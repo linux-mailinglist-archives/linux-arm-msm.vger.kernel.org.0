@@ -2,58 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C3CA15348C2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 May 2022 04:17:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DA0085348C9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 May 2022 04:18:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234268AbiEZCQp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 May 2022 22:16:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54480 "EHLO
+        id S238520AbiEZCSX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 May 2022 22:18:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34624 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346119AbiEZCQn (ORCPT
+        with ESMTP id S235828AbiEZCSW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 May 2022 22:16:43 -0400
-Received: from mail-ot1-f46.google.com (mail-ot1-f46.google.com [209.85.210.46])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBB02BC6F9;
-        Wed, 25 May 2022 19:16:42 -0700 (PDT)
-Received: by mail-ot1-f46.google.com with SMTP id n2-20020a9d6f02000000b0060b22af84d4so205763otq.1;
-        Wed, 25 May 2022 19:16:42 -0700 (PDT)
+        Wed, 25 May 2022 22:18:22 -0400
+Received: from mail-ot1-f48.google.com (mail-ot1-f48.google.com [209.85.210.48])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B03B0BC6F6;
+        Wed, 25 May 2022 19:18:18 -0700 (PDT)
+Received: by mail-ot1-f48.google.com with SMTP id l9-20020a056830268900b006054381dd35so173354otu.4;
+        Wed, 25 May 2022 19:18:18 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=knN8WauJtLSOGA1g5HxlsYMwa8+Cv8xFXfQBVnNl60o=;
-        b=Miwcey6nIx88kgUqDOjwqKI5C6FscklKnthAH23+JFh/XWO9WXF65Jx6rlsXCIXQmo
-         XThDcIrE2Cgt4brLPKbHEGiDJaChs1OI+ZIlkvs1W5xYsIy26hvDqDxMd6AW1vPKMnuB
-         /Ruzh8eOIVfvTOaVLhCNiQue8GnsNz2o80UDcH2OnsIRl+smj1sM3e5ByvliEyjqgSGz
-         cNlQ5zjgLpZsw9UuB4ZUsTY+1zMxaWtLRbRufXBkJ3Lqj61alg65FzdVHu7fRfLXTzUk
-         QPypJkbVQYz/3ZnjGnRIvHzBijYVnM98ef7m4V0iB8eV4e+dyLPHcFCz87x+L4iC9YNt
-         vt0Q==
-X-Gm-Message-State: AOAM532h3eV94bOygl+deH6FAE8BhyHf1yDKLJkG+QGf2e3/dqsFNP6F
-        hH2p2+fk4qwMW4swG1C3/kcDgGvMXw==
-X-Google-Smtp-Source: ABdhPJy3NJSfUzrqK7Qy/xtDqM7/QR6QuGwf5zgTir6ifNVbQ/8CB9Qjz1o4Pm8QWsu33IFqIhJw9g==
-X-Received: by 2002:a05:6830:40c5:b0:60b:39c0:750b with SMTP id h5-20020a05683040c500b0060b39c0750bmr1438217otu.97.1653531401899;
-        Wed, 25 May 2022 19:16:41 -0700 (PDT)
+        bh=NUQ9SiZVPAN24uE2JQeZo4XP8qsZ/j7rMIYhAswoj04=;
+        b=MS6oMGIKO//h3Zz3bxhLLTGFLSmaZwzN0bhupsGCqsBvTP3uHkUDVZXihd1MjNonhj
+         XdVj1k8oahccoSiUVCSaXvax6RbX2w74nLgDx7U2QC9lXiuOXTDd+aruJdFem/6txHdj
+         oBD09CxQ41yak17Stl4BlMpF5kbMYYosDfJmt8fI3ctIAcqNW0Wud1t3Iu+WoJxCK1yU
+         sbf0wX3l0fld4NbSlwzq8D06Cl5ulKbfKAjZJXNohGThvNiAIvlZYYsPPpSCaf11700F
+         8O/aTYGFdJEf+sYh98SmtKhZ3jNn4bTqL70j+1m9h7vAnM/TJD9qLxT0TQgoMZk4kih3
+         ElUw==
+X-Gm-Message-State: AOAM531Xx3Fu3tXOugQOEvKfZ3sD9jqIOSEE0aARtd+IPu2fq1lgvGRK
+        YHXrMmZmwf9N4snvZ0LHHgAbYEykAw==
+X-Google-Smtp-Source: ABdhPJyKdNx1ygST7g1BJvQ+OaZ3sMcoR//b5X22QjXHkasp5LxmvBz87YH+SSFEyb4r8eioLpOzVA==
+X-Received: by 2002:a05:6830:124e:b0:60a:fff3:c05b with SMTP id s14-20020a056830124e00b0060afff3c05bmr9034053otp.264.1653531497982;
+        Wed, 25 May 2022 19:18:17 -0700 (PDT)
 Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id k7-20020a056870818700b000f1fe6125e4sm184824oae.40.2022.05.25.19.16.40
+        by smtp.gmail.com with ESMTPSA id li23-20020a056871421700b000f28a948dd2sm187766oab.21.2022.05.25.19.18.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 May 2022 19:16:41 -0700 (PDT)
-Received: (nullmailer pid 2927770 invoked by uid 1000);
-        Thu, 26 May 2022 02:16:40 -0000
-Date:   Wed, 25 May 2022 21:16:40 -0500
+        Wed, 25 May 2022 19:18:17 -0700 (PDT)
+Received: (nullmailer pid 2930226 invoked by uid 1000);
+        Thu, 26 May 2022 02:18:16 -0000
+Date:   Wed, 25 May 2022 21:18:16 -0500
 From:   Rob Herring <robh@kernel.org>
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         devicetree@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>
-Subject: Re: [PATCH] dt-bindings: arm: qcom: switch maintainer to Bjorn
-Message-ID: <20220526021640.GA2927712-robh@kernel.org>
-References: <20220520124018.367004-1-krzysztof.kozlowski@linaro.org>
+        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        linux-arm-msm@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Subject: Re: [PATCH 01/12] dt-bindings: vendor-prefixes: add Shift GmbH
+Message-ID: <20220526021816.GA2930168-robh@kernel.org>
+References: <20220521164550.91115-1-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220520124018.367004-1-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220521164550.91115-1-krzysztof.kozlowski@linaro.org>
 X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
         FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
         HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
@@ -65,24 +65,14 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 20 May 2022 14:40:18 +0200, Krzysztof Kozlowski wrote:
-> Emails to Stephen bounce since long time ("Recipient address rejected:
-> undeliverable address: No such user here."), so change maintainer to
-> Qualcomm platform maintainer.
+On Sat, 21 May 2022 18:45:39 +0200, Krzysztof Kozlowski wrote:
+> Add prefix for SHIFT GmbH, phone manufacturer
+> (https://www.shiftphones.com/en/).
 > 
 > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> 
 > ---
-> 
-> Although Stephen uses his @kernel.org account but the address is still
-> not updated, so I guess these files are abandoned. Otherwise if they are
-> not abandoned, please update the email address.
-> 
-> It would be nice if folks from CodeAurora updated their addresses,
-> because these bounces happen since some time and are annoying.
-> ---
->  Documentation/devicetree/bindings/arm/qcom.yaml | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
+>  1 file changed, 2 insertions(+)
 > 
 
 Acked-by: Rob Herring <robh@kernel.org>
