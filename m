@@ -2,272 +2,175 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C6154535266
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 May 2022 19:07:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A78BD535281
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 May 2022 19:26:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348155AbiEZRH5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 May 2022 13:07:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33386 "EHLO
+        id S233201AbiEZR0d (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 May 2022 13:26:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43876 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344434AbiEZRH4 (ORCPT
+        with ESMTP id S244001AbiEZR0c (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 May 2022 13:07:56 -0400
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1673F4F9F4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 May 2022 10:07:55 -0700 (PDT)
-Received: by mail-ed1-x536.google.com with SMTP id t26so2600288edt.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 May 2022 10:07:55 -0700 (PDT)
+        Thu, 26 May 2022 13:26:32 -0400
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A21A69299;
+        Thu, 26 May 2022 10:26:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=KmROjGleSmP0Q8SmkvRLiLJ4PJ/PkOeCsvLq+FzuZvw=;
-        b=eiXItexUv6JKb5q/26VIC/dSviGcdCxMSyuZ9CBMVkMP9yD3uyHhROwvHJixyYYJQg
-         sPa6KkCqD69ksfO8xCJMbMxJpsN4jR8zWfD0QNcK/ZU/wdOo/cFdfC1E7qBJocdu0GBL
-         0U3ZAtZre/r6nzRECXRqobecfv/oG/XnXRwZo=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=KmROjGleSmP0Q8SmkvRLiLJ4PJ/PkOeCsvLq+FzuZvw=;
-        b=qmwVARaiBVAyPvd0T2o3aRTphVi+z4+HvrbwaYPdzKKaTcFj/cOwdsCvotoK+WCaiG
-         xO94a2NBx/YNpvok5QFq2nsc5rLZkmveymVboKtP4Wnqv5CP0B7SUZJ+i/Bed1myq+yh
-         au5ieIQxxqKgkoFz0kfvC1vcIVCY18fcSnb6rb16cL4SR1R3nsMXKXysD6D+XEEI4dIa
-         fTO5IREW+zndo4SA4fDZz3LOANz9m/GsvnbY6iqbSGuzM6rHovJRrQwZA+wJdBOkro/B
-         6Ov0ZEBuke/yH5v4rcv+gWmR05ocVxyErESn/U086H8yCsbVytJ8E7yewUHWEJIRQ4h1
-         YNrw==
-X-Gm-Message-State: AOAM530C5auYvMfEkdd+/RDNw+FgiywosGjUtxGoI97ErzsH7yNDQqFE
-        F25A470bqeHWXCDUzWeFwMuL43I7WwBD/MTEsIk=
-X-Google-Smtp-Source: ABdhPJwKviLs9QzUIv07zf6EbYHZTCo7AB7917Ov7tq2fmacTETd0ZXIzl44U2PlMinGFEbY8h/CwA==
-X-Received: by 2002:aa7:d412:0:b0:42a:b8bf:89f7 with SMTP id z18-20020aa7d412000000b0042ab8bf89f7mr41428077edq.410.1653584873203;
-        Thu, 26 May 2022 10:07:53 -0700 (PDT)
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com. [209.85.221.42])
-        by smtp.gmail.com with ESMTPSA id jw9-20020a170906e94900b006fea3702e56sm683677ejb.79.2022.05.26.10.07.50
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 26 May 2022 10:07:51 -0700 (PDT)
-Received: by mail-wr1-f42.google.com with SMTP id e2so2935814wrc.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 May 2022 10:07:50 -0700 (PDT)
-X-Received: by 2002:a5d:5085:0:b0:20d:5f6:63fa with SMTP id
- a5-20020a5d5085000000b0020d05f663famr31656209wrt.679.1653584869966; Thu, 26
- May 2022 10:07:49 -0700 (PDT)
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1653585990; x=1685121990;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=qqD5Zj6t+PWfNIQqW1CsB9riwLbmG/FrR6Aus1GUbvk=;
+  b=XVDnrV5CRoU9oED/A4uX8yg8OvjtL0DELcm3cs29oktVOhZufcHku2o/
+   NT/GfesfmcXp1wF9+cQmB9g0/dl53QOg1HCDp8BUjsiW5tG0M4UUs7EHj
+   4EgeTXXY9yY/Lp+0+R2BIxqLOTnGXVHRbcOL1T3Z6o8u47Ihl4qM+TiyV
+   g=;
+Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 26 May 2022 10:26:29 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 May 2022 10:26:29 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Thu, 26 May 2022 10:26:28 -0700
+Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Thu, 26 May 2022 10:26:28 -0700
+From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
+To:     <robdclark@gmail.com>, <sean@poorly.run>, <swboyd@chromium.org>,
+        <dianders@chromium.org>, <vkoul@kernel.org>, <daniel@ffwll.ch>,
+        <airlied@linux.ie>, <agross@kernel.org>,
+        <dmitry.baryshkov@linaro.org>, <bjorn.andersson@linaro.org>
+CC:     <quic_abhinavk@quicinc.com>, <quic_aravindh@quicinc.com>,
+        <quic_khsieh@quicinc.com>, <quic_sbillaka@quicinc.com>,
+        <freedreno@lists.freedesktop.org>,
+        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: [PATCH] drm/msm/dp: force link training for display resolution change
+Date:   Thu, 26 May 2022 10:26:18 -0700
+Message-ID: <1653585978-30090-1-git-send-email-quic_khsieh@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-References: <1652697510-30543-1-git-send-email-quic_vnivarth@quicinc.com>
-In-Reply-To: <1652697510-30543-1-git-send-email-quic_vnivarth@quicinc.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Thu, 26 May 2022 10:07:37 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=WZQLpYAsdU4yTCGZCGp5+t+rJiadbSeppBaX0b6ZuUxg@mail.gmail.com>
-Message-ID: <CAD=FV=WZQLpYAsdU4yTCGZCGp5+t+rJiadbSeppBaX0b6ZuUxg@mail.gmail.com>
-Subject: Re: [V2] tty: serial: qcom-geni-serial: Remove uart frequency table.
- Instead, find suitable frequency with call to clk_round_rate.
-To:     Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jiri Slaby <jirislaby@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-serial@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>,
-        quic_msavaliy@quicinc.com, Matthias Kaehlcke <mka@chromium.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Satya Priya <quic_c_skakit@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+During display resolution changes display have to be disabled first
+followed by display enable with new resolution. This patch force
+main link always be retrained during display enable procedure to
+simplify implementation instead of manually kicking of irq_hpd
+handle.
 
-On Mon, May 16, 2022 at 3:38 AM Vijaya Krishna Nivarthi
-<quic_vnivarth@quicinc.com> wrote:
->
-> Replace the UART frequency table 'root_freq[]' with logic around
-> clk_round_rate() so that SoC details like the available clk frequencies
-> can change and this driver still works. This reduces tight coupling
-> between this UART driver and the SoC clk driver because we no longer
-> have to update the 'root_freq[]' array for new SoCs. Instead the driver
-> determines the available frequencies at runtime.
->
-> Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-> ---
-> v2: loops through clk dividers to zero-in quickly
-> v1: intial patch looped through available clk frequencies
-> ---
->  drivers/tty/serial/qcom_geni_serial.c | 56 ++++++++++++++++++++++-------------
->  1 file changed, 36 insertions(+), 20 deletions(-)
->
-> diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
-> index f496102..4733a23 100644
-> --- a/drivers/tty/serial/qcom_geni_serial.c
-> +++ b/drivers/tty/serial/qcom_geni_serial.c
-> @@ -149,12 +149,6 @@ static unsigned int qcom_geni_serial_tx_empty(struct uart_port *port);
->  static void qcom_geni_serial_stop_rx(struct uart_port *uport);
->  static void qcom_geni_serial_handle_rx(struct uart_port *uport, bool drop);
->
-> -static const unsigned long root_freq[] = {7372800, 14745600, 19200000, 29491200,
-> -                                       32000000, 48000000, 51200000, 64000000,
-> -                                       80000000, 96000000, 100000000,
-> -                                       102400000, 112000000, 120000000,
-> -                                       128000000};
-> -
->  #define to_dev_port(ptr, member) \
->                 container_of(ptr, struct qcom_geni_serial_port, member)
->
-> @@ -946,25 +940,43 @@ static int qcom_geni_serial_startup(struct uart_port *uport)
->         return 0;
->  }
->
-> -static unsigned long get_clk_cfg(unsigned long clk_freq)
-> -{
-> -       int i;
-> -
-> -       for (i = 0; i < ARRAY_SIZE(root_freq); i++) {
-> -               if (!(root_freq[i] % clk_freq))
-> -                       return root_freq[i];
-> -       }
-> -       return 0;
-> -}
-> -
-> -static unsigned long get_clk_div_rate(unsigned int baud,
-> +static unsigned long get_clk_div_rate(struct clk *clk, unsigned int baud,
->                         unsigned int sampling_rate, unsigned int *clk_div)
->  {
->         unsigned long ser_clk;
->         unsigned long desired_clk;
-> +       unsigned long freq, prev;
-> +       unsigned long div, maxdiv;
-> +       int64_t mult;
+Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+---
+ drivers/gpu/drm/msm/dp/dp_ctrl.c    |  6 +++---
+ drivers/gpu/drm/msm/dp/dp_ctrl.h    |  2 +-
+ drivers/gpu/drm/msm/dp/dp_display.c | 13 ++++++-------
+ 3 files changed, 10 insertions(+), 11 deletions(-)
 
-Why is "mult" signed? Shouldn't it be type "u64" or something?
+diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+index 5ddb4e8..8b71013 100644
+--- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
++++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+@@ -1545,7 +1545,7 @@ static int dp_ctrl_process_phy_test_request(struct dp_ctrl_private *ctrl)
+ 
+ 	ret = dp_ctrl_on_link(&ctrl->dp_ctrl);
+ 	if (!ret)
+-		ret = dp_ctrl_on_stream(&ctrl->dp_ctrl);
++		ret = dp_ctrl_on_stream(&ctrl->dp_ctrl, false);
+ 	else
+ 		DRM_ERROR("failed to enable DP link controller\n");
+ 
+@@ -1802,7 +1802,7 @@ static int dp_ctrl_link_retrain(struct dp_ctrl_private *ctrl)
+ 	return dp_ctrl_setup_main_link(ctrl, &training_step);
+ }
+ 
+-int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl)
++int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl, bool force_link_train)
+ {
+ 	int ret = 0;
+ 	bool mainlink_ready = false;
+@@ -1827,7 +1827,7 @@ int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl)
+ 		}
+ 	}
+ 
+-	if (!dp_ctrl_channel_eq_ok(ctrl))
++	if (force_link_train || !dp_ctrl_channel_eq_ok(ctrl))
+ 		dp_ctrl_link_retrain(ctrl);
+ 
+ 	/* stop txing train pattern to end link training */
+diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.h b/drivers/gpu/drm/msm/dp/dp_ctrl.h
+index 2433edb..dcc7af21 100644
+--- a/drivers/gpu/drm/msm/dp/dp_ctrl.h
++++ b/drivers/gpu/drm/msm/dp/dp_ctrl.h
+@@ -20,7 +20,7 @@ struct dp_ctrl {
+ };
+ 
+ int dp_ctrl_on_link(struct dp_ctrl *dp_ctrl);
+-int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl);
++int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl, bool force_link_train);
+ int dp_ctrl_off_link_stream(struct dp_ctrl *dp_ctrl);
+ int dp_ctrl_off(struct dp_ctrl *dp_ctrl);
+ void dp_ctrl_push_idle(struct dp_ctrl *dp_ctrl);
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+index bfc6581..9246421 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.c
++++ b/drivers/gpu/drm/msm/dp/dp_display.c
+@@ -892,7 +892,7 @@ static int dp_display_enable(struct dp_display_private *dp, u32 data)
+ 		return 0;
+ 	}
+ 
+-	rc = dp_ctrl_on_stream(dp->ctrl);
++	rc = dp_ctrl_on_stream(dp->ctrl, data);
+ 	if (!rc)
+ 		dp_display->power_on = true;
+ 
+@@ -1594,6 +1594,7 @@ int msm_dp_display_enable(struct msm_dp *dp, struct drm_encoder *encoder)
+ 	int rc = 0;
+ 	struct dp_display_private *dp_display;
+ 	u32 state;
++	bool force_link_train = false;
+ 
+ 	dp_display = container_of(dp, struct dp_display_private, dp_display);
+ 	if (!dp_display->dp_mode.drm_mode.clock) {
+@@ -1622,10 +1623,12 @@ int msm_dp_display_enable(struct msm_dp *dp, struct drm_encoder *encoder)
+ 
+ 	state =  dp_display->hpd_state;
+ 
+-	if (state == ST_DISPLAY_OFF)
++	if (state == ST_DISPLAY_OFF) {
+ 		dp_display_host_phy_init(dp_display);
++		force_link_train = 1;
++	}
+ 
+-	dp_display_enable(dp_display, 0);
++	dp_display_enable(dp_display, force_link_train);
+ 
+ 	rc = dp_display_post_enable(dp);
+ 	if (rc) {
+@@ -1634,10 +1637,6 @@ int msm_dp_display_enable(struct msm_dp *dp, struct drm_encoder *encoder)
+ 		dp_display_unprepare(dp);
+ 	}
+ 
+-	/* manual kick off plug event to train link */
+-	if (state == ST_DISPLAY_OFF)
+-		dp_add_event(dp_display, EV_IRQ_HPD_INT, 0, 0);
+-
+ 	/* completed connection */
+ 	dp_display->hpd_state = ST_CONNECTED;
+ 
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
->
->         desired_clk = baud * sampling_rate;
-> -       ser_clk = get_clk_cfg(desired_clk);
-> +       if (!desired_clk) {
-> +               pr_err("%s: Invalid frequency\n", __func__);
-
-nit: IMO printing the __func__ in every printout is not a good
-practice. It uglifies the kernel log buffer. If you personally truly
-want the function in every printout then modify pr_err() to print it.
-
-
-> +               return 0;
-> +       }
-> +
-> +       maxdiv = CLK_DIV_MSK >> CLK_DIV_SHFT;
-> +       prev = 0;
-> +
-> +       for (div = 1; div <= maxdiv; div++) {
-> +               mult = div * desired_clk;
-> +               if (mult > ULONG_MAX)
-> +                       break;
-
-I'm pretty sure your "if" test is always false because you didn't cast
-properly. I even tested it for you:
-
-{
-    unsigned long a, b;
-    unsigned long long c;
-
-    printf("long size: %d, long long size: %d\n",
-           (int)(sizeof(a)), (int)(sizeof(c)));
-
-    a = 0xffffffff;
-    b = 2;
-
-    c = a * b;
-    printf("c is %#llx\n", c);
-
-    c = a * (unsigned long long)b;
-    printf("c is %#llx\n", c);
-}
-
-That prints out:
-
-long size: 4, long long size: 8
-c is 0xfffffffe
-c is 0x1fffffffe
-
-
-> +
-> +               freq = clk_round_rate(clk, (unsigned long)mult);
-> +               if (!(freq % desired_clk)) {
-> +                       ser_clk = freq;
-> +                       break;
-> +               }
-> +
-> +               if (!prev)
-> +                       ser_clk = freq;
-
-Instead of the above, why not just init ser_clk to "desired_clk"?
-...or perhaps leave it initted to 0 so your error check after the loop
-isn't dead code?
-
-
-> +               else if (prev == freq)
-> +                       break;
-
-Are you sure about this exit condition? It seems wrong. I guess you're
-assuming that clk_round_rate() will round up like it (almost always)
-does for the Qualcomm clock driver. So I guess let's say we're trying
-to make 10000 baud and your oversampling is 16. So "desired_clk" is
-160000, right? Now let's imagine that the clock driver can make three
-rates:
-
-7372800, 14745600, 19200000
-
-Your loop will run. The first time through we'll "round" 160000 and
-get back 7372800. It's not a match. Prev will now be 7372800.
-
-The second time through, we'll round (160000 * 2) and get back
-7372800. It's not a match and prev will be equal to freq so we'll
-break.
-
-...but we _should_ have found 19200000
-
-So I think this break condition is wrong.
-
-
-> +
-> +               prev = freq;
-> +       }
-> +
->         if (!ser_clk) {
->                 pr_err("%s: Can't find matching DFS entry for baud %d\n",
->                                                                 __func__, baud);
-
-In the above, you _always_ init "ser_clk" to something, so how can
-this error condition ever occur in your new code?
-
-
-> @@ -972,6 +984,9 @@ static unsigned long get_clk_div_rate(unsigned int baud,
->         }
->
->         *clk_div = ser_clk / desired_clk;
-> +       if (!(*clk_div))
-> +               *clk_div = 1;
-
-I _think_ this can be removed if you just don't allow inexact matches.
-...if you do allow inexact matches, maybe you should put a warning in
-the logs in that case?
-
-
-> +
->         return ser_clk;
->  }
->
-> @@ -1003,7 +1018,8 @@ static void qcom_geni_serial_set_termios(struct uart_port *uport,
->         if (ver >= QUP_SE_VERSION_2_5)
->                 sampling_rate /= 2;
->
-> -       clk_rate = get_clk_div_rate(baud, sampling_rate, &clk_div);
-> +       clk_rate = get_clk_div_rate(port->se.clk, baud,
-> +               sampling_rate, &clk_div);
-
-IMO it would look better to just let the above line be 81 columns
-rather than the ugly wrapping.
