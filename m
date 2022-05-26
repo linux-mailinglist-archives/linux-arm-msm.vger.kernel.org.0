@@ -2,160 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4B12F534A80
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 May 2022 08:52:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 00F5C534AB0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 May 2022 09:16:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242817AbiEZGwg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 May 2022 02:52:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48604 "EHLO
+        id S242310AbiEZHQK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 May 2022 03:16:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34652 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238937AbiEZGwd (ORCPT
+        with ESMTP id S235634AbiEZHQJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 May 2022 02:52:33 -0400
-Received: from esa.microchip.iphmx.com (esa.microchip.iphmx.com [68.232.154.123])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B42006BFF2;
-        Wed, 25 May 2022 23:52:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
-  d=microchip.com; i=@microchip.com; q=dns/txt; s=mchp;
-  t=1653547950; x=1685083950;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-id:content-transfer-encoding:
-   mime-version;
-  bh=GLzaD+Q8oTT03n8zMx1FuoPcghPbSG28RO1r1Y+lJ58=;
-  b=n6GacZsxEgNp/gvih+361Wy0zSDJhef63XTgQio7i53IGesuHM2GCgPv
-   pJ75FdDrXKgVDm/8oXTy0X8tWQezTnxNjyP5s+hJEyBBSve1Ipa6+ZWVG
-   RY4SI+m0/coBYQnBsNHFAUdXwBf6HQS3ny6HJ/V7+lD8EpfmMh4zFxsdU
-   LN3Uoi/vi2Hofvit6JANHLo7VAGRYdBkEBvjh/NaoKETJEOiV5/971cwf
-   LD5mtKhqVwoewv9h7lfL8dDUZP3N1yoBoRx7VIeebXAqLwnH2rb1fQKt/
-   uXWgrM3SEP4tk5dJpxZN7sloTJVFN3CLASkGQMbjCsKlvYdus2Wtngunk
-   A==;
-X-IronPort-AV: E=Sophos;i="5.91,252,1647327600"; 
-   d="scan'208";a="157653076"
-Received: from smtpout.microchip.com (HELO email.microchip.com) ([198.175.253.82])
-  by esa4.microchip.iphmx.com with ESMTP/TLS/AES256-SHA256; 25 May 2022 23:52:28 -0700
-Received: from chn-vm-ex02.mchp-main.com (10.10.85.144) by
- chn-vm-ex03.mchp-main.com (10.10.85.151) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2375.17; Wed, 25 May 2022 23:52:28 -0700
-Received: from NAM12-MW2-obe.outbound.protection.outlook.com (10.10.215.89) by
- email.microchip.com (10.10.87.72) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2375.17 via Frontend
- Transport; Wed, 25 May 2022 23:52:27 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=P2n4S0DrwZPigcXXpH7ubiWPlqAR9EZA1cUFdwlAvuTyPWK8jwut5aOPhnKrFFq93xbzgR3WK323JaVd4SEU0BLIwLnbepKGFuRh57JbM/f2Ctb9PQz0E3y1MtWY7U28vfMf58hnoIuIwfiD10CyULsuidILMFwJhN2RkmdPag6aP2perQxS8I49pJS400UxHTBuR84Bzb74Q2tmCWtzKin8xKlW2A56xfhzd+4Zdj+LZ3+/mNr+ieGaqFbN7fhSeYTgBr0xMh73Q2HBA4g8BwG5b0dH3ySiDmkllRe7a4vonR4aLj/DoddcEO0ARP/KkubpzJ4ZXshTAePVWHeDQg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=GLzaD+Q8oTT03n8zMx1FuoPcghPbSG28RO1r1Y+lJ58=;
- b=LP4Jm7E1aXcNnIOwno8iH/IoHFXB4AgCKbx2ZOZ7LaE+yaOrkgTsa0u3/Rqi0G603RMr0RLd9xRi6N2HIQ/s8zsGuRqA1CvWu4P2fMlJ2ft466u2e2fd0QWaoNcERTzOoCi934TCKUqXTG6im2XvnZ67ox78z/X2oLhz2rqFhMYl0UsFAUDaidceisc06AWvafGdivLo8ixV56FHoiwVta3s3fR0LWJ4YldgVd1yNuDiHrYC7+1ClmAjewneKRehT8jN/nHE/TyvtdR/K+fmAStS324KQWS7LtgekdbyQeY2aORIidHUg8B0PYq9VU3I7qQPljFcHNLcqgXEyuwMbA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=microchip.com; dmarc=pass action=none
- header.from=microchip.com; dkim=pass header.d=microchip.com; arc=none
+        Thu, 26 May 2022 03:16:09 -0400
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D340125E88
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 May 2022 00:16:05 -0700 (PDT)
+Received: by mail-ed1-x52b.google.com with SMTP id t5so761983edc.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 May 2022 00:16:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=microchiptechnology.onmicrosoft.com;
- s=selector2-microchiptechnology-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=GLzaD+Q8oTT03n8zMx1FuoPcghPbSG28RO1r1Y+lJ58=;
- b=h55ebpkwsCSij9lEtAemW7Wc/5pHwjumDaW5g4BXqeNB402b636wWK+Mf4ZAge70WZyyuR4zbbZKcyFvfeCF4VyT7qMqe+VZIyiOPEsMP9WvBUMuomR+zWdFqwDjkhcc8ZWopfg3y3xM7/Z9hU1gKV0EPt12p2JtAXvnZPgAh1E=
-Received: from CO1PR11MB5154.namprd11.prod.outlook.com (2603:10b6:303:99::15)
- by SA2PR11MB5068.namprd11.prod.outlook.com (2603:10b6:806:116::10) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5293.13; Thu, 26 May
- 2022 06:52:23 +0000
-Received: from CO1PR11MB5154.namprd11.prod.outlook.com
- ([fe80::699b:5c23:de4f:2bfa]) by CO1PR11MB5154.namprd11.prod.outlook.com
- ([fe80::699b:5c23:de4f:2bfa%6]) with mapi id 15.20.5293.013; Thu, 26 May 2022
- 06:52:23 +0000
-From:   <Conor.Dooley@microchip.com>
-To:     <robh@kernel.org>, <broonie@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <agross@kernel.org>,
-        <bjorn.andersson@linaro.org>
-CC:     <krzysztof.kozlowski@linaro.org>, <linux-spi@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH] spi: dt-bindings: Fix unevaluatedProperties warnings in
- examples
-Thread-Topic: [PATCH] spi: dt-bindings: Fix unevaluatedProperties warnings in
- examples
-Thread-Index: AQHYcKHQtFDNalpqs0iqgomN20Lhca0wuJ6A
-Date:   Thu, 26 May 2022 06:52:23 +0000
-Message-ID: <13a92f37-2491-9daa-05a7-f831d9bbb0e0@microchip.com>
-References: <20220526014141.2872567-1-robh@kernel.org>
-In-Reply-To: <20220526014141.2872567-1-robh@kernel.org>
-Accept-Language: en-IE, en-US
-Content-Language: en-IE
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-user-agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.1
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=microchip.com;
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 91e0da96-6c01-4840-5b4b-08da3ee449b6
-x-ms-traffictypediagnostic: SA2PR11MB5068:EE_
-x-microsoft-antispam-prvs: <SA2PR11MB506870A5357E7EE0303B623898D99@SA2PR11MB5068.namprd11.prod.outlook.com>
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: 5JKaMV4S0fNJMWuffWO2COamzqQgcFjQuMcszY8G/3sBFi4InNDkRe1v7PMEwYrQXekUYWtSzhMJ7pFC5dC77Thm7W/QtyCsRWyXGEPxccXTs4C/jJZ4z9vHGhx4W0aV1aiuX7SC8f6UqzH5kCZatB1LL0iN8WjcEyiLsoq+EJJEcwqMQTh9AqA85jRoGQ3zBljZF541PVbG4M/l9o3M9YkxzzYWqGchruBlWzJszsyzJcYzaqVYG2oH5v+PUq2BN6C+d0+iHTSjcufZZDSmws1LfipXhnnMPY81djWhzbOc3NoRBN0nQggqSAjwIKXMaB9+lEMEA5DG4GSHpHDqVcpMBmtV73Ilm/tFbVOEHvlQF98hlPnIqIF0M3ul6/UUYwXv6shdOCHIwAbiDxIx3PNB14EPMkcXkjgyL/XXfgB+7GfyPLIeGGGZbHtfnKDx50wNGxSew4SmfvN4k4rSSHvvRP35CFEoy9d/Im4UoWAI3fuujApCtGGVCELSmxnhjGTtnfnocDAZQh5MTB9Znd3WP8FhWWcj4NL3yiaaMaI3ej7H6ROhcZR3ju3EEp4K79nDKJZTnkhOHWG+ca8EKx7PgmNQCH6rR61+7G0iiKThcfigICqiXjIvJYFrrBTcp1bEpIZRvvyaqzzsRxjNXxnm1otYDRHyf2qNULAW0kOTQRoyDe44LLA1o42CSx8EB5nDbrTNPPzSFoxV3OjNt8LQ8f5EZXs2lY4G/tOQbw1E2bKSdRL4wUA8gmZjxNPiLej46ScBznk8eScC66IQwg==
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CO1PR11MB5154.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230001)(366004)(66556008)(66446008)(66946007)(86362001)(66476007)(76116006)(4326008)(91956017)(2616005)(31696002)(64756008)(186003)(38070700005)(7416002)(83380400001)(5660300002)(2906002)(8936002)(122000001)(38100700002)(8676002)(26005)(31686004)(6512007)(6506007)(71200400001)(53546011)(508600001)(54906003)(6486002)(110136005)(36756003)(316002)(45980500001)(43740500002);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?Z1ZITSthS0RLVWt6blhDbmxoQW1XUk4wclFmRnpQT0owOUJqclh3OXFteW1P?=
- =?utf-8?B?VGxiZ0RTM1dremFZcnhyamJZczg4ME1YdW95dWsxdHJnVUtKRGUxMHlnYTRm?=
- =?utf-8?B?T1krZnBvZDNsOUxab0xta3NFeFlveFc2TU1ha0ZCUXpnNW9UelZ4NCtMZm9M?=
- =?utf-8?B?SWFCbzhOZ3NwSWRUNmNpZWY0RWdEOC9CZlVxbmE3R084MHdrTUxEYXpRWXlj?=
- =?utf-8?B?NEFFY0ZVTkZOditoaUdza0J2YmhjNlFmbU5ITTk1NXVSd3RvSVZjaGJxMWxp?=
- =?utf-8?B?K0dkc2xqdThqVkZFQ2ZJeHh5TlhBYzRWbTQ3aC9nWEM4UVNCL0ZiNExPUFZO?=
- =?utf-8?B?TmR3bGxSZWtLRGRRT2RKN3REWDN6bEJMMDFmVno1WUZXdE5IVWRKSDNHQzVu?=
- =?utf-8?B?VUVTVU80ZE44a3hjbFFIdGhPSHJtSEg1RnRxYldmazdHeURIT2JyRUVoTkE1?=
- =?utf-8?B?MjdqWGNRUmh1K09yenVyY0pUVmJBN281bGZUbkRxK0ZtdlNYcGU3dTlsUktB?=
- =?utf-8?B?VTk0UzB0TFQ0ZzZ5bkNtRXJRaEg2UmhaYTA3Z3BBNlJFeXM0dll2TGtUems0?=
- =?utf-8?B?cmV1YVRUVVU4dmx0dVRUcG1MSUZ5dHJYMXlTSUczOTBjTUtPbVVrVWM4Ykox?=
- =?utf-8?B?Q09MbUUybm51Vm1hTFBRbTgxSHN0NmhaWFhmMzhTM09BY2VqZ0liR3pkeVJM?=
- =?utf-8?B?Q3BjT3VpRjhDRHBHZVNiYU9KVi9FL0YxVkNjcFc3V1dSQ3Qwb3NpR1FkVUl5?=
- =?utf-8?B?WitKcHU0R0t4YVFvdnd2bjFpTStxcDl3V1NpMEFFalk4cHdBVFcxRHB2MmxD?=
- =?utf-8?B?RWt3WnkwUmtwaU9DekJyNDlmK21nMmFFZVkwcm02bXN6TVVsRjlGcnpCdGdm?=
- =?utf-8?B?YkZGUVdtUnRFVUQ4d1NEMUdqeXNZN1hqVzZFYmwvaG5IVnI5RG5jdWljRUdP?=
- =?utf-8?B?djltcGdnbFBZWHBhVzlBWk5hbzYzbzY1WW1WYkZuQStWMEZyVER3QUo1VGdF?=
- =?utf-8?B?Y0ZPVzZVRTBFenhHYU1LenlFTHNLQlZoRHRXU3U5T1J2THZUVCs5WXhlU2pw?=
- =?utf-8?B?cVJYUDVuMThZM2ltSnVqcjJjZjJsR0FoYW5PdU1KWndhSHJFWFl6WDQ3aHJq?=
- =?utf-8?B?NFJwek1QTkIzN3lIZ1RxVllTNk04Z2FTNnNIbzJ0d3BDMDdTVkwyeEkyVHBR?=
- =?utf-8?B?ekhIMzdhK0pYamtDOVdFWHRxdEtZa2tUL0JhbzdVOVlaRnlHWFFXR2hURlZT?=
- =?utf-8?B?Um13UXRKR1dMZFFNZ2hDRGsySWppZjFJeWpnNEZxc2NvS3pVNFA1N1JUdmt0?=
- =?utf-8?B?VHdyTVFrNWI0V1l5SHc5NXg3WTQ2UmsrTWo4cGlhNHMwRVhjbm4wWnJ6NFRO?=
- =?utf-8?B?c2NGdWM0T2ZSZldsV0ppNm1kZVJmMzY2U1kzZFgrMVJsMG1lWWt6T2FqSHA1?=
- =?utf-8?B?bW1UMU9mR050TTRYbUpoODFqUnRyZzdCNFVIV0k2VVlyVWlXU3paUktxNHpp?=
- =?utf-8?B?TmsxVHJtY0FsOE1maHhBZEt1d3pmRHc2VjVzcmIrUy9NSHRXcHBjYi9peXJk?=
- =?utf-8?B?UXNjZzhzMmpRQ284QXY0NUlrVEFTdEpKQW4xN2lOMUw3Qm5xOStKTVVoZWtt?=
- =?utf-8?B?SXd3YnY3Y3ROZDVONkJMZmNHMHJrN1dYdkp2SXpLMmwwV0xmSXRTdG1OVjBq?=
- =?utf-8?B?QnJJRUM0R1lZQmZrUDkzRGNzdFBHWVQxRzUxTlRnRkt6d3NlNWdKRVJtblhJ?=
- =?utf-8?B?eVlHUGw4enU3R0N4T3dqa2V5TWhnNjZPOXdBeDVNdWJncDUzV1AxMEVucFpD?=
- =?utf-8?B?UTVUaE9DdThXdUdYUVExemlQWjRYU1hnNmwyUWNsV0VSdTFWT08xUmcramZq?=
- =?utf-8?B?bkkzUmxDd2M5ZnFZekd3VHRIcmNVRXNRajRLNU9oUGhQZ3BXTDVkVzFFQ2Vw?=
- =?utf-8?B?Z2Y2M1JhSUN5WEZRbmZFYmZMNTlmbi9mN0dzcHhCZWxwN2ZqbGJvMnc2Z1lv?=
- =?utf-8?B?bWkwVFErNzVFOGpaWE85RDFtZHczcXVpc0lOdnVqbC90YnBUeUhuTVljSkVs?=
- =?utf-8?B?WE1aNFUwMm92R3o1d1BlS2pJMlRhRC94NHpwMi9YdW1XOHg4dWhlajV6WFMz?=
- =?utf-8?B?K3JDYVcreENCY2NiSWZnNHJxT2szTmNQbE90YW50aXZWK3QrWERVQmdQd0do?=
- =?utf-8?B?OFh6aG5JVVZtTy9SbTRQeEZhMDN0b0JwRHVPVk8ybkdaWUxIUkJQd2RTVlBv?=
- =?utf-8?B?QWZ2M2p1Zy9mUVp5bVo3bDRxMGVnbHEzTGc4akFxeUpsNkZzSmM5ak1vK0Q0?=
- =?utf-8?B?SEZTZ0ptUFdEQUZyTjJBNlNsck4rZ3JhdVYvalJOTk5ZYzAzWDdtUT09?=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <294273602AA42A4DB0108396FD31B550@namprd11.prod.outlook.com>
-Content-Transfer-Encoding: base64
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=vemDBZDCnhpAK2uXIq2WrkheYMWxwrmu5Ee771X7p5k=;
+        b=us3L1pxoQlXucRLuOrHLCMJADLuv6kfsD5XMhrvhSTVYYm4xfsAm+5+cY9YTR39vy5
+         nhby1fQuzH8KdqPSCn2aWeOzCMoTk0a3QzZIuMDZ7pXKVeNSRQ6d6A9QUZ9ZHJK6c0CW
+         K84q1Fq3qVOZlmL4LtpNB66UCbeCe/kG68h0RN1+uUhi47q5zIYlWS7S0V8A0OBfGiW5
+         6Z8AOavjOarpZPPzMrm/coG11ipPMz8fxT8L/Y5Vrbr0M4pE3KsuejP+MTwQES0VdMM+
+         dRTYsXbqb2ffqg6g5kRaozLF+tAsxS36mQeqVkmMP5T7uz9dFWgpJSeujstPyDvHoSjG
+         5t4Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=vemDBZDCnhpAK2uXIq2WrkheYMWxwrmu5Ee771X7p5k=;
+        b=KZ2oiVCLyfZ42vOhmDFNU7s7lul2wxPpEosnEI2wfPw1C7XMY4T/8VMrZVMsJfivgD
+         bUNusR3lxZy55V67m3LL7E6b0C+zzoRdNaY4zlCVT78YZN7FKjlZNqiGIHCbmvgwAInJ
+         ML9I7Kv3At3B6W2W49Vag+EOjv2ag9ajL4lz65BJBFRDwQXuBRLuybGDYX1qljWEDvtn
+         vrg5fUbJ/xLHb4ZDwkVY5wsNvjW45N81DR/IQE7IagFR9VqsdYMTocstbeL5GaugV9F1
+         7PX21UvuGcK6IGdKAFneq/ov+TDmPvCsRxKvwsfZssnVNUY8RZIHMcGyymxKpBT/tzv4
+         TVHg==
+X-Gm-Message-State: AOAM530rkK2iuEAOWCQr/aguIyXP1swpIJH6YbMk9K0gaKD6WSmXqXuA
+        YcBUNgO3cxCuBgas1PsPieCP2Q==
+X-Google-Smtp-Source: ABdhPJyKhk21/nQY9A/VVQJDajElTIqAvYmnxdQHegM5RNLrV2nLJPVTJA7zb0PcEHPcMbBE3j4ejQ==
+X-Received: by 2002:a05:6402:1cc1:b0:428:a06e:a30f with SMTP id ds1-20020a0564021cc100b00428a06ea30fmr37677711edb.377.1653549364396;
+        Thu, 26 May 2022 00:16:04 -0700 (PDT)
+Received: from [192.168.0.177] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id b12-20020a50cccc000000b0042ab87ea713sm415510edj.22.2022.05.26.00.16.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 26 May 2022 00:16:03 -0700 (PDT)
+Message-ID: <7e019e53-c449-6520-009e-11a45e30df10@linaro.org>
+Date:   Thu, 26 May 2022 09:16:02 +0200
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: CO1PR11MB5154.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 91e0da96-6c01-4840-5b4b-08da3ee449b6
-X-MS-Exchange-CrossTenant-originalarrivaltime: 26 May 2022 06:52:23.6342
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 3f4057f3-b418-4d4e-ba84-d55b4e897d88
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: ttimGkBOhUTmKL21wqVg+bIhzzxcflSBKnRs2nSz2lDbGHYbp8Fmh/koBamrWmgdwygNSUj6susz3YlP7ZtGKrOMBQU+l1ymb5BZVZEFa0Q=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA2PR11MB5068
-X-Spam-Status: No, score=-4.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_PASS,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Subject: Re: Removal of qcom,board-id and qcom,msm-id
+Content-Language: en-US
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Konrad Dybcio <konrad.dybcio@somainline.org>, agross@kernel.org,
+        arnd@arndb.de, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        olof@lixom.net, robh@kernel.org, sboyd@kernel.org,
+        Rob Clark <robdclark@gmail.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Amit Pundir <amit.pundir@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+References: <a3c932d1-a102-ce18-deea-18cbbd05ecab@linaro.org>
+ <20220522195138.35943-1-konrad.dybcio@somainline.org>
+ <53d5999b-88ee-24db-fd08-ff9406e2b7b7@linaro.org>
+ <YowBtNkZ678ns4Ob@builder.lan>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <YowBtNkZ678ns4Ob@builder.lan>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -163,44 +83,118 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-T24gMjYvMDUvMjAyMiAwMjo0MSwgUm9iIEhlcnJpbmcgd3JvdGU6DQo+IEVYVEVSTkFMIEVNQUlM
-OiBEbyBub3QgY2xpY2sgbGlua3Mgb3Igb3BlbiBhdHRhY2htZW50cyB1bmxlc3MgeW91IGtub3cg
-dGhlIGNvbnRlbnQgaXMgc2FmZQ0KPiANCj4gVGhlICd1bmV2YWx1YXRlZFByb3BlcnRpZXMnIHNj
-aGVtYSBjaGVja3MgaXMgbm90IGZ1bGx5IHdvcmtpbmcgYW5kIGRvZXNuJ3QNCj4gY2F0Y2ggc29t
-ZSBjYXNlcyB3aGVyZSB0aGVyZSdzIGEgJHJlZiB0byBhbm90aGVyIHNjaGVtYS4gQSBmaXggaXMg
-cGVuZGluZywNCj4gYnV0IHJlc3VsdHMgaW4gbmV3IHdhcm5pbmdzIGluIGV4YW1wbGVzLg0KPiAN
-Cj4gJ3NwaS1tYXgtZnJlcXVlbmN5JyBpcyBzdXBwb3NlZCB0byBiZSBhIHBlciBTUEkgcGVyaXBo
-ZXJhbCBkZXZpY2UgcHJvcGVydHksDQo+IG5vdCBhIFNQSSBjb250cm9sbGVyIHByb3BlcnR5LCBz
-byBkcm9wIGl0Lg0KDQpSZXZpZXdlZC1ieTogQ29ub3IgRG9vbGV5IDxjb25vci5kb29sZXlAbWlj
-cm9jaGlwLmNvbT4NCg0KQXMgdGhpcyBwcm9wZXJ0eSBpcyBpbiB0aGUgbXBmcyBkZXZpY2V0cmVl
-ICYgSSdsbCBuZWVkIHRvIGZpeCBpdCwgaXMgdGhpcw0KcGF0Y2ggdGFyZ2V0ZWQgYXQgNS4xOT8g
-KEkgYXNzdW1lIGdpdmVuIHRoZSB3aW5kb3cgaXMgb3BlbiBhbmQgdGhlcmUncyBubw0KZml4ZXMg
-dGFnIHRoYXQgaXQgaXNuJ3QpLg0KDQpBcyBhbiBhc2lkZSwgSSBtZWFudCB0byBzZW5kIHRoZSBk
-cml2ZXIgb25jZSB0aGUgbWVyZ2Ugd2luZG93IGNsb3Nlcywgc28NCnRoYW5rcyBmb3Igc3BvdHRp
-bmcgYSBwcm9ibGVtIHdpdGggdGhlIGRyaXZlciBiZWZvcmUgSSBldmVuIHNlbnQgaXQgOikNCg0K
-VGhhbmtzLA0KQ29ub3IuDQoNCj4gDQo+IFNpZ25lZC1vZmYtYnk6IFJvYiBIZXJyaW5nIDxyb2Jo
-QGtlcm5lbC5vcmc+DQo+IC0tLQ0KPiAgIERvY3VtZW50YXRpb24vZGV2aWNldHJlZS9iaW5kaW5n
-cy9zcGkvbWljcm9jaGlwLG1wZnMtc3BpLnlhbWwgfCAxIC0NCj4gICBEb2N1bWVudGF0aW9uL2Rl
-dmljZXRyZWUvYmluZGluZ3Mvc3BpL3Fjb20sc3BpLWdlbmktcWNvbS55YW1sIHwgMSAtDQo+ICAg
-MiBmaWxlcyBjaGFuZ2VkLCAyIGRlbGV0aW9ucygtKQ0KPiANCj4gZGlmZiAtLWdpdCBhL0RvY3Vt
-ZW50YXRpb24vZGV2aWNldHJlZS9iaW5kaW5ncy9zcGkvbWljcm9jaGlwLG1wZnMtc3BpLnlhbWwg
-Yi9Eb2N1bWVudGF0aW9uL2RldmljZXRyZWUvYmluZGluZ3Mvc3BpL21pY3JvY2hpcCxtcGZzLXNw
-aS55YW1sDQo+IGluZGV4IGVjZTI2MWI4ZTk2My4uNzMyNmMwYTI4ZDE2IDEwMDY0NA0KPiAtLS0g
-YS9Eb2N1bWVudGF0aW9uL2RldmljZXRyZWUvYmluZGluZ3Mvc3BpL21pY3JvY2hpcCxtcGZzLXNw
-aS55YW1sDQo+ICsrKyBiL0RvY3VtZW50YXRpb24vZGV2aWNldHJlZS9iaW5kaW5ncy9zcGkvbWlj
-cm9jaGlwLG1wZnMtc3BpLnlhbWwNCj4gQEAgLTQ3LDYgKzQ3LDUgQEAgZXhhbXBsZXM6DQo+ICAg
-ICAgICAgICBjbG9ja3MgPSA8JmNsa2NmZyBDTEtfU1BJMD47DQo+ICAgICAgICAgICBpbnRlcnJ1
-cHQtcGFyZW50ID0gPCZwbGljPjsNCj4gICAgICAgICAgIGludGVycnVwdHMgPSA8NTQ+Ow0KPiAt
-ICAgICAgICBzcGktbWF4LWZyZXF1ZW5jeSA9IDwyNTAwMDAwMD47DQo+ICAgICAgIH07DQo+ICAg
-Li4uDQo+IGRpZmYgLS1naXQgYS9Eb2N1bWVudGF0aW9uL2RldmljZXRyZWUvYmluZGluZ3Mvc3Bp
-L3Fjb20sc3BpLWdlbmktcWNvbS55YW1sIGIvRG9jdW1lbnRhdGlvbi9kZXZpY2V0cmVlL2JpbmRp
-bmdzL3NwaS9xY29tLHNwaS1nZW5pLXFjb20ueWFtbA0KPiBpbmRleCBlMmM3YjkzNGM1MGQuLjc4
-Y2ViOWQ2Nzc1NCAxMDA2NDQNCj4gLS0tIGEvRG9jdW1lbnRhdGlvbi9kZXZpY2V0cmVlL2JpbmRp
-bmdzL3NwaS9xY29tLHNwaS1nZW5pLXFjb20ueWFtbA0KPiArKysgYi9Eb2N1bWVudGF0aW9uL2Rl
-dmljZXRyZWUvYmluZGluZ3Mvc3BpL3Fjb20sc3BpLWdlbmktcWNvbS55YW1sDQo+IEBAIC0xMTAs
-NyArMTEwLDYgQEAgZXhhbXBsZXM6DQo+ICAgICAgICAgICBwaW5jdHJsLW5hbWVzID0gImRlZmF1
-bHQiOw0KPiAgICAgICAgICAgcGluY3RybC0wID0gPCZxdXBfc3BpMV9kZWZhdWx0PjsNCj4gICAg
-ICAgICAgIGludGVycnVwdHMgPSA8R0lDX1NQSSA2MDIgSVJRX1RZUEVfTEVWRUxfSElHSD47DQo+
-IC0gICAgICAgIHNwaS1tYXgtZnJlcXVlbmN5ID0gPDUwMDAwMDAwPjsNCj4gICAgICAgICAgICNh
-ZGRyZXNzLWNlbGxzID0gPDE+Ow0KPiAgICAgICAgICAgI3NpemUtY2VsbHMgPSA8MD47DQo+ICAg
-ICAgIH07DQo+IC0tDQo+IDIuMzQuMQ0KPiANCg0K
+Thank you all (not only Bjorn here) for comments. These are nice
+arguments to prepare a proper patch.
+
+If I got correctly all your feedback, the preference is to document
+board-id/msm-id boards. I can prepare a patch for this, unless someone
+wants to revive old effort (from few years ago).
+
+On 23/05/2022 23:50, Bjorn Andersson wrote:
+> On Mon 23 May 02:21 CDT 2022, Krzysztof Kozlowski wrote:
+> 
+>> On 22/05/2022 21:51, Konrad Dybcio wrote:
+>>> Hi,
+>>>
+>>> removing these properties will not bring almost any benefit (other than making
+>>> some checks happy any saving some <200 LoC) and will make the lives of almost
+>>> all people doing independent development for linux-on-msm harder. There are
+>>> almost unironically like 3 people outside Linaro and QUIC who have
+>>> non-vendor-fused development boards AND the sources to rebuild the
+>>> bootloader on their own. Making it harder to boot is only going to
+>>> discourage people from developing on these devices, which is already not
+>>> that pleasant, especially with newer platforms where you have to fight with
+>>> the oh-so-bright ideas of Android boot chain..
+>>>
+>>> This only concerns devices released before sm8350, as the new ones will not
+>>> even boot with these properties present (or at least SONY Sagami, but I
+>>> doubt it's an isolated case), so other than completing support for older
+>>> devices, it won't be an issue going forward, anyway. But there are give
+>>> or take 50 locked down devices in mainline right now, and many more waiting
+>>> to be upstreamed in various downstream close-to-mainline trees that should
+>>> not be disregarded just because Qualcomm is far from the best at making
+>>> their BSP software stack clean.
+>>
+>> I actually wonder why do you need these properties for community work on
+>> such boards? You ship kernel with one concatenated DTB and the
+>> bootloader does not need the board-id/msm-id fields, doesn't it?
+>>
+> 
+> During the last years all reference devices that I know of has allowed
+> us to boot Image.gz+dtb concatenated kernels without
+> qcom,{board-msm}-id.
+> 
+> There's however been several end-user devices that for some reason
+> refuse to accept the concatenated dtb unless these values matches.
+
+I think several recently upstreamed boards have board-id/msm-id
+properties, so I wonder how can we judge whether these are needed or not.
+
+> 
+>> Not mentioning that in the past bootloader was actually not using these
+>> properties at all, because it was the dtbTool who was parsing them. So
+>> in any case either your device works fine without these properties or
+>> you have to use dtbTool, right?
+>>
+> 
+> Unfortunately not. There are the devices which accepts a single appended
+> dtb without these properties, but beyond that it's been a large mix.
+> 
+> I've seen cases where dtbTool packs up a number of dtbs, but the loaded
+> one still need to have these properties, and there are devices out there
+> that supports multiple appended dtbs etc.
+> 
+> 
+> Last but not least, forcing everyone to use dtbTool adds a
+> non-standardized tool to everyone's workflow, a tool that has to be kept
+> up to date with the compatible to msm/board-id mapping.
+
+OK
+
+> 
+>>>
+>>> One solution is to chainload another, (n+1)-stage bootloader, but this is
+>>> not ideal, as:
+>>>
+>>> 1) the stock bootloader can boot Linux just fine on most devices (except
+>>> for single exceptions, where beloved OEMs didn't implement arm64 booting or
+>>> something)
+>>>
+>>> 2) the boot chain on MSM is already 3- or 4- stage and adding to that will
+>>> only create an unnecessary mess
+>>>
+>>> 3) the job of kernel people is not to break userspace. If the
+>>> device can not even exit bootloader after a kernel upgrade, it's a big
+>>> failure.
+>>
+>> The job of kernel people is to follow bindings and since they were
+>> introduced 7 years ago, I would say there was plenty of time for that.
+>>
+> 
+> We're following the bindings and don't pick board-id or msm-id unless
+> there's a particular reason for it - which typically is that the
+> downstream bootloader requires it - we don't use the properties on the
+> kernel side.
+
+I meant to follow existing bindings for compatible:
+"qcom,<SoC>[-<soc_version>][-<foundry_id>]-<board>[/<subtype>][-<board_version>]"
+
+I think none of handsets (google, fairphone, lenovo, microsoft, sony,
+xiaomi) follow it.
+
+It seems only Qcom boards (with 'qcom' as vendor prefix) use such
+pattern, but the bindings say "Each board must specify", not "Board for
+such bootloader must specify"...
+
+> 
+>> If the dtbTool support for the bindings is there, then there is no
+>> breakage, because you had to use dtbTool before so you have to use now.
+>>
+> 
+> Among all the platforms I maintain, MSM8916 (db410c) is the only one
+> where I use dtbTool - because it refuses to accept the concatenated
+> dtb.
+
+
+Best regards,
+Krzysztof
