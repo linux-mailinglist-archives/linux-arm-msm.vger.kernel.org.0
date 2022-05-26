@@ -2,58 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ED0B0534935
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 May 2022 05:16:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8FA3F534950
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 May 2022 05:37:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230388AbiEZDP5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 May 2022 23:15:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51730 "EHLO
+        id S239795AbiEZDhy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 May 2022 23:37:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60390 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229811AbiEZDP4 (ORCPT
+        with ESMTP id S239580AbiEZDhw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 May 2022 23:15:56 -0400
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6264DF82;
-        Wed, 25 May 2022 20:15:51 -0700 (PDT)
-Received: by mail-wm1-x32c.google.com with SMTP id o29-20020a05600c511d00b00397697f172dso1819843wms.0;
-        Wed, 25 May 2022 20:15:51 -0700 (PDT)
+        Wed, 25 May 2022 23:37:52 -0400
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4389156773;
+        Wed, 25 May 2022 20:37:51 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id f2so594523wrc.0;
+        Wed, 25 May 2022 20:37:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=eGeMotmHD5kcwokKadCBWqHPNlO0Qvs0CVZPqUnOIwU=;
-        b=STPbaruw09QCXES5FDI15P7EnfhRJv83ICkhIygnvPTFFztNE3QMp+2HkzKr0MHCCL
-         vA13P4G9M+1adv/QOdjA4zKguI6NfBb99Puhm/tqNrB5bbfpnVqbXcxKrH+kH32KOrFo
-         HMFF7e4t//YJWSQez1Oune1sW8RhYrJZ1/DAvNr9nAFb5N2QrdmPgaD1/51V2R3Oc2M5
-         4JSjqZQAsd+Ss3GDdMJoEPIuDNkdvFOzpc222fcM/EhXyoxrHdZl+bcrqKhb3IoHjjmk
-         XQfHM6d95nts0V5Lo5/Zn7+uX+M0Qq1/53NK5LM62BqbRnif39q/O+EM7n0+iU8ahDcW
-         4MZA==
+         :cc:content-transfer-encoding;
+        bh=jC2VSU9zXkGEFuh8r73Q3Ivw+kwZ8g9v3xCeKOhr24Y=;
+        b=ebIGEiLNFDuQgi88XYOfm8Wtebsd2FCkAlmj2OjmfHbZiAPU8gHUOcb3K0KX/8dQar
+         KSqFSlb+XoqVKUlH97u9miY4LPLQPM1Qtjusv8LfASU7q2mNbTElIVM6aOL5HsrK69MQ
+         xqHipXQQQ5BoN61jBFWbi/umNH2Pr8gH/phKCQbDgR9gGGLO2d203hEcMXlXtmIe/Z3e
+         EJlfaSWVH/t3T5AhBMvM0H3FRWBWHumA+d+lZ0CXdJquuwXpN70PrTppQ//z9bOg9gnP
+         2i2e9sUHklzlBpgcomYk44NGiB0V+VThaBvo86sMyHkX/8ANHOFT5yu1jhdQY5+LATnK
+         coaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=eGeMotmHD5kcwokKadCBWqHPNlO0Qvs0CVZPqUnOIwU=;
-        b=QHOvwGS03r3OU31I0zO8Lwd3rLzWWxQTD7dBWQEGSHANSe7kH5zxIcKymmrN8KOwJB
-         kkKCBk/frplDg+ZUcPcBGBbXG0TwLzKl14WG13swVyImaILuCs14p1d3/xgX0dBlfa6y
-         rSODZ79OBmfTk8sxjHy5E24IlaVGPVqkPArCNz+2XVsj/4CBajtky1o8DwWVdQ8IoaM4
-         VNRCEs6oV+MuRtkiRUn5z9PCbLuYwGkymH/o+FNl75ZiyUJ3J4ol9di/ThSXzgXS5tKi
-         /bZoYAvW+gAY9ntM+QPRyhVWdftoBloO+XdRArpXdKHs6OMWjmb3rRskcNVOxY+gEQnY
-         pSWw==
-X-Gm-Message-State: AOAM531OTBWNmUlbiQzUq8cgX4clumTGIn3iYpzEF6Z6WXhFLqkH3XHH
-        /kE1Wtjw2qXkqCIG2oAAlZFAKRg54rnGJKVFjYY=
-X-Google-Smtp-Source: ABdhPJxM/y4CWGrksx4gNScQ00GELDhe/3yND60YFdXQhe2SiNRzSPQjRttu0dMdsWj00S1f+XPDEvscDu7F5r9UUA0=
-X-Received: by 2002:a05:600c:3843:b0:397:476f:ceb8 with SMTP id
- s3-20020a05600c384300b00397476fceb8mr234025wmr.200.1653534950360; Wed, 25 May
- 2022 20:15:50 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=jC2VSU9zXkGEFuh8r73Q3Ivw+kwZ8g9v3xCeKOhr24Y=;
+        b=2U2K4QVwxld8kISrqWCaPLaR4FR5q8OtdCGw5q7IpVOnJqY30cYqaNauKUTGvGQM1g
+         Z0X4ZfcRyQ9gDfwol3zGQl+dWU4R77vjoiOZSJFKgDosWeLqLwrb1zLnTTdEYqnIf1Kp
+         LmyyKmBvOIJBQozp8aO7QrI5jRq/S8yS5vUdQHKwOYGHAMOexgfrz4ZylAl18b/idKvp
+         M5zGLTaa2+4kmC58tXxP6v1UTjbgdfuqqhBOhlTzD1fI1yqkHxtgaLgHIjfijs0kLzQP
+         xCyIOxT2KFewU9n2ndYZ8scS6jrAzvTX13lfFc8HanQm2FpB6IF41XMMyIlQr5/BiWFK
+         dkzg==
+X-Gm-Message-State: AOAM531Y9CjI7mnf1E8eNqHTS/nI2qN0pZ1hSOUl5czVxNfWzWHxnP9A
+        h2PSx4TEQxW3mZkr/TJ4i7O+/+AZTn7uJ8CDljo=
+X-Google-Smtp-Source: ABdhPJyJ9gdeTDk7SjVsG8UUGtu6A0tUkYXUKX3JaRXB6ZJR3RBhBnerFejeMQFCxWdyyUoxKBnLKhL/b8HteRYU93c=
+X-Received: by 2002:adf:fb0d:0:b0:20d:97e:17ce with SMTP id
+ c13-20020adffb0d000000b0020d097e17cemr30260195wrr.585.1653536269648; Wed, 25
+ May 2022 20:37:49 -0700 (PDT)
 MIME-Version: 1.0
 References: <20210728010632.2633470-1-robdclark@gmail.com> <20210728010632.2633470-13-robdclark@gmail.com>
  <84e03c5f-a3af-6592-d19a-a2f5d20b92fb@linux.intel.com> <CAJs_Fx6Nc337LPNh=p2GT2d2yDTdLWH934o4Cof3urDGhUJB6A@mail.gmail.com>
- <904ae104-1c30-d130-129f-ccae381261d5@linux.intel.com> <CAF6AEGuVhXuX63Od+kcJ0QtfAZ2-wqZsN0KOuEzKbivJdouzog@mail.gmail.com>
- <1972f50b-d71a-9e2e-d10b-cc4f13bb208f@linux.intel.com>
-In-Reply-To: <1972f50b-d71a-9e2e-d10b-cc4f13bb208f@linux.intel.com>
+ <904ae104-1c30-d130-129f-ccae381261d5@linux.intel.com> <CAF6AEGsH=K1Hut7QBmF1kX40xS+9px=BrtZecAXVQopNs67Feg@mail.gmail.com>
+ <1cd913da-6e51-509c-a6e6-83bf79cae20b@linux.intel.com> <CAF6AEGs_+mhY9x1HG=jHmpwGU6jUS1G4mF6bJCd3yN0JRhocsQ@mail.gmail.com>
+ <046f2d0f-5e61-7d24-1b40-006f2377c974@linux.intel.com>
+In-Reply-To: <046f2d0f-5e61-7d24-1b40-006f2377c974@linux.intel.com>
 From:   Rob Clark <robdclark@gmail.com>
-Date:   Wed, 25 May 2022 20:15:47 -0700
-Message-ID: <CAF6AEGsvmQYjzoFgEMTer3oDmb62y2Hq_unDbq2UEoZ6CA3CSw@mail.gmail.com>
+Date:   Wed, 25 May 2022 20:37:47 -0700
+Message-ID: <CAF6AEGtcZ=rcVeFCRdj2gF0=4OV0B4EJ51FuZY0sge3EEgSgzg@mail.gmail.com>
 Subject: Re: [PATCH v4 12/13] drm/msm: Utilize gpu scheduler priorities
 To:     Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
 Cc:     Rob Clark <robdclark@chromium.org>,
@@ -70,6 +71,7 @@ Cc:     Rob Clark <robdclark@chromium.org>,
         =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
         open list <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
         RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
@@ -80,111 +82,305 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, May 25, 2022 at 9:11 AM Tvrtko Ursulin
+On Wed, May 25, 2022 at 9:22 AM Tvrtko Ursulin
 <tvrtko.ursulin@linux.intel.com> wrote:
 >
 >
-> On 24/05/2022 15:57, Rob Clark wrote:
-> > On Tue, May 24, 2022 at 6:45 AM Tvrtko Ursulin
+> On 25/05/2022 14:41, Rob Clark wrote:
+> > On Wed, May 25, 2022 at 2:46 AM Tvrtko Ursulin
 > > <tvrtko.ursulin@linux.intel.com> wrote:
 > >>
-> >> On 23/05/2022 23:53, Rob Clark wrote:
+> >>
+> >> On 24/05/2022 15:50, Rob Clark wrote:
+> >>> On Tue, May 24, 2022 at 6:45 AM Tvrtko Ursulin
+> >>> <tvrtko.ursulin@linux.intel.com> wrote:
+> >>>>
+> >>>>
+> >>>> On 23/05/2022 23:53, Rob Clark wrote:
+> >>>>> On Mon, May 23, 2022 at 7:45 AM Tvrtko Ursulin
+> >>>>> <tvrtko.ursulin@linux.intel.com> wrote:
+> >>>>>>
+> >>>>>>
+> >>>>>> Hi Rob,
+> >>>>>>
+> >>>>>> On 28/07/2021 02:06, Rob Clark wrote:
+> >>>>>>> From: Rob Clark <robdclark@chromium.org>
+> >>>>>>>
+> >>>>>>> The drm/scheduler provides additional prioritization on top of th=
+at
+> >>>>>>> provided by however many number of ringbuffers (each with their o=
+wn
+> >>>>>>> priority level) is supported on a given generation.  Expose the
+> >>>>>>> additional levels of priority to userspace and map the userspace
+> >>>>>>> priority back to ring (first level of priority) and schedular pri=
+ority
+> >>>>>>> (additional priority levels within the ring).
+> >>>>>>>
+> >>>>>>> Signed-off-by: Rob Clark <robdclark@chromium.org>
+> >>>>>>> Acked-by: Christian K=C3=B6nig <christian.koenig@amd.com>
+> >>>>>>> ---
+> >>>>>>>      drivers/gpu/drm/msm/adreno/adreno_gpu.c |  4 +-
+> >>>>>>>      drivers/gpu/drm/msm/msm_gem_submit.c    |  4 +-
+> >>>>>>>      drivers/gpu/drm/msm/msm_gpu.h           | 58 +++++++++++++++=
++++++++++-
+> >>>>>>>      drivers/gpu/drm/msm/msm_submitqueue.c   | 35 +++++++--------
+> >>>>>>>      include/uapi/drm/msm_drm.h              | 14 +++++-
+> >>>>>>>      5 files changed, 88 insertions(+), 27 deletions(-)
+> >>>>>>>
+> >>>>>>> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gp=
+u/drm/msm/adreno/adreno_gpu.c
+> >>>>>>> index bad4809b68ef..748665232d29 100644
+> >>>>>>> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> >>>>>>> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> >>>>>>> @@ -261,8 +261,8 @@ int adreno_get_param(struct msm_gpu *gpu, uin=
+t32_t param, uint64_t *value)
+> >>>>>>>                          return ret;
+> >>>>>>>                  }
+> >>>>>>>                  return -EINVAL;
+> >>>>>>> -     case MSM_PARAM_NR_RINGS:
+> >>>>>>> -             *value =3D gpu->nr_rings;
+> >>>>>>> +     case MSM_PARAM_PRIORITIES:
+> >>>>>>> +             *value =3D gpu->nr_rings * NR_SCHED_PRIORITIES;
+> >>>>>>>                  return 0;
+> >>>>>>>          case MSM_PARAM_PP_PGTABLE:
+> >>>>>>>                  *value =3D 0;
+> >>>>>>> diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/d=
+rm/msm/msm_gem_submit.c
+> >>>>>>> index 450efe59abb5..c2ecec5b11c4 100644
+> >>>>>>> --- a/drivers/gpu/drm/msm/msm_gem_submit.c
+> >>>>>>> +++ b/drivers/gpu/drm/msm/msm_gem_submit.c
+> >>>>>>> @@ -59,7 +59,7 @@ static struct msm_gem_submit *submit_create(str=
+uct drm_device *dev,
+> >>>>>>>          submit->gpu =3D gpu;
+> >>>>>>>          submit->cmd =3D (void *)&submit->bos[nr_bos];
+> >>>>>>>          submit->queue =3D queue;
+> >>>>>>> -     submit->ring =3D gpu->rb[queue->prio];
+> >>>>>>> +     submit->ring =3D gpu->rb[queue->ring_nr];
+> >>>>>>>          submit->fault_dumped =3D false;
+> >>>>>>>
+> >>>>>>>          INIT_LIST_HEAD(&submit->node);
+> >>>>>>> @@ -749,7 +749,7 @@ int msm_ioctl_gem_submit(struct drm_device *d=
+ev, void *data,
+> >>>>>>>          /* Get a unique identifier for the submission for loggin=
+g purposes */
+> >>>>>>>          submitid =3D atomic_inc_return(&ident) - 1;
+> >>>>>>>
+> >>>>>>> -     ring =3D gpu->rb[queue->prio];
+> >>>>>>> +     ring =3D gpu->rb[queue->ring_nr];
+> >>>>>>>          trace_msm_gpu_submit(pid_nr(pid), ring->id, submitid,
+> >>>>>>>                  args->nr_bos, args->nr_cmds);
+> >>>>>>>
+> >>>>>>> diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/=
+msm_gpu.h
+> >>>>>>> index b912cacaecc0..0e4b45bff2e6 100644
+> >>>>>>> --- a/drivers/gpu/drm/msm/msm_gpu.h
+> >>>>>>> +++ b/drivers/gpu/drm/msm/msm_gpu.h
+> >>>>>>> @@ -250,6 +250,59 @@ struct msm_gpu_perfcntr {
+> >>>>>>>          const char *name;
+> >>>>>>>      };
+> >>>>>>>
+> >>>>>>> +/*
+> >>>>>>> + * The number of priority levels provided by drm gpu scheduler. =
+ The
+> >>>>>>> + * DRM_SCHED_PRIORITY_KERNEL priority level is treated specially=
+ in some
+> >>>>>>> + * cases, so we don't use it (no need for kernel generated jobs)=
+.
+> >>>>>>> + */
+> >>>>>>> +#define NR_SCHED_PRIORITIES (1 + DRM_SCHED_PRIORITY_HIGH - DRM_S=
+CHED_PRIORITY_MIN)
+> >>>>>>> +
+> >>>>>>> +/**
+> >>>>>>> + * msm_gpu_convert_priority - Map userspace priority to ring # a=
+nd sched priority
+> >>>>>>> + *
+> >>>>>>> + * @gpu:        the gpu instance
+> >>>>>>> + * @prio:       the userspace priority level
+> >>>>>>> + * @ring_nr:    [out] the ringbuffer the userspace priority maps=
+ to
+> >>>>>>> + * @sched_prio: [out] the gpu scheduler priority level which the=
+ userspace
+> >>>>>>> + *              priority maps to
+> >>>>>>> + *
+> >>>>>>> + * With drm/scheduler providing it's own level of prioritization=
+, our total
+> >>>>>>> + * number of available priority levels is (nr_rings * NR_SCHED_P=
+RIORITIES).
+> >>>>>>> + * Each ring is associated with it's own scheduler instance.  Ho=
+wever, our
+> >>>>>>> + * UABI is that lower numerical values are higher priority.  So =
+mapping the
+> >>>>>>> + * single userspace priority level into ring_nr and sched_prio t=
+akes some
+> >>>>>>> + * care.  The userspace provided priority (when a submitqueue is=
+ created)
+> >>>>>>> + * is mapped to ring nr and scheduler priority as such:
+> >>>>>>> + *
+> >>>>>>> + *   ring_nr    =3D userspace_prio / NR_SCHED_PRIORITIES
+> >>>>>>> + *   sched_prio =3D NR_SCHED_PRIORITIES -
+> >>>>>>> + *                (userspace_prio % NR_SCHED_PRIORITIES) - 1
+> >>>>>>> + *
+> >>>>>>> + * This allows generations without preemption (nr_rings=3D=3D1) =
+to have some
+> >>>>>>> + * amount of prioritization, and provides more priority levels f=
+or gens
+> >>>>>>> + * that do have preemption.
+> >>>>>>
+> >>>>>> I am exploring how different drivers handle priority levels and th=
+is
+> >>>>>> caught my eye.
+> >>>>>>
+> >>>>>> Is the implication of the last paragraphs that on hw with nr_rings=
+ > 1,
+> >>>>>> ring + 1 preempts ring?
+> >>>>>
+> >>>>> Other way around, at least from the uabi standpoint.  Ie. ring[0]
+> >>>>> preempts ring[1]
+> >>>>
+> >>>> Ah yes, I figure it out from the comments but then confused myself w=
+hen
+> >>>> writing the email.
+> >>>>
+> >>>>>> If so I am wondering does the "spreading" of
+> >>>>>> user visible priorities by NR_SCHED_PRIORITIES creates a non-preem=
+ptable
+> >>>>>> levels within every "bucket" or how does that work?
+> >>>>>
+> >>>>> So, preemption is possible between any priority level before run_jo=
+b()
+> >>>>> gets called, which writes the job into the ringbuffer.  After that
+> >>>>
+> >>>> Hmm how? Before run_job() the jobs are not runnable, sitting in the
+> >>>> scheduler queues, right?
 > >>>
-> >>> btw, one fun (but unrelated) issue I'm hitting with scheduler... I'm
-> >>> trying to add an igt test to stress shrinker/eviction, similar to the
-> >>> existing tests/i915/gem_shrink.c.  But we hit an unfortunate
-> >>> combination of circumstances:
-> >>> 1. Pinning memory happens in the synchronous part of the submit ioctl,
-> >>> before enqueuing the job for the kthread to handle.
-> >>> 2. The first run_job() callback incurs a slight delay (~1.5ms) while
-> >>> resuming the GPU
-> >>> 3. Because of that delay, userspace has a chance to queue up enough
-> >>> more jobs to require locking/pinning more than the available system
-> >>> RAM..
+> >>> I mean, if prio[0]+prio[1]+prio[2] map to a single ring, submit A on
+> >>> prio[1] could be executed after submit B on prio[2] provided that
+> >>> run_job(submitA) hasn't happened yet.  So I guess it isn't "really"
+> >>> preemption because the submit hasn't started running on the GPU yet.
+> >>> But rather just scheduling according to priority.
+> >>>
+> >>>>> point, you only have "bucket" level preemption, because
+> >>>>> NR_SCHED_PRIORITIES levels of priority get mapped to a single FIFO
+> >>>>> ringbuffer.
+> >>>>
+> >>>> Right, and you have one GPU with four rings, which means you expose =
+12
+> >>>> priority levels to userspace, did I get that right?
+> >>>
+> >>> Correct
+> >>>
+> >>>> If so how do you convey in the ABI that not all there priority level=
+s
+> >>>> are equal? Like userspace can submit at prio 4 and expect prio 3 to
+> >>>> preempt, as would prio 2 preempt prio 3. While actual behaviour will=
+ not
+> >>>> match - 3 will not preempt 4.
+> >>>
+> >>> It isn't really exposed to userspace, but perhaps it should be..
+> >>> Userspace just knows that, to the extent possible, the kernel will tr=
+y
+> >>> to execute prio 3 before prio 4.
+> >>>
+> >>>> Also, does your userspace stack (EGL/Vulkan) use the priorities? I h=
+ad a
+> >>>> quick peek in Mesa but did not spot it - although I am not really at
+> >>>> home there yet so maybe I missed it.
+> >>>
+> >>> Yes, there is an EGL extension:
+> >>>
+> >>> https://www.khronos.org/registry/EGL/extensions/IMG/EGL_IMG_context_p=
+riority.txt
+> >>>
+> >>> It is pretty limited, it only exposes three priority levels.
 > >>
-> >> Is that one or multiple threads submitting jobs?
+> >> Right, is that wired up on msm? And if it is, or could be, how do/woul=
+d
+> >> you map the three priority levels for GPUs which expose 3 priority
+> >> levels versus the one which exposes 12?
 > >
-> > In this case multiple.. but I think it could also happen with a single
-> > thread (provided it didn't stall on a fence, directly or indirectly,
-> > from an earlier submit), because of how resume and actual job
-> > submission happens from scheduler kthread.
-> >
-> >>> I'm not sure if we want a way to prevent userspace from getting *too*
-> >>> far ahead of the kthread.  Or maybe at some point the shrinker should
-> >>> sleep on non-idle buffers?
-> >>
-> >> On the direct reclaim path when invoked from the submit ioctl? In i915
-> >> we only shrink idle objects on direct reclaim and leave active ones for
-> >> the swapper. It depends on how your locking looks like whether you could
-> >> do them, whether there would be coupling of locks and fs-reclaim context.
-> >
-> > I think the locking is more or less ok, although lockdep is unhappy
-> > about one thing[1] which is I think a false warning (ie. not
-> > recognizing that we'd already successfully acquired the obj lock via
-> > trylock).  We can already reclaim idle bo's in this path.  But the
-> > problem with a bunch of submits queued up in the scheduler, is that
-> > they are already considered pinned and active.  So at some point we
-> > need to sleep (hopefully interruptabley) until they are no longer
-> > active, ie. to throttle userspace trying to shove in more submits
-> > until some of the enqueued ones have a chance to run and complete.
+> > We don't yet, but probably should, expose a cap to indicate to
+> > userspace the # of hw rings vs # of levels of sched priority
 >
-> Odd I did not think trylock could trigger that. Looking at your code it
-> indeed seems two trylocks. I am pretty sure we use the same trylock
-> trick to avoid it. I am confused..
+> What bothers me is the question of whether this setup provides a
+> consistent benefit. Why would userspace use other than "real" (hardware)
+> priority levels on chips where they are available?
 
-The sequence is,
+yeah, perhaps we could decide that userspace doesn't really need more
+than 3 prio levels, and that on generations which have better
+preemption than what drm/sched provides, *only* expose those priority
+levels.  I've avoided that so far because it seems wrong for the
+kernel to assume that a single EGL extension is all there is when it
+comes to userspace context priority.. the other option is to expose
+more information to userspace and let it decide.
 
-1. kref_get_unless_zero()
-2. trylock, which succeeds
-3. attempt to evict or purge (which may or may not have succeeded)
-4. unlock
+Honestly, the combination of the fact that a6xx is the first gen
+shipping in consumer products with upstream driver (using drm/sched),
+and not having had time yet to implement hw preemption for a6xx yet,
+means not a whole lot of thought has gone into the current arrangement
+;-)
 
- ... meanwhile this has raced with submit (aka execbuf) finishing and
-retiring and dropping *other* remaining reference to bo...
-
-5. drm_gem_object_put() which triggers drm_gem_object_free()
-6. in our free path we acquire the obj lock again and then drop it.
-Which arguably is unnecessary and only serves to satisfy some
-GEM_WARN_ON(!msm_gem_is_locked(obj)) in code paths that are also used
-elsewhere
-
-lockdep doesn't realize the previously successful trylock+unlock
-sequence so it assumes that the code that triggered recursion into
-shrinker could be holding the objects lock.
-
+> For instance if you exposed 4 instead of 12 on a respective platform,
+> would that be better or worse? Yes you could only map three directly
+> drm/sched and one would have to be "fake". Like:
 >
-> Otherwise if you can afford to sleep you can of course throttle
-> organically via direct reclaim. Unless I am forgetting some key gotcha -
-> it's been a while I've been active in this area.
+> hw prio 0 -> drm/sched 2
+> hw prio 1 -> drm/sched 1
+> hw prio 2 -> drm/sched 0
+> hw prio 3 -> drm/sched 0
+>
+> Not saying that's nice either. Perhaps the answer is that drm/sched
+> needs more flexibility for instance if it wants to be widely used.
 
-So, one thing that is awkward about sleeping in this path is that
-there is no way to propagate back -EINTR, so we end up doing an
-uninterruptible sleep in something that could be called indirectly
-from userspace syscall.. i915 seems to deal with this by limiting it
-to shrinker being called from kswapd.  I think in the shrinker we want
-to know whether it is ok to sleep (ie. not syscall trigggered
-codepath, and whether we are under enough memory pressure to justify
-sleeping).  For the syscall path, I'm playing with something that lets
-me pass __GFP_RETRY_MAYFAIL | __GFP_NOWARN to
-shmem_read_mapping_page_gfp(), and then stall after the shrinker has
-failed, somewhere where we can make it interruptable.  Ofc, that
-doesn't help with all the other random memory allocations which can
-fail, so not sure if it will turn out to be a good approach or not.
-But I guess pinning the GEM bo's is the single biggest potential
-consumer of pages in the submit path, so maybe it will be better than
-nothing.
+I'm not sure what I'd add to drm/sched.. once it calls run_job()
+things are out of its hands, so really all it can do is re-order
+things prior to calling run_job() according to it's internal priority
+levels.  And that is still better than no re-ordering so it adds some
+value, even if not complete.
+
+> For instance in i915 uapi we have priority as int -1023 - +1023. And
+> matching implementation on some platforms, until the new ones which are
+> GuC firmware based, where we need to squash that to low/normal/high.
+
+hmm, that is a more awkward problem, since it sounds like you are
+mapping many more priority levels into a much smaller set of hw
+priority levels.  Do you have separate drm_sched instances per hw
+priority level?  If so you can do the same thing of using drm_sched
+priority levels to multiply # of hw priority levels, but ofc that is
+not perfect (and won't get you to 2k).
+
+But is there anything that actually *uses* that many levels of priority?
 
 BR,
 -R
 
+> So thinking was drm/sched happens to align with GuC. But then we have
+> your hw where it doesn't seem to.
 >
 > Regards,
 >
 > Tvrtko
 >
+> >> Is it doable properly without leaking the fact drm/sched internal
+> >> implementation detail of three priority levels? Or if you went the oth=
+er
+> >> way and only exposed up to max 3 levels, then you lose one priority
+> >> level your hardware suppose which is also not good.
+> >>
+> >> It is all quite interesting because your hardware is completely
+> >> different from ours in this respect. In our case i915 decides when to
+> >> preempt, hardware has no concept of priority (*).
+> >
+> > It is really pretty much all in firmware.. a6xx is the first gen that
+> > could do actual (non-cooperative) preemption (but that isn't
+> > implemented yet in upstream driver)
 > >
 > > BR,
 > > -R
 > >
-> > [1] https://gitlab.freedesktop.org/drm/msm/-/issues/14
-> >
+> >> Regards,
+> >>
+> >> Tvrtko
+> >>
+> >> (*) Almost no concept of priority in hardware - we do have it on new
+> >> GPUs and only on a subset of engine classes where render and compute
+> >> share the EUs. But I think it's way different from Ardenos.
