@@ -2,206 +2,229 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7646A536671
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 May 2022 19:13:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7FCA6536685
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 May 2022 19:23:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347646AbiE0RNO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 May 2022 13:13:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54518 "EHLO
+        id S1349587AbiE0RXi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 May 2022 13:23:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60146 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352871AbiE0RNN (ORCPT
+        with ESMTP id S237226AbiE0RXh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 May 2022 13:13:13 -0400
-Received: from mail-qv1-xf32.google.com (mail-qv1-xf32.google.com [IPv6:2607:f8b0:4864:20::f32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94A5314085B
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 May 2022 10:13:09 -0700 (PDT)
-Received: by mail-qv1-xf32.google.com with SMTP id j3so4549931qvn.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 May 2022 10:13:09 -0700 (PDT)
+        Fri, 27 May 2022 13:23:37 -0400
+Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85B9F135680;
+        Fri, 27 May 2022 10:23:36 -0700 (PDT)
+Received: by mail-pj1-x1032.google.com with SMTP id l20-20020a17090a409400b001dd2a9d555bso4942164pjg.0;
+        Fri, 27 May 2022 10:23:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=He5Z880deQ+rHC3rXPdLq3UZsPKkMx+IDLVC2xRb+9A=;
-        b=H6BoZqF8zOP1lGYOICiczwty00BoXs6H9LvhkAQXnymNrIqvHV4oIBeBfom5GiX9Rv
-         3RSN+TWL/l4khVIft7Q08umuFCAjNlRpK4DbEDUkAuX3UOaz/ApduURIZ4m19qrJHx8k
-         qeyQqUQyzPx+CDIrRJvJvJGSOPxbmbr2TyiQUpRMjN6J78024w/Pq6sLYDR4fJfMCn7m
-         cqvGTRqwfK3bFbDVDiczLUNyflSZHpDMpyL4BISqqk7x75SmIAV8XXkQIT4nXUnAsYC3
-         EaPiWdR3o3pSVm61Uwa37UalFONIvf6jes3Pkgu4vgEfPlcpeVrT3BE0m3tRa92jBSC9
-         qFCA==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=YY3IoyZFp/BwhNMVSMZRFp4gxgsaRvLLtyLrygtSwvg=;
+        b=LMEqIzPhVuILqTqSu/V53/iwh7+emAhi6EP4B9inXZnH/3WjlMrUgFDTNerBCFGv9e
+         o9nTy/6Y0Jl2qpbuieyBiP5y/Cb5WYdvIIsiIBbECuLoh+U8UUrNY2fCy2f6Y/+8ER1b
+         fw0X6xnUEFjkLbhkAS0CIe5OCHQmhtTOgkJG8U9whDOB83yqKfVmIY/gGioZRz8wzN0l
+         FlnWZsoYjzLAdxfaKQhQNOK43H5Fi5pYllg937TZCcHvDjsxdiELWSB2THbVv2frcz6p
+         ce3kWVz4HlsRZXfk3lxKU0ix4rlFZcRy+yKefQHHmChxSu0VJgMH7/zHM9gk75crBFm1
+         Vt3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=He5Z880deQ+rHC3rXPdLq3UZsPKkMx+IDLVC2xRb+9A=;
-        b=bbVPeBLDH244CU18Wqb4YG6TTo5q0P2a5ioW6kB5k/rybtWdysPFhvPtEXqq39E8gR
-         B47MIRtzwMIuIGhjD/s0sZYPTE3MGHB55fm+/rvCuYHWxEexwQ9BBtwyCZeVMvwYu7MV
-         pFOeohSipYML3Zqow5YIH5muDhQp74vOb3Q8wJVlE+1vNNOBiq89UoJT8kW8zqxF1fqN
-         umKP2r6uvc46WyvQ9ReIVJk/VTRVLWmClZ7KzJQh0s0tgv+DUStxH1fnqqUkl6z+9rfU
-         dGiUuwtbWnQeycggnK6d343SrnVd6v/mWxzCh7bn4xMXixZPPP27iRSwgZa4wHueKd7t
-         aJzg==
-X-Gm-Message-State: AOAM531mbVm5xrevmUp+T4AcAoOPYY36eoXF50Wda3DzR3DVGHvvcC7O
-        ri0gYyAFJ2oExaEWjS+CObbMxcFcGBmcDuGCJu6QFA==
-X-Google-Smtp-Source: ABdhPJyLajCwh6cHWo6kFY1LM0+Ej77aFJuT7mI9x+wbmFIz6e2Ibbsd2IkwMQLCuiaNBnR1eO27NL0RthmorHIrX9U=
-X-Received: by 2002:ad4:5dc6:0:b0:461:e12e:932f with SMTP id
- m6-20020ad45dc6000000b00461e12e932fmr35835497qvh.115.1653671588577; Fri, 27
- May 2022 10:13:08 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=YY3IoyZFp/BwhNMVSMZRFp4gxgsaRvLLtyLrygtSwvg=;
+        b=nHAo0pRSu8hUPIm/HBdTpaMFunLo0NfE8R8jParkWDomwNRvPF3jiRyjArIKuQtDty
+         dYsdCsNQqBK/ViD7U7nQzmMeHjj20wZjQciCAmUkzt3q+ZFqK97RocnusZmctug8UxR0
+         qMTaeoJHTNZFscKFK/dC7/wLoIK0ZuyU7WWR9AICkC4BkapX43Xmp2agNSRYI5rwRHDp
+         PcLn99RKGq/j4ihjtwqh8a8+asP9wKrFnga91OpPI/xz50rdDUz3Wm7YW0oI2tXRWtzf
+         7CVCv6kjjM2H5u7IITfj2Mv+bC/QBIKUtbDIVa/DFGZDV47pPlC5MjhhRQiSUUmcT5Tr
+         kWAw==
+X-Gm-Message-State: AOAM531kZsy7sFpnGkq6c0HlFvw4ji4zjr/jPuBZPHtb/436R3tJMGuK
+        nSmSicvo5085OA6hTPbZQzg=
+X-Google-Smtp-Source: ABdhPJznCAfmZY0ixAj2Yu27xibqHyPKUZxaLE82O0xTZYrZ6uR+EoCqezINMy7TQGOtvSaEluItnw==
+X-Received: by 2002:a17:90a:c90e:b0:1df:53ff:e149 with SMTP id v14-20020a17090ac90e00b001df53ffe149mr9303665pjt.210.1653672215967;
+        Fri, 27 May 2022 10:23:35 -0700 (PDT)
+Received: from localhost ([2a00:79e1:abd:4a00:2703:3c72:eb1a:cffd])
+        by smtp.gmail.com with ESMTPSA id be3-20020a170902aa0300b001621cdf7172sm4076520plb.58.2022.05.27.10.23.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 27 May 2022 10:23:34 -0700 (PDT)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Rob Clark <robdclark@chromium.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH] drm/msm/gem: Separate object and vma unpin
+Date:   Fri, 27 May 2022 10:23:40 -0700
+Message-Id: <20220527172341.2151005-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.35.3
 MIME-Version: 1.0
-References: <1653667696-25560-1-git-send-email-quic_khsieh@quicinc.com>
-In-Reply-To: <1653667696-25560-1-git-send-email-quic_khsieh@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Fri, 27 May 2022 20:12:57 +0300
-Message-ID: <CAA8EJpqpc-GZYUp53zC_tbq+i6r77fZXbBrBiKLqakybH8k7jw@mail.gmail.com>
-Subject: Re: [PATCH v3] drm/msm/dp: force link training for display resolution change
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>
-Cc:     robdclark@gmail.com, sean@poorly.run, swboyd@chromium.org,
-        dianders@chromium.org, vkoul@kernel.org, daniel@ffwll.ch,
-        airlied@linux.ie, agross@kernel.org, bjorn.andersson@linaro.org,
-        quic_abhinavk@quicinc.com, quic_aravindh@quicinc.com,
-        quic_sbillaka@quicinc.com, freedreno@lists.freedesktop.org,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 27 May 2022 at 19:08, Kuogee Hsieh <quic_khsieh@quicinc.com> wrote:
->
-> During display resolution changes display have to be disabled first
-> followed by display enabling with new resolution. At current
-> implementation, display enable function manually kicks up
-> irq_hpd_handle which will read panel link status and start link
-> training if link status is not in sync state. However, there is rare
-> case that panel links status stay in synch which cause link training
-> be skipped. Hence display resolution change failed.
+From: Rob Clark <robdclark@chromium.org>
 
-This doesn't describe why resolution change fails if link training is skipped.
+Previously the BO_PINNED state in the submit was tracking two related
+but different things: (1) that the buffer object was pinned, and (2)
+that the vma (mapping within a set of pagetables) was pinned.  But with
+fenced vma unpin (needed so that userspace couldn't race with retire
+path for releasing a vma) these two were decoupled.  The fact that the
+BO_PINNED flag was already cleared meant that we leaked the bo pin count
+which should have been dropped when the submit was retired.
 
-> This patch force
-> main link always be retrained during display enable procedure to
-> prevent rare failed case from happening. Also this implementation
-> are more efficient than manual kicking off irq_hpd_handle function.
->
-> Changes in v2:
-> -- set force_link_train flag on DP only (is_edp == false)
->
-> Changes in v3:
-> -- revise commit  text
-> -- add Fixes tag
->
-> Fixes: 62671d2ef24b ("drm/msm/dp: fixes wrong connection state caused by failure of link train")
-> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-> ---
->  drivers/gpu/drm/msm/dp/dp_ctrl.c    |  6 +++---
->  drivers/gpu/drm/msm/dp/dp_ctrl.h    |  2 +-
->  drivers/gpu/drm/msm/dp/dp_display.c | 15 ++++++++-------
->  3 files changed, 12 insertions(+), 11 deletions(-)
->
-> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> index af7a80c..bea93eb 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> @@ -1551,7 +1551,7 @@ static int dp_ctrl_process_phy_test_request(struct dp_ctrl_private *ctrl)
->
->         ret = dp_ctrl_on_link(&ctrl->dp_ctrl);
->         if (!ret)
-> -               ret = dp_ctrl_on_stream(&ctrl->dp_ctrl);
-> +               ret = dp_ctrl_on_stream(&ctrl->dp_ctrl, false);
->         else
->                 DRM_ERROR("failed to enable DP link controller\n");
->
-> @@ -1807,7 +1807,7 @@ static int dp_ctrl_link_retrain(struct dp_ctrl_private *ctrl)
->         return dp_ctrl_setup_main_link(ctrl, &training_step);
->  }
->
-> -int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl)
-> +int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl, bool force_link_train)
->  {
->         int ret = 0;
->         bool mainlink_ready = false;
-> @@ -1848,7 +1848,7 @@ int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl)
->                 return 0;
->         }
->
-> -       if (!dp_ctrl_channel_eq_ok(ctrl))
-> +       if (force_link_train || !dp_ctrl_channel_eq_ok(ctrl))
->                 dp_ctrl_link_retrain(ctrl);
->
->         /* stop txing train pattern to end link training */
-> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.h b/drivers/gpu/drm/msm/dp/dp_ctrl.h
-> index 0745fde..b563e2e 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.h
-> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.h
-> @@ -21,7 +21,7 @@ struct dp_ctrl {
->  };
->
->  int dp_ctrl_on_link(struct dp_ctrl *dp_ctrl);
-> -int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl);
-> +int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl, bool force_link_train);
->  int dp_ctrl_off_link_stream(struct dp_ctrl *dp_ctrl);
->  int dp_ctrl_off_link(struct dp_ctrl *dp_ctrl);
->  int dp_ctrl_off(struct dp_ctrl *dp_ctrl);
-> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-> index c388323..370348d 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_display.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-> @@ -872,7 +872,7 @@ static int dp_display_enable(struct dp_display_private *dp, u32 data)
->                 return 0;
->         }
->
-> -       rc = dp_ctrl_on_stream(dp->ctrl);
-> +       rc = dp_ctrl_on_stream(dp->ctrl, data);
->         if (!rc)
->                 dp_display->power_on = true;
->
-> @@ -1654,6 +1654,7 @@ void dp_bridge_enable(struct drm_bridge *drm_bridge)
->         int rc = 0;
->         struct dp_display_private *dp_display;
->         u32 state;
-> +       bool force_link_train = false;
->
->         dp_display = container_of(dp, struct dp_display_private, dp_display);
->         if (!dp_display->dp_mode.drm_mode.clock) {
-> @@ -1688,10 +1689,14 @@ void dp_bridge_enable(struct drm_bridge *drm_bridge)
->
->         state =  dp_display->hpd_state;
->
-> -       if (state == ST_DISPLAY_OFF)
-> +       if (state == ST_DISPLAY_OFF) {
->                 dp_display_host_phy_init(dp_display);
->
-> -       dp_display_enable(dp_display, 0);
-> +               if (!dp->is_edp)
-> +                       force_link_train = true;
-> +       }
-> +
-> +       dp_display_enable(dp_display, force_link_train);
->
->         rc = dp_display_post_enable(dp);
->         if (rc) {
-> @@ -1700,10 +1705,6 @@ void dp_bridge_enable(struct drm_bridge *drm_bridge)
->                 dp_display_unprepare(dp);
->         }
->
-> -       /* manual kick off plug event to train link */
-> -       if (state == ST_DISPLAY_OFF)
-> -               dp_add_event(dp_display, EV_IRQ_HPD_INT, 0, 0);
-> -
->         /* completed connection */
->         dp_display->hpd_state = ST_CONNECTED;
->
-> --
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
->
+So split this state into BO_OBJ_PINNED and BO_VMA_PINNED, so they can be
+dropped independently.
 
+Fixes: 95d1deb02a9c ("drm/msm/gem: Add fenced vma unpin")
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+---
+ drivers/gpu/drm/msm/msm_gem.c        |  7 +++----
+ drivers/gpu/drm/msm/msm_gem.h        | 11 ++++++-----
+ drivers/gpu/drm/msm/msm_gem_submit.c | 18 ++++++++++++------
+ drivers/gpu/drm/msm/msm_ringbuffer.c |  2 +-
+ 4 files changed, 22 insertions(+), 16 deletions(-)
 
+diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
+index 52fe6428a341..916e7f418fe1 100644
+--- a/drivers/gpu/drm/msm/msm_gem.c
++++ b/drivers/gpu/drm/msm/msm_gem.c
+@@ -439,14 +439,12 @@ int msm_gem_pin_vma_locked(struct drm_gem_object *obj, struct msm_gem_vma *vma)
+ 	return ret;
+ }
+ 
+-void msm_gem_unpin_vma_locked(struct drm_gem_object *obj, struct msm_gem_vma *vma)
++void msm_gem_unpin_locked(struct drm_gem_object *obj)
+ {
+ 	struct msm_gem_object *msm_obj = to_msm_bo(obj);
+ 
+ 	GEM_WARN_ON(!msm_gem_is_locked(obj));
+ 
+-	msm_gem_unpin_vma(vma);
+-
+ 	msm_obj->pin_count--;
+ 	GEM_WARN_ON(msm_obj->pin_count < 0);
+ 
+@@ -586,7 +584,8 @@ void msm_gem_unpin_iova(struct drm_gem_object *obj,
+ 	msm_gem_lock(obj);
+ 	vma = lookup_vma(obj, aspace);
+ 	if (!GEM_WARN_ON(!vma)) {
+-		msm_gem_unpin_vma_locked(obj, vma);
++		msm_gem_unpin_vma(vma);
++		msm_gem_unpin_locked(obj);
+ 	}
+ 	msm_gem_unlock(obj);
+ }
+diff --git a/drivers/gpu/drm/msm/msm_gem.h b/drivers/gpu/drm/msm/msm_gem.h
+index c75d3b879a53..6b7d5bb3b575 100644
+--- a/drivers/gpu/drm/msm/msm_gem.h
++++ b/drivers/gpu/drm/msm/msm_gem.h
+@@ -145,7 +145,7 @@ struct msm_gem_object {
+ 
+ uint64_t msm_gem_mmap_offset(struct drm_gem_object *obj);
+ int msm_gem_pin_vma_locked(struct drm_gem_object *obj, struct msm_gem_vma *vma);
+-void msm_gem_unpin_vma_locked(struct drm_gem_object *obj, struct msm_gem_vma *vma);
++void msm_gem_unpin_locked(struct drm_gem_object *obj);
+ struct msm_gem_vma *msm_gem_get_vma_locked(struct drm_gem_object *obj,
+ 					   struct msm_gem_address_space *aspace);
+ int msm_gem_get_iova(struct drm_gem_object *obj,
+@@ -377,10 +377,11 @@ struct msm_gem_submit {
+ 	} *cmd;  /* array of size nr_cmds */
+ 	struct {
+ /* make sure these don't conflict w/ MSM_SUBMIT_BO_x */
+-#define BO_VALID    0x8000   /* is current addr in cmdstream correct/valid? */
+-#define BO_LOCKED   0x4000   /* obj lock is held */
+-#define BO_ACTIVE   0x2000   /* active refcnt is held */
+-#define BO_PINNED   0x1000   /* obj is pinned and on active list */
++#define BO_VALID	0x8000	/* is current addr in cmdstream correct/valid? */
++#define BO_LOCKED	0x4000	/* obj lock is held */
++#define BO_ACTIVE	0x2000	/* active refcnt is held */
++#define BO_OBJ_PINNED	0x1000	/* obj (pages) is pinned and on active list */
++#define BO_VMA_PINNED	0x0800	/* vma (virtual address) is pinned */
+ 		uint32_t flags;
+ 		union {
+ 			struct msm_gem_object *obj;
+diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
+index 9cd8c8708990..286124008445 100644
+--- a/drivers/gpu/drm/msm/msm_gem_submit.c
++++ b/drivers/gpu/drm/msm/msm_gem_submit.c
+@@ -232,8 +232,11 @@ static void submit_cleanup_bo(struct msm_gem_submit *submit, int i,
+ 	 */
+ 	submit->bos[i].flags &= ~cleanup_flags;
+ 
+-	if (flags & BO_PINNED)
+-		msm_gem_unpin_vma_locked(obj, submit->bos[i].vma);
++	if (flags & BO_VMA_PINNED)
++		msm_gem_unpin_vma(submit->bos[i].vma);
++
++	if (flags & BO_OBJ_PINNED)
++		msm_gem_unpin_locked(obj);
+ 
+ 	if (flags & BO_ACTIVE)
+ 		msm_gem_active_put(obj);
+@@ -244,7 +247,9 @@ static void submit_cleanup_bo(struct msm_gem_submit *submit, int i,
+ 
+ static void submit_unlock_unpin_bo(struct msm_gem_submit *submit, int i)
+ {
+-	submit_cleanup_bo(submit, i, BO_PINNED | BO_ACTIVE | BO_LOCKED);
++	unsigned cleanup_flags = BO_VMA_PINNED | BO_OBJ_PINNED |
++				 BO_ACTIVE | BO_LOCKED;
++	submit_cleanup_bo(submit, i, cleanup_flags);
+ 
+ 	if (!(submit->bos[i].flags & BO_VALID))
+ 		submit->bos[i].iova = 0;
+@@ -377,7 +382,7 @@ static int submit_pin_objects(struct msm_gem_submit *submit)
+ 		if (ret)
+ 			break;
+ 
+-		submit->bos[i].flags |= BO_PINNED;
++		submit->bos[i].flags |= BO_OBJ_PINNED | BO_VMA_PINNED;
+ 		submit->bos[i].vma = vma;
+ 
+ 		if (vma->iova == submit->bos[i].iova) {
+@@ -511,7 +516,7 @@ static void submit_cleanup(struct msm_gem_submit *submit, bool error)
+ 	unsigned i;
+ 
+ 	if (error)
+-		cleanup_flags |= BO_PINNED | BO_ACTIVE;
++		cleanup_flags |= BO_VMA_PINNED | BO_OBJ_PINNED | BO_ACTIVE;
+ 
+ 	for (i = 0; i < submit->nr_bos; i++) {
+ 		struct msm_gem_object *msm_obj = submit->bos[i].obj;
+@@ -529,7 +534,8 @@ void msm_submit_retire(struct msm_gem_submit *submit)
+ 		struct drm_gem_object *obj = &submit->bos[i].obj->base;
+ 
+ 		msm_gem_lock(obj);
+-		submit_cleanup_bo(submit, i, BO_PINNED | BO_ACTIVE);
++		/* Note, VMA already fence-unpinned before submit: */
++		submit_cleanup_bo(submit, i, BO_OBJ_PINNED | BO_ACTIVE);
+ 		msm_gem_unlock(obj);
+ 		drm_gem_object_put(obj);
+ 	}
+diff --git a/drivers/gpu/drm/msm/msm_ringbuffer.c b/drivers/gpu/drm/msm/msm_ringbuffer.c
+index 43066320ff8c..56eecb4a72dc 100644
+--- a/drivers/gpu/drm/msm/msm_ringbuffer.c
++++ b/drivers/gpu/drm/msm/msm_ringbuffer.c
+@@ -25,7 +25,7 @@ static struct dma_fence *msm_job_run(struct drm_sched_job *job)
+ 
+ 		msm_gem_lock(obj);
+ 		msm_gem_unpin_vma_fenced(submit->bos[i].vma, fctx);
+-		submit->bos[i].flags &= ~BO_PINNED;
++		submit->bos[i].flags &= ~BO_VMA_PINNED;
+ 		msm_gem_unlock(obj);
+ 	}
+ 
 -- 
-With best wishes
-Dmitry
+2.35.3
+
