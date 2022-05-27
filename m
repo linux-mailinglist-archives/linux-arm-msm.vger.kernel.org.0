@@ -2,38 +2,38 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 08A79536731
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 May 2022 20:54:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 65FD053672F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 May 2022 20:54:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242227AbiE0Syi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 May 2022 14:54:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46988 "EHLO
+        id S1354437AbiE0Syj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 May 2022 14:54:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47012 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1354437AbiE0Syg (ORCPT
+        with ESMTP id S1354479AbiE0Syh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 May 2022 14:54:36 -0400
+        Fri, 27 May 2022 14:54:37 -0400
 Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E93364CD49
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 May 2022 11:54:33 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B0B34CD4A
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 May 2022 11:54:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1653677673; x=1685213673;
+  t=1653677676; x=1685213676;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=GdXSuoeLRNHrQDIxDPsBr+RJlcnfDvRRUC4dxm/jdlc=;
-  b=WRAMn4GHKvbNDyXuTyrUSt49fx+L9/e/dJ3P6DLPE7MfymlC2mHChQbj
-   xm/U0TeQpGgCTB9iigeZ8kmnvI0FmFfNDeEu3rbnKi1h6ri2S5t4WBKsy
-   zc8PvRW0uVP6ksEj0B3ST6yRLtTqmuAfPsOMQ09af+ma+1UBAFtAn1NBt
-   A=;
-Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 27 May 2022 11:54:33 -0700
+  bh=80Y53CZQilhomOXFE3myPxHni9r7GhO8Y5DutJUF3R4=;
+  b=u8LIPh0F6H6OHSOC5CWJHPKhvNGy6QtyiR/5/0DRCYPhqnZsqP8w3OxL
+   k4D5pK8chW3zo5H+00hUHnm7FApH8JFQVfsWAc0vxWfjDFj8LHcZWXTvd
+   ioIN8EwRmfkPxg36/eHjVDHq0okPCuSY4Q24s2Kctifph/aDmuVZZJtrF
+   0=;
+Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 27 May 2022 11:54:35 -0700
 X-QCInternal: smtphost
 Received: from nasanex01b.na.qualcomm.com ([10.46.141.250])
-  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 May 2022 11:54:33 -0700
+  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 May 2022 11:54:35 -0700
 Received: from JESSZHAN.qualcomm.com (10.80.80.8) by
  nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Fri, 27 May 2022 11:54:33 -0700
+ 15.2.986.22; Fri, 27 May 2022 11:54:34 -0700
 From:   Jessica Zhang <quic_jesszhan@quicinc.com>
 To:     <freedreno@lists.freedesktop.org>
 CC:     Jessica Zhang <quic_jesszhan@quicinc.com>,
@@ -41,9 +41,9 @@ CC:     Jessica Zhang <quic_jesszhan@quicinc.com>,
         <robdclark@gmail.com>, <seanpaul@chromium.org>,
         <swboyd@chromium.org>, <quic_aravindh@quicinc.com>,
         <dmitry.baryshkov@linaro.org>, <quic_abhinavk@quicinc.com>
-Subject: [PATCH 1/3] drm/msm/dpu: Move LM CRC code into separate method
-Date:   Fri, 27 May 2022 11:54:05 -0700
-Message-ID: <20220527185407.162-2-quic_jesszhan@quicinc.com>
+Subject: [PATCH 2/3] drm/msm/dpu: Add MISR register support for interface
+Date:   Fri, 27 May 2022 11:54:06 -0700
+Message-ID: <20220527185407.162-3-quic_jesszhan@quicinc.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20220527185407.162-1-quic_jesszhan@quicinc.com>
 References: <20220527185407.162-1-quic_jesszhan@quicinc.com>
@@ -63,146 +63,130 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Move layer mixer-specific section of dpu_crtc_get_crc() into a separate
-helper method. This way, we can make it easier to get CRCs from other HW
-blocks by adding other get_crc helper methods.
+Add support for setting MISR registers within the interface
 
 Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c | 72 +++++++++++++++---------
- 1 file changed, 44 insertions(+), 28 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c | 55 ++++++++++++++++++++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h |  8 ++-
+ 2 files changed, 61 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-index b56f777dbd0e..ae09466663cf 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-@@ -1,5 +1,6 @@
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
+index 3f4d2c6e1b45..29aaeff9eacd 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
+@@ -1,5 +1,7 @@
  // SPDX-License-Identifier: GPL-2.0-only
- /*
+-/* Copyright (c) 2015-2018, The Linux Foundation. All rights reserved.
++/*
 + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
-  * Copyright (c) 2014-2021 The Linux Foundation. All rights reserved.
-  * Copyright (C) 2013 Red Hat
-  * Author: Rob Clark <robdclark@gmail.com>
-@@ -99,17 +100,32 @@ static int dpu_crtc_verify_crc_source(struct drm_crtc *crtc,
- 	return 0;
++ * Copyright (c) 2015-2018, The Linux Foundation. All rights reserved.
+  */
+ 
+ #include "dpu_hwio.h"
+@@ -67,6 +69,14 @@
+ #define INTF_CFG2_DATABUS_WIDEN	BIT(0)
+ #define INTF_CFG2_DATA_HCTL_EN	BIT(4)
+ 
++#define INTF_MISR_CTRL			0x180
++#define INTF_MISR_SIGNATURE		0x184
++#define INTF_MISR_FRAME_COUNT_MASK	0xFF
++#define INTF_MISR_CTRL_ENABLE		BIT(8)
++#define INTF_MISR_CTRL_STATUS		BIT(9)
++#define INTF_MISR_CTRL_STATUS_CLEAR	BIT(10)
++#define INTF_MISR_CTRL_FREE_RUN_MASK	BIT(31)
++
+ static const struct dpu_intf_cfg *_intf_offset(enum dpu_intf intf,
+ 		const struct dpu_mdss_cfg *m,
+ 		void __iomem *addr,
+@@ -319,6 +329,47 @@ static u32 dpu_hw_intf_get_line_count(struct dpu_hw_intf *intf)
+ 	return DPU_REG_READ(c, INTF_LINE_COUNT);
  }
  
-+static void dpu_crtc_setup_lm_misr(struct dpu_crtc_state *crtc_state)
++static void dpu_hw_intf_setup_misr(struct dpu_hw_intf *intf, bool enable, u32 frame_count)
 +{
-+	struct dpu_crtc_mixer *m;
-+	int i;
++	struct dpu_hw_blk_reg_map *c = &intf->hw;
++	u32 config = 0;
 +
-+	for (i = 0; i < crtc_state->num_mixers; ++i) {
-+		m = &crtc_state->mixers[i];
++	DPU_REG_WRITE(c, INTF_MISR_CTRL, INTF_MISR_CTRL_STATUS_CLEAR);
 +
-+		if (!m->hw_lm || !m->hw_lm->ops.setup_misr)
-+			continue;
++	/* Clear old MISR value (in case it's read before a new value is calculated)*/
++	wmb();
 +
-+		/* Calculate MISR over 1 frame */
-+		m->hw_lm->ops.setup_misr(m->hw_lm, true, 1);
++	if (enable) {
++		config = (frame_count & INTF_MISR_FRAME_COUNT_MASK) |
++				INTF_MISR_CTRL_ENABLE | INTF_MISR_CTRL_FREE_RUN_MASK;
++
++		DPU_REG_WRITE(c, INTF_MISR_CTRL, config);
++	} else {
++		DPU_REG_WRITE(c, INTF_MISR_CTRL, 0);
 +	}
 +}
 +
- static int dpu_crtc_set_crc_source(struct drm_crtc *crtc, const char *src_name)
- {
- 	enum dpu_crtc_crc_source source = dpu_crtc_parse_crc_source(src_name);
- 	enum dpu_crtc_crc_source current_source;
- 	struct dpu_crtc_state *crtc_state;
- 	struct drm_device *drm_dev = crtc->dev;
--	struct dpu_crtc_mixer *m;
- 
- 	bool was_enabled;
- 	bool enable = false;
--	int i, ret = 0;
-+	int ret = 0;
- 
- 	if (source < 0) {
- 		DRM_DEBUG_DRIVER("Invalid CRC source %s for CRTC%d\n", src_name, crtc->index);
-@@ -146,16 +162,8 @@ static int dpu_crtc_set_crc_source(struct drm_crtc *crtc, const char *src_name)
- 
- 	crtc_state->crc_frame_skip_count = 0;
- 
--	for (i = 0; i < crtc_state->num_mixers; ++i) {
--		m = &crtc_state->mixers[i];
--
--		if (!m->hw_lm || !m->hw_lm->ops.setup_misr)
--			continue;
--
--		/* Calculate MISR over 1 frame */
--		m->hw_lm->ops.setup_misr(m->hw_lm, true, 1);
--	}
--
-+	if (source == DPU_CRTC_CRC_SOURCE_LAYER_MIXER)
-+		dpu_crtc_setup_lm_misr(crtc_state);
- 
- cleanup:
- 	drm_modeset_unlock(&crtc->mutex);
-@@ -174,34 +182,24 @@ static u32 dpu_crtc_get_vblank_counter(struct drm_crtc *crtc)
- 	return dpu_encoder_get_vsync_count(encoder);
- }
- 
--
--static int dpu_crtc_get_crc(struct drm_crtc *crtc)
-+static int dpu_crtc_get_lm_crc(struct drm_crtc *crtc, struct dpu_crtc_state *crtc_state)
- {
--	struct dpu_crtc_state *crtc_state;
--	struct dpu_crtc_mixer *m;
-+	struct dpu_crtc_mixer *lm;
- 	u32 crcs[CRTC_DUAL_MIXERS];
- 
--	int i = 0;
- 	int rc = 0;
--
--	crtc_state = to_dpu_crtc_state(crtc->state);
-+	int i;
- 
- 	BUILD_BUG_ON(ARRAY_SIZE(crcs) != ARRAY_SIZE(crtc_state->mixers));
- 
--	/* Skip first 2 frames in case of "uncooked" CRCs */
--	if (crtc_state->crc_frame_skip_count < 2) {
--		crtc_state->crc_frame_skip_count++;
--		return 0;
--	}
--
- 	for (i = 0; i < crtc_state->num_mixers; ++i) {
- 
--		m = &crtc_state->mixers[i];
-+		lm = &crtc_state->mixers[i];
- 
--		if (!m->hw_lm || !m->hw_lm->ops.collect_misr)
-+		if (!lm->hw_lm || !lm->hw_lm->ops.collect_misr)
- 			continue;
- 
--		rc = m->hw_lm->ops.collect_misr(m->hw_lm, &crcs[i]);
-+		rc = lm->hw_lm->ops.collect_misr(lm->hw_lm, &crcs[i]);
- 
- 		if (rc) {
- 			if (rc != -ENODATA)
-@@ -214,6 +212,24 @@ static int dpu_crtc_get_crc(struct drm_crtc *crtc)
- 			drm_crtc_accurate_vblank_count(crtc), crcs);
- }
- 
-+static int dpu_crtc_get_crc(struct drm_crtc *crtc)
++static int dpu_hw_intf_collect_misr(struct dpu_hw_intf *intf, u32 *misr_value)
 +{
-+	struct dpu_crtc_state *crtc_state;
++	struct dpu_hw_blk_reg_map *c = &intf->hw;
++	u32 ctrl = 0;
 +
-+	crtc_state = to_dpu_crtc_state(crtc->state);
++	if (!misr_value)
++		return -EINVAL;
 +
-+	/* Skip first 2 frames in case of "uncooked" CRCs */
-+	if (crtc_state->crc_frame_skip_count < 2) {
-+		crtc_state->crc_frame_skip_count++;
-+		return 0;
-+	}
++	ctrl = DPU_REG_READ(c, INTF_MISR_CTRL);
 +
-+	if (crtc_state->crc_source == DPU_CRTC_CRC_SOURCE_LAYER_MIXER)
-+		return dpu_crtc_get_lm_crc(crtc, crtc_state);
++	if (!(ctrl & INTF_MISR_CTRL_ENABLE))
++		return -ENODATA;
++
++	if (!(ctrl & INTF_MISR_CTRL_STATUS))
++		return -EINVAL;
++
++	*misr_value = DPU_REG_READ(c, INTF_MISR_SIGNATURE);
 +
 +	return 0;
 +}
 +
- static bool dpu_crtc_get_scanout_position(struct drm_crtc *crtc,
- 					   bool in_vblank_irq,
- 					   int *vpos, int *hpos,
+ static void _setup_intf_ops(struct dpu_hw_intf_ops *ops,
+ 		unsigned long cap)
+ {
+@@ -329,6 +380,8 @@ static void _setup_intf_ops(struct dpu_hw_intf_ops *ops,
+ 	ops->get_line_count = dpu_hw_intf_get_line_count;
+ 	if (cap & BIT(DPU_INTF_INPUT_CTRL))
+ 		ops->bind_pingpong_blk = dpu_hw_intf_bind_pingpong_blk;
++	ops->setup_misr = dpu_hw_intf_setup_misr;
++	ops->collect_misr = dpu_hw_intf_collect_misr;
+ }
+ 
+ struct dpu_hw_intf *dpu_hw_intf_init(enum dpu_intf idx,
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
+index 7b2d96ac61e8..8d0e7b509260 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
+@@ -1,5 +1,7 @@
+ /* SPDX-License-Identifier: GPL-2.0-only */
+-/* Copyright (c) 2015-2018, The Linux Foundation. All rights reserved.
++/*
++ * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
++ * Copyright (c) 2015-2018, The Linux Foundation. All rights reserved.
+  */
+ 
+ #ifndef _DPU_HW_INTF_H
+@@ -57,6 +59,8 @@ struct intf_status {
+  * @ get_line_count: reads current vertical line counter
+  * @bind_pingpong_blk: enable/disable the connection with pingpong which will
+  *                     feed pixels to this interface
++ * @setup_misr: enable/disable MISR
++ * @collect_misr: read MISR signature
+  */
+ struct dpu_hw_intf_ops {
+ 	void (*setup_timing_gen)(struct dpu_hw_intf *intf,
+@@ -77,6 +81,8 @@ struct dpu_hw_intf_ops {
+ 	void (*bind_pingpong_blk)(struct dpu_hw_intf *intf,
+ 			bool enable,
+ 			const enum dpu_pingpong pp);
++	void (*setup_misr)(struct dpu_hw_intf *intf, bool enable, u32 frame_count);
++	int (*collect_misr)(struct dpu_hw_intf *intf, u32 *misr_value);
+ };
+ 
+ struct dpu_hw_intf {
 -- 
 2.35.1
 
