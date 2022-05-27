@@ -2,194 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0EB6A53598B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 May 2022 08:44:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 92A4F535D4A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 May 2022 11:22:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344026AbiE0Go3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 May 2022 02:44:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58728 "EHLO
+        id S233938AbiE0JWY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 May 2022 05:22:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43568 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343946AbiE0GoX (ORCPT
+        with ESMTP id S239593AbiE0JWY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 May 2022 02:44:23 -0400
-Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6AC62ED79D;
-        Thu, 26 May 2022 23:44:22 -0700 (PDT)
+        Fri, 27 May 2022 05:22:24 -0400
+Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6C031C924;
+        Fri, 27 May 2022 02:22:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1653633862; x=1685169862;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=fQI6cbTw2kPlUwwHwJseatTgtASIlX3ZxniUjFCz3CU=;
-  b=m+uFmTatl5ljLbRAdFa0qeCUAH1Ym5DaJdCvd7tVI7dbW+yPkC1Vq3Xu
-   pHrU6HpNgo9fcAAxxUZhN1z37Az2vcAJHPSDyMxPUT2fVar5SuIBCBCv8
-   PHAzPxX8z0In4qGunvaXFcaLBgDawS3/xrLN2DZBc8R2gbxBA/w6X1Dfd
-   3RDJSniLYxaYZYDrfqmwH3B1MvHDPvMrYkmM6cYMC37pscP233rphuJGh
-   i/a35KzyMnw4yoCw69b50JOztTDNJYcFfuWFjB50jcjI/LMnKWTWVJt2h
-   3SbeJXFMsfJTA0mAIUNahQfzJjHcsnVW6OgZpwh7+Hf+aNAz+28F4Jyzq
-   g==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10359"; a="254892679"
-X-IronPort-AV: E=Sophos;i="5.91,254,1647327600"; 
-   d="scan'208";a="254892679"
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 May 2022 23:44:22 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.91,254,1647327600"; 
-   d="scan'208";a="718706904"
-Received: from lkp-server01.sh.intel.com (HELO db63a1be7222) ([10.239.97.150])
-  by fmsmga001.fm.intel.com with ESMTP; 26 May 2022 23:44:18 -0700
-Received: from kbuild by db63a1be7222 with local (Exim 4.95)
-        (envelope-from <lkp@intel.com>)
-        id 1nuThp-0004Uk-Cr;
-        Fri, 27 May 2022 06:44:17 +0000
-Date:   Fri, 27 May 2022 14:43:30 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>, robdclark@gmail.com,
-        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
-        vkoul@kernel.org, daniel@ffwll.ch, airlied@linux.ie,
-        agross@kernel.org, dmitry.baryshkov@linaro.org,
-        bjorn.andersson@linaro.org
-Cc:     kbuild-all@lists.01.org, quic_sbillaka@quicinc.com,
-        linux-arm-msm@vger.kernel.org, quic_abhinavk@quicinc.com,
-        dri-devel@lists.freedesktop.org, quic_khsieh@quicinc.com,
-        quic_aravindh@quicinc.com, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] drm/msm/dp: force link training for display
- resolution change
-Message-ID: <202205271424.ApfrMbAm-lkp@intel.com>
-References: <1653606555-18675-1-git-send-email-quic_khsieh@quicinc.com>
+  t=1653643343; x=1685179343;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=hr6qCLiP6QnEv9xG4V+M7/oTTlO+mnKRkqHOJKBzOCk=;
+  b=QCasqd1+j/E4ETYUfNlwdcMmk5ifFJuGR5G7LvbgX85zotfW/pdE0jhe
+   8jylGWVdFz18M6A2x/HR8wqG4QqJJ202hbnxxJgAXJUyEq3vSEohK1TMB
+   OBbXJxOWfbLJBMjuBfcbkO7gtMBYlyS+aZ7mkY11RigKxsHw/iAowUlrf
+   Nry6+G1yn9Df6B1jzlv7v1pIv49jhr7KMQWf0sRRuvQJo47wmqKfBXZRw
+   P0oC/PdcNc94WlWnxD+9Jal+InXAP1bx8yAZ+QLM9qQicXI1r2hfVZBsL
+   piRSdM+l8pW0dUOK//eleltJBN/irjtGh64dJ5i/BaWHyi8/IUU8NBUKr
+   A==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10359"; a="299775110"
+X-IronPort-AV: E=Sophos;i="5.91,255,1647327600"; 
+   d="scan'208";a="299775110"
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 May 2022 02:22:23 -0700
+X-IronPort-AV: E=Sophos;i="5.91,255,1647327600"; 
+   d="scan'208";a="603774435"
+Received: from ahunter6-mobl1.ger.corp.intel.com (HELO [10.0.2.15]) ([10.252.42.5])
+  by orsmga008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 May 2022 02:22:18 -0700
+Message-ID: <9baa3f34-8ef7-cee2-f396-163b8206534d@intel.com>
+Date:   Fri, 27 May 2022 12:22:15 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1653606555-18675-1-git-send-email-quic_khsieh@quicinc.com>
-X-Spam-Status: No, score=-5.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Firefox/91.0 Thunderbird/91.9.1
+Subject: Re: [PATCH V2 1/2] mmc: core: Define a new vendor ops to enable
+ wakeup capability
+Content-Language: en-US
+To:     Sarthak Garg <quic_sartgarg@quicinc.com>, ulf.hansson@linaro.org
+Cc:     linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, quic_kamasali@quicinc.com,
+        quic_rampraka@quicinc.com, quic_pragalla@quicinc.com,
+        quic_sayalil@quicinc.com,
+        =?UTF-8?Q?Uwe_Kleine-K=c3=b6nig?= <u.kleine-koenig@pengutronix.de>,
+        Thorsten Scherer <t.scherer@eckelmann.de>,
+        Sergey Shtylyov <s.shtylyov@omp.ru>,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        lizhe <sensor1010@163.com>
+References: <20220526121215.25947-1-quic_sartgarg@quicinc.com>
+ <20220526121215.25947-2-quic_sartgarg@quicinc.com>
+From:   Adrian Hunter <adrian.hunter@intel.com>
+Organization: Intel Finland Oy, Registered Address: PL 281, 00181 Helsinki,
+ Business Identity Code: 0357606 - 4, Domiciled in Helsinki
+In-Reply-To: <20220526121215.25947-2-quic_sartgarg@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-9.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,
+        SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Kuogee,
+On 26/05/22 15:12, Sarthak Garg wrote:
+> Define a new vendor ops to let vendor initialize card as wakeup source
 
-Thank you for the patch! Yet something to improve:
+Did you consider using the existing ->init_card() op?
 
-[auto build test ERROR on drm/drm-next]
-[also build test ERROR on next-20220526]
-[cannot apply to v5.18]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch]
+> and enable wakeup capability specially for SDIO cards which supports
+> waking host from system suspend through external dedicated pins.
+> 
+> Signed-off-by: Sarthak Garg <quic_sartgarg@quicinc.com>
+> ---
+>  drivers/mmc/core/bus.c   | 3 +++
+>  include/linux/mmc/host.h | 7 +++++++
+>  2 files changed, 10 insertions(+)
+> 
+> diff --git a/drivers/mmc/core/bus.c b/drivers/mmc/core/bus.c
+> index 58a60afa650b..6192a52288fd 100644
+> --- a/drivers/mmc/core/bus.c
+> +++ b/drivers/mmc/core/bus.c
+> @@ -364,6 +364,9 @@ int mmc_add_card(struct mmc_card *card)
+>  #endif
+>  	card->dev.of_node = mmc_of_find_child_device(card->host, 0);
+>  
+> +	if (card->host->ops->card_init_wakeup)
+> +		card->host->ops->card_init_wakeup(card);
+> +
+>  	device_enable_async_suspend(&card->dev);
+>  
+>  	ret = device_add(&card->dev);
+> diff --git a/include/linux/mmc/host.h b/include/linux/mmc/host.h
+> index c193c50ccd78..3bd4374a64b8 100644
+> --- a/include/linux/mmc/host.h
+> +++ b/include/linux/mmc/host.h
+> @@ -193,6 +193,13 @@ struct mmc_host_ops {
+>  
+>  	/* Initialize an SD express card, mandatory for MMC_CAP2_SD_EXP. */
+>  	int	(*init_sd_express)(struct mmc_host *host, struct mmc_ios *ios);
+> +
+> +	/*
+> +	 * Optional for vendor to initialize card as wakeup source and
+> +	 * enable wakeup capability specially for SDIO cards which supports
+> +	 * waking host from suspend through external dedicated pins.
+> +	 */
+> +	void    (*card_init_wakeup)(struct mmc_card *card);
+>  };
+>  
+>  struct mmc_cqe_ops {
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Kuogee-Hsieh/drm-msm-dp-force-link-training-for-display-resolution-change/20220527-071202
-base:   git://anongit.freedesktop.org/drm/drm drm-next
-config: sparc-allmodconfig (https://download.01.org/0day-ci/archive/20220527/202205271424.ApfrMbAm-lkp@intel.com/config)
-compiler: sparc64-linux-gcc (GCC) 11.3.0
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # https://github.com/intel-lab-lkp/linux/commit/42816831cad7ced23cdedbb77ef2ebf13247c623
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review Kuogee-Hsieh/drm-msm-dp-force-link-training-for-display-resolution-change/20220527-071202
-        git checkout 42816831cad7ced23cdedbb77ef2ebf13247c623
-        # save the config file
-        mkdir build_dir && cp config build_dir/.config
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.3.0 make.cross W=1 O=build_dir ARCH=sparc SHELL=/bin/bash drivers/gpu/drm/msm/
-
-If you fix the issue, kindly add following tag where applicable
-Reported-by: kernel test robot <lkp@intel.com>
-
-All errors (new ones prefixed by >>):
-
-   drivers/gpu/drm/msm/dp/dp_ctrl.c: In function 'dp_ctrl_on_stream':
->> drivers/gpu/drm/msm/dp/dp_ctrl.c:1852:13: error: 'force_link_tarin' undeclared (first use in this function); did you mean 'force_link_train'?
-    1852 |         if (force_link_tarin || !dp_ctrl_channel_eq_ok(ctrl))
-         |             ^~~~~~~~~~~~~~~~
-         |             force_link_train
-   drivers/gpu/drm/msm/dp/dp_ctrl.c:1852:13: note: each undeclared identifier is reported only once for each function it appears in
-
-
-vim +1852 drivers/gpu/drm/msm/dp/dp_ctrl.c
-
-  1810	
-  1811	int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl, bool force_link_train)
-  1812	{
-  1813		int ret = 0;
-  1814		bool mainlink_ready = false;
-  1815		struct dp_ctrl_private *ctrl;
-  1816		unsigned long pixel_rate_orig;
-  1817	
-  1818		if (!dp_ctrl)
-  1819			return -EINVAL;
-  1820	
-  1821		ctrl = container_of(dp_ctrl, struct dp_ctrl_private, dp_ctrl);
-  1822	
-  1823		ctrl->dp_ctrl.pixel_rate = ctrl->panel->dp_mode.drm_mode.clock;
-  1824	
-  1825		pixel_rate_orig = ctrl->dp_ctrl.pixel_rate;
-  1826		if (dp_ctrl->wide_bus_en)
-  1827			ctrl->dp_ctrl.pixel_rate >>= 1;
-  1828	
-  1829		drm_dbg_dp(ctrl->drm_dev, "rate=%d, num_lanes=%d, pixel_rate=%d\n",
-  1830			ctrl->link->link_params.rate,
-  1831			ctrl->link->link_params.num_lanes, ctrl->dp_ctrl.pixel_rate);
-  1832	
-  1833		if (!dp_power_clk_status(ctrl->power, DP_CTRL_PM)) { /* link clk is off */
-  1834			ret = dp_ctrl_enable_mainlink_clocks(ctrl);
-  1835			if (ret) {
-  1836				DRM_ERROR("Failed to start link clocks. ret=%d\n", ret);
-  1837				goto end;
-  1838			}
-  1839		}
-  1840	
-  1841		ret = dp_ctrl_enable_stream_clocks(ctrl);
-  1842		if (ret) {
-  1843			DRM_ERROR("Failed to start pixel clocks. ret=%d\n", ret);
-  1844			goto end;
-  1845		}
-  1846	
-  1847		if (ctrl->link->sink_request & DP_TEST_LINK_PHY_TEST_PATTERN) {
-  1848			dp_ctrl_send_phy_test_pattern(ctrl);
-  1849			return 0;
-  1850		}
-  1851	
-> 1852		if (force_link_tarin || !dp_ctrl_channel_eq_ok(ctrl))
-  1853			dp_ctrl_link_retrain(ctrl);
-  1854	
-  1855		/* stop txing train pattern to end link training */
-  1856		dp_ctrl_clear_training_pattern(ctrl);
-  1857	
-  1858		/*
-  1859		 * Set up transfer unit values and set controller state to send
-  1860		 * video.
-  1861		 */
-  1862		reinit_completion(&ctrl->video_comp);
-  1863	
-  1864		dp_ctrl_configure_source_params(ctrl);
-  1865	
-  1866		dp_catalog_ctrl_config_msa(ctrl->catalog,
-  1867			ctrl->link->link_params.rate,
-  1868			pixel_rate_orig, dp_ctrl_use_fixed_nvid(ctrl));
-  1869	
-  1870		dp_ctrl_setup_tr_unit(ctrl);
-  1871	
-  1872		dp_catalog_ctrl_state_ctrl(ctrl->catalog, DP_STATE_CTRL_SEND_VIDEO);
-  1873	
-  1874		ret = dp_ctrl_wait4video_ready(ctrl);
-  1875		if (ret)
-  1876			return ret;
-  1877	
-  1878		mainlink_ready = dp_catalog_ctrl_mainlink_ready(ctrl->catalog);
-  1879		drm_dbg_dp(ctrl->drm_dev,
-  1880			"mainlink %s\n", mainlink_ready ? "READY" : "NOT READY");
-  1881	
-  1882	end:
-  1883		return ret;
-  1884	}
-  1885	
-
--- 
-0-DAY CI Kernel Test Service
-https://01.org/lkp
