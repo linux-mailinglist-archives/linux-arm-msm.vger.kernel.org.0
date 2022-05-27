@@ -2,63 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1DE8C5367EC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 May 2022 22:11:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2FC69536855
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 May 2022 23:02:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241232AbiE0ULs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 May 2022 16:11:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57380 "EHLO
+        id S1353319AbiE0VCl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 May 2022 17:02:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56088 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231445AbiE0ULr (ORCPT
+        with ESMTP id S230491AbiE0VCk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 May 2022 16:11:47 -0400
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 497062B1B3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 May 2022 13:11:46 -0700 (PDT)
+        Fri, 27 May 2022 17:02:40 -0400
+Received: from mail-oa1-x2f.google.com (mail-oa1-x2f.google.com [IPv6:2001:4860:4864:20::2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 301CC6FD24
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 May 2022 14:02:39 -0700 (PDT)
+Received: by mail-oa1-x2f.google.com with SMTP id 586e51a60fabf-f2c296d320so7143406fac.8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 May 2022 14:02:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1653682306; x=1685218306;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=NRtIu/CwGTfIb4A0RxMlyF1P3ZSBe6aCLed7q/ujErw=;
-  b=roK+lmrKl0Wt6Sa1mfBBH5rmHVAO8UImHKg1+L6mnn2OtYRxBDDocLWi
-   CgxCS+Y7qAsznJ2WATV5kG8JswTRKcMDyYQ0YlAQjA7QNH54f4yREhK5t
-   b+3ywRqmBIqoRjeBMxJ9qpwoxCMlPKzPPb3rD8BaIcBARE7lKKNlc4LuP
-   Y=;
-Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 27 May 2022 13:11:45 -0700
-X-QCInternal: smtphost
-Received: from nasanex01b.na.qualcomm.com ([10.46.141.250])
-  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 May 2022 13:11:45 -0700
-Received: from [10.110.56.216] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Fri, 27 May
- 2022 13:11:44 -0700
-Message-ID: <f81a64fc-c80c-2bc9-a9e3-8eb4a1eccf03@quicinc.com>
-Date:   Fri, 27 May 2022 13:11:43 -0700
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=nxF6He7HpWZ4GwGGzPoFQzOw/acvMLoNb90aVoiUal0=;
+        b=X85jRBi4B1PcfrEmg5Y7ld9nwXNcZnmKbF37XCeKGUpRvf/UQ6Gaz1zscDH+ytBW9r
+         le9wkLTLhcOe9wROcOiiDXIX20kOWPFSOHEhAJJbBLXl8SDC1PoYldNdewWJ+ttbmUqc
+         0k/3n06/Kuo4jPUyjyE5vv7EaHsDbrPNsnowc=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=nxF6He7HpWZ4GwGGzPoFQzOw/acvMLoNb90aVoiUal0=;
+        b=VT2QhMmDGSkNMB0a9bYrv7AKmMf5fRAWXnBbXs6CJbaXi+6wUXLwtqfghCmURufdBr
+         VsNwrJLm4V9nt03G8s6vmJEq9GEz1F1uTrR1uB5jeJSSDujsRMM5vJqod+0sOv1MzNd3
+         7Hl9kP9BKx1WAJHmy63X+gPwSegyImetnmZVvdZLZseDOuV6asm9qeEf7yqy3Z4OeruT
+         6tAe0OuVnLhL7uwpIXWWCcIYrixfKacMvNa43KIbbFFLLzCXT0wlmtKkI/riTPb+Bvtd
+         IP0TP5+5QFvZmWY+5hSjntSHKqvdm6YeYO/LCYIShgCx6T6hVH4PuXoL8TBjicemNXXC
+         xQJg==
+X-Gm-Message-State: AOAM5320yknAYuCC5VzkovlLT7ArUe6pbCcR9K/czmMWlrPRj5vIIgG+
+        sKYZkNjR57mpreY0CK5nxImqV2MoJ/V1mnuNL1HHNg==
+X-Google-Smtp-Source: ABdhPJzlCImLhNtTcoiaIh7Pm2IzQ1VjLAL6O8LiIDHqy2sdZqfC1a4S7cVjHJafBiqfUudwpAWHMvGsG5VhwRkAh00=
+X-Received: by 2002:a05:6870:240d:b0:f1:b878:e97c with SMTP id
+ n13-20020a056870240d00b000f1b878e97cmr4843766oap.193.1653685358485; Fri, 27
+ May 2022 14:02:38 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 27 May 2022 17:02:37 -0400
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.0
-Subject: Re: [PATCH 2/3] drm/msm/dpu: Add MISR register support for interface
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        <freedreno@lists.freedesktop.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <robdclark@gmail.com>, <seanpaul@chromium.org>,
-        <swboyd@chromium.org>, <quic_aravindh@quicinc.com>,
-        <quic_abhinavk@quicinc.com>
-References: <20220527185407.162-1-quic_jesszhan@quicinc.com>
- <20220527185407.162-3-quic_jesszhan@quicinc.com>
- <d72845af-f444-af2e-b834-6e4c754a1094@linaro.org>
-From:   Jessica Zhang <quic_jesszhan@quicinc.com>
-In-Reply-To: <d72845af-f444-af2e-b834-6e4c754a1094@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-Spam-Status: No, score=-6.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+In-Reply-To: <e70aceba-02d5-15b5-46d0-d5ed5706e81a@quicinc.com>
+References: <1653043777-24003-1-git-send-email-quic_c_skakit@quicinc.com>
+ <1653043777-24003-8-git-send-email-quic_c_skakit@quicinc.com>
+ <CAE-0n53WLYR1pjnr6wASVmXXQ7xTq5n2Q7GdeKOCkWf4H4n=0A@mail.gmail.com> <e70aceba-02d5-15b5-46d0-d5ed5706e81a@quicinc.com>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date:   Fri, 27 May 2022 17:02:37 -0400
+Message-ID: <CAE-0n539gePyXhw7r+XcaHtooN98KfYsx_qwgDaFkJtMSg+80g@mail.gmail.com>
+Subject: Re: [PATCH V13 7/9] regulator: Add a regulator driver for the PM8008 PMIC
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Satya Priya Kakitapalli <quic_c_skakit@quicinc.com>
+Cc:     Lee Jones <lee.jones@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_collinsd@quicinc.com, quic_subbaram@quicinc.com,
+        quic_jprakash@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -67,152 +74,84 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+HTML mail? Please send plaintext next time.
 
+Quoting Satya Priya Kakitapalli (Temp) (2022-05-27 01:24:19)
+>
+> On 5/21/2022 8:26 AM, Stephen Boyd wrote:
+>
+>     Quoting Satya Priya (2022-05-20 03:49:35)
+>
+>         diff --git a/drivers/regulator/qcom-pm8008-regulator.c b/drivers/regulator/qcom-pm8008-regulator.c
+>         new file mode 100644
+>         index 0000000..6e815c6
+>         --- /dev/null
+>         +++ b/drivers/regulator/qcom-pm8008-regulator.c
+>         @@ -0,0 +1,225 @@
+>         +// SPDX-License-Identifier: GPL-2.0-only
+>         +/* Copyright (c) 2022, The Linux Foundation. All rights reserved. */
+>         +
+>         +#include <linux/device.h>
+>         +#include <linux/kernel.h>
+>         +#include <linux/mfd/qcom_pm8008.h>
+>         +#include <linux/module.h>
+>         +#include <linux/of.h>
+>         +#include <linux/of_device.h>
+>
+>     What in of_device.h is used?
+>
+>
+> struct of_device_id
 
-On 5/27/2022 12:38 PM, Dmitry Baryshkov wrote:
-> On 27/05/2022 21:54, Jessica Zhang wrote:
->> Add support for setting MISR registers within the interface
->>
->> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
->> ---
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c | 55 ++++++++++++++++++++-
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h |  8 ++-
->>   2 files changed, 61 insertions(+), 2 deletions(-)
->>
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c 
->> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
->> index 3f4d2c6e1b45..29aaeff9eacd 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
->> @@ -1,5 +1,7 @@
->>   // SPDX-License-Identifier: GPL-2.0-only
->> -/* Copyright (c) 2015-2018, The Linux Foundation. All rights reserved.
->> +/*
->> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights 
->> reserved.
->> + * Copyright (c) 2015-2018, The Linux Foundation. All rights reserved.
->>    */
->>   #include "dpu_hwio.h"
->> @@ -67,6 +69,14 @@
->>   #define INTF_CFG2_DATABUS_WIDEN    BIT(0)
->>   #define INTF_CFG2_DATA_HCTL_EN    BIT(4)
->> +#define INTF_MISR_CTRL            0x180
->> +#define INTF_MISR_SIGNATURE        0x184
->> +#define INTF_MISR_FRAME_COUNT_MASK    0xFF
->> +#define INTF_MISR_CTRL_ENABLE        BIT(8)
->> +#define INTF_MISR_CTRL_STATUS        BIT(9)
->> +#define INTF_MISR_CTRL_STATUS_CLEAR    BIT(10)
->> +#define INTF_MISR_CTRL_FREE_RUN_MASK    BIT(31)
-> 
-> I'm tempted to ask to move these bits to some common header. Is there 
-> any other hardware block which uses the same bitfields to control MISR?
+That struct is defined in mod_devicetable.h, not of_device.h
 
-dpu_hw_lm.c has similar macros here [1] for _ENABLE, _STATUS, 
-_STATUS_CLEAR, and _FREE_RUN_MASK
+>
+>
+>
+>         +#include <linux/platform_device.h>
+>         +#include <linux/regmap.h>
+>         +#include <linux/regulator/driver.h>
+>         +
+[...]
+>
+>
+>         +};
+>         +
+>         +static int pm8008_regulator_get_voltage(struct regulator_dev *rdev)
+>         +{
+>         +       struct pm8008_regulator *pm8008_reg = rdev_get_drvdata(rdev);
+>         +
+>         +       return pm8008_reg->voltage_selector;
+>
+>     Can this read the hardware instead of caching the value from
+>     pm8008_regulator_set_voltage()?
+>
+>
+> I can use the regmap_bulk_read like below (which was present in the earlier
+> versions)
 
-[1] 
-https://gitlab.freedesktop.org/drm/msm/-/blob/msm-next/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c#L31
+Please do
 
-> 
->> +
->>   static const struct dpu_intf_cfg *_intf_offset(enum dpu_intf intf,
->>           const struct dpu_mdss_cfg *m,
->>           void __iomem *addr,
->> @@ -319,6 +329,47 @@ static u32 dpu_hw_intf_get_line_count(struct 
->> dpu_hw_intf *intf)
->>       return DPU_REG_READ(c, INTF_LINE_COUNT);
->>   }
->> +static void dpu_hw_intf_setup_misr(struct dpu_hw_intf *intf, bool 
->> enable, u32 frame_count)
->> +{
->> +    struct dpu_hw_blk_reg_map *c = &intf->hw;
->> +    u32 config = 0;
->> +
->> +    DPU_REG_WRITE(c, INTF_MISR_CTRL, INTF_MISR_CTRL_STATUS_CLEAR);
->> +
->> +    /* Clear old MISR value (in case it's read before a new value is 
->> calculated)*/
->> +    wmb();
->> +
->> +    if (enable) {
->> +        config = (frame_count & INTF_MISR_FRAME_COUNT_MASK) |
->> +                INTF_MISR_CTRL_ENABLE | INTF_MISR_CTRL_FREE_RUN_MASK;
->> +
->> +        DPU_REG_WRITE(c, INTF_MISR_CTRL, config);
->> +    } else {
->> +        DPU_REG_WRITE(c, INTF_MISR_CTRL, 0);
->> +    }
->> +}
->> +
->> +static int dpu_hw_intf_collect_misr(struct dpu_hw_intf *intf, u32 
->> *misr_value)
->> +{
->> +    struct dpu_hw_blk_reg_map *c = &intf->hw;
->> +    u32 ctrl = 0;
->> +
->> +    if (!misr_value)
->> +        return -EINVAL;
->> +
->> +    ctrl = DPU_REG_READ(c, INTF_MISR_CTRL);
->> +
->> +    if (!(ctrl & INTF_MISR_CTRL_ENABLE))
->> +        return -ENODATA;
->> +
->> +    if (!(ctrl & INTF_MISR_CTRL_STATUS))
->> +        return -EINVAL;
->> +
->> +    *misr_value = DPU_REG_READ(c, INTF_MISR_SIGNATURE);
->> +
->> +    return 0;
->> +}
->> +
->>   static void _setup_intf_ops(struct dpu_hw_intf_ops *ops,
->>           unsigned long cap)
->>   {
->> @@ -329,6 +380,8 @@ static void _setup_intf_ops(struct dpu_hw_intf_ops 
->> *ops,
->>       ops->get_line_count = dpu_hw_intf_get_line_count;
->>       if (cap & BIT(DPU_INTF_INPUT_CTRL))
->>           ops->bind_pingpong_blk = dpu_hw_intf_bind_pingpong_blk;
->> +    ops->setup_misr = dpu_hw_intf_setup_misr;
->> +    ops->collect_misr = dpu_hw_intf_collect_misr;
->>   }
->>   struct dpu_hw_intf *dpu_hw_intf_init(enum dpu_intf idx,
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h 
->> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
->> index 7b2d96ac61e8..8d0e7b509260 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
->> @@ -1,5 +1,7 @@
->>   /* SPDX-License-Identifier: GPL-2.0-only */
->> -/* Copyright (c) 2015-2018, The Linux Foundation. All rights reserved.
->> +/*
->> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights 
->> reserved.
->> + * Copyright (c) 2015-2018, The Linux Foundation. All rights reserved.
->>    */
->>   #ifndef _DPU_HW_INTF_H
->> @@ -57,6 +59,8 @@ struct intf_status {
->>    * @ get_line_count: reads current vertical line counter
->>    * @bind_pingpong_blk: enable/disable the connection with pingpong 
->> which will
->>    *                     feed pixels to this interface
->> + * @setup_misr: enable/disable MISR
->> + * @collect_misr: read MISR signature
->>    */
->>   struct dpu_hw_intf_ops {
->>       void (*setup_timing_gen)(struct dpu_hw_intf *intf,
->> @@ -77,6 +81,8 @@ struct dpu_hw_intf_ops {
->>       void (*bind_pingpong_blk)(struct dpu_hw_intf *intf,
->>               bool enable,
->>               const enum dpu_pingpong pp);
->> +    void (*setup_misr)(struct dpu_hw_intf *intf, bool enable, u32 
->> frame_count);
->> +    int (*collect_misr)(struct dpu_hw_intf *intf, u32 *misr_value);
->>   };
->>   struct dpu_hw_intf {
-> 
-> 
-> -- 
-> With best wishes
-> Dmitry
+>         +       }
+>         +
+>         +       pm8008_reg->dev = dev;
+>         +
+>         +       rc = of_property_read_string(dev->of_node, "regulator-name", &name);
+>         +       if (rc)
+>         +               return rc;
+>         +
+>         +       /* get the required regulator data */
+>         +       for (i = 0; i < ARRAY_SIZE(reg_data); i++)
+>         +               if (strstr(name, reg_data[i].name))
+>
+>     Why not find this via reg/address instead? It would save storing the
+>     regulator name in the reg_data table.
+>
+>
+> You mean match this using base address? then we should add base address in the
+> reg_data table. We will need the name to be stored in reg_data table anyway for
+> the pm8008_reg->rdesc.of_match
+
+Why? Now that this driver binds to each node individually the usage of
+of_match doesn't make any sense to me. Can you set 'struct
+regulator_config::dev' instead and not set of_match?
