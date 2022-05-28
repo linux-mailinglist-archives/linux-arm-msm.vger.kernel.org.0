@@ -2,28 +2,34 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 81837536DB5
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 May 2022 18:04:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0B7BD536DD2
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 May 2022 18:57:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351593AbiE1QEc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 28 May 2022 12:04:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44788 "EHLO
+        id S238653AbiE1Q53 convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 28 May 2022 12:57:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57156 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233115AbiE1QEb (ORCPT
+        with ESMTP id S235367AbiE1Q52 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 28 May 2022 12:04:31 -0400
-Received: from m-r2.th.seeweb.it (m-r2.th.seeweb.it [IPv6:2001:4b7a:2000:18::171])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63F3918B01
-        for <linux-arm-msm@vger.kernel.org>; Sat, 28 May 2022 09:04:29 -0700 (PDT)
-Received: from localhost.localdomain (abxh119.neoplus.adsl.tpnet.pl [83.9.1.119])
-        by m-r2.th.seeweb.it (Postfix) with ESMTPA id D410B3F757;
-        Sat, 28 May 2022 18:26:40 +0200 (CEST)
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-To:     ~postmarketos/upstreaming@lists.sr.ht
+        Sat, 28 May 2022 12:57:28 -0400
+X-Greylist: delayed 304 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sat, 28 May 2022 09:57:27 PDT
+Received: from relay5.hostedemail.com (smtprelay0015.hostedemail.com [216.40.44.15])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FA0A15826
+        for <linux-arm-msm@vger.kernel.org>; Sat, 28 May 2022 09:57:26 -0700 (PDT)
+Received: from omf01.hostedemail.com (a10.router.float.18 [10.200.18.1])
+        by unirelay06.hostedemail.com (Postfix) with ESMTP id 6DCAD2F1A9;
+        Sat, 28 May 2022 16:52:19 +0000 (UTC)
+Received: from [HIDDEN] (Authenticated sender: joe@perches.com) by omf01.hostedemail.com (Postfix) with ESMTPA id CD3EC60011;
+        Sat, 28 May 2022 16:52:14 +0000 (UTC)
+Message-ID: <d470331985c7d82c6e5bb6d548ab610479416761.camel@perches.com>
+Subject: Re: [PATCH v3 4/4] drm/msm/adreno: Fix up formatting
+From:   Joe Perches <joe@perches.com>
+To:     Konrad Dybcio <konrad.dybcio@somainline.org>,
+        ~postmarketos/upstreaming@lists.sr.ht
 Cc:     martin.botka@somainline.org,
         angelogioacchino.delregno@somainline.org,
         marijn.suijten@somainline.org, jamipkettunen@somainline.org,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
         Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
         David Airlie <airlied@linux.ie>,
@@ -35,102 +41,55 @@ Cc:     martin.botka@somainline.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v3 4/4] drm/msm/adreno: Fix up formatting
-Date:   Sat, 28 May 2022 18:03:51 +0200
-Message-Id: <20220528160353.157870-4-konrad.dybcio@somainline.org>
-X-Mailer: git-send-email 2.36.1
-In-Reply-To: <20220528160353.157870-1-konrad.dybcio@somainline.org>
+Date:   Sat, 28 May 2022 09:52:14 -0700
+In-Reply-To: <20220528160353.157870-4-konrad.dybcio@somainline.org>
 References: <20220528160353.157870-1-konrad.dybcio@somainline.org>
+         <20220528160353.157870-4-konrad.dybcio@somainline.org>
+Content-Type: text/plain; charset="ISO-8859-1"
+Content-Transfer-Encoding: 8BIT
+User-Agent: Evolution 3.44.1-0ubuntu1 
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-0.9 required=5.0 tests=BAYES_00,FORGED_SPF_HELO,
+        KHOP_HELO_FCRDNS,SPF_HELO_PASS,SPF_NONE,T_SCC_BODY_TEXT_LINE,
+        UNPARSEABLE_RELAY autolearn=no autolearn_force=no version=3.4.6
+X-Rspamd-Server: rspamout08
+X-Rspamd-Queue-Id: CD3EC60011
+X-Stat-Signature: hguqrzykifma4fuxzhcnc6wiq5pkkp7b
+X-Session-Marker: 6A6F6540706572636865732E636F6D
+X-Session-ID: U2FsdGVkX19HTwQEza4v02RuQBSx/8pguy5mblJPov4=
+X-HE-Tag: 1653756734-471035
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Leading spaces are not something checkpatch likes, and it says so when
-they are present. Use tabs consistently to indent function body and
-unwrap a 83-char-long line, as 100 is cool nowadays.
+On Sat, 2022-05-28 at 18:03 +0200, Konrad Dybcio wrote:
+> Leading spaces are not something checkpatch likes, and it says so when
+> they are present. Use tabs consistently to indent function body and
+> unwrap a 83-char-long line, as 100 is cool nowadays.
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
----
- drivers/gpu/drm/msm/adreno/adreno_gpu.h | 17 ++++++++---------
- 1 file changed, 8 insertions(+), 9 deletions(-)
+unassociated trivia:
 
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-index a13a3e5a294b..f73f7b5dfd10 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-+++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-@@ -199,7 +199,7 @@ static inline int adreno_is_a420(struct adreno_gpu *gpu)
- 
- static inline int adreno_is_a430(struct adreno_gpu *gpu)
- {
--       return gpu->revn == 430;
-+	return gpu->revn == 430;
- }
- 
- static inline int adreno_is_a506(struct adreno_gpu *gpu)
-@@ -239,7 +239,7 @@ static inline int adreno_is_a540(struct adreno_gpu *gpu)
- 
- static inline int adreno_is_a618(struct adreno_gpu *gpu)
- {
--       return gpu->revn == 618;
-+	return gpu->revn == 618;
- }
- 
- static inline int adreno_is_a619(struct adreno_gpu *gpu)
-@@ -249,7 +249,7 @@ static inline int adreno_is_a619(struct adreno_gpu *gpu)
- 
- static inline int adreno_is_a630(struct adreno_gpu *gpu)
- {
--       return gpu->revn == 630;
-+	return gpu->revn == 630;
- }
- 
- static inline int adreno_is_a640_family(struct adreno_gpu *gpu)
-@@ -259,18 +259,18 @@ static inline int adreno_is_a640_family(struct adreno_gpu *gpu)
- 
- static inline int adreno_is_a650(struct adreno_gpu *gpu)
- {
--       return gpu->revn == 650;
-+	return gpu->revn == 650;
- }
- 
- static inline int adreno_is_7c3(struct adreno_gpu *gpu)
- {
- 	/* The order of args is important here to handle ANY_ID correctly */
--       return adreno_cmp_rev(ADRENO_REV(6, 3, 5, ANY_ID), gpu->rev);
-+	return adreno_cmp_rev(ADRENO_REV(6, 3, 5, ANY_ID), gpu->rev);
- }
- 
- static inline int adreno_is_a660(struct adreno_gpu *gpu)
- {
--       return gpu->revn == 660;
-+	return gpu->revn == 660;
- }
- 
- /* check for a615, a616, a618, a619 or any derivatives */
-@@ -281,14 +281,13 @@ static inline int adreno_is_a615_family(struct adreno_gpu *gpu)
- 
- static inline int adreno_is_a660_family(struct adreno_gpu *gpu)
- {
--       return adreno_is_a660(gpu) || adreno_is_7c3(gpu);
-+	return adreno_is_a660(gpu) || adreno_is_7c3(gpu);
- }
- 
- /* check for a650, a660, or any derivatives */
- static inline int adreno_is_a650_family(struct adreno_gpu *gpu)
- {
--       return gpu->revn == 650 || gpu->revn == 620 ||
--	       adreno_is_a660_family(gpu);
-+	return gpu->revn == 650 || gpu->revn == 620 || adreno_is_a660_family(gpu);
- }
- 
- int adreno_get_param(struct msm_gpu *gpu, struct msm_file_private *ctx,
--- 
-2.36.1
+> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+[]
+> @@ -199,7 +199,7 @@ static inline int adreno_is_a420(struct adreno_gpu *gpu)
+>  
+>  static inline int adreno_is_a430(struct adreno_gpu *gpu)
+>  {
+> -       return gpu->revn == 430;
+> +	return gpu->revn == 430;
+>  }
 
+looks like these could/should return bool
+
+>  static inline int adreno_is_a506(struct adreno_gpu *gpu)
+> @@ -239,7 +239,7 @@ static inline int adreno_is_a540(struct adreno_gpu *gpu)
+>  
+>  static inline int adreno_is_a618(struct adreno_gpu *gpu)
+>  {
+> -       return gpu->revn == 618;
+> +	return gpu->revn == 618;
+>  }
+
+etc...
