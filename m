@@ -2,66 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 601D85371C7
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 29 May 2022 18:29:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 51E505371F9
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 29 May 2022 20:02:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230074AbiE2Q3n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 29 May 2022 12:29:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45762 "EHLO
+        id S229930AbiE2SCg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 29 May 2022 14:02:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41010 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229533AbiE2Q3m (ORCPT
+        with ESMTP id S229907AbiE2SCf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 29 May 2022 12:29:42 -0400
-Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com [IPv6:2607:f8b0:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C81F2F013;
-        Sun, 29 May 2022 09:29:40 -0700 (PDT)
-Received: by mail-pf1-x42e.google.com with SMTP id x143so8553821pfc.11;
-        Sun, 29 May 2022 09:29:40 -0700 (PDT)
+        Sun, 29 May 2022 14:02:35 -0400
+Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 716D0606E4;
+        Sun, 29 May 2022 11:02:33 -0700 (PDT)
+Received: by mail-pj1-x102d.google.com with SMTP id v5-20020a17090a7c0500b001df84fa82f8so8653278pjf.5;
+        Sun, 29 May 2022 11:02:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=F0TmM8b9e274oJMvNvuPKJVM2spWHgnC/4XXZLIhTKc=;
-        b=S1Us7OAbBJgnJ7Qc5yA9DRJFHDniqPlIsZgDysPoU6nRKRxSYGGySsj1QcYZeRV31C
-         DjT6f51ghmir+RZJdqrAjQrWHq5AZ7TQWwqv2SL5tTkiIyy148ET+tgzqGxhJ+A7feEY
-         F31etkjkP4rhcTxNg8nzhl+VbIJicF/dG8DbESw0z/oqJqnnbE+/4YvI4kuNQcHHmMMH
-         x91V6YLrCvrBNzS0p98knuYHnVJZArBM9L22n7wBBTfEwRQxzTITCpEZdiEDXJ1W9DLR
-         D5iQKNHU6MrS8MjC8GplZjNVs0tZ+jXm/aWlkEzEZuar/rQJkUV+sjosCFs9cWIogPrv
-         2xWg==
+        bh=zzGOFoijegI6bs3FEJJIbalqohkJ7YI9mVcD9clwKWU=;
+        b=nOnixLnoLQGUvPL5RyUQZOlPY6YE6sNEMHjYjB2IaYUrtzPoYguiyrl1YUq+Lsm927
+         3EBZmxu4bAYfcWvSMuAlCYHftz433enDWNht0945TEX570r/w4uGZcaiKfU4ftm/cC4k
+         X4xk50R+bxzTE6Hw7drKMu4JMci4MbvUyZL0dDer18d+WLPO7wxvuMM8IU5jraCPSOXH
+         AWrwrCnl8DAxkxXrJc/+e+G8suJ5PFdL9F4Mks90Gbxs0MFal9IIERTRNIkjirUSgl/l
+         qti86avstvKCwFK9ZxRE9FhIx/81oGc9m+klckALxDY553SU3F83RRqgoggrrzi4OAdj
+         nQgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=F0TmM8b9e274oJMvNvuPKJVM2spWHgnC/4XXZLIhTKc=;
-        b=QYmAKmCBNidSStO8NbB2vfhpdIso0bu3FZq7yMLRFU+zd5139lKrjDDkiGUAEYvlBQ
-         +YBL1AF5xcgwxb/OMLVMmhL7C3pJKMbnIki/XIayVvwl61HBTWIW2cSO3mKGl4bmMIfE
-         8S3o7EioAP4uJxa2R5FbuGtGXN06fJQEUSEyTItTySF4TKBLblX8w9zmQGMcn7UH9C6d
-         Cy8g7bYcH7/bB/XNxKWkILszzRiqlVOEFdus1BeU0J/AJCPk2Rnxr+ejVkIWW0ezTUDn
-         4J+cVk7CtIwz8gbZxz42Bk0SjpSHf2HJvbrftgKbLsDUlAHLjbS1ksGbRGN/2kWoyHLo
-         DgfQ==
-X-Gm-Message-State: AOAM530S17dIwu0DoTT0N9wzGzsSX2Vme3e2TmQ5IxIRTI+jQ1vIsQ/g
-        8xi3mpnXqlGCbRQMS1rWoQY=
-X-Google-Smtp-Source: ABdhPJwiBkVL6vuI5goGhYdfMbEajG9cOJY8MXj2qEucMrXQYa65iBSazvTQHcgKUdnOCdriyfKu0g==
-X-Received: by 2002:a65:4c44:0:b0:39c:e0b5:cd2a with SMTP id l4-20020a654c44000000b0039ce0b5cd2amr45230821pgr.481.1653841780062;
-        Sun, 29 May 2022 09:29:40 -0700 (PDT)
-Received: from localhost ([2601:1c0:5200:a6:307:a401:7b76:c6e5])
-        by smtp.gmail.com with ESMTPSA id p1-20020a170902ebc100b00163ad74fe4esm1207781plg.70.2022.05.29.09.29.38
+        bh=zzGOFoijegI6bs3FEJJIbalqohkJ7YI9mVcD9clwKWU=;
+        b=EOF4j/IvRDGTsb6zrs0aSL8DDutBEYVM1GGaUnZiSFt5yL54Rdzez/jZOM3Ajql3nY
+         JwWhON6qgkLh12/tN2AhAi/nHxc5TY8Hy2J8agjUqyH2PDZKmDf8L9IAvns3L2vLYVRm
+         DRBrSuHCejEpdo2I3iDO6kGk+Y9vNqu9ogTIpP/SeEM4gcEyZi/3s1zS1JvhZs3PToHA
+         yqwP74GaKySShSZXvhS+HnyzZT/HOKAOkyiKZIbdX/Mykr0yCksQxU34L+sWE8SBEowb
+         FUnC6AS2AHKKFkSSNJ8H1we3tewZnQEJvk8i8j5lLlEGFNnW3NG3mE+uzgKXn50clODq
+         HbyQ==
+X-Gm-Message-State: AOAM5332SfRscCFXEVnrWtzLFZIIEyDjeAMqwSw4X+L4Av1hPM5Dx0m4
+        9nqGocyXD0wTnaqSHauG7gc=
+X-Google-Smtp-Source: ABdhPJwbxNlyttp4stVGRr/0qeiqK75I0bN48Jv5EpwxMjf2d4saFqSUqUJ4ZWtAGhl4CfHyPk5ouQ==
+X-Received: by 2002:a17:902:b413:b0:15e:e6a8:b3e with SMTP id x19-20020a170902b41300b0015ee6a80b3emr52707916plr.24.1653847352869;
+        Sun, 29 May 2022 11:02:32 -0700 (PDT)
+Received: from localhost (c-73-25-156-94.hsd1.or.comcast.net. [73.25.156.94])
+        by smtp.gmail.com with ESMTPSA id e16-20020a17090301d000b0016370e1af6bsm7622714plh.128.2022.05.29.11.02.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 29 May 2022 09:29:38 -0700 (PDT)
+        Sun, 29 May 2022 11:02:31 -0700 (PDT)
 From:   Rob Clark <robdclark@gmail.com>
 To:     dri-devel@lists.freedesktop.org
 Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Connor Abbott <cwabbott0@gmail.com>,
+        Jonathan Marek <jonathan@marek.ca>,
         Rob Clark <robdclark@chromium.org>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@linux.ie>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>,
-        Gerd Hoffmann <kraxel@redhat.com>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Chia-I Wu <olvaffe@gmail.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Vladimir Lypak <vladimir.lypak@gmail.com>,
+        Emma Anholt <emma@anholt.net>,
+        Dmitry Osipenko <digetx@gmail.com>,
+        Dan Carpenter <dan.carpenter@oracle.com>,
         linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] drm/prime: Ensure mmap offset is initialized
-Date:   Sun, 29 May 2022 09:29:36 -0700
-Message-Id: <20220529162936.2539901-1-robdclark@gmail.com>
+Subject: [PATCH] drm/msm/adreno: Allow larger address space size
+Date:   Sun, 29 May 2022 11:02:25 -0700
+Message-Id: <20220529180232.2576720-1-robdclark@gmail.com>
 X-Mailer: git-send-email 2.35.3
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -77,36 +88,117 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Rob Clark <robdclark@chromium.org>
 
-If a GEM object is allocated, and then exported as a dma-buf fd which is
-mmap'd before or without the GEM buffer being directly mmap'd, the
-vma_node could be unitialized.  This leads to a situation where the CPU
-mapping is not correctly torn down in drm_vma_node_unmap().
+The restriction to 4G was strictly to work around 64b math bug in some
+versions of SQE firmware.  This appears to be fixed in a650+ SQE fw, so
+allow a larger address space size on these devices.
 
-Fixes: e5516553999f ("drm: call drm_gem_object_funcs.mmap with fake offset")
+Also, add a modparam override for debugging and igt.
+
 Signed-off-by: Rob Clark <robdclark@chromium.org>
 ---
-Note, it's possible the issue existed in some related form prior to the
-commit tagged with Fixes.
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c      |  3 ++-
+ drivers/gpu/drm/msm/adreno/adreno_device.c |  3 +++
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c    | 17 +++++++++++++++++
+ drivers/gpu/drm/msm/adreno/adreno_gpu.h    |  2 ++
+ 4 files changed, 24 insertions(+), 1 deletion(-)
 
- drivers/gpu/drm/drm_prime.c | 5 +++++
- 1 file changed, 5 insertions(+)
-
-diff --git a/drivers/gpu/drm/drm_prime.c b/drivers/gpu/drm/drm_prime.c
-index e3f09f18110c..849eea154dfc 100644
---- a/drivers/gpu/drm/drm_prime.c
-+++ b/drivers/gpu/drm/drm_prime.c
-@@ -716,6 +716,11 @@ int drm_gem_prime_mmap(struct drm_gem_object *obj, struct vm_area_struct *vma)
- 	struct file *fil;
- 	int ret;
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+index 42ed9a3c4905..24932b2945ae 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+@@ -1737,7 +1737,8 @@ a6xx_create_private_address_space(struct msm_gpu *gpu)
+ 		return ERR_CAST(mmu);
  
-+	/* Ensure that the vma_node is initialized: */
-+	ret = drm_gem_create_mmap_offset(obj);
-+	if (ret)
-+		return ret;
+ 	return msm_gem_address_space_create(mmu,
+-		"gpu", 0x100000000ULL, SZ_4G);
++		"gpu", 0x100000000ULL,
++		adreno_private_address_space_size(gpu));
+ }
+ 
+ static uint32_t a6xx_get_rptr(struct msm_gpu *gpu, struct msm_ringbuffer *ring)
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
+index 89cfd84760d7..f3685130ce9b 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_device.c
++++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
+@@ -303,6 +303,7 @@ static const struct adreno_info gpulist[] = {
+ 		.init = a6xx_gpu_init,
+ 		.zapfw = "a650_zap.mdt",
+ 		.hwcg = a650_hwcg,
++		.address_space_size = SZ_16G,
+ 	}, {
+ 		.rev = ADRENO_REV(6, 6, 0, ANY_ID),
+ 		.revn = 660,
+@@ -316,6 +317,7 @@ static const struct adreno_info gpulist[] = {
+ 		.init = a6xx_gpu_init,
+ 		.zapfw = "a660_zap.mdt",
+ 		.hwcg = a660_hwcg,
++		.address_space_size = SZ_16G,
+ 	}, {
+ 		.rev = ADRENO_REV(6, 3, 5, ANY_ID),
+ 		.fw = {
+@@ -326,6 +328,7 @@ static const struct adreno_info gpulist[] = {
+ 		.inactive_period = DRM_MSM_INACTIVE_PERIOD,
+ 		.init = a6xx_gpu_init,
+ 		.hwcg = a660_hwcg,
++		.address_space_size = SZ_16G,
+ 	}, {
+ 		.rev = ADRENO_REV(6, 8, 0, ANY_ID),
+ 		.revn = 680,
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+index 4e665c806a14..7bc96cbe6e95 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+@@ -21,6 +21,10 @@
+ #include "msm_gem.h"
+ #include "msm_mmu.h"
+ 
++static u64 address_space_size = 0;
++MODULE_PARM_DESC(address_space_size, "Override for size of processes private GPU address space");
++module_param(address_space_size, u64, 0600);
 +
- 	/* Add the fake offset */
- 	vma->vm_pgoff += drm_vma_node_start(&obj->vma_node);
+ static bool zap_available = true;
  
+ static int zap_shader_load_mdt(struct msm_gpu *gpu, const char *fwname,
+@@ -228,6 +232,19 @@ adreno_iommu_create_address_space(struct msm_gpu *gpu,
+ 	return aspace;
+ }
+ 
++u64 adreno_private_address_space_size(struct msm_gpu *gpu)
++{
++	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
++
++	if (address_space_size)
++		return address_space_size;
++
++	if (adreno_gpu->info->address_space_size)
++		return adreno_gpu->info->address_space_size;
++
++	return SZ_4G;
++}
++
+ int adreno_get_param(struct msm_gpu *gpu, struct msm_file_private *ctx,
+ 		     uint32_t param, uint64_t *value, uint32_t *len)
+ {
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+index ab3b5ef80332..0a4d45695dc7 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
++++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+@@ -70,6 +70,7 @@ struct adreno_info {
+ 	const char *zapfw;
+ 	u32 inactive_period;
+ 	const struct adreno_reglist *hwcg;
++	u64 address_space_size;
+ };
+ 
+ const struct adreno_info *adreno_info(struct adreno_rev rev);
+@@ -280,6 +281,7 @@ static inline int adreno_is_a650_family(struct adreno_gpu *gpu)
+ 	       adreno_is_a660_family(gpu);
+ }
+ 
++u64 adreno_private_address_space_size(struct msm_gpu *gpu);
+ int adreno_get_param(struct msm_gpu *gpu, struct msm_file_private *ctx,
+ 		     uint32_t param, uint64_t *value, uint32_t *len);
+ int adreno_set_param(struct msm_gpu *gpu, struct msm_file_private *ctx,
 -- 
 2.35.3
 
