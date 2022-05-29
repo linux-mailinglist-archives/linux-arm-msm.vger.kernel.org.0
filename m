@@ -2,71 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 632D75371B7
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 29 May 2022 17:59:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 601D85371C7
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 29 May 2022 18:29:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231260AbiE2P66 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 29 May 2022 11:58:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55678 "EHLO
+        id S230074AbiE2Q3n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 29 May 2022 12:29:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45762 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231273AbiE2P5E (ORCPT
+        with ESMTP id S229533AbiE2Q3m (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 29 May 2022 11:57:04 -0400
-Received: from mail-ot1-x343.google.com (mail-ot1-x343.google.com [IPv6:2607:f8b0:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 295DC64C2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 29 May 2022 08:57:03 -0700 (PDT)
-Received: by mail-ot1-x343.google.com with SMTP id h9-20020a056830400900b0060b03bfe792so6248717ots.12
-        for <linux-arm-msm@vger.kernel.org>; Sun, 29 May 2022 08:57:03 -0700 (PDT)
+        Sun, 29 May 2022 12:29:42 -0400
+Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com [IPv6:2607:f8b0:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C81F2F013;
+        Sun, 29 May 2022 09:29:40 -0700 (PDT)
+Received: by mail-pf1-x42e.google.com with SMTP id x143so8553821pfc.11;
+        Sun, 29 May 2022 09:29:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=33H7bzlF73boyoKARvolMJlGymprQ+hHPrvlaQBxLsY=;
-        b=AeVFakHwl3ShYUBAR+wdaOObcRjyc/4J4NF1aui8ojiGKJ3nldxlTO5LRf+moLwZ8b
-         jPkn+YN7s/pob/eiNionXmdzFcqhA/Y3fNNZeD1uz0D/O8v2Gk5LtCoaKNERUBoJJNm5
-         Zb0v8IpfdOHRyVWSVNnhW2paJ+fGO9xUvNVvSjOJiM+w2Nb7GXc47OQERjR9BWvycwwt
-         0EPqSazouzwwZV046OphnIKEgnrK2OSTuE0zTOluJUGlZM/wnsi2+91UjLS/AjgWtpQD
-         D5Eg3JgqeigtpHkBDFG4vek9r+NKDCsmWAjWYdkIb6UodoQUV74U/OS1I62CQYSeMOFj
-         6WCg==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=F0TmM8b9e274oJMvNvuPKJVM2spWHgnC/4XXZLIhTKc=;
+        b=S1Us7OAbBJgnJ7Qc5yA9DRJFHDniqPlIsZgDysPoU6nRKRxSYGGySsj1QcYZeRV31C
+         DjT6f51ghmir+RZJdqrAjQrWHq5AZ7TQWwqv2SL5tTkiIyy148ET+tgzqGxhJ+A7feEY
+         F31etkjkP4rhcTxNg8nzhl+VbIJicF/dG8DbESw0z/oqJqnnbE+/4YvI4kuNQcHHmMMH
+         x91V6YLrCvrBNzS0p98knuYHnVJZArBM9L22n7wBBTfEwRQxzTITCpEZdiEDXJ1W9DLR
+         D5iQKNHU6MrS8MjC8GplZjNVs0tZ+jXm/aWlkEzEZuar/rQJkUV+sjosCFs9cWIogPrv
+         2xWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=33H7bzlF73boyoKARvolMJlGymprQ+hHPrvlaQBxLsY=;
-        b=IQKS1z0NEBQnySClyDFeGHadRk6XVQjpeXHz4Wq+oakdBOHFQ4Mm4gmOtXjVE2FZoY
-         w8OFxi9aW2ant/4/XYBODQfrPgF/xyc0IL4uD9vtVTjtyKuLgS4twa/TyztDYSUZ82Fc
-         w1zIxQUY+OW+4UG8doHT2GSdYOwSrHpO3uLtujW7FyMYgRkFRGS47OzEC39vaSo4y8MF
-         ZQkYMyC2I3zMmfNGLljfxRi6Ca26LNuzo3MIxqtMtB+DLwqmY/LiQDQ2XvvLSX5prmet
-         1MOugbw38pWG8sWVAU2Vz+x51xCbKFFYr1AoXnTpT/XPIrGc13nJWH+xOJizll7J16HH
-         ykYg==
-X-Gm-Message-State: AOAM532LY8dSeGk/pSPWnpAzEMZu4d+SZ+Kqg5OSXfrm+47mUYf66i9u
-        jQURv06Px4L5hDn1RjZ3j163ojxzUpq7rdRHD0E=
-X-Google-Smtp-Source: ABdhPJyL2x6MVUkHDYX54WjUueaKVacWuK/Q0kt8PsgUpOOA0Qa8tDhgfYiMmeFbY8lxlLx2xmPfewvciA4Sk1Geac8=
-X-Received: by 2002:a9d:6e97:0:b0:60b:3a60:142b with SMTP id
- a23-20020a9d6e97000000b0060b3a60142bmr7434793otr.217.1653839822359; Sun, 29
- May 2022 08:57:02 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=F0TmM8b9e274oJMvNvuPKJVM2spWHgnC/4XXZLIhTKc=;
+        b=QYmAKmCBNidSStO8NbB2vfhpdIso0bu3FZq7yMLRFU+zd5139lKrjDDkiGUAEYvlBQ
+         +YBL1AF5xcgwxb/OMLVMmhL7C3pJKMbnIki/XIayVvwl61HBTWIW2cSO3mKGl4bmMIfE
+         8S3o7EioAP4uJxa2R5FbuGtGXN06fJQEUSEyTItTySF4TKBLblX8w9zmQGMcn7UH9C6d
+         Cy8g7bYcH7/bB/XNxKWkILszzRiqlVOEFdus1BeU0J/AJCPk2Rnxr+ejVkIWW0ezTUDn
+         4J+cVk7CtIwz8gbZxz42Bk0SjpSHf2HJvbrftgKbLsDUlAHLjbS1ksGbRGN/2kWoyHLo
+         DgfQ==
+X-Gm-Message-State: AOAM530S17dIwu0DoTT0N9wzGzsSX2Vme3e2TmQ5IxIRTI+jQ1vIsQ/g
+        8xi3mpnXqlGCbRQMS1rWoQY=
+X-Google-Smtp-Source: ABdhPJwiBkVL6vuI5goGhYdfMbEajG9cOJY8MXj2qEucMrXQYa65iBSazvTQHcgKUdnOCdriyfKu0g==
+X-Received: by 2002:a65:4c44:0:b0:39c:e0b5:cd2a with SMTP id l4-20020a654c44000000b0039ce0b5cd2amr45230821pgr.481.1653841780062;
+        Sun, 29 May 2022 09:29:40 -0700 (PDT)
+Received: from localhost ([2601:1c0:5200:a6:307:a401:7b76:c6e5])
+        by smtp.gmail.com with ESMTPSA id p1-20020a170902ebc100b00163ad74fe4esm1207781plg.70.2022.05.29.09.29.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 29 May 2022 09:29:38 -0700 (PDT)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Rob Clark <robdclark@chromium.org>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Gerd Hoffmann <kraxel@redhat.com>,
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH] drm/prime: Ensure mmap offset is initialized
+Date:   Sun, 29 May 2022 09:29:36 -0700
+Message-Id: <20220529162936.2539901-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.35.3
 MIME-Version: 1.0
-Received: by 2002:a05:6358:560a:b0:a3:6e92:e156 with HTTP; Sun, 29 May 2022
- 08:57:01 -0700 (PDT)
-Reply-To: BAkermarrtin@gmail.com
-From:   Martin Baker <m.evelinemartins@gmail.com>
-Date:   Sun, 29 May 2022 15:57:01 +0000
-Message-ID: <CAEvQOXRgPP5GhpUshtwVJ9oGTJHaFEEej5XOpmhHV+oYOMZHfg@mail.gmail.com>
-Subject: 
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=4.5 required=5.0 tests=BAYES_50,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,FREEMAIL_REPLYTO,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        UNDISC_FREEM autolearn=no autolearn_force=no version=3.4.6
-X-Spam-Level: ****
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello,
+From: Rob Clark <robdclark@chromium.org>
 
+If a GEM object is allocated, and then exported as a dma-buf fd which is
+mmap'd before or without the GEM buffer being directly mmap'd, the
+vma_node could be unitialized.  This leads to a situation where the CPU
+mapping is not correctly torn down in drm_vma_node_unmap().
 
-I wrote to you this morning because I have something to tell you, please
-let me know if you read my previous post today.
+Fixes: e5516553999f ("drm: call drm_gem_object_funcs.mmap with fake offset")
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+---
+Note, it's possible the issue existed in some related form prior to the
+commit tagged with Fixes.
+
+ drivers/gpu/drm/drm_prime.c | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/drivers/gpu/drm/drm_prime.c b/drivers/gpu/drm/drm_prime.c
+index e3f09f18110c..849eea154dfc 100644
+--- a/drivers/gpu/drm/drm_prime.c
++++ b/drivers/gpu/drm/drm_prime.c
+@@ -716,6 +716,11 @@ int drm_gem_prime_mmap(struct drm_gem_object *obj, struct vm_area_struct *vma)
+ 	struct file *fil;
+ 	int ret;
+ 
++	/* Ensure that the vma_node is initialized: */
++	ret = drm_gem_create_mmap_offset(obj);
++	if (ret)
++		return ret;
++
+ 	/* Add the fake offset */
+ 	vma->vm_pgoff += drm_vma_node_start(&obj->vma_node);
+ 
+-- 
+2.35.3
+
