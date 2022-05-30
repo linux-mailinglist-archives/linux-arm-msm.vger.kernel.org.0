@@ -2,39 +2,38 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4B1E55374FA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 May 2022 09:23:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C40515374A6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 May 2022 09:23:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230482AbiE3HGW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 May 2022 03:06:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33078 "EHLO
+        id S233350AbiE3HIG convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 May 2022 03:08:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37148 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230274AbiE3HGW (ORCPT
+        with ESMTP id S233349AbiE3HIA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 May 2022 03:06:22 -0400
+        Mon, 30 May 2022 03:08:00 -0400
 Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24C0B71A1C;
-        Mon, 30 May 2022 00:06:21 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0922CB7FA;
+        Mon, 30 May 2022 00:07:40 -0700 (PDT)
 Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
-        id E67821C0B8A; Mon, 30 May 2022 09:06:19 +0200 (CEST)
-Date:   Mon, 30 May 2022 09:06:19 +0200
+        id 463541C0BB0; Mon, 30 May 2022 09:07:39 +0200 (CEST)
+Date:   Mon, 30 May 2022 09:07:38 +0200
 From:   Pavel Machek <pavel@ucw.cz>
-To:     Luca Weiss <luca@z3ntu.xyz>
-Cc:     linux-arm-msm@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Andr?? Almeida <andrealmeid@collabora.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] ARM: dts: qcom: msm8974-hammerhead: Add notification LED
-Message-ID: <20220530070618.GC1363@bug>
-References: <20220505164336.13210-1-luca@z3ntu.xyz>
+To:     Alec Su <ae40515@yahoo.com.tw>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, sboyd@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, y.oudjana@protonmail.com
+Subject: Re: [PATCH v3 0/2] Add support for Xiaomi Mi 5s Plus
+Message-ID: <20220530070738.GI1363@bug>
+References: <20220520120449.12996-1-ae40515.ref@yahoo.com.tw>
+ <20220520120449.12996-1-ae40515@yahoo.com.tw>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220505164336.13210-1-luca@z3ntu.xyz>
+Content-Transfer-Encoding: 8BIT
+In-Reply-To: <20220520120449.12996-1-ae40515@yahoo.com.tw>
 User-Agent: Mutt/1.5.23 (2014-03-12)
 X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
         SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
@@ -47,20 +46,14 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hi!
 
-> From: Andr?? Almeida <andrealmeid@collabora.com>
-> 
-> Nexus 5 has a RGB LED connected to the TRILED and hence channels 7, 6 and
-> 5 of the LPG. Add a node describing this.
-> 
-> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
-> Signed-off-by: Andr?? Almeida <andrealmeid@collabora.com>
+> This series adds the device tree for Xiaomi Mi 5s Plus (xiaomi-natrium)
+> smartphone which is based on Snapdragon 821 SoC.
 
-> --- This patch depends on the PM8941 LPG patch: 
-> https://lore.kernel.org/linux-arm-msm/20220504205411.1510667-1-bjorn.andersson@linaro.org/
-
-How does this LED end up looking in userland? We want to make sure all the phone RGB status LEDs 
-end up using same path in /sys/..
+Please cc phone-devel@ mailing list with phone-related patches.
 
 Best regards,
+								Pavel
 
-									Pavel
+-- 
+(english) http://www.livejournal.com/~pavelmachek
+(cesky, pictures) http://atrey.karlin.mff.cuni.cz/~pavel/picture/horses/blog.html
