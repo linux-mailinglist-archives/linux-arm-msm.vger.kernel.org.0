@@ -2,52 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 95DBA537C45
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 May 2022 15:32:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D54A65380EE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 May 2022 16:28:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237199AbiE3Nbv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 May 2022 09:31:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43596 "EHLO
+        id S238221AbiE3Nsb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 May 2022 09:48:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41276 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237499AbiE3Na5 (ORCPT
+        with ESMTP id S238792AbiE3Np5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 May 2022 09:30:57 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DD3E8DDD4;
-        Mon, 30 May 2022 06:27:35 -0700 (PDT)
+        Mon, 30 May 2022 09:45:57 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6056AA0D09;
+        Mon, 30 May 2022 06:33:36 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id BF1B860EE0;
-        Mon, 30 May 2022 13:27:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80C73C3411A;
-        Mon, 30 May 2022 13:27:32 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 006A660E9B;
+        Mon, 30 May 2022 13:33:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E876C3411A;
+        Mon, 30 May 2022 13:33:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1653917254;
-        bh=ooRjUvmGJzzu/siEDXfgX0wur8PrGZ7/pd2kHQ/UvyI=;
+        s=k20201202; t=1653917611;
+        bh=1rMP8kZatU4ASe70FEHQC3m9PZKnZRDIpdNd/40kEeE=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=Q92jcB1YuT6hCiE2BlCmUFtwGKuRRn77L/k45y9QqklMudC6U8eYH8MVppKeYXxli
-         gAARJJnHJfhk4XRWi9nrLN7eMXnIhEcNbV9Wv40K9qZJvP6kaUm5ukKKp0xOPO8WbQ
-         UekulUSdyfaE6r6FK809obEHs/T0VNlwHCIYic2+ea8J4rxzW0DtHTg+cP5Vb/PeNx
-         8BusEr3Ur4XwcfYTUzp4mZDjJnx9A5OFswSDbExENzyoNAmcjZ6YluB/DcgQEJ2HNF
-         jd8Yz4gZpcybc8a/D8eLtjK460Hu8I8mmAckQeWXKEdezMmygcIj3mAPNMPD78w5ez
-         n8RCocqHHfOFw==
+        b=TUmV3j/FDdfWx6IJMRliOyqi8DSAM7Xiv/9rz7cvrbZv5YF/IJy/z7CcZQhQoEcKq
+         xwVkapDxp3S5kqFtBurG2BhRpcv3dPx5TXnwSr8YKs+/QC4USWheTxUGzIIeaiXM7n
+         7W/fSg6+1x5EVSW4wG5BqaS8JZMJmjAzknYToCJvu63ubUWZPFXorEebv0QvamNUS0
+         pkeuqerQkbqUA9By3E2Dn9/X7ksA2d1BVuW5VZuEwGGUiZrnfq3GmCV+FRT5JGSjpa
+         fJq2t97rBvLMJhPm2IYi89kIHimczfUj9JwCByTzpOV1uP4SHFhhZJJFWtfzb73Pmp
+         9PHT6sKqjmn+A==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Jessica Zhang <quic_jesszhan@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Sasha Levin <sashal@kernel.org>, robdclark@gmail.com,
-        quic_abhinavk@quicinc.com, airlied@linux.ie, daniel@ffwll.ch,
-        swboyd@chromium.org, nathan@kernel.org, seanpaul@chromium.org,
-        markyacoub@google.com, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 5.18 071/159] drm/msm/dpu: Clean up CRC debug logs
-Date:   Mon, 30 May 2022 09:22:56 -0400
-Message-Id: <20220530132425.1929512-71-sashal@kernel.org>
+Cc:     Luca Weiss <luca.weiss@fairphone.com>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Sasha Levin <sashal@kernel.org>, agross@kernel.org,
+        bjorn.andersson@linaro.org, linux-media@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.17 040/135] media: venus: hfi: avoid null dereference in deinit
+Date:   Mon, 30 May 2022 09:29:58 -0400
+Message-Id: <20220530133133.1931716-40-sashal@kernel.org>
 X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220530132425.1929512-1-sashal@kernel.org>
-References: <20220530132425.1929512-1-sashal@kernel.org>
+In-Reply-To: <20220530133133.1931716-1-sashal@kernel.org>
+References: <20220530133133.1931716-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -62,62 +60,39 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Jessica Zhang <quic_jesszhan@quicinc.com>
+From: Luca Weiss <luca.weiss@fairphone.com>
 
-[ Upstream commit 3ce8bdca394fc606b55e7c5ed779d171aaae5d09 ]
+[ Upstream commit 86594f6af867b5165d2ba7b5a71fae3a5961e56c ]
 
-Currently, dpu_hw_lm_collect_misr returns EINVAL if CRC is disabled.
-This causes a lot of spam in the DRM debug logs as it's called for every
-vblank.
+If venus_probe fails at pm_runtime_put_sync the error handling first
+calls hfi_destroy and afterwards hfi_core_deinit. As hfi_destroy sets
+core->ops to NULL, hfi_core_deinit cannot call the core_deinit function
+anymore.
 
-Instead of returning EINVAL when CRC is disabled in
-dpu_hw_lm_collect_misr, let's return ENODATA and add an extra ENODATA check
-before the debug log in dpu_crtc_get_crc.
+Avoid this null pointer derefence by skipping the call when necessary.
 
-Changes since V1:
-- Added reported-by and suggested-by tags
-
-Reported-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Suggested-by: Rob Clark <robdclark@chromium.org>
-Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-Tested-by: Jessica Zhang <quic_jesszhan@quicinc.com> # RB5  (qrb5165)
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/484274/
-Link: https://lore.kernel.org/r/20220430005210.339-1-quic_jesszhan@quicinc.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c  | 3 ++-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c | 2 +-
- 2 files changed, 3 insertions(+), 2 deletions(-)
+ drivers/media/platform/qcom/venus/hfi.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-index 7763558ef566..16ba9f9b9a78 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-@@ -204,7 +204,8 @@ static int dpu_crtc_get_crc(struct drm_crtc *crtc)
- 		rc = m->hw_lm->ops.collect_misr(m->hw_lm, &crcs[i]);
- 
- 		if (rc) {
--			DRM_DEBUG_DRIVER("MISR read failed\n");
-+			if (rc != -ENODATA)
-+				DRM_DEBUG_DRIVER("MISR read failed\n");
- 			return rc;
- 		}
+diff --git a/drivers/media/platform/qcom/venus/hfi.c b/drivers/media/platform/qcom/venus/hfi.c
+index 4e2151fb47f0..1968f09ad177 100644
+--- a/drivers/media/platform/qcom/venus/hfi.c
++++ b/drivers/media/platform/qcom/venus/hfi.c
+@@ -104,6 +104,9 @@ int hfi_core_deinit(struct venus_core *core, bool blocking)
+ 		mutex_lock(&core->lock);
  	}
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
-index 86363c0ec834..462f5082099e 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
-@@ -138,7 +138,7 @@ static int dpu_hw_lm_collect_misr(struct dpu_hw_mixer *ctx, u32 *misr_value)
- 	ctrl = DPU_REG_READ(c, LM_MISR_CTRL);
  
- 	if (!(ctrl & LM_MISR_CTRL_ENABLE))
--		return -EINVAL;
-+		return -ENODATA;
++	if (!core->ops)
++		goto unlock;
++
+ 	ret = core->ops->core_deinit(core);
  
- 	if (!(ctrl & LM_MISR_CTRL_STATUS))
- 		return -EINVAL;
+ 	if (!ret)
 -- 
 2.35.1
 
