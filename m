@@ -2,110 +2,202 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E780E538471
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 May 2022 17:15:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 85ECE53848B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 May 2022 17:18:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239561AbiE3PMu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 May 2022 11:12:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43038 "EHLO
+        id S237514AbiE3PQm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 May 2022 11:16:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43192 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242062AbiE3PMg (ORCPT
+        with ESMTP id S237890AbiE3PQa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 May 2022 11:12:36 -0400
-Received: from mail-io1-xd41.google.com (mail-io1-xd41.google.com [IPv6:2607:f8b0:4864:20::d41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8166A6C0E4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 May 2022 07:12:42 -0700 (PDT)
-Received: by mail-io1-xd41.google.com with SMTP id s23so11411110iog.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 May 2022 07:12:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:reply-to:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=XJqXgw0Qi4Ge6Q57wB4GlvotoYnhUuSq68y9152a6AE=;
-        b=JsCtuXKpsViwY/CJI0/LxQxugvjrtA4BOeO2s8Sw/MrosHEeJ4yrMj0n8DIWPtcNav
-         CcFqPdv07L2Ge71ZRHy5wTNlhph0UajUtpEp69f4nDIGjBfDUf3ywSKUeVyX9ZN2aiVK
-         JQPzLJSEWmxOvx0aQTF8UcBBkr3MBFu/psgeu0tPSG5nzxCcwQyqKh/+yK5ob2XZp0w1
-         Pvt4sb0goxrJYdckqDnkeKnPhnMtW7rr3LwsPzbjAG4Sx87b7tUHogz/5sffFcPlDH71
-         Ii54SDI2UCn9kbE25HiuXyB+BcyEfANlw488btb9yiGzSJpBGsnsEFxnmiwSiB5ST4Jw
-         dJpg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to:content-transfer-encoding;
-        bh=XJqXgw0Qi4Ge6Q57wB4GlvotoYnhUuSq68y9152a6AE=;
-        b=lBfbniDrb4eT062kr+K9Q4AIFTQHkflM/Kj/x5okvuCdRyg7Q5vlivVumgZznhDdGO
-         CBmk6qvJzL28fFSHWBrDuJ/Ig/D8bbGiFqp1PCBuWiga5uagmKoPTJNz6DpAxY2akSuM
-         Y4EQh/QqCTyXBb4C9jGXtt2CTSZI3Lb0rKy6XYE15yufegQ1AWx/6jR2uaL2Crrb1Fhu
-         YX6YI8deKwNZwE+dK9VwmeDKScqor1JH1dQzj+0XbN1LjwIeZCJFpayHJ+1fMK2Jzrsh
-         CUu9neJOp6S07TtJhy+xeH1OYvisMZWkupfIiQXAOMGbx/93wsiZZY+Ftg/x6eo+VZHP
-         BwFg==
-X-Gm-Message-State: AOAM532rLW9K/OWvrkjyG07wbGvGL2pUrArYfFy9TuOmNjUOPiJBpkGW
-        L3QQr5VB5zu6E9vSnKx7acA1er8X+tAMjNL5MXg=
-X-Google-Smtp-Source: ABdhPJystCAY+oZR2ngxwv/ZHdKxqwS8y6U2PAr9NfyAZ0LxrpfGI0MtVlBXwJJdG9aEmyFfkn9wBgtvckZXyzCPHoQ=
-X-Received: by 2002:a05:6638:13cd:b0:330:bc2b:d8f0 with SMTP id
- i13-20020a05663813cd00b00330bc2bd8f0mr11862159jaj.41.1653919961459; Mon, 30
- May 2022 07:12:41 -0700 (PDT)
+        Mon, 30 May 2022 11:16:30 -0400
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B247EABA7;
+        Mon, 30 May 2022 07:16:12 -0700 (PDT)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        (No client certificate requested)
+        by smtp-out2.suse.de (Postfix) with ESMTPS id AE81F1F929;
+        Mon, 30 May 2022 14:16:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+        t=1653920170; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=tTii8oW6HgjN0H3GaZ7/EVE91VV1R88qvcxgCuUoU2E=;
+        b=V8JHqsIBU7CZ3jLsLi0qfoXjUg8mpQpS6OUNpvrVIMUceLX6xlLgT7FoAiOmEspAFcYi0D
+        J4H4OXMYzeh4rxkkKkxBBDzSqgOtundDUHHDrdZl0cNuasU4lAgJq1qdA/saS7kAgS6+kW
+        buAZeSgjlib3rxiSg+e9aPVTXX8yUf0=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+        s=susede2_ed25519; t=1653920170;
+        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=tTii8oW6HgjN0H3GaZ7/EVE91VV1R88qvcxgCuUoU2E=;
+        b=tI7klourrQ4wJ4gHtcWrMRbopOavuf5zKO3GRhSMJGMXTW9KnHnVeQE5V0dZV/v+EswrkC
+        Mrq13ySEfB7sZnDw==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        (No client certificate requested)
+        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 7D5E513A84;
+        Mon, 30 May 2022 14:16:10 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+        by imap2.suse-dmz.suse.de with ESMTPSA
+        id yYasHarRlGLCTwAAMHmgww
+        (envelope-from <tzimmermann@suse.de>); Mon, 30 May 2022 14:16:10 +0000
+Message-ID: <6169ea6b-7452-e8e3-f253-1329f4924a67@suse.de>
+Date:   Mon, 30 May 2022 16:16:10 +0200
 MIME-Version: 1.0
-Received: by 2002:a05:6622:f06:0:0:0:0 with HTTP; Mon, 30 May 2022 07:12:40
- -0700 (PDT)
-Reply-To: barristerbenjamin221@gmail.com
-From:   Attorney Amadou <koadaidrissa1@gmail.com>
-Date:   Mon, 30 May 2022 07:12:40 -0700
-Message-ID: <CAOh7+P9UwKyjyMMT++CSm4EweqD80wcjqOPKJnR-SLPmtF2uaA@mail.gmail.com>
-Subject: 
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: base64
-X-Spam-Status: Yes, score=7.7 required=5.0 tests=BAYES_99,BAYES_999,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FROM,FREEMAIL_REPLYTO,
-        FREEMAIL_REPLYTO_END_DIGIT,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,UNDISC_FREEM autolearn=no autolearn_force=no
-        version=3.4.6
-X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
-        *      https://www.dnswl.org/, no trust
-        *      [2607:f8b0:4864:20:0:0:0:d41 listed in]
-        [list.dnswl.org]
-        *  0.2 BAYES_999 BODY: Bayes spam probability is 99.9 to 100%
-        *      [score: 1.0000]
-        *  3.5 BAYES_99 BODY: Bayes spam probability is 99 to 100%
-        *      [score: 1.0000]
-        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
-        *      provider
-        *      [koadaidrissa1[at]gmail.com]
-        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
-        * -0.0 SPF_PASS SPF: sender matches SPF record
-        *  0.2 FREEMAIL_REPLYTO_END_DIGIT Reply-To freemail username ends in
-        *      digit
-        *      [barristerbenjamin221[at]gmail.com]
-        *  0.2 FREEMAIL_ENVFROM_END_DIGIT Envelope-from freemail username ends
-        *       in digit
-        *      [koadaidrissa1[at]gmail.com]
-        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
-        *      envelope-from domain
-        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
-        *       valid
-        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
-        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
-        *      author's domain
-        * -0.0 T_SCC_BODY_TEXT_LINE No description available.
-        *  2.7 UNDISC_FREEM Undisclosed recipients + freemail reply-to
-        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
-        *      different freemails
-X-Spam-Level: *******
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Subject: Re: [PATCH] drm/prime: Ensure mmap offset is initialized
+Content-Language: en-US
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
+        Rob Clark <robdclark@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        Gerd Hoffmann <kraxel@redhat.com>,
+        freedreno <freedreno@lists.freedesktop.org>
+References: <20220529162936.2539901-1-robdclark@gmail.com>
+ <0bf230f4-c888-b9c9-f061-7450406baa4a@suse.de>
+ <CAF6AEGthAfWyAvbuE4EP+u52LEKS2Fs6X=gG8qUjc7gci6oh-A@mail.gmail.com>
+From:   Thomas Zimmermann <tzimmermann@suse.de>
+In-Reply-To: <CAF6AEGthAfWyAvbuE4EP+u52LEKS2Fs6X=gG8qUjc7gci6oh-A@mail.gmail.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------hc0fa0reMYQjQXwWx2Y0uhJE"
+X-Spam-Status: No, score=-4.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-SGVsbG8gZGVhciBmcmllbmQuDQoNClBsZWFzZSBJIHdpbGwgbG92ZSB0byBkaXNjdXNzIHNvbWV0
-aGluZyB2ZXJ5IGltcG9ydGFudCB3aXRoIHlvdSwgSQ0Kd2lsbCBhcHByZWNpYXRlIGl0IGlmIHlv
-dSBncmFudCBtZSBhdWRpZW5jZS4NCg0KU2luY2VyZWx5Lg0KQmFycmlzdGVyIEFtYWRvdSBCZW5q
-YW1pbiBFc3EuDQouLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4u
-Li4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4NCuimquaEm+OB
-quOCi+WPi+S6uuOAgeOBk+OCk+OBq+OBoeOBr+OAgg0KDQrnp4Hjga/jgYLjgarjgZ/jgajpnZ7l
-uLjjgavph43opoHjgarjgZPjgajjgavjgaTjgYTjgaboqbHjgZflkIjjgYbjga7jgYzlpKflpb3j
-gY3jgafjgZnjgIHjgYLjgarjgZ/jgYznp4HjgavogbTooYbjgpLkuI7jgYjjgabjgY/jgozjgozj
-gbDnp4Hjga/jgZ3jgozjgpLmhJ/orJ3jgZfjgb7jgZnjgIINCg0K5b+D44GL44KJ44CCDQrjg5Dj
-g6rjgrnjgr/jg7zjgqLjg57jg4njgqXjg5njg7Pjgrjjg6Pjg5/jg7NFc3HjgIINCg==
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------hc0fa0reMYQjQXwWx2Y0uhJE
+Content-Type: multipart/mixed; boundary="------------VdWsP9NZV1AcBf9IfDLiDlXf";
+ protected-headers="v1"
+From: Thomas Zimmermann <tzimmermann@suse.de>
+To: Rob Clark <robdclark@gmail.com>
+Cc: dri-devel <dri-devel@lists.freedesktop.org>,
+ Rob Clark <robdclark@chromium.org>, David Airlie <airlied@linux.ie>,
+ linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+ open list <linux-kernel@vger.kernel.org>, Gerd Hoffmann <kraxel@redhat.com>,
+ freedreno <freedreno@lists.freedesktop.org>
+Message-ID: <6169ea6b-7452-e8e3-f253-1329f4924a67@suse.de>
+Subject: Re: [PATCH] drm/prime: Ensure mmap offset is initialized
+References: <20220529162936.2539901-1-robdclark@gmail.com>
+ <0bf230f4-c888-b9c9-f061-7450406baa4a@suse.de>
+ <CAF6AEGthAfWyAvbuE4EP+u52LEKS2Fs6X=gG8qUjc7gci6oh-A@mail.gmail.com>
+In-Reply-To: <CAF6AEGthAfWyAvbuE4EP+u52LEKS2Fs6X=gG8qUjc7gci6oh-A@mail.gmail.com>
+
+--------------VdWsP9NZV1AcBf9IfDLiDlXf
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
+
+SGkNCg0KQW0gMzAuMDUuMjIgdW0gMTU6NDcgc2NocmllYiBSb2IgQ2xhcms6DQo+IE9uIE1v
+biwgTWF5IDMwLCAyMDIyIGF0IDEyOjI2IEFNIFRob21hcyBaaW1tZXJtYW5uIDx0emltbWVy
+bWFubkBzdXNlLmRlPiB3cm90ZToNCj4+DQo+PiBIaQ0KPj4NCj4+IEFtIDI5LjA1LjIyIHVt
+IDE4OjI5IHNjaHJpZWIgUm9iIENsYXJrOg0KPj4+IEZyb206IFJvYiBDbGFyayA8cm9iZGNs
+YXJrQGNocm9taXVtLm9yZz4NCj4+Pg0KPj4+IElmIGEgR0VNIG9iamVjdCBpcyBhbGxvY2F0
+ZWQsIGFuZCB0aGVuIGV4cG9ydGVkIGFzIGEgZG1hLWJ1ZiBmZCB3aGljaCBpcw0KPj4+IG1t
+YXAnZCBiZWZvcmUgb3Igd2l0aG91dCB0aGUgR0VNIGJ1ZmZlciBiZWluZyBkaXJlY3RseSBt
+bWFwJ2QsIHRoZQ0KPj4+IHZtYV9ub2RlIGNvdWxkIGJlIHVuaXRpYWxpemVkLiAgVGhpcyBs
+ZWFkcyB0byBhIHNpdHVhdGlvbiB3aGVyZSB0aGUgQ1BVDQo+Pj4gbWFwcGluZyBpcyBub3Qg
+Y29ycmVjdGx5IHRvcm4gZG93biBpbiBkcm1fdm1hX25vZGVfdW5tYXAoKS4NCj4+DQo+PiBX
+aGljaCBkcml2ZXJzIGFyZSBhZmZlY3RlZCBieSB0aGlzIHByb2JsZW0/DQo+Pg0KPj4gSSBj
+aGVja2VkIHNldmVyYWwgZHJpdmVycyBhbmQgbW9zdCBhcHBlYXIgdG8gYmUgaW5pdGlhbGl6
+aW5nIHRoZSBvZmZzZXQNCj4+IGR1cmluZyBvYmplY3QgY29uc3RydWN0aW9uLCBzdWNoIGFz
+IEdFTSBTSE1FTS4gWzFdIFRUTS1iYXNlZCBkcml2ZXJzDQo+PiBhbHNvIHNlZW0gdW5hZmZl
+Y3RlZC4gWzJdDQo+Pg0KPj4gICBGcm9tIGEgcXVpY2sgZ3JlcCwgb25seSBldG5hdml2LCBt
+c20gYW5kIG9tYXBkcm0gYXBwZWFyIHRvIGJlIGFmZmVjdGVkPw0KPj4gVGhleSBvbmx5IHNl
+ZW0gdG8gcnVuIGRybV9nZW1fY3JlYXRlX21tYXBfb2Zmc2V0KCkgZnJvbSB0aGVpcg0KPj4g
+aW9jdGwtaGFuZGxpbmcgY29kZS4NCj4+DQo+PiBJZiBzbywgSSdkIHNheSBpdCdzIHByZWZl
+cmFibGUgdG8gZml4IHRoZXNlIGRyaXZlcnMgYW5kIHB1dCBhDQo+PiBkcm1fV0FSTl9PTkNF
+KCkgaW50byBkcm1fZ2VtX3ByaW1lX21tYXAoKS4NCj4gDQo+IFRoYXQgaXMgZ29vZCBpZiBm
+ZXdlciBkcml2ZXJzIGFyZSBhZmZlY3RlZCwgaG93ZXZlciBJIGRpc2FncmVlIHdpdGgNCj4g
+eW91ciBwcm9wb3NhbC4gIEF0IGxlYXN0IGZvciBmcmVlZHJlbm8gdXNlcnNwYWNlLCBhIGxv
+dCBvZiBibydzIG5ldmVyDQo+IGdldCBtbWFwJ2QgKGVpdGhlciBkaXJlY3RseSBvZiB2aWEg
+ZG1hYnVmKSwgc28gd2Ugc2hvdWxkIG5vdCBiZQ0KPiBhbGxvY2F0aW5nIGEgbW1hcCBvZmZz
+ZXQgdW5uZWNlc3NhcmlseS4NCg0KSSBzZWUuDQoNCkkgdGhlIHJlYXNvbiBJJ20gYXJndWlu
+ZyBhZ2FpbnN0IHRoZSBjdXJyZW50IHBhdGNoIGlzIHRoYXQgdGhlIGZpeCANCmFwcGVhcnMg
+bGlrZSBhIHdvcmthcm91bmQgYW5kIDYgbW9udGhzIGZyb20gbm93LCBmZXcgd2lsbCByZW1l
+bWJlciB3aHkgDQppdCdzIHRoZXJlLiBFc3BlY2lhbGx5IHNpbmNlIG1vc3QgZHJpdmVycyBp
+bml0aWFsaXplIHRoZSBvZmZzZXQgDQpjb3JyZWN0bHkuIChOb3QgdG9vIGxvbmcgYWdvLCBJ
+IHJlZmFjdG9yZWQgdGhlIGhhbmRsaW5nIG9mIHRoZXNlIG1tYXAgDQpjYWxscyB0aHJvdWdo
+b3V0IERSTSBkcml2ZXJzIGFuZCBpdCB3YXMgY29uZnVzaW5nIGF0IHRpbWVzLikNCg0KU28g
+aGVyZSdzIGFub3RoZXIgc3VnZ2VzdGlvbjogIEkgZnVydGhlciBsb29rZWQgYXQgdGhlIDMg
+ZHJpdmVycyB0aGF0IEkgDQptZW50aW9uZWQuIGV0bmF2aXYgYW5kIG1zbSBjYW4gZWFzaWx5
+IHdyYXAgdGhlIGNhbGwgdG8gDQpkcm1fZ2VtX3ByaW1lX21tYXAoKSBhbmQgaW5pdCB0aGUg
+b2Zmc2V0IGZpcnN0LiBbMV1bMl0gIG9tYXBkcm0gZG9lc24ndCANCmFjdHVhbGx5IHVzZSBk
+cm1fZ2VtX3ByaW1lX21tYXAoKS4gVGhlIG9mZnNldCBjYW4gaW5zdGVhZCBiZSBpbml0aWFs
+aXplZCANCmF0IHRoZSB0b3Agb2YgdGhlIGRyaXZlcidzIGRtYWJ1ZiBtbWFwIGZ1bmN0aW9u
+LiBbM10NCg0KQmVzdCByZWdhcmRzDQpUaG9tYXMNCg0KWzFdIA0KaHR0cHM6Ly9lbGl4aXIu
+Ym9vdGxpbi5jb20vbGludXgvdjUuMTgvc291cmNlL2RyaXZlcnMvZ3B1L2RybS9ldG5hdml2
+L2V0bmF2aXZfZHJ2LmMjTDQ4MA0KWzJdIA0KaHR0cHM6Ly9lbGl4aXIuYm9vdGxpbi5jb20v
+bGludXgvdjUuMTgvc291cmNlL2RyaXZlcnMvZ3B1L2RybS9tc20vbXNtX2Rydi5jI0w5NjEN
+ClszXSANCmh0dHBzOi8vZWxpeGlyLmJvb3RsaW4uY29tL2xpbnV4L3Y1LjE4L3NvdXJjZS9k
+cml2ZXJzL2dwdS9kcm0vb21hcGRybS9vbWFwX2dlbV9kbWFidWYuYyNMNjYNCg0KPiANCj4g
+QlIsDQo+IC1SDQo+IA0KPj4gQmVzdCByZWdhcmRzDQo+PiBUaG9tYXMNCj4+DQo+PiBbMV0N
+Cj4+IGh0dHBzOi8vZWxpeGlyLmJvb3RsaW4uY29tL2xpbnV4L3Y1LjE4L3NvdXJjZS9kcml2
+ZXJzL2dwdS9kcm0vZHJtX2dlbV9zaG1lbV9oZWxwZXIuYyNMODUNCj4+IFsyXQ0KPj4gaHR0
+cHM6Ly9lbGl4aXIuYm9vdGxpbi5jb20vbGludXgvdjUuMTgvc291cmNlL2RyaXZlcnMvZ3B1
+L2RybS90dG0vdHRtX2JvLmMjTDEwMDINCj4+DQo+Pj4NCj4+PiBGaXhlczogZTU1MTY1NTM5
+OTlmICgiZHJtOiBjYWxsIGRybV9nZW1fb2JqZWN0X2Z1bmNzLm1tYXAgd2l0aCBmYWtlIG9m
+ZnNldCIpDQo+Pj4gU2lnbmVkLW9mZi1ieTogUm9iIENsYXJrIDxyb2JkY2xhcmtAY2hyb21p
+dW0ub3JnPg0KPj4+IC0tLQ0KPj4+IE5vdGUsIGl0J3MgcG9zc2libGUgdGhlIGlzc3VlIGV4
+aXN0ZWQgaW4gc29tZSByZWxhdGVkIGZvcm0gcHJpb3IgdG8gdGhlDQo+Pj4gY29tbWl0IHRh
+Z2dlZCB3aXRoIEZpeGVzLg0KPj4+DQo+Pj4gICAgZHJpdmVycy9ncHUvZHJtL2RybV9wcmlt
+ZS5jIHwgNSArKysrKw0KPj4+ICAgIDEgZmlsZSBjaGFuZ2VkLCA1IGluc2VydGlvbnMoKykN
+Cj4+Pg0KPj4+IGRpZmYgLS1naXQgYS9kcml2ZXJzL2dwdS9kcm0vZHJtX3ByaW1lLmMgYi9k
+cml2ZXJzL2dwdS9kcm0vZHJtX3ByaW1lLmMNCj4+PiBpbmRleCBlM2YwOWYxODExMGMuLjg0
+OWVlYTE1NGRmYyAxMDA2NDQNCj4+PiAtLS0gYS9kcml2ZXJzL2dwdS9kcm0vZHJtX3ByaW1l
+LmMNCj4+PiArKysgYi9kcml2ZXJzL2dwdS9kcm0vZHJtX3ByaW1lLmMNCj4+PiBAQCAtNzE2
+LDYgKzcxNiwxMSBAQCBpbnQgZHJtX2dlbV9wcmltZV9tbWFwKHN0cnVjdCBkcm1fZ2VtX29i
+amVjdCAqb2JqLCBzdHJ1Y3Qgdm1fYXJlYV9zdHJ1Y3QgKnZtYSkNCj4+PiAgICAgICAgc3Ry
+dWN0IGZpbGUgKmZpbDsNCj4+PiAgICAgICAgaW50IHJldDsNCj4+Pg0KPj4+ICsgICAgIC8q
+IEVuc3VyZSB0aGF0IHRoZSB2bWFfbm9kZSBpcyBpbml0aWFsaXplZDogKi8NCj4+PiArICAg
+ICByZXQgPSBkcm1fZ2VtX2NyZWF0ZV9tbWFwX29mZnNldChvYmopOw0KPj4+ICsgICAgIGlm
+IChyZXQpDQo+Pj4gKyAgICAgICAgICAgICByZXR1cm4gcmV0Ow0KPj4+ICsNCj4+PiAgICAg
+ICAgLyogQWRkIHRoZSBmYWtlIG9mZnNldCAqLw0KPj4+ICAgICAgICB2bWEtPnZtX3Bnb2Zm
+ICs9IGRybV92bWFfbm9kZV9zdGFydCgmb2JqLT52bWFfbm9kZSk7DQo+Pj4NCj4+DQo+PiAt
+LQ0KPj4gVGhvbWFzIFppbW1lcm1hbm4NCj4+IEdyYXBoaWNzIERyaXZlciBEZXZlbG9wZXIN
+Cj4+IFNVU0UgU29mdHdhcmUgU29sdXRpb25zIEdlcm1hbnkgR21iSA0KPj4gTWF4ZmVsZHN0
+ci4gNSwgOTA0MDkgTsO8cm5iZXJnLCBHZXJtYW55DQo+PiAoSFJCIDM2ODA5LCBBRyBOw7xy
+bmJlcmcpDQo+PiBHZXNjaMOkZnRzZsO8aHJlcjogSXZvIFRvdGV2DQoNCi0tIA0KVGhvbWFz
+IFppbW1lcm1hbm4NCkdyYXBoaWNzIERyaXZlciBEZXZlbG9wZXINClNVU0UgU29mdHdhcmUg
+U29sdXRpb25zIEdlcm1hbnkgR21iSA0KTWF4ZmVsZHN0ci4gNSwgOTA0MDkgTsO8cm5iZXJn
+LCBHZXJtYW55DQooSFJCIDM2ODA5LCBBRyBOw7xybmJlcmcpDQpHZXNjaMOkZnRzZsO8aHJl
+cjogSXZvIFRvdGV2DQo=
+
+--------------VdWsP9NZV1AcBf9IfDLiDlXf--
+
+--------------hc0fa0reMYQjQXwWx2Y0uhJE
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature"
+
+-----BEGIN PGP SIGNATURE-----
+
+wsF5BAABCAAjFiEExndm/fpuMUdwYFFolh/E3EQov+AFAmKU0aoFAwAAAAAACgkQlh/E3EQov+BJ
+0xAAqWVnjfUcYRQHsVGDGE0WU3w+im6nm34OCB0ZCPmOTS5ryXbLd5y2XYPf7zPQ65rYRD9Upuy3
+48Fq3EBn1dAhekTzDbRFIWWxbrE/kWEctzV6VQDE4qcU3rxEzJNXBwKDaPhMMTjLHouYr+A+Auct
+1AHkq1HPRW3Im1iL08F1VjQ1iwowmc4S6wUGk4oRGGC4mvqpdn6Bov82M2BmqT7Y6kupTEIlHgQH
+3sYLpF/NxbWk64IEOc2oJ11ksE867GRcTo06uqE09xwFquMzU90mvVqu70UtMCPoYys3YAi0jeA9
+WaH8YMc8tVkwW4xggk4J4RoytRSXpXdXlA7csV5VoVQCHpEx7K4Rb5CUEH7q4T074786ornSq3QE
+ZyAtDMIjAB9ak1iwhECaoSn2s+444lgapOr+ElnoQRrPXppZhIuRj40vbyaagi1DF+BfwNS5Y1NF
+2r7DDb5sKi2pYoXT5d/3B+IYjyDuzKSBmT/JPnocXpkkTG9C70smlaSqSTuaR4N5Q7GsbIYHDOON
+wwXy54O3IoyLdVPCceLChLMlWxuZhEqWhpcaFY1CN6yX9OBAWmqh7LUB2GJvoQyz9CjTlwuPhkgA
+qGlWIXNcrj6G6wM2fNgW1yWnVGVn0uv+YsPuqEniZPZ4DHeW3kYN5uIpjt2MZKiQKSHjurtVBpvD
+qAQ=
+=BzrW
+-----END PGP SIGNATURE-----
+
+--------------hc0fa0reMYQjQXwWx2Y0uhJE--
