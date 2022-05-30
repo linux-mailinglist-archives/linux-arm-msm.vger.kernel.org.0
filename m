@@ -2,36 +2,36 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2C2B45382E3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 May 2022 16:38:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A8650538308
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 May 2022 16:38:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240236AbiE3O2v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 May 2022 10:28:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56926 "EHLO
+        id S240592AbiE3O3f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 May 2022 10:29:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42894 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241594AbiE3O0Q (ORCPT
+        with ESMTP id S241940AbiE3O1P (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 May 2022 10:26:16 -0400
-Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3632AB0DB;
-        Mon, 30 May 2022 06:51:10 -0700 (PDT)
+        Mon, 30 May 2022 10:27:15 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE794B0A7F;
+        Mon, 30 May 2022 06:51:25 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id 79B6ECE106B;
-        Mon, 30 May 2022 13:49:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6B58C3411E;
-        Mon, 30 May 2022 13:49:55 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 92862B80D86;
+        Mon, 30 May 2022 13:51:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41839C3411C;
+        Mon, 30 May 2022 13:51:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1653918596;
-        bh=mfzOGPGDFMwBe8JQHvgneMIcB+OQk61Uas1dXZKCVjs=;
+        s=k20201202; t=1653918682;
+        bh=kvByzdNQK2btTZ+fpFAvasfh10IP/7TU2FF2HCwqQdA=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=Lrgl0Z/XybRsHS/zZ5jcjund71qMAZ9GTi5JQBTM18sv/Q/OwENwrvdYfSGvRIBgY
-         FQRLkGwVD5r3wjVB8Z4LL8W/RJJuiKDm1ylhuAhFgnZglGpfYyDT0I+02fkuFatDq2
-         U5/rCdskx+0VnlMbtiWjqQA9y90hAzdJ+OqjSQv9RIxVSJMAcTwhtOLxbe17tk8vK2
-         y3h40Dk3YzItxoHVh8DISxHvgrLHOCiPsvBJWYWIlwmC7I4214grPn/LmC9ioWe6/a
-         dkTFuDAxJEORxAIJh/HwW3nTmVhRMD96fgfvrChxwKrsvzYrVljrp27aXczeAHoF5q
-         Zo51L8s4PNQUQ==
+        b=G2O8JS2qvQldnXAO4rDY6AkIYQsN+NJo/itJW58Dpxo6BXrpkTI5086tT8VfGmGwi
+         ui85z6urqaTgFjWSYlAe8kEiBM9gBntGYz6h8GOKu4DheazAGZSZavkn/ULz4SuI07
+         94jU9FKkggMmRZcF3q00arKRsqe5hLHwJToD2u2v85AnkEfq94NNdB7AcONhJqeyt8
+         xNq+AVHLpMvxoR0Ymw02F1X3kElo87rg5QPLn9/4dYgjQPpEHvA/t19ElFeJNZ0nQl
+         HSvlK9BkRwSWKK8qmtbhctKca9yCm2vgBwH/LXzgczYmi4kGUtsgXzCJSK79X25k4P
+         7x8Ctx6Flycew==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Luca Weiss <luca.weiss@fairphone.com>,
@@ -40,12 +40,12 @@ Cc:     Luca Weiss <luca.weiss@fairphone.com>,
         Sasha Levin <sashal@kernel.org>, agross@kernel.org,
         bjorn.andersson@linaro.org, linux-media@vger.kernel.org,
         linux-arm-msm@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.19 12/38] media: venus: hfi: avoid null dereference in deinit
-Date:   Mon, 30 May 2022 09:48:58 -0400
-Message-Id: <20220530134924.1936816-12-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.14 10/29] media: venus: hfi: avoid null dereference in deinit
+Date:   Mon, 30 May 2022 09:50:37 -0400
+Message-Id: <20220530135057.1937286-10-sashal@kernel.org>
 X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220530134924.1936816-1-sashal@kernel.org>
-References: <20220530134924.1936816-1-sashal@kernel.org>
+In-Reply-To: <20220530135057.1937286-1-sashal@kernel.org>
+References: <20220530135057.1937286-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -80,10 +80,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 3 insertions(+)
 
 diff --git a/drivers/media/platform/qcom/venus/hfi.c b/drivers/media/platform/qcom/venus/hfi.c
-index 24207829982f..8a99e2d8274a 100644
+index ba29fd4d4984..7d1d3e64007c 100644
 --- a/drivers/media/platform/qcom/venus/hfi.c
 +++ b/drivers/media/platform/qcom/venus/hfi.c
-@@ -113,6 +113,9 @@ int hfi_core_deinit(struct venus_core *core, bool blocking)
+@@ -117,6 +117,9 @@ int hfi_core_deinit(struct venus_core *core, bool blocking)
  		mutex_lock(&core->lock);
  	}
  
