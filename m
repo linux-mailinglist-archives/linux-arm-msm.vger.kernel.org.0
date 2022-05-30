@@ -2,46 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 490D7537387
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 May 2022 04:20:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A2120537508
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 May 2022 09:23:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232227AbiE3CUJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 29 May 2022 22:20:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41626 "EHLO
+        id S232574AbiE3GXJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 May 2022 02:23:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58394 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229960AbiE3CUI (ORCPT
+        with ESMTP id S232763AbiE3GXI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 29 May 2022 22:20:08 -0400
-Received: from mail.meizu.com (unknown [14.29.68.187])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1ED43663C8;
-        Sun, 29 May 2022 19:20:06 -0700 (PDT)
-Received: from IT-EXMB-1-125.meizu.com (172.16.1.125) by mz-mail04.meizu.com
- (172.16.1.16) with Microsoft SMTP Server (TLS) id 14.3.487.0; Mon, 30 May
- 2022 10:20:00 +0800
-Received: from meizu.meizu.com (172.16.137.70) by IT-EXMB-1-125.meizu.com
- (172.16.1.125) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2308.14; Mon, 30 May
- 2022 10:19:57 +0800
-From:   Haowen Bai <baihaowen@meizu.com>
-To:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>
-CC:     Haowen Bai <baihaowen@meizu.com>, <linux-arm-msm@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
-Subject: [PATCH] drm/msm/dpu: Fix pointer dereferenced before checking
-Date:   Mon, 30 May 2022 10:19:55 +0800
-Message-ID: <1653877196-23114-1-git-send-email-baihaowen@meizu.com>
+        Mon, 30 May 2022 02:23:08 -0400
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2163FB487;
+        Sun, 29 May 2022 23:23:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1653891786; x=1685427786;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=9oIW6eud+erP103BcFZJmB+I2g5gEj8lVojeYjWx5F8=;
+  b=cXYPMqFGpBBJXy+dySDtpuJuvf7U3/kjcGUBPwXdLCScxVuJThyUdl6q
+   CFXNWTOKqcY03yEIW5zm79FGK1p1mPxupqgs6Mblyq+cV6C5X+3N9QQ8s
+   /3ilhq6YLy8s5nN4c64P6lytUYinSXJZLgb28CUNi0kFfdt/Mu5rnJwvA
+   U=;
+Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 29 May 2022 23:23:05 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 May 2022 23:23:05 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Sun, 29 May 2022 23:23:05 -0700
+Received: from blr-ubuntu-87.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Sun, 29 May 2022 23:23:01 -0700
+From:   Sibi Sankar <quic_sibis@quicinc.com>
+To:     <bjorn.andersson@linaro.org>
+CC:     <agross@kernel.org>, <mathieu.poirier@linaro.org>,
+        <dmitry.baryshkov@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <konrad.dybcio@somainline.org>,
+        Sibi Sankar <quic_sibis@quicinc.com>
+Subject: [V2 0/6] Miscellaneous PAS fixes
+Date:   Mon, 30 May 2022 11:52:45 +0530
+Message-ID: <1653891771-17103-1-git-send-email-quic_sibis@quicinc.com>
 X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Originating-IP: [172.16.137.70]
-X-ClientProxiedBy: IT-EXMB-1-126.meizu.com (172.16.1.126) To
- IT-EXMB-1-125.meizu.com (172.16.1.125)
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
-        SPF_SOFTFAIL,T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -49,32 +63,27 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The phys_enc->wb_idx is dereferencing before null checking, so move
-it after checking.
+A collection of misc. fixes for the remoteproc PAS and sysmon driver.
 
-Signed-off-by: Haowen Bai <baihaowen@meizu.com>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+V2:
+ * Add misc. sysmon fix.
+ * Dropping patch 1 and 6 from V1.
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
-index 4829d1ce0cf8..59da348ff339 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
-@@ -574,11 +574,11 @@ static void dpu_encoder_phys_wb_disable(struct dpu_encoder_phys *phys_enc)
-  */
- static void dpu_encoder_phys_wb_destroy(struct dpu_encoder_phys *phys_enc)
- {
--	DPU_DEBUG("[wb:%d]\n", phys_enc->wb_idx - WB_0);
--
- 	if (!phys_enc)
- 		return;
- 
-+	DPU_DEBUG("[wb:%d]\n", phys_enc->wb_idx - WB_0);
-+
- 	kfree(phys_enc);
- }
- 
+Sibi Sankar (1):
+  remoteproc: qcom: pas: Add decrypt shutdown support for modem
+
+Siddharth Gupta (5):
+  remoteproc: qcom: pas: Mark va as io memory
+  remoteproc: qcom: pas: Mark devices as wakeup capable
+  remoteproc: qcom: pas: Check if coredump is enabled
+  remoteproc: q6v5: Set q6 state to offline on receiving wdog irq
+  remoteproc: sysmon: Send sysmon state only for running rprocs
+
+ drivers/remoteproc/qcom_q6v5.c     |  4 ++
+ drivers/remoteproc/qcom_q6v5_pas.c | 77 +++++++++++++++++++++++++++++++++++++-
+ drivers/remoteproc/qcom_sysmon.c   |  6 ++-
+ 3 files changed, 83 insertions(+), 4 deletions(-)
+
 -- 
 2.7.4
 
