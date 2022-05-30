@@ -2,154 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3E6F853825E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 May 2022 16:34:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2C2B45382E3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 May 2022 16:38:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237554AbiE3OX2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 May 2022 10:23:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40288 "EHLO
+        id S240236AbiE3O2v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 May 2022 10:28:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56926 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241699AbiE3OR6 (ORCPT
+        with ESMTP id S241594AbiE3O0Q (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 May 2022 10:17:58 -0400
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A4FF793B0;
-        Mon, 30 May 2022 06:47:58 -0700 (PDT)
-Received: by mail-wm1-x331.google.com with SMTP id p5-20020a1c2905000000b003970dd5404dso6479243wmp.0;
-        Mon, 30 May 2022 06:47:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=1pogo+Rv5tv/SQVuIFRfnUxU3Jbc6+ErgEhXQlEuH7Q=;
-        b=EgKmyAppjZbMOVnfQCO9MvfkDvMr+4bRewuD6ZUn/bdV7ecI0uWF5Wck1N/xzVzGBP
-         q1aP+cC6TzWU0T7V406WfklMmWpdBDC2YcH0XIULHHAw/CG9lgeFrjbJCQcmWgTFVXFE
-         ShI/kvcxCFcDEPze5rWor+yDkJ/nOqiI5MNP6mK6yW0bW/uvzOHoKL6RTkOdeROje5O7
-         CtBl+wvl+mi6mUuSpQoJsZPcLNyrZZQHM7XFSWten5gD91Mzm8Ki6pMPBgX8hlzPrDWx
-         kW/ASef/d62eot597BBs1qtCQsRLwhsjVWWR9SGads+97s4WmlryGoKH9rAke9OyIoH1
-         3u9g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=1pogo+Rv5tv/SQVuIFRfnUxU3Jbc6+ErgEhXQlEuH7Q=;
-        b=ZukBFx+fi3ih2Zin6IfRWhxgCgotJ3Jv9gVw+vm9Rp0wCYc0hL1D5X69qXJE+jUWs/
-         kwj6nvSdG3S4og85P59Tz0sFeU4Sq/7SsQya5fK8jcTynKD86sWn2wqQABQfuXUBVbuG
-         8nuF+0JZmHrhj1U1KL5DJPHT4M2Psx8++MhA3V+kG73yHEVrHgjY72UZhx0f+SojaLpq
-         7jwBM9MEsnAnPuL410A+g1jibq3JMIjnBjkK9b4O6MCo1MsPIiwtc6vrJYetGzpOChJU
-         T8i4pBFK9QOdG/yCHrj/HiHLpBqSxXSX0VHWyh4mhntEQCyluNz8jekF+Zk6aWpuV/3P
-         ROsg==
-X-Gm-Message-State: AOAM533GYr7P01bSBiFjaRUeepk1OvzVobS8AFekWvuIbSNxrmUoR6Jm
-        ku3ayXL3MKGGoGIF4eSYj6n9fTLQD6zgn320qiIV97tz
-X-Google-Smtp-Source: ABdhPJxKwfq4ycqFXAM+C8AheHuI+NB1Jymb9X57td3iSrPCizEAfyrJbVEDX+hf+1fVrrb5pR/iFCEG7v/503K0ua8=
-X-Received: by 2002:a05:600c:6011:b0:398:fa3:c02d with SMTP id
- az17-20020a05600c601100b003980fa3c02dmr12803839wmb.183.1653918476657; Mon, 30
- May 2022 06:47:56 -0700 (PDT)
+        Mon, 30 May 2022 10:26:16 -0400
+Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3632AB0DB;
+        Mon, 30 May 2022 06:51:10 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by sin.source.kernel.org (Postfix) with ESMTPS id 79B6ECE106B;
+        Mon, 30 May 2022 13:49:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6B58C3411E;
+        Mon, 30 May 2022 13:49:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1653918596;
+        bh=mfzOGPGDFMwBe8JQHvgneMIcB+OQk61Uas1dXZKCVjs=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=Lrgl0Z/XybRsHS/zZ5jcjund71qMAZ9GTi5JQBTM18sv/Q/OwENwrvdYfSGvRIBgY
+         FQRLkGwVD5r3wjVB8Z4LL8W/RJJuiKDm1ylhuAhFgnZglGpfYyDT0I+02fkuFatDq2
+         U5/rCdskx+0VnlMbtiWjqQA9y90hAzdJ+OqjSQv9RIxVSJMAcTwhtOLxbe17tk8vK2
+         y3h40Dk3YzItxoHVh8DISxHvgrLHOCiPsvBJWYWIlwmC7I4214grPn/LmC9ioWe6/a
+         dkTFuDAxJEORxAIJh/HwW3nTmVhRMD96fgfvrChxwKrsvzYrVljrp27aXczeAHoF5q
+         Zo51L8s4PNQUQ==
+From:   Sasha Levin <sashal@kernel.org>
+To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Cc:     Luca Weiss <luca.weiss@fairphone.com>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Sasha Levin <sashal@kernel.org>, agross@kernel.org,
+        bjorn.andersson@linaro.org, linux-media@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: [PATCH AUTOSEL 4.19 12/38] media: venus: hfi: avoid null dereference in deinit
+Date:   Mon, 30 May 2022 09:48:58 -0400
+Message-Id: <20220530134924.1936816-12-sashal@kernel.org>
+X-Mailer: git-send-email 2.35.1
+In-Reply-To: <20220530134924.1936816-1-sashal@kernel.org>
+References: <20220530134924.1936816-1-sashal@kernel.org>
 MIME-Version: 1.0
-References: <20220529162936.2539901-1-robdclark@gmail.com> <0bf230f4-c888-b9c9-f061-7450406baa4a@suse.de>
-In-Reply-To: <0bf230f4-c888-b9c9-f061-7450406baa4a@suse.de>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Mon, 30 May 2022 06:47:55 -0700
-Message-ID: <CAF6AEGthAfWyAvbuE4EP+u52LEKS2Fs6X=gG8qUjc7gci6oh-A@mail.gmail.com>
-Subject: Re: [PATCH] drm/prime: Ensure mmap offset is initialized
-To:     Thomas Zimmermann <tzimmermann@suse.de>
-Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
-        Rob Clark <robdclark@chromium.org>,
-        David Airlie <airlied@linux.ie>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        Gerd Hoffmann <kraxel@redhat.com>,
-        freedreno <freedreno@lists.freedesktop.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+X-stable: review
+X-Patchwork-Hint: Ignore
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, May 30, 2022 at 12:26 AM Thomas Zimmermann <tzimmermann@suse.de> wr=
-ote:
->
-> Hi
->
-> Am 29.05.22 um 18:29 schrieb Rob Clark:
-> > From: Rob Clark <robdclark@chromium.org>
-> >
-> > If a GEM object is allocated, and then exported as a dma-buf fd which i=
-s
-> > mmap'd before or without the GEM buffer being directly mmap'd, the
-> > vma_node could be unitialized.  This leads to a situation where the CPU
-> > mapping is not correctly torn down in drm_vma_node_unmap().
->
-> Which drivers are affected by this problem?
->
-> I checked several drivers and most appear to be initializing the offset
-> during object construction, such as GEM SHMEM. [1] TTM-based drivers
-> also seem unaffected. [2]
->
->  From a quick grep, only etnaviv, msm and omapdrm appear to be affected?
-> They only seem to run drm_gem_create_mmap_offset() from their
-> ioctl-handling code.
->
-> If so, I'd say it's preferable to fix these drivers and put a
-> drm_WARN_ONCE() into drm_gem_prime_mmap().
+From: Luca Weiss <luca.weiss@fairphone.com>
 
-That is good if fewer drivers are affected, however I disagree with
-your proposal.  At least for freedreno userspace, a lot of bo's never
-get mmap'd (either directly of via dmabuf), so we should not be
-allocating a mmap offset unnecessarily.
+[ Upstream commit 86594f6af867b5165d2ba7b5a71fae3a5961e56c ]
 
-BR,
--R
+If venus_probe fails at pm_runtime_put_sync the error handling first
+calls hfi_destroy and afterwards hfi_core_deinit. As hfi_destroy sets
+core->ops to NULL, hfi_core_deinit cannot call the core_deinit function
+anymore.
 
-> Best regards
-> Thomas
->
-> [1]
-> https://elixir.bootlin.com/linux/v5.18/source/drivers/gpu/drm/drm_gem_shm=
-em_helper.c#L85
-> [2]
-> https://elixir.bootlin.com/linux/v5.18/source/drivers/gpu/drm/ttm/ttm_bo.=
-c#L1002
->
-> >
-> > Fixes: e5516553999f ("drm: call drm_gem_object_funcs.mmap with fake off=
-set")
-> > Signed-off-by: Rob Clark <robdclark@chromium.org>
-> > ---
-> > Note, it's possible the issue existed in some related form prior to the
-> > commit tagged with Fixes.
-> >
-> >   drivers/gpu/drm/drm_prime.c | 5 +++++
-> >   1 file changed, 5 insertions(+)
-> >
-> > diff --git a/drivers/gpu/drm/drm_prime.c b/drivers/gpu/drm/drm_prime.c
-> > index e3f09f18110c..849eea154dfc 100644
-> > --- a/drivers/gpu/drm/drm_prime.c
-> > +++ b/drivers/gpu/drm/drm_prime.c
-> > @@ -716,6 +716,11 @@ int drm_gem_prime_mmap(struct drm_gem_object *obj,=
- struct vm_area_struct *vma)
-> >       struct file *fil;
-> >       int ret;
-> >
-> > +     /* Ensure that the vma_node is initialized: */
-> > +     ret =3D drm_gem_create_mmap_offset(obj);
-> > +     if (ret)
-> > +             return ret;
-> > +
-> >       /* Add the fake offset */
-> >       vma->vm_pgoff +=3D drm_vma_node_start(&obj->vma_node);
-> >
->
-> --
-> Thomas Zimmermann
-> Graphics Driver Developer
-> SUSE Software Solutions Germany GmbH
-> Maxfeldstr. 5, 90409 N=C3=BCrnberg, Germany
-> (HRB 36809, AG N=C3=BCrnberg)
-> Gesch=C3=A4ftsf=C3=BChrer: Ivo Totev
+Avoid this null pointer derefence by skipping the call when necessary.
+
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/media/platform/qcom/venus/hfi.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/drivers/media/platform/qcom/venus/hfi.c b/drivers/media/platform/qcom/venus/hfi.c
+index 24207829982f..8a99e2d8274a 100644
+--- a/drivers/media/platform/qcom/venus/hfi.c
++++ b/drivers/media/platform/qcom/venus/hfi.c
+@@ -113,6 +113,9 @@ int hfi_core_deinit(struct venus_core *core, bool blocking)
+ 		mutex_lock(&core->lock);
+ 	}
+ 
++	if (!core->ops)
++		goto unlock;
++
+ 	ret = core->ops->core_deinit(core);
+ 
+ 	if (!ret)
+-- 
+2.35.1
+
