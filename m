@@ -2,88 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 34F895375A3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 May 2022 09:42:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C0D7D537660
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 May 2022 10:13:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233729AbiE3Hmt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 May 2022 03:42:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51054 "EHLO
+        id S232601AbiE3IJA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 May 2022 04:09:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60836 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233735AbiE3Hmd (ORCPT
+        with ESMTP id S229839AbiE3II7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 May 2022 03:42:33 -0400
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E7A86FD34
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 May 2022 00:42:30 -0700 (PDT)
-Received: by mail-wm1-x32f.google.com with SMTP id p5-20020a1c2905000000b003970dd5404dso5930404wmp.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 May 2022 00:42:30 -0700 (PDT)
+        Mon, 30 May 2022 04:08:59 -0400
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E8C7644FA
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 May 2022 01:08:54 -0700 (PDT)
+Received: by mail-pj1-x1035.google.com with SMTP id o6-20020a17090a0a0600b001e2c6566046so3731623pjo.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 May 2022 01:08:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=tDRiL7T1D2xh8IqjQ4J9GQ/82u6rcAgsmar4+giEo/c=;
-        b=DyT3t+1nyG9y4HN64kgP299uQMuwvYQw3UXLpbawcwaWR/Jqerrg29FeN0CWFMCYbo
-         wYFK+RTScfJC11jD7p12SBCHM6cnrVn02ZhrexSayH9QhoKjl2Fki9rOWgd4xZEPrdKW
-         FAsewudhQ2ax1Og0wls9gcytEW/VAX4IZe534jNFQORswYITHyoUjmlqAURly9zdzHRC
-         swS5xuL9QRfIpzLsOkyIdTkIgzHaIrsc2BdcHDRVSj7MXk3v4dQKr/VuBNGhpnRtifDJ
-         dicKc83acHjeI51wuiYAKK2AwU7sn0qjvC8PnR1L+d9/YmVy0Nj7Pvpd+13OkuHk7uw2
-         pA8Q==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ktUZ7Jayji8WcqStkjl0qUGO7i4FHkmNzMUAUMXluTg=;
+        b=KuTdqisqGYSWAu9SpxFOYy6qtFuiRMNGCggpOV+CbFXI4ZSeUon0O8i81XddsFFMJU
+         F/nhFSVsFdL6K6S5zZDT2gWQiyi2uQfS4h7PGa2eyEbK46NkZ2eRVKw5vGz+TOIi7Fde
+         I7N3j6JrIzC03AKojxk+3NXLtx0hMP4kIsAJwvSsF69vwDC1gx7jZEkTDoFqR6AsWJID
+         wyXYMeqB/ZlYcce12VPnEu/TV61dqeQj+bEwmGEiREeznbKsp7JEx5otKBToddC/Jdz1
+         keQ0DMZzMJDvefRKjIhL+UwV07DWFn/06fmGfLTactx2RV2muBxrIsfTqQi5WsiH0i7n
+         2O/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=tDRiL7T1D2xh8IqjQ4J9GQ/82u6rcAgsmar4+giEo/c=;
-        b=1639J0yBju5L2bdw2lN8txNl19pwqxTQyL+gQEufbiIhpMWipq0VcJs6eP0aBcHsiU
-         sgLXnJWnd4UlASDnXmiCCLJhTv2RbiwJCXTgG5l07bh1xU4haIk5/noOgvq5BrXd8lKm
-         LHdZ0HCtCvaTMewU1l1d4PephxzsUg1hKPQAgpGxQkRB/9QOSj15PpqZmOZdruJiph5g
-         xbX5JNU50uTyfV/ycPeZoBUKPew2c7N/+tJZ6DDPdhpGrWSpiRbPymNm650fs0ouLJUS
-         6hshUSBEmxmBwgRAU+HYwkFK1VMU+XMBS92FCDcb3i1KmNvSMLO7nlajsvu4pkLl1YLd
-         wSng==
-X-Gm-Message-State: AOAM532GY6r84FIGzNHu96HHuOrRBxm6pet9X9wJVB9Td7ZuGbhEwYQG
-        5jseDSIzyPq0YqR7jBMnBwjEqA==
-X-Google-Smtp-Source: ABdhPJwoeX8AFnrofXaPRVEbqd1WcQ2GzDw7JV+PLebAOLW2qA5bkbyquUytImzShJhd5/S7esV1wA==
-X-Received: by 2002:a05:600c:2305:b0:397:44a4:d3cb with SMTP id 5-20020a05600c230500b0039744a4d3cbmr17393978wmo.115.1653896549076;
-        Mon, 30 May 2022 00:42:29 -0700 (PDT)
-Received: from [192.168.0.179] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id h19-20020a05600c351300b0039456fb80b3sm9966481wmq.43.2022.05.30.00.42.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 30 May 2022 00:42:28 -0700 (PDT)
-Message-ID: <fb007f9f-b2bc-9221-64d1-48de8fdb25f0@linaro.org>
-Date:   Mon, 30 May 2022 09:42:27 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Subject: Re: [PATCH v3 4/7] arm64: dts: qcom: sdm845: control RPMHPD
- performance states with UFS
-Content-Language: en-US
-To:     Viresh Kumar <viresh.kumar@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        "Martin K. Petersen" <martin.petersen@oracle.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Taniya Das <tdas@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-scsi@vger.kernel.org,
+        bh=ktUZ7Jayji8WcqStkjl0qUGO7i4FHkmNzMUAUMXluTg=;
+        b=Pi2+ekHitNkiiQky+pOeNDDOT8eyzVzNy8LBd2hkjQQu38E2+9pBIoDH1Sq/DBkEpm
+         DODuZ4TMx5c4BNUheZ1BFUHI3wdILQu+kGncIi8rKlid78v2ZOsub4g3Bx+L/AEHl+ui
+         DS9O9i5FhUndgIYl59Pf2b8aCXE66wpEW3Mlqt7Ebvy3W4WGhD/5RVoS7NaGeTLVNXXY
+         rjLH7O+TKnKX/8td2y2W1mns4/hOv4511xUjEPY+V4zvKlYAq9+3LyAoVK3iTlJ2PezC
+         fvvR91KKHi4NXonEjls082yLm5FWJENTYcwF+ekclp72e5weoA2H9qr3TehnZf0AJoNH
+         ednQ==
+X-Gm-Message-State: AOAM533ELVqhUKjF50v4zxL46JK9qdNa8/g0aem+RVCl50uMRwuEoBv/
+        TpgJ6S9pPtwYWT1f6IXAhf6f
+X-Google-Smtp-Source: ABdhPJzpye3BIRyeRcfZKMgh/enut/RYAKyDccJEWHc1q3Au19MJ6OtkkdKME793c6nbw7YIkrGV7g==
+X-Received: by 2002:a17:902:f543:b0:161:9f00:7b2c with SMTP id h3-20020a170902f54300b001619f007b2cmr55193063plf.1.1653898133768;
+        Mon, 30 May 2022 01:08:53 -0700 (PDT)
+Received: from localhost.localdomain ([220.158.159.114])
+        by smtp.gmail.com with ESMTPSA id io17-20020a17090312d100b0015e8d4eb285sm8450345plb.207.2022.05.30.01.08.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 30 May 2022 01:08:53 -0700 (PDT)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     tglx@linutronix.de, maz@kernel.org, bjorn.andersson@linaro.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-References: <20220513061347.46480-1-krzysztof.kozlowski@linaro.org>
- <20220513061347.46480-5-krzysztof.kozlowski@linaro.org>
- <20220525071630.irrz24rs73l3ke4o@vireshk-i7>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220525071630.irrz24rs73l3ke4o@vireshk-i7>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Subject: [PATCH 0/3] Check for IRQ trigger type mismatch in __setup_irq()
+Date:   Mon, 30 May 2022 13:38:39 +0530
+Message-Id: <20220530080842.37024-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.25.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -92,33 +68,38 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 25/05/2022 09:16, Viresh Kumar wrote:
-> On 13-05-22, 08:13, Krzysztof Kozlowski wrote:
->> +			ufs_opp_table: opp-table {
->> +				compatible = "operating-points-v2";
->> +
->> +				opp-50000000 {
->> +					opp-hz = /bits/ 64 <50000000
->> +						 0
->> +						 0
->> +						 37500000
->> +						 0
->> +						 0
->> +						 0
->> +						 0
->> +						 // FIXME: value 0 copied from freq-table-hz
->> +						 0>;
-> 
-> One general comment, I think this should follow how we specify
-> multiple voltages or other fields and so each frequency should be part
-> of a different < > braces. Like: opp-hz = /bits/ 64 <5000000>, <0>, ....
-> 
-> Whatever is there between < > seems to be connected, like
-> min/max/target for voltage.
-> 
-> The code will process both in a similar way though eventually.
+Hi,
 
-OK, I can change to such format.
+This series adds a check for detecting the IRQ trigger type mismatch between the
+platform (DT) and a device driver. Currently, if there is a mismatch, there
+is no error thrown but the driver requested trigger gets set silently. Then
+during the second time probe of a driver (due to probe defer or rmmod/insmod),
+platform_get_irq() throws a warning similar to below and fails.
 
-Best regards,
-Krzysztof
+irq: type mismatch, failed to map hwirq-9 for interrupt-controller@b220000!
+
+But ideally, during the first time itself, request_irq() should've failed as
+the flag mismatch is a hard error. So let's add a check in __setup_irq(), such
+that the request_irq() would fail if a mismatch has been detected.
+
+NOTE: This might break platforms those has the flag set incorrectly in DT. One
+of such case is SDX55, where the UART node has the trigger set incorrectly.
+I fixed it in a couple of places I happen to know. But there could be many...
+
+Thanks,
+Mani
+
+Manivannan Sadhasivam (3):
+  ARM: dts: qcom: sdx55: Fix the IRQ trigger type for UART
+  arm64: dts: qcom: sm8450: Fix the IRQ trigger type for remoteproc
+    nodes
+  genirq: Check for trigger type mismatch in __setup_irq()
+
+ arch/arm/boot/dts/qcom-sdx55.dtsi    |  2 +-
+ arch/arm64/boot/dts/qcom/sm8450.dtsi |  8 ++++----
+ kernel/irq/manage.c                  | 14 ++++++++++++--
+ 3 files changed, 17 insertions(+), 7 deletions(-)
+
+-- 
+2.25.1
+
