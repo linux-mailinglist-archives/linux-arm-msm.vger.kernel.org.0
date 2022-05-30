@@ -2,59 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 85ECE53848B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 May 2022 17:18:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9B4595384EB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 May 2022 17:29:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237514AbiE3PQm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 May 2022 11:16:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43192 "EHLO
+        id S242272AbiE3P3W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 May 2022 11:29:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55186 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237890AbiE3PQa (ORCPT
+        with ESMTP id S242281AbiE3P3N (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 May 2022 11:16:30 -0400
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B247EABA7;
-        Mon, 30 May 2022 07:16:12 -0700 (PDT)
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-        (No client certificate requested)
-        by smtp-out2.suse.de (Postfix) with ESMTPS id AE81F1F929;
-        Mon, 30 May 2022 14:16:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-        t=1653920170; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=tTii8oW6HgjN0H3GaZ7/EVE91VV1R88qvcxgCuUoU2E=;
-        b=V8JHqsIBU7CZ3jLsLi0qfoXjUg8mpQpS6OUNpvrVIMUceLX6xlLgT7FoAiOmEspAFcYi0D
-        J4H4OXMYzeh4rxkkKkxBBDzSqgOtundDUHHDrdZl0cNuasU4lAgJq1qdA/saS7kAgS6+kW
-        buAZeSgjlib3rxiSg+e9aPVTXX8yUf0=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-        s=susede2_ed25519; t=1653920170;
-        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=tTii8oW6HgjN0H3GaZ7/EVE91VV1R88qvcxgCuUoU2E=;
-        b=tI7klourrQ4wJ4gHtcWrMRbopOavuf5zKO3GRhSMJGMXTW9KnHnVeQE5V0dZV/v+EswrkC
-        Mrq13ySEfB7sZnDw==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-        (No client certificate requested)
-        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 7D5E513A84;
-        Mon, 30 May 2022 14:16:10 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-        by imap2.suse-dmz.suse.de with ESMTPSA
-        id yYasHarRlGLCTwAAMHmgww
-        (envelope-from <tzimmermann@suse.de>); Mon, 30 May 2022 14:16:10 +0000
-Message-ID: <6169ea6b-7452-e8e3-f253-1329f4924a67@suse.de>
-Date:   Mon, 30 May 2022 16:16:10 +0200
+        Mon, 30 May 2022 11:29:13 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 000601DE8E0;
+        Mon, 30 May 2022 07:32:48 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id h5so6822435wrb.0;
+        Mon, 30 May 2022 07:32:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=gSTJ1X2wuqX0lNp5B2IPR5UrMFLMFHeOCXzMZ0hn2b4=;
+        b=OsFLSUzvyABeW29XWfSvKzCGNQnyj+ADgKauQh4p9sWs1MaqIZbckKyZTwq6O9poQn
+         C74ES4SMcuigLnfMiVRuygm6ZTO0pkcwYbkLuBBCHKMpRuYnjNsNn+GfhmqVs6U7vamO
+         xcEdrZOejon5nwrtb5Zm07ZriInzEsvdyRNMP1UrtLa+3i8Ad+n/B0L/v7+4yddZg0eU
+         zdJ1Yml71RFWuHRuPr5Y2IMz2pcCXbZlE8rkotGQyGj8NmCD3dJKC1Gs6eoSZCvhJp+U
+         kLV/muHTMpSb08fAG82Yetymgk6+YNCKDvaLbnIWBRQGdkVfo+bmBzedobhJQKGhbj29
+         fT9A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=gSTJ1X2wuqX0lNp5B2IPR5UrMFLMFHeOCXzMZ0hn2b4=;
+        b=F4cdIcbZjjk79ZUtiXII5ejbyVWPjYbP5wC4Im1K0D6GkYAHGHfj5pcESHweSmyCW8
+         wZpRQkwO6mpGceNS/dPeF+/jlSlrj8MTF8b4iNBWlhmIhZ3BPnvyIOI9tOeVeD6K1TEq
+         Zp6j3P4vqrvK5m8X/cEsOkpzA51MA1FrsoSChPztLhU3MCflT5QCfRIWF7lXBndhD8wf
+         EEsM2medxbRwSt2RwLZUxTHzroCvmd9Qbz/bTtCGpCGdLp+89QCUt4FsTHNjuO9X8iF0
+         G3fDRUH4ZFQwxGFih+7u8PwLjD9/92HAnXdtlFoOCOmTg2QEui7tznlyIPxPkystcpWk
+         q4+g==
+X-Gm-Message-State: AOAM533446JhGnuDVY65ljTJujdrEjyX2Le9681c6MRbBRff94Ydm1Vy
+        BEy0XdFEG7yphDeyS0MQjviiU2LIZP6KBFMwjyY=
+X-Google-Smtp-Source: ABdhPJzn3Xi0lceSImCJ9R+jP77+VllF+ZZP4ZhztUgDtItqbVmUaA9faRS23xFdbwO4BeGKAXv8o3o8lRcMS3aMsDU=
+X-Received: by 2002:a05:6000:547:b0:20f:ca41:cc51 with SMTP id
+ b7-20020a056000054700b0020fca41cc51mr36432204wrf.221.1653921166691; Mon, 30
+ May 2022 07:32:46 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
+References: <20220529162936.2539901-1-robdclark@gmail.com> <0bf230f4-c888-b9c9-f061-7450406baa4a@suse.de>
+ <CAF6AEGthAfWyAvbuE4EP+u52LEKS2Fs6X=gG8qUjc7gci6oh-A@mail.gmail.com> <6169ea6b-7452-e8e3-f253-1329f4924a67@suse.de>
+In-Reply-To: <6169ea6b-7452-e8e3-f253-1329f4924a67@suse.de>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Mon, 30 May 2022 07:32:45 -0700
+Message-ID: <CAF6AEGt2GOTgwqdfLJXbMcMcSpA=cuZ=kiaOcLWVg905JM_caA@mail.gmail.com>
 Subject: Re: [PATCH] drm/prime: Ensure mmap offset is initialized
-Content-Language: en-US
-To:     Rob Clark <robdclark@gmail.com>
+To:     Thomas Zimmermann <tzimmermann@suse.de>
 Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
         Rob Clark <robdclark@chromium.org>,
         David Airlie <airlied@linux.ie>,
@@ -62,142 +61,152 @@ Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
         open list <linux-kernel@vger.kernel.org>,
         Gerd Hoffmann <kraxel@redhat.com>,
         freedreno <freedreno@lists.freedesktop.org>
-References: <20220529162936.2539901-1-robdclark@gmail.com>
- <0bf230f4-c888-b9c9-f061-7450406baa4a@suse.de>
- <CAF6AEGthAfWyAvbuE4EP+u52LEKS2Fs6X=gG8qUjc7gci6oh-A@mail.gmail.com>
-From:   Thomas Zimmermann <tzimmermann@suse.de>
-In-Reply-To: <CAF6AEGthAfWyAvbuE4EP+u52LEKS2Fs6X=gG8qUjc7gci6oh-A@mail.gmail.com>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------hc0fa0reMYQjQXwWx2Y0uhJE"
-X-Spam-Status: No, score=-4.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------hc0fa0reMYQjQXwWx2Y0uhJE
-Content-Type: multipart/mixed; boundary="------------VdWsP9NZV1AcBf9IfDLiDlXf";
- protected-headers="v1"
-From: Thomas Zimmermann <tzimmermann@suse.de>
-To: Rob Clark <robdclark@gmail.com>
-Cc: dri-devel <dri-devel@lists.freedesktop.org>,
- Rob Clark <robdclark@chromium.org>, David Airlie <airlied@linux.ie>,
- linux-arm-msm <linux-arm-msm@vger.kernel.org>,
- open list <linux-kernel@vger.kernel.org>, Gerd Hoffmann <kraxel@redhat.com>,
- freedreno <freedreno@lists.freedesktop.org>
-Message-ID: <6169ea6b-7452-e8e3-f253-1329f4924a67@suse.de>
-Subject: Re: [PATCH] drm/prime: Ensure mmap offset is initialized
-References: <20220529162936.2539901-1-robdclark@gmail.com>
- <0bf230f4-c888-b9c9-f061-7450406baa4a@suse.de>
- <CAF6AEGthAfWyAvbuE4EP+u52LEKS2Fs6X=gG8qUjc7gci6oh-A@mail.gmail.com>
-In-Reply-To: <CAF6AEGthAfWyAvbuE4EP+u52LEKS2Fs6X=gG8qUjc7gci6oh-A@mail.gmail.com>
+On Mon, May 30, 2022 at 7:16 AM Thomas Zimmermann <tzimmermann@suse.de> wro=
+te:
+>
+> Hi
+>
+> Am 30.05.22 um 15:47 schrieb Rob Clark:
+> > On Mon, May 30, 2022 at 12:26 AM Thomas Zimmermann <tzimmermann@suse.de=
+> wrote:
+> >>
+> >> Hi
+> >>
+> >> Am 29.05.22 um 18:29 schrieb Rob Clark:
+> >>> From: Rob Clark <robdclark@chromium.org>
+> >>>
+> >>> If a GEM object is allocated, and then exported as a dma-buf fd which=
+ is
+> >>> mmap'd before or without the GEM buffer being directly mmap'd, the
+> >>> vma_node could be unitialized.  This leads to a situation where the C=
+PU
+> >>> mapping is not correctly torn down in drm_vma_node_unmap().
+> >>
+> >> Which drivers are affected by this problem?
+> >>
+> >> I checked several drivers and most appear to be initializing the offse=
+t
+> >> during object construction, such as GEM SHMEM. [1] TTM-based drivers
+> >> also seem unaffected. [2]
+> >>
+> >>   From a quick grep, only etnaviv, msm and omapdrm appear to be affect=
+ed?
+> >> They only seem to run drm_gem_create_mmap_offset() from their
+> >> ioctl-handling code.
+> >>
+> >> If so, I'd say it's preferable to fix these drivers and put a
+> >> drm_WARN_ONCE() into drm_gem_prime_mmap().
+> >
+> > That is good if fewer drivers are affected, however I disagree with
+> > your proposal.  At least for freedreno userspace, a lot of bo's never
+> > get mmap'd (either directly of via dmabuf), so we should not be
+> > allocating a mmap offset unnecessarily.
+>
+> I see.
+>
+> I the reason I'm arguing against the current patch is that the fix
+> appears like a workaround and 6 months from now, few will remember why
+> it's there. Especially since most drivers initialize the offset
+> correctly. (Not too long ago, I refactored the handling of these mmap
+> calls throughout DRM drivers and it was confusing at times.)
 
---------------VdWsP9NZV1AcBf9IfDLiDlXf
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+I dispute the "correctly" part.. and that this is a workaround ;-)
 
-SGkNCg0KQW0gMzAuMDUuMjIgdW0gMTU6NDcgc2NocmllYiBSb2IgQ2xhcms6DQo+IE9uIE1v
-biwgTWF5IDMwLCAyMDIyIGF0IDEyOjI2IEFNIFRob21hcyBaaW1tZXJtYW5uIDx0emltbWVy
-bWFubkBzdXNlLmRlPiB3cm90ZToNCj4+DQo+PiBIaQ0KPj4NCj4+IEFtIDI5LjA1LjIyIHVt
-IDE4OjI5IHNjaHJpZWIgUm9iIENsYXJrOg0KPj4+IEZyb206IFJvYiBDbGFyayA8cm9iZGNs
-YXJrQGNocm9taXVtLm9yZz4NCj4+Pg0KPj4+IElmIGEgR0VNIG9iamVjdCBpcyBhbGxvY2F0
-ZWQsIGFuZCB0aGVuIGV4cG9ydGVkIGFzIGEgZG1hLWJ1ZiBmZCB3aGljaCBpcw0KPj4+IG1t
-YXAnZCBiZWZvcmUgb3Igd2l0aG91dCB0aGUgR0VNIGJ1ZmZlciBiZWluZyBkaXJlY3RseSBt
-bWFwJ2QsIHRoZQ0KPj4+IHZtYV9ub2RlIGNvdWxkIGJlIHVuaXRpYWxpemVkLiAgVGhpcyBs
-ZWFkcyB0byBhIHNpdHVhdGlvbiB3aGVyZSB0aGUgQ1BVDQo+Pj4gbWFwcGluZyBpcyBub3Qg
-Y29ycmVjdGx5IHRvcm4gZG93biBpbiBkcm1fdm1hX25vZGVfdW5tYXAoKS4NCj4+DQo+PiBX
-aGljaCBkcml2ZXJzIGFyZSBhZmZlY3RlZCBieSB0aGlzIHByb2JsZW0/DQo+Pg0KPj4gSSBj
-aGVja2VkIHNldmVyYWwgZHJpdmVycyBhbmQgbW9zdCBhcHBlYXIgdG8gYmUgaW5pdGlhbGl6
-aW5nIHRoZSBvZmZzZXQNCj4+IGR1cmluZyBvYmplY3QgY29uc3RydWN0aW9uLCBzdWNoIGFz
-IEdFTSBTSE1FTS4gWzFdIFRUTS1iYXNlZCBkcml2ZXJzDQo+PiBhbHNvIHNlZW0gdW5hZmZl
-Y3RlZC4gWzJdDQo+Pg0KPj4gICBGcm9tIGEgcXVpY2sgZ3JlcCwgb25seSBldG5hdml2LCBt
-c20gYW5kIG9tYXBkcm0gYXBwZWFyIHRvIGJlIGFmZmVjdGVkPw0KPj4gVGhleSBvbmx5IHNl
-ZW0gdG8gcnVuIGRybV9nZW1fY3JlYXRlX21tYXBfb2Zmc2V0KCkgZnJvbSB0aGVpcg0KPj4g
-aW9jdGwtaGFuZGxpbmcgY29kZS4NCj4+DQo+PiBJZiBzbywgSSdkIHNheSBpdCdzIHByZWZl
-cmFibGUgdG8gZml4IHRoZXNlIGRyaXZlcnMgYW5kIHB1dCBhDQo+PiBkcm1fV0FSTl9PTkNF
-KCkgaW50byBkcm1fZ2VtX3ByaW1lX21tYXAoKS4NCj4gDQo+IFRoYXQgaXMgZ29vZCBpZiBm
-ZXdlciBkcml2ZXJzIGFyZSBhZmZlY3RlZCwgaG93ZXZlciBJIGRpc2FncmVlIHdpdGgNCj4g
-eW91ciBwcm9wb3NhbC4gIEF0IGxlYXN0IGZvciBmcmVlZHJlbm8gdXNlcnNwYWNlLCBhIGxv
-dCBvZiBibydzIG5ldmVyDQo+IGdldCBtbWFwJ2QgKGVpdGhlciBkaXJlY3RseSBvZiB2aWEg
-ZG1hYnVmKSwgc28gd2Ugc2hvdWxkIG5vdCBiZQ0KPiBhbGxvY2F0aW5nIGEgbW1hcCBvZmZz
-ZXQgdW5uZWNlc3NhcmlseS4NCg0KSSBzZWUuDQoNCkkgdGhlIHJlYXNvbiBJJ20gYXJndWlu
-ZyBhZ2FpbnN0IHRoZSBjdXJyZW50IHBhdGNoIGlzIHRoYXQgdGhlIGZpeCANCmFwcGVhcnMg
-bGlrZSBhIHdvcmthcm91bmQgYW5kIDYgbW9udGhzIGZyb20gbm93LCBmZXcgd2lsbCByZW1l
-bWJlciB3aHkgDQppdCdzIHRoZXJlLiBFc3BlY2lhbGx5IHNpbmNlIG1vc3QgZHJpdmVycyBp
-bml0aWFsaXplIHRoZSBvZmZzZXQgDQpjb3JyZWN0bHkuIChOb3QgdG9vIGxvbmcgYWdvLCBJ
-IHJlZmFjdG9yZWQgdGhlIGhhbmRsaW5nIG9mIHRoZXNlIG1tYXAgDQpjYWxscyB0aHJvdWdo
-b3V0IERSTSBkcml2ZXJzIGFuZCBpdCB3YXMgY29uZnVzaW5nIGF0IHRpbWVzLikNCg0KU28g
-aGVyZSdzIGFub3RoZXIgc3VnZ2VzdGlvbjogIEkgZnVydGhlciBsb29rZWQgYXQgdGhlIDMg
-ZHJpdmVycyB0aGF0IEkgDQptZW50aW9uZWQuIGV0bmF2aXYgYW5kIG1zbSBjYW4gZWFzaWx5
-IHdyYXAgdGhlIGNhbGwgdG8gDQpkcm1fZ2VtX3ByaW1lX21tYXAoKSBhbmQgaW5pdCB0aGUg
-b2Zmc2V0IGZpcnN0LiBbMV1bMl0gIG9tYXBkcm0gZG9lc24ndCANCmFjdHVhbGx5IHVzZSBk
-cm1fZ2VtX3ByaW1lX21tYXAoKS4gVGhlIG9mZnNldCBjYW4gaW5zdGVhZCBiZSBpbml0aWFs
-aXplZCANCmF0IHRoZSB0b3Agb2YgdGhlIGRyaXZlcidzIGRtYWJ1ZiBtbWFwIGZ1bmN0aW9u
-LiBbM10NCg0KQmVzdCByZWdhcmRzDQpUaG9tYXMNCg0KWzFdIA0KaHR0cHM6Ly9lbGl4aXIu
-Ym9vdGxpbi5jb20vbGludXgvdjUuMTgvc291cmNlL2RyaXZlcnMvZ3B1L2RybS9ldG5hdml2
-L2V0bmF2aXZfZHJ2LmMjTDQ4MA0KWzJdIA0KaHR0cHM6Ly9lbGl4aXIuYm9vdGxpbi5jb20v
-bGludXgvdjUuMTgvc291cmNlL2RyaXZlcnMvZ3B1L2RybS9tc20vbXNtX2Rydi5jI0w5NjEN
-ClszXSANCmh0dHBzOi8vZWxpeGlyLmJvb3RsaW4uY29tL2xpbnV4L3Y1LjE4L3NvdXJjZS9k
-cml2ZXJzL2dwdS9kcm0vb21hcGRybS9vbWFwX2dlbV9kbWFidWYuYyNMNjYNCg0KPiANCj4g
-QlIsDQo+IC1SDQo+IA0KPj4gQmVzdCByZWdhcmRzDQo+PiBUaG9tYXMNCj4+DQo+PiBbMV0N
-Cj4+IGh0dHBzOi8vZWxpeGlyLmJvb3RsaW4uY29tL2xpbnV4L3Y1LjE4L3NvdXJjZS9kcml2
-ZXJzL2dwdS9kcm0vZHJtX2dlbV9zaG1lbV9oZWxwZXIuYyNMODUNCj4+IFsyXQ0KPj4gaHR0
-cHM6Ly9lbGl4aXIuYm9vdGxpbi5jb20vbGludXgvdjUuMTgvc291cmNlL2RyaXZlcnMvZ3B1
-L2RybS90dG0vdHRtX2JvLmMjTDEwMDINCj4+DQo+Pj4NCj4+PiBGaXhlczogZTU1MTY1NTM5
-OTlmICgiZHJtOiBjYWxsIGRybV9nZW1fb2JqZWN0X2Z1bmNzLm1tYXAgd2l0aCBmYWtlIG9m
-ZnNldCIpDQo+Pj4gU2lnbmVkLW9mZi1ieTogUm9iIENsYXJrIDxyb2JkY2xhcmtAY2hyb21p
-dW0ub3JnPg0KPj4+IC0tLQ0KPj4+IE5vdGUsIGl0J3MgcG9zc2libGUgdGhlIGlzc3VlIGV4
-aXN0ZWQgaW4gc29tZSByZWxhdGVkIGZvcm0gcHJpb3IgdG8gdGhlDQo+Pj4gY29tbWl0IHRh
-Z2dlZCB3aXRoIEZpeGVzLg0KPj4+DQo+Pj4gICAgZHJpdmVycy9ncHUvZHJtL2RybV9wcmlt
-ZS5jIHwgNSArKysrKw0KPj4+ICAgIDEgZmlsZSBjaGFuZ2VkLCA1IGluc2VydGlvbnMoKykN
-Cj4+Pg0KPj4+IGRpZmYgLS1naXQgYS9kcml2ZXJzL2dwdS9kcm0vZHJtX3ByaW1lLmMgYi9k
-cml2ZXJzL2dwdS9kcm0vZHJtX3ByaW1lLmMNCj4+PiBpbmRleCBlM2YwOWYxODExMGMuLjg0
-OWVlYTE1NGRmYyAxMDA2NDQNCj4+PiAtLS0gYS9kcml2ZXJzL2dwdS9kcm0vZHJtX3ByaW1l
-LmMNCj4+PiArKysgYi9kcml2ZXJzL2dwdS9kcm0vZHJtX3ByaW1lLmMNCj4+PiBAQCAtNzE2
-LDYgKzcxNiwxMSBAQCBpbnQgZHJtX2dlbV9wcmltZV9tbWFwKHN0cnVjdCBkcm1fZ2VtX29i
-amVjdCAqb2JqLCBzdHJ1Y3Qgdm1fYXJlYV9zdHJ1Y3QgKnZtYSkNCj4+PiAgICAgICAgc3Ry
-dWN0IGZpbGUgKmZpbDsNCj4+PiAgICAgICAgaW50IHJldDsNCj4+Pg0KPj4+ICsgICAgIC8q
-IEVuc3VyZSB0aGF0IHRoZSB2bWFfbm9kZSBpcyBpbml0aWFsaXplZDogKi8NCj4+PiArICAg
-ICByZXQgPSBkcm1fZ2VtX2NyZWF0ZV9tbWFwX29mZnNldChvYmopOw0KPj4+ICsgICAgIGlm
-IChyZXQpDQo+Pj4gKyAgICAgICAgICAgICByZXR1cm4gcmV0Ow0KPj4+ICsNCj4+PiAgICAg
-ICAgLyogQWRkIHRoZSBmYWtlIG9mZnNldCAqLw0KPj4+ICAgICAgICB2bWEtPnZtX3Bnb2Zm
-ICs9IGRybV92bWFfbm9kZV9zdGFydCgmb2JqLT52bWFfbm9kZSk7DQo+Pj4NCj4+DQo+PiAt
-LQ0KPj4gVGhvbWFzIFppbW1lcm1hbm4NCj4+IEdyYXBoaWNzIERyaXZlciBEZXZlbG9wZXIN
-Cj4+IFNVU0UgU29mdHdhcmUgU29sdXRpb25zIEdlcm1hbnkgR21iSA0KPj4gTWF4ZmVsZHN0
-ci4gNSwgOTA0MDkgTsO8cm5iZXJnLCBHZXJtYW55DQo+PiAoSFJCIDM2ODA5LCBBRyBOw7xy
-bmJlcmcpDQo+PiBHZXNjaMOkZnRzZsO8aHJlcjogSXZvIFRvdGV2DQoNCi0tIA0KVGhvbWFz
-IFppbW1lcm1hbm4NCkdyYXBoaWNzIERyaXZlciBEZXZlbG9wZXINClNVU0UgU29mdHdhcmUg
-U29sdXRpb25zIEdlcm1hbnkgR21iSA0KTWF4ZmVsZHN0ci4gNSwgOTA0MDkgTsO8cm5iZXJn
-LCBHZXJtYW55DQooSFJCIDM2ODA5LCBBRyBOw7xybmJlcmcpDQpHZXNjaMOkZnRzZsO8aHJl
-cjogSXZvIFRvdGV2DQo=
+But I can send a v2 with the addition of a comment explaining the
+reason, so git-blame archeology isn't required to understand the
+reasoning
 
---------------VdWsP9NZV1AcBf9IfDLiDlXf--
+BR,
+-R
 
---------------hc0fa0reMYQjQXwWx2Y0uhJE
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature"
-
------BEGIN PGP SIGNATURE-----
-
-wsF5BAABCAAjFiEExndm/fpuMUdwYFFolh/E3EQov+AFAmKU0aoFAwAAAAAACgkQlh/E3EQov+BJ
-0xAAqWVnjfUcYRQHsVGDGE0WU3w+im6nm34OCB0ZCPmOTS5ryXbLd5y2XYPf7zPQ65rYRD9Upuy3
-48Fq3EBn1dAhekTzDbRFIWWxbrE/kWEctzV6VQDE4qcU3rxEzJNXBwKDaPhMMTjLHouYr+A+Auct
-1AHkq1HPRW3Im1iL08F1VjQ1iwowmc4S6wUGk4oRGGC4mvqpdn6Bov82M2BmqT7Y6kupTEIlHgQH
-3sYLpF/NxbWk64IEOc2oJ11ksE867GRcTo06uqE09xwFquMzU90mvVqu70UtMCPoYys3YAi0jeA9
-WaH8YMc8tVkwW4xggk4J4RoytRSXpXdXlA7csV5VoVQCHpEx7K4Rb5CUEH7q4T074786ornSq3QE
-ZyAtDMIjAB9ak1iwhECaoSn2s+444lgapOr+ElnoQRrPXppZhIuRj40vbyaagi1DF+BfwNS5Y1NF
-2r7DDb5sKi2pYoXT5d/3B+IYjyDuzKSBmT/JPnocXpkkTG9C70smlaSqSTuaR4N5Q7GsbIYHDOON
-wwXy54O3IoyLdVPCceLChLMlWxuZhEqWhpcaFY1CN6yX9OBAWmqh7LUB2GJvoQyz9CjTlwuPhkgA
-qGlWIXNcrj6G6wM2fNgW1yWnVGVn0uv+YsPuqEniZPZ4DHeW3kYN5uIpjt2MZKiQKSHjurtVBpvD
-qAQ=
-=BzrW
------END PGP SIGNATURE-----
-
---------------hc0fa0reMYQjQXwWx2Y0uhJE--
+> So here's another suggestion:  I further looked at the 3 drivers that I
+> mentioned. etnaviv and msm can easily wrap the call to
+> drm_gem_prime_mmap() and init the offset first. [1][2]  omapdrm doesn't
+> actually use drm_gem_prime_mmap(). The offset can instead be initialized
+> at the top of the driver's dmabuf mmap function. [3]
+>
+> Best regards
+> Thomas
+>
+> [1]
+> https://elixir.bootlin.com/linux/v5.18/source/drivers/gpu/drm/etnaviv/etn=
+aviv_drv.c#L480
+> [2]
+> https://elixir.bootlin.com/linux/v5.18/source/drivers/gpu/drm/msm/msm_drv=
+.c#L961
+> [3]
+> https://elixir.bootlin.com/linux/v5.18/source/drivers/gpu/drm/omapdrm/oma=
+p_gem_dmabuf.c#L66
+>
+> >
+> > BR,
+> > -R
+> >
+> >> Best regards
+> >> Thomas
+> >>
+> >> [1]
+> >> https://elixir.bootlin.com/linux/v5.18/source/drivers/gpu/drm/drm_gem_=
+shmem_helper.c#L85
+> >> [2]
+> >> https://elixir.bootlin.com/linux/v5.18/source/drivers/gpu/drm/ttm/ttm_=
+bo.c#L1002
+> >>
+> >>>
+> >>> Fixes: e5516553999f ("drm: call drm_gem_object_funcs.mmap with fake o=
+ffset")
+> >>> Signed-off-by: Rob Clark <robdclark@chromium.org>
+> >>> ---
+> >>> Note, it's possible the issue existed in some related form prior to t=
+he
+> >>> commit tagged with Fixes.
+> >>>
+> >>>    drivers/gpu/drm/drm_prime.c | 5 +++++
+> >>>    1 file changed, 5 insertions(+)
+> >>>
+> >>> diff --git a/drivers/gpu/drm/drm_prime.c b/drivers/gpu/drm/drm_prime.=
+c
+> >>> index e3f09f18110c..849eea154dfc 100644
+> >>> --- a/drivers/gpu/drm/drm_prime.c
+> >>> +++ b/drivers/gpu/drm/drm_prime.c
+> >>> @@ -716,6 +716,11 @@ int drm_gem_prime_mmap(struct drm_gem_object *ob=
+j, struct vm_area_struct *vma)
+> >>>        struct file *fil;
+> >>>        int ret;
+> >>>
+> >>> +     /* Ensure that the vma_node is initialized: */
+> >>> +     ret =3D drm_gem_create_mmap_offset(obj);
+> >>> +     if (ret)
+> >>> +             return ret;
+> >>> +
+> >>>        /* Add the fake offset */
+> >>>        vma->vm_pgoff +=3D drm_vma_node_start(&obj->vma_node);
+> >>>
+> >>
+> >> --
+> >> Thomas Zimmermann
+> >> Graphics Driver Developer
+> >> SUSE Software Solutions Germany GmbH
+> >> Maxfeldstr. 5, 90409 N=C3=BCrnberg, Germany
+> >> (HRB 36809, AG N=C3=BCrnberg)
+> >> Gesch=C3=A4ftsf=C3=BChrer: Ivo Totev
+>
+> --
+> Thomas Zimmermann
+> Graphics Driver Developer
+> SUSE Software Solutions Germany GmbH
+> Maxfeldstr. 5, 90409 N=C3=BCrnberg, Germany
+> (HRB 36809, AG N=C3=BCrnberg)
+> Gesch=C3=A4ftsf=C3=BChrer: Ivo Totev
