@@ -2,47 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A809D537EF3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 May 2022 16:14:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 20DF653804E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 May 2022 16:23:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236819AbiE3OJP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 May 2022 10:09:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34030 "EHLO
+        id S236503AbiE3OJO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 May 2022 10:09:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55988 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238227AbiE3OER (ORCPT
+        with ESMTP id S239105AbiE3OFW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 May 2022 10:04:17 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 111A3994CC;
-        Mon, 30 May 2022 06:40:16 -0700 (PDT)
+        Mon, 30 May 2022 10:05:22 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E362699683;
+        Mon, 30 May 2022 06:41:18 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id BB5BFB80DB3;
-        Mon, 30 May 2022 13:40:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7446DC3411C;
-        Mon, 30 May 2022 13:40:12 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 9BFD3B80DA7;
+        Mon, 30 May 2022 13:41:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72524C385B8;
+        Mon, 30 May 2022 13:41:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1653918013;
-        bh=84kLkUFrITbye63UGnUau2HQC5kDYnmHprBb0Z2XKPw=;
+        s=k20201202; t=1653918076;
+        bh=UpzbA3wVk0DsQjKWMTYnU5OSFElWl46K5qBulj/XdIQ=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=TaVLbqwz+ih3thOKVyFlQvBKiMNYDx8oiRNrTQQ1IeVc1NLOu35P12Bx1E0jDfSPa
-         y8VAaJ1QpKyG/OQ45aqxN4+eTvS7WN+jHwaZw+AHYDLwnIiYp2KVRIIry5wbWa+Yt1
-         Knens3ZrGWmdBxTwXgwVkJbZb8vdbZarQ0JkGQ6Ta8vSYaEwMwa6ByGZd6LaV6jQmQ
-         WDCWVnI8ImAH9AyI++WO6rLinQRRW7oNsjvW+ZT5YjIruB9j5ZMU5H+9rAAizO0mFD
-         Y9/3Il8nefEl3W+7ZiHFHLlawEEA0OedNp4gXYdG0s9vcUZtY5OMxeQv5kC/SCUcIn
-         LL9WB+QvNAtYQ==
+        b=WP+zZQf56Zyhp1NTljPmVzmhpAS5+m0lM4C+a3xs61zV8LvkaIHC2KlSAUofU1+c4
+         4D3xaqAu/suBasT+GDXw7OvoLk21OxZ3/KVwcvCxelEFFN/UWIPxDUsW7gDdAPK2t3
+         mmTovJNHYzJFGBpM+3fprohHzxJ0bUShxBh3yB+g0yEc2hXvwjcqNE1MGcoFrHxPHS
+         WmbQUruVCPX2kvKidVTUYqwnwp2dAktt2z8+AF/HR3Bn1ixBuzpzmDPhxlwqIkYQJQ
+         CUWNGMAUmbqNZteD3Yqhrp8oEEIRiwRH+ZlQjt1ipHnWZCZYJkfLVII34OdLQxxoZ4
+         73oQftchR8j9g==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Luca Weiss <luca.weiss@fairphone.com>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Sasha Levin <sashal@kernel.org>, agross@kernel.org,
-        bjorn.andersson@linaro.org, linux-media@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.15 032/109] media: venus: hfi: avoid null dereference in deinit
-Date:   Mon, 30 May 2022 09:37:08 -0400
-Message-Id: <20220530133825.1933431-32-sashal@kernel.org>
+Cc:     Lv Ruyi <lv.ruyi@zte.com.cn>, Zeal Robot <zealci@zte.com.cn>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sasha Levin <sashal@kernel.org>, robdclark@gmail.com,
+        quic_abhinavk@quicinc.com, airlied@linux.ie, daniel@ffwll.ch,
+        swboyd@chromium.org, quic_mkrishn@quicinc.com,
+        angelogioacchino.delregno@collabora.com, vulab@iscas.ac.cn,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: [PATCH AUTOSEL 5.15 050/109] drm: msm: fix error check return value of irq_of_parse_and_map()
+Date:   Mon, 30 May 2022 09:37:26 -0400
+Message-Id: <20220530133825.1933431-50-sashal@kernel.org>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220530133825.1933431-1-sashal@kernel.org>
 References: <20220530133825.1933431-1-sashal@kernel.org>
@@ -60,39 +62,41 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Luca Weiss <luca.weiss@fairphone.com>
+From: Lv Ruyi <lv.ruyi@zte.com.cn>
 
-[ Upstream commit 86594f6af867b5165d2ba7b5a71fae3a5961e56c ]
+[ Upstream commit b9e4f1d2b505df8e2439b63e67afaa287c1c43e2 ]
 
-If venus_probe fails at pm_runtime_put_sync the error handling first
-calls hfi_destroy and afterwards hfi_core_deinit. As hfi_destroy sets
-core->ops to NULL, hfi_core_deinit cannot call the core_deinit function
-anymore.
+The irq_of_parse_and_map() function returns 0 on failure, and does not
+return an negative value.
 
-Avoid this null pointer derefence by skipping the call when necessary.
-
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Reported-by: Zeal Robot <zealci@zte.com.cn>
+Signed-off-by: Lv Ruyi <lv.ruyi@zte.com.cn>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/483175/
+Link: https://lore.kernel.org/r/20220424031959.3172406-1-lv.ruyi@zte.com.cn
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/qcom/venus/hfi.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/venus/hfi.c b/drivers/media/platform/qcom/venus/hfi.c
-index 0f2482367e06..9bc4becdf638 100644
---- a/drivers/media/platform/qcom/venus/hfi.c
-+++ b/drivers/media/platform/qcom/venus/hfi.c
-@@ -104,6 +104,9 @@ int hfi_core_deinit(struct venus_core *core, bool blocking)
- 		mutex_lock(&core->lock);
+diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+index b3b42672b2d4..a2b276ae9673 100644
+--- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
++++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+@@ -598,9 +598,9 @@ struct msm_kms *mdp5_kms_init(struct drm_device *dev)
  	}
  
-+	if (!core->ops)
-+		goto unlock;
-+
- 	ret = core->ops->core_deinit(core);
+ 	irq = irq_of_parse_and_map(pdev->dev.of_node, 0);
+-	if (irq < 0) {
+-		ret = irq;
+-		DRM_DEV_ERROR(&pdev->dev, "failed to get irq: %d\n", ret);
++	if (!irq) {
++		ret = -EINVAL;
++		DRM_DEV_ERROR(&pdev->dev, "failed to get irq\n");
+ 		goto fail;
+ 	}
  
- 	if (!ret)
 -- 
 2.35.1
 
