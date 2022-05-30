@@ -2,144 +2,157 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A90F5537648
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 May 2022 10:13:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 196A553765E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 May 2022 10:13:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232804AbiE3IJH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 May 2022 04:09:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33074 "EHLO
+        id S233197AbiE3IMg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 May 2022 04:12:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42094 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232884AbiE3IJG (ORCPT
+        with ESMTP id S233192AbiE3IMf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 May 2022 04:09:06 -0400
-Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0BE7875216
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 May 2022 01:09:02 -0700 (PDT)
-Received: by mail-pj1-x1031.google.com with SMTP id q12-20020a17090a304c00b001e2d4fb0eb4so3215147pjl.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 May 2022 01:09:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=0FScl+UqRUK2zjAGIdnpLvBJ2sZzcfjY6lr/T8iYlos=;
-        b=dYormkjv9tBgqAMnTu37VmgqDlxDGlFXue/fz3cho42K/yVjCGbD8zxALhzpMBMgwl
-         JZXJMANAES1GQI8B30K4cIMon6oo/4Duoho54Uec6WlqFfxLWq1yXOKhNaehzFIcu/6d
-         D4RgACl+MDeGro5q94U4/EolUn4H0qAv6uQaea59Py4tqm5AWkh54C69YQjlQdHnTIBA
-         vnPMooKNk/Uw98pna09Ymi8JN5EOzQIb5poDZ8SSG4YkGoaDZOSflOXpS46U+2upC9aN
-         bL2tuShijKJnklTSelKPV/vys6638aKnPUmAYPys83WQjcPUpBsjfIp0m7eXdBfCc7YK
-         EHUg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=0FScl+UqRUK2zjAGIdnpLvBJ2sZzcfjY6lr/T8iYlos=;
-        b=kAlWV0LEgcneBuyYk0EpXywlDn6E3UulDVprJC4JfeN0aWFnO5Q+93YaAOU4hLmH+g
-         m/SrpTeojc4576q5jTAqfoB+BkcGoov3wAX6Ixt9SSAmDsqntItNd8E/1sLr9F321nwt
-         oOMyseMhnWejzoGZy31jQEpJrxvsQbZ/E/aCnIZjTDf8NpYnxSEi7W7yGLqHxUoo9tbA
-         S1B9i8tuTPNb5l6JwOiQWUzINC2gp2Cqi9e3I4ttK/l1dT4WwF3DXra3iLDTN64s/eTX
-         JbulZJOieyLKpZslisCwHWsuGaeltZ201ua+sAlX9VhD669BY2F0QjutpI1+gLvkjHoJ
-         i6Xg==
-X-Gm-Message-State: AOAM532vh+10vR9egSWhkrUUJtBBvbG9GHhuwxn8VAuWU8DRUq6nyg1X
-        25XAmwoLl/FKaXtFWNGcLVHS
-X-Google-Smtp-Source: ABdhPJzgQqCsBR3izTUVdM/YjZC4G0IubuAotr/OnzoFZGctfNMTJcbl4DyQ5Y2vXr9SY40Un1R+ag==
-X-Received: by 2002:a17:903:11c7:b0:151:9769:3505 with SMTP id q7-20020a17090311c700b0015197693505mr54926412plh.72.1653898141679;
-        Mon, 30 May 2022 01:09:01 -0700 (PDT)
-Received: from localhost.localdomain ([220.158.159.114])
-        by smtp.gmail.com with ESMTPSA id io17-20020a17090312d100b0015e8d4eb285sm8450345plb.207.2022.05.30.01.08.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 May 2022 01:09:01 -0700 (PDT)
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     tglx@linutronix.de, maz@kernel.org, bjorn.andersson@linaro.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH 3/3] genirq: Check for trigger type mismatch in __setup_irq()
-Date:   Mon, 30 May 2022 13:38:42 +0530
-Message-Id: <20220530080842.37024-4-manivannan.sadhasivam@linaro.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20220530080842.37024-1-manivannan.sadhasivam@linaro.org>
-References: <20220530080842.37024-1-manivannan.sadhasivam@linaro.org>
+        Mon, 30 May 2022 04:12:35 -0400
+Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 320F02B25E;
+        Mon, 30 May 2022 01:12:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1653898354; x=1685434354;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=UW2XlZJzOKPS83cwNKMUi+nCO2c0h/TbOksSKi9tH78=;
+  b=Q9+3yRoIAFY9NIyAzJg5DRzQ2s3lDRvwrctJLR/WGUME7byq2yqohPtH
+   28zEWobtBkz731CBpusz1XlRK1rvwLKcjF83i1x8PW4MGDWbfCW+W0kik
+   IK5pVr7w+Rh/m4DsFozGCa72iPZWEFuXrLF22PZzDi92aF4qVPY33Rc2X
+   DQOd9cupunTuQ1RVzyu7H0Tf0+09PiYOxZibHktO1UtbRxDZaHv1fusjr
+   H3eEYwUZUB0K2EVUB0TCnLxPIajQM8T/3vVfk3rbtTuPzQ5LpmUyOZ5T0
+   2WAN+1201bxjdnhtfWOAzn0h1zJ2mbgTRNnoLqzM8WqfTzscuLcxKRRXk
+   w==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10362"; a="254806549"
+X-IronPort-AV: E=Sophos;i="5.91,262,1647327600"; 
+   d="scan'208";a="254806549"
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 May 2022 01:12:32 -0700
+X-IronPort-AV: E=Sophos;i="5.91,262,1647327600"; 
+   d="scan'208";a="605069646"
+Received: from ahunter6-mobl1.ger.corp.intel.com (HELO [10.0.2.15]) ([10.252.41.117])
+  by orsmga008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 May 2022 01:12:26 -0700
+Message-ID: <a8efe257-6a33-0f33-4aa5-000a19e2d046@intel.com>
+Date:   Mon, 30 May 2022 11:12:22 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Firefox/91.0 Thunderbird/91.9.1
+Subject: Re: [PATCH V8 0/5] mmc: add error statistics for eMMC and SD card
+Content-Language: en-US
+To:     Shaik Sajida Bhanu <quic_c_sbhanu@quicinc.com>,
+        ulf.hansson@linaro.org, wsa+renesas@sang-engineering.com,
+        shawn.lin@rock-chips.com, yoshihiro.shimoda.uh@renesas.com,
+        digetx@gmail.com, quic_asutoshd@quicinc.com
+Cc:     linux-arm-msm@vger.kernel.org, linux-mmc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_rampraka@quicinc.com,
+        quic_pragalla@quicinc.com, quic_sartgarg@quicinc.com,
+        quic_nitirawa@quicinc.com, quic_sayalil@quicinc.com
+References: <1653674036-21829-1-git-send-email-quic_c_sbhanu@quicinc.com>
+From:   Adrian Hunter <adrian.hunter@intel.com>
+Organization: Intel Finland Oy, Registered Address: PL 281, 00181 Helsinki,
+ Business Identity Code: 0357606 - 4, Domiciled in Helsinki
+In-Reply-To: <1653674036-21829-1-git-send-email-quic_c_sbhanu@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_MED,SPF_HELO_PASS,SPF_NONE,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Currently, if the trigger type defined by the platform like DT does not
-match the driver requested trigger type, the below warning is shown
-during platform_get_irq() but only during the second time of the drive
-probe (due to probe deferral or module unload/load).
+On 27/05/22 20:53, Shaik Sajida Bhanu wrote:
+> Changes since V7:
+> 	- Patch set V6 rebased on Ulf's(Ulf Hansson) master branch instead
+> 	  of Ulf's (Ulf Hansson) next branch by mistake. So rebased patch
+> 	  set on Ulf's next branch now as suggested by Adrain Hunter.
+> 
 
-irq: type mismatch, failed to map hwirq-9 for interrupt-controller@b220000!
+Looks good, thank you.
 
-Consider a typical usecase of requesting an IRQ in a driver:
-
-```
-	/* Assume DT has set the trigger type to IRQF_TYPE_LEVEL_HIGH */
-
-	q6v5->wdog_irq = platform_get_irq_byname(pdev, "wdog");
-	if (q6v5->wdog_irq <= 0)
-		return q6v5->wdog_irq;
-
-	ret = devm_request_threaded_irq(&pdev->dev, q6v5->wdog_irq,
-					NULL, q6v5_wdog_interrupt,
-					IRQF_TRIGGER_RISING | IRQF_ONESHOT,
-					"q6v5 wdog", q6v5);
-	if (ret) {
-		dev_err(&pdev->dev, "failed to acquire wdog IRQ\n");
-		return ret;
-	}
-```
-
-For the first time probe of a driver, platform_get_irq_byname() does not
-return an error and it sets the platform requested trigger type. Then,
-request_irq() also does not check for the trigger type mismatch and sets
-the driver requested trigger type. Later if the driver gets probed again,
-platform_get_irq() throws the "type mismatch" warning and fails.
-
-Ideally, request_irq() should throw the error during the first time itself,
-when it detects the trigger type mismatch. So let's add a check in
-__setup_irq() for checking the trigger type mismatch.
-
-It should be noted that the platform trigger type could be IRQ_TYPE_NONE
-in some cases like IRQ controller inside the GPIOCHIP. For those cases,
-the check should be skipped.
-
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
- kernel/irq/manage.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
-
-diff --git a/kernel/irq/manage.c b/kernel/irq/manage.c
-index c03f71d5ec10..dd28c4944172 100644
---- a/kernel/irq/manage.c
-+++ b/kernel/irq/manage.c
-@@ -1480,8 +1480,18 @@ __setup_irq(unsigned int irq, struct irq_desc *desc, struct irqaction *new)
- 	 * If the trigger type is not specified by the caller,
- 	 * then use the default for this interrupt.
- 	 */
--	if (!(new->flags & IRQF_TRIGGER_MASK))
--		new->flags |= irqd_get_trigger_type(&desc->irq_data);
-+	flags = irqd_get_trigger_type(&desc->irq_data);
-+	if (!(new->flags & IRQF_TRIGGER_MASK)) {
-+		new->flags |= flags;
-+	} else if (flags && ((new->flags & IRQF_TRIGGER_MASK) != flags)) {
-+		/*
-+		 * Bail out if the default trigger is not IRQ_TYPE_NONE and the
-+		 * caller specified trigger does not match the default trigger type.
-+		 */
-+		pr_err("Trigger type %u does not match default type %lu for %s (irq %d)\n",
-+		       new->flags & IRQF_TRIGGER_MASK, flags, new->name, irq);
-+		return -EINVAL;
-+	}
- 
- 	/*
- 	 * Check whether the interrupt nests into another interrupt
--- 
-2.25.1
+> Changes since V6:
+> 	- Rebased on Ulf's(Ulf Hansson) next branch as suggested by
+> 	  Adrain Hunter.
+> 	- Replaced debugfs_create_file() with debugfs_create_file_unsafe()
+> 	  as suggested by Adrain Hunter.
+> 	- "[V6,5/5] mmc: cqhci: Capture eMMC and SD card errors" not
+> 	  included in this Patch series as we don't have cqhci changes
+> 	  on Ulf's(Ulf Hansson)next branch.
+> 
+> Changes since V5:
+> 	- Considered all error stats enums to set error state.
+> 	- Added missed tuning error related code changes which was
+> 	  missed in patch set V5 as Adrain Hunter pointed.
+> 	- Replaced DEFINE_SIMPLE_ATTRIBUTE with DEFINE_DEBUGFS_ATTRIBUTE
+> 	  as suggested by Adrain Hunter.
+> 	  
+> Changes since V4:
+> 	- Defined new macro to increment err_stats members when error occured
+> 	  as suggested by Adrain Hunter.
+> 	- Called err_stats members increment function after printing the error
+> 	  as suggested by Adrain Hunter.
+> 	- Considered INDEX and END_BIT errors same as CRC errors as suggested
+> 	  by Adrain Hunter.
+> 	- Removed Null check for host in debug fs functions and Reordered
+> 	  err_stats declarationas suggested by Adrain Hunter.
+> 	- Removed err_state variable stuff and updated err_state debug fs entry
+> 	  based on the err_stats members state as suggested by Adrain Hunter.
+> 
+> Changes since V3:
+> 	- Dropped error stats feature flag as suggested by Adrain Hunter.
+> 	- Separated error state related changes in separate patches as
+> 	  suggested by Adrain Hunter.
+> 	  [PATCH V4 4/7] : error state debug fs
+> 	  [PATCH V4 5/7] : error state enable function
+> 	  [PATCH V4 6/7] : error state enable in error case
+> 	- Note: we are enabling error state before calling sdhci_dumpregs
+> 	  we couldn't add the err state in error stats array as err state
+> 	  is not error type.
+> 	- Corrected Signed-off-by order as suggested by Bjron Andersson.
+> 	- Moved error state enable code from sdhci_dumpregs to error
+> 	  conditions as suggested by Adrain Hunter
+> 
+> Changes since V2:
+> 	- Removed userspace error stats clear debug fs entry as suggested
+> 	  by Adrain Hunter.
+> 	- Split patch into 4 patches
+> 	  [PATCH V3 1/4] : sdhci driver
+> 	  [PATCH V3 2/4] : debug fs entries
+> 	  [PATCH V3 3/4] : core driver
+> 	  [PATCH V3 4/4] : cqhci driver
+> 	- Used for loop to print error messages instead of using printf
+> 	  statements for all error messages as suggested by Adrain Hunter.
+> 	- Introduced one flag to enable error stats feature, if any other
+> 	  client wants to use this feature, they need to enable that flag.
+> 	- Moved reset command timeout error statement to card init flow
+> 	  as suggested by Adrain Hunter.
+> 
+> Changes since V1:
+> 	- Removed sysfs entry for eMMC and SD card error statistics and added
+> 	  debugfs entry as suggested by Adrian Hunter and Ulf Hansson.
+> 
+> Shaik Sajida Bhanu (5):
+>   mmc: core: Capture eMMC and SD card errors
+>   mmc: sdhci: Capture eMMC and SD card errors
+>   mmc: debugfs: Add debug fs entry for mmc driver
+>   mmc: debugfs: Add debug fs error state entry for mmc driver
+>   mmc: cqhci: Capture eMMC and SD card errors
+> 
+>  drivers/mmc/core/core.c       | 10 +++++-
+>  drivers/mmc/core/debugfs.c    | 79 +++++++++++++++++++++++++++++++++++++++++++
+>  drivers/mmc/host/cqhci-core.c |  9 ++++-
+>  drivers/mmc/host/sdhci.c      | 59 ++++++++++++++++++++++++--------
+>  drivers/mmc/host/sdhci.h      |  3 ++
+>  include/linux/mmc/host.h      | 26 ++++++++++++++
+>  include/linux/mmc/mmc.h       |  6 ++++
+>  7 files changed, 175 insertions(+), 17 deletions(-)
+> 
 
