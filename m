@@ -2,96 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0576B539611
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 May 2022 20:18:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 84CF4539649
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 May 2022 20:28:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236390AbiEaSSM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 31 May 2022 14:18:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44816 "EHLO
+        id S1346987AbiEaS2U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 31 May 2022 14:28:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35974 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245008AbiEaSSK (ORCPT
+        with ESMTP id S1344261AbiEaS2U (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 31 May 2022 14:18:10 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 753EC8DDED;
-        Tue, 31 May 2022 11:18:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1654021089; x=1685557089;
-  h=from:to:cc:subject:date:message-id;
-  bh=ygqfd+UVLlribZpef6RN2dzonzjgsAUFslBryxdS/04=;
-  b=asN6R3KuzlFnvXyHHedN/Z4UMo4NDBA2QKinCrpurBqMzq/64dJGH/WB
-   EA0yZBQZ2zQRl+yPIMSm4IqRsaQdGFymS0wyCG6lnfKdTORVvNE2EUR+r
-   5lJEQZnwhjDXuvswYsI4tNBpkXxY3p479nBXNcO/pgvPUGuH5nmzddJmX
-   s=;
-Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
-  by alexa-out.qualcomm.com with ESMTP; 31 May 2022 11:18:09 -0700
-X-QCInternal: smtphost
-Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/AES256-SHA; 31 May 2022 11:18:07 -0700
-X-QCInternal: smtphost
-Received: from hu-vnivarth-hyd.qualcomm.com (HELO hu-sgudaval-hyd.qualcomm.com) ([10.213.111.166])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 31 May 2022 23:47:52 +0530
-Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 3994820)
-        id E5DAE3EFE; Tue, 31 May 2022 23:47:50 +0530 (+0530)
-From:   Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-To:     agross@kernel.org, bjorn.andersson@linaro.org,
-        gregkh@linuxfoundation.org, jirislaby@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     quic_msavaliy@quicinc.com, dianders@chromium.org, mka@chromium.org,
-        swboyd@chromium.org,
-        Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-Subject: [PATCH] tty: serial: qcom-geni-serial: minor fixes to get_clk_div_rate()
-Date:   Tue, 31 May 2022 23:47:46 +0530
-Message-Id: <1654021066-13341-1-git-send-email-quic_vnivarth@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-X-Spam-Status: No, score=-4.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        Tue, 31 May 2022 14:28:20 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C51654F91;
+        Tue, 31 May 2022 11:28:18 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 4FF946100C;
+        Tue, 31 May 2022 18:28:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03AADC385A9;
+        Tue, 31 May 2022 18:28:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1654021697;
+        bh=XwsdZjZfrbrweRje/hlBhGvZb1pymIZVlrGF1dkVAmU=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=VzRNjo9JlHzXS+Y10NEFXGFrnJA9Clu2WvFahdWucyVFWmKUVXhT8dXP/selsP8Aq
+         eKk3rULjG1cV/5vC17fIaGAXy0gt/h5XlhuTWAz0mbD8I2dPjRw9BDdzi/TjeWItXw
+         YkrcLDZCqJPZ9UfsV/sxC2epYf3vUJdPFTQ48Dno=
+Date:   Tue, 31 May 2022 20:28:13 +0200
+From:   Greg KH <gregkh@linuxfoundation.org>
+To:     Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
+        jirislaby@kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-serial@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_msavaliy@quicinc.com, dianders@chromium.org, mka@chromium.org,
+        swboyd@chromium.org
+Subject: Re: [PATCH] tty: serial: qcom-geni-serial: minor fixes to
+ get_clk_div_rate()
+Message-ID: <YpZePT0pKNnKU2cv@kroah.com>
+References: <1654021066-13341-1-git-send-email-quic_vnivarth@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1654021066-13341-1-git-send-email-quic_vnivarth@quicinc.com>
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add missing initialisation and correct type casting
+On Tue, May 31, 2022 at 11:47:46PM +0530, Vijaya Krishna Nivarthi wrote:
+> Add missing initialisation and correct type casting
+> 
+> Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+> ---
+>  drivers/tty/serial/qcom_geni_serial.c | 8 ++++----
+>  1 file changed, 4 insertions(+), 4 deletions(-)
 
-Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
----
- drivers/tty/serial/qcom_geni_serial.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+Hi,
 
-diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
-index 4733a23..08f3ad4 100644
---- a/drivers/tty/serial/qcom_geni_serial.c
-+++ b/drivers/tty/serial/qcom_geni_serial.c
-@@ -943,11 +943,11 @@ static int qcom_geni_serial_startup(struct uart_port *uport)
- static unsigned long get_clk_div_rate(struct clk *clk, unsigned int baud,
- 			unsigned int sampling_rate, unsigned int *clk_div)
- {
--	unsigned long ser_clk;
-+	unsigned long ser_clk = 0;
- 	unsigned long desired_clk;
- 	unsigned long freq, prev;
- 	unsigned long div, maxdiv;
--	int64_t mult;
-+	unsigned long long mult;
- 
- 	desired_clk = baud * sampling_rate;
- 	if (!desired_clk) {
-@@ -959,8 +959,8 @@ static unsigned long get_clk_div_rate(struct clk *clk, unsigned int baud,
- 	prev = 0;
- 
- 	for (div = 1; div <= maxdiv; div++) {
--		mult = div * desired_clk;
--		if (mult > ULONG_MAX)
-+		mult = (unsigned long long)div * (unsigned long long)desired_clk;
-+		if (mult > (unsigned long long)ULONG_MAX)
- 			break;
- 
- 		freq = clk_round_rate(clk, (unsigned long)mult);
--- 
-Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, hosted by the Linux Foundation.
+This is the friendly patch-bot of Greg Kroah-Hartman.  You have sent him
+a patch that has triggered this response.  He used to manually respond
+to these common problems, but in order to save his sanity (he kept
+writing the same thing over and over, yet to different people), I was
+created.  Hopefully you will not take offence and will fix the problem
+in your patch and resubmit it so that it can be accepted into the Linux
+kernel tree.
 
+You are receiving this message because of the following common error(s)
+as indicated below:
+
+- You did not specify a description of why the patch is needed, or
+  possibly, any description at all, in the email body.  Please read the
+  section entitled "The canonical patch format" in the kernel file,
+  Documentation/SubmittingPatches for what is needed in order to
+  properly describe the change.
+
+- You did not write a descriptive Subject: for the patch, allowing Greg,
+  and everyone else, to know what this patch is all about.  Please read
+  the section entitled "The canonical patch format" in the kernel file,
+  Documentation/SubmittingPatches for what a proper Subject: line should
+  look like.
+
+If you wish to discuss this problem further, or you have questions about
+how to resolve this issue, please feel free to respond to this email and
+Greg will reply once he has dug out from the pending patches received
+from other developers.
+
+thanks,
+
+greg k-h's patch email bot
