@@ -2,113 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0285F5394F2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 May 2022 18:26:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 21ED1539596
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 May 2022 19:52:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243308AbiEaQ0X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 31 May 2022 12:26:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47686 "EHLO
+        id S1344234AbiEaRwC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 31 May 2022 13:52:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51908 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241124AbiEaQ0X (ORCPT
+        with ESMTP id S1343782AbiEaRwB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 31 May 2022 12:26:23 -0400
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 81AE195DDB;
-        Tue, 31 May 2022 09:26:21 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 484C023A;
-        Tue, 31 May 2022 09:26:21 -0700 (PDT)
-Received: from [10.57.81.38] (unknown [10.57.81.38])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 9E8023F73D;
-        Tue, 31 May 2022 09:26:19 -0700 (PDT)
-Message-ID: <edf89f9a-23ce-16ce-33f4-7796ed6bdb4c@arm.com>
-Date:   Tue, 31 May 2022 17:26:14 +0100
+        Tue, 31 May 2022 13:52:01 -0400
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 675C353B64;
+        Tue, 31 May 2022 10:52:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1654019520; x=1685555520;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=z9sgpsSPs9NDoq7xVy5L9QPtqJrdgsPFZQ+CXd/DLBo=;
+  b=n1X79n9fCFQcMfaIDqzrw6l/sfoPKoqBF20195aKwGnr4KCyerq4ZVTU
+   zWbqvqkUCpLAQDWgG5oxlkvAcszIEL8vs0RG7oH303IVq1JoHCgePycEa
+   IV1hCsTENyF2HpqQvayiOk7DuQfEg0lmfI5JU74lKIHn6+AU9dUQiJGfk
+   c=;
+Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 31 May 2022 10:52:00 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 May 2022 10:51:59 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Tue, 31 May 2022 10:51:59 -0700
+Received: from [10.38.242.41] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Tue, 31 May
+ 2022 10:51:57 -0700
+Message-ID: <73f2e94b-daa5-b30e-4fa9-f6725ed1a686@quicinc.com>
+Date:   Tue, 31 May 2022 10:51:55 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Subject: Re: [PATCH 2/6] iommu/qcom: Write TCR before TTBRs to fix ASID access
- behavior
-Content-Language: en-GB
-To:     Will Deacon <will@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        jamipkettunen@somainline.org, iommu@lists.linux-foundation.org,
-        martin.botka@somainline.org, ~postmarketos/upstreaming@lists.sr.ht,
-        angelogioacchino.delregno@somainline.org,
-        marijn.suijten@somainline.org, linux-arm-kernel@lists.infradead.org
-References: <20220527212901.29268-1-konrad.dybcio@somainline.org>
- <20220527212901.29268-3-konrad.dybcio@somainline.org>
- <20220531155559.GB25502@willie-the-truck>
-From:   Robin Murphy <robin.murphy@arm.com>
-In-Reply-To: <20220531155559.GB25502@willie-the-truck>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [PATCH] drm/msm/dpu: Fix pointer dereferenced before checking
+Content-Language: en-US
+To:     Haowen Bai <baihaowen@meizu.com>, Rob Clark <robdclark@gmail.com>,
+        "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, "David Airlie" <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>
+CC:     <linux-arm-msm@vger.kernel.org>, <freedreno@lists.freedesktop.org>,
+        <linux-kernel@vger.kernel.org>, <dri-devel@lists.freedesktop.org>
+References: <1653877196-23114-1-git-send-email-baihaowen@meizu.com>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <1653877196-23114-1-git-send-email-baihaowen@meizu.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-9.7 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-7.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2022-05-31 16:55, Will Deacon wrote:
-> On Fri, May 27, 2022 at 11:28:57PM +0200, Konrad Dybcio wrote:
->> From: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
->>
->> As also stated in the arm-smmu driver, we must write the TCR before
->> writing the TTBRs, since the TCR determines the access behavior of
->> some fields.
-> 
-> Where is this stated in the arm-smmu driver?
 
-In arm_smmu_write_context_bank() - IIRC it's mostly about the case where 
-if you write a 16-bit ASID to TTBR before setting TCR2.AS you might end 
-up losing the top 8 bits of it. However, in the context of a pantomime 
-where we just have to pretend to program the "hardware" the way the 
-firmware has already programmed it (on pain of getting randomly reset if 
-we look at it wrong), I can't imagine it really matters.
 
-Robin.
+On 5/29/2022 7:19 PM, Haowen Bai wrote:
+> The phys_enc->wb_idx is dereferencing before null checking, so move
+> it after checking.
+> 
+> Signed-off-by: Haowen Bai <baihaowen@meizu.com>
 
->> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
->> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
->> ---
->>   drivers/iommu/arm/arm-smmu/qcom_iommu.c | 12 ++++++------
->>   1 file changed, 6 insertions(+), 6 deletions(-)
->>
->> diff --git a/drivers/iommu/arm/arm-smmu/qcom_iommu.c b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
->> index 1728d4d7fe25..75f353866c40 100644
->> --- a/drivers/iommu/arm/arm-smmu/qcom_iommu.c
->> +++ b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
->> @@ -273,18 +273,18 @@ static int qcom_iommu_init_domain(struct iommu_domain *domain,
->>   			ctx->secure_init = true;
->>   		}
->>   
->> -		/* TTBRs */
->> -		iommu_writeq(ctx, ARM_SMMU_CB_TTBR0,
->> -				pgtbl_cfg.arm_lpae_s1_cfg.ttbr |
->> -				FIELD_PREP(ARM_SMMU_TTBRn_ASID, ctx->asid));
->> -		iommu_writeq(ctx, ARM_SMMU_CB_TTBR1, 0);
->> -
->>   		/* TCR */
->>   		iommu_writel(ctx, ARM_SMMU_CB_TCR2,
->>   				arm_smmu_lpae_tcr2(&pgtbl_cfg));
->>   		iommu_writel(ctx, ARM_SMMU_CB_TCR,
->>   			     arm_smmu_lpae_tcr(&pgtbl_cfg) | ARM_SMMU_TCR_EAE);
->>   
->> +		/* TTBRs */
->> +		iommu_writeq(ctx, ARM_SMMU_CB_TTBR0,
->> +				pgtbl_cfg.arm_lpae_s1_cfg.ttbr |
->> +				FIELD_PREP(ARM_SMMU_TTBRn_ASID, ctx->asid));
->> +		iommu_writeq(ctx, ARM_SMMU_CB_TTBR1, 0);
+Fixes: d7d0e73f7de33 ("drm/msm/dpu: introduce the dpu_encoder_phys_* for 
+writeback")
+
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 > 
-> I'd have thought that SCTLR.M would be clear here, so it shouldn't matter
-> what order we write these in.
-> 
-> Will
-> _______________________________________________
-> iommu mailing list
-> iommu@lists.linux-foundation.org
-> https://lists.linuxfoundation.org/mailman/listinfo/iommu
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
+> index 4829d1ce0cf8..59da348ff339 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
+> @@ -574,11 +574,11 @@ static void dpu_encoder_phys_wb_disable(struct dpu_encoder_phys *phys_enc)
+>    */
+>   static void dpu_encoder_phys_wb_destroy(struct dpu_encoder_phys *phys_enc)
+>   {
+> -	DPU_DEBUG("[wb:%d]\n", phys_enc->wb_idx - WB_0);
+> -
+>   	if (!phys_enc)
+>   		return;
+>   
+> +	DPU_DEBUG("[wb:%d]\n", phys_enc->wb_idx - WB_0);
+> +
+>   	kfree(phys_enc);
+>   }
+>   
