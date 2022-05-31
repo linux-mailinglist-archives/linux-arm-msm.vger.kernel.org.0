@@ -2,153 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A60AE539804
+	by mail.lfdr.de (Postfix) with ESMTP id F19E8539805
 	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 May 2022 22:35:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235187AbiEaUet (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 31 May 2022 16:34:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47848 "EHLO
+        id S1347770AbiEaUeu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 31 May 2022 16:34:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47870 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347763AbiEaUes (ORCPT
+        with ESMTP id S1347766AbiEaUet (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 31 May 2022 16:34:48 -0400
-Received: from mail-qk1-x72f.google.com (mail-qk1-x72f.google.com [IPv6:2607:f8b0:4864:20::72f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 602E7994E5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 May 2022 13:34:46 -0700 (PDT)
-Received: by mail-qk1-x72f.google.com with SMTP id r84so13980801qke.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 May 2022 13:34:46 -0700 (PDT)
+        Tue, 31 May 2022 16:34:49 -0400
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE3BB99685;
+        Tue, 31 May 2022 13:34:48 -0700 (PDT)
+Received: by mail-wm1-x32c.google.com with SMTP id p5-20020a1c2905000000b003970dd5404dso1832302wmp.0;
+        Tue, 31 May 2022 13:34:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
+        d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=2fh41uCU0B0HjBQXprAp7krFBQPqgkjOy/nUjVHNbUw=;
-        b=cg6LfZ2kXIK9pxClWtEHJwSucUWw4dIXpd5+sYRrz3pb5+GxzuJ1aq9JCx6TIF2m5p
-         RT20SL65M2yezc64XYlLvzEI6Sd+Bqh79gRnc64JONcBV+aNMuQe1kq9bYba3YSI92Ys
-         h8rpWCWKrdWsCeM0nM4YKH+YtLRPiu03o5n/B+IoT9qwKMDQl+nU6wZD+1GP6z5jVWoR
-         r81DOxzJA3HGeAG1/CYbRaDkxQWHryEDJ7jXGekIyqbfTemiNu1CWtmckG5jr6iSU0uP
-         mpK0G+BqvyyKnarnXuLVX6IMIK6AVtwYYWZceOyq5V2OVHA5C4V2p6DrK7Q0WYk+Jnb7
-         uT4Q==
+        bh=oaXYmwjs+IP8DfonFtLZlkC4gcR1bP5BMuLB+hURGTI=;
+        b=Uo1QyPMQp8yyfSpNq3/lf50f4g6fet8bZdokB71yNpzIo46V63H3Kq2a5Ud0yvilVH
+         Tqu6qpHFTSvRpYdkO2OmrDrZdFxI/+NJ7UFDeye65myT4SIYuQw9fdDzQKcjg/DHSlKQ
+         4sGflAEksOAgt7SbEcmFnwHdgY4K4ck+OAUd76E4XSdNPifu4DK2UjXtuqpwDXA4RsE9
+         T4p6ZFKiZ7kNnNOvugictDq813xCtokUCSNm60F5l2m0bb2e6Kd+UVdHH+sHyj+Y5HWA
+         0/wOxNALIeGPDZ93ETwsT28DZ8P2vg8VHlTzhJ2oC5f91sp4jB8joWRpLDGXyIdA6HKE
+         T62g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=2fh41uCU0B0HjBQXprAp7krFBQPqgkjOy/nUjVHNbUw=;
-        b=ceNglstvOGYFIB4mvmuTcSDlkWkTqfltQu3So24MmSmtzlwfQVoVWcxUGNl5t4rMh5
-         4JS3rzGTLnXJNOsJNJhM1lUcHqqd9ye0xIsaOc3VDJSP3w9vybtbLEV2pJTUekGJJk6j
-         qnPoQD9u0Dp0YAdTXPWuVEXL04DmCWbTYoQ0peUMsu6wYLjUiDMkRXAGrDYdJ32POdEY
-         bRCbVOGGq83N2lweoWVFpcumMQ1k2vihOLq8fJHPcmiTS27ApOK2ihYOnLykPCndomU+
-         l7Lic1KcN3HSXGHMDPqlt8qGlGgOKTIYyz/DDfDVDHfsn5wHT06umxo4fmsZYHMk9lEL
-         QJOA==
-X-Gm-Message-State: AOAM531cZsfBqjviDnpfZhmdhze/s6dzNs5IiUlJ+EEw4UMkNWifbonf
-        6uPKXGx/YtCe9UGS6VcrzgQfDbSsHug2Ts+VikIlZQ==
-X-Google-Smtp-Source: ABdhPJz5IQSs0iubNWF0AHMHHE5gGY9ALKbjx1Exvbh1qJxPkgPlKRPWxj874jacm+IrqVX5a3l3Jg663f6Em2Lj6X0=
-X-Received: by 2002:a05:620a:414e:b0:6a5:8dec:57bb with SMTP id
- k14-20020a05620a414e00b006a58dec57bbmr24700836qko.30.1654029285518; Tue, 31
- May 2022 13:34:45 -0700 (PDT)
+        bh=oaXYmwjs+IP8DfonFtLZlkC4gcR1bP5BMuLB+hURGTI=;
+        b=TNrQRNGHnb3fOYYMoW8Yg7nXR64TQEn843KIP01naGouUlvGu/y6LZ5wWAVIGn7rP4
+         DxWZxScE0m/h7kk352w1nCeEA8QOWkF/N886O6yGP+TLWguJHq+z/dSCtWZNMliJ8xYv
+         koDzIuDSTMWYxZ3t5IT4fZTjiUSoLJ5n4LRfwe4RoR1CMUg2yxDZh6qbDaYUTE7e78Zr
+         4YqZfYL08h+0irFBvhKDqTKd/Htnwv1qzAUJgsKuJ+u1DWLJNKM93jSWc45PiO7sl1oq
+         YlnFMB1a0RptbYSTJgL05q3tBAgcypp22Wh5LZlc+pkOau+OxhSPiWlguGJMI9c14H00
+         uXOQ==
+X-Gm-Message-State: AOAM532ZAWk2/ixW8uWiAXgS0XnzMZBznKMA2TrPZ8dB4Ljx+j7mzZx9
+        PXxu4cv/JYxFdCPYUTKlxLFGjfV6ty1l7uj2OhI=
+X-Google-Smtp-Source: ABdhPJxioJPukJE1d1hZFegw9lQmbEjjQn5EFNtdoGSzu/a+qBWwmNy2JHdPps/csufWkTTB/pZ+fRzCLuaCM0EYTD0=
+X-Received: by 2002:a05:600c:4f93:b0:399:e654:4481 with SMTP id
+ n19-20020a05600c4f9300b00399e6544481mr16363801wmq.164.1654029287263; Tue, 31
+ May 2022 13:34:47 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220531200857.136547-1-robdclark@gmail.com>
-In-Reply-To: <20220531200857.136547-1-robdclark@gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 31 May 2022 23:34:34 +0300
-Message-ID: <CAA8EJpouqO9KfhAQSqEHP8MUGTkntx7iARRRqrvx3uMFQd4-dQ@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm: Ensure mmap offset is initialized
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, Rob Clark <robdclark@chromium.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+References: <1653896005-25168-1-git-send-email-baihaowen@meizu.com>
+In-Reply-To: <1653896005-25168-1-git-send-email-baihaowen@meizu.com>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Tue, 31 May 2022 13:34:48 -0700
+Message-ID: <CAF6AEGtsAH6LdE9douMMYEM2hW6_ifcqgM5mxaj43XAr=3uCTw@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm/dpu: Fix pointer dereferenced before checking
+To:     Haowen Bai <baihaowen@meizu.com>
+Cc:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>,
-        Gerd Hoffmann <kraxel@redhat.com>,
-        open list <linux-kernel@vger.kernel.org>
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 31 May 2022 at 23:08, Rob Clark <robdclark@gmail.com> wrote:
+On Mon, May 30, 2022 at 12:34 AM Haowen Bai <baihaowen@meizu.com> wrote:
 >
-> From: Rob Clark <robdclark@chromium.org>
+> The ctx->hw is dereferencing before null checking, so move
+> it after checking.
 >
-> If a GEM object is allocated, and then exported as a dma-buf fd which is
-> mmap'd before or without the GEM buffer being directly mmap'd, the
-> vma_node could be unitialized.  This leads to a situation where the CPU
-> mapping is not correctly torn down in drm_vma_node_unmap().
->
-> Fixes: e5516553999f ("drm: call drm_gem_object_funcs.mmap with fake offset")
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
+> Signed-off-by: Haowen Bai <baihaowen@meizu.com>
 > ---
->  drivers/gpu/drm/msm/msm_drv.c       |  2 +-
->  drivers/gpu/drm/msm/msm_drv.h       |  1 +
->  drivers/gpu/drm/msm/msm_gem_prime.c | 15 +++++++++++++++
->  3 files changed, 17 insertions(+), 1 deletion(-)
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
 >
-> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-> index 44485363f37a..14ab9a627d8b 100644
-> --- a/drivers/gpu/drm/msm/msm_drv.c
-> +++ b/drivers/gpu/drm/msm/msm_drv.c
-> @@ -964,7 +964,7 @@ static const struct drm_driver msm_driver = {
->         .prime_handle_to_fd = drm_gem_prime_handle_to_fd,
->         .prime_fd_to_handle = drm_gem_prime_fd_to_handle,
->         .gem_prime_import_sg_table = msm_gem_prime_import_sg_table,
-> -       .gem_prime_mmap     = drm_gem_prime_mmap,
-> +       .gem_prime_mmap     = msm_gem_prime_mmap,
->  #ifdef CONFIG_DEBUG_FS
->         .debugfs_init       = msm_debugfs_init,
->  #endif
-> diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
-> index bb052071b16d..090b8074fec7 100644
-> --- a/drivers/gpu/drm/msm/msm_drv.h
-> +++ b/drivers/gpu/drm/msm/msm_drv.h
-> @@ -275,6 +275,7 @@ unsigned long msm_gem_shrinker_shrink(struct drm_device *dev, unsigned long nr_t
->  void msm_gem_shrinker_init(struct drm_device *dev);
->  void msm_gem_shrinker_cleanup(struct drm_device *dev);
->
-> +int msm_gem_prime_mmap(struct drm_gem_object *obj, struct vm_area_struct *vma);
->  struct sg_table *msm_gem_prime_get_sg_table(struct drm_gem_object *obj);
->  int msm_gem_prime_vmap(struct drm_gem_object *obj, struct iosys_map *map);
->  void msm_gem_prime_vunmap(struct drm_gem_object *obj, struct iosys_map *map);
-> diff --git a/drivers/gpu/drm/msm/msm_gem_prime.c b/drivers/gpu/drm/msm/msm_gem_prime.c
-> index 94ab705e9b8a..dcc8a573bc76 100644
-> --- a/drivers/gpu/drm/msm/msm_gem_prime.c
-> +++ b/drivers/gpu/drm/msm/msm_gem_prime.c
-> @@ -11,6 +11,21 @@
->  #include "msm_drv.h"
->  #include "msm_gem.h"
->
-> +int msm_gem_prime_mmap(struct drm_gem_object *obj, struct vm_area_struct *vma)
-> +{
-> +       int ret;
-> +
-> +       /* Ensure the mmap offset is initialized.  We lazily initialize it,
-> +        * so if it has not been first mmap'd directly as a GEM object, the
-> +        * mmap offset will not be already initialized.
-> +        */
-> +       ret = drm_gem_create_mmap_offset(obj);
-> +       if (ret)
-> +               return ret;
-
-Wouldn't it be better to have this call directly in the
-drm_gem_prime_mmap() ? This way all drivers can be lazy.
-
-
-> +
-> +       return drm_gem_prime_mmap(obj, vma);
-> +}
-> +
->  struct sg_table *msm_gem_prime_get_sg_table(struct drm_gem_object *obj)
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c
+> index bcccce292937..e59680cdd0ce 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c
+> @@ -155,11 +155,13 @@ static void dpu_hw_wb_roi(struct dpu_hw_wb *ctx, struct dpu_hw_wb_cfg *wb)
+>  static void dpu_hw_wb_setup_qos_lut(struct dpu_hw_wb *ctx,
+>                 struct dpu_hw_wb_qos_cfg *cfg)
 >  {
->         struct msm_gem_object *msm_obj = to_msm_bo(obj);
-> --
-> 2.36.1
+> -       struct dpu_hw_blk_reg_map *c = &ctx->hw;
+> +       struct dpu_hw_blk_reg_map *c;
+>         u32 qos_ctrl = 0;
 >
+>         if (!ctx || !cfg)
+>                 return;
+> +
+> +       c = &ctx->hw;
 
+tbh, we should just drop both of these null checks.. there is no
+codepath that can reach this with potential for either param to be
+NULL
 
--- 
-With best wishes
-Dmitry
+BR,
+-R
+
+>
+>         DPU_REG_WRITE(c, WB_DANGER_LUT, cfg->danger_lut);
+>         DPU_REG_WRITE(c, WB_SAFE_LUT, cfg->safe_lut);
+> --
+> 2.7.4
+>
