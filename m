@@ -2,58 +2,39 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ADF925394CD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 May 2022 18:15:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EF0645394E4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 May 2022 18:19:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346062AbiEaQPZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 31 May 2022 12:15:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35428 "EHLO
+        id S1346095AbiEaQTY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 31 May 2022 12:19:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42584 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346025AbiEaQPY (ORCPT
+        with ESMTP id S1346097AbiEaQTV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 31 May 2022 12:15:24 -0400
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B07E095DCE;
-        Tue, 31 May 2022 09:15:22 -0700 (PDT)
-Received: by mail-wm1-x32f.google.com with SMTP id n124-20020a1c2782000000b003972dfca96cso1484158wmn.4;
-        Tue, 31 May 2022 09:15:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=yTwbDkRh5hDmKjnX326/H9mLZmvE5gWxqRme+WbiGTU=;
-        b=Rru3PwBplI26UVmu4AXwOX9WpBcGD4aIv0VSI8ypmKBntq8oSPd9BEv9TniUq1iLvp
-         YBRmDAhwsRw8pp75B5ILEfiMaxPMxFGFKGYBrb6SdwRv/QNuPZoYyxcce5ElLzRkxNYS
-         PAvH8P2D8UU78DqlF9etOWjlmopXtvn1GEUjdUucWxPaWHKbHyys0MMKV6e0HLLoqF2r
-         LFt+T/F5phreLYp1vMgOVXGeX8tXiA0JYKNoFZyqLbu6auPuzF943C8foHaaN0qnMqjx
-         gJjP8I6Pne2uobs/BDW2AAVT39AxR7/ICC7vlZxIolKQUDFOn6MJVnfuJfovNUwZhil3
-         PnIQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=yTwbDkRh5hDmKjnX326/H9mLZmvE5gWxqRme+WbiGTU=;
-        b=1UoCrCW5g4CxWQov+VPeh6Jmr3GTi488Lv76DWz8KXKHQEqK1nuYM4kCPZ3fNmxlgy
-         GB02MG9djRXsf4KmyAcfarO8d/JmQjk4b4saBZj6oxybkAzjqZ2BFhYcP86XdF2CdqN0
-         Ks9rueCMkh+sbq5dmGJITSVI+0mT8Ezf98lQUuiHRGrWX+X30wqFq2szJi1kuEVJs5FN
-         8bLpSRy92paek4jD5E2gylFUA9Pk8qA69M7MFyseUFJfceCv40wlCRZeueoSnQMVFHs8
-         YUbaJYRD8RzR72VgTq9ADPgDqEgoqkgqvtuX2fIONnx28j9jVcZ11NNmV8atkcF7Dt1a
-         BjPg==
-X-Gm-Message-State: AOAM531SBeKSKHE+h2a6w2vgJw+BFVlyCX/NcfhP9rA3cBHfELbl+bSh
-        Jqj0JVBdttfOM4x4m+VLsHSogr4bmx0sThOWhLo=
-X-Google-Smtp-Source: ABdhPJw8TmZisoYJQb2SVHP2J/XSkZSzLw0bfkiAV9h8OY9eEHr/k33ODPPnsIXrdwWQH0cYw+WJ2+TymTyZCKqRUgQ=
-X-Received: by 2002:a7b:c5d0:0:b0:389:fe85:3d79 with SMTP id
- n16-20020a7bc5d0000000b00389fe853d79mr24898741wmk.77.1654013721128; Tue, 31
- May 2022 09:15:21 -0700 (PDT)
-MIME-Version: 1.0
-References: <20220527212901.29268-1-konrad.dybcio@somainline.org>
- <20220527212901.29268-2-konrad.dybcio@somainline.org> <20220531154631.GA25502@willie-the-truck>
-In-Reply-To: <20220531154631.GA25502@willie-the-truck>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Tue, 31 May 2022 09:15:22 -0700
-Message-ID: <CAF6AEGsWsHfQZnszG=NgP0BufxO-DP4LwvsAYkrz2wRhcJuOXw@mail.gmail.com>
-Subject: Re: [PATCH 1/6] iommu/qcom: Use the asid read from device-tree if specified
-To:     Will Deacon <will@kernel.org>
+        Tue, 31 May 2022 12:19:21 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 100C598590;
+        Tue, 31 May 2022 09:19:21 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id B9C53B810EE;
+        Tue, 31 May 2022 16:19:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19D2CC385A9;
+        Tue, 31 May 2022 16:19:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1654013958;
+        bh=C7JqPHYdDIfIV1hFpEuC1J6B7QEItv7CaH7EVzTRasE=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=c7uCs1jy8TG74D+Nj32f4BthpKKQvR+72bqpZXJZDojOu/Ri4D//ChSLI2vkj884B
+         k35ZMlm5UJfSwDAtNkaERyfhCvFvZXDpAthbHc4HkQ7W03zyQPBFHoKp7stXu318GC
+         5VM4zAwxH7TtP3LB1s/bzGOH8e9Lq2vjBfscQPE3016J1EHU4Nqji9R8xT3oCFM7zr
+         HGeViJPNgdB51Kq1EoXhNEyKiBj2Ya4ArkH46ly3m4pxnzPNywvMEU2/pM4mGnrLa2
+         psUMVuVTbOqTI27e5Hs7HKH8fpB6H+JgeeIjB7UTyNZkdBfYSv+/9JLpw/iQ0xyJfZ
+         r4XR05x5qaAjg==
+Date:   Tue, 31 May 2022 17:19:11 +0100
+From:   Will Deacon <will@kernel.org>
+To:     Rob Clark <robdclark@gmail.com>
 Cc:     Konrad Dybcio <konrad.dybcio@somainline.org>,
         ~postmarketos/upstreaming@lists.sr.ht,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
@@ -74,33 +55,50 @@ Cc:     Konrad Dybcio <konrad.dybcio@somainline.org>,
         "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
         <devicetree@vger.kernel.org>,
         Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Subject: Re: [PATCH 1/6] iommu/qcom: Use the asid read from device-tree if
+ specified
+Message-ID: <20220531161910.GE25502@willie-the-truck>
+References: <20220527212901.29268-1-konrad.dybcio@somainline.org>
+ <20220527212901.29268-2-konrad.dybcio@somainline.org>
+ <20220531154631.GA25502@willie-the-truck>
+ <CAF6AEGsWsHfQZnszG=NgP0BufxO-DP4LwvsAYkrz2wRhcJuOXw@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAF6AEGsWsHfQZnszG=NgP0BufxO-DP4LwvsAYkrz2wRhcJuOXw@mail.gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, May 31, 2022 at 8:46 AM Will Deacon <will@kernel.org> wrote:
->
-> On Fri, May 27, 2022 at 11:28:56PM +0200, Konrad Dybcio wrote:
-> > From: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+On Tue, May 31, 2022 at 09:15:22AM -0700, Rob Clark wrote:
+> On Tue, May 31, 2022 at 8:46 AM Will Deacon <will@kernel.org> wrote:
 > >
-> > As specified in this driver, the context banks are 0x1000 apart.
-> > Problem is that sometimes the context number (our asid) does not
-> > match this logic and we end up using the wrong one: this starts
-> > being a problem in the case that we need to send TZ commands
-> > to do anything on a specific context.
->
-> I don't understand this. The ASID is a software construct, so it shouldn't
-> matter what we use. If it does matter, then please can you explain why? The
-> fact that the context banks are 0x1000 apart seems unrelated.
+> > On Fri, May 27, 2022 at 11:28:56PM +0200, Konrad Dybcio wrote:
+> > > From: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+> > >
+> > > As specified in this driver, the context banks are 0x1000 apart.
+> > > Problem is that sometimes the context number (our asid) does not
+> > > match this logic and we end up using the wrong one: this starts
+> > > being a problem in the case that we need to send TZ commands
+> > > to do anything on a specific context.
+> >
+> > I don't understand this. The ASID is a software construct, so it shouldn't
+> > matter what we use. If it does matter, then please can you explain why? The
+> > fact that the context banks are 0x1000 apart seems unrelated.
+> 
+> I think the connection is that mapping from ctx bank to ASID is 1:1
 
-I think the connection is that mapping from ctx bank to ASID is 1:1
+But in what sense? How is the ASID used beyond a tag in the TLB? The commit
+message hints at "TZ commands" being a problem.
 
-BR,
--R
+I'm not doubting that this is needed to make the thing work, I just don't
+understand why.
+
+Will
