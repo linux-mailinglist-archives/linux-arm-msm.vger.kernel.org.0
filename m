@@ -2,85 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D0DCE538EFC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 May 2022 12:31:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7DB75538F43
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 May 2022 12:52:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343502AbiEaKaz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 31 May 2022 06:30:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46182 "EHLO
+        id S1343582AbiEaKwC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 31 May 2022 06:52:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55236 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343516AbiEaKaq (ORCPT
+        with ESMTP id S233804AbiEaKwB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 31 May 2022 06:30:46 -0400
-Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 034FC9BAFF
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 May 2022 03:30:31 -0700 (PDT)
-Received: by mail-pl1-x62e.google.com with SMTP id d22so12450704plr.9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 May 2022 03:30:31 -0700 (PDT)
+        Tue, 31 May 2022 06:52:01 -0400
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51F0C48898
+        for <linux-arm-msm@vger.kernel.org>; Tue, 31 May 2022 03:51:58 -0700 (PDT)
+Received: by mail-ed1-x529.google.com with SMTP id b8so8990657edf.11
+        for <linux-arm-msm@vger.kernel.org>; Tue, 31 May 2022 03:51:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=711b+vMSd9N7VItmuBp99caF8ivrK9rtXPChlUcTho4=;
-        b=vm230eWEdDbv5BiB4b54Jy/+ZGa1KmIMWM+yx/vWv5npwnAT8/kHBc2bKte22HQZOZ
-         SL+67MZwF7JfNdzCzGDEZ5Q9FM7k13iKe3s+dlPIALKauZO/acmVUXDdv+nbNUj1atlL
-         WCU80Jf5m6PxsCj3I6ALR0v+GPNou3Ju2KyElCiOvykJbA5X05gVpv/Y5jCFWBgBTvCY
-         wuAL5JxIry5IptvwNYnjLExrrcIIZfGVBsOYD+6tjvm4za8vyTEFrDj9/cZHm/YUgJVF
-         7d7xjo/WKFMmkCfcSkoEjJCYBrb3VH27l83f/kXihKjhrBldsIc9R8mmUTlYO/kp88tT
-         fImA==
+        h=from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=f+aAYlhBaoqcFmdU6C9Gx84E9qMJBIbqGLgTA0/mSl4=;
+        b=pwIV2cacZ4ygg//TwNYbRKiQjUBGzgJXtzcat0O1FUmk1LRXTQlUJc6YLXXq5TAeVn
+         XTCERPOuIAUvyA1fsx/lioJV542cqtv6JlHCeTPnTmWtkvMqpvUNnDfn0Nn7mnVzj2kN
+         2V7sQohQUnjdNW6Y0rM64nPDNwRlpqtkcahLIXo/vWcujgCoxDuG7MYyY1LbTXnUCT/g
+         RwhPdpNiD3G44Ta4qb/1IKHQ5Ve1UePVPf/Fq3m871Uf1efZ3z/zrq7rBnrfJ2e3ETSO
+         qfWsPGcPhc31ZKBeBSaPCp6wfmp3PQDAY3ob04CrCAty60UOsIVAlXrhkiHVyKRxzsHK
+         uWTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=711b+vMSd9N7VItmuBp99caF8ivrK9rtXPChlUcTho4=;
-        b=eVFqrnWeBcTnIOGjaouOZ80Y4nFOMyrldKanJy/4L6zPQ5JBolaVN6n8rO2rauFYKW
-         J5smejmFfmbXdaKqAp6rRzae4Gf3WdCrPwKz2hGN3ssK0QjjIay0goOwtC8nxPTWnq+2
-         XSHowHKyEw9ZsdbSBNXTdlx2gVKued7kajVVPvwmxraczyRhbtgBzhOHDqeDuyemHejS
-         N9TZFGOAn7ZWgN2P2bBw09L+jcKgDXOa0PV5/DNnwH1EjlGxLtA4oqHh9x+TNu/YeXG8
-         XjfkntjxKuiNmcvQSz+TGIZELEhB3ucLq2PASSwypCZrZgSNIXh696jPYbyjUCDtI7fG
-         29JA==
-X-Gm-Message-State: AOAM532HZTZXHFfyM5nLMGEbY6MGWSb1Nn4uH31D3s+mAMsV2vwlcN9t
-        mNg8QlRmT+z4ez6la9PqJnOMhg==
-X-Google-Smtp-Source: ABdhPJytfEQGqw0/fi9ndEo5U6lc52PaAfW/t8oY9N5mCvL8FUAfI0qz9VezW/OEJpzmDIjzLd8p9w==
-X-Received: by 2002:a17:90a:d3c7:b0:1e0:d55e:35eb with SMTP id d7-20020a17090ad3c700b001e0d55e35ebmr27946118pjw.105.1653993031320;
-        Tue, 31 May 2022 03:30:31 -0700 (PDT)
-Received: from localhost ([122.162.234.2])
-        by smtp.gmail.com with ESMTPSA id i22-20020a63e916000000b003c14af50623sm9934652pgh.59.2022.05.31.03.30.30
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=f+aAYlhBaoqcFmdU6C9Gx84E9qMJBIbqGLgTA0/mSl4=;
+        b=I02NOH4mWEwIF2hTeXBsI75RMBy4wX5dyxJxeoS15kWQ18RpQx4Ki4bHjGHiGkzV7e
+         ySVG/bWpl9DVwhe6F7MKt74HKGFbW1qJzZZYImN9EFklJWkM3lsCx4Mt9AOAvilaSZkP
+         0t2gmQ2oW9igEVz9q1C6DrvKWib8yjiAR7rIQkszkwRTH9dDMK6d4NUjTpKQENM6uiiT
+         Pr7fHedam7/KfaAynW1q4VsLtC8cooFNQqDwhaafuyN6E2EkJ0jfDk3rF7VC93s7nE8Q
+         h4DXTVw7PnRCm+OezhL7HWUp2B8Sor6qTXvH/Or8EtHcf0kPD8CG2bP5POzTkrmb8C1E
+         qCsA==
+X-Gm-Message-State: AOAM5317AoatZAZyX+UUSBDtZx0MyjLKHiZEZqnMoq+7o1FzAc5tEPPe
+        uLJRQOYhXXQlbxU3AtB3dLW7uQ==
+X-Google-Smtp-Source: ABdhPJw6rnERzo76jayiAAFVyPq+buvlnElOKXK3el57Jti5fQow9ZL3T4gzpxQSRGCHCDm5L/IYNg==
+X-Received: by 2002:a05:6402:2741:b0:41f:69dc:9bcd with SMTP id z1-20020a056402274100b0041f69dc9bcdmr63412100edd.239.1653994316871;
+        Tue, 31 May 2022 03:51:56 -0700 (PDT)
+Received: from localhost.localdomain (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id q3-20020a50aa83000000b0042dc513ced8sm5117441edc.30.2022.05.31.03.51.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 31 May 2022 03:30:30 -0700 (PDT)
-Date:   Tue, 31 May 2022 16:00:29 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Stephen Boyd <sboyd@kernel.org>, Andy Gross <agross@kernel.org>,
+        Tue, 31 May 2022 03:51:56 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
+        Georgi Djakov <djakov@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        "Martin K. Petersen" <martin.petersen@oracle.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Taniya Das <tdas@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-scsi@vger.kernel.org
-Subject: Re: [RFC PATCH v2 4/6] PM: opp: allow control of multiple clocks
-Message-ID: <20220531103029.ntoypaafnd6447ag@vireshk-i7>
-References: <20220411154347.491396-1-krzysztof.kozlowski@linaro.org>
- <20220411154347.491396-5-krzysztof.kozlowski@linaro.org>
- <20220425072710.v6gwo4gu3aouezg4@vireshk-i7>
- <dea39b1f-0091-2690-7f07-108d07ef9f3c@linaro.org>
- <20220510044053.ykn6ygnbeokhzrsa@vireshk-i7>
- <1e533194-7047-8342-b426-f607fddbfaa3@linaro.org>
- <20220511050643.hd5tcrojb3wkbg7t@vireshk-i7>
- <20220518235708.1A04CC385A9@smtp.kernel.org>
- <65a4c28d-6702-3a9f-f837-1ea69a428777@linaro.org>
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Subject: [PATCH v3 0/4] soc/arm64: qcom: Add initial version of bwmon
+Date:   Tue, 31 May 2022 12:51:33 +0200
+Message-Id: <20220531105137.110050-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <65a4c28d-6702-3a9f-f837-1ea69a428777@linaro.org>
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
@@ -91,30 +74,57 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 19-05-22, 10:03, Krzysztof Kozlowski wrote:
-> Yes, true. The clock frequencies are still changed with each gear, but
-> in general the UFS indeed operates on gear concept.
+Hi,
 
-Hi Krzysztof,
+Changes since v2
+================
+1. Spent a lot of time on benchmarking and learning the BWMON behavior.
+2. Drop PM/OPP patch - applied.
+3. Patch #1: drop opp-avg-kBps.
+4. Patch #2: Add several comments explaining pieces of code and BWMON, extend
+   commit msg with measurements, extend help message, add new #defines to document
+   some magic values, reorder bwmon clear/disable/enable operations to match
+   downstream source and document this with comments, fix unit count from 1 MB
+   to 65 kB.
+5. Patch #4: drop opp-avg-kBps.
+6. Add accumulated Rb tags.
 
-I have redesigned the OPP core a bit (two patchsets until now) to make
-it easier to add multiple clock support going forward. I need some
-inputs from you before moving forward with it now. Will this work for
-your use case:
+Changes since v1
+================
+1. Add defconfig change.
+2. Fix missing semicolon in MODULE_AUTHOR.
+3. Add original downstream (msm-4.9 tree) copyrights to the driver.
 
-- Add support for multiple clocks, where none of them is primary.
+Description
+===========
+BWMON is a data bandwidth monitor providing throughput/bandwidth over certain
+interconnect links in a SoC.  It might be used to gather current bus usage and
+vote for interconnect bandwidth, thus adjusting the bus speed based on actual
+usage.
 
-- Which means you won't be able to use dev_pm_opp_set_rate() but will
-  need something like dev_pm_opp_set_level(), will add it.
+The work is built on top of Thara Gopinath's patches with several cleanups,
+changes and simplifications.
 
-- That is, your OPP table will need to implement levels (I think of
-  them as UFS gears) and then call dev_pm_opp_set_level() instead.
+Best regards,
+Krzysztof
 
-- This new API will work just like dev_pm_opp_set_rate(), except that
-  it will find the target OPP based on level instead of freq and
-  support configuration of multiple clock frequencies.
+Krzysztof Kozlowski (4):
+  dt-bindings: interconnect: qcom,sdm845-cpu-bwmon: add BWMON device
+  soc: qcom: icc-bwmon: Add bandwidth monitoring driver
+  arm64: defconfig: enable Qualcomm Bandwidth Monitor
+  arm64: dts: qcom: sdm845: Add CPU BWMON
 
-- Of course both these APIs will share most of the code.
+ .../interconnect/qcom,sdm845-cpu-bwmon.yaml   |  97 ++++
+ MAINTAINERS                                   |   7 +
+ arch/arm64/boot/dts/qcom/sdm845.dtsi          |  54 +++
+ arch/arm64/configs/defconfig                  |   1 +
+ drivers/soc/qcom/Kconfig                      |  15 +
+ drivers/soc/qcom/Makefile                     |   1 +
+ drivers/soc/qcom/icc-bwmon.c                  | 418 ++++++++++++++++++
+ 7 files changed, 593 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/interconnect/qcom,sdm845-cpu-bwmon.yaml
+ create mode 100644 drivers/soc/qcom/icc-bwmon.c
 
 -- 
-viresh
+2.34.1
+
