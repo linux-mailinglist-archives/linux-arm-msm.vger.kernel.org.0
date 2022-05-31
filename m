@@ -2,74 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B349A538F4E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 May 2022 12:53:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E9EB653908A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 May 2022 14:18:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343606AbiEaKwH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 31 May 2022 06:52:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55522 "EHLO
+        id S1344173AbiEaMSf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 31 May 2022 08:18:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51662 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343608AbiEaKwF (ORCPT
+        with ESMTP id S245457AbiEaMSd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 31 May 2022 06:52:05 -0400
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C93B6590A5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 May 2022 03:52:02 -0700 (PDT)
-Received: by mail-ed1-x535.google.com with SMTP id c2so7426196edf.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 May 2022 03:52:02 -0700 (PDT)
+        Tue, 31 May 2022 08:18:33 -0400
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E1EC419A3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 31 May 2022 05:18:28 -0700 (PDT)
+Received: by mail-lj1-x22a.google.com with SMTP id v9so14427360lja.12
+        for <linux-arm-msm@vger.kernel.org>; Tue, 31 May 2022 05:18:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=0VLAI4Ml+SYHKdIrxqb9eLy4RuGSKwigpqa2hE5EhyM=;
-        b=Ircbk0hZlXm80bfKncdNpRQnwpqdJf0Or7kiCzAJodozD6rJ0gornPINQpedK+w0Ng
-         4JQbNZ0/nunG08IvmzRNK9jgtl0aO0wShaJ8z25Z4NDyWjpFYv7iUyCKM7n1/FlUMmd8
-         kEh/YC4cqLyGtdgpOTamcW+COdIEejfU0XruVAgeEP4zHn8Jdp9REQZS+8shyUkDJWRh
-         1G73faKLccu2KgPk9VwpuWWtkX5/V0V3KrQ+/xRYpxRVAFbY8ua7L0SwvbpwCh1mH6sV
-         liCys8pboL2t2sJ6zLvyxFYI8ast30W51L20UoXkDX9RL5M4QzaH8Gb4jYIDcSIGvxC0
-         xMuw==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=8eyhHuanqx+u4deTGj8V2+LlpkWjiwWvkK9gQujKI9w=;
+        b=k1lxgjYuUHs2jvEXJ2gHGHbuWOZeTeFJbBxc1GD4/ekw2+5fCyevW6SfEKV36ceyWU
+         dpz/NHmnkaOFO+9FOrPJNEcaCOBgx1hOPTdOAi154fuPMWmJPTfqXwTtUM5lMPk8BsYT
+         WbPTRLAKqGkCTkN/N9JaJvxzYP3QDARmOq6g6f2JqOwOGQLyExNc3K8X5IA3pF+1gKhY
+         OhQHPBVj4yALlugq722WQk0FHY/rnviRqyKvhfDEzHWPu7+7Hdcfd/RXzKg2yTB/4lYz
+         IVAR2e4QG91vGUmfZFxW74sMj9Urc32dMpDbcIGtZi6KgKD2rA61/DWh9LK/VRcpc0uV
+         HpyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=0VLAI4Ml+SYHKdIrxqb9eLy4RuGSKwigpqa2hE5EhyM=;
-        b=u/o5e9sbhgR8Swyc4EYJmgZoXfOuQ4ar5z91erKl5zJlB7+H+G+JENZmJrkepxGPQG
-         jG6bvtmfyCiaE0ixt2H4IKlfvA3+ECE1HgRWvpXh3IXfngl/1ljrqaY4CXpzqwStHjJC
-         FNVN18m9e1cuahI24ZkL4wR4q2qog3h37E6YTCRrybD25Nub4fItKnsQ8jYYL9P7lcwk
-         i+/Sa/mRbBnQ6Lv5aG88muBMeiOKNxkIFYDqZOEBKIvQK7pAXx+bnBZn74pWl4WYUvUt
-         6HBKe0lFv9AsXEpYIDIrYlgEhNxlUqXwCNC41ICDD3OT4jIqnFf7234VT0kOuSvoytpR
-         qJnw==
-X-Gm-Message-State: AOAM532iNx+p9MKLBfT3mpBl9T1jASXsk+bhVb+Ek1UCjmaXxrZQgHMP
-        7pUpu+dF8tRwxsVN2daqHXfN1Q==
-X-Google-Smtp-Source: ABdhPJxeyRyKKO7bmN1vHfs62vzjhcZu15ey+2f7vqPj4eKKuw8I/4AAaIoQs3LZtcKAYTu97DFvaQ==
-X-Received: by 2002:a05:6402:17c8:b0:42d:dc6f:f17c with SMTP id s8-20020a05640217c800b0042ddc6ff17cmr5646106edy.17.1653994321314;
-        Tue, 31 May 2022 03:52:01 -0700 (PDT)
-Received: from localhost.localdomain (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id q3-20020a50aa83000000b0042dc513ced8sm5117441edc.30.2022.05.31.03.52.00
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=8eyhHuanqx+u4deTGj8V2+LlpkWjiwWvkK9gQujKI9w=;
+        b=DRdH3H82s8vnsHdfvs5nH/LE0K9mOSQZJKzLbW2lKlhCiAM1TrLtU7XrksiXGo65E+
+         seRP15Goz8GIf8WWTyvI4Watdf6bA7yxbQx8r9AVFRVZmzP1xBrBEVglRi2yDgsMrEJo
+         iDn4dNiIXqvzTpVajGtiKjTbFCGCZMOy9S1LhRt/xXId8VC7N2nRNlKeYQTi0KeLXMp5
+         MZQKDdqJr/McBtj6QU1+v7+7reD+8ipAzK5n/N50PX4yKp2bNXAhb0EdEN7S4Ica81Pr
+         iLDNcmcosH1+nn4U/TJkqCb9I06ZmjJIJmVci2mwV/jBZmVrm9HbRESPzy/ArOGcuHQh
+         ZZXQ==
+X-Gm-Message-State: AOAM530yVi1xMvgP7liz1e8ZpO9tR1sN6lFVo7FgHnWC5lz5caedGHQK
+        RdoCVH0cyPVvtAczV/FMNQ6ROg==
+X-Google-Smtp-Source: ABdhPJyupkC4slDXUK9Tw7uNHV4EJd1TiIX+PRxr4gqAnhEVxx5ILLtn79JaVw866aURIj0smdfN8g==
+X-Received: by 2002:a2e:a7ca:0:b0:253:f7ab:a008 with SMTP id x10-20020a2ea7ca000000b00253f7aba008mr21502340ljp.10.1653999506642;
+        Tue, 31 May 2022 05:18:26 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id e26-20020a2e501a000000b002554f47e37asm1145056ljb.119.2022.05.31.05.18.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 31 May 2022 03:52:00 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+        Tue, 31 May 2022 05:18:26 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Cc:     Thara Gopinath <thara.gopinath@linaro.org>
-Subject: [PATCH v3 4/4] arm64: dts: qcom: sdm845: Add CPU BWMON
-Date:   Tue, 31 May 2022 12:51:37 +0200
-Message-Id: <20220531105137.110050-5-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220531105137.110050-1-krzysztof.kozlowski@linaro.org>
-References: <20220531105137.110050-1-krzysztof.kozlowski@linaro.org>
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: [PATCH] drm/msm: less magic numbers in msm_mdss_enable
+Date:   Tue, 31 May 2022 15:18:25 +0300
+Message-Id: <20220531121825.1126204-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -77,119 +73,134 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add device node for CPU-memory BWMON device (bandwidth monitoring) on
-SDM845 measuring bandwidth between CPU (gladiator_noc) and Last Level
-Cache (memnoc).  Usage of this BWMON allows to remove fixed bandwidth
-votes from cpufreq (CPU nodes) thus achieve high memory throughput even
-with lower CPU frequencies.
+Replace magic register writes in msm_mdss_enable() with version that
+contains less magic and more variable names that can be traced back to
+the dpu_hw_catalog or the downstream dtsi files.
 
-Performance impact (SDM845-MTP RB3 board, linux next-20220422):
-1. No noticeable impact when running with schedutil or performance
-   governors.
-
-2. When comparing to customized kernel with synced interconnects and
-   without bandwidth votes from CPU freq, the sysbench memory tests
-   show significant improvement with bwmon for blocksizes past the L3
-   cache.  The results for such superficial comparison:
-
-sysbench memory test, results in MB/s (higher is better)
- bs kB |  type |    V  | V+no bw votes | bwmon | benefit %
-     1 | W/seq | 14795 |          4816 |  4985 |      3.5%
-    64 | W/seq | 41987 |         10334 | 10433 |      1.0%
-  4096 | W/seq | 29768 |          8728 | 32007 |    266.7%
- 65536 | W/seq | 17711 |          4846 | 18399 |    279.6%
-262144 | W/seq | 16112 |          4538 | 17429 |    284.1%
-    64 | R/seq | 61202 |         67092 | 66804 |     -0.4%
-  4096 | R/seq | 23871 |          5458 | 24307 |    345.4%
- 65536 | R/seq | 18554 |          4240 | 18685 |    340.7%
-262144 | R/seq | 17524 |          4207 | 17774 |    322.4%
-    64 | W/rnd |  2663 |          1098 |  1119 |      1.9%
- 65536 | W/rnd |   600 |           316 |   610 |     92.7%
-    64 | R/rnd |  4915 |          4784 |  4594 |     -4.0%
- 65536 | R/rnd |   664 |           281 |   678 |    140.7%
-
-Legend:
-bs kB: block size in KB (small block size means only L1-3 caches are
-      used
-type: R - read, W - write, seq - sequential, rnd - random
-V: vanilla (next-20220422)
-V + no bw votes: vanilla without bandwidth votes from CPU freq
-bwmon: bwmon without bandwidth votes from CPU freq
-benefit %: difference between vanilla without bandwidth votes and bwmon
-           (higher is better)
-
-Co-developed-by: Thara Gopinath <thara.gopinath@linaro.org>
-Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sdm845.dtsi | 54 ++++++++++++++++++++++++++++
- 1 file changed, 54 insertions(+)
+ drivers/gpu/drm/msm/msm_mdss.c | 79 ++++++++++++++++++++++++++++++----
+ 1 file changed, 71 insertions(+), 8 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-index 83e8b63f0910..adffb9c70566 100644
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -2026,6 +2026,60 @@ llcc: system-cache-controller@1100000 {
- 			interrupts = <GIC_SPI 582 IRQ_TYPE_LEVEL_HIGH>;
- 		};
+diff --git a/drivers/gpu/drm/msm/msm_mdss.c b/drivers/gpu/drm/msm/msm_mdss.c
+index 0454a571adf7..2a48263cd1b5 100644
+--- a/drivers/gpu/drm/msm/msm_mdss.c
++++ b/drivers/gpu/drm/msm/msm_mdss.c
+@@ -21,6 +21,7 @@
+ #define HW_REV				0x0
+ #define HW_INTR_STATUS			0x0010
  
-+		pmu@1436400 {
-+			compatible = "qcom,sdm845-cpu-bwmon";
-+			reg = <0 0x01436400 0 0x600>;
++#define UBWC_DEC_HW_VERSION		0x58
+ #define UBWC_STATIC			0x144
+ #define UBWC_CTRL_2			0x150
+ #define UBWC_PREDICTION_MODE		0x154
+@@ -132,9 +133,63 @@ static int _msm_mdss_irq_domain_add(struct msm_mdss *msm_mdss)
+ 	return 0;
+ }
+ 
++#define UBWC_1_0 0x10000000
++#define UBWC_2_0 0x20000000
++#define UBWC_3_0 0x30000000
++#define UBWC_4_0 0x40000000
 +
-+			interrupts = <GIC_SPI 581 IRQ_TYPE_LEVEL_HIGH>;
++static void msm_mdss_setup_ubwc_dec_20(struct msm_mdss *msm_mdss,
++				       u32 ubwc_static)
++{
++	writel_relaxed(ubwc_static, msm_mdss->mmio + UBWC_STATIC);
++}
 +
-+			interconnects = <&gladiator_noc MASTER_APPSS_PROC 3 &mem_noc SLAVE_EBI1 3>,
-+					<&osm_l3 MASTER_OSM_L3_APPS &osm_l3 SLAVE_OSM_L3>;
-+			interconnect-names = "ddr", "l3c";
++static void msm_mdss_setup_ubwc_dec_30(struct msm_mdss *msm_mdss,
++				       unsigned int ubwc_version,
++				       u32 ubwc_swizzle,
++				       u32 highest_bank_bit,
++				       u32 macrotile_mode)
++{
++	u32 value = (ubwc_swizzle & 0x1) |
++		    (highest_bank_bit & 0x3) << 4 |
++		    (macrotile_mode & 0x1) << 12;
 +
-+			operating-points-v2 = <&cpu_bwmon_opp_table>;
++	if (ubwc_version == UBWC_3_0)
++		value |= BIT(10);
 +
-+			cpu_bwmon_opp_table: opp-table {
-+				compatible = "operating-points-v2";
++	if (ubwc_version == UBWC_1_0)
++		value |= BIT(8);
 +
-+				/*
-+				 * The interconnect paths bandwidths taken from
-+				 * cpu4_opp_table bandwidth.
-+				 * They also match different tables from
-+				 * msm-4.9 downstream kernel:
-+				 *  - the gladiator_noc-mem_noc from bandwidth
-+				 *    table of qcom,llccbw (property qcom,bw-tbl);
-+				 *    bus width: 4 bytes;
-+				 *  - the OSM L3 from bandwidth table of
-+				 *    qcom,cpu4-l3lat-mon (qcom,core-dev-table);
-+				 *    bus width: 16 bytes;
-+				 */
-+				opp-0 {
-+					opp-peak-kBps = <800000 4800000>;
-+				};
-+				opp-1 {
-+					opp-peak-kBps = <1804000 9216000>;
-+				};
-+				opp-2 {
-+					opp-peak-kBps = <2188000 11980800>;
-+				};
-+				opp-3 {
-+					opp-peak-kBps = <3072000 15052800>;
-+				};
-+				opp-4 {
-+					opp-peak-kBps = <4068000 19353600>;
-+				};
-+				opp-5 {
-+					opp-peak-kBps = <5412000 20889600>;
-+				};
-+				opp-6 {
-+					opp-peak-kBps = <6220000 22425600>;
-+				};
-+				opp-7 {
-+					opp-peak-kBps = <7216000 25497600>;
-+				};
-+			};
-+		};
++	writel_relaxed(value, msm_mdss->mmio + UBWC_STATIC);
++}
 +
- 		pcie0: pci@1c00000 {
- 			compatible = "qcom,pcie-sdm845";
- 			reg = <0 0x01c00000 0 0x2000>,
++static void msm_mdss_setup_ubwc_dec_40(struct msm_mdss *msm_mdss,
++				       unsigned int ubwc_version,
++				       u32 ubwc_swizzle,
++				       u32 ubwc_static,
++				       u32 highest_bank_bit,
++				       u32 macrotile_mode)
++{
++	u32 value = (ubwc_swizzle & 0x7) |
++		    (ubwc_static & 0x1) << 3 |
++		    (highest_bank_bit & 0x7) << 4 |
++		    (macrotile_mode & 0x1) << 12;
++
++	writel_relaxed(value, msm_mdss->mmio + UBWC_STATIC);
++
++	if (ubwc_version == UBWC_3_0) {
++		writel_relaxed(1, msm_mdss->mmio + UBWC_CTRL_2);
++		writel_relaxed(0, msm_mdss->mmio + UBWC_PREDICTION_MODE);
++	} else {
++		writel_relaxed(2, msm_mdss->mmio + UBWC_CTRL_2);
++		writel_relaxed(1, msm_mdss->mmio + UBWC_PREDICTION_MODE);
++	}
++}
++
+ static int msm_mdss_enable(struct msm_mdss *msm_mdss)
+ {
+ 	int ret;
++	u32 hw_rev;
+ 
+ 	ret = clk_bulk_prepare_enable(msm_mdss->num_clocks, msm_mdss->clocks);
+ 	if (ret) {
+@@ -149,26 +204,34 @@ static int msm_mdss_enable(struct msm_mdss *msm_mdss)
+ 	if (msm_mdss->is_mdp5)
+ 		return 0;
+ 
++	hw_rev = readl_relaxed(msm_mdss->mmio + HW_REV);
++	dev_info(msm_mdss->dev, "HW_REV: 0x%x\n", hw_rev);
++	dev_info(msm_mdss->dev, "UBWC_DEC_HW_VERSION: 0x%x\n",
++		readl_relaxed(msm_mdss->mmio + UBWC_DEC_HW_VERSION));
++
+ 	/*
+ 	 * ubwc config is part of the "mdss" region which is not accessible
+ 	 * from the rest of the driver. hardcode known configurations here
++	 *
++	 * Decoder version can be read from the UBWC_DEC_HW_VERSION reg,
++	 * UBWC_n comes from hw_catalog.
++	 * Unforunately this driver can not access hw catalog.
+ 	 */
+-	switch (readl_relaxed(msm_mdss->mmio + HW_REV)) {
++	switch (hw_rev) {
+ 	case DPU_HW_VER_500:
+ 	case DPU_HW_VER_501:
+-		writel_relaxed(0x420, msm_mdss->mmio + UBWC_STATIC);
++		msm_mdss_setup_ubwc_dec_30(msm_mdss, UBWC_3_0, 0, 2, 0);
+ 		break;
+ 	case DPU_HW_VER_600:
+-		/* TODO: 0x102e for LP_DDR4 */
+-		writel_relaxed(0x103e, msm_mdss->mmio + UBWC_STATIC);
+-		writel_relaxed(2, msm_mdss->mmio + UBWC_CTRL_2);
+-		writel_relaxed(1, msm_mdss->mmio + UBWC_PREDICTION_MODE);
++		/* TODO: highest_bank_bit = 2 for LP_DDR4 */
++		msm_mdss_setup_ubwc_dec_40(msm_mdss, UBWC_4_0, 6, 1, 3, 1);
+ 		break;
+ 	case DPU_HW_VER_620:
+-		writel_relaxed(0x1e, msm_mdss->mmio + UBWC_STATIC);
++		/* UBWC_2_0 */
++		msm_mdss_setup_ubwc_dec_20(msm_mdss, 0x1e);
+ 		break;
+ 	case DPU_HW_VER_720:
+-		writel_relaxed(0x101e, msm_mdss->mmio + UBWC_STATIC);
++		msm_mdss_setup_ubwc_dec_40(msm_mdss, UBWC_3_0, 6, 1, 1, 1);
+ 		break;
+ 	}
+ 
 -- 
-2.34.1
+2.35.1
 
