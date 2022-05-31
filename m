@@ -2,70 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DE256539107
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 May 2022 14:47:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 094375391EA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 May 2022 15:39:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245736AbiEaMrl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 31 May 2022 08:47:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50066 "EHLO
+        id S1344785AbiEaNjU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 31 May 2022 09:39:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58188 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243527AbiEaMrk (ORCPT
+        with ESMTP id S1344797AbiEaNjS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 31 May 2022 08:47:40 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1BFD5D5C3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 May 2022 05:47:37 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id br17so21287240lfb.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 May 2022 05:47:37 -0700 (PDT)
+        Tue, 31 May 2022 09:39:18 -0400
+Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3A7390CE8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 31 May 2022 06:39:12 -0700 (PDT)
+Received: by mail-lj1-x22f.google.com with SMTP id k20so6111496ljc.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 31 May 2022 06:39:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=r3/jevdsJSGVl1zPrKNV30Bc3ZiH/kytNoUeRC1cAXA=;
-        b=bWeYY9xDhw4LSY+wJKq6IW22lA25aembLAAZ1jfzd9z/S5T6WXwzIOSGArZpy+vOJA
-         BRIr443Mz8RxaoZtbq9WR8mMgD47whTt3RqSqVyiSYINH8a4EONkpokC1800PjnANbIE
-         tSOfH3v56CyZ+1WHYucF8EsJxRMD4NZxEtLnqER082bcPH0BFd7Nusz55Y+VyoDQsjFe
-         c3Tjs5s4Yx3YPUPwfTHj/ADT1ffYS/Pvvb7KCIOfCqXJ8K6nVezv8vnqkLTircFvwM+Q
-         4DAR6rb3wvM419QwHEnHSN6tfsDy+89R/QxeuWjI3ko34zt4Ri12AsCT1F85MYL+OF61
-         tBEQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=8MU8AOeNM0UJsOQCvvfsrp6blLjd6ery6FOHTJsKqmQ=;
+        b=C00OOTf+T0prvir95rinw5NOYb41i+50ujzCI6JGgg0/ZNPUwZLikh8PJi9cPgIjz/
+         0VcQ81X110z2LOJC1/WQm5THL2OnTByI8HPfE9BOfOY2XN4IUqtCywLRb66rb6aRP4Vp
+         6ZoAsN6CVoKa5BIS6ZGnb4gjY/a798pSLVdbUV4fLI1vZY4J0ZNh/CIsbO2KU1Twy+6O
+         YUHb8I3AZFFll66yMCWp+USkFNvh+XJcLu57z4MPTZauaVzY/VMNJixpi17v4XmhlHUi
+         iexJLzAj+nmOsyxwZEw/mE+ZdX3LYG0zntpgIs7ZSYrZAcoo0uE/jF79v8QD/codMlvw
+         uFsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=r3/jevdsJSGVl1zPrKNV30Bc3ZiH/kytNoUeRC1cAXA=;
-        b=LQHHL4Hkhw5wb+A8g4WoE4ZM19BdebuL52SBQt4/OkeHxdSO3bS8i/Qr/OCqDEw8Tk
-         EkEJPFtLvfbuHeppWPzzdpRzsS8R1DXa2JAjrBu9eGarKSINc/hcA330GCykECmST9r9
-         uWs0ij6wzoZaVN4EoCosHpppR1L3J0Y/xntUXfMxbU8Nsrg4woue4DSGyNmB4/muHrxY
-         NVf8ULgl9o2crN7xSndFuG0qCEEsA9vASB6+R7QDQvyWaQgjLm9rBue9DzkTpjr/k1K5
-         lKhHjimT8IRKur7Yq5dqzuKZb+UyvZFzC+/uUWBQYc5fSc1gr2/iUPO+fnHByOZaLzbh
-         wrYw==
-X-Gm-Message-State: AOAM530SoeM5aeI9h828ydnuyjqHqQoV07Bqw6stb1YF1YjLO17nWzVX
-        7HEHN71rIsSgEeiOVBrLxF10+g==
-X-Google-Smtp-Source: ABdhPJyy9JFGnf2TlnHouAv/1tGCvkY9vnz8IoifhlpyHrM50TMAGs6Fl69JLE4RQyoO+NCNGY54Zg==
-X-Received: by 2002:ac2:5444:0:b0:477:a839:b4d with SMTP id d4-20020ac25444000000b00477a8390b4dmr42573771lfn.333.1654001256310;
-        Tue, 31 May 2022 05:47:36 -0700 (PDT)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id s16-20020a056512215000b00478f3fe716asm365082lfr.200.2022.05.31.05.47.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 31 May 2022 05:47:35 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        freedreno@lists.freedesktop.org
-Subject: [PATCH] arm64: dts: qcom: sdm845: use dispcc AHB clock for mdss node
-Date:   Tue, 31 May 2022 15:47:35 +0300
-Message-Id: <20220531124735.1165582-1-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.35.1
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=8MU8AOeNM0UJsOQCvvfsrp6blLjd6ery6FOHTJsKqmQ=;
+        b=NJve8s4oxLFh/e3VnXf+wcFvJHFWyvOZsoK4x0iu5DnpqXfRiHDD3YLqfJEAxGp2OF
+         YRieUIhHuyDhVV6LZG2G4lLV/5SeQuSxJAqW0Rs8S0LHmdV+/4f3EAkOjAe8KhwPPtpM
+         yEhTnroFwnevWzJKEYFGhazh5UsY+IN9jGeUxZQcLsH3DXISosq23U70qNziddiwghRM
+         cGLquFjufsa1T6RwpUlCHuCOVFjdgWf0527zoUM7AhKmLSZHMeZJBcr6tlmcgiHMCL9j
+         Y/8YfqCzEVPq/E6KUuJBoiJ2SotemslI94rrLX0b2+wY/InGlmO2XqygsZhE6zl9kv0N
+         QKkw==
+X-Gm-Message-State: AOAM532JlOuHTbVJnKWuhmDkyiW6UcOhNqcE7w+irsf2OuzFz2xro+Pp
+        4M3kyCz8p72KtHcl3SpzsLUCJpl9turTQYHTae7XKg==
+X-Google-Smtp-Source: ABdhPJzfxPBr1Pl55mbXLZavP23t6aFW7yYp8/aJ7Txnm0dobZrjHVwcsIneHw2JefVXX07NEzTgOsJhGiICzZ1Ay7o=
+X-Received: by 2002:a2e:a286:0:b0:253:bff6:ed52 with SMTP id
+ k6-20020a2ea286000000b00253bff6ed52mr37140754lja.229.1654004350751; Tue, 31
+ May 2022 06:39:10 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20220514220116.1008254-1-bhupesh.sharma@linaro.org>
+In-Reply-To: <20220514220116.1008254-1-bhupesh.sharma@linaro.org>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Tue, 31 May 2022 15:38:34 +0200
+Message-ID: <CAPDyKFpR6kzU4SAZp5DyqSxJ6CfjwZCDMvZ-XGKk__k_8=VdGA@mail.gmail.com>
+Subject: Re: [PATCH 1/1] dt-bindings: mmc: sdhci-msm: Fix issues in yaml bindings
+To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Cc:     linux-mmc@vger.kernel.org, bhupesh.linux@gmail.com,
+        agross@kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, robh@kernel.org,
+        bjorn.andersson@linaro.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -73,30 +68,141 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-It was noticed that on sdm845 after an MDSS suspend/resume cycle the
-driver can not read HW_REV registers properly (they will return 0
-instead). Chaning the "iface" clock from <&gcc GCC_DISP_AHB_CLK> to
-<&dispcc DISP_CC_MDSS_AHB_CLK> fixes the issue.
+On Sun, 15 May 2022 at 00:01, Bhupesh Sharma <bhupesh.sharma@linaro.org> wrote:
+>
+> Rob pointed some remaining issues in the sdhci-msm yaml
+> bindings (via [1]).
+>
+> Fix the same by first using the 'mmc-controller.yaml' as
+> 'ref' and thereafter also fix the issues reported by
+> 'make dtbs_check' check.
+>
+> [1]. https://lore.kernel.org/linux-arm-msm/YnLmNCwNfoqZln12@robh.at.kernel.org/
+>
+> Fixes: a45537723f4b ("dt-bindings: mmc: sdhci-msm: Convert bindings to yaml")
+> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Cc: Rob Herring <robh@kernel.org>
+> Cc: Ulf Hansson <ulf.hansson@linaro.org>
+> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
 
-Fixes: 08c2a076d18f ("arm64: dts: qcom: sdm845: Add dpu to sdm845 dts file")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- arch/arm64/boot/dts/qcom/sdm845.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Queued for v5.20 on the devel branch, thanks!
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-index b31bf62e8680..ad21cf465c98 100644
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -4238,7 +4238,7 @@ mdss: mdss@ae00000 {
- 
- 			power-domains = <&dispcc MDSS_GDSC>;
- 
--			clocks = <&gcc GCC_DISP_AHB_CLK>,
-+			clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
- 				 <&dispcc DISP_CC_MDSS_MDP_CLK>;
- 			clock-names = "iface", "core";
- 
--- 
-2.35.1
+Kind regards
+Uffe
 
+
+> ---
+> -> This patch uses the dts changes sent (here: https://lore.kernel.org/linux-arm-msm/20220514215424.1007718-1-bhupesh.sharma@linaro.org/), for fixing the dtbs_check errors.
+> -> This patch is rebased on 'linux-next/master'
+>
+>  .../devicetree/bindings/mmc/sdhci-msm.yaml    | 52 ++++++++++++++++---
+>  1 file changed, 44 insertions(+), 8 deletions(-)
+>
+> diff --git a/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml b/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
+> index e4236334e748..31a3ce208e1a 100644
+> --- a/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
+> +++ b/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
+> @@ -17,6 +17,9 @@ description:
+>  properties:
+>    compatible:
+>      oneOf:
+> +      - enum:
+> +          - qcom,sdhci-msm-v4
+> +        deprecated: true
+>        - items:
+>            - enum:
+>                - qcom,apq8084-sdhci
+> @@ -27,6 +30,9 @@ properties:
+>                - qcom,msm8992-sdhci
+>                - qcom,msm8994-sdhci
+>                - qcom,msm8996-sdhci
+> +          - const: qcom,sdhci-msm-v4 # for sdcc versions less than 5.0
+> +      - items:
+> +          - enum:
+>                - qcom,qcs404-sdhci
+>                - qcom,sc7180-sdhci
+>                - qcom,sc7280-sdhci
+> @@ -38,12 +44,7 @@ properties:
+>                - qcom,sm6350-sdhci
+>                - qcom,sm8150-sdhci
+>                - qcom,sm8250-sdhci
+> -          - enum:
+> -              - qcom,sdhci-msm-v4 # for sdcc versions less than 5.0
+> -              - qcom,sdhci-msm-v5 # for sdcc version 5.0
+> -      - items:
+> -          - const: qcom,sdhci-msm-v4 # Deprecated (only for backward compatibility)
+> -                                     # for sdcc versions less than 5.0
+> +          - const: qcom,sdhci-msm-v5 # for sdcc version 5.0
+>
+>    reg:
+>      minItems: 1
+> @@ -53,6 +54,28 @@ properties:
+>        - description: CQE register map
+>        - description: Inline Crypto Engine register map
+>
+> +  reg-names:
+> +    minItems: 1
+> +    maxItems: 4
+> +    oneOf:
+> +      - items:
+> +          - const: hc_mem
+> +      - items:
+> +          - const: hc_mem
+> +          - const: core_mem
+> +      - items:
+> +          - const: hc_mem
+> +          - const: cqe_mem
+> +      - items:
+> +          - const: hc_mem
+> +          - const: cqe_mem
+> +          - const: ice_mem
+> +      - items:
+> +          - const: hc_mem
+> +          - const: core_mem
+> +          - const: cqe_mem
+> +          - const: ice_mem
+> +
+>    clocks:
+>      minItems: 3
+>      items:
+> @@ -121,6 +144,16 @@ properties:
+>      description: A phandle to sdhci power domain node
+>      maxItems: 1
+>
+> +  mmc-ddr-1_8v: true
+> +
+> +  mmc-hs200-1_8v: true
+> +
+> +  mmc-hs400-1_8v: true
+> +
+> +  bus-width: true
+> +
+> +  max-frequency: true
+> +
+>  patternProperties:
+>    '^opp-table(-[a-z0-9]+)?$':
+>      if:
+> @@ -140,7 +173,10 @@ required:
+>    - clock-names
+>    - interrupts
+>
+> -additionalProperties: true
+> +allOf:
+> +  - $ref: mmc-controller.yaml#
+> +
+> +unevaluatedProperties: false
+>
+>  examples:
+>    - |
+> @@ -149,7 +185,7 @@ examples:
+>      #include <dt-bindings/clock/qcom,rpmh.h>
+>      #include <dt-bindings/power/qcom-rpmpd.h>
+>
+> -    sdhc_2: sdhci@8804000 {
+> +    sdhc_2: mmc@8804000 {
+>        compatible = "qcom,sm8250-sdhci", "qcom,sdhci-msm-v5";
+>        reg = <0 0x08804000 0 0x1000>;
+>
+> --
+> 2.35.3
+>
