@@ -2,125 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 29DD3538DEA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 May 2022 11:40:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3192A538DF6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 May 2022 11:47:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245324AbiEaJjt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 31 May 2022 05:39:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45392 "EHLO
+        id S245098AbiEaJr2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 31 May 2022 05:47:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33926 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245330AbiEaJjr (ORCPT
+        with ESMTP id S245298AbiEaJr0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 31 May 2022 05:39:47 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55BBF939C4;
-        Tue, 31 May 2022 02:39:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1653989987; x=1685525987;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version;
-  bh=xuE+EOXtoSZoSNiHuI6FbStm42p6YQHT6ek5Zy/gVNQ=;
-  b=fL2KqCPQVRFbHAw/Trgy9/XgYdahL8vOKPBgo+1zN/nWuAT7EuQ/PkEM
-   zrftVmIdIuqmUZYEwvm8bezNGkXvvMDRt4DUXPYwSM5YpZNUMJqfHzB+1
-   e3h5TsMH8qo57uACAXqYmSva+6HOr6y4UVHrV2Dh1EX3w47XuJxMmELLd
-   4=;
-Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 31 May 2022 02:39:47 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg02-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 May 2022 02:39:46 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Tue, 31 May 2022 02:39:46 -0700
-Received: from hu-ylal-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Tue, 31 May 2022 02:39:43 -0700
-From:   Yogesh Lal <quic_ylal@quicinc.com>
-To:     <bjorn.andersson@linaro.org>, <quic_sibis@quicinc.com>
-CC:     <linux-arm-msm@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Siddharth Gupta <sidgup@codeaurora.org>,
-        Yogesh Lal <quic_ylal@quicinc.com>
-Subject: [V3 2/2] remoteproc: qcom: Add full coredump fallback mechanism
-Date:   Tue, 31 May 2022 15:09:29 +0530
-Message-ID: <1653989969-26500-3-git-send-email-quic_ylal@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1653989969-26500-1-git-send-email-quic_ylal@quicinc.com>
-References: <1653989969-26500-1-git-send-email-quic_ylal@quicinc.com>
+        Tue, 31 May 2022 05:47:26 -0400
+Received: from szxga01-in.huawei.com (szxga01-in.huawei.com [45.249.212.187])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C1A748E5E;
+        Tue, 31 May 2022 02:47:25 -0700 (PDT)
+Received: from kwepemi500014.china.huawei.com (unknown [172.30.72.55])
+        by szxga01-in.huawei.com (SkyGuard) with ESMTP id 4LC6qZ1gDDzjX4V;
+        Tue, 31 May 2022 17:46:34 +0800 (CST)
+Received: from huawei.com (10.67.174.157) by kwepemi500014.china.huawei.com
+ (7.221.188.232) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2375.24; Tue, 31 May
+ 2022 17:47:23 +0800
+From:   Li Zhengyu <lizhengyu3@huawei.com>
+To:     <quic_tdas@quicinc.com>
+CC:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
+        <sboyd@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: [PATCH] clk: qcom: clk-rpmh: Fix if statement to match comment
+Date:   Tue, 31 May 2022 17:45:39 +0800
+Message-ID: <20220531094539.252642-1-lizhengyu3@huawei.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+X-Originating-IP: [10.67.174.157]
+X-ClientProxiedBy: dggems704-chm.china.huawei.com (10.3.19.181) To
+ kwepemi500014.china.huawei.com (7.221.188.232)
+X-CFilter-Loop: Reflected
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Siddharth Gupta <sidgup@codeaurora.org>
+(c->state) is u32, (enable) is bool. It returns false when
+(c->state) > 1 and (enable) is true. Convert (c->state) to bool.
 
-If a remoteproc's firmware does not support minidump but the driver
-adds an ID, the minidump driver does not collect any coredumps when
-the remoteproc crashes. This hinders the purpose of coredump
-collection. This change adds a fallback mechanism in the event of a
-crash.
-
-Signed-off-by: Siddharth Gupta <sidgup@codeaurora.org>
-Signed-off-by: Yogesh Lal <quic_ylal@quicinc.com>
+Signed-off-by: Li Zhengyu <lizhengyu3@huawei.com>
 ---
- drivers/remoteproc/qcom_common.c   | 14 ++++++++++++--
- drivers/remoteproc/qcom_q6v5_pas.c |  1 +
- 2 files changed, 13 insertions(+), 2 deletions(-)
+ drivers/clk/qcom/clk-rpmh.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/remoteproc/qcom_common.c b/drivers/remoteproc/qcom_common.c
-index 4b91e3c..246e716 100644
---- a/drivers/remoteproc/qcom_common.c
-+++ b/drivers/remoteproc/qcom_common.c
-@@ -163,12 +163,22 @@ void qcom_minidump(struct rproc *rproc, unsigned int minidump_id)
- 	 */
- 	if (subsystem->regions_baseptr == 0 ||
- 	    le32_to_cpu(subsystem->status) != 1 ||
--	    le32_to_cpu(subsystem->enabled) != MD_SS_ENABLED ||
--	    le32_to_cpu(subsystem->encryption_status) != MD_SS_ENCR_DONE) {
-+	    le32_to_cpu(subsystem->enabled) != MD_SS_ENABLED) {
-+		return rproc_coredump(rproc);
-+	}
-+
-+	if (le32_to_cpu(subsystem->encryption_status) != MD_SS_ENCR_DONE) {
- 		dev_err(&rproc->dev, "Minidump not ready, skipping\n");
- 		return;
- 	}
+diff --git a/drivers/clk/qcom/clk-rpmh.c b/drivers/clk/qcom/clk-rpmh.c
+index aed907982344..851e127432a9 100644
+--- a/drivers/clk/qcom/clk-rpmh.c
++++ b/drivers/clk/qcom/clk-rpmh.c
+@@ -196,7 +196,7 @@ static int clk_rpmh_aggregate_state_send_command(struct clk_rpmh *c,
+ 	int ret;
  
-+	/**
-+	 * Clear out the dump segments populated by parse_fw before
-+	 * re-populating them with minidump segments.
-+	 */
-+
-+	rproc_coredump_cleanup(rproc);
-+
- 	ret = qcom_add_minidump_segments(rproc, subsystem);
- 	if (ret) {
- 		dev_err(&rproc->dev, "Failed with error: %d while adding minidump entries\n", ret);
-diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
-index 401b1ec..6e5cbca 100644
---- a/drivers/remoteproc/qcom_q6v5_pas.c
-+++ b/drivers/remoteproc/qcom_q6v5_pas.c
-@@ -274,6 +274,7 @@ static const struct rproc_ops adsp_minidump_ops = {
- 	.start = adsp_start,
- 	.stop = adsp_stop,
- 	.da_to_va = adsp_da_to_va,
-+	.parse_fw = qcom_register_dump_segments,
- 	.load = adsp_load,
- 	.panic = adsp_panic,
- 	.coredump = adsp_minidump,
+ 	/* Nothing required to be done if already off or on */
+-	if (enable == c->state)
++	if (enable == !!c->state)
+ 		return 0;
+ 
+ 	c->state = enable ? c->valid_state_mask : 0;
 -- 
-2.7.4
+2.17.1
 
