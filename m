@@ -2,103 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EF0645394E4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 May 2022 18:19:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0285F5394F2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 May 2022 18:26:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346095AbiEaQTY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 31 May 2022 12:19:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42584 "EHLO
+        id S243308AbiEaQ0X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 31 May 2022 12:26:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47686 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346097AbiEaQTV (ORCPT
+        with ESMTP id S241124AbiEaQ0X (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 31 May 2022 12:19:21 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 100C598590;
-        Tue, 31 May 2022 09:19:21 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id B9C53B810EE;
-        Tue, 31 May 2022 16:19:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19D2CC385A9;
-        Tue, 31 May 2022 16:19:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1654013958;
-        bh=C7JqPHYdDIfIV1hFpEuC1J6B7QEItv7CaH7EVzTRasE=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=c7uCs1jy8TG74D+Nj32f4BthpKKQvR+72bqpZXJZDojOu/Ri4D//ChSLI2vkj884B
-         k35ZMlm5UJfSwDAtNkaERyfhCvFvZXDpAthbHc4HkQ7W03zyQPBFHoKp7stXu318GC
-         5VM4zAwxH7TtP3LB1s/bzGOH8e9Lq2vjBfscQPE3016J1EHU4Nqji9R8xT3oCFM7zr
-         HGeViJPNgdB51Kq1EoXhNEyKiBj2Ya4ArkH46ly3m4pxnzPNywvMEU2/pM4mGnrLa2
-         psUMVuVTbOqTI27e5Hs7HKH8fpB6H+JgeeIjB7UTyNZkdBfYSv+/9JLpw/iQ0xyJfZ
-         r4XR05x5qaAjg==
-Date:   Tue, 31 May 2022 17:19:11 +0100
-From:   Will Deacon <will@kernel.org>
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     Konrad Dybcio <konrad.dybcio@somainline.org>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
-        <linux-arm-kernel@lists.infradead.org>,
-        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
-        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        jamipkettunen@somainline.org, Andy Gross <agross@kernel.org>,
-        Joerg Roedel <joro@8bytes.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 1/6] iommu/qcom: Use the asid read from device-tree if
- specified
-Message-ID: <20220531161910.GE25502@willie-the-truck>
-References: <20220527212901.29268-1-konrad.dybcio@somainline.org>
- <20220527212901.29268-2-konrad.dybcio@somainline.org>
- <20220531154631.GA25502@willie-the-truck>
- <CAF6AEGsWsHfQZnszG=NgP0BufxO-DP4LwvsAYkrz2wRhcJuOXw@mail.gmail.com>
+        Tue, 31 May 2022 12:26:23 -0400
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 81AE195DDB;
+        Tue, 31 May 2022 09:26:21 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 484C023A;
+        Tue, 31 May 2022 09:26:21 -0700 (PDT)
+Received: from [10.57.81.38] (unknown [10.57.81.38])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 9E8023F73D;
+        Tue, 31 May 2022 09:26:19 -0700 (PDT)
+Message-ID: <edf89f9a-23ce-16ce-33f4-7796ed6bdb4c@arm.com>
+Date:   Tue, 31 May 2022 17:26:14 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAF6AEGsWsHfQZnszG=NgP0BufxO-DP4LwvsAYkrz2wRhcJuOXw@mail.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Subject: Re: [PATCH 2/6] iommu/qcom: Write TCR before TTBRs to fix ASID access
+ behavior
+Content-Language: en-GB
+To:     Will Deacon <will@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        jamipkettunen@somainline.org, iommu@lists.linux-foundation.org,
+        martin.botka@somainline.org, ~postmarketos/upstreaming@lists.sr.ht,
+        angelogioacchino.delregno@somainline.org,
+        marijn.suijten@somainline.org, linux-arm-kernel@lists.infradead.org
+References: <20220527212901.29268-1-konrad.dybcio@somainline.org>
+ <20220527212901.29268-3-konrad.dybcio@somainline.org>
+ <20220531155559.GB25502@willie-the-truck>
+From:   Robin Murphy <robin.murphy@arm.com>
+In-Reply-To: <20220531155559.GB25502@willie-the-truck>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-9.7 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, May 31, 2022 at 09:15:22AM -0700, Rob Clark wrote:
-> On Tue, May 31, 2022 at 8:46 AM Will Deacon <will@kernel.org> wrote:
-> >
-> > On Fri, May 27, 2022 at 11:28:56PM +0200, Konrad Dybcio wrote:
-> > > From: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
-> > >
-> > > As specified in this driver, the context banks are 0x1000 apart.
-> > > Problem is that sometimes the context number (our asid) does not
-> > > match this logic and we end up using the wrong one: this starts
-> > > being a problem in the case that we need to send TZ commands
-> > > to do anything on a specific context.
-> >
-> > I don't understand this. The ASID is a software construct, so it shouldn't
-> > matter what we use. If it does matter, then please can you explain why? The
-> > fact that the context banks are 0x1000 apart seems unrelated.
+On 2022-05-31 16:55, Will Deacon wrote:
+> On Fri, May 27, 2022 at 11:28:57PM +0200, Konrad Dybcio wrote:
+>> From: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+>>
+>> As also stated in the arm-smmu driver, we must write the TCR before
+>> writing the TTBRs, since the TCR determines the access behavior of
+>> some fields.
 > 
-> I think the connection is that mapping from ctx bank to ASID is 1:1
+> Where is this stated in the arm-smmu driver?
 
-But in what sense? How is the ASID used beyond a tag in the TLB? The commit
-message hints at "TZ commands" being a problem.
+In arm_smmu_write_context_bank() - IIRC it's mostly about the case where 
+if you write a 16-bit ASID to TTBR before setting TCR2.AS you might end 
+up losing the top 8 bits of it. However, in the context of a pantomime 
+where we just have to pretend to program the "hardware" the way the 
+firmware has already programmed it (on pain of getting randomly reset if 
+we look at it wrong), I can't imagine it really matters.
 
-I'm not doubting that this is needed to make the thing work, I just don't
-understand why.
+Robin.
 
-Will
+>> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+>> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+>> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+>> ---
+>>   drivers/iommu/arm/arm-smmu/qcom_iommu.c | 12 ++++++------
+>>   1 file changed, 6 insertions(+), 6 deletions(-)
+>>
+>> diff --git a/drivers/iommu/arm/arm-smmu/qcom_iommu.c b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+>> index 1728d4d7fe25..75f353866c40 100644
+>> --- a/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+>> +++ b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+>> @@ -273,18 +273,18 @@ static int qcom_iommu_init_domain(struct iommu_domain *domain,
+>>   			ctx->secure_init = true;
+>>   		}
+>>   
+>> -		/* TTBRs */
+>> -		iommu_writeq(ctx, ARM_SMMU_CB_TTBR0,
+>> -				pgtbl_cfg.arm_lpae_s1_cfg.ttbr |
+>> -				FIELD_PREP(ARM_SMMU_TTBRn_ASID, ctx->asid));
+>> -		iommu_writeq(ctx, ARM_SMMU_CB_TTBR1, 0);
+>> -
+>>   		/* TCR */
+>>   		iommu_writel(ctx, ARM_SMMU_CB_TCR2,
+>>   				arm_smmu_lpae_tcr2(&pgtbl_cfg));
+>>   		iommu_writel(ctx, ARM_SMMU_CB_TCR,
+>>   			     arm_smmu_lpae_tcr(&pgtbl_cfg) | ARM_SMMU_TCR_EAE);
+>>   
+>> +		/* TTBRs */
+>> +		iommu_writeq(ctx, ARM_SMMU_CB_TTBR0,
+>> +				pgtbl_cfg.arm_lpae_s1_cfg.ttbr |
+>> +				FIELD_PREP(ARM_SMMU_TTBRn_ASID, ctx->asid));
+>> +		iommu_writeq(ctx, ARM_SMMU_CB_TTBR1, 0);
+> 
+> I'd have thought that SCTLR.M would be clear here, so it shouldn't matter
+> what order we write these in.
+> 
+> Will
+> _______________________________________________
+> iommu mailing list
+> iommu@lists.linux-foundation.org
+> https://lists.linuxfoundation.org/mailman/listinfo/iommu
