@@ -2,74 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 94C44538D4A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 May 2022 10:58:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6BF61538DE0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 May 2022 11:39:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245020AbiEaI6A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 31 May 2022 04:58:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59048 "EHLO
+        id S233250AbiEaJjm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 31 May 2022 05:39:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45164 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233830AbiEaI6A (ORCPT
+        with ESMTP id S232814AbiEaJjm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 31 May 2022 04:58:00 -0400
-Received: from szxga01-in.huawei.com (szxga01-in.huawei.com [45.249.212.187])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80BC4BC36;
-        Tue, 31 May 2022 01:57:57 -0700 (PDT)
-Received: from kwepemi500014.china.huawei.com (unknown [172.30.72.53])
-        by szxga01-in.huawei.com (SkyGuard) with ESMTP id 4LC5jY037SzgYTF;
-        Tue, 31 May 2022 16:56:16 +0800 (CST)
-Received: from huawei.com (10.67.174.157) by kwepemi500014.china.huawei.com
- (7.221.188.232) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2375.24; Tue, 31 May
- 2022 16:57:55 +0800
-From:   Li Zhengyu <lizhengyu3@huawei.com>
-To:     <tdas@codeaurora.org>
-CC:     <bjorn.andersson@linaro.org>, <agross@kernel.org>,
-        <mturquette@baylibre.com>, <sboyd@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: [PATCH] clk: qcom: clk-rpmh: Remove redundant if statement
-Date:   Tue, 31 May 2022 16:56:11 +0800
-Message-ID: <20220531085611.122884-1-lizhengyu3@huawei.com>
-X-Mailer: git-send-email 2.17.1
+        Tue, 31 May 2022 05:39:42 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9086B91589;
+        Tue, 31 May 2022 02:39:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1653989981; x=1685525981;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=G9ySjORkNYB0PWVlf2LDGcVhJF/OQDgJg868ZMKx8YI=;
+  b=QuIx3EDU0J+XxSsLagGm8RYgO9sx3S9pKUBIInQrrSGA6/v7T7hP9/gN
+   c4YlBhxJkcNKQLyERVQHb9zIh4GFeKAgf5rUIMk5CgJok75Rgyvnsp1/a
+   DG0FEjmlhFKsOEQ98szpK+Kaw89z1y/85xAsyFNWYRgxs43qxW7HEsf8L
+   A=;
+Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
+  by alexa-out.qualcomm.com with ESMTP; 31 May 2022 02:39:41 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 May 2022 02:39:41 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Tue, 31 May 2022 02:39:40 -0700
+Received: from hu-ylal-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Tue, 31 May 2022 02:39:38 -0700
+From:   Yogesh Lal <quic_ylal@quicinc.com>
+To:     <bjorn.andersson@linaro.org>, <quic_sibis@quicinc.com>
+CC:     <linux-arm-msm@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Yogesh Lal <quic_ylal@quicinc.com>
+Subject: [V3 0/2] Fallback to full coredump
+Date:   Tue, 31 May 2022 15:09:27 +0530
+Message-ID: <1653989969-26500-1-git-send-email-quic_ylal@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Originating-IP: [10.67.174.157]
-X-ClientProxiedBy: dggems706-chm.china.huawei.com (10.3.19.183) To
- kwepemi500014.china.huawei.com (7.221.188.232)
-X-CFilter-Loop: Reflected
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-(!ret) has been checked, so remove (ret).
+Add support for full coredump as a fallback mechanism in
+absence of minidump support.
 
-Signed-off-by: Li Zhengyu <lizhengyu3@huawei.com>
----
- drivers/clk/qcom/clk-rpmh.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+V3:
+ * Add clear out dump segment before re-populating it. 
 
-diff --git a/drivers/clk/qcom/clk-rpmh.c b/drivers/clk/qcom/clk-rpmh.c
-index aed907982344..6d207f7e943d 100644
---- a/drivers/clk/qcom/clk-rpmh.c
-+++ b/drivers/clk/qcom/clk-rpmh.c
-@@ -207,10 +207,7 @@ static int clk_rpmh_aggregate_state_send_command(struct clk_rpmh *c,
- 	if (!ret)
- 		return 0;
- 
--	if (ret && enable)
--		c->state = 0;
--	else if (ret)
--		c->state = c->valid_state_mask;
-+	c->state = enable ? 0 : c->valid_state_mask;
- 
- 	WARN(1, "clk: %s failed to %s\n", c->res_name,
- 	     enable ? "enable" : "disable");
+Siddharth Gupta (2):
+  remoteproc: core: Export the rproc coredump APIs
+  remoteproc: qcom: Add full coredump fallback mechanism
+
+ drivers/remoteproc/qcom_common.c         | 14 ++++++++++++--
+ drivers/remoteproc/qcom_q6v5_pas.c       |  1 +
+ drivers/remoteproc/remoteproc_coredump.c |  2 ++
+ drivers/remoteproc/remoteproc_internal.h |  4 ----
+ include/linux/remoteproc.h               |  4 ++++
+ 5 files changed, 19 insertions(+), 6 deletions(-)
+
 -- 
-2.17.1
+2.7.4
 
