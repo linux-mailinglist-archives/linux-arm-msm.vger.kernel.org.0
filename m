@@ -2,84 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1FF7553987B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 May 2022 23:13:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E4FB2539875
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 May 2022 23:11:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347891AbiEaVNp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 31 May 2022 17:13:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50112 "EHLO
+        id S1347895AbiEaVLb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 31 May 2022 17:11:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41164 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346313AbiEaVNp (ORCPT
+        with ESMTP id S1345845AbiEaVL3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 31 May 2022 17:13:45 -0400
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBED736B75
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 May 2022 14:13:43 -0700 (PDT)
-Received: by mail-ej1-x636.google.com with SMTP id f9so29134662ejc.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 May 2022 14:13:43 -0700 (PDT)
+        Tue, 31 May 2022 17:11:29 -0400
+Received: from mail-qt1-x833.google.com (mail-qt1-x833.google.com [IPv6:2607:f8b0:4864:20::833])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DDCA59D062
+        for <linux-arm-msm@vger.kernel.org>; Tue, 31 May 2022 14:11:27 -0700 (PDT)
+Received: by mail-qt1-x833.google.com with SMTP id p8so14199141qtx.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 31 May 2022 14:11:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
+        d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=2D0n0MD9FVM5CduT1NCFZoyK1Wf+YfR32ZwltpKGpW0=;
-        b=ZQT68xf2h4yPB1aO3z6MMCxjgrGQxzK6GsAwKC4AbtmM7jt7hPu9NP/5/38W/CoGs4
-         /U426ZyODXRJ/hIK1zizXSQUiCeTA65NiXm2tba9pIlaxq1ArpOmj55sVibamQlHpil1
-         HXArJ8lpnCJ5gJjSUw7JSWNWLGFhmor2Mb+W4=
+        bh=BUEy9SeMTjRe3Rjyc2r8IDQhV6fRs2+aWRaD5gsRiCs=;
+        b=icNabeEtLMJq1bW2k166x8acMMz/tTMK3oe9Eys5MH7qjvMVWhZ2ntg9EwgqMRXYAn
+         gik1eqDf8KzfZB0SMCkeYKHwwkm5Wy8qw4PvFLyqO4WjfVaKraeeWbOqItDmow11kGcM
+         ZT6q9qw4qmw7se+RTeaf4nC1Tg6u99zLHs9fusGYFOKCw+9Ymqm6ipxfw0ru+d7G6iaG
+         Jny6jkMCEpRzd6swztlPw1JbgeRo2KnQ6gsv5AqMZV2bHLy2mYXKutCLs3PdIn+JUsl8
+         EsBBXFyHDReJqpYA5XW6QadlzVT325biVxIxq7sgJkDQsHvO+CG58sVX8FlBUEI4cwzo
+         qADQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=2D0n0MD9FVM5CduT1NCFZoyK1Wf+YfR32ZwltpKGpW0=;
-        b=suJXUn0qOwsewoF7YiAuEMQR8WHDJtq2lUeRgSmVRAfnRMBSE7nQUVrLUMUIO40cFD
-         CCt4fF/O7Ar4Wt0VotUexEL4YsSfIkisS8Q3gbVixosFQNF2qhYcNqe566CMqS3pJE0I
-         yqRsgHA8qFGFXEB0LwiGxdKXkCk1G5Zzy9CQOesqNBK6ym4QMK71AOoEi/njK368eDvl
-         37hA4CmKvAqvWhHo4JaPye0RbpiYADjGtMxf+0tSgmWl698MYpU6lT5T+efiuOkunR2L
-         cpgmAZ6RE0JogTzkTphm7YwH6U3ZoNGfTOolplpqcww0PUw02NU5uU1CtTiqLceeUIEN
-         +sMA==
-X-Gm-Message-State: AOAM533ox4Bw7O+SSgZwfkOV6bbNjL6zsHhh32I4Q6Jw/Fv9fyG7BkIP
-        nDyDwGaeP7JCgFVSc6JIxaAWoSmt7iBi47Zf
-X-Google-Smtp-Source: ABdhPJzzZz4kRiZ1mtTrqtDbMYC69l+JTG5UgAvLrOXVTEfYA9MGJEikmQt9UIVWJFwJYthz5bPcew==
-X-Received: by 2002:a17:907:972a:b0:6f4:f456:50a7 with SMTP id jg42-20020a170907972a00b006f4f45650a7mr54274035ejc.431.1654031622298;
-        Tue, 31 May 2022 14:13:42 -0700 (PDT)
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com. [209.85.128.54])
-        by smtp.gmail.com with ESMTPSA id d21-20020a170906641500b006febce7081esm5415052ejm.177.2022.05.31.14.13.41
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 31 May 2022 14:13:41 -0700 (PDT)
-Received: by mail-wm1-f54.google.com with SMTP id f23-20020a7bcc17000000b003972dda143eso1924368wmh.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 May 2022 14:13:41 -0700 (PDT)
-X-Received: by 2002:a05:600c:3d8e:b0:397:73e3:8c83 with SMTP id
- bi14-20020a05600c3d8e00b0039773e38c83mr25043368wmb.29.1654031205884; Tue, 31
- May 2022 14:06:45 -0700 (PDT)
+        bh=BUEy9SeMTjRe3Rjyc2r8IDQhV6fRs2+aWRaD5gsRiCs=;
+        b=fIdPifLMr8Fbs+vOpRRdIfQJDDOWmBQ5WZWy2Ydhunnx38FM+plAl9pUN+GpMEe9WO
+         /vg/LCjjUaOn854PLvuJjQ76MM1VYLEO6gX2dyMEgGhrZQiRjcRDsAG0vqx5GqaZd8yr
+         rjCHK5rVDHEWhBy4WYTy4KCL4mmsTZs/vaIQntELO7OxkRK6cctVSuJOtKENo50udFS+
+         h9QD23AfW+9sTy2PMSZQxhaerXELg0qjeYxnagPfo0beZj2j29Zb08e82r7Rx5h+omck
+         aMFnkrxbVdAkvgpFKV69OxfdNaraQw0weDDIvZ4nuwaB9HP9eZU2y+URZL/rwxGsTatJ
+         PFkQ==
+X-Gm-Message-State: AOAM530JN/SMO4EhrgFUfRyF7XG8fWvY0tudDlOhS6PkFCj06fhPOqu1
+        02B31iXg42AEVULORLQ8+KFhAcA/jpi0pW5qJiziRA==
+X-Google-Smtp-Source: ABdhPJwqvf9GT/CoaWbEcCU8y4NQt8y/aWM6RCv17U1OuAG6bzkxUvarHTp1/r0HQSzqUeSCf36W6Hu6C2bcJ9TPgX8=
+X-Received: by 2002:a05:622a:1895:b0:304:8024:332d with SMTP id
+ v21-20020a05622a189500b003048024332dmr9588698qtc.682.1654031487001; Tue, 31
+ May 2022 14:11:27 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220510192944.2408515-1-dianders@chromium.org>
- <20220510122726.v3.3.Iba4b9bf6c7a1ee5ea2835ad7bd5eaf84d7688520@changeid>
- <20220521091751.opeiqbmc5c2okdq6@houat> <CAD=FV=Wea0LT5umK4Xg87cDikim+dSuyLndfydO3_DnTujZr9Q@mail.gmail.com>
-In-Reply-To: <CAD=FV=Wea0LT5umK4Xg87cDikim+dSuyLndfydO3_DnTujZr9Q@mail.gmail.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Tue, 31 May 2022 14:06:34 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=XqJuPHxm7HYMvyHBL_zC-BBA_f0MBsZX-jHt7Pk9ngsQ@mail.gmail.com>
-Message-ID: <CAD=FV=XqJuPHxm7HYMvyHBL_zC-BBA_f0MBsZX-jHt7Pk9ngsQ@mail.gmail.com>
-Subject: Re: [PATCH v3 3/4] drm/bridge: Add devm_drm_bridge_add()
-To:     Maxime Ripard <maxime@cerno.tech>
+References: <20220531200857.136547-1-robdclark@gmail.com> <CAA8EJpouqO9KfhAQSqEHP8MUGTkntx7iARRRqrvx3uMFQd4-dQ@mail.gmail.com>
+ <CAF6AEGtauTPR5Gp8Sjy1_W4yHfYgTahRzJU=9A8XkY1RMZBwyA@mail.gmail.com>
+In-Reply-To: <CAF6AEGtauTPR5Gp8Sjy1_W4yHfYgTahRzJU=9A8XkY1RMZBwyA@mail.gmail.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Wed, 1 Jun 2022 00:11:15 +0300
+Message-ID: <CAA8EJpr77BkkaH6euX9cJ_H5bHofcFr=evTN32ARF+BR-6CD0Q@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm: Ensure mmap offset is initialized
+To:     Rob Clark <robdclark@gmail.com>
 Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
-        Hsin-Yi Wang <hsinyi@chromium.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Philip Chen <philipchen@chromium.org>,
-        Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
-        Robert Foss <robert.foss@linaro.org>,
         freedreno <freedreno@lists.freedesktop.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        LKML <linux-kernel@vger.kernel.org>
+        Gerd Hoffmann <kraxel@redhat.com>,
+        open list <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -88,42 +74,110 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Maxime,
-
-On Mon, May 23, 2022 at 10:00 AM Doug Anderson <dianders@chromium.org> wrote:
+On Tue, 31 May 2022 at 23:37, Rob Clark <robdclark@gmail.com> wrote:
 >
-> Hi,
->
-> On Sat, May 21, 2022 at 2:17 AM Maxime Ripard <maxime@cerno.tech> wrote:
+> On Tue, May 31, 2022 at 1:34 PM Dmitry Baryshkov
+> <dmitry.baryshkov@linaro.org> wrote:
 > >
-> > Hi,
-> >
-> > On Tue, May 10, 2022 at 12:29:43PM -0700, Douglas Anderson wrote:
-> > > This adds a devm managed version of drm_bridge_add(). Like other
-> > > "devm" function listed in drm_bridge.h, this function takes an
-> > > explicit "dev" to use for the lifetime management. A few notes:
-> > > * In general we have a "struct device" for bridges that makes a good
-> > >   candidate for where the lifetime matches exactly what we want.
-> > > * The "bridge->dev->dev" device appears to be the encoder
-> > >   device. That's not the right device to use for lifetime management.
+> > On Tue, 31 May 2022 at 23:08, Rob Clark <robdclark@gmail.com> wrote:
 > > >
-> > > Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> > > From: Rob Clark <robdclark@chromium.org>
+> > >
+> > > If a GEM object is allocated, and then exported as a dma-buf fd which is
+> > > mmap'd before or without the GEM buffer being directly mmap'd, the
+> > > vma_node could be unitialized.  This leads to a situation where the CPU
+> > > mapping is not correctly torn down in drm_vma_node_unmap().
+> > >
+> > > Fixes: e5516553999f ("drm: call drm_gem_object_funcs.mmap with fake offset")
+> > > Signed-off-by: Rob Clark <robdclark@chromium.org>
+> > > ---
+> > >  drivers/gpu/drm/msm/msm_drv.c       |  2 +-
+> > >  drivers/gpu/drm/msm/msm_drv.h       |  1 +
+> > >  drivers/gpu/drm/msm/msm_gem_prime.c | 15 +++++++++++++++
+> > >  3 files changed, 17 insertions(+), 1 deletion(-)
+> > >
+> > > diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+> > > index 44485363f37a..14ab9a627d8b 100644
+> > > --- a/drivers/gpu/drm/msm/msm_drv.c
+> > > +++ b/drivers/gpu/drm/msm/msm_drv.c
+> > > @@ -964,7 +964,7 @@ static const struct drm_driver msm_driver = {
+> > >         .prime_handle_to_fd = drm_gem_prime_handle_to_fd,
+> > >         .prime_fd_to_handle = drm_gem_prime_fd_to_handle,
+> > >         .gem_prime_import_sg_table = msm_gem_prime_import_sg_table,
+> > > -       .gem_prime_mmap     = drm_gem_prime_mmap,
+> > > +       .gem_prime_mmap     = msm_gem_prime_mmap,
+> > >  #ifdef CONFIG_DEBUG_FS
+> > >         .debugfs_init       = msm_debugfs_init,
+> > >  #endif
+> > > diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
+> > > index bb052071b16d..090b8074fec7 100644
+> > > --- a/drivers/gpu/drm/msm/msm_drv.h
+> > > +++ b/drivers/gpu/drm/msm/msm_drv.h
+> > > @@ -275,6 +275,7 @@ unsigned long msm_gem_shrinker_shrink(struct drm_device *dev, unsigned long nr_t
+> > >  void msm_gem_shrinker_init(struct drm_device *dev);
+> > >  void msm_gem_shrinker_cleanup(struct drm_device *dev);
+> > >
+> > > +int msm_gem_prime_mmap(struct drm_gem_object *obj, struct vm_area_struct *vma);
+> > >  struct sg_table *msm_gem_prime_get_sg_table(struct drm_gem_object *obj);
+> > >  int msm_gem_prime_vmap(struct drm_gem_object *obj, struct iosys_map *map);
+> > >  void msm_gem_prime_vunmap(struct drm_gem_object *obj, struct iosys_map *map);
+> > > diff --git a/drivers/gpu/drm/msm/msm_gem_prime.c b/drivers/gpu/drm/msm/msm_gem_prime.c
+> > > index 94ab705e9b8a..dcc8a573bc76 100644
+> > > --- a/drivers/gpu/drm/msm/msm_gem_prime.c
+> > > +++ b/drivers/gpu/drm/msm/msm_gem_prime.c
+> > > @@ -11,6 +11,21 @@
+> > >  #include "msm_drv.h"
+> > >  #include "msm_gem.h"
+> > >
+> > > +int msm_gem_prime_mmap(struct drm_gem_object *obj, struct vm_area_struct *vma)
+> > > +{
+> > > +       int ret;
+> > > +
+> > > +       /* Ensure the mmap offset is initialized.  We lazily initialize it,
+> > > +        * so if it has not been first mmap'd directly as a GEM object, the
+> > > +        * mmap offset will not be already initialized.
+> > > +        */
+> > > +       ret = drm_gem_create_mmap_offset(obj);
+> > > +       if (ret)
+> > > +               return ret;
 > >
-> > If we are to introduce more managed helpers, I think it'd be wiser to
-> > introduce them as DRM-managed, and not device managed.
+> > Wouldn't it be better to have this call directly in the
+> > drm_gem_prime_mmap() ? This way all drivers can be lazy.
 > >
-> > Otherwise, you'll end up in a weird state when a device has been removed
-> > but the DRM device is still around.
 >
-> I'm kinda confused. In this case there is no DRM device for the bridge
-> and, as per my CL description, "bridge-dev->dev" appears to be the
-> encoder device. I wasn't personally involved in discussions about it,
-> but I was under the impression that this was expected / normal. Thus
-> we can't make this DRM-managed.
+> yes.. that was my first[1] proposal.  But there are differences of
+> opinion, and in the mean time I want to get this particular issue
+> fixed ;-)
 
-Since I didn't hear a reply, I'll assume that my response addressed
-your concerns. Assuming I get reviews for the other two patches in
-this series I'll plan to land this with Dmitry's review.
+Ack, excuse me, I probably skipped the thread.
 
--Doug
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+>
+> BR,
+> -R
+>
+> [1] https://patchwork.freedesktop.org/patch/487597/
+>
+> >
+> > > +
+> > > +       return drm_gem_prime_mmap(obj, vma);
+> > > +}
+> > > +
+> > >  struct sg_table *msm_gem_prime_get_sg_table(struct drm_gem_object *obj)
+> > >  {
+> > >         struct msm_gem_object *msm_obj = to_msm_bo(obj);
+> > > --
+> > > 2.36.1
+> > >
+> >
+> >
+> > --
+> > With best wishes
+> > Dmitry
+
+
+
+-- 
+With best wishes
+Dmitry
