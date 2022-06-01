@@ -2,76 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0CB4453A3B6
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jun 2022 13:19:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0AE4953A3EA
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jun 2022 13:24:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352600AbiFALTF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Jun 2022 07:19:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57444 "EHLO
+        id S1352788AbiFALYO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Jun 2022 07:24:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34468 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350587AbiFALTF (ORCPT
+        with ESMTP id S1352820AbiFALX7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Jun 2022 07:19:05 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C0A3A76FA;
-        Wed,  1 Jun 2022 04:19:02 -0700 (PDT)
+        Wed, 1 Jun 2022 07:23:59 -0400
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3BC25E77E
+        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Jun 2022 04:23:11 -0700 (PDT)
+Received: by mail-ed1-x536.google.com with SMTP id v19so1725222edd.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Jun 2022 04:23:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1654082343; x=1685618343;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=j2WptiZFrMPVKC6oFMmIy8W8fAs1p7FSZjkRo4TZHV0=;
-  b=AIVtraew/9SX3q9818j9qKmyDg28YakAK5lNbC9tAJWoN1zI3HJtQT0N
-   lrVvJfOcRqQRLUGPMXGXJDl0Tuo+ozEVEGYhD4MCXBHuVVTLYQScHpA4w
-   vUJVHrCXP8OgVBzayHbKxvCPia48xDcEURlUUoYrpxMb15XLtJv7JHl3M
-   g=;
-Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 01 Jun 2022 04:19:02 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jun 2022 04:19:01 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 1 Jun 2022 04:19:01 -0700
-Received: from [10.50.27.146] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Wed, 1 Jun 2022
- 04:18:55 -0700
-Message-ID: <def29b3f-b5a1-5f23-7727-1308f7033cff@quicinc.com>
-Date:   Wed, 1 Jun 2022 16:48:52 +0530
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=EmX78kZDbpi7zDJcl5NRBNnxEqWkEcLfuWB3zLytvQ4=;
+        b=r55wWxDb8gLLLDShPuOiJjmUz1D5Xgin/ldr6b/Tnulo5/FyaoiTrGCFmJK10iRxpl
+         /b5twD1DES3+6TJftiXJLlEH5MTxw6tzyqTXWS49/e4fUXACwFeWmyPUdl79bB1ZMm28
+         1EQZtIGbcpDoxuCn3othqQWKg+D6efafEyLZYTIBuSeyngpnqUPZSWp0zb/eRJWQMD+4
+         W6q5xcRyZJBNbHcwT564fW1iOCfBexrbxseQQNfQI9zG+QVQGtdYMM8Iugx4ALnbLNtu
+         EfIQzbvmIUrpisGyxuU8pS95ihIaVEMR2VjCfh69jDHQWuXdYfHfC7+QL1vDtMre9YvW
+         WOjA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=EmX78kZDbpi7zDJcl5NRBNnxEqWkEcLfuWB3zLytvQ4=;
+        b=Ea71oNItCSsGr+PtD1xBgl4Tm9zcuSNyD7PBBDXcuxdiduicql5nUCjNgoFQe95Jvf
+         TBvXFmCJ3+87mZ2wFaWmt8D+O3Lyyo2bayzfCXLH57Gmwyh7Ik9yKNwBtGwzSZ38paCw
+         pHx5OkaTaqBz6/fQkk6cUh7eycRjMFxUeQLevYUiKRGuv4y30YBbcRp/AYmuSg1L3BAv
+         /eP5kYX/FLWxw5r0feo8R5RHWyvZtWFfUc+qBGkYdYcolD0b4YzOW8u/rEL6ZRMUUMMj
+         vyePlAJ08b8GY1LI6+SlIcRw553NaDr3V4hkVmcADcHabTKJig4rNLNcspEdhNUjSlb7
+         HmJw==
+X-Gm-Message-State: AOAM530A+4btrFZDKmNOMaP8FxZTRVuAkEFEOHCAWDSFtN7kABk8aWvW
+        Re6fbk50DBxvetXaKrBwAcsMyw==
+X-Google-Smtp-Source: ABdhPJzOJxGalCbiJf1Q2Q8zI2vrTUHr2z0fwXYzl5tTyez6dQrB/mI0xzVPeI2IOWLC/p/Lwqsvsw==
+X-Received: by 2002:a05:6402:1907:b0:42d:e90e:337 with SMTP id e7-20020a056402190700b0042de90e0337mr7327648edz.405.1654082589971;
+        Wed, 01 Jun 2022 04:23:09 -0700 (PDT)
+Received: from [192.168.0.179] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id p19-20020a056402155300b0042617ba638esm823008edx.24.2022.06.01.04.23.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 01 Jun 2022 04:23:09 -0700 (PDT)
+Message-ID: <7a66f2e2-1a2a-a262-138c-f535499984ae@linaro.org>
+Date:   Wed, 1 Jun 2022 13:23:08 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.0
-Subject: Re: [PATCH V13 7/9] regulator: Add a regulator driver for the PM8008
- PMIC
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Subject: Re: [RFC PATCH v2 4/6] PM: opp: allow control of multiple clocks
 Content-Language: en-US
-To:     Stephen Boyd <swboyd@chromium.org>,
+To:     Viresh Kumar <viresh.kumar@linaro.org>
+Cc:     Stephen Boyd <sboyd@kernel.org>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-CC:     Lee Jones <lee.jones@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_collinsd@quicinc.com>,
-        <quic_subbaram@quicinc.com>, <quic_jprakash@quicinc.com>
-References: <1653043777-24003-1-git-send-email-quic_c_skakit@quicinc.com>
- <1653043777-24003-8-git-send-email-quic_c_skakit@quicinc.com>
- <CAE-0n53WLYR1pjnr6wASVmXXQ7xTq5n2Q7GdeKOCkWf4H4n=0A@mail.gmail.com>
- <e70aceba-02d5-15b5-46d0-d5ed5706e81a@quicinc.com>
- <CAE-0n539gePyXhw7r+XcaHtooN98KfYsx_qwgDaFkJtMSg+80g@mail.gmail.com>
- <4b9a2abe-c462-81d9-2098-d430da24f030@quicinc.com>
- <CAE-0n529AD8OKrxbTpDNqR7Gw9SdCnJyWtiWvZAsADQKgj4kxQ@mail.gmail.com>
-From:   "Satya Priya Kakitapalli (Temp)" <quic_c_skakit@quicinc.com>
-In-Reply-To: <CAE-0n529AD8OKrxbTpDNqR7Gw9SdCnJyWtiWvZAsADQKgj4kxQ@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Taniya Das <tdas@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-scsi@vger.kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+References: <20220411154347.491396-1-krzysztof.kozlowski@linaro.org>
+ <20220411154347.491396-5-krzysztof.kozlowski@linaro.org>
+ <20220425072710.v6gwo4gu3aouezg4@vireshk-i7>
+ <dea39b1f-0091-2690-7f07-108d07ef9f3c@linaro.org>
+ <20220510044053.ykn6ygnbeokhzrsa@vireshk-i7>
+ <1e533194-7047-8342-b426-f607fddbfaa3@linaro.org>
+ <20220511050643.hd5tcrojb3wkbg7t@vireshk-i7>
+ <20220518235708.1A04CC385A9@smtp.kernel.org>
+ <65a4c28d-6702-3a9f-f837-1ea69a428777@linaro.org>
+ <20220531103029.ntoypaafnd6447ag@vireshk-i7>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220531103029.ntoypaafnd6447ag@vireshk-i7>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-5.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+X-Spam-Status: No, score=-3.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -79,51 +97,39 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 31/05/2022 12:30, Viresh Kumar wrote:
+> On 19-05-22, 10:03, Krzysztof Kozlowski wrote:
+>> Yes, true. The clock frequencies are still changed with each gear, but
+>> in general the UFS indeed operates on gear concept.
+> 
+> Hi Krzysztof,
+> 
+> I have redesigned the OPP core a bit (two patchsets until now) to make
+> it easier to add multiple clock support going forward. I need some
+> inputs from you before moving forward with it now. Will this work for
+> your use case:
+> 
+> - Add support for multiple clocks, where none of them is primary.
+> 
+> - Which means you won't be able to use dev_pm_opp_set_rate() but will
+>   need something like dev_pm_opp_set_level(), will add it.
+> 
+> - That is, your OPP table will need to implement levels (I think of
+>   them as UFS gears) and then call dev_pm_opp_set_level() instead.
+> 
+> - This new API will work just like dev_pm_opp_set_rate(), except that
+>   it will find the target OPP based on level instead of freq and
+>   support configuration of multiple clock frequencies.
+> 
+> - Of course both these APIs will share most of the code.
 
-On 6/1/2022 7:36 AM, Stephen Boyd wrote:
-> Quoting Satya Priya Kakitapalli (Temp) (2022-05-30 03:33:47)
->> On 5/28/2022 2:32 AM, Stephen Boyd wrote:
->>> Quoting Satya Priya Kakitapalli (Temp) (2022-05-27 01:24:19)
->>>> On 5/21/2022 8:26 AM, Stephen Boyd wrote:
->>>>           +       }
->>>>           +
->>>>           +       pm8008_reg->dev = dev;
->>>>           +
->>>>           +       rc = of_property_read_string(dev->of_node, "regulator-name", &name);
->>>>           +       if (rc)
->>>>           +               return rc;
->>>>           +
->>>>           +       /* get the required regulator data */
->>>>           +       for (i = 0; i < ARRAY_SIZE(reg_data); i++)
->>>>           +               if (strstr(name, reg_data[i].name))
->>>>
->>>>       Why not find this via reg/address instead? It would save storing the
->>>>       regulator name in the reg_data table.
->>>>
->>>>
->>>> You mean match this using base address? then we should add base address in the
->>>> reg_data table. We will need the name to be stored in reg_data table anyway for
->>>> the pm8008_reg->rdesc.of_match
->>> Why? Now that this driver binds to each node individually the usage of
->>> of_match doesn't make any sense to me. Can you set 'struct
->>> regulator_config::dev' instead and not set of_match?
->>
->> Currently we are setting regulator_config::dev as dev->parent i.e.,
->> pm8008@8, because the parent supplies are present under pm8008@8, to get
->> the regulators mapped correctly to the parent supplies we are using
->> dev->parent.
->>
->> If we do not set of_match in regulator descriptor,
->> regulator_of_get_init_node() would return NULL, causing init_data to be
->> NULL during regulator_register and regulators are not getting probed.
->> This can be resolved, if we get the init_data during pm8008_probe
->> itself. I'll do that in the next version.
->>
-> Ok then it seems ok to leave it as is. I suspect getting init data
-> during probe is more code vs. having the node name and the address in
-> the table.
+Hi Viresh,
 
+In general this looks reasonable and matches how the UFS gears should be
+modeled. It does not match how UFS drivers implemented the clock
+scaling, but that's the internal problem of UFS drivers. They scale the
+clocks only max or min, even though there are multiple gears in between.
+The new approach looks therefore appropriate.
 
-Okay. If we are leaving it as is then, there is no need to add address 
-in the table.
-
+Best regards,
+Krzysztof
