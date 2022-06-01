@@ -2,61 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DB946539F92
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jun 2022 10:34:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D3FF953A031
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jun 2022 11:21:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344920AbiFAIes (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Jun 2022 04:34:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57192 "EHLO
+        id S1351010AbiFAJVa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Jun 2022 05:21:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44162 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239960AbiFAIes (ORCPT
+        with ESMTP id S1350194AbiFAJVZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Jun 2022 04:34:48 -0400
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 344AC5537F;
-        Wed,  1 Jun 2022 01:34:47 -0700 (PDT)
+        Wed, 1 Jun 2022 05:21:25 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2F1C580E2;
+        Wed,  1 Jun 2022 02:21:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1654072487; x=1685608487;
-  h=subject:to:cc:references:from:message-id:date:
-   mime-version:in-reply-to:content-transfer-encoding;
-  bh=x5nMSSI5/humEcyp6BGP5MXHhmWKZK8ljqf5CpFlbKg=;
-  b=fe1gVsH0qRH7EbcUP6rMO8/aw+W0sSlUzeWJ771tokHEgPc326CwrtGz
-   V5PWuRhZECcGUUEE+zZtMEFCYyyXzoQihem6sjdN9LyD0mLmWIEtob7kK
-   5TA8uRT2xHAdQnLrJYqne+KzEkWGEiJHmb3O/ldxzFwr5hQoSJAS0puMz
-   k=;
-Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 01 Jun 2022 01:34:46 -0700
+  t=1654075285; x=1685611285;
+  h=message-id:date:mime-version:subject:from:to:cc:
+   references:in-reply-to:content-transfer-encoding;
+  bh=yMzSNegJTY36Tsg8xrGuN/+TPtYGTwZt2sCHlutuh6Q=;
+  b=WFj0GdFDnpqY09BwdHRkG4vKdTDUL+YUwI9BTjg+4phJFthH7QGYS7TP
+   Rt+Q7En4edn5WgKCwL7XLV9kwl5wk2HYUDDAtyQdYBCg1NNJaaaG2fUy6
+   UpK8qcvltX0oIG4tc0s5oEy+UDYx4fl95vZ8rL40imQrGthCgdtwWvJoq
+   I=;
+Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
+  by alexa-out.qualcomm.com with ESMTP; 01 Jun 2022 02:21:24 -0700
 X-QCInternal: smtphost
 Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jun 2022 01:34:46 -0700
+  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jun 2022 02:21:23 -0700
 Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
  nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 1 Jun 2022 01:34:45 -0700
-Received: from [10.79.43.230] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ 15.2.986.22; Wed, 1 Jun 2022 02:21:23 -0700
+Received: from [10.253.36.238] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Wed, 1 Jun 2022
- 01:34:43 -0700
-Subject: Re: [PATCH v2] remoteproc: qcom_q6v5_mss: map/unmap metadata region
- before/after use
-To:     Arnd Bergmann <arnd@arndb.de>
-CC:     <bjorn.andersson@linaro.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <sboyd@kernel.org>,
-        <agross@kernel.org>, <linux-remoteproc@vger.kernel.org>,
-        <mathieu.poirier@linaro.org>, <mka@chromium.org>
-References: <1652248625-990-1-git-send-email-quic_sibis@quicinc.com>
- <CAK8P3a2b05w3uRjXhx7CgdLEHL78ZHRjgOYoG_SR0SyDxcLDMg@mail.gmail.com>
-From:   Sibi Sankar <quic_sibis@quicinc.com>
-Message-ID: <08778603-4f15-0fb7-687d-4cf42c8ddbd3@quicinc.com>
-Date:   Wed, 1 Jun 2022 14:04:39 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+ 02:21:19 -0700
+Message-ID: <7d6b2e24-21f4-eef1-a722-23cdcd1d8a88@quicinc.com>
+Date:   Wed, 1 Jun 2022 17:21:16 +0800
 MIME-Version: 1.0
-In-Reply-To: <CAK8P3a2b05w3uRjXhx7CgdLEHL78ZHRjgOYoG_SR0SyDxcLDMg@mail.gmail.com>
-Content-Type: text/plain; charset="utf-8"; format=flowed
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH v7 02/10] Coresight: Add coresight TPDM source driver
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+From:   Jinlong Mao <quic_jinlmao@quicinc.com>
+To:     Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        Mike Leach <mike.leach@linaro.org>
+CC:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        <coresight@lists.linaro.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Tao Zhang <quic_taozha@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Hao Zhang <quic_hazha@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+References: <20220509133947.20987-1-quic_jinlmao@quicinc.com>
+ <20220509133947.20987-3-quic_jinlmao@quicinc.com>
+ <38bb1ec9-56bc-0cdf-6c46-d448a46ec886@arm.com>
+ <ea720e1a-c0d2-84b0-8dbc-bb5031d32208@quicinc.com>
+In-Reply-To: <ea720e1a-c0d2-84b0-8dbc-bb5031d32208@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
@@ -70,66 +82,90 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hey Arnd,
-Thanks for taking time to review the patch.
+Hi Suzuki,
 
-On 5/30/22 9:41 PM, Arnd Bergmann wrote:
-> On Wed, May 11, 2022 at 7:57 AM Sibi Sankar <quic_sibis@quicinc.com> wrote:
+On 5/24/2022 3:00 PM, Jinlong Mao wrote:
+> Hi Suzuki,
+>
+> Thank you for the review.
+>
+> On 5/23/2022 4:57 PM, Suzuki K Poulose wrote:
+>> Hi
 >>
->> The application processor accessing the dynamically assigned metadata
->> region after assigning it to the remote Q6 would lead to an XPU violation.
->> Fix this by un-mapping the metadata region post firmware header copy. The
->> metadata region is freed only after the modem Q6 is done with fw header
->> authentication.
+>> On 09/05/2022 14:39, Mao Jinlong wrote:
+>>> Add driver to support Coresight device TPDM (Trace, Profiling and
+>>> Diagnostics Monitor). TPDM is a monitor to collect data from
+>>> different datasets. This change is to add probe/enable/disable
+>>> functions for tpdm source.
+>>>
+>>> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
+>>> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
+>>> ---
+>>>   drivers/hwtracing/coresight/Kconfig          |  13 ++
+>>>   drivers/hwtracing/coresight/Makefile         |   1 +
+>>>   drivers/hwtracing/coresight/coresight-core.c |   5 +-
+>>>   drivers/hwtracing/coresight/coresight-tpdm.c | 146 
+>>> +++++++++++++++++++
+>>>   drivers/hwtracing/coresight/coresight-tpdm.h |  26 ++++
+>>>   include/linux/coresight.h                    |   1 +
+>>>   6 files changed, 191 insertions(+), 1 deletion(-)
+>>>   create mode 100644 drivers/hwtracing/coresight/coresight-tpdm.c
+>>>   create mode 100644 drivers/hwtracing/coresight/coresight-tpdm.h
+>>>
+
+>>> +/**
+>>> + * struct tpdm_drvdata - specifics associated to an TPDM component
+>>> + * @base:       memory mapped base address for this component.
+>>> + * @dev:        The device entity associated to this component.
+>>> + * @csdev:      component vitals needed by the framework.
+>>> + * @lock:       lock for the enable value.
+>>> + * @enable:     enable status of the component.
+>>> + */
+>>> +
+>>> +struct tpdm_drvdata {
+>>> +    void __iomem        *base;
+>>> +    struct device        *dev;
+>>> +    struct coresight_device    *csdev;
+>>> +    struct mutex        lock;
 >>
->> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
-> 
-> Acked-by: Arnd Bergmann <arnd@arndb.de>
-> 
-> Sorry for the late reply, this looks reasonable overall. Just two
-> small comments:
-> 
+>> Why mutex lock ? Couldn't this be a spinlock ?
+> 1. There is no irq for TPDM
+> 2. As there are 7 dataset types, there will be some FOR loop to configure
+> tpdm registers which may cause some time.
+>
+I think we can use mutex lock here. Do you have any more comments for this ?
+
+Thanks
+Jinlong Mao
 >>
->> -       memcpy(ptr, metadata, size);
->> +       count = PAGE_ALIGN(size) >> PAGE_SHIFT;
->> +       pages = kmalloc_array(count, sizeof(struct page *), GFP_KERNEL);
->> +       if (!pages) {
->> +               ret = -ENOMEM;
->> +               goto free_dma_attrs;
->> +       }
-> 
-> If you know a fixed upper bound for the array size, it might be easier to
-> put it on the stack.
-
-The metadata consists of the 32bit elf header and SoC dependent variable
-number of program headers. Arriving at the upper bound from the spec
-seemed futile since the max program headers supported could be > 0xffff.
-The best I can do is get the max size of metadata of all the QC SoCs
-supported upstream for putting the pages on stack and leave "count" as
-the min between the dynamic calculation and upper bound. Would that be
-good enough?
-
-> 
->> +
->> +       for (i = 0; i < count; i++)
->> +               pages[i] = nth_page(page, i);
->> +
->> +       vaddr = vmap(pages, count, flags, pgprot_dmacoherent(PAGE_KERNEL));
-> 
-> I was a bit unsure about this part, as I don't know how portable this is.
-> If the CPU bypasses the cache with pgprot_dmacoherent(), then the
-> other side should not use a cacheable access either, but that is a property
-> of the hardware that is normally hidden from the driver interface.
-> 
-> It's probably ok here, since the pages are not mapped anywhere else
-> and should have no active cache lines.
-
-yup we make sure the other side can access the region only after no
-cache lines are active (that's the main problem that we are trying
-to solve through this patch).
-
--Sibi
-
-> 
->         Arnd
-> 
+>>> +    bool            enable;
+>>> +};
+>>> +
+>>> +#endif  /* _CORESIGHT_CORESIGHT_TPDM_H */
+>>> diff --git a/include/linux/coresight.h b/include/linux/coresight.h
+>>> index 247147c11231..a9efac55029d 100644
+>>> --- a/include/linux/coresight.h
+>>> +++ b/include/linux/coresight.h
+>>> @@ -61,6 +61,7 @@ enum coresight_dev_subtype_source {
+>>>       CORESIGHT_DEV_SUBTYPE_SOURCE_PROC,
+>>>       CORESIGHT_DEV_SUBTYPE_SOURCE_BUS,
+>>>       CORESIGHT_DEV_SUBTYPE_SOURCE_SOFTWARE,
+>>> +    CORESIGHT_DEV_SUBTYPE_SOURCE_DATA_ONLY,
+>>
+>> super minor nit: I find the choice of name a bit odd.
+>> We could simply make it something like :
+>>
+>>     CORESIGHT_DEV_SUBTYPE_SOURCE_OTHERS:
+>>
+>> Suzuki
+> I will check and update.
+>>
+>>>   };
+>>>     enum coresight_dev_subtype_helper {
+>>
+>> _______________________________________________
+>> CoreSight mailing list -- coresight@lists.linaro.org
+>> To unsubscribe send an email to coresight-leave@lists.linaro.org
+> _______________________________________________
+> CoreSight mailing list -- coresight@lists.linaro.org
+> To unsubscribe send an email to coresight-leave@lists.linaro.org
