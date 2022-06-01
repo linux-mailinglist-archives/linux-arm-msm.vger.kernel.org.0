@@ -2,134 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0AE4953A3EA
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jun 2022 13:24:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B6B0953A4D9
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jun 2022 14:24:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352788AbiFALYO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Jun 2022 07:24:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34468 "EHLO
+        id S239700AbiFAMYk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Jun 2022 08:24:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53180 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352820AbiFALX7 (ORCPT
+        with ESMTP id S237528AbiFAMYd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Jun 2022 07:23:59 -0400
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3BC25E77E
-        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Jun 2022 04:23:11 -0700 (PDT)
-Received: by mail-ed1-x536.google.com with SMTP id v19so1725222edd.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Jun 2022 04:23:11 -0700 (PDT)
+        Wed, 1 Jun 2022 08:24:33 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6AFF73E5F9;
+        Wed,  1 Jun 2022 05:24:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=EmX78kZDbpi7zDJcl5NRBNnxEqWkEcLfuWB3zLytvQ4=;
-        b=r55wWxDb8gLLLDShPuOiJjmUz1D5Xgin/ldr6b/Tnulo5/FyaoiTrGCFmJK10iRxpl
-         /b5twD1DES3+6TJftiXJLlEH5MTxw6tzyqTXWS49/e4fUXACwFeWmyPUdl79bB1ZMm28
-         1EQZtIGbcpDoxuCn3othqQWKg+D6efafEyLZYTIBuSeyngpnqUPZSWp0zb/eRJWQMD+4
-         W6q5xcRyZJBNbHcwT564fW1iOCfBexrbxseQQNfQI9zG+QVQGtdYMM8Iugx4ALnbLNtu
-         EfIQzbvmIUrpisGyxuU8pS95ihIaVEMR2VjCfh69jDHQWuXdYfHfC7+QL1vDtMre9YvW
-         WOjA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=EmX78kZDbpi7zDJcl5NRBNnxEqWkEcLfuWB3zLytvQ4=;
-        b=Ea71oNItCSsGr+PtD1xBgl4Tm9zcuSNyD7PBBDXcuxdiduicql5nUCjNgoFQe95Jvf
-         TBvXFmCJ3+87mZ2wFaWmt8D+O3Lyyo2bayzfCXLH57Gmwyh7Ik9yKNwBtGwzSZ38paCw
-         pHx5OkaTaqBz6/fQkk6cUh7eycRjMFxUeQLevYUiKRGuv4y30YBbcRp/AYmuSg1L3BAv
-         /eP5kYX/FLWxw5r0feo8R5RHWyvZtWFfUc+qBGkYdYcolD0b4YzOW8u/rEL6ZRMUUMMj
-         vyePlAJ08b8GY1LI6+SlIcRw553NaDr3V4hkVmcADcHabTKJig4rNLNcspEdhNUjSlb7
-         HmJw==
-X-Gm-Message-State: AOAM530A+4btrFZDKmNOMaP8FxZTRVuAkEFEOHCAWDSFtN7kABk8aWvW
-        Re6fbk50DBxvetXaKrBwAcsMyw==
-X-Google-Smtp-Source: ABdhPJzOJxGalCbiJf1Q2Q8zI2vrTUHr2z0fwXYzl5tTyez6dQrB/mI0xzVPeI2IOWLC/p/Lwqsvsw==
-X-Received: by 2002:a05:6402:1907:b0:42d:e90e:337 with SMTP id e7-20020a056402190700b0042de90e0337mr7327648edz.405.1654082589971;
-        Wed, 01 Jun 2022 04:23:09 -0700 (PDT)
-Received: from [192.168.0.179] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id p19-20020a056402155300b0042617ba638esm823008edx.24.2022.06.01.04.23.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 01 Jun 2022 04:23:09 -0700 (PDT)
-Message-ID: <7a66f2e2-1a2a-a262-138c-f535499984ae@linaro.org>
-Date:   Wed, 1 Jun 2022 13:23:08 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Subject: Re: [RFC PATCH v2 4/6] PM: opp: allow control of multiple clocks
-Content-Language: en-US
-To:     Viresh Kumar <viresh.kumar@linaro.org>
-Cc:     Stephen Boyd <sboyd@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        "Martin K. Petersen" <martin.petersen@oracle.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Taniya Das <tdas@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-scsi@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-References: <20220411154347.491396-1-krzysztof.kozlowski@linaro.org>
- <20220411154347.491396-5-krzysztof.kozlowski@linaro.org>
- <20220425072710.v6gwo4gu3aouezg4@vireshk-i7>
- <dea39b1f-0091-2690-7f07-108d07ef9f3c@linaro.org>
- <20220510044053.ykn6ygnbeokhzrsa@vireshk-i7>
- <1e533194-7047-8342-b426-f607fddbfaa3@linaro.org>
- <20220511050643.hd5tcrojb3wkbg7t@vireshk-i7>
- <20220518235708.1A04CC385A9@smtp.kernel.org>
- <65a4c28d-6702-3a9f-f837-1ea69a428777@linaro.org>
- <20220531103029.ntoypaafnd6447ag@vireshk-i7>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220531103029.ntoypaafnd6447ag@vireshk-i7>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1654086271; x=1685622271;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references;
+  bh=Qs33nKS0x+bYUbXz3PUD+x5Womx8hyZMkTh7yVOAk44=;
+  b=bHdvL7L8mmLpMYqBLnZLRQlXix/ZGHOWucHaQfAtV5UUq1t442lEjQaR
+   vAWIH3CHu8BsIQ0oRjUYyaNKgk55ZY+67FuW8cZUwNnafzDdk97nAG4TM
+   8m1wK8Cu1edvBMiw4s4wycl4yw8OPT7EpkrpZTDYnweg6p2rDF+8cpIwM
+   E=;
+Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
+  by alexa-out.qualcomm.com with ESMTP; 01 Jun 2022 05:24:31 -0700
+X-QCInternal: smtphost
+Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
+  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 01 Jun 2022 05:24:29 -0700
+X-QCInternal: smtphost
+Received: from hu-krichai-hyd.qualcomm.com (HELO hu-sgudaval-hyd.qualcomm.com) ([10.213.110.37])
+  by ironmsg02-blr.qualcomm.com with ESMTP; 01 Jun 2022 17:54:13 +0530
+Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 4058933)
+        id 129AD4140; Wed,  1 Jun 2022 17:54:12 +0530 (+0530)
+From:   Krishna chaitanya chundru <quic_krichai@quicinc.com>
+To:     helgaas@kernel.org
+Cc:     linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_vbadigan@quicinc.com,
+        quic_ramkri@quicinc.com, manivannan.sadhasivam@linaro.org,
+        swboyd@chromium.org,
+        Krishna chaitanya chundru <quic_krichai@quicinc.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        "Saheed O. Bolarinwa" <refactormyself@gmail.com>,
+        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
+        Rajat Jain <rajatja@google.com>
+Subject: [PATCH v3] PCI/ASPM: Update LTR threshold based upon reported max latencies
+Date:   Wed,  1 Jun 2022 17:53:45 +0530
+Message-Id: <1654086232-17055-1-git-send-email-quic_krichai@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+In-Reply-To: <1646679549-12494-1-git-send-email-quic_pmaliset@quicinc.com>
+References: <1646679549-12494-1-git-send-email-quic_pmaliset@quicinc.com>
+X-Spam-Status: No, score=-4.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 31/05/2022 12:30, Viresh Kumar wrote:
-> On 19-05-22, 10:03, Krzysztof Kozlowski wrote:
->> Yes, true. The clock frequencies are still changed with each gear, but
->> in general the UFS indeed operates on gear concept.
-> 
-> Hi Krzysztof,
-> 
-> I have redesigned the OPP core a bit (two patchsets until now) to make
-> it easier to add multiple clock support going forward. I need some
-> inputs from you before moving forward with it now. Will this work for
-> your use case:
-> 
-> - Add support for multiple clocks, where none of them is primary.
-> 
-> - Which means you won't be able to use dev_pm_opp_set_rate() but will
->   need something like dev_pm_opp_set_level(), will add it.
-> 
-> - That is, your OPP table will need to implement levels (I think of
->   them as UFS gears) and then call dev_pm_opp_set_level() instead.
-> 
-> - This new API will work just like dev_pm_opp_set_rate(), except that
->   it will find the target OPP based on level instead of freq and
->   support configuration of multiple clock frequencies.
-> 
-> - Of course both these APIs will share most of the code.
+In ASPM driver, LTR threshold scale and value is updating based on
+tcommon_mode and t_poweron values. In kioxia NVMe L1.2 is failing due to
+LTR threshold scale and value is greater values than max snoop/non-snoop
+value.
 
-Hi Viresh,
+Based on PCIe r4.1, sec 5.5.1, L1.2 substate must be entered when
+reported snoop/no-snoop values is greather than or equal to
+LTR_L1.2_THRESHOLD value.
 
-In general this looks reasonable and matches how the UFS gears should be
-modeled. It does not match how UFS drivers implemented the clock
-scaling, but that's the internal problem of UFS drivers. They scale the
-clocks only max or min, even though there are multiple gears in between.
-The new approach looks therefore appropriate.
+Suggested-by: Prasad Malisetty  <quic_pmaliset@quicinc.com>
+Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+---
 
-Best regards,
-Krzysztof
+I am takking this patch forward as prasad is no more working with our org.
+
+Changes since v2:
+	- Replaced LTRME logic with max snoop/no-snoop latencies check.
+Changes since v1:
+	- Added missing variable declaration in v1 patch
+---
+ drivers/pci/pcie/aspm.c | 22 +++++++++++++++++++++-
+ 1 file changed, 21 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/pci/pcie/aspm.c b/drivers/pci/pcie/aspm.c
+index a96b742..4a15e50 100644
+--- a/drivers/pci/pcie/aspm.c
++++ b/drivers/pci/pcie/aspm.c
+@@ -465,10 +465,19 @@ static void aspm_calc_l1ss_info(struct pcie_link_state *link,
+ 	u32 ctl1 = 0, ctl2 = 0;
+ 	u32 pctl1, pctl2, cctl1, cctl2;
+ 	u32 pl1_2_enables, cl1_2_enables;
++	int ltr;
++	u16 max_snoop_lat = 0, max_nosnoop_lat = 0;
+ 
+ 	if (!(link->aspm_support & ASPM_STATE_L1_2_MASK))
+ 		return;
+ 
++	ltr = pci_find_ext_capability(child, PCI_EXT_CAP_ID_LTR);
++	if (!ltr)
++		return;
++
++	pci_read_config_word(child, ltr + PCI_LTR_MAX_SNOOP_LAT, &max_snoop_lat);
++	pci_read_config_word(child, ltr + PCI_LTR_MAX_NOSNOOP_LAT, &max_nosnoop_lat);
++
+ 	/* Choose the greater of the two Port Common_Mode_Restore_Times */
+ 	val1 = (parent_l1ss_cap & PCI_L1SS_CAP_CM_RESTORE_TIME) >> 8;
+ 	val2 = (child_l1ss_cap & PCI_L1SS_CAP_CM_RESTORE_TIME) >> 8;
+@@ -501,7 +510,18 @@ static void aspm_calc_l1ss_info(struct pcie_link_state *link,
+ 	 */
+ 	l1_2_threshold = 2 + 4 + t_common_mode + t_power_on;
+ 	encode_l12_threshold(l1_2_threshold, &scale, &value);
+-	ctl1 |= t_common_mode << 8 | scale << 29 | value << 16;
++
++	/*
++	 * If the max snoop and no snoop latencies are '0', then avoid updating scale
++	 * and value.
++	 *
++	 * Based on PCIe r4.1, sec 5.5.1, L1.2 substate must be entered when reported
++	 * snoop/no-snoop values is greather than or equal to LTR_L1.2_THRESHOLD value.
++	 */
++	if ((max_snoop_lat == 0) && (max_nosnoop_lat == 0))
++		ctl1 |= t_common_mode << 8;
++	else
++		ctl1 |= t_common_mode << 8 | scale << 29 | value << 16;
+ 
+ 	/* Some broken devices only support dword access to L1 SS */
+ 	pci_read_config_dword(parent, parent->l1ss + PCI_L1SS_CTL1, &pctl1);
+-- 
+2.7.4
+
