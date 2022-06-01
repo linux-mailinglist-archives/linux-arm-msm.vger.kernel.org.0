@@ -2,78 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D3FF953A031
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jun 2022 11:21:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BC5ED53A065
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jun 2022 11:31:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351010AbiFAJVa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Jun 2022 05:21:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44162 "EHLO
+        id S1347828AbiFAJa5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Jun 2022 05:30:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44912 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350194AbiFAJVZ (ORCPT
+        with ESMTP id S1351090AbiFAJay (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Jun 2022 05:21:25 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2F1C580E2;
-        Wed,  1 Jun 2022 02:21:24 -0700 (PDT)
+        Wed, 1 Jun 2022 05:30:54 -0400
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 610E98FD6A
+        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Jun 2022 02:30:45 -0700 (PDT)
+Received: by mail-ej1-x62b.google.com with SMTP id y19so2504842ejq.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Jun 2022 02:30:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1654075285; x=1685611285;
-  h=message-id:date:mime-version:subject:from:to:cc:
-   references:in-reply-to:content-transfer-encoding;
-  bh=yMzSNegJTY36Tsg8xrGuN/+TPtYGTwZt2sCHlutuh6Q=;
-  b=WFj0GdFDnpqY09BwdHRkG4vKdTDUL+YUwI9BTjg+4phJFthH7QGYS7TP
-   Rt+Q7En4edn5WgKCwL7XLV9kwl5wk2HYUDDAtyQdYBCg1NNJaaaG2fUy6
-   UpK8qcvltX0oIG4tc0s5oEy+UDYx4fl95vZ8rL40imQrGthCgdtwWvJoq
-   I=;
-Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
-  by alexa-out.qualcomm.com with ESMTP; 01 Jun 2022 02:21:24 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jun 2022 02:21:23 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 1 Jun 2022 02:21:23 -0700
-Received: from [10.253.36.238] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Wed, 1 Jun 2022
- 02:21:19 -0700
-Message-ID: <7d6b2e24-21f4-eef1-a722-23cdcd1d8a88@quicinc.com>
-Date:   Wed, 1 Jun 2022 17:21:16 +0800
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :references:from:in-reply-to:content-transfer-encoding;
+        bh=5IgpHecT0v2thcEdNy9dmhAzLNM0n7jwFfkompLh8aE=;
+        b=QZmZ3udwMF+1BVssFRYeb/IuNUXSyd8Qp/RCO0xI7zOGUGWzR9re06s8o9pQJWFxWN
+         OHpiyPeo+udBjSXBLTK8WBf+THibRabP/G/E+PAmOfZoVQv5pi3k2lhUjMO689oHTrag
+         OSzcCPbc1iqMXY0mc3J5IJfp4l1kJGJ1wwH4SOSAwoBsZwLeZPl8Q+EjOvnldOmJUZGE
+         xqO724vayRnZU6BHuLKN/cK40A6tUGuInyZ4DMElDuOLPAOts3BDS9mYbTV6VrcYsMfe
+         ygiaooUiRb8cqbn6RKwTvWIUzbJksUsKXxoPkPKj2wDugiaT26nWwiU6kpEYFKUz8ClM
+         rH9A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=5IgpHecT0v2thcEdNy9dmhAzLNM0n7jwFfkompLh8aE=;
+        b=k2Y6Fxv86aPBbfuz0DV7YuIHAcby05+XnkvOvlVXGOwvKmQhq64bQpvFPN0lpOyRPC
+         GiqowbFzFjAtJAQgAndBB6oMc37zFPbnbVeV6bBM4LOWG4reilrv1kKiCGbxwXA4Ap8g
+         qPCdAQO+TxuGUMmoKtcybUdSARAU+iKWv7oQb9zPldJHKD6SZrAMgX/NgjCXbPeJuDzy
+         JVYZLtTy+8gKjBS6PV4yZmbytFiQTzFSCVdCY4E7lMvZwlEb7RWX5dwDC6eSyRoxNH7C
+         h63Qo4gaIdkcsuOlNy5vwXsCzYxBLGMRmsihdDwDZMEunLewXcFiCUUMRgtZXM0Um0d2
+         PwbQ==
+X-Gm-Message-State: AOAM5318yZMQbCUhYf1xiUwNohA9DDIllqW9ODwEehU+6c2Gh86CyIwy
+        aLfRBgr/2FHRewgIWjr8yA9bnw==
+X-Google-Smtp-Source: ABdhPJxctyus0aVviZqlPHl9SGmJhm2M3lqLjAAgTBXgGpOe7SRt5ZSSOcgH7AEIlTWhEWVlKY0pkg==
+X-Received: by 2002:a17:906:9c82:b0:6e1:2c94:1616 with SMTP id fj2-20020a1709069c8200b006e12c941616mr56989534ejc.64.1654075843937;
+        Wed, 01 Jun 2022 02:30:43 -0700 (PDT)
+Received: from [192.168.0.179] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id h4-20020a1709067cc400b006f3ef214ddbsm494870ejp.65.2022.06.01.02.30.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 01 Jun 2022 02:30:43 -0700 (PDT)
+Message-ID: <e57de710-1997-d36c-72a7-a9d6db000079@linaro.org>
+Date:   Wed, 1 Jun 2022 11:30:42 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH v7 02/10] Coresight: Add coresight TPDM source driver
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Subject: Re: [PATCH 1/2] dt-bindings: phy: qcom,qmp: add IPQ8074 PCIe Gen3 PHY
+ binding
 Content-Language: en-US
-From:   Jinlong Mao <quic_jinlmao@quicinc.com>
-To:     Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Mike Leach <mike.leach@linaro.org>
-CC:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        <coresight@lists.linaro.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Tao Zhang <quic_taozha@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-References: <20220509133947.20987-1-quic_jinlmao@quicinc.com>
- <20220509133947.20987-3-quic_jinlmao@quicinc.com>
- <38bb1ec9-56bc-0cdf-6c46-d448a46ec886@arm.com>
- <ea720e1a-c0d2-84b0-8dbc-bb5031d32208@quicinc.com>
-In-Reply-To: <ea720e1a-c0d2-84b0-8dbc-bb5031d32208@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-5.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+To:     Robert Marko <robimarko@gmail.com>, agross@kernel.org,
+        bjorn.andersson@linaro.org, kishon@ti.com, vkoul@kernel.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org
+References: <20220531214420.916278-1-robimarko@gmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220531214420.916278-1-robimarko@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -82,90 +77,18 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Suzuki,
+On 31/05/2022 23:44, Robert Marko wrote:
+> IPQ8074 has 2 different single lane PCIe PHY-s, one Gen2 and one Gen3.
+> Gen2 one is already supported, document the bindings for the Gen3 one.
+> 
+> Signed-off-by: Robert Marko <robimarko@gmail.com>
+> ---
+>  Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml | 2 ++
+>  1 file changed, 2 insertions(+)
 
-On 5/24/2022 3:00 PM, Jinlong Mao wrote:
-> Hi Suzuki,
->
-> Thank you for the review.
->
-> On 5/23/2022 4:57 PM, Suzuki K Poulose wrote:
->> Hi
->>
->> On 09/05/2022 14:39, Mao Jinlong wrote:
->>> Add driver to support Coresight device TPDM (Trace, Profiling and
->>> Diagnostics Monitor). TPDM is a monitor to collect data from
->>> different datasets. This change is to add probe/enable/disable
->>> functions for tpdm source.
->>>
->>> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
->>> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
->>> ---
->>>   drivers/hwtracing/coresight/Kconfig          |  13 ++
->>>   drivers/hwtracing/coresight/Makefile         |   1 +
->>>   drivers/hwtracing/coresight/coresight-core.c |   5 +-
->>>   drivers/hwtracing/coresight/coresight-tpdm.c | 146 
->>> +++++++++++++++++++
->>>   drivers/hwtracing/coresight/coresight-tpdm.h |  26 ++++
->>>   include/linux/coresight.h                    |   1 +
->>>   6 files changed, 191 insertions(+), 1 deletion(-)
->>>   create mode 100644 drivers/hwtracing/coresight/coresight-tpdm.c
->>>   create mode 100644 drivers/hwtracing/coresight/coresight-tpdm.h
->>>
 
->>> +/**
->>> + * struct tpdm_drvdata - specifics associated to an TPDM component
->>> + * @base:       memory mapped base address for this component.
->>> + * @dev:        The device entity associated to this component.
->>> + * @csdev:      component vitals needed by the framework.
->>> + * @lock:       lock for the enable value.
->>> + * @enable:     enable status of the component.
->>> + */
->>> +
->>> +struct tpdm_drvdata {
->>> +    void __iomem        *base;
->>> +    struct device        *dev;
->>> +    struct coresight_device    *csdev;
->>> +    struct mutex        lock;
->>
->> Why mutex lock ? Couldn't this be a spinlock ?
-> 1. There is no irq for TPDM
-> 2. As there are 7 dataset types, there will be some FOR loop to configure
-> tpdm registers which may cause some time.
->
-I think we can use mutex lock here. Do you have any more comments for this ?
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Thanks
-Jinlong Mao
->>
->>> +    bool            enable;
->>> +};
->>> +
->>> +#endif  /* _CORESIGHT_CORESIGHT_TPDM_H */
->>> diff --git a/include/linux/coresight.h b/include/linux/coresight.h
->>> index 247147c11231..a9efac55029d 100644
->>> --- a/include/linux/coresight.h
->>> +++ b/include/linux/coresight.h
->>> @@ -61,6 +61,7 @@ enum coresight_dev_subtype_source {
->>>       CORESIGHT_DEV_SUBTYPE_SOURCE_PROC,
->>>       CORESIGHT_DEV_SUBTYPE_SOURCE_BUS,
->>>       CORESIGHT_DEV_SUBTYPE_SOURCE_SOFTWARE,
->>> +    CORESIGHT_DEV_SUBTYPE_SOURCE_DATA_ONLY,
->>
->> super minor nit: I find the choice of name a bit odd.
->> We could simply make it something like :
->>
->>     CORESIGHT_DEV_SUBTYPE_SOURCE_OTHERS:
->>
->> Suzuki
-> I will check and update.
->>
->>>   };
->>>     enum coresight_dev_subtype_helper {
->>
->> _______________________________________________
->> CoreSight mailing list -- coresight@lists.linaro.org
->> To unsubscribe send an email to coresight-leave@lists.linaro.org
-> _______________________________________________
-> CoreSight mailing list -- coresight@lists.linaro.org
-> To unsubscribe send an email to coresight-leave@lists.linaro.org
+
+Best regards,
+Krzysztof
