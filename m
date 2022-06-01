@@ -2,71 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8D71353AACC
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jun 2022 18:14:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1A24C53AB5E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jun 2022 18:55:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1356038AbiFAQN6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Jun 2022 12:13:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59102 "EHLO
+        id S1352420AbiFAQzO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Jun 2022 12:55:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50810 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1356036AbiFAQN5 (ORCPT
+        with ESMTP id S1344710AbiFAQzN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Jun 2022 12:13:57 -0400
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75BC341FA9
-        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Jun 2022 09:13:55 -0700 (PDT)
-Received: by mail-lj1-x22e.google.com with SMTP id q1so2540696ljb.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Jun 2022 09:13:55 -0700 (PDT)
+        Wed, 1 Jun 2022 12:55:13 -0400
+Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6ED788CCD0
+        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Jun 2022 09:55:12 -0700 (PDT)
+Received: by mail-pg1-x535.google.com with SMTP id 7so1633163pga.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Jun 2022 09:55:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=6P1Wa5YPp1teAJ/dKP3hCEeV4uIIm3lb36DEK4T0BVQ=;
-        b=B2u2d9b/POleGIq7EY1e7Cztt/IGL0517QLi0Y8zPDaqn7SQrCv2J35XRkiDn0vrW0
-         pF0YEnbY9LnhKVBekRfABxhFtBoRC3nk71SbEm3By3ANbRcqmhi9PkZEjbycU688fjQy
-         7PRM1CYiviIINxf06Gxr5bFXRW40MDUvyzNxOCqAZXElPs4xDdo/9cXZEJl0oFUZ9ZfQ
-         BYiiqoZn86K2OlyFaVz8XNkOyy8lfBRB7NJP4XBnOHCS9VAL4K9/wYzMoFV89VWvJV8/
-         mSxlUE5bT2+pl4KY3uSdVBa3QjDHzo8/WxJ+22Z2H9btwbXW1FPWGk6sezVfVr/wMBxU
-         0WgQ==
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=bbckhJ9XlY3Nme+BPmiObgn0CQAdmt4CSl1wsZbSeV0=;
+        b=FlZ/UGKxH5AQlCmDo/sE5CPr5JuOqd2r8n9Vi5nbW1KX/GjkV3/Gtn9S6TTaVs+TdM
+         ev3zTuRFx8UNm1OCV/PSOOXMWgc36pGrvvKLw4PUY5kjp2WqC0RFVWZ4l7jKZrwRiVPL
+         xaKITrvINKY1yyebYI+wZbnZ5O/vaFszXS5xc=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=6P1Wa5YPp1teAJ/dKP3hCEeV4uIIm3lb36DEK4T0BVQ=;
-        b=ZH9hTiFTrtKgdGjMr8CUSHffi0MYW81lpWjMY1avgpML6q1WyFpq8E9LoW6T1OejXJ
-         OG8I61bNJwBrDgD4G2SJe1tfD2BN69Yk3OQYUQXdOEuAr8hQJ9InJnp76ADSHfoQbQOe
-         hGFvbiYYVCCOb+0a2W9DSv5WrYikEwTqnuRkugn0H8hzZilnh9mquhDwMPRtYMKYbbZV
-         gX3lQ0/1BHZ/5OKtkeAoKY2aM/WV8Qn2DNO4qMCh1oPMYJL/6XgHM5tt5RB9AR3Be9yY
-         AozPZwH3Xv5HUOppxSoIF//65mJm3orfPs5jEQ8wrVs0CfhARHAwG7OlsiyqIeMlYu7V
-         RNWw==
-X-Gm-Message-State: AOAM5311k+27NfZah16pYchN6R5EqIarUohOs1dcERDb7+V/IoyVT8S/
-        Jl89M4N25dPkD79kcmOYe+6wIg==
-X-Google-Smtp-Source: ABdhPJxDa35XMGNMS3vF5ibxcKNSKxwWSoDJChNGJvBMYN16FV2QIlUwoONqvz/apvkkKnj0fltjrA==
-X-Received: by 2002:a05:651c:1690:b0:255:6cb6:662b with SMTP id bd16-20020a05651c169000b002556cb6662bmr2042335ljb.471.1654100033793;
-        Wed, 01 Jun 2022 09:13:53 -0700 (PDT)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id k2-20020a05651239c200b00479066d45bcsm339545lfu.214.2022.06.01.09.13.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Jun 2022 09:13:53 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: [PATCH v1 4/4] drm/msm/dpu: move struct dpu_hw_blk definition to dpu_hw_utils.h
-Date:   Wed,  1 Jun 2022 19:13:49 +0300
-Message-Id: <20220601161349.1517667-5-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220601161349.1517667-1-dmitry.baryshkov@linaro.org>
-References: <20220601161349.1517667-1-dmitry.baryshkov@linaro.org>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=bbckhJ9XlY3Nme+BPmiObgn0CQAdmt4CSl1wsZbSeV0=;
+        b=3PlmqEiOcv28et479pHNfnt+xdfIzZj+fKRKiFXlC2NJmKPb2sU44PBryLNwUiseIP
+         tJyRfz73ALGE8cLFvjm7xh9tQvM/XU3EbFKomdR2EbOMUaCjtsHSH4i0fno85lO82o9p
+         s91ikUmc2rg3bHV/D4tG71LWQkGGUZ1lk8mnG1PX8L+biP7zRKbEOcLp/xKLhEnA9ds+
+         SPazJDvQ6R2jh9mK0sJYxIR2ep1P2yLueYrrUWk0K/+9JhAG2C1G3EZc88zMM3ahyp8t
+         B7wsmMFF2zsoZQLjEGHRoF0RH5GRnyIF8dYvMBXgyqBfe4RoQTnQmjb3FW3ZzEMLh4Gw
+         qZVA==
+X-Gm-Message-State: AOAM533WgLLfIdbbeRe5b/47XP0e8+EGTty7MtYBjva7+0+YrdBk2v7F
+        rjuKcTu+E9m2Exs9zQzwCfWRIA==
+X-Google-Smtp-Source: ABdhPJxvz006k4bCcMabU3sUioYhsFPS+sODZatl7Pq8O6MVnYLQ0t5SXSDd6s81fwyeDL690piJlw==
+X-Received: by 2002:a05:6a00:168a:b0:4f7:e161:83cd with SMTP id k10-20020a056a00168a00b004f7e16183cdmr577037pfc.56.1654102511801;
+        Wed, 01 Jun 2022 09:55:11 -0700 (PDT)
+Received: from localhost ([2620:15c:11a:202:e69e:f483:e751:7c7c])
+        by smtp.gmail.com with UTF8SMTPSA id g10-20020a63e60a000000b003fab08e09e9sm1563351pgh.67.2022.06.01.09.55.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 01 Jun 2022 09:55:11 -0700 (PDT)
+Date:   Wed, 1 Jun 2022 09:55:09 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
+        Stephen Boyd <swboyd@chromium.org>, agross@kernel.org,
+        alsa-devel@alsa-project.org, bgoswami@quicinc.com,
+        bjorn.andersson@linaro.org, broonie@kernel.org,
+        devicetree@vger.kernel.org, judyhsiao@chromium.org,
+        lgirdwood@gmail.com, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, perex@perex.cz,
+        quic_plai@quicinc.com, quic_rohkumar@quicinc.com,
+        robh+dt@kernel.org, tiwai@suse.com, vkoul@kernel.org
+Subject: Re: [PATCH v2] ASoC: qcom: soundwire: Add support for controlling
+ audio CGCR from HLOS
+Message-ID: <YpeZ7TdHK20xiLz9@google.com>
+References: <1652877755-25120-1-git-send-email-quic_srivasam@quicinc.com>
+ <CAE-0n53g9rWks+euk5KHBzmJNEB3xLbJzMgCxN52DO5x+9-Wgg@mail.gmail.com>
+ <51b8aca1-e038-4907-e973-ebdbebaf9b28@quicinc.com>
+ <YpaXZ6KfApGebkBy@google.com>
+ <7c74868d-624b-c18e-b377-026e70813fcc@quicinc.com>
+ <1ec64a99-cfcf-c903-935b-d1bb0617c284@linaro.org>
+ <61c151e2-c44c-3b84-9fed-a83abef83c17@quicinc.com>
+ <2a520eaf-c1de-aa91-3029-83f5469cdbb0@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+In-Reply-To: <2a520eaf-c1de-aa91-3029-83f5469cdbb0@linaro.org>
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -75,197 +84,39 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-There is little point in having a separate header just for a single
-opaque struct definition. Drop it now and move the struct to the
-dpu_hw_util.h header.
+On Wed, Jun 01, 2022 at 02:42:30PM +0100, Srinivas Kandagatla wrote:
+> 
+> 
+> On 01/06/2022 14:15, Srinivasa Rao Mandadapu wrote:
+> > > > > > > > +       ctrl->audio_cgcr =
+> > > > > > > > devm_reset_control_get_exclusive(dev,
+> > > > > > > > "swr_audio_cgcr");
+> > > > > > > > +       if (IS_ERR(ctrl->audio_cgcr))
+> > > > > > > > +               dev_err(dev, "Failed to get
+> > > > > > > > audio_cgcr reset required for
+> > > > > > > > soundwire-v1.6.0\n");
+> > > > > > > Why is there no return on error here? Is the reset optional?
+> > > > > > Yes it's optional. For older platforms this is not required.
+> > > > > If it's optional then either there should be no error message, or the
+> > > > > error message should only be logged when the version is >= 1.6.0. There
+> > > > > are few things worse than a kernel log riddled with misleading error
+> > > > > messages.
+> > > > 
+> > > > In that case, it can be done like below. Kindly let me know your
+> > > > opinion on this.
+> > > > 
+> > > > if (ctrl->version >= 0x01060000) {
+> > > 
+> > > This is not true 1.7+ variants do not require anything as such.
+> > 
+> > I think it applies for all upcoming versions as Qualcomm Hardware team.
+> > Here is the not from HW Team.
+> 
+> Am testing sm8450 which has 1.7.0 and it does not require/have such control.
+> 
+> I dont understand what is the issue in adding a flag to
+> struct qcom_swrm_data.
+> 
+> This should give finer control rather than matching anything > 1.6.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h      |  1 -
- .../drm/msm/disp/dpu1/dpu_encoder_phys_wb.c   |  1 -
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_blk.h    | 25 -------------------
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h    |  1 -
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.h   |  2 --
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h   |  1 -
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.h     |  1 -
- .../gpu/drm/msm/disp/dpu1/dpu_hw_merge3d.h    |  1 -
- .../gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h   |  1 -
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h   |  1 -
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h    |  1 -
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h   |  7 ++++++
- 12 files changed, 7 insertions(+), 36 deletions(-)
- delete mode 100644 drivers/gpu/drm/msm/disp/dpu1/dpu_hw_blk.h
-
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
-index b8785c394fcc..da64b0f639a9 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
-@@ -12,7 +12,6 @@
- #include <drm/drm_crtc.h>
- #include "dpu_kms.h"
- #include "dpu_core_perf.h"
--#include "dpu_hw_blk.h"
- 
- #define DPU_CRTC_NAME_SIZE	12
- 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
-index 53bb4639c8e9..1db6b75cd1f6 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
-@@ -12,7 +12,6 @@
- #include "dpu_hw_top.h"
- #include "dpu_hw_wb.h"
- #include "dpu_hw_lm.h"
--#include "dpu_hw_blk.h"
- #include "dpu_hw_merge3d.h"
- #include "dpu_hw_interrupts.h"
- #include "dpu_core_irq.h"
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_blk.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_blk.h
-deleted file mode 100644
-index 52e92f37eda4..000000000000
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_blk.h
-+++ /dev/null
-@@ -1,25 +0,0 @@
--/* SPDX-License-Identifier: GPL-2.0-only */
--/* Copyright (c) 2017-2018, The Linux Foundation. All rights reserved.
-- */
--
--#ifndef _DPU_HW_BLK_H
--#define _DPU_HW_BLK_H
--
--#include <linux/types.h>
--#include <linux/list.h>
--
--struct dpu_hw_blk;
--
--
--/**
-- * struct dpu_hw_blk - definition of hardware block object
-- * @list: list of hardware blocks
-- * @type: hardware block type
-- * @id: instance id
-- * @refcount: reference/usage count
-- */
--struct dpu_hw_blk {
--	/* opaque */
--};
--
--#endif /*_DPU_HW_BLK_H */
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
-index 5755307089b5..7d9ad6a3f9f6 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
-@@ -10,7 +10,6 @@
- #include "dpu_hw_util.h"
- #include "dpu_hw_catalog.h"
- #include "dpu_hw_sspp.h"
--#include "dpu_hw_blk.h"
- 
- /**
-  * dpu_ctl_mode_sel: Interface mode selection
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.h
-index 7fa189cfcb06..05ecfdfac93b 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.h
-@@ -5,8 +5,6 @@
- #ifndef _DPU_HW_DSPP_H
- #define _DPU_HW_DSPP_H
- 
--#include "dpu_hw_blk.h"
--
- struct dpu_hw_dspp;
- 
- /**
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
-index 7b2d96ac61e8..c262430e4dbd 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
-@@ -8,7 +8,6 @@
- #include "dpu_hw_catalog.h"
- #include "dpu_hw_mdss.h"
- #include "dpu_hw_util.h"
--#include "dpu_hw_blk.h"
- 
- struct dpu_hw_intf;
- 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.h
-index d8052fb2d5da..652ddfdedec3 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.h
-@@ -8,7 +8,6 @@
- 
- #include "dpu_hw_mdss.h"
- #include "dpu_hw_util.h"
--#include "dpu_hw_blk.h"
- 
- struct dpu_hw_mixer;
- 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_merge3d.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_merge3d.h
-index 870bdb14613e..81fd1d5f718e 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_merge3d.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_merge3d.h
-@@ -8,7 +8,6 @@
- #include "dpu_hw_catalog.h"
- #include "dpu_hw_mdss.h"
- #include "dpu_hw_util.h"
--#include "dpu_hw_blk.h"
- 
- struct dpu_hw_merge_3d;
- 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h
-index 12758468d9ca..c00223441d99 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h
-@@ -8,7 +8,6 @@
- #include "dpu_hw_catalog.h"
- #include "dpu_hw_mdss.h"
- #include "dpu_hw_util.h"
--#include "dpu_hw_blk.h"
- 
- #define DITHER_MATRIX_SZ 16
- 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
-index 7f7338fcddeb..78b1bc9e004f 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
-@@ -8,7 +8,6 @@
- #include "dpu_hw_catalog.h"
- #include "dpu_hw_mdss.h"
- #include "dpu_hw_util.h"
--#include "dpu_hw_blk.h"
- #include "dpu_formats.h"
- 
- struct dpu_hw_pipe;
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h
-index 3aa10c89ca1b..a1a9e44bed36 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h
-@@ -8,7 +8,6 @@
- #include "dpu_hw_catalog.h"
- #include "dpu_hw_mdss.h"
- #include "dpu_hw_util.h"
--#include "dpu_hw_blk.h"
- 
- struct dpu_hw_mdp;
- 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h
-index d5338701fc2b..49d89d706200 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h
-@@ -25,6 +25,13 @@ struct dpu_hw_blk_reg_map {
- 	u32 log_mask;
- };
- 
-+/**
-+ * struct dpu_hw_blk - opaque hardware block object
-+ */
-+struct dpu_hw_blk {
-+	/* opaque */
-+};
-+
- /**
-  * struct dpu_hw_scaler3_de_cfg : QSEEDv3 detail enhancer configuration
-  * @enable:         detail enhancer enable/disable
--- 
-2.35.1
-
+I agree, a flag seems a suitable option.
