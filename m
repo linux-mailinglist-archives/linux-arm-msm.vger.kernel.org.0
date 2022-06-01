@@ -2,137 +2,172 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6038F539B1F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jun 2022 04:10:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C0476539BB2
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jun 2022 05:32:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349103AbiFACJJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 31 May 2022 22:09:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38210 "EHLO
+        id S1349390AbiFADbw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 31 May 2022 23:31:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36306 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231168AbiFACJI (ORCPT
+        with ESMTP id S1349432AbiFADbv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 31 May 2022 22:09:08 -0400
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA9D28BD03;
-        Tue, 31 May 2022 19:09:06 -0700 (PDT)
+        Tue, 31 May 2022 23:31:51 -0400
+Received: from mail-oa1-x34.google.com (mail-oa1-x34.google.com [IPv6:2001:4860:4864:20::34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31CAD11818
+        for <linux-arm-msm@vger.kernel.org>; Tue, 31 May 2022 20:31:49 -0700 (PDT)
+Received: by mail-oa1-x34.google.com with SMTP id 586e51a60fabf-f3381207a5so1074673fac.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 31 May 2022 20:31:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1654049347; x=1685585347;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=3EQ1f05IzxUDg+A5ZX7MGnnHFtboIohy1TiDF2TvXP4=;
-  b=YCKinBalqmithB7Jvzgzzq1U9qiIYpSYeTWlbkGfbkl6ERbr3/2Kv9+m
-   L7PxRx+2TMw98mAl+Tet6Nwu7XfHwgekvyIbskRKzXeZRhz4cIm7+mAw2
-   vD/LRWLC4H3iRYNQNMW/asS7N6QfQrurvUQqxJLO7OmLp836unr/8eYj1
-   0=;
-Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 31 May 2022 19:09:06 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 May 2022 19:09:06 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Tue, 31 May 2022 19:09:06 -0700
-Received: from hu-pkondeti-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Tue, 31 May 2022 19:09:00 -0700
-Date:   Wed, 1 Jun 2022 07:38:56 +0530
-From:   Pavan Kondeti <quic_pkondeti@quicinc.com>
-To:     Krishna Kurapati <quic_kriskura@quicinc.com>
-CC:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        "Doug Anderson" <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-phy@lists.infradead.org>, <quic_pkondeti@quicinc.com>,
-        <quic_ppratap@quicinc.com>, <quic_vpulyala@quicinc.com>
-Subject: Re: [PATCH v7 2/3] phy: qcom-snps: Add support for overriding phy
- tuning parameters
-Message-ID: <20220601020856.GA20979@hu-pkondeti-hyd.qualcomm.com>
-References: <1654013693-21484-1-git-send-email-quic_kriskura@quicinc.com>
- <1654013693-21484-3-git-send-email-quic_kriskura@quicinc.com>
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=ZXANg1Xbh102jrQayjOuezZ9O/gFRLgsMRDupXP1QUA=;
+        b=QCRv/9hjjsPosXK8+SozzTvw4mbpn5cVmMRPrTx8zbtfJZ8P6yp6nrPikH5M3Bb/zY
+         9zj+RzSvXK0g8rzpgjMmty2pyBIC2N8frbv66r+wBgGh1aQpLT8s8K+9i7Krw1YN9LgX
+         sVhAm8KDz42ZHGje/8QwEcJtsvASD/rChgUVA=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=ZXANg1Xbh102jrQayjOuezZ9O/gFRLgsMRDupXP1QUA=;
+        b=4ikvwKjyC4KZeCxevgxUlLGtUcozTOdi5/V1F5t0/dRjvRr0JK5qnXvUDBQ+0i/HQD
+         3363GaarqQeyV+Lcbk000/7OuUZ/qVjfGyLPI8F5GaSqDNEdMw4aZsx3HdnY2Ir6WMmW
+         sbsOU1lcIDIET+9MNbvJH3yyyBsZZPxd0hQHB8+A11OiUrZ8yzRaOESqPXPHtalct0xt
+         9iUSqVXNjpelVCCu/QYbnYlTPUMAJKsW9EAsmT/CzAPUpvsL4Tg/OmmNdtGuQT/AFKFo
+         7FyOplSK/mHkN3EEFYT/sjJcCZht6FyVK4lJ0Ye/v0zfkyzPnnCv6HY8kgPbodUpPlF8
+         eMrg==
+X-Gm-Message-State: AOAM531uS9YK+1ifWhMxGsDtaYoYsB68yyjs4l6GX1aTbDfXSOXDlZ6+
+        kz2aKl1NT/+oBGnvk2gugnKFcRSTpOZYbcLeaSR9hA==
+X-Google-Smtp-Source: ABdhPJxWg/wQ47t6UdY8plKB4yDS5oiLWxRUVa6tt3bSryEz8iA4tslZ3JT274/cfraEHMrjdCaYi12Re0wyLgqxBE8=
+X-Received: by 2002:a05:6870:240d:b0:f1:b878:e97c with SMTP id
+ n13-20020a056870240d00b000f1b878e97cmr14788774oap.193.1654054308492; Tue, 31
+ May 2022 20:31:48 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 31 May 2022 20:31:47 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <1654013693-21484-3-git-send-email-quic_kriskura@quicinc.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+In-Reply-To: <20220531160059.v2.1.Ie7f6d4bf8cce28131da31a43354727e417cae98d@changeid>
+References: <20220531160059.v2.1.Ie7f6d4bf8cce28131da31a43354727e417cae98d@changeid>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date:   Tue, 31 May 2022 20:31:47 -0700
+Message-ID: <CAE-0n53E+J9osr2ajviwFLwrtFrS2_i9fgW=d1P5=7UZ+s1Kew@mail.gmail.com>
+Subject: Re: [PATCH v2] drm/msm/dpu: Move min BW request and full BW disable
+ back to mdss
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Rob Clark <robdclark@gmail.com>
+Cc:     AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Kalyan Thota <quic_kalyant@quicinc.com>,
+        Sean Paul <sean@poorly.run>,
+        Vinod Polimera <quic_vpolimer@quicinc.com>,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, May 31, 2022 at 09:44:52PM +0530, Krishna Kurapati wrote:
-> Add support for overriding electrical signal tuning parameters for
-> SNPS HS Phy.
-> 
-> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+Quoting Douglas Anderson (2022-05-31 16:01:26)
+> In commit a670ff578f1f ("drm/msm/dpu: always use mdp device to scale
+> bandwidth") we fully moved interconnect stuff to the DPU driver. This
+> had no change for sc7180 but _did_ have an impact for other SoCs. It
+> made them match the sc7180 scheme.
+>
+> Unfortunately, the sc7180 scheme seems like it was a bit broken.
+> Specifically the interconnect needs to be on for more than just the
+> DPU driver's AXI bus. In the very least it also needs to be on for the
+> DSI driver's AXI bus. This can be seen fairly easily by doing this on
+> a ChromeOS sc7180-trogdor class device:
+>
+>   set_power_policy --ac_screen_dim_delay=5 --ac_screen_off_delay=10
+>   sleep 10
+>   cd /sys/bus/platform/devices/ae94000.dsi/power
+>   echo on > control
+>
+> When you do that, you'll get a warning splat in the logs about
+> "gcc_disp_hf_axi_clk status stuck at 'off'".
+>
+> One could argue that perhaps what I have done above is "illegal" and
+> that it can't happen naturally in the system because in normal system
+> usage the DPU is pretty much always on when DSI is on. That being
+> said:
+> * In official ChromeOS builds (admittedly a 5.4 kernel with backports)
+>   we have seen that splat at bootup.
+> * Even though we don't use "autosuspend" for these components, we
+>   don't use the "put_sync" variants. Thus plausibly the DSI could stay
+>   "runtime enabled" past when the DPU is enabled. Techncially we
+>   shouldn't do that if the DPU's suspend ends up yanking our clock.
+>
+> Let's change things such that the "bare minimum" request for the
+> interconnect happens in the mdss driver again. That means that all of
+> the children can assume that the interconnect is on at the minimum
+> bandwidth. We'll then let the DPU request the higher amount that it
+> wants.
+>
+> It should be noted that this isn't as hacky of a solution as it might
+> initially appear. Specifically:
+> * Since MDSS and DPU individually get their own references to the
+>   interconnect then the framework will actually handle aggregating
+>   them. The two drivers are _not_ clobbering each other.
+> * When the Qualcomm interconnect driver aggregates it takes the max of
+>   all the peaks. Thus having MDSS request a peak, as we're doing here,
+>   won't actually change the total interconnect bandwidth (it won't be
+>   added to the request for the DPU). This perhaps explains why the
+>   "average" requested in MDSS was historically 0 since that one
+>   _would_ be added in.
+>
+> NOTE also that in the downstream ChromeOS 5.4 and 5.15 kernels, we're
+> also seeing some RPMH hangs that are addressed by this fix. These
+> hangs are showing up in the field and on _some_ devices with enough
+> stress testing of suspend/resume. Specifically right at suspend time
+> with a stack crawl that looks like this (from chromeos-5.15 tree):
+>   rpmh_write_batch+0x19c/0x240
+>   qcom_icc_bcm_voter_commit+0x210/0x420
+>   qcom_icc_set+0x28/0x38
+>   apply_constraints+0x70/0xa4
+>   icc_set_bw+0x150/0x24c
+>   dpu_runtime_resume+0x50/0x1c4
+>   pm_generic_runtime_resume+0x30/0x44
+>   __genpd_runtime_resume+0x68/0x7c
+>   genpd_runtime_resume+0x12c/0x20c
+>   __rpm_callback+0x98/0x138
+>   rpm_callback+0x30/0x88
+>   rpm_resume+0x370/0x4a0
+>   __pm_runtime_resume+0x80/0xb0
+>   dpu_kms_enable_commit+0x24/0x30
+>   msm_atomic_commit_tail+0x12c/0x630
+>   commit_tail+0xac/0x150
+>   drm_atomic_helper_commit+0x114/0x11c
+>   drm_atomic_commit+0x68/0x78
+>   drm_atomic_helper_disable_all+0x158/0x1c8
+>   drm_atomic_helper_suspend+0xc0/0x1c0
+>   drm_mode_config_helper_suspend+0x2c/0x60
+>   msm_pm_prepare+0x2c/0x40
+>   pm_generic_prepare+0x30/0x44
+>   genpd_prepare+0x80/0xd0
+>   device_prepare+0x78/0x17c
+>   dpm_prepare+0xb0/0x384
+>   dpm_suspend_start+0x34/0xc0
+>
+> We don't completely understand all the mechanisms in play, but the
+> hang seemed to come and go with random factors. It's not terribly
+> surprising that the hang is gone after this patch since the line of
+> code that was failing is no longer present in the kernel.
+>
+> Fixes: a670ff578f1f ("drm/msm/dpu: always use mdp device to scale bandwidth")
+> Fixes: c33b7c0389e1 ("drm/msm/dpu: add support for clk and bw scaling for display")
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
 > ---
->  drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c | 268 +++++++++++++++++++++++++-
->  1 file changed, 266 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c b/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
-> index 5d20378..3a17216 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
-> @@ -52,6 +52,12 @@
->  #define USB2_SUSPEND_N				BIT(2)
->  #define USB2_SUSPEND_N_SEL			BIT(3)
->  
 
-<snip>
-
-> +static void qcom_snps_hsphy_override_param_update_val(
-> +			const struct override_param_map map,
-> +			s32 dt_val, struct phy_override_seq *seq_entry)
-> +{
-> +	int i;
-> +
-> +	/*
-> +	 * Param table for each param is in increasing order
-> +	 * of dt values. We need to iterate over the list to
-> +	 * select the entry that has equal or the next highest value.
-> +	 */
-> +	for (i = 0; i < map.table_size - 1; i++) {
-> +		if (map.param_table[i].value >= dt_val)
-> +			break;
-> +	}
-> +
-> +	seq_entry->need_update = true;
-> +	seq_entry->offset = map.reg_offset;
-> +	seq_entry->mask = map.param_mask;
-> +	seq_entry->value =  map.param_table[i].reg << __ffs(map.param_mask);
-> +}
-> +
-> +static void qcom_snps_hsphy_read_override_param_seq(struct device *dev)
-> +{
-> +	struct device_node *node = dev->of_node;
-> +	s32 val;
-> +	int ret, i;
-> +	struct qcom_snps_hsphy *hsphy;
-> +	const struct override_param_map *cfg =
-> +		(struct override_param_map *) of_device_get_match_data(dev);
-
-As mentioned in the previous patch-set, the explicit typecast is not needed.
-
-overall, looks good to me. After fixing the above, feel free to use
-
-Reviewed-by: Pavankumar Kondeti <quic_pkondeti@quicinc.com>
-
-Thanks,
-Pavan
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
