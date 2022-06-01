@@ -2,55 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5398253A5A0
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jun 2022 15:06:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7CD0753A615
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jun 2022 15:42:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352308AbiFANGu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Jun 2022 09:06:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48554 "EHLO
+        id S243169AbiFANmg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Jun 2022 09:42:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52294 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239275AbiFANGt (ORCPT
+        with ESMTP id S240583AbiFANmf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Jun 2022 09:06:49 -0400
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08B292DCC
-        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Jun 2022 06:06:48 -0700 (PDT)
-Received: by mail-wm1-x32c.google.com with SMTP id z17so946912wmf.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Jun 2022 06:06:47 -0700 (PDT)
+        Wed, 1 Jun 2022 09:42:35 -0400
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C982A40E44
+        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Jun 2022 06:42:33 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id k19so2413842wrd.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Jun 2022 06:42:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=y7AFvgnHqwWsOFhTmk4i/DwYzcjtYaWfhp+4Z6qHobU=;
-        b=E637gfrRTkd2Xn1qbN2xOc9CfyQozzgeVso68I9JFpeOLf+kFLouA3I8IQET/AsKlb
-         Y1dDEG86g6pP4Wv54CJhzD2hSV7CirPJGhTV90LJS7FEzMjER6rlpwuWMrNPK05oY9ti
-         g4uXFNvyQlg2NlSWpDajepojAfWFSDMaIvfd3Q/O87hLvFgbOUCzO2VMOX0U4N2i/7OW
-         pu/JMTO8zx81A1CQp8ZfTD2kAMXiw3fId03fFm0Y4aOKue7WTXjAtPw/QR6+qrB7PS41
-         wfmtWUQa7MimFRBVziVFU7sBmsYRlrglvK4rE5jYWEvme7mUhgZr+yoyAMGn3TwxXPju
-         5OJQ==
+        bh=0GytTj9uVTzJjxEXvcs09ax+kKcNDhJOHsmTGe+kH8w=;
+        b=vkNdWZInZ7+8GlW7lJ8mbeICVbcaP8DQoN8ZodMXz63//NHmpWtnr9eII0esKGgrJ7
+         XZYBnkrr/L3WwHZ8NWSVcJnc0y8O0CKd/oiv2XSilDkMaPN5i8KVJRKsC/hPW24GHylB
+         54AL2z6qZj0V3FbKgFf+vjfTlrH8rXmrt1f7q9DazKENMR+nluo+ffa+1nO4G5bQ7sSc
+         v2M78eXcOhW+t4BcTtF+Bxy/0iWu1NsuO0my9VSoIk+281lWAsZo28aNYazzWoN5si3Z
+         pzuXUwv/h9Iqp9KRhqZRzgiHF9iW4Z9pvq8vLWzBaE61/yL/BNOcVhI8MTRK33xydOlV
+         d1zA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=y7AFvgnHqwWsOFhTmk4i/DwYzcjtYaWfhp+4Z6qHobU=;
-        b=XAAFF9McIlLqi6iSUjJwy1iUUQjpJPH5+FYY4AgFwE6H/rsSCmDtlu+S71RQ3oXgiG
-         hY36fI9/W2052O+n6OUwoF1S4mjv6tnxDarjPm/QnTicDQJn97+E+xzu9pUEw6Ol1GkJ
-         pZxhAhenXOGlkwtNB6u3XG75ZO/zH+uQKOmBmstWChR96RVSZr5ISgq54t7xwAX6Tgzr
-         ysfZNaYdZOoUYBAdn4ke6g3Iixs9zAmY7nmSAKHRcEE9gronjXooGAJuJ8JeRF8j6Acn
-         7dE5HQQWM4863H6oOOxwz4Q9Hq8yQzuK/3dKzYjJHcyYZ8kdTox0sXP0PD251hUIWreD
-         bygw==
-X-Gm-Message-State: AOAM531LHhwpja5t/WXawZrLO6MSUaIG14ZPFyNMEZVnxUhufGogLbOH
-        zy5Gf1g2Az0b8ue99vYlt19oQA==
-X-Google-Smtp-Source: ABdhPJz5o9FuHCcYjcaH5dprQ7ehfD3MI+SA5JumBHiFDerZaHO2MPeu/niUrkcqkUu4GjHxBsRY7A==
-X-Received: by 2002:a05:600c:1f0e:b0:397:707f:5a60 with SMTP id bd14-20020a05600c1f0e00b00397707f5a60mr27623101wmb.3.1654088806145;
-        Wed, 01 Jun 2022 06:06:46 -0700 (PDT)
+        bh=0GytTj9uVTzJjxEXvcs09ax+kKcNDhJOHsmTGe+kH8w=;
+        b=a7cedfJI57Ta+Gp0jOprEHRQoC1yPPZ28RIgn4tBkFjXbcMz0fqUfzRsxrpfMNlMY/
+         74Gq2xTyVRvM+otlJrR47b58/sF2HmlpBiZPsknA10auKpYARXRdVsKA9Jj60I+OJZ9A
+         34hC/vhwVpAyCMeKfGnfGpyMzMZhke5Tyfb3Ue9VvhqqVeXc7FT7NeTJ5MZIEl5DIKU2
+         QxGqTWAPj8teYr5km/TY/zznYtKnzDvSOOtoMdN2ZUgxmvkEH5HjoKOGFlD7qcuxBf/g
+         Il2JmhZd8gc/ewoiUGkRVNGwwM7yJmfT68w0IRMV5A3D6HRO8dU6uUaUahEbUnsTJKLt
+         Revw==
+X-Gm-Message-State: AOAM531QZTy8q0JoS/qURTlHTQq8m9lgXhxWqajkxXqElIS9Qk1XofKO
+        fNRisH6WHedpscY5MyWfe8KFMw==
+X-Google-Smtp-Source: ABdhPJw0w+np9l1PjYluSYsyZUX4C+fqmoxAweXAcsxF3ASzI26AfWihFIw/6vfhS7xpLk/6VmugwQ==
+X-Received: by 2002:adf:f789:0:b0:210:3534:636c with SMTP id q9-20020adff789000000b002103534636cmr12231263wrp.273.1654090952330;
+        Wed, 01 Jun 2022 06:42:32 -0700 (PDT)
 Received: from [192.168.86.34] (cpc90716-aztw32-2-0-cust825.18-1.cable.virginm.net. [86.26.103.58])
-        by smtp.googlemail.com with ESMTPSA id m11-20020a5d624b000000b0020ff3a2a925sm1892597wrv.63.2022.06.01.06.06.44
+        by smtp.googlemail.com with ESMTPSA id j26-20020a05600c1c1a00b003973e27b789sm7304163wms.27.2022.06.01.06.42.31
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 01 Jun 2022 06:06:45 -0700 (PDT)
-Message-ID: <1ec64a99-cfcf-c903-935b-d1bb0617c284@linaro.org>
-Date:   Wed, 1 Jun 2022 14:06:43 +0100
+        Wed, 01 Jun 2022 06:42:31 -0700 (PDT)
+Message-ID: <2a520eaf-c1de-aa91-3029-83f5469cdbb0@linaro.org>
+Date:   Wed, 1 Jun 2022 14:42:30 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.7.0
@@ -72,13 +72,15 @@ References: <1652877755-25120-1-git-send-email-quic_srivasam@quicinc.com>
  <51b8aca1-e038-4907-e973-ebdbebaf9b28@quicinc.com>
  <YpaXZ6KfApGebkBy@google.com>
  <7c74868d-624b-c18e-b377-026e70813fcc@quicinc.com>
+ <1ec64a99-cfcf-c903-935b-d1bb0617c284@linaro.org>
+ <61c151e2-c44c-3b84-9fed-a83abef83c17@quicinc.com>
 From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-In-Reply-To: <7c74868d-624b-c18e-b377-026e70813fcc@quicinc.com>
+In-Reply-To: <61c151e2-c44c-3b84-9fed-a83abef83c17@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-3.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -88,53 +90,36 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 01/06/2022 13:57, Srinivasa Rao Mandadapu wrote:
+On 01/06/2022 14:15, Srinivasa Rao Mandadapu wrote:
+>>>>>>> +       ctrl->audio_cgcr = devm_reset_control_get_exclusive(dev, 
+>>>>>>> "swr_audio_cgcr");
+>>>>>>> +       if (IS_ERR(ctrl->audio_cgcr))
+>>>>>>> +               dev_err(dev, "Failed to get audio_cgcr reset 
+>>>>>>> required for soundwire-v1.6.0\n");
+>>>>>> Why is there no return on error here? Is the reset optional?
+>>>>> Yes it's optional. For older platforms this is not required.
+>>>> If it's optional then either there should be no error message, or the
+>>>> error message should only be logged when the version is >= 1.6.0. There
+>>>> are few things worse than a kernel log riddled with misleading error
+>>>> messages.
+>>>
+>>> In that case, it can be done like below. Kindly let me know your 
+>>> opinion on this.
+>>>
+>>> if (ctrl->version >= 0x01060000) {
+>>
+>> This is not true 1.7+ variants do not require anything as such.
 > 
-> On 6/1/2022 4:02 AM, Matthias Kaehlcke wrote:
-> Thanks for Your Time Matthias!!!
->> On Tue, May 24, 2022 at 04:19:47PM +0530, Srinivasa Rao Mandadapu wrote:
->>> On 5/21/2022 8:43 AM, Stephen Boyd wrote:
->>> Thanks for your time Stephen!!!
->>>> Quoting Srinivasa Rao Mandadapu (2022-05-18 05:42:35)
->>>>> diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
->>>>> index da1ad7e..445e481 100644
->>>>> --- a/drivers/soundwire/qcom.c
->>>>> +++ b/drivers/soundwire/qcom.c
->>>>> @@ -1333,6 +1337,10 @@ static int qcom_swrm_probe(struct 
->>>>> platform_device *pdev)
->>>>>           ctrl->bus.compute_params = &qcom_swrm_compute_params;
->>>>>           ctrl->bus.clk_stop_timeout = 300;
->>>>>
->>>>> +       ctrl->audio_cgcr = devm_reset_control_get_exclusive(dev, 
->>>>> "swr_audio_cgcr");
->>>>> +       if (IS_ERR(ctrl->audio_cgcr))
->>>>> +               dev_err(dev, "Failed to get audio_cgcr reset 
->>>>> required for soundwire-v1.6.0\n");
->>>> Why is there no return on error here? Is the reset optional?
->>> Yes it's optional. For older platforms this is not required.
->> If it's optional then either there should be no error message, or the
->> error message should only be logged when the version is >= 1.6.0. There
->> are few things worse than a kernel log riddled with misleading error
->> messages.
-> 
-> In that case, it can be done like below. Kindly let me know your opinion 
-> on this.
-> 
-> if (ctrl->version >= 0x01060000) {
+> I think it applies for all upcoming versions as Qualcomm Hardware team. 
+> Here is the not from HW Team.
 
-This is not true 1.7+ variants do not require anything as such.
+Am testing sm8450 which has 1.7.0 and it does not require/have such control.
 
-Why not add a flag in struct qcom_swrm_data and pass it as part of 
-of_match data specific to this version?
+I dont understand what is the issue in adding a flag to
+struct qcom_swrm_data.
+
+This should give finer control rather than matching anything > 1.6.
+
 
 --srini
->      ctrl->audio_cgcr = devm_reset_control_get_exclusive(dev, 
-> "swr_audio_cgcr");
->          if (IS_ERR(ctrl->audio_cgcr)) {
->              dev_err(dev, "Failed to get audio_cgcr reset required for 
-> soundwire-v1.6.0\n");
->              ret = PTR_ERR(ctrl->audio_cgcr);
->              goto err_clk;
->          }
->      }
 > 
