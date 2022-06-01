@@ -2,77 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EB26953A389
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jun 2022 13:06:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0CB4453A3B6
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jun 2022 13:19:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350981AbiFALGI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Jun 2022 07:06:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54542 "EHLO
+        id S1352600AbiFALTF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Jun 2022 07:19:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57444 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350337AbiFALGH (ORCPT
+        with ESMTP id S1350587AbiFALTF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Jun 2022 07:06:07 -0400
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7435E880ED
-        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Jun 2022 04:06:05 -0700 (PDT)
-Received: by mail-ed1-x529.google.com with SMTP id t5so1674712edc.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Jun 2022 04:06:05 -0700 (PDT)
+        Wed, 1 Jun 2022 07:19:05 -0400
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C0A3A76FA;
+        Wed,  1 Jun 2022 04:19:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=zmUkWzeg4eeXLMNd3lfhrjjKEKVUaxqNRQUp3Ckt2Z4=;
-        b=qocjSTMUZH9T2IQW3/obAwuW9pk070LbB8GfsSOVnRtrD9fopdPRvwtZ/JfC2x2L4J
-         s5/HxRxzngbaSRGdruiCod/zCu5dVCoKc7Njqlylpz7FZev1Vq0oO8Ob0TDA/S9e0fyw
-         jPZaEZBDl9f10zp324+0LbUUd6G1CNhCgcyGBGJtqyelHCqjhjGgm7MobkfDjJGItaHW
-         0cVEkxV9zabA0mHtS1vCKHvyUb173mglxwrPfO/75smUNJEHUn4ROWpiZ5pwtUKt5Oik
-         hd6Zz89OHoU3KlvkUQe5g9svtxh4Al9HXjzYeelvrQKXepE9z3xt6+d99zSfaPQzBsCI
-         BOMg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=zmUkWzeg4eeXLMNd3lfhrjjKEKVUaxqNRQUp3Ckt2Z4=;
-        b=osgMc8b+Bra02GEcNa+8ixwgY5vV+hedKEz+shj1BqLXDI1qmXLQzM+KYZEkmr8Zz9
-         ydHTic40APmOmmcHufFP+s+/WSFUcf04NvlkV9tP1XtXbdOQV5mRRe4l0ZdQoGDth9r3
-         AxBKjsINqzEWnJzCuVn7c15juhaqDo/f2GFc9ZApCfO1YC3Nk9VajM8X2oQBHqO7D3QB
-         k1IGvhah7UTnr3DgewJ/Qnt24fu6mvBfyAXPmHy5NbqG+jKIkoa9sagfzKtCymik97Yd
-         RcV6ApwHRo6DnljVL0fD1smYYZ/tJ+zoIVTTuBEdIm1V8OJ0Xua9Xy/7AqIaHFvTiRAy
-         93IA==
-X-Gm-Message-State: AOAM530yLoB6bNipX/ihII5nQ/w+gKgqfwfTASIo/vG3bB7PXBXmZybf
-        2XsOf226JSWyxMBqYCYUXPjy5g==
-X-Google-Smtp-Source: ABdhPJxGZfvPCA32qvZADlQLYkYuCMi7rvAeDhPjUHEigzmSsilnTNVK6tD84n4NNi8pnBGkqXJV0Q==
-X-Received: by 2002:a05:6402:2553:b0:42a:ef31:4444 with SMTP id l19-20020a056402255300b0042aef314444mr69111155edb.46.1654081564014;
-        Wed, 01 Jun 2022 04:06:04 -0700 (PDT)
-Received: from [192.168.0.179] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id bk2-20020a170906b0c200b006fef557bb7asm572545ejb.80.2022.06.01.04.06.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 01 Jun 2022 04:06:03 -0700 (PDT)
-Message-ID: <3389a816-0f51-ab83-1026-2201017a2f12@linaro.org>
-Date:   Wed, 1 Jun 2022 13:06:02 +0200
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1654082343; x=1685618343;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=j2WptiZFrMPVKC6oFMmIy8W8fAs1p7FSZjkRo4TZHV0=;
+  b=AIVtraew/9SX3q9818j9qKmyDg28YakAK5lNbC9tAJWoN1zI3HJtQT0N
+   lrVvJfOcRqQRLUGPMXGXJDl0Tuo+ozEVEGYhD4MCXBHuVVTLYQScHpA4w
+   vUJVHrCXP8OgVBzayHbKxvCPia48xDcEURlUUoYrpxMb15XLtJv7JHl3M
+   g=;
+Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 01 Jun 2022 04:19:02 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jun 2022 04:19:01 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Wed, 1 Jun 2022 04:19:01 -0700
+Received: from [10.50.27.146] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Wed, 1 Jun 2022
+ 04:18:55 -0700
+Message-ID: <def29b3f-b5a1-5f23-7727-1308f7033cff@quicinc.com>
+Date:   Wed, 1 Jun 2022 16:48:52 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Subject: Re: [PATCH 08/11] ARM: dts: qcom: sdx65-mtp: Increase the vmalloc
- size
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.0
+Subject: Re: [PATCH V13 7/9] regulator: Add a regulator driver for the PM8008
+ PMIC
 Content-Language: en-US
-To:     Rohit Agarwal <quic_rohiagar@quicinc.com>, agross@kernel.org,
-        bjorn.andersson@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, wim@linux-watchdog.org,
-        linux@roeck-us.net
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-watchdog@vger.kernel.org,
-        manivannan.sadhasivam@linaro.org
-References: <1654080312-5408-1-git-send-email-quic_rohiagar@quicinc.com>
- <1654080312-5408-9-git-send-email-quic_rohiagar@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <1654080312-5408-9-git-send-email-quic_rohiagar@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+To:     Stephen Boyd <swboyd@chromium.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>
+CC:     Lee Jones <lee.jones@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_collinsd@quicinc.com>,
+        <quic_subbaram@quicinc.com>, <quic_jprakash@quicinc.com>
+References: <1653043777-24003-1-git-send-email-quic_c_skakit@quicinc.com>
+ <1653043777-24003-8-git-send-email-quic_c_skakit@quicinc.com>
+ <CAE-0n53WLYR1pjnr6wASVmXXQ7xTq5n2Q7GdeKOCkWf4H4n=0A@mail.gmail.com>
+ <e70aceba-02d5-15b5-46d0-d5ed5706e81a@quicinc.com>
+ <CAE-0n539gePyXhw7r+XcaHtooN98KfYsx_qwgDaFkJtMSg+80g@mail.gmail.com>
+ <4b9a2abe-c462-81d9-2098-d430da24f030@quicinc.com>
+ <CAE-0n529AD8OKrxbTpDNqR7Gw9SdCnJyWtiWvZAsADQKgj4kxQ@mail.gmail.com>
+From:   "Satya Priya Kakitapalli (Temp)" <quic_c_skakit@quicinc.com>
+In-Reply-To: <CAE-0n529AD8OKrxbTpDNqR7Gw9SdCnJyWtiWvZAsADQKgj4kxQ@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-5.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -80,41 +79,51 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 01/06/2022 12:45, Rohit Agarwal wrote:
-> Increase the size of vmalloc using the bootargs in sdx65
-> mtp board.
-> It is failing to alloacte the size needed for firmware and
-> giving the error logs due to actual vmalloc region lesser than requested.
-> 
-> cat /proc/meminfo shows the size of VmallocTotal as 245760 kB.
-> 
-> [ 10.980356] vmap allocation for size 268439552 failed: use vmalloc=<size> to increase size
-> [ 10.980505] qcom_q6v5_pas 4080000.remoteproc: unable to map memory region: 0x90800000+10000000
-> [ 10.988542] In adsp alloc memory: adsp_probe 482
-> [ 10.988592] remoteproc remoteproc0: releasing 4080000.remoteproc
-> [ 11.001598] qcom_q6v5_pas: probe of 4080000.remoteproc failed with error -16
-> 
-> Thus, increasing the size to 300000000 as modem is not the only one using vmalloc region.
-> 
-> Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
-> ---
->  arch/arm/boot/dts/qcom-sdx65-mtp.dts | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/arch/arm/boot/dts/qcom-sdx65-mtp.dts b/arch/arm/boot/dts/qcom-sdx65-mtp.dts
-> index 85ea02d..966385f 100644
-> --- a/arch/arm/boot/dts/qcom-sdx65-mtp.dts
-> +++ b/arch/arm/boot/dts/qcom-sdx65-mtp.dts
-> @@ -21,6 +21,7 @@
->  
->  	chosen {
->  		stdout-path = "serial0:115200n8";
-> +		bootargs = "vmalloc=300000000";
 
-I understand that issue comes from SoC-related driver but this is not a
-property of the hardware. This could be added by bootloader if needed,
-but in regular case this is a system setup parameter, so it does not
-belong to DTS.
+On 6/1/2022 7:36 AM, Stephen Boyd wrote:
+> Quoting Satya Priya Kakitapalli (Temp) (2022-05-30 03:33:47)
+>> On 5/28/2022 2:32 AM, Stephen Boyd wrote:
+>>> Quoting Satya Priya Kakitapalli (Temp) (2022-05-27 01:24:19)
+>>>> On 5/21/2022 8:26 AM, Stephen Boyd wrote:
+>>>>           +       }
+>>>>           +
+>>>>           +       pm8008_reg->dev = dev;
+>>>>           +
+>>>>           +       rc = of_property_read_string(dev->of_node, "regulator-name", &name);
+>>>>           +       if (rc)
+>>>>           +               return rc;
+>>>>           +
+>>>>           +       /* get the required regulator data */
+>>>>           +       for (i = 0; i < ARRAY_SIZE(reg_data); i++)
+>>>>           +               if (strstr(name, reg_data[i].name))
+>>>>
+>>>>       Why not find this via reg/address instead? It would save storing the
+>>>>       regulator name in the reg_data table.
+>>>>
+>>>>
+>>>> You mean match this using base address? then we should add base address in the
+>>>> reg_data table. We will need the name to be stored in reg_data table anyway for
+>>>> the pm8008_reg->rdesc.of_match
+>>> Why? Now that this driver binds to each node individually the usage of
+>>> of_match doesn't make any sense to me. Can you set 'struct
+>>> regulator_config::dev' instead and not set of_match?
+>>
+>> Currently we are setting regulator_config::dev as dev->parent i.e.,
+>> pm8008@8, because the parent supplies are present under pm8008@8, to get
+>> the regulators mapped correctly to the parent supplies we are using
+>> dev->parent.
+>>
+>> If we do not set of_match in regulator descriptor,
+>> regulator_of_get_init_node() would return NULL, causing init_data to be
+>> NULL during regulator_register and regulators are not getting probed.
+>> This can be resolved, if we get the init_data during pm8008_probe
+>> itself. I'll do that in the next version.
+>>
+> Ok then it seems ok to leave it as is. I suspect getting init data
+> during probe is more code vs. having the node name and the address in
+> the table.
 
-Best regards,
-Krzysztof
+
+Okay. If we are leaving it as is then, there is no need to add address 
+in the table.
+
