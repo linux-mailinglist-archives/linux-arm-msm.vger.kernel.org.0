@@ -2,71 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D1EB853ACB6
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jun 2022 20:23:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DCB0453ACFB
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jun 2022 20:44:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235789AbiFASXe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Jun 2022 14:23:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40268 "EHLO
+        id S231624AbiFASnW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Jun 2022 14:43:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35706 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232776AbiFASXd (ORCPT
+        with ESMTP id S231482AbiFASnV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Jun 2022 14:23:33 -0400
-Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C586A0D2B
-        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Jun 2022 11:23:32 -0700 (PDT)
-Received: by mail-pl1-x62c.google.com with SMTP id o17so2527532pla.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Jun 2022 11:23:32 -0700 (PDT)
+        Wed, 1 Jun 2022 14:43:21 -0400
+Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9EF336C560
+        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Jun 2022 11:43:19 -0700 (PDT)
+Received: by mail-pj1-x1033.google.com with SMTP id l20-20020a17090a409400b001dd2a9d555bso2893789pjg.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Jun 2022 11:43:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=/JhQL6K3uh3O984WIozZ8SgUhIwo1E2fCaDixGouuFc=;
-        b=bQe+znboLg5KVUPXFanhDzZUyTtd8/DqaO3vDJEG8jvos5lAcS8YRMPwR4YULDJXsj
-         VUwdHTs5Rva3cnmIkL6+hJJYk5zczz5bB21jHPGfDzUxQeai6Mz3pg6hyEPKCZRlKVL6
-         8XfbVXwlYmCQe4tsOJqMV7rgw065OFTvi1l/I=
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=CylZr84lNM4w3HdFBlt6SOrJM7582Y3Dp242aVUdYDw=;
+        b=ftb+nI02XlOPJXHTuaCLRci64mITA4Omfb/UUtLIC1sXgKoZUnJeCFbeUk7ni7ghht
+         9yUXBo+ObvjCXB+H7YHfFLQMHeayMiGA4fq8pjQZ7Qk/1Qq2ZJxJRJVZ5BIQvZQs7zVW
+         rtMZDxS9Xx5l+e9aEAa5p/z6/cas7TtS8xSBg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=/JhQL6K3uh3O984WIozZ8SgUhIwo1E2fCaDixGouuFc=;
-        b=287BUXf1bG7ZDarfSW1vuJD/XWi2CgGh8WMH1sZAaoC5T20bWsSh4RiuJYVPojCAjc
-         VxnmzhCiw1j74RyayMurAa0qUruga+7G3q9A4KHYSN337rjor8L0JcNcp6Gr9BHaRN4F
-         s7F47K35xGMWWEkhfmpFQ9GN3GyzU/xdHFJpsXCWn3QXPqYlx7+7ToWKzSNr17a2z1GK
-         IltEKCP+lLymvRJ9vq5xkJ3fO/QCVe7CQf79a21dM5Atuu7qgBUYkrk0sh3KUcj2XNbu
-         A85lTY1C3pJUg4HThlQh1vol3QpoZTO3O1acgN8ub7tj+r4KUBIxHm7M4ADB2+SkYQGD
-         HM0w==
-X-Gm-Message-State: AOAM531pkNJhBOf4liwR0RWr57M9EGECG1yoL/WZQ1ZqslBEcR8ETsMb
-        AWW+f3t/BgpiHV0VCXIvucWtJw==
-X-Google-Smtp-Source: ABdhPJxkZcEEXs4C3T4YbCZSNWjdVM2FImDp58YVkoQ7Y7Nye2+tmcgRAy4DLVeQEFjt+JV58ido0A==
-X-Received: by 2002:a17:90b:33ca:b0:1dc:e5b8:482b with SMTP id lk10-20020a17090b33ca00b001dce5b8482bmr35533108pjb.165.1654107811654;
-        Wed, 01 Jun 2022 11:23:31 -0700 (PDT)
-Received: from tictac2.mtv.corp.google.com ([2620:15c:202:201:2f43:87c7:551a:ca93])
-        by smtp.gmail.com with ESMTPSA id ie12-20020a17090b400c00b001e2f0333a86sm1702300pjb.12.2022.06.01.11.23.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Jun 2022 11:23:31 -0700 (PDT)
-From:   Douglas Anderson <dianders@chromium.org>
-To:     dri-devel@lists.freedesktop.org, Daniel Vetter <daniel@ffwll.ch>
-Cc:     dmitry.baryshkov@linaro.org, tzimmermann@suse.de,
-        linux-arm-msm@vger.kernel.org, swboyd@chromium.org,
-        ville.syrjala@linux.intel.com, quic_sbillaka@quicinc.com,
-        quic_khsieh@quicinc.com, quic_abhinavk@quicinc.com,
-        robdclark@gmail.com, freedreno@lists.freedesktop.org,
-        jani.nikula@linux.intel.com, quic_aravindh@quicinc.com,
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=CylZr84lNM4w3HdFBlt6SOrJM7582Y3Dp242aVUdYDw=;
+        b=iWzNiLiDsxFf2ggvwX7WDrk+hm8DejQUhh6okdIZSGE5AcozTzZQCxovVQWf14b84D
+         Xxd473FMGZxeNWlgpuoBvRtRgdYm3ChnCWqOeGJZfU9Xs2sCwxEGu/oWR2qExH8hvoSn
+         tAtGiYMuI+3AJCNQP9OxExkN3yT4DocGhQ+UJ9+04MvCbpkD+ZD1L2yPYrKoinYxgzZ9
+         YYLlaItOFgkfM/yBOdCGG5S7lOfJ4PVakV/1zUUK9LkfSIv478/fa4gokzoJnqqH8H53
+         g5OBxNFYG7kAcgpc7aatxQS2lmjwlWal+cDOqtoNsZXqE2MTec0QO3yjwV2hjMwCkeE0
+         XsXg==
+X-Gm-Message-State: AOAM532DdQXHvvM2dlIcv6zhByOJ6bgTLPqVJF2rfvaQqsjon1rzY1NO
+        ZzOcYYz6HmAFrbAR0GsdHiDRbg==
+X-Google-Smtp-Source: ABdhPJwLE5i5A07i5SgY07uY/UOCAYp5F1osDKzp7pdDjaN8DDsYjIkyNUSDef3lAjYbk0rLYGQu4w==
+X-Received: by 2002:a17:902:b10e:b0:165:7c1b:67fc with SMTP id q14-20020a170902b10e00b001657c1b67fcmr776571plr.77.1654108998830;
+        Wed, 01 Jun 2022 11:43:18 -0700 (PDT)
+Received: from localhost ([2620:15c:11a:202:e69e:f483:e751:7c7c])
+        by smtp.gmail.com with UTF8SMTPSA id t1-20020a63f341000000b003fc4cc19414sm1648304pgj.45.2022.06.01.11.43.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 01 Jun 2022 11:43:18 -0700 (PDT)
+Date:   Wed, 1 Jun 2022 11:43:14 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Taniya Das <quic_tdas@quicinc.com>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Douglas Anderson <dianders@chromium.org>,
-        David Airlie <airlied@linux.ie>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH v4] drm/probe-helper: Default to 640x480 if no EDID on DP
-Date:   Wed,  1 Jun 2022 11:23:24 -0700
-Message-Id: <20220601112302.v4.1.I31ec454f8d4ffce51a7708a8092f8a6f9c929092@changeid>
-X-Mailer: git-send-email 2.36.1.255.ge46751e96f-goog
+        Stephen Boyd <swboyd@chromium.org>,
+        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v5] arm64: dts: qcom: sc7280: Add lpasscore & lpassaudio
+ clock controllers
+Message-ID: <YpexqxRtnMEFUki7@google.com>
+References: <20220523100058.26241-1-quic_tdas@quicinc.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20220523100058.26241-1-quic_tdas@quicinc.com>
 X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -74,86 +72,16 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-If we're unable to read the EDID for a display because it's corrupt /
-bogus / invalid then we'll add a set of standard modes for the
-display. Since we have no true information about the connected
-display, these modes are essentially guesses but better than nothing.
-At the moment, none of the modes returned is marked as preferred, but
-the modes are sorted such that the higher resolution modes are listed
-first.
+On Mon, May 23, 2022 at 03:30:58PM +0530, Taniya Das wrote:
+> Add the low pass audio clock controller device nodes. Keep the lpasscc
+> clock node disabled and enabled for lpass pil based devices.
+> 
+> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
 
-When userspace sees these modes presented by the kernel it needs to
-figure out which one to pick. At least one userspace, ChromeOS [1]
-seems to use the rules (which seem pretty reasonable):
-1. Try to pick the first mode marked as preferred.
-2. Try to pick the mode which matches the first detailed timing
-   descriptor in the EDID.
-3. If no modes were marked as preferred then pick the first mode.
+Why is this series still evolving? v3 landed in Bjorn's tree some time ago:
 
-Unfortunately, userspace's rules combined with what the kernel is
-doing causes us to fail section 4.2.2.6 (EDID Corruption Detection) of
-the DP 1.4a Link CTS. That test case says that, while it's OK to allow
-some implementation-specific fall-back modes if the EDID is bad that
-userspace should _default_ to 640x480.
+9499240d15f2 arm64: dts: qcom: sc7280: Add lpasscore & lpassaudio clock controllers
 
-Let's fix this by marking 640x480 as default for DP in the no-EDID
-case.
-
-NOTES:
-- In the discussion around v3 of this patch [2] there was talk about
-  solving this in userspace and I even implemented a patch that would
-  have solved this for ChromeOS, but then the discussion turned back
-  to solving this in the kernel.
-- Also in the discussion of v3 [2] it was requested to limit this
-83;40900;0c  change to just DP since folks were worried that it would break some
-  subtle corner case on VGA or HDMI.
-
-[1] https://source.chromium.org/chromium/chromium/src/+/a051f741d0a15caff2251301efe081c30e0f4a96:ui/ozone/platform/drm/common/drm_util.cc;l=488
-[2] https://lore.kernel.org/r/20220513130533.v3.1.I31ec454f8d4ffce51a7708a8092f8a6f9c929092@changeid
-
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
----
-I put Abhinav's Reviewed-by tag from v2 here since this is nearly the
-same as v2. Hope this is OK.
-
-Changes in v4:
-- Code is back to v2, but limit to just DP.
-- Beefed up the commit message.
-
-Changes in v3:
-- Don't set preferred, just disable the sort.
-
-Changes in v2:
-- Don't modify drm_add_modes_noedid() 'cause that'll break others
-- Set 640x480 as preferred in drm_helper_probe_single_connector_modes()
-
- drivers/gpu/drm/drm_probe_helper.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/gpu/drm/drm_probe_helper.c b/drivers/gpu/drm/drm_probe_helper.c
-index 425f56280d51..75a71649b64d 100644
---- a/drivers/gpu/drm/drm_probe_helper.c
-+++ b/drivers/gpu/drm/drm_probe_helper.c
-@@ -569,8 +569,17 @@ int drm_helper_probe_single_connector_modes(struct drm_connector *connector,
- 		count = drm_add_override_edid_modes(connector);
- 
- 	if (count == 0 && (connector->status == connector_status_connected ||
--			   connector->status == connector_status_unknown))
-+			   connector->status == connector_status_unknown)) {
- 		count = drm_add_modes_noedid(connector, 1024, 768);
-+
-+		/*
-+		 * Section 4.2.2.6 (EDID Corruption Detection) of the DP 1.4a
-+		 * Link CTS specifies that 640x480 (the official "failsafe"
-+		 * mode) needs to be the default if there's no EDID.
-+		 */
-+		if (connector->connector_type == DRM_MODE_CONNECTOR_DisplayPort)
-+			drm_set_preferred_mode(connector, 640, 480);
-+	}
- 	count += drm_helper_probe_add_cmdline_mode(connector);
- 	if (count != 0) {
- 		ret = __drm_helper_update_and_validate(connector, maxX, maxY, &ctx);
--- 
-2.36.1.255.ge46751e96f-goog
-
+If what landed is not correct or needs to be adapted you should send a patch
+that is based on the current QCOM tree and makes the necessary changes. The
+versioning of that patch should start with v1.
