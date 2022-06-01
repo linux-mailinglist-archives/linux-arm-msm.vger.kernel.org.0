@@ -2,126 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B9EDC53A28E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jun 2022 12:31:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D4E8853A314
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jun 2022 12:46:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352067AbiFAKaw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Jun 2022 06:30:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42902 "EHLO
+        id S1352328AbiFAKpv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Jun 2022 06:45:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49976 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352066AbiFAKav (ORCPT
+        with ESMTP id S1352265AbiFAKpn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Jun 2022 06:30:51 -0400
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 295076D955;
-        Wed,  1 Jun 2022 03:30:49 -0700 (PDT)
+        Wed, 1 Jun 2022 06:45:43 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2BF27E1DB;
+        Wed,  1 Jun 2022 03:45:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1654079450; x=1685615450;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version;
-  bh=D4VzYeTQSxFKm53xNd8/dH14WzhvKPozknfVBsu/t0E=;
-  b=s7DnZD4Xi2VjWRdivofHR4sz/wk1JQUdLN28h3FsVZeiqxxVtgjyp7xl
-   Xgh4VbodLNSYGqWzlUoNWohYjIi6SeuNsLoST76dsurgUQQVBn2nlzBbj
-   y99CGztVOYGgKKgbaAaiObBUsQ/n88QVP90ITZsrOfv6ApMc5l9ofq5IW
-   0=;
-Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 01 Jun 2022 03:30:49 -0700
+  t=1654080343; x=1685616343;
+  h=from:to:cc:subject:date:message-id;
+  bh=rpi2VzHyXBf4aaeMCg1+hxYs73JeG6jNmWiysOqFD4s=;
+  b=Fcxyt6p/neVsN912RIPaxtdqy/0CAtUZ++mOcyli9+pHTezW03LkEw94
+   +anVg7424E0+ljy2+ex8bOkztQ0VK16BZIj5isNeDgcOjGRLmhciNciIS
+   QD0HSKnbS5F3y8J7oY959JYW9BI2DW+qxTOloadC/vN1u7gSiI17tVvO+
+   E=;
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 01 Jun 2022 03:45:43 -0700
 X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg02-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jun 2022 03:30:48 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 1 Jun 2022 03:30:48 -0700
-Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 1 Jun 2022 03:30:41 -0700
-From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
-        <lgirdwood@gmail.com>, <broonie@kernel.org>, <robh+dt@kernel.org>,
-        <quic_plai@quicinc.com>, <bgoswami@quicinc.com>, <perex@perex.cz>,
-        <tiwai@suse.com>, <srinivas.kandagatla@linaro.org>,
-        <quic_rohkumar@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <alsa-devel@alsa-project.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <swboyd@chromium.org>,
-        <judyhsiao@chromium.org>, Linus Walleij <linus.walleij@linaro.org>,
-        <linux-gpio@vger.kernel.org>
-CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-        "Venkata Prasad Potturu" <quic_potturu@quicinc.com>
-Subject: [PATCH v2 2/2] pinctrl: qcom: sc7280: Add lpi pinctrl variant data for adsp based targets
-Date:   Wed, 1 Jun 2022 16:00:15 +0530
-Message-ID: <1654079415-26217-3-git-send-email-quic_srivasam@quicinc.com>
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 01 Jun 2022 03:45:41 -0700
+X-QCInternal: smtphost
+Received: from hu-rohiagar-hyd.qualcomm.com (HELO hu-sgudaval-hyd.qualcomm.com) ([10.213.106.138])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 01 Jun 2022 16:15:19 +0530
+Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 3970568)
+        id CD1F43F92; Wed,  1 Jun 2022 16:15:18 +0530 (+0530)
+From:   Rohit Agarwal <quic_rohiagar@quicinc.com>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, wim@linux-watchdog.org,
+        linux@roeck-us.net
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-watchdog@vger.kernel.org,
+        manivannan.sadhasivam@linaro.org,
+        Rohit Agarwal <quic_rohiagar@quicinc.com>
+Subject: [PATCH 00/11] Devicetree Changes SDX65
+Date:   Wed,  1 Jun 2022 16:15:01 +0530
+Message-Id: <1654080312-5408-1-git-send-email-quic_rohiagar@quicinc.com>
 X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1654079415-26217-1-git-send-email-quic_srivasam@quicinc.com>
-References: <1654079415-26217-1-git-send-email-quic_srivasam@quicinc.com>
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-4.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add compatible string and lpi pinctrl variant data structure for adsp
-enabled sc7280 platforms.
-This variant data structure rnd compatible name required for
-distingushing ADSP based platforms and ADSP bypass platforms.
-In case of ADSP enabled platforms, where audio is routed through ADSP
-macro and decodec GDSC Switches are triggered as clocks by pinctrl
-driver and ADSP firmware controls them. So It's mandatory to enable
-them in ADSP based solutions.
-In case of ADSP bypass platforms clock voting is optional as these macro
-and dcodec GDSC switches are maintained as power domains and operated from
-lpass clock drivers.
+This series adds cpufreq, watchdog dt nodes and enables 
+remoteproc in sdx65 mtp.
 
-Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
-Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
----
- drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+Thanks,
+Rohit.
 
-diff --git a/drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c b/drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c
-index 2add9a4..c9e85d9 100644
---- a/drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c
-+++ b/drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c
-@@ -134,6 +134,16 @@ static const struct lpi_function sc7280_functions[] = {
- 	LPI_FUNCTION(wsa_swr_data),
- };
- 
-+static const struct lpi_pinctrl_variant_data sc7280_adsp_lpi_data = {
-+	.pins = sc7280_lpi_pins,
-+	.npins = ARRAY_SIZE(sc7280_lpi_pins),
-+	.groups = sc7280_groups,
-+	.ngroups = ARRAY_SIZE(sc7280_groups),
-+	.functions = sc7280_functions,
-+	.nfunctions = ARRAY_SIZE(sc7280_functions),
-+	.is_clk_optional = false,
-+};
-+
- static const struct lpi_pinctrl_variant_data sc7280_lpi_data = {
- 	.pins = sc7280_lpi_pins,
- 	.npins = ARRAY_SIZE(sc7280_lpi_pins),
-@@ -149,6 +159,10 @@ static const struct of_device_id lpi_pinctrl_of_match[] = {
- 	       .compatible = "qcom,sc7280-lpass-lpi-pinctrl",
- 	       .data = &sc7280_lpi_data,
- 	},
-+	{
-+		.compatible = "qcom,sc7280-lpass-adsp-lpi-pinctrl",
-+		.data = &sc7280_adsp_lpi_data,
-+	},
- 	{ }
- };
- MODULE_DEVICE_TABLE(of, lpi_pinctrl_of_match);
+Rohit Agarwal (11):
+  ARM: dts: qcom: sdx65: Add CPUFreq support
+  ARM: dts: qcom: sdx65: Add modem SMP2P node
+  ARM: dts: qcom: sdx65: Add IMEM and PIL info region
+  dt-bindings: firmware: scm: Add compatible for SDX65
+  ARM: dts: qcom: sdx65: Add SCM node
+  ARM: dts: qcom: sdx65: Add Modem remoteproc node
+  ARM: dts: qcom: sdx65-mtp: Enable modem
+  ARM: dts: qcom: sdx65-mtp: Increase the vmalloc size
+  dt-bindings: watchdog: Add binding for Qcom SDX65
+  ARM: dts: qcom: sdx65: Add Watchdog support
+  ARM: dts: qcom: sdx65: Add pshold support
+
+ .../devicetree/bindings/firmware/qcom,scm.txt      |   1 +
+ .../devicetree/bindings/watchdog/qcom-wdt.yaml     |   1 +
+ arch/arm/boot/dts/qcom-sdx65-mtp.dts               |   6 +
+ arch/arm/boot/dts/qcom-sdx65.dtsi                  | 124 +++++++++++++++++++++
+ 4 files changed, 132 insertions(+)
+
 -- 
 2.7.4
 
