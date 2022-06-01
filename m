@@ -2,72 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 881C053A327
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jun 2022 12:47:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E4AF953A365
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jun 2022 13:01:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352306AbiFAKrA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Jun 2022 06:47:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50954 "EHLO
+        id S1352442AbiFALBY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Jun 2022 07:01:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48680 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352409AbiFAKqn (ORCPT
+        with ESMTP id S1352363AbiFALBV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Jun 2022 06:46:43 -0400
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3258B7E1FA;
-        Wed,  1 Jun 2022 03:46:35 -0700 (PDT)
+        Wed, 1 Jun 2022 07:01:21 -0400
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68BA0880EC
+        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Jun 2022 04:01:11 -0700 (PDT)
+Received: by mail-ed1-x536.google.com with SMTP id z7so1614540edm.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Jun 2022 04:01:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1654080395; x=1685616395;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=b5qedcwIh/YsEv38RoqMhtjohICmIZUWqBvAcbBcEqs=;
-  b=S9TG9S7iCHfCZfS3pit+G9vczBbx4kAMbf34eb/L6zRv0KveC7NtAKhk
-   Tj7Ttg6gNT1axznRH86iRLSOhLK+bQRn5/ONIMeGNkwzMJxsnc2DMtPo/
-   9+7lOYqE2asqERx3HZGoHjZ3ElmsXPlBL87eUeIwKywoV1mHIPmQGc9J7
-   s=;
-Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 01 Jun 2022 03:46:34 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg02-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jun 2022 03:46:34 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 1 Jun 2022 03:46:34 -0700
-Received: from [10.216.8.63] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Wed, 1 Jun 2022
- 03:46:29 -0700
-Message-ID: <5d950007-7a92-a41b-e569-79e806adb06a@quicinc.com>
-Date:   Wed, 1 Jun 2022 16:15:59 +0530
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=vpsfaliuG9NS58DlyHRBXhCTZUSRtxheYp6oTpSUfy8=;
+        b=hMxeBYcQAluH2FTWaiFI329As6gR7ftIzNs2gOZWcQlpzC0F/A2sx0vTo6m9P17P1s
+         1LQihsl6sWEJpX+SgeEiUmgQ8mlO4Ot29b0xH82Hc6Iwgl90vW5NAVk6LsNhyfdnyxax
+         8c6IJpfjcx4rBAgJagrnU5VQkhLepFE5yEAOKa+Xw//7+9VJ5hLxduZ721ln6NxfYcaM
+         mS25PeS7C7ZOUJ5+Ukp1pd+zD4ryKBR8pGkYyXG8YH7rzhFndqZ52G3IuWUrCz6ES8SC
+         SASu6wfYpQqPGIOlk9PhLgH783ElVao5F4B9aKyPXnNh2Xc35oEDw2ai62bFs1aIXVwb
+         MfZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=vpsfaliuG9NS58DlyHRBXhCTZUSRtxheYp6oTpSUfy8=;
+        b=NVUG8r8HqufSO1innTk4Yk9fW7iUiHkLQa4zH+fMA08aUK/TAudpxmRIlui+OY2T85
+         Mrq3/W66hBPHhNEzaVuQxq6wwdNRj+88K3jl6ZPUGxKGsRz6A46PFb/sBs90vdIsgV9O
+         WOZ+FleSDc3zicJu3rg/NzaE3ZmdcNDAT6n+fj3hXLt5YlGnKGM4Uu7u7Oj6Xd++ocrE
+         LuY/lZG35+SqV8NJCV2cpGRO3w/8kxMBXKXz9qKhDdbsFOBvQBMJhwDUVTDATHOycIDU
+         wzYYms4FA3qS8zWJ90fkBfYN3X+VazdjTCQigpaoaqCZWwlApWk+sGCvSNx2YRQxL6Lm
+         9ZMA==
+X-Gm-Message-State: AOAM532EEVS2EHjlxx7PLo9ZDQznC20UbXLb2RWY02c6d1OhZ0NtDS7Q
+        BbUJw+dOLzI0/lkvCZF4LaiDyw==
+X-Google-Smtp-Source: ABdhPJxbb0xGlSdXnY3FylXuEOy3UDSMn9qg/K/QBuw5p2wgcLEu3w2FO3DZNJPOD5NnWQJHj2pZHg==
+X-Received: by 2002:a05:6402:1341:b0:42a:f7cb:44dc with SMTP id y1-20020a056402134100b0042af7cb44dcmr69515379edw.165.1654081270007;
+        Wed, 01 Jun 2022 04:01:10 -0700 (PDT)
+Received: from [192.168.0.179] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id s23-20020a170906bc5700b006fec9cf9237sm573999ejv.130.2022.06.01.04.01.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 01 Jun 2022 04:01:09 -0700 (PDT)
+Message-ID: <f2e2e870-0a09-60a2-25f4-e7a57ec21cc9@linaro.org>
+Date:   Wed, 1 Jun 2022 13:01:08 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.9.1
-Subject: Re: [PATCH] tty: serial: qcom-geni-serial: minor fixes to
- get_clk_div_rate()
-Content-Language: en-CA
-To:     Doug Anderson <dianders@chromium.org>
-CC:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jiri Slaby <jirislaby@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        <linux-serial@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>, <quic_msavaliy@quicinc.com>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        "Stephen Boyd" <swboyd@chromium.org>
-References: <1654021066-13341-1-git-send-email-quic_vnivarth@quicinc.com>
- <CAD=FV=UF3x5RHrQH-m1X-4kQSsKiufLnkew=VuJz7W9EAi3GHQ@mail.gmail.com>
-From:   Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-In-Reply-To: <CAD=FV=UF3x5RHrQH-m1X-4kQSsKiufLnkew=VuJz7W9EAi3GHQ@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-5.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Subject: Re: [PATCH 04/11] dt-bindings: firmware: scm: Add compatible for
+ SDX65
+Content-Language: en-US
+To:     Rohit Agarwal <quic_rohiagar@quicinc.com>, agross@kernel.org,
+        bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, wim@linux-watchdog.org,
+        linux@roeck-us.net
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-watchdog@vger.kernel.org,
+        manivannan.sadhasivam@linaro.org
+References: <1654080312-5408-1-git-send-email-quic_rohiagar@quicinc.com>
+ <1654080312-5408-5-git-send-email-quic_rohiagar@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <1654080312-5408-5-git-send-email-quic_rohiagar@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -75,108 +80,14 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On 01/06/2022 12:45, Rohit Agarwal wrote:
+> Add devicetree compatible for SCM present in SDX65 platform.
+> 
+> Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
 
-On 6/1/2022 12:58 AM, Doug Anderson wrote:
-> Hi,
->
-> On Tue, May 31, 2022 at 11:18 AM Vijaya Krishna Nivarthi
-> <quic_vnivarth@quicinc.com> wrote:
->> Add missing initialisation and correct type casting
->>
->> Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
->> ---
->>   drivers/tty/serial/qcom_geni_serial.c | 8 ++++----
->>   1 file changed, 4 insertions(+), 4 deletions(-)
->>
->> diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
->> index 4733a23..08f3ad4 100644
->> --- a/drivers/tty/serial/qcom_geni_serial.c
->> +++ b/drivers/tty/serial/qcom_geni_serial.c
->> @@ -943,11 +943,11 @@ static int qcom_geni_serial_startup(struct uart_port *uport)
->>   static unsigned long get_clk_div_rate(struct clk *clk, unsigned int baud,
->>                          unsigned int sampling_rate, unsigned int *clk_div)
->>   {
->> -       unsigned long ser_clk;
->> +       unsigned long ser_clk = 0;
-> In this patch it's not at all obvious why you'd need to init to 0. I
-> think the "for loop" is guaranteed to run at least once because
-> "max_div" is known at compile time. ...and currently each time through
-> the "for" loop you'll always set "ser_clk".
 
-Ok, I realised we will never break out of for loop exceeding ULONG_MAX 
-in 1st pass, so yes ser_clk will always be set.
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-> I think in a future patch you'll want to _remove_ this from the for loop:
->
-> if (!prev)
->    ser_clk = freq;
 
-Intent is to save (and use) 1st freq if we cannot find an exact divider.
-
-Isn't it ok?
-
-For example please find debug output for a required frequency of 51.2MHz.
-
-We try dividers 1, 2, 3 and end up with 52.1MHz the first result.
-
-[   18.815432] 20220509 get_clk_div_rate desired_clk:51200000
-[   18.821081] 20220509 get_clk_div_rate maxdiv:4095
-[   18.825924] 20220509 get_clk_div_rate div:1
-[   18.830239] 20220509 get_clk_div_rate freq:52174000
-[   18.835288] 20220509 get_clk_div_rate div:2
-[   18.839628] 20220509 get_clk_div_rate freq:100000000
-[   18.844794] 20220509 get_clk_div_rate div:3
-[   18.849119] 20220509 get_clk_div_rate freq:100000000
-[   18.854254] 20220509 get_clk_div_rate reached max frequency breaking...
-[   18.861072] 20220509 get_clk_div_rate clk_div=1, ser_clk=52174000
-
-The behaviour was same earlier too when root_freq table was present.
-
-The table did contain 51.2MHz and we would exit with same but on call to 
-clk_set_rate(51.2MHz) we were ending up with 52.1MHz
-
->
-> ...and _that's_ when you should init "ser_clk" to 0. Until then I'd
-> leave it as uninitialized...
->
-> Honestly, I'd throw all the fixes into one series, too.
-
-My concern was if there would be a requirement to split the changes.
-
-Will put in all in 1 series with Fixes tag.
-
->
->
->>          unsigned long desired_clk;
->>          unsigned long freq, prev;
->>          unsigned long div, maxdiv;
->> -       int64_t mult;
->> +       unsigned long long mult;
->>
->>          desired_clk = baud * sampling_rate;
->>          if (!desired_clk) {
->> @@ -959,8 +959,8 @@ static unsigned long get_clk_div_rate(struct clk *clk, unsigned int baud,
->>          prev = 0;
->>
->>          for (div = 1; div <= maxdiv; div++) {
->> -               mult = div * desired_clk;
->> -               if (mult > ULONG_MAX)
->> +               mult = (unsigned long long)div * (unsigned long long)desired_clk;
-> I think you only need to cast one of the two. The other will be
-> up-cast automatically.
-Will change.
->
->
->> +               if (mult > (unsigned long long)ULONG_MAX)
-> I don't think you need this cast. As far as I know the C language will
-> "upcast" to the larger of the two types.
-Will change.
->
->
-> -Doug
-
-Thank you.
-
--Vijay/
-
+Best regards,
+Krzysztof
