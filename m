@@ -2,67 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D879453AE38
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jun 2022 22:50:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1A10A53AE5B
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jun 2022 22:51:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229750AbiFAUn1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Jun 2022 16:43:27 -0400
+        id S229930AbiFAUqb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Jun 2022 16:46:31 -0400
 Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39162 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229781AbiFAUmw (ORCPT
+        with ESMTP id S229891AbiFAUoJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Jun 2022 16:42:52 -0400
-Received: from mail-oi1-f180.google.com (mail-oi1-f180.google.com [209.85.167.180])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F9DF25BC18;
-        Wed,  1 Jun 2022 13:24:54 -0700 (PDT)
-Received: by mail-oi1-f180.google.com with SMTP id m82so4069314oif.13;
-        Wed, 01 Jun 2022 13:24:54 -0700 (PDT)
+        Wed, 1 Jun 2022 16:44:09 -0400
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE22C1EA078
+        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Jun 2022 13:29:09 -0700 (PDT)
+Received: by mail-lf1-x136.google.com with SMTP id y32so4613281lfa.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Jun 2022 13:29:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=DcSjpVSz5kBdKttL/qibmuyG6zf/I/eEkUNKVypzm4Y=;
+        b=LeXZCfDwi2JzAKvy4kHtOnltGKxqKYskF08v+UIdsvEtOxxkwoK78b2BOKkHrkgRfW
+         Y+8VuwFXMA22RggbMXr8BqJP8G9jxw4NnRbS5rJ+Hlm7fSLvPjIgZFIY3mCYuRhB7AwR
+         TDIq6/uCsckrZ4MnKi3K5jPuGZNp+R5ffvuOnJlAukZOGyMaOXN+e+lddOkZneNNJNBr
+         KwAPb0MnVnY+5+izFAW7GUFLx7j2b7w7PBm9XR71icRTloDMuybxUTteLsrK5SaaUyO/
+         N0nALzFMvqA0DKYCugRlIBeZSBKbPu6/Dkk/jBaJJJ1YQoQIpWnIz7fBd9gMiYKhkysR
+         s9CA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=+oEvt8sf4TNEOQwuXvkayzQRhlop784huNwQTGf8szM=;
-        b=PMBuMe3ajIor114thw4GqKl747NchE07mBktaQRZbtLw8pU+G8lioE1grdAdZeqsYA
-         pKyuHf+ZMLFt27dezLxXKnHStDtSHL8XqdH44XZfwtHsuVSwJdIlqZr8nBLolvp6J664
-         6Iq1YAc5S8+4GxZG4X8EWnPGnpTJ5rAHaF4Mmub7e/ZFOUJDgpRWmXTyz0Zxi2PaZS2z
-         D28rb6p3eaf4tGayD+X7vZk/cCc9pWU5ROzBj9W35el4Ax6q6XbfiZb2iu8Bptf7AFPA
-         K/RijwG6ll9T+Ep3/7wcr3vWOPVAKFh36d4AEiCRQxfHssTYY3zRSNGiSxHzZMYDZFiy
-         xVEQ==
-X-Gm-Message-State: AOAM530CKSkG0Pm/vtYrK2yTMgYYguT+sxmoLyxxD1FZyafWpuJiJg8C
-        p2TG7+9UVw7suuGVeOAfxxEbS24loA==
-X-Google-Smtp-Source: ABdhPJxJmw2Wr1rxxehnbS1Z0gkP+WPIZRGPR7vHDTR5nLzOcg+2R1n/P5o97mMeAALFB5Vi2lWL1Q==
-X-Received: by 2002:a05:6808:e83:b0:32e:28e2:199d with SMTP id k3-20020a0568080e8300b0032e28e2199dmr770181oil.222.1654115093579;
-        Wed, 01 Jun 2022 13:24:53 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id e28-20020a544f1c000000b0032c18f04800sm1468136oiy.1.2022.06.01.13.24.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Jun 2022 13:24:53 -0700 (PDT)
-Received: (nullmailer pid 379428 invoked by uid 1000);
-        Wed, 01 Jun 2022 20:24:52 -0000
-Date:   Wed, 1 Jun 2022 15:24:52 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Cc:     Robert Foss <robert.foss@linaro.org>,
-        Todor Tomov <todor.too@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH 0/2] media: dt-bindings: media: sm8250-camss: Add
- power-domain-names property
-Message-ID: <20220601202452.GA365963-robh@kernel.org>
-References: <20220518121104.951621-1-vladimir.zapolskiy@linaro.org>
- <06baf3b7-6b2d-4cc6-64d7-7bd1b3a18335@linaro.org>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=DcSjpVSz5kBdKttL/qibmuyG6zf/I/eEkUNKVypzm4Y=;
+        b=5nt/hu37oLWrTcEYHtGSqjFh5uCS71OGCyR25YH2ebNpr978wurH01rRitHzSs/18h
+         X+aNeXA2Fzi8Wns37tHPc341iGW8HheXJVQ8WdvXBsP/PDdiYVqRWCOqqCHpJ1+8tnAP
+         f2BGtCTLzMw2R7pzjY4bcNN23dO79M+qz/mNzIK68QlcQCdhwzQ8ZVdpdtQX+alc5avS
+         YkQqBdi8IIFvVtgQI10pS+WuNyKG3jvJqa0bOMU3QsooGIu6bI9berJMxanqiPRIb99h
+         La42g58LGcVuV32bqL/+UQskWhOS8N5266OTr9WjZnlTI5yFQNROsCa1eujOUCk/0SEL
+         PW2g==
+X-Gm-Message-State: AOAM530qpftTNSuPj9IoFdaIkfqVSAoffgTVY8D5Ax5InwFmqkGn2Yqc
+        D/ExjUBMVrbnu3kxlnoOUaSJfw==
+X-Google-Smtp-Source: ABdhPJyo80JtJC9EIe0BPck/BKbot5NFyz0n8b5/KWlTwdKmU8JYQYlgeVZ7FO9/zTX8ShzY5j01dg==
+X-Received: by 2002:ac2:4289:0:b0:477:b3eb:f2f with SMTP id m9-20020ac24289000000b00477b3eb0f2fmr916181lfh.386.1654115347986;
+        Wed, 01 Jun 2022 13:29:07 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id z8-20020a0565120c0800b00478e5ef1ee5sm550811lfu.245.2022.06.01.13.29.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 01 Jun 2022 13:29:07 -0700 (PDT)
+Message-ID: <846ef8f5-230e-4e52-f67c-d2fc2530fcc0@linaro.org>
+Date:   Wed, 1 Jun 2022 23:29:06 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <06baf3b7-6b2d-4cc6-64d7-7bd1b3a18335@linaro.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.0
+Subject: Re: [PATCH v3 1/4] drm/dp: Export symbol / kerneldoc fixes for DP AUX
+ bus
+Content-Language: en-GB
+To:     Douglas Anderson <dianders@chromium.org>,
+        dri-devel@lists.freedesktop.org
+Cc:     Hsin-Yi Wang <hsinyi@chromium.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Philip Chen <philipchen@chromium.org>,
+        Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
+        Robert Foss <robert.foss@linaro.org>,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Stephen Boyd <swboyd@chromium.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Javier Martinez Canillas <javierm@redhat.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Lyude Paul <lyude@redhat.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        linux-kernel@vger.kernel.org
+References: <20220510192944.2408515-1-dianders@chromium.org>
+ <20220510122726.v3.1.Ia91f4849adfc5eb9da1eb37ba79aa65fb3c95a0f@changeid>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220510122726.v3.1.Ia91f4849adfc5eb9da1eb37ba79aa65fb3c95a0f@changeid>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -70,67 +89,60 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, May 20, 2022 at 12:53:02AM +0300, Vladimir Zapolskiy wrote:
-> On 5/18/22 15:11, Vladimir Zapolskiy wrote:
-> > QCOM SM8250 camera subsystem depends on three power domains, at the moment
-> > all of them are not differentiated one from another, however the power
-> > domains compose a hierarchical structure with vfe0 and vfe1 as subdomains
-> > of titan_top, also managing vfe0 and vfe1 separately allows to get more
-> > fine-grained power control in runtime.
-> > 
-> > The change relates to my review comment for v2 of CAMSS on SM8250 submission:
-> > 
-> >     https://lore.kernel.org/all/13ad033e-cd5d-3a8c-b036-50a3ac4245c0@linaro.org/
-> > 
-> > Apparently it becomes important to manage CAMSS power domains much better for
-> > newer platforms, this referes to platforms with Titan GDSC, for instance CAMSS
-> > on SM8450 has 6 power domains, and dealing with them in bulk is not an option.
-> > 
-> > There was a note in commit 2f6f8af67203 ("media: camss: Refactor VFE power
-> > domain toggling") about problems with power VFE domains on/off, but perhaps
-> > it's related to the fact that Titan GDSC is a special power domain and VFE
-> > are subdomains, the latter shall not be enabled earlier than the Titan, but
-> > the driver did not construct a proper hierarchy and leaves a room for races.
-> > 
-> > The change should have no implications on any SM8250 CAMSS users, since
-> > none of the supported in upstream boards enables the camss device tree node.
-> > The correspondent changes in the driver will follow this dt specific series.
-> > 
-> > Most likely a similar change is required for SDM845 platform, but it would
-> > need additional investigation and testing.
-> > 
-> > Vladimir Zapolskiy (2):
-> >    media: dt-bindings: media: sm8250-camss: Add power-domain-names property
-> >    arm64: dts: qcom: sm8250: camss: Add power-domain-names property
-> > 
-> >   .../devicetree/bindings/media/qcom,sm8250-camss.yaml       | 7 +++++++
-> >   arch/arm64/boot/dts/qcom/sm8250.dtsi                       | 1 +
-> >   2 files changed, 8 insertions(+)
-> > 
+On 10/05/2022 22:29, Douglas Anderson wrote:
+> While working on the DP AUX bus code I found a few small things that
+> should be fixed. Namely the non-devm version of
+> of_dp_aux_populate_ep_devices() was missing an export. There was also
+> an extra blank line in a kerneldoc and a kerneldoc that incorrectly
+> documented a return value. Fix these.
 > 
-> These changes will be unneeded, if it is reliable to state that the order
-> of 'power-domains' array values is fixed.
+> Fixes: aeb33699fc2c ("drm: Introduce the DP AUX bus")
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+> ---
+> None of these seem critical, so my plan is to land this in
+> drm-misc-next and not drm-misc-fixes. This will avoid merge conflicts
+> with future patches.
 > 
-> From Documentation/devicetree/bindings/media/qcom,sm8250-camss.yaml
+> Changes in v3:
+> - Patch ("drm/dp: Export symbol / kerneldoc fixes...") split for v3.
 > 
->   power-domains:
->     items:
->       - description: IFE0 GDSC - Image Front End, Global Distributed Switch Controller.
->       - description: IFE1 GDSC - Image Front End, Global Distributed Switch Controller.
->       - description: Titan GDSC - Titan ISP Block, Global Distributed Switch Controller.
+>   drivers/gpu/drm/display/drm_dp_aux_bus.c | 4 +---
+>   1 file changed, 1 insertion(+), 3 deletions(-)
 > 
-> Apparently it's insufficient to ensure the fixed order of the power domains
-> by running a check against the schema, and likely it can not be improved,
-> but please correct me here, if I'm wrong.
+> diff --git a/drivers/gpu/drm/display/drm_dp_aux_bus.c b/drivers/gpu/drm/display/drm_dp_aux_bus.c
+> index dccf3e2ea323..552f949cff59 100644
+> --- a/drivers/gpu/drm/display/drm_dp_aux_bus.c
+> +++ b/drivers/gpu/drm/display/drm_dp_aux_bus.c
+> @@ -66,7 +66,6 @@ static int dp_aux_ep_probe(struct device *dev)
+>    * @dev: The device to remove.
+>    *
+>    * Calls through to the endpoint driver remove.
+> - *
+>    */
+>   static void dp_aux_ep_remove(struct device *dev)
+>   {
+> @@ -120,8 +119,6 @@ ATTRIBUTE_GROUPS(dp_aux_ep_dev);
+>   /**
+>    * dp_aux_ep_dev_release() - Free memory for the dp_aux_ep device
+>    * @dev: The device to free.
+> - *
+> - * Return: 0 if no error or negative error code.
+>    */
+>   static void dp_aux_ep_dev_release(struct device *dev)
+>   {
+> @@ -256,6 +253,7 @@ int of_dp_aux_populate_ep_devices(struct drm_dp_aux *aux)
+>   
+>   	return 0;
+>   }
+> +EXPORT_SYMBOL_GPL(of_dp_aux_populate_ep_devices);
+>   
+>   static void of_dp_aux_depopulate_ep_devices_void(void *data)
+>   {
 
-Right, the schemas can't check that the order is correct.
 
-> That's said, what is the preferred way here? Leave everything as is and rely
-> on the order of item descriptions, or add a new power-domain-names property?
-
-Well, you can't start requiring power-domain-names without breaking the 
-ABI and it has to be required to allow any order. Even then, defined 
-order is preferred unless there's too many variations and we're stuck 
-with no defined order.
-
-Rob
+-- 
+With best wishes
+Dmitry
