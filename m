@@ -2,102 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1DE07539D98
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jun 2022 08:56:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 203F4539DEC
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jun 2022 09:12:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350036AbiFAG4k (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Jun 2022 02:56:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32998 "EHLO
+        id S1343897AbiFAHMO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Jun 2022 03:12:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47560 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350010AbiFAG4g (ORCPT
+        with ESMTP id S1350216AbiFAHMO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Jun 2022 02:56:36 -0400
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6959457B10;
-        Tue, 31 May 2022 23:56:34 -0700 (PDT)
+        Wed, 1 Jun 2022 03:12:14 -0400
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8807F8CB10
+        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Jun 2022 00:12:12 -0700 (PDT)
+Received: by mail-ed1-x529.google.com with SMTP id n28so888994edb.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Jun 2022 00:12:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1654066594; x=1685602594;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version;
-  bh=AmlzsIo/Giyjo9UdRgEqUumyCRSpNAvYLMJiSoY6K9s=;
-  b=zDffZWRhAsevYTVXMoM4BsfgEAheIgvM22Z/RFZDMVuK5uAu+cJIu33g
-   3zZE9UzIXYD2veDAnRv0CQpEn6rjp/0DGh+twjI36+cmN1kzsAkgvJ3XO
-   WeOOImUTItE9IDeEur9JPqn77Zv3TYuJo2b60OZetp8TPzP8jwza8IyVd
-   E=;
-Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 31 May 2022 23:56:34 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg02-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 May 2022 23:56:33 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Tue, 31 May 2022 23:56:33 -0700
-Received: from hu-kriskura-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Tue, 31 May 2022 23:56:27 -0700
-From:   Krishna Kurapati <quic_kriskura@quicinc.com>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        "Doug Anderson" <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>
-CC:     <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-phy@lists.infradead.org>, <quic_pkondeti@quicinc.com>,
-        <quic_ppratap@quicinc.com>, <quic_vpulyala@quicinc.com>,
-        Krishna Kurapati <quic_kriskura@quicinc.com>
-Subject: [PATCH v8 3/3] arm64: dts: qcom: sc7280: Update SNPS Phy params for SC7280 IDP device
-Date:   Wed, 1 Jun 2022 12:26:04 +0530
-Message-ID: <1654066564-20518-4-git-send-email-quic_kriskura@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1654066564-20518-1-git-send-email-quic_kriskura@quicinc.com>
-References: <1654066564-20518-1-git-send-email-quic_kriskura@quicinc.com>
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=trhwASX+lfcvBV60r3M43wKh+E4woS61gxL4WkTNutQ=;
+        b=VsYG//kIrthv8XP+4a96/hG0sceqoJrsQgbNzhr3ch3jYwTr440p6rYIhEr25TiOXl
+         oDghDolp1X46DwLfW6ETlPbgBR9uXI+JODIGEQoKaEWvXs0K0oGDH9fIp5RrH9puRTw8
+         jQzoE9C+VlKj0JIgne7TaoRy0UEr97/7nMkblSVmQ+ERN7FOIJUFw3q6X9Ev4Gk/JK1O
+         ms4hT2DPd6WeSkDJ4kAlGX0Rg8rhLwfXxDoh1wlhkFTNm4bbPcK0kMWmoP3Dse2g2dVk
+         JuhTTXK8RcaLgbT2hcbyvp8IOWA3+doBvX8i7f2TnzMVKxMzfGLcCw2ErqxVCf1xQiMC
+         Ck1Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=trhwASX+lfcvBV60r3M43wKh+E4woS61gxL4WkTNutQ=;
+        b=wz31mDQjhWosZkPO1SWkOS7fHo0J3EOvIQY37SKPkmDHGGnw5A/fkH/Lkqj5JjJVRG
+         S7dyQ2uMwFhzzJsqioD6JR6zyi/MYhUwempLT7mUl8lIp3z9O2wLBfLqZbxJzgQX34pv
+         dHyy+DXxTN6d/DUD5CDX927CUWhfN6COIyRZX1UKdsnVFnbTQMnKTIyLsYBL0oB7d8wh
+         egYf1RidSNFJYZBMMWAJETeVGNTdWM+CapEuXEQ+85o7tXrFWZzQgxRzi3O2ho8oHC3b
+         mTm3Qk9ig36PdqosTOTcaC+5mNaOUMnh+SkyFjj2qylE57sFUcyR8rHctH33VGfXqx+V
+         zj0A==
+X-Gm-Message-State: AOAM531tzHpa7mZhvhg0vJD5KMrY6qd0PPnrt0IuzmzRcTgW0Vk4QvR9
+        +rtFz+CAgom4NPZv8V840OflGA==
+X-Google-Smtp-Source: ABdhPJwqkfpw/36eeo4iKm/FtLUf93jLYEwb0D93rirRhTpoZezYM47nJJPfx729OU6HFBULnvyhAg==
+X-Received: by 2002:a05:6402:3551:b0:42b:6d38:9485 with SMTP id f17-20020a056402355100b0042b6d389485mr49145090edd.234.1654067530663;
+        Wed, 01 Jun 2022 00:12:10 -0700 (PDT)
+Received: from [192.168.0.179] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id pk16-20020a170906d7b000b006fee526ed72sm332280ejb.217.2022.06.01.00.12.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 01 Jun 2022 00:12:10 -0700 (PDT)
+Message-ID: <95bbe6b0-1c56-9be9-0343-a24fe1970705@linaro.org>
+Date:   Wed, 1 Jun 2022 09:12:09 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Subject: Re: [PATCH v3 2/4] soc: qcom: icc-bwmon: Add bandwidth monitoring
+ driver
+Content-Language: en-US
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Georgi Djakov <djakov@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Cc:     Thara Gopinath <thara.gopinath@linaro.org>
+References: <20220531105137.110050-1-krzysztof.kozlowski@linaro.org>
+ <20220531105137.110050-3-krzysztof.kozlowski@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220531105137.110050-3-krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Overriding the SNPS Phy tuning parameters for SC7280 IDP device.
+On 31/05/2022 12:51, Krzysztof Kozlowski wrote:
+> +	window = mult_frac(bwmon->sample_ms, HW_TIMER_HZ, MSEC_PER_SEC);
+> +	/* Maximum sampling window: 0xfffff */
+> +	writel_relaxed(window, bwmon->base + BWMON_SAMPLE_WINDOW);
+> +
+> +	bwmon_set_threshold(bwmon, BWMON_THRESHOLD_HIGH,
+> +			    data->default_highbw_kbps);
+> +	bwmon_set_threshold(bwmon, BWMON_THRESHOLD_MED,
+> +			    data->default_medbw_kbps);
+> +	bwmon_set_threshold(bwmon, BWMON_THRESHOLD_LOW,
+> +			    data->default_lowbw_kbps);
+> +
+> +	thres_count = data->zone3_thres_count << BWMON_THRESHOLD_COUNT_ZONE3_SHIFT |
+> +		      BWMON_THRESHOLD_COUNT_ZONE2_DEFAULT << BWMON_THRESHOLD_COUNT_ZONE2_SHIFT |
+> +		      data->zone1_thres_count << BWMON_THRESHOLD_COUNT_ZONE1_SHIFT |
+> +		      BWMON_THRESHOLD_COUNT_ZONE0_DEFAULT;
+> +	writel_relaxed(thres_count, bwmon->base + BWMON_THRESHOLD_COUNT);
+> +	writel_relaxed(BWMON_ZONE_ACTIONS_DEFAULT,
+> +		       bwmon->base + BWMON_ZONE_ACTIONS);
+> +
+> +	/* Write barriers in bwmon_clear() */
+> +	irq_enable = BIT(BWMON_IRQ_ENABLE_ZONE1_SHIFT) |
+> +		     BIT(BWMON_IRQ_ENABLE_ZONE3_SHIFT);
 
-Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
----
- arch/arm64/boot/dts/qcom/sc7280-idp.dtsi | 6 ++++++
- 1 file changed, 6 insertions(+)
+Unusued variable, I will send a v4.
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-index ecbf2b8..589258a 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-@@ -317,6 +317,12 @@
- 	vdda-pll-supply = <&vreg_l10c_0p8>;
- 	vdda33-supply = <&vreg_l2b_3p0>;
- 	vdda18-supply = <&vreg_l1c_1p8>;
-+	qcom,hs-rise-fall-time-bp = <0>;
-+	qcom,squelch-detector-bp = <(-2090)>;
-+	qcom,hs-disconnect-bp = <1743>;
-+	qcom,hs-amplitude-bp = <1780>;
-+	qcom,hs-crossover-voltage-microvolt = <(-31000)>;
-+	qcom,hs-output-impedance-micro-ohms = <2600000>;
- };
- 
- &usb_1_qmpphy {
--- 
-2.7.4
 
+
+Best regards,
+Krzysztof
