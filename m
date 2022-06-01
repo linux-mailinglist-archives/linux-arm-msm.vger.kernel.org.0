@@ -2,68 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 525A253A56F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jun 2022 14:47:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9FDCE53A58D
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jun 2022 14:57:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344973AbiFAMrb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Jun 2022 08:47:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34822 "EHLO
+        id S1352254AbiFAM5b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Jun 2022 08:57:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35122 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353082AbiFAMr3 (ORCPT
+        with ESMTP id S232460AbiFAM5a (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Jun 2022 08:47:29 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22EE810FCF
-        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Jun 2022 05:47:28 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id be31so2536584lfb.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Jun 2022 05:47:28 -0700 (PDT)
+        Wed, 1 Jun 2022 08:57:30 -0400
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A63FEE0B8;
+        Wed,  1 Jun 2022 05:57:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=4li32PBdxnIv+jFKvhCljFF/bYWyWatcYvkg3TZww1s=;
-        b=ywX1q/Sp7hV1p86goYqniFRV4cZlbD1R9yXvl2mfzeiuSR3efubHRWaiRdhX8Esqed
-         mJ3yGD0RUVPPt1f/R+ouSvoTxOqAtRGGgJUYbilgONCDkx8DOopTBoVTnK1YDUsrdubc
-         35isYXnsGcsXSl0mGJFgkq3r3lG7riqq0eSxluKLDD9BSI3Llw6eJre/ph0RCqD4obLC
-         i9YXHOcRy9Xt2c5IM1Gz2xlBGmspzRO9AVWXDux0w0p9TMNZeVhk0CUU/AV1ol0ip3mo
-         xFYcraKqvM6vRkJcCRd/ukGbYMiT6azPbdbKx0f8zsY59oJZGDh+lFQouG4FfWUAYOmP
-         Jukw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=4li32PBdxnIv+jFKvhCljFF/bYWyWatcYvkg3TZww1s=;
-        b=WWb2fgy7qXq9415dpMEbVW+MyxxYb8lJkskHV4mZLcEOpfVtxS2NlhFoK/3QDjKfJd
-         mPTCIJxPg557ZB2FGvEx6WfTXBSbv9YC13IaSXAYRHyU3O7GSZh1Lar9ymjaswPeDqmG
-         aWYVvYJFccEarLfmy4nvmbBNRAWVh+XYP/r6vbaI7kNP5WN1o0X9y/+GHD2udB2dgi9S
-         DUGdVZa7R/vspjq8w5fVRIL2/oIom7g1AKW2QS3FCxEWyDVS5oyXABSWFeZITlTBrJoa
-         Dz19PjbA98ZEhPm2Q43vFQKQQH8LtT+AnsARBZj1ESdgnsaC/PN1uGwZTgc5k9NAivik
-         HaBA==
-X-Gm-Message-State: AOAM5331JQUf8TuMoYX0DwhKBKBcY+jjK/q1S9mu4hZk/K9f/0gig7lI
-        h19PL57mp+KEt8cD0bNDTQwon5s+mdsASTUqHB1OYg==
-X-Google-Smtp-Source: ABdhPJw8rLYnetAKH4EyHC77hyUUHRF/sLZFy9a2sig6ks5ygw10wco9yqviC0600wPiouO4wz2Lk4I3fuUHalzgJn0=
-X-Received: by 2002:a05:6512:308b:b0:478:7ab5:4acd with SMTP id
- z11-20020a056512308b00b004787ab54acdmr34023519lfd.167.1654087647633; Wed, 01
- Jun 2022 05:47:27 -0700 (PDT)
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1654088249; x=1685624249;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=S9uisrdptfIPDkvI5rpbWpdm1zkgyzUYHlOlidzA01w=;
+  b=vCLEhHpEWTCg/uNCZRW2n+Im5a0bFQhSsli6qKaj5+E0nXMFE2C68iZM
+   wVUjNiioJz1tFFX3vEnvNdTOGe3KAQUT4ei7/dhsa+HZkG3YjhnVfN9Iy
+   UphVGfuM/ZL9z3VlRh7ydi18EtV0nVMCNMQHZXpZkh7NZM+OYiLpVGNbe
+   Q=;
+Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 01 Jun 2022 05:57:28 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jun 2022 05:57:28 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Wed, 1 Jun 2022 05:57:28 -0700
+Received: from [10.216.6.145] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Wed, 1 Jun 2022
+ 05:57:22 -0700
+Message-ID: <7c74868d-624b-c18e-b377-026e70813fcc@quicinc.com>
+Date:   Wed, 1 Jun 2022 18:27:18 +0530
 MIME-Version: 1.0
-References: <1653674036-21829-1-git-send-email-quic_c_sbhanu@quicinc.com>
-In-Reply-To: <1653674036-21829-1-git-send-email-quic_c_sbhanu@quicinc.com>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Wed, 1 Jun 2022 14:46:51 +0200
-Message-ID: <CAPDyKFqqSdCGV-SGcbEFCA5rXaqUc0btYd9Tig43NouNuHUG5Q@mail.gmail.com>
-Subject: Re: [PATCH V8 0/5] mmc: add error statistics for eMMC and SD card
-To:     Shaik Sajida Bhanu <quic_c_sbhanu@quicinc.com>,
-        adrian.hunter@intel.com
-Cc:     wsa+renesas@sang-engineering.com, shawn.lin@rock-chips.com,
-        yoshihiro.shimoda.uh@renesas.com, digetx@gmail.com,
-        quic_asutoshd@quicinc.com, linux-arm-msm@vger.kernel.org,
-        linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_rampraka@quicinc.com, quic_pragalla@quicinc.com,
-        quic_sartgarg@quicinc.com, quic_nitirawa@quicinc.com,
-        quic_sayalil@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.1
+Subject: Re: [PATCH v2] ASoC: qcom: soundwire: Add support for controlling
+ audio CGCR from HLOS
+Content-Language: en-US
+To:     Matthias Kaehlcke <mka@chromium.org>
+CC:     Stephen Boyd <swboyd@chromium.org>, <agross@kernel.org>,
+        <alsa-devel@alsa-project.org>, <bgoswami@quicinc.com>,
+        <bjorn.andersson@linaro.org>, <broonie@kernel.org>,
+        <devicetree@vger.kernel.org>, <judyhsiao@chromium.org>,
+        <lgirdwood@gmail.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <perex@perex.cz>,
+        <quic_plai@quicinc.com>, <quic_rohkumar@quicinc.com>,
+        <robh+dt@kernel.org>, <srinivas.kandagatla@linaro.org>,
+        <tiwai@suse.com>, <vkoul@kernel.org>
+References: <1652877755-25120-1-git-send-email-quic_srivasam@quicinc.com>
+ <CAE-0n53g9rWks+euk5KHBzmJNEB3xLbJzMgCxN52DO5x+9-Wgg@mail.gmail.com>
+ <51b8aca1-e038-4907-e973-ebdbebaf9b28@quicinc.com>
+ <YpaXZ6KfApGebkBy@google.com>
+From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Organization: Qualcomm
+In-Reply-To: <YpaXZ6KfApGebkBy@google.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-5.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -72,102 +78,42 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 27 May 2022 at 19:54, Shaik Sajida Bhanu
-<quic_c_sbhanu@quicinc.com> wrote:
->
-> Changes since V7:
->         - Patch set V6 rebased on Ulf's(Ulf Hansson) master branch instead
->           of Ulf's (Ulf Hansson) next branch by mistake. So rebased patch
->           set on Ulf's next branch now as suggested by Adrain Hunter.
 
-Thanks to both of you for moving this forward to become an easy
-maintainable piece of code.
+On 6/1/2022 4:02 AM, Matthias Kaehlcke wrote:
+Thanks for Your Time Matthias!!!
+> On Tue, May 24, 2022 at 04:19:47PM +0530, Srinivasa Rao Mandadapu wrote:
+>> On 5/21/2022 8:43 AM, Stephen Boyd wrote:
+>> Thanks for your time Stephen!!!
+>>> Quoting Srinivasa Rao Mandadapu (2022-05-18 05:42:35)
+>>>> diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
+>>>> index da1ad7e..445e481 100644
+>>>> --- a/drivers/soundwire/qcom.c
+>>>> +++ b/drivers/soundwire/qcom.c
+>>>> @@ -1333,6 +1337,10 @@ static int qcom_swrm_probe(struct platform_device *pdev)
+>>>>           ctrl->bus.compute_params = &qcom_swrm_compute_params;
+>>>>           ctrl->bus.clk_stop_timeout = 300;
+>>>>
+>>>> +       ctrl->audio_cgcr = devm_reset_control_get_exclusive(dev, "swr_audio_cgcr");
+>>>> +       if (IS_ERR(ctrl->audio_cgcr))
+>>>> +               dev_err(dev, "Failed to get audio_cgcr reset required for soundwire-v1.6.0\n");
+>>> Why is there no return on error here? Is the reset optional?
+>> Yes it's optional. For older platforms this is not required.
+> If it's optional then either there should be no error message, or the
+> error message should only be logged when the version is >= 1.6.0. There
+> are few things worse than a kernel log riddled with misleading error
+> messages.
 
-Queued for v5.20 on the devel branch, thanks!
+In that case, it can be done like below. Kindly let me know your opinion 
+on this.
 
-Kind regards
-Uffe
+if (ctrl->version >= 0x01060000) {
+     ctrl->audio_cgcr = devm_reset_control_get_exclusive(dev, 
+"swr_audio_cgcr");
+         if (IS_ERR(ctrl->audio_cgcr)) {
+             dev_err(dev, "Failed to get audio_cgcr reset required for 
+soundwire-v1.6.0\n");
+             ret = PTR_ERR(ctrl->audio_cgcr);
+             goto err_clk;
+         }
+     }
 
-
->
-> Changes since V6:
->         - Rebased on Ulf's(Ulf Hansson) next branch as suggested by
->           Adrain Hunter.
->         - Replaced debugfs_create_file() with debugfs_create_file_unsafe()
->           as suggested by Adrain Hunter.
->         - "[V6,5/5] mmc: cqhci: Capture eMMC and SD card errors" not
->           included in this Patch series as we don't have cqhci changes
->           on Ulf's(Ulf Hansson)next branch.
->
-> Changes since V5:
->         - Considered all error stats enums to set error state.
->         - Added missed tuning error related code changes which was
->           missed in patch set V5 as Adrain Hunter pointed.
->         - Replaced DEFINE_SIMPLE_ATTRIBUTE with DEFINE_DEBUGFS_ATTRIBUTE
->           as suggested by Adrain Hunter.
->
-> Changes since V4:
->         - Defined new macro to increment err_stats members when error occured
->           as suggested by Adrain Hunter.
->         - Called err_stats members increment function after printing the error
->           as suggested by Adrain Hunter.
->         - Considered INDEX and END_BIT errors same as CRC errors as suggested
->           by Adrain Hunter.
->         - Removed Null check for host in debug fs functions and Reordered
->           err_stats declarationas suggested by Adrain Hunter.
->         - Removed err_state variable stuff and updated err_state debug fs entry
->           based on the err_stats members state as suggested by Adrain Hunter.
->
-> Changes since V3:
->         - Dropped error stats feature flag as suggested by Adrain Hunter.
->         - Separated error state related changes in separate patches as
->           suggested by Adrain Hunter.
->           [PATCH V4 4/7] : error state debug fs
->           [PATCH V4 5/7] : error state enable function
->           [PATCH V4 6/7] : error state enable in error case
->         - Note: we are enabling error state before calling sdhci_dumpregs
->           we couldn't add the err state in error stats array as err state
->           is not error type.
->         - Corrected Signed-off-by order as suggested by Bjron Andersson.
->         - Moved error state enable code from sdhci_dumpregs to error
->           conditions as suggested by Adrain Hunter
->
-> Changes since V2:
->         - Removed userspace error stats clear debug fs entry as suggested
->           by Adrain Hunter.
->         - Split patch into 4 patches
->           [PATCH V3 1/4] : sdhci driver
->           [PATCH V3 2/4] : debug fs entries
->           [PATCH V3 3/4] : core driver
->           [PATCH V3 4/4] : cqhci driver
->         - Used for loop to print error messages instead of using printf
->           statements for all error messages as suggested by Adrain Hunter.
->         - Introduced one flag to enable error stats feature, if any other
->           client wants to use this feature, they need to enable that flag.
->         - Moved reset command timeout error statement to card init flow
->           as suggested by Adrain Hunter.
->
-> Changes since V1:
->         - Removed sysfs entry for eMMC and SD card error statistics and added
->           debugfs entry as suggested by Adrian Hunter and Ulf Hansson.
->
-> Shaik Sajida Bhanu (5):
->   mmc: core: Capture eMMC and SD card errors
->   mmc: sdhci: Capture eMMC and SD card errors
->   mmc: debugfs: Add debug fs entry for mmc driver
->   mmc: debugfs: Add debug fs error state entry for mmc driver
->   mmc: cqhci: Capture eMMC and SD card errors
->
->  drivers/mmc/core/core.c       | 10 +++++-
->  drivers/mmc/core/debugfs.c    | 79 +++++++++++++++++++++++++++++++++++++++++++
->  drivers/mmc/host/cqhci-core.c |  9 ++++-
->  drivers/mmc/host/sdhci.c      | 59 ++++++++++++++++++++++++--------
->  drivers/mmc/host/sdhci.h      |  3 ++
->  include/linux/mmc/host.h      | 26 ++++++++++++++
->  include/linux/mmc/mmc.h       |  6 ++++
->  7 files changed, 175 insertions(+), 17 deletions(-)
->
-> --
-> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-> of Code Aurora Forum, hosted by The Linux Foundation
->
