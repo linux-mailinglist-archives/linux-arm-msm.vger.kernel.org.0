@@ -2,46 +2,47 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 819C053A719
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jun 2022 15:58:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DF98153A6FE
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jun 2022 15:57:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353930AbiFAN6X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Jun 2022 09:58:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59400 "EHLO
+        id S1353913AbiFAN5W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Jun 2022 09:57:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59368 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353931AbiFAN53 (ORCPT
+        with ESMTP id S1353920AbiFAN4l (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Jun 2022 09:57:29 -0400
-Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05CEE8720F;
-        Wed,  1 Jun 2022 06:55:10 -0700 (PDT)
+        Wed, 1 Jun 2022 09:56:41 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EFE828CCC2;
+        Wed,  1 Jun 2022 06:54:56 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id 607FFCE1C23;
-        Wed,  1 Jun 2022 13:54:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1354C3411D;
-        Wed,  1 Jun 2022 13:54:36 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 79FD8B81AEB;
+        Wed,  1 Jun 2022 13:54:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E978C34119;
+        Wed,  1 Jun 2022 13:54:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1654091677;
-        bh=CHQYXDBwrxchbKHAoMPs2PSyNPZg051MTciS8RUX4rQ=;
+        s=k20201202; t=1654091690;
+        bh=EbLXjcLRXtxb0jXjdZtiVIGjSd5602C1FKsy5V+dTeA=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=GojRMfdmTVcRlyka7Fx/8YB4V4kRRxHqnY/sEyAQWGvBRPorkf4TvwOv1IabJ/hT7
-         01z9+TwmOLT2Z5yqwZy3Ngl5ctKAaaSJqB0shS5Ac5DDT/69K3rE2umVuPcf3RAFk7
-         8kd5aEIz9mDqsT4WzBIhkrZmVIz/eKNy8Ugf9hYqPbMJP+8Ura+MRNohHI1z5M81Pp
-         FCXjTVIwwZAzAHILcnoeAuTJy2cSghMo2Q1ZmQV6GIywexUdRjdDlK2cnJ7qquMiUX
-         Moyb8gRAMR/vnQ2qW3S0+ly7+MN0UcFqXY7p4A1WpuVP26Qq4x8UQGsR8vu8ADPS2R
-         HLWEtghC7OYsw==
+        b=PbB1uj6FZiThQ/T6OWVdDEWCqwR48yTbI64GEFJNaF/LZqjYYQoVRT0BtMcD1nZ/Q
+         iHLJNvLVvDcYYxEACd2JhkCmeAGpQ2b6HFTt+W3jbNJw+GGPwOr6mpBjGAi5owPtil
+         RKceryKdBAIY3hftgr54Fv6nYE9PUec+ACOLX5L6p33d1SCyD2cV+7JvjgT+GkzBVx
+         FL2YneTUFsaFF6YCAd5WWtJ/wfNsVMf92MMe9qRCgQ+klFprOUk406uj8y8BiZ/Bk4
+         7JxR++K2ZWdXc5uosW14vl69tZ4EJN19TGmAzP5FQfH4nBpHDf/XTn++MR4kRZmop5
+         sl0jomFR3Xx8w==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Konrad Dybcio <konrad.dybcio@somainline.org>,
+Cc:     Joel Selvaraj <jo@jsfamily.in>,
+        Caleb Connolly <caleb@connolly.tech>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Sasha Levin <sashal@kernel.org>, agross@kernel.org,
         robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.17 08/48] arm64: dts: qcom: msm8994: Fix BLSP[12]_DMA channels count
-Date:   Wed,  1 Jun 2022 09:53:41 -0400
-Message-Id: <20220601135421.2003328-8-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.17 14/48] arm64: dts: qcom: sdm845-xiaomi-beryllium: fix typo in panel's vddio-supply property
+Date:   Wed,  1 Jun 2022 09:53:47 -0400
+Message-Id: <20220601135421.2003328-14-sashal@kernel.org>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220601135421.2003328-1-sashal@kernel.org>
 References: <20220601135421.2003328-1-sashal@kernel.org>
@@ -59,42 +60,33 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Konrad Dybcio <konrad.dybcio@somainline.org>
+From: Joel Selvaraj <jo@jsfamily.in>
 
-[ Upstream commit 1ae438d26b620979ed004d559c304d31c42173ae ]
+[ Upstream commit 1f1c494082a1f10d03ce4ee1485ee96d212e22ff ]
 
-MSM8994 actually features 24 DMA channels for each BLSP,
-fix it!
+vddio is misspelled with a "0" instead of "o". Fix it.
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+Signed-off-by: Joel Selvaraj <jo@jsfamily.in>
+Reviewed-by: Caleb Connolly <caleb@connolly.tech>
 Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Link: https://lore.kernel.org/r/20220319174645.340379-14-konrad.dybcio@somainline.org
+Link: https://lore.kernel.org/r/BY5PR02MB7009901651E6A8D5ACB0425ED91F9@BY5PR02MB7009.namprd02.prod.outlook.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/msm8994.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8994.dtsi b/arch/arm64/boot/dts/qcom/msm8994.dtsi
-index 480bc686e8e8..d76e93cff478 100644
---- a/arch/arm64/boot/dts/qcom/msm8994.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8994.dtsi
-@@ -498,7 +498,7 @@ blsp1_dma: dma-controller@f9904000 {
- 			#dma-cells = <1>;
- 			qcom,ee = <0>;
- 			qcom,controlled-remotely;
--			num-channels = <18>;
-+			num-channels = <24>;
- 			qcom,num-ees = <4>;
- 		};
- 
-@@ -634,7 +634,7 @@ blsp2_dma: dma-controller@f9944000 {
- 			#dma-cells = <1>;
- 			qcom,ee = <0>;
- 			qcom,controlled-remotely;
--			num-channels = <18>;
-+			num-channels = <24>;
- 			qcom,num-ees = <4>;
- 		};
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
+index 367389526b41..a97f5e89e1d0 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
++++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
+@@ -218,7 +218,7 @@ &dsi0 {
+ 	panel@0 {
+ 		compatible = "tianma,fhd-video";
+ 		reg = <0>;
+-		vddi0-supply = <&vreg_l14a_1p8>;
++		vddio-supply = <&vreg_l14a_1p8>;
+ 		vddpos-supply = <&lab>;
+ 		vddneg-supply = <&ibb>;
  
 -- 
 2.35.1
