@@ -2,98 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0C19153AD10
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jun 2022 20:52:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 730F653AE4D
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jun 2022 22:51:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230450AbiFASv3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Jun 2022 14:51:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39756 "EHLO
+        id S230021AbiFAUqT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Jun 2022 16:46:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44648 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229497AbiFASv2 (ORCPT
+        with ESMTP id S229589AbiFAUpT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Jun 2022 14:51:28 -0400
-Received: from mail-oi1-f178.google.com (mail-oi1-f178.google.com [209.85.167.178])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7351B13275E;
-        Wed,  1 Jun 2022 11:51:27 -0700 (PDT)
-Received: by mail-oi1-f178.google.com with SMTP id h188so3830015oia.2;
-        Wed, 01 Jun 2022 11:51:27 -0700 (PDT)
+        Wed, 1 Jun 2022 16:45:19 -0400
+Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8AFA10F36B
+        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Jun 2022 13:31:38 -0700 (PDT)
+Received: by mail-oi1-x234.google.com with SMTP id k11so4091175oia.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Jun 2022 13:31:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to;
+        bh=Gk4nfCem3ECRa7Gml0J0mN/3RZoOAdfGaQAqyHPKtiI=;
+        b=RGd9c1aErSn0Z6Ze8KLoF3EWbTH/9kTlwI+HC+SAx7dzvBrwHHsKOlh0JbRb09xcBP
+         iM2OCHeO/Jrl9Xle2mDSw6T0q2WeDDZSG5qe5a4Dg+cUelC504vEzjOQufYXWP9aJXgI
+         V/LFJCahzAFFpJlr1tiv2Vp4M01X+B3LdrfN7rOxB8bGQcOq43FjV1KDwVfyhOisNkOG
+         FD6f0xHzXypVyOoc2S2G61yyKZweooFWr6HTnKbFSpcoQrcxWgeekfUkx9WrMRo9A/lx
+         1hTIaXz5Rg+fQ0IRlejP5CxzHN8QjtW4TV9t29PD5AzmW/wzytk4/unH4gfxTM3MusEo
+         OocQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=M2ZNwqKjItGDpeZxDzTcGrjLej9RBlHgjiNO+wPf9u0=;
-        b=15yKPCx6b/81D4UyxkRv3vXyFI/CDsU7luQH9HUH7uY8b6i3ubb7nbbanWcAftcyGL
-         BTCMhXvvl5g5eBKRkDIZu7T3IpErw0rtEi4C3VthVt8TDIMNceTzuDTtZ+epi8B42dy5
-         xeHV0ZSoiF4iXFdrMj6G6MSAmPVut/5luy3+7x49kkmbFdY4kPc4jdMXZhVcc4j8FM1r
-         n7Azx9GkRV2lRFnHyadS2++In7/KOug/G32p973lNYQgZRBy0MlsT5LLvEjTGe3AXI4B
-         SykESyD2ilk80WzqrhKgsS9L9B6i7u+aCj3QeZXaOlZGxbiJgnNkOwxCGJgijpvVpOR8
-         1QDQ==
-X-Gm-Message-State: AOAM532FcRo4gWwLx6yqm7SrI8wjQhgI+lwfptZFPlgXbEy9xkZxObam
-        +QhBOdvYODvNzpkoKpVYOg==
-X-Google-Smtp-Source: ABdhPJwQFmyslgS5FHA+5KgsaoiseVIbZoReYgt/VB1UM4o0OIKiCyq+xA7b97+mzLJmmb3w5CRzLw==
-X-Received: by 2002:a05:6808:10d4:b0:32b:1230:5cbd with SMTP id s20-20020a05680810d400b0032b12305cbdmr15489565ois.70.1654109486200;
-        Wed, 01 Jun 2022 11:51:26 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id lv21-20020a056871439500b000f28a948dd2sm981576oab.21.2022.06.01.11.51.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Jun 2022 11:51:25 -0700 (PDT)
-Received: (nullmailer pid 215762 invoked by uid 1000);
-        Wed, 01 Jun 2022 18:51:25 -0000
-Date:   Wed, 1 Jun 2022 13:51:25 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Robert Foss <robert.foss@linaro.org>
-Cc:     agross@kernel.org, devicetree@vger.kernel.org,
-        mturquette@baylibre.com, jonathan@marek.ca,
-        linux-arm-msm@vger.kernel.org, krzk+dt@kernel.org,
-        linux-clk@vger.kernel.org, sboyd@kernel.org,
-        linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        robh+dt@kernel.org, bjorn.andersson@linaro.org
-Subject: Re: [PATCH v4 5/6] dt-bindings: clock: Add Qcom SM8350 DISPCC
- bindings
-Message-ID: <20220601185125.GA215573-robh@kernel.org>
-References: <20220601124250.60968-1-robert.foss@linaro.org>
- <20220601124250.60968-6-robert.foss@linaro.org>
+        h=x-gm-message-state:mime-version:reply-to:in-reply-to:references
+         :from:date:message-id:subject:to;
+        bh=Gk4nfCem3ECRa7Gml0J0mN/3RZoOAdfGaQAqyHPKtiI=;
+        b=dNOnmt5MqR7XaFnbFHQj3RtlxH9S3HTjNl/poqiqRn+84HL3afkoNyO4xhkk5LczRx
+         fdeXCn5laW2yxH/gyDTSOheaez860RRqTJJVH2tW92EZVZnxo/trok68jmabGQKXF6F8
+         sZL8Zu/2zfml/pDAgz+Z3R3arzlr2BXt77ZUGq8+q/5duuwGHAIHMfre4NTsNw3FDoHx
+         30MsCIx22HWjggTSfFAj8JkZEXZD25tAbE1dN3nPHAE+a+N5h6tTNdoVUJB7rpkvDIhz
+         FeK3VZjb60ssf6VSdpXl0T3nWbICJVlcthyQk1RFEJXviZ03hw+mzl5Fu1ND3PEv4bkT
+         XD0w==
+X-Gm-Message-State: AOAM533XfVdrgI8hw1ppaU+g7Y0Jme2rXNy1TMRdZeWwEUPTI4cyafmz
+        kEBNZjnG7oHOgd82IrLymQNqwt60chQhWVFhYaIZv4BZ4Ts=
+X-Google-Smtp-Source: ABdhPJw3lgUh0oxmgmjzAwlNNZ94ksw/9I0mOwLnUtgereG7iWZKY4s1I5RZI0o0mPKS7RYxDWrvjq+R1cXj2tliMpE=
+X-Received: by 2002:a05:6870:4619:b0:f1:e78d:fd54 with SMTP id
+ z25-20020a056870461900b000f1e78dfd54mr18171419oao.195.1654111014269; Wed, 01
+ Jun 2022 12:16:54 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220601124250.60968-6-robert.foss@linaro.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
-        autolearn_force=no version=3.4.6
+Received: by 2002:a05:6358:3601:b0:a3:2139:251d with HTTP; Wed, 1 Jun 2022
+ 12:16:53 -0700 (PDT)
+Reply-To: johnwinery@online.ee
+In-Reply-To: <CAFqHCSRskayxkisB-+u26DtbT6KFL5dAQ+X5s5W-kcBz_DGgTw@mail.gmail.com>
+References: <CAFqHCSRskayxkisB-+u26DtbT6KFL5dAQ+X5s5W-kcBz_DGgTw@mail.gmail.com>
+From:   johnwinery <alicejohnson8974@gmail.com>
+Date:   Wed, 1 Jun 2022 12:16:53 -0700
+Message-ID: <CAFqHCSSwNksOc4c+jJ+6tiF2b2hWGn9JARB6iPpgQJTeHU_7AA@mail.gmail.com>
+Subject: Re: good day
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 01 Jun 2022 14:42:49 +0200, Robert Foss wrote:
-> Add sm8350 DISPCC bindings, while these bindings are similar
-> to the sm8x50 bindings, the way clocks are represented has changed
-> in ABI incompatible ways.
-> 
-> Signed-off-by: Robert Foss <robert.foss@linaro.org>
-> ---
-> 
-> hanges since v2
->  - Add my SoB - Bjorn
-> 
-> Changes since v3
->  - Separate from qcom,dispcc-sm8x50
->  - Remove clock-names
->  - Make example sm8350 based
->  - Changed author to me due to size of changes
-> 
-> 
->  .../bindings/clock/qcom,dispcc-sm8350.yaml    | 104 ++++++++++++++++++
->  .../bindings/clock/qcom,dispcc-sm8x50.yaml    |   4 +-
->  .../dt-bindings/clock/qcom,dispcc-sm8350.h    |   1 +
->  3 files changed, 107 insertions(+), 2 deletions(-)
->  create mode 100644 Documentation/devicetree/bindings/clock/qcom,dispcc-sm8350.yaml
->  create mode 120000 include/dt-bindings/clock/qcom,dispcc-sm8350.h
-> 
-
-Reviewed-by: Rob Herring <robh@kernel.org>
+Greeting ,I had written an earlier mail to you but without response
