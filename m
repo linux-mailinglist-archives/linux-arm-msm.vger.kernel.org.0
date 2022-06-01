@@ -2,79 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 203F4539DEC
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jun 2022 09:12:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DB946539F92
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jun 2022 10:34:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343897AbiFAHMO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Jun 2022 03:12:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47560 "EHLO
+        id S1344920AbiFAIes (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Jun 2022 04:34:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57192 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350216AbiFAHMO (ORCPT
+        with ESMTP id S239960AbiFAIes (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Jun 2022 03:12:14 -0400
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8807F8CB10
-        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Jun 2022 00:12:12 -0700 (PDT)
-Received: by mail-ed1-x529.google.com with SMTP id n28so888994edb.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Jun 2022 00:12:12 -0700 (PDT)
+        Wed, 1 Jun 2022 04:34:48 -0400
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 344AC5537F;
+        Wed,  1 Jun 2022 01:34:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=trhwASX+lfcvBV60r3M43wKh+E4woS61gxL4WkTNutQ=;
-        b=VsYG//kIrthv8XP+4a96/hG0sceqoJrsQgbNzhr3ch3jYwTr440p6rYIhEr25TiOXl
-         oDghDolp1X46DwLfW6ETlPbgBR9uXI+JODIGEQoKaEWvXs0K0oGDH9fIp5RrH9puRTw8
-         jQzoE9C+VlKj0JIgne7TaoRy0UEr97/7nMkblSVmQ+ERN7FOIJUFw3q6X9Ev4Gk/JK1O
-         ms4hT2DPd6WeSkDJ4kAlGX0Rg8rhLwfXxDoh1wlhkFTNm4bbPcK0kMWmoP3Dse2g2dVk
-         JuhTTXK8RcaLgbT2hcbyvp8IOWA3+doBvX8i7f2TnzMVKxMzfGLcCw2ErqxVCf1xQiMC
-         Ck1Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=trhwASX+lfcvBV60r3M43wKh+E4woS61gxL4WkTNutQ=;
-        b=wz31mDQjhWosZkPO1SWkOS7fHo0J3EOvIQY37SKPkmDHGGnw5A/fkH/Lkqj5JjJVRG
-         S7dyQ2uMwFhzzJsqioD6JR6zyi/MYhUwempLT7mUl8lIp3z9O2wLBfLqZbxJzgQX34pv
-         dHyy+DXxTN6d/DUD5CDX927CUWhfN6COIyRZX1UKdsnVFnbTQMnKTIyLsYBL0oB7d8wh
-         egYf1RidSNFJYZBMMWAJETeVGNTdWM+CapEuXEQ+85o7tXrFWZzQgxRzi3O2ho8oHC3b
-         mTm3Qk9ig36PdqosTOTcaC+5mNaOUMnh+SkyFjj2qylE57sFUcyR8rHctH33VGfXqx+V
-         zj0A==
-X-Gm-Message-State: AOAM531tzHpa7mZhvhg0vJD5KMrY6qd0PPnrt0IuzmzRcTgW0Vk4QvR9
-        +rtFz+CAgom4NPZv8V840OflGA==
-X-Google-Smtp-Source: ABdhPJwqkfpw/36eeo4iKm/FtLUf93jLYEwb0D93rirRhTpoZezYM47nJJPfx729OU6HFBULnvyhAg==
-X-Received: by 2002:a05:6402:3551:b0:42b:6d38:9485 with SMTP id f17-20020a056402355100b0042b6d389485mr49145090edd.234.1654067530663;
-        Wed, 01 Jun 2022 00:12:10 -0700 (PDT)
-Received: from [192.168.0.179] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id pk16-20020a170906d7b000b006fee526ed72sm332280ejb.217.2022.06.01.00.12.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 01 Jun 2022 00:12:10 -0700 (PDT)
-Message-ID: <95bbe6b0-1c56-9be9-0343-a24fe1970705@linaro.org>
-Date:   Wed, 1 Jun 2022 09:12:09 +0200
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1654072487; x=1685608487;
+  h=subject:to:cc:references:from:message-id:date:
+   mime-version:in-reply-to:content-transfer-encoding;
+  bh=x5nMSSI5/humEcyp6BGP5MXHhmWKZK8ljqf5CpFlbKg=;
+  b=fe1gVsH0qRH7EbcUP6rMO8/aw+W0sSlUzeWJ771tokHEgPc326CwrtGz
+   V5PWuRhZECcGUUEE+zZtMEFCYyyXzoQihem6sjdN9LyD0mLmWIEtob7kK
+   5TA8uRT2xHAdQnLrJYqne+KzEkWGEiJHmb3O/ldxzFwr5hQoSJAS0puMz
+   k=;
+Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 01 Jun 2022 01:34:46 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jun 2022 01:34:46 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Wed, 1 Jun 2022 01:34:45 -0700
+Received: from [10.79.43.230] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Wed, 1 Jun 2022
+ 01:34:43 -0700
+Subject: Re: [PATCH v2] remoteproc: qcom_q6v5_mss: map/unmap metadata region
+ before/after use
+To:     Arnd Bergmann <arnd@arndb.de>
+CC:     <bjorn.andersson@linaro.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <sboyd@kernel.org>,
+        <agross@kernel.org>, <linux-remoteproc@vger.kernel.org>,
+        <mathieu.poirier@linaro.org>, <mka@chromium.org>
+References: <1652248625-990-1-git-send-email-quic_sibis@quicinc.com>
+ <CAK8P3a2b05w3uRjXhx7CgdLEHL78ZHRjgOYoG_SR0SyDxcLDMg@mail.gmail.com>
+From:   Sibi Sankar <quic_sibis@quicinc.com>
+Message-ID: <08778603-4f15-0fb7-687d-4cf42c8ddbd3@quicinc.com>
+Date:   Wed, 1 Jun 2022 14:04:39 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Subject: Re: [PATCH v3 2/4] soc: qcom: icc-bwmon: Add bandwidth monitoring
- driver
+In-Reply-To: <CAK8P3a2b05w3uRjXhx7CgdLEHL78ZHRjgOYoG_SR0SyDxcLDMg@mail.gmail.com>
+Content-Type: text/plain; charset="utf-8"; format=flowed
 Content-Language: en-US
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Cc:     Thara Gopinath <thara.gopinath@linaro.org>
-References: <20220531105137.110050-1-krzysztof.kozlowski@linaro.org>
- <20220531105137.110050-3-krzysztof.kozlowski@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220531105137.110050-3-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-5.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -82,33 +70,66 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 31/05/2022 12:51, Krzysztof Kozlowski wrote:
-> +	window = mult_frac(bwmon->sample_ms, HW_TIMER_HZ, MSEC_PER_SEC);
-> +	/* Maximum sampling window: 0xfffff */
-> +	writel_relaxed(window, bwmon->base + BWMON_SAMPLE_WINDOW);
-> +
-> +	bwmon_set_threshold(bwmon, BWMON_THRESHOLD_HIGH,
-> +			    data->default_highbw_kbps);
-> +	bwmon_set_threshold(bwmon, BWMON_THRESHOLD_MED,
-> +			    data->default_medbw_kbps);
-> +	bwmon_set_threshold(bwmon, BWMON_THRESHOLD_LOW,
-> +			    data->default_lowbw_kbps);
-> +
-> +	thres_count = data->zone3_thres_count << BWMON_THRESHOLD_COUNT_ZONE3_SHIFT |
-> +		      BWMON_THRESHOLD_COUNT_ZONE2_DEFAULT << BWMON_THRESHOLD_COUNT_ZONE2_SHIFT |
-> +		      data->zone1_thres_count << BWMON_THRESHOLD_COUNT_ZONE1_SHIFT |
-> +		      BWMON_THRESHOLD_COUNT_ZONE0_DEFAULT;
-> +	writel_relaxed(thres_count, bwmon->base + BWMON_THRESHOLD_COUNT);
-> +	writel_relaxed(BWMON_ZONE_ACTIONS_DEFAULT,
-> +		       bwmon->base + BWMON_ZONE_ACTIONS);
-> +
-> +	/* Write barriers in bwmon_clear() */
-> +	irq_enable = BIT(BWMON_IRQ_ENABLE_ZONE1_SHIFT) |
-> +		     BIT(BWMON_IRQ_ENABLE_ZONE3_SHIFT);
+Hey Arnd,
+Thanks for taking time to review the patch.
 
-Unusued variable, I will send a v4.
+On 5/30/22 9:41 PM, Arnd Bergmann wrote:
+> On Wed, May 11, 2022 at 7:57 AM Sibi Sankar <quic_sibis@quicinc.com> wrote:
+>>
+>> The application processor accessing the dynamically assigned metadata
+>> region after assigning it to the remote Q6 would lead to an XPU violation.
+>> Fix this by un-mapping the metadata region post firmware header copy. The
+>> metadata region is freed only after the modem Q6 is done with fw header
+>> authentication.
+>>
+>> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+> 
+> Acked-by: Arnd Bergmann <arnd@arndb.de>
+> 
+> Sorry for the late reply, this looks reasonable overall. Just two
+> small comments:
+> 
+>>
+>> -       memcpy(ptr, metadata, size);
+>> +       count = PAGE_ALIGN(size) >> PAGE_SHIFT;
+>> +       pages = kmalloc_array(count, sizeof(struct page *), GFP_KERNEL);
+>> +       if (!pages) {
+>> +               ret = -ENOMEM;
+>> +               goto free_dma_attrs;
+>> +       }
+> 
+> If you know a fixed upper bound for the array size, it might be easier to
+> put it on the stack.
 
+The metadata consists of the 32bit elf header and SoC dependent variable
+number of program headers. Arriving at the upper bound from the spec
+seemed futile since the max program headers supported could be > 0xffff.
+The best I can do is get the max size of metadata of all the QC SoCs
+supported upstream for putting the pages on stack and leave "count" as
+the min between the dynamic calculation and upper bound. Would that be
+good enough?
 
+> 
+>> +
+>> +       for (i = 0; i < count; i++)
+>> +               pages[i] = nth_page(page, i);
+>> +
+>> +       vaddr = vmap(pages, count, flags, pgprot_dmacoherent(PAGE_KERNEL));
+> 
+> I was a bit unsure about this part, as I don't know how portable this is.
+> If the CPU bypasses the cache with pgprot_dmacoherent(), then the
+> other side should not use a cacheable access either, but that is a property
+> of the hardware that is normally hidden from the driver interface.
+> 
+> It's probably ok here, since the pages are not mapped anywhere else
+> and should have no active cache lines.
 
-Best regards,
-Krzysztof
+yup we make sure the other side can access the region only after no
+cache lines are active (that's the main problem that we are trying
+to solve through this patch).
+
+-Sibi
+
+> 
+>         Arnd
+> 
