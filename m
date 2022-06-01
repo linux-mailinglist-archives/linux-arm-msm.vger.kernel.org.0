@@ -2,71 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BA8ED53A555
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jun 2022 14:44:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 525A253A56F
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jun 2022 14:47:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353096AbiFAMof (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Jun 2022 08:44:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56774 "EHLO
+        id S1344973AbiFAMrb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Jun 2022 08:47:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34822 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353066AbiFAMof (ORCPT
+        with ESMTP id S1353082AbiFAMr3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Jun 2022 08:44:35 -0400
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 379DB5C85D
-        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Jun 2022 05:44:25 -0700 (PDT)
-Received: by mail-ej1-x62e.google.com with SMTP id gi33so3528824ejc.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Jun 2022 05:44:25 -0700 (PDT)
+        Wed, 1 Jun 2022 08:47:29 -0400
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22EE810FCF
+        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Jun 2022 05:47:28 -0700 (PDT)
+Received: by mail-lf1-x12d.google.com with SMTP id be31so2536584lfb.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Jun 2022 05:47:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=JeSI4uQxR2QJYLMBJ1DqLjl1fY9poS8Q+KM6xI9FOz4=;
-        b=whJ2LInpsfW99ZDLn3m+Dy9M8JouyCJLhDt0YhwGRTPVaak0kyIfkTLVY/BBRqa3RF
-         ZXbAA0n5J5BA/9IWNrQTvBX0kV/pV+MlKOKBc8d8uA+8CpRPqCvwbl+Qpp0Cqc7xSTM0
-         4YtQ9m9ZRgmrlLJeAlWEvmrpUuiG4xKXUk51CMiU8aBQecEORzPctNgLpR6PGPwCk02D
-         ktOAfDgZesbUjCXo5G2gUDWdNV/LLNuq1vl4WrnXLx3+yvVlpNP1AV8+sTm0KS/CBv9r
-         wBH9ABa2beMZkgSiI54oRkRFGe1HHLjQmkvyhbQZOcIqLVTRUL/KrdiucvUhz38r1MQR
-         H0aA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=4li32PBdxnIv+jFKvhCljFF/bYWyWatcYvkg3TZww1s=;
+        b=ywX1q/Sp7hV1p86goYqniFRV4cZlbD1R9yXvl2mfzeiuSR3efubHRWaiRdhX8Esqed
+         mJ3yGD0RUVPPt1f/R+ouSvoTxOqAtRGGgJUYbilgONCDkx8DOopTBoVTnK1YDUsrdubc
+         35isYXnsGcsXSl0mGJFgkq3r3lG7riqq0eSxluKLDD9BSI3Llw6eJre/ph0RCqD4obLC
+         i9YXHOcRy9Xt2c5IM1Gz2xlBGmspzRO9AVWXDux0w0p9TMNZeVhk0CUU/AV1ol0ip3mo
+         xFYcraKqvM6vRkJcCRd/ukGbYMiT6azPbdbKx0f8zsY59oJZGDh+lFQouG4FfWUAYOmP
+         Jukw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=JeSI4uQxR2QJYLMBJ1DqLjl1fY9poS8Q+KM6xI9FOz4=;
-        b=RhupZjXrOhems6dWBXhwOpQFPuLECwgT8YfeXQQPJNp1t47CKZX2OIa83VsCI1K04W
-         T1GoKYXtRwkIMQtJJIuT72QsrjhqC3gRYiJJljSvvQo7evmXd28Bv5DgSOLZ3MIeIfoa
-         AYJOzwGdN/Pc50T/3BR+tmsCEQEDOx16RNHMT2gBhNMybaG50GQ2Pf1IfFon2rp196tB
-         dhsKnGT9qa0tH2jgoRHWc4h4lVvZx/SAGPOlrqmF/9A+6AbYWt+6BhcJgxtlUjqfBNnR
-         rN6u92wWRk9P404zs8UmIbhEujGWEOhAFwj8N9yJ0vL/d52AEzHS5ZwYISP0SCKMxciV
-         ASCg==
-X-Gm-Message-State: AOAM5302AaGiRlybkcviWiaKMR76IcVZ0rpRyeIehpLD4Ip2cIoEKs5M
-        dsfUKG3ERmLkU2WroQ06nJQYGg==
-X-Google-Smtp-Source: ABdhPJxvXRS4kVxzbQ09uBJ+jQPMMkzD3EsuPOg/u8HkzuJoP5NP2piSzB7RfCX28DjXEr56FtW7zA==
-X-Received: by 2002:a17:907:9810:b0:6fe:90ca:e730 with SMTP id ji16-20020a170907981000b006fe90cae730mr56531133ejc.549.1654087463739;
-        Wed, 01 Jun 2022 05:44:23 -0700 (PDT)
-Received: from prec5560.. ([176.74.57.19])
-        by smtp.gmail.com with ESMTPSA id j10-20020a170906830a00b006f3ef214dc0sm682055ejx.38.2022.06.01.05.44.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Jun 2022 05:44:23 -0700 (PDT)
-From:   Robert Foss <robert.foss@linaro.org>
-To:     bjorn.andersson@linaro.org, agross@kernel.org,
-        mturquette@baylibre.com, sboyd@kernel.org, robh+dt@kernel.org,
-        krzk+dt@kernel.org, robert.foss@linaro.org, jonathan@marek.ca,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>
-Subject: [PATCH v4 6/6] arm64: dts: qcom: sm8350: Add DISPCC node
-Date:   Wed,  1 Jun 2022 14:42:50 +0200
-Message-Id: <20220601124250.60968-7-robert.foss@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220601124250.60968-1-robert.foss@linaro.org>
-References: <20220601124250.60968-1-robert.foss@linaro.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=4li32PBdxnIv+jFKvhCljFF/bYWyWatcYvkg3TZww1s=;
+        b=WWb2fgy7qXq9415dpMEbVW+MyxxYb8lJkskHV4mZLcEOpfVtxS2NlhFoK/3QDjKfJd
+         mPTCIJxPg557ZB2FGvEx6WfTXBSbv9YC13IaSXAYRHyU3O7GSZh1Lar9ymjaswPeDqmG
+         aWYVvYJFccEarLfmy4nvmbBNRAWVh+XYP/r6vbaI7kNP5WN1o0X9y/+GHD2udB2dgi9S
+         DUGdVZa7R/vspjq8w5fVRIL2/oIom7g1AKW2QS3FCxEWyDVS5oyXABSWFeZITlTBrJoa
+         Dz19PjbA98ZEhPm2Q43vFQKQQH8LtT+AnsARBZj1ESdgnsaC/PN1uGwZTgc5k9NAivik
+         HaBA==
+X-Gm-Message-State: AOAM5331JQUf8TuMoYX0DwhKBKBcY+jjK/q1S9mu4hZk/K9f/0gig7lI
+        h19PL57mp+KEt8cD0bNDTQwon5s+mdsASTUqHB1OYg==
+X-Google-Smtp-Source: ABdhPJw8rLYnetAKH4EyHC77hyUUHRF/sLZFy9a2sig6ks5ygw10wco9yqviC0600wPiouO4wz2Lk4I3fuUHalzgJn0=
+X-Received: by 2002:a05:6512:308b:b0:478:7ab5:4acd with SMTP id
+ z11-20020a056512308b00b004787ab54acdmr34023519lfd.167.1654087647633; Wed, 01
+ Jun 2022 05:47:27 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <1653674036-21829-1-git-send-email-quic_c_sbhanu@quicinc.com>
+In-Reply-To: <1653674036-21829-1-git-send-email-quic_c_sbhanu@quicinc.com>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Wed, 1 Jun 2022 14:46:51 +0200
+Message-ID: <CAPDyKFqqSdCGV-SGcbEFCA5rXaqUc0btYd9Tig43NouNuHUG5Q@mail.gmail.com>
+Subject: Re: [PATCH V8 0/5] mmc: add error statistics for eMMC and SD card
+To:     Shaik Sajida Bhanu <quic_c_sbhanu@quicinc.com>,
+        adrian.hunter@intel.com
+Cc:     wsa+renesas@sang-engineering.com, shawn.lin@rock-chips.com,
+        yoshihiro.shimoda.uh@renesas.com, digetx@gmail.com,
+        quic_asutoshd@quicinc.com, linux-arm-msm@vger.kernel.org,
+        linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_rampraka@quicinc.com, quic_pragalla@quicinc.com,
+        quic_sartgarg@quicinc.com, quic_nitirawa@quicinc.com,
+        quic_sayalil@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -74,65 +72,102 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the dispcc clock-controller DT node for sm8350.
+On Fri, 27 May 2022 at 19:54, Shaik Sajida Bhanu
+<quic_c_sbhanu@quicinc.com> wrote:
+>
+> Changes since V7:
+>         - Patch set V6 rebased on Ulf's(Ulf Hansson) master branch instead
+>           of Ulf's (Ulf Hansson) next branch by mistake. So rebased patch
+>           set on Ulf's next branch now as suggested by Adrain Hunter.
 
-Signed-off-by: Robert Foss <robert.foss@linaro.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
+Thanks to both of you for moving this forward to become an easy
+maintainable piece of code.
 
-Changes since v2
- - Remove interconnect include - Bjorn
+Queued for v5.20 on the devel branch, thanks!
 
-Changes since v3
- - Switch from .fw_name to .index
+Kind regards
+Uffe
 
 
- arch/arm64/boot/dts/qcom/sm8350.dtsi | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-index 52428b6df64e..df0f3dd38f0f 100644
---- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-@@ -4,6 +4,7 @@
-  */
- 
- #include <dt-bindings/interrupt-controller/arm-gic.h>
-+#include <dt-bindings/clock/qcom,dispcc-sm8350.h>
- #include <dt-bindings/clock/qcom,gcc-sm8350.h>
- #include <dt-bindings/clock/qcom,rpmh.h>
- #include <dt-bindings/dma/qcom-gpi.h>
-@@ -2525,6 +2526,30 @@ usb_2_dwc3: usb@a800000 {
- 			};
- 		};
- 
-+		dispcc: clock-controller@af00000 {
-+			compatible = "qcom,sm8350-dispcc";
-+			reg = <0 0x0af00000 0 0x10000>;
-+			clocks = <&rpmhcc RPMH_CXO_CLK>,
-+				 <0>,
-+				 <0>,
-+				 <0>,
-+				 <0>,
-+				 <0>,
-+				 <0>,
-+				 <0>,
-+				 <0>,
-+				 <0>,
-+				 <0>,
-+				 <0>,
-+				 <0>;
-+			#clock-cells = <1>;
-+			#reset-cells = <1>;
-+			#power-domain-cells = <1>;
-+
-+			power-domains = <&rpmhpd SM8350_MMCX>;
-+			power-domain-names = "mmcx";
-+		};
-+
- 		adsp: remoteproc@17300000 {
- 			compatible = "qcom,sm8350-adsp-pas";
- 			reg = <0 0x17300000 0 0x100>;
--- 
-2.34.1
-
+>
+> Changes since V6:
+>         - Rebased on Ulf's(Ulf Hansson) next branch as suggested by
+>           Adrain Hunter.
+>         - Replaced debugfs_create_file() with debugfs_create_file_unsafe()
+>           as suggested by Adrain Hunter.
+>         - "[V6,5/5] mmc: cqhci: Capture eMMC and SD card errors" not
+>           included in this Patch series as we don't have cqhci changes
+>           on Ulf's(Ulf Hansson)next branch.
+>
+> Changes since V5:
+>         - Considered all error stats enums to set error state.
+>         - Added missed tuning error related code changes which was
+>           missed in patch set V5 as Adrain Hunter pointed.
+>         - Replaced DEFINE_SIMPLE_ATTRIBUTE with DEFINE_DEBUGFS_ATTRIBUTE
+>           as suggested by Adrain Hunter.
+>
+> Changes since V4:
+>         - Defined new macro to increment err_stats members when error occured
+>           as suggested by Adrain Hunter.
+>         - Called err_stats members increment function after printing the error
+>           as suggested by Adrain Hunter.
+>         - Considered INDEX and END_BIT errors same as CRC errors as suggested
+>           by Adrain Hunter.
+>         - Removed Null check for host in debug fs functions and Reordered
+>           err_stats declarationas suggested by Adrain Hunter.
+>         - Removed err_state variable stuff and updated err_state debug fs entry
+>           based on the err_stats members state as suggested by Adrain Hunter.
+>
+> Changes since V3:
+>         - Dropped error stats feature flag as suggested by Adrain Hunter.
+>         - Separated error state related changes in separate patches as
+>           suggested by Adrain Hunter.
+>           [PATCH V4 4/7] : error state debug fs
+>           [PATCH V4 5/7] : error state enable function
+>           [PATCH V4 6/7] : error state enable in error case
+>         - Note: we are enabling error state before calling sdhci_dumpregs
+>           we couldn't add the err state in error stats array as err state
+>           is not error type.
+>         - Corrected Signed-off-by order as suggested by Bjron Andersson.
+>         - Moved error state enable code from sdhci_dumpregs to error
+>           conditions as suggested by Adrain Hunter
+>
+> Changes since V2:
+>         - Removed userspace error stats clear debug fs entry as suggested
+>           by Adrain Hunter.
+>         - Split patch into 4 patches
+>           [PATCH V3 1/4] : sdhci driver
+>           [PATCH V3 2/4] : debug fs entries
+>           [PATCH V3 3/4] : core driver
+>           [PATCH V3 4/4] : cqhci driver
+>         - Used for loop to print error messages instead of using printf
+>           statements for all error messages as suggested by Adrain Hunter.
+>         - Introduced one flag to enable error stats feature, if any other
+>           client wants to use this feature, they need to enable that flag.
+>         - Moved reset command timeout error statement to card init flow
+>           as suggested by Adrain Hunter.
+>
+> Changes since V1:
+>         - Removed sysfs entry for eMMC and SD card error statistics and added
+>           debugfs entry as suggested by Adrian Hunter and Ulf Hansson.
+>
+> Shaik Sajida Bhanu (5):
+>   mmc: core: Capture eMMC and SD card errors
+>   mmc: sdhci: Capture eMMC and SD card errors
+>   mmc: debugfs: Add debug fs entry for mmc driver
+>   mmc: debugfs: Add debug fs error state entry for mmc driver
+>   mmc: cqhci: Capture eMMC and SD card errors
+>
+>  drivers/mmc/core/core.c       | 10 +++++-
+>  drivers/mmc/core/debugfs.c    | 79 +++++++++++++++++++++++++++++++++++++++++++
+>  drivers/mmc/host/cqhci-core.c |  9 ++++-
+>  drivers/mmc/host/sdhci.c      | 59 ++++++++++++++++++++++++--------
+>  drivers/mmc/host/sdhci.h      |  3 ++
+>  include/linux/mmc/host.h      | 26 ++++++++++++++
+>  include/linux/mmc/mmc.h       |  6 ++++
+>  7 files changed, 175 insertions(+), 17 deletions(-)
+>
+> --
+> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+> of Code Aurora Forum, hosted by The Linux Foundation
+>
