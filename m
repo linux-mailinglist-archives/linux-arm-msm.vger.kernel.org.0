@@ -2,75 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 27AEC53A1EC
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jun 2022 12:07:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1C0F553A217
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jun 2022 12:11:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344137AbiFAKGx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Jun 2022 06:06:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44938 "EHLO
+        id S1350460AbiFAKLv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Jun 2022 06:11:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43180 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352020AbiFAKFG (ORCPT
+        with ESMTP id S1350806AbiFAKLt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Jun 2022 06:05:06 -0400
-Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com [IPv6:2607:f8b0:4864:20::730])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0723A76F4
-        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Jun 2022 03:04:49 -0700 (PDT)
-Received: by mail-qk1-x730.google.com with SMTP id p123so914197qke.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Jun 2022 03:04:49 -0700 (PDT)
+        Wed, 1 Jun 2022 06:11:49 -0400
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED75363EC
+        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Jun 2022 03:11:47 -0700 (PDT)
+Received: by mail-ed1-x52f.google.com with SMTP id x62so1467865ede.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Jun 2022 03:11:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=lHSPQr2cIR/ntw9mchA0Qp1Mf6n70DWLKdFta7FA2i8=;
-        b=rf0on8d64kNqqEPTSKDTeJLGi5mhx/w+LSPJtQsnkQKzerFRuh98mE1mlZVoerdEdB
-         nilWximLlUxpwJOs6aAz4ko74Qc9SI1fC0RMONIZ9o6NiK4xAhDC905SK2U7UgYVPaTj
-         39HnnlavGu7ksAvSci1lRnC1b6W/qVV7Lvsn892uJV3Z3R20E63iaxso4k8FTMBFdRCY
-         1I2NERWc8n/ZlpGPw9fQnlfCPLBEdGUcbAXi+7ckTakLT2rvM4VyDnQwIZoSlf7TsSqj
-         GWmnEf3wePEtp1Za+lfRaKXAM5SoA+GXn1A0hgDcQEob8ruq43wLLx4r+NgtiKwX2TQf
-         SNLg==
+        h=from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=nGDdP6h2IKOTMBasdhCmRS5R0RvzDEl9dYrXpeg2bHY=;
+        b=D5kyanqz0331s9mE1kNwMkVwCTzgzR7N695F5bpbRHDjcHSpdf4D5N6biKo19ozP2e
+         /q47p0mawyATBW+dyoZFKzBFTBrpBCIKP/s51+ufirllagX4yV2BCLAeCQdTICcdyErj
+         y2FSwU5BZA3tlmb5i/xIi+cF4gaGYO6h8hGLP0m4ORrdeUjs5+zacnSjFPLKDVMHDfT/
+         9SA2PwvEO19n7IDaLPGVRWwiDeTbgpRmR9BB9GjwYETaYR49JuwOYbkMI2LqcNvPOEt+
+         10lF0YwRRMbiTaZXGniFi9jhKbqWRqTQ3wrE83uQCHjJk/L9Xp0GL6G/jwNitLcm8Wca
+         ND3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=lHSPQr2cIR/ntw9mchA0Qp1Mf6n70DWLKdFta7FA2i8=;
-        b=dazFtkKjF1+AFg/NHJkWhVn9aj8H3cYpyg+iyW0eDjfjz2grOXc8ImbgTDr0hQRBCV
-         HhRNKRSsA1eSfCrVsW9UV1WWHYvx+MCXk/6sAdmarriYT2S1dBPcwK0wU5tPwV1yQ17P
-         veanP2Z3Newvs2KF7au3J2anrX2YsJCdg7HZOffoyE89R/dFyr4SAjoc0CTcfqUVS1B0
-         rxw4+u0GVT+i8rsRinfgdo7wvgnOgx0wyFcfaKJsbv/wshc5SxKlkgFjldFiJPZS68h3
-         LeKOdEMx9bqr8j6ItUD+USqct8jgUEd2KGw79El7A5EnZXk780g67CIkgDLGSyQUdfm3
-         9uWQ==
-X-Gm-Message-State: AOAM531Kbnc4LYqIi7Z2ktfvkiD031/wYgG/F8/ZHSsnsFzmwkuBb3PF
-        EOrror63JU8M7G8sDFdBIoqI21vkavkdokL3FFfl1w==
-X-Google-Smtp-Source: ABdhPJzAahRdMs1ggkVHLtcwa0pM08LnUkdsm3uZvqJc3UZYhpPnwH+rgos7SIKGM+mWOnxRi1I1hPNAfmBomXzhN+c=
-X-Received: by 2002:a05:620a:4311:b0:67e:8a0f:4cd5 with SMTP id
- u17-20020a05620a431100b0067e8a0f4cd5mr44362828qko.363.1654077888548; Wed, 01
- Jun 2022 03:04:48 -0700 (PDT)
-MIME-Version: 1.0
-References: <20220531160059.v2.1.Ie7f6d4bf8cce28131da31a43354727e417cae98d@changeid>
-In-Reply-To: <20220531160059.v2.1.Ie7f6d4bf8cce28131da31a43354727e417cae98d@changeid>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Wed, 1 Jun 2022 13:04:37 +0300
-Message-ID: <CAA8EJpqp64eDmXPN1qMTZ78My8BKPUcu7zKunZV1SJpzjSRDuQ@mail.gmail.com>
-Subject: Re: [PATCH v2] drm/msm/dpu: Move min BW request and full BW disable
- back to mdss
-To:     Douglas Anderson <dianders@chromium.org>
-Cc:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=nGDdP6h2IKOTMBasdhCmRS5R0RvzDEl9dYrXpeg2bHY=;
+        b=isRb4gOdlKnRVig7p+fronzl6H6AU1M/kH2b7Jx2GG6HZqOVub2OJzDotD+LhG0skI
+         gC30U4as2gKcfW5lfePELNsDL0Olwft5jttRJIsf2yp71aaPJNqzHw7lCcPSr7EYYcQ9
+         9HCH0ENXANEZIiU+6DQgjXgzJrf9rSPGRLtJRctAfW0eYx+2pSxzxLRisGuapETGlL81
+         NFE9i5drQVow5jvgmXWeQ009y2VLrxuLN4gTrahg2s+Cfru8oYqtP3EWH/JvopCjk+H8
+         TY3rQdJrpKADIMs94Q1VmWvvOiOJ3smPChYhvUKO4gA5wB4wCYLbN4wl/H+MALjytrL+
+         uCUg==
+X-Gm-Message-State: AOAM533RfZlLZRrhDNLMKU5bVPJzmPvqsetYeoUtVhKkfOO947uVBcze
+        SNw/e8I8OzAmy0WniVinf8iUJA==
+X-Google-Smtp-Source: ABdhPJxn3EzA0LIO8ndRykG2oLKvwSJZm1r7JrONJsqxAntjBUU3KypkYcoH1zZ6bIbQStTsx6PQTQ==
+X-Received: by 2002:a05:6402:d9:b0:42a:c890:20b5 with SMTP id i25-20020a05640200d900b0042ac89020b5mr68485817edu.101.1654078306569;
+        Wed, 01 Jun 2022 03:11:46 -0700 (PDT)
+Received: from localhost.localdomain (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id m9-20020a170906580900b006feb7b1379dsm501373ejq.181.2022.06.01.03.11.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 01 Jun 2022 03:11:45 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Kalyan Thota <quic_kalyant@quicinc.com>,
-        Sean Paul <sean@poorly.run>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Vinod Polimera <quic_vpolimer@quicinc.com>,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Georgi Djakov <djakov@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Subject: [PATCH v4 0/4] soc/arm64: qcom: Add initial version of bwmon
+Date:   Wed,  1 Jun 2022 12:11:36 +0200
+Message-Id: <20220601101140.170504-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -78,66 +74,63 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 1 Jun 2022 at 02:01, Douglas Anderson <dianders@chromium.org> wrote:
->
-> In commit a670ff578f1f ("drm/msm/dpu: always use mdp device to scale
-> bandwidth") we fully moved interconnect stuff to the DPU driver. This
-> had no change for sc7180 but _did_ have an impact for other SoCs. It
-> made them match the sc7180 scheme.
+Hi,
 
-[skipped the description]
+Changes since v3
+================
+1. Patch #2 (bwmon): remove unused irq_enable (kbuild robot);
+   split bwmon_clear() into clearing counters and interrupts, so bwmon_start()
+   does not clear the counters twice.
 
->
-> Changes in v2:
-> - Don't set bandwidth in init.
->
->  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c |  8 ----
->  drivers/gpu/drm/msm/msm_mdss.c          | 57 +++++++++++++++++++++++++
->  2 files changed, 57 insertions(+), 8 deletions(-)
->
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> index 2b9d931474e0..3025184053e0 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> @@ -49,8 +49,6 @@
->  #define DPU_DEBUGFS_DIR "msm_dpu"
->  #define DPU_DEBUGFS_HWMASKNAME "hw_log_mask"
->
-> -#define MIN_IB_BW      400000000ULL /* Min ib vote 400MB */
-> -
->  static int dpu_kms_hw_init(struct msm_kms *kms);
->  static void _dpu_kms_mmu_destroy(struct dpu_kms *dpu_kms);
->
+Changes since v2
+================
+1. Spent a lot of time on benchmarking and learning the BWMON behavior.
+2. Drop PM/OPP patch - applied.
+3. Patch #1: drop opp-avg-kBps.
+4. Patch #2: Add several comments explaining pieces of code and BWMON, extend
+   commit msg with measurements, extend help message, add new #defines to document
+   some magic values, reorder bwmon clear/disable/enable operations to match
+   downstream source and document this with comments, fix unit count from 1 MB
+   to 65 kB.
+5. Patch #4: drop opp-avg-kBps.
+6. Add accumulated Rb tags.
 
-[skipped]
+Changes since v1
+================
+1. Add defconfig change.
+2. Fix missing semicolon in MODULE_AUTHOR.
+3. Add original downstream (msm-4.9 tree) copyrights to the driver.
 
-> diff --git a/drivers/gpu/drm/msm/msm_mdss.c b/drivers/gpu/drm/msm/msm_mdss.c
-> index 0454a571adf7..e13c5c12b775 100644
-> --- a/drivers/gpu/drm/msm/msm_mdss.c
-> +++ b/drivers/gpu/drm/msm/msm_mdss.c
-> @@ -5,6 +5,7 @@
->
->  #include <linux/clk.h>
->  #include <linux/delay.h>
-> +#include <linux/interconnect.h>
->  #include <linux/irq.h>
->  #include <linux/irqchip.h>
->  #include <linux/irqdesc.h>
-> @@ -25,6 +26,8 @@
->  #define UBWC_CTRL_2                    0x150
->  #define UBWC_PREDICTION_MODE           0x154
->
-> +#define MIN_IB_BW      400000000UL /* Min ib vote 400MB */
+Description
+===========
+BWMON is a data bandwidth monitor providing throughput/bandwidth over certain
+interconnect links in a SoC.  It might be used to gather current bus usage and
+vote for interconnect bandwidth, thus adjusting the bus speed based on actual
+usage.
 
-As msm_mdss is now used for both DPU and MDP5 devices, could you
-please confirm that this value is valid for older devices too? E.g.
-db410c or 8974
+The work is built on top of Thara Gopinath's patches with several cleanups,
+changes and simplifications.
 
-> +
->  struct msm_mdss {
->         struct device *dev;
->
+Best regards,
+Krzysztof
+
+Krzysztof Kozlowski (4):
+  dt-bindings: interconnect: qcom,sdm845-cpu-bwmon: add BWMON device
+  soc: qcom: icc-bwmon: Add bandwidth monitoring driver
+  arm64: defconfig: enable Qualcomm Bandwidth Monitor
+  arm64: dts: qcom: sdm845: Add CPU BWMON
+
+ .../interconnect/qcom,sdm845-cpu-bwmon.yaml   |  97 ++++
+ MAINTAINERS                                   |   7 +
+ arch/arm64/boot/dts/qcom/sdm845.dtsi          |  54 +++
+ arch/arm64/configs/defconfig                  |   1 +
+ drivers/soc/qcom/Kconfig                      |  15 +
+ drivers/soc/qcom/Makefile                     |   1 +
+ drivers/soc/qcom/icc-bwmon.c                  | 421 ++++++++++++++++++
+ 7 files changed, 596 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/interconnect/qcom,sdm845-cpu-bwmon.yaml
+ create mode 100644 drivers/soc/qcom/icc-bwmon.c
 
 -- 
-With best wishes
-Dmitry
+2.34.1
+
