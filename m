@@ -2,80 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1A24C53AB5E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jun 2022 18:55:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B3A3853ABAC
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jun 2022 19:18:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352420AbiFAQzO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Jun 2022 12:55:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50810 "EHLO
+        id S1356283AbiFARSS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Jun 2022 13:18:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48254 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344710AbiFAQzN (ORCPT
+        with ESMTP id S1355397AbiFARSS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Jun 2022 12:55:13 -0400
-Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6ED788CCD0
-        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Jun 2022 09:55:12 -0700 (PDT)
-Received: by mail-pg1-x535.google.com with SMTP id 7so1633163pga.12
-        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Jun 2022 09:55:12 -0700 (PDT)
+        Wed, 1 Jun 2022 13:18:18 -0400
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28321255A6;
+        Wed,  1 Jun 2022 10:18:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=bbckhJ9XlY3Nme+BPmiObgn0CQAdmt4CSl1wsZbSeV0=;
-        b=FlZ/UGKxH5AQlCmDo/sE5CPr5JuOqd2r8n9Vi5nbW1KX/GjkV3/Gtn9S6TTaVs+TdM
-         ev3zTuRFx8UNm1OCV/PSOOXMWgc36pGrvvKLw4PUY5kjp2WqC0RFVWZ4l7jKZrwRiVPL
-         xaKITrvINKY1yyebYI+wZbnZ5O/vaFszXS5xc=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=bbckhJ9XlY3Nme+BPmiObgn0CQAdmt4CSl1wsZbSeV0=;
-        b=3PlmqEiOcv28et479pHNfnt+xdfIzZj+fKRKiFXlC2NJmKPb2sU44PBryLNwUiseIP
-         tJyRfz73ALGE8cLFvjm7xh9tQvM/XU3EbFKomdR2EbOMUaCjtsHSH4i0fno85lO82o9p
-         s91ikUmc2rg3bHV/D4tG71LWQkGGUZ1lk8mnG1PX8L+biP7zRKbEOcLp/xKLhEnA9ds+
-         SPazJDvQ6R2jh9mK0sJYxIR2ep1P2yLueYrrUWk0K/+9JhAG2C1G3EZc88zMM3ahyp8t
-         B7wsmMFF2zsoZQLjEGHRoF0RH5GRnyIF8dYvMBXgyqBfe4RoQTnQmjb3FW3ZzEMLh4Gw
-         qZVA==
-X-Gm-Message-State: AOAM533WgLLfIdbbeRe5b/47XP0e8+EGTty7MtYBjva7+0+YrdBk2v7F
-        rjuKcTu+E9m2Exs9zQzwCfWRIA==
-X-Google-Smtp-Source: ABdhPJxvz006k4bCcMabU3sUioYhsFPS+sODZatl7Pq8O6MVnYLQ0t5SXSDd6s81fwyeDL690piJlw==
-X-Received: by 2002:a05:6a00:168a:b0:4f7:e161:83cd with SMTP id k10-20020a056a00168a00b004f7e16183cdmr577037pfc.56.1654102511801;
-        Wed, 01 Jun 2022 09:55:11 -0700 (PDT)
-Received: from localhost ([2620:15c:11a:202:e69e:f483:e751:7c7c])
-        by smtp.gmail.com with UTF8SMTPSA id g10-20020a63e60a000000b003fab08e09e9sm1563351pgh.67.2022.06.01.09.55.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 01 Jun 2022 09:55:11 -0700 (PDT)
-Date:   Wed, 1 Jun 2022 09:55:09 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-        Stephen Boyd <swboyd@chromium.org>, agross@kernel.org,
-        alsa-devel@alsa-project.org, bgoswami@quicinc.com,
-        bjorn.andersson@linaro.org, broonie@kernel.org,
-        devicetree@vger.kernel.org, judyhsiao@chromium.org,
-        lgirdwood@gmail.com, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, perex@perex.cz,
-        quic_plai@quicinc.com, quic_rohkumar@quicinc.com,
-        robh+dt@kernel.org, tiwai@suse.com, vkoul@kernel.org
-Subject: Re: [PATCH v2] ASoC: qcom: soundwire: Add support for controlling
- audio CGCR from HLOS
-Message-ID: <YpeZ7TdHK20xiLz9@google.com>
-References: <1652877755-25120-1-git-send-email-quic_srivasam@quicinc.com>
- <CAE-0n53g9rWks+euk5KHBzmJNEB3xLbJzMgCxN52DO5x+9-Wgg@mail.gmail.com>
- <51b8aca1-e038-4907-e973-ebdbebaf9b28@quicinc.com>
- <YpaXZ6KfApGebkBy@google.com>
- <7c74868d-624b-c18e-b377-026e70813fcc@quicinc.com>
- <1ec64a99-cfcf-c903-935b-d1bb0617c284@linaro.org>
- <61c151e2-c44c-3b84-9fed-a83abef83c17@quicinc.com>
- <2a520eaf-c1de-aa91-3029-83f5469cdbb0@linaro.org>
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1654103897; x=1685639897;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=lHtueAT33ZEVRFIBxGRY7qeK9s/pR03WpxOoLQiugeA=;
+  b=NXM3j7qHF2SfX0ABgPdEhAQ6fFvKCDBvhbZMbP05oe7L6VtkpmdfiJ99
+   SHBUyY4KBQv7VGlKXCmsqAN+KadgY7FpQSrTa80xwJ29NxMf/X+ulGmay
+   gzXmcp9ypEPP7G+m8ROavy7pbObeM2oVQigCNv9wU2Gw84zh6LCiO4bhW
+   8=;
+Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 01 Jun 2022 10:18:16 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jun 2022 10:18:16 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Wed, 1 Jun 2022 10:18:15 -0700
+Received: from [10.38.242.41] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Wed, 1 Jun 2022
+ 10:18:13 -0700
+Message-ID: <f8d5e4a7-bba8-ca51-41f7-885ce14a55fe@quicinc.com>
+Date:   Wed, 1 Jun 2022 10:18:10 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <2a520eaf-c1de-aa91-3029-83f5469cdbb0@linaro.org>
-X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [PATCH v2] drm/msm/dpu: Move min BW request and full BW disable
+ back to mdss
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Douglas Anderson <dianders@chromium.org>
+CC:     Kalyan Thota <quic_kalyant@quicinc.com>,
+        David Airlie <airlied@linux.ie>,
+        <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Sean Paul <sean@poorly.run>,
+        Vinod Polimera <quic_vpolimer@quicinc.com>,
+        <linux-kernel@vger.kernel.org>
+References: <20220531160059.v2.1.Ie7f6d4bf8cce28131da31a43354727e417cae98d@changeid>
+ <CAA8EJpqp64eDmXPN1qMTZ78My8BKPUcu7zKunZV1SJpzjSRDuQ@mail.gmail.com>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <CAA8EJpqp64eDmXPN1qMTZ78My8BKPUcu7zKunZV1SJpzjSRDuQ@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-5.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -84,39 +78,103 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jun 01, 2022 at 02:42:30PM +0100, Srinivas Kandagatla wrote:
-> 
-> 
-> On 01/06/2022 14:15, Srinivasa Rao Mandadapu wrote:
-> > > > > > > > +       ctrl->audio_cgcr =
-> > > > > > > > devm_reset_control_get_exclusive(dev,
-> > > > > > > > "swr_audio_cgcr");
-> > > > > > > > +       if (IS_ERR(ctrl->audio_cgcr))
-> > > > > > > > +               dev_err(dev, "Failed to get
-> > > > > > > > audio_cgcr reset required for
-> > > > > > > > soundwire-v1.6.0\n");
-> > > > > > > Why is there no return on error here? Is the reset optional?
-> > > > > > Yes it's optional. For older platforms this is not required.
-> > > > > If it's optional then either there should be no error message, or the
-> > > > > error message should only be logged when the version is >= 1.6.0. There
-> > > > > are few things worse than a kernel log riddled with misleading error
-> > > > > messages.
-> > > > 
-> > > > In that case, it can be done like below. Kindly let me know your
-> > > > opinion on this.
-> > > > 
-> > > > if (ctrl->version >= 0x01060000) {
-> > > 
-> > > This is not true 1.7+ variants do not require anything as such.
-> > 
-> > I think it applies for all upcoming versions as Qualcomm Hardware team.
-> > Here is the not from HW Team.
-> 
-> Am testing sm8450 which has 1.7.0 and it does not require/have such control.
-> 
-> I dont understand what is the issue in adding a flag to
-> struct qcom_swrm_data.
-> 
-> This should give finer control rather than matching anything > 1.6.
 
-I agree, a flag seems a suitable option.
+
+On 6/1/2022 3:04 AM, Dmitry Baryshkov wrote:
+> On Wed, 1 Jun 2022 at 02:01, Douglas Anderson <dianders@chromium.org> wrote:
+>>
+>> In commit a670ff578f1f ("drm/msm/dpu: always use mdp device to scale
+>> bandwidth") we fully moved interconnect stuff to the DPU driver. This
+>> had no change for sc7180 but _did_ have an impact for other SoCs. It
+>> made them match the sc7180 scheme.
+> 
+> [skipped the description]
+> 
+>>
+>> Changes in v2:
+>> - Don't set bandwidth in init.
+>>
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c |  8 ----
+>>   drivers/gpu/drm/msm/msm_mdss.c          | 57 +++++++++++++++++++++++++
+>>   2 files changed, 57 insertions(+), 8 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+>> index 2b9d931474e0..3025184053e0 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+>> @@ -49,8 +49,6 @@
+>>   #define DPU_DEBUGFS_DIR "msm_dpu"
+>>   #define DPU_DEBUGFS_HWMASKNAME "hw_log_mask"
+>>
+>> -#define MIN_IB_BW      400000000ULL /* Min ib vote 400MB */
+>> -
+>>   static int dpu_kms_hw_init(struct msm_kms *kms);
+>>   static void _dpu_kms_mmu_destroy(struct dpu_kms *dpu_kms);
+>>
+> 
+> [skipped]
+> 
+>> diff --git a/drivers/gpu/drm/msm/msm_mdss.c b/drivers/gpu/drm/msm/msm_mdss.c
+>> index 0454a571adf7..e13c5c12b775 100644
+>> --- a/drivers/gpu/drm/msm/msm_mdss.c
+>> +++ b/drivers/gpu/drm/msm/msm_mdss.c
+>> @@ -5,6 +5,7 @@
+>>
+>>   #include <linux/clk.h>
+>>   #include <linux/delay.h>
+>> +#include <linux/interconnect.h>
+>>   #include <linux/irq.h>
+>>   #include <linux/irqchip.h>
+>>   #include <linux/irqdesc.h>
+>> @@ -25,6 +26,8 @@
+>>   #define UBWC_CTRL_2                    0x150
+>>   #define UBWC_PREDICTION_MODE           0x154
+>>
+>> +#define MIN_IB_BW      400000000UL /* Min ib vote 400MB */
+> 
+> As msm_mdss is now used for both DPU and MDP5 devices, could you
+> please confirm that this value is valid for older devices too? E.g.
+> db410c or 8974
+> 
+I need to check with Kalyan on this value (400MB) as I am unable to find 
+documentation on this. Will update this thread when I do.
+
+So prior to this change 627dc55c273da ("drm/msm/disp/dpu1: icc path 
+needs to be set before dpu runtime resume"), this value was coming from 
+the hw catalog
+
+@@ -1191,10 +1193,10 @@ static int __maybe_unused 
+dpu_runtime_resume(struct device *dev)
+
+         ddev = dpu_kms->dev;
+
++       WARN_ON(!(dpu_kms->num_paths));
+         /* Min vote of BW is required before turning on AXI clk */
+         for (i = 0; i < dpu_kms->num_paths; i++)
+-               icc_set_bw(dpu_kms->path[i], 0,
+-                       dpu_kms->catalog->perf.min_dram_ib);
++               icc_set_bw(dpu_kms->path[i], 0, Bps_to_icc(MIN_IB_BW));
+
+After this, we moved to a hard-coded value, I am not sure why.
+
+So nothing wrong with this change as such, the only question is whether 
+this value is correct for older chips.
+
+But the question here is, are older chips even using icc.
+
+It seems like only sc7180, RB3/RB5 are unless i am mistaken.
+
+So is there really any impact to the older chips with this change.
+
+If not, we should probably let this one go ahead and move back to 
+catalog based approach while extending ICC for older chips.
+
+Thanks
+
+Abhinav
+
+>> +
+>>   struct msm_mdss {
+>>          struct device *dev;
+>>
+> 
