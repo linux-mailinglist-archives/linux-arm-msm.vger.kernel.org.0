@@ -2,106 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8CB7753AF90
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jun 2022 00:51:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5BB7C53AFA5
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jun 2022 00:51:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231629AbiFAVbo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Jun 2022 17:31:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37028 "EHLO
+        id S232025AbiFAWIB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Jun 2022 18:08:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38864 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231628AbiFAVbm (ORCPT
+        with ESMTP id S231970AbiFAWIA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Jun 2022 17:31:42 -0400
-Received: from mail-oa1-f54.google.com (mail-oa1-f54.google.com [209.85.160.54])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9BEB1B6FEE;
-        Wed,  1 Jun 2022 14:31:40 -0700 (PDT)
-Received: by mail-oa1-f54.google.com with SMTP id 586e51a60fabf-f2cbceefb8so4396592fac.11;
-        Wed, 01 Jun 2022 14:31:40 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=VEbVkK2s1dx1I733B0KjgcXb+wOYev+2UVEaoJXI8eM=;
-        b=m/NIyF83h/mGZ0z8tueOeoS8o64Mdtosbamfbua8lRFll+RuOMiewctJ6uDTWsbzqA
-         uZ4rDDxJyxHcbR6TweQtkzNyOsyT30QZnPGxPYRlzCiwh7sxygfeK4/lnC+LfIB8uie+
-         +3jjO56osucNAFLIa6w+N46VkRHhUO3iH28OFzUkf3YYRh3q0CVzJD98+EWbiphe7VaG
-         Wl7H470qtQ1oIXnChc46gqpwctMPO6IsJPCxYEuoJ4g5MJqB7Z4vUiA7uBrsN94As+7/
-         IhmZoYrG3R+sjBOY/zWdQvGz1Yk0hlvKJ+PEqkfFopvE9RdWYPHOPh9fxnbQAZILAMDC
-         gOHQ==
-X-Gm-Message-State: AOAM532RVaiLYWzrwHJjOWp0BPaQrPfRuVmiZAn/RYfOQ6Rt5dx8cL9W
-        SjXD34DTNvVKBXAIpCGw1w==
-X-Google-Smtp-Source: ABdhPJwGMf8v2YTPcJ/X9dmPhH+sCdV5KMAkFhLog+ZqoQtoHIigpK8SF/AVRx09qZ0e/AgHrPL/3w==
-X-Received: by 2002:a05:6870:6491:b0:f3:4ec4:8cfe with SMTP id cz17-20020a056870649100b000f34ec48cfemr943133oab.66.1654119099994;
-        Wed, 01 Jun 2022 14:31:39 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id w17-20020a4ae4d1000000b0035eb4e5a6b1sm1423674oov.7.2022.06.01.14.31.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Jun 2022 14:31:39 -0700 (PDT)
-Received: (nullmailer pid 495183 invoked by uid 1000);
-        Wed, 01 Jun 2022 21:31:39 -0000
-Date:   Wed, 1 Jun 2022 16:31:39 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Stephan Gerhold <stephan@gerhold.net>
-Cc:     Robert Foss <robert.foss@linaro.org>, agross@kernel.org,
-        bjorn.andersson@linaro.org, krzk+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
+        Wed, 1 Jun 2022 18:08:00 -0400
+Received: from relay03.th.seeweb.it (relay03.th.seeweb.it [5.144.164.164])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36ADC22735E;
+        Wed,  1 Jun 2022 15:07:55 -0700 (PDT)
+Received: from Marijn-Arch-PC.localdomain (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 9D52B20603;
+        Thu,  2 Jun 2022 00:07:49 +0200 (CEST)
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     phone-devel@vger.kernel.org, Stephen Boyd <sboyd@kernel.org>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Subject: Re: [PATCH v1] dt-bindings: clock: qcom: Relicense to GPL2 + BSD
-Message-ID: <20220601213139.GA478939-robh@kernel.org>
-References: <20220520124447.31289-1-robert.foss@linaro.org>
- <YofgAd/nAejaATli@gerhold.net>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rajeev Nandan <quic_rajeevny@quicinc.com>,
+        Vladimir Lypak <vladimir.lypak@gmail.com>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Jonathan Marek <jonathan@marek.ca>, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Subject: [PATCH v2 00/11] drm/msm/dsi_phy: Replace parent names with clk_hw pointers
+Date:   Thu,  2 Jun 2022 00:07:36 +0200
+Message-Id: <20220601220747.1145095-1-marijn.suijten@somainline.org>
+X-Mailer: git-send-email 2.36.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <YofgAd/nAejaATli@gerhold.net>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, May 20, 2022 at 08:37:53PM +0200, Stephan Gerhold wrote:
-> On Fri, May 20, 2022 at 02:44:47PM +0200, Robert Foss wrote:
-> > Qualcomm has given permission for all the dt-bindings to be dual
-> > licensed. All of the Linaro authored bindings are easy to change, in
-> > terms of the permissions & copyrights, so they've been bundled in this
-> > commit.
-> > 
-> > Additionally clean up the syntax of some of the copyright statements.
-> > 
-> > Signed-off-by: Robert Foss <robert.foss@linaro.org>
-> > ---
-> > 
-> > There are more Qcom bindings that should have the license updated
-> > to GPL2+BSD, but since they haven't been authored or copyrighted
-> > by Linaro, I think I'll have to hunt down the authors individually.
-> > 
-> >  include/dt-bindings/clock/qcom,gcc-msm8998.h          | 2 +-
-> >  include/dt-bindings/clock/qcom,rpmcc.h                | 2 +-
-> >  include/dt-bindings/clock/qcom,rpmh.h                 | 6 ++++--
-> > 
-> 
-> At least these 3 have contributors outside Qualcomm and Linaro.
-> Doesn't this mean you would still need to contact all of them
-> and see if they are fine with relicensing their contribution?
+As stated in [1] I promised to tackle and send this series.
 
-Yes. Though I think you could draw the line at some number of lines. 
-This is what I use to get # of lines by email:
+parent_hw pointers are easier to manage and cheaper to use than
+repeatedly formatting the parent name and subsequently leaving the clk
+framework to perform lookups based on that name.
 
-git blame -e include/dt-bindings/clock/qcom,rpmcc.h | sed -e 's/.*<\(.*\)>.*/\1/' | sort | uniq -c | sort -n
+This series starts out by adding extra constructors for divider, mux and
+fixed-factor clocks that have parent_hw(s) pointer argument(s) instead
+of some DT index or name.  Followed by individual patches performing the
+conversion, one DSI PHY at a time.
 
-> I don't want to make this more complicated than necessary, but it's
-> probably better to be careful when it comes to licensing stuff...
-> 
-> (Although personally I think it feels a bit weird to discuss copyright
->  for a bunch of "numbered names"...)
+dsi_phy_28nm_8960 includes an extra fixup to replace "eternal"
+devm_kzalloc allocations (for the lifetime of the device) with
+stack-local char arrays, like all the other DSI PHY drivers.
 
-Indeed.
+(Questions from v1 cover letter regarding the future of these drivers
+ is omitted for brevity.)
 
-Rob
+And with enough future improvements out of the way, let's round out this
+patch-series by stating that it has been successfully tested on:
+
+- Sony Nile Discovery (Xperia XA2 Ultra): 14nm;
+- Sony Seine PDX201 (Xperia 10II): 14nm;
+- Sony Loire Suzu (Xperia X): 28nm.
+
+And no diff is observed in debugfs's clk_summary.
+
+Unfortunately all other devices in my collection with a 7/10nm DSI PHY
+have a DSC panel which we have yet to get working.
+
+[1]: https://lore.kernel.org/linux-arm-msm/20220502214235.s5plebunh4ttjhge@SoMainline.org/
+
+Changes since v1:
+
+- Moved indentation changes to separate patch (Dmitry);
+- dsi_phy_28nm_8960: move clock name allocation removal prior to
+  parent_hw refactor;
+- Remove vco_name stack-local char array in favour of reusing clk_name
+  (Dmitry);
+- Inserted additional patch to replace hardcoded char-array length
+  constant 32 with sizeof(clk_name).
+
+v1: https://lore.kernel.org/linux-arm-msm/20220523213837.1016542-1-marijn.suijten@somainline.org/T/#u
+
+Marijn Suijten (11):
+  clk: divider: Introduce devm_clk_hw_register_divider_parent_hw()
+  clk: mux: Introduce devm_clk_hw_register_mux_parent_hws()
+  clk: fixed-factor: Introduce *clk_hw_register_fixed_factor_parent_hw()
+  drm/msm/dsi/phy: Reindent and reflow multiline function calls
+  drm/msm/dsi_phy_28nm_8960: Use stack memory for temporary clock names
+  drm/msm/dsi/phy: Replace hardcoded char-array length with sizeof()
+  drm/msm/dsi_phy_28nm_8960: Replace parent names with clk_hw pointers
+  drm/msm/dsi_phy_28nm: Replace parent names with clk_hw pointers
+  drm/msm/dsi_phy_14nm: Replace parent names with clk_hw pointers
+  drm/msm/dsi_phy_10nm: Replace parent names with clk_hw pointers
+  drm/msm/dsi_phy_7nm: Replace parent names with clk_hw pointers
+
+ drivers/clk/clk-fixed-factor.c                |  57 ++++--
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c    | 165 +++++++++---------
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c    |  55 +++---
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c    | 117 ++++++-------
+ .../gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c   |  90 +++++-----
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c     | 156 ++++++++---------
+ include/linux/clk-provider.h                  |  34 ++++
+ 7 files changed, 358 insertions(+), 316 deletions(-)
+
+-- 
+2.36.1
+
