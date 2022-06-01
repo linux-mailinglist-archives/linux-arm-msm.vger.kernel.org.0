@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 90E8153AAC9
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jun 2022 18:13:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1CA6353AACA
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jun 2022 18:14:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1356034AbiFAQN4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Jun 2022 12:13:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58924 "EHLO
+        id S1356018AbiFAQN5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Jun 2022 12:13:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59038 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1356018AbiFAQNz (ORCPT
+        with ESMTP id S1356030AbiFAQN4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Jun 2022 12:13:55 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B96242EC1
-        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Jun 2022 09:13:53 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id c19so3563752lfv.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Jun 2022 09:13:53 -0700 (PDT)
+        Wed, 1 Jun 2022 12:13:56 -0400
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97F2141F95
+        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Jun 2022 09:13:54 -0700 (PDT)
+Received: by mail-lj1-x233.google.com with SMTP id t13so2541350ljd.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Jun 2022 09:13:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=c3iCJBjLDnmrTUfepxndPiNQITEc6nULp1gHaa0QEm8=;
-        b=P7rSGkYRWT91k7QwEKAsrQvekSm4dwX5uwi5RJSU3xFdBb+MLh+FNQipWrhHi10FhY
-         VMwd6tyWx7VxKp235JjBfgSeSXl3eYQWcJTYcozrLhyZrWzolA3Alsg4tR95a3eHz//S
-         HHV88Lthdy887iWg28zlov30M0+Gt66HROdJDWy79wKiWT2GneM7JCpSRr1dSqIXGibV
-         g/ienYkTlyGRwLFEyJlXa84IptA8DQWO6WkzRiyomaPPQJvRp8wI0njudRhR9MFWrfrr
-         A06RUNNa0ETvkyW/Dnk3oQuscqMshfAsx4grrAObmk2FKb0O9tr7vQDXnjlIoDqjTrrs
-         LG6g==
+        bh=bKtAwgKsvfWTTuGD0xoOQN8yo99BGUWcdTs+0dzp78Q=;
+        b=r9KsPCNxh79MaEKHUFh6kAPpwe3ErCVaARaw2UHyLsMWh4gIjB4o7yImlpfEpMyUtR
+         33iSQgcXomiAp4/Qi7nPQPJErY5n1Ef3WqGB/h/yoqEqAO7CPzAKRdvSOpCbQa/FOkDi
+         M0hIqaPsnZG1zcFp81Kxzqjqe3XNSHLSGiOwg/7FIjAo/UYHLFnNt8KW+A8/ibFnxXCK
+         j9qf39n8foNg7HchF3Y9AtNHNwPWRXO2SNeGoqHkJiBjVvXFGzhqZ5ZgDT5qhDxszLaS
+         ko3PAQcCRgzx+M8mI2shyY+0Rgn4LrTzfnL0wA+Fu1bNPLOL/Lnb60Ur2uV3EWSdcqUF
+         fotQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=c3iCJBjLDnmrTUfepxndPiNQITEc6nULp1gHaa0QEm8=;
-        b=Tsc+lFmjOeJB6YjG6Z8Xi3RUGLN7TSi/DGMJc0jcWRUymyUyyuE9OP78V5mzpVCFrz
-         v5/tdCoEb8FtwjsusapJZYPlj/cHnLz4KER7Qle0jqPNSZ/pXD6daWqpWd5XyZZgQ/ws
-         nZrXDG520f6GfmM54lWJII7umJjZV+ZjCjO+GuLvwHS5YypW6HDXikGba0CX/imfjJCz
-         VYOpqiact62opeY7wj5Luqh2tauuUHurCXL6PFAmv5/qn6hN851spBomwkXR7o3oaqKx
-         hqU7BrWjZBSlVziDB8WzGuepIWDfuJKFTXJrFStmqL7Lc39biDs77F4joyK2WDphMUQv
-         v8+w==
-X-Gm-Message-State: AOAM533h68UxslsNFjrItj78gbp2dmw9VnpG/Z0qVgUEx6xuCDUXVX1p
-        fHYLoqdZFrKoKRHkEXqrmg0nrA==
-X-Google-Smtp-Source: ABdhPJwb5FrDfkxGjLCyTGrmIivIkVudLAbFAHr2dn/gkskHUPZOCCAYRHl40FhCi8/O6A2onZu8zw==
-X-Received: by 2002:a05:6512:a88:b0:473:e080:40e8 with SMTP id m8-20020a0565120a8800b00473e08040e8mr48306946lfu.359.1654100031778;
-        Wed, 01 Jun 2022 09:13:51 -0700 (PDT)
+        bh=bKtAwgKsvfWTTuGD0xoOQN8yo99BGUWcdTs+0dzp78Q=;
+        b=ZJq/1wevXEAhTUjvYDeqpo6QrU2CLhjBN2ub8F8vts4cH/ZOIjWNxJTGP2DeMkaQJ2
+         BE4qgQup25lISU2ILcgLMrWBNAINznE1qTrNhPFVshRXf6p1KfAlJ1whS2yg4TFfKz3H
+         6GKSvOhAdfqmxH/wfj5mrN2D7V46QKvA6EHhAwRAp9bTOXGqLJE/ifTB7pIHT1aUAnwH
+         zsZ8xvJj0QfcTlYXEZwuj+adqLKRoBpM4DdFShjkrPLrOz7a/TXADoe+ptEZY1nKwbLd
+         UP4chTdKZQUkV1gQG/fgla2h8zSSgi9+XvAZ9GVYUb8rg5nNHxzqrK+6VXmcDYoiq522
+         da0Q==
+X-Gm-Message-State: AOAM532v1ASTYyE9w0FZjporVwNhupjHp1/XCFg/wM7B7Up294cN6k/m
+        XSySFd1eTDQrv0TJGKmACESlxQ==
+X-Google-Smtp-Source: ABdhPJzJ9KhZoabEqclzLpRPsXWiNK8RXKGdgdZv1Mr+HNobHSrhmyNvO5HHKLpRxWXIuqDLRB1Yjw==
+X-Received: by 2002:a2e:8090:0:b0:255:51b2:17a6 with SMTP id i16-20020a2e8090000000b0025551b217a6mr7840285ljg.352.1654100032867;
+        Wed, 01 Jun 2022 09:13:52 -0700 (PDT)
 Received: from eriador.lan ([37.153.55.125])
         by smtp.gmail.com with ESMTPSA id k2-20020a05651239c200b00479066d45bcsm339545lfu.214.2022.06.01.09.13.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Jun 2022 09:13:51 -0700 (PDT)
+        Wed, 01 Jun 2022 09:13:52 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>
@@ -57,9 +57,9 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
-Subject: [PATCH v1 2/4] drm/msm/dpu: drop length from struct dpu_hw_blk_reg_map
-Date:   Wed,  1 Jun 2022 19:13:47 +0300
-Message-Id: <20220601161349.1517667-3-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v1 3/4] drm/msm/dpu: merge base_off with blk_off in struct dpu_hw_blk_reg_map
+Date:   Wed,  1 Jun 2022 19:13:48 +0300
+Message-Id: <20220601161349.1517667-4-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220601161349.1517667-1-dmitry.baryshkov@linaro.org>
 References: <20220601161349.1517667-1-dmitry.baryshkov@linaro.org>
@@ -75,188 +75,260 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-We (nearly) do not use the length field from struct dpu_hw_blk_reg_map,
-so we can drop it safely.
+There is little point in keeping a separate MDP address and block offset
+in this struct. Merge them to form a new blk_addr field used for all
+register access.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c      | 1 -
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c      | 1 -
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c     | 1 -
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c     | 1 -
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c       | 1 -
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_merge3d.c  | 1 -
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c | 1 -
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c     | 1 -
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c      | 1 -
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h     | 2 --
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_vbif.c     | 1 -
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c       | 1 -
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c         | 2 +-
- 13 files changed, 1 insertion(+), 14 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c        | 3 +--
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c        | 3 +--
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c       | 3 +--
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c | 3 +--
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c       | 3 +--
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c         | 3 +--
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_merge3d.c    | 3 +--
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c   | 5 ++---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c       | 3 +--
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c        | 3 +--
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c       | 6 +++---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h       | 7 +++----
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_vbif.c       | 3 +--
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c         | 3 +--
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c           | 2 +-
+ 15 files changed, 20 insertions(+), 33 deletions(-)
 
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-index 7d416bf4ae91..1120ff408dae 100644
+index 1120ff408dae..e12b7fa48a7b 100644
 --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
 +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-@@ -60,7 +60,6 @@ static const struct dpu_ctl_cfg *_ctl_offset(enum dpu_ctl ctl,
+@@ -58,8 +58,7 @@ static const struct dpu_ctl_cfg *_ctl_offset(enum dpu_ctl ctl,
+ 
+ 	for (i = 0; i < m->ctl_count; i++) {
  		if (ctl == m->ctl[i].id) {
- 			b->base_off = addr;
- 			b->blk_off = m->ctl[i].base;
--			b->length = m->ctl[i].len;
+-			b->base_off = addr;
+-			b->blk_off = m->ctl[i].base;
++			b->blk_addr = addr + m->ctl[i].base;
  			b->log_mask = DPU_DBG_MASK_CTL;
  			return &m->ctl[i];
  		}
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c
-index 184a1b27b13d..dfe6e4c11917 100644
+index dfe6e4c11917..411689ae6382 100644
 --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c
 +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c
-@@ -168,7 +168,6 @@ static struct dpu_dsc_cfg *_dsc_offset(enum dpu_dsc dsc,
+@@ -166,8 +166,7 @@ static struct dpu_dsc_cfg *_dsc_offset(enum dpu_dsc dsc,
+ 
+ 	for (i = 0; i < m->dsc_count; i++) {
  		if (dsc == m->dsc[i].id) {
- 			b->base_off = addr;
- 			b->blk_off = m->dsc[i].base;
--			b->length = m->dsc[i].len;
+-			b->base_off = addr;
+-			b->blk_off = m->dsc[i].base;
++			b->blk_addr = addr + m->dsc[i].base;
  			b->log_mask = DPU_DBG_MASK_DSC;
  			return &m->dsc[i];
  		}
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c
-index 3e63bf4fa64e..8196ae47dea8 100644
+index 8196ae47dea8..8ab5ace34a2d 100644
 --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c
 +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c
-@@ -82,7 +82,6 @@ static const struct dpu_dspp_cfg *_dspp_offset(enum dpu_dspp dspp,
+@@ -80,8 +80,7 @@ static const struct dpu_dspp_cfg *_dspp_offset(enum dpu_dspp dspp,
+ 
+ 	for (i = 0; i < m->dspp_count; i++) {
  		if (dspp == m->dspp[i].id) {
- 			b->base_off = addr;
- 			b->blk_off = m->dspp[i].base;
--			b->length = m->dspp[i].len;
+-			b->base_off = addr;
+-			b->blk_off = m->dspp[i].base;
++			b->blk_addr = addr + m->dspp[i].base;
  			b->log_mask = DPU_DBG_MASK_DSPP;
  			return &m->dspp[i];
  		}
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
+index d83503ea2419..cf1b6d84c18a 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
+@@ -401,8 +401,7 @@ u32 dpu_core_irq_read(struct dpu_kms *dpu_kms, int irq_idx)
+ static void __intr_offset(const struct dpu_mdss_cfg *m,
+ 		void __iomem *addr, struct dpu_hw_blk_reg_map *hw)
+ {
+-	hw->base_off = addr;
+-	hw->blk_off = m->mdp[0].base;
++	hw->blk_addr = addr + m->mdp[0].base;
+ }
+ 
+ struct dpu_hw_intr *dpu_hw_intr_init(void __iomem *addr,
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
-index b2ca8d19fdd7..c7eb314f1d7a 100644
+index c7eb314f1d7a..d8aff0f459f8 100644
 --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
 +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
-@@ -79,7 +79,6 @@ static const struct dpu_intf_cfg *_intf_offset(enum dpu_intf intf,
+@@ -77,8 +77,7 @@ static const struct dpu_intf_cfg *_intf_offset(enum dpu_intf intf,
+ 	for (i = 0; i < m->intf_count; i++) {
+ 		if ((intf == m->intf[i].id) &&
  		(m->intf[i].type != INTF_NONE)) {
- 			b->base_off = addr;
- 			b->blk_off = m->intf[i].base;
--			b->length = m->intf[i].len;
+-			b->base_off = addr;
+-			b->blk_off = m->intf[i].base;
++			b->blk_addr = addr + m->intf[i].base;
  			b->log_mask = DPU_DBG_MASK_INTF;
  			return &m->intf[i];
  		}
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
-index b41993269d09..87a4a5869b9b 100644
+index 87a4a5869b9b..75d55fd65f19 100644
 --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
 +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
-@@ -45,7 +45,6 @@ static const struct dpu_lm_cfg *_lm_offset(enum dpu_lm mixer,
+@@ -43,8 +43,7 @@ static const struct dpu_lm_cfg *_lm_offset(enum dpu_lm mixer,
+ 
+ 	for (i = 0; i < m->mixer_count; i++) {
  		if (mixer == m->mixer[i].id) {
- 			b->base_off = addr;
- 			b->blk_off = m->mixer[i].base;
--			b->length = m->mixer[i].len;
+-			b->base_off = addr;
+-			b->blk_off = m->mixer[i].base;
++			b->blk_addr = addr + m->mixer[i].base;
  			b->log_mask = DPU_DBG_MASK_LM;
  			return &m->mixer[i];
  		}
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_merge3d.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_merge3d.c
-index b053d68d38da..538691f7bf66 100644
+index 538691f7bf66..def0a87fdba5 100644
 --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_merge3d.c
 +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_merge3d.c
-@@ -25,7 +25,6 @@ static const struct dpu_merge_3d_cfg *_merge_3d_offset(enum dpu_merge_3d idx,
+@@ -23,8 +23,7 @@ static const struct dpu_merge_3d_cfg *_merge_3d_offset(enum dpu_merge_3d idx,
+ 
+ 	for (i = 0; i < m->merge_3d_count; i++) {
  		if (idx == m->merge_3d[i].id) {
- 			b->base_off = addr;
- 			b->blk_off = m->merge_3d[i].base;
--			b->length = m->merge_3d[i].len;
+-			b->base_off = addr;
+-			b->blk_off = m->merge_3d[i].base;
++			b->blk_addr = addr + m->merge_3d[i].base;
  			b->log_mask = DPU_DBG_MASK_PINGPONG;
  			return &m->merge_3d[i];
  		}
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c
-index 6538e195cfe9..0aa63636bc9a 100644
+index 0aa63636bc9a..0fcad9760b6f 100644
 --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c
 +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c
-@@ -53,7 +53,6 @@ static const struct dpu_pingpong_cfg *_pingpong_offset(enum dpu_pingpong pp,
+@@ -51,8 +51,7 @@ static const struct dpu_pingpong_cfg *_pingpong_offset(enum dpu_pingpong pp,
+ 
+ 	for (i = 0; i < m->pingpong_count; i++) {
  		if (pp == m->pingpong[i].id) {
- 			b->base_off = addr;
- 			b->blk_off = m->pingpong[i].base;
--			b->length = m->pingpong[i].len;
+-			b->base_off = addr;
+-			b->blk_off = m->pingpong[i].base;
++			b->blk_addr = addr + m->pingpong[i].base;
  			b->log_mask = DPU_DBG_MASK_PINGPONG;
  			return &m->pingpong[i];
  		}
+@@ -156,7 +155,7 @@ static int dpu_hw_pp_poll_timeout_wr_ptr(struct dpu_hw_pingpong *pp,
+ 		return -EINVAL;
+ 
+ 	c = &pp->hw;
+-	rc = readl_poll_timeout(c->base_off + c->blk_off + PP_LINE_COUNT,
++	rc = readl_poll_timeout(c->blk_addr + PP_LINE_COUNT,
+ 			val, (val & 0xffff) >= 1, 10, timeout_us);
+ 
+ 	return rc;
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
-index da4c7e4f304b..876ae8faa8e5 100644
+index 876ae8faa8e5..102c21bb4192 100644
 --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
 +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
-@@ -771,7 +771,6 @@ static const struct dpu_sspp_cfg *_sspp_offset(enum dpu_sspp sspp,
+@@ -769,8 +769,7 @@ static const struct dpu_sspp_cfg *_sspp_offset(enum dpu_sspp sspp,
+ 	if ((sspp < SSPP_MAX) && catalog && addr && b) {
+ 		for (i = 0; i < catalog->sspp_count; i++) {
  			if (sspp == catalog->sspp[i].id) {
- 				b->base_off = addr;
- 				b->blk_off = catalog->sspp[i].base;
--				b->length = catalog->sspp[i].len;
+-				b->base_off = addr;
+-				b->blk_off = catalog->sspp[i].base;
++				b->blk_addr = addr + catalog->sspp[i].base;
  				b->log_mask = DPU_DBG_MASK_SSPP;
  				return &catalog->sspp[i];
  			}
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c
-index 12d3b0067275..843cb607d411 100644
+index 843cb607d411..c3110a25a30d 100644
 --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c
 +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c
-@@ -287,7 +287,6 @@ static const struct dpu_mdp_cfg *_top_offset(enum dpu_mdp mdp,
+@@ -285,8 +285,7 @@ static const struct dpu_mdp_cfg *_top_offset(enum dpu_mdp mdp,
+ 
+ 	for (i = 0; i < m->mdp_count; i++) {
  		if (mdp == m->mdp[i].id) {
- 			b->base_off = addr;
- 			b->blk_off = m->mdp[i].base;
--			b->length = m->mdp[i].len;
+-			b->base_off = addr;
+-			b->blk_off = m->mdp[i].base;
++			b->blk_addr = addr + m->mdp[i].base;
  			b->log_mask = DPU_DBG_MASK_TOP;
  			return &m->mdp[i];
  		}
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c
+index 512316f25a51..b2104001d2aa 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c
+@@ -80,13 +80,13 @@ void dpu_reg_write(struct dpu_hw_blk_reg_map *c,
+ 	/* don't need to mutex protect this */
+ 	if (c->log_mask & dpu_hw_util_log_mask)
+ 		DPU_DEBUG_DRIVER("[%s:0x%X] <= 0x%X\n",
+-				name, c->blk_off + reg_off, val);
+-	writel_relaxed(val, c->base_off + c->blk_off + reg_off);
++				name, reg_off, val);
++	writel_relaxed(val, c->blk_addr + reg_off);
+ }
+ 
+ int dpu_reg_read(struct dpu_hw_blk_reg_map *c, u32 reg_off)
+ {
+-	return readl_relaxed(c->base_off + c->blk_off + reg_off);
++	return readl_relaxed(c->blk_addr + reg_off);
+ }
+ 
+ u32 *dpu_hw_util_get_log_mask_ptr(void)
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h
-index e8adb118fa85..b745ef4ac16f 100644
+index b745ef4ac16f..d5338701fc2b 100644
 --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h
 +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h
-@@ -19,12 +19,10 @@
+@@ -17,12 +17,11 @@
+  * This is the common struct maintained by each sub block
+  * for mapping the register offsets in this block to the
   * absoulute IO address
-  * @base_off:     mdp register mapped offset
-  * @blk_off:      pipe offset relative to mdss offset
-- * @length        length of register block offset
+- * @base_off:     mdp register mapped offset
+- * @blk_off:      pipe offset relative to mdss offset
++ * @blk_addr:     hw block register mapped address
++ * @log_mask:     log mask for this block
   */
  struct dpu_hw_blk_reg_map {
- 	void __iomem *base_off;
- 	u32 blk_off;
--	u32 length;
+-	void __iomem *base_off;
+-	u32 blk_off;
++	void __iomem *blk_addr;
  	u32 log_mask;
  };
  
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_vbif.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_vbif.c
-index 789ecc531b43..41ca4b179f1a 100644
+index 41ca4b179f1a..16c56e240706 100644
 --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_vbif.c
 +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_vbif.c
-@@ -222,7 +222,6 @@ static const struct dpu_vbif_cfg *_top_offset(enum dpu_vbif vbif,
+@@ -220,8 +220,7 @@ static const struct dpu_vbif_cfg *_top_offset(enum dpu_vbif vbif,
+ 
+ 	for (i = 0; i < m->vbif_count; i++) {
  		if (vbif == m->vbif[i].id) {
- 			b->base_off = addr;
- 			b->blk_off = m->vbif[i].base;
--			b->length = m->vbif[i].len;
+-			b->base_off = addr;
+-			b->blk_off = m->vbif[i].base;
++			b->blk_addr = addr + m->vbif[i].base;
  			b->log_mask = DPU_DBG_MASK_VBIF;
  			return &m->vbif[i];
  		}
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c
-index 084439fdd3a0..12f32cd3075e 100644
+index 12f32cd3075e..2d28afdf860e 100644
 --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c
 +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c
-@@ -62,7 +62,6 @@ static const struct dpu_wb_cfg *_wb_offset(enum dpu_wb wb,
+@@ -60,8 +60,7 @@ static const struct dpu_wb_cfg *_wb_offset(enum dpu_wb wb,
+ 
+ 	for (i = 0; i < m->wb_count; i++) {
  		if (wb == m->wb[i].id) {
- 			b->base_off = addr;
- 			b->blk_off = m->wb[i].base;
--			b->length = m->wb[i].len;
+-			b->base_off = addr;
+-			b->blk_off = m->wb[i].base;
++			b->blk_addr = addr + m->wb[i].base;
  			return &m->wb[i];
  		}
  	}
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-index 688dc4409af6..a3bfc0fe72a8 100644
+index a3bfc0fe72a8..a526345abc69 100644
 --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
 +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-@@ -950,7 +950,7 @@ static void dpu_kms_mdp_snapshot(struct msm_disp_state *disp_state, struct msm_k
- 		msm_disp_snapshot_add_block(disp_state, cat->wb[i].len,
+@@ -951,7 +951,7 @@ static void dpu_kms_mdp_snapshot(struct msm_disp_state *disp_state, struct msm_k
  				dpu_kms->mmio + cat->wb[i].base, "wb_%d", i);
  
--	msm_disp_snapshot_add_block(disp_state, top->hw.length,
-+	msm_disp_snapshot_add_block(disp_state, cat->mdp[0].len,
- 			dpu_kms->mmio + top->hw.blk_off, "top");
+ 	msm_disp_snapshot_add_block(disp_state, cat->mdp[0].len,
+-			dpu_kms->mmio + top->hw.blk_off, "top");
++			dpu_kms->mmio + cat->mdp[0].base, "top");
  
  	pm_runtime_put_sync(&dpu_kms->pdev->dev);
+ }
 -- 
 2.35.1
 
