@@ -2,229 +2,198 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E379453AF1F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jun 2022 00:50:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AA99553B085
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jun 2022 02:34:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232169AbiFAWIX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Jun 2022 18:08:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40198 "EHLO
+        id S232348AbiFAXBs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Jun 2022 19:01:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42012 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232151AbiFAWIP (ORCPT
+        with ESMTP id S230455AbiFAXBr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Jun 2022 18:08:15 -0400
-Received: from relay03.th.seeweb.it (relay03.th.seeweb.it [IPv6:2001:4b7a:2000:18::164])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF54A228730;
-        Wed,  1 Jun 2022 15:08:13 -0700 (PDT)
-Received: from Marijn-Arch-PC.localdomain (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 9B3D0206AE;
-        Thu,  2 Jun 2022 00:08:11 +0200 (CEST)
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     phone-devel@vger.kernel.org, Stephen Boyd <sboyd@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        Wed, 1 Jun 2022 19:01:47 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60DC325FC;
+        Wed,  1 Jun 2022 16:01:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1654124505; x=1685660505;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=3KqXwi34XKSLr7jec5wJ0ltW9KraTu5BBDO4djryD+M=;
+  b=Qs85IlERaK+M3fxqXgSRUA6rrkBMWgLPDRn2bR6+havCNB44Huwff/Y5
+   kKKcFdguN97vwcBj3jXHqrX1UR2CG/edeMHdhOt1jpLy+5kAwW2od7nMs
+   uvuqMVoFXUHvELAUouMuitgWNsCFyU+OzJEf94IaewyBf6PCFgUUwBnIx
+   k=;
+Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
+  by alexa-out.qualcomm.com with ESMTP; 01 Jun 2022 16:01:44 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jun 2022 16:01:44 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Wed, 1 Jun 2022 16:01:43 -0700
+Received: from [10.38.242.41] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Wed, 1 Jun 2022
+ 16:01:40 -0700
+Message-ID: <7c8a6058-b67f-8e88-d5ee-34d589c2d9f4@quicinc.com>
+Date:   Wed, 1 Jun 2022 16:01:38 -0700
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [PATCH v2] drm/msm/dpu: Move min BW request and full BW disable
+ back to mdss
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC:     Douglas Anderson <dianders@chromium.org>,
+        Kalyan Thota <quic_kalyant@quicinc.com>,
+        David Airlie <airlied@linux.ie>,
+        <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         AngeloGioacchino Del Regno 
         <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rajeev Nandan <quic_rajeevny@quicinc.com>,
-        Vladimir Lypak <vladimir.lypak@gmail.com>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Jonathan Marek <jonathan@marek.ca>, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        Stephen Boyd <swboyd@chromium.org>
-Subject: [PATCH v2 11/11] drm/msm/dsi_phy_7nm: Replace parent names with clk_hw pointers
-Date:   Thu,  2 Jun 2022 00:07:47 +0200
-Message-Id: <20220601220747.1145095-12-marijn.suijten@somainline.org>
-X-Mailer: git-send-email 2.36.1
-In-Reply-To: <20220601220747.1145095-1-marijn.suijten@somainline.org>
-References: <20220601220747.1145095-1-marijn.suijten@somainline.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+        Stephen Boyd <swboyd@chromium.org>,
+        Sean Paul <sean@poorly.run>,
+        Vinod Polimera <quic_vpolimer@quicinc.com>,
+        <linux-kernel@vger.kernel.org>
+References: <20220531160059.v2.1.Ie7f6d4bf8cce28131da31a43354727e417cae98d@changeid>
+ <CAA8EJpqp64eDmXPN1qMTZ78My8BKPUcu7zKunZV1SJpzjSRDuQ@mail.gmail.com>
+ <f8d5e4a7-bba8-ca51-41f7-885ce14a55fe@quicinc.com>
+ <CAA8EJpp5v3qR2M-6Jms=3GgrzUeMOiMzQtgvQc_LPVE78aE=aw@mail.gmail.com>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <CAA8EJpp5v3qR2M-6Jms=3GgrzUeMOiMzQtgvQc_LPVE78aE=aw@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-5.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-parent_hw pointers are easier to manage and cheaper to use than
-repeatedly formatting the parent name and subsequently leaving the clk
-framework to perform lookups based on that name.
 
-Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c | 70 +++++++++++------------
- 1 file changed, 34 insertions(+), 36 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-index 6a58dd62bac5..c1710a8824e7 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-@@ -588,24 +588,24 @@ static int dsi_7nm_set_usecase(struct msm_dsi_phy *phy)
-  */
- static int pll_7nm_register(struct dsi_pll_7nm *pll_7nm, struct clk_hw **provided_clocks)
- {
--	char clk_name[32], parent[32], vco_name[32];
--	char parent2[32];
-+	char clk_name[32];
- 	struct clk_init_data vco_init = {
- 		.parent_data = &(const struct clk_parent_data) {
- 			.fw_name = "ref",
- 		},
- 		.num_parents = 1,
--		.name = vco_name,
-+		.name = clk_name,
- 		.flags = CLK_IGNORE_UNUSED,
- 		.ops = &clk_ops_dsi_pll_7nm_vco,
- 	};
- 	struct device *dev = &pll_7nm->phy->pdev->dev;
--	struct clk_hw *hw;
-+	struct clk_hw *hw, *pll_out_div, *pll_bit, *pll_by_2_bit;
-+	struct clk_hw *pll_post_out_div, *phy_pll_out_dsi_parent;
- 	int ret;
- 
- 	DBG("DSI%d", pll_7nm->phy->id);
- 
--	snprintf(vco_name, sizeof(vco_name), "dsi%dvco_clk", pll_7nm->phy->id);
-+	snprintf(clk_name, sizeof(clk_name), "dsi%dvco_clk", pll_7nm->phy->id);
- 	pll_7nm->clk_hw.init = &vco_init;
- 
- 	ret = devm_clk_hw_register(dev, &pll_7nm->clk_hw);
-@@ -613,36 +613,34 @@ static int pll_7nm_register(struct dsi_pll_7nm *pll_7nm, struct clk_hw **provide
- 		return ret;
- 
- 	snprintf(clk_name, sizeof(clk_name), "dsi%d_pll_out_div_clk", pll_7nm->phy->id);
--	snprintf(parent, sizeof(parent), "dsi%dvco_clk", pll_7nm->phy->id);
- 
--	hw = devm_clk_hw_register_divider(dev, clk_name, parent,
--			CLK_SET_RATE_PARENT, pll_7nm->phy->pll_base +
-+	pll_out_div = devm_clk_hw_register_divider_parent_hw(dev, clk_name,
-+			&pll_7nm->clk_hw, CLK_SET_RATE_PARENT,
-+			pll_7nm->phy->pll_base +
- 				REG_DSI_7nm_PHY_PLL_PLL_OUTDIV_RATE,
- 			0, 2, CLK_DIVIDER_POWER_OF_TWO, NULL);
--	if (IS_ERR(hw)) {
--		ret = PTR_ERR(hw);
-+	if (IS_ERR(pll_out_div)) {
-+		ret = PTR_ERR(pll_out_div);
- 		goto fail;
- 	}
- 
- 	snprintf(clk_name, sizeof(clk_name), "dsi%d_pll_bit_clk", pll_7nm->phy->id);
--	snprintf(parent, sizeof(parent), "dsi%d_pll_out_div_clk", pll_7nm->phy->id);
- 
- 	/* BIT CLK: DIV_CTRL_3_0 */
--	hw = devm_clk_hw_register_divider(dev, clk_name, parent,
--			CLK_SET_RATE_PARENT,
-+	pll_bit = devm_clk_hw_register_divider_parent_hw(dev, clk_name,
-+			pll_out_div, CLK_SET_RATE_PARENT,
- 			pll_7nm->phy->base + REG_DSI_7nm_PHY_CMN_CLK_CFG0,
- 			0, 4, CLK_DIVIDER_ONE_BASED, &pll_7nm->postdiv_lock);
--	if (IS_ERR(hw)) {
--		ret = PTR_ERR(hw);
-+	if (IS_ERR(pll_bit)) {
-+		ret = PTR_ERR(pll_bit);
- 		goto fail;
- 	}
- 
- 	snprintf(clk_name, sizeof(clk_name), "dsi%d_phy_pll_out_byteclk", pll_7nm->phy->id);
--	snprintf(parent, sizeof(parent), "dsi%d_pll_bit_clk", pll_7nm->phy->id);
- 
- 	/* DSI Byte clock = VCO_CLK / OUT_DIV / BIT_DIV / 8 */
--	hw = devm_clk_hw_register_fixed_factor(dev, clk_name, parent,
--			CLK_SET_RATE_PARENT, 1,
-+	hw = devm_clk_hw_register_fixed_factor_parent_hw(dev, clk_name,
-+			pll_bit, CLK_SET_RATE_PARENT, 1,
- 			pll_7nm->phy->cphy_mode ? 7 : 8);
- 	if (IS_ERR(hw)) {
- 		ret = PTR_ERR(hw);
-@@ -652,24 +650,24 @@ static int pll_7nm_register(struct dsi_pll_7nm *pll_7nm, struct clk_hw **provide
- 	provided_clocks[DSI_BYTE_PLL_CLK] = hw;
- 
- 	snprintf(clk_name, sizeof(clk_name), "dsi%d_pll_by_2_bit_clk", pll_7nm->phy->id);
--	snprintf(parent, sizeof(parent), "dsi%d_pll_bit_clk", pll_7nm->phy->id);
- 
--	hw = devm_clk_hw_register_fixed_factor(dev, clk_name, parent,
--					       0, 1, 2);
--	if (IS_ERR(hw)) {
--		ret = PTR_ERR(hw);
-+	pll_by_2_bit = devm_clk_hw_register_fixed_factor_parent_hw(dev,
-+			clk_name, pll_bit, 0, 1, 2);
-+	if (IS_ERR(pll_by_2_bit)) {
-+		ret = PTR_ERR(pll_by_2_bit);
- 		goto fail;
- 	}
- 
- 	snprintf(clk_name, sizeof(clk_name), "dsi%d_pll_post_out_div_clk", pll_7nm->phy->id);
--	snprintf(parent, sizeof(parent), "dsi%d_pll_out_div_clk", pll_7nm->phy->id);
- 
- 	if (pll_7nm->phy->cphy_mode)
--		hw = devm_clk_hw_register_fixed_factor(dev, clk_name, parent, 0, 2, 7);
-+		pll_post_out_div = devm_clk_hw_register_fixed_factor_parent_hw(
-+				dev, clk_name, pll_out_div, 0, 2, 7);
- 	else
--		hw = devm_clk_hw_register_fixed_factor(dev, clk_name, parent, 0, 1, 4);
--	if (IS_ERR(hw)) {
--		ret = PTR_ERR(hw);
-+		pll_post_out_div = devm_clk_hw_register_fixed_factor_parent_hw(
-+				dev, clk_name, pll_out_div, 0, 1, 4);
-+	if (IS_ERR(pll_post_out_div)) {
-+		ret = PTR_ERR(pll_post_out_div);
- 		goto fail;
- 	}
- 
-@@ -682,15 +680,14 @@ static int pll_7nm_register(struct dsi_pll_7nm *pll_7nm, struct clk_hw **provide
- 		data = dsi_phy_read(pll_7nm->phy->base + REG_DSI_7nm_PHY_CMN_CLK_CFG1);
- 		dsi_phy_write(pll_7nm->phy->base + REG_DSI_7nm_PHY_CMN_CLK_CFG1, data | 3);
- 
--		snprintf(parent, sizeof(parent), "dsi%d_pll_post_out_div_clk", pll_7nm->phy->id);
-+		phy_pll_out_dsi_parent = pll_post_out_div;
- 	} else {
- 		snprintf(clk_name, sizeof(clk_name), "dsi%d_pclk_mux", pll_7nm->phy->id);
--		snprintf(parent, sizeof(parent), "dsi%d_pll_bit_clk", pll_7nm->phy->id);
--		snprintf(parent2, sizeof(parent2), "dsi%d_pll_by_2_bit_clk", pll_7nm->phy->id);
- 
--		hw = devm_clk_hw_register_mux(dev, clk_name,
--				((const char *[]){
--					parent, parent2,
-+		hw = devm_clk_hw_register_mux_parent_hws(dev, clk_name,
-+				((const struct clk_hw *[]){
-+					pll_bit,
-+					pll_by_2_bit,
- 				}), 2, 0, pll_7nm->phy->base +
- 					REG_DSI_7nm_PHY_CMN_CLK_CFG1,
- 				0, 1, 0, NULL);
-@@ -699,13 +696,14 @@ static int pll_7nm_register(struct dsi_pll_7nm *pll_7nm, struct clk_hw **provide
- 			goto fail;
- 		}
- 
--		snprintf(parent, sizeof(parent), "dsi%d_pclk_mux", pll_7nm->phy->id);
-+		phy_pll_out_dsi_parent = hw;
- 	}
- 
- 	snprintf(clk_name, sizeof(clk_name), "dsi%d_phy_pll_out_dsiclk", pll_7nm->phy->id);
- 
- 	/* PIX CLK DIV : DIV_CTRL_7_4*/
--	hw = devm_clk_hw_register_divider(dev, clk_name, parent, 0,
-+	hw = devm_clk_hw_register_divider_parent_hw(dev, clk_name,
-+			phy_pll_out_dsi_parent, 0,
- 			pll_7nm->phy->base + REG_DSI_7nm_PHY_CMN_CLK_CFG0,
- 			4, 4, CLK_DIVIDER_ONE_BASED, &pll_7nm->postdiv_lock);
- 	if (IS_ERR(hw)) {
--- 
-2.36.1
+On 6/1/2022 12:58 PM, Dmitry Baryshkov wrote:
+> On Wed, 1 Jun 2022 at 20:18, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+>> On 6/1/2022 3:04 AM, Dmitry Baryshkov wrote:
+>>> On Wed, 1 Jun 2022 at 02:01, Douglas Anderson <dianders@chromium.org> wrote:
+>>>>
+>>>> In commit a670ff578f1f ("drm/msm/dpu: always use mdp device to scale
+>>>> bandwidth") we fully moved interconnect stuff to the DPU driver. This
+>>>> had no change for sc7180 but _did_ have an impact for other SoCs. It
+>>>> made them match the sc7180 scheme.
+>>>
+>>> [skipped the description]
+>>>
+>>>>
+>>>> Changes in v2:
+>>>> - Don't set bandwidth in init.
+>>>>
+>>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c |  8 ----
+>>>>    drivers/gpu/drm/msm/msm_mdss.c          | 57 +++++++++++++++++++++++++
+>>>>    2 files changed, 57 insertions(+), 8 deletions(-)
+>>>>
+>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+>>>> index 2b9d931474e0..3025184053e0 100644
+>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+>>>> @@ -49,8 +49,6 @@
+>>>>    #define DPU_DEBUGFS_DIR "msm_dpu"
+>>>>    #define DPU_DEBUGFS_HWMASKNAME "hw_log_mask"
+>>>>
+>>>> -#define MIN_IB_BW      400000000ULL /* Min ib vote 400MB */
+>>>> -
+>>>>    static int dpu_kms_hw_init(struct msm_kms *kms);
+>>>>    static void _dpu_kms_mmu_destroy(struct dpu_kms *dpu_kms);
+>>>>
+>>>
+>>> [skipped]
+>>>
+>>>> diff --git a/drivers/gpu/drm/msm/msm_mdss.c b/drivers/gpu/drm/msm/msm_mdss.c
+>>>> index 0454a571adf7..e13c5c12b775 100644
+>>>> --- a/drivers/gpu/drm/msm/msm_mdss.c
+>>>> +++ b/drivers/gpu/drm/msm/msm_mdss.c
+>>>> @@ -5,6 +5,7 @@
+>>>>
+>>>>    #include <linux/clk.h>
+>>>>    #include <linux/delay.h>
+>>>> +#include <linux/interconnect.h>
+>>>>    #include <linux/irq.h>
+>>>>    #include <linux/irqchip.h>
+>>>>    #include <linux/irqdesc.h>
+>>>> @@ -25,6 +26,8 @@
+>>>>    #define UBWC_CTRL_2                    0x150
+>>>>    #define UBWC_PREDICTION_MODE           0x154
+>>>>
+>>>> +#define MIN_IB_BW      400000000UL /* Min ib vote 400MB */
+>>>
+>>> As msm_mdss is now used for both DPU and MDP5 devices, could you
+>>> please confirm that this value is valid for older devices too? E.g.
+>>> db410c or 8974
+>>>
+>> I need to check with Kalyan on this value (400MB) as I am unable to find
+>> documentation on this. Will update this thread when I do.
+>>
+>> So prior to this change 627dc55c273da ("drm/msm/disp/dpu1: icc path
+>> needs to be set before dpu runtime resume"), this value was coming from
+>> the hw catalog
+>>
+>> @@ -1191,10 +1193,10 @@ static int __maybe_unused
+>> dpu_runtime_resume(struct device *dev)
+>>
+>>           ddev = dpu_kms->dev;
+>>
+>> +       WARN_ON(!(dpu_kms->num_paths));
+>>           /* Min vote of BW is required before turning on AXI clk */
+>>           for (i = 0; i < dpu_kms->num_paths; i++)
+>> -               icc_set_bw(dpu_kms->path[i], 0,
+>> -                       dpu_kms->catalog->perf.min_dram_ib);
+>> +               icc_set_bw(dpu_kms->path[i], 0, Bps_to_icc(MIN_IB_BW));
+>>
+>> After this, we moved to a hard-coded value, I am not sure why.
+>>
+>> So nothing wrong with this change as such, the only question is whether
+>> this value is correct for older chips.
+>>
+>> But the question here is, are older chips even using icc.
+>>
+>> It seems like only sc7180, RB3/RB5 are unless i am mistaken.
+> 
+> We are not using it for msm8916 (but we should most probably). And for
+> the msm8996 the icc patches were by Yassine.
+> 
+>> So is there really any impact to the older chips with this change.
+>>
+>> If not, we should probably let this one go ahead and move back to
+>> catalog based approach while extending ICC for older chips.
+> 
+> Let's get this sorted out. I'm fine with 400 MBps, if that works for
+> all chipsets.
+> 
+
+I confirm that 400MBps min vote will work for all chipsets based on the 
+discussion i had with my team.
+
+Here, the additional thing to note as per discussion with doug on IRC is
+
+now two ICC paths get created, one from mdp5's probe and the other from 
+msm_mdss_init().
+
+So the ICC driver will aggregate the votes and take the max for the 
+second parameter ( IB ).
+
+So for normal use-cases this will still work fine.
+
+Thanks
+
+Abhinav
 
