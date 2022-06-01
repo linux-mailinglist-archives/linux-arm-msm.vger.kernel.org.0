@@ -2,52 +2,43 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6D947539D3B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jun 2022 08:32:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7FB9F539D8B
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jun 2022 08:56:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348894AbiFAGcH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Jun 2022 02:32:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57586 "EHLO
+        id S1349997AbiFAG4d (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Jun 2022 02:56:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32946 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244910AbiFAGcH (ORCPT
+        with ESMTP id S231705AbiFAG43 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Jun 2022 02:32:07 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AFB7913EB1;
-        Tue, 31 May 2022 23:32:05 -0700 (PDT)
+        Wed, 1 Jun 2022 02:56:29 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12DE95641F;
+        Tue, 31 May 2022 23:56:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1654065125; x=1685601125;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=s9gUxig0ok1ngcEsz0djAAmFBWB9OcXhuz4rut5eERE=;
-  b=xvj9GQ+ysMFmkPY80QBQKQ3JYwGwXWccRZ9sdUry9UjXcO0YgNfdfkg8
-   joq5GwSSxaas3uMGERz2NM8/7HlPURZRBalUaqUOS9E9tMfH4/ISKG4JR
-   iz+hJ/Jbt9xVc2bjhndbdTickiVltQPC9NZ+h9bBLFbMcgPVDiRxJprz5
-   M=;
-Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 31 May 2022 23:32:05 -0700
+  t=1654066588; x=1685602588;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=LJQybaBM/F7Bf/W5JS+iZAoLpoQv+yfMRgTyPAvu6vg=;
+  b=yJkN00j73m4naK14768529ZViuFoC0iR6XBAnjLIv48pC/iLdvyb01rh
+   WJp8LC4n3Yl5nKU/rpHLNQOREIdKeJ473oV9bisk/h6vDAwI1P/Y2IjkU
+   510M4A0EGMKKrR9GtiVGq5qJ4WjL4azywXR5g5ug0xT5VMpjw7J+gyRIQ
+   Q=;
+Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
+  by alexa-out.qualcomm.com with ESMTP; 31 May 2022 23:56:28 -0700
 X-QCInternal: smtphost
 Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg02-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 May 2022 23:32:05 -0700
+  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 May 2022 23:56:27 -0700
 Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
  nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Tue, 31 May 2022 23:32:04 -0700
-Received: from [10.216.54.83] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Tue, 31 May
- 2022 23:31:58 -0700
-Message-ID: <4849065c-f743-884e-2afe-d802efde0a99@quicinc.com>
-Date:   Wed, 1 Jun 2022 12:01:54 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.0
-Subject: Re: [PATCH v7 2/3] phy: qcom-snps: Add support for overriding phy
- tuning parameters
-Content-Language: en-US
-To:     Pavan Kondeti <quic_pkondeti@quicinc.com>
-CC:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ 15.2.986.22; Tue, 31 May 2022 23:56:13 -0700
+Received: from hu-kriskura-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Tue, 31 May 2022 23:56:08 -0700
+From:   Krishna Kurapati <quic_kriskura@quicinc.com>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -55,88 +46,78 @@ CC:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Stephen Boyd <swboyd@chromium.org>,
         "Doug Anderson" <dianders@chromium.org>,
         Matthias Kaehlcke <mka@chromium.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>
+CC:     <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
         <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-phy@lists.infradead.org>, <quic_ppratap@quicinc.com>,
-        <quic_vpulyala@quicinc.com>
-References: <1654013693-21484-1-git-send-email-quic_kriskura@quicinc.com>
- <1654013693-21484-3-git-send-email-quic_kriskura@quicinc.com>
- <20220601020856.GA20979@hu-pkondeti-hyd.qualcomm.com>
-From:   Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-In-Reply-To: <20220601020856.GA20979@hu-pkondeti-hyd.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
+        <linux-phy@lists.infradead.org>, <quic_pkondeti@quicinc.com>,
+        <quic_ppratap@quicinc.com>, <quic_vpulyala@quicinc.com>,
+        Krishna Kurapati <quic_kriskura@quicinc.com>
+Subject: [PATCH v8 0/3] Add QCOM SNPS PHY overriding params support
+Date:   Wed, 1 Jun 2022 12:26:01 +0530
+Message-ID: <1654066564-20518-1-git-send-email-quic_kriskura@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+MIME-Version: 1.0
+Content-Type: text/plain
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-7.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Added support for overriding tuning parameters in QCOM SNPS PHY
+from device tree. This parameter tuning is required to tune the
+hs signal on dp/dm lines for electrical compliance to be successful.
 
-On 6/1/2022 7:38 AM, Pavan Kondeti wrote:
-> On Tue, May 31, 2022 at 09:44:52PM +0530, Krishna Kurapati wrote:
->> Add support for overriding electrical signal tuning parameters for
->> SNPS HS Phy.
->>
->> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
->> ---
->>   drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c | 268 +++++++++++++++++++++++++-
->>   1 file changed, 266 insertions(+), 2 deletions(-)
->>
->> diff --git a/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c b/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
->> index 5d20378..3a17216 100644
->> --- a/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
->> +++ b/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
->> @@ -52,6 +52,12 @@
->>   #define USB2_SUSPEND_N				BIT(2)
->>   #define USB2_SUSPEND_N_SEL			BIT(3)
->>   
-> <snip>
->
->> +static void qcom_snps_hsphy_override_param_update_val(
->> +			const struct override_param_map map,
->> +			s32 dt_val, struct phy_override_seq *seq_entry)
->> +{
->> +	int i;
->> +
->> +	/*
->> +	 * Param table for each param is in increasing order
->> +	 * of dt values. We need to iterate over the list to
->> +	 * select the entry that has equal or the next highest value.
->> +	 */
->> +	for (i = 0; i < map.table_size - 1; i++) {
->> +		if (map.param_table[i].value >= dt_val)
->> +			break;
->> +	}
->> +
->> +	seq_entry->need_update = true;
->> +	seq_entry->offset = map.reg_offset;
->> +	seq_entry->mask = map.param_mask;
->> +	seq_entry->value =  map.param_table[i].reg << __ffs(map.param_mask);
->> +}
->> +
->> +static void qcom_snps_hsphy_read_override_param_seq(struct device *dev)
->> +{
->> +	struct device_node *node = dev->of_node;
->> +	s32 val;
->> +	int ret, i;
->> +	struct qcom_snps_hsphy *hsphy;
->> +	const struct override_param_map *cfg =
->> +		(struct override_param_map *) of_device_get_match_data(dev);
-> As mentioned in the previous patch-set, the explicit typecast is not needed.
->
-> overall, looks good to me. After fixing the above, feel free to use
->
-> Reviewed-by: Pavankumar Kondeti <quic_pkondeti@quicinc.com>
->
-> Thanks,
-> Pavan
-My bad, Thanks for the review Pavan. Will fix it in the next patch.
+changes in v8:
+Fixed nitpick in driver code.
+
+changes in v7:
+Fixed nitpick in driver code and dtsi file.
+
+changes in v6:
+Fixed errors in dt-bindings.
+Fixed nitpick in driver code.
+
+changes in v5:
+Fixed nitpicks in code.
+Added minimum and maximum for each parameter added in dt-bindings.
+Added proper suffixes to each parameter as per dtschema.
+
+changes in v4:
+Fixed nitpicks in code.
+Initial compliance test results showed overshoot in the middle of eye
+diagram. The current dt values were put in place to correct it and fix
+overshoot issue.
+
+changes in v3:
+Added support for phy tuning parameters to be represented in bps and
+corresponding register values to be written are obtained by traversing
+through data map declared in the driver.
+
+changes in v2:
+Reading the individual fields in each overriding register from
+device tree.
+
+Krishna Kurapati (2):
+  phy: qcom-snps: Add support for overriding phy tuning parameters
+  arm64: dts: qcom: sc7280: Update SNPS Phy params for SC7280 IDP device
+
+Sandeep Maheswaram (1):
+  dt-bindings: phy: qcom,usb-snps-femto-v2: Add phy override params
+    bindings
+
+ .../bindings/phy/qcom,usb-snps-femto-v2.yaml       |  96 ++++++++
+ arch/arm64/boot/dts/qcom/sc7280-idp.dtsi           |   6 +
+ drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c      | 267 ++++++++++++++++++++-
+ 3 files changed, 367 insertions(+), 2 deletions(-)
+
+-- 
+2.7.4
+
