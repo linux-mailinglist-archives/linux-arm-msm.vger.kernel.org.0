@@ -2,204 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EB56253B973
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jun 2022 15:09:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1FF9F53B984
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jun 2022 15:15:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235231AbiFBNJT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Jun 2022 09:09:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56736 "EHLO
+        id S235269AbiFBNPk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Jun 2022 09:15:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52684 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232339AbiFBNJR (ORCPT
+        with ESMTP id S234557AbiFBNPi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Jun 2022 09:09:17 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A706D13C4DA;
-        Thu,  2 Jun 2022 06:09:16 -0700 (PDT)
+        Thu, 2 Jun 2022 09:15:38 -0400
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DDE71F507E
+        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Jun 2022 06:15:36 -0700 (PDT)
+Received: by mail-lf1-x12e.google.com with SMTP id be31so7751173lfb.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Jun 2022 06:15:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1654175356; x=1685711356;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=5USZXaGXafMmZRCNGTL/y9r+1CJyT2qx7/K0xHXdLyA=;
-  b=sH3M7xElzEvdFx6VIMC4SIDjdXACVcz0j9VNOu0WAP+QaGpOIhWecA+U
-   c0g/y8XTBq7OlgZijSEbRv4CFd6xnrPTz1vQInQsXnPmBBNY8NG+S4GBO
-   MYFicK2eG0jTkU/Cip+eLKSi6OS2nYPRC4wdzfKFKrWEQ+44/r6OM9IyN
-   0=;
-Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 02 Jun 2022 06:09:16 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Jun 2022 06:09:16 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Thu, 2 Jun 2022 06:09:15 -0700
-Received: from hu-pkondeti-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Thu, 2 Jun 2022 06:09:09 -0700
-Date:   Thu, 2 Jun 2022 18:39:05 +0530
-From:   Pavan Kondeti <quic_pkondeti@quicinc.com>
-To:     Krishna Kurapati <quic_kriskura@quicinc.com>
-CC:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        "Matthias Kaehlcke" <mka@chromium.org>,
-        Mathias Nyman <mathias.nyman@intel.com>,
-        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>, <quic_pkondeti@quicinc.com>,
-        <quic_ppratap@quicinc.com>, <quic_vpulyala@quicinc.com>
-Subject: Re: [PATCH v20 0/5] USB DWC3 host wake up support from system suspend
-Message-ID: <20220602130905.GC2521@hu-pkondeti-hyd.qualcomm.com>
-References: <1654158277-12921-1-git-send-email-quic_kriskura@quicinc.com>
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=LolDsnGW3SOAD2FkVFrJJhEfXZjmRip7OxOTM4BASTg=;
+        b=HluOWAOZ2Qe9d1dOy5co+ZzsLWO+WnAfLDWH1EP1dRlKH20Pmt52sQIQ7Xu4uP7EPQ
+         VH5hdHOD7uu20Mv3Tlm00UNafeXaBT7Lf7KmLDU7kDAYd8gl3T8hBLcP+13KkktmmWKH
+         5Wr3Fv/2W0EoT6kYItIVVjlx8U4pf6RNhTlu72Qtim5WX6XgarhRiTZh0H6nEPFTGGjq
+         T2k5JJxDXUJhADReTRJ03NR7ejgqaZcpxRsuegBq98mFzbIKIiCQsyKeDZrUT+1C2kVk
+         ZMDitfStsOyiHtbCI0eUVQY1iW+Epwcl7gUfdp9iO39+k3QyVmMLU51OAPXdxq1FYQ7x
+         d+PQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=LolDsnGW3SOAD2FkVFrJJhEfXZjmRip7OxOTM4BASTg=;
+        b=1A2T3BlvbDLZFcXc5UNItUez2q/HFD5R3odlTL5HI5s/fxCcioabypBbUanL8FIDrn
+         BHVX/k3+unSsGmKe0WjByv1IlSwQaMGwZmJDvMVEfjUjncxWiqc1GVum34XnpoUG6cwf
+         8onc61wBj1aQx7LNGE/S5lw9vSbAjOjTIdY+Mz5iwQQBYpJDt3BYPtAUfT6mpUjZfkEJ
+         sFG1kRI0HZbVvoi21ZR3W4TFoKPjTbxaSS+L8bJKPHs/bRDcdHDLnCLekQ57nNqpvNBQ
+         To+4ttAvgB+fSKDn1CcDurWJsb0PaPNqDYkxJfCRPydn1xAFILoVBE1tb3/T2nKqvNbc
+         tlwA==
+X-Gm-Message-State: AOAM530rswuwvcO0WHaKwlcDxJr5KE3Q4J/0m2HvWUVHb/D0tNIzcpkk
+        IKEy7y0Iizd/u9Gj+5YKq32YYg==
+X-Google-Smtp-Source: ABdhPJwUl3solzkyamaoY2KgiqJvNb6IBgAizzaqXx7uraVT9ueURv8yJ2c/xWTl1+MPRWPe+LgZ0A==
+X-Received: by 2002:a05:6512:2593:b0:478:6327:3672 with SMTP id bf19-20020a056512259300b0047863273672mr40706999lfb.497.1654175735188;
+        Thu, 02 Jun 2022 06:15:35 -0700 (PDT)
+Received: from localhost.localdomain (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
+        by smtp.gmail.com with ESMTPSA id m1-20020a056512014100b0047255d211bbsm1019603lfo.234.2022.06.02.06.15.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 02 Jun 2022 06:15:34 -0700 (PDT)
+From:   Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+To:     Loic Poulain <loic.poulain@linaro.org>,
+        Robert Foss <robert.foss@linaro.org>
+Cc:     linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: [PATCH] i2c: qcom-cci: simplify access to bus data structure
+Date:   Thu,  2 Jun 2022 16:15:28 +0300
+Message-Id: <20220602131528.2246339-1-vladimir.zapolskiy@linaro.org>
+X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <1654158277-12921-1-git-send-email-quic_kriskura@quicinc.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jun 02, 2022 at 01:54:32PM +0530, Krishna Kurapati wrote:
-> Avoiding phy powerdown in host mode when dwc3 is wakeup capable, so that
-> it can be wake up by devices. Keep usb30_prim gdsc active to retain
-> controller status during suspend/resume.
-> 
-> Changes in v20:
-> Fixed nitpicks in dwc3 qcom driver.
-> Fixed code changes in dwc3 core driver.
-> 
-> Changes in v19:
-> Fixed dwc3 driver code changes.
-> 
-> Changes in v18:
-> Fixed minor nit picks in v17 reported by Matthias.
-> 
-> Changes in v17:
-> Moved the speed check to glue driver.
-> Powering down phy's solely based on dwc3 wakeup capability.
-> Configuring the interrupt functions appropriately.
-> 
-> Changes in v16:
-> Added changes to power down the phy's during suspend only if dwc3
-> is not wakeup capable.
-> 
-> Changes in v15:
-> Added patch to enable wakeup for xhci-plat based on children wakeup status.
-> Used device_wakeup_path instead of device_children_wakeup_capable
-> 
-> Changes in v14:
-> Added patch for device_children_wakeup_capable.
-> Used device_children_wakeup_capable instead of usb_wakeup_enabled_descendants.
-> Fixed minor nit picks in v13 reported by Matthias.
-> 
-> Changes in v13:
-> Moved the dt bindings patch to start.
-> Changed dwc3_set_phy_speed_mode to dwc3_check_phy_speed_mode.
-> Check wakep-source property for dwc3 core node to set the
-> wakeup capability. Drop the device_init_wakeup call from
-> runtime suspend and resume.
-> Added GENPD_FLAG_RPM_ALWAYS_ON and set GENPD_FLAG_ALWAYS_ON if
-> wakeup is supported.
-> 
-> Changes in v12:
-> Squashed PATCH 1/5 and 2/5 of v11.
-> Added dt bindings and device tree entry for wakeup-source property
-> for dwc3 core node.
-> Dropped redundant phy_set_mode call.
-> 
-> 
-> Changes in v11:
-> Moving back to v8 version
-> https://patchwork.kernel.org/project/linux-arm-msm/cover/1624882097-23265-1-git-send-email-sanm@codeaurora.org
-> as we are getting interrupts during suspend
-> when enabling both DP hs phy irq and DM hs phy irq.
-> Moved the set phy mode function to dwc3/core.c from xhci-plat.c
-> We didn't find any other option other than accessing xhci from dwc.
-> 
-> Changes in v10:
-> PATCH 1/6: Change device_set_wakeup_capable to device_set_wakeup_enable
-> PATCH 2/6: Remove redundant else part in dwc3_resume_common
-> PATCH 4/6: Change the irg flags
-> PATCH 5/6: Set flag GENPD_FLAG_ALWAYS_ON
-> PATCH 6/6: Remove disable interrupts function and enable
-> interrupts in probe.
-> 
-> 
-> Changes in v9:
-> Checking with device_may_makeup property instead of phy_power_off flag.
-> Changed the IRQ flags and removed hs_phy_mode variable.
-> 
-> Changes in v8:
-> Moved the dwc3 suspend quirk code in dwc3/host.c to xhci-plat.c
-> Checking phy_power_off flag instead of usb_wakeup_enabled_descendants 
-> to keep gdsc active.
-> 
-> Changes in v7:
-> Change in commit text and message in PATCH 1/5 and PATCH 5/5
-> as per Matthias suggestion.
-> Added curly braces for if and else if sections in PATCH 4/5.
-> 
-> Changes in v6:
-> Addressed comments in host.c and core.c
-> Separated the patches in dwc3-qcom.c to make it simple.
-> Dropped wakeup-source change as it is not related to this series.
-> 
-> Changes in v5:
-> Added phy_power_off flag to check presence of wakeup capable devices.
-> Dropped patch[v4,4/5] as it is present linux-next.
-> Addressed comments in host.c and dwc3-qcom.c.
-> 
-> Changes in v4:
-> Addressed Matthias comments raised in v3.
-> 
-> Changes in v3:
-> Removed need_phy_for_wakeup flag and by default avoiding phy powerdown.
-> Addressed Matthias comments and added entry for DEV_SUPERSPEED.
-> Added suspend_quirk in dwc3 host and moved the dwc3_set_phy_speed_flags.
-> Added wakeup-source dt entry and reading in dwc-qcom.c glue driver.
-> 
-> Changes in v2:
-> Dropped the patch in clock to set GENPD_FLAG_ACTIVE_WAKEUP flag and 
-> setting in usb dwc3 driver.
-> Separated the core patch and glue driver patch.
-> Made need_phy_for_wakeup flag part of dwc structure and 
-> hs_phy_flags as unsgined int.
-> Adrressed the comment on device_init_wakeup call.
-> Corrected offset for reading portsc register.
-> Added pacth to support wakeup in xo shutdown case.
-> 
-> Sandeep Maheswaram (5):
->   dt-bindings: usb: dwc3: Add wakeup-source property support
->   usb: dwc3: core: Host wake up support from system suspend
->   usb: dwc3: qcom: Add helper functions to enable,disable wake irqs
->   usb: dwc3: qcom: Configure wakeup interrupts during suspend
->   usb: dwc3: qcom: Keep power domain on to retain controller status
-> 
->  .../devicetree/bindings/usb/snps,dwc3.yaml         |   5 +
->  drivers/usb/dwc3/core.c                            |   9 +-
->  drivers/usb/dwc3/dwc3-qcom.c                       | 140 +++++++++++++++------
->  3 files changed, 108 insertions(+), 46 deletions(-)
-> 
+Trivial non-functional change, which adds an alias to an extensively
+used data location.
 
-This series looks good to me. I think it is ready for merge unless Felipe has
-any concerns.
+Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+---
+ drivers/i2c/busses/i2c-qcom-cci.c | 28 +++++++++++++++-------------
+ 1 file changed, 15 insertions(+), 13 deletions(-)
 
-Thanks,
-Pavan
+diff --git a/drivers/i2c/busses/i2c-qcom-cci.c b/drivers/i2c/busses/i2c-qcom-cci.c
+index 8d078bdb5c1b..c4a4a4b54131 100644
+--- a/drivers/i2c/busses/i2c-qcom-cci.c
++++ b/drivers/i2c/busses/i2c-qcom-cci.c
+@@ -541,6 +541,7 @@ static int cci_probe(struct platform_device *pdev)
+ 		return -ENOENT;
+ 
+ 	for_each_available_child_of_node(dev->of_node, child) {
++		struct cci_master *master;
+ 		u32 idx;
+ 
+ 		ret = of_property_read_u32(child, "reg", &idx);
+@@ -555,27 +556,28 @@ static int cci_probe(struct platform_device *pdev)
+ 			continue;
+ 		}
+ 
+-		cci->master[idx].adap.quirks = &cci->data->quirks;
+-		cci->master[idx].adap.algo = &cci_algo;
+-		cci->master[idx].adap.dev.parent = dev;
+-		cci->master[idx].adap.dev.of_node = of_node_get(child);
+-		cci->master[idx].master = idx;
+-		cci->master[idx].cci = cci;
++		master = &cci->master[idx];
++		master->adap.quirks = &cci->data->quirks;
++		master->adap.algo = &cci_algo;
++		master->adap.dev.parent = dev;
++		master->adap.dev.of_node = of_node_get(child);
++		master->master = idx;
++		master->cci = cci;
+ 
+-		i2c_set_adapdata(&cci->master[idx].adap, &cci->master[idx]);
+-		snprintf(cci->master[idx].adap.name,
+-			 sizeof(cci->master[idx].adap.name), "Qualcomm-CCI");
++		i2c_set_adapdata(&master->adap, master);
++		snprintf(master->adap.name, sizeof(master->adap.name),
++			 "Qualcomm-CCI");
+ 
+-		cci->master[idx].mode = I2C_MODE_STANDARD;
++		master->mode = I2C_MODE_STANDARD;
+ 		ret = of_property_read_u32(child, "clock-frequency", &val);
+ 		if (!ret) {
+ 			if (val == I2C_MAX_FAST_MODE_FREQ)
+-				cci->master[idx].mode = I2C_MODE_FAST;
++				master->mode = I2C_MODE_FAST;
+ 			else if (val == I2C_MAX_FAST_MODE_PLUS_FREQ)
+-				cci->master[idx].mode = I2C_MODE_FAST_PLUS;
++				master->mode = I2C_MODE_FAST_PLUS;
+ 		}
+ 
+-		init_completion(&cci->master[idx].irq_complete);
++		init_completion(&master->irq_complete);
+ 	}
+ 
+ 	/* Memory */
+-- 
+2.33.0
+
