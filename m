@@ -2,64 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7CB7953BA98
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jun 2022 16:21:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3EF9B53BACE
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jun 2022 16:33:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235788AbiFBOVX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Jun 2022 10:21:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32882 "EHLO
+        id S235910AbiFBOct (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Jun 2022 10:32:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50284 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232088AbiFBOVW (ORCPT
+        with ESMTP id S234003AbiFBOcs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Jun 2022 10:21:22 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E9C725D5D9;
-        Thu,  2 Jun 2022 07:21:22 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id C3795B81F5D;
-        Thu,  2 Jun 2022 14:21:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 812E9C385A5;
-        Thu,  2 Jun 2022 14:21:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1654179679;
-        bh=IiJxTBcEwl7M5vIZS8teso/henc5AJqsVFL+AueJTAE=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=MhSDMXnA9TMiAPAoEYzQgCs+A92HzGKHckeOllnT5D7A72ZFaHbYE/kVcX7pV30fx
-         Bg/v8Z/O/W0ih95pa3+A5Zd8xxvkcWk8pWdW4nfoROrSbc0rFRk9rOTgGmefA/Q9Rs
-         F+C5ZbojAqRP0njyUfkLGlGpzMIDW+VxwsQEdPQ7HD94g9oexZqMW0HOzYUZGUcJpU
-         9qcp/gitEp/uYUeoX+M8imMX7zV0N4n6sAkayQBa31AuieDgn7PW+BX+9xqX2E27Ad
-         sI6Q6qdlTR6Pwm6qo6fV8bdaMEsAXu6oG8K5zxQYe+PrG4hAlmE6lusTFchtiTX7Gf
-         XiUyIKrz9La5Q==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1nwlhM-0007nD-Fh; Thu, 02 Jun 2022 16:21:16 +0200
-Date:   Thu, 2 Jun 2022 16:21:16 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH v12 0/8] PCI: qcom: Fix higher MSI vectors handling
-Message-ID: <YpjHXIbCoLC394dJ@hovoldconsulting.com>
-References: <20220523181836.2019180-1-dmitry.baryshkov@linaro.org>
+        Thu, 2 Jun 2022 10:32:48 -0400
+Received: from mail-oi1-f174.google.com (mail-oi1-f174.google.com [209.85.167.174])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E2BF27ED90;
+        Thu,  2 Jun 2022 07:32:47 -0700 (PDT)
+Received: by mail-oi1-f174.google.com with SMTP id h188so6765841oia.2;
+        Thu, 02 Jun 2022 07:32:47 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=+XaxE4rPLjVoV9JRTROBnf5ZLA1J4kOTKBNPishDofY=;
+        b=YXWrVqzmhOpDg8QkniZZfpUZilmYXJ1q2yYXWSxRCTWs8Qm80tpSmq/wD2v9x57QoJ
+         95APRTYyY67UnppXWa7ZsQ8FI/ojVAI8jf4Teh/fEUO7hDd/BixzPlv+dCc8ZMiNQ09I
+         rk+hG1l1ElurHwNa0sbRVLQwx0hkXnI57NqAcvbZH/KVNNHcm+cYHk/h9Y2XRfhkvlwZ
+         7NvzdnwXqX4KZVYxcdKV7PO1jPnPG6tf+uD7YyXOba9ip0bPJGUdbWtwA6ux9dbDhVGK
+         q3i+E02hIr/p5HzmeQt5Ujw5xVcK+zCDiYYLwgy2RitQ0dMUmHMnUR1rb7jiYS/e0Yn/
+         h8WA==
+X-Gm-Message-State: AOAM532UmHLif4IWQyWL+k83D4T7mo9TUtB2I3aZek4KADO7/8brinKD
+        GhoeZgh6ns2hWLmKUjLa9w==
+X-Google-Smtp-Source: ABdhPJyWiiAKe/UbWmNUNQ/FQ+S2DMuUIpmbFtfNXN9RGhS3gWjfztpwD6ap26gWXzQPR8y2FqhZwA==
+X-Received: by 2002:a05:6808:17a8:b0:327:9efa:cf1a with SMTP id bg40-20020a05680817a800b003279efacf1amr17612095oib.81.1654180366543;
+        Thu, 02 Jun 2022 07:32:46 -0700 (PDT)
+Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id k13-20020a54470d000000b0032603df9d24sm2232704oik.47.2022.06.02.07.32.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 02 Jun 2022 07:32:46 -0700 (PDT)
+Received: (nullmailer pid 2261171 invoked by uid 1000);
+        Thu, 02 Jun 2022 14:32:45 -0000
+Date:   Thu, 2 Jun 2022 09:32:45 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        broonie@kernel.org, quic_plai@quicinc.com, bgoswami@quicinc.com,
+        perex@perex.cz, tiwai@suse.com, srinivas.kandagatla@linaro.org,
+        quic_rohkumar@quicinc.com, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, linux-kernel@vger.kernel.org,
+        swboyd@chromium.org, judyhsiao@chromium.org,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH 1/2] ASoC: dt-bindings: lpass-cpu: Update external mclck0
+ name
+Message-ID: <20220602143245.GA2256965-robh@kernel.org>
+References: <1654169206-12255-1-git-send-email-quic_srivasam@quicinc.com>
+ <1654169206-12255-2-git-send-email-quic_srivasam@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220523181836.2019180-1-dmitry.baryshkov@linaro.org>
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+In-Reply-To: <1654169206-12255-2-git-send-email-quic_srivasam@quicinc.com>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -67,33 +69,35 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, May 23, 2022 at 09:18:28PM +0300, Dmitry Baryshkov wrote:
-> I have replied with my Tested-by to the patch at [2], which has landed
-> in the linux-next as the commit 20f1bfb8dd62 ("PCI: qcom:
-> Add support for handling MSIs from 8 endpoints"). However lately I
-> noticed that during the tests I still had 'pcie_pme=nomsi', so the
-> device was not forced to use higher MSI vectors.
-> 
-> After removing this option I noticed that hight MSI vectors are not
-> delivered on tested platforms. After additional research I stumbled upon
-> a patch in msm-4.14 ([1]), which describes that each group of MSI
-> vectors is mapped to the separate interrupt. Implement corresponding
-> mapping.
-> 
-> The first patch in the series is a revert of  [2] (landed in pci-next).
-> Either both patches should be applied or both should be dropped.
-> 
-> Patchseries dependecies: [3] (for the schema change).
-> 
-> Changes since v11 (suggested by Johan):
->  - Added back reporting errors for the "msi0" interrupt,
->  - Stopped overriding num_vectors field if it is less than the amount of
->    MSI vectors deduced from interrupt list,
->  - Added a warning (and an override) if the host specifies more MSI
->    vectors than available,
->  - Moved has_split_msi_irq variable to the patch where it is used.
+On Thu, Jun 02, 2022 at 04:56:45PM +0530, Srinivasa Rao Mandadapu wrote:
+> Update "audio_cc_ext_mclk0" name to "core_cc_ext_mclk0",
+> as MI2S mclk is being used is from lpass core cc.
 
-You forgot to CC me this version. Please remember to keep reviewers on
-CC.
+This is safe to change breaking the ABI because ...
 
-Johan
+Names are supposed to be local to the module, not based on their source. 
+
+> 
+> Fixes: 98b7630a583f ("ASoC: dt-bindings: lpass-cpu: Update clocks and power domain names for sc7280 platform")
+> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+> ---
+>  Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml b/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml
+> index e9a5330..8438ef77 100644
+> --- a/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml
+> +++ b/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml
+> @@ -195,7 +195,7 @@ allOf:
+>            oneOf:
+>              - items:   #for I2S
+>                  - const: aon_cc_audio_hm_h
+> -                - const: audio_cc_ext_mclk0
+> +                - const: core_cc_ext_mclk0
+>                  - const: core_cc_sysnoc_mport_core
+>                  - const: core_cc_ext_if0_ibit
+>                  - const: core_cc_ext_if1_ibit
+> -- 
+> 2.7.4
+> 
+> 
