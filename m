@@ -2,207 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1E4D453B1EC
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jun 2022 05:21:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1DDE553B289
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jun 2022 06:24:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233482AbiFBDOL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Jun 2022 23:14:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51928 "EHLO
+        id S229762AbiFBEYm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Jun 2022 00:24:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55806 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233470AbiFBDOL (ORCPT
+        with ESMTP id S229660AbiFBEYl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Jun 2022 23:14:11 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB42E2AE9D6;
-        Wed,  1 Jun 2022 20:14:09 -0700 (PDT)
+        Thu, 2 Jun 2022 00:24:41 -0400
+Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AFAEB23354F;
+        Wed,  1 Jun 2022 21:24:39 -0700 (PDT)
+Received: by mail-pg1-x535.google.com with SMTP id 137so3726469pgb.5;
+        Wed, 01 Jun 2022 21:24:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1654139650; x=1685675650;
-  h=message-id:date:mime-version:subject:from:to:cc:
-   references:in-reply-to:content-transfer-encoding;
-  bh=vtq2/jv6E7he02OBQkaRLx57XKXT76AR0NCvMqUoMWU=;
-  b=SWlaBu4jNWH3vGfEYLCXWfyKxVr/zTSZtbG8yxOk/1lKV6mVU7fONNY8
-   alO/moXnmBFEVPT1mAr97OSFPXUHSMdxBMaPVMKJlTulWqsYVWqvcMirp
-   l8HLiudslPHW/31OA5P0BpG5yCZ0q3ii78Tq3QVzOsNc3kDX4ADtJt/KH
-   s=;
-Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 01 Jun 2022 20:14:09 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jun 2022 20:14:09 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 1 Jun 2022 20:14:09 -0700
-Received: from [10.253.36.238] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Wed, 1 Jun 2022
- 20:14:04 -0700
-Message-ID: <db16bdcc-9322-d81b-1afd-3955181ba2f7@quicinc.com>
-Date:   Thu, 2 Jun 2022 11:14:02 +0800
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=8UE4eAV06tZHoj1P3qIbNix8ApEWxlphKpy2ZumnTok=;
+        b=WfYqvsjGIPh5ptj++cQYipIGSrnkhtEefpWACECgBoVP50xGlWgnBjPQCS2v8PcmM7
+         e5vxYcxjVmk4yP1y1ajtM/QmIio8JOHuaMHPfoTvf32ELrLtFOGpbPKLskbH0NNt//zv
+         KWCrLPIE0RQTdY0OQ8lTbdRw5Ck654bf9Yyo9m01rEUfsTOEv3MG6ldP+ctJEsiUU2Uf
+         BI1CMX5J1wDA0cuxtanZlr/qISljTzM8E+4M4QG5WEbhj9o2nHFnn89Ga9G/R+7jt+Wg
+         0urEIF3rxUZ75rwK6Rm+Qgg6x2LDKNWEng4gZVsK76E2MsfDKG2AHVN4evlLlGVyOXw3
+         fg1g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=8UE4eAV06tZHoj1P3qIbNix8ApEWxlphKpy2ZumnTok=;
+        b=MA3ytINJJd4mH+wMZ3blg8cvynJc9RNTvA0aeeKoLkojM0VOSFvCiQSclfhD80RwpN
+         E60MzvwQtsBouIsHHjGTRxw2tr1+xQMs3ypMOLHCVucbjFvF7sXlWPLMbvp844v31E6B
+         1Ayz1OIu6oBGnSHEc1dbCYosZOtLOa3UnlGLif1Cp8hmq9KIib1k6vrWoSEe1fKdcfTu
+         ARCPbfxtBmSf+p5QfGMe278yb8+WpDD6zBL/B0NlgzpwQEUkR4661DNQEtDByVjUkp+b
+         YYKkvnslPl7tvRAKkVB9lsTBp06qqgzpmPCgpHdnnYLDCo5hryDMsYLANZf0s4zE+3dO
+         l3Rw==
+X-Gm-Message-State: AOAM531+kf+R3PX0sSt3aENbp4mzlNJ6EvqCdMILlo23ogtmm3vVW3hM
+        j0JRm0VeE8OODP2g31u6s38eJiGbtH/6bcigOGY=
+X-Google-Smtp-Source: ABdhPJwyZD5PH5XRRCmE2CU/Vnqd4lDKjH+8wa2c9qIKWTEbtELgJV92lLPBb/OaSpjMXT/I91/w3w==
+X-Received: by 2002:a63:5706:0:b0:3fc:a31b:9083 with SMTP id l6-20020a635706000000b003fca31b9083mr2455527pgb.333.1654143879197;
+        Wed, 01 Jun 2022 21:24:39 -0700 (PDT)
+Received: from localhost.localdomain ([202.120.234.246])
+        by smtp.googlemail.com with ESMTPSA id u71-20020a63854a000000b003fb92ec655esm223342pgd.34.2022.06.01.21.24.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 01 Jun 2022 21:24:38 -0700 (PDT)
+From:   Miaoqian Lin <linmq006@gmail.com>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Brian Masney <masneyb@onstation.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     linmq006@gmail.com
+Subject: [PATCH] soc: qcom: ocmem: Fix refcount leak in of_get_ocmem
+Date:   Thu,  2 Jun 2022 08:24:30 +0400
+Message-Id: <20220602042430.1114-1-linmq006@gmail.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH v7 02/10] Coresight: Add coresight TPDM source driver
-Content-Language: en-US
-From:   Jinlong Mao <quic_jinlmao@quicinc.com>
-To:     Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Mike Leach <mike.leach@linaro.org>
-CC:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        <coresight@lists.linaro.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Tao Zhang <quic_taozha@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-References: <20220509133947.20987-1-quic_jinlmao@quicinc.com>
- <20220509133947.20987-3-quic_jinlmao@quicinc.com>
- <38bb1ec9-56bc-0cdf-6c46-d448a46ec886@arm.com>
- <ea720e1a-c0d2-84b0-8dbc-bb5031d32208@quicinc.com>
- <7d6b2e24-21f4-eef1-a722-23cdcd1d8a88@quicinc.com>
- <006b7edd-20d2-3165-7c83-352b7fb312e7@arm.com>
- <2da46bcb-c1e4-dbde-c4ee-1d6983565dc9@quicinc.com>
-In-Reply-To: <2da46bcb-c1e4-dbde-c4ee-1d6983565dc9@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-5.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+of_parse_phandle() returns a node pointer with refcount
+incremented, we should use of_node_put() on it when not need anymore.
+Add missing of_node_put() to avoid refcount leak.
+of_node_put() will check NULL pointer.
 
-On 6/1/2022 5:56 PM, Jinlong Mao wrote:
->
-> On 6/1/2022 5:30 PM, Suzuki K Poulose wrote:
->> On 01/06/2022 10:21, Jinlong Mao wrote:
->>> Hi Suzuki,
->>>
->>> On 5/24/2022 3:00 PM, Jinlong Mao wrote:
->>>> Hi Suzuki,
->>>>
->>>> Thank you for the review.
->>>>
->>>> On 5/23/2022 4:57 PM, Suzuki K Poulose wrote:
->>>>> Hi
->>>>>
->>>>> On 09/05/2022 14:39, Mao Jinlong wrote:
->>>>>> Add driver to support Coresight device TPDM (Trace, Profiling and
->>>>>> Diagnostics Monitor). TPDM is a monitor to collect data from
->>>>>> different datasets. This change is to add probe/enable/disable
->>>>>> functions for tpdm source.
->>>>>>
->>>>>> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
->>>>>> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
->>>>>> ---
->>>>>>   drivers/hwtracing/coresight/Kconfig          |  13 ++
->>>>>>   drivers/hwtracing/coresight/Makefile         |   1 +
->>>>>>   drivers/hwtracing/coresight/coresight-core.c |   5 +-
->>>>>>   drivers/hwtracing/coresight/coresight-tpdm.c | 146 
->>>>>> +++++++++++++++++++
->>>>>>   drivers/hwtracing/coresight/coresight-tpdm.h |  26 ++++
->>>>>>   include/linux/coresight.h                    |   1 +
->>>>>>   6 files changed, 191 insertions(+), 1 deletion(-)
->>>>>>   create mode 100644 drivers/hwtracing/coresight/coresight-tpdm.c
->>>>>>   create mode 100644 drivers/hwtracing/coresight/coresight-tpdm.h
->>>>>>
->>>
->>>>>> +/**
->>>>>> + * struct tpdm_drvdata - specifics associated to an TPDM component
->>>>>> + * @base:       memory mapped base address for this component.
->>>>>> + * @dev:        The device entity associated to this component.
->>>>>> + * @csdev:      component vitals needed by the framework.
->>>>>> + * @lock:       lock for the enable value.
->>>>>> + * @enable:     enable status of the component.
->>>>>> + */
->>>>>> +
->>>>>> +struct tpdm_drvdata {
->>>>>> +    void __iomem        *base;
->>>>>> +    struct device        *dev;
->>>>>> +    struct coresight_device    *csdev;
->>>>>> +    struct mutex        lock;
->>>>>
->>>>> Why mutex lock ? Couldn't this be a spinlock ?
->>>> 1. There is no irq for TPDM
->>>> 2. As there are 7 dataset types, there will be some FOR loop to 
->>>> configure
->>>> tpdm registers which may cause some time.
->>
->> How long does it take to configure ? Is it too long enough to trigger
->> RCU stalls ? as long as we don't do any sleeping/blocking operations
->> we should be fine with a spinlock.
->>
->> Suzuki
->
-> Let me check on internal device and get back to you.
->
-> Thanks
-> Jinlong Mao
+Fixes: 88c1e9404f1d ("soc: qcom: add OCMEM driver")
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+---
+ drivers/soc/qcom/ocmem.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-The time of configuring the registers doesn't reach RCU stall timeout value.
+diff --git a/drivers/soc/qcom/ocmem.c b/drivers/soc/qcom/ocmem.c
+index 97fd24c178f8..c92d26b73e6f 100644
+--- a/drivers/soc/qcom/ocmem.c
++++ b/drivers/soc/qcom/ocmem.c
+@@ -194,14 +194,17 @@ struct ocmem *of_get_ocmem(struct device *dev)
+ 	devnode = of_parse_phandle(dev->of_node, "sram", 0);
+ 	if (!devnode || !devnode->parent) {
+ 		dev_err(dev, "Cannot look up sram phandle\n");
++		of_node_put(devnode);
+ 		return ERR_PTR(-ENODEV);
+ 	}
+ 
+ 	pdev = of_find_device_by_node(devnode->parent);
+ 	if (!pdev) {
+ 		dev_err(dev, "Cannot find device node %s\n", devnode->name);
++		of_node_put(devnode);
+ 		return ERR_PTR(-EPROBE_DEFER);
+ 	}
++	of_node_put(devnode);
+ 
+ 	ocmem = platform_get_drvdata(pdev);
+ 	if (!ocmem) {
+-- 
+2.25.1
 
-I will use spin_lock for both tpdm and tpda.
-
-Thanks
-Jinlong Mao
->>
->>>>
->>> I think we can use mutex lock here. Do you have any more comments 
->>> for this ?
->>
->>>
->>> Thanks
->>> Jinlong Mao
->>>>>
->>>>>> +    bool            enable;
->>>>>> +};
->>>>>> +
->>>>>> +#endif  /* _CORESIGHT_CORESIGHT_TPDM_H */
->>>>>> diff --git a/include/linux/coresight.h b/include/linux/coresight.h
->>>>>> index 247147c11231..a9efac55029d 100644
->>>>>> --- a/include/linux/coresight.h
->>>>>> +++ b/include/linux/coresight.h
->>>>>> @@ -61,6 +61,7 @@ enum coresight_dev_subtype_source {
->>>>>>       CORESIGHT_DEV_SUBTYPE_SOURCE_PROC,
->>>>>>       CORESIGHT_DEV_SUBTYPE_SOURCE_BUS,
->>>>>>       CORESIGHT_DEV_SUBTYPE_SOURCE_SOFTWARE,
->>>>>> +    CORESIGHT_DEV_SUBTYPE_SOURCE_DATA_ONLY,
->>>>>
->>>>> super minor nit: I find the choice of name a bit odd.
->>>>> We could simply make it something like :
->>>>>
->>>>>     CORESIGHT_DEV_SUBTYPE_SOURCE_OTHERS:
->>>>>
->>>>> Suzuki
->>>> I will check and update.
->>>>>
->>>>>>   };
->>>>>>     enum coresight_dev_subtype_helper {
->>>>>
->>>>> _______________________________________________
->>>>> CoreSight mailing list -- coresight@lists.linaro.org
->>>>> To unsubscribe send an email to coresight-leave@lists.linaro.org
->>>> _______________________________________________
->>>> CoreSight mailing list -- coresight@lists.linaro.org
->>>> To unsubscribe send an email to coresight-leave@lists.linaro.org
->>
->> _______________________________________________
->> CoreSight mailing list -- coresight@lists.linaro.org
->> To unsubscribe send an email to coresight-leave@lists.linaro.org
-> _______________________________________________
-> CoreSight mailing list -- coresight@lists.linaro.org
-> To unsubscribe send an email to coresight-leave@lists.linaro.org
