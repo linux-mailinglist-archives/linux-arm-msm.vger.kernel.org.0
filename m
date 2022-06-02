@@ -2,70 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D11F053B655
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jun 2022 11:48:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9BF1653B67D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jun 2022 12:00:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233030AbiFBJsg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Jun 2022 05:48:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41630 "EHLO
+        id S232621AbiFBKAA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Jun 2022 06:00:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57310 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232137AbiFBJsf (ORCPT
+        with ESMTP id S233310AbiFBJ76 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Jun 2022 05:48:35 -0400
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1EE73294210
-        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Jun 2022 02:48:33 -0700 (PDT)
-Received: by mail-lf1-x135.google.com with SMTP id s6so6926642lfo.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Jun 2022 02:48:33 -0700 (PDT)
+        Thu, 2 Jun 2022 05:59:58 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E68E6DF18;
+        Thu,  2 Jun 2022 02:59:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=b855lgf2K6RWNMdrbTy9OBrZkDrExaS8QreLgdDtVNY=;
-        b=J934V0sBP7B2jRhhvRfMsWF+ARZxNCY6OR9E2sMWyGUOibgGzczEaUO0Na+4aCDiNI
-         SVLo8Kmxp+gjWtvXVZZZ6CbXW0iVC6TDbVRhJMO8jkqGjOzW9r7cOB62POhwADrxaWO8
-         TeLmwFqw+K2Olbgpa37KvF15D7GCOY++ijcOynS4CY9PqrQeAJTpyeVCcEIWmHQSlHJ/
-         Y29SdsN9iAwDU/Q+TbrZwHcpFQ0ffgZV8e1g257BaWebYmEMiEsqakQkH/6CtV7QrRDa
-         ucft2WTFX6N0H7I2HKGREkZOcnRf16XhOfUxqsYFitrUmrcBNDCCo++UuQb7Gqhrj6BO
-         MGCg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=b855lgf2K6RWNMdrbTy9OBrZkDrExaS8QreLgdDtVNY=;
-        b=Cm8RDsQZNuOHPnBk2M+4j1RauciskN6oTdDuS4eNSaKaRpXJV8xcmmmmqIdl+N+tAG
-         I6dRbFpp7YLoWUWwOA2zJ4FtNAMu93/4R1/HsucRdm07PImm+N4hw3J36iS3Gg1eWfzB
-         wQtPxBb8xxgBMRU/oEMD00sOs0+bJ1IoZIRab5qUwNolf6Z7iM32rVnKa65qrnFQyPc5
-         KruhKZ/bQ/IO001CI77DFJ8q3RFx6xxtqoffpFAosU863YZQ5Eg480PVbjlbUTiv+O1t
-         kMbgj6Tdmy5iNyrMVQn1qpa+q7QK7C4bJVmrrXpv4jv+CngVgYm2+AEEXgOZcCItDPW6
-         im+Q==
-X-Gm-Message-State: AOAM530tTSYCR9O1He/OChOOigoe+wIX6yy74S6i/dieMJyYRftCNSrs
-        QtqbMpz3AqunzEblbfwUZJzw4UwJZp3dxDMVmd3AUw==
-X-Google-Smtp-Source: ABdhPJzvIhjnVlgMR8NiroYOlU2q9b//vsIpURDubx6WxAEF3GHnIY+ZUlGElYuNx2D6tZCg0wjBwcUmt1jm8ds4nE4=
-X-Received: by 2002:a19:ac42:0:b0:478:593c:e6fe with SMTP id
- r2-20020a19ac42000000b00478593ce6femr2904805lfc.254.1654163311389; Thu, 02
- Jun 2022 02:48:31 -0700 (PDT)
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1654163997; x=1685699997;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=oEEj+A9pnUduVQQjYXMOUSV+bJSw2QHxm5LpK0OWpF4=;
+  b=U0+MVRABFrmkQqRavbv2D5myiZNr0mugBWWsXDt3hAx201obnhGJtZtc
+   e7H6I1zfwODWJg/ysxcfecQNRahm25HrjmmIvFzvCZj/Q3TG9z7Qm/0YB
+   tyuicJDuhYz/9H+f09d5foKKa6B3evbHhESibM+9yyt7aNYQhE+aayMka
+   c=;
+Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
+  by alexa-out.qualcomm.com with ESMTP; 02 Jun 2022 02:59:56 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Jun 2022 02:59:55 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Thu, 2 Jun 2022 02:59:55 -0700
+Received: from [10.216.21.110] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Thu, 2 Jun 2022
+ 02:59:50 -0700
+Message-ID: <47d89a85-5f10-ebf9-1d62-fb886319b2c4@quicinc.com>
+Date:   Thu, 2 Jun 2022 15:29:46 +0530
 MIME-Version: 1.0
-References: <cover.1653564321.git.viresh.kumar@linaro.org> <80314068d96eb53e0d9838736415b96015803844.1653564321.git.viresh.kumar@linaro.org>
-In-Reply-To: <80314068d96eb53e0d9838736415b96015803844.1653564321.git.viresh.kumar@linaro.org>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Thu, 2 Jun 2022 11:47:54 +0200
-Message-ID: <CAPDyKFpB2ei325vemXcmEY6Xou7Wt+WtV8gu6nqAK9tSRAy-aQ@mail.gmail.com>
-Subject: Re: [PATCH 19/31] mmc: sdhci-msm: Migrate to dev_pm_opp_set_config()
-To:     Viresh Kumar <viresh.kumar@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Adrian Hunter <adrian.hunter@intel.com>,
-        linux-pm@vger.kernel.org,
-        Vincent Guittot <vincent.guittot@linaro.org>,
-        Rafael Wysocki <rjw@rjwysocki.net>,
-        Stephen Boyd <sboyd@kernel.org>, Nishanth Menon <nm@ti.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        linux-mmc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.0
+Subject: Re: [PATCH v3] PCI/ASPM: Update LTR threshold based upon reported max
+ latencies
+Content-Language: en-US
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+CC:     <helgaas@kernel.org>, <linux-pci@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_vbadigan@quicinc.com>, <quic_ramkri@quicinc.com>,
+        <swboyd@chromium.org>, Bjorn Helgaas <bhelgaas@google.com>,
+        "Saheed O. Bolarinwa" <refactormyself@gmail.com>,
+        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
+        Rajat Jain <rajatja@google.com>, <vidyas@nvidia.com>,
+        <kenny@panix.com>
+References: <1646679549-12494-1-git-send-email-quic_pmaliset@quicinc.com>
+ <1654086232-17055-1-git-send-email-quic_krichai@quicinc.com>
+ <91b75542-8e4c-5b91-bbfd-38ffc456c12e@quicinc.com>
+ <20220602082938.GA4936@thinkpad>
+From:   Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
+In-Reply-To: <20220602082938.GA4936@thinkpad>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-7.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -74,47 +76,111 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 26 May 2022 at 13:44, Viresh Kumar <viresh.kumar@linaro.org> wrote:
->
-> The OPP core now provides a unified API for setting all configuration
-> types, i.e. dev_pm_opp_set_config().
->
-> Lets start using it.
->
-> Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 
-Acked-by: Ulf Hansson <ulf.hansson@linaro.org>
+On 6/2/2022 1:59 PM, Manivannan Sadhasivam wrote:
+> On Wed, Jun 01, 2022 at 05:57:53PM +0530, Krishna Chaitanya Chundru wrote:
+>> [+cc kenny, vidya]
+>>
+>> On 6/1/2022 5:53 PM, Krishna chaitanya chundru wrote:
+>>> In ASPM driver, LTR threshold scale and value is updating based on
+> s/is/are
+>
+> s/updating/updated
+>
+>>> tcommon_mode and t_poweron values. In kioxia NVMe L1.2 is failing due to
+>>> LTR threshold scale and value is greater values than max snoop/non-snoop
+> s/is/are
+>
+>>> value.
+>>>
+>>> Based on PCIe r4.1, sec 5.5.1, L1.2 substate must be entered when
+>>> reported snoop/no-snoop values is greather than or equal to
+>>> LTR_L1.2_THRESHOLD value.
+>>>
+>>> Suggested-by: Prasad Malisetty  <quic_pmaliset@quicinc.com>
+>>> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> If you are inheriting the patch from Prasad, then you should still give the
+> authorship to him (unless the patch has changed significantly). You can add
+> your S-o-b tag to convey that you are carrying the patch from him.
+Thanks mani for pointing this, I will modify this in next patch.
+>>> ---
+>>>
+>>> I am takking this patch forward as prasad is no more working with our org.
+>>>
+>>> Changes since v2:
+>>> 	- Replaced LTRME logic with max snoop/no-snoop latencies check.
+>>> Changes since v1:
+>>> 	- Added missing variable declaration in v1 patch
+>>> ---
+>>>    drivers/pci/pcie/aspm.c | 22 +++++++++++++++++++++-
+>>>    1 file changed, 21 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/drivers/pci/pcie/aspm.c b/drivers/pci/pcie/aspm.c
+>>> index a96b742..4a15e50 100644
+>>> --- a/drivers/pci/pcie/aspm.c
+>>> +++ b/drivers/pci/pcie/aspm.c
+>>> @@ -465,10 +465,19 @@ static void aspm_calc_l1ss_info(struct pcie_link_state *link,
+>>>    	u32 ctl1 = 0, ctl2 = 0;
+>>>    	u32 pctl1, pctl2, cctl1, cctl2;
+>>>    	u32 pl1_2_enables, cl1_2_enables;
+>>> +	int ltr;
+> This could be u16 too.
+Will change in the next patch
+>>> +	u16 max_snoop_lat = 0, max_nosnoop_lat = 0;
+> No need to initialize these variables.
+I will update these in next patch.
+>>>    	if (!(link->aspm_support & ASPM_STATE_L1_2_MASK))
+>>>    		return;
+>>> +	ltr = pci_find_ext_capability(child, PCI_EXT_CAP_ID_LTR);
+>>> +	if (!ltr)
+>>> +		return;
+> Is this capability implemented always?
 
-Kind regards
-Uffe
+Based up on spec 4.1, sec 5.5 Ports that support the L1.2 substate for 
+ASPM L1 must support this.
 
-> ---
->  drivers/mmc/host/sdhci-msm.c | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
+And there is already a check in this function  if there is no L1.2 
+support the function is returning.
+
+>>> +
+>>> +	pci_read_config_word(child, ltr + PCI_LTR_MAX_SNOOP_LAT, &max_snoop_lat);
+>>> +	pci_read_config_word(child, ltr + PCI_LTR_MAX_NOSNOOP_LAT, &max_nosnoop_lat);
+>>> +
+>>>    	/* Choose the greater of the two Port Common_Mode_Restore_Times */
+>>>    	val1 = (parent_l1ss_cap & PCI_L1SS_CAP_CM_RESTORE_TIME) >> 8;
+>>>    	val2 = (child_l1ss_cap & PCI_L1SS_CAP_CM_RESTORE_TIME) >> 8;
+>>> @@ -501,7 +510,18 @@ static void aspm_calc_l1ss_info(struct pcie_link_state *link,
+>>>    	 */
+>>>    	l1_2_threshold = 2 + 4 + t_common_mode + t_power_on;
+>>>    	encode_l12_threshold(l1_2_threshold, &scale, &value);
+>>> -	ctl1 |= t_common_mode << 8 | scale << 29 | value << 16;
+>>> +
+>>> +	/*
+>>> +	 * If the max snoop and no snoop latencies are '0', then avoid updating scale
+>>> +	 * and value.
+>>> +	 *
+> This looks fine but...
 >
-> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-> index 50c71e0ba5e4..994f3f0231f7 100644
-> --- a/drivers/mmc/host/sdhci-msm.c
-> +++ b/drivers/mmc/host/sdhci-msm.c
-> @@ -2496,6 +2496,9 @@ static int sdhci_msm_probe(struct platform_device *pdev)
->         const struct sdhci_msm_offset *msm_offset;
->         const struct sdhci_msm_variant_info *var_info;
->         struct device_node *node = pdev->dev.of_node;
-> +       struct dev_pm_opp_config opp_config = {
-> +               .clk_name = "core",
-> +       };
+>>> +	 * Based on PCIe r4.1, sec 5.5.1, L1.2 substate must be entered when reported
+>>> +	 * snoop/no-snoop values is greather than or equal to LTR_L1.2_THRESHOLD value.
+> s/is/are
 >
->         host = sdhci_pltfm_init(pdev, &sdhci_msm_pdata, sizeof(*msm_host));
->         if (IS_ERR(host))
-> @@ -2564,7 +2567,7 @@ static int sdhci_msm_probe(struct platform_device *pdev)
->         if (ret)
->                 goto bus_clk_disable;
+> What about this? What if the snoop/nosnoop latencies are not equal to zero and
+> lower than LTR_L1.2_THRESHOLD?
 >
-> -       ret = devm_pm_opp_set_clkname(&pdev->dev, "core");
-> +       ret = devm_pm_opp_set_config(&pdev->dev, &opp_config);
->         if (ret)
->                 goto bus_clk_disable;
->
-> --
-> 2.31.1.272.g89b43f80a514
->
+> Thanks,
+> Mani
+
+Will address this in next patch.
+
+Thanks,
+
+Krishna Chaitanya.
+
+>>> +	 */
+>>> +	if ((max_snoop_lat == 0) && (max_nosnoop_lat == 0))
+>>> +		ctl1 |= t_common_mode << 8;
+>>> +	else
+>>> +		ctl1 |= t_common_mode << 8 | scale << 29 | value << 16;
+>>>    	/* Some broken devices only support dword access to L1 SS */
+>>>    	pci_read_config_dword(parent, parent->l1ss + PCI_L1SS_CTL1, &pctl1);
