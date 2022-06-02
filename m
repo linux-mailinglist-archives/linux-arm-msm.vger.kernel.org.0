@@ -2,63 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 714F653BDB9
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jun 2022 20:03:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D740053BDD5
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jun 2022 20:18:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237815AbiFBSDi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Jun 2022 14:03:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48804 "EHLO
+        id S234302AbiFBSSK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Jun 2022 14:18:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43094 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237796AbiFBSDh (ORCPT
+        with ESMTP id S234209AbiFBSSJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Jun 2022 14:03:37 -0400
-Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6993326563A
-        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Jun 2022 11:03:36 -0700 (PDT)
-Received: by mail-pf1-x432.google.com with SMTP id z17so5377371pff.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Jun 2022 11:03:36 -0700 (PDT)
+        Thu, 2 Jun 2022 14:18:09 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EEA1F496B5
+        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Jun 2022 11:18:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=EWYFc/gJo3faTJA9/EBkThaSJQ5LBS1fd/hXnAxH3ec=;
-        b=eUpZzMaqDscu3aV2RG5ElqjbR8o89AIC8YeZu/UX1W6PhfLK8YZNcPgYkG3aHJh4ZI
-         uSlGjlOhEBlJdH9e95bh4F59lLYXwekbxXYe0psNeUkV8Rbx3MvQixexLAxgiX/5ZhL6
-         Mg28Ds1GfuWgf7AqCy4fXMzxKpKec32Okyb+h0XGpUYd/ulB7VSOLs1WZ/RM6i6Yb0fV
-         tmxO93zgZ44fAa95BN5PoiRktav5QfQNIdNJCQOINoT8fqdrj2Z6eeNcI8tDrTIwDyer
-         TbbsSYA0X2UkgyPIw6L5P/YUOkxDBz+5ByLuO/NRblzEY81p+SsfZF99Nw5oDygONEXS
-         OBew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=EWYFc/gJo3faTJA9/EBkThaSJQ5LBS1fd/hXnAxH3ec=;
-        b=T8MG0OUVAs8GCWHwJU6hhNu5HPKf2QCZZ2GuuLy8Rl0PRLvVjHkmXtkLqpCHw3o9WC
-         4ekmr4xWKXuC/1vWssgApjlwmNZyFeRV5nlEoDeTybsNzrUnNkXZAVajFd7fDaoVV/6x
-         Ow7VlP2McJq0F24jVESDogynLRPkWhy3fhNFofjYWuTf/LcfHu+ZUamShvHB44TD9DMg
-         UrXKt8E14EPc8dGYPqqmsQaGM3u/QiFAyVeigQFq8Q+HL6ZK8oYwCkxC8K2euo138a09
-         aXpunrmfPHhr0YsyqHU+rPyoLMosQeFAiLKdIm4urBHpabCsfTZO7gX+16F2F+LnUPL7
-         T7HA==
-X-Gm-Message-State: AOAM533PtITw0GFTMGXucmR+f8gvm5sTRgyN9HpL565Hl8rSehza6+vO
-        /SPVPe0LBy4oCr4TwhfE5a6AT0agKnN22ks5nilV4g==
-X-Google-Smtp-Source: ABdhPJz6zPujh/OhQyjE72kLq3MqYFCoeqfjAsPVxOteI44BYWvoUBjLDkquC3hgElR/KiiSKLQVqXjIbXaBEOL87uw=
-X-Received: by 2002:a63:dd4c:0:b0:3fa:a80e:8ba0 with SMTP id
- g12-20020a63dd4c000000b003faa80e8ba0mr5351781pgj.167.1654193015647; Thu, 02
- Jun 2022 11:03:35 -0700 (PDT)
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1654193886; x=1685729886;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=bXdvqf253esrPe34pGvoThN/dHdsh/14HrUzRcc7lO0=;
+  b=Pm5I/ntiH2T+QHluPbWoVrUKhLOOlkNKKOUiVmyJZxL3ydk4b4cfpVH2
+   VtLjOOTobTB9O95tYkXVKvRfaebC0yaP7ok2sJPt3MD1LN9+lGrkrmG28
+   l2o149JITnJ3aqyTJAj8qaDO+G8K5kN+Q/jUd51tEJ9ekSniH0E+rSNTi
+   8=;
+Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
+  by alexa-out.qualcomm.com with ESMTP; 02 Jun 2022 11:18:05 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Jun 2022 11:18:05 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Thu, 2 Jun 2022 11:18:04 -0700
+Received: from [10.38.242.41] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Thu, 2 Jun 2022
+ 11:18:03 -0700
+Message-ID: <963f5ef5-4b1d-6b0d-5b6d-0d6136e9e8d3@quicinc.com>
+Date:   Thu, 2 Jun 2022 11:18:01 -0700
 MIME-Version: 1.0
-References: <20220602165258.2247056-1-vladimir.zapolskiy@linaro.org>
-In-Reply-To: <20220602165258.2247056-1-vladimir.zapolskiy@linaro.org>
-From:   Loic Poulain <loic.poulain@linaro.org>
-Date:   Thu, 2 Jun 2022 20:02:59 +0200
-Message-ID: <CAMZdPi_Yw-QVJV5O5qqYsDwi=GWXTV_wfTgXnpFOX7mkEGNJeA@mail.gmail.com>
-Subject: Re: [PATCH v2] i2c: qcom-cci: simplify access to bus data structure
-To:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Cc:     Robert Foss <robert.foss@linaro.org>, linux-i2c@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [Freedreno] [PATCH] drm/msm: less magic numbers in
+ msm_mdss_enable
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC:     Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        "Bjorn Andersson" <bjorn.andersson@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20220531121825.1126204-1-dmitry.baryshkov@linaro.org>
+ <d7084452-ea90-3a8b-d39a-b09d9f45f839@quicinc.com>
+ <CAA8EJprW7xnYJaeqh4vozSTx04DcQ20MMRrzLaEJPJTC3dV30w@mail.gmail.com>
+ <80c1da0f-0006-6602-ec86-ebdf71c3037a@quicinc.com>
+ <CAA8EJppfWfP-bZLOYF8QBe6kW6gBBw5eXpzzDA6GFo8U7g=jRQ@mail.gmail.com>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <CAA8EJppfWfP-bZLOYF8QBe6kW6gBBw5eXpzzDA6GFo8U7g=jRQ@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-7.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -66,77 +74,175 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 2 Jun 2022 at 18:53, Vladimir Zapolskiy
-<vladimir.zapolskiy@linaro.org> wrote:
->
-> Trivial non-functional change, which adds an alias to an extensively
-> used data location.
->
-> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-
-Reviewed-by: Loic Poulain <loic.poulain@linaro.org>
 
 
-> ---
-> Changes from v1 to v2:
-> * removed a wrapped line, thanks to review by Loic.
->
->  drivers/i2c/busses/i2c-qcom-cci.c | 27 ++++++++++++++-------------
->  1 file changed, 14 insertions(+), 13 deletions(-)
->
-> diff --git a/drivers/i2c/busses/i2c-qcom-cci.c b/drivers/i2c/busses/i2c-qcom-cci.c
-> index 8d078bdb5c1b..f6a1de575c5a 100644
-> --- a/drivers/i2c/busses/i2c-qcom-cci.c
-> +++ b/drivers/i2c/busses/i2c-qcom-cci.c
-> @@ -541,6 +541,7 @@ static int cci_probe(struct platform_device *pdev)
->                 return -ENOENT;
->
->         for_each_available_child_of_node(dev->of_node, child) {
-> +               struct cci_master *master;
->                 u32 idx;
->
->                 ret = of_property_read_u32(child, "reg", &idx);
-> @@ -555,27 +556,27 @@ static int cci_probe(struct platform_device *pdev)
->                         continue;
->                 }
->
-> -               cci->master[idx].adap.quirks = &cci->data->quirks;
-> -               cci->master[idx].adap.algo = &cci_algo;
-> -               cci->master[idx].adap.dev.parent = dev;
-> -               cci->master[idx].adap.dev.of_node = of_node_get(child);
-> -               cci->master[idx].master = idx;
-> -               cci->master[idx].cci = cci;
-> +               master = &cci->master[idx];
-> +               master->adap.quirks = &cci->data->quirks;
-> +               master->adap.algo = &cci_algo;
-> +               master->adap.dev.parent = dev;
-> +               master->adap.dev.of_node = of_node_get(child);
-> +               master->master = idx;
-> +               master->cci = cci;
->
-> -               i2c_set_adapdata(&cci->master[idx].adap, &cci->master[idx]);
-> -               snprintf(cci->master[idx].adap.name,
-> -                        sizeof(cci->master[idx].adap.name), "Qualcomm-CCI");
-> +               i2c_set_adapdata(&master->adap, master);
-> +               snprintf(master->adap.name, sizeof(master->adap.name), "Qualcomm-CCI");
->
-> -               cci->master[idx].mode = I2C_MODE_STANDARD;
-> +               master->mode = I2C_MODE_STANDARD;
->                 ret = of_property_read_u32(child, "clock-frequency", &val);
->                 if (!ret) {
->                         if (val == I2C_MAX_FAST_MODE_FREQ)
-> -                               cci->master[idx].mode = I2C_MODE_FAST;
-> +                               master->mode = I2C_MODE_FAST;
->                         else if (val == I2C_MAX_FAST_MODE_PLUS_FREQ)
-> -                               cci->master[idx].mode = I2C_MODE_FAST_PLUS;
-> +                               master->mode = I2C_MODE_FAST_PLUS;
->                 }
->
-> -               init_completion(&cci->master[idx].irq_complete);
-> +               init_completion(&master->irq_complete);
->         }
->
->         /* Memory */
-> --
-> 2.33.0
->
+On 6/1/2022 1:04 PM, Dmitry Baryshkov wrote:
+> On Wed, 1 Jun 2022 at 20:38, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+>>
+>>
+>>
+>> On 6/1/2022 2:46 AM, Dmitry Baryshkov wrote:
+>>> On Wed, 1 Jun 2022 at 01:01, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+>>>> On 5/31/2022 5:18 AM, Dmitry Baryshkov wrote:
+>>>>> Replace magic register writes in msm_mdss_enable() with version that
+>>>>> contains less magic and more variable names that can be traced back to
+>>>>> the dpu_hw_catalog or the downstream dtsi files.
+>>>>>
+>>>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>>>> ---
+>>>>>     drivers/gpu/drm/msm/msm_mdss.c | 79 ++++++++++++++++++++++++++++++----
+>>>>>     1 file changed, 71 insertions(+), 8 deletions(-)
+>>>>>
+>>>>> diff --git a/drivers/gpu/drm/msm/msm_mdss.c b/drivers/gpu/drm/msm/msm_mdss.c
+>>>>> index 0454a571adf7..2a48263cd1b5 100644
+>>>>> --- a/drivers/gpu/drm/msm/msm_mdss.c
+>>>>> +++ b/drivers/gpu/drm/msm/msm_mdss.c
+>>>>> @@ -21,6 +21,7 @@
+>>>>>     #define HW_REV                              0x0
+>>>>>     #define HW_INTR_STATUS                      0x0010
+>>>>>
+>>>>> +#define UBWC_DEC_HW_VERSION          0x58
+>>>>>     #define UBWC_STATIC                 0x144
+>>>>>     #define UBWC_CTRL_2                 0x150
+>>>>>     #define UBWC_PREDICTION_MODE                0x154
+>>>>> @@ -132,9 +133,63 @@ static int _msm_mdss_irq_domain_add(struct msm_mdss *msm_mdss)
+>>>>>         return 0;
+>>>>>     }
+>>>>>
+>>>>> +#define UBWC_1_0 0x10000000
+>>>>> +#define UBWC_2_0 0x20000000
+>>>>> +#define UBWC_3_0 0x30000000
+>>>>> +#define UBWC_4_0 0x40000000
+>>>>> +
+>>>>> +static void msm_mdss_setup_ubwc_dec_20(struct msm_mdss *msm_mdss,
+>>>>> +                                    u32 ubwc_static)
+>>>>> +{
+>>>>> +     writel_relaxed(ubwc_static, msm_mdss->mmio + UBWC_STATIC);
+>>>>> +}
+>>>>> +
+>>>>> +static void msm_mdss_setup_ubwc_dec_30(struct msm_mdss *msm_mdss,
+>>>>> +                                    unsigned int ubwc_version,
+>>>>> +                                    u32 ubwc_swizzle,
+>>>>> +                                    u32 highest_bank_bit,
+>>>>> +                                    u32 macrotile_mode)
+>>>>> +{
+>>>>> +     u32 value = (ubwc_swizzle & 0x1) |
+>>>>> +                 (highest_bank_bit & 0x3) << 4 |
+>>>>> +                 (macrotile_mode & 0x1) << 12;
+>>>>> +
+>>>>> +     if (ubwc_version == UBWC_3_0)
+>>>>> +             value |= BIT(10);
+>>>>> +
+>>>>> +     if (ubwc_version == UBWC_1_0)
+>>>>> +             value |= BIT(8);
+>>>>> +
+>>>>> +     writel_relaxed(value, msm_mdss->mmio + UBWC_STATIC);
+>>>>> +}
+>>>>> +
+>>>>> +static void msm_mdss_setup_ubwc_dec_40(struct msm_mdss *msm_mdss,
+>>>>> +                                    unsigned int ubwc_version,
+>>>>> +                                    u32 ubwc_swizzle,
+>>>>> +                                    u32 ubwc_static,
+>>>>> +                                    u32 highest_bank_bit,
+>>>>> +                                    u32 macrotile_mode)
+>>>>> +{
+>>>>> +     u32 value = (ubwc_swizzle & 0x7) |
+>>>>> +                 (ubwc_static & 0x1) << 3 |
+>>>>> +                 (highest_bank_bit & 0x7) << 4 |
+>>>>> +                 (macrotile_mode & 0x1) << 12;
+>>>>> +
+>>>>> +     writel_relaxed(value, msm_mdss->mmio + UBWC_STATIC);
+>>>>> +
+>>>>> +     if (ubwc_version == UBWC_3_0) {
+>>>>> +             writel_relaxed(1, msm_mdss->mmio + UBWC_CTRL_2);
+>>>>> +             writel_relaxed(0, msm_mdss->mmio + UBWC_PREDICTION_MODE);
+>>>>> +     } else {
+>>>>> +             writel_relaxed(2, msm_mdss->mmio + UBWC_CTRL_2);
+>>>>> +             writel_relaxed(1, msm_mdss->mmio + UBWC_PREDICTION_MODE);
+>>>>> +     }
+>>>>> +}
+>>>>> +
+>>>>
+>>>> Is it possible to unify the above functions by having the internal
+>>>> ubwc_version checks?
+>>>
+>>> Note, it's not the ubwc_version, it is the ubwc_dec_hw_version. And
+>>> also different functions take different sets of arguments.
+>>>
+>>>> It seems like msm_mdss_setup_ubwc_dec_xxx can keep growing.
+>>>>
+>>>> I have not looked into each bit programming but from the top level so
+>>>> feel free to correct if wrong but it seems both do write UBWC_STATIC
+>>>> (different values based on different UBWC versions) and write some extra
+>>>> registers based on version
+>>>
+>>> This is what both the current code and the downstream do. See
+>>> https://github.com/MiCode/Xiaomi_Kernel_OpenSource/blob/zeus-s-oss/techpack/display-drivers/msm/sde/sde_hw_top.c#L312
+>>>
+>>
+>> Thanks for pointing to the downstream method for this,
+>>
+>> This is exactly what i was also suggesting to do when I mentioned
+>> unifying the above functions.
+>>
+>> So instead of having a separate function for each version why not handle
+>> all the versions in the same function like what the link you have shown
+>> does.
+> 
+> I wouldn't like that. The downstream uses hw_catalog to pass all
+> possible parameters. We do not, so we'd have a whole set of artificial
+> values.
+> 
+
+Now that you brought that up, why cannot even upstream dpu start using 
+catalog for ubwc settings?
+
+/* struct dpu_mdp_cfg : MDP TOP-BLK instance info
+  * @id:                index identifying this block
+  * @base:              register base offset to mdss
+  * @features           bit mask identifying sub-blocks/features
+  * @highest_bank_bit:  UBWC parameter
+  * @ubwc_static:       ubwc static configuration
+  * @ubwc_swizzle:      ubwc default swizzle setting
+  * @clk_ctrls          clock control register definition
+  */
+struct dpu_mdp_cfg {
+     DPU_HW_BLK_INFO;
+     u32 highest_bank_bit;
+     u32 ubwc_swizzle;
+     struct dpu_clk_ctrl_reg clk_ctrls[DPU_CLK_CTRL_MAX];
+};
+
+We already do seem to have a couple of parameters. have to add the others.
+
+That way the number of functions wont keep growing.
+
+>>
+>>>>
+>>>>>     static int msm_mdss_enable(struct msm_mdss *msm_mdss)
+>>>>>     {
+>>>>>         int ret;
+>>>>> +     u32 hw_rev;
+>>>>>
+>>>>>         ret = clk_bulk_prepare_enable(msm_mdss->num_clocks, msm_mdss->clocks);
+>>>>>         if (ret) {
+>>>>> @@ -149,26 +204,34 @@ static int msm_mdss_enable(struct msm_mdss *msm_mdss)
+>>>>>         if (msm_mdss->is_mdp5)
+>>>>>                 return 0;
+>>>>>
+>>>>> +     hw_rev = readl_relaxed(msm_mdss->mmio + HW_REV);
+>>>>> +     dev_info(msm_mdss->dev, "HW_REV: 0x%x\n", hw_rev);
+>>>>> +     dev_info(msm_mdss->dev, "UBWC_DEC_HW_VERSION: 0x%x\n",
+>>>>> +             readl_relaxed(msm_mdss->mmio + UBWC_DEC_HW_VERSION));
+>>>>
+>>>> we are already printing the HW version here
+>>>>
+>>>> https://gitlab.freedesktop.org/drm/msm/-/blob/msm-next/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c#L1096
+>>>>
+>>>> Do you want to remove that print then? May be. Let me take a look.
+>>>
+>>> [skipped]
+>>>
+> 
+> 
+> 
