@@ -2,69 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E5C4953BE2C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jun 2022 20:47:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DC0C853BE5F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jun 2022 21:06:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235790AbiFBSrV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Jun 2022 14:47:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38596 "EHLO
+        id S238354AbiFBTG0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Jun 2022 15:06:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37996 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236819AbiFBSrU (ORCPT
+        with ESMTP id S238365AbiFBTGZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Jun 2022 14:47:20 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADDE465C2
-        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Jun 2022 11:47:18 -0700 (PDT)
+        Thu, 2 Jun 2022 15:06:25 -0400
+Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31B21BF1
+        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Jun 2022 12:06:24 -0700 (PDT)
+Received: by mail-pf1-x42d.google.com with SMTP id p8so5504205pfh.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Jun 2022 12:06:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1654195638; x=1685731638;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=MdaA4AryqUI3Iy8JJ9+Zb7xUERFtLDGiLGlIKh4JyeU=;
-  b=zG9PIT6OXMwasD9ibpxJsmeOSu3yS45dDpBSK+Rh1Kl0VIFPgTLYB58T
-   3MsMzAQNiGqcEHqB+qilnie88FYs9har3nEgIMIN/ypy/WsU6sLVqMHMt
-   xTkVrxZPNrtFaqjj/a0Zz7hUlGo4PTBQO4F3Y+DGQoWxuzBCdXTn8ZVX8
-   8=;
-Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 02 Jun 2022 11:47:17 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg02-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Jun 2022 11:47:17 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Thu, 2 Jun 2022 11:47:17 -0700
-Received: from [10.38.242.41] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Thu, 2 Jun 2022
- 11:47:14 -0700
-Message-ID: <25addbe9-1b80-2aab-f6ad-3e092158c4ee@quicinc.com>
-Date:   Thu, 2 Jun 2022 11:47:12 -0700
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=A+CJHPksJEyQ/br0kNUyJ2paAkEWbd02hKrM4zpgQyQ=;
+        b=DftemrRpxgHU1PB1Zl247GpilafWiRfmuWeotJzMK1VZeLBmDqw1XVVJPA53kteARU
+         XGS/yfyDrMHQslfTX7pA21vfF21sHFG2IfDmoRjE+eQqmxDRtPtj/UZEd+qxT++nSu4t
+         82hhWgZnRfGVqVMT6G/+rQViZi921qzEPdObU=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=A+CJHPksJEyQ/br0kNUyJ2paAkEWbd02hKrM4zpgQyQ=;
+        b=PaEKKcaHhSerTv5OUm7VHqP8P3G348utShyTMOzeT4vB03b42goIrw322hO7nWk7vJ
+         LqbcEG98YqkKSeh7Ti4joSmm8f1eVxfrdZZhOs6lOz0jz93eUWXN6wPzsrtamw/wsqfG
+         ZB9n/Icp+9KuWNsCQkwVZ9u4A3IzDoIisRZl25K501Jn+YzwqfpInkdz6aLrP6U16173
+         e27nuJ7q3EbmP0eaM7++/ShO/eqz30U+q9tnlhitdS6m4ibt//ULe7wio92bUn/s/9tb
+         iWyoU7nq2toiPZphSDavUKA3biFQ7RKgB0AuLefhnCBJAsgK/nFNX7ONUfrcWyPj3cTp
+         lirg==
+X-Gm-Message-State: AOAM533mrak4dxJx+wyeuKspiUFY5IvqdvPdQhPx0PeGIVpxnjjsSfRM
+        nAQdaRugRO7VNani88020Yti+w==
+X-Google-Smtp-Source: ABdhPJzTc/a6pzmNkyPjyl9vwfz3NHCs0ZPckhN2iQUoju04q2sVsqtxC4zMCL5PFu1/nbWvdqSF1Q==
+X-Received: by 2002:a63:d446:0:b0:3fc:1370:798a with SMTP id i6-20020a63d446000000b003fc1370798amr5610931pgj.190.1654196783584;
+        Thu, 02 Jun 2022 12:06:23 -0700 (PDT)
+Received: from smtp.gmail.com ([2620:15c:202:201:6885:8b62:3875:9d55])
+        by smtp.gmail.com with ESMTPSA id d20-20020a056a00199400b0051878e8cc13sm4197895pfl.116.2022.06.02.12.06.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 02 Jun 2022 12:06:23 -0700 (PDT)
+From:   Stephen Boyd <swboyd@chromium.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+        linux-arm-msm@vger.kernel.org,
+        Douglas Anderson <dianders@chromium.org>,
+        "Joseph S. Barrera III" <joebar@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>
+Subject: [PATCH v2] arm64: dts: qcom: Remove duplicate sc7180-trogdor include on lazor/homestar
+Date:   Thu,  2 Jun 2022 12:06:21 -0700
+Message-Id: <20220602190621.1646679-1-swboyd@chromium.org>
+X-Mailer: git-send-email 2.36.1.255.ge46751e96f-goog
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH v2 3/7] drm/msm/dpu: remove hwversion field from data
- structures
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-CC:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20220602133039.1739490-1-dmitry.baryshkov@linaro.org>
- <20220602133039.1739490-4-dmitry.baryshkov@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20220602133039.1739490-4-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-7.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -73,222 +69,81 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+The sc7180-trogdor-{lazor,homestar}-*.dtsi files all include
+sc7180-trogdor.dtsi and sc7180-trogdor-lazor.dtsi or
+sc7180-trogdor-homestar.dtsi, so including it here in the
+sc7180-trogdor-{lazor,homestar}.dtsi file means we have a duplicate
+include after commit 19794489fa24 ("arm64: dts: qcom: Only include
+sc7180.dtsi in sc7180-trogdor.dtsi"). We include the sc7180-trogdor.dtsi
+file in a board like sc7180-trogdor-lazor-r1.dts so that we can include
+the display bridge snippet (e.g. sc7180-trogdor-ti-sn65dsi86.dtsi)
+instead of making ever increasing variants like
+sc7180-trogdor-lazor-ti-sn65dsi86.dtsi.
 
+Unfortunately, having the double include like this means the display
+bridge's i2c bus is left disabled instead of enabled by the bridge
+snippet. Any boards that use the i2c bus for the display bridge will
+have the bus disabled when we include sc7180-trogdor.dtsi the second
+time, which picks up the i2c status="disabled" line from sc7180.dtsi.
+This leads to the display not turning on and black screens at boot on
+lazor and homestar devices.
 
-On 6/2/2022 6:30 AM, Dmitry Baryshkov wrote:
-> The driver should not depend on hw revision for detecting features.
-> Instead it should use features from the hw catalog. Drop the hwversion
-> field from struct dpu_mdss_cfg and struct dpu_hw_blk_reg_map.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Fix this by dropping the include and making a note that the
+sc7180-trogdor-{lazor,homestar}.dtsi file must be included after
+sc7180-trogdor.dtsi
 
-Since the previous two patches remove all the current users of 
-hwversion, this one should be fine.
+Reported-by: Douglas Anderson <dianders@chromium.org>
+Cc: "Joseph S. Barrera III" <joebar@chromium.org>
+Cc: Matthias Kaehlcke <mka@chromium.org>
+Fixes: 19794489fa24 ("arm64: dts: qcom: Only include sc7180.dtsi in sc7180-trogdor.dtsi")
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+---
 
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    | 1 -
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    | 2 --
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c        | 1 -
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c        | 1 -
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c       | 1 -
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c | 1 -
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c       | 1 -
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c         | 1 -
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_merge3d.c    | 1 -
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c   | 1 -
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c       | 1 -
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c        | 1 -
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h       | 2 --
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_vbif.c       | 1 -
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c         | 1 -
->   15 files changed, 17 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> index cff6fe3a85ac..367279371e8d 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> @@ -2002,7 +2002,6 @@ struct dpu_mdss_cfg *dpu_hw_catalog_init(u32 hw_rev)
->   	for (i = 0; i < ARRAY_SIZE(cfg_handler); i++) {
->   		if (cfg_handler[i].hw_rev == hw_rev) {
->   			cfg_handler[i].cfg_init(dpu_cfg);
-> -			dpu_cfg->hwversion = hw_rev;
->   			return dpu_cfg;
->   		}
->   	}
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> index f70de97f492a..4225f58d8f97 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> @@ -826,8 +826,6 @@ struct dpu_perf_cfg {
->    * @mdss_irqs:         Bitmap with the irqs supported by the target
->    */
->   struct dpu_mdss_cfg {
-> -	u32 hwversion;
-> -
->   	const struct dpu_caps *caps;
->   
->   	u32 mdp_count;
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-> index c33e7ef611a6..7d416bf4ae91 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-> @@ -61,7 +61,6 @@ static const struct dpu_ctl_cfg *_ctl_offset(enum dpu_ctl ctl,
->   			b->base_off = addr;
->   			b->blk_off = m->ctl[i].base;
->   			b->length = m->ctl[i].len;
-> -			b->hwversion = m->hwversion;
->   			b->log_mask = DPU_DBG_MASK_CTL;
->   			return &m->ctl[i];
->   		}
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c
-> index 4ad8991fc7d9..6f20d6b6dddd 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c
-> @@ -169,7 +169,6 @@ static struct dpu_dsc_cfg *_dsc_offset(enum dpu_dsc dsc,
->   			b->base_off = addr;
->   			b->blk_off = m->dsc[i].base;
->   			b->length = m->dsc[i].len;
-> -			b->hwversion = m->hwversion;
->   			b->log_mask = DPU_DBG_MASK_DSC;
->   			return &m->dsc[i];
->   		}
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c
-> index 355894a3b48c..3e63bf4fa64e 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c
-> @@ -83,7 +83,6 @@ static const struct dpu_dspp_cfg *_dspp_offset(enum dpu_dspp dspp,
->   			b->base_off = addr;
->   			b->blk_off = m->dspp[i].base;
->   			b->length = m->dspp[i].len;
-> -			b->hwversion = m->hwversion;
->   			b->log_mask = DPU_DBG_MASK_DSPP;
->   			return &m->dspp[i];
->   		}
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
-> index 61284e6c313d..01bb2d84c3a0 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
-> @@ -403,7 +403,6 @@ static void __intr_offset(struct dpu_mdss_cfg *m,
->   {
->   	hw->base_off = addr;
->   	hw->blk_off = m->mdp[0].base;
-> -	hw->hwversion = m->hwversion;
->   }
->   
->   struct dpu_hw_intr *dpu_hw_intr_init(void __iomem *addr,
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
-> index 3f4d2c6e1b45..b2ca8d19fdd7 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
-> @@ -80,7 +80,6 @@ static const struct dpu_intf_cfg *_intf_offset(enum dpu_intf intf,
->   			b->base_off = addr;
->   			b->blk_off = m->intf[i].base;
->   			b->length = m->intf[i].len;
-> -			b->hwversion = m->hwversion;
->   			b->log_mask = DPU_DBG_MASK_INTF;
->   			return &m->intf[i];
->   		}
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
-> index 25d2eba28e71..b41993269d09 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
-> @@ -46,7 +46,6 @@ static const struct dpu_lm_cfg *_lm_offset(enum dpu_lm mixer,
->   			b->base_off = addr;
->   			b->blk_off = m->mixer[i].base;
->   			b->length = m->mixer[i].len;
-> -			b->hwversion = m->hwversion;
->   			b->log_mask = DPU_DBG_MASK_LM;
->   			return &m->mixer[i];
->   		}
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_merge3d.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_merge3d.c
-> index c06d595d5df0..b053d68d38da 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_merge3d.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_merge3d.c
-> @@ -26,7 +26,6 @@ static const struct dpu_merge_3d_cfg *_merge_3d_offset(enum dpu_merge_3d idx,
->   			b->base_off = addr;
->   			b->blk_off = m->merge_3d[i].base;
->   			b->length = m->merge_3d[i].len;
-> -			b->hwversion = m->hwversion;
->   			b->log_mask = DPU_DBG_MASK_PINGPONG;
->   			return &m->merge_3d[i];
->   		}
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c
-> index 47c6ab6caf95..6538e195cfe9 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c
-> @@ -54,7 +54,6 @@ static const struct dpu_pingpong_cfg *_pingpong_offset(enum dpu_pingpong pp,
->   			b->base_off = addr;
->   			b->blk_off = m->pingpong[i].base;
->   			b->length = m->pingpong[i].len;
-> -			b->hwversion = m->hwversion;
->   			b->log_mask = DPU_DBG_MASK_PINGPONG;
->   			return &m->pingpong[i];
->   		}
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
-> index 0a0864dff783..ab7f1a4cc578 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
-> @@ -772,7 +772,6 @@ static const struct dpu_sspp_cfg *_sspp_offset(enum dpu_sspp sspp,
->   				b->base_off = addr;
->   				b->blk_off = catalog->sspp[i].base;
->   				b->length = catalog->sspp[i].len;
-> -				b->hwversion = catalog->hwversion;
->   				b->log_mask = DPU_DBG_MASK_SSPP;
->   				return &catalog->sspp[i];
->   			}
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c
-> index ab3ef162b666..12d3b0067275 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c
-> @@ -288,7 +288,6 @@ static const struct dpu_mdp_cfg *_top_offset(enum dpu_mdp mdp,
->   			b->base_off = addr;
->   			b->blk_off = m->mdp[i].base;
->   			b->length = m->mdp[i].len;
-> -			b->hwversion = m->hwversion;
->   			b->log_mask = DPU_DBG_MASK_TOP;
->   			return &m->mdp[i];
->   		}
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h
-> index e4a65eb4f769..550b2e2b3e34 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h
-> @@ -21,14 +21,12 @@
->    * @blk_off:      pipe offset relative to mdss offset
->    * @length        length of register block offset
->    * @xin_id        xin id
-> - * @hwversion     mdss hw version number
->    */
->   struct dpu_hw_blk_reg_map {
->   	void __iomem *base_off;
->   	u32 blk_off;
->   	u32 length;
->   	u32 xin_id;
-> -	u32 hwversion;
->   	u32 log_mask;
->   };
->   
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_vbif.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_vbif.c
-> index 046854c3fbed..789ecc531b43 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_vbif.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_vbif.c
-> @@ -223,7 +223,6 @@ static const struct dpu_vbif_cfg *_top_offset(enum dpu_vbif vbif,
->   			b->base_off = addr;
->   			b->blk_off = m->vbif[i].base;
->   			b->length = m->vbif[i].len;
-> -			b->hwversion = m->hwversion;
->   			b->log_mask = DPU_DBG_MASK_VBIF;
->   			return &m->vbif[i];
->   		}
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c
-> index bcccce292937..084439fdd3a0 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c
-> @@ -63,7 +63,6 @@ static const struct dpu_wb_cfg *_wb_offset(enum dpu_wb wb,
->   			b->base_off = addr;
->   			b->blk_off = m->wb[i].base;
->   			b->length = m->wb[i].len;
-> -			b->hwversion = m->hwversion;
->   			return &m->wb[i];
->   		}
->   	}
+It would be great to get this into -rc1 if possible to fix broken
+display.
+
+Changes from v1 (https://lore.kernel.org/r/20220520231355.1559104-1-swboyd@chromium.org):
+ * Also do the same on homestar
+
+I found that my script to check differences wasn't printing any
+differences because of a typo, so I thought everything was fine when it
+wasn't! Now I've checked and for boards using parade bridge chips quite
+a few phandles are renumbered but they're the same logically as before
+whereas as boards using the ti bridge chip only have a few lines
+reordered.
+
+ arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi | 2 +-
+ arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi    | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi
+index 9b3e3d13c165..d1e2df5164ea 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi
+@@ -5,7 +5,7 @@
+  * Copyright 2021 Google LLC.
+  */
+ 
+-#include "sc7180-trogdor.dtsi"
++/* This file must be included after sc7180-trogdor.dtsi */
+ 
+ / {
+ 	/* BOARD-SPECIFIC TOP LEVEL NODES */
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
+index fe2369c29aad..88f6a7d4d020 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
+@@ -5,7 +5,7 @@
+  * Copyright 2020 Google LLC.
+  */
+ 
+-#include "sc7180-trogdor.dtsi"
++/* This file must be included after sc7180-trogdor.dtsi */
+ 
+ &ap_sar_sensor {
+ 	semtech,cs0-ground;
+
+base-commit: 19794489fa2474a55c00848e00ca3d15ea01d36c
+-- 
+https://chromeos.dev
+
