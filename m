@@ -2,190 +2,196 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E336753B426
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jun 2022 09:09:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A2FEC53B50B
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jun 2022 10:26:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231613AbiFBHJp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Jun 2022 03:09:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58694 "EHLO
+        id S232172AbiFBIYy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Jun 2022 04:24:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41770 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231476AbiFBHJl (ORCPT
+        with ESMTP id S230357AbiFBIYx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Jun 2022 03:09:41 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DB70AE51
-        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Jun 2022 00:09:40 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id t25so6381404lfg.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Jun 2022 00:09:40 -0700 (PDT)
+        Thu, 2 Jun 2022 04:24:53 -0400
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87E0D17E3E;
+        Thu,  2 Jun 2022 01:24:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=UAKyR81ddNuP6637Lad2Iz2FIhX299nucXwl0deW0aw=;
-        b=z3Ta3fOk2Y/GamJd95ZtWJIO99IEWoBF8eJoq8+7M5DRpylf930pph2EG4q3ACoDfm
-         /DIWBCj2w6Upbitcywlhxp8IFFraTZRY/wS3weLQPzXcuH8qGjoKyYQfvTEFyzrAJKnG
-         n7fxO1lsRXUoNsh0GOskKhnHBFdT59mffXNoJ0p1hV/1QM2Q6kCvnM1k1pw3YYRtVZ33
-         lrH/QOhej+rlXWj0j9opCe6a9aTogzbfY6S2iLHPgf52Ul5xmszjd14FEg4nkD17iSFX
-         nsQGUO99cSdQkWc3THZT2Rn7C8bVX83EnTITumaz3XL0ZVCs5zWZzPppz2a6iEUCD3HN
-         7FVQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=UAKyR81ddNuP6637Lad2Iz2FIhX299nucXwl0deW0aw=;
-        b=rXjKTWuwAowvf7jXOeUQ3UDPFmhLqD2yFSjl+hEaKZp0Dx81m5XjU7GFLVqMmLXH2A
-         tsrrEFbxnJZJTGXwLN95Qps3eXzsZxkp4WdLxgBUWuJHNnikQ/Mw260KvQRrBOtONjGn
-         l5ZQhO6KAk0aZynBK1CilFuY9No4LBOa3nVXAB0RPzLM8xCuSEc3kIoUTGABKze3t8mG
-         Ymkkay0NqWhri3RZnqz1AdTMWcRSJZ4vUqQ3xTR95MpYxBAdJp7hKCphfDZdQwn7+ICa
-         ahMxXgyYFN1JgDQfv8G4T3tEtPLL9yW6IEfulik5VOeLyPUEMOCE+FRCf40aq+2GDw2V
-         061Q==
-X-Gm-Message-State: AOAM533yA613qt1/L/WSwshxBBktGQUBQVWXKWEEqVFTsRT0r274m4U9
-        oQ3ROWyWPpEcEn4pwiMa6jRF7A==
-X-Google-Smtp-Source: ABdhPJzttC7oSsr5xT5K+iyqYJKYlL7tjx44F2JOlbA9KLrQLZ5JVq7qOdtWSKTRN0Ykt7ZfXIM9/Q==
-X-Received: by 2002:a05:6512:2807:b0:477:b906:81af with SMTP id cf7-20020a056512280700b00477b90681afmr51334953lfb.299.1654153778905;
-        Thu, 02 Jun 2022 00:09:38 -0700 (PDT)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id d25-20020a056512369900b0047255d21114sm870218lfs.67.2022.06.02.00.09.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Jun 2022 00:09:38 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1654158292; x=1685694292;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=XjJmzGh3hmqgYjySrmquVuUyDD7guKAmbnvqyi6KoxY=;
+  b=tJJDSYuSDxiObsv61KzJ0VwJQ+Q8H60yrs3YmaKXMRBeL3IeCMpwAKpe
+   qRleddeOGVe59Mexz3xbKLd94OHb27D0PUJZOQzOeyHQ65CRzpmo6+bNc
+   PjP/DTPIST1vi9ftxuW/CSALYC8+0t2hVTdmywtU7B2cpVPufHJN1IQnO
+   g=;
+Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 02 Jun 2022 01:24:51 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Jun 2022 01:24:51 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Thu, 2 Jun 2022 01:24:51 -0700
+Received: from hu-kriskura-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Thu, 2 Jun 2022 01:24:45 -0700
+From:   Krishna Kurapati <quic_kriskura@quicinc.com>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>
-Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org
-Subject: [RFC PATCH v3 30/30] phy: qcom-qmp-usb: use bulk reset_control API
-Date:   Thu,  2 Jun 2022 10:09:09 +0300
-Message-Id: <20220602070909.1666068-31-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220602070909.1666068-1-dmitry.baryshkov@linaro.org>
-References: <20220602070909.1666068-1-dmitry.baryshkov@linaro.org>
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        "Matthias Kaehlcke" <mka@chromium.org>,
+        Mathias Nyman <mathias.nyman@intel.com>
+CC:     <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>, <quic_pkondeti@quicinc.com>,
+        <quic_ppratap@quicinc.com>, <quic_vpulyala@quicinc.com>,
+        Krishna Kurapati <quic_kriskura@quicinc.com>
+Subject: [PATCH v20 0/5] USB DWC3 host wake up support from system suspend
+Date:   Thu, 2 Jun 2022 13:54:32 +0530
+Message-ID: <1654158277-12921-1-git-send-email-quic_kriskura@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Switch qcom-qmp-usb driver to use reset_control_bulk_assert / _deassert
-functions rather than hardcoding the loops in the driver itself.
+Avoiding phy powerdown in host mode when dwc3 is wakeup capable, so that
+it can be wake up by devices. Keep usb30_prim gdsc active to retain
+controller status during suspend/resume.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/phy/qualcomm/phy-qcom-qmp-usb.c | 49 +++++++++----------------
- 1 file changed, 18 insertions(+), 31 deletions(-)
+Changes in v20:
+Fixed nitpicks in dwc3 qcom driver.
+Fixed code changes in dwc3 core driver.
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-index 969253e7bdd9..aebe5ed4e4e3 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-@@ -1446,7 +1446,7 @@ struct qcom_qmp {
- 	void __iomem *dp_com;
- 
- 	struct clk_bulk_data *clks;
--	struct reset_control **resets;
-+	struct reset_control_bulk_data *resets;
- 	struct regulator_bulk_data *vregs;
- 
- 	struct qmp_phy **phys;
-@@ -2009,7 +2009,7 @@ static int qcom_qmp_phy_usb_com_init(struct qmp_phy *qphy)
- 	const struct qmp_phy_cfg *cfg = qphy->cfg;
- 	void __iomem *pcs = qphy->pcs;
- 	void __iomem *dp_com = qmp->dp_com;
--	int ret, i;
-+	int ret;
- 
- 	/* turn on regulator supplies */
- 	ret = regulator_bulk_enable(cfg->num_vregs, qmp->vregs);
-@@ -2018,22 +2018,16 @@ static int qcom_qmp_phy_usb_com_init(struct qmp_phy *qphy)
- 		return ret;
- 	}
- 
--	for (i = 0; i < cfg->num_resets; i++) {
--		ret = reset_control_assert(qmp->resets[i]);
--		if (ret) {
--			dev_err(qmp->dev, "%s reset assert failed\n",
--				cfg->reset_list[i]);
--			goto err_disable_regulators;
--		}
-+	ret = reset_control_bulk_assert(cfg->num_resets, qmp->resets);
-+	if (ret) {
-+		dev_err(qmp->dev, "reset assert failed\n");
-+		goto err_disable_regulators;
- 	}
- 
--	for (i = cfg->num_resets - 1; i >= 0; i--) {
--		ret = reset_control_deassert(qmp->resets[i]);
--		if (ret) {
--			dev_err(qmp->dev, "%s reset deassert failed\n",
--				qphy->cfg->reset_list[i]);
--			goto err_assert_reset;
--		}
-+	ret = reset_control_bulk_deassert(cfg->num_resets, qmp->resets);
-+	if (ret) {
-+		dev_err(qmp->dev, "reset deassert failed\n");
-+		goto err_disable_regulators;
- 	}
- 
- 	ret = clk_bulk_prepare_enable(cfg->num_clks, qmp->clks);
-@@ -2074,8 +2068,7 @@ static int qcom_qmp_phy_usb_com_init(struct qmp_phy *qphy)
- 	return 0;
- 
- err_assert_reset:
--	while (++i < cfg->num_resets)
--		reset_control_assert(qmp->resets[i]);
-+	reset_control_bulk_assert(cfg->num_resets, qmp->resets);
- err_disable_regulators:
- 	regulator_bulk_disable(cfg->num_vregs, qmp->vregs);
- 
-@@ -2086,10 +2079,8 @@ static int qcom_qmp_phy_usb_com_exit(struct qmp_phy *qphy)
- {
- 	struct qcom_qmp *qmp = qphy->qmp;
- 	const struct qmp_phy_cfg *cfg = qphy->cfg;
--	int i = cfg->num_resets;
- 
--	while (--i >= 0)
--		reset_control_assert(qmp->resets[i]);
-+	reset_control_bulk_assert(cfg->num_resets, qmp->resets);
- 
- 	clk_bulk_disable_unprepare(cfg->num_clks, qmp->clks);
- 
-@@ -2376,23 +2367,19 @@ static int qcom_qmp_phy_usb_reset_init(struct device *dev, const struct qmp_phy_
- {
- 	struct qcom_qmp *qmp = dev_get_drvdata(dev);
- 	int i;
-+	int ret;
- 
- 	qmp->resets = devm_kcalloc(dev, cfg->num_resets,
- 				   sizeof(*qmp->resets), GFP_KERNEL);
- 	if (!qmp->resets)
- 		return -ENOMEM;
- 
--	for (i = 0; i < cfg->num_resets; i++) {
--		struct reset_control *rst;
--		const char *name = cfg->reset_list[i];
-+	for (i = 0; i < cfg->num_resets; i++)
-+		qmp->resets[i].id = cfg->reset_list[i];
- 
--		rst = devm_reset_control_get_exclusive(dev, name);
--		if (IS_ERR(rst)) {
--			dev_err(dev, "failed to get %s reset\n", name);
--			return PTR_ERR(rst);
--		}
--		qmp->resets[i] = rst;
--	}
-+	ret = devm_reset_control_bulk_get_exclusive(dev, cfg->num_resets, qmp->resets);
-+	if (ret)
-+		return dev_err_probe(dev, ret, "failed to get resets\n");
- 
- 	return 0;
- }
+Changes in v19:
+Fixed dwc3 driver code changes.
+
+Changes in v18:
+Fixed minor nit picks in v17 reported by Matthias.
+
+Changes in v17:
+Moved the speed check to glue driver.
+Powering down phy's solely based on dwc3 wakeup capability.
+Configuring the interrupt functions appropriately.
+
+Changes in v16:
+Added changes to power down the phy's during suspend only if dwc3
+is not wakeup capable.
+
+Changes in v15:
+Added patch to enable wakeup for xhci-plat based on children wakeup status.
+Used device_wakeup_path instead of device_children_wakeup_capable
+
+Changes in v14:
+Added patch for device_children_wakeup_capable.
+Used device_children_wakeup_capable instead of usb_wakeup_enabled_descendants.
+Fixed minor nit picks in v13 reported by Matthias.
+
+Changes in v13:
+Moved the dt bindings patch to start.
+Changed dwc3_set_phy_speed_mode to dwc3_check_phy_speed_mode.
+Check wakep-source property for dwc3 core node to set the
+wakeup capability. Drop the device_init_wakeup call from
+runtime suspend and resume.
+Added GENPD_FLAG_RPM_ALWAYS_ON and set GENPD_FLAG_ALWAYS_ON if
+wakeup is supported.
+
+Changes in v12:
+Squashed PATCH 1/5 and 2/5 of v11.
+Added dt bindings and device tree entry for wakeup-source property
+for dwc3 core node.
+Dropped redundant phy_set_mode call.
+
+
+Changes in v11:
+Moving back to v8 version
+https://patchwork.kernel.org/project/linux-arm-msm/cover/1624882097-23265-1-git-send-email-sanm@codeaurora.org
+as we are getting interrupts during suspend
+when enabling both DP hs phy irq and DM hs phy irq.
+Moved the set phy mode function to dwc3/core.c from xhci-plat.c
+We didn't find any other option other than accessing xhci from dwc.
+
+Changes in v10:
+PATCH 1/6: Change device_set_wakeup_capable to device_set_wakeup_enable
+PATCH 2/6: Remove redundant else part in dwc3_resume_common
+PATCH 4/6: Change the irg flags
+PATCH 5/6: Set flag GENPD_FLAG_ALWAYS_ON
+PATCH 6/6: Remove disable interrupts function and enable
+interrupts in probe.
+
+
+Changes in v9:
+Checking with device_may_makeup property instead of phy_power_off flag.
+Changed the IRQ flags and removed hs_phy_mode variable.
+
+Changes in v8:
+Moved the dwc3 suspend quirk code in dwc3/host.c to xhci-plat.c
+Checking phy_power_off flag instead of usb_wakeup_enabled_descendants 
+to keep gdsc active.
+
+Changes in v7:
+Change in commit text and message in PATCH 1/5 and PATCH 5/5
+as per Matthias suggestion.
+Added curly braces for if and else if sections in PATCH 4/5.
+
+Changes in v6:
+Addressed comments in host.c and core.c
+Separated the patches in dwc3-qcom.c to make it simple.
+Dropped wakeup-source change as it is not related to this series.
+
+Changes in v5:
+Added phy_power_off flag to check presence of wakeup capable devices.
+Dropped patch[v4,4/5] as it is present linux-next.
+Addressed comments in host.c and dwc3-qcom.c.
+
+Changes in v4:
+Addressed Matthias comments raised in v3.
+
+Changes in v3:
+Removed need_phy_for_wakeup flag and by default avoiding phy powerdown.
+Addressed Matthias comments and added entry for DEV_SUPERSPEED.
+Added suspend_quirk in dwc3 host and moved the dwc3_set_phy_speed_flags.
+Added wakeup-source dt entry and reading in dwc-qcom.c glue driver.
+
+Changes in v2:
+Dropped the patch in clock to set GENPD_FLAG_ACTIVE_WAKEUP flag and 
+setting in usb dwc3 driver.
+Separated the core patch and glue driver patch.
+Made need_phy_for_wakeup flag part of dwc structure and 
+hs_phy_flags as unsgined int.
+Adrressed the comment on device_init_wakeup call.
+Corrected offset for reading portsc register.
+Added pacth to support wakeup in xo shutdown case.
+
+Sandeep Maheswaram (5):
+  dt-bindings: usb: dwc3: Add wakeup-source property support
+  usb: dwc3: core: Host wake up support from system suspend
+  usb: dwc3: qcom: Add helper functions to enable,disable wake irqs
+  usb: dwc3: qcom: Configure wakeup interrupts during suspend
+  usb: dwc3: qcom: Keep power domain on to retain controller status
+
+ .../devicetree/bindings/usb/snps,dwc3.yaml         |   5 +
+ drivers/usb/dwc3/core.c                            |   9 +-
+ drivers/usb/dwc3/dwc3-qcom.c                       | 140 +++++++++++++++------
+ 3 files changed, 108 insertions(+), 46 deletions(-)
+
 -- 
-2.35.1
+2.7.4
 
