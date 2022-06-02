@@ -2,95 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 509D653B7C9
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jun 2022 13:28:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AF67253B819
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jun 2022 13:49:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234188AbiFBL1X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Jun 2022 07:27:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39170 "EHLO
+        id S234379AbiFBLs2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Jun 2022 07:48:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41182 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234195AbiFBL1W (ORCPT
+        with ESMTP id S234316AbiFBLs1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Jun 2022 07:27:22 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 721652AB236;
-        Thu,  2 Jun 2022 04:27:18 -0700 (PDT)
+        Thu, 2 Jun 2022 07:48:27 -0400
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52DC02997B1
+        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Jun 2022 04:48:24 -0700 (PDT)
+Received: by mail-ej1-x62d.google.com with SMTP id rs12so9405796ejb.13
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Jun 2022 04:48:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1654169238; x=1685705238;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version;
-  bh=H9dBjTw0cbAQOjaubAyGRHRBW53k1gZfcUzCESN/OuQ=;
-  b=Prpi0Mu47Si89azPaV0jIhi/rV1VJY72VYQCALfjmbtNJnjMlmcUAVA+
-   ZnBLMDP3ptrQ0p8jB2ucNxxBwQU7Q8u5c8adGY/H/gyzZIjzJQl/9cmVr
-   CiHXj3tH1A+KkDrY7Ab9lakKTEXs3jn4Q1z9ewgvs8IIQMgyJoS/Efqcj
-   I=;
-Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 02 Jun 2022 04:27:17 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Jun 2022 04:27:16 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Thu, 2 Jun 2022 04:27:16 -0700
-Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Thu, 2 Jun 2022 04:27:10 -0700
-From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
-        <lgirdwood@gmail.com>, <broonie@kernel.org>, <robh+dt@kernel.org>,
-        <quic_plai@quicinc.com>, <bgoswami@quicinc.com>, <perex@perex.cz>,
-        <tiwai@suse.com>, <srinivas.kandagatla@linaro.org>,
-        <quic_rohkumar@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <alsa-devel@alsa-project.org>, <linux-kernel@vger.kernel.org>,
-        <swboyd@chromium.org>, <judyhsiao@chromium.org>,
-        <devicetree@vger.kernel.org>
-CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Subject: [PATCH 2/2] ASoC: qcom: lpass-sc7280: Update external mclk0 name
-Date:   Thu, 2 Jun 2022 16:56:46 +0530
-Message-ID: <1654169206-12255-3-git-send-email-quic_srivasam@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1654169206-12255-1-git-send-email-quic_srivasam@quicinc.com>
-References: <1654169206-12255-1-git-send-email-quic_srivasam@quicinc.com>
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=shtQh66+bKE1caS4jMSRSwf+vIlH6pzW/iS7K92y5Eg=;
+        b=dc99xUHQThcX6ryKAYXNpafER9Kk4IqWJ4hIN06w5R5rjWA84E5p4P72DZDYGBswsI
+         kl3C21BvdXefH2LnJlT8rU/+JezOsqjRAd7tVk97vXLFhMeDIOIeP+/Hp1s8R6ceOle7
+         uJyWHNIybbL9JlE7dlJkzTO14TjU88UJAYcAbnV1SoMbJUDCi4gpZvk1mcW9ONfryXbq
+         ORVmAj8kEwf7k8Tdd5l7Rqpt5iQBFZoY0eQzfumt+hDyJ4nLrjHN3GpDX20gJiG5a5se
+         RMEgmqvFaNz8hsnSvQNIVgD2JYnNez5HZ+pn120+o00MrgoJA0GpTygS1KP0PIywXThn
+         JVpw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=shtQh66+bKE1caS4jMSRSwf+vIlH6pzW/iS7K92y5Eg=;
+        b=yUqeEPHn3lbTwLX1B2a6bwPVH64uMcqnzoe2CoGd6T2L1pZToznQe/NWDO7C0WJz6L
+         RZtA3P6vsDIgP1QahkoX4N4LxE+JDAFWh0e9SbfcyLFxglBYwm+sm3nH0uB/86GwjMZp
+         lW05QI3p2Z8URWt454InObRMYnx4KOzTM/QVP1n0RhM/Us+NTPKn9Iq/GyZNHRixMe1n
+         Dk3Kw+eF5b0vuCdlCgU4+jTAXF6pYFunNTe9Y7X3CLJ/MXyfO6vsCE6Wdj6eRsMxYbUr
+         RPSIZv0VctTaARl7uFIi5ULMo0uKZ15YM0by56FC23aVmGykCNba7A7k5TaYz7bydQe1
+         z20Q==
+X-Gm-Message-State: AOAM532iOozkNaLr2YDdmtP9wt3jFl+vDRLvjKoSw8wteBmkVa0A4UqJ
+        P7fiifcNEAsR21mGYTOM0KE4Lw==
+X-Google-Smtp-Source: ABdhPJxtzQcCHEhLjniV51EOj16IsDhDJgdLjg8JxuGS0HDjPnelZO6FqkSKvw60weMLoHwb6tlJqQ==
+X-Received: by 2002:a17:906:12d3:b0:6f5:18a2:176d with SMTP id l19-20020a17090612d300b006f518a2176dmr3728521ejb.474.1654170502863;
+        Thu, 02 Jun 2022 04:48:22 -0700 (PDT)
+Received: from [192.168.0.181] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id c18-20020a056402101200b0042dc6e250e3sm2329738edu.81.2022.06.02.04.48.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 02 Jun 2022 04:48:22 -0700 (PDT)
+Message-ID: <cb8c7e28-dfef-78e2-c97c-11b9dee02fed@linaro.org>
+Date:   Thu, 2 Jun 2022 13:48:21 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: Re: [PATCH 1/3] dt-bindings: interconnect: Update email address
+Content-Language: en-US
+To:     Sibi Sankar <quic_sibis@quicinc.com>, bjorn.andersson@linaro.org
+Cc:     agross@kernel.org, djakov@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, p.zabel@pengutronix.de,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, devicetree@vger.kernel.org
+References: <1654130923-18722-1-git-send-email-quic_sibis@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <1654130923-18722-1-git-send-email-quic_sibis@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Update "audio_cc_ext_mclk0" name to "core_cc_ext_mclk0",
-as MI2S mclk is being used is from lpass core cc.
+On 02/06/2022 02:48, Sibi Sankar wrote:
+> Update email address to the quicinc.com domain.
+> 
+> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+> ---
+>  Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml | 2 +-
 
-Fixes: b62c4e5fba2f ("ASoC: qcom: lpass-sc7280: Add platform driver for lpass audio")
-Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
----
- sound/soc/qcom/lpass-sc7280.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Thanks for updating the email addresses. All three patches should be
+rather squashed to one (and taken by Rob for example), it's quite a
+churn. Anyway:
 
-diff --git a/sound/soc/qcom/lpass-sc7280.c b/sound/soc/qcom/lpass-sc7280.c
-index 70c4df8..e65bf7e 100644
---- a/sound/soc/qcom/lpass-sc7280.c
-+++ b/sound/soc/qcom/lpass-sc7280.c
-@@ -403,7 +403,7 @@ static struct lpass_variant sc7280_data = {
- 	.dai_driver			= sc7280_lpass_cpu_dai_driver,
- 	.num_dai			= ARRAY_SIZE(sc7280_lpass_cpu_dai_driver),
- 	.dai_osr_clk_names		= (const char *[]) {
--							"audio_cc_ext_mclk0",
-+							"core_cc_ext_mclk0",
- 							"null"
- 							},
- 	.dai_bit_clk_names		= (const char *[]) {
--- 
-2.7.4
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
+
+Best regards,
+Krzysztof
