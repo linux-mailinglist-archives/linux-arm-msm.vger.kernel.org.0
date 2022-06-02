@@ -2,125 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A41F553BA2A
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jun 2022 15:55:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 08FAF53BA8A
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jun 2022 16:17:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235453AbiFBNzZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Jun 2022 09:55:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46630 "EHLO
+        id S234140AbiFBORi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Jun 2022 10:17:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45396 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231286AbiFBNzY (ORCPT
+        with ESMTP id S232088AbiFBORh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Jun 2022 09:55:24 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0742E29C;
-        Thu,  2 Jun 2022 06:55:24 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id BE16DB81ED6;
-        Thu,  2 Jun 2022 13:55:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7931BC385A5;
-        Thu,  2 Jun 2022 13:55:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1654178121;
-        bh=/RDmOcN35BWi7GR4EvLaIKmq0NmJ0DnyM3Q1jTsh+IE=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=d4v/S/mA/vOcvEjSZgk4NLp6cb9Gs9xzJu+6eyKbmoLKGhAAbUIM//EzosgFGx7pr
-         pwbt1RjLh1eu+o0EbMgWrXgYQQ6oILLEvQyGFZlBCZg3uOSzbFvwkYNno6p1rwC0Mm
-         5HP2XKMAF8czYzmkNWCVoLZa1fQAkMAI5jvetUFDrEvv+M3BDruCx2J87qFVf5Xu4n
-         oG/7Wox8Zp/eSkU1ZSJFHE3391ecggiNUvd+dYC2wadhETAK88gM7kk/HCVdPW7/Xh
-         uwmTBpc3eD2K5DXbBJgEWeOkQpFpePzZ3rodRnpFzUymbCXADzCdIcj2D48YPeeVbQ
-         G3KNSlaT/HJFA==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1nwlIE-0005kq-9l; Thu, 02 Jun 2022 15:55:18 +0200
-Date:   Thu, 2 Jun 2022 15:55:18 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
+        Thu, 2 Jun 2022 10:17:37 -0400
+Received: from mail-ot1-f44.google.com (mail-ot1-f44.google.com [209.85.210.44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFF051FCE3;
+        Thu,  2 Jun 2022 07:17:35 -0700 (PDT)
+Received: by mail-ot1-f44.google.com with SMTP id e11-20020a9d6e0b000000b0060afcbafa80so3493389otr.3;
+        Thu, 02 Jun 2022 07:17:35 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=TCCwJv6EhxWlaEc1Brd2505WQxC3GVxol8XUS0Q3iIQ=;
+        b=wWBsC8NfMMU90Yfiz8XoiaUJdjZMiwT8uBBGAL4WTaEKCbR925MzdKexvE+IxJWq+c
+         TDVsmpWbF4PmvNrWmH3Qf6eRugQG57ii6Dpi//ZcBERJLgzYS71eHQwh6OFq8QasNM7y
+         oJvlhtYJvl4O4XqXWnul46D4c+6iXc9257GbrAEAnj0Q2u4urzPfqBiN47HmGMGICseX
+         pblx51aBVEgd/zESfqjJvH/4QS+WH48OQb+/n8tYCb4juWDbgE8y8T3MdHb87INmMQFK
+         Eu4Ivy2Q+cZPthPMZcXnZNgHSn6w/cfV5Uo/83m/Y1A8sW+9QnvWtwjWoeAPpsaJt3Ws
+         vyWA==
+X-Gm-Message-State: AOAM531xWE8xeAOK/li3YAvuepbtGBfhLYgnXyHa4eflOV958FU7WyOh
+        qoElMkS8a81aDVb0EGxQwy7XebfbzA==
+X-Google-Smtp-Source: ABdhPJxYVbALGE594K0AOIrngTP0BTDjw28b1fwlQJNHJriJPoZ+rLecoT8+hiuf2AyA7nCY83K4nA==
+X-Received: by 2002:a9d:5f16:0:b0:60b:4fbb:ac5a with SMTP id f22-20020a9d5f16000000b0060b4fbbac5amr2120193oti.189.1654179454963;
+        Thu, 02 Jun 2022 07:17:34 -0700 (PDT)
+Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id gu23-20020a056870ab1700b000f5d765bc02sm2098115oab.8.2022.06.02.07.17.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 02 Jun 2022 07:17:34 -0700 (PDT)
+Received: (nullmailer pid 2234679 invoked by uid 1000);
+        Thu, 02 Jun 2022 14:17:33 -0000
+Date:   Thu, 2 Jun 2022 09:17:33 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Konrad Dybcio <konrad.dybcio@somainline.org>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org,
+        linux-arm-kernel@lists.infradead.org,
+        iommu@lists.linux-foundation.org, martin.botka@somainline.org,
+        angelogioacchino.delregno@somainline.org,
+        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
+        Andy Gross <agross@kernel.org>, Joerg Roedel <joro@8bytes.org>,
+        Will Deacon <will@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH v12 4/8] PCI: dwc: split MSI IRQ parsing/allocation to a
- separate function
-Message-ID: <YpjBRjSafpvNcpe0@hovoldconsulting.com>
-References: <20220523181836.2019180-1-dmitry.baryshkov@linaro.org>
- <20220523181836.2019180-5-dmitry.baryshkov@linaro.org>
+        Rob Clark <robdclark@gmail.com>,
+        Robin Murphy <robin.murphy@arm.com>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 4/6] iommu/qcom: Add support for AArch64 IOMMU pagetables
+Message-ID: <20220602141733.GA2227595-robh@kernel.org>
+References: <20220527212901.29268-1-konrad.dybcio@somainline.org>
+ <20220527212901.29268-5-konrad.dybcio@somainline.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220523181836.2019180-5-dmitry.baryshkov@linaro.org>
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+In-Reply-To: <20220527212901.29268-5-konrad.dybcio@somainline.org>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, May 23, 2022 at 09:18:32PM +0300, Dmitry Baryshkov wrote:
-> Split handling of MSI host IRQs to a separate dw_pcie_msi_host_init()
-> function. The code is complex enough to warrant a separate function.
+On Fri, May 27, 2022 at 11:28:59PM +0200, Konrad Dybcio wrote:
+> From: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Some IOMMUs associated with some TZ firmwares may support switching
+> to the AArch64 pagetable format by sending a "set pagetable format"
+> scm command indicating the IOMMU secure ID and the context number
+> to switch.
+> 
+> Add a DT property "qcom,use-aarch64-pagetables" for this driver to
+> send this command to the secure world and to switch the pagetable
+> format to benefit of the ARM64 IOMMU pagetables, where possible.
+> 
+> Note that, even though the command should be valid to switch each
+> context, the property is made global because:
+> 1. It doesn't make too much sense to switch only one or two
+>    context(s) to AA64 instead of just the entire thing
+> 2. Some IOMMUs will go crazy and produce spectacular results when
+>    trying to mix up the pagetables on a per-context basis.
+> 
+> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 > ---
->  .../pci/controller/dwc/pcie-designware-host.c | 98 +++++++++++--------
->  1 file changed, 56 insertions(+), 42 deletions(-)
-> 
-> diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
-> index 8dd913f69de7..a076abe6611c 100644
-> --- a/drivers/pci/controller/dwc/pcie-designware-host.c
-> +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
-> @@ -288,6 +288,60 @@ static void dw_pcie_msi_init(struct pcie_port *pp)
->  	dw_pcie_writel_dbi(pci, PCIE_MSI_ADDR_HI, upper_32_bits(msi_target));
->  }
->  
-> +static int dw_pcie_msi_host_init(struct pcie_port *pp)
-> +{
-> +	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
-> +	struct device *dev = pci->dev;
-> +	struct platform_device *pdev = to_platform_device(dev);
-> +	int ret;
-> +	u32 ctrl, num_ctrls;
-> +
-> +	num_ctrls = pp->num_vectors / MAX_MSI_IRQS_PER_CTRL;
-> +	for (ctrl = 0; ctrl < num_ctrls; ctrl++)
-> +		pp->irq_mask[ctrl] = ~0;
-> +
-> +	if (!pp->msi_irq[0]) {
-> +		int irq = platform_get_irq_byname_optional(pdev, "msi");
-> +
-> +		if (irq < 0) {
-> +			irq = platform_get_irq(pdev, 0);
-> +			if (irq < 0)
-> +				return irq;
-> +		}
-> +		pp->msi_irq[0] = irq;
-> +	}
-> +
-> +	pp->msi_irq_chip = &dw_pci_msi_bottom_irq_chip;
-> +
-> +	ret = dw_pcie_allocate_domains(pp);
-> +	if (ret)
-> +		return ret;
-> +
-> +	for (ctrl = 0; ctrl < num_ctrls; ctrl++)
-> +		if (pp->msi_irq[ctrl] > 0)
-> +			irq_set_chained_handler_and_data(pp->msi_irq[ctrl],
-> +							 dw_chained_msi_isr,
-> +							 pp);
+>  .../devicetree/bindings/iommu/qcom,iommu.txt  |  2 +
 
-Reminder: brackets.
+Bindings should be separate patch.
 
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+As you are making multiple changes, please convert this to DT schema 
+first.
+
+>  drivers/iommu/arm/arm-smmu/qcom_iommu.c       | 54 +++++++++++++++----
+>  2 files changed, 47 insertions(+), 9 deletions(-)
