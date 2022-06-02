@@ -2,65 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1FF9F53B984
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jun 2022 15:15:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 03E6853B9AB
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jun 2022 15:30:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235269AbiFBNPk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Jun 2022 09:15:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52684 "EHLO
+        id S235319AbiFBNan (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Jun 2022 09:30:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56320 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234557AbiFBNPi (ORCPT
+        with ESMTP id S233869AbiFBNan (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Jun 2022 09:15:38 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DDE71F507E
-        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Jun 2022 06:15:36 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id be31so7751173lfb.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Jun 2022 06:15:36 -0700 (PDT)
+        Thu, 2 Jun 2022 09:30:43 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0DA733A180
+        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Jun 2022 06:30:42 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id a17so876818lfs.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Jun 2022 06:30:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=LolDsnGW3SOAD2FkVFrJJhEfXZjmRip7OxOTM4BASTg=;
-        b=HluOWAOZ2Qe9d1dOy5co+ZzsLWO+WnAfLDWH1EP1dRlKH20Pmt52sQIQ7Xu4uP7EPQ
-         VH5hdHOD7uu20Mv3Tlm00UNafeXaBT7Lf7KmLDU7kDAYd8gl3T8hBLcP+13KkktmmWKH
-         5Wr3Fv/2W0EoT6kYItIVVjlx8U4pf6RNhTlu72Qtim5WX6XgarhRiTZh0H6nEPFTGGjq
-         T2k5JJxDXUJhADReTRJ03NR7ejgqaZcpxRsuegBq98mFzbIKIiCQsyKeDZrUT+1C2kVk
-         ZMDitfStsOyiHtbCI0eUVQY1iW+Epwcl7gUfdp9iO39+k3QyVmMLU51OAPXdxq1FYQ7x
-         d+PQ==
+        bh=u3whyehpi0aZCL0iJ2vFWoTKNdbN9RZd/7JoMAO4pSc=;
+        b=w0WrhdGE6Xjz/JLc7g9BFS2Yxgn4ta8BjzEhys1Q09fliDtkgxhIZTu5Z3A3fTueO9
+         8fqIdvpV6L80t6WIeGUQPWmfqPbL3DhbTELR2bL6DCzkFivhotsgkrJggun0OoJplkzm
+         XqyJ7q7IKAod117wVmUZlG7OOnqnwwpeC9VVykFpPgDt4qDC+62A+USnA3V/9iB+fSDI
+         Aa4ctRn0nA332JPPVy/0oil3RrjgSOgm+i+Oc+8niuXlELV54c1UC8+EZTpZKCLopcXL
+         qIk7li5O+SqwjAdBGwsaXcbnL6CrmhbiYKroh/RPhVyhx1fK5ftyiU5E24Dcm1WUeNhU
+         pYUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=LolDsnGW3SOAD2FkVFrJJhEfXZjmRip7OxOTM4BASTg=;
-        b=1A2T3BlvbDLZFcXc5UNItUez2q/HFD5R3odlTL5HI5s/fxCcioabypBbUanL8FIDrn
-         BHVX/k3+unSsGmKe0WjByv1IlSwQaMGwZmJDvMVEfjUjncxWiqc1GVum34XnpoUG6cwf
-         8onc61wBj1aQx7LNGE/S5lw9vSbAjOjTIdY+Mz5iwQQBYpJDt3BYPtAUfT6mpUjZfkEJ
-         sFG1kRI0HZbVvoi21ZR3W4TFoKPjTbxaSS+L8bJKPHs/bRDcdHDLnCLekQ57nNqpvNBQ
-         To+4ttAvgB+fSKDn1CcDurWJsb0PaPNqDYkxJfCRPydn1xAFILoVBE1tb3/T2nKqvNbc
-         tlwA==
-X-Gm-Message-State: AOAM530rswuwvcO0WHaKwlcDxJr5KE3Q4J/0m2HvWUVHb/D0tNIzcpkk
-        IKEy7y0Iizd/u9Gj+5YKq32YYg==
-X-Google-Smtp-Source: ABdhPJwUl3solzkyamaoY2KgiqJvNb6IBgAizzaqXx7uraVT9ueURv8yJ2c/xWTl1+MPRWPe+LgZ0A==
-X-Received: by 2002:a05:6512:2593:b0:478:6327:3672 with SMTP id bf19-20020a056512259300b0047863273672mr40706999lfb.497.1654175735188;
-        Thu, 02 Jun 2022 06:15:35 -0700 (PDT)
-Received: from localhost.localdomain (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
-        by smtp.gmail.com with ESMTPSA id m1-20020a056512014100b0047255d211bbsm1019603lfo.234.2022.06.02.06.15.34
+        bh=u3whyehpi0aZCL0iJ2vFWoTKNdbN9RZd/7JoMAO4pSc=;
+        b=hzTaQMmPp5ScU2YmUEqFOIOTWxMOrfZh1dvkdUUE8t6OuJw59QCxIpp3QkhULd8S6z
+         JP7YWVOgHujMyWTh0nFqDr74yKjOZMRVQdC4brUaOmpG2tUuaGTDvn7OvHErwZIh4Smt
+         dwRVllrwikgPbHWcEQH2KhERrh1yBsQUaZzuoOq7flgjvL3lybtolVF0QKLp/zG8xGhm
+         KCK+Vnm0XCE6zfcp8jO2JfXxhrFTnXqTpZgJr/Wm5uI0CObj9yuoyyKSfFXt/RsilkF7
+         y6BuA8X9bQeaGuPxU/HvV+npFhoE83g71CCudyBPgxguPe7hyc59FNs0Yo8ZxI9dQ+1p
+         tAGA==
+X-Gm-Message-State: AOAM531gos2SIQzRye+BLuf3zy3Yb29eiPNRxabZDfu5JIQC9tefYIMC
+        CUL5JLsM47Dm+MqJ+TzQuil2lxzDgyJ/fIoT
+X-Google-Smtp-Source: ABdhPJwFnfXhKy3OI3IhgNTaU8saaxeVINMCI7Yz4/mhqO9i/NQxz2ls+H55yXTyM6K+JhIF1o80KQ==
+X-Received: by 2002:a05:6512:31d3:b0:478:6a68:e24 with SMTP id j19-20020a05651231d300b004786a680e24mr3764732lfe.364.1654176640376;
+        Thu, 02 Jun 2022 06:30:40 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id i20-20020a056512341400b0047255d211a2sm1025399lfr.209.2022.06.02.06.30.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Jun 2022 06:15:34 -0700 (PDT)
-From:   Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-To:     Loic Poulain <loic.poulain@linaro.org>,
-        Robert Foss <robert.foss@linaro.org>
-Cc:     linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: [PATCH] i2c: qcom-cci: simplify access to bus data structure
-Date:   Thu,  2 Jun 2022 16:15:28 +0300
-Message-Id: <20220602131528.2246339-1-vladimir.zapolskiy@linaro.org>
-X-Mailer: git-send-email 2.33.0
+        Thu, 02 Jun 2022 06:30:39 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: [PATCH v2 0/7] drm/msm: clean up the hw catalog init
+Date:   Thu,  2 Jun 2022 16:30:32 +0300
+Message-Id: <20220602133039.1739490-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -68,68 +73,52 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Trivial non-functional change, which adds an alias to an extensively
-used data location.
+Replace superfluous cfg_init functions, which just assign a static
+config to the struct dpu_mdss_cfg, with static instances of struct
+dpu_mdss_cfg.
 
-Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
----
- drivers/i2c/busses/i2c-qcom-cci.c | 28 +++++++++++++++-------------
- 1 file changed, 15 insertions(+), 13 deletions(-)
+Changes since v1:
+ - Turn catalog->perf and catalog->dma_cfg to be pointers, otherwise
+   clang complains that they are not constant.
 
-diff --git a/drivers/i2c/busses/i2c-qcom-cci.c b/drivers/i2c/busses/i2c-qcom-cci.c
-index 8d078bdb5c1b..c4a4a4b54131 100644
---- a/drivers/i2c/busses/i2c-qcom-cci.c
-+++ b/drivers/i2c/busses/i2c-qcom-cci.c
-@@ -541,6 +541,7 @@ static int cci_probe(struct platform_device *pdev)
- 		return -ENOENT;
- 
- 	for_each_available_child_of_node(dev->of_node, child) {
-+		struct cci_master *master;
- 		u32 idx;
- 
- 		ret = of_property_read_u32(child, "reg", &idx);
-@@ -555,27 +556,28 @@ static int cci_probe(struct platform_device *pdev)
- 			continue;
- 		}
- 
--		cci->master[idx].adap.quirks = &cci->data->quirks;
--		cci->master[idx].adap.algo = &cci_algo;
--		cci->master[idx].adap.dev.parent = dev;
--		cci->master[idx].adap.dev.of_node = of_node_get(child);
--		cci->master[idx].master = idx;
--		cci->master[idx].cci = cci;
-+		master = &cci->master[idx];
-+		master->adap.quirks = &cci->data->quirks;
-+		master->adap.algo = &cci_algo;
-+		master->adap.dev.parent = dev;
-+		master->adap.dev.of_node = of_node_get(child);
-+		master->master = idx;
-+		master->cci = cci;
- 
--		i2c_set_adapdata(&cci->master[idx].adap, &cci->master[idx]);
--		snprintf(cci->master[idx].adap.name,
--			 sizeof(cci->master[idx].adap.name), "Qualcomm-CCI");
-+		i2c_set_adapdata(&master->adap, master);
-+		snprintf(master->adap.name, sizeof(master->adap.name),
-+			 "Qualcomm-CCI");
- 
--		cci->master[idx].mode = I2C_MODE_STANDARD;
-+		master->mode = I2C_MODE_STANDARD;
- 		ret = of_property_read_u32(child, "clock-frequency", &val);
- 		if (!ret) {
- 			if (val == I2C_MAX_FAST_MODE_FREQ)
--				cci->master[idx].mode = I2C_MODE_FAST;
-+				master->mode = I2C_MODE_FAST;
- 			else if (val == I2C_MAX_FAST_MODE_PLUS_FREQ)
--				cci->master[idx].mode = I2C_MODE_FAST_PLUS;
-+				master->mode = I2C_MODE_FAST_PLUS;
- 		}
- 
--		init_completion(&cci->master[idx].irq_complete);
-+		init_completion(&master->irq_complete);
- 	}
- 
- 	/* Memory */
+Dmitry Baryshkov (7):
+  drm/msm/dpu: use feature bit for LM combined alpha check
+  drm/msm/dpu: move VBIF_XINL_QOS_LVL_REMAP size to hw_catalog
+  drm/msm/dpu: remove hwversion field from data structures
+  drm/msm/dpu: change catalog->perf to be a const pointer
+  drm/msm/dpu: change catalog->dma_cfg to be a const pointer
+  drm/msm/dpu: constify struct dpu_mdss_cfg
+  drm/msm/dpu: make dpu hardware catalog static const
+
+ drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c |  24 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h |   4 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c   |   4 +-
+ .../drm/msm/disp/dpu1/dpu_encoder_phys_wb.c   |  12 +-
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    | 500 ++++++++----------
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |  20 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c    |   1 -
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c    |   5 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.h    |   2 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c   |   1 -
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c |   5 +-
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h |   2 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c   |   1 -
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c     |   7 +-
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_merge3d.c    |   1 -
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c   |   1 -
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c   |   5 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h   |   4 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c    |   1 -
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h   |   2 -
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_vbif.c   |   5 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c     |   1 -
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       |   6 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h       |   2 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c     |  20 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c        |   2 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h        |   2 +-
+ 27 files changed, 282 insertions(+), 358 deletions(-)
+
 -- 
-2.33.0
+2.35.1
 
