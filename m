@@ -2,153 +2,187 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C24D653B50E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jun 2022 10:26:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CD00D53B521
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jun 2022 10:29:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232338AbiFBIZj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Jun 2022 04:25:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45306 "EHLO
+        id S232348AbiFBI3w (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Jun 2022 04:29:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33476 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232276AbiFBIZg (ORCPT
+        with ESMTP id S231469AbiFBI3u (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Jun 2022 04:25:36 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BB3E60DA9;
-        Thu,  2 Jun 2022 01:25:35 -0700 (PDT)
+        Thu, 2 Jun 2022 04:29:50 -0400
+Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB840BE8
+        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Jun 2022 01:29:46 -0700 (PDT)
+Received: by mail-pj1-x1033.google.com with SMTP id o6-20020a17090a0a0600b001e2c6566046so8739494pjo.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Jun 2022 01:29:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1654158335; x=1685694335;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version;
-  bh=/JpGcxJx1zccICeK2aLcmZmzUGXEqDBGEkwlWrR3/EU=;
-  b=nd3v/EimNkZiathvuzhNK4ynpvEEkNOxmqE4cegZbG17ryryZ/qJV3fy
-   Sv+xZwwUoxcNDu0yKZanfcEVIBWjFcGcaZN9/e+eZIri0rLm3Y3sZsYrm
-   DkeqnyJ2j7sC7jz0Uv04HPYtdgKJoICgkDs6IOOqZcvUcvqu8mcehbGwg
-   g=;
-Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 02 Jun 2022 01:25:35 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Jun 2022 01:25:34 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Thu, 2 Jun 2022 01:25:34 -0700
-Received: from hu-kriskura-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Thu, 2 Jun 2022 01:25:28 -0700
-From:   Krishna Kurapati <quic_kriskura@quicinc.com>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        "Matthias Kaehlcke" <mka@chromium.org>,
-        Mathias Nyman <mathias.nyman@intel.com>
-CC:     <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>, <quic_pkondeti@quicinc.com>,
-        <quic_ppratap@quicinc.com>, <quic_vpulyala@quicinc.com>,
-        Sandeep Maheswaram <quic_c_sanm@quicinc.com>,
-        Krishna Kurapati <quic_kriskura@quicinc.com>
-Subject: [PATCH v20 5/5] usb: dwc3: qcom: Keep power domain on to retain controller status
-Date:   Thu, 2 Jun 2022 13:54:37 +0530
-Message-ID: <1654158277-12921-6-git-send-email-quic_kriskura@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1654158277-12921-1-git-send-email-quic_kriskura@quicinc.com>
-References: <1654158277-12921-1-git-send-email-quic_kriskura@quicinc.com>
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=qLE93fLBk76sb5feEZB3lwg0tckq9OyeKY/n0bkrWVI=;
+        b=RSkYj3WOKXwloda5tvOmqVsHsBOy9LS2cWoCJcwRQ2nd7TdqQ9ETsKz1SJG7p1Yru5
+         DtaOiVJALg+o8f3pNWpaR8ACvsAxa/ZZR7W8TjAcCJBoW7F2cKTIOG54iVZ9JKcyD7nv
+         9tblptL5satSidG+rDqAf1tAX4MI1F2r/Y1TsteEA09tUSnlsRVDwP/rQUx8RIceuPh6
+         CeB6WOj0QhOwvslDnLb3t0DophjrnY1vP6yA4ViEMTiogfVR3a8bIAqLF+r/c1miwTFt
+         uBDyKYE+eAHH1EOoCYVkVmlBnqJ2b6cwHgkzUhw4R3HHQAJ14wrUK2kMEhtSOCtS5QFd
+         cD8A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=qLE93fLBk76sb5feEZB3lwg0tckq9OyeKY/n0bkrWVI=;
+        b=8MoNT+c606Dim/t+lfSLxXQVgCwNKkzZKzEOKbmQvevtgIr1xyDSvJOmt2IAroVDRd
+         UIlGB1tcm0n4nBMb6pPmG/Jwp+rJg5+7tNeqAPn7SHBgdR7nPsWAizcxPxGLB1YU62Nn
+         pMGA/JfpEaLuuaSBPksYgxW3BRsVKtYkKRbFLF7+NHEKkkkpjFAtZI5X99/D3XU59PgI
+         pJ5FncjH2xamdykDrHl1SsauN7BYJuCP6jYf+mVx1CDOebA4WpG+dEnelKfNQ5T48e6V
+         BIpSwnGQ7s4T0kOEP6Q5iCu700MPeWquaslofmULLgJZliakOl8F+E8SomZP8tinECUm
+         w73w==
+X-Gm-Message-State: AOAM5306qW62fSN6bejFgQh0MWXXoTbvm06AH7dly+BoXZlBXr+peirL
+        kem8NADvtI/49eUieiFdSY/y
+X-Google-Smtp-Source: ABdhPJxinrA0W1VA+IL/O0ywNYDKGyJEBSUzZD2g4x110fuITrP1RNqA5h3zIXv0Od4GRXrdCjw4bw==
+X-Received: by 2002:a17:902:d2c2:b0:164:1047:5438 with SMTP id n2-20020a170902d2c200b0016410475438mr3755076plc.18.1654158586216;
+        Thu, 02 Jun 2022 01:29:46 -0700 (PDT)
+Received: from thinkpad ([220.158.159.212])
+        by smtp.gmail.com with ESMTPSA id a20-20020a621a14000000b0050dc762816asm2868478pfa.68.2022.06.02.01.29.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 02 Jun 2022 01:29:45 -0700 (PDT)
+Date:   Thu, 2 Jun 2022 13:59:38 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
+Cc:     helgaas@kernel.org, linux-pci@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_vbadigan@quicinc.com, quic_ramkri@quicinc.com,
+        swboyd@chromium.org, Bjorn Helgaas <bhelgaas@google.com>,
+        "Saheed O. Bolarinwa" <refactormyself@gmail.com>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Rajat Jain <rajatja@google.com>, vidyas@nvidia.com,
+        kenny@panix.com
+Subject: Re: [PATCH v3] PCI/ASPM: Update LTR threshold based upon reported
+ max latencies
+Message-ID: <20220602082938.GA4936@thinkpad>
+References: <1646679549-12494-1-git-send-email-quic_pmaliset@quicinc.com>
+ <1654086232-17055-1-git-send-email-quic_krichai@quicinc.com>
+ <91b75542-8e4c-5b91-bbfd-38ffc456c12e@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <91b75542-8e4c-5b91-bbfd-38ffc456c12e@quicinc.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,T_SCC_BODY_TEXT_LINE,T_SPF_TEMPERROR autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
+On Wed, Jun 01, 2022 at 05:57:53PM +0530, Krishna Chaitanya Chundru wrote:
+> [+cc kenny, vidya]
+> 
+> On 6/1/2022 5:53 PM, Krishna chaitanya chundru wrote:
+> > In ASPM driver, LTR threshold scale and value is updating based on
 
-If dwc3 is wakeup capable, keep the power domain always ON so that
-wakeup from system suspend can be supported. Otherwise, keep the
-power domain ON only during runtime suspend to support wakeup from
-runtime suspend.
+s/is/are
 
-Signed-off-by: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
-Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
----
- drivers/usb/dwc3/dwc3-qcom.c | 28 +++++++++++++++++++++-------
- 1 file changed, 21 insertions(+), 7 deletions(-)
+s/updating/updated
 
-diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-index 9395d79..7b6eff5 100644
---- a/drivers/usb/dwc3/dwc3-qcom.c
-+++ b/drivers/usb/dwc3/dwc3-qcom.c
-@@ -17,6 +17,7 @@
- #include <linux/of_platform.h>
- #include <linux/platform_device.h>
- #include <linux/phy/phy.h>
-+#include <linux/pm_domain.h>
- #include <linux/usb/of.h>
- #include <linux/reset.h>
- #include <linux/iopoll.h>
-@@ -756,12 +757,13 @@ dwc3_qcom_create_urs_usb_platdev(struct device *dev)
- 
- static int dwc3_qcom_probe(struct platform_device *pdev)
- {
--	struct device_node	*np = pdev->dev.of_node;
--	struct device		*dev = &pdev->dev;
--	struct dwc3_qcom	*qcom;
--	struct resource		*res, *parent_res = NULL;
--	int			ret, i;
--	bool			ignore_pipe_clk;
-+	struct device_node *np = pdev->dev.of_node;
-+	struct device *dev = &pdev->dev;
-+	struct dwc3_qcom *qcom;
-+	struct resource	*res, *parent_res = NULL;
-+	int ret, i;
-+	bool ignore_pipe_clk;
-+	struct generic_pm_domain *genpd;
- 
- 	qcom = devm_kzalloc(&pdev->dev, sizeof(*qcom), GFP_KERNEL);
- 	if (!qcom)
-@@ -770,6 +772,8 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
- 	platform_set_drvdata(pdev, qcom);
- 	qcom->dev = &pdev->dev;
- 
-+	genpd = pd_to_genpd(qcom->dev->pm_domain);
-+
- 	if (has_acpi_companion(dev)) {
- 		qcom->acpi_pdata = acpi_device_get_match_data(dev);
- 		if (!qcom->acpi_pdata) {
-@@ -877,7 +881,17 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
- 	if (ret)
- 		goto interconnect_exit;
- 
--	device_init_wakeup(&pdev->dev, 1);
-+	if (device_can_wakeup(&qcom->dwc3->dev)) {
-+		/*
-+		 * Setting GENPD_FLAG_ALWAYS_ON flag takes care of keeping
-+		 * genpd on in both runtime suspend and system suspend cases.
-+		 */
-+		genpd->flags |= GENPD_FLAG_ALWAYS_ON;
-+		device_init_wakeup(&pdev->dev, true);
-+	} else {
-+		genpd->flags |= GENPD_FLAG_RPM_ALWAYS_ON;
-+	}
-+
- 	qcom->is_suspended = false;
- 	pm_runtime_set_active(dev);
- 	pm_runtime_enable(dev);
+> > tcommon_mode and t_poweron values. In kioxia NVMe L1.2 is failing due to
+> > LTR threshold scale and value is greater values than max snoop/non-snoop
+
+s/is/are
+
+> > value.
+> > 
+> > Based on PCIe r4.1, sec 5.5.1, L1.2 substate must be entered when
+> > reported snoop/no-snoop values is greather than or equal to
+> > LTR_L1.2_THRESHOLD value.
+> > 
+> > Suggested-by: Prasad Malisetty  <quic_pmaliset@quicinc.com>
+> > Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+
+If you are inheriting the patch from Prasad, then you should still give the
+authorship to him (unless the patch has changed significantly). You can add
+your S-o-b tag to convey that you are carrying the patch from him.
+
+> > ---
+> > 
+> > I am takking this patch forward as prasad is no more working with our org.
+> > 
+> > Changes since v2:
+> > 	- Replaced LTRME logic with max snoop/no-snoop latencies check.
+> > Changes since v1:
+> > 	- Added missing variable declaration in v1 patch
+> > ---
+> >   drivers/pci/pcie/aspm.c | 22 +++++++++++++++++++++-
+> >   1 file changed, 21 insertions(+), 1 deletion(-)
+> > 
+> > diff --git a/drivers/pci/pcie/aspm.c b/drivers/pci/pcie/aspm.c
+> > index a96b742..4a15e50 100644
+> > --- a/drivers/pci/pcie/aspm.c
+> > +++ b/drivers/pci/pcie/aspm.c
+> > @@ -465,10 +465,19 @@ static void aspm_calc_l1ss_info(struct pcie_link_state *link,
+> >   	u32 ctl1 = 0, ctl2 = 0;
+> >   	u32 pctl1, pctl2, cctl1, cctl2;
+> >   	u32 pl1_2_enables, cl1_2_enables;
+> > +	int ltr;
+
+This could be u16 too.
+
+> > +	u16 max_snoop_lat = 0, max_nosnoop_lat = 0;
+
+No need to initialize these variables.
+
+> >   	if (!(link->aspm_support & ASPM_STATE_L1_2_MASK))
+> >   		return;
+> > +	ltr = pci_find_ext_capability(child, PCI_EXT_CAP_ID_LTR);
+> > +	if (!ltr)
+> > +		return;
+
+Is this capability implemented always?
+
+> > +
+> > +	pci_read_config_word(child, ltr + PCI_LTR_MAX_SNOOP_LAT, &max_snoop_lat);
+> > +	pci_read_config_word(child, ltr + PCI_LTR_MAX_NOSNOOP_LAT, &max_nosnoop_lat);
+> > +
+> >   	/* Choose the greater of the two Port Common_Mode_Restore_Times */
+> >   	val1 = (parent_l1ss_cap & PCI_L1SS_CAP_CM_RESTORE_TIME) >> 8;
+> >   	val2 = (child_l1ss_cap & PCI_L1SS_CAP_CM_RESTORE_TIME) >> 8;
+> > @@ -501,7 +510,18 @@ static void aspm_calc_l1ss_info(struct pcie_link_state *link,
+> >   	 */
+> >   	l1_2_threshold = 2 + 4 + t_common_mode + t_power_on;
+> >   	encode_l12_threshold(l1_2_threshold, &scale, &value);
+> > -	ctl1 |= t_common_mode << 8 | scale << 29 | value << 16;
+> > +
+> > +	/*
+> > +	 * If the max snoop and no snoop latencies are '0', then avoid updating scale
+> > +	 * and value.
+> > +	 *
+
+This looks fine but...
+
+> > +	 * Based on PCIe r4.1, sec 5.5.1, L1.2 substate must be entered when reported
+> > +	 * snoop/no-snoop values is greather than or equal to LTR_L1.2_THRESHOLD value.
+
+s/is/are
+
+What about this? What if the snoop/nosnoop latencies are not equal to zero and
+lower than LTR_L1.2_THRESHOLD?
+
+Thanks,
+Mani
+
+> > +	 */
+> > +	if ((max_snoop_lat == 0) && (max_nosnoop_lat == 0))
+> > +		ctl1 |= t_common_mode << 8;
+> > +	else
+> > +		ctl1 |= t_common_mode << 8 | scale << 29 | value << 16;
+> >   	/* Some broken devices only support dword access to L1 SS */
+> >   	pci_read_config_dword(parent, parent->l1ss + PCI_L1SS_CTL1, &pctl1);
+
 -- 
-2.7.4
-
+மணிவண்ணன் சதாசிவம்
