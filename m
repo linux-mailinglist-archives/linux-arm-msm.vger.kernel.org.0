@@ -2,64 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4152653BF76
+	by mail.lfdr.de (Postfix) with ESMTP id 8DA0153BF77
 	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jun 2022 22:16:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238262AbiFBUOk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Jun 2022 16:14:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44326 "EHLO
+        id S235346AbiFBUPx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Jun 2022 16:15:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58646 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239063AbiFBUOC (ORCPT
+        with ESMTP id S236670AbiFBUPt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Jun 2022 16:14:02 -0400
-Received: from mail-qv1-xf2b.google.com (mail-qv1-xf2b.google.com [IPv6:2607:f8b0:4864:20::f2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD3803F315
-        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Jun 2022 13:13:38 -0700 (PDT)
-Received: by mail-qv1-xf2b.google.com with SMTP id i19so4272915qvu.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Jun 2022 13:13:38 -0700 (PDT)
+        Thu, 2 Jun 2022 16:15:49 -0400
+Received: from mail-qt1-x830.google.com (mail-qt1-x830.google.com [IPv6:2607:f8b0:4864:20::830])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0AE0330
+        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Jun 2022 13:15:46 -0700 (PDT)
+Received: by mail-qt1-x830.google.com with SMTP id ew15so4212793qtb.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Jun 2022 13:15:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=p83Y3y+tvsDyWEgZasq7nG4b9PU/QPx+kqT2lwYJ1e8=;
-        b=iSYWGJGHUBdEa5QCXIeK5xyTCQH+48CQWo72pAMJthSMSZJEBHVix6wVzjf/Rvo235
-         NXAmyXNhW02KvW6kW89lUOU0Ll6PeYElyPKGJ4YJAAprbqoWEkCtcAdolP8DAXh/gkFo
-         0SQY+waNUYI7oOsKIbg3464q5UhRYqX1ER2MYp+jhQofHPM+iXQo5A0xu9cxFaZufWTt
-         XUOYqC6WNsayw2RSwlVc1IY4uhEtZ9aSOSMyCb+NeIXVU7wkp1YDmpQA82YVaWjJ5+vS
-         Uhwj9xyReLsca2Pl2lKisGQhagotAeQ87XNEPEJbm+HJw3pfUWR07HuP4O8AiKEGpfad
-         +8aA==
+        bh=11/VXJZ5+PDAg8KiVoWPiVtmrogeqL0Gtp9raI/dmQU=;
+        b=nXh2N0Rs852FwUUicJzJ7XNHCXWGI80DlhTnFd1XWsETQPrf/DPbrLStBIKQQxecnL
+         g3oYUHF3jaaUMk8RsQDbUBpWcg09qr+2KziKLZbxNke0gd1eIj9SjrpkCAkOLFituZnd
+         fE+acn9LO52kryL1qohpGRI63Kr2qhWTUVTzPUoCS4MF4PwcoorxUpOowvQDndaPN9rt
+         z7XXINFXrQu2SXSjcXaRrH4dD8Bw3LjxbcD9/4ITI5FR2fCXSiHQFpc4ufpzHej9+RJ9
+         JBOVM5YvovdqwrycStcqnsfh4Pqt1ADOn5UwI1mLbuSWXm8QlwBAX8w7MnA4+hZ6Pzp8
+         FWPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=p83Y3y+tvsDyWEgZasq7nG4b9PU/QPx+kqT2lwYJ1e8=;
-        b=0edVNxVKDjeZ3QY5sCs7XMloyfAcDULyh0sBDGBZHHBNUr8fEp8WeP4FNXdWZBHO0H
-         38ANWymEnOANqAOmO0gjJJXGJuNh4O+eBjoNl91yUrKZZAGiXgOX44arbnRLzylWwfJm
-         Ij0qAhBi07Cz6zvFLudV4pNuUkZTNL9Kt1N36TiA2cImCjxRhsJRqP80m5hXknK7/lC3
-         scZKG9bCfkCeCUyKcXAJdW7plHZcueZiRitO+GpaUdGnvp1fxI4GH4IE0TzfbtiT1R4z
-         qiOqEfews2tEn66ssPYLlP7mfN0nT1doxRrYh2VZpTWRjZ8pLcg9rPqThfYvX4DqZCJi
-         QqVw==
-X-Gm-Message-State: AOAM533aoT08w1LszHdSaMD25sM5dHliHmIwwyHPBTtOMfRFxbU5qiaY
-        F5l66rfOxYege5oNW+pZzYwTW/dKHBSnuCT61fiv64cTI6/Auw==
-X-Google-Smtp-Source: ABdhPJwfBX6o6J1edsdk/zUbS0B4K84TeWsW4HXJs9NBH71FqMBbwWXjNQPxr4U5VcvzdKKv0ROVn7D/kZra9jSv80k=
-X-Received: by 2002:a05:6214:20ef:b0:462:5fb6:40ed with SMTP id
- 15-20020a05621420ef00b004625fb640edmr4711849qvk.73.1654200817813; Thu, 02 Jun
- 2022 13:13:37 -0700 (PDT)
+        bh=11/VXJZ5+PDAg8KiVoWPiVtmrogeqL0Gtp9raI/dmQU=;
+        b=e3Igqkwd3WNin2iJHPdw/W/VjkT5uVmcqHjOMwbFe/wKkrPR2ixAenE5U0hdnFnjhk
+         TeCi+xjwqslfrjqhLBZqc4Cx3A79CrHFj5qPBuKm+IBZvNGE3Pf+14etkT/qqAu/aSpL
+         YZcF2BXWuPKkLDZfNxckCaxFeqyFTZg9TV77tGOdemUGozdzXtnU3gLqpeYzI251nkV5
+         Kys1pt/z3gOKCy63nkGdc2VyONXPCscTqyyqLL9BXv83QmwDNoDd1VZa6nJI1lMtZIis
+         ZDBKrvVlRoDMMk+bQR6ElrQosS0ceg8A/+qjUCLTsdtVr+PsjvCn8+012HGhfQEjsPNI
+         rCKQ==
+X-Gm-Message-State: AOAM532toNbfDfFL95P3jXYEmvyULEUHKF9tHUynS5LDGKG2e7nQa8tT
+        bjPEacA5Cx7VVo18ADpy82RMJULZnMB8hz4JIf5f0A==
+X-Google-Smtp-Source: ABdhPJwQC5oj1uGwjMqP/kuSzWwv05cDEC3cFG0gRivQN3Jgs6a2Ro5rNvB0MBm8nFlPUsljBXwb5LY8OBq9jsBP2Q0=
+X-Received: by 2002:a05:622a:4e:b0:301:8a1f:b89b with SMTP id
+ y14-20020a05622a004e00b003018a1fb89bmr5067697qtw.62.1654200946063; Thu, 02
+ Jun 2022 13:15:46 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220531121825.1126204-1-dmitry.baryshkov@linaro.org>
- <d7084452-ea90-3a8b-d39a-b09d9f45f839@quicinc.com> <CAA8EJprW7xnYJaeqh4vozSTx04DcQ20MMRrzLaEJPJTC3dV30w@mail.gmail.com>
- <80c1da0f-0006-6602-ec86-ebdf71c3037a@quicinc.com> <CAA8EJppfWfP-bZLOYF8QBe6kW6gBBw5eXpzzDA6GFo8U7g=jRQ@mail.gmail.com>
- <963f5ef5-4b1d-6b0d-5b6d-0d6136e9e8d3@quicinc.com>
-In-Reply-To: <963f5ef5-4b1d-6b0d-5b6d-0d6136e9e8d3@quicinc.com>
+References: <20220602133039.1739490-1-dmitry.baryshkov@linaro.org>
+ <20220602133039.1739490-2-dmitry.baryshkov@linaro.org> <4a041600-5ff2-9f95-52c9-ebd5f1f10a81@quicinc.com>
+In-Reply-To: <4a041600-5ff2-9f95-52c9-ebd5f1f10a81@quicinc.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Thu, 2 Jun 2022 23:13:26 +0300
-Message-ID: <CAA8EJppCiN65NV7w9TyR=P+XzGPVxZJoAZoX5+XjxKwXsL_FQg@mail.gmail.com>
-Subject: Re: [Freedreno] [PATCH] drm/msm: less magic numbers in msm_mdss_enable
+Date:   Thu, 2 Jun 2022 23:15:35 +0300
+Message-ID: <CAA8EJpp0McfrrHL0zrLTt0vn4J1RYYnHMVfdoH+FkXvLWWGm9A@mail.gmail.com>
+Subject: Re: [PATCH v2 1/7] drm/msm/dpu: use feature bit for LM combined alpha check
 To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -72,188 +72,128 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 2 Jun 2022 at 21:18, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+On Thu, 2 Jun 2022 at 21:37, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
 >
 >
 >
-> On 6/1/2022 1:04 PM, Dmitry Baryshkov wrote:
-> > On Wed, 1 Jun 2022 at 20:38, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
-> >>
-> >>
-> >>
-> >> On 6/1/2022 2:46 AM, Dmitry Baryshkov wrote:
-> >>> On Wed, 1 Jun 2022 at 01:01, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
-> >>>> On 5/31/2022 5:18 AM, Dmitry Baryshkov wrote:
-> >>>>> Replace magic register writes in msm_mdss_enable() with version that
-> >>>>> contains less magic and more variable names that can be traced back to
-> >>>>> the dpu_hw_catalog or the downstream dtsi files.
-> >>>>>
-> >>>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> >>>>> ---
-> >>>>>     drivers/gpu/drm/msm/msm_mdss.c | 79 ++++++++++++++++++++++++++++++----
-> >>>>>     1 file changed, 71 insertions(+), 8 deletions(-)
-> >>>>>
-> >>>>> diff --git a/drivers/gpu/drm/msm/msm_mdss.c b/drivers/gpu/drm/msm/msm_mdss.c
-> >>>>> index 0454a571adf7..2a48263cd1b5 100644
-> >>>>> --- a/drivers/gpu/drm/msm/msm_mdss.c
-> >>>>> +++ b/drivers/gpu/drm/msm/msm_mdss.c
-> >>>>> @@ -21,6 +21,7 @@
-> >>>>>     #define HW_REV                              0x0
-> >>>>>     #define HW_INTR_STATUS                      0x0010
-> >>>>>
-> >>>>> +#define UBWC_DEC_HW_VERSION          0x58
-> >>>>>     #define UBWC_STATIC                 0x144
-> >>>>>     #define UBWC_CTRL_2                 0x150
-> >>>>>     #define UBWC_PREDICTION_MODE                0x154
-> >>>>> @@ -132,9 +133,63 @@ static int _msm_mdss_irq_domain_add(struct msm_mdss *msm_mdss)
-> >>>>>         return 0;
-> >>>>>     }
-> >>>>>
-> >>>>> +#define UBWC_1_0 0x10000000
-> >>>>> +#define UBWC_2_0 0x20000000
-> >>>>> +#define UBWC_3_0 0x30000000
-> >>>>> +#define UBWC_4_0 0x40000000
-> >>>>> +
-> >>>>> +static void msm_mdss_setup_ubwc_dec_20(struct msm_mdss *msm_mdss,
-> >>>>> +                                    u32 ubwc_static)
-> >>>>> +{
-> >>>>> +     writel_relaxed(ubwc_static, msm_mdss->mmio + UBWC_STATIC);
-> >>>>> +}
-> >>>>> +
-> >>>>> +static void msm_mdss_setup_ubwc_dec_30(struct msm_mdss *msm_mdss,
-> >>>>> +                                    unsigned int ubwc_version,
-> >>>>> +                                    u32 ubwc_swizzle,
-> >>>>> +                                    u32 highest_bank_bit,
-> >>>>> +                                    u32 macrotile_mode)
-> >>>>> +{
-> >>>>> +     u32 value = (ubwc_swizzle & 0x1) |
-> >>>>> +                 (highest_bank_bit & 0x3) << 4 |
-> >>>>> +                 (macrotile_mode & 0x1) << 12;
-> >>>>> +
-> >>>>> +     if (ubwc_version == UBWC_3_0)
-> >>>>> +             value |= BIT(10);
-> >>>>> +
-> >>>>> +     if (ubwc_version == UBWC_1_0)
-> >>>>> +             value |= BIT(8);
-> >>>>> +
-> >>>>> +     writel_relaxed(value, msm_mdss->mmio + UBWC_STATIC);
-> >>>>> +}
-> >>>>> +
-> >>>>> +static void msm_mdss_setup_ubwc_dec_40(struct msm_mdss *msm_mdss,
-> >>>>> +                                    unsigned int ubwc_version,
-> >>>>> +                                    u32 ubwc_swizzle,
-> >>>>> +                                    u32 ubwc_static,
-> >>>>> +                                    u32 highest_bank_bit,
-> >>>>> +                                    u32 macrotile_mode)
-> >>>>> +{
-> >>>>> +     u32 value = (ubwc_swizzle & 0x7) |
-> >>>>> +                 (ubwc_static & 0x1) << 3 |
-> >>>>> +                 (highest_bank_bit & 0x7) << 4 |
-> >>>>> +                 (macrotile_mode & 0x1) << 12;
-> >>>>> +
-> >>>>> +     writel_relaxed(value, msm_mdss->mmio + UBWC_STATIC);
-> >>>>> +
-> >>>>> +     if (ubwc_version == UBWC_3_0) {
-> >>>>> +             writel_relaxed(1, msm_mdss->mmio + UBWC_CTRL_2);
-> >>>>> +             writel_relaxed(0, msm_mdss->mmio + UBWC_PREDICTION_MODE);
-> >>>>> +     } else {
-> >>>>> +             writel_relaxed(2, msm_mdss->mmio + UBWC_CTRL_2);
-> >>>>> +             writel_relaxed(1, msm_mdss->mmio + UBWC_PREDICTION_MODE);
-> >>>>> +     }
-> >>>>> +}
-> >>>>> +
-> >>>>
-> >>>> Is it possible to unify the above functions by having the internal
-> >>>> ubwc_version checks?
-> >>>
-> >>> Note, it's not the ubwc_version, it is the ubwc_dec_hw_version. And
-> >>> also different functions take different sets of arguments.
-> >>>
-> >>>> It seems like msm_mdss_setup_ubwc_dec_xxx can keep growing.
-> >>>>
-> >>>> I have not looked into each bit programming but from the top level so
-> >>>> feel free to correct if wrong but it seems both do write UBWC_STATIC
-> >>>> (different values based on different UBWC versions) and write some extra
-> >>>> registers based on version
-> >>>
-> >>> This is what both the current code and the downstream do. See
-> >>> https://github.com/MiCode/Xiaomi_Kernel_OpenSource/blob/zeus-s-oss/techpack/display-drivers/msm/sde/sde_hw_top.c#L312
-> >>>
-> >>
-> >> Thanks for pointing to the downstream method for this,
-> >>
-> >> This is exactly what i was also suggesting to do when I mentioned
-> >> unifying the above functions.
-> >>
-> >> So instead of having a separate function for each version why not handle
-> >> all the versions in the same function like what the link you have shown
-> >> does.
+> On 6/2/2022 6:30 AM, Dmitry Baryshkov wrote:
+> > Rather than checking hwversion, follow the usual patter and add special
+> > bit to the lm->features to check whether the LM has combined or separate
+> > alpha registers. While we are at it, rename
+> > dpu_hw_lm_setup_blend_config_sdm845() to
+> > dpu_hw_lm_setup_blend_config_combined_alpha().
 > >
-> > I wouldn't like that. The downstream uses hw_catalog to pass all
-> > possible parameters. We do not, so we'd have a whole set of artificial
-> > values.
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 17 ++++++++++-------
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h |  2 ++
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c      |  6 +++---
+> >   3 files changed, 15 insertions(+), 10 deletions(-)
 > >
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> > index 400ebceb56bb..78c7d987c2ca 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> > @@ -50,9 +50,12 @@
+> >   #define DMA_CURSOR_MSM8998_MASK \
+> >       (DMA_MSM8998_MASK | BIT(DPU_SSPP_CURSOR))
+> >
+> > -#define MIXER_SDM845_MASK \
+> > +#define MIXER_MSM8998_MASK \
+> >       (BIT(DPU_MIXER_SOURCESPLIT) | BIT(DPU_DIM_LAYER))
+> >
+> > +#define MIXER_SDM845_MASK \
+> > +     (BIT(DPU_MIXER_SOURCESPLIT) | BIT(DPU_DIM_LAYER) | BIT(DPU_MIXER_COMBINED_ALPHA))
+> > +
+> >   #define MIXER_SC7180_MASK \
+> >       (BIT(DPU_DIM_LAYER))
+> >
+> > @@ -936,17 +939,17 @@ static const struct dpu_lm_sub_blks msm8998_lm_sblk = {
+> >   };
+> >
+> >   static const struct dpu_lm_cfg msm8998_lm[] = {
+> > -     LM_BLK("lm_0", LM_0, 0x44000, MIXER_SDM845_MASK,
+> > +     LM_BLK("lm_0", LM_0, 0x44000, MIXER_MSM8998_MASK,
+> >               &msm8998_lm_sblk, PINGPONG_0, LM_2, DSPP_0),
+> > -     LM_BLK("lm_1", LM_1, 0x45000, MIXER_SDM845_MASK,
+> > +     LM_BLK("lm_1", LM_1, 0x45000, MIXER_MSM8998_MASK,
+> >               &msm8998_lm_sblk, PINGPONG_1, LM_5, DSPP_1),
+> > -     LM_BLK("lm_2", LM_2, 0x46000, MIXER_SDM845_MASK,
+> > +     LM_BLK("lm_2", LM_2, 0x46000, MIXER_MSM8998_MASK,
+> >               &msm8998_lm_sblk, PINGPONG_2, LM_0, 0),
+> > -     LM_BLK("lm_3", LM_3, 0x47000, MIXER_SDM845_MASK,
+> > +     LM_BLK("lm_3", LM_3, 0x47000, MIXER_MSM8998_MASK,
+> >               &msm8998_lm_sblk, PINGPONG_MAX, 0, 0),
+> > -     LM_BLK("lm_4", LM_4, 0x48000, MIXER_SDM845_MASK,
+> > +     LM_BLK("lm_4", LM_4, 0x48000, MIXER_MSM8998_MASK,
+> >               &msm8998_lm_sblk, PINGPONG_MAX, 0, 0),
+> > -     LM_BLK("lm_5", LM_5, 0x49000, MIXER_SDM845_MASK,
+> > +     LM_BLK("lm_5", LM_5, 0x49000, MIXER_MSM8998_MASK,
+> >               &msm8998_lm_sblk, PINGPONG_3, LM_1, 0),
+> >   };
+> >
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> > index 8cb6d1f25bf9..80bc09b1f1b3 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> > @@ -145,6 +145,7 @@ enum {
+> >    * @DPU_MIXER_SOURCESPLIT     Layer mixer supports source-split configuration
+> >    * @DPU_MIXER_GC              Gamma correction block
+> >    * @DPU_DIM_LAYER             Layer mixer supports dim layer
+> > + * @DPU_MIXER_COMBINED_ALPHA  Layer mixer has combined alpha register
+> >    * @DPU_MIXER_MAX             maximum value
+> >    */
+> >   enum {
+> > @@ -152,6 +153,7 @@ enum {
+> >       DPU_MIXER_SOURCESPLIT,
+> >       DPU_MIXER_GC,
+> >       DPU_DIM_LAYER,
+> > +     DPU_MIXER_COMBINED_ALPHA,
+> >       DPU_MIXER_MAX
+> >   };
+> >
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
+> > index 462f5082099e..25d2eba28e71 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
+> > @@ -148,7 +148,7 @@ static int dpu_hw_lm_collect_misr(struct dpu_hw_mixer *ctx, u32 *misr_value)
+> >       return 0;
+> >   }
+> >
+> > -static void dpu_hw_lm_setup_blend_config_sdm845(struct dpu_hw_mixer *ctx,
+> > +static void dpu_hw_lm_setup_blend_config_combined_alpha(struct dpu_hw_mixer *ctx,
+> >       u32 stage, u32 fg_alpha, u32 bg_alpha, u32 blend_op)
+> >   {
+> >       struct dpu_hw_blk_reg_map *c = &ctx->hw;
+> > @@ -204,8 +204,8 @@ static void _setup_mixer_ops(const struct dpu_mdss_cfg *m,
+> >               unsigned long features)
+> >   {
+> >       ops->setup_mixer_out = dpu_hw_lm_setup_out;
+> > -     if (m->hwversion >= DPU_HW_VER_400)
+> > -             ops->setup_blend_config = dpu_hw_lm_setup_blend_config_sdm845;
+> > +     if (test_bit(DPU_MIXER_COMBINED_ALPHA, &features))
+> > +             ops->setup_blend_config = dpu_hw_lm_setup_blend_config_combined_alpha;
 >
-> Now that you brought that up, why cannot even upstream dpu start using
-> catalog for ubwc settings?
+> This will not work for all chipsets.
+>
+> In the catalog you have added BIT(DPU_MIXER_COMBINED_ALPHA) only for
+> MIXER_SDM845_MASK but MIXER_SC7180_MASK is not updated.
+>
+> HW version of sc7180 is > DPU_HW_VER_400 so this would break both sc7180
+> and sc7280.
+>
+> Please update all the relevant chipset masks.
 
-Because msm_mdss lives out of disp/dpu1. And using the disp/dpu1 for
-it would be an inversion of dependencies.
-I like the fact that msm_mdss is independent of mdp/dpu drivers and I
-do not want to add such dependency.
+Argh, I missed the fact that the sc7180 mixer mask doesn't inherit the
+sdm845 one.
+BTW: I see that atoll-sde declares support for src-split. Is there any
+reason why it is omitted from sc7180's mixer mask?
+If there is one, could you please send a patch adding a short comment there?
 
 >
-> /* struct dpu_mdp_cfg : MDP TOP-BLK instance info
->   * @id:                index identifying this block
->   * @base:              register base offset to mdss
->   * @features           bit mask identifying sub-blocks/features
->   * @highest_bank_bit:  UBWC parameter
->   * @ubwc_static:       ubwc static configuration
->   * @ubwc_swizzle:      ubwc default swizzle setting
->   * @clk_ctrls          clock control register definition
->   */
-> struct dpu_mdp_cfg {
->      DPU_HW_BLK_INFO;
->      u32 highest_bank_bit;
->      u32 ubwc_swizzle;
->      struct dpu_clk_ctrl_reg clk_ctrls[DPU_CLK_CTRL_MAX];
-> };
->
-> We already do seem to have a couple of parameters. have to add the others.
->
-> That way the number of functions wont keep growing.
->
-> >>
-> >>>>
-> >>>>>     static int msm_mdss_enable(struct msm_mdss *msm_mdss)
-> >>>>>     {
-> >>>>>         int ret;
-> >>>>> +     u32 hw_rev;
-> >>>>>
-> >>>>>         ret = clk_bulk_prepare_enable(msm_mdss->num_clocks, msm_mdss->clocks);
-> >>>>>         if (ret) {
-> >>>>> @@ -149,26 +204,34 @@ static int msm_mdss_enable(struct msm_mdss *msm_mdss)
-> >>>>>         if (msm_mdss->is_mdp5)
-> >>>>>                 return 0;
-> >>>>>
-> >>>>> +     hw_rev = readl_relaxed(msm_mdss->mmio + HW_REV);
-> >>>>> +     dev_info(msm_mdss->dev, "HW_REV: 0x%x\n", hw_rev);
-> >>>>> +     dev_info(msm_mdss->dev, "UBWC_DEC_HW_VERSION: 0x%x\n",
-> >>>>> +             readl_relaxed(msm_mdss->mmio + UBWC_DEC_HW_VERSION));
-> >>>>
-> >>>> we are already printing the HW version here
-> >>>>
-> >>>> https://gitlab.freedesktop.org/drm/msm/-/blob/msm-next/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c#L1096
-> >>>>
-> >>>> Do you want to remove that print then? May be. Let me take a look.
-> >>>
-> >>> [skipped]
-> >>>
-> >
-> >
-> >
-
-
+> >       else
+> >               ops->setup_blend_config = dpu_hw_lm_setup_blend_config;
+> >       ops->setup_alpha_out = dpu_hw_lm_setup_color3;
 
 -- 
 With best wishes
