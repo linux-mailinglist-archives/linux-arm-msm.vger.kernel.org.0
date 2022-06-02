@@ -2,65 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DC0C853BE5F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jun 2022 21:06:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1AF2453BEA2
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jun 2022 21:22:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238354AbiFBTG0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Jun 2022 15:06:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37996 "EHLO
+        id S238469AbiFBTV0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Jun 2022 15:21:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43138 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238365AbiFBTGZ (ORCPT
+        with ESMTP id S238539AbiFBTVG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Jun 2022 15:06:25 -0400
-Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31B21BF1
-        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Jun 2022 12:06:24 -0700 (PDT)
-Received: by mail-pf1-x42d.google.com with SMTP id p8so5504205pfh.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Jun 2022 12:06:24 -0700 (PDT)
+        Thu, 2 Jun 2022 15:21:06 -0400
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3911F20F55
+        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Jun 2022 12:20:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=A+CJHPksJEyQ/br0kNUyJ2paAkEWbd02hKrM4zpgQyQ=;
-        b=DftemrRpxgHU1PB1Zl247GpilafWiRfmuWeotJzMK1VZeLBmDqw1XVVJPA53kteARU
-         XGS/yfyDrMHQslfTX7pA21vfF21sHFG2IfDmoRjE+eQqmxDRtPtj/UZEd+qxT++nSu4t
-         82hhWgZnRfGVqVMT6G/+rQViZi921qzEPdObU=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=A+CJHPksJEyQ/br0kNUyJ2paAkEWbd02hKrM4zpgQyQ=;
-        b=PaEKKcaHhSerTv5OUm7VHqP8P3G348utShyTMOzeT4vB03b42goIrw322hO7nWk7vJ
-         LqbcEG98YqkKSeh7Ti4joSmm8f1eVxfrdZZhOs6lOz0jz93eUWXN6wPzsrtamw/wsqfG
-         ZB9n/Icp+9KuWNsCQkwVZ9u4A3IzDoIisRZl25K501Jn+YzwqfpInkdz6aLrP6U16173
-         e27nuJ7q3EbmP0eaM7++/ShO/eqz30U+q9tnlhitdS6m4ibt//ULe7wio92bUn/s/9tb
-         iWyoU7nq2toiPZphSDavUKA3biFQ7RKgB0AuLefhnCBJAsgK/nFNX7ONUfrcWyPj3cTp
-         lirg==
-X-Gm-Message-State: AOAM533mrak4dxJx+wyeuKspiUFY5IvqdvPdQhPx0PeGIVpxnjjsSfRM
-        nAQdaRugRO7VNani88020Yti+w==
-X-Google-Smtp-Source: ABdhPJzTc/a6pzmNkyPjyl9vwfz3NHCs0ZPckhN2iQUoju04q2sVsqtxC4zMCL5PFu1/nbWvdqSF1Q==
-X-Received: by 2002:a63:d446:0:b0:3fc:1370:798a with SMTP id i6-20020a63d446000000b003fc1370798amr5610931pgj.190.1654196783584;
-        Thu, 02 Jun 2022 12:06:23 -0700 (PDT)
-Received: from smtp.gmail.com ([2620:15c:202:201:6885:8b62:3875:9d55])
-        by smtp.gmail.com with ESMTPSA id d20-20020a056a00199400b0051878e8cc13sm4197895pfl.116.2022.06.02.12.06.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Jun 2022 12:06:23 -0700 (PDT)
-From:   Stephen Boyd <swboyd@chromium.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org,
-        Douglas Anderson <dianders@chromium.org>,
-        "Joseph S. Barrera III" <joebar@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>
-Subject: [PATCH v2] arm64: dts: qcom: Remove duplicate sc7180-trogdor include on lazor/homestar
-Date:   Thu,  2 Jun 2022 12:06:21 -0700
-Message-Id: <20220602190621.1646679-1-swboyd@chromium.org>
-X-Mailer: git-send-email 2.36.1.255.ge46751e96f-goog
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1654197651; x=1685733651;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=DrQS+858xXoE8wF527YNH/p5k/bZpRmxcHl2RXfH/so=;
+  b=IpHD9/5jYnUDFWfLKRMiRb3stWCRIhBiH/CZDZ6Lp1m2nsVYwN6yiZ93
+   ndmaKI+a7DtWbe2UTrmwFFMH3CXQpMDwdq/JmsEM5jNOFzG9RC4iWsIPe
+   3BXvrKu8dm3qXaPhqk7+LuEPvH4woxc5zlZrGh22bJOgVWP/ZjbdjhzKX
+   Y=;
+Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 02 Jun 2022 12:20:50 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Jun 2022 12:20:50 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Thu, 2 Jun 2022 12:20:49 -0700
+Received: from [10.38.242.41] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Thu, 2 Jun 2022
+ 12:20:47 -0700
+Message-ID: <f91d4f3b-e09f-ecd0-a674-827fce71e294@quicinc.com>
+Date:   Thu, 2 Jun 2022 12:20:45 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [PATCH v2 4/7] drm/msm/dpu: change catalog->perf to be a const
+ pointer
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+CC:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>,
+        "kernel test robot" <lkp@intel.com>
+References: <20220602133039.1739490-1-dmitry.baryshkov@linaro.org>
+ <20220602133039.1739490-5-dmitry.baryshkov@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20220602133039.1739490-5-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-7.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -69,81 +74,278 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The sc7180-trogdor-{lazor,homestar}-*.dtsi files all include
-sc7180-trogdor.dtsi and sc7180-trogdor-lazor.dtsi or
-sc7180-trogdor-homestar.dtsi, so including it here in the
-sc7180-trogdor-{lazor,homestar}.dtsi file means we have a duplicate
-include after commit 19794489fa24 ("arm64: dts: qcom: Only include
-sc7180.dtsi in sc7180-trogdor.dtsi"). We include the sc7180-trogdor.dtsi
-file in a board like sc7180-trogdor-lazor-r1.dts so that we can include
-the display bridge snippet (e.g. sc7180-trogdor-ti-sn65dsi86.dtsi)
-instead of making ever increasing variants like
-sc7180-trogdor-lazor-ti-sn65dsi86.dtsi.
 
-Unfortunately, having the double include like this means the display
-bridge's i2c bus is left disabled instead of enabled by the bridge
-snippet. Any boards that use the i2c bus for the display bridge will
-have the bus disabled when we include sc7180-trogdor.dtsi the second
-time, which picks up the i2c status="disabled" line from sc7180.dtsi.
-This leads to the display not turning on and black screens at boot on
-lazor and homestar devices.
 
-Fix this by dropping the include and making a note that the
-sc7180-trogdor-{lazor,homestar}.dtsi file must be included after
-sc7180-trogdor.dtsi
-
-Reported-by: Douglas Anderson <dianders@chromium.org>
-Cc: "Joseph S. Barrera III" <joebar@chromium.org>
-Cc: Matthias Kaehlcke <mka@chromium.org>
-Fixes: 19794489fa24 ("arm64: dts: qcom: Only include sc7180.dtsi in sc7180-trogdor.dtsi")
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
----
-
-It would be great to get this into -rc1 if possible to fix broken
-display.
-
-Changes from v1 (https://lore.kernel.org/r/20220520231355.1559104-1-swboyd@chromium.org):
- * Also do the same on homestar
-
-I found that my script to check differences wasn't printing any
-differences because of a typo, so I thought everything was fine when it
-wasn't! Now I've checked and for boards using parade bridge chips quite
-a few phandles are renumbered but they're the same logically as before
-whereas as boards using the ti bridge chip only have a few lines
-reordered.
-
- arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi | 2 +-
- arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi    | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi
-index 9b3e3d13c165..d1e2df5164ea 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi
-@@ -5,7 +5,7 @@
-  * Copyright 2021 Google LLC.
-  */
- 
--#include "sc7180-trogdor.dtsi"
-+/* This file must be included after sc7180-trogdor.dtsi */
- 
- / {
- 	/* BOARD-SPECIFIC TOP LEVEL NODES */
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
-index fe2369c29aad..88f6a7d4d020 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
-@@ -5,7 +5,7 @@
-  * Copyright 2020 Google LLC.
-  */
- 
--#include "sc7180-trogdor.dtsi"
-+/* This file must be included after sc7180-trogdor.dtsi */
- 
- &ap_sar_sensor {
- 	semtech,cs0-ground;
-
-base-commit: 19794489fa2474a55c00848e00ca3d15ea01d36c
--- 
-https://chromeos.dev
-
+On 6/2/2022 6:30 AM, Dmitry Baryshkov wrote:
+> Change dpu_mdss_cfg::perf to be a const pointer rather than embedding
+> the dpu_perf_cfg struct into the struct dpu_mdss_cfg.
+> 
+> Reported-by: kernel test robot <lkp@intel.com>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c | 20 +++++++++----------
+>   .../drm/msm/disp/dpu1/dpu_encoder_phys_wb.c   | 10 +++++-----
+>   .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    | 16 +++++++--------
+>   .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |  2 +-
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c     | 18 ++++++++---------
+>   5 files changed, 33 insertions(+), 33 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
+> index a7492dd6ed65..31767d0f7353 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
+> @@ -53,7 +53,7 @@ static u64 _dpu_core_perf_calc_bw(struct dpu_kms *kms,
+>   		crtc_plane_bw += pstate->plane_fetch_bw;
+>   	}
+>   
+> -	bw_factor = kms->catalog->perf.bw_inefficiency_factor;
+> +	bw_factor = kms->catalog->perf->bw_inefficiency_factor;
+>   	if (bw_factor) {
+>   		crtc_plane_bw *= bw_factor;
+>   		do_div(crtc_plane_bw, 100);
+> @@ -90,7 +90,7 @@ static u64 _dpu_core_perf_calc_clk(struct dpu_kms *kms,
+>   		crtc_clk = max(pstate->plane_clk, crtc_clk);
+>   	}
+>   
+> -	clk_factor = kms->catalog->perf.clk_inefficiency_factor;
+> +	clk_factor = kms->catalog->perf->clk_inefficiency_factor;
+>   	if (clk_factor) {
+>   		crtc_clk *= clk_factor;
+>   		do_div(crtc_clk, 100);
+> @@ -128,7 +128,7 @@ static void _dpu_core_perf_calc_crtc(struct dpu_kms *kms,
+>   		perf->core_clk_rate = kms->perf.fix_core_clk_rate;
+>   	} else {
+>   		perf->bw_ctl = _dpu_core_perf_calc_bw(kms, crtc);
+> -		perf->max_per_pipe_ib = kms->catalog->perf.min_dram_ib;
+> +		perf->max_per_pipe_ib = kms->catalog->perf->min_dram_ib;
+>   		perf->core_clk_rate = _dpu_core_perf_calc_clk(kms, crtc, state);
+>   	}
+>   
+> @@ -189,7 +189,7 @@ int dpu_core_perf_crtc_check(struct drm_crtc *crtc,
+>   		bw = DIV_ROUND_UP_ULL(bw_sum_of_intfs, 1000);
+>   		DRM_DEBUG_ATOMIC("calculated bandwidth=%uk\n", bw);
+>   
+> -		threshold = kms->catalog->perf.max_bw_high;
+> +		threshold = kms->catalog->perf->max_bw_high;
+>   
+>   		DRM_DEBUG_ATOMIC("final threshold bw limit = %d\n", threshold);
+>   
+> @@ -413,7 +413,7 @@ static ssize_t _dpu_core_perf_mode_write(struct file *file,
+>   		    const char __user *user_buf, size_t count, loff_t *ppos)
+>   {
+>   	struct dpu_core_perf *perf = file->private_data;
+> -	struct dpu_perf_cfg *cfg = &perf->catalog->perf;
+> +	const struct dpu_perf_cfg *cfg = perf->catalog->perf;
+>   	u32 perf_mode = 0;
+>   	int ret;
+>   
+> @@ -480,15 +480,15 @@ int dpu_core_perf_debugfs_init(struct dpu_kms *dpu_kms, struct dentry *parent)
+>   	debugfs_create_u32("enable_bw_release", 0600, entry,
+>   			(u32 *)&perf->enable_bw_release);
+>   	debugfs_create_u32("threshold_low", 0600, entry,
+> -			(u32 *)&catalog->perf.max_bw_low);
+> +			(u32 *)&catalog->perf->max_bw_low);
+>   	debugfs_create_u32("threshold_high", 0600, entry,
+> -			(u32 *)&catalog->perf.max_bw_high);
+> +			(u32 *)&catalog->perf->max_bw_high);
+>   	debugfs_create_u32("min_core_ib", 0600, entry,
+> -			(u32 *)&catalog->perf.min_core_ib);
+> +			(u32 *)&catalog->perf->min_core_ib);
+>   	debugfs_create_u32("min_llcc_ib", 0600, entry,
+> -			(u32 *)&catalog->perf.min_llcc_ib);
+> +			(u32 *)&catalog->perf->min_llcc_ib);
+>   	debugfs_create_u32("min_dram_ib", 0600, entry,
+> -			(u32 *)&catalog->perf.min_dram_ib);
+> +			(u32 *)&catalog->perf->min_dram_ib);
+>   	debugfs_create_file("perf_mode", 0600, entry,
+>   			(u32 *)perf, &dpu_core_perf_mode_fops);
+>   	debugfs_create_u64("fix_core_clk_rate", 0600, entry,
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
+> index 4829d1ce0cf8..1e4a4822fbf4 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
+> @@ -104,7 +104,7 @@ static void dpu_encoder_phys_wb_set_qos(struct dpu_encoder_phys *phys_enc)
+>   	struct dpu_hw_wb *hw_wb;
+>   	struct dpu_hw_wb_qos_cfg qos_cfg;
+>   	struct dpu_mdss_cfg *catalog;
+> -	struct dpu_qos_lut_tbl *qos_lut_tb;
+> +	const struct dpu_qos_lut_tbl *qos_lut_tb;
+>   
+>   	if (!phys_enc || !phys_enc->dpu_kms || !phys_enc->dpu_kms->catalog) {
+>   		DPU_ERROR("invalid parameter(s)\n");
+> @@ -118,11 +118,11 @@ static void dpu_encoder_phys_wb_set_qos(struct dpu_encoder_phys *phys_enc)
+>   	memset(&qos_cfg, 0, sizeof(struct dpu_hw_wb_qos_cfg));
+>   	qos_cfg.danger_safe_en = true;
+>   	qos_cfg.danger_lut =
+> -		catalog->perf.danger_lut_tbl[DPU_QOS_LUT_USAGE_NRT];
+> +		catalog->perf->danger_lut_tbl[DPU_QOS_LUT_USAGE_NRT];
+>   
+> -	qos_cfg.safe_lut = catalog->perf.safe_lut_tbl[DPU_QOS_LUT_USAGE_NRT];
+> +	qos_cfg.safe_lut = catalog->perf->safe_lut_tbl[DPU_QOS_LUT_USAGE_NRT];
+>   
+> -	qos_lut_tb = &catalog->perf.qos_lut_tbl[DPU_QOS_LUT_USAGE_NRT];
+> +	qos_lut_tb = &catalog->perf->qos_lut_tbl[DPU_QOS_LUT_USAGE_NRT];
+>   	qos_cfg.creq_lut = _dpu_hw_get_qos_lut(qos_lut_tb, 0);
+>   
+>   	if (hw_wb->ops.setup_qos_lut)
+> @@ -166,7 +166,7 @@ static void dpu_encoder_phys_wb_setup_fb(struct dpu_encoder_phys *phys_enc,
+>   	if (hw_wb->ops.setup_cdp) {
+>   		memset(&cdp_cfg, 0, sizeof(struct dpu_hw_cdp_cfg));
+>   
+> -		cdp_cfg.enable = phys_enc->dpu_kms->catalog->perf.cdp_cfg
+> +		cdp_cfg.enable = phys_enc->dpu_kms->catalog->perf->cdp_cfg
+>   				[DPU_PERF_CDP_USAGE_NRT].wr_enable;
+>   		cdp_cfg.ubwc_meta_enable =
+>   				DPU_FORMAT_IS_UBWC(wb_cfg->dest.format);
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> index 367279371e8d..a7040ca5da72 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> @@ -1750,7 +1750,7 @@ static void msm8998_cfg_init(struct dpu_mdss_cfg *dpu_cfg)
+>   		.vbif_count = ARRAY_SIZE(msm8998_vbif),
+>   		.vbif = msm8998_vbif,
+>   		.reg_dma_count = 0,
+> -		.perf = msm8998_perf_data,
+> +		.perf = &msm8998_perf_data,
+>   		.mdss_irqs = IRQ_SM8250_MASK,
+>   	};
+>   }
+> @@ -1781,7 +1781,7 @@ static void sdm845_cfg_init(struct dpu_mdss_cfg *dpu_cfg)
+>   		.vbif = sdm845_vbif,
+>   		.reg_dma_count = 1,
+>   		.dma_cfg = sdm845_regdma,
+> -		.perf = sdm845_perf_data,
+> +		.perf = &sdm845_perf_data,
+>   		.mdss_irqs = IRQ_SDM845_MASK,
+>   	};
+>   }
+> @@ -1812,7 +1812,7 @@ static void sc7180_cfg_init(struct dpu_mdss_cfg *dpu_cfg)
+>   		.vbif = sdm845_vbif,
+>   		.reg_dma_count = 1,
+>   		.dma_cfg = sdm845_regdma,
+> -		.perf = sc7180_perf_data,
+> +		.perf = &sc7180_perf_data,
+>   		.mdss_irqs = IRQ_SC7180_MASK,
+>   	};
+>   }
+> @@ -1845,7 +1845,7 @@ static void sm8150_cfg_init(struct dpu_mdss_cfg *dpu_cfg)
+>   		.vbif = sdm845_vbif,
+>   		.reg_dma_count = 1,
+>   		.dma_cfg = sm8150_regdma,
+> -		.perf = sm8150_perf_data,
+> +		.perf = &sm8150_perf_data,
+>   		.mdss_irqs = IRQ_SDM845_MASK,
+>   	};
+>   }
+> @@ -1876,7 +1876,7 @@ static void sc8180x_cfg_init(struct dpu_mdss_cfg *dpu_cfg)
+>   		.vbif = sdm845_vbif,
+>   		.reg_dma_count = 1,
+>   		.dma_cfg = sm8150_regdma,
+> -		.perf = sc8180x_perf_data,
+> +		.perf = &sc8180x_perf_data,
+>   		.mdss_irqs = IRQ_SC8180X_MASK,
+>   	};
+>   }
+> @@ -1911,7 +1911,7 @@ static void sm8250_cfg_init(struct dpu_mdss_cfg *dpu_cfg)
+>   		.wb = sm8250_wb,
+>   		.reg_dma_count = 1,
+>   		.dma_cfg = sm8250_regdma,
+> -		.perf = sm8250_perf_data,
+> +		.perf = &sm8250_perf_data,
+>   		.mdss_irqs = IRQ_SM8250_MASK,
+>   	};
+>   }
+> @@ -1934,7 +1934,7 @@ static void sc7280_cfg_init(struct dpu_mdss_cfg *dpu_cfg)
+>   		.intf = sc7280_intf,
+>   		.vbif_count = ARRAY_SIZE(sdm845_vbif),
+>   		.vbif = sdm845_vbif,
+> -		.perf = sc7280_perf_data,
+> +		.perf = &sc7280_perf_data,
+>   		.mdss_irqs = IRQ_SC7280_MASK,
+>   	};
+>   }
+> @@ -1966,7 +1966,7 @@ static void qcm2290_cfg_init(struct dpu_mdss_cfg *dpu_cfg)
+>   		.vbif = sdm845_vbif,
+>   		.reg_dma_count = 1,
+>   		.dma_cfg = sdm845_regdma,
+> -		.perf = qcm2290_perf_data,
+> +		.perf = &qcm2290_perf_data,
+>   		.mdss_irqs = IRQ_SC7180_MASK,
+>   	};
+>   }
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> index 4225f58d8f97..64ed96b2fa3d 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> @@ -868,7 +868,7 @@ struct dpu_mdss_cfg {
+>   
+>   	/* Add additional block data structures here */
+>   
+> -	struct dpu_perf_cfg perf;
+> +	const struct dpu_perf_cfg *perf;
+>   	const struct dpu_format_extended *dma_formats;
+>   	const struct dpu_format_extended *cursor_formats;
+>   	const struct dpu_format_extended *vig_formats;
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> index 9d2f0364d2c7..d8048b6862f9 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> @@ -160,7 +160,7 @@ static void _dpu_plane_calc_bw(struct drm_plane *plane,
+>   	vbp = mode->vtotal - mode->vsync_end;
+>   	vpw = mode->vsync_end - mode->vsync_start;
+>   	vfp = mode->vsync_start - mode->vdisplay;
+> -	hw_latency_lines =  dpu_kms->catalog->perf.min_prefill_lines;
+> +	hw_latency_lines =  dpu_kms->catalog->perf->min_prefill_lines;
+>   	scale_factor = src_height > dst_height ?
+>   		mult_frac(src_height, 1, dst_height) : 1;
+>   
+> @@ -309,7 +309,7 @@ static void _dpu_plane_set_qos_lut(struct drm_plane *plane,
+>   	}
+>   
+>   	qos_lut = _dpu_hw_get_qos_lut(
+> -			&pdpu->catalog->perf.qos_lut_tbl[lut_usage], total_fl);
+> +			&pdpu->catalog->perf->qos_lut_tbl[lut_usage], total_fl);
+>   
+>   	trace_dpu_perf_set_qos_luts(pdpu->pipe - SSPP_VIG0,
+>   			(fmt) ? fmt->base.pixel_format : 0,
+> @@ -336,9 +336,9 @@ static void _dpu_plane_set_danger_lut(struct drm_plane *plane,
+>   	u32 danger_lut, safe_lut;
+>   
+>   	if (!pdpu->is_rt_pipe) {
+> -		danger_lut = pdpu->catalog->perf.danger_lut_tbl
+> +		danger_lut = pdpu->catalog->perf->danger_lut_tbl
+>   				[DPU_QOS_LUT_USAGE_NRT];
+> -		safe_lut = pdpu->catalog->perf.safe_lut_tbl
+> +		safe_lut = pdpu->catalog->perf->safe_lut_tbl
+>   				[DPU_QOS_LUT_USAGE_NRT];
+>   	} else {
+>   		fmt = dpu_get_dpu_format_ext(
+> @@ -346,14 +346,14 @@ static void _dpu_plane_set_danger_lut(struct drm_plane *plane,
+>   				fb->modifier);
+>   
+>   		if (fmt && DPU_FORMAT_IS_LINEAR(fmt)) {
+> -			danger_lut = pdpu->catalog->perf.danger_lut_tbl
+> +			danger_lut = pdpu->catalog->perf->danger_lut_tbl
+>   					[DPU_QOS_LUT_USAGE_LINEAR];
+> -			safe_lut = pdpu->catalog->perf.safe_lut_tbl
+> +			safe_lut = pdpu->catalog->perf->safe_lut_tbl
+>   					[DPU_QOS_LUT_USAGE_LINEAR];
+>   		} else {
+> -			danger_lut = pdpu->catalog->perf.danger_lut_tbl
+> +			danger_lut = pdpu->catalog->perf->danger_lut_tbl
+>   					[DPU_QOS_LUT_USAGE_MACROTILE];
+> -			safe_lut = pdpu->catalog->perf.safe_lut_tbl
+> +			safe_lut = pdpu->catalog->perf->safe_lut_tbl
+>   					[DPU_QOS_LUT_USAGE_MACROTILE];
+>   		}
+>   	}
+> @@ -1225,7 +1225,7 @@ static void dpu_plane_sspp_atomic_update(struct drm_plane *plane)
+>   
+>   			memset(&cdp_cfg, 0, sizeof(struct dpu_hw_cdp_cfg));
+>   
+> -			cdp_cfg.enable = pdpu->catalog->perf.cdp_cfg
+> +			cdp_cfg.enable = pdpu->catalog->perf->cdp_cfg
+>   					[DPU_PERF_CDP_USAGE_RT].rd_enable;
+>   			cdp_cfg.ubwc_meta_enable =
+>   					DPU_FORMAT_IS_UBWC(fmt);
