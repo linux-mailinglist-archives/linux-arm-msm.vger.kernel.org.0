@@ -2,56 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A8DE753B6BF
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jun 2022 12:15:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 530C753B6E4
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jun 2022 12:21:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233471AbiFBKPZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Jun 2022 06:15:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58682 "EHLO
+        id S233674AbiFBKUf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Jun 2022 06:20:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54840 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233464AbiFBKPX (ORCPT
+        with ESMTP id S233656AbiFBKUd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Jun 2022 06:15:23 -0400
+        Thu, 2 Jun 2022 06:20:33 -0400
 Received: from mail-qv1-xf2e.google.com (mail-qv1-xf2e.google.com [IPv6:2607:f8b0:4864:20::f2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 468FF2AD9AD
-        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Jun 2022 03:15:21 -0700 (PDT)
-Received: by mail-qv1-xf2e.google.com with SMTP id j2so3226092qvp.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Jun 2022 03:15:21 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 707B52AD9AD
+        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Jun 2022 03:20:31 -0700 (PDT)
+Received: by mail-qv1-xf2e.google.com with SMTP id h18so3227670qvj.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Jun 2022 03:20:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=iGK0zPU93j8Ge2AzP1KbQCzIzb8femdDnLBXlrSmAF4=;
-        b=rGExpiOaZ1dgPz/IIE7N5VFS9CKXCNxc1uESwdH+rJIsRxPqcrxLlunbdvz9yDCtDJ
-         voN25Ke98eRyOfhycMhlE6/BhgKy9kGqk0aVat6o8LmN+Dvtjo+t62ITp+NdHdJ8DaZp
-         ZK1f4mTGjjBMuaKsCEJuIAl4s/rcnw8J1EsiMHkl+n5vTmEsXXhs/HU2YbrLab9gd73W
-         iO3SqhvP749pR96qrqOJg0OsiHYyZEd0RhLMp5fjNgjRvmKi2oDsFTp7dnlJPyIfNnhF
-         ozhd2EusWxJT1KgDiXtn64VqP2yLPhmHegWOXpJfg3beGU/wXASf74PTlh8Zrta1jYLL
-         E8ug==
+        bh=7xoHOj1xulzu3SD29GS2YKQ7gqDLAbM1bPx44xbkClg=;
+        b=DSUMru50+KeenCQPQGfny1v3Ey5MgeseAd9dW+EgqLIhT5Gun0C2qi5V6HvzJ5dfK5
+         9oH3esl6la/adwnvP6zQTXAtyI6MeB5Vn3s4G9c7nfdnvmZU68JdsXs9eSrgfZN0ARmr
+         OH4fJBOSBRFdAoQUTC0UmFlnZdJeWfANDij0q8ZYbmsIjvCYD37WNd6KvnWCjQg1Pcmm
+         yQzaVJUapywWsiOmrpKJKcU3NmpijxcNaQfuPopeCPySTuVY/EP8jp4kJP3frZm4sYID
+         wyF6YnL3J4kBLP8rFV9NzS+iiQmy/DR3I5kP+NpDI82a5eisygvFLfkpj5YCyOMUSffL
+         mvEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=iGK0zPU93j8Ge2AzP1KbQCzIzb8femdDnLBXlrSmAF4=;
-        b=66aOgp+xBApsWX2MzSsd2sp+ocKwIeBKmhw8U3wKyo5P6k66bJpkTj8oGwFXiJ84b9
-         OLy9YkmCEne//GqwRSJiP9xhWyU3W2V1wwMCIJWYnGSZLnpb/lPbw8O8STEdnQKAC4qH
-         QVlmlHao5b4lkz+UEEv6krOsQilPPQDAD+6dDKvLRASW1V6QoJTZDsjW/27ccc50xam2
-         Z+0SpGyXz9xXRgC54k2C0mOoSY39wkHG1TYYrTCGkWFPz4fvAfU+8r1r9SKNC3N1dbvo
-         D3N5eGl/PntTI3AdIRZxYBdLUAJYlVzR5WryfP3zY667b9dmpmHVvF7Xav9nYFwAcasM
-         QL+Q==
-X-Gm-Message-State: AOAM531Ig0DivqoFGxic0ESq5aogIHzsEvPwXNQpaIQvsWRQSooLKSb7
-        mCBRqkT3+aZtmiVqxnjx019OEg5QG6kSgmK8x6NkwQ==
-X-Google-Smtp-Source: ABdhPJwZVrgPJE/PLNJFp4EqWodbfWB4zXOatz/ZqouAf8UAnlORn21DQ04M5d/rYnMf/jo5weyIf8kqSfgKMKENP48=
-X-Received: by 2002:ad4:5b81:0:b0:465:ded8:780 with SMTP id
- 1-20020ad45b81000000b00465ded80780mr4768269qvp.119.1654164920448; Thu, 02 Jun
- 2022 03:15:20 -0700 (PDT)
+        bh=7xoHOj1xulzu3SD29GS2YKQ7gqDLAbM1bPx44xbkClg=;
+        b=JK5wiCCsXzFNGQqI+2XDqZMuQEJZvv9oS01qLt2MUT4txHh5N/Yg7oDYIszRgYwYxZ
+         Vkp+ApO/qPfELjWwj0muc4JNIWKHcAAn87jb13FgcM84gzuKXdzzwxI/MS6NZ+g4bgKL
+         dT/B3yQsrjGEzndGG15CPYzy23o8nnNx6RRQS2eI2RJqAxMoaZm4ecT1gegmDiGwIgl5
+         o6dtIwd5JkfiOWlhGxcqxXpe5xkj4i6NclnKALXdsMpQtEL+j1qcgoUMIDy4xRacb/Jk
+         VDjdafpJzvWFWQV0fSvXGUe7GjasuYWwnUg+PlF1+im+a+hWfHY1c3ul7HWop4SAXBId
+         QTPw==
+X-Gm-Message-State: AOAM530iRYXxFR2Lk4BPvsODMirk6b8giVgvW5UxZGDE5EtvQdkDP3/Y
+        pQvUWQzAgjLFLwzHBUz9DGtRE1radO15oFfzKTjxOA==
+X-Google-Smtp-Source: ABdhPJw1Rch5C49/vloTHmi2dY/GNe+3O0wK53nKBS9fZMA13PpgfQcEMtkcYegIIDx2qb2wp1k+tGsQ77F5VsPPLIo=
+X-Received: by 2002:ad4:5aa4:0:b0:465:2b11:cfd with SMTP id
+ u4-20020ad45aa4000000b004652b110cfdmr5204455qvg.55.1654165230535; Thu, 02 Jun
+ 2022 03:20:30 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220601220747.1145095-1-marijn.suijten@somainline.org> <20220601220747.1145095-3-marijn.suijten@somainline.org>
-In-Reply-To: <20220601220747.1145095-3-marijn.suijten@somainline.org>
+References: <20220601220747.1145095-1-marijn.suijten@somainline.org> <20220601220747.1145095-4-marijn.suijten@somainline.org>
+In-Reply-To: <20220601220747.1145095-4-marijn.suijten@somainline.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Thu, 2 Jun 2022 13:15:09 +0300
-Message-ID: <CAA8EJpp0Nv=H3Xm-PQyr0__KA_tP1p6LeSkDwGSMBx0X8kpZ8g@mail.gmail.com>
-Subject: Re: [PATCH v2 02/11] clk: mux: Introduce devm_clk_hw_register_mux_parent_hws()
+Date:   Thu, 2 Jun 2022 13:20:19 +0300
+Message-ID: <CAA8EJpomtbN0+ocD2pRbkYriUY4D9OnjgoFzL9qNHhPm3Uz5cQ@mail.gmail.com>
+Subject: Re: [PATCH v2 03/11] clk: fixed-factor: Introduce *clk_hw_register_fixed_factor_parent_hw()
 To:     Marijn Suijten <marijn.suijten@somainline.org>
 Cc:     phone-devel@vger.kernel.org, Stephen Boyd <sboyd@kernel.org>,
         ~postmarketos/upstreaming@lists.sr.ht,
@@ -85,35 +85,152 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 On Thu, 2 Jun 2022 at 01:07, Marijn Suijten
 <marijn.suijten@somainline.org> wrote:
 >
-> Add the devres variant of clk_hw_register_mux_hws() for registering a
-> mux clock with clk_hw parent pointers instead of parent names.
+> Add the devres and non-devres variant of
+> clk_hw_register_fixed_factor_parent_hw() for registering a fixed factor
+> clock with clk_hw parent pointer instead of parent name.
 >
 > Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Two minor comments below. It's up to Stephen to check if they are
+correct or not.
 
 > ---
->  include/linux/clk-provider.h | 7 +++++++
->  1 file changed, 7 insertions(+)
+>  drivers/clk/clk-fixed-factor.c | 57 ++++++++++++++++++++++++++++------
+>  include/linux/clk-provider.h   |  8 +++++
+>  2 files changed, 55 insertions(+), 10 deletions(-)
 >
+> diff --git a/drivers/clk/clk-fixed-factor.c b/drivers/clk/clk-fixed-factor.c
+> index 54942d758ee6..fabb98d0cdb2 100644
+> --- a/drivers/clk/clk-fixed-factor.c
+> +++ b/drivers/clk/clk-fixed-factor.c
+> @@ -78,7 +78,8 @@ static void devm_clk_hw_register_fixed_factor_release(struct device *dev, void *
+>
+>  static struct clk_hw *
+>  __clk_hw_register_fixed_factor(struct device *dev, struct device_node *np,
+> -               const char *name, const char *parent_name, int index,
+> +               const char *name, const char *parent_name,
+> +               const struct clk_hw *parent_hw, int index,
+>                 unsigned long flags, unsigned int mult, unsigned int div,
+>                 bool devm)
+>  {
+> @@ -108,7 +109,9 @@ __clk_hw_register_fixed_factor(struct device *dev, struct device_node *np,
+>         init.name = name;
+>         init.ops = &clk_fixed_factor_ops;
+>         init.flags = flags;
+> -       if (parent_name)
+> +       if (parent_hw)
+> +               init.parent_hws = &parent_hw;
+> +       else if (parent_name)
+>                 init.parent_names = &parent_name;
+
+If you change the order of if clauses, you won't have to introduce
+unnecessary changes.
+
+>         else
+>                 init.parent_data = &pdata;
+> @@ -148,17 +151,50 @@ struct clk_hw *devm_clk_hw_register_fixed_factor_index(struct device *dev,
+>                 const char *name, unsigned int index, unsigned long flags,
+>                 unsigned int mult, unsigned int div)
+>  {
+> -       return __clk_hw_register_fixed_factor(dev, NULL, name, NULL, index,
+> -                                             flags, mult, div, true);
+> +       return __clk_hw_register_fixed_factor(dev, NULL, name, NULL, NULL,
+> +                                             index, flags, mult, div, true);
+
+Here (and several times later) you are inserting an argument and then
+moving arguments to the next line. My slight preference would be to
+just insert the arg (and maybe break the line if it gets too long) w/o
+touching the next lines.
+
+>  }
+>  EXPORT_SYMBOL_GPL(devm_clk_hw_register_fixed_factor_index);
+>
+> +/**
+> + * devm_clk_hw_register_fixed_factor_parent_hw - Register a fixed factor clock with
+> + * pointer to parent clock
+> + * @dev: device that is registering this clock
+> + * @name: name of this clock
+> + * @parent_hw: pointer to parent clk
+> + * @flags: fixed factor flags
+> + * @mult: multiplier
+> + * @div: divider
+> + *
+> + * Return: Pointer to fixed factor clk_hw structure that was registered or
+> + * an error pointer.
+> + */
+> +struct clk_hw *devm_clk_hw_register_fixed_factor_parent_hw(struct device *dev,
+> +               const char *name, const struct clk_hw *parent_hw,
+> +               unsigned long flags, unsigned int mult, unsigned int div)
+> +{
+> +       return __clk_hw_register_fixed_factor(dev, NULL, name, NULL, parent_hw,
+> +                                             -1, flags, mult, div, true);
+> +}
+> +EXPORT_SYMBOL_GPL(devm_clk_hw_register_fixed_factor_parent_hw);
+> +
+> +struct clk_hw *clk_hw_register_fixed_factor_parent_hw(struct device *dev,
+> +               const char *name, const struct clk_hw *parent_hw,
+> +               unsigned long flags, unsigned int mult, unsigned int div)
+> +{
+> +       return __clk_hw_register_fixed_factor(dev, NULL, name, NULL,
+> +                                             parent_hw, -1, flags, mult, div,
+> +                                             false);
+> +}
+> +EXPORT_SYMBOL_GPL(clk_hw_register_fixed_factor_parent_hw);
+> +
+>  struct clk_hw *clk_hw_register_fixed_factor(struct device *dev,
+>                 const char *name, const char *parent_name, unsigned long flags,
+>                 unsigned int mult, unsigned int div)
+>  {
+> -       return __clk_hw_register_fixed_factor(dev, NULL, name, parent_name, -1,
+> -                                             flags, mult, div, false);
+> +       return __clk_hw_register_fixed_factor(dev, NULL, name, parent_name,
+> +                                             NULL, -1, flags, mult, div,
+> +                                             false);
+>  }
+>  EXPORT_SYMBOL_GPL(clk_hw_register_fixed_factor);
+>
+> @@ -204,8 +240,9 @@ struct clk_hw *devm_clk_hw_register_fixed_factor(struct device *dev,
+>                 const char *name, const char *parent_name, unsigned long flags,
+>                 unsigned int mult, unsigned int div)
+>  {
+> -       return __clk_hw_register_fixed_factor(dev, NULL, name, parent_name, -1,
+> -                       flags, mult, div, true);
+> +       return __clk_hw_register_fixed_factor(dev, NULL, name, parent_name,
+> +                                             NULL, -1, flags, mult, div,
+> +                                             true);
+>  }
+>  EXPORT_SYMBOL_GPL(devm_clk_hw_register_fixed_factor);
+>
+> @@ -240,8 +277,8 @@ static struct clk_hw *_of_fixed_factor_clk_setup(struct device_node *node)
+>         if (of_match_node(set_rate_parent_matches, node))
+>                 flags |= CLK_SET_RATE_PARENT;
+>
+> -       hw = __clk_hw_register_fixed_factor(NULL, node, clk_name, NULL, 0,
+> -                                           flags, mult, div, false);
+> +       hw = __clk_hw_register_fixed_factor(NULL, node, clk_name, NULL, NULL,
+> +                                           0, flags, mult, div, false);
+>         if (IS_ERR(hw)) {
+>                 /*
+>                  * Clear OF_POPULATED flag so that clock registration can be
 > diff --git a/include/linux/clk-provider.h b/include/linux/clk-provider.h
-> index 4e07621849e6..316c7e082934 100644
+> index 316c7e082934..94458cb669f0 100644
 > --- a/include/linux/clk-provider.h
 > +++ b/include/linux/clk-provider.h
-> @@ -980,6 +980,13 @@ struct clk *clk_register_mux_table(struct device *dev, const char *name,
->                               (parent_names), NULL, NULL, (flags), (reg),     \
->                               (shift), BIT((width)) - 1, (clk_mux_flags),     \
->                               NULL, (lock))
-> +#define devm_clk_hw_register_mux_parent_hws(dev, name, parent_hws,           \
-> +                                           num_parents, flags, reg, shift,   \
-> +                                           width, clk_mux_flags, lock)       \
-> +       __devm_clk_hw_register_mux((dev), NULL, (name), (num_parents), NULL,  \
-> +                                  (parent_hws), NULL, (flags), (reg),        \
-> +                                  (shift), BIT((width)) - 1,                 \
-> +                                  (clk_mux_flags), NULL, (lock))
->
->  int clk_mux_val_to_index(struct clk_hw *hw, const u32 *table, unsigned int flags,
->                          unsigned int val);
+> @@ -1032,6 +1032,14 @@ struct clk_hw *devm_clk_hw_register_fixed_factor(struct device *dev,
+>  struct clk_hw *devm_clk_hw_register_fixed_factor_index(struct device *dev,
+>                 const char *name, unsigned int index, unsigned long flags,
+>                 unsigned int mult, unsigned int div);
+> +
+> +struct clk_hw *devm_clk_hw_register_fixed_factor_parent_hw(struct device *dev,
+> +               const char *name, const struct clk_hw *parent_hw,
+> +               unsigned long flags, unsigned int mult, unsigned int div);
+> +
+> +struct clk_hw *clk_hw_register_fixed_factor_parent_hw(struct device *dev,
+> +               const char *name, const struct clk_hw *parent_hw,
+> +               unsigned long flags, unsigned int mult, unsigned int div);
+>  /**
+>   * struct clk_fractional_divider - adjustable fractional divider clock
+>   *
 > --
 > 2.36.1
 >
