@@ -2,106 +2,204 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 08FAF53BA8A
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jun 2022 16:17:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8B70653BA8E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jun 2022 16:18:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234140AbiFBORi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Jun 2022 10:17:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45396 "EHLO
+        id S235777AbiFBOSb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Jun 2022 10:18:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49504 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232088AbiFBORh (ORCPT
+        with ESMTP id S232088AbiFBOSb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Jun 2022 10:17:37 -0400
-Received: from mail-ot1-f44.google.com (mail-ot1-f44.google.com [209.85.210.44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFF051FCE3;
-        Thu,  2 Jun 2022 07:17:35 -0700 (PDT)
-Received: by mail-ot1-f44.google.com with SMTP id e11-20020a9d6e0b000000b0060afcbafa80so3493389otr.3;
-        Thu, 02 Jun 2022 07:17:35 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=TCCwJv6EhxWlaEc1Brd2505WQxC3GVxol8XUS0Q3iIQ=;
-        b=wWBsC8NfMMU90Yfiz8XoiaUJdjZMiwT8uBBGAL4WTaEKCbR925MzdKexvE+IxJWq+c
-         TDVsmpWbF4PmvNrWmH3Qf6eRugQG57ii6Dpi//ZcBERJLgzYS71eHQwh6OFq8QasNM7y
-         oJvlhtYJvl4O4XqXWnul46D4c+6iXc9257GbrAEAnj0Q2u4urzPfqBiN47HmGMGICseX
-         pblx51aBVEgd/zESfqjJvH/4QS+WH48OQb+/n8tYCb4juWDbgE8y8T3MdHb87INmMQFK
-         Eu4Ivy2Q+cZPthPMZcXnZNgHSn6w/cfV5Uo/83m/Y1A8sW+9QnvWtwjWoeAPpsaJt3Ws
-         vyWA==
-X-Gm-Message-State: AOAM531xWE8xeAOK/li3YAvuepbtGBfhLYgnXyHa4eflOV958FU7WyOh
-        qoElMkS8a81aDVb0EGxQwy7XebfbzA==
-X-Google-Smtp-Source: ABdhPJxYVbALGE594K0AOIrngTP0BTDjw28b1fwlQJNHJriJPoZ+rLecoT8+hiuf2AyA7nCY83K4nA==
-X-Received: by 2002:a9d:5f16:0:b0:60b:4fbb:ac5a with SMTP id f22-20020a9d5f16000000b0060b4fbbac5amr2120193oti.189.1654179454963;
-        Thu, 02 Jun 2022 07:17:34 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id gu23-20020a056870ab1700b000f5d765bc02sm2098115oab.8.2022.06.02.07.17.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Jun 2022 07:17:34 -0700 (PDT)
-Received: (nullmailer pid 2234679 invoked by uid 1000);
-        Thu, 02 Jun 2022 14:17:33 -0000
-Date:   Thu, 2 Jun 2022 09:17:33 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht,
-        linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org,
-        linux-arm-kernel@lists.infradead.org,
-        iommu@lists.linux-foundation.org, martin.botka@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
-        Andy Gross <agross@kernel.org>, Joerg Roedel <joro@8bytes.org>,
-        Will Deacon <will@kernel.org>,
+        Thu, 2 Jun 2022 10:18:31 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1333C14084B;
+        Thu,  2 Jun 2022 07:18:30 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id B914EB81F60;
+        Thu,  2 Jun 2022 14:18:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56EFCC385A5;
+        Thu,  2 Jun 2022 14:18:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1654179507;
+        bh=eRDPmv4c+U9nynMolfy/A09s2kdNZCpH6noPD5U/wOg=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=eylHqOT2Dkwv9k40DXpO3x/oKCSrkDdYa0wD10+LzJHxQQh1F000mVNOnHZAw8p4r
+         Ji6gH5B3uZls6kLBspVxy1FqepkT5TGzB+gYrvJ9BoeRNIZG/fk98UXQoR2YbHhQV1
+         q3gRmcKTVSET2/tioTMfgi32mS9DjVlMOGSSmHFY7OVRx3JA7HC2nr+RHeSdUje05W
+         JVrBDIPN1b86l71e8/+G1RMFBIb1Tx3egW4kUREHHZCx9xoA2KSQuHeOxfCfzKr7e7
+         1UVH0dT/KgbfTaHfZAVblMn4qfbdMDb3KFpeigGzjA6rN9FAFmlUKjqch53oBH6ziL
+         lVMc+znUaFKvQ==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1nwlea-0007mB-7g; Thu, 02 Jun 2022 16:18:24 +0200
+Date:   Thu, 2 Jun 2022 16:18:24 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Robin Murphy <robin.murphy@arm.com>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 4/6] iommu/qcom: Add support for AArch64 IOMMU pagetables
-Message-ID: <20220602141733.GA2227595-robh@kernel.org>
-References: <20220527212901.29268-1-konrad.dybcio@somainline.org>
- <20220527212901.29268-5-konrad.dybcio@somainline.org>
+        Jingoo Han <jingoohan1@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH v12 5/8] PCI: dwc: Handle MSIs routed to multiple GIC
+ interrupts
+Message-ID: <YpjGsOT2y2IDTHAU@hovoldconsulting.com>
+References: <20220523181836.2019180-1-dmitry.baryshkov@linaro.org>
+ <20220523181836.2019180-6-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220527212901.29268-5-konrad.dybcio@somainline.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
+In-Reply-To: <20220523181836.2019180-6-dmitry.baryshkov@linaro.org>
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, May 27, 2022 at 11:28:59PM +0200, Konrad Dybcio wrote:
-> From: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+On Mon, May 23, 2022 at 09:18:33PM +0300, Dmitry Baryshkov wrote:
+> On some of Qualcomm platforms each group of 32 MSI vectors is routed to the
+> separate GIC interrupt. Implement support for such configurations by
+> parsing "msi0" ... "msiN" interrupts and attaching them to the chained
+> handler.
 > 
-> Some IOMMUs associated with some TZ firmwares may support switching
-> to the AArch64 pagetable format by sending a "set pagetable format"
-> scm command indicating the IOMMU secure ID and the context number
-> to switch.
+> Note, that if DT doesn't list an array of MSI interrupts and uses single
+> "msi" IRQ, the driver will limit the amount of supported MSI vectors
+> accordingly (to 32).
 > 
-> Add a DT property "qcom,use-aarch64-pagetables" for this driver to
-> send this command to the secure world and to switch the pagetable
-> format to benefit of the ARM64 IOMMU pagetables, where possible.
-> 
-> Note that, even though the command should be valid to switch each
-> context, the property is made global because:
-> 1. It doesn't make too much sense to switch only one or two
->    context(s) to AA64 instead of just the entire thing
-> 2. Some IOMMUs will go crazy and produce spectacular results when
->    trying to mix up the pagetables on a per-context basis.
-> 
-> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
-> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->  .../devicetree/bindings/iommu/qcom,iommu.txt  |  2 +
+>  .../pci/controller/dwc/pcie-designware-host.c | 61 +++++++++++++++++--
+>  1 file changed, 57 insertions(+), 4 deletions(-)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
+> index a076abe6611c..98a57249ecaf 100644
+> --- a/drivers/pci/controller/dwc/pcie-designware-host.c
+> +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
+> @@ -288,6 +288,47 @@ static void dw_pcie_msi_init(struct pcie_port *pp)
+>  	dw_pcie_writel_dbi(pci, PCIE_MSI_ADDR_HI, upper_32_bits(msi_target));
+>  }
+>  
+> +static const char * const split_msi_names[] = {
+> +	"msi0", "msi1", "msi2", "msi3",
+> +	"msi4", "msi5", "msi6", "msi7",
+> +};
+> +
+> +static int dw_pcie_parse_split_msi_irq(struct pcie_port *pp)
+> +{
+> +	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+> +	struct device *dev = pci->dev;
+> +	struct platform_device *pdev = to_platform_device(dev);
+> +	int irq;
+> +	u32 ctrl, max_vectors;
+> +
+> +	/* Parse as many IRQs as described in the devicetree. */
+> +	for (ctrl = 0; ctrl < MAX_MSI_CTRLS; ctrl++) {
+> +		irq = platform_get_irq_byname_optional(pdev, split_msi_names[ctrl]);
+> +		if (irq == -ENXIO)
+> +			break;
+> +		if (irq < 0)
+> +			return dev_err_probe(dev, irq,
+> +					     "Failed to parse MSI IRQ '%s'\n",
+> +					     split_msi_names[ctrl]);
+> +
+> +		pp->msi_irq[ctrl] = irq;
+> +	}
+> +
+> +	/* If there were no "msiN" IRQs at all, fallback to the standard "msi" IRQ. */
+> +	if (ctrl == 0)
+> +		return -ENXIO;
+> +
+> +	max_vectors = ctrl * MAX_MSI_IRQS_PER_CTRL;
+> +	if (pp->num_vectors > max_vectors) {
+> +		dev_warn(dev, "Exceeding number of MSI vectors, limiting to %d\n", max_vectors);
 
-Bindings should be separate patch.
+%u
 
-As you are making multiple changes, please convert this to DT schema 
-first.
+break line after last comma?
 
->  drivers/iommu/arm/arm-smmu/qcom_iommu.c       | 54 +++++++++++++++----
->  2 files changed, 47 insertions(+), 9 deletions(-)
+> +		pp->num_vectors = max_vectors;
+> +	}
+> +	if (!pp->num_vectors)
+> +		pp->num_vectors = max_vectors;
+> +
+> +	return 0;
+> +}
+> +
+>  static int dw_pcie_msi_host_init(struct pcie_port *pp)
+>  {
+>  	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+> @@ -296,21 +337,32 @@ static int dw_pcie_msi_host_init(struct pcie_port *pp)
+>  	int ret;
+>  	u32 ctrl, num_ctrls;
+>  
+> -	num_ctrls = pp->num_vectors / MAX_MSI_IRQS_PER_CTRL;
+> -	for (ctrl = 0; ctrl < num_ctrls; ctrl++)
+> +	for (ctrl = 0; ctrl < MAX_MSI_CTRLS; ctrl++)
+>  		pp->irq_mask[ctrl] = ~0;
+>  
+> +	if (!pp->msi_irq[0]) {
+> +		ret = dw_pcie_parse_split_msi_irq(pp);
+> +		if (ret < 0 && ret != -ENXIO)
+> +			return ret;
+> +	}
+> +
+> +	if (!pp->num_vectors)
+> +		pp->num_vectors = MSI_DEF_NUM_VECTORS;
+> +	num_ctrls = pp->num_vectors / MAX_MSI_IRQS_PER_CTRL;
+> +
+>  	if (!pp->msi_irq[0]) {
+>  		int irq = platform_get_irq_byname_optional(pdev, "msi");
+>  
+>  		if (irq < 0) {
+>  			irq = platform_get_irq(pdev, 0);
+>  			if (irq < 0)
+> -				return irq;
+> +				return dev_err_probe(dev, irq, "Failed to parse MSI irq\n");
+>  		}
+>  		pp->msi_irq[0] = irq;
+>  	}
+>  
+> +	dev_dbg(dev, "Using %d MSI vectors\n", pp->num_vectors);
+> +
+>  	pp->msi_irq_chip = &dw_pci_msi_bottom_irq_chip;
+>  
+>  	ret = dw_pcie_allocate_domains(pp);
+> @@ -407,7 +459,8 @@ int dw_pcie_host_init(struct pcie_port *pp)
+>  				     of_property_read_bool(np, "msi-parent") ||
+>  				     of_property_read_bool(np, "msi-map"));
+>  
+> -		if (!pp->num_vectors) {
+> +		/* for the has_msi_ctrl the default assignment is handled inside dw_pcie_msi_host_init() */
+
+Add the missing "case" after "has_msi_ctrl".
+
+s/inside/in/
+
+Please make this a multiline comment split at < 80 chars.
+
+And follow the comment style of the driver and start with a capital
+letter.
+
+> +		if (!pp->has_msi_ctrl && !pp->num_vectors) {
+>  			pp->num_vectors = MSI_DEF_NUM_VECTORS;
+>  		} else if (pp->num_vectors > MAX_MSI_IRQS) {
+>  			dev_err(dev, "Invalid number of vectors\n");
+
+Looks good now otherwise. 
+
+But please consider Rob's suggestion for generating the interrupt names.
+
+Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
