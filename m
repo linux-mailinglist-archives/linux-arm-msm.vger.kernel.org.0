@@ -2,187 +2,165 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CD00D53B521
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jun 2022 10:29:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5697353B5AC
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jun 2022 11:07:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232348AbiFBI3w (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Jun 2022 04:29:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33476 "EHLO
+        id S232749AbiFBJFm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Jun 2022 05:05:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34312 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231469AbiFBI3u (ORCPT
+        with ESMTP id S232754AbiFBJFk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Jun 2022 04:29:50 -0400
-Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB840BE8
-        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Jun 2022 01:29:46 -0700 (PDT)
-Received: by mail-pj1-x1033.google.com with SMTP id o6-20020a17090a0a0600b001e2c6566046so8739494pjo.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Jun 2022 01:29:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=qLE93fLBk76sb5feEZB3lwg0tckq9OyeKY/n0bkrWVI=;
-        b=RSkYj3WOKXwloda5tvOmqVsHsBOy9LS2cWoCJcwRQ2nd7TdqQ9ETsKz1SJG7p1Yru5
-         DtaOiVJALg+o8f3pNWpaR8ACvsAxa/ZZR7W8TjAcCJBoW7F2cKTIOG54iVZ9JKcyD7nv
-         9tblptL5satSidG+rDqAf1tAX4MI1F2r/Y1TsteEA09tUSnlsRVDwP/rQUx8RIceuPh6
-         CeB6WOj0QhOwvslDnLb3t0DophjrnY1vP6yA4ViEMTiogfVR3a8bIAqLF+r/c1miwTFt
-         uBDyKYE+eAHH1EOoCYVkVmlBnqJ2b6cwHgkzUhw4R3HHQAJ14wrUK2kMEhtSOCtS5QFd
-         cD8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=qLE93fLBk76sb5feEZB3lwg0tckq9OyeKY/n0bkrWVI=;
-        b=8MoNT+c606Dim/t+lfSLxXQVgCwNKkzZKzEOKbmQvevtgIr1xyDSvJOmt2IAroVDRd
-         UIlGB1tcm0n4nBMb6pPmG/Jwp+rJg5+7tNeqAPn7SHBgdR7nPsWAizcxPxGLB1YU62Nn
-         pMGA/JfpEaLuuaSBPksYgxW3BRsVKtYkKRbFLF7+NHEKkkkpjFAtZI5X99/D3XU59PgI
-         pJ5FncjH2xamdykDrHl1SsauN7BYJuCP6jYf+mVx1CDOebA4WpG+dEnelKfNQ5T48e6V
-         BIpSwnGQ7s4T0kOEP6Q5iCu700MPeWquaslofmULLgJZliakOl8F+E8SomZP8tinECUm
-         w73w==
-X-Gm-Message-State: AOAM5306qW62fSN6bejFgQh0MWXXoTbvm06AH7dly+BoXZlBXr+peirL
-        kem8NADvtI/49eUieiFdSY/y
-X-Google-Smtp-Source: ABdhPJxinrA0W1VA+IL/O0ywNYDKGyJEBSUzZD2g4x110fuITrP1RNqA5h3zIXv0Od4GRXrdCjw4bw==
-X-Received: by 2002:a17:902:d2c2:b0:164:1047:5438 with SMTP id n2-20020a170902d2c200b0016410475438mr3755076plc.18.1654158586216;
-        Thu, 02 Jun 2022 01:29:46 -0700 (PDT)
-Received: from thinkpad ([220.158.159.212])
-        by smtp.gmail.com with ESMTPSA id a20-20020a621a14000000b0050dc762816asm2868478pfa.68.2022.06.02.01.29.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Jun 2022 01:29:45 -0700 (PDT)
-Date:   Thu, 2 Jun 2022 13:59:38 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
-Cc:     helgaas@kernel.org, linux-pci@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_vbadigan@quicinc.com, quic_ramkri@quicinc.com,
-        swboyd@chromium.org, Bjorn Helgaas <bhelgaas@google.com>,
-        "Saheed O. Bolarinwa" <refactormyself@gmail.com>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Rajat Jain <rajatja@google.com>, vidyas@nvidia.com,
-        kenny@panix.com
-Subject: Re: [PATCH v3] PCI/ASPM: Update LTR threshold based upon reported
- max latencies
-Message-ID: <20220602082938.GA4936@thinkpad>
-References: <1646679549-12494-1-git-send-email-quic_pmaliset@quicinc.com>
- <1654086232-17055-1-git-send-email-quic_krichai@quicinc.com>
- <91b75542-8e4c-5b91-bbfd-38ffc456c12e@quicinc.com>
+        Thu, 2 Jun 2022 05:05:40 -0400
+Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D98F22A80EB;
+        Thu,  2 Jun 2022 02:05:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1654160738; x=1685696738;
+  h=from:to:cc:subject:in-reply-to:references:date:
+   message-id:mime-version;
+  bh=4oEeBotuaVj/tAGV+5gO0EXVh2xbVUIWuPkd2EPJER8=;
+  b=W/YG8gcGJHt5XWwLbIYCqZxY48ZjEGv6ifGKwtYOgU4ioEATM+RNaukX
+   G5CyaWfYMw7wLaR2K1l5LEx43jHsVWc1EDDMG7/dGnmYUd+ydsyvuwHho
+   oDxcV5lPc91TmLkgaMF1WQd58QLoqWTXkF49MIPCd27sUgyHkmX+PHEQQ
+   euYn4S9HDuigtf2dsoHfrandeSdURfZvOE/uM+J+KS9WMPmcQuNNjZSxc
+   ZHTNl0OEVWR220azfC4wH/EQtM8yl/CT4QSpVXz40qzaP/61wACqSVa7p
+   Up2ExgvvUoTcZTOgigwMnErzuTRXXKhGsSBgMumB1Kitvc3e2nrRxpduJ
+   A==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10365"; a="275894022"
+X-IronPort-AV: E=Sophos;i="5.91,270,1647327600"; 
+   d="scan'208";a="275894022"
+Received: from orsmga006.jf.intel.com ([10.7.209.51])
+  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Jun 2022 02:05:38 -0700
+X-IronPort-AV: E=Sophos;i="5.91,270,1647327600"; 
+   d="scan'208";a="552747058"
+Received: from fbackhou-mobl.ger.corp.intel.com (HELO localhost) ([10.252.46.4])
+  by orsmga006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Jun 2022 02:05:32 -0700
+From:   Jani Nikula <jani.nikula@linux.intel.com>
+To:     Douglas Anderson <dianders@chromium.org>,
+        dri-devel@lists.freedesktop.org, Daniel Vetter <daniel@ffwll.ch>
+Cc:     dmitry.baryshkov@linaro.org, tzimmermann@suse.de,
+        linux-arm-msm@vger.kernel.org, swboyd@chromium.org,
+        ville.syrjala@linux.intel.com, quic_sbillaka@quicinc.com,
+        quic_khsieh@quicinc.com, quic_abhinavk@quicinc.com,
+        robdclark@gmail.com, freedreno@lists.freedesktop.org,
+        quic_aravindh@quicinc.com,
+        Douglas Anderson <dianders@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v4] drm/probe-helper: Default to 640x480 if no EDID on DP
+In-Reply-To: <20220601112302.v4.1.I31ec454f8d4ffce51a7708a8092f8a6f9c929092@changeid>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+References: <20220601112302.v4.1.I31ec454f8d4ffce51a7708a8092f8a6f9c929092@changeid>
+Date:   Thu, 02 Jun 2022 12:05:29 +0300
+Message-ID: <87v8tjph9i.fsf@intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <91b75542-8e4c-5b91-bbfd-38ffc456c12e@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,T_SCC_BODY_TEXT_LINE,T_SPF_TEMPERROR autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Spam-Status: No, score=-4.9 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jun 01, 2022 at 05:57:53PM +0530, Krishna Chaitanya Chundru wrote:
-> [+cc kenny, vidya]
-> 
-> On 6/1/2022 5:53 PM, Krishna chaitanya chundru wrote:
-> > In ASPM driver, LTR threshold scale and value is updating based on
+On Wed, 01 Jun 2022, Douglas Anderson <dianders@chromium.org> wrote:
+> If we're unable to read the EDID for a display because it's corrupt /
+> bogus / invalid then we'll add a set of standard modes for the
+> display. Since we have no true information about the connected
+> display, these modes are essentially guesses but better than nothing.
+> At the moment, none of the modes returned is marked as preferred, but
+> the modes are sorted such that the higher resolution modes are listed
+> first.
+>
+> When userspace sees these modes presented by the kernel it needs to
+> figure out which one to pick. At least one userspace, ChromeOS [1]
+> seems to use the rules (which seem pretty reasonable):
+> 1. Try to pick the first mode marked as preferred.
+> 2. Try to pick the mode which matches the first detailed timing
+>    descriptor in the EDID.
+> 3. If no modes were marked as preferred then pick the first mode.
+>
+> Unfortunately, userspace's rules combined with what the kernel is
+> doing causes us to fail section 4.2.2.6 (EDID Corruption Detection) of
+> the DP 1.4a Link CTS. That test case says that, while it's OK to allow
+> some implementation-specific fall-back modes if the EDID is bad that
+> userspace should _default_ to 640x480.
+>
+> Let's fix this by marking 640x480 as default for DP in the no-EDID
+> case.
+>
+> NOTES:
+> - In the discussion around v3 of this patch [2] there was talk about
+>   solving this in userspace and I even implemented a patch that would
+>   have solved this for ChromeOS, but then the discussion turned back
+>   to solving this in the kernel.
+> - Also in the discussion of v3 [2] it was requested to limit this
+> 83;40900;0c  change to just DP since folks were worried that it would break some
+>   subtle corner case on VGA or HDMI.
+>
+> [1] https://source.chromium.org/chromium/chromium/src/+/a051f741d0a15caff2251301efe081c30e0f4a96:ui/ozone/platform/drm/common/drm_util.cc;l=488
+> [2] https://lore.kernel.org/r/20220513130533.v3.1.I31ec454f8d4ffce51a7708a8092f8a6f9c929092@changeid
+>
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> ---
+> I put Abhinav's Reviewed-by tag from v2 here since this is nearly the
+> same as v2. Hope this is OK.
+>
+> Changes in v4:
+> - Code is back to v2, but limit to just DP.
+> - Beefed up the commit message.
+>
+> Changes in v3:
+> - Don't set preferred, just disable the sort.
+>
+> Changes in v2:
+> - Don't modify drm_add_modes_noedid() 'cause that'll break others
+> - Set 640x480 as preferred in drm_helper_probe_single_connector_modes()
+>
+>  drivers/gpu/drm/drm_probe_helper.c | 11 ++++++++++-
+>  1 file changed, 10 insertions(+), 1 deletion(-)
+>
+> diff --git a/drivers/gpu/drm/drm_probe_helper.c b/drivers/gpu/drm/drm_probe_helper.c
+> index 425f56280d51..75a71649b64d 100644
+> --- a/drivers/gpu/drm/drm_probe_helper.c
+> +++ b/drivers/gpu/drm/drm_probe_helper.c
+> @@ -569,8 +569,17 @@ int drm_helper_probe_single_connector_modes(struct drm_connector *connector,
+>  		count = drm_add_override_edid_modes(connector);
+>  
+>  	if (count == 0 && (connector->status == connector_status_connected ||
+> -			   connector->status == connector_status_unknown))
+> +			   connector->status == connector_status_unknown)) {
+>  		count = drm_add_modes_noedid(connector, 1024, 768);
+> +
+> +		/*
+> +		 * Section 4.2.2.6 (EDID Corruption Detection) of the DP 1.4a
+> +		 * Link CTS specifies that 640x480 (the official "failsafe"
+> +		 * mode) needs to be the default if there's no EDID.
+> +		 */
+> +		if (connector->connector_type == DRM_MODE_CONNECTOR_DisplayPort)
 
-s/is/are
+If we're doing this primarily to appease the CTS, this is fine.
 
-s/updating/updated
+If we think this is a functional improvement for regular use, I suppose
+we should consider doing this also for DRM_MODE_CONNECTOR_eDP. Which is
+irrelevant for the CTS.
 
-> > tcommon_mode and t_poweron values. In kioxia NVMe L1.2 is failing due to
-> > LTR threshold scale and value is greater values than max snoop/non-snoop
+Either way,
 
-s/is/are
+Acked-by: Jani Nikula <jani.nikula@intel.com>
 
-> > value.
-> > 
-> > Based on PCIe r4.1, sec 5.5.1, L1.2 substate must be entered when
-> > reported snoop/no-snoop values is greather than or equal to
-> > LTR_L1.2_THRESHOLD value.
-> > 
-> > Suggested-by: Prasad Malisetty  <quic_pmaliset@quicinc.com>
-> > Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-
-If you are inheriting the patch from Prasad, then you should still give the
-authorship to him (unless the patch has changed significantly). You can add
-your S-o-b tag to convey that you are carrying the patch from him.
-
-> > ---
-> > 
-> > I am takking this patch forward as prasad is no more working with our org.
-> > 
-> > Changes since v2:
-> > 	- Replaced LTRME logic with max snoop/no-snoop latencies check.
-> > Changes since v1:
-> > 	- Added missing variable declaration in v1 patch
-> > ---
-> >   drivers/pci/pcie/aspm.c | 22 +++++++++++++++++++++-
-> >   1 file changed, 21 insertions(+), 1 deletion(-)
-> > 
-> > diff --git a/drivers/pci/pcie/aspm.c b/drivers/pci/pcie/aspm.c
-> > index a96b742..4a15e50 100644
-> > --- a/drivers/pci/pcie/aspm.c
-> > +++ b/drivers/pci/pcie/aspm.c
-> > @@ -465,10 +465,19 @@ static void aspm_calc_l1ss_info(struct pcie_link_state *link,
-> >   	u32 ctl1 = 0, ctl2 = 0;
-> >   	u32 pctl1, pctl2, cctl1, cctl2;
-> >   	u32 pl1_2_enables, cl1_2_enables;
-> > +	int ltr;
-
-This could be u16 too.
-
-> > +	u16 max_snoop_lat = 0, max_nosnoop_lat = 0;
-
-No need to initialize these variables.
-
-> >   	if (!(link->aspm_support & ASPM_STATE_L1_2_MASK))
-> >   		return;
-> > +	ltr = pci_find_ext_capability(child, PCI_EXT_CAP_ID_LTR);
-> > +	if (!ltr)
-> > +		return;
-
-Is this capability implemented always?
-
-> > +
-> > +	pci_read_config_word(child, ltr + PCI_LTR_MAX_SNOOP_LAT, &max_snoop_lat);
-> > +	pci_read_config_word(child, ltr + PCI_LTR_MAX_NOSNOOP_LAT, &max_nosnoop_lat);
-> > +
-> >   	/* Choose the greater of the two Port Common_Mode_Restore_Times */
-> >   	val1 = (parent_l1ss_cap & PCI_L1SS_CAP_CM_RESTORE_TIME) >> 8;
-> >   	val2 = (child_l1ss_cap & PCI_L1SS_CAP_CM_RESTORE_TIME) >> 8;
-> > @@ -501,7 +510,18 @@ static void aspm_calc_l1ss_info(struct pcie_link_state *link,
-> >   	 */
-> >   	l1_2_threshold = 2 + 4 + t_common_mode + t_power_on;
-> >   	encode_l12_threshold(l1_2_threshold, &scale, &value);
-> > -	ctl1 |= t_common_mode << 8 | scale << 29 | value << 16;
-> > +
-> > +	/*
-> > +	 * If the max snoop and no snoop latencies are '0', then avoid updating scale
-> > +	 * and value.
-> > +	 *
-
-This looks fine but...
-
-> > +	 * Based on PCIe r4.1, sec 5.5.1, L1.2 substate must be entered when reported
-> > +	 * snoop/no-snoop values is greather than or equal to LTR_L1.2_THRESHOLD value.
-
-s/is/are
-
-What about this? What if the snoop/nosnoop latencies are not equal to zero and
-lower than LTR_L1.2_THRESHOLD?
-
-Thanks,
-Mani
-
-> > +	 */
-> > +	if ((max_snoop_lat == 0) && (max_nosnoop_lat == 0))
-> > +		ctl1 |= t_common_mode << 8;
-> > +	else
-> > +		ctl1 |= t_common_mode << 8 | scale << 29 | value << 16;
-> >   	/* Some broken devices only support dword access to L1 SS */
-> >   	pci_read_config_dword(parent, parent->l1ss + PCI_L1SS_CTL1, &pctl1);
+> +			drm_set_preferred_mode(connector, 640, 480);
+> +	}
+>  	count += drm_helper_probe_add_cmdline_mode(connector);
+>  	if (count != 0) {
+>  		ret = __drm_helper_update_and_validate(connector, maxX, maxY, &ctx);
 
 -- 
-மணிவண்ணன் சதாசிவம்
+Jani Nikula, Intel Open Source Graphics Center
