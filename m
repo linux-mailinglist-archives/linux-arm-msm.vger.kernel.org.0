@@ -2,142 +2,149 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4624553B356
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jun 2022 08:07:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 862A753B40D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jun 2022 09:09:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230332AbiFBGHT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Jun 2022 02:07:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44204 "EHLO
+        id S231561AbiFBHJR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Jun 2022 03:09:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57910 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230348AbiFBGHS (ORCPT
+        with ESMTP id S231563AbiFBHJQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Jun 2022 02:07:18 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37BA4C8BDB;
-        Wed,  1 Jun 2022 23:07:08 -0700 (PDT)
+        Thu, 2 Jun 2022 03:09:16 -0400
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0587D55BF
+        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Jun 2022 00:09:13 -0700 (PDT)
+Received: by mail-lj1-x22d.google.com with SMTP id y29so4300655ljd.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Jun 2022 00:09:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1654150028; x=1685686028;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=fACQvi/i8TUwWPnJfsD9SOnQn1pBxmzqzJNVcJqEbc4=;
-  b=CDG+3f54QN+9VXH0fuJZnRrZ4TLoypuSXcA6hl4phzNe9bh6qZ5YpgaG
-   3o4I5xE6iRWDLTHb6MvH7R90HfXIKPFTBcIgz5/0Uiq3zZ9o6m6P6VM1F
-   CLOWJfKLndvamCYfGgxz4eSsQ3m+r7cBVheMfi4FMP6HPbatolgpTIj2C
-   I=;
-Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 01 Jun 2022 23:07:08 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jun 2022 23:07:07 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 1 Jun 2022 23:07:07 -0700
-Received: from hu-pkondeti-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 1 Jun 2022 23:07:01 -0700
-Date:   Thu, 2 Jun 2022 11:36:57 +0530
-From:   Pavan Kondeti <quic_pkondeti@quicinc.com>
-To:     Krishna Kurapati <quic_kriskura@quicinc.com>
-CC:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=u+c3gcANzBU0S2++2DLVJJA31QArxjO8Cm7S9YoKYHk=;
+        b=cLHJxha2/msURnLFsR3yWxkTiLxcJgVahhpKWYXAiMgleq6+z5jhULbC+7LGk4IzwC
+         HLap4UV4PtNYji/abbVzPvtKAmQN0IittOW+jv2cXr/j4omS0A3GvIbIhR8kbFdCt/pB
+         rJDiJk8UaD6vtV49f61tys7NKw1uh4leQ9J2Nj/onkUudqggb1YHCq39zCs+nbQ3QzCy
+         C1O7b9J5WNvLJc7e4IR2s+aE01UrWmyVs3TNELRKkfDS0Uw/ksxWnvQCNDGAJOpEa3Op
+         yMh1Q5EjTm8rRRubNr/z26WawjNK55NFXcWtJlNbdQEcE952Xps7vcJY3ruWpY20K632
+         GPVQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=u+c3gcANzBU0S2++2DLVJJA31QArxjO8Cm7S9YoKYHk=;
+        b=TSy7sGHh7gzhPJ0ydICcI29VbzGeF8n9CN7KZWcr5DkaZaj6EvzZ0w2Z7l17vOtF8d
+         k71l4woFDTpycqpfJR67In1LdivzfAqECe3LQiyWYFf+fAe60Gzbn04/kBSR9/PrMO0E
+         8nBXjpXw85bGZn3bE97REuU6iPpwXvl67DzYhgpOtXRpXZwq1Frt2EVVAjAcvsvB/oJg
+         wh0YyMAnWIUiTkJt6hYVhExAKcLS9OCOmMOTjA+0uivbi3gbQxcQJARrBVAZZIO99q0Q
+         tLBrRV4pqSSG+SzBvSkzE0WPqzqQ2uqsM8q3NUB+8eJC3ps9RyGvBzQJC/7pPBKboTs4
+         MhIA==
+X-Gm-Message-State: AOAM530URCyO3maRoHA2nkwpcuNp1C9JxtC+TgULnQt9d/EL1TWAhYFh
+        Cu7fZuiIztqou6id3k3Af2IMQQ==
+X-Google-Smtp-Source: ABdhPJztGpktqqV0PJNWGuzm+9HcLnoyM7abtl++WoUKtgG+1VTbZ0L+t7g074qv7ZKS7ERo15e+7g==
+X-Received: by 2002:a2e:8e73:0:b0:255:71f4:7db6 with SMTP id t19-20020a2e8e73000000b0025571f47db6mr2011844ljk.315.1654153750987;
+        Thu, 02 Jun 2022 00:09:10 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id d25-20020a056512369900b0047255d21114sm870218lfs.67.2022.06.02.00.09.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 02 Jun 2022 00:09:10 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        "Matthias Kaehlcke" <mka@chromium.org>,
-        Mathias Nyman <mathias.nyman@intel.com>,
-        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>, <quic_pkondeti@quicinc.com>,
-        <quic_ppratap@quicinc.com>, <quic_vpulyala@quicinc.com>,
-        Sandeep Maheswaram <quic_c_sanm@quicinc.com>
-Subject: Re: [PATCH v19 2/5] usb: dwc3: core: Host wake up support from
- system suspend
-Message-ID: <20220602060657.GD20979@hu-pkondeti-hyd.qualcomm.com>
-References: <1654139515-8177-1-git-send-email-quic_kriskura@quicinc.com>
- <1654139515-8177-3-git-send-email-quic_kriskura@quicinc.com>
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>
+Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org
+Subject: [RFC PATCH v3 00/30] phy: qcom-qmp: split the QMP PHY driver
+Date:   Thu,  2 Jun 2022 10:08:39 +0300
+Message-Id: <20220602070909.1666068-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <1654139515-8177-3-git-send-email-quic_kriskura@quicinc.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Krishna,
+While adding support for the PCIe EP mode support to the QMP driver I
+couldn't help but notice that the QMP PHY driver has slowly become the a
+beast with tons of conditions and corner cases being inserted here and
+there.r
 
-On Thu, Jun 02, 2022 at 08:41:52AM +0530, Krishna Kurapati wrote:
-> From: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
-> 
-> Check wakeup-source property for dwc3 core node to set the
-> wakeup capability. Drop the device_init_wakeup call from
-> runtime suspend and resume.
-> 
-> If the dwc3 is wakeup capable, don't power down the USB PHY(s).
-> The glue drivers are expected to take care of configuring the
-> additional wakeup settings if needed based on the dwc3 wakeup
-> capability status. In some SOC designs, powering off the PHY is
-> resulting in higher leakage, so this patch save power on such boards.
-> 
-> Signed-off-by: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
-> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-> Reviewed-by: Pavankumar Kondeti <quic_pkondeti@quicinc.com>
-> ---
->  drivers/usb/dwc3/core.c | 10 +++-------
->  1 file changed, 3 insertions(+), 7 deletions(-)
-> 
-> diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
-> index e027c04..c9d7fe3 100644
-> --- a/drivers/usb/dwc3/core.c
-> +++ b/drivers/usb/dwc3/core.c
-> @@ -1787,6 +1787,7 @@ static int dwc3_probe(struct platform_device *pdev)
->  
->  	platform_set_drvdata(pdev, dwc);
->  	dwc3_cache_hwparams(dwc);
-> +	device_init_wakeup(&pdev->dev, of_property_read_bool(dev->of_node, "wakeup-source"));
->  
->  	spin_lock_init(&dwc->lock);
->  	mutex_init(&dwc->mutex);
-> @@ -1948,7 +1949,7 @@ static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
->  		dwc3_core_exit(dwc);
->  		break;
->  	case DWC3_GCTL_PRTCAP_HOST:
-> -		if (!PMSG_IS_AUTO(msg)) {
-> +		if (!PMSG_IS_AUTO(msg) && !device_can_wakeup(dwc->dev)) {
->  			dwc3_core_exit(dwc);
->  			break;
->  		}
-> @@ -2009,12 +2010,11 @@ static int dwc3_resume_common(struct dwc3 *dwc, pm_message_t msg)
->  		spin_unlock_irqrestore(&dwc->lock, flags);
->  		break;
->  	case DWC3_GCTL_PRTCAP_HOST:
-> -		if (!PMSG_IS_AUTO(msg)) {
-> +		if (!PMSG_IS_AUTO(msg) && !device_can_wakeup(dwc->dev)) {
->  			ret = dwc3_core_init_for_resume(dwc);
->  			if (ret)
->  				return ret;
->  			dwc3_set_prtcap(dwc, DWC3_GCTL_PRTCAP_HOST);
-> -			break;
->  		}
+This an RFC for an attempt to to cleanup the QMP driver by splitting the
+QMP PHY driver into five smaller drivers, each targeting a particular
+family of PHY backends (DP/combo, PCIe, UFS, USB and a separate driver
+for the MSM8996 PCIe PHY). Yes, this results in some code duplication,
+but I hope that the end result is still better than the current
+situation.
 
-We should break here for the case the device does not support wakeup and
-PM transition is system suspend. See the suspend block above where we break
-correctly.
+Changes since RFC v2:
+ - After dicussion with Vinod, revert back to the approach from RFC v1:
+   copy the source and clean it up rather than creating new drivers from
+   the blank space. This lowers the risc of breaking any of the platforms.
+ - Drop common phy-qcom-qmp-lib.c for now. The goal of this patchseries
+   is to be merged early during the development cycle to unblock further
+   QMP driver development. Additional cleanups and code unification can
+   come up later.
 
-Thanks,
-Pavan
+Changes since RFC v1:
+ - Split the patchset to be able to get through the email size
+   limitations
+ - Minor correcions to the split drivers
+
+Dmitry Baryshkov (30):
+  phy: qcom-qmp: create copies of QMP PHY driver
+  phy: qcom-qmp-combo: drop all non-combo compatibles support
+  phy: qcom-qmp-pcie: drop all non-PCIe compatibles support
+  phy: qcom-qmp-pcie-msm8996: drop all compatibles except
+    msm8996-pcie-phy
+  phy: qcom-qmp-ufs: drop all non-UFS compatibles support
+  phy: qcom-qmp-usb: drop all non-USB compatibles support
+  phy: qcom-qmp-combo: change symbol prefix to qcom_qmp_phy_combo
+  phy: qcom-qmp-pcie: change symbol prefix to qcom_qmp_phy_pcie
+  phy: qcom-qmp-pcie: change symbol prefix to qcom_qmp_phy_pcie_msm8996
+  phy: qcom-qmp-ufs: change symbol prefix to qcom_qmp_phy_ufs
+  phy: qcom-qmp-usb: change symbol prefix to qcom_qmp_phy_usb
+  phy: qcom-qmp: switch to new split QMP PHY driver
+  phy: qcom-qmp: drop old QMP PHY driver source
+  phy: qcom-qmp-combo: drop support for PCIe,UFS PHY types
+  phy: qcom-qmp-pcie: drop support for non-PCIe PHY types
+  phy: qcom-qmp-pcie-msm8996: drop support for non-PCIe PHY types
+  phy: qcom-qmp-ufs: drop support for non-UFS PHY types
+  phy: qcom-qmp-usb: drop support for non-USB PHY types
+  phy: qcom-qmp-combo: cleanup the driver
+  phy: qcom-qmp-pcie: cleanup the driver
+  phy: qcom-qmp-pcie-msm8996: cleanup the driver
+  phy: qcom-qmp-ufs: cleanup the driver
+  phy: qcom-qmp-usb: cleanup the driver
+  phy: qcom-qmp-pcie: drop multi-PHY support
+  phy: qcom-qmp-ufs: drop multi-PHY support
+  phy: qcom-qmp-usb: drop multi-PHY support
+  phy: qcom-qmp-combo: use bulk reset_control API
+  phy: qcom-qmp-pcie: use bulk reset_control API
+  phy: qcom-qmp-pcie-msm8996: use bulk reset_control API
+  phy: qcom-qmp-usb: use bulk reset_control API
+
+ drivers/phy/qualcomm/Makefile                 |    8 +-
+ drivers/phy/qualcomm/phy-qcom-qmp-combo.c     | 2579 +++++++
+ .../phy/qualcomm/phy-qcom-qmp-pcie-msm8996.c  | 1081 +++
+ drivers/phy/qualcomm/phy-qcom-qmp-pcie.c      | 2404 +++++++
+ drivers/phy/qualcomm/phy-qcom-qmp-ufs.c       | 1390 ++++
+ drivers/phy/qualcomm/phy-qcom-qmp-usb.c       | 2751 +++++++
+ drivers/phy/qualcomm/phy-qcom-qmp.c           | 6350 -----------------
+ 7 files changed, 10212 insertions(+), 6351 deletions(-)
+ create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+ create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-pcie-msm8996.c
+ create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+ create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+ create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-usb.c
+ delete mode 100644 drivers/phy/qualcomm/phy-qcom-qmp.c
+
+-- 
+2.35.1
+
