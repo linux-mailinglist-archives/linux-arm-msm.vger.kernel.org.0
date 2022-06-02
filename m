@@ -2,71 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6D3AE53C0D1
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jun 2022 00:31:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AB10053C11F
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jun 2022 00:55:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235911AbiFBWbY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Jun 2022 18:31:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38104 "EHLO
+        id S239824AbiFBWvT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Jun 2022 18:51:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37796 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234670AbiFBWbX (ORCPT
+        with ESMTP id S239696AbiFBWvS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Jun 2022 18:31:23 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94962BC13
-        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Jun 2022 15:31:21 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id u26so9249424lfd.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Jun 2022 15:31:21 -0700 (PDT)
+        Thu, 2 Jun 2022 18:51:18 -0400
+Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC8B137A8E
+        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Jun 2022 15:51:16 -0700 (PDT)
+Received: by mail-lj1-x22b.google.com with SMTP id m25so3432164lji.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Jun 2022 15:51:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=QLsdHvNPdGjzenCAtFB5+kLc32Fh43hJrVp78U5dd3c=;
-        b=Wz1iGqTiwfrpxiLgj73tACgYI4BZVcJYk6xYLmo2gm/LpmOedLdVP4XWDNR2zVjy05
-         9u1vxfJAM+XDC54WK5mJ42X5MNshZ1CrkQ0aQa0ehL4i/bTdyLgGqddLzdZUI18y+2wf
-         R4/VzQcIWCwkcDYQOgleJWsmbx8SYWg3f0OatRAXYksol2IBxOk22Ebs6R19D+8Px2Mp
-         UdWyk91DSjyqcF6OEv48DZnzAmPBidetBnXnqPYwGojRbXNWhp43SOw5+cWpTgFZgdhr
-         WRT2pCp96IwU4Inzupp0Aj3WrHsH8oQ8d5hR1BVmH8s8Axggh5t0zOKh4CE+rPGFMc9c
-         Tnvw==
+        bh=9NkYAD2C4UUETYtAXX2dOGJoXAZJaIMNUMYDdg5Tj+Y=;
+        b=KtLZVD/626GPNcYcWWT1YbQVuA06Q9prmTtWJKk92ZGqPre2TC0gHwCTpdwuyXnkEY
+         NObwfABqtzgf3n336Jc54XGf8QYhsUEDAqQ83YZ5P1+I0EOdCZquers5aZp21mf7Pjix
+         SYi1aD7S2eHXzUY71RsZNfr7HSinfjBvF/pU+3Ctup6SmZlCiLSDk904kbZRDXpxgDNh
+         jgNYawbW3InkM/ZBvDYAaoEHKaDCgs4Yu+ZJDcPe2NVhOyFVSOlh8kO6kGl1u8c9F5Zb
+         Utt954xBWqN5hMMzLtTC/hZvA4GSS1S/IOnUNLXSHRxs2zG08Vo8QrV+i8uvqiwsV3x4
+         C1wg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=QLsdHvNPdGjzenCAtFB5+kLc32Fh43hJrVp78U5dd3c=;
-        b=kunpcv5i8B5lWEzKLYSKymM9CTOx7uoHgmVsdhfoxiFMSnPj+bnRjNr0uSx0lVcYMM
-         1sGg24bouAOvFGkXX2/Vhs6cxD1DbUcsxgjWpMSlFEYkHvEtD08STEX5ljZlPnU4WBat
-         C7dxwfhRuBslEkx6dsVcykZwA68JlQ5ucd+3SkIh4CCSbBdprp/J/PEqB43G1P/58IS9
-         jikP98Ws8oxXvAdDiAkG1I1lzqohxg1bVmaMf8rvhAyefi3YKQBQuaMog27a1j1uFXQa
-         F4xzLYN7C/vHxQcJrdQTQ6v9+C77Jba4oeGCe0y61h+zijwGDBntca3xY3Mu+umGMVTM
-         G4ig==
-X-Gm-Message-State: AOAM533nQ4QuSR8p4hfXjqhleqzw+MOC89clSvdjsNGZPGSCATVT7Bf3
-        p5ia3vk/gYO1YSSyZVXNhwDEfrVbc6CzMSCh
-X-Google-Smtp-Source: ABdhPJzwbMjPrGwXzXbOAq9OydlJhxlH6xaJmrXSlr6XxT//Z90jNDPRcdqXo24vOZtjsM1wmqypAA==
-X-Received: by 2002:a05:6512:3187:b0:478:5b6b:2a18 with SMTP id i7-20020a056512318700b004785b6b2a18mr5043224lfe.30.1654209079912;
-        Thu, 02 Jun 2022 15:31:19 -0700 (PDT)
+        bh=9NkYAD2C4UUETYtAXX2dOGJoXAZJaIMNUMYDdg5Tj+Y=;
+        b=WS1bfvYZrbfQ8Ym30POoVqt3t9wg7f46fzdvZGBJgV54SkSDH1J3oxIyfdvsTLu1d0
+         g9+EYimIkOVIxasyaxaRSp7Ou3BN0eUB2y798GAcBsH04sQHRVCrGvwg/edisAq3ZWt7
+         yjhdsEY3+8+T9ik6n2YuAlTz5zKlHpRfxTIli5W24pNARq0P7aTeWc3FjpCSow8zDHDQ
+         AJWtiIJBN+T7hX2/FRmxwxj7f/9FnnvEjEIoLNghdVKfoV+QI/vrCSz+zxlnhVGVywDF
+         Vnrh9HCqHQBzfZ8DHNXjl7XzcroVul1kZbnZ3tNaMyBt9T1qsAmvzuOZxhL1/frVKNfG
+         kidw==
+X-Gm-Message-State: AOAM530OeALDUCwCH+BnY0L5eTgA96ssuj0NKAZmRo5d8bZEA4xp2j2O
+        i8agtJTV3fCx5wKc05zA9xsybA==
+X-Google-Smtp-Source: ABdhPJwV0Vr69l6IGoIcphyRWsMWQKkGS7rBC8LYQMhPUh1Uc5BkCP/VrFSlJHAVB7iy2bFwyHIWhA==
+X-Received: by 2002:a05:651c:2008:b0:255:594a:cef9 with SMTP id s8-20020a05651c200800b00255594acef9mr10486338ljo.144.1654210275065;
+        Thu, 02 Jun 2022 15:51:15 -0700 (PDT)
 Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id v10-20020ac2558a000000b00478df9f4d64sm996844lfg.227.2022.06.02.15.31.19
+        by smtp.gmail.com with ESMTPSA id c11-20020a056512238b00b00479079c72bbsm1069562lfv.277.2022.06.02.15.51.13
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 02 Jun 2022 15:31:19 -0700 (PDT)
-Message-ID: <0b3574a3-1dfb-842f-e147-c6522fa30f11@linaro.org>
-Date:   Fri, 3 Jun 2022 01:31:18 +0300
+        Thu, 02 Jun 2022 15:51:14 -0700 (PDT)
+Message-ID: <beaaeb57-c144-a680-eea6-20a950d25205@linaro.org>
+Date:   Fri, 3 Jun 2022 01:51:13 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.9.0
-Subject: Re: [PATCH 2/3] drm/msm/dpu: Add MISR register support for interface
+Subject: Re: [Freedreno] [PATCH 3/3] drm/msm/dpu: Add interface support for
+ CRC debugfs
 Content-Language: en-GB
 To:     Jessica Zhang <quic_jesszhan@quicinc.com>,
         freedreno@lists.freedesktop.org
-Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        robdclark@gmail.com, seanpaul@chromium.org, swboyd@chromium.org,
-        quic_aravindh@quicinc.com, quic_abhinavk@quicinc.com
+Cc:     linux-arm-msm@vger.kernel.org, quic_abhinavk@quicinc.com,
+        dri-devel@lists.freedesktop.org, swboyd@chromium.org,
+        robdclark@gmail.com, seanpaul@chromium.org,
+        quic_aravindh@quicinc.com
 References: <20220527185407.162-1-quic_jesszhan@quicinc.com>
- <20220527185407.162-3-quic_jesszhan@quicinc.com>
- <d72845af-f444-af2e-b834-6e4c754a1094@linaro.org>
- <f81a64fc-c80c-2bc9-a9e3-8eb4a1eccf03@quicinc.com>
+ <20220527185407.162-4-quic_jesszhan@quicinc.com>
+ <266fdac1-db57-a729-3d73-42d2b34017cd@linaro.org>
+ <aa4617f6-65fd-73c6-61b1-686a72c515d7@quicinc.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <f81a64fc-c80c-2bc9-a9e3-8eb4a1eccf03@quicinc.com>
+In-Reply-To: <aa4617f6-65fd-73c6-61b1-686a72c515d7@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-4.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -79,167 +81,258 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 27/05/2022 23:11, Jessica Zhang wrote:
+On 28/05/2022 01:23, Jessica Zhang wrote:
 > 
 > 
-> On 5/27/2022 12:38 PM, Dmitry Baryshkov wrote:
+> On 5/27/2022 12:46 PM, Dmitry Baryshkov wrote:
 >> On 27/05/2022 21:54, Jessica Zhang wrote:
->>> Add support for setting MISR registers within the interface
+>>> Add support for writing CRC values for the interface block to
+>>> the debugfs by calling the necessary MISR setup/collect methods.
 >>>
 >>> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
 >>> ---
->>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c | 55 ++++++++++++++++++++-
->>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h |  8 ++-
->>>   2 files changed, 61 insertions(+), 2 deletions(-)
+>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c    | 43 ++++++++++++++-
+>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h    |  3 +
+>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 61 +++++++++++++++++++++
+>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h | 22 ++++++++
+>>>   4 files changed, 128 insertions(+), 1 deletion(-)
 >>>
->>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c 
->>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
->>> index 3f4d2c6e1b45..29aaeff9eacd 100644
->>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
->>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
->>> @@ -1,5 +1,7 @@
->>>   // SPDX-License-Identifier: GPL-2.0-only
->>> -/* Copyright (c) 2015-2018, The Linux Foundation. All rights reserved.
->>> +/*
+>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c 
+>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+>>> index ae09466663cf..e830fb1e910d 100644
+>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+>>> @@ -79,6 +79,8 @@ static enum dpu_crtc_crc_source 
+>>> dpu_crtc_parse_crc_source(const char *src_name)
+>>>       if (!strcmp(src_name, "auto") ||
+>>>           !strcmp(src_name, "lm"))
+>>>           return DPU_CRTC_CRC_SOURCE_LAYER_MIXER;
+>>> +    if (!strcmp(src_name, "intf"))
+>>> +        return DPU_CRTC_CRC_SOURCE_INTF;
+>>>       return DPU_CRTC_CRC_SOURCE_INVALID;
+>>>   }
+>>> @@ -94,8 +96,18 @@ static int dpu_crtc_verify_crc_source(struct 
+>>> drm_crtc *crtc,
+>>>           return -EINVAL;
+>>>       }
+>>> -    if (source == DPU_CRTC_CRC_SOURCE_LAYER_MIXER)
+>>> +    if (source == DPU_CRTC_CRC_SOURCE_LAYER_MIXER) {
+>>>           *values_cnt = crtc_state->num_mixers;
+>>> +    } else if (source == DPU_CRTC_CRC_SOURCE_INTF) {
+>>> +        struct drm_encoder *drm_enc = get_encoder_from_crtc(crtc);
+>>
+>> Let's do this correctly from the beginning. The CRTC can drive several 
+>> encoders. Do we want to get CRC from all of them or just from the 
+>> first one?
+> 
+> In the case of multiple encoders, it would be better to collect CRCs 
+> from all of them.
+
+Then this should become a loop.
+
+> 
+>>
+>>> +
+>>> +        if (!drm_enc) {
+>>> +            DRM_ERROR("no encoder found for crtc %d\n", crtc->index);
+>>> +            return -ENODATA;
+>>> +        }
+>>> +
+>>> +        *values_cnt = dpu_encoder_get_num_phys(drm_enc);
+>>> +    }
+>>>       return 0;
+>>>   }
+>>> @@ -116,6 +128,18 @@ static void dpu_crtc_setup_lm_misr(struct 
+>>> dpu_crtc_state *crtc_state)
+>>>       }
+>>>   }
+>>> +static void dpu_crtc_setup_encoder_misr(struct drm_crtc *crtc)
+>>> +{
+>>> +    struct drm_encoder *drm_enc = get_encoder_from_crtc(crtc);
+>>> +
+>>> +    if (!drm_enc) {
+>>> +        DRM_ERROR("no encoder found for crtc %d\n", crtc->index);
+>>> +        return;
+>>> +    }
+>>> +
+>>> +    dpu_encoder_setup_misr(drm_enc);
+>>> +}
+>>> +
+>>>   static int dpu_crtc_set_crc_source(struct drm_crtc *crtc, const 
+>>> char *src_name)
+>>>   {
+>>>       enum dpu_crtc_crc_source source = 
+>>> dpu_crtc_parse_crc_source(src_name);
+>>> @@ -164,6 +188,8 @@ static int dpu_crtc_set_crc_source(struct 
+>>> drm_crtc *crtc, const char *src_name)
+>>>       if (source == DPU_CRTC_CRC_SOURCE_LAYER_MIXER)
+>>>           dpu_crtc_setup_lm_misr(crtc_state);
+>>> +    else if (source == DPU_CRTC_CRC_SOURCE_INTF)
+>>> +        dpu_crtc_setup_encoder_misr(crtc);
+>>>   cleanup:
+>>>       drm_modeset_unlock(&crtc->mutex);
+>>> @@ -212,6 +238,18 @@ static int dpu_crtc_get_lm_crc(struct drm_crtc 
+>>> *crtc, struct dpu_crtc_state *crt
+>>>               drm_crtc_accurate_vblank_count(crtc), crcs);
+>>>   }
+>>> +static int dpu_crtc_get_encoder_crc(struct drm_crtc *crtc)
+>>> +{
+>>> +    struct drm_encoder *drm_enc =  get_encoder_from_crtc(crtc);
+>>> +
+>>> +    if (!drm_enc) {
+>>> +        DRM_ERROR("no encoder found for crtc %d\n", crtc->index);
+>>> +        return -EINVAL;
+>>> +    }
+>>> +
+>>> +    return dpu_encoder_get_crc(drm_enc);
+>>> +}
+>>> +
+>>>   static int dpu_crtc_get_crc(struct drm_crtc *crtc)
+>>>   {
+>>>       struct dpu_crtc_state *crtc_state;
+>>> @@ -227,6 +265,9 @@ static int dpu_crtc_get_crc(struct drm_crtc *crtc)
+>>>       if (crtc_state->crc_source == DPU_CRTC_CRC_SOURCE_LAYER_MIXER)
+>>>           return dpu_crtc_get_lm_crc(crtc, crtc_state);
+>>> +    if (crtc_state->crc_source == DPU_CRTC_CRC_SOURCE_INTF)
+>>> +        return dpu_crtc_get_encoder_crc(crtc);
+>>> +
+>>>       return 0;
+>>>   }
+>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h 
+>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
+>>> index b8785c394fcc..a60af034905d 100644
+>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
+>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
+>>> @@ -1,5 +1,6 @@
+>>>   /* SPDX-License-Identifier: GPL-2.0-only */
+>>>   /*
 >>> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights 
 >>> reserved.
->>> + * Copyright (c) 2015-2018, The Linux Foundation. All rights reserved.
+>>>    * Copyright (c) 2015-2021 The Linux Foundation. All rights reserved.
+>>>    * Copyright (C) 2013 Red Hat
+>>>    * Author: Rob Clark <robdclark@gmail.com>
+>>> @@ -73,11 +74,13 @@ struct dpu_crtc_smmu_state_data {
+>>>    * enum dpu_crtc_crc_source: CRC source
+>>>    * @DPU_CRTC_CRC_SOURCE_NONE: no source set
+>>>    * @DPU_CRTC_CRC_SOURCE_LAYER_MIXER: CRC in layer mixer
+>>> + * @DPU_CRTC_CRC_SOURCE_INTF: CRC in phys interface
+>>>    * @DPU_CRTC_CRC_SOURCE_INVALID: Invalid source
 >>>    */
->>>   #include "dpu_hwio.h"
->>> @@ -67,6 +69,14 @@
->>>   #define INTF_CFG2_DATABUS_WIDEN    BIT(0)
->>>   #define INTF_CFG2_DATA_HCTL_EN    BIT(4)
->>> +#define INTF_MISR_CTRL            0x180
->>> +#define INTF_MISR_SIGNATURE        0x184
->>> +#define INTF_MISR_FRAME_COUNT_MASK    0xFF
->>> +#define INTF_MISR_CTRL_ENABLE        BIT(8)
->>> +#define INTF_MISR_CTRL_STATUS        BIT(9)
->>> +#define INTF_MISR_CTRL_STATUS_CLEAR    BIT(10)
->>> +#define INTF_MISR_CTRL_FREE_RUN_MASK    BIT(31)
+>>>   enum dpu_crtc_crc_source {
+>>>       DPU_CRTC_CRC_SOURCE_NONE = 0,
+>>>       DPU_CRTC_CRC_SOURCE_LAYER_MIXER,
+>>> +    DPU_CRTC_CRC_SOURCE_INTF,
+>>>       DPU_CRTC_CRC_SOURCE_MAX,
+>>>       DPU_CRTC_CRC_SOURCE_INVALID = -1
+>>>   };
+>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c 
+>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+>>> index 52516eb20cb8..7740515f462d 100644
+>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+>>> @@ -14,6 +14,7 @@
+>>>   #include <drm/drm_crtc.h>
+>>>   #include <drm/drm_file.h>
+>>> +#include <drm/drm_vblank.h>
+>>>   #include <drm/drm_probe_helper.h>
+>>>   #include "msm_drv.h"
+>>> @@ -225,6 +226,66 @@ bool dpu_encoder_is_widebus_enabled(const struct 
+>>> drm_encoder *drm_enc)
+>>>       return dpu_enc->wide_bus_en;
+>>>   }
+>>> +int dpu_encoder_get_num_phys(const struct drm_encoder *drm_enc)
+>>> +{
+>>> +    struct dpu_encoder_virt *dpu_enc;
+>>> +
+>>> +    dpu_enc = to_dpu_encoder_virt(drm_enc);
+>>> +
+>>> +    return dpu_enc->num_phys_encs;
+>>> +}
+>>> +
+>>> +void dpu_encoder_setup_misr(const struct drm_encoder *drm_enc)
+>>> +{
+>>> +    struct dpu_encoder_virt *dpu_enc;
+>>> +
+>>> +    int i;
+>>> +
+>>> +    dpu_enc = to_dpu_encoder_virt(drm_enc);
+>>> +
+>>> +    for (i = 0; i < dpu_enc->num_phys_encs; i++) {
+>>> +        struct dpu_encoder_phys *phys = dpu_enc->phys_encs[i];
+>>> +
+>>> +        if (!phys->hw_intf || !phys->hw_intf->ops.setup_misr)
+>>> +            continue;
 >>
->> I'm tempted to ask to move these bits to some common header. Is there 
->> any other hardware block which uses the same bitfields to control MISR?
+>> Does WB support CRC?
 > 
-> dpu_hw_lm.c has similar macros here [1] for _ENABLE, _STATUS, 
-> _STATUS_CLEAR, and _FREE_RUN_MASK
+> AFAIK, no.
+> 
+>>
+>>> +
+>>> +        phys->hw_intf->ops.setup_misr(phys->hw_intf, true, 1);
+>>> +    }
+>>> +}
+>>> +
+>>> +int dpu_encoder_get_crc(const struct drm_encoder *drm_enc)
+>>> +{
+>>> +    struct dpu_encoder_virt *dpu_enc;
+>>> +    u32 crcs[MAX_PHYS_ENCODERS_PER_VIRTUAL];
+>>> +
+>>> +    int i, rc;
+>>> +
+>>> +    if (!drm_enc->crtc) {
+>>> +        DRM_ERROR("no crtc found for encoder %d\n", drm_enc->index);
+>>> +        return -EINVAL;
+>>> +    }
+>>> +
+>>> +    dpu_enc = to_dpu_encoder_virt(drm_enc);
+>>> +
+>>> +    for (i = 0; i < dpu_enc->num_phys_encs; i++) {
+>>> +        struct dpu_encoder_phys *phys = dpu_enc->phys_encs[i];
+>>> +
+>>> +        if (!phys->hw_intf || !phys->hw_intf->ops.collect_misr)
+>>> +            continue;
+>>> +
+>>> +        rc = phys->hw_intf->ops.collect_misr(phys->hw_intf, &crcs[i]);
+>>
+>> This doesn't look fully correct. Do we need to skip the indices for 
+>> the phys without a backing hw_intf?
+> 
+> Sorry if I'm misunderstanding your question, but don't we need to have a 
+> backing hw_intf (and skip if there isn't any) since the methods for 
+> collecting/setting MISR registers is within the hw_intf?
+
+Yes. So the question if we should skip the phys and leave the crcs[i] 
+untouched, skip the phys and sset crcs[i] to 0 or change 
+dpu_crtc_parse_crc_source() to return the number of intf-backed 
+phys_enc's and do not skip any crcs[i].
+
+
+> 
+>>
+>>> +
+>>
+>> Extra empty line.
+> 
+> Noted
+> 
+>>
+>>> +        if (rc) {
+>>> +            if (rc != -ENODATA)
+>>
+>> Do we need to handle ENODATA in any specific way (like zeroing the 
+>> crcs[i])? If not, I'd suggest to drop this return code. Let's make an 
+>> error always an error.
+> 
+> This is a carry-over from this change [1]. We wanted to have the ENODATA 
+> check to avoid spamming the driver debug logs when CRC is disabled for 
+> this block.
 > 
 > [1] 
-> https://gitlab.freedesktop.org/drm/msm/-/blob/msm-next/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c#L31 
+> https://gitlab.freedesktop.org/drm/msm/-/commit/3ce8bdca394fc606b55e7c5ed779d171aaae5d09 
 
-Please move bit definitions to dpu_hw_util.h. According to what I 
-observe, this might be useful.
+Thanks for the reminder. I commented this in the previous patch now.
 
->>> +
->>>   static const struct dpu_intf_cfg *_intf_offset(enum dpu_intf intf,
->>>           const struct dpu_mdss_cfg *m,
->>>           void __iomem *addr,
->>> @@ -319,6 +329,47 @@ static u32 dpu_hw_intf_get_line_count(struct 
->>> dpu_hw_intf *intf)
->>>       return DPU_REG_READ(c, INTF_LINE_COUNT);
->>>   }
->>> +static void dpu_hw_intf_setup_misr(struct dpu_hw_intf *intf, bool 
->>> enable, u32 frame_count)
->>> +{
->>> +    struct dpu_hw_blk_reg_map *c = &intf->hw;
->>> +    u32 config = 0;
->>> +
->>> +    DPU_REG_WRITE(c, INTF_MISR_CTRL, INTF_MISR_CTRL_STATUS_CLEAR);
->>> +
->>> +    /* Clear old MISR value (in case it's read before a new value is 
->>> calculated)*/
->>> +    wmb();
->>> +
->>> +    if (enable) {
->>> +        config = (frame_count & INTF_MISR_FRAME_COUNT_MASK) |
->>> +                INTF_MISR_CTRL_ENABLE | INTF_MISR_CTRL_FREE_RUN_MASK;
->>> +
->>> +        DPU_REG_WRITE(c, INTF_MISR_CTRL, config);
->>> +    } else {
->>> +        DPU_REG_WRITE(c, INTF_MISR_CTRL, 0);
->>> +    }
-
-This should also be abstracted. Please merge these functions with LM's 
-and add corresponding helpers to dpu_hw_util.c
-
->>> +}
->>> +
->>> +static int dpu_hw_intf_collect_misr(struct dpu_hw_intf *intf, u32 
->>> *misr_value)
->>> +{
->>> +    struct dpu_hw_blk_reg_map *c = &intf->hw;
->>> +    u32 ctrl = 0;
->>> +
->>> +    if (!misr_value)
->>> +        return -EINVAL;
->>> +
->>> +    ctrl = DPU_REG_READ(c, INTF_MISR_CTRL);
->>> +
->>> +    if (!(ctrl & INTF_MISR_CTRL_ENABLE))
->>> +        return -ENODATA;
-
-As the users of collect_misr() are going to ignore the -ENODATA, I think 
-it would be worth changing this to set *misr_value to 0 and return 0 
-here. It would reduce the amount of boilerplate code.
-
->>> +
->>> +    if (!(ctrl & INTF_MISR_CTRL_STATUS))
->>> +        return -EINVAL;
->>> +
->>> +    *misr_value = DPU_REG_READ(c, INTF_MISR_SIGNATURE);
->>> +
->>> +    return 0;
->>> +}
->>> +
->>>   static void _setup_intf_ops(struct dpu_hw_intf_ops *ops,
->>>           unsigned long cap)
->>>   {
->>> @@ -329,6 +380,8 @@ static void _setup_intf_ops(struct 
->>> dpu_hw_intf_ops *ops,
->>>       ops->get_line_count = dpu_hw_intf_get_line_count;
->>>       if (cap & BIT(DPU_INTF_INPUT_CTRL))
->>>           ops->bind_pingpong_blk = dpu_hw_intf_bind_pingpong_blk;
->>> +    ops->setup_misr = dpu_hw_intf_setup_misr;
->>> +    ops->collect_misr = dpu_hw_intf_collect_misr;
->>>   }
->>>   struct dpu_hw_intf *dpu_hw_intf_init(enum dpu_intf idx,
->>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h 
->>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
->>> index 7b2d96ac61e8..8d0e7b509260 100644
->>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
->>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
->>> @@ -1,5 +1,7 @@
->>>   /* SPDX-License-Identifier: GPL-2.0-only */
->>> -/* Copyright (c) 2015-2018, The Linux Foundation. All rights reserved.
->>> +/*
->>> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights 
->>> reserved.
->>> + * Copyright (c) 2015-2018, The Linux Foundation. All rights reserved.
->>>    */
->>>   #ifndef _DPU_HW_INTF_H
->>> @@ -57,6 +59,8 @@ struct intf_status {
->>>    * @ get_line_count: reads current vertical line counter
->>>    * @bind_pingpong_blk: enable/disable the connection with pingpong 
->>> which will
->>>    *                     feed pixels to this interface
->>> + * @setup_misr: enable/disable MISR
->>> + * @collect_misr: read MISR signature
->>>    */
->>>   struct dpu_hw_intf_ops {
->>>       void (*setup_timing_gen)(struct dpu_hw_intf *intf,
->>> @@ -77,6 +81,8 @@ struct dpu_hw_intf_ops {
->>>       void (*bind_pingpong_blk)(struct dpu_hw_intf *intf,
->>>               bool enable,
->>>               const enum dpu_pingpong pp);
->>> +    void (*setup_misr)(struct dpu_hw_intf *intf, bool enable, u32 
->>> frame_count);
->>> +    int (*collect_misr)(struct dpu_hw_intf *intf, u32 *misr_value);
->>>   };
->>>   struct dpu_hw_intf {
->>
->>
->> -- 
->> With best wishes
->> Dmitry
 
 
 -- 
