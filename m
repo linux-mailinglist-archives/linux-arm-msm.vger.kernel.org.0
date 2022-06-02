@@ -2,63 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5B6BB53BA18
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jun 2022 15:50:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A41F553BA2A
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jun 2022 15:55:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235093AbiFBNuI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Jun 2022 09:50:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51412 "EHLO
+        id S235453AbiFBNzZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Jun 2022 09:55:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46630 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234021AbiFBNuH (ORCPT
+        with ESMTP id S231286AbiFBNzY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Jun 2022 09:50:07 -0400
-Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4EFC511825
-        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Jun 2022 06:50:04 -0700 (PDT)
-Received: by mail-pj1-x102b.google.com with SMTP id gd1so4994899pjb.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Jun 2022 06:50:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=OlapCjAlU4I5kLgfiiO4AZkc55Tmg0Yf5lSNYuvMqzg=;
-        b=ptbvIB6+JaPo3WR4db1Nv6KzsbAEOFIjbVUIfmDs+jSX0+AfXNGdC1itM44ycfMJHZ
-         CNQzoNd9S5rBzk3DnbkuwOx+dXflPgLjehwHSfwjfAObIEd71e3pib+lXcm5P/DeDGD9
-         wwgEseJ5Tl96cZbmUDRx9bATBfQxXk6IkHXyT34uyxy95ZpltVm7hHjypl2ECO5veucT
-         +wdg6K5yZ30oHKRBWYpIw+6aI5DnB8thkI0OO+3H4XneJjVf6/Kut41cZgMWggE5BjVn
-         kj6LHRyoMdsLwAG3c9c27vPULUclgCEmsij6dW7cawQ1Y/R7JLp+Y+bfHcA4LNfi15bt
-         7RHQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=OlapCjAlU4I5kLgfiiO4AZkc55Tmg0Yf5lSNYuvMqzg=;
-        b=XbVk1tdx//MQUnjIRxF1eeBJl2lOhQTV4gcFJSzp+sty6zpcxr8Mza6avwdDVQNVux
-         Xy0pBmqgp0BosGTya3zKdL58N6l/qathSQkbeoyb4uhkbbd0oF7YfPao4yNyZm3V+h3F
-         AE9QAZokoeD9rvzr/AZZqlMMMXyKRIR9pTs+QlsaEEzPK36oEgABJMMgCayjSzqpGsiB
-         OAbkjKV9ThW8XReObhkYdj5F1rvQyJElpyepwykIbjVSSYC4QUPPJoTU0H1u91ndnwwz
-         PKn3vdzwD1Fb7dAMzywRPBrYPT7FoIDJ1qsAFNgUpHAyuzYcXTeKvqat0W7fU03BL3gA
-         ZyFA==
-X-Gm-Message-State: AOAM530uTmwCq+Cn4TIwixXT2KyC9IeSMULQYBWmFCjKcT3hCb8Fa5DK
-        +kE0Plf00jYXjynTnYdcWVEDQvk5jfQ6YogZgyXNb90BE04=
-X-Google-Smtp-Source: ABdhPJzM1kj9cg29NOIJfw74O0YGhmVug9TcitNFTjserhPrC6AYPQKI/cOLDaVG69coDAsoLgiwgya9n+0ax5CQ9Eg=
-X-Received: by 2002:a17:902:a583:b0:15d:197b:9259 with SMTP id
- az3-20020a170902a58300b0015d197b9259mr5102686plb.51.1654177803703; Thu, 02
- Jun 2022 06:50:03 -0700 (PDT)
+        Thu, 2 Jun 2022 09:55:24 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0742E29C;
+        Thu,  2 Jun 2022 06:55:24 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id BE16DB81ED6;
+        Thu,  2 Jun 2022 13:55:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7931BC385A5;
+        Thu,  2 Jun 2022 13:55:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1654178121;
+        bh=/RDmOcN35BWi7GR4EvLaIKmq0NmJ0DnyM3Q1jTsh+IE=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=d4v/S/mA/vOcvEjSZgk4NLp6cb9Gs9xzJu+6eyKbmoLKGhAAbUIM//EzosgFGx7pr
+         pwbt1RjLh1eu+o0EbMgWrXgYQQ6oILLEvQyGFZlBCZg3uOSzbFvwkYNno6p1rwC0Mm
+         5HP2XKMAF8czYzmkNWCVoLZa1fQAkMAI5jvetUFDrEvv+M3BDruCx2J87qFVf5Xu4n
+         oG/7Wox8Zp/eSkU1ZSJFHE3391ecggiNUvd+dYC2wadhETAK88gM7kk/HCVdPW7/Xh
+         uwmTBpc3eD2K5DXbBJgEWeOkQpFpePzZ3rodRnpFzUymbCXADzCdIcj2D48YPeeVbQ
+         G3KNSlaT/HJFA==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1nwlIE-0005kq-9l; Thu, 02 Jun 2022 15:55:18 +0200
+Date:   Thu, 2 Jun 2022 15:55:18 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH v12 4/8] PCI: dwc: split MSI IRQ parsing/allocation to a
+ separate function
+Message-ID: <YpjBRjSafpvNcpe0@hovoldconsulting.com>
+References: <20220523181836.2019180-1-dmitry.baryshkov@linaro.org>
+ <20220523181836.2019180-5-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
-References: <20220602131528.2246339-1-vladimir.zapolskiy@linaro.org>
-In-Reply-To: <20220602131528.2246339-1-vladimir.zapolskiy@linaro.org>
-From:   Loic Poulain <loic.poulain@linaro.org>
-Date:   Thu, 2 Jun 2022 15:49:27 +0200
-Message-ID: <CAMZdPi-iK0_OHdtdz9gakUoBqLJQyzjvntBQfvxObYPz-8e-DQ@mail.gmail.com>
-Subject: Re: [PATCH] i2c: qcom-cci: simplify access to bus data structure
-To:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Cc:     Robert Foss <robert.foss@linaro.org>, linux-i2c@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220523181836.2019180-5-dmitry.baryshkov@linaro.org>
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -66,52 +69,58 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 2 Jun 2022 at 15:15, Vladimir Zapolskiy
-<vladimir.zapolskiy@linaro.org> wrote:
->
-> Trivial non-functional change, which adds an alias to an extensively
-> used data location.
->
-> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+On Mon, May 23, 2022 at 09:18:32PM +0300, Dmitry Baryshkov wrote:
+> Split handling of MSI host IRQs to a separate dw_pcie_msi_host_init()
+> function. The code is complex enough to warrant a separate function.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->  drivers/i2c/busses/i2c-qcom-cci.c | 28 +++++++++++++++-------------
->  1 file changed, 15 insertions(+), 13 deletions(-)
->
-> diff --git a/drivers/i2c/busses/i2c-qcom-cci.c b/drivers/i2c/busses/i2c-qcom-cci.c
-> index 8d078bdb5c1b..c4a4a4b54131 100644
-> --- a/drivers/i2c/busses/i2c-qcom-cci.c
-> +++ b/drivers/i2c/busses/i2c-qcom-cci.c
-> @@ -541,6 +541,7 @@ static int cci_probe(struct platform_device *pdev)
->                 return -ENOENT;
->
->         for_each_available_child_of_node(dev->of_node, child) {
-> +               struct cci_master *master;
->                 u32 idx;
->
->                 ret = of_property_read_u32(child, "reg", &idx);
-> @@ -555,27 +556,28 @@ static int cci_probe(struct platform_device *pdev)
->                         continue;
->                 }
->
-> -               cci->master[idx].adap.quirks = &cci->data->quirks;
-> -               cci->master[idx].adap.algo = &cci_algo;
-> -               cci->master[idx].adap.dev.parent = dev;
-> -               cci->master[idx].adap.dev.of_node = of_node_get(child);
-> -               cci->master[idx].master = idx;
-> -               cci->master[idx].cci = cci;
-> +               master = &cci->master[idx];
-> +               master->adap.quirks = &cci->data->quirks;
-> +               master->adap.algo = &cci_algo;
-> +               master->adap.dev.parent = dev;
-> +               master->adap.dev.of_node = of_node_get(child);
-> +               master->master = idx;
-> +               master->cci = cci;
->
-> -               i2c_set_adapdata(&cci->master[idx].adap, &cci->master[idx]);
-> -               snprintf(cci->master[idx].adap.name,
-> -                        sizeof(cci->master[idx].adap.name), "Qualcomm-CCI");
-> +               i2c_set_adapdata(&master->adap, master);
-> +               snprintf(master->adap.name, sizeof(master->adap.name),
-> +                        "Qualcomm-CCI");
+>  .../pci/controller/dwc/pcie-designware-host.c | 98 +++++++++++--------
+>  1 file changed, 56 insertions(+), 42 deletions(-)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
+> index 8dd913f69de7..a076abe6611c 100644
+> --- a/drivers/pci/controller/dwc/pcie-designware-host.c
+> +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
+> @@ -288,6 +288,60 @@ static void dw_pcie_msi_init(struct pcie_port *pp)
+>  	dw_pcie_writel_dbi(pci, PCIE_MSI_ADDR_HI, upper_32_bits(msi_target));
+>  }
+>  
+> +static int dw_pcie_msi_host_init(struct pcie_port *pp)
+> +{
+> +	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+> +	struct device *dev = pci->dev;
+> +	struct platform_device *pdev = to_platform_device(dev);
+> +	int ret;
+> +	u32 ctrl, num_ctrls;
+> +
+> +	num_ctrls = pp->num_vectors / MAX_MSI_IRQS_PER_CTRL;
+> +	for (ctrl = 0; ctrl < num_ctrls; ctrl++)
+> +		pp->irq_mask[ctrl] = ~0;
+> +
+> +	if (!pp->msi_irq[0]) {
+> +		int irq = platform_get_irq_byname_optional(pdev, "msi");
+> +
+> +		if (irq < 0) {
+> +			irq = platform_get_irq(pdev, 0);
+> +			if (irq < 0)
+> +				return irq;
+> +		}
+> +		pp->msi_irq[0] = irq;
+> +	}
+> +
+> +	pp->msi_irq_chip = &dw_pci_msi_bottom_irq_chip;
+> +
+> +	ret = dw_pcie_allocate_domains(pp);
+> +	if (ret)
+> +		return ret;
+> +
+> +	for (ctrl = 0; ctrl < num_ctrls; ctrl++)
+> +		if (pp->msi_irq[ctrl] > 0)
+> +			irq_set_chained_handler_and_data(pp->msi_irq[ctrl],
+> +							 dw_chained_msi_isr,
+> +							 pp);
 
-Let's use a single line for snprintf now.
+Reminder: brackets.
+
+Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
