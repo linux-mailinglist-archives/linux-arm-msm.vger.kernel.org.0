@@ -2,68 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DB02D53BED6
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jun 2022 21:33:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9E46353BEE3
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jun 2022 21:35:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233753AbiFBTdG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Jun 2022 15:33:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38900 "EHLO
+        id S238644AbiFBTfq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Jun 2022 15:35:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49954 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238577AbiFBTdE (ORCPT
+        with ESMTP id S238675AbiFBTfp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Jun 2022 15:33:04 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0EAA0D67
-        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Jun 2022 12:33:02 -0700 (PDT)
+        Thu, 2 Jun 2022 15:35:45 -0400
+Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A8F9220FC
+        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Jun 2022 12:35:44 -0700 (PDT)
+Received: by mail-pj1-x102a.google.com with SMTP id j7so5766426pjn.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Jun 2022 12:35:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1654198383; x=1685734383;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=nQ/56R0NYpYi5TUuNxSnr1qC3joSH9bQnSMhS3X4DuU=;
-  b=I4uLJNbp0kGQfpsmiENJm2/ihlcwTh7ZVX6oBVKdHJNXiYh1m1qvr2LK
-   WIQ8SLCCM8TwvByp/YJ3fDAHzN+yldBb/Im61V0fkuTik4cJ0TcJf13bz
-   Hl2bYpBzqQD1KFcCJjKtX336pjOZCVx969H5rXWh4pUARpZ7eWI4Zo2m2
-   c=;
-Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
-  by alexa-out.qualcomm.com with ESMTP; 02 Jun 2022 12:33:02 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Jun 2022 12:33:01 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Thu, 2 Jun 2022 12:33:01 -0700
-Received: from [10.38.242.41] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Thu, 2 Jun 2022
- 12:32:58 -0700
-Message-ID: <9f147be5-085d-6459-9c8b-2471b2a30ed0@quicinc.com>
-Date:   Thu, 2 Jun 2022 12:32:56 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH v2 6/7] drm/msm/dpu: constify struct dpu_mdss_cfg
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-CC:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=cx/w23z3LclUVeD0RGwvqrmhkO0x9NOq8RLmyjTtPOM=;
+        b=lYVfR+YOq3qnx85Svvnsb2n7uiC27e2K2siHC/xyiklXI2m0N0FdTE4teMxk2RBxmm
+         8ifjjL4B7GGGUjzg261ufFGrAeYN06AC7Np+7rv8QsII/6wMLAcdEcIEGvhQIdMewr4M
+         kojvmoOEF9+Nen9ZvBM5a4t7oP6Ly0/7s5G6E=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=cx/w23z3LclUVeD0RGwvqrmhkO0x9NOq8RLmyjTtPOM=;
+        b=tmKh7v98PgjqhrXg7mVTpCM56ZG4RDt3XxO+hsPRNTBDRjkyOD4xk/OMYLn55CmbJx
+         J+aynU5H1GLSCmhXuBNzPB4tnAEj/dBvZVjVbHB9IBs5KGNYfM343S9SHBExcGvL6NXD
+         4sEZpUJnsduNUEcQ+5h4bUz4qhzq0bm+DwNcAYkkDobuVnfq6e7+gtmND747B4ruhl+b
+         gwlY2JAVynFOjy2wsoYjW2Xn+J5cp6bgcKELVWeJK4RVVcRODRHSwf0dl4LlG63vy8N3
+         /ajsPMBt9HuYv4dcDkhkGtnFeD4J6kGEXm+aOWrBMuTRAjvEvv8narRbAtvBZyjVH2nO
+         5l/w==
+X-Gm-Message-State: AOAM533m46rbCHHvF5ldNNe7HOakkXeyPD+ydFha3P8tmv7eDzjcWLfh
+        J0bFA856W8+FbPsMF/cSAa0qBA==
+X-Google-Smtp-Source: ABdhPJxE722AkWZmxdhlAA/lfEu+HZH5UVTLDBfMV3ZCHmXDg3l6lmRd50aXEJM5XF73P7Xl/H8gLA==
+X-Received: by 2002:a17:902:ed53:b0:166:3e43:7522 with SMTP id y19-20020a170902ed5300b001663e437522mr5530822plb.170.1654198543994;
+        Thu, 02 Jun 2022 12:35:43 -0700 (PDT)
+Received: from localhost ([2620:15c:11a:202:51d0:66d6:2fb5:b395])
+        by smtp.gmail.com with UTF8SMTPSA id m12-20020a170902d18c00b001616e19537esm3809964plb.213.2022.06.02.12.35.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 02 Jun 2022 12:35:43 -0700 (PDT)
+Date:   Thu, 2 Jun 2022 12:35:42 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Krishna Kurapati <quic_kriskura@quicinc.com>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20220602133039.1739490-1-dmitry.baryshkov@linaro.org>
- <20220602133039.1739490-7-dmitry.baryshkov@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20220602133039.1739490-7-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-7.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Mathias Nyman <mathias.nyman@intel.com>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, quic_pkondeti@quicinc.com,
+        quic_ppratap@quicinc.com, quic_vpulyala@quicinc.com,
+        Sandeep Maheswaram <quic_c_sanm@quicinc.com>
+Subject: Re: [PATCH v20 2/5] usb: dwc3: core: Host wake up support from
+ system suspend
+Message-ID: <YpkRDi2m7cLaKYEf@google.com>
+References: <1654158277-12921-1-git-send-email-quic_kriskura@quicinc.com>
+ <1654158277-12921-3-git-send-email-quic_kriskura@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1654158277-12921-3-git-send-email-quic_kriskura@quicinc.com>
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -72,372 +81,90 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Krishna,
 
+with this version I see xHCI errors on my SC7180 based system, like
+these:
 
-On 6/2/2022 6:30 AM, Dmitry Baryshkov wrote:
-> Mark struct dpu_mdss_cfg instance as a const pointer. This is mostly a
-> preparation for the next patch.
+[   65.352605] xhci-hcd xhci-hcd.13.auto: xHC error in resume, USBSTS 0x401, Reinit
+
+[  101.307155] xhci-hcd xhci-hcd.13.auto: WARN: xHC CMD_RUN timeout
+
+After resume a downstream hub isn't enumerated again.
+
+So far I didn't see those with v13, but I aso saw the first error with
+v16.
+
+I can do some more digging next week.
+
+On Thu, Jun 02, 2022 at 01:54:34PM +0530, Krishna Kurapati wrote:
+> From: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> Check wakeup-source property for dwc3 core node to set the
+> wakeup capability. Drop the device_init_wakeup call from
+> runtime suspend and resume.
+> 
+> If the dwc3 is wakeup capable, don't power down the USB PHY(s).
+> The glue drivers are expected to take care of configuring the
+> additional wakeup settings if needed based on the dwc3 wakeup
+> capability status. In some SOC designs, powering off the PHY is
+> resulting in higher leakage, so this patch save power on such boards.
+> 
+> Signed-off-by: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
+> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+> Reviewed-by: Pavankumar Kondeti <quic_pkondeti@quicinc.com>
 > ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c       |  4 ++--
->   drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h       |  4 ++--
->   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c         |  4 ++--
->   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c |  2 +-
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c      | 11 +++--------
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h      |  9 ++-------
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c          |  4 ++--
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.h          |  2 +-
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c   |  4 ++--
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h   |  2 +-
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c         |  4 ++--
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h         |  4 ++--
->   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c             |  8 +++-----
->   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h             |  2 +-
->   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c           |  2 +-
->   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c              |  2 +-
->   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h              |  2 +-
->   17 files changed, 29 insertions(+), 41 deletions(-)
+>  drivers/usb/dwc3/core.c | 9 +++------
+>  1 file changed, 3 insertions(+), 6 deletions(-)
 > 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-> index 31767d0f7353..1d9d83d7b99e 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-> @@ -468,7 +468,7 @@ static const struct file_operations dpu_core_perf_mode_fops = {
->   int dpu_core_perf_debugfs_init(struct dpu_kms *dpu_kms, struct dentry *parent)
->   {
->   	struct dpu_core_perf *perf = &dpu_kms->perf;
-> -	struct dpu_mdss_cfg *catalog = perf->catalog;
-> +	const struct dpu_mdss_cfg *catalog = perf->catalog;
->   	struct dentry *entry;
->   
->   	entry = debugfs_create_dir("core_perf", parent);
-> @@ -517,7 +517,7 @@ void dpu_core_perf_destroy(struct dpu_core_perf *perf)
->   
->   int dpu_core_perf_init(struct dpu_core_perf *perf,
->   		struct drm_device *dev,
-> -		struct dpu_mdss_cfg *catalog,
-> +		const struct dpu_mdss_cfg *catalog,
->   		struct clk *core_clk)
->   {
->   	perf->dev = dev;
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
-> index 8dfcc6db7176..e3795995e145 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
-> @@ -68,7 +68,7 @@ struct dpu_core_perf_tune {
->   struct dpu_core_perf {
->   	struct drm_device *dev;
->   	struct dentry *debugfs_root;
-> -	struct dpu_mdss_cfg *catalog;
-> +	const struct dpu_mdss_cfg *catalog;
->   	struct clk *core_clk;
->   	u64 core_clk_rate;
->   	u64 max_core_clk_rate;
-> @@ -119,7 +119,7 @@ void dpu_core_perf_destroy(struct dpu_core_perf *perf);
->    */
->   int dpu_core_perf_init(struct dpu_core_perf *perf,
->   		struct drm_device *dev,
-> -		struct dpu_mdss_cfg *catalog,
-> +		const struct dpu_mdss_cfg *catalog,
->   		struct clk *core_clk);
->   
->   struct dpu_kms;
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> index 52516eb20cb8..460df2a4831c 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> @@ -1207,7 +1207,7 @@ static void dpu_encoder_virt_disable(struct drm_encoder *drm_enc)
->   	mutex_unlock(&dpu_enc->enc_lock);
->   }
->   
-> -static enum dpu_intf dpu_encoder_get_intf(struct dpu_mdss_cfg *catalog,
-> +static enum dpu_intf dpu_encoder_get_intf(const struct dpu_mdss_cfg *catalog,
->   		enum dpu_intf_type type, u32 controller_id)
->   {
->   	int i = 0;
-> @@ -1224,7 +1224,7 @@ static enum dpu_intf dpu_encoder_get_intf(struct dpu_mdss_cfg *catalog,
->   	return INTF_MAX;
->   }
->   
-> -static enum dpu_wb dpu_encoder_get_wb(struct dpu_mdss_cfg *catalog,
-> +static enum dpu_wb dpu_encoder_get_wb(const struct dpu_mdss_cfg *catalog,
->   		enum dpu_intf_type type, u32 controller_id)
->   {
->   	int i = 0;
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
-> index 1e4a4822fbf4..4088c9e17d50 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
-> @@ -103,7 +103,7 @@ static void dpu_encoder_phys_wb_set_qos(struct dpu_encoder_phys *phys_enc)
->   {
->   	struct dpu_hw_wb *hw_wb;
->   	struct dpu_hw_wb_qos_cfg qos_cfg;
-> -	struct dpu_mdss_cfg *catalog;
-> +	const struct dpu_mdss_cfg *catalog;
->   	const struct dpu_qos_lut_tbl *qos_lut_tb;
->   
->   	if (!phys_enc || !phys_enc->dpu_kms || !phys_enc->dpu_kms->catalog) {
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> index 5470b8b14b0a..4fa16fdae17d 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> @@ -1985,17 +1985,12 @@ static const struct dpu_mdss_hw_cfg_handler cfg_handler[] = {
->   	{ .hw_rev = DPU_HW_VER_720, .cfg_init = sc7280_cfg_init},
->   };
->   
-> -void dpu_hw_catalog_deinit(struct dpu_mdss_cfg *dpu_cfg)
-> -{
-> -	kfree(dpu_cfg);
-> -}
+> diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
+> index e027c04..b99d3c2 100644
+> --- a/drivers/usb/dwc3/core.c
+> +++ b/drivers/usb/dwc3/core.c
+> @@ -1787,6 +1787,7 @@ static int dwc3_probe(struct platform_device *pdev)
+>  
+>  	platform_set_drvdata(pdev, dwc);
+>  	dwc3_cache_hwparams(dwc);
+> +	device_init_wakeup(&pdev->dev, of_property_read_bool(dev->of_node, "wakeup-source"));
+>  
+>  	spin_lock_init(&dwc->lock);
+>  	mutex_init(&dwc->mutex);
+> @@ -1948,7 +1949,7 @@ static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
+>  		dwc3_core_exit(dwc);
+>  		break;
+>  	case DWC3_GCTL_PRTCAP_HOST:
+> -		if (!PMSG_IS_AUTO(msg)) {
+> +		if (!PMSG_IS_AUTO(msg) && !device_can_wakeup(dwc->dev)) {
+>  			dwc3_core_exit(dwc);
+>  			break;
+>  		}
+> @@ -2009,7 +2010,7 @@ static int dwc3_resume_common(struct dwc3 *dwc, pm_message_t msg)
+>  		spin_unlock_irqrestore(&dwc->lock, flags);
+>  		break;
+>  	case DWC3_GCTL_PRTCAP_HOST:
+> -		if (!PMSG_IS_AUTO(msg)) {
+> +		if (!PMSG_IS_AUTO(msg) && !device_can_wakeup(dwc->dev)) {
+>  			ret = dwc3_core_init_for_resume(dwc);
+>  			if (ret)
+>  				return ret;
+> @@ -2086,8 +2087,6 @@ static int dwc3_runtime_suspend(struct device *dev)
+>  	if (ret)
+>  		return ret;
+>  
+> -	device_init_wakeup(dev, true);
 > -
-> -struct dpu_mdss_cfg *dpu_hw_catalog_init(u32 hw_rev)
-> +const struct dpu_mdss_cfg *dpu_hw_catalog_init(struct device *dev, u32 hw_rev)
->   {
->   	int i;
->   	struct dpu_mdss_cfg *dpu_cfg;
->   
-> -	dpu_cfg = kzalloc(sizeof(*dpu_cfg), GFP_KERNEL);
-> +	dpu_cfg = devm_kzalloc(dev, sizeof(*dpu_cfg), GFP_KERNEL);
->   	if (!dpu_cfg)
->   		return ERR_PTR(-ENOMEM);
->   
-> @@ -2007,7 +2002,7 @@ struct dpu_mdss_cfg *dpu_hw_catalog_init(u32 hw_rev)
->   	}
->   
->   	DPU_ERROR("unsupported chipset id:%X\n", hw_rev);
-> -	dpu_hw_catalog_deinit(dpu_cfg);
-> +
->   	return ERR_PTR(-ENODEV);
->   }
->   
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> index 60b403ac9f0f..c317fa27daa0 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> @@ -884,16 +884,11 @@ struct dpu_mdss_hw_cfg_handler {
->   /**
->    * dpu_hw_catalog_init - dpu hardware catalog init API retrieves
->    * hardcoded target specific catalog information in config structure
-> + * @dev:          DPU device
->    * @hw_rev:       caller needs provide the hardware revision.
->    *
->    * Return: dpu config structure
->    */
-> -struct dpu_mdss_cfg *dpu_hw_catalog_init(u32 hw_rev);
+>  	return 0;
+>  }
+>  
+> @@ -2096,8 +2095,6 @@ static int dwc3_runtime_resume(struct device *dev)
+>  	struct dwc3     *dwc = dev_get_drvdata(dev);
+>  	int		ret;
+>  
+> -	device_init_wakeup(dev, false);
 > -
-> -/**
-> - * dpu_hw_catalog_deinit - dpu hardware catalog cleanup
-> - * @dpu_cfg:      pointer returned from init function
-> - */
-> -void dpu_hw_catalog_deinit(struct dpu_mdss_cfg *dpu_cfg);
-> +const struct dpu_mdss_cfg *dpu_hw_catalog_init(struct device *dev, u32 hw_rev);
->   
->   #endif /* _DPU_HW_CATALOG_H */
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c
-> index 6f20d6b6dddd..184a1b27b13d 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c
-> @@ -158,7 +158,7 @@ static void dpu_hw_dsc_config_thresh(struct dpu_hw_dsc *hw_dsc,
->   }
->   
->   static struct dpu_dsc_cfg *_dsc_offset(enum dpu_dsc dsc,
-> -				       struct dpu_mdss_cfg *m,
-> +				       const struct dpu_mdss_cfg *m,
->   				       void __iomem *addr,
->   				       struct dpu_hw_blk_reg_map *b)
->   {
-> @@ -186,7 +186,7 @@ static void _setup_dsc_ops(struct dpu_hw_dsc_ops *ops,
->   };
->   
->   struct dpu_hw_dsc *dpu_hw_dsc_init(enum dpu_dsc idx, void __iomem *addr,
-> -				   struct dpu_mdss_cfg *m)
-> +				   const struct dpu_mdss_cfg *m)
->   {
->   	struct dpu_hw_dsc *c;
->   	struct dpu_dsc_cfg *cfg;
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.h
-> index 164e5f5b1002..5fab8bbba764 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.h
-> @@ -64,7 +64,7 @@ struct dpu_hw_dsc {
->    * Returns: Error code or allocated dpu_hw_dsc context
->    */
->   struct dpu_hw_dsc *dpu_hw_dsc_init(enum dpu_dsc idx, void __iomem *addr,
-> -				   struct dpu_mdss_cfg *m);
-> +				   const struct dpu_mdss_cfg *m);
->   
->   /**
->    * dpu_hw_dsc_destroy - destroys dsc driver context
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
-> index 01bb2d84c3a0..d83503ea2419 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
-> @@ -398,7 +398,7 @@ u32 dpu_core_irq_read(struct dpu_kms *dpu_kms, int irq_idx)
->   	return intr_status;
->   }
->   
-> -static void __intr_offset(struct dpu_mdss_cfg *m,
-> +static void __intr_offset(const struct dpu_mdss_cfg *m,
->   		void __iomem *addr, struct dpu_hw_blk_reg_map *hw)
->   {
->   	hw->base_off = addr;
-> @@ -406,7 +406,7 @@ static void __intr_offset(struct dpu_mdss_cfg *m,
->   }
->   
->   struct dpu_hw_intr *dpu_hw_intr_init(void __iomem *addr,
-> -		struct dpu_mdss_cfg *m)
-> +		const struct dpu_mdss_cfg *m)
->   {
->   	struct dpu_hw_intr *intr;
->   	int nirq = MDP_INTR_MAX * 32;
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
-> index 4154c5e2b4ae..46443955443c 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
-> @@ -67,7 +67,7 @@ struct dpu_hw_intr {
->    * @m :   pointer to mdss catalog data
->    */
->   struct dpu_hw_intr *dpu_hw_intr_init(void __iomem *addr,
-> -		struct dpu_mdss_cfg *m);
-> +		const struct dpu_mdss_cfg *m);
->   
->   /**
->    * dpu_hw_intr_destroy(): Cleanup interrutps hw object
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
-> index ab7f1a4cc578..da4c7e4f304b 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
-> @@ -761,7 +761,7 @@ int _dpu_hw_sspp_init_debugfs(struct dpu_hw_pipe *hw_pipe, struct dpu_kms *kms,
->   
->   static const struct dpu_sspp_cfg *_sspp_offset(enum dpu_sspp sspp,
->   		void __iomem *addr,
-> -		struct dpu_mdss_cfg *catalog,
-> +		const struct dpu_mdss_cfg *catalog,
->   		struct dpu_hw_blk_reg_map *b)
->   {
->   	int i;
-> @@ -782,7 +782,7 @@ static const struct dpu_sspp_cfg *_sspp_offset(enum dpu_sspp sspp,
->   }
->   
->   struct dpu_hw_pipe *dpu_hw_sspp_init(enum dpu_sspp idx,
-> -		void __iomem *addr, struct dpu_mdss_cfg *catalog,
-> +		void __iomem *addr, const struct dpu_mdss_cfg *catalog,
->   		bool is_virtual_pipe)
->   {
->   	struct dpu_hw_pipe *hw_pipe;
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
-> index a81e16657d61..7f7338fcddeb 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
-> @@ -360,7 +360,7 @@ struct dpu_hw_sspp_ops {
->   struct dpu_hw_pipe {
->   	struct dpu_hw_blk base;
->   	struct dpu_hw_blk_reg_map hw;
-> -	struct dpu_mdss_cfg *catalog;
-> +	const struct dpu_mdss_cfg *catalog;
->   	const struct dpu_mdp_cfg *mdp;
->   
->   	/* Pipe */
-> @@ -381,7 +381,7 @@ struct dpu_kms;
->    * @is_virtual_pipe: is this pipe virtual pipe
->    */
->   struct dpu_hw_pipe *dpu_hw_sspp_init(enum dpu_sspp idx,
-> -		void __iomem *addr, struct dpu_mdss_cfg *catalog,
-> +		void __iomem *addr, const struct dpu_mdss_cfg *catalog,
->   		bool is_virtual_pipe);
->   
->   /**
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> index 2b9d931474e0..bba29c31f843 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> @@ -747,7 +747,7 @@ static int _dpu_kms_drm_obj_init(struct dpu_kms *dpu_kms)
->   	unsigned int num_encoders;
->   
->   	struct msm_drm_private *priv;
-> -	struct dpu_mdss_cfg *catalog;
-> +	const struct dpu_mdss_cfg *catalog;
->   
->   	int primary_planes_idx = 0, cursor_planes_idx = 0, i, ret;
->   	int max_crtc_count;
-> @@ -844,8 +844,6 @@ static void _dpu_kms_hw_destroy(struct dpu_kms *dpu_kms)
->   		dpu_rm_destroy(&dpu_kms->rm);
->   	dpu_kms->rm_init = false;
->   
-> -	if (dpu_kms->catalog)
-> -		dpu_hw_catalog_deinit(dpu_kms->catalog);
->   	dpu_kms->catalog = NULL;
->   
->   	if (dpu_kms->vbif[VBIF_NRT])
-> @@ -907,7 +905,7 @@ static void dpu_kms_mdp_snapshot(struct msm_disp_state *disp_state, struct msm_k
->   {
->   	int i;
->   	struct dpu_kms *dpu_kms;
-> -	struct dpu_mdss_cfg *cat;
-> +	const struct dpu_mdss_cfg *cat;
->   	struct dpu_hw_mdp *top;
->   
->   	dpu_kms = to_dpu_kms(kms);
-> @@ -1095,7 +1093,7 @@ static int dpu_kms_hw_init(struct msm_kms *kms)
->   
->   	pr_info("dpu hardware revision:0x%x\n", dpu_kms->core_rev);
->   
-> -	dpu_kms->catalog = dpu_hw_catalog_init(dpu_kms->core_rev);
-> +	dpu_kms->catalog = dpu_hw_catalog_init(dev->dev, dpu_kms->core_rev);
->   	if (IS_ERR_OR_NULL(dpu_kms->catalog)) {
->   		rc = PTR_ERR(dpu_kms->catalog);
->   		if (!dpu_kms->catalog)
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-> index 832a0769f2e7..ed80ed6784ee 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-> @@ -69,7 +69,7 @@ struct dpu_kms {
->   	struct msm_kms base;
->   	struct drm_device *dev;
->   	int core_rev;
-> -	struct dpu_mdss_cfg *catalog;
-> +	const struct dpu_mdss_cfg *catalog;
->   
->   	/* io/register spaces: */
->   	void __iomem *mmio, *vbif[VBIF_MAX], *reg_dma;
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> index d8048b6862f9..71a4bdcf4ad8 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> @@ -106,7 +106,7 @@ struct dpu_plane {
->   	bool is_rt_pipe;
->   	bool is_virtual;
->   	struct list_head mplane_list;
-> -	struct dpu_mdss_cfg *catalog;
-> +	const struct dpu_mdss_cfg *catalog;
->   };
->   
->   static const uint64_t supported_format_modifiers[] = {
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-> index 06f03e7081bc..73b3442e7467 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-> @@ -95,7 +95,7 @@ int dpu_rm_destroy(struct dpu_rm *rm)
->   }
->   
->   int dpu_rm_init(struct dpu_rm *rm,
-> -		struct dpu_mdss_cfg *cat,
-> +		const struct dpu_mdss_cfg *cat,
->   		void __iomem *mmio)
->   {
->   	int rc, i;
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
-> index 2f34a31d8d0d..59de72b381f9 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
-> @@ -42,7 +42,7 @@ struct dpu_rm {
->    * @Return: 0 on Success otherwise -ERROR
->    */
->   int dpu_rm_init(struct dpu_rm *rm,
-> -		struct dpu_mdss_cfg *cat,
-> +		const struct dpu_mdss_cfg *cat,
->   		void __iomem *mmio);
->   
->   /**
+>  	ret = dwc3_resume_common(dwc, PMSG_AUTO_RESUME);
+>  	if (ret)
+>  		return ret;
+> -- 
+> 2.7.4
+> 
