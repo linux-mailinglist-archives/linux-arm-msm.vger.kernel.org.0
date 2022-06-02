@@ -2,240 +2,193 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 530C753B6E4
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jun 2022 12:21:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CAE7B53B77F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jun 2022 12:50:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233674AbiFBKUf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Jun 2022 06:20:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54840 "EHLO
+        id S233951AbiFBKuP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Jun 2022 06:50:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36048 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233656AbiFBKUd (ORCPT
+        with ESMTP id S232178AbiFBKuO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Jun 2022 06:20:33 -0400
-Received: from mail-qv1-xf2e.google.com (mail-qv1-xf2e.google.com [IPv6:2607:f8b0:4864:20::f2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 707B52AD9AD
-        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Jun 2022 03:20:31 -0700 (PDT)
-Received: by mail-qv1-xf2e.google.com with SMTP id h18so3227670qvj.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Jun 2022 03:20:31 -0700 (PDT)
+        Thu, 2 Jun 2022 06:50:14 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B301414020;
+        Thu,  2 Jun 2022 03:50:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=7xoHOj1xulzu3SD29GS2YKQ7gqDLAbM1bPx44xbkClg=;
-        b=DSUMru50+KeenCQPQGfny1v3Ey5MgeseAd9dW+EgqLIhT5Gun0C2qi5V6HvzJ5dfK5
-         9oH3esl6la/adwnvP6zQTXAtyI6MeB5Vn3s4G9c7nfdnvmZU68JdsXs9eSrgfZN0ARmr
-         OH4fJBOSBRFdAoQUTC0UmFlnZdJeWfANDij0q8ZYbmsIjvCYD37WNd6KvnWCjQg1Pcmm
-         yQzaVJUapywWsiOmrpKJKcU3NmpijxcNaQfuPopeCPySTuVY/EP8jp4kJP3frZm4sYID
-         wyF6YnL3J4kBLP8rFV9NzS+iiQmy/DR3I5kP+NpDI82a5eisygvFLfkpj5YCyOMUSffL
-         mvEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=7xoHOj1xulzu3SD29GS2YKQ7gqDLAbM1bPx44xbkClg=;
-        b=JK5wiCCsXzFNGQqI+2XDqZMuQEJZvv9oS01qLt2MUT4txHh5N/Yg7oDYIszRgYwYxZ
-         Vkp+ApO/qPfELjWwj0muc4JNIWKHcAAn87jb13FgcM84gzuKXdzzwxI/MS6NZ+g4bgKL
-         dT/B3yQsrjGEzndGG15CPYzy23o8nnNx6RRQS2eI2RJqAxMoaZm4ecT1gegmDiGwIgl5
-         o6dtIwd5JkfiOWlhGxcqxXpe5xkj4i6NclnKALXdsMpQtEL+j1qcgoUMIDy4xRacb/Jk
-         VDjdafpJzvWFWQV0fSvXGUe7GjasuYWwnUg+PlF1+im+a+hWfHY1c3ul7HWop4SAXBId
-         QTPw==
-X-Gm-Message-State: AOAM530iRYXxFR2Lk4BPvsODMirk6b8giVgvW5UxZGDE5EtvQdkDP3/Y
-        pQvUWQzAgjLFLwzHBUz9DGtRE1radO15oFfzKTjxOA==
-X-Google-Smtp-Source: ABdhPJw1Rch5C49/vloTHmi2dY/GNe+3O0wK53nKBS9fZMA13PpgfQcEMtkcYegIIDx2qb2wp1k+tGsQ77F5VsPPLIo=
-X-Received: by 2002:ad4:5aa4:0:b0:465:2b11:cfd with SMTP id
- u4-20020ad45aa4000000b004652b110cfdmr5204455qvg.55.1654165230535; Thu, 02 Jun
- 2022 03:20:30 -0700 (PDT)
-MIME-Version: 1.0
-References: <20220601220747.1145095-1-marijn.suijten@somainline.org> <20220601220747.1145095-4-marijn.suijten@somainline.org>
-In-Reply-To: <20220601220747.1145095-4-marijn.suijten@somainline.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Thu, 2 Jun 2022 13:20:19 +0300
-Message-ID: <CAA8EJpomtbN0+ocD2pRbkYriUY4D9OnjgoFzL9qNHhPm3Uz5cQ@mail.gmail.com>
-Subject: Re: [PATCH v2 03/11] clk: fixed-factor: Introduce *clk_hw_register_fixed_factor_parent_hw()
-To:     Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     phone-devel@vger.kernel.org, Stephen Boyd <sboyd@kernel.org>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rajeev Nandan <quic_rajeevny@quicinc.com>,
-        Vladimir Lypak <vladimir.lypak@gmail.com>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Jonathan Marek <jonathan@marek.ca>, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1654167014; x=1685703014;
+  h=from:to:cc:subject:date:message-id;
+  bh=ijYj7RlDEKtmAr/NFLRL0Xa0SCVOGON0rxxx2IQa9a0=;
+  b=AAbHiPn/KVC4Z3oNwjmAj5JcSoIZlQ9JnM+SIp+Dwer4kq4PmktI8Foi
+   1uMi4waN5IbhDGyQApyZExHj8V0bc8Vh456u+Bx0SKJ9qcrO3049L81sI
+   4jD8A906wsJ76WUeY2xUBjNO9RPKbBrkcIXmRxsBIIQv7nCO81lpULnUI
+   k=;
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 02 Jun 2022 03:50:13 -0700
+X-QCInternal: smtphost
+Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 02 Jun 2022 03:50:12 -0700
+X-QCInternal: smtphost
+Received: from mkrishn-linux.qualcomm.com ([10.204.66.35])
+  by ironmsg02-blr.qualcomm.com with ESMTP; 02 Jun 2022 16:20:00 +0530
+Received: by mkrishn-linux.qualcomm.com (Postfix, from userid 438394)
+        id B94451FA84; Thu,  2 Jun 2022 16:19:59 +0530 (IST)
+From:   Krishna <quic_mkrishn@quicinc.com>
+To:     devicetree@vger.kernel.org
+Cc:     Krishna Manikandan <quic_mkrishn@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+        quic_kalyant@quicinc.com, robh+dt@kernel.org
+Subject: [PATCH v1] dt-bindings: msm: update maintainers list with proper id
+Date:   Thu,  2 Jun 2022 16:19:58 +0530
+Message-Id: <1654166998-14907-1-git-send-email-quic_mkrishn@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-Spam-Status: No, score=-4.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 2 Jun 2022 at 01:07, Marijn Suijten
-<marijn.suijten@somainline.org> wrote:
->
-> Add the devres and non-devres variant of
-> clk_hw_register_fixed_factor_parent_hw() for registering a fixed factor
-> clock with clk_hw parent pointer instead of parent name.
->
-> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+From: Krishna Manikandan <quic_mkrishn@quicinc.com>
 
-Two minor comments below. It's up to Stephen to check if they are
-correct or not.
+Use quic id instead of codeaurora id in maintainers list
+for display devicetree bindings.
 
-> ---
->  drivers/clk/clk-fixed-factor.c | 57 ++++++++++++++++++++++++++++------
->  include/linux/clk-provider.h   |  8 +++++
->  2 files changed, 55 insertions(+), 10 deletions(-)
->
-> diff --git a/drivers/clk/clk-fixed-factor.c b/drivers/clk/clk-fixed-factor.c
-> index 54942d758ee6..fabb98d0cdb2 100644
-> --- a/drivers/clk/clk-fixed-factor.c
-> +++ b/drivers/clk/clk-fixed-factor.c
-> @@ -78,7 +78,8 @@ static void devm_clk_hw_register_fixed_factor_release(struct device *dev, void *
->
->  static struct clk_hw *
->  __clk_hw_register_fixed_factor(struct device *dev, struct device_node *np,
-> -               const char *name, const char *parent_name, int index,
-> +               const char *name, const char *parent_name,
-> +               const struct clk_hw *parent_hw, int index,
->                 unsigned long flags, unsigned int mult, unsigned int div,
->                 bool devm)
->  {
-> @@ -108,7 +109,9 @@ __clk_hw_register_fixed_factor(struct device *dev, struct device_node *np,
->         init.name = name;
->         init.ops = &clk_fixed_factor_ops;
->         init.flags = flags;
-> -       if (parent_name)
-> +       if (parent_hw)
-> +               init.parent_hws = &parent_hw;
-> +       else if (parent_name)
->                 init.parent_names = &parent_name;
+Signed-off-by: Krishna Manikandan <quic_mkrishn@quicinc.com>
+---
+ Documentation/devicetree/bindings/display/msm/dpu-sc7180.yaml          | 2 +-
+ Documentation/devicetree/bindings/display/msm/dpu-sc7280.yaml          | 2 +-
+ Documentation/devicetree/bindings/display/msm/dpu-sdm845.yaml          | 2 +-
+ Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml | 2 +-
+ Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml        | 2 +-
+ Documentation/devicetree/bindings/display/msm/dsi-phy-14nm.yaml        | 2 +-
+ Documentation/devicetree/bindings/display/msm/dsi-phy-20nm.yaml        | 2 +-
+ Documentation/devicetree/bindings/display/msm/dsi-phy-28nm.yaml        | 2 +-
+ Documentation/devicetree/bindings/display/msm/dsi-phy-common.yaml      | 2 +-
+ 9 files changed, 9 insertions(+), 9 deletions(-)
 
-If you change the order of if clauses, you won't have to introduce
-unnecessary changes.
-
->         else
->                 init.parent_data = &pdata;
-> @@ -148,17 +151,50 @@ struct clk_hw *devm_clk_hw_register_fixed_factor_index(struct device *dev,
->                 const char *name, unsigned int index, unsigned long flags,
->                 unsigned int mult, unsigned int div)
->  {
-> -       return __clk_hw_register_fixed_factor(dev, NULL, name, NULL, index,
-> -                                             flags, mult, div, true);
-> +       return __clk_hw_register_fixed_factor(dev, NULL, name, NULL, NULL,
-> +                                             index, flags, mult, div, true);
-
-Here (and several times later) you are inserting an argument and then
-moving arguments to the next line. My slight preference would be to
-just insert the arg (and maybe break the line if it gets too long) w/o
-touching the next lines.
-
->  }
->  EXPORT_SYMBOL_GPL(devm_clk_hw_register_fixed_factor_index);
->
-> +/**
-> + * devm_clk_hw_register_fixed_factor_parent_hw - Register a fixed factor clock with
-> + * pointer to parent clock
-> + * @dev: device that is registering this clock
-> + * @name: name of this clock
-> + * @parent_hw: pointer to parent clk
-> + * @flags: fixed factor flags
-> + * @mult: multiplier
-> + * @div: divider
-> + *
-> + * Return: Pointer to fixed factor clk_hw structure that was registered or
-> + * an error pointer.
-> + */
-> +struct clk_hw *devm_clk_hw_register_fixed_factor_parent_hw(struct device *dev,
-> +               const char *name, const struct clk_hw *parent_hw,
-> +               unsigned long flags, unsigned int mult, unsigned int div)
-> +{
-> +       return __clk_hw_register_fixed_factor(dev, NULL, name, NULL, parent_hw,
-> +                                             -1, flags, mult, div, true);
-> +}
-> +EXPORT_SYMBOL_GPL(devm_clk_hw_register_fixed_factor_parent_hw);
-> +
-> +struct clk_hw *clk_hw_register_fixed_factor_parent_hw(struct device *dev,
-> +               const char *name, const struct clk_hw *parent_hw,
-> +               unsigned long flags, unsigned int mult, unsigned int div)
-> +{
-> +       return __clk_hw_register_fixed_factor(dev, NULL, name, NULL,
-> +                                             parent_hw, -1, flags, mult, div,
-> +                                             false);
-> +}
-> +EXPORT_SYMBOL_GPL(clk_hw_register_fixed_factor_parent_hw);
-> +
->  struct clk_hw *clk_hw_register_fixed_factor(struct device *dev,
->                 const char *name, const char *parent_name, unsigned long flags,
->                 unsigned int mult, unsigned int div)
->  {
-> -       return __clk_hw_register_fixed_factor(dev, NULL, name, parent_name, -1,
-> -                                             flags, mult, div, false);
-> +       return __clk_hw_register_fixed_factor(dev, NULL, name, parent_name,
-> +                                             NULL, -1, flags, mult, div,
-> +                                             false);
->  }
->  EXPORT_SYMBOL_GPL(clk_hw_register_fixed_factor);
->
-> @@ -204,8 +240,9 @@ struct clk_hw *devm_clk_hw_register_fixed_factor(struct device *dev,
->                 const char *name, const char *parent_name, unsigned long flags,
->                 unsigned int mult, unsigned int div)
->  {
-> -       return __clk_hw_register_fixed_factor(dev, NULL, name, parent_name, -1,
-> -                       flags, mult, div, true);
-> +       return __clk_hw_register_fixed_factor(dev, NULL, name, parent_name,
-> +                                             NULL, -1, flags, mult, div,
-> +                                             true);
->  }
->  EXPORT_SYMBOL_GPL(devm_clk_hw_register_fixed_factor);
->
-> @@ -240,8 +277,8 @@ static struct clk_hw *_of_fixed_factor_clk_setup(struct device_node *node)
->         if (of_match_node(set_rate_parent_matches, node))
->                 flags |= CLK_SET_RATE_PARENT;
->
-> -       hw = __clk_hw_register_fixed_factor(NULL, node, clk_name, NULL, 0,
-> -                                           flags, mult, div, false);
-> +       hw = __clk_hw_register_fixed_factor(NULL, node, clk_name, NULL, NULL,
-> +                                           0, flags, mult, div, false);
->         if (IS_ERR(hw)) {
->                 /*
->                  * Clear OF_POPULATED flag so that clock registration can be
-> diff --git a/include/linux/clk-provider.h b/include/linux/clk-provider.h
-> index 316c7e082934..94458cb669f0 100644
-> --- a/include/linux/clk-provider.h
-> +++ b/include/linux/clk-provider.h
-> @@ -1032,6 +1032,14 @@ struct clk_hw *devm_clk_hw_register_fixed_factor(struct device *dev,
->  struct clk_hw *devm_clk_hw_register_fixed_factor_index(struct device *dev,
->                 const char *name, unsigned int index, unsigned long flags,
->                 unsigned int mult, unsigned int div);
-> +
-> +struct clk_hw *devm_clk_hw_register_fixed_factor_parent_hw(struct device *dev,
-> +               const char *name, const struct clk_hw *parent_hw,
-> +               unsigned long flags, unsigned int mult, unsigned int div);
-> +
-> +struct clk_hw *clk_hw_register_fixed_factor_parent_hw(struct device *dev,
-> +               const char *name, const struct clk_hw *parent_hw,
-> +               unsigned long flags, unsigned int mult, unsigned int div);
->  /**
->   * struct clk_fractional_divider - adjustable fractional divider clock
->   *
-> --
-> 2.36.1
->
-
-
+diff --git a/Documentation/devicetree/bindings/display/msm/dpu-sc7180.yaml b/Documentation/devicetree/bindings/display/msm/dpu-sc7180.yaml
+index b41991e..d3c3e4b 100644
+--- a/Documentation/devicetree/bindings/display/msm/dpu-sc7180.yaml
++++ b/Documentation/devicetree/bindings/display/msm/dpu-sc7180.yaml
+@@ -7,7 +7,7 @@ $schema: http://devicetree.org/meta-schemas/core.yaml#
+ title: Qualcomm Display DPU dt properties for SC7180 target
+ 
+ maintainers:
+-  - Krishna Manikandan <mkrishn@codeaurora.org>
++  - Krishna Manikandan <quic_mkrishn@quicinc.com>
+ 
+ description: |
+   Device tree bindings for MSM Mobile Display Subsystem(MDSS) that encapsulates
+diff --git a/Documentation/devicetree/bindings/display/msm/dpu-sc7280.yaml b/Documentation/devicetree/bindings/display/msm/dpu-sc7280.yaml
+index 6e417d0..f427eec 100644
+--- a/Documentation/devicetree/bindings/display/msm/dpu-sc7280.yaml
++++ b/Documentation/devicetree/bindings/display/msm/dpu-sc7280.yaml
+@@ -7,7 +7,7 @@ $schema: http://devicetree.org/meta-schemas/core.yaml#
+ title: Qualcomm Display DPU dt properties for SC7280
+ 
+ maintainers:
+-  - Krishna Manikandan <mkrishn@codeaurora.org>
++  - Krishna Manikandan <quic_mkrishn@quicinc.com>
+ 
+ description: |
+   Device tree bindings for MSM Mobile Display Subsystem (MDSS) that encapsulates
+diff --git a/Documentation/devicetree/bindings/display/msm/dpu-sdm845.yaml b/Documentation/devicetree/bindings/display/msm/dpu-sdm845.yaml
+index 1a42491..2bb8896 100644
+--- a/Documentation/devicetree/bindings/display/msm/dpu-sdm845.yaml
++++ b/Documentation/devicetree/bindings/display/msm/dpu-sdm845.yaml
+@@ -7,7 +7,7 @@ $schema: http://devicetree.org/meta-schemas/core.yaml#
+ title: Qualcomm Display DPU dt properties for SDM845 target
+ 
+ maintainers:
+-  - Krishna Manikandan <mkrishn@codeaurora.org>
++  - Krishna Manikandan <quic_mkrishn@quicinc.com>
+ 
+ description: |
+   Device tree bindings for MSM Mobile Display Subsystem(MDSS) that encapsulates
+diff --git a/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml b/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
+index 7095ec3c8..880bfe9 100644
+--- a/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
++++ b/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
+@@ -7,7 +7,7 @@ $schema: http://devicetree.org/meta-schemas/core.yaml#
+ title: Qualcomm Display DSI controller
+ 
+ maintainers:
+-  - Krishna Manikandan <mkrishn@codeaurora.org>
++  - Krishna Manikandan <quic_mkrishn@quicinc.com>
+ 
+ allOf:
+   - $ref: "../dsi-controller.yaml#"
+diff --git a/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml b/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml
+index 2d5a766..716f921 100644
+--- a/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml
++++ b/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml
+@@ -7,7 +7,7 @@ $schema: http://devicetree.org/meta-schemas/core.yaml#
+ title: Qualcomm Display DSI 10nm PHY
+ 
+ maintainers:
+-  - Krishna Manikandan <mkrishn@codeaurora.org>
++  - Krishna Manikandan <quic_mkrishn@quicinc.com>
+ 
+ allOf:
+   - $ref: dsi-phy-common.yaml#
+diff --git a/Documentation/devicetree/bindings/display/msm/dsi-phy-14nm.yaml b/Documentation/devicetree/bindings/display/msm/dsi-phy-14nm.yaml
+index 81dbee4..1342d74 100644
+--- a/Documentation/devicetree/bindings/display/msm/dsi-phy-14nm.yaml
++++ b/Documentation/devicetree/bindings/display/msm/dsi-phy-14nm.yaml
+@@ -7,7 +7,7 @@ $schema: http://devicetree.org/meta-schemas/core.yaml#
+ title: Qualcomm Display DSI 14nm PHY
+ 
+ maintainers:
+-  - Krishna Manikandan <mkrishn@codeaurora.org>
++  - Krishna Manikandan <quic_mkrishn@quicinc.com>
+ 
+ allOf:
+   - $ref: dsi-phy-common.yaml#
+diff --git a/Documentation/devicetree/bindings/display/msm/dsi-phy-20nm.yaml b/Documentation/devicetree/bindings/display/msm/dsi-phy-20nm.yaml
+index b8de785..9c1f914 100644
+--- a/Documentation/devicetree/bindings/display/msm/dsi-phy-20nm.yaml
++++ b/Documentation/devicetree/bindings/display/msm/dsi-phy-20nm.yaml
+@@ -7,7 +7,7 @@ $schema: http://devicetree.org/meta-schemas/core.yaml#
+ title: Qualcomm Display DSI 20nm PHY
+ 
+ maintainers:
+-  - Krishna Manikandan <mkrishn@codeaurora.org>
++  - Krishna Manikandan <quic_mkrishn@quicinc.com>
+ 
+ allOf:
+   - $ref: dsi-phy-common.yaml#
+diff --git a/Documentation/devicetree/bindings/display/msm/dsi-phy-28nm.yaml b/Documentation/devicetree/bindings/display/msm/dsi-phy-28nm.yaml
+index 69eecaa..3d8540a 100644
+--- a/Documentation/devicetree/bindings/display/msm/dsi-phy-28nm.yaml
++++ b/Documentation/devicetree/bindings/display/msm/dsi-phy-28nm.yaml
+@@ -7,7 +7,7 @@ $schema: http://devicetree.org/meta-schemas/core.yaml#
+ title: Qualcomm Display DSI 28nm PHY
+ 
+ maintainers:
+-  - Krishna Manikandan <mkrishn@codeaurora.org>
++  - Krishna Manikandan <quic_mkrishn@quicinc.com>
+ 
+ allOf:
+   - $ref: dsi-phy-common.yaml#
+diff --git a/Documentation/devicetree/bindings/display/msm/dsi-phy-common.yaml b/Documentation/devicetree/bindings/display/msm/dsi-phy-common.yaml
+index 502bdda..76d40f7 100644
+--- a/Documentation/devicetree/bindings/display/msm/dsi-phy-common.yaml
++++ b/Documentation/devicetree/bindings/display/msm/dsi-phy-common.yaml
+@@ -7,7 +7,7 @@ $schema: http://devicetree.org/meta-schemas/core.yaml#
+ title: Description of Qualcomm Display DSI PHY common dt properties
+ 
+ maintainers:
+-  - Krishna Manikandan <mkrishn@codeaurora.org>
++  - Krishna Manikandan <quic_mkrishn@quicinc.com>
+ 
+ description: |
+   This defines the DSI PHY dt properties which are common for all
 -- 
-With best wishes
-Dmitry
+2.7.4
+
