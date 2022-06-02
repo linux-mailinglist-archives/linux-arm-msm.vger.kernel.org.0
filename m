@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7E38053B423
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jun 2022 09:09:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D90F553B422
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jun 2022 09:09:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231604AbiFBHJn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Jun 2022 03:09:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58438 "EHLO
+        id S231598AbiFBHJm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Jun 2022 03:09:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58434 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231608AbiFBHJj (ORCPT
+        with ESMTP id S231610AbiFBHJj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Thu, 2 Jun 2022 03:09:39 -0400
-Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF29065DE
-        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Jun 2022 00:09:36 -0700 (PDT)
-Received: by mail-lj1-x233.google.com with SMTP id s13so4306397ljd.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Jun 2022 00:09:36 -0700 (PDT)
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF41AF5B0
+        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Jun 2022 00:09:37 -0700 (PDT)
+Received: by mail-lj1-x22c.google.com with SMTP id m26so4352386ljb.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Jun 2022 00:09:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=7STra2ppWviST4fEmSbxheGWkzqe4bH+WhSd88tTfjc=;
-        b=Rz1eR8d99I4lLfQxw+GFRNA8ElX/Yz5npKMK4pPBDeR+8YLJUgknHiuJJBjevI4lJX
-         EFGRmqcCMbY3K7gcjVpg7jd+TvmTySM6Ji32YFSK163o0zgjTGlwCTbGkQKZDfWI6uN/
-         Q8vYX8onW4xK87P6NAiHDqa9Fokd/xgRGwOn5pqTKj/l/batfasTGbCyCTBhLlvLqn0F
-         TT3pCQoeZHMWffhh5x1szvRQd3WQAGFCX96lQ/geSmH96j8KfK0gTQW2Mb+8qsFo9C9e
-         eTPaCOX1fhbUb+NsGBA3VWuybpx76u9IFlvCSWAc6+qdw4YpWNq5nsvidXyBlVFpaUjO
-         86wQ==
+        bh=qElKsV2vhgg9lh1oEQvLqrVV3o7kWqVpeyDDIi7LS9s=;
+        b=hCDHzoLnyF0sPOP+UlBAWU0IeVswjLZbzVz0VuxNnyXw6/+Eib195M4TjStqi1N3fa
+         Ewn0T6PRkhPjpqRNICHFxbnUapH9X6MDU8ablOp+L+0o1HaukOZDy8fDy4IkcU9fouO4
+         c/aiR5GbJXK8d7jxjlizvUeEhvynW+4DeYyMcpW/xLAk3GiHwS/MxJvfhJhG3MR306mc
+         rK2bHnU4LV9u94c3Gbkj5dYq6o7KXmuuLpG0e+5h+T/gvfQGCGDcl4d5l4qjkTL7AiQi
+         X+VBVBgOMIeUSb/P+gHvZOan0NNvNiN9OFBKkxShLowmYb5x06XL0hR1HRq46GYqUhxA
+         fWVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=7STra2ppWviST4fEmSbxheGWkzqe4bH+WhSd88tTfjc=;
-        b=c/nn9ZKERUN3i+xmi+fGpNv64bI3Hy8R/bUq1VkwtTZScVwuya2XrR6luiuy9c4mLz
-         azxYIv1+nXWSbjfNgUM9OlVT5YKED5KTrL7N+MkmYuCMQUb4CsOx4wtc7dIv/KP2NZ6S
-         9/x5FjXq7x+dzJbJGxSx4kznmJFOMTTM6e3jCFOypPpGgbLDferZsfgoCJTL0aHdvx80
-         kOXPLxxjWbw09cemHXeznxeoKhC/Jg+tspUGCDy3bCy7/QljAc+OwYxGDk8tF2QJjmLE
-         DA7eSkxVy/Fi6bobt3YXDXBLmB4/YRagCTrya+YP5FOfT4uzSUVytWNmbSFlHqlGkgXy
-         TtrQ==
-X-Gm-Message-State: AOAM530FtAd5ZiFyOHCey6Wove9HgP3yLw++5J2RGI4sFGvhqjLyESvb
-        kyF8GiYFmxauRhesKf3iTVpgfQ==
-X-Google-Smtp-Source: ABdhPJyftYaXzst5H4OBZYD60Ot3bDQJTl2v5xDd0u8DrJ9AdTEkACJTUPDNQZK9qeaIR3FK2JYReQ==
-X-Received: by 2002:a05:651c:98d:b0:24d:b554:7d18 with SMTP id b13-20020a05651c098d00b0024db5547d18mr40675355ljq.87.1654153775065;
+        bh=qElKsV2vhgg9lh1oEQvLqrVV3o7kWqVpeyDDIi7LS9s=;
+        b=Txu4bIvwN/7X8KKFEUxcu7/s/wNBbfogM+sl2BsbCOnEVCFUEEKIlkG+9He8RYqxOl
+         Bdb0ZwMYB3XtVV3YcfxD564SkpA70pXI0FuHY5xL7slXOu5wLBwiMbnzYP3OMI/csPck
+         GeugLUSOQ1S+uFbsou7XzAy/2m/d0iUcbX0kFMTULxtjoPqN2uC1HK5wNI/f+SRIo5SW
+         KK28LLQsvNk2AXhoVhZwRt31R/0Akn/lxED+fyqeaO9gpmo5Cn/nGUZk4u6d79HjLrYv
+         8Cfac/7J/CrOBM/3XZylo/OsCHG7swKEFVK85gwNAlQ1g3MbHe1SYGiGbcXEeFmaPqNQ
+         /0vw==
+X-Gm-Message-State: AOAM532XEHNsVN97z65W1YsNF1eEp8e0tg8Fu4XTjm2YBLy4yGrXiTlI
+        YfrW9cXyVs/5ODcguY8uSh6EiA==
+X-Google-Smtp-Source: ABdhPJz6oVZYN4od2s0RhtgDmsc1k5qsUTVile3Z3At9zXsy8BLR8ZsZBq4m+K47XwsaY6v7yMvE8Q==
+X-Received: by 2002:a05:651c:1029:b0:255:7038:f7e8 with SMTP id w9-20020a05651c102900b002557038f7e8mr2702182ljm.377.1654153775872;
         Thu, 02 Jun 2022 00:09:35 -0700 (PDT)
 Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id d25-20020a056512369900b0047255d21114sm870218lfs.67.2022.06.02.00.09.34
+        by smtp.gmail.com with ESMTPSA id d25-20020a056512369900b0047255d21114sm870218lfs.67.2022.06.02.00.09.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Jun 2022 00:09:34 -0700 (PDT)
+        Thu, 02 Jun 2022 00:09:35 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -55,9 +55,9 @@ To:     Andy Gross <agross@kernel.org>,
         Kishon Vijay Abraham I <kishon@ti.com>
 Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
         linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org
-Subject: [RFC PATCH v3 26/30] phy: qcom-qmp-usb: drop multi-PHY support
-Date:   Thu,  2 Jun 2022 10:09:05 +0300
-Message-Id: <20220602070909.1666068-27-dmitry.baryshkov@linaro.org>
+Subject: [RFC PATCH v3 27/30] phy: qcom-qmp-combo: use bulk reset_control API
+Date:   Thu,  2 Jun 2022 10:09:06 +0300
+Message-Id: <20220602070909.1666068-28-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220602070909.1666068-1-dmitry.baryshkov@linaro.org>
 References: <20220602070909.1666068-1-dmitry.baryshkov@linaro.org>
@@ -73,144 +73,125 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Each USB QMP PHY device provides just a single UFS PHY. Drop support
-for handling multiple child PHYs. Use phy->init_count to check if the
-PHY was initialized rather than duplicating this count.
+Switch qcom-qmp-combo driver to use reset_control_bulk_assert / _deassert
+functions rather than hardcoding the loops in the driver itself.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/phy/qualcomm/phy-qcom-qmp-usb.c | 37 ++++---------------------
- 1 file changed, 5 insertions(+), 32 deletions(-)
+ drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 49 +++++++++--------------
+ 1 file changed, 18 insertions(+), 31 deletions(-)
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-index a633263c900d..969253e7bdd9 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-@@ -1440,8 +1440,6 @@ struct qmp_phy {
-  * @vregs: regulator supplies bulk data
-  *
-  * @phys: array of per-lane phy descriptors
-- * @phy_mutex: mutex lock for PHY common block initialization
-- * @init_count: phy common block initialization count
-  */
- struct qcom_qmp {
- 	struct device *dev;
-@@ -1452,9 +1450,6 @@ struct qcom_qmp {
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+index c7f8a7f7a9ba..c227880f3a4f 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+@@ -741,7 +741,7 @@ struct qcom_qmp {
+ 	void __iomem *dp_com;
+ 
+ 	struct clk_bulk_data *clks;
+-	struct reset_control **resets;
++	struct reset_control_bulk_data *resets;
  	struct regulator_bulk_data *vregs;
  
  	struct qmp_phy **phys;
--
--	struct mutex phy_mutex;
--	int init_count;
- };
- 
- static inline void qphy_setbits(void __iomem *base, u32 offset, u32 val)
-@@ -2016,17 +2011,11 @@ static int qcom_qmp_phy_usb_com_init(struct qmp_phy *qphy)
+@@ -1586,7 +1586,7 @@ static int qcom_qmp_phy_combo_com_init(struct qmp_phy *qphy)
+ 	const struct qmp_phy_cfg *cfg = qphy->cfg;
+ 	void __iomem *pcs = qphy->pcs;
  	void __iomem *dp_com = qmp->dp_com;
- 	int ret, i;
+-	int ret, i;
++	int ret;
  
--	mutex_lock(&qmp->phy_mutex);
--	if (qmp->init_count++) {
--		mutex_unlock(&qmp->phy_mutex);
--		return 0;
--	}
--
- 	/* turn on regulator supplies */
- 	ret = regulator_bulk_enable(cfg->num_vregs, qmp->vregs);
- 	if (ret) {
- 		dev_err(qmp->dev, "failed to enable regulators, err=%d\n", ret);
--		goto err_unlock;
-+		return ret;
+ 	mutex_lock(&qmp->phy_mutex);
+ 	if (qmp->init_count++) {
+@@ -1601,22 +1601,16 @@ static int qcom_qmp_phy_combo_com_init(struct qmp_phy *qphy)
+ 		goto err_unlock;
  	}
  
- 	for (i = 0; i < cfg->num_resets; i++) {
-@@ -2082,8 +2071,6 @@ static int qcom_qmp_phy_usb_com_init(struct qmp_phy *qphy)
- 		qphy_setbits(pcs, QPHY_POWER_DOWN_CONTROL,
- 			     cfg->pwrdn_ctrl);
+-	for (i = 0; i < cfg->num_resets; i++) {
+-		ret = reset_control_assert(qmp->resets[i]);
+-		if (ret) {
+-			dev_err(qmp->dev, "%s reset assert failed\n",
+-				cfg->reset_list[i]);
+-			goto err_disable_regulators;
+-		}
++	ret = reset_control_bulk_assert(cfg->num_resets, qmp->resets);
++	if (ret) {
++		dev_err(qmp->dev, "reset assert failed\n");
++		goto err_disable_regulators;
+ 	}
  
--	mutex_unlock(&qmp->phy_mutex);
--
+-	for (i = cfg->num_resets - 1; i >= 0; i--) {
+-		ret = reset_control_deassert(qmp->resets[i]);
+-		if (ret) {
+-			dev_err(qmp->dev, "%s reset deassert failed\n",
+-				qphy->cfg->reset_list[i]);
+-			goto err_assert_reset;
+-		}
++	ret = reset_control_bulk_deassert(cfg->num_resets, qmp->resets);
++	if (ret) {
++		dev_err(qmp->dev, "reset deassert failed\n");
++		goto err_disable_regulators;
+ 	}
+ 
+ 	ret = clk_bulk_prepare_enable(cfg->num_clks, qmp->clks);
+@@ -1659,8 +1653,7 @@ static int qcom_qmp_phy_combo_com_init(struct qmp_phy *qphy)
  	return 0;
  
  err_assert_reset:
-@@ -2091,8 +2078,6 @@ static int qcom_qmp_phy_usb_com_init(struct qmp_phy *qphy)
- 		reset_control_assert(qmp->resets[i]);
+-	while (++i < cfg->num_resets)
+-		reset_control_assert(qmp->resets[i]);
++	reset_control_bulk_assert(cfg->num_resets, qmp->resets);
  err_disable_regulators:
  	regulator_bulk_disable(cfg->num_vregs, qmp->vregs);
--err_unlock:
--	mutex_unlock(&qmp->phy_mutex);
- 
- 	return ret;
- }
-@@ -2103,12 +2088,6 @@ static int qcom_qmp_phy_usb_com_exit(struct qmp_phy *qphy)
+ err_unlock:
+@@ -1673,7 +1666,6 @@ static int qcom_qmp_phy_combo_com_exit(struct qmp_phy *qphy)
+ {
+ 	struct qcom_qmp *qmp = qphy->qmp;
  	const struct qmp_phy_cfg *cfg = qphy->cfg;
- 	int i = cfg->num_resets;
+-	int i = cfg->num_resets;
  
--	mutex_lock(&qmp->phy_mutex);
--	if (--qmp->init_count) {
--		mutex_unlock(&qmp->phy_mutex);
--		return 0;
+ 	mutex_lock(&qmp->phy_mutex);
+ 	if (--qmp->init_count) {
+@@ -1683,8 +1675,7 @@ static int qcom_qmp_phy_combo_com_exit(struct qmp_phy *qphy)
+ 
+ 	reset_control_assert(qmp->ufs_reset);
+ 
+-	while (--i >= 0)
+-		reset_control_assert(qmp->resets[i]);
++	reset_control_bulk_assert(cfg->num_resets, qmp->resets);
+ 
+ 	clk_bulk_disable_unprepare(cfg->num_clks, qmp->clks);
+ 
+@@ -1994,23 +1985,19 @@ static int qcom_qmp_phy_combo_reset_init(struct device *dev, const struct qmp_ph
+ {
+ 	struct qcom_qmp *qmp = dev_get_drvdata(dev);
+ 	int i;
++	int ret;
+ 
+ 	qmp->resets = devm_kcalloc(dev, cfg->num_resets,
+ 				   sizeof(*qmp->resets), GFP_KERNEL);
+ 	if (!qmp->resets)
+ 		return -ENOMEM;
+ 
+-	for (i = 0; i < cfg->num_resets; i++) {
+-		struct reset_control *rst;
+-		const char *name = cfg->reset_list[i];
++	for (i = 0; i < cfg->num_resets; i++)
++		qmp->resets[i].id = cfg->reset_list[i];
+ 
+-		rst = devm_reset_control_get_exclusive(dev, name);
+-		if (IS_ERR(rst)) {
+-			dev_err(dev, "failed to get %s reset\n", name);
+-			return PTR_ERR(rst);
+-		}
+-		qmp->resets[i] = rst;
 -	}
--
- 	while (--i >= 0)
- 		reset_control_assert(qmp->resets[i]);
++	ret = devm_reset_control_bulk_get_exclusive(dev, cfg->num_resets, qmp->resets);
++	if (ret)
++		return dev_err_probe(dev, ret, "failed to get resets\n");
  
-@@ -2116,8 +2095,6 @@ static int qcom_qmp_phy_usb_com_exit(struct qmp_phy *qphy)
- 
- 	regulator_bulk_disable(cfg->num_vregs, qmp->vregs);
- 
--	mutex_unlock(&qmp->phy_mutex);
--
  	return 0;
  }
- 
-@@ -2332,7 +2309,7 @@ static int __maybe_unused qcom_qmp_phy_usb_runtime_suspend(struct device *dev)
- 	if (cfg->type != PHY_TYPE_USB3)
- 		return 0;
- 
--	if (!qmp->init_count) {
-+	if (!qphy->phy->init_count) {
- 		dev_vdbg(dev, "PHY not initialized, bailing out\n");
- 		return 0;
- 	}
-@@ -2358,7 +2335,7 @@ static int __maybe_unused qcom_qmp_phy_usb_runtime_resume(struct device *dev)
- 	if (cfg->type != PHY_TYPE_USB3)
- 		return 0;
- 
--	if (!qmp->init_count) {
-+	if (!qphy->phy->init_count) {
- 		dev_vdbg(dev, "PHY not initialized, bailing out\n");
- 		return 0;
- 	}
-@@ -2673,7 +2650,7 @@ static int qcom_qmp_phy_usb_probe(struct platform_device *pdev)
- 	struct phy_provider *phy_provider;
- 	void __iomem *serdes;
- 	const struct qmp_phy_cfg *cfg = NULL;
--	int num, id, expected_phys;
-+	int num, id;
- 	int ret;
- 
- 	qmp = devm_kzalloc(dev, sizeof(*qmp), GFP_KERNEL);
-@@ -2700,10 +2677,6 @@ static int qcom_qmp_phy_usb_probe(struct platform_device *pdev)
- 			return PTR_ERR(qmp->dp_com);
- 	}
- 
--	expected_phys = cfg->nlanes;
--
--	mutex_init(&qmp->phy_mutex);
--
- 	ret = qcom_qmp_phy_usb_clk_init(dev, cfg);
- 	if (ret)
- 		return ret;
-@@ -2722,7 +2695,7 @@ static int qcom_qmp_phy_usb_probe(struct platform_device *pdev)
- 
- 	num = of_get_available_child_count(dev->of_node);
- 	/* do we have a rogue child node ? */
--	if (num > expected_phys)
-+	if (num > 1)
- 		return -EINVAL;
- 
- 	qmp->phys = devm_kcalloc(dev, num, sizeof(*qmp->phys), GFP_KERNEL);
 -- 
 2.35.1
 
