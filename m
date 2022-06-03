@@ -2,55 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AA69B53C7CB
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jun 2022 11:44:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ABC5D53C7DE
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jun 2022 11:48:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243148AbiFCJoq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Jun 2022 05:44:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38776 "EHLO
+        id S243159AbiFCJqN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Jun 2022 05:46:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39884 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243141AbiFCJoo (ORCPT
+        with ESMTP id S243169AbiFCJqI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Jun 2022 05:44:44 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83DC22DD54
-        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Jun 2022 02:44:42 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id u23so11794040lfc.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Jun 2022 02:44:42 -0700 (PDT)
+        Fri, 3 Jun 2022 05:46:08 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D6933A721
+        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Jun 2022 02:46:07 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id h23so11776771lfe.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Jun 2022 02:46:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=8jvPxXIiogQWZXupdX922CHoFednIGVLXVXf4QrHgiY=;
-        b=O+UOlhaU1GPM2ffiLXlaOOMPGwOgfFKeYFBHms9Z8euUAUJMN780YC1U5nRTDDWGQ3
-         4P1TMXkIg2nzQtv6Tp1TuxJ/QINIw9PazrWgt5IE0uzXCGT4o6iBDE+S1po2vLqoq3r4
-         7ApFEsva8AT52NIR0mH/mDjoj+t6A9cC9bVtOjeWL6jZQXMk0IhxlpxdKx5PaBA9AFAB
-         WHHcjMLbejA1cwApeH1b+djfmVvnhn54wv07zDj3HIt/13AEeHqWo9v3tIUpfATBwWhR
-         M0ZzrA69wATnpkeRmnXLyhcvM72dUyL3htH+LN21JM2qsIchR9JbZpJZa9JUBMgfsbD7
-         a/xw==
+        bh=PV8WqoUGxOFZRKshOw3NOc1zZVTzDgewpvw4AU5r3QI=;
+        b=BIVLMG0D76swp19/yzM/9m9y5tcb/zqi8QgQHU8OHU+N7zKnrWGzE/UPZ7F1osfRLb
+         ZcMjIjpm5ZUVaPoi6qZRqJXCO7uUehgc+tnpxeL7oHTqGz2ap2+FXBln0iiQ9M3Lxeur
+         JcoaKi5uTlaA2YptWUqLtQYnfDRww/UVr62SMpaFlfPePlYiFOAL6ozldiOvOyULvbWT
+         awYIp4833HuLklWK4EIyVTwr9pnoi5ZhaZx9hIQUdNwpLU0GOLjGRWpq5+KCJnsH59Bg
+         2MD/aH+ZV3yRdZv0KFJD8D/ZwXZOV805tYETCqiP0qivXU3rwg9/aos4kDMt+J/+i+k6
+         VQyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=8jvPxXIiogQWZXupdX922CHoFednIGVLXVXf4QrHgiY=;
-        b=RYVJeeKuLYupEFeE6j6Q8P5knS7Lsk8tc8bD9Lb2EUg6SKw4B7m6L1u3W8SAwYv/QK
-         aAUHlM/jByZowvsxyiLx902hqRLjOjIOEqx2k1SCCgbKauStZDKmEXH70ROQPTWozMvU
-         /vUNk3odVnz8uzZK7usmfIkJkMorW+yhClPnLn3Ul3ioy5GJmAn06+wbNxN66pnnZJM/
-         1avA3ygwCvuHEwP3On4GS5xf4DkRAHcDB+kKop8rAcSguCjXyEKnbipc7htjoXrtUQCi
-         NKzqlKAli1tXXPruQGWY2dHHLYvprThSCeG9BekMjg7/hNe8D3aHhYBlbWKGSBIz9ReQ
-         qSNg==
-X-Gm-Message-State: AOAM533TDP6lL+RUCF5nl6H6tVqtPsZBA/bWUF6OHC44lFEqrJ6oJBjN
-        gSlDXJy9FSJdp2F6+l9E5kiquQ==
-X-Google-Smtp-Source: ABdhPJyZegfaWSTXswsrJxcn+pcCQNNZ/clp5ept6GyUSg+T+X/U1x6nsEJb4dwGWdJLV5++QVgCPw==
-X-Received: by 2002:a05:6512:2115:b0:479:ba9:25c1 with SMTP id q21-20020a056512211500b004790ba925c1mr6124265lfr.591.1654249480917;
-        Fri, 03 Jun 2022 02:44:40 -0700 (PDT)
+        bh=PV8WqoUGxOFZRKshOw3NOc1zZVTzDgewpvw4AU5r3QI=;
+        b=O2XIWNNBJ33Hps0nhpvZTeCUwzALxEC/orD6ynM+QvLgnj5x+qvpCReVu7u7zthUAc
+         Tqz7S1pUe6BXtWkBD9fSYtastXVe2M5oX7GumHJRS7jB4hESOFnYzp0hmUb6CIuaRc9o
+         zQngeaFJq8ZStuOPynxism7bgdPsrzuNg3NGcdLZJ57DG9aa8Jo62byGKufGDF9s0BTt
+         S87yx6C0pI0L2df6PiF+2qqtz0Am/bv8bjAynulRYHiAULOtPfXzXKkN7nx1qihMJtEP
+         sLnZKiNpocnBweyS9rqX+sC+yUaX3dNABbX6ZLm+nGHDA946KukW1a5Jj5SuREUERiTA
+         zH9Q==
+X-Gm-Message-State: AOAM533TV3Xz0UgXwjhHFR+O4oVatS1XaW7s9fsCrQh/uPRHNit9hbLK
+        JhrdPphlfcwNGupHkMuiJTaa8A==
+X-Google-Smtp-Source: ABdhPJyZSV21gNOrhCLTgOfOurM3xrgrxWRV/usdiINVAJc+n5B5QGzanddUNnKj+NV3L96tC+R3fA==
+X-Received: by 2002:a05:6512:3e11:b0:473:9f5f:feda with SMTP id i17-20020a0565123e1100b004739f5ffedamr6358550lfv.244.1654249565460;
+        Fri, 03 Jun 2022 02:46:05 -0700 (PDT)
 Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id e29-20020a19691d000000b0047255d21202sm1397159lfc.305.2022.06.03.02.44.40
+        by smtp.gmail.com with ESMTPSA id f9-20020a2e6a09000000b00254319f8e63sm1223352ljc.91.2022.06.03.02.46.04
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 03 Jun 2022 02:44:40 -0700 (PDT)
-Message-ID: <9e398930-6918-e95e-e15d-f8901047b9b7@linaro.org>
-Date:   Fri, 3 Jun 2022 12:44:39 +0300
+        Fri, 03 Jun 2022 02:46:05 -0700 (PDT)
+Message-ID: <be1d59c3-049f-b9f0-3281-9875a0102aaf@linaro.org>
+Date:   Fri, 3 Jun 2022 12:46:04 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.9.0
@@ -61,8 +61,7 @@ To:     Vinod Polimera <quic_vpolimer@quicinc.com>,
         dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
         freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
 Cc:     linux-kernel@vger.kernel.org, robdclark@gmail.com,
-        dianders@chromium.org, vpolimer@quicinc.com, swboyd@chromium.org,
-        kalyant@quicinc.com
+        dianders@chromium.org, swboyd@chromium.org
 References: <1654249343-24959-1-git-send-email-quic_vpolimer@quicinc.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 In-Reply-To: <1654249343-24959-1-git-send-email-quic_vpolimer@quicinc.com>
@@ -104,12 +103,12 @@ On 03/06/2022 12:42, Vinod Polimera wrote:
 > 
 > Changes in v2:
 > - Add fixes tag.
-
-I'm still waiting for an answer to the questions raised in v1 review.
-
 > 
 > Fixes: 623f279c778 ("drm/msm: fix shutdown hook in case GPU components failed to bind")
 > Signed-off-by: Vinod Polimera <quic_vpolimer@quicinc.com>
+
+Also please remove bouncing quicinc.com emails from cc list
+
 > ---
 >   drivers/gpu/drm/msm/msm_drv.c | 6 +++++-
 >   1 file changed, 5 insertions(+), 1 deletion(-)
