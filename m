@@ -2,69 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2FE3553C889
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jun 2022 12:20:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 75CF053C88D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jun 2022 12:20:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243612AbiFCKT0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Jun 2022 06:19:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42578 "EHLO
+        id S236237AbiFCKTc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Jun 2022 06:19:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42936 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243597AbiFCKTZ (ORCPT
+        with ESMTP id S243619AbiFCKTa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Jun 2022 06:19:25 -0400
-Received: from mail-yb1-xb2b.google.com (mail-yb1-xb2b.google.com [IPv6:2607:f8b0:4864:20::b2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EAC443B3C1
-        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Jun 2022 03:19:23 -0700 (PDT)
-Received: by mail-yb1-xb2b.google.com with SMTP id f34so12920034ybj.6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Jun 2022 03:19:23 -0700 (PDT)
+        Fri, 3 Jun 2022 06:19:30 -0400
+Received: from mail-qv1-xf35.google.com (mail-qv1-xf35.google.com [IPv6:2607:f8b0:4864:20::f35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB9E63B3C7
+        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Jun 2022 03:19:27 -0700 (PDT)
+Received: by mail-qv1-xf35.google.com with SMTP id j3so5310319qvn.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Jun 2022 03:19:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=eCANrYMxosIMh+Xvbir+KgFfAUJg6+S8lF+OrF54Av4=;
-        b=QQer3CrocRzXUbJga3lT0IkLvDhumQw3omrc4pXZ8kQmhdT77qsC+nSGbTrSlKuBUd
-         SCkFr8UUw1STX4eRYdkfUmIt2QCAht10BD+p+MPVoUeAInYnT6OFwC9hPSCsQsiiOxfT
-         kobkQkTdkZYzMYu0Awnp5OrBM6veOfZZrVpCwGxhWGxymggg+6AyY4kin49eqx/xn6PI
-         8w4DvpKGjeQwc8djJvJogfLdHppjC76lbOf3C6Ysqizv6hWc7KD7Cr3GhVrLiySsPIY8
-         YYlxJnCx1Sh8qkMdUMu6/DPS5FCzIsHZ4ez7fXf243TJN+i77BFjgUsJw2BWWNZiqf9H
-         BnOw==
+        bh=0UMpW2GQFjbsAh4Z5E0cvPjEi6lZODEcP2+hYnwC+bE=;
+        b=zkYz2hGQ1rahMqWa937cH83pVnLOTqmdXNQFV1d1uS6u6aMj6SPNQ9yOFFN00ysLMX
+         jUuAr5G7K4WTsp3BRQ/W+wjUDU3Dd0I0+Ku7oPNjCuEGNCC0Ww7/T88ekjo7m8hkooCW
+         wZjrIspW94cmLUoBhvkgkad+qwItBz0RGN2yAH9oxYP1JhVS2lT+VSN2HdfejhqjN+sP
+         VxYoY7vUAdFgjk8lpGRJ9ntj+LeaIt5Ri18B5vb3zKIVQ3Se/4O7f/hKLIJl6Qj3nHnT
+         N1RcbTDKcuGHQzkJbstZ9TgqQiLmHFFS8rpdNWxYzMk5r2oy4EqRV1nLAUM2gu4ezrOb
+         XicQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=eCANrYMxosIMh+Xvbir+KgFfAUJg6+S8lF+OrF54Av4=;
-        b=s0exTeKOF9RByZCepxMcu7D+964gwGANqUR6EODSYkzHcJHBOfmzva4sUhVxTGrgXW
-         Q+my9Dt7vGTKvTJsBWoBBtcJvSu2aZJMtlmmqrkdJ4mwjTIvsw1sE5YPFy/gtsYGTidJ
-         ruryh33OSd3ycP45W+gWAVVF3ueyEto2Pb/3ZeYOkxxmWfFNEvnDvCXXLszuwoKez+Z5
-         G/GFXZJGG2T1QyXMUNUDcenQdRpOXrYXK2w65Y49CW/yqDVLfZTYYjtPRF99iLzhLbhv
-         JztuicQcIGW3jzYWcz3y+38o04cMqgwZYMdElsQbGowRVlrsExvNhRkFVgEY++OimSoZ
-         K9fQ==
-X-Gm-Message-State: AOAM532xflPl3anvsNSH8E1ziIq45mCY9KIbLz+yutf9QVyqYfdZtK45
-        z/6lwqOzktoTuiMEIIilTdqhfx3hgZBHrsVJoSwYvw==
-X-Google-Smtp-Source: ABdhPJzCQPE37Bt5oIHGrr2jWp33WDnmx62d0Nt6DBKxkJKjMCw9IXg5fe2neGT3z1CVqiY5P3KeqFBug68RmO96NIY=
-X-Received: by 2002:a25:1256:0:b0:65d:6433:7993 with SMTP id
- 83-20020a251256000000b0065d64337993mr9806001ybs.626.1654251563183; Fri, 03
- Jun 2022 03:19:23 -0700 (PDT)
+        bh=0UMpW2GQFjbsAh4Z5E0cvPjEi6lZODEcP2+hYnwC+bE=;
+        b=rVi0QzAnttPLTxupo3ttUDe0KeL7hrmTCC9q9P1hP6gDavIEWEsPy6jQmU6hQiR8xH
+         DBtN7nPgPfvv/FvMxwVQtR16g25ZxPIUe+d57VFYVVO3UuPbcsHzheqpM8FvsHsd2ZQ7
+         /CIhte04CuYjzZYQeI00upjSsAozqwOIp1um6dk0pIyZfOFx5iVSnQkQtEja9nHUj4Kr
+         in2hI4T9UaTvFDm9ioTO6UDJN/+Z43yPQAoJz3kk704P75GmE0dHA/kB6oavIk2DTCM+
+         5b+VmAHPAYKhgg4nbMd3dgFnihkqEfnFZbpCdGf9IRI9za01k6sRlWcVYSbITVEK5t0W
+         16fw==
+X-Gm-Message-State: AOAM533l8q7QZr1M2F7GmZI8fn0K1+yV3ITmZmJRgppPxG0puBizR9Qt
+        IYz7rY6JU0a4PZZ6SV6Hfatwczgv95cjDA9j04DM8g==
+X-Google-Smtp-Source: ABdhPJw8iJoGhy2MD45IsbCDP/yP/cDddSg1Ox604Dq9yoEDEqKfDIRzqKkUy7GFMX8kjhbpUdHowJBaBXsYNKHA+So=
+X-Received: by 2002:ad4:5b81:0:b0:465:ded8:780 with SMTP id
+ 1-20020ad45b81000000b00465ded80780mr8480006qvp.119.1654251567078; Fri, 03 Jun
+ 2022 03:19:27 -0700 (PDT)
 MIME-Version: 1.0
-References: <1654079415-26217-1-git-send-email-quic_srivasam@quicinc.com>
- <1654079415-26217-2-git-send-email-quic_srivasam@quicinc.com>
- <CAE-0n50nfwZPdSS7Vw9FiV+Shfn9-bX44hfLq5ey9DBsAy0y4g@mail.gmail.com> <6250a441-6bcd-4ca8-782b-b7a8d9239e46@quicinc.com>
-In-Reply-To: <6250a441-6bcd-4ca8-782b-b7a8d9239e46@quicinc.com>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Fri, 3 Jun 2022 12:19:11 +0200
-Message-ID: <CACRpkdbBRjgNzxYkFPzy3kx45_7vJENp5dTX0MdJw+LSQ=9rvA@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] dt-bindings: pinctrl: qcom: sc7280: Add compatible
- string for adsp based platforms
-To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Cc:     Stephen Boyd <swboyd@chromium.org>, agross@kernel.org,
-        alsa-devel@alsa-project.org, bgoswami@quicinc.com,
-        bjorn.andersson@linaro.org, broonie@kernel.org,
-        devicetree@vger.kernel.org, judyhsiao@chromium.org,
-        lgirdwood@gmail.com, linux-arm-msm@vger.kernel.org,
-        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
-        perex@perex.cz, quic_plai@quicinc.com, quic_rohkumar@quicinc.com,
-        robh+dt@kernel.org, srinivas.kandagatla@linaro.org, tiwai@suse.com,
-        Venkata Prasad Potturu <quic_potturu@quicinc.com>
+References: <20220510192944.2408515-1-dianders@chromium.org>
+ <20220510122726.v3.3.Iba4b9bf6c7a1ee5ea2835ad7bd5eaf84d7688520@changeid>
+ <20220521091751.opeiqbmc5c2okdq6@houat> <CAD=FV=Wea0LT5umK4Xg87cDikim+dSuyLndfydO3_DnTujZr9Q@mail.gmail.com>
+ <CAD=FV=XqJuPHxm7HYMvyHBL_zC-BBA_f0MBsZX-jHt7Pk9ngsQ@mail.gmail.com> <20220603082139.sfdxb5ndwpvlhklh@penduick>
+In-Reply-To: <20220603082139.sfdxb5ndwpvlhklh@penduick>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Fri, 3 Jun 2022 13:19:16 +0300
+Message-ID: <CAA8EJpqrw63K_xxJjawLjEqP-05eUD-k6dy21162hcq7q07jgQ@mail.gmail.com>
+Subject: Re: [PATCH v3 3/4] drm/bridge: Add devm_drm_bridge_add()
+To:     Maxime Ripard <maxime@cerno.tech>
+Cc:     Doug Anderson <dianders@chromium.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Hsin-Yi Wang <hsinyi@chromium.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Philip Chen <philipchen@chromium.org>,
+        Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
+        Robert Foss <robert.foss@linaro.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        LKML <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
@@ -76,46 +82,117 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jun 3, 2022 at 8:09 AM Srinivasa Rao Mandadapu
-<quic_srivasam@quicinc.com> wrote:
-> On 6/2/2022 6:43 AM, Stephen Boyd wrote:
-
-> >> +    enum:
-> >> +      - qcom,sc7280-lpass-lpi-pinctrl
-> >> +      - qcom,sc7280-lpass-adsp-lpi-pinctrl
-> > Can you confirm that this is the same hardware (i.e. same reg property)
-> > but just a different compatible string used to convey that the device is
-> > using "adsp" mode or not? If so, this looks to be a common pattern for
-> > the audio hardware here, where we have two "views" of the hardware, one
-> > for adsp mode and one for not adsp mode. I guess the not adsp mode is
-> > called "adsp bypass"?
+On Fri, 3 Jun 2022 at 11:21, Maxime Ripard <maxime@cerno.tech> wrote:
 >
-> Yes Your understanding is correct. The same hardware in scenario not using ADSP,
->
-> and in another enabling DSP.
+> On Tue, May 31, 2022 at 02:06:34PM -0700, Doug Anderson wrote:
+> > On Mon, May 23, 2022 at 10:00 AM Doug Anderson <dianders@chromium.org> wrote:
+> > > On Sat, May 21, 2022 at 2:17 AM Maxime Ripard <maxime@cerno.tech> wrote:
+> > > > On Tue, May 10, 2022 at 12:29:43PM -0700, Douglas Anderson wrote:
+> > > > > This adds a devm managed version of drm_bridge_add(). Like other
+> > > > > "devm" function listed in drm_bridge.h, this function takes an
+> > > > > explicit "dev" to use for the lifetime management. A few notes:
+> > > > > * In general we have a "struct device" for bridges that makes a good
+> > > > >   candidate for where the lifetime matches exactly what we want.
+> > > > > * The "bridge->dev->dev" device appears to be the encoder
+> > > > >   device. That's not the right device to use for lifetime management.
+> > > > >
+> > > > > Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > > > > Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> > > >
+> > > > If we are to introduce more managed helpers, I think it'd be wiser to
+> > > > introduce them as DRM-managed, and not device managed.
+> > > >
+> > > > Otherwise, you'll end up in a weird state when a device has been removed
+> > > > but the DRM device is still around.
+> > >
+> > > I'm kinda confused. In this case there is no DRM device for the bridge
+> > > and, as per my CL description, "bridge-dev->dev" appears to be the
+> > > encoder device. I wasn't personally involved in discussions about it,
+> > > but I was under the impression that this was expected / normal. Thus
+> > > we can't make this DRM-managed.
 > >
-> > Is that right? Why are we conveying this information via the compatible
-> > string?
+> > Since I didn't hear a reply,
 >
-> Could you please suggest better way!.  As pin control driver is the
-> first one to probe, I am not getting better approach.
+> Gah, I replied but it looks like somehow it never reached the ML...
 >
-> While up-streaming these drivers, concluded to use this approach.
+> Here was my original reply:
+>
+> > > > This adds a devm managed version of drm_bridge_add(). Like other
+> > > > "devm" function listed in drm_bridge.h, this function takes an
+> > > > explicit "dev" to use for the lifetime management. A few notes:
+> > > > * In general we have a "struct device" for bridges that makes a good
+> > > >   candidate for where the lifetime matches exactly what we want.
+> > > > * The "bridge->dev->dev" device appears to be the encoder
+> > > >   device. That's not the right device to use for lifetime management.
+> > > >
+> > > > Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > > > Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> > >
+> > > If we are to introduce more managed helpers, I think it'd be wiser to
+> > > introduce them as DRM-managed, and not device managed.
+> > >
+> > > Otherwise, you'll end up in a weird state when a device has been removed
+> > > but the DRM device is still around.
+> >=20
+> > I'm kinda confused. In this case there is no DRM device for the bridge
+> > and, as per my CL description, "bridge-dev->dev" appears to be the
+> > encoder device.
+>
+> bridge->dev seems right though?
+>
+> > I wasn't personally involved in discussions about it, but I was under
+> > the impression that this was expected / normal. Thus we can't make
+> > this DRM-managed.
+>
+> Still, I don't think devm is the right solution to this either.
+>
+> The underlying issue is two-fold:
+>
+>   - Encoders can have a pointer to a bridge through of_drm_find_bridge
+>     or similar. However, bridges are traditionally tied to their device
+>     lifetime (by calling drm_bridge_add in probe, and drm_bridge_remove
+>     in remove). Encoders will typically be tied to the DRM device
+>     however, and that one sticks around until the last application
+>     closes it. We can thus very easily end up with a dangling pointer,
+>     and a use-after-free.
+>
+>   - It's not the case yet, but it doesn't seem far fetch to expose
+>     properties of bridges to the userspace. In that case, the userspace
+>     would be likely to still hold references to objects that aren't
+>     there anymore when the bridge is gone.
+>
+> The first is obviously a larger concern, but if we can find a solution
+> that would accomodate the second it would be great.
+>
+> As far as I can see, we should fix in two steps:
+>
+>   - in drm_bridge_attach, we should add a device-managed call that will
+>     unregister the main DRM device. We don't allow to probe the main DRM
+>     device when the bridge isn't there yet in most case, so it makes
+>     sense to remove it once the bridge is no longer there as well.
 
-The device tree conveys hardware description and some configuration.
+The problem is that I do not see a good way to unregister the main DRM
+device outside of it's driver code.
 
-If this is configuration thing, either you could perhaps determine it from the
-hardware (if set up in hardware or boot loader) and if that is not possible
-it should just be a boolean property of the device
-node:
+>
+>   - When the DRM device is removed, have the core cleanup any bridge
+>     registered. That will remove the need to have drm_bridge_remove in
+>     the first place.
+>
+> > I'll assume that my response addressed your concerns. Assuming I get
+> > reviews for the other two patches in this series I'll plan to land
+> > this with Dmitry's review.
+>
+> I still don't think it's a good idea to merge it. It gives an illusion
+> of being safe, but it's really far from it.
 
-{
-    compatible = "...";
-    qcom.adsp-mode;
-}
+It is more of removing the boilerplate code spread over all the
+drivers rather than about particular safety.
 
-If you are probing two different drivers depending on the mode, then there is a
-problem of course, but it is a Linux problem not a device tree problem.
+I'd propose to land devm_drm_bridge_add (and deprecate calling
+drm_bridge_remove from the bridge driver at some point) and work on
+the whole drm_device <-> drm_bridge problem in the meantime.
 
-Yours,
-Linus Walleij
+-- 
+With best wishes
+Dmitry
