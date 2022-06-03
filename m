@@ -2,56 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2813853CBC7
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jun 2022 16:53:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D6D7353CC1D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jun 2022 17:15:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245213AbiFCOx1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Jun 2022 10:53:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33970 "EHLO
+        id S245401AbiFCPPA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Jun 2022 11:15:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41186 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245210AbiFCOx0 (ORCPT
+        with ESMTP id S245405AbiFCPO4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Jun 2022 10:53:26 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9965536E29;
-        Fri,  3 Jun 2022 07:53:25 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 54D49B82353;
-        Fri,  3 Jun 2022 14:53:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0635C34115;
-        Fri,  3 Jun 2022 14:53:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1654268003;
-        bh=RGs1KTCePcSrsr1+5HQQpGae3Pc4JtwnBu3hdoIvrOY=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=WyGYjYddMk07o8bazntYbtCK4zbeCa7DEFE/TCozDMhF03Fe4kU8LPm3p5kSO9WSj
-         t3nk+MJHJEX0Yv2UYRgLUFBV3Hc84R61uyURYdZ3/eSIkFLkP6KKBi0TSTllFLd7JP
-         +2teddVxCFSl8S/YtwTHoTophTXWrIyq2O/Ug1pjO3cnW67rIVdln312x0G470x0UX
-         002zGcinS6p0imEfVb1ZI5xg2WnTpGyqcQGluIwWrbIwPXAZEWaRdvrWw/TLm8tfnw
-         Zp6/LuokL19/fMx0waN2xmdGuMl2dvo+KCy8Hpm+Ilj2IfHgr+e519ywVOgM2cn78o
-         PHgMnTz8aZq5g==
-Date:   Fri, 3 Jun 2022 16:02:22 +0100
-From:   Jonathan Cameron <jic23@kernel.org>
-To:     Yongzhi Liu <lyz_cs@pku.edu.cn>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, lars@metafoo.de,
-        svarbanov@mm-sol.com, iivanov@mm-sol.com,
-        jonathan.cameron@huawei.com, linux-arm-msm@vger.kernel.org,
-        linux-iio@vger.kernel.org, linux-kernel@vger.kernel.org,
-        fuyq@stu.pku.edu.cn
-Subject: Re: [PATCH v4] iio: vadc: Fix potential dereference of NULL pointer
-Message-ID: <20220603160222.1ad6ef49@jic23-huawei>
-In-Reply-To: <1653238427-73587-1-git-send-email-lyz_cs@pku.edu.cn>
-References: <20220522120109.7ead18a7@jic23-huawei>
-        <1653238427-73587-1-git-send-email-lyz_cs@pku.edu.cn>
-X-Mailer: Claws Mail 4.1.0 (GTK 3.24.34; x86_64-pc-linux-gnu)
+        Fri, 3 Jun 2022 11:14:56 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 2B9F050479
+        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Jun 2022 08:14:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1654269295;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=KSS+WlIjCzxfASZfHJ/pG+nFg5xuEcmHlF7DakY9wuE=;
+        b=IsinTjFKocoU3Ir/OHyQ6Oh5fbnyNiUT0IrjR3r/vh1Ebm70qJu6KsVg0TvWQPMS9Y/zK8
+        hJsYRXG6abjPlOC3unxoSCr6yIlrOjV5D0LyTky8Ot7cF65FJGxD3z4jnTu33d4WGJxKo9
+        D/hmP8DLKDqZfiLyTGT0W6Gx+tT+sfY=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ us-mta-490-udclCPTmOHyiwukZovgjTQ-1; Fri, 03 Jun 2022 11:14:53 -0400
+X-MC-Unique: udclCPTmOHyiwukZovgjTQ-1
+Received: by mail-qk1-f200.google.com with SMTP id b1-20020a05620a118100b006a36dec1b16so6184379qkk.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Jun 2022 08:14:53 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=KSS+WlIjCzxfASZfHJ/pG+nFg5xuEcmHlF7DakY9wuE=;
+        b=MZRRAbRjsgp2R+q22DLRO3ge7Al6KmuwbpDZd+9lAF8/HAQIcQI4iTr+4lwTFqpMHT
+         JMzvzczC0I0lyQ+F54B5yK7dfZDpjqWels1N3yeCteyQjvQ296irRsE3wtAkSPmukKje
+         weafv+RYELHPZ5UMRIAa/k9TlNj/4ij/S7tKCR9HMp9hZvwJRZzz5J9dOQB8MwjlGQQZ
+         eCgkhkqdbeQOJ/jTmmzEvXK6sLn/ct8bhkaTCMwF2P3IGWFfMwt2TNpXD8KkoEm1Nske
+         MwO0MM3rqVFGSlSWBrupcu2WZ03dlgg8vCNwMclurEotUzqIaB1jms2RQzWZawidOp3F
+         5YmQ==
+X-Gm-Message-State: AOAM533Do4/7j5T9q7KREpShIkElxNCAoj8ziYBEQ0fj1m+vo5drrrqG
+        OloKcRhGX5onwJ0Ar3qRna63cOD6Quc9TRo/sdJs9qTfgx9UEK+rTF8XXQpa8scemgKvGmErkVX
+        s6BCD37/ISlFKYzYT/C/1yy1aRg==
+X-Received: by 2002:a05:620a:1445:b0:6a3:9f13:7f10 with SMTP id i5-20020a05620a144500b006a39f137f10mr6753074qkl.736.1654269293269;
+        Fri, 03 Jun 2022 08:14:53 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJzYV+OzB2BFz+1kTFY3RgS+1hrEcN6pQQortBLwObPtwEpeMeMFxrV3fG5J5vUdP1DDnfWMew==
+X-Received: by 2002:a05:620a:1445:b0:6a3:9f13:7f10 with SMTP id i5-20020a05620a144500b006a39f137f10mr6753042qkl.736.1654269292985;
+        Fri, 03 Jun 2022 08:14:52 -0700 (PDT)
+Received: from xps13 (c-98-239-145-235.hsd1.wv.comcast.net. [98.239.145.235])
+        by smtp.gmail.com with ESMTPSA id m28-20020a05620a215c00b006a03cbb1323sm5009016qkm.65.2022.06.03.08.14.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 03 Jun 2022 08:14:52 -0700 (PDT)
+Date:   Fri, 3 Jun 2022 11:14:51 -0400
+From:   Brian Masney <bmasney@redhat.com>
+To:     Konrad Dybcio <konrad.dybcio@somainline.org>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org,
+        linux-arm-kernel@lists.infradead.org,
+        iommu@lists.linux-foundation.org, martin.botka@somainline.org,
+        angelogioacchino.delregno@somainline.org,
+        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
+        Rob Clark <robdclark@gmail.com>, Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 5/6] iommu/qcom: Index contexts by asid number to allow
+ asid 0
+Message-ID: <Ypola4mBuQ6zDLcz@xps13>
+References: <20220527212901.29268-1-konrad.dybcio@somainline.org>
+ <20220527212901.29268-6-konrad.dybcio@somainline.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220527212901.29268-6-konrad.dybcio@somainline.org>
+User-Agent: Mutt/2.2.1 (2022-02-19)
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -59,144 +86,22 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, 22 May 2022 09:53:47 -0700
-Yongzhi Liu <lyz_cs@pku.edu.cn> wrote:
-
-> The return value of vadc_get_channel() needs to be checked to
-> avoid use of NULL pointer. vadc_do_conversion() already provides
-> error prints in at least some of it's error paths. Thus it is
-> reasonable to add the null pointer check on prop and drop the
-> extra reporting in vadc_measure_ref_points().
+On Fri, May 27, 2022 at 11:29:00PM +0200, Konrad Dybcio wrote:
+> From: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
 > 
-> Signed-off-by: Yongzhi Liu <lyz_cs@pku.edu.cn>
-
-Hi
-
-Biggest remaining thing is squashing
-ret = -ENODEV;
-return ret;
-
-into the shorter
-return -ENODEV;
-
-
-> ---
->  drivers/iio/adc/qcom-spmi-vadc.c | 38 ++++++++++++++++++++++++++++----------
->  1 file changed, 28 insertions(+), 10 deletions(-)
+> This driver was indexing the contexts by asid-1, which is probably
+> done under the assumption that the first ASID is always 1.
 > 
-> diff --git a/drivers/iio/adc/qcom-spmi-vadc.c b/drivers/iio/adc/qcom-spmi-vadc.c
-> index 34202ba..43a52b1 100644
-> --- a/drivers/iio/adc/qcom-spmi-vadc.c
-> +++ b/drivers/iio/adc/qcom-spmi-vadc.c
-> @@ -358,22 +358,33 @@ static int vadc_measure_ref_points(struct vadc_priv *vadc)
->  	vadc->graph[VADC_CALIB_ABSOLUTE].dx = VADC_ABSOLUTE_RANGE_UV;
->  
->  	prop = vadc_get_channel(vadc, VADC_REF_1250MV);
-> +	if (!prop) {
-> +		dev_err(vadc->dev, "Please define 1.25V channel\n");
-Probably makes more sense to have the error as 
-"No 1.25V channel found\n");
+> Unfortunately this is not entirely true: at least in the MSM8956
+> and MSM8976 GPU IOMMU, the gpu_user context's ASID number is zero.
+> To allow using an asid number of zero, stop indexing the contexts
+> by asid-1 and rather index them by asid.
+> 
+> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 
-It's not obvious to anyone getting this error what 'define' might mean
-without them looking at the code, so I'd rather we just said what had
-gone wrong rather offering incomplete advice.
+msm8974 will need this as well.
 
-> +		ret = -ENODEV;
-
-Don't bother assigning a variable just to return it in the next line.
-
-return -ENODEV;
-
-> +		return ret;
-> +	}
->  	ret = vadc_do_conversion(vadc, prop, &read_1);
->  	if (ret)
-> -		goto err;
-> +		return ret;
->  
->  	/* Try with buffered 625mV channel first */
->  	prop = vadc_get_channel(vadc, VADC_SPARE1);
-> -	if (!prop)
-> +	if (!prop) {
->  		prop = vadc_get_channel(vadc, VADC_REF_625MV);
-> +		if (!prop) {
-> +			dev_err(vadc->dev, "Please define 0.625V channel\n");
-"No 0.625V channel found\n"
-> +			ret = -ENODEV;
-
-return -ENODEV;
-
-> +			return ret;
-> +		}
-> +	}
->  
->  	ret = vadc_do_conversion(vadc, prop, &read_2);
->  	if (ret)
-> -		goto err;
-> +		return ret;
->  
->  	if (read_1 == read_2) {
->  		ret = -EINVAL;
-> -		goto err;
-> +		return ret;
->  	}
->  
->  	vadc->graph[VADC_CALIB_ABSOLUTE].dy = read_1 - read_2;
-> @@ -381,25 +392,32 @@ static int vadc_measure_ref_points(struct vadc_priv *vadc)
->  
->  	/* Ratiometric calibration */
->  	prop = vadc_get_channel(vadc, VADC_VDD_VADC);
-> +	if (!prop) {
-> +		dev_err(vadc->dev, "Please define VDD channel\n");
-
-"No VDD channel found\n"
-
-> +		ret = -ENODEV;
-> +		return ret;
-> +	}
->  	ret = vadc_do_conversion(vadc, prop, &read_1);
->  	if (ret)
-> -		goto err;
-> +		return ret;
->  
->  	prop = vadc_get_channel(vadc, VADC_GND_REF);
-> +	if (!prop) {
-> +		dev_err(vadc->dev, "Please define GND channel\n");
-
-"No GND channel found\n"
-
-> +		ret = -ENODEV;
-> +		return ret;
-
-return -ENODEV;
-
-> +	}
->  	ret = vadc_do_conversion(vadc, prop, &read_2);
->  	if (ret)
-> -		goto err;
-> +		return ret;
->  
->  	if (read_1 == read_2) {
->  		ret = -EINVAL;
-> -		goto err;
-> +		return ret;
-
-return -ENODEV;
-
->  	}
->  
->  	vadc->graph[VADC_CALIB_RATIOMETRIC].dy = read_1 - read_2;
->  	vadc->graph[VADC_CALIB_RATIOMETRIC].gnd = read_2;
-> -err:
-> -	if (ret)
-> -		dev_err(vadc->dev, "measure reference points failed\n");
->  
->  	return ret;
-
-Can't get here with anything other than ret == 0 so
-	return 0;
-to make that explicit.
-
-
->  }
+Reviewed-by: Brian Masney <bmasney@redhat.com>
 
