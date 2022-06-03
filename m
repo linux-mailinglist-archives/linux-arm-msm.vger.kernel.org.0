@@ -2,114 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 64C2453C764
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jun 2022 11:22:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 70F4153C768
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jun 2022 11:23:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234965AbiFCJVh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Jun 2022 05:21:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58302 "EHLO
+        id S239309AbiFCJXJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Jun 2022 05:23:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35440 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242995AbiFCJVg (ORCPT
+        with ESMTP id S243003AbiFCJXG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Jun 2022 05:21:36 -0400
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25A363A181
-        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Jun 2022 02:21:34 -0700 (PDT)
-Received: by mail-lf1-x135.google.com with SMTP id j10so11640698lfe.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Jun 2022 02:21:34 -0700 (PDT)
+        Fri, 3 Jun 2022 05:23:06 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35FB42715B;
+        Fri,  3 Jun 2022 02:23:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=znBdlMbfX1GAYndIxEL6L68ey32IXbsATO8ijdQ1BKE=;
-        b=QWKb0MgLpF7c9f4d0itaacfFynpTJfZfeuQuQWXxQqzmhuJOuAMJohhYx1adJuNpqP
-         tazaCix09UILs6vpCcwRCB+4aEezVw1omzI4U/a81sga1U3DvX0ZmsaBEe31Xt3YLGgB
-         7sU9OHqclSw8e1SVMXsSd8C07hzKO1qKlCHZ1peJ41DXE6B8HhKVCurIcIziqSYjGVSC
-         RPYlktOWTUgQCDg6qjmMOI9Tq5puknAuu/q1UprW2WrKwtc8IIeNl775zcff2wUMYOXq
-         nDSwSB2sMCVnM1s7LTnqLzUKq/vJ03+s3D7VfUAUQWzUOqO4+oWyhHAI0NRPcEvRY//j
-         z3ug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=znBdlMbfX1GAYndIxEL6L68ey32IXbsATO8ijdQ1BKE=;
-        b=wafHLmUGByN3pSUqIFWxtweIaq2lyS+Ps+AOj2MxcHHgyDgUhvIx8zyh9WzaYZjDau
-         ZZPxR09aIN+2ov0zWzL465QGUmhcXH7ApR56tOgeney7mwMKQzPIotiT0AT5Mbb7NrmA
-         1nINF1zve75mw4p39U0NP9ZxZzRUIAXor90zgpLcC4lU7hwkRA+HoaWcSaMWctXsZShT
-         336s0uYpmvK9Zou7DwAVttvn+EL68yy0Y9U6+WEb2czLEvOBl2NQQSnkNacWrVQm+hLY
-         FiPvUqzunJwYzGNqxql8tLDE3ovkSUZWe5KNZukfygqxz6dkn84Yq0yEZHonsOQSu7V4
-         ozKA==
-X-Gm-Message-State: AOAM531D0gMhVNqt3dtH3AcqWQ/rvRxwA+8C6oVsYDHii+WOL5U9GGT+
-        JkWFMHKWSLsWv8OAxK0J2UDFrw==
-X-Google-Smtp-Source: ABdhPJxlJqvV5ZadKNB3+UERyT6y2fMzECASgz6J9AcjzN9d5fOeoogHBTEgC6v3SzhXgiO2OOpUJw==
-X-Received: by 2002:a05:6512:3b28:b0:478:8355:2c88 with SMTP id f40-20020a0565123b2800b0047883552c88mr37602534lfv.395.1654248092473;
-        Fri, 03 Jun 2022 02:21:32 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id o20-20020ac24c54000000b0047917faa676sm353033lfk.33.2022.06.03.02.21.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 03 Jun 2022 02:21:31 -0700 (PDT)
-Message-ID: <af3212f7-c068-33fe-9c00-707028349ca0@linaro.org>
-Date:   Fri, 3 Jun 2022 12:21:31 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.0
-Subject: Re: [PATCH v9 2/5] clk: qcom: gcc-sm8450: use new
- clk_regmap_phy_mux_ops for PCIe pipe clocks
-Content-Language: en-GB
-To:     Johan Hovold <johan@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-pci@vger.kernel.org
-References: <20220603075908.1853011-1-dmitry.baryshkov@linaro.org>
- <20220603075908.1853011-3-dmitry.baryshkov@linaro.org>
- <YpnDkbuZO3jCbxdF@hovoldconsulting.com>
- <bec5ec2a-b749-21ba-e406-fb5799a3df57@linaro.org>
- <YpnLQS5lvMbxpUVj@hovoldconsulting.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <YpnLQS5lvMbxpUVj@hovoldconsulting.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1654248185; x=1685784185;
+  h=from:to:cc:subject:date:message-id;
+  bh=V2lKivc9M3T8itEYOlhL4nuspF06rOXNkuFJ8fsnkqw=;
+  b=dVINiMNdBylF+G5YX0Sc2ZU4c/oHSVgGVW04BXhsC8fgEPQfz76KvnWl
+   VWWft3xds0Mi1ru9U7XpzwkQFTq+D39afbaUzNUZFxlTCAC+8ulYuyin0
+   YKG8FUJXGeAQftAHoxk1uQWxZjiRvWIbkYinynh/0+jgGu8XaUzOfVawS
+   k=;
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 03 Jun 2022 02:23:05 -0700
+X-QCInternal: smtphost
+Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 03 Jun 2022 02:23:03 -0700
+X-QCInternal: smtphost
+Received: from vpolimer-linux.qualcomm.com ([10.204.67.235])
+  by ironmsg02-blr.qualcomm.com with ESMTP; 03 Jun 2022 14:52:50 +0530
+Received: by vpolimer-linux.qualcomm.com (Postfix, from userid 463814)
+        id 680753A0D; Fri,  3 Jun 2022 14:52:49 +0530 (IST)
+From:   Vinod Polimera <quic_vpolimer@quicinc.com>
+To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
+Cc:     Vinod Polimera <quic_vpolimer@quicinc.com>,
+        linux-kernel@vger.kernel.org, robdclark@gmail.com,
+        dianders@chromium.org, vpolimer@quicinc.com, swboyd@chromium.org,
+        kalyant@quicinc.com, dmitry.baryshkov@linaro.org
+Subject: [v1] drm/msm: add null checks for drm device to avoid crash during probe defer
+Date:   Fri,  3 Jun 2022 14:52:47 +0530
+Message-Id: <1654248167-10594-1-git-send-email-quic_vpolimer@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-Spam-Status: No, score=-4.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 03/06/2022 11:50, Johan Hovold wrote:
-> On Fri, Jun 03, 2022 at 11:42:47AM +0300, Dmitry Baryshkov wrote:
->> On 03/06/2022 11:17, Johan Hovold wrote:
->>> On Fri, Jun 03, 2022 at 10:59:05AM +0300, Dmitry Baryshkov wrote:
->>>> Use newly defined clk_regmap_phy_mux_ops for PCIe pipe clocks to let
->>>> the clock framework automatically park the clock when the clock is
->>>> switched off and restore the parent when the clock is switched on.
->>>>
->>>> Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
->>>> Tested-by: Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
->>>
->>> The Tested-by tags you added are malformed throughout the series, please
->>> review and respin (there should be two separate tags for R and T).
->>
->> Hmm, I wonder how did that happen. Probably they came from your message
->> and I didn't notice that they were broken.
-> 
-> You're right, I messed up when I replied to the v7 cover letter. Sorry
-> about that and thanks for fixing it up.
+During probe defer, drm device is not initialized and an external
+trigger to shutdown is trying to clean up drm device leading to crash.
+Add checks to avoid drm device cleanup in such cases.
 
-No problem. Thanks a lot for your continuous review and testing!
+BUG: unable to handle kernel NULL pointer dereference at virtual
+address 00000000000000b8
 
+Call trace:
+
+drm_atomic_helper_shutdown+0x44/0x144
+msm_pdev_shutdown+0x2c/0x38
+platform_shutdown+0x2c/0x38
+device_shutdown+0x158/0x210
+kernel_restart_prepare+0x40/0x4c
+kernel_restart+0x20/0x6c
+__arm64_sys_reboot+0x194/0x23c
+invoke_syscall+0x50/0x13c
+el0_svc_common+0xa0/0x17c
+do_el0_svc_compat+0x28/0x34
+el0_svc_compat+0x20/0x70
+el0t_32_sync_handler+0xa8/0xcc
+el0t_32_sync+0x1a8/0x1ac
+
+Signed-off-by: Vinod Polimera <quic_vpolimer@quicinc.com>
+---
+ drivers/gpu/drm/msm/msm_drv.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+index 4448536..d62ac66 100644
+--- a/drivers/gpu/drm/msm/msm_drv.c
++++ b/drivers/gpu/drm/msm/msm_drv.c
+@@ -142,6 +142,9 @@ static void msm_irq_uninstall(struct drm_device *dev)
+ 	struct msm_drm_private *priv = dev->dev_private;
+ 	struct msm_kms *kms = priv->kms;
+ 
++	if (!irq_has_action(kms->irq))
++		return;
++
+ 	kms->funcs->irq_uninstall(kms);
+ 	if (kms->irq_requested)
+ 		free_irq(kms->irq, dev);
+@@ -259,6 +262,7 @@ static int msm_drm_uninit(struct device *dev)
+ 
+ 	ddev->dev_private = NULL;
+ 	drm_dev_put(ddev);
++	priv->dev = NULL;
+ 
+ 	destroy_workqueue(priv->wq);
+ 
+@@ -1167,7 +1171,7 @@ void msm_drv_shutdown(struct platform_device *pdev)
+ 	struct msm_drm_private *priv = platform_get_drvdata(pdev);
+ 	struct drm_device *drm = priv ? priv->dev : NULL;
+ 
+-	if (!priv || !priv->kms)
++	if (!priv || !priv->kms || !drm)
+ 		return;
+ 
+ 	drm_atomic_helper_shutdown(drm);
 -- 
-With best wishes
-Dmitry
+2.7.4
+
