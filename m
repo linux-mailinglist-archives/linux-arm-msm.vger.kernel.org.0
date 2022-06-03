@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9B2F153C7D6
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jun 2022 11:48:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8982553C7DB
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jun 2022 11:48:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243188AbiFCJr2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Jun 2022 05:47:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42082 "EHLO
+        id S243164AbiFCJra (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Jun 2022 05:47:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42094 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243173AbiFCJrW (ORCPT
+        with ESMTP id S243179AbiFCJrW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Fri, 3 Jun 2022 05:47:22 -0400
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8AA013D61
-        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Jun 2022 02:47:16 -0700 (PDT)
-Received: by mail-ej1-x62c.google.com with SMTP id u12so14882119eja.8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Jun 2022 02:47:16 -0700 (PDT)
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D86F613D20
+        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Jun 2022 02:47:17 -0700 (PDT)
+Received: by mail-ej1-x634.google.com with SMTP id q1so14874154ejz.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Jun 2022 02:47:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=fairphone.com; s=fair;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=XmlvkluiSNMj24D7hJPq2KWkb3UetBzXUSitChCIpTg=;
-        b=RaqsjKpGbIoD8x44wAMevrMZhgC+gxnWT0bU2purC+/B0SEvyuWziiWNzzZQiDANlb
-         NL/SOkwOyYwSdhKUQLFosatZsxO0Z1mm701fBAXkXqQ+YLRGmXqMRg7cr7Fqgfn/FQ4G
-         Cx/d5mnDae60/QIGBwN13vBST2fv/231WUzkzD5zbuP3mquwvpPA6iCx0hvw/otlgrZB
-         pTsPP37CZ1LWuh1Y9nqvmaDG7xT4zezrllKvI+HYxgsQO8kA2ZLDWdxL5ULORQrUT7dd
-         ZoAm/LU6hGQ/UegRhUhh/erylJ1s9DTCfaHGq8v9oI+QNUGtC+W6/qnL2542z8065uCJ
-         9DBQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=+dNjsHpB7ATpH/qWV5MFMXentqFiCOjrR0y/9QOhAEs=;
+        b=tkDkQTLWDnU/7MMzprkcxAw29BEnH+LkSj1ONc/JFnELm3w7cWG7OE3Qjv7V6J1vdi
+         mhTTknRKGQaudtX1ZHC638jQpbJ9pzNQf8AwNOErcnl6k5Q0GvTnWgUY28n2S3QHXf1u
+         t5ocphgbXHKGjvKAZmNCK4oKQwpS2LFqTbFEdJLMeQfz4/fqPR8KXeQRBko7eVcYDwWH
+         l84p9c9mOsqFTN+Sl/sgAosZvme0LUbE1awql0yS/xwjlorLZyNxpJVtZJDRpkyDLueC
+         ZkDhis5uIX+Tc7D2EIhkoJBSwTKDP1jgRd4R5GNPLYQULRDz34rWrjUFRUPSs7nkR0Ee
+         gBwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=XmlvkluiSNMj24D7hJPq2KWkb3UetBzXUSitChCIpTg=;
-        b=oLtXjPaF0eM5OPRM9ShOTeFKAjVMwsnvyFoxwDrnhc7JtXYhrlDcXpFOnAdZwD97zX
-         TlVPXVKVRGVJkynRLv1GLYrCkwu+q3bZ3W2/ONxYNe+bPMbNgVjNPfunpZNYWSU+g5bQ
-         UoPcDZT/kC/6324mcOH8mAfmqOgaivJM6ZIaWuH8mOy0b7SdQE0myCh0SHCfpQgGdcQ9
-         bMS77VdWnEJyDsSNVW36SsN6Y3Bi2T48RPEawMYgrVnOBjB+XQkkrfLDpZonRQUoi5ms
-         V1U6abplKDtA5wWC/k3z+kdfzWpBTF1069l9m7eCVNZ7gau6rQ71M3z74SF/T3peFboZ
-         9Euw==
-X-Gm-Message-State: AOAM5300WGh1WIJhE9sR+PpD2n884aXpd/lx6IPgQyzwe/WG78zse6HL
-        fQujgTjbYhF38FioBwBENa6oQ3+xIUIMUQ==
-X-Google-Smtp-Source: ABdhPJxu2JHMNp3Ryhwmps+2Sr90KjZ1hzGL9fUOJkh0TNMfX3qkXqH1irY9IA+R8Yq04ByvZ1ZEFA==
-X-Received: by 2002:a17:906:6a27:b0:708:1282:cbe9 with SMTP id qw39-20020a1709066a2700b007081282cbe9mr8052825ejc.186.1654249634363;
-        Fri, 03 Jun 2022 02:47:14 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=+dNjsHpB7ATpH/qWV5MFMXentqFiCOjrR0y/9QOhAEs=;
+        b=XdjImZ9bVRZHXw74hCF1Xh02vPZ+nPLtj6cdxYmR8vkBcOEBp6gsLSqj6K1W/7WUiU
+         Aqy4QFkA3+dTkiT1R0t3ArfPsvJ1je9i6irZVmlc/Z2q0np5DhvmC6MxDjTTCjZMvgfP
+         EvTru6SQ9GqqP2Xoc96f4op88Q8Wo7B86q6ANOnVeSHquARyMlQpHN33eyJoNoEX2dMe
+         xP2U/7xm9J50bppx5gJw+FokWhnOhvVyHhWoxonXBzhyL+MhLcNOh6Vhh2BdSuk1Gsck
+         0GHIbTBuFHGTTAwj+X6IIox5z2zdX0fgQ93F6o2XCnEdXWp9Qj2p8AlKxR/UVb8/y6bP
+         qYow==
+X-Gm-Message-State: AOAM530XZHxdEek6H3Wa1P9GvJKlbG3aLILKk6wqIViXEq+jm9soBH0/
+        W3djNLA3Ki48XdVc9vQ1d8oVifzHr77NWA==
+X-Google-Smtp-Source: ABdhPJyHJSDgxB1UFvg0p0jq1Iud89ayDEeekEcB+oS/QciVMHdFD3KOFW3i+Dv5I2bmRQ2W1El/fw==
+X-Received: by 2002:a17:906:d82:b0:70d:84d3:b6df with SMTP id m2-20020a1709060d8200b0070d84d3b6dfmr3007077eji.464.1654249635726;
+        Fri, 03 Jun 2022 02:47:15 -0700 (PDT)
 Received: from otso.. (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id a15-20020a170906274f00b006f3ef214e42sm2661009ejd.168.2022.06.03.02.47.13
+        by smtp.gmail.com with ESMTPSA id a15-20020a170906274f00b006f3ef214e42sm2661009ejd.168.2022.06.03.02.47.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Jun 2022 02:47:13 -0700 (PDT)
+        Fri, 03 Jun 2022 02:47:15 -0700 (PDT)
 From:   Luca Weiss <luca.weiss@fairphone.com>
 To:     linux-arm-msm@vger.kernel.org
 Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
@@ -57,10 +57,12 @@ Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 1/2] arm64: dts: qcom: sdm845*: replace i2s reg with constant
-Date:   Fri,  3 Jun 2022 11:47:09 +0200
-Message-Id: <20220603094710.64591-1-luca.weiss@fairphone.com>
+Subject: [PATCH 2/2] arm64: dts: qcom: sm8250: use constants for audio clocks
+Date:   Fri,  3 Jun 2022 11:47:10 +0200
+Message-Id: <20220603094710.64591-2-luca.weiss@fairphone.com>
 X-Mailer: git-send-email 2.36.1
+In-Reply-To: <20220603094710.64591-1-luca.weiss@fairphone.com>
+References: <20220603094710.64591-1-luca.weiss@fairphone.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -73,64 +75,54 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Make it easier to understand what the reg in those nodes is by using the
-constants provided by qcom,q6dsp-lpass-ports.h.
+The use of these constants was removed during merging, probably because
+the patches adding those defines and the dts patches were merged through
+different trees.
+
+Re-add them to make it clear which clocks are getting used.
 
 Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 ---
- arch/arm64/boot/dts/qcom/qrb5165-rb5.dts             | 4 ++--
- arch/arm64/boot/dts/qcom/sdm845-db845c.dts           | 2 +-
- arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts | 2 +-
- 3 files changed, 4 insertions(+), 4 deletions(-)
+ arch/arm64/boot/dts/qcom/sm8250.dtsi | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-index 0e63f707b911..f627d6b7311b 100644
---- a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-+++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-@@ -830,7 +830,7 @@ &qupv3_id_2 {
+diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+index dc2562070336..fb7a82c3704f 100644
+--- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+@@ -8,6 +8,8 @@
+ #include <dt-bindings/clock/qcom,gcc-sm8250.h>
+ #include <dt-bindings/clock/qcom,gpucc-sm8250.h>
+ #include <dt-bindings/clock/qcom,rpmh.h>
++#include <dt-bindings/clock/qcom,sm8250-lpass-aoncc.h>
++#include <dt-bindings/clock/qcom,sm8250-lpass-audiocc.h>
+ #include <dt-bindings/dma/qcom-gpi.h>
+ #include <dt-bindings/gpio/gpio.h>
+ #include <dt-bindings/interconnect/qcom,osm-l3.h>
+@@ -2188,11 +2190,11 @@ tcsr_mutex: hwlock@1f40000 {
+ 		wsamacro: codec@3240000 {
+ 			compatible = "qcom,sm8250-lpass-wsa-macro";
+ 			reg = <0 0x03240000 0 0x1000>;
+-			clocks = <&audiocc 1>,
+-				 <&audiocc 0>,
++			clocks = <&audiocc LPASS_CDC_WSA_MCLK>,
++				 <&audiocc LPASS_CDC_WSA_NPL>,
+ 				 <&q6afecc LPASS_HW_MACRO_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
+ 				 <&q6afecc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
+-				 <&aoncc 0>,
++				 <&aoncc LPASS_CDC_VA_MCLK>,
+ 				 <&vamacro>;
  
- &q6afedai {
- 	qi2s@16 {
--		reg = <16>;
-+		reg = <PRIMARY_MI2S_RX>;
- 		qcom,sd-lines = <0 1 2 3>;
- 	};
- };
-@@ -838,7 +838,7 @@ qi2s@16 {
- /* TERT I2S Uses 1 I2S SD Lines for audio on LT9611 HDMI Bridge */
- &q6afedai {
- 	qi2s@20 {
--		reg = <20>;
-+		reg = <TERTIARY_MI2S_RX>;
- 		qcom,sd-lines = <0>;
- 	};
- };
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-index 194ebeb3259c..2fbb8b024646 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-@@ -609,7 +609,7 @@ resin {
- /* QUAT I2S Uses 4 I2S SD Lines for audio on LT9611 HDMI Bridge */
- &q6afedai {
- 	qi2s@22 {
--		reg = <22>;
-+		reg = <QUATERNARY_MI2S_RX>;
- 		qcom,sd-lines = <0 1 2 3>;
- 	};
- };
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
-index d88dc07205f7..7dd103d1ef6f 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
-@@ -339,7 +339,7 @@ resin {
- /* QUAT I2S Uses 1 I2S SD Line for audio on TAS2559/60 amplifiers */
- &q6afedai {
- 	qi2s@22 {
--		reg = <22>;
-+		reg = <QUATERNARY_MI2S_RX>;
- 		qcom,sd-lines = <0>;
- 	};
- };
+ 			clock-names = "mclk", "npl", "macro", "dcodec", "va", "fsgen";
+@@ -2239,7 +2241,7 @@ audiocc: clock-controller@3300000 {
+ 		vamacro: codec@3370000 {
+ 			compatible = "qcom,sm8250-lpass-va-macro";
+ 			reg = <0 0x03370000 0 0x1000>;
+-			clocks = <&aoncc 0>,
++			clocks = <&aoncc LPASS_CDC_VA_MCLK>,
+ 				<&q6afecc LPASS_HW_MACRO_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
+ 				<&q6afecc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
+ 
 -- 
 2.36.1
 
