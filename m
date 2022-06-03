@@ -2,200 +2,243 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B0F5953C6DF
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jun 2022 10:21:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7BF2553C702
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jun 2022 10:40:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242783AbiFCIVw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Jun 2022 04:21:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33392 "EHLO
+        id S242855AbiFCIkB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Jun 2022 04:40:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55466 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229744AbiFCIVu (ORCPT
+        with ESMTP id S242811AbiFCIkA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Jun 2022 04:21:50 -0400
-Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com [66.111.4.27])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC74099;
-        Fri,  3 Jun 2022 01:21:46 -0700 (PDT)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-        by mailout.nyi.internal (Postfix) with ESMTP id 791335C012F;
-        Fri,  3 Jun 2022 04:21:43 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute3.internal (MEProxy); Fri, 03 Jun 2022 04:21:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cerno.tech; h=cc
-        :cc:content-type:date:date:from:from:in-reply-to:in-reply-to
-        :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to; s=fm3; t=1654244503; x=1654330903; bh=1ccPbvvPc2
-        QJsF6EYg6aGAQTpq423l5bpHT3Jr0RAzE=; b=ufgwP5wykpzQaFVt5QI+f4srwp
-        CDN5XhLL1lgIkELkWDuGu0MVGlKY2xDOdDHtyOtgyp06tpczWh+jSYjaijvftF94
-        VOHO3pemB7wIPmECwfxv0W6YMBYFHFuzvN5BQVI872/kr4Noy93fMJ0p8IgsucLG
-        Cu+5+DesHvyhsL5tvGADwk+iUZXDxe4w9dqo3tfp+cWvE5EqQHth6xeQlctNNwiK
-        krtMHJlDrKey2G/pvksyNMQSz/aUHL/GXga1eQQv/V+F/oauYs5Y8URtN0ZGjZb9
-        Yeb9kUFJ763rFFg9MqyXWs+egN3S0EnG585JBwcTs6+o64dGYZB144eCUrvQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
-        :feedback-id:from:from:in-reply-to:in-reply-to:message-id
-        :mime-version:references:reply-to:sender:subject:subject:to:to
-        :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-        fm1; t=1654244503; x=1654330903; bh=1ccPbvvPc2QJsF6EYg6aGAQTpq42
-        3l5bpHT3Jr0RAzE=; b=JGNuH2RRj8GNk/GdW0Yz8QCithFazuLg7ZmgIXCfKMJ7
-        CXUBXaYIFvQ95sVI/WKJQnrtwPow0jtxlyrJYMeqgScTQX2iMZVEN9HZl/aG7QDA
-        gc9CVHc/g18ezC4jBvX5ziOBchoJXViIX38J4f7AzPF/EDmbTRZBVg2EosHL6wRv
-        GlzsdfgHMX5QJ4Ftwd2Z72qdm8hy7jGTHSXOt7bCfLQT9BfqzrwPRDjIPs+ACU3a
-        buSA+Oj7XeCjbgPfGvxRIkxDrIKYn4kWRXkKEZLqzy9tcmMlsD+C7pZAIzsGLzWw
-        X4u63OdlW10xy73/6PZk+JRRVrnY+CR9FnplmiWsRw==
-X-ME-Sender: <xms:lsSZYhEe1bgESXbJAkQIeQUcKZfufA4TUKR4Lj1T0elJLzr_IwdJDA>
-    <xme:lsSZYmUvY-lam4ev421x8-yY_Ijq2jSCzB1edB5z25QED_FcbEYUf0zGJBW3gqc2w
-    ENs1XpkZP9FroFW1SU>
-X-ME-Received: <xmr:lsSZYjJETLpiMwc9tmKt0lT5Hve7ygX70mzz-SR1dVSDhxERs9A0msW235wi>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrleeigddtudcutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpeforgigihhm
-    vgcutfhiphgrrhguuceomhgrgihimhgvsegtvghrnhhordhtvggthheqnecuggftrfgrth
-    htvghrnhepfedtueevteeggfeivdffjeejledvveduudetteekvdeiueehvdegkedvleet
-    ffeknecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepmh
-    grgihimhgvsegtvghrnhhordhtvggthh
-X-ME-Proxy: <xmx:lsSZYnFhuVbHa2a3HIHFNtndJSGMwBUAKUX96abHese1LKfLBO534w>
-    <xmx:lsSZYnXH6Yh1hNoBEJ8yINX_zEyrmvYNxU7iDGNx_GNRBNcvkXJ3zA>
-    <xmx:lsSZYiOnfys3V5irrRFjCr2A2qF-_ob_AnrigaEJqbQG4pG6ACjWtQ>
-    <xmx:l8SZYovxnXDLVbsF-05lta2lwtxO7wGvZ6XbVyMk-phWTNfphZhMQQ>
-Feedback-ID: i8771445c:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 3 Jun 2022 04:21:42 -0400 (EDT)
-Date:   Fri, 3 Jun 2022 10:21:39 +0200
-From:   Maxime Ripard <maxime@cerno.tech>
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
-        Hsin-Yi Wang <hsinyi@chromium.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Philip Chen <philipchen@chromium.org>,
-        Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
-        Robert Foss <robert.foss@linaro.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        LKML <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v3 3/4] drm/bridge: Add devm_drm_bridge_add()
-Message-ID: <20220603082139.sfdxb5ndwpvlhklh@penduick>
-References: <20220510192944.2408515-1-dianders@chromium.org>
- <20220510122726.v3.3.Iba4b9bf6c7a1ee5ea2835ad7bd5eaf84d7688520@changeid>
- <20220521091751.opeiqbmc5c2okdq6@houat>
- <CAD=FV=Wea0LT5umK4Xg87cDikim+dSuyLndfydO3_DnTujZr9Q@mail.gmail.com>
- <CAD=FV=XqJuPHxm7HYMvyHBL_zC-BBA_f0MBsZX-jHt7Pk9ngsQ@mail.gmail.com>
+        Fri, 3 Jun 2022 04:40:00 -0400
+Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12FF036E0A
+        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Jun 2022 01:39:59 -0700 (PDT)
+Received: by mail-pj1-x1034.google.com with SMTP id n10so6881113pjh.5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Jun 2022 01:39:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=kCVrRc4NVvmeRfDYNLQpFovvIlkEHz3avyGKdl7f8cs=;
+        b=dhDBnMsglw2I4/hKmtWmP3lc9f2wDdTGnFAsg0hC/AKHxqx8EMr0i7zVm9VCgLZoOj
+         nZypmTQ+2CrkEDXNTqhDoKJaD9Lbaynr/HDS7RkvH8MYY3YZFSXfUEmY/z4CivzE87Gm
+         R5vGkyRV5HFdyGPLUHb6LLxdflRuEfD+SG2B8254kd9G4bsdKOy65XNy7uIO+s1yglv8
+         VG8NjTTnLKbBBUz55RKXsUs6v9odihI5GLd4NBw4zvS15L/aeYjl946mvipJhQQ9ppW1
+         mVfeClisH1iRvKpEbOSI4q8BM1uIDKMaABAr5yrIdYKBWBaDTbx0YzYGNPjB9PQ/IhJ3
+         lWDQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=kCVrRc4NVvmeRfDYNLQpFovvIlkEHz3avyGKdl7f8cs=;
+        b=byLvixJriS1w1EuJvHNDXPU71ll0p8/E6EaRWUyDVffYDxGUFnkdPWZQfm5Yg5GNah
+         6YojSlRMG3is15ksGamZjjUVVYGd+F8OvGBPsFKKDGawAQOMzKgq0Z6CRzyDDEHEoUV5
+         Zhmw5fbT8z6KiOd5WGBVhN3VpIOtRa9FFhLozX9+n3/wXR+pDQVmcYPExOVerngFx4D5
+         8P+R8qyzkAjRCWUf0Pnb9SS5imXCggmDp9gYa0VBKpUy6aL324bolV0FFSG2eIBXeFWm
+         unoJvKXX7m3HD9Yoc+hTpkVmFl8ewvvykauE8iJIdANRPj01rdtwChOkSjcAMmS68Us+
+         bQXQ==
+X-Gm-Message-State: AOAM532GqKN02JZNYFKgqWnTkEOvX/sXLtroLEM1rrUE/wqv8Rr8SP8w
+        ZA799EfUkw3IYv+oZHKFi9fxbLu3bVasHbmIIcjgKQ==
+X-Google-Smtp-Source: ABdhPJzo3b5hw6ZjNuMIq2BMHZLSqnWz2D88juzIl0iTFHcs73EzpgDZNfhLrvuJscVMDhvAXKjnmXZkUaozvtIglWU=
+X-Received: by 2002:a17:903:1c6:b0:161:9fbc:5a6 with SMTP id
+ e6-20020a17090301c600b001619fbc05a6mr9218199plh.65.1654245598449; Fri, 03 Jun
+ 2022 01:39:58 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAD=FV=XqJuPHxm7HYMvyHBL_zC-BBA_f0MBsZX-jHt7Pk9ngsQ@mail.gmail.com>
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_PASS,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+References: <20220601124250.60968-1-robert.foss@linaro.org>
+ <20220601124250.60968-4-robert.foss@linaro.org> <20220602145228.GA2299532-robh@kernel.org>
+In-Reply-To: <20220602145228.GA2299532-robh@kernel.org>
+From:   Robert Foss <robert.foss@linaro.org>
+Date:   Fri, 3 Jun 2022 10:39:47 +0200
+Message-ID: <CAG3jFyutTWpV06FU4iZrp=TJ3SSr3nAm8AWkEzSbEXjof7Lfvw@mail.gmail.com>
+Subject: Re: [PATCH v4 3/6] dt-bindings: clock: Add Qcom SM8350 GPUCC bindings
+To:     Rob Herring <robh@kernel.org>
+Cc:     bjorn.andersson@linaro.org, agross@kernel.org,
+        mturquette@baylibre.com, sboyd@kernel.org, krzk+dt@kernel.org,
+        jonathan@marek.ca, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Dmitry Baryshkov <dmityr.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, May 31, 2022 at 02:06:34PM -0700, Doug Anderson wrote:
-> On Mon, May 23, 2022 at 10:00 AM Doug Anderson <dianders@chromium.org> wrote:
-> > On Sat, May 21, 2022 at 2:17 AM Maxime Ripard <maxime@cerno.tech> wrote:
-> > > On Tue, May 10, 2022 at 12:29:43PM -0700, Douglas Anderson wrote:
-> > > > This adds a devm managed version of drm_bridge_add(). Like other
-> > > > "devm" function listed in drm_bridge.h, this function takes an
-> > > > explicit "dev" to use for the lifetime management. A few notes:
-> > > > * In general we have a "struct device" for bridges that makes a good
-> > > >   candidate for where the lifetime matches exactly what we want.
-> > > > * The "bridge->dev->dev" device appears to be the encoder
-> > > >   device. That's not the right device to use for lifetime management.
-> > > >
-> > > > Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > > Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> > >
-> > > If we are to introduce more managed helpers, I think it'd be wiser to
-> > > introduce them as DRM-managed, and not device managed.
-> > >
-> > > Otherwise, you'll end up in a weird state when a device has been removed
-> > > but the DRM device is still around.
+On Thu, 2 Jun 2022 at 16:52, Rob Herring <robh@kernel.org> wrote:
+>
+> On Wed, Jun 01, 2022 at 02:42:47PM +0200, Robert Foss wrote:
+> > Add device tree bindings for graphics clock controller for
+> > Qualcomm Technology Inc's SM8350 SoCs.
 > >
-> > I'm kinda confused. In this case there is no DRM device for the bridge
-> > and, as per my CL description, "bridge-dev->dev" appears to be the
-> > encoder device. I wasn't personally involved in discussions about it,
-> > but I was under the impression that this was expected / normal. Thus
-> > we can't make this DRM-managed.
-> 
-> Since I didn't hear a reply,
-
-Gah, I replied but it looks like somehow it never reached the ML...
-
-Here was my original reply:
-
-> > > This adds a devm managed version of drm_bridge_add(). Like other
-> > > "devm" function listed in drm_bridge.h, this function takes an
-> > > explicit "dev" to use for the lifetime management. A few notes:
-> > > * In general we have a "struct device" for bridges that makes a good
-> > >   candidate for where the lifetime matches exactly what we want.
-> > > * The "bridge->dev->dev" device appears to be the encoder
-> > >   device. That's not the right device to use for lifetime management.
-> > >
-> > > Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> > Signed-off-by: Robert Foss <robert.foss@linaro.org>
+> > Reviewed-by: Dmitry Baryshkov <dmityr.baryshkov@linaro.org>
+> > ---
 > >
-> > If we are to introduce more managed helpers, I think it'd be wiser to
-> > introduce them as DRM-managed, and not device managed.
+> > Changes since v3
+> >  - Separate from qcom,gpucc
+> >  - Remove clock-names
+> >  - Make example sm8350 based
+> >  - Changed author to me due to size of changes
 > >
-> > Otherwise, you'll end up in a weird state when a device has been removed
-> > but the DRM device is still around.
->=20
-> I'm kinda confused. In this case there is no DRM device for the bridge
-> and, as per my CL description, "bridge-dev->dev" appears to be the
-> encoder device.
+> >
+> >  .../bindings/clock/qcom,gpucc-sm8350.yaml     | 72 +++++++++++++++++++
+> >  include/dt-bindings/clock/qcom,gpucc-sm8350.h | 52 ++++++++++++++
+> >  2 files changed, 124 insertions(+)
+> >  create mode 100644 Documentation/devicetree/bindings/clock/qcom,gpucc-sm8350.yaml
+> >  create mode 100644 include/dt-bindings/clock/qcom,gpucc-sm8350.h
+> >
+> > diff --git a/Documentation/devicetree/bindings/clock/qcom,gpucc-sm8350.yaml b/Documentation/devicetree/bindings/clock/qcom,gpucc-sm8350.yaml
+> > new file mode 100644
+> > index 000000000000..0a0546c079a9
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/clock/qcom,gpucc-sm8350.yaml
+> > @@ -0,0 +1,72 @@
+> > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> > +%YAML 1.2
+> > +---
+> > +$id: http://devicetree.org/schemas/clock/qcom,gpucc-sm8350.yaml#
+> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> > +
+> > +title: Qualcomm Graphics Clock & Reset Controller Binding
+> > +
+> > +maintainers:
+> > +  - Robert Foss <robert.foss@linaro.org>
+> > +
+> > +description: |
+> > +  Qualcomm graphics clock control module which supports the clocks, resets and
+> > +  power domains on Qualcomm SoCs.
+> > +
+> > +  See also:
+> > +    dt-bindings/clock/qcom,gpucc-sm8350.h
+> > +
+> > +properties:
+> > +  compatible:
+> > +    enum:
+> > +      - qcom,sm8350-gpucc
+> > +
+> > +  clocks:
+> > +    items:
+> > +      - description: Board XO source
+> > +      - description: GPLL0 main branch source
+> > +      - description: GPLL0 div branch source
+> > +
+> > +  '#clock-cells':
+> > +    const: 1
+> > +
+> > +  '#reset-cells':
+> > +    const: 1
+> > +
+> > +  '#power-domain-cells':
+> > +    const: 1
+> > +
+> > +  reg:
+> > +    maxItems: 1
+> > +
+> > +required:
+> > +  - compatible
+> > +  - reg
+> > +  - clocks
+> > +  - '#clock-cells'
+> > +  - '#reset-cells'
+> > +  - '#power-domain-cells'
+> > +
+> > +additionalProperties: false
+> > +
+> > +examples:
+> > +  - |
+> > +    #include <dt-bindings/clock/qcom,gcc-sm8350.h>
+> > +    #include <dt-bindings/clock/qcom,rpmh.h>
+> > +
+> > +    soc {
+> > +        #address-cells = <2>;
+> > +        #size-cells = <2>;
+> > +
+> > +        clock-controller@3d90000 {
+> > +            compatible = "qcom,sm8350-gpucc";
+> > +            reg = <0 0x03d90000 0 0x9000>;
+> > +            clocks = <&rpmhcc RPMH_CXO_CLK>,
+> > +                     <&gcc GCC_GPU_GPLL0_CLK_SRC>,
+> > +                     <&gcc GCC_GPU_GPLL0_DIV_CLK_SRC>;
+> > +            #clock-cells = <1>;
+> > +            #reset-cells = <1>;
+> > +            #power-domain-cells = <1>;
+> > +        };
+> > +    };
+> > +...
+> > diff --git a/include/dt-bindings/clock/qcom,gpucc-sm8350.h b/include/dt-bindings/clock/qcom,gpucc-sm8350.h
+> > new file mode 100644
+> > index 000000000000..d2294e0d527e
+> > --- /dev/null
+> > +++ b/include/dt-bindings/clock/qcom,gpucc-sm8350.h
+> > @@ -0,0 +1,52 @@
+> > +/* SPDX-License-Identifier: GPL-2.0-only */
+>
+> Dual license.
 
-bridge->dev seems right though?
+Ack.
 
-> I wasn't personally involved in discussions about it, but I was under
-> the impression that this was expected / normal. Thus we can't make
-> this DRM-managed.
-
-Still, I don't think devm is the right solution to this either.
-
-The underlying issue is two-fold:
-
-  - Encoders can have a pointer to a bridge through of_drm_find_bridge
-    or similar. However, bridges are traditionally tied to their device
-    lifetime (by calling drm_bridge_add in probe, and drm_bridge_remove
-    in remove). Encoders will typically be tied to the DRM device
-    however, and that one sticks around until the last application
-    closes it. We can thus very easily end up with a dangling pointer,
-    and a use-after-free.
-
-  - It's not the case yet, but it doesn't seem far fetch to expose
-    properties of bridges to the userspace. In that case, the userspace
-    would be likely to still hold references to objects that aren't
-    there anymore when the bridge is gone.
-
-The first is obviously a larger concern, but if we can find a solution
-that would accomodate the second it would be great.
-
-As far as I can see, we should fix in two steps:
-
-  - in drm_bridge_attach, we should add a device-managed call that will
-    unregister the main DRM device. We don't allow to probe the main DRM
-    device when the bridge isn't there yet in most case, so it makes
-    sense to remove it once the bridge is no longer there as well.
-
-  - When the DRM device is removed, have the core cleanup any bridge
-    registered. That will remove the need to have drm_bridge_remove in
-    the first place.
-
-> I'll assume that my response addressed your concerns. Assuming I get
-> reviews for the other two patches in this series I'll plan to land
-> this with Dmitry's review.
-
-I still don't think it's a good idea to merge it. It gives an illusion
-of being safe, but it's really far from it.
-
-Maxime
+>
+> > +/*
+> > + * Copyright (c) 2019-2020, The Linux Foundation. All rights reserved.
+> > + */
+> > +
+> > +#ifndef _DT_BINDINGS_CLK_QCOM_GPU_CC_SM8350_H
+> > +#define _DT_BINDINGS_CLK_QCOM_GPU_CC_SM8350_H
+> > +
+> > +/* GPU_CC clocks */
+> > +#define GPU_CC_AHB_CLK                       0
+> > +#define GPU_CC_CB_CLK                        1
+> > +#define GPU_CC_CRC_AHB_CLK           2
+> > +#define GPU_CC_CX_APB_CLK            3
+> > +#define GPU_CC_CX_GMU_CLK            4
+> > +#define GPU_CC_CX_QDSS_AT_CLK                5
+> > +#define GPU_CC_CX_QDSS_TRIG_CLK              6
+> > +#define GPU_CC_CX_QDSS_TSCTR_CLK     7
+> > +#define GPU_CC_CX_SNOC_DVM_CLK               8
+> > +#define GPU_CC_CXO_AON_CLK           9
+> > +#define GPU_CC_CXO_CLK                       10
+> > +#define GPU_CC_FREQ_MEASURE_CLK              11
+> > +#define GPU_CC_GMU_CLK_SRC           12
+> > +#define GPU_CC_GX_GMU_CLK            13
+> > +#define GPU_CC_GX_QDSS_TSCTR_CLK     14
+> > +#define GPU_CC_GX_VSENSE_CLK         15
+> > +#define GPU_CC_HLOS1_VOTE_GPU_SMMU_CLK       16
+> > +#define GPU_CC_HUB_AHB_DIV_CLK_SRC   17
+> > +#define GPU_CC_HUB_AON_CLK           18
+> > +#define GPU_CC_HUB_CLK_SRC           19
+> > +#define GPU_CC_HUB_CX_INT_CLK                20
+> > +#define GPU_CC_HUB_CX_INT_DIV_CLK_SRC        21
+> > +#define GPU_CC_MND1X_0_GFX3D_CLK     22
+> > +#define GPU_CC_MND1X_1_GFX3D_CLK     23
+> > +#define GPU_CC_PLL0                  24
+> > +#define GPU_CC_PLL1                  25
+> > +#define GPU_CC_SLEEP_CLK             26
+> > +
+> > +/* GPU_CC resets */
+> > +#define GPUCC_GPU_CC_ACD_BCR         0
+> > +#define GPUCC_GPU_CC_CB_BCR          1
+> > +#define GPUCC_GPU_CC_CX_BCR          2
+> > +#define GPUCC_GPU_CC_FAST_HUB_BCR    3
+> > +#define GPUCC_GPU_CC_GFX3D_AON_BCR   4
+> > +#define GPUCC_GPU_CC_GMU_BCR         5
+> > +#define GPUCC_GPU_CC_GX_BCR          6
+> > +#define GPUCC_GPU_CC_XO_BCR          7
+> > +
+> > +/* GPU_CC GDSCRs */
+> > +#define GPU_CX_GDSC                  0
+> > +#define GPU_GX_GDSC                  1
+> > +
+> > +#endif
+> > --
+> > 2.34.1
+> >
+> >
