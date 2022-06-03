@@ -2,83 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D6D7353CC1D
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jun 2022 17:15:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E267D53CC2C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jun 2022 17:18:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245401AbiFCPPA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Jun 2022 11:15:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41186 "EHLO
+        id S245426AbiFCPST (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Jun 2022 11:18:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47836 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245405AbiFCPO4 (ORCPT
+        with ESMTP id S245418AbiFCPSP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Jun 2022 11:14:56 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 2B9F050479
-        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Jun 2022 08:14:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1654269295;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=KSS+WlIjCzxfASZfHJ/pG+nFg5xuEcmHlF7DakY9wuE=;
-        b=IsinTjFKocoU3Ir/OHyQ6Oh5fbnyNiUT0IrjR3r/vh1Ebm70qJu6KsVg0TvWQPMS9Y/zK8
-        hJsYRXG6abjPlOC3unxoSCr6yIlrOjV5D0LyTky8Ot7cF65FJGxD3z4jnTu33d4WGJxKo9
-        D/hmP8DLKDqZfiLyTGT0W6Gx+tT+sfY=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- us-mta-490-udclCPTmOHyiwukZovgjTQ-1; Fri, 03 Jun 2022 11:14:53 -0400
-X-MC-Unique: udclCPTmOHyiwukZovgjTQ-1
-Received: by mail-qk1-f200.google.com with SMTP id b1-20020a05620a118100b006a36dec1b16so6184379qkk.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Jun 2022 08:14:53 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=KSS+WlIjCzxfASZfHJ/pG+nFg5xuEcmHlF7DakY9wuE=;
-        b=MZRRAbRjsgp2R+q22DLRO3ge7Al6KmuwbpDZd+9lAF8/HAQIcQI4iTr+4lwTFqpMHT
-         JMzvzczC0I0lyQ+F54B5yK7dfZDpjqWels1N3yeCteyQjvQ296irRsE3wtAkSPmukKje
-         weafv+RYELHPZ5UMRIAa/k9TlNj/4ij/S7tKCR9HMp9hZvwJRZzz5J9dOQB8MwjlGQQZ
-         eCgkhkqdbeQOJ/jTmmzEvXK6sLn/ct8bhkaTCMwF2P3IGWFfMwt2TNpXD8KkoEm1Nske
-         MwO0MM3rqVFGSlSWBrupcu2WZ03dlgg8vCNwMclurEotUzqIaB1jms2RQzWZawidOp3F
-         5YmQ==
-X-Gm-Message-State: AOAM533Do4/7j5T9q7KREpShIkElxNCAoj8ziYBEQ0fj1m+vo5drrrqG
-        OloKcRhGX5onwJ0Ar3qRna63cOD6Quc9TRo/sdJs9qTfgx9UEK+rTF8XXQpa8scemgKvGmErkVX
-        s6BCD37/ISlFKYzYT/C/1yy1aRg==
-X-Received: by 2002:a05:620a:1445:b0:6a3:9f13:7f10 with SMTP id i5-20020a05620a144500b006a39f137f10mr6753074qkl.736.1654269293269;
-        Fri, 03 Jun 2022 08:14:53 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJzYV+OzB2BFz+1kTFY3RgS+1hrEcN6pQQortBLwObPtwEpeMeMFxrV3fG5J5vUdP1DDnfWMew==
-X-Received: by 2002:a05:620a:1445:b0:6a3:9f13:7f10 with SMTP id i5-20020a05620a144500b006a39f137f10mr6753042qkl.736.1654269292985;
-        Fri, 03 Jun 2022 08:14:52 -0700 (PDT)
-Received: from xps13 (c-98-239-145-235.hsd1.wv.comcast.net. [98.239.145.235])
-        by smtp.gmail.com with ESMTPSA id m28-20020a05620a215c00b006a03cbb1323sm5009016qkm.65.2022.06.03.08.14.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Jun 2022 08:14:52 -0700 (PDT)
-Date:   Fri, 3 Jun 2022 11:14:51 -0400
-From:   Brian Masney <bmasney@redhat.com>
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht,
-        linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org,
-        linux-arm-kernel@lists.infradead.org,
-        iommu@lists.linux-foundation.org, martin.botka@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
-        Rob Clark <robdclark@gmail.com>, Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 5/6] iommu/qcom: Index contexts by asid number to allow
- asid 0
-Message-ID: <Ypola4mBuQ6zDLcz@xps13>
-References: <20220527212901.29268-1-konrad.dybcio@somainline.org>
- <20220527212901.29268-6-konrad.dybcio@somainline.org>
+        Fri, 3 Jun 2022 11:18:15 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADAD5377F6;
+        Fri,  3 Jun 2022 08:18:14 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 46F9E6188C;
+        Fri,  3 Jun 2022 15:18:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C738C385A9;
+        Fri,  3 Jun 2022 15:18:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1654269493;
+        bh=hNClHbaX1+sQTSTaqXz+J1yCu27oIJqVaL4omZjeK54=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=b2oMiBOgWYmBEBlRga7OxxbRP3UqrCmg7Mq59zca+0d1GCzca1kUhd1lQU+R70V3V
+         54C4wxC2K1r0fb7JJnr1xZ91UQi1ctXyjwji+HThBdXPrzYlgStnmssRXiT+NcAz3m
+         anrotYH3mum+sJGPZNl6lxkqQX46h9gAEXjwLuyASa1hssTp3P1dfJdVWmd52AWL0O
+         5TS6ytnQHF+Abx5MMUbIcdh64OpojqM3OMAXt/svzSwjf1cCjIqrUsW7jkcd2CAKaC
+         RdIr4JlQwkjxpmKkh9haIYWjFZTwuA3AF0maoRCKAWRXBtmF21Pd9xhz1qT6/Nxp+O
+         TLaH9b9b9qpQg==
+Date:   Fri, 3 Jun 2022 20:48:06 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Ansuel Smith <ansuelsmth@gmail.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Miquel Raynal <miquel.raynal@bootlin.com>,
+        Richard Weinberger <richard@nod.at>,
+        Vignesh Raghavendra <vigneshr@ti.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-mtd@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v4 0/2] Add support for unprotected spare data page
+Message-ID: <20220603151806.GB26696@thinkpad>
+References: <20220519190112.6344-1-ansuelsmth@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20220527212901.29268-6-konrad.dybcio@somainline.org>
-User-Agent: Mutt/2.2.1 (2022-02-19)
-X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20220519190112.6344-1-ansuelsmth@gmail.com>
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -86,22 +62,78 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, May 27, 2022 at 11:29:00PM +0200, Konrad Dybcio wrote:
-> From: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+On Thu, May 19, 2022 at 09:01:10PM +0200, Ansuel Smith wrote:
+> Some background about this.
+> On original qsdk ipq8064 based firmware there was a big separation from
+> boot partition and user partition. With boot partition we refer to
+> partition used to init the router (bootloader, spm firmware and other
+> internal stuff) With user partition we refer to linux partition and data
+> partition not used to init the router.
+> When someone had to write to these boot partition a special mode was
+> needed, to switch the nand driver to this special configuration.
 > 
-> This driver was indexing the contexts by asid-1, which is probably
-> done under the assumption that the first ASID is always 1.
+> Upstream version of the nandc driver totally dropped this and the result
+> is that if someone try to read data from these partition a CRC warning
+> is printed and if someone try to write that (if for example someone
+> wants to replace the bootloader) result is a broken system as the data
+> is badly written.
 > 
-> Unfortunately this is not entirely true: at least in the MSM8956
-> and MSM8976 GPU IOMMU, the gpu_user context's ASID number is zero.
-> To allow using an asid number of zero, stop indexing the contexts
-> by asid-1 and rather index them by asid.
+
+Can you please point me to the downstream/vendor driver that has this
+implementation?
+
+Thanks,
+Mani
+
+> This series comes to fix this.
 > 
-> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
-> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+> A user can declare offset and size of these special partition using the
+> qcom,boot-pages binding.
+> 
+> An initial implementation of this assumed that the boot-pages started
+> from the start of the nand but we discover that some device have backup
+> of these special partition and we can have situation where we have this
+> partition scheme
+> - APPSBL (require special mode)
+> - APPSBLENV (doesn't require special mode)
+> - ART
+> - APPSBLBK (back of APPSBL require special mode)
+> - APPSBLENVBK (back of APPSBLENV doesn't require special mode)
+> With this configuration we need to declare sparse boot page and we can't
+> assume boot-pages always starts from the start of the nand.
+> 
+> A user can use this form to declare sparse boot pages
+> qcom,boot-pages = <0x0 0x0c80000 0x0c80000 0x0500000>;
+> 
+> The driver internally will parse this array, convert it to nand pages
+> and check internally on every read/write if this special configuration
+> should used for that page or the normal one.
+> 
+> The reason for all of this is that qcom FOR SOME REASON, disable ECC for
+> spare data only for these boot partition and we need to reflect this
+> special configuration to mute these warning and to permit actually
+> writing to these pages.
+> 
+> v4:
+> - Fix wrong compatible set for boot-pages (ipq8074 instead of ipq806x)
+> v3:
+> - Fix typo in Docmunetation commit desription
+> - Add items description for uint32-matrix
+> v2:
+> - Add fixes from Krzysztof in Documentation
+> 
+> Ansuel Smith (2):
+>   mtd: nand: raw: qcom_nandc: add support for unprotected spare data
+>     pages
+>   dt-bindings: mtd: qcom_nandc: document qcom,boot-pages binding
+> 
+>  .../devicetree/bindings/mtd/qcom,nandc.yaml   |  26 +++
+>  drivers/mtd/nand/raw/qcom_nandc.c             | 148 +++++++++++++++++-
+>  2 files changed, 169 insertions(+), 5 deletions(-)
+> 
+> -- 
+> 2.34.1
+> 
 
-msm8974 will need this as well.
-
-Reviewed-by: Brian Masney <bmasney@redhat.com>
-
+-- 
+மணிவண்ணன் சதாசிவம்
