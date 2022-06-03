@@ -2,570 +2,281 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4B63A53CD97
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jun 2022 18:57:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0BBC053CEBE
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jun 2022 19:46:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242605AbiFCQ5P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Jun 2022 12:57:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46676 "EHLO
+        id S1345314AbiFCRqg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Jun 2022 13:46:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44706 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234670AbiFCQ5P (ORCPT
+        with ESMTP id S1345175AbiFCRpy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Jun 2022 12:57:15 -0400
-Received: from relay11.mail.gandi.net (relay11.mail.gandi.net [217.70.178.231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3ADAD13E84;
-        Fri,  3 Jun 2022 09:57:11 -0700 (PDT)
-Received: (Authenticated sender: miquel.raynal@bootlin.com)
-        by mail.gandi.net (Postfix) with ESMTPSA id 92AEC100003;
-        Fri,  3 Jun 2022 16:57:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-        t=1654275430;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=QZE9qS7TQkY684bsp1aOtO1TIYwTBearn5vIKQv58Zc=;
-        b=BORFok4Mtr0Fzd56JjplsJYQ5nnKMlBm87bQ0CFW/MPvO4A67a+s5wuK3Vb7b6aagOQ9eA
-        uCqZXPzFv1uKEV+9je4mjG4fRKjP0UTsWWekvdzrlu8Vt/Vb5FVdErmqkV1Lnhxh0uWy0M
-        m++iKvsl/vmefO/rnocUtWyDxxU8jMyV+gKLuYWyl3MstfGlak/KjiYvcLd8xs0nfj6zDr
-        uVuNX7Gig32mxWNC+g9Adc++kF8uQDH9C9ONbtqAhnyn/VvWa34sF/ODKeBrUee7thU6xI
-        2ZvXOWmeNb5RiExfK6XP4OFQEnW1pow0tYKqIyjkq0SoOq04BaK/EHE7iV4SQw==
-Date:   Fri, 3 Jun 2022 18:57:06 +0200
-From:   Miquel Raynal <miquel.raynal@bootlin.com>
-To:     Md Sadre Alam <quic_mdalam@quicinc.com>
-Cc:     mani@kernel.org, richard@nod.at, vigneshr@ti.com,
-        linux-mtd@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_srichara@quicinc.com
-Subject: Re: [PATCH] mtd: rawnand: qcom: Implement exec_op()
-Message-ID: <20220603185706.55e85123@xps-13>
-In-Reply-To: <1654273498-31998-1-git-send-email-quic_mdalam@quicinc.com>
-References: <1654273498-31998-1-git-send-email-quic_mdalam@quicinc.com>
-Organization: Bootlin
-X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.33; x86_64-pc-linux-gnu)
+        Fri, 3 Jun 2022 13:45:54 -0400
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED7C756424;
+        Fri,  3 Jun 2022 10:43:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1654278202; x=1685814202;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=E/c77o9OrW6RMELApiHQEq8cGbnVpHSQmXfiuH0BvHM=;
+  b=Saq1JvK5AUNnLJaXd1Qu57DSaHTEWtGdRg+MwbetNPsidcfYqHnESD0z
+   huCv1iIMD8DPIebI/XF+YMc3Esfw8qYJn8DsTrjy2KpjR5JEN7yTIHok7
+   hFz/+nVqG1M7imk7e3C3quy70W4h3sEenvfyMAXO6kRuNLGMxTSLiAENu
+   c=;
+Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 03 Jun 2022 10:43:20 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Jun 2022 10:43:20 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Fri, 3 Jun 2022 10:43:20 -0700
+Received: from [10.216.1.37] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Fri, 3 Jun 2022
+ 10:43:16 -0700
+Message-ID: <ad393ad2-a247-3c61-5033-185d39b5596d@quicinc.com>
+Date:   Fri, 3 Jun 2022 23:13:12 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Subject: Re: [PATCH] tty: serial: qcom-geni-serial: minor fixes to
+ get_clk_div_rate()
+Content-Language: en-CA
+To:     Doug Anderson <dianders@chromium.org>
+CC:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Jiri Slaby <jirislaby@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        <linux-serial@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>, <quic_msavaliy@quicinc.com>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        "Stephen Boyd" <swboyd@chromium.org>
+References: <1654021066-13341-1-git-send-email-quic_vnivarth@quicinc.com>
+ <CAD=FV=UF3x5RHrQH-m1X-4kQSsKiufLnkew=VuJz7W9EAi3GHQ@mail.gmail.com>
+ <5d950007-7a92-a41b-e569-79e806adb06a@quicinc.com>
+ <CAD=FV=Xm1LJEoU5dKa5pMgqsHuAXuFVpdHvc1REULhAKTPbGnQ@mail.gmail.com>
+From:   Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+In-Reply-To: <CAD=FV=Xm1LJEoU5dKa5pMgqsHuAXuFVpdHvc1REULhAKTPbGnQ@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-5.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello,
-
-quic_mdalam@quicinc.com wrote on Fri,  3 Jun 2022 21:54:58 +0530:
-
-> Implement exec_op() so we can later get rid of the legacy interface
-> implementation.
-
-Thanks for doing this conversion!
-
->=20
-> Co-developed-by: Sricharan R <quic_srichara@quicinc.com>
-> Signed-off-by: Sricharan R <quic_srichara@quicinc.com>
-> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
-> ---
->  drivers/mtd/nand/raw/qcom_nandc.c | 368 +++++++++++++++++++++-----------=
-------
->  1 file changed, 204 insertions(+), 164 deletions(-)
->=20
-> diff --git a/drivers/mtd/nand/raw/qcom_nandc.c b/drivers/mtd/nand/raw/qco=
-m_nandc.c
-> index 048b255..507921b 100644
-> --- a/drivers/mtd/nand/raw/qcom_nandc.c
-> +++ b/drivers/mtd/nand/raw/qcom_nandc.c
-> @@ -14,6 +14,7 @@
->  #include <linux/of.h>
->  #include <linux/of_device.h>
->  #include <linux/delay.h>
-> +#include <linux/iopoll.h>
->  #include <linux/dma/qcom_bam_dma.h>
-> =20
->  /* NANDc reg offsets */
-> @@ -1305,15 +1306,13 @@ static int nandc_param(struct qcom_nand_host *hos=
-t)
->  }
-> =20
->  /* sets up descriptors for NAND_CMD_ERASE1 */
-> -static int erase_block(struct qcom_nand_host *host, int page_addr)
-> +static int erase_block(struct qcom_nand_host *host)
->  {
->  	struct nand_chip *chip =3D &host->chip;
->  	struct qcom_nand_controller *nandc =3D get_qcom_nand_controller(chip);
-> =20
->  	nandc_set_reg(chip, NAND_FLASH_CMD,
->  		      OP_BLOCK_ERASE | PAGE_ACC | LAST_PAGE);
-> -	nandc_set_reg(chip, NAND_ADDR0, page_addr);
-> -	nandc_set_reg(chip, NAND_ADDR1, 0);
->  	nandc_set_reg(chip, NAND_DEV0_CFG0,
->  		      host->cfg0_raw & ~(7 << CW_PER_PAGE));
->  	nandc_set_reg(chip, NAND_DEV0_CFG1, host->cfg1_raw);
-> @@ -1321,14 +1320,8 @@ static int erase_block(struct qcom_nand_host *host=
-, int page_addr)
->  	nandc_set_reg(chip, NAND_FLASH_STATUS, host->clrflashstatus);
->  	nandc_set_reg(chip, NAND_READ_STATUS, host->clrreadstatus);
-> =20
-> -	write_reg_dma(nandc, NAND_FLASH_CMD, 3, NAND_BAM_NEXT_SGL);
-> +	write_reg_dma(nandc, NAND_FLASH_CMD, 1, NAND_BAM_NEXT_SGL);
->  	write_reg_dma(nandc, NAND_DEV0_CFG0, 2, NAND_BAM_NEXT_SGL);
-> -	write_reg_dma(nandc, NAND_EXEC_CMD, 1, NAND_BAM_NEXT_SGL);
-> -
-> -	read_reg_dma(nandc, NAND_FLASH_STATUS, 1, NAND_BAM_NEXT_SGL);
-> -
-> -	write_reg_dma(nandc, NAND_FLASH_STATUS, 1, 0);
-> -	write_reg_dma(nandc, NAND_READ_STATUS, 1, NAND_BAM_NEXT_SGL);
-> =20
->  	return 0;
->  }
-> @@ -1343,16 +1336,12 @@ static int read_id(struct qcom_nand_host *host, i=
-nt column)
->  		return 0;
-> =20
->  	nandc_set_reg(chip, NAND_FLASH_CMD, OP_FETCH_ID);
-> -	nandc_set_reg(chip, NAND_ADDR0, column);
-> -	nandc_set_reg(chip, NAND_ADDR1, 0);
->  	nandc_set_reg(chip, NAND_FLASH_CHIP_SELECT,
->  		      nandc->props->is_bam ? 0 : DM_EN);
->  	nandc_set_reg(chip, NAND_EXEC_CMD, 1);
-> =20
-> -	write_reg_dma(nandc, NAND_FLASH_CMD, 4, NAND_BAM_NEXT_SGL);
-> -	write_reg_dma(nandc, NAND_EXEC_CMD, 1, NAND_BAM_NEXT_SGL);
-> -
-> -	read_reg_dma(nandc, NAND_READ_ID, 1, NAND_BAM_NEXT_SGL);
-> +	write_reg_dma(nandc, NAND_FLASH_CMD, 1, NAND_BAM_NEXT_SGL);
-> +	write_reg_dma(nandc, NAND_FLASH_CHIP_SELECT, 1, NAND_BAM_NEXT_SGL);
-> =20
->  	return 0;
->  }
-> @@ -1491,7 +1480,6 @@ static void parse_erase_write_errors(struct qcom_na=
-nd_host *host, int command)
-> =20
->  	for (i =3D 0; i < num_cw; i++) {
->  		u32 flash_status =3D le32_to_cpu(nandc->reg_read_buf[i]);
-> -
->  		if (flash_status & FS_MPU_ERR)
->  			host->status &=3D ~NAND_STATUS_WP;
-> =20
-> @@ -1523,86 +1511,6 @@ static void post_command(struct qcom_nand_host *ho=
-st, int command)
->  }
-> =20
->  /*
-> - * Implements chip->legacy.cmdfunc. It's  only used for a limited set of
-> - * commands. The rest of the commands wouldn't be called by upper layers.
-> - * For example, NAND_CMD_READOOB would never be called because we have o=
-ur own
-> - * versions of read_oob ops for nand_ecc_ctrl.
-> - */
-> -static void qcom_nandc_command(struct nand_chip *chip, unsigned int comm=
-and,
-> -			       int column, int page_addr)
-> -{
-> -	struct qcom_nand_host *host =3D to_qcom_nand_host(chip);
-> -	struct nand_ecc_ctrl *ecc =3D &chip->ecc;
-> -	struct qcom_nand_controller *nandc =3D get_qcom_nand_controller(chip);
-> -	bool wait =3D false;
-> -	int ret =3D 0;
-> -
-> -	pre_command(host, command);
-> -
-> -	switch (command) {
-> -	case NAND_CMD_RESET:
-> -		ret =3D reset(host);
-> -		wait =3D true;
-> -		break;
-> -
-> -	case NAND_CMD_READID:
-> -		nandc->buf_count =3D 4;
-> -		ret =3D read_id(host, column);
-> -		wait =3D true;
-> -		break;
-> -
-> -	case NAND_CMD_PARAM:
-> -		ret =3D nandc_param(host);
-> -		wait =3D true;
-> -		break;
-> -
-> -	case NAND_CMD_ERASE1:
-> -		ret =3D erase_block(host, page_addr);
-> -		wait =3D true;
-> -		break;
-> -
-> -	case NAND_CMD_READ0:
-> -		/* we read the entire page for now */
-> -		WARN_ON(column !=3D 0);
-> -
-> -		host->use_ecc =3D true;
-> -		set_address(host, 0, page_addr);
-> -		update_rw_regs(host, ecc->steps, true, 0);
-> -		break;
-> -
-> -	case NAND_CMD_SEQIN:
-> -		WARN_ON(column !=3D 0);
-> -		set_address(host, 0, page_addr);
-> -		break;
-> -
-> -	case NAND_CMD_PAGEPROG:
-> -	case NAND_CMD_STATUS:
-> -	case NAND_CMD_NONE:
-> -	default:
-> -		break;
-> -	}
-> -
-> -	if (ret) {
-> -		dev_err(nandc->dev, "failure executing command %d\n",
-> -			command);
-> -		free_descs(nandc);
-> -		return;
-> -	}
-> -
-> -	if (wait) {
-> -		ret =3D submit_descs(nandc);
-> -		if (ret)
-> -			dev_err(nandc->dev,
-> -				"failure submitting descs for command %d\n",
-> -				command);
-> -	}
-> -
-> -	free_descs(nandc);
-> -
-> -	post_command(host, command);
-> -}
-> -
-> -/*
->   * when using BCH ECC, the HW flags an error in NAND_FLASH_STATUS if it =
-read
->   * an erased CW, and reports an erased CW in NAND_ERASED_CW_DETECT_STATU=
-S.
->   *
-> @@ -2044,7 +1952,6 @@ static int qcom_nandc_read_page(struct nand_chip *c=
-hip, uint8_t *buf,
->  	struct qcom_nand_host *host =3D to_qcom_nand_host(chip);
->  	struct qcom_nand_controller *nandc =3D get_qcom_nand_controller(chip);
->  	u8 *data_buf, *oob_buf =3D NULL;
-> -
->  	nand_read_page_op(chip, page, 0, NULL, 0);
->  	data_buf =3D buf;
->  	oob_buf =3D oob_required ? chip->oob_poi : NULL;
-> @@ -2366,64 +2273,6 @@ static int qcom_nandc_block_markbad(struct nand_ch=
-ip *chip, loff_t ofs)
->  }
-> =20
->  /*
-> - * the three functions below implement chip->legacy.read_byte(),
-> - * chip->legacy.read_buf() and chip->legacy.write_buf() respectively. th=
-ese
-> - * aren't used for reading/writing page data, they are used for smaller =
-data
-> - * like reading	id, status etc
-> - */
-> -static uint8_t qcom_nandc_read_byte(struct nand_chip *chip)
-> -{
-> -	struct qcom_nand_host *host =3D to_qcom_nand_host(chip);
-> -	struct qcom_nand_controller *nandc =3D get_qcom_nand_controller(chip);
-> -	u8 *buf =3D nandc->data_buffer;
-> -	u8 ret =3D 0x0;
-> -
-> -	if (host->last_command =3D=3D NAND_CMD_STATUS) {
-> -		ret =3D host->status;
-> -
-> -		host->status =3D NAND_STATUS_READY | NAND_STATUS_WP;
-> -
-> -		return ret;
-> -	}
-> -
-> -	if (nandc->buf_start < nandc->buf_count)
-> -		ret =3D buf[nandc->buf_start++];
-> -
-> -	return ret;
-> -}
-> -
-> -static void qcom_nandc_read_buf(struct nand_chip *chip, uint8_t *buf, in=
-t len)
-> -{
-> -	struct qcom_nand_controller *nandc =3D get_qcom_nand_controller(chip);
-> -	int real_len =3D min_t(size_t, len, nandc->buf_count - nandc->buf_start=
-);
-> -
-> -	memcpy(buf, nandc->data_buffer + nandc->buf_start, real_len);
-> -	nandc->buf_start +=3D real_len;
-> -}
-> -
-> -static void qcom_nandc_write_buf(struct nand_chip *chip, const uint8_t *=
-buf,
-> -				 int len)
-> -{
-> -	struct qcom_nand_controller *nandc =3D get_qcom_nand_controller(chip);
-> -	int real_len =3D min_t(size_t, len, nandc->buf_count - nandc->buf_start=
-);
-> -
-> -	memcpy(nandc->data_buffer + nandc->buf_start, buf, real_len);
-> -
-> -	nandc->buf_start +=3D real_len;
-> -}
-> -
-> -/* we support only one external chip for now */
-> -static void qcom_nandc_select_chip(struct nand_chip *chip, int chipnr)
-> -{
-> -	struct qcom_nand_controller *nandc =3D get_qcom_nand_controller(chip);
-> -
-> -	if (chipnr <=3D 0)
-> -		return;
-> -
-> -	dev_warn(nandc->dev, "invalid chip select\n");
-> -}
-> -
-> -/*
->   * NAND controller page layout info
->   *
->   * Layout with ECC enabled:
-> @@ -2738,8 +2587,207 @@ static int qcom_nand_attach_chip(struct nand_chip=
- *chip)
->  	return 0;
->  }
-> =20
-> +static int nandc_status(struct nand_chip *chip)
-> +{
-> +	struct qcom_nand_controller *nandc =3D get_qcom_nand_controller(chip);
-> +	struct qcom_nand_host *host =3D to_qcom_nand_host(chip);
-> +
-> +	memcpy(nandc->data_buffer, &host->status, 1);
-> +
-> +	return 0;
-> +}
-> +
-> +static int qcom_nand_send_command(struct nand_chip *chip, u8 command)
-> +{
-> +	struct qcom_nand_host *host =3D to_qcom_nand_host(chip);
-> +	struct qcom_nand_controller *nandc =3D get_qcom_nand_controller(chip);
-> +	struct nand_ecc_ctrl *ecc =3D &chip->ecc;
-> +
-> +	int ret =3D 0;
-> +
-> +	pre_command(host, command);
-> +
-> +	switch (command) {
-> +	case NAND_CMD_RESET:
-> +		ret =3D reset(host);
-> +		break;
-> +	case NAND_CMD_READID:
-> +		nandc->buf_count =3D 4;
-> +		ret =3D read_id(host, 0);
-> +		break;
-> +	case NAND_CMD_PARAM:
-> +		ret =3D nandc_param(host);
-> +		break;
-> +	case NAND_CMD_ERASE1:
-> +		ret =3D erase_block(host);
-> +		break;
-> +	case NAND_CMD_STATUS:
-> +		ret =3D nandc_status(chip);
-> +		break;
-> +	case NAND_CMD_READ0:
-> +		host->use_ecc =3D true;
-
-->exec_op() and ECC are orthogonal
-
-> +		update_rw_regs(host, ecc->steps, true, 0);
-> +		break;
-> +	case NAND_CMD_ERASE2:
-> +		break;
-> +	case NAND_CMD_SEQIN:
-> +		break;
-> +	case NAND_CMD_PAGEPROG:
-> +		break;
-
-I am sorry but this is not following ->exec_op() main idea. The
-controller is just here to forward requests to the device it must
-respect a number of cycles but that's pretty much all. Here you are
-actually re-writing ->cmdfunc() which is not what we expect.
+Hi,
 
 
-> +	default:
-> +		break;
-> +	}
-> +
-> +	return ret;
-> +}
-> +
-> +static int qcom_nand_send_address(struct nand_chip *chip,
-> +				  const struct nand_op_instr *instr, int cmd)
-> +{
-> +	struct qcom_nand_controller *nandc =3D get_qcom_nand_controller(chip);
-> +	u32 page_addr =3D 0x0, page_mask =3D 0x0;
-> +
-> +	page_addr =3D instr->ctx.addr.addrs[0];
-> +
-> +	/*
-> +	 *Form page address for erase, read, write to using existing api
-> +	 */
-> +
-> +	switch (cmd) {
-> +	case NAND_CMD_ERASE1:
-> +		page_addr =3D instr->ctx.addr.addrs[0];
-> +		page_mask =3D instr->ctx.addr.addrs[1];
-> +		page_mask <<=3D 8;
-> +		page_addr =3D (page_addr | page_mask);
-> +		page_mask =3D instr->ctx.addr.addrs[2];
-> +		page_mask <<=3D 16;
-> +		page_addr =3D (page_addr | page_mask);
-> +		page_mask =3D instr->ctx.addr.addrs[3];
-> +		page_mask <<=3D 24;
-> +		page_addr =3D (page_addr | page_mask);
-> +		break;
-> +	case NAND_CMD_READ0:
-> +	case NAND_CMD_SEQIN:
-> +		page_addr =3D instr->ctx.addr.addrs[3];
-> +		page_addr <<=3D 24;
-> +		page_mask =3D instr->ctx.addr.addrs[2];
-> +		page_mask <<=3D 16;
-> +		page_addr |=3D page_mask;
-> +		page_mask =3D instr->ctx.addr.addrs[1];
-> +		page_mask <<=3D 8;
-> +		page_addr |=3D page_mask;
-> +		page_mask =3D instr->ctx.addr.addrs[0];
-> +		page_addr |=3D page_mask;
+On 6/1/2022 9:03 PM, Doug Anderson wrote:
+> Hi,
+>
+> On Wed, Jun 1, 2022 at 3:46 AM Vijaya Krishna Nivarthi
+> <quic_vnivarth@quicinc.com> wrote:
+>> Hi,
+>>
+>> On 6/1/2022 12:58 AM, Doug Anderson wrote:
+>>> Hi,
+>>>
+>>> On Tue, May 31, 2022 at 11:18 AM Vijaya Krishna Nivarthi
+>>> <quic_vnivarth@quicinc.com> wrote:
+>>>> Add missing initialisation and correct type casting
+>>>>
+>>>> Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+>>>> ---
+>>>>    drivers/tty/serial/qcom_geni_serial.c | 8 ++++----
+>>>>    1 file changed, 4 insertions(+), 4 deletions(-)
+>>>>
+>>>> diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
+>>>> index 4733a23..08f3ad4 100644
+>>>> --- a/drivers/tty/serial/qcom_geni_serial.c
+>>>> +++ b/drivers/tty/serial/qcom_geni_serial.c
+>>>> @@ -943,11 +943,11 @@ static int qcom_geni_serial_startup(struct uart_port *uport)
+>>>>    static unsigned long get_clk_div_rate(struct clk *clk, unsigned int baud,
+>>>>                           unsigned int sampling_rate, unsigned int *clk_div)
+>>>>    {
+>>>> -       unsigned long ser_clk;
+>>>> +       unsigned long ser_clk = 0;
+>>> In this patch it's not at all obvious why you'd need to init to 0. I
+>>> think the "for loop" is guaranteed to run at least once because
+>>> "max_div" is known at compile time. ...and currently each time through
+>>> the "for" loop you'll always set "ser_clk".
+>> Ok, I realised we will never break out of for loop exceeding ULONG_MAX
+>> in 1st pass, so yes ser_clk will always be set.
+>>
+>>> I think in a future patch you'll want to _remove_ this from the for loop:
+>>>
+>>> if (!prev)
+>>>     ser_clk = freq;
+>> Intent is to save (and use) 1st freq if we cannot find an exact divider.
+>>
+>> Isn't it ok?
+>>
+>> For example please find debug output for a required frequency of 51.2MHz.
+>>
+>> We try dividers 1, 2, 3 and end up with 52.1MHz the first result.
+>>
+>> [   18.815432] 20220509 get_clk_div_rate desired_clk:51200000
+>> [   18.821081] 20220509 get_clk_div_rate maxdiv:4095
+>> [   18.825924] 20220509 get_clk_div_rate div:1
+>> [   18.830239] 20220509 get_clk_div_rate freq:52174000
+>> [   18.835288] 20220509 get_clk_div_rate div:2
+>> [   18.839628] 20220509 get_clk_div_rate freq:100000000
+>> [   18.844794] 20220509 get_clk_div_rate div:3
+>> [   18.849119] 20220509 get_clk_div_rate freq:100000000
+>> [   18.854254] 20220509 get_clk_div_rate reached max frequency breaking...
+>> [   18.861072] 20220509 get_clk_div_rate clk_div=1, ser_clk=52174000
+>>
+>> The behaviour was same earlier too when root_freq table was present.
+> Are you certain about the behavior being the same earlier? Before
+> commit c2194bc999d4 ("tty: serial: qcom-geni-serial: Remove uart
+> frequency table..."), the behavior was that get_clk_cfg() would return
+> 0 if there was no exact match. Then get_clk_div_rate() would see this
+> 0 and print an error and return. Then the rest of
+> qcom_geni_serial_set_termios() would do nothing at all.
+>
+> Ah, or I guess what you're saying is that the table historically
+> contained "rounded" rates but that clk_round_rate() isn't returning
+> nice round rates. OK, but if we truly want to support an inexact
+> match, you'd want to pick the rate that reduces the error, not just
+> pick the first one. In other words, something like this (untested):
+>
+> freq = clk_round_rate(clk, mult);
+> diff = abs(((long)mult - freq) / div);
+> if (diff < best_diff) {
+>    best_diff = diff;
+>    ser_clk = freq;
+>    best_div = div;
+> }
+I am not sure if its required that freq is a multiple of best_div now 
+that we don't have a multiple of desired_clk anyway.
 
-Same here, just write the number of address cycles that were requested
-by the core.
+If it is indeed required, with above patch its not guaranteed and 
+finding best_div gets little more complicated?
 
-> +		break;
-> +	default:
-> +		break;
-> +	}
-> +
-> +	if (cmd =3D=3D NAND_CMD_PARAM)
-> +		return 0;
-> +
-> +	nandc_set_reg(chip, NAND_ADDR0, page_addr);
-> +	nandc_set_reg(chip, NAND_ADDR1, 0);
-> +
-> +	if (cmd !=3D NAND_CMD_SEQIN)
-> +		write_reg_dma(nandc, NAND_ADDR0, 2, 0);
-> +
-> +	return 0;
-> +}
-> +
-> +static void qcom_nand_read_buf(struct nand_chip *chip, u8 *buf, int len)
-> +{
-> +	struct qcom_nand_controller *nandc =3D get_qcom_nand_controller(chip);
-> +
-> +	memcpy(buf, nandc->data_buffer, len);
+We may have to loop through all available frequencies and dividers?
 
-Is this bounce buffer needed?
-
-> +}
-> +
-> +static int qcom_nand_exec_instr(struct nand_chip *chip,
-> +				const struct nand_op_instr *instr)
-> +{
-> +	struct qcom_nand_controller *nandc =3D get_qcom_nand_controller(chip);
-> +	struct qcom_nand_host *host =3D to_qcom_nand_host(chip);
-> +	u32 status;
-> +	int ret =3D 0;
-> +	bool wait =3D false;
-> +	static int opcode;
-> +
-> +	switch (instr->type) {
-> +	case NAND_OP_CMD_INSTR:
-> +		ret =3D qcom_nand_send_command(chip, instr->ctx.cmd.opcode);
-> +		if (instr->ctx.cmd.opcode =3D=3D NAND_CMD_RESET)
-> +			wait =3D true;
-> +		opcode =3D instr->ctx.cmd.opcode;
-> +		break;
-> +	case NAND_OP_ADDR_INSTR:
-> +		qcom_nand_send_address(chip, instr, opcode);
-> +		if (opcode !=3D NAND_CMD_READ0 && opcode !=3D NAND_CMD_READSTART &&
-> +		    opcode !=3D NAND_CMD_PARAM && opcode !=3D NAND_CMD_SEQIN)
-> +			wait =3D true;
-> +		break;
-> +	case NAND_OP_DATA_IN_INSTR:
-> +		qcom_nand_read_buf(chip, instr->ctx.data.buf.in, instr->ctx.data.len);
-> +		break;
-> +	case NAND_OP_DATA_OUT_INSTR:
-> +		wait =3D false;
-> +		break;
-> +	case NAND_OP_WAITRDY_INSTR:
-> +		ret =3D readl_poll_timeout(nandc->base + NAND_FLASH_STATUS, status,
-> +					 (status & FS_READY_BSY_N), 20,
-> +					 instr->ctx.waitrdy.timeout_ms * 1000);
-> +		if (opcode =3D=3D NAND_CMD_PARAM)
-> +			wait =3D true;
-> +	default:
-> +		break;
-> +	}
-> +
-> +	if (wait) {
-> +		if (opcode !=3D NAND_CMD_PARAM)
-> +			write_reg_dma(nandc, NAND_EXEC_CMD, 1, NAND_BAM_NEXT_SGL);
-> +
-> +		if (opcode =3D=3D NAND_CMD_READID)
-> +			read_reg_dma(nandc, NAND_READ_ID, 1, NAND_BAM_NEXT_SGL);
-> +
-> +		if (opcode =3D=3D NAND_CMD_ERASE1) {
-> +			read_reg_dma(nandc, NAND_FLASH_STATUS, 1, NAND_BAM_NEXT_SGL);
-> +			write_reg_dma(nandc, NAND_FLASH_STATUS, 1, 0);
-> +			write_reg_dma(nandc, NAND_READ_STATUS, 1, NAND_BAM_NEXT_SGL);
-> +		}
-> +
-> +		ret =3D submit_descs(nandc);
-> +		if (ret)
-> +			dev_err(nandc->dev, "failure submitting descs for command 0x%02x\n",
-> +				opcode);
-> +
-> +		free_descs(nandc);
-> +		post_command(host, opcode);
-> +	}
-> +
-> +	return ret;
-> +}
-> +
-> +static int qcom_nand_exec_op(struct nand_chip *chip,
-> +			     const struct nand_operation *op,
-> +				bool check_only)
-> +{
-> +	unsigned int i;
-> +	int ret =3D 0;
-> +
-> +	if (check_only)
-> +		return 0;
-> +
-> +	for (i =3D 0; i < op->ninstrs; i++) {
-> +		ret =3D qcom_nand_exec_instr(chip, &op->instrs[i]);
-> +		if (ret)
-> +			break;
-> +	}
-> +
-> +	return ret;
-> +}
-> +
->  static const struct nand_controller_ops qcom_nandc_ops =3D {
->  	.attach_chip =3D qcom_nand_attach_chip,
-> +	.exec_op =3D qcom_nand_exec_op,
->  };
-> =20
->  static void qcom_nandc_unalloc(struct qcom_nand_controller *nandc)
-> @@ -2938,14 +2986,6 @@ static int qcom_nand_host_init_and_register(struct=
- qcom_nand_controller *nandc,
->  	mtd->owner =3D THIS_MODULE;
->  	mtd->dev.parent =3D dev;
-> =20
-> -	chip->legacy.cmdfunc	=3D qcom_nandc_command;
-> -	chip->legacy.select_chip	=3D qcom_nandc_select_chip;
-> -	chip->legacy.read_byte	=3D qcom_nandc_read_byte;
-> -	chip->legacy.read_buf	=3D qcom_nandc_read_buf;
-> -	chip->legacy.write_buf	=3D qcom_nandc_write_buf;
-> -	chip->legacy.set_features	=3D nand_get_set_features_notsupp;
-> -	chip->legacy.get_features	=3D nand_get_set_features_notsupp;
-> -
->  	/*
->  	 * the bad block marker is readable only when we read the last codeword
->  	 * of a page with ECC disabled. currently, the nand_base and nand_bbt
+PFB, a proposed implementation with a 2nd loop. Its tested but I haven't 
+been able to optimise it further because it misses corner theoretical 
+cases when I try
 
 
-Thanks,
-Miqu=C3=A8l
+     maxdiv = CLK_DIV_MSK >> CLK_DIV_SHFT;
+     prev = 0;
+
+     /* run through quicker loop anticipating to find an exact match */
+     for (div = 1; div <= maxdiv; div++) {
+         mult = (unsigned long long)div * desired_clk;
+         if (mult > ULONG_MAX)
+             break;
+
+         freq = clk_round_rate(clk, max((unsigned long)mult, prev+1));
+         if (!(freq % desired_clk)) {
+             *clk_div = freq / desired_clk;
+             return freq;
+         }
+
+         if (prev && prev == freq)
+             break;
+
+         prev = freq;
+     }
+
+     pr_warn("Can't find exact match frequency and divider\n");
+
+     /*
+      * this scenario ideally should be a rare occurrence
+      * run through all frequencies and find closest match
+      * note that it cannot get better than a difference of 1
+      */
+     freq = 0;
+     best_diff = ULONG_MAX;
+     while (true) {
+         prev = freq;
+         freq = clk_round_rate(clk, freq+1);
+
+         if (freq == prev)
+             break;
+
+         for (div = 1; div <= maxdiv; div++) {
+             if (!(freq % div)) {
+                 diff = abs((long)(freq/div) - desired_clk);
+                 if (diff < best_diff) {
+                     best_diff = diff;
+                     ser_clk = freq;
+                     *clk_div = div;
+                     if (diff == 1)
+                         break;
+                 }
+             }
+         }
+     }
+
+     return ser_clk;
+}
+
+>
+> Why do you need this? Imagine that the desired rate was 50000001 or
+> 49999999. The closest match would be to use the rate 100000000 and
+> divide it by 2. ...but your existing algorithm would just arbitrarily
+> pick the first rate returned.
+>
+> NOTE also that you could end up with a slightly higher or slightly
+> lower clock than requested, right? So it's important to:
+> * Do signed math when comparing.
+> * Save the "div" instead of trying to recompute it at the end.
+>
+>
+>> The table did contain 51.2MHz and we would exit with same but on call to
+>> clk_set_rate(51.2MHz) we were ending up with 52.1MHz
+>>
+>>> ...and _that's_ when you should init "ser_clk" to 0. Until then I'd
+>>> leave it as uninitialized...
+>>>
+>>> Honestly, I'd throw all the fixes into one series, too.
+>> My concern was if there would be a requirement to split the changes.
+>>
+>> Will put in all in 1 series with Fixes tag.
+>>
+>>>
+>>>>           unsigned long desired_clk;
+>>>>           unsigned long freq, prev;
+>>>>           unsigned long div, maxdiv;
+>>>> -       int64_t mult;
+>>>> +       unsigned long long mult;
+>>>>
+>>>>           desired_clk = baud * sampling_rate;
+>>>>           if (!desired_clk) {
+>>>> @@ -959,8 +959,8 @@ static unsigned long get_clk_div_rate(struct clk *clk, unsigned int baud,
+>>>>           prev = 0;
+>>>>
+>>>>           for (div = 1; div <= maxdiv; div++) {
+>>>> -               mult = div * desired_clk;
+>>>> -               if (mult > ULONG_MAX)
+>>>> +               mult = (unsigned long long)div * (unsigned long long)desired_clk;
+>>> I think you only need to cast one of the two. The other will be
+>>> up-cast automatically.
+>> Will change.
+>>>
+>>>> +               if (mult > (unsigned long long)ULONG_MAX)
+>>> I don't think you need this cast. As far as I know the C language will
+>>> "upcast" to the larger of the two types.
+>> Will change.
+>>>
+>>> -Doug
+>> Thank you.
+>>
+>> -Vijay/
+>>
