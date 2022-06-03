@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C214B53CB66
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jun 2022 16:14:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7440E53CB6F
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jun 2022 16:16:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234683AbiFCOOS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Jun 2022 10:14:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45126 "EHLO
+        id S245051AbiFCOQX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Jun 2022 10:16:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52492 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244720AbiFCOOR (ORCPT
+        with ESMTP id S240024AbiFCOQW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Jun 2022 10:14:17 -0400
+        Fri, 3 Jun 2022 10:16:22 -0400
 Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com [64.147.123.21])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30F5F3E5E2;
-        Fri,  3 Jun 2022 07:14:13 -0700 (PDT)
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-        by mailout.west.internal (Postfix) with ESMTP id E5659320090E;
-        Fri,  3 Jun 2022 10:14:10 -0400 (EDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 092A142A1C;
+        Fri,  3 Jun 2022 07:16:12 -0700 (PDT)
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+        by mailout.west.internal (Postfix) with ESMTP id 4A8AE3200913;
+        Fri,  3 Jun 2022 10:16:10 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute2.internal (MEProxy); Fri, 03 Jun 2022 10:14:12 -0400
+  by compute5.internal (MEProxy); Fri, 03 Jun 2022 10:16:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cerno.tech; h=cc
         :cc:content-transfer-encoding:content-type:date:date:from:from
         :in-reply-to:in-reply-to:message-id:mime-version:references
-        :reply-to:sender:subject:subject:to:to; s=fm3; t=1654265650; x=
-        1654352050; bh=SUEjLwclojF3h4q4JNOjl27iBteEa2wqAi2mc0xoM04=; b=m
-        9xqqHlmTpZU6gtfdc8O1atMLX8zDzT+WurnmYtbGtbM8e0Nrw9py/LQ68mtDUTRy
-        BCHkNgrN7PM8bTB2w2yH+sIQre1uLzej+qnbJVVeC2/dH8JZTHtlFzyzvy0o1ODR
-        CsQPuNmPgGIjgXfkoJQYaYnY/AIeeCKKyOGF/e1zML1kOl6kXyNpuOlAqDBl1haS
-        1tcIfbfBW4S8e1kOzNERuSdyzOQTWsh3xxa+euUYkhVQ72uTy9XzyigtZ8YMz8a9
-        qI/cmZsKpeOmgNBfeNrZB8S6/TbiNQiE6mt79AROUJGimnwccP6TemS2iHEnokMW
-        uYpeoZIauIkDXRrR3v/WA==
+        :reply-to:sender:subject:subject:to:to; s=fm3; t=1654265769; x=
+        1654352169; bh=fk3KX5eSyLHN90n0U5LITdHGtIoEddiGyI/EAYeYiBU=; b=G
+        Y9BwdDOeLIcpH2chXWkgAUEKKo1tZ13DzfKkoJv9KQ+BGpE3U4V1LdKo+bbCRdFy
+        ApSud+sXjgDyje8bHqlEy/bO582UkIvySO/g5BkaNlJqvlmspV1EMLnw/KFAXRS7
+        v3dlZW8ScytrPJzDHAIx6tjzMA8SxvqWa/HP/V6bGz1i54L58ifSautV/AlkN5C9
+        EKhW3Y8jq4jbbNeYHetQuw//PlnRMY1wnSKJ8UcPI2Cjlo74Z0CZ2b2OuT/RoO8X
+        nXCxuAPbXq+LFW0LtugExbXDCrv4FV6VlwYdJRuvcCoU1UmWI4x/kycdnroJFBTd
+        rIXfQzYdU626Bl5b6RN4g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:cc:content-transfer-encoding
         :content-type:date:date:feedback-id:feedback-id:from:from
         :in-reply-to:in-reply-to:message-id:mime-version:references
         :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
-        :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1654265650; x=
-        1654352050; bh=SUEjLwclojF3h4q4JNOjl27iBteEa2wqAi2mc0xoM04=; b=F
-        BVMNDbwa6QDDvFWWlkmo3Nzj1sBpgvrq8mhFwdJSXxfn1D4zMActSDNmlmnKs/Jb
-        gNKg9L0BLGFAAHB7AM4kFgu2U27qDj7Mm6o3L/RRcLbt2084HO2mjSt532F7ByZC
-        JHDjREjkxGXsmp1OhNNyQCRKzdassPz6jlAW5zjamubqSEKfC7TEWvDfPgEgxKgm
-        cTTrO86d1FZu0aEPSnY+33Rkw5p7o2+uJxe2otd3BEnTLV/H23KMV/Es2eQS2eDt
-        iQAa1dmRCD7AiNuXCbXIDqmSlqq5NUm9JYtZwqhQl/NINSoNAEaUG0wxlARCSmki
-        dZHk+PU0/9Kjua7qvypjQ==
-X-ME-Sender: <xms:MReaYu06VyeZ8kOPo4kOl56aCsXJvW-KBqzYAOytxPf997sqzkZy6g>
-    <xme:MReaYhEhhz9QzSLzZ555mhfko8ZUNFwNoona3RTBbsGLzh4K1-Itl7IoVec5CxQp5
-    IYDYtXOmo3gTFHZjtk>
-X-ME-Received: <xmr:MReaYm6ySqVVNFWUUye8mB5D9bQCWHhtckTMuzlfkj5c3KgUOhlzuC0fWetB>
+        :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1654265769; x=
+        1654352169; bh=fk3KX5eSyLHN90n0U5LITdHGtIoEddiGyI/EAYeYiBU=; b=j
+        dH41LTNHJ5KwV22Kwf+k1jUA/bAMwYnctp+JuaJ3VcnAUQIT0G8cYeD+MIk9zEm/
+        +raGeo7KA7rpBuG+fU886W1leyQm+xkvYFCcsfwBSzmbBk5dGm6eqar3n3/R7ANC
+        GLNpm4IvFK/Bh0z7S3gQiZvG7pTjaR5F+1sIxIZtYsbzyZS3Poe65EWD7OVvy19u
+        PGyTbKTpeQ7xvCTya2bRnMiYTLC6BPJL7VR/shJzOqFSlJ6JjgkWOcvl/hPBp0Mv
+        PERo+q/bDe/vF70CIOXwpnKyye+WYsFxcXQMqBcAY0UplUDYonmCm5UU4fgC2W3u
+        YDceXm35zxpMk4eiTVGbg==
+X-ME-Sender: <xms:qBeaYq58L_DeEqQay66g6TW9QIuCXtCxG2cKhIg7X3oqysYKQcqZ1Q>
+    <xme:qBeaYj6GmgoZ_yBjDjOC7NI1g_JScgZW2CoPGfvjsT3Z4vuirYHqDIw9z5ivBpAoJ
+    6zevkFSn93jAzLbp9A>
+X-ME-Received: <xmr:qBeaYpc079RBM1yuOidLe5q0VbVgjGrGFl0XkZPZlg-7onHWXUrFJCj6S4Ct>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrleeigdejvdcutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
@@ -56,17 +56,17 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrleeigdejvdcutefuodetggdote
     htthgvrhhnpeetgfelgefggeekkefggfeludeiudffjeffgeevveekjedukedtudeuteef
     teefgfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
     hmrgigihhmvgestggvrhhnohdrthgvtghh
-X-ME-Proxy: <xmx:MReaYv04aKNlfeFXGLyWWsTe5G_EVvQ8-QTpZQqUrZfqCuz2r2K16g>
-    <xmx:MReaYhFWE2INU6AI1YGNZaO3T-HnzUR_cpI2iAwu3_A2BhlXZaYQNg>
-    <xmx:MReaYo-HIbjEhT3g5wxcy9KddeOV-9rw7HH19MjJjp-QxFYV21fJzQ>
-    <xmx:MheaYuccHEWQCIo7-ZGc2CvoZshD9-8IRnUTc9_R9z-QY1AwQuqMkw>
+X-ME-Proxy: <xmx:qBeaYnJ6MEVrz3t6Ho1T1PT0lQ52_zqXEMOzntbikcrMocls6DXBdA>
+    <xmx:qBeaYuJSAv3hVBs7qN2s4pzzd5vgbHRRyIldiBnhGWLkiqiHuvnXXw>
+    <xmx:qBeaYozysrWZnD2m1ZZKWvSMxVLtoJLMaC32wmhukaZ-XFElPQqTBg>
+    <xmx:qReaYghwdN-8LNUgsvnZgSa8g1wdQKEm1aVKd93Dnr7-7FtgPYXjeg>
 Feedback-ID: i8771445c:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 3 Jun 2022 10:14:08 -0400 (EDT)
-Date:   Fri, 3 Jun 2022 16:14:05 +0200
+ 3 Jun 2022 10:16:08 -0400 (EDT)
+Date:   Fri, 3 Jun 2022 16:16:06 +0200
 From:   Maxime Ripard <maxime@cerno.tech>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Doug Anderson <dianders@chromium.org>,
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         dri-devel <dri-devel@lists.freedesktop.org>,
         Hsin-Yi Wang <hsinyi@chromium.org>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
@@ -82,7 +82,7 @@ Cc:     Doug Anderson <dianders@chromium.org>,
         Thomas Zimmermann <tzimmermann@suse.de>,
         LKML <linux-kernel@vger.kernel.org>
 Subject: Re: [PATCH v3 3/4] drm/bridge: Add devm_drm_bridge_add()
-Message-ID: <20220603141405.dybjn3blifau6662@penduick>
+Message-ID: <20220603141606.vapkfwfj7ixefmev@penduick>
 References: <20220510192944.2408515-1-dianders@chromium.org>
  <20220510122726.v3.3.Iba4b9bf6c7a1ee5ea2835ad7bd5eaf84d7688520@changeid>
  <20220521091751.opeiqbmc5c2okdq6@houat>
@@ -90,11 +90,12 @@ References: <20220510192944.2408515-1-dianders@chromium.org>
  <CAD=FV=XqJuPHxm7HYMvyHBL_zC-BBA_f0MBsZX-jHt7Pk9ngsQ@mail.gmail.com>
  <20220603082139.sfdxb5ndwpvlhklh@penduick>
  <CAA8EJpqrw63K_xxJjawLjEqP-05eUD-k6dy21162hcq7q07jgQ@mail.gmail.com>
+ <CAD=FV=XbNe+9Cf-jWwFPAR0a1qqjdKaQdtiREKLB8sHYTh_4OQ@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <CAA8EJpqrw63K_xxJjawLjEqP-05eUD-k6dy21162hcq7q07jgQ@mail.gmail.com>
+In-Reply-To: <CAD=FV=XbNe+9Cf-jWwFPAR0a1qqjdKaQdtiREKLB8sHYTh_4OQ@mail.gmail.com>
 X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_PASS,
         SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
@@ -105,15 +106,57 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jun 03, 2022 at 01:19:16PM +0300, Dmitry Baryshkov wrote:
-> On Fri, 3 Jun 2022 at 11:21, Maxime Ripard <maxime@cerno.tech> wrote:
-> >
-> > On Tue, May 31, 2022 at 02:06:34PM -0700, Doug Anderson wrote:
-> > > On Mon, May 23, 2022 at 10:00 AM Doug Anderson <dianders@chromium.org=
-> wrote:
-> > > > On Sat, May 21, 2022 at 2:17 AM Maxime Ripard <maxime@cerno.tech> w=
-rote:
-> > > > > On Tue, May 10, 2022 at 12:29:43PM -0700, Douglas Anderson wrote:
+On Fri, Jun 03, 2022 at 06:52:05AM -0700, Doug Anderson wrote:
+> On Fri, Jun 3, 2022 at 3:19 AM Dmitry Baryshkov
+> <dmitry.baryshkov@linaro.org> wrote:
+> > On Fri, 3 Jun 2022 at 11:21, Maxime Ripard <maxime@cerno.tech> wrote:
+> > >
+> > > On Tue, May 31, 2022 at 02:06:34PM -0700, Doug Anderson wrote:
+> > > > On Mon, May 23, 2022 at 10:00 AM Doug Anderson <dianders@chromium.o=
+rg> wrote:
+> > > > > On Sat, May 21, 2022 at 2:17 AM Maxime Ripard <maxime@cerno.tech>=
+ wrote:
+> > > > > > On Tue, May 10, 2022 at 12:29:43PM -0700, Douglas Anderson wrot=
+e:
+> > > > > > > This adds a devm managed version of drm_bridge_add(). Like ot=
+her
+> > > > > > > "devm" function listed in drm_bridge.h, this function takes an
+> > > > > > > explicit "dev" to use for the lifetime management. A few note=
+s:
+> > > > > > > * In general we have a "struct device" for bridges that makes=
+ a good
+> > > > > > >   candidate for where the lifetime matches exactly what we wa=
+nt.
+> > > > > > > * The "bridge->dev->dev" device appears to be the encoder
+> > > > > > >   device. That's not the right device to use for lifetime man=
+agement.
+> > > > > > >
+> > > > > > > Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > > > > > > Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> > > > > >
+> > > > > > If we are to introduce more managed helpers, I think it'd be wi=
+ser to
+> > > > > > introduce them as DRM-managed, and not device managed.
+> > > > > >
+> > > > > > Otherwise, you'll end up in a weird state when a device has bee=
+n removed
+> > > > > > but the DRM device is still around.
+> > > > >
+> > > > > I'm kinda confused. In this case there is no DRM device for the b=
+ridge
+> > > > > and, as per my CL description, "bridge-dev->dev" appears to be the
+> > > > > encoder device. I wasn't personally involved in discussions about=
+ it,
+> > > > > but I was under the impression that this was expected / normal. T=
+hus
+> > > > > we can't make this DRM-managed.
+> > > >
+> > > > Since I didn't hear a reply,
+> > >
+> > > Gah, I replied but it looks like somehow it never reached the ML...
+> > >
+> > > Here was my original reply:
+> > >
 > > > > > > This adds a devm managed version of drm_bridge_add(). Like other
 > > > > > > "devm" function listed in drm_bridge.h, this function takes an
 > > > > > > explicit "dev" to use for the lifetime management. A few notes:
@@ -134,107 +177,85 @@ r to
 > > > > > Otherwise, you'll end up in a weird state when a device has been =
 removed
 > > > > > but the DRM device is still around.
-> > > >
+> > > >=3D20
 > > > > I'm kinda confused. In this case there is no DRM device for the bri=
 dge
 > > > > and, as per my CL description, "bridge-dev->dev" appears to be the
-> > > > encoder device. I wasn't personally involved in discussions about i=
-t,
-> > > > but I was under the impression that this was expected / normal. Thus
-> > > > we can't make this DRM-managed.
+> > > > encoder device.
 > > >
-> > > Since I didn't hear a reply,
+> > > bridge->dev seems right though?
+> > >
+> > > > I wasn't personally involved in discussions about it, but I was und=
+er
+> > > > the impression that this was expected / normal. Thus we can't make
+> > > > this DRM-managed.
+> > >
+> > > Still, I don't think devm is the right solution to this either.
+> > >
+> > > The underlying issue is two-fold:
+> > >
+> > >   - Encoders can have a pointer to a bridge through of_drm_find_bridge
+> > >     or similar. However, bridges are traditionally tied to their devi=
+ce
+> > >     lifetime (by calling drm_bridge_add in probe, and drm_bridge_remo=
+ve
+> > >     in remove). Encoders will typically be tied to the DRM device
+> > >     however, and that one sticks around until the last application
+> > >     closes it. We can thus very easily end up with a dangling pointer,
+> > >     and a use-after-free.
+> > >
+> > >   - It's not the case yet, but it doesn't seem far fetch to expose
+> > >     properties of bridges to the userspace. In that case, the userspa=
+ce
+> > >     would be likely to still hold references to objects that aren't
+> > >     there anymore when the bridge is gone.
+> > >
+> > > The first is obviously a larger concern, but if we can find a solution
+> > > that would accomodate the second it would be great.
+> > >
+> > > As far as I can see, we should fix in two steps:
+> > >
+> > >   - in drm_bridge_attach, we should add a device-managed call that wi=
+ll
+> > >     unregister the main DRM device. We don't allow to probe the main =
+DRM
+> > >     device when the bridge isn't there yet in most case, so it makes
+> > >     sense to remove it once the bridge is no longer there as well.
 > >
-> > Gah, I replied but it looks like somehow it never reached the ML...
+> > The problem is that I do not see a good way to unregister the main DRM
+> > device outside of it's driver code.
 > >
-> > Here was my original reply:
+> > >
+> > >   - When the DRM device is removed, have the core cleanup any bridge
+> > >     registered. That will remove the need to have drm_bridge_remove in
+> > >     the first place.
+> > >
+> > > > I'll assume that my response addressed your concerns. Assuming I get
+> > > > reviews for the other two patches in this series I'll plan to land
+> > > > this with Dmitry's review.
+> > >
+> > > I still don't think it's a good idea to merge it. It gives an illusion
+> > > of being safe, but it's really far from it.
 > >
-> > > > > This adds a devm managed version of drm_bridge_add(). Like other
-> > > > > "devm" function listed in drm_bridge.h, this function takes an
-> > > > > explicit "dev" to use for the lifetime management. A few notes:
-> > > > > * In general we have a "struct device" for bridges that makes a g=
-ood
-> > > > >   candidate for where the lifetime matches exactly what we want.
-> > > > > * The "bridge->dev->dev" device appears to be the encoder
-> > > > >   device. That's not the right device to use for lifetime managem=
-ent.
-> > > > >
-> > > > > Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > > > Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> > > >
-> > > > If we are to introduce more managed helpers, I think it'd be wiser =
-to
-> > > > introduce them as DRM-managed, and not device managed.
-> > > >
-> > > > Otherwise, you'll end up in a weird state when a device has been re=
-moved
-> > > > but the DRM device is still around.
-> > >=3D20
-> > > I'm kinda confused. In this case there is no DRM device for the bridge
-> > > and, as per my CL description, "bridge-dev->dev" appears to be the
-> > > encoder device.
+> > It is more of removing the boilerplate code spread over all the
+> > drivers rather than about particular safety.
 > >
-> > bridge->dev seems right though?
-> >
-> > > I wasn't personally involved in discussions about it, but I was under
-> > > the impression that this was expected / normal. Thus we can't make
-> > > this DRM-managed.
-> >
-> > Still, I don't think devm is the right solution to this either.
-> >
-> > The underlying issue is two-fold:
-> >
-> >   - Encoders can have a pointer to a bridge through of_drm_find_bridge
-> >     or similar. However, bridges are traditionally tied to their device
-> >     lifetime (by calling drm_bridge_add in probe, and drm_bridge_remove
-> >     in remove). Encoders will typically be tied to the DRM device
-> >     however, and that one sticks around until the last application
-> >     closes it. We can thus very easily end up with a dangling pointer,
-> >     and a use-after-free.
-> >
-> >   - It's not the case yet, but it doesn't seem far fetch to expose
-> >     properties of bridges to the userspace. In that case, the userspace
-> >     would be likely to still hold references to objects that aren't
-> >     there anymore when the bridge is gone.
-> >
-> > The first is obviously a larger concern, but if we can find a solution
-> > that would accomodate the second it would be great.
-> >
-> > As far as I can see, we should fix in two steps:
-> >
-> >   - in drm_bridge_attach, we should add a device-managed call that will
-> >     unregister the main DRM device. We don't allow to probe the main DRM
-> >     device when the bridge isn't there yet in most case, so it makes
-> >     sense to remove it once the bridge is no longer there as well.
+> > I'd propose to land devm_drm_bridge_add (and deprecate calling
+> > drm_bridge_remove from the bridge driver at some point) and work on
+> > the whole drm_device <-> drm_bridge problem in the meantime.
 >=20
-> The problem is that I do not see a good way to unregister the main DRM
-> device outside of it's driver code.
+> At this point it has been landed in drm-misc-next as per my response
+> to the cover letter. If need be we can revert it and rework the ps8640
+> driver to stop using it but it wouldn't change the lifetime of the
+> bridge. I'm not going to rework the bridge lifetime rules here. If
+> nothing else it seems like having the devm function at least would
+> make it obvious which drivers need to be fixed whenever the bridge
+> lifetime problem gets solved.
 
-That's what drmm helpers are doing though: they'll defer the cleanup
-until the last user has closed its fd.
+Not really, no. The issue exists whether or not the driver would be
+using devm. Anyway, what's done is done.
 
-> >   - When the DRM device is removed, have the core cleanup any bridge
-> >     registered. That will remove the need to have drm_bridge_remove in
-> >     the first place.
-> >
-> > > I'll assume that my response addressed your concerns. Assuming I get
-> > > reviews for the other two patches in this series I'll plan to land
-> > > this with Dmitry's review.
-> >
-> > I still don't think it's a good idea to merge it. It gives an illusion
-> > of being safe, but it's really far from it.
->=20
-> It is more of removing the boilerplate code spread over all the
-> drivers rather than about particular safety.
->=20
-> I'd propose to land devm_drm_bridge_add (and deprecate calling
-> drm_bridge_remove from the bridge driver at some point) and work on
-> the whole drm_device <-> drm_bridge problem in the meantime.
-
-Do you really expect that to happen? :)
-
-Anyway, it's been merged, it's too late now anyway. I don't really feel
-like it's a good thing, but it doesn't really make the situation worse
-either.
+Could you please ping earlier than a few minutes before applying the
+patch next time though? We could have easily prevented that situation.
 
 Maxime
