@@ -2,122 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8CFC253C44E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jun 2022 07:34:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A101E53C4BB
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jun 2022 08:09:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240596AbiFCFeE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Jun 2022 01:34:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49872 "EHLO
+        id S230405AbiFCGJo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Jun 2022 02:09:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43172 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240705AbiFCFeE (ORCPT
+        with ESMTP id S230201AbiFCGJn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Jun 2022 01:34:04 -0400
-Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64B8B38DB6;
-        Thu,  2 Jun 2022 22:34:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1654234442; x=1685770442;
+        Fri, 3 Jun 2022 02:09:43 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F59C2AC71;
+        Thu,  2 Jun 2022 23:09:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1654236583; x=1685772583;
   h=message-id:date:mime-version:subject:to:cc:references:
    from:in-reply-to:content-transfer-encoding;
-  bh=dsMVJcKJEcaeF8QAGuahkwXPqxSC4I8wQTrHBh2W82k=;
-  b=aQk/nJQlSVQA9F0hHPsyA3DL/4VHyww1PUyrEavj/zfAfUgfu24SeCg2
-   OmHv/NXu+QS1bq/TaJS65LVG5XW2Aqz9b9O0caK+UX/Uw+1WiVBOA8JI5
-   3WGl8/drixLYjUU+2tuQ7bRTr3uJzghZTHjIT+7dI6UoBeUpb3KEYv2ga
-   T+nWANYUv9mIwfjKmJQjxOXK6PhYsIckUDiggwybYrAkybORk1lUjIZ1k
-   RlPCCNrMWO0lPMVPEuvCgmXEN3T35LwL4KrgUXKmeYs5tE5AjbD+E+6ZK
-   I/OK4M8ESNuFbnGJpoNQlfBqjRwxw03xZWSJyO2isYL2a/d7f/cxbixHe
-   w==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10366"; a="263815475"
-X-IronPort-AV: E=Sophos;i="5.91,273,1647327600"; 
-   d="scan'208";a="263815475"
-Received: from orsmga008.jf.intel.com ([10.7.209.65])
-  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Jun 2022 22:33:55 -0700
-X-IronPort-AV: E=Sophos;i="5.91,273,1647327600"; 
-   d="scan'208";a="607227864"
-Received: from ahunter6-mobl1.ger.corp.intel.com (HELO [10.0.2.15]) ([10.252.54.219])
-  by orsmga008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Jun 2022 22:33:50 -0700
-Message-ID: <bbcd824b-457a-1009-835d-3e51ed04c1c2@intel.com>
-Date:   Fri, 3 Jun 2022 08:33:46 +0300
+  bh=kFDsYAwwyQEIROHoFgr6UXEiUnfVjD1ybd+VrPy8+F0=;
+  b=ab1B78qKl75oHYVhyEmNEi+CZsRKGBBW1nHJaPCbjawGLgP6h51YvPcW
+   6qsIUFYCGZHUOwvBw1inIpVbTcbnryvGozVSHXTbP5kxvW+3TmAbZRac8
+   hleRGotrHacukhinROUX84Elr9aBY82mhXNCMy4uvH8sxJbfecYFD2G22
+   I=;
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 02 Jun 2022 23:09:42 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Jun 2022 23:09:35 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Thu, 2 Jun 2022 23:09:33 -0700
+Received: from [10.216.32.198] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Thu, 2 Jun 2022
+ 23:09:27 -0700
+Message-ID: <6250a441-6bcd-4ca8-782b-b7a8d9239e46@quicinc.com>
+Date:   Fri, 3 Jun 2022 11:39:24 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Firefox/91.0 Thunderbird/91.9.1
-Subject: Re: [PATCH V1 1/2] mmc: core: Introduce new flag to force hardware
- reset
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.1
+Subject: Re: [PATCH v2 1/2] dt-bindings: pinctrl: qcom: sc7280: Add compatible
+ string for adsp based platforms
 Content-Language: en-US
-To:     Sarthak Garg <quic_sartgarg@quicinc.com>, ulf.hansson@linaro.org
-Cc:     linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, quic_kamasali@quicinc.com,
-        quic_rampraka@quicinc.com, quic_pragalla@quicinc.com,
-        quic_sayalil@quicinc.com, Jens Axboe <axboe@kernel.dk>,
-        Avri Altman <Avri.Altman@wdc.com>,
-        Chaitanya Kulkarni <kch@nvidia.com>,
-        =?UTF-8?Q?Christian_L=c3=b6hle?= <CLoehle@hyperstone.com>,
-        Bean Huo <beanhuo@micron.com>,
-        Vincent Whitchurch <vincent.whitchurch@axis.com>,
-        Dmitry Osipenko <digetx@gmail.com>,
-        Stephen Boyd <swboyd@chromium.org>
-References: <20220603051534.22672-1-quic_sartgarg@quicinc.com>
- <20220603051534.22672-2-quic_sartgarg@quicinc.com>
-From:   Adrian Hunter <adrian.hunter@intel.com>
-Organization: Intel Finland Oy, Registered Address: PL 281, 00181 Helsinki,
- Business Identity Code: 0357606 - 4, Domiciled in Helsinki
-In-Reply-To: <20220603051534.22672-2-quic_sartgarg@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-7.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,
-        SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+To:     Stephen Boyd <swboyd@chromium.org>,
+        Linus Walleij <linus.walleij@linaro.org>, <agross@kernel.org>,
+        <alsa-devel@alsa-project.org>, <bgoswami@quicinc.com>,
+        <bjorn.andersson@linaro.org>, <broonie@kernel.org>,
+        <devicetree@vger.kernel.org>, <judyhsiao@chromium.org>,
+        <lgirdwood@gmail.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-gpio@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <perex@perex.cz>, <quic_plai@quicinc.com>,
+        <quic_rohkumar@quicinc.com>, <robh+dt@kernel.org>,
+        <srinivas.kandagatla@linaro.org>, <tiwai@suse.com>
+CC:     Venkata Prasad Potturu <quic_potturu@quicinc.com>
+References: <1654079415-26217-1-git-send-email-quic_srivasam@quicinc.com>
+ <1654079415-26217-2-git-send-email-quic_srivasam@quicinc.com>
+ <CAE-0n50nfwZPdSS7Vw9FiV+Shfn9-bX44hfLq5ey9DBsAy0y4g@mail.gmail.com>
+From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Organization: Qualcomm
+In-Reply-To: <CAE-0n50nfwZPdSS7Vw9FiV+Shfn9-bX44hfLq5ey9DBsAy0y4g@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-7.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 3/06/22 08:15, Sarthak Garg wrote:
-> Introduce new flag cqe_recovery_reset_always to allow vendors to force
-> hardware reset during cqe recovery.
-> 
-> Signed-off-by: Sarthak Garg <quic_sartgarg@quicinc.com>
 
-You should re-base on top of "mmc: block: Fix CQE recovery reset success"
+On 6/2/2022 6:43 AM, Stephen Boyd wrote:
+> Quoting Srinivasa Rao Mandadapu (2022-06-01 03:30:14)
+>> Add compatible string to support adsp enabled sc7280 platforms.
+>>
+>> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+>> Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
+>> Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
+>> Acked-by: Rob Herring <robh@kernel.org>
+>> ---
+>>   .../devicetree/bindings/pinctrl/qcom,sc7280-lpass-lpi-pinctrl.yaml    | 4 +++-
+>>   1 file changed, 3 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sc7280-lpass-lpi-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sc7280-lpass-lpi-pinctrl.yaml
+>> index d32ee32..53c2c59 100644
+>> --- a/Documentation/devicetree/bindings/pinctrl/qcom,sc7280-lpass-lpi-pinctrl.yaml
+>> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,sc7280-lpass-lpi-pinctrl.yaml
+>> @@ -17,7 +17,9 @@ description: |
+>>
+>>   properties:
+>>     compatible:
+>> -    const: qcom,sc7280-lpass-lpi-pinctrl
+>> +    enum:
+>> +      - qcom,sc7280-lpass-lpi-pinctrl
+>> +      - qcom,sc7280-lpass-adsp-lpi-pinctrl
+> Can you confirm that this is the same hardware (i.e. same reg property)
+> but just a different compatible string used to convey that the device is
+> using "adsp" mode or not? If so, this looks to be a common pattern for
+> the audio hardware here, where we have two "views" of the hardware, one
+> for adsp mode and one for not adsp mode. I guess the not adsp mode is
+> called "adsp bypass"?
 
-Also you may want to consider fixes / stable tags.
+Yes Your understanding is correct. The same hardware in scenario not using ADSP,
 
-Otherwise, for both patches:
+and in another enabling DSP.
+>
+> Is that right? Why are we conveying this information via the compatible
+> string?
 
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Could you please suggest better way!.  As pin control driver is the 
+first one to probe, I am not getting better approach.
 
-> ---
->  drivers/mmc/core/block.c | 2 +-
->  include/linux/mmc/host.h | 1 +
->  2 files changed, 2 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/mmc/core/block.c b/drivers/mmc/core/block.c
-> index 1259ca22d625..496cdd8a2999 100644
-> --- a/drivers/mmc/core/block.c
-> +++ b/drivers/mmc/core/block.c
-> @@ -1497,7 +1497,7 @@ void mmc_blk_cqe_recovery(struct mmc_queue *mq)
->  	pr_debug("%s: CQE recovery start\n", mmc_hostname(host));
->  
->  	err = mmc_cqe_recovery(host);
-> -	if (err)
-> +	if (err || host->cqe_recovery_reset_always)
->  		mmc_blk_reset(mq->blkdata, host, MMC_BLK_CQE_RECOVERY);
->  	else
->  		mmc_blk_reset_success(mq->blkdata, MMC_BLK_CQE_RECOVERY);
-> diff --git a/include/linux/mmc/host.h b/include/linux/mmc/host.h
-> index c193c50ccd78..3e2fe950b4ec 100644
-> --- a/include/linux/mmc/host.h
-> +++ b/include/linux/mmc/host.h
-> @@ -492,6 +492,7 @@ struct mmc_host {
->  	int			cqe_qdepth;
->  	bool			cqe_enabled;
->  	bool			cqe_on;
-> +	bool			cqe_recovery_reset_always;
->  
->  	/* Inline encryption support */
->  #ifdef CONFIG_MMC_CRYPTO
+While up-streaming these drivers, concluded to use this approach.
 
