@@ -2,69 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7BF2553C702
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jun 2022 10:40:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5E4B753C708
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jun 2022 10:42:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242855AbiFCIkB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Jun 2022 04:40:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55466 "EHLO
+        id S242758AbiFCImw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Jun 2022 04:42:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32808 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242811AbiFCIkA (ORCPT
+        with ESMTP id S237114AbiFCImv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Jun 2022 04:40:00 -0400
-Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12FF036E0A
-        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Jun 2022 01:39:59 -0700 (PDT)
-Received: by mail-pj1-x1034.google.com with SMTP id n10so6881113pjh.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Jun 2022 01:39:59 -0700 (PDT)
+        Fri, 3 Jun 2022 04:42:51 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDB601BEA4
+        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Jun 2022 01:42:49 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id s6so11513662lfo.13
+        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Jun 2022 01:42:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=kCVrRc4NVvmeRfDYNLQpFovvIlkEHz3avyGKdl7f8cs=;
-        b=dhDBnMsglw2I4/hKmtWmP3lc9f2wDdTGnFAsg0hC/AKHxqx8EMr0i7zVm9VCgLZoOj
-         nZypmTQ+2CrkEDXNTqhDoKJaD9Lbaynr/HDS7RkvH8MYY3YZFSXfUEmY/z4CivzE87Gm
-         R5vGkyRV5HFdyGPLUHb6LLxdflRuEfD+SG2B8254kd9G4bsdKOy65XNy7uIO+s1yglv8
-         VG8NjTTnLKbBBUz55RKXsUs6v9odihI5GLd4NBw4zvS15L/aeYjl946mvipJhQQ9ppW1
-         mVfeClisH1iRvKpEbOSI4q8BM1uIDKMaABAr5yrIdYKBWBaDTbx0YzYGNPjB9PQ/IhJ3
-         lWDQ==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=dg2zft/FFULtW76VzDqDlP6xnV9rQ7/mV7tzPKJr+Vo=;
+        b=eSVwN8k4LE7W2/xHFDPPSlx0XmW+cOq/WlT161sSyvReiwolMR5gBO2Fo8UwBcF6St
+         /WWRsnIQkPMPZT/g/eQif1sSuQkJyXKt05DPmCbIgMEn+r0+QpY8St2q3hJD5HRycfYA
+         dsdrX1W82i4cRGR1soGxAtbf6eltmj6pN63uCK4brEUsTBxk4UiVxI2arsDehmGUGMIG
+         kwF+HfBVvpRmZX5r8/t9sZssPrCb/f0jF2lxDXg1CLDyzUSzbrsS1ZaKMBcG3IWLtu02
+         20zewvY5xws/vhXXYdpqvJAR6U2DhmuA1iX6sIfdZH/zQTC+uIZnEu83s78dt1z85EJj
+         vUfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=kCVrRc4NVvmeRfDYNLQpFovvIlkEHz3avyGKdl7f8cs=;
-        b=byLvixJriS1w1EuJvHNDXPU71ll0p8/E6EaRWUyDVffYDxGUFnkdPWZQfm5Yg5GNah
-         6YojSlRMG3is15ksGamZjjUVVYGd+F8OvGBPsFKKDGawAQOMzKgq0Z6CRzyDDEHEoUV5
-         Zhmw5fbT8z6KiOd5WGBVhN3VpIOtRa9FFhLozX9+n3/wXR+pDQVmcYPExOVerngFx4D5
-         8P+R8qyzkAjRCWUf0Pnb9SS5imXCggmDp9gYa0VBKpUy6aL324bolV0FFSG2eIBXeFWm
-         unoJvKXX7m3HD9Yoc+hTpkVmFl8ewvvykauE8iJIdANRPj01rdtwChOkSjcAMmS68Us+
-         bQXQ==
-X-Gm-Message-State: AOAM532GqKN02JZNYFKgqWnTkEOvX/sXLtroLEM1rrUE/wqv8Rr8SP8w
-        ZA799EfUkw3IYv+oZHKFi9fxbLu3bVasHbmIIcjgKQ==
-X-Google-Smtp-Source: ABdhPJzo3b5hw6ZjNuMIq2BMHZLSqnWz2D88juzIl0iTFHcs73EzpgDZNfhLrvuJscVMDhvAXKjnmXZkUaozvtIglWU=
-X-Received: by 2002:a17:903:1c6:b0:161:9fbc:5a6 with SMTP id
- e6-20020a17090301c600b001619fbc05a6mr9218199plh.65.1654245598449; Fri, 03 Jun
- 2022 01:39:58 -0700 (PDT)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=dg2zft/FFULtW76VzDqDlP6xnV9rQ7/mV7tzPKJr+Vo=;
+        b=raMwsq/FS738eceXTY5F7pnScsnOcdYB978Tl6xqBiu+EqSRwprV2pMvFo9qPZffbY
+         332/FsKzAbkNZTzAxWGFrmsJnqxReNE1fabH+I84dhYDz/7t909urpKEP+mRKxHQ/DMI
+         nFmwQ6roGpYpgGh+8tDxFpD4c4Y+o0xONBIjCuqZcBlCGAx86v7I2dmI1ag4mZ7jpD1Q
+         JlRsPM+F+H6v16Cj3P25ykTmujjqrNZ5jrai0FWtclvdaYa8PLzKu2GBMF09mrKLvT7i
+         EkAslqlzf8a7kUMSdiEYSgZrwnGXB0OqpKisVrBWhnqD3TohvGbC1jJwPNVTP0N+pz+Q
+         8LDw==
+X-Gm-Message-State: AOAM532SS6hZsrxUaI5b9SWAuqfNX10jWJ1wJboNP2hIR4iooghohP+w
+        ekB5QxOqQZAp8/3kVpYNxRIupA==
+X-Google-Smtp-Source: ABdhPJwwD/c/H7RXiX6UvnT4K1IbT8YlLJNcZpnPdj4fU6oyquKcpHEOGJ6gGP8leFbGBCcYuNIa+w==
+X-Received: by 2002:a19:a411:0:b0:478:f29b:e30e with SMTP id q17-20020a19a411000000b00478f29be30emr6154127lfc.334.1654245768345;
+        Fri, 03 Jun 2022 01:42:48 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id e25-20020ac25cb9000000b004791b687235sm203420lfq.119.2022.06.03.01.42.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 03 Jun 2022 01:42:47 -0700 (PDT)
+Message-ID: <bec5ec2a-b749-21ba-e406-fb5799a3df57@linaro.org>
+Date:   Fri, 3 Jun 2022 11:42:47 +0300
 MIME-Version: 1.0
-References: <20220601124250.60968-1-robert.foss@linaro.org>
- <20220601124250.60968-4-robert.foss@linaro.org> <20220602145228.GA2299532-robh@kernel.org>
-In-Reply-To: <20220602145228.GA2299532-robh@kernel.org>
-From:   Robert Foss <robert.foss@linaro.org>
-Date:   Fri, 3 Jun 2022 10:39:47 +0200
-Message-ID: <CAG3jFyutTWpV06FU4iZrp=TJ3SSr3nAm8AWkEzSbEXjof7Lfvw@mail.gmail.com>
-Subject: Re: [PATCH v4 3/6] dt-bindings: clock: Add Qcom SM8350 GPUCC bindings
-To:     Rob Herring <robh@kernel.org>
-Cc:     bjorn.andersson@linaro.org, agross@kernel.org,
-        mturquette@baylibre.com, sboyd@kernel.org, krzk+dt@kernel.org,
-        jonathan@marek.ca, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Dmitry Baryshkov <dmityr.baryshkov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.0
+Subject: Re: [PATCH v9 2/5] clk: qcom: gcc-sm8450: use new
+ clk_regmap_phy_mux_ops for PCIe pipe clocks
+Content-Language: en-GB
+To:     Johan Hovold <johan@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-pci@vger.kernel.org
+References: <20220603075908.1853011-1-dmitry.baryshkov@linaro.org>
+ <20220603075908.1853011-3-dmitry.baryshkov@linaro.org>
+ <YpnDkbuZO3jCbxdF@hovoldconsulting.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <YpnDkbuZO3jCbxdF@hovoldconsulting.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -73,172 +86,29 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 2 Jun 2022 at 16:52, Rob Herring <robh@kernel.org> wrote:
->
-> On Wed, Jun 01, 2022 at 02:42:47PM +0200, Robert Foss wrote:
-> > Add device tree bindings for graphics clock controller for
-> > Qualcomm Technology Inc's SM8350 SoCs.
-> >
-> > Signed-off-by: Robert Foss <robert.foss@linaro.org>
-> > Reviewed-by: Dmitry Baryshkov <dmityr.baryshkov@linaro.org>
-> > ---
-> >
-> > Changes since v3
-> >  - Separate from qcom,gpucc
-> >  - Remove clock-names
-> >  - Make example sm8350 based
-> >  - Changed author to me due to size of changes
-> >
-> >
-> >  .../bindings/clock/qcom,gpucc-sm8350.yaml     | 72 +++++++++++++++++++
-> >  include/dt-bindings/clock/qcom,gpucc-sm8350.h | 52 ++++++++++++++
-> >  2 files changed, 124 insertions(+)
-> >  create mode 100644 Documentation/devicetree/bindings/clock/qcom,gpucc-sm8350.yaml
-> >  create mode 100644 include/dt-bindings/clock/qcom,gpucc-sm8350.h
-> >
-> > diff --git a/Documentation/devicetree/bindings/clock/qcom,gpucc-sm8350.yaml b/Documentation/devicetree/bindings/clock/qcom,gpucc-sm8350.yaml
-> > new file mode 100644
-> > index 000000000000..0a0546c079a9
-> > --- /dev/null
-> > +++ b/Documentation/devicetree/bindings/clock/qcom,gpucc-sm8350.yaml
-> > @@ -0,0 +1,72 @@
-> > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> > +%YAML 1.2
-> > +---
-> > +$id: http://devicetree.org/schemas/clock/qcom,gpucc-sm8350.yaml#
-> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> > +
-> > +title: Qualcomm Graphics Clock & Reset Controller Binding
-> > +
-> > +maintainers:
-> > +  - Robert Foss <robert.foss@linaro.org>
-> > +
-> > +description: |
-> > +  Qualcomm graphics clock control module which supports the clocks, resets and
-> > +  power domains on Qualcomm SoCs.
-> > +
-> > +  See also:
-> > +    dt-bindings/clock/qcom,gpucc-sm8350.h
-> > +
-> > +properties:
-> > +  compatible:
-> > +    enum:
-> > +      - qcom,sm8350-gpucc
-> > +
-> > +  clocks:
-> > +    items:
-> > +      - description: Board XO source
-> > +      - description: GPLL0 main branch source
-> > +      - description: GPLL0 div branch source
-> > +
-> > +  '#clock-cells':
-> > +    const: 1
-> > +
-> > +  '#reset-cells':
-> > +    const: 1
-> > +
-> > +  '#power-domain-cells':
-> > +    const: 1
-> > +
-> > +  reg:
-> > +    maxItems: 1
-> > +
-> > +required:
-> > +  - compatible
-> > +  - reg
-> > +  - clocks
-> > +  - '#clock-cells'
-> > +  - '#reset-cells'
-> > +  - '#power-domain-cells'
-> > +
-> > +additionalProperties: false
-> > +
-> > +examples:
-> > +  - |
-> > +    #include <dt-bindings/clock/qcom,gcc-sm8350.h>
-> > +    #include <dt-bindings/clock/qcom,rpmh.h>
-> > +
-> > +    soc {
-> > +        #address-cells = <2>;
-> > +        #size-cells = <2>;
-> > +
-> > +        clock-controller@3d90000 {
-> > +            compatible = "qcom,sm8350-gpucc";
-> > +            reg = <0 0x03d90000 0 0x9000>;
-> > +            clocks = <&rpmhcc RPMH_CXO_CLK>,
-> > +                     <&gcc GCC_GPU_GPLL0_CLK_SRC>,
-> > +                     <&gcc GCC_GPU_GPLL0_DIV_CLK_SRC>;
-> > +            #clock-cells = <1>;
-> > +            #reset-cells = <1>;
-> > +            #power-domain-cells = <1>;
-> > +        };
-> > +    };
-> > +...
-> > diff --git a/include/dt-bindings/clock/qcom,gpucc-sm8350.h b/include/dt-bindings/clock/qcom,gpucc-sm8350.h
-> > new file mode 100644
-> > index 000000000000..d2294e0d527e
-> > --- /dev/null
-> > +++ b/include/dt-bindings/clock/qcom,gpucc-sm8350.h
-> > @@ -0,0 +1,52 @@
-> > +/* SPDX-License-Identifier: GPL-2.0-only */
->
-> Dual license.
+On 03/06/2022 11:17, Johan Hovold wrote:
+> On Fri, Jun 03, 2022 at 10:59:05AM +0300, Dmitry Baryshkov wrote:
+>> Use newly defined clk_regmap_phy_mux_ops for PCIe pipe clocks to let
+>> the clock framework automatically park the clock when the clock is
+>> switched off and restore the parent when the clock is switched on.
+>>
+>> Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+>> Tested-by: Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+> 
+> The Tested-by tags you added are malformed throughout the series, please
+> review and respin (there should be two separate tags for R and T).
 
-Ack.
+Hmm, I wonder how did that happen. Probably they came from your message 
+and I didn't notice that they were broken.
 
->
-> > +/*
-> > + * Copyright (c) 2019-2020, The Linux Foundation. All rights reserved.
-> > + */
-> > +
-> > +#ifndef _DT_BINDINGS_CLK_QCOM_GPU_CC_SM8350_H
-> > +#define _DT_BINDINGS_CLK_QCOM_GPU_CC_SM8350_H
-> > +
-> > +/* GPU_CC clocks */
-> > +#define GPU_CC_AHB_CLK                       0
-> > +#define GPU_CC_CB_CLK                        1
-> > +#define GPU_CC_CRC_AHB_CLK           2
-> > +#define GPU_CC_CX_APB_CLK            3
-> > +#define GPU_CC_CX_GMU_CLK            4
-> > +#define GPU_CC_CX_QDSS_AT_CLK                5
-> > +#define GPU_CC_CX_QDSS_TRIG_CLK              6
-> > +#define GPU_CC_CX_QDSS_TSCTR_CLK     7
-> > +#define GPU_CC_CX_SNOC_DVM_CLK               8
-> > +#define GPU_CC_CXO_AON_CLK           9
-> > +#define GPU_CC_CXO_CLK                       10
-> > +#define GPU_CC_FREQ_MEASURE_CLK              11
-> > +#define GPU_CC_GMU_CLK_SRC           12
-> > +#define GPU_CC_GX_GMU_CLK            13
-> > +#define GPU_CC_GX_QDSS_TSCTR_CLK     14
-> > +#define GPU_CC_GX_VSENSE_CLK         15
-> > +#define GPU_CC_HLOS1_VOTE_GPU_SMMU_CLK       16
-> > +#define GPU_CC_HUB_AHB_DIV_CLK_SRC   17
-> > +#define GPU_CC_HUB_AON_CLK           18
-> > +#define GPU_CC_HUB_CLK_SRC           19
-> > +#define GPU_CC_HUB_CX_INT_CLK                20
-> > +#define GPU_CC_HUB_CX_INT_DIV_CLK_SRC        21
-> > +#define GPU_CC_MND1X_0_GFX3D_CLK     22
-> > +#define GPU_CC_MND1X_1_GFX3D_CLK     23
-> > +#define GPU_CC_PLL0                  24
-> > +#define GPU_CC_PLL1                  25
-> > +#define GPU_CC_SLEEP_CLK             26
-> > +
-> > +/* GPU_CC resets */
-> > +#define GPUCC_GPU_CC_ACD_BCR         0
-> > +#define GPUCC_GPU_CC_CB_BCR          1
-> > +#define GPUCC_GPU_CC_CX_BCR          2
-> > +#define GPUCC_GPU_CC_FAST_HUB_BCR    3
-> > +#define GPUCC_GPU_CC_GFX3D_AON_BCR   4
-> > +#define GPUCC_GPU_CC_GMU_BCR         5
-> > +#define GPUCC_GPU_CC_GX_BCR          6
-> > +#define GPUCC_GPU_CC_XO_BCR          7
-> > +
-> > +/* GPU_CC GDSCRs */
-> > +#define GPU_CX_GDSC                  0
-> > +#define GPU_GX_GDSC                  1
-> > +
-> > +#endif
-> > --
-> > 2.34.1
-> >
-> >
+> 
+> You can drop the Tested-by tags from the two clock driver since I really
+> tested the corresponding changes on a different platform (my fault, I
+> replied to the cover in the last round).
+> 
+>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+
+-- 
+With best wishes
+Dmitry
