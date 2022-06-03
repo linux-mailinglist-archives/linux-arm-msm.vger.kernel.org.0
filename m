@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2BE0653C6AF
+	by mail.lfdr.de (Postfix) with ESMTP id E73AA53C6B1
 	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jun 2022 10:01:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241107AbiFCIBK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Jun 2022 04:01:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33926 "EHLO
+        id S239936AbiFCIBL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Jun 2022 04:01:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33958 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242693AbiFCIBI (ORCPT
+        with ESMTP id S242697AbiFCIBJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Jun 2022 04:01:08 -0400
+        Fri, 3 Jun 2022 04:01:09 -0400
 Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D917136E2B
-        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Jun 2022 01:01:04 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id be31so11389599lfb.10
-        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Jun 2022 01:01:04 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0EDED35DCC
+        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Jun 2022 01:01:08 -0700 (PDT)
+Received: by mail-lf1-x12e.google.com with SMTP id y32so11396458lfa.6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Jun 2022 01:01:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=92h+xS0S7U/GCtJqbNeL9psANLQOdO1D44wv+Muryeg=;
-        b=n5rO0+cA24MQdayWipnfIoooXRy67sqMp9htPwhQL6puMrJtkBR99yUe2ekmO4swWy
-         7P7cbIXVWROWHTnEJt15ctIJp13vEMotKFzyabGmSD3azl3X+v2Dmz1nezJWV7e173HD
-         V02fJ/A7Z46FtZ+snSop4o93WEMFl20/xgAzoKOlgKUIQWqT5aH71Ka2SjNogg8ndEDL
-         Scmbfhjoj2sbyV6b5k2Vt41jpldICc9RQl7pzqNOv9TeqRJerrCi02WUPIO4CQVE3i+D
-         2IHovrTvtmdq1h8JcsAxMCXR1cHy45inmk4GzYUHUE6mLXQuTzZ8hJcmpTzqP2J320x/
-         T4Ng==
+        bh=cclcRpR0z5EblF3tKpkP/jzT9s47x/VjVivCAyqkXIk=;
+        b=vFvlu98tCazewvO6JRZ1wDtY+64qxioy+soKkqsCBhsQt7R00WrsZZvtsUXiGk+r2Q
+         mmreMoRysBuuBLQTXEl1Ad7TZ7X1Dxno6qQIQsV+5bf5Ou4YAzij/agj4E8IWqBz9IVJ
+         TPHQfhGmJN8Bg9ao7laEP1Jx5hK9ZYQ445VT649Mc6Qhx2Dc2mw6/cgVpsJWw+l9aF1d
+         WsP8zpqPmcynfBBjpswC31PoEC3vw5VOBh1O/tQ3uZDGnSojtziHQdkBJtcmhN9J+oGh
+         v15bxDtae5Y8UjuYrb/8gD05rhtU8+SvofBa5v2CccGJt9t1wSNa73k+p7vU45JSigD2
+         G9oQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=92h+xS0S7U/GCtJqbNeL9psANLQOdO1D44wv+Muryeg=;
-        b=IENf3vhmZzrN1d9JdqhtPNdy6eSCV5cjpVLBq6yo9Of1E2HLyaE9I+tz0RrqZIhA5e
-         ziuaWFfZHYxxowIK0xVwMDdAFfZasMcEA21nCi+I2G37u9IAMinrZCE7hXUwlzAMUmLy
-         Rubk99jK2Xh2Xo7IRIMv8tq2apsNKEiWRtMRnQhQf/EoGwQg7kWgX/8z3PlTbj1m1TVy
-         tOutLzZnfNyJF7Un5IAeOrcofIIuYvDUuu/VhVqZhFVRauSl7V+nD4YYLtN5PF8zogMC
-         PCdZUvU0Eqqkr2IrDMQsE8q/1ZO0Wz4tIidDwEU3qCa14L3iRsHrOn2nBFqrVIDPVYoy
-         DyQw==
-X-Gm-Message-State: AOAM531qpAfV1PmAT66N26h9A3yprn9nZHtCXmsjDu+bzXnY0Oz/bRFS
-        6nXepXtlCIEcS0yM+t1+rFqLBw==
-X-Google-Smtp-Source: ABdhPJwQ47yFKb8+4vTrT/DyFt307+4IjfD6BDGHeYIXt2kQ7DZX3hHeQZ4IuHKqRKlyC7XQ+UuemQ==
-X-Received: by 2002:ac2:5d22:0:b0:478:9e46:ae85 with SMTP id i2-20020ac25d22000000b004789e46ae85mr6127811lfb.126.1654243263231;
-        Fri, 03 Jun 2022 01:01:03 -0700 (PDT)
+        bh=cclcRpR0z5EblF3tKpkP/jzT9s47x/VjVivCAyqkXIk=;
+        b=HCwAX+vGRxrqhsWD+wAdnrRZbmkfNIQMBmb2IEnPUvx2SyOR7IlFBjY685MBQ3cG59
+         EFXgmqpRBZrekRp/9SJWxuJ5i5+8OwoXwigJkhBOPRlebtoyvebKgUAfOI/e3+mW1fbP
+         L7nFkawhga6c6evOS4CMheizcblgvtBEk3Uj97v3I5rOrLVSwqLvaU1t8DBEVozZUp/m
+         5HLgKOncwSYIUiqeMfnefOsbM9WWdDQQ9LsHT1DDmn5Awe9MtrRkZ5Cw16h1sGHhPqBx
+         2tnXQSBMrhJDIxZE2kLKB3t7Cc4iyM8SHaxCyBYbWU4WLiEOIj7ssqYX+emtImj+5wwf
+         brbw==
+X-Gm-Message-State: AOAM531gbpiv8SlFQZZZadgbSHB2lgywErVGN0LI8wPyZKpBYadKomo8
+        87AiPMmI2SBZ6fV+ahiQVuAXvg==
+X-Google-Smtp-Source: ABdhPJw8AjPMZ3k2i3rddqIRJEvqoHEKc+cwkZayS1KHSHWlBxua0dFchLEMICN/Mmeo0jDqfwKVNw==
+X-Received: by 2002:a05:6512:1693:b0:474:35c:8c11 with SMTP id bu19-20020a056512169300b00474035c8c11mr6015738lfb.19.1654243264932;
+        Fri, 03 Jun 2022 01:01:04 -0700 (PDT)
 Received: from localhost.localdomain (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
-        by smtp.gmail.com with ESMTPSA id d10-20020a19e60a000000b0047255d21205sm1434462lfh.308.2022.06.03.01.01.02
+        by smtp.gmail.com with ESMTPSA id d16-20020a05651233d000b004788c118ddbsm1437307lfg.210.2022.06.03.01.01.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Jun 2022 01:01:02 -0700 (PDT)
+        Fri, 03 Jun 2022 01:01:04 -0700 (PDT)
 From:   Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>, Stephen Boyd <sboyd@kernel.org>,
         Michael Turquette <mturquette@baylibre.com>,
         linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
-Subject: [PATCH v6 5/7] clk: qcom: clk-alpha-pll: add Lucid EVO PLL configuration interfaces
-Date:   Fri,  3 Jun 2022 11:01:01 +0300
-Message-Id: <20220603080101.2251828-1-vladimir.zapolskiy@linaro.org>
+Subject: [PATCH v6 6/7] clk: qcom: clk-alpha-pll: add Rivian EVO PLL configuration interfaces
+Date:   Fri,  3 Jun 2022 11:01:03 +0300
+Message-Id: <20220603080103.2251847-1-vladimir.zapolskiy@linaro.org>
 X-Mailer: git-send-email 2.33.0
 In-Reply-To: <20220603080019.2251764-1-vladimir.zapolskiy@linaro.org>
 References: <20220603080019.2251764-1-vladimir.zapolskiy@linaro.org>
@@ -63,7 +63,7 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -71,137 +71,131 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The change adds controls for Lucid EVO PLL configuration and exports
-control functions to clock controller drivers.
+The change adds and exports Rivian EVO PLL configuration and control
+functions to clock controller drivers.
 
 Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 ---
-Changes from v3 to v6:
+Changes from v1 to v6:
 * none.
 
-Changes from v2 to v3:
-* improved commit subject and description per ask from Bjorn.
-
- drivers/clk/qcom/clk-alpha-pll.c | 65 ++++++++++++++++++++++++++++++++
- drivers/clk/qcom/clk-alpha-pll.h |  5 ++-
- 2 files changed, 69 insertions(+), 1 deletion(-)
+ drivers/clk/qcom/clk-alpha-pll.c | 70 ++++++++++++++++++++++++++++++++
+ drivers/clk/qcom/clk-alpha-pll.h |  6 +++
+ 2 files changed, 76 insertions(+)
 
 diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
-index 47879ee5a677..54bad5277802 100644
+index 54bad5277802..ab4f0fc15a48 100644
 --- a/drivers/clk/qcom/clk-alpha-pll.c
 +++ b/drivers/clk/qcom/clk-alpha-pll.c
-@@ -191,8 +191,10 @@ EXPORT_SYMBOL_GPL(clk_alpha_pll_regs);
- #define LUCID_5LPE_ENABLE_VOTE_RUN	BIT(21)
- 
- /* LUCID EVO PLL specific settings and offsets */
-+#define LUCID_EVO_PCAL_NOT_DONE		BIT(8)
- #define LUCID_EVO_ENABLE_VOTE_RUN       BIT(25)
- #define LUCID_EVO_PLL_L_VAL_MASK        GENMASK(15, 0)
-+#define LUCID_EVO_PLL_CAL_L_VAL_SHIFT	16
- 
- /* ZONDA PLL specific */
- #define ZONDA_PLL_OUT_MASK	0xf
-@@ -1994,6 +1996,33 @@ const struct clk_ops clk_alpha_pll_zonda_ops = {
+@@ -154,6 +154,18 @@ const u8 clk_alpha_pll_regs[][PLL_OFF_MAX_REGS] = {
+ 		[PLL_OFF_TEST_CTL_U] = 0x30,
+ 		[PLL_OFF_TEST_CTL_U1] = 0x34,
+ 	},
++	[CLK_ALPHA_PLL_TYPE_RIVIAN_EVO] = {
++		[PLL_OFF_OPMODE] = 0x04,
++		[PLL_OFF_STATUS] = 0x0c,
++		[PLL_OFF_L_VAL] = 0x10,
++		[PLL_OFF_USER_CTL] = 0x14,
++		[PLL_OFF_USER_CTL_U] = 0x18,
++		[PLL_OFF_CONFIG_CTL] = 0x1c,
++		[PLL_OFF_CONFIG_CTL_U] = 0x20,
++		[PLL_OFF_CONFIG_CTL_U1] = 0x24,
++		[PLL_OFF_TEST_CTL] = 0x28,
++		[PLL_OFF_TEST_CTL_U] = 0x2c,
++	},
  };
- EXPORT_SYMBOL_GPL(clk_alpha_pll_zonda_ops);
+ EXPORT_SYMBOL_GPL(clk_alpha_pll_regs);
  
-+void clk_lucid_evo_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
-+				 const struct alpha_pll_config *config)
-+{
-+	clk_alpha_pll_write_config(regmap, PLL_L_VAL(pll), config->l |
-+			(TRION_PLL_CAL_VAL << LUCID_EVO_PLL_CAL_L_VAL_SHIFT));
+@@ -2179,3 +2191,61 @@ const struct clk_ops clk_alpha_pll_lucid_evo_ops = {
+ 	.set_rate = alpha_pll_lucid_5lpe_set_rate,
+ };
+ EXPORT_SYMBOL_GPL(clk_alpha_pll_lucid_evo_ops);
 +
-+	clk_alpha_pll_write_config(regmap, PLL_ALPHA_VAL(pll), config->alpha);
++void clk_rivian_evo_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
++				  const struct alpha_pll_config *config)
++{
 +	clk_alpha_pll_write_config(regmap, PLL_CONFIG_CTL(pll), config->config_ctl_val);
 +	clk_alpha_pll_write_config(regmap, PLL_CONFIG_CTL_U(pll), config->config_ctl_hi_val);
 +	clk_alpha_pll_write_config(regmap, PLL_CONFIG_CTL_U1(pll), config->config_ctl_hi1_val);
-+	clk_alpha_pll_write_config(regmap, PLL_USER_CTL(pll), config->user_ctl_val);
-+	clk_alpha_pll_write_config(regmap, PLL_USER_CTL_U(pll), config->user_ctl_hi_val);
 +	clk_alpha_pll_write_config(regmap, PLL_TEST_CTL(pll), config->test_ctl_val);
 +	clk_alpha_pll_write_config(regmap, PLL_TEST_CTL_U(pll), config->test_ctl_hi_val);
-+	clk_alpha_pll_write_config(regmap, PLL_TEST_CTL_U1(pll), config->test_ctl_hi1_val);
++	clk_alpha_pll_write_config(regmap, PLL_L_VAL(pll), config->l);
++	clk_alpha_pll_write_config(regmap, PLL_USER_CTL(pll), config->user_ctl_val);
++	clk_alpha_pll_write_config(regmap, PLL_USER_CTL_U(pll), config->user_ctl_hi_val);
 +
-+	/* Disable PLL output */
-+	regmap_update_bits(regmap, PLL_MODE(pll), PLL_OUTCTRL, 0);
-+
-+	/* Set operation mode to STANDBY */
 +	regmap_write(regmap, PLL_OPMODE(pll), PLL_STANDBY);
 +
-+	/* Place the PLL in STANDBY mode */
-+	regmap_update_bits(regmap, PLL_MODE(pll), PLL_RESET_N, PLL_RESET_N);
++	regmap_update_bits(regmap, PLL_MODE(pll),
++			   PLL_RESET_N | PLL_BYPASSNL | PLL_OUTCTRL,
++			   PLL_RESET_N | PLL_BYPASSNL);
 +}
-+EXPORT_SYMBOL_GPL(clk_lucid_evo_pll_configure);
++EXPORT_SYMBOL_GPL(clk_rivian_evo_pll_configure);
 +
- static int alpha_pll_lucid_evo_enable(struct clk_hw *hw)
- {
- 	struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
-@@ -2079,6 +2108,31 @@ static void alpha_pll_lucid_evo_disable(struct clk_hw *hw)
- 	regmap_write(regmap, PLL_OPMODE(pll), PLL_STANDBY);
- }
- 
-+static int alpha_pll_lucid_evo_prepare(struct clk_hw *hw)
++static unsigned long clk_rivian_evo_pll_recalc_rate(struct clk_hw *hw,
++						    unsigned long parent_rate)
 +{
 +	struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
-+	struct clk_hw *p;
-+	u32 val = 0;
-+	int ret;
++	u32 l;
 +
-+	/* Return early if calibration is not needed. */
-+	regmap_read(pll->clkr.regmap, PLL_MODE(pll), &val);
-+	if (!(val & LUCID_EVO_PCAL_NOT_DONE))
-+		return 0;
++	regmap_read(pll->clkr.regmap, PLL_L_VAL(pll), &l);
 +
-+	p = clk_hw_get_parent(hw);
-+	if (!p)
-+		return -EINVAL;
-+
-+	ret = alpha_pll_lucid_evo_enable(hw);
-+	if (ret)
-+		return ret;
-+
-+	alpha_pll_lucid_evo_disable(hw);
-+
-+	return 0;
++	return parent_rate * l;
 +}
 +
- static unsigned long alpha_pll_lucid_evo_recalc_rate(struct clk_hw *hw,
- 						     unsigned long parent_rate)
- {
-@@ -2114,3 +2168,14 @@ const struct clk_ops clk_alpha_pll_postdiv_lucid_evo_ops = {
- 	.set_rate = clk_lucid_evo_pll_postdiv_set_rate,
- };
- EXPORT_SYMBOL_GPL(clk_alpha_pll_postdiv_lucid_evo_ops);
++static long clk_rivian_evo_pll_round_rate(struct clk_hw *hw, unsigned long rate,
++					  unsigned long *prate)
++{
++	struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
++	unsigned long min_freq, max_freq;
++	u32 l;
++	u64 a;
 +
-+const struct clk_ops clk_alpha_pll_lucid_evo_ops = {
-+	.prepare = alpha_pll_lucid_evo_prepare,
-+	.enable = alpha_pll_lucid_evo_enable,
-+	.disable = alpha_pll_lucid_evo_disable,
++	rate = alpha_pll_round_rate(rate, *prate, &l, &a, 0);
++	if (!pll->vco_table || alpha_pll_find_vco(pll, rate))
++		return rate;
++
++	min_freq = pll->vco_table[0].min_freq;
++	max_freq = pll->vco_table[pll->num_vco - 1].max_freq;
++
++	return clamp(rate, min_freq, max_freq);
++}
++
++const struct clk_ops clk_alpha_pll_rivian_evo_ops = {
++	.enable = alpha_pll_lucid_5lpe_enable,
++	.disable = alpha_pll_lucid_5lpe_disable,
 +	.is_enabled = clk_trion_pll_is_enabled,
-+	.recalc_rate = alpha_pll_lucid_evo_recalc_rate,
-+	.round_rate = clk_alpha_pll_round_rate,
-+	.set_rate = alpha_pll_lucid_5lpe_set_rate,
++	.recalc_rate = clk_rivian_evo_pll_recalc_rate,
++	.round_rate = clk_rivian_evo_pll_round_rate,
 +};
-+EXPORT_SYMBOL_GPL(clk_alpha_pll_lucid_evo_ops);
++EXPORT_SYMBOL_GPL(clk_alpha_pll_rivian_evo_ops);
 diff --git a/drivers/clk/qcom/clk-alpha-pll.h b/drivers/clk/qcom/clk-alpha-pll.h
-index 6e9907deaf30..0b7a6859ca2c 100644
+index 0b7a6859ca2c..447efb82fe59 100644
 --- a/drivers/clk/qcom/clk-alpha-pll.h
 +++ b/drivers/clk/qcom/clk-alpha-pll.h
-@@ -152,6 +152,8 @@ extern const struct clk_ops clk_alpha_pll_postdiv_lucid_5lpe_ops;
+@@ -18,6 +18,7 @@ enum {
+ 	CLK_ALPHA_PLL_TYPE_AGERA,
+ 	CLK_ALPHA_PLL_TYPE_ZONDA,
+ 	CLK_ALPHA_PLL_TYPE_LUCID_EVO,
++	CLK_ALPHA_PLL_TYPE_RIVIAN_EVO,
+ 	CLK_ALPHA_PLL_TYPE_MAX,
+ };
  
- extern const struct clk_ops clk_alpha_pll_zonda_ops;
- #define clk_alpha_pll_postdiv_zonda_ops clk_alpha_pll_postdiv_fabia_ops
-+
-+extern const struct clk_ops clk_alpha_pll_lucid_evo_ops;
+@@ -157,6 +158,9 @@ extern const struct clk_ops clk_alpha_pll_lucid_evo_ops;
  extern const struct clk_ops clk_alpha_pll_fixed_lucid_evo_ops;
  extern const struct clk_ops clk_alpha_pll_postdiv_lucid_evo_ops;
  
-@@ -168,6 +170,7 @@ void clk_agera_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
- 
- void clk_zonda_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
++extern const struct clk_ops clk_alpha_pll_rivian_evo_ops;
++#define clk_alpha_pll_postdiv_rivian_evo_ops clk_alpha_pll_postdiv_fabia_ops
++
+ void clk_alpha_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
  			     const struct alpha_pll_config *config);
--
-+void clk_lucid_evo_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
-+				 const struct alpha_pll_config *config);
+ void clk_fabia_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
+@@ -172,5 +176,7 @@ void clk_zonda_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
+ 			     const struct alpha_pll_config *config);
+ void clk_lucid_evo_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
+ 				 const struct alpha_pll_config *config);
++void clk_rivian_evo_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
++				  const struct alpha_pll_config *config);
  
  #endif
 -- 
