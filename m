@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 36D8D53C711
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jun 2022 10:45:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 63A3453C714
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jun 2022 10:45:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242871AbiFCIpB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Jun 2022 04:45:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34314 "EHLO
+        id S242863AbiFCIpC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Jun 2022 04:45:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34326 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242865AbiFCIpA (ORCPT
+        with ESMTP id S242862AbiFCIpA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Fri, 3 Jun 2022 04:45:00 -0400
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A991436E1D
-        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Jun 2022 01:44:58 -0700 (PDT)
-Received: by mail-lj1-x22f.google.com with SMTP id 1so7745314ljp.8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Jun 2022 01:44:58 -0700 (PDT)
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4574A36E25
+        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Jun 2022 01:44:59 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id a15so11543694lfb.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Jun 2022 01:44:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=X0V6BYnaPhxh7sNHV1/VEW9TfsvsIk7K2y2VHazjUm4=;
-        b=pXoogqiEZcsyJZp/nP3rMMWNbxdxW6meN0/jsQS2ZBTrxYZq+mLQKYLh0I3JKAySc+
-         l7I9/cmFnUv3YEq0jPYolBlpdfBpKFNJq+Kvwukrl/6+1aLLexSc7daOe96GN+ahTKEn
-         YezBbT+86+T5YySxraqom725e9jmey796ti8edrZ8GNv+xahDyZIJ4RzzdzwhT4awTmT
-         i2nZwG4XbvWPSrwT5nAXWkiFXz8l1Ix814OvU4DCXm7Df+0nlDjoypVNbLl+2fBY9m5N
-         GyFyTmx0x0e0pzQYkfU8k1rNIRGDSk15ek89ksZPh0VM8mH/r/WhXsY26Z6yiXWIGDRM
-         IkgA==
+        bh=/EDLNTI5pI/Mi1iA33N6km0sR5Uc9crbW1Xns2oX9B0=;
+        b=ZJ271B6Ikppj9bkr5p1LXeNC+LkvtzH56jVb1P3l1eEmah7Yq3s2Aykn7Wj2NIcjoH
+         kS6rsqTEA+xlfTFOg5gzPRSMNU89MPzxyDW/NvgwVKW/xlBWKbC8k73Ct076RHEbdrAl
+         s9zruWzS1BKpcsXo0KlSoOTL0RU1Eabjr42abK18yOQzx9TPjwGyhaJtCasGK189Dt0U
+         1A4YbbJjTA391JIqLKMN2NuVD3CjB8xDHRn7mkvvXZy8C0HjPWHYErGy6fL246lvxSlO
+         LYBQKyFgL2MgKiVBM1qr1nmSb1WLf6OBC0qg9cK7+Wrm90IZNFbMgytwIXE83YlmcpJM
+         mAYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=X0V6BYnaPhxh7sNHV1/VEW9TfsvsIk7K2y2VHazjUm4=;
-        b=WJX432l+7UO1nYfCvaSRNvJD8S5VR5r5cioFAqk6EDeSHKDo8zAlgv1Z7KSrsQSgxl
-         99X3v36CrasQoDgCKXZlxcTectbiJbxAu4h1ourhbnX1xasEi5+AD2mFGva+QjbXVxsy
-         0pgFAru0JpXdSfWfHXwqBZ7utn8OIY8bi3KQft6VLv+GCZ9J+tcXNem+hBBbSWOuC4x8
-         XNm+sH6/ylzjzRLFFw0dYEaw97bxklyosL0Ucs3RQDcZV/yVLJPEJ/Ghv+HIMFS9gXGQ
-         1THK3TvD0wJE2jeEcj8NOI3df09hcOpTdqJJi+QB4RbKIINHkz01fmjDojTziaLwHZRg
-         e/BQ==
-X-Gm-Message-State: AOAM531b4xP/EBQt3B5HB3350XXW+BphjnRjuBymeeucIugRY50SpLBe
-        FPyNp3lshVcptOqnfqEH+kOv1A==
-X-Google-Smtp-Source: ABdhPJwMiS4YdG5vMPSOB31RgMvyoDODfczKQcycIlEZPc9n9i5aJ4LR6qYOu0mGPUcMCllEfAMaVw==
-X-Received: by 2002:a2e:a810:0:b0:253:cb18:9058 with SMTP id l16-20020a2ea810000000b00253cb189058mr44301815ljq.12.1654245896789;
-        Fri, 03 Jun 2022 01:44:56 -0700 (PDT)
+        bh=/EDLNTI5pI/Mi1iA33N6km0sR5Uc9crbW1Xns2oX9B0=;
+        b=S8dleP8nS9nRQG+6T2a4U5UvUgtRjN+b9GV+eSLyxwhfVMui4a8MzA1pv2LL/IzoZj
+         102hAoG/uOZuB67EjC5o2EkemHQhSb2I5pkFBEqO6zwld4eu9ngQGF2rGefmGw1Xqm1Q
+         /oqFn9E3KIvdhBa546MHikOWHYeiop5me1JFnu7ueVy2cBAY+IAgwS+L2bDby79rH+I6
+         zpdKoyycljKxh3p3kQUSFGfabzUOQ+9fqrd7oNApMUGN+s7jVIYCPFwGZjYzZuUiQbll
+         w1vU+ybhoMIqc1n+euMkAoTuMZVRslsWcwnQf3Hw2hKkOisxY6FnGmp3bYJ8Pzrsdo0o
+         RrDg==
+X-Gm-Message-State: AOAM531J+vzYIfkX/O9h2Db3AZAzAN+luS47x+IRS6GfdmWmZSGbJ9IC
+        FRIa7b/VEJhbUBXJVfRtWctUiw==
+X-Google-Smtp-Source: ABdhPJzzDPH8l/po4iPtWattIFQsO/9iDQ1nPLb0cEovjjXcHx+04KVBeXUGoLOiX82JHqWWIEcvZQ==
+X-Received: by 2002:a05:6512:2a9a:b0:477:caea:4ba with SMTP id dt26-20020a0565122a9a00b00477caea04bamr52651544lfb.575.1654245897543;
+        Fri, 03 Jun 2022 01:44:57 -0700 (PDT)
 Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id b7-20020a0565120b8700b00478f8c9d402sm1474817lfv.20.2022.06.03.01.44.55
+        by smtp.gmail.com with ESMTPSA id b7-20020a0565120b8700b00478f8c9d402sm1474817lfv.20.2022.06.03.01.44.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Jun 2022 01:44:56 -0700 (PDT)
+        Fri, 03 Jun 2022 01:44:57 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -60,9 +60,9 @@ To:     Andy Gross <agross@kernel.org>,
 Cc:     Johan Hovold <johan+linaro@kernel.org>,
         linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         linux-pci@vger.kernel.org
-Subject: [PATCH v10 1/5] clk: qcom: regmap: add PHY clock source implementation
-Date:   Fri,  3 Jun 2022 11:44:50 +0300
-Message-Id: <20220603084454.1861142-2-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v10 2/5] clk: qcom: gcc-sm8450: use new clk_regmap_phy_mux_ops for PCIe pipe clocks
+Date:   Fri,  3 Jun 2022 11:44:51 +0300
+Message-Id: <20220603084454.1861142-3-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220603084454.1861142-1-dmitry.baryshkov@linaro.org>
 References: <20220603084454.1861142-1-dmitry.baryshkov@linaro.org>
@@ -70,7 +70,7 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -78,161 +78,120 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On recent Qualcomm platforms the QMP PIPE clocks feed into a set of
-muxes which must be parked to the "safe" source (bi_tcxo) when
-corresponding GDSC is turned off and on again. Currently this is
-handcoded in the PCIe driver by reparenting the gcc_pipe_N_clk_src
-clock. However the same code sequence should be applied in the
-pcie-qcom endpoint, USB3 and UFS drivers.
-
-Rather than copying this sequence over and over again, follow the
-example of clk_rcg2_shared_ops and implement this parking in the
-enable() and disable() clock operations. Supplement the regmap-mux with
-the new clk_regmap_phy_mux type, which implements such multiplexers
-as a simple gate clocks.
-
-This is possible since each of these multiplexers has just two clock
-sources: one coming from the PHY and a reference (XO) one.  If the clock
-is running off the from-PHY source, report it as enabled. Report it as
-disabled otherwise (if it uses reference source).
-
-This way the PHY will disable the pipe clock before turning off the
-GDSC, which in turn would lead to disabling corresponding pipe_clk_src
-(and thus it being parked to a safe, reference clock source). And vice
-versa, after enabling the GDSC the PHY will enable the pipe clock, which
-would cause pipe_clk_src to be switched from a safe source to the
-working one.
+Use newly defined clk_regmap_phy_mux_ops for PCIe pipe clocks to let
+the clock framework automatically park the clock when the clock is
+switched off and restore the parent when the clock is switched on.
 
 Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-Tested-by: Johan Hovold <johan+linaro@kernel.org>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/clk/qcom/Makefile             |  1 +
- drivers/clk/qcom/clk-regmap-phy-mux.c | 62 +++++++++++++++++++++++++++
- drivers/clk/qcom/clk-regmap-phy-mux.h | 33 ++++++++++++++
- 3 files changed, 96 insertions(+)
- create mode 100644 drivers/clk/qcom/clk-regmap-phy-mux.c
- create mode 100644 drivers/clk/qcom/clk-regmap-phy-mux.h
+ drivers/clk/qcom/gcc-sm8450.c | 49 ++++++++++-------------------------
+ 1 file changed, 13 insertions(+), 36 deletions(-)
 
-diff --git a/drivers/clk/qcom/Makefile b/drivers/clk/qcom/Makefile
-index 36789f5233ef..08594230c1c1 100644
---- a/drivers/clk/qcom/Makefile
-+++ b/drivers/clk/qcom/Makefile
-@@ -11,6 +11,7 @@ clk-qcom-y += clk-branch.o
- clk-qcom-y += clk-regmap-divider.o
- clk-qcom-y += clk-regmap-mux.o
- clk-qcom-y += clk-regmap-mux-div.o
-+clk-qcom-y += clk-regmap-phy-mux.o
- clk-qcom-$(CONFIG_KRAIT_CLOCKS) += clk-krait.o
- clk-qcom-y += clk-hfpll.o
- clk-qcom-y += reset.o
-diff --git a/drivers/clk/qcom/clk-regmap-phy-mux.c b/drivers/clk/qcom/clk-regmap-phy-mux.c
-new file mode 100644
-index 000000000000..a1adc075b471
---- /dev/null
-+++ b/drivers/clk/qcom/clk-regmap-phy-mux.c
-@@ -0,0 +1,62 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Copyright (c) 2022, Linaro Ltd.
-+ */
-+
-+#include <linux/clk-provider.h>
-+#include <linux/bitops.h>
-+#include <linux/regmap.h>
-+#include <linux/export.h>
-+
-+#include "clk-regmap.h"
+diff --git a/drivers/clk/qcom/gcc-sm8450.c b/drivers/clk/qcom/gcc-sm8450.c
+index 593a195467ff..666efa5ff978 100644
+--- a/drivers/clk/qcom/gcc-sm8450.c
++++ b/drivers/clk/qcom/gcc-sm8450.c
+@@ -17,6 +17,7 @@
+ #include "clk-regmap.h"
+ #include "clk-regmap-divider.h"
+ #include "clk-regmap-mux.h"
 +#include "clk-regmap-phy-mux.h"
-+
-+#define PHY_MUX_MASK		GENMASK(1, 0)
-+#define PHY_MUX_PHY_SRC		0
-+#define PHY_MUX_REF_SRC		2
-+
-+static inline struct clk_regmap_phy_mux *to_clk_regmap_phy_mux(struct clk_regmap *clkr)
-+{
-+	return container_of(clkr, struct clk_regmap_phy_mux, clkr);
-+}
-+
-+static int phy_mux_is_enabled(struct clk_hw *hw)
-+{
-+	struct clk_regmap *clkr = to_clk_regmap(hw);
-+	struct clk_regmap_phy_mux *phy_mux = to_clk_regmap_phy_mux(clkr);
-+	unsigned int val;
-+
-+	regmap_read(clkr->regmap, phy_mux->reg, &val);
-+	val = FIELD_GET(PHY_MUX_MASK, val);
-+
-+	WARN_ON(val != PHY_MUX_PHY_SRC && val != PHY_MUX_REF_SRC);
-+
-+	return val == PHY_MUX_PHY_SRC;
-+}
-+
-+static int phy_mux_enable(struct clk_hw *hw)
-+{
-+	struct clk_regmap *clkr = to_clk_regmap(hw);
-+	struct clk_regmap_phy_mux *phy_mux = to_clk_regmap_phy_mux(clkr);
-+
-+	return regmap_update_bits(clkr->regmap, phy_mux->reg,
-+				  PHY_MUX_MASK,
-+				  FIELD_PREP(PHY_MUX_MASK, PHY_MUX_PHY_SRC));
-+}
-+
-+static void phy_mux_disable(struct clk_hw *hw)
-+{
-+	struct clk_regmap *clkr = to_clk_regmap(hw);
-+	struct clk_regmap_phy_mux *phy_mux = to_clk_regmap_phy_mux(clkr);
-+
-+	regmap_update_bits(clkr->regmap, phy_mux->reg,
-+			   PHY_MUX_MASK,
-+			   FIELD_PREP(PHY_MUX_MASK, PHY_MUX_REF_SRC));
-+}
-+
-+const struct clk_ops clk_regmap_phy_mux_ops = {
-+	.enable = phy_mux_enable,
-+	.disable = phy_mux_disable,
-+	.is_enabled = phy_mux_is_enabled,
-+};
-+EXPORT_SYMBOL_GPL(clk_regmap_phy_mux_ops);
-diff --git a/drivers/clk/qcom/clk-regmap-phy-mux.h b/drivers/clk/qcom/clk-regmap-phy-mux.h
-new file mode 100644
-index 000000000000..614dd384695c
---- /dev/null
-+++ b/drivers/clk/qcom/clk-regmap-phy-mux.h
-@@ -0,0 +1,33 @@
-+/* SPDX-License-Identifier: GPL-2.0-only */
-+/*
-+ * Copyright (c) 2022, Linaro Ltd.
-+ */
-+
-+#ifndef __QCOM_CLK_REGMAP_PHY_MUX_H__
-+#define __QCOM_CLK_REGMAP_PHY_MUX_H__
-+
-+#include "clk-regmap.h"
-+
-+/*
-+ * A clock implementation for PHY pipe and symbols clock muxes.
-+ *
-+ * If the clock is running off the from-PHY source, report it as enabled.
-+ * Report it as disabled otherwise (if it uses reference source).
-+ *
-+ * This way the PHY will disable the pipe clock before turning off the GDSC,
-+ * which in turn would lead to disabling corresponding pipe_clk_src (and thus
-+ * it being parked to a safe, reference clock source). And vice versa, after
-+ * enabling the GDSC the PHY will enable the pipe clock, which would cause
-+ * pipe_clk_src to be switched from a safe source to the working one.
-+ *
-+ * For some platforms this should be used for the UFS symbol_clk_src clocks
-+ * too.
-+ */
-+struct clk_regmap_phy_mux {
-+	u32			reg;
-+	struct clk_regmap	clkr;
-+};
-+
-+extern const struct clk_ops clk_regmap_phy_mux_ops;
-+
-+#endif
+ #include "gdsc.h"
+ #include "reset.h"
+ 
+@@ -26,9 +27,7 @@ enum {
+ 	P_GCC_GPLL0_OUT_MAIN,
+ 	P_GCC_GPLL4_OUT_MAIN,
+ 	P_GCC_GPLL9_OUT_MAIN,
+-	P_PCIE_0_PIPE_CLK,
+ 	P_PCIE_1_PHY_AUX_CLK,
+-	P_PCIE_1_PIPE_CLK,
+ 	P_SLEEP_CLK,
+ 	P_UFS_PHY_RX_SYMBOL_0_CLK,
+ 	P_UFS_PHY_RX_SYMBOL_1_CLK,
+@@ -153,16 +152,6 @@ static const struct clk_parent_data gcc_parent_data_3[] = {
+ 	{ .fw_name = "bi_tcxo" },
+ };
+ 
+-static const struct parent_map gcc_parent_map_4[] = {
+-	{ P_PCIE_0_PIPE_CLK, 0 },
+-	{ P_BI_TCXO, 2 },
+-};
+-
+-static const struct clk_parent_data gcc_parent_data_4[] = {
+-	{ .fw_name = "pcie_0_pipe_clk", },
+-	{ .fw_name = "bi_tcxo", },
+-};
+-
+ static const struct parent_map gcc_parent_map_5[] = {
+ 	{ P_PCIE_1_PHY_AUX_CLK, 0 },
+ 	{ P_BI_TCXO, 2 },
+@@ -173,16 +162,6 @@ static const struct clk_parent_data gcc_parent_data_5[] = {
+ 	{ .fw_name = "bi_tcxo" },
+ };
+ 
+-static const struct parent_map gcc_parent_map_6[] = {
+-	{ P_PCIE_1_PIPE_CLK, 0 },
+-	{ P_BI_TCXO, 2 },
+-};
+-
+-static const struct clk_parent_data gcc_parent_data_6[] = {
+-	{ .fw_name = "pcie_1_pipe_clk" },
+-	{ .fw_name = "bi_tcxo" },
+-};
+-
+ static const struct parent_map gcc_parent_map_7[] = {
+ 	{ P_BI_TCXO, 0 },
+ 	{ P_GCC_GPLL0_OUT_MAIN, 1 },
+@@ -239,17 +218,16 @@ static const struct clk_parent_data gcc_parent_data_11[] = {
+ 	{ .fw_name = "bi_tcxo" },
+ };
+ 
+-static struct clk_regmap_mux gcc_pcie_0_pipe_clk_src = {
++static struct clk_regmap_phy_mux gcc_pcie_0_pipe_clk_src = {
+ 	.reg = 0x7b060,
+-	.shift = 0,
+-	.width = 2,
+-	.parent_map = gcc_parent_map_4,
+ 	.clkr = {
+ 		.hw.init = &(struct clk_init_data){
+ 			.name = "gcc_pcie_0_pipe_clk_src",
+-			.parent_data = gcc_parent_data_4,
+-			.num_parents = ARRAY_SIZE(gcc_parent_data_4),
+-			.ops = &clk_regmap_mux_closest_ops,
++			.parent_data = &(const struct clk_parent_data){
++				.fw_name = "pcie_0_pipe_clk",
++			},
++			.num_parents = 1,
++			.ops = &clk_regmap_phy_mux_ops,
+ 		},
+ 	},
+ };
+@@ -269,17 +247,16 @@ static struct clk_regmap_mux gcc_pcie_1_phy_aux_clk_src = {
+ 	},
+ };
+ 
+-static struct clk_regmap_mux gcc_pcie_1_pipe_clk_src = {
++static struct clk_regmap_phy_mux gcc_pcie_1_pipe_clk_src = {
+ 	.reg = 0x9d064,
+-	.shift = 0,
+-	.width = 2,
+-	.parent_map = gcc_parent_map_6,
+ 	.clkr = {
+ 		.hw.init = &(struct clk_init_data){
+ 			.name = "gcc_pcie_1_pipe_clk_src",
+-			.parent_data = gcc_parent_data_6,
+-			.num_parents = ARRAY_SIZE(gcc_parent_data_6),
+-			.ops = &clk_regmap_mux_closest_ops,
++			.parent_data = &(const struct clk_parent_data){
++				.fw_name = "pcie_1_pipe_clk",
++			},
++			.num_parents = 1,
++			.ops = &clk_regmap_phy_mux_ops,
+ 		},
+ 	},
+ };
 -- 
 2.35.1
 
