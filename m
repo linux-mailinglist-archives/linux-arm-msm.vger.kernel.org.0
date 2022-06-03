@@ -2,159 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8B69153C904
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jun 2022 13:03:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 913E453C9F9
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jun 2022 14:27:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243887AbiFCLD0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Jun 2022 07:03:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46742 "EHLO
+        id S244403AbiFCMZP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Jun 2022 08:25:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46852 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237380AbiFCLD0 (ORCPT
+        with ESMTP id S244395AbiFCMZO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Jun 2022 07:03:26 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B4CA2F016;
-        Fri,  3 Jun 2022 04:03:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1654254203; x=1685790203;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=KBAKvX9/GNCNqNjkKFmolG/8gDtP8L5C5SntjrMrokk=;
-  b=i9I+iSIeAGz4hn6PBEqLa2v0hEm4WFbZz7e94472vMSVkS2KmEZDEf73
-   jJvHa3ZBH3C2BM21znnrcBtorvblxJMv5ubAhSFEK/95C/FZteDnKn+J6
-   KFFw4A7QOAmCfnsJdAnbW0Odj8HtaiFUQL2JOzxUHZM3ntELXIcQ6Uc3r
-   Q=;
-Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
-  by alexa-out.qualcomm.com with ESMTP; 03 Jun 2022 04:03:23 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Jun 2022 04:03:22 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Fri, 3 Jun 2022 04:03:21 -0700
-Received: from [10.216.32.198] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Fri, 3 Jun 2022
- 04:03:15 -0700
-Message-ID: <a2b7de25-55a4-7d31-2787-be6d0ccf9500@quicinc.com>
-Date:   Fri, 3 Jun 2022 16:33:12 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.1
-Subject: Re: [PATCH v2 2/2] pinctrl: qcom: sc7280: Add lpi pinctrl variant
- data for adsp based targets
-Content-Language: en-US
-To:     Linus Walleij <linus.walleij@linaro.org>
-CC:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
-        <lgirdwood@gmail.com>, <broonie@kernel.org>, <robh+dt@kernel.org>,
-        <quic_plai@quicinc.com>, <bgoswami@quicinc.com>, <perex@perex.cz>,
-        <tiwai@suse.com>, <srinivas.kandagatla@linaro.org>,
-        <quic_rohkumar@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <alsa-devel@alsa-project.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <swboyd@chromium.org>,
-        <judyhsiao@chromium.org>, <linux-gpio@vger.kernel.org>,
-        Venkata Prasad Potturu <quic_potturu@quicinc.com>
-References: <1654079415-26217-1-git-send-email-quic_srivasam@quicinc.com>
- <1654079415-26217-3-git-send-email-quic_srivasam@quicinc.com>
- <CACRpkdYQW7WByaGoSFKT91OwRao_jJdCAbL0pUuj3vdS6TdkQg@mail.gmail.com>
-From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Organization: Qualcomm
-In-Reply-To: <CACRpkdYQW7WByaGoSFKT91OwRao_jJdCAbL0pUuj3vdS6TdkQg@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-5.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        Fri, 3 Jun 2022 08:25:14 -0400
+Received: from mail-oa1-f41.google.com (mail-oa1-f41.google.com [209.85.160.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B5FB3A5C9;
+        Fri,  3 Jun 2022 05:25:13 -0700 (PDT)
+Received: by mail-oa1-f41.google.com with SMTP id 586e51a60fabf-f2e0a41009so10392159fac.6;
+        Fri, 03 Jun 2022 05:25:13 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
+         :message-id;
+        bh=YZtN1F0Qk9NbbCUaUPvkdQ1eLPQxxxaqqx36o3Sni5k=;
+        b=7D8I6vv8Lo2I6NelwLtAOPQvVz+QUj67zjUst5AWEwAjBZhZ6ppJNW15jyRFnxXbj1
+         69AmvfKnxuM070OpaRPYw6KHvqdSnGVVLLdSrEA4+2CW8XZOjwiHVrAKohcH6pAAQTVm
+         olAp+E1eJf9+zMuLWp21LXyEsHyYVS+3AqljQbYva9/1dco3nBZECYebl31bbS5aculQ
+         Cp2KANOsWsgXp/NsuQRy5/SQTD9UzmgJ+Yoay4VT0Pw6vcH3gFAsmmBlawnwQuc/qD7P
+         KosZAwRvBimaKplPudsSocXZXdaoMX6YD4CZ6CGSVBWu0annCYbW9ztx4xaMk070CcUg
+         WG8g==
+X-Gm-Message-State: AOAM531Bv5DXP8AMCmlkwlms0hnImrxViL4ERFA1dwl5PlgAr9FSAT8d
+        u7/WxPQSdrxdFEXFw0G36q2XAhoN2w==
+X-Google-Smtp-Source: ABdhPJxSVrqRYKsD/zB7jTBr5ppoHfux9/u9Rnk3J/ggqOIFhHqD+yh/Q/u1OQq9Kf6x2ZnC3jgxgQ==
+X-Received: by 2002:a05:6870:c6a0:b0:f5:cf37:63a3 with SMTP id cv32-20020a056870c6a000b000f5cf3763a3mr5338923oab.288.1654259112858;
+        Fri, 03 Jun 2022 05:25:12 -0700 (PDT)
+Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id c30-20020a056830349e00b00605da994088sm3531447otu.2.2022.06.03.05.25.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 03 Jun 2022 05:25:12 -0700 (PDT)
+Received: (nullmailer pid 136419 invoked by uid 1000);
+        Fri, 03 Jun 2022 12:25:11 -0000
+From:   Rob Herring <robh@kernel.org>
+To:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Cc:     devicetree@vger.kernel.org,
+        Michael Turquette <mturquette@baylibre.com>,
+        linux-clk@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org, Stephen Boyd <sboyd@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>
+In-Reply-To: <20220603080019.2251764-2-vladimir.zapolskiy@linaro.org>
+References: <20220603080019.2251764-1-vladimir.zapolskiy@linaro.org> <20220603080019.2251764-2-vladimir.zapolskiy@linaro.org>
+Subject: Re: [PATCH v6 1/7] dt-bindings: clock: add QCOM SM8450 camera clock bindings
+Date:   Fri, 03 Jun 2022 07:25:11 -0500
+Message-Id: <1654259111.699187.136418.nullmailer@robh.at.kernel.org>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Fri, 03 Jun 2022 11:00:18 +0300, Vladimir Zapolskiy wrote:
+> The change adds device tree bindings for camera clock controller
+> found on SM8450 SoC.
+> 
+> Reviewed-by: Rob Herring <robh@kernel.org>
+> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+> ---
+> Changes from v5 to v6:
+> * added Rob's tag.
+> 
+> Changes from v4 to v5:
+> * fixed a typo in a usage example found in the yaml file.
+> 
+> Changes from v3 to v4:
+> * renamed a filename in $id value after the rename of the file itself.
+> 
+> Changes from v2 to v3:
+> * renamed files to match the compatible value "qcom,sm8450-camcc",
+> * fixed a typo in a usage example found in the yaml file.
+> 
+> Changes from v1 to v2:
+> * updated qcom,camcc-sm8450.yaml according to review comments from Rob,
+> * changed qcom,camcc-sm8450.h license to dual one.
+> 
+>  .../bindings/clock/qcom,sm8450-camcc.yaml     |  89 ++++++++++
+>  include/dt-bindings/clock/qcom,sm8450-camcc.h | 159 ++++++++++++++++++
+>  2 files changed, 248 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,sm8450-camcc.yaml
+>  create mode 100644 include/dt-bindings/clock/qcom,sm8450-camcc.h
+> 
 
-On 6/3/2022 3:58 PM, Linus Walleij wrote:
-Thanks for Your time and valuable inputs Linus!!!
-> On Wed, Jun 1, 2022 at 12:30 PM Srinivasa Rao Mandadapu
-> <quic_srivasam@quicinc.com> wrote:
->
-> So one way to just use a propert and avoid more compatible strings:
->
->> Add compatible string and lpi pinctrl variant data structure for adsp
->> enabled sc7280 platforms.
->> This variant data structure rnd compatible name required for
->> distingushing ADSP based platforms and ADSP bypass platforms.
->> In case of ADSP enabled platforms, where audio is routed through ADSP
->> macro and decodec GDSC Switches are triggered as clocks by pinctrl
->> driver and ADSP firmware controls them. So It's mandatory to enable
->> them in ADSP based solutions.
->> In case of ADSP bypass platforms clock voting is optional as these macro
->> and dcodec GDSC switches are maintained as power domains and operated from
->> lpass clock drivers.
->>
->> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
->> Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
->> Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
->> ---
->>   drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c | 14 ++++++++++++++
->>   1 file changed, 14 insertions(+)
->>
->> diff --git a/drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c b/drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c
->> index 2add9a4..c9e85d9 100644
->> --- a/drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c
->> +++ b/drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c
->> @@ -134,6 +134,16 @@ static const struct lpi_function sc7280_functions[] = {
->>          LPI_FUNCTION(wsa_swr_data),
->>   };
->>
->> +static const struct lpi_pinctrl_variant_data sc7280_adsp_lpi_data = {
-> Remove static and export this struct in drivers/pinctrl/qcom/pinctrl-lpass-lpi.h
-We can remove entire data structure if my below approach is okay.
->
->> +       .pins = sc7280_lpi_pins,
->> +       .npins = ARRAY_SIZE(sc7280_lpi_pins),
->> +       .groups = sc7280_groups,
->> +       .ngroups = ARRAY_SIZE(sc7280_groups),
->> +       .functions = sc7280_functions,
->> +       .nfunctions = ARRAY_SIZE(sc7280_functions),
->> +       .is_clk_optional = false,
->> +};
->>
->>
->>   static const struct lpi_pinctrl_variant_data sc7280_lpi_data = {
->>          .pins = sc7280_lpi_pins,
->>          .npins = ARRAY_SIZE(sc7280_lpi_pins),
->> @@ -149,6 +159,10 @@ static const struct of_device_id lpi_pinctrl_of_match[] = {
->>                 .compatible = "qcom,sc7280-lpass-lpi-pinctrl",
->>                 .data = &sc7280_lpi_data,
->>          },
->> +       {
->> +               .compatible = "qcom,sc7280-lpass-adsp-lpi-pinctrl",
->> +               .data = &sc7280_adsp_lpi_data,
->> +       },
-> Drop this and instead add some code in the probe()
-> in drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
-> lines:
->
-> if (of_device_is_compatible(np, "qcom,sc7280-lpass-lpi-pinctrl") &&
-> of_property_read_bool(np, "qcom,adsp-mode))
->       data = &sc7280_adsp_lpi_data;
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
-Here, only diff between ADSP and ADSP bypass variant dats is 
-"is_clk_optional" field.
+yamllint warnings/errors:
 
-So we can keep something like this. Kindly suggest, if it's not making 
-sense.
+dtschema/dtc warnings/errors:
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/clock/qcom,sm8450-camcc.example.dtb: clock-controller@ade0000: reg: [[0, 182321152], [0, 131072]] is too long
+	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/clock/qcom,sm8450-camcc.yaml
 
-if (of_device_is_compatible(np, "qcom,sc7280-lpass-lpi-pinctrl") &&
-of_property_read_bool(np, "qcom,adsp-mode))
-      data->is_clk_optional = false;
+doc reference errors (make refcheckdocs):
 
->
-> Yours,
-> Linus Walleij
+See https://patchwork.ozlabs.org/patch/
+
+This check can fail if there are any dependencies. The base for a patch
+series is generally the most recent rc1.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit.
+
