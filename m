@@ -2,260 +2,146 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7440E53CB6F
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jun 2022 16:16:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 72EF353CB93
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jun 2022 16:34:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245051AbiFCOQX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Jun 2022 10:16:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52492 "EHLO
+        id S245106AbiFCOeV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Jun 2022 10:34:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54838 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240024AbiFCOQW (ORCPT
+        with ESMTP id S244009AbiFCOeV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Jun 2022 10:16:22 -0400
-Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com [64.147.123.21])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 092A142A1C;
-        Fri,  3 Jun 2022 07:16:12 -0700 (PDT)
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-        by mailout.west.internal (Postfix) with ESMTP id 4A8AE3200913;
-        Fri,  3 Jun 2022 10:16:10 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute5.internal (MEProxy); Fri, 03 Jun 2022 10:16:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cerno.tech; h=cc
-        :cc:content-transfer-encoding:content-type:date:date:from:from
-        :in-reply-to:in-reply-to:message-id:mime-version:references
-        :reply-to:sender:subject:subject:to:to; s=fm3; t=1654265769; x=
-        1654352169; bh=fk3KX5eSyLHN90n0U5LITdHGtIoEddiGyI/EAYeYiBU=; b=G
-        Y9BwdDOeLIcpH2chXWkgAUEKKo1tZ13DzfKkoJv9KQ+BGpE3U4V1LdKo+bbCRdFy
-        ApSud+sXjgDyje8bHqlEy/bO582UkIvySO/g5BkaNlJqvlmspV1EMLnw/KFAXRS7
-        v3dlZW8ScytrPJzDHAIx6tjzMA8SxvqWa/HP/V6bGz1i54L58ifSautV/AlkN5C9
-        EKhW3Y8jq4jbbNeYHetQuw//PlnRMY1wnSKJ8UcPI2Cjlo74Z0CZ2b2OuT/RoO8X
-        nXCxuAPbXq+LFW0LtugExbXDCrv4FV6VlwYdJRuvcCoU1UmWI4x/kycdnroJFBTd
-        rIXfQzYdU626Bl5b6RN4g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-transfer-encoding
-        :content-type:date:date:feedback-id:feedback-id:from:from
-        :in-reply-to:in-reply-to:message-id:mime-version:references
-        :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
-        :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1654265769; x=
-        1654352169; bh=fk3KX5eSyLHN90n0U5LITdHGtIoEddiGyI/EAYeYiBU=; b=j
-        dH41LTNHJ5KwV22Kwf+k1jUA/bAMwYnctp+JuaJ3VcnAUQIT0G8cYeD+MIk9zEm/
-        +raGeo7KA7rpBuG+fU886W1leyQm+xkvYFCcsfwBSzmbBk5dGm6eqar3n3/R7ANC
-        GLNpm4IvFK/Bh0z7S3gQiZvG7pTjaR5F+1sIxIZtYsbzyZS3Poe65EWD7OVvy19u
-        PGyTbKTpeQ7xvCTya2bRnMiYTLC6BPJL7VR/shJzOqFSlJ6JjgkWOcvl/hPBp0Mv
-        PERo+q/bDe/vF70CIOXwpnKyye+WYsFxcXQMqBcAY0UplUDYonmCm5UU4fgC2W3u
-        YDceXm35zxpMk4eiTVGbg==
-X-ME-Sender: <xms:qBeaYq58L_DeEqQay66g6TW9QIuCXtCxG2cKhIg7X3oqysYKQcqZ1Q>
-    <xme:qBeaYj6GmgoZ_yBjDjOC7NI1g_JScgZW2CoPGfvjsT3Z4vuirYHqDIw9z5ivBpAoJ
-    6zevkFSn93jAzLbp9A>
-X-ME-Received: <xmr:qBeaYpc079RBM1yuOidLe5q0VbVgjGrGFl0XkZPZlg-7onHWXUrFJCj6S4Ct>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrleeigdejvdcutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpeffhffvvefukfhfgggtugfgjgesthhqredttddtvdenucfhrhhomhepofgrgihi
-    mhgvucftihhprghrugcuoehmrgigihhmvgestggvrhhnohdrthgvtghhqeenucggtffrrg
-    htthgvrhhnpeetgfelgefggeekkefggfeludeiudffjeffgeevveekjedukedtudeuteef
-    teefgfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    hmrgigihhmvgestggvrhhnohdrthgvtghh
-X-ME-Proxy: <xmx:qBeaYnJ6MEVrz3t6Ho1T1PT0lQ52_zqXEMOzntbikcrMocls6DXBdA>
-    <xmx:qBeaYuJSAv3hVBs7qN2s4pzzd5vgbHRRyIldiBnhGWLkiqiHuvnXXw>
-    <xmx:qBeaYozysrWZnD2m1ZZKWvSMxVLtoJLMaC32wmhukaZ-XFElPQqTBg>
-    <xmx:qReaYghwdN-8LNUgsvnZgSa8g1wdQKEm1aVKd93Dnr7-7FtgPYXjeg>
-Feedback-ID: i8771445c:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 3 Jun 2022 10:16:08 -0400 (EDT)
-Date:   Fri, 3 Jun 2022 16:16:06 +0200
-From:   Maxime Ripard <maxime@cerno.tech>
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        Hsin-Yi Wang <hsinyi@chromium.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Philip Chen <philipchen@chromium.org>,
-        Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
-        Robert Foss <robert.foss@linaro.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        LKML <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v3 3/4] drm/bridge: Add devm_drm_bridge_add()
-Message-ID: <20220603141606.vapkfwfj7ixefmev@penduick>
-References: <20220510192944.2408515-1-dianders@chromium.org>
- <20220510122726.v3.3.Iba4b9bf6c7a1ee5ea2835ad7bd5eaf84d7688520@changeid>
- <20220521091751.opeiqbmc5c2okdq6@houat>
- <CAD=FV=Wea0LT5umK4Xg87cDikim+dSuyLndfydO3_DnTujZr9Q@mail.gmail.com>
- <CAD=FV=XqJuPHxm7HYMvyHBL_zC-BBA_f0MBsZX-jHt7Pk9ngsQ@mail.gmail.com>
- <20220603082139.sfdxb5ndwpvlhklh@penduick>
- <CAA8EJpqrw63K_xxJjawLjEqP-05eUD-k6dy21162hcq7q07jgQ@mail.gmail.com>
- <CAD=FV=XbNe+9Cf-jWwFPAR0a1qqjdKaQdtiREKLB8sHYTh_4OQ@mail.gmail.com>
+        Fri, 3 Jun 2022 10:34:21 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C551A5045E;
+        Fri,  3 Jun 2022 07:34:18 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 52E86616F9;
+        Fri,  3 Jun 2022 14:34:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BDC3C385A9;
+        Fri,  3 Jun 2022 14:34:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1654266857;
+        bh=3nAELPzfAqOQmMeq44MqN+8FRP1GoZ6OQ7z/q+8F6nE=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=XH0DMFMPOaK4wqwPXozOLeoRU+BC9lC/4jjMf8Ss8jxwAImkqjIqfZy5jOSObMEw3
+         MktfV//vAQ0NbofATGFbRO5O8D3bJG/J06Ainax6o3NAaAEHHLonj5OCDp7DuODnbs
+         1VKxKZ6rChwetbrDOF80MsnQZsG4gGnYnjBOzPzn8GTeEZVj8iX1sTgZRx61sjsFbU
+         IIGG/yCeqP9fDpRIlgv3PPVT5oT9gPYI/gfSE1Nkac3pTOl74HzozkA3u4dSRyoXsw
+         fi76rV1bOrhDcp1TwwVq62G5W0QVSQA5aCuCW+7nEwufMxI3m3AkvRCIdacVXBk6bf
+         SFGf3+R3I32Pw==
+Date:   Fri, 3 Jun 2022 20:04:10 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Miquel Raynal <miquel.raynal@bootlin.com>
+Cc:     Ansuel Smith <ansuelsmth@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Richard Weinberger <richard@nod.at>,
+        Vignesh Raghavendra <vigneshr@ti.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-mtd@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v4 0/2] Add support for unprotected spare data page
+Message-ID: <20220603143410.GA26696@thinkpad>
+References: <20220519190112.6344-1-ansuelsmth@gmail.com>
+ <20220603154934.521c57ab@xps-13>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <CAD=FV=XbNe+9Cf-jWwFPAR0a1qqjdKaQdtiREKLB8sHYTh_4OQ@mail.gmail.com>
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_PASS,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20220603154934.521c57ab@xps-13>
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jun 03, 2022 at 06:52:05AM -0700, Doug Anderson wrote:
-> On Fri, Jun 3, 2022 at 3:19 AM Dmitry Baryshkov
-> <dmitry.baryshkov@linaro.org> wrote:
-> > On Fri, 3 Jun 2022 at 11:21, Maxime Ripard <maxime@cerno.tech> wrote:
-> > >
-> > > On Tue, May 31, 2022 at 02:06:34PM -0700, Doug Anderson wrote:
-> > > > On Mon, May 23, 2022 at 10:00 AM Doug Anderson <dianders@chromium.o=
-rg> wrote:
-> > > > > On Sat, May 21, 2022 at 2:17 AM Maxime Ripard <maxime@cerno.tech>=
- wrote:
-> > > > > > On Tue, May 10, 2022 at 12:29:43PM -0700, Douglas Anderson wrot=
-e:
-> > > > > > > This adds a devm managed version of drm_bridge_add(). Like ot=
-her
-> > > > > > > "devm" function listed in drm_bridge.h, this function takes an
-> > > > > > > explicit "dev" to use for the lifetime management. A few note=
-s:
-> > > > > > > * In general we have a "struct device" for bridges that makes=
- a good
-> > > > > > >   candidate for where the lifetime matches exactly what we wa=
-nt.
-> > > > > > > * The "bridge->dev->dev" device appears to be the encoder
-> > > > > > >   device. That's not the right device to use for lifetime man=
-agement.
-> > > > > > >
-> > > > > > > Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > > > > > Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> > > > > >
-> > > > > > If we are to introduce more managed helpers, I think it'd be wi=
-ser to
-> > > > > > introduce them as DRM-managed, and not device managed.
-> > > > > >
-> > > > > > Otherwise, you'll end up in a weird state when a device has bee=
-n removed
-> > > > > > but the DRM device is still around.
-> > > > >
-> > > > > I'm kinda confused. In this case there is no DRM device for the b=
-ridge
-> > > > > and, as per my CL description, "bridge-dev->dev" appears to be the
-> > > > > encoder device. I wasn't personally involved in discussions about=
- it,
-> > > > > but I was under the impression that this was expected / normal. T=
-hus
-> > > > > we can't make this DRM-managed.
-> > > >
-> > > > Since I didn't hear a reply,
-> > >
-> > > Gah, I replied but it looks like somehow it never reached the ML...
-> > >
-> > > Here was my original reply:
-> > >
-> > > > > > This adds a devm managed version of drm_bridge_add(). Like other
-> > > > > > "devm" function listed in drm_bridge.h, this function takes an
-> > > > > > explicit "dev" to use for the lifetime management. A few notes:
-> > > > > > * In general we have a "struct device" for bridges that makes a=
- good
-> > > > > >   candidate for where the lifetime matches exactly what we want.
-> > > > > > * The "bridge->dev->dev" device appears to be the encoder
-> > > > > >   device. That's not the right device to use for lifetime manag=
-ement.
-> > > > > >
-> > > > > > Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > > > > Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> > > > >
-> > > > > If we are to introduce more managed helpers, I think it'd be wise=
-r to
-> > > > > introduce them as DRM-managed, and not device managed.
-> > > > >
-> > > > > Otherwise, you'll end up in a weird state when a device has been =
-removed
-> > > > > but the DRM device is still around.
-> > > >=3D20
-> > > > I'm kinda confused. In this case there is no DRM device for the bri=
-dge
-> > > > and, as per my CL description, "bridge-dev->dev" appears to be the
-> > > > encoder device.
-> > >
-> > > bridge->dev seems right though?
-> > >
-> > > > I wasn't personally involved in discussions about it, but I was und=
-er
-> > > > the impression that this was expected / normal. Thus we can't make
-> > > > this DRM-managed.
-> > >
-> > > Still, I don't think devm is the right solution to this either.
-> > >
-> > > The underlying issue is two-fold:
-> > >
-> > >   - Encoders can have a pointer to a bridge through of_drm_find_bridge
-> > >     or similar. However, bridges are traditionally tied to their devi=
-ce
-> > >     lifetime (by calling drm_bridge_add in probe, and drm_bridge_remo=
-ve
-> > >     in remove). Encoders will typically be tied to the DRM device
-> > >     however, and that one sticks around until the last application
-> > >     closes it. We can thus very easily end up with a dangling pointer,
-> > >     and a use-after-free.
-> > >
-> > >   - It's not the case yet, but it doesn't seem far fetch to expose
-> > >     properties of bridges to the userspace. In that case, the userspa=
-ce
-> > >     would be likely to still hold references to objects that aren't
-> > >     there anymore when the bridge is gone.
-> > >
-> > > The first is obviously a larger concern, but if we can find a solution
-> > > that would accomodate the second it would be great.
-> > >
-> > > As far as I can see, we should fix in two steps:
-> > >
-> > >   - in drm_bridge_attach, we should add a device-managed call that wi=
-ll
-> > >     unregister the main DRM device. We don't allow to probe the main =
-DRM
-> > >     device when the bridge isn't there yet in most case, so it makes
-> > >     sense to remove it once the bridge is no longer there as well.
-> >
-> > The problem is that I do not see a good way to unregister the main DRM
-> > device outside of it's driver code.
-> >
-> > >
-> > >   - When the DRM device is removed, have the core cleanup any bridge
-> > >     registered. That will remove the need to have drm_bridge_remove in
-> > >     the first place.
-> > >
-> > > > I'll assume that my response addressed your concerns. Assuming I get
-> > > > reviews for the other two patches in this series I'll plan to land
-> > > > this with Dmitry's review.
-> > >
-> > > I still don't think it's a good idea to merge it. It gives an illusion
-> > > of being safe, but it's really far from it.
-> >
-> > It is more of removing the boilerplate code spread over all the
-> > drivers rather than about particular safety.
-> >
-> > I'd propose to land devm_drm_bridge_add (and deprecate calling
-> > drm_bridge_remove from the bridge driver at some point) and work on
-> > the whole drm_device <-> drm_bridge problem in the meantime.
->=20
-> At this point it has been landed in drm-misc-next as per my response
-> to the cover letter. If need be we can revert it and rework the ps8640
-> driver to stop using it but it wouldn't change the lifetime of the
-> bridge. I'm not going to rework the bridge lifetime rules here. If
-> nothing else it seems like having the devm function at least would
-> make it obvious which drivers need to be fixed whenever the bridge
-> lifetime problem gets solved.
+On Fri, Jun 03, 2022 at 03:49:34PM +0200, Miquel Raynal wrote:
+> Hi,
+> 
+> ansuelsmth@gmail.com wrote on Thu, 19 May 2022 21:01:10 +0200:
+> 
+> > Some background about this.
+> > On original qsdk ipq8064 based firmware there was a big separation from
+> > boot partition and user partition. With boot partition we refer to
+> > partition used to init the router (bootloader, spm firmware and other
+> > internal stuff) With user partition we refer to linux partition and data
+> > partition not used to init the router.
+> > When someone had to write to these boot partition a special mode was
+> > needed, to switch the nand driver to this special configuration.
+> > 
+> > Upstream version of the nandc driver totally dropped this and the result
+> > is that if someone try to read data from these partition a CRC warning
+> > is printed and if someone try to write that (if for example someone
+> > wants to replace the bootloader) result is a broken system as the data
+> > is badly written.
+> > 
+> > This series comes to fix this.
+> > 
+> > A user can declare offset and size of these special partition using the
+> > qcom,boot-pages binding.
+> > 
+> > An initial implementation of this assumed that the boot-pages started
+> > from the start of the nand but we discover that some device have backup
+> > of these special partition and we can have situation where we have this
+> > partition scheme
+> > - APPSBL (require special mode)
+> > - APPSBLENV (doesn't require special mode)
+> > - ART
+> > - APPSBLBK (back of APPSBL require special mode)
+> > - APPSBLENVBK (back of APPSBLENV doesn't require special mode)
+> > With this configuration we need to declare sparse boot page and we can't
+> > assume boot-pages always starts from the start of the nand.
+> > 
+> > A user can use this form to declare sparse boot pages
+> > qcom,boot-pages = <0x0 0x0c80000 0x0c80000 0x0500000>;
+> > 
+> > The driver internally will parse this array, convert it to nand pages
+> > and check internally on every read/write if this special configuration
+> > should used for that page or the normal one.
+> > 
+> > The reason for all of this is that qcom FOR SOME REASON, disable ECC for
+> > spare data only for these boot partition and we need to reflect this
+> > special configuration to mute these warning and to permit actually
+> > writing to these pages.
+> 
+> Manivannan, any feedback on this?
+> 
 
-Not really, no. The issue exists whether or not the driver would be
-using devm. Anyway, what's done is done.
+Sorry for the delay. I will check internally on some of the unknown
+implementations mentioned and provide my comments.
 
-Could you please ping earlier than a few minutes before applying the
-patch next time though? We could have easily prevented that situation.
+Thanks,
+Mani
 
-Maxime
+> > 
+> > v4:
+> > - Fix wrong compatible set for boot-pages (ipq8074 instead of ipq806x)
+> > v3:
+> > - Fix typo in Docmunetation commit desription
+> > - Add items description for uint32-matrix
+> > v2:
+> > - Add fixes from Krzysztof in Documentation
+> > 
+> > Ansuel Smith (2):
+> >   mtd: nand: raw: qcom_nandc: add support for unprotected spare data
+> >     pages
+> >   dt-bindings: mtd: qcom_nandc: document qcom,boot-pages binding
+> > 
+> >  .../devicetree/bindings/mtd/qcom,nandc.yaml   |  26 +++
+> >  drivers/mtd/nand/raw/qcom_nandc.c             | 148 +++++++++++++++++-
+> >  2 files changed, 169 insertions(+), 5 deletions(-)
+> > 
+> 
+> Thanks,
+> Miquèl
+
+-- 
+மணிவண்ணன் சதாசிவம்
