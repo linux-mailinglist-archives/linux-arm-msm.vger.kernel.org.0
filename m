@@ -2,38 +2,38 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 70F4153C768
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jun 2022 11:23:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0A54153C79F
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jun 2022 11:36:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239309AbiFCJXJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Jun 2022 05:23:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35440 "EHLO
+        id S233221AbiFCJgK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Jun 2022 05:36:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45778 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243003AbiFCJXG (ORCPT
+        with ESMTP id S238349AbiFCJgK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Jun 2022 05:23:06 -0400
+        Fri, 3 Jun 2022 05:36:10 -0400
 Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35FB42715B;
-        Fri,  3 Jun 2022 02:23:05 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A9D32C66D;
+        Fri,  3 Jun 2022 02:36:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1654248185; x=1685784185;
+  t=1654248968; x=1685784968;
   h=from:to:cc:subject:date:message-id;
-  bh=V2lKivc9M3T8itEYOlhL4nuspF06rOXNkuFJ8fsnkqw=;
-  b=dVINiMNdBylF+G5YX0Sc2ZU4c/oHSVgGVW04BXhsC8fgEPQfz76KvnWl
-   VWWft3xds0Mi1ru9U7XpzwkQFTq+D39afbaUzNUZFxlTCAC+8ulYuyin0
-   YKG8FUJXGeAQftAHoxk1uQWxZjiRvWIbkYinynh/0+jgGu8XaUzOfVawS
-   k=;
+  bh=rNtSLC5bGnyIBYdwXfdRCRjwAbc7RD6DLKsmw6WkyWA=;
+  b=dG7AG51hvPN8D2mGW/MBFDtSUASFTOygT+PuJFFbVwfecDzJYEd2qURU
+   efgQkNbCmMD8ZamDQAXHmj1zTLdhcMii40uH3e19b0aUmZSO7HQtbwGPG
+   xzaHbOlXZvn+D/l9YncU1PmakJjvAPKtD3W9kP3P5gsrAwM7WLfJo+kV7
+   M=;
 Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
-  by alexa-out.qualcomm.com with ESMTP; 03 Jun 2022 02:23:05 -0700
+  by alexa-out.qualcomm.com with ESMTP; 03 Jun 2022 02:36:08 -0700
 X-QCInternal: smtphost
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 03 Jun 2022 02:23:03 -0700
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 03 Jun 2022 02:36:06 -0700
 X-QCInternal: smtphost
 Received: from vpolimer-linux.qualcomm.com ([10.204.67.235])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 03 Jun 2022 14:52:50 +0530
+  by ironmsg01-blr.qualcomm.com with ESMTP; 03 Jun 2022 15:05:53 +0530
 Received: by vpolimer-linux.qualcomm.com (Postfix, from userid 463814)
-        id 680753A0D; Fri,  3 Jun 2022 14:52:49 +0530 (IST)
+        id 0DBC73A46; Fri,  3 Jun 2022 15:05:52 +0530 (IST)
 From:   Vinod Polimera <quic_vpolimer@quicinc.com>
 To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
         freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
@@ -41,9 +41,9 @@ Cc:     Vinod Polimera <quic_vpolimer@quicinc.com>,
         linux-kernel@vger.kernel.org, robdclark@gmail.com,
         dianders@chromium.org, vpolimer@quicinc.com, swboyd@chromium.org,
         kalyant@quicinc.com, dmitry.baryshkov@linaro.org
-Subject: [v1] drm/msm: add null checks for drm device to avoid crash during probe defer
-Date:   Fri,  3 Jun 2022 14:52:47 +0530
-Message-Id: <1654248167-10594-1-git-send-email-quic_vpolimer@quicinc.com>
+Subject: [v3] drm/msm/disp/dpu1: avoid clearing hw interrupts if hw_intr is null during drm uninit
+Date:   Fri,  3 Jun 2022 15:05:50 +0530
+Message-Id: <1654248950-17946-1-git-send-email-quic_vpolimer@quicinc.com>
 X-Mailer: git-send-email 2.7.4
 X-Spam-Status: No, score=-4.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
@@ -55,65 +55,58 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-During probe defer, drm device is not initialized and an external
-trigger to shutdown is trying to clean up drm device leading to crash.
-Add checks to avoid drm device cleanup in such cases.
+If dp modeset init is failed due to panel being not ready and
+probe defers during drm bind, avoid clearing irqs and dereference
+hw_intr when hw_intr is null.
 
-BUG: unable to handle kernel NULL pointer dereference at virtual
-address 00000000000000b8
+BUG: Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
 
 Call trace:
+ dpu_core_irq_uninstall+0x50/0xb0
+ dpu_irq_uninstall+0x18/0x24
+ msm_drm_uninit+0xd8/0x16c
+ msm_drm_bind+0x580/0x5fc
+ try_to_bring_up_master+0x168/0x1c0
+ __component_add+0xb4/0x178
+ component_add+0x1c/0x28
+ dp_display_probe+0x38c/0x400
+ platform_probe+0xb0/0xd0
+ really_probe+0xcc/0x2c8
+ __driver_probe_device+0xbc/0xe8
+ driver_probe_device+0x48/0xf0
+ __device_attach_driver+0xa0/0xc8
+ bus_for_each_drv+0x8c/0xd8
+ __device_attach+0xc4/0x150
+ device_initial_probe+0x1c/0x28
 
-drm_atomic_helper_shutdown+0x44/0x144
-msm_pdev_shutdown+0x2c/0x38
-platform_shutdown+0x2c/0x38
-device_shutdown+0x158/0x210
-kernel_restart_prepare+0x40/0x4c
-kernel_restart+0x20/0x6c
-__arm64_sys_reboot+0x194/0x23c
-invoke_syscall+0x50/0x13c
-el0_svc_common+0xa0/0x17c
-do_el0_svc_compat+0x28/0x34
-el0_svc_compat+0x20/0x70
-el0t_32_sync_handler+0xa8/0xcc
-el0t_32_sync+0x1a8/0x1ac
+Changes in V2:
+- Update commit message and correct fixes tag.
 
+Changes in V3:
+- Misc changes in commit text.
+
+Fixes: f25f656608e3 ("drm/msm/dpu: merge struct dpu_irq into struct dpu_hw_intr")
 Signed-off-by: Vinod Polimera <quic_vpolimer@quicinc.com>
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/msm_drv.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-index 4448536..d62ac66 100644
---- a/drivers/gpu/drm/msm/msm_drv.c
-+++ b/drivers/gpu/drm/msm/msm_drv.c
-@@ -142,6 +142,9 @@ static void msm_irq_uninstall(struct drm_device *dev)
- 	struct msm_drm_private *priv = dev->dev_private;
- 	struct msm_kms *kms = priv->kms;
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
+index c515b7c..ab28577 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
+@@ -599,6 +599,9 @@ void dpu_core_irq_uninstall(struct dpu_kms *dpu_kms)
+ {
+ 	int i;
  
-+	if (!irq_has_action(kms->irq))
++	if (!dpu_kms->hw_intr)
 +		return;
 +
- 	kms->funcs->irq_uninstall(kms);
- 	if (kms->irq_requested)
- 		free_irq(kms->irq, dev);
-@@ -259,6 +262,7 @@ static int msm_drm_uninit(struct device *dev)
- 
- 	ddev->dev_private = NULL;
- 	drm_dev_put(ddev);
-+	priv->dev = NULL;
- 
- 	destroy_workqueue(priv->wq);
- 
-@@ -1167,7 +1171,7 @@ void msm_drv_shutdown(struct platform_device *pdev)
- 	struct msm_drm_private *priv = platform_get_drvdata(pdev);
- 	struct drm_device *drm = priv ? priv->dev : NULL;
- 
--	if (!priv || !priv->kms)
-+	if (!priv || !priv->kms || !drm)
- 		return;
- 
- 	drm_atomic_helper_shutdown(drm);
+ 	pm_runtime_get_sync(&dpu_kms->pdev->dev);
+ 	for (i = 0; i < dpu_kms->hw_intr->total_irqs; i++)
+ 		if (!list_empty(&dpu_kms->hw_intr->irq_cb_tbl[i]))
 -- 
 2.7.4
 
