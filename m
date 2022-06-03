@@ -2,79 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4B4EA53C7F8
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jun 2022 11:56:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2FE3553C889
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jun 2022 12:20:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243257AbiFCJ4G (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Jun 2022 05:56:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38130 "EHLO
+        id S243612AbiFCKT0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Jun 2022 06:19:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42578 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241320AbiFCJ4E (ORCPT
+        with ESMTP id S243597AbiFCKTZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Jun 2022 05:56:04 -0400
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6B9B3AA51
-        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Jun 2022 02:56:03 -0700 (PDT)
-Received: by mail-ej1-x634.google.com with SMTP id q1so14912545ejz.9
-        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Jun 2022 02:56:03 -0700 (PDT)
+        Fri, 3 Jun 2022 06:19:25 -0400
+Received: from mail-yb1-xb2b.google.com (mail-yb1-xb2b.google.com [IPv6:2607:f8b0:4864:20::b2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EAC443B3C1
+        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Jun 2022 03:19:23 -0700 (PDT)
+Received: by mail-yb1-xb2b.google.com with SMTP id f34so12920034ybj.6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Jun 2022 03:19:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=zs/Snm7wBkBvkKLKDEJnB4SYZuuEuwpMYd9uLaVIwAE=;
-        b=DdIngkecu9AmD2BzAJfyBpoShkPBVC4nsP1yeLLlFehRqlWKi6JVSb1+elF2xPskEf
-         vvEcXeBkkwygEIXvXZGY3hePMwnnpjO2MX+j9sMHvqik1O/pDV+UoFKabvYpubHyphLo
-         bMxjmCxJHhKhbbxt2s3KMyDBnMp73jgsYJmTz1sU6mQSnDkJo86g1qcwSpyfpzz5IDzb
-         zzOc0o2/VgHg4Ivm/SG9gCVH4M0uuSW192XTP2pA8qL3gtlp6HOm6z0XMDxx6noVDfLO
-         oM2qN+XVjNQONM5KIoANhvk7OTFgReUPj5K38EiorCx4wAioCrlZ+bMSx7ljGVt505nm
-         n6/w==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=eCANrYMxosIMh+Xvbir+KgFfAUJg6+S8lF+OrF54Av4=;
+        b=QQer3CrocRzXUbJga3lT0IkLvDhumQw3omrc4pXZ8kQmhdT77qsC+nSGbTrSlKuBUd
+         SCkFr8UUw1STX4eRYdkfUmIt2QCAht10BD+p+MPVoUeAInYnT6OFwC9hPSCsQsiiOxfT
+         kobkQkTdkZYzMYu0Awnp5OrBM6veOfZZrVpCwGxhWGxymggg+6AyY4kin49eqx/xn6PI
+         8w4DvpKGjeQwc8djJvJogfLdHppjC76lbOf3C6Ysqizv6hWc7KD7Cr3GhVrLiySsPIY8
+         YYlxJnCx1Sh8qkMdUMu6/DPS5FCzIsHZ4ez7fXf243TJN+i77BFjgUsJw2BWWNZiqf9H
+         BnOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=zs/Snm7wBkBvkKLKDEJnB4SYZuuEuwpMYd9uLaVIwAE=;
-        b=M0r8iwnGVqwCSMaJCnS8VYQjeYlwyMu4QEz2d4a5YUROguJyQgJvPS7zc/etyZbMJU
-         ATHTX2iLsNanvk30o1oWJzgVVTlsILN2iQLGZX/e/mTp8stG5eOM/zDEnlGeHwZxjax3
-         s1bs1/7jgZCPuz1To/hcKZ3iX5gC8cIOoNsZmYWMjbM5wSo3XeN8BBy+D8DU3+aYIfO+
-         JtvXZ4CgHF0tYAGEwWb94sT+JenaDlnMvZ2XeGJXtiwcOTAE5eTj54rDKcMd3/hTnDU0
-         fKswGAHqXGqToyKs19Whmq35guzlZ//gQhmZ2JIAC0iOkmQ+B+AFbpXleOpBZx2xfQFj
-         6T6g==
-X-Gm-Message-State: AOAM530PlpTcZkNZazDvMcCqJyJ2OrfwrK1FWG2X3A7SpUxU7C+n+sfl
-        3wwTiIulVzAYNmyPJT3QEOrE7w==
-X-Google-Smtp-Source: ABdhPJyLZEXgasjK1iNOh+v508745d/SULGzUUJKtECcrWud9tCUDwBjEhia6wGu5d/38gtONk+/Ww==
-X-Received: by 2002:a17:907:1686:b0:70e:895b:7ba0 with SMTP id hc6-20020a170907168600b0070e895b7ba0mr1731808ejc.484.1654250162255;
-        Fri, 03 Jun 2022 02:56:02 -0700 (PDT)
-Received: from [192.168.0.181] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id l15-20020aa7c3cf000000b0042bdb6a3602sm3520334edr.69.2022.06.03.02.56.01
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 03 Jun 2022 02:56:01 -0700 (PDT)
-Message-ID: <173ad8d6-44b3-444b-c72d-f35e83d7ed1a@linaro.org>
-Date:   Fri, 3 Jun 2022 11:56:00 +0200
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=eCANrYMxosIMh+Xvbir+KgFfAUJg6+S8lF+OrF54Av4=;
+        b=s0exTeKOF9RByZCepxMcu7D+964gwGANqUR6EODSYkzHcJHBOfmzva4sUhVxTGrgXW
+         Q+my9Dt7vGTKvTJsBWoBBtcJvSu2aZJMtlmmqrkdJ4mwjTIvsw1sE5YPFy/gtsYGTidJ
+         ruryh33OSd3ycP45W+gWAVVF3ueyEto2Pb/3ZeYOkxxmWfFNEvnDvCXXLszuwoKez+Z5
+         G/GFXZJGG2T1QyXMUNUDcenQdRpOXrYXK2w65Y49CW/yqDVLfZTYYjtPRF99iLzhLbhv
+         JztuicQcIGW3jzYWcz3y+38o04cMqgwZYMdElsQbGowRVlrsExvNhRkFVgEY++OimSoZ
+         K9fQ==
+X-Gm-Message-State: AOAM532xflPl3anvsNSH8E1ziIq45mCY9KIbLz+yutf9QVyqYfdZtK45
+        z/6lwqOzktoTuiMEIIilTdqhfx3hgZBHrsVJoSwYvw==
+X-Google-Smtp-Source: ABdhPJzCQPE37Bt5oIHGrr2jWp33WDnmx62d0Nt6DBKxkJKjMCw9IXg5fe2neGT3z1CVqiY5P3KeqFBug68RmO96NIY=
+X-Received: by 2002:a25:1256:0:b0:65d:6433:7993 with SMTP id
+ 83-20020a251256000000b0065d64337993mr9806001ybs.626.1654251563183; Fri, 03
+ Jun 2022 03:19:23 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: [PATCH] arm64: dts: qcom: add device tree for LG G7 and LG V35
-Content-Language: en-US
-To:     Stefan Hansson <newbie13xd@gmail.com>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        phone-devel@vger.kernel.org
-Cc:     Anton Bambura <jenneron@protonmail.com>,
-        Gregari Ivanov <llamashere@posteo.de>
-References: <20220602120727.197491-1-newbie13xd@gmail.com>
- <b99033fd-ca3c-49bb-d46b-c9ca1cb0c386@linaro.org>
- <6927df15-54d1-bf1e-0e34-9524e79e3f0a@gmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <6927df15-54d1-bf1e-0e34-9524e79e3f0a@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+References: <1654079415-26217-1-git-send-email-quic_srivasam@quicinc.com>
+ <1654079415-26217-2-git-send-email-quic_srivasam@quicinc.com>
+ <CAE-0n50nfwZPdSS7Vw9FiV+Shfn9-bX44hfLq5ey9DBsAy0y4g@mail.gmail.com> <6250a441-6bcd-4ca8-782b-b7a8d9239e46@quicinc.com>
+In-Reply-To: <6250a441-6bcd-4ca8-782b-b7a8d9239e46@quicinc.com>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Fri, 3 Jun 2022 12:19:11 +0200
+Message-ID: <CACRpkdbBRjgNzxYkFPzy3kx45_7vJENp5dTX0MdJw+LSQ=9rvA@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] dt-bindings: pinctrl: qcom: sc7280: Add compatible
+ string for adsp based platforms
+To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Cc:     Stephen Boyd <swboyd@chromium.org>, agross@kernel.org,
+        alsa-devel@alsa-project.org, bgoswami@quicinc.com,
+        bjorn.andersson@linaro.org, broonie@kernel.org,
+        devicetree@vger.kernel.org, judyhsiao@chromium.org,
+        lgirdwood@gmail.com, linux-arm-msm@vger.kernel.org,
+        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
+        perex@perex.cz, quic_plai@quicinc.com, quic_rohkumar@quicinc.com,
+        robh+dt@kernel.org, srinivas.kandagatla@linaro.org, tiwai@suse.com,
+        Venkata Prasad Potturu <quic_potturu@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -83,30 +76,46 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 03/06/2022 11:47, Stefan Hansson wrote:
+On Fri, Jun 3, 2022 at 8:09 AM Srinivasa Rao Mandadapu
+<quic_srivasam@quicinc.com> wrote:
+> On 6/2/2022 6:43 AM, Stephen Boyd wrote:
 
->>> +	gpio-keys {
->>> +		compatible = "gpio-keys";
->>> +
->>> +		pinctrl-names = "default";
->>> +		pinctrl-0 = <&vol_up_pin_a>;
->>> +
->>> +		label = "GPIO Buttons";
->>
->> Is "label" really a property of gpio-keys node?
->>
-> 
-> I tested these dts:es with dtbs_check and I do not see any errors 
-> regarding labels. If you prefer me to delete this I can do that. I 
-> understand it is rather weird to have this here if it's not in the 
-> schema. I am rather new to writing device trees, so I think you are 
-> better off making the call here.
+> >> +    enum:
+> >> +      - qcom,sc7280-lpass-lpi-pinctrl
+> >> +      - qcom,sc7280-lpass-adsp-lpi-pinctrl
+> > Can you confirm that this is the same hardware (i.e. same reg property)
+> > but just a different compatible string used to convey that the device is
+> > using "adsp" mode or not? If so, this looks to be a common pattern for
+> > the audio hardware here, where we have two "views" of the hardware, one
+> > for adsp mode and one for not adsp mode. I guess the not adsp mode is
+> > called "adsp bypass"?
+>
+> Yes Your understanding is correct. The same hardware in scenario not using ADSP,
+>
+> and in another enabling DSP.
+> >
+> > Is that right? Why are we conveying this information via the compatible
+> > string?
+>
+> Could you please suggest better way!.  As pin control driver is the
+> first one to probe, I am not getting better approach.
+>
+> While up-streaming these drivers, concluded to use this approach.
 
-Thanks for reporting. Indeed current DT schema won't detect this. Anyway
-it seems gpio-keys driver already uses it and since it appeared in DTS,
-maybe better to document it. I'll work on this, so feel free to keep the
-property.
+The device tree conveys hardware description and some configuration.
 
+If this is configuration thing, either you could perhaps determine it from the
+hardware (if set up in hardware or boot loader) and if that is not possible
+it should just be a boolean property of the device
+node:
 
-Best regards,
-Krzysztof
+{
+    compatible = "...";
+    qcom.adsp-mode;
+}
+
+If you are probing two different drivers depending on the mode, then there is a
+problem of course, but it is a Linux problem not a device tree problem.
+
+Yours,
+Linus Walleij
