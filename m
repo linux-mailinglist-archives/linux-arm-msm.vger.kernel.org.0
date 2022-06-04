@@ -2,152 +2,146 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6693D53D77D
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Jun 2022 17:30:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3DE2A53D7B6
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Jun 2022 18:20:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237720AbiFDPaM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 4 Jun 2022 11:30:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51262 "EHLO
+        id S238077AbiFDQUJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 4 Jun 2022 12:20:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49722 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233426AbiFDPaK (ORCPT
+        with ESMTP id S230027AbiFDQUJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 4 Jun 2022 11:30:10 -0400
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9F4650473;
-        Sat,  4 Jun 2022 08:30:07 -0700 (PDT)
-Received: by mail-ej1-x630.google.com with SMTP id n10so21160004ejk.5;
-        Sat, 04 Jun 2022 08:30:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=3bk7baS2SNynPNN4B6G8lp7hpcyD8ZFLbXx8vqds4tM=;
-        b=QVHu+WBPZB67UwBQxVrKxY+BylBP8feaLPaDi0O5fCJuLupUHPjv41RD9TA/ljh/UI
-         3OJHeY6K5MdvviD1q1q+HqWrMDh8WL9k5gy1h5AQth72cWe+2kPQRvA6+XgMilKWTHuQ
-         bI+wRFGvmAaBJKCLFRyeMl3Qoac/Gx1TNDxdn5Dkd9cToXVAXsGlb4dmsNk2MPyMR8lX
-         6JUITLd5W6pQHscw3dxfwKqWNB9WCaDa9dhNjf74vKQv9oRQCxULGSlxJU5OViRiU/UB
-         aJbWHVHQgyLAPC/Oi5zyO3A5R2+bnNeLZD7fIlR2Rt3Uw1GNyq8UJVzhjzfKVWf7YabA
-         klPw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=3bk7baS2SNynPNN4B6G8lp7hpcyD8ZFLbXx8vqds4tM=;
-        b=jggchCeZCt4sL61X/XIAtR4NHofE2kgoW4PEqN1rJ6Wf/4M6ccaftMMHXb/uK+rxVM
-         +Bf2MjILtOakpTxddn+NBN6pI8g4/52ZIDNzLYuzb8KbzgXDkqZ4iO3ArsBJVEayY57U
-         LiwX+tnhBhKGk1Rz72zW3rlgFNptLOOIrSQcAeyL5oTw/Ey5ywByCqinSyVH03a3W7iX
-         80ZrpxA0UQITRA+AY0Usb9vJ9PaRrpuaF70UNA+uUTzMTq5jl6oKAFMlZZEJoetaPGj0
-         m5mklltpdHLbiwWfwRz5xQzpynFFmXowQ83iatFpmjSR9yHcM480B6qj2IxeUw7h/XZa
-         iEPg==
-X-Gm-Message-State: AOAM533bhJE2j/k4qFDQDO8MhAZ1ZvuT8vXOTOfpBMsb1wiUohOdgejN
-        ErcmlEp62On86/niV9B4Og4=
-X-Google-Smtp-Source: ABdhPJzCyjjZCIsbjsxVOA5l13Qm04uEQWHvW8LtSgGavAFKukbQEvvnWXzh3QUYeNqsht4LsLtF6Q==
-X-Received: by 2002:a17:906:ae57:b0:70b:e847:271b with SMTP id lf23-20020a170906ae5700b0070be847271bmr11034710ejb.700.1654356606421;
-        Sat, 04 Jun 2022 08:30:06 -0700 (PDT)
-Received: from fedora.robimarko.hr (cpe-94-253-165-43.zg.cable.xnet.hr. [94.253.165.43])
-        by smtp.googlemail.com with ESMTPSA id hz10-20020a1709072cea00b0070e01426360sm2069250ejc.91.2022.06.04.08.30.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 04 Jun 2022 08:30:05 -0700 (PDT)
-From:   Robert Marko <robimarko@gmail.com>
-To:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Robert Marko <robimarko@gmail.com>
-Subject: [PATCH] arm64: dts: qcom: ipq6018: correct QUP peripheral labels
-Date:   Sat,  4 Jun 2022 17:30:03 +0200
-Message-Id: <20220604153003.55172-1-robimarko@gmail.com>
-X-Mailer: git-send-email 2.36.1
+        Sat, 4 Jun 2022 12:20:09 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5680B3388C;
+        Sat,  4 Jun 2022 09:20:08 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 1C7E7B802C7;
+        Sat,  4 Jun 2022 16:20:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8529EC385B8;
+        Sat,  4 Jun 2022 16:20:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1654359605;
+        bh=PE3Z/bGGTKYSm3vIXjeLGIwcHQHcqHXv+XN3i6CoFpo=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=LSFlZNoQ0Q9isOtG07ipQmLHDJi+mP+HyudDKGy3O4A/xV5UtSNVD+cXwHkZzE8TJ
+         2SUNDv3wck8I9fuNIxZ5S3GcpyvLfVV+iCWeMD7nKjOmYFBIYMtGtdqQpPWEdeHlBz
+         AMLD9UV2Gw1pdgrJqouDy3ADwpFfgV/jKKPWnoZVvveB1hmVXwdQgVfhFoV5D0qWQa
+         3nv28ePH1eGXOKI4kZ1OZuPtyHrO8/qpnlssPaGBcIIcsa52U6yXne624Tu5nEDuJ/
+         M6T1m+tkIrGOEdHFK3I+WqIIWgX3dH6ddKsqQO3WWDnHAbem7StVrJVhDOCq+x1J88
+         NF8zsOrOF6fnA==
+Date:   Sat, 4 Jun 2022 17:29:05 +0100
+From:   Jonathan Cameron <jic23@kernel.org>
+To:     Caleb Connolly <caleb.connolly@linaro.org>
+Cc:     Lars-Peter Clausen <lars@metafoo.de>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Lee Jones <lee.jones@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>, linux-iio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Sumit Semwal <sumit.semwal@linaro.org>
+Subject: Re: [PATCH v14 01/10] spmi: add a helper to look up an SPMI device
+ from a device node
+Message-ID: <20220604172905.36483a52@jic23-huawei>
+In-Reply-To: <20220501182323.7b672d8a@jic23-huawei>
+References: <20220429220904.137297-1-caleb.connolly@linaro.org>
+        <20220429220904.137297-2-caleb.connolly@linaro.org>
+        <20220501182323.7b672d8a@jic23-huawei>
+X-Mailer: Claws Mail 4.1.0 (GTK 3.24.34; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Current QUP peripheral labels like spi_0 and i2c_0 dont really tell what is
-the exact QUP HW being used as there are actually 6 identical QUP HW blocks
-for UART, SPI and I2C.
-For example current i2c_0 label actually points to the QUP2 I2C HW.
+On Sun, 1 May 2022 18:23:23 +0100
+Jonathan Cameron <jic23@kernel.org> wrote:
 
-This style of labeling does not follow what the rest of Qualcomm SoC-s use,
-for example IPQ8074 which has the identical QUP blocks.
-It also makes it really hard to add the missing QUP DT nodes as there are
-multiple missing.
+> On Fri, 29 Apr 2022 23:08:56 +0100
+> Caleb Connolly <caleb.connolly@linaro.org> wrote:
+> 
+> > The helper function spmi_device_from_of() takes a device node and
+> > returns the SPMI device associated with it.
+> > This is like of_find_device_by_node but for SPMI devices.
+> > 
+> > Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>   
+> 
+> Stephen, are you fine with this addition to spmi?
 
-So utilize the same style as other Qualcomm SoC-s are using and update the
-CP01 DTS as its the current sole user of them.
+Stephen.  This is still waiting for an SPMI ack.
 
-Signed-off-by: Robert Marko <robimarko@gmail.com>
----
- arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts | 4 ++--
- arch/arm64/boot/dts/qcom/ipq6018.dtsi        | 8 ++++----
- 2 files changed, 6 insertions(+), 6 deletions(-)
+Thanks,
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts b/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts
-index 5aec18308712..b603961c5831 100644
---- a/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts
-+++ b/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts
-@@ -29,13 +29,13 @@ &blsp1_uart3 {
- 	status = "okay";
- };
- 
--&i2c_1 {
-+&blsp1_i2c3 {
- 	pinctrl-0 = <&i2c_1_pins>;
- 	pinctrl-names = "default";
- 	status = "okay";
- };
- 
--&spi_0 {
-+&blsp1_spi1 {
- 	cs-select = <0>;
- 	status = "okay";
- 
-diff --git a/arch/arm64/boot/dts/qcom/ipq6018.dtsi b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-index aac56575e30d..1c3f3d521715 100644
---- a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-@@ -282,7 +282,7 @@ blsp1_uart3: serial@78b1000 {
- 			status = "disabled";
- 		};
- 
--		spi_0: spi@78b5000 {
-+		blsp1_spi1: spi@78b5000 {
- 			compatible = "qcom,spi-qup-v2.2.1";
- 			#address-cells = <1>;
- 			#size-cells = <0>;
-@@ -297,7 +297,7 @@ spi_0: spi@78b5000 {
- 			status = "disabled";
- 		};
- 
--		spi_1: spi@78b6000 {
-+		blsp1_spi2: spi@78b6000 {
- 			compatible = "qcom,spi-qup-v2.2.1";
- 			#address-cells = <1>;
- 			#size-cells = <0>;
-@@ -312,7 +312,7 @@ spi_1: spi@78b6000 {
- 			status = "disabled";
- 		};
- 
--		i2c_0: i2c@78b6000 {
-+		blsp1_i2c2: i2c@78b6000 {
- 			compatible = "qcom,i2c-qup-v2.2.1";
- 			#address-cells = <1>;
- 			#size-cells = <0>;
-@@ -327,7 +327,7 @@ i2c_0: i2c@78b6000 {
- 			status = "disabled";
- 		};
- 
--		i2c_1: i2c@78b7000 { /* BLSP1 QUP2 */
-+		blsp1_i2c3: i2c@78b7000 {
- 			compatible = "qcom,i2c-qup-v2.2.1";
- 			#address-cells = <1>;
- 			#size-cells = <0>;
--- 
-2.36.1
+Jonathan
+
+> 
+> Given bulk of this series in in IIO I'm planning to pick up once
+> everyone is happy with it.
+> 
+> Thanks,
+> 
+> Jonathan
+> 
+> 
+> > ---
+> >  drivers/spmi/spmi.c  | 17 +++++++++++++++++
+> >  include/linux/spmi.h |  3 +++
+> >  2 files changed, 20 insertions(+)
+> > 
+> > diff --git a/drivers/spmi/spmi.c b/drivers/spmi/spmi.c
+> > index b37ead9e2fad..a456ce5141e1 100644
+> > --- a/drivers/spmi/spmi.c
+> > +++ b/drivers/spmi/spmi.c
+> > @@ -386,6 +386,23 @@ static struct bus_type spmi_bus_type = {
+> >  	.uevent		= spmi_drv_uevent,
+> >  };
+> >  
+> > +/**
+> > + * spmi_device_from_of() - get the associated SPMI device from a device node
+> > + *
+> > + * @np:		device node
+> > + *
+> > + * Returns the struct spmi_device associated with a device node or NULL.
+> > + */
+> > +struct spmi_device *spmi_device_from_of(struct device_node *np)
+> > +{
+> > +	struct device *dev = bus_find_device_by_of_node(&spmi_bus_type, np);
+> > +
+> > +	if (dev)
+> > +		return to_spmi_device(dev);
+> > +	return NULL;
+> > +}
+> > +EXPORT_SYMBOL_GPL(spmi_device_from_of);
+> > +
+> >  /**
+> >   * spmi_controller_alloc() - Allocate a new SPMI device
+> >   * @ctrl:	associated controller
+> > diff --git a/include/linux/spmi.h b/include/linux/spmi.h
+> > index 729bcbf9f5ad..eac1956a8727 100644
+> > --- a/include/linux/spmi.h
+> > +++ b/include/linux/spmi.h
+> > @@ -164,6 +164,9 @@ static inline void spmi_driver_unregister(struct spmi_driver *sdrv)
+> >  	module_driver(__spmi_driver, spmi_driver_register, \
+> >  			spmi_driver_unregister)
+> >  
+> > +struct device_node;
+> > +
+> > +struct spmi_device *spmi_device_from_of(struct device_node *np);
+> >  int spmi_register_read(struct spmi_device *sdev, u8 addr, u8 *buf);
+> >  int spmi_ext_register_read(struct spmi_device *sdev, u8 addr, u8 *buf,
+> >  			   size_t len);  
+> 
 
