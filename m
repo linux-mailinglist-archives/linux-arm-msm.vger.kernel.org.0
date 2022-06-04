@@ -2,146 +2,222 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3DE2A53D7B6
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Jun 2022 18:20:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EEE6D53D7EF
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Jun 2022 18:47:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238077AbiFDQUJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 4 Jun 2022 12:20:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49722 "EHLO
+        id S238843AbiFDQrC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 4 Jun 2022 12:47:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35186 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230027AbiFDQUJ (ORCPT
+        with ESMTP id S238847AbiFDQrA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 4 Jun 2022 12:20:09 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5680B3388C;
-        Sat,  4 Jun 2022 09:20:08 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 1C7E7B802C7;
-        Sat,  4 Jun 2022 16:20:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8529EC385B8;
-        Sat,  4 Jun 2022 16:20:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1654359605;
-        bh=PE3Z/bGGTKYSm3vIXjeLGIwcHQHcqHXv+XN3i6CoFpo=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=LSFlZNoQ0Q9isOtG07ipQmLHDJi+mP+HyudDKGy3O4A/xV5UtSNVD+cXwHkZzE8TJ
-         2SUNDv3wck8I9fuNIxZ5S3GcpyvLfVV+iCWeMD7nKjOmYFBIYMtGtdqQpPWEdeHlBz
-         AMLD9UV2Gw1pdgrJqouDy3ADwpFfgV/jKKPWnoZVvveB1hmVXwdQgVfhFoV5D0qWQa
-         3nv28ePH1eGXOKI4kZ1OZuPtyHrO8/qpnlssPaGBcIIcsa52U6yXne624Tu5nEDuJ/
-         M6T1m+tkIrGOEdHFK3I+WqIIWgX3dH6ddKsqQO3WWDnHAbem7StVrJVhDOCq+x1J88
-         NF8zsOrOF6fnA==
-Date:   Sat, 4 Jun 2022 17:29:05 +0100
-From:   Jonathan Cameron <jic23@kernel.org>
-To:     Caleb Connolly <caleb.connolly@linaro.org>
-Cc:     Lars-Peter Clausen <lars@metafoo.de>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Lee Jones <lee.jones@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>, linux-iio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Sumit Semwal <sumit.semwal@linaro.org>
-Subject: Re: [PATCH v14 01/10] spmi: add a helper to look up an SPMI device
- from a device node
-Message-ID: <20220604172905.36483a52@jic23-huawei>
-In-Reply-To: <20220501182323.7b672d8a@jic23-huawei>
-References: <20220429220904.137297-1-caleb.connolly@linaro.org>
-        <20220429220904.137297-2-caleb.connolly@linaro.org>
-        <20220501182323.7b672d8a@jic23-huawei>
-X-Mailer: Claws Mail 4.1.0 (GTK 3.24.34; x86_64-pc-linux-gnu)
+        Sat, 4 Jun 2022 12:47:00 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E300F32;
+        Sat,  4 Jun 2022 09:46:59 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id v1so10671350ejg.13;
+        Sat, 04 Jun 2022 09:46:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=avNh9h8+MOw7k99GPQLLRg6KWk1j4wFpZKYDx2QT8Qs=;
+        b=OTIMNzxmuar4680Fg5TNraZ4bHHfBXTi2Stw86M0kXpEVlDf7omD8rnb7e+8rofPLA
+         l+BSuJatsldU+dPBQn2s/7VB0NWxnTD3PfL0FklxHSApwb6kZBHAt4UUuPHV3lxH7FYH
+         XmMvnqIdJ8WSd98+646jkt7J1zqN2XH7wBG222nz+HBXeRDdkC3CFGlER7oFfb90dsU+
+         M0KdEI5OY93Ik4fwYc4MneqgjborlN7nZpDAw7tIE35pYBxBZfAFd87M/PPTg6fA9qDK
+         oIT+6G6Vs+Go19i45IiqFM7YKn8In6MBtnVrftzgQ3POTSxcd1KF84ZjxuEAa9LeWQA/
+         wCrw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=avNh9h8+MOw7k99GPQLLRg6KWk1j4wFpZKYDx2QT8Qs=;
+        b=Ry0mhjTAE6vY4qBAgKpM6lqxSGhWSxThvxPyAYDQkMayLklHdDIPh4FWzLM48LT7zN
+         hjx1LSzqv1BE01M2pAYm+7XzmvadH4RIKDlwrklvPMNbIV5ZJhmgF21Bp7yzs5373xX/
+         b6PXdDSIpZahyFc85ossMc1M9K5Ye78q3iLGn1/OKhFFIh5lIIENRD3uZd7SJIh3KHOi
+         hD1laptnat2AEowTEgjcKUo1k7J5T4PSsJeZ3Hcm3xCPuY/a2slv3zsTShO9vPqpSlC0
+         roFY2bW0yJX/QuK2OXgwTYxvGp7QzzixAvhnfhqgTOkquTd+UqvM/ZJ0ldjEyNrIWcHc
+         bcYQ==
+X-Gm-Message-State: AOAM533FgkO9syDH/gQgXzl/k4vkWKNrMjPBvIZE6VfnoaxjMKsDUc6h
+        PPDyWLdy/wbepn0ceduiTWU=
+X-Google-Smtp-Source: ABdhPJxErZXa+n/Q/YcKds8t0Fl6cPR0Bptfav5naEGXaAeHEH/13Sb4u/EaL9P4UGL+q+JN7mG9lQ==
+X-Received: by 2002:a17:907:6d1f:b0:6fe:e53b:7f53 with SMTP id sa31-20020a1709076d1f00b006fee53b7f53mr14016250ejc.375.1654361217403;
+        Sat, 04 Jun 2022 09:46:57 -0700 (PDT)
+Received: from fedora.robimarko.hr (cpe-94-253-165-43.zg.cable.xnet.hr. [94.253.165.43])
+        by smtp.googlemail.com with ESMTPSA id gt43-20020a1709072dab00b0070f1b033de4sm1834454ejc.200.2022.06.04.09.46.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 04 Jun 2022 09:46:56 -0700 (PDT)
+From:   Robert Marko <robimarko@gmail.com>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-i2c@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Robert Marko <robimarko@gmail.com>
+Subject: [PATCH] dt-bindings: i2c: qcom,i2c-qup: convert to dtschema
+Date:   Sat,  4 Jun 2022 18:46:53 +0200
+Message-Id: <20220604164653.79284-1-robimarko@gmail.com>
+X-Mailer: git-send-email 2.36.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, 1 May 2022 18:23:23 +0100
-Jonathan Cameron <jic23@kernel.org> wrote:
+Convert DT bindings for Qualcomm QUP I2C controller to DT schema format.
 
-> On Fri, 29 Apr 2022 23:08:56 +0100
-> Caleb Connolly <caleb.connolly@linaro.org> wrote:
-> 
-> > The helper function spmi_device_from_of() takes a device node and
-> > returns the SPMI device associated with it.
-> > This is like of_find_device_by_node but for SPMI devices.
-> > 
-> > Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>   
-> 
-> Stephen, are you fine with this addition to spmi?
+Old text bindings were missing usage of DMA so that was documented, as
+well as the max clock-frequency.
 
-Stephen.  This is still waiting for an SPMI ack.
+Signed-off-by: Robert Marko <robimarko@gmail.com>
+---
+ .../devicetree/bindings/i2c/qcom,i2c-qup.txt  | 40 ---------
+ .../devicetree/bindings/i2c/qcom,i2c-qup.yaml | 83 +++++++++++++++++++
+ 2 files changed, 83 insertions(+), 40 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/i2c/qcom,i2c-qup.txt
+ create mode 100644 Documentation/devicetree/bindings/i2c/qcom,i2c-qup.yaml
 
-Thanks,
-
-Jonathan
-
-> 
-> Given bulk of this series in in IIO I'm planning to pick up once
-> everyone is happy with it.
-> 
-> Thanks,
-> 
-> Jonathan
-> 
-> 
-> > ---
-> >  drivers/spmi/spmi.c  | 17 +++++++++++++++++
-> >  include/linux/spmi.h |  3 +++
-> >  2 files changed, 20 insertions(+)
-> > 
-> > diff --git a/drivers/spmi/spmi.c b/drivers/spmi/spmi.c
-> > index b37ead9e2fad..a456ce5141e1 100644
-> > --- a/drivers/spmi/spmi.c
-> > +++ b/drivers/spmi/spmi.c
-> > @@ -386,6 +386,23 @@ static struct bus_type spmi_bus_type = {
-> >  	.uevent		= spmi_drv_uevent,
-> >  };
-> >  
-> > +/**
-> > + * spmi_device_from_of() - get the associated SPMI device from a device node
-> > + *
-> > + * @np:		device node
-> > + *
-> > + * Returns the struct spmi_device associated with a device node or NULL.
-> > + */
-> > +struct spmi_device *spmi_device_from_of(struct device_node *np)
-> > +{
-> > +	struct device *dev = bus_find_device_by_of_node(&spmi_bus_type, np);
-> > +
-> > +	if (dev)
-> > +		return to_spmi_device(dev);
-> > +	return NULL;
-> > +}
-> > +EXPORT_SYMBOL_GPL(spmi_device_from_of);
-> > +
-> >  /**
-> >   * spmi_controller_alloc() - Allocate a new SPMI device
-> >   * @ctrl:	associated controller
-> > diff --git a/include/linux/spmi.h b/include/linux/spmi.h
-> > index 729bcbf9f5ad..eac1956a8727 100644
-> > --- a/include/linux/spmi.h
-> > +++ b/include/linux/spmi.h
-> > @@ -164,6 +164,9 @@ static inline void spmi_driver_unregister(struct spmi_driver *sdrv)
-> >  	module_driver(__spmi_driver, spmi_driver_register, \
-> >  			spmi_driver_unregister)
-> >  
-> > +struct device_node;
-> > +
-> > +struct spmi_device *spmi_device_from_of(struct device_node *np);
-> >  int spmi_register_read(struct spmi_device *sdev, u8 addr, u8 *buf);
-> >  int spmi_ext_register_read(struct spmi_device *sdev, u8 addr, u8 *buf,
-> >  			   size_t len);  
-> 
+diff --git a/Documentation/devicetree/bindings/i2c/qcom,i2c-qup.txt b/Documentation/devicetree/bindings/i2c/qcom,i2c-qup.txt
+deleted file mode 100644
+index dc71754a56af..000000000000
+--- a/Documentation/devicetree/bindings/i2c/qcom,i2c-qup.txt
++++ /dev/null
+@@ -1,40 +0,0 @@
+-Qualcomm Universal Peripheral (QUP) I2C controller
+-
+-Required properties:
+- - compatible: Should be:
+-   * "qcom,i2c-qup-v1.1.1" for 8660, 8960 and 8064.
+-   * "qcom,i2c-qup-v2.1.1" for 8974 v1.
+-   * "qcom,i2c-qup-v2.2.1" for 8974 v2 and later.
+- - reg: Should contain QUP register address and length.
+- - interrupts: Should contain I2C interrupt.
+-
+- - clocks: A list of phandles + clock-specifiers, one for each entry in
+-   clock-names.
+- - clock-names: Should contain:
+-   * "core" for the core clock
+-   * "iface" for the AHB clock
+-
+- - #address-cells: Should be <1> Address cells for i2c device address
+- - #size-cells: Should be <0> as i2c addresses have no size component
+-
+-Optional properties:
+- - clock-frequency: Should specify the desired i2c bus clock frequency in Hz,
+-                    defaults to 100kHz if omitted.
+-
+-Child nodes should conform to i2c bus binding.
+-
+-Example:
+-
+- i2c@f9924000 {
+- 	compatible = "qcom,i2c-qup-v2.2.1";
+- 	reg = <0xf9924000 0x1000>;
+- 	interrupts = <0 96 0>;
+-
+- 	clocks = <&gcc GCC_BLSP1_QUP2_I2C_APPS_CLK>, <&gcc GCC_BLSP1_AHB_CLK>;
+- 	clock-names = "core", "iface";
+-
+- 	clock-frequency = <355000>;
+-
+- 	#address-cells = <1>;
+- 	#size-cells = <0>;
+- };
+diff --git a/Documentation/devicetree/bindings/i2c/qcom,i2c-qup.yaml b/Documentation/devicetree/bindings/i2c/qcom,i2c-qup.yaml
+new file mode 100644
+index 000000000000..097962a90e62
+--- /dev/null
++++ b/Documentation/devicetree/bindings/i2c/qcom,i2c-qup.yaml
+@@ -0,0 +1,83 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/i2c/qcom,i2c-qup.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm Universal Peripheral (QUP) I2C controller Device Tree Bindings
++
++maintainers:
++  - Robert Marko <robimarko@gmail.com>
++
++allOf:
++  - $ref: /schemas/i2c/i2c-controller.yaml#
++
++properties:
++  compatible:
++    oneOf:
++      - enum:
++          - qcom,i2c-qup-v1.1.1
++          - qcom,i2c-qup-v2.1.1
++          - qcom,i2c-qup-v2.2.1
++
++  reg:
++    maxItems: 1
++
++  interrupts:
++    maxItems: 1
++
++  clocks:
++    items:
++      - description: QUP I2C core clock
++      - description: AHB bus clock
++
++  clock-names:
++    items:
++      - const: core
++      - const: iface
++
++  clock-frequency:
++    default: 100000
++    maximum: 1000000
++    description: Desired i2c bus clock frequency in Hz, defaults to 100kHz if omitted.
++
++  dmas:
++    items:
++      - description: RX DMA Channel
++      - description: TX DMA Channel
++
++  dma-names:
++    items:
++      - const: rx
++      - const: tx
++
++required:
++  - compatible
++  - reg
++  - interrupts
++  - clocks
++  - clock-names
++  - '#address-cells'
++  - '#size-cells'
++
++unevaluatedProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/interrupt-controller/arm-gic.h>
++    #include <dt-bindings/clock/qcom,gcc-ipq8074.h>
++
++    i2c@78ba000 {
++      compatible = "qcom,i2c-qup-v2.2.1";
++      #address-cells = <1>;
++      #size-cells = <0>;
++      reg = <0x078ba000 0x600>;
++      interrupts = <GIC_SPI 300 IRQ_TYPE_LEVEL_HIGH>;
++      clocks = <&gcc GCC_BLSP1_QUP6_I2C_APPS_CLK>,
++               <&gcc GCC_BLSP1_AHB_CLK>;
++      clock-names = "core", "iface";
++      clock-frequency = <100000>;
++      dmas = <&blsp_dma 23>, <&blsp_dma 22>;
++      dma-names = "rx", "tx";
++    };
++...
+-- 
+2.36.1
 
