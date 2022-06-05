@@ -2,110 +2,152 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A444553DC6C
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  5 Jun 2022 17:07:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4A17753DC8E
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  5 Jun 2022 17:24:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237838AbiFEPHw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 5 Jun 2022 11:07:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46390 "EHLO
+        id S1345470AbiFEPYy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 5 Jun 2022 11:24:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51938 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232100AbiFEPHv (ORCPT
+        with ESMTP id S1345344AbiFEPYx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 5 Jun 2022 11:07:51 -0400
-Received: from mail-oi1-f182.google.com (mail-oi1-f182.google.com [209.85.167.182])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3224314080;
-        Sun,  5 Jun 2022 08:07:50 -0700 (PDT)
-Received: by mail-oi1-f182.google.com with SMTP id p129so12049113oig.3;
-        Sun, 05 Jun 2022 08:07:50 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Eud9kg/6OFIqnqYrPe3oEwQGSlqs1McYY85aMizcgo0=;
-        b=YXfajtCQLNHIkypQ5n0dwnAdRdEubsDdFuNwV+v4qvlKwYt3ihZTsN2seKbnVL0Un2
-         yThIPlCGQdoMIp9zDsY+uZ3p0hf3U/POJr0ynGfsI7tOoSp8neX4WBucem6NWTVntgcw
-         NI+x/SK4xMTMHViN+a8jRiY9Zakyk32PpaZGh7NA8VLrhKA+8eulyWSr4rxwF/HUNsWi
-         vc7wNs3Rar3J72vEdwe9eng3qQb6Pqcsq6UV51d9EIvAlG0NTfCGwZScCI2TlvfioeKJ
-         H+Y2H8YcmmXsvScN0r1J6mfOF4tkC1BiGydvrGiWffKEJulF+Hl2fHq88+Pq0i8++Vfr
-         agow==
-X-Gm-Message-State: AOAM533mUoQJ+KwHQBg8+JfktZNAYtVbZdZ6A+TjF0luITxJ1F3rHmRm
-        sOd0g1BgWh/Zve+7IlXKQQ==
-X-Google-Smtp-Source: ABdhPJz00ge01uJT59XtkxX6M/a3OhPGU/9wzEOHC1jW9OSL85nx3nlhfnsOhpmql6+2MPxju5SuxA==
-X-Received: by 2002:a05:6808:bd5:b0:32b:ac3a:73e1 with SMTP id o21-20020a0568080bd500b0032bac3a73e1mr26500521oik.54.1654441669478;
-        Sun, 05 Jun 2022 08:07:49 -0700 (PDT)
-Received: from robh.at.kernel.org ([2607:fb90:20d2:7c7e:bed3:ffa4:df1c:4ad2])
-        by smtp.gmail.com with ESMTPSA id z6-20020a9d71c6000000b0060affecb2a5sm6628284otj.17.2022.06.05.08.07.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 05 Jun 2022 08:07:49 -0700 (PDT)
-Received: (nullmailer pid 3507843 invoked by uid 1000);
-        Sun, 05 Jun 2022 15:07:47 -0000
-Date:   Sun, 5 Jun 2022 10:07:47 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        Sun, 5 Jun 2022 11:24:53 -0400
+Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C42132715B;
+        Sun,  5 Jun 2022 08:24:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1654442691; x=1685978691;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=yikPlj0wND/Abtn5F66hdIjP6Y6XeK5dIgxnMBNJi40=;
+  b=U+n8p0VY44arlYpS+MtRouMvM+fIUVF9+GdLvMRlMI3Kt911/oc3phPa
+   tIM0+4wFSJpLkKqgFhVy8Vth37Pz8HWSkzSzK/5XKoIRayadsx1W3sAG5
+   3TgLF8vPah/aBcIQ2TWv9b7XDJaLpms/R4F+leWfz7Jp76Udz+qrun91F
+   fsWTYqROQ05UUvFdbjzub63c65o2qpuNgfodl3s27cvoShxGi8RcHc3um
+   9l9dBmXWyNTXsUOPg08He5h1NoqQUnA6NJZK26F/8rHZjL+ODX5kYcHBB
+   nXhob77A7yraZR+kxNN2j3LMRHVSrjZUHUgdeVsMVp3AHXcLIVFmzYcJA
+   w==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10369"; a="264263845"
+X-IronPort-AV: E=Sophos;i="5.91,279,1647327600"; 
+   d="scan'208";a="264263845"
+Received: from orsmga001.jf.intel.com ([10.7.209.18])
+  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Jun 2022 08:24:51 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.91,279,1647327600"; 
+   d="scan'208";a="613952476"
+Received: from lkp-server01.sh.intel.com (HELO 60dabacc1df6) ([10.239.97.150])
+  by orsmga001.jf.intel.com with ESMTP; 05 Jun 2022 08:24:47 -0700
+Received: from kbuild by 60dabacc1df6 with local (Exim 4.95)
+        (envelope-from <lkp@intel.com>)
+        id 1nxs7S-000C1B-UN;
+        Sun, 05 Jun 2022 15:24:46 +0000
+Date:   Sun, 5 Jun 2022 23:24:23 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Stephen Boyd <sboyd@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Amit Pundir <amit.pundir@linaro.org>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Kumar Gala <galak@codeaurora.org>
-Subject: Re: [PATCH 1/4] dt-bindings: arm: qcom: document qcom,msm-id and
- qcom,board-id
-Message-ID: <20220605150747.GA3465286-robh@kernel.org>
-References: <20220529202629.47588-1-krzysztof.kozlowski@linaro.org>
- <20220529202629.47588-2-krzysztof.kozlowski@linaro.org>
+        Stephen Boyd <swboyd@chromium.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <helgaas@kernel.org>
+Cc:     llvm@lists.linux.dev, kbuild-all@lists.01.org,
+        Johan Hovold <johan+linaro@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-pci@vger.kernel.org
+Subject: Re: [PATCH v10 1/5] clk: qcom: regmap: add PHY clock source
+ implementation
+Message-ID: <202206052344.Lkv2vI5x-lkp@intel.com>
+References: <20220603084454.1861142-2-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220529202629.47588-2-krzysztof.kozlowski@linaro.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
-        autolearn_force=no version=3.4.6
+In-Reply-To: <20220603084454.1861142-2-dmitry.baryshkov@linaro.org>
+X-Spam-Status: No, score=-5.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, May 29, 2022 at 10:26:26PM +0200, Krzysztof Kozlowski wrote:
-> The top level qcom,msm-id and qcom,board-id properties are utilized by
-> bootloaders on Qualcomm MSM platforms to determine which device tree
-> should be used and passed to the kernel.
-> 
-> The commit b32e592d3c28 ("devicetree: bindings: Document qcom board
-> compatible format") from 2015 was a consensus during discussion about
-> upstreaming qcom,msm-id and qcom,board-id fields.  There are however still
-> problems with that consensus:
-> 1. It was reached 7 years ago but it turned out its implementation did
->    not reach all possible products.
-> 
-> 2. Initially additional tool (dtbTool) was needed for parsing these
->    fields to create a QCDT image consisting of multiple DTBs, later the
->    bootloaders were improved and they use these qcom,msm-id and
->    qcom,board-id properties directly.
-> 
-> 3. Extracting relevant information from the board compatible requires
->    this additional tool (dtbTool), which makes the build process more
->    complicated and not easily reproducible (DTBs are modified after the
->    kernel build).
-> 
-> 4. Some versions of Qualcomm bootloaders expect these properties even
->    when booting with a single DTB.  The community is stuck with these
->    bootloaders thus they require properties in the DTBs.
-> 
-> Since several upstreamed Qualcomm SoC-based boards require these
-> properties to properly boot and the properties are reportedly used by
-> bootloaders, document them.
+Hi Dmitry,
 
-My primary issue here is accepting this will be an endorsement for 
-other vendors doing something similar. I'm not against an ID 
-property(ies) in the root node, but would rather see something common 
-if we do anything.
+Thank you for the patch! Yet something to improve:
 
-Rob
+[auto build test ERROR on v5.18]
+[also build test ERROR on next-20220603]
+[cannot apply to clk/clk-next helgaas-pci/next agross-msm/qcom/for-next]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Dmitry-Baryshkov/PCI-qcom-Rework-pipe_clk-pipe_clk_src-handling/20220605-164136
+base:    4b0986a3613c92f4ec1bdc7f60ec66fea135991f
+config: mips-randconfig-r005-20220605 (https://download.01.org/0day-ci/archive/20220605/202206052344.Lkv2vI5x-lkp@intel.com/config)
+compiler: clang version 15.0.0 (https://github.com/llvm/llvm-project 416a5080d89066029f9889dc23f94de47c2fa895)
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # install mips cross compiling tool for clang build
+        # apt-get install binutils-mips-linux-gnu
+        # https://github.com/intel-lab-lkp/linux/commit/4fbc2ca1313223feb409121fa1028557f72a310b
+        git remote add linux-review https://github.com/intel-lab-lkp/linux
+        git fetch --no-tags linux-review Dmitry-Baryshkov/PCI-qcom-Rework-pipe_clk-pipe_clk_src-handling/20220605-164136
+        git checkout 4fbc2ca1313223feb409121fa1028557f72a310b
+        # save the config file
+        mkdir build_dir && cp config build_dir/.config
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=mips SHELL=/bin/bash drivers/clk/qcom/
+
+If you fix the issue, kindly add following tag where applicable
+Reported-by: kernel test robot <lkp@intel.com>
+
+All errors (new ones prefixed by >>):
+
+>> drivers/clk/qcom/clk-regmap-phy-mux.c:30:8: error: call to undeclared function 'FIELD_GET'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+           val = FIELD_GET(PHY_MUX_MASK, val);
+                 ^
+>> drivers/clk/qcom/clk-regmap-phy-mux.c:44:7: error: call to undeclared function 'FIELD_PREP'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+                                     FIELD_PREP(PHY_MUX_MASK, PHY_MUX_PHY_SRC));
+                                     ^
+   drivers/clk/qcom/clk-regmap-phy-mux.c:54:7: error: call to undeclared function 'FIELD_PREP'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+                              FIELD_PREP(PHY_MUX_MASK, PHY_MUX_REF_SRC));
+                              ^
+   3 errors generated.
+
+
+vim +/FIELD_GET +30 drivers/clk/qcom/clk-regmap-phy-mux.c
+
+    22	
+    23	static int phy_mux_is_enabled(struct clk_hw *hw)
+    24	{
+    25		struct clk_regmap *clkr = to_clk_regmap(hw);
+    26		struct clk_regmap_phy_mux *phy_mux = to_clk_regmap_phy_mux(clkr);
+    27		unsigned int val;
+    28	
+    29		regmap_read(clkr->regmap, phy_mux->reg, &val);
+  > 30		val = FIELD_GET(PHY_MUX_MASK, val);
+    31	
+    32		WARN_ON(val != PHY_MUX_PHY_SRC && val != PHY_MUX_REF_SRC);
+    33	
+    34		return val == PHY_MUX_PHY_SRC;
+    35	}
+    36	
+    37	static int phy_mux_enable(struct clk_hw *hw)
+    38	{
+    39		struct clk_regmap *clkr = to_clk_regmap(hw);
+    40		struct clk_regmap_phy_mux *phy_mux = to_clk_regmap_phy_mux(clkr);
+    41	
+    42		return regmap_update_bits(clkr->regmap, phy_mux->reg,
+    43					  PHY_MUX_MASK,
+  > 44					  FIELD_PREP(PHY_MUX_MASK, PHY_MUX_PHY_SRC));
+    45	}
+    46	
+
+-- 
+0-DAY CI Kernel Test Service
+https://01.org/lkp
