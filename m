@@ -2,49 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 95BE153DE8B
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jun 2022 00:06:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2B9E253DEA6
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jun 2022 00:38:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348300AbiFEWG2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 5 Jun 2022 18:06:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37304 "EHLO
+        id S1348362AbiFEWig (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 5 Jun 2022 18:38:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34938 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233452AbiFEWGZ (ORCPT
+        with ESMTP id S244959AbiFEWif (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 5 Jun 2022 18:06:25 -0400
-Received: from relay02.th.seeweb.it (relay02.th.seeweb.it [IPv6:2001:4b7a:2000:18::163])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A455381A6
-        for <linux-arm-msm@vger.kernel.org>; Sun,  5 Jun 2022 15:06:23 -0700 (PDT)
-Received: from SoMainline.org (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 93A3820569;
-        Mon,  6 Jun 2022 00:06:19 +0200 (CEST)
-Date:   Mon, 6 Jun 2022 00:06:18 +0200
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Will Deacon <will@kernel.org>
-Cc:     Konrad Dybcio <konrad.dybcio@somainline.org>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org,
-        linux-arm-kernel@lists.infradead.org,
-        iommu@lists.linux-foundation.org, martin.botka@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        jamipkettunen@somainline.org, Rob Clark <robdclark@gmail.com>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/6] iommu/qcom: Write TCR before TTBRs to fix ASID
- access behavior
-Message-ID: <20220605220618.n6rkb6cfdzzgst3j@SoMainline.org>
-References: <20220527212901.29268-1-konrad.dybcio@somainline.org>
- <20220527212901.29268-3-konrad.dybcio@somainline.org>
- <20220531155559.GB25502@willie-the-truck>
+        Sun, 5 Jun 2022 18:38:35 -0400
+Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com [209.85.160.171])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B799A2C12F;
+        Sun,  5 Jun 2022 15:38:34 -0700 (PDT)
+Received: by mail-qt1-f171.google.com with SMTP id x16so6054645qtw.12;
+        Sun, 05 Jun 2022 15:38:34 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=2o4Si/ESwdinfrZMz9nTD0LmxXF7OLAHry8I5SkRmG4=;
+        b=ijt0QmnS78dPHQE8IYbojVcDJNBQBVSEgVBkxH9/J51mtI4fVcXF+KW51DkiST+jBU
+         /7wSiLSsSdbkeDdHEY4ZCgeNj5nqqUKDBlcMz7vvJ1lOBKl+brz3gIy1s7ypKl9JalXs
+         rECMmCVyOS7GVE9/ixmiyDyLQ66dzzLFA3/kVurzKJy9/CevCybfCpMd5StJuHEn2nLS
+         dC/ShF1BRdaJrsfRMPTIwfzMxoAZG+EF3rv05bLdlNfvqno+FTb0CKsj9TrfSmRqMs12
+         bRg1QapUOG81M3By53RLEseDAexmq8Ondgy9XEARdFmKvE5MiKUnQ3hR/+GMNzkEg4Ss
+         g6TQ==
+X-Gm-Message-State: AOAM533dPs6noLuNmOqX69dseiIb0S6knZcK4LGa0g0yciYClQDRP/Ve
+        uD2PtYVQ4U7wKJpJPmQ0Gg==
+X-Google-Smtp-Source: ABdhPJzSKRDnrny8BKo9He5QTFTcAXpqrnhpYOyi4zRLtD4q9a2RlGz5Mr2RHgWmvJf67C+lU0kTdg==
+X-Received: by 2002:ac8:7d49:0:b0:304:e4ce:3345 with SMTP id h9-20020ac87d49000000b00304e4ce3345mr7305436qtb.508.1654468713846;
+        Sun, 05 Jun 2022 15:38:33 -0700 (PDT)
+Received: from robh.at.kernel.org ([2607:fb90:1bdb:2e61:f12:452:5315:9c7e])
+        by smtp.gmail.com with ESMTPSA id w184-20020a3794c1000000b006a098381abcsm10168131qkd.114.2022.06.05.15.38.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 05 Jun 2022 15:38:33 -0700 (PDT)
+Received: (nullmailer pid 3657152 invoked by uid 1000);
+        Sun, 05 Jun 2022 22:38:30 -0000
+Date:   Sun, 5 Jun 2022 17:38:30 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Krishna <quic_mkrishn@quicinc.com>
+Cc:     devicetree@vger.kernel.org, quic_kalyant@quicinc.com,
+        robh+dt@kernel.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v1] dt-bindings: msm: update maintainers list with proper
+ id
+Message-ID: <20220605223830.GA3657088-robh@kernel.org>
+References: <1654166998-14907-1-git-send-email-quic_mkrishn@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220531155559.GB25502@willie-the-truck>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+In-Reply-To: <1654166998-14907-1-git-send-email-quic_mkrishn@quicinc.com>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -52,55 +65,24 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2022-05-31 16:55:59, Will Deacon wrote:
-> On Fri, May 27, 2022 at 11:28:57PM +0200, Konrad Dybcio wrote:
-> > From: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
-> > 
-> > As also stated in the arm-smmu driver, we must write the TCR before
-> > writing the TTBRs, since the TCR determines the access behavior of
-> > some fields.
+On Thu, 02 Jun 2022 16:19:58 +0530, Krishna wrote:
+> From: Krishna Manikandan <quic_mkrishn@quicinc.com>
 > 
-> Where is this stated in the arm-smmu driver?
+> Use quic id instead of codeaurora id in maintainers list
+> for display devicetree bindings.
 > 
-> > 
-> > Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
-> > Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-> > Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-> > ---
-> >  drivers/iommu/arm/arm-smmu/qcom_iommu.c | 12 ++++++------
-> >  1 file changed, 6 insertions(+), 6 deletions(-)
-> > 
-> > diff --git a/drivers/iommu/arm/arm-smmu/qcom_iommu.c b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-> > index 1728d4d7fe25..75f353866c40 100644
-> > --- a/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-> > +++ b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-> > @@ -273,18 +273,18 @@ static int qcom_iommu_init_domain(struct iommu_domain *domain,
-> >  			ctx->secure_init = true;
-> >  		}
-> >  
-> > -		/* TTBRs */
-> > -		iommu_writeq(ctx, ARM_SMMU_CB_TTBR0,
-> > -				pgtbl_cfg.arm_lpae_s1_cfg.ttbr |
-> > -				FIELD_PREP(ARM_SMMU_TTBRn_ASID, ctx->asid));
-> > -		iommu_writeq(ctx, ARM_SMMU_CB_TTBR1, 0);
-> > -
-> >  		/* TCR */
-> >  		iommu_writel(ctx, ARM_SMMU_CB_TCR2,
-> >  				arm_smmu_lpae_tcr2(&pgtbl_cfg));
-> >  		iommu_writel(ctx, ARM_SMMU_CB_TCR,
-> >  			     arm_smmu_lpae_tcr(&pgtbl_cfg) | ARM_SMMU_TCR_EAE);
-> >  
-> > +		/* TTBRs */
-> > +		iommu_writeq(ctx, ARM_SMMU_CB_TTBR0,
-> > +				pgtbl_cfg.arm_lpae_s1_cfg.ttbr |
-> > +				FIELD_PREP(ARM_SMMU_TTBRn_ASID, ctx->asid));
-> > +		iommu_writeq(ctx, ARM_SMMU_CB_TTBR1, 0);
+> Signed-off-by: Krishna Manikandan <quic_mkrishn@quicinc.com>
+> ---
+>  Documentation/devicetree/bindings/display/msm/dpu-sc7180.yaml          | 2 +-
+>  Documentation/devicetree/bindings/display/msm/dpu-sc7280.yaml          | 2 +-
+>  Documentation/devicetree/bindings/display/msm/dpu-sdm845.yaml          | 2 +-
+>  Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml | 2 +-
+>  Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml        | 2 +-
+>  Documentation/devicetree/bindings/display/msm/dsi-phy-14nm.yaml        | 2 +-
+>  Documentation/devicetree/bindings/display/msm/dsi-phy-20nm.yaml        | 2 +-
+>  Documentation/devicetree/bindings/display/msm/dsi-phy-28nm.yaml        | 2 +-
+>  Documentation/devicetree/bindings/display/msm/dsi-phy-common.yaml      | 2 +-
+>  9 files changed, 9 insertions(+), 9 deletions(-)
 > 
-> I'd have thought that SCTLR.M would be clear here, so it shouldn't matter
-> what order we write these in.
 
-Having tested the series without this particular patch on 8976 (Sony
-Loire Suzu), it doesn't seem to matter indeed.  I'll ask around if this
-"access behaviour" was observed on a different board/platform.
-
-- Marijn
+Applied, thanks!
