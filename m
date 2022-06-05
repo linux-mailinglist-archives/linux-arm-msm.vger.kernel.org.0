@@ -2,152 +2,160 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4A17753DC8E
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  5 Jun 2022 17:24:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E8E5A53DC9D
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  5 Jun 2022 17:42:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345470AbiFEPYy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 5 Jun 2022 11:24:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51938 "EHLO
+        id S1345609AbiFEPm2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 5 Jun 2022 11:42:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52972 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345344AbiFEPYx (ORCPT
+        with ESMTP id S1345564AbiFEPm1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 5 Jun 2022 11:24:53 -0400
-Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C42132715B;
-        Sun,  5 Jun 2022 08:24:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1654442691; x=1685978691;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=yikPlj0wND/Abtn5F66hdIjP6Y6XeK5dIgxnMBNJi40=;
-  b=U+n8p0VY44arlYpS+MtRouMvM+fIUVF9+GdLvMRlMI3Kt911/oc3phPa
-   tIM0+4wFSJpLkKqgFhVy8Vth37Pz8HWSkzSzK/5XKoIRayadsx1W3sAG5
-   3TgLF8vPah/aBcIQ2TWv9b7XDJaLpms/R4F+leWfz7Jp76Udz+qrun91F
-   fsWTYqROQ05UUvFdbjzub63c65o2qpuNgfodl3s27cvoShxGi8RcHc3um
-   9l9dBmXWyNTXsUOPg08He5h1NoqQUnA6NJZK26F/8rHZjL+ODX5kYcHBB
-   nXhob77A7yraZR+kxNN2j3LMRHVSrjZUHUgdeVsMVp3AHXcLIVFmzYcJA
-   w==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10369"; a="264263845"
-X-IronPort-AV: E=Sophos;i="5.91,279,1647327600"; 
-   d="scan'208";a="264263845"
-Received: from orsmga001.jf.intel.com ([10.7.209.18])
-  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Jun 2022 08:24:51 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.91,279,1647327600"; 
-   d="scan'208";a="613952476"
-Received: from lkp-server01.sh.intel.com (HELO 60dabacc1df6) ([10.239.97.150])
-  by orsmga001.jf.intel.com with ESMTP; 05 Jun 2022 08:24:47 -0700
-Received: from kbuild by 60dabacc1df6 with local (Exim 4.95)
-        (envelope-from <lkp@intel.com>)
-        id 1nxs7S-000C1B-UN;
-        Sun, 05 Jun 2022 15:24:46 +0000
-Date:   Sun, 5 Jun 2022 23:24:23 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <helgaas@kernel.org>
-Cc:     llvm@lists.linux.dev, kbuild-all@lists.01.org,
-        Johan Hovold <johan+linaro@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-pci@vger.kernel.org
-Subject: Re: [PATCH v10 1/5] clk: qcom: regmap: add PHY clock source
- implementation
-Message-ID: <202206052344.Lkv2vI5x-lkp@intel.com>
-References: <20220603084454.1861142-2-dmitry.baryshkov@linaro.org>
+        Sun, 5 Jun 2022 11:42:27 -0400
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42E323CFFE
+        for <linux-arm-msm@vger.kernel.org>; Sun,  5 Jun 2022 08:42:26 -0700 (PDT)
+Received: by mail-ed1-x532.google.com with SMTP id w27so15790355edl.7
+        for <linux-arm-msm@vger.kernel.org>; Sun, 05 Jun 2022 08:42:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=9B1ls8yxGR8zR2l3YzKPbZsH4BwBWVg6R1Ggw6EpK00=;
+        b=hhjQr19dkEE4mggA5808Y6fgDAQLq+ga1n1mUxAle2NCtJU+zF8H7tAm46apPYHIzR
+         Hd8o6Q2m+p4m/msMntyB9mvrlG8Xkm4PO5q6bdnyHQDSyKUHkaGrb8qbFUFLXaLgeZwO
+         3NIZHxf1oJVF7navow3Ho6LMu9IjX7JA/38i7sjMDcP2vVOJwnkyccDxgTpN9SW7IvAJ
+         VqL8XqQ/3aFT3EqAq4MTnIrSeQbKA0T+a2iSUxnrpRwytydFJg4PA0o69hEQnx2UGk2g
+         csWnTlMPAu56EPLxquaefKiZ98/6yvJCp5g3ffeD2cFLYN3qIaARIKYZ693hULjmdeNN
+         EX4g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=9B1ls8yxGR8zR2l3YzKPbZsH4BwBWVg6R1Ggw6EpK00=;
+        b=RHjVuI01teUECnTgYlTaeE9jwg26xxiOUwfThDLwNWd1iwIEDSU31Vq0sRlBoLs43y
+         68XQdVfoaeMlE5fgEp/Cos6eVfBpri1wBSx7kootUIpZoq3t2pQe2OpwCAb7aDWOcUMM
+         ybB91KGqUbLsKVYBt/PEroR58ker4QNiD8XlvgM1e8BFcCZ7omX7AqrBdd2kYmipAxV1
+         HRJKyb4U82ksJue8mufEZ8GodrPdmF1ugH8fnc7cQPKzMvzKX/6Xnby6QMTtvnnYICYU
+         TLfR3qbpML7P9PWeg2y6r5SzUfG+LKS5yFnzxW+ClkJ06AJrl3ZrD3Y4AM+f4HygP21O
+         3N+g==
+X-Gm-Message-State: AOAM532aVleDUX+0HfRe2LYAWX6YIFNEA0EPvXLmnAlCglBFfzKjb9fx
+        xZ4xCsTqzErCeHIJEK4bejv8aA==
+X-Google-Smtp-Source: ABdhPJzYrCBob8WbVSGFXb2ZMYIBWQaNFllwDiFYYSjxcPKr8Kh4AZkpqz5U6Q0GOAn/Gyv0D0dynQ==
+X-Received: by 2002:a05:6402:1341:b0:42a:f7cb:44dc with SMTP id y1-20020a056402134100b0042af7cb44dcmr22194785edw.165.1654443744851;
+        Sun, 05 Jun 2022 08:42:24 -0700 (PDT)
+Received: from [192.168.0.181] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id hz10-20020a1709072cea00b0070e01426360sm3252319ejc.91.2022.06.05.08.42.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 05 Jun 2022 08:42:24 -0700 (PDT)
+Message-ID: <ea5ffada-c3be-885d-6b10-30ac027a4d6f@linaro.org>
+Date:   Sun, 5 Jun 2022 17:42:23 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220603084454.1861142-2-dmitry.baryshkov@linaro.org>
-X-Spam-Status: No, score=-5.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: Re: [PATCH 4/4] arm64: dts: qcom: sdm845-oneplus: split qcom,board-id
+ into tuples
+Content-Language: en-US
+To:     Stephan Gerhold <stephan@gerhold.net>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Stephen Boyd <sboyd@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Amit Pundir <amit.pundir@linaro.org>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Caleb Connolly <caleb@connolly.tech>
+References: <20220529202629.47588-1-krzysztof.kozlowski@linaro.org>
+ <20220529202629.47588-5-krzysztof.kozlowski@linaro.org>
+ <Yppatj7KuQLPdDW1@gerhold.net>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <Yppatj7KuQLPdDW1@gerhold.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Dmitry,
+On 03/06/2022 21:02, Stephan Gerhold wrote:
+> +Cc Caleb Connolly <caleb@connolly.tech>
+> 
+> On Sun, May 29, 2022 at 10:26:29PM +0200, Krzysztof Kozlowski wrote:
+>> The qcom,board-id is an uint32 matrix, so a list of tuples.
+>>
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> ---
+>>  arch/arm64/boot/dts/qcom/sdm845-oneplus-enchilada.dts | 2 +-
+>>  arch/arm64/boot/dts/qcom/sdm845-oneplus-fajita.dts    | 2 +-
+>>  2 files changed, 2 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/sdm845-oneplus-enchilada.dts b/arch/arm64/boot/dts/qcom/sdm845-oneplus-enchilada.dts
+>> index bf2cf92e8976..8897a2f4cfe3 100644
+>> --- a/arch/arm64/boot/dts/qcom/sdm845-oneplus-enchilada.dts
+>> +++ b/arch/arm64/boot/dts/qcom/sdm845-oneplus-enchilada.dts
+>> @@ -12,7 +12,7 @@ / {
+>>  	compatible = "oneplus,enchilada", "qcom,sdm845";
+>>  	chassis-type = "handset";
+>>  	qcom,msm-id = <0x141 0x20001>;
+>> -	qcom,board-id = <8 0 17819 22>;
+>> +	qcom,board-id = <8 0>, <17819 22>;
+> 
+> FWIW: While it's just a cosmetic change this is a bit misleading in my
+> opinion. Having two tuples suggests this should be interpreted as:
+> 
+> "This device tree is suitable for two different boards:
+>  board-id = <8 0> (aka sdm845-mtp, a standard qcom reference board)
+>  OR, alternatively: board-id = <17819 22>"
+> 
+> Since this device tree is clearly not meant for sdm845-mtp one could now
+> argue that the <8 0> could be removed, and only the second tuple covers
+> the actual device. It might be worth a try (maybe Caleb can try?), but
+> I suspect the bootloader will not accept that...
+> 
+> I think the bootloader from OPPO/OnePlus is actually looking for
+> quadruples instead of tuples on this board. I have seen similar hacks on
+> several other OPPO devices as well. They usually add their project ID
+> (here: 17819) somewhere and look for that in the bootloader.
+> 
+> In this case maybe adding a short comment would be sufficient, just to
+> make it more obvious that this doesn't actually follow the binding
+> documentation.
 
-Thank you for the patch! Yet something to improve:
+Thanks for bringing up this topic. I think we should include this
+quadruple-set in the DT schema.
 
-[auto build test ERROR on v5.18]
-[also build test ERROR on next-20220603]
-[cannot apply to clk/clk-next helgaas-pci/next agross-msm/qcom/for-next]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch]
+> But this kind of brings up the question if it's worth making any
+> constraints in the DT schema at all, if some of the device trees
+> can not follow it.
+> 
+> For example, older OPPO bootloaders actually look for triples instead,
+> e.g.: (This is from a real device!)
+> 	qcom,board-id = <8 0 15009>;
+> 
+> So maybe it's just a matter of time until someone tries to add a DT
+> with a format that cannot be changed cosmetically to fit the DT schema...
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Dmitry-Baryshkov/PCI-qcom-Rework-pipe_clk-pipe_clk_src-handling/20220605-164136
-base:    4b0986a3613c92f4ec1bdc7f60ec66fea135991f
-config: mips-randconfig-r005-20220605 (https://download.01.org/0day-ci/archive/20220605/202206052344.Lkv2vI5x-lkp@intel.com/config)
-compiler: clang version 15.0.0 (https://github.com/llvm/llvm-project 416a5080d89066029f9889dc23f94de47c2fa895)
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # install mips cross compiling tool for clang build
-        # apt-get install binutils-mips-linux-gnu
-        # https://github.com/intel-lab-lkp/linux/commit/4fbc2ca1313223feb409121fa1028557f72a310b
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review Dmitry-Baryshkov/PCI-qcom-Rework-pipe_clk-pipe_clk_src-handling/20220605-164136
-        git checkout 4fbc2ca1313223feb409121fa1028557f72a310b
-        # save the config file
-        mkdir build_dir && cp config build_dir/.config
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=mips SHELL=/bin/bash drivers/clk/qcom/
+Generic answer is: yes, we want constraints because we want to define
+interface which is followed by bootloader. Following up answer is - in
+practice this might not be possible...
 
-If you fix the issue, kindly add following tag where applicable
-Reported-by: kernel test robot <lkp@intel.com>
+I wish I could say that DTS abusing bindings will not be accepted, but
+unfortunately vendor (OnePlus or whoever) simply does not care at all,
+so this would affect only the community. Therefore rejecting such DTS is
+not a viable option which leads me to first option - try to describe it
+in schema, as much as possible.
 
-All errors (new ones prefixed by >>):
-
->> drivers/clk/qcom/clk-regmap-phy-mux.c:30:8: error: call to undeclared function 'FIELD_GET'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
-           val = FIELD_GET(PHY_MUX_MASK, val);
-                 ^
->> drivers/clk/qcom/clk-regmap-phy-mux.c:44:7: error: call to undeclared function 'FIELD_PREP'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
-                                     FIELD_PREP(PHY_MUX_MASK, PHY_MUX_PHY_SRC));
-                                     ^
-   drivers/clk/qcom/clk-regmap-phy-mux.c:54:7: error: call to undeclared function 'FIELD_PREP'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
-                              FIELD_PREP(PHY_MUX_MASK, PHY_MUX_REF_SRC));
-                              ^
-   3 errors generated.
+Even if it means some "oneOf:" set for different vendors.
 
 
-vim +/FIELD_GET +30 drivers/clk/qcom/clk-regmap-phy-mux.c
-
-    22	
-    23	static int phy_mux_is_enabled(struct clk_hw *hw)
-    24	{
-    25		struct clk_regmap *clkr = to_clk_regmap(hw);
-    26		struct clk_regmap_phy_mux *phy_mux = to_clk_regmap_phy_mux(clkr);
-    27		unsigned int val;
-    28	
-    29		regmap_read(clkr->regmap, phy_mux->reg, &val);
-  > 30		val = FIELD_GET(PHY_MUX_MASK, val);
-    31	
-    32		WARN_ON(val != PHY_MUX_PHY_SRC && val != PHY_MUX_REF_SRC);
-    33	
-    34		return val == PHY_MUX_PHY_SRC;
-    35	}
-    36	
-    37	static int phy_mux_enable(struct clk_hw *hw)
-    38	{
-    39		struct clk_regmap *clkr = to_clk_regmap(hw);
-    40		struct clk_regmap_phy_mux *phy_mux = to_clk_regmap_phy_mux(clkr);
-    41	
-    42		return regmap_update_bits(clkr->regmap, phy_mux->reg,
-    43					  PHY_MUX_MASK,
-  > 44					  FIELD_PREP(PHY_MUX_MASK, PHY_MUX_PHY_SRC));
-    45	}
-    46	
-
--- 
-0-DAY CI Kernel Test Service
-https://01.org/lkp
+Best regards,
+Krzysztof
