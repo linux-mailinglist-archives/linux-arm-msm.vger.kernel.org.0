@@ -2,37 +2,37 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 451E153F254
+	by mail.lfdr.de (Postfix) with ESMTP id DCC8853F257
 	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jun 2022 01:05:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235208AbiFFXFr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Jun 2022 19:05:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60490 "EHLO
+        id S232378AbiFFXFs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Jun 2022 19:05:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60500 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232378AbiFFXFq (ORCPT
+        with ESMTP id S235206AbiFFXFq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Mon, 6 Jun 2022 19:05:46 -0400
 Received: from APC01-TYZ-obe.outbound.protection.outlook.com (mail-tyzapc01olkn2045.outbound.protection.outlook.com [40.92.107.45])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8D729FEA;
-        Mon,  6 Jun 2022 16:05:41 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C50F35DE4;
+        Mon,  6 Jun 2022 16:05:45 -0700 (PDT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=arqP/E1ysWYAvKkwkKN9P3oS5tB/MtetzLlunyDySeSVrLe2JFF4pYL8eJOc6J0SEIWHDdZwJcI1GPgD65tsoZP/hB6t35q9/Fc3qkOwivC5ujW9GMh4soeFIyJKZWvDE9QoU724osGRodEqkkTtb2cvi4pbBKfzmR2HSrmDI9rsnTGJ95aV1yQTBDL0b07fiy96UJNmZu6Mv4ReDQifcigZuTdBeXhekLlysLWXaSw2Xcw+WrxbnhN1Z9p1n5v9orHjkzGwI21se0Lf/tWN8gx2ST9meRs5ScUGau0kcl6egI3zYj6XpjCYrqkmBqoABIeIdpzSV5v4A5sJ+bn7BA==
+ b=aC6qtUoTYeiNFIGqSepR+FN2VmfNMFl33xHam+xn50RoNUdmRJhYdopGnllGZKlOgjfsNe4O07tDrqyl8n7aurbgCdzlWZtkAWlfL0+jBIhuR5wsnFkGcmm359FdMDa6Z0dHJJ4/Iqa8BDx6weTGlQTqXhDPK/N14UxvGWDGdKf/JN3YN66pVs9uKmxnIWZwOT9eEz0mslpwsmnZju3EiWIqAuQ+Fy/aF3W1YCD+1AtAqyu1uxKj2zrF1EOAuVhQvmK3XE3rvLTmYtwHM9htA9/sxZJB67VZ05eudQCjUlMepla0Kb57R8m6nKWCuAKBK6rRZ6t+pS8A7l7K28jqCw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=7BAzMJUpd/c34NtUQrHoKjKNReeBxPTXHR1jq7KKqqs=;
- b=TmLZqyHBs1JWgu/Tx42JfQHOkDDBVcyE/ypyQ7tbLZbs1OtG32iumFkijxUPuSL140K8aOSlhc0ujD5QWkhL6m4isApCJdNmyC2cA2eY+jIqpUWwTShJwHRXAQbj9fbVBA2VocCzJ1l2h2ix8uAFN41d2ieZZ5baBAXZZZbchAmRfPPws+7/nuiLWPOm/sDNDl3MOoP2nkWrDq/weRQGLTZ5FfpEBYmbiJ8WUOWpGY8gEl7O4ttscqQqIhj5UhBolPdXgI62JjWZZ0rrBWV1elB7L3UYzWLeWtVCYHXtgj4VnYRFpMt1RN8RnRA1AmMIiuZffOsjYoIgPuQa/5BSSA==
+ bh=PzeIRvSm1z/qoNQEOhlsrvODgJQHnTr+rVnJabpJmLM=;
+ b=VZJ5XrwnfDb0bRaJ0FV1rFTNtIX5P3pR+9Yie72/mDZLudjFC9dbyZ3vQedAYT/bspTKGZYQTaSHR8z7hSMcbzY9SquCsySCXP0P6//6u1wcy8fKFoyjVCH3xk6U9MiWeHajvq5POfuViJGuPGBq8azwkz0Hrw+kZzWBABvE+A8sBBoBwPz3V+CGhOmd3S46xtqJFY4dBkrJ7eDPhB8iQ4GdFWeBfE1OAevA2iGbc4/eABJfybrC65+AiEzfLtWYcsVW5uthK78rPD8yn1wshlxQJ7vtHIvtf/pwy51UDEyq9n5RzcbTgUBnDTk3jsKSYCdFrqN5tiX861my/ZVbJQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
  dkim=none; arc=none
 Received: from SEZPR03MB6666.apcprd03.prod.outlook.com (2603:1096:101:7d::6)
  by PUZPR03MB6187.apcprd03.prod.outlook.com (2603:1096:301:ba::7) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5332.6; Mon, 6 Jun
- 2022 23:05:38 +0000
+ 2022 23:05:39 +0000
 Received: from SEZPR03MB6666.apcprd03.prod.outlook.com
  ([fe80::9129:13b:1fd4:1961]) by SEZPR03MB6666.apcprd03.prod.outlook.com
  ([fe80::9129:13b:1fd4:1961%3]) with mapi id 15.20.5332.007; Mon, 6 Jun 2022
- 23:05:38 +0000
+ 23:05:39 +0000
 From:   Teguh Sobirin <teguh@sobir.in>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -40,54 +40,56 @@ To:     Andy Gross <agross@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         phone-devel@vger.kernel.org
-Subject: [PATCH 1/7] dt-bindings: display: panel: Add Innolux TD4328 panel bindings
-Date:   Tue,  7 Jun 2022 06:05:16 +0700
-Message-ID: <SEZPR03MB6666F4081BF29953A0DC379BDDA29@SEZPR03MB6666.apcprd03.prod.outlook.com>
+Subject: [PATCH 2/7] gpu: drm: panel: Add Innolux TD4328 panel driver
+Date:   Tue,  7 Jun 2022 06:05:17 +0700
+Message-ID: <SEZPR03MB6666CFDD30995CDDD0DDACC2DDA29@SEZPR03MB6666.apcprd03.prod.outlook.com>
 X-Mailer: git-send-email 2.30.2
+In-Reply-To: <20220606230522.107428-1-teguh@sobir.in>
+References: <20220606230522.107428-1-teguh@sobir.in>
 Content-Transfer-Encoding: 7BIT
 Content-Type:   text/plain; charset=US-ASCII
-X-TMN:  [DfeeB1xDS0YUM3Zs9Qn6tcyZBNOJOX1L]
+X-TMN:  [gOFivkEOeeGaEowq67y+CFBvVy3fLMpw]
 X-ClientProxiedBy: SI2PR01CA0051.apcprd01.prod.exchangelabs.com
  (2603:1096:4:193::6) To SEZPR03MB6666.apcprd03.prod.outlook.com
  (2603:1096:101:7d::6)
-X-Microsoft-Original-Message-ID: <20220606230522.107428-1-teguh@sobir.in>
+X-Microsoft-Original-Message-ID: <20220606230522.107428-2-teguh@sobir.in>
 MIME-Version: 1.0
 X-MS-Exchange-MessageSentRepresentingType: 1
 X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: ea572e5a-7784-4fc4-c936-08da481111d9
+X-MS-Office365-Filtering-Correlation-Id: d353d03f-cd30-4255-f3a9-08da4811128e
 X-MS-TrafficTypeDiagnostic: PUZPR03MB6187:EE_
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: b85M04EnCjnkMe5J6oed7wrnWbbJ06+RpBTCs6ngx2KFq739pfRmnW25V9Z7R+Mw4XRBikvcXQl//KZa7RHcesXK1Kl85edqzp8U2ZMQjs0TJyypIH0SSnwbDgdJyWbcvf2TIabM6j2oH6TOBmOZHNJSmX49FbhAkRPzlNYql+0wXxISDUOrYao5Hcwwy9tlRTM0ymhR0t415ghg1aqaq0d2fKF2oSxPceO+S+YAKxiFIJ5JaSSmUYKZDMk8Ud/kYYSF4j3d6QoUT+xwIMBxHYgSgmgpXmkh8J/oO/yUdE5+MnuD3bUfjmJexLn5fFtyMTrnpYnv2YWplgNyZ9HbBxIj96+5zXgCvXqRvMpQ4dsrAw/W51F/hEcEd96tX2amSRcPdQhR3x4fXw0a1q7WVFl1TVkojsEhplRC/jze8khGZHiY6cDqSMsGwovYCdjOIGXkMAF03nS+XKI0OjZ+0zMZiA3PEWOvot2T5xuVbm5tc0kHvovkPlySqN64FvaXxgIn9/m4EYNyasxCH8MMrMd1ySGH2p/ydwjhurPQ6zPABo9A02wGQSG+NmnVAE8RRjWJ143mDerHiKk3/WK4lALIe7i5jre1iFfBIEG9DTAGEKF8fd0N2UKqzUthKaRJ
+X-Microsoft-Antispam-Message-Info: feg6geMLTs+A7zDizDsxNnwPMEipzKCGxvwqzlhSEpKvOlFMIpS1bJc9r6IlmBRT8qhuq1EwpOvYdFqmA9ad8lQXKXuByMk2dNYgsXO1dvIZHMd6s18BMp69o9ZOBjPAMwJ7+fPjAZZAzCB8LlM4PhhAMCy636VldcMOc2B3atSyOPOa4Cl8KsoEKsPZlOOhSXf7nkZ9vKW8mjTdHm8UyepAHYNtUt3zKls07syrbyXnT/iYliVP94jcO5QuIssQ9H9Ie/ZKIbfYhyZihNkeCbt0iqIWUluWBZ5dmIyQ71f8a2f+pddQvf8jfYUEz61GWfM09FZeS9ymbFpXNAu5FLb6VJ95nz9kaMXu5wZe07vKGgscWk7O2beKoDvjXoRVPWqf3wxUckX4+zyEfJ6V00gScG0WhDJjFIY3NLm0T11jeuChPhf4IWWNwbQFy3BGV6m6YTY+iTtwyfIrfK6Z4aiTRwbS8F3EZ9jsywjmugn5VYoCSrbFDnEtMKyBfdUSaoCli8V0C7sSEo0O6ws/zZZ2p3VT+Elo2A8rss17hLXoiJY6BsftJvRqoYAFdd/1aavwGWO5Raoxya2q3BhwLg==
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?zBzVRX6gmdxwlx99AvAJeI15oQBi9SZVMcJGo11kHrUw1smcGifoMlO4rq78?=
- =?us-ascii?Q?cEy9nUKQOG0Iu0nU7Xzp+GsZI0wz14f6Mep5gVOf2Ris8x2LPKjkYj87Wlom?=
- =?us-ascii?Q?rWnqNBTzkoemIE2K77NtaoOd8uJc8HCdY1MxyYG1gGoo3+o3kfAcHp7NlG2M?=
- =?us-ascii?Q?IqcXzvDINwpFKg+QtFt8HNWYnfqRy5xExMzXJifsNp4l9D7XPm/ObTo5uZmC?=
- =?us-ascii?Q?ExMJazkqpltyDTCjyakMe43f7RgDAemUKEBv82HfJNx5R1jBMYpaIWwWwvZZ?=
- =?us-ascii?Q?QayqBB87ra9iowGdyKg/3rEJAMMzdSVC4DMrBaa4rT6BYws4LkrsoQ21jbqy?=
- =?us-ascii?Q?rLJj5AIL/atjRDwOWQHDBYG/6xaDtzhK0Eu3/ps+5GeiRU9RoKLdvnlsjoQ5?=
- =?us-ascii?Q?SWceZhb6CefnERbgB2UJWF58kLJwImvoBqydyDm7kMni0qlQeoZrIQ1b8PTE?=
- =?us-ascii?Q?xHnc6GzQX5/lAKGjz3mB+ea2DlQq8uuhKa7wc6YnkeCGdbC+LWpUrxt5qxpZ?=
- =?us-ascii?Q?l9/i4nkLlT9khQ9rdk8MNj7zPTH4y/ZQfMjOiiaNKO6lrt82T8qW8diVVo54?=
- =?us-ascii?Q?xf7czbqS5yZ4zQB6hD8AxaUo9knUzM5GcKGTS8qbR5JUIb7sxAQIOVCXxkvR?=
- =?us-ascii?Q?qd1XQ19MISBQMywTEgCUQ/iEHA+OYI9AKR4YJjZ/VcU5C0mxldo/absDW8RH?=
- =?us-ascii?Q?Boo29hM8DyBcQkoWhEkAvb5ZqyESO9jwX0aEeGZgsqbVfexUYcHcL4EkJ/A6?=
- =?us-ascii?Q?Lt6mizUUg7VzVcuC2qHq1UpbCcMKp0BwSWij6fSmVG1LD6u3U/Qcu2iyL0AW?=
- =?us-ascii?Q?Cfrsi6fqaGV2K13cGJPm74KRp/4SkAj6u7v+ybKeaIk7k1yOHa8nMFcdztwA?=
- =?us-ascii?Q?Pyt/9oUANlor5oLFQ3MzyM/a3eFI6AiBOWNDWMVuclEQGmqBdtzeTvwyjmOa?=
- =?us-ascii?Q?fJ3Y3jW5lWWWkfc1mz703kxWQnVllF+7bO8uxIpLV4d+TEbTkxEO60PuBAtj?=
- =?us-ascii?Q?KLMvLdtHQ/PVWl9w36HU35r0OSBD+gcs29xkvrlEBveEFGEeJTiyMmdJ4IJF?=
- =?us-ascii?Q?Nnu5b7eBPeC9qJk8WvICY5zwKRK8cdNxOw3xvDZ/JO25IHkPbiyZ9d3VIhUJ?=
- =?us-ascii?Q?DqPIfrp8lBvj+K35Cul/AVdzyVtE3ILp/IlXPxcbBVUltTWYvSZA1U0k82X/?=
- =?us-ascii?Q?0gHHIXEtgjOFrbC2R+wZWfaxUDfCONuzCKsQaswKOCsyaBypzdN2AT5cIUq9?=
- =?us-ascii?Q?kzcKqNFJKiQ48V7OG3zupzriHtzh1VHYZznNfxCFoYxRnNz4GKKHJIKpuarE?=
- =?us-ascii?Q?0ANzlJC+A8/l+K/x72MJNsgpZTUtXg8JHJEMo/m3tuvYGZwtDnwkI4B4TBL3?=
- =?us-ascii?Q?V+Kr5GbvdYt8LowCfjoQi89wrRfoPhv3V92XquzbF1vPo+PpxA=3D=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?zVyMUhEUdsYCaSMEQGJ0TinbKuHo4kqx8GL1RHc0xt+FwsOBlMn2ryL+yx4j?=
+ =?us-ascii?Q?RaSEKi+n9ujT/DonPFMR7Th//wwBnw6N/9a9a2ws7cYIAQII7VEsovDo4b5p?=
+ =?us-ascii?Q?bhGt/txm38SkLXjSQCeakkoJZ19NlGRab2NKO0hQH/ueYWI1l/Lt+9rOZxVN?=
+ =?us-ascii?Q?zdKijkOEtSWYxFtJmzR0Vg8GrguZkOSrESoGZY05B4fqvhm1zsEjZi+MWoU6?=
+ =?us-ascii?Q?XeCa7LBxPz59B1cJ56N3OPDif/p01q00v0G/mWc7r+cmFkZhf4BySjHCk99V?=
+ =?us-ascii?Q?1O70k2DzZ4LxobUifeA5xjR8dL7CqzgEC7WBX4zZUaOFzsjD7nPqSGv0Ybef?=
+ =?us-ascii?Q?7vblJMcVhCO1t/7QoXT7BgV4FX4rr6SqE7ZCdGwlb6h4znq+Anm/5dhpUFum?=
+ =?us-ascii?Q?TWbzOHv3q2jz22YPlST1m7aHYr0lG+s2Gam4sHmPfmPjdqbC1R/XShSj7Fv4?=
+ =?us-ascii?Q?IzwDmaCAHGq0qVJZF7lzlke1EV5ENzXQCEou39kX6aGBkI8doaAkd4GqT15I?=
+ =?us-ascii?Q?g8EoDTeFnH1See04jP0ZVOLsBhkuQOzDboDEc+ln2Wp+LnMWA1Aa0CtKYEq/?=
+ =?us-ascii?Q?7PuEGgiPK/8O/GNb4MKvB6r72Dd0aDeBPvjK8CGhRrzHBDW/9Ee4ai3hHUMX?=
+ =?us-ascii?Q?sH+WdbSUIIabysdEi9F5Fkp6a92Q+H9UiXca2ISg10WJyavzRgDxhSrXEApY?=
+ =?us-ascii?Q?1tpv8fFkpwGZrZHKuN5zPQJmZlXwLORzNi6yysTz436v359nJDlnMkcZt1Tq?=
+ =?us-ascii?Q?GTrkiwoFCMFPepEpRdJpk1c0oED2H24lWCod/5OXmI9oThXNRStinyVGauxd?=
+ =?us-ascii?Q?S5r4gOhOnCt+ljL5dfaRdhSppG17r1tf428RvEBE/l2hHkXPlhPLy0kErqJi?=
+ =?us-ascii?Q?cvsFajzVmQ/kFYG8ho+8/GbPECNUoW0rM2QmCFB1gxrFxOP4P6eZeFfzm2LT?=
+ =?us-ascii?Q?5BDNeYZ3i6nh3Z63/UVaFmRsT55hZn++jT7tym3MGfFJ74uUBRAYj1UF8ace?=
+ =?us-ascii?Q?FOTvCSUbKvVCgjvWiokd/RMXqwS4cSUzEYq7odXuR/n/2z7fgeSQp7hhoTVK?=
+ =?us-ascii?Q?JMisu/JFE1nu651vBKhQpegdfPUjR3SvQxWldMDEoh9zKbxjbgnf57l9CyIT?=
+ =?us-ascii?Q?p8/9pD51ehCVjcZJYbnyxaKzCWFFvUzMSNUL5TomqAl/kIV67qcUHN81Q0z/?=
+ =?us-ascii?Q?eTCyj+Q3PD40jZIcB69mLIHR4j34bSxR+Cy+f2kaWUT9EVdRxJHvnbTSABkD?=
+ =?us-ascii?Q?9EKOi3EFvDf1bH/szU9qoOLmrJquwmnwiAx3+GhGnswtNT+ywovqYhIO34GH?=
+ =?us-ascii?Q?JwB2nhanYQt6EY/wPQrHqk8X37EOvTzgjCESbwbOj9axRIpgNDSQdHtlZGI1?=
+ =?us-ascii?Q?INMdrnqcK+tC8nMAuozUbm6iBeMUS5wMSViD4XdGVkEemTa06A=3D=3D?=
 X-OriginatorOrg: sct-15-20-4734-24-msonline-outlook-c0b75.templateTenant
-X-MS-Exchange-CrossTenant-Network-Message-Id: ea572e5a-7784-4fc4-c936-08da481111d9
+X-MS-Exchange-CrossTenant-Network-Message-Id: d353d03f-cd30-4255-f3a9-08da4811128e
 X-MS-Exchange-CrossTenant-AuthSource: SEZPR03MB6666.apcprd03.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Jun 2022 23:05:38.0601
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Jun 2022 23:05:39.3891
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
@@ -102,103 +104,391 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add documentation for "innolux,td4328" panel.
-
 Signed-off-by: Teguh Sobirin <teguh@sobir.in>
 ---
- .../display/panel/innolux,td4328.yaml         | 83 +++++++++++++++++++
- 1 file changed, 83 insertions(+)
- create mode 100755 Documentation/devicetree/bindings/display/panel/innolux,td4328.yaml
+ drivers/gpu/drm/panel/Kconfig                |   9 +
+ drivers/gpu/drm/panel/Makefile               |   1 +
+ drivers/gpu/drm/panel/panel-innolux-td4328.c | 339 +++++++++++++++++++
+ 3 files changed, 349 insertions(+)
+ create mode 100644 drivers/gpu/drm/panel/panel-innolux-td4328.c
 
-diff --git a/Documentation/devicetree/bindings/display/panel/innolux,td4328.yaml b/Documentation/devicetree/bindings/display/panel/innolux,td4328.yaml
-new file mode 100755
-index 000000000000..d4773ade0f13
+diff --git a/drivers/gpu/drm/panel/Kconfig b/drivers/gpu/drm/panel/Kconfig
+index a89c03379db5..50ecd01872b9 100644
+--- a/drivers/gpu/drm/panel/Kconfig
++++ b/drivers/gpu/drm/panel/Kconfig
+@@ -202,6 +202,15 @@ config DRM_PANEL_INNOLUX_P079ZCA
+ 	  24 bit RGB per pixel. It provides a MIPI DSI interface to
+ 	  the host and has a built-in LED backlight.
+ 
++config DRM_PANEL_INNOLUX_TD4328
++	tristate "Innolux TD4328 DSI panel"
++	depends on OF
++	depends on DRM_MIPI_DSI
++	depends on BACKLIGHT_CLASS_DEVICE
++	help
++	  Say Y here if you want to enable support for the panels built
++	  around the Innolux TD4328 display controller.
++
+ config DRM_PANEL_JDI_LT070ME05000
+ 	tristate "JDI LT070ME05000 WUXGA DSI panel"
+ 	depends on OF
+diff --git a/drivers/gpu/drm/panel/Makefile b/drivers/gpu/drm/panel/Makefile
+index ddf488b96cb3..cc3389a13a2a 100644
+--- a/drivers/gpu/drm/panel/Makefile
++++ b/drivers/gpu/drm/panel/Makefile
+@@ -18,6 +18,7 @@ obj-$(CONFIG_DRM_PANEL_ILITEK_ILI9341) += panel-ilitek-ili9341.o
+ obj-$(CONFIG_DRM_PANEL_ILITEK_ILI9881C) += panel-ilitek-ili9881c.o
+ obj-$(CONFIG_DRM_PANEL_INNOLUX_EJ030NA) += panel-innolux-ej030na.o
+ obj-$(CONFIG_DRM_PANEL_INNOLUX_P079ZCA) += panel-innolux-p079zca.o
++obj-$(CONFIG_DRM_PANEL_INNOLUX_TD4328) += panel-innolux-td4328.o
+ obj-$(CONFIG_DRM_PANEL_JDI_LT070ME05000) += panel-jdi-lt070me05000.o
+ obj-$(CONFIG_DRM_PANEL_JDI_R63452) += panel-jdi-fhd-r63452.o
+ obj-$(CONFIG_DRM_PANEL_KHADAS_TS050) += panel-khadas-ts050.o
+diff --git a/drivers/gpu/drm/panel/panel-innolux-td4328.c b/drivers/gpu/drm/panel/panel-innolux-td4328.c
+new file mode 100644
+index 000000000000..7c17f8c06512
 --- /dev/null
-+++ b/Documentation/devicetree/bindings/display/panel/innolux,td4328.yaml
-@@ -0,0 +1,83 @@
-+# SPDX-License-Identifier: GPL-2.0
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/display/panel/innolux,td4328.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
++++ b/drivers/gpu/drm/panel/panel-innolux-td4328.c
+@@ -0,0 +1,339 @@
++// SPDX-License-Identifier: GPL-2.0
++/*
++ * Copyright (C) 2022 Teguh Sobirin
++ * Author: Teguh Sobirin <teguh@sobir.in>
++ *
++ * This driver is for the DSI interface to Innolux panel
++ * Using the TD4328 display driver IC from Synaptics.
++ */
 +
-+title: Synaptics TD4328 based DSI display Panels
++#include <linux/delay.h>
++#include <linux/gpio/consumer.h>
++#include <linux/module.h>
++#include <linux/of.h>
++#include <linux/regulator/consumer.h>
 +
-+maintainers:
-+  - Teguh Sobirin <teguh@sobir.in>
++#include <video/display_timing.h>
++#include <video/mipi_display.h>
 +
-+description: |
-+  The TD4328 IC from Synaptics is a DSI Panel IC used to drive DSI panels.
++#include <drm/drm_mipi_dsi.h>
++#include <drm/drm_modes.h>
++#include <drm/drm_panel.h>
 +
-+allOf:
-+  - $ref: panel-common.yaml#
++struct td4328 {
++	struct device *dev;
++	struct drm_panel panel;
++	struct regulator *supply;
++	struct gpio_desc *reset_gpio;
++	enum drm_panel_orientation orientation;
++	bool prepared;
++};
 +
-+properties:
-+  compatible:
-+    const: innolux,td4328
-+    description: This indicates the panel manufacturer of the panel that is
-+      in turn using the TD4328 panel driver.
++static inline struct td4328 *panel_to_td4328(struct drm_panel *panel)
++{
++	return container_of(panel, struct td4328, panel);
++}
 +
-+  reset-gpios:
-+    maxItems: 1
-+    description: phandle of gpio for reset line - This should be 8mA, gpio
-+      can be configured using mux, pinctrl, pinctrl-names (active high)
++static int td4328_init_sequence(struct td4328 *ctx)
++{
++	struct mipi_dsi_device *dsi = to_mipi_dsi_device(ctx->dev);
++	struct device *dev = ctx->dev;
++	int ret;
 +
-+  vddio-supply:
-+    description: phandle of the regulator that provides the supply voltage
-+      Power IC supply
++	ret = mipi_dsi_dcs_exit_sleep_mode(dsi);
++	if (ret < 0) {
++		dev_err(dev, "Failed to exit sleep mode: %d\n", ret);
++		return ret;
++	}
++	msleep(70);
 +
-+  vddpos-supply:
-+    description: phandle of the positive boost supply regulator
++	ret = mipi_dsi_dcs_set_column_address(dsi, 0, 1080 - 1);
++	if (ret < 0) {
++		dev_err(dev, "Failed to set sleep column address: %d\n", ret);
++		return ret;
++	}
 +
-+  vddneg-supply:
-+    description: phandle of the negative boost supply regulator
++	ret = mipi_dsi_dcs_set_page_address(dsi, 0, 1920 - 1);
++	if (ret < 0) {
++		dev_err(dev, "Failed to set sleep page address: %d\n", ret);
++		return ret;
++	}
 +
-+  rotation:
-+    description: Display rotation in degrees counter clockwise (0,90,180,270)
++	ret = mipi_dsi_dcs_set_tear_on(dsi, MIPI_DSI_DCS_TEAR_MODE_VBLANK);
 +
-+  reg: true
-+  port: true
++	if (ret < 0) {
++		dev_err(dev, "Failed to set tear on: %d\n", ret);
++		return ret;
++	}
 +
-+required:
-+  - compatible
-+  - reg
-+  - vddio-supply
-+  - vddpos-supply
-+  - vddneg-supply
-+  - reset-gpios
-+  - rotation
-+  - port
++	ret = mipi_dsi_dcs_set_display_on(dsi);
++	if (ret < 0) {
++		dev_err(dev, "Failed to set display on: %d\n", ret);
++		return ret;
++	}
 +
-+unevaluatedProperties: false
++	dev_dbg(dev, "Panel init sequence done\n");
++	return 0;
++}
 +
-+examples:
-+  - |+
-+    #include <dt-bindings/gpio/gpio.h>
++static int td4328_unprepare(struct drm_panel *panel)
++{
++	struct td4328 *ctx = panel_to_td4328(panel);
++	struct mipi_dsi_device *dsi = to_mipi_dsi_device(ctx->dev);
++	int ret;
 +
-+    dsi0 {
-+        #address-cells = <1>;
-+        #size-cells = <0>;
++	if (!ctx->prepared)
++		return 0;
 +
-+        panel@0 {
-+            compatible = "innolux,td4328";
-+            reg = <0>;
-+            vddio-supply = <&vreg_l14a_1p88>;
-+            vddpos-supply = <&lab>;
-+            vddneg-supply = <&ibb>;
++	ret = mipi_dsi_dcs_set_display_off(dsi);
++	if (ret < 0)
++		dev_err(ctx->dev, "failed to set display off: %d\n", ret);
 +
-+            reset-gpios = <&tlmm 6 GPIO_ACTIVE_HIGH>;
-+            rotation = <90>;
++	ret = mipi_dsi_dcs_enter_sleep_mode(dsi);
++	if (ret < 0) {
++		dev_err(ctx->dev, "failed to enter sleep mode: %d\n", ret);
++		return ret;
++	}
 +
-+            port {
-+                panel0_in: endpoint {
-+                    remote-endpoint = <&dsi0_out>;
-+                };
-+            };
-+        };
-+    };
++	regulator_disable(ctx->supply);
 +
-+...
++	ctx->prepared = false;
++
++	return 0;
++}
++
++static int td4328_prepare(struct drm_panel *panel)
++{
++	struct td4328 *ctx = panel_to_td4328(panel);
++	struct mipi_dsi_device *dsi = to_mipi_dsi_device(ctx->dev);
++	int ret;
++
++	if (ctx->prepared)
++		return 0;
++
++	dev_dbg(ctx->dev, "Resetting the panel\n");
++	ret = regulator_enable(ctx->supply);
++	if (ret < 0) {
++		dev_err(ctx->dev, "Failed to enable supply: %d\n", ret);
++		return ret;
++	}
++
++	msleep(20);
++
++	gpiod_set_value_cansleep(ctx->reset_gpio, 1);
++	usleep_range(10, 20);
++	gpiod_set_value_cansleep(ctx->reset_gpio, 0);
++
++	msleep(20);
++
++	ret = mipi_dsi_dcs_exit_sleep_mode(dsi);
++	if (ret < 0) {
++		dev_err(ctx->dev, "Failed to exit sleep mode: %d\n", ret);
++		goto disable_supply;
++	}
++
++	msleep(250);
++
++	ret = td4328_init_sequence(ctx);
++	if (ret < 0) {
++		dev_err(ctx->dev, "Panel init sequence failed: %d\n", ret);
++		goto disable_supply;
++	}
++
++	ret = mipi_dsi_dcs_set_display_on(dsi);
++	if (ret < 0) {
++		dev_err(ctx->dev, "Failed to set display on: %d\n", ret);
++		goto disable_supply;
++	}
++
++	msleep(50);
++
++	ctx->prepared = true;
++
++	return 0;
++
++disable_supply:
++	regulator_disable(ctx->supply);
++	return ret;
++}
++
++static const struct drm_display_mode default_mode = {
++	.clock       = (1080 + 60 + 10 + 60) * (1920 + 20 + 8 + 20) * 60 / 1000,
++	.hdisplay    = 1080,
++	.hsync_start = 1080 + 60,
++	.hsync_end   = 1080 + 60 + 10,
++	.htotal      = 1080 + 60 + 10 + 60,
++	.vdisplay    = 1920,
++	.vsync_start = 1920 + 20,
++	.vsync_end   = 1920 + 20 + 8,
++	.vtotal      = 1920 + 20 + 8 + 20,
++	.width_mm    = 75,
++	.height_mm   = 132,
++};
++
++static int td4328_get_modes(struct drm_panel *panel,
++				struct drm_connector *connector)
++{
++	struct td4328 *ctx = panel_to_td4328(panel);
++	struct drm_display_mode *mode;
++
++	mode = drm_mode_duplicate(connector->dev, &default_mode);
++	if (!mode) {
++		dev_err(ctx->dev, "Failed to add mode %ux%u@%u\n",
++			default_mode.hdisplay, default_mode.vdisplay,
++			drm_mode_vrefresh(&default_mode));
++		return -ENOMEM;
++	}
++
++	drm_mode_set_name(mode);
++
++	mode->type = DRM_MODE_TYPE_DRIVER | DRM_MODE_TYPE_PREFERRED;
++	connector->display_info.width_mm = mode->width_mm;
++	connector->display_info.height_mm = mode->height_mm;
++	drm_mode_probed_add(connector, mode);
++	drm_connector_set_panel_orientation(connector, ctx->orientation);
++
++	return 1;
++}
++
++static const struct drm_panel_funcs td4328_funcs = {
++	.unprepare	= td4328_unprepare,
++	.prepare	= td4328_prepare,
++	.get_modes	= td4328_get_modes,
++};
++
++static int td4328_probe(struct mipi_dsi_device *dsi)
++{
++	struct device *dev = &dsi->dev;
++	struct td4328 *ctx;
++	int ret;
++
++	ctx = devm_kzalloc(dev, sizeof(*ctx), GFP_KERNEL);
++	if (!ctx)
++		return -ENOMEM;
++
++	ctx->reset_gpio = devm_gpiod_get_optional(dev, "reset", GPIOD_OUT_HIGH);
++	if (IS_ERR(ctx->reset_gpio)) {
++		dev_err(dev, "cannot get reset gpio\n");
++		return PTR_ERR(ctx->reset_gpio);
++	}
++
++	ctx->supply = devm_regulator_get(dev, "vdd");
++	if (IS_ERR(ctx->supply)) {
++		ret = PTR_ERR(ctx->supply);
++		if (ret != -EPROBE_DEFER)
++			dev_err(dev, "Failed to request vdd regulator: %d\n", ret);
++		return ret;
++	}
++
++	ctx->supply = devm_regulator_get(dev, "vddio");
++	if (IS_ERR(ctx->supply)) {
++		ret = PTR_ERR(ctx->supply);
++		if (ret != -EPROBE_DEFER)
++			dev_err(dev, "Failed to request vddio regulator: %d\n", ret);
++		return ret;
++	}
++
++	ctx->supply = devm_regulator_get(dev, "vddpos");
++	if (IS_ERR(ctx->supply)) {
++		ret = PTR_ERR(ctx->supply);
++		if (ret != -EPROBE_DEFER)
++			dev_err(dev, "Failed to request vddpos regulator: %d\n", ret);
++		return ret;
++	}
++
++	ctx->supply = devm_regulator_get(dev, "vddneg");
++	if (IS_ERR(ctx->supply)) {
++		ret = PTR_ERR(ctx->supply);
++		if (ret != -EPROBE_DEFER)
++			dev_err(dev, "Failed to request vddneg regulator: %d\n", ret);
++		return ret;
++	}
++
++	ret = of_drm_get_panel_orientation(dev->of_node, &ctx->orientation);
++	if (ret < 0) {
++		dev_err(dev, "Failed to get orientation %d\n", ret);
++		return ret;
++	}
++
++	mipi_dsi_set_drvdata(dsi, ctx);
++
++	ctx->dev = dev;
++
++	dsi->lanes = 4;
++	dsi->format = MIPI_DSI_FMT_RGB888;
++	dsi->mode_flags = MIPI_DSI_MODE_LPM
++		| MIPI_DSI_MODE_VIDEO_HSE
++		| MIPI_DSI_CLOCK_NON_CONTINUOUS
++		| MIPI_DSI_MODE_VIDEO_BURST
++		| MIPI_DSI_MODE_NO_EOT_PACKET;
++
++	drm_panel_init(&ctx->panel, &dsi->dev, &td4328_funcs,
++		       DRM_MODE_CONNECTOR_DSI);
++
++	ret = drm_panel_of_backlight(&ctx->panel);
++	if (ret)
++		return ret;
++
++	drm_panel_add(&ctx->panel);
++
++	ret = mipi_dsi_attach(dsi);
++	if (ret < 0) {
++		dev_err(dev, "mipi_dsi_attach failed: %d\n", ret);
++		drm_panel_remove(&ctx->panel);
++		return ret;
++	}
++
++	return 0;
++}
++
++static void td4328_shutdown(struct mipi_dsi_device *dsi)
++{
++	struct td4328 *ctx = mipi_dsi_get_drvdata(dsi);
++	int ret;
++
++	ret = drm_panel_unprepare(&ctx->panel);
++	if (ret < 0)
++		dev_err(&dsi->dev, "Failed to unprepare panel: %d\n", ret);
++
++	ret = drm_panel_disable(&ctx->panel);
++	if (ret < 0)
++		dev_err(&dsi->dev, "Failed to disable panel: %d\n", ret);
++}
++
++static int td4328_remove(struct mipi_dsi_device *dsi)
++{
++	struct td4328 *ctx = mipi_dsi_get_drvdata(dsi);
++	int ret;
++
++	td4328_shutdown(dsi);
++
++	ret = mipi_dsi_detach(dsi);
++	if (ret < 0)
++		dev_err(&dsi->dev, "Failed to detach from DSI host: %d\n", ret);
++
++	drm_panel_remove(&ctx->panel);
++
++	return 0;
++}
++
++static const struct of_device_id td4328_of_match[] = {
++	{ .compatible = "innolux,td4328" },
++	{ /* sentinel */ }
++};
++MODULE_DEVICE_TABLE(of, td4328_of_match);
++
++static struct mipi_dsi_driver td4328_driver = {
++	.driver = {
++		.name = "panel-innolux-td4328",
++		.of_match_table = td4328_of_match,
++	},
++	.probe	= td4328_probe,
++	.remove = td4328_remove,
++	.shutdown = td4328_shutdown,
++};
++module_mipi_dsi_driver(td4328_driver);
++
++MODULE_AUTHOR("Teguh Sobirin <teguh@sobir.in>");
++MODULE_DESCRIPTION("DRM driver for TD4328 cmd mode DSI Innolux panel");
++MODULE_LICENSE("GPL v2");
 -- 
 2.30.2
 
