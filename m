@@ -2,84 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4604C53EF45
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jun 2022 22:12:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4373D53F06F
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jun 2022 22:46:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233133AbiFFUML (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Jun 2022 16:12:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52920 "EHLO
+        id S234455AbiFFUo6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Jun 2022 16:44:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49074 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233178AbiFFUMH (ORCPT
+        with ESMTP id S232339AbiFFUoi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Jun 2022 16:12:07 -0400
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BE9B139AEC
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Jun 2022 13:12:02 -0700 (PDT)
-Received: by mail-ej1-x62c.google.com with SMTP id fu3so29591171ejc.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Jun 2022 13:12:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=HCWIcD+SfRMw/M9RRt+jg58AphPseq4gfsJ1F6OVZZU=;
-        b=L64JkmvDNh1FIACsNToXduJszZ5RYI3mnVnXlEJgBMBcVUIJznBmtDp/P0EKumXSX/
-         zad6k3tZainA3cYz+aKtsb03+xotN0Og3MtfFmorTrxvRWwPwuEKwx8H4Vj5ghwhAf3G
-         CWzDhBbC4GdfPTWfSGrqktycegGjlYT4PyutU=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=HCWIcD+SfRMw/M9RRt+jg58AphPseq4gfsJ1F6OVZZU=;
-        b=Y9Hlg/dvzGpHD1+ak3Oc8j8V9CrvMlIQ+MaPtcaFCvJ3990HabJXBWPYqYrZKQeHct
-         UEJmgfY9szIlKJHBj24lIaCkKNYRJY3ZEcBlxA6hGYcxsysdSgq290eIo1myJ67OY2FN
-         GYEbLKFXwTwjTzlZMWAAeiXg8A1puq9qZMstxQWnSzIzHh/kyVgfdqaXSHx3yEv8hxK5
-         nDPq7myUfEBKWQmVPg7cyno8mp9KGGx5AiDb4//EFWxuBjQF+uA+EFgaf20BhvW+GhRG
-         99796TS6E8fgynLnWiB7cW/FQBUQ17fLpEmW0DmZELvQNlDgxQlpLZE/9QWCw4Nm8Bf3
-         zYXw==
-X-Gm-Message-State: AOAM531rrxF3p5IbT4zzAEv3AKbOut3dQO+e8H2Cmqag1145zL5Qpx1/
-        PMJO9MIzd2Qnv7Ujv0hcdqGG5m3uuEmyNhG00eQ=
-X-Google-Smtp-Source: ABdhPJySnGlAEMqamSn+Vx86JjbLLcRzJ07fpHVbhJR69TRBDGDy5BlU4duhl8LW2CjU/euFgURXdA==
-X-Received: by 2002:a17:907:9815:b0:703:bdb0:9e6b with SMTP id ji21-20020a170907981500b00703bdb09e6bmr23776563ejc.731.1654546320806;
-        Mon, 06 Jun 2022 13:12:00 -0700 (PDT)
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com. [209.85.128.54])
-        by smtp.gmail.com with ESMTPSA id a14-20020a170906368e00b006fec5cef701sm6684279ejc.197.2022.06.06.13.11.59
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 06 Jun 2022 13:12:00 -0700 (PDT)
-Received: by mail-wm1-f54.google.com with SMTP id z17so3373731wmi.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Jun 2022 13:11:59 -0700 (PDT)
-X-Received: by 2002:a05:600c:591:b0:39c:4544:b814 with SMTP id
- o17-20020a05600c059100b0039c4544b814mr14648542wmd.118.1654546319242; Mon, 06
- Jun 2022 13:11:59 -0700 (PDT)
+        Mon, 6 Jun 2022 16:44:38 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 206F6FC4DF;
+        Mon,  6 Jun 2022 13:39:28 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 7AEA561572;
+        Mon,  6 Jun 2022 20:39:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 436B5C385A9;
+        Mon,  6 Jun 2022 20:39:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1654547967;
+        bh=qeDYNocyvB6ztqkmiLeKEV1qxWokU2Os5Sf6lfKULq8=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+        b=FLWMznABSFfkkpCwItmaxJq1ey3mCAS4AXqqUmDRoUHjQ/qct9ufY+QcZtrjhadXE
+         QFmDLlQYvd//o0Ort33ZfuZTBuMuFY9rDheTFpbf7HqkJJ/Yt87LO4lFHlKjylrsb8
+         UF7H/a94f7uM6JXxvsEgcbSl0V4JveoceNnBFhonxzrR/L6UCEbVun1WZ6fHg9FkYe
+         t/oP70qpkDr9wfj9yz4PSYlBCfOy5AnEhW+r4OA//YZm2aWlch0DTlJGSsRSj4dW/o
+         3PekMMwifLR+XgCyTqJAC1zbkjt7MX+0zV57FpKopFEAEwIUmNc6P08egXuTGZ7DBD
+         TsI7lBry+VZdA==
+Message-ID: <058de46e-24cf-e25b-121c-3ff080702776@kernel.org>
+Date:   Mon, 6 Jun 2022 23:39:19 +0300
 MIME-Version: 1.0
-References: <20220601112302.v4.1.I31ec454f8d4ffce51a7708a8092f8a6f9c929092@changeid>
-In-Reply-To: <20220601112302.v4.1.I31ec454f8d4ffce51a7708a8092f8a6f9c929092@changeid>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Mon, 6 Jun 2022 13:11:47 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=VKWNeXzDZ=DdXi=U218xghLJAeAQah_uFOjM9WrGZ5sQ@mail.gmail.com>
-Message-ID: <CAD=FV=VKWNeXzDZ=DdXi=U218xghLJAeAQah_uFOjM9WrGZ5sQ@mail.gmail.com>
-Subject: Re: [PATCH v4] drm/probe-helper: Default to 640x480 if no EDID on DP
-To:     dri-devel <dri-devel@lists.freedesktop.org>,
-        Daniel Vetter <daniel@ffwll.ch>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        =?UTF-8?B?VmlsbGUgU3lyasOkbMOk?= <ville.syrjala@linux.intel.com>,
-        Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
-        "Kuogee Hsieh (QUIC)" <quic_khsieh@quicinc.com>,
-        "Abhinav Kumar (QUIC)" <quic_abhinavk@quicinc.com>,
-        Rob Clark <robdclark@gmail.com>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Jani Nikula <jani.nikula@linux.intel.com>,
-        "Aravind Venkateswaran (QUIC)" <quic_aravindh@quicinc.com>,
-        David Airlie <airlied@linux.ie>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+Subject: Re: [PATCH v4 4/4] arm64: dts: qcom: sdm845: Add CPU BWMON
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Cc:     Thara Gopinath <thara.gopinath@linaro.org>
+References: <20220601101140.170504-1-krzysztof.kozlowski@linaro.org>
+ <20220601101140.170504-5-krzysztof.kozlowski@linaro.org>
+From:   Georgi Djakov <djakov@kernel.org>
+In-Reply-To: <20220601101140.170504-5-krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-8.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -88,70 +62,128 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On 1.06.22 13:11, Krzysztof Kozlowski wrote:
+> Add device node for CPU-memory BWMON device (bandwidth monitoring) on
+> SDM845 measuring bandwidth between CPU (gladiator_noc) and Last Level
+> Cache (memnoc).  Usage of this BWMON allows to remove fixed bandwidth
+> votes from cpufreq (CPU nodes) thus achieve high memory throughput even
+> with lower CPU frequencies.
+> 
+> Performance impact (SDM845-MTP RB3 board, linux next-20220422):
+> 1. No noticeable impact when running with schedutil or performance
+>     governors.
+> 
+> 2. When comparing to customized kernel with synced interconnects and
+>     without bandwidth votes from CPU freq, the sysbench memory tests
+>     show significant improvement with bwmon for blocksizes past the L3
+>     cache.  The results for such superficial comparison:
+> 
+> sysbench memory test, results in MB/s (higher is better)
+>   bs kB |  type |    V  | V+no bw votes | bwmon | benefit %
+>       1 | W/seq | 14795 |          4816 |  4985 |      3.5%
+>      64 | W/seq | 41987 |         10334 | 10433 |      1.0%
+>    4096 | W/seq | 29768 |          8728 | 32007 |    266.7%
+>   65536 | W/seq | 17711 |          4846 | 18399 |    279.6%
+> 262144 | W/seq | 16112 |          4538 | 17429 |    284.1%
+>      64 | R/seq | 61202 |         67092 | 66804 |     -0.4%
+>    4096 | R/seq | 23871 |          5458 | 24307 |    345.4%
+>   65536 | R/seq | 18554 |          4240 | 18685 |    340.7%
+> 262144 | R/seq | 17524 |          4207 | 17774 |    322.4%
+>      64 | W/rnd |  2663 |          1098 |  1119 |      1.9%
+>   65536 | W/rnd |   600 |           316 |   610 |     92.7%
+>      64 | R/rnd |  4915 |          4784 |  4594 |     -4.0%
+>   65536 | R/rnd |   664 |           281 |   678 |    140.7%
+> 
+> Legend:
+> bs kB: block size in KB (small block size means only L1-3 caches are
+>        used
+> type: R - read, W - write, seq - sequential, rnd - random
+> V: vanilla (next-20220422)
+> V + no bw votes: vanilla without bandwidth votes from CPU freq
+> bwmon: bwmon without bandwidth votes from CPU freq
+> benefit %: difference between vanilla without bandwidth votes and bwmon
+>             (higher is better)
+> 
 
-On Wed, Jun 1, 2022 at 11:23 AM Douglas Anderson <dianders@chromium.org> wrote:
->
-> If we're unable to read the EDID for a display because it's corrupt /
-> bogus / invalid then we'll add a set of standard modes for the
-> display. Since we have no true information about the connected
-> display, these modes are essentially guesses but better than nothing.
-> At the moment, none of the modes returned is marked as preferred, but
-> the modes are sorted such that the higher resolution modes are listed
-> first.
->
-> When userspace sees these modes presented by the kernel it needs to
-> figure out which one to pick. At least one userspace, ChromeOS [1]
-> seems to use the rules (which seem pretty reasonable):
-> 1. Try to pick the first mode marked as preferred.
-> 2. Try to pick the mode which matches the first detailed timing
->    descriptor in the EDID.
-> 3. If no modes were marked as preferred then pick the first mode.
->
-> Unfortunately, userspace's rules combined with what the kernel is
-> doing causes us to fail section 4.2.2.6 (EDID Corruption Detection) of
-> the DP 1.4a Link CTS. That test case says that, while it's OK to allow
-> some implementation-specific fall-back modes if the EDID is bad that
-> userspace should _default_ to 640x480.
->
-> Let's fix this by marking 640x480 as default for DP in the no-EDID
-> case.
->
-> NOTES:
-> - In the discussion around v3 of this patch [2] there was talk about
->   solving this in userspace and I even implemented a patch that would
->   have solved this for ChromeOS, but then the discussion turned back
->   to solving this in the kernel.
-> - Also in the discussion of v3 [2] it was requested to limit this
-> 83;40900;0c  change to just DP since folks were worried that it would break some
->   subtle corner case on VGA or HDMI.
->
-> [1] https://source.chromium.org/chromium/chromium/src/+/a051f741d0a15caff2251301efe081c30e0f4a96:ui/ozone/platform/drm/common/drm_util.cc;l=488
-> [2] https://lore.kernel.org/r/20220513130533.v3.1.I31ec454f8d4ffce51a7708a8092f8a6f9c929092@changeid
->
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Ok, now i see! So bwmon shows similar performance compared with the current
+cpufreq-based bandwidth scaling. And if you add bwmon on top of vanilla, are
+the results close/same? Is the plan to remove the cpufreq based bandwidth
+scaling and switch to bwmon? It might improve the power consumption in some
+scenarios.
+
+Thanks,
+Georgi
+
+> Co-developed-by: Thara Gopinath <thara.gopinath@linaro.org>
+> Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > ---
-> I put Abhinav's Reviewed-by tag from v2 here since this is nearly the
-> same as v2. Hope this is OK.
->
-> Changes in v4:
-> - Code is back to v2, but limit to just DP.
-> - Beefed up the commit message.
->
-> Changes in v3:
-> - Don't set preferred, just disable the sort.
->
-> Changes in v2:
-> - Don't modify drm_add_modes_noedid() 'cause that'll break others
-> - Set 640x480 as preferred in drm_helper_probe_single_connector_modes()
->
->  drivers/gpu/drm/drm_probe_helper.c | 11 ++++++++++-
->  1 file changed, 10 insertions(+), 1 deletion(-)
+>   arch/arm64/boot/dts/qcom/sdm845.dtsi | 54 ++++++++++++++++++++++++++++
+>   1 file changed, 54 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> index 83e8b63f0910..adffb9c70566 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> @@ -2026,6 +2026,60 @@ llcc: system-cache-controller@1100000 {
+>   			interrupts = <GIC_SPI 582 IRQ_TYPE_LEVEL_HIGH>;
+>   		};
+>   
+> +		pmu@1436400 {
+> +			compatible = "qcom,sdm845-cpu-bwmon";
+> +			reg = <0 0x01436400 0 0x600>;
+> +
+> +			interrupts = <GIC_SPI 581 IRQ_TYPE_LEVEL_HIGH>;
+> +
+> +			interconnects = <&gladiator_noc MASTER_APPSS_PROC 3 &mem_noc SLAVE_EBI1 3>,
+> +					<&osm_l3 MASTER_OSM_L3_APPS &osm_l3 SLAVE_OSM_L3>;
+> +			interconnect-names = "ddr", "l3c";
+> +
+> +			operating-points-v2 = <&cpu_bwmon_opp_table>;
+> +
+> +			cpu_bwmon_opp_table: opp-table {
+> +				compatible = "operating-points-v2";
+> +
+> +				/*
+> +				 * The interconnect paths bandwidths taken from
+> +				 * cpu4_opp_table bandwidth.
+> +				 * They also match different tables from
+> +				 * msm-4.9 downstream kernel:
+> +				 *  - the gladiator_noc-mem_noc from bandwidth
+> +				 *    table of qcom,llccbw (property qcom,bw-tbl);
+> +				 *    bus width: 4 bytes;
+> +				 *  - the OSM L3 from bandwidth table of
+> +				 *    qcom,cpu4-l3lat-mon (qcom,core-dev-table);
+> +				 *    bus width: 16 bytes;
+> +				 */
+> +				opp-0 {
+> +					opp-peak-kBps = <800000 4800000>;
+> +				};
+> +				opp-1 {
+> +					opp-peak-kBps = <1804000 9216000>;
+> +				};
+> +				opp-2 {
+> +					opp-peak-kBps = <2188000 11980800>;
+> +				};
+> +				opp-3 {
+> +					opp-peak-kBps = <3072000 15052800>;
+> +				};
+> +				opp-4 {
+> +					opp-peak-kBps = <4068000 19353600>;
+> +				};
+> +				opp-5 {
+> +					opp-peak-kBps = <5412000 20889600>;
+> +				};
+> +				opp-6 {
+> +					opp-peak-kBps = <6220000 22425600>;
+> +				};
+> +				opp-7 {
+> +					opp-peak-kBps = <7216000 25497600>;
+> +				};
+> +			};
+> +		};
+> +
+>   		pcie0: pci@1c00000 {
+>   			compatible = "qcom,pcie-sdm845";
+>   			reg = <0 0x01c00000 0 0x2000>,
 
-Pushed to drm-misc-next after cleaning up the turd that I somehow left
-in the commit message.
-
-fae7d186403e drm/probe-helper: Default to 640x480 if no EDID on DP
-
--Doug
