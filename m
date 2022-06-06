@@ -2,112 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D9A4253EBD4
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jun 2022 19:09:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8511653E9E7
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jun 2022 19:08:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240462AbiFFPWw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Jun 2022 11:22:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58684 "EHLO
+        id S241209AbiFFP5P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Jun 2022 11:57:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59026 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240471AbiFFPWv (ORCPT
+        with ESMTP id S241183AbiFFP5J (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Jun 2022 11:22:51 -0400
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00BBA35840;
-        Mon,  6 Jun 2022 08:22:49 -0700 (PDT)
-Received: by mail-ej1-x630.google.com with SMTP id n10so29649496ejk.5;
-        Mon, 06 Jun 2022 08:22:49 -0700 (PDT)
+        Mon, 6 Jun 2022 11:57:09 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93D302125B
+        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Jun 2022 08:57:07 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id s6so23949826lfo.13
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Jun 2022 08:57:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=q+Uwlf6qgJvF453WbwLN1jaXprVYO3wmuZLS2RkkxFs=;
-        b=m09w9gwjIR2RAinzDyK8VruLeAVFJvHbrpa+jH7oL4BHaYqSW018C8VDZ5FfT4vyLg
-         kNefBfLJHsDLZlV8RkJKC8ykSn5cgqkyB6k4jQdfBwSycSwz2Y4276a5v4F77KXSferg
-         ZsKhu1CptfVOlueQ7oisLW6pMvU18Zv1B3k7IZq8sAB2opU8HQ1H2/L2XhGAvkO1NjTC
-         mSVFBgdgRwsaDa2j/z3wTMl7LluZzvd7rYgBGxwur8G+FAr0zglFNsEyZlsKhYcP0EWW
-         VJlrkvanXxE7DYNxjSJLAFFpi170XqtRM3xZi4myMc9TxZ/3uTlRHveq0na6un/jV+D5
-         PavA==
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=YdNQsAh0qlk4u0zBBVjDkzwiH9R4DqegW0uwFh+QZew=;
+        b=Ry/wQFW21izQYCGVPxoTTQkGOePxLZ94A6g0x0GNQyIisRWf063vJSA9VrU6GHiNBJ
+         8tX5GNA2Q/evL4mMqDhUdJP/XblS2pNXJtKFL8BB5v4nSP+/BNMhEhM9eY7ndE8sqpEd
+         NkWhDGj2l5I1giLnh5G/k9ykB4AhicZpUHfTpl4a7itRpZQZCBNjxW0TpeS0DEfpLCEq
+         7t7VYoei6nEklWuuJEgdUFWGJf+1zQYE2oQABaGRbJMLdBv33H3GUPn4rT1nEKFh3veh
+         RPLBYhzEFDxkR+/0tKBtIVmloJoLJgeszvSZkxPXZxRz3EfvLAY/vnmGSAsT1MzflzY2
+         jsxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=q+Uwlf6qgJvF453WbwLN1jaXprVYO3wmuZLS2RkkxFs=;
-        b=a3C6JCTYfSF/teONzFUt1fgnGkPmaDP3CB3E78mNAzZJVaQJeUiFkq8nOJDT9U8zj3
-         PTG9onKPwNMtO33logC5ylrnVsKy0Wk32ljvWoh9ahHCpheiFh2/oDONDaAybHYXYh6W
-         DXjDFmcfPJD1p7/Kz1gL64ptQWpB683RW5BepYd0hmRHzij0r1PMwHG7lOlkI3AT79ED
-         rK9SZLRcJDTWz/R0b6jbyZXoE/uTh7ySa0yrk0V9UEtTiOfjyBKkvXVo8uvuPogidNPY
-         jwbSNyuh9vAoVEUK23mdqSRZRq9zg7wfCOoIIgzWphHCdD3Icgmhpcl30+2mR55BqHiL
-         hsKw==
-X-Gm-Message-State: AOAM532wHiYGNMuu5pnnl6zc6ZYyV7LzohwNAAFFMzwvhuEFdLGPOwBW
-        953bSXSdYPY2oYh33vI+YRA=
-X-Google-Smtp-Source: ABdhPJwanu3lq40yFMgYXOPYxN6gLx5qlezisxn9fc6ryWKeN9LAGfPx4pY2ol6YBGm4gXEwZyWM9A==
-X-Received: by 2002:a17:907:1c87:b0:6f0:29ea:cc01 with SMTP id nb7-20020a1709071c8700b006f029eacc01mr22180895ejc.671.1654528968351;
-        Mon, 06 Jun 2022 08:22:48 -0700 (PDT)
-Received: from localhost.localdomain ([138.199.7.159])
-        by smtp.gmail.com with ESMTPSA id b3-20020a170906660300b00711aed17047sm2348128ejp.28.2022.06.06.08.22.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Jun 2022 08:22:47 -0700 (PDT)
-From:   Yassine Oudjana <yassine.oudjana@gmail.com>
-X-Google-Original-From: Yassine Oudjana <y.oudjana@protonmail.com>
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Banajit Goswami <bgoswami@codeaurora.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>
-Cc:     Yassine Oudjana <y.oudjana@protonmail.com>,
-        Yassine Oudjana <yassine.oudjana@gmail.com>,
-        alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] ASoC: wcd9335: Remove RX channel from old list before adding it to a new one
-Date:   Mon,  6 Jun 2022 19:22:26 +0400
-Message-Id: <20220606152226.149164-1-y.oudjana@protonmail.com>
-X-Mailer: git-send-email 2.36.1
+        bh=YdNQsAh0qlk4u0zBBVjDkzwiH9R4DqegW0uwFh+QZew=;
+        b=XsBBzTMKthi6xanYYDcYfMg1juKLp46fgbjQFdBNXUynhH9VzF5hgXKfnjiegkj102
+         cVqnsOefYjFBtj/fXPhBDHPLyaqWbF3/0DnhqtHB0mWRPYmAcWu838CjjYkqWBovR0Y6
+         sOgo+Tre7yCTEa609thmBy25YL+39qzj0Iyphrtxaeyq6PVVIoy+NLqmU8ui9K/nbY3O
+         II5SSQKnKvJR6uxVVP5KtVks5xYB4IPQ0+V2SoK32EqErqqh65Mw5kGTlnlwpSllvUav
+         /MEkSSs08eQO72T1C6fFu/YGTQd6IoafSk6HVoiU30/ZOrXQlwfgAais37mBXem2kyIq
+         S4UQ==
+X-Gm-Message-State: AOAM531qAj3SN88B4dQ7s3n4bnYwhwfO6CgyTfIeRBZbAGaiijpL79tv
+        BvbKjOfNYq8VsAQr4ZZmhXXH3zl88By7OLYL
+X-Google-Smtp-Source: ABdhPJxanyqAWNvCGkqFfFiDr0g6eEVU9GfHoKUKyz3jwWQBwP8oldiA+lJj0xPi8o4Z+6YdMBM3Yw==
+X-Received: by 2002:ac2:5b08:0:b0:479:16ed:e624 with SMTP id v8-20020ac25b08000000b0047916ede624mr11946145lfn.618.1654531025868;
+        Mon, 06 Jun 2022 08:57:05 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id j22-20020a056512345600b00478ed85bc92sm2906342lfr.249.2022.06.06.08.57.04
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 06 Jun 2022 08:57:04 -0700 (PDT)
+Message-ID: <9872153f-8f46-23c3-6eb7-154d20fdee5b@linaro.org>
+Date:   Mon, 6 Jun 2022 18:57:04 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.0
+Subject: Re: [PATCH] arm64: dts: qcom: sm8450: fix interconnects property of
+ UFS node
+Content-Language: en-GB
+To:     Vinod Koul <vkoul@kernel.org>,
+        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+References: <20220310221934.1560729-1-vladimir.zapolskiy@linaro.org>
+ <dbe6d9c5-f717-785f-e65d-baa1328cea2b@linaro.org> <Ykx6NWrcf4IA2Mam@ripper>
+ <CAA8EJpqrJr5RB8E6CQ+cAgp6bad4m_LSG6CPeMsf+Ws0jqFf1Q@mail.gmail.com>
+ <YlTlZa35A4lu02oI@builder.lan>
+ <2af9a8a7-0904-df31-7c1a-21705bcda8d6@linaro.org> <YlVf13E+AI4JAgkp@matsya>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <YlVf13E+AI4JAgkp@matsya>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Yassine Oudjana <y.oudjana@protonmail.com>
+On 12/04/2022 14:17, Vinod Koul wrote:
+> On 12-04-22, 09:34, Vladimir Zapolskiy wrote:
+>> Hi Bjorn,
+>>
+>> On 4/12/22 05:35, Bjorn Andersson wrote:
+>>> On Tue 05 Apr 12:38 CDT 2022, Dmitry Baryshkov wrote:
+>>>
+>>>> On Tue, 5 Apr 2022 at 20:17, Bjorn Andersson <bjorn.andersson@linaro.org> wrote:
+>>>>>
+>>>>> On Tue 05 Apr 08:38 PDT 2022, Dmitry Baryshkov wrote:
+>>>>>
+>>>>>> On 11/03/2022 01:19, Vladimir Zapolskiy wrote:
+>>>>>>> All interconnect device tree nodes on sm8450 are 2-cells, however in
+>>>>>>> UFS node they are handled as 1-cells, fix it.
+>>>>>>>
+>>>>>>> Fixes: aa2d0bf04a3c ("arm64: dts: qcom: sm8450: add interconnect nodes")
+>>>>>>> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+>>>>>>
+>>>>>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>>>>>
+>>>>>> Bjorn, could you please this pick for the -rc kernel?
+>>>>>>
+>>>>>
+>>>>> The change is obviously correct, but what difference does this change
+>>>>> make with the current implementation?
+>>>>
+>>>> it makes interconnect paths probe correctly. All NoC have
+>>>> #interconnec-cells = <2> now.
+>>>>
+>>>
+>>> But there's no code in the UFS driver that calls of_icc_get(), so what
+>>> does this actually do? (Other than correcting the dtb for the day when
+>>> we add that support to the driver).
+>>
+>> FWIW the change also has a runtime effect, it fixes a parsing of the board dtb,
+>> otherwise a warning in the kernel log appears:
+>>
+>>    OF: /soc@0/ufshc@1d84000: could not get #interconnect-cells for /clocks/sleep-clk
+>>
+>> Why /clocks/sleep-clk is mentioned here at all??
+>> Its phandle value is 0x26, which is equal to SLAVE_UFS_MEM_CFG from the array.
+> 
+> We should either apply this fix or a patch to drop this line from dts.
+> Either would be apt and latter would make more sense..
 
-Currently in slim_rx_mux_put, an RX channel gets added to a new list
-even if it is already in one. This can mess up links and make either
-it, the new list head, or both, get linked to the wrong entries.
-This can cause an entry to link to itself which in turn ends up
-making list_for_each_entry in other functions loop infinitely.
-To avoid issues, always remove the RX channel from any list it's in
-before adding it to a new list.
+So, neither of the patches were applied. I'd suggest to apply this one 
+now during the -rc stage.
 
-Signed-off-by: Yassine Oudjana <y.oudjana@protonmail.com>
----
- sound/soc/codecs/wcd9335.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
-
-diff --git a/sound/soc/codecs/wcd9335.c b/sound/soc/codecs/wcd9335.c
-index 617a36a89dfe..597420679505 100644
---- a/sound/soc/codecs/wcd9335.c
-+++ b/sound/soc/codecs/wcd9335.c
-@@ -1289,9 +1289,12 @@ static int slim_rx_mux_put(struct snd_kcontrol *kc,
- 
- 	wcd->rx_port_value[port_id] = ucontrol->value.enumerated.item[0];
- 
-+	/* Remove channel from any list it's in before adding it to a new one */
-+	list_del_init(&wcd->rx_chs[port_id].list);
-+
- 	switch (wcd->rx_port_value[port_id]) {
- 	case 0:
--		list_del_init(&wcd->rx_chs[port_id].list);
-+		/* Channel already removed from lists. Nothing to do here */
- 		break;
- 	case 1:
- 		list_add_tail(&wcd->rx_chs[port_id].list,
 -- 
-2.36.1
-
+With best wishes
+Dmitry
