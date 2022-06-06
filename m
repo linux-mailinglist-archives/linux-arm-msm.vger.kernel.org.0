@@ -2,69 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CD9B553F157
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jun 2022 23:04:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CB87353F16C
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jun 2022 23:09:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229925AbiFFVEM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Jun 2022 17:04:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39432 "EHLO
+        id S234849AbiFFVJ3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Jun 2022 17:09:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44418 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234351AbiFFVEG (ORCPT
+        with ESMTP id S234920AbiFFVJW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Jun 2022 17:04:06 -0400
-Received: from mail-oa1-x35.google.com (mail-oa1-x35.google.com [IPv6:2001:4860:4864:20::35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E536109D
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Jun 2022 13:54:13 -0700 (PDT)
-Received: by mail-oa1-x35.google.com with SMTP id 586e51a60fabf-e93bbb54f9so20604029fac.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Jun 2022 13:54:13 -0700 (PDT)
+        Mon, 6 Jun 2022 17:09:22 -0400
+Received: from mail-oa1-x2c.google.com (mail-oa1-x2c.google.com [IPv6:2001:4860:4864:20::2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5101364D1
+        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Jun 2022 14:09:18 -0700 (PDT)
+Received: by mail-oa1-x2c.google.com with SMTP id 586e51a60fabf-edeb6c3642so20704780fac.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Jun 2022 14:09:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=KZR4S4tS0zB38NFydiChxkC66+hB8f39WxVtHRzvgFU=;
-        b=rH1LfLU1pouy+FGVOvz1daFsN0Q3d9uK80+SC3LnT4b9FdBUuuMwO36myTgh8Wbcye
-         eh+LzYZA0zxTM9RnaxMnYirlm6QcPU6c+76LIP1E1vwcC5JzugEeGmVrYf8Ks/JTwDa3
-         rt4Pu34ZxYNoZYb8kZd6DlDZ2xweSJvR5K9JZl1a8at2FHMiK2X+AILZaGn/jOBm/cXX
-         IvVQjztMNLlZSwNzTV4dLBA/3dBasx8jv6bgBJ3JaG7jqVGmOIch98qQOAO7fFgdIpSt
-         Koh8nZXEoMmLPffhfXNCMXpDSXGOYpNBEbh8RtvPKYC49QLnt0A9qYIEQ6QdP/Fvro1d
-         +Agg==
+        bh=KjZUeR41V+hdVlsqMk8d6AC7MYE0tWAvsjnkRUTqWy0=;
+        b=pFvU4CCOoui9Xxwvj+qmAzvOiXI5aFvbgInYPFz5KR8vAZcLHD+eEK+zBnSYabG76Y
+         MRbf1UnC8j/xo4HYq+uQIv7B4Yo4XSCQVBFX4QN+29ohKySkRHLH8O6dLfXIRcEhoZHk
+         F+kZ7/hlhRgAU6+FKMAK4AcL0Zy1S2foyOzvqfUfQP4ii2fFfQPSFElUi+vip+WNdGs2
+         aJy5/A7s8iEQiAMgum4CAooOH52UZzohQgmE3lxqlDPwx39Z0rbT1T65u5ahuNxZgHri
+         XpAhd6N9EMVKAo2hPVj7k5YB+vDf1PNUK2WXKIL44ij8uok/rG3Qeu7OsWtHTFwEkoJ5
+         kWTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=KZR4S4tS0zB38NFydiChxkC66+hB8f39WxVtHRzvgFU=;
-        b=v2wDyyNfYlQ/wrbHCfsNwMBZM2FTuBHUWGB3XDHefGDEocD5KpF067zEdpstvzwUCf
-         NXJcHVfCnjj25kvDjP/p8ktjxPfhnRW6coRJ/WmeOGHESb2gl4pJzIv+MkMsJYB105Wx
-         xEwiMqNZwsgKCDJWLsmHB+EBsQNvOUktPnjvotHWNoR5daKlFNQyodo6R3/sw4z2VyyF
-         3hgkJjxV+iaE40Zdeoqjvnk5BN2f6C2l6o1LUeXpkJJXUoURYFIZW/puQGCeMA4utho9
-         Vfm/nTEWLu8Onwkd/GW7Bg1idvKkcn6mYCCsgRUnpfqCYuTPHXHBZ9cDvSTUAIpj389e
-         ToyA==
-X-Gm-Message-State: AOAM531tL+qxayITOM+uboxrDX8wYp1/we7EsDlv77WB/wsN3wMDwmFi
-        0ZvwUa+LvCWe5cDAWlMa+5hMKA==
-X-Google-Smtp-Source: ABdhPJx4V+4+mgi3g71iq5hEroP90EmOGF2DT9TGEv3LwcnWMgt6lB9Xsg7jkhKkUaIME4M99jEgXw==
-X-Received: by 2002:a05:6870:8181:b0:f3:2682:ea6b with SMTP id k1-20020a056870818100b000f32682ea6bmr14652136oae.215.1654548852134;
-        Mon, 06 Jun 2022 13:54:12 -0700 (PDT)
+        bh=KjZUeR41V+hdVlsqMk8d6AC7MYE0tWAvsjnkRUTqWy0=;
+        b=X6+OyL0yRQc7W/JgrKZgFXbxCMjyrpfJLGTiUgRp5TDKqqRTl9CGSqSKAqKgPINpB8
+         +3hmXpiu9j4t1Ps/tP8kGiJjj2GKJADhDYA+kqlhvyZDgTRz/QzMGnPMJ5Ri8nvxFGIJ
+         RgPRLYfJ4MY2FyM9YM+Elw4nup7A2AujWxwu3NwrjWMkNscUPUFWv+BlhVi9MZIIzDGy
+         mwO0nkhVM4SU3GgUycxIeAncgq6ObJnFo3Xf+wCM4NnC2NBZ19k23HCxmBMF0vUlUtAk
+         gbQ4fX+q+8u8NK5I3khT+6B5lFLydbM7v8VgmlklR+Va0FkFGpLxu4xw1p7uensue9V2
+         Q7WA==
+X-Gm-Message-State: AOAM5329mwpn0mwAmZIDUv12HdnLOoymKE6YfG7s6aHU4kXViyzrr5wk
+        dhM0yahqAZaX8H/64sG+oGoRSA==
+X-Google-Smtp-Source: ABdhPJyFpCdTs573Aa9BUetYgzmOYdpif+0Pijgsdtagi9smmxL5Z1AK44PHxIkjGftSEl++FYBRGQ==
+X-Received: by 2002:a05:6870:b14c:b0:fa:e853:9a7e with SMTP id a12-20020a056870b14c00b000fae8539a7emr9763440oal.186.1654549757512;
+        Mon, 06 Jun 2022 14:09:17 -0700 (PDT)
 Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id bg10-20020a056820080a00b0040e6e53f6bfsm8928165oob.15.2022.06.06.13.54.11
+        by smtp.gmail.com with ESMTPSA id q28-20020a05683022dc00b0060c00c3fde5sm1108100otc.72.2022.06.06.14.09.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Jun 2022 13:54:11 -0700 (PDT)
-Date:   Mon, 6 Jun 2022 13:56:36 -0700
+        Mon, 06 Jun 2022 14:09:16 -0700 (PDT)
+Date:   Mon, 6 Jun 2022 14:11:41 -0700
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org
-Subject: Re: [RFC PATCH v3 00/30] phy: qcom-qmp: split the QMP PHY driver
-Message-ID: <Yp5qBJUh3T/qTne0@ripper>
-References: <20220602070909.1666068-1-dmitry.baryshkov@linaro.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, Georgi Djakov <djakov@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        Rob Herring <robh@kernel.org>
+Subject: Re: [PATCH v4 1/4] dt-bindings: interconnect: qcom,sdm845-cpu-bwmon:
+ add BWMON device
+Message-ID: <Yp5tjUICIEUptKSx@ripper>
+References: <20220601101140.170504-1-krzysztof.kozlowski@linaro.org>
+ <20220601101140.170504-2-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220602070909.1666068-1-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220601101140.170504-2-krzysztof.kozlowski@linaro.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -72,93 +77,134 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 02 Jun 00:08 PDT 2022, Dmitry Baryshkov wrote:
+On Wed 01 Jun 03:11 PDT 2022, Krzysztof Kozlowski wrote:
 
-> While adding support for the PCIe EP mode support to the QMP driver I
-> couldn't help but notice that the QMP PHY driver has slowly become the a
-> beast with tons of conditions and corner cases being inserted here and
-> there.r
+> Add bindings for the Qualcomm Bandwidth Monitor device providing
+> performance data on interconnects.  The bindings describe only BWMON
+> version 4, e.g. the instance on SDM845 between CPU and Last Level Cache
+> Controller.
 > 
-> This an RFC for an attempt to to cleanup the QMP driver by splitting the
-> QMP PHY driver into five smaller drivers, each targeting a particular
-> family of PHY backends (DP/combo, PCIe, UFS, USB and a separate driver
-> for the MSM8996 PCIe PHY). Yes, this results in some code duplication,
-> but I hope that the end result is still better than the current
-> situation.
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Reviewed-by: Rob Herring <robh@kernel.org>
+> Acked-by: Georgi Djakov <djakov@kernel.org>
+> ---
+>  .../interconnect/qcom,sdm845-cpu-bwmon.yaml   | 97 +++++++++++++++++++
+>  1 file changed, 97 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/interconnect/qcom,sdm845-cpu-bwmon.yaml
 > 
+> diff --git a/Documentation/devicetree/bindings/interconnect/qcom,sdm845-cpu-bwmon.yaml b/Documentation/devicetree/bindings/interconnect/qcom,sdm845-cpu-bwmon.yaml
+> new file mode 100644
+> index 000000000000..8c82e06ee432
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/interconnect/qcom,sdm845-cpu-bwmon.yaml
+> @@ -0,0 +1,97 @@
+> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/interconnect/qcom,sdm845-cpu-bwmon.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Interconnect Bandwidth Monitor
+> +
+> +maintainers:
+> +  - Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> +
+> +description:
+> +  Bandwidth Monitor measures current throughput on buses between various NoC
+> +  fabrics and provides information when it crosses configured thresholds.
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,sdm845-cpu-bwmon       # BWMON v4
 
-With the MODULE_DEVICE_TABLE of the combo PHY corrected, this looks good
-to me.
+It seems the thing that's called bwmon v4 is compatible with a number of
+different platforms, should we add a generic compatible to the binding
+as well, to avoid having to update the implementation for each SoC?
 
-Acked-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-
-Tested-by: Bjorn Andersson <bjorn.andersson@linaro.org> # UFS, PCIe and USB on SC8180X
+(I.e. "qcom,sdm845-cpu-bwmon", "qcom,bwmon-v4")
 
 Regards,
 Bjorn
 
-> Changes since RFC v2:
->  - After dicussion with Vinod, revert back to the approach from RFC v1:
->    copy the source and clean it up rather than creating new drivers from
->    the blank space. This lowers the risc of breaking any of the platforms.
->  - Drop common phy-qcom-qmp-lib.c for now. The goal of this patchseries
->    is to be merged early during the development cycle to unblock further
->    QMP driver development. Additional cleanups and code unification can
->    come up later.
-> 
-> Changes since RFC v1:
->  - Split the patchset to be able to get through the email size
->    limitations
->  - Minor correcions to the split drivers
-> 
-> Dmitry Baryshkov (30):
->   phy: qcom-qmp: create copies of QMP PHY driver
->   phy: qcom-qmp-combo: drop all non-combo compatibles support
->   phy: qcom-qmp-pcie: drop all non-PCIe compatibles support
->   phy: qcom-qmp-pcie-msm8996: drop all compatibles except
->     msm8996-pcie-phy
->   phy: qcom-qmp-ufs: drop all non-UFS compatibles support
->   phy: qcom-qmp-usb: drop all non-USB compatibles support
->   phy: qcom-qmp-combo: change symbol prefix to qcom_qmp_phy_combo
->   phy: qcom-qmp-pcie: change symbol prefix to qcom_qmp_phy_pcie
->   phy: qcom-qmp-pcie: change symbol prefix to qcom_qmp_phy_pcie_msm8996
->   phy: qcom-qmp-ufs: change symbol prefix to qcom_qmp_phy_ufs
->   phy: qcom-qmp-usb: change symbol prefix to qcom_qmp_phy_usb
->   phy: qcom-qmp: switch to new split QMP PHY driver
->   phy: qcom-qmp: drop old QMP PHY driver source
->   phy: qcom-qmp-combo: drop support for PCIe,UFS PHY types
->   phy: qcom-qmp-pcie: drop support for non-PCIe PHY types
->   phy: qcom-qmp-pcie-msm8996: drop support for non-PCIe PHY types
->   phy: qcom-qmp-ufs: drop support for non-UFS PHY types
->   phy: qcom-qmp-usb: drop support for non-USB PHY types
->   phy: qcom-qmp-combo: cleanup the driver
->   phy: qcom-qmp-pcie: cleanup the driver
->   phy: qcom-qmp-pcie-msm8996: cleanup the driver
->   phy: qcom-qmp-ufs: cleanup the driver
->   phy: qcom-qmp-usb: cleanup the driver
->   phy: qcom-qmp-pcie: drop multi-PHY support
->   phy: qcom-qmp-ufs: drop multi-PHY support
->   phy: qcom-qmp-usb: drop multi-PHY support
->   phy: qcom-qmp-combo: use bulk reset_control API
->   phy: qcom-qmp-pcie: use bulk reset_control API
->   phy: qcom-qmp-pcie-msm8996: use bulk reset_control API
->   phy: qcom-qmp-usb: use bulk reset_control API
-> 
->  drivers/phy/qualcomm/Makefile                 |    8 +-
->  drivers/phy/qualcomm/phy-qcom-qmp-combo.c     | 2579 +++++++
->  .../phy/qualcomm/phy-qcom-qmp-pcie-msm8996.c  | 1081 +++
->  drivers/phy/qualcomm/phy-qcom-qmp-pcie.c      | 2404 +++++++
->  drivers/phy/qualcomm/phy-qcom-qmp-ufs.c       | 1390 ++++
->  drivers/phy/qualcomm/phy-qcom-qmp-usb.c       | 2751 +++++++
->  drivers/phy/qualcomm/phy-qcom-qmp.c           | 6350 -----------------
->  7 files changed, 10212 insertions(+), 6351 deletions(-)
->  create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-combo.c
->  create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-pcie-msm8996.c
->  create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
->  create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
->  create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-usb.c
->  delete mode 100644 drivers/phy/qualcomm/phy-qcom-qmp.c
-> 
+> +
+> +  interconnects:
+> +    maxItems: 2
+> +
+> +  interconnect-names:
+> +    items:
+> +      - const: ddr
+> +      - const: l3c
+> +
+> +  interrupts:
+> +    maxItems: 1
+> +
+> +  operating-points-v2: true
+> +  opp-table: true
+> +
+> +  reg:
+> +    # Currently described BWMON v4 and v5 use one register address space.
+> +    # BWMON v2 uses two register spaces - not yet described.
+> +    maxItems: 1
+> +
+> +required:
+> +  - compatible
+> +  - interconnects
+> +  - interconnect-names
+> +  - interrupts
+> +  - operating-points-v2
+> +  - opp-table
+> +  - reg
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/interconnect/qcom,osm-l3.h>
+> +    #include <dt-bindings/interconnect/qcom,sdm845.h>
+> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +
+> +    pmu@1436400 {
+> +        compatible = "qcom,sdm845-cpu-bwmon";
+> +        reg = <0x01436400 0x600>;
+> +
+> +        interrupts = <GIC_SPI 581 IRQ_TYPE_LEVEL_HIGH>;
+> +
+> +        interconnects = <&gladiator_noc MASTER_APPSS_PROC 3 &mem_noc SLAVE_EBI1 3>,
+> +                        <&osm_l3 MASTER_OSM_L3_APPS &osm_l3 SLAVE_OSM_L3>;
+> +        interconnect-names = "ddr", "l3c";
+> +
+> +        operating-points-v2 = <&cpu_bwmon_opp_table>;
+> +
+> +        cpu_bwmon_opp_table: opp-table {
+> +            compatible = "operating-points-v2";
+> +
+> +            opp-0 {
+> +                opp-peak-kBps = <800000 4800000>;
+> +            };
+> +            opp-1 {
+> +                opp-peak-kBps = <1804000 9216000>;
+> +            };
+> +            opp-2 {
+> +                opp-peak-kBps = <2188000 11980800>;
+> +            };
+> +            opp-3 {
+> +                opp-peak-kBps = <3072000 15052800>;
+> +            };
+> +            opp-4 {
+> +                opp-peak-kBps = <4068000 19353600>;
+> +            };
+> +            opp-5 {
+> +                opp-peak-kBps = <5412000 20889600>;
+> +            };
+> +            opp-6 {
+> +                opp-peak-kBps = <6220000 22425600>;
+> +            };
+> +            opp-7 {
+> +                opp-peak-kBps = <7216000 25497600>;
+> +            };
+> +        };
+> +    };
 > -- 
-> 2.35.1
+> 2.34.1
 > 
