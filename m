@@ -2,339 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0682953E82E
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jun 2022 19:08:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BD1E853E5FF
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jun 2022 19:06:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238770AbiFFNUq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Jun 2022 09:20:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57304 "EHLO
+        id S238667AbiFFNXi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Jun 2022 09:23:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43196 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238760AbiFFNUp (ORCPT
+        with ESMTP id S238649AbiFFNXi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Jun 2022 09:20:45 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 458772E2992
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Jun 2022 06:20:41 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id q7so19848826wrg.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Jun 2022 06:20:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=r2R9jG8Kr9X9kmtbyt2WFDnM8NcZdvgcAwzUcSJYgjw=;
-        b=qzJbkgoAry6y5ooent4QLmsA0cRCNFEoLRGjDr98rD999MqAsUN6QjVZpNJXZyo+hK
-         C6uN3cBDa1i+8ZtIhzwcOa7zLsYP/HsK0OQlEK9fBtuEYe3SVb++Cq6OWVDyJS4I1kQC
-         ch2ojPl4WGIvQXB2UlSjDPFGoXfWiw/kq6DExOEbJkI5y4PU6bQU8rkehsmiSkicKqal
-         9hy3xDwP3skiJHYRGIhTAKQM0z8g6kTVZaEZkXmLoCl6na3/adiZRqHR+pOnZGbufR1t
-         ARq0dzV39wxuKVMLcEDG69thomCWRIR3ZAre7w7Swd5lAGAq3ZaKq4tJZwiP4EUeyKTl
-         rFiA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=r2R9jG8Kr9X9kmtbyt2WFDnM8NcZdvgcAwzUcSJYgjw=;
-        b=A6AWU/16dKz9HBC77gBzD2nmkPc245dP6ondEPj0v9m+FDsnxchBQutV+/p72/dqTw
-         UPz/IOPA7v0TpcQwyLa89sqn6dl7V8xHCohnDTQiCZiXaDvDhvcbRr7Mls1O4eTOXV1A
-         +PxbiJj2kHSqAKRH5DWTB3RPblZBz6UoBZ0RPaARdYrBMhTZPpwle/A4jv+9FgwfNjwv
-         nKFoR4eI1NlgdPDPoBe6vVr/K0zfCtPrFe2amuNpr3Q7tt/tW1zyruRv24PGT3QgII6l
-         dFSBNu1IMZ00KZNSio05fopjoqWOvCg7yyGDSatZqbi1lXb5pcqp/1LfSUg2RSz9gaay
-         iVkg==
-X-Gm-Message-State: AOAM530iLSTFtCLR6EWDH0ylaY4gPGyw1y8wbyNd7PhLaI/ijLETLSrN
-        jjYrZsJ/x/brhrgzmYh307xwLxqZUGkgjwkC
-X-Google-Smtp-Source: ABdhPJzWoxTMK/JV0TvFWOsbiyvdmQ5ev4T6j/uZCIl+bI0dO66TkLxqsbDT345zmVf/uJBC+xcnXQ==
-X-Received: by 2002:a5d:5952:0:b0:217:a419:c417 with SMTP id e18-20020a5d5952000000b00217a419c417mr7367967wri.641.1654521639416;
-        Mon, 06 Jun 2022 06:20:39 -0700 (PDT)
-Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id i12-20020a05600c354c00b0039765a7add4sm21077810wmq.29.2022.06.06.06.20.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Jun 2022 06:20:38 -0700 (PDT)
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-To:     linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
-        mchehab@kernel.org, hverkuil@xs4all.nl, robert.foss@linaro.org
-Cc:     jonathan@marek.ca, andrey.konovalov@linaro.org,
-        todor.too@gmail.com, agross@kernel.org, bjorn.andersson@linaro.org,
-        jgrahsl@snap.com, hfink@snap.com, vladimir.zapolskiy@linaro.org,
-        dmitry.baryshkov@linaro.org, konrad.dybcio@somainline.org,
-        bryan.odonoghue@linaro.org
-Subject: [PATCH v3 5/5] arm64: dts: qcom: sdm845-db845c-navigation-mezzanine: Add navigation mezzanine dts
-Date:   Mon,  6 Jun 2022 14:20:29 +0100
-Message-Id: <20220606132029.2221257-6-bryan.odonoghue@linaro.org>
+        Mon, 6 Jun 2022 09:23:38 -0400
+Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1216426AE4;
+        Mon,  6 Jun 2022 06:23:36 -0700 (PDT)
+Received: from g550jk.arnhem.chello.nl (31-151-115-246.dynamic.upc.nl [31.151.115.246])
+        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 0BBFCCCD41;
+        Mon,  6 Jun 2022 13:23:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
+        t=1654521815; bh=SugJZ3N7itj+AQjc/th4lWFZxXLSDruuiFiYAcg6tgU=;
+        h=From:To:Cc:Subject:Date;
+        b=pTGmjpsnb+e9O7cE+ctoCkP1rhL3sx4dgInO6z/RDCUs97pMU0OMKKIkBmbmAfl/e
+         jwsfnTmYSYUCHBmj3W63iL2OZ89fcCCFO0NMRngU9LH2oReLYNQFaoRh30ALGdsL6D
+         4fHh/DJrYJLHU2WPLj0KoaYYs7TTRrQO8gA3P+xE=
+From:   Luca Weiss <luca@z3ntu.xyz>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Luca Weiss <luca@z3ntu.xyz>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] dt-bindings: remoteproc: qcom: q6v5: fix example
+Date:   Mon,  6 Jun 2022 15:23:24 +0200
+Message-Id: <20220606132324.1497349-1-luca@z3ntu.xyz>
 X-Mailer: git-send-email 2.36.1
-In-Reply-To: <20220606132029.2221257-1-bryan.odonoghue@linaro.org>
-References: <20220606132029.2221257-1-bryan.odonoghue@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FROM_SUSPICIOUS_NTLD,
+        FROM_SUSPICIOUS_NTLD_FP,PDS_OTHER_BAD_TLD,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Level: **
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Move the dts data for the rb3 navigation mezzanine into its own dts file.
+Use the node in the examples that is present in msm8974.dtsi, which uses
+proper flags for the interrupts and add required 'xo' clock among
+others.
 
-Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
 ---
- arch/arm64/boot/dts/qcom/Makefile             |   1 +
- .../sdm845-db845c-navigation-mezzanine.dts    | 115 ++++++++++++++++++
- arch/arm64/boot/dts/qcom/sdm845-db845c.dts    | 106 ----------------
- 3 files changed, 116 insertions(+), 106 deletions(-)
- create mode 100644 arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dts
+ .../bindings/remoteproc/qcom,q6v5.txt         | 41 +++++++++++--------
+ 1 file changed, 23 insertions(+), 18 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 86e6801a9c29..2561c419f3ef 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -101,6 +101,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-cheza-r1.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-cheza-r2.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-cheza-r3.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-db845c.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-db845c-navigation-mezzanine.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-mtp.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-oneplus-enchilada.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-oneplus-fajita.dtb
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dts
-new file mode 100644
-index 000000000000..565675d644c5
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dts
-@@ -0,0 +1,115 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * Copyright (c) 2022, Linaro Ltd.
-+ */
-+
-+/dts-v1/;
-+
-+#include "sdm845-db845c.dts"
-+
-+&cci {
-+	status = "okay";
-+};
-+
-+&camss {
-+	vdda-supply = <&vreg_l1a_0p875>;
-+
-+	status = "ok";
-+
-+	ports {
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+		port@0 {
-+			reg = <0>;
-+			csiphy0_ep: endpoint {
-+				data-lanes = <0 1 2 3>;
-+				remote-endpoint = <&ov8856_ep>;
-+			};
-+		};
-+	};
-+};
-+
-+&cci_i2c0 {
-+	camera@10 {
-+		compatible = "ovti,ov8856";
-+		reg = <0x10>;
-+
-+		// CAM0_RST_N
-+		reset-gpios = <&tlmm 9 GPIO_ACTIVE_LOW>;
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&cam0_default>;
-+		gpios = <&tlmm 13 0>,
-+			<&tlmm 9 GPIO_ACTIVE_LOW>;
-+
-+		clocks = <&clock_camcc CAM_CC_MCLK0_CLK>;
-+		clock-names = "xvclk";
-+		clock-frequency = <19200000>;
-+
-+		/* The &vreg_s4a_1p8 trace is powered on as a,
-+		 * so it is represented by a fixed regulator.
-+		 *
-+		 * The 2.8V vdda-supply and 1.2V vddd-supply regulators
-+		 * both have to be enabled through the power management
-+		 * gpios.
-+		 */
-+		power-domains = <&clock_camcc TITAN_TOP_GDSC>;
-+
-+		dovdd-supply = <&vreg_lvs1a_1p8>;
-+		avdd-supply = <&cam0_avdd_2v8>;
-+		dvdd-supply = <&cam0_dvdd_1v2>;
-+
-+		status = "ok";
-+
-+		port {
-+			ov8856_ep: endpoint {
-+				link-frequencies = /bits/ 64
-+					<360000000 180000000>;
-+				data-lanes = <1 2 3 4>;
-+				remote-endpoint = <&csiphy0_ep>;
-+			};
-+		};
-+	};
-+};
-+
-+&cci_i2c1 {
-+	camera@60 {
-+		compatible = "ovti,ov7251";
-+
-+		// I2C address as per ov7251.txt linux documentation
-+		reg = <0x60>;
-+
-+		// CAM3_RST_N
-+		enable-gpios = <&tlmm 21 0>;
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&cam3_default>;
-+		gpios = <&tlmm 16 0>,
-+			<&tlmm 21 0>;
-+
-+		clocks = <&clock_camcc CAM_CC_MCLK3_CLK>;
-+		clock-names = "xclk";
-+		clock-frequency = <24000000>;
-+
-+		/* The &vreg_s4a_1p8 trace always powered on.
-+		 *
-+		 * The 2.8V vdda-supply regulator is enabled when the
-+		 * vreg_s4a_1p8 trace is pulled high.
-+		 * It too is represented by a fixed regulator.
-+		 *
-+		 * No 1.2V vddd-supply regulator is used.
-+		 */
-+		power-domains = <&clock_camcc TITAN_TOP_GDSC>;
-+
-+		vdddo-supply = <&vreg_lvs1a_1p8>;
-+		vdda-supply = <&cam3_avdd_2v8>;
-+
-+		status = "disable";
-+
-+		port {
-+			ov7251_ep: endpoint {
-+				data-lanes = <0 1>;
-+//				remote-endpoint = <&csiphy3_ep>;
-+			};
-+		};
-+	};
-+};
-+
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-index 194ebeb3259c..faf1e9c7f24b 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-@@ -1139,112 +1139,6 @@ &pm8998_gpio {
+diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,q6v5.txt b/Documentation/devicetree/bindings/remoteproc/qcom,q6v5.txt
+index b677900b3aae..f861862b9770 100644
+--- a/Documentation/devicetree/bindings/remoteproc/qcom,q6v5.txt
++++ b/Documentation/devicetree/bindings/remoteproc/qcom,q6v5.txt
+@@ -257,29 +257,23 @@ related to the Hexagon.  See ../soc/qcom/qcom,smd.yaml and
+ The following example describes the resources needed to boot control the
+ Hexagon, as it is found on MSM8974 boards.
  
- };
+-	modem-rproc@fc880000 {
+-		compatible = "qcom,q6v5-pil";
+-		reg = <0xfc880000 0x100>,
+-		      <0xfc820000 0x020>;
++	remoteproc@fc880000 {
++		compatible = "qcom,msm8974-mss-pil";
++		reg = <0xfc880000 0x100>, <0xfc820000 0x020>;
+ 		reg-names = "qdsp6", "rmb";
  
--&cci {
--	status = "okay";
--};
+-		interrupts-extended = <&intc 0 24 1>,
+-				      <&modem_smp2p_in 0 0>,
+-				      <&modem_smp2p_in 1 0>,
+-				      <&modem_smp2p_in 2 0>,
+-				      <&modem_smp2p_in 3 0>;
+-		interrupt-names = "wdog",
+-				  "fatal",
+-				  "ready",
+-				  "handover",
+-				  "stop-ack";
++		interrupts-extended = <&intc GIC_SPI 24 IRQ_TYPE_EDGE_RISING>,
++				      <&modem_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
++				      <&modem_smp2p_in 1 IRQ_TYPE_EDGE_RISING>,
++				      <&modem_smp2p_in 2 IRQ_TYPE_EDGE_RISING>,
++				      <&modem_smp2p_in 3 IRQ_TYPE_EDGE_RISING>;
++		interrupt-names = "wdog", "fatal", "ready", "handover", "stop-ack";
+ 
+ 		clocks = <&gcc GCC_MSS_Q6_BIMC_AXI_CLK>,
+ 			 <&gcc GCC_MSS_CFG_AHB_CLK>,
+-			 <&gcc GCC_BOOT_ROM_AHB_CLK>;
+-		clock-names = "iface", "bus", "mem";
 -
--&camss {
--	vdda-supply = <&vreg_l1a_0p875>;
--
--	status = "ok";
--
--	ports {
--		#address-cells = <1>;
--		#size-cells = <0>;
--		port@0 {
--			reg = <0>;
--			csiphy0_ep: endpoint {
--				data-lanes = <0 1 2 3>;
--				remote-endpoint = <&ov8856_ep>;
--			};
--		};
--	};
--};
--
--&cci_i2c0 {
--	camera@10 {
--		compatible = "ovti,ov8856";
--		reg = <0x10>;
--
--		// CAM0_RST_N
--		reset-gpios = <&tlmm 9 GPIO_ACTIVE_LOW>;
--		pinctrl-names = "default";
--		pinctrl-0 = <&cam0_default>;
--		gpios = <&tlmm 13 0>,
--			<&tlmm 9 GPIO_ACTIVE_LOW>;
--
--		clocks = <&clock_camcc CAM_CC_MCLK0_CLK>;
--		clock-names = "xvclk";
--		clock-frequency = <19200000>;
--
--		/* The &vreg_s4a_1p8 trace is powered on as a,
--		 * so it is represented by a fixed regulator.
--		 *
--		 * The 2.8V vdda-supply and 1.2V vddd-supply regulators
--		 * both have to be enabled through the power management
--		 * gpios.
--		 */
--		power-domains = <&clock_camcc TITAN_TOP_GDSC>;
--
--		dovdd-supply = <&vreg_lvs1a_1p8>;
--		avdd-supply = <&cam0_avdd_2v8>;
--		dvdd-supply = <&cam0_dvdd_1v2>;
--
--		status = "ok";
--
--		port {
--			ov8856_ep: endpoint {
--				link-frequencies = /bits/ 64
--					<360000000 180000000>;
--				data-lanes = <1 2 3 4>;
--				remote-endpoint = <&csiphy0_ep>;
--			};
--		};
--	};
--};
--
--&cci_i2c1 {
--	camera@60 {
--		compatible = "ovti,ov7251";
--
--		// I2C address as per ov7251.txt linux documentation
--		reg = <0x60>;
--
--		// CAM3_RST_N
--		enable-gpios = <&tlmm 21 0>;
--		pinctrl-names = "default";
--		pinctrl-0 = <&cam3_default>;
--		gpios = <&tlmm 16 0>,
--			<&tlmm 21 0>;
--
--		clocks = <&clock_camcc CAM_CC_MCLK3_CLK>;
--		clock-names = "xclk";
--		clock-frequency = <24000000>;
--
--		/* The &vreg_s4a_1p8 trace always powered on.
--		 *
--		 * The 2.8V vdda-supply regulator is enabled when the
--		 * vreg_s4a_1p8 trace is pulled high.
--		 * It too is represented by a fixed regulator.
--		 *
--		 * No 1.2V vddd-supply regulator is used.
--		 */
--		power-domains = <&clock_camcc TITAN_TOP_GDSC>;
--
--		vdddo-supply = <&vreg_lvs1a_1p8>;
--		vdda-supply = <&cam3_avdd_2v8>;
--
--		status = "disable";
--
--		port {
--			ov7251_ep: endpoint {
--				data-lanes = <0 1>;
--//				remote-endpoint = <&csiphy3_ep>;
--			};
--		};
--	};
--};
--
- /* PINCTRL - additions to nodes defined in sdm845.dtsi */
- &qup_spi0_default {
- 	config {
+-		qcom,halt-regs = <&tcsr_mutex_block 0x1180 0x1200 0x1280>;
++			 <&gcc GCC_BOOT_ROM_AHB_CLK>,
++			 <&xo_board>;
++		clock-names = "iface", "bus", "mem", "xo";
+ 
+ 		resets = <&gcc GCC_MSS_RESTART>;
+ 		reset-names = "mss_restart";
+@@ -289,6 +283,8 @@ Hexagon, as it is found on MSM8974 boards.
+ 		mx-supply = <&pm8841_s1>;
+ 		pll-supply = <&pm8941_l12>;
+ 
++		qcom,halt-regs = <&tcsr_mutex_block 0x1180 0x1200 0x1280>;
++
+ 		qcom,smem-states = <&modem_smp2p_out 0>;
+ 		qcom,smem-state-names = "stop";
+ 
+@@ -299,4 +295,13 @@ Hexagon, as it is found on MSM8974 boards.
+ 		mpss {
+ 			memory-region = <&mpss_region>;
+ 		};
++
++		smd-edge {
++			interrupts = <GIC_SPI 25 IRQ_TYPE_EDGE_RISING>;
++
++			qcom,ipc = <&apcs 8 12>;
++			qcom,smd-edge = <0>;
++
++			label = "modem";
++		};
+ 	};
 -- 
 2.36.1
 
