@@ -2,76 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CEB5853EF0E
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jun 2022 22:00:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4604C53EF45
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jun 2022 22:12:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232710AbiFFUAK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Jun 2022 16:00:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56948 "EHLO
+        id S233133AbiFFUML (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Jun 2022 16:12:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52920 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233213AbiFFUAA (ORCPT
+        with ESMTP id S233178AbiFFUMH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Jun 2022 16:00:00 -0400
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B0AA33E23
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Jun 2022 12:59:58 -0700 (PDT)
-Received: by mail-ej1-x62a.google.com with SMTP id s12so23816935ejx.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Jun 2022 12:59:58 -0700 (PDT)
+        Mon, 6 Jun 2022 16:12:07 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BE9B139AEC
+        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Jun 2022 13:12:02 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id fu3so29591171ejc.7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Jun 2022 13:12:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=MyBIlHlvNnNukF5G0n9+2AGCAoU99vx7TpccBzJvzGk=;
-        b=Dh6hO/bbO4U7Wwjb0yjg8aPpKaeV3WtXIWRnsKFRLoP0wSC2DM18KCiugxyQqZJ10I
-         pTVrCF0N8YsZZ4QCHy5byDFsKoikoMIiyGJrR/ZPKOaxg7Q6/8yEw3SvECCrOR2jPYW+
-         G3qmInSfX+VJqatxbhHuEet40CcCHXPRZks0A=
+        bh=HCWIcD+SfRMw/M9RRt+jg58AphPseq4gfsJ1F6OVZZU=;
+        b=L64JkmvDNh1FIACsNToXduJszZ5RYI3mnVnXlEJgBMBcVUIJznBmtDp/P0EKumXSX/
+         zad6k3tZainA3cYz+aKtsb03+xotN0Og3MtfFmorTrxvRWwPwuEKwx8H4Vj5ghwhAf3G
+         CWzDhBbC4GdfPTWfSGrqktycegGjlYT4PyutU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=MyBIlHlvNnNukF5G0n9+2AGCAoU99vx7TpccBzJvzGk=;
-        b=MMUw732VG8MLADRSYiBuV1EtfOiBE4LsspN/Nw/K+0izPZtrDmVXIypMcC0ILMesc7
-         UaXHx8LBRoUpoGTbW4rP4KHveVdG1LiimNsYKMCN35z//8g6yqBcM4RAOMWlRPX6cOCb
-         wHShcF+LdQ/jeYX3S7AyKHv4zFsTRRp6aCzaEYgHKIEKLr+lV9QAcY/5N6UzkkmR6JZf
-         rcL6k3kh4v6TAYqvPEm39ILKqT03UBbE29bsHhdwT9HpySRjc9gSQ2eiwaXN1zhaDMIU
-         z8Ftr6XydJddHA/Q+BHtePzlXGPiaUlrzATyrboexvmstMemQJXr5th1Y/RliZtjjA0Z
-         2J3Q==
-X-Gm-Message-State: AOAM531RfWiyj6quMyfM4lz4RGZYyJ+J12VyLlw3r+8t/o+UxDgWvvmL
-        oLMTEm2OY0BpjEub+sA+8Lrtbwjw39ZiDHTI6Uk=
-X-Google-Smtp-Source: ABdhPJwKSVzG8lWs+l+yR19ONa+ssLP0hU4rdgL8/r/bWSZ/Fh+4NJ2FMcVgVjo8lgNHy48V2f4XjQ==
-X-Received: by 2002:a17:906:d550:b0:704:7ba6:9854 with SMTP id cr16-20020a170906d55000b007047ba69854mr22739666ejc.579.1654545596409;
-        Mon, 06 Jun 2022 12:59:56 -0700 (PDT)
-Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com. [209.85.221.49])
-        by smtp.gmail.com with ESMTPSA id i2-20020a056402054200b004315050d7dfsm3010004edx.81.2022.06.06.12.59.55
+        bh=HCWIcD+SfRMw/M9RRt+jg58AphPseq4gfsJ1F6OVZZU=;
+        b=Y9Hlg/dvzGpHD1+ak3Oc8j8V9CrvMlIQ+MaPtcaFCvJ3990HabJXBWPYqYrZKQeHct
+         UEJmgfY9szIlKJHBj24lIaCkKNYRJY3ZEcBlxA6hGYcxsysdSgq290eIo1myJ67OY2FN
+         GYEbLKFXwTwjTzlZMWAAeiXg8A1puq9qZMstxQWnSzIzHh/kyVgfdqaXSHx3yEv8hxK5
+         nDPq7myUfEBKWQmVPg7cyno8mp9KGGx5AiDb4//EFWxuBjQF+uA+EFgaf20BhvW+GhRG
+         99796TS6E8fgynLnWiB7cW/FQBUQ17fLpEmW0DmZELvQNlDgxQlpLZE/9QWCw4Nm8Bf3
+         zYXw==
+X-Gm-Message-State: AOAM531rrxF3p5IbT4zzAEv3AKbOut3dQO+e8H2Cmqag1145zL5Qpx1/
+        PMJO9MIzd2Qnv7Ujv0hcdqGG5m3uuEmyNhG00eQ=
+X-Google-Smtp-Source: ABdhPJySnGlAEMqamSn+Vx86JjbLLcRzJ07fpHVbhJR69TRBDGDy5BlU4duhl8LW2CjU/euFgURXdA==
+X-Received: by 2002:a17:907:9815:b0:703:bdb0:9e6b with SMTP id ji21-20020a170907981500b00703bdb09e6bmr23776563ejc.731.1654546320806;
+        Mon, 06 Jun 2022 13:12:00 -0700 (PDT)
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com. [209.85.128.54])
+        by smtp.gmail.com with ESMTPSA id a14-20020a170906368e00b006fec5cef701sm6684279ejc.197.2022.06.06.13.11.59
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 06 Jun 2022 12:59:55 -0700 (PDT)
-Received: by mail-wr1-f49.google.com with SMTP id p10so21235148wrg.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Jun 2022 12:59:55 -0700 (PDT)
-X-Received: by 2002:a05:6000:1685:b0:218:45f0:5be6 with SMTP id
- y5-20020a056000168500b0021845f05be6mr4306754wrd.301.1654545595132; Mon, 06
- Jun 2022 12:59:55 -0700 (PDT)
+        Mon, 06 Jun 2022 13:12:00 -0700 (PDT)
+Received: by mail-wm1-f54.google.com with SMTP id z17so3373731wmi.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Jun 2022 13:11:59 -0700 (PDT)
+X-Received: by 2002:a05:600c:591:b0:39c:4544:b814 with SMTP id
+ o17-20020a05600c059100b0039c4544b814mr14648542wmd.118.1654546319242; Mon, 06
+ Jun 2022 13:11:59 -0700 (PDT)
 MIME-Version: 1.0
-References: <1654021066-13341-1-git-send-email-quic_vnivarth@quicinc.com>
- <CAD=FV=UF3x5RHrQH-m1X-4kQSsKiufLnkew=VuJz7W9EAi3GHQ@mail.gmail.com>
- <5d950007-7a92-a41b-e569-79e806adb06a@quicinc.com> <CAD=FV=Xm1LJEoU5dKa5pMgqsHuAXuFVpdHvc1REULhAKTPbGnQ@mail.gmail.com>
- <ad393ad2-a247-3c61-5033-185d39b5596d@quicinc.com> <CAD=FV=XD+LozhkJZp0C7RUO01T-XuqBA-SJ0EQeyvGk0CxC3JQ@mail.gmail.com>
- <e677fd02-011f-4f4e-fa73-17dc96aea7d0@quicinc.com>
-In-Reply-To: <e677fd02-011f-4f4e-fa73-17dc96aea7d0@quicinc.com>
+References: <20220601112302.v4.1.I31ec454f8d4ffce51a7708a8092f8a6f9c929092@changeid>
+In-Reply-To: <20220601112302.v4.1.I31ec454f8d4ffce51a7708a8092f8a6f9c929092@changeid>
 From:   Doug Anderson <dianders@chromium.org>
-Date:   Mon, 6 Jun 2022 12:59:43 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=UzjnEjMTLTRVXTrz6aoiBymJtnJ1o8dzPN9hn0Be3tng@mail.gmail.com>
-Message-ID: <CAD=FV=UzjnEjMTLTRVXTrz6aoiBymJtnJ1o8dzPN9hn0Be3tng@mail.gmail.com>
-Subject: Re: [PATCH] tty: serial: qcom-geni-serial: minor fixes to get_clk_div_rate()
-To:     Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jiri Slaby <jirislaby@kernel.org>,
+Date:   Mon, 6 Jun 2022 13:11:47 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=VKWNeXzDZ=DdXi=U218xghLJAeAQah_uFOjM9WrGZ5sQ@mail.gmail.com>
+Message-ID: <CAD=FV=VKWNeXzDZ=DdXi=U218xghLJAeAQah_uFOjM9WrGZ5sQ@mail.gmail.com>
+Subject: Re: [PATCH v4] drm/probe-helper: Default to 640x480 if no EDID on DP
+To:     dri-devel <dri-devel@lists.freedesktop.org>,
+        Daniel Vetter <daniel@ffwll.ch>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-serial@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>,
-        quic_msavaliy@quicinc.com, Matthias Kaehlcke <mka@chromium.org>,
-        Stephen Boyd <swboyd@chromium.org>
+        Stephen Boyd <swboyd@chromium.org>,
+        =?UTF-8?B?VmlsbGUgU3lyasOkbMOk?= <ville.syrjala@linux.intel.com>,
+        Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
+        "Kuogee Hsieh (QUIC)" <quic_khsieh@quicinc.com>,
+        "Abhinav Kumar (QUIC)" <quic_abhinavk@quicinc.com>,
+        Rob Clark <robdclark@gmail.com>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Jani Nikula <jani.nikula@linux.intel.com>,
+        "Aravind Venkateswaran (QUIC)" <quic_aravindh@quicinc.com>,
+        David Airlie <airlied@linux.ie>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
@@ -85,159 +90,68 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hi,
 
-On Mon, Jun 6, 2022 at 11:19 AM Vijaya Krishna Nivarthi
-<quic_vnivarth@quicinc.com> wrote:
+On Wed, Jun 1, 2022 at 11:23 AM Douglas Anderson <dianders@chromium.org> wrote:
 >
-> Hi,
+> If we're unable to read the EDID for a display because it's corrupt /
+> bogus / invalid then we'll add a set of standard modes for the
+> display. Since we have no true information about the connected
+> display, these modes are essentially guesses but better than nothing.
+> At the moment, none of the modes returned is marked as preferred, but
+> the modes are sorted such that the higher resolution modes are listed
+> first.
 >
+> When userspace sees these modes presented by the kernel it needs to
+> figure out which one to pick. At least one userspace, ChromeOS [1]
+> seems to use the rules (which seem pretty reasonable):
+> 1. Try to pick the first mode marked as preferred.
+> 2. Try to pick the mode which matches the first detailed timing
+>    descriptor in the EDID.
+> 3. If no modes were marked as preferred then pick the first mode.
 >
-> On 6/4/2022 12:10 AM, Doug Anderson wrote:
-> > Hi,
-> >
-> > On Fri, Jun 3, 2022 at 10:43 AM Vijaya Krishna Nivarthi
-> > <quic_vnivarth@quicinc.com> wrote:
-> >>
-> >> Ah, or I guess what you're saying is that the table historically
-> >> contained "rounded" rates but that clk_round_rate() isn't returning
-> >> nice round rates. OK, but if we truly want to support an inexact
-> >> match, you'd want to pick the rate that reduces the error, not just
-> >> pick the first one. In other words, something like this (untested):
-> >>
-> >> freq = clk_round_rate(clk, mult);
-> >> diff = abs(((long)mult - freq) / div);
-> >> if (diff < best_diff) {
-> >>     best_diff = diff;
-> >>     ser_clk = freq;
-> >>     best_div = div;
-> >> }
-> >> I am not sure if its required that freq is a multiple of best_div now
-> >> that we don't have a multiple of desired_clk anyway.
-> > How about just this (untested):
-> >
-> > freq = clk_round_rate(clk, mult);
-> > candidate_div = max(1, DIV_ROUND_CLOSEST(freq, desired_clk));
-> > candidate_freq = freq / candidate_div;
-> > diff = abs((long)desired_clk - candidate_freq);
-> > if (diff < best_diff) {
-> >    best_diff = diff;
-> >    ser_clk = freq;
-> >    best_div = candidate_div;
-> > }
+> Unfortunately, userspace's rules combined with what the kernel is
+> doing causes us to fail section 4.2.2.6 (EDID Corruption Detection) of
+> the DP 1.4a Link CTS. That test case says that, while it's OK to allow
+> some implementation-specific fall-back modes if the EDID is bad that
+> userspace should _default_ to 640x480.
 >
-> I am afraid this still doesn't guarantee that ser_clk is a multiple of
-> best_div
+> Let's fix this by marking 640x480 as default for DP in the no-EDID
+> case.
+>
+> NOTES:
+> - In the discussion around v3 of this patch [2] there was talk about
+>   solving this in userspace and I even implemented a patch that would
+>   have solved this for ChromeOS, but then the discussion turned back
+>   to solving this in the kernel.
+> - Also in the discussion of v3 [2] it was requested to limit this
+> 83;40900;0c  change to just DP since folks were worried that it would break some
+>   subtle corner case on VGA or HDMI.
+>
+> [1] https://source.chromium.org/chromium/chromium/src/+/a051f741d0a15caff2251301efe081c30e0f4a96:ui/ozone/platform/drm/common/drm_util.cc;l=488
+> [2] https://lore.kernel.org/r/20220513130533.v3.1.I31ec454f8d4ffce51a7708a8092f8a6f9c929092@changeid
+>
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> ---
+> I put Abhinav's Reviewed-by tag from v2 here since this is nearly the
+> same as v2. Hope this is OK.
+>
+> Changes in v4:
+> - Code is back to v2, but limit to just DP.
+> - Beefed up the commit message.
+>
+> Changes in v3:
+> - Don't set preferred, just disable the sort.
+>
+> Changes in v2:
+> - Don't modify drm_add_modes_noedid() 'cause that'll break others
+> - Set 640x480 as preferred in drm_helper_probe_single_connector_modes()
+>
+>  drivers/gpu/drm/drm_probe_helper.c | 11 ++++++++++-
+>  1 file changed, 10 insertions(+), 1 deletion(-)
 
-OK. ...I guess my question would be: does it matter for some reason?
-"ser_clk" is just a local variable in this function. Who cares if it's
-not a multiple of best_div? This is why we're keeping track of
-"best_div" in the first place, so that later in the function instead
-of:
+Pushed to drm-misc-next after cleaning up the turd that I somehow left
+in the commit message.
 
-*clk_div = ser_clk / desired_clk;
-if (!(*clk_div))
-  *clk_div = 1;
-
-You just do:
-
-*clk_div = best_div;
-
-
-> I tested it with a function simulates clk_round_rate.
->
-> static unsigned long clk_round_rate_test(struct clk *clk, unsigned long
-> in_freq)
-> {
->      unsigned long root_freq[6] = {105, 204, 303, 402, 501, 602};
->      int i;
->
->      for (i = 0; i < 6; i++) {
->          if (root_freq[i] >= in_freq)
->              return root_freq[i];
->      }
->      return root_freq[6];
-> }
->
->      {
->          unsigned long ser_clk;
->          unsigned long desired_clk;
->          unsigned long freq;
->          int div_round_closest;
->          unsigned long div;
->          unsigned long mult;
->          unsigned long candidate_div, candidate_freq;
->
->          unsigned long diff, best_diff, best_div;
->          unsigned long one;
->
->          desired_clk = 100;
->          one = 1;
->          best_diff = ULONG_MAX;
->          pr_err("\ndesired_clk-%d\n", desired_clk);
->          for (div = 1; div <= 10; div++) {
->              mult = div * desired_clk;
->
->              freq = clk_round_rate_test(clk, mult);
->              div_round_closest = DIV_ROUND_CLOSEST(freq, desired_clk);
->              candidate_div = max(one, (unsigned long)div_round_closest);
->              candidate_freq = freq / candidate_div;
->              diff = abs((long)desired_clk - candidate_freq);
->              pr_err("div-%d, mult-%d, freq-%d, div_round_closest-%d,
-> candidate_div-%d, candidate_freq-%d, diff-%d\n",
->                  div, mult, freq, div_round_closest, candidate_div,
-> candidate_freq, diff);
->              if (diff < best_diff) {
->                  pr_err("This is best so far\n");
->                  best_diff = diff;
->                  ser_clk = freq;
->                  best_div = candidate_div;
->              }
->          }
->          pr_err("\nbest_diff-%d, ser_clk-%d, best_div-%d\n",
->              best_diff, ser_clk, best_div);
->      }
->
-> And here is the output
->
-> [   17.835167] desired_clk-100
-> [   17.839567] div-1, mult-100, freq-105, div_round_closest-1,
-> candidate_div-1, candidate_freq-105, diff-5
-> [   17.849220] This is best so far
-> [   17.852458] div-2, mult-200, freq-204, div_round_closest-2,
-> candidate_div-2, candidate_freq-102, diff-2
-> [   17.862104] This is best so far
-> [   17.865345] div-3, mult-300, freq-303, div_round_closest-3,
-> candidate_div-3, candidate_freq-101, diff-1
-> [   17.874995] This is best so far
-> [   17.878237] div-4, mult-400, freq-402, div_round_closest-4,
-> candidate_div-4, candidate_freq-100, diff-0
-> [   17.887882] This is best so far
-> [   17.891118] div-5, mult-500, freq-501, div_round_closest-5,
-> candidate_div-5, candidate_freq-100, diff-0
-> [   17.900770] div-6, mult-600, freq-602, div_round_closest-6,
-> candidate_div-6, candidate_freq-100, diff-0
-> [   17.910415] div-7, mult-700, freq-602, div_round_closest-6,
-> candidate_div-6, candidate_freq-100, diff-0
-> [   17.920057] div-8, mult-800, freq-602, div_round_closest-6,
-> candidate_div-6, candidate_freq-100, diff-0
-> [   17.929703] div-9, mult-900, freq-602, div_round_closest-6,
-> candidate_div-6, candidate_freq-100, diff-0
-> [   17.939353] div-10, mult-1000, freq-602, div_round_closest-6,
-> candidate_div-6, candidate_freq-100, diff-0
-> [   17.949181]
-> [   17.949181] best_diff-0, ser_clk-402, best_div-4
-
-That doesn't look like a terrible result. I guess nominally 602 is a
-better approximation, but if we're accepting that we're not going to
-have an exact rate anyway then maybe being off by that tiny amount
-doesn't matter and we'd do better with the slow clock (maybe saves
-power?)
-
-
-> Please note that we go past cases when we have an divider that can
-> exactly divide the frequency(105/1, 204/2, 303/3) and end up with one
-> that doesn't.
-
-Ah, good point. Luckily that's a 1-line fix, right?
-
+fae7d186403e drm/probe-helper: Default to 640x480 if no EDID on DP
 
 -Doug
