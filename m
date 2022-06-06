@@ -2,135 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0630653ED2F
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jun 2022 19:50:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 40D4453ED4F
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jun 2022 19:55:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230089AbiFFRut (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Jun 2022 13:50:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43320 "EHLO
+        id S229700AbiFFRzx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Jun 2022 13:55:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40168 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230026AbiFFRur (ORCPT
+        with ESMTP id S229452AbiFFRzw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Jun 2022 13:50:47 -0400
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 405B56B7D4;
-        Mon,  6 Jun 2022 10:50:45 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 8FE65165C;
-        Mon,  6 Jun 2022 10:50:45 -0700 (PDT)
-Received: from [10.57.81.38] (unknown [10.57.81.38])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 344483F66F;
-        Mon,  6 Jun 2022 10:50:38 -0700 (PDT)
-Message-ID: <6575de6d-94ba-c427-5b1e-967750ddff23@arm.com>
-Date:   Mon, 6 Jun 2022 18:50:33 +0100
+        Mon, 6 Jun 2022 13:55:52 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B5E82F9AD9;
+        Mon,  6 Jun 2022 10:55:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1654538151; x=1686074151;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=nA3VMIc0EdXLtq38zIS6zslzeXYlwNxm4o2TKajA+5E=;
+  b=aB8f/Hnkgq8hYIVzjcTOYMszJsB1KWRG9RNUjETlqJ5rrmQs5FiUJh+9
+   jP6YGLM07uGvILaRQsmYpMsl2HSMWUqanH6W5TlkD8NxBDeinrYmqxscS
+   01rDhYl0kLH+KwVOpvOxHR13rbwL71SlXhPpDFgzZgyITeGDRfzDiDwk0
+   E=;
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 06 Jun 2022 10:55:51 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Jun 2022 10:55:50 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Mon, 6 Jun 2022 10:55:49 -0700
+Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Mon, 6 Jun 2022 10:55:49 -0700
+From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
+To:     <robdclark@gmail.com>, <sean@poorly.run>, <swboyd@chromium.org>,
+        <dianders@chromium.org>, <vkoul@kernel.org>, <daniel@ffwll.ch>,
+        <airlied@linux.ie>, <agross@kernel.org>,
+        <dmitry.baryshkov@linaro.org>, <bjorn.andersson@linaro.org>
+CC:     <quic_abhinavk@quicinc.com>, <quic_aravindh@quicinc.com>,
+        <quic_khsieh@quicinc.com>, <quic_sbillaka@quicinc.com>,
+        <freedreno@lists.freedesktop.org>,
+        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: [PATCH v2] drm/msm/dp: check core_initialized before disable interrupts at dp_display_unbind()
+Date:   Mon, 6 Jun 2022 10:55:39 -0700
+Message-ID: <1654538139-7450-1-git-send-email-quic_khsieh@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: [PATCH 2/5] iommu: Ensure device has the same iommu_ops as the
- domain
-Content-Language: en-GB
-To:     Nicolin Chen <nicolinc@nvidia.com>
-Cc:     jgg@nvidia.com, joro@8bytes.org, will@kernel.org, marcan@marcan.st,
-        sven@svenpeter.dev, robdclark@gmail.com, m.szyprowski@samsung.com,
-        krzysztof.kozlowski@linaro.org, baolu.lu@linux.intel.com,
-        agross@kernel.org, bjorn.andersson@linaro.org,
-        matthias.bgg@gmail.com, heiko@sntech.de, orsonzhai@gmail.com,
-        baolin.wang7@gmail.com, zhang.lyra@gmail.com, wens@csie.org,
-        jernej.skrabec@gmail.com, samuel@sholland.org,
-        jean-philippe@linaro.org, alex.williamson@redhat.com,
-        suravee.suthikulpanit@amd.com, alyssa@rosenzweig.io,
-        alim.akhtar@samsung.com, dwmw2@infradead.org, yong.wu@mediatek.com,
-        mjrosato@linux.ibm.com, gerald.schaefer@linux.ibm.com,
-        thierry.reding@gmail.com, vdumpa@nvidia.com, jonathanh@nvidia.com,
-        cohuck@redhat.com, iommu@lists.linux-foundation.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
-        linux-mediatek@lists.infradead.org,
-        linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
-        linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
-        virtualization@lists.linux-foundation.org, kvm@vger.kernel.org
-References: <20220606061927.26049-1-nicolinc@nvidia.com>
- <20220606061927.26049-3-nicolinc@nvidia.com>
- <1e0e5403-1e65-db9a-c8e7-34e316bfda8e@arm.com>
- <Yp4wiJZWxoCLY8tm@Asurada-Nvidia>
-From:   Robin Murphy <robin.murphy@arm.com>
-In-Reply-To: <Yp4wiJZWxoCLY8tm@Asurada-Nvidia>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-9.8 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2022-06-06 17:51, Nicolin Chen wrote:
-> Hi Robin,
-> 
-> On Mon, Jun 06, 2022 at 03:33:42PM +0100, Robin Murphy wrote:
->> On 2022-06-06 07:19, Nicolin Chen wrote:
->>> The core code should not call an iommu driver op with a struct device
->>> parameter unless it knows that the dev_iommu_priv_get() for that struct
->>> device was setup by the same driver. Otherwise in a mixed driver system
->>> the iommu_priv could be casted to the wrong type.
->>
->> We don't have mixed-driver systems, and there are plenty more
->> significant problems than this one to solve before we can (but thanks
->> for pointing it out - I hadn't got as far as auditing the public
->> interfaces yet). Once domains are allocated via a particular device's
->> IOMMU instance in the first place, there will be ample opportunity for
->> the core to stash suitable identifying information in the domain for
->> itself. TBH even the current code could do it without needing the
->> weirdly invasive changes here.
-> 
-> Do you have an alternative and less invasive solution in mind?
-> 
->>> Store the iommu_ops pointer in the iommu_domain and use it as a check to
->>> validate that the struct device is correct before invoking any domain op
->>> that accepts a struct device.
->>
->> In fact this even describes exactly that - "Store the iommu_ops pointer
->> in the iommu_domain", vs. the "Store the iommu_ops pointer in the
->> iommu_domain_ops" which the patch is actually doing :/
-> 
-> Will fix that.
+During msm initialize phase, dp_display_unbind() will be called to undo
+initializations had been done by dp_display_bind() previously if there is
+error happen at msm_drm_bind. In this case, core_initialized flag had to
+be check to make sure clocks is on before update DP controller register
+to disable HPD interrupts. Otherwise system will crash due to below NOC
+fatal error.
 
-Well, as before I'd prefer to make the code match the commit message - 
-if I really need to spell it out, see below - since I can't imagine that 
-we should ever have need to identify a set of iommu_domain_ops in 
-isolation, therefore I think it's considerably clearer to use the 
-iommu_domain itself. However, either way we really don't need this yet, 
-so we may as well just go ahead and remove the redundant test from VFIO 
-anyway, and I can add some form of this patch to my dev branch for now.
+QTISECLIB [01f01a7ad]CNOC2 ERROR: ERRLOG0_LOW = 0x00061007
+QTISECLIB [01f01a7ad]GEM_NOC ERROR: ERRLOG0_LOW = 0x00001007
+QTISECLIB [01f0371a0]CNOC2 ERROR: ERRLOG0_HIGH = 0x00000003
+QTISECLIB [01f055297]GEM_NOC ERROR: ERRLOG0_HIGH = 0x00000003
+QTISECLIB [01f072beb]CNOC2 ERROR: ERRLOG1_LOW = 0x00000024
+QTISECLIB [01f0914b8]GEM_NOC ERROR: ERRLOG1_LOW = 0x00000042
+QTISECLIB [01f0ae639]CNOC2 ERROR: ERRLOG1_HIGH = 0x00004002
+QTISECLIB [01f0cc73f]GEM_NOC ERROR: ERRLOG1_HIGH = 0x00004002
+QTISECLIB [01f0ea092]CNOC2 ERROR: ERRLOG2_LOW = 0x0009020c
+QTISECLIB [01f10895f]GEM_NOC ERROR: ERRLOG2_LOW = 0x0ae9020c
+QTISECLIB [01f125ae1]CNOC2 ERROR: ERRLOG2_HIGH = 0x00000000
+QTISECLIB [01f143be7]GEM_NOC ERROR: ERRLOG2_HIGH = 0x00000000
+QTISECLIB [01f16153a]CNOC2 ERROR: ERRLOG3_LOW = 0x00000000
+QTISECLIB [01f17fe07]GEM_NOC ERROR: ERRLOG3_LOW = 0x00000000
+QTISECLIB [01f19cf89]CNOC2 ERROR: ERRLOG3_HIGH = 0x00000000
+QTISECLIB [01f1bb08e]GEM_NOC ERROR: ERRLOG3_HIGH = 0x00000000
+QTISECLIB [01f1d8a31]CNOC2 ERROR: SBM1 FAULTINSTATUS0_LOW = 0x00000002
+QTISECLIB [01f1f72a4]GEM_NOC ERROR: SBM0 FAULTINSTATUS0_LOW = 0x00000001
+QTISECLIB [01f21a217]CNOC3 ERROR: ERRLOG0_LOW = 0x00000006
+QTISECLIB [01f23dfd3]NOC error fatal
 
-Thanks,
-Robin.
+changes in v2:
+-- drop the first patch (drm/msm: enable msm irq after all initializations are done successfully at msm_drm_init()) since the problem had been fixed by other patch
 
------>8-----
-diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
-index cde2e1d6ab9b..72990edc9314 100644
---- a/drivers/iommu/iommu.c
-+++ b/drivers/iommu/iommu.c
-@@ -1902,6 +1902,7 @@ static struct iommu_domain 
-*__iommu_domain_alloc(struct device *dev,
-  	domain->type = type;
-  	/* Assume all sizes by default; the driver may override this later */
-  	domain->pgsize_bitmap = ops->pgsize_bitmap;
-+	domain->owner = ops;
-  	if (!domain->ops)
-  		domain->ops = ops->default_domain_ops;
+Fixes: a65c95ff88f2 ("drm/msm/dp: stop event kernel thread when DP unbind")
+Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+---
+ drivers/gpu/drm/msm/dp/dp_display.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/iommu.h b/include/linux/iommu.h
-index 6f64cbbc6721..79e557207f53 100644
---- a/include/linux/iommu.h
-+++ b/include/linux/iommu.h
-@@ -89,6 +89,7 @@ struct iommu_domain_geometry {
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+index da5c03a..2b72639 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.c
++++ b/drivers/gpu/drm/msm/dp/dp_display.c
+@@ -309,7 +309,8 @@ static void dp_display_unbind(struct device *dev, struct device *master,
+ 	struct msm_drm_private *priv = dev_get_drvdata(master);
+ 
+ 	/* disable all HPD interrupts */
+-	dp_catalog_hpd_config_intr(dp->catalog, DP_DP_HPD_INT_MASK, false);
++	if (dp->core_initialized)
++		dp_catalog_hpd_config_intr(dp->catalog, DP_DP_HPD_INT_MASK, false);
+ 
+ 	kthread_stop(dp->ev_tsk);
+ 
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
-  struct iommu_domain {
-  	unsigned type;
-+	const struct iommu_ops *owner; /* Who allocated this domain */
-  	const struct iommu_domain_ops *ops;
-  	unsigned long pgsize_bitmap;	/* Bitmap of page sizes in use */
-  	iommu_fault_handler_t handler;
