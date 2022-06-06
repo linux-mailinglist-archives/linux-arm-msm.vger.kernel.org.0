@@ -2,122 +2,236 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 40D4453ED4F
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jun 2022 19:55:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9A3E753EDBB
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jun 2022 20:19:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229700AbiFFRzx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Jun 2022 13:55:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40168 "EHLO
+        id S231312AbiFFSTO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Jun 2022 14:19:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38056 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229452AbiFFRzw (ORCPT
+        with ESMTP id S231191AbiFFSTN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Jun 2022 13:55:52 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B5E82F9AD9;
-        Mon,  6 Jun 2022 10:55:51 -0700 (PDT)
+        Mon, 6 Jun 2022 14:19:13 -0400
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D08FEDF76;
+        Mon,  6 Jun 2022 11:19:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1654538151; x=1686074151;
-  h=from:to:cc:subject:date:message-id:mime-version;
-  bh=nA3VMIc0EdXLtq38zIS6zslzeXYlwNxm4o2TKajA+5E=;
-  b=aB8f/Hnkgq8hYIVzjcTOYMszJsB1KWRG9RNUjETlqJ5rrmQs5FiUJh+9
-   jP6YGLM07uGvILaRQsmYpMsl2HSMWUqanH6W5TlkD8NxBDeinrYmqxscS
-   01rDhYl0kLH+KwVOpvOxHR13rbwL71SlXhPpDFgzZgyITeGDRfzDiDwk0
-   E=;
-Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
-  by alexa-out.qualcomm.com with ESMTP; 06 Jun 2022 10:55:51 -0700
+  t=1654539551; x=1686075551;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=YZQGXZpI9rTtyvTmtBEtIuiY7pUKk8RF6e/r0K/TTGI=;
+  b=DWpSJ3ljgAz6XRR+PN49hK9+I5qeVHnAkmGTXbEusnz34xpNcWpEGQFG
+   8h9tQMnmTHfPRuo1fDv0G9tpRl3FoKhJZS85imNb1uwK45mi94l3VO/9q
+   FldjNAqIw1igMPx42oUzEAg26OcWhYH+64Fo6N68US85gTukPRsWyuL1N
+   8=;
+Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 06 Jun 2022 11:19:11 -0700
 X-QCInternal: smtphost
 Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Jun 2022 10:55:50 -0700
+  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Jun 2022 11:19:10 -0700
 Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
  nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Mon, 6 Jun 2022 10:55:49 -0700
-Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Mon, 6 Jun 2022 10:55:49 -0700
-From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
-To:     <robdclark@gmail.com>, <sean@poorly.run>, <swboyd@chromium.org>,
-        <dianders@chromium.org>, <vkoul@kernel.org>, <daniel@ffwll.ch>,
-        <airlied@linux.ie>, <agross@kernel.org>,
-        <dmitry.baryshkov@linaro.org>, <bjorn.andersson@linaro.org>
-CC:     <quic_abhinavk@quicinc.com>, <quic_aravindh@quicinc.com>,
-        <quic_khsieh@quicinc.com>, <quic_sbillaka@quicinc.com>,
-        <freedreno@lists.freedesktop.org>,
-        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: [PATCH v2] drm/msm/dp: check core_initialized before disable interrupts at dp_display_unbind()
-Date:   Mon, 6 Jun 2022 10:55:39 -0700
-Message-ID: <1654538139-7450-1-git-send-email-quic_khsieh@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+ 15.2.986.22; Mon, 6 Jun 2022 11:19:10 -0700
+Received: from [10.216.6.183] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Mon, 6 Jun 2022
+ 11:19:06 -0700
+Message-ID: <e677fd02-011f-4f4e-fa73-17dc96aea7d0@quicinc.com>
+Date:   Mon, 6 Jun 2022 23:49:02 +0530
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Subject: Re: [PATCH] tty: serial: qcom-geni-serial: minor fixes to
+ get_clk_div_rate()
+Content-Language: en-CA
+To:     Doug Anderson <dianders@chromium.org>
+CC:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Jiri Slaby <jirislaby@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        <linux-serial@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>, <quic_msavaliy@quicinc.com>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        "Stephen Boyd" <swboyd@chromium.org>
+References: <1654021066-13341-1-git-send-email-quic_vnivarth@quicinc.com>
+ <CAD=FV=UF3x5RHrQH-m1X-4kQSsKiufLnkew=VuJz7W9EAi3GHQ@mail.gmail.com>
+ <5d950007-7a92-a41b-e569-79e806adb06a@quicinc.com>
+ <CAD=FV=Xm1LJEoU5dKa5pMgqsHuAXuFVpdHvc1REULhAKTPbGnQ@mail.gmail.com>
+ <ad393ad2-a247-3c61-5033-185d39b5596d@quicinc.com>
+ <CAD=FV=XD+LozhkJZp0C7RUO01T-XuqBA-SJ0EQeyvGk0CxC3JQ@mail.gmail.com>
+From:   Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+In-Reply-To: <CAD=FV=XD+LozhkJZp0C7RUO01T-XuqBA-SJ0EQeyvGk0CxC3JQ@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-7.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-During msm initialize phase, dp_display_unbind() will be called to undo
-initializations had been done by dp_display_bind() previously if there is
-error happen at msm_drm_bind. In this case, core_initialized flag had to
-be check to make sure clocks is on before update DP controller register
-to disable HPD interrupts. Otherwise system will crash due to below NOC
-fatal error.
+Hi,
 
-QTISECLIB [01f01a7ad]CNOC2 ERROR: ERRLOG0_LOW = 0x00061007
-QTISECLIB [01f01a7ad]GEM_NOC ERROR: ERRLOG0_LOW = 0x00001007
-QTISECLIB [01f0371a0]CNOC2 ERROR: ERRLOG0_HIGH = 0x00000003
-QTISECLIB [01f055297]GEM_NOC ERROR: ERRLOG0_HIGH = 0x00000003
-QTISECLIB [01f072beb]CNOC2 ERROR: ERRLOG1_LOW = 0x00000024
-QTISECLIB [01f0914b8]GEM_NOC ERROR: ERRLOG1_LOW = 0x00000042
-QTISECLIB [01f0ae639]CNOC2 ERROR: ERRLOG1_HIGH = 0x00004002
-QTISECLIB [01f0cc73f]GEM_NOC ERROR: ERRLOG1_HIGH = 0x00004002
-QTISECLIB [01f0ea092]CNOC2 ERROR: ERRLOG2_LOW = 0x0009020c
-QTISECLIB [01f10895f]GEM_NOC ERROR: ERRLOG2_LOW = 0x0ae9020c
-QTISECLIB [01f125ae1]CNOC2 ERROR: ERRLOG2_HIGH = 0x00000000
-QTISECLIB [01f143be7]GEM_NOC ERROR: ERRLOG2_HIGH = 0x00000000
-QTISECLIB [01f16153a]CNOC2 ERROR: ERRLOG3_LOW = 0x00000000
-QTISECLIB [01f17fe07]GEM_NOC ERROR: ERRLOG3_LOW = 0x00000000
-QTISECLIB [01f19cf89]CNOC2 ERROR: ERRLOG3_HIGH = 0x00000000
-QTISECLIB [01f1bb08e]GEM_NOC ERROR: ERRLOG3_HIGH = 0x00000000
-QTISECLIB [01f1d8a31]CNOC2 ERROR: SBM1 FAULTINSTATUS0_LOW = 0x00000002
-QTISECLIB [01f1f72a4]GEM_NOC ERROR: SBM0 FAULTINSTATUS0_LOW = 0x00000001
-QTISECLIB [01f21a217]CNOC3 ERROR: ERRLOG0_LOW = 0x00000006
-QTISECLIB [01f23dfd3]NOC error fatal
 
-changes in v2:
--- drop the first patch (drm/msm: enable msm irq after all initializations are done successfully at msm_drm_init()) since the problem had been fixed by other patch
+On 6/4/2022 12:10 AM, Doug Anderson wrote:
+> Hi,
+>
+> On Fri, Jun 3, 2022 at 10:43 AM Vijaya Krishna Nivarthi
+> <quic_vnivarth@quicinc.com> wrote:
+>>
+>> Ah, or I guess what you're saying is that the table historically
+>> contained "rounded" rates but that clk_round_rate() isn't returning
+>> nice round rates. OK, but if we truly want to support an inexact
+>> match, you'd want to pick the rate that reduces the error, not just
+>> pick the first one. In other words, something like this (untested):
+>>
+>> freq = clk_round_rate(clk, mult);
+>> diff = abs(((long)mult - freq) / div);
+>> if (diff < best_diff) {
+>>     best_diff = diff;
+>>     ser_clk = freq;
+>>     best_div = div;
+>> }
+>> I am not sure if its required that freq is a multiple of best_div now
+>> that we don't have a multiple of desired_clk anyway.
+> How about just this (untested):
+>
+> freq = clk_round_rate(clk, mult);
+> candidate_div = max(1, DIV_ROUND_CLOSEST(freq, desired_clk));
+> candidate_freq = freq / candidate_div;
+> diff = abs((long)desired_clk - candidate_freq);
+> if (diff < best_diff) {
+>    best_diff = diff;
+>    ser_clk = freq;
+>    best_div = candidate_div;
+> }
 
-Fixes: a65c95ff88f2 ("drm/msm/dp: stop event kernel thread when DP unbind")
-Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
----
- drivers/gpu/drm/msm/dp/dp_display.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+I am afraid this still doesn't guarantee that ser_clk is a multiple of 
+best_div
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index da5c03a..2b72639 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -309,7 +309,8 @@ static void dp_display_unbind(struct device *dev, struct device *master,
- 	struct msm_drm_private *priv = dev_get_drvdata(master);
- 
- 	/* disable all HPD interrupts */
--	dp_catalog_hpd_config_intr(dp->catalog, DP_DP_HPD_INT_MASK, false);
-+	if (dp->core_initialized)
-+		dp_catalog_hpd_config_intr(dp->catalog, DP_DP_HPD_INT_MASK, false);
- 
- 	kthread_stop(dp->ev_tsk);
- 
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+I tested it with a function simulates clk_round_rate.
 
+static unsigned long clk_round_rate_test(struct clk *clk, unsigned long 
+in_freq)
+{
+     unsigned long root_freq[6] = {105, 204, 303, 402, 501, 602};
+     int i;
+
+     for (i = 0; i < 6; i++) {
+         if (root_freq[i] >= in_freq)
+             return root_freq[i];
+     }
+     return root_freq[6];
+}
+
+     {
+         unsigned long ser_clk;
+         unsigned long desired_clk;
+         unsigned long freq;
+         int div_round_closest;
+         unsigned long div;
+         unsigned long mult;
+         unsigned long candidate_div, candidate_freq;
+
+         unsigned long diff, best_diff, best_div;
+         unsigned long one;
+
+         desired_clk = 100;
+         one = 1;
+         best_diff = ULONG_MAX;
+         pr_err("\ndesired_clk-%d\n", desired_clk);
+         for (div = 1; div <= 10; div++) {
+             mult = div * desired_clk;
+
+             freq = clk_round_rate_test(clk, mult);
+             div_round_closest = DIV_ROUND_CLOSEST(freq, desired_clk);
+             candidate_div = max(one, (unsigned long)div_round_closest);
+             candidate_freq = freq / candidate_div;
+             diff = abs((long)desired_clk - candidate_freq);
+             pr_err("div-%d, mult-%d, freq-%d, div_round_closest-%d, 
+candidate_div-%d, candidate_freq-%d, diff-%d\n",
+                 div, mult, freq, div_round_closest, candidate_div, 
+candidate_freq, diff);
+             if (diff < best_diff) {
+                 pr_err("This is best so far\n");
+                 best_diff = diff;
+                 ser_clk = freq;
+                 best_div = candidate_div;
+             }
+         }
+         pr_err("\nbest_diff-%d, ser_clk-%d, best_div-%d\n",
+             best_diff, ser_clk, best_div);
+     }
+
+And here is the output
+
+[   17.835167] desired_clk-100
+[   17.839567] div-1, mult-100, freq-105, div_round_closest-1, 
+candidate_div-1, candidate_freq-105, diff-5
+[   17.849220] This is best so far
+[   17.852458] div-2, mult-200, freq-204, div_round_closest-2, 
+candidate_div-2, candidate_freq-102, diff-2
+[   17.862104] This is best so far
+[   17.865345] div-3, mult-300, freq-303, div_round_closest-3, 
+candidate_div-3, candidate_freq-101, diff-1
+[   17.874995] This is best so far
+[   17.878237] div-4, mult-400, freq-402, div_round_closest-4, 
+candidate_div-4, candidate_freq-100, diff-0
+[   17.887882] This is best so far
+[   17.891118] div-5, mult-500, freq-501, div_round_closest-5, 
+candidate_div-5, candidate_freq-100, diff-0
+[   17.900770] div-6, mult-600, freq-602, div_round_closest-6, 
+candidate_div-6, candidate_freq-100, diff-0
+[   17.910415] div-7, mult-700, freq-602, div_round_closest-6, 
+candidate_div-6, candidate_freq-100, diff-0
+[   17.920057] div-8, mult-800, freq-602, div_round_closest-6, 
+candidate_div-6, candidate_freq-100, diff-0
+[   17.929703] div-9, mult-900, freq-602, div_round_closest-6, 
+candidate_div-6, candidate_freq-100, diff-0
+[   17.939353] div-10, mult-1000, freq-602, div_round_closest-6, 
+candidate_div-6, candidate_freq-100, diff-0
+[   17.949181]
+[   17.949181] best_diff-0, ser_clk-402, best_div-4
+
+Please note that we go past cases when we have an divider that can 
+exactly divide the frequency(105/1, 204/2, 303/3) and end up with one 
+that doesn't.
+
+It seems like we need to run through all dividers to find one that can 
+divide output freq from clk_round_rate and among those choose smallest 
+delta.
+
+In regular bootup 2nd loop was required only for 51200000. For others 
+1843200, 153600, 1st loop worked fine.
+
+Thank you.
+
+>
+> Here:
+>
+> freq: a freq we can definitely make
+>
+> candidate_div: the best number to divide freq by to get the desired clock.
+>
+> candidate_freq: the frequency we'll end up if we divide freq by
+> candidate_div. We want this to be close to desired_clk.
+>
+> diff: how far away the candidate_freq is away from what we want.
+>
+> best_diff: how far away the best candidate was from what we wanted.
+>
+> ser_clk: What we should pass to clk_set_rate() to get the best candidate.
+>
+> best_div: What we should use as a divider to get the best candidate.
+>
+>
+> -Doug
