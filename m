@@ -2,181 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1AEB653DEFC
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jun 2022 01:46:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A796253DFCA
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jun 2022 04:47:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348675AbiFEXqS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 5 Jun 2022 19:46:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50286 "EHLO
+        id S236148AbiFFCr0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 5 Jun 2022 22:47:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44366 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348637AbiFEXqR (ORCPT
+        with ESMTP id S238762AbiFFCrW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 5 Jun 2022 19:46:17 -0400
-Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F230366A4;
-        Sun,  5 Jun 2022 16:46:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1654472776; x=1686008776;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=n/CPBD9mjhSpvD3GBbfLc0rRsVqgVN0gzOX/Kll/qEY=;
-  b=eRWxWNvkaF1pH+sGl9Czd0YYP5vjbZis9HvbxQS5GHsslKsN9/o5QV42
-   Ibeii5ZyLqlYk1HF0gq1OrGVBrlWdUcBUt6Ewt5MMrXPljIwqmxIjTHNV
-   BObSGTpnDntxcIvahw19h43TCdQA6miVy6Xzi688VrGdk8rrcl6UmMuWD
-   QRe524RKkl89N4VBwvWqx2qIRA6LtZbLZCwVmNvbI86zXR8L9qz7iUwsb
-   J0YDxoLjFXGv1mgI4JtknW/IZn9fS82sDcgDpzyhG5xWhD+4VXkxP+yJv
-   CYobkZ7ieTwyWMLLsZC3SfDtUKV1D59jAenmBKO6OYFvn9PTyvzPvCK5B
-   w==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10369"; a="276642302"
-X-IronPort-AV: E=Sophos;i="5.91,280,1647327600"; 
-   d="scan'208";a="276642302"
-Received: from orsmga004.jf.intel.com ([10.7.209.38])
-  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Jun 2022 16:46:03 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.91,280,1647327600"; 
-   d="scan'208";a="708839521"
-Received: from lkp-server01.sh.intel.com (HELO 60dabacc1df6) ([10.239.97.150])
-  by orsmga004.jf.intel.com with ESMTP; 05 Jun 2022 16:46:01 -0700
-Received: from kbuild by 60dabacc1df6 with local (Exim 4.95)
-        (envelope-from <lkp@intel.com>)
-        id 1nxzwW-000CKp-IR;
-        Sun, 05 Jun 2022 23:46:00 +0000
-Date:   Mon, 6 Jun 2022 07:45:08 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Md Sadre Alam <quic_mdalam@quicinc.com>, mani@kernel.org,
-        miquel.raynal@bootlin.com, richard@nod.at, vigneshr@ti.com,
-        linux-mtd@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     llvm@lists.linux.dev, kbuild-all@lists.01.org,
-        quic_srichara@quicinc.com, quic_mdalam@quicinc.com
-Subject: Re: [PATCH] mtd: rawnand: qcom: Implement exec_op()
-Message-ID: <202206060716.xdJ89V2D-lkp@intel.com>
-References: <1654273498-31998-1-git-send-email-quic_mdalam@quicinc.com>
+        Sun, 5 Jun 2022 22:47:22 -0400
+Received: from sonic308-21.consmr.mail.sg3.yahoo.com (sonic308-21.consmr.mail.sg3.yahoo.com [106.10.241.211])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61C2263BB
+        for <linux-arm-msm@vger.kernel.org>; Sun,  5 Jun 2022 19:47:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com.tw; s=s2048; t=1654483637; bh=QXj6PURIQUaCdrfr15xm4Zh9/UDEJ2ARKkaiXl6akD0=; h=From:To:Cc:Subject:Date:References:From:Subject:Reply-To; b=WicVmVkGzPhd9hj2CMA603BqDxOdJt0h9aSntiI2FGSmDK31W+WvrACnxwh4bzY8YjcUFju16elcmTm/2PORZwtKtRLjXSTF4zzGzwAEiZf+fK/JTxt9NiflHc9a1vlxtSUoG665rnhUE94Cl75YeUw3FgSl44mtR6Tah0tOqU/hrANBWE2tkoQIVt0xQcgV+tljf3IAVqBMDGNs9oyX/6NvX0ClSL19U1BgEkG9WeJ1J2iiTDJW9zMfcWS6WCxg2uebGvttO0XroFHLh1rTrdnwgAWKBtKq894aeQhNCvgz/FCyeMBB0lcs9rIm2ot/6QfurojLOuAVO2NOEwyIog==
+X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1654483637; bh=L1zxY4efVVZlwmSPsVIBtRqKcEZjyysK1tCCWYMltmh=; h=X-Sonic-MF:From:To:Subject:Date:From:Subject; b=fxPjkqN5S/EEQqhOsxkG3E+CUBfWg8yP7B5p7rnONTHGemLyU0bZM6T2ma0pQHGlq/T+CYga6i5odL0qfiwhONLM5wC2NL6JJ2FjQszeZDY8+uB9LjXiuc0Aw6EKI+wqoXba+5zgZ5MxxyTRw7MeoYHiK8UFnXeIc7iYGblMLY8O4LxcXDVogiF48aCWOt/8M021JBYrdkhKxdWaF0M1MBFBXfDESvpOVtetpsZgAkIvtI888yJqBzF6hda0B7PEVuoJBrWXHynfiHZumsx0rDO25bE+iggg51KKTXoWCy8RmkrwLVol0BfebRRazzyJ2yG4BmwrORKlPoFo78dTfA==
+X-YMail-OSG: _iyoQs4VM1kXrGhcDqDev5I1b0aJbFIeeAglBQJF39Sj8sJm2c3x0QoiTWVo.iS
+ 6Vecz4gDEPzurWSHWdR.9A7HAq1tsGP3lpHHLZ2.xQ59NyjwW3X13Oo_vBZnja26ubom.azK_PRZ
+ eZRaiHAlQGfER0e2bUqk_zpwFAx8ZWlUkaJPhs4QW2kMrLLa6hTpHeaTGA2ydIH5PYG_OufeAYKJ
+ 2E_LdmRYUjzXF80DujlbZsGEO_TBncnHcPuaKaipnPe10VyzAYV8BzDLwRA3XN_Pdb5lWRTUOcb5
+ ajC4L876g.RjXnpRZIgSk1LxlwWm7n.kI.fFGauExIP1SBWcqdTTOuX626jlk_CxyzEoOS2fR9qs
+ .PEn.LnzlFma8SOQwsAktoQJ0UV4NDsWN6WBgPkXut13kMyte2SY4vW6sF1DytiXIMWMWKNFva77
+ bKMxMjsKEjq3yBYznsGttvVzTI_ZUrIWRDFUKekdqdfqihzC19nLrejLz7tLzZRg.shljuesveRk
+ tcbKIdiHkqyca2qoBbxy_GldNQmM_be.bT8jrb8eHL4D.o77ogrfh3l3RWo96C9nZlrlktNX735k
+ wprxwT_FpPyxDKm9Rf9Okv5feUbcNG4i_Hpa2M.lIVw_nxMFOLwnGFQOElSXOKsS9lruy9ogBU8F
+ oP1NicuUh.QrkL1wBtirNNOPsUNu8KnFElr7sgNmOHCL4UVBT4pm6avEU9JBXEt6NejlUNRi1EDF
+ KTC0FPaqyIZVHCPXMgvnRKDGzp9j.gci8wlQhElatIiBwz9yq4H6rHquigWBsMKbqrDeYw5HrvYK
+ MzPI3OuNnGxbmwYBZX23mAgQ._nBB6kNPK20FBFEHV6AoMehvO6ATa3gZ2_dhhOShqw9JllsfOHT
+ T4ixgCEHRSjvw0h.DCSneZruzC1PcuC0VCLIFRoePk3ErVdSN_MU6aNE65bQRHT1KW6ygDrREJKn
+ 70g96T_m2SGSQsgek9tdvcDI1MGa1IZ18OlPA6hoLl9R_abedPxjITyUZ23qPxJUeM.ZaWDLRp_G
+ JnBbxQHff6P8Y88Pk.aoaOAERoBpep3lcEdWAUftXX28SRNEAzh2ejAnRF8lTs6YqOjynKYCfsrj
+ bjMP7WCwjJc1_8OcyWgbhQRqflLh0rZjCBOgoeRrsHE5HCPRMHhDZGUdWhqiQFsthq129B58U_3_
+ u_8K0I4VbTz85nAVaYRu4xysgwOnmx2vlkKsiDuk7FcKao2HCKAa6gpOUyq0FKMYY3s4o6OupbHo
+ 28kgAFz5RjW8LsxKkQuCY2pEyBVq8kN5twHXx0mUbudNjghFHqq91n6QHK7pfFxxFiaPU9RMklon
+ 9WPgCbzh4mr1HPnZ3mf8H4PLVgrveaVDZUG8KkYZHa3g49QkF45B9WwxSqWEF3q3YdOtfOE.mx8K
+ s2nWtypPBNDxRWkasfOeORC_EP2dHWy8q6YywpDVG_wlS09513.Db5EJcT3YJs9OaJ_f3ESsWc2x
+ BeDMyofDlKEc56TjvSjK_R5gXrFAasbA0YTlquaJqyrggd67KloHXEHl5Umk9FWvNdzkY0fHeqgf
+ jxm6JEy.mkw_Rl1HKgvkPp9ecE7bJQ0czIgl3qrAVO7ZH5DNFMiRcefnXjj7.DhuaO.l7kHoMSER
+ LjtjmRBujijGfq61UpvG1TonNWnch7S0VDn4lmEOJtdjXgjCwE2VmogJvxMkaF8DuUuaADi2q8sN
+ X54IWNEwdpBAXaa_KEpaDqQnha7qPTJtYoyLIaREgMQfemyudgcOcgYv.AT7aFqDuNJGQwCaUL8R
+ bfVO7PsPmPfTqRLWqcXXgWBY2yOAWXURCT_dMQavTfZ2qn9FiaGiD5I0Fek2CfHZw1Bw3V_IGQZo
+ p9vwwiG1mUbuSgTBKBmiEagK5XhWT.X9Uyl6NrzrR.9J10BN5vC5j35Rgx5oyKmBc5TfEmTEUuYY
+ uAZKGPCtyVeXHMiSx8Q2K6pq6TyZBVDh4b3SYZKQxS0.Bg_T6NOZWOcNk.Qo5H92vNkJC1JF.Zc4
+ 5djF2Xcz7bvZHC_9Tzb5ll0vZRcGH3tY6fwjB4O6roLvrVdJ3kNyGAdOOo36UtZZALrX7xt6gQcw
+ PS3JLKJNHL7UObMONXIRwpFPeOb7dUhrCvalSmf15rCUl4kwqKsDuWvN9LO3kD86OTrPWeixyoRc
+ rl9u7g0vcAiP8yWIofnUhwZTcNjc2exhaDHQFy1IoapkDPv9gSozljlDzCFOmedZbSwFI_UrI_aa
+ KGtBizokxHqbJzcWpdOzlwGiSIG_t1aZDOzlfqBik6kmpvnRl0e4SFitpvSuX2.0Utshbtly9MQz
+ X
+X-Sonic-MF: <ae40515@yahoo.com.tw>
+Received: from sonic.gate.mail.ne1.yahoo.com by sonic308.consmr.mail.sg3.yahoo.com with HTTP; Mon, 6 Jun 2022 02:47:17 +0000
+Received: by hermes--canary-production-sg3-5f7658c994-q45vr (Yahoo Inc. Hermes SMTP Server) with ESMTPA ID 3a7a87dc6523ee7d3426ceda942b505a;
+          Mon, 06 Jun 2022 02:47:16 +0000 (UTC)
+From:   Alec Su <ae40515@yahoo.com.tw>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, sboyd@codeaurora.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        phone-devel@vger.kernel.org, linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, y.oudjana@protonmail.com,
+        Alec Su <ae40515@yahoo.com.tw>
+Subject: [PATCH v4 0/2] Add support for Xiaomi Mi 5s Plus
+Date:   Mon,  6 Jun 2022 02:47:04 +0000
+Message-Id: <20220606024706.22861-1-ae40515@yahoo.com.tw>
+X-Mailer: git-send-email 2.35.3
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1654273498-31998-1-git-send-email-quic_mdalam@quicinc.com>
-X-Spam-Status: No, score=-8.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+References: <20220606024706.22861-1-ae40515.ref@yahoo.com.tw>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Md,
+This series adds the device tree for Xiaomi Mi 5s Plus (xiaomi-natrium)
+smartphone which is based on Snapdragon 821 SoC.
 
-Thank you for the patch! Perhaps something to improve:
+Changes since v3:
+- Remove the unnecessary properties in the device tree.
+- Correct the supplies in "dsi0" node
+- Add delay properties in "touchscreen" node
 
-[auto build test WARNING on mtd/nand/next]
-[also build test WARNING on v5.18 next-20220603]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch]
+Changes since v2:
+- Rename the node "synaptics" to "touchscreen".
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Md-Sadre-Alam/mtd-rawnand-qcom-Implement-exec_op/20220605-235824
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/mtd/linux.git nand/next
-config: arm64-randconfig-r021-20220605 (https://download.01.org/0day-ci/archive/20220606/202206060716.xdJ89V2D-lkp@intel.com/config)
-compiler: clang version 15.0.0 (https://github.com/llvm/llvm-project 416a5080d89066029f9889dc23f94de47c2fa895)
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # install arm64 cross compiling tool for clang build
-        # apt-get install binutils-aarch64-linux-gnu
-        # https://github.com/intel-lab-lkp/linux/commit/5ab4409034966f5503f62ef2df59408762a9e872
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review Md-Sadre-Alam/mtd-rawnand-qcom-Implement-exec_op/20220605-235824
-        git checkout 5ab4409034966f5503f62ef2df59408762a9e872
-        # save the config file
-        mkdir build_dir && cp config build_dir/.config
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=arm64 SHELL=/bin/bash drivers/mtd/nand/raw/ drivers/nfc/nfcmrvl/
+Changes since v1:
+- Adjust the sequence of the patches in this series.
+- Remove the unnecessary line and properties in the device tree.
+- Rename the nodes contain underscores.
 
-If you fix the issue, kindly add following tag where applicable
-Reported-by: kernel test robot <lkp@intel.com>
+Alec Su (2):
+  dt-bindings: arm: qcom: Document xiaomi,natrium board
+  arm64: dts: qcom: msm8996-xiaomi-natrium: Add support for Xiaomi Mi 5s
+    Plus
 
-All warnings (new ones prefixed by >>):
-
->> drivers/mtd/nand/raw/qcom_nandc.c:2727:2: warning: unannotated fall-through between switch labels [-Wimplicit-fallthrough]
-           default:
-           ^
-   drivers/mtd/nand/raw/qcom_nandc.c:2727:2: note: insert 'break;' to avoid fall-through
-           default:
-           ^
-           break; 
-   1 warning generated.
-
-
-vim +2727 drivers/mtd/nand/raw/qcom_nandc.c
-
-  2691	
-  2692	static int qcom_nand_exec_instr(struct nand_chip *chip,
-  2693					const struct nand_op_instr *instr)
-  2694	{
-  2695		struct qcom_nand_controller *nandc = get_qcom_nand_controller(chip);
-  2696		struct qcom_nand_host *host = to_qcom_nand_host(chip);
-  2697		u32 status;
-  2698		int ret = 0;
-  2699		bool wait = false;
-  2700		static int opcode;
-  2701	
-  2702		switch (instr->type) {
-  2703		case NAND_OP_CMD_INSTR:
-  2704			ret = qcom_nand_send_command(chip, instr->ctx.cmd.opcode);
-  2705			if (instr->ctx.cmd.opcode == NAND_CMD_RESET)
-  2706				wait = true;
-  2707			opcode = instr->ctx.cmd.opcode;
-  2708			break;
-  2709		case NAND_OP_ADDR_INSTR:
-  2710			qcom_nand_send_address(chip, instr, opcode);
-  2711			if (opcode != NAND_CMD_READ0 && opcode != NAND_CMD_READSTART &&
-  2712			    opcode != NAND_CMD_PARAM && opcode != NAND_CMD_SEQIN)
-  2713				wait = true;
-  2714			break;
-  2715		case NAND_OP_DATA_IN_INSTR:
-  2716			qcom_nand_read_buf(chip, instr->ctx.data.buf.in, instr->ctx.data.len);
-  2717			break;
-  2718		case NAND_OP_DATA_OUT_INSTR:
-  2719			wait = false;
-  2720			break;
-  2721		case NAND_OP_WAITRDY_INSTR:
-  2722			ret = readl_poll_timeout(nandc->base + NAND_FLASH_STATUS, status,
-  2723						 (status & FS_READY_BSY_N), 20,
-  2724						 instr->ctx.waitrdy.timeout_ms * 1000);
-  2725			if (opcode == NAND_CMD_PARAM)
-  2726				wait = true;
-> 2727		default:
-  2728			break;
-  2729		}
-  2730	
-  2731		if (wait) {
-  2732			if (opcode != NAND_CMD_PARAM)
-  2733				write_reg_dma(nandc, NAND_EXEC_CMD, 1, NAND_BAM_NEXT_SGL);
-  2734	
-  2735			if (opcode == NAND_CMD_READID)
-  2736				read_reg_dma(nandc, NAND_READ_ID, 1, NAND_BAM_NEXT_SGL);
-  2737	
-  2738			if (opcode == NAND_CMD_ERASE1) {
-  2739				read_reg_dma(nandc, NAND_FLASH_STATUS, 1, NAND_BAM_NEXT_SGL);
-  2740				write_reg_dma(nandc, NAND_FLASH_STATUS, 1, 0);
-  2741				write_reg_dma(nandc, NAND_READ_STATUS, 1, NAND_BAM_NEXT_SGL);
-  2742			}
-  2743	
-  2744			ret = submit_descs(nandc);
-  2745			if (ret)
-  2746				dev_err(nandc->dev, "failure submitting descs for command 0x%02x\n",
-  2747					opcode);
-  2748	
-  2749			free_descs(nandc);
-  2750			post_command(host, opcode);
-  2751		}
-  2752	
-  2753		return ret;
-  2754	}
-  2755	
+ .../devicetree/bindings/arm/qcom.yaml         |   1 +
+ arch/arm64/boot/dts/qcom/Makefile             |   1 +
+ .../boot/dts/qcom/msm8996-xiaomi-natrium.dts  | 414 ++++++++++++++++++
+ 3 files changed, 416 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/msm8996-xiaomi-natrium.dts
 
 -- 
-0-DAY CI Kernel Test Service
-https://01.org/lkp
+2.35.3
+
