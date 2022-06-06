@@ -2,135 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CBA7E53F1A7
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jun 2022 23:23:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3529453F1BB
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jun 2022 23:32:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231172AbiFFVXj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Jun 2022 17:23:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48972 "EHLO
+        id S234408AbiFFVcF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Jun 2022 17:32:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39648 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231426AbiFFVXg (ORCPT
+        with ESMTP id S229725AbiFFVcE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Jun 2022 17:23:36 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9E01CA3C3;
-        Mon,  6 Jun 2022 14:23:34 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id h5so21535943wrb.0;
-        Mon, 06 Jun 2022 14:23:34 -0700 (PDT)
+        Mon, 6 Jun 2022 17:32:04 -0400
+Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 379EB56407
+        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Jun 2022 14:32:03 -0700 (PDT)
+Received: by mail-pl1-x632.google.com with SMTP id o6so8079821plg.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Jun 2022 14:32:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=OfY6X4JVQBiL9H59caeTHODekDNJrKZ9yOY0lERy7u8=;
-        b=hB1aabYJ45U2sFPdevy3YeJni7Yu6ezotGBopOjnkmWkjU/AuETPp+3LFizhsX6tq5
-         3uP4UmZ7ADOQPWyeb31hAWbN5Ephl7ItZ0AHOP5RK8Hfzx2OlYj12cNBpwmDWOeuwcbE
-         N7gDX4M415mCo4i9W3ZoTKZq8oUFaSTmCiee7LojVRUgclJ01SlozBSzzc/gZq6qMVtp
-         XgwOAd2xdIZ5QCY8dxJ7V7yGiCYW3pJChjteIzbd+nNUfJLTrq8xxWcyEQQzvoqn2DrB
-         L/UcIcEkGAYUOJKzxI5xCyJLJKBi3fu55DkkwqAorZhreHxkRBfn/R6NCpIFYHpJAjKs
-         zYvg==
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=zwFgEioW6+dps+UZ8YhmtNSvhyshGyl8govd5a3fXPY=;
+        b=jqydjtFc/RmZBMb24ewb0gU1WiC+ZnxuHT3FEHsdMtskE5j4ahApOqYXpBKXXqzCOh
+         W+WDAoOfOL2+RYTx71LmIhsbRHMCezEvetTlGVgUCWzurIfYOA+rxIv8fRe9coJGq1hl
+         HY1BnJs04Edh0RxBt/4LzVg4PLgZ2bLYWUaoE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=OfY6X4JVQBiL9H59caeTHODekDNJrKZ9yOY0lERy7u8=;
-        b=A2dPmdxn8nl2RBTMzhJtkuiFGYqlnJaAOlosX/L1W3WcdVE1VSrivyYGIqPCmqLe9K
-         5XxbZKCSDzKtSBEIaSTOm4NrBX0geUeW1rBh4ZJhyAyRbG3TdOXBJhGCsNR9z3Dz69x6
-         pl4gbf7eIoelHk2W1b8bW8gUjAteJDz1fES9a9k5k/eVrHBIU5iAs3Ssn1RconiOAZWV
-         o9g/VXg1FHzGVpo7MUdGE5NAc/wg5u+kRXuwG/g7eoaot9v9OiuhTreY8hRLtciW67za
-         079ooDrrOQs5N+pGEtONn2jzCP2WWEtMDXWAXbY5fQXNXDEzlX3VaMakpitAFy0A25BV
-         zEkw==
-X-Gm-Message-State: AOAM531qcBHovQ/L9HrbE8M4xn3ENJ1NKRMoEZMEFOvshB2umSvYo/zl
-        mjMQGx8XI8J4AbBL7x4C0Dvq77e92KbrFKYY7mQ=
-X-Google-Smtp-Source: ABdhPJzFe0DtmvJNvXSibzfXuetpXq7Ja76dWcSijzRDnmzdipQLnwN4INHe/Cq5C9hjS/IYOl3FwnxWJFHSB1bzKdY=
-X-Received: by 2002:a05:6000:547:b0:20f:ca41:cc51 with SMTP id
- b7-20020a056000054700b0020fca41cc51mr24126476wrf.221.1654550613305; Mon, 06
- Jun 2022 14:23:33 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=zwFgEioW6+dps+UZ8YhmtNSvhyshGyl8govd5a3fXPY=;
+        b=6m8bG+ObVf7gEE7iHWjB/4dHcXkgJy6Ee9tH2FfjUUhJKu/PS/zSp90U+ksgVqWRCm
+         KZ+TuFdpV9pkoK77+YrssomcpJ2WzirOUVdGoIFpSgLQ4FirV+pbv87q+EbKwPbBOKST
+         zKWFwhm+Tk0kFOsrYgj+/oE9qMxkZJZXh32BgO5TbxQ0MGVD4/WMPHfmXjr1zVGYpywE
+         ftYhEsy7dXSYcCf6chPZy5SfeUgXP9XstHzSyuqERY1tb1cwhHIXIs0s8OsMyqgFHaFn
+         +VqdfCSjpkT9uw+vm/wZn1EejCvG3YxWuvmRVbJfMF6rAZksA9PKomeniZnoA7bVXu6K
+         W+dA==
+X-Gm-Message-State: AOAM530WpI8XTRXR4VJ8SxbW3KSg/mg2NJaL89gwf5atHdaDsODXVCwt
+        x63fANgV8Bm5G7QNo0QIrriFCw==
+X-Google-Smtp-Source: ABdhPJzFCoz1wnK2i6ZyDNCl+1R8AH5AkRe8lRZiN2HEGNRw8Rd7b9GLNMQNG4fMTtAAJ2M5c8qZaQ==
+X-Received: by 2002:a17:90b:1a8a:b0:1e8:9388:5b5b with SMTP id ng10-20020a17090b1a8a00b001e893885b5bmr4265017pjb.50.1654551122739;
+        Mon, 06 Jun 2022 14:32:02 -0700 (PDT)
+Received: from localhost ([2620:15c:11a:202:196:a14c:7344:f6db])
+        by smtp.gmail.com with UTF8SMTPSA id i3-20020a056a00004300b0050dc76281c9sm11227962pfk.163.2022.06.06.14.32.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 06 Jun 2022 14:32:02 -0700 (PDT)
+Date:   Mon, 6 Jun 2022 14:32:01 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_rohkumar@quicinc.com,
+        srinivas.kandagatla@linaro.org, dianders@chromium.org,
+        swboyd@chromium.org, judyhsiao@chromium.org
+Subject: Re: [PATCH v12 00/12] Add soundcard support for sc7280 based
+ platforms.
+Message-ID: <Yp5yUSvC05wOxtei@google.com>
+References: <1653049124-24713-1-git-send-email-quic_srivasam@quicinc.com>
 MIME-Version: 1.0
-References: <20220606211305.189585-1-luzmaximilian@gmail.com>
-In-Reply-To: <20220606211305.189585-1-luzmaximilian@gmail.com>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Mon, 6 Jun 2022 14:23:34 -0700
-Message-ID: <CAF6AEGuJQt9D1+Q6xcKw=AYMZUFPSUh-v2GonuahMpZ2wbx08g@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm: Fix double pm_runtime_disable() call
-To:     Maximilian Luz <luzmaximilian@gmail.com>
-Cc:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1653049124-24713-1-git-send-email-quic_srivasam@quicinc.com>
+X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jun 6, 2022 at 2:13 PM Maximilian Luz <luzmaximilian@gmail.com> wrote:
->
-> Following commit 17e822f7591f ("drm/msm: fix unbalanced
-> pm_runtime_enable in adreno_gpu_{init, cleanup}"), any call to
-> adreno_unbind() will disable runtime PM twice, as indicated by the call
-> trees below:
->
->   adreno_unbind()
->    -> pm_runtime_force_suspend()
->    -> pm_runtime_disable()
->
->   adreno_unbind()
->    -> gpu->funcs->destroy() [= aNxx_destroy()]
->    -> adreno_gpu_cleanup()
->    -> pm_runtime_disable()
->
-> Note that pm_runtime_force_suspend() is called right before
-> gpu->funcs->destroy() and both functions are called unconditionally.
->
-> With recent addition of the eDP AUX bus code, this problem manifests
-> itself when the eDP panel cannot be found yet and probing is deferred.
-> On the first probe attempt, we disable runtime PM twice as described
-> above. This then causes any later probe attempt to fail with
->
->   [drm:adreno_load_gpu [msm]] *ERROR* Couldn't power up the GPU: -13
->
-> preventing the driver from loading.
->
-> As there seem to be scenarios where the aNxx_destroy() functions are not
-> called from adreno_unbind(), simply removing pm_runtime_disable() from
-> inside adreno_unbind() does not seem to be the proper fix. This is what
-> commit 17e822f7591f ("drm/msm: fix unbalanced pm_runtime_enable in
-> adreno_gpu_{init, cleanup}") intended to fix. Therefore, instead check
-> whether runtime PM is still enabled, and only disable it in that case.
->
-> Fixes: 17e822f7591f ("drm/msm: fix unbalanced pm_runtime_enable in adreno_gpu_{init, cleanup}")
-> Signed-off-by: Maximilian Luz <luzmaximilian@gmail.com>
+On Fri, May 20, 2022 at 05:48:32PM +0530, Srinivasa Rao Mandadapu wrote:
+> This patch set is to add bolero digital macros, WCD and maxim codecs nodes
+> for audio on sc7280 based platforms.
+> 
+> This patch set depends on:
+>     -- https://patchwork.kernel.org/project/linux-arm-msm/list/?series=638776
+>     -- https://patchwork.kernel.org/project/linux-arm-msm/list/?series=634597
+>     -- https://patchwork.kernel.org/project/linux-clk/list/?series=637999
+>     -- https://patchwork.kernel.org/project/linux-arm-msm/list/?series=638002
 
-Reviewed-by: Rob Clark <robdclark@gmail.com>
+Another dependency (at least in terms of functionality) is:
 
-> ---
->  drivers/gpu/drm/msm/adreno/adreno_gpu.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
->
-> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> index 4e665c806a14..f944b69e2a25 100644
-> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> @@ -1057,7 +1057,8 @@ void adreno_gpu_cleanup(struct adreno_gpu *adreno_gpu)
->         for (i = 0; i < ARRAY_SIZE(adreno_gpu->info->fw); i++)
->                 release_firmware(adreno_gpu->fw[i]);
->
-> -       pm_runtime_disable(&priv->gpu_pdev->dev);
-> +       if (pm_runtime_enabled(&priv->gpu_pdev->dev))
-> +               pm_runtime_disable(&priv->gpu_pdev->dev);
->
->         msm_gpu_cleanup(&adreno_gpu->base);
->  }
-> --
-> 2.36.1
->
+ASoC: qcom: soundwire: Add support for controlling audio CGCR from HLOS
+https://patchwork.kernel.org/patch/12853622/
+
+And then there is this:
+
+arm64: dts: qcom: sc7280: Add lpasscore & lpassaudio clock controllers
+https://patchwork.kernel.org/project/linux-arm-msm/patch/20220523100058.26241-1-quic_tdas@quicinc.com/
+
+A previous version (v3) of that patch already landed (9499240d15f2
+"arm64: dts: qcom: sc7280: Add lpasscore & lpassaudio clock controllers"),
+it is not clear to me why it is still evolving as if that weren't the
+case.
+
+From the newer version of the patch at least marking the 'lpasscc' node
+as disabled is needed.
