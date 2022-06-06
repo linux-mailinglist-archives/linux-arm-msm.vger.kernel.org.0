@@ -2,274 +2,242 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5979053EEEC
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jun 2022 21:54:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CEB5853EF0E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jun 2022 22:00:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232773AbiFFTyk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Jun 2022 15:54:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35572 "EHLO
+        id S232710AbiFFUAK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Jun 2022 16:00:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56948 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232746AbiFFTyc (ORCPT
+        with ESMTP id S233213AbiFFUAA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Jun 2022 15:54:32 -0400
-Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A57FC1FE;
-        Mon,  6 Jun 2022 12:54:30 -0700 (PDT)
-Received: by mail-pj1-x102c.google.com with SMTP id j7so13663051pjn.4;
-        Mon, 06 Jun 2022 12:54:30 -0700 (PDT)
+        Mon, 6 Jun 2022 16:00:00 -0400
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B0AA33E23
+        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Jun 2022 12:59:58 -0700 (PDT)
+Received: by mail-ej1-x62a.google.com with SMTP id s12so23816935ejx.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Jun 2022 12:59:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=8q1bn4DIkVdPYocO3zbCpHORpBrE1kGq1oYmf6HtOsQ=;
-        b=mINn9lreCSDSLRjzYdkyakH7yu1xAu+JVxl4M3NKQNUO8NWCIji+Rg6dcg9XN92Dfe
-         jYN5iYbjFfYMGkY/13NHhv/udazkkmpBC32NPAWcl0LB5fcVJTJZk9LwRGvouoPPp23c
-         QlHN+iGVcMZApXMDDqIkmJOp/SGQRVFDADNQizTZBlXk4q9lA+8z2AJRLRRvxawOCGze
-         umg1tBSEOLEmfGquqdxyyWBaeq2I7g8bSvE9ril7aKuycWeLKJGIzkUkT+cwwluaKDIv
-         UILQs03kROqlIbJzsDKz1M1UbmmY1eIosuYzQX2WiWCUMqfYSJXx8vz0Me5X5OCdLddi
-         Q7Hw==
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=MyBIlHlvNnNukF5G0n9+2AGCAoU99vx7TpccBzJvzGk=;
+        b=Dh6hO/bbO4U7Wwjb0yjg8aPpKaeV3WtXIWRnsKFRLoP0wSC2DM18KCiugxyQqZJ10I
+         pTVrCF0N8YsZZ4QCHy5byDFsKoikoMIiyGJrR/ZPKOaxg7Q6/8yEw3SvECCrOR2jPYW+
+         G3qmInSfX+VJqatxbhHuEet40CcCHXPRZks0A=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=8q1bn4DIkVdPYocO3zbCpHORpBrE1kGq1oYmf6HtOsQ=;
-        b=RHcw2uRWAFftA6Go70ZwwpSieV7667/yQA45CIyIbY5MWcigpr2789fW0/jl/c1Az1
-         nftlT9uy617Zh/Ixwq1Jdjv3VcImSNeoXbBdKG6btZ19K5WeaCL5O9ieLKACn796+dfN
-         y1QQTXJOWcyXwvEiZV09ud2i+K6IqqseH39LKmc/EUdMvNzhWg3c7U3UamJICGcPXKai
-         SKcZXFPTHzq01C/gIopyBVAqPpioEmeDDXz4eyw4RegCZrOuSMgVU8AUWBj7ehabSjb7
-         no/OCUuT/pEAq2HTt54EevKrTtFkovws93kVGWdP7cke0Flu2HgfFDUiXaMWZDaeyQYb
-         JHdA==
-X-Gm-Message-State: AOAM532WMfG4rnYl9Q+cxEj+P6EqtfUxJ3FP5EjOcEtxOy67UTtjkyzl
-        BFsndzd5JfA7jRl5jouDbTI=
-X-Google-Smtp-Source: ABdhPJwcps+5XEULqwqwbglOyf5515hyF9v/tsYQo6POITCwxg+LpNt/xyw1wZhJkQLbzY4ali+PGA==
-X-Received: by 2002:a17:90a:e2c6:b0:1e2:fad9:40f7 with SMTP id fr6-20020a17090ae2c600b001e2fad940f7mr45813125pjb.198.1654545270086;
-        Mon, 06 Jun 2022 12:54:30 -0700 (PDT)
-Received: from localhost ([2a00:79e1:abd:4a00:2703:3c72:eb1a:cffd])
-        by smtp.gmail.com with ESMTPSA id t1-20020a63f341000000b003fc4cc19414sm11011928pgj.45.2022.06.06.12.54.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Jun 2022 12:54:28 -0700 (PDT)
-From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-        Rob Clark <robdclark@chromium.org>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        linux-doc@vger.kernel.org (open list:DOCUMENTATION),
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v2 2/2] drm/msm: Expose client engine utilization via fdinfo
-Date:   Mon,  6 Jun 2022 12:54:32 -0700
-Message-Id: <20220606195432.1888346-2-robdclark@gmail.com>
-X-Mailer: git-send-email 2.36.1
-In-Reply-To: <20220606195432.1888346-1-robdclark@gmail.com>
-References: <20220606195432.1888346-1-robdclark@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=MyBIlHlvNnNukF5G0n9+2AGCAoU99vx7TpccBzJvzGk=;
+        b=MMUw732VG8MLADRSYiBuV1EtfOiBE4LsspN/Nw/K+0izPZtrDmVXIypMcC0ILMesc7
+         UaXHx8LBRoUpoGTbW4rP4KHveVdG1LiimNsYKMCN35z//8g6yqBcM4RAOMWlRPX6cOCb
+         wHShcF+LdQ/jeYX3S7AyKHv4zFsTRRp6aCzaEYgHKIEKLr+lV9QAcY/5N6UzkkmR6JZf
+         rcL6k3kh4v6TAYqvPEm39ILKqT03UBbE29bsHhdwT9HpySRjc9gSQ2eiwaXN1zhaDMIU
+         z8Ftr6XydJddHA/Q+BHtePzlXGPiaUlrzATyrboexvmstMemQJXr5th1Y/RliZtjjA0Z
+         2J3Q==
+X-Gm-Message-State: AOAM531RfWiyj6quMyfM4lz4RGZYyJ+J12VyLlw3r+8t/o+UxDgWvvmL
+        oLMTEm2OY0BpjEub+sA+8Lrtbwjw39ZiDHTI6Uk=
+X-Google-Smtp-Source: ABdhPJwKSVzG8lWs+l+yR19ONa+ssLP0hU4rdgL8/r/bWSZ/Fh+4NJ2FMcVgVjo8lgNHy48V2f4XjQ==
+X-Received: by 2002:a17:906:d550:b0:704:7ba6:9854 with SMTP id cr16-20020a170906d55000b007047ba69854mr22739666ejc.579.1654545596409;
+        Mon, 06 Jun 2022 12:59:56 -0700 (PDT)
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com. [209.85.221.49])
+        by smtp.gmail.com with ESMTPSA id i2-20020a056402054200b004315050d7dfsm3010004edx.81.2022.06.06.12.59.55
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 06 Jun 2022 12:59:55 -0700 (PDT)
+Received: by mail-wr1-f49.google.com with SMTP id p10so21235148wrg.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Jun 2022 12:59:55 -0700 (PDT)
+X-Received: by 2002:a05:6000:1685:b0:218:45f0:5be6 with SMTP id
+ y5-20020a056000168500b0021845f05be6mr4306754wrd.301.1654545595132; Mon, 06
+ Jun 2022 12:59:55 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+References: <1654021066-13341-1-git-send-email-quic_vnivarth@quicinc.com>
+ <CAD=FV=UF3x5RHrQH-m1X-4kQSsKiufLnkew=VuJz7W9EAi3GHQ@mail.gmail.com>
+ <5d950007-7a92-a41b-e569-79e806adb06a@quicinc.com> <CAD=FV=Xm1LJEoU5dKa5pMgqsHuAXuFVpdHvc1REULhAKTPbGnQ@mail.gmail.com>
+ <ad393ad2-a247-3c61-5033-185d39b5596d@quicinc.com> <CAD=FV=XD+LozhkJZp0C7RUO01T-XuqBA-SJ0EQeyvGk0CxC3JQ@mail.gmail.com>
+ <e677fd02-011f-4f4e-fa73-17dc96aea7d0@quicinc.com>
+In-Reply-To: <e677fd02-011f-4f4e-fa73-17dc96aea7d0@quicinc.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Mon, 6 Jun 2022 12:59:43 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=UzjnEjMTLTRVXTrz6aoiBymJtnJ1o8dzPN9hn0Be3tng@mail.gmail.com>
+Message-ID: <CAD=FV=UzjnEjMTLTRVXTrz6aoiBymJtnJ1o8dzPN9hn0Be3tng@mail.gmail.com>
+Subject: Re: [PATCH] tty: serial: qcom-geni-serial: minor fixes to get_clk_div_rate()
+To:     Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Jiri Slaby <jirislaby@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-serial@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>,
+        quic_msavaliy@quicinc.com, Matthias Kaehlcke <mka@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+Hi,
 
-Similar to AMD commit
-874442541133 ("drm/amdgpu: Add show_fdinfo() interface"), using the
-infrastructure added in previous patches, we add basic client info
-and GPU engine utilisation for msm.
+On Mon, Jun 6, 2022 at 11:19 AM Vijaya Krishna Nivarthi
+<quic_vnivarth@quicinc.com> wrote:
+>
+> Hi,
+>
+>
+> On 6/4/2022 12:10 AM, Doug Anderson wrote:
+> > Hi,
+> >
+> > On Fri, Jun 3, 2022 at 10:43 AM Vijaya Krishna Nivarthi
+> > <quic_vnivarth@quicinc.com> wrote:
+> >>
+> >> Ah, or I guess what you're saying is that the table historically
+> >> contained "rounded" rates but that clk_round_rate() isn't returning
+> >> nice round rates. OK, but if we truly want to support an inexact
+> >> match, you'd want to pick the rate that reduces the error, not just
+> >> pick the first one. In other words, something like this (untested):
+> >>
+> >> freq = clk_round_rate(clk, mult);
+> >> diff = abs(((long)mult - freq) / div);
+> >> if (diff < best_diff) {
+> >>     best_diff = diff;
+> >>     ser_clk = freq;
+> >>     best_div = div;
+> >> }
+> >> I am not sure if its required that freq is a multiple of best_div now
+> >> that we don't have a multiple of desired_clk anyway.
+> > How about just this (untested):
+> >
+> > freq = clk_round_rate(clk, mult);
+> > candidate_div = max(1, DIV_ROUND_CLOSEST(freq, desired_clk));
+> > candidate_freq = freq / candidate_div;
+> > diff = abs((long)desired_clk - candidate_freq);
+> > if (diff < best_diff) {
+> >    best_diff = diff;
+> >    ser_clk = freq;
+> >    best_div = candidate_div;
+> > }
+>
+> I am afraid this still doesn't guarantee that ser_clk is a multiple of
+> best_div
 
-Example output:
+OK. ...I guess my question would be: does it matter for some reason?
+"ser_clk" is just a local variable in this function. Who cares if it's
+not a multiple of best_div? This is why we're keeping track of
+"best_div" in the first place, so that later in the function instead
+of:
 
-	# cat /proc/`pgrep glmark2`/fdinfo/6
-	pos:	0
-	flags:	02400002
-	mnt_id:	21
-	ino:	162
-	drm-driver:	msm
-	drm-client-id:	7
-	drm-engine-gpu:	1734371319 ns
-	drm-cycles-gpu:	1153645024
-	drm-maxfreq-gpu:	800000000 Hz
+*clk_div = ser_clk / desired_clk;
+if (!(*clk_div))
+  *clk_div = 1;
 
-See also: https://patchwork.freedesktop.org/patch/468505/
+You just do:
 
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- Documentation/gpu/drm-usage-stats.rst | 21 +++++++++++++++++++++
- drivers/gpu/drm/msm/msm_drv.c         | 19 ++++++++++++++++++-
- drivers/gpu/drm/msm/msm_gpu.c         | 21 +++++++++++++++++++--
- drivers/gpu/drm/msm/msm_gpu.h         | 19 +++++++++++++++++++
- 4 files changed, 77 insertions(+), 3 deletions(-)
+*clk_div = best_div;
 
-diff --git a/Documentation/gpu/drm-usage-stats.rst b/Documentation/gpu/drm-usage-stats.rst
-index 6c9f166a8d6f..60e5cc9c13ad 100644
---- a/Documentation/gpu/drm-usage-stats.rst
-+++ b/Documentation/gpu/drm-usage-stats.rst
-@@ -105,6 +105,27 @@ object belong to this client, in the respective memory region.
- Default unit shall be bytes with optional unit specifiers of 'KiB' or 'MiB'
- indicating kibi- or mebi-bytes.
- 
-+- drm-cycles-<str> <uint>
-+
-+Engine identifier string must be the same as the one specified in the
-+drm-engine-<str> tag and shall contain the number of busy cycles for the given
-+engine.
-+
-+Values are not required to be constantly monotonic if it makes the driver
-+implementation easier, but are required to catch up with the previously reported
-+larger value within a reasonable period. Upon observing a value lower than what
-+was previously read, userspace is expected to stay with that larger previous
-+value until a monotonic update is seen.
-+
-+- drm-maxfreq-<str> <uint> [Hz|MHz|KHz]
-+
-+Engine identifier string must be the same as the one specified in the
-+drm-engine-<str> tag and shall contain the maxium frequence for the given
-+engine.  Taken together with drm-cycles-<str>, this can be used to calculate
-+percentage utilization of the engine, whereas drm-engine-<str> only refects
-+time active without considering what frequency the engine is operating as a
-+percentage of it's maximum frequency.
-+
- ===============================
- Driver specific implementations
- ===============================
-diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-index 14ab9a627d8b..57a66093e671 100644
---- a/drivers/gpu/drm/msm/msm_drv.c
-+++ b/drivers/gpu/drm/msm/msm_drv.c
-@@ -948,7 +948,24 @@ static const struct drm_ioctl_desc msm_ioctls[] = {
- 	DRM_IOCTL_DEF_DRV(MSM_SUBMITQUEUE_QUERY, msm_ioctl_submitqueue_query, DRM_RENDER_ALLOW),
- };
- 
--DEFINE_DRM_GEM_FOPS(fops);
-+static void msm_fop_show_fdinfo(struct seq_file *m, struct file *f)
-+{
-+	struct drm_file *file = f->private_data;
-+	struct drm_device *dev = file->minor->dev;
-+	struct msm_drm_private *priv = dev->dev_private;
-+	struct drm_printer p = drm_seq_file_printer(m);
-+
-+	if (!priv->gpu)
-+		return;
-+
-+	msm_gpu_show_fdinfo(priv->gpu, file->driver_priv, &p);
-+}
-+
-+static const struct file_operations fops = {
-+	.owner = THIS_MODULE,
-+	DRM_GEM_FOPS,
-+	.show_fdinfo = msm_fop_show_fdinfo,
-+};
- 
- static const struct drm_driver msm_driver = {
- 	.driver_features    = DRIVER_GEM |
-diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
-index eb8a6663f309..333a9a299b41 100644
---- a/drivers/gpu/drm/msm/msm_gpu.c
-+++ b/drivers/gpu/drm/msm/msm_gpu.c
-@@ -4,6 +4,8 @@
-  * Author: Rob Clark <robdclark@gmail.com>
-  */
- 
-+#include "drm/drm_drv.h"
-+
- #include "msm_gpu.h"
- #include "msm_gem.h"
- #include "msm_mmu.h"
-@@ -146,6 +148,16 @@ int msm_gpu_pm_suspend(struct msm_gpu *gpu)
- 	return 0;
- }
- 
-+void msm_gpu_show_fdinfo(struct msm_gpu *gpu, struct msm_file_private *ctx,
-+			 struct drm_printer *p)
-+{
-+	drm_printf(p, "drm-driver:\t%s\n", gpu->dev->driver->name);
-+	drm_printf(p, "drm-client-id:\t%u\n", ctx->seqno);
-+	drm_printf(p, "drm-engine-gpu:\t%llu ns\n", ctx->elapsed_ns);
-+	drm_printf(p, "drm-cycles-gpu:\t%llu\n", ctx->cycles);
-+	drm_printf(p, "drm-maxfreq-gpu:\t%lu Hz\n", gpu->fast_rate);
-+}
-+
- int msm_gpu_hw_init(struct msm_gpu *gpu)
- {
- 	int ret;
-@@ -652,7 +664,7 @@ static void retire_submit(struct msm_gpu *gpu, struct msm_ringbuffer *ring,
- {
- 	int index = submit->seqno % MSM_GPU_SUBMIT_STATS_COUNT;
- 	volatile struct msm_gpu_submit_stats *stats;
--	u64 elapsed, clock = 0;
-+	u64 elapsed, clock = 0, cycles;
- 	unsigned long flags;
- 
- 	stats = &ring->memptrs->stats[index];
-@@ -660,12 +672,17 @@ static void retire_submit(struct msm_gpu *gpu, struct msm_ringbuffer *ring,
- 	elapsed = (stats->alwayson_end - stats->alwayson_start) * 10000;
- 	do_div(elapsed, 192);
- 
-+	cycles = stats->cpcycles_end - stats->cpcycles_start;
-+
- 	/* Calculate the clock frequency from the number of CP cycles */
- 	if (elapsed) {
--		clock = (stats->cpcycles_end - stats->cpcycles_start) * 1000;
-+		clock = cycles * 1000;
- 		do_div(clock, elapsed);
- 	}
- 
-+	submit->queue->ctx->elapsed_ns += elapsed;
-+	submit->queue->ctx->cycles     += cycles;
-+
- 	trace_msm_gpu_submit_retired(submit, elapsed, clock,
- 		stats->alwayson_start, stats->alwayson_end);
- 
-diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
-index 6def00883046..4911943ba53b 100644
---- a/drivers/gpu/drm/msm/msm_gpu.h
-+++ b/drivers/gpu/drm/msm/msm_gpu.h
-@@ -361,6 +361,22 @@ struct msm_file_private {
- 	/** cmdline: Overridden task cmdline, see MSM_PARAM_CMDLINE */
- 	char *cmdline;
- 
-+	/**
-+	 * elapsed:
-+	 *
-+	 * The total (cumulative) elapsed time GPU was busy with rendering
-+	 * from this context in ns.
-+	 */
-+	uint64_t elapsed_ns;
-+
-+	/**
-+	 * cycles:
-+	 *
-+	 * The total (cumulative) GPU cycles elapsed attributed to this
-+	 * context.
-+	 */
-+	uint64_t cycles;
-+
- 	/**
- 	 * entities:
- 	 *
-@@ -544,6 +560,9 @@ static inline void gpu_write64(struct msm_gpu *gpu, u32 lo, u32 hi, u64 val)
- int msm_gpu_pm_suspend(struct msm_gpu *gpu);
- int msm_gpu_pm_resume(struct msm_gpu *gpu);
- 
-+void msm_gpu_show_fdinfo(struct msm_gpu *gpu, struct msm_file_private *ctx,
-+			 struct drm_printer *p);
-+
- int msm_submitqueue_init(struct drm_device *drm, struct msm_file_private *ctx);
- struct msm_gpu_submitqueue *msm_submitqueue_get(struct msm_file_private *ctx,
- 		u32 id);
--- 
-2.36.1
 
+> I tested it with a function simulates clk_round_rate.
+>
+> static unsigned long clk_round_rate_test(struct clk *clk, unsigned long
+> in_freq)
+> {
+>      unsigned long root_freq[6] = {105, 204, 303, 402, 501, 602};
+>      int i;
+>
+>      for (i = 0; i < 6; i++) {
+>          if (root_freq[i] >= in_freq)
+>              return root_freq[i];
+>      }
+>      return root_freq[6];
+> }
+>
+>      {
+>          unsigned long ser_clk;
+>          unsigned long desired_clk;
+>          unsigned long freq;
+>          int div_round_closest;
+>          unsigned long div;
+>          unsigned long mult;
+>          unsigned long candidate_div, candidate_freq;
+>
+>          unsigned long diff, best_diff, best_div;
+>          unsigned long one;
+>
+>          desired_clk = 100;
+>          one = 1;
+>          best_diff = ULONG_MAX;
+>          pr_err("\ndesired_clk-%d\n", desired_clk);
+>          for (div = 1; div <= 10; div++) {
+>              mult = div * desired_clk;
+>
+>              freq = clk_round_rate_test(clk, mult);
+>              div_round_closest = DIV_ROUND_CLOSEST(freq, desired_clk);
+>              candidate_div = max(one, (unsigned long)div_round_closest);
+>              candidate_freq = freq / candidate_div;
+>              diff = abs((long)desired_clk - candidate_freq);
+>              pr_err("div-%d, mult-%d, freq-%d, div_round_closest-%d,
+> candidate_div-%d, candidate_freq-%d, diff-%d\n",
+>                  div, mult, freq, div_round_closest, candidate_div,
+> candidate_freq, diff);
+>              if (diff < best_diff) {
+>                  pr_err("This is best so far\n");
+>                  best_diff = diff;
+>                  ser_clk = freq;
+>                  best_div = candidate_div;
+>              }
+>          }
+>          pr_err("\nbest_diff-%d, ser_clk-%d, best_div-%d\n",
+>              best_diff, ser_clk, best_div);
+>      }
+>
+> And here is the output
+>
+> [   17.835167] desired_clk-100
+> [   17.839567] div-1, mult-100, freq-105, div_round_closest-1,
+> candidate_div-1, candidate_freq-105, diff-5
+> [   17.849220] This is best so far
+> [   17.852458] div-2, mult-200, freq-204, div_round_closest-2,
+> candidate_div-2, candidate_freq-102, diff-2
+> [   17.862104] This is best so far
+> [   17.865345] div-3, mult-300, freq-303, div_round_closest-3,
+> candidate_div-3, candidate_freq-101, diff-1
+> [   17.874995] This is best so far
+> [   17.878237] div-4, mult-400, freq-402, div_round_closest-4,
+> candidate_div-4, candidate_freq-100, diff-0
+> [   17.887882] This is best so far
+> [   17.891118] div-5, mult-500, freq-501, div_round_closest-5,
+> candidate_div-5, candidate_freq-100, diff-0
+> [   17.900770] div-6, mult-600, freq-602, div_round_closest-6,
+> candidate_div-6, candidate_freq-100, diff-0
+> [   17.910415] div-7, mult-700, freq-602, div_round_closest-6,
+> candidate_div-6, candidate_freq-100, diff-0
+> [   17.920057] div-8, mult-800, freq-602, div_round_closest-6,
+> candidate_div-6, candidate_freq-100, diff-0
+> [   17.929703] div-9, mult-900, freq-602, div_round_closest-6,
+> candidate_div-6, candidate_freq-100, diff-0
+> [   17.939353] div-10, mult-1000, freq-602, div_round_closest-6,
+> candidate_div-6, candidate_freq-100, diff-0
+> [   17.949181]
+> [   17.949181] best_diff-0, ser_clk-402, best_div-4
+
+That doesn't look like a terrible result. I guess nominally 602 is a
+better approximation, but if we're accepting that we're not going to
+have an exact rate anyway then maybe being off by that tiny amount
+doesn't matter and we'd do better with the slow clock (maybe saves
+power?)
+
+
+> Please note that we go past cases when we have an divider that can
+> exactly divide the frequency(105/1, 204/2, 303/3) and end up with one
+> that doesn't.
+
+Ah, good point. Luckily that's a 1-line fix, right?
+
+
+-Doug
