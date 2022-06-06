@@ -2,109 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E712F53E77E
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jun 2022 19:07:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8379053EC86
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jun 2022 19:10:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239500AbiFFOUf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Jun 2022 10:20:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49248 "EHLO
+        id S239787AbiFFOd6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Jun 2022 10:33:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54452 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239832AbiFFOUL (ORCPT
+        with ESMTP id S239732AbiFFOd5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Jun 2022 10:20:11 -0400
-Received: from mail-qk1-x735.google.com (mail-qk1-x735.google.com [IPv6:2607:f8b0:4864:20::735])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D52E413324B
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Jun 2022 07:20:09 -0700 (PDT)
-Received: by mail-qk1-x735.google.com with SMTP id x65so10950621qke.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Jun 2022 07:20:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=dM396G/2QLfKioc1syDLOcBhUV6ELRzsPLGNpLhwVM4=;
-        b=g/K66wRRBcNu+YwOGEtjZAqNUaihQbAWupXjLyzDpylwhn+yPd+Mi4ri/fttRxQhOV
-         FZEjlrRRUKoNEb9thvv3KUAKQyteO+16cCf58RkrZtqwstKu8ubKTV/em7u6Pvwnlmu5
-         dGTlkM9OMXw6qYx1ke5p9aubbbITIQlnl4BpIdzdo0969hwe2VLjxe8AuTYoirmeS7cs
-         Ng3wpe8nR7oRUeq1Z0piMCn29dTuu0vZON050LeGxzCC1YoNb3LZJgqFj8VNUp9WGy6D
-         lj6QNZ0MxL2MdDHGR5RFs/50yVpEJLfcPzKhpwwKfq1U3+HrkATdt55kq2aE6NlPx/9z
-         69Jw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=dM396G/2QLfKioc1syDLOcBhUV6ELRzsPLGNpLhwVM4=;
-        b=4sXcsKBECm9tOxyAPLbZbspWfTjoqlDuaWgjkYO7Uc+W/dHv9kn4fIxMFJTTCeCXsw
-         MzGWbcrxq6JszY2rd4GtWy/SXAxAL+RDhbYpeeAFTWGUQIv9ICgvlK71R+V0ZK4ALlzG
-         H1NKHorC1bdWWmhssws4Qw7umPuqK9I+0GSwwD2v6fGSbD36zf6Yyzrzi4+0T8cJk38T
-         tjUXj3b983XBBom3fhi8MrVq+T+JyqNwQSnRWoItiWQRzcWhuJUtjRY+PQmbPzUEpSO2
-         xXaoIILceF1VNBJ2CRrSMmt4pP/u40uhO6BGLMiU3Wd/l4UN4CKDQXeAFTMRa8oU9C2F
-         Xukw==
-X-Gm-Message-State: AOAM5322zEuX1JxwuUancIxn16KfunC03xBiDQnhjEkaiOyATjqx0fCH
-        JlrSPPa9uV9NGYKf2/MJaftOzc/HQe4J8EgOmkC5jA==
-X-Google-Smtp-Source: ABdhPJwCgwyEqFtCYUGmUxfsE/3NhDjPqELI8Rn6UPGZ90g6qh5uCPgZURSpTtOodpN0uMsuaVhi3qToGDahMVVVHq8=
-X-Received: by 2002:a37:b081:0:b0:6a6:7ae4:aa0c with SMTP id
- z123-20020a37b081000000b006a67ae4aa0cmr14350164qke.203.1654525208867; Mon, 06
- Jun 2022 07:20:08 -0700 (PDT)
+        Mon, 6 Jun 2022 10:33:57 -0400
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id D5D0D2C13F;
+        Mon,  6 Jun 2022 07:33:55 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 8CACF15DB;
+        Mon,  6 Jun 2022 07:33:55 -0700 (PDT)
+Received: from [10.57.81.38] (unknown [10.57.81.38])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 555903F73B;
+        Mon,  6 Jun 2022 07:33:48 -0700 (PDT)
+Message-ID: <1e0e5403-1e65-db9a-c8e7-34e316bfda8e@arm.com>
+Date:   Mon, 6 Jun 2022 15:33:42 +0100
 MIME-Version: 1.0
-References: <20220602070909.1666068-1-dmitry.baryshkov@linaro.org>
- <20220602070909.1666068-3-dmitry.baryshkov@linaro.org> <Yp4HDG4Bus1FOHId@ripper>
-In-Reply-To: <Yp4HDG4Bus1FOHId@ripper>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Mon, 6 Jun 2022 17:19:57 +0300
-Message-ID: <CAA8EJpoj0ps=iBfx97XmaVrbMoXmzyM35QVS7MdB=_D8Y4p02g@mail.gmail.com>
-Subject: Re: [RFC PATCH v3 02/30] phy: qcom-qmp-combo: drop all non-combo
- compatibles support
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: Re: [PATCH 2/5] iommu: Ensure device has the same iommu_ops as the
+ domain
+Content-Language: en-GB
+To:     Nicolin Chen <nicolinc@nvidia.com>, jgg@nvidia.com,
+        joro@8bytes.org, will@kernel.org, marcan@marcan.st,
+        sven@svenpeter.dev, robdclark@gmail.com, m.szyprowski@samsung.com,
+        krzysztof.kozlowski@linaro.org, baolu.lu@linux.intel.com,
+        agross@kernel.org, bjorn.andersson@linaro.org,
+        matthias.bgg@gmail.com, heiko@sntech.de, orsonzhai@gmail.com,
+        baolin.wang7@gmail.com, zhang.lyra@gmail.com, wens@csie.org,
+        jernej.skrabec@gmail.com, samuel@sholland.org,
+        jean-philippe@linaro.org, alex.williamson@redhat.com
+Cc:     suravee.suthikulpanit@amd.com, alyssa@rosenzweig.io,
+        alim.akhtar@samsung.com, dwmw2@infradead.org, yong.wu@mediatek.com,
+        mjrosato@linux.ibm.com, gerald.schaefer@linux.ibm.com,
+        thierry.reding@gmail.com, vdumpa@nvidia.com, jonathanh@nvidia.com,
+        cohuck@redhat.com, iommu@lists.linux-foundation.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+        linux-mediatek@lists.infradead.org,
+        linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
+        linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
+        virtualization@lists.linux-foundation.org, kvm@vger.kernel.org
+References: <20220606061927.26049-1-nicolinc@nvidia.com>
+ <20220606061927.26049-3-nicolinc@nvidia.com>
+From:   Robin Murphy <robin.murphy@arm.com>
+In-Reply-To: <20220606061927.26049-3-nicolinc@nvidia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-9.8 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 6 Jun 2022 at 16:51, Bjorn Andersson <bjorn.andersson@linaro.org> wrote:
->
-> On Thu 02 Jun 00:08 PDT 2022, Dmitry Baryshkov wrote:
-> > -static const struct of_device_id qcom_qmp_phy_of_match_table[] = {
-> [..]
-> > -     }, {
-> > -             .compatible = "qcom,sdm845-qmp-usb3-phy",
->
-> We have a few examples of these, where we have a compatible for the
-> USB-half of the combo PHY. For backwards compatibility I think we would
-> want to retain these, but if we move them to the UNI phy driver wouldn't
-> we end up with duplicate USB configuration tables between the two files?
+On 2022-06-06 07:19, Nicolin Chen wrote:
+> The core code should not call an iommu driver op with a struct device
+> parameter unless it knows that the dev_iommu_priv_get() for that struct
+> device was setup by the same driver. Otherwise in a mixed driver system
+> the iommu_priv could be casted to the wrong type.
 
-Yes. Unlike previous approaches (RFC v1, v2) this series ends up with
-duplicate USB configuration tables for these three PHYs. We can export
-them from -combo and use them in the -usb driver.
-In previous attempts I tried to use the USB subdriver from the combo
-one. However at this point I'd prefer first to sort out the combo PHY
-init/reinit/switch issues, fix the register layout for the USB parts
-and remove duplication afterwards.
+We don't have mixed-driver systems, and there are plenty more 
+significant problems than this one to solve before we can (but thanks 
+for pointing it out - I hadn't got as far as auditing the public 
+interfaces yet). Once domains are allocated via a particular device's 
+IOMMU instance in the first place, there will be ample opportunity for 
+the core to stash suitable identifying information in the domain for 
+itself. TBH even the current code could do it without needing the 
+weirdly invasive changes here.
 
->
-> Should we keep the combo instances here as well?
+> Store the iommu_ops pointer in the iommu_domain and use it as a check to
+> validate that the struct device is correct before invoking any domain op
+> that accepts a struct device.
 
-We keep combo instances in qcom_qmp_combo_phy_of_match_table.
+In fact this even describes exactly that - "Store the iommu_ops pointer 
+in the iommu_domain", vs. the "Store the iommu_ops pointer in the 
+iommu_domain_ops" which the patch is actually doing :/
 
->
-> Regards,
-> Bjorn
->
-> > -             .data = &qmp_v3_usb3phy_cfg,
-> > -     }, {
+[...]
+> diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
+> index 19cf28d40ebe..8a1f437a51f2 100644
+> --- a/drivers/iommu/iommu.c
+> +++ b/drivers/iommu/iommu.c
+> @@ -1963,6 +1963,10 @@ static int __iommu_attach_device(struct iommu_domain *domain,
+>   {
+>   	int ret;
+>   
+> +	/* Ensure the device was probe'd onto the same driver as the domain */
+> +	if (dev->bus->iommu_ops != domain->ops->iommu_ops)
 
+Nope, dev_iommu_ops(dev) please. Furthermore I think the logical place 
+to put this is in iommu_group_do_attach_device(), since that's the 
+gateway for the public interfaces - we shouldn't need to second-guess 
+ourselves for internal default-domain-related calls.
 
+Thanks,
+Robin.
 
--- 
-With best wishes
-Dmitry
+> +		return -EMEDIUMTYPE;
+> +
+>   	if (unlikely(domain->ops->attach_dev == NULL))
+>   		return -ENODEV;
