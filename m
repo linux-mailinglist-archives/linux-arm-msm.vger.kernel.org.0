@@ -2,253 +2,157 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E9B9753E8DB
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jun 2022 19:08:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EEA6453EB28
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jun 2022 19:09:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241414AbiFFQDK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Jun 2022 12:03:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56866 "EHLO
+        id S241218AbiFFQGu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Jun 2022 12:06:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47302 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241431AbiFFQDJ (ORCPT
+        with ESMTP id S241168AbiFFQGn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Jun 2022 12:03:09 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1E8450036
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Jun 2022 09:03:07 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id t25so24002466lfg.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Jun 2022 09:03:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=rXFSlQwhD0hABpERnEvh1wc9P0XhL1JyMA/Bqw04Q58=;
-        b=gk9vZvgwAxNK2UeZ/Ty1cO9MVZNEAKo2lA1WFdadz6h8cbykxU+Jmx7znarXsFdd+7
-         N6rE/EAFrHvJ9Qqh0VvCMQeOtW3lPl3KbDPNz9tD1b/HnG2ifuE0PeZhjGaS4xBZI630
-         pwQQMOFKkesxmih1bJqmkmWZIK1u1L0OyhMffPhzV3C1836OS0UBEGRSjkkB0dHc+mgT
-         B9KqWrhcXx98ZvE1RFufRgbLK6TcXFY1eZwTbC8UdzCI9joUJ8oyRsPI3JxFL3QrBV55
-         C+BvFdrAZrlWsSklYkUiX4yZ43+l5AiAOtbCZdVCDIFES1LcwXq2o8qTGTPiTl+J52dd
-         fz4g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=rXFSlQwhD0hABpERnEvh1wc9P0XhL1JyMA/Bqw04Q58=;
-        b=08N44BqbgOydV2iXPX/vGtQrwnNb7SHdugiyNNAccMXfKLYaGSQOdZgfL7enCD//0o
-         0HyL+pqRQL7TqB8826n5bboZiYgFMvvVHuRXAK6BLbGuJC5CAk/mG8JLUeFjp4gxaZH4
-         dq88ZZouAcglelAXFYEmQibktY0V9BNYoK243xExZvRqgOS1fT6nITx+tVzoNAcxRcUc
-         7+DZdRwCd6oy3K7g0EmcF4fDirPmFbm6pQQ4nufBjasNx8hKo2ubsqVTkUq12Sftdhxl
-         86fGj7TcZ00VFzq0fri2ZjCCVeWGF5FBlROpD23AASLols5NAw+KC30FfeT3wVb5P6pM
-         WWLA==
-X-Gm-Message-State: AOAM530xTSRkcgnxOKHP05Nb+h7xJbFDLYlNRn1aUPzlnF3GWWHNNbRx
-        2VvpSvPJLNEO1rdc8lLJ8IN/aw==
-X-Google-Smtp-Source: ABdhPJw6HOqVfSPTDlS1yI5qGEU63ArxfXEuN/kRsDe8VuP3U8DLoE1uaaQxg3dT0DcgFOdYX/dxKg==
-X-Received: by 2002:a05:6512:3d94:b0:479:560e:ce5c with SMTP id k20-20020a0565123d9400b00479560ece5cmr1716710lfv.506.1654531386132;
-        Mon, 06 Jun 2022 09:03:06 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id k8-20020ac257c8000000b0047255d211f5sm2893725lfo.292.2022.06.06.09.03.05
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 06 Jun 2022 09:03:05 -0700 (PDT)
-Message-ID: <1622739f-0cac-5b9f-325f-6a7b7eeb0606@linaro.org>
-Date:   Mon, 6 Jun 2022 19:03:04 +0300
+        Mon, 6 Jun 2022 12:06:43 -0400
+Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0F1F1A44B4;
+        Mon,  6 Jun 2022 09:06:41 -0700 (PDT)
+Received: from g550jk.arnhem.chello.nl (31-151-115-246.dynamic.upc.nl [31.151.115.246])
+        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 783DECCE35;
+        Mon,  6 Jun 2022 16:06:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
+        t=1654531569; bh=FDmhzeRJXLln4Tsh/IURDfuOWharrgHiMsf+T6eZVRk=;
+        h=From:To:Cc:Subject:Date;
+        b=kIXuQ34jpxSgTAlu5WQwYutKhQUg6+TwsdaWr3k9kvYEfI5uyWrGa6TrRcvbiAWxJ
+         EPWQrlhfOVl/5YFwN7isG+qeC3a53HRBmMX+fMvvPOlOTjXqe7oSBMpTFt+5GJABhQ
+         /m4BrcW7yN/T/rIKEVaEQfyDVZrFkCKa/mewNKD0=
+From:   Luca Weiss <luca@z3ntu.xyz>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Luca Weiss <luca@z3ntu.xyz>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH 1/2] ARM: dts: qcom: msm8974: re-add missing pinctrl
+Date:   Mon,  6 Jun 2022 18:04:21 +0200
+Message-Id: <20220606160421.1641778-1-luca@z3ntu.xyz>
+X-Mailer: git-send-email 2.36.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.0
-Subject: Re: [PATCH v3 4/5] arm64: dts: qcom: qrb5165-rb5-vision-mezzanine:
- Add vision mezzanine
-Content-Language: en-GB
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
-        mchehab@kernel.org, hverkuil@xs4all.nl, robert.foss@linaro.org
-Cc:     jonathan@marek.ca, andrey.konovalov@linaro.org,
-        todor.too@gmail.com, agross@kernel.org, bjorn.andersson@linaro.org,
-        jgrahsl@snap.com, hfink@snap.com, vladimir.zapolskiy@linaro.org,
-        konrad.dybcio@somainline.org
-References: <20220606132029.2221257-1-bryan.odonoghue@linaro.org>
- <20220606132029.2221257-5-bryan.odonoghue@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20220606132029.2221257-5-bryan.odonoghue@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FROM_SUSPICIOUS_NTLD,
+        FROM_SUSPICIOUS_NTLD_FP,PDS_OTHER_BAD_TLD,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Level: **
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 06/06/2022 16:20, Bryan O'Donoghue wrote:
-> The Vision Mezzanine for the RB5 ships with an imx517 and ov9282 populated.
-> Other sensors and components may be added or stacked with additional
-> mezzanines.
-> 
-> In this drop we enable the Sony imx577 main camera sensor.
-> 
-> The IMX577 is on CCI1/CSI2 provides four lanes of camera data.
-> 
-> An example media-ctl pipeline is:
-> 
-> media-ctl --reset
-> media-ctl -v -d /dev/media0 -V '"imx412 '20-001a'":0[fmt:SRGGB10/4056x3040 field:none]'
-> media-ctl -V '"msm_csiphy2":0[fmt:SRGGB10/4056x3040]'
-> media-ctl -V '"msm_csid0":0[fmt:SRGGB10/4056x3040]'
-> media-ctl -V '"msm_vfe0_rdi0":0[fmt:SRGGB10/4056x3040]'
-> media-ctl -l '"msm_csiphy2":1->"msm_csid0":0[1]'
-> media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
-> 
-> yavta -B capture-mplane -c -I -n 5 -f SRGGB10P -s 4056x3040 -F /dev/video0
-> 
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> ---
->   arch/arm64/boot/dts/qcom/Makefile             |  1 +
->   .../dts/qcom/qrb5165-rb5-vision-mezzanine.dts | 68 +++++++++++++++++++
->   arch/arm64/boot/dts/qcom/sm8250.dtsi          | 33 +++++++++
->   3 files changed, 102 insertions(+)
->   create mode 100644 arch/arm64/boot/dts/qcom/qrb5165-rb5-vision-mezzanine.dts
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index 2f8aec2cc6db..86e6801a9c29 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -51,6 +51,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-sony-xperia-yoshino-poplar.dtb
->   dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-1000.dtb
->   dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-4000.dtb
->   dtb-$(CONFIG_ARCH_QCOM)	+= qrb5165-rb5.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= qrb5165-rb5-vision-mezzanine.dtb
->   dtb-$(CONFIG_ARCH_QCOM)	+= sa8155p-adp.dtb
->   dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-idp.dtb
->   dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-coachz-r1.dtb
-> diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5-vision-mezzanine.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5-vision-mezzanine.dts
-> new file mode 100644
-> index 000000000000..c8bed02243f8
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5-vision-mezzanine.dts
-> @@ -0,0 +1,68 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/*
-> + * Copyright (c) 2022, Linaro Ltd.
-> + */
-> +
-> +/dts-v1/;
-> +
-> +#include "qrb5165-rb5.dts"
-> +
-> +&camcc {
-> +	status = "okay";
-> +};
-> +
-> +&camss {
-> +	status = "okay";
-> +	vdda-phy-supply = <&vreg_l5a_0p88>;
-> +	vdda-pll-supply = <&vreg_l9a_1p2>;
-> +
-> +	ports {
-> +		/* The port index denotes CSIPHY id i.e. csiphy2 */
-> +		port@2 {
-> +			reg = <2>;
-> +			csiphy2_ep: endpoint {
-> +				clock-lanes = <7>;
-> +				data-lanes = <0 1 2 3>;
-> +				remote-endpoint = <&imx412_ep>;
-> +			};
-> +
-> +		};
-> +	};
-> +};
-> +
-> +&cci1 {
-> +	status = "okay";
-> +};
-> +
-> +&cci1_i2c0 {
-> +	camera@1a {
-> +		/*
-> +		 * rb5 ships with an imx577. camx code from qcom treats imx412
-> +		 * and imx577 the same way. Absent better data do the same here.
-> +		 */
-> +		compatible = "sony,imx412";
+As part of a recent cleanup commit, the pinctrl for a few uart and i2c
+nodes was removed. Adjust the names and/or add it back and assign it to
+the uart and i2c nodes.
 
-I'd prefer to list "sony,imx577", "sony,imx412" here or even just imx577 
-here and extend imx412 driver to support imx577 compat.
+Fixes: 1dfe967ec7cf ("ARM: dts: qcom-msm8974*: Consolidate I2C/UART/SDHCI")
+Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+---
+Bjorn, could you please pick this up for -fixes so it lands in an
+upcoming 5.19-rc?
 
-> +		reg = <0x1a>;
-> +
-> +		reset-gpios = <&tlmm 78 GPIO_ACTIVE_LOW>;
-> +		pinctrl-names = "default", "suspend";
-> +		pinctrl-0 = <&cam2_default>;
-> +		pinctrl-1 = <&cam2_suspend>;
-> +
-> +		clocks = <&camcc CAM_CC_MCLK2_CLK>;
-> +		assigned-clocks = <&camcc CAM_CC_MCLK2_CLK>;
-> +		assigned-clock-rates = <24000000>;
-> +
-> +		dovdd-supply  = <&vreg_l7f_1p8>;
-> +		avdd-supply = <&vdc_5v>;
-> +		dvdd-supply = <&vdc_5v>;
-> +
-> +		port {
-> +			imx412_ep: endpoint {
+ arch/arm/boot/dts/qcom-msm8974.dtsi | 30 +++++++++++++++++++++++++----
+ 1 file changed, 26 insertions(+), 4 deletions(-)
 
-I'd call this the imx577_ep. It's still the imx577 sensor, despite the 
-kernel using imx412 compat
-
-> +				clock-lanes = <1>;
-> +				link-frequencies = /bits/ 64 <600000000>;
-> +				data-lanes = <1 2 3 4>;
-> +				remote-endpoint = <&csiphy2_ep>;
-> +			};
-> +		};
-> +	};
-> +};
-> diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> index aa9a13364865..2b65ec2806d0 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> @@ -3788,6 +3788,39 @@ tlmm: pinctrl@f100000 {
->   			gpio-ranges = <&tlmm 0 0 181>;
->   			wakeup-parent = <&pdc>;
->   
-> +			cam2_default: cam2-default {
-> +				rst {
-> +					pins = "gpio78";
-> +					function = "gpio";
-> +					drive-strength = <2>;
-> +					bias-disable;
-> +				};
-> +
-> +				mclk {
-> +					pins = "gpio96";
-> +					function = "cam_mclk";
-> +					drive-strength = <16>;
-> +					bias-disable;
-> +				};
-> +			};
-> +
-> +			cam2_suspend: cam2-suspend {
-> +				rst {
-> +					pins = "gpio78";
-> +					function = "gpio";
-> +					drive-strength = <2>;
-> +					bias-pull-down;
-> +					output-low;
-> +				};
-> +
-> +				mclk {
-> +					pins = "gpio96";
-> +					function = "cam_mclk";
-> +					drive-strength = <2>;
-> +					bias-disable;
-> +				};
-> +			};
-> +
->   			cci0_default: cci0-default {
->   				cci0_i2c0_default: cci0-i2c0-default {
->   					/* SDA, SCL */
-
-
+diff --git a/arch/arm/boot/dts/qcom-msm8974.dtsi b/arch/arm/boot/dts/qcom-msm8974.dtsi
+index 814ad0b46232..c3b8a6d63027 100644
+--- a/arch/arm/boot/dts/qcom-msm8974.dtsi
++++ b/arch/arm/boot/dts/qcom-msm8974.dtsi
+@@ -506,6 +506,8 @@ blsp1_uart2: serial@f991e000 {
+ 			interrupts = <GIC_SPI 108 IRQ_TYPE_LEVEL_HIGH>;
+ 			clocks = <&gcc GCC_BLSP1_UART2_APPS_CLK>, <&gcc GCC_BLSP1_AHB_CLK>;
+ 			clock-names = "core", "iface";
++			pinctrl-names = "default";
++			pinctrl-0 = <&blsp1_uart2_default>;
+ 			status = "disabled";
+ 		};
+ 
+@@ -581,6 +583,9 @@ blsp2_uart1: serial@f995d000 {
+ 			interrupts = <GIC_SPI 113 IRQ_TYPE_NONE>;
+ 			clocks = <&gcc GCC_BLSP2_UART1_APPS_CLK>, <&gcc GCC_BLSP2_AHB_CLK>;
+ 			clock-names = "core", "iface";
++			pinctrl-names = "default", "sleep";
++			pinctrl-0 = <&blsp2_uart1_default>;
++			pinctrl-1 = <&blsp2_uart1_sleep>;
+ 			status = "disabled";
+ 		};
+ 
+@@ -599,6 +604,8 @@ blsp2_uart4: serial@f9960000 {
+ 			interrupts = <GIC_SPI 116 IRQ_TYPE_LEVEL_HIGH>;
+ 			clocks = <&gcc GCC_BLSP2_UART4_APPS_CLK>, <&gcc GCC_BLSP2_AHB_CLK>;
+ 			clock-names = "core", "iface";
++			pinctrl-names = "default";
++			pinctrl-0 = <&blsp2_uart4_default>;
+ 			status = "disabled";
+ 		};
+ 
+@@ -639,6 +646,9 @@ blsp2_i2c6: i2c@f9968000 {
+ 			interrupts = <0 106 IRQ_TYPE_LEVEL_HIGH>;
+ 			clocks = <&gcc GCC_BLSP2_QUP6_I2C_APPS_CLK>, <&gcc GCC_BLSP2_AHB_CLK>;
+ 			clock-names = "core", "iface";
++			pinctrl-names = "default", "sleep";
++			pinctrl-0 = <&blsp2_i2c6_default>;
++			pinctrl-1 = <&blsp2_i2c6_sleep>;
+ 			#address-cells = <1>;
+ 			#size-cells = <0>;
+ 		};
+@@ -1256,7 +1266,7 @@ cd {
+ 				};
+ 			};
+ 
+-			blsp1_uart2_active: blsp1-uart2-active {
++			blsp1_uart2_default: blsp1-uart2-default {
+ 				rx {
+ 					pins = "gpio5";
+ 					function = "blsp_uart2";
+@@ -1272,7 +1282,7 @@ tx {
+ 				};
+ 			};
+ 
+-			blsp2_uart1_active: blsp2-uart1-active {
++			blsp2_uart1_default: blsp2-uart1-default {
+ 				tx-rts {
+ 					pins = "gpio41", "gpio44";
+ 					function = "blsp_uart7";
+@@ -1295,7 +1305,7 @@ blsp2_uart1_sleep: blsp2-uart1-sleep {
+ 				bias-pull-down;
+ 			};
+ 
+-			blsp2_uart4_active: blsp2-uart4-active {
++			blsp2_uart4_default: blsp2-uart4-default {
+ 				tx-rts {
+ 					pins = "gpio53", "gpio56";
+ 					function = "blsp_uart10";
+@@ -1406,7 +1416,19 @@ blsp2_i2c5_sleep: blsp2-i2c5-sleep {
+ 				bias-pull-up;
+ 			};
+ 
+-			/* BLSP2_I2C6 info is missing - nobody uses it though? */
++			blsp2_i2c6_default: blsp2-i2c6-default {
++				pins = "gpio87", "gpio88";
++				function = "blsp_i2c12";
++				drive-strength = <2>;
++				bias-disable;
++			};
++
++			blsp2_i2c6_sleep: blsp2-i2c6-sleep {
++				pins = "gpio87", "gpio88";
++				function = "blsp_i2c12";
++				drive-strength = <2>;
++				bias-pull-up;
++			};
+ 
+ 			spi8_default: spi8_default {
+ 				mosi {
 -- 
-With best wishes
-Dmitry
+2.36.1
+
