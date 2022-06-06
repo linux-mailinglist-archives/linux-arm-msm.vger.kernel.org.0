@@ -2,136 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 50C9D53E9D0
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jun 2022 19:08:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 03ECC53E892
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jun 2022 19:08:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241347AbiFFQGv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Jun 2022 12:06:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47646 "EHLO
+        id S241596AbiFFQNk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Jun 2022 12:13:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52360 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241348AbiFFQGt (ORCPT
+        with ESMTP id S241595AbiFFQNg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Jun 2022 12:06:49 -0400
-Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD258E52A7;
-        Mon,  6 Jun 2022 09:06:47 -0700 (PDT)
-Received: from g550jk.arnhem.chello.nl (31-151-115-246.dynamic.upc.nl [31.151.115.246])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 89D28CD361;
-        Mon,  6 Jun 2022 16:06:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1654531576; bh=o9eixXtP/Xx2M72rr+rsSeCZivwh5KMZsFPSUC13lhk=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=p2lrpkAjAckkN/gcgXfr6BiCj7ajAkXyu3tfJ2Z0ipTkPVvszYVyHnsVdoVuQaAsH
-         8ewkiYQch+POrrxMXT3j8Mimt59m6Q9GFDe9FMTZo7hCbHu6J/IalpnMJ6RLKROYFU
-         pz+K3O9Gbf/0dDFIZBA+ILvwG/lKw4hXQM2TaRPg=
-From:   Luca Weiss <luca@z3ntu.xyz>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Luca Weiss <luca@z3ntu.xyz>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 2/2] ARM: dts: qcom: msm8974-*: re-add remoteproc supplies
-Date:   Mon,  6 Jun 2022 18:04:23 +0200
-Message-Id: <20220606160421.1641778-2-luca@z3ntu.xyz>
-X-Mailer: git-send-email 2.36.1
-In-Reply-To: <20220606160421.1641778-1-luca@z3ntu.xyz>
-References: <20220606160421.1641778-1-luca@z3ntu.xyz>
+        Mon, 6 Jun 2022 12:13:36 -0400
+Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2E8A1248D3;
+        Mon,  6 Jun 2022 09:13:35 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by sin.source.kernel.org (Postfix) with ESMTPS id 0E8B8CE1C04;
+        Mon,  6 Jun 2022 16:13:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 130A0C34115;
+        Mon,  6 Jun 2022 16:13:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1654532012;
+        bh=KzlsCY5EneODGrRzogwzoUlBLdPUtIfNZ9l+NxOzLQc=;
+        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+        b=NlF6jaNtP+Vg7t9azUkk8f/rm25iImW2yfh9pKiK4/70IPqxibkL2erZQhw2UYOcP
+         vt/NRoRxJvq47TG1PtQzNL0E4Q4B8QEnaImnKmyr4h6r7P/4PEehpe53vEuMnpR/kk
+         jkR9PzOm6yeXoLIGKjhB/9pyTzs5ofg6CgoYfEiJtbu5C6/iLakxm7s9ZOdW3qab1e
+         A+cOpvre8Zcvd6kE2ACj/DLCNNGTYMK7hkA9j80002gk/YcMY6svCH+UHC4Mocjg2O
+         ziDdANo+53zRL/IjcxRwLKFF9xcRI8yMxoCq4/BqfJO6zLglQAhJgpVv8H4d+JIJY1
+         f1GhV/Dht7z5Q==
+From:   Mark Brown <broonie@kernel.org>
+To:     conor.dooley@microchip.com, agross@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, bjorn.andersson@linaro.org,
+        robh@kernel.org
+Cc:     krzysztof.kozlowski@linaro.org, devicetree@vger.kernel.org,
+        linux-spi@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+In-Reply-To: <20220526014141.2872567-1-robh@kernel.org>
+References: <20220526014141.2872567-1-robh@kernel.org>
+Subject: Re: [PATCH] spi: dt-bindings: Fix unevaluatedProperties warnings in examples
+Message-Id: <165453200977.2010189.2397395940075983324.b4-ty@kernel.org>
+Date:   Mon, 06 Jun 2022 17:13:29 +0100
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=0.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FROM_SUSPICIOUS_NTLD,
-        PDS_OTHER_BAD_TLD,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-8.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-As part of a recent cleanup commit, the remoteproc supplies for adsp and
-modem were removed from msm8974.dtsi and now need to be set in the
-device dts. Do so.
+On Wed, 25 May 2022 20:41:41 -0500, Rob Herring wrote:
+> The 'unevaluatedProperties' schema checks is not fully working and doesn't
+> catch some cases where there's a $ref to another schema. A fix is pending,
+> but results in new warnings in examples.
+> 
+> 'spi-max-frequency' is supposed to be a per SPI peripheral device property,
+> not a SPI controller property, so drop it.
+> 
+> [...]
 
-Fixes: f300826d27be ("ARM: dts: qcom-msm8974: Sort and clean up nodes")
-Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
----
-Bjorn, could you please pick this up for -fixes so it lands in an
-upcoming 5.19-rc?
+Applied to
 
- .../boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts   | 11 +++++++++++
- arch/arm/boot/dts/qcom-msm8974-sony-xperia-rhine.dtsi | 11 +++++++++++
- .../qcom-msm8974pro-sony-xperia-shinano-castor.dts    | 11 +++++++++++
- 3 files changed, 33 insertions(+)
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi.git for-next
 
-diff --git a/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts b/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts
-index 9493886a5c0d..2d699de713ce 100644
---- a/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts
-+++ b/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts
-@@ -313,6 +313,17 @@ otg {
- 	};
- };
- 
-+&remoteproc_adsp {
-+	cx-supply = <&pm8841_s2>;
-+};
-+
-+&remoteproc_mss {
-+	cx-supply = <&pm8841_s2>;
-+	mss-supply = <&pm8841_s3>;
-+	mx-supply = <&pm8841_s1>;
-+	pll-supply = <&pm8941_l12>;
-+};
-+
- &rpm_requests {
- 	pm8841-regulators {
- 		compatible = "qcom,rpm-pm8841-regulators";
-diff --git a/arch/arm/boot/dts/qcom-msm8974-sony-xperia-rhine.dtsi b/arch/arm/boot/dts/qcom-msm8974-sony-xperia-rhine.dtsi
-index 1d21de46f85c..60bf96304687 100644
---- a/arch/arm/boot/dts/qcom-msm8974-sony-xperia-rhine.dtsi
-+++ b/arch/arm/boot/dts/qcom-msm8974-sony-xperia-rhine.dtsi
-@@ -183,6 +183,17 @@ &pm8941_wled {
- 	qcom,num-strings = <2>;
- };
- 
-+&remoteproc_adsp {
-+	cx-supply = <&pm8841_s2>;
-+};
-+
-+&remoteproc_mss {
-+	cx-supply = <&pm8841_s2>;
-+	mss-supply = <&pm8841_s3>;
-+	mx-supply = <&pm8841_s1>;
-+	pll-supply = <&pm8941_l12>;
-+};
-+
- &rpm_requests {
- 	pm8841-regulators {
- 		compatible = "qcom,rpm-pm8841-regulators";
-diff --git a/arch/arm/boot/dts/qcom-msm8974pro-sony-xperia-shinano-castor.dts b/arch/arm/boot/dts/qcom-msm8974pro-sony-xperia-shinano-castor.dts
-index 9bd8faea61a5..48f0c47a45ef 100644
---- a/arch/arm/boot/dts/qcom-msm8974pro-sony-xperia-shinano-castor.dts
-+++ b/arch/arm/boot/dts/qcom-msm8974pro-sony-xperia-shinano-castor.dts
-@@ -288,6 +288,17 @@ lcd_dcdc_en_pin_a: lcd-dcdc-en-active {
- 
- };
- 
-+&remoteproc_adsp {
-+	cx-supply = <&pm8841_s2>;
-+};
-+
-+&remoteproc_mss {
-+	cx-supply = <&pm8841_s2>;
-+	mss-supply = <&pm8841_s3>;
-+	mx-supply = <&pm8841_s1>;
-+	pll-supply = <&pm8941_l12>;
-+};
-+
- &rpm_requests {
- 	pm8941-regulators {
- 		compatible = "qcom,rpm-pm8941-regulators";
--- 
-2.36.1
+Thanks!
 
+[1/1] spi: dt-bindings: Fix unevaluatedProperties warnings in examples
+      commit: 6aa27071e4354c351d98e345fc888b70f335f185
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
