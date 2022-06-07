@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E0E95542545
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jun 2022 08:54:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 509ED5422EF
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jun 2022 08:50:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232096AbiFHEsi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Jun 2022 00:48:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32786 "EHLO
+        id S232459AbiFHDgi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Jun 2022 23:36:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43042 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230184AbiFHEsY (ORCPT
+        with ESMTP id S234001AbiFHDfN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Jun 2022 00:48:24 -0400
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C19622DB6F
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Jun 2022 14:32:34 -0700 (PDT)
-Received: by mail-lf1-x134.google.com with SMTP id j10so30254573lfe.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Jun 2022 14:32:34 -0700 (PDT)
+        Tue, 7 Jun 2022 23:35:13 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27A023739CB
+        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Jun 2022 14:32:36 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id a2so24152706lfg.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Jun 2022 14:32:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=DnDN5jytIV5Bes7CqHjDo38pkNDFfuO2iEwx4YsJsCg=;
-        b=aFJq9Gy0UHX/A2ONyVr3g4M97Kyl9h7ynDm+QYIPnNpfLvvYSusSOJ9S/ZtCUk0xAX
-         PccHyssc9s7J0ZfxqtEDyvN8H9MUdUQNNGjMlai32vuV2Q2Ih0f6gxDLYrMoonzIn5BP
-         bpLhJICj6YT9QOJIhMuPeJe1koBLNbeQaftAy/fRroYOQOjnZflJM/+ihbdyYVQ69gKy
-         MNldy89Mt5D1chiWRFsitHSiPCwZrbL6hNGXPrsCY9kynh/tTD7g+foXdnPaI33OE52x
-         8aUV2Di+llgKed1oT7QUp6a5YLeTYD/I0Fktk0THSqoYDhOHOyugtJJyLcgyESA49bzT
-         7bbA==
+        bh=XuJqlH7IMqIbhMed2RebJAgHFsIyu/87Ru6Pl+aULTY=;
+        b=hQrpL3tmRdulVI3KY+VTqI+OcSpAOF6ZXQtZMew6j1sCNICj7nEfQlhXlWNwZ1nVA+
+         XhJwsTgrYt1Iebbf7rpWa5zJMT0tXZs7YpTkaE0z1EyhymqT7ap/jqtDkDB3LlcF9WeH
+         8lYNPQCK4uVglu2zOfNWWL9gcEJ8legRaAIaosgYmAZz4vLCb/ddFoV5ab7a7UqJKKB8
+         pP4cMZAj0G7LMn0kyv4gdc8kvLpI9Al2cA/98O0iVS+eN3+r28iNVkf5fV6N/cHRX4oE
+         Zxm6gJLSqbAwsdwmnFFv4ScQc/BtXu4oYB7IMiiI5SGMIXrTi66dR/BjZo1SxQkiV0/6
+         vxRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=DnDN5jytIV5Bes7CqHjDo38pkNDFfuO2iEwx4YsJsCg=;
-        b=DcCRMizaXZmB6BtPCS2zZ7afsD4KnUpZMmfLGtYVuuNfGjEjEhdbS2mQj9CEa1iCmH
-         MW5zKNMiuYzVpcl71XQhxLoA/kaxav9H/iEWT7GJyC04x3fQEGWUjbZQMdvFSaeYw7P/
-         TNBRkvsyuRu+cpMP3k66HkQe3Abi/O2AJ6A85rbJfbE0hjMgikpDnMt4jdmBifwvhjtp
-         /FKxyqensKsUQWvMAlbeMIQFxwlGYIR7Go+sfEvzKl3L+Q25t7cm891wgpW4KNxEHSm5
-         Zm0lrPM/OZyAtiu03imlAlg8WYy4mXLQydRbny1JjQlpk36uvlSyMhhg3171bgbkw8fM
-         ubDA==
-X-Gm-Message-State: AOAM530RGFFCZsqs1kdoJLMkyV7FRY8mnfuPlbuh5XgR+Iv7JFpJhxqz
-        AiklIHTz9GksF42rmDpQK6jpQQ==
-X-Google-Smtp-Source: ABdhPJyP2PoG+Z693Rlhxes5/6PcNdpyVa7/qldfovjMRhUhyn+H0jENrZZagm+NKynBbr4oJnVrKw==
-X-Received: by 2002:a05:6512:15a2:b0:478:ffaa:89 with SMTP id bp34-20020a05651215a200b00478ffaa0089mr19944036lfb.658.1654637553708;
-        Tue, 07 Jun 2022 14:32:33 -0700 (PDT)
+        bh=XuJqlH7IMqIbhMed2RebJAgHFsIyu/87Ru6Pl+aULTY=;
+        b=LaKiZZzc95RlPKAZ1TOX95RQh2Ob1uETI28rwg3yjfptUtFxYRCBTTycPXdWHQX9Kw
+         HYKo3efpRgSGQzI3c5pxxeI1cQkQp5oy7xuwJ5kSXZdFSIfFsZG8K1skiUBO2d9eJVnO
+         dXbyS5Fm4bEUOqwGMMm5DltBTTdiGTbqyHGGz+5v72y436CNTKnNt/u8aThYdqwSl91b
+         kHTmRpi9PFqCgD5i0+GyUwfPAnRlBhbpjxrrDBEZoQnQoRj9j97nu78Q/h0aPKCPwkzS
+         /upqg/Jox54kN/giwb7ogSitFWrrBgg9LL7YtPOGq1QXgmORFiGzFsXUN8mWhzxdgeRY
+         YJSg==
+X-Gm-Message-State: AOAM532mGKcJBJCuNKFsAxmclxugZXSS/18Hx2mugW5JN13Ly5SP+wR6
+        JfZ/0a0KOX6DhX7MTpwpEgBx8A==
+X-Google-Smtp-Source: ABdhPJwkuFZK3Mw2KqK/X6nWvpGXhlLMIkXTATBf1bpfZb2GzgJdIgQdWiQ8Kj1jXPjKyJPUsrDMTg==
+X-Received: by 2002:a05:6512:1526:b0:479:fe9:10b0 with SMTP id bq38-20020a056512152600b004790fe910b0mr19047159lfb.382.1654637555080;
+        Tue, 07 Jun 2022 14:32:35 -0700 (PDT)
 Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id g23-20020ac24d97000000b0047255d21153sm3411343lfe.130.2022.06.07.14.32.32
+        by smtp.gmail.com with ESMTPSA id g23-20020ac24d97000000b0047255d21153sm3411343lfe.130.2022.06.07.14.32.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Jun 2022 14:32:32 -0700 (PDT)
+        Tue, 07 Jun 2022 14:32:34 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -55,9 +55,9 @@ To:     Andy Gross <agross@kernel.org>,
         Kishon Vijay Abraham I <kishon@ti.com>
 Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
         linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org
-Subject: [PATCH v1 20/30] phy: qcom-qmp-pcie: cleanup the driver
-Date:   Wed,  8 Jun 2022 00:31:53 +0300
-Message-Id: <20220607213203.2819885-21-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v1 21/30] phy: qcom-qmp-pcie-msm8996: cleanup the driver
+Date:   Wed,  8 Jun 2022 00:31:54 +0300
+Message-Id: <20220607213203.2819885-22-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220607213203.2819885-1-dmitry.baryshkov@linaro.org>
 References: <20220607213203.2819885-1-dmitry.baryshkov@linaro.org>
@@ -73,21 +73,22 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Remove the conditionals and options that are not used by any of PCIe PHY
-devices.
+Remove the conditionals and options that are not used by the MSM8996
+PCIe PHY device. Hardcode has_lane_rst and has_phy_com_ctrl as this is
+the case for this PHY.
 
 Acked-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 Tested-by: Bjorn Andersson <bjorn.andersson@linaro.org> # UFS, PCIe and USB on SC8180X
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 213 ++---------------------
- 1 file changed, 11 insertions(+), 202 deletions(-)
+ .../phy/qualcomm/phy-qcom-qmp-pcie-msm8996.c  | 268 +++---------------
+ 1 file changed, 41 insertions(+), 227 deletions(-)
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-index b780994692b3..d9e8a3e88890 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-@@ -1257,22 +1257,6 @@ struct qmp_phy_cfg {
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie-msm8996.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie-msm8996.c
+index 02e5ae7fa213..51da3a3a199e 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie-msm8996.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie-msm8996.c
+@@ -266,22 +266,6 @@ struct qmp_phy_cfg {
  	const struct qmp_phy_init_tbl *pcs_misc_tbl_sec;
  	int pcs_misc_tbl_num_sec;
  
@@ -110,7 +111,7 @@ index b780994692b3..d9e8a3e88890 100644
  	/* clock ids to be requested */
  	const char * const *clk_list;
  	int num_clks;
-@@ -1292,28 +1276,14 @@ struct qmp_phy_cfg {
+@@ -301,28 +285,11 @@ struct qmp_phy_cfg {
  	/* bit offset of PHYSTATUS in QPHY_PCS_STATUS register */
  	unsigned int phy_status;
  
@@ -123,11 +124,11 @@ index b780994692b3..d9e8a3e88890 100644
  	/* power_down delay in usec */
  	int pwrdn_delay_min;
  	int pwrdn_delay_max;
- 
+-
 -	/* true, if PHY has a separate DP_COM control block */
 -	bool has_phy_dp_com_ctrl;
- 	/* true, if PHY has secondary tx/rx lanes to be configured */
- 	bool is_dual_lane_phy;
+-	/* true, if PHY has secondary tx/rx lanes to be configured */
+-	bool is_dual_lane_phy;
 -
 -	/* true, if PCS block has no separate SW_RESET register */
 -	bool no_pcs_sw_reset;
@@ -139,11 +140,17 @@ index b780994692b3..d9e8a3e88890 100644
  };
  
  /**
-@@ -1331,11 +1301,7 @@ struct qmp_phy_combo_cfg {
+@@ -334,17 +301,12 @@ struct qmp_phy_combo_cfg {
+  * @tx: iomapped memory space for lane's tx
+  * @rx: iomapped memory space for lane's rx
+  * @pcs: iomapped memory space for lane's pcs
+- * @tx2: iomapped memory space for second lane's tx (in dual lane PHYs)
+- * @rx2: iomapped memory space for second lane's rx (in dual lane PHYs)
+  * @pcs_misc: iomapped memory space for lane's pcs_misc
   * @pipe_clk: pipe clock
   * @index: lane index
   * @qmp: QMP phy to which this lane belongs
-- * @lane_rst: lane's reset controller
+  * @lane_rst: lane's reset controller
   * @mode: current PHY mode
 - * @dp_aux_cfg: Display port aux config
 - * @dp_opts: Display port optional config
@@ -151,11 +158,17 @@ index b780994692b3..d9e8a3e88890 100644
   */
  struct qmp_phy {
  	struct phy *phy;
-@@ -1350,24 +1316,13 @@ struct qmp_phy {
+@@ -353,30 +315,18 @@ struct qmp_phy {
+ 	void __iomem *tx;
+ 	void __iomem *rx;
+ 	void __iomem *pcs;
+-	void __iomem *tx2;
+-	void __iomem *rx2;
+ 	void __iomem *pcs_misc;
  	struct clk *pipe_clk;
  	unsigned int index;
  	struct qcom_qmp *qmp;
--	struct reset_control *lane_rst;
+ 	struct reset_control *lane_rst;
  	enum phy_mode mode;
 -	unsigned int dp_aux_cfg;
 -	struct phy_configure_opts_dp dp_opts;
@@ -176,7 +189,7 @@ index b780994692b3..d9e8a3e88890 100644
   *
   * @clks: array of clocks required by phy
   * @resets: array of resets required by phy
-@@ -1376,11 +1331,9 @@ struct qmp_phy_dp_clks {
+@@ -385,11 +335,9 @@ struct qmp_phy_dp_clks {
   * @phys: array of per-lane phy descriptors
   * @phy_mutex: mutex lock for PHY common block initialization
   * @init_count: phy common block initialization count
@@ -188,7 +201,7 @@ index b780994692b3..d9e8a3e88890 100644
  
  	struct clk_bulk_data *clks;
  	struct reset_control **resets;
-@@ -1390,8 +1343,6 @@ struct qcom_qmp {
+@@ -399,8 +347,6 @@ struct qcom_qmp {
  
  	struct mutex phy_mutex;
  	int init_count;
@@ -197,51 +210,44 @@ index b780994692b3..d9e8a3e88890 100644
  };
  
  static inline void qphy_setbits(void __iomem *base, u32 offset, u32 val)
-@@ -1470,8 +1421,6 @@ static const struct qmp_phy_cfg ipq8074_pciephy_cfg = {
- 	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
+@@ -467,8 +413,6 @@ static const struct qmp_phy_cfg msm8996_pciephy_cfg = {
+ 	.mask_com_pcs_ready	= PCS_READY,
  	.phy_status		= PHYSTATUS,
  
--	.has_phy_com_ctrl	= false,
--	.has_lane_rst		= false,
+-	.has_phy_com_ctrl	= true,
+-	.has_lane_rst		= true,
  	.has_pwrdn_delay	= true,
- 	.pwrdn_delay_min	= 995,		/* us */
- 	.pwrdn_delay_max	= 1005,		/* us */
-@@ -1500,8 +1449,6 @@ static const struct qmp_phy_cfg ipq6018_pciephy_cfg = {
- 	.start_ctrl		= SERDES_START | PCS_START,
- 	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
- 
--	.has_phy_com_ctrl	= false,
--	.has_lane_rst		= false,
- 	.has_pwrdn_delay	= true,
- 	.pwrdn_delay_min	= 995,		/* us */
- 	.pwrdn_delay_max	= 1005,		/* us */
-@@ -1829,38 +1776,16 @@ static void qcom_qmp_phy_pcie_configure(void __iomem *base,
- 
- static int qcom_qmp_phy_pcie_serdes_init(struct qmp_phy *qphy)
- {
--	struct qcom_qmp *qmp = qphy->qmp;
- 	const struct qmp_phy_cfg *cfg = qphy->cfg;
+ 	.pwrdn_delay_min	= POWER_DOWN_DELAY_US_MIN,
+ 	.pwrdn_delay_max	= POWER_DOWN_DELAY_US_MAX,
+@@ -512,6 +456,8 @@ static int qcom_qmp_phy_pcie_msm8996_serdes_init(struct qmp_phy *qphy)
  	void __iomem *serdes = qphy->serdes;
  	const struct qmp_phy_init_tbl *serdes_tbl = cfg->serdes_tbl;
  	int serdes_tbl_num = cfg->serdes_tbl_num;
--	int ret;
++	void __iomem *status;
++	unsigned int mask, val;
+ 	int ret;
  
- 	qcom_qmp_phy_pcie_configure(serdes, cfg->regs, serdes_tbl, serdes_tbl_num);
- 	if (cfg->serdes_tbl_sec)
- 		qcom_qmp_phy_pcie_configure(serdes, cfg->regs, cfg->serdes_tbl_sec,
+ 	qcom_qmp_phy_pcie_msm8996_configure(serdes, cfg->regs, serdes_tbl, serdes_tbl_num);
+@@ -519,24 +465,20 @@ static int qcom_qmp_phy_pcie_msm8996_serdes_init(struct qmp_phy *qphy)
+ 		qcom_qmp_phy_pcie_msm8996_configure(serdes, cfg->regs, cfg->serdes_tbl_sec,
  				       cfg->serdes_tbl_num_sec);
  
 -	if (cfg->has_phy_com_ctrl) {
 -		void __iomem *status;
 -		unsigned int mask, val;
--
+ 
 -		qphy_clrbits(serdes, cfg->regs[QPHY_COM_SW_RESET], SW_RESET);
 -		qphy_setbits(serdes, cfg->regs[QPHY_COM_START_CONTROL],
 -			     SERDES_START | PCS_START);
--
++	qphy_clrbits(serdes, cfg->regs[QPHY_COM_SW_RESET], SW_RESET);
++	qphy_setbits(serdes, cfg->regs[QPHY_COM_START_CONTROL],
++		     SERDES_START | PCS_START);
+ 
 -		status = serdes + cfg->regs[QPHY_COM_PCS_READY_STATUS];
 -		mask = cfg->mask_com_pcs_ready;
--
++	status = serdes + cfg->regs[QPHY_COM_PCS_READY_STATUS];
++	mask = cfg->mask_com_pcs_ready;
+ 
 -		ret = readl_poll_timeout(status, val, (val & mask), 10,
 -					 PHY_INIT_COMPLETE_TIMEOUT);
 -		if (ret) {
@@ -249,22 +255,25 @@ index b780994692b3..d9e8a3e88890 100644
 -				"phy common block init timed-out\n");
 -			return ret;
 -		}
--	}
--
- 	return 0;
- }
++	ret = readl_poll_timeout(status, val, (val & mask), 10,
++				 PHY_INIT_COMPLETE_TIMEOUT);
++	if (ret) {
++		dev_err(qmp->dev,
++			"phy common block init timed-out\n");
++		return ret;
+ 	}
  
-@@ -1868,9 +1793,7 @@ static int qcom_qmp_phy_pcie_com_init(struct qmp_phy *qphy)
- {
+ 	return 0;
+@@ -547,8 +489,6 @@ static int qcom_qmp_phy_pcie_msm8996_com_init(struct qmp_phy *qphy)
  	struct qcom_qmp *qmp = qphy->qmp;
  	const struct qmp_phy_cfg *cfg = qphy->cfg;
--	void __iomem *serdes = qphy->serdes;
- 	void __iomem *pcs = qphy->pcs;
+ 	void __iomem *serdes = qphy->serdes;
+-	void __iomem *pcs = qphy->pcs;
 -	void __iomem *dp_com = qmp->dp_com;
  	int ret, i;
  
  	mutex_lock(&qmp->phy_mutex);
-@@ -1908,41 +1831,13 @@ static int qcom_qmp_phy_pcie_com_init(struct qmp_phy *qphy)
+@@ -586,41 +526,8 @@ static int qcom_qmp_phy_pcie_msm8996_com_init(struct qmp_phy *qphy)
  	if (ret)
  		goto err_assert_reset;
  
@@ -303,25 +312,12 @@ index b780994692b3..d9e8a3e88890 100644
 -			qphy_setbits(pcs, QPHY_POWER_DOWN_CONTROL,
 -					cfg->pwrdn_ctrl);
 -	}
-+	if (cfg->regs[QPHY_PCS_POWER_DOWN_CONTROL])
-+		qphy_setbits(pcs,
-+				cfg->regs[QPHY_PCS_POWER_DOWN_CONTROL],
-+				cfg->pwrdn_ctrl);
-+	else
-+		qphy_setbits(pcs, QPHY_POWER_DOWN_CONTROL,
-+				cfg->pwrdn_ctrl);
++	qphy_setbits(serdes, cfg->regs[QPHY_COM_POWER_DOWN_CONTROL],
++		     SW_PWRDN);
  
  	mutex_unlock(&qmp->phy_mutex);
  
-@@ -1963,7 +1858,6 @@ static int qcom_qmp_phy_pcie_com_exit(struct qmp_phy *qphy)
- {
- 	struct qcom_qmp *qmp = qphy->qmp;
- 	const struct qmp_phy_cfg *cfg = qphy->cfg;
--	void __iomem *serdes = qphy->serdes;
- 	int i = cfg->num_resets;
- 
- 	mutex_lock(&qmp->phy_mutex);
-@@ -1972,16 +1866,6 @@ static int qcom_qmp_phy_pcie_com_exit(struct qmp_phy *qphy)
+@@ -650,15 +557,12 @@ static int qcom_qmp_phy_pcie_msm8996_com_exit(struct qmp_phy *qphy)
  		return 0;
  	}
  
@@ -334,11 +330,16 @@ index b780994692b3..d9e8a3e88890 100644
 -		qphy_setbits(serdes, cfg->regs[QPHY_COM_POWER_DOWN_CONTROL],
 -			     SW_PWRDN);
 -	}
--
++	qphy_setbits(serdes, cfg->regs[QPHY_COM_START_CONTROL],
++		     SERDES_START | PCS_START);
++	qphy_clrbits(serdes, cfg->regs[QPHY_COM_SW_RESET],
++		     SW_RESET);
++	qphy_setbits(serdes, cfg->regs[QPHY_COM_POWER_DOWN_CONTROL],
++		     SW_PWRDN);
+ 
  	while (--i >= 0)
  		reset_control_assert(qmp->resets[i]);
- 
-@@ -1998,37 +1882,9 @@ static int qcom_qmp_phy_pcie_init(struct phy *phy)
+@@ -676,37 +580,9 @@ static int qcom_qmp_phy_pcie_msm8996_init(struct phy *phy)
  {
  	struct qmp_phy *qphy = phy_get_drvdata(phy);
  	struct qcom_qmp *qmp = qphy->qmp;
@@ -373,12 +374,12 @@ index b780994692b3..d9e8a3e88890 100644
 -			return ret;
 -	}
 -
- 	ret = qcom_qmp_phy_pcie_com_init(qphy);
+ 	ret = qcom_qmp_phy_pcie_msm8996_com_init(qphy);
  	if (ret)
  		return ret;
-@@ -2051,19 +1907,10 @@ static int qcom_qmp_phy_pcie_power_on(struct phy *phy)
+@@ -729,13 +605,11 @@ static int qcom_qmp_phy_pcie_msm8996_power_on(struct phy *phy)
  
- 	qcom_qmp_phy_pcie_serdes_init(qphy);
+ 	qcom_qmp_phy_pcie_msm8996_serdes_init(qphy);
  
 -	if (cfg->has_lane_rst) {
 -		ret = reset_control_deassert(qphy->lane_rst);
@@ -387,28 +388,56 @@ index b780994692b3..d9e8a3e88890 100644
 -				qphy->index);
 -			return ret;
 -		}
--	}
--
- 	ret = clk_prepare_enable(qphy->pipe_clk);
- 	if (ret) {
- 		dev_err(qmp->dev, "pipe_clk enable failed err=%d\n", ret);
--		goto err_reset_lane;
++	ret = reset_control_deassert(qphy->lane_rst);
++	if (ret) {
++		dev_err(qmp->dev, "lane%d reset deassert failed\n",
++			qphy->index);
 +		return ret;
  	}
  
- 	/* Tx, Rx, and PCS configurations */
-@@ -2103,10 +1950,6 @@ static int qcom_qmp_phy_pcie_power_on(struct phy *phy)
- 		qcom_qmp_phy_pcie_configure(pcs, cfg->regs, cfg->pcs_tbl_sec,
+ 	ret = clk_prepare_enable(qphy->pipe_clk);
+@@ -751,40 +625,17 @@ static int qcom_qmp_phy_pcie_msm8996_power_on(struct phy *phy)
+ 		qcom_qmp_phy_pcie_msm8996_configure_lane(tx, cfg->regs, cfg->tx_tbl_sec,
+ 					    cfg->tx_tbl_num_sec, 1);
+ 
+-	/* Configuration for other LANE for USB-DP combo PHY */
+-	if (cfg->is_dual_lane_phy) {
+-		qcom_qmp_phy_pcie_msm8996_configure_lane(qphy->tx2, cfg->regs,
+-					    cfg->tx_tbl, cfg->tx_tbl_num, 2);
+-		if (cfg->tx_tbl_sec)
+-			qcom_qmp_phy_pcie_msm8996_configure_lane(qphy->tx2, cfg->regs,
+-						    cfg->tx_tbl_sec,
+-						    cfg->tx_tbl_num_sec, 2);
+-	}
+-
+ 	qcom_qmp_phy_pcie_msm8996_configure_lane(rx, cfg->regs,
+ 				    cfg->rx_tbl, cfg->rx_tbl_num, 1);
+ 	if (cfg->rx_tbl_sec)
+ 		qcom_qmp_phy_pcie_msm8996_configure_lane(rx, cfg->regs,
+ 					    cfg->rx_tbl_sec, cfg->rx_tbl_num_sec, 1);
+ 
+-	if (cfg->is_dual_lane_phy) {
+-		qcom_qmp_phy_pcie_msm8996_configure_lane(qphy->rx2, cfg->regs,
+-					    cfg->rx_tbl, cfg->rx_tbl_num, 2);
+-		if (cfg->rx_tbl_sec)
+-			qcom_qmp_phy_pcie_msm8996_configure_lane(qphy->rx2, cfg->regs,
+-						    cfg->rx_tbl_sec,
+-						    cfg->rx_tbl_num_sec, 2);
+-	}
+-
+ 	qcom_qmp_phy_pcie_msm8996_configure(pcs, cfg->regs, cfg->pcs_tbl, cfg->pcs_tbl_num);
+ 	if (cfg->pcs_tbl_sec)
+ 		qcom_qmp_phy_pcie_msm8996_configure(pcs, cfg->regs, cfg->pcs_tbl_sec,
  				       cfg->pcs_tbl_num_sec);
  
 -	ret = reset_control_deassert(qmp->ufs_reset);
 -	if (ret)
 -		goto err_disable_pipe_clk;
 -
- 	qcom_qmp_phy_pcie_configure(pcs_misc, cfg->regs, cfg->pcs_misc_tbl,
+ 	qcom_qmp_phy_pcie_msm8996_configure(pcs_misc, cfg->regs, cfg->pcs_misc_tbl,
  			       cfg->pcs_misc_tbl_num);
  	if (cfg->pcs_misc_tbl_sec)
-@@ -2123,8 +1966,8 @@ static int qcom_qmp_phy_pcie_power_on(struct phy *phy)
+@@ -801,8 +652,8 @@ static int qcom_qmp_phy_pcie_msm8996_power_on(struct phy *phy)
  		usleep_range(cfg->pwrdn_delay_min, cfg->pwrdn_delay_max);
  
  	/* Pull PHY out of reset state */
@@ -419,17 +448,17 @@ index b780994692b3..d9e8a3e88890 100644
  	/* start SerDes and Phy-Coding-Sublayer */
  	qphy_setbits(pcs, cfg->regs[QPHY_START_CTRL], cfg->start_ctrl);
  
-@@ -2143,9 +1986,6 @@ static int qcom_qmp_phy_pcie_power_on(struct phy *phy)
- 
+@@ -822,8 +673,7 @@ static int qcom_qmp_phy_pcie_msm8996_power_on(struct phy *phy)
  err_disable_pipe_clk:
  	clk_disable_unprepare(qphy->pipe_clk);
--err_reset_lane:
+ err_reset_lane:
 -	if (cfg->has_lane_rst)
 -		reset_control_assert(qphy->lane_rst);
++	reset_control_assert(qphy->lane_rst);
  
  	return ret;
  }
-@@ -2158,8 +1998,7 @@ static int qcom_qmp_phy_pcie_power_off(struct phy *phy)
+@@ -836,8 +686,7 @@ static int qcom_qmp_phy_pcie_msm8996_power_off(struct phy *phy)
  	clk_disable_unprepare(qphy->pipe_clk);
  
  	/* PHY reset */
@@ -439,34 +468,55 @@ index b780994692b3..d9e8a3e88890 100644
  
  	/* stop SerDes and Phy-Coding-Sublayer */
  	qphy_clrbits(qphy->pcs, cfg->regs[QPHY_START_CTRL], cfg->start_ctrl);
-@@ -2179,10 +2018,6 @@ static int qcom_qmp_phy_pcie_power_off(struct phy *phy)
- static int qcom_qmp_phy_pcie_exit(struct phy *phy)
+@@ -857,10 +706,8 @@ static int qcom_qmp_phy_pcie_msm8996_power_off(struct phy *phy)
+ static int qcom_qmp_phy_pcie_msm8996_exit(struct phy *phy)
  {
  	struct qmp_phy *qphy = phy_get_drvdata(phy);
 -	const struct qmp_phy_cfg *cfg = qphy->cfg;
--
+ 
 -	if (cfg->has_lane_rst)
 -		reset_control_assert(qphy->lane_rst);
++	reset_control_assert(qphy->lane_rst);
  
- 	qcom_qmp_phy_pcie_com_exit(qphy);
+ 	qcom_qmp_phy_pcie_msm8996_com_exit(qphy);
  
-@@ -2348,11 +2183,6 @@ static const struct phy_ops qcom_qmp_phy_pcie_ops = {
- 	.owner		= THIS_MODULE,
- };
+@@ -1065,31 +912,7 @@ int qcom_qmp_phy_pcie_msm8996_create(struct device *dev, struct device_node *np,
+ 	if (!qphy->pcs)
+ 		return -ENOMEM;
  
--static void qcom_qmp_reset_control_put(void *data)
--{
--	reset_control_put(data);
--}
+-	/*
+-	 * If this is a dual-lane PHY, then there should be registers for the
+-	 * second lane. Some old device trees did not specify this, so fall
+-	 * back to old legacy behavior of assuming they can be reached at an
+-	 * offset from the first lane.
+-	 */
+-	if (cfg->is_dual_lane_phy) {
+-		qphy->tx2 = of_iomap(np, 3);
+-		qphy->rx2 = of_iomap(np, 4);
+-		if (!qphy->tx2 || !qphy->rx2) {
+-			dev_warn(dev,
+-				 "Underspecified device tree, falling back to legacy register regions\n");
 -
- static
- int qcom_qmp_phy_pcie_create(struct device *dev, struct device_node *np, int id,
- 			void __iomem *serdes, const struct qmp_phy_cfg *cfg)
-@@ -2438,20 +2268,6 @@ int qcom_qmp_phy_pcie_create(struct device *dev, struct device_node *np, int id,
- 		qphy->pipe_clk = NULL;
+-			/* In the old version, pcs_misc is at index 3. */
+-			qphy->pcs_misc = qphy->tx2;
+-			qphy->tx2 = qphy->tx + QMP_PHY_LEGACY_LANE_STRIDE;
+-			qphy->rx2 = qphy->rx + QMP_PHY_LEGACY_LANE_STRIDE;
+-
+-		} else {
+-			qphy->pcs_misc = of_iomap(np, 5);
+-		}
+-
+-	} else {
+-		qphy->pcs_misc = of_iomap(np, 3);
+-	}
++	qphy->pcs_misc = of_iomap(np, 3);
+ 
+ 	if (!qphy->pcs_misc)
+ 		dev_vdbg(dev, "PHY pcs_misc-reg not used\n");
+@@ -1117,18 +940,16 @@ int qcom_qmp_phy_pcie_msm8996_create(struct device *dev, struct device_node *np,
  	}
  
--	/* Get lane reset, if any */
+ 	/* Get lane reset, if any */
 -	if (cfg->has_lane_rst) {
 -		snprintf(prop_name, sizeof(prop_name), "lane%d", id);
 -		qphy->lane_rst = of_reset_control_get_exclusive(np, prop_name);
@@ -478,12 +528,20 @@ index b780994692b3..d9e8a3e88890 100644
 -					       qphy->lane_rst);
 -		if (ret)
 -			return ret;
--	}
--
- 	generic_phy = devm_phy_create(dev, np, &qcom_qmp_phy_pcie_ops);
++	snprintf(prop_name, sizeof(prop_name), "lane%d", id);
++	qphy->lane_rst = of_reset_control_get_exclusive(np, prop_name);
++	if (IS_ERR(qphy->lane_rst)) {
++		dev_err(dev, "failed to get lane%d reset\n", id);
++		return PTR_ERR(qphy->lane_rst);
+ 	}
++	ret = devm_add_action_or_reset(dev, qcom_qmp_reset_control_put,
++				       qphy->lane_rst);
++	if (ret)
++		return ret;
+ 
+ 	generic_phy = devm_phy_create(dev, np, &qcom_qmp_phy_pcie_msm8996_ops);
  	if (IS_ERR(generic_phy)) {
- 		ret = PTR_ERR(generic_phy);
-@@ -2538,13 +2354,6 @@ static int qcom_qmp_phy_pcie_probe(struct platform_device *pdev)
+@@ -1183,13 +1004,6 @@ static int qcom_qmp_phy_pcie_msm8996_probe(struct platform_device *pdev)
  	if (IS_ERR(serdes))
  		return PTR_ERR(serdes);
  
