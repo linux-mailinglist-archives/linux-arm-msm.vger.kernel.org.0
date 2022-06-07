@@ -2,47 +2,48 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 306C9540C03
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jun 2022 20:33:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B4890540C7F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jun 2022 20:37:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352243AbiFGSdW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Jun 2022 14:33:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44752 "EHLO
+        id S1346092AbiFGShJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Jun 2022 14:37:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48296 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349153AbiFGSbp (ORCPT
+        with ESMTP id S1352077AbiFGSdU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Jun 2022 14:31:45 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7FE017DDD1;
-        Tue,  7 Jun 2022 10:56:56 -0700 (PDT)
+        Tue, 7 Jun 2022 14:33:20 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 181B4147695;
+        Tue,  7 Jun 2022 10:57:23 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 397B2617E1;
-        Tue,  7 Jun 2022 17:56:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F49DC34119;
-        Tue,  7 Jun 2022 17:56:54 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id B3C17B82371;
+        Tue,  7 Jun 2022 17:57:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B883C36AFE;
+        Tue,  7 Jun 2022 17:57:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1654624615;
-        bh=fXydfbGPjscZ2gziUBtB4tTAPY3+/VZjcJkVsS08xN0=;
+        s=k20201202; t=1654624640;
+        bh=i29J13wvF2mQ3XdIzvlfmTFJ+j3j+hpaGB3EjGM9yns=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=vKCciScZUHtjZxtSfsyLAtU5bWepZTIP3Mzo/q7w+9+pE1iOK/xhFM1oLFEYGhJ10
-         yLJOdSYkmlWNtY7xIiSoAU4hlODrLXkSV5uaaM17tHqbu0TyX26sF2A6jrfyAVLTlm
-         ZHdx188FnxaVbO4grtc+twuaAQj5Q8cLegwuoC4JEp0NfhfofN38VbL+5a5rFd8bdB
-         9OVVZCzyMh4oV7JjBx2t/pVIwt38eGTSUxG5OWw0lZQXm7Ze03V2v479raTHMsaynT
-         Kq9nf/IPbnOkJP2Lm3VGl0ltz0RCngCr9HJJHdEjCjaMoLkfoe1jxUwvvhetw2EkvN
-         qafGz/U2KFFsA==
+        b=ZMR9p29UTrqwYePA9PlsRxfa9f2v3aynyXTQMMC98beXEq8V0GupMUbQTEBRHMrRr
+         Bb75WuoqB6PdRwGmPxNyEkHmFM5T7BzLlwXqXvEYrnhvToJ+NG9XQv5zK6TCay2db9
+         zfNg9TXk+HM9RRVu8kvj0GbI56FAw9YKkosplCXpDcozi5TgnIKxV46cHzpN8bhqGJ
+         8crWhXyMtlLCgpjeoZzIrvSslfB2EYe3JMPE2wKhjDPG+EUCfi+aTxVH5SU/DmcY0x
+         pp7wvq4QEVyrMGFZ/wNqYY2WF1kPsQvE6ESKDxgccqNUPh1+GQeLP8bgz7pNlqsRrj
+         yeFo5IILiYp6w==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-        Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
-        agross@kernel.org, bjorn.andersson@linaro.org,
-        yung-chuan.liao@linux.intel.com, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org
-Subject: [PATCH AUTOSEL 5.15 19/51] soundwire: qcom: adjust autoenumeration timeout
-Date:   Tue,  7 Jun 2022 13:55:18 -0400
-Message-Id: <20220607175552.479948-19-sashal@kernel.org>
+Cc:     John Ogness <john.ogness@linutronix.de>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Petr Mladek <pmladek@suse.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Sasha Levin <sashal@kernel.org>, agross@kernel.org,
+        bjorn.andersson@linaro.org, jirislaby@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.15 27/51] serial: msm_serial: disable interrupts in __msm_console_write()
+Date:   Tue,  7 Jun 2022 13:55:26 -0400
+Message-Id: <20220607175552.479948-27-sashal@kernel.org>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220607175552.479948-1-sashal@kernel.org>
 References: <20220607175552.479948-1-sashal@kernel.org>
@@ -60,40 +61,57 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+From: John Ogness <john.ogness@linutronix.de>
 
-[ Upstream commit 74da272400b46f2e898f115d1b1cd60828766919 ]
+[ Upstream commit aabdbb1b7a5819e18c403334a31fb0cc2c06ad41 ]
 
-Currently timeout for autoenumeration during probe and bus reset is set to
-2 secs which is really a big value. This can have an adverse effect on
-boot time if the slave device is not ready/reset.
-This was the case with wcd938x which was not reset yet but we spent 2
-secs waiting in the soundwire controller probe. Reduce this time to
-1/10 of Hz which should be good enough time to finish autoenumeration
-if any slaves are available on the bus.
+__msm_console_write() assumes that interrupts are disabled, but
+with threaded console printers it is possible that the write()
+callback of the console is called with interrupts enabled.
 
-Reported-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Link: https://lore.kernel.org/r/20220506084705.18525-1-srinivas.kandagatla@linaro.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Explicitly disable interrupts using local_irq_save() to preserve
+the assumed context.
+
+Reported-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Reviewed-by: Petr Mladek <pmladek@suse.com>
+Signed-off-by: John Ogness <john.ogness@linutronix.de>
+Link: https://lore.kernel.org/r/20220506213324.470461-1-john.ogness@linutronix.de
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soundwire/qcom.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/tty/serial/msm_serial.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
-index 0ef79d60e88e..f5955826b152 100644
---- a/drivers/soundwire/qcom.c
-+++ b/drivers/soundwire/qcom.c
-@@ -97,7 +97,7 @@
+diff --git a/drivers/tty/serial/msm_serial.c b/drivers/tty/serial/msm_serial.c
+index 489d19274f9a..03ff63438e77 100644
+--- a/drivers/tty/serial/msm_serial.c
++++ b/drivers/tty/serial/msm_serial.c
+@@ -1588,6 +1588,7 @@ static inline struct uart_port *msm_get_port_from_line(unsigned int line)
+ static void __msm_console_write(struct uart_port *port, const char *s,
+ 				unsigned int count, bool is_uartdm)
+ {
++	unsigned long flags;
+ 	int i;
+ 	int num_newlines = 0;
+ 	bool replaced = false;
+@@ -1605,6 +1606,8 @@ static void __msm_console_write(struct uart_port *port, const char *s,
+ 			num_newlines++;
+ 	count += num_newlines;
  
- #define SWRM_SPECIAL_CMD_ID	0xF
- #define MAX_FREQ_NUM		1
--#define TIMEOUT_MS		(2 * HZ)
-+#define TIMEOUT_MS		100
- #define QCOM_SWRM_MAX_RD_LEN	0x1
- #define QCOM_SDW_MAX_PORTS	14
- #define DEFAULT_CLK_FREQ	9600000
++	local_irq_save(flags);
++
+ 	if (port->sysrq)
+ 		locked = 0;
+ 	else if (oops_in_progress)
+@@ -1650,6 +1653,8 @@ static void __msm_console_write(struct uart_port *port, const char *s,
+ 
+ 	if (locked)
+ 		spin_unlock(&port->lock);
++
++	local_irq_restore(flags);
+ }
+ 
+ static void msm_console_write(struct console *co, const char *s,
 -- 
 2.35.1
 
