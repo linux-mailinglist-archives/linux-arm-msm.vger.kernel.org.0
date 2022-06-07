@@ -2,73 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DB2B85404D3
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jun 2022 19:19:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 896C2540565
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jun 2022 19:25:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345733AbiFGRTX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Jun 2022 13:19:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39956 "EHLO
+        id S239768AbiFGRZu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Jun 2022 13:25:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45968 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345724AbiFGRTK (ORCPT
+        with ESMTP id S1346393AbiFGRYl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Jun 2022 13:19:10 -0400
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CAE8C1059C6
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Jun 2022 10:19:05 -0700 (PDT)
-Received: by mail-ej1-x62f.google.com with SMTP id kq6so23529187ejb.11
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Jun 2022 10:19:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Zf9oNDrBn8AgS0HsJI75t84ZHlXciTzhx5M3HotS7pg=;
-        b=qO2yi3wo1qcclE8YpBFykeMxGAE7JKaFTrIett9b4yuO2Ls8e8QSELZ7Kd9xoSE71s
-         RKSJ+aRE6RzxBxUZZl3X3bnPTzfvBF2d9g5AjJ4MGmZiTMh1lCqZFi+Sxb2wB7wTpf8W
-         EhGB8eE0yZLTycH/8UnVq3AJumxnw70mRGs+c1OmiKRK68UVYgPm6PCL+hXzeTkreYrd
-         6CDdSPndsWvKy8d3guI1sxt/MlekNBV9GM4QhZEiyRVA8OxoQ17fgeVcx40gX6l+LJfW
-         duIlKl8qEVDzxuLcmvwUrL6mgNbthyOe1N3sK2oHmIAFdSeNas3hGJGuVgsWxwdr6nmt
-         /CJg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Zf9oNDrBn8AgS0HsJI75t84ZHlXciTzhx5M3HotS7pg=;
-        b=bCh10QB6az6u9R/SSjZUUC3EkfS4syKgf1E3aiqxRb/i9jyEmNAM8F8CtEmLd9iACW
-         Q/f2Z8npI5STlZlLCWpnnToXvFLvFIHLhuuohVPxLmeETD5sGyn7x9JAezgmIIQY4cM9
-         Zg4xULomG8Cx0MJx0gdb8PT+UVHnmo9IWbqhnKe81CIwzOhvz/cHDDB+1oRR6XgVF2de
-         wcE9ifcBMtTnXXoWNl1YfKZOdg+9uYEsmezv1Un2/KjK7qVaOqbPuF6OeuOvmG/UTmif
-         R/XfH/tIMUR9QnG6PVCPIqB3h+sPq3RUjJNq3SLpEc3II4eUkm9CABtMHsJPD2E8rX0t
-         uU4w==
-X-Gm-Message-State: AOAM530PzyxS2I2i+kl59boPeOta8i65LEVKsHGOrlsVgYNe9BQ92pCz
-        tdJXYKoCXe/PzkMa26jsyi8Wtg==
-X-Google-Smtp-Source: ABdhPJwZ/F+q6oQyPWMSqGsaHGZROmRaaOaUta0JoOC/1LYy1wmN1BOTtGZKdZElA09r4SjlHMaWWg==
-X-Received: by 2002:a17:906:c154:b0:711:ce44:a0a0 with SMTP id dp20-20020a170906c15400b00711ce44a0a0mr11804793ejc.420.1654622345428;
-        Tue, 07 Jun 2022 10:19:05 -0700 (PDT)
-Received: from localhost.localdomain (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id i7-20020a170906444700b0070e238ff66fsm5876540ejp.96.2022.06.07.10.19.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Jun 2022 10:19:05 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Brian Masney <masneyb@onstation.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 14/14] arm64: dts: qcom: msm8994: add required ranges to OCMEM
-Date:   Tue,  7 Jun 2022 19:18:48 +0200
-Message-Id: <20220607171848.535128-14-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220607171848.535128-1-krzysztof.kozlowski@linaro.org>
-References: <20220607171848.535128-1-krzysztof.kozlowski@linaro.org>
+        Tue, 7 Jun 2022 13:24:41 -0400
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5FDC1CA3CA;
+        Tue,  7 Jun 2022 10:22:40 -0700 (PDT)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        (No client certificate requested)
+        by smtp-out2.suse.de (Postfix) with ESMTPS id F2F271F9C5;
+        Tue,  7 Jun 2022 17:22:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+        t=1654622559; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=uqrHo72t/egh4eNcpx8eoTFgHBdSO5h/73dIvIbUMoc=;
+        b=i31KyvkjR3ttXiDZKKYNnfh7FMxbcNejOIkF2dskvohB7fOjjF6KD3Z7ILHJVnDLoCem5R
+        F4A4LoqqV2jbiXNFzkAU7NShq64dkkv8TQ0GxqAjAifXWYPm4jcIVTlx5/C7Jm3zzXTFNF
+        2+W3Wpm2xzma+DeB3Ue1kx55XnWNZ0Y=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+        s=susede2_ed25519; t=1654622559;
+        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=uqrHo72t/egh4eNcpx8eoTFgHBdSO5h/73dIvIbUMoc=;
+        b=LTSsckAlefo3halfg034rdzHNz567wacaNmmndzCRH8VGBHFPJbOdRLeLNqDBv+NxkDV5/
+        V+XCH1MOG7BRgCCA==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        (No client certificate requested)
+        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id C055013A88;
+        Tue,  7 Jun 2022 17:22:38 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+        by imap2.suse-dmz.suse.de with ESMTPSA
+        id Y2u+LV6Jn2LqEAAAMHmgww
+        (envelope-from <tzimmermann@suse.de>); Tue, 07 Jun 2022 17:22:38 +0000
+Message-ID: <26a6ed05-264a-eef6-a0ee-527d6968f8a8@suse.de>
+Date:   Tue, 7 Jun 2022 19:22:38 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: Re: [PATCH v2 1/2] drm: Add DRM_GEM_FOPS
+Content-Language: en-US
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     Rob Clark <robdclark@chromium.org>,
+        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+        David Airlie <airlied@linux.ie>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>
+References: <20220606195432.1888346-1-robdclark@gmail.com>
+ <34aacfa3-9eb9-d3d5-07b7-805fd1408bb7@suse.de>
+ <CAF6AEGuikc8Qh2ixEvJoeN0hQ+VLJNk_jBQm8fqYQAJ=ihpo1g@mail.gmail.com>
+From:   Thomas Zimmermann <tzimmermann@suse.de>
+In-Reply-To: <CAF6AEGuikc8Qh2ixEvJoeN0hQ+VLJNk_jBQm8fqYQAJ=ihpo1g@mail.gmail.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------89GWd80acGp6EW6OVodnIp0z"
+X-Spam-Status: No, score=-5.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -76,30 +80,118 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The OCMEM bindings require ranges property.
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------89GWd80acGp6EW6OVodnIp0z
+Content-Type: multipart/mixed; boundary="------------5RHAoO43WMHEge7jXP9WGHn3";
+ protected-headers="v1"
+From: Thomas Zimmermann <tzimmermann@suse.de>
+To: Rob Clark <robdclark@gmail.com>
+Cc: Rob Clark <robdclark@chromium.org>,
+ Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+ David Airlie <airlied@linux.ie>,
+ linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+ open list <linux-kernel@vger.kernel.org>,
+ dri-devel <dri-devel@lists.freedesktop.org>,
+ freedreno <freedreno@lists.freedesktop.org>
+Message-ID: <26a6ed05-264a-eef6-a0ee-527d6968f8a8@suse.de>
+Subject: Re: [PATCH v2 1/2] drm: Add DRM_GEM_FOPS
+References: <20220606195432.1888346-1-robdclark@gmail.com>
+ <34aacfa3-9eb9-d3d5-07b7-805fd1408bb7@suse.de>
+ <CAF6AEGuikc8Qh2ixEvJoeN0hQ+VLJNk_jBQm8fqYQAJ=ihpo1g@mail.gmail.com>
+In-Reply-To: <CAF6AEGuikc8Qh2ixEvJoeN0hQ+VLJNk_jBQm8fqYQAJ=ihpo1g@mail.gmail.com>
 
-Fixes: 9d511d0a7926 ("arm64: dts: qcom: msm8994: Add OCMEM node")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+--------------5RHAoO43WMHEge7jXP9WGHn3
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
 
----
+SGkNCg0KQW0gMDcuMDYuMjIgdW0gMTY6NTggc2NocmllYiBSb2IgQ2xhcms6DQo+IE9uIE1v
+biwgSnVuIDYsIDIwMjIgYXQgMTE6NTYgUE0gVGhvbWFzIFppbW1lcm1hbm4gPHR6aW1tZXJt
+YW5uQHN1c2UuZGU+IHdyb3RlOg0KPj4NCj4+IEhpDQo+Pg0KPj4gQW0gMDYuMDYuMjIgdW0g
+MjE6NTQgc2NocmllYiBSb2IgQ2xhcms6DQo+Pj4gRnJvbTogUm9iIENsYXJrIDxyb2JkY2xh
+cmtAY2hyb21pdW0ub3JnPg0KPj4+DQo+Pj4gVGhlIERFRklORV9EUk1fR0VNX0ZPUFMoKSBo
+ZWxwZXIgaXMgYSBiaXQgbGltaXRpbmcgaWYgYSBkcml2ZXIgd2FudHMgdG8NCj4+PiBwcm92
+aWRlIGFkZGl0aW9uYWwgZmlsZSBvcHMsIGxpa2Ugc2hvd19mZGluZm8oKS4NCj4+Pg0KPj4+
+IFNpZ25lZC1vZmYtYnk6IFJvYiBDbGFyayA8cm9iZGNsYXJrQGNocm9taXVtLm9yZz4NCj4+
+PiAtLS0NCj4+PiAgICBpbmNsdWRlL2RybS9kcm1fZ2VtLmggfCAyNiArKysrKysrKysrKysr
+KysrKystLS0tLS0tLQ0KPj4+ICAgIDEgZmlsZSBjaGFuZ2VkLCAxOCBpbnNlcnRpb25zKCsp
+LCA4IGRlbGV0aW9ucygtKQ0KPj4+DQo+Pj4gZGlmZiAtLWdpdCBhL2luY2x1ZGUvZHJtL2Ry
+bV9nZW0uaCBiL2luY2x1ZGUvZHJtL2RybV9nZW0uaA0KPj4+IGluZGV4IDlkN2M2MWExMjJk
+Yy4uZGM4OGQ0YTJjZGY2IDEwMDY0NA0KPj4+IC0tLSBhL2luY2x1ZGUvZHJtL2RybV9nZW0u
+aA0KPj4+ICsrKyBiL2luY2x1ZGUvZHJtL2RybV9nZW0uaA0KPj4+IEBAIC0zMTQsNiArMzE0
+LDIzIEBAIHN0cnVjdCBkcm1fZ2VtX29iamVjdCB7DQo+Pj4gICAgICAgIGNvbnN0IHN0cnVj
+dCBkcm1fZ2VtX29iamVjdF9mdW5jcyAqZnVuY3M7DQo+Pj4gICAgfTsNCj4+Pg0KPj4+ICsv
+KioNCj4+PiArICogRFJNX0dFTV9GT1BTIC0gRGVmYXVsdCBkcm0gR0VNIGZpbGUgb3BlcmF0
+aW9ucw0KPj4+ICsgKg0KPj4+ICsgKiBUaGlzIG1hY3JvIHByb3ZpZGVzIGEgc2hvcnRoYW5k
+IGZvciBzZXR0aW5nIHRoZSBHRU0gZmlsZSBvcHMgaW4gdGhlDQo+Pj4gKyAqICZmaWxlX29w
+ZXJhdGlvbnMgc3RydWN0dXJlLg0KPj4NCj4+IEkgd291bGQgYXBwcmVjaWF0ZSBhIHJlZmVy
+ZW5jZSB0byBERUZJTkVfRFJNX0dFTV9GT1BTLiBTb21ldGhpbmcgYWxvbmcNCj4+IHRoZSBs
+aW5lcyBvZiAnaWYgYWxsIHlvdSBuZWVkIGFyZSB0aGUgZGVmYXVsdCBvcHMsIHVzZSBERUZJ
+TkVfRFJNX0dFTV9GT1BTJy4NCj4+DQo+Pj4gKyAqLw0KPj4+ICsjZGVmaW5lIERSTV9HRU1f
+Rk9QUyBcDQo+Pj4gKyAgICAgLm9wZW4gICAgICAgICAgID0gZHJtX29wZW4sXA0KPj4+ICsg
+ICAgIC5yZWxlYXNlICAgICAgICA9IGRybV9yZWxlYXNlLFwNCj4+PiArICAgICAudW5sb2Nr
+ZWRfaW9jdGwgPSBkcm1faW9jdGwsXA0KPj4+ICsgICAgIC5jb21wYXRfaW9jdGwgICA9IGRy
+bV9jb21wYXRfaW9jdGwsXA0KPj4+ICsgICAgIC5wb2xsICAgICAgICAgICA9IGRybV9wb2xs
+LFwNCj4+PiArICAgICAucmVhZCAgICAgICAgICAgPSBkcm1fcmVhZCxcDQo+Pj4gKyAgICAg
+Lmxsc2VlayAgICAgICAgID0gbm9vcF9sbHNlZWssXA0KPj4+ICsgICAgIC5tbWFwICAgICAg
+ICAgICA9IGRybV9nZW1fbW1hcA0KPj4+ICsNCj4+PiArDQo+Pg0KPj4gT25seSBvbmUgZW1w
+dHkgbGluZSBwbGVhc2UuDQo+Pg0KPj4+ICAgIC8qKg0KPj4+ICAgICAqIERFRklORV9EUk1f
+R0VNX0ZPUFMoKSAtIG1hY3JvIHRvIGdlbmVyYXRlIGZpbGUgb3BlcmF0aW9ucyBmb3IgR0VN
+IGRyaXZlcnMNCj4+PiAgICAgKiBAbmFtZTogbmFtZSBmb3IgdGhlIGdlbmVyYXRlZCBzdHJ1
+Y3R1cmUNCj4+PiBAQCAtMzMwLDE0ICszNDcsNyBAQCBzdHJ1Y3QgZHJtX2dlbV9vYmplY3Qg
+ew0KPj4+ICAgICNkZWZpbmUgREVGSU5FX0RSTV9HRU1fRk9QUyhuYW1lKSBcDQo+Pj4gICAg
+ICAgIHN0YXRpYyBjb25zdCBzdHJ1Y3QgZmlsZV9vcGVyYXRpb25zIG5hbWUgPSB7XA0KPj4+
+ICAgICAgICAgICAgICAgIC5vd25lciAgICAgICAgICA9IFRISVNfTU9EVUxFLFwNCj4+DQo+
+PiBJcyB0aGVyZSBhIHNwZWNpZmljIHJlYXNvbiB3aHkgLm93bmVyIGlzIHN0aWxsIHNldCBo
+ZXJlPyBJIHN1c3BlY3QgdGhhdA0KPj4gRFJNX0dFTV9GT1BTIGlzIHN0cmljdGx5IGZvciBj
+YWxsYmFjayBmdW5jdGlvbnM/DQo+IA0KPiBJIHdhcyBvbiB0aGUgZmVuY2UgYWJvdXQgdGhh
+dCBvbmUsIGJ1dCBpdCBzZWVtZWQgYmV0dGVyIHRvIG5vdCBtaXgNCj4gIm1hZ2ljIiBhbmQg
+dGhlIGNhbGxiYWNrcy4uIGJ1dCBJIGNvdWxkIGJlIGNvbnZpbmNlZCBpbiBlaXRoZXINCj4g
+ZGlyZWN0aW9uDQoNCkkgdGhpbmsgeW91IG1hZGUgdGhlIHJpZ2h0IGNob2ljZS4gSXQncyBj
+bGVhbmVyIGFuZCBtb3N0IGRyaXZlcnMgd2lsbCANCndhbnQgdG8gdXNlIERFRklORV9EUk1f
+R0VNX0ZPUFMsIHdoaWNoIGluY2x1ZGVzIHRoZSBtYWdpYy4NCg0KQmVzdCByZWdhcmRzDQpU
+aG9tYXMNCg0KPiANCj4+IEluIGFueSBjYXNlDQo+Pg0KPj4gQWNrZWQtYnk6IFRob21hcyBa
+aW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPg0KPiANCj4gdGh4LCBJJ2xsIGZpeHVw
+IHRoZSBvdGhlciBuaXRzIGluIHYzLg0KPiANCj4+DQo+PiBCZXN0IHJlZ2FyZHMNCj4+IFRo
+b21hcw0KPj4NCj4+PiAtICAgICAgICAgICAgIC5vcGVuICAgICAgICAgICA9IGRybV9vcGVu
+LFwNCj4+PiAtICAgICAgICAgICAgIC5yZWxlYXNlICAgICAgICA9IGRybV9yZWxlYXNlLFwN
+Cj4+PiAtICAgICAgICAgICAgIC51bmxvY2tlZF9pb2N0bCA9IGRybV9pb2N0bCxcDQo+Pj4g
+LSAgICAgICAgICAgICAuY29tcGF0X2lvY3RsICAgPSBkcm1fY29tcGF0X2lvY3RsLFwNCj4+
+PiAtICAgICAgICAgICAgIC5wb2xsICAgICAgICAgICA9IGRybV9wb2xsLFwNCj4+PiAtICAg
+ICAgICAgICAgIC5yZWFkICAgICAgICAgICA9IGRybV9yZWFkLFwNCj4+PiAtICAgICAgICAg
+ICAgIC5sbHNlZWsgICAgICAgICA9IG5vb3BfbGxzZWVrLFwNCj4+PiAtICAgICAgICAgICAg
+IC5tbWFwICAgICAgICAgICA9IGRybV9nZW1fbW1hcCxcDQo+Pj4gKyAgICAgICAgICAgICBE
+Uk1fR0VNX0ZPUFMsXA0KPj4+ICAgICAgICB9DQo+Pj4NCj4+PiAgICB2b2lkIGRybV9nZW1f
+b2JqZWN0X3JlbGVhc2Uoc3RydWN0IGRybV9nZW1fb2JqZWN0ICpvYmopOw0KPj4NCj4+IC0t
+DQo+PiBUaG9tYXMgWmltbWVybWFubg0KPj4gR3JhcGhpY3MgRHJpdmVyIERldmVsb3Blcg0K
+Pj4gU1VTRSBTb2Z0d2FyZSBTb2x1dGlvbnMgR2VybWFueSBHbWJIDQo+PiBNYXhmZWxkc3Ry
+LiA1LCA5MDQwOSBOw7xybmJlcmcsIEdlcm1hbnkNCj4+IChIUkIgMzY4MDksIEFHIE7DvHJu
+YmVyZykNCj4+IEdlc2Now6RmdHNmw7xocmVyOiBJdm8gVG90ZXYNCg0KLS0gDQpUaG9tYXMg
+WmltbWVybWFubg0KR3JhcGhpY3MgRHJpdmVyIERldmVsb3Blcg0KU1VTRSBTb2Z0d2FyZSBT
+b2x1dGlvbnMgR2VybWFueSBHbWJIDQpNYXhmZWxkc3RyLiA1LCA5MDQwOSBOw7xybmJlcmcs
+IEdlcm1hbnkNCihIUkIgMzY4MDksIEFHIE7DvHJuYmVyZykNCkdlc2Now6RmdHNmw7xocmVy
+OiBJdm8gVG90ZXYNCg==
 
-Not tested on HW. Testing might be useful.
----
- arch/arm64/boot/dts/qcom/msm8994.dtsi | 1 +
- 1 file changed, 1 insertion(+)
+--------------5RHAoO43WMHEge7jXP9WGHn3--
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8994.dtsi b/arch/arm64/boot/dts/qcom/msm8994.dtsi
-index 0327c9941ae5..da9c8e05c7b4 100644
---- a/arch/arm64/boot/dts/qcom/msm8994.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8994.dtsi
-@@ -1074,6 +1074,7 @@ ocmem: sram@fdd00000 {
- 			reg = <0xfdd00000 0x2000>,
- 			      <0xfec00000 0x200000>;
- 			reg-names = "ctrl", "mem";
-+			ranges = <0 0xfec00000 0x200000>;
- 			clocks = <&rpmcc RPM_SMD_OCMEMGX_CLK>,
- 				 <&mmcc OCMEMCX_OCMEMNOC_CLK>;
- 			clock-names = "core", "iface";
--- 
-2.34.1
+--------------89GWd80acGp6EW6OVodnIp0z
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature"
 
+-----BEGIN PGP SIGNATURE-----
+
+wsF5BAABCAAjFiEExndm/fpuMUdwYFFolh/E3EQov+AFAmKfiV4FAwAAAAAACgkQlh/E3EQov+DQ
+uQ/+KnvET6HMvJUhfdKhlai2pSkrzSbKSF2Pb+b1D3obDj4/rK/d2B+cC/pl+fqz8bu0ViMTnRQL
+IKKuUABF02sxx1VdHHvFxXZKlk7Nw2CzW7PFd2uoPMpY50gboPp8bR8mOMVqhHsZhOHAVacOtZsB
+YmVClM+TODlUgzky+wC5/sQtULVNgOdmZHn1M5EpxTAvThMPotan+BTJF5JgO39TQG13REF5g+Y6
+J/KWvQlYWjN4YZBDsCLFlC7sqHJLDFtAsdCPsOH86Wqx3w9z9UGVH4D5eDbMmNftbY5lR4aBnVaw
+46nfs/Z6shV07FmZwTduGDNRLGyjDnR+2OoDVVp6jl89+W3/HGZEqkmhQHRHljo+3LrClRECSoPk
+YR5IaXgud6ANeiuRWPI1W4ogxrhlZNjDNiJ8wBlQQjQ4llBm3YvVFjBDP+CzkdCVDuhACQd338DW
+71lvJaWeuoWlms97Saolua/DED2AnC5nH83gC2so+vxyC6a+IvuRiegKW3XrLRKN1fUdIjCiZYSO
+OHlsV9HLvGKuMcZrfe1KY4NrTM5YKkXvt5Ng1lUgKRxrjIeukOuHaxJWgtVSzZObIFxgRlcM0SO9
+CWiCI4BnT/e6lZDNtExIvobeAofZLUBsvUzDYjO3z4bxVqXJIcpmO/2zMBcpCdhTBTTMfuKKG7GH
+DJM=
+=5OZi
+-----END PGP SIGNATURE-----
+
+--------------89GWd80acGp6EW6OVodnIp0z--
