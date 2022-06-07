@@ -2,106 +2,180 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 054C053FF8E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jun 2022 14:59:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 33B2B53FFBF
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jun 2022 15:12:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232262AbiFGM7I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Jun 2022 08:59:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37506 "EHLO
+        id S244513AbiFGNMg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Jun 2022 09:12:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38340 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244337AbiFGM7F (ORCPT
+        with ESMTP id S244439AbiFGNMe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Jun 2022 08:59:05 -0400
-Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B86D4A3DD
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Jun 2022 05:59:00 -0700 (PDT)
-Received: by mail-pj1-x102a.google.com with SMTP id gd1so15597142pjb.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Jun 2022 05:59:00 -0700 (PDT)
+        Tue, 7 Jun 2022 09:12:34 -0400
+Received: from mail-il1-x12f.google.com (mail-il1-x12f.google.com [IPv6:2607:f8b0:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C23C51EC53
+        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Jun 2022 06:12:31 -0700 (PDT)
+Received: by mail-il1-x12f.google.com with SMTP id b17so9865812ilh.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Jun 2022 06:12:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
+        d=sartura-hr.20210112.gappssmtp.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=lDtXYp3fqP9C71L4lDk/xlr3jxWkEpVJr+KnqNG4y7E=;
-        b=K90qEHu0azHSHu2mOI/stRPDYrcuxcyCEFw1AMnirN2f0G71zutWWNnloA3GlxvQOQ
-         xWsKraE+lZ25HczKKrKK7w2x9n7xuENo0TxW2z4j70T/UwwmhNHpZI2wunLzRrHhuADb
-         4QvAomrTpPbwCIdUKPVGJYM7iypuonqnEdl1KPR/zIem+WdbqnNMyqnwOcDPRacshMsS
-         iFhaVVvSgJ22oqgR+eqo+o1C8baqY6byzkiZHEehP3uc5RcO7tBiR2TSAzG2QWKezj1O
-         ewjI2VXumahjBGKRs7NjofsnyPK1BKNc2WSiztSudBdoqAoj7+JTV43OfoLfy3nHVV0A
-         7LeA==
+        bh=mcxZtplXwk/Z+TT8W9hddhp2FUJFjSAJiAMtVESFwX4=;
+        b=1R9AiW1gY1VYK6kYFNaQEa0cCcVv0mg4PT8PsSFrmYE8qP50U/W8QnvoV8a3AAiuY/
+         6AE3+OpXx+GOb6NGUe8ynFndhTMVnvEd+lz2Ufhrj35oREogwN7e8iAHXyGibeX0qGQe
+         Mc3O1gPlG+6DN56TdUTVkO+LFlhq0niqSzLCQ+9IxXf3J157h8Ncm4NBLnm6M3LHv0Sw
+         IOvovO5h/4xOaWe8MHBozd6uGQENdjNERulvpkYnGKBDYA7j+M6905myRyL11P1J3v2z
+         CWFAj3Y3JgP7/y4FItqBEAw5Rd9w78cklOruPWiyG0Fz2W3oVXsI4xUJgPnD4USc75Vj
+         vG8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=lDtXYp3fqP9C71L4lDk/xlr3jxWkEpVJr+KnqNG4y7E=;
-        b=YYYNDbLeHPvmnYiqfeyy40lw0H2CrDg+NFunA1CGySL8Ttt1QEdcz+FzKA5qnyZONm
-         3ROuTCnqMjpMQb+rRIhuJkEES9dHWbxqntRY0YoB2jVuPUnxe63BlNnO8mW648H61oIq
-         KZsx0hnwrAniQs5cibjFafKMZllWN0bpQkBXgcWWzcLRorOfRwDe5yCLUMxDF5NGnpI2
-         3KpUBWrRnK5tMQRk+5VmT8Y/FjznSC1I29MC5LRFTYBAq7zaFXahhbL1kRMp5zGpd3Tg
-         Qj5xtJpq9DsUR/HtCouf1mHgu6KmD38WjNTzo3DRXZeXEibX0qAtjFZ3MNJ7JTbwxL4Q
-         QX3Q==
-X-Gm-Message-State: AOAM531yZRb2P5Icfx544AEd6DpLWo9oTALKjjgrP6XOn/pPuRAowJtM
-        W6Hok/PA6+oZDOMhEVKHS7oe1+bXabyedFcowozEaw==
-X-Google-Smtp-Source: ABdhPJzcJQafpZkJeNY+yifsfYjttv26Nfb/21vVes5wyxo2mbx6fcRcdIFZS6FHMfgvoZV/ItHhisempzlmgAMrG4E=
-X-Received: by 2002:a17:902:f353:b0:167:7bc1:b1b9 with SMTP id
- q19-20020a170902f35300b001677bc1b1b9mr10880509ple.117.1654606739759; Tue, 07
- Jun 2022 05:58:59 -0700 (PDT)
+        bh=mcxZtplXwk/Z+TT8W9hddhp2FUJFjSAJiAMtVESFwX4=;
+        b=PtWv8+0upvTfPtNoxM4QAUnt+F6PAsz4FJG7qyNfmR0SsiZgjHQSNdxCgysmuiKQYS
+         iQKzWs8V+cnRoevnNNjey+JhXdTxBq9rQSvNg8F7Gqlt19gO9pkMXsmWRxM3Nw+xv+UI
+         nXWM34jV0OjO4SZj/Z6WSH12ZwaktXzX4wOT9l+l8M6LSLd0NOtnOg6NekELyd5asc+n
+         nJ4EPo1Db/DaEhghnxyM2rfVEqsdmtiG9niuPxdk1yNIsl5O6s136FUeddH30JtU4f+a
+         Tv+mZRojHoU2qppdy13Fym4Sm5PPV41zT2/+k1JB3CaY59qc4irT/IA+IpOfHhaJ8z9a
+         VKzQ==
+X-Gm-Message-State: AOAM531mORLcskBj8z7kyfHbJpFzN+y1aOVTKvcgdXZgxmhhIKNrKH8w
+        fykCercgRq8ZoWKXbS4glpD35JW6XGK6ZTksFCoAVg==
+X-Google-Smtp-Source: ABdhPJw95CeU2MDQe4i7N7oPLkSanT5aQWwJEN3LpDbgGCXPYQoyGBGQkxeiSbtBzI0UNRW9Pns5C3y7Zo+8caz+foE=
+X-Received: by 2002:a05:6e02:19cc:b0:2d3:e20f:4959 with SMTP id
+ r12-20020a056e0219cc00b002d3e20f4959mr17071989ill.40.1654607550608; Tue, 07
+ Jun 2022 06:12:30 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220601233818.1877963-1-bjorn.andersson@linaro.org> <3e51df22-5747-7536-257a-77d279c57254@baylibre.com>
-In-Reply-To: <3e51df22-5747-7536-257a-77d279c57254@baylibre.com>
-From:   Robert Foss <robert.foss@linaro.org>
-Date:   Tue, 7 Jun 2022 14:58:48 +0200
-Message-ID: <CAG3jFyuvW2ZHRZ4AgMe8k88fOnkxNLXfxR2hC_X6t_P9TA=HJQ@mail.gmail.com>
-Subject: Re: [PATCH] drm/bridge: lt9611uxc: Cancel only driver's work
-To:     Neil Armstrong <narmstrong@baylibre.com>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andrzej Hajda <andrzej.hajda@intel.com>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        dri-devel@lists.freedesktop.org
+References: <cover.1644234441.git.baruch@tkos.co.il> <20220412161259.GA7109@lpieralisi>
+ <YnvCGD4RwuyPkTfK@lpieralisi>
+In-Reply-To: <YnvCGD4RwuyPkTfK@lpieralisi>
+From:   Robert Marko <robert.marko@sartura.hr>
+Date:   Tue, 7 Jun 2022 15:12:19 +0200
+Message-ID: <CA+HBbNFo9QCExiA9T4Mn4t5vvir79xF3R9F6OLZa0m5Bzpte3w@mail.gmail.com>
+Subject: Re: [PATCH v6 0/3] PCI: IPQ6018 platform support
+To:     Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
+Cc:     Baruch Siach <baruch@tkos.co.il>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Selvam Sathappan Periakaruppan <speriaka@codeaurora.org>,
+        Kathiravan T <kathirav@codeaurora.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        "Bryan O'Donoghue" <pure.logic@nexus-software.ie>,
+        linux-pci@vger.kernel.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-tegra@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 7 Jun 2022 at 14:32, Neil Armstrong <narmstrong@baylibre.com> wrote:
+On Wed, May 11, 2022 at 4:03 PM Lorenzo Pieralisi
+<lorenzo.pieralisi@arm.com> wrote:
 >
-> On 02/06/2022 01:38, Bjorn Andersson wrote:
-> > During device remove care needs to be taken that no work is pending
-> > before it removes the underlying DRM bridge etc, but this can be done on
-> > the specific work rather than waiting for the flush of the system-wide
-> > workqueue.
+> On Tue, Apr 12, 2022 at 05:12:59PM +0100, Lorenzo Pieralisi wrote:
+> > On Mon, Feb 07, 2022 at 04:51:23PM +0200, Baruch Siach wrote:
+> > > This series adds support for the single PCIe lane on IPQ6018 SoCs. The code is
+> > > ported from downstream Codeaurora v5.4 kernel. The main difference from
+> > > downstream code is the split of PCIe registers configuration from .init to
+> > > .post_init, since it requires phy_power_on().
+> > >
+> > > Tested on IPQ6010 based hardware.
+> > >
+> > > Changes in v6:
+> > >
+> > >   * Drop DT patch applied to the qcom tree
+> > >
+> > >   * Normalize driver changes subject line
+> > >
+> > >   * Add a preparatory patch to rename PCIE_CAP_LINK1_VAL to PCIE_CAP_SLOT_VAL,
+> > >     and define it using PCI_EXP_SLTCAP_* macros
+> > >
+> > >   * Drop a vague comment about ASPM configuration
+> > >
+> > >   * Add a comment about the source of delay periods
+> > >
+> > > Changes in v5:
+> > >
+> > >   * Remove comments from qcom_pcie_init_2_9_0() (Bjorn Andersson)
+> > >
+> > > Changes in v4:
+> > >
+> > >   * Drop applied DT bits
+> > >
+> > >   * Add max-link-speed that was missing from the applied v2 patch
+> > >
+> > >   * Rebase the driver on v5.16-rc3
+> > >
+> > > Changes in v3:
+> > >
+> > >   * Drop applied patches
+> > >
+> > >   * Rely on generic code for speed setup
+> > >
+> > >   * Drop unused macros
+> > >
+> > >   * Formatting fixes
+> > >
+> > > Changes in v2:
+> > >
+> > >   * Add patch moving GEN3_RELATED macros to a common header
+> > >
+> > >   * Drop ATU configuration from pcie-qcom
+> > >
+> > >   * Remove local definition of common registers
+> > >
+> > >   * Use bulk clk and reset APIs
+> > >
+> > >   * Remove msi-parent from device-tree
+> > >
+> > > Baruch Siach (2):
+> > >   PCI: dwc: tegra: move GEN3_RELATED DBI register to common header
+> > >   PCI: qcom: Define slot capabilities using PCI_EXP_SLTCAP_*
+> > >
+> > > Selvam Sathappan Periakaruppan (1):
+> > >   PCI: qcom: Add IPQ60xx support
+> > >
+> > >  drivers/pci/controller/dwc/pcie-designware.h |   7 +
+> > >  drivers/pci/controller/dwc/pcie-qcom.c       | 155 ++++++++++++++++++-
+> > >  drivers/pci/controller/dwc/pcie-tegra194.c   |   6 -
+> > >  3 files changed, 160 insertions(+), 8 deletions(-)
 > >
-> > Fixes: bc6fa8676ebb ("drm/bridge/lontium-lt9611uxc: move HPD notification out of IRQ handler")
-> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > ---
-> >   drivers/gpu/drm/bridge/lontium-lt9611uxc.c | 2 +-
-> >   1 file changed, 1 insertion(+), 1 deletion(-)
+> > Hi Bjorn, Andy,
 > >
-> > diff --git a/drivers/gpu/drm/bridge/lontium-lt9611uxc.c b/drivers/gpu/drm/bridge/lontium-lt9611uxc.c
-> > index 3d62e6bf6892..310b3b194491 100644
-> > --- a/drivers/gpu/drm/bridge/lontium-lt9611uxc.c
-> > +++ b/drivers/gpu/drm/bridge/lontium-lt9611uxc.c
-> > @@ -982,7 +982,7 @@ static int lt9611uxc_remove(struct i2c_client *client)
-> >       struct lt9611uxc *lt9611uxc = i2c_get_clientdata(client);
-> >
-> >       disable_irq(client->irq);
-> > -     flush_scheduled_work();
-> > +     cancel_work_sync(&lt9611uxc->work);
-> >       lt9611uxc_audio_exit(lt9611uxc);
-> >       drm_bridge_remove(&lt9611uxc->bridge);
-> >
+> > any feedback on this series please ?
 >
-> Reviewed-by: Neil Armstrong <narmstrong@baylibre.com>
+> Any feedback on these patches please ?
 
-Applied to drm-misc-next.
+Finally dug the CP01, and for me, it works, so:
+Tested-by: Robert Marko <robert.marko@sartura.hr>
+
+Can we finally get this merged or at least looked at.
+IPQ8074 will also benefit from this.
+
+Regards,
+Robert
+>
+> Thanks,
+> Lorenzo
+
+
+
+-- 
+Robert Marko
+Staff Embedded Linux Engineer
+Sartura Ltd.
+Lendavska ulica 16a
+10000 Zagreb, Croatia
+Email: robert.marko@sartura.hr
+Web: www.sartura.hr
