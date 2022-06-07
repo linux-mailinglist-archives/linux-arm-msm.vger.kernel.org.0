@@ -2,78 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BA99F53F68F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jun 2022 08:50:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8D1A753F6A2
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jun 2022 08:56:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231247AbiFGGuy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Jun 2022 02:50:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44314 "EHLO
+        id S231334AbiFGG4o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Jun 2022 02:56:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55936 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230162AbiFGGux (ORCPT
+        with ESMTP id S230099AbiFGG4n (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Jun 2022 02:50:53 -0400
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BCEDDEEB1
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Jun 2022 23:50:52 -0700 (PDT)
-Received: by mail-ej1-x62f.google.com with SMTP id kq6so20157349ejb.11
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Jun 2022 23:50:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=gcjA/D1N6F29apXrVNtiB7cxyQefIwUG0Piy77ZFa00=;
-        b=e2qVNFqbMue2rV7KpSz8oiizqGhv0jaDz+S7v3abMGbZ5xqQPVkya+z5RUS3itUo6A
-         1j6PkbqlIQuh/gY/koXNA12KXKqn5ULLSpkUSrxg4UuZ7LzSqtZgcgQIFF4CFMqc8s2z
-         GE+4BgBFrSrqjJWANmEjSMXbibBF7EKTb7VwCj0Q2NIOG73uw6IsAYvCGSBBVLHGzo8A
-         ArW+08xmfFtfzTns54FcKHsrtzPOadCFxTQUHTq9tjH90xSVvG5f65DozGw9VA/xMyAC
-         wrePdthLVd1R17UCRUme4Qbxl34TmlRvUHzfD67qsktqJTfmZ2gaLX7rfAz9RE//gBnM
-         WsTA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=gcjA/D1N6F29apXrVNtiB7cxyQefIwUG0Piy77ZFa00=;
-        b=VaTwfC/5TE3sIqnwo28tzGxinKkSB/5tJBEb69gXuiukgZzOXsRkfb6h5tUqBpl3RH
-         1XCHCRsgcgQH5kdq3njksQ7FPRHFnZGePocizXQ/W/FaB9x7p372nVr6imARbjBs2Rxf
-         GxgnilzR+yeAFKiRS+P0f8KCnQSOaulDWFRSzHw8OPk9Ohfd/B57r2u0ANy4Xmr2HHJ+
-         /OzDhkApdK6eEAKckcT439bhs3Vo5EzLak/u6OsvsPy5M+xUnBUcqOpP4dyAA0dw/ZkO
-         e2VajzXy1qd19Sn7xMjGpFAidGLED6RTuityz+TfvfYvJ/MSWZB0FDdNNXXta2aWw1uz
-         ERcg==
-X-Gm-Message-State: AOAM530J9w5HLFVi2lpOUB6MbI3V3wGzfZm8iQuN4RqfQ1bHRwNPPYEt
-        qLp9cyCG13zFtSFjnWNc4E1YTw==
-X-Google-Smtp-Source: ABdhPJyR5JlmxsGr7LTLbWT6s2wCa6c297ttH1DNwdGUznsJNrDOcsQpF6v/UhkoFMjJt2jTJ0qQhA==
-X-Received: by 2002:a17:907:c29:b0:704:fbb:1943 with SMTP id ga41-20020a1709070c2900b007040fbb1943mr25005900ejc.486.1654584650908;
-        Mon, 06 Jun 2022 23:50:50 -0700 (PDT)
-Received: from [192.168.0.181] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id n24-20020aa7c698000000b0042bb229e81esm9694505edq.15.2022.06.06.23.50.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 06 Jun 2022 23:50:50 -0700 (PDT)
-Message-ID: <3e4e504c-5a38-43cd-ea8d-afbbb72eacad@linaro.org>
-Date:   Tue, 7 Jun 2022 08:50:49 +0200
+        Tue, 7 Jun 2022 02:56:43 -0400
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6D09BA543;
+        Mon,  6 Jun 2022 23:56:41 -0700 (PDT)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        (No client certificate requested)
+        by smtp-out2.suse.de (Postfix) with ESMTPS id 644031F974;
+        Tue,  7 Jun 2022 06:56:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+        t=1654585000; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=GtYnqqkMeCG+SdwABzSw7VDFtwge7SFqOX+iy7N9eNU=;
+        b=eLwEsnDDYoCnXqAb+jFqP9/RFg+FI+S9Zub8CmAIV+YIC+Zxgx4JjAn4vnAMphALDYg6wz
+        tPow/NWPkJvmhboqRIRYW4DaF3dBdBNDlLhfgOnK31/Gm5eUe2TNIixf6K1C6Q05tIpI9W
+        Kjx1HVm7YFQQSMYscLiDkQG2F1KzDkU=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+        s=susede2_ed25519; t=1654585000;
+        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=GtYnqqkMeCG+SdwABzSw7VDFtwge7SFqOX+iy7N9eNU=;
+        b=/cbUUaVSP6Ozv8pG8uH/ZZOZwZEQkKcjbhmsZVdVNw51JXcaKZnNzVu9DuT+4/IZ8vv7q7
+        TtZlFlmX3If1FlCQ==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        (No client certificate requested)
+        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 2DFA313638;
+        Tue,  7 Jun 2022 06:56:40 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+        by imap2.suse-dmz.suse.de with ESMTPSA
+        id ui5MCqj2nmIFcQAAMHmgww
+        (envelope-from <tzimmermann@suse.de>); Tue, 07 Jun 2022 06:56:40 +0000
+Message-ID: <34aacfa3-9eb9-d3d5-07b7-805fd1408bb7@suse.de>
+Date:   Tue, 7 Jun 2022 08:56:39 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.10.0
-Subject: Re: [PATCH v4 1/4] dt-bindings: interconnect: qcom,sdm845-cpu-bwmon:
- add BWMON device
+Subject: Re: [PATCH v2 1/2] drm: Add DRM_GEM_FOPS
 Content-Language: en-US
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Georgi Djakov <djakov@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        Rob Herring <robh@kernel.org>
-References: <20220601101140.170504-1-krzysztof.kozlowski@linaro.org>
- <20220601101140.170504-2-krzysztof.kozlowski@linaro.org>
- <Yp5tjUICIEUptKSx@ripper>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <Yp5tjUICIEUptKSx@ripper>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+To:     Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org
+Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+        Rob Clark <robdclark@chromium.org>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        open list <linux-kernel@vger.kernel.org>
+References: <20220606195432.1888346-1-robdclark@gmail.com>
+From:   Thomas Zimmermann <tzimmermann@suse.de>
+In-Reply-To: <20220606195432.1888346-1-robdclark@gmail.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------xlw0dtzkO9vwXvWXs909mr81"
+X-Spam-Status: No, score=-7.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -82,62 +79,94 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 06/06/2022 23:11, Bjorn Andersson wrote:
-> On Wed 01 Jun 03:11 PDT 2022, Krzysztof Kozlowski wrote:
-> 
->> Add bindings for the Qualcomm Bandwidth Monitor device providing
->> performance data on interconnects.  The bindings describe only BWMON
->> version 4, e.g. the instance on SDM845 between CPU and Last Level Cache
->> Controller.
->>
->> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->> Reviewed-by: Rob Herring <robh@kernel.org>
->> Acked-by: Georgi Djakov <djakov@kernel.org>
->> ---
->>  .../interconnect/qcom,sdm845-cpu-bwmon.yaml   | 97 +++++++++++++++++++
->>  1 file changed, 97 insertions(+)
->>  create mode 100644 Documentation/devicetree/bindings/interconnect/qcom,sdm845-cpu-bwmon.yaml
->>
->> diff --git a/Documentation/devicetree/bindings/interconnect/qcom,sdm845-cpu-bwmon.yaml b/Documentation/devicetree/bindings/interconnect/qcom,sdm845-cpu-bwmon.yaml
->> new file mode 100644
->> index 000000000000..8c82e06ee432
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/interconnect/qcom,sdm845-cpu-bwmon.yaml
->> @@ -0,0 +1,97 @@
->> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
->> +%YAML 1.2
->> +---
->> +$id: http://devicetree.org/schemas/interconnect/qcom,sdm845-cpu-bwmon.yaml#
->> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->> +
->> +title: Qualcomm Interconnect Bandwidth Monitor
->> +
->> +maintainers:
->> +  - Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->> +
->> +description:
->> +  Bandwidth Monitor measures current throughput on buses between various NoC
->> +  fabrics and provides information when it crosses configured thresholds.
->> +
->> +properties:
->> +  compatible:
->> +    enum:
->> +      - qcom,sdm845-cpu-bwmon       # BWMON v4
-> 
-> It seems the thing that's called bwmon v4 is compatible with a number of
-> different platforms, should we add a generic compatible to the binding
-> as well, to avoid having to update the implementation for each SoC?
-> 
-> (I.e. "qcom,sdm845-cpu-bwmon", "qcom,bwmon-v4")
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------xlw0dtzkO9vwXvWXs909mr81
+Content-Type: multipart/mixed; boundary="------------WPv3m0MaCPCi1nhPiH36UBtP";
+ protected-headers="v1"
+From: Thomas Zimmermann <tzimmermann@suse.de>
+To: Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org
+Cc: freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+ Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+ Rob Clark <robdclark@chromium.org>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, David Airlie <airlied@linux.ie>,
+ Daniel Vetter <daniel@ffwll.ch>, open list <linux-kernel@vger.kernel.org>
+Message-ID: <34aacfa3-9eb9-d3d5-07b7-805fd1408bb7@suse.de>
+Subject: Re: [PATCH v2 1/2] drm: Add DRM_GEM_FOPS
+References: <20220606195432.1888346-1-robdclark@gmail.com>
+In-Reply-To: <20220606195432.1888346-1-robdclark@gmail.com>
 
-I am hesitant. I could not find BWMON IP block versioning in the
-Qualcomm docs. Only the downstream sources had it. Therefore I think it
-is more applicable to use this one as fallback for other boards, e.g.:
+--------------WPv3m0MaCPCi1nhPiH36UBtP
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
 
-"qcom,sdm660-cpu-bwmon", "qcom,sdm845-cpu-bwmon"
-(even if the number is a bit odd - newer comes as last compatible).
+SGkNCg0KQW0gMDYuMDYuMjIgdW0gMjE6NTQgc2NocmllYiBSb2IgQ2xhcms6DQo+IEZyb206
+IFJvYiBDbGFyayA8cm9iZGNsYXJrQGNocm9taXVtLm9yZz4NCj4gDQo+IFRoZSBERUZJTkVf
+RFJNX0dFTV9GT1BTKCkgaGVscGVyIGlzIGEgYml0IGxpbWl0aW5nIGlmIGEgZHJpdmVyIHdh
+bnRzIHRvDQo+IHByb3ZpZGUgYWRkaXRpb25hbCBmaWxlIG9wcywgbGlrZSBzaG93X2ZkaW5m
+bygpLg0KPiANCj4gU2lnbmVkLW9mZi1ieTogUm9iIENsYXJrIDxyb2JkY2xhcmtAY2hyb21p
+dW0ub3JnPg0KPiAtLS0NCj4gICBpbmNsdWRlL2RybS9kcm1fZ2VtLmggfCAyNiArKysrKysr
+KysrKysrKysrKystLS0tLS0tLQ0KPiAgIDEgZmlsZSBjaGFuZ2VkLCAxOCBpbnNlcnRpb25z
+KCspLCA4IGRlbGV0aW9ucygtKQ0KPiANCj4gZGlmZiAtLWdpdCBhL2luY2x1ZGUvZHJtL2Ry
+bV9nZW0uaCBiL2luY2x1ZGUvZHJtL2RybV9nZW0uaA0KPiBpbmRleCA5ZDdjNjFhMTIyZGMu
+LmRjODhkNGEyY2RmNiAxMDA2NDQNCj4gLS0tIGEvaW5jbHVkZS9kcm0vZHJtX2dlbS5oDQo+
+ICsrKyBiL2luY2x1ZGUvZHJtL2RybV9nZW0uaA0KPiBAQCAtMzE0LDYgKzMxNCwyMyBAQCBz
+dHJ1Y3QgZHJtX2dlbV9vYmplY3Qgew0KPiAgIAljb25zdCBzdHJ1Y3QgZHJtX2dlbV9vYmpl
+Y3RfZnVuY3MgKmZ1bmNzOw0KPiAgIH07DQo+ICAgDQo+ICsvKioNCj4gKyAqIERSTV9HRU1f
+Rk9QUyAtIERlZmF1bHQgZHJtIEdFTSBmaWxlIG9wZXJhdGlvbnMNCj4gKyAqDQo+ICsgKiBU
+aGlzIG1hY3JvIHByb3ZpZGVzIGEgc2hvcnRoYW5kIGZvciBzZXR0aW5nIHRoZSBHRU0gZmls
+ZSBvcHMgaW4gdGhlDQo+ICsgKiAmZmlsZV9vcGVyYXRpb25zIHN0cnVjdHVyZS4gDQoNCkkg
+d291bGQgYXBwcmVjaWF0ZSBhIHJlZmVyZW5jZSB0byBERUZJTkVfRFJNX0dFTV9GT1BTLiBT
+b21ldGhpbmcgYWxvbmcgDQp0aGUgbGluZXMgb2YgJ2lmIGFsbCB5b3UgbmVlZCBhcmUgdGhl
+IGRlZmF1bHQgb3BzLCB1c2UgREVGSU5FX0RSTV9HRU1fRk9QUycuDQoNCj4gKyAqLw0KPiAr
+I2RlZmluZSBEUk1fR0VNX0ZPUFMgXA0KPiArCS5vcGVuCQk9IGRybV9vcGVuLFwNCj4gKwku
+cmVsZWFzZQk9IGRybV9yZWxlYXNlLFwNCj4gKwkudW5sb2NrZWRfaW9jdGwJPSBkcm1faW9j
+dGwsXA0KPiArCS5jb21wYXRfaW9jdGwJPSBkcm1fY29tcGF0X2lvY3RsLFwNCj4gKwkucG9s
+bAkJPSBkcm1fcG9sbCxcDQo+ICsJLnJlYWQJCT0gZHJtX3JlYWQsXA0KPiArCS5sbHNlZWsJ
+CT0gbm9vcF9sbHNlZWssXA0KPiArCS5tbWFwCQk9IGRybV9nZW1fbW1hcA0KPiArDQo+ICsN
+Cg0KT25seSBvbmUgZW1wdHkgbGluZSBwbGVhc2UuDQoNCj4gICAvKioNCj4gICAgKiBERUZJ
+TkVfRFJNX0dFTV9GT1BTKCkgLSBtYWNybyB0byBnZW5lcmF0ZSBmaWxlIG9wZXJhdGlvbnMg
+Zm9yIEdFTSBkcml2ZXJzDQo+ICAgICogQG5hbWU6IG5hbWUgZm9yIHRoZSBnZW5lcmF0ZWQg
+c3RydWN0dXJlDQo+IEBAIC0zMzAsMTQgKzM0Nyw3IEBAIHN0cnVjdCBkcm1fZ2VtX29iamVj
+dCB7DQo+ICAgI2RlZmluZSBERUZJTkVfRFJNX0dFTV9GT1BTKG5hbWUpIFwNCj4gICAJc3Rh
+dGljIGNvbnN0IHN0cnVjdCBmaWxlX29wZXJhdGlvbnMgbmFtZSA9IHtcDQo+ICAgCQkub3du
+ZXIJCT0gVEhJU19NT0RVTEUsXA0KDQpJcyB0aGVyZSBhIHNwZWNpZmljIHJlYXNvbiB3aHkg
+Lm93bmVyIGlzIHN0aWxsIHNldCBoZXJlPyBJIHN1c3BlY3QgdGhhdCANCkRSTV9HRU1fRk9Q
+UyBpcyBzdHJpY3RseSBmb3IgY2FsbGJhY2sgZnVuY3Rpb25zPw0KDQpJbiBhbnkgY2FzZQ0K
+DQpBY2tlZC1ieTogVGhvbWFzIFppbW1lcm1hbm4gPHR6aW1tZXJtYW5uQHN1c2UuZGU+DQoN
+CkJlc3QgcmVnYXJkcw0KVGhvbWFzDQoNCj4gLQkJLm9wZW4JCT0gZHJtX29wZW4sXA0KPiAt
+CQkucmVsZWFzZQk9IGRybV9yZWxlYXNlLFwNCj4gLQkJLnVubG9ja2VkX2lvY3RsCT0gZHJt
+X2lvY3RsLFwNCj4gLQkJLmNvbXBhdF9pb2N0bAk9IGRybV9jb21wYXRfaW9jdGwsXA0KPiAt
+CQkucG9sbAkJPSBkcm1fcG9sbCxcDQo+IC0JCS5yZWFkCQk9IGRybV9yZWFkLFwNCj4gLQkJ
+Lmxsc2VlawkJPSBub29wX2xsc2VlayxcDQo+IC0JCS5tbWFwCQk9IGRybV9nZW1fbW1hcCxc
+DQo+ICsJCURSTV9HRU1fRk9QUyxcDQo+ICAgCX0NCj4gICANCj4gICB2b2lkIGRybV9nZW1f
+b2JqZWN0X3JlbGVhc2Uoc3RydWN0IGRybV9nZW1fb2JqZWN0ICpvYmopOw0KDQotLSANClRo
+b21hcyBaaW1tZXJtYW5uDQpHcmFwaGljcyBEcml2ZXIgRGV2ZWxvcGVyDQpTVVNFIFNvZnR3
+YXJlIFNvbHV0aW9ucyBHZXJtYW55IEdtYkgNCk1heGZlbGRzdHIuIDUsIDkwNDA5IE7DvHJu
+YmVyZywgR2VybWFueQ0KKEhSQiAzNjgwOSwgQUcgTsO8cm5iZXJnKQ0KR2VzY2jDpGZ0c2bD
+vGhyZXI6IEl2byBUb3Rldg0K
 
-What's your preference?
+--------------WPv3m0MaCPCi1nhPiH36UBtP--
 
-Best regards,
-Krzysztof
+--------------xlw0dtzkO9vwXvWXs909mr81
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature"
+
+-----BEGIN PGP SIGNATURE-----
+
+wsF5BAABCAAjFiEExndm/fpuMUdwYFFolh/E3EQov+AFAmKe9qcFAwAAAAAACgkQlh/E3EQov+DG
+hQ//fkjGsZRzBkApq7GtenwYHJJUtBJ5BE9x6aEjkNYYZw1EJ6IdJBZudTX5B8f6SQpno4GCO+aQ
+pQcp13X9YKBI3SZ/YNRuanCh5T1w7x34+z2MH6/hRBWmFSzBGUsQdXoxbe1n6eanY/BU1ZSsuc4r
+dTmKVDD8iC3HLEiX8mOhmgG509HWtCgh4RVSE7/wmwO+ijH5WcCLhKm0crC480EDT1/vyHohJ6eH
+eBbs1SdE9IR9ucAiarXfuS2NgEQw6uar24wTEYKXORHDsjrB8/aZV21fKU7oQSr6ZYqWq3P7rmAc
+x7gXtF6hEoe/k/ixl8rj3Q4NuNMO90MBQDTQEGVJCQTtL8kXzA17rmLYaVlY2NdlPGnDNPvvHfq9
+KJh3W3S8oAhm/831DHMRr902vu69zIX94wawYoHF/vG1n/jrxzMEKGAEFcX1r8PIUIN1B4EAgaQb
+AVpvqrVo3kuulJPGZTFreEvwGniO4H23DBHdXBT6MEazzcu+x01UBvghHY/dAcQvy0+R+LW7bKcg
+xK6uhuPdTwT/k70ZSAwGOD5yZ/2aIH9rS+seM5rLwCbqk7rimv+6aAXav1PxeaUchqfbWGSDKv4A
+V+T+X/MaBW3bbPrJ1vau0O8rfLLJJL4KzWZH0b6WVqTt70E2zFTP9QaXnWxM05MLP7TM3UOZvzFB
+GiE=
+=JNib
+-----END PGP SIGNATURE-----
+
+--------------xlw0dtzkO9vwXvWXs909mr81--
