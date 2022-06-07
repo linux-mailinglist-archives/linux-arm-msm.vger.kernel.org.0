@@ -2,75 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BEA9C53FE5C
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jun 2022 14:09:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B2C9E53FE91
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jun 2022 14:18:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243557AbiFGMIu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Jun 2022 08:08:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55616 "EHLO
+        id S234866AbiFGMSx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Jun 2022 08:18:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49668 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243551AbiFGMIs (ORCPT
+        with ESMTP id S243578AbiFGMRn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Jun 2022 08:08:48 -0400
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A49718BD3E
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Jun 2022 05:08:47 -0700 (PDT)
-Received: by mail-ej1-x62e.google.com with SMTP id u12so34776372eja.8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Jun 2022 05:08:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :references:from:in-reply-to:content-transfer-encoding;
-        bh=xV+JNWROXIXNNl72An2tMAra5xOJapsLU/5a6Polwlg=;
-        b=p8WSw2UMIhQNr2Fwr8cpY5cZqsab+1E35dtmXpB41xaHUUoak4LJRLYksNib4yNTik
-         t0+d1YA7pOXHFbyDI5/w/PSMRJn2b1otbPqCKptEO6LjOiQYGxLvxohrBSkzvKqKZjzv
-         eXpzqayAHIETEYiDAZVNbAE+SUc8MNrVk6jm5JzjS6ygFRirmZueNBO167lnAvlYQtj1
-         mcU3zA6ggk0c2VHVTjAy15pCP91j2Shz/q1lvUWmaKKMAwssV8CWTjktGezp/honngST
-         Qj3vhh8HEDRk1Y1SzxPh5IGFbC38EyNYCgnKjMEZW6ycmUN17A0DIAJ+ANpqxUHx4IOk
-         UbEg==
+        Tue, 7 Jun 2022 08:17:43 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 5EA77F7485
+        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Jun 2022 05:15:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1654604153;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=oMK24xIGG6wu595QaPQlChtbwsTC3JSyEhFxYI/TvBY=;
+        b=FjUq0gs+Ne4/F5RXNkuLGNYNE6i12mTLsGAi87Scneatkv3b+jCoueak5RcsCcD9GWntWJ
+        4fWeAcZ3ClsPhLgSwzTEKmh3XBzzs9nOJ6frKpHjrUf9agnxC3lHxKYF1HHeOhe5kwvPNS
+        bQefxyAbpAdI4a7HgWjzzy7ClINr3pA=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ us-mta-318-8YMY78WjOtSHrnKrMscWTw-1; Tue, 07 Jun 2022 08:15:52 -0400
+X-MC-Unique: 8YMY78WjOtSHrnKrMscWTw-1
+Received: by mail-qv1-f72.google.com with SMTP id v15-20020ad4554f000000b004646455c054so10737156qvy.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Jun 2022 05:15:52 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=xV+JNWROXIXNNl72An2tMAra5xOJapsLU/5a6Polwlg=;
-        b=gM0c7o0lBEzeGzxHoK68vX+2boDGUd4kSUpiZCT5vUT5LJo5dZjahwj84UERHy8y6p
-         CdzI9Mq97QsJXDAUXgD3jGLCD1AZnzbr7Q3a6l2iHcO0MKEnN9HLol7Kwv98clEV20WW
-         /j3poIeGDF0DO9WE40ZgQilUVuPK1zb8OwCGpht7hC4FkQCafJyxKfTApAHH502NHPzv
-         sJpRDCzmXyUnl21rMt7W8RszwiZxUS+dMa3VFQB51dRZImJH8R197XpEtgqofhnBlPXK
-         dfMvLDbOsBDkowt07oa/Cz6AV3feXj9un6RkoA4yXkN5iFo/C5AyKW8VjzwOTqQzVNWL
-         m1Ew==
-X-Gm-Message-State: AOAM531+6rKjZKMZc9yOgmQV/gUI80s3cJ8YL/oc7uCneef6LamVxXqC
-        XZ3fy7MB8/Oa4A7f+S2KZJLHVA==
-X-Google-Smtp-Source: ABdhPJyczAHK7KPQ/MU9ZVoX5hsVjj1U5sR9a+dXDnJEexExXSxpVn7QuiQ2RX1o5bvhSIAmm4Grwg==
-X-Received: by 2002:a17:907:d29:b0:711:d215:5a5e with SMTP id gn41-20020a1709070d2900b00711d2155a5emr8283950ejc.697.1654603726171;
-        Tue, 07 Jun 2022 05:08:46 -0700 (PDT)
-Received: from [192.168.0.183] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id v4-20020a170906488400b006fea2035036sm7546255ejq.86.2022.06.07.05.08.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 07 Jun 2022 05:08:45 -0700 (PDT)
-Message-ID: <c2da559b-1d87-be64-5531-aef0e9c62aa7@linaro.org>
-Date:   Tue, 7 Jun 2022 14:08:44 +0200
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=oMK24xIGG6wu595QaPQlChtbwsTC3JSyEhFxYI/TvBY=;
+        b=vFAykuw3nDV/7u/hCsugFO+0ADD+8k6fE3mKLpUpZv632E9YBs/8Jqu9ZHHmtVypE1
+         5mWRpfhioG4H/e/mmFUjBPchNtSjRPGZl2q004HJdvWJnfSoLpTb2tu89xTF6FYP50hs
+         bM9A+Sk2rP+DzXVPwFkJ1IO1O+5Bkqd1qXbw2DPLC/tGNzW2358POXouz0PyZwX3sRAQ
+         x/tOcHpIbT1XEuTR2mnyqcT3dg0h7LqP+A0VPfsl/NIBqmFVIdApI1u/x9FxeoeAxfBN
+         Tp668z4yY70+zgiJqGJGdfICUAJaYcabNJxUlfnw8a5GYd9BHGLElQt4Q7rkfXrdL8M3
+         6TfQ==
+X-Gm-Message-State: AOAM531tsYNfp0uXEOljQF7wDCcSjB6RgtAEHRk8fNTEs0O90KeMB4bd
+        tlZB/uDAN7FQt/Kok2yO1QlEjJJLYVTkvvTc61uWZFwDE74EmjQyFG3qLiWEfu1XVc1EWL0kBJe
+        y3FGRuiu5I1Lw2QgIEo9VTEYlSw==
+X-Received: by 2002:ae9:df87:0:b0:6a6:acfe:f1ed with SMTP id t129-20020ae9df87000000b006a6acfef1edmr10438252qkf.579.1654604152062;
+        Tue, 07 Jun 2022 05:15:52 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJz0A1/Z3+7HGeA0k9MPhFMYSifjOBR8tuyrQVy1bAdH0gssRyCDYA3k9yt79LLbL7gI80w4HQ==
+X-Received: by 2002:ae9:df87:0:b0:6a6:acfe:f1ed with SMTP id t129-20020ae9df87000000b006a6acfef1edmr10438233qkf.579.1654604151818;
+        Tue, 07 Jun 2022 05:15:51 -0700 (PDT)
+Received: from halaneylaptop ([2600:1700:1ff0:d0e0::48])
+        by smtp.gmail.com with ESMTPSA id bl33-20020a05620a1aa100b006a6f1c30701sm353511qkb.115.2022.06.07.05.15.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 07 Jun 2022 05:15:50 -0700 (PDT)
+Date:   Tue, 7 Jun 2022 07:15:48 -0500
+From:   Andrew Halaney <ahalaney@redhat.com>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] clk: qcom: gdsc: Bump parent usage count when GDSC is
+ found enabled
+Message-ID: <20220607121548.fhzpjcmoahlkue4t@halaneylaptop>
+References: <20220606212112.3617731-1-bjorn.andersson@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: [PATCH 1/7] dt-bindings: display: panel: Add Innolux TD4328 panel
- bindings
-Content-Language: en-US
-To:     Teguh Sobirin <teguh@sobir.in>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        phone-devel@vger.kernel.org
-References: <SEZPR03MB6666F4081BF29953A0DC379BDDA29@SEZPR03MB6666.apcprd03.prod.outlook.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <SEZPR03MB6666F4081BF29953A0DC379BDDA29@SEZPR03MB6666.apcprd03.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220606212112.3617731-1-bjorn.andersson@linaro.org>
+X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -78,141 +80,37 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 07/06/2022 01:05, Teguh Sobirin wrote:
-> Add documentation for "innolux,td4328" panel.
+On Mon, Jun 06, 2022 at 02:21:12PM -0700, Bjorn Andersson wrote:
+> When a GDSC is found to be enabled at boot the pm_runtime state will
+> be unbalanced as the GDSC is later turned off. Fix this by increasing
+> the usage counter on the power-domain, in line with how we handled the
+> regulator state.
 > 
-> Signed-off-by: Teguh Sobirin <teguh@sobir.in>
+> Fixes: 1b771839de05 ("clk: qcom: gdsc: enable optional power domain support")
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 > ---
->  .../display/panel/innolux,td4328.yaml         | 83 +++++++++++++++++++
->  1 file changed, 83 insertions(+)
->  create mode 100755 Documentation/devicetree/bindings/display/panel/innolux,td4328.yaml
+>  drivers/clk/qcom/gdsc.c | 3 +++
+>  1 file changed, 3 insertions(+)
 > 
-> diff --git a/Documentation/devicetree/bindings/display/panel/innolux,td4328.yaml b/Documentation/devicetree/bindings/display/panel/innolux,td4328.yaml
-> new file mode 100755
-> index 000000000000..d4773ade0f13
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/display/panel/innolux,td4328.yaml
-> @@ -0,0 +1,83 @@
-> +# SPDX-License-Identifier: GPL-2.0
-
-Dual License please (like checkpatch asks).
-
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/display/panel/innolux,td4328.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
+> index 44520efc6c72..a1fa7c4cff60 100644
+> --- a/drivers/clk/qcom/gdsc.c
+> +++ b/drivers/clk/qcom/gdsc.c
+> @@ -420,6 +420,9 @@ static int gdsc_init(struct gdsc *sc)
+>  				return ret;
+>  		}
+>  
+> +		/* ...and the power-domain */
+> +		gdsc_pm_runtime_get(sc);
 > +
-> +title: Synaptics TD4328 based DSI display Panels
-> +
-> +maintainers:
-> +  - Teguh Sobirin <teguh@sobir.in>
-> +
-> +description: |
-> +  The TD4328 IC from Synaptics is a DSI Panel IC used to drive DSI panels.
-> +
-> +allOf:
-> +  - $ref: panel-common.yaml#
-> +
-> +properties:
-> +  compatible:
-> +    const: innolux,td4328
+>  		/*
+>  		 * Votable GDSCs can be ON due to Vote from other masters.
+>  		 * If a Votable GDSC is ON, make sure we have a Vote.
+> -- 
+> 2.35.1
+> 
 
-Innolux or Synaptics?
+Makes sense to me!
 
-> +    description: This indicates the panel manufacturer of the panel that is
-> +      in turn using the TD4328 panel driver.
+Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
 
-What does the "panel driver" mean here?
-
-> +
-> +  reset-gpios:
-> +    maxItems: 1
-> +    description: phandle of gpio for reset line - This should be 8mA, gpio
-> +      can be configured using mux, pinctrl, pinctrl-names (active high)
-
-s/phandle of gpio//
-Everywhere.
-
-> +
-> +  vddio-supply:
-> +    description: phandle of the regulator that provides the supply voltage
-> +      Power IC supply
-
-s/phandle of the regulator//
-Everywhere. This should be simply:
-"Power IC supply"
-
-> +
-> +  vddpos-supply:
-> +    description: phandle of the positive boost supply regulator
-
-"Positive boost supply"
-
-> +
-> +  vddneg-supply:
-> +    description: phandle of the negative boost supply regulator
-
-"Negative boost supply"
-
-> +
-> +  rotation:
-> +    description: Display rotation in degrees counter clockwise (0,90,180,270)
-
-No need for description, just true
-
-> +
-> +  reg: true
-
-maxItems
-
-> +  port: true
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - vddio-supply
-> +  - vddpos-supply
-> +  - vddneg-supply
-> +  - reset-gpios
-> +  - rotation
-> +  - port
-> +
-> +unevaluatedProperties: false
-> +
-> +examples:
-> +  - |+
-
-Just "  - |"
-
-> +    #include <dt-bindings/gpio/gpio.h>
-> +
-> +    dsi0 {
-
-dsi
-
-> +        #address-cells = <1>;
-> +        #size-cells = <0>;
-> +
-> +        panel@0 {
-> +            compatible = "innolux,td4328";
-> +            reg = <0>;
-> +            vddio-supply = <&vreg_l14a_1p88>;
-> +            vddpos-supply = <&lab>;
-> +            vddneg-supply = <&ibb>;
-> +
-> +            reset-gpios = <&tlmm 6 GPIO_ACTIVE_HIGH>;
-> +            rotation = <90>;
-> +
-> +            port {
-> +                panel0_in: endpoint {
-> +                    remote-endpoint = <&dsi0_out>;
-> +                };
-> +            };
-> +        };
-> +    };
-> +
-> +...
-
-
-Best regards,
-Krzysztof
