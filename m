@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E77095404BC
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jun 2022 19:19:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ABAC75404C4
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jun 2022 19:19:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345659AbiFGRTF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Jun 2022 13:19:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39792 "EHLO
+        id S1345726AbiFGRTK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Jun 2022 13:19:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39820 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345666AbiFGRS6 (ORCPT
+        with ESMTP id S1345668AbiFGRS7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Jun 2022 13:18:58 -0400
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67662104C96
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Jun 2022 10:18:56 -0700 (PDT)
-Received: by mail-ed1-x52b.google.com with SMTP id fd25so23899681edb.3
+        Tue, 7 Jun 2022 13:18:59 -0400
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A6BD1053CF
+        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Jun 2022 10:18:57 -0700 (PDT)
+Received: by mail-ej1-x633.google.com with SMTP id u12so36578788eja.8
         for <linux-arm-msm@vger.kernel.org>; Tue, 07 Jun 2022 10:18:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=95xSn5ZnLXJf8gOJTiH12x4Y2i7vMsP36HiT3AQ0fYQ=;
-        b=WLHHjfo9g9OtC97Ni2SdnwCyNBlO3bH4M6XH4VmoqOFPxMwQh+og626C+6TxlPADAk
-         lrcLFoTQGyO/g+iVGeVKRMwuu9T/ngU0SYD1CMGcKEYcEPDPc0dYWzGuYwTGtZzKiQue
-         R3gJ068LyWhxJ2iodOnCH1MA95bWJO1RIaBgxsrNKOGdMVWKJlmYbYDfAMWORHr3JZ2G
-         VoyYDPYbd+jkte9eGh8XzLl/ThfsZ9+JIlb0fEVKC/AcIDVY5ORqnPhVIK/23EYLeAH8
-         kl4DkbgF5iWDslWhTWWAi6MLhFm54UIH+0/n5i7u2QPmGLG/QksLU4WlebWWJX8Vtbfj
-         L27g==
+        bh=wRdWSIKyYkI40KDQnl/RDAGtefWUX7TnHCHtBAZfwPE=;
+        b=FdiAMr47BtFt6E1QXvm4vtubcRAn8dLeI3CKXfojzpriAa/2D8JiW5GLajV6HKh9Pc
+         WFGKf06a2QWoNWF1ovX/uYNV2aCZA4tKyGl0vpedg6lAOatnApQP7r9M4RJRzh5JliYc
+         iQv3CudJ4aYT3MqMJMK+V6HSzBoKAfiyHCc6bleRNBXK6j35EMw+VHqwv/TMksaKR6Jl
+         eTPKRcWq/dZUv2/8R7IS3xu4XBAsLZ14KkQeADJzCen+a22mgnsiqupkWM36WxGseMZC
+         6pdYj186NZEflBvsUx+7oRsdtdwFvIw69kOnwYYWMSoRHE68BxRPKHKftOkAX23wHeMs
+         Th1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=95xSn5ZnLXJf8gOJTiH12x4Y2i7vMsP36HiT3AQ0fYQ=;
-        b=GqokaSI6voqSVVZeTfWTjQg43MWTbGxftTwksdO5/JmiyTDmhRvo3s0OvrywjIgZmh
-         x9wyY1ktx0IInVpGFd1mipd+ykO0hurtUOulWgETVeqkJIpaUrn/gQUEfmHrWtchpaJY
-         wfeNz2zK5/uwGCqlzQkZvL2sWXH+Qw6VunU/tFEiCVZ8UJ5W+PaAzwbwyCFAsSSN/Gvl
-         ObK6ty2STVrjHpiCfADD95+Deu0C26XwCtW8QnMyyA7YFarSxMIdJ25Z8l797lBC/LpO
-         ub3mfwjU3EGXf9RQf9HzASNftst9A76WKM8uK971akm/zPK4Z+AyEiqrrumK3JTtvx3J
-         hQzA==
-X-Gm-Message-State: AOAM533EQX9JVmNAydkYJ4Xkcu3ux8LFsbdK/emnnuqiRntgGbzs3dSd
-        c3cCYEvDbBijCPDDGl8tHaPOQQ==
-X-Google-Smtp-Source: ABdhPJwJTxFyEVm/dLk4XAcF5mviLMRqjgStSv977bRQo2b9oBdyXECKGSidxoUJXmxfzthmnqIl1A==
-X-Received: by 2002:aa7:c34d:0:b0:42d:ce57:5df2 with SMTP id j13-20020aa7c34d000000b0042dce575df2mr34430319edr.315.1654622334478;
-        Tue, 07 Jun 2022 10:18:54 -0700 (PDT)
+        bh=wRdWSIKyYkI40KDQnl/RDAGtefWUX7TnHCHtBAZfwPE=;
+        b=7JRFl7IsTKSNeaCXx9EzCZRG9XtzjIn+4rEO7wDQphyVZsMYaQwXG9xZnTMUrOL6qZ
+         yvnjrt6PjB4IMDu3FlyiYTpe70F4jsHWNuXN08OyNj35HRfxhDxxF8jyL+m4gfmPLKQD
+         tihgo7kcH8EafZJ0j8MiYYTF01uw7at4y29l+WZItrUlKMt2NQOo+j0MhOm/w9A6xtOh
+         2ublyAmC3y4vCTZXAb/iHQ9p0i6iAgyHsQKZfGGrEfrsZO2WrUiC/wP/ACZaqnOkc55g
+         mcCDVAkNPS5fWN2IlZTkTBbAZ62Mnwf1I4y4pgqxp6FcC+gHesorn+8XmFZQTmc4fClD
+         Er5Q==
+X-Gm-Message-State: AOAM533MmSphUcs9TQwUV6pwm9/9mLjBl/9ZBXm6vaNlrkbMqnxm6rVA
+        MvXFoA11zd9fAOxLWw24QZMHKQ==
+X-Google-Smtp-Source: ABdhPJx+54wFQc2pVulIxuucwp9fStM95Fu5NCHKyIdjcTqEAUiVihmUeWWIlGK3tZTxdbCkez+P3A==
+X-Received: by 2002:a17:906:8454:b0:711:c970:227a with SMTP id e20-20020a170906845400b00711c970227amr12686829ejy.4.1654622335481;
+        Tue, 07 Jun 2022 10:18:55 -0700 (PDT)
 Received: from localhost.localdomain (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id i7-20020a170906444700b0070e238ff66fsm5876540ejp.96.2022.06.07.10.18.53
+        by smtp.gmail.com with ESMTPSA id i7-20020a170906444700b0070e238ff66fsm5876540ejp.96.2022.06.07.10.18.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Jun 2022 10:18:54 -0700 (PDT)
+        Tue, 07 Jun 2022 10:18:55 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -58,9 +58,9 @@ To:     Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 03/14] ARM: dts: qcom: use generic sram as name for imem and ocmem nodes
-Date:   Tue,  7 Jun 2022 19:18:37 +0200
-Message-Id: <20220607171848.535128-3-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 04/14] ARM: dts: qcom: apq8064-asus-nexus7: add dedicated IMEM compatible
+Date:   Tue,  7 Jun 2022 19:18:38 +0200
+Message-Id: <20220607171848.535128-4-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20220607171848.535128-1-krzysztof.kozlowski@linaro.org>
 References: <20220607171848.535128-1-krzysztof.kozlowski@linaro.org>
@@ -76,65 +76,27 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-According to Devicetree specification, the device nodes should be
-generic, reflecting the function of the device.  The typical name for
-memory regions is "sram".
+syscon compatible must be preceded with a specific compatible, to
+accurately describe the device.
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
  arch/arm/boot/dts/qcom-apq8064-asus-nexus7-flo.dts | 2 +-
- arch/arm/boot/dts/qcom-msm8974.dtsi                | 4 ++--
- arch/arm/boot/dts/qcom-sdx55.dtsi                  | 2 +-
- 3 files changed, 4 insertions(+), 4 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/arch/arm/boot/dts/qcom-apq8064-asus-nexus7-flo.dts b/arch/arm/boot/dts/qcom-apq8064-asus-nexus7-flo.dts
-index ca9f73528196..de01e34409f2 100644
+index de01e34409f2..13ad1e84a25b 100644
 --- a/arch/arm/boot/dts/qcom-apq8064-asus-nexus7-flo.dts
 +++ b/arch/arm/boot/dts/qcom-apq8064-asus-nexus7-flo.dts
-@@ -341,7 +341,7 @@ mmc@12400000 {
- 			};
+@@ -342,7 +342,7 @@ mmc@12400000 {
  		};
  
--		imem@2a03f000 {
-+		sram@2a03f000 {
- 			compatible = "syscon", "simple-mfd";
+ 		sram@2a03f000 {
+-			compatible = "syscon", "simple-mfd";
++			compatible = "qcom,apq8064-imem", "syscon", "simple-mfd";
  			reg = <0x2a03f000 0x1000>;
  
-diff --git a/arch/arm/boot/dts/qcom-msm8974.dtsi b/arch/arm/boot/dts/qcom-msm8974.dtsi
-index 814ad0b46232..09b181bb5365 100644
---- a/arch/arm/boot/dts/qcom-msm8974.dtsi
-+++ b/arch/arm/boot/dts/qcom-msm8974.dtsi
-@@ -1603,7 +1603,7 @@ opp-27000000 {
- 			};
- 		};
- 
--		ocmem@fdd00000 {
-+		sram@fdd00000 {
- 			compatible = "qcom,msm8974-ocmem";
- 			reg = <0xfdd00000 0x2000>,
- 			      <0xfec00000 0x180000>;
-@@ -1650,7 +1650,7 @@ smd-edge {
- 			};
- 		};
- 
--		imem: imem@fe805000 {
-+		imem: sram@fe805000 {
- 			compatible = "syscon", "simple-mfd";
- 			reg = <0xfe805000 0x1000>;
- 
-diff --git a/arch/arm/boot/dts/qcom-sdx55.dtsi b/arch/arm/boot/dts/qcom-sdx55.dtsi
-index 1c2b208a5670..710c7f772d42 100644
---- a/arch/arm/boot/dts/qcom-sdx55.dtsi
-+++ b/arch/arm/boot/dts/qcom-sdx55.dtsi
-@@ -561,7 +561,7 @@ tlmm: pinctrl@f100000 {
- 			#interrupt-cells = <2>;
- 		};
- 
--		imem@1468f000 {
-+		sram@1468f000 {
- 			compatible = "simple-mfd";
- 			reg = <0x1468f000 0x1000>;
- 
+ 			reboot-mode {
 -- 
 2.34.1
 
