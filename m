@@ -2,171 +2,165 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8D1A753F6A2
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jun 2022 08:56:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5A8C953FCFB
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jun 2022 13:11:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231334AbiFGG4o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Jun 2022 02:56:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55936 "EHLO
+        id S241296AbiFGLLU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Jun 2022 07:11:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57382 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230099AbiFGG4n (ORCPT
+        with ESMTP id S242756AbiFGLKF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Jun 2022 02:56:43 -0400
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6D09BA543;
-        Mon,  6 Jun 2022 23:56:41 -0700 (PDT)
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-        (No client certificate requested)
-        by smtp-out2.suse.de (Postfix) with ESMTPS id 644031F974;
-        Tue,  7 Jun 2022 06:56:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-        t=1654585000; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=GtYnqqkMeCG+SdwABzSw7VDFtwge7SFqOX+iy7N9eNU=;
-        b=eLwEsnDDYoCnXqAb+jFqP9/RFg+FI+S9Zub8CmAIV+YIC+Zxgx4JjAn4vnAMphALDYg6wz
-        tPow/NWPkJvmhboqRIRYW4DaF3dBdBNDlLhfgOnK31/Gm5eUe2TNIixf6K1C6Q05tIpI9W
-        Kjx1HVm7YFQQSMYscLiDkQG2F1KzDkU=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-        s=susede2_ed25519; t=1654585000;
-        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=GtYnqqkMeCG+SdwABzSw7VDFtwge7SFqOX+iy7N9eNU=;
-        b=/cbUUaVSP6Ozv8pG8uH/ZZOZwZEQkKcjbhmsZVdVNw51JXcaKZnNzVu9DuT+4/IZ8vv7q7
-        TtZlFlmX3If1FlCQ==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-        (No client certificate requested)
-        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 2DFA313638;
-        Tue,  7 Jun 2022 06:56:40 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-        by imap2.suse-dmz.suse.de with ESMTPSA
-        id ui5MCqj2nmIFcQAAMHmgww
-        (envelope-from <tzimmermann@suse.de>); Tue, 07 Jun 2022 06:56:40 +0000
-Message-ID: <34aacfa3-9eb9-d3d5-07b7-805fd1408bb7@suse.de>
-Date:   Tue, 7 Jun 2022 08:56:39 +0200
+        Tue, 7 Jun 2022 07:10:05 -0400
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 235478721C;
+        Tue,  7 Jun 2022 04:06:17 -0700 (PDT)
+Received: by mail-ej1-x634.google.com with SMTP id q1so34459151ejz.9;
+        Tue, 07 Jun 2022 04:06:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:from:to:cc:subject:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=JYTw8qBceECAtQp7A1kdanNQp5jRY5QBdh0dwqqC9RU=;
+        b=Nw5HmIulmE1vH1fMJ8FcWCnuJQHQiHH/x26C400Hk5Bf9PGo6Hw3r8UEWG1iplpkO3
+         bn2h1/zeXA+zFIZm1mDr53CRhOeZBRmwk6l3fWcutnWVOBQX8QXyqimHHXhXCV5SW1D9
+         xneNpq0uZNxhavrDzIyjaOlg3cRi/GIRrnD6ph4c9sc+7OaVG22cBe4ciXUj1oSePQ8H
+         dTk9dRNW6OXOx83c+AUB10I/nvHOjLk6/U8Qxj2b5caJczVcORF4L2HCpp0ebje4/wKs
+         EN8zGeT/km2CULPG1J7Sa/caGJwt7KFGxSaItC782x1KKRszWhdDADTmktx1IH/qarM9
+         N3bQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:from:to:cc:subject:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=JYTw8qBceECAtQp7A1kdanNQp5jRY5QBdh0dwqqC9RU=;
+        b=UBNjL3NrXNDVHoom9pNMDHtTdP8dJr4AUoBKoHqGPIKDQwFbP0hS1rWPkyeCK5UzAz
+         vobp5UfQJiuJOtQeYkVXwlF3qmWyyU2QDssPgVWAK1Scs+4PRo5pmhHvdfvEMgnI5q1j
+         1RA/VlbTLqxaVklYZXPCL8K2r3uwYQI6/KgBVTYpeGht17ESHhUs7QU4XTLePmYCk3lu
+         hJYSmcm5AKNTin3RtusZZfar43RnJ2yYXJqVtlvZadAkuxesm4aYOupPlIfUqcBHACL5
+         8HwBEQp7evtbxijTmPWKHIwmK9L0mUAcW+IqVpHe2rJJEpSVgVPNfxSrjicTj5Em11Bm
+         2Kuw==
+X-Gm-Message-State: AOAM533xbJXsTCxAlMpQoS5ElN9Blc22nNQbl07CWmPrnfqFucLUubof
+        Cfeoh1qSbKNgwy9nfoFgbsfhoaQGCYc=
+X-Google-Smtp-Source: ABdhPJy8xYlbSp5BuzRvztb2RbXiyhlVE5XzRRPnbXnxapSzqknqjm/tCBViCfgB25Q9EmDSXjGvQg==
+X-Received: by 2002:a17:907:da3:b0:6fe:f08b:776 with SMTP id go35-20020a1709070da300b006fef08b0776mr26382420ejc.558.1654599976053;
+        Tue, 07 Jun 2022 04:06:16 -0700 (PDT)
+Received: from Ansuel-xps. (93-42-70-190.ip85.fastwebnet.it. [93.42.70.190])
+        by smtp.gmail.com with ESMTPSA id w21-20020aa7d295000000b0042dd482d0c4sm10115552edq.80.2022.06.07.04.06.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 07 Jun 2022 04:06:15 -0700 (PDT)
+Message-ID: <629f3127.1c69fb81.2590d.39ac@mx.google.com>
+X-Google-Original-Message-ID: <Yp74rG6DVmeU+QCQ@Ansuel-xps.>
+Date:   Tue, 7 Jun 2022 09:05:16 +0200
+From:   Ansuel Smith <ansuelsmth@gmail.com>
+To:     Manivannan Sadhasivam <mani@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Miquel Raynal <miquel.raynal@bootlin.com>,
+        Richard Weinberger <richard@nod.at>,
+        Vignesh Raghavendra <vigneshr@ti.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-mtd@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v4 2/2] dt-bindings: mtd: qcom_nandc: document
+ qcom,boot-pages binding
+References: <20220519190112.6344-1-ansuelsmth@gmail.com>
+ <20220519190112.6344-3-ansuelsmth@gmail.com>
+ <20220607091522.GB5410@thinkpad>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: [PATCH v2 1/2] drm: Add DRM_GEM_FOPS
-Content-Language: en-US
-To:     Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org
-Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-        Rob Clark <robdclark@chromium.org>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        open list <linux-kernel@vger.kernel.org>
-References: <20220606195432.1888346-1-robdclark@gmail.com>
-From:   Thomas Zimmermann <tzimmermann@suse.de>
-In-Reply-To: <20220606195432.1888346-1-robdclark@gmail.com>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------xlw0dtzkO9vwXvWXs909mr81"
-X-Spam-Status: No, score=-7.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20220607091522.GB5410@thinkpad>
+X-Spam-Status: No, score=-0.5 required=5.0 tests=BAYES_00,DATE_IN_PAST_03_06,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------xlw0dtzkO9vwXvWXs909mr81
-Content-Type: multipart/mixed; boundary="------------WPv3m0MaCPCi1nhPiH36UBtP";
- protected-headers="v1"
-From: Thomas Zimmermann <tzimmermann@suse.de>
-To: Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org
-Cc: freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
- Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
- Rob Clark <robdclark@chromium.org>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, David Airlie <airlied@linux.ie>,
- Daniel Vetter <daniel@ffwll.ch>, open list <linux-kernel@vger.kernel.org>
-Message-ID: <34aacfa3-9eb9-d3d5-07b7-805fd1408bb7@suse.de>
-Subject: Re: [PATCH v2 1/2] drm: Add DRM_GEM_FOPS
-References: <20220606195432.1888346-1-robdclark@gmail.com>
-In-Reply-To: <20220606195432.1888346-1-robdclark@gmail.com>
+On Tue, Jun 07, 2022 at 02:45:22PM +0530, Manivannan Sadhasivam wrote:
+> On Thu, May 19, 2022 at 09:01:12PM +0200, Ansuel Smith wrote:
+> > Document new qcom,boot-pages binding used to apply special
+> > read/write configuration to boot pages.
+> > 
+> > QCOM apply a special configuration where spare data is not protected
+> > by ECC for some special pages (used for boot partition). Add
+> > Documentation on how to declare these special pages.
+> > 
+> > Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+> > ---
+> >  .../devicetree/bindings/mtd/qcom,nandc.yaml   | 26 +++++++++++++++++++
+> >  1 file changed, 26 insertions(+)
+> > 
+> > diff --git a/Documentation/devicetree/bindings/mtd/qcom,nandc.yaml b/Documentation/devicetree/bindings/mtd/qcom,nandc.yaml
+> > index 84ad7ff30121..a59ae9525f4e 100644
+> > --- a/Documentation/devicetree/bindings/mtd/qcom,nandc.yaml
+> > +++ b/Documentation/devicetree/bindings/mtd/qcom,nandc.yaml
+> > @@ -102,6 +102,30 @@ allOf:
+> >              - const: rx
+> >              - const: cmd
+> >  
+> > +  - if:
+> > +      properties:
+> > +        compatible:
+> > +          contains:
+> > +            enum:
+> > +              - qcom,ipq806x-nand
+> > +
+> > +    then:
+> > +      properties:
+> > +        qcom,boot-pages:
+> 
+> Eventhough the page layout is what making the difference, here the boot
+> partition offset and size are getting specified. So how about, changing it
+> to "qcom,boot-partitions"?
+> 
+> Thanks,
+> Mani
+>
 
---------------WPv3m0MaCPCi1nhPiH36UBtP
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+Yep, you are correct and the naming is confusing. Will do the change.
+Did you check the code if you notice something to improve / an idea of a
+better implementation or better naming?
+Just to skip sending multiple revision with small changes.
 
-SGkNCg0KQW0gMDYuMDYuMjIgdW0gMjE6NTQgc2NocmllYiBSb2IgQ2xhcms6DQo+IEZyb206
-IFJvYiBDbGFyayA8cm9iZGNsYXJrQGNocm9taXVtLm9yZz4NCj4gDQo+IFRoZSBERUZJTkVf
-RFJNX0dFTV9GT1BTKCkgaGVscGVyIGlzIGEgYml0IGxpbWl0aW5nIGlmIGEgZHJpdmVyIHdh
-bnRzIHRvDQo+IHByb3ZpZGUgYWRkaXRpb25hbCBmaWxlIG9wcywgbGlrZSBzaG93X2ZkaW5m
-bygpLg0KPiANCj4gU2lnbmVkLW9mZi1ieTogUm9iIENsYXJrIDxyb2JkY2xhcmtAY2hyb21p
-dW0ub3JnPg0KPiAtLS0NCj4gICBpbmNsdWRlL2RybS9kcm1fZ2VtLmggfCAyNiArKysrKysr
-KysrKysrKysrKystLS0tLS0tLQ0KPiAgIDEgZmlsZSBjaGFuZ2VkLCAxOCBpbnNlcnRpb25z
-KCspLCA4IGRlbGV0aW9ucygtKQ0KPiANCj4gZGlmZiAtLWdpdCBhL2luY2x1ZGUvZHJtL2Ry
-bV9nZW0uaCBiL2luY2x1ZGUvZHJtL2RybV9nZW0uaA0KPiBpbmRleCA5ZDdjNjFhMTIyZGMu
-LmRjODhkNGEyY2RmNiAxMDA2NDQNCj4gLS0tIGEvaW5jbHVkZS9kcm0vZHJtX2dlbS5oDQo+
-ICsrKyBiL2luY2x1ZGUvZHJtL2RybV9nZW0uaA0KPiBAQCAtMzE0LDYgKzMxNCwyMyBAQCBz
-dHJ1Y3QgZHJtX2dlbV9vYmplY3Qgew0KPiAgIAljb25zdCBzdHJ1Y3QgZHJtX2dlbV9vYmpl
-Y3RfZnVuY3MgKmZ1bmNzOw0KPiAgIH07DQo+ICAgDQo+ICsvKioNCj4gKyAqIERSTV9HRU1f
-Rk9QUyAtIERlZmF1bHQgZHJtIEdFTSBmaWxlIG9wZXJhdGlvbnMNCj4gKyAqDQo+ICsgKiBU
-aGlzIG1hY3JvIHByb3ZpZGVzIGEgc2hvcnRoYW5kIGZvciBzZXR0aW5nIHRoZSBHRU0gZmls
-ZSBvcHMgaW4gdGhlDQo+ICsgKiAmZmlsZV9vcGVyYXRpb25zIHN0cnVjdHVyZS4gDQoNCkkg
-d291bGQgYXBwcmVjaWF0ZSBhIHJlZmVyZW5jZSB0byBERUZJTkVfRFJNX0dFTV9GT1BTLiBT
-b21ldGhpbmcgYWxvbmcgDQp0aGUgbGluZXMgb2YgJ2lmIGFsbCB5b3UgbmVlZCBhcmUgdGhl
-IGRlZmF1bHQgb3BzLCB1c2UgREVGSU5FX0RSTV9HRU1fRk9QUycuDQoNCj4gKyAqLw0KPiAr
-I2RlZmluZSBEUk1fR0VNX0ZPUFMgXA0KPiArCS5vcGVuCQk9IGRybV9vcGVuLFwNCj4gKwku
-cmVsZWFzZQk9IGRybV9yZWxlYXNlLFwNCj4gKwkudW5sb2NrZWRfaW9jdGwJPSBkcm1faW9j
-dGwsXA0KPiArCS5jb21wYXRfaW9jdGwJPSBkcm1fY29tcGF0X2lvY3RsLFwNCj4gKwkucG9s
-bAkJPSBkcm1fcG9sbCxcDQo+ICsJLnJlYWQJCT0gZHJtX3JlYWQsXA0KPiArCS5sbHNlZWsJ
-CT0gbm9vcF9sbHNlZWssXA0KPiArCS5tbWFwCQk9IGRybV9nZW1fbW1hcA0KPiArDQo+ICsN
-Cg0KT25seSBvbmUgZW1wdHkgbGluZSBwbGVhc2UuDQoNCj4gICAvKioNCj4gICAgKiBERUZJ
-TkVfRFJNX0dFTV9GT1BTKCkgLSBtYWNybyB0byBnZW5lcmF0ZSBmaWxlIG9wZXJhdGlvbnMg
-Zm9yIEdFTSBkcml2ZXJzDQo+ICAgICogQG5hbWU6IG5hbWUgZm9yIHRoZSBnZW5lcmF0ZWQg
-c3RydWN0dXJlDQo+IEBAIC0zMzAsMTQgKzM0Nyw3IEBAIHN0cnVjdCBkcm1fZ2VtX29iamVj
-dCB7DQo+ICAgI2RlZmluZSBERUZJTkVfRFJNX0dFTV9GT1BTKG5hbWUpIFwNCj4gICAJc3Rh
-dGljIGNvbnN0IHN0cnVjdCBmaWxlX29wZXJhdGlvbnMgbmFtZSA9IHtcDQo+ICAgCQkub3du
-ZXIJCT0gVEhJU19NT0RVTEUsXA0KDQpJcyB0aGVyZSBhIHNwZWNpZmljIHJlYXNvbiB3aHkg
-Lm93bmVyIGlzIHN0aWxsIHNldCBoZXJlPyBJIHN1c3BlY3QgdGhhdCANCkRSTV9HRU1fRk9Q
-UyBpcyBzdHJpY3RseSBmb3IgY2FsbGJhY2sgZnVuY3Rpb25zPw0KDQpJbiBhbnkgY2FzZQ0K
-DQpBY2tlZC1ieTogVGhvbWFzIFppbW1lcm1hbm4gPHR6aW1tZXJtYW5uQHN1c2UuZGU+DQoN
-CkJlc3QgcmVnYXJkcw0KVGhvbWFzDQoNCj4gLQkJLm9wZW4JCT0gZHJtX29wZW4sXA0KPiAt
-CQkucmVsZWFzZQk9IGRybV9yZWxlYXNlLFwNCj4gLQkJLnVubG9ja2VkX2lvY3RsCT0gZHJt
-X2lvY3RsLFwNCj4gLQkJLmNvbXBhdF9pb2N0bAk9IGRybV9jb21wYXRfaW9jdGwsXA0KPiAt
-CQkucG9sbAkJPSBkcm1fcG9sbCxcDQo+IC0JCS5yZWFkCQk9IGRybV9yZWFkLFwNCj4gLQkJ
-Lmxsc2VlawkJPSBub29wX2xsc2VlayxcDQo+IC0JCS5tbWFwCQk9IGRybV9nZW1fbW1hcCxc
-DQo+ICsJCURSTV9HRU1fRk9QUyxcDQo+ICAgCX0NCj4gICANCj4gICB2b2lkIGRybV9nZW1f
-b2JqZWN0X3JlbGVhc2Uoc3RydWN0IGRybV9nZW1fb2JqZWN0ICpvYmopOw0KDQotLSANClRo
-b21hcyBaaW1tZXJtYW5uDQpHcmFwaGljcyBEcml2ZXIgRGV2ZWxvcGVyDQpTVVNFIFNvZnR3
-YXJlIFNvbHV0aW9ucyBHZXJtYW55IEdtYkgNCk1heGZlbGRzdHIuIDUsIDkwNDA5IE7DvHJu
-YmVyZywgR2VybWFueQ0KKEhSQiAzNjgwOSwgQUcgTsO8cm5iZXJnKQ0KR2VzY2jDpGZ0c2bD
-vGhyZXI6IEl2byBUb3Rldg0K
+> > +          $ref: /schemas/types.yaml#/definitions/uint32-matrix
+> > +          items:
+> > +            items:
+> > +              - description: offset
+> > +              - description: size
+> > +          description:
+> > +            Some special page used by boot partition have spare data
+> > +            not protected by ECC. Use this to declare these special page
+> > +            by defining first the offset and then the size.
+> > +
+> > +            It's in the form of <offset1 size1 offset2 size2 offset3 ...>
+> > +
+> > +            Refer to the ipq8064 example on how to use this special binding.
+> > +
+> >  required:
+> >    - compatible
+> >    - reg
+> > @@ -135,6 +159,8 @@ examples:
+> >          nand-ecc-strength = <4>;
+> >          nand-bus-width = <8>;
+> >  
+> > +        qcom,boot-pages = <0x0 0x58a0000>;
+> > +
+> >          partitions {
+> >            compatible = "fixed-partitions";
+> >            #address-cells = <1>;
+> > -- 
+> > 2.34.1
+> > 
+> 
+> -- 
+> மணிவண்ணன் சதாசிவம்
 
---------------WPv3m0MaCPCi1nhPiH36UBtP--
-
---------------xlw0dtzkO9vwXvWXs909mr81
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature"
-
------BEGIN PGP SIGNATURE-----
-
-wsF5BAABCAAjFiEExndm/fpuMUdwYFFolh/E3EQov+AFAmKe9qcFAwAAAAAACgkQlh/E3EQov+DG
-hQ//fkjGsZRzBkApq7GtenwYHJJUtBJ5BE9x6aEjkNYYZw1EJ6IdJBZudTX5B8f6SQpno4GCO+aQ
-pQcp13X9YKBI3SZ/YNRuanCh5T1w7x34+z2MH6/hRBWmFSzBGUsQdXoxbe1n6eanY/BU1ZSsuc4r
-dTmKVDD8iC3HLEiX8mOhmgG509HWtCgh4RVSE7/wmwO+ijH5WcCLhKm0crC480EDT1/vyHohJ6eH
-eBbs1SdE9IR9ucAiarXfuS2NgEQw6uar24wTEYKXORHDsjrB8/aZV21fKU7oQSr6ZYqWq3P7rmAc
-x7gXtF6hEoe/k/ixl8rj3Q4NuNMO90MBQDTQEGVJCQTtL8kXzA17rmLYaVlY2NdlPGnDNPvvHfq9
-KJh3W3S8oAhm/831DHMRr902vu69zIX94wawYoHF/vG1n/jrxzMEKGAEFcX1r8PIUIN1B4EAgaQb
-AVpvqrVo3kuulJPGZTFreEvwGniO4H23DBHdXBT6MEazzcu+x01UBvghHY/dAcQvy0+R+LW7bKcg
-xK6uhuPdTwT/k70ZSAwGOD5yZ/2aIH9rS+seM5rLwCbqk7rimv+6aAXav1PxeaUchqfbWGSDKv4A
-V+T+X/MaBW3bbPrJ1vau0O8rfLLJJL4KzWZH0b6WVqTt70E2zFTP9QaXnWxM05MLP7TM3UOZvzFB
-GiE=
-=JNib
------END PGP SIGNATURE-----
-
---------------xlw0dtzkO9vwXvWXs909mr81--
+-- 
+	Ansuel
