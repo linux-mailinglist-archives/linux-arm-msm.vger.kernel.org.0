@@ -2,86 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8DCDF541842
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jun 2022 23:12:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C9E8154195F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jun 2022 23:22:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1379203AbiFGVLy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Jun 2022 17:11:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35620 "EHLO
+        id S1350524AbiFGVVl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Jun 2022 17:21:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47658 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1380111AbiFGVLa (ORCPT
+        with ESMTP id S1380966AbiFGVRM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Jun 2022 17:11:30 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40281217890;
-        Tue,  7 Jun 2022 11:53:11 -0700 (PDT)
+        Tue, 7 Jun 2022 17:17:12 -0400
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0FC21B75AB
+        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Jun 2022 11:58:09 -0700 (PDT)
+Received: by mail-lj1-x22a.google.com with SMTP id l18so12932454lje.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Jun 2022 11:58:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1654627994; x=1686163994;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references;
-  bh=B/QLFtyjZWjzsp19lvnKhc+TE8eim40eLeEgUFfICJY=;
-  b=JM/CpygC8Mc8T2HvdJSdvO9m8XsMLblKotJQ/vLKK/1NBfSZZ8Un+ME3
-   UTDAdJBXaV/qEcbx0PSANR1FiLPrBaIAN5fpT6rmhXGSy78R+lYuClQL3
-   ulaZvLiHfJHKgpx6v+hgP8oJ9XQIDb0vohHtBvyQTfxtlBMaDyxNbP3+/
-   I=;
-Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
-  by alexa-out.qualcomm.com with ESMTP; 07 Jun 2022 11:53:11 -0700
-X-QCInternal: smtphost
-Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 07 Jun 2022 11:53:09 -0700
-X-QCInternal: smtphost
-Received: from hu-vnivarth-hyd.qualcomm.com (HELO hu-sgudaval-hyd.qualcomm.com) ([10.213.111.166])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 08 Jun 2022 00:22:53 +0530
-Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 3994820)
-        id 957823F74; Wed,  8 Jun 2022 00:22:52 +0530 (+0530)
-From:   Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-To:     agross@kernel.org, bjorn.andersson@linaro.org,
-        gregkh@linuxfoundation.org, jirislaby@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     quic_msavaliy@quicinc.com, dianders@chromium.org, mka@chromium.org,
-        swboyd@chromium.org,
-        Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-Subject: [PATCH 2/2] tty: serial: qcom-geni-serial: Implement start_rx callback
-Date:   Wed,  8 Jun 2022 00:22:45 +0530
-Message-Id: <1654627965-1461-3-git-send-email-quic_vnivarth@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1654627965-1461-1-git-send-email-quic_vnivarth@quicinc.com>
-References: <1654627965-1461-1-git-send-email-quic_vnivarth@quicinc.com>
-X-Spam-Status: No, score=-4.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=/W9jGpIH/OL56+uBhFnE9P3noAAOQAr28i57rZ4o8JQ=;
+        b=Fx68vBqv45589Im4IvB0H8RQ6BqBh+sZp72BRgAEYLdJUHRr5zV3uUKQXxAjSGUa6q
+         TCRiIPrfiGlbN9VT3oaxlxkAEPik61ghm4YmrJEiPPrnU6kFTxxb+LhB2c2O8iujSbpZ
+         vYa0IXYWBue7/PqO70VJ2VbjW+HXeMZIspILfuL/mUL0wG5E+krhe8/YDsfxiZe5D8+k
+         qCMIHa60w5zUFT9WMf2LTRvvMJrH4MU7NV8zhsJT1ffDSPXHA54XjHcBlj8S0T94Bb3G
+         fkQdrK5t0CnollXZ7RGFXTbvnyOPE2iMS5kBvNZWKmI7LkrPYHWDCqkJTfc7KvdS2Ilt
+         fesA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=/W9jGpIH/OL56+uBhFnE9P3noAAOQAr28i57rZ4o8JQ=;
+        b=OkwuvvWM+7Ct3GX/7wrdhyN6ZJB+b2Dr5UtMUIh0/XvqtwKMF30V5Cptq0sZ7s+7S2
+         6kOvkANDjafMlGpCxD3no/5TONo+nd27AJ5+svg8fV1Eg+eAq8RipbakyqiPG+ebgJAt
+         fCtUj5qHoVdT9wqcrTcLnVcKeqZbObCnd+aktBP8llpNUlO2EvWmQjpoPidixc1eFi8G
+         Rv1v3qRdq2YutsEvo1ViEK5FOozXN2SmKAJTOcgqVBk5142DIXGA+6DR33VB0VpWBqhT
+         NX6U7Bt79iQJQtm6p3Ltk90HvSCj+HUaavPOj0q7YqrgVpE/r7ic9o6Y5u1hIOv/arMX
+         /MDw==
+X-Gm-Message-State: AOAM531D+w9cO8MbV0WByTRWxB+GGbELSTS1Ckg9VuALkYWdzrVd18Yp
+        wYD65QjPR0npvXaixu/CJCE4gTi1VG4Idl0uqn/xbw==
+X-Google-Smtp-Source: ABdhPJzLmOS1+/guV5q204SUkhFztXDSFtNTawl/bLE9lR2G+hjpUayf3IPB1mxKvThg6bhdHx7edw==
+X-Received: by 2002:a05:651c:1a10:b0:255:9422:a7c6 with SMTP id by16-20020a05651c1a1000b002559422a7c6mr7959383ljb.328.1654628287555;
+        Tue, 07 Jun 2022 11:58:07 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id d19-20020a2eb053000000b0025587b872cesm1611668ljl.70.2022.06.07.11.58.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 07 Jun 2022 11:58:07 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, David Heidelberg <david@ixit.cz>
+Subject: [PATCH v1 0/7] drm/msm/hdmi: YAML-ify schema and cleanup some platform properties
+Date:   Tue,  7 Jun 2022 21:57:59 +0300
+Message-Id: <20220607185806.2771739-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.35.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In suspend sequence stop_rx will be performed only if implementation for
-start_rx callback is present.
+As agreed with David, this is a continuation of his work started at [1].
 
-Set qcom_geni_serial_start_rx as callback for start_rx so that stop_rx is
-performed.
+Changes since his patches:
+HDMI schema:
+- Dropped generic pinctrl properties
+- Dropped data-lanes property, which is not supported by the HDMI driver
+- Switched to unevaluatedProperties
+- Moved clocks/regulators/supplies to condition clauses
+- Specified phy-names as used by existing DT files
+- Dropped #phy-cells
+- Dropped power-domains property (which is not used by the device trees)
+- Marked old GPIO properties as deprecated (in a separate patch)
 
-Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
----
- drivers/tty/serial/qcom_geni_serial.c | 1 +
- 1 file changed, 1 insertion(+)
+HDMI PHY schema:
+- Split into QMP (msm8996) and non-QMP (other) PHY schemas
+- Added proper clocks/clock-names/reg/reg-names descriptions
 
-diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
-index 4733a23..f8f9506 100644
---- a/drivers/tty/serial/qcom_geni_serial.c
-+++ b/drivers/tty/serial/qcom_geni_serial.c
-@@ -1306,6 +1306,7 @@ static const struct uart_ops qcom_geni_console_pops = {
- 	.stop_tx = qcom_geni_serial_stop_tx,
- 	.start_tx = qcom_geni_serial_start_tx,
- 	.stop_rx = qcom_geni_serial_stop_rx,
-+	.start_rx = qcom_geni_serial_start_rx,
- 	.set_termios = qcom_geni_serial_set_termios,
- 	.startup = qcom_geni_serial_startup,
- 	.request_port = qcom_geni_serial_request_port,
+The rest of the patches consist of the new work. They further cleanup
+the platform configs, remove unused supplies, etc.
+
+[1]: https://patchwork.freedesktop.org/series/98353/
+
+Dmitry Baryshkov (7):
+  dt-bindings: display/msm: hdmi: split and convert to yaml
+  dt-bindings: display/msm: hdmi: mark old GPIO properties as deprecated
+  drm/msm/hdmi: drop unused GPIO support
+  drm/msm/hdmi: enable core-vcc/core-vdda-supply for 8996 platform
+  drm/msm/hdmi: drop empty 'none' regulator lists
+  drm/msm/hdmi: drop hpd_regs usage on 8x74/8084
+  drm/msm/hdmi: merge platform config for 8974/8084/8994/8996
+
+ .../devicetree/bindings/display/msm/hdmi.txt  |  99 --------
+ .../bindings/display/msm/qcom,hdmi.yaml       | 240 ++++++++++++++++++
+ .../bindings/phy/qcom,hdmi-phy-other.yaml     | 103 ++++++++
+ .../bindings/phy/qcom,hdmi-phy-qmp.yaml       |  84 ++++++
+ drivers/gpu/drm/msm/hdmi/hdmi.c               |  98 +------
+ drivers/gpu/drm/msm/hdmi/hdmi.h               |  13 +-
+ drivers/gpu/drm/msm/hdmi/hdmi_hpd.c           |  62 +----
+ 7 files changed, 447 insertions(+), 252 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/display/msm/hdmi.txt
+ create mode 100644 Documentation/devicetree/bindings/display/msm/qcom,hdmi.yaml
+ create mode 100644 Documentation/devicetree/bindings/phy/qcom,hdmi-phy-other.yaml
+ create mode 100644 Documentation/devicetree/bindings/phy/qcom,hdmi-phy-qmp.yaml
+
 -- 
-Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, hosted by the Linux Foundation.
+2.35.1
 
