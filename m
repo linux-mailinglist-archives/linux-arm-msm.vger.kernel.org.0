@@ -2,111 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 34B2253F719
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jun 2022 09:24:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5D97A53F787
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jun 2022 09:45:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237616AbiFGHYg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Jun 2022 03:24:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40520 "EHLO
+        id S237859AbiFGHpN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Jun 2022 03:45:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44090 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231617AbiFGHYe (ORCPT
+        with ESMTP id S237907AbiFGHo6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Jun 2022 03:24:34 -0400
-Received: from mail-ej1-x643.google.com (mail-ej1-x643.google.com [IPv6:2a00:1450:4864:20::643])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76FE4BBCCE
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Jun 2022 00:24:33 -0700 (PDT)
-Received: by mail-ej1-x643.google.com with SMTP id m20so33278921ejj.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Jun 2022 00:24:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=OHbou33WPhW0PDy9/CZae9mIrL4buN3/FALSld4obAM=;
-        b=nZSLGL0FwMW7ZulHR9U52MbrNEMnewFW3MGol4rpEwxR/xWwklbRptFrN/0ezaWipa
-         SVj/FBp8HjTkHSaZhA4aco+JJol3TW+ysVSnLFMXjX1hdO0ILcm4wtBJThFEVNDVVCXo
-         4ntrNGY2nycQcp03JB0+YgisUIAkEdLhhtyc+foH1HVsb7bhUUUWeAE8pEpG8RX8LdXL
-         D+TDGq3Ylpiuj+mSUPFQoAIi/kpKeuOjYIkwe9sZltrehUP10lYzyOJq2KjZoaS/bP5x
-         slQv6+rCeEHv4SpF6VlGXk8Fl6SbD6l8oqnry6LWntt0ByHJQjQnicz2v40WRbqgQUut
-         GSoQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=OHbou33WPhW0PDy9/CZae9mIrL4buN3/FALSld4obAM=;
-        b=oNj1RpFlXBQyPkgdjIUkg203242rLGPi+0+5fQdQPaEwqSf9h/lUyUJI1UdSiennkg
-         jVv6OfXsfbR6uk8nidvdVQuIRQYAe4+Z/7e3Jtqnosndgi4s60HitSqKyqDqwu3Iy2ec
-         6EcwPvANteSuBJX4lGnO9Oh6qT6zPxXFjzGoegPJNb6OBhGlPn6fIUEgCpgC4qvuU3+v
-         mCheTla+MWX8SGtlPuqqbuSz81O+90qgLG0BR9oBuVKUEVNSl22JZ28vPw4h+ilvGaVs
-         SIofef0AhD8+rfxJ5DjgTG0RP/wwf99+3V6B/YXJP7zIbBYL0LCQewFcFpH3G7gRrSaX
-         6D5A==
-X-Gm-Message-State: AOAM533UKWBGDPCn4u7MedyZLNdErUVdJe3cE6qqFnSmEvhVB3aHfJyB
-        pwlJj15A0ms0gKulRsIO9ios30OB82RruXJev/8=
-X-Google-Smtp-Source: ABdhPJzM6ViYn8Xj6BM3INVuLM+AOES80/1QTk2bTK+rPk/zlJbWxB+0auaSVpSpOCaepSZ+lFsOA8UQfOCX2ZJh9Mw=
-X-Received: by 2002:a17:906:478b:b0:6f8:5850:4da9 with SMTP id
- cw11-20020a170906478b00b006f858504da9mr24982924ejc.619.1654586671945; Tue, 07
- Jun 2022 00:24:31 -0700 (PDT)
+        Tue, 7 Jun 2022 03:44:58 -0400
+Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E8FC32ECC;
+        Tue,  7 Jun 2022 00:44:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1654587897; x=1686123897;
+  h=message-id:date:mime-version:cc:subject:to:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=OSBO16dRCwR6Wb79tDIGbzqHZ301kVBrdpEBr6LRMRc=;
+  b=WhVp5S+1hW900TACvFcx0rLwHKeZbfS2Kvoil6SFq4syxzGNCha5E3Lt
+   lbgEZAvxWkwKC/V/DjAl7ke5XN94VFOnpQAncBJ8PWDepGpgLoRnIrQ+y
+   MZTd2G9PVaoakvHUGvNPRhKek6wm1xf1XiS02s9sFOBAdkmaX8P2K7fmc
+   wS/gQf8pGhDQTO0d40OfeqqXdiPB+pGtJiBAVhyptfwnvDeP6o/IoNLre
+   bSpk0vznExOnGUz7ER2qOTV58qi+HhwS9JcurQz0GK8L/cjwoEOzPq7Tt
+   OE5IR7+A93wJWpDQSbyHNrtV8gqBfz53kRMjdbj9nTrJSlbmmC95b6too
+   w==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10370"; a="277374445"
+X-IronPort-AV: E=Sophos;i="5.91,283,1647327600"; 
+   d="scan'208";a="277374445"
+Received: from fmsmga007.fm.intel.com ([10.253.24.52])
+  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Jun 2022 00:44:55 -0700
+X-IronPort-AV: E=Sophos;i="5.91,283,1647327600"; 
+   d="scan'208";a="584086830"
+Received: from zwang64-mobl1.ccr.corp.intel.com (HELO [10.249.174.202]) ([10.249.174.202])
+  by fmsmga007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Jun 2022 00:44:45 -0700
+Message-ID: <d357966b-7abd-f8f3-3ca7-3c99f5e075b9@linux.intel.com>
+Date:   Tue, 7 Jun 2022 15:44:43 +0800
 MIME-Version: 1.0
-Received: by 2002:a05:6402:26c8:0:0:0:0 with HTTP; Tue, 7 Jun 2022 00:24:31
- -0700 (PDT)
-Reply-To: andyhalford22@gmail.com
-From:   Andy Halford <fameyemrf@gmail.com>
-Date:   Tue, 7 Jun 2022 00:24:31 -0700
-Message-ID: <CAATdNavPsznxvtSrdYvx28MvzTTn6hj8oMJQVfY=Xjj=mxEA=w@mail.gmail.com>
-Subject: Dear Friend
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: Yes, score=6.8 required=5.0 tests=BAYES_50,DEAR_FRIEND,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        FREEMAIL_REPLYTO,FREEMAIL_REPLYTO_END_DIGIT,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,UNDISC_FREEM autolearn=no
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Cc:     baolu.lu@linux.intel.com, suravee.suthikulpanit@amd.com,
+        alyssa@rosenzweig.io, alim.akhtar@samsung.com, dwmw2@infradead.org,
+        yong.wu@mediatek.com, mjrosato@linux.ibm.com,
+        gerald.schaefer@linux.ibm.com, thierry.reding@gmail.com,
+        vdumpa@nvidia.com, jonathanh@nvidia.com, cohuck@redhat.com,
+        iommu@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+        linux-mediatek@lists.infradead.org,
+        linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
+        linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
+        virtualization@lists.linux-foundation.org, kvm@vger.kernel.org
+Subject: Re: [PATCH 0/5] Simplify vfio_iommu_type1 attach/detach routine
+Content-Language: en-US
+To:     Nicolin Chen <nicolinc@nvidia.com>, jgg@nvidia.com,
+        joro@8bytes.org, will@kernel.org, marcan@marcan.st,
+        sven@svenpeter.dev, robin.murphy@arm.com, robdclark@gmail.com,
+        m.szyprowski@samsung.com, krzysztof.kozlowski@linaro.org,
+        agross@kernel.org, bjorn.andersson@linaro.org,
+        matthias.bgg@gmail.com, heiko@sntech.de, orsonzhai@gmail.com,
+        baolin.wang7@gmail.com, zhang.lyra@gmail.com, wens@csie.org,
+        jernej.skrabec@gmail.com, samuel@sholland.org,
+        jean-philippe@linaro.org, alex.williamson@redhat.com
+References: <20220606061927.26049-1-nicolinc@nvidia.com>
+From:   Baolu Lu <baolu.lu@linux.intel.com>
+In-Reply-To: <20220606061927.26049-1-nicolinc@nvidia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-8.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
-X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
-        *      https://www.dnswl.org/, no trust
-        *      [2a00:1450:4864:20:0:0:0:643 listed in]
-        [list.dnswl.org]
-        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
-        *      [score: 0.5000]
-        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
-        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
-        *      provider
-        *      [fameyemrf[at]gmail.com]
-        *  0.2 FREEMAIL_REPLYTO_END_DIGIT Reply-To freemail username ends in
-        *      digit
-        *      [andyhalford22[at]gmail.com]
-        * -0.0 SPF_PASS SPF: sender matches SPF record
-        *  2.6 DEAR_FRIEND BODY: Dear Friend? That's not very dear!
-        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
-        *      envelope-from domain
-        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
-        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
-        *      author's domain
-        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
-        *       valid
-        * -0.0 T_SCC_BODY_TEXT_LINE No description available.
-        *  2.3 UNDISC_FREEM Undisclosed recipients + freemail reply-to
-        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
-        *      different freemails
-X-Spam-Level: ******
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
--- 
-Hello Sir
+On 2022/6/6 14:19, Nicolin Chen wrote:
+> Worths mentioning the exact match for enforce_cache_coherency is removed
+> with this series, since there's very less value in doing that since KVM
+> won't be able to take advantage of it -- this just wastes domain memory.
+> Instead, we rely on Intel IOMMU driver taking care of that internally.
 
+After reading this series, I don't see that Intel IOMMU driver needs any
+further change to support the new scheme. Did I miss anything?
 
-
-  I am Andy Halford from London, UK. Nice to meet you. Sorry for the
-inconvenience it's because of the time difference. I contacted you
-specifically regarding an important piece of information I intend
-sharing with you that will be of interest to you. Having gone through
-an intelligent methodical search, I decided to specifically contact
-you hoping that you will find this information useful. Kindly confirm
-I got the correct email by replying via same email to ensure I don't
-send the information to the wrong person.
-
-
-
-REGARDS
-Andy Halford
+Best regards,
+baolu
