@@ -2,180 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 33B2B53FFBF
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jun 2022 15:12:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CD3A853FFD9
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jun 2022 15:18:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244513AbiFGNMg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Jun 2022 09:12:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38340 "EHLO
+        id S244556AbiFGNSs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Jun 2022 09:18:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56622 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244439AbiFGNMe (ORCPT
+        with ESMTP id S243513AbiFGNSr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Jun 2022 09:12:34 -0400
-Received: from mail-il1-x12f.google.com (mail-il1-x12f.google.com [IPv6:2607:f8b0:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C23C51EC53
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Jun 2022 06:12:31 -0700 (PDT)
-Received: by mail-il1-x12f.google.com with SMTP id b17so9865812ilh.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Jun 2022 06:12:31 -0700 (PDT)
+        Tue, 7 Jun 2022 09:18:47 -0400
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0072A6928C
+        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Jun 2022 06:18:44 -0700 (PDT)
+Received: by mail-ej1-x634.google.com with SMTP id q1so35168959ejz.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Jun 2022 06:18:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=sartura-hr.20210112.gappssmtp.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=mcxZtplXwk/Z+TT8W9hddhp2FUJFjSAJiAMtVESFwX4=;
-        b=1R9AiW1gY1VYK6kYFNaQEa0cCcVv0mg4PT8PsSFrmYE8qP50U/W8QnvoV8a3AAiuY/
-         6AE3+OpXx+GOb6NGUe8ynFndhTMVnvEd+lz2Ufhrj35oREogwN7e8iAHXyGibeX0qGQe
-         Mc3O1gPlG+6DN56TdUTVkO+LFlhq0niqSzLCQ+9IxXf3J157h8Ncm4NBLnm6M3LHv0Sw
-         IOvovO5h/4xOaWe8MHBozd6uGQENdjNERulvpkYnGKBDYA7j+M6905myRyL11P1J3v2z
-         CWFAj3Y3JgP7/y4FItqBEAw5Rd9w78cklOruPWiyG0Fz2W3oVXsI4xUJgPnD4USc75Vj
-         vG8g==
+        d=fairphone.com; s=fair;
+        h=cc:subject:from:to:mime-version:content-transfer-encoding:date
+         :message-id:references:in-reply-to;
+        bh=xQ/38FMDTLXlcNU1vfrf+06M1Gbcy9oJbFk2y6vkO2w=;
+        b=oHVLGgKjmFMRMizTWmpZDLzkW76syBiOmiYDceeIW+ewSxfl64CjZKYzxmVFRGMpTG
+         LU0BRmI9u2/28Lm0vt5W5IjCHcVZ4Z5Dec6IwLNQn/yl3CL7iqmUdOoAwJqpRNb5/sv5
+         eIsgDDe6s9HKYbysqzFAhfZX/nXhqmpFw7RLOKKuiSXxo1ke3Mj21BdmuSc2klLcL5Za
+         WcpPogll14XXtfMDfJMPsnUnOUv4dgw4QJUyZh6N5EzxJBdXX22J1a+1EVZosCacRCpH
+         kBiL6+pzjpOnKRkfl7RNP7bw7kSlVzi7ds8+B7I1KThDpMy+czgIGLsZt02Ee3VflEBz
+         D8lg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=mcxZtplXwk/Z+TT8W9hddhp2FUJFjSAJiAMtVESFwX4=;
-        b=PtWv8+0upvTfPtNoxM4QAUnt+F6PAsz4FJG7qyNfmR0SsiZgjHQSNdxCgysmuiKQYS
-         iQKzWs8V+cnRoevnNNjey+JhXdTxBq9rQSvNg8F7Gqlt19gO9pkMXsmWRxM3Nw+xv+UI
-         nXWM34jV0OjO4SZj/Z6WSH12ZwaktXzX4wOT9l+l8M6LSLd0NOtnOg6NekELyd5asc+n
-         nJ4EPo1Db/DaEhghnxyM2rfVEqsdmtiG9niuPxdk1yNIsl5O6s136FUeddH30JtU4f+a
-         Tv+mZRojHoU2qppdy13Fym4Sm5PPV41zT2/+k1JB3CaY59qc4irT/IA+IpOfHhaJ8z9a
-         VKzQ==
-X-Gm-Message-State: AOAM531mORLcskBj8z7kyfHbJpFzN+y1aOVTKvcgdXZgxmhhIKNrKH8w
-        fykCercgRq8ZoWKXbS4glpD35JW6XGK6ZTksFCoAVg==
-X-Google-Smtp-Source: ABdhPJw95CeU2MDQe4i7N7oPLkSanT5aQWwJEN3LpDbgGCXPYQoyGBGQkxeiSbtBzI0UNRW9Pns5C3y7Zo+8caz+foE=
-X-Received: by 2002:a05:6e02:19cc:b0:2d3:e20f:4959 with SMTP id
- r12-20020a056e0219cc00b002d3e20f4959mr17071989ill.40.1654607550608; Tue, 07
- Jun 2022 06:12:30 -0700 (PDT)
-MIME-Version: 1.0
-References: <cover.1644234441.git.baruch@tkos.co.il> <20220412161259.GA7109@lpieralisi>
- <YnvCGD4RwuyPkTfK@lpieralisi>
-In-Reply-To: <YnvCGD4RwuyPkTfK@lpieralisi>
-From:   Robert Marko <robert.marko@sartura.hr>
-Date:   Tue, 7 Jun 2022 15:12:19 +0200
-Message-ID: <CA+HBbNFo9QCExiA9T4Mn4t5vvir79xF3R9F6OLZa0m5Bzpte3w@mail.gmail.com>
-Subject: Re: [PATCH v6 0/3] PCI: IPQ6018 platform support
-To:     Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
-Cc:     Baruch Siach <baruch@tkos.co.il>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Selvam Sathappan Periakaruppan <speriaka@codeaurora.org>,
-        Kathiravan T <kathirav@codeaurora.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        "Bryan O'Donoghue" <pure.logic@nexus-software.ie>,
-        linux-pci@vger.kernel.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        linux-tegra@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+        h=x-gm-message-state:cc:subject:from:to:mime-version
+         :content-transfer-encoding:date:message-id:references:in-reply-to;
+        bh=xQ/38FMDTLXlcNU1vfrf+06M1Gbcy9oJbFk2y6vkO2w=;
+        b=0Gqpg6XkX1S8CXvojBVHSEwR5zIsBLZ9fehI91GJTICLlzcEmqwOXdZOfpVhE8a7+n
+         dQKUiObyd4a0rJJqX4YyumBYLRPnvMqDUZtg8yaTBogdeiBNtZ3ENJOQUpb0+ZBwtcqg
+         Rbz9mIJCrzSEUk4uxrbJ6HdkQjeUTG6JRJ0LLA7OCaP+AY0yBjZ68MdZKBv8uAKsPD/T
+         vRt1PT/ki+GFjcKmgbokLk8w+7Wv0aVXA7BzNTvk6txG9vucMk9Gg5R8TYnAngKOjWBk
+         dKHfrKeGvUb1GP0VFb2KbvNk3JK+j9IrXGFFwvaggoZIJYkJY0V6dm2cIixV38u3/LiZ
+         LFfQ==
+X-Gm-Message-State: AOAM530iKqlCNa2brj2md6Cfzs6XEAcNXhbG5nMyrej0Ytzu+3tJfWnF
+        m0xidLmHeQDQnY+TSI1GSCsVag==
+X-Google-Smtp-Source: ABdhPJzl8lTpta7T4QnmJUQpMYORX+lUVc3wUnHas6OVjJwcyHdfSOUBlntzuSdVEyfl0tXG5VwNiw==
+X-Received: by 2002:a17:907:1ca8:b0:70c:68ce:dade with SMTP id nb40-20020a1709071ca800b0070c68cedademr23803960ejc.723.1654607923570;
+        Tue, 07 Jun 2022 06:18:43 -0700 (PDT)
+Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id z14-20020a170906074e00b006fecf62536asm5311035ejb.188.2022.06.07.06.18.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 07 Jun 2022 06:18:43 -0700 (PDT)
+Content-Type: text/plain; charset=UTF-8
+Cc:     "Lee Jones" <lee.jones@linaro.org>,
+        "Liam Girdwood" <lgirdwood@gmail.com>,
+        "Mark Brown" <broonie@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <swboyd@chromium.org>, <quic_collinsd@quicinc.com>,
+        <quic_subbaram@quicinc.com>, <quic_jprakash@quicinc.com>
+Subject: Re: [PATCH V14 8/9] arm64: dts: qcom: pm8008: Add base dts file
+From:   "Luca Weiss" <luca.weiss@fairphone.com>
+To:     "Satya Priya" <quic_c_skakit@quicinc.com>,
+        "Bjorn Andersson" <bjorn.andersson@linaro.org>,
+        "Rob Herring" <robh+dt@kernel.org>
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Date:   Tue, 07 Jun 2022 15:16:31 +0200
+Message-Id: <CKJXIE08RHD0.31NM2AKTA8B9V@otso>
+X-Mailer: aerc 0.9.0
+References: <1654602615-28849-1-git-send-email-quic_c_skakit@quicinc.com>
+ <1654602615-28849-9-git-send-email-quic_c_skakit@quicinc.com>
+In-Reply-To: <1654602615-28849-9-git-send-email-quic_c_skakit@quicinc.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, May 11, 2022 at 4:03 PM Lorenzo Pieralisi
-<lorenzo.pieralisi@arm.com> wrote:
+Hi Satya,
+
+On Tue Jun 7, 2022 at 1:50 PM CEST, Satya Priya wrote:
+> Add base DTS file for pm8008.
 >
-> On Tue, Apr 12, 2022 at 05:12:59PM +0100, Lorenzo Pieralisi wrote:
-> > On Mon, Feb 07, 2022 at 04:51:23PM +0200, Baruch Siach wrote:
-> > > This series adds support for the single PCIe lane on IPQ6018 SoCs. The code is
-> > > ported from downstream Codeaurora v5.4 kernel. The main difference from
-> > > downstream code is the split of PCIe registers configuration from .init to
-> > > .post_init, since it requires phy_power_on().
-> > >
-> > > Tested on IPQ6010 based hardware.
-> > >
-> > > Changes in v6:
-> > >
-> > >   * Drop DT patch applied to the qcom tree
-> > >
-> > >   * Normalize driver changes subject line
-> > >
-> > >   * Add a preparatory patch to rename PCIE_CAP_LINK1_VAL to PCIE_CAP_SLOT_VAL,
-> > >     and define it using PCI_EXP_SLTCAP_* macros
-> > >
-> > >   * Drop a vague comment about ASPM configuration
-> > >
-> > >   * Add a comment about the source of delay periods
-> > >
-> > > Changes in v5:
-> > >
-> > >   * Remove comments from qcom_pcie_init_2_9_0() (Bjorn Andersson)
-> > >
-> > > Changes in v4:
-> > >
-> > >   * Drop applied DT bits
-> > >
-> > >   * Add max-link-speed that was missing from the applied v2 patch
-> > >
-> > >   * Rebase the driver on v5.16-rc3
-> > >
-> > > Changes in v3:
-> > >
-> > >   * Drop applied patches
-> > >
-> > >   * Rely on generic code for speed setup
-> > >
-> > >   * Drop unused macros
-> > >
-> > >   * Formatting fixes
-> > >
-> > > Changes in v2:
-> > >
-> > >   * Add patch moving GEN3_RELATED macros to a common header
-> > >
-> > >   * Drop ATU configuration from pcie-qcom
-> > >
-> > >   * Remove local definition of common registers
-> > >
-> > >   * Use bulk clk and reset APIs
-> > >
-> > >   * Remove msi-parent from device-tree
-> > >
-> > > Baruch Siach (2):
-> > >   PCI: dwc: tegra: move GEN3_RELATED DBI register to common header
-> > >   PCI: qcom: Define slot capabilities using PCI_EXP_SLTCAP_*
-> > >
-> > > Selvam Sathappan Periakaruppan (1):
-> > >   PCI: qcom: Add IPQ60xx support
-> > >
-> > >  drivers/pci/controller/dwc/pcie-designware.h |   7 +
-> > >  drivers/pci/controller/dwc/pcie-qcom.c       | 155 ++++++++++++++++++-
-> > >  drivers/pci/controller/dwc/pcie-tegra194.c   |   6 -
-> > >  3 files changed, 160 insertions(+), 8 deletions(-)
-> >
-> > Hi Bjorn, Andy,
-> >
-> > any feedback on this series please ?
+> Signed-off-by: Satya Priya <quic_c_skakit@quicinc.com>
+> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+> ---
+> Changes in V14:
+>  - None.
 >
-> Any feedback on these patches please ?
-
-Finally dug the CP01, and for me, it works, so:
-Tested-by: Robert Marko <robert.marko@sartura.hr>
-
-Can we finally get this merged or at least looked at.
-IPQ8074 will also benefit from this.
-
-Regards,
-Robert
+> Changes in V13:
+>  - None.
 >
-> Thanks,
-> Lorenzo
+> Changes in V12:
+>  - None.
+>
+> Changes in V11:
+>  - Remove intermediate regulators node and add the ldos under
+>    pm8008@8 node.
+>  - change the address cells as 2 for pm8008 parent mfd node.
+>  - add compatible to register the ldos.
+>  - add reg with i2c client offset and address.
+>
+>  arc
+>  arch/arm64/boot/dts/qcom/pm8008.dtsi | 54 ++++++++++++++++++++++++++++++=
+++++++
+>  1 file changed, 54 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/pm8008.dtsi
+>
+> diff --git a/arch/arm64/boot/dts/qcom/pm8008.dtsi b/arch/arm64/boot/dts/q=
+com/pm8008.dtsi
+> new file mode 100644
+> index 0000000..6f37e4d
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/pm8008.dtsi
+> @@ -0,0 +1,54 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +// Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserv=
+ed.
 
+I noticed this file was licensed as BSD-3-Clause in V13 and
+this change was not mentioned in the "Changes" part.
+Any specific reason? Especially newer dts files should be BSD-licensed,
+and having this GPL dtsi included in otherwise BSD dts files is not
+good.
 
-
--- 
-Robert Marko
-Staff Embedded Linux Engineer
-Sartura Ltd.
-Lendavska ulica 16a
-10000 Zagreb, Croatia
-Email: robert.marko@sartura.hr
-Web: www.sartura.hr
+Regards
+Luca
