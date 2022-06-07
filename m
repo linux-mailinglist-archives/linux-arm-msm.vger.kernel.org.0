@@ -2,71 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 164FF540025
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jun 2022 15:35:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C92D75400F9
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jun 2022 16:12:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244780AbiFGNf0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Jun 2022 09:35:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50528 "EHLO
+        id S233846AbiFGOM6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Jun 2022 10:12:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34620 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244788AbiFGNfY (ORCPT
+        with ESMTP id S233115AbiFGOM6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Jun 2022 09:35:24 -0400
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6ADEEC9662
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Jun 2022 06:35:22 -0700 (PDT)
-Received: by mail-ed1-x536.google.com with SMTP id x5so17943023edi.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Jun 2022 06:35:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=xDQbY/64npGudGixqFX4Cr/5hLlk9RCSz25mhEaqA2c=;
-        b=m2ARHIniY851xN8CFtadCNZjqaVeAHydgmzCm+xX+Ru5UzM97CKTsIrQmrwTMuKqoA
-         qq/LVaQlkK5EQKx9mkGt9foUSMiGdVvX/eNmmxL0FG97RgFcZtM9cSu3EEwY+Qp1mc1j
-         RZV++y2nZR0rNieLFBGuwYMnW8Y2s2J9niujersBAyc1ywS3ZcJmy2VIdyxEWZth6Tci
-         DU1hNjr4h1vCNvSj7eQD1T/EJQlxB/Kh5aSEVC8cUnygrJOKBqhURnGT3NlCHtFr02qn
-         59fVxJzsCFKvVR65WJHvsA3fkCZjgwzfO6eti9s61Hld5UvWXtyIS+Xan03FZ4kJYh/j
-         Cw4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=xDQbY/64npGudGixqFX4Cr/5hLlk9RCSz25mhEaqA2c=;
-        b=aJfi1db0JYQx+bAd4U7LAi0R5E9alM62yJlGfkLF34JDVbjYd6j1rz8ScXgiv1rbpR
-         asIczhGZx+K/Wp2+WaFi54zOqdnBsA5F2sqoHa4ZmfqmJGcWpF3k0Y68OZqQd3kLv4wz
-         2Iy4KcnBsnmmRce5na4kXh4lDBlA1UZux/3PTeB82TZHg+0tRitAvQmZBXu0ARSykBHm
-         tCijKeLg9zmWiuW8JmFDCY6rxybGjHdVgGWpXqrBuwlCYe4kvCY/PVJM7Nh3BSAUTF4I
-         DMVX+HGDGSqVznEBbEOJbgnp5jB9YvNIOmn2Mjb0o6Qf3EkX/h07IV88vsrd0Z+0U2+8
-         uv0Q==
-X-Gm-Message-State: AOAM533oedLOve1noL0QyaZKlMyWKaq9m5/3KwCL4U691OTeP1MfbByx
-        nIyHciz2UzoFevr9ybiknrHxiQ==
-X-Google-Smtp-Source: ABdhPJz2bmmQ/mb8Z+m00RUNU/4Q9fwi2oEPL0lZSscE/c56c7Vu+nsR2ZqBwPjPSbWamBkIWnA8SA==
-X-Received: by 2002:a05:6402:42c1:b0:42d:fba6:d5c5 with SMTP id i1-20020a05640242c100b0042dfba6d5c5mr33801935edc.295.1654608920839;
-        Tue, 07 Jun 2022 06:35:20 -0700 (PDT)
-Received: from localhost.localdomain (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id b23-20020a17090630d700b0070e1adff390sm5644204ejb.34.2022.06.07.06.35.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Jun 2022 06:35:20 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+        Tue, 7 Jun 2022 10:12:58 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1F8F19E;
+        Tue,  7 Jun 2022 07:12:56 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id DF81461578;
+        Tue,  7 Jun 2022 14:12:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15294C385A5;
+        Tue,  7 Jun 2022 14:12:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1654611175;
+        bh=tOlTuXrCdHXR6tngcOYuj9xb6Z7sf9Xjv7iA3sFggYc=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=KH4AWZwnRnDjxQDeZmq+Cmgtn6CDh5+jO2Zb7+EQMAhBVKoINQHyhMuThDfmevcBt
+         ZTDUUyjmeiOD4Tibu/IbzEYR2NAYUYA59os4W+XauvN7beQS/xos5AiLJDnwVrndUB
+         rM5amS1fGMBjy59vEfHyiqOmGRTu9UYaqMyg/YOisI7Va9vKbs3Qac9qJhRxKkexml
+         aU8UhPgCJH+avMFetQh4PoMZ0XdyT5aMEOm1EY4vsbeKaZ9Hwl8hfcWkqD8AjYVwK9
+         ukNPlmqK55f0NoRDtDaBQC0MTDoeqZPUvqzfB4UPasrcLeVxKToaglkKnnAk9WRCro
+         RPY6qgXxQqaTw==
+Date:   Tue, 7 Jun 2022 19:42:42 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Ansuel Smith <ansuelsmth@gmail.com>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Lee Jones <lee.jones@linaro.org>,
+        Miquel Raynal <miquel.raynal@bootlin.com>,
+        Richard Weinberger <richard@nod.at>,
+        Vignesh Raghavendra <vigneshr@ti.com>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 2/2] dt-bindings: mfd: qcom,tcsr: Add qcom,tcsr-mdm9615
-Date:   Tue,  7 Jun 2022 15:34:43 +0200
-Message-Id: <20220607133443.182468-2-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220607133443.182468-1-krzysztof.kozlowski@linaro.org>
-References: <20220607133443.182468-1-krzysztof.kozlowski@linaro.org>
+        linux-mtd@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v4 2/2] dt-bindings: mtd: qcom_nandc: document
+ qcom,boot-pages binding
+Message-ID: <20220607141242.GA1882@thinkpad>
+References: <20220519190112.6344-1-ansuelsmth@gmail.com>
+ <20220519190112.6344-3-ansuelsmth@gmail.com>
+ <20220607091522.GB5410@thinkpad>
+ <629f3127.1c69fb81.2590d.39ac@mx.google.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+In-Reply-To: <629f3127.1c69fb81.2590d.39ac@mx.google.com>
+X-Spam-Status: No, score=-8.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -75,25 +66,94 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Document the (already used) TCSR on MDM9615.
+On Tue, Jun 07, 2022 at 09:05:16AM +0200, Ansuel Smith wrote:
+> On Tue, Jun 07, 2022 at 02:45:22PM +0530, Manivannan Sadhasivam wrote:
+> > On Thu, May 19, 2022 at 09:01:12PM +0200, Ansuel Smith wrote:
+> > > Document new qcom,boot-pages binding used to apply special
+> > > read/write configuration to boot pages.
+> > > 
+> > > QCOM apply a special configuration where spare data is not protected
+> > > by ECC for some special pages (used for boot partition). Add
+> > > Documentation on how to declare these special pages.
+> > > 
+> > > Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+> > > ---
+> > >  .../devicetree/bindings/mtd/qcom,nandc.yaml   | 26 +++++++++++++++++++
+> > >  1 file changed, 26 insertions(+)
+> > > 
+> > > diff --git a/Documentation/devicetree/bindings/mtd/qcom,nandc.yaml b/Documentation/devicetree/bindings/mtd/qcom,nandc.yaml
+> > > index 84ad7ff30121..a59ae9525f4e 100644
+> > > --- a/Documentation/devicetree/bindings/mtd/qcom,nandc.yaml
+> > > +++ b/Documentation/devicetree/bindings/mtd/qcom,nandc.yaml
+> > > @@ -102,6 +102,30 @@ allOf:
+> > >              - const: rx
+> > >              - const: cmd
+> > >  
+> > > +  - if:
+> > > +      properties:
+> > > +        compatible:
+> > > +          contains:
+> > > +            enum:
+> > > +              - qcom,ipq806x-nand
+> > > +
+> > > +    then:
+> > > +      properties:
+> > > +        qcom,boot-pages:
+> > 
+> > Eventhough the page layout is what making the difference, here the boot
+> > partition offset and size are getting specified. So how about, changing it
+> > to "qcom,boot-partitions"?
+> > 
+> > Thanks,
+> > Mani
+> >
+> 
+> Yep, you are correct and the naming is confusing. Will do the change.
+> Did you check the code if you notice something to improve / an idea of a
+> better implementation or better naming?
+> Just to skip sending multiple revision with small changes.
+> 
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml | 1 +
- 1 file changed, 1 insertion(+)
+Yep, I do have some comments. Will share them.
 
-diff --git a/Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml b/Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml
-index 428973f97a72..2f816fd0c9ec 100644
---- a/Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml
-+++ b/Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml
-@@ -21,6 +21,7 @@ properties:
-               - qcom,tcsr-apq8064
-               - qcom,tcsr-apq8084
-               - qcom,tcsr-ipq8064
-+              - qcom,tcsr-mdm9615
-               - qcom,tcsr-msm8660
-               - qcom,tcsr-msm8916
-               - qcom,tcsr-msm8953
+Thanks,
+Mani
+
+> > > +          $ref: /schemas/types.yaml#/definitions/uint32-matrix
+> > > +          items:
+> > > +            items:
+> > > +              - description: offset
+> > > +              - description: size
+> > > +          description:
+> > > +            Some special page used by boot partition have spare data
+> > > +            not protected by ECC. Use this to declare these special page
+> > > +            by defining first the offset and then the size.
+> > > +
+> > > +            It's in the form of <offset1 size1 offset2 size2 offset3 ...>
+> > > +
+> > > +            Refer to the ipq8064 example on how to use this special binding.
+> > > +
+> > >  required:
+> > >    - compatible
+> > >    - reg
+> > > @@ -135,6 +159,8 @@ examples:
+> > >          nand-ecc-strength = <4>;
+> > >          nand-bus-width = <8>;
+> > >  
+> > > +        qcom,boot-pages = <0x0 0x58a0000>;
+> > > +
+> > >          partitions {
+> > >            compatible = "fixed-partitions";
+> > >            #address-cells = <1>;
+> > > -- 
+> > > 2.34.1
+> > > 
+> > 
+> > -- 
+> > மணிவண்ணன் சதாசிவம்
+> 
+> -- 
+> 	Ansuel
+
 -- 
-2.34.1
-
+மணிவண்ணன் சதாசிவம்
