@@ -2,158 +2,171 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C92D75400F9
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jun 2022 16:12:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 65FE85401F1
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jun 2022 16:58:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233846AbiFGOM6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Jun 2022 10:12:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34620 "EHLO
+        id S240573AbiFGO6p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Jun 2022 10:58:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49600 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233115AbiFGOM6 (ORCPT
+        with ESMTP id S1343800AbiFGO6h (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Jun 2022 10:12:58 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1F8F19E;
-        Tue,  7 Jun 2022 07:12:56 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id DF81461578;
-        Tue,  7 Jun 2022 14:12:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15294C385A5;
-        Tue,  7 Jun 2022 14:12:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1654611175;
-        bh=tOlTuXrCdHXR6tngcOYuj9xb6Z7sf9Xjv7iA3sFggYc=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=KH4AWZwnRnDjxQDeZmq+Cmgtn6CDh5+jO2Zb7+EQMAhBVKoINQHyhMuThDfmevcBt
-         ZTDUUyjmeiOD4Tibu/IbzEYR2NAYUYA59os4W+XauvN7beQS/xos5AiLJDnwVrndUB
-         rM5amS1fGMBjy59vEfHyiqOmGRTu9UYaqMyg/YOisI7Va9vKbs3Qac9qJhRxKkexml
-         aU8UhPgCJH+avMFetQh4PoMZ0XdyT5aMEOm1EY4vsbeKaZ9Hwl8hfcWkqD8AjYVwK9
-         ukNPlmqK55f0NoRDtDaBQC0MTDoeqZPUvqzfB4UPasrcLeVxKToaglkKnnAk9WRCro
-         RPY6qgXxQqaTw==
-Date:   Tue, 7 Jun 2022 19:42:42 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Ansuel Smith <ansuelsmth@gmail.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Miquel Raynal <miquel.raynal@bootlin.com>,
-        Richard Weinberger <richard@nod.at>,
-        Vignesh Raghavendra <vigneshr@ti.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-mtd@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 2/2] dt-bindings: mtd: qcom_nandc: document
- qcom,boot-pages binding
-Message-ID: <20220607141242.GA1882@thinkpad>
-References: <20220519190112.6344-1-ansuelsmth@gmail.com>
- <20220519190112.6344-3-ansuelsmth@gmail.com>
- <20220607091522.GB5410@thinkpad>
- <629f3127.1c69fb81.2590d.39ac@mx.google.com>
+        Tue, 7 Jun 2022 10:58:37 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8C63F68B2;
+        Tue,  7 Jun 2022 07:58:34 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id a15so16031432wrh.2;
+        Tue, 07 Jun 2022 07:58:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=w/x0GYJIyglYGzsLMtcs2N+UdxoGHu5iQjLjq7gDOa8=;
+        b=mnolo5fLNDdBuBMvlwaCPryzz8RBix8JR7j5txmuj3HpmexQIJcKZ0WRj2TDLOGlKV
+         eYi7+7ZJHGeQve1+oBuw+oLFq7T9Yr+xLFozhFvuSZar1J0XmxxdFE5aozzgXRt3P06K
+         Y2sq5jwvUjX6GibC1NrppLGFBqwd2rXJYZ3XqJGbNXxvgsrR2sWENE1FYtj0ajqZ9MMR
+         bfyL9nr4gBdbp4Vq4N5lVOffSCj0v+rbe8am4yZYbkvuBfvwtorzMCXREQkALIJ5+6Tb
+         FnnWBEbeTqOOWnNdVWaaWKsWZbdpeuN/wJ15uIQBpt6yQh9S0tU0fPdBqwh43ZFLKx3h
+         h1Aw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=w/x0GYJIyglYGzsLMtcs2N+UdxoGHu5iQjLjq7gDOa8=;
+        b=2aQqKC4RQDE6fn7OXBE3a9Epg95KqSdpcHTGCTZAgE6/NvqKJZH5SeMzBw0JUxaY9s
+         TTltrvmNXultivnuKgBd1nnqZ7CbvWiKTRl7F/yJGP9aCgGVHvi1XGx1ErDcd1zilZlA
+         uARPG4VBjmDM5rCbhlQuMQNWVdsf6Mpmx3iaLOdtFzIAzfGLlzhHYAx6iqeqk0TNWPJx
+         Qtqw5YXMwairt+oqAmOescwTij+FPjvVywAFdfoa7nDT2koDVjVmZ8D45Pb7mmMMgpPY
+         8Rlb9pmzvH6Z5qDLTXdJsvsIcZQP41iEHmnzdFSEG93Fn9vI1t0IAeo4yMOJlFqwae9g
+         e0Ig==
+X-Gm-Message-State: AOAM532qjRWmeoWiBiQvBrMHQ5fq2b7PuwcUwWbOod5rX+QRx+iET9DR
+        RJoDbAg7Hr2c2Q/uPsI37k0k8ptxbu5q4dJfv8M=
+X-Google-Smtp-Source: ABdhPJwRNN4z4XBKhcVm2933w90dY8yGBFVxOqV2cYUSjdAP95m0E38O7iji7hfuIr68iVFLPD1tEZKwD7DNfMrpJnk=
+X-Received: by 2002:adf:fb0d:0:b0:20d:97e:17ce with SMTP id
+ c13-20020adffb0d000000b0020d097e17cemr28428199wrr.585.1654613913189; Tue, 07
+ Jun 2022 07:58:33 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <629f3127.1c69fb81.2590d.39ac@mx.google.com>
-X-Spam-Status: No, score=-8.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+References: <20220606195432.1888346-1-robdclark@gmail.com> <34aacfa3-9eb9-d3d5-07b7-805fd1408bb7@suse.de>
+In-Reply-To: <34aacfa3-9eb9-d3d5-07b7-805fd1408bb7@suse.de>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Tue, 7 Jun 2022 07:58:36 -0700
+Message-ID: <CAF6AEGuikc8Qh2ixEvJoeN0hQ+VLJNk_jBQm8fqYQAJ=ihpo1g@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] drm: Add DRM_GEM_FOPS
+To:     Thomas Zimmermann <tzimmermann@suse.de>
+Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+        Rob Clark <robdclark@chromium.org>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jun 07, 2022 at 09:05:16AM +0200, Ansuel Smith wrote:
-> On Tue, Jun 07, 2022 at 02:45:22PM +0530, Manivannan Sadhasivam wrote:
-> > On Thu, May 19, 2022 at 09:01:12PM +0200, Ansuel Smith wrote:
-> > > Document new qcom,boot-pages binding used to apply special
-> > > read/write configuration to boot pages.
-> > > 
-> > > QCOM apply a special configuration where spare data is not protected
-> > > by ECC for some special pages (used for boot partition). Add
-> > > Documentation on how to declare these special pages.
-> > > 
-> > > Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
-> > > ---
-> > >  .../devicetree/bindings/mtd/qcom,nandc.yaml   | 26 +++++++++++++++++++
-> > >  1 file changed, 26 insertions(+)
-> > > 
-> > > diff --git a/Documentation/devicetree/bindings/mtd/qcom,nandc.yaml b/Documentation/devicetree/bindings/mtd/qcom,nandc.yaml
-> > > index 84ad7ff30121..a59ae9525f4e 100644
-> > > --- a/Documentation/devicetree/bindings/mtd/qcom,nandc.yaml
-> > > +++ b/Documentation/devicetree/bindings/mtd/qcom,nandc.yaml
-> > > @@ -102,6 +102,30 @@ allOf:
-> > >              - const: rx
-> > >              - const: cmd
-> > >  
-> > > +  - if:
-> > > +      properties:
-> > > +        compatible:
-> > > +          contains:
-> > > +            enum:
-> > > +              - qcom,ipq806x-nand
-> > > +
-> > > +    then:
-> > > +      properties:
-> > > +        qcom,boot-pages:
-> > 
-> > Eventhough the page layout is what making the difference, here the boot
-> > partition offset and size are getting specified. So how about, changing it
-> > to "qcom,boot-partitions"?
-> > 
-> > Thanks,
-> > Mani
+On Mon, Jun 6, 2022 at 11:56 PM Thomas Zimmermann <tzimmermann@suse.de> wro=
+te:
+>
+> Hi
+>
+> Am 06.06.22 um 21:54 schrieb Rob Clark:
+> > From: Rob Clark <robdclark@chromium.org>
 > >
-> 
-> Yep, you are correct and the naming is confusing. Will do the change.
-> Did you check the code if you notice something to improve / an idea of a
-> better implementation or better naming?
-> Just to skip sending multiple revision with small changes.
-> 
+> > The DEFINE_DRM_GEM_FOPS() helper is a bit limiting if a driver wants to
+> > provide additional file ops, like show_fdinfo().
+> >
+> > Signed-off-by: Rob Clark <robdclark@chromium.org>
+> > ---
+> >   include/drm/drm_gem.h | 26 ++++++++++++++++++--------
+> >   1 file changed, 18 insertions(+), 8 deletions(-)
+> >
+> > diff --git a/include/drm/drm_gem.h b/include/drm/drm_gem.h
+> > index 9d7c61a122dc..dc88d4a2cdf6 100644
+> > --- a/include/drm/drm_gem.h
+> > +++ b/include/drm/drm_gem.h
+> > @@ -314,6 +314,23 @@ struct drm_gem_object {
+> >       const struct drm_gem_object_funcs *funcs;
+> >   };
+> >
+> > +/**
+> > + * DRM_GEM_FOPS - Default drm GEM file operations
+> > + *
+> > + * This macro provides a shorthand for setting the GEM file ops in the
+> > + * &file_operations structure.
+>
+> I would appreciate a reference to DEFINE_DRM_GEM_FOPS. Something along
+> the lines of 'if all you need are the default ops, use DEFINE_DRM_GEM_FOP=
+S'.
+>
+> > + */
+> > +#define DRM_GEM_FOPS \
+> > +     .open           =3D drm_open,\
+> > +     .release        =3D drm_release,\
+> > +     .unlocked_ioctl =3D drm_ioctl,\
+> > +     .compat_ioctl   =3D drm_compat_ioctl,\
+> > +     .poll           =3D drm_poll,\
+> > +     .read           =3D drm_read,\
+> > +     .llseek         =3D noop_llseek,\
+> > +     .mmap           =3D drm_gem_mmap
+> > +
+> > +
+>
+> Only one empty line please.
+>
+> >   /**
+> >    * DEFINE_DRM_GEM_FOPS() - macro to generate file operations for GEM =
+drivers
+> >    * @name: name for the generated structure
+> > @@ -330,14 +347,7 @@ struct drm_gem_object {
+> >   #define DEFINE_DRM_GEM_FOPS(name) \
+> >       static const struct file_operations name =3D {\
+> >               .owner          =3D THIS_MODULE,\
+>
+> Is there a specific reason why .owner is still set here? I suspect that
+> DRM_GEM_FOPS is strictly for callback functions?
 
-Yep, I do have some comments. Will share them.
+I was on the fence about that one, but it seemed better to not mix
+"magic" and the callbacks.. but I could be convinced in either
+direction
 
-Thanks,
-Mani
+> In any case
+>
+> Acked-by: Thomas Zimmermann <tzimmermann@suse.de>
 
-> > > +          $ref: /schemas/types.yaml#/definitions/uint32-matrix
-> > > +          items:
-> > > +            items:
-> > > +              - description: offset
-> > > +              - description: size
-> > > +          description:
-> > > +            Some special page used by boot partition have spare data
-> > > +            not protected by ECC. Use this to declare these special page
-> > > +            by defining first the offset and then the size.
-> > > +
-> > > +            It's in the form of <offset1 size1 offset2 size2 offset3 ...>
-> > > +
-> > > +            Refer to the ipq8064 example on how to use this special binding.
-> > > +
-> > >  required:
-> > >    - compatible
-> > >    - reg
-> > > @@ -135,6 +159,8 @@ examples:
-> > >          nand-ecc-strength = <4>;
-> > >          nand-bus-width = <8>;
-> > >  
-> > > +        qcom,boot-pages = <0x0 0x58a0000>;
-> > > +
-> > >          partitions {
-> > >            compatible = "fixed-partitions";
-> > >            #address-cells = <1>;
-> > > -- 
-> > > 2.34.1
-> > > 
-> > 
-> > -- 
-> > மணிவண்ணன் சதாசிவம்
-> 
-> -- 
-> 	Ansuel
+thx, I'll fixup the other nits in v3.
 
--- 
-மணிவண்ணன் சதாசிவம்
+>
+> Best regards
+> Thomas
+>
+> > -             .open           =3D drm_open,\
+> > -             .release        =3D drm_release,\
+> > -             .unlocked_ioctl =3D drm_ioctl,\
+> > -             .compat_ioctl   =3D drm_compat_ioctl,\
+> > -             .poll           =3D drm_poll,\
+> > -             .read           =3D drm_read,\
+> > -             .llseek         =3D noop_llseek,\
+> > -             .mmap           =3D drm_gem_mmap,\
+> > +             DRM_GEM_FOPS,\
+> >       }
+> >
+> >   void drm_gem_object_release(struct drm_gem_object *obj);
+>
+> --
+> Thomas Zimmermann
+> Graphics Driver Developer
+> SUSE Software Solutions Germany GmbH
+> Maxfeldstr. 5, 90409 N=C3=BCrnberg, Germany
+> (HRB 36809, AG N=C3=BCrnberg)
+> Gesch=C3=A4ftsf=C3=BChrer: Ivo Totev
