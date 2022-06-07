@@ -2,165 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5A8C953FCFB
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jun 2022 13:11:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 34B2253F719
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jun 2022 09:24:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241296AbiFGLLU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Jun 2022 07:11:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57382 "EHLO
+        id S237616AbiFGHYg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Jun 2022 03:24:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40520 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242756AbiFGLKF (ORCPT
+        with ESMTP id S231617AbiFGHYe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Jun 2022 07:10:05 -0400
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 235478721C;
-        Tue,  7 Jun 2022 04:06:17 -0700 (PDT)
-Received: by mail-ej1-x634.google.com with SMTP id q1so34459151ejz.9;
-        Tue, 07 Jun 2022 04:06:17 -0700 (PDT)
+        Tue, 7 Jun 2022 03:24:34 -0400
+Received: from mail-ej1-x643.google.com (mail-ej1-x643.google.com [IPv6:2a00:1450:4864:20::643])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76FE4BBCCE
+        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Jun 2022 00:24:33 -0700 (PDT)
+Received: by mail-ej1-x643.google.com with SMTP id m20so33278921ejj.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Jun 2022 00:24:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:date:from:to:cc:subject:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=JYTw8qBceECAtQp7A1kdanNQp5jRY5QBdh0dwqqC9RU=;
-        b=Nw5HmIulmE1vH1fMJ8FcWCnuJQHQiHH/x26C400Hk5Bf9PGo6Hw3r8UEWG1iplpkO3
-         bn2h1/zeXA+zFIZm1mDr53CRhOeZBRmwk6l3fWcutnWVOBQX8QXyqimHHXhXCV5SW1D9
-         xneNpq0uZNxhavrDzIyjaOlg3cRi/GIRrnD6ph4c9sc+7OaVG22cBe4ciXUj1oSePQ8H
-         dTk9dRNW6OXOx83c+AUB10I/nvHOjLk6/U8Qxj2b5caJczVcORF4L2HCpp0ebje4/wKs
-         EN8zGeT/km2CULPG1J7Sa/caGJwt7KFGxSaItC782x1KKRszWhdDADTmktx1IH/qarM9
-         N3bQ==
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=OHbou33WPhW0PDy9/CZae9mIrL4buN3/FALSld4obAM=;
+        b=nZSLGL0FwMW7ZulHR9U52MbrNEMnewFW3MGol4rpEwxR/xWwklbRptFrN/0ezaWipa
+         SVj/FBp8HjTkHSaZhA4aco+JJol3TW+ysVSnLFMXjX1hdO0ILcm4wtBJThFEVNDVVCXo
+         4ntrNGY2nycQcp03JB0+YgisUIAkEdLhhtyc+foH1HVsb7bhUUUWeAE8pEpG8RX8LdXL
+         D+TDGq3Ylpiuj+mSUPFQoAIi/kpKeuOjYIkwe9sZltrehUP10lYzyOJq2KjZoaS/bP5x
+         slQv6+rCeEHv4SpF6VlGXk8Fl6SbD6l8oqnry6LWntt0ByHJQjQnicz2v40WRbqgQUut
+         GSoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:from:to:cc:subject:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=JYTw8qBceECAtQp7A1kdanNQp5jRY5QBdh0dwqqC9RU=;
-        b=UBNjL3NrXNDVHoom9pNMDHtTdP8dJr4AUoBKoHqGPIKDQwFbP0hS1rWPkyeCK5UzAz
-         vobp5UfQJiuJOtQeYkVXwlF3qmWyyU2QDssPgVWAK1Scs+4PRo5pmhHvdfvEMgnI5q1j
-         1RA/VlbTLqxaVklYZXPCL8K2r3uwYQI6/KgBVTYpeGht17ESHhUs7QU4XTLePmYCk3lu
-         hJYSmcm5AKNTin3RtusZZfar43RnJ2yYXJqVtlvZadAkuxesm4aYOupPlIfUqcBHACL5
-         8HwBEQp7evtbxijTmPWKHIwmK9L0mUAcW+IqVpHe2rJJEpSVgVPNfxSrjicTj5Em11Bm
-         2Kuw==
-X-Gm-Message-State: AOAM533xbJXsTCxAlMpQoS5ElN9Blc22nNQbl07CWmPrnfqFucLUubof
-        Cfeoh1qSbKNgwy9nfoFgbsfhoaQGCYc=
-X-Google-Smtp-Source: ABdhPJy8xYlbSp5BuzRvztb2RbXiyhlVE5XzRRPnbXnxapSzqknqjm/tCBViCfgB25Q9EmDSXjGvQg==
-X-Received: by 2002:a17:907:da3:b0:6fe:f08b:776 with SMTP id go35-20020a1709070da300b006fef08b0776mr26382420ejc.558.1654599976053;
-        Tue, 07 Jun 2022 04:06:16 -0700 (PDT)
-Received: from Ansuel-xps. (93-42-70-190.ip85.fastwebnet.it. [93.42.70.190])
-        by smtp.gmail.com with ESMTPSA id w21-20020aa7d295000000b0042dd482d0c4sm10115552edq.80.2022.06.07.04.06.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Jun 2022 04:06:15 -0700 (PDT)
-Message-ID: <629f3127.1c69fb81.2590d.39ac@mx.google.com>
-X-Google-Original-Message-ID: <Yp74rG6DVmeU+QCQ@Ansuel-xps.>
-Date:   Tue, 7 Jun 2022 09:05:16 +0200
-From:   Ansuel Smith <ansuelsmth@gmail.com>
-To:     Manivannan Sadhasivam <mani@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Miquel Raynal <miquel.raynal@bootlin.com>,
-        Richard Weinberger <richard@nod.at>,
-        Vignesh Raghavendra <vigneshr@ti.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-mtd@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 2/2] dt-bindings: mtd: qcom_nandc: document
- qcom,boot-pages binding
-References: <20220519190112.6344-1-ansuelsmth@gmail.com>
- <20220519190112.6344-3-ansuelsmth@gmail.com>
- <20220607091522.GB5410@thinkpad>
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=OHbou33WPhW0PDy9/CZae9mIrL4buN3/FALSld4obAM=;
+        b=oNj1RpFlXBQyPkgdjIUkg203242rLGPi+0+5fQdQPaEwqSf9h/lUyUJI1UdSiennkg
+         jVv6OfXsfbR6uk8nidvdVQuIRQYAe4+Z/7e3Jtqnosndgi4s60HitSqKyqDqwu3Iy2ec
+         6EcwPvANteSuBJX4lGnO9Oh6qT6zPxXFjzGoegPJNb6OBhGlPn6fIUEgCpgC4qvuU3+v
+         mCheTla+MWX8SGtlPuqqbuSz81O+90qgLG0BR9oBuVKUEVNSl22JZ28vPw4h+ilvGaVs
+         SIofef0AhD8+rfxJ5DjgTG0RP/wwf99+3V6B/YXJP7zIbBYL0LCQewFcFpH3G7gRrSaX
+         6D5A==
+X-Gm-Message-State: AOAM533UKWBGDPCn4u7MedyZLNdErUVdJe3cE6qqFnSmEvhVB3aHfJyB
+        pwlJj15A0ms0gKulRsIO9ios30OB82RruXJev/8=
+X-Google-Smtp-Source: ABdhPJzM6ViYn8Xj6BM3INVuLM+AOES80/1QTk2bTK+rPk/zlJbWxB+0auaSVpSpOCaepSZ+lFsOA8UQfOCX2ZJh9Mw=
+X-Received: by 2002:a17:906:478b:b0:6f8:5850:4da9 with SMTP id
+ cw11-20020a170906478b00b006f858504da9mr24982924ejc.619.1654586671945; Tue, 07
+ Jun 2022 00:24:31 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20220607091522.GB5410@thinkpad>
-X-Spam-Status: No, score=-0.5 required=5.0 tests=BAYES_00,DATE_IN_PAST_03_06,
+Received: by 2002:a05:6402:26c8:0:0:0:0 with HTTP; Tue, 7 Jun 2022 00:24:31
+ -0700 (PDT)
+Reply-To: andyhalford22@gmail.com
+From:   Andy Halford <fameyemrf@gmail.com>
+Date:   Tue, 7 Jun 2022 00:24:31 -0700
+Message-ID: <CAATdNavPsznxvtSrdYvx28MvzTTn6hj8oMJQVfY=Xjj=mxEA=w@mail.gmail.com>
+Subject: Dear Friend
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: Yes, score=6.8 required=5.0 tests=BAYES_50,DEAR_FRIEND,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
+        FREEMAIL_REPLYTO,FREEMAIL_REPLYTO_END_DIGIT,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,UNDISC_FREEM autolearn=no
+        autolearn_force=no version=3.4.6
+X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
+        *      https://www.dnswl.org/, no trust
+        *      [2a00:1450:4864:20:0:0:0:643 listed in]
+        [list.dnswl.org]
+        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
+        *      [score: 0.5000]
+        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
+        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
+        *      provider
+        *      [fameyemrf[at]gmail.com]
+        *  0.2 FREEMAIL_REPLYTO_END_DIGIT Reply-To freemail username ends in
+        *      digit
+        *      [andyhalford22[at]gmail.com]
+        * -0.0 SPF_PASS SPF: sender matches SPF record
+        *  2.6 DEAR_FRIEND BODY: Dear Friend? That's not very dear!
+        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
+        *      envelope-from domain
+        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
+        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
+        *      author's domain
+        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
+        *       valid
+        * -0.0 T_SCC_BODY_TEXT_LINE No description available.
+        *  2.3 UNDISC_FREEM Undisclosed recipients + freemail reply-to
+        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
+        *      different freemails
+X-Spam-Level: ******
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jun 07, 2022 at 02:45:22PM +0530, Manivannan Sadhasivam wrote:
-> On Thu, May 19, 2022 at 09:01:12PM +0200, Ansuel Smith wrote:
-> > Document new qcom,boot-pages binding used to apply special
-> > read/write configuration to boot pages.
-> > 
-> > QCOM apply a special configuration where spare data is not protected
-> > by ECC for some special pages (used for boot partition). Add
-> > Documentation on how to declare these special pages.
-> > 
-> > Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
-> > ---
-> >  .../devicetree/bindings/mtd/qcom,nandc.yaml   | 26 +++++++++++++++++++
-> >  1 file changed, 26 insertions(+)
-> > 
-> > diff --git a/Documentation/devicetree/bindings/mtd/qcom,nandc.yaml b/Documentation/devicetree/bindings/mtd/qcom,nandc.yaml
-> > index 84ad7ff30121..a59ae9525f4e 100644
-> > --- a/Documentation/devicetree/bindings/mtd/qcom,nandc.yaml
-> > +++ b/Documentation/devicetree/bindings/mtd/qcom,nandc.yaml
-> > @@ -102,6 +102,30 @@ allOf:
-> >              - const: rx
-> >              - const: cmd
-> >  
-> > +  - if:
-> > +      properties:
-> > +        compatible:
-> > +          contains:
-> > +            enum:
-> > +              - qcom,ipq806x-nand
-> > +
-> > +    then:
-> > +      properties:
-> > +        qcom,boot-pages:
-> 
-> Eventhough the page layout is what making the difference, here the boot
-> partition offset and size are getting specified. So how about, changing it
-> to "qcom,boot-partitions"?
-> 
-> Thanks,
-> Mani
->
-
-Yep, you are correct and the naming is confusing. Will do the change.
-Did you check the code if you notice something to improve / an idea of a
-better implementation or better naming?
-Just to skip sending multiple revision with small changes.
-
-> > +          $ref: /schemas/types.yaml#/definitions/uint32-matrix
-> > +          items:
-> > +            items:
-> > +              - description: offset
-> > +              - description: size
-> > +          description:
-> > +            Some special page used by boot partition have spare data
-> > +            not protected by ECC. Use this to declare these special page
-> > +            by defining first the offset and then the size.
-> > +
-> > +            It's in the form of <offset1 size1 offset2 size2 offset3 ...>
-> > +
-> > +            Refer to the ipq8064 example on how to use this special binding.
-> > +
-> >  required:
-> >    - compatible
-> >    - reg
-> > @@ -135,6 +159,8 @@ examples:
-> >          nand-ecc-strength = <4>;
-> >          nand-bus-width = <8>;
-> >  
-> > +        qcom,boot-pages = <0x0 0x58a0000>;
-> > +
-> >          partitions {
-> >            compatible = "fixed-partitions";
-> >            #address-cells = <1>;
-> > -- 
-> > 2.34.1
-> > 
-> 
-> -- 
-> மணிவண்ணன் சதாசிவம்
-
 -- 
-	Ansuel
+Hello Sir
+
+
+
+  I am Andy Halford from London, UK. Nice to meet you. Sorry for the
+inconvenience it's because of the time difference. I contacted you
+specifically regarding an important piece of information I intend
+sharing with you that will be of interest to you. Having gone through
+an intelligent methodical search, I decided to specifically contact
+you hoping that you will find this information useful. Kindly confirm
+I got the correct email by replying via same email to ensure I don't
+send the information to the wrong person.
+
+
+
+REGARDS
+Andy Halford
