@@ -2,58 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 19439542234
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jun 2022 08:46:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BB5915423EB
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jun 2022 08:51:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344055AbiFHA7E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Jun 2022 20:59:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49110 "EHLO
+        id S229970AbiFHA6P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Jun 2022 20:58:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48028 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1835733AbiFGX4u (ORCPT
+        with ESMTP id S1835728AbiFGX4u (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Tue, 7 Jun 2022 19:56:50 -0400
-Received: from mail-qt1-x833.google.com (mail-qt1-x833.google.com [IPv6:2607:f8b0:4864:20::833])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BCC9239695
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Jun 2022 16:18:09 -0700 (PDT)
-Received: by mail-qt1-x833.google.com with SMTP id x16so10512278qtw.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Jun 2022 16:18:09 -0700 (PDT)
+Received: from mail-qk1-x72c.google.com (mail-qk1-x72c.google.com [IPv6:2607:f8b0:4864:20::72c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D07E5154348
+        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Jun 2022 16:29:06 -0700 (PDT)
+Received: by mail-qk1-x72c.google.com with SMTP id o73so9431122qke.7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Jun 2022 16:29:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=K7/gzK+9zEAB7m+URXpWPKFV8Md7lwbStbXqUp9N1Lw=;
-        b=kD7H9kmH0TOh5IRdxAaVmdhiPL9BuO0CGy9mJpJnw8mQDcrCA/O7nS9XO4O0K/Hjpc
-         2VZB+xlv+DN2kYxk2NJWqLqp8xLprTQ3FjA7xiHLSbCLjUxvIpCopvsz9mAaO664Nu3e
-         mJ1v72wx4cPChKaqrwmhtD7SSvRpL5N8YOXWCfw7QwyvyiAm+g/Z9FOwXAY5YPf3gzkc
-         jKLBcXA30soO2y2k5vRIFLE5gJ1nsDuh7XJxwp2mqt3eUNZNREHdkEVIxjXDDVetw29Z
-         Dy6R8zsmcORzvM/epQqyUn8bcIB6SNaGjDNgqzwlFWMkqIXufBR+9ch8T84OxAplWDCH
-         L2FA==
+        bh=FiG/Hud81dwYwv++beYl18TZSvKyeM5nOEBoDQXc/3k=;
+        b=Mhd6cpCaYW2Tl9OtEjwkeQyhLh8AP+YBY8ohGYJRJEdwgvp9n5japd0qSF3K7ob11Q
+         BZQzSwqd0ed8DunZ5Yq4By8en7g2y5YtH/Homnn6/QyOy4Jh5dMNYD0xxXUrlg2R0YOt
+         VSi+8B3al9Gl19aXHSB3Zw/oU4PzIAOoLRIeS3ymUQb3becgGH8C+waoXnX7MoFChAUi
+         QzSAYSEvNxpkdsTMB/lwDDMovbmZcAjGanIX5mh5RtEdVlzDF67Uutz5OzBSPIvp9ERX
+         4YjM0t4ARG6gxXmfL2SCnKJwkGC79J1x+1mMQA1rY2ZUIgjq3UVifYVey3cU0Vw5l6II
+         jGPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=K7/gzK+9zEAB7m+URXpWPKFV8Md7lwbStbXqUp9N1Lw=;
-        b=555syNDvqF7iD6LIOkYlMjKXqnaq3vX7OSYVETprRQrqh2ULb7zrPyGVMEO0SdGu5J
-         dCYz6O2+5Hnrw7pkeZ4KyKPzUkWn7ZDPivWTE8mcXYgKTcKgD7iwBzLWxqO6WxsuIxU1
-         iTY0cWZc/iAAZQkBjU3TUiEsKlPrdUXUUI/hnP6S+Gd1wmZdr2wxi2Mg0pLJYkl2qkbU
-         WR0dSyLbqC/tyzT6U7a9dY1klDO5Qs2VXdxROOPzZqhSZfsLu0K22h3qbwF+OSIRb1NW
-         5O3+/1nnxkFyxJNg98yZzJjlE4eBbBBWVtRjRRYaAqJhxYVULVAF2mhunvpKpPtqrPxT
-         Ji7w==
-X-Gm-Message-State: AOAM530Kcu375Uz4Rs6P3Bh2dWtRWNVLtzONxc1dHyGwd2z9PJpDJ+HB
-        COdv5sR4Vfmxm61RSUyjFRqTrwquUy2WE/2NunLY8w==
-X-Google-Smtp-Source: ABdhPJwWaEMpZd6sm7MREATgjYhP0WVx5ZHG+STuqGDMV32g2q4lA/btHLzN3suLQfbF0mlblinbGfcb3VQRH13J6mQ=
-X-Received: by 2002:ac8:5990:0:b0:304:c8d6:3147 with SMTP id
- e16-20020ac85990000000b00304c8d63147mr25556691qte.370.1654643888839; Tue, 07
- Jun 2022 16:18:08 -0700 (PDT)
+        bh=FiG/Hud81dwYwv++beYl18TZSvKyeM5nOEBoDQXc/3k=;
+        b=DmiCKWwxqE+xgVvxmKre3oSB+ITeWeJoCDfp6Kg9ol+EQ8ee3JXieSru2Zszxs18rg
+         BQ+/ScycR5CZpaZAWvKqMN/gUgU3wHipokQCT/R4mQDCANnXkZCwV6dhBE9ZQjzad70P
+         oX9YTFYQXlrGiqDAyv1221mCbBAquJfncy36+xhnVFWVy6CugKnedjjZ9SAPPtuUQD1r
+         r/T6qkaYUdkx1OKpRba64NRV0+VBaKmOz+QnUGXKf5pKJajQbUUVaK/NqUgORl71i8WH
+         9svmj0Q4/zK8Ai2AEYt6RS/ZmXqKxHCBiFovAmVe6EacbJbfmO0SSUrvNqNrSB77Nw35
+         r6OA==
+X-Gm-Message-State: AOAM533wISQkv1iUzJHKgRM2uyNhOVAMuiprmIaBepmrC6xKSitq9Y7P
+        JMUfzQPi0Bjnn6/erZMqsKNjdGAaDOeBzSkABaGXgezXgCzaRv9QEb8=
+X-Google-Smtp-Source: ABdhPJwwRGTBBD5DqoWSE8LyFQtfkj3/fAdtxJwR2bzfmzzNtNXVVBWyuAU1DMg4twFQYPKztB8GkiUIAIASkkTukhY=
+X-Received: by 2002:a05:620a:4156:b0:6a6:f8d2:6d9e with SMTP id
+ k22-20020a05620a415600b006a6f8d26d9emr1947955qko.30.1654644545911; Tue, 07
+ Jun 2022 16:29:05 -0700 (PDT)
 MIME-Version: 1.0
 References: <20220607213543.4057620-1-bjorn.andersson@linaro.org>
- <20220607213543.4057620-3-bjorn.andersson@linaro.org> <f16657a3-15e5-f7d6-1f2b-58e2ea83dddc@linaro.org>
- <Yp/VCg3UznbLKLuk@ripper>
-In-Reply-To: <Yp/VCg3UznbLKLuk@ripper>
+ <20220607213543.4057620-4-bjorn.andersson@linaro.org> <d9658f54-e594-8f0e-071e-ef627285d281@linaro.org>
+ <Yp/ZkxNltUgE79nC@ripper>
+In-Reply-To: <Yp/ZkxNltUgE79nC@ripper>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Wed, 8 Jun 2022 02:17:57 +0300
-Message-ID: <CAA8EJporMU9b42cuBfCBSw4yAakUcj47d6bY5yZRLkW-2Ciq_w@mail.gmail.com>
-Subject: Re: [PATCH v2 2/5] phy: qcom-qmp: Add USB3 5NM QMP UNI registers
+Date:   Wed, 8 Jun 2022 02:28:54 +0300
+Message-ID: <CAA8EJppTa88Rbo5R1SbycfvpPMAB18DXPd_iGJ_M+swE9KBv2Q@mail.gmail.com>
+Subject: Re: [PATCH v2 3/5] phy: qcom-qmp: Add USB4 5NM QMP combo PHY registers
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc:     Kishon Vijay Abraham I <kishon@ti.com>,
         Vinod Koul <vkoul@kernel.org>,
@@ -73,84 +73,154 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 8 Jun 2022 at 01:43, Bjorn Andersson <bjorn.andersson@linaro.org> wrote:
+On Wed, 8 Jun 2022 at 02:02, Bjorn Andersson <bjorn.andersson@linaro.org> wrote:
 >
-> On Tue 07 Jun 14:58 PDT 2022, Dmitry Baryshkov wrote:
+> On Tue 07 Jun 15:24 PDT 2022, Dmitry Baryshkov wrote:
+>
 > > On 08/06/2022 00:35, Bjorn Andersson wrote:
+> > > Add all registers defines from qcom,usb4-5nm-qmp-combo.h of the msm-5.4
+> > > kernel. Offsets are adjusted to be relative to each sub-block, as we
+> > > describe the individual pieces in the upstream kernel and "v5_5NM" are
+> > > injected in the defines to not collide with existing constants.
+> > >
+> > > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > > ---
+> > >
+> > > Changes since v1:
+> > > - New patch
+> > >
+> > >   .../qualcomm/phy-qcom-usb4-5nm-qmp-combo.h    | 1547 +++++++++++++++++
+> > >   1 file changed, 1547 insertions(+)
+> > >   create mode 100644 drivers/phy/qualcomm/phy-qcom-usb4-5nm-qmp-combo.h
+> > >
+> > > diff --git a/drivers/phy/qualcomm/phy-qcom-usb4-5nm-qmp-combo.h b/drivers/phy/qualcomm/phy-qcom-usb4-5nm-qmp-combo.h
+> > > new file mode 100644
+> > > index 000000000000..7be8a50269ec
+> > > --- /dev/null
+> > > +++ b/drivers/phy/qualcomm/phy-qcom-usb4-5nm-qmp-combo.h
+> > > @@ -0,0 +1,1547 @@
+> > > +/* SPDX-License-Identifier: GPL-2.0-only */
+> > > +/*
+> > > + * Copyright (c) 2021, The Linux Foundation. All rights reserved.
+> > > + */
+> > > +
+> > > +#ifndef PHY_QCOM_V5_5NM_QMP_COMBO_USB4_H
+> > > +#define PHY_QCOM_V5_5NM_QMP_COMBO_USB4_H
+> > > +
+> > > +/* USB4-USB3-DP Combo PHY register offsets */
+> > > +/* Module: USB43DP_COM_USB43DP_COM_USB4_USB3_DP_COM */
+> > > +#define USB43DP_V5_5NM_COM_PHY_MODE_CTRL                           0x00
+> > > +#define USB43DP_V5_5NM_COM_SW_RESET                                        0x04
+> > > +#define USB43DP_V5_5NM_COM_POWER_DOWN_CTRL                         0x08
+> > > +#define USB43DP_V5_5NM_COM_SWI_CTRL                                        0x0c
+> > > +#define USB43DP_V5_5NM_COM_TYPEC_CTRL                                      0x10
+> > > +#define USB43DP_V5_5NM_COM_TYPEC_PWRDN_CTRL                                0x14
+> > > +#define USB43DP_V5_5NM_COM_DP_BIST_CFG_0                           0x18
+> > > +#define USB43DP_V5_5NM_COM_RESET_OVRD_CTRL1                                0x1c
+> > > +#define USB43DP_V5_5NM_COM_RESET_OVRD_CTRL2                                0x20
+> > > +#define USB43DP_V5_5NM_COM_DBG_CLK_MUX_CTRL                                0x24
+> > > +#define USB43DP_V5_5NM_COM_TYPEC_STATUS                                    0x28
+> > > +#define USB43DP_V5_5NM_COM_PLACEHOLDER_STATUS                              0x2c
+> > > +#define USB43DP_V5_5NM_COM_REVISION_ID0                                    0x30
+> > > +#define USB43DP_V5_5NM_COM_REVISION_ID1                                    0x34
+> > > +#define USB43DP_V5_5NM_COM_REVISION_ID2                                    0x38
+> > > +#define USB43DP_V5_5NM_COM_REVISION_ID3                                    0x3c
+> >
+> > QPHY_V5_DP_COM_foo ?
+> >
+>
+> My first version of the QMP patch used V5 defines and USB worked
+> sometimes. So I hacked up a thing to dump the phy sequences of the
+> downstream and upstream kernels, compared the magic numbers and then
+> tried to fit suitable constants.
+>
+> But it obviously was a waste of time and I would have to make up a
+> different naming scheme for the ones that doesn't match the existing
+> constants - when we could just use the autogenerated files that exist in
+> the downstream kernels.
+>
 > [..]
-> > > +#define USB3_V5_5NM_UNI_QSERDES_COM_BIN_VCOCAL_CMP_CODE2_MODE0     0x1b0
-> > > +#define USB3_V5_5NM_UNI_QSERDES_COM_BIN_VCOCAL_CMP_CODE1_MODE1     0x1b4
-> > > +#define USB3_V5_5NM_UNI_QSERDES_COM_BIN_VCOCAL_CMP_CODE2_MODE1     0x1b8
-> > > +#define USB3_V5_5NM_UNI_QSERDES_COM_BIN_VCOCAL_HSCLK_SEL           0x1bc
-> > > +#define USB3_V5_5NM_UNI_QSERDES_COM_RESERVED_1                     0x1c0
-> > > +#define USB3_V5_5NM_UNI_QSERDES_COM_MODE_OPERATION_STATUS          0x1c4
+> > > +#define USB43DP_V5_5NM_QSERDES_TXA_DEBUG_BUS1                              0xf0
+> > > +#define USB43DP_V5_5NM_QSERDES_TXA_DEBUG_BUS2                              0xf4
+> > > +#define USB43DP_V5_5NM_QSERDES_TXA_DEBUG_BUS3                              0xf8
+> > > +#define USB43DP_V5_5NM_QSERDES_TXA_TX_BKUP_RO_BUS                  0xfc
 > >
-> > These defines look completely compatible with the existing ones in the
-> > QSERDES_V5_COM_ namespace. Please use them instead.
+> > QSERDES_V5_20_TX_foo ? This looks compatible with the 4 registers that we
+> > have in the header, but I can not verify the rest of registers
 > >
 >
-> Can you please confirm that all these constants are exactly the same as
-> the existing V5 entries?
+> Exactly the point I was making in my reply to the other patch.
+>
+> Per the documentation this is version 5.0.0, but these register offsets
+> happens to match the 5.20 defines that we have...
+>
+> > > +
+> > > +/* Module: USB43DP_QSERDES_RXA_USB43DP_QSERDES_RXA_USB4_USB3_DP_QMP_RX */
+> [..]
+> > > +#define USB43DP_V5_5NM_QSERDES_RXA_RX_BKUP_READ_BUS3_STATUS                0x3e8
+>
+> And these, doesn't match either V5 or V5_20.
 
-The only difference that I see is the phy-qcom-qmp.h defining
-QSERDES_V5_COM_CMN_MODE to 0x1a4, which should be 0x1a0. This is
-clearly a mistake on the upstream side (confirmed by the msm-5.10).
-Could you please send a patch for it?
-
+Yes, I guessed so.
 
 >
 > [..]
-> > > +/* Module: USB3_UNI_PCS_USB3_PCIE_USB3_UNI_PCS_USB3 */
-> > > +#define USB3_V5_5NM_UNI_PCS_USB3_POWER_STATE_CONFIG1               0x00
-> > > +#define USB3_V5_5NM_UNI_PCS_USB3_AUTONOMOUS_MODE_STATUS            0x04
-> > > +#define USB3_V5_5NM_UNI_PCS_USB3_AUTONOMOUS_MODE_CTRL              0x08
-> > > +#define USB3_V5_5NM_UNI_PCS_USB3_AUTONOMOUS_MODE_CTRL2             0x0c
-> > > +#define USB3_V5_5NM_UNI_PCS_USB3_LFPS_RXTERM_IRQ_SOURCE_STATUS     0x10
-> > > +#define USB3_V5_5NM_UNI_PCS_USB3_LFPS_RXTERM_IRQ_CLEAR             0x14
-> > > +#define USB3_V5_5NM_UNI_PCS_USB3_LFPS_DET_HIGH_COUNT_VAL           0x18
-> > > +#define USB3_V5_5NM_UNI_PCS_USB3_LFPS_TX_ECSTART                   0x1c
-> > > +#define USB3_V5_5NM_UNI_PCS_USB3_LFPS_PER_TIMER_VAL                0x20
-> > > +#define USB3_V5_5NM_UNI_PCS_USB3_LFPS_TX_END_CNT_U3_START          0x24
-> > > +#define USB3_V5_5NM_UNI_PCS_USB3_LFPS_CONFIG1                      0x28
-> > > +#define USB3_V5_5NM_UNI_PCS_USB3_RXEQTRAINING_LOCK_TIME            0x2c
-> > > +#define USB3_V5_5NM_UNI_PCS_USB3_RXEQTRAINING_WAIT_TIME            0x30
-> > > +#define USB3_V5_5NM_UNI_PCS_USB3_RXEQTRAINING_CTLE_TIME            0x34
-> > > +#define USB3_V5_5NM_UNI_PCS_USB3_RXEQTRAINING_WAIT_TIME_S2         0x38
-> > > +#define USB3_V5_5NM_UNI_PCS_USB3_RXEQTRAINING_DFE_TIME_S2          0x3c
-> > > +#define USB3_V5_5NM_UNI_PCS_USB3_RCVR_DTCT_DLY_U3_L                0x40
-> > > +#define USB3_V5_5NM_UNI_PCS_USB3_RCVR_DTCT_DLY_U3_H                0x44
-> > > +#define USB3_V5_5NM_UNI_PCS_USB3_ARCVR_DTCT_EN_PERIOD              0x48
-> > > +#define USB3_V5_5NM_UNI_PCS_USB3_ARCVR_DTCT_CM_DLY                 0x4c
-> > > +#define USB3_V5_5NM_UNI_PCS_USB3_TXONESZEROS_RUN_LENGTH            0x50
-> > > +#define USB3_V5_5NM_UNI_PCS_USB3_ALFPS_DEGLITCH_VAL                0x54
-> > > +#define USB3_V5_5NM_UNI_PCS_USB3_SIGDET_STARTUP_TIMER_VAL          0x58
-> > > +#define USB3_V5_5NM_UNI_PCS_USB3_TEST_CONTROL                      0x5c
-> > > +#define USB3_V5_5NM_UNI_PCS_USB3_RXTERMINATION_DLY_SEL             0x60
+> > > +#define USB43DP_V5_5NM_QSERDES_TXB_TX_BKUP_RO_BUS                  0xfc
 > >
-> > These look like QPHY_V5_PCS_USB3, but without additional 0x300 offset. I'd
-> > suggest modifying qcom-qmp-phy-usb.c to allocate another register space for
-> > pcs_usb and updating QPHY_V4_PCS_USB3_foo / QPHY_V5_PCS_USB3_foo defines to
-> > remove this offset.
-> >
-> > Afterwards most if not all constants from this header can be merged into
-> > phy-qcom-qmp.h I do not think that it makes sense to split this header at
-> > this moment. The QSERDES_COM/_TX/_RX/_PCS defines are common to all PHY
-> > types.
+> > What is the difference between _TXA_ and _TXB_ ?
 > >
 >
-> You might be right, but I spent considerable time debugging the combo
-> phy (which is version 5.0.0) and in the end it turned out that it's not
-> the same offsets.
->
-> I really would prefer that we stop haphazardly try to fit things into
-> the phy-qcom-qmp.h with version numbers that we essentially make up
-> base, when Qualcomm dumps the register layout for each generation in
-> their downstream kernel.
+> Nothing, I just don't want us to mess around with these files if we can
+> get them dumped from the register documentation.
 
-Well... Let's come up with a better versioning/naming scheme. But I
-don't think we should dump repeatable symbol headers, which are in
-reality common between different PHYs. This would make things harder
-to understand and harder to maintain.
+Well, you still had the register offsets adjusted, hadn't you? I think
+we can also apply sed to convert the names and then check if they
+match the existing headers or not. If they do not, create a new
+prefix, repeat, etc.
+
+>
+> > > +
+> [..]
+> > > +
+> > > +/* Module: USB3_PCS_MISC_USB3_PCS_MISC_USB3_PCS_MISC */
+> > > +#define USB3_V5_5NM_PCS_MISC_TYPEC_CTRL                                    0x00
+> > > +#define USB3_V5_5NM_PCS_MISC_TYPEC_PWRDN_CTRL                              0x04
+> > > +#define USB3_V5_5NM_PCS_MISC_PCS_MISC_CONFIG1                              0x08
+> > > +#define USB3_V5_5NM_PCS_MISC_CLAMP_ENABLE                          0x0c
+> > > +#define USB3_V5_5NM_PCS_MISC_TYPEC_STATUS                          0x10
+> > > +#define USB3_V5_5NM_PCS_MISC_PLACEHOLDER_STATUS                            0x14
+> >
+> > QPHY_V4_PCS_MISC (or v5)
+> >
+>
+> Perhaps, but then we're just making up those prefixes and hoping for the
+> best.
+>
+> [..]
+> > > +#define USB3_V5_5NM_PCS_EQ_CONFIG2                                 0x1e0
+> > > +#define USB3_V5_5NM_PCS_EQ_CONFIG3                                 0x1e4
+> > > +#define USB3_V5_5NM_PCS_EQ_CONFIG4                                 0x1E8
+> > > +#define USB3_V5_5NM_PCS_EQ_CONFIG5                                 0x1EC
+> >
+> > This looks like both QPHY_V4_PCS and QPHY_V5_PCS. Most probably we should
+> > merge them together and add these defines.
+> >
+>
+> Exactly, all these defines looks like defines we already have and if you
+> pick the wrong one you end up with things not working - or in my case
+> something that worked sometimes.
+>
+> > > +
+> > > +/* Module: USB3_PCS_USB3_USB3_PCS_USB3_USB3_PCS_USB3 */
+> [..]
+> > > +#define USB3_V5_5NM_PCS_USB3_RXTERMINATION_DLY_SEL                 0x60
+> >
+> > Again, QPHY_V5_PCS_USB w/o the 0x300 offset
+> >
+>
+> Yeah, that extra region needs to be added to the binding and driver.
+
+We can add it to the driver first (and just make it as an offset from pcs).
 
 -- 
 With best wishes
