@@ -2,36 +2,36 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 57CCF540D89
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jun 2022 20:49:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BFB82540D8B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jun 2022 20:49:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353960AbiFGSs5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Jun 2022 14:48:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57840 "EHLO
+        id S1353967AbiFGSs7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Jun 2022 14:48:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57878 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1354405AbiFGSq7 (ORCPT
+        with ESMTP id S1354565AbiFGSrJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Jun 2022 14:46:59 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD34532077;
-        Tue,  7 Jun 2022 11:01:04 -0700 (PDT)
+        Tue, 7 Jun 2022 14:47:09 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED2276A015;
+        Tue,  7 Jun 2022 11:02:12 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 73E95617B0;
-        Tue,  7 Jun 2022 18:01:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76F18C34119;
-        Tue,  7 Jun 2022 18:01:02 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id A080BB82349;
+        Tue,  7 Jun 2022 18:02:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E00FC34119;
+        Tue,  7 Jun 2022 18:02:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1654624863;
-        bh=OeYBXK7Vd8Z7875GdHc2vCw+10nPHVIVgJicLuUH/T0=;
+        s=k20201202; t=1654624930;
+        bh=LfWAWhbVjUE7KSVQYTqbDlcBwnnnhFqtXBohBmzGMuI=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=eWgTDvG+bsAcVzy1/uMHQ79HI/UMC2/PcAXU/slldxUxH6aI26zkZv0GYIV9f5Nmu
-         uxITV3ARjS/JEkq2HSMoaaGFaf40krJZQzrJfCywFIAHNpxvK0+LTrY+W1qxoH+gEa
-         mq2BeSN+zup4v/5/vv0EvPq6TObVDbaaRJuIGMsra2j6FvgPRskv80m+b0cf9rposw
-         3N+mn9tNSmCUo2J1OlVPox+ek3ZDN8AuwW0NU3/fqs/S9BzdIkE8pVrfLwnCDb6IY1
-         kSJT750blUAIizxQCD0ZOTfAbp1wfdIpNBNGpg98Q9f0ToejqRerjGHvVfdYp1ve9V
-         hyvbkqUB2WBtA==
+        b=ocQxog95iXHvvt73VRJy1hipY5KlmEYjoYpIKrslabcxIMvIhcw87O52hr6S8TNZY
+         GiihRlpVqXr130WYY+gd+ofnc6GL5kS6yicA9tLvs+21gVx93OyuHY0D7rR++PgmOR
+         m8yIs01k2ACr8Jm24OvbYO3bXMYLIibW7K5ejn3g+frBJdbpEi4WS6LHgfld7oxRCD
+         bMQFaWpOHHvi45A+6Lt6qt3sHMarZGXbtvRMsfE3zxnOXw0x7Sq5tysZhYnsXCG3wd
+         BYNTf0zBceDoRvZ66uZD9EuGQkRZgSi7741ovrsFPJEJ7aWIoPPCBG00UWN4EbSCFV
+         l+2uRRkPn6Phg==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     John Ogness <john.ogness@linutronix.de>,
@@ -41,12 +41,12 @@ Cc:     John Ogness <john.ogness@linutronix.de>,
         Sasha Levin <sashal@kernel.org>, agross@kernel.org,
         bjorn.andersson@linaro.org, jirislaby@kernel.org,
         linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.4 18/34] serial: msm_serial: disable interrupts in __msm_console_write()
-Date:   Tue,  7 Jun 2022 13:59:53 -0400
-Message-Id: <20220607180011.481266-18-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.19 16/27] serial: msm_serial: disable interrupts in __msm_console_write()
+Date:   Tue,  7 Jun 2022 14:01:20 -0400
+Message-Id: <20220607180133.481701-16-sashal@kernel.org>
 X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220607180011.481266-1-sashal@kernel.org>
-References: <20220607180011.481266-1-sashal@kernel.org>
+In-Reply-To: <20220607180133.481701-1-sashal@kernel.org>
+References: <20220607180133.481701-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -83,7 +83,7 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 5 insertions(+)
 
 diff --git a/drivers/tty/serial/msm_serial.c b/drivers/tty/serial/msm_serial.c
-index 5129c2dfbe07..aac96659694d 100644
+index a40827956bd1..d248c43db36a 100644
 --- a/drivers/tty/serial/msm_serial.c
 +++ b/drivers/tty/serial/msm_serial.c
 @@ -1579,6 +1579,7 @@ static inline struct uart_port *msm_get_port_from_line(unsigned int line)
