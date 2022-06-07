@@ -2,70 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C4F7C5426D3
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jun 2022 08:58:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9BB925421B6
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jun 2022 08:44:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1378913AbiFHA7R (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Jun 2022 20:59:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41154 "EHLO
+        id S229986AbiFHA6S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Jun 2022 20:58:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34648 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1574406AbiFGXZk (ORCPT
+        with ESMTP id S1573483AbiFGXYI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Jun 2022 19:25:40 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73C37170F2A
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Jun 2022 14:35:45 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id i29so13530620lfp.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Jun 2022 14:35:45 -0700 (PDT)
+        Tue, 7 Jun 2022 19:24:08 -0400
+Received: from mail-oa1-x2e.google.com (mail-oa1-x2e.google.com [IPv6:2001:4860:4864:20::2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA3EC3F5740
+        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Jun 2022 14:33:22 -0700 (PDT)
+Received: by mail-oa1-x2e.google.com with SMTP id 586e51a60fabf-f2a4c51c45so24834852fac.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Jun 2022 14:33:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=ggI96oh4nmAF7H/TKahQWu836yBK21tCOCTlg3vHU9s=;
-        b=doRCuV5A0DI7BomjV0eVJ7z854H9CJSGK+oVS7Gb2uxhNdE3mf/sH2WURuCFXdizlA
-         KA8aOi/S6SWKYeC6lOEsLTlJ2vL4B8eLJpeIkGlvCK8E381VCwQDsB+qN+eVpvTPTCSf
-         rmGmPrDGWN3xE+njNDL/I4w1yIG44umNul1g7lxCaZFCOoUFfaXq+3DvHXKdXne1/K5A
-         jr55sOGEbA9ar0Z3xJDctl+nxozg/iA7UxFcp40DUEjvzPW7p0q6sUPxfeSVnMTCIwD3
-         gmpRU1jJOmKrnVc6YtWaQBIAun2Ntq7VQiTAtixX9P2xO39G1HgFmK9miVeYs7ozpoT6
-         tB7g==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=7WQJ/XtKegsw42WINS+GcmBCB6YzztdG6Y2PPPtUW/w=;
+        b=TrullXJMsk5YwE74aMpxuW61E1Hw1bnKtHsWUuwneaKzbWnpnuR+AjXBZ629aN2OD4
+         K8M0ZQuIVKorAfsPpsBq4P/2IJG0G29TGqlJA0BDh9WZ1T7oHDJej8Pa4GdBM1Px974A
+         cFaCm7tTycbHC+Kgx1dTX3JZv8xASZxwar4EZmTS4r868fstIko0vde6uw7EGmO62bSp
+         k9J9GAkUGTPbdwagbRBagx5TDT9IFym/yPArpVhVR2+zp4iu05KPEYJCDrOwJ5HliovS
+         qmxbar3fOJ/dBtJBu0ZXgJRPAUTqg8kgwHHB5w8d+I2Ivx5MiU5sRuNowWjBNz9bAQIo
+         0yHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=ggI96oh4nmAF7H/TKahQWu836yBK21tCOCTlg3vHU9s=;
-        b=7DAjgmF7cE4af+fBASpGC6TBhv3W/+M1RE+gQTjYhqGsm/yz6gNYYrRahFPQAfOcbh
-         l5J54kEgV8VYqXs7nmGcT6lv1J4F9QQEyZnPKbkwIOgprCWv6aivOEO0maO9Zj8+bEgG
-         riGFo9l3JWhnejvETiLp4E/uzSm/de28m5ub7aEookzh4ecTRADVdqFjbsvMYzmimj3o
-         Uiwt041HmrnwwKq5ErFQ90BiXL5+mbed639UdgLPKKghrFfrknwsoyzRP5fPReN+W3cb
-         O8h3VtPq8pvGoc6GzL/GSeFfnaEaSFG5dtMCA6/MjjUZpTCGNHbdoR9aElcH68YQecio
-         3zMw==
-X-Gm-Message-State: AOAM533STk6iK8ds1xUkixgHTBW+R/p6KKsv/bdb4ipWwBSw7EnQydkl
-        D0rHuxBy1MjTUvmJVay4Ep0n1A==
-X-Google-Smtp-Source: ABdhPJz1EszLbQUB9ohWH+LJawc4IJSKOyxgeyPazzlOBAh37VNSPWCi0pQAvLUG+1eIa+Dbj97ANw==
-X-Received: by 2002:ac2:4c50:0:b0:479:4fac:dd8e with SMTP id o16-20020ac24c50000000b004794facdd8emr6556972lfk.678.1654637743812;
-        Tue, 07 Jun 2022 14:35:43 -0700 (PDT)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id 4-20020a2e1644000000b0025552d57beasm2975060ljw.89.2022.06.07.14.35.43
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=7WQJ/XtKegsw42WINS+GcmBCB6YzztdG6Y2PPPtUW/w=;
+        b=QsSImfoG3NM/Orum43nYtTBCTfQw2drfMusZe1aHMjp370BhFXAbJHKprMnMn2YUBw
+         bti79mZo5pYPKyoM92otfHCUoqd9gwAEQx2jotaExk2ygJ5tIfyTaqP3x9KlK59ZFN6y
+         WKQCOQnI4rS8Xf+Mymx6dVkRcizLOJCHFBj4HgibJuQCGuehecolTApeIky8KaGQXip5
+         bznIUGAomumuR5UykPhzNVgBZH1D90B4JBkCVnDqEQk221RnUzKK9vduPf/5bB85dmZ5
+         hJJmb1+EVcQ+UJkfqRNYnQvIfE+Rm30c2OSG9SFyFZWsMfUnOW8x5cghqMy9rDlMuoEn
+         cztw==
+X-Gm-Message-State: AOAM530CsIA5NJHOqDtbnIbl/YdB1RqDE0LgRGWfSS2RruLlwOoX0s2r
+        CRiMZtQ4G9X1JMNhrFUk0F93ew==
+X-Google-Smtp-Source: ABdhPJyU25K2d0bR0vnpnqOV1y2zdIZ6XN9gCVbMevu5CAiFWeOd1COsOlK9xlawqzqPKGiYAmdkLg==
+X-Received: by 2002:a05:6870:82a2:b0:f5:f1ee:cfdb with SMTP id q34-20020a05687082a200b000f5f1eecfdbmr538939oae.297.1654637599500;
+        Tue, 07 Jun 2022 14:33:19 -0700 (PDT)
+Received: from ripper.. (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id cd24-20020a056808319800b0032e7205619asm4966031oib.15.2022.06.07.14.33.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Jun 2022 14:35:43 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Tue, 07 Jun 2022 14:33:18 -0700 (PDT)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Kishon Vijay Abraham I <kishon@ti.com>,
         Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>
-Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org
-Subject: [PATCH v1 01/30] phy: qcom-qmp: create copies of QMP PHY driver
-Date:   Wed,  8 Jun 2022 00:35:32 +0300
-Message-Id: <20220607213203.2819885-2-dmitry.baryshkov@linaro.org>
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Manu Gautam <mgautam@codeaurora.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v2 0/5] phy: qcom: Add SC8280XP UNI and COMBO USB phys
+Date:   Tue,  7 Jun 2022 14:35:38 -0700
+Message-Id: <20220607213543.4057620-1-bjorn.andersson@linaro.org>
 X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220607213203.2819885-1-dmitry.baryshkov@linaro.org>
-References: 
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -73,49 +72,33 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In order to split and cleanup the single monstrous QMP PHY driver,
-create blind copies of the current file. They will be used for:
-- PCIe (and a separate msm8996 PCIe PHY driver)
-- UFS
-- USB
-- Combo DP + USB
+The Qualcomm SC8280XP has two pairs of USB phys; a pair of combo phys and a
+pair of uni phys. Introduce support for these.
 
-Acked-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Tested-by: Bjorn Andersson <bjorn.andersson@linaro.org> # UFS, PCIe and USB on SC8180X
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/phy/qualcomm/{phy-qcom-qmp.c => phy-qcom-qmp-combo.c}     | 0
- .../phy/qualcomm/{phy-qcom-qmp.c => phy-qcom-qmp-pcie-msm8996.c}  | 0
- drivers/phy/qualcomm/{phy-qcom-qmp.c => phy-qcom-qmp-pcie.c}      | 0
- drivers/phy/qualcomm/{phy-qcom-qmp.c => phy-qcom-qmp-ufs.c}       | 0
- drivers/phy/qualcomm/{phy-qcom-qmp.c => phy-qcom-qmp-usb.c}       | 0
- 5 files changed, 0 insertions(+), 0 deletions(-)
- copy drivers/phy/qualcomm/{phy-qcom-qmp.c => phy-qcom-qmp-combo.c} (100%)
- copy drivers/phy/qualcomm/{phy-qcom-qmp.c => phy-qcom-qmp-pcie-msm8996.c} (100%)
- copy drivers/phy/qualcomm/{phy-qcom-qmp.c => phy-qcom-qmp-pcie.c} (100%)
- copy drivers/phy/qualcomm/{phy-qcom-qmp.c => phy-qcom-qmp-ufs.c} (100%)
- copy drivers/phy/qualcomm/{phy-qcom-qmp.c => phy-qcom-qmp-usb.c} (100%)
+This is based ontop of Dmitry's refactoring of the QMP driver:
+https://lore.kernel.org/all/20220602070909.1666068-1-dmitry.baryshkov@linaro.org/
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-similarity index 100%
-copy from drivers/phy/qualcomm/phy-qcom-qmp.c
-copy to drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie-msm8996.c
-similarity index 100%
-copy from drivers/phy/qualcomm/phy-qcom-qmp.c
-copy to drivers/phy/qualcomm/phy-qcom-qmp-pcie-msm8996.c
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-similarity index 100%
-copy from drivers/phy/qualcomm/phy-qcom-qmp.c
-copy to drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-similarity index 100%
-copy from drivers/phy/qualcomm/phy-qcom-qmp.c
-copy to drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-similarity index 100%
-copy from drivers/phy/qualcomm/phy-qcom-qmp.c
-copy to drivers/phy/qualcomm/phy-qcom-qmp-usb.c
+A first version of this series was posted with only the UNI phy, this fixes a
+few comments and add the combo phy as well.
+
+Bjorn Andersson (5):
+  dt-bindings: phy: qcom,qmp: Add compatible for SC8280XP USB phys
+  phy: qcom-qmp: Add USB3 5NM QMP UNI registers
+  phy: qcom-qmp: Add USB4 5NM QMP combo PHY registers
+  phy: qcom-qmp: Add SC8280XP USB3 UNI phy
+  phy: qcom-qmp: Add sc8280xp USB/DP combo phys
+
+ .../devicetree/bindings/phy/qcom,qmp-phy.yaml |    2 +
+ .../bindings/phy/qcom,qmp-usb3-dp-phy.yaml    |    1 +
+ drivers/phy/qualcomm/phy-qcom-qmp-combo.c     |  205 +++
+ drivers/phy/qualcomm/phy-qcom-qmp-usb.c       |  138 ++
+ drivers/phy/qualcomm/phy-qcom-qmp.h           |   13 +
+ .../phy/qualcomm/phy-qcom-usb3-5nm-qmp-uni.h  |  617 +++++++
+ .../qualcomm/phy-qcom-usb4-5nm-qmp-combo.h    | 1547 +++++++++++++++++
+ 7 files changed, 2523 insertions(+)
+ create mode 100644 drivers/phy/qualcomm/phy-qcom-usb3-5nm-qmp-uni.h
+ create mode 100644 drivers/phy/qualcomm/phy-qcom-usb4-5nm-qmp-combo.h
+
 -- 
 2.35.1
 
