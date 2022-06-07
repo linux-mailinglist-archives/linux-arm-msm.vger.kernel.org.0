@@ -2,51 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 19806540AB4
+	by mail.lfdr.de (Postfix) with ESMTP id D3EFC540AB6
 	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jun 2022 20:23:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351462AbiFGSXe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Jun 2022 14:23:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41790 "EHLO
+        id S1351470AbiFGSXh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Jun 2022 14:23:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42284 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352163AbiFGSQ5 (ORCPT
+        with ESMTP id S1352476AbiFGSVM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Jun 2022 14:16:57 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37560FD28;
-        Tue,  7 Jun 2022 10:50:50 -0700 (PDT)
+        Tue, 7 Jun 2022 14:21:12 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 196CD3466C;
+        Tue,  7 Jun 2022 10:53:54 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id C89B76146F;
-        Tue,  7 Jun 2022 17:50:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C98FFC34115;
-        Tue,  7 Jun 2022 17:50:47 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id D34E06137B;
+        Tue,  7 Jun 2022 17:53:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BFF3C385A5;
+        Tue,  7 Jun 2022 17:53:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1654624249;
-        bh=KgLkVpm/eCq7pTrqhy/1TWHRr1bnRifLYUD1rkYJal0=;
+        s=k20201202; t=1654624433;
+        bh=0/OPehuoJpxf3SgM/ilGfsr7BWC3yKaBiuwbOz7xEW8=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=Ub+VtufDduOXMSv4TZ9gQU3zOrvM1SsnkzzkhdwhZCv1lv56F+kq8Bf/vgxdxebWm
-         mF7yA56VUm7ldmjLlSF2PneCn+xFkeT5SpPIDalt1Tc2h/c/B9Q6NuZm7iyTtGd4eK
-         9LoRAyoA/fPkvigYeFf4vdkb/RzjcpwfCsgdtfp4jRiwL9F41rHd4GQ7YdXzkiWeKZ
-         fvotHf7tSvA6c92nFMVTY8/d3dO0GYVdS6F0ulVLwpGVbrS6U+Wn9Zl+0su8nq2Sae
-         8JYV/xd7sy+sEEP/i44c9LIkG4MNiH1zQPaSW7Cs0J16Dy7T/0B85bWBIITrlL1b2O
-         hv//HYJvwPAsQ==
+        b=IGrZrtMTH9gRLwB8yPNJd5A0TLZQxYh2B/IDe2O2nSOs3/BWGfxNWPbpnfZr5kJjB
+         nei/fz9+FoC6pHZM9n2m7j8GaWCWZ6o3PQgiGmsU86+oVymQA/89k8vtCLB8Hfj4fF
+         2nd9TexvB5eFW7dk/funp9gxwzhv6BTYlAK7aRas29ItS9hxeswr8fAR67pqLAVI1y
+         5feZYp9yQxBIaTH1tfpCjBIpvOYjoVxsqh3WODlnXR9bxKLiKCQvQ67m0l+uIdoqPL
+         1T5YFUiEHDuai7IOqq9aKcMvilW+mEt69vtpql6IwvGiz/kXrADGOo5K3D/fMq0I7Y
+         z+FS2YOauiSaw==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     John Ogness <john.ogness@linutronix.de>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Petr Mladek <pmladek@suse.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Sasha Levin <sashal@kernel.org>, agross@kernel.org,
-        bjorn.andersson@linaro.org, jirislaby@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.18 30/68] serial: msm_serial: disable interrupts in __msm_console_write()
-Date:   Tue,  7 Jun 2022 13:47:56 -0400
-Message-Id: <20220607174846.477972-30-sashal@kernel.org>
+Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
+        Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
+        agross@kernel.org, bjorn.andersson@linaro.org,
+        yung-chuan.liao@linux.intel.com, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org
+Subject: [PATCH AUTOSEL 5.17 20/60] soundwire: qcom: adjust autoenumeration timeout
+Date:   Tue,  7 Jun 2022 13:52:17 -0400
+Message-Id: <20220607175259.478835-20-sashal@kernel.org>
 X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220607174846.477972-1-sashal@kernel.org>
-References: <20220607174846.477972-1-sashal@kernel.org>
+In-Reply-To: <20220607175259.478835-1-sashal@kernel.org>
+References: <20220607175259.478835-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -61,57 +60,40 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: John Ogness <john.ogness@linutronix.de>
+From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 
-[ Upstream commit aabdbb1b7a5819e18c403334a31fb0cc2c06ad41 ]
+[ Upstream commit 74da272400b46f2e898f115d1b1cd60828766919 ]
 
-__msm_console_write() assumes that interrupts are disabled, but
-with threaded console printers it is possible that the write()
-callback of the console is called with interrupts enabled.
+Currently timeout for autoenumeration during probe and bus reset is set to
+2 secs which is really a big value. This can have an adverse effect on
+boot time if the slave device is not ready/reset.
+This was the case with wcd938x which was not reset yet but we spent 2
+secs waiting in the soundwire controller probe. Reduce this time to
+1/10 of Hz which should be good enough time to finish autoenumeration
+if any slaves are available on the bus.
 
-Explicitly disable interrupts using local_irq_save() to preserve
-the assumed context.
-
-Reported-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Reviewed-by: Petr Mladek <pmladek@suse.com>
-Signed-off-by: John Ogness <john.ogness@linutronix.de>
-Link: https://lore.kernel.org/r/20220506213324.470461-1-john.ogness@linutronix.de
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Link: https://lore.kernel.org/r/20220506084705.18525-1-srinivas.kandagatla@linaro.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/msm_serial.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/soundwire/qcom.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/tty/serial/msm_serial.c b/drivers/tty/serial/msm_serial.c
-index 23c94b927776..e676ec761f18 100644
---- a/drivers/tty/serial/msm_serial.c
-+++ b/drivers/tty/serial/msm_serial.c
-@@ -1599,6 +1599,7 @@ static inline struct uart_port *msm_get_port_from_line(unsigned int line)
- static void __msm_console_write(struct uart_port *port, const char *s,
- 				unsigned int count, bool is_uartdm)
- {
-+	unsigned long flags;
- 	int i;
- 	int num_newlines = 0;
- 	bool replaced = false;
-@@ -1616,6 +1617,8 @@ static void __msm_console_write(struct uart_port *port, const char *s,
- 			num_newlines++;
- 	count += num_newlines;
+diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
+index 54813417ef8e..249f1b69ec94 100644
+--- a/drivers/soundwire/qcom.c
++++ b/drivers/soundwire/qcom.c
+@@ -99,7 +99,7 @@
  
-+	local_irq_save(flags);
-+
- 	if (port->sysrq)
- 		locked = 0;
- 	else if (oops_in_progress)
-@@ -1661,6 +1664,8 @@ static void __msm_console_write(struct uart_port *port, const char *s,
- 
- 	if (locked)
- 		spin_unlock(&port->lock);
-+
-+	local_irq_restore(flags);
- }
- 
- static void msm_console_write(struct console *co, const char *s,
+ #define SWRM_SPECIAL_CMD_ID	0xF
+ #define MAX_FREQ_NUM		1
+-#define TIMEOUT_MS		(2 * HZ)
++#define TIMEOUT_MS		100
+ #define QCOM_SWRM_MAX_RD_LEN	0x1
+ #define QCOM_SDW_MAX_PORTS	14
+ #define DEFAULT_CLK_FREQ	9600000
 -- 
 2.35.1
 
