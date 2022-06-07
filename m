@@ -2,72 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CD3A853FFD9
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jun 2022 15:18:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BE45A540024
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jun 2022 15:35:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244556AbiFGNSs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Jun 2022 09:18:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56622 "EHLO
+        id S244806AbiFGNfZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Jun 2022 09:35:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50518 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243513AbiFGNSr (ORCPT
+        with ESMTP id S244780AbiFGNfY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Jun 2022 09:18:47 -0400
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0072A6928C
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Jun 2022 06:18:44 -0700 (PDT)
-Received: by mail-ej1-x634.google.com with SMTP id q1so35168959ejz.9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Jun 2022 06:18:44 -0700 (PDT)
+        Tue, 7 Jun 2022 09:35:24 -0400
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5864AC6847
+        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Jun 2022 06:35:21 -0700 (PDT)
+Received: by mail-ej1-x62b.google.com with SMTP id m20so35188697ejj.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Jun 2022 06:35:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair;
-        h=cc:subject:from:to:mime-version:content-transfer-encoding:date
-         :message-id:references:in-reply-to;
-        bh=xQ/38FMDTLXlcNU1vfrf+06M1Gbcy9oJbFk2y6vkO2w=;
-        b=oHVLGgKjmFMRMizTWmpZDLzkW76syBiOmiYDceeIW+ewSxfl64CjZKYzxmVFRGMpTG
-         LU0BRmI9u2/28Lm0vt5W5IjCHcVZ4Z5Dec6IwLNQn/yl3CL7iqmUdOoAwJqpRNb5/sv5
-         eIsgDDe6s9HKYbysqzFAhfZX/nXhqmpFw7RLOKKuiSXxo1ke3Mj21BdmuSc2klLcL5Za
-         WcpPogll14XXtfMDfJMPsnUnOUv4dgw4QJUyZh6N5EzxJBdXX22J1a+1EVZosCacRCpH
-         kBiL6+pzjpOnKRkfl7RNP7bw7kSlVzi7ds8+B7I1KThDpMy+czgIGLsZt02Ee3VflEBz
-         D8lg==
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=rEEFwb3oB6edXdLTltHDejyT72ppuJHFYFe2MWg11vg=;
+        b=bIMjQj29IXUlWVJWuZoBrJbhkXJO/lJL14jsX7JUB+41BhUq7+HsxquSf57k2tT626
+         8R9TPXdmTFSAxYlvpyxaWpphgpBkF7DA3OdopeMFpjfCJj+D9jRmYW/BwAxIFg6oU8H/
+         ykMoelXY5JuoVEAGTyKI/oJ0h476uMUs1vvUa7zhN51g6R0jualc4p/GJUdCTjXVUZBD
+         6n+L8SfTlkVr8yGiYsKi/4I0tA5u1+PIScUdPQ1UteiBbAVjLbGTCBd1itI8uWt7oToO
+         iT6h9mvLq0BsXTTbNyFlntd41ibrlhRT2W8o+4jKIPr2azFqGTTBWtctdIiZpSqSbJ8+
+         UF3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:cc:subject:from:to:mime-version
-         :content-transfer-encoding:date:message-id:references:in-reply-to;
-        bh=xQ/38FMDTLXlcNU1vfrf+06M1Gbcy9oJbFk2y6vkO2w=;
-        b=0Gqpg6XkX1S8CXvojBVHSEwR5zIsBLZ9fehI91GJTICLlzcEmqwOXdZOfpVhE8a7+n
-         dQKUiObyd4a0rJJqX4YyumBYLRPnvMqDUZtg8yaTBogdeiBNtZ3ENJOQUpb0+ZBwtcqg
-         Rbz9mIJCrzSEUk4uxrbJ6HdkQjeUTG6JRJ0LLA7OCaP+AY0yBjZ68MdZKBv8uAKsPD/T
-         vRt1PT/ki+GFjcKmgbokLk8w+7Wv0aVXA7BzNTvk6txG9vucMk9Gg5R8TYnAngKOjWBk
-         dKHfrKeGvUb1GP0VFb2KbvNk3JK+j9IrXGFFwvaggoZIJYkJY0V6dm2cIixV38u3/LiZ
-         LFfQ==
-X-Gm-Message-State: AOAM530iKqlCNa2brj2md6Cfzs6XEAcNXhbG5nMyrej0Ytzu+3tJfWnF
-        m0xidLmHeQDQnY+TSI1GSCsVag==
-X-Google-Smtp-Source: ABdhPJzl8lTpta7T4QnmJUQpMYORX+lUVc3wUnHas6OVjJwcyHdfSOUBlntzuSdVEyfl0tXG5VwNiw==
-X-Received: by 2002:a17:907:1ca8:b0:70c:68ce:dade with SMTP id nb40-20020a1709071ca800b0070c68cedademr23803960ejc.723.1654607923570;
-        Tue, 07 Jun 2022 06:18:43 -0700 (PDT)
-Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id z14-20020a170906074e00b006fecf62536asm5311035ejb.188.2022.06.07.06.18.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 07 Jun 2022 06:18:43 -0700 (PDT)
-Content-Type: text/plain; charset=UTF-8
-Cc:     "Lee Jones" <lee.jones@linaro.org>,
-        "Liam Girdwood" <lgirdwood@gmail.com>,
-        "Mark Brown" <broonie@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <swboyd@chromium.org>, <quic_collinsd@quicinc.com>,
-        <quic_subbaram@quicinc.com>, <quic_jprakash@quicinc.com>
-Subject: Re: [PATCH V14 8/9] arm64: dts: qcom: pm8008: Add base dts file
-From:   "Luca Weiss" <luca.weiss@fairphone.com>
-To:     "Satya Priya" <quic_c_skakit@quicinc.com>,
-        "Bjorn Andersson" <bjorn.andersson@linaro.org>,
-        "Rob Herring" <robh+dt@kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Date:   Tue, 07 Jun 2022 15:16:31 +0200
-Message-Id: <CKJXIE08RHD0.31NM2AKTA8B9V@otso>
-X-Mailer: aerc 0.9.0
-References: <1654602615-28849-1-git-send-email-quic_c_skakit@quicinc.com>
- <1654602615-28849-9-git-send-email-quic_c_skakit@quicinc.com>
-In-Reply-To: <1654602615-28849-9-git-send-email-quic_c_skakit@quicinc.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=rEEFwb3oB6edXdLTltHDejyT72ppuJHFYFe2MWg11vg=;
+        b=6WBaeiOVkfP0Ug/NDaDRKN/EBrfV4NRT4ngIWgr0i2se64ZhR9Uo4QDoos9Qe5oszk
+         WZcoa89MOsQ0L/E3+NHlm8g6+yqgNN+pBcuvNa9Iho27NdHWMebox0k5fkmUlxNVWAiR
+         nOJojU+5MWDZ6q4aZ+aji+prskMvg2kpzJm0oc3V9CMlgStHhH4aLN662gws9Wrh8yjn
+         fjB2tTwz1RdD2iJ3SlVozdFPGjCGMncrvwR8jACeEtcA5oAhd5E8hSxEjMd7AW617+jO
+         EM5WJck/xDTVi2zAX8/rnTQkTgR10XhJeYONcrE1oo8ktv0FOsVAfB5mbbiST7f9bDs6
+         ffhA==
+X-Gm-Message-State: AOAM532ASi6dADnCYXpNeydTQ5TEYIUJsuhZFnvhLj+ftLA2kNFWrq5c
+        m/cQSLqrw6OkxZ3kiSvhTsosTw==
+X-Google-Smtp-Source: ABdhPJxv4p97hVWx1ZCcLvuuZi+pfqT+8mSLYG+g5JynKNhp5Fb/tpKxruM8YdTd5zyvHh0QHk4VEA==
+X-Received: by 2002:a17:907:2cc3:b0:6fa:55f:8805 with SMTP id hg3-20020a1709072cc300b006fa055f8805mr26558728ejc.46.1654608919887;
+        Tue, 07 Jun 2022 06:35:19 -0700 (PDT)
+Received: from localhost.localdomain (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id b23-20020a17090630d700b0070e1adff390sm5644204ejb.34.2022.06.07.06.35.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 07 Jun 2022 06:35:19 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Lee Jones <lee.jones@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 1/2] dt-bindings: mfd: qcom,tcsr: Convert to dtschema
+Date:   Tue,  7 Jun 2022 15:34:42 +0200
+Message-Id: <20220607133443.182468-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -78,52 +73,101 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Satya,
+Convert the Qualcomm Top Control and Status Register to DT Schema.
 
-On Tue Jun 7, 2022 at 1:50 PM CEST, Satya Priya wrote:
-> Add base DTS file for pm8008.
->
-> Signed-off-by: Satya Priya <quic_c_skakit@quicinc.com>
-> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-> ---
-> Changes in V14:
->  - None.
->
-> Changes in V13:
->  - None.
->
-> Changes in V12:
->  - None.
->
-> Changes in V11:
->  - Remove intermediate regulators node and add the ldos under
->    pm8008@8 node.
->  - change the address cells as 2 for pm8008 parent mfd node.
->  - add compatible to register the ldos.
->  - add reg with i2c client offset and address.
->
->  arc
->  arch/arm64/boot/dts/qcom/pm8008.dtsi | 54 ++++++++++++++++++++++++++++++=
-++++++
->  1 file changed, 54 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/pm8008.dtsi
->
-> diff --git a/arch/arm64/boot/dts/qcom/pm8008.dtsi b/arch/arm64/boot/dts/q=
-com/pm8008.dtsi
-> new file mode 100644
-> index 0000000..6f37e4d
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/pm8008.dtsi
-> @@ -0,0 +1,54 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +// Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserv=
-ed.
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ .../devicetree/bindings/mfd/qcom,tcsr.txt     | 24 ---------
+ .../devicetree/bindings/mfd/qcom,tcsr.yaml    | 49 +++++++++++++++++++
+ 2 files changed, 49 insertions(+), 24 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/mfd/qcom,tcsr.txt
+ create mode 100644 Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml
 
-I noticed this file was licensed as BSD-3-Clause in V13 and
-this change was not mentioned in the "Changes" part.
-Any specific reason? Especially newer dts files should be BSD-licensed,
-and having this GPL dtsi included in otherwise BSD dts files is not
-good.
+diff --git a/Documentation/devicetree/bindings/mfd/qcom,tcsr.txt b/Documentation/devicetree/bindings/mfd/qcom,tcsr.txt
+deleted file mode 100644
+index add61bcc3c74..000000000000
+--- a/Documentation/devicetree/bindings/mfd/qcom,tcsr.txt
++++ /dev/null
+@@ -1,24 +0,0 @@
+-QCOM Top Control and Status Register
+-
+-Qualcomm devices have a set of registers that provide various control and status
+-functions for their peripherals.  This node is intended to allow access to these
+-registers via syscon.
+-
+-Required properties:
+-- compatible:	Should contain:
+-		"qcom,tcsr-ipq6018", "syscon", "simple-mfd" for IPQ6018
+-		"qcom,tcsr-ipq8064", "syscon" for IPQ8064
+-		"qcom,tcsr-apq8064", "syscon" for APQ8064
+-		"qcom,tcsr-msm8660", "syscon" for MSM8660
+-		"qcom,tcsr-msm8953", "syscon" for MSM8953
+-		"qcom,tcsr-msm8960", "syscon" for MSM8960
+-		"qcom,tcsr-msm8974", "syscon" for MSM8974
+-		"qcom,tcsr-apq8084", "syscon" for APQ8084
+-		"qcom,tcsr-msm8916", "syscon" for MSM8916
+-- reg: Address range for TCSR registers
+-
+-Example:
+-	tcsr: syscon@1a400000 {
+-		compatible = "qcom,tcsr-msm8960", "syscon";
+-		reg = <0x1a400000 0x100>;
+-	};
+diff --git a/Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml b/Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml
+new file mode 100644
+index 000000000000..428973f97a72
+--- /dev/null
++++ b/Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml
+@@ -0,0 +1,49 @@
++# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/mfd/qcom,tcsr.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm Top Control and Status Register
++
++maintainers:
++  - Bjorn Andersson <bjorn.andersson@linaro.org>
++
++description:
++  Qualcomm devices have a set of registers that provide various control and
++  status functions for their peripherals.
++
++properties:
++  compatible:
++    oneOf:
++      - items:
++          - enum:
++              - qcom,tcsr-apq8064
++              - qcom,tcsr-apq8084
++              - qcom,tcsr-ipq8064
++              - qcom,tcsr-msm8660
++              - qcom,tcsr-msm8916
++              - qcom,tcsr-msm8953
++              - qcom,tcsr-msm8960
++              - qcom,tcsr-msm8974
++          - const: syscon
++      - items:
++          - const: qcom,tcsr-ipq6018
++          - const: syscon
++          - const: simple-mfd
++
++  reg:
++    maxItems: 1
++
++required:
++  - compatible
++  - reg
++
++additionalProperties: false
++
++examples:
++  - |
++    syscon@1a400000 {
++        compatible = "qcom,tcsr-msm8960", "syscon";
++        reg = <0x1a400000 0x100>;
++    };
+-- 
+2.34.1
 
-Regards
-Luca
