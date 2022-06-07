@@ -2,36 +2,36 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B4890540C7F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jun 2022 20:37:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EFDBA540E0F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jun 2022 20:52:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346092AbiFGShJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Jun 2022 14:37:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48296 "EHLO
+        id S245226AbiFGSwG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Jun 2022 14:52:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58040 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352077AbiFGSdU (ORCPT
+        with ESMTP id S1353897AbiFGSqP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Jun 2022 14:33:20 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 181B4147695;
-        Tue,  7 Jun 2022 10:57:23 -0700 (PDT)
+        Tue, 7 Jun 2022 14:46:15 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F13E18CE02;
+        Tue,  7 Jun 2022 10:59:40 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id B3C17B82371;
-        Tue,  7 Jun 2022 17:57:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B883C36AFE;
-        Tue,  7 Jun 2022 17:57:19 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 6A21E617A7;
+        Tue,  7 Jun 2022 17:59:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 991F6C34119;
+        Tue,  7 Jun 2022 17:59:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1654624640;
-        bh=i29J13wvF2mQ3XdIzvlfmTFJ+j3j+hpaGB3EjGM9yns=;
+        s=k20201202; t=1654624778;
+        bh=vtKWyOoQaRMqiRfNd1NHO7HzFxwuPjrXjpQnKder8Dw=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=ZMR9p29UTrqwYePA9PlsRxfa9f2v3aynyXTQMMC98beXEq8V0GupMUbQTEBRHMrRr
-         Bb75WuoqB6PdRwGmPxNyEkHmFM5T7BzLlwXqXvEYrnhvToJ+NG9XQv5zK6TCay2db9
-         zfNg9TXk+HM9RRVu8kvj0GbI56FAw9YKkosplCXpDcozi5TgnIKxV46cHzpN8bhqGJ
-         8crWhXyMtlLCgpjeoZzIrvSslfB2EYe3JMPE2wKhjDPG+EUCfi+aTxVH5SU/DmcY0x
-         pp7wvq4QEVyrMGFZ/wNqYY2WF1kPsQvE6ESKDxgccqNUPh1+GQeLP8bgz7pNlqsRrj
-         yeFo5IILiYp6w==
+        b=gunOpj1ESwYrEnrseXx/LoMizFAC4DLoBfL0XZabP9goXiZE7pAh964mpX2YdzAqx
+         +ON3bs3QF6ANnBVQEPq625jJRSmIuRpQ+FWIAxcwV3bQc+JR3DMSXEGvlSoaSD8+pC
+         fA7wF3+CUQDNqMkQWczdxXTWjW1iwQvn3arVJk/i1/4WRWP2YjWQl8IdhCyruf39gk
+         EzGqxhYiuUnfofd0mhl7i0BbkAM47I/pAD7MytSMtIy9HMCNDgRzKh4vtu74CJgCM2
+         dHqNPJG5u0oqiaAWcX54M5RqKB7bpKTgTxRVINLO80Pu9COCsohnjZB3k68dhRTFvq
+         Kw1/WdtgzYXKg==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     John Ogness <john.ogness@linutronix.de>,
@@ -41,12 +41,12 @@ Cc:     John Ogness <john.ogness@linutronix.de>,
         Sasha Levin <sashal@kernel.org>, agross@kernel.org,
         bjorn.andersson@linaro.org, jirislaby@kernel.org,
         linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.15 27/51] serial: msm_serial: disable interrupts in __msm_console_write()
-Date:   Tue,  7 Jun 2022 13:55:26 -0400
-Message-Id: <20220607175552.479948-27-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.10 20/38] serial: msm_serial: disable interrupts in __msm_console_write()
+Date:   Tue,  7 Jun 2022 13:58:15 -0400
+Message-Id: <20220607175835.480735-20-sashal@kernel.org>
 X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220607175552.479948-1-sashal@kernel.org>
-References: <20220607175552.479948-1-sashal@kernel.org>
+In-Reply-To: <20220607175835.480735-1-sashal@kernel.org>
+References: <20220607175835.480735-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -83,10 +83,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 5 insertions(+)
 
 diff --git a/drivers/tty/serial/msm_serial.c b/drivers/tty/serial/msm_serial.c
-index 489d19274f9a..03ff63438e77 100644
+index 26bcbec5422e..27023a56f3ac 100644
 --- a/drivers/tty/serial/msm_serial.c
 +++ b/drivers/tty/serial/msm_serial.c
-@@ -1588,6 +1588,7 @@ static inline struct uart_port *msm_get_port_from_line(unsigned int line)
+@@ -1593,6 +1593,7 @@ static inline struct uart_port *msm_get_port_from_line(unsigned int line)
  static void __msm_console_write(struct uart_port *port, const char *s,
  				unsigned int count, bool is_uartdm)
  {
@@ -94,7 +94,7 @@ index 489d19274f9a..03ff63438e77 100644
  	int i;
  	int num_newlines = 0;
  	bool replaced = false;
-@@ -1605,6 +1606,8 @@ static void __msm_console_write(struct uart_port *port, const char *s,
+@@ -1610,6 +1611,8 @@ static void __msm_console_write(struct uart_port *port, const char *s,
  			num_newlines++;
  	count += num_newlines;
  
@@ -103,7 +103,7 @@ index 489d19274f9a..03ff63438e77 100644
  	if (port->sysrq)
  		locked = 0;
  	else if (oops_in_progress)
-@@ -1650,6 +1653,8 @@ static void __msm_console_write(struct uart_port *port, const char *s,
+@@ -1655,6 +1658,8 @@ static void __msm_console_write(struct uart_port *port, const char *s,
  
  	if (locked)
  		spin_unlock(&port->lock);
