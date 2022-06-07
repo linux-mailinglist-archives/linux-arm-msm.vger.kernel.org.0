@@ -2,70 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CD6AE5403E2
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jun 2022 18:38:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 44EE95403FD
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jun 2022 18:43:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345074AbiFGQi5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Jun 2022 12:38:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40612 "EHLO
+        id S1344072AbiFGQnk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Jun 2022 12:43:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50586 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345069AbiFGQi4 (ORCPT
+        with ESMTP id S237151AbiFGQnj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Jun 2022 12:38:56 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4BCD6814B4;
-        Tue,  7 Jun 2022 09:38:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1654619935; x=1686155935;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=uKV8Rrvy8kCqSKlM45aKJN6vfteKfERlb/gHHUZ2hGE=;
-  b=eenzpvUgxXQaYdsJQYmJHLoYazvwDnOAI4KDAjGbDTl+g3zQzAgyPcKq
-   FkEn23dldDXQrfHYuvtZyUc8QdA6zAL3NLW59CMRAjHJG6sFQjwQd907x
-   1mxveKa4iESJVznu5hOOO4maN4zX9WEEEmHNKC5VFMpf7CpkOXzFvugHv
-   M=;
-Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
-  by alexa-out.qualcomm.com with ESMTP; 07 Jun 2022 09:38:55 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Jun 2022 09:38:54 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Tue, 7 Jun 2022 09:38:54 -0700
-Received: from [10.216.1.130] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Tue, 7 Jun 2022
- 09:38:46 -0700
-Message-ID: <5427aa79-b87c-74eb-def5-9b4e3299a331@quicinc.com>
-Date:   Tue, 7 Jun 2022 22:08:38 +0530
+        Tue, 7 Jun 2022 12:43:39 -0400
+Received: from mail-io1-f41.google.com (mail-io1-f41.google.com [209.85.166.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58E5EB36C0;
+        Tue,  7 Jun 2022 09:43:38 -0700 (PDT)
+Received: by mail-io1-f41.google.com with SMTP id q76so10855080iod.8;
+        Tue, 07 Jun 2022 09:43:38 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=KQhN2bCw2qzHzEfViF9RH6IaU2tqDjbhZaw77rQjUj8=;
+        b=OCB+dnI5IN7FO5ybiN90ipNOZOwukyvWjrLaV9cATXZkL4R/3yitkfqugVxbI/273W
+         gkly7Ey8PmU4mubLtYbILSlYzG/plbgjcEt36SefnWtqdHa0gV4hJLLdtnEi00RB084+
+         YDkaE2pfuhxX8yvN6Mk8DPD7WlL+Med5QRiyeoU+Q8vp1ItLdhgIB4mxvyfyGnKeTzSX
+         A8UHMb8PbzZcV+OLvB1gjIuzc8NSWWTklwrwJUOaJy8fNV0H++bR9EbZL0PAaIVtvz1b
+         H5ByQqY9mzqJ8NYrPai5G51QGGcfqWxZhZBY7dzZOyy3/Q1J7n58XuD6JL3JNOUguUTQ
+         g5hw==
+X-Gm-Message-State: AOAM5306kN5iGxR1vFMlRz/M98xFmTprhFtIyNiErxy+rvOp7GD6qjp4
+        NrUibXP8aCCZgJkmGb7d1A==
+X-Google-Smtp-Source: ABdhPJyJ2L0oQIGdzZg1DvKHr4FFEhIlqyV/wjzoCkNQxGXJJFfSgVxrTPgvLeSYaY/OCk76B5bIOg==
+X-Received: by 2002:a05:6638:371e:b0:331:bc34:c3b1 with SMTP id k30-20020a056638371e00b00331bc34c3b1mr4629870jav.68.1654620217640;
+        Tue, 07 Jun 2022 09:43:37 -0700 (PDT)
+Received: from robh.at.kernel.org ([64.188.179.251])
+        by smtp.gmail.com with ESMTPSA id z9-20020a921a49000000b002d396d6a2b4sm7456318ill.13.2022.06.07.09.43.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 07 Jun 2022 09:43:37 -0700 (PDT)
+Received: (nullmailer pid 3412797 invoked by uid 1000);
+        Tue, 07 Jun 2022 16:43:35 -0000
+Date:   Tue, 7 Jun 2022 10:43:35 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Luca Weiss <luca@z3ntu.xyz>
+Cc:     linux-arm-msm@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] dt-bindings: remoteproc: qcom: q6v5: fix example
+Message-ID: <20220607164335.GA3409694-robh@kernel.org>
+References: <20220606132324.1497349-1-luca@z3ntu.xyz>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.1
-Subject: Re: [PATCH v12 00/12] Add soundcard support for sc7280 based
- platforms.
-Content-Language: en-US
-To:     Matthias Kaehlcke <mka@chromium.org>
-CC:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
-        <robh+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_rohkumar@quicinc.com>, <srinivas.kandagatla@linaro.org>,
-        <dianders@chromium.org>, <swboyd@chromium.org>,
-        <judyhsiao@chromium.org>, <quic_tdas@quicinc.com>
-References: <1653049124-24713-1-git-send-email-quic_srivasam@quicinc.com>
- <Yp5yUSvC05wOxtei@google.com>
-From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Organization: Qualcomm
-In-Reply-To: <Yp5yUSvC05wOxtei@google.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-5.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220606132324.1497349-1-luca@z3ntu.xyz>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -73,44 +68,17 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Mon, Jun 06, 2022 at 03:23:24PM +0200, Luca Weiss wrote:
+> Use the node in the examples that is present in msm8974.dtsi, which uses
+> proper flags for the interrupts and add required 'xo' clock among
+> others.
+> 
+> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+> ---
+>  .../bindings/remoteproc/qcom,q6v5.txt         | 41 +++++++++++--------
+>  1 file changed, 23 insertions(+), 18 deletions(-)
 
-On 6/7/2022 3:02 AM, Matthias Kaehlcke wrote:
-Thanks for your time Matthias!!!
-> On Fri, May 20, 2022 at 05:48:32PM +0530, Srinivasa Rao Mandadapu wrote:
->> This patch set is to add bolero digital macros, WCD and maxim codecs nodes
->> for audio on sc7280 based platforms.
->>
->> This patch set depends on:
->>      -- https://patchwork.kernel.org/project/linux-arm-msm/list/?series=638776
->>      -- https://patchwork.kernel.org/project/linux-arm-msm/list/?series=634597
->>      -- https://patchwork.kernel.org/project/linux-clk/list/?series=637999
->>      -- https://patchwork.kernel.org/project/linux-arm-msm/list/?series=638002
-> Another dependency (at least in terms of functionality) is:
->
-> ASoC: qcom: soundwire: Add support for controlling audio CGCR from HLOS
-> https://patchwork.kernel.org/patch/12853622/
-This is landed today.
->
-> And then there is this:
->
-> arm64: dts: qcom: sc7280: Add lpasscore & lpassaudio clock controllers
-> https://patchwork.kernel.org/project/linux-arm-msm/patch/20220523100058.26241-1-quic_tdas@quicinc.com/
->
-> A previous version (v3) of that patch already landed (9499240d15f2
-> "arm64: dts: qcom: sc7280: Add lpasscore & lpassaudio clock controllers"),
-> it is not clear to me why it is still evolving as if that weren't the
-> case.
+Please consider just converting this to schema instead. Then we actually 
+check the example.
 
-I too have same doubt. the changes should be incremental and new patch. 
-May be Taniya considered
-
-the status in patchwork.kernel org, where still it's showing new.
-
->
->  From the newer version of the patch at least marking the 'lpasscc' node
-> as disabled is needed.
-
-yes, agree. And the node name changed to lpasscore to lpass_core.
-
-Included Taniya in the mail chain for further discussion.
-
+Rob
