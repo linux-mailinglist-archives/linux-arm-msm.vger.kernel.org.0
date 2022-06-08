@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 15603542FD4
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jun 2022 14:08:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 919A4542FE0
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jun 2022 14:08:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238658AbiFHMHb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Jun 2022 08:07:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37738 "EHLO
+        id S238680AbiFHMHd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Jun 2022 08:07:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37850 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238653AbiFHMHa (ORCPT
+        with ESMTP id S230111AbiFHMHc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Jun 2022 08:07:30 -0400
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1A7F1207F6
-        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Jun 2022 05:07:26 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id a29so4389271lfk.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jun 2022 05:07:26 -0700 (PDT)
+        Wed, 8 Jun 2022 08:07:32 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF3BB1B1853
+        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Jun 2022 05:07:27 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id y32so32894168lfa.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jun 2022 05:07:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=FHJ84TvATipBDD8bX8DKVRbAMxK57cbNX0Qh0OSz2u4=;
-        b=p6sUTGw1Hbrk+FTOYNKUsrbBHLd1vviISuy2ymTJwJ2qaErzIhLpNC2ahvsUQXzYck
-         lIUrtgE6eQksSaKS5txREoyveTcvE7qormHK1L1ZhmBgOkRGP7fFCgHiafjzTHxR4UVO
-         ofcSHAz4Dl61mJ/Pr9VU9usdQWVyB+AuScfCqT+jYBNUddBww/4XwO6KbYQETYAWNm21
-         sn3OCd1ETBZm+sGIlOmTNd1EELu0gq6UTXu65MmUvblA+Xi/nBn79ex9NJtC4yUnktTJ
-         t/PO+maBOwGD6M6l1yrFsMEdH86UTuQ+dmcoLh4SBnmBI4NrbYrTkjSpPZKJ8TDR2fB5
-         +zJQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=VePBzYxQZCMYmePlwL3wtl0+0lRocvRBaNXocWAt7M4=;
+        b=Ihtmv3hVfP8GlQ2ZrJSp5zl353vJCWBqL1/l/4ND1iPexqM6TZN8CHdn0PLPDkZ6Y5
+         PpJ0xj6EPXULKS1+y82qB+sVgA8XmiGOGzxiIo17eBnnFmCIP0gNlGzcQA/HROlnsEAu
+         kREMad9Hct2zAIW4uDxvSLOJ3hz/TNQUIU+z26NlaI3rAcIwqJQKjUAm5JUSUzDnRbUg
+         rS96RWLgSRAYYuJLtKXq1vIReiv8A+cRcLisSWlbJsFgC59xE1DZQ/nRfCMa2IF2e1UE
+         uUAmzhLODSrsD+YByd3/M5xAzYsDtDIjOCtBdUu6FcbKc387A8infuIrr46BHNSVJ8Ov
+         eBQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=FHJ84TvATipBDD8bX8DKVRbAMxK57cbNX0Qh0OSz2u4=;
-        b=VdaD9Q5HDbk3H4iWvqW/vtIdzT1ORq+QgZAnO5ViGpe8xFNH38u+7SsPq3deMBpfGD
-         0WvggwDjmxdIdAPsUKvCyG+4w7A8DrNhv7HDENcETPw3xkJqGQT7OgLxj2GnIIMiYci0
-         iFu7Q8X51ufV4dsqCf4ZL2qLKR8Y3MARV/eIB/w2NT53deFrAf1zDIgMMmWSCPZfjMLS
-         8GYg1gVdLgJoOiRTXMN/yhM+9ck8mnARGvJF0GkVOlwEe0aJevkPVO8APix6EVnuvsBp
-         zXK7QmlfpC2gns/bzQbneYDL8gSBbu0DUcyAvcTFr8bnlC/LsASFyLbqbe6QkFLan6rE
-         r+Lg==
-X-Gm-Message-State: AOAM533dCi60E5uB3hc4P0VmPOmzM8LeDdeCJVX+i0gRV2sfwqj5PdOw
-        uW5M2bVa7nc6UFfvpR8smcWvnQ==
-X-Google-Smtp-Source: ABdhPJx81PXvshf1eliVIiEm3C5RGBqIuZcu0SRNR44xkx0s4ZOpmtlVMIYi/PKJGj2uvv6cQyo72w==
-X-Received: by 2002:a19:4f1e:0:b0:479:278:8d24 with SMTP id d30-20020a194f1e000000b0047902788d24mr21280946lfb.370.1654690045070;
-        Wed, 08 Jun 2022 05:07:25 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=VePBzYxQZCMYmePlwL3wtl0+0lRocvRBaNXocWAt7M4=;
+        b=U1+aZHgTqLiDJspxpS5KUtuanj9d1xGP9l8Cz/fPfVM4Y/ZBTN2VNtIZSTmwdteRSz
+         pi/8OgzKsBeIRNe7pkIYl3Jbhlbp09TIVNrW7zQ8ixkDPeu2ZqnKOuTV2bcPZNk64m9K
+         UutBwp8eqhxRS0kvNexcQ8EUuay1YFAhbb+GAjDnX6B4Fd02qL3MD0zngV3jqA37q4i0
+         CumCRr9/A6ZrHD8aAs0VlSPk6g2NE0t/fFijwdi2OKNOXVbjTcMD9knalRbAIUs5qB7t
+         H9dXszAaTLhywm1AOq9o4pxkDXHmo1F7uKS5cmfDA7LOJjpwd6VfpQd2XtT6Enx4nPHL
+         7Ylw==
+X-Gm-Message-State: AOAM5302Ck73YdtQG/ZPRMp1XNA+QVbeatQfeSIg+QvdHM0bkIjrYJbj
+        k3tgsrSmkGjKJ/rMkJE/kniCyw==
+X-Google-Smtp-Source: ABdhPJynsH9N/Lo36AZTRYTbNatxhuHKEw2yG+X4/bzegyagfUFhMjpfdgQ63ZCEXTGcBKnpbe5hhA==
+X-Received: by 2002:a05:6512:ac9:b0:479:5b66:e9e9 with SMTP id n9-20020a0565120ac900b004795b66e9e9mr6684404lfu.581.1654690046115;
+        Wed, 08 Jun 2022 05:07:26 -0700 (PDT)
 Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id 4-20020ac25f04000000b0047b0f2d7650sm52049lfq.271.2022.06.08.05.07.24
+        by smtp.gmail.com with ESMTPSA id 4-20020ac25f04000000b0047b0f2d7650sm52049lfq.271.2022.06.08.05.07.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Jun 2022 05:07:24 -0700 (PDT)
+        Wed, 08 Jun 2022 05:07:25 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -59,11 +59,13 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         David Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: [PATCH v2 00/12] drm/msm/hdmi: YAML-ify schema and cleanup some platform properties
-Date:   Wed,  8 Jun 2022 15:07:11 +0300
-Message-Id: <20220608120723.2987843-1-dmitry.baryshkov@linaro.org>
+        freedreno@lists.freedesktop.org, David Heidelberg <david@ixit.cz>
+Subject: [PATCH v2 01/12] dt-bindings: display/msm: hdmi: split and convert to yaml
+Date:   Wed,  8 Jun 2022 15:07:12 +0300
+Message-Id: <20220608120723.2987843-2-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.35.1
+In-Reply-To: <20220608120723.2987843-1-dmitry.baryshkov@linaro.org>
+References: <20220608120723.2987843-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -76,74 +78,569 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-As agreed with David, this is a continuation of his work started at [1].
-I didn't pick up his R-b tag for the first patch, since patch has been
-heavily modified.
+Convert Qualcomm HDMI binding into HDMI TX and PHY yaml bindings.
 
-Changes since v1:
-- Dropped quotes in $id/$schema
-- Sorted out compat strings alphabetically
-- Removed obvious descriptions
-- Removed undocumented qcom,hdmi-tx-ddc-* properties
-- Switched to additionalProperties
-- Fixed IRQ and GPIO flags in the schema example
-- Added 8084 and 8660 variants to qcom,hdmi-phy-other.yaml conditional
+Changes to schema:
+HDMI:
+ - fixed reg-names numbering to match 0..3 instead 0,1,3,4
+ - dropped qcom,tx-ddc-* from example, they were not documented
 
-- Marked hdmi-mux-supply as deprecated (and dropped it from
-  apq8064-ifc6410.dtsi)
-- Reused 8960 regulator/clock configs for 8x60 (verified against msm-3.4
-  kernel)
+PHY:
+ - moved into phy/ directory
+ - split into QMP and non-QMP PHY schemas
 
-Changes since his patches:
-HDMI schema:
-- Dropped generic pinctrl properties
-- Dropped data-lanes property, which is not supported by the HDMI driver
-- Switched to unevaluatedProperties
-- Moved clocks/regulators/supplies to condition clauses
-- Specified phy-names as used by existing DT files
-- Dropped #phy-cells
-- Dropped power-domains property (which is not used by the device trees)
-- Marked old GPIO properties as deprecated (in a separate patch)
-
-HDMI PHY schema:
-- Split into QMP (msm8996) and non-QMP (other) PHY schemas
-- Added proper clocks/clock-names/reg/reg-names descriptions
-
-The rest of the patches consist of the new work. They further cleanup
-the platform configs, remove unused supplies, etc.
-
-[1]: https://patchwork.freedesktop.org/series/98353/
-
-
-Dmitry Baryshkov (12):
-  dt-bindings: display/msm: hdmi: split and convert to yaml
-  dt-bindings: display/msm: hdmi: mark old GPIO properties as deprecated
-  dt-bindings: display/msm: hdmi: mark hdmi-mux-supply as deprecated
-  arm: dts: qcom: apq8064-ifc6410: drop hdmi-mux-supply
-  drm/msm/hdmi: drop the hdmi-mux support
-  drm/msm/hdmi: drop unused GPIO support
-  drm/msm/hdmi: enable core-vcc/core-vdda-supply for 8996 platform
-  drm/msm/hdmi: drop empty 'none' regulator lists
-  drm/msm/hdmi: drop hpd_regs usage on 8x74/8084
-  drm/msm/hdmi: merge platform config for 8974/8084/8994/8996
-  drm/msm/hdmi: reuse MSM8960's config for MSM8660
-  drm/msm/hdmi-phy: populate 8x60 HDMI PHY requirements
-
+Co-developed-by: David Heidelberg <david@ixit.cz>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
  .../devicetree/bindings/display/msm/hdmi.txt  |  99 --------
- .../devicetree/bindings/display/msm/hdmi.yaml | 234 ++++++++++++++++++
+ .../devicetree/bindings/display/msm/hdmi.yaml | 230 ++++++++++++++++++
  .../bindings/phy/qcom,hdmi-phy-other.yaml     | 103 ++++++++
  .../bindings/phy/qcom,hdmi-phy-qmp.yaml       |  83 +++++++
- arch/arm/boot/dts/qcom-apq8064-ifc6410.dts    |   1 -
- drivers/gpu/drm/msm/hdmi/hdmi.c               | 104 ++------
- drivers/gpu/drm/msm/hdmi/hdmi.h               |  13 +-
- drivers/gpu/drm/msm/hdmi/hdmi_hpd.c           |  62 +----
- drivers/gpu/drm/msm/hdmi/hdmi_phy_8x60.c      |  12 +
- 9 files changed, 454 insertions(+), 257 deletions(-)
+ 4 files changed, 416 insertions(+), 99 deletions(-)
  delete mode 100644 Documentation/devicetree/bindings/display/msm/hdmi.txt
  create mode 100644 Documentation/devicetree/bindings/display/msm/hdmi.yaml
  create mode 100644 Documentation/devicetree/bindings/phy/qcom,hdmi-phy-other.yaml
  create mode 100644 Documentation/devicetree/bindings/phy/qcom,hdmi-phy-qmp.yaml
 
+diff --git a/Documentation/devicetree/bindings/display/msm/hdmi.txt b/Documentation/devicetree/bindings/display/msm/hdmi.txt
+deleted file mode 100644
+index 5f90a40da51b..000000000000
+--- a/Documentation/devicetree/bindings/display/msm/hdmi.txt
++++ /dev/null
+@@ -1,99 +0,0 @@
+-Qualcomm adreno/snapdragon hdmi output
+-
+-Required properties:
+-- compatible: one of the following
+-   * "qcom,hdmi-tx-8996"
+-   * "qcom,hdmi-tx-8994"
+-   * "qcom,hdmi-tx-8084"
+-   * "qcom,hdmi-tx-8974"
+-   * "qcom,hdmi-tx-8660"
+-   * "qcom,hdmi-tx-8960"
+-- reg: Physical base address and length of the controller's registers
+-- reg-names: "core_physical"
+-- interrupts: The interrupt signal from the hdmi block.
+-- power-domains: Should be <&mmcc MDSS_GDSC>.
+-- clocks: device clocks
+-  See ../clocks/clock-bindings.txt for details.
+-- core-vdda-supply: phandle to supply regulator
+-- hdmi-mux-supply: phandle to mux regulator
+-- phys: the phandle for the HDMI PHY device
+-- phy-names: the name of the corresponding PHY device
+-
+-Optional properties:
+-- hpd-gpios: hpd pin
+-- qcom,hdmi-tx-mux-en-gpios: hdmi mux enable pin
+-- qcom,hdmi-tx-mux-sel-gpios: hdmi mux select pin
+-- qcom,hdmi-tx-mux-lpm-gpios: hdmi mux lpm pin
+-- power-domains: reference to the power domain(s), if available.
+-- pinctrl-names: the pin control state names; should contain "default"
+-- pinctrl-0: the default pinctrl state (active)
+-- pinctrl-1: the "sleep" pinctrl state
+-
+-HDMI PHY:
+-Required properties:
+-- compatible: Could be the following
+-  * "qcom,hdmi-phy-8660"
+-  * "qcom,hdmi-phy-8960"
+-  * "qcom,hdmi-phy-8974"
+-  * "qcom,hdmi-phy-8084"
+-  * "qcom,hdmi-phy-8996"
+-- #phy-cells: Number of cells in a PHY specifier; Should be 0.
+-- reg: Physical base address and length of the registers of the PHY sub blocks.
+-- reg-names: The names of register regions. The following regions are required:
+-  * "hdmi_phy"
+-  * "hdmi_pll"
+-  For HDMI PHY on msm8996, these additional register regions are required:
+-    * "hdmi_tx_l0"
+-    * "hdmi_tx_l1"
+-    * "hdmi_tx_l3"
+-    * "hdmi_tx_l4"
+-- power-domains: Should be <&mmcc MDSS_GDSC>.
+-- clocks: device clocks
+-  See Documentation/devicetree/bindings/clock/clock-bindings.txt for details.
+-- core-vdda-supply: phandle to vdda regulator device node
+-
+-Example:
+-
+-/ {
+-	...
+-
+-	hdmi: hdmi@4a00000 {
+-		compatible = "qcom,hdmi-tx-8960";
+-		reg-names = "core_physical";
+-		reg = <0x04a00000 0x2f0>;
+-		interrupts = <GIC_SPI 79 0>;
+-		power-domains = <&mmcc MDSS_GDSC>;
+-		clock-names =
+-		    "core",
+-		    "master_iface",
+-		    "slave_iface";
+-		clocks =
+-		    <&mmcc HDMI_APP_CLK>,
+-		    <&mmcc HDMI_M_AHB_CLK>,
+-		    <&mmcc HDMI_S_AHB_CLK>;
+-		qcom,hdmi-tx-ddc-clk = <&msmgpio 70 GPIO_ACTIVE_HIGH>;
+-		qcom,hdmi-tx-ddc-data = <&msmgpio 71 GPIO_ACTIVE_HIGH>;
+-		qcom,hdmi-tx-hpd = <&msmgpio 72 GPIO_ACTIVE_HIGH>;
+-		core-vdda-supply = <&pm8921_hdmi_mvs>;
+-		hdmi-mux-supply = <&ext_3p3v>;
+-		pinctrl-names = "default", "sleep";
+-		pinctrl-0 = <&hpd_active  &ddc_active  &cec_active>;
+-		pinctrl-1 = <&hpd_suspend &ddc_suspend &cec_suspend>;
+-
+-		phys = <&hdmi_phy>;
+-		phy-names = "hdmi_phy";
+-	};
+-
+-	hdmi_phy: phy@4a00400 {
+-		compatible = "qcom,hdmi-phy-8960";
+-		reg-names = "hdmi_phy",
+-			    "hdmi_pll";
+-		reg = <0x4a00400 0x60>,
+-		      <0x4a00500 0x100>;
+-		#phy-cells = <0>;
+-		power-domains = <&mmcc MDSS_GDSC>;
+-		clock-names = "slave_iface";
+-		clocks = <&mmcc HDMI_S_AHB_CLK>;
+-		core-vdda-supply = <&pm8921_hdmi_mvs>;
+-	};
+-};
+diff --git a/Documentation/devicetree/bindings/display/msm/hdmi.yaml b/Documentation/devicetree/bindings/display/msm/hdmi.yaml
+new file mode 100644
+index 000000000000..ef425c649ead
+--- /dev/null
++++ b/Documentation/devicetree/bindings/display/msm/hdmi.yaml
+@@ -0,0 +1,230 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++
++$id: http://devicetree.org/schemas/display/msm/hdmi.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm Adreno/Snapdragon HDMI output
++
++maintainers:
++  - Rob Clark <robdclark@gmail.com>
++
++properties:
++  compatible:
++    enum:
++      - qcom,hdmi-tx-8084
++      - qcom,hdmi-tx-8660
++      - qcom,hdmi-tx-8960
++      - qcom,hdmi-tx-8974
++      - qcom,hdmi-tx-8994
++      - qcom,hdmi-tx-8996
++
++  clocks:
++    minItems: 1
++    maxItems: 5
++
++  clock-names:
++    minItems: 1
++    maxItems: 5
++
++  reg:
++    minItems: 1
++    maxItems: 3
++
++  reg-names:
++    minItems: 1
++    items:
++      - const: core_physical
++      - const: qfprom_physical
++      - const: hdcp_physical
++
++  interrupts:
++    maxItems: 1
++
++  phys:
++    maxItems: 1
++
++  phy-names:
++    enum:
++      - hdmi_phy
++      - hdmi-phy
++
++  core-vdda-supply:
++    description: phandle to VDDA supply regulator
++
++  hdmi-mux-supply:
++    description: phandle to mux regulator
++
++  core-vcc-supply:
++    description: phandle to VCC supply regulator
++
++  hpd-gpios:
++    maxItems: 1
++    description: hpd pin
++
++  qcom,hdmi-tx-mux-en-gpios:
++    maxItems: 1
++    description: HDMI mux enable pin
++
++  qcom,hdmi-tx-mux-sel-gpios:
++    maxItems: 1
++    description: HDMI mux select pin
++
++  qcom,hdmi-tx-mux-lpm-gpios:
++    maxItems: 1
++    description: HDMI mux lpm pin
++
++  '#sound-dai-cells':
++    const: 1
++
++  ports:
++    type: object
++    $ref: /schemas/graph.yaml#/properties/ports
++    properties:
++      port@0:
++        $ref: /schemas/graph.yaml#/$defs/port-base
++        description: |
++          Input endpoints of the controller.
++
++      port@1:
++        $ref: /schemas/graph.yaml#/$defs/port-base
++        description: |
++          Output endpoints of the controller.
++
++    required:
++      - port@0
++
++required:
++  - compatible
++  - clocks
++  - clock-names
++  - reg
++  - reg-names
++  - interrupts
++  - phys
++  - phy-names
++
++allOf:
++  - if:
++      properties:
++        compatible:
++          contains:
++            enum:
++              - qcom,hdmi-tx-8960
++              - qcom,hdmi-tx-8660
++    then:
++      properties:
++        clocks:
++          minItems: 3
++          maxItems: 3
++        clock-names:
++          items:
++            - const: core
++            - const: master_iface
++            - const: slave_iface
++        core-vcc-supplies: false
++
++  - if:
++      properties:
++        compatible:
++          contains:
++            enum:
++              - qcom,hdmi-tx-8974
++              - qcom,hdmi-tx-8084
++              - qcom,hdmi-tx-8994
++              - qcom,hdmi-tx-8996
++    then:
++      properties:
++        clocks:
++          minItems: 5
++        clock-names:
++          items:
++            - const: mdp_core
++            - const: iface
++            - const: core
++            - const: alt_iface
++            - const: extp
++        hdmi-mux-supplies: false
++
++additionalProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/gpio/gpio.h>
++    #include <dt-bindings/interrupt-controller/irq.h>
++    #include <dt-bindings/interrupt-controller/arm-gic.h>
++    hdmi: hdmi@4a00000 {
++      compatible = "qcom,hdmi-tx-8960";
++      reg-names = "core_physical";
++      reg = <0x04a00000 0x2f0>;
++      interrupts = <GIC_SPI 79 IRQ_TYPE_LEVEL_HIGH>;
++      clock-names = "core",
++                    "master_iface",
++                    "slave_iface";
++      clocks = <&clk 61>,
++               <&clk 72>,
++               <&clk 98>;
++      hpd-gpios = <&msmgpio 72 GPIO_ACTIVE_HIGH>;
++      core-vdda-supply = <&pm8921_hdmi_mvs>;
++      hdmi-mux-supply = <&ext_3p3v>;
++      pinctrl-names = "default", "sleep";
++      pinctrl-0 = <&hpd_active  &ddc_active  &cec_active>;
++      pinctrl-1 = <&hpd_suspend &ddc_suspend &cec_suspend>;
++
++      phys = <&hdmi_phy>;
++      phy-names = "hdmi_phy";
++    };
++  - |
++    #include <dt-bindings/clock/qcom,gcc-msm8996.h>
++    #include <dt-bindings/clock/qcom,mmcc-msm8996.h>
++    #include <dt-bindings/gpio/gpio.h>
++    #include <dt-bindings/interrupt-controller/irq.h>
++    #include <dt-bindings/interrupt-controller/arm-gic.h>
++    hdmi@9a0000 {
++      compatible = "qcom,hdmi-tx-8996";
++      reg = <0x009a0000 0x50c>,
++            <0x00070000 0x6158>,
++            <0x009e0000 0xfff>;
++      reg-names = "core_physical",
++                  "qfprom_physical",
++                  "hdcp_physical";
++
++      interrupt-parent = <&mdss>;
++      interrupts = <8 IRQ_TYPE_LEVEL_HIGH>;
++
++      clocks = <&mmcc MDSS_MDP_CLK>,
++               <&mmcc MDSS_AHB_CLK>,
++               <&mmcc MDSS_HDMI_CLK>,
++               <&mmcc MDSS_HDMI_AHB_CLK>,
++               <&mmcc MDSS_EXTPCLK_CLK>;
++      clock-names = "mdp_core",
++                    "iface",
++                    "core",
++                    "alt_iface",
++                    "extp";
++
++      phys = <&hdmi_phy>;
++      phy-names = "hdmi_phy";
++      #sound-dai-cells = <1>;
++
++      pinctrl-names = "default", "sleep";
++      pinctrl-0 = <&hdmi_hpd_active &hdmi_ddc_active>;
++      pinctrl-1 = <&hdmi_hpd_suspend &hdmi_ddc_suspend>;
++
++      core-vdda-supply = <&vreg_l12a_1p8>;
++      core-vcc-supply = <&vreg_s4a_1p8>;
++
++      ports {
++        #address-cells = <1>;
++        #size-cells = <0>;
++
++        port@0 {
++          reg = <0>;
++          endpoint {
++            remote-endpoint = <&mdp5_intf3_out>;
++          };
++        };
++      };
++    };
++...
+diff --git a/Documentation/devicetree/bindings/phy/qcom,hdmi-phy-other.yaml b/Documentation/devicetree/bindings/phy/qcom,hdmi-phy-other.yaml
+new file mode 100644
+index 000000000000..3a6128d8f6fd
+--- /dev/null
++++ b/Documentation/devicetree/bindings/phy/qcom,hdmi-phy-other.yaml
+@@ -0,0 +1,103 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++
++$id: http://devicetree.org/schemas/phy/qcom,hdmi-phy-other.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm Adreno/Snapdragon HDMI phy
++
++maintainers:
++  - Rob Clark <robdclark@gmail.com>
++
++properties:
++  compatible:
++    enum:
++      - qcom,hdmi-phy-8660
++      - qcom,hdmi-phy-8960
++      - qcom,hdmi-phy-8974
++      - qcom,hdmi-phy-8084
++
++  reg:
++    maxItems: 2
++
++  reg-names:
++    items:
++      - const: hdmi_phy
++      - const: hdmi_pll
++
++  clocks:
++    minItems: 1
++    maxItems: 2
++
++  clock-names:
++    minItems: 1
++    maxItems: 2
++
++  power-domains:
++    maxItems: 1
++
++  core-vdda-supply:
++    description: phandle to VDDA supply regulator
++  vddio-supply:
++    description: phandle to VDD I/O supply regulator
++
++  '#phy-cells':
++    const: 0
++
++allOf:
++  - if:
++      properties:
++        compatible:
++          contains:
++            enum:
++              - qcom,hdmi-phy-8660
++              - qcom,hdmi-phy-8960
++    then:
++      properties:
++        clocks:
++          maxItems: 1
++        clock-names:
++          items:
++            - const: slave_iface
++        vddio-supply: false
++
++  - if:
++      properties:
++        compatible:
++          contains:
++            enum:
++              - qcom,hdmi-phy-8084
++              - qcom,hdmi-phy-8974
++    then:
++      properties:
++        clocks:
++          maxItems: 2
++        clock-names:
++          items:
++            - const: iface
++            - const: alt_iface
++
++required:
++  - compatible
++  - clocks
++  - reg
++  - reg-names
++  - '#phy-cells'
++
++additionalProperties: false
++
++examples:
++  - |
++    hdmi_phy: phy@4a00400 {
++      compatible = "qcom,hdmi-phy-8960";
++      reg-names = "hdmi_phy",
++                  "hdmi_pll";
++      reg = <0x4a00400 0x60>,
++            <0x4a00500 0x100>;
++      #phy-cells = <0>;
++      power-domains = <&mmcc 1>;
++      clock-names = "slave_iface";
++      clocks = <&clk 21>;
++      core-vdda-supply = <&pm8921_hdmi_mvs>;
++    };
+diff --git a/Documentation/devicetree/bindings/phy/qcom,hdmi-phy-qmp.yaml b/Documentation/devicetree/bindings/phy/qcom,hdmi-phy-qmp.yaml
+new file mode 100644
+index 000000000000..3784e11bf2ef
+--- /dev/null
++++ b/Documentation/devicetree/bindings/phy/qcom,hdmi-phy-qmp.yaml
+@@ -0,0 +1,83 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++
++$id: http://devicetree.org/schemas/phy/qcom,hdmi-phy-qmp.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm Adreno/Snapdragon QMP HDMI phy
++
++maintainers:
++  - Rob Clark <robdclark@gmail.com>
++
++properties:
++  compatible:
++    enum:
++      - qcom,hdmi-phy-8996
++
++  reg:
++    maxItems: 6
++
++  reg-names:
++    items:
++      - const: hdmi_pll
++      - const: hdmi_tx_l0
++      - const: hdmi_tx_l1
++      - const: hdmi_tx_l2
++      - const: hdmi_tx_l3
++      - const: hdmi_phy
++
++  clocks:
++    maxItems: 2
++
++  clock-names:
++    items:
++      - const: iface
++      - const: ref
++
++  power-domains:
++    maxItems: 1
++
++  vcca-supply: true
++
++  vddio-supply: true
++
++  '#phy-cells':
++    const: 0
++
++required:
++  - compatible
++  - clocks
++  - clock-names
++  - reg
++  - reg-names
++  - '#phy-cells'
++
++additionalProperties: false
++
++examples:
++  - |
++    hdmi-phy@9a0600 {
++      compatible = "qcom,hdmi-phy-8996";
++      reg = <0x009a0600 0x1c4>,
++            <0x009a0a00 0x124>,
++            <0x009a0c00 0x124>,
++            <0x009a0e00 0x124>,
++            <0x009a1000 0x124>,
++            <0x009a1200 0x0c8>;
++      reg-names = "hdmi_pll",
++                  "hdmi_tx_l0",
++                  "hdmi_tx_l1",
++                  "hdmi_tx_l2",
++                  "hdmi_tx_l3",
++                  "hdmi_phy";
++
++      clocks = <&mmcc 116>,
++               <&gcc 214>;
++      clock-names = "iface",
++                    "ref";
++      #phy-cells = <0>;
++
++      vddio-supply = <&vreg_l12a_1p8>;
++      vcca-supply = <&vreg_l28a_0p925>;
++    };
 -- 
 2.35.1
 
