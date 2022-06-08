@@ -2,215 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C17AA542512
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jun 2022 08:54:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 71A4B5425CC
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jun 2022 08:55:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232382AbiFHEwO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Jun 2022 00:52:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52874 "EHLO
+        id S232824AbiFHESp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Jun 2022 00:18:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37086 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230184AbiFHEvw (ORCPT
+        with ESMTP id S232991AbiFHERz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Jun 2022 00:51:52 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2CEA32717AF;
-        Tue,  7 Jun 2022 18:17:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1654651044; x=1686187044;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version;
-  bh=/nNkMm22PKPf3p8/rCKaXGPuNVIxoEoPsdpm5cQPmew=;
-  b=LUNehITs6n18Jk2/zguEW3Fc8h1AWTHNOeug5ntjD5T6HHpnzjnycWeD
-   8YJ5A/GsWFUym8OuMsxdT3PgPDU7+5Idh5JPX/r8fBlLt23yjeQoTe+K5
-   FRJ1m9ByzOMtp1A3oSP1857IRLCbj7/CD3VxdzfiiiCBf6+4BLfNxwMZi
-   k=;
-Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 07 Jun 2022 18:17:21 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg02-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Jun 2022 18:17:20 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Tue, 7 Jun 2022 18:17:20 -0700
-Received: from hu-clew-lv.qualcomm.com (10.49.16.6) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Tue, 7 Jun 2022 18:17:20 -0700
-From:   Chris Lew <quic_clew@quicinc.com>
-To:     <bjorn.andersson@linaro.org>, <mathieu.poirier@linaro.org>
-CC:     <linux-remoteproc@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_clew@quicinc.com>
-Subject: [PATCH 4/4] rpmsg: glink: Add support for rpmsg_rx_done
-Date:   Tue, 7 Jun 2022 18:16:45 -0700
-Message-ID: <1654651005-15475-5-git-send-email-quic_clew@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1654651005-15475-1-git-send-email-quic_clew@quicinc.com>
-References: <1654651005-15475-1-git-send-email-quic_clew@quicinc.com>
+        Wed, 8 Jun 2022 00:17:55 -0400
+Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C8812F4F5B;
+        Tue,  7 Jun 2022 18:40:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1654652448; x=1686188448;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=zbm4iZu1MGqfCpOkzqcAjxrsjpBC11cUbsTqwp4M7J0=;
+  b=WrKfzuHlSJLzjsBoSP5ZCx4IEQRpzr5B3A6KqL6rokwYTWVd1kiHY32e
+   sSGZ9pKsPcQhSW1yGCeNd//nyH43m+nE3+W5TmJMJQPPhn58d/IjEAtc3
+   12j4Rte3l2rLukXfu7ixgFS4IdJKvUpycEtxKArzBLrhJW9mBNFfEL4F/
+   dNlszB9OqWns7OxavDI3VHy9vw530rnc4k6ocWtSfhG6VADJV0HCrnoLy
+   29zJobdrqYn1M0mbulkb69jrb1bSgo7pWDey5ppWCmKjMiuezZV7b9qel
+   Vl1kSJDCJFSCsW2ALFr6D2+hCTQR9wJbOczBez3yrDYrEopAV8/Xf1r1/
+   w==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10371"; a="340797571"
+X-IronPort-AV: E=Sophos;i="5.91,284,1647327600"; 
+   d="scan'208";a="340797571"
+Received: from fmsmga003.fm.intel.com ([10.253.24.29])
+  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Jun 2022 18:40:17 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.91,284,1647327600"; 
+   d="scan'208";a="670294643"
+Received: from lkp-server01.sh.intel.com (HELO 60dabacc1df6) ([10.239.97.150])
+  by FMSMGA003.fm.intel.com with ESMTP; 07 Jun 2022 18:40:13 -0700
+Received: from kbuild by 60dabacc1df6 with local (Exim 4.95)
+        (envelope-from <lkp@intel.com>)
+        id 1nykg8-000E8z-R5;
+        Wed, 08 Jun 2022 01:40:12 +0000
+Date:   Wed, 8 Jun 2022 09:39:48 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Satya Priya <quic_c_skakit@quicinc.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     kbuild-all@lists.01.org, Lee Jones <lee.jones@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        swboyd@chromium.org, quic_collinsd@quicinc.com,
+        quic_subbaram@quicinc.com, quic_jprakash@quicinc.com,
+        Satya Priya <quic_c_skakit@quicinc.com>
+Subject: Re: [PATCH V14 7/9] regulator: Add a regulator driver for the PM8008
+ PMIC
+Message-ID: <202206080910.XAMKbeVH-lkp@intel.com>
+References: <1654602615-28849-8-git-send-email-quic_c_skakit@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.49.16.6]
-X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1654602615-28849-8-git-send-email-quic_c_skakit@quicinc.com>
+X-Spam-Status: No, score=-5.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the implementation for the hooks of rpmsg_rx_done. If a client
-signals they want to hold onto a buffer with RPMSG_DEFER in the rx_cb,
-glink will move that intent to a deferred cleanup list. On the new
-rpmsg rx_done call, the glink transport will search this deferred
-cleanup list for the matching buffer and release the intent.
+Hi Satya,
 
-Signed-off-by: Chris Lew <quic_clew@quicinc.com>
----
- drivers/rpmsg/qcom_glink_native.c | 54 ++++++++++++++++++++++++++++++++++++---
- 1 file changed, 51 insertions(+), 3 deletions(-)
+Thank you for the patch! Perhaps something to improve:
 
-diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
-index 799e602113a1..db0dcc04f393 100644
---- a/drivers/rpmsg/qcom_glink_native.c
-+++ b/drivers/rpmsg/qcom_glink_native.c
-@@ -146,6 +146,7 @@ enum {
-  * @riids:	idr of all remote intents
-  * @intent_work: worker responsible for transmitting rx_done packets
-  * @done_intents: list of intents that needs to be announced rx_done
-+ * @defer_intents: list of intents held by the client released by rpmsg_rx_done
-  * @buf:	receive buffer, for gathering fragments
-  * @buf_offset:	write offset in @buf
-  * @buf_size:	size of current @buf
-@@ -174,6 +175,7 @@ struct glink_channel {
- 	struct idr riids;
- 	struct work_struct intent_work;
- 	struct list_head done_intents;
-+	struct list_head defer_intents;
- 
- 	struct glink_core_rx_intent *buf;
- 	int buf_offset;
-@@ -232,6 +234,7 @@ static struct glink_channel *qcom_glink_alloc_channel(struct qcom_glink *glink,
- 	init_completion(&channel->intent_req_comp);
- 
- 	INIT_LIST_HEAD(&channel->done_intents);
-+	INIT_LIST_HEAD(&channel->defer_intents);
- 	INIT_WORK(&channel->intent_work, qcom_glink_rx_done_work);
- 
- 	idr_init(&channel->liids);
-@@ -261,6 +264,12 @@ static void qcom_glink_channel_release(struct kref *ref)
- 			kfree(intent);
- 		}
- 	}
-+	list_for_each_entry_safe(intent, tmp, &channel->defer_intents, node) {
-+		if (!intent->reuse) {
-+			kfree(intent->data);
-+			kfree(intent);
-+		}
-+	}
- 
- 	idr_for_each_entry(&channel->liids, tmp, iid) {
- 		kfree(tmp->data);
-@@ -549,9 +558,10 @@ static void qcom_glink_rx_done_work(struct work_struct *work)
- 	spin_unlock_irqrestore(&channel->intent_lock, flags);
- }
- 
--static void qcom_glink_rx_done(struct qcom_glink *glink,
-+static void __qcom_glink_rx_done(struct qcom_glink *glink,
- 			       struct glink_channel *channel,
--			       struct glink_core_rx_intent *intent)
-+			       struct glink_core_rx_intent *intent,
-+			       bool defer)
- {
- 	int ret = -EAGAIN;
- 
-@@ -569,6 +579,14 @@ static void qcom_glink_rx_done(struct qcom_glink *glink,
- 		spin_unlock(&channel->intent_lock);
- 	}
- 
-+	/* Move intent to defer list until client calls rpmsg_rx_done */
-+	if (defer) {
-+		spin_lock(&channel->intent_lock);
-+		list_add_tail(&intent->node, &channel->defer_intents);
-+		spin_unlock(&channel->intent_lock);
-+		return;
-+	}
-+
- 	/* Schedule the sending of a rx_done indication */
- 	spin_lock(&channel->intent_lock);
- 	if (list_empty(&channel->done_intents))
-@@ -581,6 +599,28 @@ static void qcom_glink_rx_done(struct qcom_glink *glink,
- 	spin_unlock(&channel->intent_lock);
- }
- 
-+static int qcom_glink_rx_done(struct rpmsg_endpoint *ept, void *data)
-+{
-+	struct glink_channel *channel = to_glink_channel(ept);
-+	struct qcom_glink *glink = channel->glink;
-+	struct glink_core_rx_intent *intent, *tmp;
-+	unsigned long flags;
-+
-+	spin_lock_irqsave(&channel->intent_lock, flags);
-+	list_for_each_entry_safe(intent, tmp, &channel->defer_intents, node) {
-+		if (intent->data == data) {
-+			list_del(&intent->node);
-+			spin_unlock_irqrestore(&channel->intent_lock, flags);
-+
-+			qcom_glink_send_rx_done(glink, channel, intent, true);
-+			return 0;
-+		}
-+	}
-+	spin_unlock_irqrestore(&channel->intent_lock, flags);
-+
-+	return -EINVAL;
-+}
-+
- /**
-  * qcom_glink_receive_version() - receive version/features from remote system
-  *
-@@ -841,6 +881,7 @@ static int qcom_glink_rx_data(struct qcom_glink *glink, size_t avail)
- 	} __packed hdr;
- 	unsigned int chunk_size;
- 	unsigned int left_size;
-+	bool rx_done_defer;
- 	unsigned int rcid;
- 	unsigned int liid;
- 	int ret = 0;
-@@ -935,7 +976,12 @@ static int qcom_glink_rx_data(struct qcom_glink *glink, size_t avail)
- 		intent->offset = 0;
- 		channel->buf = NULL;
- 
--		qcom_glink_rx_done(glink, channel, intent);
-+		if (channel->ept.rx_done && ret == RPMSG_DEFER)
-+			rx_done_defer = true;
-+		else
-+			rx_done_defer = false;
-+
-+		__qcom_glink_rx_done(glink, channel, intent, rx_done_defer);
- 	}
- 
- advance_rx:
-@@ -1212,6 +1258,7 @@ static struct rpmsg_endpoint *qcom_glink_create_ept(struct rpmsg_device *rpdev,
- 	ept->cb = cb;
- 	ept->priv = priv;
- 	ept->ops = &glink_endpoint_ops;
-+	ept->rx_done = true;
- 
- 	return ept;
- }
-@@ -1462,6 +1509,7 @@ static const struct rpmsg_endpoint_ops glink_endpoint_ops = {
- 	.sendto = qcom_glink_sendto,
- 	.trysend = qcom_glink_trysend,
- 	.trysendto = qcom_glink_trysendto,
-+	.rx_done = qcom_glink_rx_done,
- };
- 
- static void qcom_glink_rpdev_release(struct device *dev)
+[auto build test WARNING on lee-mfd/for-mfd-next]
+[also build test WARNING on robh/for-next]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Satya-Priya/Add-Qualcomm-Technologies-Inc-PM8008-regulator-driver/20220607-195327
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/lee/mfd.git for-mfd-next
+config: x86_64-allyesconfig (https://download.01.org/0day-ci/archive/20220608/202206080910.XAMKbeVH-lkp@intel.com/config)
+compiler: gcc-11 (Debian 11.3.0-1) 11.3.0
+reproduce (this is a W=1 build):
+        # https://github.com/intel-lab-lkp/linux/commit/11e915cb6368e90fdc4186104c56a3619aa63440
+        git remote add linux-review https://github.com/intel-lab-lkp/linux
+        git fetch --no-tags linux-review Satya-Priya/Add-Qualcomm-Technologies-Inc-PM8008-regulator-driver/20220607-195327
+        git checkout 11e915cb6368e90fdc4186104c56a3619aa63440
+        # save the config file
+        mkdir build_dir && cp config build_dir/.config
+        make W=1 O=build_dir ARCH=x86_64 SHELL=/bin/bash drivers/regulator/
+
+If you fix the issue, kindly add following tag where applicable
+Reported-by: kernel test robot <lkp@intel.com>
+
+All warnings (new ones prefixed by >>):
+
+   drivers/regulator/qcom-pm8008-regulator.c: In function 'pm8008_regulator_get_voltage':
+>> drivers/regulator/qcom-pm8008-regulator.c:74:13: warning: unused variable 'rc' [-Wunused-variable]
+      74 |         int rc, uV;
+         |             ^~
+
+
+vim +/rc +74 drivers/regulator/qcom-pm8008-regulator.c
+
+    69	
+    70	static int pm8008_regulator_get_voltage(struct regulator_dev *rdev)
+    71	{
+    72		struct pm8008_regulator *pm8008_reg = rdev_get_drvdata(rdev);
+    73		__le16 mV;
+  > 74		int rc, uV;
+    75	
+    76		regmap_bulk_read(pm8008_reg->regmap,
+    77				LDO_VSET_LB_REG(pm8008_reg->base), (void *)&mV, 2);
+    78	
+    79		uV = le16_to_cpu(mV) * 1000;
+    80		return (uV - pm8008_reg->rdesc.min_uV) / pm8008_reg->rdesc.uV_step;
+    81	}
+    82	
+
 -- 
-2.7.4
-
+0-DAY CI Kernel Test Service
+https://01.org/lkp
