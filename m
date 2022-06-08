@@ -2,69 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 35CE5543CDA
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jun 2022 21:29:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 30486543CDF
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jun 2022 21:29:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235290AbiFHT3H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Jun 2022 15:29:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34326 "EHLO
+        id S235475AbiFHT3Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Jun 2022 15:29:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34976 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234508AbiFHT3G (ORCPT
+        with ESMTP id S235470AbiFHT3P (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Jun 2022 15:29:06 -0400
-Received: from mail-oa1-x2f.google.com (mail-oa1-x2f.google.com [IPv6:2001:4860:4864:20::2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83CCA1BD7DF
-        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Jun 2022 12:29:05 -0700 (PDT)
-Received: by mail-oa1-x2f.google.com with SMTP id 586e51a60fabf-fe023ab520so5258700fac.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jun 2022 12:29:05 -0700 (PDT)
+        Wed, 8 Jun 2022 15:29:15 -0400
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94F281BD7DF
+        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Jun 2022 12:29:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to;
-        bh=5vvwrgdknn1K9gJFkCVHoS1UOMpaiXh3dfNKyE3vHCA=;
-        b=Hd5jcwosS+DHrHrSRvsp1DiAbCxUrFWV4Ys2JHKBdh4xlpDyW7BhzoIfKfDx5gjQXM
-         1mW+SikjxugwKvDlj4Tgp4hFCUdMfAORPCneDm8IwpDuvRUsynDdRTIVK3kwSK3+KRHw
-         5rMCTq+XO6A0kbgcSWlQN+lUXklGV8Tcp6KxI=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to;
-        bh=5vvwrgdknn1K9gJFkCVHoS1UOMpaiXh3dfNKyE3vHCA=;
-        b=YCmEtSY9PTJKFog0GkBsFBQSKd9beIDp/qsZozhjU9XbX462ZMsjRiyeoB8wDOb0Sl
-         OxBkxNtxZ7k8KYdHhYnfmgvzcfjjyAEUJFGW3ZkJDfPpKJCexmbwfuyrx75Jb2wdVZmM
-         kx1YnNY/S/mOLapDqUc08QcQs8638WvHazCYtdZpUewiace/juNuFQ4VNERMr8+GzF6D
-         02YB77imUG/6ivNyoIP2SCRxzxNaKXaUS4vvKDhA4Z6myia3gTed8Czt827AzyFh5T1n
-         3dxbvMQS5LvdtlUxLXwTKw+QdI8T0a0C7OMhg6l1IFmQ1MRkMQyLobbsGCbXwCBjfzWP
-         i+zQ==
-X-Gm-Message-State: AOAM530eSTKm9ui8+dDIghABQjmG7bs0XIefL/9xIKd1OHVDnQrqen7w
-        Vn9zYguTx8wbaEythsvcpYo8bVraIKmpOlG1GEk3gg==
-X-Google-Smtp-Source: ABdhPJwfbQOhuoavwnKuPwNYfxx7ThIu71YX1w2/3eSgITORUdWupWunN82u7ED3ykn9MRwPBeCHP/wkwS4CsJQhctI=
-X-Received: by 2002:a05:6870:240d:b0:f1:b878:e97c with SMTP id
- n13-20020a056870240d00b000f1b878e97cmr3169953oap.193.1654716544865; Wed, 08
- Jun 2022 12:29:04 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 8 Jun 2022 12:29:04 -0700
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1654716553; x=1686252553;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=BZdpUZIWhAaLzKQoiW64mA5GcDePFfVEhO4psuS1qss=;
+  b=C/g4x1tvlXCp7C8jyi1LYKQgLiVFwStl+jezb87njem44UV/jsTDCvYW
+   yAjCBtaUXESeeTYyJEzuiH2CRYJsz6VSJUTx+U/BqwHF9aRT00x+gKCji
+   akmsSieP34Tu4ru75s3GZRRx6BDc+tnfc94ISL6tC8A0oUTDfwZ4fM4PI
+   A=;
+Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 08 Jun 2022 12:29:13 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Jun 2022 12:29:13 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Wed, 8 Jun 2022 12:29:12 -0700
+Received: from [10.111.166.162] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Wed, 8 Jun 2022
+ 12:29:10 -0700
+Message-ID: <e56780cb-44c1-b26b-90b8-ceb40b8f218b@quicinc.com>
+Date:   Wed, 8 Jun 2022 12:29:08 -0700
 MIME-Version: 1.0
-In-Reply-To: <1654696929-20205-3-git-send-email-quic_srivasam@quicinc.com>
-References: <1654696929-20205-1-git-send-email-quic_srivasam@quicinc.com> <1654696929-20205-3-git-send-email-quic_srivasam@quicinc.com>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Wed, 8 Jun 2022 12:29:04 -0700
-Message-ID: <CAE-0n53EY1eKqnVLhU__e7t63BbVoKz++6aijOpEw0k5Cxa8-w@mail.gmail.com>
-Subject: Re: [PATCH v3 2/2] ASoC: qcom: soundwire: Add software clock gating
- requirement check
-To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-        agross@kernel.org, alsa-devel@alsa-project.org,
-        bgoswami@quicinc.com, bjorn.andersson@linaro.org,
-        broonie@kernel.org, devicetree@vger.kernel.org,
-        judyhsiao@chromium.org, lgirdwood@gmail.com,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        perex@perex.cz, quic_plai@quicinc.com, quic_rohkumar@quicinc.com,
-        robh+dt@kernel.org, srinivas.kandagatla@linaro.org, tiwai@suse.com,
-        vkoul@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [Freedreno] [PATCH] drm/msm: less magic numbers in
+ msm_mdss_enable
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC:     <freedreno@lists.freedesktop.org>, David Airlie <airlied@linux.ie>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        "Stephen Boyd" <swboyd@chromium.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Sean Paul <sean@poorly.run>
+References: <20220531121825.1126204-1-dmitry.baryshkov@linaro.org>
+ <d7084452-ea90-3a8b-d39a-b09d9f45f839@quicinc.com>
+ <CAA8EJprW7xnYJaeqh4vozSTx04DcQ20MMRrzLaEJPJTC3dV30w@mail.gmail.com>
+ <80c1da0f-0006-6602-ec86-ebdf71c3037a@quicinc.com>
+ <CAA8EJppfWfP-bZLOYF8QBe6kW6gBBw5eXpzzDA6GFo8U7g=jRQ@mail.gmail.com>
+ <963f5ef5-4b1d-6b0d-5b6d-0d6136e9e8d3@quicinc.com>
+ <CAA8EJppCiN65NV7w9TyR=P+XzGPVxZJoAZoX5+XjxKwXsL_FQg@mail.gmail.com>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <CAA8EJppCiN65NV7w9TyR=P+XzGPVxZJoAZoX5+XjxKwXsL_FQg@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-5.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -73,47 +76,205 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Srinivasa Rao Mandadapu (2022-06-08 07:02:09)
-> Validate software clock gating required or not and do software
-> clock gating on hclk if soundwire is operational and keep it
-> running by adding flag in private dat structure.
-> This is to avoid conflict between older architectures,
-> where software clock gating is not required and on latest
-> architectues, where software clock gating is mandatory.
 
-This talks about software clock gating but the code is getting a reset
-and asserting it. Is that because the power on reset value of the clock
-gating is to have hardware clock gating disabled, but some earlier code
-is enabling hardware clock gating?
 
->
-> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-> Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-> ---
->  drivers/soundwire/qcom.c | 27 ++++++++++++++++++++-------
->  1 file changed, 20 insertions(+), 7 deletions(-)
->
-> diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
-> index 38c3bf5..ebd7479 100644
-> --- a/drivers/soundwire/qcom.c
-> +++ b/drivers/soundwire/qcom.c
-> @@ -659,7 +665,8 @@ static int qcom_swrm_init(struct qcom_swrm_ctrl *ctrl)
->         val = FIELD_PREP(SWRM_MCP_FRAME_CTRL_BANK_ROW_CTRL_BMSK, ctrl->rows_index);
->         val |= FIELD_PREP(SWRM_MCP_FRAME_CTRL_BANK_COL_CTRL_BMSK, ctrl->cols_index);
->
-> -       reset_control_reset(ctrl->audio_cgcr);
-> +       if (ctrl->audio_cgcr)
-> +               reset_control_reset(ctrl->audio_cgcr);
->
->         ctrl->reg_write(ctrl, SWRM_MCP_FRAME_CTRL_BANK_ADDR(0), val);
->
-> @@ -1494,7 +1506,8 @@ static int __maybe_unused swrm_runtime_resume(struct device *dev)
->                 qcom_swrm_get_device_status(ctrl);
->                 sdw_handle_slave_status(&ctrl->bus, ctrl->status);
->         } else {
-> -               reset_control_reset(ctrl->audio_cgcr);
-> +               if (ctrl->audio_cgcr)
-> +                       reset_control_reset(ctrl->audio_cgcr);
+On 6/2/2022 1:13 PM, Dmitry Baryshkov wrote:
+> On Thu, 2 Jun 2022 at 21:18, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+>>
+>>
+>>
+>> On 6/1/2022 1:04 PM, Dmitry Baryshkov wrote:
+>>> On Wed, 1 Jun 2022 at 20:38, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+>>>>
+>>>>
+>>>>
+>>>> On 6/1/2022 2:46 AM, Dmitry Baryshkov wrote:
+>>>>> On Wed, 1 Jun 2022 at 01:01, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+>>>>>> On 5/31/2022 5:18 AM, Dmitry Baryshkov wrote:
+>>>>>>> Replace magic register writes in msm_mdss_enable() with version that
+>>>>>>> contains less magic and more variable names that can be traced back to
+>>>>>>> the dpu_hw_catalog or the downstream dtsi files.
+>>>>>>>
+>>>>>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>>>>>> ---
+>>>>>>>      drivers/gpu/drm/msm/msm_mdss.c | 79 ++++++++++++++++++++++++++++++----
+>>>>>>>      1 file changed, 71 insertions(+), 8 deletions(-)
+>>>>>>>
+>>>>>>> diff --git a/drivers/gpu/drm/msm/msm_mdss.c b/drivers/gpu/drm/msm/msm_mdss.c
+>>>>>>> index 0454a571adf7..2a48263cd1b5 100644
+>>>>>>> --- a/drivers/gpu/drm/msm/msm_mdss.c
+>>>>>>> +++ b/drivers/gpu/drm/msm/msm_mdss.c
+>>>>>>> @@ -21,6 +21,7 @@
+>>>>>>>      #define HW_REV                              0x0
+>>>>>>>      #define HW_INTR_STATUS                      0x0010
+>>>>>>>
+>>>>>>> +#define UBWC_DEC_HW_VERSION          0x58
+>>>>>>>      #define UBWC_STATIC                 0x144
+>>>>>>>      #define UBWC_CTRL_2                 0x150
+>>>>>>>      #define UBWC_PREDICTION_MODE                0x154
+>>>>>>> @@ -132,9 +133,63 @@ static int _msm_mdss_irq_domain_add(struct msm_mdss *msm_mdss)
+>>>>>>>          return 0;
+>>>>>>>      }
+>>>>>>>
+>>>>>>> +#define UBWC_1_0 0x10000000
+>>>>>>> +#define UBWC_2_0 0x20000000
+>>>>>>> +#define UBWC_3_0 0x30000000
+>>>>>>> +#define UBWC_4_0 0x40000000
+>>>>>>> +
+>>>>>>> +static void msm_mdss_setup_ubwc_dec_20(struct msm_mdss *msm_mdss,
+>>>>>>> +                                    u32 ubwc_static)
+>>>>>>> +{
+>>>>>>> +     writel_relaxed(ubwc_static, msm_mdss->mmio + UBWC_STATIC);
+>>>>>>> +}
+>>>>>>> +
+>>>>>>> +static void msm_mdss_setup_ubwc_dec_30(struct msm_mdss *msm_mdss,
+>>>>>>> +                                    unsigned int ubwc_version,
+>>>>>>> +                                    u32 ubwc_swizzle,
+>>>>>>> +                                    u32 highest_bank_bit,
+>>>>>>> +                                    u32 macrotile_mode)
+>>>>>>> +{
+>>>>>>> +     u32 value = (ubwc_swizzle & 0x1) |
+>>>>>>> +                 (highest_bank_bit & 0x3) << 4 |
+>>>>>>> +                 (macrotile_mode & 0x1) << 12;
+>>>>>>> +
+>>>>>>> +     if (ubwc_version == UBWC_3_0)
+>>>>>>> +             value |= BIT(10);
+>>>>>>> +
+>>>>>>> +     if (ubwc_version == UBWC_1_0)
+>>>>>>> +             value |= BIT(8);
+>>>>>>> +
+>>>>>>> +     writel_relaxed(value, msm_mdss->mmio + UBWC_STATIC);
+>>>>>>> +}
+>>>>>>> +
+>>>>>>> +static void msm_mdss_setup_ubwc_dec_40(struct msm_mdss *msm_mdss,
+>>>>>>> +                                    unsigned int ubwc_version,
+>>>>>>> +                                    u32 ubwc_swizzle,
+>>>>>>> +                                    u32 ubwc_static,
+>>>>>>> +                                    u32 highest_bank_bit,
+>>>>>>> +                                    u32 macrotile_mode)
+>>>>>>> +{
+>>>>>>> +     u32 value = (ubwc_swizzle & 0x7) |
+>>>>>>> +                 (ubwc_static & 0x1) << 3 |
+>>>>>>> +                 (highest_bank_bit & 0x7) << 4 |
+>>>>>>> +                 (macrotile_mode & 0x1) << 12;
+>>>>>>> +
+>>>>>>> +     writel_relaxed(value, msm_mdss->mmio + UBWC_STATIC);
+>>>>>>> +
+>>>>>>> +     if (ubwc_version == UBWC_3_0) {
+>>>>>>> +             writel_relaxed(1, msm_mdss->mmio + UBWC_CTRL_2);
+>>>>>>> +             writel_relaxed(0, msm_mdss->mmio + UBWC_PREDICTION_MODE);
+>>>>>>> +     } else {
+>>>>>>> +             writel_relaxed(2, msm_mdss->mmio + UBWC_CTRL_2);
+>>>>>>> +             writel_relaxed(1, msm_mdss->mmio + UBWC_PREDICTION_MODE);
+>>>>>>> +     }
+>>>>>>> +}
+>>>>>>> +
+>>>>>>
+>>>>>> Is it possible to unify the above functions by having the internal
+>>>>>> ubwc_version checks?
+>>>>>
+>>>>> Note, it's not the ubwc_version, it is the ubwc_dec_hw_version. And
+>>>>> also different functions take different sets of arguments.
+>>>>>
+>>>>>> It seems like msm_mdss_setup_ubwc_dec_xxx can keep growing.
+>>>>>>
+>>>>>> I have not looked into each bit programming but from the top level so
+>>>>>> feel free to correct if wrong but it seems both do write UBWC_STATIC
+>>>>>> (different values based on different UBWC versions) and write some extra
+>>>>>> registers based on version
+>>>>>
+>>>>> This is what both the current code and the downstream do. See
+>>>>> https://github.com/MiCode/Xiaomi_Kernel_OpenSource/blob/zeus-s-oss/techpack/display-drivers/msm/sde/sde_hw_top.c#L312
+>>>>>
+>>>>
+>>>> Thanks for pointing to the downstream method for this,
+>>>>
+>>>> This is exactly what i was also suggesting to do when I mentioned
+>>>> unifying the above functions.
+>>>>
+>>>> So instead of having a separate function for each version why not handle
+>>>> all the versions in the same function like what the link you have shown
+>>>> does.
+>>>
+>>> I wouldn't like that. The downstream uses hw_catalog to pass all
+>>> possible parameters. We do not, so we'd have a whole set of artificial
+>>> values.
+>>>
+>>
+>> Now that you brought that up, why cannot even upstream dpu start using
+>> catalog for ubwc settings?
+> 
+> Because msm_mdss lives out of disp/dpu1. And using the disp/dpu1 for
+> it would be an inversion of dependencies.
+> I like the fact that msm_mdss is independent of mdp/dpu drivers and I
+> do not want to add such dependency.
+> 
 
-reset_control_reset() is a no-op if the pointer is NULL so the if
-condition is not necessary in the above two statements.
+Ok, so I think this function itself is placed incorrectly. It should not 
+be in msm_mdss.c and should in the DPU folder.
+
+This check tells me that this will not be executed for mdp5 devices.
+
+    /*
+      * HW_REV requires MDSS_MDP_CLK, which is not enabled by the mdss on
+      * mdp5 hardware. Skip reading it for now.
+      */
+     if (msm_mdss->is_mdp5)
+         return 0;
+
+In that case, what prevents us from moving this to dpu and start using 
+catalog for this?
+
+>>
+>> /* struct dpu_mdp_cfg : MDP TOP-BLK instance info
+>>    * @id:                index identifying this block
+>>    * @base:              register base offset to mdss
+>>    * @features           bit mask identifying sub-blocks/features
+>>    * @highest_bank_bit:  UBWC parameter
+>>    * @ubwc_static:       ubwc static configuration
+>>    * @ubwc_swizzle:      ubwc default swizzle setting
+>>    * @clk_ctrls          clock control register definition
+>>    */
+>> struct dpu_mdp_cfg {
+>>       DPU_HW_BLK_INFO;
+>>       u32 highest_bank_bit;
+>>       u32 ubwc_swizzle;
+>>       struct dpu_clk_ctrl_reg clk_ctrls[DPU_CLK_CTRL_MAX];
+>> };
+>>
+>> We already do seem to have a couple of parameters. have to add the others.
+>>
+>> That way the number of functions wont keep growing.
+>>
+>>>>
+>>>>>>
+>>>>>>>      static int msm_mdss_enable(struct msm_mdss *msm_mdss)
+>>>>>>>      {
+>>>>>>>          int ret;
+>>>>>>> +     u32 hw_rev;
+>>>>>>>
+>>>>>>>          ret = clk_bulk_prepare_enable(msm_mdss->num_clocks, msm_mdss->clocks);
+>>>>>>>          if (ret) {
+>>>>>>> @@ -149,26 +204,34 @@ static int msm_mdss_enable(struct msm_mdss *msm_mdss)
+>>>>>>>          if (msm_mdss->is_mdp5)
+>>>>>>>                  return 0;
+>>>>>>>
+>>>>>>> +     hw_rev = readl_relaxed(msm_mdss->mmio + HW_REV);
+>>>>>>> +     dev_info(msm_mdss->dev, "HW_REV: 0x%x\n", hw_rev);
+>>>>>>> +     dev_info(msm_mdss->dev, "UBWC_DEC_HW_VERSION: 0x%x\n",
+>>>>>>> +             readl_relaxed(msm_mdss->mmio + UBWC_DEC_HW_VERSION));
+>>>>>>
+>>>>>> we are already printing the HW version here
+>>>>>>
+>>>>>> https://gitlab.freedesktop.org/drm/msm/-/blob/msm-next/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c#L1096
+>>>>>>
+>>>>>> Do you want to remove that print then? May be. Let me take a look.
+>>>>>
+>>>>> [skipped]
+>>>>>
+>>>
+>>>
+>>>
+> 
+> 
+> 
