@@ -2,83 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D9F74542DCA
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jun 2022 12:31:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C8587542DAA
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jun 2022 12:31:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237156AbiFHKae (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Jun 2022 06:30:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45080 "EHLO
+        id S237230AbiFHKam (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Jun 2022 06:30:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40814 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237810AbiFHK30 (ORCPT
+        with ESMTP id S238196AbiFHK35 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Jun 2022 06:29:26 -0400
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED90E151FD6
-        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Jun 2022 03:18:54 -0700 (PDT)
-Received: by mail-ed1-x532.google.com with SMTP id fd25so26429807edb.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jun 2022 03:18:54 -0700 (PDT)
+        Wed, 8 Jun 2022 06:29:57 -0400
+Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB7F5BDA22
+        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Jun 2022 03:22:12 -0700 (PDT)
+Received: by mail-lj1-x229.google.com with SMTP id y15so16787018ljc.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jun 2022 03:22:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair;
-        h=mime-version:content-transfer-encoding:date:message-id:cc:subject
-         :from:to:references:in-reply-to;
-        bh=1iFwdNwk1v1dXl+OlTTXTF6c13xKzPVa4F0ip2ie7ak=;
-        b=R6Uj/kR8aNyvL0If9eAlU2L/SUtOV5vbaXXSJFGtExUlkvqNZfxVvmdTgFsQ2NrLSZ
-         21SvpF0O2oQsiB3ERybUBhuX+g5mUi59un0dmQmQcIXLHAjENToLjRBcMdT5c8KnwF/l
-         OAcw77biYKlFRWFNGJNZ7g49tOP/menfHXBrYYEOkT9bUxg2ULaWA71hlUqLo6DR5N/C
-         gVw6MbDS3N9hd+cmM0kkcGo0j41mjf+SgBTzXJEV9kD9Ym8pCwBJE6j7dN88aep9b1hG
-         VG1OUsbuJw+ajdmB9uv7irEt3xbvfXdi4+8xdunJe2Wyz1HJe65nXgiRky1iBon5EOFc
-         aJtA==
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=AbKSfBNHMsB6gPQL/2rq+lhYEHklPNuzgxkaV0yDgno=;
+        b=C8zmcSh8kYU52OoswL7DTEeRYlTehP7/3y+AfdFoA++vcRkdZcfFCNg6ZOfrnQp3ZI
+         13+Y95T8Bh7U8yGWDvaMo+v2+1AFp1mfEgHkL5HNsHrPn5gu9BfNEkbrLw1vV8MicHna
+         Zlqo3Arg8IucLqkr4Vv3HWcPri8OD8bPfZv593RWgOw9VfAaHUalCbOMGor2jrgVapyj
+         Q7jxcVTFPPP8MkSbRilMYU0LlI0yfERdKBCOOvserLLoeTTQ6LeoN64O0/4pm9XYzQop
+         DFBN4y651eeQ2f2Z20Ku4iS/3mihSqezWUJzJC5yCHIFkvsTpxrv4Dhes/Wwib+Fd+1E
+         ZLrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:content-transfer-encoding:date
-         :message-id:cc:subject:from:to:references:in-reply-to;
-        bh=1iFwdNwk1v1dXl+OlTTXTF6c13xKzPVa4F0ip2ie7ak=;
-        b=nNLBF8CAEd8MX3pgQT7vsgpPQIZlDUIaSHMJDOotygq4RJIhpyaD1tM5okdgusrup+
-         8YLXpF00l7F8yxmtvdq84J7K0XX2i8+MtSVroXxmETHYpvob0CJqwhn/UDj9TM0zs96L
-         u4fABbbGCNIf/2GW1RvbOqmGwxQMWtcF3hLyRHOlmoacUH+03ToWj5PmMnAjpahL0joc
-         XX/VuiVdWOyvqEm2lIot5DYw29+9VU1QO2f4s0hIQSzJChdZId9td3NCjIeikkc/SULl
-         2ApvAVabnb+MrrhOp/D5FfjA0caMfByJFmoaQM+q44aD4nJLnDicchEUIsYjsIMavcWJ
-         Ya7g==
-X-Gm-Message-State: AOAM530G/O7eJq32bC10mOvWlHtevJ3gMSc5bjAhc7dyS42Rft9Xsr8J
-        Wf9N+XELsJzr31QontItRzd7rGIjznpSSYsG
-X-Google-Smtp-Source: ABdhPJwhTP+Sm/YUUUagKijKOaUv4aAkFfndIn3NiT0GJBAk3tk/3OR0q9VUBiGxUlwsgKfu44pDNw==
-X-Received: by 2002:a05:6402:11c7:b0:42e:c47a:ffdf with SMTP id j7-20020a05640211c700b0042ec47affdfmr29844951edw.113.1654683533557;
-        Wed, 08 Jun 2022 03:18:53 -0700 (PDT)
-Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id h9-20020a1709063b4900b007043b29dfd9sm8894340ejf.89.2022.06.08.03.18.52
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 08 Jun 2022 03:18:53 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date:   Wed, 08 Jun 2022 12:18:52 +0200
-Message-Id: <CKKOCWP2NYO5.GH08U776B1KU@otso>
-Cc:     <~postmarketos/upstreaming@lists.sr.ht>,
-        <phone-devel@vger.kernel.org>,
-        "Konrad Dybcio" <konrad.dybcio@somainline.org>,
-        "Marijn Suijten" <marijn.suijten@somainline.org>,
-        "AngeloGioacchino Del Regno" 
-        <angelogioacchino.delregno@somainline.org>,
-        "Song Qiang" <songqiang1304521@gmail.com>,
-        "Lars-Peter Clausen" <lars@metafoo.de>,
-        "Rob Herring" <robh+dt@kernel.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        "Andy Gross" <agross@kernel.org>,
-        "Bjorn Andersson" <bjorn.andersson@linaro.org>,
-        "Liam Girdwood" <lgirdwood@gmail.com>,
-        "Mark Brown" <broonie@kernel.org>, <linux-iio@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH 3/5] proximity: vl53l0x: Handle the VDD regulator
-From:   "Luca Weiss" <luca.weiss@fairphone.com>
-To:     "Markuss Broks" <markuss.broks@gmail.com>,
-        <linux-kernel@vger.kernel.org>, <jic23@kernel.org>
-X-Mailer: aerc 0.9.0
-References: <20220523175344.5845-1-markuss.broks@gmail.com>
- <20220523175344.5845-4-markuss.broks@gmail.com>
-In-Reply-To: <20220523175344.5845-4-markuss.broks@gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=AbKSfBNHMsB6gPQL/2rq+lhYEHklPNuzgxkaV0yDgno=;
+        b=W6UniAclXaHKbii34Zeq/qkguM78Z5KD9rL60VEpFUXdqh3P2SDGjcWTu1GXplZEyT
+         1Pg+agh8MfkhDVnwK4Y6NKUdL5XoSAsX0TL979LjRI0MyBcb9FznaQD7IkH/9EAbqHY/
+         fhcZiIFeh8tyJYuVg2TcV7Tp4K2vcs5uERZcuTfhihoj9azMuPqcvrUU6gn5cLn3L3UO
+         hVnGQ6CuIBP9LKsjI1Hekawo9qgr/F9Uc976gDMdAfspyNHJUKXwrz0Uz4M9HDJznl/2
+         uiVotw/i96z8Z2RJ2H/uOwqS2BVW2Y/KyIhXTRwyfe+HZpzwAq+HbgH6j3A596FmKrFe
+         UXEA==
+X-Gm-Message-State: AOAM530FCZ42LLui11MUibYiWup1+/L/3WRMyfX2xVoYsdDgvTQQQTua
+        CRoeujFd6IX3InspDKSSAh8fAg==
+X-Google-Smtp-Source: ABdhPJxcZzw3ShwMGJ6nR/dJ/fZjPdi5oqIicOs2LJhVAjvyxGcfnWH1a52O7RJlK1W83DrQE1jAdw==
+X-Received: by 2002:a2e:87c9:0:b0:255:7e94:d93b with SMTP id v9-20020a2e87c9000000b002557e94d93bmr14386532ljj.396.1654683730706;
+        Wed, 08 Jun 2022 03:22:10 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id v1-20020ac25601000000b00478fe3327aasm3642934lfd.217.2022.06.08.03.22.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 08 Jun 2022 03:22:09 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+        Johan Hovold <johan@kernel.org>
+Subject: [PATCH v14 0/7] PCI: dwc: Fix higher MSI vectors handling
+Date:   Wed,  8 Jun 2022 13:22:01 +0300
+Message-Id: <20220608102208.2967438-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.35.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -86,102 +78,119 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Markuss,
+I have replied with my Tested-by to the patch at [2], which has landed
+in the linux-next as the commit 20f1bfb8dd62 ("PCI: qcom:
+Add support for handling MSIs from 8 endpoints"). However lately I
+noticed that during the tests I still had 'pcie_pme=nomsi', so the
+device was not forced to use higher MSI vectors.
 
-On Mon May 23, 2022 at 7:53 PM CEST, Markuss Broks wrote:
-> Handle the regulator supplying the VDD pin of VL53L0X.
->
-> Signed-off-by: Markuss Broks <markuss.broks@gmail.com>
-> ---
->  drivers/iio/proximity/vl53l0x-i2c.c | 37 +++++++++++++++++++++++++++++
->  1 file changed, 37 insertions(+)
->
-> diff --git a/drivers/iio/proximity/vl53l0x-i2c.c b/drivers/iio/proximity/=
-vl53l0x-i2c.c
-> index 12a3e2eff464..8581a873919f 100644
-> --- a/drivers/iio/proximity/vl53l0x-i2c.c
-> +++ b/drivers/iio/proximity/vl53l0x-i2c.c
-> @@ -43,6 +43,7 @@
->  struct vl53l0x_data {
->  	struct i2c_client *client;
->  	struct completion completion;
-> +	struct regulator *vdd_supply;
->  };
-> =20
->  static irqreturn_t vl53l0x_handle_irq(int irq, void *priv)
-> @@ -192,10 +193,31 @@ static const struct iio_info vl53l0x_info =3D {
->  	.read_raw =3D vl53l0x_read_raw,
->  };
-> =20
-> +static void vl53l0x_power_off(void *_data)
-> +{
-> +	struct vl53l0x_data *data =3D _data;
-> +
-> +	regulator_disable(data->vdd_supply);
-> +}
-> +
-> +static int vl53l0x_power_on(struct vl53l0x_data *data)
-> +{
-> +	int ret;
-> +
-> +	ret =3D regulator_enable(data->vdd_supply);
-> +	if (ret)
-> +		return ret;
-> +
-> +	usleep_range(3200, 5000);
-> +
-> +	return 0;
-> +}
-> +
->  static int vl53l0x_probe(struct i2c_client *client)
->  {
->  	struct vl53l0x_data *data;
->  	struct iio_dev *indio_dev;
-> +	int error;
-> =20
->  	indio_dev =3D devm_iio_device_alloc(&client->dev, sizeof(*data));
->  	if (!indio_dev)
-> @@ -210,6 +232,21 @@ static int vl53l0x_probe(struct i2c_client *client)
->  				     I2C_FUNC_SMBUS_BYTE_DATA))
->  		return -EOPNOTSUPP;
-> =20
-> +	data->vdd_supply =3D devm_regulator_get_optional(&client->dev, "vdd");
-> +	if (IS_ERR(data->vdd_supply))
-> +		return dev_err_probe(&client->dev, PTR_ERR(data->vdd_supply),
-> +				     "Unable to get VDD regulator\n");
+After removing this option I noticed that hight MSI vectors are not
+delivered on tested platforms. After additional research I stumbled upon
+a patch in msm-4.14 ([1]), which describes that each group of MSI
+vectors is mapped to the separate interrupt. Implement corresponding
+mapping.
 
-It looks like this optional regulator is not actually optional.
+The last patch in the series is a revert of  [2] (landed in pci-next).
+Bjorn Helgaas has removed the offending patch from his 5.19 pull
+request, but the revert is still a part of this patch series as a
+reminder to Lorenzo to drop the patch from his pci/qcom branch.
 
-[    1.919995] vl53l0x-i2c 1-0029: error -ENODEV: Unable to get VDD regulat=
-or
+Changes since v13:
+ - Changed msiX from pointer to the char array (reported by Johan).
 
-When using devm_regulator_get instead, a dummy regulator gets returned
-which I think is what we want here:
+Changes since v12:
+ - Dropped split_msi_names array in favour of generating the msi_name on
+   the fly (Rob),
+ - Dropped separate split MSI ISR as requested by Rob,
+ - Many small syntax & spelling changes as suggested by Johan and Rob,
+ - Moved a revert to be a last patch, as it is now a reminder to
+   Lorenzo,
+ - Renamed series to name dwc rather than qcom, as the are no more
+   actual changes to the qcom PCIe driver (Johan thanks for all
+   suggestions for making the code to work as is).
 
-[    1.905518] vl53l0x-i2c 1-0029: supply vdd not found, using dummy regula=
-tor
+Changes since v11 (suggested by Johan):
+ - Added back reporting errors for the "msi0" interrupt,
+ - Stopped overriding num_vectors field if it is less than the amount of
+   MSI vectors deduced from interrupt list,
+ - Added a warning (and an override) if the host specifies more MSI
+   vectors than available,
+ - Moved has_split_msi_irq variable to the patch where it is used.
 
-Can you fix this up or should I send a patch?
+Changes since v10:
+ - Remove has_split_msi_irqs flag. Trust DT and use split MSI IRQs if
+   they are described in the DT. This removes the need for the
+   pcie-qcom.c changes (everything is handled by the core (suggested by
+   Johan).
+ - Rebased on top of Lorenzo's DWC branch
 
-Regards
-Luca
+Changes since v9:
+ - Relax requirements and stop validating the DT. If the has_split_msi
+   was specified, parse as many msiN irqs as specified in DT. If there
+   are none, fallback to the single "msi" IRQ.
 
+Changes since v8:
+ - Fix typos noted by Bjorn Helgaas
+ - Add missing links to the patch 1 (revert)
+ - Fix sm8250 interrupt-names (Johan)
+ - Specify num_vectors in qcom configuration data (Johan)
+ - Rework parsing of MSI IRQs (Johan)
 
-> +
-> +	error =3D vl53l0x_power_on(data);
-> +	if (error)
-> +		return dev_err_probe(&client->dev, error,
-> +				     "Failed to power on the chip\n");
-> +
-> +	error =3D devm_add_action_or_reset(&client->dev, vl53l0x_power_off, dat=
-a);
-> +	if (error)
-> +		return dev_err_probe(&client->dev, error,
-> +				     "Failed to install poweroff action\n");
-> +
->  	indio_dev->name =3D "vl53l0x";
->  	indio_dev->info =3D &vl53l0x_info;
->  	indio_dev->channels =3D vl53l0x_channels;
-> --=20
-> 2.36.1
+Changes since v7:
+ - Move code back to the dwc core driver (as required by Rob),
+ - Change dt schema to require either a single "msi" interrupt or an
+   array of "msi0", "msi1", ... "msi7" IRQs. Disallow specifying a
+   part of the array (the DT should specify the exact amount of MSI IRQs
+   allowing fallback to a single "msi" IRQ),
+ - Fix in the DWC init code for the dma_mapping_error() return value.
+
+Changes since v6:
+ - Fix indentation of the arguments as requested by Stanimir
+
+Changes since v5:
+ - Fixed commit subject and in-comment code according to Bjorn's
+   suggestion,
+ - Changed variable idx to i to follow dw_handle_msi_irq() style.
+
+Changes since v4:
+ - Fix the minItems/maxItems properties in the YAML schema.
+
+Changes since v3:
+ - Reimplement MSI handling scheme in the Qualcomm host controller
+   driver.
+
+Changes since v2:
+ - Fix and rephrase commit message for patch 2.
+
+Changes since v1:
+ - Split a huge patch into three patches as suggested by Bjorn Helgaas
+ - snps,dw-pcie removal is now part of [3]
+
+[1] https://git.codelinaro.org/clo/la/kernel/msm-4.14/-/commit/671a3d5f129f4bfe477152292ada2194c8440d22
+[2] https://lore.kernel.org/linux-arm-msm/20211214101319.25258-1-manivannan.sadhasivam@linaro.org/
+
+Dmitry Baryshkov (7):
+  PCI: dwc: Correct msi_irq condition in dw_pcie_free_msi()
+  PCI: dwc: Convert msi_irq to the array
+  PCI: dwc: split MSI IRQ parsing/allocation to a separate function
+  PCI: dwc: Handle MSIs routed to multiple GIC interrupts
+  dt-bindings: PCI: qcom: Support additional MSI interrupts
+  arm64: dts: qcom: sm8250: provide additional MSI interrupts
+  PCI: qcom: Revert "PCI: qcom: Add support for handling MSIs from 8
+    endpoints"
+
+ .../devicetree/bindings/pci/qcom,pcie.yaml    |  53 +++++-
+ arch/arm64/boot/dts/qcom/sm8250.dtsi          |  12 +-
+ drivers/pci/controller/dwc/pci-dra7xx.c       |   2 +-
+ drivers/pci/controller/dwc/pci-exynos.c       |   2 +-
+ .../pci/controller/dwc/pcie-designware-host.c | 161 +++++++++++++-----
+ drivers/pci/controller/dwc/pcie-designware.h  |   2 +-
+ drivers/pci/controller/dwc/pcie-keembay.c     |   2 +-
+ drivers/pci/controller/dwc/pcie-qcom.c        |   1 -
+ drivers/pci/controller/dwc/pcie-spear13xx.c   |   2 +-
+ drivers/pci/controller/dwc/pcie-tegra194.c    |   2 +-
+ 10 files changed, 185 insertions(+), 54 deletions(-)
+
+-- 
+2.35.1
 
