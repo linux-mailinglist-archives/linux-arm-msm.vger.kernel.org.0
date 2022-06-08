@@ -2,72 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A7119543F08
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jun 2022 00:14:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9D23E543F0F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jun 2022 00:20:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236200AbiFHWO6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Jun 2022 18:14:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41170 "EHLO
+        id S236513AbiFHWSA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Jun 2022 18:18:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54068 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236504AbiFHWO5 (ORCPT
+        with ESMTP id S236499AbiFHWR7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Jun 2022 18:14:57 -0400
-Received: from mail-oa1-x36.google.com (mail-oa1-x36.google.com [IPv6:2001:4860:4864:20::36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A59B31512
-        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Jun 2022 15:14:55 -0700 (PDT)
-Received: by mail-oa1-x36.google.com with SMTP id 586e51a60fabf-fb6b4da1dfso11014147fac.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jun 2022 15:14:55 -0700 (PDT)
+        Wed, 8 Jun 2022 18:17:59 -0400
+Received: from mail-oa1-x2c.google.com (mail-oa1-x2c.google.com [IPv6:2001:4860:4864:20::2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4482D37A05
+        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Jun 2022 15:17:55 -0700 (PDT)
+Received: by mail-oa1-x2c.google.com with SMTP id 586e51a60fabf-f16a3e0529so29032134fac.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jun 2022 15:17:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to;
-        bh=4+3RQXUOPtCpLvkD/U0erPbjIdgGtkmXEv+DgUOZHBk=;
-        b=kD5nxNFk80W+73EVv5maekxoUggnhB7L4tjOpUL4RRMV5c6rh/qT1Rt1SrPD6LfQi+
-         Spbena1c1XCLUDtW8Sh5BOJhqkJRyiGnBFMLU3M2EgtcdLie4f4a7td17XlNsz7/RUnl
-         PfqlebSOrrHdXbIIVyL4gF+Qo070/pnIZmwd4=
+         :subject:to:cc;
+        bh=sjggaWHpjbyPFtlZQEJUzFJDBjr7IqTMh+s2+xOurSk=;
+        b=Dtey83E7P4XRafF2kgiWH0Nqj5Cu/jeuMmiOiioNWcp94xnELMeJ1RLV2iLC42j0Aw
+         vCmjggpU3Yl6QpeWoegxYrh6J7IDD8XSIdZ2dxl8ayz6AqICySZnX6Thyqq1YqdkfE0I
+         Q2WHDA+Oabqn8z0zRq7k93+lKjUbaR/QzPGB4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to;
-        bh=4+3RQXUOPtCpLvkD/U0erPbjIdgGtkmXEv+DgUOZHBk=;
-        b=1vBamMtSp5dWJLUrvinL9zNnxFeJxctJ9A1d8nkDALcB23+wCyGDlG1II6GG6bGq0P
-         ZONaAYlgiX9GctACxVrL6dRtK6q665lE3FFSLIDTpu3QZJflAZRM6h6n5KGlmt3qfIrF
-         R5mO65TGoqvqfMlr1AVkokzaPNvpLIBc6Af20aKUQDPNf+j8C9by3MhTMX+xkuLE3VzO
-         MvWbg9Y8NGmnGljZdMcoJVWoRF1Vdfk5IeNKOX2FD+7HoLhU1p9NGQeK0zY1AuBLu1GT
-         mtUD85kXriRUeEa/iHmwhkotfwgwyPC4c42JR8zzkVwrcDPYH/GYrivk8NE/OiqsEsmB
-         sdSg==
-X-Gm-Message-State: AOAM533GY28XUrf9zC/sCEjH6FtQTxpmNSVebsXBwmq+A13MzUtFLyTk
-        tENH8UwuLEcv4w2Cfed2Cxke3E6VFz42AokR1WSEhg==
-X-Google-Smtp-Source: ABdhPJyqsGvOKTE4uunfCR1Mb+T+23hK+RV3b+F13PhuhOCuTw0rP+YUQOmxZHfZGkHHt9+RtkGFHec2aKtLrzEwEeo=
+         :user-agent:date:message-id:subject:to:cc;
+        bh=sjggaWHpjbyPFtlZQEJUzFJDBjr7IqTMh+s2+xOurSk=;
+        b=b9ppcg7jHwf+nVk9QXTuOnJcn1eIzU192L9IzNmQWHLmxtvLd263xBitsvFEgq/nqS
+         4bBzf2uC2d+uwYY2M38YyF3BdU7pqczIr2PMiVj8nZfDJZkmlWmZOwOEKH0yVzH/o5bn
+         3UFCuQPWbpvfJWseTV45/ZFB1IECL6XeKjKkXlmzsaF6NoOja3QkGmSK2VtgzfPgS53T
+         AwyKU7qJvlfjOjEqov4d7jst9LokT+JtZG86YgQ5yTrsHxolBqw0a4qZeM1nsw8HQYM9
+         0OOb/rOKi8hsA66dWYgk7+DsAWjJb5ii3TFIpAa+KBeH5GMbPwvcb6Vb/T5dPhAeBK4t
+         KmWw==
+X-Gm-Message-State: AOAM532A616013sUOztWb2BFo9csfdD6mcNjHJ1EuY6g0wYoj0qPnja+
+        cNHyobKJD2kmsoLO8zXOrJBZHDsmfwuwlqNDSdxC2w==
+X-Google-Smtp-Source: ABdhPJxjhinNFopJWfMD6r4u711h/8HphOSbID6Nj3U0jXyaNq7zLF2fz4Du5aIyA170mLwnTOdfDEPL4IFLBfactqI=
 X-Received: by 2002:a05:6870:b381:b0:fe:2004:b3b5 with SMTP id
- w1-20020a056870b38100b000fe2004b3b5mr85785oap.63.1654726494871; Wed, 08 Jun
- 2022 15:14:54 -0700 (PDT)
+ w1-20020a056870b38100b000fe2004b3b5mr93795oap.63.1654726674487; Wed, 08 Jun
+ 2022 15:17:54 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 8 Jun 2022 15:14:54 -0700
+ HTTPREST; Wed, 8 Jun 2022 15:17:54 -0700
 MIME-Version: 1.0
-In-Reply-To: <20220607110841.53889-1-linmq006@gmail.com>
-References: <20220607110841.53889-1-linmq006@gmail.com>
+In-Reply-To: <1654240730-31322-1-git-send-email-quic_krichai@quicinc.com>
+References: <1654240730-31322-1-git-send-email-quic_krichai@quicinc.com>
 From:   Stephen Boyd <swboyd@chromium.org>
 User-Agent: alot/0.10
-Date:   Wed, 8 Jun 2022 15:14:54 -0700
-Message-ID: <CAE-0n52aJC_LzT_cYxQXKEpcE58YqCbT7jW0iEaaxtbW9jL4jg@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm/mdp4: Fix refcount leak in mdp4_modeset_init_intf
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        David Heidelberg <david@ixit.cz>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Guo Zhengkui <guozhengkui@vivo.com>,
-        Miaoqian Lin <linmq006@gmail.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Rob Clark <robdclark@gmail.com>, Rob Herring <robh@kernel.org>,
-        Sean Paul <sean@poorly.run>, Xu Wang <vulab@iscas.ac.cn>,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Date:   Wed, 8 Jun 2022 15:17:54 -0700
+Message-ID: <CAE-0n52hpKxMG=gq1rPGx0cM2VKNRo+WHVW+ExCScJ8UwZKgGA@mail.gmail.com>
+Subject: Re: [PATCH v1] PCI: qcom: Allow L1 and its sub states on qcom dwc wrapper
+To:     Krishna chaitanya chundru <quic_krichai@quicinc.com>,
+        helgaas@kernel.org
+Cc:     linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_vbadigan@quicinc.com,
+        quic_hemantk@quicinc.com, quic_ramkri@quicinc.com,
+        manivannan.sadhasivam@linaro.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Rob Herring <robh@kernel.org>,
+        =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -75,14 +75,11 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Miaoqian Lin (2022-06-07 04:08:38)
-> of_graph_get_remote_node() returns remote device node pointer with
-> refcount incremented, we should use of_node_put() on it
-> when not need anymore.
-> Add missing of_node_put() to avoid refcount leak.
+Quoting Krishna chaitanya chundru (2022-06-03 00:18:50)
+> Allow L1 and its sub-states in the qcom dwc pcie wrapper.
+> By default its disabled. So enable it explicitly.
 >
-> Fixes: 86418f90a4c1 ("drm: convert drivers to use of_graph_get_remote_node")
-> Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
-> ---
 
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Would be good to add some more details about why it's disabled by
+default. I guess it's disabled by default in the hardware and enabling
+it is OK to do unconditionally for all qcom dwc pcie devices?
