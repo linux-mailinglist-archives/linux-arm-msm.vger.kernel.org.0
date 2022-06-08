@@ -2,72 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D0251543F13
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jun 2022 00:22:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7DB3C543F2D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jun 2022 00:30:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236552AbiFHWWS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Jun 2022 18:22:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45106 "EHLO
+        id S229802AbiFHWaw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Jun 2022 18:30:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53626 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236549AbiFHWWR (ORCPT
+        with ESMTP id S230391AbiFHWav (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Jun 2022 18:22:17 -0400
-Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com [IPv6:2607:f8b0:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B5BC19039
-        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Jun 2022 15:22:15 -0700 (PDT)
-Received: by mail-ot1-x333.google.com with SMTP id a21-20020a9d4715000000b0060bfaac6899so7320024otf.12
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jun 2022 15:22:15 -0700 (PDT)
+        Wed, 8 Jun 2022 18:30:51 -0400
+Received: from mail-qt1-x836.google.com (mail-qt1-x836.google.com [IPv6:2607:f8b0:4864:20::836])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5176235DF1
+        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Jun 2022 15:30:47 -0700 (PDT)
+Received: by mail-qt1-x836.google.com with SMTP id hh4so15956369qtb.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jun 2022 15:30:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=yMd7Hozsat/nVbPGsAk4XlEU/f2AJQfxXiHNmo0Z5Nk=;
-        b=NEw2wfLkuGo5EdYbuTEj6NoH4fIGrXjfeg3eNR+v7cAGl3dpHTQRSmBY3kY5BT+H1L
-         LB+i8vMnE9BzZShTbzuVVLb2TuS0HtHRMEglkBIb3W/Usm7JHA06Yp6eYcZjEnNkfyjb
-         tnaC988GjPJLeCcb3/ZCZidFIReqds3iFEJf4=
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=/NGZa6hS3QU47AvbSLK2GIuv57CIGfWo682J5ZRFd+M=;
+        b=XJMeMhyzCMUm2owaMJ1iE92NLxC5exYof72g2v0sE+ZhYrpK7zgAz+BHp6EGTg/cQt
+         1Lrj55QT/60zOGXDq/tfODnJM4EEPq/GuRTF2dlXbPmhq3UuoWotqY5HknEMc732sJac
+         u1BLKhnTV9Q+4lSj7H9v0K5Rl+H9rtY13LsFv/UtcQX3PfC1nZOZb+ZmIf6MoxJrWVlL
+         sn+K2WonojYz9lo+n7aDnLdl2l/xE2ut69JjqbvI9eo9fnqR2AtzUwanm29JunK19dOK
+         4K5GnvvJDloWUOEifLWpkI995vH6XJwUm2VfMxl58cdH5VoePU23jYfmUxs8/On6x9Zf
+         TMjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=yMd7Hozsat/nVbPGsAk4XlEU/f2AJQfxXiHNmo0Z5Nk=;
-        b=AbkiVJ9ntyv7qC1z6CgFyImoXXGdsVc5uCQqSli5mYtIuF1lrkOp8To9/OV9t5qrAH
-         UD+GDV2hpotmTpxc7sbOjrvC0ORufl5ovM82ftAYs3Y7tKQccCazAA+r3Osd+utjRGDq
-         c2rI7POvwjJ9xEJcy1MKa1gglQO0d0y8S4/fTSxVqEZCWyKm324JCTQqklPFPncZr1CC
-         4Jkd9+EnIrjbKwn1J0j8Q6kBCqCfp4YTwgC/XUoQW3utVq0GK3pmRHToSF4yvuYf+Vwn
-         mNed3e6A6m6s340S3gdRYuWOEjrzyvCbHsiSbRjfyGNkyFdLEyP/g6V4NvfgmP5bbfG8
-         JqGQ==
-X-Gm-Message-State: AOAM532u6/DPuYaK+FiSPnnlMERznYYz0dF66DbCOM7d5UQPy7ZJmlyK
-        73XjV/AgxaJRx0pnqbXlNxDqrPmm0CiHD8WnWca7UQ==
-X-Google-Smtp-Source: ABdhPJzATqVCjyRJ2OPemoBy04LjeGoyFitsb41S+IfCDnV1z1uSVPhS+dYzhFlqA1fCOG/KPL3VK9GV++nsKx9AStE=
-X-Received: by 2002:a05:6830:113:b0:60b:eb0b:4054 with SMTP id
- i19-20020a056830011300b0060beb0b4054mr9954644otp.159.1654726934393; Wed, 08
- Jun 2022 15:22:14 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 8 Jun 2022 15:22:13 -0700
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=/NGZa6hS3QU47AvbSLK2GIuv57CIGfWo682J5ZRFd+M=;
+        b=jBg/vCdROnu6Ki3Otq04sRcBf6bDumvXccBTvXO15RZQqr0a9FIkOzKVgzDZpRWEYa
+         ahDpmspVzDbHK6IJUTTBuCHS28nzbnFuLSuDoaU3zBVzgEbmKjwHydWRWa5bXIseTYOB
+         I3+ftQzm2CVOgGYiy9ButPe3YJDhqt7KNsgKd0Uj22rtujV0LPZKzMguYWeJyUuHU4zZ
+         noiU0chqxSctjC6CXaVK8rY7i5xndYujUEwZSU8T0rLNRonkBSKlEQDuMol+T1VVwYbq
+         MhSvYPQR5sblLryJuNwdsfongMSVvl3OkDtP/m3tr7ZB/pLDCe2398Q4NPcnvMn78NYp
+         43Ig==
+X-Gm-Message-State: AOAM531QyH2qwg533F+0WVvbD3DtUKxvNlq9MshbddGC5EsB3AKrMYuc
+        7nS11EwQ1WyiH9NeEPlNIX65G/yP0XhQv8CMSY3SwQ==
+X-Google-Smtp-Source: ABdhPJzjB7X8h/8IOETHWb1n0jnV1+PHsvNYrRXqTH2Ft/wqAi4yNwbmecuXHfPUIScml8Xs0woLI0fu3SoSOKqgxiI=
+X-Received: by 2002:a05:622a:13c7:b0:305:abf:dd29 with SMTP id
+ p7-20020a05622a13c700b003050abfdd29mr1539289qtk.629.1654727446356; Wed, 08
+ Jun 2022 15:30:46 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <1654242861-15695-1-git-send-email-quic_krichai@quicinc.com>
-References: <1646679549-12494-1-git-send-email-quic_pmaliset@quicinc.com> <1654242861-15695-1-git-send-email-quic_krichai@quicinc.com>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Wed, 8 Jun 2022 15:22:13 -0700
-Message-ID: <CAE-0n527WJxDGxJ=1Y9a15+3kQvfnWSq+V0ddS3uri_i+epxQg@mail.gmail.com>
-Subject: Re: [PATCH v4] PCI/ASPM: Update LTR threshold based upon reported max latencies
-To:     Krishna chaitanya chundru <quic_krichai@quicinc.com>,
-        helgaas@kernel.org
-Cc:     linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_vbadigan@quicinc.com,
-        quic_hemantk@quicinc.com, quic_nitegupt@quicinc.com,
-        quic_skananth@quicinc.com, quic_ramkri@quicinc.com,
-        manivannan.sadhasivam@linaro.org,
-        Prasad Malisetty <quic_pmaliset@quicinc.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        "Saheed O. Bolarinwa" <refactormyself@gmail.com>,
-        =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
-        Rajat Jain <rajatja@google.com>
+References: <20220531121825.1126204-1-dmitry.baryshkov@linaro.org>
+ <d7084452-ea90-3a8b-d39a-b09d9f45f839@quicinc.com> <CAA8EJprW7xnYJaeqh4vozSTx04DcQ20MMRrzLaEJPJTC3dV30w@mail.gmail.com>
+ <80c1da0f-0006-6602-ec86-ebdf71c3037a@quicinc.com> <CAA8EJppfWfP-bZLOYF8QBe6kW6gBBw5eXpzzDA6GFo8U7g=jRQ@mail.gmail.com>
+ <963f5ef5-4b1d-6b0d-5b6d-0d6136e9e8d3@quicinc.com> <CAA8EJppCiN65NV7w9TyR=P+XzGPVxZJoAZoX5+XjxKwXsL_FQg@mail.gmail.com>
+ <e56780cb-44c1-b26b-90b8-ceb40b8f218b@quicinc.com>
+In-Reply-To: <e56780cb-44c1-b26b-90b8-ceb40b8f218b@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Thu, 9 Jun 2022 01:30:35 +0300
+Message-ID: <CAA8EJprCHW61_0zd+GqOZgpx1C-CDv6iuJZU60cc-1M2YZZhpw@mail.gmail.com>
+Subject: Re: [Freedreno] [PATCH] drm/msm: less magic numbers in msm_mdss_enable
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     freedreno@lists.freedesktop.org, David Airlie <airlied@linux.ie>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        Stephen Boyd <swboyd@chromium.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Sean Paul <sean@poorly.run>
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -75,111 +73,188 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Krishna chaitanya chundru (2022-06-03 00:54:19)
-> From: Prasad Malisetty <quic_pmaliset@quicinc.com>
+On Wed, 8 Jun 2022 at 22:29, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
 >
-> In ASPM driver, LTR threshold scale and value are updated based on
-> tcommon_mode and t_poweron values. In kioxia NVMe L1.2 is failing due to
-> LTR threshold scale and value are greater values than max snoop/non-snoop
-> value.
 >
-> Based on PCIe r4.1, sec 5.5.1, L1.2 substate must be entered when
-> reported snoop/no-snoop values is greather than or equal to
-> LTR_L1.2_THRESHOLD value.
 >
-> Signed-off-by: Prasad Malisetty  <quic_pmaliset@quicinc.com>
-> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-> ---
+> On 6/2/2022 1:13 PM, Dmitry Baryshkov wrote:
+> > On Thu, 2 Jun 2022 at 21:18, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+> >>
+> >>
+> >>
+> >> On 6/1/2022 1:04 PM, Dmitry Baryshkov wrote:
+> >>> On Wed, 1 Jun 2022 at 20:38, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+> >>>>
+> >>>>
+> >>>>
+> >>>> On 6/1/2022 2:46 AM, Dmitry Baryshkov wrote:
+> >>>>> On Wed, 1 Jun 2022 at 01:01, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+> >>>>>> On 5/31/2022 5:18 AM, Dmitry Baryshkov wrote:
+> >>>>>>> Replace magic register writes in msm_mdss_enable() with version that
+> >>>>>>> contains less magic and more variable names that can be traced back to
+> >>>>>>> the dpu_hw_catalog or the downstream dtsi files.
+> >>>>>>>
+> >>>>>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> >>>>>>> ---
+> >>>>>>>      drivers/gpu/drm/msm/msm_mdss.c | 79 ++++++++++++++++++++++++++++++----
+> >>>>>>>      1 file changed, 71 insertions(+), 8 deletions(-)
+> >>>>>>>
+> >>>>>>> diff --git a/drivers/gpu/drm/msm/msm_mdss.c b/drivers/gpu/drm/msm/msm_mdss.c
+> >>>>>>> index 0454a571adf7..2a48263cd1b5 100644
+> >>>>>>> --- a/drivers/gpu/drm/msm/msm_mdss.c
+> >>>>>>> +++ b/drivers/gpu/drm/msm/msm_mdss.c
+> >>>>>>> @@ -21,6 +21,7 @@
+> >>>>>>>      #define HW_REV                              0x0
+> >>>>>>>      #define HW_INTR_STATUS                      0x0010
+> >>>>>>>
+> >>>>>>> +#define UBWC_DEC_HW_VERSION          0x58
+> >>>>>>>      #define UBWC_STATIC                 0x144
+> >>>>>>>      #define UBWC_CTRL_2                 0x150
+> >>>>>>>      #define UBWC_PREDICTION_MODE                0x154
+> >>>>>>> @@ -132,9 +133,63 @@ static int _msm_mdss_irq_domain_add(struct msm_mdss *msm_mdss)
+> >>>>>>>          return 0;
+> >>>>>>>      }
+> >>>>>>>
+> >>>>>>> +#define UBWC_1_0 0x10000000
+> >>>>>>> +#define UBWC_2_0 0x20000000
+> >>>>>>> +#define UBWC_3_0 0x30000000
+> >>>>>>> +#define UBWC_4_0 0x40000000
+> >>>>>>> +
+> >>>>>>> +static void msm_mdss_setup_ubwc_dec_20(struct msm_mdss *msm_mdss,
+> >>>>>>> +                                    u32 ubwc_static)
+> >>>>>>> +{
+> >>>>>>> +     writel_relaxed(ubwc_static, msm_mdss->mmio + UBWC_STATIC);
+> >>>>>>> +}
+> >>>>>>> +
+> >>>>>>> +static void msm_mdss_setup_ubwc_dec_30(struct msm_mdss *msm_mdss,
+> >>>>>>> +                                    unsigned int ubwc_version,
+> >>>>>>> +                                    u32 ubwc_swizzle,
+> >>>>>>> +                                    u32 highest_bank_bit,
+> >>>>>>> +                                    u32 macrotile_mode)
+> >>>>>>> +{
+> >>>>>>> +     u32 value = (ubwc_swizzle & 0x1) |
+> >>>>>>> +                 (highest_bank_bit & 0x3) << 4 |
+> >>>>>>> +                 (macrotile_mode & 0x1) << 12;
+> >>>>>>> +
+> >>>>>>> +     if (ubwc_version == UBWC_3_0)
+> >>>>>>> +             value |= BIT(10);
+> >>>>>>> +
+> >>>>>>> +     if (ubwc_version == UBWC_1_0)
+> >>>>>>> +             value |= BIT(8);
+> >>>>>>> +
+> >>>>>>> +     writel_relaxed(value, msm_mdss->mmio + UBWC_STATIC);
+> >>>>>>> +}
+> >>>>>>> +
+> >>>>>>> +static void msm_mdss_setup_ubwc_dec_40(struct msm_mdss *msm_mdss,
+> >>>>>>> +                                    unsigned int ubwc_version,
+> >>>>>>> +                                    u32 ubwc_swizzle,
+> >>>>>>> +                                    u32 ubwc_static,
+> >>>>>>> +                                    u32 highest_bank_bit,
+> >>>>>>> +                                    u32 macrotile_mode)
+> >>>>>>> +{
+> >>>>>>> +     u32 value = (ubwc_swizzle & 0x7) |
+> >>>>>>> +                 (ubwc_static & 0x1) << 3 |
+> >>>>>>> +                 (highest_bank_bit & 0x7) << 4 |
+> >>>>>>> +                 (macrotile_mode & 0x1) << 12;
+> >>>>>>> +
+> >>>>>>> +     writel_relaxed(value, msm_mdss->mmio + UBWC_STATIC);
+> >>>>>>> +
+> >>>>>>> +     if (ubwc_version == UBWC_3_0) {
+> >>>>>>> +             writel_relaxed(1, msm_mdss->mmio + UBWC_CTRL_2);
+> >>>>>>> +             writel_relaxed(0, msm_mdss->mmio + UBWC_PREDICTION_MODE);
+> >>>>>>> +     } else {
+> >>>>>>> +             writel_relaxed(2, msm_mdss->mmio + UBWC_CTRL_2);
+> >>>>>>> +             writel_relaxed(1, msm_mdss->mmio + UBWC_PREDICTION_MODE);
+> >>>>>>> +     }
+> >>>>>>> +}
+> >>>>>>> +
+> >>>>>>
+> >>>>>> Is it possible to unify the above functions by having the internal
+> >>>>>> ubwc_version checks?
+> >>>>>
+> >>>>> Note, it's not the ubwc_version, it is the ubwc_dec_hw_version. And
+> >>>>> also different functions take different sets of arguments.
+> >>>>>
+> >>>>>> It seems like msm_mdss_setup_ubwc_dec_xxx can keep growing.
+> >>>>>>
+> >>>>>> I have not looked into each bit programming but from the top level so
+> >>>>>> feel free to correct if wrong but it seems both do write UBWC_STATIC
+> >>>>>> (different values based on different UBWC versions) and write some extra
+> >>>>>> registers based on version
+> >>>>>
+> >>>>> This is what both the current code and the downstream do. See
+> >>>>> https://github.com/MiCode/Xiaomi_Kernel_OpenSource/blob/zeus-s-oss/techpack/display-drivers/msm/sde/sde_hw_top.c#L312
+> >>>>>
+> >>>>
+> >>>> Thanks for pointing to the downstream method for this,
+> >>>>
+> >>>> This is exactly what i was also suggesting to do when I mentioned
+> >>>> unifying the above functions.
+> >>>>
+> >>>> So instead of having a separate function for each version why not handle
+> >>>> all the versions in the same function like what the link you have shown
+> >>>> does.
+> >>>
+> >>> I wouldn't like that. The downstream uses hw_catalog to pass all
+> >>> possible parameters. We do not, so we'd have a whole set of artificial
+> >>> values.
+> >>>
+> >>
+> >> Now that you brought that up, why cannot even upstream dpu start using
+> >> catalog for ubwc settings?
+> >
+> > Because msm_mdss lives out of disp/dpu1. And using the disp/dpu1 for
+> > it would be an inversion of dependencies.
+> > I like the fact that msm_mdss is independent of mdp/dpu drivers and I
+> > do not want to add such dependency.
+> >
 >
-> I am taking this patch forward as prasad is no more working with our org.
-
-Not sure why it's a reply to the previous rounds. I didn't notice this
-patch for a bit. Can you stop sending as replies to the previous round?
-
-> changes since v3:
->         - Changed the logic to include this condition "snoop/nosnoop
->           latencies are not equal to zero and lower than LTR_L1.2_THRESHOLD"
-> Changes since v2:
->         - Replaced LTRME logic with max snoop/no-snoop latencies check.
-> Changes since v1:
->         - Added missing variable declaration in v1 patch
-> ---
->  drivers/pci/pcie/aspm.c | 32 ++++++++++++++++++++++++++++++++
->  1 file changed, 32 insertions(+)
+> Ok, so I think this function itself is placed incorrectly. It should not
+> be in msm_mdss.c and should in the DPU folder.
 >
-> diff --git a/drivers/pci/pcie/aspm.c b/drivers/pci/pcie/aspm.c
-> index a96b742..c8f6253 100644
-> --- a/drivers/pci/pcie/aspm.c
-> +++ b/drivers/pci/pcie/aspm.c
-> @@ -461,14 +461,36 @@ static void aspm_calc_l1ss_info(struct pcie_link_state *link,
->  {
->         struct pci_dev *child = link->downstream, *parent = link->pdev;
->         u32 val1, val2, scale1, scale2;
-> +       u32 max_val, max_scale, max_snp_scale, max_snp_val, max_nsnp_scale, max_nsnp_val;
->         u32 t_common_mode, t_power_on, l1_2_threshold, scale, value;
->         u32 ctl1 = 0, ctl2 = 0;
->         u32 pctl1, pctl2, cctl1, cctl2;
->         u32 pl1_2_enables, cl1_2_enables;
-> +       u16 ltr;
-> +       u16 max_snoop_lat, max_nosnoop_lat;
+> This check tells me that this will not be executed for mdp5 devices.
 >
->         if (!(link->aspm_support & ASPM_STATE_L1_2_MASK))
->                 return;
->
-> +       ltr = pci_find_ext_capability(child, PCI_EXT_CAP_ID_LTR);
-> +       if (!ltr)
-> +               return;
-> +
-> +       pci_read_config_word(child, ltr + PCI_LTR_MAX_SNOOP_LAT, &max_snoop_lat);
-> +       pci_read_config_word(child, ltr + PCI_LTR_MAX_NOSNOOP_LAT, &max_nosnoop_lat);
-> +
-> +       max_snp_scale = (max_snoop_lat & PCI_LTR_SCALE_MASK) >> PCI_LTR_SCALE_SHIFT;
-> +       max_snp_val = (max_snoop_lat & PCI_LTR_VALUE_MASK);
+>     /*
+>       * HW_REV requires MDSS_MDP_CLK, which is not enabled by the mdss on
+>       * mdp5 hardware. Skip reading it for now.
+>       */
+>      if (msm_mdss->is_mdp5)
+>          return 0;
 
-Remove useless parenthesis please.
+This condition should be changed to check for the MDP_CLK being
+available in the clocks array rather than checking for is_mdp5. I'd
+like to phase is_mdp5 away at some point.
 
-> +
-> +       max_nsnp_scale = (max_nosnoop_lat & PCI_LTR_SCALE_MASK) >> PCI_LTR_SCALE_SHIFT;
-> +       max_nsnp_val = (max_nosnoop_lat & PCI_LTR_VALUE_MASK)
+> In that case, what prevents us from moving this to dpu and start using
+> catalog for this?
 
-Remove useless parenthesis please.
+Because there is nothing tying mdss and dpu drivers. For example, is
+the msm8998 (3.0.0) the DPU or MDP5 device? MSM8996?
+Neither struct msm_mdss nor the MDSS device itself are accessible
+through the msm_drv (or dpu_kms).
+I think trying to invent such a link would make the code worse.
 
-> +
-> +       /* choose the greater max scale value between snoop and no snoop value*/
-> +       max_scale = (max_snp_scale > max_nsnp_scale) ? max_snp_scale: max_nsnp_scale;
+> >> /* struct dpu_mdp_cfg : MDP TOP-BLK instance info
+> >>    * @id:                index identifying this block
+> >>    * @base:              register base offset to mdss
+> >>    * @features           bit mask identifying sub-blocks/features
+> >>    * @highest_bank_bit:  UBWC parameter
+> >>    * @ubwc_static:       ubwc static configuration
+> >>    * @ubwc_swizzle:      ubwc default swizzle setting
+> >>    * @clk_ctrls          clock control register definition
+> >>    */
+> >> struct dpu_mdp_cfg {
+> >>       DPU_HW_BLK_INFO;
+> >>       u32 highest_bank_bit;
+> >>       u32 ubwc_swizzle;
+> >>       struct dpu_clk_ctrl_reg clk_ctrls[DPU_CLK_CTRL_MAX];
+> >> };
+> >>
+> >> We already do seem to have a couple of parameters. have to add the others.
+> >>
+> >> That way the number of functions wont keep growing.
 
-Use max()?
 
-> +
-> +       /* choose the greater max value between snoop and no snoop scales */
-> +       max_val = (max_snp_val > max_nsnp_val) ? max_snp_val: max_nsnp_val;
-
-Use max()?
-
-> +
->         /* Choose the greater of the two Port Common_Mode_Restore_Times */
->         val1 = (parent_l1ss_cap & PCI_L1SS_CAP_CM_RESTORE_TIME) >> 8;
->         val2 = (child_l1ss_cap & PCI_L1SS_CAP_CM_RESTORE_TIME) >> 8;
-> @@ -501,6 +523,16 @@ static void aspm_calc_l1ss_info(struct pcie_link_state *link,
->          */
->         l1_2_threshold = 2 + 4 + t_common_mode + t_power_on;
->         encode_l12_threshold(l1_2_threshold, &scale, &value);
-> +
-> +       /*
-> +        * Based on PCIe r4.1, sec 5.5.1, L1.2 substate must be entered when reported
-> +        * snoop/no-snoop values are greather than or equal to LTR_L1.2_THRESHOLD value.
-> +        */
-> +       if (scale > max_scale)
-> +               scale = max_scale;
-
-Use min()?
-
-> +       if (value > max_val)
-> +               value = max_val;
-
-Use min()?
-
-> +
->         ctl1 |= t_common_mode << 8 | scale << 29 | value << 16;
->
->         /* Some broken devices only support dword access to L1 SS */
+-- 
+With best wishes
+Dmitry
