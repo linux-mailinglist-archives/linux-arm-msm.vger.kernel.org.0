@@ -2,66 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 559F8543813
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jun 2022 17:52:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D722354379A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jun 2022 17:40:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244578AbiFHPve (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Jun 2022 11:51:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55596 "EHLO
+        id S244439AbiFHPjy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Jun 2022 11:39:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59028 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239819AbiFHPvZ (ORCPT
+        with ESMTP id S244467AbiFHPju (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Jun 2022 11:51:25 -0400
-Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0689112FB05;
-        Wed,  8 Jun 2022 08:51:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1654703484; x=1686239484;
-  h=message-id:date:mime-version:subject:to:references:from:
-   in-reply-to:content-transfer-encoding;
-  bh=J9gVhWmRkrARQ+vF0CS/Zkh9G25iczH9M7T6+0LTHwA=;
-  b=oKkqBnP3wjW1YvdNq/BfTlcA49KaEjexypqPxpr8AlkXwOhTht/ORCAU
-   r2HuKsa5O8bQ4hyd0/Ji9pZW5SSNrdAbapXqVCgk4rXJ5VlliTPG2Es/k
-   +4gj+3IupNB+aXglY05Al13tojFQjRSfnlN6Fp47iiracc8hj0xeFsu8G
-   yTVxboIMvUDP9Ps/HKgLqjglSpsjc6/SPoy/lvspUtIhOL9n28qq4CzpU
-   aGIVZ4wakLcyaqxVaGgjMxJ+YdfhzCgZogmccesD1/tUc5dTtcxa62Vzq
-   sSdHriM4/EYuEtBnSzwd9zzm6tjUcvxiOuYSC5sfvg4EruTrLgUiAsGqD
-   A==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10372"; a="275706633"
-X-IronPort-AV: E=Sophos;i="5.91,286,1647327600"; 
-   d="scan'208";a="275706633"
-Received: from orsmga008.jf.intel.com ([10.7.209.65])
-  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Jun 2022 08:51:21 -0700
-X-IronPort-AV: E=Sophos;i="5.91,286,1647327600"; 
-   d="scan'208";a="609715710"
-Received: from pandeyvi-mobl1.amr.corp.intel.com (HELO [10.213.185.165]) ([10.213.185.165])
-  by orsmga008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Jun 2022 08:51:19 -0700
-Message-ID: <90a49c5c-7433-cec4-cb86-1424209a54e4@linux.intel.com>
-Date:   Wed, 8 Jun 2022 10:39:21 -0500
+        Wed, 8 Jun 2022 11:39:50 -0400
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83294121CFD
+        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Jun 2022 08:39:48 -0700 (PDT)
+Received: by mail-ed1-x52e.google.com with SMTP id h19so27675959edj.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jun 2022 08:39:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=u1KDk/axUVp21+cddhdnk3LSPy6qbxF3WGn2a8z1Emg=;
+        b=FUuw+7ZM3/XXnrhhGij7vnuxOiK6TrpBZ/GHgI9xei+CGe2dYATAna7tls+lZ7pfii
+         WvErUgiHuJq5JqU6UfFNSbQJ9Bvw15qeVyFlvEyQb9ydHtbTdswChqeIRvs1iXQqQHd5
+         ZXX4rFy8gGNKqDKSUdebNORdv8iYOQNYzcUHg=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=u1KDk/axUVp21+cddhdnk3LSPy6qbxF3WGn2a8z1Emg=;
+        b=Fo3RVTiv6rkm5o7IVPYjEin9etPclhBHvDrTMxPwjHWCXogHbRvBr/1GnNdcIxSeub
+         LKQVuK1cH3xItmRfxs7qc/xxhhMPlV+3xFW/d1+OlduYCQjzYEJRUyFFO5W0p4h3gnWQ
+         11UCQ+R4hmxtviKxENUy5FXk0I7/Z81hL6Qcz/GWYlWoqXYX4Q2rb01R2pVguhcLijuJ
+         mh8qhfuK82YyytX1xT6LdVGtfnTeeD8IGKQe7ONv3NgAiNmccP9sXAuLGKYldV3mmgVi
+         9edNhCD1eETRMVJc3nh452P0fbY3Lm3RodXclhl9kq88zAor4dBgFld6MPYbZwVsHguu
+         /w/g==
+X-Gm-Message-State: AOAM531trLUvx37oFPMJ70lZsiImKNZXCb3XGMctPkZWx+QjTxaaAKsV
+        baUjwOPKgkBGTp5ZfugEHuLfN8VwvHQ282RzqWY=
+X-Google-Smtp-Source: ABdhPJwD9QEfHyDshgG621AD3spQ5uNLtvwJ4Tdb+HtpEWVdxpuUNpBgriS/15fn+gtVmSKyoFjflw==
+X-Received: by 2002:a05:6402:254e:b0:431:35df:5e38 with SMTP id l14-20020a056402254e00b0043135df5e38mr25261837edb.385.1654702786734;
+        Wed, 08 Jun 2022 08:39:46 -0700 (PDT)
+Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com. [209.85.221.44])
+        by smtp.gmail.com with ESMTPSA id ck11-20020a0564021c0b00b0042de3d661d2sm12638463edb.1.2022.06.08.08.39.46
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 08 Jun 2022 08:39:46 -0700 (PDT)
+Received: by mail-wr1-f44.google.com with SMTP id h5so28939639wrb.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jun 2022 08:39:46 -0700 (PDT)
+X-Received: by 2002:a5d:608d:0:b0:218:3cfa:afe9 with SMTP id
+ w13-20020a5d608d000000b002183cfaafe9mr17795611wrt.422.1654702785594; Wed, 08
+ Jun 2022 08:39:45 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Firefox/91.0 Thunderbird/91.9.1
-Subject: Re: [PATCH v3 1/2] soundwire: qcom: Add flag for software clock
- gating check
-Content-Language: en-US
-To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-        agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        broonie@kernel.org, robh+dt@kernel.org, quic_plai@quicinc.com,
-        bgoswami@quicinc.com, perex@perex.cz, tiwai@suse.com,
-        srinivas.kandagatla@linaro.org, quic_rohkumar@quicinc.com,
-        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        swboyd@chromium.org, judyhsiao@chromium.org, vkoul@kernel.org
-References: <1654696929-20205-1-git-send-email-quic_srivasam@quicinc.com>
- <1654696929-20205-2-git-send-email-quic_srivasam@quicinc.com>
-From:   Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-In-Reply-To: <1654696929-20205-2-git-send-email-quic_srivasam@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-6.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
+References: <1654627965-1461-1-git-send-email-quic_vnivarth@quicinc.com> <1654627965-1461-3-git-send-email-quic_vnivarth@quicinc.com>
+In-Reply-To: <1654627965-1461-3-git-send-email-quic_vnivarth@quicinc.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Wed, 8 Jun 2022 08:39:31 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=U1oD60yRvoZohG07Pd62ki32DCGuCrG0R6bPXM=NpY=A@mail.gmail.com>
+Message-ID: <CAD=FV=U1oD60yRvoZohG07Pd62ki32DCGuCrG0R6bPXM=NpY=A@mail.gmail.com>
+Subject: Re: [PATCH 2/2] tty: serial: qcom-geni-serial: Implement start_rx callback
+To:     Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Jiri Slaby <jirislaby@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-serial@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>,
+        quic_msavaliy@quicinc.com, Matthias Kaehlcke <mka@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -69,35 +79,27 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi,
 
-
-On 6/8/22 09:02, Srinivasa Rao Mandadapu wrote:
-> Add flag in qcom_swrm_data private data structure for validating
-> software colck gating control requirement.
-
-typo: clock
-
-> 
-> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-> Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+On Tue, Jun 7, 2022 at 11:53 AM Vijaya Krishna Nivarthi
+<quic_vnivarth@quicinc.com> wrote:
+>
+> In suspend sequence stop_rx will be performed only if implementation for
+> start_rx callback is present.
+>
+> Set qcom_geni_serial_start_rx as callback for start_rx so that stop_rx is
+> performed.
+>
+> Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
 > ---
->  drivers/soundwire/qcom.c | 1 +
+>  drivers/tty/serial/qcom_geni_serial.c | 1 +
 >  1 file changed, 1 insertion(+)
-> 
-> diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
-> index a3fccf0..38c3bf5 100644
-> --- a/drivers/soundwire/qcom.c
-> +++ b/drivers/soundwire/qcom.c
-> @@ -181,6 +181,7 @@ struct qcom_swrm_ctrl {
->  struct qcom_swrm_data {
->  	u32 default_cols;
->  	u32 default_rows;
-> +	bool sw_clk_gate_required;
 
-I would have used a different split between patches, where the flag and
-functionality is introduced, and a second patch where this flag would be
-set for a specific platform.
+I think you also want a Fixes tag here, right? ...because if only the
+first patch is taken then it can actually regress Qualcomm devices.
+Thus:
 
->  };
->  
->  static const struct qcom_swrm_data swrm_v1_3_data = {
+Fixes: c9d2325cdb92 ("serial: core: Do stop_rx in suspend path for
+console if console_suspend is disabled")
+
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
