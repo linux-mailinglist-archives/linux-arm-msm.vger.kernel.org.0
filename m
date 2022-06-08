@@ -2,230 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1F809543EF9
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jun 2022 00:02:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9E2C8543EFF
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jun 2022 00:04:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235671AbiFHWB4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Jun 2022 18:01:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45006 "EHLO
+        id S231620AbiFHWEn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Jun 2022 18:04:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55132 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232615AbiFHWBz (ORCPT
+        with ESMTP id S229463AbiFHWEn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Jun 2022 18:01:55 -0400
-Received: from mail-io1-f45.google.com (mail-io1-f45.google.com [209.85.166.45])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 845D2B8BC5;
-        Wed,  8 Jun 2022 15:01:54 -0700 (PDT)
-Received: by mail-io1-f45.google.com with SMTP id p128so924292iof.1;
-        Wed, 08 Jun 2022 15:01:54 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=NN7GcotegH3FFfcqHSDcYe6YeJ9nxGa2AwyTelBXKr8=;
-        b=gPw85fgrG6aLwnLxi2yRHtV8srawtwgsyYS2yO+OJMMdU950BOekt49MY9Ez1evs0a
-         ICqBbwaZZx8JTRt4xm2yMP/DA0UFu2+eLMcekQEKribLx056ZnlqjtNcN6sw9EIbr1Eu
-         pRNRMlRkBxao8amiyS3C8BG+FUhi8LVB7RftfEM4pTWsWq9EHU/+7JEq7eGWgHHXly1W
-         f0gaO1lcs1uO/NOEYHsH24sU6cg4AfeJprs2bX/gXcbJzFoS3ffAeFOTho473ezBg+1N
-         nUSZMf9Pp0djrwjkYXmGbPjtozajwPYegqabY2upmOeju5ARXEwj1bTLTMttdfKlPnmE
-         GcnA==
-X-Gm-Message-State: AOAM533FEr214/iuV+qjxAQMArdI8R0eH3Y4V+nUBpspyY4G3EE+886u
-        sSGbkJs6pwdW1/Cpcfj8og==
-X-Google-Smtp-Source: ABdhPJwYJUic/1ZyEOvAqw740GgvsE+qnzhkTfmFrKTOJpNUOscNySpwIX4S+PyzbpZVs1iVy1344A==
-X-Received: by 2002:a05:6638:3383:b0:331:b268:261 with SMTP id h3-20020a056638338300b00331b2680261mr9101899jav.55.1654725713770;
-        Wed, 08 Jun 2022 15:01:53 -0700 (PDT)
-Received: from robh.at.kernel.org ([64.188.179.251])
-        by smtp.gmail.com with ESMTPSA id b12-20020a5edc0c000000b00669a3f60e99sm727337iok.31.2022.06.08.15.01.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Jun 2022 15:01:53 -0700 (PDT)
-Received: (nullmailer pid 2156157 invoked by uid 1000);
-        Wed, 08 Jun 2022 22:01:50 -0000
-Date:   Wed, 8 Jun 2022 16:01:50 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Mao Jinlong <quic_jinlmao@quicinc.com>
-Cc:     Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Leo Yan <leo.yan@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Tao Zhang <quic_taozha@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>,
-        linux-arm-msm@vger.kernel.org,
+        Wed, 8 Jun 2022 18:04:43 -0400
+X-Greylist: delayed 1257 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 08 Jun 2022 15:04:40 PDT
+Received: from msg-1.mailo.com (msg-1.mailo.com [213.182.54.11])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6878F1498D7
+        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Jun 2022 15:04:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=mailoo.org; s=mailo;
+        t=1654723379; bh=KIO51oCSFBweuGA1Msu2btlmkDy6vYub6CEmYJxxH4w=;
+        h=X-EA-Auth:Message-ID:Subject:From:To:Cc:Date:In-Reply-To:
+         References:Content-Type:MIME-Version:Content-Transfer-Encoding;
+        b=bDx4yfH5O9J40SpES1cArf5QgrRDpSgNAoMMIwMgccQj4itj658OFVp7qZWAE4hn8
+         L37MVHQNQJUw7/7LYIOpMumOgwfpSQace5VzE1Fr997+iHEXCs/PUxqaBeRUXK4Fok
+         HP3VShc8/msEIa+BU9WcIrqDZUlSISxKaqbfbphI=
+Received: by b-6.in.mailobj.net [192.168.90.16] with ESMTP
+        via proxy.mailoo.org [213.182.55.207]
+        Wed,  8 Jun 2022 23:22:59 +0200 (CEST)
+X-EA-Auth: UhNYjE+10JvU06sCLX4eJVHCBIE9YEmsIEtVZsDiqasF96VM03rc5qtn5aeyRFiRMzJkqxMheEJk4YsHAbGb7Qz2NgE5IfNzzY16N2TzQSw=
+Message-ID: <78f1adee5c6e0c3547c116d0e78fe5b70f9c15e1.camel@mailoo.org>
+Subject: Re: [PATCHv2] iommu/arm-smmu-qcom: Add debug support for TLB sync
+ timeouts
+From:   Vincent Knecht <vincent.knecht@mailoo.org>
+To:     Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
+        Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>
+Cc:     iommu@lists.linux-foundation.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, quic_guptap@quicinc.com,
+        Rob Clark <robdclark@chromium.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>
-Subject: Re: [PATCH v8 03/10] dt-bindings: arm: Adds CoreSight TPDM hardware
- definitions
-Message-ID: <20220608220150.GA2137312-robh@kernel.org>
-References: <20220608154705.40322-1-quic_jinlmao@quicinc.com>
- <20220608154705.40322-4-quic_jinlmao@quicinc.com>
+Date:   Wed, 08 Jun 2022 23:22:58 +0200
+In-Reply-To: <20220526041403.9984-1-quic_saipraka@quicinc.com>
+References: <20220526041403.9984-1-quic_saipraka@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.42.4 (3.42.4-2.fc35) 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220608154705.40322-4-quic_jinlmao@quicinc.com>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jun 08, 2022 at 11:46:58PM +0800, Mao Jinlong wrote:
-> Adds new coresight-tpdm.yaml file describing the bindings required
-> to define tpdm in the device trees.
-> 
-> Acked-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-> Reviewed-by: Mike Leach <mike.leach@linaro.org>
-> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
-> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
+Le jeudi 26 mai 2022 =C3=A0 09:44 +0530, Sai Prakash Ranjan a =C3=A9crit=C2=
+=A0:
+> TLB sync timeouts can be due to various reasons such as TBU power down
+> or pending TCU/TBU invalidation/sync and so on. Debugging these often
+> require dumping of some implementation defined registers to know the
+> status of TBU/TCU operations and some of these registers are not
+> accessible in non-secure world such as from kernel and requires SMC
+> calls to read them in the secure world. So, add this debug support
+> to dump implementation defined registers for TLB sync timeout issues.
+>=20
+> Signed-off-by: Sai Prakash Ranjan <quic_saipraka@quicinc.com>
 > ---
->  .../bindings/arm/coresight-tpdm.yaml          | 99 +++++++++++++++++++
+>=20
+> Changes in v2:
+> =C2=A0* Use scm call consistently so that it works on older chipsets wher=
+e
+> =C2=A0=C2=A0 some of these regs are secure registers.
+> =C2=A0* Add device specific data to get the implementation defined regist=
+er
+> =C2=A0=C2=A0 offsets.
+>=20
+> ---
+> =C2=A0drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 161 ++++++++++++++++++=
+---
+> =C2=A0drivers/iommu/arm/arm-smmu/arm-smmu.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+ |=C2=A0=C2=A0 2 +
+> =C2=A0drivers/iommu/arm/arm-smmu/arm-smmu.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+ |=C2=A0=C2=A0 1 +
+> =C2=A03 files changed, 146 insertions(+), 18 deletions(-)
 
-qcom,coresight-tpdm.yaml
+Hi Sai, and thanks for this patch !
 
->  .../devicetree/bindings/arm/coresight.txt     |  7 ++
+I've encountered TLB sync timeouts with msm8939 SoC recently.
+What would be needed to add to this patch so this SoC is supported ?
+Like, where could one check the values to be used in an equivalent
+of qcom_smmu_impl0_reg_offset values for this SoC (if any change needed) ?
+Current values are not found by simply greping in downstream/vendor dtsi/dt=
+s files...
 
-This file is going away[1]. I'd just drop the changes to it.
 
->  MAINTAINERS                                   |  1 +
->  3 files changed, 107 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/arm/coresight-tpdm.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/arm/coresight-tpdm.yaml b/Documentation/devicetree/bindings/arm/coresight-tpdm.yaml
-> new file mode 100644
-> index 000000000000..14bef4ce4274
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/arm/coresight-tpdm.yaml
-> @@ -0,0 +1,99 @@
-> +# SPDX-License-Identifier: GPL-2.0-only or BSD-2-Clause
-> +# Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/arm/coresight-tpdm.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Trace, Profiling and Diagnostics Monitor - TPDM
-> +
-> +description: |
-> +  The TPDM or Monitor serves as data collection component for various dataset
-> +  types specified in the QPMDA spec. It covers Implementation defined ((ImplDef),
-> +  Basic Counts (BC), Tenure Counts (TC), Continuous Multi-Bit (CMB), and Discrete
-> +  Single Bit (DSB). It performs data collection in the data producing clock
-> +  domain and transfers it to the data collection time domain, generally ATB
-> +  clock domain.
-> +
-> +  The primary use case of the TPDM is to collect data from different data
-> +  sources and send it to a TPDA for packetization, timestamping, and funneling.
-> +
-> +maintainers:
-> +  - Mao Jinlong <quic_jinlmao@quicinc.com>
-> +  - Tao Zhang <quic_taozha@quicinc.com>
-> +
-> +properties:
-> +  $nodename:
-> +    pattern: "^tpdm(@[0-9a-f]+)$"
 
-blank line
-
-> +  compatible:
-> +    items:
-> +      - const: qcom,coresight-tpdm
-> +      - const: arm,primecell
-
-You need a 'select' to fix the errors reported. See other primecell 
-bindings.
-
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  clocks:
-> +    maxItems: 1
-> +
-> +  clock-names:
-> +    items:
-> +      - const: apb_pclk
-> +
-> +  out-ports:
-> +    description: |
-> +      Output connections from the TPDM to coresight funnle/tpda.
-
-typo
-
-> +    $ref: /schemas/graph.yaml#/properties/ports
-
-blank line here.
-
-> +    properties:
-> +      port:
-> +        description: Output connection from the TPDM to coresight
-> +            funnel/tpda.
-
-s/tpda/TPDA/
-
-> +        $ref: /schemas/graph.yaml#/properties/port
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - clocks
-> +  - clock-names
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  # minimum TPDM definition. TPDM connect to coresight funnel.
-> +  - |
-> +    tpdm@6980000 {
-> +      compatible = "qcom,coresight-tpdm", "arm,primecell";
-> +      reg = <0x6980000 0x1000>;
-> +
-> +      clocks = <&aoss_qmp>;
-> +      clock-names = "apb_pclk";
-> +
-> +      out-ports {
-> +        port {
-> +          tpdm_turing_out_funnel_turing: endpoint {
-> +            remote-endpoint =
-> +              <&funnel_turing_in_tpdm_turing>;
-> +          };
-> +        };
-> +      };
-> +    };
-> +  # minimum TPDM definition. TPDM connect to coresight TPDA.
-> +  - |
-
-The only difference in the 2 examples is some external phandle. 1 
-example is sufficient.
-
-> +    tpdm@684c000 {
-> +      compatible = "qcom,coresight-tpdm", "arm,primecell";
-> +      reg = <0x684c000 0x1000>;
-> +
-> +      clocks = <&aoss_qmp>;
-> +      clock-names = "apb_pclk";
-> +
-> +      out-ports {
-> +        port {
-> +          tpdm_prng_out_tpda_qdss: endpoint {
-> +            remote-endpoint =
-> +              <&tpda_qdss_in_tpdm_prng>;
-> +          };
-> +        };
-> +      };
-> +    };
-> +
-> +...
-
-Rob
-
-[1] https://lore.kernel.org/all/20220603011933.3277315-1-robh@kernel.org/
