@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C8587542DAA
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jun 2022 12:31:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 11AB6542DAE
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jun 2022 12:31:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237230AbiFHKam (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Jun 2022 06:30:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40814 "EHLO
+        id S237173AbiFHKag (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Jun 2022 06:30:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49608 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238196AbiFHK35 (ORCPT
+        with ESMTP id S238195AbiFHK35 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Wed, 8 Jun 2022 06:29:57 -0400
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB7F5BDA22
-        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Jun 2022 03:22:12 -0700 (PDT)
-Received: by mail-lj1-x229.google.com with SMTP id y15so16787018ljc.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jun 2022 03:22:12 -0700 (PDT)
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACD991952F1
+        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Jun 2022 03:22:13 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id t25so32473986lfg.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jun 2022 03:22:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=AbKSfBNHMsB6gPQL/2rq+lhYEHklPNuzgxkaV0yDgno=;
-        b=C8zmcSh8kYU52OoswL7DTEeRYlTehP7/3y+AfdFoA++vcRkdZcfFCNg6ZOfrnQp3ZI
-         13+Y95T8Bh7U8yGWDvaMo+v2+1AFp1mfEgHkL5HNsHrPn5gu9BfNEkbrLw1vV8MicHna
-         Zlqo3Arg8IucLqkr4Vv3HWcPri8OD8bPfZv593RWgOw9VfAaHUalCbOMGor2jrgVapyj
-         Q7jxcVTFPPP8MkSbRilMYU0LlI0yfERdKBCOOvserLLoeTTQ6LeoN64O0/4pm9XYzQop
-         DFBN4y651eeQ2f2Z20Ku4iS/3mihSqezWUJzJC5yCHIFkvsTpxrv4Dhes/Wwib+Fd+1E
-         ZLrA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=JPW5UrM16VIb0V7/sU8bftbljN5lwsuQwzROP9bFs3c=;
+        b=WwR9ZBulDvF+VzUXyjppAsv7PC22ucgd6TMWxnl6ilFGusLm+jcBOi/++JDfNsXyWt
+         gLDmO+Hyj+lCM6MXA/YQTr/ewf84Wt4TqA9JDcQT5g6kYfjHWKR5rXeT1H3lUpRFKdkM
+         ThIQui1BPduLWKjrX+8agPCVKtIlA7KFOSpE8CzGL1gkfRT+LaDhDMzebB6DoOZ7E4NA
+         0eNvsMPqW1aPB1TXsTvtx0ErwYqUxjeIWN4Qh6oWaBVaB8BEU6PYFAsp9MdD9xXPfToK
+         q8+W8+vIK6SJRDTg51FcKTFRSULwsvFXdxBeh6y1ythTSpMwrONFcSbYRLbj6riT0+EI
+         CwDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=AbKSfBNHMsB6gPQL/2rq+lhYEHklPNuzgxkaV0yDgno=;
-        b=W6UniAclXaHKbii34Zeq/qkguM78Z5KD9rL60VEpFUXdqh3P2SDGjcWTu1GXplZEyT
-         1Pg+agh8MfkhDVnwK4Y6NKUdL5XoSAsX0TL979LjRI0MyBcb9FznaQD7IkH/9EAbqHY/
-         fhcZiIFeh8tyJYuVg2TcV7Tp4K2vcs5uERZcuTfhihoj9azMuPqcvrUU6gn5cLn3L3UO
-         hVnGQ6CuIBP9LKsjI1Hekawo9qgr/F9Uc976gDMdAfspyNHJUKXwrz0Uz4M9HDJznl/2
-         uiVotw/i96z8Z2RJ2H/uOwqS2BVW2Y/KyIhXTRwyfe+HZpzwAq+HbgH6j3A596FmKrFe
-         UXEA==
-X-Gm-Message-State: AOAM530FCZ42LLui11MUibYiWup1+/L/3WRMyfX2xVoYsdDgvTQQQTua
-        CRoeujFd6IX3InspDKSSAh8fAg==
-X-Google-Smtp-Source: ABdhPJxcZzw3ShwMGJ6nR/dJ/fZjPdi5oqIicOs2LJhVAjvyxGcfnWH1a52O7RJlK1W83DrQE1jAdw==
-X-Received: by 2002:a2e:87c9:0:b0:255:7e94:d93b with SMTP id v9-20020a2e87c9000000b002557e94d93bmr14386532ljj.396.1654683730706;
-        Wed, 08 Jun 2022 03:22:10 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=JPW5UrM16VIb0V7/sU8bftbljN5lwsuQwzROP9bFs3c=;
+        b=1aNKQug6uQfI/87m9Z3Y3uAUucWZmUPLXfN1a4TqXJdkTMzq9UEoavVohywUDDW+Ae
+         2yS65RC+UNMMM4zHxkG+4B0y6hlRX7YmXwwOmPybCIVj/SP2ZvHRnMuIGAgffH8JkN0u
+         5Xbld/zV9FGz4rlz8AAETjTzrgdJwM/H0rV/vgt5Q1OT8e+eBJ89AUSbBcWgcCznfRco
+         gwlCrAPdzYxwy/ND+UOWbxdO2wMzv0XoKHF3c4MsZ5R8J0K5XVeEElq4tw51oGASGs+G
+         q1QobZmn5ZfqAhHps5+AHx6KzHyZfS84AxNiz4+lojJ+TaX9mi+w+u9EoAFb6oITzG8T
+         CUJA==
+X-Gm-Message-State: AOAM530RqR4FRBXgan7c1V2MxcYTuYhQbUFrmiRFIDu9m7MUU/JwkbBT
+        jHkrZxsVQMeebZs17BMuqBhBRg==
+X-Google-Smtp-Source: ABdhPJwbkYmZfTV4CYj1/ovm9TEu6RD3OSam5XSvUY2TsC3JKBp7hCKz+V63+800AMNjAKutM3YZPQ==
+X-Received: by 2002:a05:6512:2286:b0:479:7a60:5e42 with SMTP id f6-20020a056512228600b004797a605e42mr1568944lfu.625.1654683731603;
+        Wed, 08 Jun 2022 03:22:11 -0700 (PDT)
 Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id v1-20020ac25601000000b00478fe3327aasm3642934lfd.217.2022.06.08.03.22.09
+        by smtp.gmail.com with ESMTPSA id v1-20020ac25601000000b00478fe3327aasm3642934lfd.217.2022.06.08.03.22.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Jun 2022 03:22:09 -0700 (PDT)
+        Wed, 08 Jun 2022 03:22:11 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -61,11 +61,14 @@ To:     Andy Gross <agross@kernel.org>,
         Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Cc:     Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
         linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
-        Johan Hovold <johan@kernel.org>
-Subject: [PATCH v14 0/7] PCI: dwc: Fix higher MSI vectors handling
-Date:   Wed,  8 Jun 2022 13:22:01 +0300
-Message-Id: <20220608102208.2967438-1-dmitry.baryshkov@linaro.org>
+        Johan Hovold <johan@kernel.org>, Rob Herring <robh@kernel.org>,
+        Johan Hovold <johan+linaro@kernel.org>
+Subject: [PATCH v14 1/7] PCI: dwc: Correct msi_irq condition in dw_pcie_free_msi()
+Date:   Wed,  8 Jun 2022 13:22:02 +0300
+Message-Id: <20220608102208.2967438-2-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.35.1
+In-Reply-To: <20220608102208.2967438-1-dmitry.baryshkov@linaro.org>
+References: <20220608102208.2967438-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -78,119 +81,31 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-I have replied with my Tested-by to the patch at [2], which has landed
-in the linux-next as the commit 20f1bfb8dd62 ("PCI: qcom:
-Add support for handling MSIs from 8 endpoints"). However lately I
-noticed that during the tests I still had 'pcie_pme=nomsi', so the
-device was not forced to use higher MSI vectors.
+The subdrivers pass -ESOMETHING if they do not want the core to touch
+MSI IRQ. dw_pcie_host_init() also checks if (msi_irq > 0) rather than
+just if (msi_irq). So let's make dw_pcie_free_msi() also check that
+msi_irq is greater than zero.
 
-After removing this option I noticed that hight MSI vectors are not
-delivered on tested platforms. After additional research I stumbled upon
-a patch in msm-4.14 ([1]), which describes that each group of MSI
-vectors is mapped to the separate interrupt. Implement corresponding
-mapping.
+Reviewed-by: Rob Herring <robh@kernel.org>
+Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ drivers/pci/controller/dwc/pcie-designware-host.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-The last patch in the series is a revert of  [2] (landed in pci-next).
-Bjorn Helgaas has removed the offending patch from his 5.19 pull
-request, but the revert is still a part of this patch series as a
-reminder to Lorenzo to drop the patch from his pci/qcom branch.
-
-Changes since v13:
- - Changed msiX from pointer to the char array (reported by Johan).
-
-Changes since v12:
- - Dropped split_msi_names array in favour of generating the msi_name on
-   the fly (Rob),
- - Dropped separate split MSI ISR as requested by Rob,
- - Many small syntax & spelling changes as suggested by Johan and Rob,
- - Moved a revert to be a last patch, as it is now a reminder to
-   Lorenzo,
- - Renamed series to name dwc rather than qcom, as the are no more
-   actual changes to the qcom PCIe driver (Johan thanks for all
-   suggestions for making the code to work as is).
-
-Changes since v11 (suggested by Johan):
- - Added back reporting errors for the "msi0" interrupt,
- - Stopped overriding num_vectors field if it is less than the amount of
-   MSI vectors deduced from interrupt list,
- - Added a warning (and an override) if the host specifies more MSI
-   vectors than available,
- - Moved has_split_msi_irq variable to the patch where it is used.
-
-Changes since v10:
- - Remove has_split_msi_irqs flag. Trust DT and use split MSI IRQs if
-   they are described in the DT. This removes the need for the
-   pcie-qcom.c changes (everything is handled by the core (suggested by
-   Johan).
- - Rebased on top of Lorenzo's DWC branch
-
-Changes since v9:
- - Relax requirements and stop validating the DT. If the has_split_msi
-   was specified, parse as many msiN irqs as specified in DT. If there
-   are none, fallback to the single "msi" IRQ.
-
-Changes since v8:
- - Fix typos noted by Bjorn Helgaas
- - Add missing links to the patch 1 (revert)
- - Fix sm8250 interrupt-names (Johan)
- - Specify num_vectors in qcom configuration data (Johan)
- - Rework parsing of MSI IRQs (Johan)
-
-Changes since v7:
- - Move code back to the dwc core driver (as required by Rob),
- - Change dt schema to require either a single "msi" interrupt or an
-   array of "msi0", "msi1", ... "msi7" IRQs. Disallow specifying a
-   part of the array (the DT should specify the exact amount of MSI IRQs
-   allowing fallback to a single "msi" IRQ),
- - Fix in the DWC init code for the dma_mapping_error() return value.
-
-Changes since v6:
- - Fix indentation of the arguments as requested by Stanimir
-
-Changes since v5:
- - Fixed commit subject and in-comment code according to Bjorn's
-   suggestion,
- - Changed variable idx to i to follow dw_handle_msi_irq() style.
-
-Changes since v4:
- - Fix the minItems/maxItems properties in the YAML schema.
-
-Changes since v3:
- - Reimplement MSI handling scheme in the Qualcomm host controller
-   driver.
-
-Changes since v2:
- - Fix and rephrase commit message for patch 2.
-
-Changes since v1:
- - Split a huge patch into three patches as suggested by Bjorn Helgaas
- - snps,dw-pcie removal is now part of [3]
-
-[1] https://git.codelinaro.org/clo/la/kernel/msm-4.14/-/commit/671a3d5f129f4bfe477152292ada2194c8440d22
-[2] https://lore.kernel.org/linux-arm-msm/20211214101319.25258-1-manivannan.sadhasivam@linaro.org/
-
-Dmitry Baryshkov (7):
-  PCI: dwc: Correct msi_irq condition in dw_pcie_free_msi()
-  PCI: dwc: Convert msi_irq to the array
-  PCI: dwc: split MSI IRQ parsing/allocation to a separate function
-  PCI: dwc: Handle MSIs routed to multiple GIC interrupts
-  dt-bindings: PCI: qcom: Support additional MSI interrupts
-  arm64: dts: qcom: sm8250: provide additional MSI interrupts
-  PCI: qcom: Revert "PCI: qcom: Add support for handling MSIs from 8
-    endpoints"
-
- .../devicetree/bindings/pci/qcom,pcie.yaml    |  53 +++++-
- arch/arm64/boot/dts/qcom/sm8250.dtsi          |  12 +-
- drivers/pci/controller/dwc/pci-dra7xx.c       |   2 +-
- drivers/pci/controller/dwc/pci-exynos.c       |   2 +-
- .../pci/controller/dwc/pcie-designware-host.c | 161 +++++++++++++-----
- drivers/pci/controller/dwc/pcie-designware.h  |   2 +-
- drivers/pci/controller/dwc/pcie-keembay.c     |   2 +-
- drivers/pci/controller/dwc/pcie-qcom.c        |   1 -
- drivers/pci/controller/dwc/pcie-spear13xx.c   |   2 +-
- drivers/pci/controller/dwc/pcie-tegra194.c    |   2 +-
- 10 files changed, 185 insertions(+), 54 deletions(-)
-
+diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
+index 9979302532b7..af91fe69f542 100644
+--- a/drivers/pci/controller/dwc/pcie-designware-host.c
++++ b/drivers/pci/controller/dwc/pcie-designware-host.c
+@@ -257,7 +257,7 @@ int dw_pcie_allocate_domains(struct pcie_port *pp)
+ 
+ static void dw_pcie_free_msi(struct pcie_port *pp)
+ {
+-	if (pp->msi_irq)
++	if (pp->msi_irq > 0)
+ 		irq_set_chained_handler_and_data(pp->msi_irq, NULL, NULL);
+ 
+ 	irq_domain_remove(pp->msi_domain);
 -- 
 2.35.1
 
