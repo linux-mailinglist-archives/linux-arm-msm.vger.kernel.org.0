@@ -2,82 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B4471542B9F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jun 2022 11:36:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 614C5542BAF
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jun 2022 11:39:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235043AbiFHJgN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Jun 2022 05:36:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55636 "EHLO
+        id S234274AbiFHJij (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Jun 2022 05:38:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56334 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235078AbiFHJfm (ORCPT
+        with ESMTP id S235061AbiFHJiC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Jun 2022 05:35:42 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A627724947
-        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Jun 2022 01:58:49 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id h23so32180255lfe.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jun 2022 01:58:49 -0700 (PDT)
+        Wed, 8 Jun 2022 05:38:02 -0400
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB6C4184907
+        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Jun 2022 02:05:16 -0700 (PDT)
+Received: by mail-ed1-x529.google.com with SMTP id fd25so26187516edb.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jun 2022 02:05:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=/pGSw391BzRvIqn5v5qVcewQbHvJEoL3fOObdtgaFK0=;
-        b=oC7CCyVjF74wVjB91MELdLfDquFJF+e71AY29y4+HXEC0zAM8BGSxcCk2cZongbUIo
-         InExNfmJz0ZAKxNrzdrqIRIMqbWn30o4jNun14+GlQsZXW3nmEPjkuxExcepbkGx/lAn
-         moe+7kpbNE1pMb22DGMrSALHVTQmak92Z7iHyi5gWfQSwNk/zwsYn8BpE++IRj6oFJ42
-         8Nu0j/AAe+U2ZaXzTcEXoaoYIY7UmZn6JS1LADrVimrSnIBZjjDswx/1VUDu46m1p96O
-         WBjTiJWzyDsVb9zLb9A9aOPwJgKcnDXGSUOejnnqfkZNNfy/an7Dg4JdFc01TYuYsA62
-         jybA==
+        bh=oiAKojnSb91/fs9PbBc2BR8fQQ+2pgjjbaqdMMi6Ld0=;
+        b=iR8SBG8llqld/s9wiSkQcvkD5SyH+0lxEupixJwq/BcjKOMCXVBNd3hXbWO/YaHTOM
+         paTtgKf2qAwV140JUSvJP3aItVayrqwIahefBZVHlo01Y7sgOdMTOMaRrhaOArLXZDMD
+         tdRyAxv3IHihl+A1mOzpRv9vE9xkdidbHad5YfE0mHNyWWTewseGB//634ZxSlY49cSI
+         MaQ6lfEVCdTgzvQQO44fyhTeFPzslfQcvaOWYKXlSt3uuWoXl9pU7ZDRb4EHPMsRlKjc
+         6hHDdhhR05SjWAzKg8JdiuUhuQT+C9kmTSiPm8/ugSJYS00Ms/FRUdrNBSE6LEzLnLao
+         njcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=/pGSw391BzRvIqn5v5qVcewQbHvJEoL3fOObdtgaFK0=;
-        b=dqtoWe47gED5dgoYVjWHLmIevp6MwRbrdyYE0rAI+XWrZdr0O43riFlTLQVXxsDGGG
-         WEb6kZt7ZoHs0gbIS4pEhjyXokR3n6SnUS5CxHDWh2aHehPn8aXxPZXzcwpw5cB5c9sX
-         TMz4eJfA6yMCXf7LJIqMi9RIhU/g2QN9rTjhWHxsytjfcriaQVR39uVD+9cXJ+hx9gfR
-         RS6zowJKazzCmrb7wGay1TCmu6iG4bIum01mEiDlgMSeRnl2RrwgfOp3Qv8LfYn4ahDb
-         lJWAVuaaPTBpE7qDLXOgt3ynUy0rAUcfkq+sceNmyl852qP+WAVBHwDjTjuVLJiSsi01
-         E2GQ==
-X-Gm-Message-State: AOAM531vF5S/jjHJ70K+hiRy8c8ucErh0yRh6A1EGuwDBZ4TQC2Vhdi/
-        SJOELH3ZNpxggI5faC1GKj1dzw==
-X-Google-Smtp-Source: ABdhPJw/yCbkKMV9QBiCoHF7IaP7UTuYj5YEkWOQvgTGiEg+NlmnvvzasV2gV5cuC7t6mAQwDIoaRQ==
-X-Received: by 2002:a05:6512:3284:b0:479:d2:4792 with SMTP id p4-20020a056512328400b0047900d24792mr23532874lfe.357.1654678728005;
-        Wed, 08 Jun 2022 01:58:48 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id p9-20020a056512312900b004794a78bfe7sm1196198lfd.6.2022.06.08.01.58.47
+        bh=oiAKojnSb91/fs9PbBc2BR8fQQ+2pgjjbaqdMMi6Ld0=;
+        b=QkeXA+ViJSJ/K06XPt4T1e0cTz/RUXmvZKKUo5wpl8yL3BOjqAOZFFLYnmtB9rUj8X
+         yRm/kpNk9LyyrGzyyQqURnVGZrhWiAc42Gs1KT4Zo1B1x9bF/phydCeoroRe1b+gwkzB
+         sUZnhVw8genai/lIcXeO+DFwiRN9+AuzNnQPcZqYMCDpFnvJPillFoRRkelxoA1cPOcL
+         BwxNwjGyZmbV/KfZs+ZC/GV8nKSX7boRlX79HVOqsfvhyEPW6huep6DbfnQII6HWwVu0
+         FZT31oHB+hVz0KCVV+Xrg4HRGPD33KWl3n/9j4uvLciydv7L8yAD0sI/XeBIlE3gq7/c
+         7Sew==
+X-Gm-Message-State: AOAM530U/b5ZX4q0uRgY9EqpON4uVig340BikH08MdEF2EqgbrLUxU8B
+        uCL4TDMj/vab4nK47wKvlhL9YvtfCKpJZA==
+X-Google-Smtp-Source: ABdhPJyckb8xscBNTOvpq4Q37RPBgb7rImH1MWN1fFRpLJNZ8145876OyuEylO5gyszpaBgghwXnrg==
+X-Received: by 2002:a05:6402:2750:b0:42e:3d52:d270 with SMTP id z16-20020a056402275000b0042e3d52d270mr30814728edd.332.1654679115174;
+        Wed, 08 Jun 2022 02:05:15 -0700 (PDT)
+Received: from [192.168.0.190] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id g22-20020aa7c596000000b0042deea0e961sm11689352edq.67.2022.06.08.02.05.13
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 08 Jun 2022 01:58:47 -0700 (PDT)
-Message-ID: <58f1282d-3c13-59b3-84e6-0cf39f846dd1@linaro.org>
-Date:   Wed, 8 Jun 2022 11:58:46 +0300
+        Wed, 08 Jun 2022 02:05:14 -0700 (PDT)
+Message-ID: <c431b51a-f68f-8608-5d5d-6dac85e2be4f@linaro.org>
+Date:   Wed, 8 Jun 2022 11:05:13 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.0
-Subject: Re: [PATCH v13 4/7] PCI: dwc: Handle MSIs routed to multiple GIC
- interrupts
-Content-Language: en-GB
-To:     Johan Hovold <johan@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
+ Thunderbird/91.10.0
+Subject: Re: [PATCH v1 2/7] dt-bindings: display/msm: hdmi: mark old GPIO
+ properties as deprecated
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
-        Rob Herring <robh@kernel.org>,
-        Johan Hovold <johan+linaro@kernel.org>
-References: <20220603074137.1849892-1-dmitry.baryshkov@linaro.org>
- <20220603074137.1849892-5-dmitry.baryshkov@linaro.org>
- <Yp4q5S7WIYbYEdHc@hovoldconsulting.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <Yp4q5S7WIYbYEdHc@hovoldconsulting.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, David Heidelberg <david@ixit.cz>
+References: <20220607185806.2771739-1-dmitry.baryshkov@linaro.org>
+ <20220607185806.2771739-3-dmitry.baryshkov@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220607185806.2771739-3-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
@@ -89,75 +85,62 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 06/06/2022 19:27, Johan Hovold wrote:
-> On Fri, Jun 03, 2022 at 10:41:34AM +0300, Dmitry Baryshkov wrote:
->> On some of Qualcomm platforms each group of 32 MSI vectors is routed to the
->> separate GIC interrupt. Implement support for such configurations by
->> parsing "msi0" ... "msiN" interrupts and attaching them to the chained
->> handler.
->>
->> Note, that if DT doesn't list an array of MSI interrupts and uses single
->> "msi" IRQ, the driver will limit the amount of supported MSI vectors
->> accordingly (to 32).
->>
->> Reviewed-by: Rob Herring <robh@kernel.org>
->> Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
->> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> ---
->>   .../pci/controller/dwc/pcie-designware-host.c | 63 +++++++++++++++++--
->>   1 file changed, 59 insertions(+), 4 deletions(-)
->>
->> diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
->> index 85c1160792e1..d1f9e20df903 100644
->> --- a/drivers/pci/controller/dwc/pcie-designware-host.c
->> +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
->> @@ -289,6 +289,46 @@ static void dw_pcie_msi_init(struct pcie_port *pp)
->>   	dw_pcie_writel_dbi(pci, PCIE_MSI_ADDR_HI, upper_32_bits(msi_target));
->>   }
->>   
->> +static int dw_pcie_parse_split_msi_irq(struct pcie_port *pp)
->> +{
->> +	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
->> +	struct device *dev = pci->dev;
->> +	struct platform_device *pdev = to_platform_device(dev);
->> +	int irq;
->> +	u32 ctrl, max_vectors;
->> +
->> +	/* Parse as many IRQs as described in the devicetree. */
->> +	for (ctrl = 0; ctrl < MAX_MSI_CTRLS; ctrl++) {
->> +		char *msi_name = "msiX";
->> +
->> +		msi_name[3] = '0' + ctrl;
+On 07/06/2022 20:58, Dmitry Baryshkov wrote:
+> Mark obsolete GPIO properties as deprecated. They are not used by
+> existing device trees. While we are at it, also drop them from the
+> schema example.
 > 
-> This oopses here as the string constant is read only:
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  .../devicetree/bindings/display/msm/qcom,hdmi.yaml         | 7 +++++--
+>  1 file changed, 5 insertions(+), 2 deletions(-)
 > 
-> 	[   19.787973] Unable to handle kernel write to read-only memory at virtual address ffffaa14f831afd3
-> 
-> Did you not test the series before posting?
+> diff --git a/Documentation/devicetree/bindings/display/msm/qcom,hdmi.yaml b/Documentation/devicetree/bindings/display/msm/qcom,hdmi.yaml
+> index 2f485b5d1c5d..2b1cac0851ce 100644
+> --- a/Documentation/devicetree/bindings/display/msm/qcom,hdmi.yaml
+> +++ b/Documentation/devicetree/bindings/display/msm/qcom,hdmi.yaml
+> @@ -59,22 +59,27 @@ properties:
+>  
+>    qcom,hdmi-tx-ddc-clk-gpios:
+>      maxItems: 1
+> +    deprecated: true
+>      description: HDMI DDC clock
+>  
+>    qcom,hdmi-tx-ddc-data-gpios:
+>      maxItems: 1
+> +    deprecated: true
 
-Interesting enough the posted series works for me. Maybe I have a 
-different set of debugging options. But thanks for spotting this. I'll 
-post v14.
+This is confusing. These two are not defined in the old bindings, not
+used by DTS, not used by Linux implementation - why did you add them?
 
-> 
-> You need to define msi_name as:
-> 
-> 	char msi_name[] = "msiX";
-> 
->> +		irq = platform_get_irq_byname_optional(pdev, msi_name);
->> +		if (irq == -ENXIO)
->> +			break;
->> +		if (irq < 0)
->> +			return dev_err_probe(dev, irq,
->> +					     "Failed to parse MSI IRQ '%s'\n",
->> +					     msi_name);
->> +
->> +		pp->msi_irq[ctrl] = irq;
->> +	}
-> 
-> Johan
+>      description: HDMI DDC data
+>  
+>    qcom,hdmi-tx-mux-en-gpios:
+>      maxItems: 1
+> +    deprecated: true
+>      description: HDMI mux enable pin
+>  
+>    qcom,hdmi-tx-mux-sel-gpios:
+>      maxItems: 1
+> +    deprecated: true
+>      description: HDMI mux select pin
+>  
+>    qcom,hdmi-tx-mux-lpm-gpios:
+>      maxItems: 1
+> +    deprecated: true
+>      description: HDMI mux lpm pin
+>  
+>    '#sound-dai-cells':
+> @@ -171,8 +176,6 @@ examples:
+>            <&clk 61>,
+>            <&clk 72>,
+>            <&clk 98>;
+> -      qcom,hdmi-tx-ddc-clk-gpios = <&msmgpio 70 0>;
+> -      qcom,hdmi-tx-ddc-data-gpios = <&msmgpio 71 0>;
+>        hpd-gpios = <&msmgpio 72 0>;
+>        core-vdda-supply = <&pm8921_hdmi_mvs>;
+>        hdmi-mux-supply = <&ext_3p3v>;
 
 
--- 
-With best wishes
-Dmitry
+Best regards,
+Krzysztof
