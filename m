@@ -2,66 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 71A4B5425CC
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jun 2022 08:55:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A3C895422F4
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jun 2022 08:50:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232824AbiFHESp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Jun 2022 00:18:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37086 "EHLO
+        id S232952AbiFHEmO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Jun 2022 00:42:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43456 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232991AbiFHERz (ORCPT
+        with ESMTP id S233835AbiFHEjO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Jun 2022 00:17:55 -0400
+        Wed, 8 Jun 2022 00:39:14 -0400
 Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C8812F4F5B;
-        Tue,  7 Jun 2022 18:40:47 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B27B93FE0F2;
+        Tue,  7 Jun 2022 19:30:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1654652448; x=1686188448;
+  t=1654655440; x=1686191440;
   h=date:from:to:cc:subject:message-id:references:
    mime-version:in-reply-to;
-  bh=zbm4iZu1MGqfCpOkzqcAjxrsjpBC11cUbsTqwp4M7J0=;
-  b=WrKfzuHlSJLzjsBoSP5ZCx4IEQRpzr5B3A6KqL6rokwYTWVd1kiHY32e
-   sSGZ9pKsPcQhSW1yGCeNd//nyH43m+nE3+W5TmJMJQPPhn58d/IjEAtc3
-   12j4Rte3l2rLukXfu7ixgFS4IdJKvUpycEtxKArzBLrhJW9mBNFfEL4F/
-   dNlszB9OqWns7OxavDI3VHy9vw530rnc4k6ocWtSfhG6VADJV0HCrnoLy
-   29zJobdrqYn1M0mbulkb69jrb1bSgo7pWDey5ppWCmKjMiuezZV7b9qel
-   Vl1kSJDCJFSCsW2ALFr6D2+hCTQR9wJbOczBez3yrDYrEopAV8/Xf1r1/
+  bh=sG0AzbZENUyQtpHzBixIeP6cHtFJAq/4tpTQw7wbmn0=;
+  b=FkrCxB2a8hi0DK391FdjWv3tE3CIl4NoQK0s7ANDxw/5XG0gfz4/8uMg
+   8rR/9iZuRINcEMmYuuWOPCOi8l87gpVmZSav6+WYaKBrS+EkTmWIPfr0U
+   hd45a4GYbgZ3+fLfAhlP+RfL+9+6O295+eUKa9CkMuHlJA1xoMzehPwOc
+   pue5esBllMxOxsFxtGVUgxwqBYKjUxThSilPe70Yy++0OLV/t2QicDTGj
+   ireUrGQqriS+wyq0ovVc9EVr149ha8exVD9C8Jkl18ArAegq1T1yWHeXY
+   o0xZ9o6twIX4Oql9LJn0wB98GA90w2ROdY5JQoO8BYSzeQ4KSSW5C43Ax
    w==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10371"; a="340797571"
+X-IronPort-AV: E=McAfee;i="6400,9594,10371"; a="340812529"
 X-IronPort-AV: E=Sophos;i="5.91,284,1647327600"; 
-   d="scan'208";a="340797571"
-Received: from fmsmga003.fm.intel.com ([10.253.24.29])
-  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Jun 2022 18:40:17 -0700
+   d="scan'208";a="340812529"
+Received: from fmsmga006.fm.intel.com ([10.253.24.20])
+  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Jun 2022 19:30:19 -0700
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.91,284,1647327600"; 
-   d="scan'208";a="670294643"
+   d="scan'208";a="826684008"
 Received: from lkp-server01.sh.intel.com (HELO 60dabacc1df6) ([10.239.97.150])
-  by FMSMGA003.fm.intel.com with ESMTP; 07 Jun 2022 18:40:13 -0700
+  by fmsmga006.fm.intel.com with ESMTP; 07 Jun 2022 19:30:14 -0700
 Received: from kbuild by 60dabacc1df6 with local (Exim 4.95)
         (envelope-from <lkp@intel.com>)
-        id 1nykg8-000E8z-R5;
-        Wed, 08 Jun 2022 01:40:12 +0000
-Date:   Wed, 8 Jun 2022 09:39:48 +0800
+        id 1nylSY-000EB2-2P;
+        Wed, 08 Jun 2022 02:30:14 +0000
+Date:   Wed, 8 Jun 2022 10:29:24 +0800
 From:   kernel test robot <lkp@intel.com>
-To:     Satya Priya <quic_c_skakit@quicinc.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     kbuild-all@lists.01.org, Lee Jones <lee.jones@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>, linux-arm-msm@vger.kernel.org,
+To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
+        agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        broonie@kernel.org, robh+dt@kernel.org, quic_plai@quicinc.com,
+        bgoswami@quicinc.com, perex@perex.cz, tiwai@suse.com,
+        srinivas.kandagatla@linaro.org, quic_rohkumar@quicinc.com,
+        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        swboyd@chromium.org, quic_collinsd@quicinc.com,
-        quic_subbaram@quicinc.com, quic_jprakash@quicinc.com,
-        Satya Priya <quic_c_skakit@quicinc.com>
-Subject: Re: [PATCH V14 7/9] regulator: Add a regulator driver for the PM8008
- PMIC
-Message-ID: <202206080910.XAMKbeVH-lkp@intel.com>
-References: <1654602615-28849-8-git-send-email-quic_c_skakit@quicinc.com>
+        swboyd@chromium.org, judyhsiao@chromium.org, vkoul@kernel.org
+Cc:     llvm@lists.linux.dev, kbuild-all@lists.01.org,
+        Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Subject: Re: [PATCH 2/2] ASoC: qcom: soundwire: Add software clock gating
+ requirement check
+Message-ID: <202206081054.vVkYPkJt-lkp@intel.com>
+References: <1654605334-32030-3-git-send-email-quic_srivasam@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1654602615-28849-8-git-send-email-quic_c_skakit@quicinc.com>
+In-Reply-To: <1654605334-32030-3-git-send-email-quic_srivasam@quicinc.com>
 X-Spam-Status: No, score=-5.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -72,56 +72,104 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Satya,
+Hi Srinivasa,
 
-Thank you for the patch! Perhaps something to improve:
+Thank you for the patch! Yet something to improve:
 
-[auto build test WARNING on lee-mfd/for-mfd-next]
-[also build test WARNING on robh/for-next]
+[auto build test ERROR on broonie-sound/for-next]
+[cannot apply to linus/master v5.19-rc1 next-20220607]
 [If your patch is applied to the wrong git tree, kindly drop us a note.
 And when submitting patch, we suggest to use '--base' as documented in
 https://git-scm.com/docs/git-format-patch]
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Satya-Priya/Add-Qualcomm-Technologies-Inc-PM8008-regulator-driver/20220607-195327
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/lee/mfd.git for-mfd-next
-config: x86_64-allyesconfig (https://download.01.org/0day-ci/archive/20220608/202206080910.XAMKbeVH-lkp@intel.com/config)
-compiler: gcc-11 (Debian 11.3.0-1) 11.3.0
+url:    https://github.com/intel-lab-lkp/linux/commits/Srinivasa-Rao-Mandadapu/Add-software-clock-gating-requirement-check/20220607-203739
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
+config: i386-randconfig-a006 (https://download.01.org/0day-ci/archive/20220608/202206081054.vVkYPkJt-lkp@intel.com/config)
+compiler: clang version 15.0.0 (https://github.com/llvm/llvm-project b92436efcb7813fc481b30f2593a4907568d917a)
 reproduce (this is a W=1 build):
-        # https://github.com/intel-lab-lkp/linux/commit/11e915cb6368e90fdc4186104c56a3619aa63440
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # https://github.com/intel-lab-lkp/linux/commit/86aa15d36b06f7b73938f00f9ad99eff75a94a94
         git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review Satya-Priya/Add-Qualcomm-Technologies-Inc-PM8008-regulator-driver/20220607-195327
-        git checkout 11e915cb6368e90fdc4186104c56a3619aa63440
+        git fetch --no-tags linux-review Srinivasa-Rao-Mandadapu/Add-software-clock-gating-requirement-check/20220607-203739
+        git checkout 86aa15d36b06f7b73938f00f9ad99eff75a94a94
         # save the config file
         mkdir build_dir && cp config build_dir/.config
-        make W=1 O=build_dir ARCH=x86_64 SHELL=/bin/bash drivers/regulator/
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=i386 SHELL=/bin/bash drivers/soundwire/
 
 If you fix the issue, kindly add following tag where applicable
 Reported-by: kernel test robot <lkp@intel.com>
 
-All warnings (new ones prefixed by >>):
+All errors (new ones prefixed by >>):
 
-   drivers/regulator/qcom-pm8008-regulator.c: In function 'pm8008_regulator_get_voltage':
->> drivers/regulator/qcom-pm8008-regulator.c:74:13: warning: unused variable 'rc' [-Wunused-variable]
-      74 |         int rc, uV;
-         |             ^~
+>> drivers/soundwire/qcom.c:668:6: error: use of undeclared identifier 'data'
+           if (data->sw_clk_gate_required)
+               ^
+   drivers/soundwire/qcom.c:1509:7: error: use of undeclared identifier 'data'
+                   if (data->sw_clk_gate_required)
+                       ^
+   2 errors generated.
 
 
-vim +/rc +74 drivers/regulator/qcom-pm8008-regulator.c
+vim +/data +668 drivers/soundwire/qcom.c
 
-    69	
-    70	static int pm8008_regulator_get_voltage(struct regulator_dev *rdev)
-    71	{
-    72		struct pm8008_regulator *pm8008_reg = rdev_get_drvdata(rdev);
-    73		__le16 mV;
-  > 74		int rc, uV;
-    75	
-    76		regmap_bulk_read(pm8008_reg->regmap,
-    77				LDO_VSET_LB_REG(pm8008_reg->base), (void *)&mV, 2);
-    78	
-    79		uV = le16_to_cpu(mV) * 1000;
-    80		return (uV - pm8008_reg->rdesc.min_uV) / pm8008_reg->rdesc.uV_step;
-    81	}
-    82	
+   659	
+   660	static int qcom_swrm_init(struct qcom_swrm_ctrl *ctrl)
+   661	{
+   662		u32 val;
+   663	
+   664		/* Clear Rows and Cols */
+   665		val = FIELD_PREP(SWRM_MCP_FRAME_CTRL_BANK_ROW_CTRL_BMSK, ctrl->rows_index);
+   666		val |= FIELD_PREP(SWRM_MCP_FRAME_CTRL_BANK_COL_CTRL_BMSK, ctrl->cols_index);
+   667	
+ > 668		if (data->sw_clk_gate_required)
+   669			reset_control_reset(ctrl->audio_cgcr);
+   670	
+   671		ctrl->reg_write(ctrl, SWRM_MCP_FRAME_CTRL_BANK_ADDR(0), val);
+   672	
+   673		/* Enable Auto enumeration */
+   674		ctrl->reg_write(ctrl, SWRM_ENUMERATOR_CFG_ADDR, 1);
+   675	
+   676		ctrl->intr_mask = SWRM_INTERRUPT_STATUS_RMSK;
+   677		/* Mask soundwire interrupts */
+   678		ctrl->reg_write(ctrl, SWRM_INTERRUPT_MASK_ADDR,
+   679				SWRM_INTERRUPT_STATUS_RMSK);
+   680	
+   681		/* Configure No pings */
+   682		ctrl->reg_read(ctrl, SWRM_MCP_CFG_ADDR, &val);
+   683		u32p_replace_bits(&val, SWRM_DEF_CMD_NO_PINGS, SWRM_MCP_CFG_MAX_NUM_OF_CMD_NO_PINGS_BMSK);
+   684		ctrl->reg_write(ctrl, SWRM_MCP_CFG_ADDR, val);
+   685	
+   686		ctrl->reg_write(ctrl, SWRM_MCP_BUS_CTRL, SWRM_MCP_BUS_CLK_START);
+   687		/* Configure number of retries of a read/write cmd */
+   688		if (ctrl->version > 0x01050001) {
+   689			/* Only for versions >= 1.5.1 */
+   690			ctrl->reg_write(ctrl, SWRM_CMD_FIFO_CFG_ADDR,
+   691					SWRM_RD_WR_CMD_RETRIES |
+   692					SWRM_CONTINUE_EXEC_ON_CMD_IGNORE);
+   693		} else {
+   694			ctrl->reg_write(ctrl, SWRM_CMD_FIFO_CFG_ADDR,
+   695					SWRM_RD_WR_CMD_RETRIES);
+   696		}
+   697	
+   698		/* Set IRQ to PULSE */
+   699		ctrl->reg_write(ctrl, SWRM_COMP_CFG_ADDR,
+   700				SWRM_COMP_CFG_IRQ_LEVEL_OR_PULSE_MSK |
+   701				SWRM_COMP_CFG_ENABLE_MSK);
+   702	
+   703		/* enable CPU IRQs */
+   704		if (ctrl->mmio) {
+   705			ctrl->reg_write(ctrl, SWRM_INTERRUPT_CPU_EN,
+   706					SWRM_INTERRUPT_STATUS_RMSK);
+   707		}
+   708		ctrl->slave_status = 0;
+   709		ctrl->reg_read(ctrl, SWRM_COMP_PARAMS, &val);
+   710		ctrl->rd_fifo_depth = FIELD_GET(SWRM_COMP_PARAMS_RD_FIFO_DEPTH, val);
+   711		ctrl->wr_fifo_depth = FIELD_GET(SWRM_COMP_PARAMS_WR_FIFO_DEPTH, val);
+   712	
+   713		return 0;
+   714	}
+   715	
 
 -- 
 0-DAY CI Kernel Test Service
