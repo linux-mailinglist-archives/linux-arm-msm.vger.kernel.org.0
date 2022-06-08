@@ -2,290 +2,205 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8E58A543D11
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jun 2022 21:42:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E5462543E85
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jun 2022 23:25:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233374AbiFHTmg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Jun 2022 15:42:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38970 "EHLO
+        id S234515AbiFHVZ0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Jun 2022 17:25:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34348 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232283AbiFHTmf (ORCPT
+        with ESMTP id S234294AbiFHVZY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Jun 2022 15:42:35 -0400
-Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6050062F2
-        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Jun 2022 12:42:33 -0700 (PDT)
-Received: by mail-ot1-x32e.google.com with SMTP id w19-20020a9d6393000000b0060aeb359ca8so15839765otk.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jun 2022 12:42:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=/tgjH9mFdfvMGKoTcSwglUP7+Zl5pVfpIKW93n2nUZk=;
-        b=IjgzC9DLdUtW+ScdWa7zZTdP0ua6Oe5FJ6F5MYRowLOTlysZhiZX2FARdp0zwj1rb0
-         GSGzLVgBKfHbNw1rakz425yBP2+LJmAfJpXrSIExQ2uPs7cufg2kONR3AplWwQDjDJGU
-         xxPIqNkcIUE67yC7Ye/LBYlUGKfjcsgQp8o5Y=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=/tgjH9mFdfvMGKoTcSwglUP7+Zl5pVfpIKW93n2nUZk=;
-        b=O8uZzxKpAEx4NT75I0sdC84a89qbWcjmfMYVrYRmkl0xefP0L4wX9A9Y5h48P2mUo6
-         NWXWQfIJvMcpY2E0L+VDXfJnLAVKN7Uc9c90Hjhxahze3iYWIdv2RQ7kEdJh+XMJJAFi
-         e1oc3nNAYhX+3dBBiIlE+YyihhoJ/oUhTTql1ziyKr4F2GrbhcFadR/00R3/F352kF7K
-         DYItqGRcuGP2NI9jdUnfl3UDaNpIXy/ZOrigJ39RpQSwFVN0fFiBsiQMADsMDqBac2cK
-         lDWB0BTJdRsRuj6qJx1RyQOkJJstujoudnjEvSFRz8HHNme4JVOkggbTzAV34r2JpMy9
-         Bl2g==
-X-Gm-Message-State: AOAM533p54eS+3VlBHCYlwE1xwPpvtWYqAf5pam8pNLUXjkN2l/KFzGC
-        RUGgOXYDToCcBDMDxfX2tvquUxa72GltvTNOKbqan/AjP+k=
-X-Google-Smtp-Source: ABdhPJwjCG+CwZWvg902g0alknSaarK/lRkMXJPhsKVBSrQCa48DDOgEor0STgV+nlSx2ftFeBsSRdizIn98jCKfAwk=
-X-Received: by 2002:a9d:729b:0:b0:60c:21bd:97c0 with SMTP id
- t27-20020a9d729b000000b0060c21bd97c0mr464708otj.77.1654717352641; Wed, 08 Jun
- 2022 12:42:32 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 8 Jun 2022 12:42:32 -0700
+        Wed, 8 Jun 2022 17:25:24 -0400
+Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.126.135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34A3F19799D;
+        Wed,  8 Jun 2022 14:25:20 -0700 (PDT)
+Received: from mail-yb1-f173.google.com ([209.85.219.173]) by
+ mrelayeu.kundenserver.de (mreue011 [213.165.67.97]) with ESMTPSA (Nemesis) id
+ 1MNc1T-1oNa4K0QrT-00P2e5; Wed, 08 Jun 2022 23:25:19 +0200
+Received: by mail-yb1-f173.google.com with SMTP id s39so11077928ybi.0;
+        Wed, 08 Jun 2022 14:25:16 -0700 (PDT)
+X-Gm-Message-State: AOAM533ccHmRHAtjzIENuM22dhcJwyw6Hc9WOvf6/we8Lwl3909SSkO9
+        yJ1qPPUY++2J0XerrodTaoB3zDcjNnsRmNA1OYw=
+X-Google-Smtp-Source: ABdhPJzN5kbTwiXruPcKSpnmqojFIl1cGQUBuhNCCdRneCrpSwm0deMOGKvKLmavgOJ05DHkpAoCHNV4Fm5CQu/QOU4=
+X-Received: by 2002:a0d:efc2:0:b0:2fe:d2b7:da8 with SMTP id
+ y185-20020a0defc2000000b002fed2b70da8mr36982567ywe.42.1654705351589; Wed, 08
+ Jun 2022 09:22:31 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <1654602615-28849-8-git-send-email-quic_c_skakit@quicinc.com>
-References: <1654602615-28849-1-git-send-email-quic_c_skakit@quicinc.com> <1654602615-28849-8-git-send-email-quic_c_skakit@quicinc.com>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Wed, 8 Jun 2022 12:42:32 -0700
-Message-ID: <CAE-0n53iZk3U3ZWHj8VBUn2gi1KzFz0ZdxABiZvTPzK=cKu1Ng@mail.gmail.com>
-Subject: Re: [PATCH V14 7/9] regulator: Add a regulator driver for the PM8008 PMIC
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Satya Priya <quic_c_skakit@quicinc.com>
-Cc:     Lee Jones <lee.jones@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_collinsd@quicinc.com, quic_subbaram@quicinc.com,
-        quic_jprakash@quicinc.com
+References: <20220608142723.103523089@infradead.org> <20220608144517.188449351@infradead.org>
+In-Reply-To: <20220608144517.188449351@infradead.org>
+From:   Arnd Bergmann <arnd@arndb.de>
+Date:   Wed, 8 Jun 2022 18:22:12 +0200
+X-Gmail-Original-Message-ID: <CAK8P3a2y5+nrQFzhjrTTZe+d57Ug261J3kwLNe8Mu8i2qxtG2w@mail.gmail.com>
+Message-ID: <CAK8P3a2y5+nrQFzhjrTTZe+d57Ug261J3kwLNe8Mu8i2qxtG2w@mail.gmail.com>
+Subject: Re: [PATCH 20/36] arch/idle: Change arch_cpu_idle() IRQ behaviour
+To:     Peter Zijlstra <peterz@infradead.org>
+Cc:     Richard Henderson <rth@twiddle.net>,
+        Ivan Kokshaysky <ink@jurassic.park.msu.ru>,
+        Matt Turner <mattst88@gmail.com>,
+        Vineet Gupta <vgupta@kernel.org>,
+        Russell King - ARM Linux <linux@armlinux.org.uk>,
+        Hans Ulli Kroll <ulli.kroll@googlemail.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Sascha Hauer <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Tony Lindgren <tony@atomide.com>,
+        Kevin Hilman <khilman@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, Guo Ren <guoren@kernel.org>,
+        bcain@quicinc.com, Huacai Chen <chenhuacai@kernel.org>,
+        Xuerui Wang <kernel@xen0n.name>,
+        Geert Uytterhoeven <geert@linux-m68k.org>,
+        Sam Creasey <sammy@sammy.net>, Michal Simek <monstr@monstr.eu>,
+        Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+        Dinh Nguyen <dinguyen@kernel.org>,
+        Jonas Bonn <jonas@southpole.se>,
+        Stefan Kristiansson <stefan.kristiansson@saunalahti.fi>,
+        Stafford Horne <shorne@gmail.com>,
+        James Bottomley <James.Bottomley@hansenpartnership.com>,
+        Helge Deller <deller@gmx.de>,
+        Michael Ellerman <mpe@ellerman.id.au>,
+        Benjamin Herrenschmidt <benh@kernel.crashing.org>,
+        Paul Mackerras <paulus@samba.org>,
+        Paul Walmsley <paul.walmsley@sifive.com>,
+        Palmer Dabbelt <palmer@dabbelt.com>,
+        Albert Ou <aou@eecs.berkeley.edu>,
+        Heiko Carstens <hca@linux.ibm.com>,
+        Vasily Gorbik <gor@linux.ibm.com>,
+        Alexander Gordeev <agordeev@linux.ibm.com>,
+        Christian Borntraeger <borntraeger@linux.ibm.com>,
+        Sven Schnelle <svens@linux.ibm.com>,
+        Yoshinori Sato <ysato@users.sourceforge.jp>,
+        Rich Felker <dalias@libc.org>,
+        David Miller <davem@davemloft.net>,
+        Richard Weinberger <richard@nod.at>,
+        Anton Ivanov <anton.ivanov@cambridgegreys.com>,
+        Johannes Berg <johannes@sipsolutions.net>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>,
+        Dave Hansen <dave.hansen@linux.intel.com>,
+        "the arch/x86 maintainers" <x86@kernel.org>,
+        "H. Peter Anvin" <hpa@zytor.com>,
+        Arnaldo Carvalho de Melo <acme@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Jiri Olsa <jolsa@kernel.org>,
+        Namhyung Kim <namhyung@kernel.org>,
+        Juergen Gross <jgross@suse.com>, srivatsa@csail.mit.edu,
+        amakhalov@vmware.com, Pv-drivers <pv-drivers@vmware.com>,
+        Boris Ostrovsky <boris.ostrovsky@oracle.com>,
+        Chris Zankel <chris@zankel.net>,
+        Max Filippov <jcmvbkbc@gmail.com>,
+        Rafael Wysocki <rafael@kernel.org>,
+        Len Brown <lenb@kernel.org>, Pavel Machek <pavel@ucw.cz>,
+        gregkh <gregkh@linuxfoundation.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        lpieralisi@kernel.org, Sudeep Holla <sudeep.holla@arm.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Anup Patel <anup@brainfault.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        jacob.jun.pan@linux.intel.com, Arnd Bergmann <arnd@arndb.de>,
+        Yury Norov <yury.norov@gmail.com>,
+        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+        Rasmus Villemoes <linux@rasmusvillemoes.dk>,
+        Steven Rostedt <rostedt@goodmis.org>,
+        Petr Mladek <pmladek@suse.com>,
+        Sergey Senozhatsky <senozhatsky@chromium.org>,
+        John Ogness <john.ogness@linutronix.de>,
+        "Paul E. McKenney" <paulmck@kernel.org>,
+        Frederic Weisbecker <frederic@kernel.org>,
+        quic_neeraju@quicinc.com, Josh Triplett <josh@joshtriplett.org>,
+        Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+        Lai Jiangshan <jiangshanlai@gmail.com>,
+        Joel Fernandes <joel@joelfernandes.org>,
+        Juri Lelli <juri.lelli@redhat.com>,
+        Vincent Guittot <vincent.guittot@linaro.org>,
+        Dietmar Eggemann <dietmar.eggemann@arm.com>,
+        Ben Segall <bsegall@google.com>, Mel Gorman <mgorman@suse.de>,
+        Daniel Bristot de Oliveira <bristot@redhat.com>,
+        vschneid@redhat.com, jpoimboe@kernel.org,
+        alpha <linux-alpha@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        "open list:SYNOPSYS ARC ARCHITECTURE" 
+        <linux-snps-arc@lists.infradead.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-omap <linux-omap@vger.kernel.org>,
+        linux-csky@vger.kernel.org,
+        "open list:QUALCOMM HEXAGON..." <linux-hexagon@vger.kernel.org>,
+        "open list:IA64 (Itanium) PLATFORM" <linux-ia64@vger.kernel.org>,
+        linux-m68k <linux-m68k@lists.linux-m68k.org>,
+        "open list:BROADCOM NVRAM DRIVER" <linux-mips@vger.kernel.org>,
+        Openrisc <openrisc@lists.librecores.org>,
+        Parisc List <linux-parisc@vger.kernel.org>,
+        linuxppc-dev <linuxppc-dev@lists.ozlabs.org>,
+        linux-riscv <linux-riscv@lists.infradead.org>,
+        linux-s390 <linux-s390@vger.kernel.org>,
+        Linux-sh list <linux-sh@vger.kernel.org>,
+        sparclinux <sparclinux@vger.kernel.org>,
+        linux-um <linux-um@lists.infradead.org>,
+        linux-perf-users@vger.kernel.org,
+        "open list:DRM DRIVER FOR QEMU'S CIRRUS DEVICE" 
+        <virtualization@lists.linux-foundation.org>,
+        xen-devel <xen-devel@lists.xenproject.org>,
+        "open list:TENSILICA XTENSA PORT (xtensa)" 
+        <linux-xtensa@linux-xtensa.org>,
+        ACPI Devel Maling List <linux-acpi@vger.kernel.org>,
+        Linux PM list <linux-pm@vger.kernel.org>,
+        linux-clk <linux-clk@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:TEGRA ARCHITECTURE SUPPORT" <linux-tegra@vger.kernel.org>,
+        linux-arch <linux-arch@vger.kernel.org>, rcu@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+X-Provags-ID: V03:K1:ULl6cVPERAdL9PyvM7zONDpiWVA4ZyVCOCwcYzHyZ73ntMV0dXB
+ Qnmv/scTxLAGN5u/O+hL+EvSWO+2o8nUrHr2/SapIIJB48TQzNuq7Qo4YjkkFjKlpP+8WrN
+ 4s3kxn7SJ8r4HuxEedkCiCX/mZHBl+eq1ayzzhuhSO7yKbwkoJTbbR4YNjb9FqeLSzEM19Q
+ Mc4EFUXFXKH6dwoj9trfQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:grSfKAphyzs=:I2pHeW7GZh5+m3dVZkq2mK
+ h1vxzn78vi6v74anukEMbJA1NmbhPJsQ61amenlQ+l0eulwQnAphYlpg9L/wLMXysg2mrtIGl
+ Gp6gy8nUKSm98lf1bCp1OxghGzjwMcNPmNXf5rYaGmYlJ302EfJJIkdXy8WIyogSODZwIx/bz
+ 3f+Nsz1yJK25RbaEF/EZbTgAlScnruIzkAQVSYdXSD4p8hwt9yyxpxEdwpWFME0gZVyl0Madr
+ CnUhu1DEnNYkWJFwfn7u8hClLiS4MEG6k3Ky2lXVWaR6SiADuD0pKXkSs2enFIUKnR+gYR0Wg
+ dAGrhJOqTbTrQrgegZe1uqIvesGeKPhJompxYd4WbtuGF6eRQ34yEbu25ehPmNTRuz/E4/1qj
+ bJUCwmofNaGObBLn+2Y9Hhm8AzONXvsj0IRq/m7qjUM1HW6+qOAZ6w07tpskpivABnTlBAoJR
+ WGVCRozSSODlc+KobCiXeme9quMYCEj/FNJXz+OvOOk3tq2oFvCGV5W1Q8ARC9voBU+Xfy07W
+ PIM4H4LdTHtBpF8FRkPrLY/V0M0nCbnMVyrgdDfMDJIt2aIL7LVsvK0v1GiSmU7WpSftyf7Bj
+ 9ITI5IZa5QnwqoB5fpLA2b3ZFrZyWarhYbocWot6ttZMKakPG8BWsAGlDPmiDLIMcJsMcbXaT
+ /dy88hAw+iE4MJDule9bvMH3EWaEWM1eitRY4U1FocIBhFqhIs92e2Eb27yRQvF7HJ7vm9Cwk
+ JAIdAD3nS81Vjs1JQiiVSKI3+N63yI7FxXR9SIi14rGMtCP8uYH1U/2a3Vjo0x54NTLCjRYe8
+ +QzdDdWQFo6qvnBiB98ReMOXm3z+vjpl1jmW9gc9BS/K/v5869ib5kHyzx2wjbkj2SN04il97
+ QjAJudU8GsAAsFtr5+6CJL724hA/0VuLfc4wXv+9Q=
+X-Spam-Status: No, score=-0.3 required=5.0 tests=BAYES_00,DATE_IN_PAST_03_06,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Satya Priya (2022-06-07 04:50:13)
-> diff --git a/drivers/regulator/qcom-pm8008-regulator.c b/drivers/regulator/qcom-pm8008-regulator.c
-> new file mode 100644
-> index 0000000..71cb95c
-> --- /dev/null
-> +++ b/drivers/regulator/qcom-pm8008-regulator.c
-> @@ -0,0 +1,248 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2019-2020, The Linux Foundation. All rights reserved.
-> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +#include <linux/device.h>
-> +#include <linux/kernel.h>
-> +#include <linux/mfd/qcom_pm8008.h>
-> +#include <linux/module.h>
-> +#include <linux/of.h>
-> +#include <linux/platform_device.h>
-> +#include <linux/regmap.h>
-> +#include <linux/regulator/driver.h>
-> +
-> +#define VSET_STEP_MV                   8
-> +#define VSET_STEP_UV                   (VSET_STEP_MV * 1000)
-> +
-> +#define LDO_ENABLE_REG(base)           ((base) + 0x46)
-> +#define ENABLE_BIT                     BIT(7)
-> +
-> +#define LDO_VSET_LB_REG(base)          ((base) + 0x40)
-> +
-> +#define LDO_STEPPER_CTL_REG(base)      ((base) + 0x3b)
-> +#define DEFAULT_VOLTAGE_STEPPER_RATE   38400
-> +#define STEP_RATE_MASK                 GENMASK(1, 0)
-> +
-> +#define NLDO_MIN_UV                    528000
-> +#define NLDO_MAX_UV                    1504000
-> +
-> +#define PLDO_MIN_UV                    1504000
-> +#define PLDO_MAX_UV                    3400000
-> +
-> +struct pm8008_regulator_data {
-> +       const char                      *name;
-> +       const char                      *supply_name;
-> +       int                             min_dropout_uv;
-> +       const struct linear_range       *voltage_range;
-> +};
-> +
-> +struct pm8008_regulator {
-> +       struct device           *dev;
+On Wed, Jun 8, 2022 at 4:27 PM Peter Zijlstra <peterz@infradead.org> wrote:
+>
+> Current arch_cpu_idle() is called with IRQs disabled, but will return
+> with IRQs enabled.
+>
+> However, the very first thing the generic code does after calling
+> arch_cpu_idle() is raw_local_irq_disable(). This means that
+> architectures that can idle with IRQs disabled end up doing a
+> pointless 'enable-disable' dance.
+>
+> Therefore, push this IRQ disabling into the idle function, meaning
+> that those architectures can avoid the pointless IRQ state flipping.
+>
+> Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 
-Is this used anywhere?
+I think you now need to add the a raw_local_irq_disable(); in loongarch
+as well.
 
-> +       struct regmap           *regmap;
-> +       struct regulator_desc   rdesc;
-> +       u16                     base;
-> +       int                     step_rate;
-> +       int                     voltage_selector;
-> +};
-> +
-> +static const struct linear_range nldo_ranges[] = {
-> +       REGULATOR_LINEAR_RANGE(528000, 0, 122, 8000),
-> +};
-> +
-> +static const struct linear_range pldo_ranges[] = {
-> +       REGULATOR_LINEAR_RANGE(1504000, 0, 237, 8000),
-> +};
-> +static_assert(ARRAY_SIZE(pldo_ranges) == 1 && ARRAY_SIZE(nldo_ranges) == 1);
-
-Can this static_assert be placed next to the assignment of
-n_linear_ranges in probe?
-
-> +
-> +static const struct pm8008_regulator_data reg_data[] = {
-> +       /* name  parent       headroom_uv voltage_range */
-> +       { "ldo1", "vdd_l1_l2", 225000, nldo_ranges, },
-> +       { "ldo2", "vdd_l1_l2", 225000, nldo_ranges, },
-> +       { "ldo3", "vdd_l3_l4", 300000, pldo_ranges, },
-> +       { "ldo4", "vdd_l3_l4", 300000, pldo_ranges, },
-> +       { "ldo5", "vdd_l5",    200000, pldo_ranges, },
-> +       { "ldo6", "vdd_l6",    200000, pldo_ranges, },
-> +       { "ldo7", "vdd_l7",    200000, pldo_ranges, },
-> +};
-> +
-> +static int pm8008_regulator_get_voltage(struct regulator_dev *rdev)
-> +{
-> +       struct pm8008_regulator *pm8008_reg = rdev_get_drvdata(rdev);
-> +       __le16 mV;
-> +       int rc, uV;
-> +
-> +       regmap_bulk_read(pm8008_reg->regmap,
-> +                       LDO_VSET_LB_REG(pm8008_reg->base), (void *)&mV, 2);
-> +
-> +       uV = le16_to_cpu(mV) * 1000;
-> +       return (uV - pm8008_reg->rdesc.min_uV) / pm8008_reg->rdesc.uV_step;
-> +}
-> +
-> +static inline int pm8008_write_voltage(struct pm8008_regulator *pm8008_reg,
-> +                                                       int mV)
-> +{
-> +       __le16 vset_raw;
-> +
-> +       vset_raw = cpu_to_le16(mV);
-> +
-> +       return regmap_bulk_write(pm8008_reg->regmap,
-> +                       LDO_VSET_LB_REG(pm8008_reg->base),
-> +                       (const void *)&vset_raw, sizeof(vset_raw));
-> +}
-> +
-> +static int pm8008_regulator_set_voltage_time(struct regulator_dev *rdev,
-> +                               int old_uV, int new_uv)
-> +{
-> +       struct pm8008_regulator *pm8008_reg = rdev_get_drvdata(rdev);
-> +
-> +       return DIV_ROUND_UP(abs(new_uv - old_uV), pm8008_reg->step_rate);
-> +}
-> +
-> +static int pm8008_regulator_set_voltage(struct regulator_dev *rdev,
-> +                                       unsigned int selector)
-> +{
-> +       struct pm8008_regulator *pm8008_reg = rdev_get_drvdata(rdev);
-> +       int rc, mV;
-> +
-> +       rc = regulator_list_voltage_linear_range(rdev, selector);
-> +       if (rc < 0)
-> +               return rc;
-> +
-> +       /* voltage control register is set with voltage in millivolts */
-> +       mV = DIV_ROUND_UP(rc, 1000);
-> +
-> +       rc = pm8008_write_voltage(pm8008_reg, mV);
-> +       if (rc < 0)
-> +               return rc;
-> +
-> +       pm8008_reg->voltage_selector = selector;
-
-Is this used anywhere? I think not so remove it and the struct member?
-
-> +
-> +       return 0;
-> +}
-> +
-> +static const struct regulator_ops pm8008_regulator_ops = {
-> +       .enable                 = regulator_enable_regmap,
-> +       .disable                = regulator_disable_regmap,
-> +       .is_enabled             = regulator_is_enabled_regmap,
-> +       .set_voltage_sel        = pm8008_regulator_set_voltage,
-> +       .get_voltage_sel        = pm8008_regulator_get_voltage,
-> +       .list_voltage           = regulator_list_voltage_linear,
-> +       .set_voltage_time       = pm8008_regulator_set_voltage_time,
-> +};
-> +
-> +static int pm8008_regulator_probe(struct platform_device *pdev)
-> +{
-> +       int rc, i;
-> +       u32 base;
-> +       unsigned int reg;
-> +       const char *name;
-> +       struct device *dev = &pdev->dev;
-> +       struct regulator_config reg_config = {};
-> +       struct regulator_dev    *rdev;
-> +       const struct pm8008_data *chip = dev_get_drvdata(pdev->dev.parent);
-> +       struct pm8008_regulator *pm8008_reg;
-> +
-> +       pm8008_reg = devm_kzalloc(dev, sizeof(*pm8008_reg), GFP_KERNEL);
-> +       if (!pm8008_reg)
-> +               return -ENOMEM;
-> +
-> +       pm8008_reg->regmap = pm8008_get_regmap(chip);
-> +       if (!pm8008_reg->regmap) {
-> +               dev_err(dev, "parent regmap is missing\n");
-> +               return -EINVAL;
-> +       }
-> +
-> +       pm8008_reg->dev = dev;
-> +
-> +       rc = of_property_read_string(dev->of_node, "regulator-name", &name);
-> +       if (rc)
-> +               return rc;
-> +
-> +       /* get the required regulator data */
-> +       for (i = 0; i < ARRAY_SIZE(reg_data); i++)
-> +               if (strstr(name, reg_data[i].name))
-> +                       break;
-> +
-> +       if (i == ARRAY_SIZE(reg_data)) {
-> +               dev_err(dev, "Invalid regulator name %s\n", name);
-> +               return -EINVAL;
-> +       }
-> +
-> +       rc = of_property_read_u32_index(dev->of_node, "reg", 1, &base);
-> +       if (rc < 0) {
-> +               dev_err(dev, "%s: failed to get regulator base rc=%d\n", name, rc);
-> +               return rc;
-> +       }
-> +       pm8008_reg->base = base;
-> +
-> +       /* get slew rate */
-> +       rc = regmap_bulk_read(pm8008_reg->regmap,
-> +                       LDO_STEPPER_CTL_REG(pm8008_reg->base), &reg, 1);
-> +       if (rc < 0) {
-> +               dev_err(dev, "failed to read step rate configuration rc=%d\n", rc);
-> +               return rc;
-> +       }
-> +       reg &= STEP_RATE_MASK;
-> +       pm8008_reg->step_rate = DEFAULT_VOLTAGE_STEPPER_RATE >> reg;
-> +
-> +       pm8008_reg->rdesc.type = REGULATOR_VOLTAGE;
-> +       pm8008_reg->rdesc.ops = &pm8008_regulator_ops;
-> +       pm8008_reg->rdesc.name = reg_data[i].name;
-> +       pm8008_reg->rdesc.supply_name = reg_data[i].supply_name;
-> +       pm8008_reg->rdesc.of_match = reg_data[i].name;
-> +       pm8008_reg->rdesc.uV_step = VSET_STEP_UV;
-> +       pm8008_reg->rdesc.linear_ranges = reg_data[i].voltage_range;
-> +       pm8008_reg->rdesc.n_linear_ranges = 1;
-> +
-
-Ideally the static assert is right here.
+       Arnd
