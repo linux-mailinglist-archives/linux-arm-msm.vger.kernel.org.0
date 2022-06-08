@@ -2,117 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8903B5431F2
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jun 2022 15:53:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CCEE7543224
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jun 2022 16:03:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240492AbiFHNxk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Jun 2022 09:53:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45890 "EHLO
+        id S240669AbiFHOCd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Jun 2022 10:02:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56308 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240665AbiFHNxX (ORCPT
+        with ESMTP id S230113AbiFHOCd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Jun 2022 09:53:23 -0400
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9E90294229
-        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Jun 2022 06:53:19 -0700 (PDT)
-Received: by mail-ej1-x62e.google.com with SMTP id v1so30938841ejg.13
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jun 2022 06:53:19 -0700 (PDT)
+        Wed, 8 Jun 2022 10:02:33 -0400
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99C1A1CA5F9;
+        Wed,  8 Jun 2022 07:02:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=8PRvjGp7UM9Up4FPr/47yKpqJbueu9nLy8SWPr8RszU=;
-        b=oeYK2TKyzTiHgPb0Dxk0KGifXeFTRCAUSuakM69XasAGQPYPgc12KOWBmpYN2gDoke
-         LTqyvBarNMvXqzOY9EPoKbLU5GzS4PpqcFVuJ6WAHheXl92bmY8CjAD7rL8QQ+NeMARJ
-         CSC2VO1DrTmtqqB++NgkBd2ji3C0k7WM9WFn8ImnO4DbPu7MprpDZ5zdBE1Q6p4Npkv3
-         RKvDGo3L5mMUqVPDd1Kf4QdwYwsaCJhR0VW/ZzRn78owqIDsNpg3iU0RbHodXLqvihDu
-         fL5+uZNhees0fnqMHrV9UZezIboKwEQvJMtgxo+Czqzjp/MWvZowXF3q+jOVH6a//A8n
-         7B6g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=8PRvjGp7UM9Up4FPr/47yKpqJbueu9nLy8SWPr8RszU=;
-        b=ucANZ7J1Gb/3aVGwXTfECYgF4hDPhi1ktUGm+4UHgkY0ht+HtSXCoxrec+9GTnkXW1
-         xS7QCGtwVebfKLdwUlPaJt11JgT4OpzHHcTYyqWm3ZVnN01EAo1se327rQ6ESetIKOyY
-         Lclfp+A3KIAPkUhkcBzk/kMuZctC6NFVjtQDTUlWaJdQl0EqQO7IcfNp2OXCd5yzOfHx
-         Dbx7bw1vWG48TgW0ZvLkKuxbQMy5afEQADHYELgM8ZaxXsXaiPuZZUxT1XH5oyKIzOGN
-         odeHCMJZWAezaZ4//+Ry/AEO8mJU0+uXUGXC5hVDTjQzYybNMSC5BRPHj8iTnZms5tQY
-         9ZRA==
-X-Gm-Message-State: AOAM533+splUrfTdtBvPALHwtV2I2go9k30ADoe4tn39EBPS5x8Rx9SX
-        PKq0JcwbjVQfkgSQQuO3lzlTeA==
-X-Google-Smtp-Source: ABdhPJx+WIlX+erT9aZp6OAxsFgDVMszu6osL+HV/P+oQlmpJonKqTmPCso5aR/gBNmm3QuJ8eDpMQ==
-X-Received: by 2002:a17:906:586:b0:70d:9052:fdf0 with SMTP id 6-20020a170906058600b0070d9052fdf0mr26345021ejn.633.1654696398125;
-        Wed, 08 Jun 2022 06:53:18 -0700 (PDT)
-Received: from [192.168.0.193] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id g8-20020a170906198800b00711d5bc20d5sm3492785ejd.221.2022.06.08.06.53.15
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 08 Jun 2022 06:53:17 -0700 (PDT)
-Message-ID: <4efa8494-53e0-90a8-6fc3-75b0bc0adaed@linaro.org>
-Date:   Wed, 8 Jun 2022 15:53:14 +0200
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1654696952; x=1686232952;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=b/xbZaJsSPdikLONMvC+HkvV8fqeSw048CUDrTrbLAQ=;
+  b=c8MW8UMThYSGWIadX2+s5XrLErbqJl5sC6eEdL6zDWQ2jxSES0Shb7/W
+   aX2bzo0mGdYvh+nBnmEFSwsoRJhr+te0s7j0biz/MJfVpsqqsxWV7Q9Gn
+   TtTTWlpjLc6aNGG5I/rsP0dSPIT/afYKLwm8iiLcsX3OzH5dKTKthyuSM
+   A=;
+Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 08 Jun 2022 07:02:31 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Jun 2022 07:02:30 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Wed, 8 Jun 2022 07:02:30 -0700
+Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Wed, 8 Jun 2022 07:02:24 -0700
+From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
+        <lgirdwood@gmail.com>, <broonie@kernel.org>, <robh+dt@kernel.org>,
+        <quic_plai@quicinc.com>, <bgoswami@quicinc.com>, <perex@perex.cz>,
+        <tiwai@suse.com>, <srinivas.kandagatla@linaro.org>,
+        <quic_rohkumar@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <alsa-devel@alsa-project.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <swboyd@chromium.org>,
+        <judyhsiao@chromium.org>, <vkoul@kernel.org>
+CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Subject: [PATCH v3 0/2] Add software clock gating requirement check
+Date:   Wed, 8 Jun 2022 19:32:07 +0530
+Message-ID: <1654696929-20205-1-git-send-email-quic_srivasam@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: [PATCH 1/2] dt-bindings: thermal: qcom,spmi-temp-alarm: convert
- to dtschema
-Content-Language: en-US
-To:     Rob Herring <robh@kernel.org>
-Cc:     "Rafael J. Wysocki" <rafael@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        "Ivan T. Ivanov" <ivan.ivanov@linaro.org>,
-        linux-kernel@vger.kernel.org, Kumar Gala <galak@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org
-References: <20220608112702.80873-1-krzysztof.kozlowski@linaro.org>
- <1654695907.406371.1272093.nullmailer@robh.at.kernel.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <1654695907.406371.1272093.nullmailer@robh.at.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 08/06/2022 15:45, Rob Herring wrote:
-> On Wed, 08 Jun 2022 13:27:01 +0200, Krzysztof Kozlowski wrote:
->> Convert the Qualcomm QPNP PMIC Temperature Alarm to DT Schema.
->>
->> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->> ---
->>  .../thermal/qcom,spmi-temp-alarm.yaml         | 85 +++++++++++++++++++
->>  .../bindings/thermal/qcom-spmi-temp-alarm.txt | 51 -----------
->>  2 files changed, 85 insertions(+), 51 deletions(-)
->>  create mode 100644 Documentation/devicetree/bindings/thermal/qcom,spmi-temp-alarm.yaml
->>  delete mode 100644 Documentation/devicetree/bindings/thermal/qcom-spmi-temp-alarm.txt
->>
-> 
-> Running 'make dtbs_check' with the schema in this patch gives the
-> following warnings. Consider if they are expected or the schema is
-> incorrect. These may not be new warnings.
-> 
-> Note that it is not yet a requirement to have 0 warnings for dtbs_check.
-> This will change in the future.
-> 
-> Full log is available here: https://patchwork.ozlabs.org/patch/
-> 
-> 
-> temp-alarm@2400: '#thermal-sensor-cells' is a required property
+This patch set is to add software clock gating requirement check
 
-I should have ordered the patches differently. This is fixed in second
-patch.
+Changes Since V1:
+	-- Use boolean flag for bool variable initialization
+	   instead of hard coding.
+Changes Since V1:
+	-- Fix if check before reset control call
+	
+Srinivasa Rao Mandadapu (2):
+  soundwire: qcom: Add flag for software clock gating check
+  ASoC: qcom: soundwire: Add software clock gating requirement check
 
-Best regards,
-Krzysztof
+ drivers/soundwire/qcom.c | 28 +++++++++++++++++++++-------
+ 1 file changed, 21 insertions(+), 7 deletions(-)
+
+-- 
+2.7.4
+
