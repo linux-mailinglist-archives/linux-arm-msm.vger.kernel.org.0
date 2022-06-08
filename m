@@ -2,312 +2,705 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7B0DD542B0A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jun 2022 11:17:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E9AEA542B9D
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jun 2022 11:36:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234020AbiFHJPq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Jun 2022 05:15:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58908 "EHLO
+        id S235194AbiFHJgJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Jun 2022 05:36:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59688 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235061AbiFHJO1 (ORCPT
+        with ESMTP id S234877AbiFHJfh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Jun 2022 05:14:27 -0400
-Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7CEB1E715B;
-        Wed,  8 Jun 2022 01:35:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1654677350; x=1686213350;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=u2mgcVFnDbhjpU/Uh7wePZyTNQEPp1VD7PO9mfATzNw=;
-  b=nSXZ86PrZOuVCTgdwCEGCDMRRP1CpykRNt0WVQ/blAPZd2YWLJLWDaCe
-   PB4OrF+rPp1frgfNDco4YtkUzBzil7iOIhLaFePQAGcpG3C67DG1nvPlq
-   /dUhcSIdxYnr5jEE0nE+N4Z5wSOfoaH1dWq876nqZGmio1RL73X6pRpj5
-   /5BAbIO/IbyqZh3ZTcyQ1RjhAynZ8n5U+p94CWRbxmfaqrfZPAjHdm8Zp
-   7y17FTXco+RHIg79GadZCRlx1KWy5s/P1qDI8Bt1XxX0LA5JW07aIxQ4U
-   rl+1Ve4rWHamURwLHgFV3PDFgqQLarSsUewKWjWQGJJTRynesY7BnhHeq
-   w==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10371"; a="302173750"
-X-IronPort-AV: E=Sophos;i="5.91,285,1647327600"; 
-   d="scan'208";a="302173750"
-Received: from fmsmga003.fm.intel.com ([10.253.24.29])
-  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Jun 2022 01:35:50 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.91,285,1647327600"; 
-   d="scan'208";a="670427829"
-Received: from fmsmsx601.amr.corp.intel.com ([10.18.126.81])
-  by FMSMGA003.fm.intel.com with ESMTP; 08 Jun 2022 01:35:49 -0700
-Received: from fmsmsx609.amr.corp.intel.com (10.18.126.89) by
- fmsmsx601.amr.corp.intel.com (10.18.126.81) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2308.27; Wed, 8 Jun 2022 01:35:49 -0700
-Received: from fmsedg602.ED.cps.intel.com (10.1.192.136) by
- fmsmsx609.amr.corp.intel.com (10.18.126.89) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2308.27 via Frontend Transport; Wed, 8 Jun 2022 01:35:49 -0700
-Received: from NAM12-MW2-obe.outbound.protection.outlook.com (104.47.66.48) by
- edgegateway.intel.com (192.55.55.71) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2308.27; Wed, 8 Jun 2022 01:35:48 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=cOC3IGPPwEf3vDXzusP+HSlwBtfLkcgggtbVqBqwCZbVovAPNRs7BxDkDyR8I5mmsSC9v2VW07RyfguRm0sf8xOIf725HZbwyXFsMhsPaLWa7TFpHsmzF8l9WlA0s9ncCVooSX4goxfMMO4ez9XNOJzcrxFFMtkOmrcmtdLrLDRL1tu/SPBGelHmPCkKRA5ZiC2oG2lQIPiq7KmBGoLPov9jY1kiy4YlAb8YvHQnFIyE9+ETGnaVw7Zd9IPiXg8k+OUbiFeogdVJYlNLACjLYo4eCuP9a17ZAO+HvjajGSL95TgGSKDopyMfs4lq11oUYziTq6S3iBtRwFIrD7mu7g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=CHYdMJFMNMcPgjtUBe4kkTcabS00eYAAmtRB6t/CvNM=;
- b=HkatTQSQAjukxnKUd8RmJRQaMQTNDvdPwkTY5Jl3ko6wcrluPK0hH+ujIig8KueKA8uLpv5496lnHcReomwea/qrCO3FsyIcpGKOgVjqUMBWe1bLE5fggFkhx3IaAB3BOu0sqfupWjLXmdASpe/EzNsyTN8PZ9c7OcxYQMyhMmYf6E1v9Y4XjX3TMWSQKORqSe0jiBoF2dyRaJS5kFVkuRKZKZqX+etbVkYFy8jOUpINxnGhK0+U+Br002euYDf086e6SZXMWc2e+1jV5GXRfuZs0sV3s3QNfi5sZYF1WtOL5gItHX2viRa71LgrYofc5gYbdSds9G2PCkbxJhtbiw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from BN9PR11MB5276.namprd11.prod.outlook.com (2603:10b6:408:135::18)
- by LV2PR11MB6045.namprd11.prod.outlook.com (2603:10b6:408:17b::20) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5314.19; Wed, 8 Jun
- 2022 08:35:47 +0000
-Received: from BN9PR11MB5276.namprd11.prod.outlook.com
- ([fe80::a1cb:c445:9900:65c8]) by BN9PR11MB5276.namprd11.prod.outlook.com
- ([fe80::a1cb:c445:9900:65c8%7]) with mapi id 15.20.5314.019; Wed, 8 Jun 2022
- 08:35:47 +0000
-From:   "Tian, Kevin" <kevin.tian@intel.com>
-To:     Nicolin Chen <nicolinc@nvidia.com>,
-        "jgg@nvidia.com" <jgg@nvidia.com>,
-        "joro@8bytes.org" <joro@8bytes.org>,
-        "will@kernel.org" <will@kernel.org>,
-        "marcan@marcan.st" <marcan@marcan.st>,
-        "sven@svenpeter.dev" <sven@svenpeter.dev>,
-        "robin.murphy@arm.com" <robin.murphy@arm.com>,
-        "robdclark@gmail.com" <robdclark@gmail.com>,
-        "m.szyprowski@samsung.com" <m.szyprowski@samsung.com>,
-        "krzysztof.kozlowski@linaro.org" <krzysztof.kozlowski@linaro.org>,
-        "baolu.lu@linux.intel.com" <baolu.lu@linux.intel.com>,
-        "agross@kernel.org" <agross@kernel.org>,
-        "bjorn.andersson@linaro.org" <bjorn.andersson@linaro.org>,
-        "matthias.bgg@gmail.com" <matthias.bgg@gmail.com>,
-        "heiko@sntech.de" <heiko@sntech.de>,
-        "orsonzhai@gmail.com" <orsonzhai@gmail.com>,
-        "baolin.wang7@gmail.com" <baolin.wang7@gmail.com>,
-        "zhang.lyra@gmail.com" <zhang.lyra@gmail.com>,
-        "wens@csie.org" <wens@csie.org>,
-        "jernej.skrabec@gmail.com" <jernej.skrabec@gmail.com>,
-        "samuel@sholland.org" <samuel@sholland.org>,
-        "jean-philippe@linaro.org" <jean-philippe@linaro.org>,
-        "alex.williamson@redhat.com" <alex.williamson@redhat.com>
-CC:     "virtualization@lists.linux-foundation.org" 
-        <virtualization@lists.linux-foundation.org>,
-        "thierry.reding@gmail.com" <thierry.reding@gmail.com>,
-        "alim.akhtar@samsung.com" <alim.akhtar@samsung.com>,
-        "alyssa@rosenzweig.io" <alyssa@rosenzweig.io>,
-        "linux-s390@vger.kernel.org" <linux-s390@vger.kernel.org>,
-        "linux-samsung-soc@vger.kernel.org" 
-        <linux-samsung-soc@vger.kernel.org>,
-        "kvm@vger.kernel.org" <kvm@vger.kernel.org>,
-        "jonathanh@nvidia.com" <jonathanh@nvidia.com>,
-        "linux-rockchip@lists.infradead.org" 
-        <linux-rockchip@lists.infradead.org>,
-        "gerald.schaefer@linux.ibm.com" <gerald.schaefer@linux.ibm.com>,
-        "linux-sunxi@lists.linux.dev" <linux-sunxi@lists.linux.dev>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "linux-mediatek@lists.infradead.org" 
-        <linux-mediatek@lists.infradead.org>,
-        "linux-tegra@vger.kernel.org" <linux-tegra@vger.kernel.org>,
-        "linux-arm-kernel@lists.infradead.org" 
-        <linux-arm-kernel@lists.infradead.org>,
-        "cohuck@redhat.com" <cohuck@redhat.com>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "iommu@lists.linux-foundation.org" <iommu@lists.linux-foundation.org>,
-        "dwmw2@infradead.org" <dwmw2@infradead.org>
-Subject: RE: [PATCH 4/5] vfio/iommu_type1: Clean up update_dirty_scope in
- detach_group()
-Thread-Topic: [PATCH 4/5] vfio/iommu_type1: Clean up update_dirty_scope in
- detach_group()
-Thread-Index: AQHYeW2XhbiTGS3QqUuDnj2btqHn361FMWPw
-Date:   Wed, 8 Jun 2022 08:35:47 +0000
-Message-ID: <BN9PR11MB5276FD77A2780C97BB82CBA88CA49@BN9PR11MB5276.namprd11.prod.outlook.com>
-References: <20220606061927.26049-1-nicolinc@nvidia.com>
- <20220606061927.26049-5-nicolinc@nvidia.com>
-In-Reply-To: <20220606061927.26049-5-nicolinc@nvidia.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 92a48429-2813-4c42-4f12-08da4929e2cd
-x-ms-traffictypediagnostic: LV2PR11MB6045:EE_
-x-microsoft-antispam-prvs: <LV2PR11MB6045A3DE26596570F4B2C9278CA49@LV2PR11MB6045.namprd11.prod.outlook.com>
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: mPbIZXTOFFo+OY3QOAjlNDH+3Bi7k7JEBNpc2zsPqIhKLWQltIRxVdaf9k4v5wxygssJuWkFAhROqHVXWf4O0VfNVVpfzEq8Og39cCfALz+NYzbwbrU3q1y1F7XofA2W7KsxBmHbGd3UO6gMFd34TzGKMIg5BdAVoMGUOwy5aOId26gGd0rRJt3AfigrtmXn1NWvXFcDhKYinJeD8FPQeE5iX/RH+KSY+XNv5Pm+mpUvQ/fhxuqn26Tf4K4cAdfOoOf3Tx9NCeq8eXx9rFvBoxptxV4ZxHFp6+B267XiHFriCIEuk61I44BLVXB236I+mXzv6UpgEN4nf9063kgnGKB0j97xBxco6mgyArRPuTq7JRklWWLXVlfFQuBPeOLG/JcaQKdZmSYULwYTJDGymG+F0gFSRXUQb4tMcSM6TKBaA4nM5mfrvyFb5ucMXYtW2h08R0v+VksdodYkJbGb3U5w4f56EY2Q/cOHYdBarufDINofDHq+FEb2U433zmrWjQvux5kBaMaJPh/mb2qjgldyYVrREnBzAbuRUgoog0OdvRqUXkKpTeQqZB+0kvLLpvxaxF+Ls4xToSJvHAgd3aPUP59z9c5I/0NMjr97Uc8QpWAfVQWCfbQ0PbVTVQCd7qQMmVJa13OIVWheyqI7ogosJFRaEM1YBa/nZMUcES8CCiSjMMWqHrb4mu+d7gd2jzUDVUcaZZfCHwyMb1DWguTdWuci/VqvqVLQwy0AVGSuJFqU1ZI6weLXB9zePruLUNO6Bx8ivZFEywbmPmtyw8Vi7GCjzpodMGEnIzL28tE6kQyhU05fNRSBXokvgMUnRZOGeKSz19M4Tur6ufDS7w==
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BN9PR11MB5276.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230001)(366004)(7696005)(52536014)(38100700002)(316002)(83380400001)(76116006)(186003)(7416002)(110136005)(71200400001)(966005)(8936002)(38070700005)(5660300002)(7406005)(15650500001)(508600001)(2906002)(86362001)(55016003)(54906003)(6506007)(9686003)(122000001)(26005)(921005)(82960400001)(66476007)(66946007)(66556008)(66446008)(64756008)(8676002)(4326008)(33656002)(14143004);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?CzN5ou86xd+IU4dj2iK0YggY15ts3p12Z6x7CyXFfYf7yD6DGqorgWFZ4qO8?=
- =?us-ascii?Q?HFnseAxY/ACXFGVewKXfzHVB4UdGwsq569EENZjkQ6ahlZ9TlOyUdMrPo+0+?=
- =?us-ascii?Q?1lzbgcCZTeHLiEzHP6pnC/Zv8OxH6YzOILz9qns2zKugLmhtM6kVue/djfI+?=
- =?us-ascii?Q?eNupFGGOOwk7B7M7Ep0V7GLTh+qlbV62q44hYJdvTFub9RMesSAxdVQH+JUf?=
- =?us-ascii?Q?VbPWGwBiICdC1u842mhV1njsFfE7DrahMsCKp092x7mgSbeEH2dlrGFFcQg5?=
- =?us-ascii?Q?4twbMicbgihGUZM9RfY0v9CSF/u1h/jBOANYpHnc9QhTZEXrlm9sJCzXM3NK?=
- =?us-ascii?Q?J+eFnAZnLymzTCjpKxOKfm7DthUoCwgprraukZLiLHUWkobD9SwlzWkBcXJ+?=
- =?us-ascii?Q?5ONPCvsfgQuDiWAtU8KLO18pTUfznBAlADgvvVPAOmqXno9I4CXqUrxzWCY/?=
- =?us-ascii?Q?Idqf0bhpNS7jUX4rdJL0VxdH1QHJlXDw2+X7HMib86W3p5csbGJz2EymP1/M?=
- =?us-ascii?Q?X0q5QlGlasx4n+xuH98BBY+pxu6QhSD470OyY40/Kqio6+fY4ZPF2sBOjZS3?=
- =?us-ascii?Q?oYOND8yinzOXIra0bS340xkCBbLapOvu8oKG+1fP/c9JoaM1mh0JXIHusrNK?=
- =?us-ascii?Q?2tvHoJ/MyHsvmI9ztK923Yd+iXCBOu1a5FcBzmbOtO4oY/m60gHOClNT36WF?=
- =?us-ascii?Q?7EwLrlBpp4h05CacDiiDiEQMeN7CqhjNqcddd+DZpNYB/duD72zes0CzKR7x?=
- =?us-ascii?Q?wJIgGOzMb6zxgb8JNcbW5N5GmLBuJ5uToW5p/TRbKAv316+s0dm+pi+Wai63?=
- =?us-ascii?Q?QrXtW1jH4uIF36nUHmxHdZBJS9GOn/h89QawMN9tH4xvuGA5uwJgEHiN7lgW?=
- =?us-ascii?Q?9TigaY1hUlEKnQYDAfZmgtmM4TadCsOa0H6nXKxYFDsi/YHavIP1iefIR5lo?=
- =?us-ascii?Q?Ptce5UBVtSSbWSPdajYOhk08/WYjgobDpoceKtf859yhigjsUpaL65J5D0/u?=
- =?us-ascii?Q?clHJhAmYxv680pxocCXTKW2XESRdxqP8m4qw9iIQWG8vHihqFXhdtwBdL3LQ?=
- =?us-ascii?Q?SQznSiJUJ1BIsw6jursGPCHCDqyrZo0hZcStvtL4PVFHicMvPzJ9Nqaxo2JC?=
- =?us-ascii?Q?t6Dkup3GGYvHQ6OamMAf8QCUzxeXhTyK6RlvcIgBqMrSTZxSRwNCMWqzehJO?=
- =?us-ascii?Q?KKLHto1Y+6X4n0kzlJPW4S4lbcPmvwwjCz9LIm4+Tcutou2/+9DYbDxZkWPa?=
- =?us-ascii?Q?AHKBrppgVMzdZan6K10NUjFStcbQo4hV2z3mePrJlwt80sn6uypChvFA6znj?=
- =?us-ascii?Q?jrThkCf2d6exJtgQXhMMNnHBgQh6mH65hFXX/xoZJyjwFClZJ/kjEy8GQA6o?=
- =?us-ascii?Q?iOn8992J9g5g7dtwH7+SUij/wcVtxVdzPctjQIF5U32GI/abiadSL6/VE/kv?=
- =?us-ascii?Q?HFTGGfp0Or5Sq6lBG7aQUV+hCB2ah3yCD0KZr4ONGlx0GalvvmU5FxdF18V3?=
- =?us-ascii?Q?/j7G6DDEywSK+40xXRP0l+/B3s4mCyeXWxc6GZYHIZ6vNwKmbPztDPZqnLKr?=
- =?us-ascii?Q?44LfT5gnTOVMuAE0V5Th2T/3aifzg8ez1Utd9q+KqqYFBtjp5ZnsDcD86Qxr?=
- =?us-ascii?Q?+F02Ed165hx6py3LhEjb3JraYY61rmZFqPezfDoeV8iCUhtIC3Hn9E9xwcMK?=
- =?us-ascii?Q?o2N1FKMFIFhnzbgCeOCJ7SR/+VSWaiX8zBRF1ycvRr+IjrPprBgdzZ33NpOH?=
- =?us-ascii?Q?Ky1iQ4p5zA=3D=3D?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+        Wed, 8 Jun 2022 05:35:37 -0400
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1517410EA46
+        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Jun 2022 01:58:35 -0700 (PDT)
+Received: by mail-ed1-x52a.google.com with SMTP id d14so593517eda.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jun 2022 01:58:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=g7EDx6yfItJbVg5cj1lG0NG4Vh/0+UySR9KbGJCBupI=;
+        b=aJitfWBdCyZcAhHJLyLR6ZWrm2Chi4tcHEuX4dmBsp1M379npbrzkI/E6Ti7Yafjie
+         prlF9eV4KlPunRFxwx/cybNon9ro1O2rt+rlZUWHqOXj55tJAhEaiwDo5xBF7Fa0q9QA
+         EbX/53uw0l45FnhmZFNb6SmPQkckCBVrTtNQBz07xhHh4ohSkWtBPnaoH0BtaNEKBcHI
+         Qj9NtJJ7xV6ObYEg6VH/GY/MiTcCl27JJrPjU2GA5bvxGMKWdqVZXqnrkYwoBT6N9WG6
+         N5FS8ErvQ4UgTnivLBhCIRbT9onjjO+qveBtJT3S0NlUXOjXU1DOqyuOBW1l7cAx7rze
+         l5WA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=g7EDx6yfItJbVg5cj1lG0NG4Vh/0+UySR9KbGJCBupI=;
+        b=GyibvT0BRt3DovFs2LwJiLjFM8MY/QFYKUPtA/yrom/yukiwcPgLpK9v53QUSgAH5Y
+         VROilrSk2RkQ7o3dcw/oPl8DR/1JsTAHXpRuOBXT09DW+U40vybgjGoxJL0D/ILLNA2J
+         ku7FAYuozRJXot4dcxFEH8v2a9+5uYvlW5OYWJqHepWTS7Ee3NJr9D4kv7HuaixMWlLT
+         8tExClntMR1BNMcARTIehfWK9/IeSNpHldseJ94/CfaGGvmJkZlHUf2GC8WDkAvWxpSv
+         WA8/v9p/n29MqickjLq6iH129ndhjMouOKidjBCMK/1JiYz5kVOQ5JiJlXC2Dq5sAz7R
+         R6FA==
+X-Gm-Message-State: AOAM532l5sR7SZWAyZ40gBk9YoZFwSWoZWtPnn0JemRleZGixX6YoV1x
+        czr8XHD5wqzJRJeCQKNcTasWujwA0b2DuQ==
+X-Google-Smtp-Source: ABdhPJzJFu1zw8n5rynWOH+RE9PkoRj3fiMq8xWs2oavStcKLb5iTvwFiOpgl0RRoQCXZqRpk2rv/A==
+X-Received: by 2002:a05:6402:28a5:b0:42d:df55:5b91 with SMTP id eg37-20020a05640228a500b0042ddf555b91mr38277315edb.353.1654678713485;
+        Wed, 08 Jun 2022 01:58:33 -0700 (PDT)
+Received: from [192.168.0.189] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id x11-20020a056402414b00b0043158c608e4sm5140708eda.27.2022.06.08.01.58.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 08 Jun 2022 01:58:32 -0700 (PDT)
+Message-ID: <fcaa5759-9b26-fb70-d7a8-fa8300553929@linaro.org>
+Date:   Wed, 8 Jun 2022 10:58:31 +0200
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: BN9PR11MB5276.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 92a48429-2813-4c42-4f12-08da4929e2cd
-X-MS-Exchange-CrossTenant-originalarrivaltime: 08 Jun 2022 08:35:47.3472
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: wZ6UkAjER+9Jqw7bHJGNFW1L/QeMxm6FT29NzWH/9zcIxvZMlybKLcG6O8q6+DzGnONuQX9Fteog/RcJFqxo1g==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV2PR11MB6045
-X-OriginatorOrg: intel.com
-X-Spam-Status: No, score=-8.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: Re: [PATCH v1 1/7] dt-bindings: display/msm: hdmi: split and convert
+ to yaml
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, David Heidelberg <david@ixit.cz>
+References: <20220607185806.2771739-1-dmitry.baryshkov@linaro.org>
+ <20220607185806.2771739-2-dmitry.baryshkov@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220607185806.2771739-2-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-> From: Nicolin Chen
-> Sent: Monday, June 6, 2022 2:19 PM
->=20
-> All devices in emulated_iommu_groups have pinned_page_dirty_scope
-> set, so the update_dirty_scope in the first list_for_each_entry
-> is always false. Clean it up, and move the "if update_dirty_scope"
-> part from the detach_group_done routine to the domain_list part.
->=20
-> Rename the "detach_group_done" goto label accordingly.
->=20
-> Suggested-by: Jason Gunthorpe <jgg@nvidia.com>
-> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+On 07/06/2022 20:58, Dmitry Baryshkov wrote:
+> Convert Qualcomm HDMI binding into HDMI TX and PHY yaml bindings.
+> 
+> Changes to schema:
+> HDMI:
+>  - fixed reg-names numbering to match 0..3 instead 0,1,3,4
+> 
+> PHY:
+>  - moved into phy/ directory
+>  - split into QMP and non-QMP PHY schemas
+> 
+> Co-developed-by: David Heidelberg <david@ixit.cz>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->  drivers/vfio/vfio_iommu_type1.c | 27 ++++++++++++---------------
->  1 file changed, 12 insertions(+), 15 deletions(-)
->=20
-> diff --git a/drivers/vfio/vfio_iommu_type1.c
-> b/drivers/vfio/vfio_iommu_type1.c
-> index f4e3b423a453..b45b1cc118ef 100644
-> --- a/drivers/vfio/vfio_iommu_type1.c
-> +++ b/drivers/vfio/vfio_iommu_type1.c
-> @@ -2463,14 +2463,12 @@ static void
-> vfio_iommu_type1_detach_group(void *iommu_data,
->  	struct vfio_iommu *iommu =3D iommu_data;
->  	struct vfio_domain *domain;
->  	struct vfio_iommu_group *group;
-> -	bool update_dirty_scope =3D false;
->  	LIST_HEAD(iova_copy);
->=20
->  	mutex_lock(&iommu->lock);
->  	list_for_each_entry(group, &iommu->emulated_iommu_groups,
-> next) {
->  		if (group->iommu_group !=3D iommu_group)
->  			continue;
-> -		update_dirty_scope =3D !group->pinned_page_dirty_scope;
->  		list_del(&group->next);
->  		kfree(group);
->=20
-> @@ -2479,7 +2477,7 @@ static void vfio_iommu_type1_detach_group(void
-> *iommu_data,
->  			WARN_ON(iommu->notifier.head);
->  			vfio_iommu_unmap_unpin_all(iommu);
->  		}
-> -		goto detach_group_done;
-> +		goto out_unlock;
->  	}
->=20
->  	/*
-> @@ -2495,9 +2493,7 @@ static void vfio_iommu_type1_detach_group(void
-> *iommu_data,
->  			continue;
->=20
->  		iommu_detach_group(domain->domain, group-
-> >iommu_group);
-> -		update_dirty_scope =3D !group->pinned_page_dirty_scope;
->  		list_del(&group->next);
-> -		kfree(group);
->  		/*
->  		 * Group ownership provides privilege, if the group list is
->  		 * empty, the domain goes away. If it's the last domain with
-> @@ -2519,7 +2515,17 @@ static void vfio_iommu_type1_detach_group(void
-> *iommu_data,
->  			kfree(domain);
->  			vfio_iommu_aper_expand(iommu, &iova_copy);
->  			vfio_update_pgsize_bitmap(iommu);
-> +			/*
-> +			 * Removal of a group without dirty tracking may
-> allow
-> +			 * the iommu scope to be promoted.
-> +			 */
-> +			if (!group->pinned_page_dirty_scope) {
-> +				iommu->num_non_pinned_groups--;
-> +				if (iommu->dirty_page_tracking)
+>  .../devicetree/bindings/display/msm/hdmi.txt  |  99 --------
+>  .../bindings/display/msm/qcom,hdmi.yaml       | 237 ++++++++++++++++++
+>  .../bindings/phy/qcom,hdmi-phy-other.yaml     | 103 ++++++++
+>  .../bindings/phy/qcom,hdmi-phy-qmp.yaml       |  84 +++++++
+>  4 files changed, 424 insertions(+), 99 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/display/msm/hdmi.txt
+>  create mode 100644 Documentation/devicetree/bindings/display/msm/qcom,hdmi.yaml
+>  create mode 100644 Documentation/devicetree/bindings/phy/qcom,hdmi-phy-other.yaml
+>  create mode 100644 Documentation/devicetree/bindings/phy/qcom,hdmi-phy-qmp.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/display/msm/hdmi.txt b/Documentation/devicetree/bindings/display/msm/hdmi.txt
+> deleted file mode 100644
+> index 5f90a40da51b..000000000000
+> --- a/Documentation/devicetree/bindings/display/msm/hdmi.txt
+> +++ /dev/null
+> @@ -1,99 +0,0 @@
+> -Qualcomm adreno/snapdragon hdmi output
+> -
+> -Required properties:
+> -- compatible: one of the following
+> -   * "qcom,hdmi-tx-8996"
+> -   * "qcom,hdmi-tx-8994"
+> -   * "qcom,hdmi-tx-8084"
+> -   * "qcom,hdmi-tx-8974"
+> -   * "qcom,hdmi-tx-8660"
+> -   * "qcom,hdmi-tx-8960"
+> -- reg: Physical base address and length of the controller's registers
+> -- reg-names: "core_physical"
+> -- interrupts: The interrupt signal from the hdmi block.
+> -- power-domains: Should be <&mmcc MDSS_GDSC>.
+> -- clocks: device clocks
+> -  See ../clocks/clock-bindings.txt for details.
+> -- core-vdda-supply: phandle to supply regulator
+> -- hdmi-mux-supply: phandle to mux regulator
+> -- phys: the phandle for the HDMI PHY device
+> -- phy-names: the name of the corresponding PHY device
+> -
+> -Optional properties:
+> -- hpd-gpios: hpd pin
+> -- qcom,hdmi-tx-mux-en-gpios: hdmi mux enable pin
+> -- qcom,hdmi-tx-mux-sel-gpios: hdmi mux select pin
+> -- qcom,hdmi-tx-mux-lpm-gpios: hdmi mux lpm pin
+> -- power-domains: reference to the power domain(s), if available.
+> -- pinctrl-names: the pin control state names; should contain "default"
+> -- pinctrl-0: the default pinctrl state (active)
+> -- pinctrl-1: the "sleep" pinctrl state
+> -
+> -HDMI PHY:
+> -Required properties:
+> -- compatible: Could be the following
+> -  * "qcom,hdmi-phy-8660"
+> -  * "qcom,hdmi-phy-8960"
+> -  * "qcom,hdmi-phy-8974"
+> -  * "qcom,hdmi-phy-8084"
+> -  * "qcom,hdmi-phy-8996"
+> -- #phy-cells: Number of cells in a PHY specifier; Should be 0.
+> -- reg: Physical base address and length of the registers of the PHY sub blocks.
+> -- reg-names: The names of register regions. The following regions are required:
+> -  * "hdmi_phy"
+> -  * "hdmi_pll"
+> -  For HDMI PHY on msm8996, these additional register regions are required:
+> -    * "hdmi_tx_l0"
+> -    * "hdmi_tx_l1"
+> -    * "hdmi_tx_l3"
+> -    * "hdmi_tx_l4"
+> -- power-domains: Should be <&mmcc MDSS_GDSC>.
+> -- clocks: device clocks
+> -  See Documentation/devicetree/bindings/clock/clock-bindings.txt for details.
+> -- core-vdda-supply: phandle to vdda regulator device node
+> -
+> -Example:
+> -
+> -/ {
+> -	...
+> -
+> -	hdmi: hdmi@4a00000 {
+> -		compatible = "qcom,hdmi-tx-8960";
+> -		reg-names = "core_physical";
+> -		reg = <0x04a00000 0x2f0>;
+> -		interrupts = <GIC_SPI 79 0>;
+> -		power-domains = <&mmcc MDSS_GDSC>;
+> -		clock-names =
+> -		    "core",
+> -		    "master_iface",
+> -		    "slave_iface";
+> -		clocks =
+> -		    <&mmcc HDMI_APP_CLK>,
+> -		    <&mmcc HDMI_M_AHB_CLK>,
+> -		    <&mmcc HDMI_S_AHB_CLK>;
+> -		qcom,hdmi-tx-ddc-clk = <&msmgpio 70 GPIO_ACTIVE_HIGH>;
+> -		qcom,hdmi-tx-ddc-data = <&msmgpio 71 GPIO_ACTIVE_HIGH>;
+> -		qcom,hdmi-tx-hpd = <&msmgpio 72 GPIO_ACTIVE_HIGH>;
+> -		core-vdda-supply = <&pm8921_hdmi_mvs>;
+> -		hdmi-mux-supply = <&ext_3p3v>;
+> -		pinctrl-names = "default", "sleep";
+> -		pinctrl-0 = <&hpd_active  &ddc_active  &cec_active>;
+> -		pinctrl-1 = <&hpd_suspend &ddc_suspend &cec_suspend>;
+> -
+> -		phys = <&hdmi_phy>;
+> -		phy-names = "hdmi_phy";
+> -	};
+> -
+> -	hdmi_phy: phy@4a00400 {
+> -		compatible = "qcom,hdmi-phy-8960";
+> -		reg-names = "hdmi_phy",
+> -			    "hdmi_pll";
+> -		reg = <0x4a00400 0x60>,
+> -		      <0x4a00500 0x100>;
+> -		#phy-cells = <0>;
+> -		power-domains = <&mmcc MDSS_GDSC>;
+> -		clock-names = "slave_iface";
+> -		clocks = <&mmcc HDMI_S_AHB_CLK>;
+> -		core-vdda-supply = <&pm8921_hdmi_mvs>;
+> -	};
+> -};
+> diff --git a/Documentation/devicetree/bindings/display/msm/qcom,hdmi.yaml b/Documentation/devicetree/bindings/display/msm/qcom,hdmi.yaml
+> new file mode 100644
+> index 000000000000..2f485b5d1c5d
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/display/msm/qcom,hdmi.yaml
+> @@ -0,0 +1,237 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
 > +
-> 	vfio_iommu_populate_bitmap_full(iommu);
+> +$id: "http://devicetree.org/schemas/display/msm/qcom,hdmi.yaml#"
+> +$schema: "http://devicetree.org/meta-schemas/core.yaml#"
 
-This doesn't look correct. The old code decrements
-num_non_pinned_groups for every detach group without dirty
-tracking. But now it's only done when the domain is about to
-be released...
+Both go without quotes.
 
-> +			}
->  		}
-> +		kfree(group);
->  		break;
->  	}
->=20
-> @@ -2528,16 +2534,7 @@ static void vfio_iommu_type1_detach_group(void
-> *iommu_data,
->  	else
->  		vfio_iommu_iova_free(&iova_copy);
->=20
-> -detach_group_done:
-> -	/*
-> -	 * Removal of a group without dirty tracking may allow the iommu
-> scope
-> -	 * to be promoted.
-> -	 */
-> -	if (update_dirty_scope) {
-> -		iommu->num_non_pinned_groups--;
-> -		if (iommu->dirty_page_tracking)
-> -			vfio_iommu_populate_bitmap_full(iommu);
-> -	}
-> +out_unlock:
->  	mutex_unlock(&iommu->lock);
->  }
->=20
-> --
-> 2.17.1
->=20
-> _______________________________________________
-> iommu mailing list
-> iommu@lists.linux-foundation.org
-> https://lists.linuxfoundation.org/mailman/listinfo/iommu
+> +
+> +title: Qualcomm Adreno/Snapdragon HDMI output
+> +
+> +maintainers:
+> +  - Rob Clark <robdclark@gmail.com>
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,hdmi-tx-8660
+> +      - qcom,hdmi-tx-8960
+> +      - qcom,hdmi-tx-8974
+> +      - qcom,hdmi-tx-8084
+> +      - qcom,hdmi-tx-8994
+> +      - qcom,hdmi-tx-8996
+
+Could you order them alphabetically? Helps to avoid conflicts, if ever
+extended.
+
+> +
+> +  clocks:
+> +    minItems: 1
+> +    maxItems: 5
+> +
+> +  clock-names:
+> +    minItems: 1
+> +    maxItems: 5
+> +
+> +  reg:
+> +    minItems: 1
+> +    maxItems: 3
+> +    description: Physical base address and length of the controller's registers
+
+Skip description, it's obvious.
+
+> +
+> +  reg-names:
+> +    minItems: 1
+> +    items:
+> +      - const: core_physical
+> +      - const: qfprom_physical
+> +      - const: hdcp_physical
+> +
+> +  interrupts:
+> +    maxItems: 1
+> +    description: The interrupt signal from the hdmi block.
+
+Skip description, it's obvious.
+
+> +
+> +  phys:
+> +    description: the phandle for the HDMI PHY device
+
+You can skip description, it's quite obvious... Also in some places
+description is first in the property, in some last. Just keep one choice. :)
+
+> +    maxItems: 1
+> +
+> +  phy-names:
+> +    enum:
+> +      - hdmi_phy
+> +      - hdmi-phy
+
+Fix the DTS and use only one. Do the drivers actually use it?
+
+> +
+> +  hpd-gpios:
+> +    maxItems: 1
+> +    description: hpd pin
+> +
+> +  qcom,hdmi-tx-ddc-clk-gpios:
+> +    maxItems: 1
+> +    description: HDMI DDC clock
+> +
+> +  qcom,hdmi-tx-ddc-data-gpios:
+> +    maxItems: 1
+> +    description: HDMI DDC data
+> +
+> +  qcom,hdmi-tx-mux-en-gpios:
+> +    maxItems: 1
+> +    description: HDMI mux enable pin
+
+These were not documented before, so mention that in the commit msg, please.
+
+> +
+> +  qcom,hdmi-tx-mux-sel-gpios:
+> +    maxItems: 1
+> +    description: HDMI mux select pin
+> +
+> +  qcom,hdmi-tx-mux-lpm-gpios:
+> +    maxItems: 1
+> +    description: HDMI mux lpm pin
+> +
+> +  '#sound-dai-cells':
+> +    const: 1
+> +
+> +  ports:
+> +    type: object
+> +    $ref: /schemas/graph.yaml#/properties/ports
+> +    properties:
+> +      port@0:
+> +        $ref: /schemas/graph.yaml#/$defs/port-base
+> +        description: |
+> +          Input endpoints of the controller.
+> +
+> +      port@1:
+> +        $ref: /schemas/graph.yaml#/$defs/port-base
+> +        description: |
+> +          Output endpoints of the controller.
+> +
+> +    required:
+> +      - port@0
+> +
+> +required:
+> +  - compatible
+> +  - clocks
+> +  - clock-names
+> +  - reg
+> +  - reg-names
+> +  - interrupts
+> +  - phys
+> +  - phy-names
+> +
+> +allOf:
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            enum:
+> +              - qcom,hdmi-tx-8960
+> +    then:
+> +      properties:
+> +        clocks:
+> +          minItems: 3
+> +          maxItems: 3
+> +        clock-names:
+> +          items:
+> +            - const: core
+> +            - const: master_iface
+> +            - const: slave_iface
+> +        core-vdda-supply:
+> +          description: phandle to VDDA supply regulator
+> +        hdmi-mux-supply:
+> +          description: phandle to mux regulator
+> +
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            enum:
+> +              - qcom,hdmi-tx-8974
+> +              - qcom,hdmi-tx-8084
+> +              - qcom,hdmi-tx-8994
+> +              - qcom,hdmi-tx-8996
+> +    then:
+> +      properties:
+> +        clocks:
+> +          minItems: 5
+> +        clock-names:
+> +          items:
+> +            - const: mdp_core
+> +            - const: iface
+> +            - const: core
+> +            - const: alt_iface
+> +            - const: extp
+> +        core-vdda-supply:
+> +          description: phandle to VDDA supply regulator
+> +        core-vcc-supply:
+> +          description: phandle to VCC supply regulator
+> +
+> +unevaluatedProperties: false
+
+This should be additionalProperties:false, because you do not reference
+any schema. If it fails on supplies, please define the supplies in the
+properties list (not in the allOf:if:then) and disallow it on chosen
+variant (only one I guess)... if the supplies are really not possible on
+that variant.
+
+> +
+> +examples:
+> +  - |
+> +    hdmi: hdmi@4a00000 {
+> +      compatible = "qcom,hdmi-tx-8960";
+> +      reg-names = "core_physical";
+> +      reg = <0x04a00000 0x2f0>;
+> +      interrupts = <0 79 0>;
+
+Use proper defines for GIC and flags. IRQ TYPE none is not correct usually.
+
+> +      clock-names =
+> +          "core",
+> +          "master_iface",
+> +          "slave_iface";
+
+      clock-names = "core",
+(and align continued lines)
+
+
+> +      clocks =
+> +          <&clk 61>,
+> +          <&clk 72>,
+> +          <&clk 98>;
+> +      qcom,hdmi-tx-ddc-clk-gpios = <&msmgpio 70 0>;
+> +      qcom,hdmi-tx-ddc-data-gpios = <&msmgpio 71 0>;
+> +      hpd-gpios = <&msmgpio 72 0>;
+
+Proper GPIO flags.
+
+> +      core-vdda-supply = <&pm8921_hdmi_mvs>;
+> +      hdmi-mux-supply = <&ext_3p3v>;
+> +      pinctrl-names = "default", "sleep";
+> +      pinctrl-0 = <&hpd_active  &ddc_active  &cec_active>;
+> +      pinctrl-1 = <&hpd_suspend &ddc_suspend &cec_suspend>;
+> +
+> +      phys = <&hdmi_phy>;
+> +      phy-names = "hdmi_phy";
+> +    };
+> +  - |
+> +    #include <dt-bindings/clock/qcom,gcc-msm8996.h>
+> +    #include <dt-bindings/clock/qcom,mmcc-msm8996.h>
+> +    #include <dt-bindings/gpio/gpio.h>
+> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +    hdmi-tx@9a0000 {
+
+Node name just "hdmi"
+
+> +      compatible = "qcom,hdmi-tx-8996";
+> +      reg = <0x009a0000 0x50c>,
+> +            <0x00070000 0x6158>,
+> +            <0x009e0000 0xfff>;
+> +      reg-names = "core_physical",
+> +                  "qfprom_physical",
+> +                  "hdcp_physical";
+> +
+> +      interrupt-parent = <&mdss>;
+> +      interrupts = <8 IRQ_TYPE_LEVEL_HIGH>;
+> +
+> +      clocks = <&mmcc MDSS_MDP_CLK>,
+> +               <&mmcc MDSS_AHB_CLK>,
+> +               <&mmcc MDSS_HDMI_CLK>,
+> +               <&mmcc MDSS_HDMI_AHB_CLK>,
+> +               <&mmcc MDSS_EXTPCLK_CLK>;
+> +      clock-names = "mdp_core",
+> +                    "iface",
+> +                    "core",
+> +                    "alt_iface",
+> +                    "extp";
+> +
+> +      phys = <&hdmi_phy>;
+> +      phy-names = "hdmi_phy";
+> +      #sound-dai-cells = <1>;
+> +
+> +      pinctrl-names = "default", "sleep";
+> +      pinctrl-0 = <&hdmi_hpd_active &hdmi_ddc_active>;
+> +      pinctrl-1 = <&hdmi_hpd_suspend &hdmi_ddc_suspend>;
+> +
+> +      core-vdda-supply = <&vreg_l12a_1p8>;
+> +      core-vcc-supply = <&vreg_s4a_1p8>;
+> +
+> +      ports {
+> +        #address-cells = <1>;
+> +        #size-cells = <0>;
+> +
+> +        port@0 {
+> +          reg = <0>;
+> +          endpoint {
+> +            remote-endpoint = <&mdp5_intf3_out>;
+> +          };
+> +        };
+> +      };
+> +    };
+> +...
+> diff --git a/Documentation/devicetree/bindings/phy/qcom,hdmi-phy-other.yaml b/Documentation/devicetree/bindings/phy/qcom,hdmi-phy-other.yaml
+> new file mode 100644
+> index 000000000000..79193cf71828
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/phy/qcom,hdmi-phy-other.yaml
+> @@ -0,0 +1,103 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +
+> +$id: "http://devicetree.org/schemas/phy/qcom,hdmi-phy-other.yaml#"
+> +$schema: "http://devicetree.org/meta-schemas/core.yaml#"
+
+Same comment
+
+> +
+> +title: Qualcomm Adreno/Snapdragon HDMI phy
+> +
+> +maintainers:
+> +  - Rob Clark <robdclark@gmail.com>
+> +
+> +properties:
+> +  compatible:
+> +    contains:
+
+Remove contains
+
+> +      enum:
+> +        - qcom,hdmi-phy-8660
+> +        - qcom,hdmi-phy-8960
+> +        - qcom,hdmi-phy-8974
+> +        - qcom,hdmi-phy-8084
+> +
+> +  reg:
+> +    minItems: 2
+> +    maxItems: 2
+
+maxItems is enough in such case
+
+> +
+> +  reg-names:
+> +    items:
+> +      - const: hdmi_phy
+> +      - const: hdmi_pll
+> +
+> +  clocks:
+> +    minItems: 1
+> +    maxItems: 2
+> +
+> +  clock-names:
+> +    minItems: 1
+> +    maxItems: 2
+> +
+> +  power-domains:
+> +    maxItems: 1
+> +
+> +  '#phy-cells':
+> +    const: 0
+> +
+> +allOf:
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            enum:
+> +              - qcom,hdmi-phy-8960
+> +    then:
+> +      properties:
+> +        clocks:
+> +          maxItems: 1
+> +        clock-names:
+> +          items:
+> +            - const: slave_iface
+> +        core-vdda-supply:
+> +          description: phandle to VDDA supply regulator
+> +
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            enum:
+> +              - qcom,hdmi-phy-8974
+> +    then:
+> +      properties:
+> +        clocks:
+> +          maxItems: 2
+> +        clock-names:
+> +          items:
+> +            - const: iface
+> +            - const: alt_iface
+> +        core-vdda-supply:
+> +          description: phandle to VDDA supply regulator
+> +        vddio-supply:
+> +          description: phandle to VDD I/O supply regulator
+> +
+
+What are the clocks for other variants? Also between 1-2 with any name?
+
+> +required:
+> +  - compatible
+> +  - clocks
+> +  - reg
+> +  - reg-names
+> +  - '#phy-cells'
+> +
+> +unevaluatedProperties: false
+
+additionalProperties:false
+
+> +
+> +examples:
+> +  - |
+> +    hdmi_phy: phy@4a00400 {
+> +      compatible = "qcom,hdmi-phy-8960";
+> +      reg-names = "hdmi_phy",
+> +                  "hdmi_pll";
+> +      reg = <0x4a00400 0x60>,
+> +            <0x4a00500 0x100>;
+> +      #phy-cells = <0>;
+> +      power-domains = <&mmcc 1>;
+> +      clock-names = "slave_iface";
+> +      clocks = <&clk 21>;
+> +      core-vdda-supply = <&pm8921_hdmi_mvs>;
+> +    };
+> diff --git a/Documentation/devicetree/bindings/phy/qcom,hdmi-phy-qmp.yaml b/Documentation/devicetree/bindings/phy/qcom,hdmi-phy-qmp.yaml
+> new file mode 100644
+> index 000000000000..2b36a4c3d4c3
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/phy/qcom,hdmi-phy-qmp.yaml
+> @@ -0,0 +1,84 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +
+> +$id: "http://devicetree.org/schemas/phy/qcom,hdmi-phy-qmp.yaml#"
+> +$schema: "http://devicetree.org/meta-schemas/core.yaml#"
+
+Same comment
+
+> +
+> +title: Qualcomm Adreno/Snapdragon QMP HDMI phy
+> +
+> +maintainers:
+> +  - Rob Clark <robdclark@gmail.com>
+> +
+> +properties:
+> +  compatible:
+> +    contains:
+
+Remove contains
+> +      enum:
+> +        - qcom,hdmi-phy-8996
+> +
+> +  reg:
+> +    maxItems: 6
+> +
+> +  reg-names:
+> +    items:
+> +      - const: hdmi_pll
+> +      - const: hdmi_tx_l0
+> +      - const: hdmi_tx_l1
+> +      - const: hdmi_tx_l2
+> +      - const: hdmi_tx_l3
+> +      - const: hdmi_phy
+> +
+> +  clocks:
+> +    maxItems: 2
+> +
+> +  clock-names:
+> +    items:
+> +      - const: iface
+> +      - const: ref
+> +
+> +  power-domains:
+> +    maxItems: 1
+> +
+> +  vcca-supply: true
+> +
+> +  vddio-supply: true
+> +
+> +  '#phy-cells':
+> +    const: 0
+> +
+> +required:
+> +  - compatible
+> +  - clocks
+> +  - clock-names
+> +  - reg
+> +  - reg-names
+> +  - '#phy-cells'
+> +
+> +unevaluatedProperties: false
+
+additionalProperties:false
+
+> +
+> +examples:
+> +  - |
+> +    hdmi-phy@9a0600 {
+
+
+Best regards,
+Krzysztof
