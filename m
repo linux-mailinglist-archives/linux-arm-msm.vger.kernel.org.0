@@ -2,169 +2,299 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 585A1543D85
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jun 2022 22:24:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 81885543DC1
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jun 2022 22:48:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231506AbiFHUY2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Jun 2022 16:24:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37564 "EHLO
+        id S234191AbiFHUsM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Jun 2022 16:48:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50222 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230470AbiFHUY1 (ORCPT
+        with ESMTP id S234133AbiFHUsJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Jun 2022 16:24:27 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5715915A3D8;
-        Wed,  8 Jun 2022 13:24:26 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 9FF8AB82ACF;
-        Wed,  8 Jun 2022 20:24:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FDDAC34116;
-        Wed,  8 Jun 2022 20:24:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1654719863;
-        bh=kjulfUSLLMXAENNBuRnDb2ttG1bjGhev/8nPL0ukd74=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:From;
-        b=Tj82SFOEBNhE2C99Z3s8glLZg5Va/8Cv4lQtee1XdyPOMUb9RuyCumchv0GXMjW7p
-         JpGMGfKwoE1c6gEhf24mZksjoCU9iMMtC9u99/Xfg2rPeVrfQiQOjy7Os+WDAKoLg7
-         Y/jNwAETXYr1edF430gwK6G04XgUXz1ho9ylWCT+sTT91WrJWmBzCt46wTIOXsRnKE
-         2R0khovDUQtfXUmjvnBjlTLJTlB3wOLwcyQRncSRzoLHbtv3gHdOrUbTqfoSNyqC5D
-         OhRL4RTQrqspVbJrSdkVHs0zS6i/2xvFRFKU6ju6UrRXbZ6ZXCBXbvHEb2xlzj4JDv
-         UmKIF5Hio4pug==
-Date:   Wed, 8 Jun 2022 15:24:20 -0500
-From:   Bjorn Helgaas <helgaas@kernel.org>
-To:     Robert Marko <robert.marko@sartura.hr>
-Cc:     Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Baruch Siach <baruch@tkos.co.il>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Selvam Sathappan Periakaruppan <speriaka@codeaurora.org>,
-        Kathiravan T <kathirav@codeaurora.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Bryan O'Donoghue <pure.logic@nexus-software.ie>,
-        linux-pci@vger.kernel.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        linux-tegra@vger.kernel.org,
-        Stanimir Varbanov <svarbanov@mm-sol.com>
-Subject: Re: [PATCH v6 0/3] PCI: IPQ6018 platform support
-Message-ID: <20220608202420.GA418223@bhelgaas>
+        Wed, 8 Jun 2022 16:48:09 -0400
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A54E1F3F8D;
+        Wed,  8 Jun 2022 13:47:29 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id o8so1990202wro.3;
+        Wed, 08 Jun 2022 13:47:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=YO3uFVIndRZEsy8GIdl/SBdnE+NXVeLS4S/TD3zVgu8=;
+        b=fZupOoixI48nSRfkR4Mmobzl9D/DfTbVa8ZFBSGnq2EE8R8uxbHLxicPkeH+XoA8Hr
+         J0zeFbVZo/eakgcsZaaW618ND6c5NfoK4OkUf+PU10ZR35y20iwMA05KjIk6X0Va8bnt
+         OXcrYtnmNk1R1bKnFk4zb6dObkrTb3mLqFbEN/ibn8v+Hu96+joIMHdGm5c2BECgsE2/
+         NcMqHedsN4Ooi5074c4jzFGXF+DtWOYwop/oR5K5DmvNslU4srTazf/SZrY6MllIJtNh
+         29csVe7rMK5GndO733mBC6GcpU892ybtsHb5pCb/blneBLVyDzWHbsFJSyg2zfb+klVn
+         kOyA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=YO3uFVIndRZEsy8GIdl/SBdnE+NXVeLS4S/TD3zVgu8=;
+        b=jJUXbrV9rTUzZcp3UaDFCdcAeBmiWYfhq+cBF9MOlM3wnMx2SI+Ldpaj/kTSVqqKQU
+         RbUrsDJURzuPuc1bdl8G1YAnbEVAXZsDeyk09fd2lSR/0QMy3Jrty6Jf8HGNki88P847
+         I7SJq13OqL2DLqVyg1xaHQ5wFa3Fflf8bZfelyz05tjgOGwJNLHr6/31J0KcvLZJ7B7W
+         iSoq709XtTndfPhZYwDTwrUdM+sOM2Cl2vE0H0o5CT9bF+vBczpKEtU8zxUBvIQWtR+q
+         tMsvu6uAwnazRulbl0/DTLrht7DtB5Gusu7YdGptiCYOWRhv1AY8Iww8lw7Rdmc0k848
+         ognA==
+X-Gm-Message-State: AOAM530vlAxLXlOWPPo3LdZbes05NDbiF1O2x0mFkXH05AMOpBcvb684
+        2r1cOaPu7Wzz/U6O58rDM83XB85ezHEZmBwPqlo=
+X-Google-Smtp-Source: ABdhPJxge7NY2M3tyn2D7hW+msJl2ZlgP4HAVvhUtIgREg2hn1YhT5UWT8l/25o9JWzK8Z8BP7mHRE8dcK1DJmLaI6c=
+X-Received: by 2002:adf:fb0d:0:b0:20d:97e:17ce with SMTP id
+ c13-20020adffb0d000000b0020d097e17cemr35419463wrr.585.1654721240259; Wed, 08
+ Jun 2022 13:47:20 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CA+HBbNFo9QCExiA9T4Mn4t5vvir79xF3R9F6OLZa0m5Bzpte3w@mail.gmail.com>
-X-Spam-Status: No, score=-8.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+References: <20210927152928.831245-1-robdclark@gmail.com> <f1c6fff0-a220-86d9-8572-2de3d47ab96a@codeaurora.org>
+ <CAF6AEGtRO2VdweN014JpApQ460=KxEU9uF8jf1U__Gh-bMRo7w@mail.gmail.com> <2e8544dc-1914-92ab-a9c6-e9093a649c49@quicinc.com>
+In-Reply-To: <2e8544dc-1914-92ab-a9c6-e9093a649c49@quicinc.com>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Wed, 8 Jun 2022 13:47:07 -0700
+Message-ID: <CAF6AEGvgd7AbGG9szgAW1hXPrhfY78Vdh2s8a6Cei1gpScDQNw@mail.gmail.com>
+Subject: Re: [Freedreno] [PATCH] drm/msm: Switch ordering of runpm put vs devfreq_idle
+To:     Akhil P Oommen <quic_akhilpo@quicinc.com>
+Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-[+cc Stanimir, beginning of thread at
-https://lore.kernel.org/r/cover.1644234441.git.baruch@tkos.co.il]
-
-On Tue, Jun 07, 2022 at 03:12:19PM +0200, Robert Marko wrote:
-> On Wed, May 11, 2022 at 4:03 PM Lorenzo Pieralisi
-> <lorenzo.pieralisi@arm.com> wrote:
+On Wed, Jun 8, 2022 at 12:36 PM Akhil P Oommen <quic_akhilpo@quicinc.com> w=
+rote:
+>
+> On 6/8/2022 3:00 AM, Rob Clark wrote:
+> > On Tue, Sep 28, 2021 at 7:52 AM Akhil P Oommen <akhilpo@codeaurora.org>=
+ wrote:
+> >> On 9/27/2021 8:59 PM, Rob Clark wrote:
+> >>> From: Rob Clark <robdclark@chromium.org>
+> >>>
+> >>> I've seen a few crashes like:
+> >>>
+> >>>       Internal error: synchronous external abort: 96000010 [#1] PREEM=
+PT SMP
+> >>>       Modules linked in: snd_seq_dummy snd_seq snd_seq_device bridge =
+stp llc tun nf_nat_tftp nf_conntrack_tftp nf_nat_ftp nf_conntrack_ftp esp6 =
+ah6 ip6t_REJECT ip6t_ipv6header vhost_vsock vhost vmw_vsock_virtio_transpor=
+t_common vsock rfcomm algif_hash algif_skcipher af_alg uinput veth xt_cgrou=
+p xt_MASQUERADE venus_enc venus_dec videobuf2_dma_contig qcom_spmi_adc5 qco=
+m_spmi_adc_tm5 hci_uart qcom_vadc_common cros_ec_typec qcom_spmi_temp_alarm=
+ typec btqca snd_soc_rt5682_i2c snd_soc_rt5682 snd_soc_sc7180 bluetooth snd=
+_soc_qcom_common snd_soc_rl6231 ecdh_generic ecc venus_core v4l2_mem2mem sn=
+d_soc_lpass_sc7180 snd_soc_lpass_hdmi snd_soc_lpass_cpu snd_soc_lpass_platf=
+orm snd_soc_max98357a ip6table_nat fuse iio_trig_sysfs cros_ec_lid_angle cr=
+os_ec_sensors cros_ec_sensors_core industrialio_triggered_buffer kfifo_buf =
+cros_ec_sensorhub lzo_rle ath10k_snoc lzo_compress ath10k_core ath zram mac=
+80211 cfg80211 ax88179_178a usbnet mii uvcvideo videobuf2_vmalloc joydev
+> >>>       CPU: 3 PID: 212 Comm: A618-worker Tainted: G W 5.4.139-16300-g8=
+8d8e1285982 #1
+> >>>       Hardware name: Google Pompom (rev1) with LTE (DT)
+> >>>       pstate: 60c00009 (nZCv daif +PAN +UAO)
+> >>>       pc : a6xx_gmu_set_oob+0x114/0x200
+> >>>       lr : a6xx_gmu_set_oob+0x10c/0x200
+> >>>       sp : ffffffc011b7bc20
+> >>>       x29: ffffffc011b7bc20 x28: ffffffdad27c5000
+> >>>       x27: 0000000000000001 x26: ffffffdad1521044
+> >>>       x25: ffffffbef7498338 x24: 0000000000000018
+> >>>       x23: 0000000000000002 x22: 0000000000014648
+> >>>       x21: 0000033732fe638b x20: 0000000080000000
+> >>>       x19: ffffffbef7433bc8 x18: 0000000040000000
+> >>>       x17: 000000243508d982 x16: 000000000000b67e
+> >>>       x15: 00000000000090d4 x14: 0000000000000024
+> >>>       x13: 0000000000000024 x12: 0000000000017521
+> >>>       x11: 0000000000000b48 x10: 0000000000326a48
+> >>>       x9 : 1a130d33f6371600 x8 : ffffffc011e54648
+> >>>       x7 : 614948e00005003c x6 : ffffffbe3cd17e60
+> >>>       x5 : 0000000000000040 x4 : 0000000000000004
+> >>>       x3 : 0000000000000000 x2 : ffffffbef7488000
+> >>>       x1 : ffffffbef7488000 x0 : 0000000000000000
+> >>>       Call trace:
+> >>>       a6xx_gmu_set_oob+0x114/0x200
+> >>>       a6xx_gmu_set_freq+0xe0/0x1fc
+> >>>       msm_devfreq_target+0x80/0x13c
+> >>>       msm_devfreq_idle+0x54/0x94
+> >>>       retire_submit+0x170/0x254
+> >>>       retire_submits+0xa4/0xdc
+> >>>       retire_worker+0x1c/0x28
+> >>>       kthread_worker_fn+0xf4/0x1bc
+> >>>       kthread+0x140/0x158
+> >>>       ret_from_fork+0x10/0x18
+> >>>       Code: 52800c81 9415bbe5 f9400a68 8b160108 (b9400108)
+> >>>       ---[ end trace 16b871df2482cd61 ]---
+> >>>       Kernel panic - not syncing: Fatal exception
+> >>>       SMP: stopping secondary CPUs
+> >>>       Kernel Offset: 0x1ac1400000 from 0xffffffc010000000
+> >>>       PHYS_OFFSET: 0xffffffc280000000
+> >>>       CPU features: 0x88102e,2a80aa38
+> >>>       Memory Limit: none
+> >>>
+> >>> Which smells a lot like touching hw after power collapse.  I'm not
+> >>> *entirely* sure how it could have taken 66ms (the autosuspend delay)
+> >>> before we get to a6xx_gmu_set_oob(), but to be safe we should move
+> >>> the pm_runtime_put_autosuspend() after msm_devfreq_idle().
+> >> https://elixir.bootlin.com/linux/v5.15-rc1/source/drivers/gpu/drm/msm/=
+adreno/a6xx_gmu.c#L132
+> >> We have this check in the gmu freq set path which should avoid this
+> >> scenario. I might be a bit pedantic here, but I feel that the original
+> >> code is more accurate. We should immediately mark last busy and put
+> >> runtime_pm refcount.
+> > So, I've been doing some experiments, changing the _put_autosuspend()
+> > to _put_sync(), in the course of tracking down some remaining "GMU
+> > OOB" timeout type issues and related badness, and discovered things
+> > very quickly die with SError splats like below.  Possibly the issue is
+> > that runpm has some race conditions, but I'm not sure we can trust
+> > pm_runtime_get_if_in_use() quite as much as one would like..
 > >
-> > On Tue, Apr 12, 2022 at 05:12:59PM +0100, Lorenzo Pieralisi wrote:
-> > > On Mon, Feb 07, 2022 at 04:51:23PM +0200, Baruch Siach wrote:
-> > > > This series adds support for the single PCIe lane on IPQ6018 SoCs. The code is
-> > > > ported from downstream Codeaurora v5.4 kernel. The main difference from
-> > > > downstream code is the split of PCIe registers configuration from .init to
-> > > > .post_init, since it requires phy_power_on().
-> > > >
-> > > > Tested on IPQ6010 based hardware.
-> > > >
-> > > > Changes in v6:
-> > > >
-> > > >   * Drop DT patch applied to the qcom tree
-> > > >
-> > > >   * Normalize driver changes subject line
-> > > >
-> > > >   * Add a preparatory patch to rename PCIE_CAP_LINK1_VAL to PCIE_CAP_SLOT_VAL,
-> > > >     and define it using PCI_EXP_SLTCAP_* macros
-> > > >
-> > > >   * Drop a vague comment about ASPM configuration
-> > > >
-> > > >   * Add a comment about the source of delay periods
-> > > >
-> > > > Changes in v5:
-> > > >
-> > > >   * Remove comments from qcom_pcie_init_2_9_0() (Bjorn Andersson)
-> > > >
-> > > > Changes in v4:
-> > > >
-> > > >   * Drop applied DT bits
-> > > >
-> > > >   * Add max-link-speed that was missing from the applied v2 patch
-> > > >
-> > > >   * Rebase the driver on v5.16-rc3
-> > > >
-> > > > Changes in v3:
-> > > >
-> > > >   * Drop applied patches
-> > > >
-> > > >   * Rely on generic code for speed setup
-> > > >
-> > > >   * Drop unused macros
-> > > >
-> > > >   * Formatting fixes
-> > > >
-> > > > Changes in v2:
-> > > >
-> > > >   * Add patch moving GEN3_RELATED macros to a common header
-> > > >
-> > > >   * Drop ATU configuration from pcie-qcom
-> > > >
-> > > >   * Remove local definition of common registers
-> > > >
-> > > >   * Use bulk clk and reset APIs
-> > > >
-> > > >   * Remove msi-parent from device-tree
-> > > >
-> > > > Baruch Siach (2):
-> > > >   PCI: dwc: tegra: move GEN3_RELATED DBI register to common header
-> > > >   PCI: qcom: Define slot capabilities using PCI_EXP_SLTCAP_*
-> > > >
-> > > > Selvam Sathappan Periakaruppan (1):
-> > > >   PCI: qcom: Add IPQ60xx support
-> > > >
-> > > >  drivers/pci/controller/dwc/pcie-designware.h |   7 +
-> > > >  drivers/pci/controller/dwc/pcie-qcom.c       | 155 ++++++++++++++++++-
-> > > >  drivers/pci/controller/dwc/pcie-tegra194.c   |   6 -
-> > > >  3 files changed, 160 insertions(+), 8 deletions(-)
-> > >
-> > > Hi Bjorn, Andy,
-> > >
-> > > any feedback on this series please ?
-> >
-> > Any feedback on these patches please ?
-> 
-> Finally dug the CP01, and for me, it works, so:
-> Tested-by: Robert Marko <robert.marko@sartura.hr>
+> > -----------
+> > [   33.225332] CPU: 0 PID: 216 Comm: A618-worker Tainted: G        W
+> >        5.4.196 #7
+> > [   33.225337] Hardware name: Google Wormdingler rev1+ INX panel board =
+(DT)
+> > [   33.225343] pstate: 20c00009 (nzCv daif +PAN +UAO)
+> > [   33.225353] pc : msm_readl+0x14/0x34
+> > [   33.225361] lr : a6xx_gpu_busy+0x40/0x80
+> > [   33.225365] sp : ffffffc011b93ad0
+> > [   33.225371] x29: ffffffc011b93ad0 x28: ffffffe77cba3000
+> > [   33.225377] x27: 0000000000000001 x26: ffffffe77bb4c4ac
+> > [   33.225384] x25: ffffffa2f227dfa0 x24: ffffffa2f22aab28
+> > [   33.225390] x23: 0000000000000000 x22: ffffffa2f22bf020
+> > [   33.225397] x21: ffffffa2f22bf000 x20: ffffffc011b93b10
+> > [   33.225404] x19: ffffffc011bd4110 x18: 000000000000000e
+> > [   33.225410] x17: 0000000000000004 x16: 000000000000000c
+> > [   33.225416] x15: 000001be3a969450 x14: 0000000000000400
+> > [   33.225423] x13: 00000000000101d6 x12: 0000000034155555
+> > [   33.225429] x11: 0000000000000001 x10: 0000000000000000
+> > [   33.225436] x9 : 0000000100000000 x8 : ffffffc011bd4000
+> > [   33.225443] x7 : 0000000000000000 x6 : 0000000000000007
+> > [   33.225450] x5 : ffffffc01d8b38f0 x4 : 0000000000000000
+> > [   33.225457] x3 : 00000000ffffffff x2 : 0000000000000002
+> > [   33.225463] x1 : 0000000000000000 x0 : ffffffc011bd4110
+> > [   33.225471] Call trace:
+> > [   33.225478]  msm_readl+0x14/0x34
+> > [   33.225484]  a6xx_gpu_busy+0x40/0x80
+> > [   33.225490]  msm_devfreq_get_dev_status+0x70/0x1d0
+> > [   33.225500]  devfreq_simple_ondemand_func+0x34/0x100
+> > [   33.225510]  update_devfreq+0x50/0xe8
+> > [   33.225517]  qos_notifier_call+0x2c/0x64
+> > [   33.225523]  qos_max_notifier_call+0x1c/0x2c
+> > [   33.225532]  notifier_call_chain+0x58/0x98
+> > [   33.225539]  __blocking_notifier_call_chain+0x74/0x84
+> > [   33.225545]  blocking_notifier_call_chain+0x38/0x48
+> > [   33.225554]  pm_qos_update_target+0xf8/0x19c
+> > [   33.225560]  freq_qos_apply+0x54/0x6c
+> > [   33.225566]  apply_constraint+0x60/0x104
+> > [   33.225572]  __dev_pm_qos_update_request+0xb4/0x184
+> > [   33.225578]  dev_pm_qos_update_request+0x38/0x58
+> > [   33.225584]  msm_devfreq_idle_work+0x34/0x40
+> > [   33.225591]  kthread_worker_fn+0x144/0x1c8
+> > [   33.225597]  kthread+0x140/0x284
+> > [   33.225604]  ret_from_fork+0x10/0x18
+> > [   33.225617] Code: f9000bf3 910003fd aa0003f3 d503201f (b9400260)
+> > [   33.225623] ---[ end trace f6309767a42d0831 ]---
+> > [   33.236185] SMP: stopping secondary CPUs
+> > [   33.236186] Kernel Offset: 0x276b600000 from 0xffffffc010000000
+> > [   33.236186] PHYS_OFFSET: 0xffffffdf80000000
+> > [   33.236187] CPU features: 0x088102e,2a80aa38
+> > -----------
+> Any chance we are racing with system suspend here? Because, when
+> "dev->power.disable_depth > 0", pm_runtime_get_if_in_use() returns
+> -EINVAL. Then I guess we should look for a positive return value from
+> pm_runtime_get_if_in_use() before proceeding.
 
-This mainly affects pcie-qcom.c, so it looks like Stanimir should have
-been copied on this, but wasn't.  Please include him on the next
-iteration.
+I think that is possible.. although I can still still SErrors in
+a6xx_gpu_busy() with:
 
-This will also need to be updated to apply on v5.19-rc1:
+----------
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+index 1ec90a9ca56c..61e1e33f355a 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+@@ -129,7 +129,7 @@ void a6xx_gmu_set_freq(struct msm_gpu *gpu, struct
+dev_pm_opp *opp)
+         * This can get called from devfreq while the hardware is idle. Don=
+'t
+         * bring up the power if it isn't already active
+         */
+-       if (pm_runtime_get_if_in_use(gmu->dev) =3D=3D 0)
++       if (pm_runtime_get_if_in_use(gmu->dev) <=3D 0)
+                return;
 
-  03:21:47 ~/linux (next)$ git checkout -b wip/baruch-ipq6018-v6 v5.19-rc1
-  Switched to a new branch 'wip/baruch-ipq6018-v6'
-  03:21:55 ~/linux (wip/baruch-ipq6018-v6)$ git am m/v6_20220207_baruch_pci_ipq6018_platform_support.mbx
-  Applying: PCI: dwc: tegra: move GEN3_RELATED DBI register to common header
-  Applying: PCI: qcom: Define slot capabilities using PCI_EXP_SLTCAP_*
-  Applying: PCI: qcom: Add IPQ60xx support
-  error: patch failed: drivers/pci/controller/dwc/pcie-qcom.c:1531
-  error: drivers/pci/controller/dwc/pcie-qcom.c: patch does not apply
-  Patch failed at 0003 PCI: qcom: Add IPQ60xx support
+        if (!gmu->legacy) {
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+index 95a6c3361a1e..b17a95f7b85c 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+@@ -1456,7 +1456,7 @@ static u64 a6xx_gpu_busy(struct msm_gpu *gpu,
+unsigned long *out_sample_rate)
+        *out_sample_rate =3D 19200000;
+
+        /* Only read the gpu busy if the hardware is already active */
+-       if (pm_runtime_get_if_in_use(a6xx_gpu->gmu.dev) =3D=3D 0)
++       if (pm_runtime_get_if_in_use(a6xx_gpu->gmu.dev) <=3D 0)
+                return 0;
+
+        busy_cycles =3D gmu_read64(&a6xx_gpu->gmu,
+----------
+
+So I don't think this completely explains it
+
+I am starting to think it might not be a bad idea to drain the gpu's
+kthread working in the suspend path
+
+BR,
+-R
+
+>
+> -Akhil.
+> >> -Akhil.
+> >>
+> >>> Fixes: 9bc95570175a ("drm/msm: Devfreq tuning")
+> >>> Signed-off-by: Rob Clark <robdclark@chromium.org>
+> >>> ---
+> >>>    drivers/gpu/drm/msm/msm_gpu.c | 6 +++---
+> >>>    1 file changed, 3 insertions(+), 3 deletions(-)
+> >>>
+> >>> diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_=
+gpu.c
+> >>> index d1a16642ecd5..2b2bbe7499e6 100644
+> >>> --- a/drivers/gpu/drm/msm/msm_gpu.c
+> >>> +++ b/drivers/gpu/drm/msm/msm_gpu.c
+> >>> @@ -667,9 +667,6 @@ static void retire_submit(struct msm_gpu *gpu, st=
+ruct msm_ringbuffer *ring,
+> >>>
+> >>>        msm_submit_retire(submit);
+> >>>
+> >>> -     pm_runtime_mark_last_busy(&gpu->pdev->dev);
+> >>> -     pm_runtime_put_autosuspend(&gpu->pdev->dev);
+> >>> -
+> >>>        spin_lock_irqsave(&ring->submit_lock, flags);
+> >>>        list_del(&submit->node);
+> >>>        spin_unlock_irqrestore(&ring->submit_lock, flags);
+> >>> @@ -683,6 +680,9 @@ static void retire_submit(struct msm_gpu *gpu, st=
+ruct msm_ringbuffer *ring,
+> >>>        mutex_unlock(&gpu->active_lock);
+> >>>
+> >>>        msm_gem_submit_put(submit);
+> >>> +
+> >>> +     pm_runtime_mark_last_busy(&gpu->pdev->dev);
+> >>> +     pm_runtime_put_autosuspend(&gpu->pdev->dev);
+> >>>    }
+> >>>
+> >>>    static void retire_submits(struct msm_gpu *gpu)
+> >>>
+>
