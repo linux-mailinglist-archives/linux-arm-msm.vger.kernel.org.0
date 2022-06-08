@@ -2,77 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8EC15542FEB
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jun 2022 14:08:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CE554543096
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jun 2022 14:39:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238733AbiFHMH4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Jun 2022 08:07:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39112 "EHLO
+        id S239432AbiFHMhu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Jun 2022 08:37:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44852 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238705AbiFHMHx (ORCPT
+        with ESMTP id S239345AbiFHMht (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Jun 2022 08:07:53 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9801E1D01D0;
-        Wed,  8 Jun 2022 05:07:50 -0700 (PDT)
+        Wed, 8 Jun 2022 08:37:49 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9202A2CCF54
+        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Jun 2022 05:37:45 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id kq6so28155174ejb.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jun 2022 05:37:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1654690070; x=1686226070;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=eixAlGC3/66qXleJOQL13o9s1uPtPCDR9p1TUd1YkLw=;
-  b=NwjbTwHgEpkJeV1IG1+4JR87Kb+qUa6TMp7TwSMFmjcmtpJruaSp///v
-   V+Jp/W4n1+cCzrxBmwXRIjzzCsdHD8gYpFYFj1BpDmpziQNSe5OnzQxPo
-   hWPOBwPIBlqPjiAutQBCzl1xHklQjG73zQ5WOi2hhMhSYTnd8OucyaqeM
-   8=;
-Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 08 Jun 2022 05:07:50 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Jun 2022 05:07:49 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 8 Jun 2022 05:07:49 -0700
-Received: from [10.216.33.38] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Wed, 8 Jun 2022
- 05:07:43 -0700
-Message-ID: <e4c67862-d173-906f-e9c7-d26408135e3a@quicinc.com>
-Date:   Wed, 8 Jun 2022 17:37:40 +0530
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=H0WIvtDK8p0hub9/Szus7esLARC3UMiO3VioApHUPBY=;
+        b=Tsg1x0Q8gQ3BwxdDKxr3GztlxX4tjBiwzsVdK/a8gxfowQSkHgSZ8zcX0TpFfNRidL
+         Srb+CtQa6fOlcNTwnam9zdq22zbwYe0P046H0hS5F+qvQNjoTBe11Hs29KrKR/npMjtl
+         aqy20peak7dBdXuXTvUODVZI2rhuhgApqEtHi3M37GUaDppZaxRrQYO/o+QnrEQD+W9i
+         3s95MzkblBaQ99c+Lm937NU/9RjX5gaiJWh14VA+NP1sLlLI2nRJbi4c8nln+9YEXzmz
+         93l1W1tv+z9yU/XV7Yo2kqFxQHqLcuH1Fg/2d8ltZCJg22FG4R8aaHFQ8qS0NMPIiI/E
+         MoEA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=H0WIvtDK8p0hub9/Szus7esLARC3UMiO3VioApHUPBY=;
+        b=Iqchi/RpV1aIo1c/zgCcaqaWN7zmyXOstbM26ARoSej2xbnJ50NwXy8jvRcNXHfwXz
+         03DKVmqgjuDSU9MLWrBqx/SpyN3wgMQUE0BO/ljBFi/+JP7bliiPh/OxDZA2ZWQrKbEu
+         4EOsDWSZjtdRGD0UtRMOG9Ggm7Ajv66LnubP7FxJWhiLAvl4+ekU3FQPwwFLqp1djNt9
+         iXs7uaomIP/SATW0oKzXo1W6PatQ0ph/yR80HzW2FkEH+SIo/l3O/epdAtsUIUM5IaHp
+         5oGJBMkrXoO8LLUDrPQNDoFWiz9F79luBJcPFr/pxsA7nKtQ+JxAUF5N8ZGoln1O5LJn
+         oTcA==
+X-Gm-Message-State: AOAM532YpS9GdBb3gWFGgFXEZSgP8hO0iKmigBpZBuz4CC4vKScjhXaY
+        Dsur67mxOTIoq6rMj6gsW+2jIg==
+X-Google-Smtp-Source: ABdhPJy0CWdqL36Ktq7laF+3NF2aMLunQqcEfbts6nMe4AvWKnaPdOnxG/P/zeEoYq1eMlQKYpwQeQ==
+X-Received: by 2002:a17:907:6286:b0:6da:6e24:5e43 with SMTP id nd6-20020a170907628600b006da6e245e43mr31108018ejc.449.1654691864091;
+        Wed, 08 Jun 2022 05:37:44 -0700 (PDT)
+Received: from [192.168.0.192] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id w2-20020a056402268200b0042ddd08d5f8sm12908878edd.2.2022.06.08.05.37.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 08 Jun 2022 05:37:43 -0700 (PDT)
+Message-ID: <e9918d06-1b53-d847-016f-2310c4fa9866@linaro.org>
+Date:   Wed, 8 Jun 2022 14:37:42 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.0
-Subject: Re: [PATCH v8 1/3] dt-bindings: phy: qcom,usb-snps-femto-v2: Add phy
- override params bindings
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: Re: [PATCH v2 01/12] dt-bindings: display/msm: hdmi: split and
+ convert to yaml
 Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "Andy Gross" <agross@kernel.org>,
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        "Matthias Kaehlcke" <mka@chromium.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>
-CC:     <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-phy@lists.infradead.org>, <quic_pkondeti@quicinc.com>,
-        <quic_ppratap@quicinc.com>, <quic_vpulyala@quicinc.com>,
-        Sandeep Maheswaram <quic_c_sanm@quicinc.com>
-References: <1654066564-20518-1-git-send-email-quic_kriskura@quicinc.com>
- <1654066564-20518-2-git-send-email-quic_kriskura@quicinc.com>
- <00cf0a30-46d5-f566-af35-9f7c33ec4182@linaro.org>
-From:   Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-In-Reply-To: <00cf0a30-46d5-f566-af35-9f7c33ec4182@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, David Heidelberg <david@ixit.cz>
+References: <20220608120723.2987843-1-dmitry.baryshkov@linaro.org>
+ <20220608120723.2987843-2-dmitry.baryshkov@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220608120723.2987843-2-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-5.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -81,122 +85,128 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 08/06/2022 14:07, Dmitry Baryshkov wrote:
+> Convert Qualcomm HDMI binding into HDMI TX and PHY yaml bindings.
+> 
+> Changes to schema:
+> HDMI:
+>  - fixed reg-names numbering to match 0..3 instead 0,1,3,4
+>  - dropped qcom,tx-ddc-* from example, they were not documented
+> 
+> PHY:
+>  - moved into phy/ directory
+>  - split into QMP and non-QMP PHY schemas
+> 
+> Co-developed-by: David Heidelberg <david@ixit.cz>
 
-On 6/8/2022 3:06 PM, Krzysztof Kozlowski wrote:
-> On 01/06/2022 08:56, Krishna Kurapati wrote:
->> From: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
->>
->> Add device tree bindings for SNPS phy tuning parameters.
->>
->> Signed-off-by: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
->> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
->> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->> ---
->>   .../bindings/phy/qcom,usb-snps-femto-v2.yaml       | 96 ++++++++++++++++++++++
->>   1 file changed, 96 insertions(+)
->>
->> diff --git a/Documentation/devicetree/bindings/phy/qcom,usb-snps-femto-v2.yaml b/Documentation/devicetree/bindings/phy/qcom,usb-snps-femto-v2.yaml
->> index 1ce251d..daeeb04 100644
->> --- a/Documentation/devicetree/bindings/phy/qcom,usb-snps-femto-v2.yaml
->> +++ b/Documentation/devicetree/bindings/phy/qcom,usb-snps-femto-v2.yaml
->> @@ -53,6 +53,102 @@ properties:
->>     vdda33-supply:
->>       description: phandle to the regulator 3.3V supply node.
->>   
->> +  qcom,hs-disconnect-bp:
->> +    description:
->> +      This adjusts the voltage level for the threshold used to
->> +      detect a disconnect event at the host. Possible values are.
->> +      The values defined are in multiples of basis points (1bp = 0.01%).
->> +      The hardware accepts only discrete values. The value closest to the
->> +      provided input will be chosen as the override value for this param.
->> +    minimum: -272
->> +    maximum: 2156
->> +
->> +  qcom,squelch-detector-bp:
->> +    description:
->> +      This adjusts the voltage level for the threshold used to
->> +      detect valid high-speed data.
->> +      The values defined are in multiples of basis points (1bp = 0.01%).
->> +      The hardware accepts only discrete values. The value closest to the
->> +      provided input will be chosen as the override value for this param.
->> +    minimum: -2090
->> +    maximum: 1590
->> +
->> +  qcom,hs-amplitude-bp:
->> +    description:
->> +      This adjusts the high-speed DC level voltage.
->> +      The values defined are in multiples of basis points (1bp = 0.01%).
->> +      The hardware accepts only discrete values. The value closest to the
->> +      provided input will be chosen as the override value for this param.
->> +    minimum: -660
->> +    maximum: 2670
->> +
->> +  qcom,pre-emphasis-duration-bp:
->> +    description:
->> +      This signal controls the duration for which the
->> +      HS pre-emphasis current is sourced onto DP<#> or DM<#>.
->> +      The HS Transmitter pre-emphasis duration is defined in terms of
->> +      unit amounts. One unit of pre-emphasis duration is approximately
->> +      650 ps and is defined as 1X pre-emphasis duration.
->> +      The values defined are in multiples of basis points (1bp = 0.01%).
->> +      The hardware accepts only discrete values. The value closest to the
->> +      provided input will be chosen as the override value for this param.
->> +    minimum: 10000
->> +    maximum: 20000
->> +
->> +  qcom,pre-emphasis-amplitude-bp:
->> +    description:
->> +      This signal controls the amount of current sourced to
->> +      DP<#> and DM<#> after a J-to-K or K-to-J transition.
->> +      The HS Transmitter pre-emphasis current is defined in terms of unit
->> +      amounts. One unit amount is approximately 2 mA and is defined as
->> +      1X pre-emphasis current.
->> +      The values defined are in multiples of basis points (1bp = 0.01%).
->> +      The hardware accepts only discrete values. The value closest to the
->> +      provided input will be chosen as the override value for this param.
->> +    minimum: 10000
->> +    maximum: 40000
->> +
->> +  qcom,hs-rise-fall-time-bp:
->> +    description:
->> +      This adjusts the rise/fall times of the high-speed waveform.
->> +      The values defined are in multiples of basis points (1bp = 0.01%).
->> +      The hardware accepts only discrete values. The value closest to the
->> +      provided input will be chosen as the override value for this param.
->> +    minimum: -4100
->> +    maximum: 5430
->> +
->> +  qcom,hs-crossover-voltage-microvolt:
->> +    description:
->> +      This adjusts the voltage at which the DP<#> and DM<#>
->> +      signals cross while transmitting in HS mode.
->> +      The values defined are in milli volts.
-> It's not accurate anymore - it's microvolt. I propose to skip this one
-> sentence, because unit is obvious from the type.
+David also needs to SoB here.
 
-Hi Krzysztof,
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
 
-Sure, will omit this line in the next series.
+(...)
 
->> +    maximum: 28000
->> +
->> +  qcom,hs-output-impedance-micro-ohms:
->> +    description:
->> +      In some applications, there can be significant series resistance
->> +      on the D+ and D- paths between the transceiver and cable. This adjusts
->> +      the driver source impedance to compensate for added series
->> +      resistance on the USB. The values defined are in milli ohms.
-> The same. Other places might need similar change.
->
-> Best regards,
-> Krzysztof
+> +$id: http://devicetree.org/schemas/display/msm/hdmi.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Adreno/Snapdragon HDMI output
+> +
+> +maintainers:
+> +  - Rob Clark <robdclark@gmail.com>
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,hdmi-tx-8084
+> +      - qcom,hdmi-tx-8660
+> +      - qcom,hdmi-tx-8960
+> +      - qcom,hdmi-tx-8974
+> +      - qcom,hdmi-tx-8994
+> +      - qcom,hdmi-tx-8996
+> +
+> +  clocks:
+> +    minItems: 1
+> +    maxItems: 5
+> +
+> +  clock-names:
+> +    minItems: 1
+> +    maxItems: 5
+> +
+> +  reg:
+> +    minItems: 1
+> +    maxItems: 3
+> +
+> +  reg-names:
+> +    minItems: 1
+> +    items:
+> +      - const: core_physical
+> +      - const: qfprom_physical
+> +      - const: hdcp_physical
+> +
+> +  interrupts:
+> +    maxItems: 1
+> +
+> +  phys:
+> +    maxItems: 1
+> +
+> +  phy-names:
+> +    enum:
+> +      - hdmi_phy
+> +      - hdmi-phy
 
-Sure, Will make sure to remove the basis points sentence from other 
-params as well as bp has been added to dtschema and is self-explanatory.
+I did not notice your question on v1. I see now two DTS files using two
+different names... yeah, let's mark it deprecated and remove entirely
+from DTS. Let's hope DTS does not have other users than Linux kernel. :)
+
+> +
+> +  core-vdda-supply:
+> +    description: phandle to VDDA supply regulator
+> +
+> +  hdmi-mux-supply:
+> +    description: phandle to mux regulator
+> +
+> +  core-vcc-supply:
+> +    description: phandle to VCC supply regulator
+> +
+
+(...)
+
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,hdmi-phy-8660
+> +      - qcom,hdmi-phy-8960
+> +      - qcom,hdmi-phy-8974
+> +      - qcom,hdmi-phy-8084
+> +
+> +  reg:
+> +    maxItems: 2
+> +
+> +  reg-names:
+> +    items:
+> +      - const: hdmi_phy
+> +      - const: hdmi_pll
+> +
+> +  clocks:
+> +    minItems: 1
+> +    maxItems: 2
+> +
+> +  clock-names:
+> +    minItems: 1
+> +    maxItems: 2
+> +
+> +  power-domains:
+> +    maxItems: 1
+> +
+> +  core-vdda-supply:
+> +    description: phandle to VDDA supply regulator
+
+Blank line
+
+> +  vddio-supply:
+> +    description: phandle to VDD I/O supply regulator
+> +
 
 
-Thanks,
-
-Krishna,
-
+Best regards,
+Krzysztof
