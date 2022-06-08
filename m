@@ -2,99 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9E2C8543EFF
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jun 2022 00:04:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A7119543F08
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jun 2022 00:14:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231620AbiFHWEn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Jun 2022 18:04:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55132 "EHLO
+        id S236200AbiFHWO6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Jun 2022 18:14:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41170 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229463AbiFHWEn (ORCPT
+        with ESMTP id S236504AbiFHWO5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Jun 2022 18:04:43 -0400
-X-Greylist: delayed 1257 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 08 Jun 2022 15:04:40 PDT
-Received: from msg-1.mailo.com (msg-1.mailo.com [213.182.54.11])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6878F1498D7
-        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Jun 2022 15:04:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=mailoo.org; s=mailo;
-        t=1654723379; bh=KIO51oCSFBweuGA1Msu2btlmkDy6vYub6CEmYJxxH4w=;
-        h=X-EA-Auth:Message-ID:Subject:From:To:Cc:Date:In-Reply-To:
-         References:Content-Type:MIME-Version:Content-Transfer-Encoding;
-        b=bDx4yfH5O9J40SpES1cArf5QgrRDpSgNAoMMIwMgccQj4itj658OFVp7qZWAE4hn8
-         L37MVHQNQJUw7/7LYIOpMumOgwfpSQace5VzE1Fr997+iHEXCs/PUxqaBeRUXK4Fok
-         HP3VShc8/msEIa+BU9WcIrqDZUlSISxKaqbfbphI=
-Received: by b-6.in.mailobj.net [192.168.90.16] with ESMTP
-        via proxy.mailoo.org [213.182.55.207]
-        Wed,  8 Jun 2022 23:22:59 +0200 (CEST)
-X-EA-Auth: UhNYjE+10JvU06sCLX4eJVHCBIE9YEmsIEtVZsDiqasF96VM03rc5qtn5aeyRFiRMzJkqxMheEJk4YsHAbGb7Qz2NgE5IfNzzY16N2TzQSw=
-Message-ID: <78f1adee5c6e0c3547c116d0e78fe5b70f9c15e1.camel@mailoo.org>
-Subject: Re: [PATCHv2] iommu/arm-smmu-qcom: Add debug support for TLB sync
- timeouts
-From:   Vincent Knecht <vincent.knecht@mailoo.org>
-To:     Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
-        Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>
-Cc:     iommu@lists.linux-foundation.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, quic_guptap@quicinc.com,
-        Rob Clark <robdclark@chromium.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Date:   Wed, 08 Jun 2022 23:22:58 +0200
-In-Reply-To: <20220526041403.9984-1-quic_saipraka@quicinc.com>
-References: <20220526041403.9984-1-quic_saipraka@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.42.4 (3.42.4-2.fc35) 
+        Wed, 8 Jun 2022 18:14:57 -0400
+Received: from mail-oa1-x36.google.com (mail-oa1-x36.google.com [IPv6:2001:4860:4864:20::36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A59B31512
+        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Jun 2022 15:14:55 -0700 (PDT)
+Received: by mail-oa1-x36.google.com with SMTP id 586e51a60fabf-fb6b4da1dfso11014147fac.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jun 2022 15:14:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to;
+        bh=4+3RQXUOPtCpLvkD/U0erPbjIdgGtkmXEv+DgUOZHBk=;
+        b=kD5nxNFk80W+73EVv5maekxoUggnhB7L4tjOpUL4RRMV5c6rh/qT1Rt1SrPD6LfQi+
+         Spbena1c1XCLUDtW8Sh5BOJhqkJRyiGnBFMLU3M2EgtcdLie4f4a7td17XlNsz7/RUnl
+         PfqlebSOrrHdXbIIVyL4gF+Qo070/pnIZmwd4=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to;
+        bh=4+3RQXUOPtCpLvkD/U0erPbjIdgGtkmXEv+DgUOZHBk=;
+        b=1vBamMtSp5dWJLUrvinL9zNnxFeJxctJ9A1d8nkDALcB23+wCyGDlG1II6GG6bGq0P
+         ZONaAYlgiX9GctACxVrL6dRtK6q665lE3FFSLIDTpu3QZJflAZRM6h6n5KGlmt3qfIrF
+         R5mO65TGoqvqfMlr1AVkokzaPNvpLIBc6Af20aKUQDPNf+j8C9by3MhTMX+xkuLE3VzO
+         MvWbg9Y8NGmnGljZdMcoJVWoRF1Vdfk5IeNKOX2FD+7HoLhU1p9NGQeK0zY1AuBLu1GT
+         mtUD85kXriRUeEa/iHmwhkotfwgwyPC4c42JR8zzkVwrcDPYH/GYrivk8NE/OiqsEsmB
+         sdSg==
+X-Gm-Message-State: AOAM533GY28XUrf9zC/sCEjH6FtQTxpmNSVebsXBwmq+A13MzUtFLyTk
+        tENH8UwuLEcv4w2Cfed2Cxke3E6VFz42AokR1WSEhg==
+X-Google-Smtp-Source: ABdhPJyqsGvOKTE4uunfCR1Mb+T+23hK+RV3b+F13PhuhOCuTw0rP+YUQOmxZHfZGkHHt9+RtkGFHec2aKtLrzEwEeo=
+X-Received: by 2002:a05:6870:b381:b0:fe:2004:b3b5 with SMTP id
+ w1-20020a056870b38100b000fe2004b3b5mr85785oap.63.1654726494871; Wed, 08 Jun
+ 2022 15:14:54 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 8 Jun 2022 15:14:54 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
-        version=3.4.6
+In-Reply-To: <20220607110841.53889-1-linmq006@gmail.com>
+References: <20220607110841.53889-1-linmq006@gmail.com>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date:   Wed, 8 Jun 2022 15:14:54 -0700
+Message-ID: <CAE-0n52aJC_LzT_cYxQXKEpcE58YqCbT7jW0iEaaxtbW9jL4jg@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm/mdp4: Fix refcount leak in mdp4_modeset_init_intf
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        David Heidelberg <david@ixit.cz>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Guo Zhengkui <guozhengkui@vivo.com>,
+        Miaoqian Lin <linmq006@gmail.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Rob Clark <robdclark@gmail.com>, Rob Herring <robh@kernel.org>,
+        Sean Paul <sean@poorly.run>, Xu Wang <vulab@iscas.ac.cn>,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Le jeudi 26 mai 2022 =C3=A0 09:44 +0530, Sai Prakash Ranjan a =C3=A9crit=C2=
-=A0:
-> TLB sync timeouts can be due to various reasons such as TBU power down
-> or pending TCU/TBU invalidation/sync and so on. Debugging these often
-> require dumping of some implementation defined registers to know the
-> status of TBU/TCU operations and some of these registers are not
-> accessible in non-secure world such as from kernel and requires SMC
-> calls to read them in the secure world. So, add this debug support
-> to dump implementation defined registers for TLB sync timeout issues.
->=20
-> Signed-off-by: Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+Quoting Miaoqian Lin (2022-06-07 04:08:38)
+> of_graph_get_remote_node() returns remote device node pointer with
+> refcount incremented, we should use of_node_put() on it
+> when not need anymore.
+> Add missing of_node_put() to avoid refcount leak.
+>
+> Fixes: 86418f90a4c1 ("drm: convert drivers to use of_graph_get_remote_node")
+> Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
 > ---
->=20
-> Changes in v2:
-> =C2=A0* Use scm call consistently so that it works on older chipsets wher=
-e
-> =C2=A0=C2=A0 some of these regs are secure registers.
-> =C2=A0* Add device specific data to get the implementation defined regist=
-er
-> =C2=A0=C2=A0 offsets.
->=20
-> ---
-> =C2=A0drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 161 ++++++++++++++++++=
----
-> =C2=A0drivers/iommu/arm/arm-smmu/arm-smmu.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
- |=C2=A0=C2=A0 2 +
-> =C2=A0drivers/iommu/arm/arm-smmu/arm-smmu.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
- |=C2=A0=C2=A0 1 +
-> =C2=A03 files changed, 146 insertions(+), 18 deletions(-)
 
-Hi Sai, and thanks for this patch !
-
-I've encountered TLB sync timeouts with msm8939 SoC recently.
-What would be needed to add to this patch so this SoC is supported ?
-Like, where could one check the values to be used in an equivalent
-of qcom_smmu_impl0_reg_offset values for this SoC (if any change needed) ?
-Current values are not found by simply greping in downstream/vendor dtsi/dt=
-s files...
-
-
-
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
