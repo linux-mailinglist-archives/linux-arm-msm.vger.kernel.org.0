@@ -2,120 +2,141 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 604DC542DDF
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jun 2022 12:31:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CDD7E542DEC
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jun 2022 12:35:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236801AbiFHKaY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Jun 2022 06:30:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44636 "EHLO
+        id S236459AbiFHKfG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Jun 2022 06:35:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33226 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238251AbiFHK36 (ORCPT
+        with ESMTP id S236929AbiFHKdB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Jun 2022 06:29:58 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5D14197621
-        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Jun 2022 03:22:19 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id y32so32497676lfa.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jun 2022 03:22:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=6MvVCHkA9nZFkLH6XXvcaT5WkDeOWl8XVZeIyd8n1Yk=;
-        b=dI3j/mRiNdhGkN1jqhXgY8EDtTNOmTCI16JzkTM1TUosxY70xD3JQsOqDQdcW47Hd9
-         kSZOlpiT64s4Nm4vc0vwDTBP5WIUtBfLprItEQpkmaNl6WV7ks10CofHpB56V/AI4E0B
-         Mqzf6m/a/hr9JzppmQO5jmbfyveSXxmci2rZQcbtYQg8/XZ8SAm4DUQdEO/Cpu3aUNgl
-         SrI8G0XG2+kmh3W+G3JX1XrUy2pEe1uWC4AYEoALUnEANH4OwqbKgrQCTC3ekHLPrQxt
-         3f0c9ZGwvD9VPiKlLcz49A4z3dgOQp6e5fNmiZexzkFh/uBxyfLZlYL63Hfd6h8Fxse6
-         fc7g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=6MvVCHkA9nZFkLH6XXvcaT5WkDeOWl8XVZeIyd8n1Yk=;
-        b=vCEnUJ1zWK5Wr37MjAAm4cl0UxRfJ+ju1Ah/y7EgeNYS/sKUJ9bnOL8wPMMpidUuY1
-         wSIQ8ZxXe4mbMicHkmjdbjA9SIG7JINThYhoiau0YPGic+Oqbnbas9rBC2+sLAzEMAa0
-         i0Jhco6vsvwI+0MDzNWIvm7Vg82wSsATBhWy6jMiPGO0KKmt7VCuRLurG2YENDUCv6gx
-         tl+SheflujcEBB1n43HlfrowiK10R9Yfh+BEARubJXyZqzNYrpSdxybXBLDNXObFhTBE
-         O+ZXfuDgN37LsqrvZyfofTGrNAERgsjYgPwygR7Z751ahU9q/+nG07UyihMEG7dGsfk+
-         rkOg==
-X-Gm-Message-State: AOAM531qcTaSy4Vsx0D96pDCtCG5/VBVfJDDb18viIRj/nYZAQX92X+7
-        Cn5Z/+akiJsiOmRKSWp9IoUTUQ==
-X-Google-Smtp-Source: ABdhPJwhy+KM30PMbLozabIVJXIRGcRR1c1/GtRpK5IXY5QjX0t8EZQCbYF1rizl20EjyzZuAuCUVA==
-X-Received: by 2002:a05:6512:c18:b0:479:36c1:207a with SMTP id z24-20020a0565120c1800b0047936c1207amr11811458lfu.260.1654683737976;
-        Wed, 08 Jun 2022 03:22:17 -0700 (PDT)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id v1-20020ac25601000000b00478fe3327aasm3642934lfd.217.2022.06.08.03.22.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Jun 2022 03:22:17 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+        Wed, 8 Jun 2022 06:33:01 -0400
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 107FB1C4203;
+        Wed,  8 Jun 2022 03:25:59 -0700 (PDT)
+Received: from [192.168.1.100] (2-237-20-237.ip236.fastwebnet.it [2.237.20.237])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (No client certificate requested)
+        (Authenticated sender: kholk11)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id 246C0660181B;
+        Wed,  8 Jun 2022 11:25:47 +0100 (BST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1654683948;
+        bh=CbCEHZf0MESeLkAV+KaRIb58SJLwsWDBEd1XfSKloiU=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+        b=JL6CAQRzPNxS11sdv1lqG3+jYQQBX0szDXfzGlqNeAmSTxcSN4hrnxHXiJK4TI/5o
+         4lG3gsRwQhONwG+w5NxnfRzA+cI5lF3VjstoVw0s3HPCKYvYr7kER2ucKauN9+qgMT
+         mTsntlQDlE0JrPQUTJURaOqHDSkyIi90kFHMkUae1FEGncdiXfftKujwqhZzPtMcGC
+         hldbDeeSFn1Hvs5EIWixyoS9jStUbJyl1AVxxnbAxcZhEJiSgkRbwBUWK0306fSYfO
+         mWuaO/tU/mF4L7Eqymam34ABQMq66ZhWoW9r442GAmDfk2QCk2U4rXjVa10NTpdz0t
+         8aV3MpGHtXuKQ==
+Message-ID: <4f6f1ec4-2c68-5446-e0e0-85e1631a84cf@collabora.com>
+Date:   Wed, 8 Jun 2022 12:25:44 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.0
+Subject: Re: [PATCH 1/6] iommu/qcom: Use the asid read from device-tree if
+ specified
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Clark <robdclark@gmail.com>, Will Deacon <will@kernel.org>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
+        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
+        <linux-arm-kernel@lists.infradead.org>,
+        "list@263.net:IOMMU DRIVERS" <iommu@lists.linux-foundation.org>,
+        Joerg Roedel <joro@8bytes.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        jamipkettunen@somainline.org, Andy Gross <agross@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
-        Johan Hovold <johan@kernel.org>, Rob Herring <robh@kernel.org>
-Subject: [PATCH v14 7/7] PCI: qcom: Revert "PCI: qcom: Add support for handling MSIs from 8 endpoints"
-Date:   Wed,  8 Jun 2022 13:22:08 +0300
-Message-Id: <20220608102208.2967438-8-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220608102208.2967438-1-dmitry.baryshkov@linaro.org>
-References: <20220608102208.2967438-1-dmitry.baryshkov@linaro.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        Robin Murphy <robin.murphy@arm.com>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+References: <20220527212901.29268-1-konrad.dybcio@somainline.org>
+ <20220527212901.29268-2-konrad.dybcio@somainline.org>
+ <20220531154631.GA25502@willie-the-truck>
+ <CAF6AEGsWsHfQZnszG=NgP0BufxO-DP4LwvsAYkrz2wRhcJuOXw@mail.gmail.com>
+ <20220531161910.GE25502@willie-the-truck>
+ <CAF6AEGvF+5mf6jE9Xac1qR9P+-=ELLu_LzoJhUV-Dx2RYH20Ag@mail.gmail.com>
+ <6efeafbc-d366-bddd-faa4-4359f3a56f4a@somainline.org>
+From:   AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>
+In-Reply-To: <6efeafbc-d366-bddd-faa4-4359f3a56f4a@somainline.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-I have replied with my Tested-by to the patch at [2], which has landed
-in the linux-next as the commit 20f1bfb8dd62 ("PCI: qcom:
-Add support for handling MSIs from 8 endpoints"). However lately I
-noticed that during the tests I still had 'pcie_pme=nomsi', so the
-device was not forced to use higher MSI vectors.
+Il 03/06/22 20:03, Konrad Dybcio ha scritto:
+> 
+> 
+> On 31.05.2022 22:57, Rob Clark wrote:
+>> On Tue, May 31, 2022 at 9:19 AM Will Deacon <will@kernel.org> wrote:
+>>>
+>>> On Tue, May 31, 2022 at 09:15:22AM -0700, Rob Clark wrote:
+>>>> On Tue, May 31, 2022 at 8:46 AM Will Deacon <will@kernel.org> wrote:
+>>>>>
+>>>>> On Fri, May 27, 2022 at 11:28:56PM +0200, Konrad Dybcio wrote:
+>>>>>> From: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+>>>>>>
+>>>>>> As specified in this driver, the context banks are 0x1000 apart.
+>>>>>> Problem is that sometimes the context number (our asid) does not
+>>>>>> match this logic and we end up using the wrong one: this starts
+>>>>>> being a problem in the case that we need to send TZ commands
+>>>>>> to do anything on a specific context.
+>>>>>
+>>>>> I don't understand this. The ASID is a software construct, so it shouldn't
+>>>>> matter what we use. If it does matter, then please can you explain why? The
+>>>>> fact that the context banks are 0x1000 apart seems unrelated.
+>>>>
+>>>> I think the connection is that mapping from ctx bank to ASID is 1:1
+>>>
+>>> But in what sense? How is the ASID used beyond a tag in the TLB? The commit
+>>> message hints at "TZ commands" being a problem.
+>>>
+>>> I'm not doubting that this is needed to make the thing work, I just don't
+>>> understand why.
+>>
+>> (disclaimer, it has been quite a while since I've looked at the smmu
+>> setup with earlier tz, ie. things that use qcom_iommu, but from
+>> memory...)
+>>
+>> We cannot actually assign the context banks ourselves, so in the dt
+>> bindings the "ASID" is actually the context bank index.
+> I think so.
+> 
+>    I don't
+>> remember exactly if this was a limitation of the tz interface, or
+>> result of not being able to program the smmu's global registers
+>> ourselves.
+> 
+> As far as I understand, it's the latter, as changing the defaults is not allowed by the security policy on consumer devices.
+> 
+> Qualcomm arbitrarily chose some numbers that may or may have not aligned with their usual index-is-offset-divided-by-0x1000 and hardcoded them in the BSP, and now the secure side (if required, and well, it is..) expects precisely that configuration.
+> 
+> 
+> Konrad
+> 
 
-After removing this option I noticed that high MSI vectors are not
-delivered on tested platforms. Additional research pointed to
-a patch in msm-4.14 ([1]), which describes that each group of MSI
-vectors is mapped to the separate interrupt.
+I can confirm that it's the latter, as described by Konrad.
+The inability of programming the global registers from Linux is due to the
+hypervisor disallowing that (in different ways depending on the SoC's firmware
+but with the same outcome: AP reset by HYP).
 
-Without these changes specifying num_vectors can lead to missing MSI
-interrupts and thus to devices malfunction.
-
-[1] https://git.codelinaro.org/clo/la/kernel/msm-4.14/-/commit/671a3d5f129f4bfe477152292ada2194c8440d22
-[2] https://lore.kernel.org/linux-arm-msm/20211214101319.25258-1-manivannan.sadhasivam@linaro.org/
-
-Fixes: 20f1bfb8dd62 ("PCI: qcom: Add support for handling MSIs from 8 endpoints")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Rob Herring <robh@kernel.org>
----
- drivers/pci/controller/dwc/pcie-qcom.c | 1 -
- 1 file changed, 1 deletion(-)
-
-diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-index 8523b5ef9d16..2ea13750b492 100644
---- a/drivers/pci/controller/dwc/pcie-qcom.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom.c
-@@ -1592,7 +1592,6 @@ static int qcom_pcie_probe(struct platform_device *pdev)
- 	pci->dev = dev;
- 	pci->ops = &dw_pcie_ops;
- 	pp = &pci->pp;
--	pp->num_vectors = MAX_MSI_IRQS;
- 
- 	pcie->pci = pci;
- 
--- 
-2.35.1
-
+Cheers,
+Angelo
