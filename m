@@ -2,64 +2,369 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E3C86542BB8
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jun 2022 11:42:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C28BC542A19
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jun 2022 10:57:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235257AbiFHJlu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Jun 2022 05:41:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45186 "EHLO
+        id S233250AbiFHI5t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Jun 2022 04:57:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45512 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234815AbiFHJl1 (ORCPT
+        with ESMTP id S232623AbiFHI5F (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Jun 2022 05:41:27 -0400
-X-Greylist: delayed 1820 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 08 Jun 2022 02:08:43 PDT
-Received: from mail.puregrowthonline.pl (mail.puregrowthonline.pl [51.38.124.91])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0BD2513F405
-        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Jun 2022 02:08:42 -0700 (PDT)
-Received: by mail.puregrowthonline.pl (Postfix, from userid 1002)
-        id 5758BA288F; Wed,  8 Jun 2022 08:10:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=puregrowthonline.pl;
-        s=mail; t=1654675816;
-        bh=CSKXLMgcdpWkXuTgJn5+jsCVobtU9JEF4vCnS5z6McM=;
-        h=Date:From:To:Subject:From;
-        b=Qnl/lpnNq2CnFr+4pjN5p0JGeqBOIgFU8SOkUh0H14EWDorpWdV3MAp3svNKSm48y
-         /n2+80grbur/MqnXHk7X9+xrD3CCjxYaGydvZG7oOMB9poMtrBZr8Sz+rl+GI+NfK+
-         9i2UV6zDzQPMxmAyA94U2lUiNb/Ikok9kcABBQx1KwJJuHf3QECd2ADzzEbJlihILN
-         8PELfdL8it1AToMiu6p0+UMYW//1Hw/5CAPMWm8B4mKzlQAgvnPBX0uzC0ptLThvbg
-         NBYFEAl2Ppw1wSkYP9fBWzisNxZgWBBy60XeoiBU2kAd+HZkNmUo6cji/h6WyVdR3M
-         JxZ6i7+i/EDqQ==
-Received: by mail.puregrowthonline.pl for <linux-arm-msm@vger.kernel.org>; Wed,  8 Jun 2022 08:10:14 GMT
-Message-ID: <20220608064500-0.1.41.cyac.0.bzcy625e2f@puregrowthonline.pl>
-Date:   Wed,  8 Jun 2022 08:10:14 GMT
-From:   "Wiktor Nurek" <wiktor.nurek@puregrowthonline.pl>
-To:     <linux-arm-msm@vger.kernel.org>
-Subject: =?UTF-8?Q?Nap=C5=82yw_Klient=C3=B3w_ze_strony?=
-X-Mailer: mail.puregrowthonline.pl
+        Wed, 8 Jun 2022 04:57:05 -0400
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DBE213AA9F0
+        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Jun 2022 01:18:14 -0700 (PDT)
+Received: by mail-ed1-x531.google.com with SMTP id h19so26057184edj.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jun 2022 01:18:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=lJu7f90/17ENJHeOodBXtuPNJTJFwuBT63hP1IT/OVM=;
+        b=URFGorMQpl7AiTcT3K116o61q9Gw1Y7xbs78/Alh1ddhW11RceAO4V1vXAGLgvAOo3
+         vTkyPvv6PixhUafKVvDPwTFWLsodkgkdeRV+0+jFbNFA84vmZoYWCV6KEFIjMXbMPSNH
+         gSZN0INIfu1cMqJXbOi4rTRsloGUfW66DDjejdAVAislEBy0PAynv4Z83ZJkRdN8K+JM
+         0obFFCuI4Fia/umvnbxgdQTe5Y4rbG6y6CX3LFqH7JNIo260JFq2BG1iszyRjKSYfbbT
+         Vyv4AiBeCF+955lwvB3K+a6CM9WUW4fwylQbgfOnZ2d2QiB1ehBa9Rgfvw55HwvU4JcZ
+         RGQg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=lJu7f90/17ENJHeOodBXtuPNJTJFwuBT63hP1IT/OVM=;
+        b=mW8D5HKRefAEFWmY19xPiWSCjSKrGgPKyibKiCR0o7URJygsN3507jcBvycXda7CIt
+         yz+BeEe2elbEIa4gTky1oI8eYg/nGNPEX0E2Z0i7C1LgPV7Wf6SXZaoHP5WSFgLfR7GP
+         fEJMKMgzkXohdjr+p55/gqeTWIJcxuXVallc6sOPXgFu1YVjXD/fCvFe7zGbhYVSPG8U
+         5YAFdCC0E2/5Ci0SeK//d9XqxlbwaxHULvfJZwzBTDQI91fkpmr4cwjqOUg7jflixNZ1
+         GBX2Kkw/1R54Y23lzb4GHidw7GtkuxoTHvrwmZ50pFk6JutuE0IHKv/bZfhE1Qt+AIGh
+         +IpA==
+X-Gm-Message-State: AOAM531mtP5AgLE7pFaAMC3kcXR9Ughy6ZZ30dUXTVmLBDf32GvvxmVp
+        b+0mN7DwVMrcG7HfAGBjrgLsqA==
+X-Google-Smtp-Source: ABdhPJxnCzCjUnvhxXYiotWtcKQPuPZvHbxx4DCOkLs+hjD7cVT2yw+SkYky4cMjJ5JGiQe7NhFbQw==
+X-Received: by 2002:aa7:db02:0:b0:42d:c3ba:9c86 with SMTP id t2-20020aa7db02000000b0042dc3ba9c86mr37852819eds.337.1654676284100;
+        Wed, 08 Jun 2022 01:18:04 -0700 (PDT)
+Received: from [192.168.0.189] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id l1-20020a1709060e0100b006fec4ee28d0sm7301486eji.189.2022.06.08.01.18.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 08 Jun 2022 01:18:03 -0700 (PDT)
+Message-ID: <79443fb4-5c09-a33f-594d-71ac93cc0317@linaro.org>
+Date:   Wed, 8 Jun 2022 10:18:02 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: Re: [PATCH 2/4] arm64: dts: qcom: add SC8280XP platform
+Content-Language: en-US
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Manivannan Sadhasivam <mani@kernel.org>
+Cc:     Jassi Brar <jassisinghbrar@gmail.com>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20220607214113.4057684-1-bjorn.andersson@linaro.org>
+ <20220607214113.4057684-3-bjorn.andersson@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220607214113.4057684-3-bjorn.andersson@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Dzie=C5=84 dobry,
+On 07/06/2022 23:41, Bjorn Andersson wrote:
+> Introduce initial support for the Qualcomm SC8280XP platform, aka 8cx
+> Gen 3. This initial contribution supports SMP, CPUfreq, CPU cluster
+> idling, GCC, TLMM, SMMU, RPMh regulators, power-domains and clocks,
+> interconnects, some QUPs, UFS, remoteprocs, USB, watchdog, LLCC and
+> tsens.
+> 
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 2195 ++++++++++++++++++++++++
+>  1 file changed, 2195 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> new file mode 100644
+> index 000000000000..4143813643ad
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> @@ -0,0 +1,2195 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * Copyright (c) 2021, The Linux Foundation. All rights reserved.
+> + * Copyright (c) 2022, Linaro Limited
+> + */
+> +
+> +#include <dt-bindings/clock/qcom,gcc-sc8280xp.h>
+> +#include <dt-bindings/clock/qcom,rpmh.h>
+> +#include <dt-bindings/interrupt-controller/arm-gic.h>
+> +#include <dt-bindings/interconnect/qcom,sc8280xp.h>
+> +#include <dt-bindings/mailbox/qcom-ipcc.h>
+> +#include <dt-bindings/power/qcom-rpmpd.h>
+> +#include <dt-bindings/soc/qcom,rpmh-rsc.h>
+> +#include <dt-bindings/thermal/thermal.h>
+> +
+> +/ {
+> +	interrupt-parent = <&intc>;
+> +
+> +	#address-cells = <2>;
+> +	#size-cells = <2>;
+> +
+> +	clocks {
+> +		xo_board: xo-board {
 
-chcia=C5=82bym poinformowa=C4=87 Pa=C5=84stwa o mo=C5=BCliwo=C5=9Bci pozy=
-skania nowych zlece=C5=84 ze strony www.
+xo-board-clk
 
-Widzimy zainteresowanie potencjalnych Klient=C3=B3w Pa=C5=84stwa firm=C4=85=
-, dlatego ch=C4=99tnie pomo=C5=BCemy Pa=C5=84stwu dotrze=C4=87 z ofert=C4=
-=85 do wi=C4=99kszego grona odbiorc=C3=B3w poprzez efektywne metody pozyc=
-jonowania strony w Google.
+> +			compatible = "fixed-clock";
+> +			#clock-cells = <0>;
+> +			clock-frequency = <38400000>;
 
-Czy m=C3=B3g=C5=82bym liczy=C4=87 na kontakt zwrotny?
+The clock is probably on the board, so the frequency should be rather
+defined in DTS.
 
+> +		};
+> +
+> +		sleep_clk: sleep-clk {
+> +			compatible = "fixed-clock";
+> +			#clock-cells = <0>;
+> +			clock-frequency = <32764>;
+> +		};
+> +	};
 
-Pozdrawiam serdecznie,
-Wiktor Nurek
+(...)
+
+> +
+> +		qup1: geniqup@ac0000 {
+> +			compatible = "qcom,geni-se-qup";
+> +			reg = <0 0x00ac0000 0 0x6000>;
+> +			clocks = <&gcc GCC_QUPV3_WRAP_1_M_AHB_CLK>,
+> +				 <&gcc GCC_QUPV3_WRAP_1_S_AHB_CLK>;
+> +			clock-names = "m-ahb", "s-ahb";
+> +			iommus = <&apps_smmu 0x83 0>;
+> +
+> +			#address-cells = <2>;
+> +			#size-cells = <2>;
+> +			ranges;
+> +
+> +			status = "disabled";
+> +		};
+> +
+> +		ufs_mem_hc: ufshc@1d84000 {
+
+Just "ufs" as node name.
+
+> +			compatible = "qcom,sc8280xp-ufshc", "qcom,ufshc",
+> +				     "jedec,ufs-2.0";
+> +			reg = <0 0x01d84000 0 0x3000>;
+> +			interrupts = <GIC_SPI 265 IRQ_TYPE_LEVEL_HIGH>;
+> +			phys = <&ufs_mem_phy_lanes>;
+> +			phy-names = "ufsphy";
+> +			lanes-per-direction = <2>;
+> +			#reset-cells = <1>;
+> +			resets = <&gcc GCC_UFS_PHY_BCR>;
+> +			reset-names = "rst";
+> +
+> +			power-domains = <&gcc UFS_PHY_GDSC>;
+> +			required-opps = <&rpmhpd_opp_nom>;
+> +
+> +			iommus = <&apps_smmu 0xe0 0x0>;
+> +
+> +			clocks = <&gcc GCC_UFS_PHY_AXI_CLK>
+> +				 <&gcc GCC_AGGRE_UFS_PHY_AXI_CLK>,
+> +				 <&gcc GCC_UFS_PHY_AHB_CLK>,
+> +				 <&gcc GCC_UFS_PHY_UNIPRO_CORE_CLK>,
+> +				 <&rpmhcc RPMH_CXO_CLK>,
+> +				 <&gcc GCC_UFS_PHY_TX_SYMBOL_0_CLK>,
+> +				 <&gcc GCC_UFS_PHY_RX_SYMBOL_0_CLK>,
+> +				 <&gcc GCC_UFS_PHY_RX_SYMBOL_1_CLK>;
+> +			clock-names = "core_clk",
+> +				      "bus_aggr_clk",
+> +				      "iface_clk",
+> +				      "core_clk_unipro",
+> +				      "ref_clk",
+> +				      "tx_lane0_sync_clk",
+> +				      "rx_lane0_sync_clk",
+> +				      "rx_lane1_sync_clk";
+> +			freq-table-hz = <75000000 300000000>,
+> +					<0 0>,
+> +					<0 0>,
+> +					<75000000 300000000>,
+> +					<0 0>,
+> +					<0 0>,
+> +					<0 0>,
+> +					<0 0>;
+> +			status = "disabled";
+> +		};
+> +
+> +		ufs_mem_phy: phy@1d87000 {
+> +			compatible = "qcom,sc8280xp-qmp-ufs-phy";
+> +			reg = <0 0x01d87000 0 0xe10>;
+> +			#address-cells = <2>;
+> +			#size-cells = <2>;
+> +			ranges;
+> +			clock-names = "ref",
+> +				      "ref_aux";
+> +			clocks = <&rpmhcc RPMH_CXO_CLK>,
+> +				 <&gcc GCC_UFS_PHY_PHY_AUX_CLK>;
+> +
+> +			resets = <&ufs_mem_hc 0>;
+> +			reset-names = "ufsphy";
+> +			status = "disabled";
+> +
+> +			ufs_mem_phy_lanes: phy@1d87400 {
+> +				reg = <0 0x01d87400 0 0x108>,
+> +				      <0 0x01d87600 0 0x1e0>,
+> +				      <0 0x01d87c00 0 0x1dc>,
+> +				      <0 0x01d87800 0 0x108>,
+> +				      <0 0x01d87a00 0 0x1e0>;
+> +				#phy-cells = <0>;
+> +				#clock-cells = <0>;
+> +			};
+> +		};
+> +
+> +		ufs_card_hc: ufshc@1da4000 {
+
+node name: ufs
+
+> +			compatible = "qcom,sc8280xp-ufshc", "qcom,ufshc",
+> +				     "jedec,ufs-2.0";
+> +			reg = <0 0x01da4000 0 0x3000>;
+> +			interrupts = <GIC_SPI 125 IRQ_TYPE_LEVEL_HIGH>;
+> +			phys = <&ufs_card_phy_lanes>;
+> +			phy-names = "ufsphy";
+> +			lanes-per-direction = <2>;
+> +			#reset-cells = <1>;
+> +			resets = <&gcc GCC_UFS_CARD_BCR>;
+> +			reset-names = "rst";
+> +
+> +			power-domains = <&gcc UFS_CARD_GDSC>;
+> +
+> +			iommus = <&apps_smmu 0x4a0 0x0>;
+> +
+> +			clocks = <&gcc GCC_UFS_CARD_AXI_CLK>,
+> +				 <&gcc GCC_AGGRE_UFS_CARD_AXI_CLK>,
+> +				 <&gcc GCC_UFS_CARD_AHB_CLK>,
+> +				 <&gcc GCC_UFS_CARD_UNIPRO_CORE_CLK>,
+> +				 <&rpmhcc RPMH_CXO_CLK>,
+> +				 <&gcc GCC_UFS_CARD_TX_SYMBOL_0_CLK>,
+> +				 <&gcc GCC_UFS_CARD_RX_SYMBOL_0_CLK>,
+> +				 <&gcc GCC_UFS_CARD_RX_SYMBOL_1_CLK>;
+> +			clock-names = "core_clk",
+> +				      "bus_aggr_clk",
+> +				      "iface_clk",
+> +				      "core_clk_unipro",
+> +				      "ref_clk",
+> +				      "tx_lane0_sync_clk",
+> +				      "rx_lane0_sync_clk",
+> +				      "rx_lane1_sync_clk";
+> +			freq-table-hz = <75000000 300000000>,
+> +					<0 0>,
+> +					<0 0>,
+> +					<75000000 300000000>,
+> +					<0 0>,
+> +					<0 0>,
+> +					<0 0>,
+> +					<0 0>;
+> +			status = "disabled";
+> +		};
+> +
+> +		ufs_card_phy: phy@1da7000 {
+> +			compatible = "qcom,sc8280xp-qmp-ufs-phy";
+> +			reg = <0 0x01da7000 0 0xe10>;
+> +			#address-cells = <2>;
+> +			#size-cells = <2>;
+> +			ranges;
+> +			clock-names = "ref",
+> +				      "ref_aux";
+> +			clocks = <&gcc GCC_UFS_1_CARD_CLKREF_CLK>,
+> +				 <&gcc GCC_UFS_CARD_PHY_AUX_CLK>;
+> +
+> +			resets = <&ufs_card_hc 0>;
+> +			reset-names = "ufsphy";
+> +			status = "disabled";
+> +
+> +			ufs_card_phy_lanes: phy@1da7400 {
+> +				reg = <0 0x01da7400 0 0x108>,
+> +				      <0 0x01da7600 0 0x1e0>,
+> +				      <0 0x01da7c00 0 0x1dc>,
+> +				      <0 0x01da7800 0 0x108>,
+> +				      <0 0x01da7a00 0 0x1e0>;
+> +				#phy-cells = <0>;
+> +				#clock-cells = <0>;
+> +			};
+> +		};
+> +
+> +		tcsr_mutex: hwlock@1f40000 {
+> +			compatible = "qcom,tcsr-mutex";
+> +			reg = <0x0 0x01f40000 0x0 0x20000>;
+> +			#hwlock-cells = <1>;
+> +		};
+> +
+> +		usb_0_hsphy: phy@88e5000 {
+> +			compatible = "qcom,sc8280xp-usb-hs-phy",
+> +				     "qcom,usb-snps-hs-5nm-phy";
+> +			reg = <0 0x088e5000 0 0x400>;
+> +			status = "disabled";
+
+status goes to the end
+
+> +			#phy-cells = <0>;
+> +
+> +			clocks = <&gcc GCC_USB2_HS0_CLKREF_CLK>;
+> +			clock-names = "ref";
+> +
+> +			resets = <&gcc GCC_QUSB2PHY_PRIM_BCR>;
+> +		};
+> +
+> +		usb_2_hsphy0: phy@88e7000 {
+> +			compatible = "qcom,sc8280xp-usb-hs-phy",
+> +				     "qcom,usb-snps-hs-5nm-phy";
+> +			reg = <0 0x088e7000 0 0x400>;
+> +			status = "disabled";
+
+ditto
+
+> +			#phy-cells = <0>;
+> +
+> +			clocks = <&gcc GCC_USB2_HS0_CLKREF_CLK>;
+> +			clock-names = "ref";
+> +
+> +			resets = <&gcc GCC_QUSB2PHY_HS0_MP_BCR>;
+> +		};
+> +
+> +		usb_2_hsphy1: phy@88e8000 {
+> +			compatible = "qcom,sc8280xp-usb-hs-phy",
+> +				     "qcom,usb-snps-hs-5nm-phy";
+> +			reg = <0 0x088e8000 0 0x400>;
+> +			status = "disabled";
+
+ditto
+
+> +			#phy-cells = <0>;
+> +
+> +			clocks = <&gcc GCC_USB2_HS1_CLKREF_CLK>;
+> +			clock-names = "ref";
+> +
+> +			resets = <&gcc GCC_QUSB2PHY_HS1_MP_BCR>;
+> +		};
+> +
+> +		usb_2_hsphy2: phy@88e9000 {
+> +			compatible = "qcom,sc8280xp-usb-hs-phy",
+> +				     "qcom,usb-snps-hs-5nm-phy";
+> +			reg = <0 0x088e9000 0 0x400>;
+> +			status = "disabled";
+
+ditto and so on
+
+Best regards,
+Krzysztof
