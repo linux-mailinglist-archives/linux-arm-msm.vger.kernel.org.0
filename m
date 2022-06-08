@@ -2,55 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1165F543D63
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jun 2022 22:10:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 585A1543D85
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jun 2022 22:24:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232789AbiFHUKl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Jun 2022 16:10:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55958 "EHLO
+        id S231506AbiFHUY2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Jun 2022 16:24:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37564 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234374AbiFHUKi (ORCPT
+        with ESMTP id S230470AbiFHUY1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Jun 2022 16:10:38 -0400
+        Wed, 8 Jun 2022 16:24:27 -0400
 Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 250F8CFE25;
-        Wed,  8 Jun 2022 13:10:37 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5715915A3D8;
+        Wed,  8 Jun 2022 13:24:26 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id DBE52B82AC3;
-        Wed,  8 Jun 2022 20:10:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C6CDC34116;
-        Wed,  8 Jun 2022 20:10:33 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 9FF8AB82ACF;
+        Wed,  8 Jun 2022 20:24:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FDDAC34116;
+        Wed,  8 Jun 2022 20:24:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1654719034;
-        bh=+v8of3jnjnzn/h3EdB5DuPrm891S4ZFc92BTLhZg5Uo=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=XzrvHbZXcBsUfSmbukPLZVcboumF7O1BRQcUcRNrRxYjblR41PkW2HI7krp3F3dCL
-         N2yigY+0av3SJEbgzrZtIIoZjs0TFdKt/2cYl0Lal/KfuHfEVqld1bkhNrNwnnhHwT
-         Xd7QguRA8B5z908kWOKl3AOZqrfgUHLZOmKwsAPYySsQUtIIkZBi3nBKDUePLhDWad
-         nKz+rTi6ug2G8E8r//q5BKmN7zskWYKX+nZ20zedJB08nX+PmsiALEc44vixNdAYZR
-         h9DFdFJrkEaCVGgMwg23BucB5nfDnj6u78SicDXQiVCBiithRHyz9S09PXFvKYED3J
-         twH/ZciSdDfkA==
-Date:   Wed, 8 Jun 2022 22:10:31 +0200
-From:   Wolfram Sang <wsa@kernel.org>
-To:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Cc:     Loic Poulain <loic.poulain@linaro.org>,
-        Robert Foss <robert.foss@linaro.org>,
-        linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2] i2c: qcom-cci: simplify access to bus data structure
-Message-ID: <YqECN6yz3aWhZ/xC@kunai>
-Mail-Followup-To: Wolfram Sang <wsa@kernel.org>,
-        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Robert Foss <robert.foss@linaro.org>, linux-i2c@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-References: <20220602165258.2247056-1-vladimir.zapolskiy@linaro.org>
+        s=k20201202; t=1654719863;
+        bh=kjulfUSLLMXAENNBuRnDb2ttG1bjGhev/8nPL0ukd74=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:From;
+        b=Tj82SFOEBNhE2C99Z3s8glLZg5Va/8Cv4lQtee1XdyPOMUb9RuyCumchv0GXMjW7p
+         JpGMGfKwoE1c6gEhf24mZksjoCU9iMMtC9u99/Xfg2rPeVrfQiQOjy7Os+WDAKoLg7
+         Y/jNwAETXYr1edF430gwK6G04XgUXz1ho9ylWCT+sTT91WrJWmBzCt46wTIOXsRnKE
+         2R0khovDUQtfXUmjvnBjlTLJTlB3wOLwcyQRncSRzoLHbtv3gHdOrUbTqfoSNyqC5D
+         OhRL4RTQrqspVbJrSdkVHs0zS6i/2xvFRFKU6ju6UrRXbZ6ZXCBXbvHEb2xlzj4JDv
+         UmKIF5Hio4pug==
+Date:   Wed, 8 Jun 2022 15:24:20 -0500
+From:   Bjorn Helgaas <helgaas@kernel.org>
+To:     Robert Marko <robert.marko@sartura.hr>
+Cc:     Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Baruch Siach <baruch@tkos.co.il>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Selvam Sathappan Periakaruppan <speriaka@codeaurora.org>,
+        Kathiravan T <kathirav@codeaurora.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Bryan O'Donoghue <pure.logic@nexus-software.ie>,
+        linux-pci@vger.kernel.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-tegra@vger.kernel.org,
+        Stanimir Varbanov <svarbanov@mm-sol.com>
+Subject: Re: [PATCH v6 0/3] PCI: IPQ6018 platform support
+Message-ID: <20220608202420.GA418223@bhelgaas>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="klSzXGj72fUoifiF"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220602165258.2247056-1-vladimir.zapolskiy@linaro.org>
+In-Reply-To: <CA+HBbNFo9QCExiA9T4Mn4t5vvir79xF3R9F6OLZa0m5Bzpte3w@mail.gmail.com>
 X-Spam-Status: No, score=-8.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -61,39 +69,102 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+[+cc Stanimir, beginning of thread at
+https://lore.kernel.org/r/cover.1644234441.git.baruch@tkos.co.il]
 
---klSzXGj72fUoifiF
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Tue, Jun 07, 2022 at 03:12:19PM +0200, Robert Marko wrote:
+> On Wed, May 11, 2022 at 4:03 PM Lorenzo Pieralisi
+> <lorenzo.pieralisi@arm.com> wrote:
+> >
+> > On Tue, Apr 12, 2022 at 05:12:59PM +0100, Lorenzo Pieralisi wrote:
+> > > On Mon, Feb 07, 2022 at 04:51:23PM +0200, Baruch Siach wrote:
+> > > > This series adds support for the single PCIe lane on IPQ6018 SoCs. The code is
+> > > > ported from downstream Codeaurora v5.4 kernel. The main difference from
+> > > > downstream code is the split of PCIe registers configuration from .init to
+> > > > .post_init, since it requires phy_power_on().
+> > > >
+> > > > Tested on IPQ6010 based hardware.
+> > > >
+> > > > Changes in v6:
+> > > >
+> > > >   * Drop DT patch applied to the qcom tree
+> > > >
+> > > >   * Normalize driver changes subject line
+> > > >
+> > > >   * Add a preparatory patch to rename PCIE_CAP_LINK1_VAL to PCIE_CAP_SLOT_VAL,
+> > > >     and define it using PCI_EXP_SLTCAP_* macros
+> > > >
+> > > >   * Drop a vague comment about ASPM configuration
+> > > >
+> > > >   * Add a comment about the source of delay periods
+> > > >
+> > > > Changes in v5:
+> > > >
+> > > >   * Remove comments from qcom_pcie_init_2_9_0() (Bjorn Andersson)
+> > > >
+> > > > Changes in v4:
+> > > >
+> > > >   * Drop applied DT bits
+> > > >
+> > > >   * Add max-link-speed that was missing from the applied v2 patch
+> > > >
+> > > >   * Rebase the driver on v5.16-rc3
+> > > >
+> > > > Changes in v3:
+> > > >
+> > > >   * Drop applied patches
+> > > >
+> > > >   * Rely on generic code for speed setup
+> > > >
+> > > >   * Drop unused macros
+> > > >
+> > > >   * Formatting fixes
+> > > >
+> > > > Changes in v2:
+> > > >
+> > > >   * Add patch moving GEN3_RELATED macros to a common header
+> > > >
+> > > >   * Drop ATU configuration from pcie-qcom
+> > > >
+> > > >   * Remove local definition of common registers
+> > > >
+> > > >   * Use bulk clk and reset APIs
+> > > >
+> > > >   * Remove msi-parent from device-tree
+> > > >
+> > > > Baruch Siach (2):
+> > > >   PCI: dwc: tegra: move GEN3_RELATED DBI register to common header
+> > > >   PCI: qcom: Define slot capabilities using PCI_EXP_SLTCAP_*
+> > > >
+> > > > Selvam Sathappan Periakaruppan (1):
+> > > >   PCI: qcom: Add IPQ60xx support
+> > > >
+> > > >  drivers/pci/controller/dwc/pcie-designware.h |   7 +
+> > > >  drivers/pci/controller/dwc/pcie-qcom.c       | 155 ++++++++++++++++++-
+> > > >  drivers/pci/controller/dwc/pcie-tegra194.c   |   6 -
+> > > >  3 files changed, 160 insertions(+), 8 deletions(-)
+> > >
+> > > Hi Bjorn, Andy,
+> > >
+> > > any feedback on this series please ?
+> >
+> > Any feedback on these patches please ?
+> 
+> Finally dug the CP01, and for me, it works, so:
+> Tested-by: Robert Marko <robert.marko@sartura.hr>
 
-On Thu, Jun 02, 2022 at 07:52:58PM +0300, Vladimir Zapolskiy wrote:
-> Trivial non-functional change, which adds an alias to an extensively
-> used data location.
->=20
-> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+This mainly affects pcie-qcom.c, so it looks like Stanimir should have
+been copied on this, but wasn't.  Please include him on the next
+iteration.
 
-Applied to for-next, thanks!
+This will also need to be updated to apply on v5.19-rc1:
 
-
---klSzXGj72fUoifiF
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmKhAjYACgkQFA3kzBSg
-KbZOsxAAlAAx0jKzW5KjP3Y49MujRkuXNzwRfn1bccx26SFqENJjmndNwU+bBO1N
-xuoc6RokENklz8CglMFBTk5Cgm7J0MLpZqG3t7SdpiUjI6CmdzmE+bdNOy7w56Sh
-YaWZbRrCie4pzgP68dnlkxv7HCojzXy6s8bk4OS3RBPwuk0acSqiRaGXIbOuC3gu
-KZAXmanbqSbroEqpPs2RgQ92yLn3GjPxr9IFNyRJY7AO9orU5Bg4Q9i/b5DgFHGF
-n6AEMepORkKTtbPnrIyz961G8CCFkRRe7/For74k/LgO1YBfnaLZ5EBpXYTsbvWG
-3DhIy4b/v5fHP+TMo94CXBH/TTmoXME+FFS1WQNpjPLsEhlIop+f7+bQSHcvKFEI
-Vv0s2EEA80td3StLcxS9GPHc/nERCivyZtfGpk5RRcyM0cp8gWN6j/ue9zsA/NzF
-fJsnAqow14gXSZCALwuXKW+DyuhOT+jPAlJpriAAMDNAl1ElfFzQcbAX+xiKttuZ
-OekW86SH/AhSi35PepYIOpdyQgebtzTNlPPniWwyPZEOc+oX23wFrqbpr1R7yHhX
-X79H0IbSvOQacFteGufRJHLWsbZhDrEegkvb5uKcoiPAp/AlB5gSJAJwbnn2EVKJ
-gzZakU3ucHlGw8jTPnh8W3ux1AALaIXjSy9yt5ZwMZHjvpaRsa8=
-=QD3o
------END PGP SIGNATURE-----
-
---klSzXGj72fUoifiF--
+  03:21:47 ~/linux (next)$ git checkout -b wip/baruch-ipq6018-v6 v5.19-rc1
+  Switched to a new branch 'wip/baruch-ipq6018-v6'
+  03:21:55 ~/linux (wip/baruch-ipq6018-v6)$ git am m/v6_20220207_baruch_pci_ipq6018_platform_support.mbx
+  Applying: PCI: dwc: tegra: move GEN3_RELATED DBI register to common header
+  Applying: PCI: qcom: Define slot capabilities using PCI_EXP_SLTCAP_*
+  Applying: PCI: qcom: Add IPQ60xx support
+  error: patch failed: drivers/pci/controller/dwc/pcie-qcom.c:1531
+  error: drivers/pci/controller/dwc/pcie-qcom.c: patch does not apply
+  Patch failed at 0003 PCI: qcom: Add IPQ60xx support
