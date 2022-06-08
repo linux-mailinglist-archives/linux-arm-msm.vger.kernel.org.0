@@ -2,132 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 231FE542DF1
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jun 2022 12:35:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6945E542E4F
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jun 2022 12:50:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237369AbiFHKfT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Jun 2022 06:35:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38154 "EHLO
+        id S237469AbiFHKtW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Jun 2022 06:49:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45578 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239072AbiFHKey (ORCPT
+        with ESMTP id S237466AbiFHKtV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Jun 2022 06:34:54 -0400
-X-Greylist: delayed 150 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 08 Jun 2022 03:28:28 PDT
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15D752A3B8D;
-        Wed,  8 Jun 2022 03:28:26 -0700 (PDT)
-Received: from [192.168.1.100] (2-237-20-237.ip236.fastwebnet.it [2.237.20.237])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits))
+        Wed, 8 Jun 2022 06:49:21 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E2691D64CB;
+        Wed,  8 Jun 2022 03:49:20 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: kholk11)
-        by madras.collabora.co.uk (Postfix) with ESMTPSA id 2C259660181B;
-        Wed,  8 Jun 2022 11:27:33 +0100 (BST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1654684053;
-        bh=Kq9FiJlI6hhYA2IYA9Osr8xu/rdeYfLtmdfJ9Zo21bQ=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=FQi1/TEz3EasDsgmDWKT21PyoHVa0B1l+hnaC+he5pFJCyG0OBxNaBihX1tZuKQD+
-         mHKU1KaOba8jFYXdNqbdrrXqN8lO8lO7Culr0dnlbmYCPH6JEm9O2Sak9yiNqs8O5i
-         FFl6wdxReAhG7BA2vfcP69C8vrQns3Cs9NtrCqVfV4s2uIQmpNazeEGoMOAd61WZTp
-         s8dFGBeK31HkaAPVpksS12zrex99GIZuBoQHFs4/60HgPC0MlWj453xyuiiW3H6j/i
-         1tlfMROMlR6dBcYBB7STPOJ7YR7lJUo0AFJNk0XjhDhIIdDzh8dKdNPEDhMTdpKc9V
-         W1qk3cDcXPd5Q==
-Message-ID: <1930a7b3-3637-9e3b-3dac-7baf034c7b7a@collabora.com>
-Date:   Wed, 8 Jun 2022 12:27:31 +0200
+        by ams.source.kernel.org (Postfix) with ESMTPS id 0C288B826A6;
+        Wed,  8 Jun 2022 10:49:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C784C34116;
+        Wed,  8 Jun 2022 10:49:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1654685357;
+        bh=yHR+xAhDwC6CybgYw5sI5rdec09GKeyjJpCfve9lxZI=;
+        h=From:To:In-Reply-To:References:Subject:Date:From;
+        b=HNyBRqxAbIA2Xe+B+ZUrP2g00CVkQNnWgjoFOlw2/Q+Ry11jLGXjBwteSAuDGhWTd
+         +e1N202ARPX5ByjLNzE32F+10aHfTrUgOvr+hcisnK+igWIR4XbKPjMucMjXzZjk31
+         uQZ+bconFy1z3drR0HDepzx8u2YgMkNfHzgdrz76lXoWDp3v/t2idT1UewIJTVM9LI
+         2sBtPRk5Js6G/kPMjuHcvMd7YRLWI9UubWvYFM1nyMqNhmmu0qwvDTiP5x2DUkbQ3X
+         OKN/1jfoZW0NWOC0IDYCjETWtjKSjLolZ+IG//4zIWYLcv/eVjz+dwT5ZcTz3Bjn8p
+         dfibvT3R3M5Aw==
+From:   Mark Brown <broonie@kernel.org>
+To:     linux-kernel@vger.kernel.org, agross@kernel.org,
+        linux-arm-msm@vger.kernel.org, lgirdwood@gmail.com,
+        robimarko@gmail.com, bjorn.andersson@linaro.org
+In-Reply-To: <20220604193300.125758-1-robimarko@gmail.com>
+References: <20220604193300.125758-1-robimarko@gmail.com>
+Subject: Re: [PATCH 1/2] regulator: qcom_smd: add get_voltage to MP5496
+Message-Id: <165468535629.140909.8757110927718700970.b4-ty@kernel.org>
+Date:   Wed, 08 Jun 2022 11:49:16 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.0
-Subject: Re: [PATCH 2/6] iommu/qcom: Write TCR before TTBRs to fix ASID access
- behavior
-Content-Language: en-US
-To:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Will Deacon <will@kernel.org>
-Cc:     Konrad Dybcio <konrad.dybcio@somainline.org>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org,
-        linux-arm-kernel@lists.infradead.org,
-        iommu@lists.linux-foundation.org, martin.botka@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        jamipkettunen@somainline.org, Rob Clark <robdclark@gmail.com>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>, linux-kernel@vger.kernel.org
-References: <20220527212901.29268-1-konrad.dybcio@somainline.org>
- <20220527212901.29268-3-konrad.dybcio@somainline.org>
- <20220531155559.GB25502@willie-the-truck>
- <20220605220618.n6rkb6cfdzzgst3j@SoMainline.org>
-From:   AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>
-In-Reply-To: <20220605220618.n6rkb6cfdzzgst3j@SoMainline.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-8.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Il 06/06/22 00:06, Marijn Suijten ha scritto:
-> On 2022-05-31 16:55:59, Will Deacon wrote:
->> On Fri, May 27, 2022 at 11:28:57PM +0200, Konrad Dybcio wrote:
->>> From: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
->>>
->>> As also stated in the arm-smmu driver, we must write the TCR before
->>> writing the TTBRs, since the TCR determines the access behavior of
->>> some fields.
->>
->> Where is this stated in the arm-smmu driver?
->>
->>>
->>> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
->>> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
->>> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
->>> ---
->>>   drivers/iommu/arm/arm-smmu/qcom_iommu.c | 12 ++++++------
->>>   1 file changed, 6 insertions(+), 6 deletions(-)
->>>
->>> diff --git a/drivers/iommu/arm/arm-smmu/qcom_iommu.c b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
->>> index 1728d4d7fe25..75f353866c40 100644
->>> --- a/drivers/iommu/arm/arm-smmu/qcom_iommu.c
->>> +++ b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
->>> @@ -273,18 +273,18 @@ static int qcom_iommu_init_domain(struct iommu_domain *domain,
->>>   			ctx->secure_init = true;
->>>   		}
->>>   
->>> -		/* TTBRs */
->>> -		iommu_writeq(ctx, ARM_SMMU_CB_TTBR0,
->>> -				pgtbl_cfg.arm_lpae_s1_cfg.ttbr |
->>> -				FIELD_PREP(ARM_SMMU_TTBRn_ASID, ctx->asid));
->>> -		iommu_writeq(ctx, ARM_SMMU_CB_TTBR1, 0);
->>> -
->>>   		/* TCR */
->>>   		iommu_writel(ctx, ARM_SMMU_CB_TCR2,
->>>   				arm_smmu_lpae_tcr2(&pgtbl_cfg));
->>>   		iommu_writel(ctx, ARM_SMMU_CB_TCR,
->>>   			     arm_smmu_lpae_tcr(&pgtbl_cfg) | ARM_SMMU_TCR_EAE);
->>>   
->>> +		/* TTBRs */
->>> +		iommu_writeq(ctx, ARM_SMMU_CB_TTBR0,
->>> +				pgtbl_cfg.arm_lpae_s1_cfg.ttbr |
->>> +				FIELD_PREP(ARM_SMMU_TTBRn_ASID, ctx->asid));
->>> +		iommu_writeq(ctx, ARM_SMMU_CB_TTBR1, 0);
->>
->> I'd have thought that SCTLR.M would be clear here, so it shouldn't matter
->> what order we write these in.
+On Sat, 4 Jun 2022 21:32:59 +0200, Robert Marko wrote:
+> Add the get_voltage OP to MP5496 ops using the generic rpm_reg_get_voltage.
 > 
-> Having tested the series without this particular patch on 8976 (Sony
-> Loire Suzu), it doesn't seem to matter indeed.  I'll ask around if this
-> "access behaviour" was observed on a different board/platform.
 > 
-> - Marijn
 
-On some platforms, the bootloader (and/or the hypervisor) is performing some
-initialization of the IOMMU which, depending on the actual firmware version
-that ran before booting Linux, may or may not leave SCTLR.M cleared.
+Applied to
 
-Cheers,
-Angelo
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-next
+
+Thanks!
+
+[1/2] regulator: qcom_smd: add get_voltage to MP5496
+      commit: f210f387c8c05ae0bd5312b8b6b85398c20b94f9
+[2/2] regulator: qcom_smd: correct MP5496 ranges
+      commit: 122e951eb8045338089b086c8bd9b0b9afb04a92
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
