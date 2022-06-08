@@ -2,208 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 55057542E6D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jun 2022 12:53:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A49A7542E7A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jun 2022 12:54:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237026AbiFHKwx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Jun 2022 06:52:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58702 "EHLO
+        id S237017AbiFHKyb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Jun 2022 06:54:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37550 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237075AbiFHKws (ORCPT
+        with ESMTP id S237009AbiFHKyb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Jun 2022 06:52:48 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D80B10C4
-        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Jun 2022 03:52:45 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id s6so32568815lfo.13
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jun 2022 03:52:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=QE6MV/SSiskw4Oh1dEc1tPN6Esn/x4TkybkUdyYRtK4=;
-        b=QKXimZ4DlV/UrPTjLnQeUTXotl36I+mbzsKE9+AsF0UVCg1gl0blsM6QuMc2uvZsqI
-         TllJCRm6rPAYxELkm5Q8DgJpGeJl1yeIWNzQHHp0qHeLFsdpIDWJPe84VE/SqvsZVMPv
-         AxDCF7YlKOrMwMiQVr6N2DuXL2sbsXwwa0dWQ4qE8RSWjvEcNnsIr/wxy7rRe+X5q3HT
-         S3ITTVJAQsvtD0WFCiWe/GO6Q3mBlD9gJCQ9p8BlqdhwY8hlrLe/ENM6B11797tv4Bej
-         7aCDfIQ/vcfRWkRVCyqtd1Qp+HWTFOquIGvCf9oB9rVLxrdheOsklMA4E0wS0av8tfjW
-         lUfw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=QE6MV/SSiskw4Oh1dEc1tPN6Esn/x4TkybkUdyYRtK4=;
-        b=kqEuat3w2XRLfl84zXxsqf69h6URfg33/Q6hhCAPypkhQ9A3k9NcIJDDcuZfLtNjEY
-         4BqesqtcxKjVOZu1YXQ0eQwoEU6LcMfeh3TXKBOzDr1kMP5sexrd4OD9cXtT6EZcK8eT
-         B1sBK24l0H8C97ZGnBr9rr4lFnC+eKwlIGYCvta/DvyVbXjaCc4yd02LgDb8W0W9tMZW
-         K3dxENag2MWcY9VGHr4331E/KTM1CCilW2fQq63rTcybOjeahZbKgXzwx4qciwFXSoFk
-         GjmzFYU17fZ1vfDN5MxU+MNCMzNqtJrmmzSx7fSARmrIWE/0kw0sI/bfFoyp29RwMtJD
-         xE3Q==
-X-Gm-Message-State: AOAM532J5CiJhtxk9tZcw6xvuHXu0Zspe8FpU5qcd4uNquN2sjB9zCon
-        77x3bXdd9VGKcI3WA3bcsImkvw==
-X-Google-Smtp-Source: ABdhPJy1UY0nm5cKxnglUt6BuyckSKzz7cNsZxytrHA5/JnRbTh7xPy7GROuydqa75F4bBYyOPDv1w==
-X-Received: by 2002:a05:6512:158c:b0:479:307c:e73e with SMTP id bp12-20020a056512158c00b00479307ce73emr11963288lfb.576.1654685564535;
-        Wed, 08 Jun 2022 03:52:44 -0700 (PDT)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id e9-20020a2e5009000000b002556b0cd5acsm3232337ljb.56.2022.06.08.03.52.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Jun 2022 03:52:44 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>
-Cc:     Johan Hovold <johan+linaro@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-pci@vger.kernel.org, Johan Hovold <johan@kernel.org>
-Subject: [PATCH v11 5/5] PCI: qcom: Drop manual pipe_clk_src handling
-Date:   Wed,  8 Jun 2022 13:52:38 +0300
-Message-Id: <20220608105238.2973600-6-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220608105238.2973600-1-dmitry.baryshkov@linaro.org>
-References: <20220608105238.2973600-1-dmitry.baryshkov@linaro.org>
+        Wed, 8 Jun 2022 06:54:31 -0400
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id A80EA13F3C;
+        Wed,  8 Jun 2022 03:54:29 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 39283139F;
+        Wed,  8 Jun 2022 03:54:29 -0700 (PDT)
+Received: from [10.57.83.136] (unknown [10.57.83.136])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 897F33F73B;
+        Wed,  8 Jun 2022 03:54:26 -0700 (PDT)
+Message-ID: <4911a6c8-e494-5a5e-015d-d9fcf886d253@arm.com>
+Date:   Wed, 8 Jun 2022 11:54:20 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: Re: [PATCH 2/6] iommu/qcom: Write TCR before TTBRs to fix ASID access
+ behavior
+Content-Language: en-GB
+To:     AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Will Deacon <will@kernel.org>
+Cc:     Konrad Dybcio <konrad.dybcio@somainline.org>,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org,
+        linux-arm-kernel@lists.infradead.org,
+        iommu@lists.linux-foundation.org, martin.botka@somainline.org,
+        angelogioacchino.delregno@somainline.org,
+        jamipkettunen@somainline.org, Rob Clark <robdclark@gmail.com>,
+        Joerg Roedel <joro@8bytes.org>, linux-kernel@vger.kernel.org
+References: <20220527212901.29268-1-konrad.dybcio@somainline.org>
+ <20220527212901.29268-3-konrad.dybcio@somainline.org>
+ <20220531155559.GB25502@willie-the-truck>
+ <20220605220618.n6rkb6cfdzzgst3j@SoMainline.org>
+ <1930a7b3-3637-9e3b-3dac-7baf034c7b7a@collabora.com>
+From:   Robin Murphy <robin.murphy@arm.com>
+In-Reply-To: <1930a7b3-3637-9e3b-3dac-7baf034c7b7a@collabora.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-8.1 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Manual reparenting of pipe_clk_src is being replaced with the parking of
-the clock with clk_disable()/clk_enable() in the phy driver. Drop
-redundant code switching of the pipe clock between the PHY clock source
-and the safe bi_tcxo.
+On 2022-06-08 11:27, AngeloGioacchino Del Regno wrote:
+> Il 06/06/22 00:06, Marijn Suijten ha scritto:
+>> On 2022-05-31 16:55:59, Will Deacon wrote:
+>>> On Fri, May 27, 2022 at 11:28:57PM +0200, Konrad Dybcio wrote:
+>>>> From: AngeloGioacchino Del Regno 
+>>>> <angelogioacchino.delregno@somainline.org>
+>>>>
+>>>> As also stated in the arm-smmu driver, we must write the TCR before
+>>>> writing the TTBRs, since the TCR determines the access behavior of
+>>>> some fields.
+>>>
+>>> Where is this stated in the arm-smmu driver?
+>>>
+>>>>
+>>>> Signed-off-by: AngeloGioacchino Del Regno 
+>>>> <angelogioacchino.delregno@somainline.org>
+>>>> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+>>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+>>>> ---
+>>>>   drivers/iommu/arm/arm-smmu/qcom_iommu.c | 12 ++++++------
+>>>>   1 file changed, 6 insertions(+), 6 deletions(-)
+>>>>
+>>>> diff --git a/drivers/iommu/arm/arm-smmu/qcom_iommu.c 
+>>>> b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+>>>> index 1728d4d7fe25..75f353866c40 100644
+>>>> --- a/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+>>>> +++ b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+>>>> @@ -273,18 +273,18 @@ static int qcom_iommu_init_domain(struct 
+>>>> iommu_domain *domain,
+>>>>               ctx->secure_init = true;
+>>>>           }
+>>>> -        /* TTBRs */
+>>>> -        iommu_writeq(ctx, ARM_SMMU_CB_TTBR0,
+>>>> -                pgtbl_cfg.arm_lpae_s1_cfg.ttbr |
+>>>> -                FIELD_PREP(ARM_SMMU_TTBRn_ASID, ctx->asid));
+>>>> -        iommu_writeq(ctx, ARM_SMMU_CB_TTBR1, 0);
+>>>> -
+>>>>           /* TCR */
+>>>>           iommu_writel(ctx, ARM_SMMU_CB_TCR2,
+>>>>                   arm_smmu_lpae_tcr2(&pgtbl_cfg));
+>>>>           iommu_writel(ctx, ARM_SMMU_CB_TCR,
+>>>>                    arm_smmu_lpae_tcr(&pgtbl_cfg) | ARM_SMMU_TCR_EAE);
+>>>> +        /* TTBRs */
+>>>> +        iommu_writeq(ctx, ARM_SMMU_CB_TTBR0,
+>>>> +                pgtbl_cfg.arm_lpae_s1_cfg.ttbr |
+>>>> +                FIELD_PREP(ARM_SMMU_TTBRn_ASID, ctx->asid));
+>>>> +        iommu_writeq(ctx, ARM_SMMU_CB_TTBR1, 0);
+>>>
+>>> I'd have thought that SCTLR.M would be clear here, so it shouldn't 
+>>> matter
+>>> what order we write these in.
+>>
+>> Having tested the series without this particular patch on 8976 (Sony
+>> Loire Suzu), it doesn't seem to matter indeed.  I'll ask around if this
+>> "access behaviour" was observed on a different board/platform.
+>>
+>> - Marijn
+> 
+> On some platforms, the bootloader (and/or the hypervisor) is performing 
+> some
+> initialization of the IOMMU which, depending on the actual firmware version
+> that ran before booting Linux, may or may not leave SCTLR.M cleared.
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-Tested-by: Johan Hovold <johan+linaro@kernel.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/pci/controller/dwc/pcie-qcom.c | 39 +-------------------------
- 1 file changed, 1 insertion(+), 38 deletions(-)
+But does it actually matter even then? If we're only allowed to program 
+the same ASID that was in use beforehand, then logically we can't be 
+changing TCR2.AS in a way that makes any difference anyway.
 
-diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-index 8c1073452196..9a95ecf5a688 100644
---- a/drivers/pci/controller/dwc/pcie-qcom.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom.c
-@@ -164,9 +164,6 @@ struct qcom_pcie_resources_2_7_0 {
- 	int num_clks;
- 	struct regulator_bulk_data supplies[2];
- 	struct reset_control *pci_reset;
--	struct clk *pipe_clk_src;
--	struct clk *phy_pipe_clk;
--	struct clk *ref_clk_src;
- };
- 
- union qcom_pcie_resources {
-@@ -192,7 +189,6 @@ struct qcom_pcie_ops {
- 
- struct qcom_pcie_cfg {
- 	const struct qcom_pcie_ops *ops;
--	unsigned int pipe_clk_need_muxing:1;
- 	unsigned int has_tbu_clk:1;
- 	unsigned int has_ddrss_sf_tbu_clk:1;
- 	unsigned int has_aggre0_clk:1;
-@@ -1158,20 +1154,6 @@ static int qcom_pcie_get_resources_2_7_0(struct qcom_pcie *pcie)
- 	if (ret < 0)
- 		return ret;
- 
--	if (pcie->cfg->pipe_clk_need_muxing) {
--		res->pipe_clk_src = devm_clk_get(dev, "pipe_mux");
--		if (IS_ERR(res->pipe_clk_src))
--			return PTR_ERR(res->pipe_clk_src);
--
--		res->phy_pipe_clk = devm_clk_get(dev, "phy_pipe");
--		if (IS_ERR(res->phy_pipe_clk))
--			return PTR_ERR(res->phy_pipe_clk);
--
--		res->ref_clk_src = devm_clk_get(dev, "ref");
--		if (IS_ERR(res->ref_clk_src))
--			return PTR_ERR(res->ref_clk_src);
--	}
--
- 	return 0;
- }
- 
-@@ -1189,10 +1171,6 @@ static int qcom_pcie_init_2_7_0(struct qcom_pcie *pcie)
- 		return ret;
- 	}
- 
--	/* Set TCXO as clock source for pcie_pipe_clk_src */
--	if (pcie->cfg->pipe_clk_need_muxing)
--		clk_set_parent(res->pipe_clk_src, res->ref_clk_src);
--
- 	ret = clk_bulk_prepare_enable(res->num_clks, res->clks);
- 	if (ret < 0)
- 		goto err_disable_regulators;
-@@ -1254,18 +1232,8 @@ static void qcom_pcie_deinit_2_7_0(struct qcom_pcie *pcie)
- 	struct qcom_pcie_resources_2_7_0 *res = &pcie->res.v2_7_0;
- 
- 	clk_bulk_disable_unprepare(res->num_clks, res->clks);
--	regulator_bulk_disable(ARRAY_SIZE(res->supplies), res->supplies);
--}
- 
--static int qcom_pcie_post_init_2_7_0(struct qcom_pcie *pcie)
--{
--	struct qcom_pcie_resources_2_7_0 *res = &pcie->res.v2_7_0;
--
--	/* Set pipe clock as clock source for pcie_pipe_clk_src */
--	if (pcie->cfg->pipe_clk_need_muxing)
--		clk_set_parent(res->pipe_clk_src, res->phy_pipe_clk);
--
--	return 0;
-+	regulator_bulk_disable(ARRAY_SIZE(res->supplies), res->supplies);
- }
- 
- static int qcom_pcie_link_up(struct dw_pcie *pci)
-@@ -1441,7 +1409,6 @@ static const struct qcom_pcie_ops ops_2_7_0 = {
- 	.init = qcom_pcie_init_2_7_0,
- 	.deinit = qcom_pcie_deinit_2_7_0,
- 	.ltssm_enable = qcom_pcie_2_3_2_ltssm_enable,
--	.post_init = qcom_pcie_post_init_2_7_0,
- };
- 
- /* Qcom IP rev.: 1.9.0 */
-@@ -1450,7 +1417,6 @@ static const struct qcom_pcie_ops ops_1_9_0 = {
- 	.init = qcom_pcie_init_2_7_0,
- 	.deinit = qcom_pcie_deinit_2_7_0,
- 	.ltssm_enable = qcom_pcie_2_3_2_ltssm_enable,
--	.post_init = qcom_pcie_post_init_2_7_0,
- 	.config_sid = qcom_pcie_config_sid_sm8250,
- };
- 
-@@ -1495,7 +1461,6 @@ static const struct qcom_pcie_cfg sm8250_cfg = {
- static const struct qcom_pcie_cfg sm8450_pcie0_cfg = {
- 	.ops = &ops_1_9_0,
- 	.has_ddrss_sf_tbu_clk = true,
--	.pipe_clk_need_muxing = true,
- 	.has_aggre0_clk = true,
- 	.has_aggre1_clk = true,
- };
-@@ -1503,14 +1468,12 @@ static const struct qcom_pcie_cfg sm8450_pcie0_cfg = {
- static const struct qcom_pcie_cfg sm8450_pcie1_cfg = {
- 	.ops = &ops_1_9_0,
- 	.has_ddrss_sf_tbu_clk = true,
--	.pipe_clk_need_muxing = true,
- 	.has_aggre1_clk = true,
- };
- 
- static const struct qcom_pcie_cfg sc7280_cfg = {
- 	.ops = &ops_1_9_0,
- 	.has_tbu_clk = true,
--	.pipe_clk_need_muxing = true,
- };
- 
- static const struct qcom_pcie_cfg sc8180x_cfg = {
--- 
-2.35.1
+I see no point in pretending to worry about theoretical architectural 
+correctness in a driver tied to specific implementations that already 
+violate the given architecture in many other ways. If there's a known 
+firmware implementation that definitely requires this, that should be 
+called out; otherwise, there doesn't seem much justification for the 
+patch at all.
 
+Thanks,
+Robin.
