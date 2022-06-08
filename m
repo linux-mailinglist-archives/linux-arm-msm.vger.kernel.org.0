@@ -2,174 +2,148 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A8ECF542538
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jun 2022 08:54:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 93025542540
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jun 2022 08:54:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350211AbiFHA7J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Jun 2022 20:59:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32950 "EHLO
+        id S1348718AbiFHCQf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Jun 2022 22:16:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49690 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1839317AbiFHAC6 (ORCPT
+        with ESMTP id S1445059AbiFHCLu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Jun 2022 20:02:58 -0400
-Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com [IPv6:2607:f8b0:4864:20::730])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 176225A161
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Jun 2022 16:52:34 -0700 (PDT)
-Received: by mail-qk1-x730.google.com with SMTP id n197so7355422qke.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Jun 2022 16:52:34 -0700 (PDT)
+        Tue, 7 Jun 2022 22:11:50 -0400
+Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63608B58;
+        Tue,  7 Jun 2022 17:11:33 -0700 (PDT)
+Received: by mail-ej1-x636.google.com with SMTP id m20so38216959ejj.10;
+        Tue, 07 Jun 2022 17:11:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=I5bIA8RovZ0OK8PNlEOCrd8XWvxVcrOKgYX0lsRMHs0=;
-        b=KTfI2qFLJ+aAHRXp1Fk+G2auRh0YeaY5jKt5RMRNbLOXBXdmxmYzqTIxcyN30yQGQ2
-         8LzXgVmswee+4+r5DbL0cYffY4N1/883lIpTOTb9kcIz4fuphFY0SLktL7tMOT4ZIxU4
-         rwQw+qwo4XLB9tGwHE2Nt66zTrt1EzBj7QECltOIVKwaLsQ0UR+nrIlp/jVCb8ok2/nM
-         mlU2WxBH23u09BZK+VG8vbgdQ1bgp5TnNEJlyTCr7R99ZgnPzm2D0gZ7uUON6m+DJm+S
-         38PrqlVvCEMzw6Ao8zd+u8m6KN3ITXaZdnxxNMt0OwvV4R7KNAedS7CQKML09xH+71he
-         Piwg==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=6ar1MDgtA0wB8Ds/6E+9yGeeWGB8hd9IIOZtnBP3qtQ=;
+        b=IM1XkXyqw7gnD/Ee2HrDRknwqvnksbwocKVipuKtHHy7V9A7QvPfIZ0SdUBxhAsjiA
+         2BXgxrF+ABiZacrrEk7rf5Jmn6J56FT0/j2EH3nvI+LTdS5KOCGUAz+t5KinebT+0bBz
+         wjF2JVvw1/fEjKL9G1z7s58dQZzhGIBq7uKK6v8uic/rNEmvW+vLPK6QfjJaxjLPhNh/
+         7XSQzjJFcXkUepwkB0wQ0LJITyMSYPE8yNV6S2LPIK6U1Xs37gkKQe/mJfbL3vx5tafE
+         LLoCPYhAw2FuN9cXol7v380sGD2OdKGqAE78H7J5dSxF6i0HzseJC77uHcDnuw/QkHv/
+         TnTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=I5bIA8RovZ0OK8PNlEOCrd8XWvxVcrOKgYX0lsRMHs0=;
-        b=GxXt42d0Gbexi3EiWiLcd1tWGGj7H9fcjMmQnueQNB9NOfk5tA14dp0OH/18IvjG1X
-         SDV64IQtY1fgVT+fukpLcxxg0KRT5wx1TVKPGlRroB4B42smprNTAtwY8J1ETDEA4uUA
-         pCK54n/dRNg4QRrIhOV5+QwLy+CJsDBKNbQB8FvpzRhxv/JUyyjNe/0T3Ss6PdGFYjQo
-         5mwS+ljJU36entQoQPcasBHGlHdVko2eE4ZLiFBEjRrPTCwJq769YZ1tUoNq8yZIFGxf
-         yIBAqc9J6ImQnzEcE3EL0v4u8W2m7tT4CFZRn4LcJdFewJ/RlR2p9tw7qUcpwIrx4s4e
-         fXxA==
-X-Gm-Message-State: AOAM532oKZKhZv37pip0p+lbt7yKmXNNcbnyfHCH8oxQpytzitEZyEBC
-        1gpRvrizFrWJqFxskH+P8MQOJ0JtSzk4Tg8TLMrXmQ==
-X-Google-Smtp-Source: ABdhPJx9OS3WgJ7xFZVSzzuFy/GVj77eWoUolgeKliH+N0347n1Xtkzr+MVR+jabfBeySi2RA42Y4jrUEpLCwgNrh5s=
-X-Received: by 2002:a05:620a:4311:b0:67e:8a0f:4cd5 with SMTP id
- u17-20020a05620a431100b0067e8a0f4cd5mr21887718qko.363.1654645953166; Tue, 07
- Jun 2022 16:52:33 -0700 (PDT)
-MIME-Version: 1.0
-References: <20220607213543.4057620-1-bjorn.andersson@linaro.org>
- <20220607213543.4057620-4-bjorn.andersson@linaro.org> <d9658f54-e594-8f0e-071e-ef627285d281@linaro.org>
- <Yp/ZkxNltUgE79nC@ripper>
-In-Reply-To: <Yp/ZkxNltUgE79nC@ripper>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Wed, 8 Jun 2022 02:52:22 +0300
-Message-ID: <CAA8EJppSKfWXoNhqj+XOVV18P+uP=5fo7kaOGNWdYnN-NH8xNw@mail.gmail.com>
-Subject: Re: [PATCH v2 3/5] phy: qcom-qmp: Add USB4 5NM QMP combo PHY registers
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Kishon Vijay Abraham I <kishon@ti.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Manu Gautam <mgautam@codeaurora.org>,
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=6ar1MDgtA0wB8Ds/6E+9yGeeWGB8hd9IIOZtnBP3qtQ=;
+        b=Bj1ztGO2xLarav4m7mCsHXuAvrxZ0NkN4WEbu1sckPZfkG2VW3mmk1E4z/LmugDeNG
+         lgvc0jaKkWFCvvpQzKETkP9UGAr+MbPsMRqAFp0cxbb97mEja2ktM5oDVzN813E86+7a
+         rZFMHBh4Ud+Jx6vGmjuGRzdErnvDkvAWpksXotqSTL1ge6TiDRoGvVmE8xyWPwxYj2Uz
+         7mp0ZFeEVk6+vYIpxcwR8oPaYRq8TDtvT57W7DWj7x3I2HG9PJxfOmwilWA6z4OcA0gr
+         r0yZJxwNOL1ghTpfeOa77ZSMJbPJSWHlDM3cmjGTlqOhnMcNK4URVAAYjApX5Bzo0kxH
+         0k5A==
+X-Gm-Message-State: AOAM53021JadDckoCBZbDtlPO/zadqLG8N6YmqOJNehwbQLKbpoerD6a
+        SJ9eyncyFuNBoCdoOyAClEI=
+X-Google-Smtp-Source: ABdhPJx0X5+zVB5NX0PKmpIScjirJeMXRAiXjVqt/5EDlTUmwRA+OrHGmIWDdCPgNj58WTScuMxtfw==
+X-Received: by 2002:a17:906:449:b0:711:c975:cfb8 with SMTP id e9-20020a170906044900b00711c975cfb8mr14330370eja.58.1654647091688;
+        Tue, 07 Jun 2022 17:11:31 -0700 (PDT)
+Received: from localhost.localdomain (93-42-70-190.ip85.fastwebnet.it. [93.42.70.190])
+        by smtp.googlemail.com with ESMTPSA id o19-20020a1709061b1300b006fed85c1a8fsm8434947ejg.202.2022.06.07.17.11.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 07 Jun 2022 17:11:31 -0700 (PDT)
+From:   Ansuel Smith <ansuelsmth@gmail.com>
+To:     Manivannan Sadhasivam <mani@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Miquel Raynal <miquel.raynal@bootlin.com>,
+        Richard Weinberger <richard@nod.at>,
+        Vignesh Raghavendra <vigneshr@ti.com>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        linux-mtd@lists.infradead.org, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Cc:     Ansuel Smith <ansuelsmth@gmail.com>
+Subject: [PATCH v5 0/3] Add support for unprotected spare data page
+Date:   Wed,  8 Jun 2022 02:10:27 +0200
+Message-Id: <20220608001030.18813-1-ansuelsmth@gmail.com>
+X-Mailer: git-send-email 2.36.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 8 Jun 2022 at 02:02, Bjorn Andersson <bjorn.andersson@linaro.org> wrote:
->
-> On Tue 07 Jun 15:24 PDT 2022, Dmitry Baryshkov wrote:
->
-> > On 08/06/2022 00:35, Bjorn Andersson wrote:
-> > > Add all registers defines from qcom,usb4-5nm-qmp-combo.h of the msm-5.4
-> > > kernel. Offsets are adjusted to be relative to each sub-block, as we
-> > > describe the individual pieces in the upstream kernel and "v5_5NM" are
-> > > injected in the defines to not collide with existing constants.
-> > >
-> > > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > > ---
-> > >
-> > > Changes since v1:
-> > > - New patch
-> > >
-> > >   .../qualcomm/phy-qcom-usb4-5nm-qmp-combo.h    | 1547 +++++++++++++++++
-> > >   1 file changed, 1547 insertions(+)
-> > >   create mode 100644 drivers/phy/qualcomm/phy-qcom-usb4-5nm-qmp-combo.h
-> > >
-> > > diff --git a/drivers/phy/qualcomm/phy-qcom-usb4-5nm-qmp-combo.h b/drivers/phy/qualcomm/phy-qcom-usb4-5nm-qmp-combo.h
-> > > new file mode 100644
-> > > index 000000000000..7be8a50269ec
-> > > --- /dev/null
-> > > +++ b/drivers/phy/qualcomm/phy-qcom-usb4-5nm-qmp-combo.h
-> > > @@ -0,0 +1,1547 @@
-> > > +/* SPDX-License-Identifier: GPL-2.0-only */
-> > > +/*
-> > > + * Copyright (c) 2021, The Linux Foundation. All rights reserved.
-> > > + */
-> > > +
-> > > +#ifndef PHY_QCOM_V5_5NM_QMP_COMBO_USB4_H
-> > > +#define PHY_QCOM_V5_5NM_QMP_COMBO_USB4_H
-> > > +
-> > > +/* USB4-USB3-DP Combo PHY register offsets */
-> > > +/* Module: USB43DP_COM_USB43DP_COM_USB4_USB3_DP_COM */
-> > > +#define USB43DP_V5_5NM_COM_PHY_MODE_CTRL                           0x00
-> > > +#define USB43DP_V5_5NM_COM_SW_RESET                                        0x04
-> > > +#define USB43DP_V5_5NM_COM_POWER_DOWN_CTRL                         0x08
-> > > +#define USB43DP_V5_5NM_COM_SWI_CTRL                                        0x0c
-> > > +#define USB43DP_V5_5NM_COM_TYPEC_CTRL                                      0x10
-> > > +#define USB43DP_V5_5NM_COM_TYPEC_PWRDN_CTRL                                0x14
-> > > +#define USB43DP_V5_5NM_COM_DP_BIST_CFG_0                           0x18
-> > > +#define USB43DP_V5_5NM_COM_RESET_OVRD_CTRL1                                0x1c
-> > > +#define USB43DP_V5_5NM_COM_RESET_OVRD_CTRL2                                0x20
-> > > +#define USB43DP_V5_5NM_COM_DBG_CLK_MUX_CTRL                                0x24
-> > > +#define USB43DP_V5_5NM_COM_TYPEC_STATUS                                    0x28
-> > > +#define USB43DP_V5_5NM_COM_PLACEHOLDER_STATUS                              0x2c
-> > > +#define USB43DP_V5_5NM_COM_REVISION_ID0                                    0x30
-> > > +#define USB43DP_V5_5NM_COM_REVISION_ID1                                    0x34
-> > > +#define USB43DP_V5_5NM_COM_REVISION_ID2                                    0x38
-> > > +#define USB43DP_V5_5NM_COM_REVISION_ID3                                    0x3c
-> >
-> > QPHY_V5_DP_COM_foo ?
-> >
->
-> My first version of the QMP patch used V5 defines and USB worked
-> sometimes. So I hacked up a thing to dump the phy sequences of the
-> downstream and upstream kernels, compared the magic numbers and then
-> tried to fit suitable constants.
->
-> But it obviously was a waste of time and I would have to make up a
-> different naming scheme for the ones that doesn't match the existing
-> constants - when we could just use the autogenerated files that exist in
-> the downstream kernels.
+Some background about this.
+On original qsdk ipq8064 based firmware there was a big separation from
+boot partition and user partition. With boot partition we refer to
+partition used to init the router (bootloader, spm firmware and other
+internal stuff) With user partition we refer to linux partition and data
+partition not used to init the router.
+When someone had to write to these boot partition a special mode was
+needed, to switch the nand driver to this special configuration.
 
-I decided that I should write more about it. My main issue with using
-downstream tables is that we end up with tons of repetitive defines.
-Each chip generation would bring 2-4 sets of tables, wouldn't it? This
-can easily become an unsupported beast.
-I'd propose to follow the opposite path. Let's split the existing
-tables on a per-generation, per-region basis. Yes, we'd end up with
-tens of the header files. However then when new generation arrives, we
-can split corresponding header files on a region-by-region basis, and
-compare each region with existing tables. If the region matches, use
-it. If it does not, create a new header. Yes, I can do this for the
-existing header as a continuation of the QMP split saga, if everybody
-agrees that this is a good path.
+Upstream version of the nandc driver totally dropped this and the result
+is that if someone try to read data from these partition a CRC warning
+is printed and if someone try to write that (if for example someone
+wants to replace the bootloader) result is a broken system as the data
+is badly written.
 
-You can ask, why do I suggest such a scheme? Because it looks like the
-lowest common scheme. If we check downstream, we have USB/USB+DP with
-huge autogenerated tables. Then comes UFS, which mostly follows naming
-of the phy-qcom-qmp.h.
+This series comes to fix this.
 
-And the last one is a PCIe. I do not know about the sc8280xp, but for
-the rest of the platforms we do not have register names at all. When I
-was porting the SM8450 PCIe PHY support, I had to guess the correct
-generation beforehand. With just 5 QSERDES_COM_ namespaces, guessing
-is easy. If  we had separate namespaces for the UFS and for several
-USB PHY instances, guessing would be next to impossible. And then
-creating a correct table would also be impossible. Well, as long as we
-do not accept tables without register names.
+A user can declare offset and size of these special partition using the
+qcom,boot-pages binding.
 
-Thus I think we should resort to using a single naming scheme rather
-than following downstream here. If you dislike existing
-QSERDES_Vn/QPHY_Vn, let's come up with something more sensible.
+An initial implementation of this assumed that the boot-pages started
+from the start of the nand but we discover that some device have backup
+of these special partition and we can have situation where we have this
+partition scheme
+- APPSBL (require special mode)
+- APPSBLENV (doesn't require special mode)
+- ART
+- APPSBLBK (back of APPSBL require special mode)
+- APPSBLENVBK (back of APPSBLENV doesn't require special mode)
+With this configuration we need to declare sparse boot page and we can't
+assume boot-pages always starts from the start of the nand.
 
---
-With best wishes
-Dmitry
+A user can use this form to declare sparse boot pages
+qcom,boot-pages = <0x0 0x0c80000 0x0c80000 0x0500000>;
+
+The driver internally will parse this array, convert it to nand pages
+and check internally on every read/write if this special configuration
+should used for that page or the normal one.
+
+The reason for all of this is that qcom FOR SOME REASON, disable ECC for
+spare data only for these boot partition and we need to reflect this
+special configuration to mute these warning and to permit actually
+writing to these pages.
+
+v5:
+- Rename boot-pages to boot-partitions
+- Add additional check to parsing function
+- Rename unprotect_spare_data to codeword_fixup
+- Add additional info from Manivannan
+- Add patch to remove holes in qcom_nand_host struct
+v4:
+- Fix wrong compatible set for boot-pages (ipq8074 instead of ipq806x)
+v3:
+- Fix typo in Docmunetation commit desription
+- Add items description for uint32-matrix
+v2:
+- Add fixes from Krzysztof in Documentation
+
+Ansuel Smith (3):
+  mtd: nand: raw: qcom_nandc: add support for unprotected spare data
+    pages
+  dt-bindings: mtd: qcom_nandc: document qcom,boot-partitions binding
+  mtd: nand: raw: qcom_nandc: reorder qcom_nand_host struct
+
+ .../devicetree/bindings/mtd/qcom,nandc.yaml   |  26 +++
+ drivers/mtd/nand/raw/qcom_nandc.c             | 179 +++++++++++++++++-
+ 2 files changed, 198 insertions(+), 7 deletions(-)
+
+-- 
+2.36.1
+
