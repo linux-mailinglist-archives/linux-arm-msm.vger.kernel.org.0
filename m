@@ -2,142 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3A99D543942
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jun 2022 18:41:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C4CC25439EE
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jun 2022 19:09:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243943AbiFHQk3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Jun 2022 12:40:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33078 "EHLO
+        id S230318AbiFHRGs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Jun 2022 13:06:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60066 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245344AbiFHQk0 (ORCPT
+        with ESMTP id S237546AbiFHRFI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Jun 2022 12:40:26 -0400
-Received: from NAM12-BN8-obe.outbound.protection.outlook.com (mail-bn8nam12olkn2059.outbound.protection.outlook.com [40.92.21.59])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 208EBB5798;
-        Wed,  8 Jun 2022 09:40:25 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=fgGbKfSuWbZOEyZ7wpYGXTbwH4n2x85erwHJWQa1nWe5PjMWtJLg1898ovhRMcm7M3fCgkSVHgNBh79vllUSjAAitp1nrb2HRvQctBmX94/4jPOWCy3FqXxPNVASvv4MXnnNH1pnMyI00XsMIWn2f69JLLUDFRo+uXbcjQ9P6YeE3ZcESVqiq1cqiQcUxfHlMXReQIzz8qyulXiIBVZ3AHjkjeg0Rt6/tTA1sZq4h6pNJickRomUXCNLGM771jSg8t7kbUR1cKPfvzS6n+N39drUEGI9diufTxagdq3phoSjy+C3byz3NGeck3HAMxVSMu3FwXWrQSpmoJW6npEvsw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=xTq8lsOTUSKQb5bOfmJtaECWn/tLLrq/fEJjOF24vuM=;
- b=YzdByYQ0NpEMo3z6lP6CTGrVcF2bEXA3H2cU1PHOrSgtK6EY1GyYVJO9827DNCv7ATHlj4LIchwOOzTu+h95VnHtrL5UHHHj1PaNYkmvNTHPDaZAAtMW9gpa2m1uunLBU3zSLIxsrdY5mIrV5Fdyk4BODLWbO/uGzVQv7rzPOPZUyFq30lq8iv474RUNrEeyteGBe/UIq17pTczJ8faUpIZx/VRqkRSG2oF2qqvCeil84hB7WXKb42vdTTXFX0ixpbbvIUAe/4P3FeNhYPwFo5lmuZzXwU2E+ff0f4WWg2+M1P2JUuupByVe9w8NnCRWcGexZGzpWXC3BzlFhMuqSQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-Received: from BY5PR02MB7009.namprd02.prod.outlook.com (2603:10b6:a03:236::13)
- by SA2PR02MB7530.namprd02.prod.outlook.com (2603:10b6:806:149::18) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5314.13; Wed, 8 Jun
- 2022 16:40:22 +0000
-Received: from BY5PR02MB7009.namprd02.prod.outlook.com
- ([fe80::e179:40c4:4269:70e]) by BY5PR02MB7009.namprd02.prod.outlook.com
- ([fe80::e179:40c4:4269:70e%5]) with mapi id 15.20.5314.019; Wed, 8 Jun 2022
- 16:40:22 +0000
-Message-ID: <BY5PR02MB7009AA50A0F7D570877DA646D9A49@BY5PR02MB7009.namprd02.prod.outlook.com>
-Date:   Wed, 8 Jun 2022 22:10:08 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.0
-Subject: Re: [PATCH v2 1/3] drm/panel: nt36672a: add backlight support
-Content-Language: en-US
-To:     Sumit Semwal <sumit.semwal@linaro.org>
-Cc:     Thierry Reding <thierry.reding@gmail.com>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
+        Wed, 8 Jun 2022 13:05:08 -0400
+Received: from mail-4317.proton.ch (mail-4317.proton.ch [185.70.43.17])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B40E3C618C;
+        Wed,  8 Jun 2022 09:53:54 -0700 (PDT)
+Date:   Wed, 08 Jun 2022 16:53:49 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=connolly.tech;
+        s=protonmail; t=1654707232; x=1654966432;
+        bh=NTQKID+P6bfYd2k0VkyU/2Td+qJJ4uMnG1+NHLimZJM=;
+        h=Date:To:From:Cc:Reply-To:Subject:Message-ID:In-Reply-To:
+         References:Feedback-ID:From:To:Cc:Date:Subject:Reply-To:
+         Feedback-ID:Message-ID;
+        b=XWVVjhVogiP0j+qooPSRX7WA631cydiXaNvkxI8inrldH5Ot5LgK+E45NQinzaZBA
+         Wu4ULipxn/7hvQ75wVFJOKhzu/mxoAvNhJC1a+yRNdgq+OSs7hYCHVLOpLV2ndlS7x
+         Z5NfugD+J69aaBg0ZluGb7u82YH3UKLI9dSq5QU4=
+To:     Dylan Van Assche <me@dylanvanassche.be>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Amit Pundir <amit.pundir@linaro.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-References: <20220401001810.81507-1-jo@jsfamily.in>
- <BY5PR02MB700935F5817128CB7C3991CDD9E09@BY5PR02MB7009.namprd02.prod.outlook.com>
- <BY5PR02MB70099A0E4C060E52284DCE46D9A59@BY5PR02MB7009.namprd02.prod.outlook.com>
- <CAO_48GH5V2-Z0cqGJoF68hzZjqhY6_aGxReSk+ByC_zrLWusYQ@mail.gmail.com>
-From:   Joel Selvaraj <jo@jsfamily.in>
-In-Reply-To: <CAO_48GH5V2-Z0cqGJoF68hzZjqhY6_aGxReSk+ByC_zrLWusYQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TMN:  [/+uiMSMIzM/YwDKuS5twXfvn8lnsW4BSMf9duTXUzqGa9NQtSWtCVUQRUobYS5ag]
-X-ClientProxiedBy: PN2PR01CA0160.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:c01:26::15) To BY5PR02MB7009.namprd02.prod.outlook.com
- (2603:10b6:a03:236::13)
-X-Microsoft-Original-Message-ID: <f0332a86-2499-941d-cd8a-b2c0823b409e@jsfamily.in>
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+From:   Caleb Connolly <caleb@connolly.tech>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
+Reply-To: Caleb Connolly <caleb@connolly.tech>
+Subject: Re: [PATCH] arm64: dts: qcom/sdm845-shift-axolotl: Enable pmi9889 LPG LED
+Message-ID: <19c35ce5-d98c-b5b2-893b-d89425693add@connolly.tech>
+In-Reply-To: <20220512054439.13971-1-me@dylanvanassche.be>
+References: <20220512054439.13971-1-me@dylanvanassche.be>
+Feedback-ID: 10753939:user:proton
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: e7627f12-71ed-4720-5251-08da496d94c4
-X-MS-TrafficTypeDiagnostic: SA2PR02MB7530:EE_
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 8rsZTXWdZfWzfHpsxtu1t3bmHpr7IxMsNxrSJM1fanPwbDV7TUKuu7NVkFQN1lsL2jLaNgRW2kLH13qYZglqyztg4+Uz/mj9jHC84vvikueHtN7qeUtBatg8G9zqPUWd9nH6weNP/uD4W4Js5ZUDnlSa+U80HkHES0C5gFo45MR/QkkyqimmPP2q240mv6k6fHKc7D3emB/+HPJ1f/Pd8VQPeYegf9pmCO9jUNEQyqwuHlaO2lB53grUOl5Uco3HXZ77zRDcz7qwYHmZnzCQjvD0jksC0tJ7IwNhUHWWMfkgqSFxelowaaOEX9APKBHPl2m0TLShmKIvknsJm398ZDevEc+5Yt0pXGfFVhgG3ROlvrgo+ir0z7w08haCsokmRAYrgkZ3knUVqQsbkhVPHcGPnMqyV0Z/sT+FCa+AEUcxbwB+t13CtiqkzEy37P4iAA6Sf4FY1XwQ1qdXTWNE8LiKElb5RdvL51sK3oRxlJH8cjXOmGPmb7N1pBrnjyhGhxdSrCXnOx+luAtdDEV9MMgkDP8lIwQSKycel5Z+ca3tmvbGGitkl4X5ExFJPqANjNTaJjv4ngWew5BI4Iocfg==
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?bTIwNjVmdzFZSWJtWXBQS3c4bXJHK1E0eXp4M04wc2Z1UjVZYnFoMEhwcXVq?=
- =?utf-8?B?cFJPWGp1YUcvcm5hN2hkZVk0cEFhNHFBemxWRXVqNWcvQ243M0QwZXpkTDht?=
- =?utf-8?B?WUdaMDRIMEFiOE82UlpYOENlZ21xYVFaZmhUSHNPM1YyL3pkcENsMGJUV1dR?=
- =?utf-8?B?MzBsTDYyd3ZHUDFnNVphT1VvVUVFRjMzMzZydklSaTZvK3JWT2ZjWWdJVmVu?=
- =?utf-8?B?Sm5VbzhYTUo3Y05NcGkvTm9uanExWC8waTZsZFdjVTFlQldXa0QxRk5NMjRa?=
- =?utf-8?B?c1dsbHRtOGlWT0hGT3c0dnYrenhYRHNFdGl4TldmK2ExNmcweHpWaVc2MUpO?=
- =?utf-8?B?dURoU2FQVFRnb2toaGlWVFR0Yys1VHpiQ2Q3MzU2emN5TFdOMDlsNUJCS2xP?=
- =?utf-8?B?N0ZRclE0eHY4RlFVeGxMc25jUnJHZm9mY1dLRkVpZjZteUFEYU9LT1pIa3Fl?=
- =?utf-8?B?SjNCU2YxUCt4QmN5UGtzK2VNVmxxWGdaRElKZ1pFN0dMOTA5SDdDMnJ5SFR3?=
- =?utf-8?B?TlhRVWJpdSsxejE4VXV2UEV2eXQwVGlCSHJUMVYvMDRZV28zdnBwb2ZOZEt3?=
- =?utf-8?B?WkUyODR0VlZnNnVjM2VlZXVqR2FvQXhLdFpoMnBFRnZVZW5SeWFUZ1ZjNGha?=
- =?utf-8?B?T3QwOXU3Sko4bGR4bDFjTXZJa2hDTjJDdElXWW5ZMmR5dW55cThjYkk5UjFH?=
- =?utf-8?B?Rnp5VEt4Q0NqaGtNU3JnbDNhUmFKb3dRTVo1emdIRUtQWjFPa2JZUmg0bHQ4?=
- =?utf-8?B?U0ZpNTdYZWluRENremg1UUltWFltRE90YVl3VE40UVBXWlFUTzUxb0NKOHYx?=
- =?utf-8?B?VDlyR2ZEdytScWF1azhVTUMyMUlvQ2wrR2U5RjdYWWJiL3BQWjF2cDNvN0Mr?=
- =?utf-8?B?L0l5SzNkQUk3dVdidEcxblBKUTVUclI0azVIOTZtRHRXQXJEY1hCSTBZbzE5?=
- =?utf-8?B?ZGlUNVBObTBuT3lNUzIyMm0yYzBzVld0ei82SGFDVTQzVllLYmNIRUFPcldM?=
- =?utf-8?B?MjhocUp2K2w5c2R3OFBDOGZhR2E4Q1FERDhJUTNlRU90cGh3Unk0ajk4ZUg4?=
- =?utf-8?B?MFAzOTlGUlorVkY0MFQ2azdXaERDeWYzQ096UnVCeTdSTGxIRmVqWlhKS2JB?=
- =?utf-8?B?QzBHQkFYL3lBTzhjVW5oajdmZVlKRVY3Nkp4RXB3eWpvMUt4ZzFqcllDTk9o?=
- =?utf-8?B?UDRFb1hobFZ3Zm9BbkgxZURvdmxiWTNqQUlrYjJiYkl2S1kzeklWTFNsQ3li?=
- =?utf-8?B?MjRPOC9pdnkvbEx0S3B5VGd0YUhrakVaeUxUbDJlT2xWWjRMbWo1VytaZUxq?=
- =?utf-8?B?MDVtbm5iY2xJbjZGL1YrZExsSFFXdjlKNWpObHpCYlBBdVFOeG5PenJJcEhD?=
- =?utf-8?B?bFROdVM4SElOL1d0NFJDamw0V2xpNU1QRjlYRlIyVEJrQnhsRHpBUW4vckVT?=
- =?utf-8?B?L0Npb2VaZTZscTdlTzF5dEN1V2JGVHlTQkd0cWlWVUpaQU5YMm9RRWY2eVgz?=
- =?utf-8?B?U3JZVGVnYVZaSUtNYlRZbTRvbzlSYkJnWWRBTFkva25waFBqL1B6SHBnSk5k?=
- =?utf-8?B?Zzgxa3JzK0FXUTA4L1ppd2FaQ0hxOU1JdkQrMTRzOUJMM0FxeGthdGVIbmVt?=
- =?utf-8?B?YlMyK2hPWUp4TFl6VFNjWEJsZDYzRzE1OFkyaFpYaU1va3Rva3I2eVMwcHYy?=
- =?utf-8?B?TGl4cENidDVkSkd6eENHaUxURzNRS2lkbUFDbS83WE5WYzRTRGZwejM1cE5j?=
- =?utf-8?B?ZXNrQXhIUUY2bjlrVnhvZjQxN1BXdzV3SEZNOFg4ZVJWTitKNnBFL3VXc09M?=
- =?utf-8?B?L1FVeFBWSVlQWE1LZlZSYnhyZWZ1VSt5WGJKV0RoV2lkSVRhYlRxb0VRYUpS?=
- =?utf-8?B?eXdMMS9qZmRZZWNjQjZPSTI5eDJYaG1LN3lLQVBDdHZDWGpCTThXL0ZCcDBE?=
- =?utf-8?B?YnAyMjRzZEJtckk3OWc5amVHOGh6VklVTk0xVVlYSmVZUS9YeDNkNHVHb1Ax?=
- =?utf-8?B?ZnRvWG13aklnPT0=?=
-X-OriginatorOrg: sct-15-20-4755-11-msonline-outlook-99c3d.templateTenant
-X-MS-Exchange-CrossTenant-Network-Message-Id: e7627f12-71ed-4720-5251-08da496d94c4
-X-MS-Exchange-CrossTenant-AuthSource: BY5PR02MB7009.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Jun 2022 16:40:22.8596
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA2PR02MB7530
-X-Spam-Status: No, score=-0.8 required=5.0 tests=BAYES_00,FORGED_MUA_MOZILLA,
-        NICE_REPLY_A,RCVD_IN_DNSWL_NONE,SPF_HELO_PASS,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Sumit,
 
-On 08/06/22 22:00, Sumit Semwal wrote:
-> This is entirely my fault - It somehow missed my radar, and I didn't
-> queue it up. I will push it via drm-misc tree tonight. Apologies
-> again!
 
-No problem. Thanks for the update! So it will land on upcoming 5.19-rcs 
-or 5.20-rc?
+On 12/05/2022 06:44, Dylan Van Assche wrote:
+> Enables the RGB notification LED on the SHIFT 6mq (sdm845-shift-axolotl)
+> with the Qualcomm Light Pulse Generator bindings by Bjorn Andersson [1].
+> Patches are merged in for-next branch of linux-leds.
+> Tested these changes on the SHIFT 6mq.
+>
+> [1] https://git.kernel.org/pub/scm/linux/kernel/git/pavel/linux-leds.git/=
+commit/?h=3Dfor-next&id=3Da8e53db46f19f67be6a26488aafb7d10c78e33bd
+>
+> Signed-off-by: Dylan Van Assche <me@dylanvanassche.be>
+Tested-by: Caleb Connolly <caleb@connolly.tech>
+Reviewed-by: Caleb Connolly <caleb@connolly.tech>
+> ---
+>   .../boot/dts/qcom/sdm845-shift-axolotl.dts    | 29 +++++++++++++++++++
+>   1 file changed, 29 insertions(+)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts b/arch/arm=
+64/boot/dts/qcom/sdm845-shift-axolotl.dts
+> index 847f6217a77b..af412ac2c9d0 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
+> +++ b/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
+> @@ -2,11 +2,13 @@
+>   /*
+>    * Copyright (c) 2022, Alexander Martinz <amartinz@shiftphones.com>
+>    * Copyright (c) 2022, Caleb Connolly <caleb@connolly.tech>
+> + * Copyright (c) 2022, Dylan Van Assche <me@dylanvanassche.be>
+>    */
+>
+>   /dts-v1/;
+>
+>   #include <dt-bindings/gpio/gpio.h>
+> +#include <dt-bindings/leds/common.h>
+>   #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+>   #include "sdm845.dtsi"
+>   #include "pm8998.dtsi"
+> @@ -554,6 +556,33 @@ &pmi8998_smb2 {
+>   =09monitored-battery =3D <&battery>;
+>   };
+>
+> +&pmi8998_lpg {
+> +=09status =3D "okay";
+> +
+> +=09multi-led {
+> +=09=09color =3D <LED_COLOR_ID_RGB>;
+> +=09=09function =3D LED_FUNCTION_STATUS;
+> +
+> +=09=09#address-cells =3D <1>;
+> +=09=09#size-cells =3D <0>;
+> +
+> +=09=09led@3 {
+> +=09=09=09reg =3D <3>;
+> +=09=09=09color =3D <LED_COLOR_ID_BLUE>;
+> +=09=09};
+> +
+> +=09=09led@4 {
+> +=09=09=09reg =3D <4>;
+> +=09=09=09color =3D <LED_COLOR_ID_GREEN>;
+> +=09=09};
+> +
+> +=09=09led@5 {
+> +=09=09=09reg =3D <5>;
+> +=09=09=09color =3D <LED_COLOR_ID_RED>;
+> +=09=09};
+> +=09};
+> +};
+> +
+>   &qup_uart9_default {
+>   =09pinconf-rx {
+>   =09=09pins =3D "gpio5";
+> --
+> 2.36.1
+>
 
-> Best,
-> Sumit.
+--
+Kind Regards,
+Caleb
 
-Best Regards,
-Joel Selvaraj
