@@ -2,74 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CDD7E542DEC
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jun 2022 12:35:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 231FE542DF1
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jun 2022 12:35:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236459AbiFHKfG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Jun 2022 06:35:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33226 "EHLO
+        id S237369AbiFHKfT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Jun 2022 06:35:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38154 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236929AbiFHKdB (ORCPT
+        with ESMTP id S239072AbiFHKey (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Jun 2022 06:33:01 -0400
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 107FB1C4203;
-        Wed,  8 Jun 2022 03:25:59 -0700 (PDT)
+        Wed, 8 Jun 2022 06:34:54 -0400
+X-Greylist: delayed 150 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 08 Jun 2022 03:28:28 PDT
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15D752A3B8D;
+        Wed,  8 Jun 2022 03:28:26 -0700 (PDT)
 Received: from [192.168.1.100] (2-237-20-237.ip236.fastwebnet.it [2.237.20.237])
         (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits))
         (No client certificate requested)
         (Authenticated sender: kholk11)
-        by madras.collabora.co.uk (Postfix) with ESMTPSA id 246C0660181B;
-        Wed,  8 Jun 2022 11:25:47 +0100 (BST)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id 2C259660181B;
+        Wed,  8 Jun 2022 11:27:33 +0100 (BST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1654683948;
-        bh=CbCEHZf0MESeLkAV+KaRIb58SJLwsWDBEd1XfSKloiU=;
+        s=mail; t=1654684053;
+        bh=Kq9FiJlI6hhYA2IYA9Osr8xu/rdeYfLtmdfJ9Zo21bQ=;
         h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=JL6CAQRzPNxS11sdv1lqG3+jYQQBX0szDXfzGlqNeAmSTxcSN4hrnxHXiJK4TI/5o
-         4lG3gsRwQhONwG+w5NxnfRzA+cI5lF3VjstoVw0s3HPCKYvYr7kER2ucKauN9+qgMT
-         mTsntlQDlE0JrPQUTJURaOqHDSkyIi90kFHMkUae1FEGncdiXfftKujwqhZzPtMcGC
-         hldbDeeSFn1Hvs5EIWixyoS9jStUbJyl1AVxxnbAxcZhEJiSgkRbwBUWK0306fSYfO
-         mWuaO/tU/mF4L7Eqymam34ABQMq66ZhWoW9r442GAmDfk2QCk2U4rXjVa10NTpdz0t
-         8aV3MpGHtXuKQ==
-Message-ID: <4f6f1ec4-2c68-5446-e0e0-85e1631a84cf@collabora.com>
-Date:   Wed, 8 Jun 2022 12:25:44 +0200
+        b=FQi1/TEz3EasDsgmDWKT21PyoHVa0B1l+hnaC+he5pFJCyG0OBxNaBihX1tZuKQD+
+         mHKU1KaOba8jFYXdNqbdrrXqN8lO8lO7Culr0dnlbmYCPH6JEm9O2Sak9yiNqs8O5i
+         FFl6wdxReAhG7BA2vfcP69C8vrQns3Cs9NtrCqVfV4s2uIQmpNazeEGoMOAd61WZTp
+         s8dFGBeK31HkaAPVpksS12zrex99GIZuBoQHFs4/60HgPC0MlWj453xyuiiW3H6j/i
+         1tlfMROMlR6dBcYBB7STPOJ7YR7lJUo0AFJNk0XjhDhIIdDzh8dKdNPEDhMTdpKc9V
+         W1qk3cDcXPd5Q==
+Message-ID: <1930a7b3-3637-9e3b-3dac-7baf034c7b7a@collabora.com>
+Date:   Wed, 8 Jun 2022 12:27:31 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.9.0
-Subject: Re: [PATCH 1/6] iommu/qcom: Use the asid read from device-tree if
- specified
+Subject: Re: [PATCH 2/6] iommu/qcom: Write TCR before TTBRs to fix ASID access
+ behavior
 Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Clark <robdclark@gmail.com>, Will Deacon <will@kernel.org>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
-        <linux-arm-kernel@lists.infradead.org>,
-        "list@263.net:IOMMU DRIVERS" <iommu@lists.linux-foundation.org>,
-        Joerg Roedel <joro@8bytes.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        jamipkettunen@somainline.org, Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+To:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Will Deacon <will@kernel.org>
+Cc:     Konrad Dybcio <konrad.dybcio@somainline.org>,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org,
+        linux-arm-kernel@lists.infradead.org,
+        iommu@lists.linux-foundation.org, martin.botka@somainline.org,
+        angelogioacchino.delregno@somainline.org,
+        jamipkettunen@somainline.org, Rob Clark <robdclark@gmail.com>,
         Robin Murphy <robin.murphy@arm.com>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+        Joerg Roedel <joro@8bytes.org>, linux-kernel@vger.kernel.org
 References: <20220527212901.29268-1-konrad.dybcio@somainline.org>
- <20220527212901.29268-2-konrad.dybcio@somainline.org>
- <20220531154631.GA25502@willie-the-truck>
- <CAF6AEGsWsHfQZnszG=NgP0BufxO-DP4LwvsAYkrz2wRhcJuOXw@mail.gmail.com>
- <20220531161910.GE25502@willie-the-truck>
- <CAF6AEGvF+5mf6jE9Xac1qR9P+-=ELLu_LzoJhUV-Dx2RYH20Ag@mail.gmail.com>
- <6efeafbc-d366-bddd-faa4-4359f3a56f4a@somainline.org>
+ <20220527212901.29268-3-konrad.dybcio@somainline.org>
+ <20220531155559.GB25502@willie-the-truck>
+ <20220605220618.n6rkb6cfdzzgst3j@SoMainline.org>
 From:   AngeloGioacchino Del Regno 
         <angelogioacchino.delregno@collabora.com>
-In-Reply-To: <6efeafbc-d366-bddd-faa4-4359f3a56f4a@somainline.org>
+In-Reply-To: <20220605220618.n6rkb6cfdzzgst3j@SoMainline.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -82,61 +71,63 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Il 03/06/22 20:03, Konrad Dybcio ha scritto:
-> 
-> 
-> On 31.05.2022 22:57, Rob Clark wrote:
->> On Tue, May 31, 2022 at 9:19 AM Will Deacon <will@kernel.org> wrote:
+Il 06/06/22 00:06, Marijn Suijten ha scritto:
+> On 2022-05-31 16:55:59, Will Deacon wrote:
+>> On Fri, May 27, 2022 at 11:28:57PM +0200, Konrad Dybcio wrote:
+>>> From: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
 >>>
->>> On Tue, May 31, 2022 at 09:15:22AM -0700, Rob Clark wrote:
->>>> On Tue, May 31, 2022 at 8:46 AM Will Deacon <will@kernel.org> wrote:
->>>>>
->>>>> On Fri, May 27, 2022 at 11:28:56PM +0200, Konrad Dybcio wrote:
->>>>>> From: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
->>>>>>
->>>>>> As specified in this driver, the context banks are 0x1000 apart.
->>>>>> Problem is that sometimes the context number (our asid) does not
->>>>>> match this logic and we end up using the wrong one: this starts
->>>>>> being a problem in the case that we need to send TZ commands
->>>>>> to do anything on a specific context.
->>>>>
->>>>> I don't understand this. The ASID is a software construct, so it shouldn't
->>>>> matter what we use. If it does matter, then please can you explain why? The
->>>>> fact that the context banks are 0x1000 apart seems unrelated.
->>>>
->>>> I think the connection is that mapping from ctx bank to ASID is 1:1
->>>
->>> But in what sense? How is the ASID used beyond a tag in the TLB? The commit
->>> message hints at "TZ commands" being a problem.
->>>
->>> I'm not doubting that this is needed to make the thing work, I just don't
->>> understand why.
+>>> As also stated in the arm-smmu driver, we must write the TCR before
+>>> writing the TTBRs, since the TCR determines the access behavior of
+>>> some fields.
 >>
->> (disclaimer, it has been quite a while since I've looked at the smmu
->> setup with earlier tz, ie. things that use qcom_iommu, but from
->> memory...)
+>> Where is this stated in the arm-smmu driver?
 >>
->> We cannot actually assign the context banks ourselves, so in the dt
->> bindings the "ASID" is actually the context bank index.
-> I think so.
+>>>
+>>> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+>>> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+>>> ---
+>>>   drivers/iommu/arm/arm-smmu/qcom_iommu.c | 12 ++++++------
+>>>   1 file changed, 6 insertions(+), 6 deletions(-)
+>>>
+>>> diff --git a/drivers/iommu/arm/arm-smmu/qcom_iommu.c b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+>>> index 1728d4d7fe25..75f353866c40 100644
+>>> --- a/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+>>> +++ b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+>>> @@ -273,18 +273,18 @@ static int qcom_iommu_init_domain(struct iommu_domain *domain,
+>>>   			ctx->secure_init = true;
+>>>   		}
+>>>   
+>>> -		/* TTBRs */
+>>> -		iommu_writeq(ctx, ARM_SMMU_CB_TTBR0,
+>>> -				pgtbl_cfg.arm_lpae_s1_cfg.ttbr |
+>>> -				FIELD_PREP(ARM_SMMU_TTBRn_ASID, ctx->asid));
+>>> -		iommu_writeq(ctx, ARM_SMMU_CB_TTBR1, 0);
+>>> -
+>>>   		/* TCR */
+>>>   		iommu_writel(ctx, ARM_SMMU_CB_TCR2,
+>>>   				arm_smmu_lpae_tcr2(&pgtbl_cfg));
+>>>   		iommu_writel(ctx, ARM_SMMU_CB_TCR,
+>>>   			     arm_smmu_lpae_tcr(&pgtbl_cfg) | ARM_SMMU_TCR_EAE);
+>>>   
+>>> +		/* TTBRs */
+>>> +		iommu_writeq(ctx, ARM_SMMU_CB_TTBR0,
+>>> +				pgtbl_cfg.arm_lpae_s1_cfg.ttbr |
+>>> +				FIELD_PREP(ARM_SMMU_TTBRn_ASID, ctx->asid));
+>>> +		iommu_writeq(ctx, ARM_SMMU_CB_TTBR1, 0);
+>>
+>> I'd have thought that SCTLR.M would be clear here, so it shouldn't matter
+>> what order we write these in.
 > 
->    I don't
->> remember exactly if this was a limitation of the tz interface, or
->> result of not being able to program the smmu's global registers
->> ourselves.
+> Having tested the series without this particular patch on 8976 (Sony
+> Loire Suzu), it doesn't seem to matter indeed.  I'll ask around if this
+> "access behaviour" was observed on a different board/platform.
 > 
-> As far as I understand, it's the latter, as changing the defaults is not allowed by the security policy on consumer devices.
-> 
-> Qualcomm arbitrarily chose some numbers that may or may have not aligned with their usual index-is-offset-divided-by-0x1000 and hardcoded them in the BSP, and now the secure side (if required, and well, it is..) expects precisely that configuration.
-> 
-> 
-> Konrad
-> 
+> - Marijn
 
-I can confirm that it's the latter, as described by Konrad.
-The inability of programming the global registers from Linux is due to the
-hypervisor disallowing that (in different ways depending on the SoC's firmware
-but with the same outcome: AP reset by HYP).
+On some platforms, the bootloader (and/or the hypervisor) is performing some
+initialization of the IOMMU which, depending on the actual firmware version
+that ran before booting Linux, may or may not leave SCTLR.M cleared.
 
 Cheers,
 Angelo
