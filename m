@@ -2,78 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 58C0F544B7F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jun 2022 14:14:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7AF07544BAD
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jun 2022 14:24:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245241AbiFIMOy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Jun 2022 08:14:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59398 "EHLO
+        id S245150AbiFIMX6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Jun 2022 08:23:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39626 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237776AbiFIMOw (ORCPT
+        with ESMTP id S236881AbiFIMXz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Jun 2022 08:14:52 -0400
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9F5D144BC5
-        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Jun 2022 05:14:49 -0700 (PDT)
-Received: by mail-ed1-x536.google.com with SMTP id b8so14261050edj.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Jun 2022 05:14:49 -0700 (PDT)
+        Thu, 9 Jun 2022 08:23:55 -0400
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 730BC2F395
+        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Jun 2022 05:23:53 -0700 (PDT)
+Received: by mail-lf1-x12d.google.com with SMTP id c2so18291829lfk.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Jun 2022 05:23:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=UzOEe2X6Pcp5CwSwzOY2ybmrXssFZ5RmjZdx4tT+M50=;
-        b=G/WxesYGBG8H3t/Zi6No32EukuRuEvudUPMMa+c7U9VFoVDPbMbL8Y2lsrAuwDziIY
-         I2NgS4zkfLl1TdG5I4Xh53kQv56f3EVw7gWAmcKA19s86ApyHcAebK42vYEETip87382
-         5dAoJ/dh7Gnjr9pXIfbgJynGn2hzi7vAVmgkvIh638E7pyGy6c/6t3d4Aogsf1R1MuuZ
-         XZ6eOAXQdjXBjF9gyk8Ggi8fvtWyni6uFwiohsvNjOShK2a/Yh+RqkRz43pjBC3WSVkm
-         b9tJVs00exkAScc1g4B3wy9bMSGPMVZa9737bLWsJjbbtWwxmZLWEapE5Z5QAauGD6vv
-         olnw==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Zd34kREa0n00H398I8o2YhXQla1j3aeJKt50d9fLvpQ=;
+        b=a9GC6/AhrnYGFqHxrVH0bfIEVxyfwQBfJxpCnNS8YjK467zxQBT4yZTfTSntHLIAng
+         QYi+ajizkgGnyx0L9wAOewRZtUf+uxC8vEiClZaW2xtNbro5e5opB2WwmKca3ShcHzLY
+         ceR/O2a9U3d953WuKHVJnrt+INC+KfwRSlGC66H3xS0fgNOFRSG8Ftqq/oSZW59NlSg6
+         YVs8i9F0pfwFEwbPi/oGIWpPhPJ3+MnXPZSFG0P++PAqhNnwkZKnSKhAP03s6VkOuPNU
+         ViOgAhJT9Sfuq/cFQ8lysnt6GxmpSv/Vhtu25ivjGCGlz7eot/B4OZHTYugO2r19WNwt
+         Godw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=UzOEe2X6Pcp5CwSwzOY2ybmrXssFZ5RmjZdx4tT+M50=;
-        b=Y5qR/00QEKQozOdVNJKu0cz4b9pcFQMLbkVW9+Ks+vIeevMIIU9l9n6LU7ZPJfZh3P
-         6wJ37t35Q1se4Ae94UPs+/trfwrxzAGAAUVZR+BbBJrRe8nBzFMLQOVjQwG5BhzW7gZR
-         EjTzHDLkoQTCLv3oUw1IX0Z8I7yCi/TwFwC+n0PQn3ZerDhFj9o+4FcgzqTf4imdizFK
-         WoxGwRqV5S/dt6Sqjt/ohrJP0wDJwBXldAxXSFBDfl8sGwrR04NcvMBOEPp/d1DP4EQ6
-         myDDXJTL4NweQ6ll3+pSAoRxW9POMVs46NmFdON67VTqMXRodMkLgzQONVl5IbpLapkU
-         3n3g==
-X-Gm-Message-State: AOAM533IXa01YIlo2Tyq+6GZH1AcvUWaX8plli/5VPrPZgc75VQF0bn3
-        s/0TrRiUY3r5jfPs0RiO1srcZg==
-X-Google-Smtp-Source: ABdhPJxm+YhFVbWSiAI0yxYJExwM3A6gaCeP9DrDlyEGnXB/LOPPvq6V3/x2Q0jrhgeqqaicyeV4wg==
-X-Received: by 2002:a05:6402:378b:b0:42a:ad8c:628f with SMTP id et11-20020a056402378b00b0042aad8c628fmr44794604edb.90.1654776888389;
-        Thu, 09 Jun 2022 05:14:48 -0700 (PDT)
-Received: from [192.168.0.197] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id i2-20020a056402054200b004315050d7dfsm8255608edx.81.2022.06.09.05.14.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 09 Jun 2022 05:14:47 -0700 (PDT)
-Message-ID: <89afe584-58d6-537a-b30e-84153c228225@linaro.org>
-Date:   Thu, 9 Jun 2022 14:14:46 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: [PATCH 2/2] arm64: dts: qcom/sdm845-shift-axolotl: Add audio
- support
-Content-Language: en-US
-To:     Alexander Martinz <amartinz@shiftphones.com>,
-        ~postmarketos/upstreaming@lists.sr.ht
-Cc:     phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        bh=Zd34kREa0n00H398I8o2YhXQla1j3aeJKt50d9fLvpQ=;
+        b=N3tI3NbvskM/7LYPVY1bg1MutuZbPVVKDeXQZnWWTYf+QtLMuzIrYnLpdj7vGe+5ut
+         wrFUayhxr03UrEuwskSZGvCVZPATq52SqSozPOcAFKg6NGaYq/MSTmhlK5vHpxfm3TPc
+         /iyQzumJV8By5X8oYfLiXD7pSAJkkhFNuqlU45DC2tQ/8Yxf7mcBj80+ZG7+OcCY/XqC
+         9vhC751a7dHYL9m0dND7YvLD54z+YxCj+mgezEIV0C/vCWg2snLrd722fXJIwmMZHGkd
+         oBStwHQF+h4EsiDsGkL0MFSDkO415wn0FDp3AJXvGkamtXngF0UpBnHMjsSQeTIz1ENx
+         /BTA==
+X-Gm-Message-State: AOAM53341YXJAv4wqeuYat9unnQ1Go4z1e/rU86oVNGdFhe3EJ4tFQxA
+        5q7qMOd6pnnE8+TNAJOU38ujFg==
+X-Google-Smtp-Source: ABdhPJyxqJwN1fJVc3vG+X2bWsbFDHRVBc9p4ES3Hjxr0Pn1co0TJLZTo0YqlK6Z6CtHpmd8TDH7nA==
+X-Received: by 2002:ac2:5e37:0:b0:478:f418:a2a9 with SMTP id o23-20020ac25e37000000b00478f418a2a9mr31156071lfg.281.1654777431709;
+        Thu, 09 Jun 2022 05:23:51 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id f11-20020a056512360b00b0047daa133decsm32421lfs.166.2022.06.09.05.23.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 09 Jun 2022 05:23:51 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Dylan Van Assche <me@dylanvanassche.be>
-References: <20220609095412.211060-1-amartinz@shiftphones.com>
- <20220609095412.211060-2-amartinz@shiftphones.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220609095412.211060-2-amartinz@shiftphones.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: [PATCH v3 00/14] drm/msm/hdmi: YAML-ify schema and cleanup some platform properties
+Date:   Thu,  9 Jun 2022 15:23:36 +0300
+Message-Id: <20220609122350.3157529-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.35.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -82,194 +76,83 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 09/06/2022 11:54, Alexander Martinz wrote:
-> This patch adds audio support for the SHIFT6mq phone.
-> 
-> The primary microphone and headphone jack are handled by the
-> SDM845 sound card and WCD9340 codec.
-> 
-> The primary speaker needs to go through the TFA9890 speaker
-> amplifier.
+As agreed with David, this is a continuation of his work started at [1].
 
-Thank you for your patch. There is something to discuss/improve.
+Changes since v2:
+- Deprecated usage of phy-names for HDMI node, added two patches to
+  remove this property from DT files,
+- Fixed the uninitialized variable access in hpd_gpio code.
 
-> 
-> Signed-off-by: Alexander Martinz <amartinz@shiftphones.com>
-> Tested-by: Dylan Van Assche <me@dylanvanassche.be>
+Changes since v1:
+- Dropped quotes in $id/$schema
+- Sorted out compat strings alphabetically
+- Removed obvious descriptions
+- Removed undocumented qcom,hdmi-tx-ddc-* properties
+- Switched to additionalProperties
+- Fixed IRQ and GPIO flags in the schema example
+- Added 8084 and 8660 variants to qcom,hdmi-phy-other.yaml conditional
 
-Same problem.
+- Marked hdmi-mux-supply as deprecated (and dropped it from
+  apq8064-ifc6410.dtsi)
+- Reused 8960 regulator/clock configs for 8x60 (verified against msm-3.4
+  kernel)
 
-> ---
->  .../boot/dts/qcom/sdm845-shift-axolotl.dts    | 141 ++++++++++++++++++
->  1 file changed, 141 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts b/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
-> index fa72f23ef0c2..8c4967d6d0e3 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
-> +++ b/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
-> @@ -8,6 +8,8 @@
->  
->  #include <dt-bindings/gpio/gpio.h>
->  #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
-> +#include <dt-bindings/sound/qcom,q6afe.h>
-> +#include <dt-bindings/sound/qcom,q6asm.h>
->  #include "sdm845.dtsi"
->  #include "pm8998.dtsi"
->  #include "pmi8998.dtsi"
-> @@ -492,6 +494,19 @@ touchscreen@38 {
->  	};
->  };
->  
-> +&i2c11 {
-> +	status = "okay";
-> +	clock-frequency = <400000>;
-> +
-> +	tfa9890_codec: tfa9890@34 {
+Changes since David's patches:
+HDMI schema:
+- Dropped generic pinctrl properties
+- Dropped data-lanes property, which is not supported by the HDMI driver
+- Switched to unevaluatedProperties
+- Moved clocks/regulators/supplies to condition clauses
+- Specified phy-names as used by existing DT files
+- Dropped #phy-cells
+- Dropped power-domains property (which is not used by the device trees)
+- Marked old GPIO properties as deprecated (in a separate patch)
 
-Generic node names please, so I guess it is: codec or audio-codec
+HDMI PHY schema:
+- Split into QMP (msm8996) and non-QMP (other) PHY schemas
+- Added proper clocks/clock-names/reg/reg-names descriptions
 
-> +		compatible = "nxp,tfa9890";
-> +		reg = <0x34>;
-> +		vddd-supply = <&vreg_s4a_1p8>;
-> +		reset-gpio = <&tlmm 7 0>;
-> +		#sound-dai-cells = <1>;
-> +	};
-> +};
-> +
->  &ipa {
->  	status = "okay";
->  
-> @@ -530,6 +545,27 @@ volume_down_resin: resin {
->  	};
->  };
->  
-> +&q6afedai {
-> +	qi2s@22 {
-> +		reg = <22>;
-> +		qcom,sd-lines = <0>;
-> +	};
-> +};
-> +
-> +&q6asmdai {
-> +	dai@0 {
-> +		reg = <0>;
-> +	};
-> +
-> +	dai@1 {
-> +		reg = <1>;
-> +	};
-> +
-> +	dai@2 {
-> +		reg = <2>;
-> +	};
-> +};
-> +
->  /*
->   * Prevent garbage data on bluetooth UART lines
->   */
-> @@ -578,6 +614,84 @@ &qupv3_id_1 {
->  	status = "okay";
->  };
->  
-> +&sound {
-> +	model = "SHIFT6mq";
-> +	compatible = "qcom,sdm845-sndcard";
-> +	pinctrl-0 = <&quat_mi2s_active &quat_mi2s_sd0_active>;
-> +	pinctrl-names = "default";
-> +
-> +	audio-routing = "RX_BIAS", "MCLK",
-> +			"AMIC1", "MIC BIAS1",
-> +			"AMIC2", "MIC BIAS2",
-> +			"AMIC3", "MIC BIAS3";
-> +
-> +	mm1-dai-link {
-> +		link-name = "MultiMedia1";
-> +		cpu {
-> +			sound-dai = <&q6asmdai MSM_FRONTEND_DAI_MULTIMEDIA1>;
-> +		};
-> +	};
-> +
-> +	mm2-dai-link {
-> +		link-name = "MultiMedia2";
-> +		cpu {
-> +			sound-dai = <&q6asmdai MSM_FRONTEND_DAI_MULTIMEDIA2>;
-> +		};
-> +	};
-> +
-> +	mm3-dai-link {
-> +		link-name = "MultiMedia3";
-> +		cpu {
-> +			sound-dai = <&q6asmdai MSM_FRONTEND_DAI_MULTIMEDIA3>;
-> +		};
-> +	};
-> +
-> +	speaker-dai-link {
-> +		link-name = "Speaker Playback";
-> +		codec {
-> +			sound-dai = <&tfa9890_codec 0>;
-> +		};
-> +
-> +		cpu {
-> +			sound-dai = <&q6afedai QUATERNARY_MI2S_RX>;
-> +		};
-> +
-> +		platform {
-> +			sound-dai = <&q6routing>;
-> +		};
-> +	};
-> +
-> +	slim-dai-link {
-> +		link-name = "SLIM Playback";
-> +		codec {
-> +			sound-dai = <&wcd9340 0>;
-> +		};
-> +
-> +		cpu {
-> +			sound-dai = <&q6afedai SLIMBUS_0_RX>;
-> +		};
-> +
-> +		platform {
-> +			sound-dai = <&q6routing>;
-> +		};
-> +	};
-> +
-> +	slimcap-dai-link {
-> +		link-name = "SLIM Capture";
-> +		codec {
-> +			sound-dai = <&wcd9340 1>;
-> +		};
-> +
-> +		cpu {
-> +			sound-dai = <&q6afedai SLIMBUS_0_TX>;
-> +		};
-> +
-> +		platform {
-> +			sound-dai = <&q6routing>;
-> +		};
-> +	};
-> +};
-> +
->  &tlmm {
->  	gpio-reserved-ranges = <0 4>, <81 4>;
->  
-> @@ -686,6 +800,15 @@ config {
->  			bias-pull-down;
->  		};
->  	};
-> +
-> +	wcd_intr_default: wcd_intr_default {
+The rest of the patches consist of the new work. They further cleanup
+the platform configs, remove unused supplies, etc.
 
-No underscores in node names. Instead hyphens.
+[1]: https://patchwork.freedesktop.org/series/98353/
 
-> +		pins = <54>;
-> +		function = "gpio";
-> +
-> +		input-enable;
-> +		bias-pull-down;
-> +		drive-strength = <2>;
-> +	};
->  };
+Dmitry Baryshkov (14):
+  dt-bindings: display/msm: hdmi: split and convert to yaml
+  dt-bindings: display/msm: hdmi: mark old GPIO properties as deprecated
+  dt-bindings: display/msm: hdmi: mark hdmi-mux-supply as deprecated
+  ARM: dts: qcom: apq8064-ifc6410: drop hdmi-mux-supply
+  drm/msm/hdmi: drop the hdmi-mux support
+  drm/msm/hdmi: drop unused GPIO support
+  drm/msm/hdmi: enable core-vcc/core-vdda-supply for 8996 platform
+  drm/msm/hdmi: drop empty 'none' regulator lists
+  drm/msm/hdmi: drop hpd_regs usage on 8x74/8084
+  drm/msm/hdmi: merge platform config for 8974/8084/8994/8996
+  drm/msm/hdmi: reuse MSM8960's config for MSM8660
+  drm/msm/hdmi-phy: populate 8x60 HDMI PHY requirements
+  ARM: dts: qcom: apq8064: drop phy-names from HDMI device node
+  arm64: dts: qcom: msm8996: drop phy-names from HDMI device node
+
+ .../devicetree/bindings/display/msm/hdmi.txt  |  99 --------
+ .../devicetree/bindings/display/msm/hdmi.yaml | 232 ++++++++++++++++++
+ .../bindings/phy/qcom,hdmi-phy-other.yaml     | 104 ++++++++
+ .../bindings/phy/qcom,hdmi-phy-qmp.yaml       |  85 +++++++
+ arch/arm/boot/dts/qcom-apq8064-ifc6410.dts    |   1 -
+ arch/arm/boot/dts/qcom-apq8064.dtsi           |   1 -
+ arch/arm64/boot/dts/qcom/msm8996.dtsi         |   1 -
+ drivers/gpu/drm/msm/hdmi/hdmi.c               | 109 ++------
+ drivers/gpu/drm/msm/hdmi/hdmi.h               |  13 +-
+ drivers/gpu/drm/msm/hdmi/hdmi_hpd.c           |  62 +----
+ drivers/gpu/drm/msm/hdmi/hdmi_phy_8x60.c      |  12 +
+ 11 files changed, 459 insertions(+), 260 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/display/msm/hdmi.txt
+ create mode 100644 Documentation/devicetree/bindings/display/msm/hdmi.yaml
+ create mode 100644 Documentation/devicetree/bindings/phy/qcom,hdmi-phy-other.yaml
+ create mode 100644 Documentation/devicetree/bindings/phy/qcom,hdmi-phy-qmp.yaml
 
 
-Best regards,
-Krzysztof
+base-commit: f2906aa863381afb0015a9eb7fefad885d4e5a56
+prerequisite-patch-id: 89e074537a1d17a955ba626431104040577c0bec
+-- 
+2.35.1
+
