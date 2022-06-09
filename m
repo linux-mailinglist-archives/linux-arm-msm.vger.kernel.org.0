@@ -2,159 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E277C544F2C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jun 2022 16:34:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 80EF9544FF2
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jun 2022 16:56:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241036AbiFIOeI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Jun 2022 10:34:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53258 "EHLO
+        id S1343869AbiFIO4M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Jun 2022 10:56:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36464 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236491AbiFIOeF (ORCPT
+        with ESMTP id S1343592AbiFIO4K (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Jun 2022 10:34:05 -0400
-Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24F9631750E
-        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Jun 2022 07:34:03 -0700 (PDT)
-Received: by mail-pf1-x433.google.com with SMTP id g205so21224699pfb.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Jun 2022 07:34:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=G+wGSWx5rEpsgmi4hQGx7HlbHSxy52WR8UStPyNrzxo=;
-        b=Mf5PqduKe8vF51h+9aatjv7dQZh61xwzCf3FP3+ZjcQysGr9xL6cg5cp3dRur46HOl
-         oqnMHRfnjKRHek2s3UNpi3H+lwZgPXjoZ9bXkxt+/DsDSgneq0mkld9/10q3zdVUEw8n
-         /BiAOaPAuAdyVhgyLtYYMWH6P21wI1PXuiwW8=
+        Thu, 9 Jun 2022 10:56:10 -0400
+Received: from mail-io1-f49.google.com (mail-io1-f49.google.com [209.85.166.49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD59A3871A4;
+        Thu,  9 Jun 2022 07:56:07 -0700 (PDT)
+Received: by mail-io1-f49.google.com with SMTP id r5so1323355iod.5;
+        Thu, 09 Jun 2022 07:56:07 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=G+wGSWx5rEpsgmi4hQGx7HlbHSxy52WR8UStPyNrzxo=;
-        b=C/VDa9BDXfs89QmYrNUxIbjBP77+mhaU9n234EsAR2m11WPAt3+1KX3rQpCGDpR9EQ
-         Ei5O5zNXAvjiqg1axi4eoOvouewh1xxNTFflkof/BRb3kFJPFcB3Tu+8cgoSgjsonApb
-         qOaJrFh8sj4IXl2N0F4T+l44OcCna1sTNXBOLzgVs5pIAvHsC8JlolDieAAewh9rsuZH
-         5qAAkfFq7XLA8Hqx7VCwC/4Mgu1uD4ZFf3TsyQF5LsRoFw6VomLciJHH1D2snVSXPS+o
-         9meoqONmO3nmSrmDf1zQeQ5BiaP8g5JU4VfjOjxBWqJl10gd/LWMsxqxkjztgyyPaR2Y
-         dMag==
-X-Gm-Message-State: AOAM532JFx1yiRhfaTKEfc9DadDvnzL82OS6bJf24sDoo/JMyo2PEilR
-        THqcNLs7yjeQBCvt/JzX2nMKEw==
-X-Google-Smtp-Source: ABdhPJy8SxaE59iJ2xQ/JffGvrDKCf2I2syIiyTxswm9wtZ4HWH2Kfbsudisov+hdfl6zmxEHFkyKg==
-X-Received: by 2002:a63:f04e:0:b0:3ff:af9d:5387 with SMTP id s14-20020a63f04e000000b003ffaf9d5387mr3910816pgj.514.1654785242609;
-        Thu, 09 Jun 2022 07:34:02 -0700 (PDT)
-Received: from tictac2.mtv.corp.google.com ([2620:15c:202:201:4732:8bcf:1bc2:ec84])
-        by smtp.gmail.com with ESMTPSA id g2-20020aa79f02000000b005185407eda5sm17420543pfr.44.2022.06.09.07.34.01
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=ikB6YJSl5vJ4cPxB+SR4C1C7bWjvKiJRtoZ3B3fpkIg=;
+        b=kIQyrIcYQNqyT/cOJQ2YXH0Us1pnSGmDtr/pWBJWiesqTQTaRjVYOctS7KEKdJk0hv
+         r2xQToYnOSEU+fRCjg0ZgAXVlduCbP2ziQYcG/5UNdGSMI3LZPwGKECKCoomFYhtNdNV
+         ZksMT66THCsUulbxecH1kviKm2MXU9E1xNptNhwA5+LnogcWaJ7PeLlLLLMZQPRRbLfX
+         VjoOe9/6Pk7nQpA+lM26Ygk+CZ+jARMGR9YlGWCpgHP3cgQRxp40hz7Fjbg1E24ieVB9
+         4vHNSQzAYF+TYOxdxkHG6jVsCAq+WWFs2vFqfRxPK43Ydm4cMi/OQh+SF0k7IOrhknLo
+         tybg==
+X-Gm-Message-State: AOAM533TbW2Hmk1yNjXC4xsIHougiNYbeZp3b3ne073a9hSmpg8rR/E5
+        L97oUFPLCfVXttSmZGZBGw==
+X-Google-Smtp-Source: ABdhPJwrdtzdoJI7G135qeLaR3UCx5EafkyJoQg9adSeymPU9nQ4XeCrBEFI+xv1qjv0jNt5M/EEzw==
+X-Received: by 2002:a02:9f14:0:b0:331:9195:dd3e with SMTP id z20-20020a029f14000000b003319195dd3emr13796820jal.0.1654786566891;
+        Thu, 09 Jun 2022 07:56:06 -0700 (PDT)
+Received: from robh.at.kernel.org ([64.188.179.251])
+        by smtp.gmail.com with ESMTPSA id i45-20020a02602d000000b0032e22496addsm9493537jac.139.2022.06.09.07.56.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Jun 2022 07:34:02 -0700 (PDT)
-From:   Douglas Anderson <dianders@chromium.org>
-To:     Rob Clark <robdclark@gmail.com>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        Jordan Crouse <jordan@cosmicpenguin.net>
-Cc:     Douglas Anderson <dianders@chromium.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Thu, 09 Jun 2022 07:56:06 -0700 (PDT)
+Received: (nullmailer pid 3783129 invoked by uid 1000);
+        Thu, 09 Jun 2022 14:56:04 -0000
+Date:   Thu, 9 Jun 2022 08:56:04 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Taniya Das <quic_tdas@quicinc.com>
+Cc:     Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette =?iso-8859-1?Q?=A0?= 
+        <mturquette@baylibre.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Chia-I Wu <olvaffe@gmail.com>,
-        Dan Carpenter <dan.carpenter@oracle.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Eric Anholt <eric@anholt.net>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Sean Paul <sean@poorly.run>, Wang Qing <wangqing@vivo.com>,
-        Yangtao Li <tiny.windzz@gmail.com>,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH] drm/msm: Grab the GPU runtime in a6xx routines, not the GMU one
-Date:   Thu,  9 Jun 2022 07:33:33 -0700
-Message-Id: <20220609073317.1.Ie846c5352bc307ee4248d7cab998ab3016b85d06@changeid>
-X-Mailer: git-send-email 2.36.1.255.ge46751e96f-goog
+        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH v4 2/3] dt-bindings: clock: Add support for external
+ MCLKs for LPASS on SC7280
+Message-ID: <20220609145604.GA3781473-robh@kernel.org>
+References: <20220604062137.14584-1-quic_tdas@quicinc.com>
+ <20220604062137.14584-3-quic_tdas@quicinc.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220604062137.14584-3-quic_tdas@quicinc.com>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From testing on sc7180-trogdor devices, reading the GMU registers
-needs the GMU clocks to be enabled. Those clocks get turned on in
-a6xx_gmu_resume(). Confusingly enough, that function is called as a
-result of the runtime_pm of the GPU "struct device", not the GMU
-"struct device".
+On Sat, Jun 04, 2022 at 11:51:36AM +0530, Taniya Das wrote:
+> Support external mclk to interface external MI2S clocks for SC7280.
+> 
+> Fixes: 4185b27b3bef ("dt-bindings: clock: Add YAML schemas for LPASS clocks on SC7280").
+> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+> ---
+>  include/dt-bindings/clock/qcom,lpasscorecc-sc7280.h | 2 ++
+>  1 file changed, 2 insertions(+)
 
-Let's grab a reference to the correct device. Incidentally, this makes
-us match the a5xx routine more closely.
-
-This is easily shown to fix crashes that happen if we change the GPU's
-pm_runtime usage to not use autosuspend. It's also believed to fix
-some long tail GPU crashes even with autosuspend.
-
-NOTE: the crashes I've seen were fixed by _only_ fixing
-a6xx_gpu_busy(). However, I believe that the same arguments should be
-made to a6xx_gmu_set_freq() so I've changed that function too.
-
-Fixes: eadf79286a4b ("drm/msm: Check for powered down HW in the devfreq callbacks")
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
----
-
- drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 6 +++---
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 4 ++--
- 2 files changed, 5 insertions(+), 5 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-index 9f76f5b15759..b79ad2e0649c 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-@@ -129,13 +129,13 @@ void a6xx_gmu_set_freq(struct msm_gpu *gpu, struct dev_pm_opp *opp)
- 	 * This can get called from devfreq while the hardware is idle. Don't
- 	 * bring up the power if it isn't already active
- 	 */
--	if (pm_runtime_get_if_in_use(gmu->dev) == 0)
-+	if (pm_runtime_get_if_in_use(&gpu->pdev->dev) == 0)
- 		return;
- 
- 	if (!gmu->legacy) {
- 		a6xx_hfi_set_freq(gmu, perf_index);
- 		dev_pm_opp_set_opp(&gpu->pdev->dev, opp);
--		pm_runtime_put(gmu->dev);
-+		pm_runtime_put(&gpu->pdev->dev);
- 		return;
- 	}
- 
-@@ -159,7 +159,7 @@ void a6xx_gmu_set_freq(struct msm_gpu *gpu, struct dev_pm_opp *opp)
- 		dev_err(gmu->dev, "GMU set GPU frequency error: %d\n", ret);
- 
- 	dev_pm_opp_set_opp(&gpu->pdev->dev, opp);
--	pm_runtime_put(gmu->dev);
-+	pm_runtime_put(&gpu->pdev->dev);
- }
- 
- unsigned long a6xx_gmu_get_freq(struct msm_gpu *gpu)
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index 841e47a0b06b..87568d0b6ef8 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -1659,7 +1659,7 @@ static u64 a6xx_gpu_busy(struct msm_gpu *gpu, unsigned long *out_sample_rate)
- 	*out_sample_rate = 19200000;
- 
- 	/* Only read the gpu busy if the hardware is already active */
--	if (pm_runtime_get_if_in_use(a6xx_gpu->gmu.dev) == 0)
-+	if (pm_runtime_get_if_in_use(&gpu->pdev->dev) == 0)
- 		return 0;
- 
- 	busy_cycles = gmu_read64(&a6xx_gpu->gmu,
-@@ -1667,7 +1667,7 @@ static u64 a6xx_gpu_busy(struct msm_gpu *gpu, unsigned long *out_sample_rate)
- 			REG_A6XX_GMU_CX_GMU_POWER_COUNTER_XOCLK_0_H);
- 
- 
--	pm_runtime_put(a6xx_gpu->gmu.dev);
-+	pm_runtime_put(&gpu->pdev->dev);
- 
- 	return busy_cycles;
- }
--- 
-2.36.1.255.ge46751e96f-goog
-
+Acked-by: Rob Herring <robh@kernel.org>
