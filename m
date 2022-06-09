@@ -2,86 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1E3CB545625
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jun 2022 23:07:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 78E1F5456F6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jun 2022 00:12:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233748AbiFIVHK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Jun 2022 17:07:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48196 "EHLO
+        id S1345239AbiFIWMN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Jun 2022 18:12:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45374 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231946AbiFIVHJ (ORCPT
+        with ESMTP id S231266AbiFIWMN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Jun 2022 17:07:09 -0400
-Received: from mail-il1-f180.google.com (mail-il1-f180.google.com [209.85.166.180])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB74DFE61A;
-        Thu,  9 Jun 2022 14:07:08 -0700 (PDT)
-Received: by mail-il1-f180.google.com with SMTP id u2so18704379iln.2;
-        Thu, 09 Jun 2022 14:07:08 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=aPtqHDMoQGdoae6zzejWWCsMkFdeFOiCXUKMbTEVUPo=;
-        b=ikGIMExk9VFeDyn9b/kA0KGPV0+9lERT9fNJ5hRhy6I0eg9ks6bnkpDiHJyMOXqTdN
-         HrmIpQpXwaQQtqe3fg0iUk8GRWenSg8r2PFfKwhK1f/5Pf6NwPfDBd5Gak90aQ5+i7IU
-         MfrRKf24eeBD1HM0wfFulnl2RsgE5dP3CAqm8/sKKL/P9X9x/MyNXAJe2UB2LI1sLy5+
-         dxKoJbnq5t9b5lRKqr37ocVYJbZ/qoq19O0pka/TQrhmTycDUS55J/ljINlED6S8cyuN
-         EVLeQ4nTSy85hrsWdOrYQaN6znkS1PrX/Ed1HJwCW1Es5cSIbhQFN6E9PEOy4qjPnj+p
-         E8aQ==
-X-Gm-Message-State: AOAM531SFbbOHKQ8qx5EWwEwDLzMSePXS4udk8QEjhbMyA+fp/Kuy9BX
-        4soWZqnw6WuiLbHxS+mUWw==
-X-Google-Smtp-Source: ABdhPJwNB4CbEkIovPz4grxr9Q45QXlG6X7GESmaoa/6jf6ML/U3s4aEwaZkR4NCZsc4RBaOypUmWA==
-X-Received: by 2002:a05:6e02:1c89:b0:2d1:b0ae:88a1 with SMTP id w9-20020a056e021c8900b002d1b0ae88a1mr22730568ill.311.1654808828040;
-        Thu, 09 Jun 2022 14:07:08 -0700 (PDT)
-Received: from robh.at.kernel.org ([64.188.179.251])
-        by smtp.gmail.com with ESMTPSA id n23-20020a02cc17000000b0032e2c859d8esm9960687jap.138.2022.06.09.14.07.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Jun 2022 14:07:07 -0700 (PDT)
-Received: (nullmailer pid 100144 invoked by uid 1000);
-        Thu, 09 Jun 2022 21:07:05 -0000
-Date:   Thu, 9 Jun 2022 15:07:05 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        "Ivan T. Ivanov" <ivan.ivanov@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Kumar Gala <galak@codeaurora.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>
-Subject: Re: [PATCH 1/2] dt-bindings: thermal: qcom,spmi-temp-alarm: convert
- to dtschema
-Message-ID: <20220609210705.GA100111-robh@kernel.org>
-References: <20220608112702.80873-1-krzysztof.kozlowski@linaro.org>
+        Thu, 9 Jun 2022 18:12:13 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 809DD1C28CD;
+        Thu,  9 Jun 2022 15:12:12 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 19D3861F03;
+        Thu,  9 Jun 2022 22:12:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 684C1C34114;
+        Thu,  9 Jun 2022 22:12:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1654812731;
+        bh=zJvO4Ob62G1vZNY0ZLTIVvosVMthN1HJt9gvNcztX2c=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=cTKMxbEYwLB84MUA4Do8QRyHyOLUgtD5RLQ/1RlSMk2SgHDKcBvtPUs169GiTbQdc
+         G/ycUcmw7zJp/7TtERG5HYIXnsfeJaX7ZUQeA9rlGlqFKYS/7NjzLpmPkn4Q8Axkni
+         zVvxj9rXGxhbO6iVr8Ckyx3opAK61KNoe40cGD+DxKlFTpajFe38Dek/7iDYjviiQ4
+         r6YKe5LGP3mD+msS3+kh1X4o1HzFzY6Rf6On0xmPT/GdQ20hxxtVPCdYdEcNGQxr7Q
+         ypzvPbP7fCec+RW5k558duToIGoiRzFjyWM9IT+ypjpA4eS5KUYeONFoGDwqj/o5UD
+         yTar86bAUyBmw==
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220608112702.80873-1-krzysztof.kozlowski@linaro.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CAA8EJpomtbN0+ocD2pRbkYriUY4D9OnjgoFzL9qNHhPm3Uz5cQ@mail.gmail.com>
+References: <20220601220747.1145095-1-marijn.suijten@somainline.org> <20220601220747.1145095-4-marijn.suijten@somainline.org> <CAA8EJpomtbN0+ocD2pRbkYriUY4D9OnjgoFzL9qNHhPm3Uz5cQ@mail.gmail.com>
+Subject: Re: [PATCH v2 03/11] clk: fixed-factor: Introduce *clk_hw_register_fixed_factor_parent_hw()
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rajeev Nandan <quic_rajeevny@quicinc.com>,
+        Vladimir Lypak <vladimir.lypak@gmail.com>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Jonathan Marek <jonathan@marek.ca>, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+Date:   Thu, 09 Jun 2022 15:12:09 -0700
+User-Agent: alot/0.10
+Message-Id: <20220609221211.684C1C34114@smtp.kernel.org>
+X-Spam-Status: No, score=-8.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 08 Jun 2022 13:27:01 +0200, Krzysztof Kozlowski wrote:
-> Convert the Qualcomm QPNP PMIC Temperature Alarm to DT Schema.
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->  .../thermal/qcom,spmi-temp-alarm.yaml         | 85 +++++++++++++++++++
->  .../bindings/thermal/qcom-spmi-temp-alarm.txt | 51 -----------
->  2 files changed, 85 insertions(+), 51 deletions(-)
->  create mode 100644 Documentation/devicetree/bindings/thermal/qcom,spmi-temp-alarm.yaml
->  delete mode 100644 Documentation/devicetree/bindings/thermal/qcom-spmi-temp-alarm.txt
-> 
+Quoting Dmitry Baryshkov (2022-06-02 03:20:19)
+> On Thu, 2 Jun 2022 at 01:07, Marijn Suijten
+> <marijn.suijten@somainline.org> wrote:
+> > diff --git a/drivers/clk/clk-fixed-factor.c b/drivers/clk/clk-fixed-fac=
+tor.c
+> > index 54942d758ee6..fabb98d0cdb2 100644
+> > --- a/drivers/clk/clk-fixed-factor.c
+> > +++ b/drivers/clk/clk-fixed-factor.c
+> > @@ -78,7 +78,8 @@ static void devm_clk_hw_register_fixed_factor_release=
+(struct device *dev, void *
+> >
+> >  static struct clk_hw *
+> >  __clk_hw_register_fixed_factor(struct device *dev, struct device_node =
+*np,
+> > -               const char *name, const char *parent_name, int index,
+> > +               const char *name, const char *parent_name,
+> > +               const struct clk_hw *parent_hw, int index,
+> >                 unsigned long flags, unsigned int mult, unsigned int di=
+v,
+> >                 bool devm)
+> >  {
+> > @@ -108,7 +109,9 @@ __clk_hw_register_fixed_factor(struct device *dev, =
+struct device_node *np,
+> >         init.name =3D name;
+> >         init.ops =3D &clk_fixed_factor_ops;
+> >         init.flags =3D flags;
+> > -       if (parent_name)
+> > +       if (parent_hw)
+> > +               init.parent_hws =3D &parent_hw;
+> > +       else if (parent_name)
+> >                 init.parent_names =3D &parent_name;
+>=20
+> If you change the order of if clauses, you won't have to introduce
+> unnecessary changes.
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+Indeed, please do that.
+
+>=20
+> >         else
+> >                 init.parent_data =3D &pdata;
+> > @@ -148,17 +151,50 @@ struct clk_hw *devm_clk_hw_register_fixed_factor_=
+index(struct device *dev,
+> >                 const char *name, unsigned int index, unsigned long fla=
+gs,
+> >                 unsigned int mult, unsigned int div)
+> >  {
+> > -       return __clk_hw_register_fixed_factor(dev, NULL, name, NULL, in=
+dex,
+> > -                                             flags, mult, div, true);
+> > +       return __clk_hw_register_fixed_factor(dev, NULL, name, NULL, NU=
+LL,
+> > +                                             index, flags, mult, div, =
+true);
+>=20
+> Here (and several times later) you are inserting an argument and then
+> moving arguments to the next line. My slight preference would be to
+> just insert the arg (and maybe break the line if it gets too long) w/o
+> touching the next lines.
+
+I'd just add the argument at the end because when it is added in the
+middle it makes the diff more difficult to read.
