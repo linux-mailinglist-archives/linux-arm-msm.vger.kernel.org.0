@@ -2,31 +2,33 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D6AB8544813
+	by mail.lfdr.de (Postfix) with ESMTP id 1357F544811
 	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jun 2022 11:54:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241266AbiFIJyg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Jun 2022 05:54:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50282 "EHLO
+        id S240177AbiFIJyk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Jun 2022 05:54:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50568 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242416AbiFIJye (ORCPT
+        with ESMTP id S239398AbiFIJyh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Jun 2022 05:54:34 -0400
-Received: from mail.shift-gmbh.com (mail.shift-gmbh.com [IPv6:2a01:4f8:a0:5496::2])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8399A195974;
-        Thu,  9 Jun 2022 02:54:29 -0700 (PDT)
+        Thu, 9 Jun 2022 05:54:37 -0400
+X-Greylist: delayed 2337 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 09 Jun 2022 02:54:35 PDT
+Received: from mail.shift-gmbh.com (mail.shift-gmbh.com [85.10.195.145])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33A7B19578A;
+        Thu,  9 Jun 2022 02:54:33 -0700 (PDT)
 From:   Alexander Martinz <amartinz@shiftphones.com>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=shiftphones.com;
-        s=2018; t=1654768466;
+        s=2018; t=1654768471;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
          to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding;
-        bh=EHEuZTnae7JIoJINVmYOdraD9EvP6HM8Di56khNR+uQ=;
-        b=r94IREh6bcly39S5nnsnaC5t+otHkGUEXkMrZ9yFu0zBDWm6TtlStPI0XD1Bc0Thiz4VhD
-        XPbChYw5Y5VVPHQ0PF5ysE6ugU3fiCwUC8jD+sp6wHGear7yTJxH9USFXF6AoqKM9/oY8L
-        clMD62V4sKmSRhQcPZNBvbMud5+MhvuYLPQWwDflx2Rjw0uyzNczWKSgS9vmpHDfYs8PYQ
-        ZcatI4/USt/HRHZl6fGhTMhqtigmjgmGD7jey4HknDfruQwI0hx4P44QGEpidKmWr8D7iL
-        lKJrXA7xhFEGBxbAfuE9ZH+AqnR976qYgMio72jXzlLg89tmRp7Wdb3PxFC4Rg==
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=3ai7MXDHhQ0YkmN4XjLxpe4VHIXkfJfMzV2EfEfNPqA=;
+        b=q3qFRsOM0276IDWHlcDx5ar0aVWlGYi/hivWeZCNX4vetaAs94nL3WD5W8jjKIOhuUX10N
+        9yklJLJ3nk7v2sGTmgwLFqQeVGhqc7pc7D4Q7f6XO8uyQQs/rbO0US5qfm1lIVFId7/7Pw
+        bO90EOk4ZKWREEwZeszqcT25Swz+KVC5EQ5/vwrwBolzzaZbsDbhfVE4JhzEH3KRmETdK+
+        wpI5ZLpRQecrGgxz9fOojk+YXK3NgdHV20zpn+o1tW/0OPi7qQy4Gpi2WFX8cWWSToOm0w
+        FaurpkpwnXFGyId4LP9VlVA6Z7BiAPgpfvQxSJdO+bU4q8iJFqSV6IRepJB7Ng==
 To:     ~postmarketos/upstreaming@lists.sr.ht
 Cc:     phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -34,11 +36,13 @@ Cc:     phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org,
-        Dylan Van Assche <me@dylanvanassche.be>,
-        Alexander Martinz <amartinz@shiftphones.com>
-Subject: [PATCH 1/2] arch: arm64: qcom: sdm845-shift-axolotl: fix Bluetooth firmware loading
-Date:   Thu,  9 Jun 2022 11:54:11 +0200
-Message-Id: <20220609095412.211060-1-amartinz@shiftphones.com>
+        Alexander Martinz <amartinz@shiftphones.com>,
+        Dylan Van Assche <me@dylanvanassche.be>
+Subject: [PATCH 2/2] arm64: dts: qcom/sdm845-shift-axolotl: Add audio support
+Date:   Thu,  9 Jun 2022 11:54:12 +0200
+Message-Id: <20220609095412.211060-2-amartinz@shiftphones.com>
+In-Reply-To: <20220609095412.211060-1-amartinz@shiftphones.com>
+References: <20220609095412.211060-1-amartinz@shiftphones.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Authentication-Results: ORIGINATING;
@@ -53,77 +57,207 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Dylan Van Assche <me@dylanvanassche.be>
+This patch adds audio support for the SHIFT6mq phone.
 
-Add hsuart0 alias, firmware name and prevent garbage data on Bluetooth UART lines
-on the SHIFT 6mq based on the Qualcomm SDM845 chip.
-I discovered that these were missing by comparing the DTS with similar
-devices such as the Oneplus 6/6T and Dragonboard 845c.
+The primary microphone and headphone jack are handled by the
+SDM845 sound card and WCD9340 codec.
 
-Signed-of-by: Dylan Van Assche <me@dylanvanassche.be>
-Tested-by: Alexander Martinz <amartinz@shiftphones.com>
+The primary speaker needs to go through the TFA9890 speaker
+amplifier.
+
+Signed-off-by: Alexander Martinz <amartinz@shiftphones.com>
+Tested-by: Dylan Van Assche <me@dylanvanassche.be>
 ---
- .../boot/dts/qcom/sdm845-shift-axolotl.dts    | 33 +++++++++++++++++++
- 1 file changed, 33 insertions(+)
+ .../boot/dts/qcom/sdm845-shift-axolotl.dts    | 141 ++++++++++++++++++
+ 1 file changed, 141 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts b/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
-index 103cc40816fd..fa72f23ef0c2 100644
+index fa72f23ef0c2..8c4967d6d0e3 100644
 --- a/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
 +++ b/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
-@@ -20,6 +20,7 @@ / {
+@@ -8,6 +8,8 @@
  
- 	aliases {
- 		display0 = &framebuffer0;
-+		hsuart0 = &uart6;
- 		serial0 = &uart9;
- 	};
- 
-@@ -529,6 +530,32 @@ volume_down_resin: resin {
+ #include <dt-bindings/gpio/gpio.h>
+ #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
++#include <dt-bindings/sound/qcom,q6afe.h>
++#include <dt-bindings/sound/qcom,q6asm.h>
+ #include "sdm845.dtsi"
+ #include "pm8998.dtsi"
+ #include "pmi8998.dtsi"
+@@ -492,6 +494,19 @@ touchscreen@38 {
  	};
  };
  
-+/*
-+ * Prevent garbage data on bluetooth UART lines
-+ */
-+&qup_uart6_default {
-+        pinmux {
-+                pins = "gpio45", "gpio46", "gpio47", "gpio48";
-+                function = "qup6";
-+        };
++&i2c11 {
++	status = "okay";
++	clock-frequency = <400000>;
 +
-+        cts {
-+                pins = "gpio45";
-+                bias-pull-down;
-+        };
-+
-+        rts-tx {
-+                pins = "gpio46", "gpio47";
-+                drive-strength = <2>;
-+                bias-disable;
-+        };
-+
-+        rx {
-+                pins = "gpio48";
-+                bias-pull-up;
-+        };
++	tfa9890_codec: tfa9890@34 {
++		compatible = "nxp,tfa9890";
++		reg = <0x34>;
++		vddd-supply = <&vreg_s4a_1p8>;
++		reset-gpio = <&tlmm 7 0>;
++		#sound-dai-cells = <1>;
++	};
 +};
 +
- &qup_uart9_default {
- 	pinconf-rx {
- 		pins = "gpio5";
-@@ -667,6 +694,12 @@ &uart6 {
- 	bluetooth {
- 		compatible = "qcom,wcn3990-bt";
+ &ipa {
+ 	status = "okay";
  
-+		/*
-+		 * This path is relative to the qca/
-+		 * subdir under lib/firmware.
-+		 */
-+		firmware-name = "axolotl/crnv21.bin";
+@@ -530,6 +545,27 @@ volume_down_resin: resin {
+ 	};
+ };
+ 
++&q6afedai {
++	qi2s@22 {
++		reg = <22>;
++		qcom,sd-lines = <0>;
++	};
++};
 +
- 		vddio-supply = <&vreg_s4a_1p8>;
- 		vddxo-supply = <&vreg_l7a_1p8>;
- 		vddrf-supply = <&vreg_l17a_1p3>;
++&q6asmdai {
++	dai@0 {
++		reg = <0>;
++	};
++
++	dai@1 {
++		reg = <1>;
++	};
++
++	dai@2 {
++		reg = <2>;
++	};
++};
++
+ /*
+  * Prevent garbage data on bluetooth UART lines
+  */
+@@ -578,6 +614,84 @@ &qupv3_id_1 {
+ 	status = "okay";
+ };
+ 
++&sound {
++	model = "SHIFT6mq";
++	compatible = "qcom,sdm845-sndcard";
++	pinctrl-0 = <&quat_mi2s_active &quat_mi2s_sd0_active>;
++	pinctrl-names = "default";
++
++	audio-routing = "RX_BIAS", "MCLK",
++			"AMIC1", "MIC BIAS1",
++			"AMIC2", "MIC BIAS2",
++			"AMIC3", "MIC BIAS3";
++
++	mm1-dai-link {
++		link-name = "MultiMedia1";
++		cpu {
++			sound-dai = <&q6asmdai MSM_FRONTEND_DAI_MULTIMEDIA1>;
++		};
++	};
++
++	mm2-dai-link {
++		link-name = "MultiMedia2";
++		cpu {
++			sound-dai = <&q6asmdai MSM_FRONTEND_DAI_MULTIMEDIA2>;
++		};
++	};
++
++	mm3-dai-link {
++		link-name = "MultiMedia3";
++		cpu {
++			sound-dai = <&q6asmdai MSM_FRONTEND_DAI_MULTIMEDIA3>;
++		};
++	};
++
++	speaker-dai-link {
++		link-name = "Speaker Playback";
++		codec {
++			sound-dai = <&tfa9890_codec 0>;
++		};
++
++		cpu {
++			sound-dai = <&q6afedai QUATERNARY_MI2S_RX>;
++		};
++
++		platform {
++			sound-dai = <&q6routing>;
++		};
++	};
++
++	slim-dai-link {
++		link-name = "SLIM Playback";
++		codec {
++			sound-dai = <&wcd9340 0>;
++		};
++
++		cpu {
++			sound-dai = <&q6afedai SLIMBUS_0_RX>;
++		};
++
++		platform {
++			sound-dai = <&q6routing>;
++		};
++	};
++
++	slimcap-dai-link {
++		link-name = "SLIM Capture";
++		codec {
++			sound-dai = <&wcd9340 1>;
++		};
++
++		cpu {
++			sound-dai = <&q6afedai SLIMBUS_0_TX>;
++		};
++
++		platform {
++			sound-dai = <&q6routing>;
++		};
++	};
++};
++
+ &tlmm {
+ 	gpio-reserved-ranges = <0 4>, <81 4>;
+ 
+@@ -686,6 +800,15 @@ config {
+ 			bias-pull-down;
+ 		};
+ 	};
++
++	wcd_intr_default: wcd_intr_default {
++		pins = <54>;
++		function = "gpio";
++
++		input-enable;
++		bias-pull-down;
++		drive-strength = <2>;
++	};
+ };
+ 
+ &uart6 {
+@@ -756,6 +879,24 @@ &venus {
+ 	firmware-name = "qcom/sdm845/axolotl/venus.mbn";
+ };
+ 
++&wcd9340 {
++	pinctrl-0 = <&wcd_intr_default>;
++	pinctrl-names = "default";
++	clock-names = "extclk";
++	clocks = <&rpmhcc RPMH_LN_BB_CLK2>;
++	reset-gpios = <&tlmm 64 0>;
++	vdd-buck-supply = <&vreg_s4a_1p8>;
++	vdd-buck-sido-supply = <&vreg_s4a_1p8>;
++	vdd-tx-supply = <&vreg_s4a_1p8>;
++	vdd-rx-supply = <&vreg_s4a_1p8>;
++	vdd-io-supply = <&vreg_s4a_1p8>;
++
++	qcom,micbias1-microvolt = <2700000>;
++	qcom,micbias2-microvolt = <2700000>;
++	qcom,micbias3-microvolt = <2700000>;
++	qcom,micbias4-microvolt = <2700000>;
++};
++
+ &wifi {
+ 	status = "okay";
+ 
 -- 
 2.36.1
 
