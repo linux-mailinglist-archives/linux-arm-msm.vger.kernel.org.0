@@ -2,368 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 25349544AB3
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jun 2022 13:43:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 68B94544B07
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jun 2022 13:50:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237523AbiFILm3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Jun 2022 07:42:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40060 "EHLO
+        id S233763AbiFILun (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Jun 2022 07:50:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34538 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244343AbiFILlJ (ORCPT
+        with ESMTP id S239820AbiFILum (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Jun 2022 07:41:09 -0400
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A56A419CED8
-        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Jun 2022 04:40:34 -0700 (PDT)
-Received: by mail-ej1-x631.google.com with SMTP id h23so35837833ejj.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Jun 2022 04:40:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=VIMCTR1frvgpFCy/vc70wP9R+xYc4n9eebnCO6KFjK8=;
-        b=e87w43dqaKRQ7Z/dx+eIcL+FrCawq+shSTObf8LVjoQtraBFuU9aOy5zqaETz0fAu5
-         sOjEiZqfSRL1Qvn3y+om0xZsVLmMggAgQPn9t0SJ2S3xMtB+MTRF2tmyOUw3yF9MNQR5
-         fejPJ/pGRUhL66yMSYmRWbgVSUGuuqOZkwpB6jmoVgIY3Qlg15kXmqmCBlyynUfjLaEq
-         srqqTDE6kT9Vtl50jxgDHRowOHnGC+Da8f8+QUd36Vs8YMzAP+tFMjRLSn8aNTiHQz/K
-         uuFUbdx5SXkCMdhX6JegFLquuwlb/q1x+JeEj4uugHxcUwWZjvTiuwZvNUwGnOxBMEcj
-         UOqA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=VIMCTR1frvgpFCy/vc70wP9R+xYc4n9eebnCO6KFjK8=;
-        b=udNTt09yGOiEEO1c3ikRB0+O+mNMtXw9SD9g3XX4kdUeqYw7YONQQOOyrci5pD7j2H
-         La8WbveL1S3eOxRRigz9iw8CdBhtSxYSpxrmye7DsjiNTuRJpN5EDX/OT7Gzes5Myk4M
-         7OtpheQY1mSOdP3CdKCiLoC4qdqKO8A++eYaCsBYSCtt6IV04agFG5S9rJ0xObtYjRSc
-         Hm3sAct69jrgrs5osg8JChe67tMNvWgtkOqRb1e37nvmbBSBdHrS0z9faFSMrGUfKCHX
-         qdGeOiO/QZM/z6a5GDsPreaEaswIDHcs0QtG3RhBGnqHX/9myRY1r3p9lL21AZz8fcNO
-         EFTw==
-X-Gm-Message-State: AOAM531fQS9XEERKwoB2RkwTm//OTLjaSrLZ3jEBtqJBRGC2sXvLn74N
-        MW7RWUnwdm9U/oAx2zyfe5P5NA==
-X-Google-Smtp-Source: ABdhPJxg5RjCwZhjIijeZmNGh2LNUXMbxIJjQHT/neGfAI+evNUZBpeF4c5I0UK2Tq9zSG8JegRfWg==
-X-Received: by 2002:a17:907:1310:b0:709:bfa:4f3e with SMTP id vj16-20020a170907131000b007090bfa4f3emr28754314ejb.589.1654774833043;
-        Thu, 09 Jun 2022 04:40:33 -0700 (PDT)
-Received: from localhost.localdomain (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id 10-20020a170906058a00b007101f6f0720sm7760844ejn.120.2022.06.09.04.40.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Jun 2022 04:40:32 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>,
-        arm@kernel.org, soc@kernel.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Thu, 9 Jun 2022 07:50:42 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45E2940F27B;
+        Thu,  9 Jun 2022 04:50:41 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id DC5F160B0C;
+        Thu,  9 Jun 2022 11:50:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BC74C34114;
+        Thu,  9 Jun 2022 11:50:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1654775440;
+        bh=gATZaLIUmZR0d4Dmyav0+IhccKug7Z/4zmtUfvd5RJw=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=rDQHg5r1bCeF77ifffkA8E0SdS22TUjUb0z/nq1nwqUqCCeVG6Z0j6BkRhQs6y5c1
+         hgPdv+j7ZW4EPvt8V5X1AINKEDLB0inQKYtiqFAm39H1+e3HSTWiXP8stv5Cx19Guv
+         ZgthtHps0dmgh4+5GMGHbs+PJQazuj6olM6aMmn4ytw7p7gKIkHGxrbb78werfnkgY
+         AhiGGmxPM+HSzPUR3I80FTyevRAQ2VDgu7Dtf2K9olvpQsuM8v3/Jp7j6C6CI3d7TL
+         /ERtIPEstLy9yo6HcSAnUByX5kv8uT8aSQRCCyE3B+uR//s7FiXqG9vwYlUYVX/XkE
+         7g9cC1xBXgihQ==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1nzGgO-0000wl-1B; Thu, 09 Jun 2022 13:50:36 +0200
+Date:   Thu, 9 Jun 2022 13:50:36 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Stephen Boyd <sboyd@kernel.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH v2 31/48] ARM: dts: qcom: align gpio-key node names with dtschema
-Date:   Thu,  9 Jun 2022 13:40:18 +0200
-Message-Id: <20220609114026.380682-2-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220609113721.379932-1-krzysztof.kozlowski@linaro.org>
-References: <20220609113721.379932-1-krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH 2/3] clk: qcom: gdsc: add support for collapse-vote
+ registers
+Message-ID: <YqHejM86/T0f3Vt+@hovoldconsulting.com>
+References: <20220520100948.19622-1-johan+linaro@kernel.org>
+ <20220520100948.19622-3-johan+linaro@kernel.org>
+ <20220521035228.1FD9AC385A9@smtp.kernel.org>
+ <Yot4XHaf6uHcJxTL@hovoldconsulting.com>
+ <20220526183219.9F047C385A9@smtp.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220526183219.9F047C385A9@smtp.kernel.org>
+X-Spam-Status: No, score=-8.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The node names should be generic and DT schema expects certain pattern
-(e.g. with key/button/switch).
+On Thu, May 26, 2022 at 11:32:17AM -0700, Stephen Boyd wrote:
+> Quoting Johan Hovold (2022-05-23 05:04:44)
+> > On Fri, May 20, 2022 at 08:52:26PM -0700, Stephen Boyd wrote:
+> > > Quoting Johan Hovold (2022-05-20 03:09:47)
+> > > > Recent Qualcomm platforms have APCS collapse-vote registers that allow
+> > > > for sharing GDSCs with other masters (e.g. LPASS).
+> > > 
+> > > Maybe just say 'with other subsystems' because LPASS is an entire
+> > > subsystem.
+> > 
+> > The term "subsystem" is too broad and also has a different meaning in
+> > Linux.
+> > 
+> > The vendor kernel uses "masters" here which is clear enough and
+> > presumably matches their documentation.
+> > 
+> 
+> How about "voter"? Then it isn't confused with linux subsystems.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- arch/arm/boot/dts/qcom-apq8064-asus-nexus7-flo.dts        | 4 ++--
- arch/arm/boot/dts/qcom-apq8064-sony-xperia-lagan-yuga.dts | 8 ++++----
- arch/arm/boot/dts/qcom-ipq4018-ap120c-ac.dtsi             | 2 +-
- arch/arm/boot/dts/qcom-ipq8064-rb3011.dts                 | 4 ++--
- arch/arm/boot/dts/qcom-ipq8064-v1.0.dtsi                  | 6 +++---
- arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts  | 4 ++--
- arch/arm/boot/dts/qcom-msm8974-sony-xperia-rhine.dtsi     | 8 ++++----
- arch/arm/boot/dts/qcom-msm8974pro-fairphone-fp2.dts       | 6 +++---
- arch/arm/boot/dts/qcom-msm8974pro-samsung-klte.dts        | 6 +++---
- .../dts/qcom-msm8974pro-sony-xperia-shinano-castor.dts    | 8 ++++----
- 10 files changed, 28 insertions(+), 28 deletions(-)
+Yeah, voters vote, but that's not very informative, is it?
 
-diff --git a/arch/arm/boot/dts/qcom-apq8064-asus-nexus7-flo.dts b/arch/arm/boot/dts/qcom-apq8064-asus-nexus7-flo.dts
-index ca9f73528196..549f3ef53b2d 100644
---- a/arch/arm/boot/dts/qcom-apq8064-asus-nexus7-flo.dts
-+++ b/arch/arm/boot/dts/qcom-apq8064-asus-nexus7-flo.dts
-@@ -44,12 +44,12 @@ ext_3p3v: regulator-fixed@1 {
- 
- 	gpio-keys {
- 		compatible = "gpio-keys";
--		volume_up {
-+		key-volume-up {
- 			label = "Volume Up";
- 			gpios = <&pm8921_gpio 4 GPIO_ACTIVE_HIGH>;
- 			linux,code = <KEY_VOLUMEUP>;
- 		};
--		volume_down {
-+		key-volume-down {
- 			label = "Volume Down";
- 			gpios = <&pm8921_gpio 38 GPIO_ACTIVE_HIGH>;
- 			linux,code = <KEY_VOLUMEDOWN>;
-diff --git a/arch/arm/boot/dts/qcom-apq8064-sony-xperia-lagan-yuga.dts b/arch/arm/boot/dts/qcom-apq8064-sony-xperia-lagan-yuga.dts
-index 0cee62c7b8b0..13826462fee5 100644
---- a/arch/arm/boot/dts/qcom-apq8064-sony-xperia-lagan-yuga.dts
-+++ b/arch/arm/boot/dts/qcom-apq8064-sony-xperia-lagan-yuga.dts
-@@ -23,28 +23,28 @@ gpio-keys {
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&gpio_keys_pin_a>;
- 
--		camera-focus {
-+		key-camera-focus {
- 			label = "camera_focus";
- 			gpios = <&pm8921_gpio 3 GPIO_ACTIVE_LOW>;
- 			linux,input-type = <1>;
- 			linux,code = <KEY_CAMERA_FOCUS>;
- 		};
- 
--		camera-snapshot {
-+		key-camera-snapshot {
- 			label = "camera_snapshot";
- 			gpios = <&pm8921_gpio 4 GPIO_ACTIVE_LOW>;
- 			linux,input-type = <1>;
- 			linux,code = <KEY_CAMERA>;
- 		};
- 
--		volume-down {
-+		key-volume-down {
- 			label = "volume_down";
- 			gpios = <&pm8921_gpio 29 GPIO_ACTIVE_LOW>;
- 			linux,input-type = <1>;
- 			linux,code = <KEY_VOLUMEDOWN>;
- 		};
- 
--		volume-up {
-+		key-volume-up {
- 			label = "volume_up";
- 			gpios = <&pm8921_gpio 35 GPIO_ACTIVE_LOW>;
- 			linux,input-type = <1>;
-diff --git a/arch/arm/boot/dts/qcom-ipq4018-ap120c-ac.dtsi b/arch/arm/boot/dts/qcom-ipq4018-ap120c-ac.dtsi
-index 1f3b1ce82108..af9a26fb5d4a 100644
---- a/arch/arm/boot/dts/qcom-ipq4018-ap120c-ac.dtsi
-+++ b/arch/arm/boot/dts/qcom-ipq4018-ap120c-ac.dtsi
-@@ -11,7 +11,7 @@ / {
- 	keys {
- 		compatible = "gpio-keys";
- 
--		reset {
-+		key-reset {
- 			label = "reset";
- 			gpios = <&tlmm 63 GPIO_ACTIVE_LOW>;
- 			linux,code = <KEY_RESTART>;
-diff --git a/arch/arm/boot/dts/qcom-ipq8064-rb3011.dts b/arch/arm/boot/dts/qcom-ipq8064-rb3011.dts
-index 596d129d4a95..760151b52add 100644
---- a/arch/arm/boot/dts/qcom-ipq8064-rb3011.dts
-+++ b/arch/arm/boot/dts/qcom-ipq8064-rb3011.dts
-@@ -187,12 +187,12 @@ partition@0 {
- 			};
- 		};
- 
--		gpio_keys {
-+		gpio-keys {
- 			compatible = "gpio-keys";
- 			pinctrl-0 = <&buttons_pins>;
- 			pinctrl-names = "default";
- 
--			button@1 {
-+			button {
- 				label = "reset";
- 				linux,code = <KEY_RESTART>;
- 				gpios = <&qcom_pinmux 66 GPIO_ACTIVE_LOW>;
-diff --git a/arch/arm/boot/dts/qcom-ipq8064-v1.0.dtsi b/arch/arm/boot/dts/qcom-ipq8064-v1.0.dtsi
-index 5c802b99e15f..ccebb7d56113 100644
---- a/arch/arm/boot/dts/qcom-ipq8064-v1.0.dtsi
-+++ b/arch/arm/boot/dts/qcom-ipq8064-v1.0.dtsi
-@@ -65,19 +65,19 @@ sata@29000000 {
- 			status = "okay";
- 		};
- 
--		gpio_keys {
-+		gpio-keys {
- 			compatible = "gpio-keys";
- 			pinctrl-0 = <&buttons_pins>;
- 			pinctrl-names = "default";
- 
--			button@1 {
-+			button-1 {
- 				label = "reset";
- 				linux,code = <KEY_RESTART>;
- 				gpios = <&qcom_pinmux 54 GPIO_ACTIVE_LOW>;
- 				linux,input-type = <1>;
- 				debounce-interval = <60>;
- 			};
--			button@2 {
-+			button-2 {
- 				label = "wps";
- 				linux,code = <KEY_WPS_BUTTON>;
- 				gpios = <&qcom_pinmux 65 GPIO_ACTIVE_LOW>;
-diff --git a/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts b/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts
-index 9493886a5c0d..72e82033252e 100644
---- a/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts
-+++ b/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts
-@@ -24,14 +24,14 @@ gpio-keys {
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&gpio_keys_pin_a>;
- 
--		volume-up {
-+		key-volume-up {
- 			label = "volume_up";
- 			gpios = <&pm8941_gpios 2 GPIO_ACTIVE_LOW>;
- 			linux,input-type = <1>;
- 			linux,code = <KEY_VOLUMEUP>;
- 		};
- 
--		volume-down {
-+		key-volume-down {
- 			label = "volume_down";
- 			gpios = <&pm8941_gpios 3 GPIO_ACTIVE_LOW>;
- 			linux,input-type = <1>;
-diff --git a/arch/arm/boot/dts/qcom-msm8974-sony-xperia-rhine.dtsi b/arch/arm/boot/dts/qcom-msm8974-sony-xperia-rhine.dtsi
-index 1d21de46f85c..e0152f118495 100644
---- a/arch/arm/boot/dts/qcom-msm8974-sony-xperia-rhine.dtsi
-+++ b/arch/arm/boot/dts/qcom-msm8974-sony-xperia-rhine.dtsi
-@@ -20,28 +20,28 @@ gpio-keys {
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&gpio_keys_pin_a>;
- 
--		volume-down {
-+		key-volume-down {
- 			label = "volume_down";
- 			gpios = <&pm8941_gpios 2 GPIO_ACTIVE_LOW>;
- 			linux,input-type = <1>;
- 			linux,code = <KEY_VOLUMEDOWN>;
- 		};
- 
--		camera-snapshot {
-+		key-camera-snapshot {
- 			label = "camera_snapshot";
- 			gpios = <&pm8941_gpios 3 GPIO_ACTIVE_LOW>;
- 			linux,input-type = <1>;
- 			linux,code = <KEY_CAMERA>;
- 		};
- 
--		camera-focus {
-+		key-camera-focus {
- 			label = "camera_focus";
- 			gpios = <&pm8941_gpios 4 GPIO_ACTIVE_LOW>;
- 			linux,input-type = <1>;
- 			linux,code = <KEY_CAMERA_FOCUS>;
- 		};
- 
--		volume-up {
-+		key-volume-up {
- 			label = "volume_up";
- 			gpios = <&pm8941_gpios 5 GPIO_ACTIVE_LOW>;
- 			linux,input-type = <1>;
-diff --git a/arch/arm/boot/dts/qcom-msm8974pro-fairphone-fp2.dts b/arch/arm/boot/dts/qcom-msm8974pro-fairphone-fp2.dts
-index 58cb2ce1e4df..92857283a675 100644
---- a/arch/arm/boot/dts/qcom-msm8974pro-fairphone-fp2.dts
-+++ b/arch/arm/boot/dts/qcom-msm8974pro-fairphone-fp2.dts
-@@ -25,7 +25,7 @@ gpio-keys {
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&gpio_keys_pin_a>;
- 
--		camera-snapshot {
-+		key-camera-snapshot {
- 			label = "camera_snapshot";
- 			gpios = <&pm8941_gpios 1 GPIO_ACTIVE_LOW>;
- 			linux,code = <KEY_CAMERA>;
-@@ -33,7 +33,7 @@ camera-snapshot {
- 			debounce-interval = <15>;
- 		};
- 
--		volume-down {
-+		key-volume-down {
- 			label = "volume_down";
- 			gpios = <&pm8941_gpios 2 GPIO_ACTIVE_LOW>;
- 			linux,code = <KEY_VOLUMEDOWN>;
-@@ -41,7 +41,7 @@ volume-down {
- 			debounce-interval = <15>;
- 		};
- 
--		volume-up {
-+		key-volume-up {
- 			label = "volume_up";
- 			gpios = <&pm8941_gpios 5 GPIO_ACTIVE_LOW>;
- 			linux,code = <KEY_VOLUMEUP>;
-diff --git a/arch/arm/boot/dts/qcom-msm8974pro-samsung-klte.dts b/arch/arm/boot/dts/qcom-msm8974pro-samsung-klte.dts
-index d6b2300a8223..1ed40c14f9d3 100644
---- a/arch/arm/boot/dts/qcom-msm8974pro-samsung-klte.dts
-+++ b/arch/arm/boot/dts/qcom-msm8974pro-samsung-klte.dts
-@@ -25,7 +25,7 @@ gpio-keys {
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&gpio_keys_pin_a>;
- 
--		volume-down {
-+		key-volume-down {
- 			label = "volume_down";
- 			gpios = <&pma8084_gpios 2 GPIO_ACTIVE_LOW>;
- 			linux,input-type = <1>;
-@@ -33,7 +33,7 @@ volume-down {
- 			debounce-interval = <15>;
- 		};
- 
--		home-key {
-+		key-home {
- 			label = "home_key";
- 			gpios = <&pma8084_gpios 3 GPIO_ACTIVE_LOW>;
- 			linux,input-type = <1>;
-@@ -42,7 +42,7 @@ home-key {
- 			debounce-interval = <15>;
- 		};
- 
--		volume-up {
-+		key-volume-up {
- 			label = "volume_up";
- 			gpios = <&pma8084_gpios 5 GPIO_ACTIVE_LOW>;
- 			linux,input-type = <1>;
-diff --git a/arch/arm/boot/dts/qcom-msm8974pro-sony-xperia-shinano-castor.dts b/arch/arm/boot/dts/qcom-msm8974pro-sony-xperia-shinano-castor.dts
-index 9bd8faea61a5..e409c12edc81 100644
---- a/arch/arm/boot/dts/qcom-msm8974pro-sony-xperia-shinano-castor.dts
-+++ b/arch/arm/boot/dts/qcom-msm8974pro-sony-xperia-shinano-castor.dts
-@@ -24,28 +24,28 @@ gpio-keys {
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&gpio_keys_pin_a>;
- 
--		volume-down {
-+		key-volume-down {
- 			label = "volume_down";
- 			gpios = <&pm8941_gpios 2 GPIO_ACTIVE_LOW>;
- 			linux,input-type = <1>;
- 			linux,code = <KEY_VOLUMEDOWN>;
- 		};
- 
--		camera-snapshot {
-+		key-camera-snapshot {
- 			label = "camera_snapshot";
- 			gpios = <&pm8941_gpios 3 GPIO_ACTIVE_LOW>;
- 			linux,input-type = <1>;
- 			linux,code = <KEY_CAMERA>;
- 		};
- 
--		camera-focus {
-+		key-camera-focus {
- 			label = "camera_focus";
- 			gpios = <&pm8941_gpios 4 GPIO_ACTIVE_LOW>;
- 			linux,input-type = <1>;
- 			linux,code = <KEY_CAMERA_FOCUS>;
- 		};
- 
--		volume-up {
-+		key-volume-up {
- 			label = "volume_up";
- 			gpios = <&pm8941_gpios 5 GPIO_ACTIVE_LOW>;
- 			linux,input-type = <1>;
--- 
-2.34.1
+I don't see any reason to obfuscate the commit message here.
 
+Johan
