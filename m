@@ -2,109 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0A293544B61
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jun 2022 14:10:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2494C544B66
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jun 2022 14:12:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245182AbiFIMKf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Jun 2022 08:10:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38522 "EHLO
+        id S245165AbiFIMMG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Jun 2022 08:12:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46478 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245199AbiFIMK3 (ORCPT
+        with ESMTP id S245166AbiFIMME (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Jun 2022 08:10:29 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F5BE265FBF
-        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Jun 2022 05:10:26 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id s6so37622953lfo.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Jun 2022 05:10:26 -0700 (PDT)
+        Thu, 9 Jun 2022 08:12:04 -0400
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3D3DDEB8
+        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Jun 2022 05:12:02 -0700 (PDT)
+Received: by mail-ed1-x52d.google.com with SMTP id x62so30908763ede.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Jun 2022 05:12:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=QSG20Dj6ndvabyRb1c78eTbY+WPCIgmk0mLj5fnfkZc=;
-        b=yQKeO/Z2I0TkmD51XdZCPv8rndgXW2el6J4HIJe8EIgTxElnD7e53n1HVblBwk0mSH
-         /OL51MvESzk+OSfstbvtRK7HkC5CfWoBkQ5DafO7X4w4naZypTtCpPv3wtQuHf5w/APp
-         AdtLE6rLqvrH59UL2r7T+mFuUG5rOnl+s0EhkCr5rKP6JQdyoRBRMu7+/dA1HzvQjSfA
-         fVNYV4DEU8dNTo8jAfZ4fOxFTT0CIUBgFGtgSQb5Cu9RpfO10idNjaP9F4DC9R8qd03/
-         ricINP2QR0CJS8dwHMPx6jjXnkITY2DYestbvJJjvut1Qu2V+HkwjZ/C3dwVjViaLc1r
-         Yscg==
+        bh=35+OxtjxgC3eYwAbp4/2PDr0i9pDlp26elktRUGxVwc=;
+        b=MzGcAx8cOg3qkErF9kdH7BugrP0alKEVzRHjKFl7onbm5VHBVIRioqj7Ufvce4vD+E
+         OQQCZgAhLi4bo36II65Qz47HKCnrI0MfnwCoaSLUlQoU76vq7wt9uEFEX6A0w0nlEV1C
+         GraysaFA1hBG0BFBEdfYBwKOreUyt639KhT1WtFwDijJN50hGSIi8cKl2x0PsFKQ6gVu
+         uVC9GlmOl8qRmnhNU7lanJSfg2e8D2ZXZ2O1sqPjyA5z9C/mYEHzN6oeVo2WqtCvGmp7
+         odEkop7niyv5iHdq61CLOypONyAYgONToGUqoYtdXqgUNuX0A8VbmjwMnj2IeTMg9jTg
+         MS8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=QSG20Dj6ndvabyRb1c78eTbY+WPCIgmk0mLj5fnfkZc=;
-        b=jovgfRYjSGU94ablN3Ay0ll6rQbSJdFWPqgF9Qc3mvxp2/olEgUwMHaJm2mFSrLmw7
-         OnB/rZboZH5kt/hZocL7DJjL3AFyABc0QNgM4YJ9OL5zOlPj3arACcukio03k0elsepB
-         +y1kN5iTnKaQHhrqTJM245/VjBL1v0aMGZezOjyUaOmbX+gfTWGTE/ZXkLWfiPXo7NLx
-         O3C5jK4bs0rDB00fQgKo5rW1luWCdv+l+BWABfVXSixT9czyw9Uz4+fkRfaeI+jfdOTH
-         +IrwIbQWPmnii8w6Pm/RIUBGvHTWx6hTxpV15v2OhMOH/U/BbyM3sYzKLnjLAnk47Cyf
-         Exsw==
-X-Gm-Message-State: AOAM530rHMygDFnMrjvs81bAz2v1IPb4g15KVznPVLWXY3ZuC+bJ6LnA
-        GLfLx5LVpwd2PwqQ7N5ztVGKOA==
-X-Google-Smtp-Source: ABdhPJx4hS6cWFi0csc42PotruFgLnEop7eKNzSQaLClCXHVQwjjzFnQZjWmDt88EW5Yplrdbl5cVQ==
-X-Received: by 2002:a05:6512:92c:b0:479:7a74:8427 with SMTP id f12-20020a056512092c00b004797a748427mr4722918lft.126.1654776624478;
-        Thu, 09 Jun 2022 05:10:24 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id f25-20020a19dc59000000b0047255d211afsm4199310lfj.222.2022.06.09.05.10.23
+        bh=35+OxtjxgC3eYwAbp4/2PDr0i9pDlp26elktRUGxVwc=;
+        b=cTOChNjyHjn2l0t4UtCLpfsL8l+IYyxzY/bfW0Ir4nLPnPB1MbAVVkjvfP6YvwNmAT
+         P0pLCWjkEVnXWvdL2aZt4dtEEZlt4Df7pqeL/Q1kZWikkbAYLttQ4lQratA27nlNODFk
+         Xp5bm7LDxV3U+88WrloLRZuP97fRLhGDHydUlQx25cVKRMZqYSyDDacPgJP9g9WyULGO
+         fnuU0cdwjPpzuLDForvggxtmbG1G3xbjJ6AFCUL93TtojiLcL1hbn8a+V4mZQpt1+/nR
+         KcfHxnDaS0MxwNqyu10PHEkOwoK0caecOB2y6IKEOaWeinb/08ZrLVHrOlndHTSSkOjO
+         xjLQ==
+X-Gm-Message-State: AOAM532+Z//lHeGQe/KleDM3XKHDMlt1bJONd3ArgeMwrIH7zKLBUIlz
+        NqTB5HLHR00lzDECOXCZeZeXew==
+X-Google-Smtp-Source: ABdhPJz0+DDVc2ZrkaX5S9IetfY47zQT7j8sKaKAcXh2Dm/QqxGZ8Bbf9nUDCVbDzQnntW97yJMLQQ==
+X-Received: by 2002:a05:6402:5c9:b0:420:aac6:257b with SMTP id n9-20020a05640205c900b00420aac6257bmr44688465edx.128.1654776721243;
+        Thu, 09 Jun 2022 05:12:01 -0700 (PDT)
+Received: from [192.168.0.197] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id f8-20020a170906494800b0070c4abe4706sm9006250ejt.158.2022.06.09.05.12.00
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 09 Jun 2022 05:10:24 -0700 (PDT)
-Message-ID: <98c98ef4-06df-0aae-ecf7-77e181f566f4@linaro.org>
-Date:   Thu, 9 Jun 2022 15:10:23 +0300
+        Thu, 09 Jun 2022 05:12:00 -0700 (PDT)
+Message-ID: <fd3ae279-eb0e-ec5b-2611-15ada34a9c66@linaro.org>
+Date:   Thu, 9 Jun 2022 14:11:59 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.0
-Subject: Re: [PATCH v2 01/12] dt-bindings: display/msm: hdmi: split and
- convert to yaml
-Content-Language: en-GB
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+ Thunderbird/91.10.0
+Subject: Re: [PATCH 1/2] arch: arm64: qcom: sdm845-shift-axolotl: fix
+ Bluetooth firmware loading
+Content-Language: en-US
+To:     Alexander Martinz <amartinz@shiftphones.com>,
+        ~postmarketos/upstreaming@lists.sr.ht
+Cc:     phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, David Heidelberg <david@ixit.cz>
-References: <20220608120723.2987843-1-dmitry.baryshkov@linaro.org>
- <20220608120723.2987843-2-dmitry.baryshkov@linaro.org>
- <e9918d06-1b53-d847-016f-2310c4fa9866@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <e9918d06-1b53-d847-016f-2310c4fa9866@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Dylan Van Assche <me@dylanvanassche.be>
+References: <20220609095412.211060-1-amartinz@shiftphones.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220609095412.211060-1-amartinz@shiftphones.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 08/06/2022 15:37, Krzysztof Kozlowski wrote:
-> On 08/06/2022 14:07, Dmitry Baryshkov wrote:
->> Convert Qualcomm HDMI binding into HDMI TX and PHY yaml bindings.
->>
->> Changes to schema:
->> HDMI:
->>   - fixed reg-names numbering to match 0..3 instead 0,1,3,4
->>   - dropped qcom,tx-ddc-* from example, they were not documented
->>
->> PHY:
->>   - moved into phy/ directory
->>   - split into QMP and non-QMP PHY schemas
->>
->> Co-developed-by: David Heidelberg <david@ixit.cz>
+On 09/06/2022 11:54, Alexander Martinz wrote:
+> From: Dylan Van Assche <me@dylanvanassche.be>
 > 
-> David also needs to SoB here.
+> Add hsuart0 alias, firmware name and prevent garbage data on Bluetooth UART lines
+> on the SHIFT 6mq based on the Qualcomm SDM845 chip.
+> I discovered that these were missing by comparing the DTS with similar
+> devices such as the Oneplus 6/6T and Dragonboard 845c.
+> 
+> Signed-of-by: Dylan Van Assche <me@dylanvanassche.be>
+> Tested-by: Alexander Martinz <amartinz@shiftphones.co>
 
-Thank you for the review and for the comments.
+Thanks for the patch. Instead of your Tested-by (or beside) your SoB is
+needed, following Dylan's.
 
--- 
-With best wishes
-Dmitry
+Best regards,
+Krzysztof
