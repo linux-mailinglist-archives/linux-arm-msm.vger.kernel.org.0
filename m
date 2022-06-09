@@ -2,319 +2,196 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3519D544DAF
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jun 2022 15:30:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 17912544DF1
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jun 2022 15:43:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239413AbiFINa1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Jun 2022 09:30:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45312 "EHLO
+        id S243004AbiFINny (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Jun 2022 09:43:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47304 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236324AbiFINa0 (ORCPT
+        with ESMTP id S1343936AbiFINnu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Jun 2022 09:30:26 -0400
-Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com [66.111.4.26])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03E9D20AA63;
-        Thu,  9 Jun 2022 06:30:20 -0700 (PDT)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-        by mailout.nyi.internal (Postfix) with ESMTP id BD9195C015E;
-        Thu,  9 Jun 2022 09:30:17 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute4.internal (MEProxy); Thu, 09 Jun 2022 09:30:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cerno.tech; h=cc
-        :cc:content-type:date:date:from:from:in-reply-to:in-reply-to
-        :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to; s=fm1; t=1654781417; x=1654867817; bh=b5Igb65gfn
-        ctwI+RmVcDwth67sj2G3dGQC36Mmle1xo=; b=hrNMVTrTRQEGyDhZAL/1QrQN5N
-        P0aN116ZSMxkNjztkjs7NS5b8SROBAmQQ2f6/Zj4PknLBtlBogQclvBWWxOINVP0
-        +7/n3UUV+CfHpkIV6Zf8StrfdQZDG+DG8DSuzs/k+XfFddv/QH0WTA6wGszWRDFF
-        mqc/JOHVtif8H+QO1t0m2VSiZgl0YSobS06XoudyDIdaiX1swxxPQWY6PQw3zGZA
-        pebiAH0Nn480Gjmw2RQhCLkwVME+n33/UfCQV525mzNVo+TZ3Qp7tWajbaza49Ve
-        5QniqcFlN3hyTTgaq2hoMp8kHu4IS2lY77/5iAe/A8QpofRoh9tcMSp9jSjA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
-        :feedback-id:from:from:in-reply-to:in-reply-to:message-id
-        :mime-version:references:reply-to:sender:subject:subject:to:to
-        :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-        fm2; t=1654781417; x=1654867817; bh=b5Igb65gfnctwI+RmVcDwth67sj2
-        G3dGQC36Mmle1xo=; b=ot/lx1glgu8FRpUD/xpDMAyOKyxEnimxixAshRv3ShVN
-        BQx1BHHX6AE3QMHdGyxjezt1DOMO6qRx2i3r3kN/NM39i5q10X6ljWwl/6aeWvZw
-        ceW6PB7/Uh0WOYU2tC3SMujJPRWxLzpybAPG0wFUG4yXQrOFynu5Rs329tSAk44z
-        OneftqZUsmO28zU+feEChIJzjInZWgC9XIcBGKlhqO4QybiO/Syvvovny7rz/dok
-        HqbLUX6s2BBbzXrJAMSorOSjE9oRNRjxlarpm46SaHo83ygjYwMBmXlW7LUJKpyS
-        olMUEKcOGz4oKKv6F71TLyKc/4OQwUNOIqMI8H7K3A==
-X-ME-Sender: <xms:6fWhYucywhODPj6i5crRPjl4hFU8H56Fu8isoOVhHmVCUKiZQGRezw>
-    <xme:6fWhYoNSVWpOxurkhXGBXwEToKINNrxTNdf9FlNuLxJTUPT2RJMhtshYEfVtTcZZt
-    vBCxmgWI-eas9RL7Wo>
-X-ME-Received: <xmr:6fWhYvgrmpAVb_J5GJBjOy6HrXYNLWG0SEvKq6Oacu4y5Xr_r_fLiXs_lyD2b82aNiU90d-bd50ayXzANaSLYRBvwknUtkr39m6fa4k>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedruddtledgieduucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomhepofgrgihi
-    mhgvucftihhprghrugcuoehmrgigihhmvgestggvrhhnohdrthgvtghhqeenucggtffrrg
-    htthgvrhhnpeetfefffefgkedtfefgledugfdtjeefjedvtddtkeetieffjedvgfehheff
-    hfevudenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    hmrgigihhmvgestggvrhhnohdrthgvtghh
-X-ME-Proxy: <xmx:6fWhYr_0qPI8otBXQiksi79Fkts6kQK-hG8iMobHDaBiK1Wqa6eFwg>
-    <xmx:6fWhYquTK5wgI8fPDIOUoSBQfbOjhToyculi8vGvRxbGb_-oN2vpLg>
-    <xmx:6fWhYiEexJG-w-aiWLc_jBdbZSUCdJ6m1MV8f4Wq1xBfZgW5Hda5DQ>
-    <xmx:6fWhYqEc3mY9dgz5GkH3fofyEnl8ov46_axMc35-axSp5DtL7mButg>
-Feedback-ID: i8771445c:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 9 Jun 2022 09:30:16 -0400 (EDT)
-Date:   Thu, 9 Jun 2022 15:30:15 +0200
-From:   Maxime Ripard <maxime@cerno.tech>
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        Hsin-Yi Wang <hsinyi@chromium.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Philip Chen <philipchen@chromium.org>,
-        Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
-        Robert Foss <robert.foss@linaro.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        LKML <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v3 3/4] drm/bridge: Add devm_drm_bridge_add()
-Message-ID: <20220609133015.e4oj5xur3pzpw7tp@houat>
-References: <20220510192944.2408515-1-dianders@chromium.org>
- <20220510122726.v3.3.Iba4b9bf6c7a1ee5ea2835ad7bd5eaf84d7688520@changeid>
- <20220521091751.opeiqbmc5c2okdq6@houat>
- <CAD=FV=Wea0LT5umK4Xg87cDikim+dSuyLndfydO3_DnTujZr9Q@mail.gmail.com>
- <CAD=FV=XqJuPHxm7HYMvyHBL_zC-BBA_f0MBsZX-jHt7Pk9ngsQ@mail.gmail.com>
- <20220603082139.sfdxb5ndwpvlhklh@penduick>
- <CAA8EJpqrw63K_xxJjawLjEqP-05eUD-k6dy21162hcq7q07jgQ@mail.gmail.com>
- <20220603141405.dybjn3blifau6662@penduick>
- <CAD=FV=Wy_HnshYRcLFRddo0-w=v6sfnzhRYJd+eH0S7uMPxqaQ@mail.gmail.com>
+        Thu, 9 Jun 2022 09:43:50 -0400
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3ECF349937;
+        Thu,  9 Jun 2022 06:43:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1654782228; x=1686318228;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=1WVkXl50t9Il/XMHdciZY20302TmK7LTbudpy4UwY60=;
+  b=BNl3wIER9X8oI2gNJg6YR5401PoX5sh8H92nONGOkeGWAtT5aiMhDsjY
+   KdxwhMOMKVplDqekBVaR1hYdnnCg896Xe25loGN33Bb+d8I5IvRN8Hjdg
+   vz79BkNAJf921HTWklJIZDsfBt1xzFJ56nWWc/gKyhAiK2r8jLVcj69A2
+   s=;
+Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 09 Jun 2022 06:43:48 -0700
+X-QCInternal: smtphost
+Received: from unknown (HELO nasanex01a.na.qualcomm.com) ([10.52.223.231])
+  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jun 2022 06:43:47 -0700
+Received: from cbsp-sh-gv.qualcomm.com (10.80.80.8) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Thu, 9 Jun 2022 06:43:45 -0700
+From:   Qiang Yu <quic_qianyu@quicinc.com>
+To:     <mani@kernel.org>, <quic_hemantk@quicinc.com>,
+        <loic.poulain@linaro.org>
+CC:     <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, Qiang Yu <quic_qianyu@quicinc.com>
+Subject: [PATCH] bus: mhi: Disable IRQs instead of freeing them during power down
+Date:   Thu, 9 Jun 2022 21:43:35 +0800
+Message-ID: <1654782215-70383-1-git-send-email-quic_qianyu@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="wxmfr2nwsxbwozb6"
-Content-Disposition: inline
-In-Reply-To: <CAD=FV=Wy_HnshYRcLFRddo0-w=v6sfnzhRYJd+eH0S7uMPxqaQ@mail.gmail.com>
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+EP tends to read MSI address/data once and cache them after BME is set.
+So host should avoid changing MSI address/data after BME is set.
 
---wxmfr2nwsxbwozb6
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In pci reset function, host invokes free_irq(), which also clears MSI
+address/data in EP's PCIe config space. If the invalid address/data
+are cached and used by EP, MSI triggered by EP wouldn't be received by
+host, because an invalid MSI data is sent to an invalid MSI address.
 
-On Fri, Jun 03, 2022 at 07:56:16AM -0700, Doug Anderson wrote:
-> Hi,
->=20
-> On Fri, Jun 3, 2022 at 7:14 AM Maxime Ripard <maxime@cerno.tech> wrote:
-> >
-> > On Fri, Jun 03, 2022 at 01:19:16PM +0300, Dmitry Baryshkov wrote:
-> > > On Fri, 3 Jun 2022 at 11:21, Maxime Ripard <maxime@cerno.tech> wrote:
-> > > >
-> > > > On Tue, May 31, 2022 at 02:06:34PM -0700, Doug Anderson wrote:
-> > > > > On Mon, May 23, 2022 at 10:00 AM Doug Anderson <dianders@chromium=
-=2Eorg> wrote:
-> > > > > > On Sat, May 21, 2022 at 2:17 AM Maxime Ripard <maxime@cerno.tec=
-h> wrote:
-> > > > > > > On Tue, May 10, 2022 at 12:29:43PM -0700, Douglas Anderson wr=
-ote:
-> > > > > > > > This adds a devm managed version of drm_bridge_add(). Like =
-other
-> > > > > > > > "devm" function listed in drm_bridge.h, this function takes=
- an
-> > > > > > > > explicit "dev" to use for the lifetime management. A few no=
-tes:
-> > > > > > > > * In general we have a "struct device" for bridges that mak=
-es a good
-> > > > > > > >   candidate for where the lifetime matches exactly what we =
-want.
-> > > > > > > > * The "bridge->dev->dev" device appears to be the encoder
-> > > > > > > >   device. That's not the right device to use for lifetime m=
-anagement.
-> > > > > > > >
-> > > > > > > > Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > > > > > > Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> > > > > > >
-> > > > > > > If we are to introduce more managed helpers, I think it'd be =
-wiser to
-> > > > > > > introduce them as DRM-managed, and not device managed.
-> > > > > > >
-> > > > > > > Otherwise, you'll end up in a weird state when a device has b=
-een removed
-> > > > > > > but the DRM device is still around.
-> > > > > >
-> > > > > > I'm kinda confused. In this case there is no DRM device for the=
- bridge
-> > > > > > and, as per my CL description, "bridge-dev->dev" appears to be =
-the
-> > > > > > encoder device. I wasn't personally involved in discussions abo=
-ut it,
-> > > > > > but I was under the impression that this was expected / normal.=
- Thus
-> > > > > > we can't make this DRM-managed.
-> > > > >
-> > > > > Since I didn't hear a reply,
-> > > >
-> > > > Gah, I replied but it looks like somehow it never reached the ML...
-> > > >
-> > > > Here was my original reply:
-> > > >
-> > > > > > > This adds a devm managed version of drm_bridge_add(). Like ot=
-her
-> > > > > > > "devm" function listed in drm_bridge.h, this function takes an
-> > > > > > > explicit "dev" to use for the lifetime management. A few note=
-s:
-> > > > > > > * In general we have a "struct device" for bridges that makes=
- a good
-> > > > > > >   candidate for where the lifetime matches exactly what we wa=
-nt.
-> > > > > > > * The "bridge->dev->dev" device appears to be the encoder
-> > > > > > >   device. That's not the right device to use for lifetime man=
-agement.
-> > > > > > >
-> > > > > > > Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > > > > > Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> > > > > >
-> > > > > > If we are to introduce more managed helpers, I think it'd be wi=
-ser to
-> > > > > > introduce them as DRM-managed, and not device managed.
-> > > > > >
-> > > > > > Otherwise, you'll end up in a weird state when a device has bee=
-n removed
-> > > > > > but the DRM device is still around.
-> > > > >=3D20
-> > > > > I'm kinda confused. In this case there is no DRM device for the b=
-ridge
-> > > > > and, as per my CL description, "bridge-dev->dev" appears to be the
-> > > > > encoder device.
-> > > >
-> > > > bridge->dev seems right though?
-> > > >
-> > > > > I wasn't personally involved in discussions about it, but I was u=
-nder
-> > > > > the impression that this was expected / normal. Thus we can't make
-> > > > > this DRM-managed.
-> > > >
-> > > > Still, I don't think devm is the right solution to this either.
-> > > >
-> > > > The underlying issue is two-fold:
-> > > >
-> > > >   - Encoders can have a pointer to a bridge through of_drm_find_bri=
-dge
-> > > >     or similar. However, bridges are traditionally tied to their de=
-vice
-> > > >     lifetime (by calling drm_bridge_add in probe, and drm_bridge_re=
-move
-> > > >     in remove). Encoders will typically be tied to the DRM device
-> > > >     however, and that one sticks around until the last application
-> > > >     closes it. We can thus very easily end up with a dangling point=
-er,
-> > > >     and a use-after-free.
-> > > >
-> > > >   - It's not the case yet, but it doesn't seem far fetch to expose
-> > > >     properties of bridges to the userspace. In that case, the users=
-pace
-> > > >     would be likely to still hold references to objects that aren't
-> > > >     there anymore when the bridge is gone.
-> > > >
-> > > > The first is obviously a larger concern, but if we can find a solut=
-ion
-> > > > that would accomodate the second it would be great.
-> > > >
-> > > > As far as I can see, we should fix in two steps:
-> > > >
-> > > >   - in drm_bridge_attach, we should add a device-managed call that =
-will
-> > > >     unregister the main DRM device. We don't allow to probe the mai=
-n DRM
-> > > >     device when the bridge isn't there yet in most case, so it makes
-> > > >     sense to remove it once the bridge is no longer there as well.
-> > >
-> > > The problem is that I do not see a good way to unregister the main DRM
-> > > device outside of it's driver code.
-> >
-> > That's what drmm helpers are doing though: they'll defer the cleanup
-> > until the last user has closed its fd.
->=20
-> I'm a bit confused here. I'll take the concrete example of ps8640
-> since that's what I was working on here.
->=20
-> ...right now the fact that we're using devm means that
-> drm_bridge_remove() will get called when a ps8640 device is unbound,
-> right?
+To fix this issue, after host runs request_irq() successfully during
+mhi driver probe, let's invoke enable_irq()/disable_irq() instead of
+request_irq()/free_irq() when we want to power on and power down MHI.
+Meanwhile, Host should invoke free_irq() when mhi host driver is
+removed.
 
-Yes
+Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
+---
+ drivers/bus/mhi/host/init.c        | 31 +++++++++++++++++++++++++++++++
+ drivers/bus/mhi/host/pci_generic.c |  2 ++
+ drivers/bus/mhi/host/pm.c          |  4 ++--
+ 3 files changed, 35 insertions(+), 2 deletions(-)
 
-> I guess you're saying that the "drm_bridge" memory needs to
-> outlast this, right?
+diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
+index cbb86b2..48cb093 100644
+--- a/drivers/bus/mhi/host/init.c
++++ b/drivers/bus/mhi/host/init.c
+@@ -18,6 +18,7 @@
+ #include <linux/slab.h>
+ #include <linux/vmalloc.h>
+ #include <linux/wait.h>
++#include <linux/irq.h>
+ #include "internal.h"
+ 
+ static DEFINE_IDA(mhi_controller_ida);
+@@ -168,6 +169,22 @@ int mhi_init_irq_setup(struct mhi_controller *mhi_cntrl)
+ 	unsigned long irq_flags = IRQF_SHARED | IRQF_NO_SUSPEND;
+ 	int i, ret;
+ 
++	/*
++	 * if irq[0] has action, it represents all MSI IRQs have been
++	 * requested, so we just need to enable them.
++	 */
++	if (irq_has_action(mhi_cntrl->irq[0])) {
++		enable_irq(mhi_cntrl->irq[0]);
++
++		for (i = 0; i < mhi_cntrl->total_ev_rings; i++, mhi_event++) {
++			if (mhi_event->offload_ev)
++				continue;
++
++			enable_irq(mhi_cntrl->irq[mhi_event->irq]);
++		}
++		return 0;
++	}
++
+ 	/* if controller driver has set irq_flags, use it */
+ 	if (mhi_cntrl->irq_flags)
+ 		irq_flags = mhi_cntrl->irq_flags;
+@@ -179,6 +196,11 @@ int mhi_init_irq_setup(struct mhi_controller *mhi_cntrl)
+ 				   "bhi", mhi_cntrl);
+ 	if (ret)
+ 		return ret;
++	/*
++	 * IRQ marked IRQF_SHARED isn't recommended to use IRQ_NOAUTOEN,
++	 * so disable it explicitly.
++	 */
++	disable_irq(mhi_cntrl->irq[0]);
+ 
+ 	for (i = 0; i < mhi_cntrl->total_ev_rings; i++, mhi_event++) {
+ 		if (mhi_event->offload_ev)
+@@ -200,6 +222,8 @@ int mhi_init_irq_setup(struct mhi_controller *mhi_cntrl)
+ 				mhi_cntrl->irq[mhi_event->irq], i);
+ 			goto error_request;
+ 		}
++
++		disable_irq(mhi_cntrl->irq[mhi_event->irq]);
+ 	}
+ 
+ 	return 0;
+@@ -1003,8 +1027,14 @@ int mhi_register_controller(struct mhi_controller *mhi_cntrl,
+ 
+ 	mhi_create_debugfs(mhi_cntrl);
+ 
++	ret = mhi_init_irq_setup(mhi_cntrl);
++	if (ret)
++		goto error_setup_irq;
++
+ 	return 0;
+ 
++error_setup_irq:
++	mhi_destroy_debugfs(mhi_cntrl);
+ err_release_dev:
+ 	put_device(&mhi_dev->dev);
+ err_ida_free:
+@@ -1027,6 +1057,7 @@ void mhi_unregister_controller(struct mhi_controller *mhi_cntrl)
+ 	struct mhi_chan *mhi_chan = mhi_cntrl->mhi_chan;
+ 	unsigned int i;
+ 
++	mhi_deinit_free_irq(mhi_cntrl);
+ 	mhi_destroy_debugfs(mhi_cntrl);
+ 
+ 	destroy_workqueue(mhi_cntrl->hiprio_wq);
+diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
+index 6fbc591..60020d0 100644
+--- a/drivers/bus/mhi/host/pci_generic.c
++++ b/drivers/bus/mhi/host/pci_generic.c
+@@ -945,6 +945,8 @@ static void mhi_pci_remove(struct pci_dev *pdev)
+ 
+ 	mhi_unregister_controller(mhi_cntrl);
+ 	pci_disable_pcie_error_reporting(pdev);
++
++	pci_free_irq_vectors(pdev);
+ }
+ 
+ static void mhi_pci_shutdown(struct pci_dev *pdev)
+diff --git a/drivers/bus/mhi/host/pm.c b/drivers/bus/mhi/host/pm.c
+index dc2e8ff..190231c 100644
+--- a/drivers/bus/mhi/host/pm.c
++++ b/drivers/bus/mhi/host/pm.c
+@@ -500,7 +500,7 @@ static void mhi_pm_disable_transition(struct mhi_controller *mhi_cntrl)
+ 	for (i = 0; i < mhi_cntrl->total_ev_rings; i++, mhi_event++) {
+ 		if (mhi_event->offload_ev)
+ 			continue;
+-		free_irq(mhi_cntrl->irq[mhi_event->irq], mhi_event);
++		disable_irq(mhi_cntrl->irq[mhi_event->irq]);
+ 		tasklet_kill(&mhi_event->task);
+ 	}
+ 
+@@ -1182,7 +1182,7 @@ void mhi_power_down(struct mhi_controller *mhi_cntrl, bool graceful)
+ 	/* Wait for shutdown to complete */
+ 	flush_work(&mhi_cntrl->st_worker);
+ 
+-	free_irq(mhi_cntrl->irq[0], mhi_cntrl);
++	disable_irq(mhi_cntrl->irq[0]);
+ }
+ EXPORT_SYMBOL_GPL(mhi_power_down);
+ 
+-- 
+Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
 
-Since drm_bridge isn't exposing anything to userspace, it would mostly
-be its connector. But they are usually allocated in the same structure,
-so it's pretty much equivalent here.
-
-> That being said, even if the actual memory for drm_bridge outlasts the
-> ps8640 driver lifetime, much of the data would need to be marked
-> invalid I think.
-
-All the device resources, yes. So things like IO mappings, clocks, reset
-lines, regulators, etc.
-
-> If nothing else all function pointers that point into the driver would
-> have to be made NULL, right? Once the device has been unbound it's
-> possible that the underlying module might be removed. I suspect that
-> we'd need to do more than just bogus-up the function pointers, though.
-
-I ... didn't think of the module memory being freed. I don't know the
-module handling code, but if it's an option we could get a reference to
-the module memory to make sure the memory stays around until everything
-has been freed.
-
-If we can't, then we could relocate all the functions inside the kernel
-for the teardown, but I'm sure it's going to be a mess.
-
-> ...so it feels like any solution here needs to take into account
-> _both_ the lifetime of the "struct device" and the "struct
-> drm_device". If the "struct device" goes away but the "struct
-> drm_device" is still around then we need to essentially transition the
-> "struct drm_device" over to a dummy, right?
-
-So we want to make sure we won't access the device resources if they
-aren't there anymore, during the timeframe between the device being
-unbound and the DRM device being unregistered (which can be arbitrarily
-long). Fortunately, drm_device->registered is being toggled as soon as
-we start the unbinding process, and drm_dev_enter()/drm_dev_exit() is
-there to make sure the device is registered.
-
-So we would need to make sure that all device resource access is
-protected by a call to those functions. It's tedious, but it works
-today.
-
-It's a bit more complicated in the case of bridges (as opposed to any
-other entity) because you don't have access to the DRM device when you
-probe, only when you are attached. So you also need to make sure the
-private structure you allocated in probe (using devm_) is properly
-converted to be DRM-managed and freed later on.
-
-Maxime
-
---wxmfr2nwsxbwozb6
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQRcEzekXsqa64kGDp7j7w1vZxhRxQUCYqH15wAKCRDj7w1vZxhR
-xbinAP4k1MWu9RhJ9c2UTXZ6KpsdkD+7929wsLPuo/a9FBhuWgEAgL1lu8WRNZU1
-1XzudSHHZYEO9pNa2rw+qu5uq7XwkQk=
-=02sb
------END PGP SIGNATURE-----
-
---wxmfr2nwsxbwozb6--
