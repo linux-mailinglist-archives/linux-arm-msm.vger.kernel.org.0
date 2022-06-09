@@ -2,51 +2,51 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3373854499D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jun 2022 13:03:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 79F7A5449BF
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jun 2022 13:09:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234749AbiFILD2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Jun 2022 07:03:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39630 "EHLO
+        id S232649AbiFILJo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Jun 2022 07:09:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37206 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243418AbiFILDZ (ORCPT
+        with ESMTP id S229771AbiFILJn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Jun 2022 07:03:25 -0400
+        Thu, 9 Jun 2022 07:09:43 -0400
 Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DF7B2DAA5;
-        Thu,  9 Jun 2022 04:03:24 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5F792EB687;
+        Thu,  9 Jun 2022 04:09:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1654772604; x=1686308604;
+  t=1654772981; x=1686308981;
   h=from:to:cc:subject:date:message-id:mime-version;
-  bh=tiH6fLWycgZOWONZkC/uzfuzboRGK08l+FrKtOqNvGk=;
-  b=AUX8Xz2PN0aXQrBMv+sUa1mehpvqhh1JR96QipnZfvcqku+zgVErnaqy
-   unbiFU/hCrI2IfNU6KpaPf8Ds04ttDyLq8weKnw+rHkFWZ9IJhr+jreuo
-   8liCNX3EH19qk2ay4orHG1y3ckFfcLlvM+Xv2PuD7FRxs8QxfP+M6n07/
-   M=;
-Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 09 Jun 2022 04:03:24 -0700
+  bh=tncl9kad/y74ql+gojdikvuwM+22yplMfh9FoFhlAyQ=;
+  b=FPKEaBIViQQdi17FFcYGy02zIYL2n8yZ6aYi5qArh6vAaHNgn/3zPHbr
+   xUyngcpX/HeKl8cBcIqRIpp8jZlX5MzxPXzl4FDtNAQHWLMeY211uJT9e
+   t9rA6ZCikK6ZvsLKH3veRPx2Lh9eCgD4FnG6mPr4pxblGiz2g0HhhelBg
+   U=;
+Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 09 Jun 2022 04:09:41 -0700
 X-QCInternal: smtphost
 Received: from unknown (HELO nasanex01a.na.qualcomm.com) ([10.52.223.231])
-  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jun 2022 04:03:24 -0700
+  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jun 2022 04:09:41 -0700
 Received: from zijuhu-gv.qualcomm.com (10.80.80.8) by
  nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Thu, 9 Jun 2022 04:03:21 -0700
+ 15.2.986.22; Thu, 9 Jun 2022 04:09:37 -0700
 From:   Zijun Hu <quic_zijuhu@quicinc.com>
 To:     <marcel@holtmann.org>, <johan.hedberg@gmail.com>,
         <luiz.dentz@gmail.com>, <davem@davemloft.net>,
         <edumazet@google.com>, <kuba@kernel.org>, <pabeni@redhat.com>
 CC:     <linux-kernel@vger.kernel.org>, <linux-bluetooth@vger.kernel.org>,
         <linux-arm-msm@vger.kernel.org>, Zijun Hu <quic_zijuhu@quicinc.com>
-Subject: [PATCH v1] Bluetooth: Fix CVSD SCO setup failure
-Date:   Thu, 9 Jun 2022 19:03:16 +0800
-Message-ID: <1654772596-10019-1-git-send-email-quic_zijuhu@quicinc.com>
+Subject: [PATCH v2] Bluetooth: Fix CVSD SCO setup failure
+Date:   Thu, 9 Jun 2022 19:09:34 +0800
+Message-ID: <1654772974-10357-1-git-send-email-quic_zijuhu@quicinc.com>
 X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nasanex01a.na.qualcomm.com (10.52.223.231)
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
@@ -59,7 +59,7 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 It will set up SCO after all CVSD eSCO attempts failure, but
-still fails to setup SCO finally due to wrong D1/D0 @retrans_effort
+still fails to set up SCO finally due to wrong D1/D0 @retrans_effort
 within @esco_param_cvsd, so change it from 0x1 to 0xff to avoid
 Invalid HCI Command Parameters error.
 
