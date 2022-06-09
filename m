@@ -2,66 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B05FE5450AD
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jun 2022 17:23:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 40938545123
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jun 2022 17:44:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243064AbiFIPXh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Jun 2022 11:23:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45340 "EHLO
+        id S242552AbiFIPog (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Jun 2022 11:44:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54772 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344489AbiFIPXa (ORCPT
+        with ESMTP id S1344606AbiFIPod (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Jun 2022 11:23:30 -0400
-Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 869F5B18;
-        Thu,  9 Jun 2022 08:23:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1654788208; x=1686324208;
-  h=message-id:date:mime-version:subject:to:references:from:
-   in-reply-to:content-transfer-encoding;
-  bh=OqFF6qDwLOh06Q07Wxi7YuzZhtAUWXJ5RHWWW3Dj/IY=;
-  b=VeUiBiKw+Eaxyb83yq9NpxMX1jKSB5jl+LTcZSlT4+U7fnss6cr7aivv
-   DxG0fUpDg0Zs9sRb+ZGdLVnJgr1VRWxbr4lLkuoQHMVaL8AIRnSx3Sz7d
-   BYpfM+phMKhY3gTldLAmsTJIl+f2vaz96NiI6GZhwlgNm8ME9rYn+/HAA
-   DiEcdKNJZpACESyJWmvVbBPd5qn47oGHP2iojYvZAuoU5Ibg3dB91m3ZC
-   WeYBSLh/2Azl+RNXcZbezgpRRIg8He7Rm1tQUYqyIS25jz1QZaLMSuXE4
-   u+EbH3Vv7Jm9GZQHgpr6/1vq4BiUBWi1K0f0iZCId9vv8BVPEXNrfTsXW
-   w==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10373"; a="257747930"
-X-IronPort-AV: E=Sophos;i="5.91,287,1647327600"; 
-   d="scan'208";a="257747930"
-Received: from fmsmga007.fm.intel.com ([10.253.24.52])
-  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jun 2022 08:23:28 -0700
-X-IronPort-AV: E=Sophos;i="5.91,287,1647327600"; 
-   d="scan'208";a="585630710"
-Received: from jeremywe-mobl3.amr.corp.intel.com (HELO [10.209.173.145]) ([10.209.173.145])
-  by fmsmga007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jun 2022 08:23:26 -0700
-Message-ID: <97757ee1-2525-4e97-855e-da6fb66f01ae@linux.intel.com>
-Date:   Thu, 9 Jun 2022 10:22:35 -0500
+        Thu, 9 Jun 2022 11:44:33 -0400
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41956129EE6;
+        Thu,  9 Jun 2022 08:44:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1654789471; x=1686325471;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=AyctHdx5ic41iiv6bacgkvRNkNQXHSvvLv/tMJJxBYM=;
+  b=oG4Uvv4FXNXk9SVkVN3+9rNbOBsWeS/BrLTGbS/u+Xi/dgZWj4+0UDL0
+   my8rNTDTZeyWpUcVhy5u6rE39posj5MvYRQY5dxRpPD+5HN2LVT7CxQMc
+   DV3h/9uuH4YUQY0kRRwnF6+js4w5rDLXL0FCBmnbuNENB8LY37N8komXI
+   A=;
+Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 09 Jun 2022 08:44:28 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jun 2022 08:44:28 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Thu, 9 Jun 2022 08:44:27 -0700
+Received: from [10.216.42.89] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Thu, 9 Jun 2022
+ 08:44:20 -0700
+Message-ID: <f3b53f49-6e3f-3a3f-6737-d51a9d6ab78b@quicinc.com>
+Date:   Thu, 9 Jun 2022 21:14:16 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Firefox/91.0 Thunderbird/91.9.1
-Subject: Re: [PATCH v4 1/2] soundwire: qcom: Add flag for software clock
- gating check
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.2
+Subject: Re: [PATCH] drm/msm: Grab the GPU runtime in a6xx routines, not the
+ GMU one
 Content-Language: en-US
-To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-        agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        broonie@kernel.org, robh+dt@kernel.org, quic_plai@quicinc.com,
-        bgoswami@quicinc.com, perex@perex.cz, tiwai@suse.com,
-        srinivas.kandagatla@linaro.org, quic_rohkumar@quicinc.com,
-        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        swboyd@chromium.org, judyhsiao@chromium.org, vkoul@kernel.org
-References: <1654785023-1667-1-git-send-email-quic_srivasam@quicinc.com>
- <1654785023-1667-2-git-send-email-quic_srivasam@quicinc.com>
-From:   Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-In-Reply-To: <1654785023-1667-2-git-send-email-quic_srivasam@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-6.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+To:     Douglas Anderson <dianders@chromium.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Jordan Crouse <jordan@cosmicpenguin.net>
+CC:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Chia-I Wu <olvaffe@gmail.com>,
+        Dan Carpenter <dan.carpenter@oracle.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        "Eric Anholt" <eric@anholt.net>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Sean Paul <sean@poorly.run>, Wang Qing <wangqing@vivo.com>,
+        Yangtao Li <tiny.windzz@gmail.com>,
+        <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20220609073317.1.Ie846c5352bc307ee4248d7cab998ab3016b85d06@changeid>
+From:   Akhil P Oommen <quic_akhilpo@quicinc.com>
+In-Reply-To: <20220609073317.1.Ie846c5352bc307ee4248d7cab998ab3016b85d06@changeid>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-5.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -69,67 +81,87 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 6/9/22 09:30, Srinivasa Rao Mandadapu wrote:
-> Validate software clock gating required or not and do software
-> clock gating on hclk if soundwire is operational and keep it
-> running by adding flag in private data structure.
-> This is to avoid conflict between older architectures,
-> where software clock gating is not required and on latest
-> architectues, where software clock gating is mandatory.
-
-architectures.
-
-> 
-> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-> Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+On 6/9/2022 8:03 PM, Douglas Anderson wrote:
+> >From testing on sc7180-trogdor devices, reading the GMU registers
+">"  ??
+> needs the GMU clocks to be enabled. Those clocks get turned on in
+> a6xx_gmu_resume(). Confusingly enough, that function is called as a
+> result of the runtime_pm of the GPU "struct device", not the GMU
+> "struct device".
+>
+> Let's grab a reference to the correct device. Incidentally, this makes
+> us match the a5xx routine more closely.
+>
+> This is easily shown to fix crashes that happen if we change the GPU's
+> pm_runtime usage to not use autosuspend. It's also believed to fix
+> some long tail GPU crashes even with autosuspend.
+>
+> NOTE: the crashes I've seen were fixed by _only_ fixing
+> a6xx_gpu_busy(). However, I believe that the same arguments should be
+> made to a6xx_gmu_set_freq() so I've changed that function too.
+>
+> Fixes: eadf79286a4b ("drm/msm: Check for powered down HW in the devfreq callbacks")
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
 > ---
->  drivers/soundwire/qcom.c | 14 ++++++++++----
->  1 file changed, 10 insertions(+), 4 deletions(-)
-> 
-> diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
-> index a3fccf0..8e163da 100644
-> --- a/drivers/soundwire/qcom.c
-> +++ b/drivers/soundwire/qcom.c
-> @@ -181,6 +181,7 @@ struct qcom_swrm_ctrl {
->  struct qcom_swrm_data {
->  	u32 default_cols;
->  	u32 default_rows;
-> +	bool sw_clk_gate_required;
->  };
->  
->  static const struct qcom_swrm_data swrm_v1_3_data = {
-> @@ -1311,6 +1312,15 @@ static int qcom_swrm_probe(struct platform_device *pdev)
->  			return PTR_ERR(ctrl->mmio);
->  	}
->  
-> +	if (data->sw_clk_gate_required) {
-> +		ctrl->audio_cgcr = devm_reset_control_get_exclusive(dev, "swr_audio_cgcr");
-> +		if (IS_ERR(ctrl->audio_cgcr)) {
+>
+>   drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 6 +++---
+>   drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 4 ++--
+>   2 files changed, 5 insertions(+), 5 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+> index 9f76f5b15759..b79ad2e0649c 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+> @@ -129,13 +129,13 @@ void a6xx_gmu_set_freq(struct msm_gpu *gpu, struct dev_pm_opp *opp)
+>   	 * This can get called from devfreq while the hardware is idle. Don't
+>   	 * bring up the power if it isn't already active
+>   	 */
+> -	if (pm_runtime_get_if_in_use(gmu->dev) == 0)
+> +	if (pm_runtime_get_if_in_use(&gpu->pdev->dev) == 0)
 
-You need to handle the NULL case, devm_reset_control_get_exclusive() can
-return ERR_OR_NULL
+Wouldn't we return early here when this fn is called from a6xx_gmu_set_initial_freq()?
 
-https://elixir.bootlin.com/linux/latest/source/drivers/reset/core.c#L1045
+-Akhil.
 
-> +			dev_err(dev, "Failed to get cgcr reset ctrl required for SW gating\n");
-> +			ret = PTR_ERR(ctrl->audio_cgcr);
-> +			goto err_init;
-> +		}
-> +	}
-> +
->  	ctrl->irq = of_irq_get(dev->of_node, 0);
->  	if (ctrl->irq < 0) {
->  		ret = ctrl->irq;
-> @@ -1336,10 +1346,6 @@ static int qcom_swrm_probe(struct platform_device *pdev)
->  	ctrl->bus.compute_params = &qcom_swrm_compute_params;
->  	ctrl->bus.clk_stop_timeout = 300;
->  
-> -	ctrl->audio_cgcr = devm_reset_control_get_exclusive(dev, "swr_audio_cgcr");
-> -	if (IS_ERR(ctrl->audio_cgcr))
-> -		dev_err(dev, "Failed to get audio_cgcr reset required for soundwire-v1.6.0\n");
-> -
->  	ret = qcom_swrm_get_port_config(ctrl);
->  	if (ret)
->  		goto err_clk;
+>   		return;
+>   
+>   	if (!gmu->legacy) {
+>   		a6xx_hfi_set_freq(gmu, perf_index);
+>   		dev_pm_opp_set_opp(&gpu->pdev->dev, opp);
+> -		pm_runtime_put(gmu->dev);
+> +		pm_runtime_put(&gpu->pdev->dev);
+>   		return;
+>   	}
+>   
+> @@ -159,7 +159,7 @@ void a6xx_gmu_set_freq(struct msm_gpu *gpu, struct dev_pm_opp *opp)
+>   		dev_err(gmu->dev, "GMU set GPU frequency error: %d\n", ret);
+>   
+>   	dev_pm_opp_set_opp(&gpu->pdev->dev, opp);
+> -	pm_runtime_put(gmu->dev);
+> +	pm_runtime_put(&gpu->pdev->dev);
+>   }
+>   
+>   unsigned long a6xx_gmu_get_freq(struct msm_gpu *gpu)
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> index 841e47a0b06b..87568d0b6ef8 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> @@ -1659,7 +1659,7 @@ static u64 a6xx_gpu_busy(struct msm_gpu *gpu, unsigned long *out_sample_rate)
+>   	*out_sample_rate = 19200000;
+>   
+>   	/* Only read the gpu busy if the hardware is already active */
+> -	if (pm_runtime_get_if_in_use(a6xx_gpu->gmu.dev) == 0)
+> +	if (pm_runtime_get_if_in_use(&gpu->pdev->dev) == 0)
+>   		return 0;
+>   
+>   	busy_cycles = gmu_read64(&a6xx_gpu->gmu,
+> @@ -1667,7 +1667,7 @@ static u64 a6xx_gpu_busy(struct msm_gpu *gpu, unsigned long *out_sample_rate)
+>   			REG_A6XX_GMU_CX_GMU_POWER_COUNTER_XOCLK_0_H);
+>   
+>   
+> -	pm_runtime_put(a6xx_gpu->gmu.dev);
+> +	pm_runtime_put(&gpu->pdev->dev);
+>   
+>   	return busy_cycles;
+>   }
+
