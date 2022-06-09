@@ -2,137 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2BCD654477B
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jun 2022 11:30:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DAD545447A2
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jun 2022 11:34:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240854AbiFIJ36 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Jun 2022 05:29:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51046 "EHLO
+        id S235161AbiFIJde (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Jun 2022 05:33:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37308 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240913AbiFIJ3z (ORCPT
+        with ESMTP id S234852AbiFIJde (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Jun 2022 05:29:55 -0400
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8122026717F
-        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Jun 2022 02:29:53 -0700 (PDT)
-Received: by mail-ed1-x533.google.com with SMTP id x62so30378805ede.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Jun 2022 02:29:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=JeSI4uQxR2QJYLMBJ1DqLjl1fY9poS8Q+KM6xI9FOz4=;
-        b=f0Ck0il7HMPwkoG6M1COIc/Igd98jl1VfQkKdJy4S/qTGJhIxDuXVvtJo9nEZazlSX
-         uwVhHnSmPw6cr9j0zHGdhRmujf10aBH6FMCKl5wkykfv/xQg5bTB7Snaj8HnpXcTFSkT
-         eKnMB9BxkbOb4jngECD7mXncmSblVDcmMIQOyEKglg+8VC6DfBt/3srtqWSBFbIatgG1
-         FPQMznt8deXN8b1yGhpdbrumdayW3OZ86yZbkXu6yc2joRbFgqQtS+E3R8cn+9nPK5A+
-         NEjSZJgHMAxc9NGtyxhSLI7dyDNoARgORFQUgRCRJikDEqFJneKlyjegmvTDrAIo2tDU
-         uecA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=JeSI4uQxR2QJYLMBJ1DqLjl1fY9poS8Q+KM6xI9FOz4=;
-        b=oQ9fFJBjh+fRphKuyN3eZnJzTmACd72nEjrTZZOgbYJAwd9iopzGQocw/GQaHoFuoa
-         XaRxLm8+U7s0D662QZHn+GeDLDq6nvn+Ygxhxb9/BXcTEcoTOPqb9kM1BiUUsiqCKh/6
-         zUi1czhXSeMmWK/XUrSq4TegaWh0Vyf59MaYBUcwy6aZsS5uhVR+c1P+KevrD7KNzi37
-         DcChdvUlfUG7W3WA39F5zNjq32Omg31XNIo64pruDoJD+fOh4qHVMzzJ1rHb+6VzEDT/
-         2U3tlQknMS0d57yyW6UwtTIN6fX29RP2AtSd5MZ9ljo5d2ZTfFboTsc9m3U2bTFC8eIR
-         +/yg==
-X-Gm-Message-State: AOAM533lqBQmVEuZds2vKOYqtGhnWD3dYq/PfhkWDTU2qXL8zRr6B3ce
-        zwU1JFj2ZdFWPQENo0v9/Yx8vw==
-X-Google-Smtp-Source: ABdhPJyMQf7bVUF7T8t94AiIgb/4gHLlxihQ+nlVbUR0Oa2i2+oloZZh8upehaCbMBPUSYbOtks4hg==
-X-Received: by 2002:a05:6402:1d4a:b0:42e:93de:17f4 with SMTP id dz10-20020a0564021d4a00b0042e93de17f4mr35910158edb.8.1654766993011;
-        Thu, 09 Jun 2022 02:29:53 -0700 (PDT)
-Received: from prec5560.. ([176.74.57.19])
-        by smtp.gmail.com with ESMTPSA id l9-20020a50cbc9000000b0042ab87ea713sm8653417edi.22.2022.06.09.02.29.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Jun 2022 02:29:52 -0700 (PDT)
-From:   Robert Foss <robert.foss@linaro.org>
-To:     agross@kernel.org, bjorn.andersson@linaro.org,
-        mturquette@baylibre.com, sboyd@kernel.org, robh+dt@kernel.org,
-        krzk+dt@kernel.org, robert.foss@linaro.org, jonathan@marek.ca,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>
-Subject: [PATCH v5 6/6] arm64: dts: qcom: sm8350: Add DISPCC node
-Date:   Thu,  9 Jun 2022 11:29:40 +0200
-Message-Id: <20220609092940.304740-7-robert.foss@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220609092940.304740-1-robert.foss@linaro.org>
-References: <20220609092940.304740-1-robert.foss@linaro.org>
+        Thu, 9 Jun 2022 05:33:34 -0400
+Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71CFD374275;
+        Thu,  9 Jun 2022 02:33:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1654767212; x=1686303212;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=LXu/9U0BdgUxliXYEM/+Ql+iYlIl9zqzpjen+/HOcWM=;
+  b=FLXSO2sUmZrN9EsF1eRG74lv5NL+9pH6ovW9ex+mgFZ+Xt5+/p8I0oep
+   xsqlaPTkwOxdmyrMcmLhf4/m0DP/RwMxX7DYmnzqWIJcACzAlO+79sOjV
+   83ugIA3kjbTmXh8kvwTNA8mN5bnrKn1VZDopD6zSrbP54dFWgw60cFh+l
+   6/bs6/OxYiJADD2bZsK4ChWFHHrJCDQZ8ea/0MM5Pya0jgy4ntKxpdar5
+   m/pmgYM/8syVHhb8qBM/5pN19OHCfNRRyXWD5bmuYymKAFH0TNrlTypXr
+   1BRBL0b94ZPuIv2i/Ww9+UnDqCc4/Sdn3uk8rizhBnOBvMJ8WD/fv3BtO
+   g==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10372"; a="266001830"
+X-IronPort-AV: E=Sophos;i="5.91,287,1647327600"; 
+   d="scan'208";a="266001830"
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jun 2022 02:33:31 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.91,287,1647327600"; 
+   d="scan'208";a="724333416"
+Received: from lkp-server01.sh.intel.com (HELO 60dabacc1df6) ([10.239.97.150])
+  by fmsmga001.fm.intel.com with ESMTP; 09 Jun 2022 02:33:28 -0700
+Received: from kbuild by 60dabacc1df6 with local (Exim 4.95)
+        (envelope-from <lkp@intel.com>)
+        id 1nzEXg-000FqZ-4Y;
+        Thu, 09 Jun 2022 09:33:28 +0000
+Date:   Thu, 9 Jun 2022 17:32:51 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Luca Weiss <luca@z3ntu.xyz>, linux-arm-msm@vger.kernel.org
+Cc:     llvm@lists.linux.dev, kbuild-all@lists.01.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Luca Weiss <luca@z3ntu.xyz>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/2] ARM: dts: qcom: msm8974-*: re-add remoteproc supplies
+Message-ID: <202206091706.4QP4H2JW-lkp@intel.com>
+References: <20220606160421.1641778-2-luca@z3ntu.xyz>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220606160421.1641778-2-luca@z3ntu.xyz>
+X-Spam-Status: No, score=-5.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the dispcc clock-controller DT node for sm8350.
+Hi Luca,
 
-Signed-off-by: Robert Foss <robert.foss@linaro.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
+Thank you for the patch! Yet something to improve:
 
-Changes since v2
- - Remove interconnect include - Bjorn
+[auto build test ERROR on linus/master]
+[also build test ERROR on robh/for-next v5.19-rc1 next-20220609]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch]
 
-Changes since v3
- - Switch from .fw_name to .index
+url:    https://github.com/intel-lab-lkp/linux/commits/Luca-Weiss/ARM-dts-qcom-msm8974-re-add-missing-pinctrl/20220607-002318
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git f2906aa863381afb0015a9eb7fefad885d4e5a56
+config: arm-randconfig-c002-20220608 (https://download.01.org/0day-ci/archive/20220609/202206091706.4QP4H2JW-lkp@intel.com/config)
+compiler: clang version 15.0.0 (https://github.com/llvm/llvm-project b92436efcb7813fc481b30f2593a4907568d917a)
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # install arm cross compiling tool for clang build
+        # apt-get install binutils-arm-linux-gnueabi
+        # https://github.com/intel-lab-lkp/linux/commit/68b0d8fbd2f10572118c481ea108f3dfb7f46a4f
+        git remote add linux-review https://github.com/intel-lab-lkp/linux
+        git fetch --no-tags linux-review Luca-Weiss/ARM-dts-qcom-msm8974-re-add-missing-pinctrl/20220607-002318
+        git checkout 68b0d8fbd2f10572118c481ea108f3dfb7f46a4f
+        # save the config file
+        mkdir build_dir && cp config build_dir/.config
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=arm SHELL=/bin/bash
 
+If you fix the issue, kindly add following tag where applicable
+Reported-by: kernel test robot <lkp@intel.com>
 
- arch/arm64/boot/dts/qcom/sm8350.dtsi | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+All errors (new ones prefixed by >>):
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-index 52428b6df64e..df0f3dd38f0f 100644
---- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-@@ -4,6 +4,7 @@
-  */
- 
- #include <dt-bindings/interrupt-controller/arm-gic.h>
-+#include <dt-bindings/clock/qcom,dispcc-sm8350.h>
- #include <dt-bindings/clock/qcom,gcc-sm8350.h>
- #include <dt-bindings/clock/qcom,rpmh.h>
- #include <dt-bindings/dma/qcom-gpi.h>
-@@ -2525,6 +2526,30 @@ usb_2_dwc3: usb@a800000 {
- 			};
- 		};
- 
-+		dispcc: clock-controller@af00000 {
-+			compatible = "qcom,sm8350-dispcc";
-+			reg = <0 0x0af00000 0 0x10000>;
-+			clocks = <&rpmhcc RPMH_CXO_CLK>,
-+				 <0>,
-+				 <0>,
-+				 <0>,
-+				 <0>,
-+				 <0>,
-+				 <0>,
-+				 <0>,
-+				 <0>,
-+				 <0>,
-+				 <0>,
-+				 <0>,
-+				 <0>;
-+			#clock-cells = <1>;
-+			#reset-cells = <1>;
-+			#power-domain-cells = <1>;
-+
-+			power-domains = <&rpmhpd SM8350_MMCX>;
-+			power-domain-names = "mmcx";
-+		};
-+
- 		adsp: remoteproc@17300000 {
- 			compatible = "qcom,sm8350-adsp-pas";
- 			reg = <0 0x17300000 0 0x100>;
+   also defined at arch/arm/boot/dts/qcom-msm8974pro-sony-xperia-shinano-castor.dts:291.18-293.3
+>> ERROR: Input tree has errors, aborting (use -f to force output)
+
 -- 
-2.34.1
-
+0-DAY CI Kernel Test Service
+https://01.org/lkp
