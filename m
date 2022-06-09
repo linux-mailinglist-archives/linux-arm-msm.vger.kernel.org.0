@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1D39D54556A
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jun 2022 22:15:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9DCDD5455CA
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jun 2022 22:40:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243756AbiFIUO4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Jun 2022 16:14:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48960 "EHLO
+        id S234684AbiFIUkU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Jun 2022 16:40:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42762 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243951AbiFIUOz (ORCPT
+        with ESMTP id S232101AbiFIUkU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Jun 2022 16:14:55 -0400
-Received: from mail-io1-f52.google.com (mail-io1-f52.google.com [209.85.166.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99269F552C;
-        Thu,  9 Jun 2022 13:14:54 -0700 (PDT)
-Received: by mail-io1-f52.google.com with SMTP id y12so23309750ior.7;
-        Thu, 09 Jun 2022 13:14:54 -0700 (PDT)
+        Thu, 9 Jun 2022 16:40:20 -0400
+Received: from mail-io1-f48.google.com (mail-io1-f48.google.com [209.85.166.48])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CC8FFC81B;
+        Thu,  9 Jun 2022 13:40:19 -0700 (PDT)
+Received: by mail-io1-f48.google.com with SMTP id y12so23374204ior.7;
+        Thu, 09 Jun 2022 13:40:19 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=piUBE++JRG9yWwuNvmCBzi3ehQlmnHS+QH9pFUr1+pk=;
-        b=GJ2oa5wIVpLjzyVwnIy3c64HHmROlC4CEt9fIkwlbXtFy3wnLtJpLf1lGADJZ1rW3/
-         LLzsekwTDy33WIHdb2DxbRf9RzMdW10X8UsEnJt3qiqk01yla9ql8Fv01R1yJHW9FyC1
-         fwzqg/elgMVme10riV71rvQ0qFuQuxUJqXhdgjstSpgAPH/y72Uu/+eu+O6yoJGNH+kl
-         fSeol0HwMiMfxji656TNZxKLVf/XtB1S/4mREg7vmhgFcCyPf+s8O/5kwDPisIf66Qje
-         hPHNS1rk3aJvShba9ot+MDhjk97jGe9wWv7rAGeYzzKFxpqHkka67E4edcJMWTSLRxBw
-         c4QQ==
-X-Gm-Message-State: AOAM532NvSM++Cc/wQXGeWPx/eyLGruXEtx2PzFe+PoFHR090TblTWsT
-        V4QpCaSngX7Q7D+t3nBGbudmhAGE3w==
-X-Google-Smtp-Source: ABdhPJxXbwg7PCmF5Ut2aJoaikQsVVn8SNBKqY6YT/SGxz3mzeIpYGcuR/LFx2pMAx72R20MDOV/QQ==
-X-Received: by 2002:a05:6638:3e94:b0:331:c614:ecb7 with SMTP id ch20-20020a0566383e9400b00331c614ecb7mr9583924jab.220.1654805693852;
-        Thu, 09 Jun 2022 13:14:53 -0700 (PDT)
+        bh=e3inXp28+t1Fu79HVtNOuLwQSwI2FZtsXZm82BbEUbM=;
+        b=CUhKsn6lNkObvScQjMFQneQkGcqY4Y3wD7Hi8MED7Xov07JLLk/I3R/b37DDokI0GZ
+         w2RborYaxpHsu38zDh9kjUemBmqVMmcNpPQdDgD3+RFya6o8IPjaX8YaM5+F1EpuiXTg
+         XdieUpO2/iODAkq/ryodDKVJApbVm5VPNwgNuv7m/RPkgM4kVPfCzmQS5oQh4svdhxXV
+         GHdzVO10043GeTvWFqruWuLKsI8vojCitER4SpJ9Etb+UWCrYH2ygVuUiM6+LGzMIucf
+         +ZhF22c+4ANMFq0oReZnCFG79N59dHLw1xtrt5ZO+RyOKhviVM/PWUCE9LSB0Yd0KU75
+         IpXA==
+X-Gm-Message-State: AOAM532sAPzn4xSQxtt/xcAg08vY6xR79RmpM1yN9/mlXvbsPDMKRDf+
+        Jvs+Ijz6MUKUqpgGogaZ4kb0DfMdxw==
+X-Google-Smtp-Source: ABdhPJzNkq8AnEwrys013uFfNBIMTljy33vvXsnbh8wZjluRcL2tShGePfR6E5wOFRvNqDHM4dr0Cg==
+X-Received: by 2002:a02:3506:0:b0:328:9a29:678 with SMTP id k6-20020a023506000000b003289a290678mr21985379jaa.33.1654807218797;
+        Thu, 09 Jun 2022 13:40:18 -0700 (PDT)
 Received: from robh.at.kernel.org ([64.188.179.251])
-        by smtp.gmail.com with ESMTPSA id b8-20020a92a048000000b002d3a3a089b3sm10663316ilm.1.2022.06.09.13.14.52
+        by smtp.gmail.com with ESMTPSA id b13-20020a02914d000000b00332122c106dsm121225jag.152.2022.06.09.13.40.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Jun 2022 13:14:53 -0700 (PDT)
-Received: (nullmailer pid 29307 invoked by uid 1000);
-        Thu, 09 Jun 2022 20:14:52 -0000
-Date:   Thu, 9 Jun 2022 14:14:52 -0600
+        Thu, 09 Jun 2022 13:40:18 -0700 (PDT)
+Received: (nullmailer pid 63550 invoked by uid 1000);
+        Thu, 09 Jun 2022 20:40:16 -0000
+Date:   Thu, 9 Jun 2022 14:40:16 -0600
 From:   Rob Herring <robh@kernel.org>
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Lee Jones <lee.jones@linaro.org>,
-        Andy Gross <agross@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 2/2] dt-bindings: mfd: qcom,tcsr: Add qcom,tcsr-mdm9615
-Message-ID: <20220609201452.GA29231-robh@kernel.org>
-References: <20220607133443.182468-1-krzysztof.kozlowski@linaro.org>
- <20220607133443.182468-2-krzysztof.kozlowski@linaro.org>
+        Brian Masney <masneyb@onstation.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 01/14] dt-bindings: sram: qcom,ocmem: cleanup example
+ coding style
+Message-ID: <20220609204016.GA59013-robh@kernel.org>
+References: <20220607171848.535128-1-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220607133443.182468-2-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220607171848.535128-1-krzysztof.kozlowski@linaro.org>
 X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
         FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
         HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
@@ -68,13 +68,13 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 07 Jun 2022 15:34:43 +0200, Krzysztof Kozlowski wrote:
-> Document the (already used) TCSR on MDM9615.
+On Tue, Jun 07, 2022 at 07:18:35PM +0200, Krzysztof Kozlowski wrote:
+> Fix the indentation in the OCMEM example and use generic node name -
+> sram - to reflect the type of the device.
 > 
 > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > ---
->  Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml | 1 +
->  1 file changed, 1 insertion(+)
-> 
+>  Documentation/devicetree/bindings/sram/qcom,ocmem.yaml | 10 +++++-----
+>  1 file changed, 5 insertions(+), 5 deletions(-)
 
-Acked-by: Rob Herring <robh@kernel.org>
+Applied, thanks.
