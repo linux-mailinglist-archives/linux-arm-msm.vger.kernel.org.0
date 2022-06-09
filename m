@@ -2,63 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 47DD35452AA
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jun 2022 19:08:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C24465452B1
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jun 2022 19:10:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344534AbiFIRIG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Jun 2022 13:08:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42000 "EHLO
+        id S1344422AbiFIRKl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Jun 2022 13:10:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52922 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343765AbiFIRIE (ORCPT
+        with ESMTP id S230002AbiFIRKk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Jun 2022 13:08:04 -0400
-Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [85.215.255.50])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0059112DBD9;
-        Thu,  9 Jun 2022 10:08:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1654794457;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=kGZmmOADn0EKx1aFs3YZdMQLcwtTt5OJKjbF5f+Rez0=;
-    b=JjDiEl1F3iWYsjzzx1Y3CxkcU62MDCi+eUrW55ZHZT3AuzZifhN8sJ2bh8RaYw93gV
-    X7IJyWbuXU3V15njIAffIS2bkkwihgt8qk+RLm7Ip8ryFJSRfqosYksOHrJvqfOocKY6
-    wEzsKnRfAlmeCAQ9GKf7JcWaJ22Wcpcwq1YhBfFAKWRp+F3xlg1aXVGL7J6V7VsW1Dtp
-    EVuTY3ByedGLBt/90gOizrQwVXyg6ED5NVx7DOlLgBeqKkH2y/PjIpOlG79JDj45ZmX0
-    lCNS8KBC97PCS3E7s/tXSUOKDlWJRCH5lNCW9XmdJDU1yz3ScFI+Ekt/wJs8h1/WAJ4X
-    K/NA==
-Authentication-Results: strato.com;
-    dkim=none
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u267FZF9PwpcNKLVrKw5+aY="
-X-RZG-CLASS-ID: mo00
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 47.45.0 SBL|AUTH)
-    with ESMTPSA id 9056edy59H7aBv1
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Thu, 9 Jun 2022 19:07:36 +0200 (CEST)
-Date:   Thu, 9 Jun 2022 19:07:29 +0200
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Alexander Martinz <amartinz@shiftphones.com>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
+        Thu, 9 Jun 2022 13:10:40 -0400
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35E2CE8BAD;
+        Thu,  9 Jun 2022 10:10:39 -0700 (PDT)
+Received: by mail-ed1-x52f.google.com with SMTP id o10so32039099edi.1;
+        Thu, 09 Jun 2022 10:10:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:from:to:cc:subject:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=YOQJZv6DXLC4OLwRVn231eqFTPEfawUDpXHNEiex4bo=;
+        b=CwbKPKSNxp5YBunmE6UC1ut68jz2Elg6HagvQgpmZ4OMU5/LGQ6gVFbCrz2QuVTENn
+         IIC2XVmBXK5Mb466jWvOL/SYXcCfm944NQtIrbP1EqsWtLInlv8H9MeTEz33eRrXSxG0
+         JaX3EtOzOap5l7nI3Dj8feT2lmQDA5bhpeYEY4Jy068b/xcIbQgLH610qH8Cgsjvb0eO
+         1gcu5kEGDIhLTAbDpzO25UQslez7FyYFV9gTWjdwv8KCIHYx3QaC2s5qyH8rS8AiGwxI
+         f6JgtB9rWjnSXq6EPJWFg8CgXePTiWYXaSZuz8CY1ERplhhgS805UrdqofNwBMiT7XOd
+         a+Eg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:from:to:cc:subject:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=YOQJZv6DXLC4OLwRVn231eqFTPEfawUDpXHNEiex4bo=;
+        b=INFRfK0o2MqZeInzqrQt9qKBkhFlnTl8k/yQwJyvAhFYkYYFjzn1bfLY7ZD/QAaDsj
+         oVkiAw+t6sbG8ggDK+DU5SOf6jHt0GTf84d5YCKSsDKNQCvCsv05cuocqV/L2Yu4g2vj
+         XO+h2oD4y0tevPbFkm0kD+BxdML8yfSkdkDeEStXHufaj05PXxSAKAFocMOiM7jhrKF7
+         QpnLaM+iTTbUGWWkeAqy17dTcfvMaIfmHj2YqzkZoUe0pfDIVWm58aUIndI+psOjLmXl
+         V048/wYx2KRTPpR94Lq5Y7ilq1ZAN7V77rLEwSiKWP1Z56sSUycfssJpiqZiSurfuln7
+         09KQ==
+X-Gm-Message-State: AOAM531p2omHf3+ON5s4cgATvnjY7wW9waDCuji+UIM5sMJJuCocSrCK
+        2m718p9Hos0z6TyFT8a8C1Q=
+X-Google-Smtp-Source: ABdhPJzg3yBm+tCizifx1o9yscxNe4FUUthz6U/luW+cQRetX6xULG0qN2cVQ6l8EG+UteRU3SyPsg==
+X-Received: by 2002:aa7:d456:0:b0:42d:d7d9:34c1 with SMTP id q22-20020aa7d456000000b0042dd7d934c1mr46597774edr.21.1654794637540;
+        Thu, 09 Jun 2022 10:10:37 -0700 (PDT)
+Received: from Ansuel-xps. (93-42-70-190.ip85.fastwebnet.it. [93.42.70.190])
+        by smtp.gmail.com with ESMTPSA id d10-20020a1709063cea00b006f3ef214e5bsm10963516ejh.193.2022.06.09.10.10.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 09 Jun 2022 10:10:36 -0700 (PDT)
+Message-ID: <62a2298c.1c69fb81.bc909.d2d0@mx.google.com>
+X-Google-Original-Message-ID: <YqIpibuM0ECVh6Gl@Ansuel-xps.>
+Date:   Thu, 9 Jun 2022 19:10:33 +0200
+From:   Ansuel Smith <ansuelsmth@gmail.com>
+To:     Manivannan Sadhasivam <mani@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Miquel Raynal <miquel.raynal@bootlin.com>,
+        Richard Weinberger <richard@nod.at>,
+        Vignesh Raghavendra <vigneshr@ti.com>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Dylan Van Assche <me@dylanvanassche.be>
-Subject: Re: [PATCH 2/2] arm64: dts: qcom/sdm845-shift-axolotl: Add audio
- support
-Message-ID: <YqIo0TJHqCx33NLj@gerhold.net>
-References: <20220609095412.211060-1-amartinz@shiftphones.com>
- <20220609095412.211060-2-amartinz@shiftphones.com>
+        linux-mtd@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v6 1/3] mtd: nand: raw: qcom_nandc: reorder
+ qcom_nand_host struct
+References: <20220609132344.17548-1-ansuelsmth@gmail.com>
+ <20220609132344.17548-2-ansuelsmth@gmail.com>
+ <20220609170722.GA5081@thinkpad>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20220609095412.211060-2-amartinz@shiftphones.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20220609170722.GA5081@thinkpad>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_PASS,SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -66,80 +83,66 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jun 09, 2022 at 11:54:12AM +0200, Alexander Martinz wrote:
-> This patch adds audio support for the SHIFT6mq phone.
+On Thu, Jun 09, 2022 at 10:37:22PM +0530, Manivannan Sadhasivam wrote:
+> On Thu, Jun 09, 2022 at 03:23:42PM +0200, Ansuel Smith wrote:
+> > Reorder qcom_nand_host to save holes in the struct.
 > 
-> The primary microphone and headphone jack are handled by the
-> SDM845 sound card and WCD9340 codec.
+> You forgot to reorder other structs also as I requested :/
 > 
-> The primary speaker needs to go through the TFA9890 speaker
-> amplifier.
+> Thanks,
+> Mani
+>
+
+Mhhh I didn't find obvius hole in other struct.
+Think I will pass this with dwarf to better check them. Sorry!
+Feel free to point them if you notice obvius hole that I didn't notice.
+
+> > 
+> > Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+> > ---
+> >  drivers/mtd/nand/raw/qcom_nandc.c | 10 ++++++----
+> >  1 file changed, 6 insertions(+), 4 deletions(-)
+> > 
+> > diff --git a/drivers/mtd/nand/raw/qcom_nandc.c b/drivers/mtd/nand/raw/qcom_nandc.c
+> > index 1a77542c6d67..7fbbd3e7784c 100644
+> > --- a/drivers/mtd/nand/raw/qcom_nandc.c
+> > +++ b/drivers/mtd/nand/raw/qcom_nandc.c
+> > @@ -431,11 +431,12 @@ struct qcom_nand_controller {
+> >   *				and reserved bytes
+> >   * @cw_data:			the number of bytes within a codeword protected
+> >   *				by ECC
+> > + * @ecc_bytes_hw:		ECC bytes used by controller hardware for this
+> > + *				chip
+> > + *
+> >   * @use_ecc:			request the controller to use ECC for the
+> >   *				upcoming read/write
+> >   * @bch_enabled:		flag to tell whether BCH ECC mode is used
+> > - * @ecc_bytes_hw:		ECC bytes used by controller hardware for this
+> > - *				chip
+> >   * @status:			value to be returned if NAND_CMD_STATUS command
+> >   *				is executed
+> >   * @last_command:		keeps track of last command on this chip. used
+> > @@ -452,11 +453,12 @@ struct qcom_nand_host {
+> >  	int cs;
+> >  	int cw_size;
+> >  	int cw_data;
+> > -	bool use_ecc;
+> > -	bool bch_enabled;
+> >  	int ecc_bytes_hw;
+> >  	int spare_bytes;
+> >  	int bbm_size;
+> > +
+> > +	bool use_ecc;
+> > +	bool bch_enabled;
+> >  	u8 status;
+> >  	int last_command;
+> >  
+> > -- 
+> > 2.36.1
+> > 
 > 
-> Signed-off-by: Alexander Martinz <amartinz@shiftphones.com>
-> Tested-by: Dylan Van Assche <me@dylanvanassche.be>
-> ---
->  .../boot/dts/qcom/sdm845-shift-axolotl.dts    | 141 ++++++++++++++++++
->  1 file changed, 141 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts b/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
-> index fa72f23ef0c2..8c4967d6d0e3 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
-> +++ b/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
-[...]
-> @@ -492,6 +494,19 @@ touchscreen@38 {
->  	};
->  };
->  
-> +&i2c11 {
-> +	status = "okay";
-> +	clock-frequency = <400000>;
-> +
-> +	tfa9890_codec: tfa9890@34 {
+> -- 
+> மணிவண்ணன் சதாசிவம்
 
-Please use "audio-codec@" as suggested in the bindings. Also, I think a
-label such as "speaker_codec: " would make it more obvious that this is
-the speaker. But that's personal preference. :)
-
-> +		compatible = "nxp,tfa9890";
-> +		reg = <0x34>;
-> +		vddd-supply = <&vreg_s4a_1p8>;
-> +		reset-gpio = <&tlmm 7 0>;
-
-The mainline driver does not support the reset-gpio (it resets via the
-I2C registers instead). Can just drop this.
-
-Alternatively we could document it to the DT schema and describe it here
-for completeness. That way it's already there if someone ever considers
-it necessary for the driver.
-
-> +		#sound-dai-cells = <1>;
-
-Should be <0>. You might want to check your addition with
-"make dtbs_check" to make sure it matches the DT schema. :)
-
-Also, I would recommend adding a "sound-name-prefix". The prefix is used
-for the ALSA mixers which makes it more obvious that they belong to the
-speaker. (See example in DT schema.)
-
-> +	};
-> +};
-> +
->  &ipa {
->  	status = "okay";
->  
-[...]
-> @@ -756,6 +879,24 @@ &venus {
->  	firmware-name = "qcom/sdm845/axolotl/venus.mbn";
->  };
->  
-> +&wcd9340 {
-> +	pinctrl-0 = <&wcd_intr_default>;
-> +	pinctrl-names = "default";
-> +	clock-names = "extclk";
-> +	clocks = <&rpmhcc RPMH_LN_BB_CLK2>;
-> +	reset-gpios = <&tlmm 64 0>;
-
-0 => GPIO_ACTIVE_HIGH
-
-Thanks,
-Stephan
+-- 
+	Ansuel
