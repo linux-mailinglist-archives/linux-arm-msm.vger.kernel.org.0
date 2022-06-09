@@ -2,110 +2,197 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DAD545447A2
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jun 2022 11:34:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4E78A5447D8
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jun 2022 11:41:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235161AbiFIJde (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Jun 2022 05:33:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37308 "EHLO
+        id S242667AbiFIJlU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Jun 2022 05:41:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46944 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234852AbiFIJde (ORCPT
+        with ESMTP id S242254AbiFIJlT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Jun 2022 05:33:34 -0400
-Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71CFD374275;
-        Thu,  9 Jun 2022 02:33:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1654767212; x=1686303212;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=LXu/9U0BdgUxliXYEM/+Ql+iYlIl9zqzpjen+/HOcWM=;
-  b=FLXSO2sUmZrN9EsF1eRG74lv5NL+9pH6ovW9ex+mgFZ+Xt5+/p8I0oep
-   xsqlaPTkwOxdmyrMcmLhf4/m0DP/RwMxX7DYmnzqWIJcACzAlO+79sOjV
-   83ugIA3kjbTmXh8kvwTNA8mN5bnrKn1VZDopD6zSrbP54dFWgw60cFh+l
-   6/bs6/OxYiJADD2bZsK4ChWFHHrJCDQZ8ea/0MM5Pya0jgy4ntKxpdar5
-   m/pmgYM/8syVHhb8qBM/5pN19OHCfNRRyXWD5bmuYymKAFH0TNrlTypXr
-   1BRBL0b94ZPuIv2i/Ww9+UnDqCc4/Sdn3uk8rizhBnOBvMJ8WD/fv3BtO
-   g==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10372"; a="266001830"
-X-IronPort-AV: E=Sophos;i="5.91,287,1647327600"; 
-   d="scan'208";a="266001830"
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jun 2022 02:33:31 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.91,287,1647327600"; 
-   d="scan'208";a="724333416"
-Received: from lkp-server01.sh.intel.com (HELO 60dabacc1df6) ([10.239.97.150])
-  by fmsmga001.fm.intel.com with ESMTP; 09 Jun 2022 02:33:28 -0700
-Received: from kbuild by 60dabacc1df6 with local (Exim 4.95)
-        (envelope-from <lkp@intel.com>)
-        id 1nzEXg-000FqZ-4Y;
-        Thu, 09 Jun 2022 09:33:28 +0000
-Date:   Thu, 9 Jun 2022 17:32:51 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Luca Weiss <luca@z3ntu.xyz>, linux-arm-msm@vger.kernel.org
-Cc:     llvm@lists.linux.dev, kbuild-all@lists.01.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Luca Weiss <luca@z3ntu.xyz>, Andy Gross <agross@kernel.org>,
+        Thu, 9 Jun 2022 05:41:19 -0400
+Received: from desiato.infradead.org (desiato.infradead.org [IPv6:2001:8b0:10b:1:d65d:64ff:fe57:4e05])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B3F14B40B;
+        Thu,  9 Jun 2022 02:41:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=infradead.org; s=desiato.20200630; h=In-Reply-To:Content-Type:MIME-Version:
+        References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+        Content-Transfer-Encoding:Content-ID:Content-Description;
+        bh=jxhFyRA7gcpqWtRQyvyD3abswc2PbVc4FSoswUV5Ukc=; b=eTVis02Li1gUMyvYNvhtQOfPjM
+        7jPK+tlnMQu8YlONdKYuGGzg5f4OtA6n+DLuvaVtWLmmwBKEcjK3gJJFZyuUsx9s+WrgcdXDtEGo5
+        n/0BitYa/9Tv9a5PHDy4FBaJ0usEOIIGYMMcR/SAKx38GPSteGLT2qjJKdgzgVt9Wb+/EeSMk/GCj
+        o7MIldwwpKDLAKlNGDE/FUzTM2RKPEJfDUWHFxb549VYWV718uWBpBWrwfwVc4Y51nI2XmOQdPNke
+        dbtUv13RdN1xprVJqbJ/lLZKhjUqu4j3NGqJXLsSZjtm/Jap7nXVhvEByTNVwWiNq35HcNs4n5id9
+        tqC7XoNQ==;
+Received: from dhcp-077-249-017-003.chello.nl ([77.249.17.3] helo=worktop.programming.kicks-ass.net)
+        by desiato.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
+        id 1nzEen-006Kx6-EP; Thu, 09 Jun 2022 09:40:50 +0000
+Received: by worktop.programming.kicks-ass.net (Postfix, from userid 1000)
+        id B092F981287; Thu,  9 Jun 2022 11:40:46 +0200 (CEST)
+Date:   Thu, 9 Jun 2022 11:40:46 +0200
+From:   Peter Zijlstra <peterz@infradead.org>
+To:     Arnd Bergmann <arnd@arndb.de>
+Cc:     Richard Henderson <rth@twiddle.net>,
+        Ivan Kokshaysky <ink@jurassic.park.msu.ru>,
+        Matt Turner <mattst88@gmail.com>,
+        Vineet Gupta <vgupta@kernel.org>,
+        Russell King - ARM Linux <linux@armlinux.org.uk>,
+        Hans Ulli Kroll <ulli.kroll@googlemail.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Sascha Hauer <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Tony Lindgren <tony@atomide.com>,
+        Kevin Hilman <khilman@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, Guo Ren <guoren@kernel.org>,
+        bcain@quicinc.com, Huacai Chen <chenhuacai@kernel.org>,
+        Xuerui Wang <kernel@xen0n.name>,
+        Geert Uytterhoeven <geert@linux-m68k.org>,
+        Sam Creasey <sammy@sammy.net>, Michal Simek <monstr@monstr.eu>,
+        Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+        Dinh Nguyen <dinguyen@kernel.org>,
+        Jonas Bonn <jonas@southpole.se>,
+        Stefan Kristiansson <stefan.kristiansson@saunalahti.fi>,
+        Stafford Horne <shorne@gmail.com>,
+        James Bottomley <James.Bottomley@hansenpartnership.com>,
+        Helge Deller <deller@gmx.de>,
+        Michael Ellerman <mpe@ellerman.id.au>,
+        Benjamin Herrenschmidt <benh@kernel.crashing.org>,
+        Paul Mackerras <paulus@samba.org>,
+        Paul Walmsley <paul.walmsley@sifive.com>,
+        Palmer Dabbelt <palmer@dabbelt.com>,
+        Albert Ou <aou@eecs.berkeley.edu>,
+        Heiko Carstens <hca@linux.ibm.com>,
+        Vasily Gorbik <gor@linux.ibm.com>,
+        Alexander Gordeev <agordeev@linux.ibm.com>,
+        Christian Borntraeger <borntraeger@linux.ibm.com>,
+        Sven Schnelle <svens@linux.ibm.com>,
+        Yoshinori Sato <ysato@users.sourceforge.jp>,
+        Rich Felker <dalias@libc.org>,
+        David Miller <davem@davemloft.net>,
+        Richard Weinberger <richard@nod.at>,
+        Anton Ivanov <anton.ivanov@cambridgegreys.com>,
+        Johannes Berg <johannes@sipsolutions.net>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>,
+        Dave Hansen <dave.hansen@linux.intel.com>,
+        the arch/x86 maintainers <x86@kernel.org>,
+        "H. Peter Anvin" <hpa@zytor.com>,
+        Arnaldo Carvalho de Melo <acme@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Jiri Olsa <jolsa@kernel.org>,
+        Namhyung Kim <namhyung@kernel.org>,
+        Juergen Gross <jgross@suse.com>, srivatsa@csail.mit.edu,
+        amakhalov@vmware.com, Pv-drivers <pv-drivers@vmware.com>,
+        Boris Ostrovsky <boris.ostrovsky@oracle.com>,
+        Chris Zankel <chris@zankel.net>,
+        Max Filippov <jcmvbkbc@gmail.com>,
+        Rafael Wysocki <rafael@kernel.org>,
+        Len Brown <lenb@kernel.org>, Pavel Machek <pavel@ucw.cz>,
+        gregkh <gregkh@linuxfoundation.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        lpieralisi@kernel.org, Sudeep Holla <sudeep.holla@arm.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/2] ARM: dts: qcom: msm8974-*: re-add remoteproc supplies
-Message-ID: <202206091706.4QP4H2JW-lkp@intel.com>
-References: <20220606160421.1641778-2-luca@z3ntu.xyz>
+        Anup Patel <anup@brainfault.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        jacob.jun.pan@linux.intel.com, Yury Norov <yury.norov@gmail.com>,
+        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+        Rasmus Villemoes <linux@rasmusvillemoes.dk>,
+        Steven Rostedt <rostedt@goodmis.org>,
+        Petr Mladek <pmladek@suse.com>,
+        Sergey Senozhatsky <senozhatsky@chromium.org>,
+        John Ogness <john.ogness@linutronix.de>,
+        "Paul E. McKenney" <paulmck@kernel.org>,
+        Frederic Weisbecker <frederic@kernel.org>,
+        quic_neeraju@quicinc.com, Josh Triplett <josh@joshtriplett.org>,
+        Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+        Lai Jiangshan <jiangshanlai@gmail.com>,
+        Joel Fernandes <joel@joelfernandes.org>,
+        Juri Lelli <juri.lelli@redhat.com>,
+        Vincent Guittot <vincent.guittot@linaro.org>,
+        Dietmar Eggemann <dietmar.eggemann@arm.com>,
+        Ben Segall <bsegall@google.com>, Mel Gorman <mgorman@suse.de>,
+        Daniel Bristot de Oliveira <bristot@redhat.com>,
+        vschneid@redhat.com, jpoimboe@kernel.org,
+        alpha <linux-alpha@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        "open list:SYNOPSYS ARC ARCHITECTURE" 
+        <linux-snps-arc@lists.infradead.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-omap <linux-omap@vger.kernel.org>,
+        linux-csky@vger.kernel.org,
+        "open list:QUALCOMM HEXAGON..." <linux-hexagon@vger.kernel.org>,
+        "open list:IA64 (Itanium) PLATFORM" <linux-ia64@vger.kernel.org>,
+        linux-m68k <linux-m68k@lists.linux-m68k.org>,
+        "open list:BROADCOM NVRAM DRIVER" <linux-mips@vger.kernel.org>,
+        Openrisc <openrisc@lists.librecores.org>,
+        Parisc List <linux-parisc@vger.kernel.org>,
+        linuxppc-dev <linuxppc-dev@lists.ozlabs.org>,
+        linux-riscv <linux-riscv@lists.infradead.org>,
+        linux-s390 <linux-s390@vger.kernel.org>,
+        Linux-sh list <linux-sh@vger.kernel.org>,
+        sparclinux <sparclinux@vger.kernel.org>,
+        linux-um <linux-um@lists.infradead.org>,
+        linux-perf-users@vger.kernel.org,
+        "open list:DRM DRIVER FOR QEMU'S CIRRUS DEVICE" 
+        <virtualization@lists.linux-foundation.org>,
+        xen-devel <xen-devel@lists.xenproject.org>,
+        "open list:TENSILICA XTENSA PORT (xtensa)" 
+        <linux-xtensa@linux-xtensa.org>,
+        ACPI Devel Maling List <linux-acpi@vger.kernel.org>,
+        Linux PM list <linux-pm@vger.kernel.org>,
+        linux-clk <linux-clk@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:TEGRA ARCHITECTURE SUPPORT" <linux-tegra@vger.kernel.org>,
+        linux-arch <linux-arch@vger.kernel.org>, rcu@vger.kernel.org
+Subject: Re: [PATCH 33/36] cpuidle,omap3: Use WFI for omap3_pm_idle()
+Message-ID: <YqHAHpGVe10I8O1z@worktop.programming.kicks-ass.net>
+References: <20220608142723.103523089@infradead.org>
+ <20220608144518.010587032@infradead.org>
+ <CAK8P3a0g-fNu9=BUECSXcNeWT7XWHQMnSXZE-XYE+5eakHxKxA@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220606160421.1641778-2-luca@z3ntu.xyz>
-X-Spam-Status: No, score=-5.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+In-Reply-To: <CAK8P3a0g-fNu9=BUECSXcNeWT7XWHQMnSXZE-XYE+5eakHxKxA@mail.gmail.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Luca,
+On Wed, Jun 08, 2022 at 06:28:33PM +0200, Arnd Bergmann wrote:
+> On Wed, Jun 8, 2022 at 4:27 PM Peter Zijlstra <peterz@infradead.org> wrote:
+> >
+> > arch_cpu_idle() is a very simple idle interface and exposes only a
+> > single idle state and is expected to not require RCU and not do any
+> > tracing/instrumentation.
+> >
+> > As such, omap_sram_idle() is not a valid implementation. Replace it
+> > with the simple (shallow) omap3_do_wfi() call. Leaving the more
+> > complicated idle states for the cpuidle driver.
+> >
+> > Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+> 
+> I see similar code in omap2:
+> 
+> omap2_pm_idle()
+>  -> omap2_enter_full_retention()
+>      -> omap2_sram_suspend()
+> 
+> Is that code path safe to use without RCU or does it need a similar change?
 
-Thank you for the patch! Yet something to improve:
-
-[auto build test ERROR on linus/master]
-[also build test ERROR on robh/for-next v5.19-rc1 next-20220609]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Luca-Weiss/ARM-dts-qcom-msm8974-re-add-missing-pinctrl/20220607-002318
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git f2906aa863381afb0015a9eb7fefad885d4e5a56
-config: arm-randconfig-c002-20220608 (https://download.01.org/0day-ci/archive/20220609/202206091706.4QP4H2JW-lkp@intel.com/config)
-compiler: clang version 15.0.0 (https://github.com/llvm/llvm-project b92436efcb7813fc481b30f2593a4907568d917a)
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # install arm cross compiling tool for clang build
-        # apt-get install binutils-arm-linux-gnueabi
-        # https://github.com/intel-lab-lkp/linux/commit/68b0d8fbd2f10572118c481ea108f3dfb7f46a4f
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review Luca-Weiss/ARM-dts-qcom-msm8974-re-add-missing-pinctrl/20220607-002318
-        git checkout 68b0d8fbd2f10572118c481ea108f3dfb7f46a4f
-        # save the config file
-        mkdir build_dir && cp config build_dir/.config
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=arm SHELL=/bin/bash
-
-If you fix the issue, kindly add following tag where applicable
-Reported-by: kernel test robot <lkp@intel.com>
-
-All errors (new ones prefixed by >>):
-
-   also defined at arch/arm/boot/dts/qcom-msm8974pro-sony-xperia-shinano-castor.dts:291.18-293.3
->> ERROR: Input tree has errors, aborting (use -f to force output)
-
--- 
-0-DAY CI Kernel Test Service
-https://01.org/lkp
+It needs a similar change, clearly I was running on fumes to not have
+found that when grepping around the omap code :/
