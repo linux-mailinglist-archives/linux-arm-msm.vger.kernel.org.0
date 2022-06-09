@@ -2,127 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EA8B25443C8
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jun 2022 08:27:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 299D05444B1
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jun 2022 09:23:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238899AbiFIG1H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Jun 2022 02:27:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45448 "EHLO
+        id S239851AbiFIHUr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Jun 2022 03:20:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40120 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238893AbiFIG1G (ORCPT
+        with ESMTP id S239859AbiFIHUp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Jun 2022 02:27:06 -0400
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22D1460E2
-        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Jun 2022 23:27:05 -0700 (PDT)
-Received: by mail-lj1-x22f.google.com with SMTP id c30so8450948ljr.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jun 2022 23:27:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=cycGJJ91H4YHdjGIAutpI1GaX9p7h4brlXbJX4MVN/Q=;
-        b=Mpa9s8ZMhN2wGYXSvQKctpW3XIJWSKFkN2WMMwjNevVr4R381DlULaGujGUPT96e+q
-         PxBqdKrEmav5wKR4JLDwgQTChoaxM/pbFLs6hfpje0G3cBfmyEyXNR3cxJzc02ougGp6
-         deQUeFXF5HkLZrqF7q+HnV+SQXBah/jMfVPuFcGZbmvg6puK7keBrGeVpsdPuP9pV3Dy
-         a4E1igC8EOMKif/t8j9j8LX973xuDLKgrBiJ36j+uBJs3JeIs6Rv2ywYgIFmoQ0ahx1r
-         rGJYIvAdX4nR4nncPacsckqfBuOtYQnaWzumcK0pPE1e9ZfiEiiC0aNj1o3vJvZVm3LL
-         LwPQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=cycGJJ91H4YHdjGIAutpI1GaX9p7h4brlXbJX4MVN/Q=;
-        b=1FmJAKmy4VcJ1EwZ8QHT/bDHPn+LggLfAWLMh54iGF10a9GGQqpChTCZ1WlB/Hxihr
-         pORa7fO0iB2jQDK6zEkx/7oBFKxWIx6fjdHHFb3459UsEh4e6s+sm5cEgz4mNrvbOY4U
-         UK/v2eAMu6hjO5IzmOohvLfgQ6pCdtAmW/wuvQkk8bVTr3iCDGmUSQxR47AUEtAIc8j0
-         9SNaJrcRVB6EwjhqWhLnFFDrV0JacQXSC120WEJWraxLgvMsWcSrzbeBJAi/LfyxYvfM
-         BKb5SUfQK8NJJx/6dfytH8tcxb1lGykm7ijdGmEHTt9PvIlDRvbYI/+i337CfjE4XyNa
-         wvoQ==
-X-Gm-Message-State: AOAM53166Fw67xH/W/vFfQknBvZF4alpuhZ+AVGanmmBuuTYA5LrMsqt
-        dogFc7QQ5Fz+OOgKh7tgxq4Anw==
-X-Google-Smtp-Source: ABdhPJwH50v0hPsS84CEB+KQLzlSSoTIQA5T8P964OIyZkPVqZ+avwaWZ78IjDxe1VKTt2yylpUxSA==
-X-Received: by 2002:a2e:8e38:0:b0:255:59c2:7192 with SMTP id r24-20020a2e8e38000000b0025559c27192mr25338422ljk.156.1654756023379;
-        Wed, 08 Jun 2022 23:27:03 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id bf43-20020a05651225ab00b004790823d354sm3861368lfb.26.2022.06.08.23.27.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 08 Jun 2022 23:27:02 -0700 (PDT)
-Message-ID: <89941420-717a-c311-54fe-cd8fcd0b0a06@linaro.org>
-Date:   Thu, 9 Jun 2022 09:27:02 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.0
-Subject: Re: [PATCH v2 06/12] drm/msm/hdmi: drop unused GPIO support
-Content-Language: en-GB
-To:     Stephen Boyd <swboyd@chromium.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
+        Thu, 9 Jun 2022 03:20:45 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2DF4243BBD;
+        Thu,  9 Jun 2022 00:20:44 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 8CB78B82C44;
+        Thu,  9 Jun 2022 07:20:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE514C34114;
+        Thu,  9 Jun 2022 07:20:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1654759242;
+        bh=GkGBXoZ0lI7pgry3fH1/hlxhfCuW2nQ9dPWKJZmlobA=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=QIu5f75c01gsq7A3FlZhFl61flEc+x3EMTgwC3K9Z5wVWV94lT1v9XT19H3pE4XmY
+         zkJHzPb7PIiuOttMo612C0vDIMMjAAbc6Q3Jg2bUt0SsxfX7IBMmknuc5Tc1Bk/Y7c
+         G6goJu3RbUBQTTnbMsPvEpmDQDtd8+7i9Zqk12nf4TQqUzi0EMjCY2orDkBzO6lDET
+         y5yUWSI4potzwd+KzBBvaG5KvVPnaHO8t0hi1PiDnJ95BPnanexYgWuoUkF/l+Vijy
+         vW7j8YWSvCN8HByxNRwN9RnSVX94VJYvpiKKyIg9aNvK5qayjrVykTAEMJhmzs017W
+         EhbY9yKtGZaBQ==
+Date:   Thu, 9 Jun 2022 12:50:29 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Ansuel Smith <ansuelsmth@gmail.com>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Miquel Raynal <miquel.raynal@bootlin.com>,
+        Richard Weinberger <richard@nod.at>,
+        Vignesh Raghavendra <vigneshr@ti.com>,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>, Sean Paul <sean@poorly.run>
-Cc:     David Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-References: <20220608120723.2987843-1-dmitry.baryshkov@linaro.org>
- <20220608120723.2987843-7-dmitry.baryshkov@linaro.org>
- <CAE-0n53z_nWsgVVn-4LbsP1GuzTgCa+DDDDE0y8k3+s-t=eSBA@mail.gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <CAE-0n53z_nWsgVVn-4LbsP1GuzTgCa+DDDDE0y8k3+s-t=eSBA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        linux-mtd@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v5 2/3] dt-bindings: mtd: qcom_nandc: document
+ qcom,boot-partitions binding
+Message-ID: <20220609072029.GA2758@thinkpad>
+References: <20220608001030.18813-1-ansuelsmth@gmail.com>
+ <20220608001030.18813-3-ansuelsmth@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20220608001030.18813-3-ansuelsmth@gmail.com>
+X-Spam-Status: No, score=-8.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 08/06/2022 23:59, Stephen Boyd wrote:
-> Quoting Dmitry Baryshkov (2022-06-08 05:07:17)
->> @@ -543,41 +529,16 @@ static int msm_hdmi_bind(struct device *dev, struct device *master, void *data)
->>          hdmi_cfg->mmio_name     = "core_physical";
->>          hdmi_cfg->qfprom_mmio_name = "qfprom_physical";
->>
->> -       for (i = 0; i < HDMI_MAX_NUM_GPIO; i++) {
-> [...]
->> -               if (gpiod)
->> -                       gpiod_set_consumer_name(gpiod, msm_hdmi_gpio_pdata[i].label);
->> -               hdmi_cfg->gpios[i].output = msm_hdmi_gpio_pdata[i].output;
->> -               hdmi_cfg->gpios[i].value = msm_hdmi_gpio_pdata[i].value;
->> -       }
->> +       hdmi->hpd_gpiod = devm_gpiod_get_optional(dev, "hpd", GPIOD_IN);
->> +       /* This will catch e.g. -PROBE_DEFER */
+On Wed, Jun 08, 2022 at 02:10:29AM +0200, Ansuel Smith wrote:
+> Document new qcom,boot-partition binding used to apply special
+> read/write layout to boot partitions.
 > 
-> EPROBE_DEFER?
-
-Ack.
-
+> QCOM apply a special layout where spare data is not protected
+> by ECC for some special pages (used for boot partition). Add
+> Documentation on how to declare these special pages.
 > 
->> +       if (IS_ERR(hdmi->hpd_gpiod))
->> +               return PTR_ERR(hdmi->hpd_gpiod);
->> +
->> +       if (!hdmi->hpd_gpiod)
->> +               DBG("failed to get HPD gpio");
+> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+> ---
+>  .../devicetree/bindings/mtd/qcom,nandc.yaml   | 26 +++++++++++++++++++
+>  1 file changed, 26 insertions(+)
 > 
-> Does DBG() add newlines?
+> diff --git a/Documentation/devicetree/bindings/mtd/qcom,nandc.yaml b/Documentation/devicetree/bindings/mtd/qcom,nandc.yaml
+> index 84ad7ff30121..a0914ccb95b0 100644
+> --- a/Documentation/devicetree/bindings/mtd/qcom,nandc.yaml
+> +++ b/Documentation/devicetree/bindings/mtd/qcom,nandc.yaml
+> @@ -102,6 +102,30 @@ allOf:
+>              - const: rx
+>              - const: cmd
+>  
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            enum:
+> +              - qcom,ipq806x-nand
+> +
+> +    then:
+> +      properties:
+> +        qcom,boot-partitions:
+> +          $ref: /schemas/types.yaml#/definitions/uint32-matrix
 
-Yes, it does.
+Wondering if u32 is enough for covering all ranges? Other than this,
 
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+
+Thanks,
+Mani
+
+> +          items:
+> +            items:
+> +              - description: offset
+> +              - description: size
+> +          description:
+> +            Boot partition use a different layout where the 4 bytes of spare
+> +            data are not protected by ECC. Use this to declare these special
+> +            partitions by defining first the offset and then the size.
+> +
+> +            It's in the form of <offset1 size1 offset2 size2 offset3 ...>
+> +
+> +            Refer to the ipq8064 example on how to use this special binding.
+> +
+>  required:
+>    - compatible
+>    - reg
+> @@ -135,6 +159,8 @@ examples:
+>          nand-ecc-strength = <4>;
+>          nand-bus-width = <8>;
+>  
+> +        qcom,boot-partitions = <0x0 0x58a0000>;
+> +
+>          partitions {
+>            compatible = "fixed-partitions";
+>            #address-cells = <1>;
+> -- 
+> 2.36.1
 > 
->> +
->> +       if (hdmi->hpd_gpiod)
->> +               gpiod_set_consumer_name(hdmi->hpd_gpiod, "HDMI_HPD");
->>
->>          dev->platform_data = hdmi_cfg;
->>
-
 
 -- 
-With best wishes
-Dmitry
+மணிவண்ணன் சதாசிவம்
