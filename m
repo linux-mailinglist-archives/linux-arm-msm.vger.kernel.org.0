@@ -2,58 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7154E544B39
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jun 2022 14:04:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3054B544B56
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jun 2022 14:10:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244970AbiFIMED (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Jun 2022 08:04:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38548 "EHLO
+        id S235642AbiFIMJ6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Jun 2022 08:09:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36428 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244926AbiFIMEB (ORCPT
+        with ESMTP id S235574AbiFIMJ5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Jun 2022 08:04:01 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E9F368FAD;
-        Thu,  9 Jun 2022 05:04:00 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 31D93B82D47;
-        Thu,  9 Jun 2022 12:03:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE2DEC341C5;
-        Thu,  9 Jun 2022 12:03:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1654776237;
-        bh=S5g9QkaioS1LmOyC7q+wI7Npt3iFDlZoTjKlFeUKQyc=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=pRP1l9UCWUpMb/BJtM/d3o+moasB/Qk6d2QgT+ptF0OZqPWudpIkDSs7UfvgMNu2s
-         NgAhXD0D9vA1LQhNjNLW6be1b3apg6SFCQFl5ODb7H92NW1a5YU0Kacu6FNLBrYHWW
-         abUQMWF4rk4mWNhKnxXr9BDTVPh6Y0U6OGoeyOKOA9lIkv0p+WPRUPkWyLW48u8hi5
-         JToQYwB1i1F158Fd3Es3vfj0mXDLAxz917nK7p9Yx9YXKgcCfS64yvKvtZxGQxSAkf
-         AN3H4VITH0LX2xrbaSE8ZeI0AK46zJ6Z+U2q3ekV5CGCfGHJEq6SZftgffOJ1iW2yK
-         ZQVEwcsSYMi5g==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan+linaro@kernel.org>)
-        id 1nzGtF-00014H-T1; Thu, 09 Jun 2022 14:03:53 +0200
-From:   Johan Hovold <johan+linaro@kernel.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-kernel@vger.kernel.org,
-        Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH 3/3] phy: qcom-qmp: clean up hex defines
-Date:   Thu,  9 Jun 2022 14:03:38 +0200
-Message-Id: <20220609120338.4080-4-johan+linaro@kernel.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220609120338.4080-1-johan+linaro@kernel.org>
-References: <20220609120338.4080-1-johan+linaro@kernel.org>
+        Thu, 9 Jun 2022 08:09:57 -0400
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7A1C264DD2
+        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Jun 2022 05:09:55 -0700 (PDT)
+Received: by mail-lj1-x234.google.com with SMTP id y15so20501256ljc.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Jun 2022 05:09:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=Rim2Ki2Eu3BjQABgKkl/x6ZfzcgX4FO+4AS4UaRphF8=;
+        b=CL9aPDC4zmgstdQlhsmmruoiv+PY/kyMtM3oki+NCEWjfAVUT8tz9cQYJBkg14i46V
+         bugl+IasUsJzAcG+g38guZkPwTknRSwoptaGsFHq5tmsagVmQa9ULVO5tsU6Nu6N5boQ
+         KJvpg0GIT/13DMWfWfMe/Mcun2xTKE7uo3vkPzDVu54UA3t8f1EZ3zsLx0SjugKTGlXu
+         OH1uiYMEYf7y/QyG9WQnG8J+sswMf6rmCZyI6/mFZcSUhQrv8B/OAET54vlu5x6xuFZc
+         lJN7+hqbKvXFT7VbJo5OZsZIfI2PEO3fQ/fjEt2hPEsPa69+V/g8YO1FyvJMWZ8vXwlm
+         x6pQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=Rim2Ki2Eu3BjQABgKkl/x6ZfzcgX4FO+4AS4UaRphF8=;
+        b=MXLq/en4hEG/ItOLwwK+IAO+eMZInXFf5oy3+Uc2KKaGuNV1NZJGnuNFW1bJYxUzA+
+         TIPqr62fuiIXC5wOpPFaP9XnHdRoRXqV+6FHI9cx4GB/nkODJhJgE22/GU2TNUHfq8ck
+         sHpUA9dP7WWNn+yhRRZwrgSU8y5/qP4Q7k8weW7kSli2Bg4l/MgT9B49tqWG87MkN4pC
+         HIbJf9KKMD0UwFg6uzvUdC3iGKY5nQhushvgSu5Aa7sJIRPX3JMtdRYPbaFVrCE4EzYy
+         80dZjYG4WyE96lr6cTBGzhI1O0zXvZTDL3ccizhKixkImNcbuyDN05nuJ2nuJ+asXBTE
+         vxsA==
+X-Gm-Message-State: AOAM530YdjvMCylkrsGRSZb34sAN0TPnJ18etBlTJ3HUGC0uOQ5c2rMF
+        Rq8BezNlPeRvkS/mmsqxaqYWCg==
+X-Google-Smtp-Source: ABdhPJxwGatgo+iZBh1zUEHAJkUUpucUDp/+0VK2xI554y8QFcDYLe4X7kHwkCGa0+lfZasdCHoJSQ==
+X-Received: by 2002:a2e:908b:0:b0:255:68b4:4085 with SMTP id l11-20020a2e908b000000b0025568b44085mr23175357ljg.369.1654776594036;
+        Thu, 09 Jun 2022 05:09:54 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id n11-20020a05651203eb00b0047255d211e9sm4202581lfq.280.2022.06.09.05.09.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 09 Jun 2022 05:09:53 -0700 (PDT)
+Message-ID: <58811796-1a27-b159-28a4-e9b507fa5869@linaro.org>
+Date:   Thu, 9 Jun 2022 15:09:52 +0300
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.0
+Subject: Re: [PATCH v2 01/12] dt-bindings: display/msm: hdmi: split and
+ convert to yaml
+Content-Language: en-GB
+To:     David Heidelberg <david@ixit.cz>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+References: <20220608120723.2987843-1-dmitry.baryshkov@linaro.org>
+ <20220608120723.2987843-2-dmitry.baryshkov@linaro.org>
+ <e9918d06-1b53-d847-016f-2310c4fa9866@linaro.org>
+ <f1489ae9-268a-5e35-2223-e8ee95cbd206@ixit.cz>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <f1489ae9-268a-5e35-2223-e8ee95cbd206@ixit.cz>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-8.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,UPPERCASE_50_75
+X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -61,61 +88,29 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Use lower case hex consistently for define values.
+On 09/06/2022 01:45, David Heidelberg wrote:
+> On 08/06/2022 14:37, Krzysztof Kozlowski wrote:
+>> On 08/06/2022 14:07, Dmitry Baryshkov wrote:
+>>> Convert Qualcomm HDMI binding into HDMI TX and PHY yaml bindings.
+>>>
+>>> Changes to schema:
+>>> HDMI:
+>>>   - fixed reg-names numbering to match 0..3 instead 0,1,3,4
+>>>   - dropped qcom,tx-ddc-* from example, they were not documented
+>>>
+>>> PHY:
+>>>   - moved into phy/ directory
+>>>   - split into QMP and non-QMP PHY schemas
+>>>
+>>> Co-developed-by: David Heidelberg <david@ixit.cz>
+>> David also needs to SoB here.
+> 
+> no problem, for this or any later version of patches developed by me:
+> 
+> Signed-off-by: David Heidelberg <david@ixit.cz>
 
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
----
- drivers/phy/qualcomm/phy-qcom-qmp.h | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+Thanks!
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.h b/drivers/phy/qualcomm/phy-qcom-qmp.h
-index 6d410826ae90..3a4f150dd499 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp.h
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp.h
-@@ -30,7 +30,7 @@
- #define QSERDES_PLL_CP_CTRL_MODE0			0x080
- #define QSERDES_PLL_CP_CTRL_MODE1			0x084
- #define QSERDES_PLL_PLL_RCTRL_MODE0			0x088
--#define QSERDES_PLL_PLL_RCTRL_MODE1			0x08C
-+#define QSERDES_PLL_PLL_RCTRL_MODE1			0x08c
- #define QSERDES_PLL_PLL_CCTRL_MODE0			0x090
- #define QSERDES_PLL_PLL_CCTRL_MODE1			0x094
- #define QSERDES_PLL_BIAS_EN_CTRL_BY_PSM			0x0a4
-@@ -44,7 +44,7 @@
- #define QSERDES_PLL_DIV_FRAC_START3_MODE0		0x0e0
- #define QSERDES_PLL_DIV_FRAC_START1_MODE1		0x0e4
- #define QSERDES_PLL_DIV_FRAC_START2_MODE1		0x0e8
--#define QSERDES_PLL_DIV_FRAC_START3_MODE1		0x0eC
-+#define QSERDES_PLL_DIV_FRAC_START3_MODE1		0x0ec
- #define QSERDES_PLL_INTEGLOOP_GAIN0_MODE0		0x100
- #define QSERDES_PLL_INTEGLOOP_GAIN1_MODE0		0x104
- #define QSERDES_PLL_INTEGLOOP_GAIN0_MODE1		0x108
-@@ -270,11 +270,11 @@
- #define QPHY_RX_MIN_HIBERN8_TIME			0x140
- #define QPHY_RX_SIGDET_CTRL2				0x148
- #define QPHY_RX_PWM_GEAR_BAND				0x154
--#define QPHY_PLL_LOCK_CHK_DLY_TIME_AUXCLK_LSB		0x1A8
--#define QPHY_OSC_DTCT_ACTIONS				0x1AC
--#define QPHY_RX_SIGDET_LVL				0x1D8
--#define QPHY_L1SS_WAKEUP_DLY_TIME_AUXCLK_LSB		0x1DC
--#define QPHY_L1SS_WAKEUP_DLY_TIME_AUXCLK_MSB		0x1E0
-+#define QPHY_PLL_LOCK_CHK_DLY_TIME_AUXCLK_LSB		0x1a8
-+#define QPHY_OSC_DTCT_ACTIONS				0x1ac
-+#define QPHY_RX_SIGDET_LVL				0x1d8
-+#define QPHY_L1SS_WAKEUP_DLY_TIME_AUXCLK_LSB		0x1dc
-+#define QPHY_L1SS_WAKEUP_DLY_TIME_AUXCLK_MSB		0x1e0
- 
- /* Only for QMP V3 & V4 PHY - DP COM registers */
- #define QPHY_V3_DP_COM_PHY_MODE_CTRL			0x00
-@@ -639,7 +639,7 @@
- #define QSERDES_V4_TX_TRAN_DRVR_EMP_EN			0xb8
- #define QSERDES_V4_TX_TX_INTERFACE_MODE			0xbc
- #define QSERDES_V4_TX_PWM_GEAR_1_DIVIDER_BAND0_1	0xd8
--#define QSERDES_V4_TX_PWM_GEAR_2_DIVIDER_BAND0_1	0xdC
-+#define QSERDES_V4_TX_PWM_GEAR_2_DIVIDER_BAND0_1	0xdc
- #define QSERDES_V4_TX_PWM_GEAR_3_DIVIDER_BAND0_1	0xe0
- #define QSERDES_V4_TX_PWM_GEAR_4_DIVIDER_BAND0_1	0xe4
- #define QSERDES_V4_TX_VMODE_CTRL1			0xe8
 -- 
-2.35.1
-
+With best wishes
+Dmitry
