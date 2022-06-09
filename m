@@ -2,58 +2,39 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 484325448D1
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jun 2022 12:27:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5E3B654494D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jun 2022 12:41:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240237AbiFIK1A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Jun 2022 06:27:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49318 "EHLO
+        id S242990AbiFIKlC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Jun 2022 06:41:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34128 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235536AbiFIK07 (ORCPT
+        with ESMTP id S243229AbiFIKku (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Jun 2022 06:26:59 -0400
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CCDB61FD2BE;
-        Thu,  9 Jun 2022 03:26:58 -0700 (PDT)
-Received: by mail-ej1-x62e.google.com with SMTP id y19so46547173ejq.6;
-        Thu, 09 Jun 2022 03:26:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:from:to:cc:subject:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=sOUTYmBneU8iG+DbESjBMogqAliu7BQ9pIctsnxzzY8=;
-        b=KcbtaW+Syi3OQ9ucjj23DpcuP7IxuMzTv74WDyxY7k5J5wFm1XFA8r9gg4Y46WISer
-         FbzmwndkTD9CXu7nZ6q1A1/8quMVRTePoENvbJCJw9Ayht6xn2JcDb6HuKHCVmfeVLOz
-         bOTo6Z8tmPX2biiHCMn18E75JRIUt7T6NJR0FgOHouFb2hH01PdT1P9hP3yVR8hXbmTS
-         dUcQDvanXVtJ6u2rCrnWa2l5bbV7kYDkK/1etnVJt6pSAjbIRcHvtZunyn4GJqdPlRUw
-         GHHPJjYwDAzxZARBO6A4wDQ0LU5I5+zgr21ZfCss2ziZ6FlIlc2AgvmKiwlics3wdzab
-         S2NA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:from:to:cc:subject:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=sOUTYmBneU8iG+DbESjBMogqAliu7BQ9pIctsnxzzY8=;
-        b=PZGd7nZBSJI8p/eVUFim66NDmcal+RwJDwkCAGhySdpn9r84JLvWUTAltXLZVqWCcO
-         RJ0YH4bui1S44KdDpPZdDHDbXb2Ekx0OWGKAa82dQtzvoCxCGaDtF9jMdFubDl25SlVU
-         jLTjTttpY9NtIRa2f35jU5LRfSeF2zqT3ZgJjtLLrryRALvTeMg3HA/VUOY0cbXlyt4o
-         7b4qGQ3ryKAwnJqd7TJXFAp+rK3Lo43nFeG7CjLkxvQcVKDsF7nji2qHCBiyKETbM/CB
-         vlJYmMUEeJBqzzck9ckaKD+uw1/+erVJQF0iu1ga+OFJTzwkqEpg8IZ12oMLj40GUbKs
-         Pz8A==
-X-Gm-Message-State: AOAM531wqn0Bb8kM/JWqrMSoLCvaRBqqIQTZt8+CAxaEjTyLBkiTO0mS
-        MD69/LhsfO8MZ6wHC7L11FBvv/IUjqw=
-X-Google-Smtp-Source: ABdhPJyKWGGdiwtTA3k2q4C3kDwA3pz4FW+/eH64t+dXA1QIsqIkpA0BKRQ54f3WO8G470p5FNoRcw==
-X-Received: by 2002:a17:906:84b:b0:70c:d506:7817 with SMTP id f11-20020a170906084b00b0070cd5067817mr32323334ejd.206.1654770417293;
-        Thu, 09 Jun 2022 03:26:57 -0700 (PDT)
-Received: from Ansuel-xps. (93-42-70-190.ip85.fastwebnet.it. [93.42.70.190])
-        by smtp.gmail.com with ESMTPSA id o9-20020a170906600900b006fec8e5b8a9sm10456213ejj.152.2022.06.09.03.26.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Jun 2022 03:26:56 -0700 (PDT)
-Message-ID: <62a1caf0.1c69fb81.a67af.bdf8@mx.google.com>
-X-Google-Original-Message-ID: <YqHK7WOZsq/YH2kV@Ansuel-xps.>
-Date:   Thu, 9 Jun 2022 12:26:53 +0200
-From:   Ansuel Smith <ansuelsmth@gmail.com>
-To:     Manivannan Sadhasivam <mani@kernel.org>
+        Thu, 9 Jun 2022 06:40:50 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 104721105DE;
+        Thu,  9 Jun 2022 03:40:31 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id A00B961D98;
+        Thu,  9 Jun 2022 10:40:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81D8DC34114;
+        Thu,  9 Jun 2022 10:40:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1654771230;
+        bh=Wf1dhu5SQZfFcciS3upZkCwdHerc+NxnCZv0l+U13g8=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=iLTslnYCa+oM6PAoLH8GepLVVcc/R2U8AJ6EJEvHCTiFddGWW/AjUau6qbWbXwezQ
+         2CRcan9QZd5dfHRgByYGdP9WNSFT6edd90LxCOIE/oWUWIbrzydsqj7Gio3ad5OyVW
+         2HFwrNBIyGMU5aaQI+rKk3iZ23PFEeqnGgEBxwhH5lMVt/3LVw3047oiHm+/GRVRqz
+         wvm/aQizoP19YBog/Hr2aIyv0LfdKViW6zMfGeUC1VDEQyDffKJTJjYzXOrYWD8vDY
+         wFMnMbSyuNSc6MREiqj7QLu1qTmCb4WjTzEBV+d3bleZ1iBjuuTHwjAS+xcP2BY9Y6
+         z/VKtPiEdYPIQ==
+Date:   Thu, 9 Jun 2022 16:09:44 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Ansuel Smith <ansuelsmth@gmail.com>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Miquel Raynal <miquel.raynal@bootlin.com>,
@@ -63,81 +44,114 @@ Cc:     Andy Gross <agross@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         linux-mtd@lists.infradead.org, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v5 3/3] mtd: nand: raw: qcom_nandc: reorder
- qcom_nand_host struct
+Subject: Re: [PATCH v5 2/3] dt-bindings: mtd: qcom_nandc: document
+ qcom,boot-partitions binding
+Message-ID: <20220609103944.GD2758@thinkpad>
 References: <20220608001030.18813-1-ansuelsmth@gmail.com>
- <20220608001030.18813-4-ansuelsmth@gmail.com>
- <20220609072240.GB2758@thinkpad>
+ <20220608001030.18813-3-ansuelsmth@gmail.com>
+ <20220609072029.GA2758@thinkpad>
+ <62a1ca9a.1c69fb81.3b355.0b02@mx.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20220609072240.GB2758@thinkpad>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <62a1ca9a.1c69fb81.3b355.0b02@mx.google.com>
+X-Spam-Status: No, score=-8.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jun 09, 2022 at 12:52:40PM +0530, Manivannan Sadhasivam wrote:
-> On Wed, Jun 08, 2022 at 02:10:30AM +0200, Ansuel Smith wrote:
-> > Reorder qcom_nand_host to save holes in the struct.
+On Thu, Jun 09, 2022 at 12:25:27PM +0200, Ansuel Smith wrote:
+> On Thu, Jun 09, 2022 at 12:50:29PM +0530, Manivannan Sadhasivam wrote:
+> > On Wed, Jun 08, 2022 at 02:10:29AM +0200, Ansuel Smith wrote:
+> > > Document new qcom,boot-partition binding used to apply special
+> > > read/write layout to boot partitions.
+> > > 
+> > > QCOM apply a special layout where spare data is not protected
+> > > by ECC for some special pages (used for boot partition). Add
+> > > Documentation on how to declare these special pages.
+> > > 
+> > > Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+> > > ---
+> > >  .../devicetree/bindings/mtd/qcom,nandc.yaml   | 26 +++++++++++++++++++
+> > >  1 file changed, 26 insertions(+)
+> > > 
+> > > diff --git a/Documentation/devicetree/bindings/mtd/qcom,nandc.yaml b/Documentation/devicetree/bindings/mtd/qcom,nandc.yaml
+> > > index 84ad7ff30121..a0914ccb95b0 100644
+> > > --- a/Documentation/devicetree/bindings/mtd/qcom,nandc.yaml
+> > > +++ b/Documentation/devicetree/bindings/mtd/qcom,nandc.yaml
+> > > @@ -102,6 +102,30 @@ allOf:
+> > >              - const: rx
+> > >              - const: cmd
+> > >  
+> > > +  - if:
+> > > +      properties:
+> > > +        compatible:
+> > > +          contains:
+> > > +            enum:
+> > > +              - qcom,ipq806x-nand
+> > > +
+> > > +    then:
+> > > +      properties:
+> > > +        qcom,boot-partitions:
+> > > +          $ref: /schemas/types.yaml#/definitions/uint32-matrix
 > > 
-> > Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
-> 
-> If this patch gets moved to 2/3, you could save few changes. Also, do the same
-> for other structs as well.
-> 
-> Thanks,
-> Mani
->
-
-Since 2/3 already had lots of changes didn't want to put a struct
-reorder in it since it does touch also other values. Tell me if I should
-squash the 2 commit.
-
-> > ---
-> >  drivers/mtd/nand/raw/qcom_nandc.c | 7 ++++---
-> >  1 file changed, 4 insertions(+), 3 deletions(-)
+> > Wondering if u32 is enough for covering all ranges? Other than this,
 > > 
-> > diff --git a/drivers/mtd/nand/raw/qcom_nandc.c b/drivers/mtd/nand/raw/qcom_nandc.c
-> > index 06ee9a836a3b..110f839c9e51 100644
-> > --- a/drivers/mtd/nand/raw/qcom_nandc.c
-> > +++ b/drivers/mtd/nand/raw/qcom_nandc.c
-> > @@ -475,11 +475,13 @@ struct qcom_nand_host {
-> >  	int cs;
-> >  	int cw_size;
-> >  	int cw_data;
-> > -	bool use_ecc;
-> > -	bool bch_enabled;
-> >  	int ecc_bytes_hw;
-> >  	int spare_bytes;
-> >  	int bbm_size;
-> > +
-> > +	bool codeword_fixup;
-> > +	bool use_ecc;
-> > +	bool bch_enabled;
-> >  	u8 status;
-> >  	int last_command;
-> >  
-> > @@ -490,7 +492,6 @@ struct qcom_nand_host {
-> >  	u32 clrflashstatus;
-> >  	u32 clrreadstatus;
-> >  
-> > -	bool codeword_fixup;
-> >  	int nr_boot_partitions;
-> >  	struct qcom_nand_boot_partition *boot_partitions;
-> >  };
+> > Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+> > 
+> > Thanks,
+> > Mani
+> >
+> 
+> I mean they are offset and sizes... Considering it's an old SoC and max
+> nand mounted is 1g we should be safe with u32.
+> 
+
+I thought so but wanted to confirm...
+
+Thanks,
+Mani
+
+> > > +          items:
+> > > +            items:
+> > > +              - description: offset
+> > > +              - description: size
+> > > +          description:
+> > > +            Boot partition use a different layout where the 4 bytes of spare
+> > > +            data are not protected by ECC. Use this to declare these special
+> > > +            partitions by defining first the offset and then the size.
+> > > +
+> > > +            It's in the form of <offset1 size1 offset2 size2 offset3 ...>
+> > > +
+> > > +            Refer to the ipq8064 example on how to use this special binding.
+> > > +
+> > >  required:
+> > >    - compatible
+> > >    - reg
+> > > @@ -135,6 +159,8 @@ examples:
+> > >          nand-ecc-strength = <4>;
+> > >          nand-bus-width = <8>;
+> > >  
+> > > +        qcom,boot-partitions = <0x0 0x58a0000>;
+> > > +
+> > >          partitions {
+> > >            compatible = "fixed-partitions";
+> > >            #address-cells = <1>;
+> > > -- 
+> > > 2.36.1
+> > > 
+> > 
 > > -- 
-> > 2.36.1
-> > 
+> > மணிவண்ணன் சதாசிவம்
 > 
 > -- 
-> மணிவண்ணன் சதாசிவம்
+> 	Ansuel
 
 -- 
-	Ansuel
+மணிவண்ணன் சதாசிவம்
