@@ -2,74 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 92DF4544691
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jun 2022 10:56:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ADC535446B3
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jun 2022 10:57:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242679AbiFIIwb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Jun 2022 04:52:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35686 "EHLO
+        id S242697AbiFII5M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Jun 2022 04:57:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34226 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242668AbiFIIv5 (ORCPT
+        with ESMTP id S242904AbiFII4a (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Jun 2022 04:51:57 -0400
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4238F48E73
-        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Jun 2022 01:51:30 -0700 (PDT)
-Received: by mail-ej1-x636.google.com with SMTP id q1so46122432ejz.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Jun 2022 01:51:30 -0700 (PDT)
+        Thu, 9 Jun 2022 04:56:30 -0400
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 199371E810B
+        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Jun 2022 01:56:12 -0700 (PDT)
+Received: by mail-ej1-x62b.google.com with SMTP id fu3so44611971ejc.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Jun 2022 01:56:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=M8e5RnC6BDCalWH7A1w4Wai2umRpd61YtQBBpmHxCTg=;
-        b=G94I6/e5+zMW3WjmA5mkIh/BZbIwi9fHMwAlv8zSiWQW5mYtBS9tiT+96zVrv6l8Gj
-         bczYIYNi28cSQF6doso2XWgT5IRxnHPky1hBo5YI7rFRDNTdh33dPQJNNboe7HvTytWf
-         wHCo7eYL4MXhFSivL2FYB5eV3VoamvJ6+4H0K4xPSAO2SeknD32ErVAKfbN1EdjeSdhO
-         a/o5BrU4f37Mm8jBgggs8aedhv5lIEDeOXti8dpEu0Yu6QvgP279D2PRsGwmftOE5rVT
-         wj2LFK6kD+2bjBX95997d2PGMlIH0/TUeWNmAnuewbmoPVcU2p+3HFqkgNaACSPGuyq1
-         070Q==
+        bh=23ND4rIp28maicnbuFOnjfrniSOk7N5VAPPY+gIY+W4=;
+        b=rUKxy/Yy93wPG79xU9wyskibQe9IRoiZzJ2GgV7Rc+CT3nUoOk7M8yUvMIv1gGrLer
+         /FfOvsdp+vLpnspqkhm6sLxbl0Ulatox3je4BBcVUO+0SIHldW3ckm9KSFRutkz5bqPu
+         OgVhwwpirghDtgGAb9b5ks2MEM/mHCyZqys9tQNCs++Iq6Rrpx8WBoPMyeIzwKxI3U1G
+         pw0gHt2ffA7CyDg55fNSVtYsi/G7HbsuxYPirs8qqhF8zf3+2Gg58RXIH1v3T+H9UsB8
+         Y+GsCd22zC7QtvqDoBDwAJdWw9avWFaaXtI1Cv4CJ91rVTCviq5goUyebvXSaLosSzRa
+         9U2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=M8e5RnC6BDCalWH7A1w4Wai2umRpd61YtQBBpmHxCTg=;
-        b=pDRZz2ZztOe5zZpuqJkOA8a+7Rc2EzXlnTsUFcXdvgbxMjQrw+uvO7SH+EdOL365aD
-         Va4sJyxTqFOOl/VtcJsV4sZUxEsCSm/PY2E4t5VPFcUpno8c/tFRXfaqhS8T4gdYybtX
-         qVjUp8nu8nfdiMryHjYfqI4yfozuEWa/lovp4ks3TqyZFrdDgN4KqFApsHBzkrPEgOOU
-         RXlg6dLad/ca7+QW2ToybCLV97iKjJy9k0yYR7/cK06oHwhHro7h8HdH0FqVvOEShg/2
-         s2TfdYq88+k2aKMd3MCqrHB30HMHFVzkXfGk+EA45VB0+4EJz6UsaMVy0ej5jWvsgjYD
-         Jh8w==
-X-Gm-Message-State: AOAM532+CxJCeWgEulx1RaoH616xwo7M+kufqyPlAbqW35CjqQggp52i
-        Ew4e/Ix8PB2GXgOTdC6mSapYyA==
-X-Google-Smtp-Source: ABdhPJxOe2ebPCCRukL/3pwCqqRVEGK7F4P3I838X2J4i641HLJD2ermkGhgGkY2/WjmEMN7KYWLNw==
-X-Received: by 2002:a17:907:3e91:b0:711:ea5e:2d4 with SMTP id hs17-20020a1709073e9100b00711ea5e02d4mr9199454ejc.52.1654764688817;
-        Thu, 09 Jun 2022 01:51:28 -0700 (PDT)
+        bh=23ND4rIp28maicnbuFOnjfrniSOk7N5VAPPY+gIY+W4=;
+        b=ndUf9Oh1eKzHcqj4UVocyZtoDNzAve7fp1M6QR6dKzCcpzrqiPqE9WkoYfOdePVWvw
+         Ujzmb7Aa9Tm8z751LT2aoFcY3SXNzbcHayNvJAUqdXcMHCg3jAVI0W0mB39ysYk2eWvz
+         I2VKrX5fsQb/GpcEGLFd1TXjTH1nvEBAa50nUALOmZzV407SdVDcybPH2pLjucIprVIK
+         P+Z0dEwKAQ14ytg90Pwo1kPHPlgwkSJGA8TJpr6DdSlDwpYOE9M3Ik/rZO8EkElmZKGp
+         ZQPUqk2myRLfhE/sSuj1Q/8w1Gu3ePp/GXCv1IRDlt9dasdOpnqyEVeyTJC3TmOwosND
+         FDlw==
+X-Gm-Message-State: AOAM533vrLZFn0K7AtoXEuU06LpV7zwrcXjs5TUxQErlBPq0FR2ZVZD7
+        yYi5yyYqE8B0BGvlGQJPn+xNuA==
+X-Google-Smtp-Source: ABdhPJxT89yjhtXwg4++i7ECOHiVXc4PmOb6nuBXh9T0b6PTr4L1lJYk6J2tR702atACd/Yq//8x/w==
+X-Received: by 2002:a17:907:1c8f:b0:6e8:f898:63bb with SMTP id nb15-20020a1709071c8f00b006e8f89863bbmr36423455ejc.721.1654764970676;
+        Thu, 09 Jun 2022 01:56:10 -0700 (PDT)
 Received: from [192.168.0.195] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id e1-20020a1709062c0100b0070bdc059ab2sm8916366ejh.138.2022.06.09.01.51.27
+        by smtp.gmail.com with ESMTPSA id q6-20020a1709060f8600b00711edab7622sm2819210ejj.40.2022.06.09.01.56.09
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 09 Jun 2022 01:51:27 -0700 (PDT)
-Message-ID: <6ade0286-bdd4-c55c-ff02-8e8e7fe5bdce@linaro.org>
-Date:   Thu, 9 Jun 2022 10:51:26 +0200
+        Thu, 09 Jun 2022 01:56:09 -0700 (PDT)
+Message-ID: <67079e6f-52f4-6e0d-bf53-f9feb63e28f6@linaro.org>
+Date:   Thu, 9 Jun 2022 10:56:08 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.10.0
-Subject: Re: [PATCH 1/9] dt-bindings: arm: qcom: fix Alcatel OneTouch Idol 3
- compatibles
+Subject: Re: [PATCH 00/11] dt-bindings/pinctrl/arm: qcom: minor cleanups of
+ QCOM PMIC pinctrl
 Content-Language: en-US
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Neil Armstrong <narmstrong@baylibre.com>,
         Stephen Boyd <sboyd@codeaurora.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Rob Herring <robh@kernel.org>
-References: <20220520123252.365762-1-krzysztof.kozlowski@linaro.org>
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     Luca Weiss <luca@z3ntu.xyz>, David Heidelberg <david@ixit.cz>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>
+References: <20220507194913.261121-1-krzysztof.kozlowski@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220520123252.365762-1-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220507194913.261121-1-krzysztof.kozlowski@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -82,20 +83,17 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 20/05/2022 14:32, Krzysztof Kozlowski wrote:
-> The MSM8916 Alcatel OneTouch Idol 3 does not use MTP fallbacks in
-> compatibles:
+On 07/05/2022 21:49, Krzysztof Kozlowski wrote:
+> Hi,
 > 
->   msm8916-alcatel-idol347.dtb: /: compatible: 'oneOf' conditional failed, one must be fixed:
->     ['alcatel,idol347', 'qcom,msm8916'] is too short
+> The patches are independent, so they can be picked up as is.
 > 
-> Reported-by: Rob Herring <robh@kernel.org>
-> Fixes: e9dd2f7204ed ("dt-bindings: arm: qcom: Document alcatel,idol347 board")
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Not really tested on hardware (except SDM845).
+> 
 
-Bjorn,
-
-Any comments on these?
+Hi Bjorn,
+The pinctrl bindings part was applied. The DTS changes are waiting for
+you here.
 
 Best regards,
 Krzysztof
