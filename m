@@ -2,496 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 655A1544521
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jun 2022 09:54:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 18C7A544540
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jun 2022 10:02:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233090AbiFIHxN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Jun 2022 03:53:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50118 "EHLO
+        id S231740AbiFIIAo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Jun 2022 04:00:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54838 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232357AbiFIHxM (ORCPT
+        with ESMTP id S231955AbiFIIAn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Jun 2022 03:53:12 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 630B61E3028;
-        Thu,  9 Jun 2022 00:53:10 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id F2113B82C3D;
-        Thu,  9 Jun 2022 07:53:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C5D4C34114;
-        Thu,  9 Jun 2022 07:53:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1654761187;
-        bh=P3FLNlZhGb3NkhkHCxICHx9Dpls3bm2gQnBATFpOF5c=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=GhgjJQ9I0cybj/OzgI8ZYMTl0Lsr9RRvQ/YBDZuyJTNdw9DPyzNfGsyCx29xiBruO
-         jOymaSYJ57LUxHpOBz/qfP+SJawhMJZP2YLp5pEkieB2cu+4Ysge5HOICBbqxivd56
-         E3JOxpLkNo8quJvYJlqsfcUeAa5cs6usYEXMbdhq+WFAlhmFv8GDnY3rNKiidtZbHF
-         +9cEtD27eLK32vAG/7USmTQtoEKN/Zg2uwK1TolmlCyPyJFICO77SZdubcjSpS4qLv
-         tz/EG+x87joXiVN/CpnwFR+mBIowfJ+6lMWE1pntu8xLXN7AYMQ0wnsSJVmTUXIJPl
-         VQ/PN/XQ9JP2A==
-Date:   Thu, 9 Jun 2022 13:22:54 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Ansuel Smith <ansuelsmth@gmail.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Miquel Raynal <miquel.raynal@bootlin.com>,
-        Richard Weinberger <richard@nod.at>,
-        Vignesh Raghavendra <vigneshr@ti.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-mtd@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v5 1/3] mtd: nand: raw: qcom_nandc: add support for
- unprotected spare data pages
-Message-ID: <20220609075254.GC2758@thinkpad>
-References: <20220608001030.18813-1-ansuelsmth@gmail.com>
- <20220608001030.18813-2-ansuelsmth@gmail.com>
+        Thu, 9 Jun 2022 04:00:43 -0400
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C88E10E5;
+        Thu,  9 Jun 2022 01:00:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1654761642; x=1686297642;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=e1UGClnaUgzCb1brsqptliKGNl+O+10vLwIjpGp/hgo=;
+  b=C0wY5RdWQkUhd97+S7rwxYVJEBHn6ZtUYQCzNUGJwP7LAaMd3O3w3Wxa
+   +k2jcpEmzXjtX7tEpVndayCAbuB9Dqvf9gKZneW/efbd5gWSxOmuSiuvb
+   XQESL8+f1/eFBo0smLSOp/Eh7Mt2qgwdpS6RZH3aZiMvBMyFGP6J19Ifc
+   A=;
+Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 09 Jun 2022 01:00:42 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jun 2022 01:00:42 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Thu, 9 Jun 2022 01:00:12 -0700
+Received: from [10.50.50.196] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Thu, 9 Jun 2022
+ 01:00:08 -0700
+Message-ID: <231dd355-acf3-626f-3da0-350281c660f5@quicinc.com>
+Date:   Thu, 9 Jun 2022 13:30:04 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.1
+Subject: Re: [PATCHv2] iommu/arm-smmu-qcom: Add debug support for TLB sync
+ timeouts
+Content-Language: en-US
+To:     Vincent Knecht <vincent.knecht@mailoo.org>,
+        Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>
+CC:     <iommu@lists.linux-foundation.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <quic_guptap@quicinc.com>, Rob Clark <robdclark@chromium.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+References: <20220526041403.9984-1-quic_saipraka@quicinc.com>
+ <78f1adee5c6e0c3547c116d0e78fe5b70f9c15e1.camel@mailoo.org>
+From:   Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+In-Reply-To: <78f1adee5c6e0c3547c116d0e78fe5b70f9c15e1.camel@mailoo.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20220608001030.18813-2-ansuelsmth@gmail.com>
-X-Spam-Status: No, score=-8.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-5.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jun 08, 2022 at 02:10:28AM +0200, Ansuel Smith wrote:
-> IPQ8064 nand have special pages where a different layout scheme is used.
-> These special page are used by boot partition and on reading them
-> lots of warning are reported about wrong ECC data and if written to
-> results in broken data and not bootable device.
-> 
-> The layout scheme used by these special page consist in using 512 bytes
-> as the codeword size (even for the last codeword) while writing to CFG0
-> register. This forces the NAND controller to unprotect the 4 bytes of
-> spare data.
-> 
-> Since the kernel is unaware of this different layout for these special
-> page, it does try to protect the spare data too during read/write and
-> warn about CRC errors.
-> 
-> Add support for this by permitting the user to declare these special
-> pages in dts by declaring offset and size of the partition. The driver
-> internally will convert these value to nand pages.
-> 
-> On user read/write the page is checked and if it's a boot page the
-> correct layout is used.
-> 
-> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
-> ---
->  drivers/mtd/nand/raw/qcom_nandc.c | 174 +++++++++++++++++++++++++++++-
->  1 file changed, 169 insertions(+), 5 deletions(-)
-> 
-> diff --git a/drivers/mtd/nand/raw/qcom_nandc.c b/drivers/mtd/nand/raw/qcom_nandc.c
-> index 1a77542c6d67..06ee9a836a3b 100644
-> --- a/drivers/mtd/nand/raw/qcom_nandc.c
-> +++ b/drivers/mtd/nand/raw/qcom_nandc.c
-> @@ -80,8 +80,10 @@
->  #define	DISABLE_STATUS_AFTER_WRITE	4
->  #define	CW_PER_PAGE			6
->  #define	UD_SIZE_BYTES			9
-> +#define	UD_SIZE_BYTES_MASK		GENMASK(18, 9)
->  #define	ECC_PARITY_SIZE_BYTES_RS	19
->  #define	SPARE_SIZE_BYTES		23
-> +#define	SPARE_SIZE_BYTES_MASK		GENMASK(26, 23)
->  #define	NUM_ADDR_CYCLES			27
->  #define	STATUS_BFR_READ			30
->  #define	SET_RD_MODE_AFTER_STATUS	31
-> @@ -102,6 +104,7 @@
->  #define	ECC_MODE			4
->  #define	ECC_PARITY_SIZE_BYTES_BCH	8
->  #define	ECC_NUM_DATA_BYTES		16
-> +#define	ECC_NUM_DATA_BYTES_MASK		GENMASK(25, 16)
->  #define	ECC_FORCE_CLK_OPEN		30
->  
->  /* NAND_DEV_CMD1 bits */
-> @@ -418,6 +421,19 @@ struct qcom_nand_controller {
->  	const struct qcom_nandc_props *props;
->  };
->  
-> +/*
-> + * NAND special boot partitions
-> + *
-> + * @page_offset:		offset of the partition where spare data is not protected
-> + *				by ECC (value in pages)
+Hi Vincent,
 
-s/page_offset/offset
+On 6/9/2022 2:52 AM, Vincent Knecht wrote:
+> Le jeudi 26 mai 2022 à 09:44 +0530, Sai Prakash Ranjan a écrit :
+>> TLB sync timeouts can be due to various reasons such as TBU power down
+>> or pending TCU/TBU invalidation/sync and so on. Debugging these often
+>> require dumping of some implementation defined registers to know the
+>> status of TBU/TCU operations and some of these registers are not
+>> accessible in non-secure world such as from kernel and requires SMC
+>> calls to read them in the secure world. So, add this debug support
+>> to dump implementation defined registers for TLB sync timeout issues.
+>>
+>> Signed-off-by: Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+>> ---
+>>
+>> Changes in v2:
+>>   * Use scm call consistently so that it works on older chipsets where
+>>     some of these regs are secure registers.
+>>   * Add device specific data to get the implementation defined register
+>>     offsets.
+>>
+>> ---
+>>   drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 161 ++++++++++++++++++---
+>>   drivers/iommu/arm/arm-smmu/arm-smmu.c      |   2 +
+>>   drivers/iommu/arm/arm-smmu/arm-smmu.h      |   1 +
+>>   3 files changed, 146 insertions(+), 18 deletions(-)
+> Hi Sai, and thanks for this patch !
+>
+> I've encountered TLB sync timeouts with msm8939 SoC recently.
+> What would be needed to add to this patch so this SoC is supported ?
+> Like, where could one check the values to be used in an equivalent
+> of qcom_smmu_impl0_reg_offset values for this SoC (if any change needed) ?
+> Current values are not found by simply greping in downstream/vendor dtsi/dts files...
 
-> + * @page_offset:		size of the partition where spare data is not protected
-> + *				by ECC (value in pages)
+These are implementation defined registers and some might not be present on older SoCs
+and sometimes they don't add this support in downstream kernels even if the registers
+are present.
 
-s/page_offset/size
-
-> + */
-> +struct qcom_nand_boot_partition {
-> +	u32 page_offset;
-> +	u32 page_size;
-
-same here
-
-> +};
-> +
->  /*
->   * NAND chip structure
->   *
-> @@ -444,6 +460,13 @@ struct qcom_nand_controller {
->   * @cfg0, cfg1, cfg0_raw..:	NANDc register configurations needed for
->   *				ecc/non-ecc mode for the current nand flash
->   *				device
-> + *
-> + * @codeword_fixup:		keep track of the current layout used by
-> + *				the driver for read/write operation.
-> + * @nr_boot_partitions:		count of the boot partitions where spare data is not
-> + *				protected by ECC
-
-Align the Kdoc comments w.r.t other members.
-
-> + * @boot_pages:			array of boot partitions where offset and size of the
-> + *				boot partitions are stored
-
-s/boot_pages/boot_partitions
-
->   */
->  struct qcom_nand_host {
->  	struct nand_chip chip;
-> @@ -466,6 +489,10 @@ struct qcom_nand_host {
->  	u32 ecc_bch_cfg;
->  	u32 clrflashstatus;
->  	u32 clrreadstatus;
-> +
-> +	bool codeword_fixup;
-> +	int nr_boot_partitions;
-> +	struct qcom_nand_boot_partition *boot_partitions;
->  };
->  
->  /*
-> @@ -475,6 +502,7 @@ struct qcom_nand_host {
->   * @is_bam - whether NAND controller is using BAM
->   * @is_qpic - whether NAND CTRL is part of qpic IP
->   * @qpic_v2 - flag to indicate QPIC IP version 2
-> + * @use_codeword_fixup - whether NAND has different layout for boot partitions
->   * @dev_cmd_reg_start - NAND_DEV_CMD_* registers starting offset
->   */
->  struct qcom_nandc_props {
-> @@ -482,6 +510,7 @@ struct qcom_nandc_props {
->  	bool is_bam;
->  	bool is_qpic;
->  	bool qpic_v2;
-> +	bool use_codeword_fixup;
->  	u32 dev_cmd_reg_start;
->  };
->  
-> @@ -1701,7 +1730,7 @@ qcom_nandc_read_cw_raw(struct mtd_info *mtd, struct nand_chip *chip,
->  	data_size1 = mtd->writesize - host->cw_size * (ecc->steps - 1);
->  	oob_size1 = host->bbm_size;
->  
-> -	if (qcom_nandc_is_last_cw(ecc, cw)) {
-> +	if (qcom_nandc_is_last_cw(ecc, cw) && !host->codeword_fixup) {
->  		data_size2 = ecc->size - data_size1 -
->  			     ((ecc->steps - 1) * 4);
->  		oob_size2 = (ecc->steps * 4) + host->ecc_bytes_hw +
-> @@ -1782,7 +1811,7 @@ check_for_erased_page(struct qcom_nand_host *host, u8 *data_buf,
->  	}
->  
->  	for_each_set_bit(cw, &uncorrectable_cws, ecc->steps) {
-> -		if (qcom_nandc_is_last_cw(ecc, cw)) {
-> +		if (qcom_nandc_is_last_cw(ecc, cw) && !host->codeword_fixup) {
->  			data_size = ecc->size - ((ecc->steps - 1) * 4);
->  			oob_size = (ecc->steps * 4) + host->ecc_bytes_hw;
->  		} else {
-> @@ -1940,7 +1969,7 @@ static int read_page_ecc(struct qcom_nand_host *host, u8 *data_buf,
->  	for (i = 0; i < ecc->steps; i++) {
->  		int data_size, oob_size;
->  
-> -		if (qcom_nandc_is_last_cw(ecc, i)) {
-> +		if (qcom_nandc_is_last_cw(ecc, i) && !host->codeword_fixup) {
->  			data_size = ecc->size - ((ecc->steps - 1) << 2);
->  			oob_size = (ecc->steps << 2) + host->ecc_bytes_hw +
->  				   host->spare_bytes;
-> @@ -2037,6 +2066,55 @@ static int copy_last_cw(struct qcom_nand_host *host, int page)
->  	return ret;
->  }
->  
-> +static bool
-> +qcom_nandc_is_boot_page(struct qcom_nand_host *host, int page)
-
-Move function name to previous line. If it exceeds 100 lines then wrap
-arguments.
-
-s/qcom_nandc_is_boot_page/qcom_nandc_is_boot_partition
-
-> +{
-> +	struct qcom_nand_boot_partition *boot_partition;
-> +	u32 start, end;
-> +	int i;
-> +
-> +	for (i = 0; i < host->nr_boot_partitions; i++) {
-> +		boot_partition = &host->boot_partitions[i];
-> +		start = boot_partition->page_offset;
-> +		end = start + boot_partition->page_size;
-> +
-> +		/* Boot pages are normally at the start of
-
-Block comments should start with:
-
-	/*
-	 * ...
-
-Also, are you sure that only few pages in the partitions have different layout
-and not all pages? If not, then this comment needs to be reworded.
-
-> +		 * the nand in various partition.
-> +		 * Check the page from the boot page end first
-> +		 * to save one extra check and optimize this
-> +		 * in case real no-boot partition are used.
-> +		 */
-> +		if (page < end && page >= start)
-> +			return true;
-> +	}
-> +
-> +	return false;
-> +}
-> +
-> +static void
-> +qcom_nandc_codeword_fixup(struct qcom_nand_host *host, int page)
-> +{
-> +	bool codeword_fixup = qcom_nandc_is_boot_page(host, page);
-> +
-> +	/* Skip conf write if we are already in the correct mode */
-> +	if (codeword_fixup == host->codeword_fixup)
-> +		return;
-> +
-> +	host->codeword_fixup = codeword_fixup;
-> +
-> +	host->cw_data = codeword_fixup ? 512 : 516;
-> +	host->spare_bytes = host->cw_size - host->ecc_bytes_hw -
-> +			    host->bbm_size - host->cw_data;
-> +
-> +	host->cfg0 &= ~(SPARE_SIZE_BYTES_MASK | UD_SIZE_BYTES_MASK);
-> +	host->cfg0 |= host->spare_bytes << SPARE_SIZE_BYTES |
-> +		      host->cw_data << UD_SIZE_BYTES;
-> +
-> +	host->ecc_bch_cfg &= ~ECC_NUM_DATA_BYTES_MASK;
-> +	host->ecc_bch_cfg |= host->cw_data << ECC_NUM_DATA_BYTES;
-> +	host->ecc_buf_cfg = (codeword_fixup ? 0x1ff : 0x203) << NUM_STEPS;
-
-s/1ff/(512 - 1)
-s/203/(516 - 1)
-
-> +}
-> +
->  /* implements ecc->read_page() */
->  static int qcom_nandc_read_page(struct nand_chip *chip, uint8_t *buf,
->  				int oob_required, int page)
-> @@ -2045,6 +2123,9 @@ static int qcom_nandc_read_page(struct nand_chip *chip, uint8_t *buf,
->  	struct qcom_nand_controller *nandc = get_qcom_nand_controller(chip);
->  	u8 *data_buf, *oob_buf = NULL;
->  
-> +	if (host->nr_boot_partitions)
-> +		qcom_nandc_codeword_fixup(host, page);
-> +
->  	nand_read_page_op(chip, page, 0, NULL, 0);
->  	data_buf = buf;
->  	oob_buf = oob_required ? chip->oob_poi : NULL;
-> @@ -2064,6 +2145,9 @@ static int qcom_nandc_read_page_raw(struct nand_chip *chip, uint8_t *buf,
->  	int cw, ret;
->  	u8 *data_buf = buf, *oob_buf = chip->oob_poi;
->  
-> +	if (host->nr_boot_partitions)
-> +		qcom_nandc_codeword_fixup(host, page);
-> +
->  	for (cw = 0; cw < ecc->steps; cw++) {
->  		ret = qcom_nandc_read_cw_raw(mtd, chip, data_buf, oob_buf,
->  					     page, cw);
-> @@ -2084,6 +2168,9 @@ static int qcom_nandc_read_oob(struct nand_chip *chip, int page)
->  	struct qcom_nand_controller *nandc = get_qcom_nand_controller(chip);
->  	struct nand_ecc_ctrl *ecc = &chip->ecc;
->  
-> +	if (host->nr_boot_partitions)
-> +		qcom_nandc_codeword_fixup(host, page);
-> +
->  	clear_read_regs(nandc);
->  	clear_bam_transaction(nandc);
->  
-> @@ -2104,6 +2191,9 @@ static int qcom_nandc_write_page(struct nand_chip *chip, const uint8_t *buf,
->  	u8 *data_buf, *oob_buf;
->  	int i, ret;
->  
-> +	if (host->nr_boot_partitions)
-> +		qcom_nandc_codeword_fixup(host, page);
-> +
->  	nand_prog_page_begin_op(chip, page, 0, NULL, 0);
->  
->  	clear_read_regs(nandc);
-> @@ -2119,7 +2209,7 @@ static int qcom_nandc_write_page(struct nand_chip *chip, const uint8_t *buf,
->  	for (i = 0; i < ecc->steps; i++) {
->  		int data_size, oob_size;
->  
-> -		if (qcom_nandc_is_last_cw(ecc, i)) {
-> +		if (qcom_nandc_is_last_cw(ecc, i) && !host->codeword_fixup) {
->  			data_size = ecc->size - ((ecc->steps - 1) << 2);
->  			oob_size = (ecc->steps << 2) + host->ecc_bytes_hw +
->  				   host->spare_bytes;
-> @@ -2176,6 +2266,9 @@ static int qcom_nandc_write_page_raw(struct nand_chip *chip,
->  	u8 *data_buf, *oob_buf;
->  	int i, ret;
->  
-> +	if (host->nr_boot_partitions)
-> +		qcom_nandc_codeword_fixup(host, page);
-> +
->  	nand_prog_page_begin_op(chip, page, 0, NULL, 0);
->  	clear_read_regs(nandc);
->  	clear_bam_transaction(nandc);
-> @@ -2194,7 +2287,7 @@ static int qcom_nandc_write_page_raw(struct nand_chip *chip,
->  		data_size1 = mtd->writesize - host->cw_size * (ecc->steps - 1);
->  		oob_size1 = host->bbm_size;
->  
-> -		if (qcom_nandc_is_last_cw(ecc, i)) {
-> +		if (qcom_nandc_is_last_cw(ecc, i) && !host->codeword_fixup) {
->  			data_size2 = ecc->size - data_size1 -
->  				     ((ecc->steps - 1) << 2);
->  			oob_size2 = (ecc->steps << 2) + host->ecc_bytes_hw +
-> @@ -2254,6 +2347,9 @@ static int qcom_nandc_write_oob(struct nand_chip *chip, int page)
->  	int data_size, oob_size;
->  	int ret;
->  
-> +	if (host->nr_boot_partitions)
-> +		qcom_nandc_codeword_fixup(host, page);
-> +
->  	host->use_ecc = true;
->  	clear_bam_transaction(nandc);
->  
-> @@ -2902,6 +2998,71 @@ static int qcom_nandc_setup(struct qcom_nand_controller *nandc)
->  
->  static const char * const probes[] = { "cmdlinepart", "ofpart", "qcomsmem", NULL };
->  
-> +static int qcom_nand_host_parse_boot_partitions(struct qcom_nand_controller *nandc,
-> +						struct qcom_nand_host *host,
-> +						struct device_node *dn)
-> +{
-> +	struct nand_chip *chip = &host->chip;
-> +	struct mtd_info *mtd = nand_to_mtd(chip);
-> +	struct qcom_nand_boot_partition *boot_partition;
-> +	struct device *dev = nandc->dev;
-> +	int partitions_count, i, j, ret;
-> +
-> +	if (!nandc->props->use_codeword_fixup)
-> +		return 0;
-
-Move this check to caller as I suggested previously.
-
-> +
-> +	if (!of_find_property(dn, "qcom,boot-partitions", NULL))
-> +		return 0;
-> +
-> +	partitions_count = of_property_count_u32_elems(dn, "qcom,boot-partitions");
-> +	if (partitions_count < 0) {
-
-partitions_count <= 0
-
-> +		dev_err(dev, "Error parsing boot partition.");
-
-Add newline at the end of error message
-
-> +		return ret;
-> +	}
-> +
-> +	host->nr_boot_partitions = partitions_count / 2;
-> +	host->boot_partitions = devm_kcalloc(dev, host->nr_boot_partitions,
-> +					     sizeof(*host->boot_partitions), GFP_KERNEL);
-> +	if (!host->boot_partitions)
-
-host->nr_boot_partitions = 0;
-
-> +		return -ENOMEM;
-> +
-> +	for (i = 0, j = 0; i < host->nr_boot_partitions; i++, j += 2) {
-> +		boot_partition = &host->boot_partitions[i];
-> +
-> +		ret = of_property_read_u32_index(dn, "qcom,boot-partitions", j,
-> +						 &boot_partition->page_offset);
-> +		if (ret) {
-> +			dev_err(dev, "Error parsing boot partition offset at index %d", i);
-
-Add newline at the end of error message. Do the same for all error prints.
-
-> +			return ret;
-> +		}
-> +
-> +		if (boot_partition->page_offset % mtd->writesize) {
-> +			dev_err(dev, "Boot partition offset not multiple of writesize at index %i",
-> +				i);
-> +			return -EINVAL;
-> +		}
-> +		/* Convert offset to nand pages */
-
-s/pages/partitions
-
-> +		boot_partition->page_offset /= mtd->writesize;
-
-s/page_offset/offset
-
-> +
-> +		ret = of_property_read_u32_index(dn, "qcom,boot-partitions", j + 1,
-> +						 &boot_partition->page_size);
-> +		if (ret) {
-> +			dev_err(dev, "Error parsing boot partition size at index %d", i);
-> +			return ret;
-> +		}
-> +
-> +		if (boot_partition->page_size % mtd->writesize) {
-
-s/page_size/size here and below
-
-> +			dev_err(dev, "Boot partition size not multiple of writesize at index %i",
-> +				i);
-> +			return -EINVAL;
-> +		}
-> +		/* Convert size to nand pages */
-
-s/pages/partitions
+I looked up the IP doc for msm8939 and I could find only TBU_PWR_STATUS register and
+you can use the same offset for it as given in this patch.
 
 Thanks,
-Mani
-
-> +		boot_partition->page_size /= mtd->writesize;
-> +	}
-> +
-> +	return 0;
-> +}
-> +
->  static int qcom_nand_host_init_and_register(struct qcom_nand_controller *nandc,
->  					    struct qcom_nand_host *host,
->  					    struct device_node *dn)
-> @@ -2970,6 +3131,8 @@ static int qcom_nand_host_init_and_register(struct qcom_nand_controller *nandc,
->  	if (ret)
->  		nand_cleanup(chip);
->  
-> +	qcom_nand_host_parse_boot_partitions(nandc, host, dn);
-> +
->  	return ret;
->  }
->  
-> @@ -3135,6 +3298,7 @@ static int qcom_nandc_remove(struct platform_device *pdev)
->  static const struct qcom_nandc_props ipq806x_nandc_props = {
->  	.ecc_modes = (ECC_RS_4BIT | ECC_BCH_8BIT),
->  	.is_bam = false,
-> +	.use_codeword_fixup = true,
->  	.dev_cmd_reg_start = 0x0,
->  };
->  
-> -- 
-> 2.36.1
-> 
-
--- 
-மணிவண்ணன் சதாசிவம்
+Sai
