@@ -2,187 +2,153 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 41F58544D65
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jun 2022 15:22:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4BADC544D76
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jun 2022 15:24:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243807AbiFINWS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Jun 2022 09:22:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37162 "EHLO
+        id S236275AbiFINYR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Jun 2022 09:24:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46132 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235210AbiFINWR (ORCPT
+        with ESMTP id S238780AbiFINYR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Jun 2022 09:22:17 -0400
-Received: from mail.tkos.co.il (hours.tkos.co.il [84.110.109.230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7285825F5;
-        Thu,  9 Jun 2022 06:22:15 -0700 (PDT)
-Received: from tarshish (unknown [10.0.8.2])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.tkos.co.il (Postfix) with ESMTPS id 18F7A44051C;
-        Thu,  9 Jun 2022 16:21:59 +0300 (IDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tkos.co.il;
-        s=default; t=1654780919;
-        bh=4lmVetWEizyXy3Pcuz2UbHUUHYh1KNwujq3JDVAhUY0=;
-        h=References:From:To:Cc:Subject:Date:In-reply-to:From;
-        b=UJI4vR8Zfb7oVVfnOiz41PthhfILl1KVnFTBLuvNZVn82JWIlUMmB2xlmU4cZXjey
-         6Bg2yZSDDQXf8zYA1ylkOLtPogQRPqLgwvDuxXzqLJtYiP+tv3ccL9RtcUpWW+RuBU
-         hQZ+stxFV+SKPtvJyG0OQE8SfeXlQkNWjunLIZr8eJAMtwtQ+CFhQfb1Te8e7Vg3kU
-         ILHa/PWNDASm4ao8XmEzi/YPBkj7DPnA/hKAihrzOsX5w0vgdbvIMxvykB94ndTBfA
-         dxwhJph4Pms//iDVJcfmcx5K6j26xFH/DouH8SCHBfLyY17dEJ/w+iD52eQOhCviiw
-         yUWKybm+/HOlQ==
-References: <CA+HBbNFo9QCExiA9T4Mn4t5vvir79xF3R9F6OLZa0m5Bzpte3w@mail.gmail.com>
- <20220608202420.GA418223@bhelgaas>
-User-agent: mu4e 1.6.10; emacs 27.1
-From:   Baruch Siach <baruch@tkos.co.il>
-To:     Bjorn Helgaas <helgaas@kernel.org>
-Cc:     Robert Marko <robert.marko@sartura.hr>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Thu, 9 Jun 2022 09:24:17 -0400
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C13FD1B781;
+        Thu,  9 Jun 2022 06:24:15 -0700 (PDT)
+Received: by mail-ed1-x529.google.com with SMTP id d14so5638272eda.12;
+        Thu, 09 Jun 2022 06:24:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=xOp49jraaiqTwhYF0mD/jVJfnTt8MnTWTGqz+xRTGq0=;
+        b=d4kQYyM0yvnckDXPuCHW9lAxap+AYxbPdjcG00CMIxwFvwa/g8Lxynqud3+wQGqBLU
+         l8a4gAg0NSFJoO6339vafPYusRxUSh6YDbuyRNfn4RVLpOGnfLpbUoik54Z8DTlfZxqi
+         6DZukQ43NvrbT3hKz311Ic9q+3xU7uF/NQOO1ocqqS58t5IGbzguWrhy3We2UUerPuOZ
+         IiHpqMebjgvBXHOYsvnH0Jw0gDcU7RqdY4DXI0vBpS4+b1dbjEaYrx03NiEXLHnCEhvq
+         k8XD2H2ERMGyz2vwABv7WCt1fXyoy/mbnkuxV7lUFTP7pVmvKZagNZY/vpVp7TXCObcf
+         YJXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=xOp49jraaiqTwhYF0mD/jVJfnTt8MnTWTGqz+xRTGq0=;
+        b=CMc3Y4RiJb9nQTFNCE3F1IcTL7JVheMUpQuv5A4Ez3Taw8fCMBgo9H/UIxfCUodAIK
+         4sAfrDSNjyUc+4cOwQ4lu/a/mMr5aaatkCoDiBWF2mtaQxTaw9a9yTRv8OWzbNKUBGaT
+         o9B8mTjd1u+XlVrxfMmsegPDTtv1ZveaB8R/BWBsQg2na4WNw8bQmFegM06FUaj17ueH
+         9G2mkCFFoVw7KIdIVWvLOtXnurUKpZ1HsNcn/9RvCflEMvH723Zt/Wlm1L9yb+yh165V
+         UrwBcIwxDWNP6wIZzxzscj1Lpfsxj81/OR2dZ84a4uNcoTGzI9OmrdZHGUrlgDicRWEe
+         5l2A==
+X-Gm-Message-State: AOAM531L3h3BiqfXat9Nuxic66YjmCAJwJu2eQHdr0HJjNa832QUOWun
+        xCArX95IraQkmJfhkO+nBIN9IDRwBnc=
+X-Google-Smtp-Source: ABdhPJw+G30MAFfNqV3/fVSa6QC3D052TECaWZBqwRPk2jH0eVMb5bWimZSB9eMFpoY8YCgWaAEhiQ==
+X-Received: by 2002:a05:6402:3207:b0:42d:dba6:8ef0 with SMTP id g7-20020a056402320700b0042ddba68ef0mr45929939eda.410.1654781054042;
+        Thu, 09 Jun 2022 06:24:14 -0700 (PDT)
+Received: from localhost.localdomain (93-42-70-190.ip85.fastwebnet.it. [93.42.70.190])
+        by smtp.googlemail.com with ESMTPSA id i2-20020a056402054200b004315050d7dfsm8360263edx.81.2022.06.09.06.24.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 09 Jun 2022 06:24:13 -0700 (PDT)
+From:   Ansuel Smith <ansuelsmth@gmail.com>
+To:     Manivannan Sadhasivam <mani@kernel.org>,
         Andy Gross <agross@kernel.org>,
-        Selvam Sathappan Periakaruppan <quic_speriaka@quicinc.com>,
-        Kathiravan T <quic_kathirav@quicinc.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Miquel Raynal <miquel.raynal@bootlin.com>,
+        Richard Weinberger <richard@nod.at>,
+        Vignesh Raghavendra <vigneshr@ti.com>,
         Rob Herring <robh+dt@kernel.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Bryan O'Donoghue <pure.logic@nexus-software.ie>,
-        linux-pci@vger.kernel.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        linux-tegra@vger.kernel.org,
-        Stanimir Varbanov <svarbanov@mm-sol.com>
-Subject: Re: [PATCH v6 0/3] PCI: IPQ6018 platform support
-Date:   Thu, 09 Jun 2022 16:10:45 +0300
-In-reply-to: <20220608202420.GA418223@bhelgaas>
-Message-ID: <875yla55vg.fsf@tarshish>
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-mtd@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     Ansuel Smith <ansuelsmth@gmail.com>
+Subject: [PATCH v6 0/3] Add support for unprotected spare data page
+Date:   Thu,  9 Jun 2022 15:23:41 +0200
+Message-Id: <20220609132344.17548-1-ansuelsmth@gmail.com>
+X-Mailer: git-send-email 2.36.1
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bjorn,
+Some background about this.
+On original qsdk ipq8064 based firmware there was a big separation from
+boot partition and user partition. With boot partition we refer to
+partition used to init the router (bootloader, spm firmware and other
+internal stuff) With user partition we refer to linux partition and data
+partition not used to init the router.
+When someone had to write to these boot partition a special mode was
+needed, to switch the nand driver to this special configuration.
 
-[ Changed codeaurora.com addresses to their quicinc.com equivalents ]
+Upstream version of the nandc driver totally dropped this and the result
+is that if someone try to read data from these partition a CRC warning
+is printed and if someone try to write that (if for example someone
+wants to replace the bootloader) result is a broken system as the data
+is badly written.
 
-On Wed, Jun 08 2022, Bjorn Helgaas wrote:
-> [+cc Stanimir, beginning of thread at
-> https://lore.kernel.org/r/cover.1644234441.git.baruch@tkos.co.il]
->
-> On Tue, Jun 07, 2022 at 03:12:19PM +0200, Robert Marko wrote:
->> On Wed, May 11, 2022 at 4:03 PM Lorenzo Pieralisi
->> <lorenzo.pieralisi@arm.com> wrote:
->> >
->> > On Tue, Apr 12, 2022 at 05:12:59PM +0100, Lorenzo Pieralisi wrote:
->> > > On Mon, Feb 07, 2022 at 04:51:23PM +0200, Baruch Siach wrote:
->> > > > This series adds support for the single PCIe lane on IPQ6018 SoCs. The code is
->> > > > ported from downstream Codeaurora v5.4 kernel. The main difference from
->> > > > downstream code is the split of PCIe registers configuration from .init to
->> > > > .post_init, since it requires phy_power_on().
->> > > >
->> > > > Tested on IPQ6010 based hardware.
->> > > >
->> > > > Changes in v6:
->> > > >
->> > > >   * Drop DT patch applied to the qcom tree
->> > > >
->> > > >   * Normalize driver changes subject line
->> > > >
->> > > >   * Add a preparatory patch to rename PCIE_CAP_LINK1_VAL to PCIE_CAP_SLOT_VAL,
->> > > >     and define it using PCI_EXP_SLTCAP_* macros
->> > > >
->> > > >   * Drop a vague comment about ASPM configuration
->> > > >
->> > > >   * Add a comment about the source of delay periods
->> > > >
->> > > > Changes in v5:
->> > > >
->> > > >   * Remove comments from qcom_pcie_init_2_9_0() (Bjorn Andersson)
->> > > >
->> > > > Changes in v4:
->> > > >
->> > > >   * Drop applied DT bits
->> > > >
->> > > >   * Add max-link-speed that was missing from the applied v2 patch
->> > > >
->> > > >   * Rebase the driver on v5.16-rc3
->> > > >
->> > > > Changes in v3:
->> > > >
->> > > >   * Drop applied patches
->> > > >
->> > > >   * Rely on generic code for speed setup
->> > > >
->> > > >   * Drop unused macros
->> > > >
->> > > >   * Formatting fixes
->> > > >
->> > > > Changes in v2:
->> > > >
->> > > >   * Add patch moving GEN3_RELATED macros to a common header
->> > > >
->> > > >   * Drop ATU configuration from pcie-qcom
->> > > >
->> > > >   * Remove local definition of common registers
->> > > >
->> > > >   * Use bulk clk and reset APIs
->> > > >
->> > > >   * Remove msi-parent from device-tree
->> > > >
->> > > > Baruch Siach (2):
->> > > >   PCI: dwc: tegra: move GEN3_RELATED DBI register to common header
->> > > >   PCI: qcom: Define slot capabilities using PCI_EXP_SLTCAP_*
->> > > >
->> > > > Selvam Sathappan Periakaruppan (1):
->> > > >   PCI: qcom: Add IPQ60xx support
->> > > >
->> > > >  drivers/pci/controller/dwc/pcie-designware.h |   7 +
->> > > >  drivers/pci/controller/dwc/pcie-qcom.c       | 155 ++++++++++++++++++-
->> > > >  drivers/pci/controller/dwc/pcie-tegra194.c   |   6 -
->> > > >  3 files changed, 160 insertions(+), 8 deletions(-)
->> > >
->> > > Hi Bjorn, Andy,
->> > >
->> > > any feedback on this series please ?
->> >
->> > Any feedback on these patches please ?
->> 
->> Finally dug the CP01, and for me, it works, so:
->> Tested-by: Robert Marko <robert.marko@sartura.hr>
->
-> This mainly affects pcie-qcom.c, so it looks like Stanimir should have
-> been copied on this, but wasn't.  Please include him on the next
-> iteration.
+This series comes to fix this.
 
-I somehow missed the pcie-qcom.c standalone entry in MAINTAINERS because
-the same file also appears on the general qcom entry. I'll add him on
-v7. Hopefully that will improve the fortune of this series.
+A user can declare offset and size of these special partition using the
+qcom,boot-pages binding.
 
-> This will also need to be updated to apply on v5.19-rc1:
->
->   03:21:47 ~/linux (next)$ git checkout -b wip/baruch-ipq6018-v6 v5.19-rc1
->   Switched to a new branch 'wip/baruch-ipq6018-v6'
->   03:21:55 ~/linux (wip/baruch-ipq6018-v6)$ git am m/v6_20220207_baruch_pci_ipq6018_platform_support.mbx
->   Applying: PCI: dwc: tegra: move GEN3_RELATED DBI register to common header
->   Applying: PCI: qcom: Define slot capabilities using PCI_EXP_SLTCAP_*
->   Applying: PCI: qcom: Add IPQ60xx support
->   error: patch failed: drivers/pci/controller/dwc/pcie-qcom.c:1531
->   error: drivers/pci/controller/dwc/pcie-qcom.c: patch does not apply
->   Patch failed at 0003 PCI: qcom: Add IPQ60xx support
+An initial implementation of this assumed that the boot-pages started
+from the start of the nand but we discover that some device have backup
+of these special partition and we can have situation where we have this
+partition scheme
+- APPSBL (require special mode)
+- APPSBLENV (doesn't require special mode)
+- ART
+- APPSBLBK (back of APPSBL require special mode)
+- APPSBLENVBK (back of APPSBLENV doesn't require special mode)
+With this configuration we need to declare sparse boot page and we can't
+assume boot-pages always starts from the start of the nand.
 
-I'll rebase on v5.19-rc1.
+A user can use this form to declare sparse boot pages
+qcom,boot-partitions = <0x0 0x0c80000 0x0c80000 0x0500000>;
 
-baruch
+The driver internally will parse this array, convert it to nand pages
+and check internally on every read/write if this special configuration
+should used for that page or the normal one.
+
+The reason for all of this is that qcom FOR SOME REASON, disable ECC for
+spare data only for these boot partition and we need to reflect this
+special configuration to mute these warning and to permit actually
+writing to these pages.
+
+v6:
+- Add additional comments on boot partition check
+- First reorder struct then make change
+- Add additional changes request from Manivannan
+- Add review tag for dt commit
+v5:
+- Rename boot-pages to boot-partitions
+- Add additional check to parsing function
+- Rename unprotect_spare_data to codeword_fixup
+- Add additional info from Manivannan
+- Add patch to remove holes in qcom_nand_host struct
+v4:
+- Fix wrong compatible set for boot-pages (ipq8074 instead of ipq806x)
+v3:
+- Fix typo in Docmunetation commit desription
+- Add items description for uint32-matrix
+v2:
+- Add fixes from Krzysztof in Documentation
+
+Ansuel Smith (3):
+  mtd: nand: raw: qcom_nandc: reorder qcom_nand_host struct
+  mtd: nand: raw: qcom_nandc: add support for unprotected spare data
+    pages
+  dt-bindings: mtd: qcom_nandc: document qcom,boot-partitions binding
+
+ .../devicetree/bindings/mtd/qcom,nandc.yaml   |  27 +++
+ drivers/mtd/nand/raw/qcom_nandc.c             | 214 +++++++++++++++++-
+ 2 files changed, 232 insertions(+), 9 deletions(-)
 
 -- 
-                                                     ~. .~   Tk Open Systems
-=}------------------------------------------------ooO--U--Ooo------------{=
-   - baruch@tkos.co.il - tel: +972.52.368.4656, http://www.tkos.co.il -
+2.36.1
+
