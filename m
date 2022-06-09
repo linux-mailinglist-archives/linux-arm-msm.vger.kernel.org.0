@@ -2,262 +2,156 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1357F544811
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jun 2022 11:54:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A81B3544835
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jun 2022 12:02:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240177AbiFIJyk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Jun 2022 05:54:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50568 "EHLO
+        id S235202AbiFIKCO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Jun 2022 06:02:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57230 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239398AbiFIJyh (ORCPT
+        with ESMTP id S232691AbiFIKCN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Jun 2022 05:54:37 -0400
-X-Greylist: delayed 2337 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 09 Jun 2022 02:54:35 PDT
-Received: from mail.shift-gmbh.com (mail.shift-gmbh.com [85.10.195.145])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33A7B19578A;
-        Thu,  9 Jun 2022 02:54:33 -0700 (PDT)
-From:   Alexander Martinz <amartinz@shiftphones.com>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=shiftphones.com;
-        s=2018; t=1654768471;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=3ai7MXDHhQ0YkmN4XjLxpe4VHIXkfJfMzV2EfEfNPqA=;
-        b=q3qFRsOM0276IDWHlcDx5ar0aVWlGYi/hivWeZCNX4vetaAs94nL3WD5W8jjKIOhuUX10N
-        9yklJLJ3nk7v2sGTmgwLFqQeVGhqc7pc7D4Q7f6XO8uyQQs/rbO0US5qfm1lIVFId7/7Pw
-        bO90EOk4ZKWREEwZeszqcT25Swz+KVC5EQ5/vwrwBolzzaZbsDbhfVE4JhzEH3KRmETdK+
-        wpI5ZLpRQecrGgxz9fOojk+YXK3NgdHV20zpn+o1tW/0OPi7qQy4Gpi2WFX8cWWSToOm0w
-        FaurpkpwnXFGyId4LP9VlVA6Z7BiAPgpfvQxSJdO+bU4q8iJFqSV6IRepJB7Ng==
-To:     ~postmarketos/upstreaming@lists.sr.ht
-Cc:     phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Alexander Martinz <amartinz@shiftphones.com>,
-        Dylan Van Assche <me@dylanvanassche.be>
-Subject: [PATCH 2/2] arm64: dts: qcom/sdm845-shift-axolotl: Add audio support
-Date:   Thu,  9 Jun 2022 11:54:12 +0200
-Message-Id: <20220609095412.211060-2-amartinz@shiftphones.com>
-In-Reply-To: <20220609095412.211060-1-amartinz@shiftphones.com>
-References: <20220609095412.211060-1-amartinz@shiftphones.com>
+        Thu, 9 Jun 2022 06:02:13 -0400
+Received: from casper.infradead.org (casper.infradead.org [IPv6:2001:8b0:10b:1236::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5921714E94C;
+        Thu,  9 Jun 2022 03:02:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
+        References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+        Content-Transfer-Encoding:Content-ID:Content-Description;
+        bh=UbbDgBiwip0YBZOTZVQugfugvsZnYOECFEm/sChB2KE=; b=pk5LmI1A6aszGw6bJBfBOEp2aD
+        U1h+ZFFSSnK8VqAlyB4JuyYAdX13KUgLZiqkzxfwMXZ9rLcXV72vPGCzoT5Nh/jWgfuAo9rvsnY2d
+        uR5AV7hvfyPjralHm1TpJmT+OCcad3LiNA+fq5wN7wYCWN4JhRiwUwGBAslMEHFWQWn5ULi2Lub4P
+        i+EEJRnbfwtH5eutwugIAwcmhtxvbG1a5W2y8SzA+C4Ts7dxbLHpQKmAmovezzT8tR42G7Z3XpfnO
+        yc0zC9lSe7OtjlT7qvzvuP3LXJVZDKeRWF3xOE4FMAliLG0o07t6jIPvQ35THQypS5lZSRykYm4f6
+        U90A/TjQ==;
+Received: from dhcp-077-249-017-003.chello.nl ([77.249.17.3] helo=worktop.programming.kicks-ass.net)
+        by casper.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
+        id 1nzEzM-00DRgJ-Mk; Thu, 09 Jun 2022 10:02:04 +0000
+Received: by worktop.programming.kicks-ass.net (Postfix, from userid 1000)
+        id 2E614981287; Thu,  9 Jun 2022 12:02:04 +0200 (CEST)
+Date:   Thu, 9 Jun 2022 12:02:04 +0200
+From:   Peter Zijlstra <peterz@infradead.org>
+To:     Petr Mladek <pmladek@suse.com>
+Cc:     ink@jurassic.park.msu.ru, mattst88@gmail.com, vgupta@kernel.org,
+        linux@armlinux.org.uk, ulli.kroll@googlemail.com,
+        linus.walleij@linaro.org, shawnguo@kernel.org,
+        Sascha Hauer <s.hauer@pengutronix.de>, kernel@pengutronix.de,
+        festevam@gmail.com, linux-imx@nxp.com, tony@atomide.com,
+        khilman@kernel.org, catalin.marinas@arm.com, will@kernel.org,
+        guoren@kernel.org, bcain@quicinc.com, chenhuacai@kernel.org,
+        kernel@xen0n.name, geert@linux-m68k.org, sammy@sammy.net,
+        monstr@monstr.eu, tsbogend@alpha.franken.de, dinguyen@kernel.org,
+        jonas@southpole.se, stefan.kristiansson@saunalahti.fi,
+        shorne@gmail.com, James.Bottomley@hansenpartnership.com,
+        deller@gmx.de, mpe@ellerman.id.au, benh@kernel.crashing.org,
+        paulus@samba.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
+        aou@eecs.berkeley.edu, hca@linux.ibm.com, gor@linux.ibm.com,
+        agordeev@linux.ibm.com, borntraeger@linux.ibm.com,
+        svens@linux.ibm.com, ysato@users.sourceforge.jp, dalias@libc.org,
+        davem@davemloft.net, richard@nod.at,
+        anton.ivanov@cambridgegreys.com, johannes@sipsolutions.net,
+        tglx@linutronix.de, mingo@redhat.com, bp@alien8.de,
+        dave.hansen@linux.intel.com, x86@kernel.org, hpa@zytor.com,
+        acme@kernel.org, mark.rutland@arm.com,
+        alexander.shishkin@linux.intel.com, jolsa@kernel.org,
+        namhyung@kernel.org, jgross@suse.com, srivatsa@csail.mit.edu,
+        amakhalov@vmware.com, pv-drivers@vmware.com,
+        boris.ostrovsky@oracle.com, chris@zankel.net, jcmvbkbc@gmail.com,
+        rafael@kernel.org, lenb@kernel.org, pavel@ucw.cz,
+        gregkh@linuxfoundation.org, mturquette@baylibre.com,
+        sboyd@kernel.org, daniel.lezcano@linaro.org, lpieralisi@kernel.org,
+        sudeep.holla@arm.com, agross@kernel.org,
+        bjorn.andersson@linaro.org, anup@brainfault.org,
+        thierry.reding@gmail.com, jonathanh@nvidia.com,
+        jacob.jun.pan@linux.intel.com, Arnd Bergmann <arnd@arndb.de>,
+        yury.norov@gmail.com, andriy.shevchenko@linux.intel.com,
+        linux@rasmusvillemoes.dk, rostedt@goodmis.org,
+        senozhatsky@chromium.org, john.ogness@linutronix.de,
+        paulmck@kernel.org, frederic@kernel.org, quic_neeraju@quicinc.com,
+        josh@joshtriplett.org, mathieu.desnoyers@efficios.com,
+        jiangshanlai@gmail.com, joel@joelfernandes.org,
+        juri.lelli@redhat.com, vincent.guittot@linaro.org,
+        dietmar.eggemann@arm.com, bsegall@google.com, mgorman@suse.de,
+        bristot@redhat.com, vschneid@redhat.com, jpoimboe@kernel.org,
+        linux-alpha@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-snps-arc@lists.infradead.org,
+        linux-arm-kernel@lists.infradead.org, linux-omap@vger.kernel.org,
+        linux-csky@vger.kernel.org, linux-hexagon@vger.kernel.org,
+        linux-ia64@vger.kernel.org, linux-m68k@lists.linux-m68k.org,
+        linux-mips@vger.kernel.org, openrisc@lists.librecores.org,
+        linux-parisc@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
+        linux-riscv@lists.infradead.org, linux-s390@vger.kernel.org,
+        linux-sh@vger.kernel.org, sparclinux@vger.kernel.org,
+        linux-um@lists.infradead.org, linux-perf-users@vger.kernel.org,
+        virtualization@lists.linux-foundation.org,
+        xen-devel@lists.xenproject.org, linux-xtensa@linux-xtensa.org,
+        linux-acpi@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-tegra@vger.kernel.org, linux-arch@vger.kernel.org,
+        rcu@vger.kernel.org
+Subject: Re: [PATCH 24/36] printk: Remove trace_.*_rcuidle() usage
+Message-ID: <YqHFHB6qqv5wiR8t@worktop.programming.kicks-ass.net>
+References: <20220608142723.103523089@infradead.org>
+ <20220608144517.444659212@infradead.org>
+ <YqG6URbihTNCk9YR@alley>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Authentication-Results: ORIGINATING;
-        auth=pass smtp.auth=amartinz@shiftphones.com smtp.mailfrom=amartinz@shiftphones.com
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <YqG6URbihTNCk9YR@alley>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This patch adds audio support for the SHIFT6mq phone.
+On Thu, Jun 09, 2022 at 11:16:46AM +0200, Petr Mladek wrote:
+> On Wed 2022-06-08 16:27:47, Peter Zijlstra wrote:
+> > The problem, per commit fc98c3c8c9dc ("printk: use rcuidle console
+> > tracepoint"), was printk usage from the cpuidle path where RCU was
+> > already disabled.
+> > 
+> > Per the patches earlier in this series, this is no longer the case.
+> 
+> My understanding is that this series reduces a lot the amount
+> of code called with RCU disabled. As a result the particular printk()
+> call mentioned by commit fc98c3c8c9dc ("printk: use rcuidle console
+> tracepoint") is called with RCU enabled now. Hence this particular
+> problem is fixed better way now.
+> 
+> But is this true in general?
+> Does this "prevent" calling printk() a safe way in code with
+> RCU disabled?
 
-The primary microphone and headphone jack are handled by the
-SDM845 sound card and WCD9340 codec.
+On x86_64, yes. Other architectures, less so.
 
-The primary speaker needs to go through the TFA9890 speaker
-amplifier.
+Specifically, the objtool noinstr validation pass will warn at build
+time (DEBUG_ENTRY=y) if any noinstr/cpuidle code does a call to
+non-vetted code like printk().
 
-Signed-off-by: Alexander Martinz <amartinz@shiftphones.com>
-Tested-by: Dylan Van Assche <me@dylanvanassche.be>
----
- .../boot/dts/qcom/sdm845-shift-axolotl.dts    | 141 ++++++++++++++++++
- 1 file changed, 141 insertions(+)
+At the same time; there's a few hacks that allow WARN to work, but
+mostly if you hit WARN in entry/noinstr you get to keep the pieces in
+any case.
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts b/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
-index fa72f23ef0c2..8c4967d6d0e3 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
-@@ -8,6 +8,8 @@
- 
- #include <dt-bindings/gpio/gpio.h>
- #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
-+#include <dt-bindings/sound/qcom,q6afe.h>
-+#include <dt-bindings/sound/qcom,q6asm.h>
- #include "sdm845.dtsi"
- #include "pm8998.dtsi"
- #include "pmi8998.dtsi"
-@@ -492,6 +494,19 @@ touchscreen@38 {
- 	};
- };
- 
-+&i2c11 {
-+	status = "okay";
-+	clock-frequency = <400000>;
-+
-+	tfa9890_codec: tfa9890@34 {
-+		compatible = "nxp,tfa9890";
-+		reg = <0x34>;
-+		vddd-supply = <&vreg_s4a_1p8>;
-+		reset-gpio = <&tlmm 7 0>;
-+		#sound-dai-cells = <1>;
-+	};
-+};
-+
- &ipa {
- 	status = "okay";
- 
-@@ -530,6 +545,27 @@ volume_down_resin: resin {
- 	};
- };
- 
-+&q6afedai {
-+	qi2s@22 {
-+		reg = <22>;
-+		qcom,sd-lines = <0>;
-+	};
-+};
-+
-+&q6asmdai {
-+	dai@0 {
-+		reg = <0>;
-+	};
-+
-+	dai@1 {
-+		reg = <1>;
-+	};
-+
-+	dai@2 {
-+		reg = <2>;
-+	};
-+};
-+
- /*
-  * Prevent garbage data on bluetooth UART lines
-  */
-@@ -578,6 +614,84 @@ &qupv3_id_1 {
- 	status = "okay";
- };
- 
-+&sound {
-+	model = "SHIFT6mq";
-+	compatible = "qcom,sdm845-sndcard";
-+	pinctrl-0 = <&quat_mi2s_active &quat_mi2s_sd0_active>;
-+	pinctrl-names = "default";
-+
-+	audio-routing = "RX_BIAS", "MCLK",
-+			"AMIC1", "MIC BIAS1",
-+			"AMIC2", "MIC BIAS2",
-+			"AMIC3", "MIC BIAS3";
-+
-+	mm1-dai-link {
-+		link-name = "MultiMedia1";
-+		cpu {
-+			sound-dai = <&q6asmdai MSM_FRONTEND_DAI_MULTIMEDIA1>;
-+		};
-+	};
-+
-+	mm2-dai-link {
-+		link-name = "MultiMedia2";
-+		cpu {
-+			sound-dai = <&q6asmdai MSM_FRONTEND_DAI_MULTIMEDIA2>;
-+		};
-+	};
-+
-+	mm3-dai-link {
-+		link-name = "MultiMedia3";
-+		cpu {
-+			sound-dai = <&q6asmdai MSM_FRONTEND_DAI_MULTIMEDIA3>;
-+		};
-+	};
-+
-+	speaker-dai-link {
-+		link-name = "Speaker Playback";
-+		codec {
-+			sound-dai = <&tfa9890_codec 0>;
-+		};
-+
-+		cpu {
-+			sound-dai = <&q6afedai QUATERNARY_MI2S_RX>;
-+		};
-+
-+		platform {
-+			sound-dai = <&q6routing>;
-+		};
-+	};
-+
-+	slim-dai-link {
-+		link-name = "SLIM Playback";
-+		codec {
-+			sound-dai = <&wcd9340 0>;
-+		};
-+
-+		cpu {
-+			sound-dai = <&q6afedai SLIMBUS_0_RX>;
-+		};
-+
-+		platform {
-+			sound-dai = <&q6routing>;
-+		};
-+	};
-+
-+	slimcap-dai-link {
-+		link-name = "SLIM Capture";
-+		codec {
-+			sound-dai = <&wcd9340 1>;
-+		};
-+
-+		cpu {
-+			sound-dai = <&q6afedai SLIMBUS_0_TX>;
-+		};
-+
-+		platform {
-+			sound-dai = <&q6routing>;
-+		};
-+	};
-+};
-+
- &tlmm {
- 	gpio-reserved-ranges = <0 4>, <81 4>;
- 
-@@ -686,6 +800,15 @@ config {
- 			bias-pull-down;
- 		};
- 	};
-+
-+	wcd_intr_default: wcd_intr_default {
-+		pins = <54>;
-+		function = "gpio";
-+
-+		input-enable;
-+		bias-pull-down;
-+		drive-strength = <2>;
-+	};
- };
- 
- &uart6 {
-@@ -756,6 +879,24 @@ &venus {
- 	firmware-name = "qcom/sdm845/axolotl/venus.mbn";
- };
- 
-+&wcd9340 {
-+	pinctrl-0 = <&wcd_intr_default>;
-+	pinctrl-names = "default";
-+	clock-names = "extclk";
-+	clocks = <&rpmhcc RPMH_LN_BB_CLK2>;
-+	reset-gpios = <&tlmm 64 0>;
-+	vdd-buck-supply = <&vreg_s4a_1p8>;
-+	vdd-buck-sido-supply = <&vreg_s4a_1p8>;
-+	vdd-tx-supply = <&vreg_s4a_1p8>;
-+	vdd-rx-supply = <&vreg_s4a_1p8>;
-+	vdd-io-supply = <&vreg_s4a_1p8>;
-+
-+	qcom,micbias1-microvolt = <2700000>;
-+	qcom,micbias2-microvolt = <2700000>;
-+	qcom,micbias3-microvolt = <2700000>;
-+	qcom,micbias4-microvolt = <2700000>;
-+};
-+
- &wifi {
- 	status = "okay";
- 
--- 
-2.36.1
+On other architecture we'll need to rely on runtime coverage with
+PROVE_RCU. That is, if a splat like in the above mentioned commit
+happens again, we'll need to fix it by adjusting the callchain, not by
+mucking about with RCU state.
 
+> I am not sure if anyone cares. printk() is the best effort
+> functionality because of the consoles code anyway. Also I wonder
+> if anyone uses this trace_console().
+
+This is the tracepoint used to spool all of printk into ftrace, I
+suspect there's users, but I haven't used it myself.
+
+> Therefore if this patch allows to remove some tricky tracing
+> code then it might be worth it. But if trace_console_rcuidle()
+> variant is still going to be available then I would keep using it.
+
+My ultimate goal is to delete trace_.*_rcuidle() and RCU_NONIDLE()
+entirely. We're close, but not quite there yet.
