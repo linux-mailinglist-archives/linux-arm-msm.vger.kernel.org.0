@@ -2,232 +2,164 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 565D95440F5
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jun 2022 03:13:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 004CF544213
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jun 2022 05:44:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229752AbiFIBNA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Jun 2022 21:13:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37288 "EHLO
+        id S232788AbiFIDo4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Jun 2022 23:44:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33926 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229720AbiFIBM6 (ORCPT
+        with ESMTP id S231326AbiFIDoy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Jun 2022 21:12:58 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA13E424BA;
-        Wed,  8 Jun 2022 18:12:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1654737176; x=1686273176;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=06zP1AL9u1zzGGm8hB/0bmU7bVi5Ty8PW+dVOKeQnj4=;
-  b=I/3FszAPRmJz8KMUboUT/dGD7jQq7LiCz9EbPgA4v//xQYMiUR4L+Ocl
-   lFCN6+9E9sSS7TA9UsKhn8XHRvINI4wRvReeCO422aGXcVqIhR0EzUNVL
-   O+fN0bnMI7JWCOEgk6ooRTDUBFpI+QzXGruOdExhZ4AjVGrSPtmF4wsFF
-   I=;
-Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 08 Jun 2022 18:12:56 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Jun 2022 18:12:55 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 8 Jun 2022 18:12:55 -0700
-Received: from [10.253.11.78] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Wed, 8 Jun 2022
- 18:12:50 -0700
-Message-ID: <7f525d11-c738-4f45-1821-d1c617cd6401@quicinc.com>
-Date:   Thu, 9 Jun 2022 09:12:47 +0800
+        Wed, 8 Jun 2022 23:44:54 -0400
+Received: from mail.tkos.co.il (golan.tkos.co.il [84.110.109.230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 418FE267170;
+        Wed,  8 Jun 2022 20:44:53 -0700 (PDT)
+Received: from tarshish (unknown [10.0.8.2])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.tkos.co.il (Postfix) with ESMTPS id 5CCA8440852;
+        Thu,  9 Jun 2022 06:44:37 +0300 (IDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tkos.co.il;
+        s=default; t=1654746277;
+        bh=EWe42ZBC6Hrzj+YG80I5ZMUF+bsbGfPPCSZmNiV399s=;
+        h=References:From:To:Cc:Subject:Date:In-reply-to:From;
+        b=nqu33TuHHoGsX6jGe+dYYWPOFVxxDiCsynNa657VbaIbZhQeHvUFvud2+YYg5WgaW
+         4Gw3VU8dJjxMcxN+Ki259adtdkm2rGEyHDpLvaRJ5dU+0QQSYwQlhiLQbgH1x6ni6a
+         OIIiwJos2dnDyEn5TvkmQADLOBWYRV6nIMEv7/OUwEE9bRQT4mKVwQGfHiT52Xatsy
+         U+bAMis8VP8w1dMzf+rzVHwt8fGRh4c6JcsJQA/6w1mXDXpuhqkTpV2gTzUMkCrJIV
+         3NbkRwkLSKT1Elgcxey49Wzn72MLUsCTeNrKZR8Jc2pcOi7ni9lVmL5iiSbgFHedLv
+         X4ObjxfA3C60Q==
+References: <cover.1644234441.git.baruch@tkos.co.il>
+ <f452d0d28482462557485805d708b9adb9e0f6c0.1644234441.git.baruch@tkos.co.il>
+ <20220608230008.acp6lwu6xjin62ql@pali>
+User-agent: mu4e 1.6.10; emacs 27.1
+From:   Baruch Siach <baruch@tkos.co.il>
+To:     Pali =?utf-8?Q?Roh=C3=A1r?= <pali@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Selvam Sathappan Periakaruppan <speriaka@codeaurora.org>,
+        Kathiravan T <kathirav@codeaurora.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Robert Marko <robert.marko@sartura.hr>,
+        Bryan O'Donoghue <pure.logic@nexus-software.ie>,
+        linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-tegra@vger.kernel.org,
+        Stanimir Varbanov <svarbanov@mm-sol.com>
+Subject: Re: [PATCH v6 2/3] PCI: qcom: Define slot capabilities using
+ PCI_EXP_SLTCAP_*
+Date:   Thu, 09 Jun 2022 06:27:34 +0300
+In-reply-to: <20220608230008.acp6lwu6xjin62ql@pali>
+Message-ID: <87r13ymrf2.fsf@tarshish>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH v8 03/10] dt-bindings: arm: Adds CoreSight TPDM hardware
- definitions
-Content-Language: en-US
-To:     Rob Herring <robh@kernel.org>
-CC:     Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Leo Yan <leo.yan@linaro.org>,
-        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
-        <coresight@lists.linaro.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Tao Zhang <quic_taozha@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-References: <20220608154705.40322-1-quic_jinlmao@quicinc.com>
- <20220608154705.40322-4-quic_jinlmao@quicinc.com>
- <20220608220150.GA2137312-robh@kernel.org>
-From:   Jinlong Mao <quic_jinlmao@quicinc.com>
-In-Reply-To: <20220608220150.GA2137312-robh@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-5.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Thank you Rob for the review of the yaml changes.
+Hi Pali,
 
-I will check and address all you comments.
-
-On 6/9/2022 6:01 AM, Rob Herring wrote:
-> On Wed, Jun 08, 2022 at 11:46:58PM +0800, Mao Jinlong wrote:
->> Adds new coresight-tpdm.yaml file describing the bindings required
->> to define tpdm in the device trees.
->>
->> Acked-by: Suzuki K Poulose <suzuki.poulose@arm.com>
->> Reviewed-by: Mike Leach <mike.leach@linaro.org>
->> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
->> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
+On Thu, Jun 09 2022, Pali Roh=C3=A1r wrote:
+> On Monday 07 February 2022 16:51:25 Baruch Siach wrote:
+>> From: Baruch Siach <baruch.siach@siklu.com>
+>>=20
+>> The PCIE_CAP_LINK1_VAL macro actually defines slot capabilities. Use
+>> PCI_EXP_SLTCAP_* macros to spell its value, and rename it to better
+>> describe its meaning.
+>>=20
+>> Signed-off-by: Baruch Siach <baruch.siach@siklu.com>
 >> ---
->>   .../bindings/arm/coresight-tpdm.yaml          | 99 +++++++++++++++++++
-> qcom,coresight-tpdm.yaml
+>>  drivers/pci/controller/dwc/pcie-qcom.c | 15 +++++++++++++--
+>>  1 file changed, 13 insertions(+), 2 deletions(-)
+>>=20
+>> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/contro=
+ller/dwc/pcie-qcom.c
+>> index c19cd506ed3f..01e58b057d2a 100644
+>> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+>> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+>> @@ -69,7 +69,18 @@
+>>  #define PCIE20_AXI_MSTR_RESP_COMP_CTRL1		0x81c
+>>  #define CFG_BRIDGE_SB_INIT			BIT(0)
+>>=20=20
+>> -#define PCIE_CAP_LINK1_VAL			0x2FD7F
+>> +#define PCIE_CAP_SLOT_POWER_LIMIT_VAL		0x7D00
+>> +#define PCIE_CAP_SLOT_POWER_LIMIT_SCALE		0x8000
 >
->>   .../devicetree/bindings/arm/coresight.txt     |  7 ++
-> This file is going away[1]. I'd just drop the changes to it.
+> Hello!
 >
->>   MAINTAINERS                                   |  1 +
->>   3 files changed, 107 insertions(+)
->>   create mode 100644 Documentation/devicetree/bindings/arm/coresight-tpdm.yaml
->>
->> diff --git a/Documentation/devicetree/bindings/arm/coresight-tpdm.yaml b/Documentation/devicetree/bindings/arm/coresight-tpdm.yaml
->> new file mode 100644
->> index 000000000000..14bef4ce4274
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/arm/coresight-tpdm.yaml
->> @@ -0,0 +1,99 @@
->> +# SPDX-License-Identifier: GPL-2.0-only or BSD-2-Clause
->> +# Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
->> +%YAML 1.2
->> +---
->> +$id: http://devicetree.org/schemas/arm/coresight-tpdm.yaml#
->> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->> +
->> +title: Trace, Profiling and Diagnostics Monitor - TPDM
->> +
->> +description: |
->> +  The TPDM or Monitor serves as data collection component for various dataset
->> +  types specified in the QPMDA spec. It covers Implementation defined ((ImplDef),
->> +  Basic Counts (BC), Tenure Counts (TC), Continuous Multi-Bit (CMB), and Discrete
->> +  Single Bit (DSB). It performs data collection in the data producing clock
->> +  domain and transfers it to the data collection time domain, generally ATB
->> +  clock domain.
->> +
->> +  The primary use case of the TPDM is to collect data from different data
->> +  sources and send it to a TPDA for packetization, timestamping, and funneling.
->> +
->> +maintainers:
->> +  - Mao Jinlong <quic_jinlmao@quicinc.com>
->> +  - Tao Zhang <quic_taozha@quicinc.com>
->> +
->> +properties:
->> +  $nodename:
->> +    pattern: "^tpdm(@[0-9a-f]+)$"
-> blank line
+> Please do not use hardcoded values for slot power limit value and scale
+> numbers. There are macros PCI_EXP_SLTCAP_SPLV and PCI_EXP_SLTCAP_SPLS
+> for composing mask:
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/i=
+nclude/uapi/linux/pci_regs.h?h=3Dv5.19-rc1#n593
+> Which could be used together with FIELD_PREP(). See e.g. aardvark commit:
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit=
+/?id=3D0d5b8c298545c827ca9f2461b2655277ce0aef79
+
+Thanks for the tip.
+
+> And the important information: Slot power limit is board specific and
+> depends on how power supply and power regulators are designed. So slot
+> power limit **cannot** be hardcoded in driver. Instead this value should
+> be read from device tree file for the current board.
 >
->> +  compatible:
->> +    items:
->> +      - const: qcom,coresight-tpdm
->> +      - const: arm,primecell
-> You need a 'select' to fix the errors reported. See other primecell
-> bindings.
->
->> +
->> +  reg:
->> +    maxItems: 1
->> +
->> +  clocks:
->> +    maxItems: 1
->> +
->> +  clock-names:
->> +    items:
->> +      - const: apb_pclk
->> +
->> +  out-ports:
->> +    description: |
->> +      Output connections from the TPDM to coresight funnle/tpda.
-> typo
->
->> +    $ref: /schemas/graph.yaml#/properties/ports
-> blank line here.
->
->> +    properties:
->> +      port:
->> +        description: Output connection from the TPDM to coresight
->> +            funnel/tpda.
-> s/tpda/TPDA/
->
->> +        $ref: /schemas/graph.yaml#/properties/port
->> +
->> +required:
->> +  - compatible
->> +  - reg
->> +  - clocks
->> +  - clock-names
->> +
->> +additionalProperties: false
->> +
->> +examples:
->> +  # minimum TPDM definition. TPDM connect to coresight funnel.
->> +  - |
->> +    tpdm@6980000 {
->> +      compatible = "qcom,coresight-tpdm", "arm,primecell";
->> +      reg = <0x6980000 0x1000>;
->> +
->> +      clocks = <&aoss_qmp>;
->> +      clock-names = "apb_pclk";
->> +
->> +      out-ports {
->> +        port {
->> +          tpdm_turing_out_funnel_turing: endpoint {
->> +            remote-endpoint =
->> +              <&funnel_turing_in_tpdm_turing>;
->> +          };
->> +        };
->> +      };
->> +    };
->> +  # minimum TPDM definition. TPDM connect to coresight TPDA.
->> +  - |
-> The only difference in the 2 examples is some external phandle. 1
-> example is sufficient.
->
->> +    tpdm@684c000 {
->> +      compatible = "qcom,coresight-tpdm", "arm,primecell";
->> +      reg = <0x684c000 0x1000>;
->> +
->> +      clocks = <&aoss_qmp>;
->> +      clock-names = "apb_pclk";
->> +
->> +      out-ports {
->> +        port {
->> +          tpdm_prng_out_tpda_qdss: endpoint {
->> +            remote-endpoint =
->> +              <&tpda_qdss_in_tpdm_prng>;
->> +          };
->> +        };
->> +      };
->> +    };
->> +
->> +...
-> Rob
->
-> [1] https://lore.kernel.org/all/20220603011933.3277315-1-robh@kernel.org/
+> There is a new kernel function of_pci_get_slot_power_limit() which reads
+> it and compose PCIe slot power limit value and scale numbers. See:
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/d=
+rivers/pci/of.c?h=3Dv5.19-rc1#n631
+
+The 'slot-power-limit-milliwatt' property appears to be undocumented as
+of v5.19-rc1.
+
+This patch should make no functional change. I guess we should keep the
+default hard-coded driver value for compatibility with existing DTs with
+no 'slot-power-limit-milliwatt'.
+
+Thanks,
+baruch
+
+>> +#define PCIE_CAP_SLOT_VAL			(PCI_EXP_SLTCAP_ABP | \
+>> +						PCI_EXP_SLTCAP_PCP | \
+>> +						PCI_EXP_SLTCAP_MRLSP | \
+>> +						PCI_EXP_SLTCAP_AIP | \
+>> +						PCI_EXP_SLTCAP_PIP | \
+>> +						PCI_EXP_SLTCAP_HPS | \
+>> +						PCI_EXP_SLTCAP_HPC | \
+>> +						PCI_EXP_SLTCAP_EIP | \
+>> +						PCIE_CAP_SLOT_POWER_LIMIT_VAL | \
+>> +						PCIE_CAP_SLOT_POWER_LIMIT_SCALE)
+>>=20=20
+>>  #define PCIE20_PARF_Q2A_FLUSH			0x1AC
+>>=20=20
+>> @@ -1111,7 +1122,7 @@ static int qcom_pcie_init_2_3_3(struct qcom_pcie *=
+pcie)
+>>=20=20
+>>  	writel(PCI_COMMAND_MASTER, pci->dbi_base + PCI_COMMAND);
+>>  	writel(DBI_RO_WR_EN, pci->dbi_base + PCIE20_MISC_CONTROL_1_REG);
+>> -	writel(PCIE_CAP_LINK1_VAL, pci->dbi_base + offset + PCI_EXP_SLTCAP);
+>> +	writel(PCIE_CAP_SLOT_VAL, pci->dbi_base + offset + PCI_EXP_SLTCAP);
+>>=20=20
+>>  	val =3D readl(pci->dbi_base + offset + PCI_EXP_LNKCAP);
+>>  	val &=3D ~PCI_EXP_LNKCAP_ASPMS;
+>> --=20
+>> 2.34.1
+>>=20
+
+
+--=20
+                                                     ~. .~   Tk Open Systems
+=3D}------------------------------------------------ooO--U--Ooo------------=
+{=3D
+   - baruch@tkos.co.il - tel: +972.52.368.4656, http://www.tkos.co.il -
