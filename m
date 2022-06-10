@@ -2,77 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E9D3B5458FF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jun 2022 02:10:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4CEDE545A6B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jun 2022 05:26:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232459AbiFJAKU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Jun 2022 20:10:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41112 "EHLO
+        id S234338AbiFJDVO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Jun 2022 23:21:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51550 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231237AbiFJAKT (ORCPT
+        with ESMTP id S229833AbiFJDVM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Jun 2022 20:10:19 -0400
-Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F22C3CFDB
-        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Jun 2022 17:10:18 -0700 (PDT)
-Received: by mail-pl1-x634.google.com with SMTP id f8so2463034plo.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Jun 2022 17:10:18 -0700 (PDT)
+        Thu, 9 Jun 2022 23:21:12 -0400
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67657A7E2F;
+        Thu,  9 Jun 2022 20:21:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=toj+A2N5AVFrqrL1/Vxl2lAeLAZTIqgD9K/xvEkZUTA=;
-        b=bj4cb3zOQN7YWyDrtemAMpKdCeidDBxj5uW7rn9I7qiCXlN7e0LBpr5GyFjnCIhGHL
-         eEi94dhebFtW/qvn07s8D7zDA87t7LsILMvAFrS5HciKff/9/RfZqjl+hdyJnEE4Fdzm
-         QtCTH31Os2tt09D4LTEJJE2SmzFDOPdANFfCk=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=toj+A2N5AVFrqrL1/Vxl2lAeLAZTIqgD9K/xvEkZUTA=;
-        b=Uyy7RgYl+3D2AuGXdlNPPuKpj3uLdB22vtar6OKK02hOST813rt9LfJqPOUhnDSPxA
-         n3sDMOmXUpmTgej664cuTgctO4bVmV5WIqZh8QE9GQrZpqjd4pUJJRE7ogv79CU14wvt
-         y0f1anw2kEFlZfucSu4FOc+jsw+vXF7xpBSjkHbQ/IjH2wDMHp3X4H7tSINrK+70AcuL
-         8hekL9eO/r/H0LUNOpKnKrC5I+hajozjW2KCalWtOU4nqoqo1VhveaT8VHQfOx/+/58u
-         VNa577RkRl0TiMqpWywiWuzosj72iXam4FTSA1x2xy0eFwxeL/3n7BxVgK26UmcprwWi
-         T40w==
-X-Gm-Message-State: AOAM533NcL9zrQ7sXCt0Y3y4yqgLoj2rrR7fzZanBacKSLxNGD6BN5ar
-        Ptt3i8560zy92HqaWHHaDvFydA==
-X-Google-Smtp-Source: ABdhPJyNbf0SWOUtZad094XjSO7uUkrqyNCFQTH3dSK98kga6ApoMb+Nabdmt1o077+NLjvf2sgRIw==
-X-Received: by 2002:a17:902:ec92:b0:166:3502:ecb1 with SMTP id x18-20020a170902ec9200b001663502ecb1mr42079933plg.62.1654819817617;
-        Thu, 09 Jun 2022 17:10:17 -0700 (PDT)
-Received: from tictac2.mtv.corp.google.com ([2620:15c:202:201:4732:8bcf:1bc2:ec84])
-        by smtp.gmail.com with ESMTPSA id y15-20020a17090322cf00b0015e8d4eb2c5sm9508750plg.271.2022.06.09.17.10.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Jun 2022 17:10:17 -0700 (PDT)
-From:   Douglas Anderson <dianders@chromium.org>
-To:     Rob Clark <robdclark@gmail.com>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        Jordan Crouse <jordan@cosmicpenguin.net>
-Cc:     Douglas Anderson <dianders@chromium.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Chia-I Wu <olvaffe@gmail.com>,
-        Dan Carpenter <dan.carpenter@oracle.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Eric Anholt <eric@anholt.net>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Sean Paul <sean@poorly.run>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Vladimir Lypak <vladimir.lypak@gmail.com>,
-        Yangtao Li <tiny.windzz@gmail.com>,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v3] drm/msm: Avoid unclocked GMU register access in 6xx gpu_busy
-Date:   Thu,  9 Jun 2022 17:09:47 -0700
-Message-Id: <20220609170859.v3.1.Ie846c5352bc307ee4248d7cab998ab3016b85d06@changeid>
-X-Mailer: git-send-email 2.36.1.476.g0c4daa206d-goog
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1654831271; x=1686367271;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=FtqhQVca6m+DX64KFFdxUfTxhfMmn/HlAe9P+FdJx2I=;
+  b=O9FUhVFklJEu1UzXdPPo7CilU3fQEc3zbrX6mBZREftsL1lZIMDa8Ot7
+   9tZjpLsdjr7YDrKFyVF6gQ92SNnGFqsTdi0TdOiETYkyr7IjvqhauKMOQ
+   QXLxh8io74lCo93jp2BhpdRH+5rtu9G9Qwu20Wb8Oxi1aPMEqL6XODKHW
+   I=;
+Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 09 Jun 2022 20:21:11 -0700
+X-QCInternal: smtphost
+Received: from unknown (HELO nasanex01a.na.qualcomm.com) ([10.52.223.231])
+  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jun 2022 20:21:10 -0700
+Received: from [10.253.72.126] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Thu, 9 Jun 2022
+ 20:21:08 -0700
+Message-ID: <9659ecb9-9727-a146-e286-d28d656483c3@quicinc.com>
+Date:   Fri, 10 Jun 2022 11:21:05 +0800
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.0
+Subject: Re: [PATCH] bus: mhi: Disable IRQs instead of freeing them during
+ power down
+Content-Language: en-US
+To:     Jeffrey Hugo <quic_jhugo@quicinc.com>, <mani@kernel.org>,
+        <quic_hemantk@quicinc.com>, <loic.poulain@linaro.org>
+CC:     <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_cang@quicinc.com>
+References: <1654782215-70383-1-git-send-email-quic_qianyu@quicinc.com>
+ <62d09e6f-9898-6233-dfd6-b5ba5d837571@quicinc.com>
+From:   Qiang Yu <quic_qianyu@quicinc.com>
+In-Reply-To: <62d09e6f-9898-6233-dfd6-b5ba5d837571@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-Spam-Status: No, score=-5.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -81,321 +65,169 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From testing on sc7180-trogdor devices, reading the GMU registers
-needs the GMU clocks to be enabled. Those clocks get turned on in
-a6xx_gmu_resume(). Confusingly enough, that function is called as a
-result of the runtime_pm of the GPU "struct device", not the GMU
-"struct device". Unfortunately the current a6xx_gpu_busy() grabs a
-reference to the GMU's "struct device".
+On 6/9/2022 9:54 PM, Jeffrey Hugo wrote:
 
-The fact that we were grabbing the wrong reference was easily seen to
-cause crashes that happen if we change the GPU's pm_runtime usage to
-not use autosuspend. It's also believed to cause some long tail GPU
-crashes even with autosuspend.
+> On 6/9/2022 7:43 AM, Qiang Yu wrote:
+>> EP tends to read MSI address/data once and cache them after BME is set.
+>> So host should avoid changing MSI address/data after BME is set.
+>>
+>> In pci reset function, host invokes free_irq(), which also clears MSI
+>> address/data in EP's PCIe config space. If the invalid address/data
+>> are cached and used by EP, MSI triggered by EP wouldn't be received by
+>> host, because an invalid MSI data is sent to an invalid MSI address.
+>>
+>> To fix this issue, after host runs request_irq() successfully during
+>> mhi driver probe, let's invoke enable_irq()/disable_irq() instead of
+>> request_irq()/free_irq() when we want to power on and power down MHI.
+>> Meanwhile, Host should invoke free_irq() when mhi host driver is
+>> removed.
+>
+> I don't think this works for hotplug, nor cases where there are 
+> multiple MHI devices on the system.
+>
+> The EP shouldn't be caching this information for multiple reasons. 
+> Masking the MSIs, disabling the MSIs, changing the address when the 
+> affinity changes, etc.
+>
+> It really feels like we are solving the problem in the wrong place.
+>
+> Right now, this gets a NACK from me.
+>
+After free_irq(), MSI is still enabled but MSI address and data are 
+cleared. So there is a chance that device initiates MSI using zero 
+address. How to fix this race conditions.
 
-We could look at changing it so that we do pm_runtime_get_if_in_use()
-on the GPU's "struct device", but then we run into a different
-problem. pm_runtime_get_if_in_use() will return 0 for the GPU's
-"struct device" the whole time when we're in the "autosuspend
-delay". That is, when we drop the last reference to the GPU but we're
-waiting a period before actually suspending then we'll think the GPU
-is off. One reason that's bad is that if the GPU didn't actually turn
-off then the cycle counter doesn't lose state and that throws off all
-of our calculations.
+Maybe EP should not cache MSI data and address. But I think this patch 
+is necessary and we will talk with EP POC.
 
-Let's change the code to keep track of the suspend state of
-devfreq. msm_devfreq_suspend() is always called before we actually
-suspend the GPU and msm_devfreq_resume() after we resume it. This
-means we can use the suspended state to know if we're powered or not.
+>>
+>> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
+>> ---
+>>   drivers/bus/mhi/host/init.c        | 31 
+>> +++++++++++++++++++++++++++++++
+>>   drivers/bus/mhi/host/pci_generic.c |  2 ++
+>>   drivers/bus/mhi/host/pm.c          |  4 ++--
+>>   3 files changed, 35 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
+>> index cbb86b2..48cb093 100644
+>> --- a/drivers/bus/mhi/host/init.c
+>> +++ b/drivers/bus/mhi/host/init.c
+>> @@ -18,6 +18,7 @@
+>>   #include <linux/slab.h>
+>>   #include <linux/vmalloc.h>
+>>   #include <linux/wait.h>
+>> +#include <linux/irq.h>
+>
+> Should be in alphabetical order
+>
+>>   #include "internal.h"
+>>     static DEFINE_IDA(mhi_controller_ida);
+>> @@ -168,6 +169,22 @@ int mhi_init_irq_setup(struct mhi_controller 
+>> *mhi_cntrl)
+>>       unsigned long irq_flags = IRQF_SHARED | IRQF_NO_SUSPEND;
+>>       int i, ret;
+>>   +    /*
+>> +     * if irq[0] has action, it represents all MSI IRQs have been
+>> +     * requested, so we just need to enable them.
+>> +     */
+>
+> This seems like an assumption about how the interrupts are allocated 
+> and assigned that may not hold true for all devices.
 
-NOTE: one might wonder when exactly our status function is called when
-devfreq is supposed to be disabled. The stack crawl I captured was:
-  msm_devfreq_get_dev_status
-  devfreq_simple_ondemand_func
-  devfreq_update_target
-  qos_notifier_call
-  qos_max_notifier_call
-  blocking_notifier_call_chain
-  pm_qos_update_target
-  freq_qos_apply
-  apply_constraint
-  __dev_pm_qos_update_request
-  dev_pm_qos_update_request
-  msm_devfreq_idle_work
+All interrupts are allocated and assigned together in mhi_pci_get_irqs() 
+and mhi_init_irq_setup().
 
-Fixes: eadf79286a4b ("drm/msm: Check for powered down HW in the devfreq callbacks")
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
----
+So I think if irq[0] has action, other irqs must be requested 
+successfully. If any other msi request fail, irq[0] should have been freed.
 
-Changes in v3:
-- Totally rewrote to not use the pm_runtime functions.
-- Moved the code to be common for all adreno GPUs.
-
-Changes in v2:
-- Move the set_freq runtime pm grab to the GPU file.
-- Use <= for the pm_runtime test, not ==.
-
- drivers/gpu/drm/msm/adreno/a5xx_gpu.c |  8 ------
- drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 13 ++++-----
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 12 +++------
- drivers/gpu/drm/msm/adreno/a6xx_gpu.h |  3 ++-
- drivers/gpu/drm/msm/msm_gpu.h         |  9 ++++++-
- drivers/gpu/drm/msm/msm_gpu_devfreq.c | 39 +++++++++++++++++++++------
- 6 files changed, 51 insertions(+), 33 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-index c424e9a37669..3dcec7acb384 100644
---- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-@@ -1666,18 +1666,10 @@ static u64 a5xx_gpu_busy(struct msm_gpu *gpu, unsigned long *out_sample_rate)
- {
- 	u64 busy_cycles;
- 
--	/* Only read the gpu busy if the hardware is already active */
--	if (pm_runtime_get_if_in_use(&gpu->pdev->dev) == 0) {
--		*out_sample_rate = 1;
--		return 0;
--	}
--
- 	busy_cycles = gpu_read64(gpu, REG_A5XX_RBBM_PERFCTR_RBBM_0_LO,
- 			REG_A5XX_RBBM_PERFCTR_RBBM_0_HI);
- 	*out_sample_rate = clk_get_rate(gpu->core_clk);
- 
--	pm_runtime_put(&gpu->pdev->dev);
--
- 	return busy_cycles;
- }
- 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-index 9f76f5b15759..dc715d88ff21 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-@@ -102,7 +102,8 @@ bool a6xx_gmu_gx_is_on(struct a6xx_gmu *gmu)
- 		A6XX_GMU_SPTPRAC_PWR_CLK_STATUS_GX_HM_CLK_OFF));
- }
- 
--void a6xx_gmu_set_freq(struct msm_gpu *gpu, struct dev_pm_opp *opp)
-+void a6xx_gmu_set_freq(struct msm_gpu *gpu, struct dev_pm_opp *opp,
-+		       bool suspended)
- {
- 	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
- 	struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
-@@ -127,15 +128,16 @@ void a6xx_gmu_set_freq(struct msm_gpu *gpu, struct dev_pm_opp *opp)
- 
- 	/*
- 	 * This can get called from devfreq while the hardware is idle. Don't
--	 * bring up the power if it isn't already active
-+	 * bring up the power if it isn't already active. All we're doing here
-+	 * is updating the frequency so that when we come back online we're at
-+	 * the right rate.
- 	 */
--	if (pm_runtime_get_if_in_use(gmu->dev) == 0)
-+	if (suspended)
- 		return;
- 
- 	if (!gmu->legacy) {
- 		a6xx_hfi_set_freq(gmu, perf_index);
- 		dev_pm_opp_set_opp(&gpu->pdev->dev, opp);
--		pm_runtime_put(gmu->dev);
- 		return;
- 	}
- 
-@@ -159,7 +161,6 @@ void a6xx_gmu_set_freq(struct msm_gpu *gpu, struct dev_pm_opp *opp)
- 		dev_err(gmu->dev, "GMU set GPU frequency error: %d\n", ret);
- 
- 	dev_pm_opp_set_opp(&gpu->pdev->dev, opp);
--	pm_runtime_put(gmu->dev);
- }
- 
- unsigned long a6xx_gmu_get_freq(struct msm_gpu *gpu)
-@@ -895,7 +896,7 @@ static void a6xx_gmu_set_initial_freq(struct msm_gpu *gpu, struct a6xx_gmu *gmu)
- 		return;
- 
- 	gmu->freq = 0; /* so a6xx_gmu_set_freq() doesn't exit early */
--	a6xx_gmu_set_freq(gpu, gpu_opp);
-+	a6xx_gmu_set_freq(gpu, gpu_opp, false);
- 	dev_pm_opp_put(gpu_opp);
- }
- 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index 42ed9a3c4905..8c02a67f29f2 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -1658,27 +1658,21 @@ static u64 a6xx_gpu_busy(struct msm_gpu *gpu, unsigned long *out_sample_rate)
- 	/* 19.2MHz */
- 	*out_sample_rate = 19200000;
- 
--	/* Only read the gpu busy if the hardware is already active */
--	if (pm_runtime_get_if_in_use(a6xx_gpu->gmu.dev) == 0)
--		return 0;
--
- 	busy_cycles = gmu_read64(&a6xx_gpu->gmu,
- 			REG_A6XX_GMU_CX_GMU_POWER_COUNTER_XOCLK_0_L,
- 			REG_A6XX_GMU_CX_GMU_POWER_COUNTER_XOCLK_0_H);
- 
--
--	pm_runtime_put(a6xx_gpu->gmu.dev);
--
- 	return busy_cycles;
- }
- 
--static void a6xx_gpu_set_freq(struct msm_gpu *gpu, struct dev_pm_opp *opp)
-+static void a6xx_gpu_set_freq(struct msm_gpu *gpu, struct dev_pm_opp *opp,
-+			      bool suspended)
- {
- 	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
- 	struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
- 
- 	mutex_lock(&a6xx_gpu->gmu.lock);
--	a6xx_gmu_set_freq(gpu, opp);
-+	a6xx_gmu_set_freq(gpu, opp, suspended);
- 	mutex_unlock(&a6xx_gpu->gmu.lock);
- }
- 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h b/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
-index 86e0a7c3fe6d..ab853f61db63 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
-@@ -77,7 +77,8 @@ void a6xx_gmu_clear_oob(struct a6xx_gmu *gmu, enum a6xx_gmu_oob_state state);
- int a6xx_gmu_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node);
- void a6xx_gmu_remove(struct a6xx_gpu *a6xx_gpu);
- 
--void a6xx_gmu_set_freq(struct msm_gpu *gpu, struct dev_pm_opp *opp);
-+void a6xx_gmu_set_freq(struct msm_gpu *gpu, struct dev_pm_opp *opp,
-+		       bool suspended);
- unsigned long a6xx_gmu_get_freq(struct msm_gpu *gpu);
- 
- void a6xx_show(struct msm_gpu *gpu, struct msm_gpu_state *state,
-diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
-index 6def00883046..7ced1a30d4e8 100644
---- a/drivers/gpu/drm/msm/msm_gpu.h
-+++ b/drivers/gpu/drm/msm/msm_gpu.h
-@@ -68,7 +68,8 @@ struct msm_gpu_funcs {
- 	struct msm_gpu_state *(*gpu_state_get)(struct msm_gpu *gpu);
- 	int (*gpu_state_put)(struct msm_gpu_state *state);
- 	unsigned long (*gpu_get_freq)(struct msm_gpu *gpu);
--	void (*gpu_set_freq)(struct msm_gpu *gpu, struct dev_pm_opp *opp);
-+	void (*gpu_set_freq)(struct msm_gpu *gpu, struct dev_pm_opp *opp,
-+			     bool suspended);
- 	struct msm_gem_address_space *(*create_address_space)
- 		(struct msm_gpu *gpu, struct platform_device *pdev);
- 	struct msm_gem_address_space *(*create_private_address_space)
-@@ -92,6 +93,9 @@ struct msm_gpu_devfreq {
- 	/** devfreq: devfreq instance */
- 	struct devfreq *devfreq;
- 
-+	/** lock: lock for "suspended", "busy_cycles", and "time" */
-+	struct mutex lock;
-+
- 	/**
- 	 * idle_constraint:
- 	 *
-@@ -135,6 +139,9 @@ struct msm_gpu_devfreq {
- 	 * elapsed
- 	 */
- 	struct msm_hrtimer_work boost_work;
-+
-+	/** suspended: tracks if we're suspended */
-+	bool suspended;
- };
- 
- struct msm_gpu {
-diff --git a/drivers/gpu/drm/msm/msm_gpu_devfreq.c b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
-index d2539ca78c29..ea94bc18e72e 100644
---- a/drivers/gpu/drm/msm/msm_gpu_devfreq.c
-+++ b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
-@@ -20,6 +20,7 @@ static int msm_devfreq_target(struct device *dev, unsigned long *freq,
- 		u32 flags)
- {
- 	struct msm_gpu *gpu = dev_to_gpu(dev);
-+	struct msm_gpu_devfreq *df = &gpu->devfreq;
- 	struct dev_pm_opp *opp;
- 
- 	/*
-@@ -32,10 +33,13 @@ static int msm_devfreq_target(struct device *dev, unsigned long *freq,
- 
- 	trace_msm_gpu_freq_change(dev_pm_opp_get_freq(opp));
- 
--	if (gpu->funcs->gpu_set_freq)
--		gpu->funcs->gpu_set_freq(gpu, opp);
--	else
-+	if (gpu->funcs->gpu_set_freq) {
-+		mutex_lock(&df->lock);
-+		gpu->funcs->gpu_set_freq(gpu, opp, df->suspended);
-+		mutex_unlock(&df->lock);
-+	} else {
- 		clk_set_rate(gpu->core_clk, *freq);
-+	}
- 
- 	dev_pm_opp_put(opp);
- 
-@@ -58,15 +62,24 @@ static void get_raw_dev_status(struct msm_gpu *gpu,
- 	unsigned long sample_rate;
- 	ktime_t time;
- 
-+	mutex_lock(&df->lock);
-+
- 	status->current_frequency = get_freq(gpu);
--	busy_cycles = gpu->funcs->gpu_busy(gpu, &sample_rate);
- 	time = ktime_get();
--
--	busy_time = busy_cycles - df->busy_cycles;
- 	status->total_time = ktime_us_delta(time, df->time);
-+	df->time = time;
- 
-+	if (df->suspended) {
-+		mutex_unlock(&df->lock);
-+		status->busy_time = 0;
-+		return;
-+	}
-+
-+	busy_cycles = gpu->funcs->gpu_busy(gpu, &sample_rate);
-+	busy_time = busy_cycles - df->busy_cycles;
- 	df->busy_cycles = busy_cycles;
--	df->time = time;
-+
-+	mutex_unlock(&df->lock);
- 
- 	busy_time *= USEC_PER_SEC;
- 	do_div(busy_time, sample_rate);
-@@ -175,6 +188,8 @@ void msm_devfreq_init(struct msm_gpu *gpu)
- 	if (!gpu->funcs->gpu_busy)
- 		return;
- 
-+	mutex_init(&df->lock);
-+
- 	dev_pm_qos_add_request(&gpu->pdev->dev, &df->idle_freq,
- 			       DEV_PM_QOS_MAX_FREQUENCY,
- 			       PM_QOS_MAX_FREQUENCY_DEFAULT_VALUE);
-@@ -244,12 +259,16 @@ void msm_devfreq_cleanup(struct msm_gpu *gpu)
- void msm_devfreq_resume(struct msm_gpu *gpu)
- {
- 	struct msm_gpu_devfreq *df = &gpu->devfreq;
-+	unsigned long sample_rate;
- 
- 	if (!has_devfreq(gpu))
- 		return;
- 
--	df->busy_cycles = 0;
-+	mutex_lock(&df->lock);
-+	df->busy_cycles = gpu->funcs->gpu_busy(gpu, &sample_rate);
- 	df->time = ktime_get();
-+	df->suspended = false;
-+	mutex_unlock(&df->lock);
- 
- 	devfreq_resume_device(df->devfreq);
- }
-@@ -261,6 +280,10 @@ void msm_devfreq_suspend(struct msm_gpu *gpu)
- 	if (!has_devfreq(gpu))
- 		return;
- 
-+	mutex_lock(&df->lock);
-+	df->suspended = true;
-+	mutex_unlock(&df->lock);
-+
- 	devfreq_suspend_device(df->devfreq);
- 
- 	cancel_idle_work(df);
--- 
-2.36.1.476.g0c4daa206d-goog
-
+>> +    if (irq_has_action(mhi_cntrl->irq[0])) {
+>> +        enable_irq(mhi_cntrl->irq[0]);
+>> +
+>> +        for (i = 0; i < mhi_cntrl->total_ev_rings; i++, mhi_event++) {
+>> +            if (mhi_event->offload_ev)
+>> +                continue;
+>> +
+>> +            enable_irq(mhi_cntrl->irq[mhi_event->irq]);
+>> +        }
+>> +        return 0;
+>> +    }
+>> +
+>>       /* if controller driver has set irq_flags, use it */
+>>       if (mhi_cntrl->irq_flags)
+>>           irq_flags = mhi_cntrl->irq_flags;
+>> @@ -179,6 +196,11 @@ int mhi_init_irq_setup(struct mhi_controller 
+>> *mhi_cntrl)
+>>                      "bhi", mhi_cntrl);
+>>       if (ret)
+>>           return ret;
+>> +    /*
+>> +     * IRQ marked IRQF_SHARED isn't recommended to use IRQ_NOAUTOEN,
+>> +     * so disable it explicitly.
+>> +     */
+>> +    disable_irq(mhi_cntrl->irq[0]);
+>>         for (i = 0; i < mhi_cntrl->total_ev_rings; i++, mhi_event++) {
+>>           if (mhi_event->offload_ev)
+>> @@ -200,6 +222,8 @@ int mhi_init_irq_setup(struct mhi_controller 
+>> *mhi_cntrl)
+>>                   mhi_cntrl->irq[mhi_event->irq], i);
+>>               goto error_request;
+>>           }
+>> +
+>> +        disable_irq(mhi_cntrl->irq[mhi_event->irq]);
+>>       }
+>>         return 0;
+>> @@ -1003,8 +1027,14 @@ int mhi_register_controller(struct 
+>> mhi_controller *mhi_cntrl,
+>>         mhi_create_debugfs(mhi_cntrl);
+>>   +    ret = mhi_init_irq_setup(mhi_cntrl);
+>> +    if (ret)
+>> +        goto error_setup_irq;
+>> +
+>>       return 0;
+>>   +error_setup_irq:
+>> +    mhi_destroy_debugfs(mhi_cntrl);
+>>   err_release_dev:
+>>       put_device(&mhi_dev->dev);
+>>   err_ida_free:
+>> @@ -1027,6 +1057,7 @@ void mhi_unregister_controller(struct 
+>> mhi_controller *mhi_cntrl)
+>>       struct mhi_chan *mhi_chan = mhi_cntrl->mhi_chan;
+>>       unsigned int i;
+>>   +    mhi_deinit_free_irq(mhi_cntrl);
+>>       mhi_destroy_debugfs(mhi_cntrl);
+>>         destroy_workqueue(mhi_cntrl->hiprio_wq);
+>> diff --git a/drivers/bus/mhi/host/pci_generic.c 
+>> b/drivers/bus/mhi/host/pci_generic.c
+>> index 6fbc591..60020d0 100644
+>> --- a/drivers/bus/mhi/host/pci_generic.c
+>> +++ b/drivers/bus/mhi/host/pci_generic.c
+>> @@ -945,6 +945,8 @@ static void mhi_pci_remove(struct pci_dev *pdev)
+>>         mhi_unregister_controller(mhi_cntrl);
+>>       pci_disable_pcie_error_reporting(pdev);
+>> +
+>> +    pci_free_irq_vectors(pdev);
+>>   }
+>>     static void mhi_pci_shutdown(struct pci_dev *pdev)
+>> diff --git a/drivers/bus/mhi/host/pm.c b/drivers/bus/mhi/host/pm.c
+>> index dc2e8ff..190231c 100644
+>> --- a/drivers/bus/mhi/host/pm.c
+>> +++ b/drivers/bus/mhi/host/pm.c
+>> @@ -500,7 +500,7 @@ static void mhi_pm_disable_transition(struct 
+>> mhi_controller *mhi_cntrl)
+>>       for (i = 0; i < mhi_cntrl->total_ev_rings; i++, mhi_event++) {
+>>           if (mhi_event->offload_ev)
+>>               continue;
+>> -        free_irq(mhi_cntrl->irq[mhi_event->irq], mhi_event);
+>> +        disable_irq(mhi_cntrl->irq[mhi_event->irq]);
+>>           tasklet_kill(&mhi_event->task);
+>>       }
+>>   @@ -1182,7 +1182,7 @@ void mhi_power_down(struct mhi_controller 
+>> *mhi_cntrl, bool graceful)
+>>       /* Wait for shutdown to complete */
+>>       flush_work(&mhi_cntrl->st_worker);
+>>   -    free_irq(mhi_cntrl->irq[0], mhi_cntrl);
+>> +    disable_irq(mhi_cntrl->irq[0]);
+>>   }
+>>   EXPORT_SYMBOL_GPL(mhi_power_down);
+>
