@@ -2,82 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2FD81546F46
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jun 2022 23:34:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 42948546F0B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jun 2022 23:12:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348985AbiFJVdy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Jun 2022 17:33:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33770 "EHLO
+        id S1350855AbiFJVMg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Jun 2022 17:12:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34236 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349148AbiFJVdx (ORCPT
+        with ESMTP id S1350849AbiFJVMe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Jun 2022 17:33:53 -0400
-X-Greylist: delayed 1430 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 10 Jun 2022 14:33:48 PDT
-Received: from gateway23.websitewelcome.com (gateway23.websitewelcome.com [192.185.49.180])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42B613E0E4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jun 2022 14:33:47 -0700 (PDT)
-Received: from cm10.websitewelcome.com (cm10.websitewelcome.com [100.42.49.4])
-        by gateway23.websitewelcome.com (Postfix) with ESMTP id 19ED41AA4B
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jun 2022 16:09:55 -0500 (CDT)
-Received: from gator4040.hostgator.com ([192.185.4.51])
-        by cmsmtp with SMTP
-        id zltDnuQGJ7PdJzltDn3dE5; Fri, 10 Jun 2022 16:09:55 -0500
-X-Authority-Reason: nr=8
-Received: from gator4040.hostgator.com ([192.185.4.51]:48946)
-        by gator4040.hostgator.com with esmtpa (Exim 4.95)
-        (envelope-from <raymond.dalangin@hcc.com.ph>)
-        id 1nzlsl-003VdN-1a;
-        Fri, 10 Jun 2022 16:09:27 -0500
-Received: from [66.115.149.3]
- via [66.115.149.3]
- by webmail.hcc.com.ph
- with HTTP (HTTP/1.1 POST); Fri, 10 Jun 2022 16:09:03 -0500
+        Fri, 10 Jun 2022 17:12:34 -0400
+Received: from mail-oa1-x33.google.com (mail-oa1-x33.google.com [IPv6:2001:4860:4864:20::33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D26D849B67
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jun 2022 14:12:32 -0700 (PDT)
+Received: by mail-oa1-x33.google.com with SMTP id 586e51a60fabf-f2e0a41009so738541fac.6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jun 2022 14:12:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=eUw90MQM5SVuieh3UI6r6+Ffszit+OiITVtSMahiOlI=;
+        b=PxZoMFPohd1GKquX3Z0yebjsbyodzL6Sc1YYSADroQz8Hm2TevBoKncjyGg2shlJqe
+         Kt2jvBqIz83qvGPjgsU19YaG+D6Qom/vhBlROqhNcOjp5nqnRXCUN8z8ysEHYUNHZvP4
+         ZY+0oNzWQLIQsNhMs6YyFQqnji2XBG4+NKb/s=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=eUw90MQM5SVuieh3UI6r6+Ffszit+OiITVtSMahiOlI=;
+        b=o798HV43cMwM+GP+b6PQLZdGoD9skkatfTDV6dhTtISpeRl3+A8VJhy38nl7gZIevs
+         BXuWK4e+SstCF5/ICVgPgkK1mkrcELSb4sA2B+X9+reyJhF90wSr8hGjsnorrt1EaVNJ
+         +Sq5amIPToaDBWUpNeKnHvDwM0dgQHYIXqtDQmQ+ZnBDGtTLOwR3+CzwsHUsVOGJ/9S6
+         15vUBvfWxGIVJT5vJN/7Nk9u4AHssdLFbtNQp81y2SwVeYQpWEHOI8Ali9ic+gG0Zuas
+         H+tr7LDgN7bcNX5lRn4Jo+BohuWYv+26Y2+HpBilnmHwbH67eVvAGL4sqC9PL7s216dl
+         pJgA==
+X-Gm-Message-State: AOAM530PX4Ap/6zXLJ7BLeXbYM2I68tK30NCpcPBMbxqds0xHJLI02FQ
+        kZoBAFJwKKhHgYFNE8hqlH0Wa7SmlhcByGs5/stLvw==
+X-Google-Smtp-Source: ABdhPJxFZZJBT4zmQa9rbL6oi07IG1L075UxWAqyTprFlgGRMHH3fCtuJiv9mMe6loLyhtjcJqcBOdO2wSQrhVr5se8=
+X-Received: by 2002:a05:6870:240d:b0:f1:b878:e97c with SMTP id
+ n13-20020a056870240d00b000f1b878e97cmr895829oap.193.1654895551998; Fri, 10
+ Jun 2022 14:12:31 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 10 Jun 2022 14:12:31 -0700
 MIME-Version: 1.0
-Date:   Fri, 10 Jun 2022 16:09:03 -0500
-From:   "Mr. David Coleman" <raymond.dalangin@hcc.com.ph>
-To:     undisclosed-recipients:;
-Subject: Reply ASAP
-Reply-To: davidcolemanrhfs@gmail.com
-User-Agent: Roundcube Webmail/1.4.12
-Message-ID: <f9719ffd4b4ca1f900e44263fb828f34@hcc.com.ph>
-X-Sender: raymond.dalangin@hcc.com.ph
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - gator4040.hostgator.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - hcc.com.ph
-X-BWhitelist: no
-X-Source-IP: 192.185.4.51
-X-Source-L: Yes
-X-Exim-ID: 1nzlsl-003VdN-1a
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: gator4040.hostgator.com [192.185.4.51]:48946
-X-Source-Auth: raymond.dalangin@hcc.com.ph
-X-Email-Count: 29
-X-Source-Cap: YWI3MTc2MDthYjcxNzYwO2dhdG9yNDA0MC5ob3N0Z2F0b3IuY29t
-X-Local-Domain: yes
-X-Spam-Status: No, score=4.8 required=5.0 tests=BAYES_50,
-        FREEMAIL_FORGED_REPLYTO,HK_NAME_MR_MRS,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        UNDISC_MONEY,URG_BIZ autolearn=no autolearn_force=no version=3.4.6
-X-Spam-Level: ****
+In-Reply-To: <1654538139-7450-1-git-send-email-quic_khsieh@quicinc.com>
+References: <1654538139-7450-1-git-send-email-quic_khsieh@quicinc.com>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date:   Fri, 10 Jun 2022 14:12:31 -0700
+Message-ID: <CAE-0n51hjNTcy5xpPknrtP3897qZkVqf9ksObxRF4v0Ej0=qag@mail.gmail.com>
+Subject: Re: [PATCH v2] drm/msm/dp: check core_initialized before disable
+ interrupts at dp_display_unbind()
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>, agross@kernel.org,
+        airlied@linux.ie, bjorn.andersson@linaro.org, daniel@ffwll.ch,
+        dianders@chromium.org, dmitry.baryshkov@linaro.org,
+        robdclark@gmail.com, sean@poorly.run, vkoul@kernel.org
+Cc:     quic_abhinavk@quicinc.com, quic_aravindh@quicinc.com,
+        quic_sbillaka@quicinc.com, freedreno@lists.freedesktop.org,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello,
+Quoting Kuogee Hsieh (2022-06-06 10:55:39)
+> During msm initialize phase, dp_display_unbind() will be called to undo
+> initializations had been done by dp_display_bind() previously if there is
+> error happen at msm_drm_bind. In this case, core_initialized flag had to
+> be check to make sure clocks is on before update DP controller register
+> to disable HPD interrupts. Otherwise system will crash due to below NOC
+> fatal error.
+>
+> QTISECLIB [01f01a7ad]CNOC2 ERROR: ERRLOG0_LOW = 0x00061007
+> QTISECLIB [01f01a7ad]GEM_NOC ERROR: ERRLOG0_LOW = 0x00001007
+> QTISECLIB [01f0371a0]CNOC2 ERROR: ERRLOG0_HIGH = 0x00000003
+> QTISECLIB [01f055297]GEM_NOC ERROR: ERRLOG0_HIGH = 0x00000003
+> QTISECLIB [01f072beb]CNOC2 ERROR: ERRLOG1_LOW = 0x00000024
+> QTISECLIB [01f0914b8]GEM_NOC ERROR: ERRLOG1_LOW = 0x00000042
+> QTISECLIB [01f0ae639]CNOC2 ERROR: ERRLOG1_HIGH = 0x00004002
+> QTISECLIB [01f0cc73f]GEM_NOC ERROR: ERRLOG1_HIGH = 0x00004002
+> QTISECLIB [01f0ea092]CNOC2 ERROR: ERRLOG2_LOW = 0x0009020c
+> QTISECLIB [01f10895f]GEM_NOC ERROR: ERRLOG2_LOW = 0x0ae9020c
+> QTISECLIB [01f125ae1]CNOC2 ERROR: ERRLOG2_HIGH = 0x00000000
+> QTISECLIB [01f143be7]GEM_NOC ERROR: ERRLOG2_HIGH = 0x00000000
+> QTISECLIB [01f16153a]CNOC2 ERROR: ERRLOG3_LOW = 0x00000000
+> QTISECLIB [01f17fe07]GEM_NOC ERROR: ERRLOG3_LOW = 0x00000000
+> QTISECLIB [01f19cf89]CNOC2 ERROR: ERRLOG3_HIGH = 0x00000000
+> QTISECLIB [01f1bb08e]GEM_NOC ERROR: ERRLOG3_HIGH = 0x00000000
+> QTISECLIB [01f1d8a31]CNOC2 ERROR: SBM1 FAULTINSTATUS0_LOW = 0x00000002
+> QTISECLIB [01f1f72a4]GEM_NOC ERROR: SBM0 FAULTINSTATUS0_LOW = 0x00000001
+> QTISECLIB [01f21a217]CNOC3 ERROR: ERRLOG0_LOW = 0x00000006
+> QTISECLIB [01f23dfd3]NOC error fatal
 
-   I have an urgent inheritance business proposal that will be beneficial 
-to both of us. Interest yourself and respond to me as soon as you can 
-for further details.
+Don't think this pile of lines really helps anyone, but OK.
 
-Regards
+>
+> changes in v2:
+> -- drop the first patch (drm/msm: enable msm irq after all initializations are done successfully at msm_drm_init()) since the problem had been fixed by other patch
+>
+> Fixes: a65c95ff88f2 ("drm/msm/dp: stop event kernel thread when DP unbind")
+> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+> ---
 
-David Coleman
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
