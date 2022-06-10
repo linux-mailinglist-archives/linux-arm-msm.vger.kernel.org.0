@@ -2,115 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 931EF54695F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jun 2022 17:29:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 35EFD5469B1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jun 2022 17:46:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242991AbiFJP3F (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Jun 2022 11:29:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40320 "EHLO
+        id S243344AbiFJPqW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Jun 2022 11:46:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46878 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233020AbiFJP3E (ORCPT
+        with ESMTP id S240913AbiFJPqV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Jun 2022 11:29:04 -0400
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0D3BD82;
-        Fri, 10 Jun 2022 08:29:03 -0700 (PDT)
-Received: by mail-lj1-x22b.google.com with SMTP id y15so24568395ljc.0;
-        Fri, 10 Jun 2022 08:29:03 -0700 (PDT)
+        Fri, 10 Jun 2022 11:46:21 -0400
+Received: from mail-il1-x12a.google.com (mail-il1-x12a.google.com [IPv6:2607:f8b0:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9DD22C110
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jun 2022 08:46:19 -0700 (PDT)
+Received: by mail-il1-x12a.google.com with SMTP id v7so21226169ilo.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jun 2022 08:46:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=v+jZ6r+UjKDKeJGUYw7c5giWLtAjtBGzVupfZsrUfPw=;
-        b=YftxElw48vAzTMHF/1nfU7VfFHsJSYUmrN1ldESryIJDZgWI62xwEtnFBnCOtU1dBy
-         hugT6puqW7XaZIJXo1TEsfOzKiAxZbj7elvsLJSguBWcH268hWJLPJ9n6csgtT0bsFAu
-         oG+5atjoQLcNfaqFj1A/1giu0nztBRDoV5yyzxGAH+WDdZW8PWD5NPRMy9Jb68+jEOas
-         rO7SvIZAjGbxr/an2qmDZHU6GyFFqKxmQkILq2u14xvgnxAOPDhGLNNy8IiKfsMtIYqY
-         o3DiP0TqRJiGuuR8sP4NOpGYv3F2oz+tU1K7wiqJ+zfYH/pArdVyPDp3VHieI+PB2M76
-         nAtg==
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=U5gwtupWPtnYNKyTXg+LeUPBFQAkfKZ5r5Zn8j7l7dY=;
+        b=rsvaBZc/2eV3W/hqt/2R6TaglxS1NpGazxTwdH1EiRqRZjuOFHq4fcRsP28TCrr6n2
+         y70IDwFbjt3ttye9H+DuJbzoALnjiE4t7ohskFyKdzguvX+aZW8DuYrmkeAqJ6G5dFL0
+         DISA0/kvXco6tRkNdDPXJwkVyeSqR2M30ANzkB0wjNZEaDKzAGhlC1IMWFqxOYiwrAdk
+         WDwQ6rARVLwrHfKVLFNXd0br6h0wR2dklUf3RKiiUd0dAyGkAhbJXbJPX+prgXaJ5YjJ
+         TUs92Zb48/H9SQ219aXJdLr7IoolQOTMTvocnLrA/iIqP+uyFvNIVHAjPpn/wN4OXZB8
+         4XvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=v+jZ6r+UjKDKeJGUYw7c5giWLtAjtBGzVupfZsrUfPw=;
-        b=7jm+buB8HKvwKL9Sn5W/7hYFbYU8IcK/sBfqKIWppWheM9hVA3ga2CJEWJB0M4101H
-         HVrihFAmUNSGknGLFsDdDFgFeGTNBUPhLdujo0CgGITrOQlpBG8AfXnSqXQd/fL6ahJV
-         N1WdWHgijltnAA5x4EAPHpzQJ5gi1PFcz6Qby8uJqWXPbGlwzcRXjLAZCOEQn5hBCv2P
-         jmeBGuBp0UxCBVKqqViZyUOq41t/DIalFGJCDmhYN0koEwnafmR2bjf/nBStB4gxmQcs
-         YuOdWa604n+O9Br2ieNcCK45cSUvYpKBRNo12OaXkHsefqZ4vD0PPBE5b99YeSeWaU5u
-         FsRg==
-X-Gm-Message-State: AOAM533oLUExYRk+W8CE7hqAFIaFmbvXdWfv0fRjqhfGs3rIi1B08ixY
-        pVrDWZv9w+pClYvEEOALb9alfYo4P76c54zoyHM=
-X-Google-Smtp-Source: ABdhPJwl2v2/H6OLQAJbbAo++RAUaoWbhTiq/DJO2nyXA23eqXmg6t46Wkkb2wH2XOIksQG/+e42V+8jRbh1NeB2EQY=
-X-Received: by 2002:a2e:b8d1:0:b0:255:bfef:7212 with SMTP id
- s17-20020a2eb8d1000000b00255bfef7212mr8012769ljp.378.1654874942164; Fri, 10
- Jun 2022 08:29:02 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=U5gwtupWPtnYNKyTXg+LeUPBFQAkfKZ5r5Zn8j7l7dY=;
+        b=dp/4vAoIgQftDkjDZyrjpZT7nAZrpCQC15VC16FT9G8GMFefb4Xoe3FKdbdP5yRt79
+         PYyOXGfWo3xppWSgM9RgeiRvFGPbq6LhYqcBvfb1pc/uHMCIVN811BEQSQJutMdVG3Hr
+         2WbBImmvqTEveQJsyW7RVG3q+xf4CP/nMlu+h/yB5AYUhd0ev64MqOH8RzkUXb5JEDtS
+         3LtJJ3ISWBE4dw7btSA40aBe83BlT5rG0Wu/HMZ/hsml1Z3VMBl4keZwYtQPM2Qe6sA5
+         9uBErMkfVjYRdXn1g29c8Er7FKZQsb0zODid3HSQNh/GwN9D7HS+UNgCoOG+J2Cb4CjR
+         l9XA==
+X-Gm-Message-State: AOAM530SVDU9tMeRaBoNR8e0x+czC/RHXwGc64RMzHUDan33xGLlw4RC
+        +c3yJo0Dg2r+iO08636GC/aBFw==
+X-Google-Smtp-Source: ABdhPJzJyzBadsuhUrO+FUS5bps+ZLxNpDz5T4mDQU2jOQ4HXXcOsXUtupRQocarpdtKZs7vxy7dPQ==
+X-Received: by 2002:a05:6e02:12ee:b0:2d1:7bcd:f7cd with SMTP id l14-20020a056e0212ee00b002d17bcdf7cdmr24726885iln.173.1654875979092;
+        Fri, 10 Jun 2022 08:46:19 -0700 (PDT)
+Received: from localhost.localdomain (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
+        by smtp.gmail.com with ESMTPSA id y15-20020a92950f000000b002d3adf71893sm12100488ilh.20.2022.06.10.08.46.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 10 Jun 2022 08:46:18 -0700 (PDT)
+From:   Alex Elder <elder@linaro.org>
+To:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+        pabeni@redhat.com
+Cc:     mka@chromium.org, evgreen@chromium.org, bjorn.andersson@linaro.org,
+        quic_cpratapa@quicinc.com, quic_avuyyuru@quicinc.com,
+        quic_jponduru@quicinc.com, quic_subashab@quicinc.com,
+        elder@kernel.org, netdev@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH net-next 0/6] net: ipa: simple refactoring
+Date:   Fri, 10 Jun 2022 10:46:09 -0500
+Message-Id: <20220610154616.249304-1-elder@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-References: <20220610084545.547700-1-nuno.sa@analog.com> <CAHp75VfhRoDupB2rFS+hg1zFN3=8RhnBcXrg0O72bKJYQz+8Kg@mail.gmail.com>
-In-Reply-To: <CAHp75VfhRoDupB2rFS+hg1zFN3=8RhnBcXrg0O72bKJYQz+8Kg@mail.gmail.com>
-From:   Andy Shevchenko <andy.shevchenko@gmail.com>
-Date:   Fri, 10 Jun 2022 17:28:24 +0200
-Message-ID: <CAHp75VevzkT-WYz=BiWhDAETx==Sswe-rYCo_qxy7vyL2qRwVA@mail.gmail.com>
-Subject: Re: [PATCH 00/34] make iio inkern interface firmware agnostic
-To:     =?UTF-8?B?TnVubyBTw6E=?= <nuno.sa@analog.com>
-Cc:     dl-linux-imx <linux-imx@nxp.com>,
-        Linux-Renesas <linux-renesas-soc@vger.kernel.org>,
-        "open list:BROADCOM NVRAM DRIVER" <linux-mips@vger.kernel.org>,
-        linux-arm Mailing List <linux-arm-kernel@lists.infradead.org>,
-        chrome-platform@lists.linux.dev,
-        Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-        "moderated list:ARM/Mediatek SoC support" 
-        <linux-mediatek@lists.infradead.org>,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-iio <linux-iio@vger.kernel.org>,
-        OpenBMC Maillist <openbmc@lists.ozlabs.org>,
-        Cai Huoqing <cai.huoqing@linux.dev>,
-        Benjamin Fair <benjaminfair@google.com>,
-        Jishnu Prakash <quic_jprakash@quicinc.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Amit Kucheria <amitk@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Michael Hennerich <Michael.Hennerich@analog.com>,
-        Haibo Chen <haibo.chen@nxp.com>,
-        Benson Leung <bleung@chromium.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Christophe Branchereau <cbranchereau@gmail.com>,
-        Patrick Venture <venture@google.com>,
-        Arnd Bergmann <arnd@arndb.de>, Nancy Yuen <yuenn@google.com>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Gwendal Grignou <gwendal@chromium.org>,
-        Saravanan Sekar <sravanhome@gmail.com>,
-        Tali Perry <tali.perry1@gmail.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Paul Cercueil <paul@crapouillou.net>,
-        Thara Gopinath <thara.gopinath@linaro.org>,
-        Avi Fishman <avifishman70@gmail.com>,
-        Lorenzo Bianconi <lorenzo@kernel.org>,
-        Claudiu Beznea <claudiu.beznea@microchip.com>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Tomer Maimon <tmaimon77@gmail.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Guenter Roeck <groeck@chromium.org>,
-        Fabio Estevam <festevam@gmail.com>,
-        Olivier Moysan <olivier.moysan@foss.st.com>,
-        Eugen Hristev <eugen.hristev@microchip.com>,
-        Miquel Raynal <miquel.raynal@bootlin.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -118,14 +72,37 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jun 10, 2022 at 4:48 PM Andy Shevchenko
-<andy.shevchenko@gmail.com> wrote:
-> On Fri, Jun 10, 2022 at 10:45 AM Nuno S=C3=A1 <nuno.sa@analog.com> wrote:
+This series contains some minor code improvements.
 
-> Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+The first patch verifies that the configuration is compatible with a
+recently-defined limit.  The second and third rename two fields so
+they better reflect their use in the code.  The next gets rid of an
+empty function by reworking its only caller.
 
-Ditto for patches 26-34.
+The last two begin to remove the assumption that an event ring is
+associated with a single channel.  Eventually we'll support having
+multiple channels share an event ring but some more needs to be done
+before that can happen.
 
---=20
-With Best Regards,
-Andy Shevchenko
+					-Alex
+
+Alex Elder (6):
+  net: ipa: verify command channel TLV count
+  net: ipa: rename channel->tlv_count
+  net: ipa: rename endpoint->trans_tre_max
+  net: ipa: simplify endpoint transaction completion
+  net: ipa: determine channel from event
+  net: ipa: derive channel from transaction
+
+ drivers/net/ipa/gsi.c          | 107 ++++++++++++++++++---------------
+ drivers/net/ipa/gsi.h          |  11 +---
+ drivers/net/ipa/gsi_private.h  |  12 ++--
+ drivers/net/ipa/gsi_trans.c    |  10 +--
+ drivers/net/ipa/ipa_cmd.c      |   8 +--
+ drivers/net/ipa/ipa_endpoint.c |  27 +++------
+ drivers/net/ipa/ipa_endpoint.h |   4 +-
+ 7 files changed, 80 insertions(+), 99 deletions(-)
+
+-- 
+2.34.1
+
