@@ -2,153 +2,173 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F0FA6545B72
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jun 2022 07:09:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A7A80545C5F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jun 2022 08:37:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234813AbiFJFJX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Jun 2022 01:09:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51376 "EHLO
+        id S244630AbiFJGh2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Jun 2022 02:37:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57224 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231197AbiFJFJW (ORCPT
+        with ESMTP id S1346194AbiFJGh1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Jun 2022 01:09:22 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1640425FB;
-        Thu,  9 Jun 2022 22:09:19 -0700 (PDT)
+        Fri, 10 Jun 2022 02:37:27 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2051835DDB
+        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Jun 2022 23:37:22 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id m125-20020a1ca383000000b0039c63fe5f64so588439wme.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Jun 2022 23:37:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1654837760; x=1686373760;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references;
-  bh=MISAWTCBlLMTTXWFcRmnJRZqF26y/VDz+IG6SwiAu48=;
-  b=ZzPHWhnMdn4MMOw28SqehASjdEUiM9nWrx2dCiZGkflXYVI4stVS83+e
-   Qrfiiixu75eOtwEGkSzPbc2SUSopdJvu/Yiejbv3OowsGLfX/kLXoUjqT
-   2fI3NHHC23QV5BI1F6u39PYtYs1oy80jug9ha5WDIjFNQshaE+yILJLY3
-   Y=;
-Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
-  by alexa-out.qualcomm.com with ESMTP; 09 Jun 2022 22:09:19 -0700
-X-QCInternal: smtphost
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/AES256-SHA; 09 Jun 2022 22:09:17 -0700
-X-QCInternal: smtphost
-Received: from hu-krichai-hyd.qualcomm.com (HELO hu-sgudaval-hyd.qualcomm.com) ([10.213.110.37])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 10 Jun 2022 10:38:56 +0530
-Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 4058933)
-        id E439331C9; Fri, 10 Jun 2022 10:38:55 +0530 (+0530)
-From:   Krishna chaitanya chundru <quic_krichai@quicinc.com>
-To:     helgaas@kernel.org
-Cc:     linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_vbadigan@quicinc.com,
-        quic_hemantk@quicinc.com, quic_nitegupt@quicinc.com,
-        quic_skananth@quicinc.com, quic_ramkri@quicinc.com,
-        manivannan.sadhasivam@linaro.org, swboyd@chromium.org,
-        Prasad Malisetty <quic_pmaliset@quicinc.com>,
-        Krishna chaitanya chundru <quic_krichai@quicinc.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        "Saheed O. Bolarinwa" <refactormyself@gmail.com>,
-        Rajat Jain <rajatja@google.com>,
-        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>
-Subject: [PATCH v5] PCI/ASPM: Update LTR threshold based upon reported max latencies
-Date:   Fri, 10 Jun 2022 10:38:28 +0530
-Message-Id: <1654837710-30561-1-git-send-email-quic_krichai@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1654242861-15695-1-git-send-email-quic_krichai@quicinc.com>
-References: <1654242861-15695-1-git-send-email-quic_krichai@quicinc.com>
-X-Spam-Status: No, score=-4.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+        d=baylibre-com.20210112.gappssmtp.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=Qxlw/2GeYPhBz4i8FzCqobc8aHph2WQJ2uzH+wlAQPM=;
+        b=YvKD/lnZFHPf9Bklm5hR2t0kTgFB1/rXSkgOKvxFTago0OfV/XXVBnr65QfdQ0sIbE
+         X56d5w92lO93EaOJsDJ8oCNGyjZkcJXPRSg9xTkOKhWDw62K7tpcO84Az2vOBRZU/r3+
+         YIHnLV0yk1ox4ibJDxo/xtHUE91KPK5nhGt24yQglgyRLlAN46Y1Z1t0+GvzN7M+MEou
+         tOdQLaDCWTLurM3ng8g7elKpPBlMcfWMNnTz6GEuMIGKZgA7WgUpL2gOP6VsKo5/EHPb
+         626ZTuTKw9tktPSgibPC7QlWbKT0XcsOV4TdzYgmUmuC1ODYErjWurNuno/msyBC5MwG
+         9u4A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=Qxlw/2GeYPhBz4i8FzCqobc8aHph2WQJ2uzH+wlAQPM=;
+        b=d0dXoawxJvVJMy9Sc8q8kYfj4md27UXqDZO9qh7kB/8W/d9hH8Wyflo5LJcl0Jqs/s
+         ZlubHmezFdXPOYHBWDcqob5noWmt8bVJtsnbKzWDGnHIDmjDSL8nC5DT2oipmSV6nO8B
+         a415v4DsSDNmCN3hxha5izQPQ6UGdyApz55YIfgg59ZP9t6ChbefTsw+DS+wYoKroC6s
+         UlvF1WdvYlweSYSUcrpFfzaOnjQfoKsRTeCRoLXLVXZwnmkJ57V69lNrI3PvCN5AwLfg
+         7SOod4GRVu1LHUtbmtT4x1lMrndILNresp1aLZxYeW7B0jq0x0qS2Z6c42Vejg92UCYs
+         hOcQ==
+X-Gm-Message-State: AOAM533XmjRcyDAou0s9VY969ep+e8C/9yG//9Z8K5CbXMwrmNodljba
+        u7ejHxVfau5819cXJrMHsWNSNA==
+X-Google-Smtp-Source: ABdhPJw4Hge4NDaRn0TL71ijVSQhRo1MhCaO3HbTb1tYRGHCORKkku8fnKoEAx9FGxDoG3CaWVnJNw==
+X-Received: by 2002:a1c:4e03:0:b0:39c:5bbc:e0d2 with SMTP id g3-20020a1c4e03000000b0039c5bbce0d2mr7034980wmh.184.1654843041123;
+        Thu, 09 Jun 2022 23:37:21 -0700 (PDT)
+Received: from localhost.localdomain ([2001:861:44c0:66c0:27b0:82d9:d0c6:702a])
+        by smtp.gmail.com with ESMTPSA id 2-20020a05600c228200b0039482d95ab7sm1729030wmf.24.2022.06.09.23.37.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 09 Jun 2022 23:37:20 -0700 (PDT)
+From:   Neil Armstrong <narmstrong@baylibre.com>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        soc@kernel.org, Arnd Bergmann <arnd@arndb.de>,
+        Olof Johansson <olof@lixom.net>, arm@kernel.org
+Cc:     Neil Armstrong <narmstrong@baylibre.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Hauke Mehrtens <hauke@hauke-m.de>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        linux-mediatek@lists.infradead.org,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        linux-tegra@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        Tero Kristo <kristo@kernel.org>,
+        Vignesh Raghavendra <vigneshr@ti.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        linux-omap@vger.kernel.org,
+        =?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <zajec5@gmail.com>,
+        Tony Lindgren <tony@atomide.com>,
+        Scott Branden <sbranden@broadcom.com>,
+        linux-gpio@vger.kernel.org, linux-amlogic@lists.infradead.org,
+        Kevin Hilman <khilman@baylibre.com>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        Andrew Lunn <andrew@lunn.ch>, Nishanth Menon <nm@ti.com>,
+        devicetree@vger.kernel.org, Chen-Yu Tsai <wens@csie.org>,
+        linux-arm-msm@vger.kernel.org,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Samuel Holland <samuel@sholland.org>,
+        Nicolas Ferre <nicolas.ferre@microchip.com>,
+        Russell King <linux@armlinux.org.uk>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Gregory Clement <gregory.clement@bootlin.com>,
+        linux-arm-kernel@lists.infradead.org,
+        Heiko Stuebner <heiko@sntech.de>, linux-kernel@vger.kernel.org,
+        Andrew Jeffery <andrew@aj.id.au>, linux-input@vger.kernel.org,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        =?UTF-8?q?Beno=C3=AEt=20Cousson?= <bcousson@baylibre.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Peter Rosin <peda@axentia.se>,
+        Khuong Dinh <khuong@os.amperecomputing.com>,
+        Claudiu Beznea <claudiu.beznea@microchip.com>,
+        Broadcom internal kernel review list 
+        <bcm-kernel-feedback-list@broadcom.com>,
+        Andy Gross <agross@kernel.org>,
+        Michal Simek <michal.simek@xilinx.com>,
+        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
+        linux-sunxi@lists.linux.dev,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-samsung-soc@vger.kernel.org,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Ray Jui <rjui@broadcom.com>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
+        Li Yang <leoyang.li@nxp.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Wei Xu <xuwei5@hisilicon.com>,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Joel Stanley <joel@jms.id.au>,
+        linux-rockchip@lists.infradead.org
+Subject: Re: (subset) [PATCH v2 00/48] dt-bindings: input: gpio-keys: rework matching children
+Date:   Fri, 10 Jun 2022 08:37:18 +0200
+Message-Id: <165484301356.1384204.15957178175784526690.b4-ty@baylibre.com>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20220609113721.379932-1-krzysztof.kozlowski@linaro.org>
+References: <20220609113721.379932-1-krzysztof.kozlowski@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Prasad Malisetty <quic_pmaliset@quicinc.com>
+Hi,
 
-In ASPM driver, LTR threshold scale and value are updated based on
-tcommon_mode and t_poweron values. In kioxia NVMe L1.2 is failing due to
-LTR threshold scale and value are greater values than max snoop/non-snoop
-value.
+On Thu, 9 Jun 2022 13:37:21 +0200, Krzysztof Kozlowski wrote:
+> Merging
+> =======
+> 1. dt-bindings: rebased on top of Rob's:
+>    https://lore.kernel.org/all/20220608211207.2058487-1-robh@kernel.org/
+> 
+> 2. DTS patches are independent. They can be picked up directly by sub-arch
+>    maintainers, by Arnd or Olof, or eventually by me (if you wish).
+> 
+> [...]
 
-Based on PCIe r4.1, sec 5.5.1, L1.2 substate must be entered when
-reported snoop/no-snoop values is greather than or equal to
-LTR_L1.2_THRESHOLD value.
+Thanks, Applied to https://git.kernel.org/pub/scm/linux/kernel/git/amlogic/linux.git (v5.20/arm64-dt)
 
-Signed-off-by: Prasad Malisetty  <quic_pmaliset@quicinc.com>
-Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
----
+[07/48] arm64: dts: amlogic: correct gpio-keys properties
+        https://git.kernel.org/amlogic/c/4956be9944d1fb23107f27bad8a2cca0fa167443
+[08/48] arm64: dts: amlogic: align gpio-key node names with dtschema
+        https://git.kernel.org/amlogic/c/4fd9afd894ebe5831dbd737e6ca7b6de14da7fda
 
-I am taking this patch forward as prasad is no more working with our org.
-Changes since v4:
-	- Replaced conditional statements with min and max.
-changes since v3:
-	- Changed the logic to include this condition "snoop/nosnoop
-	  latencies are not equal to zero and lower than LTR_L1.2_THRESHOLD"
-Changes since v2:
-	- Replaced LTRME logic with max snoop/no-snoop latencies check.
-Changes since v1:
-	- Added missing variable declaration in v1 patch
----
- drivers/pci/pcie/aspm.c | 30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+These changes has been applied on the intermediate git tree [1].
 
-diff --git a/drivers/pci/pcie/aspm.c b/drivers/pci/pcie/aspm.c
-index a96b742..676c03e 100644
---- a/drivers/pci/pcie/aspm.c
-+++ b/drivers/pci/pcie/aspm.c
-@@ -461,14 +461,36 @@ static void aspm_calc_l1ss_info(struct pcie_link_state *link,
- {
- 	struct pci_dev *child = link->downstream, *parent = link->pdev;
- 	u32 val1, val2, scale1, scale2;
-+	u32 max_val, max_scale, max_snp_scale, max_snp_val, max_nsnp_scale, max_nsnp_val;
- 	u32 t_common_mode, t_power_on, l1_2_threshold, scale, value;
- 	u32 ctl1 = 0, ctl2 = 0;
- 	u32 pctl1, pctl2, cctl1, cctl2;
- 	u32 pl1_2_enables, cl1_2_enables;
-+	u16 ltr;
-+	u16 max_snoop_lat, max_nosnoop_lat;
- 
- 	if (!(link->aspm_support & ASPM_STATE_L1_2_MASK))
- 		return;
- 
-+	ltr = pci_find_ext_capability(child, PCI_EXT_CAP_ID_LTR);
-+	if (!ltr)
-+		return;
-+
-+	pci_read_config_word(child, ltr + PCI_LTR_MAX_SNOOP_LAT, &max_snoop_lat);
-+	pci_read_config_word(child, ltr + PCI_LTR_MAX_NOSNOOP_LAT, &max_nosnoop_lat);
-+
-+	max_snp_scale = (max_snoop_lat & PCI_LTR_SCALE_MASK) >> PCI_LTR_SCALE_SHIFT;
-+	max_snp_val = max_snoop_lat & PCI_LTR_VALUE_MASK;
-+
-+	max_nsnp_scale = (max_nosnoop_lat & PCI_LTR_SCALE_MASK) >> PCI_LTR_SCALE_SHIFT;
-+	max_nsnp_val = max_nosnoop_lat & PCI_LTR_VALUE_MASK;
-+
-+	/* choose the greater max scale value between snoop and no snoop value*/
-+	max_scale = max(max_snp_scale, max_nsnp_scale);
-+
-+	/* choose the greater max value between snoop and no snoop scales */
-+	max_val = max(max_snp_val, max_nsnp_val);
-+
- 	/* Choose the greater of the two Port Common_Mode_Restore_Times */
- 	val1 = (parent_l1ss_cap & PCI_L1SS_CAP_CM_RESTORE_TIME) >> 8;
- 	val2 = (child_l1ss_cap & PCI_L1SS_CAP_CM_RESTORE_TIME) >> 8;
-@@ -501,6 +523,14 @@ static void aspm_calc_l1ss_info(struct pcie_link_state *link,
- 	 */
- 	l1_2_threshold = 2 + 4 + t_common_mode + t_power_on;
- 	encode_l12_threshold(l1_2_threshold, &scale, &value);
-+
-+	/*
-+	 * Based on PCIe r4.1, sec 5.5.1, L1.2 substate must be entered when reported
-+	 * snoop/no-snoop values are greather than or equal to LTR_L1.2_THRESHOLD value.
-+	 */
-+	scale = min(scale, max_scale);
-+	value = min(value, max_val);
-+
- 	ctl1 |= t_common_mode << 8 | scale << 29 | value << 16;
- 
- 	/* Some broken devices only support dword access to L1 SS */
+The v5.20/arm64-dt branch will then be sent via a formal Pull Request to the Linux SoC maintainers
+for inclusion in their intermediate git branches in order to be sent to Linus during
+the next merge window, or sooner if it's a set of fixes.
+
+In the cases of fixes, those will be merged in the current release candidate
+kernel and as soon they appear on the Linux master branch they will be
+backported to the previous Stable and Long-Stable kernels [2].
+
+The intermediate git branches are merged daily in the linux-next tree [3],
+people are encouraged testing these pre-release kernels and report issues on the
+relevant mailing-lists.
+
+If problems are discovered on those changes, please submit a signed-off-by revert
+patch followed by a corrective changeset.
+
+[1] https://git.kernel.org/pub/scm/linux/kernel/git/amlogic/linux.git
+[2] https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
+[3] https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git
+
 -- 
-2.7.4
-
+Neil
