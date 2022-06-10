@@ -2,57 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 49BAE546641
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jun 2022 14:05:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D49D6546682
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jun 2022 14:24:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347649AbiFJMEZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Jun 2022 08:04:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56782 "EHLO
+        id S239840AbiFJMYL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Jun 2022 08:24:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34200 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347752AbiFJMEY (ORCPT
+        with ESMTP id S234938AbiFJMYK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Jun 2022 08:04:24 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7D8F193E4;
-        Fri, 10 Jun 2022 05:04:23 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id A38B6B834E0;
-        Fri, 10 Jun 2022 12:04:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53FECC3411D;
-        Fri, 10 Jun 2022 12:04:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1654862661;
-        bh=q29Sh8OaZZnjTZf4cfd9bieOC8BLYRFYnh2YtXknEQs=;
-        h=From:To:Cc:Subject:Date:From;
-        b=YHYc9HR0FWAu3R/i2PNgPZXqUoX/2Mv13LjYTzteYGKaiqmIdWGzdfiX/5l8szL39
-         J1JxpDpN9bearnk8nZaOK39LmBiJbW/cc/JDRgqZ7ha6bxBdsYGdq+LiDTo9dLOovh
-         v+nEfprR3nynbRN/ZEGdkZ+0/23GyGzB65rYLFGgjEUY5h5IVrTSDcmHsgv538lYit
-         NDXZWg2gMnc3FJyfTezyMKsBKZjBDfN+1Qa3ANPN2uQ7vklE+ts0eOOD4AlURlnHwg
-         M5qv5wGdExkSg/pEohXx2n2ln4hjflkJOHkTxFzz/ub3yoIZ0AaVGuW2OA52Coq6g7
-         7vNT6JWOg/dhA==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan+linaro@kernel.org>)
-        id 1nzdNB-0002li-B5; Fri, 10 Jun 2022 14:04:17 +0200
-From:   Johan Hovold <johan+linaro@kernel.org>
-To:     stable@vger.kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>
-Subject: [PATCH stable-4.9] PCI: qcom: Fix unbalanced PHY init on probe errors
-Date:   Fri, 10 Jun 2022 14:04:11 +0200
-Message-Id: <20220610120411.10619-1-johan+linaro@kernel.org>
-X-Mailer: git-send-email 2.35.1
+        Fri, 10 Jun 2022 08:24:10 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DEC7B7E;
+        Fri, 10 Jun 2022 05:24:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1654863849; x=1686399849;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=xjSpnrPTS8bq+KeyyNcNYj6DYCgzCY8egMAx56m3R04=;
+  b=GddL6lxS7bIeMQBqqsAexwbnSBUUwqmA/hQljHSSkrfuuD3ZAEv2eP8R
+   EQcMlPbeoW0rwks6WgKR5tbmiQtnwFQlhUU1m6qHspsgB4o9b2Y5NGciO
+   aKAu8IfhOqXAHNg4DSMQ4rHK8UE8FgUYlUhmVXIVQkcDkADGGkxQ2Nv2V
+   Q=;
+Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
+  by alexa-out.qualcomm.com with ESMTP; 10 Jun 2022 05:24:09 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Jun 2022 05:24:08 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Fri, 10 Jun 2022 05:24:08 -0700
+Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Fri, 10 Jun 2022 05:24:02 -0700
+From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
+        <lgirdwood@gmail.com>, <broonie@kernel.org>, <robh+dt@kernel.org>,
+        <quic_plai@quicinc.com>, <bgoswami@quicinc.com>, <perex@perex.cz>,
+        <tiwai@suse.com>, <srinivas.kandagatla@linaro.org>,
+        <quic_rohkumar@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <alsa-devel@alsa-project.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <swboyd@chromium.org>,
+        <judyhsiao@chromium.org>, <vkoul@kernel.org>
+CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Subject: [PATCH v5 0/2] Add software clock gating requirement check
+Date:   Fri, 10 Jun 2022 17:53:33 +0530
+Message-ID: <1654863815-3970-1-git-send-email-quic_srivasam@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-8.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -60,46 +66,29 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-commit 83013631f0f9961416abd812e228c8efbc2f6069 upstream.
+This patch set is to add software clock gating requirement check
 
-Undo the PHY initialisation (e.g. balance runtime PM) if host
-initialisation fails during probe.
+Changes Since V4:
+	-- Fix error check, after a reset control get api return
+	-- Fix typo in commit message
+Changes Since V3:
+	-- Remove redundant check before reset control call
+	-- Reorganiaze patches.
+	-- Fix typos.
+Changes Since V2:
+	-- Fix if check before reset control call	
+Changes Since V1:
+	-- Use boolean flag for bool variable initialization
+	   instead of hard coding.
 
-Link: https://lore.kernel.org/r/20220401133854.10421-3-johan+linaro@kernel.org
-Fixes: 82a823833f4e ("PCI: qcom: Add Qualcomm PCIe controller driver")
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Signed-off-by: Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Acked-by: Stanimir Varbanov <svarbanov@mm-sol.com>
-Cc: stable@vger.kernel.org      # 4.5
-[ johan: adjust context to 4.9 ]
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
----
- drivers/pci/host/pcie-qcom.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+	
+Srinivasa Rao Mandadapu (2):
+  soundwire: qcom: Add flag for software clock gating check
+  ASoC: qcom: soundwire: Enable software clock gating requirement flag
 
-diff --git a/drivers/pci/host/pcie-qcom.c b/drivers/pci/host/pcie-qcom.c
-index aeb46f8c7087..4e21ca3c067e 100644
---- a/drivers/pci/host/pcie-qcom.c
-+++ b/drivers/pci/host/pcie-qcom.c
-@@ -562,10 +562,15 @@ static int qcom_pcie_probe(struct platform_device *pdev)
- 	ret = dw_pcie_host_init(pp);
- 	if (ret) {
- 		dev_err(dev, "cannot initialize host\n");
--		return ret;
-+		goto err_phy_exit;
- 	}
- 
- 	return 0;
-+
-+err_phy_exit:
-+	phy_exit(pcie->phy);
-+
-+	return ret;
- }
- 
- static const struct of_device_id qcom_pcie_match[] = {
+ drivers/soundwire/qcom.c | 22 +++++++++++++++++-----
+ 1 file changed, 17 insertions(+), 5 deletions(-)
+
 -- 
-2.35.1
+2.7.4
 
