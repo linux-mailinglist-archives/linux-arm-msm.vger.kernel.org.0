@@ -2,101 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CA32F546CCA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jun 2022 20:55:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3FDBA546CDF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jun 2022 21:01:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350296AbiFJSzx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Jun 2022 14:55:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55636 "EHLO
+        id S1348112AbiFJTBP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Jun 2022 15:01:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51390 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350378AbiFJSzu (ORCPT
+        with ESMTP id S243528AbiFJTBO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Jun 2022 14:55:50 -0400
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF5601E7ADD
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jun 2022 11:55:48 -0700 (PDT)
-Received: by mail-lj1-x234.google.com with SMTP id e4so119445ljl.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jun 2022 11:55:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=g2xdbCbqDzIncuP45i58XD17g/B6emE4ldK55IkqvnU=;
-        b=HzfSCXgWRJfxYCIZZCARYTSb2XczWHRaBN33MxBNh+UyIwO4QaHTE0t22vI52miHYY
-         pN/BaE8UlpdGYhIOrDRjo5yBSxWGZe8WbetqfcrZVsgesQI52CZyG6/J1hDvb6wGL68X
-         xxUtGiQgdJjdE29NQXXQniypyGWaSs6mrUic7pEvupXl52fq3CzB/x2uCjOoW7tNmmEQ
-         iEBxt1XlEQel85s7SKueE5t5zJC4aTw8nCPZJUj7LXS4h4VcgVCZ/f4dWXY1YHJulbdu
-         H9jsVNn0DlFVP4IvktCow+l/n7wapL2I3F9qxkwV63/sFayPys4KxdsariUqMRf5GFAi
-         E3Bw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=g2xdbCbqDzIncuP45i58XD17g/B6emE4ldK55IkqvnU=;
-        b=gi3iLg6aR0aWA8JC9u9wKgtHP5csOv8GvzQ8Y44/jomCAr4ha+VxQwEzlt58CIJC6u
-         a7c5ahUCxmCyGx331MvmDaXZ5D68BxGzEZcn30cxoOyxLyso765UEWu1fJRwdYn5qn+u
-         P1JPZyuYvPAjJ4l7XIq7exX4EsGyOwETt3sugxgLHMru3lwxRcj4NWVpEehGwKQuR8VW
-         7sR1+IphmYx1Hrerur2mSzax4/Zd5woSK6phRohGa6012nAq7oqA2kIpxLDNSdEldgnR
-         wMxZ8r6RZLGDuzDSJdYaQRzK4P4FsztWBtervlb4o0bMMdxX0LSrPjCq+Rh7kK1aPAP3
-         l17g==
-X-Gm-Message-State: AOAM531sixP+ZRI2n7RoEC2opT0Mi67HYllx75ZxoDw7iJ/Abh4embGI
-        1mAoAfKeOx8SsUWCHbPZDfKCZw==
-X-Google-Smtp-Source: ABdhPJzPKyEEKA9IXKYOpC3AalNHY6eqp5J+wftUS9vE+slOHtINp2E/Bu9ig+dXQvnCSC5tl3cfBQ==
-X-Received: by 2002:a2e:8803:0:b0:255:8be7:c03a with SMTP id x3-20020a2e8803000000b002558be7c03amr17533376ljh.487.1654887347060;
-        Fri, 10 Jun 2022 11:55:47 -0700 (PDT)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id i14-20020ac2522e000000b0047255d2118esm4816218lfl.189.2022.06.10.11.55.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Jun 2022 11:55:46 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>
-Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org
-Subject: [PATCH 2/2] phy: qcom-qmp: fix PCIe PHY support
-Date:   Fri, 10 Jun 2022 21:55:42 +0300
-Message-Id: <20220610185542.3662484-3-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220610185542.3662484-1-dmitry.baryshkov@linaro.org>
-References: <20220610185542.3662484-1-dmitry.baryshkov@linaro.org>
+        Fri, 10 Jun 2022 15:01:14 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4DB312C36B9;
+        Fri, 10 Jun 2022 12:01:13 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id B2D556222E;
+        Fri, 10 Jun 2022 19:01:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1352DC34114;
+        Fri, 10 Jun 2022 19:01:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1654887672;
+        bh=Hnvop1nQB2a1YvXC9KrSU6WdMwLevAsVoA6EE55HKf0=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=j2V8JdBRB9od3csLhFaWyYbQv4LOFTb655urrswTus3Zufk/CEtBBoyna10Gf0yzw
+         g2Q25Psjl8EgSp54TApA8f2BEC4zmE/5LyPX/9sWAd+T/8SbBiqlZnpRS8NJmLdfLJ
+         YXccNmbOugAmc0N1Y4Y3Zqb3FiKyYm8NFPBK6NqoIj0m2eVqVFUeBXoiZHdMKm2T3t
+         UlUApgeWIfxWnmUOGL1W8187VMKi/0/uYDgZMax5vUo8xdYFSmcp0F5suozphejrz8
+         WDs2WSLXWc27b2R5mOv8MNt7/VTjNxoQHJIWnHepHV54LX80fhopqJX0VAsjrJGjXj
+         z8wubT/wkWYcA==
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20220610074632.abtec5kulbclund4@SoMainline.org>
+References: <20220601220747.1145095-1-marijn.suijten@somainline.org> <20220601220747.1145095-4-marijn.suijten@somainline.org> <CAA8EJpomtbN0+ocD2pRbkYriUY4D9OnjgoFzL9qNHhPm3Uz5cQ@mail.gmail.com> <20220609221211.684C1C34114@smtp.kernel.org> <20220610074632.abtec5kulbclund4@SoMainline.org>
+Subject: Re: [PATCH v2 03/11] clk: fixed-factor: Introduce *clk_hw_register_fixed_factor_parent_hw()
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rajeev Nandan <quic_rajeevny@quicinc.com>,
+        Vladimir Lypak <vladimir.lypak@gmail.com>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Jonathan Marek <jonathan@marek.ca>, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+To:     Marijn Suijten <marijn.suijten@somainline.org>
+Date:   Fri, 10 Jun 2022 12:01:10 -0700
+User-Agent: alot/0.10
+Message-Id: <20220610190112.1352DC34114@smtp.kernel.org>
+X-Spam-Status: No, score=-8.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Replace init/exit ops with power_on/power_off which should be used for
-the PCIe PHYs to fix PHY initialization.
+Quoting Marijn Suijten (2022-06-10 00:46:32)
+> On 2022-06-09 15:12:09, Stephen Boyd wrote:
+> > Quoting Dmitry Baryshkov (2022-06-02 03:20:19)
+> > > On Thu, 2 Jun 2022 at 01:07, Marijn Suijten
+> > > <marijn.suijten@somainline.org> wrote:
+> > > > diff --git a/drivers/clk/clk-fixed-factor.c b/drivers/clk/clk-fixed=
+-factor.c
+> > > > index 54942d758ee6..fabb98d0cdb2 100644
+> > > > --- a/drivers/clk/clk-fixed-factor.c
+> > > > +++ b/drivers/clk/clk-fixed-factor.c
+> > > > @@ -148,17 +151,50 @@ struct clk_hw *devm_clk_hw_register_fixed_fac=
+tor_index(struct device *dev,
+> > > >                 const char *name, unsigned int index, unsigned long=
+ flags,
+> > > >                 unsigned int mult, unsigned int div)
+> > > >  {
+> > > > -       return __clk_hw_register_fixed_factor(dev, NULL, name, NULL=
+, index,
+> > > > -                                             flags, mult, div, tru=
+e);
+> > > > +       return __clk_hw_register_fixed_factor(dev, NULL, name, NULL=
+, NULL,
+> > > > +                                             index, flags, mult, d=
+iv, true);
+> > >=20
+> > > Here (and several times later) you are inserting an argument and then
+> > > moving arguments to the next line. My slight preference would be to
+> > > just insert the arg (and maybe break the line if it gets too long) w/o
+> > > touching the next lines.
+>=20
+> That'll definitely look odd, as we'll end up with index floating on a
+> single line, all on its own.
 
-Fixes: da07a06b905f ("phy: qcom-qmp-pcie: drop support for non-PCIe PHY types")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Pretty sure Dmitry is suggesting to make the line longer, not put the
+index on a line by itself. Ignore the 80-column limit.
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-index bd9f71456e32..b2cd0cf965d8 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-@@ -2141,8 +2141,8 @@ static int phy_pipe_clk_register(struct qcom_qmp *qmp, struct device_node *np)
- }
- 
- static const struct phy_ops qcom_qmp_phy_pcie_ops = {
--	.init		= qcom_qmp_phy_pcie_enable,
--	.exit		= qcom_qmp_phy_pcie_disable,
-+	.power_on	= qcom_qmp_phy_pcie_enable,
-+	.power_off	= qcom_qmp_phy_pcie_disable,
- 	.set_mode	= qcom_qmp_phy_pcie_set_mode,
- 	.owner		= THIS_MODULE,
- };
--- 
-2.35.1
+>=20
+> > I'd just add the argument at the end because when it is added in the
+> > middle it makes the diff more difficult to read.
+>=20
+> How strong is this feeling, against keeping argument ordering consistent
+> with other implementations of similar __clk_hw_register_* functions?
+>=20
 
+Not super strong. Just try to minimize the diff to make the reviewer's
+job easier. In this case it would be inserting NULL before 'index' and
+not modifying the next line so the diff is one line instead of two.
