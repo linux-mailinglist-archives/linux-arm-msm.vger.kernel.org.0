@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E6515546CC7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jun 2022 20:55:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 821F8546CC9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jun 2022 20:55:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346668AbiFJSzs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Jun 2022 14:55:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55428 "EHLO
+        id S1350385AbiFJSzw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Jun 2022 14:55:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55604 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350377AbiFJSzr (ORCPT
+        with ESMTP id S1350377AbiFJSzt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Jun 2022 14:55:47 -0400
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B20C16BE1B
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jun 2022 11:55:46 -0700 (PDT)
-Received: by mail-lj1-x229.google.com with SMTP id l18so61563lje.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jun 2022 11:55:46 -0700 (PDT)
+        Fri, 10 Jun 2022 14:55:49 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4981D1CAD31
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jun 2022 11:55:47 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id a2so38074886lfg.5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jun 2022 11:55:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=DL/v6Vwo9BkFl30Z9CxnNgezCjx47K1shb9q1wseJlI=;
-        b=DhNyCaZ/swphAvcB34TYeT8JCAeTakrcqQ9LlA5PVt+FLZB1Y7eigx5NvL/XDOK/4D
-         mq+fGHRW/oxpyztBvM8I0UcPMPQqZ1mxJv1pDJKc9lMlvqb4pVEnCVF1jgfUEIhR9oO8
-         wJDaSt9NWntkB0Bhi8cT37+SxJfXDqKsCNPSmLzbqgijDjWaCWnD8QU/p6EaxNxud6uw
-         gbYb3PVa8Cy3K33wl4FQl7eZddwQVlztXuvIpgBomqjGcJIFAz1PV/rhLM92nSwchV7o
-         dNu6+Y8nzxR1Dr4gvOLmCBehA+mT9chJiLKb+zigk/l/v0vR7Cq4flWZZPyFEiFpAyRz
-         3pMw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=ZpXhcBz85pZHSFxO7IztMlfvhvygUvHRe9NMB75dzZI=;
+        b=HYln7yxQTd0W6JEhVzLIUqvcJF7sqkcJkVdYnOX6S7BsIUJEu06cYJN1/UJDzoLjbG
+         TrGgBvJD/JoRSYsjjMiCc8wJytQCfqozhQ8s7i029waEhWz0u3FdmbAT8c5FFN+oqLg/
+         RexFFrehDpCRBl7AXgaulHQpHXIaHdMJLnXDfAnPFWPocuMMgTwNrlcpQOQyeqatg6ns
+         UeX33AefaBDw8MXJaNDArnjyBHn6oK3QKDHdcRSBkCJhVWfQN8nWCzh6bCFa1ngKZFA+
+         LefmuAVldKHo6fW2WlV8GhpEnhj9smyoxK8SPqs1qzzcFR6J9zrAyByA/w4EiJMbYdiR
+         +zJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=DL/v6Vwo9BkFl30Z9CxnNgezCjx47K1shb9q1wseJlI=;
-        b=o365b2MvxP8zu1JGC0uLDze7OFKtNeI8u2HIknDyOEYknUyNcj5tW4ffCDZuC/j1mg
-         /ewHyqwh1F0zlk9XG1fQDYA0gmIfsZqRiMnfntbKRGlxLdAQtN+XO1AAxGlllynlj9/b
-         7I36vW+KqmXxqCCKSF4jg2d6bMKs1Clx2HcrlnSozQYXDLW7968uk9Ux65J0XS/fQn/Y
-         jPg/7skKuOHYeL6wDXfpxdJ7y6t4N/Q/9Ag/RbqNCC9IZDs9/wG8GCbHdOv8ptJ339Gv
-         /dsV21PjGgHt+TBT1bWhG1sBdlggqpiO83itsYCAlCr4DichUuAbG4F+KolDYUpE+Hwm
-         Lxrg==
-X-Gm-Message-State: AOAM531jFzbuI+dy+gIS4CKyo/yrHwqSUCH9Qx8y8Z5f5tGC4m6CKUR+
-        ZH/74/kB8i6s4/L+Bcm/2zWRLg==
-X-Google-Smtp-Source: ABdhPJx7Hd3RcxQarfYg4FmWjPNKIuDJYZ2UWyZWCvRYDmgYaKNWRiAY/3i6g47DheC5CSwwZsz0ow==
-X-Received: by 2002:a2e:f12:0:b0:250:bf9c:3d2d with SMTP id 18-20020a2e0f12000000b00250bf9c3d2dmr62932063ljp.452.1654887344730;
-        Fri, 10 Jun 2022 11:55:44 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=ZpXhcBz85pZHSFxO7IztMlfvhvygUvHRe9NMB75dzZI=;
+        b=SrmsdoKECmaHbGMRCK4kSvzRQu4CZ6tQyKEemmYHJ3P8KbjUNGX5sjKwMAQEnj4rV+
+         Uh80AFitj1DVKGKVD6RIr52wvU2LcYDFhkc6RX8JBhTMX+Q044/9nmAJzktunZpUiOG6
+         paJGX3bP1cFJgdMsj+p/d0jaZC8fQD0NeaTuh3PbY4GEBxFE6SrFl6KN4nF3LmDppdpO
+         pTstZMPDvzdHiSx3kesqK8FbCfK7cAJWiRpXc2EpXXSv747rvKm0AOL+g6uQynrIwtyj
+         QyWKbPmggG7QCGztLQ18+DMABcnzVMMeJZ5rbbwzq/UOwWu15s8mfSGQJ+Y+Q2s/8Up4
+         VFYQ==
+X-Gm-Message-State: AOAM531sRjwBq1lzg2s9zOali6Td4fjlfcE8IXEIdfngfslQ3cdcVYKl
+        7Zyno8imCx4HRjfHm/+JmMm5gw==
+X-Google-Smtp-Source: ABdhPJypY/h7RKqc16xUO47DD6bBDpjECmUqbpavQ7VWC6S4INM4TkOoF6/JkIC/MFzLOS3t4olz4g==
+X-Received: by 2002:ac2:4e86:0:b0:479:242:61da with SMTP id o6-20020ac24e86000000b00479024261damr28473023lfr.40.1654887345668;
+        Fri, 10 Jun 2022 11:55:45 -0700 (PDT)
 Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id i14-20020ac2522e000000b0047255d2118esm4816218lfl.189.2022.06.10.11.55.43
+        by smtp.gmail.com with ESMTPSA id i14-20020ac2522e000000b0047255d2118esm4816218lfl.189.2022.06.10.11.55.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Jun 2022 11:55:43 -0700 (PDT)
+        Fri, 10 Jun 2022 11:55:45 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -55,10 +55,12 @@ To:     Andy Gross <agross@kernel.org>,
         Kishon Vijay Abraham I <kishon@ti.com>
 Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
         linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org
-Subject: [PATCH 0/2] phy: qcom-qmp: fix QMP PCIe PHY init
-Date:   Fri, 10 Jun 2022 21:55:40 +0300
-Message-Id: <20220610185542.3662484-1-dmitry.baryshkov@linaro.org>
+Subject: [PATCH 1/2] phy: qcom-qmp: fix msm8996 PCIe PHY support
+Date:   Fri, 10 Jun 2022 21:55:41 +0300
+Message-Id: <20220610185542.3662484-2-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.35.1
+In-Reply-To: <20220610185542.3662484-1-dmitry.baryshkov@linaro.org>
+References: <20220610185542.3662484-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -71,18 +73,30 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-These two patches fix PCIe PHY init after the previous QMP PHY rework
-([1]). They were generated on top of phy/next, but I'm fine with them
-being squashed to the corresponding patches.
+Replace init/exit ops with power_on/power_off which should be used for
+the PCIe PHYs to fix PHY initialization.
 
-Dmitry Baryshkov (2):
-  phy: qcom-qmp: fix msm8996 PCIe PHY support
-  phy: qcom-qmp: fix PCIe PHY support
-
+Fixes: f575ac2d64e7 ("phy: qcom-qmp-pcie-msm8996: drop support for non-PCIe PHY types")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
  drivers/phy/qualcomm/phy-qcom-qmp-pcie-msm8996.c | 4 ++--
- drivers/phy/qualcomm/phy-qcom-qmp-pcie.c         | 4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie-msm8996.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie-msm8996.c
+index 48ea1de81d7c..21103c41ba08 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie-msm8996.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie-msm8996.c
+@@ -854,8 +854,8 @@ static int phy_pipe_clk_register(struct qcom_qmp *qmp, struct device_node *np)
+ }
+ 
+ static const struct phy_ops qcom_qmp_phy_pcie_msm8996_ops = {
+-	.init		= qcom_qmp_phy_pcie_msm8996_enable,
+-	.exit		= qcom_qmp_phy_pcie_msm8996_disable,
++	.power_on	= qcom_qmp_phy_pcie_msm8996_enable,
++	.power_off	= qcom_qmp_phy_pcie_msm8996_disable,
+ 	.set_mode	= qcom_qmp_phy_pcie_msm8996_set_mode,
+ 	.owner		= THIS_MODULE,
+ };
 -- 
 2.35.1
 
