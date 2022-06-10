@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0F22A546D07
+	by mail.lfdr.de (Postfix) with ESMTP id 795FF546D08
 	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jun 2022 21:10:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350461AbiFJTKS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Jun 2022 15:10:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33766 "EHLO
+        id S1350473AbiFJTKT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Jun 2022 15:10:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33768 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350473AbiFJTKN (ORCPT
+        with ESMTP id S1350467AbiFJTKN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Fri, 10 Jun 2022 15:10:13 -0400
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C46EDF7
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB5B721A7
         for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jun 2022 12:10:11 -0700 (PDT)
-Received: by mail-lj1-x22b.google.com with SMTP id d18so141746ljc.4
+Received: by mail-lj1-x22d.google.com with SMTP id e4so154917ljl.1
         for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jun 2022 12:10:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=27r7fm24HH5e9SqiJoIarL14kYY0+23g/ojTmHV1I9U=;
-        b=YX95DABx5s7kCy6eYkbvTnZifQAs1b9MyGFy9dTIVS6UhUZly//IQnpAHf7mQHQmcg
-         Op6ShO3pgbbpxgvYFTA+82E22nlH3Fr3SLNrPziEYiTHqQ0rm7Cj2rFK3CnbuSUg7hwz
-         6DZ7Br940TNYPMEK/3WPhvI8Q22+sL71RblhTFh/ZsOVqnTJCZffFUE1Voa1G/pJhPhQ
-         vamXxjBg9HWnTqY56FGaDPro0p8HBx2JLjvW5Ph93GoZ4uEBjpqdgpN0b0/Vj/Vcx0vh
-         ZBZ0/Rvo84l84wwfEfLFT+W2FHswnPgv+4ZFRGNmV/uRRo8MjIndTravcv1ks4XcDBrZ
-         NlDg==
+        bh=MUejcEUBOlGy0+QEeY0SWSm0DJwBNAice3z2nR2K0iQ=;
+        b=xMsL7t1PafQsJrvk7ePusx+RWVDKRd1/pNR8rYc7fx+OzthY0xWdH6sBjMHtyoW/Bw
+         YB0ifpyA3prZxg0mGFNnE12boDNzgluUDuRf3Cow71c+sKlTPNaXqehX2Fx1gpFHuQbb
+         mHmEDpXiTrP2ghgZAF+/26E6478sq6/bAsif/NGiQny9Sm5oJAJdd0w4HE2GYLrCVeNW
+         gOyMu7fdig2jEOBhw1th5hMU3lDTOTkDUHGAkheBrUXtW7QfJ3HJ88DmgkfllarnYWq4
+         tMrDfrbta6PKZdfN4vLiAGsKXXvbw3lBNuvqWxpE9snWg5J1t5fO5CQLn+njID69L7Ep
+         wkJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=27r7fm24HH5e9SqiJoIarL14kYY0+23g/ojTmHV1I9U=;
-        b=RNqEDrchcTbsFCVPC9AhjMn98z1glAMnvV5pM9Vf9XYYnggDEpMHP7hNuSW8xPT4Mt
-         IZvdnbIF/fB+jQuZDP7XVqKpPzjcqrIz4Gpfyv17qd37yeRE5FAKLV6DJ8dPp6QtEZju
-         YXkqEhYZlaTBW8BM4HLZwUlNAUWq3Pasp9sLdMakxe1grfBy/F/iU/NVDwK+hcasPAS9
-         MjJEopDLZasYpqi6SS7H9p8BhRQyFL5LtaQKV8SYwzcholK+kTczss3IBaz7nxZ7yhLM
-         pmUx/TFWo6O+fcYbeh0c2os/1cNFR+yzn3tV/QEPuZE56P3RIaSj485vTqupOzgnX9ae
-         2yfQ==
-X-Gm-Message-State: AOAM530BSceMV+KATJEHrbholkfoC0pqdOVwzGclHw8XVKIlBKMEL0BI
-        QpGtM3GtJ4HoBxRKmSiClqs0oK3x3lV9KVfw
-X-Google-Smtp-Source: ABdhPJwYtS+cuot5KxiOKkBLufCMSJ77ATNWt18bYXRScQlZ43o9CSx3YXjD+YjYqhMl0I6dZNMOOA==
-X-Received: by 2002:a05:651c:1506:b0:255:affc:33f2 with SMTP id e6-20020a05651c150600b00255affc33f2mr9908951ljf.265.1654888209575;
-        Fri, 10 Jun 2022 12:10:09 -0700 (PDT)
+        bh=MUejcEUBOlGy0+QEeY0SWSm0DJwBNAice3z2nR2K0iQ=;
+        b=jBu6IL1QcM1/QuhZ6bOqFg7YxMtSzkwTjPQfM5L0EpJpLb+SwF9+uJmATSKQbq0jKN
+         G6WK/+uh9znEUI7iEoPX7nilapHm+jYm3bx+Z1buhNULDVskJ0HUTENQ01JVfsDTCK2M
+         OflyW7YA6EGfTzPbKr6mxymNmA/VrBOIAuC5P4hUf6IgVBlIJ64Trw10KDzSKG2RL9OR
+         2vKH3iceFdvV4rZi094l9UbsM3PD6u2jyFyfSJK1k/bOt7XBMT/Xo4bl4gBfspJt9drO
+         Ky8/vvreH8qH+XGJOyb14FHsFnd0Hg6qMabt/gkmqAggfBcaw0WUdLcpSuSTCADN2a1H
+         jKHw==
+X-Gm-Message-State: AOAM531Vm31ea2YcQ4X180OLflM2WDUU09EYxk4ZVPROnIdnOo11O5hT
+        e6/8V29xOu4P6Dkrivpl/CzAuA==
+X-Google-Smtp-Source: ABdhPJygjKFTxDyKxnOzhsykwtb0KxMxOAZ9q6BnbTQeskIFS42cZQRBr7u7izFbY9F5SL003HDDuA==
+X-Received: by 2002:a05:651c:1a13:b0:256:39d4:f630 with SMTP id by19-20020a05651c1a1300b0025639d4f630mr7056286ljb.84.1654888211385;
+        Fri, 10 Jun 2022 12:10:11 -0700 (PDT)
 Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id h2-20020a2e9002000000b00253e1833e8bsm26614ljg.117.2022.06.10.12.10.07
+        by smtp.gmail.com with ESMTPSA id h2-20020a2e9002000000b00253e1833e8bsm26614ljg.117.2022.06.10.12.10.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Jun 2022 12:10:07 -0700 (PDT)
+        Fri, 10 Jun 2022 12:10:10 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -56,9 +56,9 @@ To:     Andy Gross <agross@kernel.org>,
 Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
         linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
         Johan Hovold <johan@kernel.org>
-Subject: [RFC PATCH 25/28] phy: qcom-qmp: pcs-v3: add missing registers
-Date:   Fri, 10 Jun 2022 22:09:22 +0300
-Message-Id: <20220610190925.3670081-26-dmitry.baryshkov@linaro.org>
+Subject: [RFC PATCH 26/28] phy: qcom-qmp: pcs-pcie-v4: add missing registers
+Date:   Fri, 10 Jun 2022 22:09:23 +0300
+Message-Id: <20220610190925.3670081-27-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220610190925.3670081-1-dmitry.baryshkov@linaro.org>
 References: <20220610190925.3670081-1-dmitry.baryshkov@linaro.org>
@@ -75,137 +75,82 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Add missing registers, verified against:
-- msm-4.19's qcom,usb3-11nm-qmp-combo.h
+- msm-4.19's qcom,kona-qmp-usb3.h
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/phy/qualcomm/phy-qcom-qmp-pcs-v3.h | 82 ++++++++++++++++++++++
- 1 file changed, 82 insertions(+)
+ .../phy/qualcomm/phy-qcom-qmp-pcs-pcie-v4.h   | 49 +++++++++++++++++++
+ 1 file changed, 49 insertions(+)
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcs-v3.h b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-v3.h
-index ac13f2989a73..10dbbb006201 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-pcs-v3.h
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-v3.h
-@@ -7,7 +7,9 @@
- #define QCOM_PHY_QMP_PCS_V3_H_
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcs-pcie-v4.h b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-pcie-v4.h
+index 5a97867c5ba6..4cc02288d418 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-pcs-pcie-v4.h
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-pcie-v4.h
+@@ -7,17 +7,66 @@
+ #define QCOM_PHY_QMP_PCS_PCIE_V4_H_
  
- /* Only for QMP V3 PHY - PCS registers */
-+#define QPHY_V3_PCS_SW_RESET				0x000
- #define QPHY_V3_PCS_POWER_DOWN_CONTROL			0x004
-+#define QPHY_V3_PCS_START_CONTROL			0x008
- #define QPHY_V3_PCS_TXMGN_V0				0x00c
- #define QPHY_V3_PCS_TXMGN_V1				0x010
- #define QPHY_V3_PCS_TXMGN_V2				0x014
-@@ -31,6 +33,7 @@
- #define QPHY_V3_PCS_RATE_SLEW_CNTRL			0x05c
- #define QPHY_V3_PCS_POWER_STATE_CONFIG1			0x060
- #define QPHY_V3_PCS_POWER_STATE_CONFIG2			0x064
-+#define QPHY_V3_PCS_POWER_STATE_CONFIG3			0x068
- #define QPHY_V3_PCS_POWER_STATE_CONFIG4			0x06c
- #define QPHY_V3_PCS_RCVR_DTCT_DLY_P1U2_L		0x070
- #define QPHY_V3_PCS_RCVR_DTCT_DLY_P1U2_H		0x074
-@@ -40,24 +43,103 @@
- #define QPHY_V3_PCS_LOCK_DETECT_CONFIG2			0x084
- #define QPHY_V3_PCS_LOCK_DETECT_CONFIG3			0x088
- #define QPHY_V3_PCS_TSYNC_RSYNC_TIME			0x08c
-+#define QPHY_V3_PCS_SIGDET_LOW_2_IDLE_TIME		0x090
-+#define QPHY_V3_PCS_BEACON_2_IDLE_TIME_L		0x094
-+#define QPHY_V3_PCS_BEACON_2_IDLE_TIME_H		0x098
-+#define QPHY_V3_PCS_PWRUP_RESET_DLY_TIME_SYSCLK		0x09c
- #define QPHY_V3_PCS_PWRUP_RESET_DLY_TIME_AUXCLK		0x0a0
- #define QPHY_V3_PCS_LP_WAKEUP_DLY_TIME_AUXCLK		0x0a4
- #define QPHY_V3_PCS_PLL_LOCK_CHK_DLY_TIME		0x0a8
-+#define QPHY_V3_PCS_LFPS_DET_HIGH_COUNT_VAL		0x0ac
- #define QPHY_V3_PCS_LFPS_TX_ECSTART_EQTLOCK		0x0b0
-+#define QPHY_V3_PCS_LFPS_TX_END_CNT_P2U3_START		0x0b4
- #define QPHY_V3_PCS_RXEQTRAINING_WAIT_TIME		0x0b8
- #define QPHY_V3_PCS_RXEQTRAINING_RUN_TIME		0x0bc
-+#define QPHY_V3_PCS_TXONESZEROS_RUN_LENGTH		0x0c0
- #define QPHY_V3_PCS_FLL_CNTRL1				0x0c4
- #define QPHY_V3_PCS_FLL_CNTRL2				0x0c8
- #define QPHY_V3_PCS_FLL_CNT_VAL_L			0x0cc
- #define QPHY_V3_PCS_FLL_CNT_VAL_H_TOL			0x0d0
- #define QPHY_V3_PCS_FLL_MAN_CODE			0x0d4
-+#define QPHY_V3_PCS_AUTONOMOUS_MODE_CTRL		0x0d8
-+#define QPHY_V3_PCS_LFPS_RXTERM_IRQ_CLEAR		0x0dc
-+#define QPHY_V3_PCS_ARCVR_DTCT_EN_PERIOD		0x0e0
-+#define QPHY_V3_PCS_ARCVR_DTCT_CM_DLY			0x0e4
-+#define QPHY_V3_PCS_ALFPS_DEGLITCH_VAL			0x0e8
-+#define QPHY_V3_PCS_INSIG_SW_CTRL1			0x0ec
-+#define QPHY_V3_PCS_INSIG_SW_CTRL2			0x0f0
-+#define QPHY_V3_PCS_INSIG_SW_CTRL3			0x0f4
-+#define QPHY_V3_PCS_INSIG_MX_CTRL1			0x0f8
-+#define QPHY_V3_PCS_INSIG_MX_CTRL2			0x0fc
-+#define QPHY_V3_PCS_INSIG_MX_CTRL3			0x100
-+#define QPHY_V3_PCS_OUTSIG_SW_CTRL1			0x104
-+#define QPHY_V3_PCS_OUTSIG_MX_CTRL1			0x108
-+#define QPHY_V3_PCS_CLK_DEBUG_BYPASS_CTRL		0x10c
-+#define QPHY_V3_PCS_TEST_CONTROL			0x110
-+#define QPHY_V3_PCS_TEST_CONTROL2			0x114
-+#define QPHY_V3_PCS_TEST_CONTROL3			0x118
-+#define QPHY_V3_PCS_TEST_CONTROL4			0x11c
-+#define QPHY_V3_PCS_TEST_CONTROL5			0x120
-+#define QPHY_V3_PCS_TEST_CONTROL6			0x124
-+#define QPHY_V3_PCS_TEST_CONTROL7			0x128
-+#define QPHY_V3_PCS_COM_RESET_CONTROL			0x12c
-+#define QPHY_V3_PCS_BIST_CTRL				0x130
-+#define QPHY_V3_PCS_PRBS_POLY0				0x134
-+#define QPHY_V3_PCS_PRBS_POLY1				0x138
-+#define QPHY_V3_PCS_PRBS_SEED0				0x13c
-+#define QPHY_V3_PCS_PRBS_SEED1				0x140
-+#define QPHY_V3_PCS_FIXED_PAT_CTRL			0x144
-+#define QPHY_V3_PCS_FIXED_PAT0				0x148
-+#define QPHY_V3_PCS_FIXED_PAT1				0x14c
-+#define QPHY_V3_PCS_FIXED_PAT2				0x150
-+#define QPHY_V3_PCS_FIXED_PAT3				0x154
-+#define QPHY_V3_PCS_COM_CLK_SWITCH_CTRL			0x158
-+#define QPHY_V3_PCS_ELECIDLE_DLY_SEL			0x15c
-+#define QPHY_V3_PCS_SPARE1				0x160
-+#define QPHY_V3_PCS_BIST_CHK_ERR_CNT_L_STATUS		0x164
-+#define QPHY_V3_PCS_BIST_CHK_ERR_CNT_H_STATUS		0x168
-+#define QPHY_V3_PCS_BIST_CHK_STATUS			0x16c
-+#define QPHY_V3_PCS_LFPS_RXTERM_IRQ_SOURCE_STATUS	0x170
-+#define QPHY_V3_PCS_PCS_STATUS				0x174
-+#define QPHY_V3_PCS_PCS_STATUS2				0x178
-+#define QPHY_V3_PCS_PCS_STATUS3				0x17c
-+#define QPHY_V3_PCS_COM_RESET_STATUS			0x180
-+#define QPHY_V3_PCS_OSC_DTCT_STATUS			0x184
-+#define QPHY_V3_PCS_REVISION_ID0			0x188
-+#define QPHY_V3_PCS_REVISION_ID1			0x18c
-+#define QPHY_V3_PCS_REVISION_ID2			0x190
-+#define QPHY_V3_PCS_REVISION_ID3			0x194
-+#define QPHY_V3_PCS_DEBUG_BUS_0_STATUS			0x198
-+#define QPHY_V3_PCS_DEBUG_BUS_1_STATUS			0x19c
-+#define QPHY_V3_PCS_DEBUG_BUS_2_STATUS			0x1a0
-+#define QPHY_V3_PCS_DEBUG_BUS_3_STATUS			0x1a4
- #define QPHY_V3_PCS_LP_WAKEUP_DLY_TIME_AUXCLK_MSB	0x1a8
- #define QPHY_V3_PCS_OSC_DTCT_ACTIONS			0x1ac
- #define QPHY_V3_PCS_SIGDET_CNTRL			0x1b0
-+#define QPHY_V3_PCS_IDAC_CAL_CNTRL			0x1b4
-+#define QPHY_V3_PCS_CMN_ACK_OUT_SEL			0x1b8
-+#define QPHY_V3_PCS_PLL_LOCK_CHK_DLY_TIME_SYSCLK	0x1bc
-+#define QPHY_V3_PCS_AUTONOMOUS_MODE_STATUS		0x1c0
-+#define QPHY_V3_PCS_ENDPOINT_REFCLK_CNTRL		0x1c4
-+#define QPHY_V3_PCS_EPCLK_PRE_PLL_LOCK_DLY_SYSCLK	0x1c8
-+#define QPHY_V3_PCS_EPCLK_PRE_PLL_LOCK_DLY_AUXCLK	0x1cc
-+#define QPHY_V3_PCS_EPCLK_DLY_COUNT_VAL_L		0x1d0
-+#define QPHY_V3_PCS_EPCLK_DLY_COUNT_VAL_H		0x1d4
- #define QPHY_V3_PCS_RX_SIGDET_LVL			0x1d8
- #define QPHY_V3_PCS_L1SS_WAKEUP_DLY_TIME_AUXCLK_LSB	0x1dc
- #define QPHY_V3_PCS_L1SS_WAKEUP_DLY_TIME_AUXCLK_MSB	0x1e0
-+#define QPHY_V3_PCS_AUTONOMOUS_MODE_CTRL2		0x1e4
-+#define QPHY_V3_PCS_RXTERMINATION_DLY_SEL		0x1e8
-+#define QPHY_V3_PCS_LFPS_PER_TIMER_VAL			0x1ec
-+#define QPHY_V3_PCS_SIGDET_STARTUP_TIMER_VAL		0x1f0
-+#define QPHY_V3_PCS_LOCK_DETECT_CONFIG4			0x1f4
-+#define QPHY_V3_PCS_RX_SIGDET_DTCT_CNTRL		0x1f8
-+#define QPHY_V3_PCS_PCS_STATUS4				0x1fc
-+#define QPHY_V3_PCS_PCS_STATUS4_CLEAR			0x200
-+#define QPHY_V3_PCS_DEC_ERROR_COUNT_STATUS		0x204
-+#define QPHY_V3_PCS_COMMA_POS_STATUS			0x208
- #define QPHY_V3_PCS_REFGEN_REQ_CONFIG1			0x20c
- #define QPHY_V3_PCS_REFGEN_REQ_CONFIG2			0x210
-+#define QPHY_V3_PCS_REFGEN_REQ_CONFIG3			0x214
+ /* Only for QMP V4 PHY - PCS_PCIE registers (same as PCS_MISC?) */
++#define QPHY_V4_PCS_PCIE_INT_AUX_CLK_STATUS		0x00
++#define QPHY_V4_PCS_PCIE_OSC_DTCT_STATUS		0x04
++#define QPHY_V4_PCS_PCIE_POWER_STATE_CONFIG1		0x08
+ #define QPHY_V4_PCS_PCIE_POWER_STATE_CONFIG2		0x0c
++#define QPHY_V4_PCS_PCIE_POWER_STATE_CONFIG3		0x10
+ #define QPHY_V4_PCS_PCIE_POWER_STATE_CONFIG4		0x14
++#define QPHY_V4_PCS_PCIE_PCS_TX_RX_CONFIG		0x18
+ #define QPHY_V4_PCS_PCIE_ENDPOINT_REFCLK_DRIVE		0x1c
++#define QPHY_V4_PCS_PCIE_ENDPOINT_REFCLK_CNTRL		0x20
++#define QPHY_V4_PCS_PCIE_EPCLK_PRE_PLL_LOCK_DLY_AUXCLK	0x24
++#define QPHY_V4_PCS_PCIE_EPCLK_DLY_COUNT_VAL_L		0x28
++#define QPHY_V4_PCS_PCIE_EPCLK_DLY_COUNT_VAL_H		0x2c
++#define QPHY_V4_PCS_PCIE_RX_IDLE_DTCT_CNTRL1		0x30
++#define QPHY_V4_PCS_PCIE_RX_IDLE_DTCT_CNTRL2		0x34
++#define QPHY_V4_PCS_PCIE_SIGDET_CNTRL			0x38
++#define QPHY_V4_PCS_PCIE_SIGDET_LOW_2_IDLE_TIME		0x3c
+ #define QPHY_V4_PCS_PCIE_L1P1_WAKEUP_DLY_TIME_AUXCLK_L	0x40
++#define QPHY_V4_PCS_PCIE_L1P1_WAKEUP_DLY_TIME_AUXCLK_H	0x44
+ #define QPHY_V4_PCS_PCIE_L1P2_WAKEUP_DLY_TIME_AUXCLK_L	0x48
++#define QPHY_V4_PCS_PCIE_L1P2_WAKEUP_DLY_TIME_AUXCLK_H	0x4c
+ #define QPHY_V4_PCS_PCIE_INT_AUX_CLK_CONFIG1		0x50
++#define QPHY_V4_PCS_PCIE_INT_AUX_CLK_CONFIG2		0x54
++#define QPHY_V4_PCS_PCIE_OSC_DTCT_CONFIG1		0x58
++#define QPHY_V4_PCS_PCIE_OSC_DTCT_CONFIG2		0x5c
++#define QPHY_V4_PCS_PCIE_OSC_DTCT_CONFIG3		0x60
++#define QPHY_V4_PCS_PCIE_OSC_DTCT_CONFIG4		0x64
++#define QPHY_V4_PCS_PCIE_OSC_DTCT_CONFIG5		0x68
++#define QPHY_V4_PCS_PCIE_OSC_DTCT_CONFIG6		0x6c
++#define QPHY_V4_PCS_PCIE_OSC_DTCT_CONFIG7		0x70
++#define QPHY_V4_PCS_PCIE_OSC_DTCT_MODE2_CONFIG1		0x74
++#define QPHY_V4_PCS_PCIE_OSC_DTCT_MODE2_CONFIG2		0x78
++#define QPHY_V4_PCS_PCIE_OSC_DTCT_MODE2_CONFIG3		0x7c
++#define QPHY_V4_PCS_PCIE_OSC_DTCT_MODE2_CONFIG4		0x80
++#define QPHY_V4_PCS_PCIE_OSC_DTCT_MODE2_CONFIG5		0x84
++#define QPHY_V4_PCS_PCIE_OSC_DTCT_MODE2_CONFIG6		0x88
++#define QPHY_V4_PCS_PCIE_OSC_DTCT_MODE2_CONFIG7		0x8c
+ #define QPHY_V4_PCS_PCIE_OSC_DTCT_ACTIONS		0x90
++#define QPHY_V4_PCS_PCIE_LOCAL_FS			0x94
++#define QPHY_V4_PCS_PCIE_LOCAL_LF			0x98
++#define QPHY_V4_PCS_PCIE_LOCAL_FS_RS			0x9c
+ #define QPHY_V4_PCS_PCIE_EQ_CONFIG1			0xa0
+ #define QPHY_V4_PCS_PCIE_EQ_CONFIG2			0xa4
++#define QPHY_V4_PCS_PCIE_PRESET_P0_P1_PRE		0xa8
++#define QPHY_V4_PCS_PCIE_PRESET_P2_P3_PRE		0xac
++#define QPHY_V4_PCS_PCIE_PRESET_P4_P5_PRE		0xb0
+ #define QPHY_V4_PCS_PCIE_PRESET_P6_P7_PRE		0xb4
++#define QPHY_V4_PCS_PCIE_PRESET_P8_P9_PRE		0xb8
+ #define QPHY_V4_PCS_PCIE_PRESET_P10_PRE			0xbc
++#define QPHY_V4_PCS_PCIE_PRESET_P1_P3_PRE_RS		0xc0
++#define QPHY_V4_PCS_PCIE_PRESET_P4_P5_PRE_RS		0xc4
++#define QPHY_V4_PCS_PCIE_PRESET_P6_P9_PRE_RS		0xc8
++#define QPHY_V4_PCS_PCIE_PRESET_P0_P1_POST		0xcc
++#define QPHY_V4_PCS_PCIE_PRESET_P2_P3_POST		0xd0
++#define QPHY_V4_PCS_PCIE_PRESET_P4_P5_POST		0xd4
++#define QPHY_V4_PCS_PCIE_PRESET_P6_P7_POST		0xd8
++#define QPHY_V4_PCS_PCIE_PRESET_P8_P9_POST		0xdc
+ #define QPHY_V4_PCS_PCIE_PRESET_P10_POST		0xe0
++#define QPHY_V4_PCS_PCIE_PRESET_P1_P3_POST_RS		0xe4
++#define QPHY_V4_PCS_PCIE_PRESET_P4_P5_POST_RS		0xe8
++#define QPHY_V4_PCS_PCIE_PRESET_P6_P9_POST_RS		0xec
++#define QPHY_V4_PCS_PCIE_RXEQEVAL_TIME			0xf0
  
  #endif
 -- 
