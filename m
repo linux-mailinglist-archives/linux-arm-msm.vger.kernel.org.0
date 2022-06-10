@@ -2,60 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A30EC546E86
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jun 2022 22:38:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E5CFD546E8F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jun 2022 22:41:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346497AbiFJUid (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Jun 2022 16:38:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49236 "EHLO
+        id S1348285AbiFJUlX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Jun 2022 16:41:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34704 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350510AbiFJUi0 (ORCPT
+        with ESMTP id S1347415AbiFJUlX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Jun 2022 16:38:26 -0400
-Received: from mail-oa1-x2a.google.com (mail-oa1-x2a.google.com [IPv6:2001:4860:4864:20::2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F82212F0DF
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jun 2022 13:38:23 -0700 (PDT)
-Received: by mail-oa1-x2a.google.com with SMTP id 586e51a60fabf-fe4ac3b87fso647840fac.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jun 2022 13:38:23 -0700 (PDT)
+        Fri, 10 Jun 2022 16:41:23 -0400
+Received: from mail-oa1-x35.google.com (mail-oa1-x35.google.com [IPv6:2001:4860:4864:20::35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F23673F319
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jun 2022 13:41:21 -0700 (PDT)
+Received: by mail-oa1-x35.google.com with SMTP id 586e51a60fabf-fe023ab520so612843fac.10
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jun 2022 13:41:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:in-reply-to:references:from:user-agent:date:message-id
          :subject:to:cc;
-        bh=OmNB8Tcgddvh+DStPNDRj/l3PH4AXfXE+UIaJzFaKDU=;
-        b=PeEQYbTqlBNmQVeOneHYbMQ2SNrnE9oRTTJBeeItlAIoqfZ+jTsaeM3pXbv4byuW2/
-         AfTroOiJeqAqHgr6g/W5/8NxXUIGHdQ7BxUq1EEr3ZV/U/uQjrGlxVpcIR3cc5hcxYdl
-         QtdINxF1F92WAg6BPLRNtQNPQFQiMlm1VhshM=
+        bh=1wOc0J4fYT2fujAD0N/SFPgzt/fgt6blJDB3o4DP2ak=;
+        b=HJndNUV/RX85HGvljX/EtGuC32YxOaIkn0U7bRqjBppXY0Jjfc12XCvOOYrw6VTM1g
+         9OpOq0EKOn5tD06F+MsK7nJMe8SORGdywqBhNc2BWf+v9TSFSoNO75b2jXiBnvpA+PYA
+         kaUbt9thYk41DLzgsEZlgZpMmvd/4p2oTDqx0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:in-reply-to:references:from
          :user-agent:date:message-id:subject:to:cc;
-        bh=OmNB8Tcgddvh+DStPNDRj/l3PH4AXfXE+UIaJzFaKDU=;
-        b=gf4ngny0esEjp8k90V4GJUIum5Mf7u0ZJnhP0emds722XpnPs4A0pRhsAXN7NyOp1Q
-         dsr47nd/RiajUsICLaTs2uArAAlq6pJ/jk/etE0FN68Bv4NRY+sm9NWoHKAKw7GDgH/G
-         joxusUSkHRwB/1wdtZLR/tO85+90SXbAmnZp3Gw2pT8NWjhuIPRbcxoYzE6g8xlnNQWE
-         1lC0foNyu70IR2MJ6izn72cdaGAOOLzLoKRekEOmkwmNhFWb17X3elTDtKRCYyuUFZ7o
-         hCEK/tMpTeZfng1P50QgHyTpZVKM6RwMmR6cLy4SCAcyEw5Luh3LtPOrHpmhRBQebZjx
-         JapQ==
-X-Gm-Message-State: AOAM532Bq93ntzhL6HVmYA1oII100K+bjTW3u8aaW/tXs7D18uuCai11
-        gpJGa/DlJnsiHJwKWqcwXSm9xucAISeApplEpSDe5Q==
-X-Google-Smtp-Source: ABdhPJxrnMCKEY4AraCYzAprPhmiQ1YNHjc36TBp1WRgX1iN4BwAyAiw6GjZRAmfjgdlO1edLxRj4Tmv7M7qh5o0Mgk=
+        bh=1wOc0J4fYT2fujAD0N/SFPgzt/fgt6blJDB3o4DP2ak=;
+        b=tmeZQbE7dvgegJozxBCbn/cj3rl6C8G0CN1YRNMt6h6nkN3hUFtdwoQn9/a4p3MFY7
+         H4Pftv8h2M+SWNV9KXBvl0zivUI4w0EcFWJNIug0UbSczogDKIKQZXObTCTkduK47Ayw
+         FjuppC71Yi38VwUiZCEyrcLgg/oQ8WwwFGfMBcLbYFpiZOvLv00Kizr7FdSR6e8td653
+         z+kyS3NfI0YqSwy5KIFGdZaK8iaeFiKLO4MVCziagHXSrHBAGSKrmxoVAopPH+tM1Y4q
+         UYkhNQy6LRWxyU8zdWWDnG30o68WAccSd3mV110dXX8DithtU4IjrOReILtJwLwE5Rg2
+         Uosw==
+X-Gm-Message-State: AOAM530N63z3h3bfyKPeCU6lNiZFeN0XXCiBkgAxU0Tb/SMlXQf1E4sZ
+        TFcyk3cI4HqNqrSywmcZo3dxWZXJAAqmehGhoPKz6Q==
+X-Google-Smtp-Source: ABdhPJy1FIFw0/ZajJ73h4iKWxSpPY7TneAyV/yA60TeLcm44Rt1c746tdIuod7oRox8ozRoNH+AI+oN7vt+zXmGddg=
 X-Received: by 2002:a05:6870:b381:b0:fe:2004:b3b5 with SMTP id
- w1-20020a056870b38100b000fe2004b3b5mr922317oap.63.1654893502377; Fri, 10 Jun
- 2022 13:38:22 -0700 (PDT)
+ w1-20020a056870b38100b000fe2004b3b5mr927327oap.63.1654893681353; Fri, 10 Jun
+ 2022 13:41:21 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 10 Jun 2022 13:38:21 -0700
+ HTTPREST; Fri, 10 Jun 2022 13:41:20 -0700
 MIME-Version: 1.0
-In-Reply-To: <1654775566-21953-1-git-send-email-quic_dikshita@quicinc.com>
-References: <1654775566-21953-1-git-send-email-quic_dikshita@quicinc.com>
+In-Reply-To: <20220609113148.3149194-1-dmitry.baryshkov@linaro.org>
+References: <20220609113148.3149194-1-dmitry.baryshkov@linaro.org>
 From:   Stephen Boyd <swboyd@chromium.org>
 User-Agent: alot/0.10
-Date:   Fri, 10 Jun 2022 13:38:21 -0700
-Message-ID: <CAE-0n50q5GJ_q9Pojjrh+34W+i6BXhxSDCS6M_6NLP0pyZYuQg@mail.gmail.com>
-Subject: Re: [PATCH] venus: Add support for SSR trigger using fault injection
-To:     Dikshita Agarwal <quic_dikshita@quicinc.com>,
-        linux-kernel@vger.kernel.org, linux-media@vger.kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, stanimir.varbanov@linaro.org,
-        quic_vgarodia@quicinc.com
+Date:   Fri, 10 Jun 2022 13:41:20 -0700
+Message-ID: <CAE-0n502VOOw2bU7f+Qb4_JeH1WgWL49gxk12QNrGrxH-GFs7A@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm/hdmi: fill the pwr_regs bulk regulators
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+Cc:     David Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
@@ -67,48 +70,14 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Dikshita Agarwal (2022-06-09 04:52:46)
-> diff --git a/drivers/media/platform/qcom/venus/dbgfs.c b/drivers/media/platform/qcom/venus/dbgfs.c
-> index 52de47f..a0bfb9e 100644
-> --- a/drivers/media/platform/qcom/venus/dbgfs.c
-> +++ b/drivers/media/platform/qcom/venus/dbgfs.c
-> @@ -4,13 +4,31 @@
->   */
+Quoting Dmitry Baryshkov (2022-06-09 04:31:48)
+> Conversion to use bulk regulator API omitted filling the pwr_regs with
+> proper regulator IDs. This was left unnoticed, since none of my testing
+> platforms has used the pwr_regs. Fix this by propagating regulator ids
+> properly.
 >
->  #include <linux/debugfs.h>
-> +#include <linux/fault-inject.h>
->
->  #include "core.h"
->
-> +#ifdef CONFIG_FAULT_INJECTION
-> +static DECLARE_FAULT_ATTR(venus_ssr_attr);
-> +#endif
-> +
-> +bool venus_fault_inject_ssr(void)
-> +{
-> +#ifdef CONFIG_FAULT_INJECTION
-> +       return should_fail(&venus_ssr_attr, 1);
-> +#else
-> +       return false;
-> +#endif
-> +}
+> Fixes: 31b3b1f5e352 ("drm/msm/hdmi: use bulk regulator API")
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
 
-It would be better to remove the ifdef in this function and define a
-static inline version that returns false when CONFIG_FAULT_INJECTION is
-disabled so that the compiler doesn't have to insert a function call to
-venus_fault_inject_ssr() when the config is disabled. It may also be
-good to avoid the jump when enabled by exporting the attribute to the
-irq handler file.
-
-> +
->  void venus_dbgfs_init(struct venus_core *core)
->  {
->         core->root = debugfs_create_dir("venus", NULL);
->         debugfs_create_x32("fw_level", 0644, core->root, &venus_fw_debug);
-> +
-> +#ifdef CONFIG_FAULT_INJECTION
-> +       fault_create_debugfs_attr("fail_ssr", core->root, &venus_ssr_attr);
-> +#endif
->  }
->
->  void venus_dbgfs_deinit(struct venus_core *core)
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
