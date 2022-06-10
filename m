@@ -2,393 +2,222 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5A148546067
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jun 2022 10:49:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 46F3154627B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jun 2022 11:33:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348523AbiFJIts (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Jun 2022 04:49:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45830 "EHLO
+        id S234773AbiFJJdq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Jun 2022 05:33:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51086 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348526AbiFJIt3 (ORCPT
+        with ESMTP id S1348565AbiFJJda (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Jun 2022 04:49:29 -0400
-Received: from mx0a-00128a01.pphosted.com (mx0a-00128a01.pphosted.com [148.163.135.77])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F70451583;
-        Fri, 10 Jun 2022 01:49:26 -0700 (PDT)
-Received: from pps.filterd (m0167088.ppops.net [127.0.0.1])
-        by mx0a-00128a01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 25A8fboE010559;
-        Fri, 10 Jun 2022 04:49:25 -0400
-Received: from nwd2mta3.analog.com ([137.71.173.56])
-        by mx0a-00128a01.pphosted.com (PPS) with ESMTPS id 3gm00mh299-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 10 Jun 2022 04:49:25 -0400
-Received: from ASHBMBX9.ad.analog.com (ASHBMBX9.ad.analog.com [10.64.17.10])
-        by nwd2mta3.analog.com (8.14.7/8.14.7) with ESMTP id 25A8nOwt023362
-        (version=TLSv1/SSLv3 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL);
-        Fri, 10 Jun 2022 04:49:24 -0400
-Received: from ASHBCASHYB5.ad.analog.com (10.64.17.133) by
- ASHBMBX9.ad.analog.com (10.64.17.10) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.14; Fri, 10 Jun 2022 04:49:23 -0400
-Received: from ASHBMBX8.ad.analog.com (10.64.17.5) by
- ASHBCASHYB5.ad.analog.com (10.64.17.133) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.14; Fri, 10 Jun 2022 04:49:23 -0400
-Received: from zeus.spd.analog.com (10.66.68.11) by ashbmbx8.ad.analog.com
- (10.64.17.5) with Microsoft SMTP Server id 15.2.986.14 via Frontend
- Transport; Fri, 10 Jun 2022 04:49:23 -0400
-Received: from nsa.ad.analog.com ([10.44.3.70])
-        by zeus.spd.analog.com (8.15.1/8.15.1) with ESMTP id 25A8imiu014275;
-        Fri, 10 Jun 2022 04:49:12 -0400
-From:   =?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>
-To:     <linux-imx@nxp.com>, <linux-renesas-soc@vger.kernel.org>,
-        <linux-mips@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <chrome-platform@lists.linux.dev>,
-        Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-        <linux-mediatek@lists.infradead.org>,
-        <linux-stm32@st-md-mailman.stormreply.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-iio@vger.kernel.org>,
-        <openbmc@lists.ozlabs.org>
-CC:     Cai Huoqing <cai.huoqing@linux.dev>,
-        Benjamin Fair <benjaminfair@google.com>,
-        Jishnu Prakash <quic_jprakash@quicinc.com>,
-        "Linus Walleij" <linus.walleij@linaro.org>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Amit Kucheria <amitk@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Michael Hennerich <Michael.Hennerich@analog.com>,
-        Haibo Chen <haibo.chen@nxp.com>,
-        Benson Leung <bleung@chromium.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        "Alexandre Belloni" <alexandre.belloni@bootlin.com>,
-        Christophe Branchereau <cbranchereau@gmail.com>,
-        Patrick Venture <venture@google.com>,
-        Arnd Bergmann <arnd@arndb.de>, Nancy Yuen <yuenn@google.com>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        "Gwendal Grignou" <gwendal@chromium.org>,
-        Saravanan Sekar <sravanhome@gmail.com>,
-        "Tali Perry" <tali.perry1@gmail.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Paul Cercueil <paul@crapouillou.net>,
-        Thara Gopinath <thara.gopinath@linaro.org>,
-        Avi Fishman <avifishman70@gmail.com>,
-        "Lorenzo Bianconi" <lorenzo@kernel.org>,
-        Claudiu Beznea <claudiu.beznea@microchip.com>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Andy Shevchenko <andy.shevchenko@gmail.com>,
-        Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Tomer Maimon <tmaimon77@gmail.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "Nicolas Ferre" <nicolas.ferre@microchip.com>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Shawn Guo <shawnguo@kernel.org>,
-        "Guenter Roeck" <groeck@chromium.org>,
-        Fabio Estevam <festevam@gmail.com>,
-        "Olivier Moysan" <olivier.moysan@foss.st.com>,
-        Eugen Hristev <eugen.hristev@microchip.com>,
-        Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 34/34] iio: inkern: fix coding style warnings
-Date:   Fri, 10 Jun 2022 10:45:45 +0200
-Message-ID: <20220610084545.547700-35-nuno.sa@analog.com>
-X-Mailer: git-send-email 2.36.1
-In-Reply-To: <20220610084545.547700-1-nuno.sa@analog.com>
-References: <20220610084545.547700-1-nuno.sa@analog.com>
+        Fri, 10 Jun 2022 05:33:30 -0400
+Received: from esa.hc3962-90.iphmx.com (esa.hc3962-90.iphmx.com [216.71.142.165])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 872D1B879;
+        Fri, 10 Jun 2022 02:33:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qccesdkim1;
+  t=1654853609; x=1655458409;
+  h=from:to:cc:subject:date:message-id:references:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=3DMqVoYgd7Lui/BS5V2QvFSdB5jMpj3moPRWICO8P8g=;
+  b=BT9eiWtwSRhcaZ0+1XiKvCP2vMW8+I6n2QbDQnqP4ng//hViVFg0MX8T
+   MszaczNFQvV//jUgGiORAd6+AWA44uu8rxNtJsP56R29qm3uT3IIBOfA/
+   ASAASLLOoCuDxHhkKNDsbaFflTLRC3nemaZ4wNpRnqDUiLo/6Uc+QI3C0
+   Q=;
+Received: from mail-bn8nam11lp2171.outbound.protection.outlook.com (HELO NAM11-BN8-obe.outbound.protection.outlook.com) ([104.47.58.171])
+  by ob1.hc3962-90.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Jun 2022 09:33:27 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=Lhw3rLZQOumNYQvN/BbYMUHz2B7wAmi2lC9mdFU0DtU94YZsWVh3fSGMetXIQlQoN4XZmDmafA0afubgG0xgVwXx1tJGh1/vqD3GSWCFjGPZjrLOr10WXHTi/GEKK1UIXSvQB/MFKk6wjcDASNMy0xTjBAzIXuOO36MK0PnxQeiAtVjoASFlZFFhrC+ek4GqdMTcVSCgsS34430iOiyxu9STm+D75sKcyOK6EMbnvnOTi2OBuOonX4sOlhfmo+XfJuZS7I98o94oBSEnvIztKuPJMc9EUqu4pceVzcWCEdrwxWJzl5qWJiuFUPniuRvo4/fHe4R0QxTg6iOPuJJLBQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=3DMqVoYgd7Lui/BS5V2QvFSdB5jMpj3moPRWICO8P8g=;
+ b=mazt9q+vbMf8i26HrkderNa95i5mDn0xGYjhP14EWVuIKgzNnFkJlSSzn70zcbosyzdUV9BA2cL8nmvQOluxJf+Kq1qVSmJZD2SXxpv/f9Sug0GW95hKrCh8BlBKm7yRcJAYnRoR11Sl6GY8q7GeE+PDjQpUhxeFMQN92u2zWVFG9P+d1p3VUqEQfGKAz++Lc4SToFdofvwXYoj5s9PHhKU3GRZriMgG5pDsgYhHAfa9GPhWkTKNAu5J8608YWHyJR5X7t8FKeDkLic+0d5wJTgMCCLOucq2DxRD9FyLO/s7z2n+wMgUjUYyziioqWbC7o5Mw8d/E3oIfeR5CGFPmA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=quicinc.com; dmarc=pass action=none header.from=quicinc.com;
+ dkim=pass header.d=quicinc.com; arc=none
+Received: from BL0PR02MB4564.namprd02.prod.outlook.com (2603:10b6:208:4d::13)
+ by BN0PR02MB8014.namprd02.prod.outlook.com (2603:10b6:408:16d::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5332.13; Fri, 10 Jun
+ 2022 09:33:20 +0000
+Received: from BL0PR02MB4564.namprd02.prod.outlook.com
+ ([fe80::508d:2d15:ef0f:4f60]) by BL0PR02MB4564.namprd02.prod.outlook.com
+ ([fe80::508d:2d15:ef0f:4f60%7]) with mapi id 15.20.5314.020; Fri, 10 Jun 2022
+ 09:33:14 +0000
+From:   "Vijaya Krishna Nivarthi (Temp) (QUIC)" <quic_vnivarth@quicinc.com>
+To:     Doug Anderson <dianders@chromium.org>,
+        "Vijaya Krishna Nivarthi (Temp) (QUIC)" <quic_vnivarth@quicinc.com>
+CC:     Andy Gross <agross@kernel.org>,
+        "bjorn.andersson@linaro.org" <bjorn.andersson@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Jiri Slaby <jirislaby@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "linux-serial@vger.kernel.org" <linux-serial@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        "Mukesh Savaliya (QUIC)" <quic_msavaliy@quicinc.com>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>
+Subject: RE: [PATCH] tty: serial: qcom-geni-serial: minor fixes to
+ get_clk_div_rate()
+Thread-Topic: [PATCH] tty: serial: qcom-geni-serial: minor fixes to
+ get_clk_div_rate()
+Thread-Index: AQHYdRrKW5lyYlSVJ024eBGmtoqqRK05XvEAgAFQ0mOAA1kLt4AEzQpIgAGIppyAAcghDIAB83QA
+Date:   Fri, 10 Jun 2022 09:33:14 +0000
+Message-ID: <BL0PR02MB45641E7841A666F867D0185EFAA69@BL0PR02MB4564.namprd02.prod.outlook.com>
+References: <1654021066-13341-1-git-send-email-quic_vnivarth@quicinc.com>
+ <CAD=FV=UF3x5RHrQH-m1X-4kQSsKiufLnkew=VuJz7W9EAi3GHQ@mail.gmail.com>
+ <5d950007-7a92-a41b-e569-79e806adb06a@quicinc.com>
+ <CAD=FV=Xm1LJEoU5dKa5pMgqsHuAXuFVpdHvc1REULhAKTPbGnQ@mail.gmail.com>
+ <ad393ad2-a247-3c61-5033-185d39b5596d@quicinc.com>
+ <CAD=FV=XD+LozhkJZp0C7RUO01T-XuqBA-SJ0EQeyvGk0CxC3JQ@mail.gmail.com>
+ <e677fd02-011f-4f4e-fa73-17dc96aea7d0@quicinc.com>
+ <CAD=FV=UzjnEjMTLTRVXTrz6aoiBymJtnJ1o8dzPN9hn0Be3tng@mail.gmail.com>
+ <da18c508-f32e-fece-6392-e6a95f7c7968@quicinc.com>
+ <CAD=FV=Wytm9EYu=4ndN+En2AFEgPK9NjrUMbFPA_h6TwyxGCYA@mail.gmail.com>
+ <765a170c-d335-d626-0609-7d0f3967b71d@quicinc.com>
+ <CAD=FV=X2wTUH50MqFu=4WifvbTG+df-oYqQBRWeSPES7M2fxNw@mail.gmail.com>
+In-Reply-To: <CAD=FV=X2wTUH50MqFu=4WifvbTG+df-oYqQBRWeSPES7M2fxNw@mail.gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=quicinc.com;
+x-ms-exchange-messagesentrepresentingtype: 1
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 8ce3e39b-d049-4a95-0e46-08da4ac43e2c
+x-ms-traffictypediagnostic: BN0PR02MB8014:EE_
+x-ld-processed: 98e9ba89-e1a1-4e38-9007-8bdabc25de1d,ExtAddr
+x-microsoft-antispam-prvs: <BN0PR02MB801474CD2E4BD2287E380AC286A69@BN0PR02MB8014.namprd02.prod.outlook.com>
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: LKYpH2SVRENjowx3cogG32zGzzm6qZ5z5NNoUzJsmxP8pOFKnBvTA6HbnhsybVFSzGVwjxjzGn8u0GbV4jMrTmaTWwTvLvRoRl1XCvZ8lvqT0xBALz1Ybda79RkCzRgdM2Bf3VVrAIBM+MjOX84SFFaLD91+TwF+cZc/PpdZ8UFDB1FMBKubcdJphKE/D/U5qUHR+T4xTCL6Tbeni9oCvc10s2W36bi53oQklzBdny34s19Pu64A1mL+Y0e+SZ+ZNDUHY0L95b3fzjDuk84/iOhSsFHeP1gu/pXIbJIoc7R8AvSVCVTI8Q5GHSzJekc9owaD82OwCb33JOzvSIYGF4Qlxjpx8cwfx99rRpSqy7T+dPmErfrsWNXnkfoDklWT04Ml0FrvjQ5HVwXFD1YrXxUU2eGKf9/tVkr0F6m+tEm5ETlcG9G3wbv6A5RA1Q6t87Y3H1kXBvlhDDjwpFcbun3/+AG5FZtPxziRh+qbL8+8X2gmdnx/omkCfo6YCfK+RAfXvLWar/8U81h2Y8BJI/qqujyTTcUioj1PDLja3GIsP8c8tKBGj25FJMo9TLuTC62/alW6LpRfEZopUC4zRfZlDae6c6TrvpmpBSgg4F4RO2a5GWeVAIKOKmRbBIm4m6OQe0Qxt9o8Gsjxd6iSA4LJsxrnD29fiGc46OkqaGbR22pqRGRjh55B9g3mh7EqtJviNyYdCPpmQEevjc1rQA==
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL0PR02MB4564.namprd02.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230001)(4636009)(366004)(508600001)(33656002)(8676002)(4326008)(186003)(9686003)(7696005)(6506007)(83380400001)(2906002)(38100700002)(26005)(38070700005)(5660300002)(316002)(122000001)(52536014)(8936002)(71200400001)(55016003)(7416002)(86362001)(66556008)(64756008)(76116006)(66476007)(66946007)(66446008)(110136005)(54906003);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?WEw4WkxBeXE5b05MdWkxNWhDOXR6NG9mUWtTdGVBZTNrbTBKVWJRN0xTMmpY?=
+ =?utf-8?B?cGljU2hwWEtDSGFuS21NVnFGd3k0SHZlVkxocnh2MVdONGErM3JuNWcxSXVJ?=
+ =?utf-8?B?V2tsN0twMXp4clNtRDQwODJITXdsSVZza3RoSTN1QkpEa2dablpuR2RaMW1k?=
+ =?utf-8?B?eENFSkdpNXh3Nm5uNk9FcExJSWZTd09oMDZZVUVSTDRLdlVVY1dNbmNXZ0w4?=
+ =?utf-8?B?aEFGT09xS28vL25iRm1nOXVhcWExaHFQRzY5ZXowZUxPQWM3OE0xVHFZVWdi?=
+ =?utf-8?B?SGRLYTdIR3BQc2FEMFkrcUpubFBYVUsxSFdHaldEMWxnMHl3WUV5QUNwTU1j?=
+ =?utf-8?B?RUdGNlo1L0FvcTEwMU5lUUNqNmN3NmRJRXM1M1hBaE9IK1YxV2lyTVhyalRt?=
+ =?utf-8?B?NXVaU1Q5dVJpWTNrMUVGUGV5SjZ2bTBZSng2TitKdFBBTVNrOVYvVVRFRExD?=
+ =?utf-8?B?Wi9WMzNwMUhwWFpXcHhNbktRY3FJNXNSTDRGNHk5cjZvU3VKaEF4VGEzeUUv?=
+ =?utf-8?B?S0MzaFZDdHEvSExuR2pNZWJRZnFJL2xaaCtBV3lpaVI1UFNRQjQvUTZqMjh5?=
+ =?utf-8?B?ZjMydm1qbUt0ZTFod2lDZGM0dzl3Rm1jcVBTaXovTjh4cmNNQWVMNHpjL3l1?=
+ =?utf-8?B?bzZydUEzSTZRbW90OWRDMk9UeWxmdjJJZnpReHVkUVlhTlpHRGFQcGIrQ040?=
+ =?utf-8?B?WjVBUjVjTGZHdXFycnBLWGlXM0xNWFNERFk5QThLRmVrREcxL05vVEt4UDJv?=
+ =?utf-8?B?M3BhRlhQeWFieHZXemYvcnM0Q2xsRSt1ak14d1puaXZjV25UTXdOKzJ4NUV4?=
+ =?utf-8?B?NGYrTmRTY0QyZ3ozMXZMQ2ZwL2VSY2FVUGJjQUlsZFRoZ2lqQUFpZm1OR09z?=
+ =?utf-8?B?VFFSWnF5b3lMRldFOFFndlBqTnZ3aGZzVGNWQ1pLc1MyOGVvV0JienQ2U29k?=
+ =?utf-8?B?TmpvazRRemZzbFhKdEJ2UG0wUk1kd0VVNlE0cTVnT1JoZUNaWEFNNzYvbllC?=
+ =?utf-8?B?ZkZTVjdsSUdlcUJHYXdlRHQ0bjQrakg5akxOeUdJNlNwRVgvNHJZQm4rN2Ft?=
+ =?utf-8?B?dU9GeFF5U090bFE4QkhKRGtkNERtY0tVTDVjQ2RUNTFlT3hCWXZtUHNpSGUz?=
+ =?utf-8?B?aTVORXZLcXVnbStEV1RkY0d5TUl6a2RLS1pjOWJiZzlrNHlLbU5LTjY3Vi9l?=
+ =?utf-8?B?YlkzdWwyTHhsVTBSbVhTWTNYcE4yMUxTTlVFa0liajhMMWNLVTEvbWRva3Yz?=
+ =?utf-8?B?Z3FvbUkwaFRhU3lZYnZGTHRxdUZTRUNKK3REMWtqdjB6aEVSMElJSHZqMDJB?=
+ =?utf-8?B?VkpQQm1ZS0ZReGpIWlh6OGxNYUJRNWN5b25pblp3Q1JuSVV6RGRpdG11djl3?=
+ =?utf-8?B?TFo5eS9zZFJJY2huM0h5NnZoQ2VEaVdPbm1Rd2p2bms3Y0FpTDdLWFNBUUNn?=
+ =?utf-8?B?NXJUMXR5UTVYckFVQjRTU1MyZW45dlAyQUwyYytqSEpSUC9PTU5idUdPQm5n?=
+ =?utf-8?B?d0dnZ25XVnRYT1FpejdTVWRMSU1jZ0JYNFh6dHlLTmFvNzhacXpqdVU1eXoy?=
+ =?utf-8?B?SDl0SXJzS1ZHaHBQdmtpaW4yV3M0aDdjQ0RTSW9kbzNCMUJvZU1CQW9QU0JC?=
+ =?utf-8?B?VnYwY2FZR2s2UUMxOEthYTBybTdNa1hiV0dsbXJmYzY0VDhveFVQSVFxVmZO?=
+ =?utf-8?B?WnZDR20zODZmbUtrVGc1ZHI3M2Q5SjFpcE8xS2xZR0R6RS8wS3BrTFV2UW1H?=
+ =?utf-8?B?SEtJZWh3S3dmUXJwTUxiU1lIZ0tzR3VVdkVpS3dWTDh2SW5Scy9STkhxSDlD?=
+ =?utf-8?B?VWF2YjFreGlnVzFIT0hrREJXdWprdlBpV1R1MWhJdldJdTVCQ2NIRzVvMzdH?=
+ =?utf-8?B?SlRLc2dCK1M3RDk3NmlidHJTTWxOSHFaakJEWFNMc21LSzkyZC9LbytEOU16?=
+ =?utf-8?B?Z1VWc0REWHJrMzQ2c1hlUnFtL01WUVFZZElXQVBTWXdhTEtKL29veXZBQWZV?=
+ =?utf-8?B?ZmZQSWJJY2RVTUdPb3BmaVQ2WFFWYm1qKzFRQkRVd3JjUXIyVlRHTnU0dm05?=
+ =?utf-8?B?MEFMYjl0NktsKzdhN2k3N3ZDd0lZclVRaFZKbjI0QzE1VHZ5UEs3V2ZLUG9H?=
+ =?utf-8?B?U2JmSnFiaXpBb2JxQkNWTm9naVd1clRjaEhteHFCc0lhL2ljRUlJdTc4UTR6?=
+ =?utf-8?B?bFFwUVc0c3V5WFNtbGE0anZCbUtic0JTL0hKdmZwajBWRTZqM21NYkkwWGY2?=
+ =?utf-8?B?NnFwODF0VWhPQkkzQzRFVVN2T2Q3SGdNNGVWa2NQVzBCbDlGZ2VCNXk4d3Ni?=
+ =?utf-8?B?bUpDU2d3NmFsMTQ2WnpEbEtaK0VOWk1iemdxOTRmTXpFWG5qcHdHUT09?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ADIRuleOP-NewSCL: Rule Triggered
-X-Proofpoint-ORIG-GUID: z0tgKmiEePpg_dowAY_aI8d3iIGfILTP
-X-Proofpoint-GUID: z0tgKmiEePpg_dowAY_aI8d3iIGfILTP
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.874,Hydra:6.0.517,FMLib:17.11.64.514
- definitions=2022-06-10_02,2022-06-09_02,2022-02-23_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxscore=0
- malwarescore=0 mlxlogscore=768 lowpriorityscore=0 suspectscore=0
- bulkscore=0 adultscore=0 priorityscore=1501 clxscore=1015 spamscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2204290000 definitions=main-2206100032
-X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_LOW,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+X-OriginatorOrg: quicinc.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: BL0PR02MB4564.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8ce3e39b-d049-4a95-0e46-08da4ac43e2c
+X-MS-Exchange-CrossTenant-originalarrivaltime: 10 Jun 2022 09:33:14.3310
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 98e9ba89-e1a1-4e38-9007-8bdabc25de1d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: KIgczWWMYcOTUEAqUmE5df2sKLS+uThrJng1Or6r6T4HQf47Rh1mV4oIDTIXzOjqSBmvsMUGFwM+3i3XVFcYdPk5bV6U1LVQ3NaC8NjVeLw=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN0PR02MB8014
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_PASS,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Just cosmetics. No functional change intended...
-
-Signed-off-by: Nuno Sá <nuno.sa@analog.com>
----
- drivers/iio/inkern.c | 64 ++++++++++++++++++++++----------------------
- 1 file changed, 32 insertions(+), 32 deletions(-)
-
-diff --git a/drivers/iio/inkern.c b/drivers/iio/inkern.c
-index 7eb536560ded..526519cefcb9 100644
---- a/drivers/iio/inkern.c
-+++ b/drivers/iio/inkern.c
-@@ -45,13 +45,13 @@ int iio_map_array_register(struct iio_dev *indio_dev, struct iio_map *maps)
- 	int i = 0, ret = 0;
- 	struct iio_map_internal *mapi;
- 
--	if (maps == NULL)
-+	if (!maps)
- 		return 0;
- 
- 	mutex_lock(&iio_map_list_lock);
--	while (maps[i].consumer_dev_name != NULL) {
-+	while (!maps[i].consumer_dev_name) {
- 		mapi = kzalloc(sizeof(*mapi), GFP_KERNEL);
--		if (mapi == NULL) {
-+		if (!mapi) {
- 			ret = -ENOMEM;
- 			goto error_ret;
- 		}
-@@ -69,7 +69,6 @@ int iio_map_array_register(struct iio_dev *indio_dev, struct iio_map *maps)
- }
- EXPORT_SYMBOL_GPL(iio_map_array_register);
- 
--
- /*
-  * Remove all map entries associated with the given iio device
-  */
-@@ -163,7 +162,7 @@ static int __fwnode_iio_channel_get(struct iio_channel *channel,
- 
- 	idev = bus_find_device(&iio_bus_type, NULL, iiospec.fwnode,
- 			       iio_dev_node_match);
--	if (idev == NULL) {
-+	if (!idev) {
- 		fwnode_handle_put(iiospec.fwnode);
- 		return -EPROBE_DEFER;
- 	}
-@@ -196,7 +195,7 @@ static struct iio_channel *fwnode_iio_channel_get(struct fwnode_handle *fwnode,
- 		return ERR_PTR(-EINVAL);
- 
- 	channel = kzalloc(sizeof(*channel), GFP_KERNEL);
--	if (channel == NULL)
-+	if (!channel)
- 		return ERR_PTR(-ENOMEM);
- 
- 	err = __fwnode_iio_channel_get(channel, fwnode, index);
-@@ -293,7 +292,7 @@ static struct iio_channel *fwnode_iio_channel_get_all(struct device *dev)
- 
- 	/* NULL terminated array to save passing size */
- 	chans = kcalloc(nummaps + 1, sizeof(*chans), GFP_KERNEL);
--	if (chans == NULL)
-+	if (!chans)
- 		return ERR_PTR(-ENOMEM);
- 
- 	/* Search for FW matches */
-@@ -318,7 +317,7 @@ static struct iio_channel *iio_channel_get_sys(const char *name,
- 	struct iio_channel *channel;
- 	int err;
- 
--	if (name == NULL && channel_name == NULL)
-+	if (!name && !channel_name)
- 		return ERR_PTR(-ENODEV);
- 
- 	/* first find matching entry the channel map */
-@@ -333,11 +332,11 @@ static struct iio_channel *iio_channel_get_sys(const char *name,
- 		break;
- 	}
- 	mutex_unlock(&iio_map_list_lock);
--	if (c == NULL)
-+	if (!c)
- 		return ERR_PTR(-ENODEV);
- 
- 	channel = kzalloc(sizeof(*channel), GFP_KERNEL);
--	if (channel == NULL) {
-+	if (!channel) {
- 		err = -ENOMEM;
- 		goto error_no_mem;
- 	}
-@@ -349,7 +348,7 @@ static struct iio_channel *iio_channel_get_sys(const char *name,
- 			iio_chan_spec_from_name(channel->indio_dev,
- 						c->map->adc_channel_label);
- 
--		if (channel->channel == NULL) {
-+		if (!channel->channel) {
- 			err = -EINVAL;
- 			goto error_no_chan;
- 		}
-@@ -441,7 +440,7 @@ struct iio_channel *iio_channel_get_all(struct device *dev)
- 	int mapind = 0;
- 	int i, ret;
- 
--	if (dev == NULL)
-+	if (!dev)
- 		return ERR_PTR(-EINVAL);
- 
- 	chans = fwnode_iio_channel_get_all(dev);
-@@ -465,7 +464,7 @@ struct iio_channel *iio_channel_get_all(struct device *dev)
- 
- 	/* NULL terminated array to save passing size */
- 	chans = kcalloc(nummaps + 1, sizeof(*chans), GFP_KERNEL);
--	if (chans == NULL) {
-+	if (!chans) {
- 		ret = -ENOMEM;
- 		goto error_ret;
- 	}
-@@ -479,7 +478,7 @@ struct iio_channel *iio_channel_get_all(struct device *dev)
- 		chans[mapind].channel =
- 			iio_chan_spec_from_name(chans[mapind].indio_dev,
- 						c->map->adc_channel_label);
--		if (chans[mapind].channel == NULL) {
-+		if (!chans[mapind].channel) {
- 			ret = -EINVAL;
- 			goto error_free_chans;
- 		}
-@@ -541,14 +540,14 @@ struct iio_channel *devm_iio_channel_get_all(struct device *dev)
- EXPORT_SYMBOL_GPL(devm_iio_channel_get_all);
- 
- static int iio_channel_read(struct iio_channel *chan, int *val, int *val2,
--	enum iio_chan_info_enum info)
-+			    enum iio_chan_info_enum info)
- {
- 	int unused;
- 	int vals[INDIO_MAX_RAW_ELEMENTS];
- 	int ret;
- 	int val_len = 2;
- 
--	if (val2 == NULL)
-+	if (!val2)
- 		val2 = &unused;
- 
- 	if (!iio_channel_has_info(chan->channel, info))
-@@ -560,9 +559,10 @@ static int iio_channel_read(struct iio_channel *chan, int *val, int *val2,
- 					vals, &val_len, info);
- 		*val = vals[0];
- 		*val2 = vals[1];
--	} else
-+	} else {
- 		ret = chan->indio_dev->info->read_raw(chan->indio_dev,
- 					chan->channel, val, val2, info);
-+	}
- 
- 	return ret;
- }
-@@ -573,7 +573,7 @@ int iio_read_channel_raw(struct iio_channel *chan, int *val)
- 	int ret;
- 
- 	mutex_lock(&iio_dev_opaque->info_exist_lock);
--	if (chan->indio_dev->info == NULL) {
-+	if (!chan->indio_dev->info) {
- 		ret = -ENODEV;
- 		goto err_unlock;
- 	}
-@@ -592,7 +592,7 @@ int iio_read_channel_average_raw(struct iio_channel *chan, int *val)
- 	int ret;
- 
- 	mutex_lock(&iio_dev_opaque->info_exist_lock);
--	if (chan->indio_dev->info == NULL) {
-+	if (!chan->indio_dev->info) {
- 		ret = -ENODEV;
- 		goto err_unlock;
- 	}
-@@ -606,7 +606,8 @@ int iio_read_channel_average_raw(struct iio_channel *chan, int *val)
- EXPORT_SYMBOL_GPL(iio_read_channel_average_raw);
- 
- static int iio_convert_raw_to_processed_unlocked(struct iio_channel *chan,
--	int raw, int *processed, unsigned int scale)
-+						 int raw, int *processed,
-+						 unsigned int scale)
- {
- 	int scale_type, scale_val, scale_val2;
- 	int offset_type, offset_val, offset_val2;
-@@ -639,7 +640,7 @@ static int iio_convert_raw_to_processed_unlocked(struct iio_channel *chan,
- 	}
- 
- 	scale_type = iio_channel_read(chan, &scale_val, &scale_val2,
--					IIO_CHAN_INFO_SCALE);
-+				      IIO_CHAN_INFO_SCALE);
- 	if (scale_type < 0) {
- 		/*
- 		 * If no channel scaling is available apply consumer scale to
-@@ -684,19 +685,19 @@ static int iio_convert_raw_to_processed_unlocked(struct iio_channel *chan,
- }
- 
- int iio_convert_raw_to_processed(struct iio_channel *chan, int raw,
--	int *processed, unsigned int scale)
-+				 int *processed, unsigned int scale)
- {
- 	struct iio_dev_opaque *iio_dev_opaque = to_iio_dev_opaque(chan->indio_dev);
- 	int ret;
- 
- 	mutex_lock(&iio_dev_opaque->info_exist_lock);
--	if (chan->indio_dev->info == NULL) {
-+	if (!chan->indio_dev->info) {
- 		ret = -ENODEV;
- 		goto err_unlock;
- 	}
- 
- 	ret = iio_convert_raw_to_processed_unlocked(chan, raw, processed,
--							scale);
-+						    scale);
- err_unlock:
- 	mutex_unlock(&iio_dev_opaque->info_exist_lock);
- 
-@@ -711,7 +712,7 @@ int iio_read_channel_attribute(struct iio_channel *chan, int *val, int *val2,
- 	int ret;
- 
- 	mutex_lock(&iio_dev_opaque->info_exist_lock);
--	if (chan->indio_dev->info == NULL) {
-+	if (!chan->indio_dev->info) {
- 		ret = -ENODEV;
- 		goto err_unlock;
- 	}
-@@ -737,7 +738,7 @@ int iio_read_channel_processed_scale(struct iio_channel *chan, int *val,
- 	int ret;
- 
- 	mutex_lock(&iio_dev_opaque->info_exist_lock);
--	if (chan->indio_dev->info == NULL) {
-+	if (!chan->indio_dev->info) {
- 		ret = -ENODEV;
- 		goto err_unlock;
- 	}
-@@ -815,7 +816,7 @@ int iio_read_avail_channel_raw(struct iio_channel *chan,
- 	int type;
- 
- 	ret = iio_read_avail_channel_attribute(chan, vals, &type, length,
--					 IIO_CHAN_INFO_RAW);
-+					       IIO_CHAN_INFO_RAW);
- 
- 	if (ret >= 0 && type != IIO_VAL_INT)
- 		/* raw values are assumed to be IIO_VAL_INT */
-@@ -899,7 +900,7 @@ int iio_get_channel_type(struct iio_channel *chan, enum iio_chan_type *type)
- 	/* Need to verify underlying driver has not gone away */
- 
- 	mutex_lock(&iio_dev_opaque->info_exist_lock);
--	if (chan->indio_dev->info == NULL) {
-+	if (!chan->indio_dev->info) {
- 		ret = -ENODEV;
- 		goto err_unlock;
- 	}
-@@ -926,7 +927,7 @@ int iio_write_channel_attribute(struct iio_channel *chan, int val, int val2,
- 	int ret;
- 
- 	mutex_lock(&iio_dev_opaque->info_exist_lock);
--	if (chan->indio_dev->info == NULL) {
-+	if (!chan->indio_dev->info) {
- 		ret = -ENODEV;
- 		goto err_unlock;
- 	}
-@@ -960,9 +961,8 @@ unsigned int iio_get_channel_ext_info_count(struct iio_channel *chan)
- }
- EXPORT_SYMBOL_GPL(iio_get_channel_ext_info_count);
- 
--static const struct iio_chan_spec_ext_info *iio_lookup_ext_info(
--						const struct iio_channel *chan,
--						const char *attr)
-+static const struct iio_chan_spec_ext_info *
-+iio_lookup_ext_info(const struct iio_channel *chan, const char *attr)
- {
- 	const struct iio_chan_spec_ext_info *ext_info;
- 
--- 
-2.36.1
-
+SGksDQoNClJlLXNlbmRpbmcgKDJuZCBhdHRlbXB0KSBhcyBlbWFpbHMgYXJlIGJvdW5jaW5nLi4u
+DQoNCg0KPiA+DQo+ID4gQnV0IHRoZW4gb25jZSBhZ2Fpbiwgd2Ugd291bGQgbGlrZWx5IG5lZWQg
+MiBsb29wcyBiZWNhdXNlIHdoaWxlIHdlIGFyZQ0KPiA+IG9rIHdpdGggZ2l2aW5nIHVwIG9uIHNl
+YXJjaCBmb3IgYmVzdF9kaXYgb24gZmluZGluZyBzb21ldGhpbmcgd2l0aGluDQo+ID4gMiUgdG9s
+ZXJhbmNlLCB3ZSBtYXkgbm90IHdhbnQgdG8gZ2l2ZSB1cCBvbiBleGFjdCBtYXRjaCAoZnJlcSAl
+DQo+ID4gZGVzaXJlZF9jbGsgPT0gMCApDQo+IA0KPiBBaCwgaXQgdG9vayBtZSBhIHdoaWxlIHRv
+IHVuZGVyc3RhbmQgd2h5IHR3byBsb29wcy4gSXQncyBiZWNhdXNlIGluIG9uZSBjYXNlDQo+IHlv
+dSdyZSB0cnlpbmcgbXVsdGlwbGllcyBhbmQgaW4gdGhlIG90aGVyIHlvdSdyZSBidW1waW5nIHVw
+IHRvIHRoZSBuZXh0DQo+IGNsb3Nlc3QgY2xvY2sgcmF0ZS4gSSBkb24ndCB0aGluayB5b3UgcmVh
+bGx5IG5lZWQgdG8gZG8gdGhhdC4gSnVzdCB0ZXN0IHRoZSAocmF0ZSAtDQo+IDIlKSBhbmQgdGhl
+IHJhdGUuIEhvdyBhYm91dCB0aGlzIChvbmx5IGxpZ2h0bHkgdGVzdGVkKToNCj4gDQo+ICAgICBz
+ZXJfY2xrID0gMDsNCj4gICAgIG1heGRpdiA9IENMS19ESVZfTVNLID4+IENMS19ESVZfU0hGVDsN
+Cj4gICAgIGRpdiA9IDE7DQo+ICAgICB3aGlsZSAoZGl2IDwgbWF4ZGl2KSB7DQoNCg0KZGl2IDw9
+IG1heGRpdiA/DQoNCg0KPiAgICAgICAgIG11bHQgPSAodW5zaWduZWQgbG9uZyBsb25nKWRpdiAq
+IGRlc2lyZWRfY2xrOw0KPiAgICAgICAgIGlmIChtdWx0ICE9ICh1bnNpZ25lZCBsb25nKW11bHQp
+DQo+ICAgICAgICAgICAgIGJyZWFrOw0KPiANCj4gICAgICAgICB0d29fcGVyY2VudCA9IG11bHQg
+LyA1MDsNCj4gDQo+ICAgICAgICAgLyoNCj4gICAgICAgICAgKiBMb29wIHJlcXVlc3RpbmcgKGZy
+ZXEgLSAyJSkgYW5kIHBvc3NpYmx5IChmcmVxKS4NCj4gICAgICAgICAgKg0KPiAgICAgICAgICAq
+IFdlJ2xsIGtlZXAgdHJhY2sgb2YgdGhlIGxvd2VzdCBmcmVxIGluZXhhY3QgbWF0Y2ggd2UgZm91
+bmQNCj4gICAgICAgICAgKiBidXQgYWx3YXlzIHRyeSB0byBmaW5kIGEgcGVyZmVjdCBtYXRjaC4g
+Tk9URTogdGhpcyBhbGdvcml0aG0NCj4gICAgICAgICAgKiBjb3VsZCBtaXNzIGEgc2xpZ2h0bHkg
+YmV0dGVyIGZyZXEgaWYgdGhlcmUncyBtb3JlIHRoYW4gb25lDQo+ICAgICAgICAgICogZnJlcSBi
+ZXR3ZWVuIChmcmVxIC0gMiUpIGFuZCAoZnJlcSkgYnV0IChmcmVxKSBjYW4ndCBiZSBtYWRlDQo+
+ICAgICAgICAgICogZXhhY3RseSwgYnV0IHRoYXQncyBPSy4NCj4gICAgICAgICAgKg0KPiAgICAg
+ICAgICAqIFRoaXMgYWJzb2x1dGVseSByZWxpZXMgb24gdGhlIGZhY3QgdGhhdCB0aGUgUXVhbGNv
+bW0gY2xvY2sNCj4gICAgICAgICAgKiBkcml2ZXIgYWx3YXlzIHJvdW5kcyB1cC4NCj4gICAgICAg
+ICAgKi8NCj4gICAgICAgICB0ZXN0X2ZyZXEgPSBtdWx0IC0gdHdvX3BlcmNlbnQ7DQo+ICAgICAg
+ICAgd2hpbGUgKHRlc3RfZnJlcSA8PSBtdWx0KSB7DQo+ICAgICAgICAgICAgIGZyZXEgPSBjbGtf
+cm91bmRfcmF0ZShjbGssIHRlc3RfZnJlcSk7DQo+IA0KPiAgICAgICAgICAgICAvKg0KPiAgICAg
+ICAgICAgICAgKiBBIGRlYWQtb24gZnJlcSBpcyBhbiBpbnN0YS13aW4uIFRoaXMgaW1wbGljaXRs
+eQ0KPiAgICAgICAgICAgICAgKiBoYW5kbGVzIHdoZW4gImZyZXEgPT0gbXVsdCINCj4gICAgICAg
+ICAgICAgICovDQo+ICAgICAgICAgICAgIGlmICghKGZyZXEgJSBkZXNpcmVkX2NsaykpIHsNCj4g
+ICAgICAgICAgICAgICAgICpjbGtfZGl2ID0gZnJlcSAvIGRlc2lyZWRfY2xrOw0KPiAgICAgICAg
+ICAgICAgICAgcmV0dXJuIGZyZXE7DQo+ICAgICAgICAgICAgIH0NCj4gDQo+ICAgICAgICAgICAg
+IC8qDQo+ICAgICAgICAgICAgICAqIE9ubHkgdGltZSBjbG9jayBmcmFtZXdvcmsgZG9lc24ndCBy
+b3VuZCB1cCBpcyBpZg0KPiAgICAgICAgICAgICAgKiB3ZSdyZSBwYXN0IHRoZSBtYXggY2xvY2sg
+cmF0ZS4gV2UncmUgZG9uZSBzZWFyY2hpbmcNCj4gICAgICAgICAgICAgICogaWYgdGhhdCdzIHRo
+ZSBjYXNlLg0KPiAgICAgICAgICAgICAgKi8NCj4gICAgICAgICAgICAgaWYgKGZyZXEgPCB0ZXN0
+X2ZyZXEpDQo+ICAgICAgICAgICAgICAgICByZXR1cm4gc2VyX2NsazsNCj4gDQo+ICAgICAgICAg
+ICAgIC8qIFNhdmUgdGhlIGZpcnN0IChsb3dlc3QgZnJlcSkgd2l0aGluIDIlICovDQo+ICAgICAg
+ICAgICAgIGlmICghc2VyX2NsayAmJiBmcmVxIDw9IG11bHQgKyB0d29fcGVyY2VudCkgew0KPiAg
+ICAgICAgICAgICAgICAgc2VyX2NsayA9IGZyZXE7DQo+ICAgICAgICAgICAgICAgICAqY2xrX2Rp
+diA9IGRpdjsNCj4gICAgICAgICAgICAgfQ0KDQpNeSBsYXN0IGNvbmNlcm4gaXMgd2l0aCBzZWFy
+Y2ggaGFwcGVuaW5nIG9ubHkgd2l0aGluIDIlIHRvbGVyYW5jZS4NCkRvIHdlIGZhaWwgb3RoZXJ3
+aXNlPw0KDQpUaGlzIHJlYWwgY2FzZSBoYXMgYmVzdCB0b2xlcmFuY2Ugb2YgMS45JSBhbmQgc2Vl
+bXMgY2xvc2UuDQoNClsgICAxNy45NjM2NzJdIDIwMjIwNTMwIGRlc2lyZWRfY2xrLTUxMjAwMDAw
+DQpbICAgMjEuMTkzNTUwXSAyMDIyMDUzMCByZXR1cm5pbmcgc2VyX2Nsay01MjE3NDAwMCwgZGl2
+LTEsIGRpZmYtOTc0MDAwDQoNClBlcmhhcHMgd2UgY2FuIGZhbGxiYWNrIG9uIDFzdCBjbG9jayBy
+YXRlPw0KDQpUaGFuayB5b3UuDQoNCj4gDQo+ICAgICAgICAgICAgIC8qDQo+ICAgICAgICAgICAg
+ICAqIElmIHdlIGFscmVhZHkgcm91bmRlZCB1cCBwYXN0IG11bHQgdGhlbiB0aGlzIHdpbGwNCj4g
+ICAgICAgICAgICAgICogY2F1c2UgdGhlIGxvb3AgdG8gZXhpdC4gSWYgbm90IHRoZW4gdGhpcyB3
+aWxsIHJ1bg0KPiAgICAgICAgICAgICAgKiB0aGUgbG9vcCBhIHNlY29uZCB0aW1lIHdpdGggZXhh
+Y3RseSBtdWx0Lg0KPiAgICAgICAgICAgICAgKi8NCj4gICAgICAgICAgICAgdGVzdF9mcmVxID0g
+bWF4KGZyZXEgKyAxLCBtdWx0KTsNCj4gICAgICAgICB9DQo+IA0KPiAgICAgICAgIC8qDQo+ICAg
+ICAgICAgICogdGVzdF9mcmVxIHdpbGwgYWx3YXlzIGJlIGJpZ2dlciB0aGFuIG11bHQgYnkgYXQg
+bGVhc3QgMS4NCj4gICAgICAgICAgKiBUaGF0IG1lYW5zIHdlIGNhbiBnZXQgdGhlIG5leHQgZGl2
+aWRlciB3aXRoIGEgRElWX1JPVU5EX1VQLg0KPiAgICAgICAgICAqIFRoaXMgaGFzIHRoZSBhZHZh
+bnRhZ2Ugb2Ygc2tpcHBpbmcgYnkgYSB3aG9sZSBidW5jaCBvZiBkaXZzDQo+ICAgICAgICAgICog
+SWYgdGhlIGNsb2NrIGZyYW1ld29yayBhbHJlYWR5IGJ5cGFzc2VkIHRoZW0uDQo+ICAgICAgICAg
+ICovDQo+ICAgICAgICAgZGl2ID0gRElWX1JPVU5EX1VQKHRlc3RfZnJlcSwgZGVzaXJlZF9jbGsp
+Ow0KPiAgICAgICAgIH0NCj4gDQo+ICAgICByZXR1cm4gc2VyX2NsazsNCg==
