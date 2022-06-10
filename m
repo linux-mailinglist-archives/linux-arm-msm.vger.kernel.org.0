@@ -2,151 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2D302545DBD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jun 2022 09:46:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EB5B8545DDA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jun 2022 09:54:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346867AbiFJHqj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Jun 2022 03:46:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52906 "EHLO
+        id S243664AbiFJHyW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Jun 2022 03:54:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56016 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236577AbiFJHqi (ORCPT
+        with ESMTP id S1346776AbiFJHyU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Jun 2022 03:46:38 -0400
-Received: from relay01.th.seeweb.it (relay01.th.seeweb.it [5.144.164.162])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49D4813B2DB
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jun 2022 00:46:35 -0700 (PDT)
-Received: from SoMainline.org (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id F06A62055F;
-        Fri, 10 Jun 2022 09:46:33 +0200 (CEST)
-Date:   Fri, 10 Jun 2022 09:46:32 +0200
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rajeev Nandan <quic_rajeevny@quicinc.com>,
-        Vladimir Lypak <vladimir.lypak@gmail.com>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Jonathan Marek <jonathan@marek.ca>, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v2 03/11] clk: fixed-factor: Introduce
- *clk_hw_register_fixed_factor_parent_hw()
-Message-ID: <20220610074632.abtec5kulbclund4@SoMainline.org>
-Mail-Followup-To: Marijn Suijten <marijn.suijten@somainline.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rajeev Nandan <quic_rajeevny@quicinc.com>,
-        Vladimir Lypak <vladimir.lypak@gmail.com>,
-        Arnd Bergmann <arnd@arndb.de>, Jonathan Marek <jonathan@marek.ca>,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-References: <20220601220747.1145095-1-marijn.suijten@somainline.org>
- <20220601220747.1145095-4-marijn.suijten@somainline.org>
- <CAA8EJpomtbN0+ocD2pRbkYriUY4D9OnjgoFzL9qNHhPm3Uz5cQ@mail.gmail.com>
- <20220609221211.684C1C34114@smtp.kernel.org>
+        Fri, 10 Jun 2022 03:54:20 -0400
+Received: from szxga08-in.huawei.com (szxga08-in.huawei.com [45.249.212.255])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 486F320B7C5;
+        Fri, 10 Jun 2022 00:54:19 -0700 (PDT)
+Received: from canpemm500009.china.huawei.com (unknown [172.30.72.56])
+        by szxga08-in.huawei.com (SkyGuard) with ESMTP id 4LKCqF6pydz1GCWR;
+        Fri, 10 Jun 2022 15:52:25 +0800 (CST)
+Received: from localhost.localdomain (10.67.164.66) by
+ canpemm500009.china.huawei.com (7.192.105.203) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2375.24; Fri, 10 Jun 2022 15:54:17 +0800
+From:   Yicong Yang <yangyicong@hisilicon.com>
+To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
+        <rafael@kernel.org>, <viresh.kumar@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-pm@vger.kernel.org>
+CC:     <yangyicong@hisilicon.com>, <andriy.shevchenko@linux.intel.com>,
+        <daniel.lezcano@linaro.org>
+Subject: [PATCH] cpufreq: qcom-cpufreq-hw: use HZ_PER_KHZ macro in units.h
+Date:   Fri, 10 Jun 2022 15:53:09 +0800
+Message-ID: <20220610075309.59608-1-yangyicong@hisilicon.com>
+X-Mailer: git-send-email 2.31.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220609221211.684C1C34114@smtp.kernel.org>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 7BIT
+Content-Type:   text/plain; charset=US-ASCII
+X-Originating-IP: [10.67.164.66]
+X-ClientProxiedBy: dggems705-chm.china.huawei.com (10.3.19.182) To
+ canpemm500009.china.huawei.com (7.192.105.203)
+X-CFilter-Loop: Reflected
+X-Spam-Status: No, score=-4.0 required=5.0 tests=BAYES_00,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2022-06-09 15:12:09, Stephen Boyd wrote:
-> Quoting Dmitry Baryshkov (2022-06-02 03:20:19)
-> > On Thu, 2 Jun 2022 at 01:07, Marijn Suijten
-> > <marijn.suijten@somainline.org> wrote:
-> > > diff --git a/drivers/clk/clk-fixed-factor.c b/drivers/clk/clk-fixed-factor.c
-> > > index 54942d758ee6..fabb98d0cdb2 100644
-> > > --- a/drivers/clk/clk-fixed-factor.c
-> > > +++ b/drivers/clk/clk-fixed-factor.c
-> > > @@ -78,7 +78,8 @@ static void devm_clk_hw_register_fixed_factor_release(struct device *dev, void *
-> > >
-> > >  static struct clk_hw *
-> > >  __clk_hw_register_fixed_factor(struct device *dev, struct device_node *np,
-> > > -               const char *name, const char *parent_name, int index,
-> > > +               const char *name, const char *parent_name,
-> > > +               const struct clk_hw *parent_hw, int index,
-> > >                 unsigned long flags, unsigned int mult, unsigned int div,
-> > >                 bool devm)
-> > >  {
-> > > @@ -108,7 +109,9 @@ __clk_hw_register_fixed_factor(struct device *dev, struct device_node *np,
-> > >         init.name = name;
-> > >         init.ops = &clk_fixed_factor_ops;
-> > >         init.flags = flags;
-> > > -       if (parent_name)
-> > > +       if (parent_hw)
-> > > +               init.parent_hws = &parent_hw;
-> > > +       else if (parent_name)
-> > >                 init.parent_names = &parent_name;
-> > 
-> > If you change the order of if clauses, you won't have to introduce
-> > unnecessary changes.
-> 
-> Indeed, please do that.
+HZ macros has been centralized in units.h since [1]. Use it to avoid
+duplicated definition.
 
-The intent here was to prefer parent_hw over parent_name, but I later
-reordered the function arguments again to have parent_name before
-parent_hw; in-line with __clk_hw_register_divider.  Hence makes more
-sense to swap these around indeed.
+[1] commit e2c77032fcbe ("units: add the HZ macros")
 
-Besides, we don't expect more than one of these to be set anyway per
-design of this private function, that is only called by well-defined
-implementations below.
+Signed-off-by: Yicong Yang <yangyicong@hisilicon.com>
+---
+ drivers/cpufreq/qcom-cpufreq-hw.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-> > 
-> > >         else
-> > >                 init.parent_data = &pdata;
-> > > @@ -148,17 +151,50 @@ struct clk_hw *devm_clk_hw_register_fixed_factor_index(struct device *dev,
-> > >                 const char *name, unsigned int index, unsigned long flags,
-> > >                 unsigned int mult, unsigned int div)
-> > >  {
-> > > -       return __clk_hw_register_fixed_factor(dev, NULL, name, NULL, index,
-> > > -                                             flags, mult, div, true);
-> > > +       return __clk_hw_register_fixed_factor(dev, NULL, name, NULL, NULL,
-> > > +                                             index, flags, mult, div, true);
-> > 
-> > Here (and several times later) you are inserting an argument and then
-> > moving arguments to the next line. My slight preference would be to
-> > just insert the arg (and maybe break the line if it gets too long) w/o
-> > touching the next lines.
+diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
+index 0253731d6d25..7f118be969d3 100644
+--- a/drivers/cpufreq/qcom-cpufreq-hw.c
++++ b/drivers/cpufreq/qcom-cpufreq-hw.c
+@@ -15,6 +15,7 @@
+ #include <linux/pm_opp.h>
+ #include <linux/slab.h>
+ #include <linux/spinlock.h>
++#include <linux/units.h>
+ 
+ #define LUT_MAX_ENTRIES			40U
+ #define LUT_SRC				GENMASK(31, 30)
+@@ -26,8 +27,6 @@
+ 
+ #define GT_IRQ_STATUS			BIT(2)
+ 
+-#define HZ_PER_KHZ			1000
+-
+ struct qcom_cpufreq_soc_data {
+ 	u32 reg_enable;
+ 	u32 reg_domain_state;
+-- 
+2.24.0
 
-That'll definitely look odd, as we'll end up with index floating on a
-single line, all on its own.
-
-> I'd just add the argument at the end because when it is added in the
-> middle it makes the diff more difficult to read.
-
-How strong is this feeling, against keeping argument ordering consistent
-with other implementations of similar __clk_hw_register_* functions?
-
-- Marijn
