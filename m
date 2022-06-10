@@ -2,41 +2,44 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 174D6546BDA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jun 2022 19:47:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 31B97546BE5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jun 2022 19:54:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349884AbiFJRqx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Jun 2022 13:46:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59506 "EHLO
+        id S1347225AbiFJRyV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Jun 2022 13:54:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34430 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346290AbiFJRqx (ORCPT
+        with ESMTP id S1347189AbiFJRyT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Jun 2022 13:46:53 -0400
+        Fri, 10 Jun 2022 13:54:19 -0400
 Received: from mail-0201.mail-europe.com (mail-0201.mail-europe.com [51.77.79.158])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70929562D9
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jun 2022 10:46:51 -0700 (PDT)
-Date:   Fri, 10 Jun 2022 17:46:40 +0000
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40EC218315A;
+        Fri, 10 Jun 2022 10:54:18 -0700 (PDT)
+Date:   Fri, 10 Jun 2022 17:54:09 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-        s=protonmail3; t=1654883207; x=1655142407;
-        bh=QufpaSI3FHp/11KdpTOr1o3pvr2wl7OD5zTBc5ErmDA=;
+        s=protonmail3; t=1654883653; x=1655142853;
+        bh=nxoTndTUQ2vonEkTmNIcxLEtrwo1HFnunt341zyx2GM=;
         h=Date:To:From:Cc:Reply-To:Subject:Message-ID:Feedback-ID:From:To:
          Cc:Date:Subject:Reply-To:Feedback-ID:Message-ID;
-        b=BsGipUK/6NVeglk+eg57RrwxO6H8v8CasloCswNXxf4J4pfKq1aI7lHfD8Au5eL5s
-         NKbdo0XAF3hZuvha5xnjVYH8j4JOl6Nx2AzSBTI8UkuC4pCQ8BzxxN+GPmzEYhuVvq
-         ojZtCj9H3kQaSyEMY6Ikgl38xwerdDGme0dJcp8TVfdlGxqP5bXZLYWkp8VTVnemSG
-         7fBy5Tz7qYPlQHToaDAIWA+T0uaOXE7V/14MA9iXs+b58hAyUGipxzr+QhE5E4ZE6Y
-         IWCUnJqmQZtr5cs4C9kMXnAu3jdWntf/kVjzvt61Jv0dmEuDmKjsUnkxSmVhRS4ZWW
-         yr0ak7xzIMR5A==
+        b=lQWp4mBy1fGSJ5VPzSTpIoso/bPCVN6uxsPe4rNR2LJ+Xzu3hcbvtxVYRW0ITiPp8
+         ypH0aXO9FAfL5nCp+sxQEDVPNLdozXGK/Sg6sFNiX3m3PIPB6pEewUwfl/MMpLgWGZ
+         92Ya4mSlHIKn6q1IQbf3t5rZwwvtUWECd8/iUepWegOMLblDiIn5KFqPwK6haH5N+X
+         RjPIzv0qkKH7o1H8a9JJF6zZv931kIAETj6ZLh6yi4U3Rt0uIbFYIV0rjjAsNxUA1F
+         tfUDQQEBA+KphbSQ2zkL0LvvSe+yDcnNBb1yUFN2di2fSr6yeGk2WjNgrfTcjANKLT
+         WTMkf2oyTcp3g==
 To:     devicetree@vger.kernel.org
 From:   "Lin, Meng-Bo" <linmengbo0689@protonmail.com>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, stephan@gerhold.net,
-        nikita@trvn.ru
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Nikita Travkin <nikita@trvn.ru>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
 Reply-To: "Lin, Meng-Bo" <linmengbo0689@protonmail.com>
-Subject: [PATCH] arm64: dts: qcom: msm8916-samsung-a2015: Add touchscreen pinctrl
-Message-ID: <20220610172018.101498-1-linmengbo0689@protonmail.com>
+Subject: [RESEND PATCH] arm64: dts: qcom: msm8916-samsung-a2015: Add touchscreen pinctrl
+Message-ID: <20220610175332.104154-1-linmengbo0689@protonmail.com>
 Feedback-ID: 40467236:user:proton
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -52,8 +55,8 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-A3, A5 and most of the MSM8916 Samsung uses GPIO pin 13 for touchscreen
-interrupts. Add it to common dtsi.
+A3, A5 and most of the Samsung phones with MSM8916 SoC use GPIO pin 13 for
+touchscreen interrupts. Add touchscreen pinctrl to a2015 common dtsi.
 
 Signed-off-by: Lin, Meng-Bo <linmengbo0689@protonmail.com>
 ---
