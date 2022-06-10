@@ -2,66 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D2E2E546687
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jun 2022 14:25:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D61E9546723
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jun 2022 15:12:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344970AbiFJMYY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Jun 2022 08:24:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35354 "EHLO
+        id S241501AbiFJNMo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Jun 2022 09:12:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47514 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348837AbiFJMYX (ORCPT
+        with ESMTP id S233672AbiFJNMn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Jun 2022 08:24:23 -0400
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12CB62D252F;
-        Fri, 10 Jun 2022 05:24:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1654863861; x=1686399861;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version;
-  bh=a5cYxsrZs6g/lSIx7BnXUD9zgtOAf/FWEjYm01yd8Mc=;
-  b=o1neMeCD5qmuQ42X7yDRq05zb11zgFNvpcQDz3xGfeIzVSKQhUQsIVSl
-   TlEzHmWZfMbKQAneVX3P32rMnS7aB+bzbjyQGyuSdEtCzxkw+hqTxGhDf
-   d/+LYKxMsEqzyAI3MEuihoEuBjYNoKQx7NZWob1qt1CU0+qPh2cS1wSJY
-   o=;
-Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 10 Jun 2022 05:24:20 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Jun 2022 05:24:20 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Fri, 10 Jun 2022 05:24:20 -0700
-Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Fri, 10 Jun 2022 05:24:14 -0700
-From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
-        <lgirdwood@gmail.com>, <broonie@kernel.org>, <robh+dt@kernel.org>,
-        <quic_plai@quicinc.com>, <bgoswami@quicinc.com>, <perex@perex.cz>,
-        <tiwai@suse.com>, <srinivas.kandagatla@linaro.org>,
-        <quic_rohkumar@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <alsa-devel@alsa-project.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <swboyd@chromium.org>,
-        <judyhsiao@chromium.org>, <vkoul@kernel.org>
-CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Subject: [PATCH v5 2/2] ASoC: qcom: soundwire: Enable software clock gating requirement flag
-Date:   Fri, 10 Jun 2022 17:53:35 +0530
-Message-ID: <1654863815-3970-3-git-send-email-quic_srivasam@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1654863815-3970-1-git-send-email-quic_srivasam@quicinc.com>
-References: <1654863815-3970-1-git-send-email-quic_srivasam@quicinc.com>
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        Fri, 10 Jun 2022 09:12:43 -0400
+Received: from mail-io1-f51.google.com (mail-io1-f51.google.com [209.85.166.51])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01E2D101D3;
+        Fri, 10 Jun 2022 06:12:39 -0700 (PDT)
+Received: by mail-io1-f51.google.com with SMTP id p128so5780972iof.1;
+        Fri, 10 Jun 2022 06:12:38 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
+         :message-id;
+        bh=P6vSzHEUiako1y5dB9/gimIULLRnQi4GWLiXOFtbXkE=;
+        b=twpd+Lk+KaANN5pWa0hN6nfSl/GoGPi7BEL2MmT47i5VBklltcOhkiF3VwWL+lMPMj
+         mLlzx3r0XhhsApxNIFfY7CfKPRTkiuCg+GRPhgnVG1F8FIPgbxtjW7NXwllb7Z/V0JCH
+         2IPWB7BO5wgbX1J0mvTNnEXOqy3DEYlTOdXEIsyR4r3j121zKa0RIvH0CIJiNEUhRtxB
+         7iuYJ8YsUxRszFfU94Yd5Xce2nddGJmIo5Y5ZYVJuIPalFfD7HBbMPkqyGb4XwwjGy6V
+         L6KWG+2MfzZTiAtyvfCEmtOWxDA9b11M5cikmAOR8aSdb99UyWG4O5mYLHKtr1nTGLgS
+         9OAA==
+X-Gm-Message-State: AOAM530iuXiLJJrV3E74rsxxOXxdpy3/y+kshA+V83j2KEC44JeOeBrx
+        H+QqZZdmvp0WaT+4xD4HOTA+ict9Mg==
+X-Google-Smtp-Source: ABdhPJz5wGx6Ou1JgXidNNZx2owmPU+xXR1z5MNKoC9tJp1MevK60+xBnAQnpCQ3en4ELcTh0ns5wQ==
+X-Received: by 2002:a5e:c30b:0:b0:668:825c:8556 with SMTP id a11-20020a5ec30b000000b00668825c8556mr21667029iok.68.1654866758196;
+        Fri, 10 Jun 2022 06:12:38 -0700 (PDT)
+Received: from robh.at.kernel.org ([64.188.179.251])
+        by smtp.gmail.com with ESMTPSA id y14-20020a927d0e000000b002d53be43069sm6628542ilc.64.2022.06.10.06.12.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 10 Jun 2022 06:12:37 -0700 (PDT)
+Received: (nullmailer pid 1529402 invoked by uid 1000);
+        Fri, 10 Jun 2022 13:12:35 -0000
+From:   Rob Herring <robh@kernel.org>
+To:     Mao Jinlong <quic_jinlmao@quicinc.com>
+Cc:     linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        Tao Zhang <quic_taozha@quicinc.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Hao Zhang <quic_hazha@quicinc.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        coresight@lists.linaro.org, Konrad Dybcio <konradybcio@gmail.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Leo Yan <leo.yan@linaro.org>
+In-Reply-To: <20220610032144.5173-4-quic_jinlmao@quicinc.com>
+References: <20220610032144.5173-1-quic_jinlmao@quicinc.com> <20220610032144.5173-4-quic_jinlmao@quicinc.com>
+Subject: Re: [PATCH v9 03/10] dt-bindings: arm: Adds CoreSight TPDM hardware definitions
+Date:   Fri, 10 Jun 2022 07:12:35 -0600
+Message-Id: <1654866755.742985.1529401.nullmailer@robh.at.kernel.org>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=no
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -69,41 +75,42 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable software clock gating flag in private data for SC7280
-based platforms, which are soundwire 1.6.0 version based.
+On Fri, 10 Jun 2022 11:21:37 +0800, Mao Jinlong wrote:
+> Adds new coresight-tpdm.yaml file describing the bindings required
+> to define tpdm in the device trees.
+> 
+> Acked-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+> Reviewed-by: Mike Leach <mike.leach@linaro.org>
+> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
+> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
+> ---
+>  .../bindings/arm/qcom,coresight-tpdm.yaml     | 92 +++++++++++++++++++
+>  MAINTAINERS                                   |  1 +
+>  2 files changed, 93 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/arm/qcom,coresight-tpdm.yaml
+> 
 
-Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
----
- drivers/soundwire/qcom.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
-diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
-index eb3c66e..441fbe8 100644
---- a/drivers/soundwire/qcom.c
-+++ b/drivers/soundwire/qcom.c
-@@ -194,6 +194,12 @@ static const struct qcom_swrm_data swrm_v1_5_data = {
- 	.default_cols = 16,
- };
- 
-+static const struct qcom_swrm_data swrm_v1_6_data = {
-+	.default_rows = 50,
-+	.default_cols = 16,
-+	.sw_clk_gate_required = true,
-+};
-+
- #define to_qcom_sdw(b)	container_of(b, struct qcom_swrm_ctrl, bus)
- 
- static int qcom_swrm_ahb_reg_read(struct qcom_swrm_ctrl *ctrl, int reg,
-@@ -1564,7 +1570,7 @@ static const struct dev_pm_ops swrm_dev_pm_ops = {
- static const struct of_device_id qcom_swrm_of_match[] = {
- 	{ .compatible = "qcom,soundwire-v1.3.0", .data = &swrm_v1_3_data },
- 	{ .compatible = "qcom,soundwire-v1.5.1", .data = &swrm_v1_5_data },
--	{ .compatible = "qcom,soundwire-v1.6.0", .data = &swrm_v1_5_data },
-+	{ .compatible = "qcom,soundwire-v1.6.0", .data = &swrm_v1_6_data },
- 	{/* sentinel */},
- };
- 
--- 
-2.7.4
+yamllint warnings/errors:
+
+dtschema/dtc warnings/errors:
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/arm/qcom,coresight-tpdm.example.dtb: tpdm@684c000: reg: [[0, 109363200], [0, 4096]] is too long
+	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/arm/qcom,coresight-tpdm.yaml
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.ozlabs.org/patch/
+
+This check can fail if there are any dependencies. The base for a patch
+series is generally the most recent rc1.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit.
 
