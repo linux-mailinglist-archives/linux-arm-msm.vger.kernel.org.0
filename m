@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B5AEF546CEA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jun 2022 21:09:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7CDE9546CEB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jun 2022 21:09:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347854AbiFJTJd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Jun 2022 15:09:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58274 "EHLO
+        id S1348196AbiFJTJe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Jun 2022 15:09:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58370 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348196AbiFJTJc (ORCPT
+        with ESMTP id S1347158AbiFJTJd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Jun 2022 15:09:32 -0400
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 377EEBAE
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jun 2022 12:09:31 -0700 (PDT)
-Received: by mail-lj1-x234.google.com with SMTP id d18so140016ljc.4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jun 2022 12:09:31 -0700 (PDT)
+        Fri, 10 Jun 2022 15:09:33 -0400
+Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A078421A7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jun 2022 12:09:32 -0700 (PDT)
+Received: by mail-lj1-x232.google.com with SMTP id g25so149667ljm.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jun 2022 12:09:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=01bj+k2iK46i8ygWClSrCFjTLx488NH70cSKsBIKTsg=;
-        b=e2UYcv7lC0jZz+Wigj6FNk1yThV/KB1KLaVVjLjyM+YOg8FsAGBF7KPSxASPLIy8cm
-         UxmcpYP0PeJ5I9x5xdlgmX/wDSneUlY053PwKo/g91oyJnM/tlL6mzxDCND49SfnM4WM
-         2EKcBQZa/RZrhLT7rBqn/WXsmMHvqPXUZ0iXaJxsh6D0ERC9i+sxUZQOW1dGxcENluBZ
-         2PQ28CXz/mj/a0eYrYWgda6MSkIkr5xNj2zNSxgZWK2IyQ9hOwRhtVV1ph5G+kjSrhdB
-         webI1/D+Z7ecQk4fcPq2tevTdW+cVDVvbOuzLjenNwNKQbXGLoYHMgjZ+A8NNSMziGVA
-         x3qQ==
+        bh=aJkt2UvzC/fuSbaAFzAgmcuGnHsumZ1LtWfxE2c+EXo=;
+        b=IqVo/yDeLrrY6oVxiUm6d7ssqUGieE86BefvLu0kajhUEPSV5bGzJFyZ2jgJyQF0X6
+         NE/WH/n6OiTaIKbHbNhYOqAPlkzENyzhKLi3lmSGcEqLdZgGjwK5PFHg3/oHnbrIcyP7
+         l+dnSAC11IPBinbsqT1PqgE7bntf0gp9h3VwdnvAPusMqBEjaA/+AJrxhv7sPO++2ESv
+         fXeelBj7fJkCgK1qMVddo38utMbKOYEfehbXJgABa8f2KsNpa05Tfco9v4w3JfdptobO
+         CaXR+lxMPNpc60BygT4qZzcxjmTjgEyMQJ2U2dd7rjs2angfzCnTOnXct387m6Hd763F
+         ONcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=01bj+k2iK46i8ygWClSrCFjTLx488NH70cSKsBIKTsg=;
-        b=OiC72XOFNCS6nNzO8dNlSqIMHGDWcGqCf4VI7u5Z5B6hcPMSEs+dPGQdPW5zBiVrOk
-         LpJdDr/hYc1Y6rEMTkBnFmV5Of0I6I1ry3oq5NC5UglFyENpVhvRREliQg7k+9E1f9sc
-         f147JrzyVS4RG9m7rItsMjoCJ1ctIDlkavV9pCh5/nOe6yvKuePjjOE0uyDBwM//Dnzb
-         1pf9iE1liXSe7SZG++bxEq7hvNPeLEnMdt1jWPRLSkN22cU6nLDGxEwlMl46/n8PnX9J
-         wY6zL0k48td0CZXYyIPL1P7CnGxeAg79ZwL7mvtUKHNQ8TfDKStHmiKWp94ZG4UiBeFO
-         oxGQ==
-X-Gm-Message-State: AOAM533E+jYF1TISJa2PA02wvQgLHwTvcWhajPQsHWaPn1v9c1wEQ87b
-        yHmgHCeSFlReMfrWMEnk+qLVZA==
-X-Google-Smtp-Source: ABdhPJwOfc8XsZXdVD6QUYDj3rblILAvfam/8wo18Ug1btVrQE079zdGPlnq58qSzQa40Lb0HXg/Zg==
-X-Received: by 2002:a2e:9893:0:b0:255:951f:9694 with SMTP id b19-20020a2e9893000000b00255951f9694mr15655945ljj.283.1654888169533;
-        Fri, 10 Jun 2022 12:09:29 -0700 (PDT)
+        bh=aJkt2UvzC/fuSbaAFzAgmcuGnHsumZ1LtWfxE2c+EXo=;
+        b=dyYgH6X7jZafpaUCHGBMs/BTI8yI9RkaXQqzZL/HiE1uOuI6tCgfPnSxKJnrG/pjaH
+         r9gU948GOkH9BjW/z4UY9xxpufzgi9yLOHdCKvhzMFFvrk0WMTQLGWNK3q/4Zw2z3JJg
+         JLJLyNyGEcZuJHPM4RtNjdxWueaC3iJsFvkZIJjO0zV17ni13qDCEEZg4YrLV/8zTbeC
+         LSoWMJ5gfBJutJhPOFFXXKB3QsZQPsKxqxi7BdFQTiNVMb8XcCNNuMxfE63VCkNh4BkR
+         +lZ+c9uxNO1gg0mHyhdTObaQvfex5MCn6vXH59euFWCeGuJUxhGb+RUJ7t9GZGj7HqMz
+         LQAg==
+X-Gm-Message-State: AOAM533qn9MN2KMe8Mq0QVCNPTIymSIgAfc1ulS/JWz1Mk7INoIP1o8z
+        5NJeTV5bTIYqXp6GkrOg6vXl0g==
+X-Google-Smtp-Source: ABdhPJwZXCgHdoBZUEhhs9rJ9ZeOcJ7aq1u8FFnVcVxdDXoVFkmJBktg11yAVRSz5hDopgj+y9Zv/g==
+X-Received: by 2002:a2e:9283:0:b0:253:e175:dd84 with SMTP id d3-20020a2e9283000000b00253e175dd84mr56469384ljh.221.1654888171024;
+        Fri, 10 Jun 2022 12:09:31 -0700 (PDT)
 Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id h2-20020a2e9002000000b00253e1833e8bsm26614ljg.117.2022.06.10.12.09.27
+        by smtp.gmail.com with ESMTPSA id h2-20020a2e9002000000b00253e1833e8bsm26614ljg.117.2022.06.10.12.09.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Jun 2022 12:09:27 -0700 (PDT)
+        Fri, 10 Jun 2022 12:09:30 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -56,9 +56,9 @@ To:     Andy Gross <agross@kernel.org>,
 Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
         linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
         Johan Hovold <johan@kernel.org>
-Subject: [RFC PATCH 01/28] phy: qcom-qmp: fix the QSERDES_V5_COM_CMN_MODE register
-Date:   Fri, 10 Jun 2022 22:08:58 +0300
-Message-Id: <20220610190925.3670081-2-dmitry.baryshkov@linaro.org>
+Subject: [RFC PATCH 02/28] phy: qcom-qmp-ufs: remove spurious register write in the msm8996 table
+Date:   Fri, 10 Jun 2022 22:08:59 +0300
+Message-Id: <20220610190925.3670081-3-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220610190925.3670081-1-dmitry.baryshkov@linaro.org>
 References: <20220610190925.3670081-1-dmitry.baryshkov@linaro.org>
@@ -74,30 +74,28 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Change QSERDES_V5_COM_CMN_MODE to be defined to 0x1a0 rather than 0x1a4.
-The only user of this register name (sm8450_qmp_gen4x2_pcie_serdes_tbl)
-should use the 0x1a0 register, as stated in the downstream dtsi tree.
+The msm8996_ufs_serdes_tbl table contains write to
+QPHY_POWER_DOWN_CONTROL, however this register doesn't belong to the
+QSERDES register space. Also the PHY power down is already handled in
+the qcom_qmp_phy_ufs_com_init(). Drop this entry completely.
 
-Fixes: 2c91bf6bf290 ("phy: qcom-qmp: Add SM8450 PCIe1 PHY support")
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/phy/qualcomm/phy-qcom-qmp.h | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/phy/qualcomm/phy-qcom-qmp-ufs.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.h b/drivers/phy/qualcomm/phy-qcom-qmp.h
-index f4ee5884c076..581f09c71667 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp.h
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp.h
-@@ -1116,7 +1116,8 @@
- #define QSERDES_V5_COM_CORE_CLK_EN			0x174
- #define QSERDES_V5_COM_CMN_CONFIG			0x17c
- #define QSERDES_V5_COM_CMN_MISC1			0x19c
--#define QSERDES_V5_COM_CMN_MODE				0x1a4
-+#define QSERDES_V5_COM_CMN_MODE				0x1a0
-+#define QSERDES_V5_COM_CMN_MODE_CONTD			0x1a4
- #define QSERDES_V5_COM_VCO_DC_LEVEL_CTRL		0x1a8
- #define QSERDES_V5_COM_BIN_VCOCAL_CMP_CODE1_MODE0	0x1ac
- #define QSERDES_V5_COM_BIN_VCOCAL_CMP_CODE2_MODE0	0x1b0
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+index a2526068232b..83330f7ec64c 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+@@ -163,7 +163,6 @@ static const unsigned int sm8150_ufsphy_regs_layout[QPHY_LAYOUT_SIZE] = {
+ };
+ 
+ static const struct qmp_phy_init_tbl msm8996_ufs_serdes_tbl[] = {
+-	QMP_PHY_INIT_CFG(QPHY_POWER_DOWN_CONTROL, 0x01),
+ 	QMP_PHY_INIT_CFG(QSERDES_COM_CMN_CONFIG, 0x0e),
+ 	QMP_PHY_INIT_CFG(QSERDES_COM_SYSCLK_EN_SEL, 0xd7),
+ 	QMP_PHY_INIT_CFG(QSERDES_COM_CLK_SELECT, 0x30),
 -- 
 2.35.1
 
