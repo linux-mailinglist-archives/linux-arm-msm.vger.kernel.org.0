@@ -2,118 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 562B1547165
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Jun 2022 04:33:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 422E05471A0
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Jun 2022 05:26:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349026AbiFKCd1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Jun 2022 22:33:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43186 "EHLO
+        id S1348741AbiFKD0R (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Jun 2022 23:26:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33964 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349068AbiFKCdY (ORCPT
+        with ESMTP id S1347238AbiFKD0Q (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Jun 2022 22:33:24 -0400
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6221674C8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jun 2022 19:33:17 -0700 (PDT)
-Received: by mail-ed1-x52b.google.com with SMTP id o10so1044074edi.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jun 2022 19:33:17 -0700 (PDT)
+        Fri, 10 Jun 2022 23:26:16 -0400
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A75EA0D32;
+        Fri, 10 Jun 2022 20:26:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=rgKkPquDB/3ylB22sdoq44O3nuMRqOGPmfYPJEM3DpI=;
-        b=JsXVqmPM/FghNi+FuyecZKJimRfQRZRaZMN7LbU4AElduixKN8TVkmhpZTWnrsGkbZ
-         5LwE/p8/n+cIXvQ1YTcLTi0yyURcD/DMLBUnB+eqSpwlWIAygkMHM4b3P17Zp5erCg7D
-         knTgcyr8j5ARmG7z3CGlckVUGoumxDAZyb+n8=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=rgKkPquDB/3ylB22sdoq44O3nuMRqOGPmfYPJEM3DpI=;
-        b=tGKpkQDdpW6ijZ+yDAV+1TMlq8pOMqHiaOvJWDDuQo9zTZQGAHeXiUO0eJvMgcASdL
-         jREsMDK4H2A+PLhbgwWKK5BSXTWd5/k3WDu0cQ/W9R8CU9M7fjO7Pfz7SY9/nNGUnnNC
-         RUKHikG2pD37+GRYRDuPIi1u5sJ1dqpvn2HUvChIPiBuu1BRAfG/ZY0TU2247CCVkyZm
-         rEV1mNuy0g0128IsO1Q6vksU8XuW1yqIC1WMykzkWHfIQR95lgnm4y4q5bfJlJ5qERRy
-         Fsv6E9aQOC7bU4eOzf2X825EGIu/M6QQzxkELd0URtsP1tCzAveUb7GgQOCMTfOLsZy5
-         NSbw==
-X-Gm-Message-State: AOAM530wMEOBWD0vX/TDimlrcgrR9dvhqc3uYoPZ7qSGrvgpZubKutAj
-        4aYWVnZO+CUjxF7PlLNlaBnbVirdoBM+9jhMBIivWA==
-X-Google-Smtp-Source: ABdhPJzFbgEeXrjhdaEFlL5CPKYiFgrRM2XGTpISMDDKOxh3YJg+nd70yb1Qcu1fnLsZwhWAweXqTRUn04uTYMjQVNU=
-X-Received: by 2002:aa7:c604:0:b0:42d:cffb:f4dc with SMTP id
- h4-20020aa7c604000000b0042dcffbf4dcmr55022482edq.270.1654914796079; Fri, 10
- Jun 2022 19:33:16 -0700 (PDT)
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1654917975; x=1686453975;
+  h=message-id:date:mime-version:subject:to:references:from:
+   in-reply-to:content-transfer-encoding;
+  bh=HVSSV8LGOw92Phwdzd7AfIW3E8dYU6iGxh+I+4+CoQc=;
+  b=xB1Tp52CkFVKJifT8LI8lxzYJdPPUPXhQm5Me0xEnfnKLrrSUTlsuXPO
+   geK/AfePyyRFZhoO2joTjshrFJwR99mYE+7OBjZ7/ZkdWpgvMapciu2Cc
+   oAOiwPh6J07dQ3Vd5LF6o2zM05N85fLMHlGFLrLu77Y67qh+XJ/M9m6Na
+   s=;
+Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 10 Jun 2022 20:26:14 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Jun 2022 20:26:14 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Fri, 10 Jun 2022 20:26:13 -0700
+Received: from [10.216.8.205] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Fri, 10 Jun
+ 2022 20:26:06 -0700
+Message-ID: <ae46345f-cb39-bfc2-16d9-70b5729eee6c@quicinc.com>
+Date:   Sat, 11 Jun 2022 08:56:03 +0530
 MIME-Version: 1.0
-References: <20220608142723.103523089@infradead.org> <20220608144517.444659212@infradead.org>
- <YqG6URbihTNCk9YR@alley> <YqHFHB6qqv5wiR8t@worktop.programming.kicks-ass.net>
- <CA+_sPaoJGrXhNPCs2dKf2J7u07y1xYrRFZBUtkKwzK9GqcHSuQ@mail.gmail.com> <YqHvXFdIJfvUDI6e@alley>
-In-Reply-To: <YqHvXFdIJfvUDI6e@alley>
-From:   Sergey Senozhatsky <senozhatsky@chromium.org>
-Date:   Sat, 11 Jun 2022 11:33:05 +0900
-Message-ID: <CA+_sPaq1ez7jah0bibAdeA__Yp92K_VA7E-NZ9knoUmOW9itJg@mail.gmail.com>
-Subject: Re: [PATCH 24/36] printk: Remove trace_.*_rcuidle() usage
-To:     Petr Mladek <pmladek@suse.com>
-Cc:     Peter Zijlstra <peterz@infradead.org>, ink@jurassic.park.msu.ru,
-        mattst88@gmail.com, vgupta@kernel.org, linux@armlinux.org.uk,
-        ulli.kroll@googlemail.com, linus.walleij@linaro.org,
-        shawnguo@kernel.org, Sascha Hauer <s.hauer@pengutronix.de>,
-        kernel@pengutronix.de, festevam@gmail.com, linux-imx@nxp.com,
-        tony@atomide.com, khilman@kernel.org, catalin.marinas@arm.com,
-        will@kernel.org, guoren@kernel.org, bcain@quicinc.com,
-        chenhuacai@kernel.org, kernel@xen0n.name, geert@linux-m68k.org,
-        sammy@sammy.net, monstr@monstr.eu, tsbogend@alpha.franken.de,
-        dinguyen@kernel.org, jonas@southpole.se,
-        stefan.kristiansson@saunalahti.fi, shorne@gmail.com,
-        James.Bottomley@hansenpartnership.com, deller@gmx.de,
-        mpe@ellerman.id.au, benh@kernel.crashing.org, paulus@samba.org,
-        paul.walmsley@sifive.com, palmer@dabbelt.com,
-        aou@eecs.berkeley.edu, hca@linux.ibm.com, gor@linux.ibm.com,
-        agordeev@linux.ibm.com, borntraeger@linux.ibm.com,
-        svens@linux.ibm.com, ysato@users.sourceforge.jp, dalias@libc.org,
-        davem@davemloft.net, richard@nod.at,
-        anton.ivanov@cambridgegreys.com, johannes@sipsolutions.net,
-        tglx@linutronix.de, mingo@redhat.com, bp@alien8.de,
-        dave.hansen@linux.intel.com, x86@kernel.org, hpa@zytor.com,
-        acme@kernel.org, mark.rutland@arm.com,
-        alexander.shishkin@linux.intel.com, jolsa@kernel.org,
-        namhyung@kernel.org, jgross@suse.com, srivatsa@csail.mit.edu,
-        amakhalov@vmware.com, pv-drivers@vmware.com,
-        boris.ostrovsky@oracle.com, chris@zankel.net, jcmvbkbc@gmail.com,
-        rafael@kernel.org, lenb@kernel.org, pavel@ucw.cz,
-        gregkh@linuxfoundation.org, mturquette@baylibre.com,
-        sboyd@kernel.org, daniel.lezcano@linaro.org, lpieralisi@kernel.org,
-        sudeep.holla@arm.com, agross@kernel.org,
-        bjorn.andersson@linaro.org, anup@brainfault.org,
-        thierry.reding@gmail.com, jonathanh@nvidia.com,
-        jacob.jun.pan@linux.intel.com, Arnd Bergmann <arnd@arndb.de>,
-        yury.norov@gmail.com, andriy.shevchenko@linux.intel.com,
-        linux@rasmusvillemoes.dk, rostedt@goodmis.org,
-        john.ogness@linutronix.de, paulmck@kernel.org, frederic@kernel.org,
-        quic_neeraju@quicinc.com, josh@joshtriplett.org,
-        mathieu.desnoyers@efficios.com, jiangshanlai@gmail.com,
-        joel@joelfernandes.org, juri.lelli@redhat.com,
-        vincent.guittot@linaro.org, dietmar.eggemann@arm.com,
-        bsegall@google.com, mgorman@suse.de, bristot@redhat.com,
-        vschneid@redhat.com, jpoimboe@kernel.org,
-        linux-alpha@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-snps-arc@lists.infradead.org,
-        linux-arm-kernel@lists.infradead.org, linux-omap@vger.kernel.org,
-        linux-csky@vger.kernel.org, linux-hexagon@vger.kernel.org,
-        linux-ia64@vger.kernel.org, linux-m68k@lists.linux-m68k.org,
-        linux-mips@vger.kernel.org, openrisc@lists.librecores.org,
-        linux-parisc@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
-        linux-riscv@lists.infradead.org, linux-s390@vger.kernel.org,
-        linux-sh@vger.kernel.org, sparclinux@vger.kernel.org,
-        linux-um@lists.infradead.org, linux-perf-users@vger.kernel.org,
-        virtualization@lists.linux-foundation.org,
-        xen-devel@lists.xenproject.org, linux-xtensa@linux-xtensa.org,
-        linux-acpi@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-tegra@vger.kernel.org, linux-arch@vger.kernel.org,
-        rcu@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.1
+Subject: Re: [PATCH v3 1/2] dt-bindings: pinctrl: qcom: sc7280: Add boolean
+ param for ADSP bypass platforms
+Content-Language: en-US
+To:     Stephen Boyd <swboyd@chromium.org>,
+        Linus Walleij <linus.walleij@linaro.org>, <agross@kernel.org>,
+        <alsa-devel@alsa-project.org>, <bgoswami@quicinc.com>,
+        <bjorn.andersson@linaro.org>, <broonie@kernel.org>,
+        <devicetree@vger.kernel.org>, <judyhsiao@chromium.org>,
+        <lgirdwood@gmail.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-gpio@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <perex@perex.cz>, <quic_plai@quicinc.com>,
+        <quic_rohkumar@quicinc.com>, <robh+dt@kernel.org>,
+        <srinivas.kandagatla@linaro.org>, <tiwai@suse.com>
+References: <1654872335-4993-1-git-send-email-quic_srivasam@quicinc.com>
+ <1654872335-4993-2-git-send-email-quic_srivasam@quicinc.com>
+ <CAE-0n53NdTwAO4DY0x7Fy9h4eRVR-3iKnGfqfZ-ggyghfsC9UA@mail.gmail.com>
+From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Organization: Qualcomm
+In-Reply-To: <CAE-0n53NdTwAO4DY0x7Fy9h4eRVR-3iKnGfqfZ-ggyghfsC9UA@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-5.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -121,31 +77,43 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jun 9, 2022 at 10:02 PM Petr Mladek <pmladek@suse.com> wrote:
+
+On 6/11/2022 1:34 AM, Stephen Boyd wrote:
+Thanks for Your time Stephen!!!
+> Quoting Srinivasa Rao Mandadapu (2022-06-10 07:45:34)
+>> Add boolean param qcom,adsp-bypass-mode to support adsp bypassed sc7280
+>> platforms. Which is required to make clock voting as optional for ADSP
+>> bypass platforms.
+>>
+>> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+>> ---
+>>   .../bindings/pinctrl/qcom,sc7280-lpass-lpi-pinctrl.yaml          | 9 ++++++++-
+>>   1 file changed, 8 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sc7280-lpass-lpi-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sc7280-lpass-lpi-pinctrl.yaml
+>> index d32ee32..ea9920c 100644
+>> --- a/Documentation/devicetree/bindings/pinctrl/qcom,sc7280-lpass-lpi-pinctrl.yaml
+>> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,sc7280-lpass-lpi-pinctrl.yaml
+>> @@ -17,7 +17,14 @@ description: |
+>>
+>>   properties:
+>>     compatible:
+>> -    const: qcom,sc7280-lpass-lpi-pinctrl
+>> +    enum:
+>> +      - qcom,sc7280-lpass-lpi-pinctrl
+> Drop this part.
+Okay. Will revert this change.
 >
-> On Thu 2022-06-09 20:30:58, Sergey Senozhatsky wrote:
-> > My emails are getting rejected... Let me try web-interface
->
-> Bad day for mail sending. I have problems as well ;-)
+>> +
+>> +  qcom,adsp-bypass-mode:
+>> +    description:
+>> +      Tells pin controllers want to make clocks optional for ADSP bypass
+>> +      targets.
+> How about "ADSP is in bypass mode"?
 
-For me the problem is still there and apparently it's an "too many
-recipients" error.
+You mean, description like below?
 
-> > I'm somewhat curious whether we can actually remove that trace event.
->
-> Good question.
->
-> Well, I think that it might be useful. It allows to see trace and
-> printk messages together.
+qcom,adsp-bypass-mode:
+     description:
+	ADSP is in bypass mode.
 
-Fair enough. Seems that back in 2011 people were pretty happy with it
-https://lore.kernel.org/all/1322161388.5366.54.camel@jlt3.sipsolutions.net/T/#m7bf6416f469119372191f22a6ecf653c5f7331d2
-
-but... reportedly, one of the folks who Ack-ed it (*cough cough*
-PeterZ) has never used it.
-
-> It was ugly when it was in the console code. The new location
-> in vprintk_store() allows to have it even "correctly" sorted
-> (timestamp) against other tracing messages.
-
-That's true.
