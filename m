@@ -2,84 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 43FE05474BA
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Jun 2022 15:07:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2D5685474EC
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Jun 2022 15:50:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233413AbiFKNH3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 11 Jun 2022 09:07:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55102 "EHLO
+        id S233328AbiFKNuU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 11 Jun 2022 09:50:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39448 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233574AbiFKNH1 (ORCPT
+        with ESMTP id S232552AbiFKNuT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 11 Jun 2022 09:07:27 -0400
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4816205D5
-        for <linux-arm-msm@vger.kernel.org>; Sat, 11 Jun 2022 06:07:24 -0700 (PDT)
-Received: by mail-ej1-x629.google.com with SMTP id gl15so2843359ejb.4
-        for <linux-arm-msm@vger.kernel.org>; Sat, 11 Jun 2022 06:07:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=t3xj8kLCMLC4vvamPsMzSiJ2niC/wuVI+iAvhlePD7o=;
-        b=uX6WgOkG9xeUEUQuPGDSp3BweCStVxvXtlyk0B3FBwtjym/rD9MMlngFbaQABDAmgi
-         9CSCdNhrnd1RvoBLmRErP9H4SmS9R2t+7PynV0tQO0+H3ZLNpi2d9Z+8c0RlW0wopeVA
-         evrNF74tBijpawDoPa5EitKkHmeYE1lt29RO1qjFRaUtoJju9Y3nQKdxDsX2qWaf2XWM
-         YyEURFz2dnwagNa6YWFubYUv/mV5XThSB2iagI/5Qcyt1EjmjgI0YP3nbIsaTsUWGXOE
-         BWq8yyADYYhqDG15Y2s+JkPzgiL/gyxOIbMTV3pytHNXsWDxlvOlRSZcLdL6dklRQZWm
-         N4IQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=t3xj8kLCMLC4vvamPsMzSiJ2niC/wuVI+iAvhlePD7o=;
-        b=o4kocSpoEpWjzWR3kbX0Q8nXQUmV6zsSnd+W4mPWMubyMbe2rASUjRGD0vC+pjzrjv
-         WZnRRDX9fm+HQxgKeISj9DSgLIfhjT62NGzAupQJao1hE40OruSA7CWARGNEKmWMJvEK
-         s8Aj4MdFcO9sQkQAujW2UixWmymNL0aYykqGLu9/QvEvUue8OfXtvJIzk1qqMTtH0bIO
-         nFbcyBlqlfLupIa/C5RKvpuQSFpzdNh0nwk5xcE/5BJv7Btcpf8iuqoJEoraGBP2T3cp
-         TI+s8fMoWpE3Mh4bI3MDWW+S9DdgZzWkB0pl3fE/p9BmlUyocvoYWz7iTRtXK0CyOqem
-         16hg==
-X-Gm-Message-State: AOAM532L5gwkUi4pD10g6SJooXqpz08p/dd4+6ZdxMfrGs6onTePPnu8
-        a/UTPtxzfMFLxD/CD4nvKGQ18A==
-X-Google-Smtp-Source: ABdhPJxukTgXWKlc1cHbTbw+Z5q7M3h2i8LlNSYby1pDuVGRC9L+CC2PcCGZvNHYqZrpem+lL2G+Qw==
-X-Received: by 2002:a17:906:f84e:b0:70e:6ec8:cc4a with SMTP id ks14-20020a170906f84e00b0070e6ec8cc4amr37889671ejb.694.1654952843286;
-        Sat, 11 Jun 2022 06:07:23 -0700 (PDT)
-Received: from [192.168.0.203] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id 2-20020a170906318200b007121361d54asm1033191ejy.25.2022.06.11.06.07.21
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 11 Jun 2022 06:07:22 -0700 (PDT)
-Message-ID: <89d6735a-61eb-08cf-8d4a-6fb1b2d457ad@linaro.org>
-Date:   Sat, 11 Jun 2022 15:07:21 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: [PATCH 1/4] dt-bindings: arm: qcom: document qcom,msm-id and
- qcom,board-id
-Content-Language: en-US
-To:     Rob Herring <robh@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        Sat, 11 Jun 2022 09:50:19 -0400
+Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D9745E140;
+        Sat, 11 Jun 2022 06:50:11 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by sin.source.kernel.org (Postfix) with ESMTPS id 4801CCE02C5;
+        Sat, 11 Jun 2022 13:50:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E49FDC34116;
+        Sat, 11 Jun 2022 13:49:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1654955407;
+        bh=axWYZgHjU+vWL39otfQyFw7n1cGND5pHaeO608w9aDQ=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=kXEFWai8vIb/IcKUCUsY5h6FQ5HgBYwoNoO6x0MjQtdX9+M+TxIqv68GybTf+JOgW
+         q/rV4SV3/m1/STeXQ+UhMBbZQgylp8pVkzRVphpH0I9ytGjY804Yv+Hfj7kFzrY8FN
+         dQ5Bsv9xQ4YGPIVB0zHbP6oKxuv28f0GR5JQljdn7j5Hm/k4wwQwu/0bq5LIzb7kGO
+         qiRF8DBvDKq57IzKjPeCW9Uc/oQWQ/I3eyGpG4r9iA19/4Xzgt4xaW5KPrZqH+YdYX
+         CvRdaHxByHiYYFDF3o0LpHQcmqIK+hK/B8HUt9XKFV7g3A47bKyk80WnlHX4RfshFk
+         IyGi7XrE4Zc2A==
+Date:   Sat, 11 Jun 2022 14:59:05 +0100
+From:   Jonathan Cameron <jic23@kernel.org>
+To:     Nuno =?UTF-8?B?U8Oh?= <nuno.sa@analog.com>
+Cc:     <linux-imx@nxp.com>, <linux-renesas-soc@vger.kernel.org>,
+        <linux-mips@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <chrome-platform@lists.linux.dev>,
+        Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+        <linux-mediatek@lists.infradead.org>,
+        <linux-stm32@st-md-mailman.stormreply.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-iio@vger.kernel.org>,
+        <openbmc@lists.ozlabs.org>, Cai Huoqing <cai.huoqing@linux.dev>,
+        Benjamin Fair <benjaminfair@google.com>,
+        Jishnu Prakash <quic_jprakash@quicinc.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Amit Kucheria <amitk@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Michael Hennerich <Michael.Hennerich@analog.com>,
+        Haibo Chen <haibo.chen@nxp.com>,
+        Benson Leung <bleung@chromium.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Christophe Branchereau <cbranchereau@gmail.com>,
+        Patrick Venture <venture@google.com>,
+        Arnd Bergmann <arnd@arndb.de>, Nancy Yuen <yuenn@google.com>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Gwendal Grignou <gwendal@chromium.org>,
+        Saravanan Sekar <sravanhome@gmail.com>,
+        Tali Perry <tali.perry1@gmail.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Paul Cercueil <paul@crapouillou.net>,
+        Thara Gopinath <thara.gopinath@linaro.org>,
+        Avi Fishman <avifishman70@gmail.com>,
+        Lorenzo Bianconi <lorenzo@kernel.org>,
+        Claudiu Beznea <claudiu.beznea@microchip.com>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Andy Shevchenko <andy.shevchenko@gmail.com>,
+        Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Tomer Maimon <tmaimon77@gmail.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Stephen Boyd <sboyd@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Amit Pundir <amit.pundir@linaro.org>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Kumar Gala <galak@codeaurora.org>
-References: <20220529202629.47588-1-krzysztof.kozlowski@linaro.org>
- <20220529202629.47588-2-krzysztof.kozlowski@linaro.org>
- <20220605150747.GA3465286-robh@kernel.org>
- <54015d41-d4eb-12ae-5bd1-00d2c3cf7814@linaro.org>
- <20220610163343.GA1787330-robh@kernel.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220610163343.GA1787330-robh@kernel.org>
+        Nicolas Ferre <nicolas.ferre@microchip.com>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Guenter Roeck <groeck@chromium.org>,
+        Fabio Estevam <festevam@gmail.com>,
+        Olivier Moysan <olivier.moysan@foss.st.com>,
+        Eugen Hristev <eugen.hristev@microchip.com>,
+        Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: Re: [PATCH 01/34] iio: adc: ad7606: explicitly add proper header
+ files
+Message-ID: <20220611145905.55e9b074@jic23-huawei>
+In-Reply-To: <20220610084545.547700-2-nuno.sa@analog.com>
+References: <20220610084545.547700-1-nuno.sa@analog.com>
+        <20220610084545.547700-2-nuno.sa@analog.com>
+X-Mailer: Claws Mail 4.1.0 (GTK 3.24.34; x86_64-pc-linux-gnu)
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-8.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -88,84 +104,44 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10/06/2022 18:33, Rob Herring wrote:
-> On Tue, Jun 07, 2022 at 01:15:51PM +0200, Krzysztof Kozlowski wrote:
->> On 05/06/2022 17:07, Rob Herring wrote:
->>> On Sun, May 29, 2022 at 10:26:26PM +0200, Krzysztof Kozlowski wrote:
->>>> The top level qcom,msm-id and qcom,board-id properties are utilized by
->>>> bootloaders on Qualcomm MSM platforms to determine which device tree
->>>> should be used and passed to the kernel.
->>>>
->>>> The commit b32e592d3c28 ("devicetree: bindings: Document qcom board
->>>> compatible format") from 2015 was a consensus during discussion about
->>>> upstreaming qcom,msm-id and qcom,board-id fields.  There are however still
->>>> problems with that consensus:
->>>> 1. It was reached 7 years ago but it turned out its implementation did
->>>>    not reach all possible products.
->>>>
->>>> 2. Initially additional tool (dtbTool) was needed for parsing these
->>>>    fields to create a QCDT image consisting of multiple DTBs, later the
->>>>    bootloaders were improved and they use these qcom,msm-id and
->>>>    qcom,board-id properties directly.
->>>>
->>>> 3. Extracting relevant information from the board compatible requires
->>>>    this additional tool (dtbTool), which makes the build process more
->>>>    complicated and not easily reproducible (DTBs are modified after the
->>>>    kernel build).
->>>>
->>>> 4. Some versions of Qualcomm bootloaders expect these properties even
->>>>    when booting with a single DTB.  The community is stuck with these
->>>>    bootloaders thus they require properties in the DTBs.
->>>>
->>>> Since several upstreamed Qualcomm SoC-based boards require these
->>>> properties to properly boot and the properties are reportedly used by
->>>> bootloaders, document them.
->>>
->>> My primary issue here is accepting this will be an endorsement for 
->>> other vendors doing something similar. I'm not against an ID 
->>> property(ies) in the root node, but would rather see something common 
->>> if we do anything.
->>
->> Hi Rob,
->>
->> A more common approach was merged back in 2015 - encoding this ID
->> information in the board compatibles. If I understood previous
->> discussion correctly, this common method was later used by Qualcomm DTB
->> post-processing tool. At least for some of the cases.
->>
->> Other cases (several Qualcomm boards from different vendors) still use
->> these ID properties. It even turns out they use it differently between
->> vendors (e.g. Xiaomi vs OnePlus).
->>
->> Important arguments for documenting these properties:
->> 1. These ID properties are already on released boards where changing
->> bootloader is non-trivial or even not possible. It will not be possible
->> to remove these properties, without seriously affecting the community
->> working with them.
-> 
-> Accepting things because they are already in use is also not a path we 
-> want to go down. If it's the color of the bike shed, then fine.
-> 
->> 2. According to Konrad [1] (second paragraph), newer chipsets (starting
->> with sm8350 released in 2021) do not use these properties. These newer
->> DTS do not have them.
->>
->> Considering 1+2 above, maybe let's document these properties as
->> compatible? Would that solve your point of "endorsement for other vendors"?
-> 
-> What do you mean? Only allow them for certain root compatible strings? I 
-> suppose that would be okay by me. It would also be useful documentation 
-> of where they are needed.
+On Fri, 10 Jun 2022 10:45:12 +0200
+Nuno S=C3=A1 <nuno.sa@analog.com> wrote:
 
-Bah, I wrote something else than I had in mind. So one more try:
+> Do not trust the fact that iio.h includes of.h which in turn includes
+> all the headers we are relying on.
+>=20
+> The ultimate goal is to actually drop of.h from iio.h.
+>=20
+> Signed-off-by: Nuno S=C3=A1 <nuno.sa@analog.com>
+Hi Nuno,
 
-Considering 1+2 above, maybe let's document these properties as
-*deprecated*? Would that solve your point of "endorsement for other
-vendors"?
+Not sure how far I'll get through the series, but to try and
+reduce the noise / traffic for any future versions I'm going to
+pick up as many of these precursor patches as possible.
 
-However the idea to restrict them per-compatible, is also nice. Although
-I cannot guarantee the list will not grow for older SoCs.
+Applied to the togreg branch of iio.git (which just got rebased
+on v5.19-rc1) and pushed out as testing for 0-day to take a quick
+look and see if we missed anything.
+
+Thanks,
+
+Jonathan
 
 
-Best regards,
-Krzysztof
+> ---
+>  drivers/iio/adc/ad7606.c | 1 +
+>  1 file changed, 1 insertion(+)
+>=20
+> diff --git a/drivers/iio/adc/ad7606.c b/drivers/iio/adc/ad7606.c
+> index 3b193dc26438..ba24f99523e0 100644
+> --- a/drivers/iio/adc/ad7606.c
+> +++ b/drivers/iio/adc/ad7606.c
+> @@ -12,6 +12,7 @@
+>  #include <linux/interrupt.h>
+>  #include <linux/kernel.h>
+>  #include <linux/module.h>
+> +#include <linux/property.h>
+>  #include <linux/regulator/consumer.h>
+>  #include <linux/sched.h>
+>  #include <linux/slab.h>
+
