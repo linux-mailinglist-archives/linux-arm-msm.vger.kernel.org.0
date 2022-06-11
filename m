@@ -2,74 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DAC7D547719
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Jun 2022 20:19:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B7810547762
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Jun 2022 21:58:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229909AbiFKSTg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 11 Jun 2022 14:19:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50680 "EHLO
+        id S231451AbiFKT6K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 11 Jun 2022 15:58:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41922 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229864AbiFKSTf (ORCPT
+        with ESMTP id S231432AbiFKT6I (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 11 Jun 2022 14:19:35 -0400
-Received: from mail-oa1-x2b.google.com (mail-oa1-x2b.google.com [IPv6:2001:4860:4864:20::2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A4A7634D
-        for <linux-arm-msm@vger.kernel.org>; Sat, 11 Jun 2022 11:19:34 -0700 (PDT)
-Received: by mail-oa1-x2b.google.com with SMTP id 586e51a60fabf-fe32122311so3247108fac.7
-        for <linux-arm-msm@vger.kernel.org>; Sat, 11 Jun 2022 11:19:34 -0700 (PDT)
+        Sat, 11 Jun 2022 15:58:08 -0400
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8B5B369C4
+        for <linux-arm-msm@vger.kernel.org>; Sat, 11 Jun 2022 12:58:01 -0700 (PDT)
+Received: by mail-lj1-x22c.google.com with SMTP id j20so2392037ljg.8
+        for <linux-arm-msm@vger.kernel.org>; Sat, 11 Jun 2022 12:58:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kali.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :references:from:in-reply-to:content-transfer-encoding;
-        bh=r17snX+1CJhT3VmJw3mp5dS1V2P55fF3SOw7ALhy79o=;
-        b=Wm0Buxc1kpff5ZqSS5cNUYXQv33z8vgTxHCWjEm264FoGRHl7IufZbtu6B7zYx2cGa
-         r5L6ypdpMXTZfVJpyUYBiuMpkJD6gLQ6j2YApWr9uY9fBlbgyLhF2L+2CR3OO5UpiRWP
-         PcxZiX7SlnyyFrG/aqyNQuYlWDS8x6PQ5s5cA4GCSIOpWiUrQte6G5mC8Q0Yq1aG0o2C
-         PnBYnHbvco8hrrqjLURKvWb6kc7BDcxbSvJ5ClCgwsk+Zkf/g9V/gRaag0lbXxWmqyaP
-         VduAC8DpVUI7P5PLcBdTXj9AF1s0o+M7WKVwqV1XRzM3W+zM7biTsTvFWndHMtM3ijYp
-         5Kaw==
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=oxQkwpPSC0y6PSBnoCHGL4044465zqiVx70IXoXpvOc=;
+        b=BHkKobmasFZUBwncc9LygpAPBRmbKMJOq3yO/P8De5qhIRgAOZgUPRaJ+wFyzFAGaz
+         NpSJYJLa/f5h4etHmJe5dy92Di1ZF1fWOdOrbckf67s7wpYN3gyQQThSEB2wMFfm4zX+
+         RP1z9RUvbI+CAcx2psfP5l0p4YU1p1NP4OkE4eswC9k3wz7wtA42nq4lbUk8NTVogHhl
+         3yYHIdzkHfRxZdt6mniJOHr3waqXHkZuMjGYiL3GAr9/uALlUqPQyTZDn4HTXwwd0Njd
+         AlmxFA+Zw4BEM63KkHT2Tf/We3UUqYpNJnfx/rsrxq33Q2FR/gC8VtXl8lsRQZ8LfWx5
+         L2Og==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:references:from:in-reply-to
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=r17snX+1CJhT3VmJw3mp5dS1V2P55fF3SOw7ALhy79o=;
-        b=RcSewW/SJ7tyw2rpjlh/MXin/relyvPSOki4Mly68ozBrb5EUgYuP23QEKVk6w82Xb
-         FEIh1hBmEMKQIzLKkXMnrwI1qw5xPuzQJD589bDgK0+pWxBoRIPH4elG1C0ucjum8vcu
-         vc2Dg70iSq9wEqoua/p5SY/zi9SpujhdCq1LOhmrhCIrSTnEwvOgyXikUGxDj/1dgOzO
-         SDnCj5fYCeDcWTNyZJtD4GaUjlQcqcO5c5Jm+BepmQr0WRT4qIgCE559FJru4KlvSpXF
-         9zH5H+7wgQzcze7K7slJ+fC50fZCilm+I0terzRVj0g7LyBittsAaS+TQ10my4HJPyKr
-         Dm5w==
-X-Gm-Message-State: AOAM531sGGh4aqV9wwgz567AX30BbxcYIJVXRna/ZcA32EA/YH7o7TUd
-        GCh59S8XOYFZfOKLUHg0PGixaw==
-X-Google-Smtp-Source: ABdhPJw9wW0v+7X7Ti52yfdwpcIcu2d7tm+laTtRoHNn9hqddgAfa+6is/cZbU1XYjRlUedi2U3EjA==
-X-Received: by 2002:a05:6870:e2cc:b0:f5:dca0:95dc with SMTP id w12-20020a056870e2cc00b000f5dca095dcmr3235200oad.160.1654971573965;
-        Sat, 11 Jun 2022 11:19:33 -0700 (PDT)
-Received: from [192.168.11.16] (cpe-173-173-107-246.satx.res.rr.com. [173.173.107.246])
-        by smtp.gmail.com with ESMTPSA id bx36-20020a0568081b2400b00325cda1ffa6sm1209993oib.37.2022.06.11.11.19.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 11 Jun 2022 11:19:30 -0700 (PDT)
-Message-ID: <03923830-c3ae-6ef8-890a-361341c18e95@kali.org>
-Date:   Sat, 11 Jun 2022 13:19:27 -0500
+        bh=oxQkwpPSC0y6PSBnoCHGL4044465zqiVx70IXoXpvOc=;
+        b=rL+kD0SmsggH6PBJPEmqoMo0yY7UuMz/LiFgy7hebrM1Ro+k5Wf3uGkTZvdFVRZZr5
+         QkWxzEgkoFL3vg93nUpaGDycNDtAmUjXfDwtGSK9qZLJxt7Y8KbKZQQeRLG4fMaQw60R
+         t4P2pWxMkP+EK0LeA9GJC29a2lXPs5ZsHvGot+hGoGepH24eXPIzqvB9eFt7hLri7FRK
+         IGIxbrwbMbJ6+HP/lDuGL0HKEN5pMg75olKJGJnhUNxtkvGDmSZ8vB75444P9IA8tPlq
+         XJZfXrvsie2VM7PRSrCn7h9GVf1s8jAjU8peTBicH7/SCqGk2j97P9Ti3XYQEnoirbe6
+         meZA==
+X-Gm-Message-State: AOAM530aWO0ZhqUtKVi6ij/fXOkPwNJHc3SF2cHIWZ7AoQ0rBIf7S7Ol
+        09ydYQqnsIGq3BDO6R8saZ9aTw==
+X-Google-Smtp-Source: ABdhPJwcAibQ8M+9PY44AHNLQKkTKnNNepX/fDokdOIeO0ZAKvSmcH3oc9JG/OaBl8CiQrgcVHYE3Q==
+X-Received: by 2002:a2e:968a:0:b0:258:e311:ca01 with SMTP id q10-20020a2e968a000000b00258e311ca01mr6274999lji.337.1654977480161;
+        Sat, 11 Jun 2022 12:58:00 -0700 (PDT)
+Received: from localhost.localdomain (78-107-206-185.broadband.corbina.ru. [78.107.206.185])
+        by smtp.googlemail.com with ESMTPSA id v30-20020a056512049e00b00479526185a0sm364948lfq.118.2022.06.11.12.57.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 11 Jun 2022 12:57:59 -0700 (PDT)
+From:   Andrey Konovalov <andrey.konovalov@linaro.org>
+To:     bjorn.andersson@linaro.org, agross@kernel.org
+Cc:     robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        vinod.koul@linaro.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Andrey Konovalov <andrey.konovalov@linaro.org>
+Subject: [PATCH] arm64: dts: qcom: qcs404: fix default pinctrl settings for blsp1_spi1
+Date:   Sat, 11 Jun 2022 22:57:13 +0300
+Message-Id: <20220611195713.131597-1-andrey.konovalov@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.10.0
-Subject: Re: [PATCH] dmaengine: qcom: bam_dma: fix runtime PM underflow
-Content-Language: en-US
-To:     Caleb Connolly <caleb.connolly@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20220609195043.1544625-1-caleb.connolly@linaro.org>
-From:   Steev Klimaszewski <steev@kali.org>
-In-Reply-To: <20220609195043.1544625-1-caleb.connolly@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -78,87 +70,56 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Caleb,
+The current settings refer to "blsp_spi1" function which isn't defined.
+For this reason an attempt to enable blsp1_spi1 interface results in
+the probe failure below:
 
-On 6/9/22 2:50 PM, Caleb Connolly wrote:
-> When PM runtime is disabled, pm_runtime_get() isn't called, but
-> pm_runtime_put() still is. Fix this by creating a matching wrapper
-> on pm_runtime_put_autosuspend().
->
-> Fixes: dbad41e7bb5f ("dmaengine: qcom: bam_dma: check if the runtime pm enabled")
-> Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
-> ---
->   drivers/dma/qcom/bam_dma.c | 18 +++++++++++++-----
->   1 file changed, 13 insertions(+), 5 deletions(-)
->
-> diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
-> index 87f6ca1541cf..a36dedee262e 100644
-> --- a/drivers/dma/qcom/bam_dma.c
-> +++ b/drivers/dma/qcom/bam_dma.c
-> @@ -566,6 +566,14 @@ static int bam_pm_runtime_get_sync(struct device *dev)
->   	return 0;
->   }
->   
-> +static int bam_pm_runtime_put_autosuspend(struct device *dev)
-> +{
-> +	if (pm_runtime_enabled(dev))
-> +		return pm_runtime_put_autosuspend(dev);
-> +
-> +	return 0;
-> +}
-> +
->   /**
->    * bam_free_chan - Frees dma resources associated with specific channel
->    * @chan: specified channel
-> @@ -617,7 +625,7 @@ static void bam_free_chan(struct dma_chan *chan)
->   
->   err:
->   	pm_runtime_mark_last_busy(bdev->dev);
-> -	pm_runtime_put_autosuspend(bdev->dev);
-> +	bam_pm_runtime_put_autosuspend(bdev->dev);
->   }
->   
->   /**
-> @@ -793,7 +801,7 @@ static int bam_pause(struct dma_chan *chan)
->   	bchan->paused = 1;
->   	spin_unlock_irqrestore(&bchan->vc.lock, flag);
->   	pm_runtime_mark_last_busy(bdev->dev);
-> -	pm_runtime_put_autosuspend(bdev->dev);
-> +	bam_pm_runtime_put_autosuspend(bdev->dev);
->   
->   	return 0;
->   }
-> @@ -819,7 +827,7 @@ static int bam_resume(struct dma_chan *chan)
->   	bchan->paused = 0;
->   	spin_unlock_irqrestore(&bchan->vc.lock, flag);
->   	pm_runtime_mark_last_busy(bdev->dev);
-> -	pm_runtime_put_autosuspend(bdev->dev);
-> +	bam_pm_runtime_put_autosuspend(bdev->dev);
->   
->   	return 0;
->   }
-> @@ -936,7 +944,7 @@ static irqreturn_t bam_dma_irq(int irq, void *data)
->   	}
->   
->   	pm_runtime_mark_last_busy(bdev->dev);
-> -	pm_runtime_put_autosuspend(bdev->dev);
-> +	bam_pm_runtime_put_autosuspend(bdev->dev);
->   
->   	return IRQ_HANDLED;
->   }
-> @@ -1111,7 +1119,7 @@ static void bam_start_dma(struct bam_chan *bchan)
->   			bam_addr(bdev, bchan->id, BAM_P_EVNT_REG));
->   
->   	pm_runtime_mark_last_busy(bdev->dev);
-> -	pm_runtime_put_autosuspend(bdev->dev);
-> +	bam_pm_runtime_put_autosuspend(bdev->dev);
->   }
->   
->   /**
+[    3.492900] qcs404-pinctrl 1000000.pinctrl: invalid function blsp_spi1 in map table
+[    3.502460] qcs404-pinctrl 1000000.pinctrl: invalid function blsp_spi1 in map table
+[    3.517725] qcs404-pinctrl 1000000.pinctrl: invalid function blsp_spi1 in map table
+[    3.532998] qcs404-pinctrl 1000000.pinctrl: invalid function blsp_spi1 in map table
+[    3.548277] spi_qup: probe of 78b6000.spi failed with error -22
 
-I've tested this patch here and no longer see the logs filling up with 
-messages about Runtime PM underflows.  Tested on the Lenovo Yoga C630.
+Fix this by making the functions used in qcs404.dtsi to match the contents
+of drivers/pinctrl/qcom/pinctrl-qcs404.c.
 
+Signed-off-by: Andrey Konovalov <andrey.konovalov@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/qcs404.dtsi | 21 +++++++++++++++++++--
+ 1 file changed, 19 insertions(+), 2 deletions(-)
 
-Tested-by: Steev Klimaszewski <steev@kali.org>
+diff --git a/arch/arm64/boot/dts/qcom/qcs404.dtsi b/arch/arm64/boot/dts/qcom/qcs404.dtsi
+index d912166b7552..0d9e1f19aa67 100644
+--- a/arch/arm64/boot/dts/qcom/qcs404.dtsi
++++ b/arch/arm64/boot/dts/qcom/qcs404.dtsi
+@@ -669,8 +669,25 @@ blsp1_spi0_default: blsp1-spi0-default {
+ 			};
+ 
+ 			blsp1_spi1_default: blsp1-spi1-default {
+-				pins = "gpio22", "gpio23", "gpio24", "gpio25";
+-				function = "blsp_spi1";
++				mosi {
++					pins = "gpio22";
++					function = "blsp_spi_mosi_a1";
++				};
++
++				miso {
++					pins = "gpio23";
++					function = "blsp_spi_miso_a1";
++				};
++
++				cs_n {
++					pins = "gpio24";
++					function = "blsp_spi_cs_n_a1";
++				};
++
++				clk {
++					pins = "gpio25";
++					function = "blsp_spi_clk_a1";
++				};
+ 			};
+ 
+ 			blsp1_spi2_default: blsp1-spi2-default {
+-- 
+2.25.1
 
