@@ -2,320 +2,170 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5CC1E54734F
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Jun 2022 11:37:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 43FE05474BA
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Jun 2022 15:07:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229464AbiFKJhW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 11 Jun 2022 05:37:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55798 "EHLO
+        id S233413AbiFKNH3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 11 Jun 2022 09:07:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55102 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229616AbiFKJhU (ORCPT
+        with ESMTP id S233574AbiFKNH1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 11 Jun 2022 05:37:20 -0400
-Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D07532ECA;
-        Sat, 11 Jun 2022 02:37:19 -0700 (PDT)
-Received: from g550jk.localnet (31-151-115-246.dynamic.upc.nl [31.151.115.246])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 88FD7CD394;
-        Sat, 11 Jun 2022 09:36:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1654940206; bh=Pv4FsvWvfgEkD1dHzfg4Gg5E6CXk8wuVq7wdUmNs0+g=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=ut+6n+0zCKmQUtRtdy98cgZCJw6OGK0W5R6FomNvWBHs7pGOXuyFH8c9TA+nw6aZC
-         TkEn3kAzPTqMWIe0qGlnp4IzPIymnNA6b+YNjvwB5dbCQ2D2/RzeDzu80hgGvJZcdT
-         zmKOjnPUJ9eQXSovO0kHSWylGDEuqIKBGtd9zYt8=
-From:   Luca Weiss <luca@z3ntu.xyz>
-To:     linux-arm-msm@vger.kernel.org,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Vladimir Lypak <vladimir.lypak@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: msm8953: add MDSS
-Date:   Sat, 11 Jun 2022 11:36:45 +0200
-Message-ID: <4716730.GXAFRqVoOG@g550jk>
-In-Reply-To: <c7ac47e0-20a2-3972-e760-61276964445c@linaro.org>
-References: <20220610225304.267508-1-luca@z3ntu.xyz> <20220610225304.267508-2-luca@z3ntu.xyz> <c7ac47e0-20a2-3972-e760-61276964445c@linaro.org>
+        Sat, 11 Jun 2022 09:07:27 -0400
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4816205D5
+        for <linux-arm-msm@vger.kernel.org>; Sat, 11 Jun 2022 06:07:24 -0700 (PDT)
+Received: by mail-ej1-x629.google.com with SMTP id gl15so2843359ejb.4
+        for <linux-arm-msm@vger.kernel.org>; Sat, 11 Jun 2022 06:07:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=t3xj8kLCMLC4vvamPsMzSiJ2niC/wuVI+iAvhlePD7o=;
+        b=uX6WgOkG9xeUEUQuPGDSp3BweCStVxvXtlyk0B3FBwtjym/rD9MMlngFbaQABDAmgi
+         9CSCdNhrnd1RvoBLmRErP9H4SmS9R2t+7PynV0tQO0+H3ZLNpi2d9Z+8c0RlW0wopeVA
+         evrNF74tBijpawDoPa5EitKkHmeYE1lt29RO1qjFRaUtoJju9Y3nQKdxDsX2qWaf2XWM
+         YyEURFz2dnwagNa6YWFubYUv/mV5XThSB2iagI/5Qcyt1EjmjgI0YP3nbIsaTsUWGXOE
+         BWq8yyADYYhqDG15Y2s+JkPzgiL/gyxOIbMTV3pytHNXsWDxlvOlRSZcLdL6dklRQZWm
+         N4IQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=t3xj8kLCMLC4vvamPsMzSiJ2niC/wuVI+iAvhlePD7o=;
+        b=o4kocSpoEpWjzWR3kbX0Q8nXQUmV6zsSnd+W4mPWMubyMbe2rASUjRGD0vC+pjzrjv
+         WZnRRDX9fm+HQxgKeISj9DSgLIfhjT62NGzAupQJao1hE40OruSA7CWARGNEKmWMJvEK
+         s8Aj4MdFcO9sQkQAujW2UixWmymNL0aYykqGLu9/QvEvUue8OfXtvJIzk1qqMTtH0bIO
+         nFbcyBlqlfLupIa/C5RKvpuQSFpzdNh0nwk5xcE/5BJv7Btcpf8iuqoJEoraGBP2T3cp
+         TI+s8fMoWpE3Mh4bI3MDWW+S9DdgZzWkB0pl3fE/p9BmlUyocvoYWz7iTRtXK0CyOqem
+         16hg==
+X-Gm-Message-State: AOAM532L5gwkUi4pD10g6SJooXqpz08p/dd4+6ZdxMfrGs6onTePPnu8
+        a/UTPtxzfMFLxD/CD4nvKGQ18A==
+X-Google-Smtp-Source: ABdhPJxukTgXWKlc1cHbTbw+Z5q7M3h2i8LlNSYby1pDuVGRC9L+CC2PcCGZvNHYqZrpem+lL2G+Qw==
+X-Received: by 2002:a17:906:f84e:b0:70e:6ec8:cc4a with SMTP id ks14-20020a170906f84e00b0070e6ec8cc4amr37889671ejb.694.1654952843286;
+        Sat, 11 Jun 2022 06:07:23 -0700 (PDT)
+Received: from [192.168.0.203] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id 2-20020a170906318200b007121361d54asm1033191ejy.25.2022.06.11.06.07.21
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 11 Jun 2022 06:07:22 -0700 (PDT)
+Message-ID: <89d6735a-61eb-08cf-8d4a-6fb1b2d457ad@linaro.org>
+Date:   Sat, 11 Jun 2022 15:07:21 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
-X-Spam-Status: No, score=0.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FROM_SUSPICIOUS_NTLD,
-        PDS_OTHER_BAD_TLD,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: Re: [PATCH 1/4] dt-bindings: arm: qcom: document qcom,msm-id and
+ qcom,board-id
+Content-Language: en-US
+To:     Rob Herring <robh@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Stephen Boyd <sboyd@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Amit Pundir <amit.pundir@linaro.org>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Kumar Gala <galak@codeaurora.org>
+References: <20220529202629.47588-1-krzysztof.kozlowski@linaro.org>
+ <20220529202629.47588-2-krzysztof.kozlowski@linaro.org>
+ <20220605150747.GA3465286-robh@kernel.org>
+ <54015d41-d4eb-12ae-5bd1-00d2c3cf7814@linaro.org>
+ <20220610163343.GA1787330-robh@kernel.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220610163343.GA1787330-robh@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Dmitry,
+On 10/06/2022 18:33, Rob Herring wrote:
+> On Tue, Jun 07, 2022 at 01:15:51PM +0200, Krzysztof Kozlowski wrote:
+>> On 05/06/2022 17:07, Rob Herring wrote:
+>>> On Sun, May 29, 2022 at 10:26:26PM +0200, Krzysztof Kozlowski wrote:
+>>>> The top level qcom,msm-id and qcom,board-id properties are utilized by
+>>>> bootloaders on Qualcomm MSM platforms to determine which device tree
+>>>> should be used and passed to the kernel.
+>>>>
+>>>> The commit b32e592d3c28 ("devicetree: bindings: Document qcom board
+>>>> compatible format") from 2015 was a consensus during discussion about
+>>>> upstreaming qcom,msm-id and qcom,board-id fields.  There are however still
+>>>> problems with that consensus:
+>>>> 1. It was reached 7 years ago but it turned out its implementation did
+>>>>    not reach all possible products.
+>>>>
+>>>> 2. Initially additional tool (dtbTool) was needed for parsing these
+>>>>    fields to create a QCDT image consisting of multiple DTBs, later the
+>>>>    bootloaders were improved and they use these qcom,msm-id and
+>>>>    qcom,board-id properties directly.
+>>>>
+>>>> 3. Extracting relevant information from the board compatible requires
+>>>>    this additional tool (dtbTool), which makes the build process more
+>>>>    complicated and not easily reproducible (DTBs are modified after the
+>>>>    kernel build).
+>>>>
+>>>> 4. Some versions of Qualcomm bootloaders expect these properties even
+>>>>    when booting with a single DTB.  The community is stuck with these
+>>>>    bootloaders thus they require properties in the DTBs.
+>>>>
+>>>> Since several upstreamed Qualcomm SoC-based boards require these
+>>>> properties to properly boot and the properties are reportedly used by
+>>>> bootloaders, document them.
+>>>
+>>> My primary issue here is accepting this will be an endorsement for 
+>>> other vendors doing something similar. I'm not against an ID 
+>>> property(ies) in the root node, but would rather see something common 
+>>> if we do anything.
+>>
+>> Hi Rob,
+>>
+>> A more common approach was merged back in 2015 - encoding this ID
+>> information in the board compatibles. If I understood previous
+>> discussion correctly, this common method was later used by Qualcomm DTB
+>> post-processing tool. At least for some of the cases.
+>>
+>> Other cases (several Qualcomm boards from different vendors) still use
+>> these ID properties. It even turns out they use it differently between
+>> vendors (e.g. Xiaomi vs OnePlus).
+>>
+>> Important arguments for documenting these properties:
+>> 1. These ID properties are already on released boards where changing
+>> bootloader is non-trivial or even not possible. It will not be possible
+>> to remove these properties, without seriously affecting the community
+>> working with them.
+> 
+> Accepting things because they are already in use is also not a path we 
+> want to go down. If it's the color of the bike shed, then fine.
+> 
+>> 2. According to Konrad [1] (second paragraph), newer chipsets (starting
+>> with sm8350 released in 2021) do not use these properties. These newer
+>> DTS do not have them.
+>>
+>> Considering 1+2 above, maybe let's document these properties as
+>> compatible? Would that solve your point of "endorsement for other vendors"?
+> 
+> What do you mean? Only allow them for certain root compatible strings? I 
+> suppose that would be okay by me. It would also be useful documentation 
+> of where they are needed.
 
-thanks for the feedback!
+Bah, I wrote something else than I had in mind. So one more try:
 
-On Samstag, 11. Juni 2022 01:20:31 CEST Dmitry Baryshkov wrote:
-> On 11/06/2022 01:53, Luca Weiss wrote:
-> > From: Vladimir Lypak <vladimir.lypak@gmail.com>
-> > 
-> > Add the MDSS, MDP and DSI nodes that are found on msm8953 SoC.
-> > 
-> > IOMMU is not added because support for it isn't yet upstream and MDSS
-> > works fine without IOMMU on 8953.
-> > 
-> > Signed-off-by: Vladimir Lypak <vladimir.lypak@gmail.com>
-> > Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
-> 
-> Looks good, few minor nits below.
-> 
-> > ---
-> > 
-> >   arch/arm64/boot/dts/qcom/msm8953.dtsi | 202 ++++++++++++++++++++++++++
-> >   1 file changed, 202 insertions(+)
-> > 
-> > diff --git a/arch/arm64/boot/dts/qcom/msm8953.dtsi
-> > b/arch/arm64/boot/dts/qcom/msm8953.dtsi index ffc3ec2cd3bc..a2aca3d05899
-> > 100644
-> > --- a/arch/arm64/boot/dts/qcom/msm8953.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/msm8953.dtsi
-> > @@ -726,6 +726,208 @@ tcsr_phy_clk_scheme_sel: syscon@193f044 {
-> > 
-> >   			reg = <0x193f044 0x4>;
-> >   		
-> >   		};
-> > 
-> > +		mdss: mdss@1a00000 {
-> > +			compatible = "qcom,mdss";
-> > +
-> > +			reg = <0x1a00000 0x1000>,
-> > +			      <0x1ab0000 0x1040>;
-> > +			reg-names = "mdss_phys",
-> > +				    "vbif_phys";
-> > +
-> > +			power-domains = <&gcc MDSS_GDSC>;
-> > +			interrupts = <GIC_SPI 72 IRQ_TYPE_LEVEL_HIGH>;
-> > +
-> > +			interrupt-controller;
-> > +			#interrupt-cells = <1>;
-> > +
-> > +			clocks = <&gcc GCC_MDSS_AHB_CLK>,
-> > +				 <&gcc GCC_MDSS_AXI_CLK>,
-> > +				 <&gcc GCC_MDSS_VSYNC_CLK>;
-> 
-> Please also add GCC_MDSS_MDP_CLK at the end of this array. It might be
-> required to read HW_REV register.
+Considering 1+2 above, maybe let's document these properties as
+*deprecated*? Would that solve your point of "endorsement for other
+vendors"?
 
-I don't think if I add that clock with the name "core" (or similar) that it
-would be used by the driver:
-
-https://github.com/torvalds/linux/blob/master/drivers/gpu/drm/msm/msm_mdss.c#L274-L302
-
-Regards
-Luca
-
-> 
-> > +			clock-names = "iface",
-> > +				      "bus",
-> > +				      "vsync";
-> > +
-> > +			#address-cells = <1>;
-> > +			#size-cells = <1>;
-> > +			ranges;
-> 
-> status = "disabled";
-> 
-> > +
-> > +			mdp: mdp@1a01000 {
-> > +				compatible = "qcom,mdp5";
-> > +				reg = <0x1a01000 0x89000>;
-> > +				reg-names = "mdp_phys";
-> > +
-> > +				interrupt-parent = <&mdss>;
-> > +				interrupts = <0>;
-> > +
-> > +				power-domains = <&gcc MDSS_GDSC>;
-> > +
-> > +				clocks = <&gcc GCC_MDSS_AHB_CLK>,
-> > +					 <&gcc GCC_MDSS_AXI_CLK>,
-> > +					 <&gcc GCC_MDSS_MDP_CLK>,
-> > +					 <&gcc GCC_MDSS_VSYNC_CLK>;
-> > +				clock-names = "iface",
-> > +					      "bus",
-> > +					      "core",
-> > +					      "vsync";
-> > +
-> > +				// iommus = <&apps_iommu 0xc00 0>;
-> > +
-> > +				ports {
-> > +					#address-cells = <1>;
-> > +					#size-cells = <0>;
-> > +
-> > +					port@0 {
-> > +						reg = <0>;
-> > +						mdp5_intf1_out: endpoint {
-> > +							remote-endpoint = <&dsi0_in>;
-> > +						};
-> > +					};
-> > +
-> > +					port@1 {
-> > +						reg = <1>;
-> > +						mdp5_intf2_out: endpoint {
-> > +							remote-endpoint = <&dsi1_in>;
-> > +						};
-> > +					};
-> > +				};
-> > +			};
-> > +
-> > +			dsi0: dsi@1a94000 {
-> > +				compatible = "qcom,mdss-dsi-ctrl";
-> > +				reg = <0x1a94000 0x400>;
-> > +				reg-names = "dsi_ctrl";
-> > +
-> > +				interrupt-parent = <&mdss>;
-> > +				interrupts = <4>;
-> > +
-> > +				assigned-clocks = <&gcc BYTE0_CLK_SRC>,
-> > +						  <&gcc PCLK0_CLK_SRC>;
-> > +				assigned-clock-parents = <&dsi0_phy 0>,
-> > +							 <&dsi0_phy 1>;
-> > +
-> > +				clocks = <&gcc GCC_MDSS_MDP_CLK>,
-> > +					 <&gcc GCC_MDSS_AHB_CLK>,
-> > +					 <&gcc GCC_MDSS_AXI_CLK>,
-> > +					 <&gcc GCC_MDSS_BYTE0_CLK>,
-> > +					 <&gcc GCC_MDSS_PCLK0_CLK>,
-> > +					 <&gcc GCC_MDSS_ESC0_CLK>;
-> > +				clock-names = "mdp_core",
-> > +					      "iface",
-> > +					      "bus",
-> > +					      "byte",
-> > +					      "pixel",
-> > +					      "core";
-> > +
-> > +				phys = <&dsi0_phy>;
-> > +				phy-names = "dsi";
-> > +
-> > +				#address-cells = <1>;
-> > +				#size-cells = <0>;
-> 
-> status = "disabled";
-> 
-> > +
-> > +				ports {
-> > +					#address-cells = <1>;
-> > +					#size-cells = <0>;
-> > +
-> > +					port@0 {
-> > +						reg = <0>;
-> > +						dsi0_in: endpoint {
-> > +							remote-endpoint = <&mdp5_intf1_out>;
-> > +						};
-> > +					};
-> > +
-> > +					port@1 {
-> > +						reg = <1>;
-> > +						dsi0_out: endpoint {
-> > +						};
-> > +					};
-> > +				};
-> > +			};
-> > +
-> > +			dsi0_phy: dsi-phy@1a94400 {
-> > +				compatible = "qcom,dsi-phy-14nm-8953";
-> > +				reg = <0x1a94400 0x100>,
-> > +				      <0x1a94500 0x300>,
-> > +				      <0x1a94800 0x188>;
-> > +				reg-names = "dsi_phy",
-> > +					    "dsi_phy_lane",
-> > +					    "dsi_pll";
-> > +
-> > +				#clock-cells = <1>;
-> > +				#phy-cells = <0>;
-> 
-> status = "disabled";
-> 
-> > +
-> > +				clocks = <&gcc GCC_MDSS_AHB_CLK>, <&xo_board>;
-> > +				clock-names = "iface", "ref";
-> > +			};
-> > +
-> > +			dsi1: dsi@1a96000 {
-> > +				compatible = "qcom,mdss-dsi-ctrl";
-> > +				reg = <0x1a96000 0x400>;
-> > +				reg-names = "dsi_ctrl";
-> > +
-> > +				interrupt-parent = <&mdss>;
-> > +				interrupts = <5>;
-> > +
-> > +				assigned-clocks = <&gcc BYTE1_CLK_SRC>,
-> > +						  <&gcc PCLK1_CLK_SRC>;
-> > +				assigned-clock-parents = <&dsi1_phy 0>,
-> > +							 <&dsi1_phy 1>;
-> > +
-> > +				clocks = <&gcc GCC_MDSS_MDP_CLK>,
-> > +					 <&gcc GCC_MDSS_AHB_CLK>,
-> > +					 <&gcc GCC_MDSS_AXI_CLK>,
-> > +					 <&gcc GCC_MDSS_BYTE1_CLK>,
-> > +					 <&gcc GCC_MDSS_PCLK1_CLK>,
-> > +					 <&gcc GCC_MDSS_ESC1_CLK>;
-> > +				clock-names = "mdp_core",
-> > +					      "iface",
-> > +					      "bus",
-> > +					      "byte",
-> > +					      "pixel",
-> > +					      "core";
-> > +
-> > +				phys = <&dsi1_phy>;
-> > +				phy-names = "dsi";
-> > +
-> > +				status = "disabled";
-> > +
-> > +				ports {
-> > +					#address-cells = <1>;
-> > +					#size-cells = <0>;
-> > +
-> > +					port@0 {
-> > +						reg = <0>;
-> > +						dsi1_in: endpoint {
-> > +							remote-endpoint = <&mdp5_intf2_out>;
-> > +						};
-> > +					};
-> > +
-> > +					port@1 {
-> > +						reg = <1>;
-> > +						dsi1_out: endpoint {
-> > +						};
-> > +					};
-> > +				};
-> > +			};
-> > +
-> > +			dsi1_phy: dsi-phy@1a96400 {
-> > +				compatible = "qcom,dsi-phy-14nm-8953";
-> > +				reg = <0x1a96400 0x100>,
-> > +				      <0x1a96500 0x300>,
-> > +				      <0x1a96800 0x188>;
-> > +				reg-names = "dsi_phy",
-> > +					    "dsi_phy_lane",
-> > +					    "dsi_pll";
-> > +
-> > +				#clock-cells = <1>;
-> > +				#phy-cells = <0>;
-> > +
-> > +				clocks = <&gcc GCC_MDSS_AHB_CLK>, <&xo_board>;
-> > +				clock-names = "iface", "ref";
-> > +
-> > +				status = "disabled";
-> > +			};
-> > +		};
-> > +
-> > 
-> >   		spmi_bus: spmi@200f000 {
-> >   		
-> >   			compatible = "qcom,spmi-pmic-arb";
-> >   			reg = <0x200f000 0x1000>,
+However the idea to restrict them per-compatible, is also nice. Although
+I cannot guarantee the list will not grow for older SoCs.
 
 
-
-
+Best regards,
+Krzysztof
