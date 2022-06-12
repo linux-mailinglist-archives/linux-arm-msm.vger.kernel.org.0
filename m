@@ -2,169 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3079B547B57
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Jun 2022 19:51:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C3EA6547CC7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jun 2022 00:33:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231208AbiFLRqB convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 12 Jun 2022 13:46:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37182 "EHLO
+        id S234753AbiFLWdJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 12 Jun 2022 18:33:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34668 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232764AbiFLRqA (ORCPT
+        with ESMTP id S236018AbiFLWdH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 12 Jun 2022 13:46:00 -0400
-Received: from mail-oo1-f48.google.com (mail-oo1-f48.google.com [209.85.161.48])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 138B5E09E;
-        Sun, 12 Jun 2022 10:45:59 -0700 (PDT)
-Received: by mail-oo1-f48.google.com with SMTP id n24-20020a4ae758000000b0041b82638b42so830796oov.9;
-        Sun, 12 Jun 2022 10:45:59 -0700 (PDT)
+        Sun, 12 Jun 2022 18:33:07 -0400
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7EFB8175B0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 12 Jun 2022 15:33:04 -0700 (PDT)
+Received: by mail-ej1-x62e.google.com with SMTP id y19so7840373ejq.6
+        for <linux-arm-msm@vger.kernel.org>; Sun, 12 Jun 2022 15:33:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ragnatech-se.20210112.gappssmtp.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=PxmsONNK0747oJIcc0WYgerKFwFBhaqFBSVZH2Qv3uU=;
+        b=2VP7ecBFlZ9U9+ev3Fa4rLGpcY1OtVAM30DcnBKT2TGUxi7nej89Ro0NfAgS93J0Ug
+         jZuulBJjV4L/eimWcs0uM7efF3Sy3yQqwxfj/b6Y86qDnybFipuWE4C2SlYzQOZ6vgiB
+         YTUqTkp7CVAjcIUwQdWbYVqPO5VhWk3SzBE/xYIkNZdejgqLeDIANFIxHXltexV2crbS
+         lfG3ZKmgwje7Py7Yl2g8CkyjSMrFVtnNQqspUJTQn4b5uqscRjZYUznL4HdKInmTeuMd
+         aMuld/7Uo6bWZlciIRGmx5K4K7Eaxz2LQJn07j0JCp2QmmRO3ZfAOHOX8ajkyOjEUmIB
+         A9OQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=xNhFuNm1nmnzKrxqQuO4XyzP0cAuS/p9Ps9ar4/pkNA=;
-        b=rBZpEbtDe9ogwyCl5aKAZeYuIeFNbLxCFj+voN3oYfsgr566qS87dpaPHK61BPXfxI
-         GYnatewn+qcvJEEKu3KkF6IMOxBJRhkP5lC8dQ/deQmpD/gyU1Rfk+mqInUhUIv+/Qrw
-         QDYivWpLJ4tTyT/SRUzMZ0eJk22aMNXnWqhoGgETmthCDGKYW8rJNSv4UWSzjVBqTQ0Y
-         rT5C2TCjbs5AQJ6cj1CDgpc/OzzqoqefVXK8uIyCtep5kk5985JECfRXQ7xJaudofEbH
-         ChwADx3hH89+7Q+cLlaY+UN2urLJW6SA3JQliOE76PVLhrjRb54wkjO5dnAgub5ll59w
-         FhBQ==
-X-Gm-Message-State: AOAM531JT+vGRTMVIQYtjL9BzYb6Sai4poqdMp/RMmkpHezbEZwLZCBo
-        PUaYOWLxkZdTXnHjoaoGnckJLguEY7aipw==
-X-Google-Smtp-Source: ABdhPJwAWF2Xwa4TwmfvQzub7spRW+GbwStg9EvmhgcPkRgW1jN+HOg7DXvyIpG8QMnMcBHrsrBjyA==
-X-Received: by 2002:a4a:d984:0:b0:329:a95a:d492 with SMTP id k4-20020a4ad984000000b00329a95ad492mr22457099oou.61.1655055958282;
-        Sun, 12 Jun 2022 10:45:58 -0700 (PDT)
-Received: from mail-ot1-f49.google.com (mail-ot1-f49.google.com. [209.85.210.49])
-        by smtp.gmail.com with ESMTPSA id r9-20020a056830134900b0060afaae0e34sm2460700otq.0.2022.06.12.10.45.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 12 Jun 2022 10:45:58 -0700 (PDT)
-Received: by mail-ot1-f49.google.com with SMTP id a8-20020a05683012c800b0060c027c8afdso2984239otq.10;
-        Sun, 12 Jun 2022 10:45:58 -0700 (PDT)
-X-Received: by 2002:a81:4811:0:b0:30c:8021:4690 with SMTP id
- v17-20020a814811000000b0030c80214690mr60597100ywa.47.1655055588159; Sun, 12
- Jun 2022 10:39:48 -0700 (PDT)
-MIME-Version: 1.0
-References: <20220610084545.547700-1-nuno.sa@analog.com> <20220610084545.547700-35-nuno.sa@analog.com>
- <YqNo6U8r80aNFzUr@spruce> <d083dd2c7e9e6eefb32124648a06799a9ebe8dfd.camel@gmail.com>
-In-Reply-To: <d083dd2c7e9e6eefb32124648a06799a9ebe8dfd.camel@gmail.com>
-From:   Geert Uytterhoeven <geert@linux-m68k.org>
-Date:   Sun, 12 Jun 2022 19:39:36 +0200
-X-Gmail-Original-Message-ID: <CAMuHMdXtLQOo2fiTHA-CBgWZE0hbPVUzv77sKrf_Qz8oHp7bkA@mail.gmail.com>
-Message-ID: <CAMuHMdXtLQOo2fiTHA-CBgWZE0hbPVUzv77sKrf_Qz8oHp7bkA@mail.gmail.com>
-Subject: Re: [PATCH 34/34] iio: inkern: fix coding style warnings
-To:     =?UTF-8?B?TnVubyBTw6E=?= <noname.nuno@gmail.com>
-Cc:     Joe Simmons-Talbott <joetalbott@gmail.com>,
-        =?UTF-8?B?TnVubyBTw6E=?= <nuno.sa@analog.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Linux-Renesas <linux-renesas-soc@vger.kernel.org>,
-        "open list:BROADCOM NVRAM DRIVER" <linux-mips@vger.kernel.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        chrome-platform@lists.linux.dev,
-        Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-        linux-mediatek@lists.infradead.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-iio@vger.kernel.org, openbmc@lists.ozlabs.org,
-        Cai Huoqing <cai.huoqing@linux.dev>,
-        Benjamin Fair <benjaminfair@google.com>,
-        Jishnu Prakash <quic_jprakash@quicinc.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Amit Kucheria <amitk@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Michael Hennerich <Michael.Hennerich@analog.com>,
-        Haibo Chen <haibo.chen@nxp.com>,
-        Benson Leung <bleung@chromium.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Christophe Branchereau <cbranchereau@gmail.com>,
-        Patrick Venture <venture@google.com>,
-        Arnd Bergmann <arnd@arndb.de>, Nancy Yuen <yuenn@google.com>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Gwendal Grignou <gwendal@chromium.org>,
-        Saravanan Sekar <sravanhome@gmail.com>,
-        Tali Perry <tali.perry1@gmail.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Paul Cercueil <paul@crapouillou.net>,
-        Thara Gopinath <thara.gopinath@linaro.org>,
-        Avi Fishman <avifishman70@gmail.com>,
-        Lorenzo Bianconi <lorenzo@kernel.org>,
-        Claudiu Beznea <claudiu.beznea@microchip.com>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Andy Shevchenko <andy.shevchenko@gmail.com>,
-        Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Tomer Maimon <tmaimon77@gmail.com>,
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=PxmsONNK0747oJIcc0WYgerKFwFBhaqFBSVZH2Qv3uU=;
+        b=N2kHQI2sgRfemnKnayQJdoOGBbYQXSAoQD0WuTOnfhSX/LPy14JHksDLpC4u+eTUyu
+         wDtLjL1oijfqdAMYnKoGlg78xzMtbaG8mX0lKjvTOdJ5VkGm8rhDEcyVKutfEHe85nE1
+         ZPAwh8uPQPBPxC5d7arsxKHZQAaB6om8YKQUGr+4CTtUdTQ4L7KD8Zf1KvZOef+/dxOh
+         TBF5YC+5+R+TeXcxEIyll4Yc7rNDRPjVAIhDAx5Mm2Zy3ll+sE9apE1cF9bG3fz7zU/Y
+         OFBZzS7Krfz0YXJmluXBYxfzqndYrpQDP7ZB9R4uhw5sdrKCL0Th7cBOVrqzfmr7ATUV
+         u+hw==
+X-Gm-Message-State: AOAM5339bTlyzx0UQjSBvCVCdPJ61TcEzlGE7FPtOXVakZ0DmIdITdSm
+        sVVIXcTy/fEpv+Sp7YRKE080ZA==
+X-Google-Smtp-Source: ABdhPJxFjSKJNSq4b3G/JClmOrxqSkJ+5meJ/f/2lUgo9VmIEzvwFszc8neocCxrslmOpbgLMo/m8A==
+X-Received: by 2002:a17:906:b15:b0:715:bf2e:df92 with SMTP id u21-20020a1709060b1500b00715bf2edf92mr3768278ejg.576.1655073183114;
+        Sun, 12 Jun 2022 15:33:03 -0700 (PDT)
+Received: from bismarck.berto.se (p4fca22cf.dip0.t-ipconnect.de. [79.202.34.207])
+        by smtp.googlemail.com with ESMTPSA id e3-20020a056402104300b0042b5cf75d6esm3766559edu.97.2022.06.12.15.33.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 12 Jun 2022 15:33:02 -0700 (PDT)
+From:   =?UTF-8?q?Niklas=20S=C3=B6derlund?= 
+        <niklas.soderlund+renesas@ragnatech.se>
+To:     Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        devicetree@vger.kernel.org
+Cc:     Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
+        bcm-kernel-feedback-list@broadcom.com,
+        Shawn Guo <shawnguo@kernel.org>, Li Yang <leoyang.li@nxp.com>,
+        Sascha Hauer <s.hauer@pengutronix.de>, kernel@pengutronix.de,
+        Fabio Estevam <festevam@gmail.com>, linux-imx@nxp.com,
+        Wei Xu <xuwei5@hisilicon.com>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Guenter Roeck <groeck@chromium.org>,
-        Fabio Estevam <festevam@gmail.com>,
-        Olivier Moysan <olivier.moysan@foss.st.com>,
-        Eugen Hristev <eugen.hristev@microchip.com>,
-        Miquel Raynal <miquel.raynal@bootlin.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
-        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no
-        version=3.4.6
+        Heiko Stuebner <heiko@sntech.de>, Nishanth Menon <nm@ti.com>,
+        Vignesh Raghavendra <vigneshr@ti.com>,
+        Tero Kristo <kristo@kernel.org>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-rockchip@lists.infradead.org,
+        =?UTF-8?q?Niklas=20S=C3=B6derlund?= 
+        <niklas.soderlund+renesas@ragnatech.se>
+Subject: [PATCH 0/6] arm64: dts: Add missing space around properties
+Date:   Mon, 13 Jun 2022 00:31:55 +0200
+Message-Id: <20220612223201.2740248-1-niklas.soderlund+renesas@ragnatech.se>
+X-Mailer: git-send-email 2.36.1
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Nuno,
+Hello,
 
-On Fri, Jun 10, 2022 at 9:52 PM Nuno Sá <noname.nuno@gmail.com> wrote:
-> On Fri, 2022-06-10 at 11:53 -0400, Joe Simmons-Talbott wrote:
-> > On Fri, Jun 10, 2022 at 10:45:45AM +0200, Nuno Sá wrote:
-> > > Just cosmetics. No functional change intended...
-> > >
-> > > Signed-off-by: Nuno Sá <nuno.sa@analog.com>
+While debugging an issue on a Renesas board I found a typo with missing 
+spaces around properties that had been copied around [1]. This extends 
+this fix for all arm64 files.
 
-> > > --- a/drivers/iio/inkern.c
-> > > +++ b/drivers/iio/inkern.c
-> > > @@ -45,13 +45,13 @@ int iio_map_array_register(struct iio_dev
-> > > *indio_dev, struct iio_map *maps)
-> > >         int i = 0, ret = 0;
-> > >         struct iio_map_internal *mapi;
-> > >
-> > > -       if (maps == NULL)
-> > > +       if (!maps)
-> > >                 return 0;
-> > >
-> > >         mutex_lock(&iio_map_list_lock);
-> > > -       while (maps[i].consumer_dev_name != NULL) {
-> > > +       while (!maps[i].consumer_dev_name) {
-> >
-> > Shouldn't this be?:
-> > while (maps[i].consumer_dev_name) {
->
-> Ups... Nice catch! I was probably in bot mode already.
+1. https://lore.kernel.org/linux-renesas-soc/20220608175728.1012550-1-niklas.soderlund+renesas@ragnatech.se/
 
-When making a change with no functional change intended, it is always
-a good idea to compare the generated assembler before/after.  I.e.
+Niklas Söderlund (6):
+  arm64: dts: broadcom: Add missing space around status property
+  arm64: dts: rockchip: Add missing space around regulator-name property
+  arm64: dts: freescale: Add missing space around properties
+  arm64: dts: hisilicon: Add missing space around properties
+  arm64: dts: qcom: Add missing space around properties
+  arm64: dts: ti: Add missing space around properties
 
-    make drivers/iio/inkern.s
-    mv drivers/iio/inkern.s drivers/iio/inkern.s.orig
-    [make your change]
-    make drivers/iio/inkern.s
-    diff -u drivers/iio/inkern.s{.orig,}
+ arch/arm64/boot/dts/broadcom/stingray/stingray.dtsi       | 2 +-
+ arch/arm64/boot/dts/freescale/fsl-ls1028a.dtsi            | 6 +++---
+ arch/arm64/boot/dts/freescale/imx8-ss-conn.dtsi           | 2 +-
+ arch/arm64/boot/dts/freescale/imx8mm.dtsi                 | 8 ++++----
+ arch/arm64/boot/dts/freescale/imx8mn.dtsi                 | 8 ++++----
+ arch/arm64/boot/dts/freescale/imx8mp.dtsi                 | 8 ++++----
+ arch/arm64/boot/dts/freescale/imx8mq.dtsi                 | 2 +-
+ .../arm64/boot/dts/freescale/imx8qxp-colibri-eval-v3.dtsi | 6 +++---
+ arch/arm64/boot/dts/freescale/imx8ulp.dtsi                | 6 +++---
+ arch/arm64/boot/dts/hisilicon/hip06.dtsi                  | 6 +++---
+ arch/arm64/boot/dts/hisilicon/hip07.dtsi                  | 6 +++---
+ arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile.dtsi     | 2 +-
+ arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts      | 2 +-
+ arch/arm64/boot/dts/rockchip/rk3368-orion-r68-meta.dts    | 2 +-
+ arch/arm64/boot/dts/ti/k3-am62-main.dtsi                  | 4 ++--
+ arch/arm64/boot/dts/ti/k3-am64-main.dtsi                  | 4 ++--
+ arch/arm64/boot/dts/ti/k3-am65-iot2050-common.dtsi        | 2 +-
+ arch/arm64/boot/dts/ti/k3-am65-wakeup.dtsi                | 4 ++--
+ arch/arm64/boot/dts/ti/k3-am654-base-board.dts            | 2 +-
+ arch/arm64/boot/dts/ti/k3-j7200-mcu-wakeup.dtsi           | 4 ++--
+ arch/arm64/boot/dts/ti/k3-j721e-mcu-wakeup.dtsi           | 4 ++--
+ arch/arm64/boot/dts/ti/k3-j721s2-mcu-wakeup.dtsi          | 4 ++--
+ 22 files changed, 47 insertions(+), 47 deletions(-)
 
-Gr{oetje,eeting}s,
+-- 
+2.36.1
 
-                        Geert
-
---
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
-
-In personal conversations with technical people, I call myself a hacker. But
-when I'm talking to journalists I just say "programmer" or something like that.
-                                -- Linus Torvalds
