@@ -2,94 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 30103547865
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Jun 2022 05:27:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B01EA54786D
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Jun 2022 06:03:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234382AbiFLD0J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 11 Jun 2022 23:26:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46492 "EHLO
+        id S229861AbiFLEDP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 12 Jun 2022 00:03:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41276 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230325AbiFLDZ5 (ORCPT
+        with ESMTP id S229528AbiFLEDN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 11 Jun 2022 23:25:57 -0400
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41D7066CBF;
-        Sat, 11 Jun 2022 20:25:40 -0700 (PDT)
+        Sun, 12 Jun 2022 00:03:13 -0400
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B18123982B;
+        Sat, 11 Jun 2022 21:03:12 -0700 (PDT)
+Received: by mail-ej1-x634.google.com with SMTP id s12so5128616ejx.3;
+        Sat, 11 Jun 2022 21:03:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1655004340; x=1686540340;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version;
-  bh=Ht5tFAx/b0oY9oX+FB+kzZOocBM2sta/Sgzs8nZLw/o=;
-  b=rzxbAUh9KH/Kfdyv7IZaAtGLcSAhVYKPtLBYUJjB10XlXSDlIDQMOnpR
-   lspZo6f9h+kVQZdIP1eeViEmMZ0oAxOlZeyMs7/WDlHGb+/w7IfkGeScW
-   iWI7765Zd7oMXh+luwmDJOy4vyvX+O8h4KV1BoGbbxuw+My5InV30cQw3
-   A=;
-Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 11 Jun 2022 20:25:39 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg02-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jun 2022 20:25:39 -0700
-Received: from nalasex01c.na.qualcomm.com (10.47.97.35) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Sat, 11 Jun 2022 20:25:39 -0700
-Received: from fenglinw-gv.qualcomm.com (10.80.80.8) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Sat, 11 Jun 2022 20:25:36 -0700
-From:   Fenglin Wu <quic_fenglinw@quicinc.com>
-To:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <sboyd@kernel.org>
-CC:     <quic_collinsd@quicinc.com>, <quic_subbaram@quicinc.com>,
-        <quic_fenglinw@quicinc.com>, <tglx@linutronix.de>,
-        <maz@kernel.org>, "David Collins" <collinsd@codeaurora.org>
-Subject: [RESEND PATCH v6 10/10] spmi: pmic-arb: increase SPMI transaction timeout delay
-Date:   Sun, 12 Jun 2022 11:24:46 +0800
-Message-ID: <1655004286-11493-11-git-send-email-quic_fenglinw@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1655004286-11493-1-git-send-email-quic_fenglinw@quicinc.com>
-References: <1655004286-11493-1-git-send-email-quic_fenglinw@quicinc.com>
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=pbFRE+VCdz/Mvat4l03Ru/M9ljAjH7/8wgRe5uPLKmA=;
+        b=JylIYtTShS/QVxxbVK6KZgGdN2BZID9npboqy/8nxih8wIBzeXClsDxln2BxALdDKo
+         s/rdJm9lAJOmYNN48gAD4YprUguICzlGaD2n5L+7N8UDtwFkb10xOgcJROs17fds/p0C
+         djKJtLrvwes1nNTxMct5KgVOoJHnvlGqfRffcNGB3xI2tq12ydBIJQHokfeodlOA/OOS
+         dYL3kFDEUOlRW3hG09rOFTU1ut9Ig2Vy409NhFVaCYhKZGXtR2Br5lyBBBhkA4Dy49q6
+         TzI1y3h5cFKs45EFz7cIirMCXSqmb9Tt9rLTkz+gaZA4p2T4AjtpmqQTeePPu2QxhL0S
+         e16Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=pbFRE+VCdz/Mvat4l03Ru/M9ljAjH7/8wgRe5uPLKmA=;
+        b=flLrjLdRaiAQgM3Mc9ju5vCDgn6aR2ZkPPYoiOmu7XFMjopWbE0uJeUrz1PMvDlb8g
+         kMoFkeGd7lcVPHcTvEc/Mh4aM6yX6NT77LnnIqxFc72U5eIjzADWC/plMcK0/zCSZBIy
+         AgYuhu/7aSW7JmWMwEF7oiQw3Mdk7dcn7Nib6HmZbTK34ilvApyuP0yOBMMhRe3KgjRi
+         MB4IL747iIBhD1CynATIvcn4ubSRuUkU429OchsWfZB6QqSrfqo6kORBtSwtwq0AK4Jv
+         /qInlFtv27HGeYKMplioiBTBRrk1dcu23WDNRXlU/SeT8B5xfSwUbSrnXDRDTwSky+CI
+         bAcw==
+X-Gm-Message-State: AOAM530+3cWZt40z033rjF/9ePiCEjv/GH38iNPjWNqxLlIjyxPP9s/X
+        EHAPVB1EuUlWgF76qMDi0EXWV3uHgieuyzM2vLU=
+X-Google-Smtp-Source: ABdhPJy9n/qDVUSTdlF1vXGTql2S/bTRtKA5PHOMP6KIlAgDuGmiLNoP/0JDATNBnLXZHa3pJmlXULj0phEuLoDftkE=
+X-Received: by 2002:a17:907:1c19:b0:711:e5f9:2ec7 with SMTP id
+ nc25-20020a1709071c1900b00711e5f92ec7mr23267565ejc.518.1655006591088; Sat, 11
+ Jun 2022 21:03:11 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+References: <20220529180428.2577832-1-robdclark@gmail.com>
+In-Reply-To: <20220529180428.2577832-1-robdclark@gmail.com>
+From:   Chia-I Wu <olvaffe@gmail.com>
+Date:   Sat, 11 Jun 2022 21:02:59 -0700
+Message-ID: <CAPaKu7QDoZiPRDAptk7+cfv3Da+oXU7f0f4m6LQiwfzd=x=TuA@mail.gmail.com>
+Subject: Re: [PATCH v2] drm/msm/adreno: Allow larger address space size
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     ML dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Connor Abbott <cwabbott0@gmail.com>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Rob Clark <robdclark@chromium.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Vladimir Lypak <vladimir.lypak@gmail.com>,
+        Emma Anholt <emma@anholt.net>,
+        Dan Carpenter <dan.carpenter@oracle.com>,
+        open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: David Collins <collinsd@codeaurora.org>
-
-Increase the SPMI transaction timeout delay from 100 us to
-1000 us in order to account for the slower execution time
-found on some simulator targets.
-
-Signed-off-by: David Collins <collinsd@codeaurora.org>
-Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
----
- drivers/spmi/spmi-pmic-arb.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/spmi/spmi-pmic-arb.c b/drivers/spmi/spmi-pmic-arb.c
-index 0496e5d..45f9344 100644
---- a/drivers/spmi/spmi-pmic-arb.c
-+++ b/drivers/spmi/spmi-pmic-arb.c
-@@ -91,7 +91,7 @@ enum pmic_arb_channel {
- 
- /* Maximum number of support PMIC peripherals */
- #define PMIC_ARB_MAX_PERIPHS		512
--#define PMIC_ARB_TIMEOUT_US		100
-+#define PMIC_ARB_TIMEOUT_US		1000
- #define PMIC_ARB_MAX_TRANS_BYTES	(8)
- 
- #define PMIC_ARB_APID_MASK		0xFF
--- 
-2.7.4
-
+On Sun, May 29, 2022 at 11:04 AM Rob Clark <robdclark@gmail.com> wrote:
+>
+> From: Rob Clark <robdclark@chromium.org>
+>
+> The restriction to 4G was strictly to work around 64b math bug in some
+> versions of SQE firmware.  This appears to be fixed in a650+ SQE fw, so
+> allow a larger address space size on these devices.
+>
+> Also, add a modparam override for debugging and igt.
+>
+> v2: Send the right version of the patch (ie. the one that actually
+>     compiles)
+>
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
+Reviewed-by: Chia-I Wu <olvaffe@gmail.com>
