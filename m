@@ -2,69 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CF3675498B2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jun 2022 18:37:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 81EED549B62
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jun 2022 20:22:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240865AbiFMPfP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Jun 2022 11:35:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51632 "EHLO
+        id S245238AbiFMSWm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Jun 2022 14:22:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39098 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241511AbiFMPeq (ORCPT
+        with ESMTP id S242509AbiFMSWc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Jun 2022 11:34:46 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4BF7B377EE;
-        Mon, 13 Jun 2022 06:07:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1655125625; x=1686661625;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=RjncP8fHJaZm0GW9zoaAk/zj6fE5CQig6aRBxp/wKTw=;
-  b=djcktMo1eMQYk4skgRSd/00BST+0fk2iSOAm4MjxRjvXarLGz5lqJVK2
-   +dPiqBXO/T5URDSHz+LViRtV6SvhVDKWYiPg6NKhjG/292NIjErY7LFZf
-   kpFItpZSEnZu1AMpwtj2GHyW4rBCb10DELma1wrw3l62pZ0EBR78mVArB
-   w=;
-Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 13 Jun 2022 06:07:04 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg02-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Jun 2022 06:07:04 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Mon, 13 Jun 2022 06:07:04 -0700
-Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Mon, 13 Jun
- 2022 06:07:03 -0700
-Message-ID: <b3f5e49d-8917-79ab-8f59-29ad6cec3973@quicinc.com>
-Date:   Mon, 13 Jun 2022 07:07:02 -0600
+        Mon, 13 Jun 2022 14:22:32 -0400
+Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 175942D1C0;
+        Mon, 13 Jun 2022 07:29:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1655130541; x=1686666541;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=yo6oWuP1uRTaNxH2baN81HXr0Uua9EFGTDjlZt3dMu8=;
+  b=DBcUToDMdvWPLx8xPLuKw9HhtDWKXsrQfhh8JgZlXsKrRFtxpj+Ra7S8
+   WalsncKQw/fZCXztXuuqah72OpSUzIVYaW/JW4+epSnGqtX4QGAcMHAEM
+   kUCdXna7rrt2nzlPoOQSp3tKwv2TGm2prbjF+3wzixwC1HTXT5pO8trw1
+   y/FbgiztqQ5kYIpXEwoRfZnpF9wnVNseOiftQpMNZ85WJhrz6I2jj28xa
+   iQvGWsj5DYEVSBda+K2UFHDdta03cNugTxx9qTPhRYqxikBfljT+ush4e
+   i0djt6o6rrHCz6ZGXyGW/f9/6McyUYYfCsSOBAPHS9AcqFZOnDYpRzNXP
+   g==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10377"; a="279345735"
+X-IronPort-AV: E=Sophos;i="5.91,297,1647327600"; 
+   d="scan'208";a="279345735"
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Jun 2022 07:28:53 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.91,297,1647327600"; 
+   d="scan'208";a="611801842"
+Received: from lkp-server01.sh.intel.com (HELO 60dabacc1df6) ([10.239.97.150])
+  by orsmga008.jf.intel.com with ESMTP; 13 Jun 2022 07:28:49 -0700
+Received: from kbuild by 60dabacc1df6 with local (Exim 4.95)
+        (envelope-from <lkp@intel.com>)
+        id 1o0l3g-000Ks1-MG;
+        Mon, 13 Jun 2022 14:28:48 +0000
+Date:   Mon, 13 Jun 2022 22:28:39 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Ansuel Smith <ansuelsmth@gmail.com>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Miquel Raynal <miquel.raynal@bootlin.com>,
+        Richard Weinberger <richard@nod.at>,
+        Vignesh Raghavendra <vigneshr@ti.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        linux-mtd@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     llvm@lists.linux.dev, kbuild-all@lists.01.org,
+        Ansuel Smith <ansuelsmth@gmail.com>
+Subject: Re: [PATCH v5 1/3] mtd: nand: raw: qcom_nandc: add support for
+ unprotected spare data pages
+Message-ID: <202206132205.G3tGFPx7-lkp@intel.com>
+References: <20220608001030.18813-2-ansuelsmth@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Subject: Re: [PATCH] bus: mhi: Disable IRQs instead of freeing them during
- power down
-Content-Language: en-US
-To:     Qiang Yu <quic_qianyu@quicinc.com>, <mani@kernel.org>,
-        <quic_hemantk@quicinc.com>, <loic.poulain@linaro.org>
-CC:     <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_cang@quicinc.com>
-References: <1654782215-70383-1-git-send-email-quic_qianyu@quicinc.com>
- <62d09e6f-9898-6233-dfd6-b5ba5d837571@quicinc.com>
- <9659ecb9-9727-a146-e286-d28d656483c3@quicinc.com>
- <9a11394d-f7df-e549-8afb-0834f7d30202@quicinc.com>
- <8eceb966-b5c1-8913-ac97-95348f92650d@quicinc.com>
-From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
-In-Reply-To: <8eceb966-b5c1-8913-ac97-95348f92650d@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-5.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220608001030.18813-2-ansuelsmth@gmail.com>
+X-Spam-Status: No, score=-5.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -72,232 +75,115 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 6/12/2022 7:48 PM, Qiang Yu wrote:
-> 
-> On 6/10/2022 10:00 PM, Jeffrey Hugo wrote:
->> On 6/9/2022 9:21 PM, Qiang Yu wrote:
->>> On 6/9/2022 9:54 PM, Jeffrey Hugo wrote:
->>>
->>>> On 6/9/2022 7:43 AM, Qiang Yu wrote:
->>>>> EP tends to read MSI address/data once and cache them after BME is 
->>>>> set.
->>>>> So host should avoid changing MSI address/data after BME is set.
->>>>>
->>>>> In pci reset function, host invokes free_irq(), which also clears MSI
->>>>> address/data in EP's PCIe config space. If the invalid address/data
->>>>> are cached and used by EP, MSI triggered by EP wouldn't be received by
->>>>> host, because an invalid MSI data is sent to an invalid MSI address.
->>>>>
->>>>> To fix this issue, after host runs request_irq() successfully during
->>>>> mhi driver probe, let's invoke enable_irq()/disable_irq() instead of
->>>>> request_irq()/free_irq() when we want to power on and power down MHI.
->>>>> Meanwhile, Host should invoke free_irq() when mhi host driver is
->>>>> removed.
->>>>
->>>> I don't think this works for hotplug, nor cases where there are 
->>>> multiple MHI devices on the system.
->>>>
->>>> The EP shouldn't be caching this information for multiple reasons. 
->>>> Masking the MSIs, disabling the MSIs, changing the address when the 
->>>> affinity changes, etc.
->>>>
->>>> It really feels like we are solving the problem in the wrong place.
->>>>
->>>> Right now, this gets a NACK from me.
->>>>
->>> After free_irq(), MSI is still enabled but MSI address and data are 
->>> cleared. So there is a chance that device initiates MSI using zero 
->>> address. How to fix this race conditions.
->>
->> On what system is MSI still enabled?  I just removed the AIC100 
->> controller on an random x86 system, and lspci is indicating MSIs are 
->> disabled -
->>
->> Capabilities: [50] MSI: Enable- Count=32/32 Maskable+ 64bit+
-> 
-> system: Ubuntu18.04, 5.4.0-89-generic,  Intel(R) Core(TM) i7-6700 CPU @ 
-> 3.40GHz
-> 
-> After removing MHI driver, I also see MSI enable is cleared.  But I 
-> don't think free_irq clears it. I add log before free_irq and after 
-> free_irq as following show:
-> 
-> [62777.625111] msi cap before free irq
-> [62777.625125] msi control=0x1bb, address=0xfee00318, data=0x0
-> [62777.625301] msi cap after free irq
-> [62777.625313] msi control=0x1bb, address=0x0, data=0x0
-> [62777.625496] mhi-pci-generic 0000:01:00.0: mhi_pci_remove end of line, 
-> block 90 secs.
-> # lspci -vvs 01:00.0
->          Capabilities: [50] MSI: Enable+ Count=8/32 Maskable+ 64bit+
->                  Address: 0000000000000000  Data: 0000
->                  Masking: ffffffff  Pending: 00000000
+Hi Ansuel,
 
-At this point, the MSI functionality is still enabled, but every MSI is 
-masked out (Masking), so per the PCIe spec, the endpoint may not trigger 
-a MSI to the host.  The device advertises that it supports maskable MSIs 
-(Maskable+), so this is appropiate.
+Thank you for the patch! Perhaps something to improve:
 
-If your device can still send a MSI at this point, then it violates the 
-PCIe spec.
+[auto build test WARNING on mtd/nand/next]
+[also build test WARNING on mtd/mtd/next mtd/mtd/fixes robh/for-next v5.19-rc2 next-20220610]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch]
 
-disable_irq() will not help you with this as it will do the same thing.
+url:    https://github.com/intel-lab-lkp/linux/commits/Ansuel-Smith/Add-support-for-unprotected-spare-data-page/20220608-104834
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/mtd/linux.git nand/next
+config: hexagon-randconfig-r041-20220613 (https://download.01.org/0day-ci/archive/20220613/202206132205.G3tGFPx7-lkp@intel.com/config)
+compiler: clang version 15.0.0 (https://github.com/llvm/llvm-project d378268ead93c85803c270277f0243737b536ae7)
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # https://github.com/intel-lab-lkp/linux/commit/5f9263b88e99a6cae44be5e737cb0928ee420e87
+        git remote add linux-review https://github.com/intel-lab-lkp/linux
+        git fetch --no-tags linux-review Ansuel-Smith/Add-support-for-unprotected-spare-data-page/20220608-104834
+        git checkout 5f9263b88e99a6cae44be5e737cb0928ee420e87
+        # save the config file
+        mkdir build_dir && cp config build_dir/.config
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=hexagon SHELL=/bin/bash drivers/mtd/nand/raw/
 
-I still think you are trying to fix an issue in the wrong location (host 
-vs EP), and causing additional issues by doing so.
+If you fix the issue, kindly add following tag where applicable
+Reported-by: kernel test robot <lkp@intel.com>
 
-> [62868.692186] mhi-pci-generic 0000:01:00.0: mhi_pci_remove 90 sec expire.
-> # lspci -vvs 01:00.0
->          Capabilities: [50] MSI: Enable- Count=8/32 Maskable+ 64bit+
->                  Address: 0000000000000000  Data: 0000
->                  Masking: 00000000  Pending: 00000000
-> 
-> I also add msleep() at last of remove callback to block the remove 
-> operation, then lspci shows MSI is still enabled  and after MHI driver 
-> is removed,
-> 
-> lspci shows MSI is disabled. It proves free_irq does not clear MSI 
-> enable, although I am not sure who does it (probably pci framework 
-> clears but I don 't find it).
-> 
-> I delete pci_free_irq_vectors() when I test.
-> 
->>
->>> Maybe EP should not cache MSI data and address. But I think this 
->>> patch is necessary and we will talk with EP POC.
->>>
->>>>>
->>>>> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
->>>>> ---
->>>>>   drivers/bus/mhi/host/init.c        | 31 
->>>>> +++++++++++++++++++++++++++++++
->>>>>   drivers/bus/mhi/host/pci_generic.c |  2 ++
->>>>>   drivers/bus/mhi/host/pm.c          |  4 ++--
->>>>>   3 files changed, 35 insertions(+), 2 deletions(-)
->>>>>
->>>>> diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
->>>>> index cbb86b2..48cb093 100644
->>>>> --- a/drivers/bus/mhi/host/init.c
->>>>> +++ b/drivers/bus/mhi/host/init.c
->>>>> @@ -18,6 +18,7 @@
->>>>>   #include <linux/slab.h>
->>>>>   #include <linux/vmalloc.h>
->>>>>   #include <linux/wait.h>
->>>>> +#include <linux/irq.h>
->>>>
->>>> Should be in alphabetical order
->>>>
->>>>>   #include "internal.h"
->>>>>     static DEFINE_IDA(mhi_controller_ida);
->>>>> @@ -168,6 +169,22 @@ int mhi_init_irq_setup(struct mhi_controller 
->>>>> *mhi_cntrl)
->>>>>       unsigned long irq_flags = IRQF_SHARED | IRQF_NO_SUSPEND;
->>>>>       int i, ret;
->>>>>   +    /*
->>>>> +     * if irq[0] has action, it represents all MSI IRQs have been
->>>>> +     * requested, so we just need to enable them.
->>>>> +     */
->>>>
->>>> This seems like an assumption about how the interrupts are allocated 
->>>> and assigned that may not hold true for all devices.
->>>
->>> All interrupts are allocated and assigned together in 
->>> mhi_pci_get_irqs() and mhi_init_irq_setup().
->>>
->>> So I think if irq[0] has action, other irqs must be requested 
->>> successfully. If any other msi request fail, irq[0] should have been 
->>> freed.
->>>
->>>>> +    if (irq_has_action(mhi_cntrl->irq[0])) {
->>>>> +        enable_irq(mhi_cntrl->irq[0]);
->>>>> +
->>>>> +        for (i = 0; i < mhi_cntrl->total_ev_rings; i++, 
->>>>> mhi_event++) {
->>>>> +            if (mhi_event->offload_ev)
->>>>> +                continue;
->>>>> +
->>>>> + enable_irq(mhi_cntrl->irq[mhi_event->irq]);
->>>>> +        }
->>>>> +        return 0;
->>>>> +    }
->>>>> +
->>>>>       /* if controller driver has set irq_flags, use it */
->>>>>       if (mhi_cntrl->irq_flags)
->>>>>           irq_flags = mhi_cntrl->irq_flags;
->>>>> @@ -179,6 +196,11 @@ int mhi_init_irq_setup(struct mhi_controller 
->>>>> *mhi_cntrl)
->>>>>                      "bhi", mhi_cntrl);
->>>>>       if (ret)
->>>>>           return ret;
->>>>> +    /*
->>>>> +     * IRQ marked IRQF_SHARED isn't recommended to use IRQ_NOAUTOEN,
->>>>> +     * so disable it explicitly.
->>>>> +     */
->>>>> +    disable_irq(mhi_cntrl->irq[0]);
->>>>>         for (i = 0; i < mhi_cntrl->total_ev_rings; i++, mhi_event++) {
->>>>>           if (mhi_event->offload_ev)
->>>>> @@ -200,6 +222,8 @@ int mhi_init_irq_setup(struct mhi_controller 
->>>>> *mhi_cntrl)
->>>>>                   mhi_cntrl->irq[mhi_event->irq], i);
->>>>>               goto error_request;
->>>>>           }
->>>>> +
->>>>> +        disable_irq(mhi_cntrl->irq[mhi_event->irq]);
->>>>>       }
->>>>>         return 0;
->>>>> @@ -1003,8 +1027,14 @@ int mhi_register_controller(struct 
->>>>> mhi_controller *mhi_cntrl,
->>>>>         mhi_create_debugfs(mhi_cntrl);
->>>>>   +    ret = mhi_init_irq_setup(mhi_cntrl);
->>>>> +    if (ret)
->>>>> +        goto error_setup_irq;
->>>>> +
->>>>>       return 0;
->>>>>   +error_setup_irq:
->>>>> +    mhi_destroy_debugfs(mhi_cntrl);
->>>>>   err_release_dev:
->>>>>       put_device(&mhi_dev->dev);
->>>>>   err_ida_free:
->>>>> @@ -1027,6 +1057,7 @@ void mhi_unregister_controller(struct 
->>>>> mhi_controller *mhi_cntrl)
->>>>>       struct mhi_chan *mhi_chan = mhi_cntrl->mhi_chan;
->>>>>       unsigned int i;
->>>>>   +    mhi_deinit_free_irq(mhi_cntrl);
->>>>>       mhi_destroy_debugfs(mhi_cntrl);
->>>>>         destroy_workqueue(mhi_cntrl->hiprio_wq);
->>>>> diff --git a/drivers/bus/mhi/host/pci_generic.c 
->>>>> b/drivers/bus/mhi/host/pci_generic.c
->>>>> index 6fbc591..60020d0 100644
->>>>> --- a/drivers/bus/mhi/host/pci_generic.c
->>>>> +++ b/drivers/bus/mhi/host/pci_generic.c
->>>>> @@ -945,6 +945,8 @@ static void mhi_pci_remove(struct pci_dev *pdev)
->>>>>         mhi_unregister_controller(mhi_cntrl);
->>>>>       pci_disable_pcie_error_reporting(pdev);
->>>>> +
->>>>> +    pci_free_irq_vectors(pdev);
->>>>>   }
->>>>>     static void mhi_pci_shutdown(struct pci_dev *pdev)
->>>>> diff --git a/drivers/bus/mhi/host/pm.c b/drivers/bus/mhi/host/pm.c
->>>>> index dc2e8ff..190231c 100644
->>>>> --- a/drivers/bus/mhi/host/pm.c
->>>>> +++ b/drivers/bus/mhi/host/pm.c
->>>>> @@ -500,7 +500,7 @@ static void mhi_pm_disable_transition(struct 
->>>>> mhi_controller *mhi_cntrl)
->>>>>       for (i = 0; i < mhi_cntrl->total_ev_rings; i++, mhi_event++) {
->>>>>           if (mhi_event->offload_ev)
->>>>>               continue;
->>>>> -        free_irq(mhi_cntrl->irq[mhi_event->irq], mhi_event);
->>>>> +        disable_irq(mhi_cntrl->irq[mhi_event->irq]);
->>>>>           tasklet_kill(&mhi_event->task);
->>>>>       }
->>>>>   @@ -1182,7 +1182,7 @@ void mhi_power_down(struct mhi_controller 
->>>>> *mhi_cntrl, bool graceful)
->>>>>       /* Wait for shutdown to complete */
->>>>>       flush_work(&mhi_cntrl->st_worker);
->>>>>   -    free_irq(mhi_cntrl->irq[0], mhi_cntrl);
->>>>> +    disable_irq(mhi_cntrl->irq[0]);
->>>>>   }
->>>>>   EXPORT_SYMBOL_GPL(mhi_power_down);
->>>>
->>
+All warnings (new ones prefixed by >>):
 
+>> drivers/mtd/nand/raw/qcom_nandc.c:3020:10: warning: variable 'ret' is uninitialized when used here [-Wuninitialized]
+                   return ret;
+                          ^~~
+   drivers/mtd/nand/raw/qcom_nandc.c:3009:33: note: initialize the variable 'ret' to silence this warning
+           int partitions_count, i, j, ret;
+                                          ^
+                                           = 0
+   1 warning generated.
+
+
+vim +/ret +3020 drivers/mtd/nand/raw/qcom_nandc.c
+
+  3000	
+  3001	static int qcom_nand_host_parse_boot_partitions(struct qcom_nand_controller *nandc,
+  3002							struct qcom_nand_host *host,
+  3003							struct device_node *dn)
+  3004	{
+  3005		struct nand_chip *chip = &host->chip;
+  3006		struct mtd_info *mtd = nand_to_mtd(chip);
+  3007		struct qcom_nand_boot_partition *boot_partition;
+  3008		struct device *dev = nandc->dev;
+  3009		int partitions_count, i, j, ret;
+  3010	
+  3011		if (!nandc->props->use_codeword_fixup)
+  3012			return 0;
+  3013	
+  3014		if (!of_find_property(dn, "qcom,boot-partitions", NULL))
+  3015			return 0;
+  3016	
+  3017		partitions_count = of_property_count_u32_elems(dn, "qcom,boot-partitions");
+  3018		if (partitions_count < 0) {
+  3019			dev_err(dev, "Error parsing boot partition.");
+> 3020			return ret;
+  3021		}
+  3022	
+  3023		host->nr_boot_partitions = partitions_count / 2;
+  3024		host->boot_partitions = devm_kcalloc(dev, host->nr_boot_partitions,
+  3025						     sizeof(*host->boot_partitions), GFP_KERNEL);
+  3026		if (!host->boot_partitions)
+  3027			return -ENOMEM;
+  3028	
+  3029		for (i = 0, j = 0; i < host->nr_boot_partitions; i++, j += 2) {
+  3030			boot_partition = &host->boot_partitions[i];
+  3031	
+  3032			ret = of_property_read_u32_index(dn, "qcom,boot-partitions", j,
+  3033							 &boot_partition->page_offset);
+  3034			if (ret) {
+  3035				dev_err(dev, "Error parsing boot partition offset at index %d", i);
+  3036				return ret;
+  3037			}
+  3038	
+  3039			if (boot_partition->page_offset % mtd->writesize) {
+  3040				dev_err(dev, "Boot partition offset not multiple of writesize at index %i",
+  3041					i);
+  3042				return -EINVAL;
+  3043			}
+  3044			/* Convert offset to nand pages */
+  3045			boot_partition->page_offset /= mtd->writesize;
+  3046	
+  3047			ret = of_property_read_u32_index(dn, "qcom,boot-partitions", j + 1,
+  3048							 &boot_partition->page_size);
+  3049			if (ret) {
+  3050				dev_err(dev, "Error parsing boot partition size at index %d", i);
+  3051				return ret;
+  3052			}
+  3053	
+  3054			if (boot_partition->page_size % mtd->writesize) {
+  3055				dev_err(dev, "Boot partition size not multiple of writesize at index %i",
+  3056					i);
+  3057				return -EINVAL;
+  3058			}
+  3059			/* Convert size to nand pages */
+  3060			boot_partition->page_size /= mtd->writesize;
+  3061		}
+  3062	
+  3063		return 0;
+  3064	}
+  3065	
+
+-- 
+0-DAY CI Kernel Test Service
+https://01.org/lkp
