@@ -2,225 +2,302 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A2C785499DA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jun 2022 19:23:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CF3675498B2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jun 2022 18:37:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240848AbiFMRX4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Jun 2022 13:23:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33350 "EHLO
+        id S240865AbiFMPfP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Jun 2022 11:35:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51632 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242480AbiFMRXd (ORCPT
+        with ESMTP id S241511AbiFMPeq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Jun 2022 13:23:33 -0400
-Received: from muru.com (muru.com [72.249.23.125])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id B509D4F9E3;
-        Mon, 13 Jun 2022 05:39:07 -0700 (PDT)
-Received: from localhost (localhost [127.0.0.1])
-        by muru.com (Postfix) with ESMTPS id AC04B82CC;
-        Mon, 13 Jun 2022 12:34:24 +0000 (UTC)
-Date:   Mon, 13 Jun 2022 15:39:05 +0300
-From:   Tony Lindgren <tony@atomide.com>
-To:     Peter Zijlstra <peterz@infradead.org>
-Cc:     rth@twiddle.net, ink@jurassic.park.msu.ru, mattst88@gmail.com,
-        vgupta@kernel.org, linux@armlinux.org.uk,
-        ulli.kroll@googlemail.com, linus.walleij@linaro.org,
-        shawnguo@kernel.org, Sascha Hauer <s.hauer@pengutronix.de>,
-        kernel@pengutronix.de, festevam@gmail.com, linux-imx@nxp.com,
-        khilman@kernel.org, catalin.marinas@arm.com, will@kernel.org,
-        guoren@kernel.org, bcain@quicinc.com, chenhuacai@kernel.org,
-        kernel@xen0n.name, geert@linux-m68k.org, sammy@sammy.net,
-        monstr@monstr.eu, tsbogend@alpha.franken.de, dinguyen@kernel.org,
-        jonas@southpole.se, stefan.kristiansson@saunalahti.fi,
-        shorne@gmail.com, James.Bottomley@hansenpartnership.com,
-        deller@gmx.de, mpe@ellerman.id.au, benh@kernel.crashing.org,
-        paulus@samba.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
-        aou@eecs.berkeley.edu, hca@linux.ibm.com, gor@linux.ibm.com,
-        agordeev@linux.ibm.com, borntraeger@linux.ibm.com,
-        svens@linux.ibm.com, ysato@users.sourceforge.jp, dalias@libc.org,
-        davem@davemloft.net, richard@nod.at,
-        anton.ivanov@cambridgegreys.com, johannes@sipsolutions.net,
-        tglx@linutronix.de, mingo@redhat.com, bp@alien8.de,
-        dave.hansen@linux.intel.com, x86@kernel.org, hpa@zytor.com,
-        acme@kernel.org, mark.rutland@arm.com,
-        alexander.shishkin@linux.intel.com, jolsa@kernel.org,
-        namhyung@kernel.org, jgross@suse.com, srivatsa@csail.mit.edu,
-        amakhalov@vmware.com, pv-drivers@vmware.com,
-        boris.ostrovsky@oracle.com, chris@zankel.net, jcmvbkbc@gmail.com,
-        rafael@kernel.org, lenb@kernel.org, pavel@ucw.cz,
-        gregkh@linuxfoundation.org, mturquette@baylibre.com,
-        sboyd@kernel.org, daniel.lezcano@linaro.org, lpieralisi@kernel.org,
-        sudeep.holla@arm.com, agross@kernel.org,
-        bjorn.andersson@linaro.org, anup@brainfault.org,
-        thierry.reding@gmail.com, jonathanh@nvidia.com,
-        jacob.jun.pan@linux.intel.com, Arnd Bergmann <arnd@arndb.de>,
-        yury.norov@gmail.com, andriy.shevchenko@linux.intel.com,
-        linux@rasmusvillemoes.dk, rostedt@goodmis.org, pmladek@suse.com,
-        senozhatsky@chromium.org, john.ogness@linutronix.de,
-        paulmck@kernel.org, frederic@kernel.org, quic_neeraju@quicinc.com,
-        josh@joshtriplett.org, mathieu.desnoyers@efficios.com,
-        jiangshanlai@gmail.com, joel@joelfernandes.org,
-        juri.lelli@redhat.com, vincent.guittot@linaro.org,
-        dietmar.eggemann@arm.com, bsegall@google.com, mgorman@suse.de,
-        bristot@redhat.com, vschneid@redhat.com, jpoimboe@kernel.org,
-        linux-alpha@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-snps-arc@lists.infradead.org,
-        linux-arm-kernel@lists.infradead.org, linux-omap@vger.kernel.org,
-        linux-csky@vger.kernel.org, linux-hexagon@vger.kernel.org,
-        linux-ia64@vger.kernel.org, linux-m68k@lists.linux-m68k.org,
-        linux-mips@vger.kernel.org, openrisc@lists.librecores.org,
-        linux-parisc@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
-        linux-riscv@lists.infradead.org, linux-s390@vger.kernel.org,
-        linux-sh@vger.kernel.org, sparclinux@vger.kernel.org,
-        linux-um@lists.infradead.org, linux-perf-users@vger.kernel.org,
-        virtualization@lists.linux-foundation.org,
-        xen-devel@lists.xenproject.org, linux-xtensa@linux-xtensa.org,
-        linux-acpi@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-tegra@vger.kernel.org, linux-arch@vger.kernel.org,
-        rcu@vger.kernel.org
-Subject: [PATCH 34.5/36] cpuidle,omap4: Push RCU-idle into
- omap4_enter_lowpower()
-Message-ID: <Yqcv6crSNKuSWoTu@atomide.com>
-References: <20220608142723.103523089@infradead.org>
- <20220608144518.073801916@infradead.org>
+        Mon, 13 Jun 2022 11:34:46 -0400
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4BF7B377EE;
+        Mon, 13 Jun 2022 06:07:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1655125625; x=1686661625;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=RjncP8fHJaZm0GW9zoaAk/zj6fE5CQig6aRBxp/wKTw=;
+  b=djcktMo1eMQYk4skgRSd/00BST+0fk2iSOAm4MjxRjvXarLGz5lqJVK2
+   +dPiqBXO/T5URDSHz+LViRtV6SvhVDKWYiPg6NKhjG/292NIjErY7LFZf
+   kpFItpZSEnZu1AMpwtj2GHyW4rBCb10DELma1wrw3l62pZ0EBR78mVArB
+   w=;
+Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 13 Jun 2022 06:07:04 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg02-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Jun 2022 06:07:04 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Mon, 13 Jun 2022 06:07:04 -0700
+Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Mon, 13 Jun
+ 2022 06:07:03 -0700
+Message-ID: <b3f5e49d-8917-79ab-8f59-29ad6cec3973@quicinc.com>
+Date:   Mon, 13 Jun 2022 07:07:02 -0600
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220608144518.073801916@infradead.org>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
-        SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.0
+Subject: Re: [PATCH] bus: mhi: Disable IRQs instead of freeing them during
+ power down
+Content-Language: en-US
+To:     Qiang Yu <quic_qianyu@quicinc.com>, <mani@kernel.org>,
+        <quic_hemantk@quicinc.com>, <loic.poulain@linaro.org>
+CC:     <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_cang@quicinc.com>
+References: <1654782215-70383-1-git-send-email-quic_qianyu@quicinc.com>
+ <62d09e6f-9898-6233-dfd6-b5ba5d837571@quicinc.com>
+ <9659ecb9-9727-a146-e286-d28d656483c3@quicinc.com>
+ <9a11394d-f7df-e549-8afb-0834f7d30202@quicinc.com>
+ <8eceb966-b5c1-8913-ac97-95348f92650d@quicinc.com>
+From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
+In-Reply-To: <8eceb966-b5c1-8913-ac97-95348f92650d@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-5.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-OMAP4 uses full SoC suspend modes as idle states, as such it needs the
-whole power-domain and clock-domain code from the idle path.
+On 6/12/2022 7:48 PM, Qiang Yu wrote:
+> 
+> On 6/10/2022 10:00 PM, Jeffrey Hugo wrote:
+>> On 6/9/2022 9:21 PM, Qiang Yu wrote:
+>>> On 6/9/2022 9:54 PM, Jeffrey Hugo wrote:
+>>>
+>>>> On 6/9/2022 7:43 AM, Qiang Yu wrote:
+>>>>> EP tends to read MSI address/data once and cache them after BME is 
+>>>>> set.
+>>>>> So host should avoid changing MSI address/data after BME is set.
+>>>>>
+>>>>> In pci reset function, host invokes free_irq(), which also clears MSI
+>>>>> address/data in EP's PCIe config space. If the invalid address/data
+>>>>> are cached and used by EP, MSI triggered by EP wouldn't be received by
+>>>>> host, because an invalid MSI data is sent to an invalid MSI address.
+>>>>>
+>>>>> To fix this issue, after host runs request_irq() successfully during
+>>>>> mhi driver probe, let's invoke enable_irq()/disable_irq() instead of
+>>>>> request_irq()/free_irq() when we want to power on and power down MHI.
+>>>>> Meanwhile, Host should invoke free_irq() when mhi host driver is
+>>>>> removed.
+>>>>
+>>>> I don't think this works for hotplug, nor cases where there are 
+>>>> multiple MHI devices on the system.
+>>>>
+>>>> The EP shouldn't be caching this information for multiple reasons. 
+>>>> Masking the MSIs, disabling the MSIs, changing the address when the 
+>>>> affinity changes, etc.
+>>>>
+>>>> It really feels like we are solving the problem in the wrong place.
+>>>>
+>>>> Right now, this gets a NACK from me.
+>>>>
+>>> After free_irq(), MSI is still enabled but MSI address and data are 
+>>> cleared. So there is a chance that device initiates MSI using zero 
+>>> address. How to fix this race conditions.
+>>
+>> On what system is MSI still enabled?  I just removed the AIC100 
+>> controller on an random x86 system, and lspci is indicating MSIs are 
+>> disabled -
+>>
+>> Capabilities: [50] MSI: Enable- Count=32/32 Maskable+ 64bit+
+> 
+> system: Ubuntu18.04, 5.4.0-89-generic,  Intel(R) Core(TM) i7-6700 CPU @ 
+> 3.40GHz
+> 
+> After removing MHI driver, I also see MSI enable is cleared.  But I 
+> don't think free_irq clears it. I add log before free_irq and after 
+> free_irq as following show:
+> 
+> [62777.625111] msi cap before free irq
+> [62777.625125] msi control=0x1bb, address=0xfee00318, data=0x0
+> [62777.625301] msi cap after free irq
+> [62777.625313] msi control=0x1bb, address=0x0, data=0x0
+> [62777.625496] mhi-pci-generic 0000:01:00.0: mhi_pci_remove end of line, 
+> block 90 secs.
+> # lspci -vvs 01:00.0
+>          Capabilities: [50] MSI: Enable+ Count=8/32 Maskable+ 64bit+
+>                  Address: 0000000000000000  Data: 0000
+>                  Masking: ffffffff  Pending: 00000000
 
-All that code is not suitable to run with RCU disabled, as such push
-RCU-idle deeper still.
+At this point, the MSI functionality is still enabled, but every MSI is 
+masked out (Masking), so per the PCIe spec, the endpoint may not trigger 
+a MSI to the host.  The device advertises that it supports maskable MSIs 
+(Maskable+), so this is appropiate.
 
-Signed-off-by: Tony Lindgren <tony@atomide.com>
----
+If your device can still send a MSI at this point, then it violates the 
+PCIe spec.
 
-Peter here's one more for your series, looks like this is needed to avoid
-warnings similar to what you did for omap3.
+disable_irq() will not help you with this as it will do the same thing.
 
----
- arch/arm/mach-omap2/common.h              |  6 ++++--
- arch/arm/mach-omap2/cpuidle44xx.c         |  8 ++------
- arch/arm/mach-omap2/omap-mpuss-lowpower.c | 12 +++++++++++-
- arch/arm/mach-omap2/pm44xx.c              |  2 +-
- 4 files changed, 18 insertions(+), 10 deletions(-)
+I still think you are trying to fix an issue in the wrong location (host 
+vs EP), and causing additional issues by doing so.
 
-diff --git a/arch/arm/mach-omap2/common.h b/arch/arm/mach-omap2/common.h
---- a/arch/arm/mach-omap2/common.h
-+++ b/arch/arm/mach-omap2/common.h
-@@ -284,11 +284,13 @@ extern u32 omap4_get_cpu1_ns_pa_addr(void);
- 
- #if defined(CONFIG_SMP) && defined(CONFIG_PM)
- extern int omap4_mpuss_init(void);
--extern int omap4_enter_lowpower(unsigned int cpu, unsigned int power_state);
-+extern int omap4_enter_lowpower(unsigned int cpu, unsigned int power_state,
-+				bool rcuidle);
- extern int omap4_hotplug_cpu(unsigned int cpu, unsigned int power_state);
- #else
- static inline int omap4_enter_lowpower(unsigned int cpu,
--					unsigned int power_state)
-+					unsigned int power_state,
-+					bool rcuidle)
- {
- 	cpu_do_idle();
- 	return 0;
-diff --git a/arch/arm/mach-omap2/cpuidle44xx.c b/arch/arm/mach-omap2/cpuidle44xx.c
---- a/arch/arm/mach-omap2/cpuidle44xx.c
-+++ b/arch/arm/mach-omap2/cpuidle44xx.c
-@@ -105,9 +105,7 @@ static int omap_enter_idle_smp(struct cpuidle_device *dev,
- 	}
- 	raw_spin_unlock_irqrestore(&mpu_lock, flag);
- 
--	cpuidle_rcu_enter();
--	omap4_enter_lowpower(dev->cpu, cx->cpu_state);
--	cpuidle_rcu_exit();
-+	omap4_enter_lowpower(dev->cpu, cx->cpu_state, true);
- 
- 	raw_spin_lock_irqsave(&mpu_lock, flag);
- 	if (cx->mpu_state_vote == num_online_cpus())
-@@ -186,10 +184,8 @@ static int omap_enter_idle_coupled(struct cpuidle_device *dev,
- 		}
- 	}
- 
--	cpuidle_rcu_enter();
--	omap4_enter_lowpower(dev->cpu, cx->cpu_state);
-+	omap4_enter_lowpower(dev->cpu, cx->cpu_state, true);
- 	cpu_done[dev->cpu] = true;
--	cpuidle_rcu_exit();
- 
- 	/* Wakeup CPU1 only if it is not offlined */
- 	if (dev->cpu == 0 && cpumask_test_cpu(1, cpu_online_mask)) {
-diff --git a/arch/arm/mach-omap2/omap-mpuss-lowpower.c b/arch/arm/mach-omap2/omap-mpuss-lowpower.c
---- a/arch/arm/mach-omap2/omap-mpuss-lowpower.c
-+++ b/arch/arm/mach-omap2/omap-mpuss-lowpower.c
-@@ -33,6 +33,7 @@
-  * and first to wake-up when MPUSS low power states are excercised
-  */
- 
-+#include <linux/cpuidle.h>
- #include <linux/kernel.h>
- #include <linux/io.h>
- #include <linux/errno.h>
-@@ -214,6 +215,7 @@ static void __init save_l2x0_context(void)
-  * of OMAP4 MPUSS subsystem
-  * @cpu : CPU ID
-  * @power_state: Low power state.
-+ * @rcuidle: RCU needs to be idled
-  *
-  * MPUSS states for the context save:
-  * save_state =
-@@ -222,7 +224,8 @@ static void __init save_l2x0_context(void)
-  *	2 - CPUx L1 and logic lost + GIC lost: MPUSS OSWR
-  *	3 - CPUx L1 and logic lost + GIC + L2 lost: DEVICE OFF
-  */
--int omap4_enter_lowpower(unsigned int cpu, unsigned int power_state)
-+int omap4_enter_lowpower(unsigned int cpu, unsigned int power_state,
-+			 bool rcuidle)
- {
- 	struct omap4_cpu_pm_info *pm_info = &per_cpu(omap4_pm_info, cpu);
- 	unsigned int save_state = 0, cpu_logic_state = PWRDM_POWER_RET;
-@@ -268,6 +271,10 @@ int omap4_enter_lowpower(unsigned int cpu, unsigned int power_state)
- 	cpu_clear_prev_logic_pwrst(cpu);
- 	pwrdm_set_next_pwrst(pm_info->pwrdm, power_state);
- 	pwrdm_set_logic_retst(pm_info->pwrdm, cpu_logic_state);
-+
-+	if (rcuidle)
-+		cpuidle_rcu_enter();
-+
- 	set_cpu_wakeup_addr(cpu, __pa_symbol(omap_pm_ops.resume));
- 	omap_pm_ops.scu_prepare(cpu, power_state);
- 	l2x0_pwrst_prepare(cpu, save_state);
-@@ -283,6 +290,9 @@ int omap4_enter_lowpower(unsigned int cpu, unsigned int power_state)
- 	if (IS_PM44XX_ERRATUM(PM_OMAP4_ROM_SMP_BOOT_ERRATUM_GICD) && cpu)
- 		gic_dist_enable();
- 
-+	if (rcuidle)
-+		cpuidle_rcu_exit();
-+
- 	/*
- 	 * Restore the CPUx power state to ON otherwise CPUx
- 	 * power domain can transitions to programmed low power
-diff --git a/arch/arm/mach-omap2/pm44xx.c b/arch/arm/mach-omap2/pm44xx.c
---- a/arch/arm/mach-omap2/pm44xx.c
-+++ b/arch/arm/mach-omap2/pm44xx.c
-@@ -76,7 +76,7 @@ static int omap4_pm_suspend(void)
- 	 * domain CSWR is not supported by hardware.
- 	 * More details can be found in OMAP4430 TRM section 4.3.4.2.
- 	 */
--	omap4_enter_lowpower(cpu_id, cpu_suspend_state);
-+	omap4_enter_lowpower(cpu_id, cpu_suspend_state, false);
- 
- 	/* Restore next powerdomain state */
- 	list_for_each_entry(pwrst, &pwrst_list, node) {
--- 
-2.36.1
+> [62868.692186] mhi-pci-generic 0000:01:00.0: mhi_pci_remove 90 sec expire.
+> # lspci -vvs 01:00.0
+>          Capabilities: [50] MSI: Enable- Count=8/32 Maskable+ 64bit+
+>                  Address: 0000000000000000  Data: 0000
+>                  Masking: 00000000  Pending: 00000000
+> 
+> I also add msleep() at last of remove callback to block the remove 
+> operation, then lspci shows MSI is still enabled  and after MHI driver 
+> is removed,
+> 
+> lspci shows MSI is disabled. It proves free_irq does not clear MSI 
+> enable, although I am not sure who does it (probably pci framework 
+> clears but I don 't find it).
+> 
+> I delete pci_free_irq_vectors() when I test.
+> 
+>>
+>>> Maybe EP should not cache MSI data and address. But I think this 
+>>> patch is necessary and we will talk with EP POC.
+>>>
+>>>>>
+>>>>> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
+>>>>> ---
+>>>>>   drivers/bus/mhi/host/init.c        | 31 
+>>>>> +++++++++++++++++++++++++++++++
+>>>>>   drivers/bus/mhi/host/pci_generic.c |  2 ++
+>>>>>   drivers/bus/mhi/host/pm.c          |  4 ++--
+>>>>>   3 files changed, 35 insertions(+), 2 deletions(-)
+>>>>>
+>>>>> diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
+>>>>> index cbb86b2..48cb093 100644
+>>>>> --- a/drivers/bus/mhi/host/init.c
+>>>>> +++ b/drivers/bus/mhi/host/init.c
+>>>>> @@ -18,6 +18,7 @@
+>>>>>   #include <linux/slab.h>
+>>>>>   #include <linux/vmalloc.h>
+>>>>>   #include <linux/wait.h>
+>>>>> +#include <linux/irq.h>
+>>>>
+>>>> Should be in alphabetical order
+>>>>
+>>>>>   #include "internal.h"
+>>>>>     static DEFINE_IDA(mhi_controller_ida);
+>>>>> @@ -168,6 +169,22 @@ int mhi_init_irq_setup(struct mhi_controller 
+>>>>> *mhi_cntrl)
+>>>>>       unsigned long irq_flags = IRQF_SHARED | IRQF_NO_SUSPEND;
+>>>>>       int i, ret;
+>>>>>   +    /*
+>>>>> +     * if irq[0] has action, it represents all MSI IRQs have been
+>>>>> +     * requested, so we just need to enable them.
+>>>>> +     */
+>>>>
+>>>> This seems like an assumption about how the interrupts are allocated 
+>>>> and assigned that may not hold true for all devices.
+>>>
+>>> All interrupts are allocated and assigned together in 
+>>> mhi_pci_get_irqs() and mhi_init_irq_setup().
+>>>
+>>> So I think if irq[0] has action, other irqs must be requested 
+>>> successfully. If any other msi request fail, irq[0] should have been 
+>>> freed.
+>>>
+>>>>> +    if (irq_has_action(mhi_cntrl->irq[0])) {
+>>>>> +        enable_irq(mhi_cntrl->irq[0]);
+>>>>> +
+>>>>> +        for (i = 0; i < mhi_cntrl->total_ev_rings; i++, 
+>>>>> mhi_event++) {
+>>>>> +            if (mhi_event->offload_ev)
+>>>>> +                continue;
+>>>>> +
+>>>>> + enable_irq(mhi_cntrl->irq[mhi_event->irq]);
+>>>>> +        }
+>>>>> +        return 0;
+>>>>> +    }
+>>>>> +
+>>>>>       /* if controller driver has set irq_flags, use it */
+>>>>>       if (mhi_cntrl->irq_flags)
+>>>>>           irq_flags = mhi_cntrl->irq_flags;
+>>>>> @@ -179,6 +196,11 @@ int mhi_init_irq_setup(struct mhi_controller 
+>>>>> *mhi_cntrl)
+>>>>>                      "bhi", mhi_cntrl);
+>>>>>       if (ret)
+>>>>>           return ret;
+>>>>> +    /*
+>>>>> +     * IRQ marked IRQF_SHARED isn't recommended to use IRQ_NOAUTOEN,
+>>>>> +     * so disable it explicitly.
+>>>>> +     */
+>>>>> +    disable_irq(mhi_cntrl->irq[0]);
+>>>>>         for (i = 0; i < mhi_cntrl->total_ev_rings; i++, mhi_event++) {
+>>>>>           if (mhi_event->offload_ev)
+>>>>> @@ -200,6 +222,8 @@ int mhi_init_irq_setup(struct mhi_controller 
+>>>>> *mhi_cntrl)
+>>>>>                   mhi_cntrl->irq[mhi_event->irq], i);
+>>>>>               goto error_request;
+>>>>>           }
+>>>>> +
+>>>>> +        disable_irq(mhi_cntrl->irq[mhi_event->irq]);
+>>>>>       }
+>>>>>         return 0;
+>>>>> @@ -1003,8 +1027,14 @@ int mhi_register_controller(struct 
+>>>>> mhi_controller *mhi_cntrl,
+>>>>>         mhi_create_debugfs(mhi_cntrl);
+>>>>>   +    ret = mhi_init_irq_setup(mhi_cntrl);
+>>>>> +    if (ret)
+>>>>> +        goto error_setup_irq;
+>>>>> +
+>>>>>       return 0;
+>>>>>   +error_setup_irq:
+>>>>> +    mhi_destroy_debugfs(mhi_cntrl);
+>>>>>   err_release_dev:
+>>>>>       put_device(&mhi_dev->dev);
+>>>>>   err_ida_free:
+>>>>> @@ -1027,6 +1057,7 @@ void mhi_unregister_controller(struct 
+>>>>> mhi_controller *mhi_cntrl)
+>>>>>       struct mhi_chan *mhi_chan = mhi_cntrl->mhi_chan;
+>>>>>       unsigned int i;
+>>>>>   +    mhi_deinit_free_irq(mhi_cntrl);
+>>>>>       mhi_destroy_debugfs(mhi_cntrl);
+>>>>>         destroy_workqueue(mhi_cntrl->hiprio_wq);
+>>>>> diff --git a/drivers/bus/mhi/host/pci_generic.c 
+>>>>> b/drivers/bus/mhi/host/pci_generic.c
+>>>>> index 6fbc591..60020d0 100644
+>>>>> --- a/drivers/bus/mhi/host/pci_generic.c
+>>>>> +++ b/drivers/bus/mhi/host/pci_generic.c
+>>>>> @@ -945,6 +945,8 @@ static void mhi_pci_remove(struct pci_dev *pdev)
+>>>>>         mhi_unregister_controller(mhi_cntrl);
+>>>>>       pci_disable_pcie_error_reporting(pdev);
+>>>>> +
+>>>>> +    pci_free_irq_vectors(pdev);
+>>>>>   }
+>>>>>     static void mhi_pci_shutdown(struct pci_dev *pdev)
+>>>>> diff --git a/drivers/bus/mhi/host/pm.c b/drivers/bus/mhi/host/pm.c
+>>>>> index dc2e8ff..190231c 100644
+>>>>> --- a/drivers/bus/mhi/host/pm.c
+>>>>> +++ b/drivers/bus/mhi/host/pm.c
+>>>>> @@ -500,7 +500,7 @@ static void mhi_pm_disable_transition(struct 
+>>>>> mhi_controller *mhi_cntrl)
+>>>>>       for (i = 0; i < mhi_cntrl->total_ev_rings; i++, mhi_event++) {
+>>>>>           if (mhi_event->offload_ev)
+>>>>>               continue;
+>>>>> -        free_irq(mhi_cntrl->irq[mhi_event->irq], mhi_event);
+>>>>> +        disable_irq(mhi_cntrl->irq[mhi_event->irq]);
+>>>>>           tasklet_kill(&mhi_event->task);
+>>>>>       }
+>>>>>   @@ -1182,7 +1182,7 @@ void mhi_power_down(struct mhi_controller 
+>>>>> *mhi_cntrl, bool graceful)
+>>>>>       /* Wait for shutdown to complete */
+>>>>>       flush_work(&mhi_cntrl->st_worker);
+>>>>>   -    free_irq(mhi_cntrl->irq[0], mhi_cntrl);
+>>>>> +    disable_irq(mhi_cntrl->irq[0]);
+>>>>>   }
+>>>>>   EXPORT_SYMBOL_GPL(mhi_power_down);
+>>>>
+>>
+
