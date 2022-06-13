@@ -2,168 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EFC15549D8E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jun 2022 21:24:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AEABE549DDE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jun 2022 21:41:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348641AbiFMTYM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Jun 2022 15:24:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44848 "EHLO
+        id S236329AbiFMTlg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Jun 2022 15:41:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46704 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349572AbiFMTWV (ORCPT
+        with ESMTP id S235832AbiFMTlP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Jun 2022 15:22:21 -0400
-Received: from mail-pg1-x532.google.com (mail-pg1-x532.google.com [IPv6:2607:f8b0:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 769D1326F7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Jun 2022 10:18:14 -0700 (PDT)
-Received: by mail-pg1-x532.google.com with SMTP id e66so6102817pgc.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Jun 2022 10:18:14 -0700 (PDT)
+        Mon, 13 Jun 2022 15:41:15 -0400
+Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44AEA7628A
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Jun 2022 11:08:35 -0700 (PDT)
+Received: by mail-pf1-x42d.google.com with SMTP id w21so6482221pfc.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Jun 2022 11:08:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=VP4KQHv/fOTk1uSuALx0rQHJbV2oSTFRWBWAJzpP+gE=;
-        b=ypBkktvD0AWy15WiMJmTTqief/l8LnhS6sft/yvTkNe4TXAbwY1giPwzMIVIlJMj/T
-         CG0DiU0Z9HAOIWlLTwxcdY65JSdAp96GOdfzUr/xEWTSzSFhCYTBrG9vvKHr4mjlCQzG
-         uu/fL66iivcNZjZC6w4MChZkLTr4NCqQXa6kL9NujPJj97GqO3wp9KmQxP7on8qHnn2p
-         sbNONY8N5/rEqCFcw4KnIxPtZ9Ffzwd2mCAr0X1rJ+n6ZG48MYenk6NkgJvEFvXQuns0
-         Ch55V77MnQKOMUlXWtkUMewKXmb0zyHXOF4FVJvRjUbSxMb3+UGHXQmXg2WhFFfCTK13
-         v8SQ==
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=6RfOO19u1aifVisZByr6WMgdeJkVkBAonCLIE3lhww4=;
+        b=ZayI3pusa6NPPyQZLxoG9kjQSrLh5RNRtXEreB7tn3HaMiEKs1Z81QJIKGnlBiOvT8
+         3ZLMkTlpiBnqjIIlh93/+g4p5UHN4QIWDyTopX3GH7Euacyu8/dnuI4KUls12eDKB465
+         pxLc45h7AyHIaDcwYjMRBCzav/15XOBFQDWOU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=VP4KQHv/fOTk1uSuALx0rQHJbV2oSTFRWBWAJzpP+gE=;
-        b=nbPzTueuzuiS6b1qd7FL/bTQGTtq+3Ph3QBCZLKU/WO7nYMv4kxwR76vaclxPXlxR+
-         FhIsbGWfG2G95Kc+BwSJH+5NM7tyFj7aCCOK6B2hj2IvUaq9SVWknpq7r+gdTt5eyHjc
-         oIcNFq7zTanLbjDpTg7Mn/FkaRfFGXnj8qRdzOwPKDr+n4TfRI9kUV9MI6MDaGlYcjAK
-         Lf5P9GrNhLmXgSvMmSigl3r6i4au1ynqRf1NLbystHkrhuqD1HLd6AsgEePgFDAubsyd
-         8XHoOzfe2IiTfULGEAbqtsmug7cwj5cnA1JaS7ftA+Ev45oDUlzwL8r5T7OvsKcB37oX
-         AWrw==
-X-Gm-Message-State: AOAM530CrdSou7+xTUog58Zqz/XplHBPbMEndhjltq29p69U3qPuGcLA
-        spgeOylnVk7y8e7JCZHSsC4fIg==
-X-Google-Smtp-Source: ABdhPJwWO6p1O1jMAWb63Gp7Nr1Qe4p+1PNjRbbTIJ63//BsAb8NehROChTlbDkjmUEAREnOZIhpEQ==
-X-Received: by 2002:a63:a0e:0:b0:3fd:a62e:fa5f with SMTP id 14-20020a630a0e000000b003fda62efa5fmr588604pgk.126.1655140694122;
-        Mon, 13 Jun 2022 10:18:14 -0700 (PDT)
-Received: from localhost.localdomain ([192.77.111.2])
-        by smtp.gmail.com with ESMTPSA id u17-20020a62d451000000b0050dc762812csm5646641pfl.6.2022.06.13.10.18.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Jun 2022 10:18:13 -0700 (PDT)
-From:   Alex Elder <elder@linaro.org>
-To:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-        pabeni@redhat.com
-Cc:     mka@chromium.org, evgreen@chromium.org, bjorn.andersson@linaro.org,
-        quic_cpratapa@quicinc.com, quic_avuyyuru@quicinc.com,
-        quic_jponduru@quicinc.com, quic_subashab@quicinc.com,
-        elder@kernel.org, netdev@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH net-next 6/6] net: ipa: rework gsi_channel_tx_update()
-Date:   Mon, 13 Jun 2022 12:17:59 -0500
-Message-Id: <20220613171759.578856-7-elder@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220613171759.578856-1-elder@linaro.org>
-References: <20220613171759.578856-1-elder@linaro.org>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=6RfOO19u1aifVisZByr6WMgdeJkVkBAonCLIE3lhww4=;
+        b=sYUUGUvJMS7lp/bev9nAGRa4lHopLgEulZUp6TFNL9gHcrSqaocl+MgyxWMqGB2GbC
+         IoTYnBbsb0cXoVCbNDQktXuP0w3XG/5mdOA2bKxGmLZ1WpdHkharzDpRAX1ODIoDnPwr
+         AH7SBNlfVVZ98N0yPJi5OpfU9AWDhGgzogiRJFOQghDtObgY7T4Dreh7RVhr4amx7FSV
+         3ZBIFZa4JoLpuaih41jy7GI206t+5/kTAOQzftSxMmFruuitQFcFmNQlB0LBN9+cVOhj
+         t2GzP8TNXucaPj0+BU1UTCsFPdCzHYHxBZEfe/STlH650iOwMBD6KpJ9UICdrTPYNhAI
+         H+lQ==
+X-Gm-Message-State: AOAM531isLcKPi45M7GMV/VsH6eSK+8Y/0TIQTeDsQf13KjSe9EGre2F
+        GJNnU1glBYP2cms5xw6LUiBqXA==
+X-Google-Smtp-Source: ABdhPJzyTBSrgeUuj8ZPrTjLj2otwZf42YS9YWJUq0VMLGjI4RlCZxEMTxCgygHUnY0IX59pPnAQ+w==
+X-Received: by 2002:a05:6a00:1acd:b0:51c:795b:860c with SMTP id f13-20020a056a001acd00b0051c795b860cmr591557pfv.16.1655143714650;
+        Mon, 13 Jun 2022 11:08:34 -0700 (PDT)
+Received: from localhost ([2620:15c:11a:202:c4fb:a1d8:47ef:f10c])
+        by smtp.gmail.com with UTF8SMTPSA id f12-20020aa782cc000000b0051bd9981cacsm5734717pfn.123.2022.06.13.11.08.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 13 Jun 2022 11:08:34 -0700 (PDT)
+Date:   Mon, 13 Jun 2022 11:08:32 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Krishna Kurapati <quic_kriskura@quicinc.com>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Mathias Nyman <mathias.nyman@intel.com>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, quic_pkondeti@quicinc.com,
+        quic_ppratap@quicinc.com, quic_vpulyala@quicinc.com,
+        Sandeep Maheswaram <quic_c_sanm@quicinc.com>
+Subject: Re: [PATCH v20 2/5] usb: dwc3: core: Host wake up support from
+ system suspend
+Message-ID: <Yqd9IHQEj3Ex+FcF@google.com>
+References: <1654158277-12921-1-git-send-email-quic_kriskura@quicinc.com>
+ <1654158277-12921-3-git-send-email-quic_kriskura@quicinc.com>
+ <YpkRDi2m7cLaKYEf@google.com>
+ <Yp5nf2w8uVZ38/XZ@google.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
-X-Spam-Level: *
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <Yp5nf2w8uVZ38/XZ@google.com>
+X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Rename gsi_channel_tx_update() to be gsi_trans_tx_completed(), and
-pass it just the transaction pointer, deriving the channel from the
-transaction.  Update the comments above the function to provide a
-more concise description of how statistics for TX endpoints are
-maintained and used.
+On Mon, Jun 06, 2022 at 01:45:51PM -0700, Matthias Kaehlcke wrote:
+> On Thu, Jun 02, 2022 at 12:35:42PM -0700, Matthias Kaehlcke wrote:
+> > Hi Krishna,
+> > 
+> > with this version I see xHCI errors on my SC7180 based system, like
+> > these:
+> > 
+> > [   65.352605] xhci-hcd xhci-hcd.13.auto: xHC error in resume, USBSTS 0x401, Reinit
+> > 
+> > [  101.307155] xhci-hcd xhci-hcd.13.auto: WARN: xHC CMD_RUN timeout
+> > 
+> > After resume a downstream hub isn't enumerated again.
+> > 
+> > So far I didn't see those with v13, but I aso saw the first error with
+> > v16.
+> 
+> It also happens with v13, but only when a wakeup capable vUSB <= 2
+> device is plugged in. Initially I used a wakeup capable USB3 to
+> Ethernet adapter to trigger the wakeup case, however older versions
+> of this series that use usb_wakeup_enabled_descendants() to check
+> for wakeup capable devices didn't actually check for vUSB > 2
+> devices.
+> 
+> So the case were the controller/PHYs is powered down works, but
+> the controller is unhappy when the runtime PM path is used during
+> system suspend.
 
-Signed-off-by: Alex Elder <elder@linaro.org>
----
- drivers/net/ipa/gsi.c | 54 ++++++++++++++++++++-----------------------
- 1 file changed, 25 insertions(+), 29 deletions(-)
+The issue isn't seen on all systems using dwc3-qcom and the problem starts
+during probe(). The expected probe sequence is something like this:
 
-diff --git a/drivers/net/ipa/gsi.c b/drivers/net/ipa/gsi.c
-index c2cafd9247a70..df8af1f00fc8b 100644
---- a/drivers/net/ipa/gsi.c
-+++ b/drivers/net/ipa/gsi.c
-@@ -1021,40 +1021,36 @@ void gsi_trans_tx_queued(struct gsi_trans *trans)
- }
- 
- /**
-- * gsi_channel_tx_update() - Report completed TX transfers
-- * @channel:	Channel that has completed transmitting packets
-- * @trans:	Last transation known to be complete
-- *
-- * Compute the number of transactions and bytes that have been transferred
-- * over a TX channel since the given transaction was committed.  Report this
-- * information to the network stack.
-- *
-- * At the time a transaction is committed, we record its channel's
-- * committed transaction and byte counts *in the transaction*.
-- * Completions are signaled by the hardware with an interrupt, and
-- * we can determine the latest completed transaction at that time.
-- *
-- * The difference between the byte/transaction count recorded in
-- * the transaction and the count last time we recorded a completion
-- * tells us exactly how much data has been transferred between
-- * completions.
-- *
-- * Calling this each time we learn of a newly-completed transaction
-- * allows us to provide accurate information to the network stack
-- * about how much work has been completed by the hardware at a given
-- * point in time.
-+ * gsi_trans_tx_completed() - Report completed TX transactions
-+ * @trans:	TX channel transaction that has completed
-+ *
-+ * Report that a transaction on a TX channel has completed.  At the time a
-+ * transaction is committed, we record *in the transaction* its channel's
-+ * committed transaction and byte counts.  Transactions are completed in
-+ * order, and the difference between the channel's byte/transaction count
-+ * when the transaction was committed and when it completes tells us
-+ * exactly how much data has been transferred while the transaction was
-+ * pending.
-+ *
-+ * We report this information to the network stack, which uses it to manage
-+ * the rate at which data is sent to hardware.
-  */
--static void
--gsi_channel_tx_update(struct gsi_channel *channel, struct gsi_trans *trans)
-+static void gsi_trans_tx_completed(struct gsi_trans *trans)
- {
--	u64 trans_count = trans->trans_count - channel->compl_trans_count;
--	u64 byte_count = trans->byte_count - channel->compl_byte_count;
-+	u32 channel_id = trans->channel_id;
-+	struct gsi *gsi = trans->gsi;
-+	struct gsi_channel *channel;
-+	u32 trans_count;
-+	u32 byte_count;
-+
-+	channel = &gsi->channel[channel_id];
-+	trans_count = trans->trans_count - channel->compl_trans_count;
-+	byte_count = trans->byte_count - channel->compl_byte_count;
- 
- 	channel->compl_trans_count += trans_count;
- 	channel->compl_byte_count += byte_count;
- 
--	ipa_gsi_channel_tx_completed(channel->gsi, gsi_channel_id(channel),
--				     trans_count, byte_count);
-+	ipa_gsi_channel_tx_completed(gsi, channel_id, trans_count, byte_count);
- }
- 
- /* Channel control interrupt handler */
-@@ -1504,7 +1500,7 @@ static struct gsi_trans *gsi_channel_update(struct gsi_channel *channel)
- 	 * up the network stack.
- 	 */
- 	if (channel->toward_ipa)
--		gsi_channel_tx_update(channel, trans);
-+		gsi_trans_tx_completed(trans);
- 	else
- 		gsi_evt_ring_rx_update(evt_ring, index);
- 
--- 
-2.34.1
+dwc3_qcom_probe
+  dwc3_qcom_of_register_core
+    dwc3_probe
 
+  if (device_can_wakeup(&qcom->dwc3->dev))
+    ...
+
+The important part is that device_can_wakeup() is called after dwc3_probe()
+has completed. That's what I see on a QC SC7280 system, where wakeup is
+generally working with these patches.
+
+However on a QC SC7180 system dwc3_probe() is deferred and only executed after
+dwc3_qcom_probe(). As a result the device_can_wakeup() call returns false.
+With that the controller/driver ends up in an unhappy state after system
+suspend.
+
+Probing is deferred on SC7180 because device_links_check_suppliers() finds
+that '88e3000.phy' isn't ready yet.
