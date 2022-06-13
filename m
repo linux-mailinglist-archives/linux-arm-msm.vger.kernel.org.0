@@ -2,73 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F137A547F4E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jun 2022 08:04:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A0227547F89
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jun 2022 08:35:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236449AbiFMGDw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Jun 2022 02:03:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36208 "EHLO
+        id S234228AbiFMGfc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Jun 2022 02:35:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38396 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236559AbiFMGDf (ORCPT
+        with ESMTP id S231917AbiFMGfa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Jun 2022 02:03:35 -0400
-Received: from mail.tkos.co.il (hours.tkos.co.il [84.110.109.230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C6A710E3;
-        Sun, 12 Jun 2022 23:03:00 -0700 (PDT)
-Received: from tarshish.tkos.co.il (unknown [10.0.8.3])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.tkos.co.il (Postfix) with ESMTPS id 6A54944052E;
-        Mon, 13 Jun 2022 09:02:41 +0300 (IDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tkos.co.il;
-        s=default; t=1655100161;
-        bh=18DYyj44zWX19FKEoi7n2ggbNmNvRoc33jDGgrFbP4c=;
-        h=From:To:Cc:Subject:Date:From;
-        b=dWjNBtcICNkQ9tMMvcQXrPwhAETpifWMQXrXXJIR+BqmEo0bUW0LvYy0gPtRxK93N
-         6eMuC7ZhA3VjmPHYt2N0fjIgI22zsbVaewxk1zgJIJe2E1UOd1yZZ7usbg2uGQKoqM
-         EzzvjNQu++Nal1220aHWMtojePc9z/z4TW8QBfXxNjT6tQ6j0xMRIXZ6Nt81UgTohL
-         HFHv9t3ex7m0VSeQp97dNJbaoY7bFxOLGA/2g1K3xFlYnlpMZRI8NnaU1OHYj4NZ6f
-         TIMfIeeQP6OmO3jCOjuh6/l9o5KWwGeDJ6JLwhhg8/Uolak+oBfsVAscoc6W+h5zQR
-         Qf9fv5gPpZTsw==
-From:   Baruch Siach <baruch@tkos.co.il>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>
-Cc:     linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Baruch Siach <baruch@tkos.co.il>
-Subject: [PATCH] dt-bindings: PCI: qcom: fix description typo
-Date:   Mon, 13 Jun 2022 09:02:38 +0300
-Message-Id: <e08b53be6cdf8d94a5a002d5b74c8a884b2ff3c6.1655100158.git.baruch@tkos.co.il>
-X-Mailer: git-send-email 2.35.1
+        Mon, 13 Jun 2022 02:35:30 -0400
+Received: from szxga01-in.huawei.com (szxga01-in.huawei.com [45.249.212.187])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6892BC81;
+        Sun, 12 Jun 2022 23:35:27 -0700 (PDT)
+Received: from kwepemi500014.china.huawei.com (unknown [172.30.72.54])
+        by szxga01-in.huawei.com (SkyGuard) with ESMTP id 4LM1wp1jX5zgYXn;
+        Mon, 13 Jun 2022 14:33:30 +0800 (CST)
+Received: from huawei.com (10.67.174.157) by kwepemi500014.china.huawei.com
+ (7.221.188.232) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2375.24; Mon, 13 Jun
+ 2022 14:35:25 +0800
+From:   Li Zhengyu <lizhengyu3@huawei.com>
+To:     <quic_tdas@quicinc.com>, <sboyd@kernel.org>
+CC:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: [PATCH] clk: qcom: clk-rpmh: Remove redundant if statement
+Date:   Mon, 13 Jun 2022 14:33:27 +0800
+Message-ID: <20220613063327.89320-1-lizhengyu3@huawei.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.67.174.157]
+X-ClientProxiedBy: dggems704-chm.china.huawei.com (10.3.19.181) To
+ kwepemi500014.china.huawei.com (7.221.188.232)
+X-CFilter-Loop: Reflected
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Signed-off-by: Baruch Siach <baruch@tkos.co.il>
----
- Documentation/devicetree/bindings/pci/qcom,pcie.yaml | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+By the clk framework already reference counts prepare/unprepare,
+this if statement should be never true.
 
-diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-index 0b69b12b849e..c40ba753707c 100644
---- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-+++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-@@ -11,7 +11,7 @@ maintainers:
-   - Stanimir Varbanov <svarbanov@mm-sol.com>
+Signed-off-by: Li Zhengyu <lizhengyu3@huawei.com>
+---
+Previous threads: 
+https://lore.kernel.org/all/20220531094539.252642-1-lizhengyu3@huawei.com/
+
+ drivers/clk/qcom/clk-rpmh.c | 4 ----
+ 1 file changed, 4 deletions(-)
+
+diff --git a/drivers/clk/qcom/clk-rpmh.c b/drivers/clk/qcom/clk-rpmh.c
+index aed907982344..249146947923 100644
+--- a/drivers/clk/qcom/clk-rpmh.c
++++ b/drivers/clk/qcom/clk-rpmh.c
+@@ -195,10 +195,6 @@ static int clk_rpmh_aggregate_state_send_command(struct clk_rpmh *c,
+ {
+ 	int ret;
  
- description: |
--  Qualcomm PCIe root complex controller is bansed on the Synopsys DesignWare
-+  Qualcomm PCIe root complex controller is based on the Synopsys DesignWare
-   PCIe IP.
- 
- properties:
+-	/* Nothing required to be done if already off or on */
+-	if (enable == c->state)
+-		return 0;
+-
+ 	c->state = enable ? c->valid_state_mask : 0;
+ 	c->aggr_state = c->state | c->peer->state;
+ 	c->peer->aggr_state = c->aggr_state;
 -- 
-2.35.1
+2.17.1
 
