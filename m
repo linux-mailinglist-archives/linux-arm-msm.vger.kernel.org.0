@@ -2,96 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2DE9D548CD0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jun 2022 18:14:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C0FC4548E05
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jun 2022 18:17:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1357230AbiFML4t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Jun 2022 07:56:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41202 "EHLO
+        id S1385873AbiFMOws (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Jun 2022 10:52:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45464 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1357841AbiFMLzd (ORCPT
+        with ESMTP id S1385909AbiFMOvC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Jun 2022 07:55:33 -0400
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5E332F67A;
-        Mon, 13 Jun 2022 03:56:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1655117761; x=1686653761;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=vbuPPm2ZNkUse/X0oH12l21pmvWvlzFHAvFZQz0hTnA=;
-  b=mJ4H9cbcCxO+Uu9n74cyqMWQoGiDQ1+IMUtnAGj52zfZavn1sQnbr1DZ
-   oydIm9mRfuGDQvwld//R2pk6AgJqJI5IZ0BR1fAOrdyQcgofyRy6EyrD0
-   CCt0EV0SbVYFk+SatrX7DALZPtpoNoDPedi+S/iW2UX4EJqYYx0gF90V7
-   4=;
-Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 13 Jun 2022 03:56:01 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Jun 2022 03:56:00 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Mon, 13 Jun 2022 03:56:00 -0700
-Received: from [10.216.14.138] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Mon, 13 Jun
- 2022 03:55:54 -0700
-Message-ID: <23bb9f5d-85fe-d7a7-d178-1185981f1b89@quicinc.com>
-Date:   Mon, 13 Jun 2022 16:25:51 +0530
+        Mon, 13 Jun 2022 10:51:02 -0400
+X-Greylist: delayed 1799 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 13 Jun 2022 04:55:27 PDT
+Received: from mx.kernkonzept.com (serv1.kernkonzept.com [IPv6:2a01:4f8:1c1c:b490::2])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B69DE2ED65;
+        Mon, 13 Jun 2022 04:55:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=kernkonzept.com; s=mx1; h=Content-Transfer-Encoding:MIME-Version:Message-Id
+        :Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+        List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=1O+xm8OX+p7BlrqyEqCZKZj5xafZ91tAT8H1qJFm4Pw=; b=GGxftj7vG/t264Yay8zk+3rEiD
+        uRPM2vt+3LhK4f4EuK0mcfE3JrjpqQEwjeWdJKVPHopnMpUhULah65d1a1h7L8LxtnBFAZZe1Gwjj
+        EWJL3qcFHJpyboZjReZ9b0uFJEM6VPpWkMAX0YCLRR7uNoXZMM0bsCUMrj9A/Aag8594togSe+25i
+        ItJ+gBY0543KiVnQha10sCj+Y+Ll5GulAh870c7sRJTV7bfATUI9veFjFQJ6Q+u0FwNRK9MYdwgC/
+        dBSB8P+gakxUV8V/oZPwe90YSyZYZoCs2FgabB3H088kNHPfGZ0kLHiftNK2Sf66FkREnOqVMtqHH
+        F4swSQ5w==;
+Received: from [10.22.3.24] (helo=kernkonzept.com)
+        by mx.kernkonzept.com with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim 4.94.2)
+        id 1o0hwS-0051cL-49; Mon, 13 Jun 2022 13:09:08 +0200
+From:   Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+To:     Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+Subject: [PATCH] Bluetooth: btqcomsmd: Fix command timeout after setting BD address
+Date:   Mon, 13 Jun 2022 13:07:45 +0200
+Message-Id: <20220613110745.3778356-1-stephan.gerhold@kernkonzept.com>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.1
-Subject: Re: [PATCH 1/2] ASoC: dt-bindings: lpass-cpu: Update external mclck0
- name
-Content-Language: en-US
-To:     Mark Brown <broonie@kernel.org>, Rob Herring <robh@kernel.org>
-CC:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
-        <lgirdwood@gmail.com>, <quic_plai@quicinc.com>,
-        <bgoswami@quicinc.com>, <perex@perex.cz>, <tiwai@suse.com>,
-        <srinivas.kandagatla@linaro.org>, <quic_rohkumar@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <alsa-devel@alsa-project.org>,
-        <linux-kernel@vger.kernel.org>, <swboyd@chromium.org>,
-        <judyhsiao@chromium.org>, <devicetree@vger.kernel.org>
-References: <1654169206-12255-1-git-send-email-quic_srivasam@quicinc.com>
- <1654169206-12255-2-git-send-email-quic_srivasam@quicinc.com>
- <20220602143245.GA2256965-robh@kernel.org> <YpjL3X73LyefYjI7@sirena.org.uk>
-From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Organization: Qualcomm
-In-Reply-To: <YpjL3X73LyefYjI7@sirena.org.uk>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-5.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+The Bluetooth firmware seems to become unresponsive for a while after
+setting the BD address. At least on recent kernel versions this often
+causes timeouts for subsequent commands, e.g. the HCI reset sent by
+the Bluetooth core during initialization:
 
-On 6/2/2022 8:10 PM, Mark Brown wrote:
-Thanks for your time Mark Brown and Rob Herring!!!
-> On Thu, Jun 02, 2022 at 09:32:45AM -0500, Rob Herring wrote:
->> On Thu, Jun 02, 2022 at 04:56:45PM +0530, Srinivasa Rao Mandadapu wrote:
->>> Update "audio_cc_ext_mclk0" name to "core_cc_ext_mclk0",
->>> as MI2S mclk is being used is from lpass core cc.
->> This is safe to change breaking the ABI because ...
-> The driver was only just merged so didn't make it into a full
-> release.
-yes. DTS changes are still in review state.
->
->> Names are supposed to be local to the module, not based on their source.
-> Indeed.
+	Bluetooth: hci0: Opcode 0x c03 failed: -110
 
-Okay. Will take care next time. As external MCLK is supported from both 
-modules, audio cc and core cc,
+Unfortunately this behavior does not seem to be documented anywhere.
+Experimentation suggests that the minimum necessary delay to avoid
+the problem is ~150us. However, to be sure add a sleep for > 1ms
+in case it is a bit longer on other firmware versions.
 
-for now it's mandatory to change the name to avoid confusion.
+Fixes: 1511cc750c3d ("Bluetooth: Introduce Qualcomm WCNSS SMD based HCI driver")
+Signed-off-by: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+---
+I tested this using a script that reboots repeatedly and checks for the
+error. With this patch, BT shows up successfully for 100+ consecutive
+boots. Without this patch it usually fails after 1-5 boots (or even
+always on some boards).
+---
+ drivers/bluetooth/btqcomsmd.c | 17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/bluetooth/btqcomsmd.c b/drivers/bluetooth/btqcomsmd.c
+index 2acb719e596f..11c7e04bf394 100644
+--- a/drivers/bluetooth/btqcomsmd.c
++++ b/drivers/bluetooth/btqcomsmd.c
+@@ -122,6 +122,21 @@ static int btqcomsmd_setup(struct hci_dev *hdev)
+ 	return 0;
+ }
+ 
++static int btqcomsmd_set_bdaddr(struct hci_dev *hdev, const bdaddr_t *bdaddr)
++{
++	int ret;
++
++	ret = qca_set_bdaddr_rome(hdev, bdaddr);
++	if (ret)
++		return ret;
++
++	/* The firmware stops responding for a while after setting the bdaddr,
++	 * causing timeouts for subsequent commands. Sleep a bit to avoid this.
++	 */
++	usleep_range(1000, 10000);
++	return 0;
++}
++
+ static int btqcomsmd_probe(struct platform_device *pdev)
+ {
+ 	struct btqcomsmd *btq;
+@@ -162,7 +177,7 @@ static int btqcomsmd_probe(struct platform_device *pdev)
+ 	hdev->close = btqcomsmd_close;
+ 	hdev->send = btqcomsmd_send;
+ 	hdev->setup = btqcomsmd_setup;
+-	hdev->set_bdaddr = qca_set_bdaddr_rome;
++	hdev->set_bdaddr = btqcomsmd_set_bdaddr;
+ 
+ 	ret = hci_register_dev(hdev);
+ 	if (ret < 0)
+-- 
+2.30.2
 
