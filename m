@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7811D54A0EF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jun 2022 23:11:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B13A854A0F3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jun 2022 23:12:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351818AbiFMVLG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Jun 2022 17:11:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34270 "EHLO
+        id S240011AbiFMVMI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Jun 2022 17:12:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37160 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351929AbiFMVKx (ORCPT
+        with ESMTP id S1351048AbiFMVL5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Jun 2022 17:10:53 -0400
-Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBEB416586;
-        Mon, 13 Jun 2022 13:49:02 -0700 (PDT)
-Received: by mail-pj1-x102f.google.com with SMTP id q12-20020a17090a304c00b001e2d4fb0eb4so9903761pjl.4;
-        Mon, 13 Jun 2022 13:49:02 -0700 (PDT)
+        Mon, 13 Jun 2022 17:11:57 -0400
+Received: from mail-pg1-x534.google.com (mail-pg1-x534.google.com [IPv6:2607:f8b0:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 665293DDDC;
+        Mon, 13 Jun 2022 13:50:22 -0700 (PDT)
+Received: by mail-pg1-x534.google.com with SMTP id l4so5543565pgh.13;
+        Mon, 13 Jun 2022 13:50:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=9WbBxL9rxB+15RDo2ejuHuLx5dieu0bPV+8/sqzH35Y=;
-        b=DFL3pOHOBZ6uaJ9yEQKJPsB4zFwGx8lcLv8a8av/oYj7ZXVHpF9p4sbHQSM+SiPgzS
-         G8v5eO+mAEDU3qPqPtbDxwqMOgfXWgxVYZos6oI0uSl/K1IL6woCWmkehq9oS3XK4l7c
-         Uu+e25rcd3/Psv0Hx7k+uDQqHCQxeODGaPKqPeURWic69bRlu7thtwyczqT2D19SxSR7
-         GnxyQlGZrDiTQq4x25qyT/ovdPwjwkHlMJ+45YNBt8/4I2ATZvIgVWdMQLJt/JdszGV4
-         pRgA4XxU+dIMgKHpuiTMx2hCERNDNuVjp+s4IaereW/IY1CT/WT6dTHpkBGbium/OBgq
-         G/iA==
+        bh=ZmwXvgLLBC7TADCPkXTU2hZQHv34ij//8HIDEtsV3fg=;
+        b=d4SK5QkUQl4YuJ5khcaFrQapCV8SM63zlqRjeOcI9zoh06FmMqpOvdLTMXBdxba3Gp
+         KUnYizKkLIF419F1zA6l4tHwGs0rDfnMp9sWokkyqAUHQ6i23NSuOzFZkwzTnnem7M3Z
+         C4SRDjxVroJVNHZbdGP5H5tW5ILZSO5vpca7JWzFw3UIl4+t9a2qEoWGvQ2Q+JIGnCaU
+         Xocf8oekLGO2iA1zStcBA4ruy69//oC9IZ2z9xRCLQxlXY7HfD8LGUgn+agiTmVTboaQ
+         zxa9rxnZonyLUvKJBBII++QCt3dI3TIr12x3YJ/BGFO0g6kjVtBAi+7Uogl+2PQHP7it
+         +LAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=9WbBxL9rxB+15RDo2ejuHuLx5dieu0bPV+8/sqzH35Y=;
-        b=1NSS1QdODMtq3DT1fNl3MoOphc+uuIRcrNsb3gR5NuZyij0ACFU3WMqokFLAD9MNJm
-         DjbNOTUvDyndNXnkMjy8S4aqIeGU8dSDkaFafU3jxpuXz2pJ259+C96Fx6yACSXoz6if
-         +2AKo+dTDcPHJWHvmlni7Eqn/9qCz2MbOH+hDfYPrfmnRhvRI6AyJIr71H2WKT3H10Hu
-         NuiDa6nHfJl+tUv7CTlghS0LraaSWeITRZaoJOvtBMi7CwbhdXIp+WATy3JtX6AEgyFD
-         IsP4SJjXS5t0/ZDDysu19/NKkzmyOkLtTzf9TtswJSippA90ZkPjvom14vewmBPi3SYj
-         Mfgw==
-X-Gm-Message-State: AJIora/YW0hLJCUA5CGRNklw/ZJsEydj3rFi3RIcGoQ1j1yALApMrf2u
-        bMX2GSH7qWrrCA81QNej01E=
-X-Google-Smtp-Source: AGRyM1uOTI6k/sL4XJU84/uEt3GMbUUcl5XCnXux4Nhuu8n+ayh648e2MJrOjk4qEy4XjYgEi16mpA==
-X-Received: by 2002:a17:90a:1588:b0:1e0:a45c:5c1 with SMTP id m8-20020a17090a158800b001e0a45c05c1mr596780pja.65.1655153341625;
-        Mon, 13 Jun 2022 13:49:01 -0700 (PDT)
+        bh=ZmwXvgLLBC7TADCPkXTU2hZQHv34ij//8HIDEtsV3fg=;
+        b=7QdY+xnfC2MqsGMkgG0Fb071s3ojXZ8hJUc9tkDvKL1JdTSWzkc8trfdWFD13GchkA
+         Yf/5au0idus3g28jCjQysoMocpNYXX72MxbBWT/nnuxV5UInSgOs4sJK7dt8BrjY9Yzx
+         oBPP8UhnyYI8WLAF9DEZWanI9xf0vGvxCIIFTitJJOEU1bHlas/03+m8/v94UdEiB06A
+         RtdFW+VY1FAuE0Zk17Zq3MEtPw+PUSEVdQ6TMSu2SlpTGVmEaL4L13toy/3g89TnZ450
+         wpKHKsKmV569bJytVVMfH2NHkNuWA/r/ZxIIci8h7/cOhLQzBfr1Y4G8QiQ2+KBPFd+S
+         j0Ig==
+X-Gm-Message-State: AOAM5306bWMV895Z5vaZmuqim3smSQ1Ik7bl44zvPl3zei/E03sWzx2b
+        LMISSzOOxMsJ0uvzA+gth/c=
+X-Google-Smtp-Source: ABdhPJzm1ncJI/Zv5ZahCXdnEdUzbwnLxSHxpjYu4I8xjvCMgyZ73IgE2hbkPio67Zoi84w6qPuTJw==
+X-Received: by 2002:a65:6b92:0:b0:39c:c97b:1b57 with SMTP id d18-20020a656b92000000b0039cc97b1b57mr1281744pgw.517.1655153421701;
+        Mon, 13 Jun 2022 13:50:21 -0700 (PDT)
 Received: from localhost ([2a00:79e1:abd:4a00:2703:3c72:eb1a:cffd])
-        by smtp.gmail.com with ESMTPSA id a11-20020a170902900b00b00168b113f222sm5539202plp.173.2022.06.13.13.49.00
+        by smtp.gmail.com with ESMTPSA id y2-20020a17090264c200b0016641a37e71sm5509262pli.225.2022.06.13.13.50.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Jun 2022 13:49:00 -0700 (PDT)
+        Mon, 13 Jun 2022 13:50:20 -0700 (PDT)
 From:   Rob Clark <robdclark@gmail.com>
 To:     dri-devel@lists.freedesktop.org
 Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
@@ -58,9 +58,9 @@ Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
         Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>,
         linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] drm/msm: Make msm_gem_free_object() static
-Date:   Mon, 13 Jun 2022 13:49:10 -0700
-Message-Id: <20220613204910.2651747-1-robdclark@gmail.com>
+Subject: [PATCH] drm/msm/gem: Drop obj lock in msm_gem_free_object()
+Date:   Mon, 13 Jun 2022 13:50:32 -0700
+Message-Id: <20220613205032.2652374-1-robdclark@gmail.com>
 X-Mailer: git-send-email 2.36.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -76,40 +76,75 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Rob Clark <robdclark@chromium.org>
 
-Misc small cleanup I noticed.  Not called from another object file since
-3c9edd9c85f5 ("drm/msm: Introduce GEM object funcs")
+The only reason we grabbed the lock was to satisfy a bunch of places
+that WARN_ON() if called without the lock held.  But this angers lockdep
+which doesn't realize no one else can be holding the lock by the time we
+end up destroying the object (and sees what would otherwise be a locking
+inversion between reservation_ww_class_mutex and fs_reclaim).
 
+Closes: https://gitlab.freedesktop.org/drm/msm/-/issues/14
 Signed-off-by: Rob Clark <robdclark@chromium.org>
 ---
- drivers/gpu/drm/msm/msm_gem.c | 2 +-
- drivers/gpu/drm/msm/msm_gem.h | 1 -
- 2 files changed, 1 insertion(+), 2 deletions(-)
+ drivers/gpu/drm/msm/msm_gem.c |  8 --------
+ drivers/gpu/drm/msm/msm_gem.h | 14 +++++++++++++-
+ 2 files changed, 13 insertions(+), 9 deletions(-)
 
 diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
-index 35845e273d81..3ef7ada59392 100644
+index 3ef7ada59392..ccc7e6d8cc30 100644
 --- a/drivers/gpu/drm/msm/msm_gem.c
 +++ b/drivers/gpu/drm/msm/msm_gem.c
-@@ -1004,7 +1004,7 @@ void msm_gem_describe_objects(struct list_head *list, struct seq_file *m)
- #endif
+@@ -1020,8 +1020,6 @@ static void msm_gem_free_object(struct drm_gem_object *obj)
+ 	list_del(&msm_obj->mm_list);
+ 	mutex_unlock(&priv->mm_lock);
  
- /* don't call directly!  Use drm_gem_object_put() */
--void msm_gem_free_object(struct drm_gem_object *obj)
-+static void msm_gem_free_object(struct drm_gem_object *obj)
- {
- 	struct msm_gem_object *msm_obj = to_msm_bo(obj);
- 	struct drm_device *dev = obj->dev;
+-	msm_gem_lock(obj);
+-
+ 	/* object should not be on active list: */
+ 	GEM_WARN_ON(is_active(msm_obj));
+ 
+@@ -1037,17 +1035,11 @@ static void msm_gem_free_object(struct drm_gem_object *obj)
+ 
+ 		put_iova_vmas(obj);
+ 
+-		/* dma_buf_detach() grabs resv lock, so we need to unlock
+-		 * prior to drm_prime_gem_destroy
+-		 */
+-		msm_gem_unlock(obj);
+-
+ 		drm_prime_gem_destroy(obj, msm_obj->sgt);
+ 	} else {
+ 		msm_gem_vunmap(obj);
+ 		put_pages(obj);
+ 		put_iova_vmas(obj);
+-		msm_gem_unlock(obj);
+ 	}
+ 
+ 	drm_gem_object_release(obj);
 diff --git a/drivers/gpu/drm/msm/msm_gem.h b/drivers/gpu/drm/msm/msm_gem.h
-index 6b7d5bb3b575..d608339c1643 100644
+index d608339c1643..432032ad4aed 100644
 --- a/drivers/gpu/drm/msm/msm_gem.h
 +++ b/drivers/gpu/drm/msm/msm_gem.h
-@@ -175,7 +175,6 @@ void msm_gem_active_get(struct drm_gem_object *obj, struct msm_gpu *gpu);
- void msm_gem_active_put(struct drm_gem_object *obj);
- int msm_gem_cpu_prep(struct drm_gem_object *obj, uint32_t op, ktime_t *timeout);
- int msm_gem_cpu_fini(struct drm_gem_object *obj);
--void msm_gem_free_object(struct drm_gem_object *obj);
- int msm_gem_new_handle(struct drm_device *dev, struct drm_file *file,
- 		uint32_t size, uint32_t flags, uint32_t *handle, char *name);
- struct drm_gem_object *msm_gem_new(struct drm_device *dev,
+@@ -229,7 +229,19 @@ msm_gem_unlock(struct drm_gem_object *obj)
+ static inline bool
+ msm_gem_is_locked(struct drm_gem_object *obj)
+ {
+-	return dma_resv_is_locked(obj->resv);
++	/*
++	 * Destroying the object is a special case.. msm_gem_free_object()
++	 * calls many things that WARN_ON if the obj lock is not held.  But
++	 * acquiring the obj lock in msm_gem_free_object() can cause a
++	 * locking order inversion between reservation_ww_class_mutex and
++	 * fs_reclaim.
++	 *
++	 * This deadlock is not actually possible, because no one should
++	 * be already holding the lock when msm_gem_free_object() is called.
++	 * Unfortunately lockdep is not aware of this detail.  So when the
++	 * refcount drops to zero, we pretend it is already locked.
++	 */
++	return dma_resv_is_locked(obj->resv) || (kref_read(&obj->refcount) == 0);
+ }
+ 
+ static inline bool is_active(struct msm_gem_object *msm_obj)
 -- 
 2.36.1
 
