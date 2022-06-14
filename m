@@ -2,84 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 161B154BDB7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jun 2022 00:36:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AF85154BE12
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jun 2022 01:02:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345709AbiFNWfT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Jun 2022 18:35:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60696 "EHLO
+        id S1357490AbiFNXBn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Jun 2022 19:01:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56138 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346696AbiFNWfN (ORCPT
+        with ESMTP id S1357467AbiFNXBj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Jun 2022 18:35:13 -0400
-Received: from mail-il1-f171.google.com (mail-il1-f171.google.com [209.85.166.171])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D3734EF7C;
-        Tue, 14 Jun 2022 15:35:12 -0700 (PDT)
-Received: by mail-il1-f171.google.com with SMTP id d6so7638278ilm.4;
-        Tue, 14 Jun 2022 15:35:12 -0700 (PDT)
+        Tue, 14 Jun 2022 19:01:39 -0400
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 209D7532CB
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Jun 2022 16:01:38 -0700 (PDT)
+Received: by mail-pj1-x1035.google.com with SMTP id v17-20020a17090a899100b001ead067eaf9so455026pjn.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Jun 2022 16:01:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=anholt-net.20210112.gappssmtp.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=RWlMcK/WiHaE2lupDQgc+icrhgmdMQxgOsPbDDDl0aE=;
+        b=rxZaCTVb83tYMLMGAxqk8WP2FjGYRIoCovnvFYKSSOhMElgtlaDdZdSZMKPgSK4Yvo
+         rC52cpeIJXo1GGTArDPxTrvH2g0j3p7QIUY5w78AbPKw2KsYXheKA8zc25on4qL9jc7k
+         Pux+AQFyh9bQxZS2Av8mD7rxozr+inA00Hb7dAzDh+Di3oqIzFrchKq0vkDUvlbHaxek
+         DRfGsep2dsYUDMjpJWrl4htAQKqUQVJIsWTNYxGeAn5KVIyPZqHF/KFc4lT4YMeLJIf5
+         ry7iVS607W8w4IYMtJIee9psu43QKUIBJbDZIHwrUeV5l21LlnXFp0dg9U3JNTJh/a2F
+         me6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=aemasrqfwaW0xVRSjSqdQ4JfxZy0TQey0iT9bogvqO4=;
-        b=JWuvFMI/Z3Mc3ACnfAb06u9UajEkyQ6Jy8d8E4zP8g7g6pSLuZ9DVh5A7EPHVOmc1m
-         ebTQDi4KDa6bayFZGMcQWKDK2WbV4mLBr6T/VZ8XkTLR6FPaQfW4H3dcOxDKm2cnQzri
-         VR6y7VTt1GTbjb3IDmIrZRyu0fJtQk2c7E1kMRwnyLZ1cF5dIAvDui3llAMJe9JXpkM0
-         dd02xh6YxvQopNbj3ZAzhbeCY5anErxlGhWBDW0WQRg9iS5alh0aUkvMIazuPR22Bpff
-         w8C7iPXBNW/r52ns6lo26hz3SV8uXM6nFNiKRWqjOSo8iez3l+TBWkk6HvRoQBdrp0Gz
-         ALZQ==
-X-Gm-Message-State: AJIora+mzzRcNl/oOVGTABuHqPKNXpL+gXKg1NA90M0+2nKQOPJUaFTz
-        NtEU4gi/fIUpdRreJY5ANg==
-X-Google-Smtp-Source: AGRyM1u3MB5UawW2+wt5tCmnlp/5KvqCGJhKl2Um3Et1tsrwULWDyKeKydmmaAcZFCt/295nVoKx5g==
-X-Received: by 2002:a05:6e02:1448:b0:2d3:c5c2:fbbe with SMTP id p8-20020a056e02144800b002d3c5c2fbbemr4528164ilo.188.1655246111376;
-        Tue, 14 Jun 2022 15:35:11 -0700 (PDT)
-Received: from robh.at.kernel.org ([64.188.179.251])
-        by smtp.gmail.com with ESMTPSA id z4-20020a92d184000000b002d3c1859791sm6040316ilz.60.2022.06.14.15.35.09
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=RWlMcK/WiHaE2lupDQgc+icrhgmdMQxgOsPbDDDl0aE=;
+        b=8OmKatKGP+f6pvpZknYCmDUGUDJOOcjyCQGr5J6TUIme3ZVtHUpffO7zia1j3YNNWI
+         gqbKzB6OONNTPy/NsuFRxU/qmzx4lkR6k5EdHcNkDI9xYi8G4xPyQjZkO/8WpkxJgIFE
+         2GuFL55Zl+C2MlPPPdFuZYp1QSQr/2fD4/mxKPMCtoHjK24nwn7h7wwG8jI81/aK6XOH
+         aoZJvuPlPBC5Wda5wlDWmJvDemt4iDP0anKtPkLPzavn0Q6PqyFCjCX6QVgS8nTMAJdO
+         sKf2Vy//ZP6wvzdM8QkXBHquK+Z8R5l6jLWFbriAyjorf6O8cQYuDMsC9JmF4/9UXqKf
+         Oxpw==
+X-Gm-Message-State: AJIora9PsBzkcTg+xOpIhS3kPShSWAeI+R+YbBbN+AkWt2eSTLp9gtXl
+        3W92JwV5K3rwj/zeJUAi61BuKg==
+X-Google-Smtp-Source: AGRyM1sug/F5zUgorGwld6/cvjxSjJ3Ba76jZNwLVen3RaltHSazhsqEJzh8eunYtM28ILlpP5FJ5Q==
+X-Received: by 2002:a17:90a:a605:b0:1ea:6b4f:915e with SMTP id c5-20020a17090aa60500b001ea6b4f915emr6825913pjq.60.1655247697545;
+        Tue, 14 Jun 2022 16:01:37 -0700 (PDT)
+Received: from wildbow.anholt.net (97-115-79-125.ptld.qwest.net. [97.115.79.125])
+        by smtp.gmail.com with ESMTPSA id cp15-20020a170902e78f00b00168c5230332sm7787768plb.148.2022.06.14.16.01.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Jun 2022 15:35:11 -0700 (PDT)
-Received: (nullmailer pid 2855592 invoked by uid 1000);
-        Tue, 14 Jun 2022 22:35:09 -0000
-Date:   Tue, 14 Jun 2022 16:35:09 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Cc:     swboyd@chromium.org, bgoswami@quicinc.com, lgirdwood@gmail.com,
-        judyhsiao@chromium.org, agross@kernel.org,
-        linux-arm-msm@vger.kernel.org, perex@perex.cz,
-        alsa-devel@alsa-project.org, quic_plai@quicinc.com,
-        linux-kernel@vger.kernel.org, bjorn.andersson@linaro.org,
-        tiwai@suse.com, broonie@kernel.org, linux-gpio@vger.kernel.org,
-        srinivas.kandagatla@linaro.org, robh+dt@kernel.org,
-        Linus Walleij <linus.walleij@linaro.org>,
-        devicetree@vger.kernel.org, quic_rohkumar@quicinc.com
-Subject: Re: [PATCH v4 1/2] dt-bindings: pinctrl: qcom: sc7280: Add boolean
- param for ADSP bypass platforms
-Message-ID: <20220614223509.GA2855511-robh@kernel.org>
-References: <1654921357-16400-1-git-send-email-quic_srivasam@quicinc.com>
- <1654921357-16400-2-git-send-email-quic_srivasam@quicinc.com>
+        Tue, 14 Jun 2022 16:01:37 -0700 (PDT)
+From:   Emma Anholt <emma@anholt.net>
+To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>
+Cc:     linux-kernel@vger.kernel.org, iommu@lists.linux-foundation.org,
+        linux-arm-kernel@lists.infradead.org, Emma Anholt <emma@anholt.net>
+Subject: [PATCH 1/2] iommu: arm-smmu-impl: Add 8250 display compatible to the client list.
+Date:   Tue, 14 Jun 2022 16:01:35 -0700
+Message-Id: <20220614230136.3726047-1-emma@anholt.net>
+X-Mailer: git-send-email 2.36.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1654921357-16400-2-git-send-email-quic_srivasam@quicinc.com>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 11 Jun 2022 09:52:36 +0530, Srinivasa Rao Mandadapu wrote:
-> Add boolean param qcom,adsp-bypass-mode to support adsp bypassed sc7280
-> platforms. Which is required to make clock voting as optional for ADSP
-> bypass platforms.
-> 
-> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-> ---
->  .../devicetree/bindings/pinctrl/qcom,sc7280-lpass-lpi-pinctrl.yaml   | 5 +++++
->  1 file changed, 5 insertions(+)
-> 
+Required for turning on per-process page tables for the GPU.
 
-Acked-by: Rob Herring <robh@kernel.org>
+Signed-off-by: Emma Anholt <emma@anholt.net>
+---
+
+ drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+index d8e1ef83c01b..bb9220937068 100644
+--- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
++++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+@@ -233,6 +233,7 @@ static const struct of_device_id qcom_smmu_client_of_match[] __maybe_unused = {
+ 	{ .compatible = "qcom,sc7280-mdss" },
+ 	{ .compatible = "qcom,sc7280-mss-pil" },
+ 	{ .compatible = "qcom,sc8180x-mdss" },
++	{ .compatible = "qcom,sm8250-mdss" },
+ 	{ .compatible = "qcom,sdm845-mdss" },
+ 	{ .compatible = "qcom,sdm845-mss-pil" },
+ 	{ }
+-- 
+2.36.1
+
