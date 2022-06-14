@@ -2,62 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5B85854BA64
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jun 2022 21:17:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 98F7154BA6D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jun 2022 21:19:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236301AbiFNTRh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Jun 2022 15:17:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58016 "EHLO
+        id S243412AbiFNTSx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Jun 2022 15:18:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60344 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231907AbiFNTRf (ORCPT
+        with ESMTP id S1348261AbiFNTS3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Jun 2022 15:17:35 -0400
-Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65DA7111A
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Jun 2022 12:17:34 -0700 (PDT)
-Received: by mail-pf1-x434.google.com with SMTP id u37so988504pfg.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Jun 2022 12:17:34 -0700 (PDT)
+        Tue, 14 Jun 2022 15:18:29 -0400
+Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6AFB729C83
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Jun 2022 12:18:25 -0700 (PDT)
+Received: by mail-pl1-x62f.google.com with SMTP id t2so8545710pld.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Jun 2022 12:18:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :references:from:in-reply-to:content-transfer-encoding;
-        bh=lhMxTQMnN137Vr3Q0ziGclyB7kCt3vT1THj9ycpmP0s=;
-        b=LWphgGFaYcwVO/fFu1KEC+ZLpADp2ELKQ/7uuS+rXW9SxCDTAImT7Jjdx80Z4HoIca
-         aKdt+QMqhEipMYdfu1/jbCoxbQwqt3tcINIQ32CWOFSEElTfPpCdr64xjq885K4sdUi4
-         nC3hg0HJ77bmwhGQhmEHlUUz//yeoxpWGJlmpJ3NTrBz0kbO9Pa7ojRgVsTtFo02HONo
-         sfiF5eg7YTMgeRRf2sKI9YDP33gO6JaDs424WhhOe11sCC28GSlGiXbp9Oh3A+U585ng
-         dq/+T682bjkBEel/gOBiAgKgcTH9uq3Dis487kQCVqQ6Q5icRS7kNap0FF5UHJxcuPdd
-         kX0w==
+        bh=3hYo58giO756Nq17jRB4A4D+eaiCFVzK8Vfjbc4Oh+o=;
+        b=C7el04sMSIat6W96z22BeTYVjWwGcAlQULymQ6Y3dqpfyczEYEVavvflfNH8t/Cj99
+         x2g2Xn3hhaZvrwjOPm/lVCRyC0nhA6KlTsgkD9lBtmKe1fEKgWq8xt2B6MDprNs8zNPh
+         SS7Sk1W8ICtEcmA/yOxNr/AfG20Z30Gr3qGiXwSpStXJBNiurFBBeqi8K9j0q6MBDEI2
+         6UJ6gaXUUEO02VAWg03qQD/Moq9i7a/2flalIrEOJfN4OP7zRhRoIlHGUvSTEKaO6oIE
+         uWS3fPEiM42Ug0OS2bhWEMFbvJ3vB84wRO6bUZGfX1uufAUQ2p3jzsn41WqtHIfPpzz1
+         vcgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=lhMxTQMnN137Vr3Q0ziGclyB7kCt3vT1THj9ycpmP0s=;
-        b=QWrbVCPgzQB55MO2tftLaXfugMLSKAGi4HdMBSWgO6iOJ7mXTEcSAmGcTm7MvF9Eqm
-         fHxciwStkruJPhyAavj+QRHnkcyS1aRFgHAwV6yV7G4ApqdKSIHPqNfHSz+F+nbmkrM/
-         GiORNDlWNQQdTWTYZnFM0i1AomzCdRiZZfoN77By8X9au/9JclqFKhBxash0LWlatY2y
-         BdNarBhhXNQ4DJGa7egQJfr8Og0Mqh2ttlHR0OqzLvks4a+sONMGBySubAYahoy8I+JJ
-         Q9GFGtGDifImeBrbYtecVb37UZpnY4sT9CiCqaGj5W9FLn3iZMOTvB7AAb8TAtlU8iax
-         ESoA==
-X-Gm-Message-State: AJIora+Bct8NqyTGYKmOj+pJuumpUAtfncF7xNPYA09Pfy2M9BFXkItk
-        E1vRv2qUahZuTKFB/kSYUtvnUw==
-X-Google-Smtp-Source: AGRyM1vBGLLo8xuwfhG9CyAc8WHfk9haKqAIM0YO9jCpCi6/n7shNJxARh2oq3WdoAc/c6CjpzuN3Q==
-X-Received: by 2002:a63:194c:0:b0:408:a9d1:400c with SMTP id 12-20020a63194c000000b00408a9d1400cmr3519825pgz.559.1655234253902;
-        Tue, 14 Jun 2022 12:17:33 -0700 (PDT)
-Received: from [172.22.33.138] ([192.77.111.2])
-        by smtp.gmail.com with ESMTPSA id bi9-20020a170902bf0900b00163bfaf0b17sm7574855plb.233.2022.06.14.12.17.33
+        bh=3hYo58giO756Nq17jRB4A4D+eaiCFVzK8Vfjbc4Oh+o=;
+        b=qk3tcVxTn1TFo7SoxTkhDaPvGo9EGbOD6J3v5+IhBYBJbOAeyQcwgkN+zAf9qg5ml3
+         kaYxMUsyvcJOzIWBF8wv+P0hxItmOnmbY7E9UblOsAt9zF1Kbpl+YfbeoIEnIhRRz/wT
+         GWItDl75yyVarD9/w1Jsj9+obis9AXFvPuSuj8xcNeC1rBjxU017QBIkt0g9PCHWQbIQ
+         4J+MWZhR/9tbERHHWurjK2cNgSowp+rj9vCts/Jv/rIsY1uDx8Cl5QuovzsJ0SnGn+sc
+         ge5g8Pa/1wTmTpcWrFgcicAQVRZ82mkMSJ5SPMsCAxHyLGhyH2PFxwsiyFIey2LkCr2F
+         yUUQ==
+X-Gm-Message-State: AJIora9U9mjSs8zYu1F2Huw8thH/M0ZaDbWg5vjU2TsYit0QsYezaWun
+        NNqaNMKzjRL3KP1Wsn4pT74R8A==
+X-Google-Smtp-Source: AGRyM1tuHjbaqXs+7aghcEEp8rKNGSZssX8kuM31YU6OetEN14CKRCXjzx0TBQrL8CyxowH1ASWJXg==
+X-Received: by 2002:a17:90b:1808:b0:1e2:a335:ad04 with SMTP id lw8-20020a17090b180800b001e2a335ad04mr6135419pjb.110.1655234304868;
+        Tue, 14 Jun 2022 12:18:24 -0700 (PDT)
+Received: from [192.168.2.1] (146725694.box.freepro.com. [130.180.211.218])
+        by smtp.googlemail.com with ESMTPSA id 17-20020a17090a005100b001e87ae821f8sm7781425pjb.36.2022.06.14.12.18.17
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 14 Jun 2022 12:17:33 -0700 (PDT)
-Message-ID: <c317ba82-e77f-147f-6c4e-c975d1d313ea@linaro.org>
-Date:   Tue, 14 Jun 2022 12:17:32 -0700
+        Tue, 14 Jun 2022 12:18:23 -0700 (PDT)
+Message-ID: <81493b57-a35e-3082-f5a8-36c8278a8bf3@linaro.org>
+Date:   Tue, 14 Jun 2022 21:18:14 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
+ Thunderbird/91.9.1
 Subject: Re: [PATCH 1/2] dt-bindings: thermal: qcom,spmi-temp-alarm: convert
  to dtschema
 Content-Language: en-US
-To:     Daniel Lezcano <daniel.lezcano@linaro.org>,
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         "Rafael J. Wysocki" <rafael@kernel.org>,
@@ -71,10 +71,11 @@ To:     Daniel Lezcano <daniel.lezcano@linaro.org>,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20220608112702.80873-1-krzysztof.kozlowski@linaro.org>
  <2c778212-1ff6-6afb-aa13-917bbffcfebc@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <2c778212-1ff6-6afb-aa13-917bbffcfebc@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+ <c317ba82-e77f-147f-6c4e-c975d1d313ea@linaro.org>
+From:   Daniel Lezcano <daniel.lezcano@linaro.org>
+In-Reply-To: <c317ba82-e77f-147f-6c4e-c975d1d313ea@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -85,23 +86,31 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14/06/2022 12:01, Daniel Lezcano wrote:
-> On 08/06/2022 13:27, Krzysztof Kozlowski wrote:
->> Convert the Qualcomm QPNP PMIC Temperature Alarm to DT Schema.
+On 14/06/2022 21:17, Krzysztof Kozlowski wrote:
+> On 14/06/2022 12:01, Daniel Lezcano wrote:
+>> On 08/06/2022 13:27, Krzysztof Kozlowski wrote:
+>>> Convert the Qualcomm QPNP PMIC Temperature Alarm to DT Schema.
+>>>
+>>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>>> ---
+>>>    .../thermal/qcom,spmi-temp-alarm.yaml         | 85 +++++++++++++++++++
+>>>    .../bindings/thermal/qcom-spmi-temp-alarm.txt | 51 -----------
+>>>    2 files changed, 85 insertions(+), 51 deletions(-)
+>>>    create mode 100644 Documentation/devicetree/bindings/thermal/qcom,spmi-temp-alarm.yaml
+>>>    delete mode 100644 Documentation/devicetree/bindings/thermal/qcom-spmi-temp-alarm.txt
 >>
->> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->> ---
->>   .../thermal/qcom,spmi-temp-alarm.yaml         | 85 +++++++++++++++++++
->>   .../bindings/thermal/qcom-spmi-temp-alarm.txt | 51 -----------
->>   2 files changed, 85 insertions(+), 51 deletions(-)
->>   create mode 100644 Documentation/devicetree/bindings/thermal/qcom,spmi-temp-alarm.yaml
->>   delete mode 100644 Documentation/devicetree/bindings/thermal/qcom-spmi-temp-alarm.txt
+>> Applied this patch.
+>>
+>> I can pick patch 2/2 if needed, just let me know
 > 
-> Applied this patch.
-> 
-> I can pick patch 2/2 if needed, just let me know
+> Thanks Daniel. I guess Bjorn will pick up the DTS patch.
 
-Thanks Daniel. I guess Bjorn will pick up the DTS patch.
+Ok, thanks
 
-Best regards,
-Krzysztof
+
+-- 
+<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
+
+Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
+<http://twitter.com/#!/linaroorg> Twitter |
+<http://www.linaro.org/linaro-blog/> Blog
