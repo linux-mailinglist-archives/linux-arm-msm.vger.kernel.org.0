@@ -2,63 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 81CEE54BC45
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jun 2022 22:59:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9865C54BC69
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jun 2022 23:05:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240437AbiFNUz4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Jun 2022 16:55:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49600 "EHLO
+        id S1356827AbiFNVAy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Jun 2022 17:00:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54568 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234754AbiFNUz4 (ORCPT
+        with ESMTP id S245736AbiFNVAx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Jun 2022 16:55:56 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85C092F64F;
-        Tue, 14 Jun 2022 13:55:54 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 4518CB81B79;
-        Tue, 14 Jun 2022 20:55:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6449AC3411B;
-        Tue, 14 Jun 2022 20:55:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1655240151;
-        bh=XzEAK2y5Iei2R8rsITjcjNvlSr4PiUjEUS7DNftkwGA=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=p+477iWvi8LLsQiEZY2hhhQ40qc7phf5EbKKe1GuDHgRJXxTt+MG2/rD8GTYsOqBl
-         CasgghvFA/MX721GElqHLUbboFEUU0y/kgk6k5wzD7+RD3Tc+rsXH+AocbYtU4BZJG
-         ezxk4R1JY8hSnTtTLoheIaI/EoQvvBLajGpcce/Lzilh+3lnUONfUJRJGjEvqatiqD
-         v8ZAVP2JJ8JiohhAmQo10X1wGXF5UjICvydhJnBg7SJ/U1WwaVUo46gLXOC/qYjDiu
-         oXZ/waiR/Is4B/W7vcOgNNVd5DfMzisbrhLptJpzEZ8nR1vluxOKojCE46Q4dR3grm
-         g/qVgaaQ1ojqw==
-Date:   Wed, 15 Jun 2022 02:25:50 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
+        Tue, 14 Jun 2022 17:00:53 -0400
+Received: from mail-io1-f43.google.com (mail-io1-f43.google.com [209.85.166.43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50E0250076;
+        Tue, 14 Jun 2022 14:00:53 -0700 (PDT)
+Received: by mail-io1-f43.google.com with SMTP id i16so10717787ioa.6;
+        Tue, 14 Jun 2022 14:00:53 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=6wiAEAPY25hq39gjHNba18GOciZXRMGE+/vSibk2A0Y=;
+        b=pzKp/jCj0hGhQhT1oPjAQR/DQOF4LYGMx/Z69dnZw4Aw4X8PMrT+BUVjMlOWfDgCii
+         5EryCoSdyeC5dmAQ/PMmp+gr3UaAKLA1uxicimv9Ua5fY3XObX7yPQNkGTmp0+Z3qsJR
+         mOqZBWWk/U82hMofQENt/cTqVNBdfRtGCc6w1Z6Cf744y6AoBu0GsgrmPemuJd2kDhcJ
+         aKjO7Bq9ROMQfWRb91fSbKxc7Npd1MXRJaGKCyRYt8ogWmKHn8/aWk1tP7Gn2KPbZElK
+         bGPWZQwrDNKcSWzmjbYDn0IJ3Xr0dlNmR9rlC+UzlT2vFaWiZb2DKFlNzO+ClgzDVG2N
+         vYyw==
+X-Gm-Message-State: AOAM532e2A48yNjE839oK4utBZK0MHtmVisDGe2uhGx178OiI6aAWqGf
+        ILDtMy1xNYlMdbZGd4htoQ==
+X-Google-Smtp-Source: ABdhPJzIytzKnEVgu1QnavMIZw8F2v0fC5i8fFAEMNNu8RKGv/X2WWcvM5eIkW4e+95ltwCWuCHhLA==
+X-Received: by 2002:a05:6638:1342:b0:331:e382:b0af with SMTP id u2-20020a056638134200b00331e382b0afmr4132233jad.32.1655240452595;
+        Tue, 14 Jun 2022 14:00:52 -0700 (PDT)
+Received: from robh.at.kernel.org ([64.188.179.251])
+        by smtp.gmail.com with ESMTPSA id u12-20020a92d1cc000000b002d77ea49cd7sm5954020ilg.28.2022.06.14.14.00.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 14 Jun 2022 14:00:52 -0700 (PDT)
+Received: (nullmailer pid 2556989 invoked by uid 1000);
+        Tue, 14 Jun 2022 21:00:50 -0000
+Date:   Tue, 14 Jun 2022 15:00:50 -0600
+From:   Rob Herring <robh@kernel.org>
 To:     Ansuel Smith <ansuelsmth@gmail.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Miquel Raynal <miquel.raynal@bootlin.com>,
+Cc:     Vignesh Raghavendra <vigneshr@ti.com>,
         Richard Weinberger <richard@nod.at>,
-        Vignesh Raghavendra <vigneshr@ti.com>,
+        Andy Gross <agross@kernel.org>,
+        Miquel Raynal <miquel.raynal@bootlin.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-mtd@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v6 1/3] mtd: nand: raw: qcom_nandc: reorder
- qcom_nand_host struct
-Message-ID: <20220614205550.GA5596@thinkpad>
+        linux-mtd@lists.infradead.org, linux-kernel@vger.kernel.org,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Subject: Re: [PATCH v6 3/3] dt-bindings: mtd: qcom_nandc: document
+ qcom,boot-partitions binding
+Message-ID: <20220614210050.GA2556790-robh@kernel.org>
 References: <20220609132344.17548-1-ansuelsmth@gmail.com>
- <20220609132344.17548-2-ansuelsmth@gmail.com>
- <20220609170722.GA5081@thinkpad>
- <62a2298c.1c69fb81.bc909.d2d0@mx.google.com>
+ <20220609132344.17548-4-ansuelsmth@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <62a2298c.1c69fb81.bc909.d2d0@mx.google.com>
-X-Spam-Status: No, score=-8.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+In-Reply-To: <20220609132344.17548-4-ansuelsmth@gmail.com>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -66,86 +72,19 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jun 09, 2022 at 07:10:33PM +0200, Ansuel Smith wrote:
-> On Thu, Jun 09, 2022 at 10:37:22PM +0530, Manivannan Sadhasivam wrote:
-> > On Thu, Jun 09, 2022 at 03:23:42PM +0200, Ansuel Smith wrote:
-> > > Reorder qcom_nand_host to save holes in the struct.
-> > 
-> > You forgot to reorder other structs also as I requested :/
-> > 
-> > Thanks,
-> > Mani
-> >
+On Thu, 09 Jun 2022 15:23:44 +0200, Ansuel Smith wrote:
+> Document new qcom,boot-partition binding used to apply special
+> read/write layout to boot partitions.
 > 
-> Mhhh I didn't find obvius hole in other struct.
-> Think I will pass this with dwarf to better check them. Sorry!
-> Feel free to point them if you notice obvius hole that I didn't notice.
+> QCOM apply a special layout where spare data is not protected
+> by ECC for some special pages (used for boot partition). Add
+> Documentation on how to declare these special pages.
+> 
+> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+> Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+> ---
+>  .../devicetree/bindings/mtd/qcom,nandc.yaml   | 27 +++++++++++++++++++
+>  1 file changed, 27 insertions(+)
 > 
 
-Sorry, I should be explicit. Please rearrange the members in other structs such
-that we could avoid holes (in future also). For instance, in
-"struct bam_transaction" u32's and bool are mixed in the middle. You could
-organize them like,
-
-struct pointer
-struct
-u32
-bool
-
-And this goes same for all other structs as well.
-
-Thanks,
-Mani
-
-> > > 
-> > > Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
-> > > ---
-> > >  drivers/mtd/nand/raw/qcom_nandc.c | 10 ++++++----
-> > >  1 file changed, 6 insertions(+), 4 deletions(-)
-> > > 
-> > > diff --git a/drivers/mtd/nand/raw/qcom_nandc.c b/drivers/mtd/nand/raw/qcom_nandc.c
-> > > index 1a77542c6d67..7fbbd3e7784c 100644
-> > > --- a/drivers/mtd/nand/raw/qcom_nandc.c
-> > > +++ b/drivers/mtd/nand/raw/qcom_nandc.c
-> > > @@ -431,11 +431,12 @@ struct qcom_nand_controller {
-> > >   *				and reserved bytes
-> > >   * @cw_data:			the number of bytes within a codeword protected
-> > >   *				by ECC
-> > > + * @ecc_bytes_hw:		ECC bytes used by controller hardware for this
-> > > + *				chip
-> > > + *
-> > >   * @use_ecc:			request the controller to use ECC for the
-> > >   *				upcoming read/write
-> > >   * @bch_enabled:		flag to tell whether BCH ECC mode is used
-> > > - * @ecc_bytes_hw:		ECC bytes used by controller hardware for this
-> > > - *				chip
-> > >   * @status:			value to be returned if NAND_CMD_STATUS command
-> > >   *				is executed
-> > >   * @last_command:		keeps track of last command on this chip. used
-> > > @@ -452,11 +453,12 @@ struct qcom_nand_host {
-> > >  	int cs;
-> > >  	int cw_size;
-> > >  	int cw_data;
-> > > -	bool use_ecc;
-> > > -	bool bch_enabled;
-> > >  	int ecc_bytes_hw;
-> > >  	int spare_bytes;
-> > >  	int bbm_size;
-> > > +
-> > > +	bool use_ecc;
-> > > +	bool bch_enabled;
-> > >  	u8 status;
-> > >  	int last_command;
-> > >  
-> > > -- 
-> > > 2.36.1
-> > > 
-> > 
-> > -- 
-> > மணிவண்ணன் சதாசிவம்
-> 
-> -- 
-> 	Ansuel
-
--- 
-மணிவண்ணன் சதாசிவம்
+Reviewed-by: Rob Herring <robh@kernel.org>
