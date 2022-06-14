@@ -2,52 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 56C1954BA60
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jun 2022 21:15:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5B85854BA64
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jun 2022 21:17:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344835AbiFNTP4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Jun 2022 15:15:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56566 "EHLO
+        id S236301AbiFNTRh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Jun 2022 15:17:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58016 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344784AbiFNTPz (ORCPT
+        with ESMTP id S231907AbiFNTRf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Jun 2022 15:15:55 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3239764E;
-        Tue, 14 Jun 2022 12:15:54 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 700E160A75;
-        Tue, 14 Jun 2022 19:15:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAD49C3411B;
-        Tue, 14 Jun 2022 19:15:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1655234153;
-        bh=6hbdX0woT8V0SmoPGKiyf3mxXcYsvphTWfMcAMjl43Q=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=aqvqshr66xDqYRSEtNNm7zLiKChU1xH9iKqGyCCVjEOD1/jahmYP6xVVQ9uCZ3KLE
-         p9jArETIGRcEw3jCqpqQkYt5qOBsdvLhiUVr3FaSqREyqPGCUvLOfUZCTM2hPj6Luu
-         l9UBAzIjbPapadYDDO61Ubvsc4E48RUb0dctLKGALUD02bFL0dHVljnAkfAb2IpEHr
-         jSCpsU40+jrF2InbQKugDeflkQ+wanigH4Idaz2t55UAF0y1crB/jVEbScV943YIrU
-         K61qIWHFuprdTSprG8BY77aVF+b5azATeBX2iR4ZFb6FX0wwSTNRNvxRQXpHVZxu/4
-         9F2LiQDsrJwYw==
-Content-Type: text/plain; charset="utf-8"
+        Tue, 14 Jun 2022 15:17:35 -0400
+Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65DA7111A
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Jun 2022 12:17:34 -0700 (PDT)
+Received: by mail-pf1-x434.google.com with SMTP id u37so988504pfg.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Jun 2022 12:17:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :references:from:in-reply-to:content-transfer-encoding;
+        bh=lhMxTQMnN137Vr3Q0ziGclyB7kCt3vT1THj9ycpmP0s=;
+        b=LWphgGFaYcwVO/fFu1KEC+ZLpADp2ELKQ/7uuS+rXW9SxCDTAImT7Jjdx80Z4HoIca
+         aKdt+QMqhEipMYdfu1/jbCoxbQwqt3tcINIQ32CWOFSEElTfPpCdr64xjq885K4sdUi4
+         nC3hg0HJ77bmwhGQhmEHlUUz//yeoxpWGJlmpJ3NTrBz0kbO9Pa7ojRgVsTtFo02HONo
+         sfiF5eg7YTMgeRRf2sKI9YDP33gO6JaDs424WhhOe11sCC28GSlGiXbp9Oh3A+U585ng
+         dq/+T682bjkBEel/gOBiAgKgcTH9uq3Dis487kQCVqQ6Q5icRS7kNap0FF5UHJxcuPdd
+         kX0w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=lhMxTQMnN137Vr3Q0ziGclyB7kCt3vT1THj9ycpmP0s=;
+        b=QWrbVCPgzQB55MO2tftLaXfugMLSKAGi4HdMBSWgO6iOJ7mXTEcSAmGcTm7MvF9Eqm
+         fHxciwStkruJPhyAavj+QRHnkcyS1aRFgHAwV6yV7G4ApqdKSIHPqNfHSz+F+nbmkrM/
+         GiORNDlWNQQdTWTYZnFM0i1AomzCdRiZZfoN77By8X9au/9JclqFKhBxash0LWlatY2y
+         BdNarBhhXNQ4DJGa7egQJfr8Og0Mqh2ttlHR0OqzLvks4a+sONMGBySubAYahoy8I+JJ
+         Q9GFGtGDifImeBrbYtecVb37UZpnY4sT9CiCqaGj5W9FLn3iZMOTvB7AAb8TAtlU8iax
+         ESoA==
+X-Gm-Message-State: AJIora+Bct8NqyTGYKmOj+pJuumpUAtfncF7xNPYA09Pfy2M9BFXkItk
+        E1vRv2qUahZuTKFB/kSYUtvnUw==
+X-Google-Smtp-Source: AGRyM1vBGLLo8xuwfhG9CyAc8WHfk9haKqAIM0YO9jCpCi6/n7shNJxARh2oq3WdoAc/c6CjpzuN3Q==
+X-Received: by 2002:a63:194c:0:b0:408:a9d1:400c with SMTP id 12-20020a63194c000000b00408a9d1400cmr3519825pgz.559.1655234253902;
+        Tue, 14 Jun 2022 12:17:33 -0700 (PDT)
+Received: from [172.22.33.138] ([192.77.111.2])
+        by smtp.gmail.com with ESMTPSA id bi9-20020a170902bf0900b00163bfaf0b17sm7574855plb.233.2022.06.14.12.17.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 14 Jun 2022 12:17:33 -0700 (PDT)
+Message-ID: <c317ba82-e77f-147f-6c4e-c975d1d313ea@linaro.org>
+Date:   Tue, 14 Jun 2022 12:17:32 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20220613063327.89320-1-lizhengyu3@huawei.com>
-References: <20220613063327.89320-1-lizhengyu3@huawei.com>
-Subject: Re: [PATCH] clk: qcom: clk-rpmh: Remove redundant if statement
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-To:     Li Zhengyu <lizhengyu3@huawei.com>, quic_tdas@quicinc.com
-Date:   Tue, 14 Jun 2022 12:15:51 -0700
-User-Agent: alot/0.10
-Message-Id: <20220614191553.CAD49C3411B@smtp.kernel.org>
-X-Spam-Status: No, score=-8.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: Re: [PATCH 1/2] dt-bindings: thermal: qcom,spmi-temp-alarm: convert
+ to dtschema
+Content-Language: en-US
+To:     Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Amit Kucheria <amitk@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        "Ivan T. Ivanov" <ivan.ivanov@linaro.org>,
+        Kumar Gala <galak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20220608112702.80873-1-krzysztof.kozlowski@linaro.org>
+ <2c778212-1ff6-6afb-aa13-917bbffcfebc@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <2c778212-1ff6-6afb-aa13-917bbffcfebc@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -56,11 +85,23 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Li Zhengyu (2022-06-12 23:33:27)
-> By the clk framework already reference counts prepare/unprepare,
-> this if statement should be never true.
->=20
-> Signed-off-by: Li Zhengyu <lizhengyu3@huawei.com>
-> ---
+On 14/06/2022 12:01, Daniel Lezcano wrote:
+> On 08/06/2022 13:27, Krzysztof Kozlowski wrote:
+>> Convert the Qualcomm QPNP PMIC Temperature Alarm to DT Schema.
+>>
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> ---
+>>   .../thermal/qcom,spmi-temp-alarm.yaml         | 85 +++++++++++++++++++
+>>   .../bindings/thermal/qcom-spmi-temp-alarm.txt | 51 -----------
+>>   2 files changed, 85 insertions(+), 51 deletions(-)
+>>   create mode 100644 Documentation/devicetree/bindings/thermal/qcom,spmi-temp-alarm.yaml
+>>   delete mode 100644 Documentation/devicetree/bindings/thermal/qcom-spmi-temp-alarm.txt
+> 
+> Applied this patch.
+> 
+> I can pick patch 2/2 if needed, just let me know
 
-Reviewed-by: Stephen Boyd <sboyd@kernel.org>
+Thanks Daniel. I guess Bjorn will pick up the DTS patch.
+
+Best regards,
+Krzysztof
