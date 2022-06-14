@@ -2,73 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 321F054AC1A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jun 2022 10:41:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5C32854AC45
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jun 2022 10:46:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353536AbiFNIlL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Jun 2022 04:41:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33198 "EHLO
+        id S239845AbiFNIqD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Jun 2022 04:46:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40848 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352827AbiFNIkw (ORCPT
+        with ESMTP id S1356201AbiFNInv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Jun 2022 04:40:52 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0563F427D8;
-        Tue, 14 Jun 2022 01:40:14 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id B48E2B817DB;
-        Tue, 14 Jun 2022 08:40:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FC2FC3411B;
-        Tue, 14 Jun 2022 08:40:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1655196011;
-        bh=md/hhacy6Xjty9NLHaPlGwpLO6qKQ3qcDjhq4v/Auk0=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=iq7uZHjZcOJSfxTsPh+UwmlAkkNxiZt0WHrZKXauUcxQqVevfx8eBY/gYW1M8qtof
-         lb2uTGspgRsZ/3BqExC7h3Kq0xOhtWD/U+zvNO3vnSLZMg4DvzWownaUZALTZ1ELFs
-         atbe/al9tkdao6weGW9jvLjQAzSQntezaaQPu9VYYo5lczd9gxhcocCbZBQVYmXA55
-         9iOMVmBe0lcfF1m/NCeYKvRR7m0SVUcn4U/A9hEIHm80fETm2BK0HkMVsgD70Nokxk
-         GeqerXzinCqYOruUxuHi2nYBa4eekLx2hkC++i6FsUqTXoy5usazeZI6uMQWpXX5jL
-         ntRa4PDbJowlw==
-Content-Type: text/plain; charset="utf-8"
+        Tue, 14 Jun 2022 04:43:51 -0400
+Received: from extserv.mm-sol.com (ns.mm-sol.com [37.157.136.199])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5A1342A18;
+        Tue, 14 Jun 2022 01:43:36 -0700 (PDT)
+Received: from [192.168.1.12] (unknown [195.24.90.54])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
+        (Client did not present a certificate)
+        (Authenticated sender: svarbanov@mm-sol.com)
+        by extserv.mm-sol.com (Postfix) with ESMTPSA id 7A3EED2D8;
+        Tue, 14 Jun 2022 11:43:32 +0300 (EEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mm-sol.com; s=201706;
+        t=1655196215; bh=Av5SJp2VrbZTqBy8DGhcuSbxMQmRILVGd28Y685GsWM=;
+        h=Date:Subject:To:Cc:From:From;
+        b=ZEHfRkZXnbY5zsZDCN9Yo04uVTt5dZYinauD2FrJ2rAGQ45KdF12XeHm/6DQqnl2Q
+         s+98czrx8gC6fdrTcIOEIWl8RGx/Xz5p2DblV6G5r0g5KGBragLo8oDn/pMy8FFmdj
+         nCZKWluo7Ru8qfrwLjDK2HVF0sVIQ4uNuoSNXCYvtqT5LeXgWOoMbj2Vv8SMNlkxKe
+         Sm9h+XQi2A+eV+f3XSPrFE/oMm106dElVaeynVeP0QIG3KNaLu+sARwf0g+GTXL1wO
+         r2w/OnUpTS0spGsZVUL1ImGrcHMpu/DdmXTID383uGzhJYP9to1PC/KtSoNETXvRJr
+         1xaN/OCRUn9JA==
+Message-ID: <1605ad62-530a-7bb9-37d7-11ff6e858a0d@mm-sol.com>
+Date:   Tue, 14 Jun 2022 11:43:24 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20220429220904.137297-2-caleb.connolly@linaro.org>
-References: <20220429220904.137297-1-caleb.connolly@linaro.org> <20220429220904.137297-2-caleb.connolly@linaro.org>
-Subject: Re: [PATCH v14 01/10] spmi: add a helper to look up an SPMI device from a device node
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     Jami Kettunen <jami.kettunen@somainline.org>,
-        Sumit Semwal <sumit.semwal@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Lee Jones <lee.jones@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, caleb.connolly@linaro.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-iio@vger.kernel.org, linux-kernel@vger.kernel.org
-Date:   Tue, 14 Jun 2022 01:40:09 -0700
-User-Agent: alot/0.10
-Message-Id: <20220614084011.3FC2FC3411B@smtp.kernel.org>
-X-Spam-Status: No, score=-8.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Subject: Re: [PATCH v7 2/3] PCI: qcom: Define slot capabilities using
+ PCI_EXP_SLTCAP_*
+Content-Language: en-US
+To:     Baruch Siach <baruch@tkos.co.il>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Baruch Siach <baruch.siach@siklu.com>,
+        Kathiravan T <quic_kathirav@quicinc.com>,
+        Selvam Sathappan Periakaruppan <quic_speriaka@quicinc.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Robert Marko <robert.marko@sartura.hr>,
+        Bryan O'Donoghue <pure.logic@nexus-software.ie>,
+        =?UTF-8?Q?Pali_Roh=c3=a1r?= <pali@kernel.org>,
+        linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-tegra@vger.kernel.org
+References: <cover.1655028401.git.baruch@tkos.co.il>
+ <27d2c59cc9a916754e0dc68f44447ecefe378410.1655028401.git.baruch@tkos.co.il>
+From:   Stanimir Varbanov <svarbanov@mm-sol.com>
+In-Reply-To: <27d2c59cc9a916754e0dc68f44447ecefe378410.1655028401.git.baruch@tkos.co.il>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Caleb Connolly (2022-04-29 15:08:56)
-> The helper function spmi_device_from_of() takes a device node and
-> returns the SPMI device associated with it.
-> This is like of_find_device_by_node but for SPMI devices.
->=20
-> Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
-> ---
 
-Acked-by: Stephen Boyd <sboyd@kernel.org>
+
+On 6/12/22 13:18, Baruch Siach wrote:
+> From: Baruch Siach <baruch.siach@siklu.com>
+> 
+> The PCIE_CAP_LINK1_VAL macro actually defines slot capabilities. Use
+> PCI_EXP_SLTCAP_* macros to spell its value, and rename it to better
+> describe its meaning.
+> 
+> Signed-off-by: Baruch Siach <baruch.siach@siklu.com>
+> ---
+> v7:
+>   Use FIELD_PREP for power limit and stale (Pali Rohár)
+> ---
+>  drivers/pci/controller/dwc/pcie-qcom.c | 17 +++++++++++++++--
+>  1 file changed, 15 insertions(+), 2 deletions(-)
+
+Acked-by: Stanimir Varbanov <svarbanov@mm-sol.com>
+
+-- 
+regards,
+Stan
