@@ -2,47 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B249354B343
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jun 2022 16:34:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 006F954B3AB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jun 2022 16:43:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241074AbiFNOcS convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Jun 2022 10:32:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52610 "EHLO
+        id S244342AbiFNOhv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Jun 2022 10:37:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60510 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345441AbiFNOcN (ORCPT
+        with ESMTP id S238564AbiFNOht (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Jun 2022 10:32:13 -0400
-Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 130673A71D;
-        Tue, 14 Jun 2022 07:32:12 -0700 (PDT)
+        Tue, 14 Jun 2022 10:37:49 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29696175AA;
+        Tue, 14 Jun 2022 07:37:47 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id 6682CCE1ABA;
-        Tue, 14 Jun 2022 14:32:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E30BC3411B;
-        Tue, 14 Jun 2022 14:32:07 +0000 (UTC)
-Date:   Tue, 14 Jun 2022 10:32:05 -0400
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 7934E617B4;
+        Tue, 14 Jun 2022 14:37:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D478C3411C;
+        Tue, 14 Jun 2022 14:37:34 +0000 (UTC)
+Date:   Tue, 14 Jun 2022 10:37:32 -0400
 From:   Steven Rostedt <rostedt@goodmis.org>
-To:     Sai Prakash Ranjan <quic_saipraka@quicinc.com>
-Cc:     <arnd@arndb.de>, <catalin.marinas@arm.com>,
-        <gregkh@linuxfoundation.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <coresight@lists.linaro.org>, <suzuki.poulose@arm.com>,
-        <maz@kernel.org>, <quic_psodagud@quicinc.com>,
-        <quic_tsoni@quicinc.com>, <will@kernel.org>,
-        Prasad Sodagudi <psodagud@codeaurora.org>
-Subject: Re: [PATCHv15 5/9] lib: Add register read/write tracing support
-Message-ID: <20220614103205.2d134546@gandalf.local.home>
-In-Reply-To: <f6d1b9e9d70968b506bdfd1b77129cb751b9df9d.1652891705.git.quic_saipraka@quicinc.com>
-References: <cover.1652891705.git.quic_saipraka@quicinc.com>
-        <f6d1b9e9d70968b506bdfd1b77129cb751b9df9d.1652891705.git.quic_saipraka@quicinc.com>
+To:     Petr Mladek <pmladek@suse.com>
+Cc:     Sergey Senozhatsky <senozhatsky@chromium.org>,
+        Peter Zijlstra <peterz@infradead.org>,
+        ink@jurassic.park.msu.ru, mattst88@gmail.com, vgupta@kernel.org,
+        linux@armlinux.org.uk, ulli.kroll@googlemail.com,
+        linus.walleij@linaro.org, shawnguo@kernel.org,
+        Sascha Hauer <s.hauer@pengutronix.de>, kernel@pengutronix.de,
+        festevam@gmail.com, linux-imx@nxp.com, tony@atomide.com,
+        khilman@kernel.org, catalin.marinas@arm.com, will@kernel.org,
+        guoren@kernel.org, bcain@quicinc.com, chenhuacai@kernel.org,
+        kernel@xen0n.name, geert@linux-m68k.org, sammy@sammy.net,
+        monstr@monstr.eu, tsbogend@alpha.franken.de, dinguyen@kernel.org,
+        jonas@southpole.se, stefan.kristiansson@saunalahti.fi,
+        shorne@gmail.com, James.Bottomley@hansenpartnership.com,
+        deller@gmx.de, mpe@ellerman.id.au, benh@kernel.crashing.org,
+        paulus@samba.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
+        aou@eecs.berkeley.edu, hca@linux.ibm.com, gor@linux.ibm.com,
+        agordeev@linux.ibm.com, borntraeger@linux.ibm.com,
+        svens@linux.ibm.com, ysato@users.sourceforge.jp, dalias@libc.org,
+        davem@davemloft.net, richard@nod.at,
+        anton.ivanov@cambridgegreys.com, johannes@sipsolutions.net,
+        tglx@linutronix.de, mingo@redhat.com, bp@alien8.de,
+        dave.hansen@linux.intel.com, x86@kernel.org, hpa@zytor.com,
+        acme@kernel.org, mark.rutland@arm.com,
+        alexander.shishkin@linux.intel.com, jolsa@kernel.org,
+        namhyung@kernel.org, jgross@suse.com, srivatsa@csail.mit.edu,
+        amakhalov@vmware.com, pv-drivers@vmware.com,
+        boris.ostrovsky@oracle.com, chris@zankel.net, jcmvbkbc@gmail.com,
+        rafael@kernel.org, lenb@kernel.org, pavel@ucw.cz,
+        gregkh@linuxfoundation.org, mturquette@baylibre.com,
+        sboyd@kernel.org, daniel.lezcano@linaro.org, lpieralisi@kernel.org,
+        sudeep.holla@arm.com, agross@kernel.org,
+        bjorn.andersson@linaro.org, anup@brainfault.org,
+        thierry.reding@gmail.com, jonathanh@nvidia.com,
+        jacob.jun.pan@linux.intel.com, Arnd Bergmann <arnd@arndb.de>,
+        yury.norov@gmail.com, andriy.shevchenko@linux.intel.com,
+        linux@rasmusvillemoes.dk, john.ogness@linutronix.de,
+        paulmck@kernel.org, frederic@kernel.org, quic_neeraju@quicinc.com,
+        josh@joshtriplett.org, mathieu.desnoyers@efficios.com,
+        jiangshanlai@gmail.com, joel@joelfernandes.org,
+        juri.lelli@redhat.com, vincent.guittot@linaro.org,
+        dietmar.eggemann@arm.com, bsegall@google.com, mgorman@suse.de,
+        bristot@redhat.com, vschneid@redhat.com, jpoimboe@kernel.org,
+        linux-alpha@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-snps-arc@lists.infradead.org,
+        linux-arm-kernel@lists.infradead.org, linux-omap@vger.kernel.org,
+        linux-csky@vger.kernel.org, linux-hexagon@vger.kernel.org,
+        linux-ia64@vger.kernel.org, linux-m68k@lists.linux-m68k.org,
+        linux-mips@vger.kernel.org, openrisc@lists.librecores.org,
+        linux-parisc@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
+        linux-riscv@lists.infradead.org, linux-s390@vger.kernel.org,
+        linux-sh@vger.kernel.org, sparclinux@vger.kernel.org,
+        linux-um@lists.infradead.org, linux-perf-users@vger.kernel.org,
+        virtualization@lists.linux-foundation.org,
+        xen-devel@lists.xenproject.org, linux-xtensa@linux-xtensa.org,
+        linux-acpi@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-tegra@vger.kernel.org, linux-arch@vger.kernel.org,
+        rcu@vger.kernel.org
+Subject: Re: [PATCH 24/36] printk: Remove trace_.*_rcuidle() usage
+Message-ID: <20220614103732.489ba62b@gandalf.local.home>
+In-Reply-To: <YqHvXFdIJfvUDI6e@alley>
+References: <20220608142723.103523089@infradead.org>
+        <20220608144517.444659212@infradead.org>
+        <YqG6URbihTNCk9YR@alley>
+        <YqHFHB6qqv5wiR8t@worktop.programming.kicks-ass.net>
+        <CA+_sPaoJGrXhNPCs2dKf2J7u07y1xYrRFZBUtkKwzK9GqcHSuQ@mail.gmail.com>
+        <YqHvXFdIJfvUDI6e@alley>
 X-Mailer: Claws Mail 3.17.8 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 8BIT
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-6.7 required=5.0 tests=BAYES_00,
         HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_PASS,
         T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
@@ -52,51 +105,19 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 18 May 2022 22:14:14 +0530
-Sai Prakash Ranjan <quic_saipraka@quicinc.com> wrote:
+On Thu, 9 Jun 2022 15:02:20 +0200
+Petr Mladek <pmladek@suse.com> wrote:
 
-> From: Prasad Sodagudi <psodagud@codeaurora.org>
+> > I'm somewhat curious whether we can actually remove that trace event.  
 > 
-> Generic MMIO read/write i.e., __raw_{read,write}{b,l,w,q} accessors
-> are typically used to read/write from/to memory mapped registers
-> and can cause hangs or some undefined behaviour in following few
-> cases,
+> Good question.
 > 
-> * If the access to the register space is unclocked, for example: if
->   there is an access to multimedia(MM) block registers without MM
->   clocks.
-> 
-> * If the register space is protected and not set to be accessible from
->   non-secure world, for example: only EL3 (EL: Exception level) access
->   is allowed and any EL2/EL1 access is forbidden.
-> 
-> * If xPU(memory/register protection units) is controlling access to
->   certain memory/register space for specific clients.
-> 
-> and more...
-> 
-> Such cases usually results in instant reboot/SErrors/NOC or interconnect
-> hangs and tracing these register accesses can be very helpful to debug
-> such issues during initial development stages and also in later stages.
-> 
-> So use ftrace trace events to log such MMIO register accesses which
-> provides rich feature set such as early enablement of trace events,
-> filtering capability, dumping ftrace logs on console and many more.
-> 
-> Sample output:
-> 
-> rwmmio_write: __qcom_geni_serial_console_write+0x160/0x1e0 width=32 val=0xa0d5d addr=0xfffffbfffdbff700
-> rwmmio_post_write: __qcom_geni_serial_console_write+0x160/0x1e0 width=32 val=0xa0d5d addr=0xfffffbfffdbff700
-> rwmmio_read: qcom_geni_serial_poll_bit+0x94/0x138 width=32 addr=0xfffffbfffdbff610
-> rwmmio_post_read: qcom_geni_serial_poll_bit+0x94/0x138 width=32 val=0x0 addr=0xfffffbfffdbff610
-> 
-> Signed-off-by: Prasad Sodagudi <psodagud@codeaurora.org>
-> Co-developed-by: Sai Prakash Ranjan <quic_saipraka@quicinc.com>
-> Signed-off-by: Sai Prakash Ranjan <quic_saipraka@quicinc.com>
-> ---
+> Well, I think that it might be useful. It allows to see trace and
+> printk messages together.
 
-From a tracing point of view, I do not see anything wrong with this patch.
-
-Acked-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Yes people still use it. I was just asked about it at Kernel Recipes. That
+is, someone wanted printk mixed in with the tracing, and I told them about
+this event (which they didn't know about but was happy to hear that it
+existed).
 
 -- Steve
