@@ -2,78 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 82BCB54BC01
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jun 2022 22:46:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 81CEE54BC45
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jun 2022 22:59:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233624AbiFNUpa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Jun 2022 16:45:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34380 "EHLO
+        id S240437AbiFNUz4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Jun 2022 16:55:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49600 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233371AbiFNUp1 (ORCPT
+        with ESMTP id S234754AbiFNUz4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Jun 2022 16:45:27 -0400
-Received: from mail-io1-f46.google.com (mail-io1-f46.google.com [209.85.166.46])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9CF9128E1E;
-        Tue, 14 Jun 2022 13:45:25 -0700 (PDT)
-Received: by mail-io1-f46.google.com with SMTP id 19so10659755iou.12;
-        Tue, 14 Jun 2022 13:45:25 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=GGYmomEIPWiGIqFRCO19qX9ba5T2sMGBWXRgciDZr6c=;
-        b=elbJQhFW5yQSzzYGsa5SRcnUSJTLcDoc3Y5U2Uf9/QcdTEB47dsRxVBmUQ7bwl6/cA
-         MzkdzoHx82CGR9U6yJxq/XZ6HObPdvnUKCkwsjYMp195OfXZdf9+mngagxtUXn8HlI9m
-         T21nveaq+rUQeFUI5BhgbiMWwENkkWN7H7+ZtYBQtW3+rCRyKNDO2NozdTq3WlUT8vxj
-         SyYiB9BJNynmtPgKZuW4ecCFgp3EILdk9NKmwv/35whzn2nKHeZe9l20KRmjEZtX9GVN
-         C2jjLf7YtFZMT2SsEy34K4YLTZSAOmxDSYULlorf6tuzp22fR2EBqawmpZ+lYVcCw119
-         uvuw==
-X-Gm-Message-State: AOAM530pzUG0Avw0j7/Wyp/jN8xGr0gaRGY3d4e38mTmRGQ4GDNEYqED
-        m+THnI7S1pEZ5oy4QI5Ypg==
-X-Google-Smtp-Source: ABdhPJw2AB9ZgFOPWqBNs7nRAT4ePVUiVt0DMGlQhs8AKGXiLV65876+Jq2I8iyns/vOZJW5zMmEng==
-X-Received: by 2002:a05:6638:2242:b0:331:8bfd:c864 with SMTP id m2-20020a056638224200b003318bfdc864mr3989048jas.214.1655239524890;
-        Tue, 14 Jun 2022 13:45:24 -0700 (PDT)
-Received: from robh.at.kernel.org ([64.188.179.251])
-        by smtp.gmail.com with ESMTPSA id v2-20020a056602014200b0066a0c0beee7sm1840732iot.44.2022.06.14.13.45.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Jun 2022 13:45:24 -0700 (PDT)
-Received: (nullmailer pid 2498361 invoked by uid 1000);
-        Tue, 14 Jun 2022 20:45:22 -0000
-Date:   Tue, 14 Jun 2022 14:45:22 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Mao Jinlong <quic_jinlmao@quicinc.com>
-Cc:     Leo Yan <leo.yan@linaro.org>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Tue, 14 Jun 2022 16:55:56 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85C092F64F;
+        Tue, 14 Jun 2022 13:55:54 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 4518CB81B79;
+        Tue, 14 Jun 2022 20:55:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6449AC3411B;
+        Tue, 14 Jun 2022 20:55:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1655240151;
+        bh=XzEAK2y5Iei2R8rsITjcjNvlSr4PiUjEUS7DNftkwGA=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=p+477iWvi8LLsQiEZY2hhhQ40qc7phf5EbKKe1GuDHgRJXxTt+MG2/rD8GTYsOqBl
+         CasgghvFA/MX721GElqHLUbboFEUU0y/kgk6k5wzD7+RD3Tc+rsXH+AocbYtU4BZJG
+         ezxk4R1JY8hSnTtTLoheIaI/EoQvvBLajGpcce/Lzilh+3lnUONfUJRJGjEvqatiqD
+         v8ZAVP2JJ8JiohhAmQo10X1wGXF5UjICvydhJnBg7SJ/U1WwaVUo46gLXOC/qYjDiu
+         oXZ/waiR/Is4B/W7vcOgNNVd5DfMzisbrhLptJpzEZ8nR1vluxOKojCE46Q4dR3grm
+         g/qVgaaQ1ojqw==
+Date:   Wed, 15 Jun 2022 02:25:50 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Ansuel Smith <ansuelsmth@gmail.com>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-kernel@lists.infradead.org,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        devicetree@vger.kernel.org,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Hao Zhang <quic_hazha@quicinc.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        linux-kernel@vger.kernel.org, coresight@lists.linaro.org,
+        Miquel Raynal <miquel.raynal@bootlin.com>,
+        Richard Weinberger <richard@nod.at>,
+        Vignesh Raghavendra <vigneshr@ti.com>,
         Rob Herring <robh+dt@kernel.org>,
-        Tao Zhang <quic_taozha@quicinc.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        linux-arm-msm@vger.kernel.org,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Subject: Re: [PATCH v10 08/10] dt-bindings: arm: Adds CoreSight TPDA hardware
- definitions
-Message-ID: <20220614204522.GA2497116-robh@kernel.org>
-References: <20220611004331.7343-1-quic_jinlmao@quicinc.com>
- <20220611004331.7343-9-quic_jinlmao@quicinc.com>
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-mtd@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v6 1/3] mtd: nand: raw: qcom_nandc: reorder
+ qcom_nand_host struct
+Message-ID: <20220614205550.GA5596@thinkpad>
+References: <20220609132344.17548-1-ansuelsmth@gmail.com>
+ <20220609132344.17548-2-ansuelsmth@gmail.com>
+ <20220609170722.GA5081@thinkpad>
+ <62a2298c.1c69fb81.bc909.d2d0@mx.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20220611004331.7343-9-quic_jinlmao@quicinc.com>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <62a2298c.1c69fb81.bc909.d2d0@mx.google.com>
+X-Spam-Status: No, score=-8.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -81,18 +66,86 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 11 Jun 2022 08:43:29 +0800, Mao Jinlong wrote:
-> Adds new coresight-tpda.yaml file describing the bindings required
-> to define tpda in the device trees.
+On Thu, Jun 09, 2022 at 07:10:33PM +0200, Ansuel Smith wrote:
+> On Thu, Jun 09, 2022 at 10:37:22PM +0530, Manivannan Sadhasivam wrote:
+> > On Thu, Jun 09, 2022 at 03:23:42PM +0200, Ansuel Smith wrote:
+> > > Reorder qcom_nand_host to save holes in the struct.
+> > 
+> > You forgot to reorder other structs also as I requested :/
+> > 
+> > Thanks,
+> > Mani
+> >
 > 
-> Reviewed-by: Mike Leach <mike.leach@linaro.org>
-> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
-> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
-> ---
->  .../bindings/arm/qcom,coresight-tpda.yaml     | 111 ++++++++++++++++++
->  MAINTAINERS                                   |   1 +
->  2 files changed, 112 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/arm/qcom,coresight-tpda.yaml
+> Mhhh I didn't find obvius hole in other struct.
+> Think I will pass this with dwarf to better check them. Sorry!
+> Feel free to point them if you notice obvius hole that I didn't notice.
 > 
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+Sorry, I should be explicit. Please rearrange the members in other structs such
+that we could avoid holes (in future also). For instance, in
+"struct bam_transaction" u32's and bool are mixed in the middle. You could
+organize them like,
+
+struct pointer
+struct
+u32
+bool
+
+And this goes same for all other structs as well.
+
+Thanks,
+Mani
+
+> > > 
+> > > Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+> > > ---
+> > >  drivers/mtd/nand/raw/qcom_nandc.c | 10 ++++++----
+> > >  1 file changed, 6 insertions(+), 4 deletions(-)
+> > > 
+> > > diff --git a/drivers/mtd/nand/raw/qcom_nandc.c b/drivers/mtd/nand/raw/qcom_nandc.c
+> > > index 1a77542c6d67..7fbbd3e7784c 100644
+> > > --- a/drivers/mtd/nand/raw/qcom_nandc.c
+> > > +++ b/drivers/mtd/nand/raw/qcom_nandc.c
+> > > @@ -431,11 +431,12 @@ struct qcom_nand_controller {
+> > >   *				and reserved bytes
+> > >   * @cw_data:			the number of bytes within a codeword protected
+> > >   *				by ECC
+> > > + * @ecc_bytes_hw:		ECC bytes used by controller hardware for this
+> > > + *				chip
+> > > + *
+> > >   * @use_ecc:			request the controller to use ECC for the
+> > >   *				upcoming read/write
+> > >   * @bch_enabled:		flag to tell whether BCH ECC mode is used
+> > > - * @ecc_bytes_hw:		ECC bytes used by controller hardware for this
+> > > - *				chip
+> > >   * @status:			value to be returned if NAND_CMD_STATUS command
+> > >   *				is executed
+> > >   * @last_command:		keeps track of last command on this chip. used
+> > > @@ -452,11 +453,12 @@ struct qcom_nand_host {
+> > >  	int cs;
+> > >  	int cw_size;
+> > >  	int cw_data;
+> > > -	bool use_ecc;
+> > > -	bool bch_enabled;
+> > >  	int ecc_bytes_hw;
+> > >  	int spare_bytes;
+> > >  	int bbm_size;
+> > > +
+> > > +	bool use_ecc;
+> > > +	bool bch_enabled;
+> > >  	u8 status;
+> > >  	int last_command;
+> > >  
+> > > -- 
+> > > 2.36.1
+> > > 
+> > 
+> > -- 
+> > மணிவண்ணன் சதாசிவம்
+> 
+> -- 
+> 	Ansuel
+
+-- 
+மணிவண்ணன் சதாசிவம்
