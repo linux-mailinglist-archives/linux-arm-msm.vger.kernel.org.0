@@ -2,37 +2,37 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AD6DD54AE9C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jun 2022 12:41:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3060954AECB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jun 2022 12:50:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237989AbiFNKjt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Jun 2022 06:39:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57648 "EHLO
+        id S234631AbiFNKtl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Jun 2022 06:49:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40742 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230157AbiFNKjs (ORCPT
+        with ESMTP id S1355788AbiFNKtR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Jun 2022 06:39:48 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE66235252;
-        Tue, 14 Jun 2022 03:39:47 -0700 (PDT)
+        Tue, 14 Jun 2022 06:49:17 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0EC1549253;
+        Tue, 14 Jun 2022 03:49:16 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id AF974B81856;
-        Tue, 14 Jun 2022 10:39:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7603C3411B;
-        Tue, 14 Jun 2022 10:39:39 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 53E926121B;
+        Tue, 14 Jun 2022 10:49:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A14BC3411B;
+        Tue, 14 Jun 2022 10:49:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1655203185;
-        bh=1WpNbruZfpiREjP5nt5HMy2K24XhwdQUFBtL7VlCzIM=;
+        s=k20201202; t=1655203755;
+        bh=roWnZoctTuO7EfRC+YTK7DM+q3/Q15Ivpx5/o2MsL/M=;
         h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=EPBud0OBnT4YGtLFkEMrFQLy/bCsgRcqOPkc0XW79lwTBSYcD5svdm+wvid3QGguz
-         tdAElO6q1DIS4kHo4IC9FnIlK1wV8nvfg3fe67VkfgJSzYXz9DN7bFi9/h53Hnsr1+
-         wuAFP1mWFUPZ3cmM5r3GaLZEFvMJdtH9Vmyw9VogNN7Zkl1eCOnPp3wlIqGVbVO0Pq
-         QvfB3fs1pelbAWDxvIH6WHtJaPEVQN5QgtVO3gn2PS+aCMaRtc8ezKYfy00EJbhm2+
-         urC7cq9vu5lQCseSz4DsZ47sCiZeCdl6QRCpQX6jvjamqyZTjsdjn5HnwbG44g4+KL
-         wD5lfT8UKEBAg==
-Date:   Tue, 14 Jun 2022 11:48:53 +0100
+        b=lgKkXvQ7vFPgU7uuUI/p6W6E3A4F2Es47erkQFgDJCGTZYZ59LM3yJUm2Rqez8U9C
+         cTuk8Pj7LghPfcwUX7FWRLbCUo9RuBfGIE1nkxkHduH7mwnnnDFnV3ZwxNK5+33iLW
+         R5Rq6fdZvJ9oASjg7kBgEqRZLcr3LL4QLOSW6fiSWlxW7I4UpmzqFXWiKn5lJHVPyp
+         RodDEmWCY1xDNdMDSZ3NINa4oPt3cwF7jfyVN30D+e0yEdqWI34lD2odnGbI2LPWjx
+         +9Iios17uWARa7bekWizGOAXxiwT40wlsUF+K8sDEptJlF6xBl00Mhh59uL82e3SHn
+         4uUPhZctZCloA==
+Date:   Tue, 14 Jun 2022 11:58:24 +0100
 From:   Jonathan Cameron <jic23@kernel.org>
 To:     Luca Weiss <luca@z3ntu.xyz>
 Cc:     Luca Weiss <luca.weiss@fairphone.com>,
@@ -53,12 +53,13 @@ Cc:     Luca Weiss <luca.weiss@fairphone.com>,
         Mark Brown <broonie@kernel.org>, linux-iio@vger.kernel.org,
         devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
 Subject: Re: [PATCH 3/5] proximity: vl53l0x: Handle the VDD regulator
-Message-ID: <20220614114853.340e9c36@jic23-huawei>
-In-Reply-To: <13033502.uLZWGnKmhe@g550jk>
+Message-ID: <20220614115824.289aebce@jic23-huawei>
+In-Reply-To: <20220614114853.340e9c36@jic23-huawei>
 References: <20220523175344.5845-1-markuss.broks@gmail.com>
         <CKKOCWP2NYO5.GH08U776B1KU@otso>
         <20220612095333.1479464c@jic23-huawei>
         <13033502.uLZWGnKmhe@g550jk>
+        <20220614114853.340e9c36@jic23-huawei>
 X-Mailer: Claws Mail 4.1.0 (GTK 3.24.34; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
@@ -73,160 +74,176 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, 12 Jun 2022 11:28:22 +0200
-Luca Weiss <luca@z3ntu.xyz> wrote:
+On Tue, 14 Jun 2022 11:48:53 +0100
+Jonathan Cameron <jic23@kernel.org> wrote:
 
-> Hi Jonathan,
+> On Sun, 12 Jun 2022 11:28:22 +0200
+> Luca Weiss <luca@z3ntu.xyz> wrote:
 > 
-> On Sonntag, 12. Juni 2022 10:53:33 CEST Jonathan Cameron wrote:
-> > On Wed, 08 Jun 2022 12:18:52 +0200
+> > Hi Jonathan,
 > > 
-> > "Luca Weiss" <luca.weiss@fairphone.com> wrote:  
-> > > Hi Markuss,
+> > On Sonntag, 12. Juni 2022 10:53:33 CEST Jonathan Cameron wrote:  
+> > > On Wed, 08 Jun 2022 12:18:52 +0200
 > > > 
-> > > On Mon May 23, 2022 at 7:53 PM CEST, Markuss Broks wrote:  
-> > > > Handle the regulator supplying the VDD pin of VL53L0X.
+> > > "Luca Weiss" <luca.weiss@fairphone.com> wrote:    
+> > > > Hi Markuss,
 > > > > 
-> > > > Signed-off-by: Markuss Broks <markuss.broks@gmail.com>
-> > > > ---
+> > > > On Mon May 23, 2022 at 7:53 PM CEST, Markuss Broks wrote:    
+> > > > > Handle the regulator supplying the VDD pin of VL53L0X.
+> > > > > 
+> > > > > Signed-off-by: Markuss Broks <markuss.broks@gmail.com>
+> > > > > ---
+> > > > > 
+> > > > >  drivers/iio/proximity/vl53l0x-i2c.c | 37 +++++++++++++++++++++++++++++
+> > > > >  1 file changed, 37 insertions(+)
+> > > > > 
+> > > > > diff --git a/drivers/iio/proximity/vl53l0x-i2c.c
+> > > > > b/drivers/iio/proximity/vl53l0x-i2c.c index 12a3e2eff464..8581a873919f
+> > > > > 100644
+> > > > > --- a/drivers/iio/proximity/vl53l0x-i2c.c
+> > > > > +++ b/drivers/iio/proximity/vl53l0x-i2c.c
+> > > > > @@ -43,6 +43,7 @@
+> > > > > 
+> > > > >  struct vl53l0x_data {
+> > > > >  
+> > > > >  	struct i2c_client *client;
+> > > > >  	struct completion completion;
+> > > > > 
+> > > > > +	struct regulator *vdd_supply;
+> > > > > 
+> > > > >  };
+> > > > >  
+> > > > >  static irqreturn_t vl53l0x_handle_irq(int irq, void *priv)
+> > > > > 
+> > > > > @@ -192,10 +193,31 @@ static const struct iio_info vl53l0x_info = {
+> > > > > 
+> > > > >  	.read_raw = vl53l0x_read_raw,
+> > > > >  
+> > > > >  };
+> > > > > 
+> > > > > +static void vl53l0x_power_off(void *_data)
+> > > > > +{
+> > > > > +	struct vl53l0x_data *data = _data;
+> > > > > +
+> > > > > +	regulator_disable(data->vdd_supply);
+> > > > > +}
+> > > > > +
+> > > > > +static int vl53l0x_power_on(struct vl53l0x_data *data)
+> > > > > +{
+> > > > > +	int ret;
+> > > > > +
+> > > > > +	ret = regulator_enable(data->vdd_supply);
+> > > > > +	if (ret)
+> > > > > +		return ret;
+> > > > > +
+> > > > > +	usleep_range(3200, 5000);
+> > > > > +
+> > > > > +	return 0;
+> > > > > +}
+> > > > > +
+> > > > > 
+> > > > >  static int vl53l0x_probe(struct i2c_client *client)
+> > > > >  {
+> > > > >  
+> > > > >  	struct vl53l0x_data *data;
+> > > > >  	struct iio_dev *indio_dev;
+> > > > > 
+> > > > > +	int error;
+> > > > > 
+> > > > >  	indio_dev = devm_iio_device_alloc(&client->dev, sizeof(*data));
+> > > > >  	if (!indio_dev)
+> > > > > 
+> > > > > @@ -210,6 +232,21 @@ static int vl53l0x_probe(struct i2c_client *client)
+> > > > > 
+> > > > >  				     I2C_FUNC_SMBUS_BYTE_DATA))
+> > > > >  		
+> > > > >  		return -EOPNOTSUPP;
+> > > > > 
+> > > > > +	data->vdd_supply = devm_regulator_get_optional(&client->dev,     
+> > "vdd");  
+> > > > > +	if (IS_ERR(data->vdd_supply))
+> > > > > +		return dev_err_probe(&client->dev, PTR_ERR(data-    
+> > >vdd_supply),    
+> > > > > +				     "Unable to get VDD     
+> > regulator\n");  
 > > > > 
-> > > >  drivers/iio/proximity/vl53l0x-i2c.c | 37 +++++++++++++++++++++++++++++
-> > > >  1 file changed, 37 insertions(+)
+> > > > It looks like this optional regulator is not actually optional.
 > > > > 
-> > > > diff --git a/drivers/iio/proximity/vl53l0x-i2c.c
-> > > > b/drivers/iio/proximity/vl53l0x-i2c.c index 12a3e2eff464..8581a873919f
-> > > > 100644
-> > > > --- a/drivers/iio/proximity/vl53l0x-i2c.c
-> > > > +++ b/drivers/iio/proximity/vl53l0x-i2c.c
-> > > > @@ -43,6 +43,7 @@
+> > > > [    1.919995] vl53l0x-i2c 1-0029: error -ENODEV: Unable to get VDD
+> > > > regulator
 > > > > 
-> > > >  struct vl53l0x_data {
-> > > >  
-> > > >  	struct i2c_client *client;
-> > > >  	struct completion completion;
+> > > > When using devm_regulator_get instead, a dummy regulator gets returned
+> > > > which I think is what we want here:
 > > > > 
-> > > > +	struct regulator *vdd_supply;
+> > > > [    1.905518] vl53l0x-i2c 1-0029: supply vdd not found, using dummy
+> > > > regulator
 > > > > 
-> > > >  };
-> > > >  
-> > > >  static irqreturn_t vl53l0x_handle_irq(int irq, void *priv)
-> > > > 
-> > > > @@ -192,10 +193,31 @@ static const struct iio_info vl53l0x_info = {
-> > > > 
-> > > >  	.read_raw = vl53l0x_read_raw,
-> > > >  
-> > > >  };
-> > > > 
-> > > > +static void vl53l0x_power_off(void *_data)
-> > > > +{
-> > > > +	struct vl53l0x_data *data = _data;
-> > > > +
-> > > > +	regulator_disable(data->vdd_supply);
-> > > > +}
-> > > > +
-> > > > +static int vl53l0x_power_on(struct vl53l0x_data *data)
-> > > > +{
-> > > > +	int ret;
-> > > > +
-> > > > +	ret = regulator_enable(data->vdd_supply);
-> > > > +	if (ret)
-> > > > +		return ret;
-> > > > +
-> > > > +	usleep_range(3200, 5000);
-> > > > +
-> > > > +	return 0;
-> > > > +}
-> > > > +
-> > > > 
-> > > >  static int vl53l0x_probe(struct i2c_client *client)
-> > > >  {
-> > > >  
-> > > >  	struct vl53l0x_data *data;
-> > > >  	struct iio_dev *indio_dev;
-> > > > 
-> > > > +	int error;
-> > > > 
-> > > >  	indio_dev = devm_iio_device_alloc(&client->dev, sizeof(*data));
-> > > >  	if (!indio_dev)
-> > > > 
-> > > > @@ -210,6 +232,21 @@ static int vl53l0x_probe(struct i2c_client *client)
-> > > > 
-> > > >  				     I2C_FUNC_SMBUS_BYTE_DATA))
-> > > >  		
-> > > >  		return -EOPNOTSUPP;
-> > > > 
-> > > > +	data->vdd_supply = devm_regulator_get_optional(&client->dev,   
-> "vdd");
-> > > > +	if (IS_ERR(data->vdd_supply))
-> > > > +		return dev_err_probe(&client->dev, PTR_ERR(data-  
-> >vdd_supply),  
-> > > > +				     "Unable to get VDD   
-> regulator\n");
+> > > > Can you fix this up or should I send a patch?    
 > > > 
-> > > It looks like this optional regulator is not actually optional.
+> > > Hi Luca,
 > > > 
-> > > [    1.919995] vl53l0x-i2c 1-0029: error -ENODEV: Unable to get VDD
-> > > regulator
-> > > 
-> > > When using devm_regulator_get instead, a dummy regulator gets returned
-> > > which I think is what we want here:
-> > > 
-> > > [    1.905518] vl53l0x-i2c 1-0029: supply vdd not found, using dummy
-> > > regulator
-> > > 
-> > > Can you fix this up or should I send a patch?  
+> > > Please send a patch.    
 > > 
-> > Hi Luca,
-> > 
-> > Please send a patch.  
+> > Which commit sha can I use for Fixes: here?
+> > Based your togreg[0] branch currently shows "Age: 20 hours" I guess it was 
+> > rebased recently?  
 > 
-> Which commit sha can I use for Fixes: here?
-> Based your togreg[0] branch currently shows "Age: 20 hours" I guess it was 
-> rebased recently?
+> It was rebased onto rc1 as you noticed.
+> 
+> In theory it is now stable, assuming nothing nasty shows up.
+> Fixes tag doesn't matter strongly given both will go into mainline via
+> the same pull request, so maybe just skip adding one to make my life
+> easier :)
+The 'in theory stable' bit lasted a few more mins as I had a patch
+I'd otherwise needed to have done a messy revert for.
 
-It was rebased onto rc1 as you noticed.
+So definitely safer to skip the Fixes tag for this, though I do
+have scripts that check them and should in theory fix it up
+if it is based on stale version of togreg.  It's just fiddly
+to do.
 
-In theory it is now stable, assuming nothing nasty shows up.
-Fixes tag doesn't matter strongly given both will go into mainline via
-the same pull request, so maybe just skip adding one to make my life
-easier :)
-
-Thanks,
-
+Thanks
 Jonathan
 
+
 > 
-> Regards
-> Luca
+> Thanks,
 > 
-> [0]https://git.kernel.org/pub/scm/linux/kernel/git/jic23/iio.git/log/?h=togreg
+> Jonathan
 > 
 > > 
-> > Jonathan
+> > Regards
+> > Luca
+> > 
+> > [0]https://git.kernel.org/pub/scm/linux/kernel/git/jic23/iio.git/log/?h=togreg
 > >   
-> > > Regards
-> > > Luca
-> > >   
-> > > > +
-> > > > +	error = vl53l0x_power_on(data);
-> > > > +	if (error)
-> > > > +		return dev_err_probe(&client->dev, error,
-> > > > +				     "Failed to power on the   
-> chip\n");
-> > > > +
-> > > > +	error = devm_add_action_or_reset(&client->dev, vl53l0x_power_off,
-> > > > data);
-> > > > +	if (error)
-> > > > +		return dev_err_probe(&client->dev, error,
-> > > > +				     "Failed to install poweroff   
-> action\n");
-> > > > +
-> > > > 
-> > > >  	indio_dev->name = "vl53l0x";
-> > > >  	indio_dev->info = &vl53l0x_info;
-> > > >  	indio_dev->channels = vl53l0x_channels;  
-> 
-> 
-> 
+> > > 
+> > > Jonathan
+> > >     
+> > > > Regards
+> > > > Luca
+> > > >     
+> > > > > +
+> > > > > +	error = vl53l0x_power_on(data);
+> > > > > +	if (error)
+> > > > > +		return dev_err_probe(&client->dev, error,
+> > > > > +				     "Failed to power on the     
+> > chip\n");  
+> > > > > +
+> > > > > +	error = devm_add_action_or_reset(&client->dev, vl53l0x_power_off,
+> > > > > data);
+> > > > > +	if (error)
+> > > > > +		return dev_err_probe(&client->dev, error,
+> > > > > +				     "Failed to install poweroff     
+> > action\n");  
+> > > > > +
+> > > > > 
+> > > > >  	indio_dev->name = "vl53l0x";
+> > > > >  	indio_dev->info = &vl53l0x_info;
+> > > > >  	indio_dev->channels = vl53l0x_channels;    
+> > 
+> > 
+> > 
+> >   
 > 
 
