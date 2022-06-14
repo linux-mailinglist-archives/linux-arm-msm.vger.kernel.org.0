@@ -2,71 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 70F3254BDA8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jun 2022 00:34:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 161B154BDB7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jun 2022 00:36:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244242AbiFNWbU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Jun 2022 18:31:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53418 "EHLO
+        id S1345709AbiFNWfT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Jun 2022 18:35:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60696 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352978AbiFNW2o (ORCPT
+        with ESMTP id S1346696AbiFNWfN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Jun 2022 18:28:44 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D677E4D9DF;
-        Tue, 14 Jun 2022 15:28:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1655245721; x=1686781721;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=TXsGVyUodPcbLb1MebJjc7VpvV7kUIfbb97MlIz1RY0=;
-  b=Fse21qLtixeT0LXxOOFwVxUaWPcowaUPqxUs0bODWpcOOb+uRK43GA6b
-   ST1P2HCbJYhwBH3p5O/siq8dw+a05l6gPoI13/sQXwaZWFL1XerXtWSBV
-   zANLYwnHoDnZMP3XrjnznKxXcWgfCakEnngJaPPRopSC/lG7TwixoBjSk
-   w=;
-Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 14 Jun 2022 15:28:37 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Jun 2022 15:28:36 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Tue, 14 Jun 2022 15:28:36 -0700
-Received: from [10.110.74.141] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Tue, 14 Jun
- 2022 15:28:35 -0700
-Message-ID: <5afe209a-31d8-25d3-d087-2ff85eace182@quicinc.com>
-Date:   Tue, 14 Jun 2022 15:28:34 -0700
+        Tue, 14 Jun 2022 18:35:13 -0400
+Received: from mail-il1-f171.google.com (mail-il1-f171.google.com [209.85.166.171])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D3734EF7C;
+        Tue, 14 Jun 2022 15:35:12 -0700 (PDT)
+Received: by mail-il1-f171.google.com with SMTP id d6so7638278ilm.4;
+        Tue, 14 Jun 2022 15:35:12 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=aemasrqfwaW0xVRSjSqdQ4JfxZy0TQey0iT9bogvqO4=;
+        b=JWuvFMI/Z3Mc3ACnfAb06u9UajEkyQ6Jy8d8E4zP8g7g6pSLuZ9DVh5A7EPHVOmc1m
+         ebTQDi4KDa6bayFZGMcQWKDK2WbV4mLBr6T/VZ8XkTLR6FPaQfW4H3dcOxDKm2cnQzri
+         VR6y7VTt1GTbjb3IDmIrZRyu0fJtQk2c7E1kMRwnyLZ1cF5dIAvDui3llAMJe9JXpkM0
+         dd02xh6YxvQopNbj3ZAzhbeCY5anErxlGhWBDW0WQRg9iS5alh0aUkvMIazuPR22Bpff
+         w8C7iPXBNW/r52ns6lo26hz3SV8uXM6nFNiKRWqjOSo8iez3l+TBWkk6HvRoQBdrp0Gz
+         ALZQ==
+X-Gm-Message-State: AJIora+mzzRcNl/oOVGTABuHqPKNXpL+gXKg1NA90M0+2nKQOPJUaFTz
+        NtEU4gi/fIUpdRreJY5ANg==
+X-Google-Smtp-Source: AGRyM1u3MB5UawW2+wt5tCmnlp/5KvqCGJhKl2Um3Et1tsrwULWDyKeKydmmaAcZFCt/295nVoKx5g==
+X-Received: by 2002:a05:6e02:1448:b0:2d3:c5c2:fbbe with SMTP id p8-20020a056e02144800b002d3c5c2fbbemr4528164ilo.188.1655246111376;
+        Tue, 14 Jun 2022 15:35:11 -0700 (PDT)
+Received: from robh.at.kernel.org ([64.188.179.251])
+        by smtp.gmail.com with ESMTPSA id z4-20020a92d184000000b002d3c1859791sm6040316ilz.60.2022.06.14.15.35.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 14 Jun 2022 15:35:11 -0700 (PDT)
+Received: (nullmailer pid 2855592 invoked by uid 1000);
+        Tue, 14 Jun 2022 22:35:09 -0000
+Date:   Tue, 14 Jun 2022 16:35:09 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Cc:     swboyd@chromium.org, bgoswami@quicinc.com, lgirdwood@gmail.com,
+        judyhsiao@chromium.org, agross@kernel.org,
+        linux-arm-msm@vger.kernel.org, perex@perex.cz,
+        alsa-devel@alsa-project.org, quic_plai@quicinc.com,
+        linux-kernel@vger.kernel.org, bjorn.andersson@linaro.org,
+        tiwai@suse.com, broonie@kernel.org, linux-gpio@vger.kernel.org,
+        srinivas.kandagatla@linaro.org, robh+dt@kernel.org,
+        Linus Walleij <linus.walleij@linaro.org>,
+        devicetree@vger.kernel.org, quic_rohkumar@quicinc.com
+Subject: Re: [PATCH v4 1/2] dt-bindings: pinctrl: qcom: sc7280: Add boolean
+ param for ADSP bypass platforms
+Message-ID: <20220614223509.GA2855511-robh@kernel.org>
+References: <1654921357-16400-1-git-send-email-quic_srivasam@quicinc.com>
+ <1654921357-16400-2-git-send-email-quic_srivasam@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Subject: Re: [PATCH v6] drm/msm/dp: force link training for display resolution
- change
-Content-Language: en-US
-To:     Stephen Boyd <swboyd@chromium.org>, <agross@kernel.org>,
-        <airlied@linux.ie>, <bjorn.andersson@linaro.org>,
-        <daniel@ffwll.ch>, <dianders@chromium.org>,
-        <dmitry.baryshkov@linaro.org>, <robdclark@gmail.com>,
-        <sean@poorly.run>, <vkoul@kernel.org>
-CC:     <quic_abhinavk@quicinc.com>, <quic_aravindh@quicinc.com>,
-        <quic_sbillaka@quicinc.com>, <freedreno@lists.freedesktop.org>,
-        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <1655240702-12230-1-git-send-email-quic_khsieh@quicinc.com>
- <CAE-0n52EAyTcQd6CiwXT1T658C-b+2r14BK_3-tf-ZiJdzqaAw@mail.gmail.com>
-From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
-In-Reply-To: <CAE-0n52EAyTcQd6CiwXT1T658C-b+2r14BK_3-tf-ZiJdzqaAw@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-5.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1654921357-16400-2-git-send-email-quic_srivasam@quicinc.com>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -74,132 +71,15 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Sat, 11 Jun 2022 09:52:36 +0530, Srinivasa Rao Mandadapu wrote:
+> Add boolean param qcom,adsp-bypass-mode to support adsp bypassed sc7280
+> platforms. Which is required to make clock voting as optional for ADSP
+> bypass platforms.
+> 
+> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+> ---
+>  .../devicetree/bindings/pinctrl/qcom,sc7280-lpass-lpi-pinctrl.yaml   | 5 +++++
+>  1 file changed, 5 insertions(+)
+> 
 
-On 6/14/2022 2:59 PM, Stephen Boyd wrote:
-> Quoting Kuogee Hsieh (2022-06-14 14:05:02)
->> Display resolution change is implemented through drm modeset. Older
->> modeset (resolution) has to be disabled first before newer modeset
->> (resolution) can be enabled. Display disable will turn off both
->> pixel clock and main link clock so that main link have to be
->> re-trained during display enable to have new video stream flow
->> again. At current implementation, display enable function manually
->> kicks up irq_hpd_handle which will read panel link status and start
->> link training if link status is not in sync state.
->>
->> However, there is rare case that a particular panel links status keep
->> staying in sync for some period of time after main link had been shut
->> down previously at display disabled. In this case, main link retraining
->> will not be executed by irq_hdp_handle(). Hence video stream of newer
->> display resolution will fail to be transmitted to panel due to main
->> link is not in sync between host and panel.
->>
->> This patch will bypass irq_hpd_hanle() in favor of directly call
-> s/hanle/handle/
->
->> dp_ctrl_on_stream() to always perform link training in regardless of
->> main link status. So that no unexpected exception resolution change
->> failure cases will happen. Also this implementation are more efficient
->> than manual kicking off irq_hpd_handle function.
->>
->> Changes in v2:
->> -- set force_link_train flag on DP only (is_edp == false)
->>
->> Changes in v3:
->> -- revise commit  text
->> -- add Fixes tag
->>
->> Changes in v4:
->> -- revise commit  text
->>
->> Changes in v5:
->> -- fix spelling at commit text
->>
->> Changes in v6:
->> -- split dp_ctrl_on_stream() for phy test case
->> -- revise commit text for modeset
->>
->> Fixes: 62671d2ef24b ("drm/msm/dp: fixes wrong connection state caused by failure of link train")
->> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
->> ---
->>   drivers/gpu/drm/msm/dp/dp_ctrl.c    | 31 +++++++++++++++++++++++--------
->>   drivers/gpu/drm/msm/dp/dp_ctrl.h    |  3 ++-
->>   drivers/gpu/drm/msm/dp/dp_display.c | 13 ++++++-------
->>   3 files changed, 31 insertions(+), 16 deletions(-)
->>
->> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
->> index af7a80c..cb9c7af 100644
->> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
->> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
->> @@ -1807,7 +1807,27 @@ static int dp_ctrl_link_retrain(struct dp_ctrl_private *ctrl)
->>          return dp_ctrl_setup_main_link(ctrl, &training_step);
->>   }
->>
->> -int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl)
->> +int dp_ctrl_on_stream_phy_test_report(struct dp_ctrl *dp_ctrl)
->> +{
->> +       int ret = 0;
-> Drop assignment please.
->
->> +       struct dp_ctrl_private *ctrl;
->> +
->> +       ctrl = container_of(dp_ctrl, struct dp_ctrl_private, dp_ctrl);
->> +
->> +       ctrl->dp_ctrl.pixel_rate = ctrl->panel->dp_mode.drm_mode.clock;
->> +
->> +       ret = dp_ctrl_enable_stream_clocks(ctrl);
->> +       if (ret) {
->> +               DRM_ERROR("Failed to start pixel clocks. ret=%d\n", ret);
->> +               return ret;
->> +       }
->> +
->> +       dp_ctrl_send_phy_test_pattern(ctrl);
-> None of this code needs to be run in the normal display on case?
->
->> +
->> +       return 0;
->> +}
->> +
->> +int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl, bool force_link_train)
->>   {
->>          int ret = 0;
->>          bool mainlink_ready = false;
->> @@ -1843,12 +1863,7 @@ int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl)
->>                  goto end;
->>          }
->>
->> -       if (ctrl->link->sink_request & DP_TEST_LINK_PHY_TEST_PATTERN) {
->> -               dp_ctrl_send_phy_test_pattern(ctrl);
->> -               return 0;
->> -       }
->> -
->> -       if (!dp_ctrl_channel_eq_ok(ctrl))
->> +       if (force_link_train || !dp_ctrl_channel_eq_ok(ctrl))
->>                  dp_ctrl_link_retrain(ctrl);
->>
->>          /* stop txing train pattern to end link training */
->> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
->> index c388323..b6d25ab 100644
->> --- a/drivers/gpu/drm/msm/dp/dp_display.c
->> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
->> @@ -1688,10 +1689,12 @@ void dp_bridge_enable(struct drm_bridge *drm_bridge)
->>
->>          state =  dp_display->hpd_state;
->>
->> -       if (state == ST_DISPLAY_OFF)
->> +       if (state == ST_DISPLAY_OFF) {
->>                  dp_display_host_phy_init(dp_display);
->> +               force_link_train = true;
->> +       }
->>
->> -       dp_display_enable(dp_display, 0);
->> +       dp_display_enable(dp_display, force_link_train);
-> Do we need to pass it from here? Why can't dp_display_enable() simply
-> check for 'state == ST_DISPLAY_OFF' and then force retrain the link?
-
-can we keep this as it is?
-
-it is more readable that we do need force link re-training due to 
-ST_DISPLAY_OFF at top level.
-
-Also we only need to do (state == ST_DISPLAY_OFF) checking one time.
-
+Acked-by: Rob Herring <robh@kernel.org>
