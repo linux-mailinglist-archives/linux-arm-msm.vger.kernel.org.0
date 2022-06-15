@@ -2,65 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 073FE54CE93
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jun 2022 18:24:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 67BC454CFCF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jun 2022 19:29:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239852AbiFOQY0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Jun 2022 12:24:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56994 "EHLO
+        id S1349551AbiFOR2P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Jun 2022 13:28:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38502 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232903AbiFOQYZ (ORCPT
+        with ESMTP id S1349653AbiFOR2O (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Jun 2022 12:24:25 -0400
-Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7975032EE6;
-        Wed, 15 Jun 2022 09:24:24 -0700 (PDT)
-Received: by mail-pf1-x42f.google.com with SMTP id u2so11908332pfc.2;
-        Wed, 15 Jun 2022 09:24:24 -0700 (PDT)
+        Wed, 15 Jun 2022 13:28:14 -0400
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 931C3959D;
+        Wed, 15 Jun 2022 10:28:13 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id a15so16313082wrh.2;
+        Wed, 15 Jun 2022 10:28:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=py6GEyuDmZJFdYOHYjHaNYQonIUxCggLBa4xNxCVPiI=;
-        b=lwp84MUy8aVK38zeHShl+5sWGRLOP7YtFKjClNzK9QETCKTdvHtTQwSV7YX7IAleTZ
-         hhnASLIQAYmpoY2kT26DOKUhr2JdllSmRc/ZsxynkeE0cvqwbGz0+vHcrRo8Gi7uhX12
-         ysn+n/bEjOIcuJZ3cnSbZW8ySuu9jn0j+ZUEl+6E8n+sKXzkerb14hAAvpnD8r+UxN5L
-         tCi6GW08Nr/0izW5Y1Q6z7d3jsfSNXxD4RHVmKG9w1y5tRsyzZZrYEe3pPw+0E0ffeZF
-         /7YEtZUUD54Et7Xnv60CWfGdNQlX9zgEHStpar6E1h725mj2spJZ9ioTck4nEZsyoiLG
-         yp6Q==
+        bh=zPJh0+5QxVl9IcfIvjsxlZmZC8UvoEwLLOJqypTZHXc=;
+        b=Qbx/WYWJfRWvXbO5/QYUstaVAaNakVAkD1orizUvn5sG9T4r/X03Reo8/rpPxcrAyx
+         HAE0zYdcvw/0AliGuzyAUDHkr+MscMeJ0x7oLhQ/IKgbpQbhUDdFeIOSg2BDi8ipMk4k
+         Nxk2lWYs5MkzL8wOKY9tQsCaAz+KvM4sFXXgCkSBo+m/UJWJUZ0DZD9n40tuNB8mbL06
+         DzNwVGfk0CAytBpJCbf75vndA+8RFz76ekoKAE3r9jBN31I/M04u+ZTdzTHu6Kgpdv0x
+         7MhmgUdAJcIXDK2/MKjHAEeIKk/to+UZNRZa/Mrcwq+0rkNzhh+xJAL6ns+UWn+HVmHg
+         ZlaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=py6GEyuDmZJFdYOHYjHaNYQonIUxCggLBa4xNxCVPiI=;
-        b=MLLwiGzym3cMA4hUTD9LgT6elFLILgD7tFWXwNC+c9Zu8NTP1qVzEKwSu1aUmGXGDm
-         vVeTltfEfFc3uHmOMPWZ/34NEO4wbt1xUBjyAh3Ruqea+Oyc7g5+gJtI0+I2ie6WEfi7
-         lnRXSUk08F3bQFmi3DxOxMHXcdL2ZXvxxo67x1or5/2ASWi168DGYlzH3sN9qUVxd83K
-         BdYYRuMsbyt0c/rpa/3VHe9Sq/Rl7vkliNubjsh8o3pko2j7OxEmOTtJPswnZqUH9T8l
-         d81top2INdeVXtCN9vPidsyx+W3eOjwp6wdVW6/q7rJ++s6YCkdl77URJQLKqUjXUrrt
-         s5ag==
-X-Gm-Message-State: AJIora9+iNlPpLVfX7CmQM0MTewRiNpf2TDsiJFx5F4cq3ndJT9ycKme
-        T1x8pRgfuP9nOOkBfoKsNKo=
-X-Google-Smtp-Source: AGRyM1tGREJNu5awib9cAUO8GkgnbOfiIQsGUbIPOrc/TUh8iC3c1m0/3l/Ns5AH207ke8bLqFgObg==
-X-Received: by 2002:a63:824a:0:b0:406:59b2:b5b4 with SMTP id w71-20020a63824a000000b0040659b2b5b4mr556905pgd.190.1655310263864;
-        Wed, 15 Jun 2022 09:24:23 -0700 (PDT)
-Received: from localhost ([2a00:79e1:abd:4a00:2703:3c72:eb1a:cffd])
-        by smtp.gmail.com with ESMTPSA id o22-20020a17090aac1600b001dff2fb7e39sm1995523pjq.24.2022.06.15.09.24.21
+        bh=zPJh0+5QxVl9IcfIvjsxlZmZC8UvoEwLLOJqypTZHXc=;
+        b=1IlB8UJFpyf7eRGoyGUucW8LClCh2hCkgiSNGE4rFX1aI/3YqhhiIZvdo0llo/x/td
+         B7LLLfS8SFIBRxaLOqd+9WxIwj5N8QKA+A/2JiLyjie1BJ/nhc5YsAR65IwBHqJ18EKW
+         kbG6qha1ihdGWVvAHFd0Fdow2nh+04KiLR8aygMvhShgubnp/XTt+lu1NNB9sVHPiRXZ
+         RawFG7Ghrz/mcyHc/DY6LauTSuUnIs5S1/du+FdvUtATOGhufsPqviFHSCp/TwfIF4pG
+         mAv8+IdkBkcvmN/QdJLHFDDvqin+8zCu/9Ajbbtiz5/5AJKyvvjkjUqrV22c2qi/WE0h
+         NGSg==
+X-Gm-Message-State: AJIora9jxQLZxTYQYvlGbImodMCYtbAvAMgB+6sWdqpuzIZ/zuHtahKV
+        2ocyT/xECj1WjkCmhJ87vbg=
+X-Google-Smtp-Source: AGRyM1uiE7j+UMgU29QN0t5gfsp+6EyQLQ4EmGOgoJfFhX57n4p9IxIHkwjyLW2f9A2DvLre7XJmqg==
+X-Received: by 2002:a05:6000:1c02:b0:218:42ab:281f with SMTP id ba2-20020a0560001c0200b0021842ab281fmr810768wrb.607.1655314091949;
+        Wed, 15 Jun 2022 10:28:11 -0700 (PDT)
+Received: from localhost.localdomain (93-42-70-190.ip85.fastwebnet.it. [93.42.70.190])
+        by smtp.googlemail.com with ESMTPSA id w3-20020a7bc103000000b003976fbfbf00sm3023792wmi.30.2022.06.15.10.28.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Jun 2022 09:24:22 -0700 (PDT)
-From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Rob Clark <robdclark@chromium.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] drm/msm: Fix fence rollover issue
-Date:   Wed, 15 Jun 2022 09:24:35 -0700
-Message-Id: <20220615162435.3011793-1-robdclark@gmail.com>
+        Wed, 15 Jun 2022 10:28:11 -0700 (PDT)
+From:   Christian 'Ansuel' Marangi <ansuelsmth@gmail.com>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+Cc:     Christian 'Ansuel' Marangi <ansuelsmth@gmail.com>
+Subject: [PATCH 1/3] dt-bindings: clock: add pcm reset for ipq806x lcc
+Date:   Wed, 15 Jun 2022 18:34:06 +0200
+Message-Id: <20220615163408.30154-1-ansuelsmth@gmail.com>
 X-Mailer: git-send-email 2.36.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -74,50 +74,24 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+Add pcm reset define for ipq806x lcc.
 
-And while we are at it, let's start the fence counter close to the
-rollover point so that if issues slip in, they are more obvious.
-
-Signed-off-by: Rob Clark <robdclark@chromium.org>
+Signed-off-by: Christian 'Ansuel' Marangi <ansuelsmth@gmail.com>
 ---
- drivers/gpu/drm/msm/msm_fence.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ include/dt-bindings/clock/qcom,lcc-ipq806x.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/msm_fence.c b/drivers/gpu/drm/msm/msm_fence.c
-index 3df255402a33..a35a6746c7cd 100644
---- a/drivers/gpu/drm/msm/msm_fence.c
-+++ b/drivers/gpu/drm/msm/msm_fence.c
-@@ -28,6 +28,14 @@ msm_fence_context_alloc(struct drm_device *dev, volatile uint32_t *fenceptr,
- 	fctx->fenceptr = fenceptr;
- 	spin_lock_init(&fctx->spinlock);
+diff --git a/include/dt-bindings/clock/qcom,lcc-ipq806x.h b/include/dt-bindings/clock/qcom,lcc-ipq806x.h
+index 25b92bbf0ab4..e0fb4acf4ba8 100644
+--- a/include/dt-bindings/clock/qcom,lcc-ipq806x.h
++++ b/include/dt-bindings/clock/qcom,lcc-ipq806x.h
+@@ -19,4 +19,6 @@
+ #define SPDIF_CLK			10
+ #define AHBIX_CLK			11
  
-+	/*
-+	 * Start out close to the 32b fence rollover point, so we can
-+	 * catch bugs with fence comparisons.
-+	 */
-+	fctx->last_fence = 0xffffff00;
-+	fctx->completed_fence = fctx->last_fence;
-+	*fctx->fenceptr = fctx->last_fence;
++#define LCC_PCM_RESET			0
 +
- 	return fctx;
- }
- 
-@@ -46,11 +54,12 @@ bool msm_fence_completed(struct msm_fence_context *fctx, uint32_t fence)
- 		(int32_t)(*fctx->fenceptr - fence) >= 0;
- }
- 
--/* called from workqueue */
-+/* called from irq handler */
- void msm_update_fence(struct msm_fence_context *fctx, uint32_t fence)
- {
- 	spin_lock(&fctx->spinlock);
--	fctx->completed_fence = max(fence, fctx->completed_fence);
-+	if (fence_after(fence, fctx->completed_fence))
-+		fctx->completed_fence = fence;
- 	spin_unlock(&fctx->spinlock);
- }
- 
+ #endif
 -- 
 2.36.1
 
