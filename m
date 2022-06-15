@@ -2,76 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 887C154D2F4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jun 2022 22:54:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E9F7654D344
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jun 2022 23:05:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349580AbiFOUxv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Jun 2022 16:53:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49410 "EHLO
+        id S1344070AbiFOVFR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Jun 2022 17:05:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59454 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349526AbiFOUxt (ORCPT
+        with ESMTP id S1344717AbiFOVFQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Jun 2022 16:53:49 -0400
-Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C688B55208
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jun 2022 13:53:46 -0700 (PDT)
-Received: by mail-pg1-x536.google.com with SMTP id f65so12443754pgc.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jun 2022 13:53:46 -0700 (PDT)
+        Wed, 15 Jun 2022 17:05:16 -0400
+Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1AF22E9CE
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jun 2022 14:05:15 -0700 (PDT)
+Received: by mail-pj1-x1031.google.com with SMTP id hv24-20020a17090ae41800b001e33eebdb5dso4260508pjb.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jun 2022 14:05:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=dqUZddHd2eUD1yS52Gl+Px29FvkVippx8mvYDs3Nfp8=;
-        b=oFBSWa5N5hISjc6dUgBXrl+Fi95HxIWz6sU0iEIXft5yBHzixVAob+7keHBHVtI8bk
-         e5mZ/sXI+ax27roSpAiWEQ9TgGihz2l2U7+D87iAj4CgPM+JMMKh0hQ6AAnL+UMkPeUd
-         Vqy/KUUW81mNLeV096MwdOSSUIKeoBuuu2FUzoJwSrEUaWMzj8YIGk3eHHy0Jv9hACL5
-         7pLmRONbvAprOzld5Z32HqRfP3U/j2W4xDFjRx4KrGDe4AzgaZYC6268zC8Bi8snJX2F
-         8B6pN4nI+fWaCApsLhalJRuLIpBIOvB79jHwdp58skjrLVNVf3B3ECibZdjspfqu5275
-         VSYA==
+         :references:from:in-reply-to:content-transfer-encoding;
+        bh=nSPGzfTdZ9LfoOSqIU6EOVEMTSn+8rXd/OcMmHhdRhA=;
+        b=SOMOfzNOEUkBuuBnOrR5RTa6rJffV6+Ngvrq9Yo+bQvLfiiuKPusw6MyqE2JjFK791
+         cu/E/2IDmPD/mfDAsU0A+uJvql58unDxr1ovqwFEfTHzBoULxjdbACa2fl0KBjXJVZP8
+         1wiGEJRBTny54swVMGmUotUJuI6S2TnDHt4lRZvq1V77GQoPYQD6iRdiPLvtMGoQSHUO
+         jC5BCI5T+P+2UwY5eBkJnOTZKmp8UaiZ/0mn1Fjp6JkJT98uQIG+pXXcejb4Od6y1+Q2
+         W4ZK+y7h+roufFwASTDkiZPldmpc9fW3WmW0v31OUBYpSvLixEdF80nsWaQUmwdGe/VC
+         C1JQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
+         :content-language:to:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=dqUZddHd2eUD1yS52Gl+Px29FvkVippx8mvYDs3Nfp8=;
-        b=uQIdnayZNV9ZnlPpfIxmcEH9eDqV2LOQgUSZ8t49E46mvK6HA7ChdoJwM/LzJfEBFf
-         0Ca9bCgSNxDTp867SU85lKKAS3Jass6TxAr21S7mU60hxnOliTws7qqQ+lwH9Wh/V071
-         CJma5SNqxMaTSgA2mhAPlPQY+FWlfURKR8QI4NhIOKqrlr9IxVxM95uP+Wyb657bUATQ
-         nVajITU/E2dQGwVBmuxRWbPqL5KcPq2eEcDxPkkjlWOw5HJ35n5gwT/sGfSv9YNguteD
-         LfbEAMRTLz8LvrcpYE1ICE8z/2GsaY9Rg5uOdYyDH+Pn7/jaQn2KfS6cF3kZjuMX7RqR
-         J2Yg==
-X-Gm-Message-State: AJIora9drdMePhLi6XJeZbJ2QxCQ7SUgcP1LRcxgGw9YcMiqDpGD4gyp
-        TVBFfceXLCMNyX7H5veAjxvZEw==
-X-Google-Smtp-Source: AGRyM1uylt1sMxbqAyk47BNBSqxPP7neT6hLMSku9E/k6xbp/vkxQR34uadVNp9ZTysVcsegIEucZw==
-X-Received: by 2002:a05:6a00:1811:b0:51b:fec8:be7b with SMTP id y17-20020a056a00181100b0051bfec8be7bmr1450763pfa.22.1655326426283;
-        Wed, 15 Jun 2022 13:53:46 -0700 (PDT)
+        bh=nSPGzfTdZ9LfoOSqIU6EOVEMTSn+8rXd/OcMmHhdRhA=;
+        b=C0lSn8EZ53VINhTRSnxfu1Ias40C+GdjZeScREkB9p1WTRfOP8XGXfeQoZab8ZnQ2/
+         UA9qytB8cvxM9Y+OtVWyMr3xhYyXw7amYfsYGrKeEpaHJlAn385TYsYCiL2KJpk8qC0B
+         FcE3W3fmjsi4qhYtDyNWc028KppKGCW3s+M0/TYd2eTUEwduFI2NeFSVOAph9FdIo0A5
+         4GkMpSMvZvWaSwZ3x92NRGjd2OnJbQsfPIfbsLF8TYGn9OGmdoU5+WWqnF7Bx4QziwfJ
+         9bViuKtNrwlpGhlzBwA7X6krpge8AhdNwQgFoinE3gAsN++HMy7uHmDUobSl5S5bkJR3
+         DTMA==
+X-Gm-Message-State: AJIora/TfycB9rSxAQiP6lrhTPYz3EtwKmrBI5ssLfQX+qxPtkjUx8fJ
+        4tQx4wFoH3CergcB6avnw2sdqg==
+X-Google-Smtp-Source: AGRyM1toehBrqqaMQr374mrNlBFnfbhQiBAgvhLstQXz4lea94d8XdLlbwxJ4Mn+NBAsGnu054oJHA==
+X-Received: by 2002:a17:902:d2c9:b0:167:1195:3a41 with SMTP id n9-20020a170902d2c900b0016711953a41mr1424179plc.126.1655327115240;
+        Wed, 15 Jun 2022 14:05:15 -0700 (PDT)
 Received: from [172.22.33.138] ([192.77.111.2])
-        by smtp.gmail.com with ESMTPSA id a7-20020a170902710700b00168a4ee4dc7sm78602pll.32.2022.06.15.13.53.45
+        by smtp.gmail.com with ESMTPSA id w9-20020a17090a780900b001ead46e77e2sm39944pjk.13.2022.06.15.14.05.14
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 15 Jun 2022 13:53:46 -0700 (PDT)
-Message-ID: <044dacdb-7d11-8c68-3fb7-ebd67621225e@linaro.org>
-Date:   Wed, 15 Jun 2022 13:53:44 -0700
+        Wed, 15 Jun 2022 14:05:14 -0700 (PDT)
+Message-ID: <7cc9c5d2-0c42-f24f-1611-0190b24504be@linaro.org>
+Date:   Wed, 15 Jun 2022 14:05:14 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.10.0
-Subject: Re: [PATCH 1/3] dt-bindings: clock: add pcm reset for ipq806x lcc
+Subject: Re: [PATCH] dt-bindings: dma: rework qcom,adm Documentation to yaml
+ schema
 Content-Language: en-US
-To:     Ansuel Smith <ansuelsmth@gmail.com>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+To:     Christian 'Ansuel' Marangi <ansuelsmth@gmail.com>,
         Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-References: <20220615163408.30154-1-ansuelsmth@gmail.com>
- <a92fe431-a995-4c7f-b90b-8e80298bc71a@linaro.org>
- <62aa1b41.1c69fb81.95632.5b71@mx.google.com>
- <717ad899-31ad-5e70-b299-ffb8ca287071@linaro.org>
- <62aa1dd0.1c69fb81.b9887.676e@mx.google.com>
+        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20220615175043.20166-1-ansuelsmth@gmail.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <62aa1dd0.1c69fb81.b9887.676e@mx.google.com>
+In-Reply-To: <20220615175043.20166-1-ansuelsmth@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -84,52 +80,49 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 15/06/2022 10:04, Ansuel Smith wrote:
-> On Wed, Jun 15, 2022 at 10:50:17AM -0700, Krzysztof Kozlowski wrote:
->> On 15/06/2022 09:53, Ansuel Smith wrote:
->>> On Wed, Jun 15, 2022 at 10:43:10AM -0700, Krzysztof Kozlowski wrote:
->>>> On 15/06/2022 09:34, Christian 'Ansuel' Marangi wrote:
->>>>> Add pcm reset define for ipq806x lcc.
->>>>>
->>>>> Signed-off-by: Christian 'Ansuel' Marangi <ansuelsmth@gmail.com>
->>>> To prevent any confusion about identities (we have strict rules about
->>>> these), I need to ask - who uses this email address?
->>>>
->>>> https://lore.kernel.org/all/?q=ansuelsmth%40gmail.com
->>>>
->>>> Best regards,
->>>> Krzysztof
->>>
->>> Same person. Started using extended name, wanted to do this change from
->>> a long time but all the patch were already pushed so I couldn't change
->>> it since they were already proposed and on the various mailing list.
->>
->> Previously "Ansuel Smith" was used entirely, without any parts of this
->> name. Here 'Ansuel' appears in quotes, which usually is used for nicknames.
->>
->> Is "Ansuel Smith" your real name or a nickname? What do you mean by
->> "extended name"?
->>
+On 15/06/2022 10:50, Christian 'Ansuel' Marangi wrote:
+> Rework the qcom,adm Documentation to yaml schema.
+> This is not a pure conversion since originally the driver has changed
+> implementation for the #dma-cells and was wrong from the start.
+> Also the driver now handles the common DMA clients implementation with
+> the first cell that denotes the channel number and nothing else since
+> the client will have to provide the crci information via other means.
 > 
-> Ansuel is second name. Smith is not real... (sorry)
-> So with extendend name I mean full name + second name that is
-> Christian Ansuel Marangi.
+> Signed-off-by: Christian 'Ansuel' Marangi <ansuelsmth@gmail.com>
+
+Drop the quotes please.
+
+As discussed in other patch - trust for me is broken and I have no clue
+which identity is real.
+
+> ---
+>  .../devicetree/bindings/dma/qcom,adm.yaml     | 95 +++++++++++++++++++
+>  .../devicetree/bindings/dma/qcom_adm.txt      | 61 ------------
+>  2 files changed, 95 insertions(+), 61 deletions(-)
+>  create mode 100644 Documentation/devicetree/bindings/dma/qcom,adm.yaml
+>  delete mode 100644 Documentation/devicetree/bindings/dma/qcom_adm.txt
 > 
-> Honestly it's a very stupid mistake by me not using the full name from
-> the start.
+> diff --git a/Documentation/devicetree/bindings/dma/qcom,adm.yaml b/Documentation/devicetree/bindings/dma/qcom,adm.yaml
+> new file mode 100644
+> index 000000000000..77096a7c9405
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/dma/qcom,adm.yaml
+> @@ -0,0 +1,95 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/dma/qcom,adm.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm ADM DMA Controller
+> +
+> +maintainers:
+> +  - Christian 'Ansuel' Marangi <ansuelsmth@gmail.com>
 
-Not-real names are no accepted [1] and since we cannot validate this, we
-trust. Quite a lot in our process depends on trust. Once trust is gone,
-it's not easy to get it back... Worth watching - Trust and the Linux
-development model; Greg KH [2].
+Add Bjorn here.
 
-Anyway I have no clue which identity to trust...
+> +
 
-
-[1]
-https://www.kernel.org/doc/html/latest/process/submitting-patches.html?highlight=certificate#sign-your-work-the-developer-s-certificate-of-origin
-
-[2] https://www.youtube.com/watch?v=nhJqaZT94z0&t=7044s&ab_channel=hupstream
 
 Best regards,
 Krzysztof
