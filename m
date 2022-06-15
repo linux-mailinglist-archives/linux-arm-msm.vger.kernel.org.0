@@ -2,141 +2,174 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DB99B54BF03
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jun 2022 03:00:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1CE9E54BECB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jun 2022 02:44:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244658AbiFOBA2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Jun 2022 21:00:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37922 "EHLO
+        id S233156AbiFOAoP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Jun 2022 20:44:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51120 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244633AbiFOBA0 (ORCPT
+        with ESMTP id S231504AbiFOAoO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Jun 2022 21:00:26 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA64F34B89;
-        Tue, 14 Jun 2022 18:00:19 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id k19so13283090wrd.8;
-        Tue, 14 Jun 2022 18:00:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=WkTfkEtdvoDFhLpzjBZDOf9aoOpbPYXE7T/CHrXeHMg=;
-        b=IGxma2NKikLDsbYCdhTSaETNNjbqTomFUuGFHKt1wFmj6T+VLPgokRIY87z4s/a1FO
-         TG6MFCvgRXODC6bJa+55TLNfqooWkAN3CCFFYbNhCfH4ST4TcfDeupYU9hyrMemqZYPB
-         og10GrfehnJXbj/Ru5OTYIeb0gOSXJXpYVSrrG8p1XDf6bYv0MOsVeUIwp1s8HlSo5mB
-         UIVFNlhJY5/7d5b4uCEY8eu7rZ7ASHJ3NHYD9l5xOtDoR9ApPgefaFg70rmaFuBZuZRX
-         OsqQvYBP7UzmsA80JSjcKP4DLEZqArOjlEw+Yv/r2vWU5Xr/N7EO/252fgom4dTuXsuP
-         80fw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=WkTfkEtdvoDFhLpzjBZDOf9aoOpbPYXE7T/CHrXeHMg=;
-        b=ipw8BVaWYvNJk1cirl1ug3nk04GNaxkORh5sy4haoAROy+kWE1mzlDKUSYplp1Z1ot
-         2Qf8Vuj0c/bUnCLrjUqigSGsGNdK3dkmwhyx91ybSf0QABuWWPCd3vAs7tJ7Xq0UclyV
-         sNsEy3/bJPeH2JL0n4OlJMAf9i88ZjUSxnYlrsodbRHE3tIRskX87zzg1FmHu/mzDhhR
-         x91bwdZJgid0igrDLM775Kv/xuAu6Da1KqthuAe72eY5rd1VtPEUkN7zp1C0umiDExZ6
-         PMs+J4Pi7S+xctrRr5WjPp/MfXtNp8cvBXfn4L4+7u6gsMbQhrvhElpFHNXBBeCjB6UM
-         aBVQ==
-X-Gm-Message-State: AJIora8PPrD5spofCE2OQrnPll0+7hVe5KBghqaxpckmMVWcxrCNKd3m
-        fYIcuKiuWyQscQ9Sr5H7nFw=
-X-Google-Smtp-Source: AGRyM1u8w9uNDVwTTjicqnuRA4u5EELuTRh3kWuA+S9ngbbi41XTiT5CMhb2JGf4b9wfYfqxhEX7Pg==
-X-Received: by 2002:adf:f252:0:b0:210:2a67:2d9 with SMTP id b18-20020adff252000000b002102a6702d9mr6953243wrp.17.1655254818201;
-        Tue, 14 Jun 2022 18:00:18 -0700 (PDT)
-Received: from localhost.localdomain (93-42-70-190.ip85.fastwebnet.it. [93.42.70.190])
-        by smtp.googlemail.com with ESMTPSA id g10-20020a5d698a000000b0021020517639sm12890265wru.102.2022.06.14.18.00.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Jun 2022 18:00:15 -0700 (PDT)
-From:   Ansuel Smith <ansuelsmth@gmail.com>
-To:     Manivannan Sadhasivam <mani@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Miquel Raynal <miquel.raynal@bootlin.com>,
-        Richard Weinberger <richard@nod.at>,
-        Vignesh Raghavendra <vigneshr@ti.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-mtd@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Ansuel Smith <ansuelsmth@gmail.com>, Rob Herring <robh@kernel.org>
-Subject: [PATCH v7 3/3] dt-bindings: mtd: qcom_nandc: document qcom,boot-partitions binding
-Date:   Wed, 15 Jun 2022 02:06:12 +0200
-Message-Id: <20220615000612.3119-4-ansuelsmth@gmail.com>
-X-Mailer: git-send-email 2.36.1
-In-Reply-To: <20220615000612.3119-1-ansuelsmth@gmail.com>
-References: <20220615000612.3119-1-ansuelsmth@gmail.com>
+        Tue, 14 Jun 2022 20:44:14 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA4434BBBE;
+        Tue, 14 Jun 2022 17:44:13 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 4259A61949;
+        Wed, 15 Jun 2022 00:44:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95DFBC3411B;
+        Wed, 15 Jun 2022 00:44:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1655253852;
+        bh=rcjBHcwDa3Vvz9ae34yYid9fcwgrK1WVNSLCfZ/KP5E=;
+        h=Date:From:To:Cc:Subject:Reply-To:References:In-Reply-To:From;
+        b=fdhcRapfOZeMu89rXN1F9+PFgQBw1jq2TFCvdWilZKBPl7d60xoaf+Z1BoVI71oyo
+         RqJwT7IyOmWKrdq1gGthk/wr5qRLVQoB8lFuH3bhpG8v28ehqFht7ixYYEHPsMm9AB
+         B8Nl92yiOr67Th9tcRyEPi0fRLrSpOhoRzoC/T6UuHa5X12CLk5h++1bfLpyoCHqB+
+         fvK77b4d+EdbOzzr1aIJ1u6gTHC44L8QS8SaSAp9SKbflwgVl3VgsZCvB9XatY8lhL
+         9YwdPZU6iL7l0pnNRdqWmeOhCsfxrQ+i6D2NKXEGZhl5QpSSUjx5BoIk0tcHaLBiwv
+         bedv5BuhTNO6Q==
+Received: by paulmck-ThinkPad-P17-Gen-1.home (Postfix, from userid 1000)
+        id 327DD5C0BCC; Tue, 14 Jun 2022 17:44:12 -0700 (PDT)
+Date:   Tue, 14 Jun 2022 17:44:12 -0700
+From:   "Paul E. McKenney" <paulmck@kernel.org>
+To:     Peter Zijlstra <peterz@infradead.org>
+Cc:     rth@twiddle.net, ink@jurassic.park.msu.ru, mattst88@gmail.com,
+        vgupta@kernel.org, linux@armlinux.org.uk,
+        ulli.kroll@googlemail.com, linus.walleij@linaro.org,
+        shawnguo@kernel.org, Sascha Hauer <s.hauer@pengutronix.de>,
+        kernel@pengutronix.de, festevam@gmail.com, linux-imx@nxp.com,
+        tony@atomide.com, khilman@kernel.org, catalin.marinas@arm.com,
+        will@kernel.org, guoren@kernel.org, bcain@quicinc.com,
+        chenhuacai@kernel.org, kernel@xen0n.name, geert@linux-m68k.org,
+        sammy@sammy.net, monstr@monstr.eu, tsbogend@alpha.franken.de,
+        dinguyen@kernel.org, jonas@southpole.se,
+        stefan.kristiansson@saunalahti.fi, shorne@gmail.com,
+        James.Bottomley@HansenPartnership.com, deller@gmx.de,
+        mpe@ellerman.id.au, benh@kernel.crashing.org, paulus@samba.org,
+        paul.walmsley@sifive.com, palmer@dabbelt.com,
+        aou@eecs.berkeley.edu, hca@linux.ibm.com, gor@linux.ibm.com,
+        agordeev@linux.ibm.com, borntraeger@linux.ibm.com,
+        svens@linux.ibm.com, ysato@users.sourceforge.jp, dalias@libc.org,
+        davem@davemloft.net, richard@nod.at,
+        anton.ivanov@cambridgegreys.com, johannes@sipsolutions.net,
+        tglx@linutronix.de, mingo@redhat.com, bp@alien8.de,
+        dave.hansen@linux.intel.com, x86@kernel.org, hpa@zytor.com,
+        acme@kernel.org, mark.rutland@arm.com,
+        alexander.shishkin@linux.intel.com, jolsa@kernel.org,
+        namhyung@kernel.org, jgross@suse.com, srivatsa@csail.mit.edu,
+        amakhalov@vmware.com, pv-drivers@vmware.com,
+        boris.ostrovsky@oracle.com, chris@zankel.net, jcmvbkbc@gmail.com,
+        rafael@kernel.org, lenb@kernel.org, pavel@ucw.cz,
+        gregkh@linuxfoundation.org, mturquette@baylibre.com,
+        sboyd@kernel.org, daniel.lezcano@linaro.org, lpieralisi@kernel.org,
+        sudeep.holla@arm.com, agross@kernel.org,
+        bjorn.andersson@linaro.org, anup@brainfault.org,
+        thierry.reding@gmail.com, jonathanh@nvidia.com,
+        jacob.jun.pan@linux.intel.com, Arnd Bergmann <arnd@arndb.de>,
+        yury.norov@gmail.com, andriy.shevchenko@linux.intel.com,
+        linux@rasmusvillemoes.dk, rostedt@goodmis.org, pmladek@suse.com,
+        senozhatsky@chromium.org, john.ogness@linutronix.de,
+        frederic@kernel.org, quic_neeraju@quicinc.com,
+        josh@joshtriplett.org, mathieu.desnoyers@efficios.com,
+        jiangshanlai@gmail.com, joel@joelfernandes.org,
+        juri.lelli@redhat.com, vincent.guittot@linaro.org,
+        dietmar.eggemann@arm.com, bsegall@google.com, mgorman@suse.de,
+        bristot@redhat.com, vschneid@redhat.com, jpoimboe@kernel.org,
+        linux-alpha@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-snps-arc@lists.infradead.org,
+        linux-arm-kernel@lists.infradead.org, linux-omap@vger.kernel.org,
+        linux-csky@vger.kernel.org, linux-hexagon@vger.kernel.org,
+        linux-ia64@vger.kernel.org, linux-m68k@lists.linux-m68k.org,
+        linux-mips@vger.kernel.org, openrisc@lists.librecores.org,
+        linux-parisc@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
+        linux-riscv@lists.infradead.org, linux-s390@vger.kernel.org,
+        linux-sh@vger.kernel.org, sparclinux@vger.kernel.org,
+        linux-um@lists.infradead.org, linux-perf-users@vger.kernel.org,
+        virtualization@lists.linux-foundation.org,
+        xen-devel@lists.xenproject.org, linux-xtensa@linux-xtensa.org,
+        linux-acpi@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-tegra@vger.kernel.org, linux-arch@vger.kernel.org,
+        rcu@vger.kernel.org
+Subject: Re: [PATCH 16/36] rcu: Fix rcu_idle_exit()
+Message-ID: <20220615004412.GA5766@paulmck-ThinkPad-P17-Gen-1>
+Reply-To: paulmck@kernel.org
+References: <20220608142723.103523089@infradead.org>
+ <20220608144516.935970247@infradead.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220608144516.935970247@infradead.org>
+X-Spam-Status: No, score=-8.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Document new qcom,boot-partition binding used to apply special
-read/write layout to boot partitions.
+On Wed, Jun 08, 2022 at 04:27:39PM +0200, Peter Zijlstra wrote:
+> Current rcu_idle_exit() is terminally broken because it uses
+> local_irq_{save,restore}(), which are traced which uses RCU.
+> 
+> However, now that all the callers are sure to have IRQs disabled, we
+> can remove these calls.
+> 
+> Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+> Acked-by: Paul E. McKenney <paulmck@kernel.org>
 
-QCOM apply a special layout where spare data is not protected
-by ECC for some special pages (used for boot partition). Add
-Documentation on how to declare these special pages.
+We have some fun conflicts between this series and Frederic's context-tracking
+series.  But it looks like these can be resolved by:
 
-Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
-Reviewed-by: Rob Herring <robh@kernel.org>
----
- .../devicetree/bindings/mtd/qcom,nandc.yaml   | 27 +++++++++++++++++++
- 1 file changed, 27 insertions(+)
+1.	A patch on top of Frederic's series that provides the old rcu_*()
+	names for the functions now prefixed with ct_*() such as
+	ct_idle_exit().
 
-diff --git a/Documentation/devicetree/bindings/mtd/qcom,nandc.yaml b/Documentation/devicetree/bindings/mtd/qcom,nandc.yaml
-index 84ad7ff30121..482a2c068740 100644
---- a/Documentation/devicetree/bindings/mtd/qcom,nandc.yaml
-+++ b/Documentation/devicetree/bindings/mtd/qcom,nandc.yaml
-@@ -102,6 +102,31 @@ allOf:
-             - const: rx
-             - const: cmd
+2.	Another patch on top of Frederic's series that takes the
+	changes remaining from this patch, shown below.  Frederic's
+	series uses raw_local_irq_save() and raw_local_irq_restore(),
+	which can then be removed.
+
+Or is there a better way to do this?
+
+							Thanx, Paul
+
+------------------------------------------------------------------------
+
+commit f64cee8c159e9863a74594efe3d33fb513a6a7b5
+Author: Peter Zijlstra <peterz@infradead.org>
+Date:   Tue Jun 14 17:24:43 2022 -0700
+
+    context_tracking: Interrupts always disabled for ct_idle_exit()
+    
+    Now that the idle-loop cleanups have ensured that rcu_idle_exit() is
+    always invoked with interrupts disabled, remove the interrupt disabling
+    in favor of a debug check.
+    
+    Signed-off-by: Peter Zijlstra <peterz@infradead.org>
+    Cc: Frederic Weisbecker <frederic@kernel.org>
+    Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+
+diff --git a/kernel/context_tracking.c b/kernel/context_tracking.c
+index 1da44803fd319..99310cf5b0254 100644
+--- a/kernel/context_tracking.c
++++ b/kernel/context_tracking.c
+@@ -332,11 +332,8 @@ EXPORT_SYMBOL_GPL(ct_idle_enter);
+  */
+ void noinstr ct_idle_exit(void)
+ {
+-	unsigned long flags;
+-
+-	raw_local_irq_save(flags);
++	WARN_ON_ONCE(IS_ENABLED(CONFIG_RCU_EQS_DEBUG) && !raw_irqs_disabled());
+ 	ct_kernel_enter(false, RCU_DYNTICKS_IDX - CONTEXT_IDLE);
+-	raw_local_irq_restore(flags);
+ }
+ EXPORT_SYMBOL_GPL(ct_idle_exit);
  
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            enum:
-+              - qcom,ipq806x-nand
-+
-+    then:
-+      properties:
-+        qcom,boot-partitions:
-+          $ref: /schemas/types.yaml#/definitions/uint32-matrix
-+          items:
-+            items:
-+              - description: offset
-+              - description: size
-+          description:
-+            Boot partition use a different layout where the 4 bytes of spare
-+            data are not protected by ECC. Use this to declare these special
-+            partitions by defining first the offset and then the size.
-+
-+            It's in the form of <offset1 size1 offset2 size2 offset3 ...>
-+            and should be declared in ascending order.
-+
-+            Refer to the ipq8064 example on how to use this special binding.
-+
- required:
-   - compatible
-   - reg
-@@ -135,6 +160,8 @@ examples:
-         nand-ecc-strength = <4>;
-         nand-bus-width = <8>;
- 
-+        qcom,boot-partitions = <0x0 0x58a0000>;
-+
-         partitions {
-           compatible = "fixed-partitions";
-           #address-cells = <1>;
--- 
-2.36.1
-
