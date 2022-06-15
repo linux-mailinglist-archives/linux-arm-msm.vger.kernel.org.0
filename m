@@ -2,120 +2,154 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F013B54D083
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jun 2022 19:58:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6573654CF7B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jun 2022 19:12:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1357778AbiFOR6s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Jun 2022 13:58:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42618 "EHLO
+        id S1354229AbiFORMP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Jun 2022 13:12:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48202 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1358237AbiFOR6n (ORCPT
+        with ESMTP id S1354934AbiFORMD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Jun 2022 13:58:43 -0400
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6975B27FF0;
-        Wed, 15 Jun 2022 10:58:42 -0700 (PDT)
-Received: by mail-wm1-x333.google.com with SMTP id m32-20020a05600c3b2000b0039756bb41f2so1536714wms.3;
-        Wed, 15 Jun 2022 10:58:42 -0700 (PDT)
+        Wed, 15 Jun 2022 13:12:03 -0400
+Received: from mail-pg1-x52d.google.com (mail-pg1-x52d.google.com [IPv6:2607:f8b0:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CBA3350465
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jun 2022 10:12:01 -0700 (PDT)
+Received: by mail-pg1-x52d.google.com with SMTP id 31so10294460pgv.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jun 2022 10:12:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:from:to:cc:subject:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=KwgxQKTurbR04VbDoFBBQGoh1GTDU5LHbSaT2BVEv68=;
-        b=Rqf0t0EyXvXh4IJSUpMG4/jmg4iXbEdRfNi7nwoUtDNc1vtsGu0RGMDs+aNrZ3HP4J
-         E9GlwvYDAPClGBszutHknKF6FQNwnNahNH+wiMzaod4CyuGiFrQ9GcsHrZiu1vsHQt6r
-         B+moWFhub+SDoNXkjMWfOkdop5Ein3LDPqCRNw3USqIDyUIVv4bBwmacxIe8K3ZpHrBE
-         t9Y8Fr2QBv4XFCtzlZRmLzW9j45VZcKNYfRqyvv9Vu63mviCBnjnnD1pYxzdpHU6uKwK
-         1OtIVl/bdUD2jnN5T6IxKMN3BdmeCRa3zms9+vclRElxpELf4t+i40IPdANzDeJ2vt/v
-         rx/Q==
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=3AyomL7Oc+DdUYdK158JFYS4POGAertrwHcZhI495qU=;
+        b=RaryPI0ZtjtKjxfcUL/BY2bKh6PbgJEUZfevFWvhuw0gKFSweI6+ekz1KnHX++ofzz
+         5lS36xmH1bEd3gfPv1owuiy3SfJqg8r9ePZ/AEmWwzUJ3gDPdM/oI4moUoe7n98TlSOM
+         FcPpuG17WcgLz5I1tQgFCLyMQr+2xpL93VFf7H6ynbM8R7uNMikDh4PyzBkvfbeJIXxD
+         GNjSpPppaEGtvDyI1to4njrRQmdHLZXmWbFanQ+9r6KHFW/SDCPVLpVMGsAMEg2zy298
+         beiA1ZrY5n2Njt7OABc/Eyo22CBSFtpDXcJ2a+dxKzEuWtwcsNc1p7htSXhJukYpcLYu
+         VWKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:from:to:cc:subject:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=KwgxQKTurbR04VbDoFBBQGoh1GTDU5LHbSaT2BVEv68=;
-        b=CAzgZAdb/HwJYmDRpzboQ08ipT3njZKo1/qQgRWf5H6doFPfKp+rrI4DViTvvrENka
-         DJvxGAPB/ckAc67ndEM6kgId0qoX1ixuVKX/6AMBWuS4+ZO/UBYsxNJOAOYLrPFt5Dt6
-         DsNz3ccRo2NBKYoAZctDnOrV6CzWmv77NTMDPVmVGeHzZYPSKpVMt1fYYlyVG61g9URK
-         sarCrTD+/Twts2/FvBWm+WfUpNQfEZ6cdeo4wgR6ZvCB7JCvnb13ACNls27rCLMkEbOf
-         coTDL8rXGFDRfk/fj+e/Xn0VJgHnfXr8N7vHQVAlZ2a6btQw7jelC1MLG1qd5gpnxJw4
-         1DIg==
-X-Gm-Message-State: AJIora9RlAsWUeO3mpgjz+b647jp6xQlYAeiNxEXIsD2u2UKe6lWnamZ
-        O0n2kSOj0VuczgODCd8QSSg=
-X-Google-Smtp-Source: AGRyM1ujty6P3eMQimMT3bT5EXYQaUW1b/posxJSj02nvDnjHVXsTv7WfhU4bzdsuItDxJI3fXJCJQ==
-X-Received: by 2002:a05:600c:3c8f:b0:39b:808c:b5cb with SMTP id bg15-20020a05600c3c8f00b0039b808cb5cbmr663767wmb.11.1655315920810;
-        Wed, 15 Jun 2022 10:58:40 -0700 (PDT)
-Received: from Ansuel-xps. (93-42-70-190.ip85.fastwebnet.it. [93.42.70.190])
-        by smtp.gmail.com with ESMTPSA id n23-20020a05600c3b9700b0039c5224bfcbsm3398451wms.46.2022.06.15.10.58.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Jun 2022 10:58:40 -0700 (PDT)
-Message-ID: <62aa1dd0.1c69fb81.b9887.676e@mx.google.com>
-X-Google-Original-Message-ID: <YqoRKPJFdOsH8D+Z@Ansuel-xps.>
-Date:   Wed, 15 Jun 2022 19:04:40 +0200
-From:   Ansuel Smith <ansuelsmth@gmail.com>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=3AyomL7Oc+DdUYdK158JFYS4POGAertrwHcZhI495qU=;
+        b=qJ+5k53i9DWkBO+2CXH1DQdw4bfWnprXcdjpdqEhnfIooDrqkNeatlNt8C2OFZU5md
+         uhRPtdI5Par0G9US2yBXlnz0OpKll0iHhwk1ZSCEiyr5hWYQpUPiaQIawOrWO8JfUuQT
+         8PQYA61osYSXQbNgFFQgxdaROuiYo6LvJ3SGgZY2f+SBnV2vlF129nFzyofA39AMtKP+
+         2emzgZ3+6d9dCHI5dOw1zK6DHcjczHiC+Yg/mWZylgDirZj7bWlhrkWJOBQe21+B6m/V
+         vrjBHqFW7ohrAjvL9TmjS46+mqoMqLhqGp775mdEK2jYmCC++Kiwcmwbgp/2dfEIiHQo
+         7B3g==
+X-Gm-Message-State: AJIora9a5e3AE/rQU0ZWzkCJIcp2qULTl8S/vJtJkUPhuaElfGmcMPQN
+        v0J7W0gw9O73vcmAOSXK2JnXJCDHn3AsB3B11kw+szg+8YGREg==
+X-Google-Smtp-Source: AGRyM1uA1LIViXu2DRXGg9esMg5JyGVlSdhSVJDitquFoXIzMZ+OJ2WuNj0EVeUj2Boh9KSivtt8Vaspthfz2HrD6vM=
+X-Received: by 2002:a62:7c14:0:b0:51b:9d03:a4c7 with SMTP id
+ x20-20020a627c14000000b0051b9d03a4c7mr387767pfc.74.1655313121181; Wed, 15 Jun
+ 2022 10:12:01 -0700 (PDT)
+MIME-Version: 1.0
+References: <20220522162802.208275-1-luca@z3ntu.xyz> <20220522162802.208275-11-luca@z3ntu.xyz>
+In-Reply-To: <20220522162802.208275-11-luca@z3ntu.xyz>
+From:   Loic Poulain <loic.poulain@linaro.org>
+Date:   Wed, 15 Jun 2022 19:11:25 +0200
+Message-ID: <CAMZdPi82+xW2yoKQrg61Mj_-kLCBbp=VDQNDDccQpv5=i_V6Vw@mail.gmail.com>
+Subject: Re: [RFC PATCH 10/14] i2c: qcom-cci: add msm8974 compatible
+To:     Luca Weiss <luca@z3ntu.xyz>
+Cc:     linux-arm-msm@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Robert Foss <robert.foss@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH 1/3] dt-bindings: clock: add pcm reset for ipq806x lcc
-References: <20220615163408.30154-1-ansuelsmth@gmail.com>
- <a92fe431-a995-4c7f-b90b-8e80298bc71a@linaro.org>
- <62aa1b41.1c69fb81.95632.5b71@mx.google.com>
- <717ad899-31ad-5e70-b299-ffb8ca287071@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <717ad899-31ad-5e70-b299-ffb8ca287071@linaro.org>
+        Todor Tomov <todor.too@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        linux-i2c@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
+        matti.lehtimaki@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jun 15, 2022 at 10:50:17AM -0700, Krzysztof Kozlowski wrote:
-> On 15/06/2022 09:53, Ansuel Smith wrote:
-> > On Wed, Jun 15, 2022 at 10:43:10AM -0700, Krzysztof Kozlowski wrote:
-> >> On 15/06/2022 09:34, Christian 'Ansuel' Marangi wrote:
-> >>> Add pcm reset define for ipq806x lcc.
-> >>>
-> >>> Signed-off-by: Christian 'Ansuel' Marangi <ansuelsmth@gmail.com>
-> >> To prevent any confusion about identities (we have strict rules about
-> >> these), I need to ask - who uses this email address?
-> >>
-> >> https://lore.kernel.org/all/?q=ansuelsmth%40gmail.com
-> >>
-> >> Best regards,
-> >> Krzysztof
-> > 
-> > Same person. Started using extended name, wanted to do this change from
-> > a long time but all the patch were already pushed so I couldn't change
-> > it since they were already proposed and on the various mailing list.
-> 
-> Previously "Ansuel Smith" was used entirely, without any parts of this
-> name. Here 'Ansuel' appears in quotes, which usually is used for nicknames.
-> 
-> Is "Ansuel Smith" your real name or a nickname? What do you mean by
-> "extended name"?
+On Sun, 22 May 2022 at 18:28, Luca Weiss <luca@z3ntu.xyz> wrote:
 >
+> From: Matti Lehtim=C3=A4ki <matti.lehtimaki@gmail.com>
+>
+> MSM8974 CCI is the same as MSM8916 except it has two masters.
+>
+> Signed-off-by: Matti Lehtim=C3=A4ki <matti.lehtimaki@gmail.com>
+> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
 
-Ansuel is second name. Smith is not real... (sorry)
-So with extendend name I mean full name + second name that is
-Christian Ansuel Marangi.
+Reviewed-by: Loic Poulain <loic.poulain@linaro.org>
 
-Honestly it's a very stupid mistake by me not using the full name from
-the start.
-
-> 
-> Best regards,
-> Krzysztof
-
--- 
-	Ansuel
+> ---
+> To note, the cci_v1_5_data variable name is just a bit arbitrary and
+> isn't meant to reflect IP version "1.5". I'd be happy to change the
+> variable name to something else.
+>
+>  drivers/i2c/busses/i2c-qcom-cci.c | 35 +++++++++++++++++++++++++++++++
+>  1 file changed, 35 insertions(+)
+>
+> diff --git a/drivers/i2c/busses/i2c-qcom-cci.c b/drivers/i2c/busses/i2c-q=
+com-cci.c
+> index 5c7cc862f08f..a68f17eb9dd0 100644
+> --- a/drivers/i2c/busses/i2c-qcom-cci.c
+> +++ b/drivers/i2c/busses/i2c-qcom-cci.c
+> @@ -725,6 +725,40 @@ static const struct cci_data cci_v1_data =3D {
+>         },
+>  };
+>
+> +static const struct cci_data cci_v1_5_data =3D {
+> +       .num_masters =3D 2,
+> +       .queue_size =3D { 64, 16 },
+> +       .quirks =3D {
+> +               .max_write_len =3D 10,
+> +               .max_read_len =3D 12,
+> +       },
+> +       .cci_clk_rate =3D  19200000,
+> +       .params[I2C_MODE_STANDARD] =3D {
+> +               .thigh =3D 78,
+> +               .tlow =3D 114,
+> +               .tsu_sto =3D 28,
+> +               .tsu_sta =3D 28,
+> +               .thd_dat =3D 10,
+> +               .thd_sta =3D 77,
+> +               .tbuf =3D 118,
+> +               .scl_stretch_en =3D 0,
+> +               .trdhld =3D 6,
+> +               .tsp =3D 1
+> +       },
+> +       .params[I2C_MODE_FAST] =3D {
+> +               .thigh =3D 20,
+> +               .tlow =3D 28,
+> +               .tsu_sto =3D 21,
+> +               .tsu_sta =3D 21,
+> +               .thd_dat =3D 13,
+> +               .thd_sta =3D 18,
+> +               .tbuf =3D 32,
+> +               .scl_stretch_en =3D 0,
+> +               .trdhld =3D 6,
+> +               .tsp =3D 3
+> +       },
+> +};
+> +
+>  static const struct cci_data cci_v2_data =3D {
+>         .num_masters =3D 2,
+>         .queue_size =3D { 64, 16 },
+> @@ -773,6 +807,7 @@ static const struct cci_data cci_v2_data =3D {
+>
+>  static const struct of_device_id cci_dt_match[] =3D {
+>         { .compatible =3D "qcom,msm8916-cci", .data =3D &cci_v1_data},
+> +       { .compatible =3D "qcom,msm8974-cci", .data =3D &cci_v1_5_data},
+>         { .compatible =3D "qcom,msm8996-cci", .data =3D &cci_v2_data},
+>         { .compatible =3D "qcom,sdm845-cci", .data =3D &cci_v2_data},
+>         { .compatible =3D "qcom,sm8250-cci", .data =3D &cci_v2_data},
+> --
+> 2.36.0
+>
