@@ -2,72 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4360E54C9FC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jun 2022 15:39:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 705B254CA1E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jun 2022 15:46:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1354224AbiFONjv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Jun 2022 09:39:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48076 "EHLO
+        id S230055AbiFONqs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Jun 2022 09:46:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54828 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1354328AbiFONjp (ORCPT
+        with ESMTP id S1349094AbiFONqn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Jun 2022 09:39:45 -0400
-Received: from mail-yb1-xb31.google.com (mail-yb1-xb31.google.com [IPv6:2607:f8b0:4864:20::b31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A17F836B7F
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jun 2022 06:39:44 -0700 (PDT)
-Received: by mail-yb1-xb31.google.com with SMTP id u99so20537523ybi.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jun 2022 06:39:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Hd2Q7z9uWW7dB0gy7lxuAP2GK3dj82/CD4CwzUHIa4U=;
-        b=rPkstlrZwE646fy1fdO0Vu8lKssadxnY/cq1nHk/4Drjaed9Hyl/FzAV97Qw6CvIOZ
-         ukuClPhw1cqKIxSdjV+m1grXdgBQgi+gLNnMZ7HqXd0JJeUPu6JXC1gVuTwBjilsC25M
-         046vbKX3N0sgQ1TA9dwRUme8KeoU1PUtU8IECplVwcTFYaJIgO/VSyyVD4xWFk4Afnl8
-         7o7tzI6DEzz4TuN43YTXQPTuXTvo1omNKgiz4HSoz26G4MBgCF0gubbzX3NnlnAvpfqL
-         cKHyVg2yoBW8qKIxE+KQiKn3UdKz47hR2QBV3lkKhJTUCVPlbM/fFn9AGhFZh6f1wIyx
-         o+7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Hd2Q7z9uWW7dB0gy7lxuAP2GK3dj82/CD4CwzUHIa4U=;
-        b=mz7aTuvOHzA2wtewu9B46NqH+NY3WGw4B+4SOgQbezQD5aCa5RDI2w89VeDefu7MwJ
-         T/XHyu3fItbPDUDViILYkZUEkhLrj4gZYDJzpOzX7tJyEGJG08oV2klOGlPVluBEvY8o
-         de+00f9Kj4Q12aBX9ZncryWHB195PUl5eKjxkT5aMeaD1w3dmObRPYH7OQ0AraO26dBb
-         ALJJF4wg7rlcpBfYbSas5UdSq7KKPb+Op2P7fSDCi9wnzYqfxRqBa2my1pByb+883siA
-         MJiIPA2yPiecPGghHKKlZD84UygCmc+pJxnalJxaZGqcuen29+ENmBSDxA5kXXCXGlGd
-         Q9cg==
-X-Gm-Message-State: AJIora9jigiS+gGU2xtC9NKdySAnhT05IMv9nff5F25gvRfw97wNMU89
-        veADfq2MBRH4wdap7JyZsuUqdhvxMK7X6Yo26cdapw==
-X-Google-Smtp-Source: AGRyM1tmMuIlqeQp7nqh2Mjy2GzaCsjE7hVrrxP2n3u/EC5oobfK92wjpSUNebv+96g3JYgFgZ/eKGfNefJpR0XngmY=
-X-Received: by 2002:a25:1256:0:b0:65d:6433:7993 with SMTP id
- 83-20020a251256000000b0065d64337993mr10062220ybs.626.1655300383762; Wed, 15
- Jun 2022 06:39:43 -0700 (PDT)
+        Wed, 15 Jun 2022 09:46:43 -0400
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E84B6387A0;
+        Wed, 15 Jun 2022 06:46:40 -0700 (PDT)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        (No client certificate requested)
+        by smtp-out1.suse.de (Postfix) with ESMTPS id 9F87521C5A;
+        Wed, 15 Jun 2022 13:46:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+        t=1655300799; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=iw2jPfqQLlQoX6LpWeZ9/tB9JNb7rzIb1MZz0AVsEEk=;
+        b=JCegLWCPSVTLynsDQtvK8IxzjXkGE5OqKVZrJF/3a6IUIZ81WIkfgeiCkicuka3kRv2FTw
+        1RgcCDku63qj7yMqlF7yEGl0F3xCzqMWo4STyxGQz+YIJTJM4lcGC3aPHvs2u7BKjxMJxH
+        UGgY4eeRYa9wvUN0rFh8TRKg8FKCJ+Q=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+        s=susede2_ed25519; t=1655300799;
+        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=iw2jPfqQLlQoX6LpWeZ9/tB9JNb7rzIb1MZz0AVsEEk=;
+        b=Vv/oRgxY3qp2fZqDIWLYhONZYJCScD1xArOZxb4ve7qhDavbd74xXEb0U/6jjmFKn5a8o8
+        ipePg5kDnDtP3QDA==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        (No client certificate requested)
+        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 6888313A35;
+        Wed, 15 Jun 2022 13:46:39 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+        by imap2.suse-dmz.suse.de with ESMTPSA
+        id wahiGL/iqWJ/LAAAMHmgww
+        (envelope-from <tzimmermann@suse.de>); Wed, 15 Jun 2022 13:46:39 +0000
+Message-ID: <d2a0c8e3-4987-44e9-4abe-99c571738836@suse.de>
+Date:   Wed, 15 Jun 2022 15:46:33 +0200
 MIME-Version: 1.0
-References: <1654079415-26217-1-git-send-email-quic_srivasam@quicinc.com>
- <1654079415-26217-3-git-send-email-quic_srivasam@quicinc.com>
- <CACRpkdYQW7WByaGoSFKT91OwRao_jJdCAbL0pUuj3vdS6TdkQg@mail.gmail.com> <a2b7de25-55a4-7d31-2787-be6d0ccf9500@quicinc.com>
-In-Reply-To: <a2b7de25-55a4-7d31-2787-be6d0ccf9500@quicinc.com>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Wed, 15 Jun 2022 15:39:32 +0200
-Message-ID: <CACRpkdayb3Rx=jxdxW4rZxg6efEyf_Nzv1rgL0t8pLLJd-NsiA@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] pinctrl: qcom: sc7280: Add lpi pinctrl variant
- data for adsp based targets
-To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        broonie@kernel.org, robh+dt@kernel.org, quic_plai@quicinc.com,
-        bgoswami@quicinc.com, perex@perex.cz, tiwai@suse.com,
-        srinivas.kandagatla@linaro.org, quic_rohkumar@quicinc.com,
-        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        swboyd@chromium.org, judyhsiao@chromium.org,
-        linux-gpio@vger.kernel.org,
-        Venkata Prasad Potturu <quic_potturu@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: Re: [PATCH v3 1/2] drm: Add DRM_GEM_FOPS
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>,
+        dri-devel@lists.freedesktop.org
+Cc:     Rob Clark <robdclark@chromium.org>,
+        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+        David Airlie <airlied@linux.ie>, linux-arm-msm@vger.kernel.org,
+        open list <linux-kernel@vger.kernel.org>,
+        freedreno@lists.freedesktop.org, Chris Healy <cphealy@gmail.com>
+References: <20220609174213.2265938-1-robdclark@gmail.com>
+ <5066e977-52b5-ce18-98e9-44dcfe018127@linaro.org>
+From:   Thomas Zimmermann <tzimmermann@suse.de>
+In-Reply-To: <5066e977-52b5-ce18-98e9-44dcfe018127@linaro.org>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------VRpy50pJeVxwM2suD9NUp0hG"
+X-Spam-Status: No, score=-5.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -76,36 +79,104 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jun 3, 2022 at 1:03 PM Srinivasa Rao Mandadapu
-<quic_srivasam@quicinc.com> wrote:
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------VRpy50pJeVxwM2suD9NUp0hG
+Content-Type: multipart/mixed; boundary="------------1S0aSUT3yvbPCdxnHl9OHuKO";
+ protected-headers="v1"
+From: Thomas Zimmermann <tzimmermann@suse.de>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org
+Cc: Rob Clark <robdclark@chromium.org>,
+ Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+ David Airlie <airlied@linux.ie>, linux-arm-msm@vger.kernel.org,
+ open list <linux-kernel@vger.kernel.org>, freedreno@lists.freedesktop.org,
+ Chris Healy <cphealy@gmail.com>
+Message-ID: <d2a0c8e3-4987-44e9-4abe-99c571738836@suse.de>
+Subject: Re: [PATCH v3 1/2] drm: Add DRM_GEM_FOPS
+References: <20220609174213.2265938-1-robdclark@gmail.com>
+ <5066e977-52b5-ce18-98e9-44dcfe018127@linaro.org>
+In-Reply-To: <5066e977-52b5-ce18-98e9-44dcfe018127@linaro.org>
 
-> >> @@ -149,6 +159,10 @@ static const struct of_device_id lpi_pinctrl_of_match[] = {
-> >>                 .compatible = "qcom,sc7280-lpass-lpi-pinctrl",
-> >>                 .data = &sc7280_lpi_data,
-> >>          },
-> >> +       {
-> >> +               .compatible = "qcom,sc7280-lpass-adsp-lpi-pinctrl",
-> >> +               .data = &sc7280_adsp_lpi_data,
-> >> +       },
-> > Drop this and instead add some code in the probe()
-> > in drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
-> > lines:
-> >
-> > if (of_device_is_compatible(np, "qcom,sc7280-lpass-lpi-pinctrl") &&
-> > of_property_read_bool(np, "qcom,adsp-mode))
-> >       data = &sc7280_adsp_lpi_data;
->
-> Here, only diff between ADSP and ADSP bypass variant dats is
-> "is_clk_optional" field.
->
-> So we can keep something like this. Kindly suggest, if it's not making
-> sense.
->
-> if (of_device_is_compatible(np, "qcom,sc7280-lpass-lpi-pinctrl") &&
-> of_property_read_bool(np, "qcom,adsp-mode))
->       data->is_clk_optional = false;
+--------------1S0aSUT3yvbPCdxnHl9OHuKO
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
 
-Looks good to me!
+DQoNCkFtIDE1LjA2LjIyIHVtIDE0OjQ1IHNjaHJpZWIgRG1pdHJ5IEJhcnlzaGtvdjoNCj4g
+T24gMDkvMDYvMjAyMiAyMDo0MiwgUm9iIENsYXJrIHdyb3RlOg0KPj4gRnJvbTogUm9iIENs
+YXJrIDxyb2JkY2xhcmtAY2hyb21pdW0ub3JnPg0KPj4NCj4+IFRoZSBERUZJTkVfRFJNX0dF
+TV9GT1BTKCkgaGVscGVyIGlzIGEgYml0IGxpbWl0aW5nIGlmIGEgZHJpdmVyIHdhbnRzIHRv
+DQo+PiBwcm92aWRlIGFkZGl0aW9uYWwgZmlsZSBvcHMsIGxpa2Ugc2hvd19mZGluZm8oKS4N
+Cj4+DQo+PiB2MjogU3BsaXQgb3V0IERSTV9HRU1fRk9QUyBpbnN0ZWFkIG9mIG1ha2luZyBE
+RUZJTkVfRFJNX0dFTV9GT1BTDQo+PiDCoMKgwqDCoCB2YXJhcmRpYw0KPj4gdjM6IG5pdHMN
+Cj4+DQo+PiBTaWduZWQtb2ZmLWJ5OiBSb2IgQ2xhcmsgPHJvYmRjbGFya0BjaHJvbWl1bS5v
+cmc+DQo+PiBBY2tlZC1ieTogVGhvbWFzIFppbW1lcm1hbm4gPHR6aW1tZXJtYW5uQHN1c2Uu
+ZGU+DQo+IA0KPiBJIHN1c3BlY3QgdGhhdCB3aXRoIFRvbWFzJ3MgYWNrIHdlIGNhbiBwaWNr
+IHRoaXMgdGhyb3VnaCB0aGUgZHJtL21zbS4gSXMgDQo+IHRoaXMgY29ycmVjdD8gKEknbGwg
+dGhlbiBwaWNrIGl0IGZvciB0aGUgbXNtLWx1bWFnKS4NCg0KU3VyZSwgZ28gYWhlYWQuDQoN
+Cj4gDQo+PiAtLS0NCj4+IMKgIGluY2x1ZGUvZHJtL2RybV9nZW0uaCB8IDI2ICsrKysrKysr
+KysrKysrKysrKy0tLS0tLS0tDQo+PiDCoCAxIGZpbGUgY2hhbmdlZCwgMTggaW5zZXJ0aW9u
+cygrKSwgOCBkZWxldGlvbnMoLSkNCj4+DQo+PiBkaWZmIC0tZ2l0IGEvaW5jbHVkZS9kcm0v
+ZHJtX2dlbS5oIGIvaW5jbHVkZS9kcm0vZHJtX2dlbS5oDQo+PiBpbmRleCA5ZDdjNjFhMTIy
+ZGMuLjg3Y2ZmYzllZmE4NSAxMDA2NDQNCj4+IC0tLSBhL2luY2x1ZGUvZHJtL2RybV9nZW0u
+aA0KPj4gKysrIGIvaW5jbHVkZS9kcm0vZHJtX2dlbS5oDQo+PiBAQCAtMzE0LDYgKzMxNCwy
+MyBAQCBzdHJ1Y3QgZHJtX2dlbV9vYmplY3Qgew0KPj4gwqDCoMKgwqDCoCBjb25zdCBzdHJ1
+Y3QgZHJtX2dlbV9vYmplY3RfZnVuY3MgKmZ1bmNzOw0KPj4gwqAgfTsNCj4+ICsvKioNCj4+
+ICsgKiBEUk1fR0VNX0ZPUFMgLSBEZWZhdWx0IGRybSBHRU0gZmlsZSBvcGVyYXRpb25zDQo+
+PiArICoNCj4+ICsgKiBUaGlzIG1hY3JvIHByb3ZpZGVzIGEgc2hvcnRoYW5kIGZvciBzZXR0
+aW5nIHRoZSBHRU0gZmlsZSBvcHMgaW4gdGhlDQo+PiArICogJmZpbGVfb3BlcmF0aW9ucyBz
+dHJ1Y3R1cmUuwqAgSWYgYWxsIHlvdSBuZWVkIGFyZSB0aGUgZGVmYXVsdCBvcHMsIHVzZQ0K
+Pj4gKyAqIERFRklORV9EUk1fR0VNX0ZPUFMgaW5zdGVhZC4NCj4+ICsgKi8NCj4+ICsjZGVm
+aW5lIERSTV9HRU1fRk9QUyBcDQo+PiArwqDCoMKgIC5vcGVuwqDCoMKgwqDCoMKgwqAgPSBk
+cm1fb3BlbixcDQo+PiArwqDCoMKgIC5yZWxlYXNlwqDCoMKgID0gZHJtX3JlbGVhc2UsXA0K
+Pj4gK8KgwqDCoCAudW5sb2NrZWRfaW9jdGzCoMKgwqAgPSBkcm1faW9jdGwsXA0KPj4gK8Kg
+wqDCoCAuY29tcGF0X2lvY3RswqDCoMKgID0gZHJtX2NvbXBhdF9pb2N0bCxcDQo+PiArwqDC
+oMKgIC5wb2xswqDCoMKgwqDCoMKgwqAgPSBkcm1fcG9sbCxcDQo+PiArwqDCoMKgIC5yZWFk
+wqDCoMKgwqDCoMKgwqAgPSBkcm1fcmVhZCxcDQo+PiArwqDCoMKgIC5sbHNlZWvCoMKgwqDC
+oMKgwqDCoCA9IG5vb3BfbGxzZWVrLFwNCj4+ICvCoMKgwqAgLm1tYXDCoMKgwqDCoMKgwqDC
+oCA9IGRybV9nZW1fbW1hcA0KPj4gKw0KPj4gwqAgLyoqDQo+PiDCoMKgICogREVGSU5FX0RS
+TV9HRU1fRk9QUygpIC0gbWFjcm8gdG8gZ2VuZXJhdGUgZmlsZSBvcGVyYXRpb25zIGZvciBH
+RU0gDQo+PiBkcml2ZXJzDQo+PiDCoMKgICogQG5hbWU6IG5hbWUgZm9yIHRoZSBnZW5lcmF0
+ZWQgc3RydWN0dXJlDQo+PiBAQCAtMzMwLDE0ICszNDcsNyBAQCBzdHJ1Y3QgZHJtX2dlbV9v
+YmplY3Qgew0KPj4gwqAgI2RlZmluZSBERUZJTkVfRFJNX0dFTV9GT1BTKG5hbWUpIFwNCj4+
+IMKgwqDCoMKgwqAgc3RhdGljIGNvbnN0IHN0cnVjdCBmaWxlX29wZXJhdGlvbnMgbmFtZSA9
+IHtcDQo+PiDCoMKgwqDCoMKgwqDCoMKgwqAgLm93bmVywqDCoMKgwqDCoMKgwqAgPSBUSElT
+X01PRFVMRSxcDQo+PiAtwqDCoMKgwqDCoMKgwqAgLm9wZW7CoMKgwqDCoMKgwqDCoCA9IGRy
+bV9vcGVuLFwNCj4+IC3CoMKgwqDCoMKgwqDCoCAucmVsZWFzZcKgwqDCoCA9IGRybV9yZWxl
+YXNlLFwNCj4+IC3CoMKgwqDCoMKgwqDCoCAudW5sb2NrZWRfaW9jdGzCoMKgwqAgPSBkcm1f
+aW9jdGwsXA0KPj4gLcKgwqDCoMKgwqDCoMKgIC5jb21wYXRfaW9jdGzCoMKgwqAgPSBkcm1f
+Y29tcGF0X2lvY3RsLFwNCj4+IC3CoMKgwqDCoMKgwqDCoCAucG9sbMKgwqDCoMKgwqDCoMKg
+ID0gZHJtX3BvbGwsXA0KPj4gLcKgwqDCoMKgwqDCoMKgIC5yZWFkwqDCoMKgwqDCoMKgwqAg
+PSBkcm1fcmVhZCxcDQo+PiAtwqDCoMKgwqDCoMKgwqAgLmxsc2Vla8KgwqDCoMKgwqDCoMKg
+ID0gbm9vcF9sbHNlZWssXA0KPj4gLcKgwqDCoMKgwqDCoMKgIC5tbWFwwqDCoMKgwqDCoMKg
+wqAgPSBkcm1fZ2VtX21tYXAsXA0KPj4gK8KgwqDCoMKgwqDCoMKgIERSTV9HRU1fRk9QUyxc
+DQo+PiDCoMKgwqDCoMKgIH0NCj4+IMKgIHZvaWQgZHJtX2dlbV9vYmplY3RfcmVsZWFzZShz
+dHJ1Y3QgZHJtX2dlbV9vYmplY3QgKm9iaik7DQo+IA0KPiANCg0KLS0gDQpUaG9tYXMgWmlt
+bWVybWFubg0KR3JhcGhpY3MgRHJpdmVyIERldmVsb3Blcg0KU1VTRSBTb2Z0d2FyZSBTb2x1
+dGlvbnMgR2VybWFueSBHbWJIDQpNYXhmZWxkc3RyLiA1LCA5MDQwOSBOw7xybmJlcmcsIEdl
+cm1hbnkNCihIUkIgMzY4MDksIEFHIE7DvHJuYmVyZykNCkdlc2Now6RmdHNmw7xocmVyOiBJ
+dm8gVG90ZXYNCg==
 
-Yours,
-Linus Walleij
+--------------1S0aSUT3yvbPCdxnHl9OHuKO--
+
+--------------VRpy50pJeVxwM2suD9NUp0hG
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature"
+
+-----BEGIN PGP SIGNATURE-----
+
+wsF5BAABCAAjFiEExndm/fpuMUdwYFFolh/E3EQov+AFAmKp4roFAwAAAAAACgkQlh/E3EQov+B/
+jw/9FbZQOVOHCHcSWZW4LrskKH/NSHemiJDUG+aQQYl5hcZyGPD95dolcsXOi19VHc+kw5lxdQxR
+sjm5leaeDIhN8ZkE17VsceY5JkoplxvY6Eq59tDXDYMop6M4SpUfa1Di8VctTTJTn/MFQ+uKe11W
+Lhc2FXhkmUQmUIu6SB9J9ABJX0xwCAysWXNG4l9pkhCJT46IYvusJHC5HXQ6USR7LGf/CFGOPWWQ
+YW82VxcYyNTMMNWjG5b2fM3D+OFYtSdqEgeuHyGM1tIcgTBO1fomvwyqsoxIBuWAxsWlmBr0sT6c
+SefFxAVFKJzXrTRIIRh0ho0lMuxx001LcZXSpUChMGvomvKDgvcmBBf7a7siNkZC6Km4Hsrg+5QL
+uyr6SRt0m/eMszs3ZReiFBzHdXK01UbAzCoejhgBJzBcUSMimtcbL4rTUkih4prTjE2me9O1Mbvq
+REX7ZXctE/e7EjZiMw9jxe/xk38LnK33lGFrvbNK+8ImiaUWft218l7rbtjLCbA6WBvZxnTLWspw
+3TyjUOpOLFPMzW1oQCaiflw7T4WzUqADGVEP1GJuDqEqGd5ew9oaqX9jyg8/UiQa2ulSplsy/fSA
+ftKiOyD6dPt8PBVdRAs6dGbCfG5T6i1u2+GQhb7ZCOt9ymPnbPl4eLXD3PJ49brvEgeZFTLC4SUf
+lLE=
+=4Wsv
+-----END PGP SIGNATURE-----
+
+--------------VRpy50pJeVxwM2suD9NUp0hG--
