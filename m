@@ -2,61 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C7A2A54CFC3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jun 2022 19:28:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2507554D027
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jun 2022 19:39:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349568AbiFOR2N (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Jun 2022 13:28:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38298 "EHLO
+        id S1357690AbiFORjq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Jun 2022 13:39:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53442 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349551AbiFOR2J (ORCPT
+        with ESMTP id S1347332AbiFORjp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Jun 2022 13:28:09 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED88B64C7;
-        Wed, 15 Jun 2022 10:28:04 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 067BD61AAF;
-        Wed, 15 Jun 2022 17:28:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAE10C3411E;
-        Wed, 15 Jun 2022 17:28:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1655314083;
-        bh=ilTAICh3FsjTzVc9ME4FcR9Ufoo9UUbjHFBRoZxdStI=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=hp7X1Voa0A0eOfpO6673a2hnZATJ4nUKhChLwBbJcnFpBuQ7Ms28vSPcJAWMYw20R
-         msLl4j2LWIMAlydf9LDlNE9VdtQbZA3y7xGPzSE8dPQS1M3L6rYTz2+wsx3Y/tVwSt
-         8M0vnVWykjlW46/4YVJPgOPVIRztmJCwVb8YB487CDgoVVU46L9xOclio6IgCQ5jZY
-         pKI6jjuDCOGjBWfWuANSKzswPLDDrWNYWLbn7QVYkYdHv54Dnu34rO0P2SsaYeeBQL
-         SR4BxBVaE8+cjd2H8Jt0CeGIOFKNEMjOAliyZLZudsNnM2MfrWbd72PpN46ScKjfvQ
-         uVFMs4Zvs8XMw==
-Date:   Wed, 15 Jun 2022 22:58:02 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Ansuel Smith <ansuelsmth@gmail.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Miquel Raynal <miquel.raynal@bootlin.com>,
-        Richard Weinberger <richard@nod.at>,
-        Vignesh Raghavendra <vigneshr@ti.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-mtd@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v7 2/3] mtd: nand: raw: qcom_nandc: add support for
- unprotected spare data pages
-Message-ID: <20220615172802.GB3606@thinkpad>
-References: <20220615000612.3119-1-ansuelsmth@gmail.com>
- <20220615000612.3119-3-ansuelsmth@gmail.com>
+        Wed, 15 Jun 2022 13:39:45 -0400
+Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ECE6B52B3E
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jun 2022 10:39:43 -0700 (PDT)
+Received: by mail-pf1-x430.google.com with SMTP id e11so12071429pfj.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jun 2022 10:39:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=JIGNx3dxDBXAJBCjmLCOBkusT3zHmoO5EB6WelB8/B4=;
+        b=oUnFHZqLgzAe8XdtP8xIy+iktAr8OgZ4tDzEeFSBmBvpgqj5WAhI+pSU3KD2EHL4MU
+         Fx70SswIOfEmaDuHutuxmIs8RnsZ5Ask4k7KmE76D6HqBiQFmPX6vJ6Etu3JGb04jsvZ
+         0S6FvLFPnTJbFXSqt+DjJZwAKP30H/aWT4wqfQlj2JfFf+6c+T5RC6BCqpgSpJ/DMVTM
+         Ak4XK9T5z5jR7V7tC9BYqOyv3Yb3SLxTdK119Ac8ejXjJZ9WQULAo8ZLLMZ6q6Dp+7zJ
+         iS2jrR3zlapsYE/y8XadnHxa6za+sH7sOnGte3ZwBME5awCGiRETJliB+l76OoUIILPq
+         KaIg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=JIGNx3dxDBXAJBCjmLCOBkusT3zHmoO5EB6WelB8/B4=;
+        b=fJKoN5qztNxbmA50hr5PY4V0CZvyVqVdcsI/2hOhqdvupvQeZxMmKW7Nh7rBbBzdID
+         JzSrVF3bJj92qnaFVkRZ3YJkOSUw1GH5PvYUwr2c7JcM31sHD+UuMV1cSKF38movhMH3
+         cbK08oWxrjnlIbDc4MFzdae302moF9MeOzTQsvK741mWP8lTgYfUiJLFVfjMr6AQtm45
+         UutgnTwHcIa2PLAddbhzVAR62E/pWJZ79Zkq1AJ1eQw5uq8BzE6N3opa1yjg+tAa+nA/
+         RKInFwQk8lzoXzMjrnSVkgYJvK3l7VHuPG04nlgo/VtO0wxEHbc+AoOf0LvZcJ0NbkC0
+         Wk4Q==
+X-Gm-Message-State: AJIora916Z0v7wnedmQqX3jUOg5SbJX6Ao3qIlg5GCBsmjZOodDCTSlO
+        +skXujBDnqiQ63N1P5mzwWy4
+X-Google-Smtp-Source: AGRyM1vxpaSwdX+YrOVTzPhfpPmR3ZUlbCHDtX94AFzFgX6H6IowGyl2HG3yxhPrt495b2UfJjSbzg==
+X-Received: by 2002:a63:1152:0:b0:3fd:b58f:5be7 with SMTP id 18-20020a631152000000b003fdb58f5be7mr825255pgr.164.1655314783415;
+        Wed, 15 Jun 2022 10:39:43 -0700 (PDT)
+Received: from thinkpad ([192.77.111.2])
+        by smtp.gmail.com with ESMTPSA id t188-20020a6281c5000000b0051ba7515e0dsm7247196pfd.54.2022.06.15.10.39.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 15 Jun 2022 10:39:42 -0700 (PDT)
+Date:   Wed, 15 Jun 2022 23:09:41 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Cc:     helgaas@kernel.org, linux-pci@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_vbadigan@quicinc.com, quic_hemantk@quicinc.com,
+        quic_nitegupt@quicinc.com, quic_skananth@quicinc.com,
+        quic_ramkri@quicinc.com, swboyd@chromium.org,
+        Prasad Malisetty <quic_pmaliset@quicinc.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        "Saheed O. Bolarinwa" <refactormyself@gmail.com>,
+        Rajat Jain <rajatja@google.com>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>
+Subject: Re: [PATCH v5] PCI/ASPM: Update LTR threshold based upon reported
+ max latencies
+Message-ID: <20220615173941.GC3606@thinkpad>
+References: <1654242861-15695-1-git-send-email-quic_krichai@quicinc.com>
+ <1654837710-30561-1-git-send-email-quic_krichai@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20220615000612.3119-3-ansuelsmth@gmail.com>
-X-Spam-Status: No, score=-8.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+In-Reply-To: <1654837710-30561-1-git-send-email-quic_krichai@quicinc.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -64,148 +82,101 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jun 15, 2022 at 02:06:11AM +0200, Ansuel Smith wrote:
-> IPQ8064 nand have special pages where a different layout scheme is used.
-> These special page are used by boot partition and on reading them
-> lots of warning are reported about wrong ECC data and if written to
-> results in broken data and not bootable device.
+On Fri, Jun 10, 2022 at 10:38:28AM +0530, Krishna chaitanya chundru wrote:
+> From: Prasad Malisetty <quic_pmaliset@quicinc.com>
 > 
-> The layout scheme used by these special page consist in using 512 bytes
-> as the codeword size (even for the last codeword) while writing to CFG0
-> register. This forces the NAND controller to unprotect the 4 bytes of
-> spare data.
+> In ASPM driver, LTR threshold scale and value are updated based on
+> tcommon_mode and t_poweron values. In kioxia NVMe L1.2 is failing due to
+> LTR threshold scale and value are greater values than max snoop/non-snoop
+> value.
 > 
-> Since the kernel is unaware of this different layout for these special
-> page, it does try to protect the spare data too during read/write and
-> warn about CRC errors.
+> Based on PCIe r4.1, sec 5.5.1, L1.2 substate must be entered when
+> reported snoop/no-snoop values is greather than or equal to
+> LTR_L1.2_THRESHOLD value.
 > 
-> Add support for this by permitting the user to declare these special
-> pages in dts by declaring offset and size of the partition. The driver
-> internally will convert these value to nand pages.
-> 
-> On user read/write the page is checked and if it's a boot page the
-> correct layout is used.
-> 
-> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+> Signed-off-by: Prasad Malisetty  <quic_pmaliset@quicinc.com>
+> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
 
-Just a few nitpicks below. With those fixed,
-
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
 Thanks,
 Mani
 
 > ---
->  drivers/mtd/nand/raw/qcom_nandc.c | 203 +++++++++++++++++++++++++++++-
->  1 file changed, 198 insertions(+), 5 deletions(-)
 > 
-> diff --git a/drivers/mtd/nand/raw/qcom_nandc.c b/drivers/mtd/nand/raw/qcom_nandc.c
-> index f2990d721733..0dbfe32888ff 100644
-> --- a/drivers/mtd/nand/raw/qcom_nandc.c
-> +++ b/drivers/mtd/nand/raw/qcom_nandc.c
-
-[...]
-
-> +static bool qcom_nandc_is_boot_partition(struct qcom_nand_host *host, int page)
-> +{
-> +	struct qcom_nand_boot_partition *boot_partition;
-> +	u32 start, end;
-> +	int i;
-> +
-> +	/*
-> +	 * Since the frequent access will be to the non-boot partitions like rootfs,
-> +	 * optimize the page check by:
-> +
-
-Missing "*"
-
-> +	 * 1. Checking if the page lies after the last boot partition.
-> +	 * 2. Checking from the boot partition end.
-> +	 */
-> +
-> +	/* First check the last boot partition */
-> +	boot_partition = &host->boot_partitions[host->nr_boot_partitions - 1];
-> +	start = boot_partition->page_offset;
-> +	end = start + boot_partition->page_size;
-> +
-> +	/* Page is after the last boot partition end. This is NOT a boot partition */
-> +	if (page > end)
-> +		return false;
-> +
-> +	/* Actually check if it's a boot partition */
-> +	if (page < end && page >= start)
-> +		return true;
-> +
-> +	/* Check the other boot partition starting from the second-last partition */
-
-s/boot partition/boot partitions
-
-> +	for (i = host->nr_boot_partitions - 2; i >= 0; i--) {
-> +		boot_partition = &host->boot_partitions[i];
-> +		start = boot_partition->page_offset;
-> +		end = start + boot_partition->page_size;
-> +
-> +		if (page < end && page >= start)
-> +			return true;
-> +	}
-> +
-> +	return false;
-> +}
-> +
-> +static void
-> +qcom_nandc_codeword_fixup(struct qcom_nand_host *host, int page)
-
-As like other functions, please align the function on the same line
-
-> +{
-> +	bool codeword_fixup = qcom_nandc_is_boot_partition(host, page);
-> +
-> +	/* Skip conf write if we are already in the correct mode */
-> +	if (codeword_fixup == host->codeword_fixup)
+> I am taking this patch forward as prasad is no more working with our org.
+> Changes since v4:
+> 	- Replaced conditional statements with min and max.
+> changes since v3:
+> 	- Changed the logic to include this condition "snoop/nosnoop
+> 	  latencies are not equal to zero and lower than LTR_L1.2_THRESHOLD"
+> Changes since v2:
+> 	- Replaced LTRME logic with max snoop/no-snoop latencies check.
+> Changes since v1:
+> 	- Added missing variable declaration in v1 patch
+> ---
+>  drivers/pci/pcie/aspm.c | 30 ++++++++++++++++++++++++++++++
+>  1 file changed, 30 insertions(+)
+> 
+> diff --git a/drivers/pci/pcie/aspm.c b/drivers/pci/pcie/aspm.c
+> index a96b742..676c03e 100644
+> --- a/drivers/pci/pcie/aspm.c
+> +++ b/drivers/pci/pcie/aspm.c
+> @@ -461,14 +461,36 @@ static void aspm_calc_l1ss_info(struct pcie_link_state *link,
+>  {
+>  	struct pci_dev *child = link->downstream, *parent = link->pdev;
+>  	u32 val1, val2, scale1, scale2;
+> +	u32 max_val, max_scale, max_snp_scale, max_snp_val, max_nsnp_scale, max_nsnp_val;
+>  	u32 t_common_mode, t_power_on, l1_2_threshold, scale, value;
+>  	u32 ctl1 = 0, ctl2 = 0;
+>  	u32 pctl1, pctl2, cctl1, cctl2;
+>  	u32 pl1_2_enables, cl1_2_enables;
+> +	u16 ltr;
+> +	u16 max_snoop_lat, max_nosnoop_lat;
+>  
+>  	if (!(link->aspm_support & ASPM_STATE_L1_2_MASK))
+>  		return;
+>  
+> +	ltr = pci_find_ext_capability(child, PCI_EXT_CAP_ID_LTR);
+> +	if (!ltr)
 > +		return;
 > +
-> +	host->codeword_fixup = codeword_fixup;
+> +	pci_read_config_word(child, ltr + PCI_LTR_MAX_SNOOP_LAT, &max_snoop_lat);
+> +	pci_read_config_word(child, ltr + PCI_LTR_MAX_NOSNOOP_LAT, &max_nosnoop_lat);
 > +
-> +	host->cw_data = codeword_fixup ? 512 : 516;
-> +	host->spare_bytes = host->cw_size - host->ecc_bytes_hw -
-> +			    host->bbm_size - host->cw_data;
+> +	max_snp_scale = (max_snoop_lat & PCI_LTR_SCALE_MASK) >> PCI_LTR_SCALE_SHIFT;
+> +	max_snp_val = max_snoop_lat & PCI_LTR_VALUE_MASK;
 > +
-> +	host->cfg0 &= ~(SPARE_SIZE_BYTES_MASK | UD_SIZE_BYTES_MASK);
-> +	host->cfg0 |= host->spare_bytes << SPARE_SIZE_BYTES |
-> +		      host->cw_data << UD_SIZE_BYTES;
+> +	max_nsnp_scale = (max_nosnoop_lat & PCI_LTR_SCALE_MASK) >> PCI_LTR_SCALE_SHIFT;
+> +	max_nsnp_val = max_nosnoop_lat & PCI_LTR_VALUE_MASK;
 > +
-> +	host->ecc_bch_cfg &= ~ECC_NUM_DATA_BYTES_MASK;
-> +	host->ecc_bch_cfg |= host->cw_data << ECC_NUM_DATA_BYTES;
-> +	host->ecc_buf_cfg = (host->cw_data - 1) << NUM_STEPS;
-> +}
-
-[...]
-
-> +static int qcom_nand_host_parse_boot_partitions(struct qcom_nand_controller *nandc,
-> +						struct qcom_nand_host *host,
-> +						struct device_node *dn)
-> +{
-> +	struct nand_chip *chip = &host->chip;
-> +	struct mtd_info *mtd = nand_to_mtd(chip);
-> +	struct qcom_nand_boot_partition *boot_partition;
-> +	struct device *dev = nandc->dev;
-> +	int partitions_count, i, j, ret;
+> +	/* choose the greater max scale value between snoop and no snoop value*/
+> +	max_scale = max(max_snp_scale, max_nsnp_scale);
 > +
-> +	if (!of_find_property(dn, "qcom,boot-partitions", NULL))
-> +		return 0;
+> +	/* choose the greater max value between snoop and no snoop scales */
+> +	max_val = max(max_snp_val, max_nsnp_val);
 > +
-> +	partitions_count = of_property_count_u32_elems(dn, "qcom,boot-partitions");
-> +	if (partitions_count <= 0) {
-> +		dev_err(dev, "Error parsing boot partition\n");
-> +		if (partitions_count == 0)
-> +			return -EINVAL;
-> +		else
-> +			return partitions_count;
-
-		return partitions_count ? partitions_count : -EINVAL;
-
-Thanks,
-Mani
+>  	/* Choose the greater of the two Port Common_Mode_Restore_Times */
+>  	val1 = (parent_l1ss_cap & PCI_L1SS_CAP_CM_RESTORE_TIME) >> 8;
+>  	val2 = (child_l1ss_cap & PCI_L1SS_CAP_CM_RESTORE_TIME) >> 8;
+> @@ -501,6 +523,14 @@ static void aspm_calc_l1ss_info(struct pcie_link_state *link,
+>  	 */
+>  	l1_2_threshold = 2 + 4 + t_common_mode + t_power_on;
+>  	encode_l12_threshold(l1_2_threshold, &scale, &value);
+> +
+> +	/*
+> +	 * Based on PCIe r4.1, sec 5.5.1, L1.2 substate must be entered when reported
+> +	 * snoop/no-snoop values are greather than or equal to LTR_L1.2_THRESHOLD value.
+> +	 */
+> +	scale = min(scale, max_scale);
+> +	value = min(value, max_val);
+> +
+>  	ctl1 |= t_common_mode << 8 | scale << 29 | value << 16;
+>  
+>  	/* Some broken devices only support dword access to L1 SS */
+> -- 
+> 2.7.4
+> 
 
 -- 
 மணிவண்ணன் சதாசிவம்
