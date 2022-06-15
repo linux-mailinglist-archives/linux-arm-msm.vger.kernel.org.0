@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9EAB654CF29
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jun 2022 18:59:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A13BF54CF2B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jun 2022 18:59:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353626AbiFOQ7k (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S1349993AbiFOQ7k (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Wed, 15 Jun 2022 12:59:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34142 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34234 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349993AbiFOQ7f (ORCPT
+        with ESMTP id S1350002AbiFOQ7i (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Jun 2022 12:59:35 -0400
-Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 460292E0A9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jun 2022 09:59:33 -0700 (PDT)
-Received: by mail-pj1-x102e.google.com with SMTP id y13-20020a17090a154d00b001eaaa3b9b8dso2615182pja.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jun 2022 09:59:33 -0700 (PDT)
+        Wed, 15 Jun 2022 12:59:38 -0400
+Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 927C92E9DF
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jun 2022 09:59:34 -0700 (PDT)
+Received: by mail-pj1-x102b.google.com with SMTP id v11-20020a17090a4ecb00b001e2c5b837ccso2687688pjl.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jun 2022 09:59:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=TgYasgJyDkLKxGP7tFRjaW6ZIrdHuMDeEyRzo2a6X1Q=;
-        b=gnmHEB9YtHSr56xHMm+Ju6lUiJNhW1rHa8GBLrPRWPAKDMVAH23PB6WOAVuUtiEyDn
-         UkSMu1knR7p2h8iUbFoq+px2Oipj3Ep7zqXuNY1eAoL1Qk5WQnKsYclgY3ZunxMdEEmO
-         pw5998B9AhlvSn2Q82yKmOzxD0rD6dOq9sjSLFnLr4j5aba5+5aY99Q7KjeagLLeEDX3
-         QZzmCuBMtpj2NS1K0WnuqzUfFOzi7Z9GpkoF2cgglcA40uc4Sl8/CqNct3HdOEAe4OuV
-         rzMgmQlP8UGyA7KdX5/5Pt4ob+KcVBCz3gvvl2Oh78LGcHvCPB+rKIwaFU7NkTXkjpIH
-         SOkw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=rpIVO5Kfmx2LoU227Q0lbW/FLezMOp+ICqcp8J2B6FI=;
+        b=MZpYEqAM/KX+Nu/O0mwQPCl2GJDQG3BQQBIWo9GaDMMfvVfCJGL0yTeCPiq6izrFor
+         CLalTVjKv5Om+Cux+Qz7lkVbo11fce/QEbQgl6yrV3kM9xpUTvIC97MEWVhPJNmkx4ek
+         kYzMko73AHKQlsafOON8jgXe47eiuTBrgT2N+lLMWYzOg6QvB/nJeo/zuZNlti9vCp8O
+         TasXSMtCNQppiXD8b+sRBIKGg5m8MhLLlDxeN113kjn8sb4bcyfWdYmIG4Yh5wzG+3mZ
+         vqrsHrJNvdQSYy/7vLm+m89jH3MfBWZKrbtU0WA3P4YNxenrKmwd4KLX6X/unKSD4LQr
+         VTeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=TgYasgJyDkLKxGP7tFRjaW6ZIrdHuMDeEyRzo2a6X1Q=;
-        b=Z6DMwNoQNolnE+lVkiymRVTAG3SIy6/0Yg7wi0DaGpPD2eJHM/3RWfJ0iEAgr5yIZK
-         TW5l0GJpEWelDbWxuMMx9dckxd9vSMGwjXe1BKCSm2SdhXTZsCjDRqKUu3MPqT7cN2Ae
-         b25d888aTw9QI37r4JP5WMeuvQ6o4UdoEup8zZURIcQoZT3lKlLlupGmVvKjDdP5xu00
-         O0NYMRwLRBsNq+e/D5LLuMCYExsG9tyku1ueSFo3/i9EHcJT7Mzb2qkU6xdLwYtXQODY
-         qbiySeS5k/r+X7EeIHNyM8mXbObxrR88Y4b2KE46LyEw69zmd3gw9kxyLBeBlm53DJQB
-         WpPA==
-X-Gm-Message-State: AJIora/cbZxpo6v8kDQGu/AbGCo1iIU8BJIgMbUI2FsA9Inu9SmZLLuD
-        zwBH3mYysKVHS1bZb8VfKdVd/A==
-X-Google-Smtp-Source: AGRyM1tnLfxVY9k3xmR/MfAeKNGvzGPQaEJLVgW4JQvZSmUXpNi8brcF++WTTbZZTcGSrY4lVeQTgg==
-X-Received: by 2002:a17:902:b714:b0:168:f72d:b8d5 with SMTP id d20-20020a170902b71400b00168f72db8d5mr519478pls.66.1655312372688;
-        Wed, 15 Jun 2022 09:59:32 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=rpIVO5Kfmx2LoU227Q0lbW/FLezMOp+ICqcp8J2B6FI=;
+        b=6FCYd93X039YFdPrm5WtLm7HI2eVKgMxSxsna/tKdzgJyegvw9Q00z9u+sYGm4YdKB
+         xgRA0BLAJkTADa1lneKWR/nskrLFi3l98eSqQm5AGVmhO9yJOUuq9gMJB1i/X3rsU8oa
+         FhZoaEBqR8kGr+5KpxLvhNrTaA8Fs0WO8ysJAIIJ/1NaFKJWuDF55hTJ9eA2g7WDEAxl
+         ru9c/M20TqljhREoMkPVokz4uWVW8pMRkjZqMuAV19HWhCZ7WENVA2M6dYm3d26lwYLR
+         uigBOtU88eyT79LgpY4vFyg9yt7OFFgWjTAsKgDFpxl1hzruFLoy6M4tdVK4Z3nu7aUl
+         xOvg==
+X-Gm-Message-State: AJIora/LaLtYK8fCvD9F+t2mmSZLVejZwVd/y/lSFJnt++rmbIJh8opz
+        h+7t3qDZofjK8CQBzTuijW9gqw==
+X-Google-Smtp-Source: AGRyM1ufbWyrUR7cMW1ED5blXTBvzX2GdcvoY3l2cczUqBWYxE8jz8arVAs7v/PQtOd+NX0fEFbhxQ==
+X-Received: by 2002:a17:902:f541:b0:163:f64a:6127 with SMTP id h1-20020a170902f54100b00163f64a6127mr596561plf.134.1655312374000;
+        Wed, 15 Jun 2022 09:59:34 -0700 (PDT)
 Received: from localhost.localdomain ([192.77.111.2])
-        by smtp.gmail.com with ESMTPSA id s194-20020a6377cb000000b003fd1111d73csm10618513pgc.4.2022.06.15.09.59.31
+        by smtp.gmail.com with ESMTPSA id s194-20020a6377cb000000b003fd1111d73csm10618513pgc.4.2022.06.15.09.59.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Jun 2022 09:59:32 -0700 (PDT)
+        Wed, 15 Jun 2022 09:59:33 -0700 (PDT)
 From:   Alex Elder <elder@linaro.org>
 To:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
         pabeni@redhat.com
@@ -56,15 +56,17 @@ Cc:     mka@chromium.org, evgreen@chromium.org, bjorn.andersson@linaro.org,
         quic_jponduru@quicinc.com, quic_subashab@quicinc.com,
         elder@kernel.org, netdev@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH net-next 0/5] net: ipa: more multi-channel event ring work
-Date:   Wed, 15 Jun 2022 11:59:24 -0500
-Message-Id: <20220615165929.5924-1-elder@linaro.org>
+Subject: [PATCH net-next 1/5] net: ipa: don't assume one channel per event ring
+Date:   Wed, 15 Jun 2022 11:59:25 -0500
+Message-Id: <20220615165929.5924-2-elder@linaro.org>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20220615165929.5924-1-elder@linaro.org>
+References: <20220615165929.5924-1-elder@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -72,31 +74,111 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This series makes a little more progress toward supporting multiple
-channels with a single event ring.  The first removes the assumption
-that consecutive events are associated with the same RX channel.
+In gsi_evt_ring_rx_update(), use gsi_event_trans() repeatedly
+to find the transaction associated with an event, rather than
+assuming consecutive events are associated with the same channel.
+This removes the only caller of gsi_trans_pool_next(), so get rid
+of it.
 
-The second derives the channel associated with an event from the
-event itself, and the next does a small cleanup enabled by that.
+Signed-off-by: Alex Elder <elder@linaro.org>
+---
+ drivers/net/ipa/gsi.c         | 14 ++++++--------
+ drivers/net/ipa/gsi_private.h |  3 ---
+ drivers/net/ipa/gsi_trans.c   | 16 ----------------
+ 3 files changed, 6 insertions(+), 27 deletions(-)
 
-The fourth causes updates to occur for every event processed (rather
-once).  And the final patch does a little more rework to make TX
-completion have more in common with RX completion.
-
-					-Alex
-
-Alex Elder (5):
-  net: ipa: don't assume one channel per event ring
-  net: ipa: don't pass channel when mapping transaction
-  net: ipa: pass GSI pointer to gsi_evt_ring_rx_update()
-  net: ipa: call gsi_evt_ring_rx_update() unconditionally
-  net: ipa: move more code out of gsi_channel_update()
-
- drivers/net/ipa/gsi.c         | 59 +++++++++++++++++++----------------
- drivers/net/ipa/gsi_private.h |  3 --
- drivers/net/ipa/gsi_trans.c   | 28 +++++------------
- 3 files changed, 40 insertions(+), 50 deletions(-)
-
+diff --git a/drivers/net/ipa/gsi.c b/drivers/net/ipa/gsi.c
+index df8af1f00fc8b..0e9064c043adf 100644
+--- a/drivers/net/ipa/gsi.c
++++ b/drivers/net/ipa/gsi.c
+@@ -1366,15 +1366,11 @@ static void gsi_evt_ring_rx_update(struct gsi_evt_ring *evt_ring, u32 index)
+ {
+ 	struct gsi_channel *channel = evt_ring->channel;
+ 	struct gsi_ring *ring = &evt_ring->ring;
+-	struct gsi_trans_info *trans_info;
+ 	struct gsi_event *event_done;
+ 	struct gsi_event *event;
+-	struct gsi_trans *trans;
+ 	u32 event_avail;
+ 	u32 old_index;
+ 
+-	trans_info = &channel->trans_info;
+-
+ 	/* We'll start with the oldest un-processed event.  RX channels
+ 	 * replenish receive buffers in single-TRE transactions, so we
+ 	 * can just map that event to its transaction.  Transactions
+@@ -1382,9 +1378,6 @@ static void gsi_evt_ring_rx_update(struct gsi_evt_ring *evt_ring, u32 index)
+ 	 */
+ 	old_index = ring->index;
+ 	event = gsi_ring_virt(ring, old_index);
+-	trans = gsi_event_trans(channel->gsi, event);
+-	if (!trans)
+-		return;
+ 
+ 	/* Compute the number of events to process before we wrap,
+ 	 * and determine when we'll be done processing events.
+@@ -1392,6 +1385,12 @@ static void gsi_evt_ring_rx_update(struct gsi_evt_ring *evt_ring, u32 index)
+ 	event_avail = ring->count - old_index % ring->count;
+ 	event_done = gsi_ring_virt(ring, index);
+ 	do {
++		struct gsi_trans *trans;
++
++		trans = gsi_event_trans(channel->gsi, event);
++		if (!trans)
++			return;
++
+ 		trans->len = __le16_to_cpu(event->len);
+ 
+ 		/* Move on to the next event and transaction */
+@@ -1399,7 +1398,6 @@ static void gsi_evt_ring_rx_update(struct gsi_evt_ring *evt_ring, u32 index)
+ 			event++;
+ 		else
+ 			event = gsi_ring_virt(ring, 0);
+-		trans = gsi_trans_pool_next(&trans_info->pool, trans);
+ 	} while (event != event_done);
+ }
+ 
+diff --git a/drivers/net/ipa/gsi_private.h b/drivers/net/ipa/gsi_private.h
+index 74cbc287fc715..0b2516fa21b5d 100644
+--- a/drivers/net/ipa/gsi_private.h
++++ b/drivers/net/ipa/gsi_private.h
+@@ -16,9 +16,6 @@ struct gsi_channel;
+ 
+ #define GSI_RING_ELEMENT_SIZE	16	/* bytes; must be a power of 2 */
+ 
+-/* Return the entry that follows one provided in a transaction pool */
+-void *gsi_trans_pool_next(struct gsi_trans_pool *pool, void *element);
+-
+ /**
+  * gsi_trans_move_complete() - Mark a GSI transaction completed
+  * @trans:	Transaction to commit
+diff --git a/drivers/net/ipa/gsi_trans.c b/drivers/net/ipa/gsi_trans.c
+index a110be72f70b6..54a2400cb560e 100644
+--- a/drivers/net/ipa/gsi_trans.c
++++ b/drivers/net/ipa/gsi_trans.c
+@@ -214,22 +214,6 @@ void *gsi_trans_pool_alloc_dma(struct gsi_trans_pool *pool, dma_addr_t *addr)
+ 	return pool->base + offset;
+ }
+ 
+-/* Return the pool element that immediately follows the one given.
+- * This only works done if elements are allocated one at a time.
+- */
+-void *gsi_trans_pool_next(struct gsi_trans_pool *pool, void *element)
+-{
+-	void *end = pool->base + pool->count * pool->size;
+-
+-	WARN_ON(element < pool->base);
+-	WARN_ON(element >= end);
+-	WARN_ON(pool->max_alloc != 1);
+-
+-	element += pool->size;
+-
+-	return element < end ? element : pool->base;
+-}
+-
+ /* Map a given ring entry index to the transaction associated with it */
+ static void gsi_channel_trans_map(struct gsi_channel *channel, u32 index,
+ 				  struct gsi_trans *trans)
 -- 
 2.34.1
 
