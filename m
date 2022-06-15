@@ -2,75 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 705B254CA1E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jun 2022 15:46:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 711F754CAA0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jun 2022 16:00:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230055AbiFONqs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Jun 2022 09:46:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54828 "EHLO
+        id S1355407AbiFOOAF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Jun 2022 10:00:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43412 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349094AbiFONqn (ORCPT
+        with ESMTP id S1353854AbiFON7m (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Jun 2022 09:46:43 -0400
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E84B6387A0;
-        Wed, 15 Jun 2022 06:46:40 -0700 (PDT)
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-        (No client certificate requested)
-        by smtp-out1.suse.de (Postfix) with ESMTPS id 9F87521C5A;
-        Wed, 15 Jun 2022 13:46:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-        t=1655300799; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=iw2jPfqQLlQoX6LpWeZ9/tB9JNb7rzIb1MZz0AVsEEk=;
-        b=JCegLWCPSVTLynsDQtvK8IxzjXkGE5OqKVZrJF/3a6IUIZ81WIkfgeiCkicuka3kRv2FTw
-        1RgcCDku63qj7yMqlF7yEGl0F3xCzqMWo4STyxGQz+YIJTJM4lcGC3aPHvs2u7BKjxMJxH
-        UGgY4eeRYa9wvUN0rFh8TRKg8FKCJ+Q=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-        s=susede2_ed25519; t=1655300799;
-        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=iw2jPfqQLlQoX6LpWeZ9/tB9JNb7rzIb1MZz0AVsEEk=;
-        b=Vv/oRgxY3qp2fZqDIWLYhONZYJCScD1xArOZxb4ve7qhDavbd74xXEb0U/6jjmFKn5a8o8
-        ipePg5kDnDtP3QDA==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-        (No client certificate requested)
-        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 6888313A35;
-        Wed, 15 Jun 2022 13:46:39 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-        by imap2.suse-dmz.suse.de with ESMTPSA
-        id wahiGL/iqWJ/LAAAMHmgww
-        (envelope-from <tzimmermann@suse.de>); Wed, 15 Jun 2022 13:46:39 +0000
-Message-ID: <d2a0c8e3-4987-44e9-4abe-99c571738836@suse.de>
-Date:   Wed, 15 Jun 2022 15:46:33 +0200
+        Wed, 15 Jun 2022 09:59:42 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C51763BBC1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jun 2022 06:59:38 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id c2so19137131lfk.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jun 2022 06:59:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=+OAoX9xa8zARnq1PmieTQqq78QxHaSY9nnSC1exfJcQ=;
+        b=r1Kp1EfT/IMcglR2oedl5BVnI/ZlqGaUUQgE58Fl9iORFiZTb/zZZsAcen7I1kHOTl
+         QYw3sEKJS+v/n1VlBfmWZQM06pm2vuMLqv5FLkUTgBQJMRbArgpev+sCdWp4ybE7rtHG
+         klrJyAnqg3NzLZjgSpldafWfOHsvlOcBEow6UEHeiohk/tPLbOEUfo6bDXIfTFHrKjRm
+         2u+oskr6HdpYrNgOsxzWuWydZDQE8uzOJmaAROURAMRAeec7FOGkoVu9JKmYJh3Da2hv
+         1ZnZXRyw6e07jJ7MzLKxyL9Zw+LrzWGU/esGaH3E5V8lJR57dZ0K6TYgm23Np1SNM5Af
+         cnTw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=+OAoX9xa8zARnq1PmieTQqq78QxHaSY9nnSC1exfJcQ=;
+        b=74bRdTp+vGpDH0YphNPTUUn5OGDuJA9kSs4EfgGaNIiqu/HJMbMYgepF+vWLhbLMRn
+         FRSioOU0ECmE7zNdUsknc2VRKOtauhAVLY8aBvkTwIzXS1vMnVFcXtxCvI2UU42tsfoX
+         RwhiSuls6ti9YmDI9dxM0J6yBsbHRF0wQNvgPAjcTAo6VRt/NagifUjJblq2lFetE5Dq
+         Uwax8XbfrZLyj/m+SP9+5EQbnmRcL/KdRIf3lT6zKFxrMt+iTSDFgpisg0iU97EO1FPm
+         390DQ5fF9NNbSQgz1jvPdKXxpmustpyAK6JdlfwbYlxox6u7O7c51OviTxmSdsQArmf4
+         SEUg==
+X-Gm-Message-State: AJIora88skeAhAuE78EPBbu8tWIO2KAFRehj7tT7nt881lhsd8dfIWE9
+        dtY12qKy1PtwofewvG53Cr4Mcg==
+X-Google-Smtp-Source: AGRyM1tv84JWj8qt4J4oF52FvEm2avqnxiVT6u4wP7riAO1GYvMdFBJsLHOyiycdrlq5lWgBSQ0Cng==
+X-Received: by 2002:a05:6512:2522:b0:479:a9c:42a9 with SMTP id be34-20020a056512252200b004790a9c42a9mr6107700lfb.210.1655301577020;
+        Wed, 15 Jun 2022 06:59:37 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id z23-20020a2e8e97000000b0025530fa4edesm1694962ljk.49.2022.06.15.06.59.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 15 Jun 2022 06:59:36 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: [PATCH 1/5] drm/msm: less magic numbers in msm_mdss_enable
+Date:   Wed, 15 Jun 2022 16:59:31 +0300
+Message-Id: <20220615135935.87381-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: [PATCH v3 1/2] drm: Add DRM_GEM_FOPS
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
-        dri-devel@lists.freedesktop.org
-Cc:     Rob Clark <robdclark@chromium.org>,
-        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-        David Airlie <airlied@linux.ie>, linux-arm-msm@vger.kernel.org,
-        open list <linux-kernel@vger.kernel.org>,
-        freedreno@lists.freedesktop.org, Chris Healy <cphealy@gmail.com>
-References: <20220609174213.2265938-1-robdclark@gmail.com>
- <5066e977-52b5-ce18-98e9-44dcfe018127@linaro.org>
-From:   Thomas Zimmermann <tzimmermann@suse.de>
-In-Reply-To: <5066e977-52b5-ce18-98e9-44dcfe018127@linaro.org>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------VRpy50pJeVxwM2suD9NUp0hG"
-X-Spam-Status: No, score=-5.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -79,104 +73,136 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------VRpy50pJeVxwM2suD9NUp0hG
-Content-Type: multipart/mixed; boundary="------------1S0aSUT3yvbPCdxnHl9OHuKO";
- protected-headers="v1"
-From: Thomas Zimmermann <tzimmermann@suse.de>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org
-Cc: Rob Clark <robdclark@chromium.org>,
- Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
- David Airlie <airlied@linux.ie>, linux-arm-msm@vger.kernel.org,
- open list <linux-kernel@vger.kernel.org>, freedreno@lists.freedesktop.org,
- Chris Healy <cphealy@gmail.com>
-Message-ID: <d2a0c8e3-4987-44e9-4abe-99c571738836@suse.de>
-Subject: Re: [PATCH v3 1/2] drm: Add DRM_GEM_FOPS
-References: <20220609174213.2265938-1-robdclark@gmail.com>
- <5066e977-52b5-ce18-98e9-44dcfe018127@linaro.org>
-In-Reply-To: <5066e977-52b5-ce18-98e9-44dcfe018127@linaro.org>
+Replace magic register writes in msm_mdss_enable() with version that
+contains less magic and more variable names that can be traced back to
+the dpu_hw_catalog or the downstream dtsi files.
 
---------------1S0aSUT3yvbPCdxnHl9OHuKO
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ drivers/gpu/drm/msm/msm_mdss.c | 80 ++++++++++++++++++++++++++++++----
+ 1 file changed, 72 insertions(+), 8 deletions(-)
 
-DQoNCkFtIDE1LjA2LjIyIHVtIDE0OjQ1IHNjaHJpZWIgRG1pdHJ5IEJhcnlzaGtvdjoNCj4g
-T24gMDkvMDYvMjAyMiAyMDo0MiwgUm9iIENsYXJrIHdyb3RlOg0KPj4gRnJvbTogUm9iIENs
-YXJrIDxyb2JkY2xhcmtAY2hyb21pdW0ub3JnPg0KPj4NCj4+IFRoZSBERUZJTkVfRFJNX0dF
-TV9GT1BTKCkgaGVscGVyIGlzIGEgYml0IGxpbWl0aW5nIGlmIGEgZHJpdmVyIHdhbnRzIHRv
-DQo+PiBwcm92aWRlIGFkZGl0aW9uYWwgZmlsZSBvcHMsIGxpa2Ugc2hvd19mZGluZm8oKS4N
-Cj4+DQo+PiB2MjogU3BsaXQgb3V0IERSTV9HRU1fRk9QUyBpbnN0ZWFkIG9mIG1ha2luZyBE
-RUZJTkVfRFJNX0dFTV9GT1BTDQo+PiDCoMKgwqDCoCB2YXJhcmRpYw0KPj4gdjM6IG5pdHMN
-Cj4+DQo+PiBTaWduZWQtb2ZmLWJ5OiBSb2IgQ2xhcmsgPHJvYmRjbGFya0BjaHJvbWl1bS5v
-cmc+DQo+PiBBY2tlZC1ieTogVGhvbWFzIFppbW1lcm1hbm4gPHR6aW1tZXJtYW5uQHN1c2Uu
-ZGU+DQo+IA0KPiBJIHN1c3BlY3QgdGhhdCB3aXRoIFRvbWFzJ3MgYWNrIHdlIGNhbiBwaWNr
-IHRoaXMgdGhyb3VnaCB0aGUgZHJtL21zbS4gSXMgDQo+IHRoaXMgY29ycmVjdD8gKEknbGwg
-dGhlbiBwaWNrIGl0IGZvciB0aGUgbXNtLWx1bWFnKS4NCg0KU3VyZSwgZ28gYWhlYWQuDQoN
-Cj4gDQo+PiAtLS0NCj4+IMKgIGluY2x1ZGUvZHJtL2RybV9nZW0uaCB8IDI2ICsrKysrKysr
-KysrKysrKysrKy0tLS0tLS0tDQo+PiDCoCAxIGZpbGUgY2hhbmdlZCwgMTggaW5zZXJ0aW9u
-cygrKSwgOCBkZWxldGlvbnMoLSkNCj4+DQo+PiBkaWZmIC0tZ2l0IGEvaW5jbHVkZS9kcm0v
-ZHJtX2dlbS5oIGIvaW5jbHVkZS9kcm0vZHJtX2dlbS5oDQo+PiBpbmRleCA5ZDdjNjFhMTIy
-ZGMuLjg3Y2ZmYzllZmE4NSAxMDA2NDQNCj4+IC0tLSBhL2luY2x1ZGUvZHJtL2RybV9nZW0u
-aA0KPj4gKysrIGIvaW5jbHVkZS9kcm0vZHJtX2dlbS5oDQo+PiBAQCAtMzE0LDYgKzMxNCwy
-MyBAQCBzdHJ1Y3QgZHJtX2dlbV9vYmplY3Qgew0KPj4gwqDCoMKgwqDCoCBjb25zdCBzdHJ1
-Y3QgZHJtX2dlbV9vYmplY3RfZnVuY3MgKmZ1bmNzOw0KPj4gwqAgfTsNCj4+ICsvKioNCj4+
-ICsgKiBEUk1fR0VNX0ZPUFMgLSBEZWZhdWx0IGRybSBHRU0gZmlsZSBvcGVyYXRpb25zDQo+
-PiArICoNCj4+ICsgKiBUaGlzIG1hY3JvIHByb3ZpZGVzIGEgc2hvcnRoYW5kIGZvciBzZXR0
-aW5nIHRoZSBHRU0gZmlsZSBvcHMgaW4gdGhlDQo+PiArICogJmZpbGVfb3BlcmF0aW9ucyBz
-dHJ1Y3R1cmUuwqAgSWYgYWxsIHlvdSBuZWVkIGFyZSB0aGUgZGVmYXVsdCBvcHMsIHVzZQ0K
-Pj4gKyAqIERFRklORV9EUk1fR0VNX0ZPUFMgaW5zdGVhZC4NCj4+ICsgKi8NCj4+ICsjZGVm
-aW5lIERSTV9HRU1fRk9QUyBcDQo+PiArwqDCoMKgIC5vcGVuwqDCoMKgwqDCoMKgwqAgPSBk
-cm1fb3BlbixcDQo+PiArwqDCoMKgIC5yZWxlYXNlwqDCoMKgID0gZHJtX3JlbGVhc2UsXA0K
-Pj4gK8KgwqDCoCAudW5sb2NrZWRfaW9jdGzCoMKgwqAgPSBkcm1faW9jdGwsXA0KPj4gK8Kg
-wqDCoCAuY29tcGF0X2lvY3RswqDCoMKgID0gZHJtX2NvbXBhdF9pb2N0bCxcDQo+PiArwqDC
-oMKgIC5wb2xswqDCoMKgwqDCoMKgwqAgPSBkcm1fcG9sbCxcDQo+PiArwqDCoMKgIC5yZWFk
-wqDCoMKgwqDCoMKgwqAgPSBkcm1fcmVhZCxcDQo+PiArwqDCoMKgIC5sbHNlZWvCoMKgwqDC
-oMKgwqDCoCA9IG5vb3BfbGxzZWVrLFwNCj4+ICvCoMKgwqAgLm1tYXDCoMKgwqDCoMKgwqDC
-oCA9IGRybV9nZW1fbW1hcA0KPj4gKw0KPj4gwqAgLyoqDQo+PiDCoMKgICogREVGSU5FX0RS
-TV9HRU1fRk9QUygpIC0gbWFjcm8gdG8gZ2VuZXJhdGUgZmlsZSBvcGVyYXRpb25zIGZvciBH
-RU0gDQo+PiBkcml2ZXJzDQo+PiDCoMKgICogQG5hbWU6IG5hbWUgZm9yIHRoZSBnZW5lcmF0
-ZWQgc3RydWN0dXJlDQo+PiBAQCAtMzMwLDE0ICszNDcsNyBAQCBzdHJ1Y3QgZHJtX2dlbV9v
-YmplY3Qgew0KPj4gwqAgI2RlZmluZSBERUZJTkVfRFJNX0dFTV9GT1BTKG5hbWUpIFwNCj4+
-IMKgwqDCoMKgwqAgc3RhdGljIGNvbnN0IHN0cnVjdCBmaWxlX29wZXJhdGlvbnMgbmFtZSA9
-IHtcDQo+PiDCoMKgwqDCoMKgwqDCoMKgwqAgLm93bmVywqDCoMKgwqDCoMKgwqAgPSBUSElT
-X01PRFVMRSxcDQo+PiAtwqDCoMKgwqDCoMKgwqAgLm9wZW7CoMKgwqDCoMKgwqDCoCA9IGRy
-bV9vcGVuLFwNCj4+IC3CoMKgwqDCoMKgwqDCoCAucmVsZWFzZcKgwqDCoCA9IGRybV9yZWxl
-YXNlLFwNCj4+IC3CoMKgwqDCoMKgwqDCoCAudW5sb2NrZWRfaW9jdGzCoMKgwqAgPSBkcm1f
-aW9jdGwsXA0KPj4gLcKgwqDCoMKgwqDCoMKgIC5jb21wYXRfaW9jdGzCoMKgwqAgPSBkcm1f
-Y29tcGF0X2lvY3RsLFwNCj4+IC3CoMKgwqDCoMKgwqDCoCAucG9sbMKgwqDCoMKgwqDCoMKg
-ID0gZHJtX3BvbGwsXA0KPj4gLcKgwqDCoMKgwqDCoMKgIC5yZWFkwqDCoMKgwqDCoMKgwqAg
-PSBkcm1fcmVhZCxcDQo+PiAtwqDCoMKgwqDCoMKgwqAgLmxsc2Vla8KgwqDCoMKgwqDCoMKg
-ID0gbm9vcF9sbHNlZWssXA0KPj4gLcKgwqDCoMKgwqDCoMKgIC5tbWFwwqDCoMKgwqDCoMKg
-wqAgPSBkcm1fZ2VtX21tYXAsXA0KPj4gK8KgwqDCoMKgwqDCoMKgIERSTV9HRU1fRk9QUyxc
-DQo+PiDCoMKgwqDCoMKgIH0NCj4+IMKgIHZvaWQgZHJtX2dlbV9vYmplY3RfcmVsZWFzZShz
-dHJ1Y3QgZHJtX2dlbV9vYmplY3QgKm9iaik7DQo+IA0KPiANCg0KLS0gDQpUaG9tYXMgWmlt
-bWVybWFubg0KR3JhcGhpY3MgRHJpdmVyIERldmVsb3Blcg0KU1VTRSBTb2Z0d2FyZSBTb2x1
-dGlvbnMgR2VybWFueSBHbWJIDQpNYXhmZWxkc3RyLiA1LCA5MDQwOSBOw7xybmJlcmcsIEdl
-cm1hbnkNCihIUkIgMzY4MDksIEFHIE7DvHJuYmVyZykNCkdlc2Now6RmdHNmw7xocmVyOiBJ
-dm8gVG90ZXYNCg==
+diff --git a/drivers/gpu/drm/msm/msm_mdss.c b/drivers/gpu/drm/msm/msm_mdss.c
+index 0454a571adf7..b41848bfff91 100644
+--- a/drivers/gpu/drm/msm/msm_mdss.c
++++ b/drivers/gpu/drm/msm/msm_mdss.c
+@@ -21,6 +21,7 @@
+ #define HW_REV				0x0
+ #define HW_INTR_STATUS			0x0010
+ 
++#define UBWC_DEC_HW_VERSION		0x58
+ #define UBWC_STATIC			0x144
+ #define UBWC_CTRL_2			0x150
+ #define UBWC_PREDICTION_MODE		0x154
+@@ -132,9 +133,63 @@ static int _msm_mdss_irq_domain_add(struct msm_mdss *msm_mdss)
+ 	return 0;
+ }
+ 
++#define UBWC_1_0 0x10000000
++#define UBWC_2_0 0x20000000
++#define UBWC_3_0 0x30000000
++#define UBWC_4_0 0x40000000
++
++static void msm_mdss_setup_ubwc_dec_20(struct msm_mdss *msm_mdss,
++				       u32 ubwc_static)
++{
++	writel_relaxed(ubwc_static, msm_mdss->mmio + UBWC_STATIC);
++}
++
++static void msm_mdss_setup_ubwc_dec_30(struct msm_mdss *msm_mdss,
++				       unsigned int ubwc_version,
++				       u32 ubwc_swizzle,
++				       u32 highest_bank_bit,
++				       u32 macrotile_mode)
++{
++	u32 value = (ubwc_swizzle & 0x1) |
++		    (highest_bank_bit & 0x3) << 4 |
++		    (macrotile_mode & 0x1) << 12;
++
++	if (ubwc_version == UBWC_3_0)
++		value |= BIT(10);
++
++	if (ubwc_version == UBWC_1_0)
++		value |= BIT(8);
++
++	writel_relaxed(value, msm_mdss->mmio + UBWC_STATIC);
++}
++
++static void msm_mdss_setup_ubwc_dec_40(struct msm_mdss *msm_mdss,
++				       unsigned int ubwc_version,
++				       u32 ubwc_swizzle,
++				       u32 ubwc_static,
++				       u32 highest_bank_bit,
++				       u32 macrotile_mode)
++{
++	u32 value = (ubwc_swizzle & 0x7) |
++		    (ubwc_static & 0x1) << 3 |
++		    (highest_bank_bit & 0x7) << 4 |
++		    (macrotile_mode & 0x1) << 12;
++
++	writel_relaxed(value, msm_mdss->mmio + UBWC_STATIC);
++
++	if (ubwc_version == UBWC_3_0) {
++		writel_relaxed(1, msm_mdss->mmio + UBWC_CTRL_2);
++		writel_relaxed(0, msm_mdss->mmio + UBWC_PREDICTION_MODE);
++	} else {
++		writel_relaxed(2, msm_mdss->mmio + UBWC_CTRL_2);
++		writel_relaxed(1, msm_mdss->mmio + UBWC_PREDICTION_MODE);
++	}
++}
++
+ static int msm_mdss_enable(struct msm_mdss *msm_mdss)
+ {
+ 	int ret;
++	u32 hw_rev;
+ 
+ 	ret = clk_bulk_prepare_enable(msm_mdss->num_clocks, msm_mdss->clocks);
+ 	if (ret) {
+@@ -149,26 +204,35 @@ static int msm_mdss_enable(struct msm_mdss *msm_mdss)
+ 	if (msm_mdss->is_mdp5)
+ 		return 0;
+ 
++	hw_rev = readl_relaxed(msm_mdss->mmio + HW_REV);
++	dev_dbg(msm_mdss->dev, "HW_REV: 0x%x\n", hw_rev);
++	dev_dbg(msm_mdss->dev, "UBWC_DEC_HW_VERSION: 0x%x\n",
++		readl_relaxed(msm_mdss->mmio + UBWC_DEC_HW_VERSION));
++
+ 	/*
+ 	 * ubwc config is part of the "mdss" region which is not accessible
+ 	 * from the rest of the driver. hardcode known configurations here
++	 *
++	 * Decoder version can be read from the UBWC_DEC_HW_VERSION reg,
++	 * UBWC_n and the rest of params comes from hw_catalog.
++	 * Unforunately this driver can not access hw catalog, so we have to
++	 * hardcode them here.
+ 	 */
+-	switch (readl_relaxed(msm_mdss->mmio + HW_REV)) {
++	switch (hw_rev) {
+ 	case DPU_HW_VER_500:
+ 	case DPU_HW_VER_501:
+-		writel_relaxed(0x420, msm_mdss->mmio + UBWC_STATIC);
++		msm_mdss_setup_ubwc_dec_30(msm_mdss, UBWC_3_0, 0, 2, 0);
+ 		break;
+ 	case DPU_HW_VER_600:
+-		/* TODO: 0x102e for LP_DDR4 */
+-		writel_relaxed(0x103e, msm_mdss->mmio + UBWC_STATIC);
+-		writel_relaxed(2, msm_mdss->mmio + UBWC_CTRL_2);
+-		writel_relaxed(1, msm_mdss->mmio + UBWC_PREDICTION_MODE);
++		/* TODO: highest_bank_bit = 2 for LP_DDR4 */
++		msm_mdss_setup_ubwc_dec_40(msm_mdss, UBWC_4_0, 6, 1, 3, 1);
+ 		break;
+ 	case DPU_HW_VER_620:
+-		writel_relaxed(0x1e, msm_mdss->mmio + UBWC_STATIC);
++		/* UBWC_2_0 */
++		msm_mdss_setup_ubwc_dec_20(msm_mdss, 0x1e);
+ 		break;
+ 	case DPU_HW_VER_720:
+-		writel_relaxed(0x101e, msm_mdss->mmio + UBWC_STATIC);
++		msm_mdss_setup_ubwc_dec_40(msm_mdss, UBWC_3_0, 6, 1, 1, 1);
+ 		break;
+ 	}
+ 
+-- 
+2.35.1
 
---------------1S0aSUT3yvbPCdxnHl9OHuKO--
-
---------------VRpy50pJeVxwM2suD9NUp0hG
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature"
-
------BEGIN PGP SIGNATURE-----
-
-wsF5BAABCAAjFiEExndm/fpuMUdwYFFolh/E3EQov+AFAmKp4roFAwAAAAAACgkQlh/E3EQov+B/
-jw/9FbZQOVOHCHcSWZW4LrskKH/NSHemiJDUG+aQQYl5hcZyGPD95dolcsXOi19VHc+kw5lxdQxR
-sjm5leaeDIhN8ZkE17VsceY5JkoplxvY6Eq59tDXDYMop6M4SpUfa1Di8VctTTJTn/MFQ+uKe11W
-Lhc2FXhkmUQmUIu6SB9J9ABJX0xwCAysWXNG4l9pkhCJT46IYvusJHC5HXQ6USR7LGf/CFGOPWWQ
-YW82VxcYyNTMMNWjG5b2fM3D+OFYtSdqEgeuHyGM1tIcgTBO1fomvwyqsoxIBuWAxsWlmBr0sT6c
-SefFxAVFKJzXrTRIIRh0ho0lMuxx001LcZXSpUChMGvomvKDgvcmBBf7a7siNkZC6Km4Hsrg+5QL
-uyr6SRt0m/eMszs3ZReiFBzHdXK01UbAzCoejhgBJzBcUSMimtcbL4rTUkih4prTjE2me9O1Mbvq
-REX7ZXctE/e7EjZiMw9jxe/xk38LnK33lGFrvbNK+8ImiaUWft218l7rbtjLCbA6WBvZxnTLWspw
-3TyjUOpOLFPMzW1oQCaiflw7T4WzUqADGVEP1GJuDqEqGd5ew9oaqX9jyg8/UiQa2ulSplsy/fSA
-ftKiOyD6dPt8PBVdRAs6dGbCfG5T6i1u2+GQhb7ZCOt9ymPnbPl4eLXD3PJ49brvEgeZFTLC4SUf
-lLE=
-=4Wsv
------END PGP SIGNATURE-----
-
---------------VRpy50pJeVxwM2suD9NUp0hG--
