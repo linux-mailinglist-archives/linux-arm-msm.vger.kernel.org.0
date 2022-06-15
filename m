@@ -2,176 +2,260 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D6EE654C196
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jun 2022 08:06:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 57C5154C2AF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jun 2022 09:35:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345851AbiFOGFT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Jun 2022 02:05:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52476 "EHLO
+        id S244495AbiFOHfO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Jun 2022 03:35:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42582 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245729AbiFOGFR (ORCPT
+        with ESMTP id S234935AbiFOHfN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Jun 2022 02:05:17 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2B7118E08;
-        Tue, 14 Jun 2022 23:05:16 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 79489617AA;
-        Wed, 15 Jun 2022 06:05:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B477C34115;
-        Wed, 15 Jun 2022 06:05:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1655273115;
-        bh=yf3pNom/syiLiOha7Upiq9/nR1Hjl9dv2JULctSWZP0=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=SjnyzJRJ5maovA4d7DzY2/Ij5TNs/akt5ph8MDjdNnh42oSEnpEqun3aky3dQcf6z
-         rGme0eLVsl/XoKZXtCCkL0+cKE/nzsKpLCn2sT4A50UeO3p7crMUO1XfASUME8HSj0
-         pD6alvihCcM/657amEHKEos8BTfaNv0g8jeH8Q6QrkIG8VgVi/YsytFwbegMDMw6Gn
-         Pxj0w5BlxtbfpWb4+1rV886T9D/GynKsmxsWQDGtqkBJk0CUIxtfKvkZpW8JkVRt5W
-         zI01Adx6IQH3zR34l9+HTfR6cCjay+Ytdyco9DFFfWGGA7opCch5d/Lzswk+yKRRZO
-         /G8E+1jj9J/iQ==
-Received: from sofa.misterjones.org ([185.219.108.64] helo=wait-a-minute.misterjones.org)
-        by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.95)
-        (envelope-from <maz@kernel.org>)
-        id 1o1M9R-000hh4-Lq;
-        Wed, 15 Jun 2022 07:05:13 +0100
-Date:   Wed, 15 Jun 2022 07:05:11 +0100
-Message-ID: <87mteepilk.wl-maz@kernel.org>
-From:   Marc Zyngier <maz@kernel.org>
-To:     Mark Rutland <mark.rutland@arm.com>
-Cc:     Peter Zijlstra <peterz@infradead.org>, rth@twiddle.net,
-        ink@jurassic.park.msu.ru, mattst88@gmail.com, vgupta@kernel.org,
-        linux@armlinux.org.uk, ulli.kroll@googlemail.com,
-        linus.walleij@linaro.org, shawnguo@kernel.org,
-        Sascha Hauer <s.hauer@pengutronix.de>, kernel@pengutronix.de,
-        festevam@gmail.com, linux-imx@nxp.com, tony@atomide.com,
-        khilman@kernel.org, catalin.marinas@arm.com, will@kernel.org,
-        guoren@kernel.org, bcain@quicinc.com, chenhuacai@kernel.org,
-        kernel@xen0n.name, geert@linux-m68k.org, sammy@sammy.net,
-        monstr@monstr.eu, tsbogend@alpha.franken.de, dinguyen@kernel.org,
-        jonas@southpole.se, stefan.kristiansson@saunalahti.fi,
-        shorne@gmail.com, James.Bottomley@HansenPartnership.com,
-        deller@gmx.de, mpe@ellerman.id.au, benh@kernel.crashing.org,
-        paulus@samba.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
-        aou@eecs.berkeley.edu, hca@linux.ibm.com, gor@linux.ibm.com,
-        agordeev@linux.ibm.com, borntraeger@linux.ibm.com,
-        svens@linux.ibm.com, ysato@users.sourceforge.jp, dalias@libc.org,
-        davem@davemloft.net, richard@nod.at,
-        anton.ivanov@cambridgegreys.com, johannes@sipsolutions.net,
-        tglx@linutronix.de, mingo@redhat.com, bp@alien8.de,
-        dave.hansen@linux.intel.com, x86@kernel.org, hpa@zytor.com,
-        acme@kernel.org, alexander.shishkin@linux.intel.com,
-        jolsa@kernel.org, namhyung@kernel.org, jgross@suse.com,
-        srivatsa@csail.mit.edu, amakhalov@vmware.com,
-        pv-drivers@vmware.com, boris.ostrovsky@oracle.com,
-        chris@zankel.net, jcmvbkbc@gmail.com, rafael@kernel.org,
-        lenb@kernel.org, pavel@ucw.cz, gregkh@linuxfoundation.org,
-        mturquette@baylibre.com, sboyd@kernel.org,
-        daniel.lezcano@linaro.org, lpieralisi@kernel.org,
-        sudeep.holla@arm.com, agross@kernel.org,
-        bjorn.andersson@linaro.org, anup@brainfault.org,
-        thierry.reding@gmail.com, jonathanh@nvidia.com,
-        jacob.jun.pan@linux.intel.com, Arnd Bergmann <arnd@arndb.de>,
-        yury.norov@gmail.com, andriy.shevchenko@linux.intel.com,
-        linux@rasmusvillemoes.dk, rostedt@goodmis.org, pmladek@suse.com,
-        senozhatsky@chromium.org, john.ogness@linutronix.de,
-        paulmck@kernel.org, frederic@kernel.org, quic_neeraju@quicinc.com,
-        josh@joshtriplett.org, mathieu.desnoyers@efficios.com,
-        jiangshanlai@gmail.com, joel@joelfernandes.org,
-        juri.lelli@redhat.com, vincent.guittot@linaro.org,
-        dietmar.eggemann@arm.com, bsegall@google.com, mgorman@suse.de,
-        bristot@redhat.com, vschneid@redhat.com, jpoimboe@kernel.org,
-        linux-alpha@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-snps-arc@lists.infradead.org,
-        linux-arm-kernel@lists.infradead.org, linux-omap@vger.kernel.org,
-        linux-csky@vger.kernel.org, linux-hexagon@vger.kernel.org,
-        linux-ia64@vger.kernel.org, linux-m68k@lists.linux-m68k.org,
-        linux-mips@vger.kernel.org, openrisc@lists.librecores.org,
-        linux-parisc@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
-        linux-riscv@lists.infradead.org, linux-s390@vger.kernel.org,
-        linux-sh@vger.kernel.org, sparclinux@vger.kernel.org,
-        linux-um@lists.infradead.org, linux-perf-users@vger.kernel.org,
-        virtualization@lists.linux-foundation.org,
-        xen-devel@lists.xenproject.org, linux-xtensa@linux-xtensa.org,
-        linux-acpi@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-tegra@vger.kernel.org, linux-arch@vger.kernel.org,
-        rcu@vger.kernel.org
-Subject: Re: [PATCH 23/36] arm64,smp: Remove trace_.*_rcuidle() usage
-In-Reply-To: <Yqi2UGb4alCAR5s4@FVFF77S0Q05N>
-References: <20220608142723.103523089@infradead.org>
-        <20220608144517.380962958@infradead.org>
-        <Yqi2UGb4alCAR5s4@FVFF77S0Q05N>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
- FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/27.1
- (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
-Content-Type: text/plain; charset=US-ASCII
-X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: mark.rutland@arm.com, peterz@infradead.org, rth@twiddle.net, ink@jurassic.park.msu.ru, mattst88@gmail.com, vgupta@kernel.org, linux@armlinux.org.uk, ulli.kroll@googlemail.com, linus.walleij@linaro.org, shawnguo@kernel.org, s.hauer@pengutronix.de, kernel@pengutronix.de, festevam@gmail.com, linux-imx@nxp.com, tony@atomide.com, khilman@kernel.org, catalin.marinas@arm.com, will@kernel.org, guoren@kernel.org, bcain@quicinc.com, chenhuacai@kernel.org, kernel@xen0n.name, geert@linux-m68k.org, sammy@sammy.net, monstr@monstr.eu, tsbogend@alpha.franken.de, dinguyen@kernel.org, jonas@southpole.se, stefan.kristiansson@saunalahti.fi, shorne@gmail.com, James.Bottomley@HansenPartnership.com, deller@gmx.de, mpe@ellerman.id.au, benh@kernel.crashing.org, paulus@samba.org, paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu, hca@linux.ibm.com, gor@linux.ibm.com, agordeev@linux.ibm.com, borntraeger@linux.ibm.com, svens@linux.ibm.com, ysato@users.sourceforge.jp, dalias@
- libc.org, davem@davemloft.net, richard@nod.at, anton.ivanov@cambridgegreys.com, johannes@sipsolutions.net, tglx@linutronix.de, mingo@redhat.com, bp@alien8.de, dave.hansen@linux.intel.com, x86@kernel.org, hpa@zytor.com, acme@kernel.org, alexander.shishkin@linux.intel.com, jolsa@kernel.org, namhyung@kernel.org, jgross@suse.com, srivatsa@csail.mit.edu, amakhalov@vmware.com, pv-drivers@vmware.com, boris.ostrovsky@oracle.com, chris@zankel.net, jcmvbkbc@gmail.com, rafael@kernel.org, lenb@kernel.org, pavel@ucw.cz, gregkh@linuxfoundation.org, mturquette@baylibre.com, sboyd@kernel.org, daniel.lezcano@linaro.org, lpieralisi@kernel.org, sudeep.holla@arm.com, agross@kernel.org, bjorn.andersson@linaro.org, anup@brainfault.org, thierry.reding@gmail.com, jonathanh@nvidia.com, jacob.jun.pan@linux.intel.com, arnd@arndb.de, yury.norov@gmail.com, andriy.shevchenko@linux.intel.com, linux@rasmusvillemoes.dk, rostedt@goodmis.org, pmladek@suse.com, senozhatsky@chromium.org, john.ogness@linutronix.de, paul
- mck@kernel.org, frederic@kernel.org, quic_neeraju@quicinc.com, josh@joshtriplett.org, mathieu.desnoyers@efficios.com, jiangshanlai@gmail.com, joel@joelfernandes.org, juri.lelli@redhat.com, vincent.guittot@linaro.org, dietmar.eggemann@arm.com, bsegall@google.com, mgorman@suse.de, bristot@redhat.com, vschneid@redhat.com, jpoimboe@kernel.org, linux-alpha@vger.kernel.org, linux-kernel@vger.kernel.org, linux-snps-arc@lists.infradead.org, linux-arm-kernel@lists.infradead.org, linux-omap@vger.kernel.org, linux-csky@vger.kernel.org, linux-hexagon@vger.kernel.org, linux-ia64@vger.kernel.org, linux-m68k@lists.linux-m68k.org, linux-mips@vger.kernel.org, openrisc@lists.librecores.org, linux-parisc@vger.kernel.org, linuxppc-dev@lists.ozlabs.org, linux-riscv@lists.infradead.org, linux-s390@vger.kernel.org, linux-sh@vger.kernel.org, sparclinux@vger.kernel.org, linux-um@lists.infradead.org, linux-perf-users@vger.kernel.org, virtualization@lists.linux-foundation.org, xen-devel@lists.xenproject.org, 
- linux-xtensa@linux-xtensa.org, linux-acpi@vger.kernel.org, linux-pm@vger.kernel.org, linux-clk@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-tegra@vger.kernel.org, linux-arch@vger.kernel.org, rcu@vger.kernel.org
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
-X-Spam-Status: No, score=-8.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        Wed, 15 Jun 2022 03:35:13 -0400
+Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF29C47AE7;
+        Wed, 15 Jun 2022 00:35:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1655278511; x=1686814511;
+  h=from:to:cc:subject:date:message-id:references:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=qjTs6Qqc+6U9DK7fvm60mvysz0KWlM5ghwtuJV99NBg=;
+  b=DGJe3IryVqaMplzaMEvYgOK8/s/CY4PchcITymGuznkf8zU8Fj8JN+5w
+   O0d7235hyiZlJLV9ePAhujORAfxpnmkCgWXT0k7hi/J6IzucWukahunhl
+   CK2yhAWiNQCRntoOZJid0mVuGFeaO02M0C5+SjW/RBZZt+ogDl+a6gAOA
+   kVezpucP5/i9tUF8KKTFwBDSJ57p9H9BZQMZsUSekT3VXFIC4r9cuEQgh
+   o4bN7BZbHC5q2pDCf5rjEtKkQsFA2Xxbm0UbonEMl/2mt1WCWCt93yCYO
+   wMdk9wjb3QX++T9HrxKmlYNbGqzu1BgMbHHNnKdwfmcs9x2vja2L5pvlN
+   A==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10378"; a="261897088"
+X-IronPort-AV: E=Sophos;i="5.91,300,1647327600"; 
+   d="scan'208";a="261897088"
+Received: from fmsmga003.fm.intel.com ([10.253.24.29])
+  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Jun 2022 00:35:08 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.91,300,1647327600"; 
+   d="scan'208";a="674345094"
+Received: from fmsmsx601.amr.corp.intel.com ([10.18.126.81])
+  by FMSMGA003.fm.intel.com with ESMTP; 15 Jun 2022 00:35:07 -0700
+Received: from fmsmsx608.amr.corp.intel.com (10.18.126.88) by
+ fmsmsx601.amr.corp.intel.com (10.18.126.81) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2308.27; Wed, 15 Jun 2022 00:35:07 -0700
+Received: from fmsedg601.ED.cps.intel.com (10.1.192.135) by
+ fmsmsx608.amr.corp.intel.com (10.18.126.88) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2308.27 via Frontend Transport; Wed, 15 Jun 2022 00:35:07 -0700
+Received: from NAM10-DM6-obe.outbound.protection.outlook.com (104.47.58.108)
+ by edgegateway.intel.com (192.55.55.70) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2308.27; Wed, 15 Jun 2022 00:35:07 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=lJnI56DiAFK6OBrUFjVVDeBR2VHmW/OosX1p+7aeUmMTIVJ2flVdcBAh7RYGplvJtBp1ZWVdgNBABCAzq3KbN9XG1ultZ1lgI2p0KG5yYItKyYn3DhIFqx18OKt0Jcg2RF4obSIhEwbkB8iu9XWO+9bLq5qer90L+bQHmxhoZZo1BH+avUJDxi7a0C0hlkQKHkvaCLVWp/rFiyizGTLOHXpJEh1Gx3JoJwNXM+dIetpIlhARFU5zQ7LD/HdTPMqbm0Uma81SKJ9+OoC+5980ro6MpNTDpQ9GNYQQz7GRPgs5CSm+yVzUgsc+ceMwn0VUcrZw3BoWv/k4TFeLY6/AMQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=QmAOL4zLvaH0pBgX6k2mYHNQK0hTQ/UwZGXCmcK3IGI=;
+ b=Q5v7s6vzxoNBQCCCt0ihR7B+90OWXxR1Sp38H25pizJKkhQ7umluPnSsmZgcNyVkmDzhaFGb90o/yDRaTTpw5U4eBYFhk3mDqvNe4gZF1cyi+pnbrWf+iwdwhSJIikwu2QbCHMG59xS03peQ7vewSCCNZwvZmddwYJ4ohWpLC28DsZXl4anIT8EQlC78udAMdo55z8mUePcJ8BuWyU485FB3VuvTT2snEeiJI5sv1AxwGmsBks5JexUaLJKxH1cZORn+d48oqAPm40cahLRMRxCtJi5CaObvIrjrbmZ3sFDUw5xQdEMj7D2QH91mTMVXrvh7vEr+f+3OoIrjNTKxjA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from BN9PR11MB5276.namprd11.prod.outlook.com (2603:10b6:408:135::18)
+ by BL1PR11MB5429.namprd11.prod.outlook.com (2603:10b6:208:30b::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5332.13; Wed, 15 Jun
+ 2022 07:35:00 +0000
+Received: from BN9PR11MB5276.namprd11.prod.outlook.com
+ ([fe80::3583:afc6:2732:74b8]) by BN9PR11MB5276.namprd11.prod.outlook.com
+ ([fe80::3583:afc6:2732:74b8%4]) with mapi id 15.20.5332.022; Wed, 15 Jun 2022
+ 07:35:00 +0000
+From:   "Tian, Kevin" <kevin.tian@intel.com>
+To:     Nicolin Chen <nicolinc@nvidia.com>
+CC:     Jason Gunthorpe <jgg@nvidia.com>,
+        "joro@8bytes.org" <joro@8bytes.org>,
+        "will@kernel.org" <will@kernel.org>,
+        "marcan@marcan.st" <marcan@marcan.st>,
+        "sven@svenpeter.dev" <sven@svenpeter.dev>,
+        "robin.murphy@arm.com" <robin.murphy@arm.com>,
+        "robdclark@gmail.com" <robdclark@gmail.com>,
+        "m.szyprowski@samsung.com" <m.szyprowski@samsung.com>,
+        "krzysztof.kozlowski@linaro.org" <krzysztof.kozlowski@linaro.org>,
+        "baolu.lu@linux.intel.com" <baolu.lu@linux.intel.com>,
+        "agross@kernel.org" <agross@kernel.org>,
+        "bjorn.andersson@linaro.org" <bjorn.andersson@linaro.org>,
+        "matthias.bgg@gmail.com" <matthias.bgg@gmail.com>,
+        "heiko@sntech.de" <heiko@sntech.de>,
+        "orsonzhai@gmail.com" <orsonzhai@gmail.com>,
+        "baolin.wang7@gmail.com" <baolin.wang7@gmail.com>,
+        "zhang.lyra@gmail.com" <zhang.lyra@gmail.com>,
+        "wens@csie.org" <wens@csie.org>,
+        "jernej.skrabec@gmail.com" <jernej.skrabec@gmail.com>,
+        "samuel@sholland.org" <samuel@sholland.org>,
+        "jean-philippe@linaro.org" <jean-philippe@linaro.org>,
+        "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
+        "virtualization@lists.linux-foundation.org" 
+        <virtualization@lists.linux-foundation.org>,
+        "thierry.reding@gmail.com" <thierry.reding@gmail.com>,
+        "alim.akhtar@samsung.com" <alim.akhtar@samsung.com>,
+        "alyssa@rosenzweig.io" <alyssa@rosenzweig.io>,
+        "linux-s390@vger.kernel.org" <linux-s390@vger.kernel.org>,
+        "linux-samsung-soc@vger.kernel.org" 
+        <linux-samsung-soc@vger.kernel.org>,
+        "kvm@vger.kernel.org" <kvm@vger.kernel.org>,
+        "jonathanh@nvidia.com" <jonathanh@nvidia.com>,
+        "linux-rockchip@lists.infradead.org" 
+        <linux-rockchip@lists.infradead.org>,
+        "gerald.schaefer@linux.ibm.com" <gerald.schaefer@linux.ibm.com>,
+        "linux-sunxi@lists.linux.dev" <linux-sunxi@lists.linux.dev>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "linux-mediatek@lists.infradead.org" 
+        <linux-mediatek@lists.infradead.org>,
+        "linux-tegra@vger.kernel.org" <linux-tegra@vger.kernel.org>,
+        "linux-arm-kernel@lists.infradead.org" 
+        <linux-arm-kernel@lists.infradead.org>,
+        "cohuck@redhat.com" <cohuck@redhat.com>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "iommu@lists.linux-foundation.org" <iommu@lists.linux-foundation.org>,
+        "dwmw2@infradead.org" <dwmw2@infradead.org>
+Subject: RE: [PATCH 3/5] vfio/iommu_type1: Prefer to reuse domains vs match
+ enforced cache coherency
+Thread-Topic: [PATCH 3/5] vfio/iommu_type1: Prefer to reuse domains vs match
+ enforced cache coherency
+Thread-Index: AQHYeW2KrRlTv4MQ5UeMm5INXClL961FJamwgAA6IwCAAMkn0IAJQ4IAgAConjA=
+Date:   Wed, 15 Jun 2022 07:35:00 +0000
+Message-ID: <BN9PR11MB527694346588A803F0EDD95E8CAD9@BN9PR11MB5276.namprd11.prod.outlook.com>
+References: <20220606061927.26049-1-nicolinc@nvidia.com>
+ <20220606061927.26049-4-nicolinc@nvidia.com>
+ <BN9PR11MB5276DC98E75B1906A76F7ADC8CA49@BN9PR11MB5276.namprd11.prod.outlook.com>
+ <20220608111724.GL1343366@nvidia.com>
+ <DM4PR11MB52781590FB8FB197579DEE848CA49@DM4PR11MB5278.namprd11.prod.outlook.com>
+ <YqjzXpzuBa4ATf9o@Asurada-Nvidia>
+In-Reply-To: <YqjzXpzuBa4ATf9o@Asurada-Nvidia>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+dlp-version: 11.6.500.17
+dlp-product: dlpe-windows
+dlp-reaction: no-action
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 6b3f2e08-9de5-49bb-8948-08da4ea18e0d
+x-ms-traffictypediagnostic: BL1PR11MB5429:EE_
+x-microsoft-antispam-prvs: <BL1PR11MB5429955041DDA2F710BDDFEC8CAD9@BL1PR11MB5429.namprd11.prod.outlook.com>
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: gclx44ls315XMkbb/mOK1LsfqKSbzW9+I44SNLlNNKB1MOKmYs9RbqZ6j3amspubH5RTm3TuQew8JqVs1PweGwcNd9wnmyW8m21M37irrjB97J6GhqXArAEGh2s2d0980h4kmcrEa0QeAJ/LeCotU6rgoLfhKca4YtDnQ5QSEadB9fc1+7TjeYvDiB8yC0IT3S3mFJKiV6DG19CgJNvZePzEzEZfSXZs7BPNvvOLyOMps58kltKIUmsbYKmYNG5Vp+8kupYvks56PFyn+ue2dKe2dpymK5BO48++zIeZqrD9kLsQ/tZ5ByZyzQxLUciiq3sVZtB999NzXLSKZqhTk7ziRt94meinpcDhbA6SBa5hYLvW00/htGjPI1s/6pA3glEnxUs6IG9zsFo/sCJ/uGPz/lQgSfSeUlZFwl6MANf6pYevUQtCZOKew9Ak7notoHjS+ntOnuqPal7JfkV8ygqyk4tq3qJHvQtvNOGfIZ7+kSbYmDHN+/K/NoC/GPqLl9b3bIF94pf5+tSgKGv86IBFtR6+ejb528JuQ8poM9hLZOK+l8HY5Yw7kZX/F9DhY/aQxmOp8XAV7aZaghj4y4EuJ5ga4qj2PSpHqBIBsUdxqJBAA5vaVSuiV4F1ICGNrL4tuVVj/O6neG26CBsES2G6roRVAxcCBh2/MIWToj349lpOtiAbw5x3HPuhqqJK0VkYTOr/3TabSmXtfYN6zA==
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BN9PR11MB5276.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230016)(366004)(66446008)(66476007)(8676002)(64756008)(66556008)(76116006)(66946007)(8936002)(7416002)(38100700002)(52536014)(508600001)(4326008)(7406005)(86362001)(71200400001)(5660300002)(26005)(6506007)(7696005)(2906002)(9686003)(6916009)(55016003)(38070700005)(33656002)(54906003)(316002)(82960400001)(122000001)(186003)(83380400001);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?FixdU54nkp2j0ExIDKg4vco44Ep9nEs3xx33Ys0G7pbuHo4e42WWkSg/cpC3?=
+ =?us-ascii?Q?xg0J9txdDG+ASNpsBpKFlkSeNca1NDo4Us8/Q2BPhm0Pvq/elPoAiLjS/YTK?=
+ =?us-ascii?Q?vi7Yzzd++hY/qc8pD5baz7rV0mUn9GfwbybDKkID6fYPCwZ5GJdJsJFubcSd?=
+ =?us-ascii?Q?rLZrX/0eznWjjwDA4nQKsUbZZ4FQQ5MU6LZOAsDp+MvbklgjRJjh8uVjOzv9?=
+ =?us-ascii?Q?QJ0N8Qa0OucsIHzLUA6B2sb8589/FYUUCpwcnGIdWhb0jfIBo3Brvd2DL8/q?=
+ =?us-ascii?Q?Z7Wbv3JTWVE6FK9qZcgJnrLC6JP6OSupsETmaixSMUbo9qSeaJMIFcFM62if?=
+ =?us-ascii?Q?+gp+K9I5Z1MCPlN/BmDU8u3nVgYZHbeccVr+FeyFEXvAfS8BkegvGKwm/wd/?=
+ =?us-ascii?Q?zX3OWqhMK8xwf8M9IwzaCWzxGQpfo+XU4IA6egFduka4u+wX8Pmdl1YYJBfv?=
+ =?us-ascii?Q?sHrhUULxpK4OqTxRimUAQ/lJ/Hb5ZQmYOWZQPSrAmUOe/8t3/MNtyFd0+zV1?=
+ =?us-ascii?Q?Aj7xAORyCiBdUYP+Y5qpzjysmgBu70kHSiD4J82tNuJJzWFkv99HZO6xV/QD?=
+ =?us-ascii?Q?XxgBmmZDftJxefMCR4h3RxuKKBNBgzbxA4HIFPkjakiXu77FgZUC29dF1XCf?=
+ =?us-ascii?Q?R/Goe0XPsPs+FlANtx06192HYBGYFeYwBvGKsxKEdQ9v4DDJTi51+JZb1pfC?=
+ =?us-ascii?Q?HwCGn4fb/rItd6RpDKzHwGMkWphq9D4gpB3sIiZZt1fNMlZRt6BFqFGCWY41?=
+ =?us-ascii?Q?vZvJb0u98LkOgx8y0a9+b0prj+GXQnBMgo6ycR7Ejfw8x26C0rSXTmfPv7sP?=
+ =?us-ascii?Q?tUplK0KjWYSj7Y30mHnn9vhfzuzo8OJM+a5hJv3E5dMAFt12uV21tSrGlpeu?=
+ =?us-ascii?Q?MQ3Uvz4AgjAkuZThMja3CusgRWDVEdyOFfFI/FSksMnXrMrf4yhD6Owcaqf4?=
+ =?us-ascii?Q?Senv0mMS89bZnOXwLF8y/bPCs2sBM1+AfHcP0b+YzeNDz81MTL/NTOpmE8Yu?=
+ =?us-ascii?Q?iGLivg3TV/2kQuGyaHuZI2G8JrSm4YSOARYWG835IVbAs/ceT/131jmDmSZ3?=
+ =?us-ascii?Q?wkBYGTDlKFtusb4wk5qQ/htFHgdjnYDfxM5voKV8GNY2f8WjzSLv+5P4k5mf?=
+ =?us-ascii?Q?/DFgUv/IRvjUFd2Gxywn29dnmPMZSvQyDoNJx44NHPtsln9D7so+W/APIC/r?=
+ =?us-ascii?Q?7J142KSJa22E8/OYLCjKSdH9+we7J9cIOMp2Z2NZgZ3cxouTlXc3MrB8E4D7?=
+ =?us-ascii?Q?5ssiiX/IfYAYWB7XUIxB1lh5OzbKbOeQV6S+t9pyQoSz5Q55NX62BDggiiK+?=
+ =?us-ascii?Q?p5QykUJs1mZd5o+AFUMOvj4zzbLWzs6Ylv03Ylcx7QaFKm1JC9BQFKLp8blS?=
+ =?us-ascii?Q?2FItx8XjJT4j25IYRd9Xs69KhZVnC6n3I5it8fpPsimiHfK1rbG09YPTh3it?=
+ =?us-ascii?Q?HR5PpfOwfjHGRm6H/PVkYMATiryGV8GG5+eSw+SX2XZsIhgmFRkhiC7JhwpP?=
+ =?us-ascii?Q?Lp7hKuY6qhOu5MOG1OIu/BTA3nvmQnanMQlNAzomD3eh3cu0Sc9xvUd6QayU?=
+ =?us-ascii?Q?QFM1BxV8Vzlep9v0GwDvLyRGNSM/z841HjJDDuOuLLgZpjJdVeL58avZC6YH?=
+ =?us-ascii?Q?ueXuE8E50MZz7ocnSUbPLogJh4PLNaRKFL3+puytgb6on4hPJDCbDbQJ5ecg?=
+ =?us-ascii?Q?/+dkT12834iliiV5XztPFOGfaBR3LcFh91pXvMFkt+bq/ig3EGmhkr64kD+O?=
+ =?us-ascii?Q?1Xsw9+6UXg=3D=3D?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: BN9PR11MB5276.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 6b3f2e08-9de5-49bb-8948-08da4ea18e0d
+X-MS-Exchange-CrossTenant-originalarrivaltime: 15 Jun 2022 07:35:00.5987
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: YB3Oay9/YbjViA+rFqwL5rNvWz1hcm9jfbxfIpp/r37jw1RQTfQQFBsGeSE0ko3JyklMons88TXEE2Bm41toyA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL1PR11MB5429
+X-OriginatorOrg: intel.com
+X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,
+        SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 14 Jun 2022 17:24:48 +0100,
-Mark Rutland <mark.rutland@arm.com> wrote:
-> 
-> On Wed, Jun 08, 2022 at 04:27:46PM +0200, Peter Zijlstra wrote:
-> > Ever since commit d3afc7f12987 ("arm64: Allow IPIs to be handled as
-> > normal interrupts") this function is called in regular IRQ context.
-> > 
-> > Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-> 
-> [adding Marc since he authored that commit]
-> 
-> Makes sense to me:
-> 
->   Acked-by: Mark Rutland <mark.rutland@arm.com>
-> 
-> Mark.
-> 
-> > ---
-> >  arch/arm64/kernel/smp.c |    4 ++--
-> >  1 file changed, 2 insertions(+), 2 deletions(-)
-> > 
-> > --- a/arch/arm64/kernel/smp.c
-> > +++ b/arch/arm64/kernel/smp.c
-> > @@ -865,7 +865,7 @@ static void do_handle_IPI(int ipinr)
-> >  	unsigned int cpu = smp_processor_id();
-> >  
-> >  	if ((unsigned)ipinr < NR_IPI)
-> > -		trace_ipi_entry_rcuidle(ipi_types[ipinr]);
-> > +		trace_ipi_entry(ipi_types[ipinr]);
-> >  
-> >  	switch (ipinr) {
-> >  	case IPI_RESCHEDULE:
-> > @@ -914,7 +914,7 @@ static void do_handle_IPI(int ipinr)
-> >  	}
-> >  
-> >  	if ((unsigned)ipinr < NR_IPI)
-> > -		trace_ipi_exit_rcuidle(ipi_types[ipinr]);
-> > +		trace_ipi_exit(ipi_types[ipinr]);
-> >  }
-> >  
-> >  static irqreturn_t ipi_handler(int irq, void *data)
+> From: Nicolin Chen <nicolinc@nvidia.com>
+> Sent: Wednesday, June 15, 2022 4:45 AM
+>=20
+> Hi Kevin,
+>=20
+> On Wed, Jun 08, 2022 at 11:48:27PM +0000, Tian, Kevin wrote:
+> > > > > The KVM mechanism for controlling wbinvd is only triggered during
+> > > > > kvm_vfio_group_add(), meaning it is a one-shot test done once the
+> > > devices
+> > > > > are setup.
+> > > >
+> > > > It's not one-shot. kvm_vfio_update_coherency() is called in both
+> > > > group_add() and group_del(). Then the coherency property is
+> > > > checked dynamically in wbinvd emulation:
+> > >
+> > > From the perspective of managing the domains that is still
+> > > one-shot. It doesn't get updated when individual devices are
+> > > added/removed to domains.
+> >
+> > It's unchanged per-domain but dynamic per-vm when multiple
+> > domains are added/removed (i.e. kvm->arch.noncoherent_dma_count).
+> > It's the latter being checked in the kvm.
+>=20
+> I am going to send a v2, yet not quite getting the point here.
+> Meanwhile, Jason is on leave.
+>=20
+> What, in your opinion, would be an accurate description here?
+>=20
 
-Acked-by: Marc Zyngier <maz@kernel.org>
+Something like below:
+--
+The KVM mechanism for controlling wbinvd is based on OR of
+the coherency property of all devices attached to a guest, no matter
+those devices  are attached to a single domain or multiple domains.
 
-	M.
+So, there is no value in trying to push a device that could do enforced
+cache coherency to a dedicated domain vs re-using an existing domain
+which is non-coherent since KVM won't be able to take advantage of it.=20
+This just wastes domain memory.
 
--- 
-Without deviation from the norm, progress is not possible.
+Simplify this code and eliminate the test. This removes the only logic
+that needed to have a dummy domain attached prior to searching for a
+matching domain and simplifies the next patches.
+
+It's unclear whether we want to further optimize the Intel driver to
+update the domain coherency after a device is detached from it, at
+least not before KVM can be verified to handle such dynamics in related
+emulation paths (wbinvd, vcpu load, write_cr0, ept, etc.). In reality
+we don't see an usage requiring such optimization as the only device
+which imposes such non-coherency is Intel GPU which even doesn't
+support hotplug/hot remove.
+--
+
+Thanks
+Kevin
