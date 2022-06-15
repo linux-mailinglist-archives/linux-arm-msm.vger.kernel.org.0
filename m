@@ -2,60 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A53E054D472
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jun 2022 00:15:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5A6DC54D4A3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jun 2022 00:36:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344509AbiFOWPx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Jun 2022 18:15:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38272 "EHLO
+        id S1350128AbiFOWgY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Jun 2022 18:36:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53212 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240120AbiFOWPx (ORCPT
+        with ESMTP id S1349509AbiFOWgY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Jun 2022 18:15:53 -0400
-Received: from mail-io1-f50.google.com (mail-io1-f50.google.com [209.85.166.50])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A6545638B;
-        Wed, 15 Jun 2022 15:15:52 -0700 (PDT)
-Received: by mail-io1-f50.google.com with SMTP id p128so14170314iof.1;
-        Wed, 15 Jun 2022 15:15:52 -0700 (PDT)
+        Wed, 15 Jun 2022 18:36:24 -0400
+Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com [IPv6:2607:f8b0:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA45A562C7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jun 2022 15:36:22 -0700 (PDT)
+Received: by mail-pl1-x633.google.com with SMTP id i15so11612940plr.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jun 2022 15:36:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=mV7iuGUs7Sd/EB7Y6IVDAes2u13Cf7xlNc9ZNwwInH8=;
+        b=l1vqRhqJpsnPX9adoCyvZMhxiUUjd7Ueb+/3PJLRf7TL5d79Yyh3174drC0uOTCmY8
+         +H60mhgJ9Nui98dSrZtr3UT0xELEzJJp7i5px5nR62LbqJ54x3vKGHRtxCMC0toddiUK
+         NB4gyX+qNJsr5b9A1vEFnvtqliTMnmX1oZLl8inbURAi1fht92bxIE7PfrFp8oEK7VY1
+         FLtZX0ElS69VxnZnJ68z+0106vRZ7jAenVO5MiZ1cwRwi0kGGgk1I5/cG6A/W2GfXGGW
+         iFt7vqRDVLY2y3JCxEMrDIJV/Q+Wnstsl2HdNx6CpIUJTzWiWe2xI33cV47MOu9cwRGA
+         aySA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
-         :message-id;
-        bh=rFQupfevfAD0SGiomMUJ6dJueSNgsuECIsu7rzoLymM=;
-        b=67A6OrdsLOmEaLULv/+Q9ntqq2dPbGXoJvAYLrWtOEj392674Xsf75Y+jTea5fcWty
-         ItXSMHuBRR5DqBLq0BYjk/ViFQYKi3Vw9JTtfyOQES4aOm4yNqJsm/vNcTJU9SW0P8oU
-         ebrgK51NZd2x/RdKN2yvsLP0HlRjRS2lPuAlmynT9NKmfqhYuAXsZft19WDoXi/0jxjy
-         6QdpZfsxMgnNdGWBsWgs4MuhXzaxmratv8hYbQnJLlEgqZ/9qkDXm5AcDe9rkarkr9+5
-         aIOvRL1MgS8OxWwRi42/HuAxf+KfxpW+JR5XQZ+cZH82HxMax/JeGNp+so2t0gPuifs6
-         aqvg==
-X-Gm-Message-State: AJIora/rCE6Hbb2SmCGtrnRM43gt7mb8PfW+MX4qfj7ejDo6EzNTvjiC
-        7njQEyc/A1kavhyVp1eIRDeBcZNmaQ==
-X-Google-Smtp-Source: AGRyM1s1B2FsBfRxwDUnxFfjK7iaLYluxFJ3mp4Tqro156LZpEo84zIfiu7kV12xz1Zj9q0/4yW/oA==
-X-Received: by 2002:a05:6638:2487:b0:331:faca:e317 with SMTP id x7-20020a056638248700b00331facae317mr1137123jat.300.1655331351463;
-        Wed, 15 Jun 2022 15:15:51 -0700 (PDT)
-Received: from robh.at.kernel.org ([64.188.179.251])
-        by smtp.gmail.com with ESMTPSA id q15-20020a056e0220ef00b002d1bc2eb604sm124631ilv.58.2022.06.15.15.15.50
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=mV7iuGUs7Sd/EB7Y6IVDAes2u13Cf7xlNc9ZNwwInH8=;
+        b=Vk9Lv4o9BcHjROJjW8UxrVtM344FP/PbH0tOkHwJKRPBfTmOXxZX9RzpAYrt+TVqBs
+         N1LIf+NBmtGsuFXInDlmuRA8j5HeOCfbZWLsQpytyfFXaswfdswByRoPA3qI/EkVZpRV
+         mRkR7cdfbhQeQ6g67EroS/jF6Dx9mzc+3XuMOc64gqu9pKowFPjctrNDjR10CsEL+NUh
+         I4DBNmmH8+lE9JCHUb6+KHEUPzfyA+SuzW9PXwU07VmxqsMdGovBCXiZxtXpp6oX+RwQ
+         +38RHJWD0yO1XWNEK9pbmCX+0FGHlPUBybDjk+Q0uBZGPV0SgsdYG0lS1hHRqVOk5C9T
+         8Myw==
+X-Gm-Message-State: AJIora8Q5BRlC0Mi2CboTZJWT2PEjC6Yk/JwJjt9OhM6oaJl+nak/W+9
+        lrxrC4BiD4zi4ZEU32lXewjLGw==
+X-Google-Smtp-Source: AGRyM1twssaYQfVWyMrshZxeSWZ9mwJyA7gkNlEydiGHiNrG9KJ0HMdkIjzpZ/ZbD9PxDuj+ED5jWA==
+X-Received: by 2002:a17:903:2341:b0:167:4b11:a8e with SMTP id c1-20020a170903234100b001674b110a8emr1943077plh.10.1655332582397;
+        Wed, 15 Jun 2022 15:36:22 -0700 (PDT)
+Received: from google.com ([192.77.111.2])
+        by smtp.gmail.com with ESMTPSA id w9-20020a17090a780900b001ead46e77e2sm107763pjk.13.2022.06.15.15.36.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Jun 2022 15:15:51 -0700 (PDT)
-Received: (nullmailer pid 1930255 invoked by uid 1000);
-        Wed, 15 Jun 2022 22:15:49 -0000
-From:   Rob Herring <robh@kernel.org>
-To:     Christian 'Ansuel' Marangi <ansuelsmth@gmail.com>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org,
-        dmaengine@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
-        linux-arm-msm@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-In-Reply-To: <20220615175043.20166-1-ansuelsmth@gmail.com>
-References: <20220615175043.20166-1-ansuelsmth@gmail.com>
-Subject: Re: [PATCH] dt-bindings: dma: rework qcom,adm Documentation to yaml schema
-Date:   Wed, 15 Jun 2022 16:15:49 -0600
-Message-Id: <1655331349.359650.1930254.nullmailer@robh.at.kernel.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
+        Wed, 15 Jun 2022 15:36:21 -0700 (PDT)
+Date:   Wed, 15 Jun 2022 23:36:20 +0100
+From:   Lee Jones <lee.jones@linaro.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/2] dt-bindings: mfd: qcom,tcsr: Convert to dtschema
+Message-ID: <Yqpe5EkBHCT6e12v@google.com>
+References: <20220607133443.182468-1-krzysztof.kozlowski@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20220607133443.182468-1-krzysztof.kozlowski@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -63,50 +76,22 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 15 Jun 2022 19:50:43 +0200, Christian 'Ansuel' Marangi wrote:
-> Rework the qcom,adm Documentation to yaml schema.
-> This is not a pure conversion since originally the driver has changed
-> implementation for the #dma-cells and was wrong from the start.
-> Also the driver now handles the common DMA clients implementation with
-> the first cell that denotes the channel number and nothing else since
-> the client will have to provide the crci information via other means.
+On Tue, 07 Jun 2022, Krzysztof Kozlowski wrote:
+
+> Convert the Qualcomm Top Control and Status Register to DT Schema.
 > 
-> Signed-off-by: Christian 'Ansuel' Marangi <ansuelsmth@gmail.com>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > ---
->  .../devicetree/bindings/dma/qcom,adm.yaml     | 95 +++++++++++++++++++
->  .../devicetree/bindings/dma/qcom_adm.txt      | 61 ------------
->  2 files changed, 95 insertions(+), 61 deletions(-)
->  create mode 100644 Documentation/devicetree/bindings/dma/qcom,adm.yaml
->  delete mode 100644 Documentation/devicetree/bindings/dma/qcom_adm.txt
-> 
+>  .../devicetree/bindings/mfd/qcom,tcsr.txt     | 24 ---------
+>  .../devicetree/bindings/mfd/qcom,tcsr.yaml    | 49 +++++++++++++++++++
+>  2 files changed, 49 insertions(+), 24 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/mfd/qcom,tcsr.txt
+>  create mode 100644 Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml
 
-Running 'make dtbs_check' with the schema in this patch gives the
-following warnings. Consider if they are expected or the schema is
-incorrect. These may not be new warnings.
+Applied, thanks.
 
-Note that it is not yet a requirement to have 0 warnings for dtbs_check.
-This will change in the future.
-
-Full log is available here: https://patchwork.ozlabs.org/patch/
-
-
-dma-controller@18300000: reset-names:1: 'c0' was expected
-	arch/arm/boot/dts/qcom-ipq8064-ap148.dtb
-	arch/arm/boot/dts/qcom-ipq8064-rb3011.dtb
-
-dma-controller@18300000: reset-names:2: 'c1' was expected
-	arch/arm/boot/dts/qcom-ipq8064-ap148.dtb
-	arch/arm/boot/dts/qcom-ipq8064-rb3011.dtb
-
-dma-controller@18300000: reset-names:3: 'c2' was expected
-	arch/arm/boot/dts/qcom-ipq8064-ap148.dtb
-	arch/arm/boot/dts/qcom-ipq8064-rb3011.dtb
-
-dma-controller@18300000: reset-names: ['clk', 'pbus', 'c0', 'c1', 'c2'] is too long
-	arch/arm/boot/dts/qcom-ipq8064-ap148.dtb
-	arch/arm/boot/dts/qcom-ipq8064-rb3011.dtb
-
-dma-controller@18300000: resets: [[11, 13], [11, 12], [11, 11], [11, 10], [11, 9]] is too long
-	arch/arm/boot/dts/qcom-ipq8064-ap148.dtb
-	arch/arm/boot/dts/qcom-ipq8064-rb3011.dtb
-
+-- 
+Lee Jones [李琼斯]
+Principal Technical Lead - Developer Services
+Linaro.org │ Open source software for Arm SoCs
+Follow Linaro: Facebook | Twitter | Blog
