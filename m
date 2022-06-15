@@ -2,154 +2,468 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1CF1054C4AB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jun 2022 11:30:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5478854C4C0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jun 2022 11:35:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347364AbiFOJa1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Jun 2022 05:30:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41962 "EHLO
+        id S1344765AbiFOJfo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Jun 2022 05:35:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46296 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347361AbiFOJa0 (ORCPT
+        with ESMTP id S240837AbiFOJfn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Jun 2022 05:30:26 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7585733367;
-        Wed, 15 Jun 2022 02:30:25 -0700 (PDT)
+        Wed, 15 Jun 2022 05:35:43 -0400
+Received: from mail-qk1-x734.google.com (mail-qk1-x734.google.com [IPv6:2607:f8b0:4864:20::734])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B12C25E86
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jun 2022 02:35:42 -0700 (PDT)
+Received: by mail-qk1-x734.google.com with SMTP id 15so8282963qki.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jun 2022 02:35:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1655285425; x=1686821425;
-  h=from:to:cc:subject:date:message-id;
-  bh=AMTJTmjaBl38K652XyoSExmZt+f63mrTd2Xhmelbmm8=;
-  b=rzwWoVYY0aqNRfZahVvbgfMy6dQOwL7UMl0wmYYu1fsQ+U8QB4UPIO+V
-   8ZZO41MYMzqywQCwIAnixSlk+9pmMKXHcEc0R7HDcX4EbZ8zaXmt+rMZc
-   4KlucdPWp+Sq8E263cctRupQ7XQ+UwEyhYxWBnKXicVgz9K6kFc9GRpZD
-   E=;
-Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
-  by alexa-out.qualcomm.com with ESMTP; 15 Jun 2022 02:30:25 -0700
-X-QCInternal: smtphost
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 15 Jun 2022 02:30:23 -0700
-X-QCInternal: smtphost
-Received: from hu-dikshita-hyd.qualcomm.com (HELO hu-sgudaval-hyd.qualcomm.com) ([10.213.110.13])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 15 Jun 2022 15:00:12 +0530
-Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 347544)
-        id 0E56B45EF; Wed, 15 Jun 2022 15:00:12 +0530 (+0530)
-From:   Dikshita Agarwal <quic_dikshita@quicinc.com>
-To:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, stanimir.varbanov@linaro.org,
-        quic_vgarodia@quicinc.com, swboyd@chromium.org,
-        Dikshita Agarwal <quic_dikshita@quicinc.com>
-Subject: [PATCH v2] venus: Add support for SSR trigger using fault injection
-Date:   Wed, 15 Jun 2022 15:00:09 +0530
-Message-Id: <1655285409-19829-1-git-send-email-quic_dikshita@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-X-Spam-Status: No, score=-4.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=CSefTW77Mat1nTCylbI+4S4JLk9w2ke43dS/JMfZowI=;
+        b=S00gqrOOhpEEC0u3ZwVOdQ3vmI5Hj9HK/ZWEyl5rzX4l28P0cswKBR3NfHnuEKg7n9
+         Lm+hrhJkW3onS9pqSLW6doYySAeP0SSNLzyTsmAOVeAp+nblgZsnIGG/PT5SfYbcA+zq
+         U008+MZORaa9PRDKpET1ZVbCgJHoYST712uIztxdJnifJfwNTNK/aEJf/OOnX9Qy4p8E
+         dS2qsRzbMwH+StwZ9/moRXVf8OVbYOehmywJK9SUULACZURg0q5rlYp/yzAlv4F+tnvL
+         s8ikZhIl7bjDuTnU/FJfv/nZZcWiXT5WeO1oHF8tb18qSViJTbbCpU+aAb0TLVusjGPK
+         btXQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=CSefTW77Mat1nTCylbI+4S4JLk9w2ke43dS/JMfZowI=;
+        b=C1LUPBpgsKCFuNaedC5GDb8MRT0d1M90Dm09E+V94xj/8tNXjlBxjuT3rbRyTwtuSL
+         +R/ou93aF69mQEk2H/UlDdYqepIvuhs2CUpF6Jgq5bSSkPeIXTYZ8urTYxhe9RMDKejn
+         bMQ/7eDFL7G/AeoWrvcHdiCgyhkO7imuOHX0KcPr/1Z7zrTDYVmG1jSi1HgNkaayL684
+         864/W3q/wMbnNkwb44jAYcIDCx1CCisyRCPG3uM5JCIJY05SBBaVxzGGzQVldvnAlOiK
+         ZKIJ0TAS6UwYYonQ93UPZ8DrpDUq2H6/jmyUM0k4bmU2c7P6zauvY6V7wVVKYypeQqGn
+         Orpg==
+X-Gm-Message-State: AOAM533ftcPR0chQgfAUCePt1SbJhBV6gN6ZnHa8R75wO9gNd263Bvr6
+        zfIE1ltHi+1w6y/+DqQ361UpGPoBS/btoSurn77crg==
+X-Google-Smtp-Source: ABdhPJxhbuXy8E622h9phKLOyThn0yufOuoirvYoQjFL5TuVttqqaW9MCvsNkPqsyrbN5ckimPwVWXaVTjyKvI5geuU=
+X-Received: by 2002:a37:a83:0:b0:6a6:7e4d:41dc with SMTP id
+ 125-20020a370a83000000b006a67e4d41dcmr7457042qkk.59.1655285741038; Wed, 15
+ Jun 2022 02:35:41 -0700 (PDT)
+MIME-Version: 1.0
+References: <20220614211328.216-1-quic_jesszhan@quicinc.com> <20220614211328.216-2-quic_jesszhan@quicinc.com>
+In-Reply-To: <20220614211328.216-2-quic_jesszhan@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Wed, 15 Jun 2022 12:35:30 +0300
+Message-ID: <CAA8EJppgyuzHipZT1SVyD5+NNnC2yB5hRy4=--DGv=dk1VRMAw@mail.gmail.com>
+Subject: Re: [PATCH v2 1/3] drm/msm/dpu: Move LM CRC code into separate method
+To:     Jessica Zhang <quic_jesszhan@quicinc.com>
+Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
+        seanpaul@chromium.org, swboyd@chromium.org,
+        quic_aravindh@quicinc.com, quic_abhinavk@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Here we introduce a new fault injection for SSR trigger.
+On Wed, 15 Jun 2022 at 00:13, Jessica Zhang <quic_jesszhan@quicinc.com> wrote:
+>
+> Move layer mixer-specific section of dpu_crtc_get_crc() into a separate
+> helper method. This way, we can make it easier to get CRCs from other HW
+> blocks by adding other get_crc helper methods.
+>
+> Changes since V1:
+> - Moved common bitmasks to dpu_hw_util.h
+> - Moved common CRC methods to dpu_hw_util.c
+> - Updated copyrights
+> - Changed crcs array to a dynamically allocated array and added it as a
+>   member of crtc_state
+>
+> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
 
-To trigger the SSR:
- echo 100 >  /sys/kernel/debug/venus/fail_ssr/probability
- echo 1 >  /sys/kernel/debug/venus/fail_ssr/times
+Please split this into separate patches. One for hw_util, one for the rest
 
-signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
-Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
----
- drivers/media/platform/qcom/venus/core.c  | 15 ++++++++++++++-
- drivers/media/platform/qcom/venus/dbgfs.c | 21 +++++++++++++++++++++
- drivers/media/platform/qcom/venus/dbgfs.h |  1 +
- 3 files changed, 36 insertions(+), 1 deletion(-)
+> ---
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c    | 88 +++++++++++++--------
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h    |  4 +
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c   | 42 +---------
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c | 46 ++++++++++-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h | 16 ++++
+>  5 files changed, 124 insertions(+), 72 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> index b56f777dbd0e..16742a66878e 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> @@ -1,5 +1,6 @@
+>  // SPDX-License-Identifier: GPL-2.0-only
+>  /*
+> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
+>   * Copyright (c) 2014-2021 The Linux Foundation. All rights reserved.
+>   * Copyright (C) 2013 Red Hat
+>   * Author: Rob Clark <robdclark@gmail.com>
+> @@ -88,6 +89,11 @@ static int dpu_crtc_verify_crc_source(struct drm_crtc *crtc,
+>         enum dpu_crtc_crc_source source = dpu_crtc_parse_crc_source(src_name);
+>         struct dpu_crtc_state *crtc_state = to_dpu_crtc_state(crtc->state);
+>
+> +       if (crtc_state->crcs) {
+> +               kfree(crtc_state->crcs);
+> +               crtc_state->crcs = NULL;
+> +       }
+> +
+>         if (source < 0) {
+>                 DRM_DEBUG_DRIVER("Invalid source %s for CRTC%d\n", src_name, crtc->index);
+>                 return -EINVAL;
+> @@ -96,20 +102,37 @@ static int dpu_crtc_verify_crc_source(struct drm_crtc *crtc,
+>         if (source == DPU_CRTC_CRC_SOURCE_LAYER_MIXER)
+>                 *values_cnt = crtc_state->num_mixers;
+>
+> +       crtc_state->crcs = kcalloc(*values_cnt, sizeof(crtc_state->crcs), GFP_KERNEL);
+> +
 
-diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
-index 877eca1..abfa5d6 100644
---- a/drivers/media/platform/qcom/venus/core.c
-+++ b/drivers/media/platform/qcom/venus/core.c
-@@ -265,6 +265,19 @@ static void venus_assign_register_offsets(struct venus_core *core)
- 	}
- }
- 
-+static irqreturn_t venus_isr_thread(int irq, void *dev_id)
-+{
-+	struct venus_core *core = dev_id;
-+	irqreturn_t ret;
-+
-+	ret = hfi_isr_thread(irq, dev_id);
-+
-+	if (ret == IRQ_HANDLED && venus_fault_inject_ssr())
-+		hfi_core_trigger_ssr(core, HFI_TEST_SSR_SW_ERR_FATAL);
-+
-+	return ret;
-+}
-+
- static int venus_probe(struct platform_device *pdev)
- {
- 	struct device *dev = &pdev->dev;
-@@ -320,7 +333,7 @@ static int venus_probe(struct platform_device *pdev)
- 	INIT_DELAYED_WORK(&core->work, venus_sys_error_handler);
- 	init_waitqueue_head(&core->sys_err_done);
- 
--	ret = devm_request_threaded_irq(dev, core->irq, hfi_isr, hfi_isr_thread,
-+	ret = devm_request_threaded_irq(dev, core->irq, hfi_isr, venus_isr_thread,
- 					IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
- 					"venus", core);
- 	if (ret)
-diff --git a/drivers/media/platform/qcom/venus/dbgfs.c b/drivers/media/platform/qcom/venus/dbgfs.c
-index 52de47f..ec15078 100644
---- a/drivers/media/platform/qcom/venus/dbgfs.c
-+++ b/drivers/media/platform/qcom/venus/dbgfs.c
-@@ -4,13 +4,34 @@
-  */
- 
- #include <linux/debugfs.h>
-+#include <linux/fault-inject.h>
- 
- #include "core.h"
- 
-+#ifdef CONFIG_FAULT_INJECTION
-+static DECLARE_FAULT_ATTR(venus_ssr_attr);
-+#endif
-+
-+#ifdef CONFIG_FAULT_INJECTION
-+bool venus_fault_inject_ssr(void)
-+{
-+	return should_fail(&venus_ssr_attr, 1);
-+}
-+#else
-+bool venus_fault_inject_ssr(void)
-+{
-+	return false;
-+}
-+#endif
-+
- void venus_dbgfs_init(struct venus_core *core)
- {
- 	core->root = debugfs_create_dir("venus", NULL);
- 	debugfs_create_x32("fw_level", 0644, core->root, &venus_fw_debug);
-+
-+#ifdef CONFIG_FAULT_INJECTION
-+	fault_create_debugfs_attr("fail_ssr", core->root, &venus_ssr_attr);
-+#endif
- }
- 
- void venus_dbgfs_deinit(struct venus_core *core)
-diff --git a/drivers/media/platform/qcom/venus/dbgfs.h b/drivers/media/platform/qcom/venus/dbgfs.h
-index b7b621a..b0d0686 100644
---- a/drivers/media/platform/qcom/venus/dbgfs.h
-+++ b/drivers/media/platform/qcom/venus/dbgfs.h
-@@ -8,5 +8,6 @@ struct venus_core;
- 
- void venus_dbgfs_init(struct venus_core *core);
- void venus_dbgfs_deinit(struct venus_core *core);
-+bool venus_fault_inject_ssr(void);
- 
- #endif
+I do not quite like the idea of constantly allocating and freeing the
+crcs array. I'd suggest defining sensible MAX_CRC_VALUES, using a
+static array and verifying that no one over commits the
+MAX_CRC_VALUES.
+If at some point we decide that we really need the dynamic array, we
+can implement it later. We already had dynamic arrays and Rob had to
+fix it. See 00326bfa4e63 ("drm/msm/dpu: Remove dynamic allocation from
+atomic context").
+
+>         return 0;
+>  }
+>
+> +static void dpu_crtc_setup_lm_misr(struct dpu_crtc_state *crtc_state)
+> +{
+> +       struct dpu_crtc_mixer *m;
+> +       int i;
+> +
+> +       for (i = 0; i < crtc_state->num_mixers; ++i) {
+> +               m = &crtc_state->mixers[i];
+> +
+> +               if (!m->hw_lm || !m->hw_lm->ops.setup_misr)
+> +                       continue;
+> +
+> +               /* Calculate MISR over 1 frame */
+> +               m->hw_lm->ops.setup_misr(m->hw_lm, true, 1);
+> +       }
+> +}
+> +
+>  static int dpu_crtc_set_crc_source(struct drm_crtc *crtc, const char *src_name)
+>  {
+>         enum dpu_crtc_crc_source source = dpu_crtc_parse_crc_source(src_name);
+>         enum dpu_crtc_crc_source current_source;
+>         struct dpu_crtc_state *crtc_state;
+>         struct drm_device *drm_dev = crtc->dev;
+> -       struct dpu_crtc_mixer *m;
+>
+>         bool was_enabled;
+>         bool enable = false;
+> -       int i, ret = 0;
+> +       int ret = 0;
+>
+>         if (source < 0) {
+>                 DRM_DEBUG_DRIVER("Invalid CRC source %s for CRTC%d\n", src_name, crtc->index);
+> @@ -137,6 +160,10 @@ static int dpu_crtc_set_crc_source(struct drm_crtc *crtc, const char *src_name)
+>                         goto cleanup;
+>
+>         } else if (was_enabled && !enable) {
+> +               if (crtc_state->crcs) {
+> +                       kfree(crtc_state->crcs);
+> +                       crtc_state->crcs = NULL;
+> +               }
+>                 drm_crtc_vblank_put(crtc);
+>         }
+>
+> @@ -146,16 +173,8 @@ static int dpu_crtc_set_crc_source(struct drm_crtc *crtc, const char *src_name)
+>
+>         crtc_state->crc_frame_skip_count = 0;
+>
+> -       for (i = 0; i < crtc_state->num_mixers; ++i) {
+> -               m = &crtc_state->mixers[i];
+> -
+> -               if (!m->hw_lm || !m->hw_lm->ops.setup_misr)
+> -                       continue;
+> -
+> -               /* Calculate MISR over 1 frame */
+> -               m->hw_lm->ops.setup_misr(m->hw_lm, true, 1);
+> -       }
+> -
+> +       if (source == DPU_CRTC_CRC_SOURCE_LAYER_MIXER)
+> +               dpu_crtc_setup_lm_misr(crtc_state);
+
+else ?
+
+>
+>  cleanup:
+>         drm_modeset_unlock(&crtc->mutex);
+> @@ -174,34 +193,21 @@ static u32 dpu_crtc_get_vblank_counter(struct drm_crtc *crtc)
+>         return dpu_encoder_get_vsync_count(encoder);
+>  }
+>
+> -
+> -static int dpu_crtc_get_crc(struct drm_crtc *crtc)
+> +static int dpu_crtc_get_lm_crc(struct drm_crtc *crtc, struct dpu_crtc_state *crtc_state)
+>  {
+> -       struct dpu_crtc_state *crtc_state;
+> -       struct dpu_crtc_mixer *m;
+> -       u32 crcs[CRTC_DUAL_MIXERS];
+> +       struct dpu_crtc_mixer *lm;
+>
+> -       int i = 0;
+>         int rc = 0;
+> -
+> -       crtc_state = to_dpu_crtc_state(crtc->state);
+> -
+> -       BUILD_BUG_ON(ARRAY_SIZE(crcs) != ARRAY_SIZE(crtc_state->mixers));
+> -
+> -       /* Skip first 2 frames in case of "uncooked" CRCs */
+> -       if (crtc_state->crc_frame_skip_count < 2) {
+> -               crtc_state->crc_frame_skip_count++;
+> -               return 0;
+> -       }
+> +       int i;
+>
+>         for (i = 0; i < crtc_state->num_mixers; ++i) {
+>
+> -               m = &crtc_state->mixers[i];
+> +               lm = &crtc_state->mixers[i];
+>
+> -               if (!m->hw_lm || !m->hw_lm->ops.collect_misr)
+> +               if (!lm->hw_lm || !lm->hw_lm->ops.collect_misr)
+>                         continue;
+>
+> -               rc = m->hw_lm->ops.collect_misr(m->hw_lm, &crcs[i]);
+> +               rc = lm->hw_lm->ops.collect_misr(lm->hw_lm, &crtc_state->crcs[i]);
+>
+>                 if (rc) {
+>                         if (rc != -ENODATA)
+> @@ -211,7 +217,25 @@ static int dpu_crtc_get_crc(struct drm_crtc *crtc)
+>         }
+>
+>         return drm_crtc_add_crc_entry(crtc, true,
+> -                       drm_crtc_accurate_vblank_count(crtc), crcs);
+> +                       drm_crtc_accurate_vblank_count(crtc), crtc_state->crcs);
+> +}
+> +
+> +static int dpu_crtc_get_crc(struct drm_crtc *crtc)
+> +{
+> +       struct dpu_crtc_state *crtc_state;
+> +
+> +       crtc_state = to_dpu_crtc_state(crtc->state);
+> +
+> +       /* Skip first 2 frames in case of "uncooked" CRCs */
+> +       if (crtc_state->crc_frame_skip_count < 2) {
+> +               crtc_state->crc_frame_skip_count++;
+> +               return 0;
+> +       }
+> +
+> +       if (crtc_state->crc_source == DPU_CRTC_CRC_SOURCE_LAYER_MIXER)
+> +               return dpu_crtc_get_lm_crc(crtc, crtc_state);
+> +
+> +       return 0;
+>  }
+>
+>  static bool dpu_crtc_get_scanout_position(struct drm_crtc *crtc,
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
+> index b8785c394fcc..4bf45e3343ef 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
+> @@ -201,6 +201,9 @@ struct dpu_crtc {
+>   * @mixers        : List of active mixers
+>   * @num_ctls      : Number of ctl paths in use
+>   * @hw_ctls       : List of active ctl paths
+> + * @crc_source    : CRC source
+> + * @crc_frame_skip_count: Number of frames skipped before getting CRC
+> + * @crcs          : Array to store CRC values
+>   */
+>  struct dpu_crtc_state {
+>         struct drm_crtc_state base;
+> @@ -222,6 +225,7 @@ struct dpu_crtc_state {
+>
+>         enum dpu_crtc_crc_source crc_source;
+>         int crc_frame_skip_count;
+> +       u32 *crcs;
+>  };
+>
+>  #define to_dpu_crtc_state(x) \
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
+> index 462f5082099e..06b24d8d1419 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
+> @@ -1,5 +1,6 @@
+>  // SPDX-License-Identifier: GPL-2.0-only
+>  /*
+> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
+>   * Copyright (c) 2015-2021, The Linux Foundation. All rights reserved.
+>   */
+>
+> @@ -27,11 +28,6 @@
+>
+>  #define LM_MISR_CTRL                     0x310
+>  #define LM_MISR_SIGNATURE                0x314
+> -#define LM_MISR_FRAME_COUNT_MASK         0xFF
+> -#define LM_MISR_CTRL_ENABLE              BIT(8)
+> -#define LM_MISR_CTRL_STATUS              BIT(9)
+> -#define LM_MISR_CTRL_STATUS_CLEAR        BIT(10)
+> -#define LM_MISR_CTRL_FREE_RUN_MASK     BIT(31)
+>
+>
+>  static const struct dpu_lm_cfg *_lm_offset(enum dpu_lm mixer,
+> @@ -108,44 +104,12 @@ static void dpu_hw_lm_setup_border_color(struct dpu_hw_mixer *ctx,
+>
+>  static void dpu_hw_lm_setup_misr(struct dpu_hw_mixer *ctx, bool enable, u32 frame_count)
+>  {
+> -       struct dpu_hw_blk_reg_map *c = &ctx->hw;
+> -       u32 config = 0;
+> -
+> -       DPU_REG_WRITE(c, LM_MISR_CTRL, LM_MISR_CTRL_STATUS_CLEAR);
+> -
+> -       /* Clear old MISR value (in case it's read before a new value is calculated)*/
+> -       wmb();
+> -
+> -       if (enable) {
+> -               config = (frame_count & LM_MISR_FRAME_COUNT_MASK) |
+> -                       LM_MISR_CTRL_ENABLE | LM_MISR_CTRL_FREE_RUN_MASK;
+> -
+> -               DPU_REG_WRITE(c, LM_MISR_CTRL, config);
+> -       } else {
+> -               DPU_REG_WRITE(c, LM_MISR_CTRL, 0);
+> -       }
+> -
+> +       dpu_hw_setup_misr(&ctx->hw, enable, frame_count, LM_MISR_CTRL);
+>  }
+>
+>  static int dpu_hw_lm_collect_misr(struct dpu_hw_mixer *ctx, u32 *misr_value)
+>  {
+> -       struct dpu_hw_blk_reg_map *c = &ctx->hw;
+> -       u32 ctrl = 0;
+> -
+> -       if (!misr_value)
+> -               return -EINVAL;
+> -
+> -       ctrl = DPU_REG_READ(c, LM_MISR_CTRL);
+> -
+> -       if (!(ctrl & LM_MISR_CTRL_ENABLE))
+> -               return -ENODATA;
+> -
+> -       if (!(ctrl & LM_MISR_CTRL_STATUS))
+> -               return -EINVAL;
+> -
+> -       *misr_value = DPU_REG_READ(c, LM_MISR_SIGNATURE);
+> -
+> -       return 0;
+> +       return dpu_hw_collect_misr(&ctx->hw, misr_value, LM_MISR_CTRL, LM_MISR_SIGNATURE);
+>  }
+>
+>  static void dpu_hw_lm_setup_blend_config_sdm845(struct dpu_hw_mixer *ctx,
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c
+> index 512316f25a51..244f2f90e99a 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c
+> @@ -1,5 +1,7 @@
+>  // SPDX-License-Identifier: GPL-2.0-only
+> -/* Copyright (c) 2015-2018, The Linux Foundation. All rights reserved.
+> +/*
+> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
+> + * Copyright (c) 2015-2018, The Linux Foundation. All rights reserved.
+>   */
+>  #define pr_fmt(fmt)    "[drm:%s:%d] " fmt, __func__, __LINE__
+>
+> @@ -447,3 +449,45 @@ u64 _dpu_hw_get_qos_lut(const struct dpu_qos_lut_tbl *tbl,
+>
+>         return 0;
+>  }
+> +
+> +void dpu_hw_setup_misr(struct dpu_hw_blk_reg_map *c, bool enable,
+> +               u32 frame_count, u32 misr_ctrl_offset)
+> +{
+> +       u32 config = 0;
+> +
+> +       DPU_REG_WRITE(c, misr_ctrl_offset, MISR_CTRL_STATUS_CLEAR);
+> +
+> +       /* Clear old MISR value (in case it's read before a new value is calculated)*/
+> +       wmb();
+> +
+> +       if (enable) {
+> +               config = (frame_count & MISR_FRAME_COUNT_MASK) |
+> +                       MISR_CTRL_ENABLE | MISR_CTRL_FREE_RUN_MASK;
+> +
+> +               DPU_REG_WRITE(c, misr_ctrl_offset, config);
+> +       } else {
+> +               DPU_REG_WRITE(c, misr_ctrl_offset, 0);
+> +       }
+> +
+> +}
+> +
+> +int dpu_hw_collect_misr(struct dpu_hw_blk_reg_map *c, u32 *misr_value,
+> +               u32 misr_ctrl_offset, u32 misr_signature_offset)
+> +{
+> +       u32 ctrl = 0;
+> +
+> +       if (!misr_value)
+> +               return -EINVAL;
+> +
+> +       ctrl = DPU_REG_READ(c, misr_ctrl_offset);
+> +
+> +       if (!(ctrl & MISR_CTRL_ENABLE))
+> +               return -ENODATA;
+> +
+> +       if (!(ctrl & MISR_CTRL_STATUS))
+> +               return -EINVAL;
+> +
+> +       *misr_value = DPU_REG_READ(c, misr_signature_offset);
+> +
+> +       return 0;
+> +}
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h
+> index e4a65eb4f769..88df3a5c5d8e 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h
+> @@ -1,5 +1,6 @@
+>  /* SPDX-License-Identifier: GPL-2.0-only */
+>  /*
+> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
+>   * Copyright (c) 2015-2021, The Linux Foundation. All rights reserved.
+>   */
+>
+> @@ -12,6 +13,11 @@
+>  #include "dpu_hw_catalog.h"
+>
+>  #define REG_MASK(n)                     ((BIT(n)) - 1)
+> +#define MISR_FRAME_COUNT_MASK         0xFF
+> +#define MISR_CTRL_ENABLE              BIT(8)
+> +#define MISR_CTRL_STATUS              BIT(9)
+> +#define MISR_CTRL_STATUS_CLEAR        BIT(10)
+> +#define MISR_CTRL_FREE_RUN_MASK     BIT(31)
+>
+>  /*
+>   * This is the common struct maintained by each sub block
+> @@ -343,4 +349,14 @@ void dpu_hw_csc_setup(struct dpu_hw_blk_reg_map  *c,
+>  u64 _dpu_hw_get_qos_lut(const struct dpu_qos_lut_tbl *tbl,
+>                 u32 total_fl);
+>
+> +void dpu_hw_setup_misr(struct dpu_hw_blk_reg_map *c,
+> +               bool enable,
+> +               u32 frame_count,
+> +               u32 misr_ctrl_offset);
+> +
+> +int dpu_hw_collect_misr(struct dpu_hw_blk_reg_map *c,
+> +               u32 *misr_value,
+> +               u32 misr_ctrl_offset,
+> +               u32 misr_signature_offset);
+
+Please move offsets next to the hw_blk_reg_map.
+
+> +
+>  #endif /* _DPU_HW_UTIL_H */
+> --
+> 2.35.1
+>
+
+
 -- 
-2.7.4
-
+With best wishes
+Dmitry
