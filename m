@@ -2,58 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1026754D23B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jun 2022 22:02:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 887C154D2F4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jun 2022 22:54:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243742AbiFOUCc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Jun 2022 16:02:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32986 "EHLO
+        id S1349580AbiFOUxv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Jun 2022 16:53:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49410 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236325AbiFOUCc (ORCPT
+        with ESMTP id S1349526AbiFOUxt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Jun 2022 16:02:32 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A96E7E0F8;
-        Wed, 15 Jun 2022 13:02:31 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 21A1361477;
-        Wed, 15 Jun 2022 20:02:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72C47C34115;
-        Wed, 15 Jun 2022 20:02:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1655323350;
-        bh=N+ZxzuAjYb3UjX3opuYl3NmMcBi+WXp8I5IE22RDtvc=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=WMo83Yd+PudKCWpq2JtXborGZ16IJXhxW539k6fOGwFSB/H4yqipXZh4MA5fGVdzV
-         CNZc2Ljyjli3Y+YEkg8HpzHb6hHbGG14PDXa4NPS9AE3w2rHJ8sNeAb6rZR6ab463b
-         SVptpd4KGFJPk/YduIX7JWP+Zdi7VLbIUQrnmjqQH2GJkuQNwRF9YVAu5zYln5i1LC
-         5LwQ5izAHYab4k7qKNyqYHsKxWrBJk+kzxZMaEeP1GioSfRXXDfgv2KzrLyKLmD71w
-         gdZviit0AP9wS8eZzYXUBrhhUNpX0yq24NbZDlqk0pp8AEfBvEBUhH3GwbRQm9kVSw
-         SUfDuAVe79uYw==
-Content-Type: text/plain; charset="utf-8"
+        Wed, 15 Jun 2022 16:53:49 -0400
+Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C688B55208
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jun 2022 13:53:46 -0700 (PDT)
+Received: by mail-pg1-x536.google.com with SMTP id f65so12443754pgc.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jun 2022 13:53:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=dqUZddHd2eUD1yS52Gl+Px29FvkVippx8mvYDs3Nfp8=;
+        b=oFBSWa5N5hISjc6dUgBXrl+Fi95HxIWz6sU0iEIXft5yBHzixVAob+7keHBHVtI8bk
+         e5mZ/sXI+ax27roSpAiWEQ9TgGihz2l2U7+D87iAj4CgPM+JMMKh0hQ6AAnL+UMkPeUd
+         Vqy/KUUW81mNLeV096MwdOSSUIKeoBuuu2FUzoJwSrEUaWMzj8YIGk3eHHy0Jv9hACL5
+         7pLmRONbvAprOzld5Z32HqRfP3U/j2W4xDFjRx4KrGDe4AzgaZYC6268zC8Bi8snJX2F
+         8B6pN4nI+fWaCApsLhalJRuLIpBIOvB79jHwdp58skjrLVNVf3B3ECibZdjspfqu5275
+         VSYA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=dqUZddHd2eUD1yS52Gl+Px29FvkVippx8mvYDs3Nfp8=;
+        b=uQIdnayZNV9ZnlPpfIxmcEH9eDqV2LOQgUSZ8t49E46mvK6HA7ChdoJwM/LzJfEBFf
+         0Ca9bCgSNxDTp867SU85lKKAS3Jass6TxAr21S7mU60hxnOliTws7qqQ+lwH9Wh/V071
+         CJma5SNqxMaTSgA2mhAPlPQY+FWlfURKR8QI4NhIOKqrlr9IxVxM95uP+Wyb657bUATQ
+         nVajITU/E2dQGwVBmuxRWbPqL5KcPq2eEcDxPkkjlWOw5HJ35n5gwT/sGfSv9YNguteD
+         LfbEAMRTLz8LvrcpYE1ICE8z/2GsaY9Rg5uOdYyDH+Pn7/jaQn2KfS6cF3kZjuMX7RqR
+         J2Yg==
+X-Gm-Message-State: AJIora9drdMePhLi6XJeZbJ2QxCQ7SUgcP1LRcxgGw9YcMiqDpGD4gyp
+        TVBFfceXLCMNyX7H5veAjxvZEw==
+X-Google-Smtp-Source: AGRyM1uylt1sMxbqAyk47BNBSqxPP7neT6hLMSku9E/k6xbp/vkxQR34uadVNp9ZTysVcsegIEucZw==
+X-Received: by 2002:a05:6a00:1811:b0:51b:fec8:be7b with SMTP id y17-20020a056a00181100b0051bfec8be7bmr1450763pfa.22.1655326426283;
+        Wed, 15 Jun 2022 13:53:46 -0700 (PDT)
+Received: from [172.22.33.138] ([192.77.111.2])
+        by smtp.gmail.com with ESMTPSA id a7-20020a170902710700b00168a4ee4dc7sm78602pll.32.2022.06.15.13.53.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 15 Jun 2022 13:53:46 -0700 (PDT)
+Message-ID: <044dacdb-7d11-8c68-3fb7-ebd67621225e@linaro.org>
+Date:   Wed, 15 Jun 2022 13:53:44 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <62aa1dd0.1c69fb81.b9887.676e@mx.google.com>
-References: <20220615163408.30154-1-ansuelsmth@gmail.com> <a92fe431-a995-4c7f-b90b-8e80298bc71a@linaro.org> <62aa1b41.1c69fb81.95632.5b71@mx.google.com> <717ad899-31ad-5e70-b299-ffb8ca287071@linaro.org> <62aa1dd0.1c69fb81.b9887.676e@mx.google.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
 Subject: Re: [PATCH 1/3] dt-bindings: clock: add pcm reset for ipq806x lcc
-From:   Stephen Boyd <sboyd@kernel.org>
+Content-Language: en-US
+To:     Ansuel Smith <ansuelsmth@gmail.com>
 Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-To:     Ansuel Smith <ansuelsmth@gmail.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Date:   Wed, 15 Jun 2022 13:02:28 -0700
-User-Agent: alot/0.10
-Message-Id: <20220615200230.72C47C34115@smtp.kernel.org>
-X-Spam-Status: No, score=-8.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+References: <20220615163408.30154-1-ansuelsmth@gmail.com>
+ <a92fe431-a995-4c7f-b90b-8e80298bc71a@linaro.org>
+ <62aa1b41.1c69fb81.95632.5b71@mx.google.com>
+ <717ad899-31ad-5e70-b299-ffb8ca287071@linaro.org>
+ <62aa1dd0.1c69fb81.b9887.676e@mx.google.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <62aa1dd0.1c69fb81.b9887.676e@mx.google.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -61,13 +84,52 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Ansuel Smith (2022-06-15 10:04:40)
->=20
+On 15/06/2022 10:04, Ansuel Smith wrote:
+> On Wed, Jun 15, 2022 at 10:50:17AM -0700, Krzysztof Kozlowski wrote:
+>> On 15/06/2022 09:53, Ansuel Smith wrote:
+>>> On Wed, Jun 15, 2022 at 10:43:10AM -0700, Krzysztof Kozlowski wrote:
+>>>> On 15/06/2022 09:34, Christian 'Ansuel' Marangi wrote:
+>>>>> Add pcm reset define for ipq806x lcc.
+>>>>>
+>>>>> Signed-off-by: Christian 'Ansuel' Marangi <ansuelsmth@gmail.com>
+>>>> To prevent any confusion about identities (we have strict rules about
+>>>> these), I need to ask - who uses this email address?
+>>>>
+>>>> https://lore.kernel.org/all/?q=ansuelsmth%40gmail.com
+>>>>
+>>>> Best regards,
+>>>> Krzysztof
+>>>
+>>> Same person. Started using extended name, wanted to do this change from
+>>> a long time but all the patch were already pushed so I couldn't change
+>>> it since they were already proposed and on the various mailing list.
+>>
+>> Previously "Ansuel Smith" was used entirely, without any parts of this
+>> name. Here 'Ansuel' appears in quotes, which usually is used for nicknames.
+>>
+>> Is "Ansuel Smith" your real name or a nickname? What do you mean by
+>> "extended name"?
+>>
+> 
 > Ansuel is second name. Smith is not real... (sorry)
 > So with extendend name I mean full name + second name that is
 > Christian Ansuel Marangi.
->=20
+> 
 > Honestly it's a very stupid mistake by me not using the full name from
 > the start.
 
-Please send a patch to the .mailmap file to fix up the name.
+Not-real names are no accepted [1] and since we cannot validate this, we
+trust. Quite a lot in our process depends on trust. Once trust is gone,
+it's not easy to get it back... Worth watching - Trust and the Linux
+development model; Greg KH [2].
+
+Anyway I have no clue which identity to trust...
+
+
+[1]
+https://www.kernel.org/doc/html/latest/process/submitting-patches.html?highlight=certificate#sign-your-work-the-developer-s-certificate-of-origin
+
+[2] https://www.youtube.com/watch?v=nhJqaZT94z0&t=7044s&ab_channel=hupstream
+
+Best regards,
+Krzysztof
