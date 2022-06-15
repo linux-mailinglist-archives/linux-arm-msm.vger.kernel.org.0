@@ -2,238 +2,488 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E22C854CD8F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jun 2022 17:54:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C79A154CDE5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jun 2022 18:11:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237465AbiFOPyM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Jun 2022 11:54:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49804 "EHLO
+        id S241710AbiFOQLv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Jun 2022 12:11:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38252 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231167AbiFOPyL (ORCPT
+        with ESMTP id S1348591AbiFOQLu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Jun 2022 11:54:11 -0400
+        Wed, 15 Jun 2022 12:11:50 -0400
 Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DADE81D302;
-        Wed, 15 Jun 2022 08:54:08 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06A4B35DDA
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jun 2022 09:11:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1655308449; x=1686844449;
-  h=from:to:cc:subject:date:message-id:mime-version;
-  bh=hQbr63r6g12pXkWSUm16jYJVYXPNC3k9vGnZ4/4C+so=;
-  b=A0hZAtVW8y7mMMM9FwmWYhm2/swaB3W3VndrkMIVi1Z+eZNJy0fXfIbb
-   ORGxwbmbU36M6UcKqTPil/mOiO+D/ioUv95ZWvpf3QyGcrpsJxNI8SN21
-   Fxsl6u1t2JJSblEKyN4apqlptxKTyl0w+Z07cjPtSHq1gYyYc2ujnfPPP
-   w=;
-Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 15 Jun 2022 08:54:08 -0700
+  t=1655309508; x=1686845508;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=bB0PkHT1v5TkKJvrH5JrmI/jbeS7bnhTqfsE+4bHGgc=;
+  b=meTIw7HSFMA3KoxE/cs7S+2s+haxNCjouL5p03IGIsZ7eLho884bktMw
+   yLymRN90ashvwB3rGXKio58/vm2yk3oSbRXTFtr0bF9LTz0gABB3nr8/e
+   VLcF2/ES65KHtnVdfB9vqxin514yidQVC+OkemziAowQcMBW07YDjGYSJ
+   k=;
+Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 15 Jun 2022 09:11:47 -0700
 X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Jun 2022 08:54:07 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 15 Jun 2022 08:54:07 -0700
-Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 15 Jun 2022 08:54:06 -0700
-From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
-To:     <robdclark@gmail.com>, <sean@poorly.run>, <swboyd@chromium.org>,
-        <dianders@chromium.org>, <vkoul@kernel.org>, <daniel@ffwll.ch>,
-        <airlied@linux.ie>, <agross@kernel.org>,
-        <dmitry.baryshkov@linaro.org>, <bjorn.andersson@linaro.org>
-CC:     <quic_abhinavk@quicinc.com>, <quic_aravindh@quicinc.com>,
-        <quic_khsieh@quicinc.com>, <quic_sbillaka@quicinc.com>,
-        <freedreno@lists.freedesktop.org>,
-        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: [PATCH v7] drm/msm/dp: force link training for display resolution change
-Date:   Wed, 15 Jun 2022 08:53:57 -0700
-Message-ID: <1655308437-1924-1-git-send-email-quic_khsieh@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+Received: from nasanex01b.na.qualcomm.com ([10.46.141.250])
+  by ironmsg02-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Jun 2022 09:11:47 -0700
+Received: from [10.71.110.111] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Wed, 15 Jun
+ 2022 09:11:47 -0700
+Message-ID: <7489a181-f87f-5187-6fae-3ad5b74c2d2c@quicinc.com>
+Date:   Wed, 15 Jun 2022 09:11:46 -0700
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Subject: Re: [PATCH v2 1/3] drm/msm/dpu: Move LM CRC code into separate method
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC:     <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
+        <seanpaul@chromium.org>, <swboyd@chromium.org>,
+        <quic_aravindh@quicinc.com>, <quic_abhinavk@quicinc.com>
+References: <20220614211328.216-1-quic_jesszhan@quicinc.com>
+ <20220614211328.216-2-quic_jesszhan@quicinc.com>
+ <CAA8EJppgyuzHipZT1SVyD5+NNnC2yB5hRy4=--DGv=dk1VRMAw@mail.gmail.com>
+From:   Jessica Zhang <quic_jesszhan@quicinc.com>
+In-Reply-To: <CAA8EJppgyuzHipZT1SVyD5+NNnC2yB5hRy4=--DGv=dk1VRMAw@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-Spam-Status: No, score=-5.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Display resolution change is implemented through drm modeset. Older
-modeset (resolution) has to be disabled first before newer modeset
-(resolution) can be enabled. Display disable will turn off both
-pixel clock and main link clock so that main link have to be
-re-trained during display enable to have new video stream flow
-again. At current implementation, display enable function manually
-kicks up irq_hpd_handle which will read panel link status and start
-link training if link status is not in sync state.
 
-However, there is rare case that a particular panel links status keep
-staying in sync for some period of time after main link had been shut
-down previously at display disabled. In this case, main link retraining
-will not be executed by irq_hdp_handle(). Hence video stream of newer
-display resolution will fail to be transmitted to panel due to main
-link is not in sync between host and panel.
 
-This patch will bypass irq_hpd_handle() in favor of directly call
-dp_ctrl_on_stream() to always perform link training in regardless of
-main link status. So that no unexpected exception resolution change
-failure cases will happen. Also this implementation are more efficient
-than manual kicking off irq_hpd_handle function.
+On 6/15/2022 2:35 AM, Dmitry Baryshkov wrote:
+> On Wed, 15 Jun 2022 at 00:13, Jessica Zhang <quic_jesszhan@quicinc.com> wrote:
+>>
+>> Move layer mixer-specific section of dpu_crtc_get_crc() into a separate
+>> helper method. This way, we can make it easier to get CRCs from other HW
+>> blocks by adding other get_crc helper methods.
+>>
+>> Changes since V1:
+>> - Moved common bitmasks to dpu_hw_util.h
+>> - Moved common CRC methods to dpu_hw_util.c
+>> - Updated copyrights
+>> - Changed crcs array to a dynamically allocated array and added it as a
+>>    member of crtc_state
+>>
+>> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+> 
+> Please split this into separate patches. One for hw_util, one for the rest
 
-Changes in v2:
--- set force_link_train flag on DP only (is_edp == false)
+Sure
 
-Changes in v3:
--- revise commit  text
--- add Fixes tag
+> 
+>> ---
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c    | 88 +++++++++++++--------
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h    |  4 +
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c   | 42 +---------
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c | 46 ++++++++++-
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h | 16 ++++
+>>   5 files changed, 124 insertions(+), 72 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+>> index b56f777dbd0e..16742a66878e 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+>> @@ -1,5 +1,6 @@
+>>   // SPDX-License-Identifier: GPL-2.0-only
+>>   /*
+>> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
+>>    * Copyright (c) 2014-2021 The Linux Foundation. All rights reserved.
+>>    * Copyright (C) 2013 Red Hat
+>>    * Author: Rob Clark <robdclark@gmail.com>
+>> @@ -88,6 +89,11 @@ static int dpu_crtc_verify_crc_source(struct drm_crtc *crtc,
+>>          enum dpu_crtc_crc_source source = dpu_crtc_parse_crc_source(src_name);
+>>          struct dpu_crtc_state *crtc_state = to_dpu_crtc_state(crtc->state);
+>>
+>> +       if (crtc_state->crcs) {
+>> +               kfree(crtc_state->crcs);
+>> +               crtc_state->crcs = NULL;
+>> +       }
+>> +
+>>          if (source < 0) {
+>>                  DRM_DEBUG_DRIVER("Invalid source %s for CRTC%d\n", src_name, crtc->index);
+>>                  return -EINVAL;
+>> @@ -96,20 +102,37 @@ static int dpu_crtc_verify_crc_source(struct drm_crtc *crtc,
+>>          if (source == DPU_CRTC_CRC_SOURCE_LAYER_MIXER)
+>>                  *values_cnt = crtc_state->num_mixers;
+>>
+>> +       crtc_state->crcs = kcalloc(*values_cnt, sizeof(crtc_state->crcs), GFP_KERNEL);
+>> +
+> 
+> I do not quite like the idea of constantly allocating and freeing the
+> crcs array. I'd suggest defining sensible MAX_CRC_VALUES, using a
+> static array and verifying that no one over commits the
+> MAX_CRC_VALUES.
+> If at some point we decide that we really need the dynamic array, we
+> can implement it later. We already had dynamic arrays and Rob had to
+> fix it. See 00326bfa4e63 ("drm/msm/dpu: Remove dynamic allocation from
+> atomic context").
 
-Changes in v4:
--- revise commit  text
+Ah, got it... the reason I used a dynamic array here was because AFAIK 
+we don't have a defined upper limit for how many drm_encoders can be 
+connected to a CRTC simultaneously. Do you have a suggestion on what 
+value we can set for MAX_CRC_VALUES?
 
-Changes in v5:
--- fix spelling at commit text
+> 
+>>          return 0;
+>>   }
+>>
+>> +static void dpu_crtc_setup_lm_misr(struct dpu_crtc_state *crtc_state)
+>> +{
+>> +       struct dpu_crtc_mixer *m;
+>> +       int i;
+>> +
+>> +       for (i = 0; i < crtc_state->num_mixers; ++i) {
+>> +               m = &crtc_state->mixers[i];
+>> +
+>> +               if (!m->hw_lm || !m->hw_lm->ops.setup_misr)
+>> +                       continue;
+>> +
+>> +               /* Calculate MISR over 1 frame */
+>> +               m->hw_lm->ops.setup_misr(m->hw_lm, true, 1);
+>> +       }
+>> +}
+>> +
+>>   static int dpu_crtc_set_crc_source(struct drm_crtc *crtc, const char *src_name)
+>>   {
+>>          enum dpu_crtc_crc_source source = dpu_crtc_parse_crc_source(src_name);
+>>          enum dpu_crtc_crc_source current_source;
+>>          struct dpu_crtc_state *crtc_state;
+>>          struct drm_device *drm_dev = crtc->dev;
+>> -       struct dpu_crtc_mixer *m;
+>>
+>>          bool was_enabled;
+>>          bool enable = false;
+>> -       int i, ret = 0;
+>> +       int ret = 0;
+>>
+>>          if (source < 0) {
+>>                  DRM_DEBUG_DRIVER("Invalid CRC source %s for CRTC%d\n", src_name, crtc->index);
+>> @@ -137,6 +160,10 @@ static int dpu_crtc_set_crc_source(struct drm_crtc *crtc, const char *src_name)
+>>                          goto cleanup;
+>>
+>>          } else if (was_enabled && !enable) {
+>> +               if (crtc_state->crcs) {
+>> +                       kfree(crtc_state->crcs);
+>> +                       crtc_state->crcs = NULL;
+>> +               }
+>>                  drm_crtc_vblank_put(crtc);
+>>          }
+>>
+>> @@ -146,16 +173,8 @@ static int dpu_crtc_set_crc_source(struct drm_crtc *crtc, const char *src_name)
+>>
+>>          crtc_state->crc_frame_skip_count = 0;
+>>
+>> -       for (i = 0; i < crtc_state->num_mixers; ++i) {
+>> -               m = &crtc_state->mixers[i];
+>> -
+>> -               if (!m->hw_lm || !m->hw_lm->ops.setup_misr)
+>> -                       continue;
+>> -
+>> -               /* Calculate MISR over 1 frame */
+>> -               m->hw_lm->ops.setup_misr(m->hw_lm, true, 1);
+>> -       }
+>> -
+>> +       if (source == DPU_CRTC_CRC_SOURCE_LAYER_MIXER)
+>> +               dpu_crtc_setup_lm_misr(crtc_state);
+> 
+> else ?
 
-Changes in v6:
--- split dp_ctrl_on_stream() for phy test case
--- revise commit text for modeset
+Noted.
 
-Changes in v7:
--- drop 0 assignment at local variable (ret = 0)
+> 
+>>
+>>   cleanup:
+>>          drm_modeset_unlock(&crtc->mutex);
+>> @@ -174,34 +193,21 @@ static u32 dpu_crtc_get_vblank_counter(struct drm_crtc *crtc)
+>>          return dpu_encoder_get_vsync_count(encoder);
+>>   }
+>>
+>> -
+>> -static int dpu_crtc_get_crc(struct drm_crtc *crtc)
+>> +static int dpu_crtc_get_lm_crc(struct drm_crtc *crtc, struct dpu_crtc_state *crtc_state)
+>>   {
+>> -       struct dpu_crtc_state *crtc_state;
+>> -       struct dpu_crtc_mixer *m;
+>> -       u32 crcs[CRTC_DUAL_MIXERS];
+>> +       struct dpu_crtc_mixer *lm;
+>>
+>> -       int i = 0;
+>>          int rc = 0;
+>> -
+>> -       crtc_state = to_dpu_crtc_state(crtc->state);
+>> -
+>> -       BUILD_BUG_ON(ARRAY_SIZE(crcs) != ARRAY_SIZE(crtc_state->mixers));
+>> -
+>> -       /* Skip first 2 frames in case of "uncooked" CRCs */
+>> -       if (crtc_state->crc_frame_skip_count < 2) {
+>> -               crtc_state->crc_frame_skip_count++;
+>> -               return 0;
+>> -       }
+>> +       int i;
+>>
+>>          for (i = 0; i < crtc_state->num_mixers; ++i) {
+>>
+>> -               m = &crtc_state->mixers[i];
+>> +               lm = &crtc_state->mixers[i];
+>>
+>> -               if (!m->hw_lm || !m->hw_lm->ops.collect_misr)
+>> +               if (!lm->hw_lm || !lm->hw_lm->ops.collect_misr)
+>>                          continue;
+>>
+>> -               rc = m->hw_lm->ops.collect_misr(m->hw_lm, &crcs[i]);
+>> +               rc = lm->hw_lm->ops.collect_misr(lm->hw_lm, &crtc_state->crcs[i]);
+>>
+>>                  if (rc) {
+>>                          if (rc != -ENODATA)
+>> @@ -211,7 +217,25 @@ static int dpu_crtc_get_crc(struct drm_crtc *crtc)
+>>          }
+>>
+>>          return drm_crtc_add_crc_entry(crtc, true,
+>> -                       drm_crtc_accurate_vblank_count(crtc), crcs);
+>> +                       drm_crtc_accurate_vblank_count(crtc), crtc_state->crcs);
+>> +}
+>> +
+>> +static int dpu_crtc_get_crc(struct drm_crtc *crtc)
+>> +{
+>> +       struct dpu_crtc_state *crtc_state;
+>> +
+>> +       crtc_state = to_dpu_crtc_state(crtc->state);
+>> +
+>> +       /* Skip first 2 frames in case of "uncooked" CRCs */
+>> +       if (crtc_state->crc_frame_skip_count < 2) {
+>> +               crtc_state->crc_frame_skip_count++;
+>> +               return 0;
+>> +       }
+>> +
+>> +       if (crtc_state->crc_source == DPU_CRTC_CRC_SOURCE_LAYER_MIXER)
+>> +               return dpu_crtc_get_lm_crc(crtc, crtc_state);
+>> +
+>> +       return 0;
+>>   }
+>>
+>>   static bool dpu_crtc_get_scanout_position(struct drm_crtc *crtc,
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
+>> index b8785c394fcc..4bf45e3343ef 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
+>> @@ -201,6 +201,9 @@ struct dpu_crtc {
+>>    * @mixers        : List of active mixers
+>>    * @num_ctls      : Number of ctl paths in use
+>>    * @hw_ctls       : List of active ctl paths
+>> + * @crc_source    : CRC source
+>> + * @crc_frame_skip_count: Number of frames skipped before getting CRC
+>> + * @crcs          : Array to store CRC values
+>>    */
+>>   struct dpu_crtc_state {
+>>          struct drm_crtc_state base;
+>> @@ -222,6 +225,7 @@ struct dpu_crtc_state {
+>>
+>>          enum dpu_crtc_crc_source crc_source;
+>>          int crc_frame_skip_count;
+>> +       u32 *crcs;
+>>   };
+>>
+>>   #define to_dpu_crtc_state(x) \
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
+>> index 462f5082099e..06b24d8d1419 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
+>> @@ -1,5 +1,6 @@
+>>   // SPDX-License-Identifier: GPL-2.0-only
+>>   /*
+>> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
+>>    * Copyright (c) 2015-2021, The Linux Foundation. All rights reserved.
+>>    */
+>>
+>> @@ -27,11 +28,6 @@
+>>
+>>   #define LM_MISR_CTRL                     0x310
+>>   #define LM_MISR_SIGNATURE                0x314
+>> -#define LM_MISR_FRAME_COUNT_MASK         0xFF
+>> -#define LM_MISR_CTRL_ENABLE              BIT(8)
+>> -#define LM_MISR_CTRL_STATUS              BIT(9)
+>> -#define LM_MISR_CTRL_STATUS_CLEAR        BIT(10)
+>> -#define LM_MISR_CTRL_FREE_RUN_MASK     BIT(31)
+>>
+>>
+>>   static const struct dpu_lm_cfg *_lm_offset(enum dpu_lm mixer,
+>> @@ -108,44 +104,12 @@ static void dpu_hw_lm_setup_border_color(struct dpu_hw_mixer *ctx,
+>>
+>>   static void dpu_hw_lm_setup_misr(struct dpu_hw_mixer *ctx, bool enable, u32 frame_count)
+>>   {
+>> -       struct dpu_hw_blk_reg_map *c = &ctx->hw;
+>> -       u32 config = 0;
+>> -
+>> -       DPU_REG_WRITE(c, LM_MISR_CTRL, LM_MISR_CTRL_STATUS_CLEAR);
+>> -
+>> -       /* Clear old MISR value (in case it's read before a new value is calculated)*/
+>> -       wmb();
+>> -
+>> -       if (enable) {
+>> -               config = (frame_count & LM_MISR_FRAME_COUNT_MASK) |
+>> -                       LM_MISR_CTRL_ENABLE | LM_MISR_CTRL_FREE_RUN_MASK;
+>> -
+>> -               DPU_REG_WRITE(c, LM_MISR_CTRL, config);
+>> -       } else {
+>> -               DPU_REG_WRITE(c, LM_MISR_CTRL, 0);
+>> -       }
+>> -
+>> +       dpu_hw_setup_misr(&ctx->hw, enable, frame_count, LM_MISR_CTRL);
+>>   }
+>>
+>>   static int dpu_hw_lm_collect_misr(struct dpu_hw_mixer *ctx, u32 *misr_value)
+>>   {
+>> -       struct dpu_hw_blk_reg_map *c = &ctx->hw;
+>> -       u32 ctrl = 0;
+>> -
+>> -       if (!misr_value)
+>> -               return -EINVAL;
+>> -
+>> -       ctrl = DPU_REG_READ(c, LM_MISR_CTRL);
+>> -
+>> -       if (!(ctrl & LM_MISR_CTRL_ENABLE))
+>> -               return -ENODATA;
+>> -
+>> -       if (!(ctrl & LM_MISR_CTRL_STATUS))
+>> -               return -EINVAL;
+>> -
+>> -       *misr_value = DPU_REG_READ(c, LM_MISR_SIGNATURE);
+>> -
+>> -       return 0;
+>> +       return dpu_hw_collect_misr(&ctx->hw, misr_value, LM_MISR_CTRL, LM_MISR_SIGNATURE);
+>>   }
+>>
+>>   static void dpu_hw_lm_setup_blend_config_sdm845(struct dpu_hw_mixer *ctx,
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c
+>> index 512316f25a51..244f2f90e99a 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c
+>> @@ -1,5 +1,7 @@
+>>   // SPDX-License-Identifier: GPL-2.0-only
+>> -/* Copyright (c) 2015-2018, The Linux Foundation. All rights reserved.
+>> +/*
+>> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
+>> + * Copyright (c) 2015-2018, The Linux Foundation. All rights reserved.
+>>    */
+>>   #define pr_fmt(fmt)    "[drm:%s:%d] " fmt, __func__, __LINE__
+>>
+>> @@ -447,3 +449,45 @@ u64 _dpu_hw_get_qos_lut(const struct dpu_qos_lut_tbl *tbl,
+>>
+>>          return 0;
+>>   }
+>> +
+>> +void dpu_hw_setup_misr(struct dpu_hw_blk_reg_map *c, bool enable,
+>> +               u32 frame_count, u32 misr_ctrl_offset)
+>> +{
+>> +       u32 config = 0;
+>> +
+>> +       DPU_REG_WRITE(c, misr_ctrl_offset, MISR_CTRL_STATUS_CLEAR);
+>> +
+>> +       /* Clear old MISR value (in case it's read before a new value is calculated)*/
+>> +       wmb();
+>> +
+>> +       if (enable) {
+>> +               config = (frame_count & MISR_FRAME_COUNT_MASK) |
+>> +                       MISR_CTRL_ENABLE | MISR_CTRL_FREE_RUN_MASK;
+>> +
+>> +               DPU_REG_WRITE(c, misr_ctrl_offset, config);
+>> +       } else {
+>> +               DPU_REG_WRITE(c, misr_ctrl_offset, 0);
+>> +       }
+>> +
+>> +}
+>> +
+>> +int dpu_hw_collect_misr(struct dpu_hw_blk_reg_map *c, u32 *misr_value,
+>> +               u32 misr_ctrl_offset, u32 misr_signature_offset)
+>> +{
+>> +       u32 ctrl = 0;
+>> +
+>> +       if (!misr_value)
+>> +               return -EINVAL;
+>> +
+>> +       ctrl = DPU_REG_READ(c, misr_ctrl_offset);
+>> +
+>> +       if (!(ctrl & MISR_CTRL_ENABLE))
+>> +               return -ENODATA;
+>> +
+>> +       if (!(ctrl & MISR_CTRL_STATUS))
+>> +               return -EINVAL;
+>> +
+>> +       *misr_value = DPU_REG_READ(c, misr_signature_offset);
+>> +
+>> +       return 0;
+>> +}
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h
+>> index e4a65eb4f769..88df3a5c5d8e 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h
+>> @@ -1,5 +1,6 @@
+>>   /* SPDX-License-Identifier: GPL-2.0-only */
+>>   /*
+>> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
+>>    * Copyright (c) 2015-2021, The Linux Foundation. All rights reserved.
+>>    */
+>>
+>> @@ -12,6 +13,11 @@
+>>   #include "dpu_hw_catalog.h"
+>>
+>>   #define REG_MASK(n)                     ((BIT(n)) - 1)
+>> +#define MISR_FRAME_COUNT_MASK         0xFF
+>> +#define MISR_CTRL_ENABLE              BIT(8)
+>> +#define MISR_CTRL_STATUS              BIT(9)
+>> +#define MISR_CTRL_STATUS_CLEAR        BIT(10)
+>> +#define MISR_CTRL_FREE_RUN_MASK     BIT(31)
+>>
+>>   /*
+>>    * This is the common struct maintained by each sub block
+>> @@ -343,4 +349,14 @@ void dpu_hw_csc_setup(struct dpu_hw_blk_reg_map  *c,
+>>   u64 _dpu_hw_get_qos_lut(const struct dpu_qos_lut_tbl *tbl,
+>>                  u32 total_fl);
+>>
+>> +void dpu_hw_setup_misr(struct dpu_hw_blk_reg_map *c,
+>> +               bool enable,
+>> +               u32 frame_count,
+>> +               u32 misr_ctrl_offset);
+>> +
+>> +int dpu_hw_collect_misr(struct dpu_hw_blk_reg_map *c,
+>> +               u32 *misr_value,
+>> +               u32 misr_ctrl_offset,
+>> +               u32 misr_signature_offset);
+> 
+> Please move offsets next to the hw_blk_reg_map.
 
-Fixes: 62671d2ef24b ("drm/msm/dp: fixes wrong connection state caused by failure of link train")
-Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
----
- drivers/gpu/drm/msm/dp/dp_ctrl.c    | 31 +++++++++++++++++++++++--------
- drivers/gpu/drm/msm/dp/dp_ctrl.h    |  3 ++-
- drivers/gpu/drm/msm/dp/dp_display.c | 13 ++++++-------
- 3 files changed, 31 insertions(+), 16 deletions(-)
+Noted.
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-index af7a80c..01028b5 100644
---- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
-+++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-@@ -1551,7 +1551,7 @@ static int dp_ctrl_process_phy_test_request(struct dp_ctrl_private *ctrl)
- 
- 	ret = dp_ctrl_on_link(&ctrl->dp_ctrl);
- 	if (!ret)
--		ret = dp_ctrl_on_stream(&ctrl->dp_ctrl);
-+		ret = dp_ctrl_on_stream_phy_test_report(&ctrl->dp_ctrl);
- 	else
- 		DRM_ERROR("failed to enable DP link controller\n");
- 
-@@ -1807,7 +1807,27 @@ static int dp_ctrl_link_retrain(struct dp_ctrl_private *ctrl)
- 	return dp_ctrl_setup_main_link(ctrl, &training_step);
- }
- 
--int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl)
-+int dp_ctrl_on_stream_phy_test_report(struct dp_ctrl *dp_ctrl)
-+{
-+	int ret;
-+	struct dp_ctrl_private *ctrl;
-+
-+	ctrl = container_of(dp_ctrl, struct dp_ctrl_private, dp_ctrl);
-+
-+	ctrl->dp_ctrl.pixel_rate = ctrl->panel->dp_mode.drm_mode.clock;
-+
-+	ret = dp_ctrl_enable_stream_clocks(ctrl);
-+	if (ret) {
-+		DRM_ERROR("Failed to start pixel clocks. ret=%d\n", ret);
-+		return ret;
-+	}
-+
-+	dp_ctrl_send_phy_test_pattern(ctrl);
-+
-+	return 0;
-+}
-+
-+int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl, bool force_link_train)
- {
- 	int ret = 0;
- 	bool mainlink_ready = false;
-@@ -1843,12 +1863,7 @@ int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl)
- 		goto end;
- 	}
- 
--	if (ctrl->link->sink_request & DP_TEST_LINK_PHY_TEST_PATTERN) {
--		dp_ctrl_send_phy_test_pattern(ctrl);
--		return 0;
--	}
--
--	if (!dp_ctrl_channel_eq_ok(ctrl))
-+	if (force_link_train || !dp_ctrl_channel_eq_ok(ctrl))
- 		dp_ctrl_link_retrain(ctrl);
- 
- 	/* stop txing train pattern to end link training */
-diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.h b/drivers/gpu/drm/msm/dp/dp_ctrl.h
-index 0745fde..9a39b00 100644
---- a/drivers/gpu/drm/msm/dp/dp_ctrl.h
-+++ b/drivers/gpu/drm/msm/dp/dp_ctrl.h
-@@ -21,7 +21,8 @@ struct dp_ctrl {
- };
- 
- int dp_ctrl_on_link(struct dp_ctrl *dp_ctrl);
--int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl);
-+int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl, bool force_link_train);
-+int dp_ctrl_on_stream_phy_test_report(struct dp_ctrl *dp_ctrl);
- int dp_ctrl_off_link_stream(struct dp_ctrl *dp_ctrl);
- int dp_ctrl_off_link(struct dp_ctrl *dp_ctrl);
- int dp_ctrl_off(struct dp_ctrl *dp_ctrl);
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index c388323..b6d25ab 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -872,7 +872,7 @@ static int dp_display_enable(struct dp_display_private *dp, u32 data)
- 		return 0;
- 	}
- 
--	rc = dp_ctrl_on_stream(dp->ctrl);
-+	rc = dp_ctrl_on_stream(dp->ctrl, data);
- 	if (!rc)
- 		dp_display->power_on = true;
- 
-@@ -1654,6 +1654,7 @@ void dp_bridge_enable(struct drm_bridge *drm_bridge)
- 	int rc = 0;
- 	struct dp_display_private *dp_display;
- 	u32 state;
-+	bool force_link_train = false;
- 
- 	dp_display = container_of(dp, struct dp_display_private, dp_display);
- 	if (!dp_display->dp_mode.drm_mode.clock) {
-@@ -1688,10 +1689,12 @@ void dp_bridge_enable(struct drm_bridge *drm_bridge)
- 
- 	state =  dp_display->hpd_state;
- 
--	if (state == ST_DISPLAY_OFF)
-+	if (state == ST_DISPLAY_OFF) {
- 		dp_display_host_phy_init(dp_display);
-+		force_link_train = true;
-+	}
- 
--	dp_display_enable(dp_display, 0);
-+	dp_display_enable(dp_display, force_link_train);
- 
- 	rc = dp_display_post_enable(dp);
- 	if (rc) {
-@@ -1700,10 +1703,6 @@ void dp_bridge_enable(struct drm_bridge *drm_bridge)
- 		dp_display_unprepare(dp);
- 	}
- 
--	/* manual kick off plug event to train link */
--	if (state == ST_DISPLAY_OFF)
--		dp_add_event(dp_display, EV_IRQ_HPD_INT, 0, 0);
--
- 	/* completed connection */
- 	dp_display->hpd_state = ST_CONNECTED;
- 
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+Thanks,
 
+Jessica Zhang
+
+> 
+>> +
+>>   #endif /* _DPU_HW_UTIL_H */
+>> --
+>> 2.35.1
+>>
+> 
+> 
+> -- 
+> With best wishes
+> Dmitry
