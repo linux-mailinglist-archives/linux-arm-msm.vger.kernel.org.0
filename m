@@ -2,73 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1363F54CECB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jun 2022 18:35:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B227154D050
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jun 2022 19:47:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345706AbiFOQfY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Jun 2022 12:35:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39820 "EHLO
+        id S1356872AbiFORrt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Jun 2022 13:47:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60770 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239852AbiFOQfX (ORCPT
+        with ESMTP id S1349899AbiFORrs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Jun 2022 12:35:23 -0400
-Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5234E2D1E5;
-        Wed, 15 Jun 2022 09:35:23 -0700 (PDT)
-Received: by mail-pj1-x1031.google.com with SMTP id v17-20020a17090a899100b001ead067eaf9so2672584pjn.0;
-        Wed, 15 Jun 2022 09:35:23 -0700 (PDT)
+        Wed, 15 Jun 2022 13:47:48 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C442F1147F;
+        Wed, 15 Jun 2022 10:47:47 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id m24so16323263wrb.10;
+        Wed, 15 Jun 2022 10:47:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=NXNiK5CoOd5h/K567StuCdpvu1byZQqmWfR+aD9BoLg=;
-        b=m2hmwJKhxnLWptIU4bEaOprXB7AjROw7lct5pUQISGmydnU6CeitFPq3Qc9nBe1MQC
-         PaaVmblRPW/g2e460HEqDMv1JWHDx+leQItVlqmFT92ZIOQ4mFuHkp/67ZK/on2CWJ57
-         7cHTsZBoqA/i8uP47pfHx3HmdrA3/UMF6T5VWr7Saf5m5cn6uTuD64FNpK99mmvImEJp
-         Ccu3KzYFY84/TZ/XWD1T0TNUh7Ldx3ruUETmYEfqVSxkJQHNqP4xxrNI8YMsVfFxYGgb
-         FUoek2jo46bd3K8MhP0Z1sx8mK3GTsyfPGDDONzkL2tdDHbiUYLQTk06jL6veFjQXxIi
-         a0Nw==
+        h=message-id:date:from:to:cc:subject:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=UEplRBRe8Not6/N/87KHMRBTXuTr13tJIbM6hc9f8sQ=;
+        b=Px0sxprY8EaTIf37otn4bHLOMuOiouEYqETuqdXAoedA3jFIrkkKeHZvQZcfi6IDQd
+         +gPo6UtC+5oE4EUy+jA8XQ7k3lqlL722vCj/oANcJfB4eG3pUwsqRPv0uGe/HecIqW06
+         cSNnPJbGMJNoz1TcKBBRCF+5+Gy+Cravzkx4VbGZqli8BcwNbigqDx4TMiTrEehL3wXu
+         /D+jaAoPIZIEEgXk+EJBQxt2H4K1b7kI15klNggExGmPBJhVD7tPrtpUq9FphpwM1H+2
+         rWMXGX3cud6Dblde43mQIlZpBjDyX+LwEaufSxZUdSU0FK7uOYBP2vVcdz9tV4MoyFOx
+         aIxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=NXNiK5CoOd5h/K567StuCdpvu1byZQqmWfR+aD9BoLg=;
-        b=OofSNZQcoeSd8RrnHMylTElLrbBrcOuGEUO7Ux2GiMQp02MfVXhEFKavbS2fbhEMKp
-         VRkU6APmMi4f/KNTmwlX4Fx7NxyWiH1fcWx5NRcLWUMkjxOaGKmXnnWxt1IjbJ7QB0QW
-         8Wjf1dWLYg+sfZLigSIRXDnqLtJBfEW/Hh0Iu17s17Od0rqcFTm8bNrIEvN1Bka1LT3L
-         QQXnJOSU6oy6EiujBjNEonIFiGG/ERXJk4ZOwwslQDdDTT2Z+nenRE+irF+BQ+t6SJX+
-         a9sF7n2RivDWkslJdUSsmBk7NRGW+zz4PQPbeub93Jw/C1DZ/Dg11JZla3uxTu6A6iqZ
-         6FeA==
-X-Gm-Message-State: AJIora8GH9K/YB55TJJfrBJ+Bo0UYima68aGRVQJBg4ilp6KLgp6xiZh
-        YRhyRzEitI/VcShTs23UN2LIGQzGLYI=
-X-Google-Smtp-Source: AGRyM1tLwthhtZmarB0uyNajKCWDIJw6HY2FWPaSR5DXQjf5zLnQlXHmthoGVTwOVaURRNFowOIaPw==
-X-Received: by 2002:a17:90b:2349:b0:1e3:34f9:87e8 with SMTP id ms9-20020a17090b234900b001e334f987e8mr11146478pjb.217.1655310922780;
-        Wed, 15 Jun 2022 09:35:22 -0700 (PDT)
-Received: from localhost ([2a00:79e1:abd:4a00:2703:3c72:eb1a:cffd])
-        by smtp.gmail.com with ESMTPSA id v15-20020a63bf0f000000b003fdb97e6961sm9909464pgf.28.2022.06.15.09.35.20
+        h=x-gm-message-state:message-id:date:from:to:cc:subject:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=UEplRBRe8Not6/N/87KHMRBTXuTr13tJIbM6hc9f8sQ=;
+        b=XmkHLc8sQbZFr9+YfpUvC5ZH2Hs730EVQDCJXfaC4BlUx8++x44X979WJ4s0TAJEcf
+         czsDR6qCe9wnUxjxiDdhLWrNGMjlqo679z46Oa7fM9UHwFa3gTww8JQVgm1G6Itwr+M/
+         mdTBlLpMXq8xiCb5BwGgki6EZD1qqzSJhM7JK8V3HrWmZE9H2YLM2bvW/sORDZoc0oig
+         lzq1RJLQB3x87/qwijIk/z2JDOltq8t/LJNm2v6yj9rhMpd4wy4efYQAmjhUJgZ20oxo
+         pQctcnY0ZKJHdJHqVxWy6nI7KqBOCPVe7ddVTtomtBiFWsRmRgbnQ/aP+IO1APnnsscC
+         zddA==
+X-Gm-Message-State: AJIora9mYJz6gINCGfT/pH7z/3rHTopUqOAVwAyowjn4IwH/4UHSDIr8
+        V/LicxDMldimP+JMyy4OCeFowHQaquU=
+X-Google-Smtp-Source: AGRyM1sdCdaiNcC0qqAatgAXTIR/dGxEV0s1FBUtTraV7r7iycMccsJTIVFL8TKmFtDbKNmYjUCrwg==
+X-Received: by 2002:a05:6000:1548:b0:217:6480:e65 with SMTP id 8-20020a056000154800b0021764800e65mr934830wry.381.1655315266192;
+        Wed, 15 Jun 2022 10:47:46 -0700 (PDT)
+Received: from Ansuel-xps. (93-42-70-190.ip85.fastwebnet.it. [93.42.70.190])
+        by smtp.gmail.com with ESMTPSA id l125-20020a1c2583000000b0039c4d9737f3sm3158157wml.34.2022.06.15.10.47.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Jun 2022 09:35:21 -0700 (PDT)
-From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Rob Clark <robdclark@chromium.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Emma Anholt <emma@anholt.net>,
-        =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-        Dan Carpenter <dan.carpenter@oracle.com>,
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] drm/msm: Fix %d vs %u
-Date:   Wed, 15 Jun 2022 09:35:28 -0700
-Message-Id: <20220615163532.3013035-1-robdclark@gmail.com>
-X-Mailer: git-send-email 2.36.1
+        Wed, 15 Jun 2022 10:47:45 -0700 (PDT)
+Message-ID: <62aa1b41.1c69fb81.95632.5b71@mx.google.com>
+X-Google-Original-Message-ID: <YqoOmlGklknRj8Yf@Ansuel-xps.>
+Date:   Wed, 15 Jun 2022 18:53:46 +0200
+From:   Ansuel Smith <ansuelsmth@gmail.com>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH 1/3] dt-bindings: clock: add pcm reset for ipq806x lcc
+References: <20220615163408.30154-1-ansuelsmth@gmail.com>
+ <a92fe431-a995-4c7f-b90b-8e80298bc71a@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <a92fe431-a995-4c7f-b90b-8e80298bc71a@linaro.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
         RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
@@ -79,38 +78,22 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+On Wed, Jun 15, 2022 at 10:43:10AM -0700, Krzysztof Kozlowski wrote:
+> On 15/06/2022 09:34, Christian 'Ansuel' Marangi wrote:
+> > Add pcm reset define for ipq806x lcc.
+> > 
+> > Signed-off-by: Christian 'Ansuel' Marangi <ansuelsmth@gmail.com>
+> To prevent any confusion about identities (we have strict rules about
+> these), I need to ask - who uses this email address?
+> 
+> https://lore.kernel.org/all/?q=ansuelsmth%40gmail.com
+> 
+> Best regards,
+> Krzysztof
 
-In debugging fence rollover, I noticed that GPU state capture and
-devcore dumps were showing me negative fence numbers.  Let's fix that
-and some related signed vs unsigned confusion.
+Same person. Started using extended name, wanted to do this change from
+a long time but all the patch were already pushed so I couldn't change
+it since they were already proposed and on the various mailing list.
 
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- drivers/gpu/drm/msm/adreno/adreno_gpu.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-index dd044d557c7c..ce3b508b7c2b 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-@@ -790,11 +790,11 @@ void adreno_show(struct msm_gpu *gpu, struct msm_gpu_state *state,
- 	for (i = 0; i < gpu->nr_rings; i++) {
- 		drm_printf(p, "  - id: %d\n", i);
- 		drm_printf(p, "    iova: 0x%016llx\n", state->ring[i].iova);
--		drm_printf(p, "    last-fence: %d\n", state->ring[i].seqno);
--		drm_printf(p, "    retired-fence: %d\n", state->ring[i].fence);
--		drm_printf(p, "    rptr: %d\n", state->ring[i].rptr);
--		drm_printf(p, "    wptr: %d\n", state->ring[i].wptr);
--		drm_printf(p, "    size: %d\n", MSM_GPU_RINGBUFFER_SZ);
-+		drm_printf(p, "    last-fence: %u\n", state->ring[i].seqno);
-+		drm_printf(p, "    retired-fence: %u\n", state->ring[i].fence);
-+		drm_printf(p, "    rptr: %u\n", state->ring[i].rptr);
-+		drm_printf(p, "    wptr: %u\n", state->ring[i].wptr);
-+		drm_printf(p, "    size: %u\n", MSM_GPU_RINGBUFFER_SZ);
- 
- 		adreno_show_object(p, &state->ring[i].data,
- 			state->ring[i].data_size, &state->ring[i].encoded);
 -- 
-2.36.1
-
+	Ansuel
