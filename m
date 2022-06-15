@@ -2,70 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F329E54CFD3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jun 2022 19:29:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7372954CFDA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jun 2022 19:29:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245041AbiFOR3S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Jun 2022 13:29:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38632 "EHLO
+        id S1348281AbiFOR3e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Jun 2022 13:29:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40372 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350965AbiFOR2R (ORCPT
+        with ESMTP id S1352759AbiFOR3a (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Jun 2022 13:28:17 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F984DF0F;
-        Wed, 15 Jun 2022 10:28:16 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id w17so8781650wrg.7;
-        Wed, 15 Jun 2022 10:28:16 -0700 (PDT)
+        Wed, 15 Jun 2022 13:29:30 -0400
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5512434BB3;
+        Wed, 15 Jun 2022 10:29:28 -0700 (PDT)
+Received: by mail-wm1-x335.google.com with SMTP id l126-20020a1c2584000000b0039c1a10507fso1502450wml.1;
+        Wed, 15 Jun 2022 10:29:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=1TZ31csmugUEo+8MzdBW071qYG5n2pSsL9G37UaQECs=;
-        b=B+5/Pezt8eLSv0wjjxExytBprcVBO9M3ZM+p6YScshCE+vP6bMAbtfHO/ZuZBOVuPC
-         rywxag2H23qIn9zVhAhXBcPcqDyfHCCdFrWSblLlUZ8kRXEE+vDKmIzem0LuVsMZsnB9
-         0M8R9LkJv5Wg7IqBytud4ASU4oq2n1rKTcKs4odfxu4V3+NOIyYWcOMOguqJE63Yim/O
-         2yAe5D7fjdF2oZmQaHGBRBpvYku0RG5c1CKrTKGFlOD8oh0/zem4XpmXiKTBihsnCjHO
-         OU2loXqBMEFApObadp2t3ZhKrFpPObZkNvrhLcvCnS7q90dKUcgZ5iF+UbiXhHgxGGc2
-         i2dA==
+        h=message-id:date:from:to:cc:subject:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=0mmtAiGES9hy6GbZr6mj1I/9d7FHTjal/1dcnEoMib4=;
+        b=d/ZM+qkibzc1FPpQIVKOPEDkTrF02xlafmgh2XMchXaJDbGefaV7FPRiq9MMt1jujY
+         6nuFUGuuXLbLBgp76pCx/O2r4cIN+CtcNgwKZwpVdzekFdRFqDd7O32A7p8UVj/A62n2
+         Xs6cMKvcbN5gyfoMnqEqagWnM3EnMXZvedk5xE7YpROhUtP/QqXRbL8czsAjvcFJvXuX
+         QANMtQIxUbMg9ZIuPF5DMRMVZ1WQzcr+DX0meZ2TE8KHPIMPWE1d0RQxcFL/aheiGAh7
+         jGGq9WheLGjRcC8FMRMWntkV4+X+jwEX9ITHj/a+kk694HVt/sU0fLCfSXmpuPfrVLhf
+         7FLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=1TZ31csmugUEo+8MzdBW071qYG5n2pSsL9G37UaQECs=;
-        b=lmmmXdGlK7Wf131MpDvMD8x7C64JIibuaF5LY8FLjHhVlXD+y4iuc0IqNmWrBIv9el
-         51y+WWsppoKwwbTV60Sqk0NqXjSJqmUI45NKxdDPT/T3/S5/GMBAMOOArHAh7pwq2sHa
-         EmTj27GQi/UL/PTrNdzY56PXUXWkNPMkYv9wkJDq5Si84B5YsguUN/vrfP/5NnE4CuX8
-         7ac1J2j/J8dSb6Hv3sFiI0/EldWqWJEYWmOKJ+MpP1diaTdmvsK1xtYs550Dif9qPfwM
-         HZyXZVBpy+qva15TlC4A4TSTwKRUH2DX/kuvofNzcgSvXQ8D722g1F1xZ0hyaYXw1G6/
-         zmJg==
-X-Gm-Message-State: AJIora8AcEmMEfdL5e7qJKuEDTcnh2yvjiZDolKAnd07tEhsnNMzyYRu
-        okDHNh+H8RG40Zwl4m6h0NY=
-X-Google-Smtp-Source: AGRyM1s0YzUg7ZRzt5khe5CvyMl8gMYVZEMf5KMuoIvul92VVB9vLTphosQ0HwDXvD8gsVix+FxAcg==
-X-Received: by 2002:adf:fc0c:0:b0:210:2e87:9d3a with SMTP id i12-20020adffc0c000000b002102e879d3amr859955wrr.556.1655314094213;
-        Wed, 15 Jun 2022 10:28:14 -0700 (PDT)
-Received: from localhost.localdomain (93-42-70-190.ip85.fastwebnet.it. [93.42.70.190])
-        by smtp.googlemail.com with ESMTPSA id w3-20020a7bc103000000b003976fbfbf00sm3023792wmi.30.2022.06.15.10.28.13
+        h=x-gm-message-state:message-id:date:from:to:cc:subject:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=0mmtAiGES9hy6GbZr6mj1I/9d7FHTjal/1dcnEoMib4=;
+        b=nwHdYC9/mIhD8FirHKHPj4c4nnd0+B559Q/4QxUD3ssj3nZnA31QB02jbujUemqvcD
+         ULfVZYORrLdeXf2C+VHDGOOCd8Ga18XNPMlct5u8yU9I62v5hDNTyHNe8U5KTPT/64aH
+         +TcrLCq1AQXiKKm+eXA+O1Pa6RPiQiyJdb0srQJxWLEX5a0/fB9CFbS0u6Y3chnIJBFJ
+         wzElidQzFGwDxuAOAX1+AM1/qfFZFeCl87cknVMT1g1lQTTkD2UdlMZG73HnT5UyYnU6
+         mQ31hiH0hXpN2fIwyknlGSQjBDHaPxp1nkw9k5HRTJYZ2AZM8eYOxO3MZXsaVjZdL4L5
+         qLTw==
+X-Gm-Message-State: AJIora81U/mcQVvemJKY+BrB54JzsIMGORzf1zzRALDsi/bxQfNlCOhJ
+        9cqlXgbhuOwEMg9OCXuXfEa44yix9yk=
+X-Google-Smtp-Source: AGRyM1u6SrzeH7qCFw4qlFWwaZs3p9N6OsL/H2wxtO516NhvYU71hXSl0/p2IYSj34r7su/3P5K8qA==
+X-Received: by 2002:a05:600c:4e51:b0:39c:4f18:4c29 with SMTP id e17-20020a05600c4e5100b0039c4f184c29mr537734wmq.101.1655314166756;
+        Wed, 15 Jun 2022 10:29:26 -0700 (PDT)
+Received: from Ansuel-xps. (93-42-70-190.ip85.fastwebnet.it. [93.42.70.190])
+        by smtp.gmail.com with ESMTPSA id t1-20020a5d6a41000000b00218468314d7sm15298550wrw.62.2022.06.15.10.29.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Jun 2022 10:28:13 -0700 (PDT)
-From:   Christian 'Ansuel' Marangi <ansuelsmth@gmail.com>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
+        Wed, 15 Jun 2022 10:29:26 -0700 (PDT)
+Message-ID: <62aa16f6.1c69fb81.816fc.be7a@mx.google.com>
+X-Google-Original-Message-ID: <YqoKTt3G5+hXj2ET@Ansuel-xps.>
+Date:   Wed, 15 Jun 2022 18:35:26 +0200
+From:   Ansuel Smith <ansuelsmth@gmail.com>
+To:     Manivannan Sadhasivam <mani@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Miquel Raynal <miquel.raynal@bootlin.com>,
+        Richard Weinberger <richard@nod.at>,
+        Vignesh Raghavendra <vigneshr@ti.com>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-Cc:     Christian 'Ansuel' Marangi <ansuelsmth@gmail.com>
-Subject: [PATCH 3/3] clk: qcom: lcc-ipq806x: convert to parent data
-Date:   Wed, 15 Jun 2022 18:34:08 +0200
-Message-Id: <20220615163408.30154-3-ansuelsmth@gmail.com>
-X-Mailer: git-send-email 2.36.1
-In-Reply-To: <20220615163408.30154-1-ansuelsmth@gmail.com>
-References: <20220615163408.30154-1-ansuelsmth@gmail.com>
+        linux-mtd@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v7 2/3] mtd: nand: raw: qcom_nandc: add support for
+ unprotected spare data pages
+References: <20220615000612.3119-1-ansuelsmth@gmail.com>
+ <20220615000612.3119-3-ansuelsmth@gmail.com>
+ <20220615172802.GB3606@thinkpad>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20220615172802.GB3606@thinkpad>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
         RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
@@ -76,220 +83,156 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Convert lcc-ipq806x driver to parent_data API.
+On Wed, Jun 15, 2022 at 10:58:02PM +0530, Manivannan Sadhasivam wrote:
+> On Wed, Jun 15, 2022 at 02:06:11AM +0200, Ansuel Smith wrote:
+> > IPQ8064 nand have special pages where a different layout scheme is used.
+> > These special page are used by boot partition and on reading them
+> > lots of warning are reported about wrong ECC data and if written to
+> > results in broken data and not bootable device.
+> > 
+> > The layout scheme used by these special page consist in using 512 bytes
+> > as the codeword size (even for the last codeword) while writing to CFG0
+> > register. This forces the NAND controller to unprotect the 4 bytes of
+> > spare data.
+> > 
+> > Since the kernel is unaware of this different layout for these special
+> > page, it does try to protect the spare data too during read/write and
+> > warn about CRC errors.
+> > 
+> > Add support for this by permitting the user to declare these special
+> > pages in dts by declaring offset and size of the partition. The driver
+> > internally will convert these value to nand pages.
+> > 
+> > On user read/write the page is checked and if it's a boot page the
+> > correct layout is used.
+> > 
+> > Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+> 
+> Just a few nitpicks below. With those fixed,
+> 
+> Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+> 
+> Thanks,
+> Mani
+>
 
-Signed-off-by: Christian 'Ansuel' Marangi <ansuelsmth@gmail.com>
----
- drivers/clk/qcom/lcc-ipq806x.c | 79 +++++++++++++++++++---------------
- 1 file changed, 44 insertions(+), 35 deletions(-)
+Sure! Thanks a lot for the various review. Will send v8 that should be
+the final version.
 
-diff --git a/drivers/clk/qcom/lcc-ipq806x.c b/drivers/clk/qcom/lcc-ipq806x.c
-index ba90bebba597..c07ca8dc6e3a 100644
---- a/drivers/clk/qcom/lcc-ipq806x.c
-+++ b/drivers/clk/qcom/lcc-ipq806x.c
-@@ -24,6 +24,10 @@
- #include "clk-regmap-mux.h"
- #include "reset.h"
- 
-+static const struct clk_parent_data gcc_pxo[] = {
-+	{ .fw_name = "pxo", .name = "pxo" },
-+};
-+
- static struct clk_pll pll4 = {
- 	.l_reg = 0x4,
- 	.m_reg = 0x8,
-@@ -34,7 +38,7 @@ static struct clk_pll pll4 = {
- 	.status_bit = 16,
- 	.clkr.hw.init = &(struct clk_init_data){
- 		.name = "pll4",
--		.parent_names = (const char *[]){ "pxo" },
-+		.parent_data = gcc_pxo,
- 		.num_parents = 1,
- 		.ops = &clk_pll_ops,
- 	},
-@@ -64,9 +68,9 @@ static const struct parent_map lcc_pxo_pll4_map[] = {
- 	{ P_PLL4, 2 }
- };
- 
--static const char * const lcc_pxo_pll4[] = {
--	"pxo",
--	"pll4_vote",
-+static const struct clk_parent_data lcc_pxo_pll4[] = {
-+	{ .fw_name = "pxo", .name = "pxo" },
-+	{ .fw_name = "pll4_vote", .name = "pll4_vote" },
- };
- 
- static struct freq_tbl clk_tbl_aif_mi2s[] = {
-@@ -131,18 +135,14 @@ static struct clk_rcg mi2s_osr_src = {
- 		.enable_mask = BIT(9),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "mi2s_osr_src",
--			.parent_names = lcc_pxo_pll4,
--			.num_parents = 2,
-+			.parent_data = lcc_pxo_pll4,
-+			.num_parents = ARRAY_SIZE(lcc_pxo_pll4),
- 			.ops = &clk_rcg_ops,
- 			.flags = CLK_SET_RATE_GATE,
- 		},
- 	},
- };
- 
--static const char * const lcc_mi2s_parents[] = {
--	"mi2s_osr_src",
--};
--
- static struct clk_branch mi2s_osr_clk = {
- 	.halt_reg = 0x50,
- 	.halt_bit = 1,
-@@ -152,7 +152,9 @@ static struct clk_branch mi2s_osr_clk = {
- 		.enable_mask = BIT(17),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "mi2s_osr_clk",
--			.parent_names = lcc_mi2s_parents,
-+			.parent_hws = (const struct clk_hw*[]){
-+				&mi2s_osr_src.clkr.hw,
-+			},
- 			.num_parents = 1,
- 			.ops = &clk_branch_ops,
- 			.flags = CLK_SET_RATE_PARENT,
-@@ -167,7 +169,9 @@ static struct clk_regmap_div mi2s_div_clk = {
- 	.clkr = {
- 		.hw.init = &(struct clk_init_data){
- 			.name = "mi2s_div_clk",
--			.parent_names = lcc_mi2s_parents,
-+			.parent_hws = (const struct clk_hw*[]){
-+				&mi2s_osr_src.clkr.hw,
-+			},
- 			.num_parents = 1,
- 			.ops = &clk_regmap_div_ops,
- 		},
-@@ -183,7 +187,9 @@ static struct clk_branch mi2s_bit_div_clk = {
- 		.enable_mask = BIT(15),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "mi2s_bit_div_clk",
--			.parent_names = (const char *[]){ "mi2s_div_clk" },
-+			.parent_hws = (const struct clk_hw*[]){
-+				&mi2s_div_clk.clkr.hw,
-+			},
- 			.num_parents = 1,
- 			.ops = &clk_branch_ops,
- 			.flags = CLK_SET_RATE_PARENT,
-@@ -191,6 +197,10 @@ static struct clk_branch mi2s_bit_div_clk = {
- 	},
- };
- 
-+static const struct clk_parent_data lcc_mi2s_bit_div_codec_clk[] = {
-+	{ .hw = &mi2s_bit_div_clk.clkr.hw, },
-+	{ .fw_name = "mi2s_codec_clk", .name = "mi2s_codec_clk" },
-+};
- 
- static struct clk_regmap_mux mi2s_bit_clk = {
- 	.reg = 0x48,
-@@ -199,11 +209,8 @@ static struct clk_regmap_mux mi2s_bit_clk = {
- 	.clkr = {
- 		.hw.init = &(struct clk_init_data){
- 			.name = "mi2s_bit_clk",
--			.parent_names = (const char *[]){
--				"mi2s_bit_div_clk",
--				"mi2s_codec_clk",
--			},
--			.num_parents = 2,
-+			.parent_data = lcc_mi2s_bit_div_codec_clk,
-+			.num_parents = ARRAY_SIZE(lcc_mi2s_bit_div_codec_clk),
- 			.ops = &clk_regmap_mux_closest_ops,
- 			.flags = CLK_SET_RATE_PARENT,
- 		},
-@@ -245,8 +252,8 @@ static struct clk_rcg pcm_src = {
- 		.enable_mask = BIT(9),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "pcm_src",
--			.parent_names = lcc_pxo_pll4,
--			.num_parents = 2,
-+			.parent_data = lcc_pxo_pll4,
-+			.num_parents = ARRAY_SIZE(lcc_pxo_pll4),
- 			.ops = &clk_rcg_ops,
- 			.flags = CLK_SET_RATE_GATE,
- 		},
-@@ -262,7 +269,9 @@ static struct clk_branch pcm_clk_out = {
- 		.enable_mask = BIT(11),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "pcm_clk_out",
--			.parent_names = (const char *[]){ "pcm_src" },
-+			.parent_hws = (const struct clk_hw*[]){
-+				&pcm_src.clkr.hw,
-+			},
- 			.num_parents = 1,
- 			.ops = &clk_branch_ops,
- 			.flags = CLK_SET_RATE_PARENT,
-@@ -270,6 +279,11 @@ static struct clk_branch pcm_clk_out = {
- 	},
- };
- 
-+static const struct clk_parent_data lcc_pcm_clk_out_codec_clk[] = {
-+	{ .hw = &pcm_clk_out.clkr.hw, },
-+	{ .fw_name = "pcm_codec_clk", .name = "pcm_codec_clk" },
-+};
-+
- static struct clk_regmap_mux pcm_clk = {
- 	.reg = 0x54,
- 	.shift = 10,
-@@ -277,11 +291,8 @@ static struct clk_regmap_mux pcm_clk = {
- 	.clkr = {
- 		.hw.init = &(struct clk_init_data){
- 			.name = "pcm_clk",
--			.parent_names = (const char *[]){
--				"pcm_clk_out",
--				"pcm_codec_clk",
--			},
--			.num_parents = 2,
-+			.parent_data = lcc_pcm_clk_out_codec_clk,
-+			.num_parents = ARRAY_SIZE(lcc_pcm_clk_out_codec_clk),
- 			.ops = &clk_regmap_mux_closest_ops,
- 			.flags = CLK_SET_RATE_PARENT,
- 		},
-@@ -325,18 +336,14 @@ static struct clk_rcg spdif_src = {
- 		.enable_mask = BIT(9),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "spdif_src",
--			.parent_names = lcc_pxo_pll4,
--			.num_parents = 2,
-+			.parent_data = lcc_pxo_pll4,
-+			.num_parents = ARRAY_SIZE(lcc_pxo_pll4),
- 			.ops = &clk_rcg_ops,
- 			.flags = CLK_SET_RATE_GATE,
- 		},
- 	},
- };
- 
--static const char * const lcc_spdif_parents[] = {
--	"spdif_src",
--};
--
- static struct clk_branch spdif_clk = {
- 	.halt_reg = 0xd4,
- 	.halt_bit = 1,
-@@ -346,7 +353,9 @@ static struct clk_branch spdif_clk = {
- 		.enable_mask = BIT(12),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "spdif_clk",
--			.parent_names = lcc_spdif_parents,
-+			.parent_hws = (const struct clk_hw*[]){
-+				&spdif_src.clkr.hw,
-+			},
- 			.num_parents = 1,
- 			.ops = &clk_branch_ops,
- 			.flags = CLK_SET_RATE_PARENT,
-@@ -384,8 +393,8 @@ static struct clk_rcg ahbix_clk = {
- 		.enable_mask = BIT(11),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "ahbix",
--			.parent_names = lcc_pxo_pll4,
--			.num_parents = 2,
-+			.parent_data = lcc_pxo_pll4,
-+			.num_parents = ARRAY_SIZE(lcc_pxo_pll4),
- 			.ops = &clk_rcg_lcc_ops,
- 		},
- 	},
+> > ---
+> >  drivers/mtd/nand/raw/qcom_nandc.c | 203 +++++++++++++++++++++++++++++-
+> >  1 file changed, 198 insertions(+), 5 deletions(-)
+> > 
+> > diff --git a/drivers/mtd/nand/raw/qcom_nandc.c b/drivers/mtd/nand/raw/qcom_nandc.c
+> > index f2990d721733..0dbfe32888ff 100644
+> > --- a/drivers/mtd/nand/raw/qcom_nandc.c
+> > +++ b/drivers/mtd/nand/raw/qcom_nandc.c
+> 
+> [...]
+> 
+> > +static bool qcom_nandc_is_boot_partition(struct qcom_nand_host *host, int page)
+> > +{
+> > +	struct qcom_nand_boot_partition *boot_partition;
+> > +	u32 start, end;
+> > +	int i;
+> > +
+> > +	/*
+> > +	 * Since the frequent access will be to the non-boot partitions like rootfs,
+> > +	 * optimize the page check by:
+> > +
+> 
+> Missing "*"
+> 
+> > +	 * 1. Checking if the page lies after the last boot partition.
+> > +	 * 2. Checking from the boot partition end.
+> > +	 */
+> > +
+> > +	/* First check the last boot partition */
+> > +	boot_partition = &host->boot_partitions[host->nr_boot_partitions - 1];
+> > +	start = boot_partition->page_offset;
+> > +	end = start + boot_partition->page_size;
+> > +
+> > +	/* Page is after the last boot partition end. This is NOT a boot partition */
+> > +	if (page > end)
+> > +		return false;
+> > +
+> > +	/* Actually check if it's a boot partition */
+> > +	if (page < end && page >= start)
+> > +		return true;
+> > +
+> > +	/* Check the other boot partition starting from the second-last partition */
+> 
+> s/boot partition/boot partitions
+> 
+> > +	for (i = host->nr_boot_partitions - 2; i >= 0; i--) {
+> > +		boot_partition = &host->boot_partitions[i];
+> > +		start = boot_partition->page_offset;
+> > +		end = start + boot_partition->page_size;
+> > +
+> > +		if (page < end && page >= start)
+> > +			return true;
+> > +	}
+> > +
+> > +	return false;
+> > +}
+> > +
+> > +static void
+> > +qcom_nandc_codeword_fixup(struct qcom_nand_host *host, int page)
+> 
+> As like other functions, please align the function on the same line
+> 
+> > +{
+> > +	bool codeword_fixup = qcom_nandc_is_boot_partition(host, page);
+> > +
+> > +	/* Skip conf write if we are already in the correct mode */
+> > +	if (codeword_fixup == host->codeword_fixup)
+> > +		return;
+> > +
+> > +	host->codeword_fixup = codeword_fixup;
+> > +
+> > +	host->cw_data = codeword_fixup ? 512 : 516;
+> > +	host->spare_bytes = host->cw_size - host->ecc_bytes_hw -
+> > +			    host->bbm_size - host->cw_data;
+> > +
+> > +	host->cfg0 &= ~(SPARE_SIZE_BYTES_MASK | UD_SIZE_BYTES_MASK);
+> > +	host->cfg0 |= host->spare_bytes << SPARE_SIZE_BYTES |
+> > +		      host->cw_data << UD_SIZE_BYTES;
+> > +
+> > +	host->ecc_bch_cfg &= ~ECC_NUM_DATA_BYTES_MASK;
+> > +	host->ecc_bch_cfg |= host->cw_data << ECC_NUM_DATA_BYTES;
+> > +	host->ecc_buf_cfg = (host->cw_data - 1) << NUM_STEPS;
+> > +}
+> 
+> [...]
+> 
+> > +static int qcom_nand_host_parse_boot_partitions(struct qcom_nand_controller *nandc,
+> > +						struct qcom_nand_host *host,
+> > +						struct device_node *dn)
+> > +{
+> > +	struct nand_chip *chip = &host->chip;
+> > +	struct mtd_info *mtd = nand_to_mtd(chip);
+> > +	struct qcom_nand_boot_partition *boot_partition;
+> > +	struct device *dev = nandc->dev;
+> > +	int partitions_count, i, j, ret;
+> > +
+> > +	if (!of_find_property(dn, "qcom,boot-partitions", NULL))
+> > +		return 0;
+> > +
+> > +	partitions_count = of_property_count_u32_elems(dn, "qcom,boot-partitions");
+> > +	if (partitions_count <= 0) {
+> > +		dev_err(dev, "Error parsing boot partition\n");
+> > +		if (partitions_count == 0)
+> > +			return -EINVAL;
+> > +		else
+> > +			return partitions_count;
+> 
+> 		return partitions_count ? partitions_count : -EINVAL;
+> 
+> Thanks,
+> Mani
+> 
+> -- 
+> மணிவண்ணன் சதாசிவம்
+
 -- 
-2.36.1
-
+	Ansuel
