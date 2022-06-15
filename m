@@ -2,53 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 46E3054D215
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jun 2022 21:56:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6EDC254D224
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jun 2022 21:56:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350256AbiFOTzz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Jun 2022 15:55:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55536 "EHLO
+        id S1350414AbiFOT4o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Jun 2022 15:56:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56016 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350213AbiFOTzy (ORCPT
+        with ESMTP id S1350416AbiFOT4n (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Jun 2022 15:55:54 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1FDD2983E;
-        Wed, 15 Jun 2022 12:55:53 -0700 (PDT)
+        Wed, 15 Jun 2022 15:56:43 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80DB02F027;
+        Wed, 15 Jun 2022 12:56:42 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 2973D612FD;
-        Wed, 15 Jun 2022 19:55:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7994AC34115;
-        Wed, 15 Jun 2022 19:55:52 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id D5E6D60BA5;
+        Wed, 15 Jun 2022 19:56:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 381A3C34115;
+        Wed, 15 Jun 2022 19:56:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1655322952;
-        bh=L1IfRrjwmFboG0YuyIVj9iLYd93QBE3lTZ/YkDGWoHM=;
+        s=k20201202; t=1655323001;
+        bh=hTYG6s1u5kGTRIJKtbzopTzVK9GFB8oMOCCuo9hUAAU=;
         h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=gGSKM7O2QDGx3l7MGUBs7sH+l1deXBKuVQOwbrTI36exqbP+0u6XN3C3yzIbDK19/
-         rXbCjb41RjrPlXiKaq/PMIww7PA0AxkrO/kCCycuiZNlnAdiHM4t6Xi+UOzyuI8b21
-         mIOZj184g/JjdISYgt0SP0TkF53esvQrkyuHjz8V9yA/aplB6kHSebs99Npyrp7jG0
-         mtqxlrJ+/iFMrfPazFr6z+g5PZfWl+lDYtgj0U9krvYxhisC7A41hDuwRUc9razSLI
-         jV/kPcO+FeJnPYwBOAGZSqNvqN2/yUi7UZecEreQmYvnwaWvDsDLltHsLa+9bHqTWp
-         IhIbyqoCjDw9w==
+        b=Wqt97L1LQeSMYjrXVRa3+bbiKckk9wya+TCSwIsa9GXTEzMM1SmDmM3+uevKiQ7HG
+         G3E8IcCgB1nYTbzsaDmLCLm7DRy7TrPL3FWUmolbM6gTMhzatB2XevsRtl5LyYQKs6
+         SnrnDZ/l/GUUqCJlzWDYBaSMLqTZfooBQazu3cC2eTaNyhbDic1tXPOusM2h5OyWj/
+         fK81BGSfGyoq8w5+ekHGk3lFD7JhidnaPPygOVZ0n5A6gTjcJR/opOTKx0b0o3RNcy
+         Qlwrfa/whjm1HXWc0Obn0jV7RvBUWt77dqXQyiyPgK4Q5xoOPuv3uDsjV07a6R44j6
+         cavceXfBNE8/g==
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20220614153306.29339-4-quic_tdas@quicinc.com>
-References: <20220614153306.29339-1-quic_tdas@quicinc.com> <20220614153306.29339-4-quic_tdas@quicinc.com>
-Subject: Re: [PATCH v5 3/3] clk: qcom: lpass: Add support for resets & external mclk for SC7280
+In-Reply-To: <20220614153306.29339-3-quic_tdas@quicinc.com>
+References: <20220614153306.29339-1-quic_tdas@quicinc.com> <20220614153306.29339-3-quic_tdas@quicinc.com>
+Subject: Re: [PATCH v5 2/3] dt-bindings: clock: Add support for external MCLKs for LPASS on SC7280
 From:   Stephen Boyd <sboyd@kernel.org>
 Cc:     linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
         linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
         devicetree@vger.kernel.org, robh@kernel.org, robh+dt@kernel.org,
-        Taniya Das <quic_tdas@quicinc.com>, mka@chromium.org
+        Taniya Das <quic_tdas@quicinc.com>
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Michael Turquette <mturquette@baylibre.com>,
         Taniya Das <quic_tdas@quicinc.com>
-Date:   Wed, 15 Jun 2022 12:55:50 -0700
+Date:   Wed, 15 Jun 2022 12:56:39 -0700
 User-Agent: alot/0.10
-Message-Id: <20220615195552.7994AC34115@smtp.kernel.org>
+Message-Id: <20220615195641.381A3C34115@smtp.kernel.org>
 X-Spam-Status: No, score=-8.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -59,11 +59,13 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Taniya Das (2022-06-14 08:33:06)
-> The clock gating control for TX/RX/WSA core bus clocks would be required
-> to be reset(moved from hardware control) from audio core driver. Thus
-> add the support for the reset clocks.
+Quoting Taniya Das (2022-06-14 08:33:05)
+> Support external mclk to interface external MI2S clocks for SC7280.
+>=20
+> Fixes: 4185b27b3bef ("dt-bindings: clock: Add YAML schemas for LPASS cloc=
+ks on SC7280").
+> Acked-by: Rob Herring <robh@kernel.org>
+> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+> ---
 
-Why can't this driver remove the clks from hardware control when it
-probes? Does something put the clks into hardware control mode at
-runtime?
+Reviewed-by: Stephen Boyd <sboyd@kernel.org>
