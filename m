@@ -2,62 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7A5C954CDE8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jun 2022 18:12:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 19E1D54CE70
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jun 2022 18:19:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348606AbiFOQMA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Jun 2022 12:12:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38306 "EHLO
+        id S1348775AbiFOQTW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Jun 2022 12:19:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41706 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348591AbiFOQL7 (ORCPT
+        with ESMTP id S1356403AbiFOQSf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Jun 2022 12:11:59 -0400
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9C4035DDA
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jun 2022 09:11:57 -0700 (PDT)
+        Wed, 15 Jun 2022 12:18:35 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8FDF4BFFF
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jun 2022 09:17:12 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id a2so19705453lfg.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jun 2022 09:17:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1655309517; x=1686845517;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=SOL+ffGS+r8v5ewHpIOkg75iNh8LzzO2LAlBqs9VkBs=;
-  b=gw+FhTTcOI9ZZ2YT4yRcg223tLd1X+bhr9/sHb7A59XXrL2xSDfsT61P
-   E8d9M0t4yfiAzEh3jkxTzP4QJkv/jCSh1G4pKcYnSlDoEQ3QJDiqV1Sk3
-   XO/Buc+m342QIg+aAr5scnl0iDqy3eOmEvAGva/m7j40BeDdD0rhNExxN
-   Y=;
-Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 15 Jun 2022 09:11:57 -0700
-X-QCInternal: smtphost
-Received: from nasanex01b.na.qualcomm.com ([10.46.141.250])
-  by ironmsg02-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Jun 2022 09:11:57 -0700
-Received: from [10.71.110.111] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Wed, 15 Jun
- 2022 09:11:57 -0700
-Message-ID: <60fc83dd-b6ed-ba60-a116-6eecbf71784f@quicinc.com>
-Date:   Wed, 15 Jun 2022 09:11:56 -0700
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=enqTj8G+JMLqJtg3eWd64lmGi1ztkOy37oPU+WBetZA=;
+        b=v3SIyID1s3Pb2lnxi6rKrA98EqNfi95RGGgE+/eukh3tZnjcaZ7EHIGpFRbItYTAge
+         iFpQE/OuPj+2sBvHVK2yuopP5Um6g4DG/pow8mMMGVRMZGz1Aa1uUAaoj8rhz3R9J/jL
+         XtKr/YgNxxaYzj3YBGqesU3jKBwmTy4UAdCbPbYA8fpB87VgvoJClhJ3Qk6yLD8CZjwC
+         PQvy+LR4im0cY6VJIDhvK1rTuVI2YdyVR2cLyxLNnuaKdaDbNa2MluM3fQrjqv0JVl/A
+         5FddA4nTEw1BlWxxwK5+LspgO14sLmdSAgW6RbtQ++YowtDko29mo5oXl1JaR4jfjIYr
+         T04Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=enqTj8G+JMLqJtg3eWd64lmGi1ztkOy37oPU+WBetZA=;
+        b=JE9UUgUEMOiEUG+lkgEOk2mv0vjfJ4L8c1abwlmaLPKbPCJRzDA+FdHpVcCD1bsMsX
+         oyv073NJQvb49oksgjwZmUyBjZyta7vnlk6m03eNrwS1cZ0zFtDb0B1o4wvhQND6wRM+
+         cBh3Zbv4zyjhgcbBhcNdoq41qMlp6te4MFjpYPQIxUUDaxJqcbv6t5WY6FAnQcOQFQgh
+         Y0kBosHSEohxCNKExmgvegUQiT4WZ2S5/jS4rKq0y78NNu4lpwtIycbLMkcpKy69Qumw
+         ErTwHSlQf9gXLpgCwCIy9rOly1xdRJlRnNOTCP/GAiltt/LN9Uo+MVl0MPu8Ica3ktw6
+         nYcA==
+X-Gm-Message-State: AJIora/UeR+Q0IfToaGASqQ14nhFaP2t5NtMcR9NS4vl8uLiuz+qGSSw
+        RXjhB7/A5e80iIFrwyPrqbAe/A==
+X-Google-Smtp-Source: AGRyM1tDymQ2nSjUAUxrkEoOVXS2qLQxpubfiaMB8C34JUBpYCnl8JYWa9TFNWiAUPeHJyYmcQ5sPg==
+X-Received: by 2002:a19:4316:0:b0:479:ed75:5c1f with SMTP id q22-20020a194316000000b00479ed755c1fmr158029lfa.253.1655309830906;
+        Wed, 15 Jun 2022 09:17:10 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id o16-20020ac24bd0000000b0047255d211bfsm1849298lfq.238.2022.06.15.09.17.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 15 Jun 2022 09:17:10 -0700 (PDT)
+Message-ID: <d91600b6-c9a6-bdae-e5c3-38a6b1133883@linaro.org>
+Date:   Wed, 15 Jun 2022 19:17:09 +0300
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Subject: Re: [PATCH v2 3/3] drm/msm/dpu: Add interface support for CRC debugfs
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC:     <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
-        <seanpaul@chromium.org>, <swboyd@chromium.org>,
-        <quic_aravindh@quicinc.com>, <quic_abhinavk@quicinc.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: Re: [PATCH v2 1/3] drm/msm/dpu: Move LM CRC code into separate method
+Content-Language: en-GB
+To:     Jessica Zhang <quic_jesszhan@quicinc.com>
+Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
+        seanpaul@chromium.org, swboyd@chromium.org,
+        quic_aravindh@quicinc.com, quic_abhinavk@quicinc.com
 References: <20220614211328.216-1-quic_jesszhan@quicinc.com>
- <20220614211328.216-4-quic_jesszhan@quicinc.com>
- <CAA8EJprHBdbAfTEy7wsoyLday6hWR2pBuOrBWjckB_saYDE7DA@mail.gmail.com>
-From:   Jessica Zhang <quic_jesszhan@quicinc.com>
-In-Reply-To: <CAA8EJprHBdbAfTEy7wsoyLday6hWR2pBuOrBWjckB_saYDE7DA@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-Spam-Status: No, score=-5.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+ <20220614211328.216-2-quic_jesszhan@quicinc.com>
+ <CAA8EJppgyuzHipZT1SVyD5+NNnC2yB5hRy4=--DGv=dk1VRMAw@mail.gmail.com>
+ <7489a181-f87f-5187-6fae-3ad5b74c2d2c@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <7489a181-f87f-5187-6fae-3ad5b74c2d2c@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -66,329 +79,93 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 15/06/2022 19:11, Jessica Zhang wrote:
+> On 6/15/2022 2:35 AM, Dmitry Baryshkov wrote:
+>> On Wed, 15 Jun 2022 at 00:13, Jessica Zhang 
+>> <quic_jesszhan@quicinc.com> wrote:
+>>>
+>>> Move layer mixer-specific section of dpu_crtc_get_crc() into a separate
+>>> helper method. This way, we can make it easier to get CRCs from other HW
+>>> blocks by adding other get_crc helper methods.
+>>>
+>>> Changes since V1:
+>>> - Moved common bitmasks to dpu_hw_util.h
+>>> - Moved common CRC methods to dpu_hw_util.c
+>>> - Updated copyrights
+>>> - Changed crcs array to a dynamically allocated array and added it as a
+>>>    member of crtc_state
+>>>
+>>> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+>>
+>> Please split this into separate patches. One for hw_util, one for the 
+>> rest
+> 
+> Sure
+> 
+>>
+>>> ---
+>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c    | 88 +++++++++++++--------
+>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h    |  4 +
+>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c   | 42 +---------
+>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c | 46 ++++++++++-
+>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h | 16 ++++
+>>>   5 files changed, 124 insertions(+), 72 deletions(-)
+>>>
+>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c 
+>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+>>> index b56f777dbd0e..16742a66878e 100644
+>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+>>> @@ -1,5 +1,6 @@
+>>>   // SPDX-License-Identifier: GPL-2.0-only
+>>>   /*
+>>> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights 
+>>> reserved.
+>>>    * Copyright (c) 2014-2021 The Linux Foundation. All rights reserved.
+>>>    * Copyright (C) 2013 Red Hat
+>>>    * Author: Rob Clark <robdclark@gmail.com>
+>>> @@ -88,6 +89,11 @@ static int dpu_crtc_verify_crc_source(struct 
+>>> drm_crtc *crtc,
+>>>          enum dpu_crtc_crc_source source = 
+>>> dpu_crtc_parse_crc_source(src_name);
+>>>          struct dpu_crtc_state *crtc_state = 
+>>> to_dpu_crtc_state(crtc->state);
+>>>
+>>> +       if (crtc_state->crcs) {
+>>> +               kfree(crtc_state->crcs);
+>>> +               crtc_state->crcs = NULL;
+>>> +       }
+>>> +
+>>>          if (source < 0) {
+>>>                  DRM_DEBUG_DRIVER("Invalid source %s for CRTC%d\n", 
+>>> src_name, crtc->index);
+>>>                  return -EINVAL;
+>>> @@ -96,20 +102,37 @@ static int dpu_crtc_verify_crc_source(struct 
+>>> drm_crtc *crtc,
+>>>          if (source == DPU_CRTC_CRC_SOURCE_LAYER_MIXER)
+>>>                  *values_cnt = crtc_state->num_mixers;
+>>>
+>>> +       crtc_state->crcs = kcalloc(*values_cnt, 
+>>> sizeof(crtc_state->crcs), GFP_KERNEL);
+>>> +
+>>
+>> I do not quite like the idea of constantly allocating and freeing the
+>> crcs array. I'd suggest defining sensible MAX_CRC_VALUES, using a
+>> static array and verifying that no one over commits the
+>> MAX_CRC_VALUES.
+>> If at some point we decide that we really need the dynamic array, we
+>> can implement it later. We already had dynamic arrays and Rob had to
+>> fix it. See 00326bfa4e63 ("drm/msm/dpu: Remove dynamic allocation from
+>> atomic context").
+> 
+> Ah, got it... the reason I used a dynamic array here was because AFAIK 
+> we don't have a defined upper limit for how many drm_encoders can be 
+> connected to a CRTC simultaneously. Do you have a suggestion on what 
+> value we can set for MAX_CRC_VALUES?
+
+Three? Two for two hw_intfs?
 
 
-On 6/15/2022 2:44 AM, Dmitry Baryshkov wrote:
-> On Wed, 15 Jun 2022 at 00:13, Jessica Zhang <quic_jesszhan@quicinc.com> wrote:
->>
->> Add support for writing CRC values for the interface block to
->> the debugfs by calling the necessary MISR setup/collect methods.
->>
->> Changes since V1:
->> - Set values_cnt to only include phys with backing hw_intf
->> - Loop over all drm_encs connected to crtc
->>
->> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
->> ---
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c    | 49 ++++++++++++++--
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h    |  3 +
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 64 +++++++++++++++++++++
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h | 22 +++++++
->>   4 files changed, 134 insertions(+), 4 deletions(-)
->>
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
->> index 16742a66878e..8c9933b2337f 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
->> @@ -79,6 +79,8 @@ static enum dpu_crtc_crc_source dpu_crtc_parse_crc_source(const char *src_name)
->>          if (!strcmp(src_name, "auto") ||
->>              !strcmp(src_name, "lm"))
->>                  return DPU_CRTC_CRC_SOURCE_LAYER_MIXER;
->> +       if (!strcmp(src_name, "intf"))
->> +               return DPU_CRTC_CRC_SOURCE_INTF;
-> 
-> What about "encoder" / DPU_CRTC_CRC_SOURCE_ENCODER? You basically
-> offload CRC generation/collection to the dpu_encoder, so I'd ignore
-> the fact that only INTF's support MISR generation and use a more
-> generic word here.
-> 
->>
->>          return DPU_CRTC_CRC_SOURCE_INVALID;
->>   }
->> @@ -99,8 +101,14 @@ static int dpu_crtc_verify_crc_source(struct drm_crtc *crtc,
->>                  return -EINVAL;
->>          }
->>
->> -       if (source == DPU_CRTC_CRC_SOURCE_LAYER_MIXER)
->> +       if (source == DPU_CRTC_CRC_SOURCE_LAYER_MIXER) {
->>                  *values_cnt = crtc_state->num_mixers;
->> +       } else if (source == DPU_CRTC_CRC_SOURCE_INTF) {
->> +               struct drm_encoder *drm_enc;
-> 
-> Zero values_cnt here.
-
-Noted.
-
-> 
->> +
->> +               drm_for_each_encoder_mask(drm_enc, crtc->dev, crtc->state->encoder_mask)
->> +                       *values_cnt += dpu_encoder_get_num_phys(drm_enc);
->> +       }
->>
->>          crtc_state->crcs = kcalloc(*values_cnt, sizeof(crtc_state->crcs), GFP_KERNEL);
->>
->> @@ -123,6 +131,14 @@ static void dpu_crtc_setup_lm_misr(struct dpu_crtc_state *crtc_state)
->>          }
->>   }
->>
->> +static void dpu_crtc_setup_encoder_misr(struct drm_crtc *crtc)
->> +{
->> +       struct drm_encoder *drm_enc;
->> +
->> +       drm_for_each_encoder_mask(drm_enc, crtc->dev, crtc->state->encoder_mask)
->> +               dpu_encoder_setup_misr(drm_enc);
->> +}
->> +
->>   static int dpu_crtc_set_crc_source(struct drm_crtc *crtc, const char *src_name)
->>   {
->>          enum dpu_crtc_crc_source source = dpu_crtc_parse_crc_source(src_name);
->> @@ -175,6 +191,8 @@ static int dpu_crtc_set_crc_source(struct drm_crtc *crtc, const char *src_name)
->>
->>          if (source == DPU_CRTC_CRC_SOURCE_LAYER_MIXER)
->>                  dpu_crtc_setup_lm_misr(crtc_state);
->> +       else if (source == DPU_CRTC_CRC_SOURCE_INTF)
->> +               dpu_crtc_setup_encoder_misr(crtc);
-> 
-> else? >
->>
->>   cleanup:
->>          drm_modeset_unlock(&crtc->mutex);
->> @@ -220,11 +238,31 @@ static int dpu_crtc_get_lm_crc(struct drm_crtc *crtc, struct dpu_crtc_state *crt
->>                          drm_crtc_accurate_vblank_count(crtc), crtc_state->crcs);
->>   }
->>
->> -static int dpu_crtc_get_crc(struct drm_crtc *crtc)
->> +static int dpu_crtc_get_encoder_crc(struct drm_crtc *crtc)
->>   {
->> -       struct dpu_crtc_state *crtc_state;
->> +       struct drm_encoder *drm_enc;
->> +       struct dpu_crtc_state *crtc_state = to_dpu_crtc_state(crtc->state);
->> +       int rc, pos = 0;
->>
->> -       crtc_state = to_dpu_crtc_state(crtc->state);
->> +       drm_for_each_encoder_mask(drm_enc, crtc->dev, crtc->state->encoder_mask) {
->> +               rc = dpu_encoder_get_crc(drm_enc, crtc_state->crcs, pos);
->> +               if (rc < 0) {
->> +                       if (rc != -ENODATA)
->> +                               DRM_DEBUG_DRIVER("MISR read failed\n");
->> +
->> +                       return rc;
->> +               }
->> +
->> +               pos += rc;
->> +       }
->> +
->> +       return drm_crtc_add_crc_entry(crtc, true,
->> +                       drm_crtc_accurate_vblank_count(crtc), crtc_state->crcs);
->> +}
->> +
->> +static int dpu_crtc_get_crc(struct drm_crtc *crtc)
->> +{
->> +       struct dpu_crtc_state *crtc_state = to_dpu_crtc_state(crtc->state);
-> 
-> Unnecessary change here. Please move it to the patch 1, which
-> refactors this function.
-
-Noted.
-
-> 
->>
->>          /* Skip first 2 frames in case of "uncooked" CRCs */
->>          if (crtc_state->crc_frame_skip_count < 2) {
->> @@ -235,6 +273,9 @@ static int dpu_crtc_get_crc(struct drm_crtc *crtc)
->>          if (crtc_state->crc_source == DPU_CRTC_CRC_SOURCE_LAYER_MIXER)
->>                  return dpu_crtc_get_lm_crc(crtc, crtc_state);
->>
->> +       if (crtc_state->crc_source == DPU_CRTC_CRC_SOURCE_INTF)
->> +               return dpu_crtc_get_encoder_crc(crtc);
->> +
->>          return 0;
->>   }
->>
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
->> index 4bf45e3343ef..5db84ea796db 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
->> @@ -1,5 +1,6 @@
->>   /* SPDX-License-Identifier: GPL-2.0-only */
->>   /*
->> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
->>    * Copyright (c) 2015-2021 The Linux Foundation. All rights reserved.
->>    * Copyright (C) 2013 Red Hat
->>    * Author: Rob Clark <robdclark@gmail.com>
->> @@ -73,11 +74,13 @@ struct dpu_crtc_smmu_state_data {
->>    * enum dpu_crtc_crc_source: CRC source
->>    * @DPU_CRTC_CRC_SOURCE_NONE: no source set
->>    * @DPU_CRTC_CRC_SOURCE_LAYER_MIXER: CRC in layer mixer
->> + * @DPU_CRTC_CRC_SOURCE_INTF: CRC in phys interface
->>    * @DPU_CRTC_CRC_SOURCE_INVALID: Invalid source
->>    */
->>   enum dpu_crtc_crc_source {
->>          DPU_CRTC_CRC_SOURCE_NONE = 0,
->>          DPU_CRTC_CRC_SOURCE_LAYER_MIXER,
->> +       DPU_CRTC_CRC_SOURCE_INTF,
->>          DPU_CRTC_CRC_SOURCE_MAX,
->>          DPU_CRTC_CRC_SOURCE_INVALID = -1
->>   };
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->> index 52516eb20cb8..2cbfed5c627e 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->> @@ -14,6 +14,7 @@
->>
->>   #include <drm/drm_crtc.h>
->>   #include <drm/drm_file.h>
->> +#include <drm/drm_vblank.h>
-> 
-> Why?
-
-Leftover from the v1 patch -- not needed anymore since the 
-`drm_crtc_add_crc_entry` call was moved to dpu_crtc.c. Will remove it.
-
-> 
->>   #include <drm/drm_probe_helper.h>
->>
->>   #include "msm_drv.h"
->> @@ -225,6 +226,69 @@ bool dpu_encoder_is_widebus_enabled(const struct drm_encoder *drm_enc)
->>          return dpu_enc->wide_bus_en;
->>   }
->>
->> +int dpu_encoder_get_num_phys(const struct drm_encoder *drm_enc)
-> 
-> The function name is misleading. It doesn't return the number of phys.
-> It returns a number of hw_intfs. And in reality you'd like to get the
-> number of crc entries supported. If at some point WB (or any other
-> possible dpu_encoder backend) gains support for CRC, we won't have to
-> change the name.  Please consider adjusting it.
-
-Noted.
-
-> 
->> +{
->> +       struct dpu_encoder_virt *dpu_enc;
->> +       int i, num_intf = 0;
->> +
->> +       dpu_enc = to_dpu_encoder_virt(drm_enc);
->> +
->> +       for (i = 0; i < dpu_enc->num_phys_encs; i++) {
->> +               struct dpu_encoder_phys *phys = dpu_enc->phys_encs[i];
->> +
->> +               if (phys->hw_intf)
->> +                       num_intf++;
-> 
-> You have to check for hw_intf->ops.setup_misr too.
-
-Noted.
-
-> 
->> +       }
->> +
->> +       return num_intf;
->> +}
->> +
->> +void dpu_encoder_setup_misr(const struct drm_encoder *drm_enc)
->> +{
->> +       struct dpu_encoder_virt *dpu_enc;
->> +
->> +       int i;
->> +
->> +       dpu_enc = to_dpu_encoder_virt(drm_enc);
->> +
->> +       for (i = 0; i < dpu_enc->num_phys_encs; i++) {
->> +               struct dpu_encoder_phys *phys = dpu_enc->phys_encs[i];
->> +
->> +               if (!phys->hw_intf || !phys->hw_intf->ops.setup_misr)
->> +                       continue;
->> +
->> +               phys->hw_intf->ops.setup_misr(phys->hw_intf, true, 1);
->> +       }
->> +}
->> +
->> +int dpu_encoder_get_crc(const struct drm_encoder *drm_enc, u32 *crcs, int pos)
->> +{
->> +       struct dpu_encoder_virt *dpu_enc;
->> +
->> +       int i, rc = 0, entries_added = 0;
->> +
->> +       if (!drm_enc->crtc) {
->> +               DRM_ERROR("no crtc found for encoder %d\n", drm_enc->index);
->> +               return -EINVAL;
->> +       }
->> +
->> +       dpu_enc = to_dpu_encoder_virt(drm_enc);
->> +
->> +       for (i = 0; i < dpu_enc->num_phys_encs; i++) {
->> +               struct dpu_encoder_phys *phys = dpu_enc->phys_encs[i];
->> +
->> +               if (!phys->hw_intf || !phys->hw_intf->ops.collect_misr)
->> +                       continue;
->> +
->> +               rc = phys->hw_intf->ops.collect_misr(phys->hw_intf, &crcs[pos + i]);
-> 
-> No, you should be indexing the crcs with entries_added rather than i.
-
-Noted.
-
-Thanks,
-
-Jessica Zhang
-
-> 
->> +               if (rc)
->> +                       return rc;
->> +               entries_added++;
->> +       }
->> +
->> +       return entries_added;
->> +}
->> +
->>   static void _dpu_encoder_setup_dither(struct dpu_hw_pingpong *hw_pp, unsigned bpc)
->>   {
->>          struct dpu_hw_dither_cfg dither_cfg = { 0 };
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
->> index 781d41c91994..375370029cb9 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
->> @@ -1,5 +1,6 @@
->>   /* SPDX-License-Identifier: GPL-2.0-only */
->>   /*
->> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
->>    * Copyright (c) 2015-2018, The Linux Foundation. All rights reserved.
->>    * Copyright (C) 2013 Red Hat
->>    * Author: Rob Clark <robdclark@gmail.com>
->> @@ -174,6 +175,27 @@ int dpu_encoder_get_vsync_count(struct drm_encoder *drm_enc);
->>
->>   bool dpu_encoder_is_widebus_enabled(const struct drm_encoder *drm_enc);
->>
->> +/**
->> + * dpu_encoder_get_num_phys - get number of physical encoders contained in virtual
->> + *                            encoder
->> + * @drm_enc:    Pointer to previously created drm encoder structure
->> + * Returns:     Number of physical encoders for given drm encoder
->> + */
->> +int dpu_encoder_get_num_phys(const struct drm_encoder *drm_enc);
->> +
->> +/**
->> + * dpu_encoder_setup_misr - enable misr calculations
->> + * @drm_enc:    Pointer to previously created drm encoder structure
->> + */
->> +void dpu_encoder_setup_misr(const struct drm_encoder *drm_encoder);
->> +
->> +/**
->> + * dpu_encoder_get_crc - get the crc value from interface blocks
->> + * @drm_enc:    Pointer to previously created drm encoder structure
->> + * Returns:     0 on success, error otherwise
->> + */
->> +int dpu_encoder_get_crc(const struct drm_encoder *drm_enc, u32 *crcs, int pos);
->> +
->>   /**
->>    * dpu_encoder_use_dsc_merge - returns true if the encoder uses DSC merge topology.
->>    * @drm_enc:    Pointer to previously created drm encoder structure
->> --
->> 2.35.1
->>
-> 
-> 
-> -- 
-> With best wishes
-> Dmitry
+-- 
+With best wishes
+Dmitry
