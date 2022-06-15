@@ -2,91 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B62C454CBAC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jun 2022 16:45:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2A5F454CC01
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jun 2022 16:59:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353642AbiFOOpC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Jun 2022 10:45:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59662 "EHLO
+        id S244348AbiFOO7m (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Jun 2022 10:59:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48706 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353949AbiFOOpB (ORCPT
+        with ESMTP id S242891AbiFOO7m (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Jun 2022 10:45:01 -0400
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 5ABF239BAA;
-        Wed, 15 Jun 2022 07:45:00 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 2DB97153B;
-        Wed, 15 Jun 2022 07:45:00 -0700 (PDT)
-Received: from pierre123.arm.com (unknown [10.57.5.38])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id 91EC93F73B;
-        Wed, 15 Jun 2022 07:44:57 -0700 (PDT)
-From:   Pierre Gondois <pierre.gondois@arm.com>
-To:     linux-kernel@vger.kernel.org
-Cc:     Ionela.Voinescu@arm.com, Lukasz.Luba@arm.com,
-        Dietmar.Eggemann@arm.com, Pierre Gondois <pierre.gondois@arm.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: [PATCH 4/4] cpufreq: Change order of online() CB and policy->cpus modification
-Date:   Wed, 15 Jun 2022 16:43:21 +0200
-Message-Id: <20220615144321.262773-5-pierre.gondois@arm.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20220615144321.262773-1-pierre.gondois@arm.com>
-References: <20220615144321.262773-1-pierre.gondois@arm.com>
+        Wed, 15 Jun 2022 10:59:42 -0400
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3489C101C9;
+        Wed, 15 Jun 2022 07:59:41 -0700 (PDT)
+Received: by mail-wm1-x333.google.com with SMTP id i81-20020a1c3b54000000b0039c76434147so1312622wma.1;
+        Wed, 15 Jun 2022 07:59:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=6fopigGhBHUvToQDW8C96mevEAHmyd9RwH6T3VHGQno=;
+        b=aMm4UMWGVLS0PAt7bgDYcLdhm/CszdAgtdVdM0VB45miYsgwGwV09ga2eYkF4zV8yE
+         kUtl2fvYUcU7gIGTYYEkTyc6kdkn+RFFKlGwxZoASle2G2i0bcCNksb6K0Kc73gmP5qU
+         G1J8w5fZywh60Dj2gtTk22jbwzc1IhxKa5YXcVEdViPzZrOrJYAJu3ojR7mrJWPmlND2
+         2Z8qcYC60RFp6XpiM4BGr+2XVXKD1E7lHXhSAFHKx9eHClHe+2Un2u1GC2EzxzP1SIz4
+         Vw0e6Y3MBvEM+wL9S7jigJAfH3hZYTDU/M5Ys9NHbpq1jLpR21o0Agibudjy8rVbRB5P
+         ttjw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=6fopigGhBHUvToQDW8C96mevEAHmyd9RwH6T3VHGQno=;
+        b=AuNE7RmAzoU8Lw+WUN2rGqFLnHOvONFIQ2Cby88ZMTKvVn9z14s8EYUAK9LuPi5/Qj
+         LoPMCNyQ2PTKJbdkfKWOhi3t99N5EZWYhSQxSDhEUOTfcdp7WAg0D8yLJjB8DzE+coVr
+         j1jEzKq9cFbuQ6/mfXIibWlZPLVoK/FQK40VqFmeO+0OLPwOUJ9QOGQEIPmAo9clhZ+c
+         tl/eokvq6ybwo1C/EBSYojqpBpGuSk+qS/5LhO9zqsB57x6cg+LCyZT/TJzWvMnsoMaK
+         NHdSiPNUuqo+5guizgwWZ9YyUa2lcDfuJLp6nEAxNZglHZVrEY7XnwZgyZqr8k8nlmJs
+         I5yQ==
+X-Gm-Message-State: AOAM53083Y9txYq3TusVOlK3nRpV1jublYyEmSZuvjx1w+RvjrQLciG4
+        Rj0R8PhT/hNue8/sgi1bc+0uE5GiAq8EwlJxG80=
+X-Google-Smtp-Source: ABdhPJwOdzB0phMq92UxkYkA4A0DK81tSFVTV8Pe3y2MmItWnkJUarOsTTIAMYPDNE2/mS2V7lGTfJqzy/ONnv84lkk=
+X-Received: by 2002:a05:600c:4f96:b0:39c:951e:66b7 with SMTP id
+ n22-20020a05600c4f9600b0039c951e66b7mr10636359wmq.84.1655305179680; Wed, 15
+ Jun 2022 07:59:39 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-6.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+References: <20220610172055.2337977-1-robdclark@gmail.com> <42e52572-726b-d94d-6523-7b42dbeecff1@kali.org>
+In-Reply-To: <42e52572-726b-d94d-6523-7b42dbeecff1@kali.org>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Wed, 15 Jun 2022 07:59:44 -0700
+Message-ID: <CAF6AEGuTw3fMaNbvkt9z3EWqjND2R3nrRu+PP=GVQjx+TW0N9w@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm/gem: Drop early returns in close/purge vma
+To:     Steev Klimaszewski <steev@kali.org>
+Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From a state where all policy->related_cpus are offline, putting one
-of the policy's CPU back online re-activates the policy by:
- 1. Calling cpufreq_driver->online()
- 2. Setting the CPU in policy->cpus
+On Sat, Jun 11, 2022 at 11:16 AM Steev Klimaszewski <steev@kali.org> wrote:
+>
+> Hi Rob,
+>
+> On 6/10/22 12:20 PM, Rob Clark wrote:
+> > From: Rob Clark <robdclark@chromium.org>
+> >
+> > Keep the warn, but drop the early return.  If we do manage to hit this
+> > sort of issue, skipping the cleanup just makes things worse (dangling
+> > drm_mm_nodes when the msm_gem_vma is freed, etc).  Whereas the worst
+> > that happens if we tear down a mapping the GPU is accessing is that we
+> > get GPU iova faults, but otherwise the world keeps spinning.
+> >
 
-qcom_cpufreq_hw_cpu_online() makes use of policy->cpus. Thus 1. and 2.
-should be inverted to avoid having a policy->cpus empty. The
-qcom-cpufreq-hw is the only driver affected by this.
+forgot this initially:
 
-Fixes: a1eb080a0447 ("cpufreq: qcom-hw: provide online/offline operations")
-Signed-off-by: Pierre Gondois <pierre.gondois@arm.com>
----
- drivers/cpufreq/cpufreq.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+Reported-by: Steev Klimaszewski <steev@kali.org>
 
-diff --git a/drivers/cpufreq/cpufreq.c b/drivers/cpufreq/cpufreq.c
-index 2cad42774164..36043be16d8e 100644
---- a/drivers/cpufreq/cpufreq.c
-+++ b/drivers/cpufreq/cpufreq.c
-@@ -1350,15 +1350,15 @@ static int cpufreq_online(unsigned int cpu)
- 	}
- 
- 	if (!new_policy && cpufreq_driver->online) {
-+		/* Recover policy->cpus using related_cpus */
-+		cpumask_copy(policy->cpus, policy->related_cpus);
-+
- 		ret = cpufreq_driver->online(policy);
- 		if (ret) {
- 			pr_debug("%s: %d: initialization failed\n", __func__,
- 				 __LINE__);
- 			goto out_exit_policy;
- 		}
--
--		/* Recover policy->cpus using related_cpus */
--		cpumask_copy(policy->cpus, policy->related_cpus);
- 	} else {
- 		cpumask_copy(policy->cpus, cpumask_of(cpu));
- 
--- 
-2.25.1
-
+> > Signed-off-by: Rob Clark <robdclark@chromium.org>
+> > ---
+> >   drivers/gpu/drm/msm/msm_gem_vma.c | 6 ++----
+> >   1 file changed, 2 insertions(+), 4 deletions(-)
+> >
+> > diff --git a/drivers/gpu/drm/msm/msm_gem_vma.c b/drivers/gpu/drm/msm/msm_gem_vma.c
+> > index 3c1dc9241831..c471aebcdbab 100644
+> > --- a/drivers/gpu/drm/msm/msm_gem_vma.c
+> > +++ b/drivers/gpu/drm/msm/msm_gem_vma.c
+> > @@ -62,8 +62,7 @@ void msm_gem_purge_vma(struct msm_gem_address_space *aspace,
+> >       unsigned size = vma->node.size;
+> >
+> >       /* Print a message if we try to purge a vma in use */
+> > -     if (GEM_WARN_ON(msm_gem_vma_inuse(vma)))
+> > -             return;
+> > +     GEM_WARN_ON(msm_gem_vma_inuse(vma));
+> >
+> >       /* Don't do anything if the memory isn't mapped */
+> >       if (!vma->mapped)
+> > @@ -128,8 +127,7 @@ msm_gem_map_vma(struct msm_gem_address_space *aspace,
+> >   void msm_gem_close_vma(struct msm_gem_address_space *aspace,
+> >               struct msm_gem_vma *vma)
+> >   {
+> > -     if (GEM_WARN_ON(msm_gem_vma_inuse(vma) || vma->mapped))
+> > -             return;
+> > +     GEM_WARN_ON(msm_gem_vma_inuse(vma) || vma->mapped);
+> >
+> >       spin_lock(&aspace->lock);
+> >       if (vma->iova)
+>
+> I've seen the splat on the Lenovo Yoga C630 here, and have tested this
+> patch, and as described, the splat still happens, but the system is
+> still able to be used.
+>
+> Tested-by: Steev Klimaszewski <steev@kali.org>
+>
