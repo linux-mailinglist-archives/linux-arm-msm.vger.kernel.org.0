@@ -2,139 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5088A54CC10
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jun 2022 17:01:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3078F54CD50
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jun 2022 17:44:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343625AbiFOPBJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Jun 2022 11:01:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49428 "EHLO
+        id S1345452AbiFOPoc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Jun 2022 11:44:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39526 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232920AbiFOPBH (ORCPT
+        with ESMTP id S1345540AbiFOPo1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Jun 2022 11:01:07 -0400
-Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CCADC3818A;
-        Wed, 15 Jun 2022 08:01:06 -0700 (PDT)
-Received: by mail-pf1-x42d.google.com with SMTP id y196so11686541pfb.6;
-        Wed, 15 Jun 2022 08:01:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=oZ4C/2pH/xtflOzIMAJ169l+TNeby43rC2FOPbSEEZs=;
-        b=nojPL5UaGkmux0gCu7JOJqxhwy1lqtFptyfnXTMFceVdPL2Rxobub2I3oVJ78AtmFb
-         +bxryzTBDxDkecuOV+d5DIJNeSXPxGjnCIy8peSr6Zzju4bWjrlmC14dbkg0RJgzM49Y
-         cKr976plCRJjpRBAYYPnhi+X03BBEYPdI+xzPzHMfZyMrWq4HR0XRTo/TLXX6SHVJwy7
-         Lk82MdXUTdp52hzlrVgeQZKZuyRad/oYjLydlLYnj+yuxvqDYv7TqHFdjPjnniOcrsc0
-         arz2nwYUYoEsieX7Drp5TKN5rrm9iEPvY6dpl+51IfD6oiEyNc/28QbRwGH4H783PdDX
-         qeGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=oZ4C/2pH/xtflOzIMAJ169l+TNeby43rC2FOPbSEEZs=;
-        b=wAF4uweRh09+YXtkU5nTWRH3GCEMCdLdwALKtBwnmgenkrrzkas5C7bhahQW0Diz2Y
-         F8EHNY43OXy+b5joUV9C/vMMduoAKShTEx1poCR34w1Fr8RD2IxiHNX1UAWWMgm/8s8v
-         0bnhY9PNGpBRSKazr068xbocp7R2haKwXfKq3osozxzm9kXpI76iDivpSIzhrtSLG7fc
-         0tuohhvBJ3MiKE5HupIs6cC+CXCdpnIgFBkrldMGtfhJ21iSlgcbf13biinpNGnzlYym
-         jZb+CQqOkJEKI5p/fWPaAk4pmINlheri8YO5XNtK2T+SFi5zv2NAb9Vn0dZdFbRiGW2P
-         GjQQ==
-X-Gm-Message-State: AJIora9YfX/Kax5CBskW3qnfWfOVc77ym7OhXvHGjlUzGqV4MF5DwSZO
-        O+1C79o4O3+SGcB5e4ItZjM=
-X-Google-Smtp-Source: AGRyM1uVmXm2LijmpDnabCBZB64cAjzssYoJ5LFqFHbcXkw1POVaPkDuu3znkGzi5uOvf/VCeg9V5Q==
-X-Received: by 2002:a63:ec14:0:b0:401:9e3e:7d23 with SMTP id j20-20020a63ec14000000b004019e3e7d23mr190083pgh.235.1655305266249;
-        Wed, 15 Jun 2022 08:01:06 -0700 (PDT)
-Received: from localhost ([2a00:79e1:abd:4a00:2703:3c72:eb1a:cffd])
-        by smtp.gmail.com with ESMTPSA id d4-20020a62f804000000b0050dc76281d9sm10341671pfh.179.2022.06.15.08.01.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Jun 2022 08:01:02 -0700 (PDT)
-From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Rob Clark <robdclark@chromium.org>,
-        Steev Klimaszewski <steev@kali.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        Jonathan Marek <jonathan@marek.ca>,
-        =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-        Dan Carpenter <dan.carpenter@oracle.com>,
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH 2/2] drm/msm: Don't overwrite hw fence in hw_init
-Date:   Wed, 15 Jun 2022 08:01:07 -0700
-Message-Id: <20220615150107.2969593-2-robdclark@gmail.com>
-X-Mailer: git-send-email 2.36.1
-In-Reply-To: <20220615150107.2969593-1-robdclark@gmail.com>
-References: <20220615150107.2969593-1-robdclark@gmail.com>
+        Wed, 15 Jun 2022 11:44:27 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 148672A705;
+        Wed, 15 Jun 2022 08:44:25 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 10754617BA;
+        Wed, 15 Jun 2022 15:44:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B1A8C34115;
+        Wed, 15 Jun 2022 15:44:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1655307864;
+        bh=zn+/9NlXFFxNxik8PzMPhaZQNyZRXGyoUKmHeh3qoKU=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:From;
+        b=jrgcQroKhGK+qJaprMi3K8vdIP0AeA+TaghGIMQewyWTRAUWd1j93uevWM/vnkIY6
+         GgRjk7et5CJt1/2LReby/gDaRzibvaObXc7hgTnZNCJN8SoVf1JkvJAQdumqW9jco8
+         O2rtia3ub56/BpqZVVU4PotvWBr2WgbI8sc9McxctKx1lL7LLIEQHGXPUXruUMb8Rn
+         //6Y1PCHX8Ig3UNJ47ycxELdbjx67QiTSZ61ZL9lBpyOVLXR/SuLKsv5q490RB2aNS
+         UrH7x6gM8LuArjItzGEd8YJRoh9JnwT2T5XCRCAi9hRFF7ufcCSE+q+YE6tZiHcyKX
+         LiD4UNogf+Mag==
+Date:   Wed, 15 Jun 2022 10:44:22 -0500
+From:   Bjorn Helgaas <helgaas@kernel.org>
+To:     Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
+Cc:     Stephen Boyd <swboyd@chromium.org>, linux-pci@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_vbadigan@quicinc.com, quic_hemantk@quicinc.com,
+        quic_ramkri@quicinc.com, manivannan.sadhasivam@linaro.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>
+Subject: Re: [PATCH v1] PCI: qcom: Allow L1 and its sub states on qcom dwc
+ wrapper
+Message-ID: <20220615154422.GA941075@bhelgaas>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1e92745e-6fa4-a3bd-d0cb-5c1f78efbead@quicinc.com>
+X-Spam-Status: No, score=-8.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+On Wed, Jun 15, 2022 at 06:44:19PM +0530, Krishna Chaitanya Chundru wrote:
+> On 6/9/2022 3:47 AM, Stephen Boyd wrote:
+> > Quoting Krishna chaitanya chundru (2022-06-03 00:18:50)
+> > > Allow L1 and its sub-states in the qcom dwc pcie wrapper.
+> > > By default its disabled. So enable it explicitly.
+> > > 
+> > Would be good to add some more details about why it's disabled by
+> > default. I guess it's disabled by default in the hardware and enabling
+> > it is OK to do unconditionally for all qcom dwc pcie devices?
+> 
+> This is disabled by default in the hardware. We can enable this for all qcom
+> devices unconditionally because
+> 
+> Adding this patch alone will not allow aspm transitions we need to enable
+> aspm configs. If particular devices doesn't want aspm
+> they can disable using aspm configs.
 
-Prior to the last commit, this could result in setting the GPU
-written fence value back to an older value, if we had missed
-updating completed_fence prior to suspend.  This was mostly
-harmless as the GPU would eventually overwrite it again with
-the correct value.  But we should just not do this.  Instead
-just leave a sanity check that the fence looks plausible (in
-case the GPU scribbled on memory).
+This patch only affects qcom.  Is PCIE20_PARF_PM_CTRL qcom-specific?
+Or is this something that should be done for all dwc-based drivers?
 
-Reported-by: Steev Klimaszewski <steev@kali.org>
-Fixes: 95d1deb02a9c ("drm/msm/gem: Add fenced vma unpin")
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- drivers/gpu/drm/msm/adreno/adreno_gpu.c | 11 ++++++++---
- drivers/gpu/drm/msm/msm_gpu.c           |  2 +-
- 2 files changed, 9 insertions(+), 4 deletions(-)
+In fact, it only affects Qcom IP rev 2.7.0 and 1.9.0 (the only users
+of qcom_pcie_init_2_7_0()).  I guess the other revisions don't support
+ASPM L1 at all?
 
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-index e1aef4875e2f..dd044d557c7c 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-@@ -498,10 +498,15 @@ int adreno_hw_init(struct msm_gpu *gpu)
- 
- 		ring->cur = ring->start;
- 		ring->next = ring->start;
--
--		/* reset completed fence seqno: */
--		ring->memptrs->fence = ring->fctx->completed_fence;
- 		ring->memptrs->rptr = 0;
-+
-+		/* Detect and clean up an impossible fence, ie. if GPU managed
-+		 * to scribble something invalid, we don't want that to confuse
-+		 * us into mistakingly believing that submits have completed.
-+		 */
-+		if (fence_before(ring->fctx->last_fence, ring->memptrs->fence)) {
-+			ring->memptrs->fence = ring->fctx->last_fence;
-+		}
- 	}
- 
- 	return 0;
-diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
-index b61078f0cd0f..8c00f9187c03 100644
---- a/drivers/gpu/drm/msm/msm_gpu.c
-+++ b/drivers/gpu/drm/msm/msm_gpu.c
-@@ -430,7 +430,7 @@ static void recover_worker(struct kthread_work *work)
- 		 * one more to clear the faulting submit
- 		 */
- 		if (ring == cur_ring)
--			fence++;
-+			ring->memptrs->fence = ++fence;
- 
- 		msm_update_fence(ring->fctx, fence);
- 	}
--- 
-2.36.1
+Does this patch affect the Link Capabilities register?  Before this
+patch, does Link Cap advertise L1 support but enabling it doesn't
+work?  Or does it not even advertise L1 support?
 
+After this patch, I assume Link Cap advertises L1 support and enabling
+L1 and L1 substates via PCI_EXP_LNKCTL_ASPM_L1,
+PCI_L1SS_CTL1_ASPM_L1_1, and PCI_L1SS_CTL1_ASPM_L1_2 works per spec,
+right?
+
+Bjorn
