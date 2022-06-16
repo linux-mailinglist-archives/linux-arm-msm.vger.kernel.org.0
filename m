@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D735954DDC9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jun 2022 11:03:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 60F2C54DDCC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jun 2022 11:03:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230081AbiFPJDb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Jun 2022 05:03:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58930 "EHLO
+        id S1376483AbiFPJDc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Jun 2022 05:03:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58958 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1376483AbiFPJD0 (ORCPT
+        with ESMTP id S1376502AbiFPJD1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Jun 2022 05:03:26 -0400
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0395A2F027
+        Thu, 16 Jun 2022 05:03:27 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F0B12F384
         for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jun 2022 02:03:25 -0700 (PDT)
-Received: by mail-lj1-x22e.google.com with SMTP id g2so789182ljk.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jun 2022 02:03:24 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id a2so1229052lfg.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jun 2022 02:03:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=fV4e5YC9VYPaeaA3wYkEZj1J8lq/TEYTcnfqzS3h2eU=;
-        b=o0fIZANVn9C9PV0ontkcAk6mmCC1Eso7Xx+wM30L4F+Nav7QGbwlKA9k4BAz9ScOvG
-         N0XnfSxgcFtu/BNsn/gMY3F73M+Q2nGWdSsN5aKiGxhLVNpIW7rHyQiG4CdrSVcXCJ0U
-         tQsehBpaRfefwBr+eTC4wl3qiQ05VuOdjsa9OnuCdl5alW7sC/IqR8bQDDGRLOBrXtb/
-         +dICAGXXktHLx2oie+hiHxOfZUXNnUcMfbBa01ektqvVvn/buCJsClEsyezmCGZPLNCH
-         CUaVUP7TCvp5mCevW+YeHBUXCAHxjCbO4d+eACyAubQsae1g+s4KwvQBJIuroVf4d0TR
-         Jglw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=kWEg3qKQ7Suf9K5vJw6s6X7vzMoYVIAYuI4zZZJqDTo=;
+        b=Y3riwIpAM2iIU/hX5yfy2hJLoLXc2eVsvqBz5J/HPfEm9R7mPOxVbj3hnD0a0sS2UE
+         GAQw8868YRHX1Fjkoohlndz0Mjqk9srWEneE2dKvhXqE7US7tc0FHRWOj1PhZNiwo0oe
+         kYat/gsfFBdTcGTtrGU0wKjxzp4zv6mse69Pl4Mf+6cYg9zMPLD5/14P8Mwuh2u/YgXo
+         /qyXHlfALdRhJIO1Lx8Hn7Hik+5vQKIveWgG4uYGQUtfTf6MtLkvJtwOH26CvJmRh5n0
+         f+3wcXdzKf42K8UfEpTrl0TCfuhdeVDbB8HvB6MaveajTCdbvzID5p0HdqNNG/wdd/nN
+         O2Ng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=fV4e5YC9VYPaeaA3wYkEZj1J8lq/TEYTcnfqzS3h2eU=;
-        b=KBiqKGQP0fbZ5es3TjvG1v+Sz2bIpOTegPcpajWBTB+xrRGg5hBR4BFKygRyqNqyi5
-         OI/9QUgFD5GNIRkw3aseTKyX8LCBVSkmzspJq7axoF89zoEZi3YD+WIgfwfVFblsUGUc
-         lJdN2rDowtwmvVGtEnU5U8x37clueFLAxYT25tdFo6WkHuPRZ7W4njE+WUWU91NmBufR
-         vTZz41to27/U0+zPsCSWwRvX5nFqCcXnIOExRzuCfFEIwNUKZ9yab8G3EFZui3YZH7Rb
-         3NJsQnfzRQCm+SOPorDB4F4Vhul5FQp0n5LiLqEe0m/OO9vCgIaa/Khpv384C46xZjWn
-         kz9Q==
-X-Gm-Message-State: AJIora+DNfDF9IJ97fJNWcOkYqwDXJk55ND4GGm3LjN9bRVO7kDrzKS2
-        VLXUiUgr/biDIPVLTtTFSa+1RA==
-X-Google-Smtp-Source: AGRyM1sZRCtLA14Wp6cT/661rkyn2DZwhIIVqJ/CT3dEJjmk0LvlNqAXGICx3umKnWixeyOI4AGQcQ==
-X-Received: by 2002:a05:651c:545:b0:25a:45d1:4086 with SMTP id q5-20020a05651c054500b0025a45d14086mr1911485ljp.307.1655370202943;
-        Thu, 16 Jun 2022 02:03:22 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=kWEg3qKQ7Suf9K5vJw6s6X7vzMoYVIAYuI4zZZJqDTo=;
+        b=SHcBrLWIgA0T316ViEidDvXHwwleA2FPryopYjS+Vwxj3jRG0EHthBias9gMJKQtdK
+         GgL2z5jfTAgBkadfj4Vk5h8RFlUlXRTHrqvBgAZILakeBrm/sHhXY2fHWhObSeH81XmG
+         yhkxFujU1dkJXdqV6hq4/tLOfloyuPUW3KAUYvSLTmEICwo8qrbPlgzqX31H501jmHSM
+         V+jHtu/OQdshv8NkEIQQatgChgVJF/xGJRHe0UbQdaAiGaNwFe4+AAicvqGA3/ikTYiw
+         +YEA+8G6DhGd3E2Nskrj9BnG7CdRQ1zLR8GNf1nBb1GK5fbAEquXGobrDffyvP2t3XAW
+         3YGg==
+X-Gm-Message-State: AJIora8ldb1RneUtQp/QTQMohJz1OLgUEBQV1Jkyj2KnsFZ/loPYcXvQ
+        AuqTasj7yA5LGC3/RiC9TfH98g==
+X-Google-Smtp-Source: AGRyM1sJd/hJj6+kBa8lG/oP1fzLl5O9w8ImTr+6IK3JzwaOublnKhnxn0YOYGPyQKguDCqpcQTx4Q==
+X-Received: by 2002:ac2:58e1:0:b0:47d:b1fa:d09f with SMTP id v1-20020ac258e1000000b0047db1fad09fmr1926144lfo.213.1655370203866;
+        Thu, 16 Jun 2022 02:03:23 -0700 (PDT)
 Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id j9-20020a2e8009000000b0025575338c41sm172573ljg.127.2022.06.16.02.03.22
+        by smtp.gmail.com with ESMTPSA id j9-20020a2e8009000000b0025575338c41sm172573ljg.127.2022.06.16.02.03.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Jun 2022 02:03:22 -0700 (PDT)
+        Thu, 16 Jun 2022 02:03:23 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>
@@ -57,10 +57,12 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
-Subject: [RFC PATCH 0/2] drm/msm/mdp4: rework LVDS/LCDC panel support
-Date:   Thu, 16 Jun 2022 12:03:19 +0300
-Message-Id: <20220616090321.433249-1-dmitry.baryshkov@linaro.org>
+Subject: [RFC PATCH 1/2] drm/msm/mdp4: move move_valid callback to lcdc_encoder
+Date:   Thu, 16 Jun 2022 12:03:20 +0300
+Message-Id: <20220616090321.433249-2-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.35.1
+In-Reply-To: <20220616090321.433249-1-dmitry.baryshkov@linaro.org>
+References: <20220616090321.433249-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -73,26 +75,109 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-MDP4 uses custom code to handle LVDS panel. It predates handling
-EPROBE_DEFER, it tries to work when the panel device is not available,
-etc. Switch MDP4 LCDC code to use drm_panel_bridge/drm_bridge_connector
-to follow contemporary DRM practices.
+We can check the LCDC clock directly from the LCDC encoder driver, so
+remove it from the LVDS connector.
 
-Note, this code has been compile-tested only. Testing on the real device
-is still pending (and will be performed before the merge).
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.h      |  1 -
+ .../gpu/drm/msm/disp/mdp4/mdp4_lcdc_encoder.c | 26 ++++++++++++++-----
+ .../drm/msm/disp/mdp4/mdp4_lvds_connector.c   | 20 --------------
+ 3 files changed, 19 insertions(+), 28 deletions(-)
 
-Dmitry Baryshkov (2):
-  drm/msm/mdp4: move move_valid callback to lcdc_encoder
-  drm/msm/mdp4: switch LVDS to use drm_bridge/_connector
-
- drivers/gpu/drm/msm/Makefile                  |   1 -
- drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c      |  32 ++++-
- drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.h      |   7 +-
- .../gpu/drm/msm/disp/mdp4/mdp4_lcdc_encoder.c |  46 +++----
- .../drm/msm/disp/mdp4/mdp4_lvds_connector.c   | 120 ------------------
- 5 files changed, 47 insertions(+), 159 deletions(-)
- delete mode 100644 drivers/gpu/drm/msm/disp/mdp4/mdp4_lvds_connector.c
-
+diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.h b/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.h
+index e8ee92ab7956..d27fa761bfc2 100644
+--- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.h
++++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.h
+@@ -197,7 +197,6 @@ struct drm_crtc *mdp4_crtc_init(struct drm_device *dev,
+ long mdp4_dtv_round_pixclk(struct drm_encoder *encoder, unsigned long rate);
+ struct drm_encoder *mdp4_dtv_encoder_init(struct drm_device *dev);
+ 
+-long mdp4_lcdc_round_pixclk(struct drm_encoder *encoder, unsigned long rate);
+ struct drm_encoder *mdp4_lcdc_encoder_init(struct drm_device *dev,
+ 		struct device_node *panel_node);
+ 
+diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_lcdc_encoder.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_lcdc_encoder.c
+index 10eb3e5b218e..341dcd5087da 100644
+--- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_lcdc_encoder.c
++++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_lcdc_encoder.c
+@@ -366,19 +366,31 @@ static void mdp4_lcdc_encoder_enable(struct drm_encoder *encoder)
+ 	mdp4_lcdc_encoder->enabled = true;
+ }
+ 
++static int mdp4_lcdc_encoder_mode_valid(struct drm_encoder *encoder,
++		const struct drm_display_mode *mode)
++{
++	struct mdp4_lcdc_encoder *mdp4_lcdc_encoder =
++			to_mdp4_lcdc_encoder(encoder);
++	long actual, requested;
++
++	requested = 1000 * mode->clock;
++	actual = clk_round_rate(mdp4_lcdc_encoder->lcdc_clk, requested);
++
++	DBG("requested=%ld, actual=%ld", requested, actual);
++
++	if (actual != requested)
++		return MODE_CLOCK_RANGE;
++
++	return MODE_OK;
++}
++
+ static const struct drm_encoder_helper_funcs mdp4_lcdc_encoder_helper_funcs = {
+ 	.mode_set = mdp4_lcdc_encoder_mode_set,
+ 	.disable = mdp4_lcdc_encoder_disable,
+ 	.enable = mdp4_lcdc_encoder_enable,
++	.mode_valid = mdp4_lcdc_encoder_mode_valid,
+ };
+ 
+-long mdp4_lcdc_round_pixclk(struct drm_encoder *encoder, unsigned long rate)
+-{
+-	struct mdp4_lcdc_encoder *mdp4_lcdc_encoder =
+-			to_mdp4_lcdc_encoder(encoder);
+-	return clk_round_rate(mdp4_lcdc_encoder->lcdc_clk, rate);
+-}
+-
+ /* initialize encoder */
+ struct drm_encoder *mdp4_lcdc_encoder_init(struct drm_device *dev,
+ 		struct device_node *panel_node)
+diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_lvds_connector.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_lvds_connector.c
+index 7288041dd86a..4755eb13ef79 100644
+--- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_lvds_connector.c
++++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_lvds_connector.c
+@@ -56,25 +56,6 @@ static int mdp4_lvds_connector_get_modes(struct drm_connector *connector)
+ 	return ret;
+ }
+ 
+-static int mdp4_lvds_connector_mode_valid(struct drm_connector *connector,
+-				 struct drm_display_mode *mode)
+-{
+-	struct mdp4_lvds_connector *mdp4_lvds_connector =
+-			to_mdp4_lvds_connector(connector);
+-	struct drm_encoder *encoder = mdp4_lvds_connector->encoder;
+-	long actual, requested;
+-
+-	requested = 1000 * mode->clock;
+-	actual = mdp4_lcdc_round_pixclk(encoder, requested);
+-
+-	DBG("requested=%ld, actual=%ld", requested, actual);
+-
+-	if (actual != requested)
+-		return MODE_CLOCK_RANGE;
+-
+-	return MODE_OK;
+-}
+-
+ static const struct drm_connector_funcs mdp4_lvds_connector_funcs = {
+ 	.detect = mdp4_lvds_connector_detect,
+ 	.fill_modes = drm_helper_probe_single_connector_modes,
+@@ -86,7 +67,6 @@ static const struct drm_connector_funcs mdp4_lvds_connector_funcs = {
+ 
+ static const struct drm_connector_helper_funcs mdp4_lvds_connector_helper_funcs = {
+ 	.get_modes = mdp4_lvds_connector_get_modes,
+-	.mode_valid = mdp4_lvds_connector_mode_valid,
+ };
+ 
+ /* initialize connector */
 -- 
 2.35.1
 
