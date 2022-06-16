@@ -2,164 +2,147 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AD19354D880
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jun 2022 04:40:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 199A854D9F0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jun 2022 07:46:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229711AbiFPCkT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Jun 2022 22:40:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44430 "EHLO
+        id S1358421AbiFPFqi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Jun 2022 01:46:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38970 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229693AbiFPCkS (ORCPT
+        with ESMTP id S242923AbiFPFqh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Jun 2022 22:40:18 -0400
-Received: from NAM02-DM3-obe.outbound.protection.outlook.com (mail-dm3nam02on2054.outbound.protection.outlook.com [40.107.95.54])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 782AB4C7BD;
-        Wed, 15 Jun 2022 19:40:17 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=asariG3I1XsbsLdZvlU7JD7bgUWn7ouo8GIp8JJ5HLGnKARBBtsUQ/SfD7VHIb1SPe8YmVt9zofiaCUshvKwkMDxwOWeBhPKVaoiBeiAq+C5tSVebLBTn9yGoh1cHONgtP53mZr0RBoGdutD2jqzyInvD9Abrm6lAI/unFo+dAf6GHQAn7wBVtEGw4tke6u8UK/E2rRQU6bKs6ezfdal/9+3UetzzZyBfKvQ/awW9a2/xv2eSV6VJhTnXnY1QTVs1Wc8aosYZunXU9nqMBVwNRSl7kRjPW/uk8Rg4GMret6jpT0mJWMX4rhkJAslxVlBr9Zj5yK/6WAXOC6sQuF4wA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=GhBtibn7C/yz4vKqsDQRURimrz+0niz40Jmk1OUnqgU=;
- b=Bm8SX8RfwpvvCdmFVoRT82gfe8P24noxdJ5T92qIjgTpsVE61SdprlmGhftuEwA8CuwtKLk/Y2tR82N/wEcHi0hxq11dRKGZtxNMImlDpcCuKaq28WgcdDVBopMi+w2ReYgqD4UuKpZDxioaFd+08QvClcGu1Y51UFt8HDavgctfRoEgGjoH5y8uHGhQR/MctTQImKWMckDK9Z8kcuf736wneTbwJGoZflNcOgaLUAMLbul/yR2XwxM3Iu1Nh5VGM9PoaHkLvHSahdOonpepEEaiCSiMkl9t6W9W0f5mgX/fWNhKviKB2Cnnttz7LQ6barBP5yu9vPX19dflC0BiEg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 12.22.5.234) smtp.rcpttodomain=gmail.com smtp.mailfrom=nvidia.com; dmarc=pass
- (p=reject sp=reject pct=100) action=none header.from=nvidia.com; dkim=none
- (message not signed); arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=GhBtibn7C/yz4vKqsDQRURimrz+0niz40Jmk1OUnqgU=;
- b=tipximkeSNPWNhyrfTMN9HOlM6t4uiw4MXbXWVCaHeG+h7d8tDudSYkrNzJ/50JWHFpfRsTMYVj5alXvurTkcvxpz7oDkMSFqVGdxsarkF5vtxp5wB+rBbLaM9peZZ1mX0V/Fj15Drosk2s+VVC6t+S7dU2NlNsTq9ZZVkBXjVFIt14Zw10+5J704OX0gIsCjJIRb4POiXGwhDMlVNgKaCUIxCq2arwl7RQkeQKYX5bnBavM1g/xZKBPxqzD/aqoBUJLKlySJT+pwEqSjieXq2wpQekMvY7mTc2CHmCMDUNxuWQIuXmduiXk9BcG7p2G9Pk/umAWLrOcVF7R7il1iQ==
-Received: from DM6PR03CA0039.namprd03.prod.outlook.com (2603:10b6:5:100::16)
- by MN2PR12MB2990.namprd12.prod.outlook.com (2603:10b6:208:cc::23) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5353.14; Thu, 16 Jun
- 2022 02:40:13 +0000
-Received: from DM6NAM11FT005.eop-nam11.prod.protection.outlook.com
- (2603:10b6:5:100:cafe::b1) by DM6PR03CA0039.outlook.office365.com
- (2603:10b6:5:100::16) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5332.15 via Frontend
- Transport; Thu, 16 Jun 2022 02:40:13 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 12.22.5.234)
- smtp.mailfrom=nvidia.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 12.22.5.234 as permitted sender) receiver=protection.outlook.com;
- client-ip=12.22.5.234; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (12.22.5.234) by
- DM6NAM11FT005.mail.protection.outlook.com (10.13.172.238) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
- 15.20.5332.12 via Frontend Transport; Thu, 16 Jun 2022 02:40:12 +0000
-Received: from rnnvmail202.nvidia.com (10.129.68.7) by DRHQMAIL101.nvidia.com
- (10.27.9.10) with Microsoft SMTP Server (TLS) id 15.0.1497.32; Thu, 16 Jun
- 2022 02:40:08 +0000
-Received: from rnnvmail205.nvidia.com (10.129.68.10) by rnnvmail202.nvidia.com
- (10.129.68.7) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Wed, 15 Jun
- 2022 19:40:07 -0700
-Received: from Asurada-Nvidia (10.127.8.11) by mail.nvidia.com (10.129.68.10)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22 via Frontend
- Transport; Wed, 15 Jun 2022 19:40:04 -0700
-Date:   Wed, 15 Jun 2022 19:40:02 -0700
-From:   Nicolin Chen <nicolinc@nvidia.com>
-To:     Baolu Lu <baolu.lu@linux.intel.com>
-CC:     <joro@8bytes.org>, <will@kernel.org>, <marcan@marcan.st>,
-        <sven@svenpeter.dev>, <robin.murphy@arm.com>,
-        <robdclark@gmail.com>, <matthias.bgg@gmail.com>,
-        <orsonzhai@gmail.com>, <baolin.wang7@gmail.com>,
-        <zhang.lyra@gmail.com>, <jean-philippe@linaro.org>,
-        <alex.williamson@redhat.com>, <jgg@nvidia.com>,
-        <kevin.tian@intel.com>, <suravee.suthikulpanit@amd.com>,
-        <alyssa@rosenzweig.io>, <dwmw2@infradead.org>,
-        <yong.wu@mediatek.com>, <mjrosato@linux.ibm.com>,
-        <gerald.schaefer@linux.ibm.com>, <thierry.reding@gmail.com>,
-        <vdumpa@nvidia.com>, <jonathanh@nvidia.com>, <cohuck@redhat.com>,
-        <thunder.leizhen@huawei.com>, <tglx@linutronix.de>,
-        <christophe.jaillet@wanadoo.fr>, <john.garry@huawei.com>,
-        <chenxiang66@hisilicon.com>, <saiprakash.ranjan@codeaurora.org>,
-        <isaacm@codeaurora.org>, <yangyingliang@huawei.com>,
-        <jordan@cosmicpenguin.net>, <iommu@lists.linux-foundation.org>,
-        <linux-kernel@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        <linux-mediatek@lists.infradead.org>, <linux-s390@vger.kernel.org>,
-        <linux-tegra@vger.kernel.org>,
-        <virtualization@lists.linux-foundation.org>, <kvm@vger.kernel.org>
-Subject: Re: [PATCH v2 1/5] iommu: Return -EMEDIUMTYPE for incompatible
- domain and device/group
-Message-ID: <YqqYAtfn7PQeCxgW@Asurada-Nvidia>
-References: <20220616000304.23890-1-nicolinc@nvidia.com>
- <20220616000304.23890-2-nicolinc@nvidia.com>
- <0c0e6ec8-725d-93e8-44f1-db6c8a673a97@linux.intel.com>
+        Thu, 16 Jun 2022 01:46:37 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB0455B3E4;
+        Wed, 15 Jun 2022 22:46:36 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 8507BB8216D;
+        Thu, 16 Jun 2022 05:46:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EED48C34114;
+        Thu, 16 Jun 2022 05:46:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1655358394;
+        bh=ZhJQepwIk1KyZLOmiobiSGZhW7H0P3Uur7O+SoTdqs4=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=Uopth/bNHvieB/trzceVipPml5VkC0bES0SZ7k7ZD786uH2bkdj5Z7PR7oWVvoJPP
+         7ei3oJNjhw2p6Ay66Vu0o/IuSiipZr+GKZ5PK80XLbhI9GqsTbcgzVnJ960u4rpgHw
+         +p80+X8k+BvGcqN16QRr28etD5sjHVe2mf3fAI/w85Yr/FMZ7XHyyQLNYTYYnkI3H8
+         tNTEQcTeOC6+I7Sr+06/jEXwl5e9PEXPhC6LEXQS6f3P8Zg29Yc396RsO1/Zr8/02q
+         8LGXqthZ708LM5sbgvOla6ueKblAoEav9M3YXIRK1O/GQ2c7SfmmcBr1WlX/rL26U3
+         x8Os45Gcz0jVw==
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <0c0e6ec8-725d-93e8-44f1-db6c8a673a97@linux.intel.com>
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 7f4b40cf-3b78-4593-41b5-08da4f4189d1
-X-MS-TrafficTypeDiagnostic: MN2PR12MB2990:EE_
-X-Microsoft-Antispam-PRVS: <MN2PR12MB2990BF315D3E7101FA85B8B3ABAC9@MN2PR12MB2990.namprd12.prod.outlook.com>
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: HwdzFIEdlNpfJjfm+z36VuJ0NsCdJyymn+4PuqriQ52llbjQjZKtB67FKv5ZNq43v082E/05qYv1LZTW2l9JnHlWVmTK9Vzo7PbUITUtxRFeKwVaot0/W4L30fASq/Pnw2Zqg7dKa/n2KDTXEV0wh07urfOQNtUrjPPtVCcZpXLP5qew/tGmTSSA3jB1Dxj8Z8ag44OyU8rtPGGPm7MCbSxS/kb+Zq3uFnnajKR+pnTZVHKSshdZnPoiPzzAM6SuLu6Ta1KFQqOFvmC5V7bI8E8/b8AlE81Mbw8glsGK86I3MpwIy8pijZ+YjYNNVmTtI7N6ZmGvm/zHAWSOXmaZfdxTMW0aa28jjrokSC22SGP9O3amKHycFDW76sVYI8Y9JN5P0e6w+2HYqagE7OMo2W7ImW2F7GNTUikt96fwPafAhuLQ1dTnYs2oSD6E/jMezii0MF57mbf76nXplH6LvipiLlzo2q4wIT3Z5W1Q6Xo+MjM4MYltIRVB9Sj011KnPhrQTjth2pXSjTYNP9ExiuosEHVlKVDTL821HVdCRcJwWOio5yQfPnOCa8S4UPzbS/G7/e5h//3VZmL+rpGN+1n47XxpNbD2Fj7wzEC1CGHsqJAmT1/uoyne4TYDCH5L5gNX7/m8ezEqX9njhPzYOCf2WO68qp0BxNkkq7EK3hZGhMavDiCdmXwJU0pgley9mttfIGdG0/D+Lted9HwGIw==
-X-Forefront-Antispam-Report: CIP:12.22.5.234;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:InfoNoRecords;CAT:NONE;SFS:(13230016)(4636009)(36840700001)(40470700004)(46966006)(81166007)(86362001)(53546011)(33716001)(82310400005)(54906003)(6916009)(186003)(5660300002)(36860700001)(7406005)(7416002)(40460700003)(508600001)(83380400001)(26005)(55016003)(9686003)(2906002)(356005)(8936002)(316002)(47076005)(336012)(426003)(4326008)(70586007)(70206006)(8676002)(36900700001);DIR:OUT;SFP:1101;
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Jun 2022 02:40:12.8757
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7f4b40cf-3b78-4593-41b5-08da4f4189d1
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[12.22.5.234];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: DM6NAM11FT005.eop-nam11.prod.protection.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR12MB2990
-X-Spam-Status: No, score=-2.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FORGED_SPF_HELO,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20220603080105.2251866-1-vladimir.zapolskiy@linaro.org>
+References: <20220603080019.2251764-1-vladimir.zapolskiy@linaro.org> <20220603080105.2251866-1-vladimir.zapolskiy@linaro.org>
+Subject: Re: [PATCH v6 7/7] clk: qcom: add camera clock controller driver for SM8450 SoC
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Date:   Wed, 15 Jun 2022 22:46:31 -0700
+User-Agent: alot/0.10
+Message-Id: <20220616054633.EED48C34114@smtp.kernel.org>
+X-Spam-Status: No, score=-8.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jun 16, 2022 at 10:09:49AM +0800, Baolu Lu wrote:
-> External email: Use caution opening links or attachments
-> 
-> 
-> On 2022/6/16 08:03, Nicolin Chen wrote:
-> > diff --git a/drivers/iommu/intel/iommu.c b/drivers/iommu/intel/iommu.c
-> > index 44016594831d..0dd13330fe12 100644
-> > --- a/drivers/iommu/intel/iommu.c
-> > +++ b/drivers/iommu/intel/iommu.c
-> > @@ -4323,7 +4323,7 @@ static int prepare_domain_attach_device(struct iommu_domain *domain,
-> >               return -ENODEV;
-> > 
-> >       if (dmar_domain->force_snooping && !ecap_sc_support(iommu->ecap))
-> > -             return -EOPNOTSUPP;
-> > +             return -EMEDIUMTYPE;
-> > 
-> >       /* check if this iommu agaw is sufficient for max mapped address */
-> >       addr_width = agaw_to_width(iommu->agaw);
-> > @@ -4331,10 +4331,10 @@ static int prepare_domain_attach_device(struct iommu_domain *domain,
-> >               addr_width = cap_mgaw(iommu->cap);
-> > 
-> >       if (dmar_domain->max_addr > (1LL << addr_width)) {
-> > -             dev_err(dev, "%s: iommu width (%d) is not "
-> > +             dev_dbg(dev, "%s: iommu width (%d) is not "
-> >                       "sufficient for the mapped address (%llx)\n",
-> >                       __func__, addr_width, dmar_domain->max_addr);
-> > -             return -EFAULT;
-> > +             return -EMEDIUMTYPE;
-> >       }
-> >       dmar_domain->gaw = addr_width;
-> 
-> Can we simply remove the dev_err()? As the return value has explicitly
-> explained the failure reason, putting a print statement won't help much.
+Quoting Vladimir Zapolskiy (2022-06-03 01:01:05)
+> diff --git a/drivers/clk/qcom/camcc-sm8450.c b/drivers/clk/qcom/camcc-sm8=
+450.c
+> new file mode 100644
+> index 000000000000..f213c33647e2
+> --- /dev/null
+> +++ b/drivers/clk/qcom/camcc-sm8450.c
+> @@ -0,0 +1,2866 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) 2020-2021, The Linux Foundation. All rights reserved.
+> + */
+> +
+> +#include <linux/clk.h>
 
-Yes. As long as no one has objection, I can remove that in the next
-version.
+Is this include used?
+
+> +#include <linux/clk-provider.h>
+> +#include <linux/module.h>
+> +#include <linux/of_device.h>
+
+Include mod_devicetable.h instead?
+
+> +#include <linux/of.h>
+
+Is this include used?
+
+> +#include <linux/regmap.h>
+> +
+> +#include <dt-bindings/clock/qcom,sm8450-camcc.h>
+> +
+> +#include "clk-alpha-pll.h"
+> +#include "clk-branch.h"
+> +#include "clk-pll.h"
+> +#include "clk-rcg.h"
+> +#include "clk-regmap.h"
+> +#include "clk-regmap-divider.h"
+> +#include "clk-regmap-mux.h"
+> +#include "common.h"
+> +#include "gdsc.h"
+> +#include "reset.h"
+> +
+> +enum {
+> +       P_BI_TCXO,
+> +       P_CAM_CC_PLL0_OUT_EVEN,
+> +       P_CAM_CC_PLL0_OUT_MAIN,
+> +       P_CAM_CC_PLL0_OUT_ODD,
+> +       P_CAM_CC_PLL1_OUT_EVEN,
+> +       P_CAM_CC_PLL2_OUT_EVEN,
+> +       P_CAM_CC_PLL2_OUT_MAIN,
+> +       P_CAM_CC_PLL3_OUT_EVEN,
+> +       P_CAM_CC_PLL4_OUT_EVEN,
+> +       P_CAM_CC_PLL5_OUT_EVEN,
+> +       P_CAM_CC_PLL6_OUT_EVEN,
+> +       P_CAM_CC_PLL7_OUT_EVEN,
+> +       P_CAM_CC_PLL8_OUT_EVEN,
+> +       P_SLEEP_CLK,
+> +};
+> +
+> +static const struct pll_vco lucid_evo_vco[] =3D {
+> +       { 249600000, 2000000000, 0 },
+> +};
+> +
+> +static const struct pll_vco rivian_evo_vco[] =3D {
+> +       { 864000000, 1056000000, 0 },
+> +};
+> +
+> +static const struct alpha_pll_config cam_cc_pll0_config =3D {
+> +       .l =3D 0x3e,
+> +       .alpha =3D 0x8000,
+> +       .config_ctl_val =3D 0x20485699,
+> +       .config_ctl_hi_val =3D 0x00182261,
+> +       .config_ctl_hi1_val =3D 0x32aa299c,
+> +       .user_ctl_val =3D 0x00008400,
+> +       .user_ctl_hi_val =3D 0x00000805,
+> +};
+> +
+> +static struct clk_alpha_pll cam_cc_pll0 =3D {
+> +       .offset =3D 0x0,
+> +       .vco_table =3D lucid_evo_vco,
+> +       .num_vco =3D ARRAY_SIZE(lucid_evo_vco),
+> +       .regs =3D clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_LUCID_EVO],
+> +       .clkr =3D {
+> +               .hw.init =3D &(struct clk_init_data){
+
+Make these anonymous structs const please.
+
+> +                       .name =3D "cam_cc_pll0",
+> +                       .parent_data =3D &(const struct clk_parent_data){
