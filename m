@@ -2,396 +2,199 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 30F8854E863
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jun 2022 19:09:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B28AA54E880
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jun 2022 19:15:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1377330AbiFPRJk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Jun 2022 13:09:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47634 "EHLO
+        id S1378092AbiFPRPy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Jun 2022 13:15:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55662 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1377275AbiFPRJj (ORCPT
+        with ESMTP id S1357934AbiFPRPx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Jun 2022 13:09:39 -0400
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B69AA14014;
-        Thu, 16 Jun 2022 10:09:38 -0700 (PDT)
+        Thu, 16 Jun 2022 13:15:53 -0400
+Received: from mail-pf1-x42c.google.com (mail-pf1-x42c.google.com [IPv6:2607:f8b0:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79781483BA
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jun 2022 10:15:52 -0700 (PDT)
+Received: by mail-pf1-x42c.google.com with SMTP id i64so2045132pfc.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jun 2022 10:15:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1655399378; x=1686935378;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version;
-  bh=u9EhPVzSS91gvcLUGUtX1ooWEgodroZRWre+tc+6EpU=;
-  b=cgWp1PxVl+OrKx1sTi1M6uAMRQ8kCn9jV8QRIdflpWmudtUYLy0eyic9
-   MPQ1AzZiwobthfbn1j/R5SoL4jjbMY5w/I3u3A9n2zvqpprFh+z4sUzHr
-   Jw0ZSbl4/uTT/dqICbrnDrW0InjprUAEOm43o56JStED+w8W2zxaPTGxx
-   E=;
-Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 16 Jun 2022 10:09:38 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Jun 2022 10:09:38 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Thu, 16 Jun 2022 10:09:37 -0700
-Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Thu, 16 Jun 2022 10:09:36 -0700
-From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
-To:     <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
-        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
-        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@linux.ie>,
-        <agross@kernel.org>, <dmitry.baryshkov@linaro.org>,
-        <bjorn.andersson@linaro.org>
-CC:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        <quic_abhinavk@quicinc.com>, <quic_aravindh@quicinc.com>,
-        <quic_sbillaka@quicinc.com>, <freedreno@lists.freedesktop.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: [PATCH v8 2/2] drm/msm/dp: clean up pixel_rate from dp_ctrl.c
-Date:   Thu, 16 Jun 2022 10:09:21 -0700
-Message-ID: <1655399361-10842-3-git-send-email-quic_khsieh@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1655399361-10842-1-git-send-email-quic_khsieh@quicinc.com>
-References: <1655399361-10842-1-git-send-email-quic_khsieh@quicinc.com>
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=8iz7ZOP2b0Lu2YomGWoPhULSTDfxHvkkUN5CEYP8CaU=;
+        b=ApbDEiT1anUGxolRWQpnvh/eWWi46u0atckjEWb4RvkiaIAvr5aZnD+S+CE8pBh9Ue
+         Rdpxdb8HpapM2i4wnBLme8kKJb6sQYtoE4BEIjrGkPuWRCm9/6eujrfB5IdbFD4FbxFh
+         vlk2TjuD/1Sg2MIO0AkpoHPXrnb4FsWtTK2vc=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=8iz7ZOP2b0Lu2YomGWoPhULSTDfxHvkkUN5CEYP8CaU=;
+        b=Nw6NMCKplNLavq1M2REFd9ObwH3jkVo0eTz87VkRG2Gybm2y6EfDx1bAX5kXyeyhHY
+         37+TxhdK2dkfwKkTwI2g1elQuGINM1KvI25KZve5EsNDPdVIu7v0yx2xWHp89rN39L2V
+         HBzFSM3X/yEhLQNkJ+ui8qAm7Qi1NsD3v7jCJtHR10236Q7NxIztLnAe57fRi2DI6gqA
+         DI1MKkZhCLgbXl1dv+gwTEmS9KAiDyb+XJu21A4nzDuyW6KKAZiKIPR21xn+W4mrODzq
+         eQsPXes6xeJdg8FgvTmgDUv4oHNMhRDSFMGgUyAUM4bFKs6xNiuS1xKz8ZgSsBdyfv6u
+         e28w==
+X-Gm-Message-State: AJIora97BmCKmt19Aw+Ro5Mv+4/yHk8/2STif2HCsAgw3t6GHxzzIMca
+        Ae5J5N08A3OfTOagm7zNoVLIOA==
+X-Google-Smtp-Source: AGRyM1v1gOcNbulVWr4yT4FU7oeqvsT8pT39TN0Lj/5MQsCXzknBAbpphcjXQ9hhBxZQMW11jlfYIw==
+X-Received: by 2002:a65:588b:0:b0:3fe:4237:2ee5 with SMTP id d11-20020a65588b000000b003fe42372ee5mr5334297pgu.442.1655399751849;
+        Thu, 16 Jun 2022 10:15:51 -0700 (PDT)
+Received: from localhost ([2620:15c:11a:202:4ef5:7e3b:63ba:fc4])
+        by smtp.gmail.com with UTF8SMTPSA id j1-20020a170903028100b00164097a779fsm1891067plr.147.2022.06.16.10.15.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 16 Jun 2022 10:15:51 -0700 (PDT)
+Date:   Thu, 16 Jun 2022 10:15:49 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Pavan Kondeti <quic_pkondeti@quicinc.com>
+Cc:     Krishna Kurapati <quic_kriskura@quicinc.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Mathias Nyman <mathias.nyman@intel.com>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, quic_ppratap@quicinc.com,
+        quic_vpulyala@quicinc.com
+Subject: Re: [PATCH v20 2/5] usb: dwc3: core: Host wake up support from
+ system suspend
+Message-ID: <YqtlRQOwb3t6Xtd0@google.com>
+References: <1654158277-12921-1-git-send-email-quic_kriskura@quicinc.com>
+ <1654158277-12921-3-git-send-email-quic_kriskura@quicinc.com>
+ <YpkRDi2m7cLaKYEf@google.com>
+ <Yp5nf2w8uVZ38/XZ@google.com>
+ <Yqd9IHQEj3Ex+FcF@google.com>
+ <YqjLHyUVEjf7I3MI@google.com>
+ <20220616091110.GA24114@hu-pkondeti-hyd.qualcomm.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20220616091110.GA24114@hu-pkondeti-hyd.qualcomm.com>
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-dp_ctrl keep an local cache of pixel_rate which increase confusing
-in regrading how pixel_rate being used. This patch refer pixel_rate
-directly from dp_panel to eliminate unnecessary pixel_rate variable
-from struct dp_ctrl.
+On Thu, Jun 16, 2022 at 02:41:10PM +0530, Pavan Kondeti wrote:
+> Hi Matthias/Krishna,
+> 
+> On Tue, Jun 14, 2022 at 10:53:35AM -0700, Matthias Kaehlcke wrote:
+> > On Mon, Jun 13, 2022 at 11:08:32AM -0700, Matthias Kaehlcke wrote:
+> > > On Mon, Jun 06, 2022 at 01:45:51PM -0700, Matthias Kaehlcke wrote:
+> > > > On Thu, Jun 02, 2022 at 12:35:42PM -0700, Matthias Kaehlcke wrote:
+> > > > > Hi Krishna,
+> > > > > 
+> > > > > with this version I see xHCI errors on my SC7180 based system, like
+> > > > > these:
+> > > > > 
+> > > > > [   65.352605] xhci-hcd xhci-hcd.13.auto: xHC error in resume, USBSTS 0x401, Reinit
+> > > > > 
+> > > > > [  101.307155] xhci-hcd xhci-hcd.13.auto: WARN: xHC CMD_RUN timeout
+> > > > > 
+> > > > > After resume a downstream hub isn't enumerated again.
+> > > > > 
+> > > > > So far I didn't see those with v13, but I aso saw the first error with
+> > > > > v16.
+> > > > 
+> > > > It also happens with v13, but only when a wakeup capable vUSB <= 2
+> > > > device is plugged in. Initially I used a wakeup capable USB3 to
+> > > > Ethernet adapter to trigger the wakeup case, however older versions
+> > > > of this series that use usb_wakeup_enabled_descendants() to check
+> > > > for wakeup capable devices didn't actually check for vUSB > 2
+> > > > devices.
+> > > > 
+> > > > So the case were the controller/PHYs is powered down works, but
+> > > > the controller is unhappy when the runtime PM path is used during
+> > > > system suspend.
+> > > 
+> > > The issue isn't seen on all systems using dwc3-qcom and the problem starts
+> > > during probe(). The expected probe sequence is something like this:
+> > > 
+> > > dwc3_qcom_probe
+> > >   dwc3_qcom_of_register_core
+> > >     dwc3_probe
+> > > 
+> > >   if (device_can_wakeup(&qcom->dwc3->dev))
+> > >     ...
+> > > 
+> > > The important part is that device_can_wakeup() is called after dwc3_probe()
+> > > has completed. That's what I see on a QC SC7280 system, where wakeup is
+> > > generally working with these patches.
+> > > 
+> > > However on a QC SC7180 system dwc3_probe() is deferred and only executed after
+> > > dwc3_qcom_probe(). As a result the device_can_wakeup() call returns false.
+> > > With that the controller/driver ends up in an unhappy state after system
+> > > suspend.
+> > > 
+> > > Probing is deferred on SC7180 because device_links_check_suppliers() finds
+> > > that '88e3000.phy' isn't ready yet.
+> > 
+> > It seems device links could be used to make sure the dwc3 core is present:
+> > 
+> >   Another example for an inconsistent state would be a device link that
+> >   represents a driver presence dependency, yet is added from the consumer’s
+> >   ->probe callback while the supplier hasn’t probed yet: Had the driver core
+> >   known about the device link earlier, it wouldn’t have probed the consumer
+> >   in the first place. The onus is thus on the consumer to check presence of
+> >   the supplier after adding the link, and defer probing on non-presence.
+> > 
+> >   https://www.kernel.org/doc/html/v5.18/driver-api/device_link.html#usage
+> > 
+> > 
+> > You could add something like this to dwc3_qcom_of_register_core():
+> > 
+> > 
+> >   device_link_add(dev, &qcom->dwc3->dev,
+> >   		  DL_FLAG_AUTOREMOVE_CONSUMER | DL_FLAG_AUTOPROBE_CONSUMER);
+> > 
+> >   if (qcom->dwc3->dev.links.status != DL_DEV_DRIVER_BOUND)
+> >       ret = -EPROBE_DEFER;
+> > 
+> > 
+> I am not very sure how the device_link_add() API works. we are the parent and
+> creating a depdency on child probe. That does not sound correct to me.
 
-Changes in v8:
--- add this patch to remove pixel_rate from dp_ctrl
+The functional dependency is effectively there, the driver already assumes that
+the dwc3 core was probed when of_platform_populate() returns.
 
-Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
----
- drivers/gpu/drm/msm/dp/dp_ctrl.c | 158 +++++++++++++++++++--------------------
- drivers/gpu/drm/msm/dp/dp_ctrl.h |   2 -
- 2 files changed, 79 insertions(+), 81 deletions(-)
+The device link itself doesn't create the dependency on the probe(), the check
+of the link status below does.
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-index 01028b5..6fddddd 100644
---- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
-+++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-@@ -1237,8 +1237,6 @@ static int dp_ctrl_link_train_2(struct dp_ctrl_private *ctrl,
- 	return -ETIMEDOUT;
- }
- 
--static int dp_ctrl_reinitialize_mainlink(struct dp_ctrl_private *ctrl);
--
- static int dp_ctrl_link_train(struct dp_ctrl_private *ctrl,
- 			int *training_step)
- {
-@@ -1337,7 +1335,8 @@ static void dp_ctrl_set_clock_rate(struct dp_ctrl_private *ctrl,
- 				name, rate);
- }
- 
--static int dp_ctrl_enable_mainlink_clocks(struct dp_ctrl_private *ctrl)
-+static int dp_ctrl_enable_mainlink_clocks(struct dp_ctrl_private *ctrl,
-+					unsigned long pixel_rate)
- {
- 	int ret = 0;
- 	struct dp_io *dp_io = &ctrl->parser->io;
-@@ -1358,25 +1357,25 @@ static int dp_ctrl_enable_mainlink_clocks(struct dp_ctrl_private *ctrl)
- 	if (ret)
- 		DRM_ERROR("Unable to start link clocks. ret=%d\n", ret);
- 
--	drm_dbg_dp(ctrl->drm_dev, "link rate=%d pixel_clk=%d\n",
--		ctrl->link->link_params.rate, ctrl->dp_ctrl.pixel_rate);
-+	drm_dbg_dp(ctrl->drm_dev, "link rate=%d pixel_clk=%lu\n",
-+		ctrl->link->link_params.rate, pixel_rate);
- 
- 	return ret;
- }
- 
--static int dp_ctrl_enable_stream_clocks(struct dp_ctrl_private *ctrl)
-+static int dp_ctrl_enable_stream_clocks(struct dp_ctrl_private *ctrl,
-+					unsigned long pixel_rate)
- {
--	int ret = 0;
-+	int ret;
- 
--	dp_ctrl_set_clock_rate(ctrl, DP_STREAM_PM, "stream_pixel",
--					ctrl->dp_ctrl.pixel_rate * 1000);
-+	dp_ctrl_set_clock_rate(ctrl, DP_STREAM_PM, "stream_pixel", pixel_rate * 1000);
- 
- 	ret = dp_power_clk_enable(ctrl->power, DP_STREAM_PM, true);
- 	if (ret)
- 		DRM_ERROR("Unabled to start pixel clocks. ret=%d\n", ret);
- 
--	drm_dbg_dp(ctrl->drm_dev, "link rate=%d pixel_clk=%d\n",
--			ctrl->link->link_params.rate, ctrl->dp_ctrl.pixel_rate);
-+	drm_dbg_dp(ctrl->drm_dev, "link rate=%d pixel_clk=%lu\n",
-+			ctrl->link->link_params.rate, pixel_rate);
- 
- 	return ret;
- }
-@@ -1441,7 +1440,8 @@ static bool dp_ctrl_use_fixed_nvid(struct dp_ctrl_private *ctrl)
- 	return false;
- }
- 
--static int dp_ctrl_reinitialize_mainlink(struct dp_ctrl_private *ctrl)
-+static int dp_ctrl_reinitialize_mainlink(struct dp_ctrl_private *ctrl,
-+					unsigned long pixel_rate)
- {
- 	int ret = 0;
- 	struct dp_io *dp_io = &ctrl->parser->io;
-@@ -1465,7 +1465,7 @@ static int dp_ctrl_reinitialize_mainlink(struct dp_ctrl_private *ctrl)
- 	/* hw recommended delay before re-enabling clocks */
- 	msleep(20);
- 
--	ret = dp_ctrl_enable_mainlink_clocks(ctrl);
-+	ret = dp_ctrl_enable_mainlink_clocks(ctrl, pixel_rate);
- 	if (ret) {
- 		DRM_ERROR("Failed to enable mainlink clks. ret=%d\n", ret);
- 		return ret;
-@@ -1513,8 +1513,6 @@ static int dp_ctrl_link_maintenance(struct dp_ctrl_private *ctrl)
- 	ctrl->link->phy_params.p_level = 0;
- 	ctrl->link->phy_params.v_level = 0;
- 
--	ctrl->dp_ctrl.pixel_rate = ctrl->panel->dp_mode.drm_mode.clock;
--
- 	ret = dp_ctrl_setup_main_link(ctrl, &training_step);
- 	if (ret)
- 		goto end;
-@@ -1528,36 +1526,6 @@ static int dp_ctrl_link_maintenance(struct dp_ctrl_private *ctrl)
- 	return ret;
- }
- 
--static int dp_ctrl_process_phy_test_request(struct dp_ctrl_private *ctrl)
--{
--	int ret = 0;
--
--	if (!ctrl->link->phy_params.phy_test_pattern_sel) {
--		drm_dbg_dp(ctrl->drm_dev,
--			"no test pattern selected by sink\n");
--		return ret;
--	}
--
--	/*
--	 * The global reset will need DP link related clocks to be
--	 * running. Add the global reset just before disabling the
--	 * link clocks and core clocks.
--	 */
--	ret = dp_ctrl_off(&ctrl->dp_ctrl);
--	if (ret) {
--		DRM_ERROR("failed to disable DP controller\n");
--		return ret;
--	}
--
--	ret = dp_ctrl_on_link(&ctrl->dp_ctrl);
--	if (!ret)
--		ret = dp_ctrl_on_stream_phy_test_report(&ctrl->dp_ctrl);
--	else
--		DRM_ERROR("failed to enable DP link controller\n");
--
--	return ret;
--}
--
- static bool dp_ctrl_send_phy_test_pattern(struct dp_ctrl_private *ctrl)
- {
- 	bool success = false;
-@@ -1610,6 +1578,56 @@ static bool dp_ctrl_send_phy_test_pattern(struct dp_ctrl_private *ctrl)
- 	return success;
- }
- 
-+int dp_ctrl_on_stream_phy_test_report(struct dp_ctrl *dp_ctrl)
-+{
-+	int ret = 0;
-+	struct dp_ctrl_private *ctrl;
-+	unsigned long pixel_rate;
-+
-+	ctrl = container_of(dp_ctrl, struct dp_ctrl_private, dp_ctrl);
-+
-+	pixel_rate = ctrl->panel->dp_mode.drm_mode.clock;
-+	ret = dp_ctrl_enable_stream_clocks(ctrl, pixel_rate);
-+	if (ret) {
-+		DRM_ERROR("Failed to start pixel clocks. ret=%d\n", ret);
-+		return ret;
-+	}
-+
-+	dp_ctrl_send_phy_test_pattern(ctrl);
-+
-+	return 0;
-+}
-+
-+static int dp_ctrl_process_phy_test_request(struct dp_ctrl_private *ctrl)
-+{
-+	int ret = 0;
-+
-+	if (!ctrl->link->phy_params.phy_test_pattern_sel) {
-+		drm_dbg_dp(ctrl->drm_dev,
-+			"no test pattern selected by sink\n");
-+		return ret;
-+	}
-+
-+	/*
-+	 * The global reset will need DP link related clocks to be
-+	 * running. Add the global reset just before disabling the
-+	 * link clocks and core clocks.
-+	 */
-+	ret = dp_ctrl_off(&ctrl->dp_ctrl);
-+	if (ret) {
-+		DRM_ERROR("failed to disable DP controller\n");
-+		return ret;
-+	}
-+
-+	ret = dp_ctrl_on_link(&ctrl->dp_ctrl);
-+	if (!ret)
-+		ret = dp_ctrl_on_stream_phy_test_report(&ctrl->dp_ctrl);
-+	else
-+		DRM_ERROR("failed to enable DP link controller\n");
-+
-+	return ret;
-+}
-+
- void dp_ctrl_handle_sink_request(struct dp_ctrl *dp_ctrl)
- {
- 	struct dp_ctrl_private *ctrl;
-@@ -1685,6 +1703,7 @@ int dp_ctrl_on_link(struct dp_ctrl *dp_ctrl)
- 	u32 const phy_cts_pixel_clk_khz = 148500;
- 	u8 link_status[DP_LINK_STATUS_SIZE];
- 	unsigned int training_step;
-+	unsigned long pixel_rate;
- 
- 	if (!dp_ctrl)
- 		return -EINVAL;
-@@ -1695,29 +1714,30 @@ int dp_ctrl_on_link(struct dp_ctrl *dp_ctrl)
- 
- 	dp_power_clk_enable(ctrl->power, DP_CORE_PM, true);
- 
-+	pixel_rate = ctrl->panel->dp_mode.drm_mode.clock;
-+
- 	if (ctrl->link->sink_request & DP_TEST_LINK_PHY_TEST_PATTERN) {
- 		drm_dbg_dp(ctrl->drm_dev,
- 				"using phy test link parameters\n");
--		if (!ctrl->panel->dp_mode.drm_mode.clock)
--			ctrl->dp_ctrl.pixel_rate = phy_cts_pixel_clk_khz;
-+		if (!pixel_rate)
-+			pixel_rate = phy_cts_pixel_clk_khz;
- 	} else {
- 		ctrl->link->link_params.rate = rate;
- 		ctrl->link->link_params.num_lanes =
- 			ctrl->panel->link_info.num_lanes;
--		ctrl->dp_ctrl.pixel_rate = ctrl->panel->dp_mode.drm_mode.clock;
- 	}
- 
--	drm_dbg_dp(ctrl->drm_dev, "rate=%d, num_lanes=%d, pixel_rate=%d\n",
-+	drm_dbg_dp(ctrl->drm_dev, "rate=%d, num_lanes=%d, pixel_rate=%lu\n",
- 		ctrl->link->link_params.rate, ctrl->link->link_params.num_lanes,
--		ctrl->dp_ctrl.pixel_rate);
-+		pixel_rate);
- 
- 
--	rc = dp_ctrl_enable_mainlink_clocks(ctrl);
-+	rc = dp_ctrl_enable_mainlink_clocks(ctrl, pixel_rate);
- 	if (rc)
- 		return rc;
- 
- 	while (--link_train_max_retries) {
--		rc = dp_ctrl_reinitialize_mainlink(ctrl);
-+		rc = dp_ctrl_reinitialize_mainlink(ctrl, pixel_rate);
- 		if (rc) {
- 			DRM_ERROR("Failed to reinitialize mainlink. rc=%d\n",
- 					rc);
-@@ -1807,31 +1827,12 @@ static int dp_ctrl_link_retrain(struct dp_ctrl_private *ctrl)
- 	return dp_ctrl_setup_main_link(ctrl, &training_step);
- }
- 
--int dp_ctrl_on_stream_phy_test_report(struct dp_ctrl *dp_ctrl)
--{
--	int ret;
--	struct dp_ctrl_private *ctrl;
--
--	ctrl = container_of(dp_ctrl, struct dp_ctrl_private, dp_ctrl);
--
--	ctrl->dp_ctrl.pixel_rate = ctrl->panel->dp_mode.drm_mode.clock;
--
--	ret = dp_ctrl_enable_stream_clocks(ctrl);
--	if (ret) {
--		DRM_ERROR("Failed to start pixel clocks. ret=%d\n", ret);
--		return ret;
--	}
--
--	dp_ctrl_send_phy_test_pattern(ctrl);
--
--	return 0;
--}
--
- int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl, bool force_link_train)
- {
- 	int ret = 0;
- 	bool mainlink_ready = false;
- 	struct dp_ctrl_private *ctrl;
-+	unsigned long pixel_rate;
- 	unsigned long pixel_rate_orig;
- 
- 	if (!dp_ctrl)
-@@ -1839,25 +1840,24 @@ int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl, bool force_link_train)
- 
- 	ctrl = container_of(dp_ctrl, struct dp_ctrl_private, dp_ctrl);
- 
--	ctrl->dp_ctrl.pixel_rate = ctrl->panel->dp_mode.drm_mode.clock;
-+	pixel_rate = pixel_rate_orig = ctrl->panel->dp_mode.drm_mode.clock;
- 
--	pixel_rate_orig = ctrl->dp_ctrl.pixel_rate;
- 	if (dp_ctrl->wide_bus_en)
--		ctrl->dp_ctrl.pixel_rate >>= 1;
-+		pixel_rate >>= 1;
- 
--	drm_dbg_dp(ctrl->drm_dev, "rate=%d, num_lanes=%d, pixel_rate=%d\n",
-+	drm_dbg_dp(ctrl->drm_dev, "rate=%d, num_lanes=%d, pixel_rate=%lu\n",
- 		ctrl->link->link_params.rate,
--		ctrl->link->link_params.num_lanes, ctrl->dp_ctrl.pixel_rate);
-+		ctrl->link->link_params.num_lanes, pixel_rate);
- 
- 	if (!dp_power_clk_status(ctrl->power, DP_CTRL_PM)) { /* link clk is off */
--		ret = dp_ctrl_enable_mainlink_clocks(ctrl);
-+		ret = dp_ctrl_enable_mainlink_clocks(ctrl, pixel_rate);
- 		if (ret) {
- 			DRM_ERROR("Failed to start link clocks. ret=%d\n", ret);
- 			goto end;
- 		}
- 	}
- 
--	ret = dp_ctrl_enable_stream_clocks(ctrl);
-+	ret = dp_ctrl_enable_stream_clocks(ctrl, pixel_rate);
- 	if (ret) {
- 		DRM_ERROR("Failed to start pixel clocks. ret=%d\n", ret);
- 		goto end;
-diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.h b/drivers/gpu/drm/msm/dp/dp_ctrl.h
-index 9a39b00..9f29734 100644
---- a/drivers/gpu/drm/msm/dp/dp_ctrl.h
-+++ b/drivers/gpu/drm/msm/dp/dp_ctrl.h
-@@ -16,13 +16,11 @@
- struct dp_ctrl {
- 	bool orientation;
- 	atomic_t aborted;
--	u32 pixel_rate;
- 	bool wide_bus_en;
- };
- 
- int dp_ctrl_on_link(struct dp_ctrl *dp_ctrl);
- int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl, bool force_link_train);
--int dp_ctrl_on_stream_phy_test_report(struct dp_ctrl *dp_ctrl);
- int dp_ctrl_off_link_stream(struct dp_ctrl *dp_ctrl);
- int dp_ctrl_off_link(struct dp_ctrl *dp_ctrl);
- int dp_ctrl_off(struct dp_ctrl *dp_ctrl);
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+Another option would be to add a link to the PHYs to the dwc3-qcom node in
+the device tree, but I don't think that would be a better solution (and I
+expect Rob would oppose this).
 
+I'm open to other solutions, so far the device link is the cleanest that came
+to my mind.
+
+I think the root issue is the driver architecture, with two interdependent
+drivers for the same IP block, instead of a single framework driver with a
+common part (dwc3 core) and vendor specific hooks/data.
+
+> Any ways, I have another question.
+> 
+> When dwc3_qcom_of_register_core() returns error back to dwc3_qcom_probe(), we
+> goto depopulate label which calls of_platform_depopulate() which destroy the
+> child devices that are populated. how does that ensure that child probe is
+> completed by the time, our probe is called again. The child device it self is
+> gone. Is this working because when our probe is called next time, the child
+> probe depenencies are resolved?
+
+Good point! It doesn't really ensure that the child is probed (actually it
+won't be probed and DL_FLAG_AUTOPROBE_CONSUMER doesn't make sense here), it
+could happen that dwc3_qcom_probe() is deferred multiple times, but eventually
+the PHYs should be ready and dwc3_probe() be invoked through
+of_platform_populate().
