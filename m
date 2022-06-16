@@ -2,66 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 669A554DCDE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jun 2022 10:29:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7B6AF54DD98
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jun 2022 10:53:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229588AbiFPI3D (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Jun 2022 04:29:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47988 "EHLO
+        id S1359797AbiFPIxj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Jun 2022 04:53:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46154 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230424AbiFPI3B (ORCPT
+        with ESMTP id S1359846AbiFPIxG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Jun 2022 04:29:01 -0400
-Received: from mail-oa1-x29.google.com (mail-oa1-x29.google.com [IPv6:2001:4860:4864:20::29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1D365DA2F
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jun 2022 01:29:00 -0700 (PDT)
-Received: by mail-oa1-x29.google.com with SMTP id 586e51a60fabf-100eb6f7782so1084522fac.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jun 2022 01:29:00 -0700 (PDT)
+        Thu, 16 Jun 2022 04:53:06 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0071C6163C
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jun 2022 01:50:58 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id c4so1150941lfj.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jun 2022 01:50:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=0AalHbH5lNk201mZ98hB412vqqVqDD6OSz4kp0XaI6E=;
-        b=DORHNi2iEHtlclkLAQZX/cSf3ItqnU9R+RT+8QZHLTApDHQO4QLd84/xxSUCpCqNuR
-         9Rr6ePdkSrdUxed7grdE8AYhIWbYwkXrhfUVeXfM11odlC+BXoAjqSTyn+1KfNf52kis
-         DAvOMzPboaHtVXDC2uLwsKeWcEhnRpMSWSNqM=
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=JCCzD7oRfJJDnx60RNCfCTBL5b1EzprlMae+XENmAMw=;
+        b=nHq0xF0ZYp3tEAz+fksuTFTmTGEc0OFPXgW2/s+GNpAhBfmKPKdBYphT7TZavBVMtU
+         oqp+Vd2l0loY/cKTWoVo5qJeAZeS86Ah39QqsE6KllgN6Kl2vI7xNazan1ZDoG3BHTYr
+         hnwSeJDS20VsYcgtcJI3uZaj50UxyEVjj178GyfLNmn2VtTlestAKHaxMvSKYAcaY1Fc
+         5x4+nNVQnFe8zgrsv/IOxDbZEPCf2Wn1q+D7xKGgLzmBvhpZHyKg4B0APZvhBQYc/gKV
+         Xb1SCahD3iYTtLUWGFE40OycZeFbB3Es1UYMEO6L1CpM3clkCfoby9q2RDaqcubLSnPn
+         Wckw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=0AalHbH5lNk201mZ98hB412vqqVqDD6OSz4kp0XaI6E=;
-        b=72zxqMhRZga+2GzvxW6U7e0iYjXz2SiFU990yNkjXFQSgxASvOUmRXel6KeaXtG/tN
-         hBqo1/rS9r4NlQorjtA9t5tUseaKDDsoypYLeM1/ofEX3taSxE61GlfIbjlHzKNZVhAk
-         d319BKkMLsiG1k4uGqeU9hYU+XEpslvKph4QieMZPwODI5zmcCNLdcJKtfeveT9hf1lZ
-         7ZzUOIXO2Ja5hoYcNttQJI96uTndUI6jxkTvkHL1j694+6E0e57NEg8NoNhaSgqYuGAm
-         kQvWSPWvDGThtF/nqi0jEspEDs+njK1IRpzqPp+J0ukNAC2lWEBQRC8scK6I/RpHUhlQ
-         YVAA==
-X-Gm-Message-State: AJIora+yk1npg0HiVS262iBOUQF66rr49sBBQp+omtzLIMaiP4SrMqpl
-        4Th0m5Pk9WwEGtmrLRr1JL6MRsYBdR7kRKZfbbUz2Q==
-X-Google-Smtp-Source: AGRyM1uXgNqoIVp4zh6blYrU2GpEEzoJ+XSdI2WTm44if1kvy/PfW44B2udC0Qj+WYiDz6t6gB3iSjNtvCg+Mvyc1Gc=
-X-Received: by 2002:a05:6870:b48a:b0:101:40eb:63a3 with SMTP id
- y10-20020a056870b48a00b0010140eb63a3mr1935706oap.193.1655368138768; Thu, 16
- Jun 2022 01:28:58 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 16 Jun 2022 01:28:58 -0700
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=JCCzD7oRfJJDnx60RNCfCTBL5b1EzprlMae+XENmAMw=;
+        b=dnXYbD/GU3RSa5tunZw1C3KMF2dHRgR071MPcjhk9VJhEGHcOsYAFIaJnbVfqp/mcc
+         ymL1ChWjJEvClsCPkfxYh6SpN73l8mzj1JvY3oJMFBMQrJoc7OpFbbu/bCfWKsoTQBz9
+         him3wGMtSVZcZgbAam04Ea7QB5A/4teJpfS8E8Gm2iVZQ1EGGWew040iPv6qAvikPQJE
+         IFgXifVWNlj18lRktptKmohhI0ElQWFcmw5F5/ZcsGOt6eTpH1kz1peErsE4zrgFGw4I
+         AAodJ/3VrhZqfczdefau8fiJmWr0VGoXVdI+KGCHrLU2bfEUgm070KZdBSJBsdYGpj9R
+         xx9g==
+X-Gm-Message-State: AJIora9nvwiEMwtsJEn9Hk0fadHD3TuM9x8tPmW6brJKMkYuTNocim3d
+        rsocgmZasuPH7rOpd2IMxxRc6A==
+X-Google-Smtp-Source: AGRyM1tpGaPfQUuy8/yW8c6Ns9ktOMIazvlJV8x2JhkS9lg7S7PSaaDBdKwrUpogNykTLJfE4MJtiQ==
+X-Received: by 2002:a05:6512:2017:b0:478:f827:67ca with SMTP id a23-20020a056512201700b00478f82767camr2064877lfb.10.1655369455004;
+        Thu, 16 Jun 2022 01:50:55 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id a16-20020a2e8310000000b002557115af75sm167209ljh.118.2022.06.16.01.50.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 16 Jun 2022 01:50:54 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: [PATCH] drm/msm/hdmi: drop empty bridge callbacks
+Date:   Thu, 16 Jun 2022 11:50:54 +0300
+Message-Id: <20220616085054.432317-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-In-Reply-To: <20220613205032.2652374-1-robdclark@gmail.com>
-References: <20220613205032.2652374-1-robdclark@gmail.com>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Thu, 16 Jun 2022 01:28:58 -0700
-Message-ID: <CAE-0n51ADDijFnPwAQNwYE=62Rj4ZeQ38G7D=Xx3s5x7MRm18A@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm/gem: Drop obj lock in msm_gem_free_object()
-To:     Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org
-Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Rob Clark <robdclark@chromium.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -70,184 +73,42 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Rob Clark (2022-06-13 13:50:32)
-> diff --git a/drivers/gpu/drm/msm/msm_gem.h b/drivers/gpu/drm/msm/msm_gem.h
-> index d608339c1643..432032ad4aed 100644
-> --- a/drivers/gpu/drm/msm/msm_gem.h
-> +++ b/drivers/gpu/drm/msm/msm_gem.h
-> @@ -229,7 +229,19 @@ msm_gem_unlock(struct drm_gem_object *obj)
->  static inline bool
->  msm_gem_is_locked(struct drm_gem_object *obj)
->  {
-> -       return dma_resv_is_locked(obj->resv);
-> +       /*
-> +        * Destroying the object is a special case.. msm_gem_free_object()
-> +        * calls many things that WARN_ON if the obj lock is not held.  But
-> +        * acquiring the obj lock in msm_gem_free_object() can cause a
-> +        * locking order inversion between reservation_ww_class_mutex and
-> +        * fs_reclaim.
-> +        *
-> +        * This deadlock is not actually possible, because no one should
-> +        * be already holding the lock when msm_gem_free_object() is called.
-> +        * Unfortunately lockdep is not aware of this detail.  So when the
-> +        * refcount drops to zero, we pretend it is already locked.
-> +        */
-> +       return dma_resv_is_locked(obj->resv) || (kref_read(&obj->refcount) == 0);
+Drop empty callbacks msm_hdmi_bridge_enable() and
+msm_hdmi_bridge_disable().
 
-Instead of modifying this function can we push down the fact that this
-function is being called from the free path and skip checking this
-condition in that case? Or add some "_locked/free_path" wrappers that
-skip the lock assertion? That would make it clearer to understand while
-reading the code that it is locked when it is asserted to be locked, and
-that we don't care when we're freeing because all references to the
-object are gone.
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ drivers/gpu/drm/msm/hdmi/hdmi_bridge.c | 10 ----------
+ 1 file changed, 10 deletions(-)
 
-Here's a totally untested patch to show the idea. The comment about
-pretending the lock is held can be put in msm_gem_free_object() to
-clarify why it's OK to call the locked variants of the functions.
-
----8<---
-diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
-index 97d5b4d8b9b0..01f19d37bfb6 100644
---- a/drivers/gpu/drm/msm/msm_gem.c
-+++ b/drivers/gpu/drm/msm/msm_gem.c
-@@ -346,13 +346,11 @@ static void del_vma(struct msm_gem_vma *vma)
-  * mapping.
-  */
- static void
--put_iova_spaces(struct drm_gem_object *obj, bool close)
-+put_iova_spaces_locked(struct drm_gem_object *obj, bool close)
- {
- 	struct msm_gem_object *msm_obj = to_msm_bo(obj);
- 	struct msm_gem_vma *vma;
-
--	GEM_WARN_ON(!msm_gem_is_locked(obj));
--
- 	list_for_each_entry(vma, &msm_obj->vmas, list) {
- 		if (vma->aspace) {
- 			msm_gem_purge_vma(vma->aspace, vma);
-@@ -362,18 +360,28 @@ put_iova_spaces(struct drm_gem_object *obj, bool close)
- 	}
+diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
+index 97c24010c4d1..d569f0c6cab7 100644
+--- a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
++++ b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
+@@ -159,14 +159,6 @@ static void msm_hdmi_bridge_pre_enable(struct drm_bridge *bridge)
+ 		msm_hdmi_hdcp_on(hdmi->hdcp_ctrl);
  }
-
--/* Called with msm_obj locked */
-+static void put_iova_spaces(struct drm_gem_object *obj, bool close)
-+{
-+	GEM_WARN_ON(!msm_gem_is_locked(obj));
-+	put_iova_spaces_locked(obj, close);
-+}
-+
-+/* Called with msm_obj locked or on the free path */
- static void
--put_iova_vmas(struct drm_gem_object *obj)
-+put_iova_vmas_locked(struct drm_gem_object *obj)
- {
- 	struct msm_gem_object *msm_obj = to_msm_bo(obj);
- 	struct msm_gem_vma *vma, *tmp;
-
--	GEM_WARN_ON(!msm_gem_is_locked(obj));
+ 
+-static void msm_hdmi_bridge_enable(struct drm_bridge *bridge)
+-{
+-}
 -
--	list_for_each_entry_safe(vma, tmp, &msm_obj->vmas, list) {
-+	list_for_each_entry_safe(vma, tmp, &msm_obj->vmas, list)
- 		del_vma(vma);
--	}
-+}
-+
-+static void
-+put_iova_vmas(struct drm_gem_object *obj)
-+{
-+	GEM_WARN_ON(!msm_gem_is_locked(obj));
-+	put_iova_vmas_locked(obj);
- }
-
- static struct msm_gem_vma *get_vma_locked(struct drm_gem_object *obj,
-@@ -795,12 +803,10 @@ void msm_gem_evict(struct drm_gem_object *obj)
- 	update_inactive(msm_obj);
- }
-
--void msm_gem_vunmap(struct drm_gem_object *obj)
-+static void msm_gem_vunmap_locked(struct drm_gem_object *obj)
- {
- 	struct msm_gem_object *msm_obj = to_msm_bo(obj);
-
--	GEM_WARN_ON(!msm_gem_is_locked(obj));
+-static void msm_hdmi_bridge_disable(struct drm_bridge *bridge)
+-{
+-}
 -
- 	if (!msm_obj->vaddr || GEM_WARN_ON(!is_vunmapable(msm_obj)))
- 		return;
-
-@@ -808,6 +814,12 @@ void msm_gem_vunmap(struct drm_gem_object *obj)
- 	msm_obj->vaddr = NULL;
- }
-
-+void msm_gem_vunmap(struct drm_gem_object *obj)
-+{
-+	GEM_WARN_ON(!msm_gem_is_locked(obj));
-+	msm_gem_vunmap_locked(obj);
-+}
-+
- void msm_gem_active_get(struct drm_gem_object *obj, struct msm_gpu *gpu)
+ static void msm_hdmi_bridge_post_disable(struct drm_bridge *bridge)
  {
- 	struct msm_gem_object *msm_obj = to_msm_bo(obj);
-@@ -1021,12 +1033,11 @@ void msm_gem_free_object(struct drm_gem_object *obj)
- 	list_del(&msm_obj->mm_list);
- 	mutex_unlock(&priv->mm_lock);
+ 	struct hdmi_bridge *hdmi_bridge = to_hdmi_bridge(bridge);
+@@ -306,8 +298,6 @@ static enum drm_mode_status msm_hdmi_bridge_mode_valid(struct drm_bridge *bridge
+ 
+ static const struct drm_bridge_funcs msm_hdmi_bridge_funcs = {
+ 		.pre_enable = msm_hdmi_bridge_pre_enable,
+-		.enable = msm_hdmi_bridge_enable,
+-		.disable = msm_hdmi_bridge_disable,
+ 		.post_disable = msm_hdmi_bridge_post_disable,
+ 		.mode_set = msm_hdmi_bridge_mode_set,
+ 		.mode_valid = msm_hdmi_bridge_mode_valid,
+-- 
+2.35.1
 
--	msm_gem_lock(obj);
--
- 	/* object should not be on active list: */
- 	GEM_WARN_ON(is_active(msm_obj));
-
--	put_iova_spaces(obj, true);
-+	put_iova_spaces_locked(obj, true);
-+
-
- 	if (obj->import_attach) {
- 		GEM_WARN_ON(msm_obj->vaddr);
-@@ -1036,19 +1047,13 @@ void msm_gem_free_object(struct drm_gem_object *obj)
- 		 */
- 		kvfree(msm_obj->pages);
-
--		put_iova_vmas(obj);
--
--		/* dma_buf_detach() grabs resv lock, so we need to unlock
--		 * prior to drm_prime_gem_destroy
--		 */
--		msm_gem_unlock(obj);
-+		put_iova_vmas_locked(obj);
-
- 		drm_prime_gem_destroy(obj, msm_obj->sgt);
- 	} else {
--		msm_gem_vunmap(obj);
-+		msm_gem_vunmap_locked(obj);
- 		put_pages(obj);
--		put_iova_vmas(obj);
--		msm_gem_unlock(obj);
-+		put_iova_vmas_locked(obj);
- 	}
-
- 	drm_gem_object_release(obj);
-diff --git a/drivers/gpu/drm/msm/msm_gem.h b/drivers/gpu/drm/msm/msm_gem.h
-index c75d3b879a53..b2998a074de7 100644
---- a/drivers/gpu/drm/msm/msm_gem.h
-+++ b/drivers/gpu/drm/msm/msm_gem.h
-@@ -253,7 +253,6 @@ static inline bool is_purgeable(struct
-msm_gem_object *msm_obj)
-
- static inline bool is_vunmapable(struct msm_gem_object *msm_obj)
- {
--	GEM_WARN_ON(!msm_gem_is_locked(&msm_obj->base));
- 	return (msm_obj->vmap_count == 0) && msm_obj->vaddr;
- }
-
-diff --git a/drivers/gpu/drm/msm/msm_gem_shrinker.c
-b/drivers/gpu/drm/msm/msm_gem_shrinker.c
-index 086dacf2f26a..afff3a79e925 100644
---- a/drivers/gpu/drm/msm/msm_gem_shrinker.c
-+++ b/drivers/gpu/drm/msm/msm_gem_shrinker.c
-@@ -175,6 +175,7 @@ static const int vmap_shrink_limit = 15;
- static bool
- vmap_shrink(struct msm_gem_object *msm_obj)
- {
-+	GEM_WARN_ON(!msm_gem_is_locked(&msm_obj->base));
- 	if (!is_vunmapable(msm_obj))
- 		return false;
