@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D41C854DD99
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jun 2022 10:53:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D735954DDC9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jun 2022 11:03:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1359837AbiFPIxj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Jun 2022 04:53:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46110 "EHLO
+        id S230081AbiFPJDb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Jun 2022 05:03:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58930 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1376486AbiFPIxQ (ORCPT
+        with ESMTP id S1376483AbiFPJD0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Jun 2022 04:53:16 -0400
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0DE8B62120
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jun 2022 01:51:11 -0700 (PDT)
-Received: by mail-lf1-x134.google.com with SMTP id a29so1203549lfk.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jun 2022 01:51:10 -0700 (PDT)
+        Thu, 16 Jun 2022 05:03:26 -0400
+Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0395A2F027
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jun 2022 02:03:25 -0700 (PDT)
+Received: by mail-lj1-x22e.google.com with SMTP id g2so789182ljk.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jun 2022 02:03:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=CtFmr9YnFXBNjwW1QqgTVpLtMjRSqbtnLnF5ahH9/9g=;
-        b=pPPobIRP9kSIAIwFkE1PFoYJ9JAQlIrrZtZLq/UCm+y08DsoOCMBMPmfUJIO2Ureja
-         jhOpQo0aJddInFsiZh4apdmYL/r3H9uwTwxV8m9A+0oHPHMHtzDajH/ahvEaL2t7uQES
-         xDjXTNURa8l8uBtU1WF6W40cON6eHIlck2KOp38+tzuHyw5q2hN/kIjYpucSjfcC5zJX
-         yNPPGhFOVkqroHMptIEujLGzSNgNIR018+A5ntGVbrWXghJjSOmJWZvkXJRLaZTlzsgn
-         30ZefOFbFPoGuRsPAuJPhLe8yJBafhuHSplZGOfyub1B5tR54x1e8dEk8YcQwNSwHAyK
-         YV3g==
+        bh=fV4e5YC9VYPaeaA3wYkEZj1J8lq/TEYTcnfqzS3h2eU=;
+        b=o0fIZANVn9C9PV0ontkcAk6mmCC1Eso7Xx+wM30L4F+Nav7QGbwlKA9k4BAz9ScOvG
+         N0XnfSxgcFtu/BNsn/gMY3F73M+Q2nGWdSsN5aKiGxhLVNpIW7rHyQiG4CdrSVcXCJ0U
+         tQsehBpaRfefwBr+eTC4wl3qiQ05VuOdjsa9OnuCdl5alW7sC/IqR8bQDDGRLOBrXtb/
+         +dICAGXXktHLx2oie+hiHxOfZUXNnUcMfbBa01ektqvVvn/buCJsClEsyezmCGZPLNCH
+         CUaVUP7TCvp5mCevW+YeHBUXCAHxjCbO4d+eACyAubQsae1g+s4KwvQBJIuroVf4d0TR
+         Jglw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=CtFmr9YnFXBNjwW1QqgTVpLtMjRSqbtnLnF5ahH9/9g=;
-        b=VN/bIEdRF2xd95HiPaQGmKl7UxYUTbVgOVodtA+lgNY32r/kS2WsmBDCmgXaQ+TT6I
-         PLlcPU7UWfWLNlpzNOHCXGIdvz0/XHRdkUgOD+jlkIlBFB3ydpwoiAlKG5XyVxI+z7kk
-         6s15dCV6Vac0JUbAH2A0oV3HVV5U5LI1tgXX9s4KhPz3tu9NtTJUZg5PwuYvEfzJkwS6
-         qx8UtlMkcsLsD2ZvdIicputmlXqhHFzqsbPiFqrK+BqYIlSB4aPbIUbqX9/IATHLurjj
-         s0OgQUhpYtR57crvHjf3nY0LncNL6TqdY6QeH1uiyYIXmyNl23tBPHD5mSmazcZ7V9pC
-         l0NQ==
-X-Gm-Message-State: AJIora+vPncgTY+VPP6VLQ8gxMlFJVVy+cmuvRJnMks6yPzbLisTUN/g
-        xUm8tu8Oexe3xJFfyh1ZlUU8UQ==
-X-Google-Smtp-Source: AGRyM1shxA9KdPhKLQQ5X/7BmpScUk3xhKPH5MFw8Wl9/GP2gf3ehMgtoiOssA+WoklvhVCJe3/dBw==
-X-Received: by 2002:a05:6512:3b99:b0:47d:c408:555f with SMTP id g25-20020a0565123b9900b0047dc408555fmr2083991lfv.168.1655369458000;
-        Thu, 16 Jun 2022 01:50:58 -0700 (PDT)
+        bh=fV4e5YC9VYPaeaA3wYkEZj1J8lq/TEYTcnfqzS3h2eU=;
+        b=KBiqKGQP0fbZ5es3TjvG1v+Sz2bIpOTegPcpajWBTB+xrRGg5hBR4BFKygRyqNqyi5
+         OI/9QUgFD5GNIRkw3aseTKyX8LCBVSkmzspJq7axoF89zoEZi3YD+WIgfwfVFblsUGUc
+         lJdN2rDowtwmvVGtEnU5U8x37clueFLAxYT25tdFo6WkHuPRZ7W4njE+WUWU91NmBufR
+         vTZz41to27/U0+zPsCSWwRvX5nFqCcXnIOExRzuCfFEIwNUKZ9yab8G3EFZui3YZH7Rb
+         3NJsQnfzRQCm+SOPorDB4F4Vhul5FQp0n5LiLqEe0m/OO9vCgIaa/Khpv384C46xZjWn
+         kz9Q==
+X-Gm-Message-State: AJIora+DNfDF9IJ97fJNWcOkYqwDXJk55ND4GGm3LjN9bRVO7kDrzKS2
+        VLXUiUgr/biDIPVLTtTFSa+1RA==
+X-Google-Smtp-Source: AGRyM1sZRCtLA14Wp6cT/661rkyn2DZwhIIVqJ/CT3dEJjmk0LvlNqAXGICx3umKnWixeyOI4AGQcQ==
+X-Received: by 2002:a05:651c:545:b0:25a:45d1:4086 with SMTP id q5-20020a05651c054500b0025a45d14086mr1911485ljp.307.1655370202943;
+        Thu, 16 Jun 2022 02:03:22 -0700 (PDT)
 Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id v18-20020ac25b12000000b0047255d21202sm149136lfn.305.2022.06.16.01.50.57
+        by smtp.gmail.com with ESMTPSA id j9-20020a2e8009000000b0025575338c41sm172573ljg.127.2022.06.16.02.03.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Jun 2022 01:50:57 -0700 (PDT)
+        Thu, 16 Jun 2022 02:03:22 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>
@@ -57,9 +57,9 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
-Subject: [PATCH] drm/msm/hdmi: support attaching the "next" bridge
-Date:   Thu, 16 Jun 2022 11:50:57 +0300
-Message-Id: <20220616085057.432353-1-dmitry.baryshkov@linaro.org>
+Subject: [RFC PATCH 0/2] drm/msm/mdp4: rework LVDS/LCDC panel support
+Date:   Thu, 16 Jun 2022 12:03:19 +0300
+Message-Id: <20220616090321.433249-1-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -73,68 +73,26 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-There might be a chain of bridges attached to the HDMI node
-(including but not limited to the display-connector bridge). Add support
-for attaching them right to the HDMI bridge chain.
+MDP4 uses custom code to handle LVDS panel. It predates handling
+EPROBE_DEFER, it tries to work when the panel device is not available,
+etc. Switch MDP4 LCDC code to use drm_panel_bridge/drm_bridge_connector
+to follow contemporary DRM practices.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/msm/hdmi/hdmi.c | 14 ++++++++++++++
- drivers/gpu/drm/msm/hdmi/hdmi.h |  2 ++
- 2 files changed, 16 insertions(+)
+Note, this code has been compile-tested only. Testing on the real device
+is still pending (and will be performed before the merge).
 
-diff --git a/drivers/gpu/drm/msm/hdmi/hdmi.c b/drivers/gpu/drm/msm/hdmi/hdmi.c
-index cf24e68864ba..9fdb17317589 100644
---- a/drivers/gpu/drm/msm/hdmi/hdmi.c
-+++ b/drivers/gpu/drm/msm/hdmi/hdmi.c
-@@ -9,6 +9,7 @@
- #include <linux/of_gpio.h>
- 
- #include <drm/drm_bridge_connector.h>
-+#include <drm/drm_of.h>
- 
- #include <sound/hdmi-codec.h>
- #include "hdmi.h"
-@@ -133,6 +134,10 @@ static struct hdmi *msm_hdmi_init(struct platform_device *pdev)
- 	hdmi->config = config;
- 	spin_lock_init(&hdmi->reg_lock);
- 
-+	ret = drm_of_find_panel_or_bridge(pdev->dev.of_node, 1, 0, NULL, &hdmi->next_bridge);
-+	if (ret && ret != -ENODEV)
-+		goto fail;
-+
- 	hdmi->mmio = msm_ioremap(pdev, config->mmio_name);
- 	if (IS_ERR(hdmi->mmio)) {
- 		ret = PTR_ERR(hdmi->mmio);
-@@ -291,6 +296,15 @@ int msm_hdmi_modeset_init(struct hdmi *hdmi,
- 		goto fail;
- 	}
- 
-+	if (hdmi->next_bridge) {
-+		ret = drm_bridge_attach(hdmi->encoder, hdmi->next_bridge, hdmi->bridge,
-+					DRM_BRIDGE_ATTACH_NO_CONNECTOR);
-+		if (ret) {
-+			DRM_DEV_ERROR(dev->dev, "failed to attach next HDMI bridge: %d\n", ret);
-+			goto fail;
-+		}
-+	}
-+
- 	hdmi->connector = drm_bridge_connector_init(hdmi->dev, encoder);
- 	if (IS_ERR(hdmi->connector)) {
- 		ret = PTR_ERR(hdmi->connector);
-diff --git a/drivers/gpu/drm/msm/hdmi/hdmi.h b/drivers/gpu/drm/msm/hdmi/hdmi.h
-index 736f348befb3..5241735438ac 100644
---- a/drivers/gpu/drm/msm/hdmi/hdmi.h
-+++ b/drivers/gpu/drm/msm/hdmi/hdmi.h
-@@ -68,6 +68,8 @@ struct hdmi {
- 	struct drm_connector *connector;
- 	struct drm_bridge *bridge;
- 
-+	struct drm_bridge *next_bridge;
-+
- 	/* the encoder we are hooked to (outside of hdmi block) */
- 	struct drm_encoder *encoder;
- 
+Dmitry Baryshkov (2):
+  drm/msm/mdp4: move move_valid callback to lcdc_encoder
+  drm/msm/mdp4: switch LVDS to use drm_bridge/_connector
+
+ drivers/gpu/drm/msm/Makefile                  |   1 -
+ drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c      |  32 ++++-
+ drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.h      |   7 +-
+ .../gpu/drm/msm/disp/mdp4/mdp4_lcdc_encoder.c |  46 +++----
+ .../drm/msm/disp/mdp4/mdp4_lvds_connector.c   | 120 ------------------
+ 5 files changed, 47 insertions(+), 159 deletions(-)
+ delete mode 100644 drivers/gpu/drm/msm/disp/mdp4/mdp4_lvds_connector.c
+
 -- 
 2.35.1
 
