@@ -2,116 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 05BE754E2E3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jun 2022 16:05:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B186A54E506
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jun 2022 16:38:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1377501AbiFPOFH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Jun 2022 10:05:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43434 "EHLO
+        id S1377626AbiFPOiB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Jun 2022 10:38:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47960 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1377498AbiFPOFG (ORCPT
+        with ESMTP id S1376918AbiFPOiA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Jun 2022 10:05:06 -0400
-Received: from mail-io1-f54.google.com (mail-io1-f54.google.com [209.85.166.54])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E07E139825;
-        Thu, 16 Jun 2022 07:05:05 -0700 (PDT)
-Received: by mail-io1-f54.google.com with SMTP id y79so1578045iof.2;
-        Thu, 16 Jun 2022 07:05:05 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
-         :message-id;
-        bh=HBau3VRzdZhTfclTyBibLg9xFVR5jMynJXtllb1vDUo=;
-        b=rZKJL16v/5+VbUL7F+VIncxIJlDqjPihG3CPpreK2kmlHFebVil6SEvRfi10OvuPim
-         cqc7ynl1SCmXrN0tIFutY/hvFLXzEy1Ua17+8LKQlPBBMaxU/JbwU3Uq1/L3EdyYrOyO
-         q91lbPwMPqsAnb5SZ2hFIotYoyN5PM7JkvX0DdxXTFY6CHjsfSERWFzhA5ZHdID7o00/
-         1ojOUMj69XKDHR1mifgkPglqOiuoMaWvq780kwITJO/sF6jjerByW6CP58qmkUHMJh9p
-         j21U36GklvfszHBV+Ws4NWoTMrZuVcJw+XT7Oo8ygk0SBAp1Z4pY+NRQIWCFXofQpfoG
-         slWA==
-X-Gm-Message-State: AJIora/MwYX1NKAZd1imTpCj0nGASyaO2+LVeMfwgO4XBgfC61xmQkaV
-        WALMVC80Ego+xM3GSBI2Lw==
-X-Google-Smtp-Source: AGRyM1tOnixooJOH4Sxqu1VRF06xA/edeQ5bII29Z4i9C2fE+igWgZDtX/wd2w6p11/kf8obcYbEeg==
-X-Received: by 2002:a05:6638:1b5:b0:331:acf2:1111 with SMTP id b21-20020a05663801b500b00331acf21111mr2817467jaq.115.1655388305114;
-        Thu, 16 Jun 2022 07:05:05 -0700 (PDT)
-Received: from robh.at.kernel.org ([64.188.179.251])
-        by smtp.gmail.com with ESMTPSA id n41-20020a027169000000b00331a3909e46sm910313jaf.68.2022.06.16.07.05.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Jun 2022 07:05:04 -0700 (PDT)
-Received: (nullmailer pid 3391581 invoked by uid 1000);
-        Thu, 16 Jun 2022 14:05:01 -0000
-From:   Rob Herring <robh@kernel.org>
-To:     Christian Marangi <ansuelsmth@gmail.com>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        dmaengine@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
+        Thu, 16 Jun 2022 10:38:00 -0400
+Received: from relay10.mail.gandi.net (relay10.mail.gandi.net [IPv6:2001:4b98:dc4:8::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5406120BFD;
+        Thu, 16 Jun 2022 07:37:58 -0700 (PDT)
+Received: (Authenticated sender: miquel.raynal@bootlin.com)
+        by mail.gandi.net (Postfix) with ESMTPSA id 1BA05240007;
+        Thu, 16 Jun 2022 14:37:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
+        t=1655390276;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=AffThJ0/PxGNjxerxTAn0ejOKaeR6A8gRvY3EvAGqMk=;
+        b=QXO2bGvu8Trep4mecw9AonLkzv9k4fOr6tBtBkomlPNpXhphHVgHbi7Hhj8hmxPcARoW/n
+        6lp9/a+RL+/O3SN8dJ8P2jd4lBFJwVfmxjK4r9ZkC4HfK0QBke6ZkAJOzVAFb6cR076aQ5
+        nTO/gG//tf3+mdtkQuebFCofIDBicPCR8IOKAeVEIsZB87/ZMLWAblNI+n02dd27VOC6nV
+        uJrDpHaaiBQVvgNwIh648zJcMef6aAPHJVyydWSAtt7SP3o9zQELt4isdUgjS/jbExUnTw
+        L+yLeRPq004Pna/T7Js29Yz2olNWugJQrjYe+ed3U4wC/EkvXw8juumsREhtrA==
+Date:   Thu, 16 Jun 2022 16:37:51 +0200
+From:   Miquel Raynal <miquel.raynal@bootlin.com>
+To:     Ansuel Smith <ansuelsmth@gmail.com>
+Cc:     Manivannan Sadhasivam <mani@kernel.org>,
         Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Richard Weinberger <richard@nod.at>,
+        Vignesh Raghavendra <vigneshr@ti.com>,
         Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-In-Reply-To: <20220615235404.3457-1-ansuelsmth@gmail.com>
-References: <20220615235404.3457-1-ansuelsmth@gmail.com>
-Subject: Re: [PATCH v2 1/2] dt-bindings: dma: rework qcom,adm Documentation to yaml schema
-Date:   Thu, 16 Jun 2022 08:05:01 -0600
-Message-Id: <1655388301.055791.3391580.nullmailer@robh.at.kernel.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
-        autolearn_force=no version=3.4.6
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-mtd@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v7 1/3] mtd: nand: raw: qcom_nandc: reorder
+ qcom_nand_host struct
+Message-ID: <20220616163751.2b5962df@xps-13>
+In-Reply-To: <62aa76ad.1c69fb81.7e2d3.0c8e@mx.google.com>
+References: <20220615000612.3119-1-ansuelsmth@gmail.com>
+        <20220615000612.3119-2-ansuelsmth@gmail.com>
+        <20220615171132.GA3606@thinkpad>
+        <62aa76ad.1c69fb81.7e2d3.0c8e@mx.google.com>
+Organization: Bootlin
+X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.33; x86_64-pc-linux-gnu)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 16 Jun 2022 01:54:03 +0200, Christian Marangi wrote:
-> Rework the qcom,adm Documentation to yaml schema.
-> This is not a pure conversion since originally the driver has changed
-> implementation for the #dma-cells and was wrong from the start.
-> Also the driver now handles the common DMA clients implementation with
-> the first cell that denotes the channel number and nothing else since
-> the client will have to provide the crci information via other means.
-> 
-> Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-> ---
-> v2:
-> - Change Sob to Christian Marangi
-> - Add Bjorn in the maintainers list
-> 
->  .../devicetree/bindings/dma/qcom,adm.yaml     | 96 +++++++++++++++++++
->  .../devicetree/bindings/dma/qcom_adm.txt      | 61 ------------
->  2 files changed, 96 insertions(+), 61 deletions(-)
->  create mode 100644 Documentation/devicetree/bindings/dma/qcom,adm.yaml
->  delete mode 100644 Documentation/devicetree/bindings/dma/qcom_adm.txt
-> 
+Hi Ansuel/Christian,
 
-Running 'make dtbs_check' with the schema in this patch gives the
-following warnings. Consider if they are expected or the schema is
-incorrect. These may not be new warnings.
+ansuelsmth@gmail.com wrote on Thu, 16 Jun 2022 02:18:08 +0200:
 
-Note that it is not yet a requirement to have 0 warnings for dtbs_check.
-This will change in the future.
+> On Wed, Jun 15, 2022 at 10:41:32PM +0530, Manivannan Sadhasivam wrote:
+> > On Wed, Jun 15, 2022 at 02:06:10AM +0200, Ansuel Smith wrote: =20
+> > > Reorder structs in nandc driver to save holes.
+> > >=20
+> > > Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com> =20
+> >=20
+> > Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+> >=20
+> > Thanks,
+> > Mani
+> > =20
+>=20
+> I'm sending v8 with a different Sob so I'm not adding the review tag (in
+> v8).
+> In short the new Sob is what I will use onwards, wanted to keep the
+> Ansuel reference but it was suggested to use Christian Marangi and
+> nothing more. It's just a name change and we are the same person and
+> nobody is stealing ownership of the patch.
+> Sorry for the mess.
 
-Full log is available here: https://patchwork.ozlabs.org/patch/
+Mmmh strange, but okay. You are supposed to contribute with your real
+identity, not under pseudonym anyway.
 
+Also, you could have kept Mani's R-by in v8 but anyway. Mani, can
+you resend them?
 
-dma-controller@18300000: reset-names:1: 'c0' was expected
-	arch/arm/boot/dts/qcom-ipq8064-ap148.dtb
-	arch/arm/boot/dts/qcom-ipq8064-rb3011.dtb
-
-dma-controller@18300000: reset-names:2: 'c1' was expected
-	arch/arm/boot/dts/qcom-ipq8064-ap148.dtb
-	arch/arm/boot/dts/qcom-ipq8064-rb3011.dtb
-
-dma-controller@18300000: reset-names:3: 'c2' was expected
-	arch/arm/boot/dts/qcom-ipq8064-ap148.dtb
-	arch/arm/boot/dts/qcom-ipq8064-rb3011.dtb
-
-dma-controller@18300000: reset-names: ['clk', 'pbus', 'c0', 'c1', 'c2'] is too long
-	arch/arm/boot/dts/qcom-ipq8064-ap148.dtb
-	arch/arm/boot/dts/qcom-ipq8064-rb3011.dtb
-
-dma-controller@18300000: resets: [[11, 13], [11, 12], [11, 11], [11, 10], [11, 9]] is too long
-	arch/arm/boot/dts/qcom-ipq8064-ap148.dtb
-	arch/arm/boot/dts/qcom-ipq8064-rb3011.dtb
-
+Thanks,
+Miqu=C3=A8l
