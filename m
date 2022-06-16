@@ -2,71 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2F5DA54EB6C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jun 2022 22:43:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EE8C054EBAD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jun 2022 22:57:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1378274AbiFPUnD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Jun 2022 16:43:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57482 "EHLO
+        id S1378585AbiFPU5t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Jun 2022 16:57:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44794 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233530AbiFPUnC (ORCPT
+        with ESMTP id S230517AbiFPU5s (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Jun 2022 16:43:02 -0400
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3CF5722B09
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jun 2022 13:43:01 -0700 (PDT)
+        Thu, 16 Jun 2022 16:57:48 -0400
+Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35A4018368
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jun 2022 13:57:47 -0700 (PDT)
+Received: by mail-pl1-x634.google.com with SMTP id r1so2195279plo.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jun 2022 13:57:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1655412181; x=1686948181;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=+pvXpGgCvGMLklfAcFFyeylmCVs7Y2BlrR5HvOXQd8s=;
-  b=AAE/GqD7jgFLYNHG6ZlBilnDcJl1ytAApfpbziZTNr+VSyIHLDdJQj57
-   sCfYAeDL24XgoQc0asRguEdJw5CX9H2X+xk928mkLKt61+Gp0xUDF8ifN
-   usQJTWLaPCvvQbhyE3fTdWKhRbFgB21J2xgtC7LUJHwsd61oR+CUrk6vD
-   g=;
-Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 16 Jun 2022 13:43:00 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Jun 2022 13:43:00 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Thu, 16 Jun 2022 13:43:00 -0700
-Received: from [10.111.175.222] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Thu, 16 Jun
- 2022 13:42:57 -0700
-Message-ID: <2217f2a6-c94c-0efe-a58c-ddae015f6d49@quicinc.com>
-Date:   Thu, 16 Jun 2022 13:42:55 -0700
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=uN2MkJ4nUIty1Sor4XqPwun1hGLUtXm8GHd5WHbkewo=;
+        b=zmokaMcV6kyTpb28Gi8AD+sXGgk4clAe1LHnxikamybHWfRzKloNw5d4MWaKqb4XbY
+         jlGKGQGnK1+nTTbvlabT9aHoYZuc505lAG259+1EmeINJXzmI4JBxUAmP44mQN90TIq4
+         gizXW/SlGVlxdozS8yAGTFUxL1LuxTds/q4S45sRsTv0u5XF8po7XTE4AmauyBnlJhi+
+         SJRPwyFqQ1fXzVhySp7YU3Ga7bWRWiFHzr8g5ViteJbC1zKTEvDx0i61atSLq1PcAj05
+         K1r6xkTydF05AiQ0iOCv0Wtb7L2iTl6KkXKH9k7vNro8CApVaLUZq0UFouNGx5ght+p5
+         oJqw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=uN2MkJ4nUIty1Sor4XqPwun1hGLUtXm8GHd5WHbkewo=;
+        b=mzl74AQdhjX+yB+KmgXfk2pTQ8w1ZoJubP2N1qwlELDnVWJ5hFwmBKiV8MIEKoKsc8
+         oRx4ItieMaLJ6I/A3plQMTPlh0gDUCGMtjICyXG6uBDrR1MFLGbb7VCALanNxoGMq/RU
+         Xy1J6VqNukvwzx1EHbYCiVmem5RfvMel3ODm3e1GTLJKdl5nXU192sz50cwM1a0mz8Ku
+         PmIBlK3dK3cvPEXmjF53Wg62Cv7wS9srOe2K8mibTKQpuqqrQNdYT4TWtH9aEJ4mnBGA
+         tIztlidCJ1SlmCMIV/YivRaNF37uNObGQ9pKHyDfkxYecQegD1JwulMlQcxtSV085MHx
+         PF1w==
+X-Gm-Message-State: AJIora+cXK6VoClo1D+h/dN+liDiPKhfzoaxNV/sZAc46mU3U2yfaxhu
+        1v4tgFnNTSA9/4Ee43Qe2PhaAA==
+X-Google-Smtp-Source: AGRyM1szMaJdSd7SItitiXJ+irqerxl/VV72VGGcecE6fpqRMun7pj6i2ii9M2C6slr8LD0+Sn2s0Q==
+X-Received: by 2002:a17:90a:aa96:b0:1ea:3780:c3dc with SMTP id l22-20020a17090aaa9600b001ea3780c3dcmr17901042pjq.241.1655413066683;
+        Thu, 16 Jun 2022 13:57:46 -0700 (PDT)
+Received: from google.com ([192.77.111.2])
+        by smtp.gmail.com with ESMTPSA id h10-20020a170902f7ca00b001621ce92196sm2046829plw.86.2022.06.16.13.57.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 16 Jun 2022 13:57:45 -0700 (PDT)
+Date:   Thu, 16 Jun 2022 21:57:41 +0100
+From:   Lee Jones <lee.jones@linaro.org>
+To:     Satya Priya <quic_c_skakit@quicinc.com>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        swboyd@chromium.org, quic_collinsd@quicinc.com,
+        quic_subbaram@quicinc.com, quic_jprakash@quicinc.com
+Subject: Re: [PATCH V15 6/9] mfd: pm8008: Use i2c_new_dummy_device() API
+Message-ID: <YquZRcuRCrdF+Q1z@google.com>
+References: <1655200111-18357-1-git-send-email-quic_c_skakit@quicinc.com>
+ <1655200111-18357-7-git-send-email-quic_c_skakit@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH v2 3/3] drm/msm: stop storing the array of CRTCs in struct
- msm_drm_private
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-CC:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>,
-        "kernel test robot" <lkp@intel.com>
-References: <20220507170922.1723712-1-dmitry.baryshkov@linaro.org>
- <20220507170922.1723712-3-dmitry.baryshkov@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20220507170922.1723712-3-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-7.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <1655200111-18357-7-git-send-email-quic_c_skakit@quicinc.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -74,194 +78,144 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Tue, 14 Jun 2022, Satya Priya wrote:
 
-
-On 5/7/2022 10:09 AM, Dmitry Baryshkov wrote:
-> Handling the array of CRTC duplicate the struct msm_drm_private
-> duplicates a list of CRTCs in the drm_device. Drop it and use the
-
-There seem to be two duplicates in the commit text :)
-
-So this should just be "handling the array of CRTCs duplicates a list of
-of CRTCs in the drm_device.
-
-> existing list for CRTC enumeration.
+> Use i2c_new_dummy_device() to register pm8008-regulator
+> client present at a different address space, instead of
+> defining a separate DT node. This avoids calling the probe
+> twice for the same chip, once for each client pm8008-infra
+> and pm8008-regulator.
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Reported-by: kernel test robot <lkp@intel.com>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> As a part of this define pm8008_regmap_init() to do regmap
+> init for both the clients and define pm8008_get_regmap() to
+> pass the regmap to the regulator driver.
+> 
+> Signed-off-by: Satya Priya <quic_c_skakit@quicinc.com>
+> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
 > ---
+> Changes in V15:
+>  - None.
 > 
-> Changes since v1:
-> - Intialize the index variable in msm_drm_init() / event thread
->    initialization.
+> Changes in V14:
+>  - None.
 > 
-> ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c  |  2 +-
->   drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c |  2 +-
->   drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c |  2 +-
->   drivers/gpu/drm/msm/msm_drv.c            | 29 ++++++++++++------------
->   drivers/gpu/drm/msm/msm_drv.h            |  3 +--
->   5 files changed, 19 insertions(+), 19 deletions(-)
+> Changes in V13:
+>  - None.
 > 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> index 2b9d931474e0..c84859fb2d9b 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> @@ -808,7 +808,7 @@ static int _dpu_kms_drm_obj_init(struct dpu_kms *dpu_kms)
->   			ret = PTR_ERR(crtc);
->   			return ret;
->   		}
-> -		priv->crtcs[priv->num_crtcs++] = crtc;
-> +		priv->num_crtcs++;
->   	}
->   
->   	/* All CRTCs are compatible with all encoders */
-> diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
-> index fb48c8c19ec3..7449c1693e45 100644
-> --- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
-> +++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
-> @@ -337,7 +337,7 @@ static int modeset_init(struct mdp4_kms *mdp4_kms)
->   			goto fail;
->   		}
->   
-> -		priv->crtcs[priv->num_crtcs++] = crtc;
-> +		priv->num_crtcs++;
->   	}
->   
->   	/*
-> diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-> index 3d5621a68f85..36808990f840 100644
-> --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-> +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-> @@ -497,7 +497,7 @@ static int modeset_init(struct mdp5_kms *mdp5_kms)
->   			DRM_DEV_ERROR(dev->dev, "failed to construct crtc %d (%d)\n", i, ret);
->   			goto fail;
->   		}
-> -		priv->crtcs[priv->num_crtcs++] = crtc;
-> +		priv->num_crtcs++;
->   	}
->   
->   	/*
-> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-> index 4a3dda23e3e0..db676a142ac1 100644
-> --- a/drivers/gpu/drm/msm/msm_drv.c
-> +++ b/drivers/gpu/drm/msm/msm_drv.c
-> @@ -144,7 +144,7 @@ static void msm_irq_uninstall(struct drm_device *dev)
->   
->   struct msm_vblank_work {
->   	struct work_struct work;
-> -	int crtc_id;
-> +	struct drm_crtc *crtc;
->   	bool enable;
->   	struct msm_drm_private *priv;
->   };
-> @@ -157,15 +157,15 @@ static void vblank_ctrl_worker(struct work_struct *work)
->   	struct msm_kms *kms = priv->kms;
->   
->   	if (vbl_work->enable)
-> -		kms->funcs->enable_vblank(kms, priv->crtcs[vbl_work->crtc_id]);
-> +		kms->funcs->enable_vblank(kms, vbl_work->crtc);
->   	else
-> -		kms->funcs->disable_vblank(kms,	priv->crtcs[vbl_work->crtc_id]);
-> +		kms->funcs->disable_vblank(kms,	vbl_work->crtc);
->   
->   	kfree(vbl_work);
->   }
->   
->   static int vblank_ctrl_queue_work(struct msm_drm_private *priv,
-> -					int crtc_id, bool enable)
-> +					struct drm_crtc *crtc, bool enable)
->   {
->   	struct msm_vblank_work *vbl_work;
->   
-> @@ -175,7 +175,7 @@ static int vblank_ctrl_queue_work(struct msm_drm_private *priv,
->   
->   	INIT_WORK(&vbl_work->work, vblank_ctrl_worker);
->   
-> -	vbl_work->crtc_id = crtc_id;
-> +	vbl_work->crtc = crtc;
->   	vbl_work->enable = enable;
->   	vbl_work->priv = priv;
->   
-> @@ -349,6 +349,7 @@ static int msm_drm_init(struct device *dev, const struct drm_driver *drv)
->   	struct msm_drm_private *priv = dev_get_drvdata(dev);
->   	struct drm_device *ddev;
->   	struct msm_kms *kms;
-> +	struct drm_crtc *crtc;
->   	int ret, i;
->   
->   	if (drm_firmware_drivers_only())
-> @@ -422,12 +423,14 @@ static int msm_drm_init(struct device *dev, const struct drm_driver *drv)
->   	ddev->mode_config.funcs = &mode_config_funcs;
->   	ddev->mode_config.helper_private = &mode_config_helper_funcs;
->   
-> -	for (i = 0; i < priv->num_crtcs; i++) {
-> +	drm_for_each_crtc(crtc, ddev) {
-> +		i = drm_crtc_index(crtc);
+>  drivers/mfd/qcom-pm8008.c       | 34 ++++++++++++++++++++++++++++++++--
+>  include/linux/mfd/qcom_pm8008.h |  9 +++++++++
+>  2 files changed, 41 insertions(+), 2 deletions(-)
+>  create mode 100644 include/linux/mfd/qcom_pm8008.h
+> 
+> diff --git a/drivers/mfd/qcom-pm8008.c b/drivers/mfd/qcom-pm8008.c
+> index 569ffd50..55e2a8e 100644
+> --- a/drivers/mfd/qcom-pm8008.c
+> +++ b/drivers/mfd/qcom-pm8008.c
+> @@ -9,6 +9,7 @@
+>  #include <linux/interrupt.h>
+>  #include <linux/irq.h>
+>  #include <linux/irqdomain.h>
+> +#include <linux/mfd/qcom_pm8008.h>
+>  #include <linux/module.h>
+>  #include <linux/of_device.h>
+>  #include <linux/of_platform.h>
+> @@ -57,6 +58,7 @@ enum {
+>  
+>  struct pm8008_data {
+>  	struct device *dev;
+> +	struct regmap *regulators_regmap;
+>  	int irq;
+>  	struct regmap_irq_chip_data *irq_data;
+>  };
+> @@ -150,6 +152,12 @@ static struct regmap_config qcom_mfd_regmap_cfg = {
+>  	.max_register	= 0xFFFF,
+>  };
+>  
+> +struct regmap *pm8008_get_regmap(const struct pm8008_data *chip)
+> +{
+> +	return chip->regulators_regmap;
+> +}
+> +EXPORT_SYMBOL_GPL(pm8008_get_regmap);
+
+Seems like abstraction for the sake of abstraction.
+
+Why not do the dereference inside the regulator driver?
+
+>  static int pm8008_init(struct regmap *regmap)
+>  {
+>  	int rc;
+> @@ -217,11 +225,25 @@ static int pm8008_probe_irq_peripherals(struct pm8008_data *chip,
+>  	return 0;
+>  }
+>  
+> +static struct regmap *pm8008_regmap_init(struct i2c_client *client,
+> +							struct pm8008_data *chip)
+> +{
+> +	struct regmap *regmap;
 > +
->   		/* initialize event thread */
-> -		priv->event_thread[i].crtc_id = priv->crtcs[i]->base.id;
-> +		priv->event_thread[i].crtc = crtc;
->   		priv->event_thread[i].dev = ddev;
+> +	regmap = devm_regmap_init_i2c(client, &qcom_mfd_regmap_cfg);
+> +	if (!regmap)
+> +		return NULL;
+> +
+> +	i2c_set_clientdata(client, chip);
+> +	return regmap;
+> +}
 
-Do we really need 'i' here?
-Can't we just do priv->event_thread[drm_crtc_index(crtc)]?
+This function seems superfluous.
 
->   		priv->event_thread[i].worker = kthread_create_worker(0,
-> -			"crtc_event:%d", priv->event_thread[i].crtc_id);
-> +			"crtc_event:%d", priv->event_thread[i].crtc->base.id);
->   		if (IS_ERR(priv->event_thread[i].worker)) {
->   			ret = PTR_ERR(priv->event_thread[i].worker);
->   			DRM_DEV_ERROR(dev, "failed to create crtc_event kthread\n");
-> @@ -558,25 +561,23 @@ static void msm_postclose(struct drm_device *dev, struct drm_file *file)
->   int msm_crtc_enable_vblank(struct drm_crtc *crtc)
->   {
->   	struct drm_device *dev = crtc->dev;
-> -	unsigned int pipe = crtc->index;
->   	struct msm_drm_private *priv = dev->dev_private;
->   	struct msm_kms *kms = priv->kms;
->   	if (!kms)
->   		return -ENXIO;
-> -	drm_dbg_vbl(dev, "crtc=%u", pipe);
-> -	return vblank_ctrl_queue_work(priv, pipe, true);
-> +	drm_dbg_vbl(dev, "crtc=%u", crtc->base.id);
-> +	return vblank_ctrl_queue_work(priv, crtc, true);
->   }
->   
->   void msm_crtc_disable_vblank(struct drm_crtc *crtc)
->   {
->   	struct drm_device *dev = crtc->dev;
-> -	unsigned int pipe = crtc->index;
->   	struct msm_drm_private *priv = dev->dev_private;
->   	struct msm_kms *kms = priv->kms;
->   	if (!kms)
->   		return;
-> -	drm_dbg_vbl(dev, "crtc=%u", pipe);
-> -	vblank_ctrl_queue_work(priv, pipe, false);
-> +	drm_dbg_vbl(dev, "crtc=%u", crtc->base.id);
-> +	vblank_ctrl_queue_work(priv, crtc, false);
->   }
->   
->   /*
-> diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
-> index fdbaad53eb84..2ba57c575e13 100644
-> --- a/drivers/gpu/drm/msm/msm_drv.h
-> +++ b/drivers/gpu/drm/msm/msm_drv.h
-> @@ -102,7 +102,7 @@ struct msm_display_topology {
->   /* Commit/Event thread specific structure */
->   struct msm_drm_thread {
->   	struct drm_device *dev;
-> -	unsigned int crtc_id;
-> +	struct drm_crtc *crtc;
->   	struct kthread_worker *worker;
->   };
->   
-> @@ -178,7 +178,6 @@ struct msm_drm_private {
->   	struct workqueue_struct *wq;
->   
->   	unsigned int num_crtcs;
-> -	struct drm_crtc *crtcs[MAX_CRTCS];
->   
->   	struct msm_drm_thread event_thread[MAX_CRTCS];
->   
+It's only called once and it contains a single call.
+
+Just pop the call directly into probe.
+
+>  static int pm8008_probe(struct i2c_client *client)
+>  {
+>  	int rc;
+>  	struct pm8008_data *chip;
+>  	struct gpio_desc *reset_gpio;
+> +	struct i2c_client *regulators_client;
+>  	struct regmap *regmap;
+>  
+>  	chip = devm_kzalloc(&client->dev, sizeof(*chip), GFP_KERNEL);
+> @@ -229,11 +251,19 @@ static int pm8008_probe(struct i2c_client *client)
+>  		return -ENOMEM;
+>  
+>  	chip->dev = &client->dev;
+> -	regmap = devm_regmap_init_i2c(client, &qcom_mfd_regmap_cfg);
+> +	regmap = pm8008_regmap_init(client, chip);
+>  	if (!regmap)
+>  		return -ENODEV;
+>  
+> -	i2c_set_clientdata(client, chip);
+> +	regulators_client = i2c_new_dummy_device(client->adapter, client->addr + 1);
+> +	if (IS_ERR(regulators_client)) {
+> +		dev_err(&client->dev, "can't attach client\n");
+> +		return PTR_ERR(regulators_client);
+> +	}
+> +
+> +	chip->regulators_regmap = pm8008_regmap_init(regulators_client, chip);
+> +	if (!chip->regulators_regmap)
+> +		return -ENODEV;
+>  
+>  	reset_gpio = devm_gpiod_get(chip->dev, "reset", GPIOD_OUT_LOW);
+>  	if (IS_ERR(reset_gpio))
+> diff --git a/include/linux/mfd/qcom_pm8008.h b/include/linux/mfd/qcom_pm8008.h
+> new file mode 100644
+> index 0000000..3814bff
+> --- /dev/null
+> +++ b/include/linux/mfd/qcom_pm8008.h
+> @@ -0,0 +1,9 @@
+> +/* SPDX-License-Identifier: GPL-2.0 */
+> +// Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
+> +#ifndef __QCOM_PM8008_H__
+> +#define __QCOM_PM8008_H__
+> +
+> +struct pm8008_data;
+> +struct regmap *pm8008_get_regmap(const struct pm8008_data *chip);
+> +
+> +#endif
+
+-- 
+Lee Jones [李琼斯]
+Principal Technical Lead - Developer Services
+Linaro.org │ Open source software for Arm SoCs
+Follow Linaro: Facebook | Twitter | Blog
