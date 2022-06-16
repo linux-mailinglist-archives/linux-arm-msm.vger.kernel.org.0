@@ -2,106 +2,154 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 10C9754ED3D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jun 2022 00:24:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AA40154ED45
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jun 2022 00:26:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1378814AbiFPWYY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Jun 2022 18:24:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34226 "EHLO
+        id S1378905AbiFPW0T (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Jun 2022 18:26:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35386 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1378893AbiFPWYY (ORCPT
+        with ESMTP id S232123AbiFPW0R (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Jun 2022 18:24:24 -0400
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6139E61618
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jun 2022 15:24:18 -0700 (PDT)
-Received: by mail-ej1-x634.google.com with SMTP id o7so5355733eja.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jun 2022 15:24:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=s5OVQxNBYmyEQ0OmaCMiLE8dcvy12XT+9uj6YfV0c7M=;
-        b=V7kHqBNdSi12xPeBhfaIA4C8WeNusqT1JThDMUUuzy19EBFoEVKJ2/UNjtsY2Bij3C
-         GBj/s38zp3vbo7WX6a6J8u49ZDbEa+otOpNDdO47/SHcGcOS4mXzF2NKcKolLkODp7ZV
-         G/kLA8v2g0bhg7Kmz4GIsP+2JTFbKAU3l4/YpidzxaFtGu2zoHmFddvquR0xqseNCXkg
-         +RYWGp+PogNA/lcHTt4BEZie4ySvZ/bH7rZXJGnTe69Bj5stpStnFXnfcgOBI3hPaXV4
-         /+Zgqdl3upX3iupiljH/6MBjdh2oNFFjaSNh8j85KA+tikFQH/bCfhW22iQ6HNUgNG5C
-         zllQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=s5OVQxNBYmyEQ0OmaCMiLE8dcvy12XT+9uj6YfV0c7M=;
-        b=hFhugSAJLo+gcOGklZ/KFnb3JnpRL0KNRBijka/7w3w1DeB/GBPxyIPSCOgUARxK/0
-         VKNmDXX9N835INWm+PtioLDU0E/fcy6b2+Px5CEDbW679zN5EyEdz8sLQtM88OAIob6H
-         jBnR0Bb0WukO3ZUQjs3M91nbANBGu63P4CvvU8j7r+UvyYiDY0cw9gehSdrcZeyXJRsa
-         2HM8ERNR5Q6xi/m93ricVFcFCrmyrRxtFOYpC6p0h35qUfkKgMAu3fAX6+8HPuxqz9VB
-         W5I8DtUq4bPcIS4m0DgyhHTozEfGQqu26rfNOobBSyoJIytioE9LQgFK76yHonRVuQkn
-         JAZA==
-X-Gm-Message-State: AJIora8nC9i2ExJ7DexQx7vwR9ZhPnEwZsCg952XW1jtd7mdsny+eLJG
-        0nFLSa5aS8zohCKhk+lCyOHQNQ==
-X-Google-Smtp-Source: AGRyM1v4PTRpYJnGjT6DqWqt/rtDzyXA3kNaGhkSm5VBADyv1wVpQ5I4Cr3z61H+DiLds+uhcpAkVQ==
-X-Received: by 2002:a17:906:d84:b0:715:7f3d:403f with SMTP id m4-20020a1709060d8400b007157f3d403fmr6646452eji.406.1655418256867;
-        Thu, 16 Jun 2022 15:24:16 -0700 (PDT)
-Received: from [192.168.1.12] ([195.24.90.54])
-        by smtp.googlemail.com with ESMTPSA id c26-20020a170906171a00b006fed9a0eb17sm1249215eje.187.2022.06.16.15.24.15
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 16 Jun 2022 15:24:16 -0700 (PDT)
-Message-ID: <aa1334b2-49db-2425-6895-c186566374e8@linaro.org>
-Date:   Fri, 17 Jun 2022 01:24:14 +0300
+        Thu, 16 Jun 2022 18:26:17 -0400
+Received: from NAM10-DM6-obe.outbound.protection.outlook.com (mail-dm6nam10on2088.outbound.protection.outlook.com [40.107.93.88])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5AEB860B84;
+        Thu, 16 Jun 2022 15:26:17 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=E8aRmY1JdGSMx90BwU2AKlFM7+ASR5mj0ByVbRDkya7cAwbwKyR7PXZfeipgNJ1FQPe9cjfNYZR0uiTPT3XajRF6MuKNvgra7i/OJF8muNRH4rx4k6Vk/DmBvx3xunYFjj/ojJe4b2SE0/XjgmVNRE+yhkdG50NeHs78/WCkekkMvXU4/V0ph9w69VgbiLBANmOkfPiwIZr63c8JbkhXTAs2rqv9iAciqkNAPmjXGx8j8K9T19x4Cy5TTvzfgFfD2xjjC2963SUKP33qwReYfK/1o/3dP/OfQO+E96Ml8jKBHXGg3bp9K0rGg8zZ9t83Owfd3MsNBTem6MpN8ELF1Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=0WIyuudnNGesuuol1U7SbfYdjlcpyLSRI1CvrT+2O/w=;
+ b=EPiYdHEaL36pB2+vQbr4bxe/7lhixB2eM6ImiIe37oknwQCuKp/BLo2A9LvXEoV7HjB8m7r5gWQWceAwk0nUmDto6MFDTWkHu/y/8AKMv0TwQHASNMhNEiemRHW8dRBUf7EYOQ7hpozJJo1n3cHyqK0eDKJyaSHpbgoMzuwu3O+MhumFEk9pY/g19roKDURvjaO4GpamZhGyo7Z1C87pKdjDPnhaaTGMycMISYM22CUIdBtRs+vy7HDMm1Wd2SwV+UJTOnIgWIaRR4WN/DtwNW+YHJ0lbNUMadiW4rBHN/adjfWWP0RNkFR/w69+kkHjjY1FaGUYWLcXLh0sEuJUXA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 12.22.5.238) smtp.rcpttodomain=arm.com smtp.mailfrom=nvidia.com; dmarc=pass
+ (p=reject sp=reject pct=100) action=none header.from=nvidia.com; dkim=none
+ (message not signed); arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=0WIyuudnNGesuuol1U7SbfYdjlcpyLSRI1CvrT+2O/w=;
+ b=Z21zYdg09/+imRvPTtWqbGp4MLnGPdyf8Uvjm5rUNOyGknBf0iY5LWZ8c0ZKJSEC+aVESf8fizOCjylI9jTSrsurO9wgHmZX220Y+q8aHlp70mMXJGRvi6gr1GIgqllB4i0MUVZd+pTKCZKBrgtW30FU4GSwlIpIveaoxQT1A7HWArvSKcR96uSKVZH6MkxBN57eQ1rncIYMpdzNNy79LzZewWft6L4gLGSzGIiLEac8xdbpZBy0AtG7bswHHwfWE86JPwxIh2p73anRPdEB1wGYiWIqVPK6AdGyfYXE1vkc+5GGOWRMP1YVbTBZWMuZahhGEUxtOX3CDQY+bgwTxQ==
+Received: from DM6PR07CA0067.namprd07.prod.outlook.com (2603:10b6:5:74::44) by
+ BN8PR12MB3633.namprd12.prod.outlook.com (2603:10b6:408:49::28) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.5353.13; Thu, 16 Jun 2022 22:26:14 +0000
+Received: from DM6NAM11FT049.eop-nam11.prod.protection.outlook.com
+ (2603:10b6:5:74:cafe::10) by DM6PR07CA0067.outlook.office365.com
+ (2603:10b6:5:74::44) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5332.16 via Frontend
+ Transport; Thu, 16 Jun 2022 22:26:13 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 12.22.5.238)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 12.22.5.238 as permitted sender) receiver=protection.outlook.com;
+ client-ip=12.22.5.238; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (12.22.5.238) by
+ DM6NAM11FT049.mail.protection.outlook.com (10.13.172.188) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
+ 15.20.5353.14 via Frontend Transport; Thu, 16 Jun 2022 22:26:13 +0000
+Received: from drhqmail203.nvidia.com (10.126.190.182) by
+ DRHQMAIL105.nvidia.com (10.27.9.14) with Microsoft SMTP Server (TLS) id
+ 15.0.1497.32; Thu, 16 Jun 2022 22:26:13 +0000
+Received: from drhqmail203.nvidia.com (10.126.190.182) by
+ drhqmail203.nvidia.com (10.126.190.182) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Thu, 16 Jun 2022 15:26:12 -0700
+Received: from Asurada-Nvidia (10.127.8.11) by mail.nvidia.com
+ (10.126.190.182) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22 via Frontend
+ Transport; Thu, 16 Jun 2022 15:26:11 -0700
+Date:   Thu, 16 Jun 2022 15:26:09 -0700
+From:   Nicolin Chen <nicolinc@nvidia.com>
+To:     "Tian, Kevin" <kevin.tian@intel.com>
+CC:     "joro@8bytes.org" <joro@8bytes.org>,
+        "will@kernel.org" <will@kernel.org>,
+        "marcan@marcan.st" <marcan@marcan.st>,
+        "sven@svenpeter.dev" <sven@svenpeter.dev>,
+        "robin.murphy@arm.com" <robin.murphy@arm.com>,
+        "robdclark@gmail.com" <robdclark@gmail.com>,
+        "baolu.lu@linux.intel.com" <baolu.lu@linux.intel.com>,
+        "matthias.bgg@gmail.com" <matthias.bgg@gmail.com>,
+        "orsonzhai@gmail.com" <orsonzhai@gmail.com>,
+        "baolin.wang7@gmail.com" <baolin.wang7@gmail.com>,
+        "zhang.lyra@gmail.com" <zhang.lyra@gmail.com>,
+        "jean-philippe@linaro.org" <jean-philippe@linaro.org>,
+        "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
+        "jgg@nvidia.com" <jgg@nvidia.com>,
+        "jordan@cosmicpenguin.net" <jordan@cosmicpenguin.net>,
+        "thierry.reding@gmail.com" <thierry.reding@gmail.com>,
+        "alyssa@rosenzweig.io" <alyssa@rosenzweig.io>,
+        "linux-s390@vger.kernel.org" <linux-s390@vger.kernel.org>,
+        "saiprakash.ranjan@codeaurora.org" <saiprakash.ranjan@codeaurora.org>,
+        "kvm@vger.kernel.org" <kvm@vger.kernel.org>,
+        "jonathanh@nvidia.com" <jonathanh@nvidia.com>,
+        "linux-arm-kernel@lists.infradead.org" 
+        <linux-arm-kernel@lists.infradead.org>,
+        "yangyingliang@huawei.com" <yangyingliang@huawei.com>,
+        "gerald.schaefer@linux.ibm.com" <gerald.schaefer@linux.ibm.com>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "christophe.jaillet@wanadoo.fr" <christophe.jaillet@wanadoo.fr>,
+        "linux-tegra@vger.kernel.org" <linux-tegra@vger.kernel.org>,
+        "tglx@linutronix.de" <tglx@linutronix.de>,
+        "virtualization@lists.linux-foundation.org" 
+        <virtualization@lists.linux-foundation.org>,
+        "isaacm@codeaurora.org" <isaacm@codeaurora.org>,
+        "cohuck@redhat.com" <cohuck@redhat.com>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "iommu@lists.linux-foundation.org" <iommu@lists.linux-foundation.org>,
+        "linux-mediatek@lists.infradead.org" 
+        <linux-mediatek@lists.infradead.org>,
+        "dwmw2@infradead.org" <dwmw2@infradead.org>
+Subject: Re: [PATCH v2 4/5] vfio/iommu_type1: Clean up update_dirty_scope in
+ detach_group()
+Message-ID: <YquuAR4h7dMCg4eq@Asurada-Nvidia>
+References: <20220616000304.23890-1-nicolinc@nvidia.com>
+ <20220616000304.23890-5-nicolinc@nvidia.com>
+ <BL1PR11MB5271A40D57BEBBA0BAA4C0BB8CAC9@BL1PR11MB5271.namprd11.prod.outlook.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Subject: Re: [PATCH v3] venus: Add support for SSR trigger using fault
- injection
-Content-Language: en-US
-To:     Stephen Boyd <swboyd@chromium.org>,
-        Dikshita Agarwal <quic_dikshita@quicinc.com>,
-        linux-kernel@vger.kernel.org, linux-media@vger.kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, quic_vgarodia@quicinc.com
-References: <1655377322-14195-1-git-send-email-quic_dikshita@quicinc.com>
- <CAE-0n51HOy84c9osif0wXd90c5D_MQZ=9sa1g93iZHG3mWxREA@mail.gmail.com>
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-In-Reply-To: <CAE-0n51HOy84c9osif0wXd90c5D_MQZ=9sa1g93iZHG3mWxREA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <BL1PR11MB5271A40D57BEBBA0BAA4C0BB8CAC9@BL1PR11MB5271.namprd11.prod.outlook.com>
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: 95aff080-e26e-4570-bf5e-08da4fe738f0
+X-MS-TrafficTypeDiagnostic: BN8PR12MB3633:EE_
+X-Microsoft-Antispam-PRVS: <BN8PR12MB36337CA2177B4B98A2F486A2ABAC9@BN8PR12MB3633.namprd12.prod.outlook.com>
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: OmHpvl2CcvGdmIpLdmz9XMfkxgpNIMcHSFYWedc8MTTa6WnNShqzjoGP4HV457CgWvuGCxbToDLVoiLk0anLm+6lNSBC/AIy63GKexDlBt+IGRNjG5XpRTNTXMBUFUwg2ey33c9S01A0JinizzKap1AmcsyvsbNDEAGXti7GaEqEbPpLUxFqHBhZwJEz0je919Pqg5LN155IPjkOQNbXMAYMlsrblU0dApc5ULQSaUcdkKuZqv0X4fmWvPh6gNF0A52agRLvh6bfCKgMRtsXSAwZkeSHUVL5C0oq1oySOBw7TURG+8sxD/A5wVQOgaSSe57p54uULnsJTKL3OnTny88AeVE8tKd+qHMsvt2/kO9fuEVHlWlg2i1harTrhRqMVaIzsG1CAkyKE1o7HG7S7N/AWaRqzoHklh+nGQQujdiZrc9LG0bWKZFfwxeYpfVQrZDMK1BS+g5Aw9PCGstVQASM8oIbtaRqn02x9q3ILusIlMqC1uRaq7yg1dMuqVqblukwwgL6AnH+rZP3A6Py2NJCkZcLsYA89zqnV9Lp8z1DxT2E4LPS1fcmtwIASozerVw7s4kwlqbmAwVDfMl2NT3OcN88h63c3AAPd9UVJMMqss6U72oJ4eSaqcKGSUBZZfso5mlq3tc94ed/H58qN5p2mDYTZEiKQTdyAxk4glD9QSxeTVjokpiImQXqYBX2dhNXIDJDTpeHHYQa2FktN5AIeDx7qj3ORiBPfOk9cB4=
+X-Forefront-Antispam-Report: CIP:12.22.5.238;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:InfoNoRecords;CAT:NONE;SFS:(13230016)(4636009)(46966006)(36840700001)(40470700004)(26005)(8936002)(9686003)(498600001)(7406005)(7416002)(356005)(558084003)(70206006)(2906002)(5660300002)(81166007)(55016003)(36860700001)(83380400001)(47076005)(426003)(336012)(186003)(40460700003)(82310400005)(86362001)(33716001)(4326008)(8676002)(6916009)(54906003)(316002)(70586007)(14143004)(36900700001);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Jun 2022 22:26:13.6281
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 95aff080-e26e-4570-bf5e-08da4fe738f0
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[12.22.5.238];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: DM6NAM11FT049.eop-nam11.prod.protection.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN8PR12MB3633
+X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FORGED_SPF_HELO,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Thanks Dikshita.
+On Thu, Jun 16, 2022 at 06:45:09AM +0000, Tian, Kevin wrote:
 
-On 6/16/22 21:37, Stephen Boyd wrote:
-> Quoting Dikshita Agarwal (2022-06-16 04:02:02)
->> Here we introduce a new fault injection for SSR trigger.
->>
->> To trigger the SSR:
->>  echo 100 >  /sys/kernel/debug/venus/fail_ssr/probability
->>  echo 1 >  /sys/kernel/debug/venus/fail_ssr/times
->>
->> Co-developed-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
->> signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+> > +out_unlock:
+> >       mutex_unlock(&iommu->lock);
+> >  }
+> >
 > 
-> This line should come last and the 's' should be capitalized.
+> I'd just replace the goto with a direct unlock and then return there.
+> the readability is slightly better.
 
-Thanks Stephen, will fix that while applying.
-
-> 
->> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
->> ---
-> 
-> Code looks good
-> 
-> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-
--- 
-regards,
-Stan
+OK. Will do that.
