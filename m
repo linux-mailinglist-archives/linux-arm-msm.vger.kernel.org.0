@@ -2,72 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 779E254E2EB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jun 2022 16:06:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EF6BF54E2DC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jun 2022 16:04:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1377540AbiFPOGv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Jun 2022 10:06:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44634 "EHLO
+        id S1376854AbiFPOEM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Jun 2022 10:04:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42876 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1377544AbiFPOGt (ORCPT
+        with ESMTP id S233159AbiFPOEL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Jun 2022 10:06:49 -0400
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 582BE49FB0;
-        Thu, 16 Jun 2022 07:06:47 -0700 (PDT)
-Received: by mail-ej1-x630.google.com with SMTP id n10so3012836ejk.5;
-        Thu, 16 Jun 2022 07:06:47 -0700 (PDT)
+        Thu, 16 Jun 2022 10:04:11 -0400
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A4DC369EF;
+        Thu, 16 Jun 2022 07:04:10 -0700 (PDT)
+Received: by mail-wm1-x330.google.com with SMTP id o37-20020a05600c512500b0039c4ba4c64dso2889860wms.2;
+        Thu, 16 Jun 2022 07:04:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:date:from:to:cc:subject:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=ld37J2VuQn8PPhwE47ARtw0waR2/HuJQhsucGvvTMtA=;
-        b=P1l0MNTTA01XHISNTKWCqpoCKZVy3VRBbiKjUMYFH65SWbEA+sXDzta7ZjrxNsfX0R
-         6cwnvTOUSSEGSzKhUbmMo33u77oF/MEB5Yhbxcxq2vz0l6vioq7RllXKZ9A/VUWuqYvc
-         sQHWHHwhD/Esbwhc66UtDCyse6FDfUbI2FS1Ak8TMdfnKw6UqyOrhRRei0ssYzVfg+Gt
-         U59OmFAZM20lzyARr1bkG2JZzmlY7Pdnswnk802RLmCB5f0Ak3Am64oUGdlzVGLCiyxp
-         0uPCmM9X/+tWEaPVgFsrBbx0ZaqF0DWNpD9bxViE43uSb34BzpcOzQyZppEdk5/gbmJP
-         aQPw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=slC185Ob3bqwRbXUouHuTugpdNeQm0iZ+NbyQh6gPTc=;
+        b=BjTvft9fFPRIzJq1i2BdE+Ngl7Lnwas+O5i3jS01WgAIwobhoFJwDsfz+t5rUAkEK4
+         8PvZYeBrFNhXVIDPC6oRttEjtOFIF2qSVsdcZAy4lwLb4ZKPfIq6ZgJxN4cDzvfoxrhv
+         Eli6czrFILNMmzqSWwheVkrEoq6D72f2Af1wSzkHCtFlioENSWN+0/qWT9V8W8VqDy3J
+         TJP8DLFHr/P0/nqeZeDXo96GEgnIreXeODLg8xijl/1UrXE8Hou0JQguVP/wB2gYxJNI
+         tHPxOb3tuGJQmQEVDdkSXrJubExIU7an2AMNUFCEXQ2HgaMSv6w/7A+7+ppDssY3r/fU
+         HMMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:from:to:cc:subject:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=ld37J2VuQn8PPhwE47ARtw0waR2/HuJQhsucGvvTMtA=;
-        b=Xiy6/4Oq4vz8YoDaRjmWpYMCYv+c11toMElaggpqw4dlczcuscTNkuej+EOwTtU5wg
-         j57zwdvnjOR5QNHUwYx6LI1s9ziTLq6mgpMWCyC6lxtc9mnuHr7+YtPDk/NUVqujoNsr
-         fvQyV9qUmHrEbErtFACMpAGFGiWNqumyFOT+2OCBqvo9oPqWRY8uIZBZcu5w2zLA1GBD
-         1dF5RSIE2eqghgrqiioEh1XmEFM/3L9dFC1yBi6agoRyD5qxa1Bq1/tbn3PYSALe+1QE
-         dFE5BcDG2HYkASEG+XYEjmN298QVEhznyE0+08W7k/FsJ6jAlevLMK32K3gPb0BmKqIF
-         WSAw==
-X-Gm-Message-State: AJIora8fWmrCfL1UoJ7BgX5uM3rgvzRjPVpsJ41J/OuB+q/YYGTOoPMU
-        hVgVHaFTuybQvnIKiOL3yis=
-X-Google-Smtp-Source: AGRyM1u3umsK6xlqHwPnz5O2TeypBw4QaXQtA/xI3l39ercIbY2HybfED7MyFbauNWPsGryguzh7jQ==
-X-Received: by 2002:a17:907:9813:b0:711:d5ac:b9ef with SMTP id ji19-20020a170907981300b00711d5acb9efmr4650798ejc.95.1655388405685;
-        Thu, 16 Jun 2022 07:06:45 -0700 (PDT)
-Received: from Ansuel-xps. (93-42-70-190.ip85.fastwebnet.it. [93.42.70.190])
-        by smtp.gmail.com with ESMTPSA id j4-20020a50ed04000000b004318ba244dcsm1845428eds.10.2022.06.16.07.06.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Jun 2022 07:06:45 -0700 (PDT)
-Message-ID: <62ab38f5.1c69fb81.303fc.3bc8@mx.google.com>
-X-Google-Original-Message-ID: <Yqs3+kqSfW62ieoK@Ansuel-xps.>
-Date:   Thu, 16 Jun 2022 16:02:34 +0200
-From:   Christian Marangi <ansuelsmth@gmail.com>
-To:     Rob Herring <robh@kernel.org>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        dmaengine@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Subject: Re: [PATCH v2 1/2] dt-bindings: dma: rework qcom,adm Documentation
- to yaml schema
-References: <20220615235404.3457-1-ansuelsmth@gmail.com>
- <1655388301.055791.3391580.nullmailer@robh.at.kernel.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=slC185Ob3bqwRbXUouHuTugpdNeQm0iZ+NbyQh6gPTc=;
+        b=PKdgd3qNvmP7MfdJsIh+bqZP3eynB7WG0wdpY+4YnaPnrbRcDdNvo5EftrDIFoubpR
+         dB+dAvwZOeH1t2CWY5qET1uVO58YUEsuZ4EvOf7lHlcc0yd7aR9xRO8sF+aeB3aQ/Zij
+         q76GyViKHvJqSCZCLT9nZVRCLv5I4w97Bhj9Rwpg0SnEfHk2jxZEZQvuCFzN/DP16oEa
+         rbFHvEFAX+J/1nLPDp+Yb6k29ujwdRHlji0DgKUwN7rjXno1VgM1TJmvUUUVzhsBoq3E
+         Hy5MUaNbo7Hg450XEoEX9GGeJ4Re45o+zSuGNL7F1lYyxQKUNwpmLIZCFDsTSVaJeylf
+         pMRw==
+X-Gm-Message-State: AJIora94+joAxPfpkh28qeq6sTt3Uh34pE4WEa2tTBA4yfy2FdZITlxM
+        KZ3pB985INZG0ZSXqMa2raIYI3Od7F2ogfy1oXYOJjN+
+X-Google-Smtp-Source: AGRyM1vS5uY/KayIVVnAafrvhMLqkQv0X/+RZJiaVU0H2MFh34eE7xgk+0K7uZmYowMiafmu//6OgSqoUg5erP+u2uY=
+X-Received: by 2002:a05:600c:4f96:b0:39c:951e:66b7 with SMTP id
+ n22-20020a05600c4f9600b0039c951e66b7mr5296884wmq.84.1655388249063; Thu, 16
+ Jun 2022 07:04:09 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1655388301.055791.3391580.nullmailer@robh.at.kernel.org>
+References: <20220615162435.3011793-1-robdclark@gmail.com> <991331d8-ddda-a816-d279-fdaed90b43c1@linaro.org>
+In-Reply-To: <991331d8-ddda-a816-d279-fdaed90b43c1@linaro.org>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Thu, 16 Jun 2022 07:04:14 -0700
+Message-ID: <CAF6AEGvqoOOcNTrBEFxnROY-M8PazbaZb4zDw4gJFLC7jCR8CA@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm: Fix fence rollover issue
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, Rob Clark <robdclark@chromium.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
         RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
@@ -78,61 +70,91 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jun 16, 2022 at 08:05:01AM -0600, Rob Herring wrote:
-> On Thu, 16 Jun 2022 01:54:03 +0200, Christian Marangi wrote:
-> > Rework the qcom,adm Documentation to yaml schema.
-> > This is not a pure conversion since originally the driver has changed
-> > implementation for the #dma-cells and was wrong from the start.
-> > Also the driver now handles the common DMA clients implementation with
-> > the first cell that denotes the channel number and nothing else since
-> > the client will have to provide the crci information via other means.
-> > 
-> > Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-> > ---
-> > v2:
-> > - Change Sob to Christian Marangi
-> > - Add Bjorn in the maintainers list
-> > 
-> >  .../devicetree/bindings/dma/qcom,adm.yaml     | 96 +++++++++++++++++++
-> >  .../devicetree/bindings/dma/qcom_adm.txt      | 61 ------------
-> >  2 files changed, 96 insertions(+), 61 deletions(-)
-> >  create mode 100644 Documentation/devicetree/bindings/dma/qcom,adm.yaml
-> >  delete mode 100644 Documentation/devicetree/bindings/dma/qcom_adm.txt
-> > 
-> 
-> Running 'make dtbs_check' with the schema in this patch gives the
-> following warnings. Consider if they are expected or the schema is
-> incorrect. These may not be new warnings.
-> 
-> Note that it is not yet a requirement to have 0 warnings for dtbs_check.
-> This will change in the future.
-> 
-> Full log is available here: https://patchwork.ozlabs.org/patch/
-> 
-> 
-> dma-controller@18300000: reset-names:1: 'c0' was expected
-> 	arch/arm/boot/dts/qcom-ipq8064-ap148.dtb
-> 	arch/arm/boot/dts/qcom-ipq8064-rb3011.dtb
-> 
-> dma-controller@18300000: reset-names:2: 'c1' was expected
-> 	arch/arm/boot/dts/qcom-ipq8064-ap148.dtb
-> 	arch/arm/boot/dts/qcom-ipq8064-rb3011.dtb
-> 
-> dma-controller@18300000: reset-names:3: 'c2' was expected
-> 	arch/arm/boot/dts/qcom-ipq8064-ap148.dtb
-> 	arch/arm/boot/dts/qcom-ipq8064-rb3011.dtb
-> 
-> dma-controller@18300000: reset-names: ['clk', 'pbus', 'c0', 'c1', 'c2'] is too long
-> 	arch/arm/boot/dts/qcom-ipq8064-ap148.dtb
-> 	arch/arm/boot/dts/qcom-ipq8064-rb3011.dtb
-> 
-> dma-controller@18300000: resets: [[11, 13], [11, 12], [11, 11], [11, 10], [11, 9]] is too long
-> 	arch/arm/boot/dts/qcom-ipq8064-ap148.dtb
-> 	arch/arm/boot/dts/qcom-ipq8064-rb3011.dtb
+On Thu, Jun 16, 2022 at 1:27 AM Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
 >
+> On 15/06/2022 19:24, Rob Clark wrote:
+> > From: Rob Clark <robdclark@chromium.org>
+> >
+> > And while we are at it, let's start the fence counter close to the
+> > rollover point so that if issues slip in, they are more obvious.
+> >
+> > Signed-off-by: Rob Clark <robdclark@chromium.org>
+>
+> Should it also have
+>
+> Fixes: fde5de6cb461 ("drm/msm: move fence code to it's own file")
+>
+> Or maybe
+>
+> Fixes: 5f3aee4ceb5b ("drm/msm: Handle fence rollover")
 
-I should have fixed this with the other patch. Should the conversion fix
-this directly?
+arguably it fixes the first commit that added GPU support (and
+finishes up a couple spots that the above commit missed)
 
--- 
-	Ansuel
+I guess I could use the fixes tag just to indicate how far back it
+would be reasonable to backport to stable branches.
+
+> Otherwise:
+>
+> Reviewed: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>
+>
+> > ---
+> >   drivers/gpu/drm/msm/msm_fence.c | 13 +++++++++++--
+> >   1 file changed, 11 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/drivers/gpu/drm/msm/msm_fence.c b/drivers/gpu/drm/msm/msm_fence.c
+> > index 3df255402a33..a35a6746c7cd 100644
+> > --- a/drivers/gpu/drm/msm/msm_fence.c
+> > +++ b/drivers/gpu/drm/msm/msm_fence.c
+> > @@ -28,6 +28,14 @@ msm_fence_context_alloc(struct drm_device *dev, volatile uint32_t *fenceptr,
+> >       fctx->fenceptr = fenceptr;
+> >       spin_lock_init(&fctx->spinlock);
+> >
+> > +     /*
+> > +      * Start out close to the 32b fence rollover point, so we can
+> > +      * catch bugs with fence comparisons.
+> > +      */
+> > +     fctx->last_fence = 0xffffff00;
+> > +     fctx->completed_fence = fctx->last_fence;
+> > +     *fctx->fenceptr = fctx->last_fence;
+>
+> This looks like a debugging hack. But probably it's fine to have it, as
+> it wouldn't cause any side effects.
+
+I was originally going to add a modparam or kconfig to enable this..
+but then thought, if there is a bug and thing are to go wrong, it's
+best for that to happen ASAP rather than after 200-400 days of
+uptime.. the latter case can be rather hard to reproduce bugs ;-)
+
+IIRC the kernel does something similar with jiffies to ensure the
+rollover point is hit quickly
+
+BR,
+-R
+
+> > +
+> >       return fctx;
+> >   }
+> >
+> > @@ -46,11 +54,12 @@ bool msm_fence_completed(struct msm_fence_context *fctx, uint32_t fence)
+> >               (int32_t)(*fctx->fenceptr - fence) >= 0;
+> >   }
+> >
+> > -/* called from workqueue */
+> > +/* called from irq handler */
+> >   void msm_update_fence(struct msm_fence_context *fctx, uint32_t fence)
+> >   {
+> >       spin_lock(&fctx->spinlock);
+> > -     fctx->completed_fence = max(fence, fctx->completed_fence);
+> > +     if (fence_after(fence, fctx->completed_fence))
+> > +             fctx->completed_fence = fence;
+> >       spin_unlock(&fctx->spinlock);
+> >   }
+> >
+>
+>
+> --
+> With best wishes
+> Dmitry
