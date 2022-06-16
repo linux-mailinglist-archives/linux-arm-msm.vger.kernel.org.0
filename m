@@ -2,59 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C952054D5DD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jun 2022 02:15:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 058E954D5E1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jun 2022 02:15:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346210AbiFPAO0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Jun 2022 20:14:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52446 "EHLO
+        id S1346086AbiFPAPY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Jun 2022 20:15:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52792 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348088AbiFPAOW (ORCPT
+        with ESMTP id S244761AbiFPAPL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Jun 2022 20:14:22 -0400
-Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com [IPv6:2607:f8b0:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C635034B8A
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jun 2022 17:14:15 -0700 (PDT)
-Received: by mail-pl1-x631.google.com with SMTP id g8so6545850plt.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jun 2022 17:14:15 -0700 (PDT)
+        Wed, 15 Jun 2022 20:15:11 -0400
+Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B0CA39BAF
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jun 2022 17:15:10 -0700 (PDT)
+Received: by mail-pl1-x635.google.com with SMTP id g8so6547279plt.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jun 2022 17:15:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=LwNIyVGl6P4q0gd7chMhSD65ZMv4OXZcE0ZHZHBWVBg=;
-        b=fLjfQ6g9D6t7DbLzhTEj8+KIW6cx6uH3ZXhKouWQK1Q+B6ieJXymTthUGW5ECpB8ZC
-         5TJ79PUaWJ3LBhLI3cEJZKCPaZl+JTuti21cALWrdbOUC0Iy0HKxKijGiW+M6qLAddqz
-         Tt8soxYtqFYboG5mCYJWA6yHHzToezDon/P2XsKv/VOPEaoPw3jIJdFVMIta7pqfr8BE
-         3YE46EzaPwe+lCa8Z4GgRNDOkixePTjPd1VLt2O/ECtRPRVytcS1x+ALIMd5K2EBwPlY
-         fCKhQXHwxvrlX5Gw1AaMHrEAtVJckd+mh/SJEOskOKrtHZIMIgtqpOefkbaibthwXvmy
-         5dPQ==
+        bh=QhMTt4uDdPDX7crPsrwX6noLLeOOWLBWTCCTPNEBLmM=;
+        b=ru5SsmRKk+Sojj2R6znJyM93vwJ7wUai2a8cObSwMmzN4YNgCB8JlYLiNn6znXJiJw
+         SAvClZQc69rn1bHRRPg/pv2SkIuy6tRiluZXuVPvnXyG66kQLUsjoDsryMh1AEFZdoBm
+         N5eAi3pK6T9OdzTPAP6rYJjUR1OQWbJfZJVYPYUKrplu/6xj+eCh0TX4HHgulORQXKS3
+         X61E1+EKCfmPf76M/bhT990z7uaKcMpFMfs2SI1Uq+qjimHQuuqHao67XvAFXVlFx2aR
+         XeqXC7yQlCPPKxLzsJXyrUNScFdz32nXMBgNITb1BIp89n2QhWU8MNVkTS+MkjXfTGfY
+         XnsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=LwNIyVGl6P4q0gd7chMhSD65ZMv4OXZcE0ZHZHBWVBg=;
-        b=AP2u1zMB92IHMkRCokk3grxcXMtgnXmq4ySEL7MuzynJ/GMmTh2xSR3AnWNiK/Of9b
-         R1fnW857VCyXScepIQcNXdtOMMiIoCzLV81t2rMUpck4+HkUoX26scqUMHsu+AaDR0du
-         kB87p9EsUiZ+aJ4+i4K/e/85oXoCnXD8NPKxOxBwpBAn6g7TmKNpUOSPoxo6QOBmZeN8
-         Q4ixCU9Y1wpUMndywXki9AcAh2dl/8fSJn9mLQGDEx1RKIgjo4XsqmM+vpoXi1zFd0dV
-         fx6ueBWZKQeVJQN51vtjYZj83VjtgTN/z23zapa6yfqq59ZXMX90J7ZoD391lVqYT7M4
-         5cVQ==
-X-Gm-Message-State: AJIora9bLNCFAqJ9jaUofKAR2sR4TlBOPUhc6KPulaZQEySQe7dtAqvD
-        Lqb0PhOUnJy3R82vdgBaRTxMwQ==
-X-Google-Smtp-Source: AGRyM1sQOb+rad8pqIV9YhewcZC4WPd7DgSUhozcuO72HEHuc2mD+EjlwkpfXKkIGoK/O26/OL83kg==
-X-Received: by 2002:a17:903:18f:b0:167:47f3:4a with SMTP id z15-20020a170903018f00b0016747f3004amr1818855plg.70.1655338455266;
-        Wed, 15 Jun 2022 17:14:15 -0700 (PDT)
+        bh=QhMTt4uDdPDX7crPsrwX6noLLeOOWLBWTCCTPNEBLmM=;
+        b=bUaoCRUPGuzjpuH9YboA9lhZUNeW8t0Atlm2cr9hOKphGyGGapxTomGt263SVOcmd8
+         qZH8eAAf31SvJs8FeWhX5WtDrKOFSPOra6wveG24YnJDvLGF4JRS57FNCeS48IjJaXRZ
+         tA6KYyp5LI9kj7MaqVHX+zTDLXOXpGMm71I191MD1NYTqZggjXQ+LWarPRctyMLZLQt0
+         ES0znfR5SmP4XDjCd0W6jFGM2Kd0b686ISc8XZiQz4loudGsrDEvF1ABvz2ENF5wQ9+L
+         2abEKJrIkrxkpU22sp1MW13iz3nf/wMCBvpjjJ7qSYm+DTQBBI1Y5eZaYa4f8fR72aqu
+         se9A==
+X-Gm-Message-State: AJIora/YcwpU6Gj5fKafqP0G3rm2cga0CBE/30mno3WhpCGXOM/P2GNH
+        9p81bGpwhNIp3i37s9yP2zxJZw==
+X-Google-Smtp-Source: AGRyM1sl2+qWzmkjduELBjaJmA4KbijZZrqkQHtEjfdM5ktH3OTsfeL6DARSLKZrTRgoSsLz62bp1Q==
+X-Received: by 2002:a17:903:41c6:b0:164:1050:49ac with SMTP id u6-20020a17090341c600b00164105049acmr2017881ple.138.1655338509561;
+        Wed, 15 Jun 2022 17:15:09 -0700 (PDT)
 Received: from [172.22.33.138] ([192.77.111.2])
-        by smtp.gmail.com with ESMTPSA id m22-20020a638c16000000b003fa95b940bdsm169537pgd.88.2022.06.15.17.14.13
+        by smtp.gmail.com with ESMTPSA id o18-20020a629a12000000b0051bf246ca2bsm225127pfe.100.2022.06.15.17.15.07
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 15 Jun 2022 17:14:14 -0700 (PDT)
-Message-ID: <394e551d-c81f-5c06-3291-748a18713772@linaro.org>
-Date:   Wed, 15 Jun 2022 17:14:13 -0700
+        Wed, 15 Jun 2022 17:15:08 -0700 (PDT)
+Message-ID: <2e3422a3-6f4d-235d-e66b-8c9597aab232@linaro.org>
+Date:   Wed, 15 Jun 2022 17:15:07 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.10.0
-Subject: Re: [PATCH 0/6] arm64: dts: Add missing space around properties
+Subject: Re: [PATCH 3/6] arm64: dts: freescale: Add missing space around
+ properties
 Content-Language: en-US
 To:     =?UTF-8?Q?Niklas_S=c3=b6derlund?= 
         <niklas.soderlund+renesas@ragnatech.se>,
@@ -74,8 +75,9 @@ Cc:     Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
         linux-arm-kernel@lists.infradead.org,
         linux-arm-msm@vger.kernel.org, linux-rockchip@lists.infradead.org
 References: <20220612223201.2740248-1-niklas.soderlund+renesas@ragnatech.se>
+ <20220612223201.2740248-4-niklas.soderlund+renesas@ragnatech.se>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220612223201.2740248-1-niklas.soderlund+renesas@ragnatech.se>
+In-Reply-To: <20220612223201.2740248-4-niklas.soderlund+renesas@ragnatech.se>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -89,26 +91,23 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 12/06/2022 15:31, Niklas Söderlund wrote:
-> Hello,
+> Add the missing space around properties before the typo spreads to other
+> files.
 > 
-> While debugging an issue on a Renesas board I found a typo with missing 
-> spaces around properties that had been copied around [1]. This extends 
-> this fix for all arm64 files.
-> 
-> 1. https://lore.kernel.org/linux-renesas-soc/20220608175728.1012550-1-niklas.soderlund+renesas@ragnatech.se/
-> 
-> Niklas Söderlund (6):
->   arm64: dts: broadcom: Add missing space around status property
->   arm64: dts: rockchip: Add missing space around regulator-name property
->   arm64: dts: freescale: Add missing space around properties
->   arm64: dts: hisilicon: Add missing space around properties
->   arm64: dts: qcom: Add missing space around properties
->   arm64: dts: ti: Add missing space around properties
+> Signed-off-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+> ---
+>  arch/arm64/boot/dts/freescale/fsl-ls1028a.dtsi            | 6 +++---
+>  arch/arm64/boot/dts/freescale/imx8-ss-conn.dtsi           | 2 +-
+>  arch/arm64/boot/dts/freescale/imx8mm.dtsi                 | 8 ++++----
+>  arch/arm64/boot/dts/freescale/imx8mn.dtsi                 | 8 ++++----
+>  arch/arm64/boot/dts/freescale/imx8mp.dtsi                 | 8 ++++----
+>  arch/arm64/boot/dts/freescale/imx8mq.dtsi                 | 2 +-
+>  .../arm64/boot/dts/freescale/imx8qxp-colibri-eval-v3.dtsi | 6 +++---
+>  arch/arm64/boot/dts/freescale/imx8ulp.dtsi                | 6 +++---
+>  8 files changed, 23 insertions(+), 23 deletions(-)
 
-
-I think you just did quite the same work already posted:
-
-https://lore.kernel.org/all/?q=f%3Akrzysztof+%22adjust+whitespace+around%22
+Please rebase on top of earlier patch:
+https://lore.kernel.org/all/20220526204258.832179-1-krzysztof.kozlowski@linaro.org/
 
 
 Best regards,
