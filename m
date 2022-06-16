@@ -2,202 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 016B554EBC2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jun 2022 23:00:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9DA7054EC05
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jun 2022 23:06:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232055AbiFPU7n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Jun 2022 16:59:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47906 "EHLO
+        id S1379057AbiFPVGe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Jun 2022 17:06:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54862 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1378722AbiFPU7m (ORCPT
+        with ESMTP id S1379023AbiFPVGV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Jun 2022 16:59:42 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E552860062;
-        Thu, 16 Jun 2022 13:59:39 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 8D3ABB8251F;
-        Thu, 16 Jun 2022 20:59:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03802C34114;
-        Thu, 16 Jun 2022 20:59:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1655413177;
-        bh=8V+Tiyh/01oedS5WI5VecpKZ7FpOLNZCWZJZC8Rgn3I=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=qjjFTVO2EO8ewNnGfHF1GacDxc38DpKRsRaVFaa5i7onB82Pwz/An1M1bYeRITYKb
-         p+5UqTJ5Vt17iTjKppTtgtUTBvQ0hBzkmy5UTRB3fIa6JXo3+5RNk+OQyv8TwGZv56
-         yduvGgeyJ+6aT88lC2OEntThvWnmu+U3VALQRnHtYEwmrktQHxVLiUW3L8aUAaRpFY
-         G+E2hK7yVG80nIyFlIZKomotlsOhM2BYNeBVVmmpJc0LhNA9jmL0y9MPe1kB7ZRj1n
-         WluqobhDVn88pw0mGB1G1i9UwueBVAGLK5YT6rT1J2koCt0pLJJssnSa9EFRNilWz9
-         ibedWECw/O3mg==
-Date:   Fri, 17 Jun 2022 02:29:36 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Jeffrey Hugo <quic_jhugo@quicinc.com>
-Cc:     Qiang Yu <quic_qianyu@quicinc.com>, quic_hemantk@quicinc.com,
-        loic.poulain@linaro.org, mhi@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_cang@quicinc.com
-Subject: Re: [PATCH] bus: mhi: Disable IRQs instead of freeing them during
- power down
-Message-ID: <20220616205936.GG2889@thinkpad>
-References: <1654782215-70383-1-git-send-email-quic_qianyu@quicinc.com>
- <62d09e6f-9898-6233-dfd6-b5ba5d837571@quicinc.com>
- <9659ecb9-9727-a146-e286-d28d656483c3@quicinc.com>
- <9a11394d-f7df-e549-8afb-0834f7d30202@quicinc.com>
- <8eceb966-b5c1-8913-ac97-95348f92650d@quicinc.com>
- <b3f5e49d-8917-79ab-8f59-29ad6cec3973@quicinc.com>
- <20220615211621.GD3606@thinkpad>
- <1c48ef5b-65c0-501d-db55-714a8a4388b2@quicinc.com>
+        Thu, 16 Jun 2022 17:06:21 -0400
+Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6855C60A95;
+        Thu, 16 Jun 2022 14:06:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1655413580; x=1686949580;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=WK2j77TFJ/70U37ZeB4rzHVUzdPEhxO1yxy3ztiMc/4=;
+  b=TsDrAkC3ymJtbIriuDIrXYkmzS7EnbqUNK8pXgslS8QHoH+YDxN3yHEc
+   DM6fXSZB3l6hy8lspHfD0x/hJGFXlTUYiBPkABRDlWhEx5hY1vnJdDDL9
+   2jpbAQ8OGIzVd1jRUKYwKqe+AWIZZmeov6xmEmORzbUKeESslR4kSmT4j
+   u3blMg4fN+s3TknfwPeEW7Ze/AtWCL/iONantGko/1tP72ioyNkOX+Hmt
+   b/ED83T/ACvAv5lG/1MqCb8gKsDrVsSOkE7loKby74s1BvKHoznjr3Oht
+   E6JVw0mNKYLdG/JIlYBRa1hveYA2r66K2gmHDdKNAeXgH2/cM9pck4pLe
+   w==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10380"; a="304800319"
+X-IronPort-AV: E=Sophos;i="5.92,306,1650956400"; 
+   d="scan'208";a="304800319"
+Received: from orsmga001.jf.intel.com ([10.7.209.18])
+  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Jun 2022 14:06:20 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.92,306,1650956400"; 
+   d="scan'208";a="619027433"
+Received: from lkp-server01.sh.intel.com (HELO 60dabacc1df6) ([10.239.97.150])
+  by orsmga001.jf.intel.com with ESMTP; 16 Jun 2022 14:06:15 -0700
+Received: from kbuild by 60dabacc1df6 with local (Exim 4.95)
+        (envelope-from <lkp@intel.com>)
+        id 1o1wgw-000OmT-UJ;
+        Thu, 16 Jun 2022 21:06:14 +0000
+Date:   Fri, 17 Jun 2022 05:06:10 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
+        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
+        vkoul@kernel.org, daniel@ffwll.ch, airlied@linux.ie,
+        agross@kernel.org, dmitry.baryshkov@linaro.org,
+        bjorn.andersson@linaro.org
+Cc:     kbuild-all@lists.01.org, quic_sbillaka@quicinc.com,
+        linux-arm-msm@vger.kernel.org, quic_abhinavk@quicinc.com,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        quic_aravindh@quicinc.com, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v8 2/2] drm/msm/dp: clean up pixel_rate from dp_ctrl.c
+Message-ID: <202206170505.2U1jLZVk-lkp@intel.com>
+References: <1655399361-10842-3-git-send-email-quic_khsieh@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <1c48ef5b-65c0-501d-db55-714a8a4388b2@quicinc.com>
+In-Reply-To: <1655399361-10842-3-git-send-email-quic_khsieh@quicinc.com>
 X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jun 16, 2022 at 09:53:34AM -0600, Jeffrey Hugo wrote:
-> On 6/15/2022 3:16 PM, Manivannan Sadhasivam wrote:
-> > On Mon, Jun 13, 2022 at 07:07:02AM -0600, Jeffrey Hugo wrote:
-> > > On 6/12/2022 7:48 PM, Qiang Yu wrote:
-> > > > 
-> > > > On 6/10/2022 10:00 PM, Jeffrey Hugo wrote:
-> > > > > On 6/9/2022 9:21 PM, Qiang Yu wrote:
-> > > > > > On 6/9/2022 9:54 PM, Jeffrey Hugo wrote:
-> > > > > > 
-> > > > > > > On 6/9/2022 7:43 AM, Qiang Yu wrote:
-> > > > > > > > EP tends to read MSI address/data once and cache them
-> > > > > > > > after BME is set.
-> > > > > > > > So host should avoid changing MSI address/data after BME is set.
-> > > > > > > > 
-> > > > > > > > In pci reset function, host invokes free_irq(), which also clears MSI
-> > > > > > > > address/data in EP's PCIe config space. If the invalid address/data
-> > > > > > > > are cached and used by EP, MSI triggered by EP wouldn't be received by
-> > > > > > > > host, because an invalid MSI data is sent to an invalid MSI address.
-> > > > > > > > 
-> > > > > > > > To fix this issue, after host runs request_irq() successfully during
-> > > > > > > > mhi driver probe, let's invoke enable_irq()/disable_irq() instead of
-> > > > > > > > request_irq()/free_irq() when we want to power on and power down MHI.
-> > > > > > > > Meanwhile, Host should invoke free_irq() when mhi host driver is
-> > > > > > > > removed.
-> > > > > > > 
-> > > > > > > I don't think this works for hotplug, nor cases where there
-> > > > > > > are multiple MHI devices on the system.
-> > > > > > > 
-> > > > > > > The EP shouldn't be caching this information for multiple
-> > > > > > > reasons. Masking the MSIs, disabling the MSIs, changing the
-> > > > > > > address when the affinity changes, etc.
-> > > > > > > 
-> > > > > > > It really feels like we are solving the problem in the wrong place.
-> > > > > > > 
-> > > > > > > Right now, this gets a NACK from me.
-> > > > > > > 
-> > > > > > After free_irq(), MSI is still enabled but MSI address and data
-> > > > > > are cleared. So there is a chance that device initiates MSI
-> > > > > > using zero address. How to fix this race conditions.
-> > > > > 
-> > > > > On what system is MSI still enabled?  I just removed the AIC100
-> > > > > controller on an random x86 system, and lspci is indicating MSIs are
-> > > > > disabled -
-> > > > > 
-> > > > > Capabilities: [50] MSI: Enable- Count=32/32 Maskable+ 64bit+
-> > > > 
-> > > > system: Ubuntu18.04, 5.4.0-89-generic,  Intel(R) Core(TM) i7-6700 CPU @
-> > > > 3.40GHz
-> > > > 
-> > > > After removing MHI driver, I also see MSI enable is cleared.  But I
-> > > > don't think free_irq clears it. I add log before free_irq and after
-> > > > free_irq as following show:
-> > > > 
-> > > > [62777.625111] msi cap before free irq
-> > > > [62777.625125] msi control=0x1bb, address=0xfee00318, data=0x0
-> > > > [62777.625301] msi cap after free irq
-> > > > [62777.625313] msi control=0x1bb, address=0x0, data=0x0
-> > > > [62777.625496] mhi-pci-generic 0000:01:00.0: mhi_pci_remove end of line,
-> > > > block 90 secs.
-> > > > # lspci -vvs 01:00.0
-> > > >           Capabilities: [50] MSI: Enable+ Count=8/32 Maskable+ 64bit+
-> > > >                   Address: 0000000000000000  Data: 0000
-> > > >                   Masking: ffffffff  Pending: 00000000
-> > > 
-> > > At this point, the MSI functionality is still enabled, but every MSI is
-> > > masked out (Masking), so per the PCIe spec, the endpoint may not trigger a
-> > > MSI to the host.  The device advertises that it supports maskable MSIs
-> > > (Maskable+), so this is appropiate.
-> > > 
-> > > If your device can still send a MSI at this point, then it violates the PCIe
-> > > spec.
-> > > 
-> > > disable_irq() will not help you with this as it will do the same thing.
-> > > 
-> > > I still think you are trying to fix an issue in the wrong location (host vs
-> > > EP), and causing additional issues by doing so.
-> > > 
-> > 
-> > Irrespective of caching the MSI data in endpoint, I'd like to get rid of
-> > request_irq/free_irq during the mhi_{power_down/power_up} time. As like the MHI
-> > endpoint stack, we should just do disable/enable irq. Because, the MHI device
-> > may go down several times while running and we do not want to deallocate the
-> > IRQs all the time. And if the device gets removed, ultimately the MHI driver
-> > will get removed and we are fine while loading it back (even if MSI count
-> > changes).
-> > 
-> > I didn't had time to look into the patch in detail but I'm in favour of
-> > accepting the proposal.
-> > 
-> > @Jeff: Any specific issue you are seeing with hotplug etc...?
-> 
-> Perhaps I'm getting confused by the commit text of this change.
-> 
-> The issue described is that we free the irq, and then the EP sends a MSI,
-> and the host doesn't receive it.  To me, that is expected.  The host doesn't
-> care about the irq anymore because it freed it, therefore it would be
-> expected that the host doesn't receive the irq.  So, the described issue is
-> not an issue since it is expected behavior from what I can tell.
-> 
-> The proposed fix, is to disable the interrupts, and not free them until the
-> driver is removed.  I interpret removing the driver as "rmmod mhi".  Based
-> on this, the problem I see is a scenario where we have N devices in a
-> system, and one device is hotplugged.  On hotplug, we would want to clean up
-> all resources (free irq), but according to the description, we need to rmmod
-> mhi, which is both not automatic and also affects the other N-1 devices
-> which are presumed to be operational.
+Hi Kuogee,
 
-No. When the PCI device gets removed during runtime, the remove() callback will
-get called with relevant "struct pci_dev" and that should take care of all
-resource cleanup for that particular device (including free_irq).
+Thank you for the patch! Perhaps something to improve:
 
-You do not need to manually rmmod the driver as that will be done by the
-hotplug driver when there are no devices making use of it. And yes, the commit
-message needs to be changed...
+[auto build test WARNING on drm/drm-next]
+[also build test WARNING on drm-exynos/exynos-drm-next drm-tip/drm-tip linus/master v5.19-rc2 next-20220616]
+[cannot apply to drm-intel/for-linux-next tegra-drm/drm/tegra/for-next]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch]
 
-> 
-> Now, if we throw all of that out the window, and say that the goal is to
-> register the irqs when the controller is registered, free them when the
-> controller is unregistered, and enable/disable based on power up/down as a
-> optimization, that could be sane.  If that is what this change is attempting
-> to do, it is not what the commit text describes.
-> 
-> Under the assumption that you want the optimization I just described, I will
-> re-review the code next week when I get back from my travel. Assuming the
-> implementation is good (other than what I've already pointed out), I think
-> the commit text needs to be rewritten.
-> 
-> Does that clarify things for you?
+url:    https://github.com/intel-lab-lkp/linux/commits/Kuogee-Hsieh/force-link-training-for-display-resolution-change/20220617-011110
+base:   git://anongit.freedesktop.org/drm/drm drm-next
+config: m68k-allmodconfig (https://download.01.org/0day-ci/archive/20220617/202206170505.2U1jLZVk-lkp@intel.com/config)
+compiler: m68k-linux-gcc (GCC) 11.3.0
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # https://github.com/intel-lab-lkp/linux/commit/b04f0b39a03a9fc3728e9414157f9d5f0b8b2366
+        git remote add linux-review https://github.com/intel-lab-lkp/linux
+        git fetch --no-tags linux-review Kuogee-Hsieh/force-link-training-for-display-resolution-change/20220617-011110
+        git checkout b04f0b39a03a9fc3728e9414157f9d5f0b8b2366
+        # save the config file
+        mkdir build_dir && cp config build_dir/.config
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.3.0 make.cross W=1 O=build_dir ARCH=m68k SHELL=/bin/bash drivers/gpu/drm/msm/
 
-Yep!
+If you fix the issue, kindly add following tag where applicable
+Reported-by: kernel test robot <lkp@intel.com>
 
-Thanks,
-Mani
+All warnings (new ones prefixed by >>):
+
+>> drivers/gpu/drm/msm/dp/dp_ctrl.c:1587:5: warning: no previous prototype for 'dp_ctrl_on_stream_phy_test_report' [-Wmissing-prototypes]
+    1587 | int dp_ctrl_on_stream_phy_test_report(struct dp_ctrl *dp_ctrl)
+         |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+vim +/dp_ctrl_on_stream_phy_test_report +1587 drivers/gpu/drm/msm/dp/dp_ctrl.c
+
+  1586	
+> 1587	int dp_ctrl_on_stream_phy_test_report(struct dp_ctrl *dp_ctrl)
+  1588	{
+  1589		int ret = 0;
+  1590		struct dp_ctrl_private *ctrl;
+  1591		unsigned long pixel_rate;
+  1592	
+  1593		ctrl = container_of(dp_ctrl, struct dp_ctrl_private, dp_ctrl);
+  1594	
+  1595		pixel_rate = ctrl->panel->dp_mode.drm_mode.clock;
+  1596		ret = dp_ctrl_enable_stream_clocks(ctrl, pixel_rate);
+  1597		if (ret) {
+  1598			DRM_ERROR("Failed to start pixel clocks. ret=%d\n", ret);
+  1599			return ret;
+  1600		}
+  1601	
+  1602		dp_ctrl_send_phy_test_pattern(ctrl);
+  1603	
+  1604		return 0;
+  1605	}
+  1606	
 
 -- 
-மணிவண்ணன் சதாசிவம்
+0-DAY CI Kernel Test Service
+https://01.org/lkp
