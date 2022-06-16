@@ -2,64 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1461D54D716
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jun 2022 03:33:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5560954D751
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jun 2022 03:49:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1354844AbiFPBdA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Jun 2022 21:33:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37706 "EHLO
+        id S1348917AbiFPBsr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Jun 2022 21:48:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52590 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344002AbiFPBc7 (ORCPT
+        with ESMTP id S1350789AbiFPBsl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Jun 2022 21:32:59 -0400
-Received: from mail-oi1-x22e.google.com (mail-oi1-x22e.google.com [IPv6:2607:f8b0:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67D7D183A6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jun 2022 18:32:57 -0700 (PDT)
-Received: by mail-oi1-x22e.google.com with SMTP id i25so225851oii.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jun 2022 18:32:57 -0700 (PDT)
+        Wed, 15 Jun 2022 21:48:41 -0400
+Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0803E580E0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jun 2022 18:48:40 -0700 (PDT)
+Received: by mail-ot1-x32d.google.com with SMTP id q1-20020a056830018100b0060c2bfb668eso75169ota.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jun 2022 18:48:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:in-reply-to:references:from:user-agent:date:message-id
          :subject:to:cc;
-        bh=cmBS7CFdpC1cMe1f4cNFc6/OeyKM3Qag/eLbDzrE//0=;
-        b=En9sPerFTSEOQ3e7rRhMjYhhAHZ44gLkbJkXPBe2h9vYCXiOa/rq/jSFmoCMMbkgdf
-         PG0vi66r3J/2+l4LUJrHjZ7vLKdbox13uDVVz0C3zYX8WdhHbgMLhPCgqadZlp3GI7TH
-         knzfOGGCizc5VN3weWI+jSHVvM37XrGR0Zj8E=
+        bh=zsAR485NAoLbuB4xy+EFaubp0HCxCBbW1Ts4crF5Tow=;
+        b=fFbJr2IbEynRy8sloZIbFIKtAgvnSDsMcczI/pilKtebnbmnffln9+D+JvgqFqHmy7
+         fzDj+BWsTbjUnXVamZs6LUKx6o6jah5DOhR8WSbCv+r+stXp8b6G5Ed5Zl5FwwIK4QEG
+         nyIq0y7qYeh/9hb6l0sXqUB47+yv1g9WB8IAY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:in-reply-to:references:from
          :user-agent:date:message-id:subject:to:cc;
-        bh=cmBS7CFdpC1cMe1f4cNFc6/OeyKM3Qag/eLbDzrE//0=;
-        b=vdQv7vP4UfNBbcLIFOgT9JmpLPpf9NkR/HI+PM0nWui3750MMvz9oWBfIQRu1xapSZ
-         ZIVXnjDZ6cO9EyoLed/7We4vlp+5S+0Whnj80dzOaX06QWcWr4vYWkyHM6D6GQlNpe0Y
-         6ZHrTa18g4Y1jP/reOkiydAFSCz3a1VwLd8pl8Inma/xC22u0IH4csjY6K99EDrJiaGO
-         sS939qsnIq7/pnL9F0a/SxioggD2aKz3+Zb7gelnME6M180zL3fhI3kRmR8zkkDVga/p
-         F/3kRWxdlnwQ3ZGO3dtv2fNwodrSVEdNyzAEsz8nDBQK4Tu0x2AWRV1lK63vyJW5KVgK
-         VhKA==
-X-Gm-Message-State: AJIora/241JThdi7S1XerYxfulQJsoaADAbVrqaQeSXzYeU51d+aMxvv
-        Bjy8uA+P4VyEuEZiSXoDMc9MnP98Lr607lBrPQtXkg==
-X-Google-Smtp-Source: AGRyM1tRuliVYjN8lp/N+rdkcV6KQ88iFb/kd/yQoKIPHNrs3jcH7COLJ99w9jrqSQ9HJWqK7pMUmqgrSUb/DQj4scQ=
-X-Received: by 2002:a05:6808:1703:b0:32e:851e:7f81 with SMTP id
- bc3-20020a056808170300b0032e851e7f81mr1408463oib.63.1655343176352; Wed, 15
- Jun 2022 18:32:56 -0700 (PDT)
+        bh=zsAR485NAoLbuB4xy+EFaubp0HCxCBbW1Ts4crF5Tow=;
+        b=MZN4gbf9LEQrjr/3hwBhNeCTSlTWPB6TIyRfGzWUFh/oGpb1nHZnQJz0NAWQK8Ua1Z
+         DpVx2GAPTD4BrfW1tVF0m/69YnRir6TVSUAIKLP35w5h7nV3GogfUNAL2lpTGwF90N++
+         xBh+341g0MNgpd93l4KRct2rASJTTPmD4oCzTqUQbCMN02PVYJVU3pYY9WM8AxttGvQz
+         yyS+MfrtSzxe7DW1DsmsHv/+siYSynw9nCrGa2Zn8zZWjlKn7aVnFdgL8UFdq3rz47hw
+         MspjUpDRyoCkFfBz9ANiTytSbFIOYr3vpYC0WrfktmaHS8rSTmqzkS78eml/e5q0d9hW
+         ui4w==
+X-Gm-Message-State: AJIora/ZDqwupSSpOtlrI03TzUm1ktwItAbLWvXgt2QrtkF1Rs+a+Yml
+        6tDHzmgrrc3rO2IHFuuS4OYSw6ulKdi9DOmIGkuyGw==
+X-Google-Smtp-Source: AGRyM1vkdG1UsaBWMVNR7pM3j9XT4Pof9Ae4f+42js0Hjj5kjpMoNBueX1tXdoue7LykGv4I9lZ63ndZ012a2vrv43I=
+X-Received: by 2002:a9d:729b:0:b0:60c:21bd:97c0 with SMTP id
+ t27-20020a9d729b000000b0060c21bd97c0mr1212868otj.77.1655344119098; Wed, 15
+ Jun 2022 18:48:39 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 15 Jun 2022 18:32:55 -0700
+ HTTPREST; Wed, 15 Jun 2022 18:48:38 -0700
 MIME-Version: 1.0
-In-Reply-To: <1655308437-1924-1-git-send-email-quic_khsieh@quicinc.com>
-References: <1655308437-1924-1-git-send-email-quic_khsieh@quicinc.com>
+In-Reply-To: <1655285409-19829-1-git-send-email-quic_dikshita@quicinc.com>
+References: <1655285409-19829-1-git-send-email-quic_dikshita@quicinc.com>
 From:   Stephen Boyd <swboyd@chromium.org>
 User-Agent: alot/0.10
-Date:   Wed, 15 Jun 2022 18:32:55 -0700
-Message-ID: <CAE-0n51fp3L9DKTZ=yTGGDCzkprd6nCDYLX3fPMoLv3YWtUXiQ@mail.gmail.com>
-Subject: Re: [PATCH v7] drm/msm/dp: force link training for display resolution change
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>, agross@kernel.org,
-        airlied@linux.ie, bjorn.andersson@linaro.org, daniel@ffwll.ch,
-        dianders@chromium.org, dmitry.baryshkov@linaro.org,
-        robdclark@gmail.com, sean@poorly.run, vkoul@kernel.org
-Cc:     quic_abhinavk@quicinc.com, quic_aravindh@quicinc.com,
-        quic_sbillaka@quicinc.com, freedreno@lists.freedesktop.org,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
+Date:   Wed, 15 Jun 2022 18:48:38 -0700
+Message-ID: <CAE-0n53O7gb9C2uPOiHjyDuAZmxMQyUL9MtLoRa-8Lr666PENw@mail.gmail.com>
+Subject: Re: [PATCH v2] venus: Add support for SSR trigger using fault injection
+To:     Dikshita Agarwal <quic_dikshita@quicinc.com>,
+        linux-kernel@vger.kernel.org, linux-media@vger.kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, stanimir.varbanov@linaro.org,
+        quic_vgarodia@quicinc.com
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
@@ -71,496 +67,88 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Kuogee Hsieh (2022-06-15 08:53:57)
-> Display resolution change is implemented through drm modeset. Older
-> modeset (resolution) has to be disabled first before newer modeset
-> (resolution) can be enabled. Display disable will turn off both
-> pixel clock and main link clock so that main link have to be
-> re-trained during display enable to have new video stream flow
-> again. At current implementation, display enable function manually
-> kicks up irq_hpd_handle which will read panel link status and start
-> link training if link status is not in sync state.
+Quoting Dikshita Agarwal (2022-06-15 02:30:09)
+> Here we introduce a new fault injection for SSR trigger.
 >
-> However, there is rare case that a particular panel links status keep
-> staying in sync for some period of time after main link had been shut
-> down previously at display disabled. In this case, main link retraining
-> will not be executed by irq_hdp_handle(). Hence video stream of newer
-> display resolution will fail to be transmitted to panel due to main
-> link is not in sync between host and panel.
+> To trigger the SSR:
+>  echo 100 >  /sys/kernel/debug/venus/fail_ssr/probability
+>  echo 1 >  /sys/kernel/debug/venus/fail_ssr/times
 >
-> This patch will bypass irq_hpd_handle() in favor of directly call
-> dp_ctrl_on_stream() to always perform link training in regardless of
-> main link status. So that no unexpected exception resolution change
-> failure cases will happen. Also this implementation are more efficient
-> than manual kicking off irq_hpd_handle function.
+> signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+
+Why is Stan's SoB here?
+
+> diff --git a/drivers/media/platform/qcom/venus/dbgfs.c b/drivers/media/platform/qcom/venus/dbgfs.c
+> index 52de47f..ec15078 100644
+> --- a/drivers/media/platform/qcom/venus/dbgfs.c
+> +++ b/drivers/media/platform/qcom/venus/dbgfs.c
+> @@ -4,13 +4,34 @@
+>   */
 >
-> Changes in v2:
-> -- set force_link_train flag on DP only (is_edp == false)
+>  #include <linux/debugfs.h>
+> +#include <linux/fault-inject.h>
 >
-> Changes in v3:
-> -- revise commit  text
-> -- add Fixes tag
+>  #include "core.h"
 >
-> Changes in v4:
-> -- revise commit  text
->
-> Changes in v5:
-> -- fix spelling at commit text
->
-> Changes in v6:
-> -- split dp_ctrl_on_stream() for phy test case
-> -- revise commit text for modeset
->
-> Changes in v7:
-> -- drop 0 assignment at local variable (ret = 0)
->
-> Fixes: 62671d2ef24b ("drm/msm/dp: fixes wrong connection state caused by failure of link train")
-> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-> ---
->  drivers/gpu/drm/msm/dp/dp_ctrl.c    | 31 +++++++++++++++++++++++--------
->  drivers/gpu/drm/msm/dp/dp_ctrl.h    |  3 ++-
->  drivers/gpu/drm/msm/dp/dp_display.c | 13 ++++++-------
->  3 files changed, 31 insertions(+), 16 deletions(-)
->
-> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> index af7a80c..01028b5 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> @@ -1551,7 +1551,7 @@ static int dp_ctrl_process_phy_test_request(struct dp_ctrl_private *ctrl)
->
->         ret = dp_ctrl_on_link(&ctrl->dp_ctrl);
->         if (!ret)
-> -               ret = dp_ctrl_on_stream(&ctrl->dp_ctrl);
-> +               ret = dp_ctrl_on_stream_phy_test_report(&ctrl->dp_ctrl);
->         else
->                 DRM_ERROR("failed to enable DP link controller\n");
->
-> @@ -1807,7 +1807,27 @@ static int dp_ctrl_link_retrain(struct dp_ctrl_private *ctrl)
->         return dp_ctrl_setup_main_link(ctrl, &training_step);
+> +#ifdef CONFIG_FAULT_INJECTION
+> +static DECLARE_FAULT_ATTR(venus_ssr_attr);
+> +#endif
+
+This endif isn't needed.
+
+> +
+> +#ifdef CONFIG_FAULT_INJECTION
+
+and this ifdef isn't either. The two can be combined.
+
+> +bool venus_fault_inject_ssr(void)
+> +{
+> +       return should_fail(&venus_ssr_attr, 1);
+> +}
+> +#else
+> +bool venus_fault_inject_ssr(void)
+> +{
+> +       return false;
+> +}
+
+Put this part in the header file and make it static inline. Then the
+compiler is going to inline the false to the if condition and optimize
+the entire branch away unless the config is enabled. It would also be
+nice to extern the venus_ssr_attr so that the should_fail() can be
+directly inlined into the interrupt handler.
+
+> +#endif
+> +
+>  void venus_dbgfs_init(struct venus_core *core)
+>  {
+>         core->root = debugfs_create_dir("venus", NULL);
+>         debugfs_create_x32("fw_level", 0644, core->root, &venus_fw_debug);
+> +
+> +#ifdef CONFIG_FAULT_INJECTION
+> +       fault_create_debugfs_attr("fail_ssr", core->root, &venus_ssr_attr);
+> +#endif
 >  }
 >
-> -int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl)
-> +int dp_ctrl_on_stream_phy_test_report(struct dp_ctrl *dp_ctrl)
-> +{
-> +       int ret;
-> +       struct dp_ctrl_private *ctrl;
-> +
-> +       ctrl = container_of(dp_ctrl, struct dp_ctrl_private, dp_ctrl);
-> +
-> +       ctrl->dp_ctrl.pixel_rate = ctrl->panel->dp_mode.drm_mode.clock;
+>  void venus_dbgfs_deinit(struct venus_core *core)
+> diff --git a/drivers/media/platform/qcom/venus/dbgfs.h b/drivers/media/platform/qcom/venus/dbgfs.h
+> index b7b621a..b0d0686 100644
+> --- a/drivers/media/platform/qcom/venus/dbgfs.h
+> +++ b/drivers/media/platform/qcom/venus/dbgfs.h
+> @@ -8,5 +8,6 @@ struct venus_core;
 
-There are a few different places where we assign 'pixel_rate' in this
-file. Can they be consolidated? Is it a concern that wide_bus isn't
-considered here? I was really hoping that we could reuse code instead of
-duplicate it, DRY principle and all.
-
-Maybe even better, can we remove 'pixel_rate' entirely from being
-stashed? See further down for my patch.
-
-> +
-> +       ret = dp_ctrl_enable_stream_clocks(ctrl);
-> +       if (ret) {
-> +               DRM_ERROR("Failed to start pixel clocks. ret=%d\n", ret);
-> +               return ret;
-> +       }
-> +
-> +       dp_ctrl_send_phy_test_pattern(ctrl);
-> +
-> +       return 0;
-> +}
-> +
-> +int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl, bool force_link_train)
->  {
->         int ret = 0;
->         bool mainlink_ready = false;
-> @@ -1843,12 +1863,7 @@ int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl)
->                 goto end;
->         }
->
-> -       if (ctrl->link->sink_request & DP_TEST_LINK_PHY_TEST_PATTERN) {
-> -               dp_ctrl_send_phy_test_pattern(ctrl);
-> -               return 0;
-> -       }
-> -
-> -       if (!dp_ctrl_channel_eq_ok(ctrl))
-> +       if (force_link_train || !dp_ctrl_channel_eq_ok(ctrl))
->                 dp_ctrl_link_retrain(ctrl);
->
->         /* stop txing train pattern to end link training */
-> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.h b/drivers/gpu/drm/msm/dp/dp_ctrl.h
-> index 0745fde..9a39b00 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.h
-> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.h
-> @@ -21,7 +21,8 @@ struct dp_ctrl {
->  };
->
->  int dp_ctrl_on_link(struct dp_ctrl *dp_ctrl);
-> -int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl);
-> +int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl, bool force_link_train);
-> +int dp_ctrl_on_stream_phy_test_report(struct dp_ctrl *dp_ctrl);
-
-Please don't expose the API if it's only used in dp_ctrl.c
-
->  int dp_ctrl_off_link_stream(struct dp_ctrl *dp_ctrl);
->  int dp_ctrl_off_link(struct dp_ctrl *dp_ctrl);
->  int dp_ctrl_off(struct dp_ctrl *dp_ctrl);
-> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-> index c388323..b6d25ab 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_display.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-> @@ -872,7 +872,7 @@ static int dp_display_enable(struct dp_display_private *dp, u32 data)
->                 return 0;
->         }
->
-> -       rc = dp_ctrl_on_stream(dp->ctrl);
-> +       rc = dp_ctrl_on_stream(dp->ctrl, data);
->         if (!rc)
->                 dp_display->power_on = true;
->
-> @@ -1654,6 +1654,7 @@ void dp_bridge_enable(struct drm_bridge *drm_bridge)
->         int rc = 0;
->         struct dp_display_private *dp_display;
->         u32 state;
-> +       bool force_link_train = false;
->
->         dp_display = container_of(dp, struct dp_display_private, dp_display);
->         if (!dp_display->dp_mode.drm_mode.clock) {
-> @@ -1688,10 +1689,12 @@ void dp_bridge_enable(struct drm_bridge *drm_bridge)
->
->         state =  dp_display->hpd_state;
->
-> -       if (state == ST_DISPLAY_OFF)
-> +       if (state == ST_DISPLAY_OFF) {
->                 dp_display_host_phy_init(dp_display);
-> +               force_link_train = true;
-> +       }
->
-> -       dp_display_enable(dp_display, 0);
-> +       dp_display_enable(dp_display, force_link_train);
-
-I see now that ST_DISPLAY_OFF isn't exposed outside of this file. So my
-hope to not modify the function argument is not possible, ok.
++#include <linux/fault-inject.h>
 
 >
->         rc = dp_display_post_enable(dp);
->         if (rc) {
+>  void venus_dbgfs_init(struct venus_core *core);
+>  void venus_dbgfs_deinit(struct venus_core *core);
 
-Here's my untested patch for pixel_rate removal and movement of the code
-so we don't have to expose the test API. Note that there's a place where
-I removed the setting of the pixel_rate but didn't use it (see
-dp_ctrl_link_maintenance()). Is that important? I couldn't figure out
-how link maintenance cared about the pixel rate.
-
----8<----
-diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-index b4e333a4c587..e114521af2e9 100644
---- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
-+++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-@@ -1238,8 +1238,6 @@ static int dp_ctrl_link_train_2(struct
-dp_ctrl_private *ctrl,
- 	return -ETIMEDOUT;
- }
-
--static int dp_ctrl_reinitialize_mainlink(struct dp_ctrl_private *ctrl);
--
- static int dp_ctrl_link_train(struct dp_ctrl_private *ctrl,
- 			int *training_step)
- {
-@@ -1338,7 +1336,7 @@ static void dp_ctrl_set_clock_rate(struct
-dp_ctrl_private *ctrl,
- 				name, rate);
- }
-
--static int dp_ctrl_enable_mainlink_clocks(struct dp_ctrl_private *ctrl)
-+static int dp_ctrl_enable_mainlink_clocks(struct dp_ctrl_private
-*ctrl, unsigned long pixel_rate)
- {
- 	int ret = 0;
- 	struct dp_io *dp_io = &ctrl->parser->io;
-@@ -1359,25 +1357,25 @@ static int
-dp_ctrl_enable_mainlink_clocks(struct dp_ctrl_private *ctrl)
- 	if (ret)
- 		DRM_ERROR("Unable to start link clocks. ret=%d\n", ret);
-
--	drm_dbg_dp(ctrl->drm_dev, "link rate=%d pixel_clk=%d\n",
--		ctrl->link->link_params.rate, ctrl->dp_ctrl.pixel_rate);
-+	drm_dbg_dp(ctrl->drm_dev, "link rate=%d pixel_clk=%lu\n",
-+		ctrl->link->link_params.rate, pixel_rate);
-
- 	return ret;
- }
-
--static int dp_ctrl_enable_stream_clocks(struct dp_ctrl_private *ctrl)
-+static int dp_ctrl_enable_stream_clocks(struct dp_ctrl_private *ctrl,
-+					unsigned long pixel_rate)
- {
--	int ret = 0;
-+	int ret;
-
--	dp_ctrl_set_clock_rate(ctrl, DP_STREAM_PM, "stream_pixel",
--					ctrl->dp_ctrl.pixel_rate * 1000);
-+	dp_ctrl_set_clock_rate(ctrl, DP_STREAM_PM, "stream_pixel", pixel_rate * 1000);
-
- 	ret = dp_power_clk_enable(ctrl->power, DP_STREAM_PM, true);
- 	if (ret)
- 		DRM_ERROR("Unabled to start pixel clocks. ret=%d\n", ret);
-
--	drm_dbg_dp(ctrl->drm_dev, "link rate=%d pixel_clk=%d\n",
--			ctrl->link->link_params.rate, ctrl->dp_ctrl.pixel_rate);
-+	drm_dbg_dp(ctrl->drm_dev, "link rate=%d pixel_clk=%lu\n",
-+			ctrl->link->link_params.rate, pixel_rate);
-
- 	return ret;
- }
-@@ -1447,7 +1445,7 @@ static bool dp_ctrl_use_fixed_nvid(struct
-dp_ctrl_private *ctrl)
- 	return false;
- }
-
--static int dp_ctrl_reinitialize_mainlink(struct dp_ctrl_private *ctrl)
-+static int dp_ctrl_reinitialize_mainlink(struct dp_ctrl_private
-*ctrl, unsigned long pixel_rate)
- {
- 	int ret = 0;
- 	struct dp_io *dp_io = &ctrl->parser->io;
-@@ -1471,7 +1469,7 @@ static int dp_ctrl_reinitialize_mainlink(struct
-dp_ctrl_private *ctrl)
- 	/* hw recommended delay before re-enabling clocks */
- 	msleep(20);
-
--	ret = dp_ctrl_enable_mainlink_clocks(ctrl);
-+	ret = dp_ctrl_enable_mainlink_clocks(ctrl, pixel_rate);
- 	if (ret) {
- 		DRM_ERROR("Failed to enable mainlink clks. ret=%d\n", ret);
- 		return ret;
-@@ -1519,8 +1517,6 @@ static int dp_ctrl_link_maintenance(struct
-dp_ctrl_private *ctrl)
- 	ctrl->link->phy_params.p_level = 0;
- 	ctrl->link->phy_params.v_level = 0;
-
--	ctrl->dp_ctrl.pixel_rate = ctrl->panel->dp_mode.drm_mode.clock;
--
- 	ret = dp_ctrl_setup_main_link(ctrl, &training_step);
- 	if (ret)
- 		goto end;
-@@ -1534,36 +1530,6 @@ static int dp_ctrl_link_maintenance(struct
-dp_ctrl_private *ctrl)
- 	return ret;
- }
-
--static int dp_ctrl_process_phy_test_request(struct dp_ctrl_private *ctrl)
--{
--	int ret = 0;
--
--	if (!ctrl->link->phy_params.phy_test_pattern_sel) {
--		drm_dbg_dp(ctrl->drm_dev,
--			"no test pattern selected by sink\n");
--		return ret;
--	}
--
--	/*
--	 * The global reset will need DP link related clocks to be
--	 * running. Add the global reset just before disabling the
--	 * link clocks and core clocks.
--	 */
--	ret = dp_ctrl_off(&ctrl->dp_ctrl);
--	if (ret) {
--		DRM_ERROR("failed to disable DP controller\n");
--		return ret;
--	}
--
--	ret = dp_ctrl_on_link(&ctrl->dp_ctrl);
--	if (!ret)
--		ret = dp_ctrl_on_stream_phy_test_report(&ctrl->dp_ctrl);
--	else
--		DRM_ERROR("failed to enable DP link controller\n");
--
--	return ret;
--}
--
- static bool dp_ctrl_send_phy_test_pattern(struct dp_ctrl_private *ctrl)
- {
- 	bool success = false;
-@@ -1616,6 +1582,56 @@ static bool
-dp_ctrl_send_phy_test_pattern(struct dp_ctrl_private *ctrl)
- 	return success;
- }
-
-+static int dp_ctrl_on_stream_phy_test_report(struct dp_ctrl *dp_ctrl)
-+{
-+	int ret;
-+	struct dp_ctrl_private *ctrl;
-+	unsigned long pixel_rate;
-+
-+	ctrl = container_of(dp_ctrl, struct dp_ctrl_private, dp_ctrl);
-+
-+	pixel_rate = ctrl->panel->dp_mode.drm_mode.clock;
-+	ret = dp_ctrl_enable_stream_clocks(ctrl, pixel_rate);
-+	if (ret) {
-+		DRM_ERROR("Failed to start pixel clocks. ret=%d\n", ret);
-+		return ret;
-+	}
-+
-+	dp_ctrl_send_phy_test_pattern(ctrl);
-+
-+	return 0;
-+}
-+
-+static int dp_ctrl_process_phy_test_request(struct dp_ctrl_private *ctrl)
-+{
-+	int ret = 0;
-+
-+	if (!ctrl->link->phy_params.phy_test_pattern_sel) {
-+		drm_dbg_dp(ctrl->drm_dev,
-+			"no test pattern selected by sink\n");
-+		return ret;
-+	}
-+
-+	/*
-+	 * The global reset will need DP link related clocks to be
-+	 * running. Add the global reset just before disabling the
-+	 * link clocks and core clocks.
-+	 */
-+	ret = dp_ctrl_off(&ctrl->dp_ctrl);
-+	if (ret) {
-+		DRM_ERROR("failed to disable DP controller\n");
-+		return ret;
-+	}
-+
-+	ret = dp_ctrl_on_link(&ctrl->dp_ctrl);
-+	if (!ret)
-+		ret = dp_ctrl_on_stream_phy_test_report(&ctrl->dp_ctrl);
-+	else
-+		DRM_ERROR("failed to enable DP link controller\n");
-+
-+	return ret;
-+}
-+
- void dp_ctrl_handle_sink_request(struct dp_ctrl *dp_ctrl)
- {
- 	struct dp_ctrl_private *ctrl;
-@@ -1691,6 +1707,7 @@ int dp_ctrl_on_link(struct dp_ctrl *dp_ctrl)
- 	u32 const phy_cts_pixel_clk_khz = 148500;
- 	u8 link_status[DP_LINK_STATUS_SIZE];
- 	unsigned int training_step;
-+	unsigned long pixel_rate;
-
- 	if (!dp_ctrl)
- 		return -EINVAL;
-@@ -1705,25 +1722,25 @@ int dp_ctrl_on_link(struct dp_ctrl *dp_ctrl)
- 		drm_dbg_dp(ctrl->drm_dev,
- 				"using phy test link parameters\n");
- 		if (!ctrl->panel->dp_mode.drm_mode.clock)
--			ctrl->dp_ctrl.pixel_rate = phy_cts_pixel_clk_khz;
-+			pixel_rate = phy_cts_pixel_clk_khz;
- 	} else {
- 		ctrl->link->link_params.rate = rate;
- 		ctrl->link->link_params.num_lanes =
- 			ctrl->panel->link_info.num_lanes;
--		ctrl->dp_ctrl.pixel_rate = ctrl->panel->dp_mode.drm_mode.clock;
-+		pixel_rate = ctrl->panel->dp_mode.drm_mode.clock;
- 	}
-
--	drm_dbg_dp(ctrl->drm_dev, "rate=%d, num_lanes=%d, pixel_rate=%d\n",
-+	drm_dbg_dp(ctrl->drm_dev, "rate=%d, num_lanes=%d, pixel_rate=%lu\n",
- 		ctrl->link->link_params.rate, ctrl->link->link_params.num_lanes,
--		ctrl->dp_ctrl.pixel_rate);
-+		pixel_rate);
-
-
--	rc = dp_ctrl_enable_mainlink_clocks(ctrl);
-+	rc = dp_ctrl_enable_mainlink_clocks(ctrl, pixel_rate);
- 	if (rc)
- 		return rc;
-
- 	while (--link_train_max_retries) {
--		rc = dp_ctrl_reinitialize_mainlink(ctrl);
-+		rc = dp_ctrl_reinitialize_mainlink(ctrl, pixel_rate);
- 		if (rc) {
- 			DRM_ERROR("Failed to reinitialize mainlink. rc=%d\n",
- 					rc);
-@@ -1813,31 +1830,12 @@ static int dp_ctrl_link_retrain(struct
-dp_ctrl_private *ctrl)
- 	return dp_ctrl_setup_main_link(ctrl, &training_step);
- }
-
--int dp_ctrl_on_stream_phy_test_report(struct dp_ctrl *dp_ctrl)
--{
--	int ret;
--	struct dp_ctrl_private *ctrl;
--
--	ctrl = container_of(dp_ctrl, struct dp_ctrl_private, dp_ctrl);
--
--	ctrl->dp_ctrl.pixel_rate = ctrl->panel->dp_mode.drm_mode.clock;
--
--	ret = dp_ctrl_enable_stream_clocks(ctrl);
--	if (ret) {
--		DRM_ERROR("Failed to start pixel clocks. ret=%d\n", ret);
--		return ret;
--	}
--
--	dp_ctrl_send_phy_test_pattern(ctrl);
--
--	return 0;
--}
--
- int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl, bool force_link_train)
- {
- 	int ret = 0;
- 	bool mainlink_ready = false;
- 	struct dp_ctrl_private *ctrl;
-+	unsigned long pixel_rate;
- 	unsigned long pixel_rate_orig;
-
- 	if (!dp_ctrl)
-@@ -1845,25 +1843,24 @@ int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl,
-bool force_link_train)
-
- 	ctrl = container_of(dp_ctrl, struct dp_ctrl_private, dp_ctrl);
-
--	ctrl->dp_ctrl.pixel_rate = ctrl->panel->dp_mode.drm_mode.clock;
-+	pixel_rate = pixel_rate_orig = ctrl->panel->dp_mode.drm_mode.clock;
-
--	pixel_rate_orig = ctrl->dp_ctrl.pixel_rate;
- 	if (dp_ctrl->wide_bus_en)
--		ctrl->dp_ctrl.pixel_rate >>= 1;
-+		pixel_rate >>= 1;
-
--	drm_dbg_dp(ctrl->drm_dev, "rate=%d, num_lanes=%d, pixel_rate=%d\n",
-+	drm_dbg_dp(ctrl->drm_dev, "rate=%d, num_lanes=%d, pixel_rate=%lu\n",
- 		ctrl->link->link_params.rate,
--		ctrl->link->link_params.num_lanes, ctrl->dp_ctrl.pixel_rate);
-+		ctrl->link->link_params.num_lanes, pixel_rate);
-
- 	if (!dp_power_clk_status(ctrl->power, DP_CTRL_PM)) { /* link clk is off */
--		ret = dp_ctrl_enable_mainlink_clocks(ctrl);
-+		ret = dp_ctrl_enable_mainlink_clocks(ctrl, pixel_rate);
- 		if (ret) {
- 			DRM_ERROR("Failed to start link clocks. ret=%d\n", ret);
- 			goto end;
- 		}
- 	}
-
--	ret = dp_ctrl_enable_stream_clocks(ctrl);
-+	ret = dp_ctrl_enable_stream_clocks(ctrl, pixel_rate);
- 	if (ret) {
- 		DRM_ERROR("Failed to start pixel clocks. ret=%d\n", ret);
- 		goto end;
-diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.h b/drivers/gpu/drm/msm/dp/dp_ctrl.h
-index 9a39b0089ae0..9f29734af81c 100644
---- a/drivers/gpu/drm/msm/dp/dp_ctrl.h
-+++ b/drivers/gpu/drm/msm/dp/dp_ctrl.h
-@@ -16,13 +16,11 @@
- struct dp_ctrl {
- 	bool orientation;
- 	atomic_t aborted;
--	u32 pixel_rate;
- 	bool wide_bus_en;
- };
-
- int dp_ctrl_on_link(struct dp_ctrl *dp_ctrl);
- int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl, bool force_link_train);
--int dp_ctrl_on_stream_phy_test_report(struct dp_ctrl *dp_ctrl);
- int dp_ctrl_off_link_stream(struct dp_ctrl *dp_ctrl);
- int dp_ctrl_off_link(struct dp_ctrl *dp_ctrl);
- int dp_ctrl_off(struct dp_ctrl *dp_ctrl);
+#ifdef CONFIG_FAULT_INJECTION
+extern struct fault_attr venus_ssr_attr;
+static inline venus_fault_inject_ssr(void)
+{
+	return should_fail(&venus_ssr_attr, 1);
+}
+#else
+static inline bool venus_fault_inject_ssr(void) { return false; }
+#endif
