@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 78C0954EBB1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jun 2022 22:58:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E9ECD54EBBA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jun 2022 22:59:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1378764AbiFPU6M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Jun 2022 16:58:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45444 "EHLO
+        id S1378949AbiFPU6t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Jun 2022 16:58:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45974 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1378814AbiFPU6J (ORCPT
+        with ESMTP id S1378846AbiFPU6Z (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Jun 2022 16:58:09 -0400
-Received: from mail-pg1-x52a.google.com (mail-pg1-x52a.google.com [IPv6:2607:f8b0:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1920028729
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jun 2022 13:58:06 -0700 (PDT)
-Received: by mail-pg1-x52a.google.com with SMTP id w29so2283373pgl.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jun 2022 13:58:06 -0700 (PDT)
+        Thu, 16 Jun 2022 16:58:25 -0400
+Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com [IPv6:2607:f8b0:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D93CC2A969
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jun 2022 13:58:24 -0700 (PDT)
+Received: by mail-pf1-x42e.google.com with SMTP id w21so2523546pfc.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jun 2022 13:58:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=3odd+CoUCDX7IoaEaSLss/9w0NCvjM2XDJMHtoPV8qE=;
-        b=mEdlJCBMO2qy2bytIS50JuL1WzxojSbUNPCgMyaNzNr7HIKwfEDdRiJe8fEZBEOI8q
-         oDjGz4YAlVH/8JUlYm5xQG5mOR/t3TR6mzu3cN6S2smcZad/pZe707JM4GjH6uCYrHtQ
-         dY8+Q4dEU+ztLhY1qzevUho9I5d1LeVW2XF0FAjhT3Vo8hEk1Qfw68xcr7ObUvOBBUe0
-         L5RX/WwsRh6QC7BUATzBt2RFaQyxTh+5/6T7XBO1bIAs6lK32Zc4Y1tdBIS4hmjA+QLG
-         yGdvotjlH8Ydr642jmGn41gCmyE/uxs8AFcWWRQ61JvNfhwPP7MrW/NBLeLZPSMzQYNn
-         moWA==
+        bh=UYtUli93q5eaYmCsPHGq92tZCYUwF0QfxfGIcc7igWM=;
+        b=Oe8Jic99NJNF9h8azmFuMIk7RY1nIvKWC5jwwg95iF4l16ljv/UNEkRCN4H5mE/xIZ
+         CAPIzXpFXnNRJJNDIKRSDryGZEkQys5KkC/H8gxJjajHzpV3rYNxEvc8h7Ahtjrssmir
+         pKBJiB9ot2vuH92aYLwEY7553XJ1txOQQ7XJhisp8CrZH+HvJe16HdggQ4RRgrcQvYKw
+         KGTVABr/6+18Spm9T4xmdWeYB+1dOBhwV68ejwCp+R12l27jreT1CvQFf4GBJ5a/elfk
+         e0dmDl74vljp0oGpqiq4u4UXm+F0yBongfYWgM0dmefto9UReq2xLWkv2eUvHINMW1nN
+         +6kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:content-transfer-encoding
          :in-reply-to;
-        bh=3odd+CoUCDX7IoaEaSLss/9w0NCvjM2XDJMHtoPV8qE=;
-        b=CQ+G9hGGMAmnXp2JdS6WA7gaV3/nENXyz+cO6HFqUjiYi7UaUbN4uyA6nAiomJoo8y
-         E4dXTBA4/QKFIPACE4eURjJ/izHGccHFUf4ATZjH7A6Bw/UJwJuYFbvyMGpKqA2puj8w
-         AvEj93kbjKSB+3L2YA/ILoVDAz4qXm/nZJ5ZmcoRFE3tS0/tOt5rRQ6Txoh6xxsqaXpQ
-         asCpdx5+lGqJChUMmOve2LvyWvMcxQDB6ZY9LbGN7hazfWOtKp3qC1oMOLi/R7u6jTBf
-         pDM3z3+YRVeDRhmAzu1WxT+GAOZl6R5ZmJFTXkPn/VLFqzFLmAkBQgI0CvVJ50qKhyVA
-         MSYg==
-X-Gm-Message-State: AJIora97rT3lQ8Od9iuk0+pY41KGVN6lHiXeUK7anW0DC83W83AaMpvk
-        REfH/YxPI9hqWrPduDUyXAQFxg==
-X-Google-Smtp-Source: AGRyM1ubYbWNsLiEkDJckGpD3XxEVsQvHLEChWPG1wS7oT5ke3l3ekzRFeKsT7B0AJBkaPynOQutSQ==
-X-Received: by 2002:a05:6a00:1344:b0:51b:e3b5:54e2 with SMTP id k4-20020a056a00134400b0051be3b554e2mr6685158pfu.6.1655413085606;
-        Thu, 16 Jun 2022 13:58:05 -0700 (PDT)
+        bh=UYtUli93q5eaYmCsPHGq92tZCYUwF0QfxfGIcc7igWM=;
+        b=WGHuCuL6sjJnU+Bflgk73EN3uugTTPJ3CD8R7jsYNGgj8Ic1rO5p0y4UBrcgDL4lS1
+         2Um56uLoMwzmmU1uDdx6XsQv55Qf7lzta30DzDljrkLzTn9GyODim3aXlJmm1opRaEdT
+         UVrR3ulJKOT8iJEnE5RDYPH1OPTEvMSWg2L+X8pJ8U+NCldAqSRdHHH6fdE3vhPEhN6a
+         YoDyIzsSVD32dXNEcDF2+ECWC57465KTB2jIHO91296NsLOnjd61Zfp73DVzBhK6pVH1
+         eX8n50u+Zx95gC2aHQzdcI/EjtSNC6/2HWqpPOvWB/4rYvjC8jfn7qERqb66gif7Ij3S
+         /ObA==
+X-Gm-Message-State: AJIora8Eb83NajLEkwczjO9KXywF8aMnRmiL9I7m+i5bc3Ig0TAsYmAW
+        jPDgQsSPr8E3APIeVUfHmAVWkg==
+X-Google-Smtp-Source: AGRyM1tfwAKOsQvb2Es7u8TpAmEgbiYCYHURtkk0pcemroogZFDkOPviWKITlylMf5az9R3w5qH/yw==
+X-Received: by 2002:a63:3ce:0:b0:3fc:6a52:8668 with SMTP id 197-20020a6303ce000000b003fc6a528668mr6106079pgd.424.1655413104409;
+        Thu, 16 Jun 2022 13:58:24 -0700 (PDT)
 Received: from google.com ([192.77.111.2])
-        by smtp.gmail.com with ESMTPSA id v8-20020a17090a778800b001eab0a27d92sm4123401pjk.51.2022.06.16.13.58.03
+        by smtp.gmail.com with ESMTPSA id je21-20020a170903265500b001690d283f52sm1046755plb.158.2022.06.16.13.58.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Jun 2022 13:58:05 -0700 (PDT)
-Date:   Thu, 16 Jun 2022 21:58:00 +0100
+        Thu, 16 Jun 2022 13:58:24 -0700 (PDT)
+Date:   Thu, 16 Jun 2022 21:58:18 +0100
 From:   Lee Jones <lee.jones@linaro.org>
 To:     Satya Priya <quic_c_skakit@quicinc.com>
 Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -59,16 +59,15 @@ Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         swboyd@chromium.org, quic_collinsd@quicinc.com,
         quic_subbaram@quicinc.com, quic_jprakash@quicinc.com
-Subject: Re: [PATCH V15 5/9] mfd: pm8008: Remove the regmap member from
- pm8008_data struct
-Message-ID: <YquZWKQIMs5paD5n@google.com>
+Subject: Re: [PATCH V15 1/9] dt-bindings: mfd: pm8008: Add reset-gpios
+Message-ID: <YquZarjpqTYViS6J@google.com>
 References: <1655200111-18357-1-git-send-email-quic_c_skakit@quicinc.com>
- <1655200111-18357-6-git-send-email-quic_c_skakit@quicinc.com>
+ <1655200111-18357-2-git-send-email-quic_c_skakit@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <1655200111-18357-6-git-send-email-quic_c_skakit@quicinc.com>
+In-Reply-To: <1655200111-18357-2-git-send-email-quic_c_skakit@quicinc.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -81,13 +80,11 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Tue, 14 Jun 2022, Satya Priya wrote:
 
-> Remove the regmap member from pm8008_data struct as it is
-> not used outside of probe. Add a local variable for regmap
-> and pass it to the pm8008_probe_irq_peripherals()
-> API in pm8008_probe.
+> Add reset-gpios property for pm8008.
 > 
 > Signed-off-by: Satya Priya <quic_c_skakit@quicinc.com>
 > Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+> Reviewed-by: Rob Herring <robh@kernel.org>
 > ---
 > Changes in V15:
 >  - None.
@@ -98,8 +95,8 @@ On Tue, 14 Jun 2022, Satya Priya wrote:
 > Changes in V13:
 >  - None.
 > 
->  drivers/mfd/qcom-pm8008.c | 22 +++++++++++-----------
->  1 file changed, 11 insertions(+), 11 deletions(-)
+>  Documentation/devicetree/bindings/mfd/qcom,pm8008.yaml | 7 +++++++
+>  1 file changed, 7 insertions(+)
 
 For my own reference (apply this as-is to your sign-off block):
 
