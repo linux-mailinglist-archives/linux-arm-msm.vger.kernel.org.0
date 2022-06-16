@@ -2,252 +2,365 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EAD6A54EB1D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jun 2022 22:28:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D575054EB23
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jun 2022 22:28:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1378465AbiFPU1N (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Jun 2022 16:27:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41050 "EHLO
+        id S231796AbiFPU2h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Jun 2022 16:28:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44108 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1378701AbiFPU1D (ORCPT
+        with ESMTP id S230434AbiFPU2N (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Jun 2022 16:27:03 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4BD895D190;
-        Thu, 16 Jun 2022 13:26:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1655411213; x=1686947213;
-  h=from:to:cc:subject:date:message-id:mime-version;
-  bh=ls8lQOlmsBqBGQEX1/VCZmtXihXyvL46E8MuEcAIKHo=;
-  b=XUE4WXvZrhH9aiyRqzPmhSMGAR9ulTy+Bq68SR6kcSElF44QTmiiCIyV
-   b8hQycX+L6K7Ts8oMOgCf3qxYLxzeFMtyZ6BAB04a4efky+1zEvWEezpB
-   A8oIjfhhL2Ak3hlXwXXsSKJ7An2LqkGU7TvL1CfnzMiCIEn3Xquw6lEql
-   4=;
-Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 16 Jun 2022 13:26:53 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Jun 2022 13:26:52 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Thu, 16 Jun 2022 13:26:52 -0700
-Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Thu, 16 Jun 2022 13:26:51 -0700
-From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
-To:     <robdclark@gmail.com>, <sean@poorly.run>, <swboyd@chromium.org>,
-        <dianders@chromium.org>, <vkoul@kernel.org>, <daniel@ffwll.ch>,
-        <airlied@linux.ie>, <agross@kernel.org>,
-        <dmitry.baryshkov@linaro.org>, <bjorn.andersson@linaro.org>
-CC:     <quic_abhinavk@quicinc.com>, <quic_aravindh@quicinc.com>,
-        <quic_khsieh@quicinc.com>, <quic_sbillaka@quicinc.com>,
-        <freedreno@lists.freedesktop.org>,
-        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: [PATCH v9] drm/msm/dp: force link training for display resolution change
-Date:   Thu, 16 Jun 2022 13:26:40 -0700
-Message-ID: <1655411200-7255-1-git-send-email-quic_khsieh@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+        Thu, 16 Jun 2022 16:28:13 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FC1150019;
+        Thu, 16 Jun 2022 13:28:00 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 6F47C61DAC;
+        Thu, 16 Jun 2022 20:28:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9341C34114;
+        Thu, 16 Jun 2022 20:27:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1655411279;
+        bh=1iWy/ljKYElgWvDw6knPHtMncy4SKW9L+9GNYD0GiEI=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Tt2N8xqfAdA2d6/lfRAvRWUHCYVfXnAb682TR+kRWZ4azlKOj/JaAKZzrgtj938bD
+         KpttTPxkvmdl6ux4g7yJfMh91PXy4P/BhNuPFJWt6t64L8NXK75SdlC5utT6fVc6s9
+         nt4yTxj66qWmvOdX31NtapfLrE1JRbkPUiWdxAmPFe03b7a1QkqJnfZIwxR9P4o5pI
+         8lEtsYfSdWffb4jMsVQvzaDrofGcLv6J6CLvWBKRCBGaUOgCz3znRVG+TAgRZrM6rv
+         Mf+BEKAathNREnmtiPc4sQdA3FvZ+rOa/5g0zrOv512z/K8bNNRzySHPZDp2Xv4Yu6
+         qLF/6Q1ij9QcA==
+Date:   Fri, 17 Jun 2022 01:57:57 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Ansuel Smith <ansuelsmth@gmail.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Miquel Raynal <miquel.raynal@bootlin.com>,
+        Richard Weinberger <richard@nod.at>,
+        Vignesh Raghavendra <vigneshr@ti.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-mtd@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v7 1/3] mtd: nand: raw: qcom_nandc: reorder
+ qcom_nand_host struct
+Message-ID: <20220616202757.GA2889@thinkpad>
+References: <20220615000612.3119-1-ansuelsmth@gmail.com>
+ <20220615000612.3119-2-ansuelsmth@gmail.com>
+ <20220615171132.GA3606@thinkpad>
+ <62aa76ad.1c69fb81.7e2d3.0c8e@mx.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <62aa76ad.1c69fb81.7e2d3.0c8e@mx.google.com>
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Display resolution change is implemented through drm modeset. Older
-modeset (resolution) has to be disabled first before newer modeset
-(resolution) can be enabled. Display disable will turn off both
-pixel clock and main link clock so that main link have to be
-re-trained during display enable to have new video stream flow
-again. At current implementation, display enable function manually
-kicks up irq_hpd_handle which will read panel link status and start
-link training if link status is not in sync state.
+On Thu, Jun 16, 2022 at 02:18:08AM +0200, Ansuel Smith wrote:
+> On Wed, Jun 15, 2022 at 10:41:32PM +0530, Manivannan Sadhasivam wrote:
+> > On Wed, Jun 15, 2022 at 02:06:10AM +0200, Ansuel Smith wrote:
+> > > Reorder structs in nandc driver to save holes.
+> > > 
+> > > Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+> > 
+> > Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+> > 
+> > Thanks,
+> > Mani
+> >
+> 
+> I'm sending v8 with a different Sob so I'm not adding the review tag (in
+> v8).
+> In short the new Sob is what I will use onwards, wanted to keep the
+> Ansuel reference but it was suggested to use Christian Marangi and
+> nothing more. It's just a name change and we are the same person and
+> nobody is stealing ownership of the patch.
+> Sorry for the mess.
+> 
 
-However, there is rare case that a particular panel links status keep
-staying in sync for some period of time after main link had been shut
-down previously at display disabled. In this case, main link retraining
-will not be executed by irq_hdp_handle(). Hence video stream of newer
-display resolution will fail to be transmitted to panel due to main
-link is not in sync between host and panel.
+That's fine but you could've kept the review tags... Anyway, I'll give mine.
 
-This patch will bypass irq_hpd_handle() in favor of directly call
-dp_ctrl_on_stream() to always perform link training in regardless of
-main link status. So that no unexpected exception resolution change
-failure cases will happen. Also this implementation are more efficient
-than manual kicking off irq_hpd_handle function.
+Thanks,
+Mani
 
-Changes in v2:
--- set force_link_train flag on DP only (is_edp == false)
+> > > ---
+> > >  drivers/mtd/nand/raw/qcom_nandc.c | 107 +++++++++++++++++-------------
+> > >  1 file changed, 62 insertions(+), 45 deletions(-)
+> > > 
+> > > diff --git a/drivers/mtd/nand/raw/qcom_nandc.c b/drivers/mtd/nand/raw/qcom_nandc.c
+> > > index 1a77542c6d67..f2990d721733 100644
+> > > --- a/drivers/mtd/nand/raw/qcom_nandc.c
+> > > +++ b/drivers/mtd/nand/raw/qcom_nandc.c
+> > > @@ -238,6 +238,9 @@ nandc_set_reg(chip, reg,			\
+> > >   * @bam_ce - the array of BAM command elements
+> > >   * @cmd_sgl - sgl for NAND BAM command pipe
+> > >   * @data_sgl - sgl for NAND BAM consumer/producer pipe
+> > > + * @last_data_desc - last DMA desc in data channel (tx/rx).
+> > > + * @last_cmd_desc - last DMA desc in command channel.
+> > > + * @txn_done - completion for NAND transfer.
+> > >   * @bam_ce_pos - the index in bam_ce which is available for next sgl
+> > >   * @bam_ce_start - the index in bam_ce which marks the start position ce
+> > >   *		   for current sgl. It will be used for size calculation
+> > > @@ -250,14 +253,14 @@ nandc_set_reg(chip, reg,			\
+> > >   * @rx_sgl_start - start index in data sgl for rx.
+> > >   * @wait_second_completion - wait for second DMA desc completion before making
+> > >   *			     the NAND transfer completion.
+> > > - * @txn_done - completion for NAND transfer.
+> > > - * @last_data_desc - last DMA desc in data channel (tx/rx).
+> > > - * @last_cmd_desc - last DMA desc in command channel.
+> > >   */
+> > >  struct bam_transaction {
+> > >  	struct bam_cmd_element *bam_ce;
+> > >  	struct scatterlist *cmd_sgl;
+> > >  	struct scatterlist *data_sgl;
+> > > +	struct dma_async_tx_descriptor *last_data_desc;
+> > > +	struct dma_async_tx_descriptor *last_cmd_desc;
+> > > +	struct completion txn_done;
+> > >  	u32 bam_ce_pos;
+> > >  	u32 bam_ce_start;
+> > >  	u32 cmd_sgl_pos;
+> > > @@ -267,25 +270,23 @@ struct bam_transaction {
+> > >  	u32 rx_sgl_pos;
+> > >  	u32 rx_sgl_start;
+> > >  	bool wait_second_completion;
+> > > -	struct completion txn_done;
+> > > -	struct dma_async_tx_descriptor *last_data_desc;
+> > > -	struct dma_async_tx_descriptor *last_cmd_desc;
+> > >  };
+> > >  
+> > >  /*
+> > >   * This data type corresponds to the nand dma descriptor
+> > > + * @dma_desc - low level DMA engine descriptor
+> > >   * @list - list for desc_info
+> > > - * @dir - DMA transfer direction
+> > > + *
+> > >   * @adm_sgl - sgl which will be used for single sgl dma descriptor. Only used by
+> > >   *	      ADM
+> > >   * @bam_sgl - sgl which will be used for dma descriptor. Only used by BAM
+> > >   * @sgl_cnt - number of SGL in bam_sgl. Only used by BAM
+> > > - * @dma_desc - low level DMA engine descriptor
+> > > + * @dir - DMA transfer direction
+> > >   */
+> > >  struct desc_info {
+> > > +	struct dma_async_tx_descriptor *dma_desc;
+> > >  	struct list_head node;
+> > >  
+> > > -	enum dma_data_direction dir;
+> > >  	union {
+> > >  		struct scatterlist adm_sgl;
+> > >  		struct {
+> > > @@ -293,7 +294,7 @@ struct desc_info {
+> > >  			int sgl_cnt;
+> > >  		};
+> > >  	};
+> > > -	struct dma_async_tx_descriptor *dma_desc;
+> > > +	enum dma_data_direction dir;
+> > >  };
+> > >  
+> > >  /*
+> > > @@ -337,52 +338,64 @@ struct nandc_regs {
+> > >  /*
+> > >   * NAND controller data struct
+> > >   *
+> > > - * @controller:			base controller structure
+> > > - * @host_list:			list containing all the chips attached to the
+> > > - *				controller
+> > >   * @dev:			parent device
+> > > + *
+> > >   * @base:			MMIO base
+> > > - * @base_phys:			physical base address of controller registers
+> > > - * @base_dma:			dma base address of controller registers
+> > > + *
+> > >   * @core_clk:			controller clock
+> > >   * @aon_clk:			another controller clock
+> > >   *
+> > > + * @regs:			a contiguous chunk of memory for DMA register
+> > > + *				writes. contains the register values to be
+> > > + *				written to controller
+> > > + *
+> > > + * @props:			properties of current NAND controller,
+> > > + *				initialized via DT match data
+> > > + *
+> > > + * @controller:			base controller structure
+> > > + * @host_list:			list containing all the chips attached to the
+> > > + *				controller
+> > > + *
+> > >   * @chan:			dma channel
+> > >   * @cmd_crci:			ADM DMA CRCI for command flow control
+> > >   * @data_crci:			ADM DMA CRCI for data flow control
+> > > + *
+> > >   * @desc_list:			DMA descriptor list (list of desc_infos)
+> > >   *
+> > >   * @data_buffer:		our local DMA buffer for page read/writes,
+> > >   *				used when we can't use the buffer provided
+> > >   *				by upper layers directly
+> > > - * @buf_size/count/start:	markers for chip->legacy.read_buf/write_buf
+> > > - *				functions
+> > >   * @reg_read_buf:		local buffer for reading back registers via DMA
+> > > + *
+> > > + * @base_phys:			physical base address of controller registers
+> > > + * @base_dma:			dma base address of controller registers
+> > >   * @reg_read_dma:		contains dma address for register read buffer
+> > > - * @reg_read_pos:		marker for data read in reg_read_buf
+> > >   *
+> > > - * @regs:			a contiguous chunk of memory for DMA register
+> > > - *				writes. contains the register values to be
+> > > - *				written to controller
+> > > - * @cmd1/vld:			some fixed controller register values
+> > > - * @props:			properties of current NAND controller,
+> > > - *				initialized via DT match data
+> > > + * @buf_size/count/start:	markers for chip->legacy.read_buf/write_buf
+> > > + *				functions
+> > >   * @max_cwperpage:		maximum QPIC codewords required. calculated
+> > >   *				from all connected NAND devices pagesize
+> > > + *
+> > > + * @reg_read_pos:		marker for data read in reg_read_buf
+> > > + *
+> > > + * @cmd1/vld:			some fixed controller register values
+> > >   */
+> > >  struct qcom_nand_controller {
+> > > -	struct nand_controller controller;
+> > > -	struct list_head host_list;
+> > > -
+> > >  	struct device *dev;
+> > >  
+> > >  	void __iomem *base;
+> > > -	phys_addr_t base_phys;
+> > > -	dma_addr_t base_dma;
+> > >  
+> > >  	struct clk *core_clk;
+> > >  	struct clk *aon_clk;
+> > >  
+> > > +	struct nandc_regs *regs;
+> > > +	struct bam_transaction *bam_txn;
+> > > +
+> > > +	const struct qcom_nandc_props *props;
+> > > +
+> > > +	struct nand_controller controller;
+> > > +	struct list_head host_list;
+> > > +
+> > >  	union {
+> > >  		/* will be used only by QPIC for BAM DMA */
+> > >  		struct {
+> > > @@ -400,22 +413,22 @@ struct qcom_nand_controller {
+> > >  	};
+> > >  
+> > >  	struct list_head desc_list;
+> > > -	struct bam_transaction *bam_txn;
+> > >  
+> > >  	u8		*data_buffer;
+> > > +	__le32		*reg_read_buf;
+> > > +
+> > > +	phys_addr_t base_phys;
+> > > +	dma_addr_t base_dma;
+> > > +	dma_addr_t reg_read_dma;
+> > > +
+> > >  	int		buf_size;
+> > >  	int		buf_count;
+> > >  	int		buf_start;
+> > >  	unsigned int	max_cwperpage;
+> > >  
+> > > -	__le32 *reg_read_buf;
+> > > -	dma_addr_t reg_read_dma;
+> > >  	int reg_read_pos;
+> > >  
+> > > -	struct nandc_regs *regs;
+> > > -
+> > >  	u32 cmd1, vld;
+> > > -	const struct qcom_nandc_props *props;
+> > >  };
+> > >  
+> > >  /*
+> > > @@ -431,19 +444,21 @@ struct qcom_nand_controller {
+> > >   *				and reserved bytes
+> > >   * @cw_data:			the number of bytes within a codeword protected
+> > >   *				by ECC
+> > > - * @use_ecc:			request the controller to use ECC for the
+> > > - *				upcoming read/write
+> > > - * @bch_enabled:		flag to tell whether BCH ECC mode is used
+> > >   * @ecc_bytes_hw:		ECC bytes used by controller hardware for this
+> > >   *				chip
+> > > - * @status:			value to be returned if NAND_CMD_STATUS command
+> > > - *				is executed
+> > > + *
+> > >   * @last_command:		keeps track of last command on this chip. used
+> > >   *				for reading correct status
+> > >   *
+> > >   * @cfg0, cfg1, cfg0_raw..:	NANDc register configurations needed for
+> > >   *				ecc/non-ecc mode for the current nand flash
+> > >   *				device
+> > > + *
+> > > + * @status:			value to be returned if NAND_CMD_STATUS command
+> > > + *				is executed
+> > > + * @use_ecc:			request the controller to use ECC for the
+> > > + *				upcoming read/write
+> > > + * @bch_enabled:		flag to tell whether BCH ECC mode is used
+> > >   */
+> > >  struct qcom_nand_host {
+> > >  	struct nand_chip chip;
+> > > @@ -452,12 +467,10 @@ struct qcom_nand_host {
+> > >  	int cs;
+> > >  	int cw_size;
+> > >  	int cw_data;
+> > > -	bool use_ecc;
+> > > -	bool bch_enabled;
+> > >  	int ecc_bytes_hw;
+> > >  	int spare_bytes;
+> > >  	int bbm_size;
+> > > -	u8 status;
+> > > +
+> > >  	int last_command;
+> > >  
+> > >  	u32 cfg0, cfg1;
+> > > @@ -466,23 +479,27 @@ struct qcom_nand_host {
+> > >  	u32 ecc_bch_cfg;
+> > >  	u32 clrflashstatus;
+> > >  	u32 clrreadstatus;
+> > > +
+> > > +	u8 status;
+> > > +	bool use_ecc;
+> > > +	bool bch_enabled;
+> > >  };
+> > >  
+> > >  /*
+> > >   * This data type corresponds to the NAND controller properties which varies
+> > >   * among different NAND controllers.
+> > >   * @ecc_modes - ecc mode for NAND
+> > > + * @dev_cmd_reg_start - NAND_DEV_CMD_* registers starting offset
+> > >   * @is_bam - whether NAND controller is using BAM
+> > >   * @is_qpic - whether NAND CTRL is part of qpic IP
+> > >   * @qpic_v2 - flag to indicate QPIC IP version 2
+> > > - * @dev_cmd_reg_start - NAND_DEV_CMD_* registers starting offset
+> > >   */
+> > >  struct qcom_nandc_props {
+> > >  	u32 ecc_modes;
+> > > +	u32 dev_cmd_reg_start;
+> > >  	bool is_bam;
+> > >  	bool is_qpic;
+> > >  	bool qpic_v2;
+> > > -	u32 dev_cmd_reg_start;
+> > >  };
+> > >  
+> > >  /* Frees the BAM transaction memory */
+> > > -- 
+> > > 2.36.1
+> > > 
+> > 
+> > -- 
+> > மணிவண்ணன் சதாசிவம்
+> 
+> -- 
+> 	Ansuel
 
-Changes in v3:
--- revise commit  text
--- add Fixes tag
-
-Changes in v4:
--- revise commit  text
-
-Changes in v5:
--- fix spelling at commit text
-
-Changes in v6:
--- split dp_ctrl_on_stream() for phy test case
--- revise commit text for modeset
-
-Changes in v7:
--- drop 0 assignment at local variable (ret = 0)
-
-Changes in v8:
--- add patch to remove pixel_rate from dp_ctrl
-
-Changes in v9:
--- forward declare dp_ctrl_on_stream_phy_test_report()
-
-Fixes: 62671d2ef24b ("drm/msm/dp: fixes wrong connection state caused by failure of link train")
-Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
----
- drivers/gpu/drm/msm/dp/dp_ctrl.c    | 33 +++++++++++++++++++++++++--------
- drivers/gpu/drm/msm/dp/dp_ctrl.h    |  2 +-
- drivers/gpu/drm/msm/dp/dp_display.c | 13 ++++++-------
- 3 files changed, 32 insertions(+), 16 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-index af7a80c..f090945 100644
---- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
-+++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-@@ -1528,6 +1528,8 @@ static int dp_ctrl_link_maintenance(struct dp_ctrl_private *ctrl)
- 	return ret;
- }
- 
-+static int dp_ctrl_on_stream_phy_test_report(struct dp_ctrl *dp_ctrl);
-+
- static int dp_ctrl_process_phy_test_request(struct dp_ctrl_private *ctrl)
- {
- 	int ret = 0;
-@@ -1551,7 +1553,7 @@ static int dp_ctrl_process_phy_test_request(struct dp_ctrl_private *ctrl)
- 
- 	ret = dp_ctrl_on_link(&ctrl->dp_ctrl);
- 	if (!ret)
--		ret = dp_ctrl_on_stream(&ctrl->dp_ctrl);
-+		ret = dp_ctrl_on_stream_phy_test_report(&ctrl->dp_ctrl);
- 	else
- 		DRM_ERROR("failed to enable DP link controller\n");
- 
-@@ -1807,7 +1809,27 @@ static int dp_ctrl_link_retrain(struct dp_ctrl_private *ctrl)
- 	return dp_ctrl_setup_main_link(ctrl, &training_step);
- }
- 
--int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl)
-+static int dp_ctrl_on_stream_phy_test_report(struct dp_ctrl *dp_ctrl)
-+{
-+	int ret;
-+	struct dp_ctrl_private *ctrl;
-+
-+	ctrl = container_of(dp_ctrl, struct dp_ctrl_private, dp_ctrl);
-+
-+	ctrl->dp_ctrl.pixel_rate = ctrl->panel->dp_mode.drm_mode.clock;
-+
-+	ret = dp_ctrl_enable_stream_clocks(ctrl);
-+	if (ret) {
-+		DRM_ERROR("Failed to start pixel clocks. ret=%d\n", ret);
-+		return ret;
-+	}
-+
-+	dp_ctrl_send_phy_test_pattern(ctrl);
-+
-+	return 0;
-+}
-+
-+int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl, bool force_link_train)
- {
- 	int ret = 0;
- 	bool mainlink_ready = false;
-@@ -1843,12 +1865,7 @@ int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl)
- 		goto end;
- 	}
- 
--	if (ctrl->link->sink_request & DP_TEST_LINK_PHY_TEST_PATTERN) {
--		dp_ctrl_send_phy_test_pattern(ctrl);
--		return 0;
--	}
--
--	if (!dp_ctrl_channel_eq_ok(ctrl))
-+	if (force_link_train || !dp_ctrl_channel_eq_ok(ctrl))
- 		dp_ctrl_link_retrain(ctrl);
- 
- 	/* stop txing train pattern to end link training */
-diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.h b/drivers/gpu/drm/msm/dp/dp_ctrl.h
-index 0745fde..b563e2e 100644
---- a/drivers/gpu/drm/msm/dp/dp_ctrl.h
-+++ b/drivers/gpu/drm/msm/dp/dp_ctrl.h
-@@ -21,7 +21,7 @@ struct dp_ctrl {
- };
- 
- int dp_ctrl_on_link(struct dp_ctrl *dp_ctrl);
--int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl);
-+int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl, bool force_link_train);
- int dp_ctrl_off_link_stream(struct dp_ctrl *dp_ctrl);
- int dp_ctrl_off_link(struct dp_ctrl *dp_ctrl);
- int dp_ctrl_off(struct dp_ctrl *dp_ctrl);
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index c388323..b6d25ab 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -872,7 +872,7 @@ static int dp_display_enable(struct dp_display_private *dp, u32 data)
- 		return 0;
- 	}
- 
--	rc = dp_ctrl_on_stream(dp->ctrl);
-+	rc = dp_ctrl_on_stream(dp->ctrl, data);
- 	if (!rc)
- 		dp_display->power_on = true;
- 
-@@ -1654,6 +1654,7 @@ void dp_bridge_enable(struct drm_bridge *drm_bridge)
- 	int rc = 0;
- 	struct dp_display_private *dp_display;
- 	u32 state;
-+	bool force_link_train = false;
- 
- 	dp_display = container_of(dp, struct dp_display_private, dp_display);
- 	if (!dp_display->dp_mode.drm_mode.clock) {
-@@ -1688,10 +1689,12 @@ void dp_bridge_enable(struct drm_bridge *drm_bridge)
- 
- 	state =  dp_display->hpd_state;
- 
--	if (state == ST_DISPLAY_OFF)
-+	if (state == ST_DISPLAY_OFF) {
- 		dp_display_host_phy_init(dp_display);
-+		force_link_train = true;
-+	}
- 
--	dp_display_enable(dp_display, 0);
-+	dp_display_enable(dp_display, force_link_train);
- 
- 	rc = dp_display_post_enable(dp);
- 	if (rc) {
-@@ -1700,10 +1703,6 @@ void dp_bridge_enable(struct drm_bridge *drm_bridge)
- 		dp_display_unprepare(dp);
- 	}
- 
--	/* manual kick off plug event to train link */
--	if (state == ST_DISPLAY_OFF)
--		dp_add_event(dp_display, EV_IRQ_HPD_INT, 0, 0);
--
- 	/* completed connection */
- 	dp_display->hpd_state = ST_CONNECTED;
- 
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
-
+மணிவண்ணன் சதாசிவம்
