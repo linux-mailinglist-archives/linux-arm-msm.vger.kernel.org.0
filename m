@@ -2,80 +2,158 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9B3DA54DEDB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jun 2022 12:25:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0EB4754DFA0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jun 2022 13:02:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1376287AbiFPKZI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Jun 2022 06:25:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41514 "EHLO
+        id S229821AbiFPLCT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Jun 2022 07:02:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47128 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229745AbiFPKZH (ORCPT
+        with ESMTP id S229663AbiFPLCT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Jun 2022 06:25:07 -0400
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7343D5A2D3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jun 2022 03:25:06 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id y32so1520571lfa.6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jun 2022 03:25:06 -0700 (PDT)
+        Thu, 16 Jun 2022 07:02:19 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5AA825DD09;
+        Thu, 16 Jun 2022 04:02:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:reply-to:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=lLG88JCPgF7Yhflf4FNi4GQedsSNMbwmPtgneUr9Mu0=;
-        b=nwNGYHzxN/bUy/LhhY1G9hxq8XPo44RP7GtZOKHRucGu7O1UOZtoXae+ES5ie2Wv3H
-         Lo89e2SldpSTOW3ijMxaXmOS/qllUgneOZ3OQxLOVyBbmjhOQkCkTRInol4qm0zBp9u5
-         FkcMWCswycYRPifzxLy3Cn8Ki/jSQepv2sRTKZKG27vx8s0v/d7Jsus9JWyjU7qS+/hC
-         ZgYqjb3k9zyKexUHBcl6lALWGACgSWSwDIiPi7wZLS1gocZxtftXJdocUICGUIknOFpH
-         UUKTAN/rwTVZ2SM8nzHW1kfV93J7czdV9uaVcRMCOnwRC+Y63ivA+ttnNvkPk1bOWOFT
-         gebA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to:content-transfer-encoding;
-        bh=lLG88JCPgF7Yhflf4FNi4GQedsSNMbwmPtgneUr9Mu0=;
-        b=gzblAo62MLAJpcOKF7e13O3tdHmCNFJb6HH25NVUjRWfqBU+5xKcVtphaUUoP/YwqG
-         OjW7mJOulducDFUdkpfQJcQjYiWV4x37bYpE3DWJC4d0YTBj8Wb0Ax2NWhoqh8FG17hz
-         tvnAqGNEyU9ppdHffwcpA+koUcTwjdGkjZFEubFxEBF6bj2DxBrKWFye6xj8SMxWgMbs
-         SNNNGCUCGvujtddWk0Lqyef6pVkrEpQyOYyZO8rKkEVzymVsloabKNUhZ7O6BB0WAC93
-         HoigKV1pcC8mxnYsvBBawuwHbqbP868rJyI4fRQZrmoijlgJdXtOyBZIyxMJkvfwZoB5
-         IHmA==
-X-Gm-Message-State: AJIora/PnkFeTQOH5N/z/FvZSs8q8qXzy16sIWwvMf02SWCGmokAwaN3
-        k/gBd6Ax9LJ5cI3GgH1A/7vyQg42Y84LtC9nt5E=
-X-Google-Smtp-Source: AGRyM1tNW3UsYMxEBW54HEFuL2fwpT1fn01AjX8xeAkrn5nV9MFL58V4qR4BhR+zLd5S/1+uqnFaeqenB9KJKE4KBHk=
-X-Received: by 2002:a05:6512:2e7:b0:478:f55e:f490 with SMTP id
- m7-20020a05651202e700b00478f55ef490mr2215732lfq.486.1655375104853; Thu, 16
- Jun 2022 03:25:04 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 2002:a05:6520:28c2:b0:1f3:cf5:e20d with HTTP; Thu, 16 Jun 2022
- 03:25:03 -0700 (PDT)
-Reply-To: clmloans9@gmail.com
-From:   MR ANTHONY EDWARD <bashirusman02021@gmail.com>
-Date:   Thu, 16 Jun 2022 11:25:03 +0100
-Message-ID: <CAGOBX5asvO0EBOo=K4hvhUW0x8Z4mTwZNUBowaExgqNYkd0EEg@mail.gmail.com>
-Subject: DARLEHENSANGEBOT
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=4.3 required=5.0 tests=BAYES_50,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,FREEMAIL_REPLYTO,FREEMAIL_REPLYTO_END_DIGIT,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_HK_NAME_FM_MR_MRS,
-        T_SCC_BODY_TEXT_LINE,UNDISC_FREEM autolearn=no autolearn_force=no
-        version=3.4.6
-X-Spam-Level: ****
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1655377338; x=1686913338;
+  h=from:to:cc:subject:date:message-id;
+  bh=7g/s2GiM6jmBG+/eoD9DO8AkGUDJbrWKyYBTl86tXM8=;
+  b=GoRfAYxQIsAF6IBFIoyn5iU3xBjcM3SqhJ9A5MWbSCdgSecU/d8Qjaak
+   cqPm1Y1EV18zRYD7sYV/Jg59L4sZxtemK1lBoRZPcvp5ZC1nxrN3OWMxf
+   yKyw905tUa9vWOiiioLDZ6+Uk9TKumH4H2fy63HdyZuWcfaBOX0knVcQ/
+   I=;
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 16 Jun 2022 04:02:18 -0700
+X-QCInternal: smtphost
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 16 Jun 2022 04:02:15 -0700
+X-QCInternal: smtphost
+Received: from hu-dikshita-hyd.qualcomm.com (HELO hu-sgudaval-hyd.qualcomm.com) ([10.213.110.13])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 16 Jun 2022 16:32:05 +0530
+Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 347544)
+        id 842E2460E; Thu, 16 Jun 2022 16:32:04 +0530 (+0530)
+From:   Dikshita Agarwal <quic_dikshita@quicinc.com>
+To:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, stanimir.varbanov@linaro.org,
+        quic_vgarodia@quicinc.com, swboyd@chromium.org,
+        Dikshita Agarwal <quic_dikshita@quicinc.com>
+Subject: [PATCH v3] venus: Add support for SSR trigger using fault injection
+Date:   Thu, 16 Jun 2022 16:32:02 +0530
+Message-Id: <1655377322-14195-1-git-send-email-quic_dikshita@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-Spam-Status: No, score=-4.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
---=20
-Ben=C3=B6tigen Sie ein Gesch=C3=A4ftsdarlehen oder ein Darlehen jeglicher A=
-rt?
-Wenn ja, kontaktieren Sie uns
+Here we introduce a new fault injection for SSR trigger.
 
-*Vollst=C3=A4ndiger Name:
-* Ben=C3=B6tigte Menge:
-*Leihdauer:
-*Mobiltelefon:
-*Land:
+To trigger the SSR:
+ echo 100 >  /sys/kernel/debug/venus/fail_ssr/probability
+ echo 1 >  /sys/kernel/debug/venus/fail_ssr/times
+
+Co-developed-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+---
+ drivers/media/platform/qcom/venus/core.c  | 15 ++++++++++++++-
+ drivers/media/platform/qcom/venus/dbgfs.c |  9 +++++++++
+ drivers/media/platform/qcom/venus/dbgfs.h | 13 +++++++++++++
+ 3 files changed, 36 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
+index 877eca1..abfa5d6 100644
+--- a/drivers/media/platform/qcom/venus/core.c
++++ b/drivers/media/platform/qcom/venus/core.c
+@@ -265,6 +265,19 @@ static void venus_assign_register_offsets(struct venus_core *core)
+ 	}
+ }
+ 
++static irqreturn_t venus_isr_thread(int irq, void *dev_id)
++{
++	struct venus_core *core = dev_id;
++	irqreturn_t ret;
++
++	ret = hfi_isr_thread(irq, dev_id);
++
++	if (ret == IRQ_HANDLED && venus_fault_inject_ssr())
++		hfi_core_trigger_ssr(core, HFI_TEST_SSR_SW_ERR_FATAL);
++
++	return ret;
++}
++
+ static int venus_probe(struct platform_device *pdev)
+ {
+ 	struct device *dev = &pdev->dev;
+@@ -320,7 +333,7 @@ static int venus_probe(struct platform_device *pdev)
+ 	INIT_DELAYED_WORK(&core->work, venus_sys_error_handler);
+ 	init_waitqueue_head(&core->sys_err_done);
+ 
+-	ret = devm_request_threaded_irq(dev, core->irq, hfi_isr, hfi_isr_thread,
++	ret = devm_request_threaded_irq(dev, core->irq, hfi_isr, venus_isr_thread,
+ 					IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
+ 					"venus", core);
+ 	if (ret)
+diff --git a/drivers/media/platform/qcom/venus/dbgfs.c b/drivers/media/platform/qcom/venus/dbgfs.c
+index 52de47f..726f4b7 100644
+--- a/drivers/media/platform/qcom/venus/dbgfs.c
++++ b/drivers/media/platform/qcom/venus/dbgfs.c
+@@ -4,13 +4,22 @@
+  */
+ 
+ #include <linux/debugfs.h>
++#include <linux/fault-inject.h>
+ 
+ #include "core.h"
+ 
++#ifdef CONFIG_FAULT_INJECTION
++DECLARE_FAULT_ATTR(venus_ssr_attr);
++#endif
++
+ void venus_dbgfs_init(struct venus_core *core)
+ {
+ 	core->root = debugfs_create_dir("venus", NULL);
+ 	debugfs_create_x32("fw_level", 0644, core->root, &venus_fw_debug);
++
++#ifdef CONFIG_FAULT_INJECTION
++	fault_create_debugfs_attr("fail_ssr", core->root, &venus_ssr_attr);
++#endif
+ }
+ 
+ void venus_dbgfs_deinit(struct venus_core *core)
+diff --git a/drivers/media/platform/qcom/venus/dbgfs.h b/drivers/media/platform/qcom/venus/dbgfs.h
+index b7b621a..c87c135 100644
+--- a/drivers/media/platform/qcom/venus/dbgfs.h
++++ b/drivers/media/platform/qcom/venus/dbgfs.h
+@@ -4,8 +4,21 @@
+ #ifndef __VENUS_DBGFS_H__
+ #define __VENUS_DBGFS_H__
+ 
++#include <linux/fault-inject.h>
++
+ struct venus_core;
+ 
++#ifdef CONFIG_FAULT_INJECTION
++extern struct fault_attr venus_ssr_attr;
++static inline bool venus_fault_inject_ssr(void)
++{
++	return should_fail(&venus_ssr_attr, 1);
++}
++#else
++static inline bool venus_fault_inject_ssr(void) { return false; }
++#endif
++
++
+ void venus_dbgfs_init(struct venus_core *core);
+ void venus_dbgfs_deinit(struct venus_core *core);
+ 
+-- 
+2.7.4
+
