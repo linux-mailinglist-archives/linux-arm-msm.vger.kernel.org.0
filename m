@@ -2,76 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CFCCC54DA25
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jun 2022 08:03:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8561754DA63
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jun 2022 08:17:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1358858AbiFPGDM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Jun 2022 02:03:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50906 "EHLO
+        id S1359068AbiFPGR2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Jun 2022 02:17:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37186 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1358905AbiFPGDK (ORCPT
+        with ESMTP id S1347281AbiFPGR1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Jun 2022 02:03:10 -0400
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 945471F604
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jun 2022 23:03:08 -0700 (PDT)
-Received: by mail-lj1-x231.google.com with SMTP id d19so359845lji.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jun 2022 23:03:08 -0700 (PDT)
+        Thu, 16 Jun 2022 02:17:27 -0400
+Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54DE037030
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jun 2022 23:17:25 -0700 (PDT)
+Received: by mail-pj1-x102a.google.com with SMTP id hv24-20020a17090ae41800b001e33eebdb5dso4947496pjb.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jun 2022 23:17:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=Z/6CysC4KQFR6QV0a+LcXqbeuRwoBK9qA3xXzR01nNA=;
-        b=jJBZf5sR+X/C0YJwR0nZXdlcP6Mg/UWZcz8pvAkxXWXvjtleJI2UT67Q1pyo/Zg3x3
-         GMQOwt66Ow7g0H3TZ3boR173BdYaRDZuZcKwV5mTsMphMY5zkUze9XFajqwbN137oH7p
-         9nXdbizZiMoQdjChe0JA+k1Q/nZc4RsC3XyCGmzBPcBamRUXXsertcCrfoIBIzKVpAY7
-         T4RpbmlA4Kyer4WlrLJIj5mdeIWW526RKjW7IEdyAGeLqdNoXV4Ko4NGwk6WeUzCm8lD
-         qT0W9NNYySWjIcRgJwO9EYetjK/yhYXNUC+NZBLl/XKRoJ7uORUn4ESP+qHJuaYkfF/N
-         Qm8A==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=sRbNJbc+ahYktLmDyoH4yo1fpASvuRbFucDO6Muj9cg=;
+        b=frv+lCaLqDCtRc1lutAiLWWqQAjy20E2s0IY5gDRdHDdkGVOQG4qvWpbdZxvRyf9RA
+         FI0NCliBh8cSdpfwff8nuZwVTXhTof8MTp0dzDqIzTb7Zyo8YqxgZxBlW7OkCQ7uyvt3
+         TXgmPys4n/YExtF6bmTeTQGqvNmoDMQEn1v8FxSEEGq99TZ2t0R8lVCxdkw5LAy5JOkA
+         5oIzaFO33Z9f4iod6X2daM/+58jqEYZaFyQqC70ABUhVtPe12mpj7F+Y2KPPthzVrcxJ
+         jfh2OmpaHU4aKH+AH74ZZbgHt5DnE8eu8q7hp1kAv0iXjk2BTjKUK7O9PBld3TJqp244
+         N6zA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=Z/6CysC4KQFR6QV0a+LcXqbeuRwoBK9qA3xXzR01nNA=;
-        b=sGpgZv2+9UzicymHpMyiQ6C2Intbium/HimlyZAr+3OlBeHTknQMPZKjtE9Bf/a5N/
-         TqPsggZviTI8Zv4NPv+Yz0TRnHdtPdV1OATxbMVwkMZd+eGFnPOK9jFFaB3Ly+ij2Anb
-         QKySJX5C0NKg5otmII0eeyQ8PDV4fy3VVYJ97wEDBvO5gf4rt/xM8eJy0Sz1ycp6negY
-         u/0t2yinRg4sgQ5ezXKWaEU7eC1m+4qB3PgykWZhIz3k+bnMcxZZcCOTuG3I9RBM3q33
-         CtSherBynZ2BYBSmsTVrIEvWekgcd9C30akuuO/ZRCVFTTQrzzj2eXF5rYoECa0SLJrX
-         VKog==
-X-Gm-Message-State: AJIora+iN5s+eZWFtDfTzicicBEPgRz5PSn0yHWH/DZzZmBDYyf+YP0v
-        j0lC6XrMCj4dWymwL9apiF4YQw==
-X-Google-Smtp-Source: AGRyM1v86oTwwWaYY30N6Fge9WAZr/mqmx1kTvvedOKhIeoDmVomiiB8oAcjcTIUh/5Z5daZ7v4RjQ==
-X-Received: by 2002:a2e:2e07:0:b0:25a:4bb3:a2c2 with SMTP id u7-20020a2e2e07000000b0025a4bb3a2c2mr75328lju.450.1655359386925;
-        Wed, 15 Jun 2022 23:03:06 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id u10-20020a2e9b0a000000b0025a43eb8c64sm119450lji.65.2022.06.15.23.03.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 15 Jun 2022 23:03:06 -0700 (PDT)
-Message-ID: <297160e7-3999-e20e-c25b-ee60758a8f5d@linaro.org>
-Date:   Thu, 16 Jun 2022 09:03:05 +0300
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=sRbNJbc+ahYktLmDyoH4yo1fpASvuRbFucDO6Muj9cg=;
+        b=in26ak+J729128niwl7qG5crOS/+wl6RyYr7wHfx+gmaAYWtlda3hmGLlJcXiAGmbD
+         qKOBpEbL3BUXZuqsCGXmzbEZLD/eY4SalxaVB0FvM+PuwSHRmqjXdhReX9BBTmoOGuaP
+         vF1uSi3rU3zOqHhqxsbMGad1Z7Nc88bbj0rBEaPqI+vglrO0Wf28U3/QWYFDCz1qNe+J
+         xeyOwZRUUFKMlWwzTVUiU2GxISul1MbFCavZBHS5VcfnCRn+jRb0QeBhtLDEyl3zjG35
+         8JbmBJmGq/745LXtJrJ/wlq2TLGoW+WQnfGFP2ZR3lNv+W3b/YwUjwpB2fBtt37VO3yo
+         yPHQ==
+X-Gm-Message-State: AJIora8BhjkiBmqbw/KKDMpGalPdE1Qu3aoq5BHp362qvBDNNV5OdHTL
+        90sEsBYA9BhRop6wgjn1IieanA==
+X-Google-Smtp-Source: AGRyM1scPuVidbbJvlKHJZg5ot8FJQuMvDvq36SYo9aLhk8nKm9ZY+MPCW2Rl+lSsHNv9txN09mksQ==
+X-Received: by 2002:a17:902:e951:b0:168:b530:135b with SMTP id b17-20020a170902e95100b00168b530135bmr2983153pll.93.1655360244841;
+        Wed, 15 Jun 2022 23:17:24 -0700 (PDT)
+Received: from localhost ([122.162.234.2])
+        by smtp.gmail.com with ESMTPSA id n6-20020aa78a46000000b0051bd3d55773sm760331pfa.63.2022.06.15.23.17.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 15 Jun 2022 23:17:24 -0700 (PDT)
+Date:   Thu, 16 Jun 2022 11:47:22 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Pierre Gondois <pierre.gondois@arm.com>
+Cc:     linux-kernel@vger.kernel.org, Ionela.Voinescu@arm.com,
+        Lukasz.Luba@arm.com, Dietmar.Eggemann@arm.com,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 4/4] cpufreq: Change order of online() CB and
+ policy->cpus modification
+Message-ID: <20220616061722.tfsr3svljcupkcvz@vireshk-i7>
+References: <20220615144321.262773-1-pierre.gondois@arm.com>
+ <20220615144321.262773-5-pierre.gondois@arm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: [PATCH v2] drm/msm/dp: check core_initialized before disable
- interrupts at dp_display_unbind()
-Content-Language: en-GB
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>, robdclark@gmail.com,
-        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
-        vkoul@kernel.org, daniel@ffwll.ch, airlied@linux.ie,
-        agross@kernel.org, bjorn.andersson@linaro.org
-Cc:     quic_abhinavk@quicinc.com, quic_aravindh@quicinc.com,
-        quic_sbillaka@quicinc.com, freedreno@lists.freedesktop.org,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <1654538139-7450-1-git-send-email-quic_khsieh@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <1654538139-7450-1-git-send-email-quic_khsieh@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220615144321.262773-5-pierre.gondois@arm.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -80,75 +78,46 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 06/06/2022 20:55, Kuogee Hsieh wrote:
-> During msm initialize phase, dp_display_unbind() will be called to undo
-> initializations had been done by dp_display_bind() previously if there is
-> error happen at msm_drm_bind. In this case, core_initialized flag had to
-> be check to make sure clocks is on before update DP controller register
-> to disable HPD interrupts. Otherwise system will crash due to below NOC
-> fatal error.
+On 15-06-22, 16:43, Pierre Gondois wrote:
+> >From a state where all policy->related_cpus are offline, putting one
+> of the policy's CPU back online re-activates the policy by:
+>  1. Calling cpufreq_driver->online()
+>  2. Setting the CPU in policy->cpus
 > 
-> QTISECLIB [01f01a7ad]CNOC2 ERROR: ERRLOG0_LOW = 0x00061007
-> QTISECLIB [01f01a7ad]GEM_NOC ERROR: ERRLOG0_LOW = 0x00001007
-> QTISECLIB [01f0371a0]CNOC2 ERROR: ERRLOG0_HIGH = 0x00000003
-> QTISECLIB [01f055297]GEM_NOC ERROR: ERRLOG0_HIGH = 0x00000003
-> QTISECLIB [01f072beb]CNOC2 ERROR: ERRLOG1_LOW = 0x00000024
-> QTISECLIB [01f0914b8]GEM_NOC ERROR: ERRLOG1_LOW = 0x00000042
-> QTISECLIB [01f0ae639]CNOC2 ERROR: ERRLOG1_HIGH = 0x00004002
-> QTISECLIB [01f0cc73f]GEM_NOC ERROR: ERRLOG1_HIGH = 0x00004002
-> QTISECLIB [01f0ea092]CNOC2 ERROR: ERRLOG2_LOW = 0x0009020c
-> QTISECLIB [01f10895f]GEM_NOC ERROR: ERRLOG2_LOW = 0x0ae9020c
-> QTISECLIB [01f125ae1]CNOC2 ERROR: ERRLOG2_HIGH = 0x00000000
-> QTISECLIB [01f143be7]GEM_NOC ERROR: ERRLOG2_HIGH = 0x00000000
-> QTISECLIB [01f16153a]CNOC2 ERROR: ERRLOG3_LOW = 0x00000000
-> QTISECLIB [01f17fe07]GEM_NOC ERROR: ERRLOG3_LOW = 0x00000000
-> QTISECLIB [01f19cf89]CNOC2 ERROR: ERRLOG3_HIGH = 0x00000000
-> QTISECLIB [01f1bb08e]GEM_NOC ERROR: ERRLOG3_HIGH = 0x00000000
-> QTISECLIB [01f1d8a31]CNOC2 ERROR: SBM1 FAULTINSTATUS0_LOW = 0x00000002
-> QTISECLIB [01f1f72a4]GEM_NOC ERROR: SBM0 FAULTINSTATUS0_LOW = 0x00000001
-> QTISECLIB [01f21a217]CNOC3 ERROR: ERRLOG0_LOW = 0x00000006
-> QTISECLIB [01f23dfd3]NOC error fatal
+> qcom_cpufreq_hw_cpu_online() makes use of policy->cpus. Thus 1. and 2.
+> should be inverted to avoid having a policy->cpus empty. The
+> qcom-cpufreq-hw is the only driver affected by this.
 > 
-> changes in v2:
-> -- drop the first patch (drm/msm: enable msm irq after all initializations are done successfully at msm_drm_init()) since the problem had been fixed by other patch
-> 
-> Fixes: a65c95ff88f2 ("drm/msm/dp: stop event kernel thread when DP unbind")
-
-Please. Stop using commit IDs from the private git tree.  I thought we 
-have stumbled upon this during the last cycle, thus we won't see rogue 
-commit IDs anymore. But I was wrong. I've got another complaint from 
-Stephen. I'm going to fix this one manually, but please make sure to 
-stop sending wrong Fixes tags in the future.
-
-Generally I feel like this is a sign of an incorrect process on your 
-side. The patches should be developed and tested against one of upstream 
-trees (linux-next, msm-next or msm-next-lumag) and then backported to 
-your integration/backports/stable/whatever. Since today the 
-msm-next-lumag is included into the linux-next, so you can use 
-linux-next as a basis.
-
-
-> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+> Fixes: a1eb080a0447 ("cpufreq: qcom-hw: provide online/offline operations")
+> Signed-off-by: Pierre Gondois <pierre.gondois@arm.com>
 > ---
->   drivers/gpu/drm/msm/dp/dp_display.c | 3 ++-
->   1 file changed, 2 insertions(+), 1 deletion(-)
+>  drivers/cpufreq/cpufreq.c | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
 > 
-> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-> index da5c03a..2b72639 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_display.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-> @@ -309,7 +309,8 @@ static void dp_display_unbind(struct device *dev, struct device *master,
->   	struct msm_drm_private *priv = dev_get_drvdata(master);
->   
->   	/* disable all HPD interrupts */
-> -	dp_catalog_hpd_config_intr(dp->catalog, DP_DP_HPD_INT_MASK, false);
-> +	if (dp->core_initialized)
-> +		dp_catalog_hpd_config_intr(dp->catalog, DP_DP_HPD_INT_MASK, false);
->   
->   	kthread_stop(dp->ev_tsk);
->   
+> diff --git a/drivers/cpufreq/cpufreq.c b/drivers/cpufreq/cpufreq.c
+> index 2cad42774164..36043be16d8e 100644
+> --- a/drivers/cpufreq/cpufreq.c
+> +++ b/drivers/cpufreq/cpufreq.c
+> @@ -1350,15 +1350,15 @@ static int cpufreq_online(unsigned int cpu)
+>  	}
+>  
+>  	if (!new_policy && cpufreq_driver->online) {
+> +		/* Recover policy->cpus using related_cpus */
+> +		cpumask_copy(policy->cpus, policy->related_cpus);
+> +
+>  		ret = cpufreq_driver->online(policy);
+>  		if (ret) {
+>  			pr_debug("%s: %d: initialization failed\n", __func__,
+>  				 __LINE__);
+>  			goto out_exit_policy;
+>  		}
+> -
+> -		/* Recover policy->cpus using related_cpus */
+> -		cpumask_copy(policy->cpus, policy->related_cpus);
+>  	} else {
+>  		cpumask_copy(policy->cpus, cpumask_of(cpu));
 
+Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
 
 -- 
-With best wishes
-Dmitry
+viresh
