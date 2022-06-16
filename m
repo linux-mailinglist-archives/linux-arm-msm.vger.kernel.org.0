@@ -2,130 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4470D54E538
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jun 2022 16:44:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D462154E629
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jun 2022 17:36:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1377323AbiFPOn5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Jun 2022 10:43:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53320 "EHLO
+        id S1377795AbiFPPgN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Jun 2022 11:36:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44894 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1376397AbiFPOny (ORCPT
+        with ESMTP id S1377944AbiFPPgL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Jun 2022 10:43:54 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3610946664;
-        Thu, 16 Jun 2022 07:43:48 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id h5so2211450wrb.0;
-        Thu, 16 Jun 2022 07:43:48 -0700 (PDT)
+        Thu, 16 Jun 2022 11:36:11 -0400
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADCEB31503
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jun 2022 08:36:10 -0700 (PDT)
+Received: by mail-ed1-x532.google.com with SMTP id 25so2719712edw.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jun 2022 08:36:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:from:to:cc:subject:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=985lyW+ymSN+1KX2wglPXmPrHIwR1ZNAwGozRXF+cAk=;
-        b=H+MqRqIcYZJGl+fIARvDt5E+nl599ga3oyDbMLBBisOxfq/SyTCwZG0Klyezq1+CUW
-         sefLQD2EeMqxqaJrfnrkNrFZhVikdu4wMrtck74oCiEmuEgiYmtNpsRIF1tZqnrkF5Mx
-         NZkApEMPJNl/kDFEI1hA+Ue/R0aw1W8KZMZoedgEZYkf3svTuJogxbSWKM4crDZGxinQ
-         0wFVmmTIUPwII1349fc94HNyry9a7jLBlghobSH5Kq06AzNFkA5kw6DqqFRMJMjCCq55
-         jezPkDIchFIXBzf+CG7v9iTSodSWY9/lo0HS0xX3CZ2o6npEv7M2DG1DnlMLEQXeesqV
-         hW4g==
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=5dVDuCM8VRK665zH/HV+gDuurZlzqRaw3AF4f+4QEQY=;
+        b=YpSpNH3K+KjKkXCuVKrFBcVrP5SWlYv3RWSSUdRdHJUnj+BZbndMy/7IyaCo4ZQ5rb
+         d5YerNu+HSuaHbXK9sCxIH2I4yswgUI5cbWPgvOV+jsqmpGVVOzFPK8wchjbBtnuyFNC
+         yiHYfw8thWjslkqgb7sZ31mB5KIv7561wqhQw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:from:to:cc:subject:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=985lyW+ymSN+1KX2wglPXmPrHIwR1ZNAwGozRXF+cAk=;
-        b=iFXCXMsNk7G1ck5HtbLgMLiVZ6NfLyL5LayzuruownmfUyu143bIE8gSIUP7ChSq/x
-         F8kjWczzhHhI+8X65HlC5tu8CKgZfoqpop2aJlJFSuNz2GGBuSv0VwWZ5cw6/XJ2BLRo
-         mIhduuAWcx6T1Qpr2dKGTzVbwcTjAlq2ynEsUphtNxRTNJSE+AMX+J6u4NRcuv4zIVn4
-         aZ2MV/GmPKgJJvufgwOPDvjUSoUQ1A4DrU407ZlTqHJ+FBX0LVtAjT+LBWBNAVnC0nF/
-         z8+yMa8Gm+PzVBLqAt/9FrCXzM9UwIS1x42D6LXzZpb/kwzae5Rb/wWo4MyntBURNziK
-         sAyQ==
-X-Gm-Message-State: AJIora8QyMRkwtZJM3P4Agrq5nS8VjeLRMuqpuPT4RZW/zfCEQnnPkPS
-        17ibUCbWIy5mZf0iPo+X48I=
-X-Google-Smtp-Source: AGRyM1tajG3QG7/QWFCxjmxsAuXLSZv0+YuL9rwSS06bBr1D9gFyr74sDvu5dLu6L6z7sAmN/X6eBg==
-X-Received: by 2002:a05:6000:186f:b0:213:4ece:4086 with SMTP id d15-20020a056000186f00b002134ece4086mr5104454wri.438.1655390626594;
-        Thu, 16 Jun 2022 07:43:46 -0700 (PDT)
-Received: from Ansuel-xps. (93-42-70-190.ip85.fastwebnet.it. [93.42.70.190])
-        by smtp.gmail.com with ESMTPSA id l16-20020a05600c4f1000b003942a244f40sm6815826wmq.25.2022.06.16.07.43.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Jun 2022 07:43:46 -0700 (PDT)
-Message-ID: <62ab41a2.1c69fb81.aa33.ca40@mx.google.com>
-X-Google-Original-Message-ID: <YqtAplHcHm4Copoe@Ansuel-xps.>
-Date:   Thu, 16 Jun 2022 16:39:34 +0200
-From:   Christian Marangi <ansuelsmth@gmail.com>
-To:     Miquel Raynal <miquel.raynal@bootlin.com>
-Cc:     Manivannan Sadhasivam <mani@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Richard Weinberger <richard@nod.at>,
-        Vignesh Raghavendra <vigneshr@ti.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-mtd@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v7 1/3] mtd: nand: raw: qcom_nandc: reorder
- qcom_nand_host struct
-References: <20220615000612.3119-1-ansuelsmth@gmail.com>
- <20220615000612.3119-2-ansuelsmth@gmail.com>
- <20220615171132.GA3606@thinkpad>
- <62aa76ad.1c69fb81.7e2d3.0c8e@mx.google.com>
- <20220616163751.2b5962df@xps-13>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=5dVDuCM8VRK665zH/HV+gDuurZlzqRaw3AF4f+4QEQY=;
+        b=5wufDx/hIyHSHBULmnbvJ+hyIuq5pY8ioiIR9BoaUpAToY3of3C2D7GfPUhk9Tc4Yc
+         71L43xc0OtigI2R/Al4lZx5FIu7jcyBpjkvmfvk8tEBPda0MVmJ9dufu3uArieOfe4z3
+         /0qHuzZ+eCIbJAhWOgfD8w5qDW+7AZpfho4ifj/vXMjKmCpx6tf639lm05wRM5yBCA04
+         zh1NXLjSoxTUqGA0OZewtvA5dguEz1qKUsK43USD18KRTLgkpk6QbeapQR0CQqLcPgbR
+         vsQKpQ6uuuCa2cDEDF56mgRIr/+NstdABeAiKDbn8/Rzml4ohfBR9pCUjD1VoIfkjIkN
+         WfAw==
+X-Gm-Message-State: AJIora/NgKeY1KU3SPrrNWERsT5MRoKIcvxjiHSypZyG0xSiJxSnVyss
+        CZoX+CF0bDTmLerdVD7VqlinvExcjLN6ew9y+Sg=
+X-Google-Smtp-Source: AGRyM1uM1LTVcFGYtGRm7kR2A6dIvAEz2EPGBJIzT1L9CmaLCs70j2IQ0RtSMJfQXgt7fdpgUWrkkA==
+X-Received: by 2002:a05:6402:6cc:b0:42d:bd2d:9f82 with SMTP id n12-20020a05640206cc00b0042dbd2d9f82mr7296234edy.59.1655393769143;
+        Thu, 16 Jun 2022 08:36:09 -0700 (PDT)
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com. [209.85.221.42])
+        by smtp.gmail.com with ESMTPSA id a16-20020aa7d750000000b0042bd6f745fasm1941782eds.92.2022.06.16.08.36.06
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 16 Jun 2022 08:36:08 -0700 (PDT)
+Received: by mail-wr1-f42.google.com with SMTP id a15so2383123wrh.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jun 2022 08:36:06 -0700 (PDT)
+X-Received: by 2002:a5d:68d2:0:b0:210:31cc:64a6 with SMTP id
+ p18-20020a5d68d2000000b0021031cc64a6mr5183133wrw.679.1655393766098; Thu, 16
+ Jun 2022 08:36:06 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20220616163751.2b5962df@xps-13>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+References: <20220425210643.2420919-1-dianders@chromium.org> <20220425140619.2.Iae013f0ff4599294189f3a6e91376fad137bbabf@changeid>
+In-Reply-To: <20220425140619.2.Iae013f0ff4599294189f3a6e91376fad137bbabf@changeid>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Thu, 16 Jun 2022 08:35:53 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=Wbi=CXhPpOUJj=1PdgB8i6Lf1Sfr=T7wrQsgBx790S_w@mail.gmail.com>
+Message-ID: <CAD=FV=Wbi=CXhPpOUJj=1PdgB8i6Lf1Sfr=T7wrQsgBx790S_w@mail.gmail.com>
+Subject: Re: [PATCH 2/2] dt-bindings: phy: List supplies for qcom,edp-phy
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        linux-phy@lists.infradead.org, Stephen Boyd <swboyd@chromium.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        quic_kalyant <quic_kalyant@quicinc.com>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jun 16, 2022 at 04:37:51PM +0200, Miquel Raynal wrote:
-> Hi Ansuel/Christian,
-> 
-> ansuelsmth@gmail.com wrote on Thu, 16 Jun 2022 02:18:08 +0200:
-> 
-> > On Wed, Jun 15, 2022 at 10:41:32PM +0530, Manivannan Sadhasivam wrote:
-> > > On Wed, Jun 15, 2022 at 02:06:10AM +0200, Ansuel Smith wrote:  
-> > > > Reorder structs in nandc driver to save holes.
-> > > > 
-> > > > Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>  
-> > > 
-> > > Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
-> > > 
-> > > Thanks,
-> > > Mani
-> > >  
-> > 
-> > I'm sending v8 with a different Sob so I'm not adding the review tag (in
-> > v8).
-> > In short the new Sob is what I will use onwards, wanted to keep the
-> > Ansuel reference but it was suggested to use Christian Marangi and
-> > nothing more. It's just a name change and we are the same person and
-> > nobody is stealing ownership of the patch.
-> > Sorry for the mess.
-> 
-> Mmmh strange, but okay. You are supposed to contribute with your real
-> identity, not under pseudonym anyway.
+Hi,
+
+On Mon, Apr 25, 2022 at 2:07 PM Douglas Anderson <dianders@chromium.org> wrote:
 >
+> We're supposed to list the supplies in the dt bindings but there are
+> none in the eDP PHY bindings.
+>
+> Looking at the driver in Linux, I can see that there seem to be two
+> relevant supplies: "vdda-phy" and "vdda-pll". Let's add those to the
+> bindings.
+>
+> NOTE: from looking at the Qualcomm datasheet for sc7280, it's not
+> immediately clear how to figure out how to fill in these supplies. The
+> only two eDP related supplies are simply described as "power for eDP
+> 0.9V circuits" and "power for eDP 1.2V circuits". From guessing and
+> from comparing how a similar PHY is hooked up on other similar
+> Qualcomm boards, I'll make the educated guess that the 1.2V supply
+> goes to "vdda-phy" and the 0.9V supply goes to "vdda-pll" and I'll use
+> that in the example here.
+>
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> ---
+>
+>  Documentation/devicetree/bindings/phy/qcom,edp-phy.yaml | 6 ++++++
+>  1 file changed, 6 insertions(+)
 
-You are right, it's something I'm trying to fix... Fact is that the
-original series was old so I didn't want to change the name.
+Even though patch #1 in this series should be dropped, this patch
+(patch #2) is still valid. Vinod: I assume this would land in your
+tree along with the first two patches in Kuogee's series [1], which
+are related. Please let me know if you need me to re-send or anything.
+Thanks!
 
-> Also, you could have kept Mani's R-by in v8 but anyway. Mani, can
-> you resend them?
-> 
+[1] https://lore.kernel.org/r/1653507433-22585-1-git-send-email-quic_khsieh@quicinc.com/
 
-Didn't want to make changes to the patch with the R-by tag just to make
-sure. Better safe than sorry.
-
-> Thanks,
-> Miquèl
-
--- 
-	Ansuel
+-Doug
