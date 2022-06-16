@@ -2,64 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1716054EC84
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jun 2022 23:27:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CB3D254EC9E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jun 2022 23:32:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232637AbiFPV1Z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Jun 2022 17:27:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45926 "EHLO
+        id S1378708AbiFPVcF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Jun 2022 17:32:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50962 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230060AbiFPV1Z (ORCPT
+        with ESMTP id S1378565AbiFPVcD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Jun 2022 17:27:25 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 530EE60D97;
-        Thu, 16 Jun 2022 14:27:24 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id E246861DF6;
-        Thu, 16 Jun 2022 21:27:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2A43C34114;
-        Thu, 16 Jun 2022 21:27:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1655414843;
-        bh=MDQjp5WMGZSOfSbLFcG9B/11ruGs/FqwL7Riz8wGMLE=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=VPmYysL9DniOlN+7Uj5VaibWCEj0i76aLzyEp5MgHggzEsUCU+atcN+zJVKM1LnPm
-         tIJ7qw/N34h0YC5JPZH/Gn1riRbLPp3wfih8vcsu1/SOwb+i0ExVtdoa0xOdsNnwb1
-         xAac20M1UEpD+IYRgKzLmLx9g9eSteRc3826EBLFJVnl1+TpMQBkQy6SZQy/yl4cOs
-         +VW17ModtPkpTVgT9tDJLKs7Z02D2/yEW9fVlISHgx89ryAL3Vd+kMRqfQvWd6xAXj
-         gzNFvBPYWCK0B3NeQH8lthae2s5G8yjQRhGzwyFr4L1vHI3RzAiLYigbDZ4rmT0Dfw
-         K3ZQJ5aGAFXpg==
-Date:   Fri, 17 Jun 2022 02:57:22 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Miquel Raynal <miquel.raynal@bootlin.com>
-Cc:     Ansuel Smith <ansuelsmth@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Richard Weinberger <richard@nod.at>,
-        Vignesh Raghavendra <vigneshr@ti.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-mtd@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v7 1/3] mtd: nand: raw: qcom_nandc: reorder
- qcom_nand_host struct
-Message-ID: <20220616212722.GI2889@thinkpad>
-References: <20220615000612.3119-1-ansuelsmth@gmail.com>
- <20220615000612.3119-2-ansuelsmth@gmail.com>
- <20220615171132.GA3606@thinkpad>
- <62aa76ad.1c69fb81.7e2d3.0c8e@mx.google.com>
- <20220616163751.2b5962df@xps-13>
+        Thu, 16 Jun 2022 17:32:03 -0400
+Received: from mail-io1-f54.google.com (mail-io1-f54.google.com [209.85.166.54])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E82D2612B5;
+        Thu, 16 Jun 2022 14:32:02 -0700 (PDT)
+Received: by mail-io1-f54.google.com with SMTP id y79so2788349iof.2;
+        Thu, 16 Jun 2022 14:32:02 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=zi3qEd0xoKgYhRV3kEX7XrHmXR6KfbG1TrpITcXXADA=;
+        b=Gj1VakrtGX9vw3fMVdzXNWl0Ey/A/K1Uv27KA06QF9wOVgE2LEet2xaRVNSyMj6k6h
+         mhM2FTbFFU9Hup203NpLq3hjZXV1jsrDAmMNTyc3QeKs1LAw7jCX/JxeQ9YbgxtqpNdu
+         n18BGS9++Q2RYz9reFZZRFGVX2QMryiSoq3M5iGa4nW4c9Z15qU9EZup+Vibb/84/ySe
+         lCHXirGvkpQsSNIxQNxbR0rkdlD2J1M/pguSeyq/cbehsbcgX4Xaa6KyOaI+j8XBF3oP
+         J9OXd47GpfKo/ET/4beoFVM1rnW1vqJC8p/CBGEsJ0WqXZBrJhpKZixPZHWSD0eV6oUG
+         vxng==
+X-Gm-Message-State: AJIora94RG5GY/bv/OFIX7+QNPimRQy62GUdxysNuG9iwfz4HGEX+dGj
+        4Ff7juiKFbwRJyAc7DOqZfYxfv1xGA==
+X-Google-Smtp-Source: AGRyM1s39VJ/A9B7GJronl3MTGXu6WTZ6JN0PSLlYmz7U1pu0vz2NhTmfRV6zD2MKa92MwziU/UCPw==
+X-Received: by 2002:a05:6638:dc6:b0:332:3565:397a with SMTP id m6-20020a0566380dc600b003323565397amr3768500jaj.312.1655415122178;
+        Thu, 16 Jun 2022 14:32:02 -0700 (PDT)
+Received: from robh.at.kernel.org ([64.188.179.251])
+        by smtp.gmail.com with ESMTPSA id a5-20020a029105000000b00331a9a96764sm1366633jag.85.2022.06.16.14.32.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 16 Jun 2022 14:32:01 -0700 (PDT)
+Received: (nullmailer pid 4029746 invoked by uid 1000);
+        Thu, 16 Jun 2022 21:32:00 -0000
+Date:   Thu, 16 Jun 2022 15:32:00 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Christian Marangi <ansuelsmth@gmail.com>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        dmaengine@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
+        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Subject: Re: [PATCH v2 1/2] dt-bindings: dma: rework qcom,adm Documentation
+ to yaml schema
+Message-ID: <20220616213200.GB3991754-robh@kernel.org>
+References: <20220615235404.3457-1-ansuelsmth@gmail.com>
+ <1655388301.055791.3391580.nullmailer@robh.at.kernel.org>
+ <62ab38f5.1c69fb81.303fc.3bc8@mx.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20220616163751.2b5962df@xps-13>
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+In-Reply-To: <62ab38f5.1c69fb81.303fc.3bc8@mx.google.com>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -67,45 +68,69 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jun 16, 2022 at 04:37:51PM +0200, Miquel Raynal wrote:
-> Hi Ansuel/Christian,
-> 
-> ansuelsmth@gmail.com wrote on Thu, 16 Jun 2022 02:18:08 +0200:
-> 
-> > On Wed, Jun 15, 2022 at 10:41:32PM +0530, Manivannan Sadhasivam wrote:
-> > > On Wed, Jun 15, 2022 at 02:06:10AM +0200, Ansuel Smith wrote:  
-> > > > Reorder structs in nandc driver to save holes.
-> > > > 
-> > > > Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>  
+On Thu, Jun 16, 2022 at 04:02:34PM +0200, Christian Marangi wrote:
+> On Thu, Jun 16, 2022 at 08:05:01AM -0600, Rob Herring wrote:
+> > On Thu, 16 Jun 2022 01:54:03 +0200, Christian Marangi wrote:
+> > > Rework the qcom,adm Documentation to yaml schema.
+> > > This is not a pure conversion since originally the driver has changed
+> > > implementation for the #dma-cells and was wrong from the start.
+> > > Also the driver now handles the common DMA clients implementation with
+> > > the first cell that denotes the channel number and nothing else since
+> > > the client will have to provide the crci information via other means.
 > > > 
-> > > Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+> > > Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+> > > ---
+> > > v2:
+> > > - Change Sob to Christian Marangi
+> > > - Add Bjorn in the maintainers list
 > > > 
-> > > Thanks,
-> > > Mani
-> > >  
+> > >  .../devicetree/bindings/dma/qcom,adm.yaml     | 96 +++++++++++++++++++
+> > >  .../devicetree/bindings/dma/qcom_adm.txt      | 61 ------------
+> > >  2 files changed, 96 insertions(+), 61 deletions(-)
+> > >  create mode 100644 Documentation/devicetree/bindings/dma/qcom,adm.yaml
+> > >  delete mode 100644 Documentation/devicetree/bindings/dma/qcom_adm.txt
+> > > 
 > > 
-> > I'm sending v8 with a different Sob so I'm not adding the review tag (in
-> > v8).
-> > In short the new Sob is what I will use onwards, wanted to keep the
-> > Ansuel reference but it was suggested to use Christian Marangi and
-> > nothing more. It's just a name change and we are the same person and
-> > nobody is stealing ownership of the patch.
-> > Sorry for the mess.
+> > Running 'make dtbs_check' with the schema in this patch gives the
+> > following warnings. Consider if they are expected or the schema is
+> > incorrect. These may not be new warnings.
+> > 
+> > Note that it is not yet a requirement to have 0 warnings for dtbs_check.
+> > This will change in the future.
+> > 
+> > Full log is available here: https://patchwork.ozlabs.org/patch/
+> > 
+> > 
+> > dma-controller@18300000: reset-names:1: 'c0' was expected
+> > 	arch/arm/boot/dts/qcom-ipq8064-ap148.dtb
+> > 	arch/arm/boot/dts/qcom-ipq8064-rb3011.dtb
+> > 
+> > dma-controller@18300000: reset-names:2: 'c1' was expected
+> > 	arch/arm/boot/dts/qcom-ipq8064-ap148.dtb
+> > 	arch/arm/boot/dts/qcom-ipq8064-rb3011.dtb
+> > 
+> > dma-controller@18300000: reset-names:3: 'c2' was expected
+> > 	arch/arm/boot/dts/qcom-ipq8064-ap148.dtb
+> > 	arch/arm/boot/dts/qcom-ipq8064-rb3011.dtb
+> > 
+> > dma-controller@18300000: reset-names: ['clk', 'pbus', 'c0', 'c1', 'c2'] is too long
+> > 	arch/arm/boot/dts/qcom-ipq8064-ap148.dtb
+> > 	arch/arm/boot/dts/qcom-ipq8064-rb3011.dtb
+> > 
+> > dma-controller@18300000: resets: [[11, 13], [11, 12], [11, 11], [11, 10], [11, 9]] is too long
+> > 	arch/arm/boot/dts/qcom-ipq8064-ap148.dtb
+> > 	arch/arm/boot/dts/qcom-ipq8064-rb3011.dtb
+> >
 > 
-> Mmmh strange, but okay. You are supposed to contribute with your real
-> identity, not under pseudonym anyway.
-> 
-> Also, you could have kept Mani's R-by in v8 but anyway. Mani, can
-> you resend them?
-> 
+> I should have fixed this with the other patch. 
 
-Done!
+Ah, okay.
 
-Thanks,
-Mani
+> Should the conversion fix
+> this directly?
 
-> Thanks,
-> Miquèl
+Given it was clearly wrong, that would be fine with a note in the commit 
+message about the change. But no need to respin just for that.
 
--- 
-மணிவண்ணன் சதாசிவம்
+Rob
+
