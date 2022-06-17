@@ -2,79 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2D65054FDF8
+	by mail.lfdr.de (Postfix) with ESMTP id BF02C54FDFA
 	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jun 2022 21:58:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343598AbiFQT5L (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Jun 2022 15:57:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36528 "EHLO
+        id S1344081AbiFQT6P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 Jun 2022 15:58:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38222 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245596AbiFQT5K (ORCPT
+        with ESMTP id S234252AbiFQT6P (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Jun 2022 15:57:10 -0400
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B1335548A
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jun 2022 12:57:07 -0700 (PDT)
-Received: by mail-ej1-x62a.google.com with SMTP id hj18so9998483ejb.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jun 2022 12:57:07 -0700 (PDT)
+        Fri, 17 Jun 2022 15:58:15 -0400
+Received: from mail-oa1-x2c.google.com (mail-oa1-x2c.google.com [IPv6:2001:4860:4864:20::2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92E6138783
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jun 2022 12:58:12 -0700 (PDT)
+Received: by mail-oa1-x2c.google.com with SMTP id 586e51a60fabf-1016409cf0bso6761367fac.12
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jun 2022 12:58:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=38x3epfps0lP0e6upJ7edYx14JD5Ks8hIBXWzOvf/Ko=;
-        b=jX3i5+5kyx/7CmnKmahw2M0tEq9PN5ECeFW4UZiVGWMPOGQ2Ts0Ld5bb7b0YoFfkQd
-         mBvdoAnSiZguf/k1rTA/hXdrJpvQaZAh2C0DIY78/6bcHDV8dwjma0Idf5hoSnFZxRD/
-         4CfD/V1nv8zAKwcSwHJhhUU9iLISVunCieNVM=
+        h=mime-version:from:user-agent:date:message-id:subject:to:cc;
+        bh=A8JJMVbZngK6NaVYvhxrE43QJFDmbjJcs++TiSORqUk=;
+        b=aW2v/DYU2Usd+mTFmULe9Bqe1w3rcI9eZXk7h+q0xwRblBqUXiuTNc46pmjZ3ZKHgd
+         5zzI3L4XFDskEtEKrP1ArYQmnwM1Fs6TpbOki2XmDOz98N+2OhOmXxnhR3XTlqWhy2D8
+         OY1vhyUpl85BZ4asz6nEltUqaYpKNLGsXqbaU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=38x3epfps0lP0e6upJ7edYx14JD5Ks8hIBXWzOvf/Ko=;
-        b=fY+OVVpNivdjvauIk2UG67cdrERmz7xyzIVp4kUNkBqkJfEpv6+ywHaewF3G9dLe2G
-         ozoBHcWAfBH7BUIg3UirmFn4G+CSVe3eYrUsPPyiPLrtRyaib6ZJ/TeWiBPWKnQCTcIZ
-         KdW4PR+idpExbaH3qWv2P/aUxOMgPKSObPFfU8731GrqBYS2qd8uEShqt6Epk5PK3l2j
-         gTDawG5hDYN3T+Qos/M9oG5WEDZm4H8n0eShYb5O0g2LmORE+hfQbytN7pfClaTzTWs9
-         nMxMetq+9TTOUVUSSGD3gjFhuJWoco5w7i8a9QUDLFCsWM3EoZQ6qhM3Kf8IE+YNBgKW
-         JTzQ==
-X-Gm-Message-State: AJIora/1MwS9l2UmAW7MH24oJqNdIOS/udUDJMJXGPxhiQAmT7s9Qsn4
-        CnlCulvjXa1KN3GMk/kE1IDcPZRP2v00zFVEbCI=
-X-Google-Smtp-Source: AGRyM1snLb/Kq2fQd2teFsUzOhwSJSpzaW6iL+VmSNiJj3++1HqYLNteR/TXyMYnftFCtkgjbfeICw==
-X-Received: by 2002:a17:907:9005:b0:718:391:45e with SMTP id ay5-20020a170907900500b007180391045emr10876914ejc.616.1655495825498;
-        Fri, 17 Jun 2022 12:57:05 -0700 (PDT)
-Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com. [209.85.221.49])
-        by smtp.gmail.com with ESMTPSA id q3-20020a056402248300b004356894a3f8sm664241eda.89.2022.06.17.12.57.04
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 17 Jun 2022 12:57:04 -0700 (PDT)
-Received: by mail-wr1-f49.google.com with SMTP id n1so6732860wrg.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jun 2022 12:57:04 -0700 (PDT)
-X-Received: by 2002:a05:6000:1685:b0:218:45f0:5be6 with SMTP id
- y5-20020a056000168500b0021845f05be6mr11122445wrd.301.1655495824252; Fri, 17
- Jun 2022 12:57:04 -0700 (PDT)
+        h=x-gm-message-state:mime-version:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=A8JJMVbZngK6NaVYvhxrE43QJFDmbjJcs++TiSORqUk=;
+        b=Ogsbrz321yeeG7m36UQgM3KKK2FnjsjVxDHYm5Ejfv2NizDKnTlzMd6Vmrn3DtN8aI
+         QBLBqYUoJHuSQXuAO3ftWoCDdYQcZUE585QJT935wgu0atyccfZTmgwJnSSr0FG0UVW1
+         MZZUYa9fkzcCMNE6nmoRAroFNsQehhd/S7w2u+PLCXbETAIzi0dNl2u2G52vQJ721ZNU
+         ECQTnxtw7C7dtzgP/hVlo3zrDaEEl1/Rdj94FsCLLBBJFqL7w2RCm/N5FLgdt+OlWFPZ
+         lv9lomG0+6J3zjs4+L8yX7D8Vjn7PjQv8YKiztZl2O4ABW05JZ95R4m32L4ITXbanSr4
+         K64Q==
+X-Gm-Message-State: AJIora95HNDXqm1mRUg7iWcEJVADcbouuhBZqTSj90cvpFWoug4syaFc
+        wVK05erXB9naQUTkXZFu29RfTFZCC1j7N4Gk1mF8Eg==
+X-Google-Smtp-Source: AGRyM1vThDhDqP0PhYfZVq8vkNpd2vUQo0ppMWV9t0NxanyTHP+FhzT6Q3fc6CqnvvPOBarxGmE9XTJPQ7+z8YbSrck=
+X-Received: by 2002:a05:6870:b381:b0:fe:2004:b3b5 with SMTP id
+ w1-20020a056870b38100b000fe2004b3b5mr6450848oap.63.1655495891813; Fri, 17 Jun
+ 2022 12:58:11 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 17 Jun 2022 12:58:11 -0700
 MIME-Version: 1.0
-References: <20220617111021.v6.1.I9e299d3fa6fbf50df6fc7207050bf5c3a7bf4c61@changeid>
- <CAD=FV=Wp=BMwkbXH+_cHyVP3_0Zh-KXO=N8Y7wg3SktEs7FEXQ@mail.gmail.com>
-In-Reply-To: <CAD=FV=Wp=BMwkbXH+_cHyVP3_0Zh-KXO=N8Y7wg3SktEs7FEXQ@mail.gmail.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Fri, 17 Jun 2022 12:56:52 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=WA+_mK9vLth6KkoynjvNMSXX6d8_c1v29pbM8ALp7aVQ@mail.gmail.com>
-Message-ID: <CAD=FV=WA+_mK9vLth6KkoynjvNMSXX6d8_c1v29pbM8ALp7aVQ@mail.gmail.com>
-Subject: Re: [PATCH v6 1/6] FROMLIST: arm64: dts: qcom: sc7180-trogdor: Split
- out keyboard node and describe detachables
-To:     "Joseph S. Barrera III" <joebar@chromium.org>
-Cc:     LKML <linux-kernel@vger.kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Alexandru M Stan <amstan@chromium.org>,
-        Benson Leung <bleung@chromium.org>,
-        Guenter Roeck <groeck@chromium.org>,
-        Hsin-Yi Wang <hsinyi@chromium.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date:   Fri, 17 Jun 2022 12:58:11 -0700
+Message-ID: <CAE-0n52xbZeJ66RaKwggeRB57fUAwjvxGxfFMKOKJMKVyFTe+w@mail.gmail.com>
+Subject: clk: qcom: genpd lockdep warning in gdsc
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-clk@vger.kernel.org, linux-pm@vger.kernel.org,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Yu Zhao <yuzhao@google.com>, linux-arm-msm@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
@@ -86,75 +66,74 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Hi Bjorn and Dmitry,
 
-On Fri, Jun 17, 2022 at 12:47 PM Doug Anderson <dianders@chromium.org> wrote:
->
-> Hi,
->
-> On Fri, Jun 17, 2022 at 11:12 AM Joseph S. Barrera III
-> <joebar@chromium.org> wrote:
-> >
-> > From: Stephen Boyd <swboyd@chromium.org>
-> >
-> > Trogdor devices that have a detachable keyboard still have a
-> > non-detachable keyboard input device present because we include the
-> > cros-ec-keyboard.dtsi snippet in the top-level sc7180-trogdor.dtsi file
-> > that every variant board includes. We do this because the
-> > keyboard-controller node also provides some buttons like the power
-> > button and volume buttons. Unfortunately, this means we register a
-> > keyboard input device that doesn't do anything on boards with a
-> > detachable keyboard.
-> >
-> > Change the node's compatible on detachables to the newly introduced
-> > "google,cros-ec-keyb-switches" compatible to indicate that there are
-> > only switches and no keyboard to register. Similarly, move the keyboard
-> > include that defines the keyboard-controller node out of
-> > sc7180-trogdor.dtsi to boards that actually have a keyboard so that the
-> > matrix properties are not defined on boards with the switches
-> > compatible. Future boards can either use the include approach or the
-> > node definition approach to describe a keyboard with possible switches
-> > or just some switches.
-> >
-> > Cc: Benson Leung <bleung@chromium.org>
-> > Cc: Guenter Roeck <groeck@chromium.org>
-> > Cc: Douglas Anderson <dianders@chromium.org>
-> > Cc: Hsin-Yi Wang <hsinyi@chromium.org>
-> > Cc: "Joseph S. Barrera III" <joebar@chromium.org>
-> > Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> > (am from https://lore.kernel.org/r/20220518172525.3319993-1-swboyd@chromium.org)
-> >
-> >      evtest shows no more cros_ec device
-> >
-> > Cq-Depend: chromium:3609017
-> > Tested-by: Stephen Boyd <swboyd@chromium.org>
-> > Reviewed-by: Douglas Anderson <dianders@chromium.org>
-> > Signed-off-by: Joseph S. Barrera III <joebar@chromium.org>
->
-> It's OK to re-post Stephen's patch with your series, but:
->
-> 1. The subject shouldn't have FROMLIST. That's just for patches picked
-> back to a Chromium OS kernel.
->
-> 2. You shouldn't have "(am from...)". Again, just for patches picked
-> back to a Chromium OS kernel.
->
-> 3. No Cq-Depend. That's something for patches picked back to a
-> Chromium OS kernel.
->
-> 4. You should remove tags that were added by the Chromium review
-> system, like Stephen's "Tested-by" and my "Reviewed-by".
->
->
-> Another alternative is to not post Stephen's patch but add a note that
-> your patch should be applied atop his, then point to his. AKA:
->
-> https://lore.kernel.org/r/20220518172525.3319993-1-swboyd@chromium.org
+Yu reported a lockdep warning coming from the gdsc driver. It looks like
+the runtime PM usage in gdsc.c is causing lockdep to see an AA deadlock
+possibility with 'genpd->mlock'. I suspect this is because we have
+commit 1b771839de05 ("clk: qcom: gdsc: enable optional power domain
+support"), and that is now calling runtime PM code from within the genpd
+code. I think genpd already has nested lock support, so the only
+solution is to not use runtime PM from within genpd code and start
+expressing genpd parent relationships in genpd itself? Or maybe genpd
+needs to drop locks while calling down into gdsc_disable() and reacquire
+them after that?
 
-A further note is that your series ought to be based on this one:
+============================================
+WARNING: possible recursive locking detected
+5.19.0-rc2-lockdep+ #7 Not tainted
+--------------------------------------------
+kworker/2:1/49 is trying to acquire lock:
+ffffffeea0370788 (&genpd->mlock){+.+.}-{3:3}, at: genpd_lock_mtx+0x24/0x30
 
-https://patchwork.kernel.org/project/linux-arm-msm/patch/20220602190621.1646679-1-swboyd@chromium.org/
+but task is already holding lock:
+ffffffeea03710a8 (&genpd->mlock){+.+.}-{3:3}, at: genpd_lock_mtx+0x24/0x30
 
-...but when I apply your patch atop that one I get merge conflicts.
+other info that might help us debug this:
+ Possible unsafe locking scenario:
 
--Doug
+       CPU0
+       ----
+  lock(&genpd->mlock);
+  lock(&genpd->mlock);
+
+ *** DEADLOCK ***
+
+ May be due to missing lock nesting notation
+
+3 locks held by kworker/2:1/49:
+ #0: 74ffff80811a5748 ((wq_completion)pm){+.+.}-{0:0}, at:
+process_one_work+0x320/0x5fc
+ #1: ffffffc008537cf8
+((work_completion)(&genpd->power_off_work)){+.+.}-{0:0}, at:
+process_one_work+0x354/0x5fc
+ #2: ffffffeea03710a8 (&genpd->mlock){+.+.}-{3:3}, at: genpd_lock_mtx+0x24/0x30
+
+stack backtrace:
+CPU: 2 PID: 49 Comm: kworker/2:1 Not tainted 5.19.0-rc2-lockdep+ #7
+Hardware name: Google Lazor (rev3 - 8) with KB Backlight (DT)
+Workqueue: pm genpd_power_off_work_fn
+Call trace:
+ dump_backtrace+0x1a0/0x200
+ show_stack+0x24/0x30
+ dump_stack_lvl+0x7c/0xa0
+ dump_stack+0x18/0x44
+ __lock_acquire+0xb38/0x3634
+ lock_acquire+0x180/0x2d4
+ __mutex_lock_common+0x118/0xe30
+ mutex_lock_nested+0x70/0x7c
+ genpd_lock_mtx+0x24/0x30
+ genpd_runtime_suspend+0x2f0/0x414
+ __rpm_callback+0xdc/0x1b8
+ rpm_callback+0x4c/0xcc
+ rpm_suspend+0x21c/0x5f0
+ rpm_idle+0x17c/0x1e0
+ __pm_runtime_idle+0x78/0xcc
+ gdsc_disable+0x24c/0x26c
+ _genpd_power_off+0xd4/0x1c4
+ genpd_power_off+0x2d8/0x41c
+ genpd_power_off_work_fn+0x60/0x94
+ process_one_work+0x398/0x5fc
+ worker_thread+0x42c/0x6c4
+ kthread+0x194/0x1b4
+ ret_from_fork+0x10/0x20
