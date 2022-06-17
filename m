@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9485454F580
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jun 2022 12:36:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 355EB54F582
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jun 2022 12:36:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1380840AbiFQKgV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Jun 2022 06:36:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55008 "EHLO
+        id S1380531AbiFQKgX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 Jun 2022 06:36:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55016 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230341AbiFQKgU (ORCPT
+        with ESMTP id S230341AbiFQKgV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Jun 2022 06:36:20 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 050D46AA6F
+        Fri, 17 Jun 2022 06:36:21 -0400
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E0E16AA6A
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jun 2022 03:36:21 -0700 (PDT)
+Received: by mail-lf1-x132.google.com with SMTP id c4so6264977lfj.12
         for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jun 2022 03:36:20 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id c4so6264891lfj.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jun 2022 03:36:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=ehJ1FDrt934m71egzidi3dn4Z02wK65douizV/opsWo=;
-        b=z79ORX0B2DG0WrKHIrtYGnr8wOwlKxv4xsaBo4JFTQc4qQmfeSf2gVd1WkwwxDSOQa
-         qQvEuLg36Hlv6KRFC7PyW2qJzglgB5PqFHd9VxY+IrzwcqOVzt/fBkVaum8YNytMOJ75
-         egZEaoWAnBwzyQtbegQ0u+OuekCffMbqGTCTLb7BDFmbtb4NJehNKGhMw4VzV4SMOZPi
-         IxMkR7A7GcVQpx5zpRU+SyKCfCjki2cbs2gnIWJz+vg3+vyuKLepD38aBh/N18CEZVAK
-         u+1DXxI42JAy4mu4jiSHhtv+IQvJ5juK1+r/dv+xHFe7nUD7wk/zy07+MOBJ6ly1kE+G
-         /ZKg==
+        bh=BPM1lPElVRKHfSfZkivxc6Klx1L3jnABydrUVBQMP0U=;
+        b=T3xd5AFu0aHBgrFvV/NHxWYh+71RiAe0Eb5xnkHI0menhC2kuEo3wShfU2B58UUOvG
+         CmBDiAG7ci86yMRjHj8W1NDYKgv9K908P/mPrNJkRxgXcFzTTPnnOxtJ6UzQMTix2MxJ
+         3UXIms+ZEue6hENMMfsLhxjUTlR1oE7pPk3paU4X8FPaBXcND8kG2m1B7XFzrySfbH78
+         7QcBiVWV7PN3e1u/bEfLiiozdny8GMg0M9olf3tWIQ7G4cO4z/uV1vgYzHe4GYufp3BW
+         6DiUZ/JKvVenxBKCRUOp8pTwHsmV3oVD7fsu8wt4UaBigHI6hyMadTnwsn2BuKwnUVFv
+         BxGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=ehJ1FDrt934m71egzidi3dn4Z02wK65douizV/opsWo=;
-        b=OmnOGPb+X5qc+sPfZqcFE0OfNFVB2lDGC4FZwfDQ5dnCE67z0+L2/6vCLlL+Kp2qKg
-         novkaQrTLH7z4RWWlSs+v13GFvBXXMcaiJ/ayJpV3d4mi/3QlwLgPXW1hOwwi5gA00Rp
-         wz75uKrVuPFovRJfGO1Cq1bl4ljMmswTnIV3Zl41mrlfUwmTnIT+lUlIoQw9rhTn5KC0
-         QdEEwHsiLysaADu2Qbk99UoF9Dq0O0x+yL6Bmm0l/628wmdI3ql6utZEe2qVuZDAfjIc
-         pbhlDiwlNOiFpwUexp9k9N55zkrAC29O1iCOkrHVLT5NUp7ieIWiUCU8o+qfS7PGBC+1
-         3q4g==
-X-Gm-Message-State: AJIora8Hb5UGdAsRXFsMlEXADY5lq1+Jga5u3pilAdX00FIEkJgqShi2
-        d+AJWri4KEiagf7/UhVOSRmAfw==
-X-Google-Smtp-Source: AGRyM1tolUPsyooXC8CKG0Qb9ywl2kd818tLY9kYd7mx7VhHgEdlvr9dZjbttKc3d4gGijpPelmF5Q==
-X-Received: by 2002:a05:6512:281:b0:478:f324:6c0c with SMTP id j1-20020a056512028100b00478f3246c0cmr5236328lfp.287.1655462178370;
-        Fri, 17 Jun 2022 03:36:18 -0700 (PDT)
+        bh=BPM1lPElVRKHfSfZkivxc6Klx1L3jnABydrUVBQMP0U=;
+        b=dkJjLLekg1N++Ry7XArKxMOH5lfZ/oa2V3eTfDKYOGQ1TOSteg2b29fwBTYtHIb0tF
+         SH5YGT+Pz/L19eEswM30xDr/YyFfFHUWldi1asikOllHcXA8eGorajpkuvBXxppLqS6N
+         RhZzAkdbnai+S7LThhrDk6VsQf8D5FGrKKABulIfUWU1LaiKnljKQbX6iG9I1U7pe1Ci
+         0voDtdzLFEb6w5y2TB4LkUftiGxrG/4MXqwSYmWlBtwpITxx4iHHHKfIJp/LY7K2q+Dm
+         RSHHLhfZo3IYQS52FHu+a9rTyQPSjwyBqBFmUVy4N0Wl+oVZGB64KX1ifBtOzC3dCQ7a
+         5i5w==
+X-Gm-Message-State: AJIora9wNv3QKhAA/DbfI5+ojQptUnmPUU1aM/S/B9gIvwlKXfUDmI44
+        p0FlM5gBBfkt55ll0JEvAC7OIg==
+X-Google-Smtp-Source: AGRyM1vQFxmhM36CJpjLmGbKY/c+jI34RGfZYGRL2Wt7y8RQnl89EqIsPtHq0/HJz1sNjOM5CrFERw==
+X-Received: by 2002:ac2:4e86:0:b0:479:242:61da with SMTP id o6-20020ac24e86000000b00479024261damr5242193lfr.40.1655462179436;
+        Fri, 17 Jun 2022 03:36:19 -0700 (PDT)
 Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id d3-20020a056512368300b00478ff020832sm591803lfs.106.2022.06.17.03.36.17
+        by smtp.gmail.com with ESMTPSA id d3-20020a056512368300b00478ff020832sm591803lfs.106.2022.06.17.03.36.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 17 Jun 2022 03:36:17 -0700 (PDT)
+        Fri, 17 Jun 2022 03:36:18 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>
@@ -58,9 +58,9 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org, Vinod Koul <vkoul@kernel.org>,
         linux-phy@lists.infradead.org
-Subject: [PATCH 2/3] drm/msm/hdmi: make hdmi_phy_8996 OF clk provider
-Date:   Fri, 17 Jun 2022 13:36:07 +0300
-Message-Id: <20220617103608.605898-3-dmitry.baryshkov@linaro.org>
+Subject: [PATCH 3/3] arm64: dts: qcom: msm8996: add #clock-cells to the HDMI PHY node
+Date:   Fri, 17 Jun 2022 13:36:08 +0300
+Message-Id: <20220617103608.605898-4-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220617103608.605898-1-dmitry.baryshkov@linaro.org>
 References: <20220617103608.605898-1-dmitry.baryshkov@linaro.org>
@@ -76,49 +76,27 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On MSM8996 the HDMI PHY provides the PLL clock to the MMCC. As we are
-preparing to convert the MSM8996 to use DT clocks properties (rather
-than global clock names), register the OF clock provider.
+Add #clock-cells property to the HDMI PHY device node to let other nodes
+resolve the hdmipll clock.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/hdmi/hdmi_phy_8996.c | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ arch/arm64/boot/dts/qcom/msm8996.dtsi | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_phy_8996.c b/drivers/gpu/drm/msm/hdmi/hdmi_phy_8996.c
-index b06d9d25a189..cfb83e9dd810 100644
---- a/drivers/gpu/drm/msm/hdmi/hdmi_phy_8996.c
-+++ b/drivers/gpu/drm/msm/hdmi/hdmi_phy_8996.c
-@@ -707,8 +707,7 @@ int msm_hdmi_pll_8996_init(struct platform_device *pdev)
- {
- 	struct device *dev = &pdev->dev;
- 	struct hdmi_pll_8996 *pll;
--	struct clk *clk;
--	int i;
-+	int i, ret;
+diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+index 9932186f7ceb..f94f10947f26 100644
+--- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+@@ -964,6 +964,8 @@ hdmi_phy: hdmi-phy@9a0600 {
+ 				clock-names = "iface",
+ 					      "ref";
  
- 	pll = devm_kzalloc(dev, sizeof(*pll), GFP_KERNEL);
- 	if (!pll)
-@@ -735,10 +734,16 @@ int msm_hdmi_pll_8996_init(struct platform_device *pdev)
- 	}
- 	pll->clk_hw.init = &pll_init;
- 
--	clk = devm_clk_register(dev, &pll->clk_hw);
--	if (IS_ERR(clk)) {
-+	ret = devm_clk_hw_register(dev, &pll->clk_hw);
-+	if (ret) {
- 		DRM_DEV_ERROR(dev, "failed to register pll clock\n");
--		return -EINVAL;
-+		return ret;
-+	}
++				#clock-cells = <0>;
 +
-+	ret = devm_of_clk_add_hw_provider(dev, of_clk_hw_simple_get, &pll->clk_hw);
-+	if (ret) {
-+		DRM_DEV_ERROR(dev, "%s: failed to register clk provider: %d\n", __func__, ret);
-+		return ret;
- 	}
- 
- 	return 0;
+ 				status = "disabled";
+ 			};
+ 		};
 -- 
 2.35.1
 
