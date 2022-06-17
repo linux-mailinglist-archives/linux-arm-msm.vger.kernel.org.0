@@ -2,72 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4AEED54FCC5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jun 2022 20:14:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EE14E54FD68
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jun 2022 21:21:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1383081AbiFQSMd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Jun 2022 14:12:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45286 "EHLO
+        id S231890AbiFQTOg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 Jun 2022 15:14:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33718 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1383565AbiFQSM3 (ORCPT
+        with ESMTP id S233252AbiFQTOd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Jun 2022 14:12:29 -0400
-Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2005E53B49
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jun 2022 11:12:21 -0700 (PDT)
-Received: by mail-pj1-x102e.google.com with SMTP id 73-20020a17090a0fcf00b001eaee69f600so4827371pjz.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jun 2022 11:12:21 -0700 (PDT)
+        Fri, 17 Jun 2022 15:14:33 -0400
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 899CD527C7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jun 2022 12:14:32 -0700 (PDT)
+Received: by mail-lf1-x132.google.com with SMTP id c2so8331575lfk.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jun 2022 12:14:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=DpZY8rGvI2vk52QK3a3PpGqnbUnWe14CMVh2WjPF3f4=;
-        b=jp8fEEgEtjB2UpHcxYU8SEmnZCyOg8aBH74AVmhtMXOAgmlykM2IGqcKGoIFwVGhYG
-         Nm5Wwjzwi3CO/vBi4Tjuc85NMECmjfzfOHiT++T8k1X4TuBirZN3QQQjPanM8PjAfRw+
-         AKzA1ghtuPBOaQRMeNgpeLrut4VYnRV8NHrSI=
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=jb2LzNHs/uQixr8x1n5mvdFFvqrNyRBvkNqvNWM7FA0=;
+        b=Gcf9ZBMjFlTkayZYLXWPIyF5eKelbU9iEv+nXXeSqiSo4y6up80jUzSFstdWyRPax+
+         rqTE3TnZzX1HPx2OvZrB+gqZuZa55CsmdWjP9BQOGLQH0yuu8Gfip0PWtoH2cCjxCoSY
+         M5M/P7EOzYs51h1UZofOa6utoSmXjmY9vaEVEmCW7X0GwMbFBcQZYZBz5iI0fjhPxnyz
+         pOTme3AsB7eOiatzeHtRUgWe9fu8d83dYWodUq5nCzsp/aS0z41lkFDltDgdDvTtUgBs
+         3hM1E95dNpReUe9jpvHeP7PC1LRcKtmkScTl12Mjg1SfNrWaXTEf3CixKHVn+/UY52mk
+         rgLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=DpZY8rGvI2vk52QK3a3PpGqnbUnWe14CMVh2WjPF3f4=;
-        b=cp4AnEh/y8cddViHR6uB4+iFxlW0ptxkS5l5UUdXmiy1nQfWT2SaD8q5YBoEN6DYIT
-         4NMWu28qFJH3+Q9w72S2/qIMA1yVdr8G1Q0HJ8ZbQ1AvWGBxX1EhU1jBM5xZg+mvgTY+
-         wF/vNaEqfas/6ieWHZtILZavVOjWQl3FtMruFey3hCjqGyocaDRxyjsza4/FC9ZY5Z9Y
-         8ZmaExPy/AcF8klBf5277sDmUrZaFhVr5RsOKjXoLfpdZeMPKDXZtNxPaBqrcbOWgOod
-         jkgeqaMazI2lIwf+KE+c5GFprN1HPavMloVdfmfHlcT8EMC2KrRn3ATZgJBIHWSv0dFb
-         mKUA==
-X-Gm-Message-State: AJIora9tiafW4f7WvVbURlR6+a/FeMwDBxpHM5Rng1y79saQ6aog/9aA
-        mG0yh4Zb6kZyE32byqTapwkV0Q==
-X-Google-Smtp-Source: AGRyM1uBM5RHyObdSi9ULsnPZZXSzl1rByF1g/Aa6wsbCNt/goOXKEaGeWwtgRbU6+zshLhe8y2eIg==
-X-Received: by 2002:a17:902:700b:b0:167:736e:cfb1 with SMTP id y11-20020a170902700b00b00167736ecfb1mr10790531plk.36.1655489540547;
-        Fri, 17 Jun 2022 11:12:20 -0700 (PDT)
-Received: from joebar-glaptop.lan (c-71-202-34-56.hsd1.ca.comcast.net. [71.202.34.56])
-        by smtp.gmail.com with ESMTPSA id o1-20020a62f901000000b0052285857864sm4121930pfh.97.2022.06.17.11.12.19
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=jb2LzNHs/uQixr8x1n5mvdFFvqrNyRBvkNqvNWM7FA0=;
+        b=DYB+em0IG06ACY2kNPsqIwA//XaZQvmRco2KBvf1mBwoRce6e/yelu2IIzdY2iXijr
+         QEm8VLSjRGmnVrLk7r8Z9e9ev1+grzc+YfrvVEiteBf/nGuADIpfeSnfT+EAh0gxns4B
+         u2XgLUKt8wl7ZK76Fq1/OYeAhEFFU1I+wl1Y4Ovfl+u6fBE6jt0VI9WMjH4Bh3hwI4ID
+         4GXY1tBsdeOhXXISJYMFj8dXkem4HK1g550i+WqDMmQL/F6vmXlVHu953pWxUuYhiJgU
+         tq7xTDmLoznr1ERzbh8NEYiyTixlcmu29yFWdVemnSXe2q3n3Ba55tURgr0jzGn0wtz2
+         0n9Q==
+X-Gm-Message-State: AJIora9EJCKops5v4qAomNhDxch22yqo7YV8gaxCvx36Kv8wxG3LlZ3o
+        uRN0MQcHRzTsOrUKJ5WsRBrc4Q==
+X-Google-Smtp-Source: AGRyM1sYkar+S/iJLtfnp1Gq2Pu7zvO8UZFuFUKb+8M0kB+OVn5hr5c0/oIWEg7OnMYmdiWMpk7j1g==
+X-Received: by 2002:a05:6512:151d:b0:47d:de8d:f4bd with SMTP id bq29-20020a056512151d00b0047dde8df4bdmr6507816lfb.552.1655493270803;
+        Fri, 17 Jun 2022 12:14:30 -0700 (PDT)
+Received: from eriador.lumag.spb.ru ([95.161.222.59])
+        by smtp.gmail.com with ESMTPSA id k15-20020a2e920f000000b00253e1833e8bsm639680ljg.117.2022.06.17.12.14.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 17 Jun 2022 11:12:20 -0700 (PDT)
-From:   "Joseph S. Barrera III" <joebar@chromium.org>
-To:     LKML <linux-kernel@vger.kernel.org>
+        Fri, 17 Jun 2022 12:14:30 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
 Cc:     Stephen Boyd <swboyd@chromium.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Alexandru M Stan <amstan@chromium.org>,
-        "Joseph S. Barrera III" <joebar@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Andy Gross <agross@kernel.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH v6 6/6] arm64: dts: qcom: Remove duplicate sc7180-trogdor include on lazor/homestar
-Date:   Fri, 17 Jun 2022 11:10:41 -0700
-Message-Id: <20220617111021.v6.6.I423a007e8c4451bd1d091fcb65d035e5dcfc9a9d@changeid>
-X-Mailer: git-send-email 2.31.0
-In-Reply-To: <20220617111021.v6.1.I9e299d3fa6fbf50df6fc7207050bf5c3a7bf4c61@changeid>
-References: <20220617111021.v6.1.I9e299d3fa6fbf50df6fc7207050bf5c3a7bf4c61@changeid>
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: [PATCH v5 0/3] drm/msm: convet to drm_crtc_handle_vblank()
+Date:   Fri, 17 Jun 2022 22:14:26 +0300
+Message-Id: <20220617191429.1087634-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -75,79 +73,39 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Stephen Boyd <swboyd@chromium.org>
+This patchseries replaces drm_handle_vblank() with
+drm_crtc_handle_vblank(). As a bonus result of this conversion it is
+possible to drop the stored array of allocated CRTCs and use the core
+CRTC iterators.
 
-The sc7180-trogdor-{lazor,homestar}-*.dtsi files all include
-sc7180-trogdor.dtsi and sc7180-trogdor-lazor.dtsi or
-sc7180-trogdor-homestar.dtsi, so including it here in the
-sc7180-trogdor-{lazor,homestar}.dtsi file means we have a duplicate
-include after commit 19794489fa24 ("arm64: dts: qcom: Only include
-sc7180.dtsi in sc7180-trogdor.dtsi"). We include the sc7180-trogdor.dtsi
-file in a board like sc7180-trogdor-lazor-r1.dts so that we can include
-the display bridge snippet (e.g. sc7180-trogdor-ti-sn65dsi86.dtsi)
-instead of making ever increasing variants like
-sc7180-trogdor-lazor-ti-sn65dsi86.dtsi.
+Changes since v4:
+ - Removed the duplicate word 'duplicate' from the last patch'es commit
+   message (noticed by Abhinav).
 
-Unfortunately, having the double include like this means the display
-bridge's i2c bus is left disabled instead of enabled by the bridge
-snippet. Any boards that use the i2c bus for the display bridge will
-have the bus disabled when we include sc7180-trogdor.dtsi the second
-time, which picks up the i2c status="disabled" line from sc7180.dtsi.
-This leads to the display not turning on and black screens at boot on
-lazor and homestar devices.
+Changes since v3:
+ - In msm_drm_init simplify the code by using an interim var for the
+   event thread itself rather than just the index (suggested by Abhinav)
 
-Fix this by dropping the include and making a note that the
-sc7180-trogdor-{lazor,homestar}.dtsi file must be included after
-sc7180-trogdor.dtsi
+Changes since v2;
+ - none (sent by mistake)
 
-Reported-by: Douglas Anderson <dianders@chromium.org>
-Cc: "Joseph S. Barrera III" <joebar@chromium.org>
-Cc: Matthias Kaehlcke <mka@chromium.org>
-Fixes: 19794489fa24 ("arm64: dts: qcom: Only include sc7180.dtsi in sc7180-trogdor.dtsi")
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+Changes since v1;
+ - fixed uninitialized var access (LTP Robot)
 
-Signed-off-by: Joseph S. Barrera III <joebar@chromium.org>
----
+Dmitry Baryshkov (3):
+  drm/msm/mdp4: convert to drm_crtc_handle_vblank()
+  drm/msm/mdp5: convert to drm_crtc_handle_vblank()
+  drm/msm: stop storing the array of CRTCs in struct msm_drm_private
 
-Changes in v6:
- - First inclusion of this patch.
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c  |  2 +-
+ drivers/gpu/drm/msm/disp/mdp4/mdp4_irq.c |  9 +++--
+ drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c |  2 +-
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_irq.c |  9 +++--
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c |  2 +-
+ drivers/gpu/drm/msm/msm_drv.c            | 44 +++++++++++++-----------
+ drivers/gpu/drm/msm/msm_drv.h            |  3 +-
+ 7 files changed, 35 insertions(+), 36 deletions(-)
 
- arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi | 2 +-
- arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi    | 8 ++++++--
- 2 files changed, 7 insertions(+), 3 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi
-index 5074014d5269..1bd6c7dcd9e9 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi
-@@ -5,7 +5,7 @@
-  * Copyright 2021 Google LLC.
-  */
- 
--#include "sc7180-trogdor.dtsi"
-+/* This file must be included after sc7180-trogdor.dtsi */
- 
- / {
- 	/* BOARD-SPECIFIC TOP LEVEL NODES */
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
-index d8839ccdcf09..f65c488dcf9d 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
-@@ -5,8 +5,12 @@
-  * Copyright 2020 Google LLC.
-  */
- 
--#include "sc7180-trogdor.dtsi"
--/* Must come after sc7180-trogdor.dtsi to modify cros_ec */
-+ap_ec_spi: &spi6 {};
-+ap_h1_spi: &spi0 {};
-+
-+/* This file must be included after sc7180-trogdor.dtsi */
-+
-+/* This include must come after sc7180-trogdor.dtsi to modify cros_ec */
- #include <arm/cros-ec-keyboard.dtsi>
- 
- &ap_sar_sensor {
 -- 
-2.31.0
+2.35.1
 
