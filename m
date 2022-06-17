@@ -2,81 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8465154FE13
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jun 2022 22:06:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CA56654FE2F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jun 2022 22:16:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237678AbiFQUF5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Jun 2022 16:05:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42678 "EHLO
+        id S231890AbiFQUPZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 Jun 2022 16:15:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50184 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234703AbiFQUF4 (ORCPT
+        with ESMTP id S229794AbiFQUPY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Jun 2022 16:05:56 -0400
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C823A5B8AF
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jun 2022 13:05:55 -0700 (PDT)
-Received: by mail-ej1-x636.google.com with SMTP id o7so10666807eja.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jun 2022 13:05:55 -0700 (PDT)
+        Fri, 17 Jun 2022 16:15:24 -0400
+Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 886035C64D
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jun 2022 13:15:23 -0700 (PDT)
+Received: by mail-ot1-x335.google.com with SMTP id c3-20020a9d6843000000b0060c2c63c337so3874532oto.5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jun 2022 13:15:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=84H7ZXb1eHOGnR6hMHCvky7gquFVieaFdlbDiS5ZCm0=;
-        b=Q5DVApFrs0pH6BvUbcxI+mDXaiSweterCD+P4MWFO6Y93WD1AyRYi8Njqa/TN1jP7y
-         vD6XKCNPJM/JbkAi3C4Ej1RsWL+5nBBxbtqydo/DEMYUQZkO4q7IzOTn57uPmZRbruVr
-         1n5drP9oEQW34cnHA8A2UivmnHGlIdp3R05c4=
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=x4as2ZkeTzWY1neBp0pSqFxYj7FvUKGmqCj9lFfh46Y=;
+        b=jL9i7Buk6SOOHObeThBYqPreYlCVl+OpGSR+jNZBMrSfoB1QYntFn3u6z+nJTvigce
+         VBwenMjhFopuHqns/67g6yQAunM9l/71QNfBId3EqQ2MflO/F5EKVaC7RRlQ/ADStdG5
+         2smcG2mIm1zKF2VFUSfELh3VT3Zvt/s+Ubv68=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=84H7ZXb1eHOGnR6hMHCvky7gquFVieaFdlbDiS5ZCm0=;
-        b=0dpC+Ky3aArRCWw9o4cHiLvyzqATFu9uIl5+GeN4grS+j3E7Ho3b1OLG94fcd5J3Rc
-         bD1SNnhAaVcD9QHJ1M7kOLjDmXuVWIDG4IKbk/1xLIHGDcLFCJUcxte3n47q02MP+Qcb
-         aXD8VSFsn7W6t+nmUKyAWDsG4ro0jzLQ5Wn/Gi2wAucJW0YVvLkg9PhjUIcfbXNASqMo
-         /KFQJPpua7bPDZG7ci0MLYvBuRSVsBxUzkhav9EdHrOVdohjNlh95ZDzuO0431m3Gp3b
-         H169+QttGpBi5t3QZS3tczBh1RNcnVjAKs2wLBri3CYYALtHEGT4McwA6QXcgo59PZWJ
-         4V6Q==
-X-Gm-Message-State: AJIora/4Di2MO6sgoqinw8WvW9b1oiCIIB8hIBZPpSbfG5KvPw23rhbc
-        8n+bOBq0eHHfzEwkmjN4TLjEvKMnuXkgQzjJ1TQ=
-X-Google-Smtp-Source: AGRyM1u3WHOCxTXpp0NIPEEr97OSPnsWK8+1893u2q2E2FsQ0CyNJ/Z5rnp+FXQf9E08ENEwDA5zqw==
-X-Received: by 2002:a17:907:c202:b0:710:8d1c:2501 with SMTP id ti2-20020a170907c20200b007108d1c2501mr10441635ejc.377.1655496354225;
-        Fri, 17 Jun 2022 13:05:54 -0700 (PDT)
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com. [209.85.221.42])
-        by smtp.gmail.com with ESMTPSA id k8-20020a17090632c800b006feb8cebbbfsm2566153ejk.6.2022.06.17.13.05.52
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 17 Jun 2022 13:05:52 -0700 (PDT)
-Received: by mail-wr1-f42.google.com with SMTP id c21so7024414wrb.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jun 2022 13:05:52 -0700 (PDT)
-X-Received: by 2002:a5d:5c08:0:b0:219:e5de:72af with SMTP id
- cc8-20020a5d5c08000000b00219e5de72afmr10604185wrb.513.1655496351987; Fri, 17
- Jun 2022 13:05:51 -0700 (PDT)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=x4as2ZkeTzWY1neBp0pSqFxYj7FvUKGmqCj9lFfh46Y=;
+        b=ekWyTGfakwoaoiXDCUYMh0HMeIwatN7WfLxo+u6Ca0sye/DHq8YrU1DaPkwqnZ+LFP
+         27TKvxgExMqaw27/syDMeyv3Rwl5XqWsMyQFIERdQ6vvzfREq1u0BVFuAW28xK/t29iq
+         FNE8sftPQkTceA63PKLmpEy801Cct1qU0Zbk87mtQXdU6ap+tKVYYmdrIhu7tvvPNLQ3
+         X/p2VDA/W8LaafItrA4RsjY7smNQyYFNpBAHjsoPfZFGA8Jr6Z55K7UHqzglqf6wZTpe
+         HoCKHZVv9ol7Qa8XTTmmMaepvr8XW/eUxdvPqqTvEQCv6bFfO/jXLeoELUg5RRZsFv3s
+         VZ5A==
+X-Gm-Message-State: AJIora+kknwaHSHW662AO4yGR7zj2HsMZyZz79+LEY7nDzhuDP6ZL3m6
+        ITOO0TmzWdoWDl8ma6zO20qVK3obCoifP4G4yi5ADA==
+X-Google-Smtp-Source: AGRyM1u4nMHweik4URlw+DCJbLUl0w+UrlWDIBvKtDehatittlrFKAJ8bL5+y6eZyKP4hA1WsTKrT7WnEl7enizsIq4=
+X-Received: by 2002:a9d:6484:0:b0:60b:eb0b:4054 with SMTP id
+ g4-20020a9d6484000000b0060beb0b4054mr4702235otl.159.1655496922910; Fri, 17
+ Jun 2022 13:15:22 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 17 Jun 2022 13:15:22 -0700
 MIME-Version: 1.0
-References: <20220617111021.v6.1.I9e299d3fa6fbf50df6fc7207050bf5c3a7bf4c61@changeid>
- <20220617111021.v6.6.I423a007e8c4451bd1d091fcb65d035e5dcfc9a9d@changeid>
-In-Reply-To: <20220617111021.v6.6.I423a007e8c4451bd1d091fcb65d035e5dcfc9a9d@changeid>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Fri, 17 Jun 2022 13:05:40 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=VEukZVJY=EXxhGsjQ-_mVzU-qLfNmALd_ZDh1qVjo7Jg@mail.gmail.com>
-Message-ID: <CAD=FV=VEukZVJY=EXxhGsjQ-_mVzU-qLfNmALd_ZDh1qVjo7Jg@mail.gmail.com>
-Subject: Re: [PATCH v6 6/6] arm64: dts: qcom: Remove duplicate sc7180-trogdor
- include on lazor/homestar
-To:     "Joseph S. Barrera III" <joebar@chromium.org>
-Cc:     LKML <linux-kernel@vger.kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Alexandru M Stan <amstan@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Andy Gross <agross@kernel.org>,
+In-Reply-To: <20220617194921.1098725-2-dmitry.baryshkov@linaro.org>
+References: <20220617194921.1098725-1-dmitry.baryshkov@linaro.org> <20220617194921.1098725-2-dmitry.baryshkov@linaro.org>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date:   Fri, 17 Jun 2022 13:15:22 -0700
+Message-ID: <CAE-0n51vDC-a=87hbM_rvxhNNV7KNpCHy3=wH0N5VCEvdrjyuw@mail.gmail.com>
+Subject: Re: [PATCH 2/2] drm/msm/dp: remove dp_display_en/disable prototypes
+ and data argument
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+Cc:     David Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -84,55 +72,43 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
-
-On Fri, Jun 17, 2022 at 11:12 AM Joseph S. Barrera III
-<joebar@chromium.org> wrote:
+Quoting Dmitry Baryshkov (2022-06-17 12:49:21)
+> Remove unused dp_display_en/disable prototypes. While we are at it,
+> remove extra 'data' argument that is unused.
 >
-> From: Stephen Boyd <swboyd@chromium.org>
->
-> The sc7180-trogdor-{lazor,homestar}-*.dtsi files all include
-> sc7180-trogdor.dtsi and sc7180-trogdor-lazor.dtsi or
-> sc7180-trogdor-homestar.dtsi, so including it here in the
-> sc7180-trogdor-{lazor,homestar}.dtsi file means we have a duplicate
-> include after commit 19794489fa24 ("arm64: dts: qcom: Only include
-> sc7180.dtsi in sc7180-trogdor.dtsi"). We include the sc7180-trogdor.dtsi
-> file in a board like sc7180-trogdor-lazor-r1.dts so that we can include
-> the display bridge snippet (e.g. sc7180-trogdor-ti-sn65dsi86.dtsi)
-> instead of making ever increasing variants like
-> sc7180-trogdor-lazor-ti-sn65dsi86.dtsi.
->
-> Unfortunately, having the double include like this means the display
-> bridge's i2c bus is left disabled instead of enabled by the bridge
-> snippet. Any boards that use the i2c bus for the display bridge will
-> have the bus disabled when we include sc7180-trogdor.dtsi the second
-> time, which picks up the i2c status="disabled" line from sc7180.dtsi.
-> This leads to the display not turning on and black screens at boot on
-> lazor and homestar devices.
->
-> Fix this by dropping the include and making a note that the
-> sc7180-trogdor-{lazor,homestar}.dtsi file must be included after
-> sc7180-trogdor.dtsi
->
-> Reported-by: Douglas Anderson <dianders@chromium.org>
-> Cc: "Joseph S. Barrera III" <joebar@chromium.org>
-> Cc: Matthias Kaehlcke <mka@chromium.org>
-> Fixes: 19794489fa24 ("arm64: dts: qcom: Only include sc7180.dtsi in sc7180-trogdor.dtsi")
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
->
-> Signed-off-by: Joseph S. Barrera III <joebar@chromium.org>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
+>  drivers/gpu/drm/msm/dp/dp_display.c | 13 +++++--------
+>  1 file changed, 5 insertions(+), 8 deletions(-)
 >
-> Changes in v6:
->  - First inclusion of this patch.
+> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+> index 1e34ac2126f6..42ceb4c5796c 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> @@ -607,9 +607,6 @@ static int dp_hpd_plug_handle(struct dp_display_private *dp, u32 data)
+>         return 0;
+>  };
 >
->  arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi | 2 +-
->  arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi    | 8 ++++++--
->  2 files changed, 7 insertions(+), 3 deletions(-)
+> -static int dp_display_enable(struct dp_display_private *dp, u32 data);
+> -static int dp_display_disable(struct dp_display_private *dp, u32 data);
+> -
 
-Ah, now I see that you did have this patch, but you put it last, not
-first. This is an important bugfix that we're hoping to land as soon
-as possible. It should be the first patch in the series. ...or just
-don't include it in your series and point to Stephen's patch.
+This part looks good.
 
--Doug
+>  static void dp_display_handle_plugged_change(struct msm_dp *dp_display,
+>                 bool plugged)
+>  {
+> @@ -856,7 +853,7 @@ static int dp_display_set_mode(struct msm_dp *dp_display,
+>         return 0;
+>  }
+>
+> -static int dp_display_enable(struct dp_display_private *dp, u32 data)
+> +static int dp_display_enable(struct dp_display_private *dp)
+
+This will conflict with Kuogee's patch[1]
+
+>  {
+>         int rc = 0;
+>         struct msm_dp *dp_display = &dp->dp_display;
+
+[1] https://lore.kernel.org/r/1655411200-7255-1-git-send-email-quic_khsieh@quicinc.com
