@@ -2,56 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 52B0154FF0E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jun 2022 23:03:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DFE0454FEF7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jun 2022 23:03:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245608AbiFQU4e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Jun 2022 16:56:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33702 "EHLO
+        id S234370AbiFQU5H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 Jun 2022 16:57:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33852 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234370AbiFQU4e (ORCPT
+        with ESMTP id S232517AbiFQU5F (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Jun 2022 16:56:34 -0400
-Received: from mail-oa1-x34.google.com (mail-oa1-x34.google.com [IPv6:2001:4860:4864:20::34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACB855DA56
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jun 2022 13:56:32 -0700 (PDT)
-Received: by mail-oa1-x34.google.com with SMTP id 586e51a60fabf-fe32122311so6936757fac.7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jun 2022 13:56:32 -0700 (PDT)
+        Fri, 17 Jun 2022 16:57:05 -0400
+Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com [IPv6:2607:f8b0:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 557705DA56
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jun 2022 13:57:04 -0700 (PDT)
+Received: by mail-ot1-x333.google.com with SMTP id s20-20020a056830439400b0060c3e43b548so3930263otv.7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jun 2022 13:57:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:in-reply-to:references:from:user-agent:date:message-id
          :subject:to:cc;
-        bh=MH/iAqLtqToQAlEnXkpP3+J+Zy8At+koA/Z9dM2NOZc=;
-        b=kyEDKtsqodmuTT86QxhNaU7tgoCtWme2N7wlYwiTpVGVYAYBBqt1DAq/mT9BFnwPWo
-         bQ1PITdzjrSdMZlt5iD9XIjog5xhqmEIF916e+ohiHDHLGfApEbwoww3ZTPADsLwjxZ2
-         TEwBBCfZPVd4+eGNaGntLIlezdWVPhYRn3l0U=
+        bh=vMRFR0GXyCuyzUO1zmdvO0SdG3g9jDS3szGGSmZwvdo=;
+        b=EoWrsaIdWmfmOGr1BtwEg2WSZK+OU+lG3deDCXDzb74IKSuCLjUw48r/Au0ZdFbBld
+         CtADV5mdsqtHPiJQnM6grFYj+RXcVZ25BiaOF+SeT3sWq4i0Z9auBAbHmX9HOV5Xn+AO
+         W4/IHFd1Zk/BzdQQ1hCIwfywNaHuB2eYr/RVE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:in-reply-to:references:from
          :user-agent:date:message-id:subject:to:cc;
-        bh=MH/iAqLtqToQAlEnXkpP3+J+Zy8At+koA/Z9dM2NOZc=;
-        b=8Nq2rn1lX1Q1aT6mNzczi3P936QUF4mu8jSuvMur3ddOnsyDa5CK8fwBkuHdNOWsye
-         L84oqUAPw9WzHrEb76cj+HalxmGzfxH1EFKVXedoNNlckx+aAbY/Mq9DhNWniTuVHlj5
-         E4eNcSX3NY+13xIHK2EMSKBX9KCyxQGEOZi2cAri2beliNrroSbDH/SdsWN4n40gCZvO
-         CBH8VM+dCmFvtCxWfqBF7e07mQNqDrAf1aNe7Y+PFI1lj33ryv5a9vPfZDK/epOOwRLB
-         4Ypxf7loW0y0Ky/cfB7I2GUhz5L22Axp41DqG8iUFDI1er0vC+eWpE/Z/D0bDmAm7T0E
-         9gWg==
-X-Gm-Message-State: AJIora9Yn7DBW3NafAxW8CBbhhyJw4hKfY/J3hT3LOKdJEWiYCBXdIjb
-        BWOk7B1T48h3Hmf9pF1+7gu7rKhxMIwSuabQoGkdymyrwRg=
-X-Google-Smtp-Source: AGRyM1vd690rXJ51SuzzgfI8BhKCCRgUEbObgJqZvik2f2hM6fajZLbLknhknAJbbPVwWpZOvXMPEzWPFbnPZniESuA=
-X-Received: by 2002:a05:6870:b48a:b0:101:40eb:63a3 with SMTP id
- y10-20020a056870b48a00b0010140eb63a3mr6284144oap.193.1655499392048; Fri, 17
- Jun 2022 13:56:32 -0700 (PDT)
+        bh=vMRFR0GXyCuyzUO1zmdvO0SdG3g9jDS3szGGSmZwvdo=;
+        b=x102t30+pDo6t80l7nTr4Va9ONdrSOFQtNL4TjXLLor0n50YUKuZLnAa3IdTMSrjy7
+         b2kH/rcjN53CwmNny7DFi7eLNCJVVKly4L2m+MMw25Yysj8WpW2k1BafUw9JceS8CYLD
+         yZL5e5Y8HJBPZroNnVFMW3XPHUzY5EL5xahzN3R9tUy+GlV3zx6HqeghpNa3xey8luF4
+         Unk5mxTTcPW4oAuVz+l3DfhmJxAaF0F1neWfGq8BFWgTg6IJY/cY/clq4bTAcvb0VSK4
+         VCUGyXxqBHHIkq/JciAKntSwOB/mf6ZtmnbvRtNOQzB5BtmSTTCcbpjnILg+WT6HOCUn
+         PM+Q==
+X-Gm-Message-State: AJIora88INlbbwv9Yj4N/+f99AA/5tdi4U9C01UoUhMxEI25dKe6VyJb
+        zTdl0nvz9KNKdJ+Gtnp8rJ76xD4sC/xonXY/9zXFUA==
+X-Google-Smtp-Source: AGRyM1sfzKoW9WyzAhvY11tv9iFwse5ymjpHxzBQ0uh1UWvv6lmB401+6sUT+IuSWkFK2+PScwaSfV3+9PXqLXqk5Zw=
+X-Received: by 2002:a9d:6484:0:b0:60b:eb0b:4054 with SMTP id
+ g4-20020a9d6484000000b0060beb0b4054mr4760290otl.159.1655499423686; Fri, 17
+ Jun 2022 13:57:03 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 17 Jun 2022 13:56:31 -0700
+ HTTPREST; Fri, 17 Jun 2022 13:57:03 -0700
 MIME-Version: 1.0
-In-Reply-To: <20220617103608.605898-3-dmitry.baryshkov@linaro.org>
-References: <20220617103608.605898-1-dmitry.baryshkov@linaro.org> <20220617103608.605898-3-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220617103608.605898-4-dmitry.baryshkov@linaro.org>
+References: <20220617103608.605898-1-dmitry.baryshkov@linaro.org> <20220617103608.605898-4-dmitry.baryshkov@linaro.org>
 From:   Stephen Boyd <swboyd@chromium.org>
 User-Agent: alot/0.10
-Date:   Fri, 17 Jun 2022 13:56:31 -0700
-Message-ID: <CAE-0n53pK-YDLkBTyHiF_AL_BEdOjCAt2RdqLemONzVsXx+Asw@mail.gmail.com>
-Subject: Re: [PATCH 2/3] drm/msm/hdmi: make hdmi_phy_8996 OF clk provider
+Date:   Fri, 17 Jun 2022 13:57:03 -0700
+Message-ID: <CAE-0n50=Lbrs84oivqni0oBNk0KSY9yGvkYFXggekwVDQ80fyQ@mail.gmail.com>
+Subject: Re: [PATCH 3/3] arm64: dts: qcom: msm8996: add #clock-cells to the
+ HDMI PHY node
 To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
@@ -71,10 +72,9 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Dmitry Baryshkov (2022-06-17 03:36:07)
-> On MSM8996 the HDMI PHY provides the PLL clock to the MMCC. As we are
-> preparing to convert the MSM8996 to use DT clocks properties (rather
-> than global clock names), register the OF clock provider.
+Quoting Dmitry Baryshkov (2022-06-17 03:36:08)
+> Add #clock-cells property to the HDMI PHY device node to let other nodes
+> resolve the hdmipll clock.
 >
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
