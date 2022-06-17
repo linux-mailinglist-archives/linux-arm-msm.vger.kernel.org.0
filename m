@@ -2,56 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BAA1E54FE9E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jun 2022 23:02:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 014A454FF0D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jun 2022 23:03:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1383219AbiFQUst (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Jun 2022 16:48:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55694 "EHLO
+        id S238497AbiFQUtQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 Jun 2022 16:49:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56328 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1381762AbiFQUss (ORCPT
+        with ESMTP id S237678AbiFQUtP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Jun 2022 16:48:48 -0400
-Received: from mail-oa1-x2d.google.com (mail-oa1-x2d.google.com [IPv6:2001:4860:4864:20::2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F0015DBE2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jun 2022 13:48:47 -0700 (PDT)
-Received: by mail-oa1-x2d.google.com with SMTP id 586e51a60fabf-fb6b4da1dfso6929344fac.4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jun 2022 13:48:47 -0700 (PDT)
+        Fri, 17 Jun 2022 16:49:15 -0400
+Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E8815DA6E
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jun 2022 13:49:15 -0700 (PDT)
+Received: by mail-ot1-x32d.google.com with SMTP id y16-20020a9d5190000000b0060c1292a5b9so3928385otg.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jun 2022 13:49:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:in-reply-to:references:from:user-agent:date:message-id
          :subject:to:cc;
-        bh=Y4XNPPOTHcGQua89ehLw74GJaEq7bj+hezmlX6AJcYE=;
-        b=Oax+hb9jz11E80qid8APuomKpd1AiYADh5Zfb5n+Y6a/her9EiKju+LU3dKDEjr8lY
-         YhYXxlHkYUMfxRzIzmOJT0EvN55leGg8E8A/L0+zVd5ny2ZP8DEsXr1aI88AF5zDhvzM
-         DLkNe7+ayYWePHOAQW6WVD8xdAjTCgjqXOdqc=
+        bh=ncffjMc6pHw+1TPZJcdmZRbDOOjSZwLTD4p2la+PTH8=;
+        b=cXyQwuNm1l97LCMQPezs5DpJvLDKFJzjiMFByco8CrTW/jzSpYa0/rV/YQpbg3pZYb
+         vtN81MpEtREytzC6e3+GGQR+cO+soSsil9doGetmYfLBZR3kuWBOgHF9vHUe+F82jV6G
+         Eea0+GAe8yUqj84/f6ya8kLfVNs2g2hjf65so=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:in-reply-to:references:from
          :user-agent:date:message-id:subject:to:cc;
-        bh=Y4XNPPOTHcGQua89ehLw74GJaEq7bj+hezmlX6AJcYE=;
-        b=nl7+ePspv21UTdH/ks9+K6ZIyiH17OYfe64OVQsJ8IyaY6IgGt7waW/Zidj/3n/4Xk
-         Ha56bIFTcGh/AiuHOdQhFvbqL0H2VXZTJx1FBVC3PmC8k90ai2E69ecU9cIlM0DnqQnJ
-         tgvNOumRNbhQAPRktd+vQ3v2TjlkiXc5YxlbbmvedT8jf5psU9lCcH/fMguSrPnprH76
-         sU6+UX4Mezoi32rXKzyNXSBHEmDud0IZdIfq5lX25slGD/9soygE3HGCEM7W2BkPw5NC
-         9BMTiMDifIwmuYNMsrZzDE3CoQIeHeTmskRut+MxOOg6m6snCBHjjFNrIFi25PZMURAE
-         uoAQ==
-X-Gm-Message-State: AJIora9Oevv+1TieO5vVwgpOq/bVV6cmgRXEtoEPVZz+X+ji6e+MLPwd
-        KCu1VEz+jS+mkO+y494yTvXHhWt+MeJAd38auEh+sQ==
-X-Google-Smtp-Source: AGRyM1sBdyafzJaFAWXzzdqzqbJCmm4BoflbCmCwm6csBW+c/DYUEooGn1aPbS1QG/DhTZ9CKV43uKNzGz9cffP+yjM=
-X-Received: by 2002:a05:6870:b381:b0:fe:2004:b3b5 with SMTP id
- w1-20020a056870b38100b000fe2004b3b5mr6548394oap.63.1655498926376; Fri, 17 Jun
- 2022 13:48:46 -0700 (PDT)
+        bh=ncffjMc6pHw+1TPZJcdmZRbDOOjSZwLTD4p2la+PTH8=;
+        b=YdHsDBTh++GxtDd/E5WdnFmdxK/7fvYzs1np7uFVWaaWVdWCJAt2VUPOv0pd7fM8tL
+         xZrU3xg9FZ7spPs/LldzL/9CRWmsYX5aV/mD8/ii7EzBLh3NpHWEp6cdrZL6gyxkMJI0
+         cwTjiqOblAS1wUX0oE+wJq9t70YaxYv7oOs3iwCjcGIZDrgnAuDgX28Zimnklmdr8mUi
+         d4dEAoZa41lKeLcZCglBGaSM+z6R6JsjRM5QvNT4PnvJJRFf0nKlVt1+SVqX2ZRMOZi1
+         TzLIFciA3jv9dWesBL/F/1U3jikOOyBKC+WsdG/NX7bVQ9PoxjR4+71gBg13F+ohwPbp
+         XaXQ==
+X-Gm-Message-State: AJIora+BCESIBv3f0yiK8G9cKwE6yqVocvO5zIlER7hSeG+MM4tCEYAB
+        mhOqyWchcYz2TUWzedaf2GH5U2tCdnGbM03hogHO3A==
+X-Google-Smtp-Source: AGRyM1sDSnZUoLLGbHCAG3IXX1ilQUucxGfAWqMdpU5HLS7fZO3FziKUMpoNMk+vpIK9DLsLFLCnmcinX7IgEZO7Wus=
+X-Received: by 2002:a9d:6484:0:b0:60b:eb0b:4054 with SMTP id
+ g4-20020a9d6484000000b0060beb0b4054mr4750400otl.159.1655498954413; Fri, 17
+ Jun 2022 13:49:14 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 17 Jun 2022 13:48:45 -0700
+ HTTPREST; Fri, 17 Jun 2022 13:49:14 -0700
 MIME-Version: 1.0
-In-Reply-To: <20220617191429.1087634-2-dmitry.baryshkov@linaro.org>
-References: <20220617191429.1087634-1-dmitry.baryshkov@linaro.org> <20220617191429.1087634-2-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220617191429.1087634-3-dmitry.baryshkov@linaro.org>
+References: <20220617191429.1087634-1-dmitry.baryshkov@linaro.org> <20220617191429.1087634-3-dmitry.baryshkov@linaro.org>
 From:   Stephen Boyd <swboyd@chromium.org>
 User-Agent: alot/0.10
-Date:   Fri, 17 Jun 2022 13:48:45 -0700
-Message-ID: <CAE-0n51J5K_o=Mmt5aYiS6MMnHTfhPG28Pe6-9xZC0bn=zbK=A@mail.gmail.com>
-Subject: Re: [PATCH v5 1/3] drm/msm/mdp4: convert to drm_crtc_handle_vblank()
+Date:   Fri, 17 Jun 2022 13:49:13 -0700
+Message-ID: <CAE-0n51yaN=CfveKwFcqv7bgBBzU1fTcDWMcvUYJJgZ=Z3cXdw@mail.gmail.com>
+Subject: Re: [PATCH v5 2/3] drm/msm/mdp5: convert to drm_crtc_handle_vblank()
 To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
@@ -70,7 +70,7 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Dmitry Baryshkov (2022-06-17 12:14:27)
+Quoting Dmitry Baryshkov (2022-06-17 12:14:28)
 > Stop using deprecated drm_handle_vblank(), use drm_crtc_handle_vblank()
 > instead.
 >
