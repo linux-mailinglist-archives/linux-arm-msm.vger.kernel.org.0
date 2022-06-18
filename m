@@ -2,129 +2,169 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8D0715505BD
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Jun 2022 17:30:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8236F550605
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Jun 2022 18:11:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235170AbiFRPaE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 18 Jun 2022 11:30:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41576 "EHLO
+        id S235157AbiFRQLN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 18 Jun 2022 12:11:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36468 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234386AbiFRPaD (ORCPT
+        with ESMTP id S229449AbiFRQLM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 18 Jun 2022 11:30:03 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3A8110FC4
-        for <linux-arm-msm@vger.kernel.org>; Sat, 18 Jun 2022 08:30:02 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id w20so11013120lfa.11
-        for <linux-arm-msm@vger.kernel.org>; Sat, 18 Jun 2022 08:30:02 -0700 (PDT)
+        Sat, 18 Jun 2022 12:11:12 -0400
+Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D354514D2C;
+        Sat, 18 Jun 2022 09:11:11 -0700 (PDT)
+Received: by mail-pj1-x102c.google.com with SMTP id b12-20020a17090a6acc00b001ec2b181c98so5469407pjm.4;
+        Sat, 18 Jun 2022 09:11:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language
-         :from:to:cc:references:in-reply-to:content-transfer-encoding;
-        bh=1/e1mvC387Kg6krxrVdOK9bDUmZD/rSMjrmBoVChUyY=;
-        b=Y6VCMxYgNgyNPMj9zsdsppQoeYQwMpNdVVxdTH+8Wpo+3GjeF3AxYzywaHrQVhf4zb
-         19in/R4gVpRDUjzMjunejVzUb8hOvn3teiZsRMiBn5iJDl+14pD2w6cCBWTcWm/qeoai
-         fv/OHOcSJ+7AhdkgrXNTwvhqbJtF98snKZKjLEJK3lKgNKHwImezsz4rBuDhhanMzi8w
-         GfVjBU/Cl+6ODiKsaabsRg+TgY0E5WZHT5rL6EcbTFh+oHEVRAXLmVYo5hdmtqm4hCLz
-         MmnEZDgSBPiigVlx8jvAv6ID84L3mQyXwnAO+mBczGM99ERk46lyHncxt7MKNTkMczWi
-         AZcA==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=oFb7npL4PD4+dNt9TMTKGSDFvw0QWZrqS2iKTnt24Qw=;
+        b=hLhs6nAB8Hj6nYs4Z6utsnyy8MWbills7fP/TW/3nHVEFwGxZE3uILPVG//7PAsoOP
+         FDKau/L/oPiGMdtJtfANdKCEO6NoYggtAVDcwXYJEXIgzN9pduWhELjUYPN+MqIs1Yf0
+         ubIEOvHM12hoGS1qxraVPSqWzUiuz7MJ88epzc1IsaCwrc3e54pbCV/WNWWqgAj7qUW6
+         MkOnlfaVMcLyEr9BZYblqPp9hRM//8OJMGKv/Uhd+V1Cpap3Nw9HXf/F1Fcu1IWLT3SG
+         JL3EAeNqZgoMU2/qn5M2muSUxr4nfBxROPYv731sZnMSRCSjgh5Nt++VCfRSqx9LnEip
+         JkoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:from:to:cc:references:in-reply-to
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=1/e1mvC387Kg6krxrVdOK9bDUmZD/rSMjrmBoVChUyY=;
-        b=ZY4hpmHsNwXTM0u58IaZcQeIBeqGcDZ6yjgUwH78iRJGdhrc38kop3Ya1F0qY1zMqb
-         SeGYeWMIB4shVaOKvoK5VLgKooxLhOxLkK2SChiG90drv37ydlIrjh/tUYTGNuj2B+rk
-         FeNKtyE5EaZmgZtlEC1Rm3rVUdDEe+adm42R9aG+uC+F2/4Q2Mrv6MRSAX29F6lZs0xX
-         S2ENT3po/toHw4/i9O5UDm16lPCEPq+RJ68QBypNK9/WI5LFuoZkuLBbBFNOp4Hu432e
-         ddBZ6eoY+uda3tg4NrMGdzzoFUnDndRWw/uT148G9ilpG9xShHwxpSXvQ+F8xOl3FEbX
-         lipw==
-X-Gm-Message-State: AJIora8KowvJvct0cRVh/h7VUvTVBUJfXJGvC0dXtl6sbhco1duA4FZp
-        6NZiX6oJXSeVOvLSQVdNYF30gg==
-X-Google-Smtp-Source: AGRyM1vsx6BcY+vFiaMfP9N84rL3oHIMRfiZTZnNSPFSz6sBhlqco/EbWtj99hbdbLhtparSH3ujEQ==
-X-Received: by 2002:a05:6512:238d:b0:479:2116:8598 with SMTP id c13-20020a056512238d00b0047921168598mr8709693lfv.322.1655566201316;
-        Sat, 18 Jun 2022 08:30:01 -0700 (PDT)
-Received: from [192.168.43.7] ([188.162.65.10])
-        by smtp.gmail.com with ESMTPSA id t7-20020a2e9d07000000b002556cf330e8sm956719lji.99.2022.06.18.08.29.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 18 Jun 2022 08:30:00 -0700 (PDT)
-Message-ID: <4f1ae43c-0f22-19fe-0794-3cc268104396@linaro.org>
-Date:   Sat, 18 Jun 2022 18:29:58 +0300
+        bh=oFb7npL4PD4+dNt9TMTKGSDFvw0QWZrqS2iKTnt24Qw=;
+        b=ezs/+AcJlUChE+dSaekPHheQxzKK0WdDiKfBDzotqMdZN0ZZDzAjhkZAMQqTYQnIK6
+         drhf8y2Odja9axJhxZCnxBfqUZDQkvW6y+TAHPOyyR8RqrSKEgfOWMZ7jkmGqiMlPaO7
+         7hw9P8rBx3SVvBBvqjOJGMXQypcOwPNkn4WQuUJJFRrqoTj64XG0Ms2ebVabAufAXIK8
+         D9h+wx/19i25diyXD+QDB6anqUyWTZd3UXpWqv3EPYrI9HvPpYtGYm0OfV8f80F8rrA5
+         wZ/J4q+BwFaU2p72/iDaZAMWSMJv2VCPmRUzL7IDmxL/HgVUb4NOYDlFZC4Ig4lvCd9s
+         riOQ==
+X-Gm-Message-State: AJIora8yYM2rFrZof1YcC7HS7h1ibNtbCUlomepXVlEI06uzinXnZ+O1
+        cIYgA4rdu8dlVTaho1KS9pI=
+X-Google-Smtp-Source: AGRyM1tQp1nTafx9dq2YTmnYdD/C7xbKbhSjuD5YDOyAYVynK+I6eyhgcjMjerVikMi2TnQ78p5YAA==
+X-Received: by 2002:a17:902:e54b:b0:166:50b6:a0a0 with SMTP id n11-20020a170902e54b00b0016650b6a0a0mr15169227plf.30.1655568671225;
+        Sat, 18 Jun 2022 09:11:11 -0700 (PDT)
+Received: from localhost (c-73-25-156-94.hsd1.or.comcast.net. [73.25.156.94])
+        by smtp.gmail.com with ESMTPSA id d10-20020a170902654a00b0015e8d4eb29csm5490525pln.230.2022.06.18.09.11.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 18 Jun 2022 09:11:09 -0700 (PDT)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Rob Clark <robdclark@chromium.org>,
+        Steev Klimaszewski <steev@kali.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH v2 1/2] drm/msm: Drop update_fences()
+Date:   Sat, 18 Jun 2022 09:11:18 -0700
+Message-Id: <20220618161120.3451993-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.36.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: [PATCH v3 0/2] spmi: pmic-arb: Add support for PMIC v7
-Content-Language: en-GB
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Stephen Boyd <sboyd@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        David Collins <quic_collinsd@quicinc.com>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        David Dai <daidavid1@codeaurora.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20220201134108.2677578-1-vkoul@kernel.org>
- <YhUVAwtfjuIdKrRQ@matsya> <1c66890b-6736-61ef-7d16-619f90ced4a0@linaro.org>
-In-Reply-To: <1c66890b-6736-61ef-7d16-619f90ced4a0@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 01/05/2022 22:41, Dmitry Baryshkov wrote:
-> On 22/02/2022 19:53, Vinod Koul wrote:
->> On 01-02-22, 19:11, Vinod Koul wrote:
->>> Hello,
->>>
->>> The is version 3 of support for PMIC v7. I have added a new property
->>> qcom,bus-id for supporting v7 and then add driver changes for v7
->>>
->>> This depends on yaml conversion patch:
->>> https://lore.kernel.org/linux-arm-msm/20211227170151.73116-1-david@ixit.cz/ 
->>>
->>
->> Any feedback on this...
-> 
-> Another gracious reminder about these patches. At this moment this is 
-> one of the important pieces lacking for the full SM8450 support in the 
-> upstream kernel.
+From: Rob Clark <robdclark@chromium.org>
 
-Stephen, yet another ping. This is the blocking point for the further 
-SM8450 progress.
+I noticed while looking at some traces, that we could miss calls to
+msm_update_fence(), as the irq could have raced with retire_submits()
+which could have already popped the last submit on a ring out of the
+queue of in-flight submits.  But walking the list of submits in the
+irq handler isn't really needed, as dma_fence_is_signaled() will dtrt.
+So lets just drop it entirely.
 
->>> Changes since v2:
->>>   - Drop yaml conversion patch
->>>   - Fix author for spmi patch
->>> Changes since v1:
->>>   - Add yaml conversion patch and new binding
->>>   - fix driver bug report by Jonathan
->>>
->>> David Collins (1):
->>>    spmi: pmic-arb: Add support for PMIC v7
->>>
->>> Vinod Koul (1):
->>>    dt-bindings: spmi: Add qcom,bus-id
->>>
->>>   .../bindings/spmi/qcom,spmi-pmic-arb.yaml     |  11 +
->>>   drivers/spmi/spmi-pmic-arb.c                  | 233 ++++++++++++++++--
->>>   2 files changed, 225 insertions(+), 19 deletions(-)
->>>
->>> -- 
->>> 2.31.1
->>
-> 
-> 
+v2: use spin_lock_irqsave/restore as we are no longer protected by the
+    spin_lock_irqsave/restore() in update_fences()
 
+Reported-by: Steev Klimaszewski <steev@kali.org>
+Fixes: 95d1deb02a9c ("drm/msm/gem: Add fenced vma unpin")
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+Tested-by: Steev Klimaszewski <steev@kali.org>
+---
+ drivers/gpu/drm/msm/msm_fence.c |  8 +++++---
+ drivers/gpu/drm/msm/msm_gpu.c   | 22 ++--------------------
+ 2 files changed, 7 insertions(+), 23 deletions(-)
 
+diff --git a/drivers/gpu/drm/msm/msm_fence.c b/drivers/gpu/drm/msm/msm_fence.c
+index 3df255402a33..38e3323bc232 100644
+--- a/drivers/gpu/drm/msm/msm_fence.c
++++ b/drivers/gpu/drm/msm/msm_fence.c
+@@ -46,12 +46,14 @@ bool msm_fence_completed(struct msm_fence_context *fctx, uint32_t fence)
+ 		(int32_t)(*fctx->fenceptr - fence) >= 0;
+ }
+ 
+-/* called from workqueue */
++/* called from irq handler and workqueue (in recover path) */
+ void msm_update_fence(struct msm_fence_context *fctx, uint32_t fence)
+ {
+-	spin_lock(&fctx->spinlock);
++	unsigned long flags;
++
++	spin_lock_irqsave(&fctx->spinlock, flags);
+ 	fctx->completed_fence = max(fence, fctx->completed_fence);
+-	spin_unlock(&fctx->spinlock);
++	spin_unlock_irqrestore(&fctx->spinlock, flags);
+ }
+ 
+ struct msm_fence {
+diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
+index 244511f85044..cedc88cf8083 100644
+--- a/drivers/gpu/drm/msm/msm_gpu.c
++++ b/drivers/gpu/drm/msm/msm_gpu.c
+@@ -164,24 +164,6 @@ int msm_gpu_hw_init(struct msm_gpu *gpu)
+ 	return ret;
+ }
+ 
+-static void update_fences(struct msm_gpu *gpu, struct msm_ringbuffer *ring,
+-		uint32_t fence)
+-{
+-	struct msm_gem_submit *submit;
+-	unsigned long flags;
+-
+-	spin_lock_irqsave(&ring->submit_lock, flags);
+-	list_for_each_entry(submit, &ring->submits, node) {
+-		if (fence_after(submit->seqno, fence))
+-			break;
+-
+-		msm_update_fence(submit->ring->fctx,
+-			submit->hw_fence->seqno);
+-		dma_fence_signal(submit->hw_fence);
+-	}
+-	spin_unlock_irqrestore(&ring->submit_lock, flags);
+-}
+-
+ #ifdef CONFIG_DEV_COREDUMP
+ static ssize_t msm_gpu_devcoredump_read(char *buffer, loff_t offset,
+ 		size_t count, void *data, size_t datalen)
+@@ -438,7 +420,7 @@ static void recover_worker(struct kthread_work *work)
+ 		if (ring == cur_ring)
+ 			fence++;
+ 
+-		update_fences(gpu, ring, fence);
++		msm_update_fence(ring->fctx, fence);
+ 	}
+ 
+ 	if (msm_gpu_active(gpu)) {
+@@ -736,7 +718,7 @@ void msm_gpu_retire(struct msm_gpu *gpu)
+ 	int i;
+ 
+ 	for (i = 0; i < gpu->nr_rings; i++)
+-		update_fences(gpu, gpu->rb[i], gpu->rb[i]->memptrs->fence);
++		msm_update_fence(gpu->rb[i]->fctx, gpu->rb[i]->memptrs->fence);
+ 
+ 	kthread_queue_work(gpu->worker, &gpu->retire_work);
+ 	update_sw_cntrs(gpu);
 -- 
-With best wishes
-Dmitry
+2.36.1
+
