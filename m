@@ -2,60 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F23355504FA
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Jun 2022 15:08:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8A49D550555
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Jun 2022 16:01:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234062AbiFRNIy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 18 Jun 2022 09:08:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51704 "EHLO
+        id S1350791AbiFROBI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 18 Jun 2022 10:01:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50438 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238078AbiFRNIp (ORCPT
+        with ESMTP id S244203AbiFRN5U (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 18 Jun 2022 09:08:45 -0400
+        Sat, 18 Jun 2022 09:57:20 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6E6E167E5;
-        Sat, 18 Jun 2022 06:08:42 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7DDCDE6B;
+        Sat, 18 Jun 2022 06:57:19 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 6341C60B63;
-        Sat, 18 Jun 2022 13:08:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71232C3411A;
-        Sat, 18 Jun 2022 13:08:38 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 19F3B60BB1;
+        Sat, 18 Jun 2022 13:57:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1EE2C3411A;
+        Sat, 18 Jun 2022 13:57:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1655557721;
-        bh=/QwGfDf6kYui15a8Igc4mfWEBIwRmra1YgsyS0TRMaU=;
+        s=k20201202; t=1655560638;
+        bh=lRorEWc2KTi7z7ymOlOmHg76zQDyaFrAFstUtz9SnBg=;
         h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=ESMxcyIMqq4A+Uu99HzmhdwFPJzv+wlvWXV3vwLR5k2X+TQSVG+TXYnPACg/7AnKr
-         +u4lpf1/vaOWsWOFn2yysuXeEAX83zTHAKAtwxKizWmgP6IdjlKYhqR8mGJAH4eKjV
-         K70truEf0ys2TlQDDtiVXFiUtgh1vGK3cDjJV7NLkREc0arJ/4K+0GSXohWbzJxCc0
-         NgyKr5jHGM3o4lSCvWrBazlEi/4BxIiLxHJjP5whbneiTpLHu7KTVO2oUEcRYoDa/o
-         sPP/LH8tu2Ltsv0CKzs0uAEw87R8UGOq2YzytTymsI8LlJXnwwaAreLihbILtSo14i
-         5vWhdGytdeV9A==
-Date:   Sat, 18 Jun 2022 14:17:57 +0100
+        b=AHFj/HFoFUUH94y50WWJJ41Nc0+xVyu0BnPz6ynMPeCuA7tW1khpFHcZOcygfpS66
+         1PJdLDzuD9XLdoajYWLREwRAil3c82vDUZ1NpmJkmEvfQh8et0/u/ebN3adQ5YS49E
+         8rFcodb3jxfyoQyunzWPPKvsaeSLocaZU+cQic/JV8F9tZOPKEeTIt8kcRe5ZukkUq
+         tC8mkXxl1GHz/gJLiyIVLfWHvitlR6Yvz5/CJvrG8iSMlMnfArAYkQhVYGdY+V8m14
+         j2OCBtwYS9BuyltkfUIfF1QkJE3GHgLcO5pM1rV3UdWaNJotY41oTuDuq5mtMGUnRq
+         zduVJofRh6Ktw==
+Date:   Sat, 18 Jun 2022 15:06:24 +0100
 From:   Jonathan Cameron <jic23@kernel.org>
-To:     Caleb Connolly <caleb.connolly@linaro.org>
-Cc:     Lars-Peter Clausen <lars@metafoo.de>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+To:     Nuno =?UTF-8?B?U8Oh?= <noname.nuno@gmail.com>
+Cc:     Nuno =?UTF-8?B?U8Oh?= <nuno.sa@analog.com>, linux-imx@nxp.com,
+        linux-renesas-soc@vger.kernel.org, linux-mips@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        chrome-platform@lists.linux.dev,
+        Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+        linux-mediatek@lists.infradead.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
+        openbmc@lists.ozlabs.org, Cai Huoqing <cai.huoqing@linux.dev>,
+        Benjamin Fair <benjaminfair@google.com>,
+        Jishnu Prakash <quic_jprakash@quicinc.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Amit Kucheria <amitk@kernel.org>,
         Andy Gross <agross@kernel.org>,
+        Michael Hennerich <Michael.Hennerich@analog.com>,
+        Haibo Chen <haibo.chen@nxp.com>,
+        Benson Leung <bleung@chromium.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Christophe Branchereau <cbranchereau@gmail.com>,
+        Patrick Venture <venture@google.com>,
+        Arnd Bergmann <arnd@arndb.de>, Nancy Yuen <yuenn@google.com>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Gwendal Grignou <gwendal@chromium.org>,
+        Saravanan Sekar <sravanhome@gmail.com>,
+        Tali Perry <tali.perry1@gmail.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Paul Cercueil <paul@crapouillou.net>,
+        Thara Gopinath <thara.gopinath@linaro.org>,
+        Avi Fishman <avifishman70@gmail.com>,
+        Lorenzo Bianconi <lorenzo@kernel.org>,
+        Claudiu Beznea <claudiu.beznea@microchip.com>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Andy Shevchenko <andy.shevchenko@gmail.com>,
+        Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Tomer Maimon <tmaimon77@gmail.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Lee Jones <lee.jones@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>, linux-iio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Sumit Semwal <sumit.semwal@linaro.org>
-Subject: Re: [PATCH v14 00/10] iio: adc: introduce Qualcomm SPMI Round Robin
- ADC
-Message-ID: <20220618141757.625f86c4@jic23-huawei>
-In-Reply-To: <20220618140913.49fd1dc2@jic23-huawei>
-References: <20220429220904.137297-1-caleb.connolly@linaro.org>
-        <20220618140913.49fd1dc2@jic23-huawei>
+        Nicolas Ferre <nicolas.ferre@microchip.com>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Guenter Roeck <groeck@chromium.org>,
+        Fabio Estevam <festevam@gmail.com>,
+        Olivier Moysan <olivier.moysan@foss.st.com>,
+        Eugen Hristev <eugen.hristev@microchip.com>,
+        Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: Re: [PATCH 22/34] iio: inkern: only return error codes in
+ iio_channel_get_*() APIs
+Message-ID: <20220618150624.1bfc8914@jic23-huawei>
+In-Reply-To: <35e7c36c9ecbdc67698b413cf867cf19442ccfa9.camel@gmail.com>
+References: <20220610084545.547700-1-nuno.sa@analog.com>
+        <20220610084545.547700-23-nuno.sa@analog.com>
+        <20220611161701.46a68837@jic23-huawei>
+        <35e7c36c9ecbdc67698b413cf867cf19442ccfa9.camel@gmail.com>
 X-Mailer: Claws Mail 4.1.0 (GTK 3.24.34; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -66,164 +106,109 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 18 Jun 2022 14:09:13 +0100
-Jonathan Cameron <jic23@kernel.org> wrote:
+On Mon, 13 Jun 2022 09:06:49 +0200
+Nuno S=C3=A1 <noname.nuno@gmail.com> wrote:
 
-> On Fri, 29 Apr 2022 23:08:55 +0100
-> Caleb Connolly <caleb.connolly@linaro.org> wrote:
-> 
-> > The RRADC is responsible for reading data about the current and
-> > voltage from the USB or DC in jacks, it can also read the battery
-> > ID (resistence) and some temperatures. It is found on the PMI8998 and
-> > PM660 Qualcomm PMICs.
-> > 
-> > The RRADC has to calibrate some ADC values based on which chip fab
-> > the PMIC was produced in, to facilitate this the patches
-> > ("mfd: qcom-spmi-pmic: expose the PMIC revid information to clients")
-> > and ("mfd: qcom-spmi-pmic: read fab id on supported PMICs")
-> > expose the PMIC revision information and fab_id as a struct and register
-> > them as driver data in the Qualcomm SPMI PMIC driver so that it can be
-> > read by the RRADC.
-> > 
-> > The first 3 patches add support for looking up an SPMI device from a
-> > struct device_node, as well as introducing support for looking up the
-> > base USID of a Qcom PMIC, see patch comments for more details. These
-> > Address Bjorns comments on v2.  
-> 
-> Hi Caleb / All
-> 
-> Rather than waste time going for a v15 for the 3 minor issues in reviews
-> I've just fixed them up whilst applying.
-> 
-> As spmi or mfd maintainers may want an immutable branch I've
-> just pushed one out at
-> https://git.kernel.org/pub/scm/linux/kernel/git/jic23/iio.git immutable-qcom-spmi-rradc
-> that has the first 5 patches. I assume the dts changes will go via qcom -> arm-soc
-> as normal.
-> 
-> 0-day should run on that branch shortly but I'll be optimistic and pull it
-> into my testing branch in the meantime (mostly so I don't forget about it and
-> can mark it applied in patchwork :)
-
-Gah.  Merge into IIO doesn't build because of dropping of.h from includes
-in iio.h.  This driver should directly include property.h directly.
-
-New 'immutable' branch with same name pushed out.  Guessing no one picked
-it up in the minute or so previous version was available for!
-
-I'd advise that Lee / Stephen don't merge this for a few days at least so
-any other issues have become visible and I can fix them up without making
-for complex history.
+> On Sat, 2022-06-11 at 16:17 +0100, Jonathan Cameron wrote:
+> > On Fri, 10 Jun 2022 10:45:33 +0200
+> > Nuno S=C3=A1 <nuno.sa@analog.com> wrote:
+> >  =20
+> > > APIs like of_iio_channel_get_by_name() and of_iio_channel_get_all()
+> > > were
+> > > returning a mix of NULL and error pointers being NULL the way to =20
+> >=20
+> > pointers with NULL being the way to...
+> >  =20
+> > > "notify" that we should do a "system" lookup for channels. This
+> > > make
+> > > it very confusing and prone to errors as commit dbbccf7c20bf
+> > > ("iio: inkern: fix return value in
+> > > devm_of_iio_channel_get_by_name()")
+> > > proves. On top of this, patterns like 'if (channel !=3D NULL) return
+> > > channel'
+> > > were being used where channel could actually be an error code which
+> > > makes the code hard to read.
+> > >=20
+> > > Signed-off-by: Nuno S=C3=A1 <nuno.sa@analog.com>
+> > > ---
+> > > =C2=A0drivers/iio/inkern.c | 24 +++++++++++-------------
+> > > =C2=A01 file changed, 11 insertions(+), 13 deletions(-)
+> > >=20
+> > > diff --git a/drivers/iio/inkern.c b/drivers/iio/inkern.c
+> > > index 87fd2a0d44f2..31d9c122199a 100644
+> > > --- a/drivers/iio/inkern.c
+> > > +++ b/drivers/iio/inkern.c
+> > > @@ -214,7 +214,7 @@ static struct iio_channel
+> > > *of_iio_channel_get(struct device_node *np, int index)
+> > > =C2=A0struct iio_channel *of_iio_channel_get_by_name(struct device_no=
+de
+> > > *np,
+> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 const char *name)
+> > > =C2=A0{
+> > > -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0struct iio_channel *chan =
+=3D NULL;
+> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0struct iio_channel *chan;
+> > > =C2=A0
+> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0/* Walk up the tree o=
+f devices looking for a matching iio
+> > > channel */
+> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0while (np) {
+> > > @@ -231,11 +231,11 @@ struct iio_channel
+> > > *of_iio_channel_get_by_name(struct device_node *np,
+> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 name);
+> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0chan =3D of_iio_channel_get(np, index);
+> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0if (!IS_ERR(chan) || PTR_ERR(chan) =3D=3D -
+> > > EPROBE_DEFER)
+> > > -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0bre=
+ak; =20
+> >=20
+> > This original behaviour is 'interesting'. If we get a error like -
+> > ENOMEM
+> > we should return it rather than carry on.=C2=A0 Do we have enough
+> > knowledge
+> > of possible errors here to be more explicit on when we keep looking
+> > up
+> > the tree?=C2=A0 I think we can get -ENOENT from
+> > of_parse_phandle_with_args()
+> >=20
+> > That raises an interesting question on whether -ENODEV is the right
+> > response
+> > for the previously NULL case or is -ENOENT more consistent with other
+> > of_ functions?=C2=A0 No device could be thought of as being the case th=
+at
+> > needs
+> > to defer (in hope it turns up later) whereas no entry means it will
+> > never
+> > succeed. =20
+>=20
+> From what I could see, of_parse_phandle_with_args() either returns=C2=A0
+> -EINVAL or -ENOENT. We also have the internal of_iio_channel_get()
+> which can return -ENOMEM. So I guess we should only continue looking if
+> we get -ENOENT?
+>=20
+> To be clear, do you still prefer to explicitly return -ENODEV in the
+> previous NULL cases or should we honor the return code from=20
+> of_parse_phandle_with_args() and just return chans (and thus ENOENT)?
+You've looked at this more than me, so whilst I think -ENOENT is probably
+slightly more consistent I'll go with whatever you conclude is the
+best option.  Maybe add a small amount of description on what you chose
+and why to the relevant patch descriptions.
 
 Thanks,
 
 Jonathan
 
-> 
-> Thanks,
-> 
-> Jonathan
-> 
-> 
-> > 
-> > Changes since v13:
-> >  * Address Lee Jones' feedback on the SPMI patches.
-> >  * Pick up Jami's patch to enable the RRADC on the OnePlus 5
-> > 
-> > Changes since v12:
-> >  * Apply Krzysztof's suggestions to rradc DT binding docs.
-> > 
-> > Changes since v11:
-> >  * Remove debug logging which was left in ("mfd: qcom-spmi-pmic: expose the PMIC revid information to clients")
-> >  * Picked up Dmitry's Tested-by and Reviewed-by tags.
-> > 
-> > Changes since v10:
-> >  * Don't inline spmi_device_from_of()
-> > 
-> > Changes since v9:
-> >  * Add back missing copyright, this driver is originally derived from
-> >    downstream (Thanks Manivannan).
-> > 
-> > Changes since v8:
-> >  * Drop Reported-by for the bugfix on previous revision reported by LKP
-> >  * Apply Jonathans suggestions
-> >  * Rework patch 2 ("expose the PMIC revid information to clients") to
-> >    handle PMICs with a single USID (thanks Dmitry)
-> > 
-> > Changes since v7:
-> >  * Addressed Jonathans comments
-> >  * Fixed bug reported by LKP
-> > 
-> > Changes since v6:
-> >  * Fix printf format warning in rradc
-> > 
-> > Changes since v5:
-> >  * Add missing EXPORT_SYMBOL_GPL() to
-> >    ("spmi: add a helper to look up an SPMI device from a device node")
-> > 
-> > Changes since v4:
-> >  * Addressed Jonathan's comments on v4
-> >  * Reworked the qcom-spmi-pmic patches to properly walk the devicetree
-> >    to find the base USID. I've tested this on SDM845 which has two PMICs
-> >    (pm8998 and pmi8998) and I'm able to look up the PMIC revid from all
-> >    4 USIDs.
-> > 
-> > Changes since v3:
-> >  * Split PMIC patch in two, rework to support function drivers on a
-> >    sibling USID
-> >  * Completely rework RRADC driver to make use of the modern IIO
-> >    framework. This required re-arranging a lot of the equations and
-> >    results in some lost precision, where relevant I've left comments to
-> >    explain this. I don't think any of it is significant enough to
-> >    justify doing post-processing in driver.
-> >    Thanks a lot Jonathan and John Stultz for helping me out with
-> >    this
-> > 
-> > Changes since v2:
-> >  * Add missing include (thanks kernel test robot :D)
-> >  * Rework some confusing function return values, specifically
-> >    rradc_read_status_in_cont_mode and rradc_prepare_batt_id_conversion
-> >    both of which didn't correctly handle "ret". This also bought up an
-> >    issue as the previous implementation didn't actually wait for the
-> >    channel to be ready. It doesn't seem like that's strictly necessary
-> >    (same data is reported if I wait for the status to be good or not)
-> >    but I've included it anyway for good measure.
-> > 
-> > Changes since v1:
-> >  * Rework the RRADC driver based on Jonathan's feedback
-> >  * Pick up Rob's reviewed by for the dt-binding patch.
-> >  ---
-> > Caleb Connolly (9):
-> >   spmi: add a helper to look up an SPMI device from a device node
-> >   mfd: qcom-spmi-pmic: expose the PMIC revid information to clients
-> >   mfd: qcom-spmi-pmic: read fab id on supported PMICs
-> >   dt-bindings: iio: adc: document qcom-spmi-rradc
-> >   iio: adc: qcom-spmi-rradc: introduce round robin adc
-> >   arm64: dts: qcom: pmi8998: add rradc node
-> >   arm64: dts: qcom: sdm845-oneplus: enable rradc
-> >   arm64: dts: qcom: sdm845-db845c: enable rradc
-> >   arm64: dts: qcom: sdm845-xiaomi-beryllium: enable rradc
-> > 
-> > Jami Kettunen (1):
-> >   arm64: dts: qcom: msm8998-oneplus-common: enable RRADC
-> > 
-> >  .../bindings/iio/adc/qcom,spmi-rradc.yaml     |   51 +
-> >  .../boot/dts/qcom/msm8998-oneplus-common.dtsi |    4 +
-> >  arch/arm64/boot/dts/qcom/pmi8998.dtsi         |    8 +
-> >  arch/arm64/boot/dts/qcom/sdm845-db845c.dts    |    4 +
-> >  .../boot/dts/qcom/sdm845-oneplus-common.dtsi  |    4 +
-> >  .../boot/dts/qcom/sdm845-xiaomi-beryllium.dts |    4 +
-> >  drivers/iio/adc/Kconfig                       |   12 +
-> >  drivers/iio/adc/Makefile                      |    1 +
-> >  drivers/iio/adc/qcom-spmi-rradc.c             | 1021 +++++++++++++++++
-> >  drivers/mfd/qcom-spmi-pmic.c                  |  272 +++--
-> >  drivers/spmi/spmi.c                           |   17 +
-> >  include/linux/spmi.h                          |    3 +
-> >  include/soc/qcom/qcom-spmi-pmic.h             |   61 +
-> >  13 files changed, 1372 insertions(+), 90 deletions(-)
-> >  create mode 100644 Documentation/devicetree/bindings/iio/adc/qcom,spmi-rradc.yaml
-> >  create mode 100644 drivers/iio/adc/qcom-spmi-rradc.c
-> >  create mode 100644 include/soc/qcom/qcom-spmi-pmic.h
-> >   
-> 
+
+>=20
+> - Nuno S=C3=A1
 
