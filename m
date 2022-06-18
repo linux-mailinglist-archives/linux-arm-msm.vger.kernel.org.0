@@ -2,84 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D1F1F550248
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Jun 2022 05:03:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 669255502D0
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Jun 2022 06:36:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232367AbiFRDDm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Jun 2022 23:03:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39832 "EHLO
+        id S229478AbiFREgA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 18 Jun 2022 00:36:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38880 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1383900AbiFRDDl (ORCPT
+        with ESMTP id S229789AbiFREf7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Jun 2022 23:03:41 -0400
-Received: from fllv0016.ext.ti.com (fllv0016.ext.ti.com [198.47.19.142])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 520BA6CAA7;
-        Fri, 17 Jun 2022 20:03:40 -0700 (PDT)
-Received: from lelv0265.itg.ti.com ([10.180.67.224])
-        by fllv0016.ext.ti.com (8.15.2/8.15.2) with ESMTP id 25I32Nt4004650;
-        Fri, 17 Jun 2022 22:02:23 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-        s=ti-com-17Q1; t=1655521343;
-        bh=v9iLe16OQzDjus8PgEyzt81ju785zygpn75Qb7cPKDk=;
-        h=From:To:CC:Subject:Date:In-Reply-To:References;
-        b=ubm9+IAhGGTk3kdTt5x7vdcv21zn8SduavN1QPsDFtatpMEQLnnpq14kmxzjhSdoM
-         EhSYzwprF+3qoaWgxqEa7tkCA7AfNzT0CIUyyPN2V1vMiSYZKDtU+T7Pvq2yIkEfs4
-         7jCtmDUFYShPMx+ispwTz24Ou/91SMS8cN3blxkI=
-Received: from DLEE103.ent.ti.com (dlee103.ent.ti.com [157.170.170.33])
-        by lelv0265.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 25I32NTI008896
-        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
-        Fri, 17 Jun 2022 22:02:23 -0500
-Received: from DLEE108.ent.ti.com (157.170.170.38) by DLEE103.ent.ti.com
- (157.170.170.33) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2308.14; Fri, 17
- Jun 2022 22:02:22 -0500
-Received: from fllv0040.itg.ti.com (10.64.41.20) by DLEE108.ent.ti.com
- (157.170.170.38) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2308.14 via
- Frontend Transport; Fri, 17 Jun 2022 22:02:22 -0500
-Received: from localhost (ileax41-snat.itg.ti.com [10.172.224.153])
-        by fllv0040.itg.ti.com (8.15.2/8.15.2) with ESMTP id 25I32MBg024730;
-        Fri, 17 Jun 2022 22:02:22 -0500
-From:   Nishanth Menon <nm@ti.com>
-To:     <krzysztof.kozlowski@linaro.org>, <olof@lixom.net>,
-        <soc@kernel.org>, Arnd Bergmann <arnd@arndb.de>, <arm@kernel.org>
-CC:     Nishanth Menon <nm@ti.com>, <linux-input@vger.kernel.org>,
-        <khuong@os.amperecomputing.com>, <heiko@sntech.de>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <jonathanh@nvidia.com>, <sebastian.hesselbarth@gmail.com>,
-        <agross@kernel.org>, <linux-omap@vger.kernel.org>,
-        <linux-gpio@vger.kernel.org>, <tony@atomide.com>,
-        <nicolas.ferre@microchip.com>, <joel@jms.id.au>,
-        <linux-arm-msm@vger.kernel.org>, <robh+dt@kernel.org>,
-        <bcousson@baylibre.com>, <thierry.reding@gmail.com>,
-        <claudiu.beznea@microchip.com>, <vigneshr@ti.com>,
-        <bjorn.andersson@linaro.org>, <openbmc@lists.ozlabs.org>,
-        <peda@axentia.se>, <andrew@lunn.ch>,
-        <linux-aspeed@lists.ozlabs.org>, <linus.walleij@linaro.org>,
-        <festevam@gmail.com>, <xuwei5@hisilicon.com>,
-        <alexandre.belloni@bootlin.com>, <leoyang.li@nxp.com>,
-        <michal.simek@xilinx.com>, <andrew@aj.id.au>, <kristo@kernel.org>,
-        <linux-imx@nxp.com>, <krzysztof.kozlowski+dt@linaro.org>,
-        <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>,
-        <linux-arm-kernel@lists.infradead.org>, <matthias.bgg@gmail.com>,
-        <j.neuschaefer@gmx.net>, <gregory.clement@bootlin.com>,
-        <linux-mediatek@lists.infradead.org>,
-        <linux-rockchip@lists.infradead.org>, <linux@armlinux.org.uk>,
-        <kernel@pengutronix.de>, <dmitry.torokhov@gmail.com>,
-        <linux-tegra@vger.kernel.org>
-Subject: Re: (subset) [PATCH v3 00/40] dt-bindings: input: gpio-keys: rework matching children
-Date:   Fri, 17 Jun 2022 22:02:21 -0500
-Message-ID: <165552126299.28422.3856100388848453087.b4-ty@ti.com>
-X-Mailer: git-send-email 2.31.1
-In-Reply-To: <20220616005224.18391-1-krzysztof.kozlowski@linaro.org>
-References: <20220616005224.18391-1-krzysztof.kozlowski@linaro.org>
+        Sat, 18 Jun 2022 00:35:59 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA1ED2CDE9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jun 2022 21:35:56 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id be31so9613840lfb.10
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jun 2022 21:35:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=VpoARyskjrsl8rfLEbLTskbg6ji6qM2azTrmPXdEaqU=;
+        b=FytwNuiMPbYIJincXBXYnOSJu6v/r2p942L4TJkUDUeuD/0DqSJyQ8kq7a+ZX7i00g
+         A4/4DIXXmvGwyc9f/HU07lNQ1PYF6qGLqt7KOYvvKapcUqA+BvTdCQG7UkQPEAsShFF/
+         cc3LknibrexPA6BUMf9W47z2ysq+sbuQt/2qLoZOwlCxEW0pHOUkmozpZRSFcb9AAxKf
+         EcXtVYHwwPs1ZrMwHY5RvNZupzeqKH/uxOd8usfPnK6VzJe3So6uNp3oufifU7UtP0UW
+         WlCqSDG0nTDERE4GXYOMZnnXRmbPXckt7byUhcJ19JMO64P/+u6+/Trr/SGLZHSVwxMA
+         IJNg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=VpoARyskjrsl8rfLEbLTskbg6ji6qM2azTrmPXdEaqU=;
+        b=Y7e43Kh1Hf7yUuFvXQZHh0pSS5CrOz/hjnZIYhb11OxAVhWzziuVjrbKMax2lbmEmb
+         r3cgmxwVM8vSCnmIM+j6aMMi7XSiloPlq0vinYtjaMGL3AL2YevePmYs/Ujhr5AHvznj
+         cqf7Xm8abn9x8n2nCCF5zZ9eI+t0Iy6X2TUKL/I8TUDRMOiGeX323hU4eN5my9MMSgr3
+         58mTIU2TWaq40vraXyzZpnMTzA3g0AlGdU6g/qgpNi0sCIgiKhH9kLIBThcMWXNAckvp
+         M3Yx4SM0JqHIhGXvyiK+T54MJ48T5+mitdXj2PkJ6U6sD+kH7Nk53Zc2FqsvuASjo7eV
+         ybWw==
+X-Gm-Message-State: AJIora8ykNntrsXoH9jkILgupkz8cBFN9bSJojUpE/mNsT8jzr0nfKdt
+        f7xnigfjpGcr/e4nhca6iQVWjA==
+X-Google-Smtp-Source: AGRyM1sIMez5VxkVOnoLQm8sl13hrGx4EPWDtKb7FI64aoT8FGVfjTjOgllKZSGbswVBo/ED+Uj3xQ==
+X-Received: by 2002:a05:6512:5d2:b0:47f:6270:cb54 with SMTP id o18-20020a05651205d200b0047f6270cb54mr244347lfo.358.1655526954287;
+        Fri, 17 Jun 2022 21:35:54 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id y15-20020a056512044f00b00478ebc6be69sm852584lfk.261.2022.06.17.21.35.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 17 Jun 2022 21:35:53 -0700 (PDT)
+Message-ID: <cd4eaead-4218-2de0-1929-7c8a2aafaff4@linaro.org>
+Date:   Sat, 18 Jun 2022 07:35:52 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
-X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: Re: [PATCH 2/7] dt-bindings: clock: separate bindings for MSM8916 GCC
+ device
+Content-Language: en-GB
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Taniya Das <quic_tdas@quicinc.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <20220617144714.817765-1-dmitry.baryshkov@linaro.org>
+ <20220617144714.817765-3-dmitry.baryshkov@linaro.org>
+ <4a614c32-35c5-2dfa-3e15-d54c3c3c5836@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <4a614c32-35c5-2dfa-3e15-d54c3c3c5836@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -87,44 +84,67 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Krzysztof Kozlowski,
-
-On Wed, 15 Jun 2022 17:52:24 -0700, Krzysztof Kozlowski wrote:
-> Merging
-> =======
-> 1. dt-bindings: rebased on top of Rob's:
->    https://lore.kernel.org/all/20220608211207.2058487-1-robh@kernel.org/
+On 18/06/2022 04:40, Krzysztof Kozlowski wrote:
+> On 17/06/2022 07:47, Dmitry Baryshkov wrote:
+>> Separate bindings for GCC on Qualcomm MSM8916 platforms. This adds new
+>> clocks/clock-names properties to be used for clock links.
+>>
+>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> ---
+>>   .../bindings/clock/qcom,gcc-msm8916.yaml      | 61 +++++++++++++++++++
+>>   .../bindings/clock/qcom,gcc-other.yaml        |  1 -
+>>   2 files changed, 61 insertions(+), 1 deletion(-)
+>>   create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-msm8916.yaml
+>>
+>> diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-msm8916.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-msm8916.yaml
+>> new file mode 100644
+>> index 000000000000..564aa764b17b
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/clock/qcom,gcc-msm8916.yaml
+>> @@ -0,0 +1,61 @@
+>> +# SPDX-License-Identifier: GPL-2.0-only
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/clock/qcom,gcc-msm8916.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: Qualcomm Global Clock & Reset Controller Binding for MSM8916
+>> +
+>> +maintainers:
+>> +  - Stephen Boyd <sboyd@kernel.org>
+>> +  - Taniya Das <quic_tdas@quicinc.com>
+>> +
+>> +description: |
+>> +  Qualcomm global clock control module which supports the clocks, resets and
+>> +  power domains on MSM8916.
+>> +
+>> +  See also:
+>> +  - dt-bindings/clock/qcom,gcc-msm8916.h
+>> +
+>> +properties:
+>> +  compatible:
+>> +    const: qcom,gcc-msm8916
+>> +
+>> +  clocks:
+>> +    items:
+>> +      - description: XO source
+>> +      - description: Sleep clock source
+>> +      - description: DSI phy instance 0 dsi clock
+>> +      - description: DSI phy instance 0 byte clock
+>> +      - description: External MCLK clock
+>> +      - description: External Primary I2S clock
+>> +      - description: External Secondary I2S clock
+>> +
+>> +  clock-names:
+>> +    items:
+>> +      - const: xo
+>> +      - const: sleep_clk
 > 
-> 2. DTS patches are independent. They can be picked up directly by sub-arch
->    maintainers, by Arnd or Olof, or eventually by me (if you wish).
-> 
-> [...]
+> Just "sleep"
 
-I have applied the following to branch ti-k3-dts-next on [1].
-Thank you!
+I was hesitating here as all other gcc drivers use 'sleep_clk'.
 
-[29/40] arm64: dts: ti: align gpio-key node names with dtschema
-        commit: 85423386c9763fb20159892631eccc481a2d9b71
 
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent up the chain during
-the next merge window (or sooner if it is a relevant bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-[1] git://git.kernel.org/pub/scm/linux/kernel/git/ti/linux.git
 -- 
-Regards,
-Nishanth Menon
-Key (0xDDB5849D1736249D) / Fingerprint: F8A2 8693 54EB 8232 17A3  1A34 DDB5 849D 1736 249D
-
+With best wishes
+Dmitry
