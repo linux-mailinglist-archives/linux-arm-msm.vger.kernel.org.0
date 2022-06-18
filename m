@@ -2,82 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A036255060E
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Jun 2022 18:12:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1BEF8550652
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Jun 2022 19:21:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236531AbiFRQMS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 18 Jun 2022 12:12:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37254 "EHLO
+        id S233373AbiFRRVn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 18 Jun 2022 13:21:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45442 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235326AbiFRQMP (ORCPT
+        with ESMTP id S231142AbiFRRVm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 18 Jun 2022 12:12:15 -0400
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 679EB15805
-        for <linux-arm-msm@vger.kernel.org>; Sat, 18 Jun 2022 09:12:12 -0700 (PDT)
-Received: by mail-ej1-x633.google.com with SMTP id g25so13788425ejh.9
-        for <linux-arm-msm@vger.kernel.org>; Sat, 18 Jun 2022 09:12:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=IXQqZXKsIahRiMlAn7GqcvzltiNlbsf4wn/WAu8+tIk=;
-        b=dE6crysc+U1uJUov643h9mjqC3OXf4w+yGe23fvpmNE7Aqo64PJzbcxMAe6FmdzAsx
-         RFVEKII7nfr/HKlxVT5dqe3a8THvDLkvX7GaFVPSHTx5YR9duXJzX+H6rvFBGSSWOcCx
-         BUaMGlMteuBj5Ggymc3E0RGuVzbn6DB224MR6rRdGcOotGv+NwtyFCq1jBxNdn0l4Tmi
-         rTP8GONalahQRmQ70whOv50DR9XTx4XMUkiPg53kY4Z1Mnpmb3PhJ8jqfmQAHhq99rT4
-         C6Drwqe4Li7dd9vmoc/Bl6tJsNfkA238v1mICn0lsE/BS7rYEe73z+5ebmXOZr4hxzRm
-         mzEg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=IXQqZXKsIahRiMlAn7GqcvzltiNlbsf4wn/WAu8+tIk=;
-        b=mC6Qz7AeOUgxBm7CccoCZNdSd8RtCYDHcjf8KDWhro4yljkShT9Bv0mX14P1RBwAK7
-         aPidSJXHnFhJ8bMkpMOvBQpz8rU1BP7UBEx+gDqMkgYVzOJMf4Wpl4sIRd8e1WNwHrgh
-         Q9duBRlgkAkEpchM7RfqZf/IaCCrLM0UABJpDt/NyRplYITVdBEEmMLzv2Esg84WlCqh
-         dWWQqojbJIOEJA1akEvGi07ut3EYWpQ6Px49cwBXqdzO267KKqc+T8JD5AdBTfk7dwSQ
-         yeWuAlo/ddSDmt9YIf6W20dYkxVMcf/zCOS4HJ2oKdRDB4wABQVDcb0gHVZG6bYsJOCJ
-         RaNg==
-X-Gm-Message-State: AJIora/dotTuuZBByUVL45I8gBNiZkkO/Mac/tSjIGtMWtoUeUeSfelQ
-        gY9NDGUjhkxlPvtAkZjzTcKnng==
-X-Google-Smtp-Source: AGRyM1umvz/p/Iyjm5mTDqNqRqa6aA5gagfMz4fkcyiE2LZTANOh7xe4b8+2ErJKXXhpB7wPudp3dg==
-X-Received: by 2002:a17:906:6a1a:b0:711:ec13:b7bc with SMTP id qw26-20020a1709066a1a00b00711ec13b7bcmr13912025ejc.688.1655568730833;
-        Sat, 18 Jun 2022 09:12:10 -0700 (PDT)
-Received: from [192.168.212.234] (92.40.170.45.threembb.co.uk. [92.40.170.45])
-        by smtp.gmail.com with ESMTPSA id lb25-20020a170907785900b006febc1e9fc8sm3568253ejc.47.2022.06.18.09.12.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 18 Jun 2022 09:12:10 -0700 (PDT)
-Message-ID: <0289abc2-c9f2-c798-6247-e3d8e4231945@linaro.org>
-Date:   Sat, 18 Jun 2022 17:13:38 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: [PATCH v14 00/10] iio: adc: introduce Qualcomm SPMI Round Robin
- ADC
-Content-Language: en-US
-To:     Jonathan Cameron <jic23@kernel.org>
-Cc:     Lars-Peter Clausen <lars@metafoo.de>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Sat, 18 Jun 2022 13:21:42 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83AA0140CF;
+        Sat, 18 Jun 2022 10:21:37 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 17596B80A72;
+        Sat, 18 Jun 2022 17:21:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41652C3411A;
+        Sat, 18 Jun 2022 17:21:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1655572894;
+        bh=s9rzUJH1dCU78egHZ+iIG03v6Lj+ion9PzSseqxJCFI=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=mLbJ4PLP002IFIyUS/mFXkt7VRPo37gj1dl2UgXLay+Jd+5DxzlSRZxjCKSQfzLtm
+         w4ERJv/y4Vtvf+zMWg/hqpOjfO75ncGomxEsmRBeblvqyljZF/cJ0Ghsf1i8AkvVYy
+         CTfCUKo5VD9g1SiBv2jluSBhogu0x0nNfUVOBKIfVg9HtAQUAAfDJ/p33a5g0kx2kd
+         QlWaytpoO91OuQliAYmBYJC3yq5N6Q8XpHivXx5gTE7c7v/ixy3a9u9FLFcZpTIv8D
+         BUJ5TsJBVILC9zkvhKEqh4bM/awT4sH6gM4Y9KEH1IVSYXTDyOvr87C/r8rkSapHHo
+         AwM2FiuCayWcQ==
+Date:   Sat, 18 Jun 2022 18:30:40 +0100
+From:   Jonathan Cameron <jic23@kernel.org>
+To:     Nuno =?UTF-8?B?U8Oh?= <nuno.sa@analog.com>
+Cc:     <linux-imx@nxp.com>, <linux-renesas-soc@vger.kernel.org>,
+        <linux-mips@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <chrome-platform@lists.linux.dev>,
+        Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+        <linux-mediatek@lists.infradead.org>,
+        <linux-stm32@st-md-mailman.stormreply.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-iio@vger.kernel.org>,
+        <openbmc@lists.ozlabs.org>, Cai Huoqing <cai.huoqing@linux.dev>,
+        Benjamin Fair <benjaminfair@google.com>,
+        Jishnu Prakash <quic_jprakash@quicinc.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Amit Kucheria <amitk@kernel.org>,
         Andy Gross <agross@kernel.org>,
+        Michael Hennerich <Michael.Hennerich@analog.com>,
+        Haibo Chen <haibo.chen@nxp.com>,
+        Benson Leung <bleung@chromium.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Christophe Branchereau <cbranchereau@gmail.com>,
+        Patrick Venture <venture@google.com>,
+        Arnd Bergmann <arnd@arndb.de>, Nancy Yuen <yuenn@google.com>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Gwendal Grignou <gwendal@chromium.org>,
+        Saravanan Sekar <sravanhome@gmail.com>,
+        Tali Perry <tali.perry1@gmail.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Paul Cercueil <paul@crapouillou.net>,
+        Thara Gopinath <thara.gopinath@linaro.org>,
+        Avi Fishman <avifishman70@gmail.com>,
+        Lorenzo Bianconi <lorenzo@kernel.org>,
+        Claudiu Beznea <claudiu.beznea@microchip.com>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Andy Shevchenko <andy.shevchenko@gmail.com>,
+        Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Tomer Maimon <tmaimon77@gmail.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Lee Jones <lee.jones@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>, linux-iio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Sumit Semwal <sumit.semwal@linaro.org>
-References: <20220429220904.137297-1-caleb.connolly@linaro.org>
- <20220618140913.49fd1dc2@jic23-huawei> <20220618141757.625f86c4@jic23-huawei>
-From:   Caleb Connolly <caleb.connolly@linaro.org>
-In-Reply-To: <20220618141757.625f86c4@jic23-huawei>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        Nicolas Ferre <nicolas.ferre@microchip.com>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Guenter Roeck <groeck@chromium.org>,
+        Fabio Estevam <festevam@gmail.com>,
+        Olivier Moysan <olivier.moysan@foss.st.com>,
+        Eugen Hristev <eugen.hristev@microchip.com>,
+        Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: Re: [PATCH 20/34] iio: inkern: only relase the device node when
+ done with it
+Message-ID: <20220618183040.29ed935d@jic23-huawei>
+In-Reply-To: <20220610084545.547700-21-nuno.sa@analog.com>
+References: <20220610084545.547700-1-nuno.sa@analog.com>
+        <20220610084545.547700-21-nuno.sa@analog.com>
+X-Mailer: Claws Mail 4.1.0 (GTK 3.24.34; x86_64-pc-linux-gnu)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -85,178 +104,50 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Fri, 10 Jun 2022 10:45:31 +0200
+Nuno S=C3=A1 <nuno.sa@analog.com> wrote:
+
+Typo in patch title (just noticed whilst scrolling past)
+
+release
 
 
-On 18/06/2022 14:17, Jonathan Cameron wrote:
-> On Sat, 18 Jun 2022 14:09:13 +0100
-> Jonathan Cameron <jic23@kernel.org> wrote:
-> 
->> On Fri, 29 Apr 2022 23:08:55 +0100
->> Caleb Connolly <caleb.connolly@linaro.org> wrote:
->>
->>> The RRADC is responsible for reading data about the current and
->>> voltage from the USB or DC in jacks, it can also read the battery
->>> ID (resistence) and some temperatures. It is found on the PMI8998 and
->>> PM660 Qualcomm PMICs.
->>>
->>> The RRADC has to calibrate some ADC values based on which chip fab
->>> the PMIC was produced in, to facilitate this the patches
->>> ("mfd: qcom-spmi-pmic: expose the PMIC revid information to clients")
->>> and ("mfd: qcom-spmi-pmic: read fab id on supported PMICs")
->>> expose the PMIC revision information and fab_id as a struct and register
->>> them as driver data in the Qualcomm SPMI PMIC driver so that it can be
->>> read by the RRADC.
->>>
->>> The first 3 patches add support for looking up an SPMI device from a
->>> struct device_node, as well as introducing support for looking up the
->>> base USID of a Qcom PMIC, see patch comments for more details. These
->>> Address Bjorns comments on v2.
->>
->> Hi Caleb / All
->>
->> Rather than waste time going for a v15 for the 3 minor issues in reviews
->> I've just fixed them up whilst applying.
->>
->> As spmi or mfd maintainers may want an immutable branch I've
->> just pushed one out at
->> https://git.kernel.org/pub/scm/linux/kernel/git/jic23/iio.git immutable-qcom-spmi-rradc
->> that has the first 5 patches. I assume the dts changes will go via qcom -> arm-soc
->> as normal.
->>
->> 0-day should run on that branch shortly but I'll be optimistic and pull it
->> into my testing branch in the meantime (mostly so I don't forget about it and
->> can mark it applied in patchwork :)
-> 
-> Gah.  Merge into IIO doesn't build because of dropping of.h from includes
-> in iio.h.  This driver should directly include property.h directly.
-> 
-> New 'immutable' branch with same name pushed out.  Guessing no one picked
-> it up in the minute or so previous version was available for!
-> 
-> I'd advise that Lee / Stephen don't merge this for a few days at least so
-> any other issues have become visible and I can fix them up without making
-> for complex history.
-Hi Jonathan,
+> 'of_node_put()' can potentially release the memory pointed to by
+> 'iiospec.np' which would leave us with an invalid pointer (and we would
+> still pass it in 'of_xlate()'). As such, we can only release the node
+> after we are done with it.
+>=20
+> Fixes: 17d82b47a215d ("iio: Add OF support")
+> Signed-off-by: Nuno S=C3=A1 <nuno.sa@analog.com>
+> ---
+>  drivers/iio/inkern.c | 6 ++++--
+>  1 file changed, 4 insertions(+), 2 deletions(-)
+>=20
+> diff --git a/drivers/iio/inkern.c b/drivers/iio/inkern.c
+> index df74765d33dc..9d87057794fc 100644
+> --- a/drivers/iio/inkern.c
+> +++ b/drivers/iio/inkern.c
+> @@ -165,9 +165,10 @@ static int __of_iio_channel_get(struct iio_channel *=
+channel,
+> =20
+>  	idev =3D bus_find_device(&iio_bus_type, NULL, iiospec.np,
+>  			       iio_dev_node_match);
+> -	of_node_put(iiospec.np);
+> -	if (idev =3D=3D NULL)
+> +	if (idev =3D=3D NULL) {
+> +		of_node_put(iiospec.np);
+>  		return -EPROBE_DEFER;
+> +	}
+> =20
+>  	indio_dev =3D dev_to_iio_dev(idev);
+>  	channel->indio_dev =3D indio_dev;
+> @@ -175,6 +176,7 @@ static int __of_iio_channel_get(struct iio_channel *c=
+hannel,
+>  		index =3D indio_dev->info->of_xlate(indio_dev, &iiospec);
+>  	else
+>  		index =3D __of_iio_simple_xlate(indio_dev, &iiospec);
+> +	of_node_put(iiospec.np);
+>  	if (index < 0)
+>  		goto err_put;
+>  	channel->channel =3D &indio_dev->channels[index];
 
-Thanks so much for picking this up and fixing those last few issues. And 
-thanks for all your help with this series, I really appreciate the time 
-you've taken to help me get this to a mergeable state and teach me about 
-IIO.
-
-You've really made my week with this :)
-
-Kind Regards,
-Caleb
-> 
-> Thanks,
-> 
-> Jonathan
-> 
->>
->> Thanks,
->>
->> Jonathan
->>
->>
->>>
->>> Changes since v13:
->>>   * Address Lee Jones' feedback on the SPMI patches.
->>>   * Pick up Jami's patch to enable the RRADC on the OnePlus 5
->>>
->>> Changes since v12:
->>>   * Apply Krzysztof's suggestions to rradc DT binding docs.
->>>
->>> Changes since v11:
->>>   * Remove debug logging which was left in ("mfd: qcom-spmi-pmic: expose the PMIC revid information to clients")
->>>   * Picked up Dmitry's Tested-by and Reviewed-by tags.
->>>
->>> Changes since v10:
->>>   * Don't inline spmi_device_from_of()
->>>
->>> Changes since v9:
->>>   * Add back missing copyright, this driver is originally derived from
->>>     downstream (Thanks Manivannan).
->>>
->>> Changes since v8:
->>>   * Drop Reported-by for the bugfix on previous revision reported by LKP
->>>   * Apply Jonathans suggestions
->>>   * Rework patch 2 ("expose the PMIC revid information to clients") to
->>>     handle PMICs with a single USID (thanks Dmitry)
->>>
->>> Changes since v7:
->>>   * Addressed Jonathans comments
->>>   * Fixed bug reported by LKP
->>>
->>> Changes since v6:
->>>   * Fix printf format warning in rradc
->>>
->>> Changes since v5:
->>>   * Add missing EXPORT_SYMBOL_GPL() to
->>>     ("spmi: add a helper to look up an SPMI device from a device node")
->>>
->>> Changes since v4:
->>>   * Addressed Jonathan's comments on v4
->>>   * Reworked the qcom-spmi-pmic patches to properly walk the devicetree
->>>     to find the base USID. I've tested this on SDM845 which has two PMICs
->>>     (pm8998 and pmi8998) and I'm able to look up the PMIC revid from all
->>>     4 USIDs.
->>>
->>> Changes since v3:
->>>   * Split PMIC patch in two, rework to support function drivers on a
->>>     sibling USID
->>>   * Completely rework RRADC driver to make use of the modern IIO
->>>     framework. This required re-arranging a lot of the equations and
->>>     results in some lost precision, where relevant I've left comments to
->>>     explain this. I don't think any of it is significant enough to
->>>     justify doing post-processing in driver.
->>>     Thanks a lot Jonathan and John Stultz for helping me out with
->>>     this
->>>
->>> Changes since v2:
->>>   * Add missing include (thanks kernel test robot :D)
->>>   * Rework some confusing function return values, specifically
->>>     rradc_read_status_in_cont_mode and rradc_prepare_batt_id_conversion
->>>     both of which didn't correctly handle "ret". This also bought up an
->>>     issue as the previous implementation didn't actually wait for the
->>>     channel to be ready. It doesn't seem like that's strictly necessary
->>>     (same data is reported if I wait for the status to be good or not)
->>>     but I've included it anyway for good measure.
->>>
->>> Changes since v1:
->>>   * Rework the RRADC driver based on Jonathan's feedback
->>>   * Pick up Rob's reviewed by for the dt-binding patch.
->>>   ---
->>> Caleb Connolly (9):
->>>    spmi: add a helper to look up an SPMI device from a device node
->>>    mfd: qcom-spmi-pmic: expose the PMIC revid information to clients
->>>    mfd: qcom-spmi-pmic: read fab id on supported PMICs
->>>    dt-bindings: iio: adc: document qcom-spmi-rradc
->>>    iio: adc: qcom-spmi-rradc: introduce round robin adc
->>>    arm64: dts: qcom: pmi8998: add rradc node
->>>    arm64: dts: qcom: sdm845-oneplus: enable rradc
->>>    arm64: dts: qcom: sdm845-db845c: enable rradc
->>>    arm64: dts: qcom: sdm845-xiaomi-beryllium: enable rradc
->>>
->>> Jami Kettunen (1):
->>>    arm64: dts: qcom: msm8998-oneplus-common: enable RRADC
->>>
->>>   .../bindings/iio/adc/qcom,spmi-rradc.yaml     |   51 +
->>>   .../boot/dts/qcom/msm8998-oneplus-common.dtsi |    4 +
->>>   arch/arm64/boot/dts/qcom/pmi8998.dtsi         |    8 +
->>>   arch/arm64/boot/dts/qcom/sdm845-db845c.dts    |    4 +
->>>   .../boot/dts/qcom/sdm845-oneplus-common.dtsi  |    4 +
->>>   .../boot/dts/qcom/sdm845-xiaomi-beryllium.dts |    4 +
->>>   drivers/iio/adc/Kconfig                       |   12 +
->>>   drivers/iio/adc/Makefile                      |    1 +
->>>   drivers/iio/adc/qcom-spmi-rradc.c             | 1021 +++++++++++++++++
->>>   drivers/mfd/qcom-spmi-pmic.c                  |  272 +++--
->>>   drivers/spmi/spmi.c                           |   17 +
->>>   include/linux/spmi.h                          |    3 +
->>>   include/soc/qcom/qcom-spmi-pmic.h             |   61 +
->>>   13 files changed, 1372 insertions(+), 90 deletions(-)
->>>   create mode 100644 Documentation/devicetree/bindings/iio/adc/qcom,spmi-rradc.yaml
->>>   create mode 100644 drivers/iio/adc/qcom-spmi-rradc.c
->>>   create mode 100644 include/soc/qcom/qcom-spmi-pmic.h
->>>    
->>
-> 
