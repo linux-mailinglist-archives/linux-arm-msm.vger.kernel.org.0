@@ -2,68 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0DB885505B7
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Jun 2022 17:26:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8D0715505BD
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Jun 2022 17:30:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233894AbiFRP0Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 18 Jun 2022 11:26:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39232 "EHLO
+        id S235170AbiFRPaE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 18 Jun 2022 11:30:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41576 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235157AbiFRP0X (ORCPT
+        with ESMTP id S234386AbiFRPaD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 18 Jun 2022 11:26:23 -0400
-Received: from mail-qv1-xf31.google.com (mail-qv1-xf31.google.com [IPv6:2607:f8b0:4864:20::f31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C3BE6244
-        for <linux-arm-msm@vger.kernel.org>; Sat, 18 Jun 2022 08:26:22 -0700 (PDT)
-Received: by mail-qv1-xf31.google.com with SMTP id t16so5399444qvh.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 18 Jun 2022 08:26:22 -0700 (PDT)
+        Sat, 18 Jun 2022 11:30:03 -0400
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3A8110FC4
+        for <linux-arm-msm@vger.kernel.org>; Sat, 18 Jun 2022 08:30:02 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id w20so11013120lfa.11
+        for <linux-arm-msm@vger.kernel.org>; Sat, 18 Jun 2022 08:30:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=7yl+xWcwVFLnyuaROrrKb0oLsBtG84Oe2zSLgvQZ6no=;
-        b=KqY7UVBX2vSSEpwujLQYovb9gYVHEq3Pi80wL996MKdr6yBXPfcsRJfobcBKcQOyhA
-         ul2gc27bawxU+xiOUW6Rhj9/3hTqGJsWnoaB2hqov4VIhdwB6X98r9eY0eepbJmRjbUN
-         LcWQizgGEnmxWHUZcETlaNwzJ27PiK0Qqg9MrZakcRn748XrGKCeLSTLIVrsYBULvDD7
-         JeNQthnoJ3C9XRLzZLnqSHHeN/pVhfqUSVQh0t8DaO5sKVpdnnevLDDUnRFBp4xJqbwq
-         SAyEqPKbCP6eqattCeBk8jxTMCX4R4mc8QMofIJ3yesDF6ijarEQci+9jbd/XxDDEXi5
-         XF+A==
+        h=message-id:date:mime-version:user-agent:subject:content-language
+         :from:to:cc:references:in-reply-to:content-transfer-encoding;
+        bh=1/e1mvC387Kg6krxrVdOK9bDUmZD/rSMjrmBoVChUyY=;
+        b=Y6VCMxYgNgyNPMj9zsdsppQoeYQwMpNdVVxdTH+8Wpo+3GjeF3AxYzywaHrQVhf4zb
+         19in/R4gVpRDUjzMjunejVzUb8hOvn3teiZsRMiBn5iJDl+14pD2w6cCBWTcWm/qeoai
+         fv/OHOcSJ+7AhdkgrXNTwvhqbJtF98snKZKjLEJK3lKgNKHwImezsz4rBuDhhanMzi8w
+         GfVjBU/Cl+6ODiKsaabsRg+TgY0E5WZHT5rL6EcbTFh+oHEVRAXLmVYo5hdmtqm4hCLz
+         MmnEZDgSBPiigVlx8jvAv6ID84L3mQyXwnAO+mBczGM99ERk46lyHncxt7MKNTkMczWi
+         AZcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=7yl+xWcwVFLnyuaROrrKb0oLsBtG84Oe2zSLgvQZ6no=;
-        b=oe6Wcl9syJyBqStDo3cZKVaVrI7cJcd9hSNu5fCaOks7rWtMsWQB5APawCVjxyvfLf
-         qbQSz2nCV0CLFW5AwCEIWFXY3Zh3zxymR5yAVNtCLxL1MWuU4LDcE7pv2j3VFgBrGwzw
-         YsU6P63rkgwQot5w3NfScnX5FNzG6MglQQ627JAeJZRgzq2XeVlvSAj990IDEuJJmTJa
-         cN3W+4K+1z1diyAhXc2gVQHCa7cBJ83agjNJaZiEMEvr2cXur3BD/tVvUQZavHjCOkG6
-         adN2yOpWz0eJmsk1S9OayJak7dYRzpvCiE1GkqizCT8/i0UuweOaX9e3KZILThdYoTpZ
-         9d7Q==
-X-Gm-Message-State: AJIora/2U3Zq+bh80eZdQbwxa4DkXVFoAR+wQovUplyBIZfHcfQNxNEO
-        YLtKC3hqS5SWr5gNN+0q1Q+shYNAQSbrVc6YjdTX+A==
-X-Google-Smtp-Source: AGRyM1sR581qRv4JouVElVM2DI+MmhpNUnbQNeyw6yIKDKnyO1veVGBuLoVpJyWMQ0AVIq/eZxUCftWNW75DgwalseY=
-X-Received: by 2002:a05:622a:487:b0:304:fbfc:9933 with SMTP id
- p7-20020a05622a048700b00304fbfc9933mr13291540qtx.682.1655565981300; Sat, 18
- Jun 2022 08:26:21 -0700 (PDT)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:from:to:cc:references:in-reply-to
+         :content-transfer-encoding;
+        bh=1/e1mvC387Kg6krxrVdOK9bDUmZD/rSMjrmBoVChUyY=;
+        b=ZY4hpmHsNwXTM0u58IaZcQeIBeqGcDZ6yjgUwH78iRJGdhrc38kop3Ya1F0qY1zMqb
+         SeGYeWMIB4shVaOKvoK5VLgKooxLhOxLkK2SChiG90drv37ydlIrjh/tUYTGNuj2B+rk
+         FeNKtyE5EaZmgZtlEC1Rm3rVUdDEe+adm42R9aG+uC+F2/4Q2Mrv6MRSAX29F6lZs0xX
+         S2ENT3po/toHw4/i9O5UDm16lPCEPq+RJ68QBypNK9/WI5LFuoZkuLBbBFNOp4Hu432e
+         ddBZ6eoY+uda3tg4NrMGdzzoFUnDndRWw/uT148G9ilpG9xShHwxpSXvQ+F8xOl3FEbX
+         lipw==
+X-Gm-Message-State: AJIora8KowvJvct0cRVh/h7VUvTVBUJfXJGvC0dXtl6sbhco1duA4FZp
+        6NZiX6oJXSeVOvLSQVdNYF30gg==
+X-Google-Smtp-Source: AGRyM1vsx6BcY+vFiaMfP9N84rL3oHIMRfiZTZnNSPFSz6sBhlqco/EbWtj99hbdbLhtparSH3ujEQ==
+X-Received: by 2002:a05:6512:238d:b0:479:2116:8598 with SMTP id c13-20020a056512238d00b0047921168598mr8709693lfv.322.1655566201316;
+        Sat, 18 Jun 2022 08:30:01 -0700 (PDT)
+Received: from [192.168.43.7] ([188.162.65.10])
+        by smtp.gmail.com with ESMTPSA id t7-20020a2e9d07000000b002556cf330e8sm956719lji.99.2022.06.18.08.29.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 18 Jun 2022 08:30:00 -0700 (PDT)
+Message-ID: <4f1ae43c-0f22-19fe-0794-3cc268104396@linaro.org>
+Date:   Sat, 18 Jun 2022 18:29:58 +0300
 MIME-Version: 1.0
-References: <20220615135935.87381-1-dmitry.baryshkov@linaro.org>
- <20220615135935.87381-2-dmitry.baryshkov@linaro.org> <11998546.O9o76ZdvQC@g550jk>
-In-Reply-To: <11998546.O9o76ZdvQC@g550jk>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: Re: [PATCH v3 0/2] spmi: pmic-arb: Add support for PMIC v7
+Content-Language: en-GB
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Sat, 18 Jun 2022 18:26:10 +0300
-Message-ID: <CAA8EJppqpZzF2o-jQGKvFnf62kAdv-2QTsYmXMfw2k7KccNzBg@mail.gmail.com>
-Subject: Re: [PATCH 2/5] drm/msm/mdss: enable optional core clock for MDP5 MDSS
-To:     Luca Weiss <luca@z3ntu.xyz>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        dri-devel@lists.freedesktop.org, David Airlie <airlied@linux.ie>,
-        linux-arm-msm@vger.kernel.org,
+To:     Stephen Boyd <sboyd@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        David Collins <quic_collinsd@quicinc.com>
+Cc:     linux-arm-msm@vger.kernel.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        freedreno@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        Linus Walleij <linus.walleij@linaro.org>,
+        David Dai <daidavid1@codeaurora.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20220201134108.2677578-1-vkoul@kernel.org>
+ <YhUVAwtfjuIdKrRQ@matsya> <1c66890b-6736-61ef-7d16-619f90ced4a0@linaro.org>
+In-Reply-To: <1c66890b-6736-61ef-7d16-619f90ced4a0@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -72,54 +80,49 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 18 Jun 2022 at 17:24, Luca Weiss <luca@z3ntu.xyz> wrote:
->
-> Hi Dmitry,
->
-> On Mittwoch, 15. Juni 2022 15:59:32 CEST Dmitry Baryshkov wrote:
-> > Enable (optional) core (MDP_CLK) clock that allows accessing HW_REV
-> > registers during the platform init.
-> >
->
-> I believe you also need to update Documentation/devicetree/bindings/display/
-> msm/mdp5.txt with the new clock.
+On 01/05/2022 22:41, Dmitry Baryshkov wrote:
+> On 22/02/2022 19:53, Vinod Koul wrote:
+>> On 01-02-22, 19:11, Vinod Koul wrote:
+>>> Hello,
+>>>
+>>> The is version 3 of support for PMIC v7. I have added a new property
+>>> qcom,bus-id for supporting v7 and then add driver changes for v7
+>>>
+>>> This depends on yaml conversion patch:
+>>> https://lore.kernel.org/linux-arm-msm/20211227170151.73116-1-david@ixit.cz/ 
+>>>
+>>
+>> Any feedback on this...
+> 
+> Another gracious reminder about these patches. At this moment this is 
+> one of the important pieces lacking for the full SM8450 support in the 
+> upstream kernel.
 
-I'm working on converting it to the yaml format.
+Stephen, yet another ping. This is the blocking point for the further 
+SM8450 progress.
 
->
-> Regards
-> Luca
->
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> >  drivers/gpu/drm/msm/msm_mdss.c | 3 ++-
-> >  1 file changed, 2 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/drivers/gpu/drm/msm/msm_mdss.c b/drivers/gpu/drm/msm/msm_mdss.c
-> > index b41848bfff91..f7b4628986b8 100644
-> > --- a/drivers/gpu/drm/msm/msm_mdss.c
-> > +++ b/drivers/gpu/drm/msm/msm_mdss.c
-> > @@ -288,7 +288,7 @@ static int msm_mdss_reset(struct device *dev)
-> >  /*
-> >   * MDP5 MDSS uses at most three specified clocks.
-> >   */
-> > -#define MDP5_MDSS_NUM_CLOCKS 3
-> > +#define MDP5_MDSS_NUM_CLOCKS 4
-> >  static int mdp5_mdss_parse_clock(struct platform_device *pdev, struct
-> > clk_bulk_data **clocks) {
-> >       struct clk_bulk_data *bulk;
-> > @@ -305,6 +305,7 @@ static int mdp5_mdss_parse_clock(struct platform_device
-> > *pdev, struct clk_bulk_d bulk[num_clocks++].id = "iface";
-> >       bulk[num_clocks++].id = "bus";
-> >       bulk[num_clocks++].id = "vsync";
-> > +     bulk[num_clocks++].id = "core"; /* for hw_rev access */
-> >
-> >       ret = devm_clk_bulk_get_optional(&pdev->dev, num_clocks, bulk);
-> >       if (ret)
->
->
->
->
+>>> Changes since v2:
+>>>   - Drop yaml conversion patch
+>>>   - Fix author for spmi patch
+>>> Changes since v1:
+>>>   - Add yaml conversion patch and new binding
+>>>   - fix driver bug report by Jonathan
+>>>
+>>> David Collins (1):
+>>>    spmi: pmic-arb: Add support for PMIC v7
+>>>
+>>> Vinod Koul (1):
+>>>    dt-bindings: spmi: Add qcom,bus-id
+>>>
+>>>   .../bindings/spmi/qcom,spmi-pmic-arb.yaml     |  11 +
+>>>   drivers/spmi/spmi-pmic-arb.c                  | 233 ++++++++++++++++--
+>>>   2 files changed, 225 insertions(+), 19 deletions(-)
+>>>
+>>> -- 
+>>> 2.31.1
+>>
+> 
+> 
 
 
 -- 
