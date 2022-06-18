@@ -2,64 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7611055013A
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Jun 2022 02:16:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7846B550140
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Jun 2022 02:16:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237829AbiFRAQG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Jun 2022 20:16:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38030 "EHLO
+        id S1383572AbiFRAQq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 Jun 2022 20:16:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38640 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236246AbiFRAQG (ORCPT
+        with ESMTP id S1383611AbiFRAQo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Jun 2022 20:16:06 -0400
-Received: from mail-io1-xd30.google.com (mail-io1-xd30.google.com [IPv6:2607:f8b0:4864:20::d30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59A0017597
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jun 2022 17:16:05 -0700 (PDT)
-Received: by mail-io1-xd30.google.com with SMTP id y79so6050941iof.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jun 2022 17:16:05 -0700 (PDT)
+        Fri, 17 Jun 2022 20:16:44 -0400
+Received: from mail-io1-xd2e.google.com (mail-io1-xd2e.google.com [IPv6:2607:f8b0:4864:20::d2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 399E236E1A
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jun 2022 17:16:43 -0700 (PDT)
+Received: by mail-io1-xd2e.google.com with SMTP id p69so6089317iod.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jun 2022 17:16:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=Gkj3uMdCjmsHzflHOakxzyYQKVRj/sTnpglWgNUCgvI=;
-        b=R6lsSQ5dAFDDxHfBx6/RJfG7mPr/fGPTiJLoHZFflQBajhfuDa6e4hxp3GVqeC8Xt6
-         EQS4Y0R3LvNlgQbzsaeiCOeLETyIuZoldmmcUmXDS5hdcwic5aUOsgQ9J8V1FLTwtVQt
-         0q56sLpON5p6nayE71wvi/wt3+o0MUr5MsHfw=
+        bh=JUY4IDfHVWw771LXx7m4NTtTCDxzgte6IAjfOYq4YV0=;
+        b=Z7sV+UaSj09IY9kA8WmG0cAhyHKUJQzu0VKFQDd35RCeypxP2w5NJwsNUhCgMjUqKd
+         SUwKjLrCI+SJgR8B8wx6BKirjcr9zkigekjP4pH4pP1gHiqDd7b/5nG/hrIYYxxMwC+G
+         YIU5lBenThrlc8Xox7yVYVZNtzkkY2AEO2kps=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=Gkj3uMdCjmsHzflHOakxzyYQKVRj/sTnpglWgNUCgvI=;
-        b=FC3dcZdmU1wrYx6yVAeVvGvV6IcVwLdLQhehimbrZjc063bkMhXHHptxonlQ1OnHa6
-         g2mmwwR3YJYG2Tdg1TkqbBQKjG+oohBcYab6Zw+BVZxz860KKiKpDGruu6zB3DMEClwu
-         hsjkbvZkGfYigqMN/r0nfrFSYOPoZEQiRPKoElExhdM6bw1slzhVhMB1cjAZUKoKhqks
-         kwchH9xRXpfLVvLEqwJcpug4myuoN3TpswHlWWI3DQt4kE8nvtBd+Mz5QdFVDv5RwXhH
-         9tPytpt+YP3IUJ0scmWyLE68VIBFMnwaxiufgpdJpuTBZ/FhEF60XC5JZLim0XPsDX4g
-         W2oQ==
-X-Gm-Message-State: AJIora93iyUWLocOTcuD8WfIXRVDEGc41UBdfOAItzRB0Y5K5BE941Q8
-        RCXjkwUuOg1ksgnlI5X1RJJbET1iBkVMnxd8jXs=
-X-Google-Smtp-Source: AGRyM1sViLUW4N1pwRIWdFGkZD3Ivg8LyYZAp3RqXkE9PxgyWYTz69mj+LaC28XR7aM/YET+i+Mehg==
-X-Received: by 2002:a05:6638:14d0:b0:332:12c9:e359 with SMTP id l16-20020a05663814d000b0033212c9e359mr6669384jak.309.1655511364616;
-        Fri, 17 Jun 2022 17:16:04 -0700 (PDT)
-Received: from mail-io1-f54.google.com (mail-io1-f54.google.com. [209.85.166.54])
-        by smtp.gmail.com with ESMTPSA id g2-20020a92dd82000000b002cde6e352ffsm2929451iln.73.2022.06.17.17.16.03
+        bh=JUY4IDfHVWw771LXx7m4NTtTCDxzgte6IAjfOYq4YV0=;
+        b=LMr12t2WvW/giyKR9noHuGpY05jDMa91uyA9HBry0kEc48CmdBHUw5WMbokYGk/9tc
+         fm6/B0ngMzaNwGAVSEJLyhOhUlQI/xt3FhjMIiV6IUe7UPbgPhpFw7dtvw5qlczO1SOR
+         Jl8C61E6t4F3iCOd9GAnnnsMEll3c5HirZVxPYO5hFS89ClPmGF4jPKt2oWQJvOQbPzq
+         ZJBp/YGPVg7tJxrc6s5u4Zz3D3Iqqk1GRQtVjAOZIhY/eOij1185fkJDt/9ehTsy1Eae
+         0V03rJCBO7ImQokjeQ5DEUlCBp69tv6Vb43GKQZd95rdgF6L6e7o/vgJ3Z2fgzkBw76X
+         pRJw==
+X-Gm-Message-State: AJIora95/GDicAC5WjHRB+bwdU1BPwxxSh5hmXSHPiIVNp6VVd13Zqto
+        1hG92vEx6ITepc0N8vpyJLtTILgfa2Eo/BPlR4Y=
+X-Google-Smtp-Source: AGRyM1veHeLKjVVBI2GUgRNpEuLkH+/4Q0G3YE0D/j5xR6FQpLVJIcVTMlOK1k3Az0H3/lw1+fJwAw==
+X-Received: by 2002:a05:6602:2b0b:b0:64f:acc1:52c3 with SMTP id p11-20020a0566022b0b00b0064facc152c3mr6194507iov.38.1655511402503;
+        Fri, 17 Jun 2022 17:16:42 -0700 (PDT)
+Received: from mail-io1-f52.google.com (mail-io1-f52.google.com. [209.85.166.52])
+        by smtp.gmail.com with ESMTPSA id h22-20020a02c736000000b0033792143bf5sm1230077jao.67.2022.06.17.17.16.41
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 17 Jun 2022 17:16:04 -0700 (PDT)
-Received: by mail-io1-f54.google.com with SMTP id b138so6027918iof.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jun 2022 17:16:03 -0700 (PDT)
-X-Received: by 2002:a02:c012:0:b0:331:67b8:3d7e with SMTP id
- y18-20020a02c012000000b0033167b83d7emr6783017jai.244.1655511363436; Fri, 17
- Jun 2022 17:16:03 -0700 (PDT)
+        Fri, 17 Jun 2022 17:16:42 -0700 (PDT)
+Received: by mail-io1-f52.google.com with SMTP id r5so6044505iod.5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jun 2022 17:16:41 -0700 (PDT)
+X-Received: by 2002:a05:6638:3472:b0:338:3aa2:fe9 with SMTP id
+ q50-20020a056638347200b003383aa20fe9mr2033865jav.209.1655511401321; Fri, 17
+ Jun 2022 17:16:41 -0700 (PDT)
 MIME-Version: 1.0
 References: <20220617164000.v8.1.Id769ddc5dbf570ccb511db96da59f97d08f75a9c@changeid>
- <20220617164000.v8.2.I0977b1a08830d0caa8bfb1bdedb4ecceac709a7f@changeid>
-In-Reply-To: <20220617164000.v8.2.I0977b1a08830d0caa8bfb1bdedb4ecceac709a7f@changeid>
+ <20220617164000.v8.4.I41e2c2dc12961fe000ebc4d4ef6f0bc5da1259ea@changeid>
+In-Reply-To: <20220617164000.v8.4.I41e2c2dc12961fe000ebc4d4ef6f0bc5da1259ea@changeid>
 From:   Doug Anderson <dianders@chromium.org>
-Date:   Fri, 17 Jun 2022 17:15:50 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=V9RaRuvx+N1FXszA4vKJiUXhZfGcdEFXWPg+DGq=p9kw@mail.gmail.com>
-Message-ID: <CAD=FV=V9RaRuvx+N1FXszA4vKJiUXhZfGcdEFXWPg+DGq=p9kw@mail.gmail.com>
-Subject: Re: [PATCH v8 2/5] arm64: dts: qcom: sc7180: Add quackingstick dts files
+Date:   Fri, 17 Jun 2022 17:16:28 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=XFxpBdsp7HN3B_cyq9un8zCH4bhyZXghBuHnixi2jn3w@mail.gmail.com>
+Message-ID: <CAD=FV=XFxpBdsp7HN3B_cyq9un8zCH4bhyZXghBuHnixi2jn3w@mail.gmail.com>
+Subject: Re: [PATCH v8 4/5] arm64: dts: qcom: sc7180: Add pazquel dts files
 To:     "Joseph S. Barrera III" <joebar@chromium.org>
 Cc:     LKML <linux-kernel@vger.kernel.org>,
         Alexandru M Stan <amstan@chromium.org>,
@@ -86,28 +86,94 @@ Hi,
 On Fri, Jun 17, 2022 at 4:40 PM Joseph S. Barrera III
 <joebar@chromium.org> wrote:
 >
-> Quackingstick is a trogdor-based board. These dts files are copies from
-> the downstream Chrome OS 5.4 kernel, but with downstream bits removed.
+> Pazquel is a trogdor-based board. These dts files are unchanged copies
+> from the downstream Chrome OS 5.4 kernel.
 >
 > Signed-off-by: Joseph S. Barrera III <joebar@chromium.org>
 > Reviewed-by: Douglas Anderson <dianders@chromium.org>
-
-At this point enough things keep being broken that I'd rather you keep
-my "Reviewed-by" tag off for now in the next version.
-
-
 > ---
 >
 > (no changes since v7)
 >
 > Changes in v7:
->  - Incorporated changes from Stephen's "Simplify!" series.
->
-> Changes in v5:
-> - Removed extra newline
-> - Added comment that compatible will be filled in per-board
+>     - Incorporated changes from Stephen's "Simplify!" series.
 
-Not a huge deal, but your version history is missing a mention about
-incorporating the deletion of the usb_c1 node.
+You missed an important bit here. Pazquel has a trackpad, doesn't it?
+In the "Simplify!" series Stephen made it so that devices that have a
+trackpad need to enable it, right?
+
+
+> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> index 5cfd6316768c..dc26704dfe34 100644
+> --- a/arch/arm64/boot/dts/qcom/Makefile
+> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> @@ -79,6 +79,10 @@ dtb-$(CONFIG_ARCH_QCOM)      += sc7180-trogdor-mrbland-rev0-auo.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)        += sc7180-trogdor-mrbland-rev0-boe.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)        += sc7180-trogdor-mrbland-rev1-auo.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)        += sc7180-trogdor-mrbland-rev1-boe.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)        += sc7180-trogdor-pazquel-lte-parade.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)        += sc7180-trogdor-pazquel-lte-ti.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)        += sc7180-trogdor-pazquel-parade.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)        += sc7180-trogdor-pazquel-ti.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)        += sc7180-trogdor-pompom-r1.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)        += sc7180-trogdor-pompom-r1-lte.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)        += sc7180-trogdor-pompom-r2.dtb
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel-lte-parade.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel-lte-parade.dts
+> new file mode 100644
+> index 000000000000..ecedab8d1662
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel-lte-parade.dts
+> @@ -0,0 +1,22 @@
+> +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+> +/*
+> + * Google Pazquel board device tree source
+> + *
+> + * Copyright 2021 Google LLC.
+> + */
+> +
+> +/dts-v1/;
+> +
+> +#include "sc7180.dtsi"
+
+This is not good and was an important part of "Simplify!" sc7180.dtsi
+should only be included by sc7180-trogdor.dtsi.
+
+
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel.dtsi
+> new file mode 100644
+> index 000000000000..5991c94b4aa1
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel.dtsi
+> @@ -0,0 +1,218 @@
+> +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+> +/*
+> + * Google Pazquel board device tree source
+> + *
+> + * Copyright 2021 Google LLC.
+> + */
+> +
+> +#include "sc7180-trogdor.dtsi"
+> +
+> +&ap_sar_sensor {
+> +       compatible = "semtech,sx9324";
+> +       semtech,ph0-pin = <1 3 3>;
+> +       semtech,ph1-pin = <3 1 3>;
+> +       semtech,ph2-pin = <1 3 3>;
+> +       semtech,ph3-pin = <0 0 0>;
+> +       semtech,ph01-resolution = <1024>;
+> +       semtech,ph23-resolution = <1024>;
+> +       semtech,startup-sensor = <1>;
+> +       semtech,ph01-proxraw-strength = <3>;
+> +       semtech,ph23-proxraw-strength = <1>;
+> +       semtech,avg-pos-strength = <128>;
+
+
+You seem to be missing the recent downstream changes here.
+
+semtech,input-analog-gain = <0>;
+semtech,cs-idle-sleep = "gnd";
+
+You had this right in one of your two v6 series. Not sure why you keep
+regressing random things each version...
 
 -Doug
