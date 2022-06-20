@@ -2,68 +2,47 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 44B705525EB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jun 2022 22:43:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 302DC552647
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jun 2022 23:12:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238023AbiFTUnw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Jun 2022 16:43:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42382 "EHLO
+        id S238600AbiFTVMS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Jun 2022 17:12:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57830 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230241AbiFTUnv (ORCPT
+        with ESMTP id S229608AbiFTVMS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Jun 2022 16:43:51 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCCFF1A3BB;
-        Mon, 20 Jun 2022 13:43:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1655757830; x=1687293830;
-  h=message-id:date:mime-version:subject:from:to:cc:
-   references:in-reply-to:content-transfer-encoding;
-  bh=QWdPf3Fw6TblaYp67rmjIPhp23ehbOvpB5mdAyvXXJI=;
-  b=nkGYB7nHnzZbPO3+0MKpz7Bz5kPUPiNnEVmb5Iay0yQ3wqHLt2ps7CCQ
-   Wiz1J8iAyP6TDQjy5r1bz6aY+B3goJMEh2KAgFge8rbUKeNhKECUZyHlX
-   RFvgEynJ0NALV+W1Qqh+jl11gzRpQ+uBEthdk6KgItw9eOxh6uihdhPMq
-   M=;
-Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 20 Jun 2022 13:43:50 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Jun 2022 13:43:50 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Mon, 20 Jun 2022 13:43:49 -0700
-Received: from [10.110.14.194] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Mon, 20 Jun
- 2022 13:43:48 -0700
-Message-ID: <af23976a-11dc-2503-66ea-8558fc1b3108@quicinc.com>
-Date:   Mon, 20 Jun 2022 13:43:47 -0700
+        Mon, 20 Jun 2022 17:12:18 -0400
+Received: from relay01.th.seeweb.it (relay01.th.seeweb.it [5.144.164.162])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5A801A3AD;
+        Mon, 20 Jun 2022 14:12:15 -0700 (PDT)
+Received: from Marijn-Arch-PC.localdomain (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id B3F632013A;
+        Mon, 20 Jun 2022 23:12:13 +0200 (CEST)
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     phone-devel@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] arm64: dts: qcom: sdm845-akatsuki: Round down l22a regulator voltage
+Date:   Mon, 20 Jun 2022 23:12:12 +0200
+Message-Id: <20220620211212.269956-1-marijn.suijten@somainline.org>
+X-Mailer: git-send-email 2.36.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: [PATCH v13 0/3] eDP/DP Phy vdda realted function
-Content-Language: en-US
-From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
-To:     Vinod Koul <vkoul@kernel.org>
-CC:     <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
-        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
-        <daniel@ffwll.ch>, <airlied@linux.ie>, <agross@kernel.org>,
-        <dmitry.baryshkov@linaro.org>, <bjorn.andersson@linaro.org>,
-        <quic_abhinavk@quicinc.com>, <quic_aravindh@quicinc.com>,
-        <quic_sbillaka@quicinc.com>, <freedreno@lists.freedesktop.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <1653512540-21956-1-git-send-email-quic_khsieh@quicinc.com>
- <YqvEjzgSbvrOCFtq@matsya> <6f1ade9f-38b0-827c-667b-5c8018b7779a@quicinc.com>
-In-Reply-To: <6f1ade9f-38b0-827c-667b-5c8018b7779a@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -72,34 +51,36 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+2700000 is not a multiple of pmic4_pldo's step size of 8000 (with base
+voltage 1664000), resulting in pm8998-rpmh-regulators not probing.  Just
+as we did with MSM8998's Sony Yoshino Poplar [1], round the voltages
+down to err on the cautious side and leave a comment in place to
+document this discrepancy wrt downstream sources.
 
-On 6/20/2022 1:07 PM, Kuogee Hsieh wrote:
->
-> On 6/16/2022 5:02 PM, Vinod Koul wrote:
->> On 25-05-22, 14:02, Kuogee Hsieh wrote:
->>> 1) add regulator_set_load() to eDP phy
->>> 2) add regulator_set_load() to DP phy
->>> 3) remove vdda related function out of eDP/DP controller
->>>
->>> Kuogee Hsieh (3):
->>>    phy: qcom-edp: add regulator_set_load to edp phy
->>>    phy: qcom-qmp: add regulator_set_load to dp phy
->>>    drm/msm/dp: delete vdda regulator related functions from eDP/DP
->>>      controller
->>>
->>>   drivers/gpu/drm/msm/dp/dp_parser.c  | 14 ------
->>>   drivers/gpu/drm/msm/dp/dp_parser.h  |  8 ----
->>>   drivers/gpu/drm/msm/dp/dp_power.c   | 95 
->>> +------------------------------------
->>>   drivers/phy/qualcomm/phy-qcom-edp.c | 12 +++++
->>>   drivers/phy/qualcomm/phy-qcom-qmp.c | 40 ++++++++++++----
->> Please rebase this to phy-next and apply to specific qmp phy driver...
-> I will rebase to ==> 
-> https://git.kernel.org/pub/scm/linux/kernel/git/phy/linux-phy.git
+[1]: https://lore.kernel.org/linux-arm-msm/20220507153627.1478268-1-marijn.suijten@somainline.org/
 
-Hi Vinod,
+Fixes: 30a7f99befc6 ("arm64: dts: qcom: Add support for SONY Xperia XZ2 / XZ2C / XZ3 (Tama platform)")
+Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+---
+ .../arm64/boot/dts/qcom/sdm845-sony-xperia-tama-akatsuki.dts | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-Would you please specify exactly procedures i have to do as to rebase 
-this patch series to phy=next tree.
-
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama-akatsuki.dts b/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama-akatsuki.dts
+index 36ff1178b705..3839850cf7dd 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama-akatsuki.dts
++++ b/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama-akatsuki.dts
+@@ -22,8 +22,9 @@ &vreg_l14a_1p8 {
+ };
+ 
+ &vreg_l22a_2p8 {
+-	regulator-min-microvolt = <2700000>;
+-	regulator-max-microvolt = <2700000>;
++	/* Note: Round-down from 2700000 to be a multiple of PLDO step-size 8000 */
++	regulator-min-microvolt = <2696000>;
++	regulator-max-microvolt = <2696000>;
+ };
+ 
+ &vreg_l28a_2p8 {
+-- 
+2.36.1
 
