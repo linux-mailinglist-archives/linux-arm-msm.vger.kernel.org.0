@@ -2,214 +2,214 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1B0D35524E8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jun 2022 21:59:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6A5285524F5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jun 2022 22:06:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237761AbiFTT7U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Jun 2022 15:59:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34392 "EHLO
+        id S242118AbiFTUGS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Jun 2022 16:06:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38000 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229749AbiFTT7T (ORCPT
+        with ESMTP id S236360AbiFTUGR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Jun 2022 15:59:19 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8C1362DB;
-        Mon, 20 Jun 2022 12:59:18 -0700 (PDT)
+        Mon, 20 Jun 2022 16:06:17 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C0152AF8;
+        Mon, 20 Jun 2022 13:06:16 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id p6-20020a05600c1d8600b0039c630b8d96so6919402wms.1;
+        Mon, 20 Jun 2022 13:06:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1655755159; x=1687291159;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=zLK8JRmjPUYY12xma+OCv7DTnOA0Wyo6DRgV4BXT040=;
-  b=kTbdJhW4w2pwGlUzxXYqIZnWk59lO5vxEuh8EgUSGHPowT5wNeOLahlm
-   7t2DkSyTlCo+/WC/LsBU5mfqXgI0eAZT69Q2u31LUn8MvPT5A8l7N4j3y
-   F7cO0rdw+2eZeojNZTsZB1oIGw232n939G4CKSUUL51w9NlcNikklUmuP
-   s=;
-Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
-  by alexa-out.qualcomm.com with ESMTP; 20 Jun 2022 12:59:18 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Jun 2022 12:59:18 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Mon, 20 Jun 2022 12:59:17 -0700
-Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Mon, 20 Jun
- 2022 12:59:16 -0700
-Message-ID: <0ad762f2-5acb-cfd1-efca-ff83f97f978d@quicinc.com>
-Date:   Mon, 20 Jun 2022 13:59:16 -0600
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=oX9lN4QRIjjDytL1egq7FKfqlZ9uKSn9qlbeSJsieqg=;
+        b=K+4UeUWjHq6YAI9jmYvUTMkv1gq1iw00GX/6AlYN+9b41Q3kf86nQDTqY6rD37C4HI
+         kzPm2mFeTHl+1E1B1XQfdRnKW8+YaELFKaQgGAqgsXl7/q1p71QRVLhIGdeg4j5KK+cP
+         3YX3ykOuY2lgJL2B7erq/iMhopV+WmK1QZ8/MAPeoCMn4tyiCnMezfoZOyzEos9QqFg2
+         e5w+U0RJhQvBhZddSX2H2SbdIyiKQLQYRn4o5iDRWV3n6i8JNHC0MqRAoimLsqSlXU0f
+         qGvg/aHb4Vfv5PQh5RZ68Qw5K5jk6ukus9q+UPCgwRCPHKmP1bzrm1D+okCYj+yUNj2Q
+         +fUw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=oX9lN4QRIjjDytL1egq7FKfqlZ9uKSn9qlbeSJsieqg=;
+        b=a8H96RgpN96G0T5Iv7wKFAuPnjIPjQ50bAsCth6/GDrxHPSXSmVPztD2BQ77zhcG8F
+         RfNj5WoCvLjcildybIeqYJnFWSpzuSdFwX9rGQwiTjccEiBJ+Qo1D79g+mXOeWEJIytq
+         AFGHmVMgaLvIx0sT30N6EpDwy4wuz4ZuIlg9WHJyJ6wtGd88t7N8SI8VOwX4Cjg/HNx0
+         5c+fsydMBXXX8v+2tlhdLlfZQ+PI+6hP0LXgYzWhXaODPFOfyMFUmb+qJgZMyK+9lubo
+         SORdpWS4TE2Yc0uziplsd/SJ8HtCyswKOvXV9uI95xptCN/UV06uvweFMPu+ywGXqCGi
+         z5vw==
+X-Gm-Message-State: AOAM532QsphJ9yvxqwEy8cryQ6/1/6cE4NFWINYRdDIkKeZAr9bjNkK/
+        lAYSSK6Qg7ypgFku5HCWTqE=
+X-Google-Smtp-Source: ABdhPJxsi6sQIkVr9H0Bu1PTh/rzJ3ELem1KRMbimP0CLQUhYJkhAnA3ChsXiGO+dNs73Bpag9foIA==
+X-Received: by 2002:a05:600c:3acc:b0:39c:7427:d379 with SMTP id d12-20020a05600c3acc00b0039c7427d379mr36991978wms.32.1655755574785;
+        Mon, 20 Jun 2022 13:06:14 -0700 (PDT)
+Received: from localhost (92.40.169.68.threembb.co.uk. [92.40.169.68])
+        by smtp.gmail.com with ESMTPSA id eh1-20020a05600c61c100b003973d425a7fsm17910543wmb.41.2022.06.20.13.06.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 20 Jun 2022 13:06:14 -0700 (PDT)
+From:   Aidan MacDonald <aidanmacdonald.0x0@gmail.com>
+To:     broonie@kernel.org
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
+        srinivas.kandagatla@linaro.org, bgoswami@codeaurora.org,
+        gregkh@linuxfoundation.org, rafael@kernel.org,
+        cw00.choi@samsung.com, krzysztof.kozlowski@linaro.org,
+        b.zolnierkie@samsung.com, myungjoo.ham@samsung.com,
+        michael@walle.cc, linus.walleij@linaro.org, brgl@bgdev.pl,
+        tglx@linutronix.de, maz@kernel.org, lee.jones@linaro.org,
+        mani@kernel.org, cristian.ciocaltea@gmail.com, wens@csie.org,
+        tharvey@gateworks.com, rjones@gateworks.com,
+        mazziesaccount@gmail.com, orsonzhai@gmail.com,
+        baolin.wang7@gmail.com, zhang.lyra@gmail.com,
+        jernej.skrabec@gmail.com, samuel@sholland.org, lgirdwood@gmail.com,
+        perex@perex.cz, tiwai@suse.com, linux-kernel@vger.kernel.org,
+        linux-gpio@vger.kernel.org, linux-actions@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-sunxi@lists.linux.dev,
+        alsa-devel@alsa-project.org
+Subject: [PATCH 00/49] regmap-irq cleanups and refactoring
+Date:   Mon, 20 Jun 2022 21:05:55 +0100
+Message-Id: <20220620200644.1961936-1-aidanmacdonald.0x0@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Subject: Re: [PATCH] bus: mhi: Disable IRQs instead of freeing them during
- power down
-Content-Language: en-US
-To:     Manivannan Sadhasivam <mani@kernel.org>
-CC:     Qiang Yu <quic_qianyu@quicinc.com>, <quic_hemantk@quicinc.com>,
-        <loic.poulain@linaro.org>, <mhi@lists.linux.dev>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_cang@quicinc.com>
-References: <1654782215-70383-1-git-send-email-quic_qianyu@quicinc.com>
- <62d09e6f-9898-6233-dfd6-b5ba5d837571@quicinc.com>
- <9659ecb9-9727-a146-e286-d28d656483c3@quicinc.com>
- <9a11394d-f7df-e549-8afb-0834f7d30202@quicinc.com>
- <8eceb966-b5c1-8913-ac97-95348f92650d@quicinc.com>
- <b3f5e49d-8917-79ab-8f59-29ad6cec3973@quicinc.com>
- <20220615211621.GD3606@thinkpad>
- <1c48ef5b-65c0-501d-db55-714a8a4388b2@quicinc.com>
- <20220616205936.GG2889@thinkpad>
-From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
-In-Reply-To: <20220616205936.GG2889@thinkpad>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 6/16/2022 2:59 PM, Manivannan Sadhasivam wrote:
-> On Thu, Jun 16, 2022 at 09:53:34AM -0600, Jeffrey Hugo wrote:
->> On 6/15/2022 3:16 PM, Manivannan Sadhasivam wrote:
->>> On Mon, Jun 13, 2022 at 07:07:02AM -0600, Jeffrey Hugo wrote:
->>>> On 6/12/2022 7:48 PM, Qiang Yu wrote:
->>>>>
->>>>> On 6/10/2022 10:00 PM, Jeffrey Hugo wrote:
->>>>>> On 6/9/2022 9:21 PM, Qiang Yu wrote:
->>>>>>> On 6/9/2022 9:54 PM, Jeffrey Hugo wrote:
->>>>>>>
->>>>>>>> On 6/9/2022 7:43 AM, Qiang Yu wrote:
->>>>>>>>> EP tends to read MSI address/data once and cache them
->>>>>>>>> after BME is set.
->>>>>>>>> So host should avoid changing MSI address/data after BME is set.
->>>>>>>>>
->>>>>>>>> In pci reset function, host invokes free_irq(), which also clears MSI
->>>>>>>>> address/data in EP's PCIe config space. If the invalid address/data
->>>>>>>>> are cached and used by EP, MSI triggered by EP wouldn't be received by
->>>>>>>>> host, because an invalid MSI data is sent to an invalid MSI address.
->>>>>>>>>
->>>>>>>>> To fix this issue, after host runs request_irq() successfully during
->>>>>>>>> mhi driver probe, let's invoke enable_irq()/disable_irq() instead of
->>>>>>>>> request_irq()/free_irq() when we want to power on and power down MHI.
->>>>>>>>> Meanwhile, Host should invoke free_irq() when mhi host driver is
->>>>>>>>> removed.
->>>>>>>>
->>>>>>>> I don't think this works for hotplug, nor cases where there
->>>>>>>> are multiple MHI devices on the system.
->>>>>>>>
->>>>>>>> The EP shouldn't be caching this information for multiple
->>>>>>>> reasons. Masking the MSIs, disabling the MSIs, changing the
->>>>>>>> address when the affinity changes, etc.
->>>>>>>>
->>>>>>>> It really feels like we are solving the problem in the wrong place.
->>>>>>>>
->>>>>>>> Right now, this gets a NACK from me.
->>>>>>>>
->>>>>>> After free_irq(), MSI is still enabled but MSI address and data
->>>>>>> are cleared. So there is a chance that device initiates MSI
->>>>>>> using zero address. How to fix this race conditions.
->>>>>>
->>>>>> On what system is MSI still enabled?  I just removed the AIC100
->>>>>> controller on an random x86 system, and lspci is indicating MSIs are
->>>>>> disabled -
->>>>>>
->>>>>> Capabilities: [50] MSI: Enable- Count=32/32 Maskable+ 64bit+
->>>>>
->>>>> system: Ubuntu18.04, 5.4.0-89-generic,  Intel(R) Core(TM) i7-6700 CPU @
->>>>> 3.40GHz
->>>>>
->>>>> After removing MHI driver, I also see MSI enable is cleared.  But I
->>>>> don't think free_irq clears it. I add log before free_irq and after
->>>>> free_irq as following show:
->>>>>
->>>>> [62777.625111] msi cap before free irq
->>>>> [62777.625125] msi control=0x1bb, address=0xfee00318, data=0x0
->>>>> [62777.625301] msi cap after free irq
->>>>> [62777.625313] msi control=0x1bb, address=0x0, data=0x0
->>>>> [62777.625496] mhi-pci-generic 0000:01:00.0: mhi_pci_remove end of line,
->>>>> block 90 secs.
->>>>> # lspci -vvs 01:00.0
->>>>>            Capabilities: [50] MSI: Enable+ Count=8/32 Maskable+ 64bit+
->>>>>                    Address: 0000000000000000  Data: 0000
->>>>>                    Masking: ffffffff  Pending: 00000000
->>>>
->>>> At this point, the MSI functionality is still enabled, but every MSI is
->>>> masked out (Masking), so per the PCIe spec, the endpoint may not trigger a
->>>> MSI to the host.  The device advertises that it supports maskable MSIs
->>>> (Maskable+), so this is appropiate.
->>>>
->>>> If your device can still send a MSI at this point, then it violates the PCIe
->>>> spec.
->>>>
->>>> disable_irq() will not help you with this as it will do the same thing.
->>>>
->>>> I still think you are trying to fix an issue in the wrong location (host vs
->>>> EP), and causing additional issues by doing so.
->>>>
->>>
->>> Irrespective of caching the MSI data in endpoint, I'd like to get rid of
->>> request_irq/free_irq during the mhi_{power_down/power_up} time. As like the MHI
->>> endpoint stack, we should just do disable/enable irq. Because, the MHI device
->>> may go down several times while running and we do not want to deallocate the
->>> IRQs all the time. And if the device gets removed, ultimately the MHI driver
->>> will get removed and we are fine while loading it back (even if MSI count
->>> changes).
->>>
->>> I didn't had time to look into the patch in detail but I'm in favour of
->>> accepting the proposal.
->>>
->>> @Jeff: Any specific issue you are seeing with hotplug etc...?
->>
->> Perhaps I'm getting confused by the commit text of this change.
->>
->> The issue described is that we free the irq, and then the EP sends a MSI,
->> and the host doesn't receive it.  To me, that is expected.  The host doesn't
->> care about the irq anymore because it freed it, therefore it would be
->> expected that the host doesn't receive the irq.  So, the described issue is
->> not an issue since it is expected behavior from what I can tell.
->>
->> The proposed fix, is to disable the interrupts, and not free them until the
->> driver is removed.  I interpret removing the driver as "rmmod mhi".  Based
->> on this, the problem I see is a scenario where we have N devices in a
->> system, and one device is hotplugged.  On hotplug, we would want to clean up
->> all resources (free irq), but according to the description, we need to rmmod
->> mhi, which is both not automatic and also affects the other N-1 devices
->> which are presumed to be operational.
-> 
-> No. When the PCI device gets removed during runtime, the remove() callback will
-> get called with relevant "struct pci_dev" and that should take care of all
-> resource cleanup for that particular device (including free_irq).
+Hi Mark,
 
-That is what I expected, so I was confused.  Seems like we are on the 
-same page now.
+Here's a bunch of cleanups for regmap-irq focused on simplifying the API
+and generalizing it a bit. It's broken up into three refactors, focusing
+on one area at a time.
 
-> You do not need to manually rmmod the driver as that will be done by the
-> hotplug driver when there are no devices making use of it. And yes, the commit
-> message needs to be changed. >
->>
->> Now, if we throw all of that out the window, and say that the goal is to
->> register the irqs when the controller is registered, free them when the
->> controller is unregistered, and enable/disable based on power up/down as a
->> optimization, that could be sane.  If that is what this change is attempting
->> to do, it is not what the commit text describes.
->>
->> Under the assumption that you want the optimization I just described, I will
->> re-review the code next week when I get back from my travel. Assuming the
->> implementation is good (other than what I've already pointed out), I think
->> the commit text needs to be rewritten.
->>
->> Does that clarify things for you?
-> 
-> Yep!
+* Patches 01 and 02 are straightforward bugfixes, independent of the
+  rest of the series. Neither of the bugs are triggered by in-tree
+  drivers but they might be worth picking up early anyhow.
 
-Reviewed, with additional comments.  I guess I remove my NACK, but there 
-is a lot to address with v2.
+* Patches 03-13 clean up everything related to configuring IRQ types.
+
+* Patches 14-45 deal with mask/unmask registers. First, make unmask
+  registers behave more intuitively and usefully, and get rid of the
+  mask_invert flag in favor of describing inverted mask registers as
+  unmask registers. Second, make the mask_writeonly flag more useful
+  and enable it for two chips where it makes sense.
+
+* Patches 46-49 refactor sub_irq_reg() as a get_irq_reg() callback,
+  and use that to eliminate the not_fixed_stride flag.
+
+The approach I used when refactoring is pretty simple: (1) introduce new
+functionality in regmap-irq, (2) convert the drivers, and (3) remove any
+old code. Nothing should break in the middle.
+
+The patches can be re-ordered to some extent if that's preferable, but
+it's best to add get_irq_reg() last to avoid having to think about how
+it interacts with features that'll be removed anyway.
+
+I can't test most of the devices affected by this series so a lot of the
+code is only build tested. I've tested on real hardware with my AXP192
+patchset[1], although it only provides limited code coverage.
+
+qcom-pm8008 in particular deserves careful testing - it used all of the
+features touched by the refactors and required the most changes. Other
+drivers only required trivial changes but there are three of them worth
+mentioning: wcd943x, wcd9335, and wcd938x. They have suspicious looking
+IRQ type definitions and I'm pretty sure aren't working properly, but
+I can't fix them myself. The refactor shouldn't affect their behavior
+so how / when / if they get fixed shouldn't be much of an issue.
+
+Oh, and I added the 'mask_writeonly' flag and volatile ranges to the
+stpmic1 driver based on its datasheet[2] as a small optimization. It's
+probably fine but testing would be a good idea.
+
+[1]: https://lore.kernel.org/linux-iio/20220618214009.2178567-1-aidanmacdonald.0x0@gmailcom/
+[2]: https://www.st.com/resource/en/datasheet/stpmic1.pdf
+
+Aidan MacDonald (49):
+  regmap-irq: Fix a bug in regmap_irq_enable() for type_in_mask chips
+  regmap-irq: Fix offset/index mismatch in read_sub_irq_data()
+  regmap-irq: Remove an unnecessary restriction on type_in_mask
+  regmap-irq: Introduce config registers for irq types
+  mfd: qcom-pm8008: Convert irq chip to config regs
+  mfd: wcd934x: Convert irq chip to config regs
+  sound: soc: codecs: wcd9335: Convert irq chip to config regs
+  sound: soc: codecs: wcd938x: Remove spurious type_base from irq chip
+  mfd: max77650: Remove useless type_invert flag
+  regmap-irq: Remove virtual registers support
+  regmap-irq: Remove old type register support, refactor
+  regmap-irq: Remove unused type_reg_stride field
+  regmap-irq: Remove unused type_invert flag
+  regmap-irq: Do not use regmap_irq_update_bits() for wake regs
+  regmap-irq: Change the behavior of mask_writeonly
+  regmap-irq: Rename regmap_irq_update_bits()
+  regmap-irq: Add broken_mask_unmask flag
+  mfd: qcom-pm8008: Add broken_mask_unmask irq chip flag
+  mfd: stpmic1: Add broken_mask_unmask irq chip flag
+  regmap-irq: Fix inverted handling of unmask registers
+  mfd: tps65090: replace irqchip mask_invert with unmask_base
+  mfd: sun4i-gpadc: replace irqchip mask_invert with unmask_base
+  mfd: sprd-sc27xx-spi: replace irqchip mask_invert with unmask_base
+  mfd: rt5033: replace irqchip mask_invert with unmask_base
+  mfd: rohm-bd71828: replace irqchip mask_invert with unmask_base
+  mfd: rn5t618: replace irqchip mask_invert with unmask_base
+  mfd: gateworks-gsc: replace irqchip mask_invert with unmask_base
+  mfd: axp20x: replace irqchip mask_invert with unmask_base
+  mfd: atc260x: replace irqchip mask_invert with unmask_base
+  mfd: 88pm800: replace irqchip mask_invert with unmask_base
+  mfd: max14577: replace irqchip mask_invert with unmask_base
+  mfd: max77693: replace irqchip mask_invert with unmask_base
+  mfd: rohm-bd718x7: drop useless mask_invert flag on irqchip
+  mfd: max77843: drop useless mask_invert flag on irqchip
+  extcon: max77843: replace irqchip mask_invert with unmask_base
+  extcon: sm5502: drop useless mask_invert flag on irqchip
+  extcon: rt8973a: drop useless mask_invert flag on irqchip
+  irqchip: sl28cpld: replace irqchip mask_invert with unmask_base
+  gpio: sl28cpld: replace irqchip mask_invert with unmask_base
+  mfd: stpmic1: Fix broken mask/unmask in irq chip
+  mfd: stpmic1: Enable mask_writeonly flag for irq chip
+  mfd: qcom-pm8008: Fix broken mask/unmask in irq chip
+  mfd: qcom-pm8008: Enable mask_writeonly flag for irq chip
+  regmap-irq: Remove broken_mask_unmask flag
+  regmap-irq: Remove mask_invert flag
+  regmap-irq: Refactor checks for status bulk read support
+  regmap-irq: Add get_irq_reg() callback
+  mfd: qcom-pm8008: Use get_irq_reg() for irq chip
+  regmap-irq: Remove not_fixed_stride flag
+
+ drivers/base/regmap/regmap-irq.c | 457 ++++++++++++++-----------------
+ drivers/extcon/extcon-max77843.c |   3 +-
+ drivers/extcon/extcon-rt8973a.c  |   1 -
+ drivers/extcon/extcon-sm5502.c   |   2 -
+ drivers/gpio/gpio-sl28cpld.c     |   3 +-
+ drivers/irqchip/irq-sl28cpld.c   |   3 +-
+ drivers/mfd/88pm800.c            |   3 +-
+ drivers/mfd/atc260x-core.c       |   6 +-
+ drivers/mfd/axp20x.c             |  21 +-
+ drivers/mfd/gateworks-gsc.c      |   3 +-
+ drivers/mfd/max14577.c           |   7 +-
+ drivers/mfd/max77650.c           |   1 -
+ drivers/mfd/max77693.c           |   6 +-
+ drivers/mfd/max77843.c           |   1 -
+ drivers/mfd/qcom-pm8008.c        | 131 ++++-----
+ drivers/mfd/rn5t618.c            |   3 +-
+ drivers/mfd/rohm-bd71828.c       |   6 +-
+ drivers/mfd/rohm-bd718x7.c       |   1 -
+ drivers/mfd/rt5033.c             |   3 +-
+ drivers/mfd/sprd-sc27xx-spi.c    |   3 +-
+ drivers/mfd/stpmic1.c            |   7 +-
+ drivers/mfd/sun4i-gpadc.c        |   3 +-
+ drivers/mfd/tps65090.c           |   3 +-
+ drivers/mfd/wcd934x.c            |  11 +-
+ include/linux/regmap.h           |  59 ++--
+ sound/soc/codecs/wcd9335.c       |  10 +-
+ sound/soc/codecs/wcd938x.c       |   1 -
+ 27 files changed, 332 insertions(+), 426 deletions(-)
+
+-- 
+2.35.1
+
