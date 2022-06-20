@@ -2,73 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 64090552150
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jun 2022 17:40:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D27B4552162
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jun 2022 17:42:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238812AbiFTPkE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Jun 2022 11:40:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41130 "EHLO
+        id S236251AbiFTPms (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Jun 2022 11:42:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42578 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236251AbiFTPkD (ORCPT
+        with ESMTP id S235125AbiFTPmr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Jun 2022 11:40:03 -0400
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 568761901D
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jun 2022 08:40:02 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id s21so7326304lfs.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jun 2022 08:40:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=j8OxkVIDnDND/pv8hLioHXK4chnXUFokYge0wxIqKsg=;
-        b=BlxtnFGAOjxdMrbWTGZkSjzaS/Pfez/NUkbmnFQi0GzI/8kqIPgORNxKKkxbmeImrj
-         //6+tAbOb7D95UuOuC2x9IqESqPgEHBj5LmO/ANXwhdM/2tDN7qgwU7/1OYp/Aqcy/dR
-         EhOehADSOHheFnHmfwf/1c/Zu1aIS0jla98Ab1cOjkLBJich3SVDD8IsBuKwQDhBHmof
-         3GfxUXkeVgz97SMl3m3omk1w0okIKQZ5JdMDDXSs195hX5zCYstrsouHP/+4hyKhehi0
-         f5yQHPphEo+w0H4C8XrR0ApvWHyrae5IDyiqx65wErFvMj1ZlCTdJ8vNt/4wE883ClCx
-         FAlw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=j8OxkVIDnDND/pv8hLioHXK4chnXUFokYge0wxIqKsg=;
-        b=XIwk9zHlA5woisKZ5e/gddjCW4IW2bzn3JSiHFd1BCzIlg2s5ZsrmGfNnEMNm9RYRK
-         vsEGSM2e8Igpe7D3C4p4QaysaOJKjyZeQAWH2p1WPZzPiP4EPqfxY7J3bIBASIkw6jvH
-         56F0qxPF6yDAR8WLr7p4hABBrbTZuDVf/3lwxwG8pd7aoOczebO4PGKm/huudWalJh+5
-         w98Qph9SmeBeeVISYstaKHvNPFsbankjh/h9kjGCMPQHyUP/Om5QLqPCS1QjRqx1o3Vs
-         eghnxi7djofexSpsQ0eYeceG0uz3E8UqN1fYLN0YNPoevuo9IcKE3p+a94izxjP8sQ1D
-         eosw==
-X-Gm-Message-State: AJIora89tA6IGcu3CtpTLeej3m/xWYameZMDE8exPeHWIya59SYPXp8o
-        aKoLzAfJIxzDi33BQiBARtnXIw==
-X-Google-Smtp-Source: AGRyM1scOf3NP8Q3N3AGDEllJszfo7xRssZ+gnDXjpA+AbzHUXpKb7XPjJ9wXhezMmOlDCGoA5W39Q==
-X-Received: by 2002:a05:6512:1292:b0:479:6313:789e with SMTP id u18-20020a056512129200b004796313789emr14547845lfs.538.1655739600633;
-        Mon, 20 Jun 2022 08:40:00 -0700 (PDT)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id b7-20020a056512070700b0047255d211fasm1801029lfs.297.2022.06.20.08.39.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Jun 2022 08:39:59 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+        Mon, 20 Jun 2022 11:42:47 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93C9619286;
+        Mon, 20 Jun 2022 08:42:46 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 10BD3B8120C;
+        Mon, 20 Jun 2022 15:42:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8C57C3411B;
+        Mon, 20 Jun 2022 15:42:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1655739763;
+        bh=DjTm5z1TckD7/FnLfGxter2Pb89zCQ7bxMD/6sv1abI=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=fbD9HC4D4MyLUdpxq/CvkBrVrQijnYDnvpn3aPHs8mZMw5at8hflfNeEYMNMnQnrv
+         y9cUViFT8x189DDaoHMvKOYgaCWLBk8f3tGU31GS2Iz7065eDNVOO4E2WtKizJphlU
+         +RlL0VB+hpZS4I1z3mdgd5laOqISUFywqHfvh7Fs1hHO4qFhJHErA7yfJf3iW+gskG
+         OIz2EaIcnBDE952t6PvDDbsh/Dmu9+m4c0kubHjb38ckztMRgBz7tqr9T6WiCF8NcD
+         vegvHd+caOxvnPAOVoj4dwZq94emOFROERCMVWofMvBWpeOoSdXUy33mMzhjSrJciH
+         TSYxtYJofFsqA==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1o3JXy-0003Fo-LH; Mon, 20 Jun 2022 17:42:39 +0200
+Date:   Mon, 20 Jun 2022 17:42:38 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Johan Hovold <johan+linaro@kernel.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Taniya Das <quic_tdas@quicinc.com>
-Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-clk@vger.kernel.org
-Subject: [PATCH 2/2] phy: qcom-qmp-ufs: provide symbol clocks
-Date:   Mon, 20 Jun 2022 18:39:56 +0300
-Message-Id: <20220620153956.1723269-2-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220620153956.1723269-1-dmitry.baryshkov@linaro.org>
-References: <20220620153956.1723269-1-dmitry.baryshkov@linaro.org>
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] PCI: qcom: Drop unused post-init callbacks
+Message-ID: <YrCVbhXXEzDAdZm1@hovoldconsulting.com>
+References: <20220620150759.11507-1-johan+linaro@kernel.org>
+ <CAA8EJpr02CGRLyafkVV6V=0mchbfQga2=YiE_MkhuLE9veUj3w@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAA8EJpr02CGRLyafkVV6V=0mchbfQga2=YiE_MkhuLE9veUj3w@mail.gmail.com>
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -77,88 +66,18 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Register three UFS symbol clocks (ufs_rx_symbol_0_clk_src,
-ufs_rx_symbol_1_clk_src ufs_tx_symbol_0_clk_src). Register OF clock
-provider to let other devices link these clocks through the DT.
+On Mon, Jun 20, 2022 at 06:29:17PM +0300, Dmitry Baryshkov wrote:
+> On Mon, 20 Jun 2022 at 18:19, Johan Hovold <johan+linaro@kernel.org> wrote:
+> >
+> > Drop the unused post_init and post_deinit callbacks that were added for
+> > the now removed pipe clock handling.
+> 
+> I think the IPQ60xx PCIe support is intended to use post_init
+> callback. See [1]. That is the reason why I left the post_init in
+> place, while reworking the pipe clocks handling.
+> 
+> [1] https://lore.kernel.org/linux-arm-msm/a470b27a642d21e7b3e64d0f3287c0c3521bd182.1655028401.git.baruch@tkos.co.il/
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/phy/qualcomm/phy-qcom-qmp-ufs.c | 55 +++++++++++++++++++++++++
- 1 file changed, 55 insertions(+)
+Ah, ok. Let's keep them then.
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-index a2526068232b..0f31d3255897 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-@@ -1167,6 +1167,54 @@ static int qcom_qmp_phy_ufs_clk_init(struct device *dev, const struct qmp_phy_cf
- 	return devm_clk_bulk_get(dev, num, qmp->clks);
- }
- 
-+static void phy_clk_release_provider(void *res)
-+{
-+	of_clk_del_provider(res);
-+}
-+
-+#define UFS_SYMBOL_CLOCKS 3
-+
-+static int phy_symbols_clk_register(struct qcom_qmp *qmp, struct device_node *np)
-+{
-+	struct clk_hw_onecell_data *clk_data;
-+	struct clk_hw *hw;
-+	int ret;
-+
-+	clk_data = devm_kzalloc(qmp->dev, struct_size(clk_data, hws, UFS_SYMBOL_CLOCKS), GFP_KERNEL);
-+	clk_data->num = UFS_SYMBOL_CLOCKS;
-+
-+	hw = devm_clk_hw_register_fixed_rate(qmp->dev, "ufs_rx_symbol_0_clk_src",
-+							   NULL, 0, 0);
-+	if (IS_ERR(hw))
-+		return PTR_ERR(hw);
-+
-+	clk_data->hws[0] = hw;
-+
-+	hw = devm_clk_hw_register_fixed_rate(qmp->dev, "ufs_rx_symbol_1_clk_src",
-+							   NULL, 0, 0);
-+	if (IS_ERR(hw))
-+		return PTR_ERR(hw);
-+
-+	clk_data->hws[1] = hw;
-+
-+	hw = devm_clk_hw_register_fixed_rate(qmp->dev, "ufs_tx_symbol_0_clk_src",
-+							   NULL, 0, 0);
-+	if (IS_ERR(hw))
-+		return PTR_ERR(hw);
-+
-+	clk_data->hws[2] = hw;
-+
-+	ret = of_clk_add_hw_provider(np, of_clk_hw_onecell_get, clk_data);
-+	if (ret)
-+		return ret;
-+
-+        /*
-+         * Roll a devm action because the clock provider is the child node, but
-+         * the child node is not actually a device.
-+         */
-+        return devm_add_action_or_reset(qmp->dev, phy_clk_release_provider, np);
-+}
-+
- static const struct phy_ops qcom_qmp_ufs_ops = {
- 	.power_on	= qcom_qmp_phy_ufs_enable,
- 	.power_off	= qcom_qmp_phy_ufs_disable,
-@@ -1358,6 +1406,13 @@ static int qcom_qmp_phy_ufs_probe(struct platform_device *pdev)
- 			goto err_node_put;
- 		}
- 
-+		ret = phy_symbols_clk_register(qmp, child);
-+		if (ret) {
-+			dev_err(dev, "failed to create symbol clocks, %d\n",
-+				ret);
-+			goto err_node_put;
-+		}
-+
- 		id++;
- 	}
- 
--- 
-2.35.1
-
+Johan
