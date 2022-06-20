@@ -2,61 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 91F5C550E4A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jun 2022 03:05:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CE535550E4C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jun 2022 03:06:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237411AbiFTBF0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 19 Jun 2022 21:05:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59090 "EHLO
+        id S237536AbiFTBGr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 19 Jun 2022 21:06:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59498 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234884AbiFTBFZ (ORCPT
+        with ESMTP id S237527AbiFTBGq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 19 Jun 2022 21:05:25 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D2EFB7E4
-        for <linux-arm-msm@vger.kernel.org>; Sun, 19 Jun 2022 18:05:22 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id a13so4995191lfr.10
-        for <linux-arm-msm@vger.kernel.org>; Sun, 19 Jun 2022 18:05:22 -0700 (PDT)
+        Sun, 19 Jun 2022 21:06:46 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BEB2BB7F6
+        for <linux-arm-msm@vger.kernel.org>; Sun, 19 Jun 2022 18:06:45 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id i29so14866536lfp.3
+        for <linux-arm-msm@vger.kernel.org>; Sun, 19 Jun 2022 18:06:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=tKzj6L0K8MJNmRP+vzTm8uPJzi8NEXlEW3OrwZR1Y4s=;
-        b=ehbIN6DDHWJgcb8mbxbuZo7vgKAVPRGQKsNFVYB0b8wyWDj7Ye6vc6Vm1SRit6dIPT
-         /ZrDDWhQt0kOs5zehbZHINwBE1FJ+SOlJZNlaE2gTjAdfA6RlirBRXbM4M1oBt8TlUr4
-         FA55YQ75bS3s38zggMMtZpWLUu2VwVt8U8stbl8t5TMXkyZmbD69JczPQ7Hr7sQCTjyY
-         9zJmA36E0aD4TF4qd+IY9MoWtjlcN3XDA4EFiZ7EaBA0gMrgsdbUSScg+V06FQqpV4pK
-         /R/XVZtwd7NXHm9ShZu8z7eIlPR+/4kQFpdKZnKMcks8p6LYAJxI2HC9Paskkn3kf7hV
-         o0Pg==
+        bh=w1X6XioIFHIGc0TtSEX6Dx3KO+/cL3K9i4MVkunJFy4=;
+        b=DyXGCMJbP7c0vygmEbAY8WRyg5LC3BsJwQ0yUsgNd7R7rPWrnIYVsPUYQmWsqdfEXP
+         h8/4yGchzDIv3u34VdI5rpPJZl1IHNNtDITHQxBvG36EBx3+sYw5qp5HM17o52+VoL8p
+         /vgF05PQmDBwt6Xqnj7bPiqIQ76FVhDWmRH2CKc3LgoTR9EihiHlzXDwtazhpfgDbQq6
+         /SIkPoqt94nLCw998pok7+jQk74R6pEPK5yNJEvJ6SElfTiij9ss9aRyibvxGQkxJr6b
+         NXa7HEdKxzQpO5+oy4L8zI0tSpSSo4vBLxwsgIYmYr5tmcX3nkBc0NncOTFdAG5wzVOl
+         i2iQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=tKzj6L0K8MJNmRP+vzTm8uPJzi8NEXlEW3OrwZR1Y4s=;
-        b=lzDcXwFpfY6MO0+khHt2vsks0tvYccqxLt89zImFW3wSy03bD4rVJjaeMkFJ41+UE0
-         fBivmIy1wIqBay9Fn5DRN8RcYb1Sr2fudnipIa/kF/e2Y5VEfE5MUVCoVL3qukazfRJR
-         6J/dq4t3uaBzWYBNoPgSMaoMKfWrLC3hz8nbBav4FawgAIRHPFPbTakwIFXPlh8p3Gvb
-         Vomd+eEPWAFQ0JPK/UeYMcQFozSFn/5OzHTrn1aUveKdQiYL9SeIzkntIuB7ioHBUglN
-         5v/O0BfEJO1pyDGDlqqDK7lPHr4iBcIQIUmCKj2mrXTVOzsOUL7mAH2FI5i/jA4rMYYJ
-         hDMg==
-X-Gm-Message-State: AJIora8D2ZnCIHzolfxOzsEvKYavA5ZcBS/EXVSK10nd9n7CnHEzLDuR
-        lH1xO+5fYXSyiZ38Iqx34U+V1Q==
-X-Google-Smtp-Source: AGRyM1syw6wr5qEXJjO8AL6OhfBBlFYolL5iTnPvXzK82XaidCCiBDd0cmRf6hvHckJK5roZ5q47vA==
-X-Received: by 2002:a05:6512:4010:b0:47f:6fe6:119c with SMTP id br16-20020a056512401000b0047f6fe6119cmr1451315lfb.499.1655687120582;
-        Sun, 19 Jun 2022 18:05:20 -0700 (PDT)
+        bh=w1X6XioIFHIGc0TtSEX6Dx3KO+/cL3K9i4MVkunJFy4=;
+        b=r479mCg2AIPhZI5ykRhBWDGmLAyJRYpgg2VW9Y1z4gvVVLr/IELuCzogtT5HsKIiGY
+         y5GqbaOC2Rc+tGxQwqgOYpbQj00fAnWsENR5yMcLW9LIhOeYYi1pldnXo28NHwxcMEfC
+         hprQgmvOYVesiUNsOvoAHtsreU8FXuGAZ2EQbyMdqOQ4nk9xdzMf5AAEtsiHFqVrYUjP
+         PJ/UQwwgtEqWno6f50btVhRuNuBG9oE45EIoJeBnKaa7DoJsRSQaoswUpTurtqctuLQm
+         zFPDUGaZ49NQOlGS+OXqW+nErP4uXc1vuAJbJ2WX7sCQzkWbMFE+ScGRzjgloqW9oo5i
+         hrwQ==
+X-Gm-Message-State: AJIora+4mSVrfVp9MfYSq4BlYuNzkx4pWeYk+xstK149oevRmBGw4TPU
+        ESyUCBoKBwMrfAXaUb5S6TjHU8llmbhw2Ghe
+X-Google-Smtp-Source: AGRyM1vrimmMqrGWgTjIp7tmlXbBPHZGqQVyCPChg9hk70SjCo3/qUklLGVFvXsfjKpyUU7nld211g==
+X-Received: by 2002:a05:6512:2627:b0:47f:750f:f93c with SMTP id bt39-20020a056512262700b0047f750ff93cmr209123lfb.409.1655687204036;
+        Sun, 19 Jun 2022 18:06:44 -0700 (PDT)
 Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id h11-20020a19ca4b000000b0047f73f0af8bsm79826lfj.221.2022.06.19.18.05.20
+        by smtp.gmail.com with ESMTPSA id f27-20020a19dc5b000000b0047255d211c2sm1543891lfj.241.2022.06.19.18.06.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 19 Jun 2022 18:05:20 -0700 (PDT)
+        Sun, 19 Jun 2022 18:06:43 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: [PATCH] arm64: dts: qcom: msm8916: add xo clocks to rpmcc and a53pll
-Date:   Mon, 20 Jun 2022 04:05:19 +0300
-Message-Id: <20220620010519.1533364-1-dmitry.baryshkov@linaro.org>
+        Stephen Boyd <swboyd@chromium.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Taniya Das <quic_tdas@quicinc.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
+Subject: [PATCH] clk: qcom: a53-pll: convert to use parent_data rather than parent_names
+Date:   Mon, 20 Jun 2022 04:06:43 +0300
+Message-Id: <20220620010643.1533531-1-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -70,36 +71,29 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Both a53pll and rpmcc make use of xo as a clock parent. Add it to the
-respective device nodes.
+Change a53-pll driver to use clk_parent_data rather than always looking
+up the xo clock in the system clock list.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/msm8916.dtsi | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/clk/qcom/a53-pll.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-index 562c42ce2c5c..d679aa5989a6 100644
---- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-@@ -301,6 +301,8 @@ rpm_requests: rpm-requests {
- 				rpmcc: clock-controller {
- 					compatible = "qcom,rpmcc-msm8916", "qcom,rpmcc";
- 					#clock-cells = <1>;
-+					clocks = <&xo_board>;
-+					clock-names = "xo";
- 				};
+diff --git a/drivers/clk/qcom/a53-pll.c b/drivers/clk/qcom/a53-pll.c
+index 329d2c5356d8..f9c5e296dba2 100644
+--- a/drivers/clk/qcom/a53-pll.c
++++ b/drivers/clk/qcom/a53-pll.c
+@@ -127,7 +127,9 @@ static int qcom_a53pll_probe(struct platform_device *pdev)
+ 	if (!init.name)
+ 		return -ENOMEM;
  
- 				rpmpd: power-controller {
-@@ -1872,6 +1874,8 @@ a53pll: clock@b016000 {
- 			compatible = "qcom,msm8916-a53pll";
- 			reg = <0x0b016000 0x40>;
- 			#clock-cells = <0>;
-+			clocks = <&xo_board>;
-+			clock-names = "xo";
- 		};
- 
- 		timer@b020000 {
+-	init.parent_names = (const char *[]){ "xo" };
++	init.parent_data = &(const struct clk_parent_data){
++		.fw_name = "xo", .name = "xo_board",
++	};
+ 	init.num_parents = 1;
+ 	init.ops = &clk_pll_sr2_ops;
+ 	pll->clkr.hw.init = &init;
 -- 
 2.35.1
 
