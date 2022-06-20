@@ -2,77 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E1078552493
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jun 2022 21:30:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F07B95524AA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jun 2022 21:41:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242530AbiFTTav (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Jun 2022 15:30:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46858 "EHLO
+        id S244712AbiFTTly (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Jun 2022 15:41:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51910 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239371AbiFTTau (ORCPT
+        with ESMTP id S244590AbiFTTlx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Jun 2022 15:30:50 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D78FE1C11B
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jun 2022 12:30:49 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id t25so18800952lfg.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jun 2022 12:30:49 -0700 (PDT)
+        Mon, 20 Jun 2022 15:41:53 -0400
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3ED01C122
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jun 2022 12:41:50 -0700 (PDT)
+Received: by mail-ed1-x534.google.com with SMTP id es26so14806249edb.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jun 2022 12:41:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=4FVWZ5RD6j0T2Oz4CkZsx11e2rZOpIesuz+EhC8MdRg=;
-        b=MbUCCRU5DEOoziE4wlo9CXBSmyaZwaccLPzrC3aZa6M4LNES8QI+iVGPE7n9kWn1xr
-         FlInSDeXNkWMJR7TYkuFA9bGny04rz853TIMRJL0vjAEBysKvO2qOO777nLwYYlk0Ged
-         jugVJAJDoawma6KdVboL/15ypjCA1wzr4Xn9og9Da+DmcnJZyiV4tHNSkgP4/RqDUxo0
-         Suri7F2c6BCq6t5gsvz5OlTsVQPVQ5re0ZZC30g+xMb8sFdWoupX+PxvN5YjGS1CGdu4
-         6yqb+YdJsZQ6cudDnXMAIcknM7f6BiYFyzhadXb0gE/groQ5lW9lhcuSrGnlQn/MyZk0
-         agbg==
+        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
+         :content-transfer-encoding;
+        bh=sEUI2YgJeyDPI47V6RGt0fYdsBueMJxQ+51x+bPWfXk=;
+        b=t4uI+sFquTqOp8Ekf5vDFNUJIZQ2JiTt+PZKS4lhjldYnhigTwUmKYa/CLJJQGjipr
+         cJtLZdqsy/zIP+EUpoU8fKSy61fQ+/X551Nep+Paroj8FB7c4obubL9X9I5qHI1SlEJp
+         UIE6BPcW+tAPmwYMWGkqcMmAdQ2Spd5D44S4Pr4/wuc8TqzkmSwIYY+jlvFqpieMQlKM
+         P6VCi60+oo1snCMBbYd8rlcwLqHgF6NP19BNyXhnI14Q18jKmx+QdlDu9oaW9U8YwC5s
+         04lZHLFzIRzv6IGAEyjtY5rFKZC2ACP1id8364eECusOqKDMQDus2j/Lv9lXAVMGLyvf
+         mVLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=4FVWZ5RD6j0T2Oz4CkZsx11e2rZOpIesuz+EhC8MdRg=;
-        b=3+XsWECukZ1B6S5aNID4F7ly+2sU9itd/hTwfuzQOBmB0+NmulZpmGwp6Q56F+yqH+
-         WMfxDu5ainb74ymuPhFWzmQttzPMVRF15fnjcjvX3CM2L1VY713R76WmweYZPBfuDpt/
-         zk2E4WUDI1F999N23oUWpzEPjQCx4FjQOH2U7y6TJkS/+lvyt+jbSNGAoqpTu4qTIbXr
-         EbiVGQs2PJmTMRwWd/zH1th4LILxEVACC8kbLfpLp7Dw7a34vlqEX8R04xuG/1HWSbPk
-         ui0/1SjHzWCtC5k0eWaom3RkhLe+FZZCBdhGg9K2SCiKafrL9I7o+LOwx9LfnBrijwBL
-         C7BQ==
-X-Gm-Message-State: AJIora88wlV62gAxZLbh+VpDh9R6jtPqG6Z2rPSTe/FK7xZFFQVFjRQ1
-        tW5seUI28qvndkfU/9JI8NvbqQ==
-X-Google-Smtp-Source: AGRyM1uXYt5CRb9/0qaQTYLRAE5TNEoyPlRb7jf3bFWn+UD6F49KM7ZcWPEBO77nwZg6/8tmqZdWJA==
-X-Received: by 2002:ac2:51a5:0:b0:47f:79a1:5c02 with SMTP id f5-20020ac251a5000000b0047f79a15c02mr1094804lfk.575.1655753448163;
-        Mon, 20 Jun 2022 12:30:48 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id e2-20020ac25ca2000000b0047255d21100sm1872617lfq.47.2022.06.20.12.30.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 20 Jun 2022 12:30:47 -0700 (PDT)
-Message-ID: <fa5c77c3-517c-32da-5d8b-ecfb9c898b92@linaro.org>
-Date:   Mon, 20 Jun 2022 22:30:46 +0300
+        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=sEUI2YgJeyDPI47V6RGt0fYdsBueMJxQ+51x+bPWfXk=;
+        b=If1906QK6u/2puyG7p97FGCR+E7jEFXtJF6eHzPH4rsIvvvxaU8FOzHpbf0uWCa+u/
+         5Nx0Vat+Nk+gFaRhXNLaus4i0KMtgEtnscKjDqgUFLmw4hqfImsKHk/mrytPdHeAI7eB
+         ajd9PxjT6XeZFCGw4rAuY/29xR2P96KyG6x44E5Md04zQELW9mf7Prf6y6UO6v3D4H3w
+         CZBB2ryDMTyUFP5J6T0dVn4tUzZgmDMQAvgHMsv1OT0LO2+/nSBxMj8/nP+9ISyfhqmC
+         ezRcL2xE+vS41uzbJhqnb4pp6HjOaUVKBfeC06LTdCSScZ4uhLm11ElxTyO5DnUMuZdk
+         j9Vg==
+X-Gm-Message-State: AJIora9SATPNrCY8hF/0OLL1ryrlyebGbPlfwTSoahqV1sddXJ+ZJyq1
+        L8zmg0WXx6Tmeiv3oRMF224rDw==
+X-Google-Smtp-Source: AGRyM1scAVu7vTSEgbiRLCuBIayZlj7HVQWoDuynLy+Uu1q2Kg8/F1hdn1mAdxVUHySH9O31TrhWkQ==
+X-Received: by 2002:a50:fb9a:0:b0:435:6c0e:3342 with SMTP id e26-20020a50fb9a000000b004356c0e3342mr17380428edq.337.1655754109503;
+        Mon, 20 Jun 2022 12:41:49 -0700 (PDT)
+Received: from localhost.localdomain (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id o18-20020a056402439200b0042fbc23bfcesm11448549edc.46.2022.06.20.12.41.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 20 Jun 2022 12:41:49 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     krzysztof.kozlowski@linaro.org, linux-kernel@vger.kernel.org,
+        gregkh@linuxfoundation.org, bjorn.andersson@linaro.org,
+        agross@kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, mgautam@codeaurora.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        linux-usb@vger.kernel.org
+Subject: Re: (subset) [PATCH 01/13] dt-bindings: soc: qcom: aoss: document qcom,sm8450-aoss-qmp
+Date:   Mon, 20 Jun 2022 21:41:42 +0200
+Message-Id: <165575403865.144830.4698856147792054347.b4-ty@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20220504131923.214367-2-krzysztof.kozlowski@linaro.org>
+References: <20220504131923.214367-1-krzysztof.kozlowski@linaro.org> <20220504131923.214367-2-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: [PATCH v3 2/2] spmi: pmic-arb: Add support for PMIC v7
-Content-Language: en-GB
-To:     Vinod Koul <vkoul@kernel.org>, Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        David Collins <quic_collinsd@quicinc.com>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        David Collins <collinsd@codeaurora.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        David Dai <daidavid1@codeaurora.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20220201134108.2677578-1-vkoul@kernel.org>
- <20220201134108.2677578-3-vkoul@kernel.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20220201134108.2677578-3-vkoul@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -81,22 +74,21 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 01/02/2022 16:41, Vinod Koul wrote:
-> From: David Collins <collinsd@codeaurora.org>
+On Wed, 4 May 2022 15:19:11 +0200, Krzysztof Kozlowski wrote:
+> Add compatible for qcom,sm8450-aoss-qmp with qcom,aoss-qmp as a
+> fallback.  This fixes dtbs_check warnings like:
 > 
-> PMIC v7 has different offset values and seqeunces, so add support for
-> this new version of PMIC
+>   sm8450-hdk.dtb: power-controller@c300000: compatible:0: 'qcom,sm8450-aoss-qmp' is not one of
+>     ['qcom,sc7180-aoss-qmp', 'qcom,sc7280-aoss-qmp', 'qcom,sc8180x-aoss-qmp', 'qcom,sdm845-aoss-qmp',
+>      'qcom,sm6350-aoss-qmp', 'qcom,sm8150-aoss-qmp', 'qcom,sm8250-aoss-qmp', 'qcom,sm8350-aoss-qmp']
 > 
-> Signed-off-by: David Collins <collinsd@codeaurora.org>
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> [...]
 
-Tested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org> # SM8450 HDK
+Applied, thanks!
 
-> ---
->   drivers/spmi/spmi-pmic-arb.c | 233 ++++++++++++++++++++++++++++++++---
->   1 file changed, 214 insertions(+), 19 deletions(-)
+[01/13] dt-bindings: soc: qcom: aoss: document qcom,sm8450-aoss-qmp
+        https://git.kernel.org/krzk/linux-dt/c/cd3cd7d63543e4f963a0c823cd8fa29f4fe12f2a
 
-
+Best regards,
 -- 
-With best wishes
-Dmitry
+Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
