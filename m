@@ -2,72 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1407E5523EC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jun 2022 20:34:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9B2E95523EF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jun 2022 20:35:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245310AbiFTSeX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Jun 2022 14:34:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43860 "EHLO
+        id S245529AbiFTSfD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Jun 2022 14:35:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44288 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238373AbiFTSeW (ORCPT
+        with ESMTP id S242651AbiFTSfC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Jun 2022 14:34:22 -0400
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E50B81EC79
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jun 2022 11:34:20 -0700 (PDT)
-Received: by mail-ej1-x62a.google.com with SMTP id g25so22744021ejh.9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jun 2022 11:34:20 -0700 (PDT)
+        Mon, 20 Jun 2022 14:35:02 -0400
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AD5F1EC6C
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jun 2022 11:35:01 -0700 (PDT)
+Received: by mail-ed1-x52d.google.com with SMTP id e40so3745053eda.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jun 2022 11:35:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :references:from:in-reply-to:content-transfer-encoding;
-        bh=VdhSiamvlItOfaluqmA3TGcLsrz2Y0okHdkE6Q6elBQ=;
-        b=KH0btaCmNirixRVWSNGx8yXRL6TZJQalbk0W+n+WL5+UE18QpxFy4mDhFCNKTimN3t
-         r26MUghoGvhyCqYsObS5ql/4lMN3GCvegh2Gr3PODxzbN46L/5hK4pN+9WiGqeG8ZpFJ
-         nAhQy9WC9mBzy69LTk3plSyqj0LhKgs7WHBYzyo8Xd9IEgFMce2v0j9p1Tdu0Cr0YPFq
-         XfCeWVYi/vpBeb0PhNw8ZD86VxaBS69U9KI6Z8HI7xh4JIa6F9Q0Kdtqn6nHoOxhTp15
-         bn77nDBZboCNyldHWo3Gq2oAROp4+9hurtL/ZVsEMinMOSjaI77R4Tw+D8PjFXqVvP8l
-         qHAQ==
+        bh=MEpVHdTLad6DvaeX4T0f4vT7p4WxZITXRGbfMh9cG4M=;
+        b=MVE7RAQ0LOmNd1+sMDBNkkvgx13MPrZq4jKtAz/fYeaKPYGKmlN+iP+bO+UVdUOoA0
+         iXyK/4ZStJyHO/vRPvriDkxI32xTwXP+mHN1/H9hivhG+qn2UDsOLI1LwnwLyfySZyYh
+         rzj31x9RZPtPKT1v7zgJL+8ZTDPzbZk7qHkIIO6iOfsrL9wdhcoRWLJTnxZcevrDqs+1
+         MjsZLMTl1DPPsRUDIeTtbPVVW7n7uO5TmowCjuYiY4NlqxZTK7y07AFDp5TJKMN8446P
+         Btne3I59RcUBbSST1petx3E+SdmKTM6gUfTRvh3M8iSXRHImQ8mdY5U8WHZCq+e6FBbv
+         dMtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=VdhSiamvlItOfaluqmA3TGcLsrz2Y0okHdkE6Q6elBQ=;
-        b=XHrqv7tsLqyISWsPBx0zYQoweE75z9rrTsG0oIZnr5bZHYIKXySNYHzF5V3oF+ICDX
-         crLy4rPDvxCBZ2dTOUOXn84++9R+y9Co1cVhp/q/bVIKm5tTS0vTMDnBfitlwXoj/PQe
-         DfjCpkdxJxuwV2G57ZTFehNYpdsopTGzF4VJoXhJ5HwcsdQJSk3VzBAakirIcskEbQlR
-         VLDxv4H4JRy72y9S12aY9lXHbo2aYs4TRrHuvjhzy0kZuAwsUIvs59jVXglPa/8gG+zU
-         Ri1SODKaX9FFVfAUB6sKrBLIDULksvK8ElaWLH59am0m4pdg7Zuhs4qbgXSI9wQqO+VH
-         V7oA==
-X-Gm-Message-State: AJIora/RevurylmkfJIgMlKnmQ0CUCxJK7NuJ2SfHCM2G+3w83KrExaZ
-        3FzgTUBgVc3U+yYz83+hJ17dlw==
-X-Google-Smtp-Source: AGRyM1vJv8optT/McfbmWzU7V8gh+UXyiMiOErF6085ks8k/0CDXPxsDJj+QGxW35+wFkyjRGTuz0A==
-X-Received: by 2002:a17:907:1b0c:b0:6fe:25bf:b3e5 with SMTP id mp12-20020a1709071b0c00b006fe25bfb3e5mr21995640ejc.689.1655750059488;
-        Mon, 20 Jun 2022 11:34:19 -0700 (PDT)
+        bh=MEpVHdTLad6DvaeX4T0f4vT7p4WxZITXRGbfMh9cG4M=;
+        b=XD4TPmkd9RywOJF1A5Y16mXjXrGnp9OkS5xkeQpdf29eb4qb6AHWcZUvhRK2gN1eZP
+         v/PWoYfnKOpbHW7fEarzMJxMOhd83lxtyBPzD2LkFpdeEQ6hSv5vwfRSO2gOD8GvConi
+         Yd2owNMq4M96Bc5ySJJahvv7w9dk3zhOEOoowDaSfIU/k+RodyrQhNs0p+6A38Andz+u
+         HuNYBX3m/WRAizw4Pbe4woZWQg2E6crVzHZiCa1R/V2swdcxLX9JAk3qL+5Xhn1A61/R
+         NRMVKh0F0UqtId5vndEVAA6i9wyjLdn+cK/P0j0DvwEyF+qfmKvYQCe0yXXcW9t3ueCM
+         ZNTA==
+X-Gm-Message-State: AJIora8eAERu6yL6oyNjunKTuGd38CFhUlSfcoy8qB2GghlzvS7BhPtL
+        zLw7kt7+feJ1uBaPC8t8ZWdI9BR+pLeC3Q==
+X-Google-Smtp-Source: AGRyM1t3arK3LUmq3jHdvl9EY67edPH6TgzlDQy9Ox6ntIuy+o60jK4JMqNxdLPAe3W9ufGABBthOA==
+X-Received: by 2002:a05:6402:3807:b0:435:20fb:318d with SMTP id es7-20020a056402380700b0043520fb318dmr31444130edb.272.1655750099809;
+        Mon, 20 Jun 2022 11:34:59 -0700 (PDT)
 Received: from [192.168.0.211] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id kx24-20020a170907775800b0071a1cf76928sm6352945ejc.51.2022.06.20.11.34.17
+        by smtp.gmail.com with ESMTPSA id u17-20020a1709061db100b00711d546f8a8sm6283170ejh.139.2022.06.20.11.34.58
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 20 Jun 2022 11:34:18 -0700 (PDT)
-Message-ID: <8095f934-34c3-17d9-9e4b-6f244f205dac@linaro.org>
-Date:   Mon, 20 Jun 2022 20:34:17 +0200
+        Mon, 20 Jun 2022 11:34:59 -0700 (PDT)
+Message-ID: <1e0a8169-1710-b875-637d-7362bd17cda5@linaro.org>
+Date:   Mon, 20 Jun 2022 20:34:57 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.10.0
-Subject: Re: [PATCH v2 00/12] dt-bindings: remoteproc: qcom: cleanups and
- improvements
+Subject: Re: [PATCH v2] firmware: qcom_scm-legacy: correct kerneldoc
 Content-Language: en-US
-To:     Andy Gross <agross@kernel.org>,
+To:     Stephen Boyd <sboyd@kernel.org>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20220517070113.18023-1-krzysztof.kozlowski@linaro.org>
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20220519073410.7358-1-krzysztof.kozlowski@linaro.org>
+ <20220519221252.C1582C385AA@smtp.kernel.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220517070113.18023-1-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220519221252.C1582C385AA@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -80,26 +75,22 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 17/05/2022 09:01, Krzysztof Kozlowski wrote:
-> Hi,
+On 20/05/2022 00:12, Stephen Boyd wrote:
+> Quoting Krzysztof Kozlowski (2022-05-19 00:34:10)
+>> Correct kerneldoc warnings like:
+>>
+>>   drivers/firmware/qcom_scm-legacy.c:133:
+>>     warning: Function parameter or member 'dev' not described in 'scm_legacy_call'
+>>
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>>
+>> ---
 > 
-> Patches are mostly independent, so they can go via:
-> 1. Qualcomm SoC (dt-bindings/soc: + arm64)
-> 2. remoteproc (dt-bindings).
-> 
-> Changes since v1
-> ================
-> 1. Add review tags
-> 2. Patch 8: Remove ref from label (Rob)
-> 
+> Reviewed-by: Stephen Boyd <sboyd@kernel.org>
 
-Hey folks!
+Thanks!
 
-It has been a month since this patchset was sent.
-
-The bindings part have Rob's ack. Maybe the remote-proc should go via DT
-tree? Even if that happens, still the DTS wait for the same amount of
-time... so not sure what to do here. Shall I pick it up as well?
+This was month ago... Is there anyone willing to pick it up?
 
 Best regards,
 Krzysztof
