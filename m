@@ -2,93 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 40AE255264D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jun 2022 23:15:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9F3B7552661
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jun 2022 23:31:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240502AbiFTVPY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Jun 2022 17:15:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59030 "EHLO
+        id S230258AbiFTVbB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Jun 2022 17:31:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39214 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343639AbiFTVN3 (ORCPT
+        with ESMTP id S229704AbiFTVbA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Jun 2022 17:13:29 -0400
-Received: from relay06.th.seeweb.it (relay06.th.seeweb.it [5.144.164.167])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4FD8763EE
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jun 2022 14:13:22 -0700 (PDT)
-Received: from [192.168.1.101] (abxh227.neoplus.adsl.tpnet.pl [83.9.1.227])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 9102C3EE24;
-        Mon, 20 Jun 2022 23:35:32 +0200 (CEST)
-Message-ID: <3840f74b-91dc-25ab-e5db-a63cc198b111@somainline.org>
-Date:   Mon, 20 Jun 2022 23:13:18 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: [PATCH] arm64: dts: qcom: sdm845-akatsuki: Round down l22a
- regulator voltage
-Content-Language: en-US
-To:     Marijn Suijten <marijn.suijten@somainline.org>,
-        phone-devel@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Andy Gross <agross@kernel.org>,
+        Mon, 20 Jun 2022 17:31:00 -0400
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A63712D32
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jun 2022 14:30:58 -0700 (PDT)
+Received: by mail-lf1-x12e.google.com with SMTP id g4so6855861lfv.9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jun 2022 14:30:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=j8/WOG9Lsdn9ThuiG2M5ftng7nETTq8B1iAmvxjeBug=;
+        b=DMvnfxq233w/GmdsxpzV4vv8ETe0Ea4DP0HAWe9RzMJT0EW4BFw22LL2eRyoD4l8MX
+         xoP4wld2PU/5dFRoPIE56XwLFVEw3OU7F5UlVcrYtElh4+oQRwGGVf7ONp+M9Qx9glcZ
+         4LSDaCgaPoGEEqlbMqYG46iMzWa9sMyXl9gJscXoAA/KwxJ2CF21v6Ls8p5bQzC0QOZv
+         0fZ5ehxz/1LDilzlOEgcUGT6UayaNUxIPYyLBolFnqpCojFnMIun6LUl2xR2737ZRPvy
+         qa/V2D8Yl8UN/5VDaLQKYT36oO6vCW+WYKX7t0mWqra3LKPEQ/Plj2d+MqMfs67WdqtM
+         81aw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=j8/WOG9Lsdn9ThuiG2M5ftng7nETTq8B1iAmvxjeBug=;
+        b=x78tU573bBvwAgdIaeMn9LXek79GzsF1jc9EL3Izok6hbnh57SOuAxUtLVdfhUOubK
+         loM4yAF5GlgrzyEShWcaeh8HAn+fe2lpSmc8DRIHHqnGwvvqAC9K9sePgmg+zeAx+vm2
+         0gTOaBkx5RFx1fvqct0kYBwY9D8dv0NOk22lCUcBFbUprzl+b19R1za4Q9FoCatO3xWF
+         qe/WVEhibEpVOwx2u3eG0BTPmVMJ4Cmgd1MVZ6dSCzXzJakOC+Xvqgxt41rOUmjBBoS9
+         pwEg/rLcIZ+4u0jpP8c2IAp+2n7kwOF4m3W32UyR89QvfZ1OXZA3eEhRsrtoHFJKXa47
+         tOcg==
+X-Gm-Message-State: AJIora9aeIaUJzR1zTb3TNoauV7cvYNryDykBL5acBgPFNqnS1XMmJTd
+        Lf9fv6eGNalceRXPZDAL76NvQg==
+X-Google-Smtp-Source: AGRyM1vGER7uc8+o7jLkwjr73U+Xk8bqIzgQ+EV3WTWt2dZ0kQRBft7p5LqNORhapHoi6vI89MmzKQ==
+X-Received: by 2002:a05:6512:11cb:b0:47f:6906:6b94 with SMTP id h11-20020a05651211cb00b0047f69066b94mr5429172lfr.497.1655760656580;
+        Mon, 20 Jun 2022 14:30:56 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id l17-20020a2ea311000000b0025a681a7616sm838866lje.105.2022.06.20.14.30.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 20 Jun 2022 14:30:55 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20220620211212.269956-1-marijn.suijten@somainline.org>
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-In-Reply-To: <20220620211212.269956-1-marijn.suijten@somainline.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: [PATCH v1 0/4] drm/msm: move resource allocation to the _probe function
+Date:   Tue, 21 Jun 2022 00:30:50 +0300
+Message-Id: <20220620213054.1872954-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.35.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+As discussed several times on IRC, move display subdriver resource
+allocation from kms_init to probe time to let it bail early.
 
+The first patch fixes an issue with drvdata and is probably a -fixes
+material, but it is still included as a base for the rest of mdp5
+changes.
 
-On 20.06.2022 23:12, Marijn Suijten wrote:
-> 2700000 is not a multiple of pmic4_pldo's step size of 8000 (with base
-> voltage 1664000), resulting in pm8998-rpmh-regulators not probing.  Just
-> as we did with MSM8998's Sony Yoshino Poplar [1], round the voltages
-> down to err on the cautious side and leave a comment in place to
-> document this discrepancy wrt downstream sources.
-> 
-> [1]: https://lore.kernel.org/linux-arm-msm/20220507153627.1478268-1-marijn.suijten@somainline.org/
-> 
-> Fixes: 30a7f99befc6 ("arm64: dts: qcom: Add support for SONY Xperia XZ2 / XZ2C / XZ3 (Tama platform)")
-> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+Dmitry Baryshkov (4):
+  drm/msm/mdp5: stop overriding drvdata
+  drm/msm/dpu: move resource allocation to the _probe function
+  drm/msm/mdp4: move resource allocation to the _probe function
+  drm/msm/mdp5: move resource allocation to the _probe function
 
-Konrad
->  .../arm64/boot/dts/qcom/sdm845-sony-xperia-tama-akatsuki.dts | 5 +++--
->  1 file changed, 3 insertions(+), 2 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama-akatsuki.dts b/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama-akatsuki.dts
-> index 36ff1178b705..3839850cf7dd 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama-akatsuki.dts
-> +++ b/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama-akatsuki.dts
-> @@ -22,8 +22,9 @@ &vreg_l14a_1p8 {
->  };
->  
->  &vreg_l22a_2p8 {
-> -	regulator-min-microvolt = <2700000>;
-> -	regulator-max-microvolt = <2700000>;
-> +	/* Note: Round-down from 2700000 to be a multiple of PLDO step-size 8000 */
-> +	regulator-min-microvolt = <2696000>;
-> +	regulator-max-microvolt = <2696000>;
->  };
->  
->  &vreg_l28a_2p8 {
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c  |  62 ++++++------
+ drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c | 107 ++++++++++-----------
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c | 116 +++++++++++------------
+ 3 files changed, 137 insertions(+), 148 deletions(-)
+
+-- 
+2.35.1
+
