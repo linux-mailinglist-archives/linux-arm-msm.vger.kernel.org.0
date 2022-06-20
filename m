@@ -2,249 +2,235 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4CABA552666
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jun 2022 23:31:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9F35955269F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jun 2022 23:39:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242342AbiFTVbE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Jun 2022 17:31:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39242 "EHLO
+        id S245241AbiFTViD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Jun 2022 17:38:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46062 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241653AbiFTVbD (ORCPT
+        with ESMTP id S229608AbiFTViC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Jun 2022 17:31:03 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6231413CFE
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jun 2022 14:31:02 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id y32so19216962lfa.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jun 2022 14:31:02 -0700 (PDT)
+        Mon, 20 Jun 2022 17:38:02 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B874917E06;
+        Mon, 20 Jun 2022 14:38:00 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id j21so6136396lfe.1;
+        Mon, 20 Jun 2022 14:38:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=0A7Tldf1GC2gwlpbAQomv1Bp+9HeSjzZPOOkTnoz/Ng=;
-        b=Bz2VonNk+v3S+fbvzRx/LZFjkdwjYWiBNnHubGlIWiD/mYPE4tvJ4Xpzp7ByhTX38k
-         sqFYOIKviDRSYmNXh0oL385z9mULZ3qDVhx1MKBNXgPRmgUQEPMc0kzPjumaJa4wt7yE
-         1YN2sdkSeRmPG2wWB5kMTcJmWjKwRge0T77jmK3tiJt+d7R+i2pvUk8qBfh+dSlNnsVu
-         Gu0AP898ftDRI2RPtIZ6Eu282M+vQOCeCjEPOdxzmLh84TA7XzoXXRWwEGmJCVxWptnH
-         MIcHOndHIfdiGFFGkHMfEef/4Yu3fJzEOb2McCPQkMzg0/LVMMe/hUGaQJ8DYUCqxhMO
-         4gHA==
+        d=gmail.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=EgAnwP4MqXgu0q0d6eXWE8mU2Kiz+p4e1fpGeFSH/Y8=;
+        b=o2pZhsbnmZB/hPYNsAdRYKSGEUThCWUrSiKDope47O0Hc6y1Ie/Uhr9vlzSWLA7VnO
+         6lN78P1MVEepVV3liDs+f/UB+HrgEgGkF966GYg6fLnqq8wNHYQe6N3JVso5Fyy44o6y
+         MTQQwOrei2MX3mKbp2o5cf+Ro3YqXr9BSPZ5sDofxPvIy+Jve8CIopY4koLos6Miyhim
+         HbI7xS8hrxSimFq+buz+51JhYFW3Umf1FryhoF2UDYiuUfKl62C81eqe/XBlIMtqb1Un
+         gQyf5QE3lnyE367qbAyXYc4b7q6kAK5See9cks50Cphd4BQMI3b++pGIJWMs08WbeyvQ
+         Qelg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=0A7Tldf1GC2gwlpbAQomv1Bp+9HeSjzZPOOkTnoz/Ng=;
-        b=AjIs7pqm5R2daz25TATSCfaoSRf8+ACAY2b+Naohc/w07UP+lptoT2O5CO7mKwUUDQ
-         UXPnf7jGu/XZanjZUBJFSZ8R+vaGws9bEGzexYF+4enWae8Tckw0hBfQPr0Yjoc7wVOl
-         vfH0n76Xgt/ko2swU1m0rM+xLU8szOLC4mQNBIL3SPeV4FpnUuMFvvuU8mCsZg7uvgGM
-         Ub1mFa56nGIFx8JDhiz41GREgLSb1XJ+PCo9brDYiI5rzdz7hkxttsGPtC6R4epPoMmy
-         /FS4LoTpRvVS2LmyJgjHtG0A/Dm5VjljhRkKN9heZATXYxDUB8kpGU7mPfgv56Gy69PO
-         mrgA==
-X-Gm-Message-State: AJIora9mMYrEOZehOIz4kuB7+HVDY+K1B5CMyBV4okMYPj6kt0ysptgi
-        fvA58D+76+aN6zLk9SmKrNWTmA==
-X-Google-Smtp-Source: AGRyM1tQedvPN3nXzU9NleuW6BWBubNtLxpPWhre0INShfJGUrYZa1tAcgHsRpuwAFhalBCRGjivUg==
-X-Received: by 2002:a05:6512:22cf:b0:47f:7b38:73e7 with SMTP id g15-20020a05651222cf00b0047f7b3873e7mr689716lfu.523.1655760660744;
-        Mon, 20 Jun 2022 14:31:00 -0700 (PDT)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id l17-20020a2ea311000000b0025a681a7616sm838866lje.105.2022.06.20.14.30.59
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=EgAnwP4MqXgu0q0d6eXWE8mU2Kiz+p4e1fpGeFSH/Y8=;
+        b=7RiOEA/bzBRath7sC7zWrFcuenBQGUwlcGUlmBrYYf2/bVUJVEMUlSkJFt82hxSpDK
+         jaMHk23RDo784UrVglD76cdP/x3CTw+sps4u3JGqxjgjlwbenKnTn1TGrwuuO0r45tyQ
+         lDzmy7sOioELHgrK2K0JT4sTVV8YJKh3sc27bkt7Cc45BxQAcY96NFR/SKjramP+3BO3
+         g2d2nMlwRFscd9EhR6jSF47Cc0G2jR7RZNtfnwFA0Sd31aCHJsSNsMzkzfLf10PLhdq3
+         RNESImdLMu3Hz8W7BSeKoWks2jqPXuxnuMbaQPLNNtWpwQ45tbmdWDJhaVThBwmNUDp6
+         BR2Q==
+X-Gm-Message-State: AJIora/cPLw00Ly/TAOP0b36pw4ysBN97ReNMWq0mK0qXJzKh/e/phif
+        wDNj4YeT8pQISdPIhHLieN4=
+X-Google-Smtp-Source: AGRyM1s0d2VrYvy3auZpZcZEHLNE88miIB37xA3w0baRw5oXY3mn7ZteuCobzjV8K7l5aFMU1SrfTQ==
+X-Received: by 2002:a05:6512:b1c:b0:47d:df52:b5a9 with SMTP id w28-20020a0565120b1c00b0047ddf52b5a9mr13983505lfu.293.1655761079086;
+        Mon, 20 Jun 2022 14:37:59 -0700 (PDT)
+Received: from mobilestation ([95.79.189.214])
+        by smtp.gmail.com with ESMTPSA id m3-20020a05651202e300b0047f647414eesm992667lfq.229.2022.06.20.14.37.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Jun 2022 14:31:00 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
+        Mon, 20 Jun 2022 14:37:58 -0700 (PDT)
+Date:   Tue, 21 Jun 2022 00:37:55 +0300
+From:   Serge Semin <fancer.lancer@gmail.com>
+To:     Serge Semin <Sergey.Semin@baikalelectronics.ru>
+Cc:     Christoph Hellwig <hch@lst.de>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Vladimir Murzin <vladimir.murzin@arm.com>,
+        Alexey Malahov <Alexey.Malahov@baikalelectronics.ru>,
+        Pavel Parkhomenko <Pavel.Parkhomenko@baikalelectronics.ru>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Andrew Lunn <andrew@lunn.ch>,
+        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
+        Gregory Clement <gregory.clement@bootlin.com>,
+        linux-arm-kernel@lists.infradead.org,
+        Srujana Challa <schalla@marvell.com>,
+        Arnaud Ebalard <arno@natisbad.org>,
+        Boris Brezillon <bbrezillon@kernel.org>,
+        linux-crypto@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
+        dmaengine@vger.kernel.org, Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Li Yang <leoyang.li@nxp.com>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        Magnus Damm <magnus.damm@gmail.com>,
+        linux-renesas-soc@vger.kernel.org,
+        Alex Deucher <alexander.deucher@amd.com>,
+        Christian =?utf-8?B?S8O2bmln?= <christian.koenig@amd.com>,
+        "Pan, Xinhui" <Xinhui.Pan@amd.com>,
         David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
+        Gerd Hoffmann <kraxel@redhat.com>,
+        Tomasz Figa <tfiga@chromium.org>,
+        Oded Gabbay <ogabbay@kernel.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: [PATCH v1 4/4] drm/msm/mdp5: move resource allocation to the _probe function
-Date:   Tue, 21 Jun 2022 00:30:54 +0300
-Message-Id: <20220620213054.1872954-5-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220620213054.1872954-1-dmitry.baryshkov@linaro.org>
-References: <20220620213054.1872954-1-dmitry.baryshkov@linaro.org>
+        linux-arm-msm@vger.kernel.org,
+        Sunil Goutham <sgoutham@marvell.com>,
+        Linu Cherian <lcherian@marvell.com>,
+        Geetha sowjanya <gakula@marvell.com>,
+        Jon Mason <jdmason@kudzu.us>,
+        Dave Jiang <dave.jiang@intel.com>, ntb@lists.linux.dev,
+        iommu@lists.linux-foundation.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] dma-direct: take dma-ranges/offsets into account in
+ resource mapping
+Message-ID: <20220620213755.kczuriyildoublzi@mobilestation>
+References: <20220610080802.11147-1-Sergey.Semin@baikalelectronics.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20220610080802.11147-1-Sergey.Semin@baikalelectronics.ru>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-To let the probe function bail early if any of the resources is
-unavailable, move resource allocattion from kms_init directly to the
-probe callback.
+Folks,
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c | 97 +++++++++++-------------
- 1 file changed, 45 insertions(+), 52 deletions(-)
+On Fri, Jun 10, 2022 at 11:08:02AM +0300, Serge Semin wrote:
+> A basic device-specific linear memory mapping was introduced back in
+> commit ("dma: Take into account dma_pfn_offset") as a single-valued offset
+> preserved in the device.dma_pfn_offset field, which was initialized for
+> instance by means of the "dma-ranges" DT property. Afterwards the
+> functionality was extended to support more than one device-specific region
+> defined in the device.dma_range_map list of maps. But all of these
+> improvements concerned a single pointer, page or sg DMA-mapping methods,
+> while the system resource mapping function turned to miss the
+> corresponding modification. Thus the dma_direct_map_resource() method now
+> just casts the CPU physical address to the device DMA address with no
+> dma-ranges-based mapping taking into account, which is obviously wrong.
+> Let's fix it by using the phys_to_dma_direct() method to get the
+> device-specific bus address from the passed memory resource for the case
+> of the directly mapped DMA.
 
-diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-index daf5b5ca7233..015388f262f4 100644
---- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-+++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-@@ -556,17 +556,18 @@ static int mdp5_kms_init(struct drm_device *dev)
- 	struct mdp5_cfg *config;
- 	struct msm_kms *kms;
- 	struct msm_gem_address_space *aspace;
--	int irq, i, ret;
-+	int i, ret;
- 	struct device *iommu_dev;
- 
--	ret = mdp5_init(to_platform_device(dev->dev), dev);
--
- 	/* priv->kms would have been populated by the MDP5 driver */
- 	kms = priv->kms;
- 	if (!kms)
- 		return -ENOMEM;
- 
- 	mdp5_kms = to_mdp5_kms(to_mdp_kms(kms));
-+
-+	ret = mdp5_init(to_platform_device(dev->dev), dev);
-+
- 	pdev = mdp5_kms->pdev;
- 
- 	ret = mdp_kms_init(&mdp5_kms->base, &kms_funcs);
-@@ -575,15 +576,6 @@ static int mdp5_kms_init(struct drm_device *dev)
- 		goto fail;
- 	}
- 
--	irq = irq_of_parse_and_map(pdev->dev.of_node, 0);
--	if (!irq) {
--		ret = -EINVAL;
--		DRM_DEV_ERROR(&pdev->dev, "failed to get irq\n");
--		goto fail;
--	}
--
--	kms->irq = irq;
--
- 	config = mdp5_cfg_get_config(mdp5_kms->cfg);
- 
- 	/* make sure things are off before attaching iommu (bootloader could
-@@ -804,51 +796,17 @@ static int interface_init(struct mdp5_kms *mdp5_kms)
- static int mdp5_init(struct platform_device *pdev, struct drm_device *dev)
- {
- 	struct msm_drm_private *priv = dev->dev_private;
--	struct mdp5_kms *mdp5_kms;
-+	struct mdp5_kms *mdp5_kms = to_mdp5_kms(to_mdp_kms(priv->kms));
- 	struct mdp5_cfg *config;
- 	u32 major, minor;
- 	int ret;
- 
--	mdp5_kms = devm_kzalloc(&pdev->dev, sizeof(*mdp5_kms), GFP_KERNEL);
--	if (!mdp5_kms) {
--		ret = -ENOMEM;
--		goto fail;
--	}
--
--	spin_lock_init(&mdp5_kms->resource_lock);
--
- 	mdp5_kms->dev = dev;
--	mdp5_kms->pdev = pdev;
- 
- 	ret = mdp5_global_obj_init(mdp5_kms);
- 	if (ret)
- 		goto fail;
- 
--	mdp5_kms->mmio = msm_ioremap(pdev, "mdp_phys");
--	if (IS_ERR(mdp5_kms->mmio)) {
--		ret = PTR_ERR(mdp5_kms->mmio);
--		goto fail;
--	}
--
--	/* mandatory clocks: */
--	ret = get_clk(pdev, &mdp5_kms->axi_clk, "bus", true);
--	if (ret)
--		goto fail;
--	ret = get_clk(pdev, &mdp5_kms->ahb_clk, "iface", true);
--	if (ret)
--		goto fail;
--	ret = get_clk(pdev, &mdp5_kms->core_clk, "core", true);
--	if (ret)
--		goto fail;
--	ret = get_clk(pdev, &mdp5_kms->vsync_clk, "vsync", true);
--	if (ret)
--		goto fail;
--
--	/* optional clocks: */
--	get_clk(pdev, &mdp5_kms->lut_clk, "lut", false);
--	get_clk(pdev, &mdp5_kms->tbu_clk, "tbu", false);
--	get_clk(pdev, &mdp5_kms->tbu_rt_clk, "tbu_rt", false);
--
- 	/* we need to set a default rate before enabling.  Set a safe
- 	 * rate first, then figure out hw revision, and then set a
- 	 * more optimal rate:
-@@ -906,9 +864,6 @@ static int mdp5_init(struct platform_device *pdev, struct drm_device *dev)
- 	if (ret)
- 		goto fail;
- 
--	/* set uninit-ed kms */
--	priv->kms = &mdp5_kms->base.base;
--
- 	return 0;
- fail:
- 	if (mdp5_kms)
-@@ -951,15 +906,53 @@ static int mdp5_setup_interconnect(struct platform_device *pdev)
- 
- static int mdp5_dev_probe(struct platform_device *pdev)
- {
--	int ret;
-+	struct mdp5_kms *mdp5_kms;
-+	int ret, irq;
- 
- 	DBG("");
- 
-+	mdp5_kms = devm_kzalloc(&pdev->dev, sizeof(*mdp5_kms), GFP_KERNEL);
-+	if (!mdp5_kms)
-+		return -ENOMEM;
-+
- 	ret = mdp5_setup_interconnect(pdev);
- 	if (ret)
- 		return ret;
- 
--	return msm_drv_probe(&pdev->dev, mdp5_kms_init, NULL);
-+	mdp5_kms->pdev = pdev;
-+
-+	spin_lock_init(&mdp5_kms->resource_lock);
-+
-+	mdp5_kms->mmio = msm_ioremap(pdev, "mdp_phys");
-+	if (IS_ERR(mdp5_kms->mmio))
-+		return PTR_ERR(mdp5_kms->mmio);
-+
-+	/* mandatory clocks: */
-+	ret = get_clk(pdev, &mdp5_kms->axi_clk, "bus", true);
-+	if (ret)
-+		return ret;
-+	ret = get_clk(pdev, &mdp5_kms->ahb_clk, "iface", true);
-+	if (ret)
-+		return ret;
-+	ret = get_clk(pdev, &mdp5_kms->core_clk, "core", true);
-+	if (ret)
-+		return ret;
-+	ret = get_clk(pdev, &mdp5_kms->vsync_clk, "vsync", true);
-+	if (ret)
-+		return ret;
-+
-+	/* optional clocks: */
-+	get_clk(pdev, &mdp5_kms->lut_clk, "lut", false);
-+	get_clk(pdev, &mdp5_kms->tbu_clk, "tbu", false);
-+	get_clk(pdev, &mdp5_kms->tbu_rt_clk, "tbu_rt", false);
-+
-+	irq = platform_get_irq(pdev, 0);
-+	if (irq < 0)
-+		return dev_err_probe(&pdev->dev, irq, "failed to get irq\n");
-+
-+	mdp5_kms->base.base.irq = irq;
-+
-+	return msm_drv_probe(&pdev->dev, mdp5_kms_init, &mdp5_kms->base.base);
- }
- 
- static int mdp5_dev_remove(struct platform_device *pdev)
--- 
-2.35.1
+So any comment on the suggest modification? Any notes against or for?
 
+-Sergey
+
+> 
+> Fixes: 25f1e1887088 ("dma: Take into account dma_pfn_offset")
+> Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
+> 
+> ---
+> 
+> After a long discussion with Christoph and Robin regarding this patch
+> here:
+> https://lore.kernel.org/lkml/20220324014836.19149-4-Sergey.Semin@baikalelectronics.ru
+> and here
+> https://lore.kernel.org/linux-pci/20220503225104.12108-2-Sergey.Semin@baikalelectronics.ru/
+> It was decided to consult with wider maintainers audience whether it's ok
+> to accept the change as is or a more sophisticated solution needs to be
+> found for the non-linear direct MMIO mapping.
+> 
+> Cc: Christoph Hellwig <hch@lst.de>
+> Cc: Robin Murphy <robin.murphy@arm.com>
+> Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> 
+> file: arch/arm/mach-orion5x/board-dt.c
+> Cc: Andrew Lunn <andrew@lunn.ch>
+> Cc: Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>
+> Cc: Gregory Clement <gregory.clement@bootlin.com>
+> Cc: linux-arm-kernel@lists.infradead.org
+> 
+> file: drivers/crypto/marvell/cesa/cesa.c
+> Cc: Srujana Challa <schalla@marvell.com>
+> Cc: Arnaud Ebalard <arno@natisbad.org>
+> Cc: Boris Brezillon <bbrezillon@kernel.org>
+> Cc: linux-crypto@vger.kernel.org
+> 
+> file: drivers/dma/{fsl-edma-common.c,pl330.c,sh/rcar-dmac.c}
+> Cc: Vinod Koul <vkoul@kernel.org>
+> Cc: dmaengine@vger.kernel.org
+> 
+> file: arch/arm/boot/dts/{vfxxx.dtsi,ls1021a.dtsi,imx7ulp.dtsi,fsl-ls1043a.dtsi}
+> Cc: Shawn Guo <shawnguo@kernel.org>
+> Cc: Sascha Hauer <s.hauer@pengutronix.de>
+> Cc: Li Yang <leoyang.li@nxp.com>
+> Cc: linux-arm-kernel@lists.infradead.org
+> 
+> file: arch/arm/boot/dts/r8a77*.dtsi, arch/arm64/boot/dts/renesas/r8a77*.dtsi
+> Cc: Geert Uytterhoeven <geert+renesas@glider.be>
+> Cc: Magnus Damm <magnus.damm@gmail.com>
+> Cc: linux-renesas-soc@vger.kernel.org
+> 
+> file: drivers/gpu/drm/amd/amdgpu/amdgpu_vram_mgr.c
+> Cc: Alex Deucher <alexander.deucher@amd.com>
+> Cc: "Christian König" <christian.koenig@amd.com>
+> Cc: "Pan, Xinhui" <Xinhui.Pan@amd.com>
+> 
+> file: drivers/gpu/drm/virtio/virtgpu_vram.c
+> Cc: David Airlie <airlied@linux.ie>
+> Cc: Gerd Hoffmann <kraxel@redhat.com>
+> 
+> file: drivers/media/common/videobuf2/videobuf2-dma-contig.c
+> Cc: Tomasz Figa <tfiga@chromium.org>
+> Cc: Marek Szyprowski <m.szyprowski@samsung.com>
+> 
+> file: drivers/misc/habanalabs/common/memory.c
+> Cc: Oded Gabbay <ogabbay@kernel.org>
+> Cc: Arnd Bergmann <arnd@arndb.de>
+> Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> 
+> file: drivers/mtd/nand/raw/qcom_nandc.c
+> Cc: Manivannan Sadhasivam <mani@kernel.org>
+> 
+> file: arch/arm64/boot/dts/qcom/{ipq8074.dtsi,ipq6018.dtsi,qcom-sdx55.dtsi,qcom-ipq4019.dtsi,qcom-ipq8064.dtsi}
+> Cc: Andy Gross <agross@kernel.org>
+> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Cc: linux-arm-msm@vger.kernel.org
+> 
+> file: drivers/net/ethernet/marvell/octeontx2/af/rvu.c
+> Cc: Sunil Goutham <sgoutham@marvell.com>
+> Cc: Linu Cherian <lcherian@marvell.com>
+> Cc: Geetha sowjanya <gakula@marvell.com>
+> 
+> file: drivers/ntb/ntb_transport.c
+> Cc: Jon Mason <jdmason@kudzu.us>
+> Cc: Dave Jiang <dave.jiang@intel.com>
+> Cc: ntb@lists.linux.dev
+> ---
+>  kernel/dma/direct.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/kernel/dma/direct.c b/kernel/dma/direct.c
+> index 9743c6ccce1a..bc06db74dfdb 100644
+> --- a/kernel/dma/direct.c
+> +++ b/kernel/dma/direct.c
+> @@ -497,7 +497,7 @@ int dma_direct_map_sg(struct device *dev, struct scatterlist *sgl, int nents,
+>  dma_addr_t dma_direct_map_resource(struct device *dev, phys_addr_t paddr,
+>  		size_t size, enum dma_data_direction dir, unsigned long attrs)
+>  {
+> -	dma_addr_t dma_addr = paddr;
+> +	dma_addr_t dma_addr = phys_to_dma_direct(dev, paddr);
+>  
+>  	if (unlikely(!dma_capable(dev, dma_addr, size, false))) {
+>  		dev_err_once(dev,
+> -- 
+> 2.35.1
+> 
