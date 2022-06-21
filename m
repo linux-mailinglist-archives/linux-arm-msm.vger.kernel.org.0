@@ -2,277 +2,242 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3BB5C552B39
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jun 2022 08:43:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 476C1552B44
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jun 2022 08:46:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345805AbiFUGnD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Jun 2022 02:43:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56432 "EHLO
+        id S1346204AbiFUGqU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Jun 2022 02:46:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57958 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345687AbiFUGnD (ORCPT
+        with ESMTP id S239480AbiFUGqT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Jun 2022 02:43:03 -0400
-Received: from mail-qk1-x72a.google.com (mail-qk1-x72a.google.com [IPv6:2607:f8b0:4864:20::72a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B93C6FD16
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jun 2022 23:43:01 -0700 (PDT)
-Received: by mail-qk1-x72a.google.com with SMTP id n197so9380278qke.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jun 2022 23:43:01 -0700 (PDT)
+        Tue, 21 Jun 2022 02:46:19 -0400
+Received: from mx0a-00069f02.pphosted.com (mx0a-00069f02.pphosted.com [205.220.165.32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D610D1C121;
+        Mon, 20 Jun 2022 23:46:18 -0700 (PDT)
+Received: from pps.filterd (m0246629.ppops.net [127.0.0.1])
+        by mx0b-00069f02.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 25L0qdhD031178;
+        Tue, 21 Jun 2022 06:46:04 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=date : from : to : cc
+ : subject : message-id : content-type : in-reply-to : mime-version;
+ s=corp-2021-07-09; bh=nObtXQFnj9nspfwJ4u3GY2uUVEP+rI34OY8nhtLb+48=;
+ b=vCXwUBOkwqvQUaSY1FLBrdAQTEMduNExrzlbb87CwQHZI2v6yj4hOMcESkhVYjtKxP3/
+ wZOfKzlYkMvlSp2uHJq3XeFMz5nud1r127fSKpW5A4ukHZ7Qe3luV0HWNL4gBgLbM4BI
+ rMfwhY23lx7PuW6NN42NAf6OpuAb5/DsHRf/8KSS60lWvlHuWG2lAKQQy79eDNFqhEHf
+ LFIHHiBP11OfAbGyc4rN8XrxIybCf/kJsG/kG4+xqJ4L6ToG62x72LOTlLMKpQHnzerN
+ 1RZEpSOFXcVIUHi2eGDxKjBHwfe18THgPR8l4UmRYcJJJOZ8dCVqKhtz8x0qOrnjFtFN 3g== 
+Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (iadpaimrmta01.appoci.oracle.com [130.35.100.223])
+        by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3gs6kf4n7c-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Tue, 21 Jun 2022 06:46:03 +0000
+Received: from pps.filterd (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+        by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (8.16.1.2/8.16.1.2) with SMTP id 25L6egTC011206;
+        Tue, 21 Jun 2022 06:46:02 GMT
+Received: from nam04-bn8-obe.outbound.protection.outlook.com (mail-bn8nam04lp2048.outbound.protection.outlook.com [104.47.74.48])
+        by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com with ESMTP id 3gtd9tub01-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Tue, 21 Jun 2022 06:46:02 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=C7A+z5Ipu7GKf27CpFy9GFdMDoeCgnQsyGd6CAIEw5sdcWZLq1hLRY/eZkF9nEDOGme+Nk7nsOHK6Xg1L71BzMIrF+2NGIUiQC9wBi3LPCqsdAddK2hhRxRjFXhfFI/imupYhu0A9yQzN/rTFfwkA8aw7iURcADa+WnRGgAkjCEeQOOBn4mo8qMY8Z4Z3GGM9OpDezewgBgg9WC517A6kU1S52PwjAwirL+vYehM91QZRXtaOv96AAPGLmJIQQ74jiXcwsZaJm+MNRgGUZfS7A0nxJ7C/sWSWYpIafdR8UCLqlHqg6K2M/SzzgyZqzIBXEHqdogUUpDJa46OZbb6Sw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=nObtXQFnj9nspfwJ4u3GY2uUVEP+rI34OY8nhtLb+48=;
+ b=FlMOTTsvTZHqqEwNMQO2jumyQhQVChY2K83p0BroYiYyHPdf6GyD7kcfoABRo5Kv+BxzA5JVmDaTU9r3IC5mmExPYAa3pVQZ2sxibdlHOC/kIn6FaiYcf0ZHhPXx34i5faqF464xGK3ZOYGsp5R4i8B35YM9J1FXUU9wEmcEzNWadIC/vf+Yq9fu908j4yDbsfByeuy/k3/qiLaQcy3qLYrys0wr8SSWFyqUZ0TumWVxZQojlZUvU/gtDzvOwOVdh/WfsdB1O2MC13bETHlur5w1RbZIujtxW0VlyRYgAAsNsQrJhQBWpgeOVcn/XKKxqShNOCdqirOB4RRbOpENRA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=BDMAfmpcVtwHtSL8Cukz2KZ68UxxlQ/r6RdB8dvo9Ps=;
-        b=ZP1XDFtBZOGEQIt5GmVSpGQXPu6SdOzeRbvSacSQmMVLMUJU7zbGB/CF+ax4KYARi7
-         P7dzOKiTx2c/Tq0myy9Hc1hJ/nkUrGEVNBb7njzYpwsI6NtwaJZNwuOrQA2xgyxd2o1S
-         XrQhjLOsQQQeyg+quhdGtwgz6EGVzSjFtCP3ks13HeEyuqk1GaR7ENXaRz6CUUYEcTA9
-         SACEMNa7vv13oLm5xA6aMA4K5ic8t0Dbg0jlZLVtSBTu54icam8aDkhQNUTiZqQ9nppm
-         j1V3pBSE6aEEBcSWmDKkpUrbCoCSUZyC+JYSrBjMqSae/jIOeKEFGr59Zk1keyEYrPyg
-         5K6w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=BDMAfmpcVtwHtSL8Cukz2KZ68UxxlQ/r6RdB8dvo9Ps=;
-        b=jr+0zwqoe5XLK9TZYN1/wuX4CjgmYhLD0RuPHsbWZLQv2W7EeSD0Fa82ai2qKQFyJZ
-         dyfTCMRosmWoafd1nIWBW0iAFHthmU5+TcxRWCTPXj3VS1WV/YDLYM3GAVrWWOBVpTWc
-         kIiHpi0kuyZkWkcbo0KKfrX8J+BKYsxjLtLfSOwqcrOjzkXzdhTUSEOAtpTGxBVA7QG/
-         mG0CYW6Dg1q3K4I80kIFWvcMBc/7Anadcc53yEh7/M868j4oRbiHvj6CcxQ5Q86IbG0r
-         JbwJfDpaiM+BJ1n7un7OStB/QtuPR8vn+AgUIL6IsFWTYg36XTAmTT8BKS/ojqSvV+dA
-         QFVg==
-X-Gm-Message-State: AJIora/szw78rNMNmzM5prr7/vK4vw3UzcUEpmvSLga2FVdwdpIUPUGD
-        Rgre7lnpAEi68BWOYHc6Xrpybz6aSwlE9G4vfY4MYV3d0Dm2vXfM
-X-Google-Smtp-Source: AGRyM1vUeJfYyjh3kydXYSrKDxW/3xDhctDH5Qd9V09GQdUT8GXa3CTxKM7Xu6pn9tKOlomHVaw63TTOqwenOFgDFPQ=
-X-Received: by 2002:a05:620a:4305:b0:6a9:3829:c03 with SMTP id
- u5-20020a05620a430500b006a938290c03mr18734199qko.363.1655793780796; Mon, 20
- Jun 2022 23:43:00 -0700 (PDT)
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=nObtXQFnj9nspfwJ4u3GY2uUVEP+rI34OY8nhtLb+48=;
+ b=XPR+dXo7E6gXBsLoKUcKxSMeSLmk/ODjH9HW8JDQMAnZddeP3/wyDZDAgXcqi0xnQVxJLFr3quxR4RReCvnvjKSVJbASr8VZuIi0o0mOS1JasWqnwKBsFIuSADd0pXeYOyCCW1PydNbuFdpdSC0WU0KDzzGVnTrF+cBDdAw8JPM=
+Received: from MWHPR1001MB2365.namprd10.prod.outlook.com
+ (2603:10b6:301:2d::28) by SA2PR10MB4617.namprd10.prod.outlook.com
+ (2603:10b6:806:118::17) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5353.14; Tue, 21 Jun
+ 2022 06:46:00 +0000
+Received: from MWHPR1001MB2365.namprd10.prod.outlook.com
+ ([fe80::5020:9b82:5917:40b]) by MWHPR1001MB2365.namprd10.prod.outlook.com
+ ([fe80::5020:9b82:5917:40b%6]) with mapi id 15.20.5353.022; Tue, 21 Jun 2022
+ 06:46:00 +0000
+Date:   Tue, 21 Jun 2022 09:45:36 +0300
+From:   Dan Carpenter <dan.carpenter@oracle.com>
+To:     kbuild@lists.01.org,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Taniya Das <quic_tdas@quicinc.com>
+Cc:     lkp@intel.com, kbuild-all@lists.01.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
+Subject: [kbuild] Re: [PATCH] clk: qcom: common: use parent_hws in
+ _qcom_cc_register_board_clk()
+Message-ID: <202206210257.lD0x1WPz-lkp@intel.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220620080117.1571807-1-dmitry.baryshkov@linaro.org>
+Message-ID-Hash: I3RIBYGVOPTARPVC6EXC4NWLMN3QPLFU
+User-Agent: Mutt/1.9.4 (2018-02-28)
+X-ClientProxiedBy: JNAP275CA0040.ZAFP275.PROD.OUTLOOK.COM (2603:1086:0:4e::17)
+ To MWHPR1001MB2365.namprd10.prod.outlook.com (2603:10b6:301:2d::28)
 MIME-Version: 1.0
-References: <20220621005033.274-1-quic_jesszhan@quicinc.com> <20220621005033.274-2-quic_jesszhan@quicinc.com>
-In-Reply-To: <20220621005033.274-2-quic_jesszhan@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 21 Jun 2022 09:42:49 +0300
-Message-ID: <CAA8EJprJB2T0BQeaL=eoGa5YFJBKhPoXrDv8x3AkC=bXn1YqTw@mail.gmail.com>
-Subject: Re: [PATCH v3 1/4] drm/msm/dpu: Move LM CRC code into separate method
-To:     Jessica Zhang <quic_jesszhan@quicinc.com>
-Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
-        seanpaul@chromium.org, swboyd@chromium.org,
-        quic_aravindh@quicinc.com, quic_abhinavk@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: 33c1712f-8d60-405c-7c98-08da5351b420
+X-MS-TrafficTypeDiagnostic: SA2PR10MB4617:EE_
+X-Microsoft-Antispam-PRVS: <SA2PR10MB4617B30B8F4CD602DF0425228EB39@SA2PR10MB4617.namprd10.prod.outlook.com>
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: W8qyuC1NbgiX32SEIhtiey/wa7xGTmAfenhtMyAO9OsAh0EelCFdSBd9Vz/QOENaNJh5ly6wgRM2SI+tWPAlEvrDST8XVULq63I1/4UOK33KcLWhFMC2tU++xGEhHxXj5ZS3YM8LF9SoFiVmngein0IMo0AxRACdh0x2qrE1xHfiai3EDAiG3SQjyxJripwX/PmN9r/iwDLA4dOpUIsB9tJ1KZcfl0Fdsm7sBJrVadI/0gPS38R5zW3UchcI1MVAaH/UbxHMnvJhb2B5/Uu1RVJFUKR3dg/LKk66C0KuRvFVYkjKWpY1sJPIWUqbFKnkVQszQoRlZOF7WkggE6gIfFRDF2vAu2mxXR78hwN/KrRu7Jk/UZn/DsLIBHM6gdLoFHfeGXEO56ypR7SWxhtJIonbiyZvIjRITRaay3qOFsAwLVL0bXkEaGHuM/x8ENZ0EPnCKq8ftb1Qm8SDzr2cNYxJ0m8WaDI5sPo3yHdw5uoyvvOIZlN0usa9fXEP9QkBqH63FXFdJxR21kSCD9LBh0OXpvHpOkI3acuMCwj4rRMPpdZOWf+xW4gpuBxEB64nWJuD+lfYX286gls1QPxY/b+2go/pt8kvI/DXJd3e0Znlv2ccom++uk0J4yEwrrPpAlphHSO+heBlPtc0whGNKc0I08menVQIqqVRg/fmuKEOOHoeHV8LF8nn5GLFM2Sb5kdYPzaCRZPfhH3BqN2yjZnxifkzXX3e6UVssanJfR9N5bBvjb/JsJhMDMP/vY/Hay69AS7KfGwIt58uy3wI0yZJUCIeiRIHgGcCO3fNu3LymFcandb1+2W72tV+GgIysV1sj2HCSQ+CUxxQZhuZdA==
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MWHPR1001MB2365.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230016)(346002)(376002)(396003)(366004)(136003)(39860400002)(26005)(6512007)(41300700001)(86362001)(6506007)(1076003)(9686003)(6666004)(38350700002)(186003)(66476007)(52116002)(38100700002)(66556008)(4326008)(44832011)(7416002)(83380400001)(8676002)(36756003)(5660300002)(8936002)(2906002)(4001150100001)(316002)(966005)(66946007)(6486002)(478600001)(110136005);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?NH80+GtCbqySUJW4cB4Y7Cp4ocGc119uYu9AB3h98eNB3ChJbbnYQY3G8xR9?=
+ =?us-ascii?Q?eDafaG01y4SQiVmrzfz/56yCrxQ0lWlllct+dOYsS18tXRxER0gBmgT+7Ia+?=
+ =?us-ascii?Q?PvwcjgUFoN92ELK0j4f7efQs76sNXhOB9KgHhSVqAyib2hK0d7AyqaCP9j7E?=
+ =?us-ascii?Q?RSrVTL9AMazlOu/t9ajd1jQn0KUqGeVHnH8UJSZsXFSIrTZ0N9g2tS6ee6vl?=
+ =?us-ascii?Q?d9mmN2OGRzCJuXSNMNyYyMWDf5qk6uWXYo7/w/s/ezFDh3wkOL/MImZ0kUG1?=
+ =?us-ascii?Q?7Gnyk1Kfeae4Usvo7aVIEJs0bYgRJd7z9y5NpxtcxpQvgSCNgHj3NTpuwluT?=
+ =?us-ascii?Q?W1+djwwkntZ4hihGzKmMeObyG0mWg8yG9RYUg3TM7Hy6vUGmp1VRsZ6qMDUv?=
+ =?us-ascii?Q?wrqeqvyxBxYvTJ7fpPYpwo3zGgXXe1G6c2T6aPZnH5Sp35P2FOM0V6qKfrxZ?=
+ =?us-ascii?Q?P8zzWZLBW8mLydb0XA4LiuOWdMMPgLIq6JsKjVQ0vJ+RPT7SqnI4ug9DCirl?=
+ =?us-ascii?Q?ijofc+3Kp5CZkgZssoY591eoDRiuAI3PZ83CatXBNZznPU+WVisfU8pg5b/w?=
+ =?us-ascii?Q?p6qkvTPGHepf/E0E41m63nXOQndFZaj5lExJ/ECCYH9NaSbEOW6XebpiHlxH?=
+ =?us-ascii?Q?mpZ8KNw/jPYqJNpOw/+6mIsb+vAHbaxD/HMFPLi/TaG+m7F5RtzXQw1izqPZ?=
+ =?us-ascii?Q?pDaTjhoR2BDQpsh+ph5UpyIvObgTmvRnfpEK3AtHopc1SGsgzG6ONHsNos74?=
+ =?us-ascii?Q?ZSqUj86ZiO3Lhv3uRol/19LNSIipMHO7F58gNmsytYRFcEHYUkIp431oThP1?=
+ =?us-ascii?Q?/amopur9ndF4ZlNMPKOtM8thqkukb0tsVY2vBrYEx6II1luMwBLXqPlWaZGN?=
+ =?us-ascii?Q?LgOrPn7Zn9BVgzw4CjjqKMj1xLJMdw6q4emaSAMdXx6y+8iEPhW1iVCkodUV?=
+ =?us-ascii?Q?kVSKvns53LWuuy+F5dSa+qTPJBkp4ImB52eAMc2MiXqZxMAbcHUFhS0hcTsk?=
+ =?us-ascii?Q?YcVjFQtBZiEnUmmKbWBIp7gQtKknsyM8X1gNiyhwhof2K/alczxx2pEhIod9?=
+ =?us-ascii?Q?zyZDqhH6Qk/aYuch/bo1Y4RrCfvm7W29Mz3+m78+7Cd9X0Au37767KK+ZoD0?=
+ =?us-ascii?Q?TeuR3uOhDcOPvVidauKC2xgWp38Nf1c/BxC71/QVOP/JUOCK7UhR3d60AmGu?=
+ =?us-ascii?Q?fpNE5oFPF+OuBrGKVg+FnB27nBRSQi6SKPt+jwKJg9xDPQOISeE0rrZdvKYP?=
+ =?us-ascii?Q?jkVVDCUFtccWKb3CKiWYNIAZ8G8C49ZFuWktAf97nVBU+zgse0/zg8fjcHq0?=
+ =?us-ascii?Q?TDaydiAoYzA/a5k6BNAdDHyjpc/l14cYsV+WZPQCuMZpoN4/aQL0MqRn4s4H?=
+ =?us-ascii?Q?qtNS/ekVaN/RNHfABHJ9jaWkh2NphffanYvB1wmXd+mkiIx9JkCTVCKm0e2A?=
+ =?us-ascii?Q?feYD185VsGPzYGVWOA720U7hU4y86j2/Y5opCzQmZa7lqmstT3P2tMQUKMMZ?=
+ =?us-ascii?Q?hKXLCXCoUkIEWBXguAGgCICdigjjv1acyHXC5Gm+BM56yX9dAmzwMQI6afkd?=
+ =?us-ascii?Q?br+1Y70FDQhNqfhIFnoBLnI+a7rI4jduJZxpiUmU7VF83i6wRCECO6QObMXY?=
+ =?us-ascii?Q?CgLhOtDqIMvY80xtj9LbJ++PdB6kMrWh0YpFb52aDujxNbLrhUtOB3LXqLQd?=
+ =?us-ascii?Q?5ktZNCyzGtrN6MJt0d12ZfMst60ap6gbhVKqqNr+9iXlp28Oez2M4VLeWNu6?=
+ =?us-ascii?Q?FjHI8zPKg+QWFXtEXCjvvpX0bXawRp4=3D?=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 33c1712f-8d60-405c-7c98-08da5351b420
+X-MS-Exchange-CrossTenant-AuthSource: MWHPR1001MB2365.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Jun 2022 06:46:00.7705
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: pMCvbCXgtiGIv6uwIhMPD+RQx3hRwpjRenzTA9kkoGPL9j3aTqCVcZ6eB184coaIr5A2gtKqqJbB8c5SGBF0p17hsM/tcpSTn6P++RG2its=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA2PR10MB4617
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.517,18.0.883
+ definitions=2022-06-21_02:2022-06-17,2022-06-21 signatures=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999 suspectscore=0
+ phishscore=0 malwarescore=0 mlxscore=0 spamscore=0 adultscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2204290000 definitions=main-2206210028
+X-Proofpoint-ORIG-GUID: UTdVJbLoInitrxvXM_1n4dzpBjXOB5VJ
+X-Proofpoint-GUID: UTdVJbLoInitrxvXM_1n4dzpBjXOB5VJ
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 21 Jun 2022 at 03:50, Jessica Zhang <quic_jesszhan@quicinc.com> wrote:
->
-> Move layer mixer-specific section of dpu_crtc_get_crc() into a separate
-> helper method. This way, we can make it easier to get CRCs from other HW
-> blocks by adding other get_crc helper methods.
->
-> Changes since V1:
-> - Move common bitmasks to dpu_hw_util.h
-> - Move common CRC methods to dpu_hw_util.c
-> - Update copyrights
-> - Change crcs array to a dynamically allocated array and added it as a
->   member of crtc_state
->
-> Changes since V2:
-> - Put changes for hw_util into a separate commit
-> - Revert crcs array to a static array
-> - Add else case for set_crc_source to return EINVAL if no valid source
->   is selected
-> - Add DPU_CRTC_MAX_CRC_ENTRIES macro
->
-> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-> ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c | 79 ++++++++++++++----------
->  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h |  8 +++
->  2 files changed, 56 insertions(+), 31 deletions(-)
->
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> index b56f777dbd0e..69a1257d3b6d 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> @@ -1,5 +1,6 @@
->  // SPDX-License-Identifier: GPL-2.0-only
->  /*
-> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
->   * Copyright (c) 2014-2021 The Linux Foundation. All rights reserved.
->   * Copyright (C) 2013 Red Hat
->   * Author: Rob Clark <robdclark@gmail.com>
-> @@ -99,17 +100,32 @@ static int dpu_crtc_verify_crc_source(struct drm_crtc *crtc,
->         return 0;
->  }
->
-> +static void dpu_crtc_setup_lm_misr(struct dpu_crtc_state *crtc_state)
-> +{
-> +       struct dpu_crtc_mixer *m;
-> +       int i;
-> +
-> +       for (i = 0; i < crtc_state->num_mixers; ++i) {
-> +               m = &crtc_state->mixers[i];
-> +
-> +               if (!m->hw_lm || !m->hw_lm->ops.setup_misr)
-> +                       continue;
-> +
-> +               /* Calculate MISR over 1 frame */
-> +               m->hw_lm->ops.setup_misr(m->hw_lm, true, 1);
-> +       }
-> +}
-> +
->  static int dpu_crtc_set_crc_source(struct drm_crtc *crtc, const char *src_name)
->  {
->         enum dpu_crtc_crc_source source = dpu_crtc_parse_crc_source(src_name);
->         enum dpu_crtc_crc_source current_source;
->         struct dpu_crtc_state *crtc_state;
->         struct drm_device *drm_dev = crtc->dev;
-> -       struct dpu_crtc_mixer *m;
->
->         bool was_enabled;
->         bool enable = false;
-> -       int i, ret = 0;
-> +       int ret = 0;
->
->         if (source < 0) {
->                 DRM_DEBUG_DRIVER("Invalid CRC source %s for CRTC%d\n", src_name, crtc->index);
-> @@ -146,16 +162,10 @@ static int dpu_crtc_set_crc_source(struct drm_crtc *crtc, const char *src_name)
->
->         crtc_state->crc_frame_skip_count = 0;
->
-> -       for (i = 0; i < crtc_state->num_mixers; ++i) {
-> -               m = &crtc_state->mixers[i];
-> -
-> -               if (!m->hw_lm || !m->hw_lm->ops.setup_misr)
-> -                       continue;
-> -
-> -               /* Calculate MISR over 1 frame */
-> -               m->hw_lm->ops.setup_misr(m->hw_lm, true, 1);
-> -       }
-> -
-> +       if (source == DPU_CRTC_CRC_SOURCE_LAYER_MIXER)
-> +               dpu_crtc_setup_lm_misr(crtc_state);
-> +       else
-> +               ret = -EINVAL;
->
->  cleanup:
->         drm_modeset_unlock(&crtc->mutex);
-> @@ -174,34 +184,22 @@ static u32 dpu_crtc_get_vblank_counter(struct drm_crtc *crtc)
->         return dpu_encoder_get_vsync_count(encoder);
->  }
->
-> -
-> -static int dpu_crtc_get_crc(struct drm_crtc *crtc)
-> +static int dpu_crtc_get_lm_crc(struct drm_crtc *crtc,
-> +               struct dpu_crtc_state *crtc_state, u32 *crcs)
->  {
-> -       struct dpu_crtc_state *crtc_state;
-> -       struct dpu_crtc_mixer *m;
-> -       u32 crcs[CRTC_DUAL_MIXERS];
-> +       struct dpu_crtc_mixer *lm;
->
-> -       int i = 0;
->         int rc = 0;
-> -
-> -       crtc_state = to_dpu_crtc_state(crtc->state);
-> -
-> -       BUILD_BUG_ON(ARRAY_SIZE(crcs) != ARRAY_SIZE(crtc_state->mixers));
-> -
-> -       /* Skip first 2 frames in case of "uncooked" CRCs */
-> -       if (crtc_state->crc_frame_skip_count < 2) {
-> -               crtc_state->crc_frame_skip_count++;
-> -               return 0;
-> -       }
-> +       int i;
->
->         for (i = 0; i < crtc_state->num_mixers; ++i) {
->
-> -               m = &crtc_state->mixers[i];
-> +               lm = &crtc_state->mixers[i];
+Hi Dmitry,
 
-Why?
+url:    https://github.com/intel-lab-lkp/linux/commits/Dmitry-Baryshkov/clk-qcom-common-use-parent_hws-in-_qcom_cc_register_board_clk/20220620-160242 
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git  clk-next
+config: parisc-randconfig-m031-20220619 (https://download.01.org/0day-ci/archive/20220621/202206210257.lD0x1WPz-lkp@intel.com/config )
+compiler: hppa-linux-gcc (GCC) 11.3.0
 
->
-> -               if (!m->hw_lm || !m->hw_lm->ops.collect_misr)
-> +               if (!lm->hw_lm || !lm->hw_lm->ops.collect_misr)
->                         continue;
->
-> -               rc = m->hw_lm->ops.collect_misr(m->hw_lm, &crcs[i]);
-> +               rc = lm->hw_lm->ops.collect_misr(lm->hw_lm, &crcs[i]);
->
->                 if (rc) {
->                         if (rc != -ENODATA)
-> @@ -214,6 +212,25 @@ static int dpu_crtc_get_crc(struct drm_crtc *crtc)
->                         drm_crtc_accurate_vblank_count(crtc), crcs);
->  }
->
-> +static int dpu_crtc_get_crc(struct drm_crtc *crtc)
-> +{
-> +       struct dpu_crtc_state *crtc_state = to_dpu_crtc_state(crtc->state);
-> +       u32 crcs[DPU_CRTC_MAX_CRC_ENTRIES];
+If you fix the issue, kindly add following tag where applicable
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
 
-Following up the review of patch 4, I'd suggest moving crcs to
-dpu_crtc_get_lm_crc().
+smatch warnings:
+drivers/clk/qcom/common.c:172 _qcom_cc_register_board_clk() error: uninitialized symbol 'fixed'.
 
-> +
-> +       /* Skip first 2 frames in case of "uncooked" CRCs */
-> +       if (crtc_state->crc_frame_skip_count < 2) {
-> +               crtc_state->crc_frame_skip_count++;
-> +               return 0;
-> +       }
-> +
-> +       if (crtc_state->crc_source == DPU_CRTC_CRC_SOURCE_LAYER_MIXER) {
-> +               BUILD_BUG_ON(ARRAY_SIZE(crcs) < ARRAY_SIZE(crtc_state->mixers));
-> +               return dpu_crtc_get_lm_crc(crtc, crtc_state, crcs);
-> +       }
-> +
-> +       return 0;
+vim +/fixed +172 drivers/clk/qcom/common.c
 
--EINVAL?
+ee15faffef1130 Stephen Boyd     2015-10-26  129  static int _qcom_cc_register_board_clk(struct device *dev, const char *path,
+ee15faffef1130 Stephen Boyd     2015-10-26  130  				       const char *name, unsigned long rate,
+ee15faffef1130 Stephen Boyd     2015-10-26  131  				       bool add_factor)
+ee15faffef1130 Stephen Boyd     2015-10-26  132  {
+ee15faffef1130 Stephen Boyd     2015-10-26  133  	struct device_node *node = NULL;
+ee15faffef1130 Stephen Boyd     2015-10-26  134  	struct device_node *clocks_node;
+ee15faffef1130 Stephen Boyd     2015-10-26  135  	struct clk_fixed_factor *factor;
+ee15faffef1130 Stephen Boyd     2015-10-26  136  	struct clk_fixed_rate *fixed;
+                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-> +}
-> +
->  static bool dpu_crtc_get_scanout_position(struct drm_crtc *crtc,
->                                            bool in_vblank_irq,
->                                            int *vpos, int *hpos,
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
-> index b8785c394fcc..aa897ec28ad3 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
-> @@ -69,6 +69,11 @@ struct dpu_crtc_smmu_state_data {
->         uint32_t transition_error;
->  };
->
-> +/*
-> + * Maximum CRC entries that can be in crcs entries array
-> + */
-> +#define DPU_CRTC_MAX_CRC_ENTRIES       8
-> +
->  /**
->   * enum dpu_crtc_crc_source: CRC source
->   * @DPU_CRTC_CRC_SOURCE_NONE: no source set
-> @@ -201,6 +206,9 @@ struct dpu_crtc {
->   * @mixers        : List of active mixers
->   * @num_ctls      : Number of ctl paths in use
->   * @hw_ctls       : List of active ctl paths
-> + * @crc_source    : CRC source
-> + * @crc_frame_skip_count: Number of frames skipped before getting CRC
-> + * @crcs          : Array to store CRC values
+ee15faffef1130 Stephen Boyd     2015-10-26  137  	struct clk_init_data init_data = { };
+120c1552839036 Stephen Boyd     2016-08-16  138  	int ret;
+ee15faffef1130 Stephen Boyd     2015-10-26  139  
+ee15faffef1130 Stephen Boyd     2015-10-26  140  	clocks_node = of_find_node_by_path("/clocks");
+43a51019cc8ff1 Johan Hovold     2017-11-11  141  	if (clocks_node) {
+43a51019cc8ff1 Johan Hovold     2017-11-11  142  		node = of_get_child_by_name(clocks_node, path);
+43a51019cc8ff1 Johan Hovold     2017-11-11  143  		of_node_put(clocks_node);
+43a51019cc8ff1 Johan Hovold     2017-11-11  144  	}
+ee15faffef1130 Stephen Boyd     2015-10-26  145  
+ee15faffef1130 Stephen Boyd     2015-10-26  146  	if (!node) {
+ee15faffef1130 Stephen Boyd     2015-10-26  147  		fixed = devm_kzalloc(dev, sizeof(*fixed), GFP_KERNEL);
+ee15faffef1130 Stephen Boyd     2015-10-26  148  		if (!fixed)
+ee15faffef1130 Stephen Boyd     2015-10-26  149  			return -EINVAL;
+ee15faffef1130 Stephen Boyd     2015-10-26  150  
+ee15faffef1130 Stephen Boyd     2015-10-26  151  		fixed->fixed_rate = rate;
+ee15faffef1130 Stephen Boyd     2015-10-26  152  		fixed->hw.init = &init_data;
+ee15faffef1130 Stephen Boyd     2015-10-26  153  
+ee15faffef1130 Stephen Boyd     2015-10-26  154  		init_data.name = path;
+ee15faffef1130 Stephen Boyd     2015-10-26  155  		init_data.ops = &clk_fixed_rate_ops;
+ee15faffef1130 Stephen Boyd     2015-10-26  156  
+120c1552839036 Stephen Boyd     2016-08-16  157  		ret = devm_clk_hw_register(dev, &fixed->hw);
+120c1552839036 Stephen Boyd     2016-08-16  158  		if (ret)
+120c1552839036 Stephen Boyd     2016-08-16  159  			return ret;
+ee15faffef1130 Stephen Boyd     2015-10-26  160  	}
 
-There is no crcs array anymore
+"fixed" is not set on else path.
 
->   */
->  struct dpu_crtc_state {
->         struct drm_crtc_state base;
-> --
-> 2.35.1
->
+ee15faffef1130 Stephen Boyd     2015-10-26  161  	of_node_put(node);
+ee15faffef1130 Stephen Boyd     2015-10-26  162  
+ee15faffef1130 Stephen Boyd     2015-10-26  163  	if (add_factor) {
+ee15faffef1130 Stephen Boyd     2015-10-26  164  		factor = devm_kzalloc(dev, sizeof(*factor), GFP_KERNEL);
+ee15faffef1130 Stephen Boyd     2015-10-26  165  		if (!factor)
+ee15faffef1130 Stephen Boyd     2015-10-26  166  			return -EINVAL;
+ee15faffef1130 Stephen Boyd     2015-10-26  167  
+ee15faffef1130 Stephen Boyd     2015-10-26  168  		factor->mult = factor->div = 1;
+ee15faffef1130 Stephen Boyd     2015-10-26  169  		factor->hw.init = &init_data;
+ee15faffef1130 Stephen Boyd     2015-10-26  170  
+ee15faffef1130 Stephen Boyd     2015-10-26  171  		init_data.name = name;
+daa853a735065a Dmitry Baryshkov 2022-06-20 @172  		init_data.parent_hws = (const struct clk_hw*[]){ &fixed->hw };
+                                                                                                                  ^^^^^
+Used here.  This would work if fixed were set to NULL at the start but
+I kind of hate that it requires us to know that ->hw is the first member
+of fixed struct.
 
+ee15faffef1130 Stephen Boyd     2015-10-26  173  		init_data.num_parents = 1;
+ee15faffef1130 Stephen Boyd     2015-10-26  174  		init_data.flags = 0;
+ee15faffef1130 Stephen Boyd     2015-10-26  175  		init_data.ops = &clk_fixed_factor_ops;
+ee15faffef1130 Stephen Boyd     2015-10-26  176  
+120c1552839036 Stephen Boyd     2016-08-16  177  		ret = devm_clk_hw_register(dev, &factor->hw);
+120c1552839036 Stephen Boyd     2016-08-16  178  		if (ret)
+120c1552839036 Stephen Boyd     2016-08-16  179  			return ret;
+ee15faffef1130 Stephen Boyd     2015-10-26  180  	}
+ee15faffef1130 Stephen Boyd     2015-10-26  181  
+ee15faffef1130 Stephen Boyd     2015-10-26  182  	return 0;
+ee15faffef1130 Stephen Boyd     2015-10-26  183  }
 
 -- 
-With best wishes
-Dmitry
+0-DAY CI Kernel Test Service
+https://01.org/lkp 
+_______________________________________________
+kbuild mailing list -- kbuild@lists.01.org
+To unsubscribe send an email to kbuild-leave@lists.01.org
+
