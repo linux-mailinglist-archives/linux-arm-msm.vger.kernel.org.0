@@ -2,217 +2,240 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9B3625529F8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jun 2022 06:03:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 03CCB5529DD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jun 2022 06:03:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343533AbiFUDxt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Jun 2022 23:53:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34504 "EHLO
+        id S1344764AbiFUDkB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Jun 2022 23:40:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54408 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343680AbiFUDxs (ORCPT
+        with ESMTP id S1344634AbiFUDkB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Jun 2022 23:53:48 -0400
-Received: from mail.tkos.co.il (mail.tkos.co.il [84.110.109.230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E9F21C131;
-        Mon, 20 Jun 2022 20:53:46 -0700 (PDT)
-Received: from tarshish (unknown [10.0.8.2])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.tkos.co.il (Postfix) with ESMTPS id 699644403AE;
-        Tue, 21 Jun 2022 06:53:19 +0300 (IDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tkos.co.il;
-        s=default; t=1655783600;
-        bh=WptAxfSfvraXMBMBvNtwNadW7FWtSJ6h8v8Lg3QJU+Q=;
-        h=References:From:To:Cc:Subject:Date:In-reply-to:From;
-        b=Et6SnfQS0iMdNuZigK9h1VY4V6DANGVpJi2+xMGysfcyDLryK51xQ0XCywvJPXwPD
-         ohk1L4Xj8d2lfVpmXMYZIoEiGsrPJxSJb19Ny+m/6qieb5son07ITJqizImnem/xdH
-         0jhqESwnMoHpXW4gL+K8J/+NXgFvzFJcxqmCnvKSQVJPrcAEhFxYtUyjoa3DEDVXky
-         5QZYgQ6vbnTdU0gpJkPoVEmHCTu6p3aUqUJiEyrs/WAAgYo41LCAnW/Z0n390hDzV+
-         HJtjNgMq+yGwVJPoJr/8n0W4r1D4uk40mpYwRQo7H7Njz7Pj9e1q5JbWHYYtH7TrCI
-         m2L4S3PSyo5hQ==
-References: <cover.1655028401.git.baruch@tkos.co.il>
- <a470b27a642d21e7b3e64d0f3287c0c3521bd182.1655028401.git.baruch@tkos.co.il>
- <YrCY0dhQEE5pgWT1@hovoldconsulting.com>
-User-agent: mu4e 1.6.10; emacs 27.1
-From:   Baruch Siach <baruch@tkos.co.il>
+        Mon, 20 Jun 2022 23:40:01 -0400
+Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62C6E6324
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jun 2022 20:39:59 -0700 (PDT)
+Received: by mail-oi1-x22c.google.com with SMTP id p8so15648198oip.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jun 2022 20:39:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=hWxtngEThL/1CXndF6OBNy94w7fuARzauxhQ7hxLhOE=;
+        b=SXW893XzMEBxwo+LkZJq5IBDKGRH9yjB51xSiP5mHpUwPu4P2GMPq1gjaIxldpUuQE
+         Kl7msxEtaIDRUXxcojnPL73Lu+KBakHKxmL7nB2SAuLcMpr6GdlvQAFOFX3onPexAuwX
+         kr6gG8tncr4XBlsAjwP0sDiOfk/jCt3P/pzpCcMWekAAEdxeTmWc9UVPT5xcGcbhjKSr
+         zX8JkDxpwPlwQRtpXYO9s1NKKZt3TpGjSX8rrp/qV/khkXUxmL7fRo8ajkN+YUP85guQ
+         6tftfEJZHMc1Aeor5FRMAsGHUk8FmvWxemOVv0jG2hm+98Kxjf1V5ta7e0CSWZi/biUG
+         uoaw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=hWxtngEThL/1CXndF6OBNy94w7fuARzauxhQ7hxLhOE=;
+        b=oehdB9Mo4JLwOVRBYzDRnWTvFw14yD1k7SXgkBycA6ZESIallZTgpHnVvHsvJ9GEqX
+         9AD742xnjWfQ1cPVT45A6hTLXWqfaCNTA0oZOetZbI1Ej/r+38vEoSH13rnfoI/Tu0tJ
+         VpbiT1h9HOjbc0A3GF4B4t32zama1CXJTrWxAIJeEBLEiTKkWRVJASmS+r2q8gvYBu4U
+         wrzPRkdC7YnRs+NlnDLY7r+asZbJNBxrTOidm750YlgDUkgSNk0ct0/32LQ4Furjx/ln
+         +P7PkoSlEq2BCt0Vyw4zOKQA/s1PuSJHVxcDFf5RB9ARBjJpa3adk34omRSR/8Slp6Bh
+         VIxg==
+X-Gm-Message-State: AOAM530xlB/Gyr3OffZ6z2NGqjcPJpNyulSky2rQUw3oUSO30n2lOHFH
+        8oroAmv7vgNbh27BF4FADEn4VQ==
+X-Google-Smtp-Source: ABdhPJzasNTQSQFYwStVLiv+HTVfwGDinnn0CJxvWRSXoooldyj+Em+8GYm7NFgp9nFMOcgsHd5ihA==
+X-Received: by 2002:a05:6808:3027:b0:2f9:6618:ea55 with SMTP id ay39-20020a056808302700b002f96618ea55mr18305800oib.247.1655782798638;
+        Mon, 20 Jun 2022 20:39:58 -0700 (PDT)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id t23-20020a05683022f700b006060322125esm8877594otc.46.2022.06.20.20.39.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 20 Jun 2022 20:39:58 -0700 (PDT)
+Date:   Mon, 20 Jun 2022 22:39:56 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Johan Hovold <johan@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Selvam Sathappan Periakaruppan <quic_speriaka@quicinc.com>,
-        Kathiravan T <quic_kathirav@quicinc.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Robert Marko <robert.marko@sartura.hr>,
-        Bryan O'Donoghue <pure.logic@nexus-software.ie>,
-        Pali =?utf-8?Q?Roh=C3=A1r?= <pali@kernel.org>,
-        linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-tegra@vger.kernel.org
-Subject: Re: [PATCH v7 3/3] PCI: qcom: Add IPQ60xx support
-Date:   Tue, 21 Jun 2022 06:39:45 +0300
-In-reply-to: <YrCY0dhQEE5pgWT1@hovoldconsulting.com>
-Message-ID: <87k09aekop.fsf@tarshish>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 3/4] arm64: dts: qcom: sc8280x: Add reference device
+Message-ID: <YrE9jGuLNeFHFGr7@builder.lan>
+References: <20220607214113.4057684-1-bjorn.andersson@linaro.org>
+ <20220607214113.4057684-4-bjorn.andersson@linaro.org>
+ <YqDLmsrAkI1OnHqd@hovoldconsulting.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <YqDLmsrAkI1OnHqd@hovoldconsulting.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Johan,
+On Wed 08 Jun 11:17 CDT 2022, Johan Hovold wrote:
 
-Thanks for your review comments.
+> On Tue, Jun 07, 2022 at 02:41:12PM -0700, Bjorn Andersson wrote:
+> > Add basic support for the SC8280XP reference device, which allows it to
+> > boot to a shell (using EFIFB) with functional storage (UFS), USB,
+> > keyboard, touchpad, touchscreen, backlight and remoteprocs.
+> > 
+> > The PMICs are, per socinfo, reused from other platforms. But given that
+> > the address of the PMICs doesn't match other cases and that it's
+> > desirable to label things according to the schematics a new dtsi file is
+> > created to represent the reference combination of PMICs.
+> 
+> nit: missing p in "sc8280xp" in Subject.
+> 
+> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > ---
+> >  arch/arm64/boot/dts/qcom/Makefile            |   1 +
+> >  arch/arm64/boot/dts/qcom/sc8280xp-crd.dts    | 423 +++++++++++++++++++
+> >  arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi | 108 +++++
+> >  3 files changed, 532 insertions(+)
+> >  create mode 100644 arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
+> >  create mode 100644 arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi
+>  
+> > +	vreg_misc_3p3: misc-3p3-regulator {
+> > +		compatible = "regulator-fixed";
+> > +		regulator-name = "VREG_MISC_3P3";
+> > +
+> > +		regulator-min-microvolt = <3300000>;
+> > +		regulator-max-microvolt = <3300000>;
+> > +
+> > +		gpio = <&pmc8280_1_gpios 0 GPIO_ACTIVE_HIGH>;
+> 
+> The PMIC gpios are 1-based, so this should be
+> 
+> 		gpio = <&pmc8280_1_gpios 1 GPIO_ACTIVE_HIGH>;
+> 
+> or the regulator fails to probe.
+> 
+> > +		enable-active-high;
+> > +		pinctrl-names = "default";
+> > +		pinctrl-0 = <&misc_3p3_reg_en>;
+> > +
+> > +		regulator-boot-on;
+> > +		regulator-always-on;
+> > +	};
+> > +
+> > +	reserved-memory {
+> > +	};
+> > +};
+> 
+> > +&qup0_i2c4 {
+> > +       status = "okay";
+> 
+> Please move the status property last throughout here too.
+> 
+> > +       clock-frequency = <400000>;
+> > +
+> > +       pinctrl-names = "default";
+> > +       pinctrl-0 = <&qup0_i2c4_default>, <&ts0_default>;
+> > +
+> > +       hid@10 {
+> 
+> I've changed this to use the more descriptive name "touchscreen".
+> 
+> > +               compatible = "hid-over-i2c";
+> > +               reg = <0x10>;
+> > +               hid-descr-addr = <0x1>;
+> > +                       
+> > +               interrupts-extended = <&tlmm 175 IRQ_TYPE_LEVEL_LOW>;
+> > +       };
+> > +};
+> 
+> > +&qup2_i2c5 {
+> > +       status = "okay";
+> > +       clock-frequency = <400000>;
+> > +
+> > +       pinctrl-names = "default";
+> > +       pinctrl-0 = <&qup2_i2c5_default>, <&kybd_default>, <&tpad_default>;
+> > +
+> > +       hid@15 {
+> 
+> And this to "touchpad@15"
+> 
+> > +               compatible = "hid-over-i2c";
+> > +               reg = <0x15>;
+> > +               hid-descr-addr = <0x1>;
+> > +
+> > +               interrupts-extended = <&tlmm 182 IRQ_TYPE_LEVEL_LOW>;
+> > +       };
+> > +
+> > +       hid@68 {
+> 
+> And keyboard@68
+> 
+> Sure these are multifunction devices, but this is the primary function.
+> 
+> > +               compatible = "hid-over-i2c";
+> > +               reg = <0x68>;
+> > +               hid-descr-addr = <0x1>;
+> > +
+> > +               interrupts-extended = <&tlmm 104 IRQ_TYPE_LEVEL_LOW>;
+> > +       };
+> > +};
+> 
+> > diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi
+> > new file mode 100644
+> > index 000000000000..36ed7d808ab8
+> > --- /dev/null
+> > +++ b/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi
+> 
+> > +	pmc8280c: pmic@2 {
+> > +		compatible = "qcom,pm8350c", "qcom,spmi-pmic";
+> > +		reg = <0x2 SPMI_USID>;
+> > +		#address-cells = <1>;
+> > +		#size-cells = <0>;
+> > +
+> > +		pmc8280c_gpios: gpio@8800 {
+> > +			compatible = "qcom,pm8350c-gpio", "qcom,spmi-gpio";
+> > +			reg = <0x8800>;
+> > +			gpio-controller;
+> > +			gpio-ranges = <&pmc8280c_gpios 0 0 9>;
+> > +			#gpio-cells = <2>;
+> > +			interrupt-controller;
+> > +			#interrupt-cells = <2>;
+> > +		};
+> > +
+> > +		pmc8280c_lpg: lpg@e800 {
+> 
+> I renamed the node (and label suffix) "pwm" when I noticed that the
+> binding had changed in mainline.
+> 
+> Since this device is used as a PWM provider I guess that's a better
+> name?
+> 
 
-On Mon, Jun 20 2022, Johan Hovold wrote:
-> On Sun, Jun 12, 2022 at 01:18:35PM +0300, Baruch Siach wrote:
->> From: Selvam Sathappan Periakaruppan <quic_speriaka@quicinc.com>
->> 
->> IPQ60xx series of SoCs have one port of PCIe gen 3. Add support for that
->> platform.
->> 
->> The code is based on downstream[1] Codeaurora kernel v5.4 (branch
->> win.linuxopenwrt.2.0).
->> 
->> Split out the DBI registers access part from .init into .post_init. DBI
->> registers are only accessible after phy_power_on().
->> 
->> [1] https://source.codeaurora.org/quic/qsdk/oss/kernel/linux-ipq-5.4/
->> 
->> Signed-off-by: Selvam Sathappan Periakaruppan <speriaka@codeaurora.org>
->> Signed-off-by: Baruch Siach <baruch.siach@siklu.com>
->> ---
->
->> +static void qcom_pcie_deinit_2_9_0(struct qcom_pcie *pcie)
->> +{
->> +	struct qcom_pcie_resources_2_9_0 *res = &pcie->res.v2_9_0;
->> +
->> +	clk_bulk_disable_unprepare(ARRAY_SIZE(res->clks), res->clks);
->
-> Assert reset as you do in the init error path?
+The pm8350c seems to include a number of PWM channels, the RGB current
+sink (triled) and the LUT block - together making up the "Light Pulse
+Generator".
 
-Not sure about that. As I understand, the reset assert/deassert sequence
-on init is meant to ensure clean startup state. Deinit most likely does
-not need that. So maybe I should remove reset assert from init error
-path instead?
+So with that in mind, the compatible seems to have come from the fact
+that the author only intended to use one of the PWM sub-blocks...
 
-As always, this code sequence is from downstream kernel. I have no
-access to documentation.
 
-baruch
+Thanks for the feedback on the series, will updated and resubmit
+accordingly.
 
->> +}
->> +
->> +static int qcom_pcie_init_2_9_0(struct qcom_pcie *pcie)
->> +{
->> +	struct qcom_pcie_resources_2_9_0 *res = &pcie->res.v2_9_0;
->> +	struct device *dev = pcie->pci->dev;
->> +	int ret;
->> +
->> +	ret = reset_control_assert(res->rst);
->> +	if (ret) {
->> +		dev_err(dev, "reset assert failed (%d)\n", ret);
->> +		return ret;
->> +	}
->> +
->> +	/*
->> +	 * Delay periods before and after reset deassert are working values
->> +	 * from downstream Codeaurora kernel
->> +	 */
->> +	usleep_range(2000, 2500);
->> +
->> +	ret = reset_control_deassert(res->rst);
->> +	if (ret) {
->> +		dev_err(dev, "reset deassert failed (%d)\n", ret);
->> +		return ret;
->> +	}
->> +
->> +	usleep_range(2000, 2500);
->> +
->> +	ret = clk_bulk_prepare_enable(ARRAY_SIZE(res->clks), res->clks);
->> +	if (ret)
->> +		goto err_reset;
->> +
->> +	return 0;
->> +
->> +err_reset:
->> +	reset_control_assert(res->rst);
->> +
->> +	return ret;
->> +}
->> +
->> +static int qcom_pcie_post_init_2_9_0(struct qcom_pcie *pcie)
->> +{
->> +	struct dw_pcie *pci = pcie->pci;
->> +	u16 offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
->> +	u32 val;
->> +	int i;
->> +
->> +	writel(SLV_ADDR_SPACE_SZ,
->> +		pcie->parf + PCIE20_v3_PARF_SLV_ADDR_SPACE_SIZE);
->> +
->> +	val = readl(pcie->parf + PCIE20_PARF_PHY_CTRL);
->> +	val &= ~BIT(0);
->> +	writel(val, pcie->parf + PCIE20_PARF_PHY_CTRL);
->> +
->> +	writel(0, pcie->parf + PCIE20_PARF_DBI_BASE_ADDR);
->> +
->> +	writel(DEVICE_TYPE_RC, pcie->parf + PCIE20_PARF_DEVICE_TYPE);
->> +	writel(BYPASS | MSTR_AXI_CLK_EN | AHB_CLK_EN,
->> +		pcie->parf + PCIE20_PARF_MHI_CLOCK_RESET_CTRL);
->> +	writel(GEN3_RELATED_OFF_RXEQ_RGRDLESS_RXTS
->> +		| GEN3_RELATED_OFF_GEN3_ZRXDC_NONCOMPL,
->
-> I noticed that some of this probably has been copied from from
-> qcom_pcie_init_2_3_3(), but please move the | operator to the previous
-> line.
->
->> +		pci->dbi_base + GEN3_RELATED_OFF);
->> +
->> +	writel(MST_WAKEUP_EN | SLV_WAKEUP_EN | MSTR_ACLK_CGC_DIS
->> +		| SLV_ACLK_CGC_DIS | CORE_CLK_CGC_DIS |
->
-> Same here.
->
->> +		AUX_PWR_DET | L23_CLK_RMV_DIS | L1_CLK_RMV_DIS,
->> +		pcie->parf + PCIE20_PARF_SYS_CTRL);
->> +
->> +	writel(0, pcie->parf + PCIE20_PARF_Q2A_FLUSH);
->> +
->> +	dw_pcie_dbi_ro_wr_en(pci);
->> +	writel(PCIE_CAP_SLOT_VAL, pci->dbi_base + offset + PCI_EXP_SLTCAP);
->> +
->> +	val = readl(pci->dbi_base + offset + PCI_EXP_LNKCAP);
->> +	val &= ~PCI_EXP_LNKCAP_ASPMS;
->> +	writel(val, pci->dbi_base + offset + PCI_EXP_LNKCAP);
->> +
->> +	writel(PCI_EXP_DEVCTL2_COMP_TMOUT_DIS, pci->dbi_base + offset +
->> +			PCI_EXP_DEVCTL2);
->> +
->> +	for (i = 0; i < 256; i++)
->> +		writel(0x0, pcie->parf + PCIE20_PARF_BDF_TO_SID_TABLE_N
->> +				+ (4 * i));
->
-> And here for +, but you should probably just remove the line break (you
-> can go up to 100 chars if it makes the code more readable).
->
-> Please drop the 0x prefix too.
->
->> +
->> +	return 0;
->> +}
->
+Regards,
+Bjorn
+
+> > +			compatible = "qcom,pm8350c-pwm";
+> > +			reg = <0xe800>;
+> > +
+> > +			#address-cells = <1>;
+> > +			#size-cells = <0>;
+> > +
+> > +			#pwm-cells = <2>;
+> > +
+> > +			status = "disabled";
+> > +		};
+> > +	};
+> 
 > Johan
-
-
--- 
-                                                     ~. .~   Tk Open Systems
-=}------------------------------------------------ooO--U--Ooo------------{=
-   - baruch@tkos.co.il - tel: +972.52.368.4656, http://www.tkos.co.il -
