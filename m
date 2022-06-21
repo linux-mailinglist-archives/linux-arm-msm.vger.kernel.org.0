@@ -2,56 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9020F553877
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jun 2022 19:03:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5ACEF55387F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jun 2022 19:06:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238291AbiFURDr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Jun 2022 13:03:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42306 "EHLO
+        id S233936AbiFURGK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Jun 2022 13:06:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43766 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233936AbiFURDq (ORCPT
+        with ESMTP id S235198AbiFURGI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Jun 2022 13:03:46 -0400
-Received: from mail-qv1-xf2a.google.com (mail-qv1-xf2a.google.com [IPv6:2607:f8b0:4864:20::f2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DEFB72BB36
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jun 2022 10:03:43 -0700 (PDT)
-Received: by mail-qv1-xf2a.google.com with SMTP id o43so21288441qvo.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jun 2022 10:03:43 -0700 (PDT)
+        Tue, 21 Jun 2022 13:06:08 -0400
+Received: from mail-qk1-x734.google.com (mail-qk1-x734.google.com [IPv6:2607:f8b0:4864:20::734])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94C612CDEF
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jun 2022 10:06:06 -0700 (PDT)
+Received: by mail-qk1-x734.google.com with SMTP id d128so10590209qkg.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jun 2022 10:06:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=otHAQMGBki30O8G3WQ2qD0HC1niObfFAQ/YC4kJuOxM=;
-        b=Ri86gshcJeKctBZlI05AbwORrhtBo/PXn8xiXVmdcE4c19v/tljvYnSqYqxmuz11rA
-         GczySvWKSJTZ97Neva9xi4RX4b7UmYWYadlzQ5hcfyPfUtMBZkwQzwRVSeNUpTxmksQL
-         XtUsDNB74r66Hm2rWvz+6/2Ccjt0WabnKaDET1whkfhSO7EFJMbdCCx7LGFm+Nd+AzI7
-         T2N/A6Go1OPRzmxfdT2p5wix1FT3wBSDlVU0mhv1R77H+dyH3uIoutqGypVtDqNygTb8
-         wn3z93IvtKdp6+NHn3Laz9DgVuKUionF+gsPYAJFPtwzWKhMtiHgoe83JqmNVMWGQ7Be
-         ypDQ==
+        bh=Ya8LmcaL1Qybjvhe9tQQHX3prxtTnhn83RP4bUx4w6A=;
+        b=mcuyaYNlI4ew3WuKOcuyPgKYgDfDvs98pkt+t7h/iMsbfQBGspxbxUnAnB/YN7Cwhw
+         2+RlqzJAYpA712T4et4rnRNpr+3uouTkAHEnzHkqrVv4XJ2CaSqAQeL/mEFFw4Rdd7U8
+         znYczyBDYDusIJycfzw2w40bf/tBSYRrm/mlGM7ytLLleNZE+TInsZKZDU6ALtVVhDjW
+         uvdjIc6CKzBjoDMuiun2Q75eQozGEYDliUPcD39TBVhXfB9Vq95UHiul2MaUWHQYd1Q8
+         BOsgUC9Q6K4+pRtonDAP5Vgigks6jYnB7cxhWxVN6wuicNMtlLqgUHJQzCbY07w0xkJF
+         KGUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=otHAQMGBki30O8G3WQ2qD0HC1niObfFAQ/YC4kJuOxM=;
-        b=A4jFlzblZ+wAKww9GbXzco/3cmVPDM738CYRpoQMZoUzoIUenXGv9h24oLSF2dDA3m
-         xpIN8XJW58ghowwZD/MllwKxU+eeN8z1kCnXOJmL25dDNn59EFO3adN+GT8fR/bq1WJp
-         YchZ+Hj9dI8W7AIQOoQVOTLd8y0ox0keTbNsaZVW8brAUvAbkOD+T4+A7vykkH/Mqi+E
-         AGuFY7YYqgedQ7Ok+bbyjJx+1eKxlC1++UeWFfQaW/brhS7jOoqrXTvruDANXH6KDWmC
-         vk0tIhAF7dk2sQnVLsYVCB92qmrYKBnh4HpPkWko/jDRByRj5niRyLPI7trDk8c8duqw
-         W66g==
-X-Gm-Message-State: AJIora9Nsr2kI4JQoZ5ENXSaWSvsjufIT8QnST1uNT9F+KWgV+203tS8
-        FXHPWdmgypLUNWZGfQrCiP2Dn/4tKIuNGSwC0L6C8ZaKtY/dhCTr
-X-Google-Smtp-Source: AGRyM1u6Sanhm8QCp8G4R0SmNtvWaO+gorH1OCF+HnrqyQOiBhlDLaiFQQGApf2HAFSXTErWbYPEoZA6tCMYCKLIbDQ=
-X-Received: by 2002:a05:622a:34a:b0:304:f25a:ecf0 with SMTP id
- r10-20020a05622a034a00b00304f25aecf0mr24825990qtw.62.1655831022984; Tue, 21
- Jun 2022 10:03:42 -0700 (PDT)
+        bh=Ya8LmcaL1Qybjvhe9tQQHX3prxtTnhn83RP4bUx4w6A=;
+        b=wiSB+2ItYd/6dXJB1GFbcH/dG2ad7RGyRKv6E6o7zuA5PGMM/49fNX1tuDiDFQbIEP
+         p1lxY8ftKo1fuv5HW2lYyZtlSSKUpVLjuF/PzxfCqjpFR1PmrK0Q8zNn1Z7wQxlfaHC+
+         Rf8IGkqIOyiq/mGoacYxFTTkyiAeSZyJkS0Eu0i/ZZBghv+4OJlOlctRJr3aRn6RU0ZR
+         uaAN2V3n67VTZ6DLhT9i6EQGbkDpugxR6RWl1KTr2M8DC6kRa2lWFU9V7Na1hrhnPDKT
+         gwkiE2a5hzl9xur7scyldGJTCMg3W7eqLckN01PvIDkyo2B8B3e5DIANXO4ofWIWirQo
+         nIgQ==
+X-Gm-Message-State: AJIora/sbHTdegjbbjdtAueGmuN/REJhGWFwvyygy1lZyEIuYGftOhmy
+        HxIdOfiuQ7RX1c6g3iH6KaOD1aMF9E9WYA9Uspm2Rw==
+X-Google-Smtp-Source: AGRyM1s9i+6OiKN5jrUTsH3Oz5VoAin5eYkvclmAT08/OsiOOSB5z6XwZibMUtosK3AMA5heMk00+ZnMePJvnCPBurE=
+X-Received: by 2002:a37:a83:0:b0:6a6:7e4d:41dc with SMTP id
+ 125-20020a370a83000000b006a67e4d41dcmr20667265qkk.59.1655831165626; Tue, 21
+ Jun 2022 10:06:05 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220621160621.24415-1-y.oudjana@protonmail.com> <20220621160621.24415-4-y.oudjana@protonmail.com>
-In-Reply-To: <20220621160621.24415-4-y.oudjana@protonmail.com>
+References: <20220621160621.24415-1-y.oudjana@protonmail.com> <20220621160621.24415-5-y.oudjana@protonmail.com>
+In-Reply-To: <20220621160621.24415-5-y.oudjana@protonmail.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 21 Jun 2022 20:03:31 +0300
-Message-ID: <CAA8EJpogcM6nRVwUysTOuDJJPpNi5z3n_GySsEdJkaew=nJZEw@mail.gmail.com>
-Subject: Re: [PATCH 3/6] clk: qcom: msm8996-cpu: Unify cluster order
+Date:   Tue, 21 Jun 2022 20:05:54 +0300
+Message-ID: <CAA8EJppuL7OKJ+LkGmUXO+eSZsdFXO6_=1EYiwt7pvZQAmpmYg@mail.gmail.com>
+Subject: Re: [PATCH 4/6] clk: qcom: msm8996-cpu: Convert secondary muxes to clk_regmap_mux
 To:     Yassine Oudjana <yassine.oudjana@gmail.com>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -84,16 +84,213 @@ On Tue, 21 Jun 2022 at 19:07, Yassine Oudjana <yassine.oudjana@gmail.com> wrote:
 >
 > From: Yassine Oudjana <y.oudjana@protonmail.com>
 >
-> The power cluster comes before the performance cluster. Make
-> everything in the driver follow this order.
->
-> Signed-off-by: Yassine Oudjana <y.oudjana@protonmail.com>
+> There is nothing special about the secondary muxes, unlike the
+> primary muxes which need some extra logic to handle ACD and
+> switching between primary PLL and secondary mux sources. Turn
+> them into clk_regmap_mux and rename cpu_clk_msm8996_mux into
+> cpu_clk_msm8996_pmux to make it specific to primary muxes.
+
+Nice idea!
+I think this also allows us to clean up the pmux_ops to remove extra
+conditions, doesn't it? (as a followup patch)
 
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
+>
+> Signed-off-by: Yassine Oudjana <y.oudjana@protonmail.com>
 > ---
->  drivers/clk/qcom/clk-cpu-8996.c | 36 ++++++++++++++++-----------------
->  1 file changed, 18 insertions(+), 18 deletions(-)
+>  drivers/clk/qcom/clk-cpu-8996.c | 62 ++++++++++++++++-----------------
+>  1 file changed, 30 insertions(+), 32 deletions(-)
+>
+> diff --git a/drivers/clk/qcom/clk-cpu-8996.c b/drivers/clk/qcom/clk-cpu-8996.c
+> index b6761a74d5ac..b3ad9245874d 100644
+> --- a/drivers/clk/qcom/clk-cpu-8996.c
+> +++ b/drivers/clk/qcom/clk-cpu-8996.c
+> @@ -59,6 +59,7 @@
+>
+>  #include "clk-alpha-pll.h"
+>  #include "clk-regmap.h"
+> +#include "clk-regmap-mux.h"
+>
+>  enum _pmux_input {
+>         SMUX_INDEX = 0,
+> @@ -209,7 +210,7 @@ static struct clk_alpha_pll perfcl_alt_pll = {
+>         },
+>  };
+>
+> -struct clk_cpu_8996_mux {
+> +struct clk_cpu_8996_pmux {
+>         u32     reg;
+>         u8      shift;
+>         u8      width;
+> @@ -222,18 +223,18 @@ struct clk_cpu_8996_mux {
+>  static int cpu_clk_notifier_cb(struct notifier_block *nb, unsigned long event,
+>                                void *data);
+>
+> -#define to_clk_cpu_8996_mux_nb(_nb) \
+> -       container_of(_nb, struct clk_cpu_8996_mux, nb)
+> +#define to_clk_cpu_8996_pmux_nb(_nb) \
+> +       container_of(_nb, struct clk_cpu_8996_pmux, nb)
+>
+> -static inline struct clk_cpu_8996_mux *to_clk_cpu_8996_mux_hw(struct clk_hw *hw)
+> +static inline struct clk_cpu_8996_pmux *to_clk_cpu_8996_pmux_hw(struct clk_hw *hw)
+>  {
+> -       return container_of(to_clk_regmap(hw), struct clk_cpu_8996_mux, clkr);
+> +       return container_of(to_clk_regmap(hw), struct clk_cpu_8996_pmux, clkr);
+>  }
+>
+> -static u8 clk_cpu_8996_mux_get_parent(struct clk_hw *hw)
+> +static u8 clk_cpu_8996_pmux_get_parent(struct clk_hw *hw)
+>  {
+>         struct clk_regmap *clkr = to_clk_regmap(hw);
+> -       struct clk_cpu_8996_mux *cpuclk = to_clk_cpu_8996_mux_hw(hw);
+> +       struct clk_cpu_8996_pmux *cpuclk = to_clk_cpu_8996_pmux_hw(hw);
+>         u32 mask = GENMASK(cpuclk->width - 1, 0);
+>         u32 val;
+>
+> @@ -243,10 +244,10 @@ static u8 clk_cpu_8996_mux_get_parent(struct clk_hw *hw)
+>         return val & mask;
+>  }
+>
+> -static int clk_cpu_8996_mux_set_parent(struct clk_hw *hw, u8 index)
+> +static int clk_cpu_8996_pmux_set_parent(struct clk_hw *hw, u8 index)
+>  {
+>         struct clk_regmap *clkr = to_clk_regmap(hw);
+> -       struct clk_cpu_8996_mux *cpuclk = to_clk_cpu_8996_mux_hw(hw);
+> +       struct clk_cpu_8996_pmux *cpuclk = to_clk_cpu_8996_pmux_hw(hw);
+>         u32 mask = GENMASK(cpuclk->width + cpuclk->shift - 1, cpuclk->shift);
+>         u32 val;
+>
+> @@ -256,10 +257,10 @@ static int clk_cpu_8996_mux_set_parent(struct clk_hw *hw, u8 index)
+>         return regmap_update_bits(clkr->regmap, cpuclk->reg, mask, val);
+>  }
+>
+> -static int clk_cpu_8996_mux_determine_rate(struct clk_hw *hw,
+> +static int clk_cpu_8996_pmux_determine_rate(struct clk_hw *hw,
+>                                            struct clk_rate_request *req)
+>  {
+> -       struct clk_cpu_8996_mux *cpuclk = to_clk_cpu_8996_mux_hw(hw);
+> +       struct clk_cpu_8996_pmux *cpuclk = to_clk_cpu_8996_pmux_hw(hw);
+>         struct clk_hw *parent = cpuclk->pll;
+>
+>         if (cpuclk->pll_div_2 && req->rate < DIV_2_THRESHOLD) {
+> @@ -275,13 +276,13 @@ static int clk_cpu_8996_mux_determine_rate(struct clk_hw *hw,
+>         return 0;
+>  }
+>
+> -static const struct clk_ops clk_cpu_8996_mux_ops = {
+> -       .set_parent = clk_cpu_8996_mux_set_parent,
+> -       .get_parent = clk_cpu_8996_mux_get_parent,
+> -       .determine_rate = clk_cpu_8996_mux_determine_rate,
+> +static const struct clk_ops clk_cpu_8996_pmux_ops = {
+> +       .set_parent = clk_cpu_8996_pmux_set_parent,
+> +       .get_parent = clk_cpu_8996_pmux_get_parent,
+> +       .determine_rate = clk_cpu_8996_pmux_determine_rate,
+>  };
+>
+> -static struct clk_cpu_8996_mux pwrcl_smux = {
+> +static struct clk_regmap_mux pwrcl_smux = {
+>         .reg = PWRCL_REG_OFFSET + MUX_OFFSET,
+>         .shift = 2,
+>         .width = 2,
+> @@ -292,12 +293,12 @@ static struct clk_cpu_8996_mux pwrcl_smux = {
+>                         "pwrcl_pll_postdiv",
+>                 },
+>                 .num_parents = 2,
+> -               .ops = &clk_cpu_8996_mux_ops,
+> +               .ops = &clk_regmap_mux_closest_ops,
+>                 .flags = CLK_SET_RATE_PARENT,
+>         },
+>  };
+>
+> -static struct clk_cpu_8996_mux perfcl_smux = {
+> +static struct clk_regmap_mux perfcl_smux = {
+>         .reg = PERFCL_REG_OFFSET + MUX_OFFSET,
+>         .shift = 2,
+>         .width = 2,
+> @@ -308,12 +309,12 @@ static struct clk_cpu_8996_mux perfcl_smux = {
+>                         "perfcl_pll_postdiv",
+>                 },
+>                 .num_parents = 2,
+> -               .ops = &clk_cpu_8996_mux_ops,
+> +               .ops = &clk_regmap_mux_closest_ops,
+>                 .flags = CLK_SET_RATE_PARENT,
+>         },
+>  };
+>
+> -static struct clk_cpu_8996_mux pwrcl_pmux = {
+> +static struct clk_cpu_8996_pmux pwrcl_pmux = {
+>         .reg = PWRCL_REG_OFFSET + MUX_OFFSET,
+>         .shift = 0,
+>         .width = 2,
+> @@ -329,13 +330,13 @@ static struct clk_cpu_8996_mux pwrcl_pmux = {
+>                         "pwrcl_alt_pll",
+>                 },
+>                 .num_parents = 4,
+> -               .ops = &clk_cpu_8996_mux_ops,
+> +               .ops = &clk_cpu_8996_pmux_ops,
+>                 /* CPU clock is critical and should never be gated */
+>                 .flags = CLK_SET_RATE_PARENT | CLK_IS_CRITICAL,
+>         },
+>  };
+>
+> -static struct clk_cpu_8996_mux perfcl_pmux = {
+> +static struct clk_cpu_8996_pmux perfcl_pmux = {
+>         .reg = PERFCL_REG_OFFSET + MUX_OFFSET,
+>         .shift = 0,
+>         .width = 2,
+> @@ -351,7 +352,7 @@ static struct clk_cpu_8996_mux perfcl_pmux = {
+>                         "perfcl_alt_pll",
+>                 },
+>                 .num_parents = 4,
+> -               .ops = &clk_cpu_8996_mux_ops,
+> +               .ops = &clk_cpu_8996_pmux_ops,
+>                 /* CPU clock is critical and should never be gated */
+>                 .flags = CLK_SET_RATE_PARENT | CLK_IS_CRITICAL,
+>         },
+> @@ -394,9 +395,6 @@ static int qcom_cpu_clk_msm8996_register_clks(struct device *dev,
+>                 return ret;
+>         }
+>
+> -       pwrcl_smux.pll = &pwrcl_pll_postdiv.hw;
+> -       perfcl_smux.pll = &perfcl_pll_postdiv.hw;
+> -
+>         for (i = 0; i < ARRAY_SIZE(cpu_msm8996_clks); i++) {
+>                 ret = devm_clk_register_regmap(dev, cpu_msm8996_clks[i]);
+>                 if (ret)
+> @@ -474,22 +472,22 @@ static void qcom_cpu_clk_msm8996_acd_init(void __iomem *base)
+>  static int cpu_clk_notifier_cb(struct notifier_block *nb, unsigned long event,
+>                                void *data)
+>  {
+> -       struct clk_cpu_8996_mux *cpuclk = to_clk_cpu_8996_mux_nb(nb);
+> +       struct clk_cpu_8996_pmux *cpuclk = to_clk_cpu_8996_pmux_nb(nb);
+>         struct clk_notifier_data *cnd = data;
+>         int ret;
+>
+>         switch (event) {
+>         case PRE_RATE_CHANGE:
+> -               ret = clk_cpu_8996_mux_set_parent(&cpuclk->clkr.hw, ALT_INDEX);
+> +               ret = clk_cpu_8996_pmux_set_parent(&cpuclk->clkr.hw, ALT_INDEX);
+>                 qcom_cpu_clk_msm8996_acd_init(base);
+>                 break;
+>         case POST_RATE_CHANGE:
+>                 if (cnd->new_rate < DIV_2_THRESHOLD)
+> -                       ret = clk_cpu_8996_mux_set_parent(&cpuclk->clkr.hw,
+> -                                                         SMUX_INDEX);
+> +                       ret = clk_cpu_8996_pmux_set_parent(&cpuclk->clkr.hw,
+> +                                                          SMUX_INDEX);
+>                 else
+> -                       ret = clk_cpu_8996_mux_set_parent(&cpuclk->clkr.hw,
+> -                                                         ACD_INDEX);
+> +                       ret = clk_cpu_8996_pmux_set_parent(&cpuclk->clkr.hw,
+> +                                                          ACD_INDEX);
+>                 break;
+>         default:
+>                 ret = 0;
+> --
+> 2.36.1
+>
+
 
 -- 
 With best wishes
