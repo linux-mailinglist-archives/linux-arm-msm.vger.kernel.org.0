@@ -2,75 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9CC515539D0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jun 2022 20:55:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 678C55539D4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jun 2022 20:57:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352036AbiFUSy5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Jun 2022 14:54:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51122 "EHLO
+        id S1352255AbiFUS47 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Jun 2022 14:56:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52094 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351988AbiFUSyz (ORCPT
+        with ESMTP id S1351927AbiFUS47 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Jun 2022 14:54:55 -0400
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C4EA2A24E
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jun 2022 11:54:54 -0700 (PDT)
-Received: by mail-lj1-x230.google.com with SMTP id d19so16528554lji.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jun 2022 11:54:54 -0700 (PDT)
+        Tue, 21 Jun 2022 14:56:59 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB49B2A268
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jun 2022 11:56:57 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id a10so7987906wmj.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jun 2022 11:56:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=UPq0R9Y1HNG52LGq/y85p1KY2NxrAA2AyZswGvI2BOA=;
-        b=rhvNDxPL/9oBNe5aEmITDUe+it6rqMHgnQ/NT/l8uxwFxawXbAgfJx2JKCNotbQOGB
-         TqxS3ImJ86/3kFMrQb2D4lBXJ14uYy/r1+RABPpJYRnglrzP+WjVKmKkCI4/jhrjH8mG
-         bienJZQu1I3WK0s6wFVEI2UlWqI9BiIT1QFP76xXDyB/rvqSC8S95lMc9L+ebzXRYIB3
-         7KyOXmC2B4u2aBW7TENAQAp+mKG1w+NPpdAGT4cy62QK2FXpffIkAB+zX4Xvz4f89SzQ
-         h9eA+h0X4pLqMITjO+gRnerm1Jq2+iLXIQVIe94BrtXuCgzHoXYHp/fIlDO49t88mRYR
-         Gd5g==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=MAE15+uRagTlK+c2TFhZlYB3GN3MmW6xrYt0iUHtakw=;
+        b=qNHCwJDs3SVr2xlcN0pxTRz5pt6W/9NJzFsqYTDX70iKdgWjkM/A3o5DS58BfYkrL0
+         /VUN+O0WEzId26TKrER/ikSGMHZuRgJlPCdbWICl3Fo45DGa3j3VG3FmBScz/oAQnNjs
+         hJg23bcg5wR8lqNIgXBF1vPaARlfA6Ti+I8yqFsdgR1ywd9YMLzdzvyPwZmgEEei0ueR
+         aJKr+IL5KfsQvQRuZLr4ABYXM3V6LI26LACgeM1JRB6efRzxS7+fZGGKw+ro7zF2poWA
+         +SmOx0B9TRmvM52ESqi+X5XbpMsPZs8gEHXsG703PLCKLFd3xWKXsnxyAWnqjKFTUnA0
+         qcWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=UPq0R9Y1HNG52LGq/y85p1KY2NxrAA2AyZswGvI2BOA=;
-        b=awlXqiQA472ypOiv9uFGg01HhQ/f7MzZo6st76nKSvYzSmOlhoTwcGxVV2fevxfuO1
-         +YaAVtruCfOy8Bbn+cxW+5Vvlf+gafel/OLkXywxKvbtXvae9vylLiw0gyfq2uunV0Zs
-         WrjjNQ7zdVWgnbh9gIRZN+tL4dPXa7Ii00MoGJD6zaDJtCGIaEirPYcxsu9Dq6Qe6Mtb
-         ebbZkId8Szl3HZwmNPU6ReCwa0gGD7VKISRN5dEfh9O92l9411iq3uKELsIEY0GyJp8d
-         A7S/tOyrq/4WeJt0lpfiL5Il754jMh5ER8j8udg5WGfFBoKJPiz7ZJh6dZgf58zgvvs5
-         +ArQ==
-X-Gm-Message-State: AJIora//7IuTtHkw2WJqzwxxN+I9FfWJPAtcj4grFhVKc9h0h4ZoGRV7
-        Cayl36q2qTqgB6IFzH/FB4mspQ==
-X-Google-Smtp-Source: AGRyM1t4y8KtQjV7BwtnBXZ+1ZOE7EfimYN3J/FVp3DBNFI4fKKV3T2DOg2Tb3s2fWp7wG2RLjetrQ==
-X-Received: by 2002:a05:651c:4c7:b0:25a:755d:5f9f with SMTP id e7-20020a05651c04c700b0025a755d5f9fmr3105973lji.109.1655837692525;
-        Tue, 21 Jun 2022 11:54:52 -0700 (PDT)
-Received: from [192.168.43.7] ([188.162.64.230])
-        by smtp.gmail.com with ESMTPSA id d5-20020a19f245000000b004793b9c2c12sm2257613lfk.124.2022.06.21.11.54.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 21 Jun 2022 11:54:52 -0700 (PDT)
-Message-ID: <ec989295-faf6-0288-cc5f-54821c654845@linaro.org>
-Date:   Tue, 21 Jun 2022 21:54:50 +0300
+        bh=MAE15+uRagTlK+c2TFhZlYB3GN3MmW6xrYt0iUHtakw=;
+        b=0yfMw1gNAscELiDqaCKXvFcteOTkfxggw3DZ2GWAqR2Rzxh/3jku+7vF876SX9hkG/
+         /UbeAoOVp3YiJ3kqHuFExVivlyiMmONHc3f4aLiPLTnYf0Di0wHxamz01+yvAEvDi4ZL
+         3GsabUEIPZe6iL8C0wCVU2Q+0ZxpuT+Xo+7T69DLWhdvoe74UTozO3Qal+tTSlhSRMSR
+         hFihagySk59eR8yxWqp0OQaflpU2VjSpMlbevgmT4u/Bg5RhFZqDTeiAUkiR49aVq4Ft
+         D2Bk8xorhG0HQeVjefXvbtGnbsWVYiSxqoPW0O5mPpvCJQ3VutzrKCDoFlnslsIy1BqU
+         M3MQ==
+X-Gm-Message-State: AOAM5314oD1S5TibF5KJh5SA/ji0jq2M3eXlj1rgx5/tNG6nn5hAIJBr
+        WMBendbPVZWjllwI7wVf8+4CsQ==
+X-Google-Smtp-Source: ABdhPJyMTmOn6VvC9oK/W0wrY5MF2afG5xmsce7eVsRzGKZu+UWBIiz85sb/bgOaQ6OEHyQXawZyOg==
+X-Received: by 2002:a7b:cc94:0:b0:39c:4507:e806 with SMTP id p20-20020a7bcc94000000b0039c4507e806mr42707775wma.91.1655837816332;
+        Tue, 21 Jun 2022 11:56:56 -0700 (PDT)
+Received: from localhost.localdomain (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id f6-20020a1c6a06000000b003a0231af43csm294903wmc.48.2022.06.21.11.56.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 21 Jun 2022 11:56:55 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Amit Pundir <amit.pundir@linaro.org>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Kumar Gala <galak@codeaurora.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v2 0/2] dt-bindings: arm: qcom: qcom,board-id and qcom,msm-id
+Date:   Tue, 21 Jun 2022 20:56:47 +0200
+Message-Id: <20220621185649.37391-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: [v3 2/5] drm/bridge: use atomic enable/disable callbacks for
- panel bridge functions
-Content-Language: en-GB
-To:     Vinod Polimera <quic_vpolimer@quicinc.com>,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
-Cc:     linux-kernel@vger.kernel.org, robdclark@gmail.com,
-        dianders@chromium.org, swboyd@chromium.org,
-        quic_kalyant@quicinc.com, quic_sbillaka@quicinc.com
-References: <y> <1655808800-3996-1-git-send-email-quic_vpolimer@quicinc.com>
- <1655808800-3996-3-git-send-email-quic_vpolimer@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <1655808800-3996-3-git-send-email-quic_vpolimer@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -79,73 +79,40 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21/06/2022 13:53, Vinod Polimera wrote:
-> Use atomic variants for panel bridge callback functions such that
-> certain states like self-refresh can be accessed as part of
-> enable/disable sequence.
-> 
-> Signed-off-by: Vinod Polimera <quic_vpolimer@quicinc.com>
+Hi,
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Changes since v1
+================
+1. Make the qcom,board-id and qcom,msm-id properties deprecated and limited to
+   certain SoCs (Rob).
+2. Extend the qcom,board-id schema to match OnePlus variant - four elements -
+   and drop DTS patches splitting four into two touples (Stephan).
 
-> ---
->   drivers/gpu/drm/bridge/panel.c | 16 ++++++++--------
->   1 file changed, 8 insertions(+), 8 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/bridge/panel.c b/drivers/gpu/drm/bridge/panel.c
-> index 0ee563e..59a3496 100644
-> --- a/drivers/gpu/drm/bridge/panel.c
-> +++ b/drivers/gpu/drm/bridge/panel.c
-> @@ -108,28 +108,28 @@ static void panel_bridge_detach(struct drm_bridge *bridge)
->   		drm_connector_cleanup(connector);
->   }
->   
-> -static void panel_bridge_pre_enable(struct drm_bridge *bridge)
-> +static void panel_bridge_atomic_pre_enable(struct drm_bridge *bridge)
->   {
->   	struct panel_bridge *panel_bridge = drm_bridge_to_panel_bridge(bridge);
->   
->   	drm_panel_prepare(panel_bridge->panel);
->   }
->   
-> -static void panel_bridge_enable(struct drm_bridge *bridge)
-> +static void panel_bridge_atomic_enable(struct drm_bridge *bridge)
->   {
->   	struct panel_bridge *panel_bridge = drm_bridge_to_panel_bridge(bridge);
->   
->   	drm_panel_enable(panel_bridge->panel);
->   }
->   
-> -static void panel_bridge_disable(struct drm_bridge *bridge)
-> +static void panel_bridge_atomic_disable(struct drm_bridge *bridge)
->   {
->   	struct panel_bridge *panel_bridge = drm_bridge_to_panel_bridge(bridge);
->   
->   	drm_panel_disable(panel_bridge->panel);
->   }
->   
-> -static void panel_bridge_post_disable(struct drm_bridge *bridge)
-> +static void panel_bridge_atomic_post_disable(struct drm_bridge *bridge)
->   {
->   	struct panel_bridge *panel_bridge = drm_bridge_to_panel_bridge(bridge);
->   
-> @@ -158,10 +158,10 @@ static void panel_bridge_debugfs_init(struct drm_bridge *bridge,
->   static const struct drm_bridge_funcs panel_bridge_bridge_funcs = {
->   	.attach = panel_bridge_attach,
->   	.detach = panel_bridge_detach,
-> -	.pre_enable = panel_bridge_pre_enable,
-> -	.enable = panel_bridge_enable,
-> -	.disable = panel_bridge_disable,
-> -	.post_disable = panel_bridge_post_disable,
-> +	.atomic_pre_enable = panel_bridge_atomic_pre_enable,
-> +	.atomic_enable = panel_bridge_atomic_enable,
-> +	.atomic_disable = panel_bridge_atomic_disable,
-> +	.atomic_post_disable = panel_bridge_atomic_post_disable,
->   	.get_modes = panel_bridge_get_modes,
->   	.atomic_reset = drm_atomic_helper_bridge_reset,
->   	.atomic_duplicate_state = drm_atomic_helper_bridge_duplicate_state,
+Description
+===========
+The discussion [1] brought several arguments for keeping the qcom,board-id and
+qcom,msm-id properties.  Keeping means we should document them, so the DT
+schema checks pass.
 
+I revived old patch [2] with several changes and improvements.  The commit msg
+hopefully collects feedback from the discussion.
+
+Best regards,
+Krzysztof
+
+[1] https://lore.kernel.org/r/a3c932d1-a102-ce18-deea-18cbbd05ecab@linaro.org/
+[2] https://lore.kernel.org/all/1425503602-24916-1-git-send-email-galak@codeaurora.org/
+
+Krzysztof Kozlowski (2):
+  dt-bindings: arm: qcom: document qcom,msm-id and qcom,board-id
+  arm64: dts: qcom: msm8992-xiaomi-libra: split qcom,msm-id into tuples
+
+ .../devicetree/bindings/arm/qcom.yaml         | 123 ++++++++++++++++++
+ .../boot/dts/qcom/msm8992-xiaomi-libra.dts    |   2 +-
+ include/dt-bindings/arm/qcom,ids.h            |  30 +++++
+ 3 files changed, 154 insertions(+), 1 deletion(-)
+ create mode 100644 include/dt-bindings/arm/qcom,ids.h
 
 -- 
-With best wishes
-Dmitry
+2.34.1
+
