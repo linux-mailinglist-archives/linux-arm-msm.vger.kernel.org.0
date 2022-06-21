@@ -2,266 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6BD47553762
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jun 2022 18:07:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AE728553789
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jun 2022 18:12:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351517AbiFUQHm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Jun 2022 12:07:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54456 "EHLO
+        id S1353553AbiFUQLs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Jun 2022 12:11:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60460 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353686AbiFUQHm (ORCPT
+        with ESMTP id S1353786AbiFUQLs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Jun 2022 12:07:42 -0400
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDA66F1E;
-        Tue, 21 Jun 2022 09:07:40 -0700 (PDT)
-Received: by mail-ed1-x530.google.com with SMTP id cf14so10262881edb.8;
-        Tue, 21 Jun 2022 09:07:40 -0700 (PDT)
+        Tue, 21 Jun 2022 12:11:48 -0400
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED3F42CE21;
+        Tue, 21 Jun 2022 09:11:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=n1RNO5f7pssWPG4fLr9gdAw4eJ32N3P99Wlmi11446o=;
-        b=JO89EeNFZ40UdDOlEKa1vkBnKCof/favGwBF1HBd7qmSmaKWqFGdcCgR4Epcgx+/Q2
-         RgIg/21jb/qDXqDt4LfYapKAkxH5N3ndT7tpQF6n/QjqeuMn//MVLofYechx5pdKJz/W
-         S0ph4ZMug+P19CbQ5vvtXePHRDCzLvyB0Y8rh/a8FVxJ6LsV1dIqgPQWdDacegSvx+iV
-         TD0+aFw7LyDXVQhg0iyzcxKWaff3U9SqmqlTYWZqfmIbAij0N8azccoDn54KYIMk7oYe
-         /gtG86/Xb9Rw5kVsQb9jAme5YQAKR+an5xHLqTwq/XSJv4irR+LIWne/lxOeDqiQ2RWs
-         RBig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=n1RNO5f7pssWPG4fLr9gdAw4eJ32N3P99Wlmi11446o=;
-        b=rh2lVC9boZkP3xpdtJrdmy3CFiPegnPRAAkBDOqrOWeNZol3e+D9IrN+yVtjzD4hog
-         Y1YC1YheAjXGVX3T7KTfVJ+/nH5+qeETDOVYwZUSHkiaEU/XQJS6F2XKzMLBr89INor2
-         lAuYvHZVn/Thms9y0JrqZOgILXPBlifXmWP9Bu58yYljQEGkg3nJOE4I4Zbb+tP4x0tm
-         7lWKYCdnuUgFYeTrUXO618FLdHBDHREjxlawqbmABuClv9Wor74TYvW6rHmLRPPAfKOU
-         qBLvhFOfPRle7MsJITgQqI4Ico0XkG/3A+E2iPsjj/3uLGFf+VMlvfO/RaUltScSLaPB
-         u3jA==
-X-Gm-Message-State: AJIora+b+8rwNYReHOxk69K0TCtDJ4H+rCtSbdf6f2f7F0Z5rYLYADOB
-        u+HvunqkwyWr4JDfdnsLfm0=
-X-Google-Smtp-Source: AGRyM1uVyDy8Qc2zsSxZEhbGY0aVHaxjcptrDReKKrpX0HRiXCQZ1C0r/FIdLr0CaHZza7EbcR4J3Q==
-X-Received: by 2002:a05:6402:3708:b0:433:2d3b:ed5 with SMTP id ek8-20020a056402370800b004332d3b0ed5mr36305919edb.246.1655827659371;
-        Tue, 21 Jun 2022 09:07:39 -0700 (PDT)
-Received: from localhost.localdomain ([185.107.57.61])
-        by smtp.gmail.com with ESMTPSA id p6-20020a17090653c600b00722e0b1fa8esm1772943ejo.164.2022.06.21.09.07.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Jun 2022 09:07:39 -0700 (PDT)
-From:   Yassine Oudjana <yassine.oudjana@gmail.com>
-X-Google-Original-From: Yassine Oudjana <y.oudjana@protonmail.com>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Loic Poulain <loic.poulain@linaro.org>
-Cc:     Yassine Oudjana <y.oudjana@protonmail.com>,
-        Yassine Oudjana <yassine.oudjana@gmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 6/6] clk: qcom: msm8996-cpu: Use parent_data for all clocks
-Date:   Tue, 21 Jun 2022 20:06:21 +0400
-Message-Id: <20220621160621.24415-7-y.oudjana@protonmail.com>
-X-Mailer: git-send-email 2.36.1
-In-Reply-To: <20220621160621.24415-1-y.oudjana@protonmail.com>
-References: <20220621160621.24415-1-y.oudjana@protonmail.com>
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1655827907; x=1687363907;
+  h=from:to:subject:date:message-id:mime-version;
+  bh=VPMzRubPpLoq64j1JAqv7n1xLjw6zA0Rho5zPhkempo=;
+  b=Z6vEHoofWF+96pf833YYzIV6hRAF26ptArD7ndCoIDGUo2tgC5VzgGh7
+   mpnKSQZr3UIRLcJrStik99viMPD0b0bHV79bUP1ymp8TW2sGGIuHbJDp4
+   6lbMUUeJNzzlgcO67iUZUEx2nCTd9rrYIdmkHSLZU6J1Mw6nHZcGNnUTY
+   M=;
+Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 21 Jun 2022 09:11:46 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Jun 2022 09:11:46 -0700
+Received: from nalasex01c.na.qualcomm.com (10.47.97.35) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Tue, 21 Jun 2022 09:11:45 -0700
+Received: from srichara-linux.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Tue, 21 Jun 2022 09:11:40 -0700
+From:   Sricharan R <quic_srichara@quicinc.com>
+To:     <quic_srichara@quicinc.com>, <agross@kernel.org>,
+        <bjorn.andersson@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <mturquette@baylibre.com>,
+        <sboyd@kernel.org>, <linus.walleij@linaro.org>,
+        <catalin.marinas@arm.com>, <p.zabel@pengutronix.de>,
+        <quic_varada@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>, <linux-gpio@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>
+Subject: [PATCH V2 0/8] Add minimal boot support for IPQ5018
+Date:   Tue, 21 Jun 2022 21:41:18 +0530
+Message-ID: <20220621161126.15883-1-quic_srichara@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Yassine Oudjana <y.oudjana@protonmail.com>
+The IPQ5018 is Qualcomm's 802.11ax SoC for Routers,
+Gateways and Access Points.
 
-Replace parent_names in PLLs, secondary muxes and primary muxes with
-parent_data. For primary muxes there were never any *cl_pll_acd clocks,
-so instead of adding them, put the primary PLLs in both PLL_INDEX and
-ACD_INDEX, then make sure ACD_INDEX is always picked over PLL_INDEX when
-setting parent since we always want ACD when using the primary PLLs.
+This series adds minimal board boot support for ipq5018-mp03.1-c2 board.
 
-Signed-off-by: Yassine Oudjana <y.oudjana@protonmail.com>
----
- drivers/clk/qcom/clk-cpu-8996.c | 79 ++++++++++++++++++++-------------
- 1 file changed, 47 insertions(+), 32 deletions(-)
+[v2]
+	Fixed all comments and rebased for TOT.
 
-diff --git a/drivers/clk/qcom/clk-cpu-8996.c b/drivers/clk/qcom/clk-cpu-8996.c
-index b3ad9245874d..cdb7b2ef3367 100644
---- a/drivers/clk/qcom/clk-cpu-8996.c
-+++ b/drivers/clk/qcom/clk-cpu-8996.c
-@@ -112,14 +112,18 @@ static const struct alpha_pll_config hfpll_config = {
- 	.early_output_mask = BIT(3),
- };
- 
-+static const struct clk_parent_data pll_parent[] = {
-+	{ .fw_name = "xo" },
-+};
-+
- static struct clk_alpha_pll pwrcl_pll = {
- 	.offset = PWRCL_REG_OFFSET,
- 	.regs = prim_pll_regs,
- 	.flags = SUPPORTS_DYNAMIC_UPDATE | SUPPORTS_FSM_MODE,
- 	.clkr.hw.init = &(struct clk_init_data){
- 		.name = "pwrcl_pll",
--		.parent_names = (const char *[]){ "xo" },
--		.num_parents = 1,
-+		.parent_data = pll_parent,
-+		.num_parents = ARRAY_SIZE(pll_parent),
- 		.ops = &clk_alpha_pll_huayra_ops,
- 	},
- };
-@@ -130,8 +134,8 @@ static struct clk_alpha_pll perfcl_pll = {
- 	.flags = SUPPORTS_DYNAMIC_UPDATE | SUPPORTS_FSM_MODE,
- 	.clkr.hw.init = &(struct clk_init_data){
- 		.name = "perfcl_pll",
--		.parent_names = (const char *[]){ "xo" },
--		.num_parents = 1,
-+		.parent_data = pll_parent,
-+		.num_parents = ARRAY_SIZE(pll_parent),
- 		.ops = &clk_alpha_pll_huayra_ops,
- 	},
- };
-@@ -190,8 +194,8 @@ static struct clk_alpha_pll pwrcl_alt_pll = {
- 	.flags = SUPPORTS_OFFLINE_REQ | SUPPORTS_FSM_MODE,
- 	.clkr.hw.init = &(struct clk_init_data) {
- 		.name = "pwrcl_alt_pll",
--		.parent_names = (const char *[]){ "xo" },
--		.num_parents = 1,
-+		.parent_data = pll_parent,
-+		.num_parents = ARRAY_SIZE(pll_parent),
- 		.ops = &clk_alpha_pll_hwfsm_ops,
- 	},
- };
-@@ -204,8 +208,8 @@ static struct clk_alpha_pll perfcl_alt_pll = {
- 	.flags = SUPPORTS_OFFLINE_REQ | SUPPORTS_FSM_MODE,
- 	.clkr.hw.init = &(struct clk_init_data) {
- 		.name = "perfcl_alt_pll",
--		.parent_names = (const char *[]){ "xo" },
--		.num_parents = 1,
-+		.parent_data = pll_parent,
-+		.num_parents = ARRAY_SIZE(pll_parent),
- 		.ops = &clk_alpha_pll_hwfsm_ops,
- 	},
- };
-@@ -252,6 +256,9 @@ static int clk_cpu_8996_pmux_set_parent(struct clk_hw *hw, u8 index)
- 	u32 val;
- 
- 	val = index;
-+	/* We always want ACD when using the primary PLL */
-+	if (val == PLL_INDEX)
-+		val = ACD_INDEX;
- 	val <<= cpuclk->shift;
- 
- 	return regmap_update_bits(clkr->regmap, cpuclk->reg, mask, val);
-@@ -282,17 +289,24 @@ static const struct clk_ops clk_cpu_8996_pmux_ops = {
- 	.determine_rate = clk_cpu_8996_pmux_determine_rate,
- };
- 
-+static const struct clk_parent_data pwrcl_smux_parents[] = {
-+	{ .fw_name = "xo" },
-+	{ .hw = &pwrcl_pll_postdiv.hw },
-+};
-+
-+static const struct clk_parent_data perfcl_smux_parents[] = {
-+	{ .fw_name = "xo" },
-+	{ .hw = &perfcl_pll_postdiv.hw },
-+};
-+
- static struct clk_regmap_mux pwrcl_smux = {
- 	.reg = PWRCL_REG_OFFSET + MUX_OFFSET,
- 	.shift = 2,
- 	.width = 2,
- 	.clkr.hw.init = &(struct clk_init_data) {
- 		.name = "pwrcl_smux",
--		.parent_names = (const char *[]){
--			"xo",
--			"pwrcl_pll_postdiv",
--		},
--		.num_parents = 2,
-+		.parent_data = pwrcl_smux_parents,
-+		.num_parents = ARRAY_SIZE(pwrcl_smux_parents),
- 		.ops = &clk_regmap_mux_closest_ops,
- 		.flags = CLK_SET_RATE_PARENT,
- 	},
-@@ -304,16 +318,27 @@ static struct clk_regmap_mux perfcl_smux = {
- 	.width = 2,
- 	.clkr.hw.init = &(struct clk_init_data) {
- 		.name = "perfcl_smux",
--		.parent_names = (const char *[]){
--			"xo",
--			"perfcl_pll_postdiv",
--		},
--		.num_parents = 2,
-+		.parent_data = perfcl_smux_parents,
-+		.num_parents = ARRAY_SIZE(perfcl_smux_parents),
- 		.ops = &clk_regmap_mux_closest_ops,
- 		.flags = CLK_SET_RATE_PARENT,
- 	},
- };
- 
-+static const struct clk_parent_data pwrcl_pmux_parents[] = {
-+	[SMUX_INDEX] = { .hw = &pwrcl_smux.clkr.hw },
-+	[PLL_INDEX] = { .hw = &pwrcl_pll.clkr.hw },
-+	[ACD_INDEX] = { .hw = &pwrcl_pll.clkr.hw },
-+	[ALT_INDEX] = { .hw = &pwrcl_alt_pll.clkr.hw },
-+};
-+
-+static const struct clk_parent_data perfcl_pmux_parents[] = {
-+	[SMUX_INDEX] = { .hw = &perfcl_smux.clkr.hw },
-+	[PLL_INDEX] = { .hw = &perfcl_pll.clkr.hw },
-+	[ACD_INDEX] = { .hw = &perfcl_pll.clkr.hw },
-+	[ALT_INDEX] = { .hw = &perfcl_alt_pll.clkr.hw },
-+};
-+
- static struct clk_cpu_8996_pmux pwrcl_pmux = {
- 	.reg = PWRCL_REG_OFFSET + MUX_OFFSET,
- 	.shift = 0,
-@@ -323,13 +348,8 @@ static struct clk_cpu_8996_pmux pwrcl_pmux = {
- 	.nb.notifier_call = cpu_clk_notifier_cb,
- 	.clkr.hw.init = &(struct clk_init_data) {
- 		.name = "pwrcl_pmux",
--		.parent_names = (const char *[]){
--			"pwrcl_smux",
--			"pwrcl_pll",
--			"pwrcl_pll_acd",
--			"pwrcl_alt_pll",
--		},
--		.num_parents = 4,
-+		.parent_data = pwrcl_pmux_parents,
-+		.num_parents = ARRAY_SIZE(pwrcl_pmux_parents),
- 		.ops = &clk_cpu_8996_pmux_ops,
- 		/* CPU clock is critical and should never be gated */
- 		.flags = CLK_SET_RATE_PARENT | CLK_IS_CRITICAL,
-@@ -345,13 +365,8 @@ static struct clk_cpu_8996_pmux perfcl_pmux = {
- 	.nb.notifier_call = cpu_clk_notifier_cb,
- 	.clkr.hw.init = &(struct clk_init_data) {
- 		.name = "perfcl_pmux",
--		.parent_names = (const char *[]){
--			"perfcl_smux",
--			"perfcl_pll",
--			"perfcl_pll_acd",
--			"perfcl_alt_pll",
--		},
--		.num_parents = 4,
-+		.parent_data = perfcl_pmux_parents,
-+		.num_parents = ARRAY_SIZE(perfcl_pmux_parents),
- 		.ops = &clk_cpu_8996_pmux_ops,
- 		/* CPU clock is critical and should never be gated */
- 		.flags = CLK_SET_RATE_PARENT | CLK_IS_CRITICAL,
+Varadarajan Narayanan (8):
+  clk: qcom: clk-alpha-pll: Add support for Stromer PLLs
+  dt-bindings: arm64: ipq5018: Add binding descriptions for clock and
+    reset
+  clk: qcom: Add Global Clock controller (GCC) driver for IPQ5018
+  dt-bindings: pinctrl: qcom: Add ipq5018 pinctrl bindings
+  pinctrl: qcom: Add IPQ5018 pinctrl driver
+  dt-bindings: qcom: Add ipq5018 bindings
+  arm64: dts: Add ipq5018 SoC and MP03 board support
+  arm64: defconfig: Enable IPQ5018 SoC base configs
+
+ .../devicetree/bindings/arm/qcom.yaml         |    7 +
+ .../bindings/clock/qcom,gcc-other.yaml        |    3 +
+ .../pinctrl/qcom,ipq5018-pinctrl.yaml         |  145 +
+ arch/arm64/boot/dts/qcom/Makefile             |    1 +
+ .../arm64/boot/dts/qcom/ipq5018-mp03.1-c2.dts |   29 +
+ arch/arm64/boot/dts/qcom/ipq5018.dtsi         |  221 +
+ arch/arm64/configs/defconfig                  |    3 +
+ drivers/clk/qcom/Kconfig                      |    7 +
+ drivers/clk/qcom/Makefile                     |    1 +
+ drivers/clk/qcom/clk-alpha-pll.c              |  100 +-
+ drivers/clk/qcom/clk-alpha-pll.h              |    7 +-
+ drivers/clk/qcom/gcc-ipq5018.c                | 3995 +++++++++++++++++
+ drivers/pinctrl/qcom/Kconfig                  |   10 +
+ drivers/pinctrl/qcom/Makefile                 |    1 +
+ drivers/pinctrl/qcom/pinctrl-ipq5018.c        |  791 ++++
+ include/dt-bindings/clock/qcom,gcc-ipq5018.h  |  188 +
+ include/dt-bindings/reset/qcom,gcc-ipq5018.h  |  122 +
+ 17 files changed, 5629 insertions(+), 2 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,ipq5018-pinctrl.yaml
+ create mode 100644 arch/arm64/boot/dts/qcom/ipq5018-mp03.1-c2.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/ipq5018.dtsi
+ create mode 100644 drivers/clk/qcom/gcc-ipq5018.c
+ create mode 100644 drivers/pinctrl/qcom/pinctrl-ipq5018.c
+ create mode 100644 include/dt-bindings/clock/qcom,gcc-ipq5018.h
+ create mode 100644 include/dt-bindings/reset/qcom,gcc-ipq5018.h
+
 -- 
-2.36.1
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
 
