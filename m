@@ -2,105 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 95E205537A4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jun 2022 18:14:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D07305537DA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jun 2022 18:33:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353941AbiFUQMp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Jun 2022 12:12:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32860 "EHLO
+        id S1352412AbiFUQdu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Jun 2022 12:33:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48762 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353854AbiFUQMf (ORCPT
+        with ESMTP id S1350998AbiFUQds (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Jun 2022 12:12:35 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB0752E9F4;
-        Tue, 21 Jun 2022 09:12:32 -0700 (PDT)
+        Tue, 21 Jun 2022 12:33:48 -0400
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 073C9140A1;
+        Tue, 21 Jun 2022 09:33:48 -0700 (PDT)
+Received: by mail-ej1-x634.google.com with SMTP id v1so28608230ejg.13;
+        Tue, 21 Jun 2022 09:33:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1655827953; x=1687363953;
-  h=from:to:subject:date:message-id:in-reply-to:references:
-   mime-version;
-  bh=ptXjE3zECiT2wn/Ks+vJ3UipTTX8glzq7ANY1S4UC5o=;
-  b=ZD3wD+Gozw0f8RSRxEwLov0ERAdYhJkQpBdkTINWu+J/yN4zSlWd3Wvw
-   xTHxmCT7fY+XAXkmSZj9gkPMXQjZnUEv7sei0MZSt/EYJmrmkE9xqdAbc
-   NB++Hq2i5lS/vKfpSwyYv03dWeM9ADYbC23x9CdenB67huqLDWymUYxhJ
-   Q=;
-Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 21 Jun 2022 09:12:32 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg02-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Jun 2022 09:12:30 -0700
-Received: from nalasex01c.na.qualcomm.com (10.47.97.35) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Tue, 21 Jun 2022 09:12:30 -0700
-Received: from srichara-linux.qualcomm.com (10.80.80.8) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Tue, 21 Jun 2022 09:12:25 -0700
-From:   Sricharan R <quic_srichara@quicinc.com>
-To:     <quic_srichara@quicinc.com>, <agross@kernel.org>,
-        <bjorn.andersson@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <mturquette@baylibre.com>,
-        <sboyd@kernel.org>, <linus.walleij@linaro.org>,
-        <catalin.marinas@arm.com>, <p.zabel@pengutronix.de>,
-        <quic_varada@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-clk@vger.kernel.org>, <linux-gpio@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>
-Subject: [PATCH V2 8/8] arm64: defconfig: Enable IPQ5018 SoC base configs
-Date:   Tue, 21 Jun 2022 21:41:26 +0530
-Message-ID: <20220621161126.15883-9-quic_srichara@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20220621161126.15883-1-quic_srichara@quicinc.com>
-References: <20220621161126.15883-1-quic_srichara@quicinc.com>
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=15+HpU1LWB4LAxkhCvwaxGq511OUYw5iXFZyQQCZrLo=;
+        b=BJAfwfXXspb75BwMg2QxmS5n7niNvezSsSqBCKW3I8ZCwPSM9OyvwwSFX9jD2vNkXZ
+         cFHY2lKdLK5kC2/LsWLwDFUm4JswWIcvzVOkifFW9NtFZyrMUaoBpIWkOE6srRiBLJe/
+         9kc5ksfBTy7+8BXgES44LJb7oYk/pdWfMjxKcT3zZmjeraCLkfG9X8V55665S7U3LSiH
+         2CrLrjDKA3gF6ifIkUzpiix/jvvKwr5tO0rBtOJwPaFtyXiJXtiJZg9bUYAOpBIkWOyt
+         FpxDf/U821rQJE57MApy3Psb+tU2j8vtqEY93K6mn7UjvUblkndFJq8pRwGv8R0U9f8C
+         d5lQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=15+HpU1LWB4LAxkhCvwaxGq511OUYw5iXFZyQQCZrLo=;
+        b=CgU8lEeH8H5ygJkgc2lDYUYJmUhXFBHpFey/BNcbTQkqN4xmKURJQVRcmE4GD1y7Nr
+         l8sh/UEzjII8vej4AzkDWvwuUpHHBg4az8k2g73MqivvZiiyNtt0cjpnDLopj0LkvnpY
+         pN2l6SJPx3mrC2pSKv6olmhNKoA3OIvdLjwj0+XgW4JCmze6Xfv+ZLjAkM3grGHQgCO2
+         AdFj020BAty/3JZKct/Y08aeRfEx/cqFlkC6s2XfSglrv7ZUKAM+fqgyCVcpNhZPbqbb
+         hkyiKg6eWKh8jEgHfpTCo/EtZMUDJAFijo5vjmDFHYBTw0Br3o5OLomxCYTqYOV3h21d
+         +LbQ==
+X-Gm-Message-State: AJIora9xoGnlkn+aLXibHC4mYuy0P0mhTHdM1gRGH40UflvaZzLFZL2Y
+        VmSaHkaszLiX2LIZhtCN9e4=
+X-Google-Smtp-Source: AGRyM1v5QMgQTDCniTHaBREuzbUpJe/GwTAtweqPyHDGkHtmFVtH1vCYMJdfCrhcTbOs28ZLswTsTA==
+X-Received: by 2002:a17:906:73d7:b0:722:e88b:1b31 with SMTP id n23-20020a17090673d700b00722e88b1b31mr1523243ejl.350.1655829226298;
+        Tue, 21 Jun 2022 09:33:46 -0700 (PDT)
+Received: from localhost.localdomain (93-42-70-190.ip85.fastwebnet.it. [93.42.70.190])
+        by smtp.googlemail.com with ESMTPSA id g5-20020a50d5c5000000b004356c0d7436sm9557663edj.42.2022.06.21.09.33.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 21 Jun 2022 09:33:44 -0700 (PDT)
+From:   Christian Marangi <ansuelsmth@gmail.com>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+Cc:     Christian Marangi <ansuelsmth@gmail.com>
+Subject: [PATCH v2 1/3] dt-bindings: clock: add pcm reset for ipq806x lcc
+Date:   Tue, 21 Jun 2022 18:33:24 +0200
+Message-Id: <20220621163326.16858-1-ansuelsmth@gmail.com>
+X-Mailer: git-send-email 2.36.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Varadarajan Narayanan <quic_varada@quicinc.com>
+Add pcm reset define for ipq806x lcc.
 
-Enables clk & pinctrl related configs
-
-Co-developed-by: Sricharan R <quic_srichara@quicinc.com>
-Signed-off-by: Sricharan R <quic_srichara@quicinc.com>
-Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
 ---
- arch/arm64/configs/defconfig | 3 +++
- 1 file changed, 3 insertions(+)
+v2:
+- Fix Sob tag
 
-diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index 50aa3d75ab4f..2534357107e4 100644
---- a/arch/arm64/configs/defconfig
-+++ b/arch/arm64/configs/defconfig
-@@ -522,6 +522,7 @@ CONFIG_PINCTRL_IMX8DXL=y
- CONFIG_PINCTRL_IMX8ULP=y
- CONFIG_PINCTRL_MSM=y
- CONFIG_PINCTRL_IPQ8074=y
-+CONFIG_PINCTRL_IPQ5018=y
- CONFIG_PINCTRL_IPQ6018=y
- CONFIG_PINCTRL_MSM8916=y
- CONFIG_PINCTRL_MSM8994=y
-@@ -1012,6 +1013,8 @@ CONFIG_QCOM_CLK_APCS_MSM8916=y
- CONFIG_QCOM_CLK_APCC_MSM8996=y
- CONFIG_QCOM_CLK_SMD_RPM=y
- CONFIG_QCOM_CLK_RPMH=y
-+CONFIG_IPQ_GCC_5018=y
-+CONFIG_IPQ_APSS_5018=y
- CONFIG_IPQ_GCC_6018=y
- CONFIG_IPQ_GCC_8074=y
- CONFIG_MSM_GCC_8916=y
+ include/dt-bindings/clock/qcom,lcc-ipq806x.h | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/include/dt-bindings/clock/qcom,lcc-ipq806x.h b/include/dt-bindings/clock/qcom,lcc-ipq806x.h
+index 25b92bbf0ab4..e0fb4acf4ba8 100644
+--- a/include/dt-bindings/clock/qcom,lcc-ipq806x.h
++++ b/include/dt-bindings/clock/qcom,lcc-ipq806x.h
+@@ -19,4 +19,6 @@
+ #define SPDIF_CLK			10
+ #define AHBIX_CLK			11
+ 
++#define LCC_PCM_RESET			0
++
+ #endif
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
+2.36.1
 
