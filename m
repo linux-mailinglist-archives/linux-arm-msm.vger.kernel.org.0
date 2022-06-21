@@ -2,116 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4BFE4552FF2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jun 2022 12:40:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E4C38553034
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jun 2022 12:54:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347417AbiFUKky (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Jun 2022 06:40:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39404 "EHLO
+        id S1348303AbiFUKxu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Jun 2022 06:53:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46854 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347121AbiFUKkw (ORCPT
+        with ESMTP id S1349002AbiFUKxr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Jun 2022 06:40:52 -0400
-Received: from mail-qv1-xf2f.google.com (mail-qv1-xf2f.google.com [IPv6:2607:f8b0:4864:20::f2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F58128E22
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jun 2022 03:40:51 -0700 (PDT)
-Received: by mail-qv1-xf2f.google.com with SMTP id p31so19646214qvp.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jun 2022 03:40:51 -0700 (PDT)
+        Tue, 21 Jun 2022 06:53:47 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04C8F25EA4;
+        Tue, 21 Jun 2022 03:53:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=J0pHSWTmAqkhHPu3ewOMcrRY8+PhQnj0jfHcdTdRDz8=;
-        b=R3GE8vGso5FRS+jJMjZddlY67ciEK0NtOwp1vMLp6WYzw0y3wH9uVEGbIa+l9roKRX
-         eSK6mQEMo66vnDTwbEETiIzI8np+jeQVbf6+569W1HDwVhjFsnKUc1h/q02E5qLdsXln
-         bUomPzqz9/w7zeoWTihKrSMU5vyRT0xn6T6Gi1Fy+wi2Fpa/La+VvjpJep1yoWsBiram
-         Z95mhj6iVWCSAr2InYjymblYmKgKr+2IMrlpKLN8s6JghGQVuAbiv07Dv0XISr9zI2xj
-         wHUgzu0en/bM0/EGHjMkfKrkP2Ppg/bWKLGcfRmD7cEVMmNdhaq65oWAxkdvaF9Xqf4w
-         C4Xw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=J0pHSWTmAqkhHPu3ewOMcrRY8+PhQnj0jfHcdTdRDz8=;
-        b=qA8Lwu7pJbskWGQorwB1MzB0Nz46qg5EelZOToHntIZu3cP8Anq8RYXQ77oNNegyOS
-         tHNGOhmXAWafqSR02aF+TFsKb+EVmvTI9JXzU68b6MfR4WOQ05Mr3EQzoe47ci9KTgjp
-         wfBH6HynaeQeDhnxSjX1J5bfxjdvl27DxY/fKID3HV51n2YVK+PD/rLP7LnfE+TiCw4+
-         wq6pvYueVT5FcU4LSa1vlNxhs5ZRS435SPfrTDtXMzYvrV6S7M4t2l+qR4054jHUBCM7
-         ran1pQKQP+KnpODqdQTzTPoCw++APssxjZgMvukat3SbkKe+BHbSeeKV4Ic3288ynYiu
-         BxLw==
-X-Gm-Message-State: AJIora9jyqH6g0EKIWs6gG4+fwyFhYdqGCDYeYq+0OT3peaHn9sZ7+l1
-        r0IMgZaYI/fN/4YJNTjymqW4ZBXNdHwDWrX/91CFvA==
-X-Google-Smtp-Source: AGRyM1urOiTfLmkkWIabUrLK/wKc4zU+J23cZPS1taggxWTn8VedAh7d2hubXG/NEdz5XLnEZWJHk8q7ZC9Z13NzqG8=
-X-Received: by 2002:a05:622a:487:b0:304:fbfc:9933 with SMTP id
- p7-20020a05622a048700b00304fbfc9933mr23585690qtx.682.1655808050220; Tue, 21
- Jun 2022 03:40:50 -0700 (PDT)
-MIME-Version: 1.0
-References: <1655802387-15275-1-git-send-email-quic_kalyant@quicinc.com>
-In-Reply-To: <1655802387-15275-1-git-send-email-quic_kalyant@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 21 Jun 2022 13:40:39 +0300
-Message-ID: <CAA8EJpqon=3NQJo_jwbXJvvZ5FJJ9xO=k-f4ogNTaH83pbVOjQ@mail.gmail.com>
-Subject: Re: [v1 1/2] drm/msm/disp/dpu1: add dspp support for sc7280
-To:     Kalyan Thota <quic_kalyant@quicinc.com>
-Cc:     y@qualcomm.com, dri-devel@lists.freedesktop.org,
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1655808827; x=1687344827;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references;
+  bh=mb5DQUx++WBYqHBb28dKoW1PAZ+4l8zH8PF2XnRF4bc=;
+  b=IwGQReI6tvZN6q7SY0h/bJL3oqEvZEqhguy5uApJnoMxUq6B71wPtDVt
+   0uQPcF4ZqF4l8/JC1AfS7W+MpZZpKtytzL+pDsbmxmQT7BjZteO5G/y0a
+   VmF2BBdXP9tqYJYdjKUW6KVs8jK/OvISl9VXrAQwMnm48QRI2qvxyEVDH
+   A=;
+Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
+  by alexa-out.qualcomm.com with ESMTP; 21 Jun 2022 03:53:47 -0700
+X-QCInternal: smtphost
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 21 Jun 2022 03:53:45 -0700
+X-QCInternal: smtphost
+Received: from vpolimer-linux.qualcomm.com ([10.204.67.235])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 21 Jun 2022 16:23:27 +0530
+Received: by vpolimer-linux.qualcomm.com (Postfix, from userid 463814)
+        id 32B123CF4; Tue, 21 Jun 2022 16:23:26 +0530 (IST)
+From:   Vinod Polimera <quic_vpolimer@quicinc.com>
+To:     y@qualcomm.com, dri-devel@lists.freedesktop.org,
         linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        robdclark@gmail.com, dianders@chromium.org, swboyd@chromium.org,
-        quic_vpolimer@quicinc.com, quic_abhinavk@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        devicetree@vger.kernel.org
+Cc:     Vinod Polimera <quic_vpolimer@quicinc.com>,
+        linux-kernel@vger.kernel.org, robdclark@gmail.com,
+        dianders@chromium.org, swboyd@chromium.org,
+        quic_kalyant@quicinc.com, dmitry.baryshkov@linaro.org,
+        quic_sbillaka@quicinc.com
+Subject: [v3 0/5] Add PSR support for eDP
+Date:   Tue, 21 Jun 2022 16:23:15 +0530
+Message-Id: <1655808800-3996-1-git-send-email-quic_vpolimer@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+In-Reply-To: <y>
+References: <y>
+X-Spam-Status: No, score=-4.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 21 Jun 2022 at 12:06, Kalyan Thota <quic_kalyant@quicinc.com> wrote:
->
-> Add destination side post processing hw block support in sc7280.
->
-> This hwblock enablement is necessary to support color features
-> like CT Matix (Ex: Night Light feature)
->
-> Change-Id: Iba7d5e1693b06cede2891f5b998466070a77c6ef
-> Signed-off-by: Kalyan Thota <quic_kalyant@quicinc.com>
+Changes in v2:
+  - Use dp bridge to set psr entry/exit instead of dpu_enocder.
+  - Don't modify whitespaces.
+  - Set self refresh aware from atomic_check.
+  - Set self refresh aware only if psr is supported.
+  - Provide a stub for msm_dp_display_set_psr.
+  - Move dp functions to bridge code.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Changes in v3:
+  - Change callback names to reflect atomic interfaces.
+  - Move bridge callback change to separate patch as suggested by Dmitry.
+  - Remove psr function declaration from msm_drv.h.
+  - Set self_refresh_aware flag only if psr is supported.
+  - Modify the variable names to simpler form.
+  - Define bit fields for PSR settings.
+  - Add comments explaining the steps to enter/exit psr.
+  - Change DRM_INFO to drm_dbg_db. 
 
-> ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
->
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> index a4fe77c..021eb2f 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> @@ -928,7 +928,7 @@ static const struct dpu_lm_cfg sm8150_lm[] = {
->
->  static const struct dpu_lm_cfg sc7280_lm[] = {
->         LM_BLK("lm_0", LM_0, 0x44000, MIXER_SC7180_MASK,
-> -               &sc7180_lm_sblk, PINGPONG_0, 0, 0),
-> +               &sc7180_lm_sblk, PINGPONG_0, 0, DSPP_0),
->         LM_BLK("lm_2", LM_2, 0x46000, MIXER_SC7180_MASK,
->                 &sc7180_lm_sblk, PINGPONG_2, LM_3, 0),
->         LM_BLK("lm_3", LM_3, 0x47000, MIXER_SC7180_MASK,
-> @@ -1792,6 +1792,8 @@ static void sc7280_cfg_init(struct dpu_mdss_cfg *dpu_cfg)
->                 .ctl = sc7280_ctl,
->                 .sspp_count = ARRAY_SIZE(sc7280_sspp),
->                 .sspp = sc7280_sspp,
-> +               .dspp_count = ARRAY_SIZE(sc7180_dspp),
-> +               .dspp = sc7180_dspp,
->                 .mixer_count = ARRAY_SIZE(sc7280_lm),
->                 .mixer = sc7280_lm,
->                 .pingpong_count = ARRAY_SIZE(sc7280_pp),
-> --
-> 2.7.4
->
+Signed-off-by: Sankeerth Billakanti <quic_sbillaka@quicinc.com>
+Signed-off-by: Kalyan Thota <quic_kalyant@quicinc.com>
+Signed-off-by: Vinod Polimera <quic_vpolimer@quicinc.com>
 
+Vinod Polimera (5):
+  drm/msm/dp: Add basic PSR support for eDP
+  drm/bridge: use atomic enable/disable callbacks for panel bridge
+    functions
+  drm/bridge: add psr support during panel bridge enable & disable
+    sequence
+  drm/msm/disp/dpu1: use atomic enable/disable callbacks for encoder
+    functions
+  drm/msm/disp/dpu1: add PSR support for eDP interface in dpu driver
+
+ drivers/gpu/drm/bridge/panel.c              | 110 ++++++++++++++++--
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c    |  36 +++++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c |  30 ++++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c     |   2 +-
+ drivers/gpu/drm/msm/dp/dp_catalog.c         |  81 ++++++++++++++
+ drivers/gpu/drm/msm/dp/dp_catalog.h         |   4 +
+ drivers/gpu/drm/msm/dp/dp_ctrl.c            |  76 ++++++++++++-
+ drivers/gpu/drm/msm/dp/dp_ctrl.h            |   3 +
+ drivers/gpu/drm/msm/dp/dp_display.c         |  14 +++
+ drivers/gpu/drm/msm/dp/dp_display.h         |   2 +
+ drivers/gpu/drm/msm/dp/dp_drm.c             | 166 +++++++++++++++++++++++++++-
+ drivers/gpu/drm/msm/dp/dp_link.c            |  36 ++++++
+ drivers/gpu/drm/msm/dp/dp_panel.c           |  22 ++++
+ drivers/gpu/drm/msm/dp/dp_panel.h           |   6 +
+ drivers/gpu/drm/msm/dp/dp_reg.h             |  27 +++++
+ 15 files changed, 591 insertions(+), 24 deletions(-)
 
 -- 
-With best wishes
-Dmitry
+2.7.4
+
