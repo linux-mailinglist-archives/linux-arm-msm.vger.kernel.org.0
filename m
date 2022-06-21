@@ -2,297 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7AE475537DF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jun 2022 18:34:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BAF74553854
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jun 2022 19:00:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353154AbiFUQdx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Jun 2022 12:33:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48792 "EHLO
+        id S1343787AbiFURAl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Jun 2022 13:00:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39376 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353036AbiFUQdw (ORCPT
+        with ESMTP id S1352018AbiFURAj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Jun 2022 12:33:52 -0400
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E449A140A1;
-        Tue, 21 Jun 2022 09:33:50 -0700 (PDT)
-Received: by mail-ed1-x533.google.com with SMTP id ej4so16177876edb.7;
-        Tue, 21 Jun 2022 09:33:50 -0700 (PDT)
+        Tue, 21 Jun 2022 13:00:39 -0400
+Received: from mail-qk1-x72d.google.com (mail-qk1-x72d.google.com [IPv6:2607:f8b0:4864:20::72d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82C5125593
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jun 2022 10:00:38 -0700 (PDT)
+Received: by mail-qk1-x72d.google.com with SMTP id r138so16621qke.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jun 2022 10:00:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=6e6BRQh3YyDffgzUxuFfBfk4yDxOwjIQUZDD8w+p1fg=;
-        b=c2hMbgy0NvH9isC6XH0a6iK4WVDRuA8aodpZV5vJcyBmbEjRTaY58YpVP/z6qYi8WJ
-         PL2W0HuWj+CEG/4Ot2GHxgfZxaO1Hv0pAAZOG54VJyard5FQs1XtPE/78cWnzRRyVBU9
-         wLyiaLC6d72aaH/DKhrtjhE6Qxqr1YgJLZBGyH3nTpSFZlYhx4TWfaU25QAPirsBKkQe
-         BEbFFmW/sSez5cYPNjDtMdxcB0oVdOE/m8za6+jDNbGYztpAQYjh84oCuE7LAawcA2qQ
-         WvDIBQ+x6DwswTB4dQu2+S0MrkIvfQeE9h8e0bLzJ+5qnvbGi7ePzb1ZDyZSrNwAl4hs
-         pYgw==
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=ZkEO4M7jOV59qCHyyw5pNgv0UuC6b2G1AI1tuCyDlaA=;
+        b=mtqPOXuTZWFBF/kLU/7R0s5qGBDSwlgvLQm89SWh4DiOT4vVRtUaktsNZNEQsqdPXS
+         nFL+k25MASc3viAKtDqEP7RsrFIXvMrYiYNARgfLvRQ8Ww8cW0RIGBV3JXeI83/RBYXb
+         T8PJCIFKrybguxPsRoFcEMdw2zr+zq7vCX/D2bLyXQKUUSn3YWgs73AbKCi6vRYEr3n1
+         H67vQf//aTcgLNHiynKjJ4ugnVs9kZb3UrGB8X8darfnUOveKkkKgoS5LNAiTah4NTwM
+         ROhQmRup2OFQ/YUZV92iHqFDsdaFJgrcFMRu4gZrgFwWP40AXHC18/0Loiw1GECUbhlx
+         tSCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=6e6BRQh3YyDffgzUxuFfBfk4yDxOwjIQUZDD8w+p1fg=;
-        b=j0CLB0+YIlglT1GDU1yKlX73QBol07J8PxhZzEmatBNwr8ecXqMNzaf7daDl02D2ft
-         4EFmj5EFeeXtyO934GaRkFMVqjj16Pc55f03BfVFAlW6sOuH2DLt5fIbIFx5HkfPqH7m
-         P+AWLI+znioOd/mZj97hZURz+4XdXO7NAbZwXADVDT9sKR3FgK6cjtxNxcPZ0bFEBYB9
-         zXMZpipLJFiUrRY4ayqv7J6+g8A81bvVPPf6ky96I+jU+/lgcEjeeOrW2O3M76HuKUum
-         2cvZ+RC+hJm166A95mr6gGjEQGwWlzTw0ZeuNxMuEbO0v6SWWDIfPmG8jVdY4k1NPS/4
-         o8PA==
-X-Gm-Message-State: AJIora+peJsazrLflDeuM0EkqwQcCtlVYoFNPmLU9TGblOv+iCtGgcv4
-        x7XFLGZzJloElwz9E5cM2Nb9ym/x4fw=
-X-Google-Smtp-Source: AGRyM1tVogMNGQJ8hMLGtktujSSyK3CWte3nRvoVY+etuUzVvkZbnUkqSdbe+/nS3va9ANrk9JYAfQ==
-X-Received: by 2002:a05:6402:43c7:b0:435:8a92:e8d0 with SMTP id p7-20020a05640243c700b004358a92e8d0mr9737582edc.174.1655829229352;
-        Tue, 21 Jun 2022 09:33:49 -0700 (PDT)
-Received: from localhost.localdomain (93-42-70-190.ip85.fastwebnet.it. [93.42.70.190])
-        by smtp.googlemail.com with ESMTPSA id g5-20020a50d5c5000000b004356c0d7436sm9557663edj.42.2022.06.21.09.33.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Jun 2022 09:33:49 -0700 (PDT)
-From:   Christian Marangi <ansuelsmth@gmail.com>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ZkEO4M7jOV59qCHyyw5pNgv0UuC6b2G1AI1tuCyDlaA=;
+        b=ljut+qPHW/6FUE+W1GRW6CaJun24do/rLNzKGlnKG5sQGoMWpOab1UeD40/PnB3CkZ
+         DhUI6Y85pYW+XSPXiwUuIxmbhcD7OyunlUJQ2MARJyHbd04oEko2hkgPB4SQNrYb8tgO
+         ECc4RMeEOqfH7RQozYjrrFu9NygAFAmojshpYBkvZRK6zFvRTLTByych6Rwq6i4knin7
+         qzUZABX+R5qsxc3vg+QcGuMopcP6Tce2JijmdLha94dLD5DfZlsjX074HtdG0hSEH+Ya
+         PNniH+kOT1qvw/MaDKKJ4ksyyqkfy/updIwaPWMh4lZfZryueOS88chlfSLdLmlC8emQ
+         nnJA==
+X-Gm-Message-State: AJIora/UcIUZYcZASub0QMCzPFxAjIzKarPDyj/+zHmCuhcGsjQzhmFb
+        WVuCkM1DIFivPBgtaHd3GcF88jATuqbv3ZuPzCdY7A==
+X-Google-Smtp-Source: AGRyM1tpUHhHSSiROE4fi9M7Q5m/N0ialxxH/8ZL4M59Dvo2uPLFsi/GJ1HYDg5pqxD333cgmrK3tCvG/1IBvP73I2M=
+X-Received: by 2002:a05:620a:2a0e:b0:6a7:8346:1601 with SMTP id
+ o14-20020a05620a2a0e00b006a783461601mr20504725qkp.593.1655830837507; Tue, 21
+ Jun 2022 10:00:37 -0700 (PDT)
+MIME-Version: 1.0
+References: <20220620215150.1875557-1-dmitry.baryshkov@linaro.org> <62b1e1ea.1c69fb81.aafda.3244@mx.google.com>
+In-Reply-To: <62b1e1ea.1c69fb81.aafda.3244@mx.google.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Tue, 21 Jun 2022 20:00:26 +0300
+Message-ID: <CAA8EJprEhHXSz2f2Estn-3Xih9W=S0qTMg950aXfEFQgoYuVXg@mail.gmail.com>
+Subject: Re: [PATCH] clk: qcom: gcc-ipq806x: use parent_data for the last
+ remaining entry
+To:     Christian Marangi <ansuelsmth@gmail.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
         Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Taniya Das <quic_tdas@quicinc.com>,
         linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-Cc:     Christian Marangi <ansuelsmth@gmail.com>
-Subject: [PATCH v2 3/3] clk: qcom: lcc-ipq806x: convert to parent data
-Date:   Tue, 21 Jun 2022 18:33:26 +0200
-Message-Id: <20220621163326.16858-3-ansuelsmth@gmail.com>
-X-Mailer: git-send-email 2.36.1
-In-Reply-To: <20220621163326.16858-1-ansuelsmth@gmail.com>
-References: <20220621163326.16858-1-ansuelsmth@gmail.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        devicetree@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Convert lcc-ipq806x driver to parent_data API.
+On Tue, 21 Jun 2022 at 18:21, Christian Marangi <ansuelsmth@gmail.com> wrote:
+>
+> On Tue, Jun 21, 2022 at 12:51:50AM +0300, Dmitry Baryshkov wrote:
+> > Use parent_data for the last remaining entry (pll4). This clock is
+> > provided by the lcc device.
+> >
+> > Fixes: cb02866f9a74 ("clk: qcom: gcc-ipq806x: convert parent_names to parent_data")
+> > Cc: Ansuel Smith <ansuelsmth@gmail.com>
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> >  drivers/clk/qcom/gcc-ipq806x.c | 4 +++-
+> >  1 file changed, 3 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/drivers/clk/qcom/gcc-ipq806x.c b/drivers/clk/qcom/gcc-ipq806x.c
+> > index 718de17a1e60..6447f3e81b55 100644
+> > --- a/drivers/clk/qcom/gcc-ipq806x.c
+> > +++ b/drivers/clk/qcom/gcc-ipq806x.c
+> > @@ -79,7 +79,9 @@ static struct clk_regmap pll4_vote = {
+> >       .enable_mask = BIT(4),
+> >       .hw.init = &(struct clk_init_data){
+> >               .name = "pll4_vote",
+> > -             .parent_names = (const char *[]){ "pll4" },
+> > +             .parent_data = &(const struct clk_parent_data){
+> > +                     .fw_name = "pll4", .name = "pll4",
+> > +             },
+> >               .num_parents = 1,
+> >               .ops = &clk_pll_vote_ops,
+> >       },
+> > --
+> > 2.35.1
+> >
+>
+> Hi my intention was finding a way to directly reference the hw clk from
+> the lcc driver instead of using fw_name/name parent data. Wonder if that
+> would be a better solution... Seems wrong to me to eventually add also
+> the pll4 clk in the dts to correctly use the fw_name definition (when
+> that will be fixed in the ipq8064 dtsi)
 
-Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
----
-v2:
-- Fix Sob tag
+Please don't. They are two separate hardware pieces, two separate
+drivers. Please don't invent anything fancy. Let the OF clk code
+handle it.
+Yes, this will result in "pll4" clock being referenced in DT. We
+already have binding for that, <&lcc PLL4>.
 
- drivers/clk/qcom/lcc-ipq806x.c | 79 +++++++++++++++++++---------------
- 1 file changed, 44 insertions(+), 35 deletions(-)
-
-diff --git a/drivers/clk/qcom/lcc-ipq806x.c b/drivers/clk/qcom/lcc-ipq806x.c
-index ba90bebba597..c07ca8dc6e3a 100644
---- a/drivers/clk/qcom/lcc-ipq806x.c
-+++ b/drivers/clk/qcom/lcc-ipq806x.c
-@@ -24,6 +24,10 @@
- #include "clk-regmap-mux.h"
- #include "reset.h"
- 
-+static const struct clk_parent_data gcc_pxo[] = {
-+	{ .fw_name = "pxo", .name = "pxo" },
-+};
-+
- static struct clk_pll pll4 = {
- 	.l_reg = 0x4,
- 	.m_reg = 0x8,
-@@ -34,7 +38,7 @@ static struct clk_pll pll4 = {
- 	.status_bit = 16,
- 	.clkr.hw.init = &(struct clk_init_data){
- 		.name = "pll4",
--		.parent_names = (const char *[]){ "pxo" },
-+		.parent_data = gcc_pxo,
- 		.num_parents = 1,
- 		.ops = &clk_pll_ops,
- 	},
-@@ -64,9 +68,9 @@ static const struct parent_map lcc_pxo_pll4_map[] = {
- 	{ P_PLL4, 2 }
- };
- 
--static const char * const lcc_pxo_pll4[] = {
--	"pxo",
--	"pll4_vote",
-+static const struct clk_parent_data lcc_pxo_pll4[] = {
-+	{ .fw_name = "pxo", .name = "pxo" },
-+	{ .fw_name = "pll4_vote", .name = "pll4_vote" },
- };
- 
- static struct freq_tbl clk_tbl_aif_mi2s[] = {
-@@ -131,18 +135,14 @@ static struct clk_rcg mi2s_osr_src = {
- 		.enable_mask = BIT(9),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "mi2s_osr_src",
--			.parent_names = lcc_pxo_pll4,
--			.num_parents = 2,
-+			.parent_data = lcc_pxo_pll4,
-+			.num_parents = ARRAY_SIZE(lcc_pxo_pll4),
- 			.ops = &clk_rcg_ops,
- 			.flags = CLK_SET_RATE_GATE,
- 		},
- 	},
- };
- 
--static const char * const lcc_mi2s_parents[] = {
--	"mi2s_osr_src",
--};
--
- static struct clk_branch mi2s_osr_clk = {
- 	.halt_reg = 0x50,
- 	.halt_bit = 1,
-@@ -152,7 +152,9 @@ static struct clk_branch mi2s_osr_clk = {
- 		.enable_mask = BIT(17),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "mi2s_osr_clk",
--			.parent_names = lcc_mi2s_parents,
-+			.parent_hws = (const struct clk_hw*[]){
-+				&mi2s_osr_src.clkr.hw,
-+			},
- 			.num_parents = 1,
- 			.ops = &clk_branch_ops,
- 			.flags = CLK_SET_RATE_PARENT,
-@@ -167,7 +169,9 @@ static struct clk_regmap_div mi2s_div_clk = {
- 	.clkr = {
- 		.hw.init = &(struct clk_init_data){
- 			.name = "mi2s_div_clk",
--			.parent_names = lcc_mi2s_parents,
-+			.parent_hws = (const struct clk_hw*[]){
-+				&mi2s_osr_src.clkr.hw,
-+			},
- 			.num_parents = 1,
- 			.ops = &clk_regmap_div_ops,
- 		},
-@@ -183,7 +187,9 @@ static struct clk_branch mi2s_bit_div_clk = {
- 		.enable_mask = BIT(15),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "mi2s_bit_div_clk",
--			.parent_names = (const char *[]){ "mi2s_div_clk" },
-+			.parent_hws = (const struct clk_hw*[]){
-+				&mi2s_div_clk.clkr.hw,
-+			},
- 			.num_parents = 1,
- 			.ops = &clk_branch_ops,
- 			.flags = CLK_SET_RATE_PARENT,
-@@ -191,6 +197,10 @@ static struct clk_branch mi2s_bit_div_clk = {
- 	},
- };
- 
-+static const struct clk_parent_data lcc_mi2s_bit_div_codec_clk[] = {
-+	{ .hw = &mi2s_bit_div_clk.clkr.hw, },
-+	{ .fw_name = "mi2s_codec_clk", .name = "mi2s_codec_clk" },
-+};
- 
- static struct clk_regmap_mux mi2s_bit_clk = {
- 	.reg = 0x48,
-@@ -199,11 +209,8 @@ static struct clk_regmap_mux mi2s_bit_clk = {
- 	.clkr = {
- 		.hw.init = &(struct clk_init_data){
- 			.name = "mi2s_bit_clk",
--			.parent_names = (const char *[]){
--				"mi2s_bit_div_clk",
--				"mi2s_codec_clk",
--			},
--			.num_parents = 2,
-+			.parent_data = lcc_mi2s_bit_div_codec_clk,
-+			.num_parents = ARRAY_SIZE(lcc_mi2s_bit_div_codec_clk),
- 			.ops = &clk_regmap_mux_closest_ops,
- 			.flags = CLK_SET_RATE_PARENT,
- 		},
-@@ -245,8 +252,8 @@ static struct clk_rcg pcm_src = {
- 		.enable_mask = BIT(9),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "pcm_src",
--			.parent_names = lcc_pxo_pll4,
--			.num_parents = 2,
-+			.parent_data = lcc_pxo_pll4,
-+			.num_parents = ARRAY_SIZE(lcc_pxo_pll4),
- 			.ops = &clk_rcg_ops,
- 			.flags = CLK_SET_RATE_GATE,
- 		},
-@@ -262,7 +269,9 @@ static struct clk_branch pcm_clk_out = {
- 		.enable_mask = BIT(11),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "pcm_clk_out",
--			.parent_names = (const char *[]){ "pcm_src" },
-+			.parent_hws = (const struct clk_hw*[]){
-+				&pcm_src.clkr.hw,
-+			},
- 			.num_parents = 1,
- 			.ops = &clk_branch_ops,
- 			.flags = CLK_SET_RATE_PARENT,
-@@ -270,6 +279,11 @@ static struct clk_branch pcm_clk_out = {
- 	},
- };
- 
-+static const struct clk_parent_data lcc_pcm_clk_out_codec_clk[] = {
-+	{ .hw = &pcm_clk_out.clkr.hw, },
-+	{ .fw_name = "pcm_codec_clk", .name = "pcm_codec_clk" },
-+};
-+
- static struct clk_regmap_mux pcm_clk = {
- 	.reg = 0x54,
- 	.shift = 10,
-@@ -277,11 +291,8 @@ static struct clk_regmap_mux pcm_clk = {
- 	.clkr = {
- 		.hw.init = &(struct clk_init_data){
- 			.name = "pcm_clk",
--			.parent_names = (const char *[]){
--				"pcm_clk_out",
--				"pcm_codec_clk",
--			},
--			.num_parents = 2,
-+			.parent_data = lcc_pcm_clk_out_codec_clk,
-+			.num_parents = ARRAY_SIZE(lcc_pcm_clk_out_codec_clk),
- 			.ops = &clk_regmap_mux_closest_ops,
- 			.flags = CLK_SET_RATE_PARENT,
- 		},
-@@ -325,18 +336,14 @@ static struct clk_rcg spdif_src = {
- 		.enable_mask = BIT(9),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "spdif_src",
--			.parent_names = lcc_pxo_pll4,
--			.num_parents = 2,
-+			.parent_data = lcc_pxo_pll4,
-+			.num_parents = ARRAY_SIZE(lcc_pxo_pll4),
- 			.ops = &clk_rcg_ops,
- 			.flags = CLK_SET_RATE_GATE,
- 		},
- 	},
- };
- 
--static const char * const lcc_spdif_parents[] = {
--	"spdif_src",
--};
--
- static struct clk_branch spdif_clk = {
- 	.halt_reg = 0xd4,
- 	.halt_bit = 1,
-@@ -346,7 +353,9 @@ static struct clk_branch spdif_clk = {
- 		.enable_mask = BIT(12),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "spdif_clk",
--			.parent_names = lcc_spdif_parents,
-+			.parent_hws = (const struct clk_hw*[]){
-+				&spdif_src.clkr.hw,
-+			},
- 			.num_parents = 1,
- 			.ops = &clk_branch_ops,
- 			.flags = CLK_SET_RATE_PARENT,
-@@ -384,8 +393,8 @@ static struct clk_rcg ahbix_clk = {
- 		.enable_mask = BIT(11),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "ahbix",
--			.parent_names = lcc_pxo_pll4,
--			.num_parents = 2,
-+			.parent_data = lcc_pxo_pll4,
-+			.num_parents = ARRAY_SIZE(lcc_pxo_pll4),
- 			.ops = &clk_rcg_lcc_ops,
- 		},
- 	},
 -- 
-2.36.1
-
+With best wishes
+Dmitry
