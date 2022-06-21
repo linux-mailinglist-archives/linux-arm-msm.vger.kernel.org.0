@@ -2,72 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0F0735531E7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jun 2022 14:22:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 173FF553272
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jun 2022 14:47:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349847AbiFUMWn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Jun 2022 08:22:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56422 "EHLO
+        id S1348753AbiFUMqj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Jun 2022 08:46:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47700 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350100AbiFUMWj (ORCPT
+        with ESMTP id S1344117AbiFUMqj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Jun 2022 08:22:39 -0400
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59EA6237D8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jun 2022 05:22:38 -0700 (PDT)
-Received: by mail-ej1-x62f.google.com with SMTP id v1so27047793ejg.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jun 2022 05:22:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :references:from:in-reply-to:content-transfer-encoding;
-        bh=PTPXtHxYqLGYZmdj0tHzFMVrdsxMJpp8auFdi6gANok=;
-        b=KrVOQQCs3Bi9zq5d+bBrsPBDSaXCFEIPJPMunB9Rr4vwMqCFLDddvbAQSC5vyGOnFw
-         vLEUXioNrKmDQTtlZiy4oFgk6M0J1FSGQhkPSY9ODSLxerk5mD0lH9felwF1LyJOdenA
-         InbWHrITWSRhrWo99YH8OU8W8OaFT9czihqg2R4GEj+B3Xy0PoMw0d+xYgN2Fkr/CvTc
-         fd4EDfpfeIuzo140Oh6eIOneg3EZFYRcoatyhOudmGS2AtYBGt9I0Y8Oxpd8qzhhWvMB
-         SnWAfzpVUwBd49W3bU+ldWeQitL5r+0uczO8IUZPOI87zzf/r0QDNwA81DjQlXUxoPpi
-         i4TQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=PTPXtHxYqLGYZmdj0tHzFMVrdsxMJpp8auFdi6gANok=;
-        b=3VVy5rSGo7DmgSZwwaESlBILxfrGqHxsnxz95SgrYAuSlnKnEaG/1CZTqrKEBxY26T
-         /Go8OEz+KvFqbGUbtJOLhVz2PCtyfZNeSGPT31wQimfxLDj3k4fjyq+8R+/kyhtHIPFy
-         GK7wY0X6UX2rM1RRnzM6qj638rpPmGHQG6nVFKVmKJsWg4bSrvAK2A8rj5il6eayuGq/
-         ooHpBpx83iRx43CGsvqqlmlNuOfLOsDt71/TRXEKDbaf3qYoFTKvNGjFtx1goRFwWn13
-         L/nbC9d2hHOITYa0RBb+O5ysKMQtsDFMlBEA6VbK8d9DgYlyhZH9/nOLrV5uUUaXcfKy
-         JLQQ==
-X-Gm-Message-State: AJIora9i3uEqFy++UVmx0DP5a2WiKlOwyK3M656tuQElxbIiRiqGKXfQ
-        qAhRDS53klD13Irco/ka3aI7jQ==
-X-Google-Smtp-Source: AGRyM1sXT5CYOKsEAdFreJiILB92jOp8xv/+ppd8XlVIQS3GkHCZ1B4lfdob7R4bMzcm2ShZ0t4SMA==
-X-Received: by 2002:a17:907:16a4:b0:711:c9a7:dc75 with SMTP id hc36-20020a17090716a400b00711c9a7dc75mr24577617ejc.542.1655814156854;
-        Tue, 21 Jun 2022 05:22:36 -0700 (PDT)
-Received: from [192.168.0.220] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id 18-20020a170906219200b006f3ef214dc3sm7565294eju.41.2022.06.21.05.22.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 21 Jun 2022 05:22:36 -0700 (PDT)
-Message-ID: <6207a625-d6d8-71c6-c4bb-f7078da2781f@linaro.org>
-Date:   Tue, 21 Jun 2022 14:22:35 +0200
+        Tue, 21 Jun 2022 08:46:39 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 895FA12ACF;
+        Tue, 21 Jun 2022 05:46:38 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 1D69C6144D;
+        Tue, 21 Jun 2022 12:46:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4B66C3411D;
+        Tue, 21 Jun 2022 12:46:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1655815597;
+        bh=/lJf1g6k/vLlYyh34H6cKOQDaBIETGFyt/Fw9AGyS8o=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=QxKixXtz2oKY9+H1+w1iZ4YVxk07FG8wnR1oEGHhNg0aYKv573urCmtVPnYilqOPq
+         tRx+0RuJykPGgGWsDIrBJggd3BfCjb6Zsuo7D64qKC/ZD2kEjwM5FAuPaOPc+oQHFx
+         9XIV39rI7wQSRlVhhomKct+53id9oZ4UIbke2vxkQyRYHNewBBnSo9vYmsXk9Qo+gM
+         brv5gWxxMzb0o7XKV8rrEhMuwHZ7ARgA61HSf9dw4CFNR6Jm2TZiwjJPrmOQv/WD/3
+         ub8oJ5RAmQ0sj6nFMuxDy3C6iM8NukqetVUt/okXMqZId5DjMHOGz7EYz8omkMNHpP
+         Nz5I/vgUrip2g==
+Date:   Tue, 21 Jun 2022 18:16:24 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Yonglin Tan <yonglin.tan@outlook.com>
+Cc:     loic.poulain@linaro.org, gregkh@linuxfoundation.org,
+        quic_hemantk@quicinc.com, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, mhi@lists.linux.dev
+Subject: Re: [PATCH v2] bus: mhi: host: Add support for Quectel EM120 FCCL.
+Message-ID: <20220621124624.GA17181@thinkpad>
+References: <MEYP282MB2374837FFCB18B12BFDEDE80FDCF9@MEYP282MB2374.AUSP282.PROD.OUTLOOK.COM>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: [PATCH] arm64: dts: ipq8074: fix NAND node name
-Content-Language: en-US
-To:     Robert Marko <robimarko@gmail.com>, agross@kernel.org,
-        bjorn.andersson@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20220621120642.518575-1-robimarko@gmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220621120642.518575-1-robimarko@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <MEYP282MB2374837FFCB18B12BFDEDE80FDCF9@MEYP282MB2374.AUSP282.PROD.OUTLOOK.COM>
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -75,17 +56,42 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21/06/2022 14:06, Robert Marko wrote:
-> Per schema it should be nand-controller@79b0000 instead of nand@79b0000.
-> Fix it to match nand-controller.yaml requirements.
+On Mon, May 16, 2022 at 02:38:29PM +0800, Yonglin Tan wrote:
+> The product's enumeration align with previous 
+> Quectel EM120R-GL, so the EM120 FCCL would use 
+> the same config as Quectel EM120R-GL. 
 > 
-> Signed-off-by: Robert Marko <robimarko@gmail.com>
+> Signed-off-by: Yonglin Tan <yonglin.tan@outlook.com>
+
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+
+Thanks,
+Mani
+
 > ---
->  arch/arm64/boot/dts/qcom/ipq8074.dtsi | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> V2:
+> Fixed the format errors in the patch description.
+> 
+>  drivers/bus/mhi/host/pci_generic.c | 2 ++
+>  1 file changed, 2 insertions(+)
+> 
+> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
+> index 8416267..0a6469c 100644
+> --- a/drivers/bus/mhi/host/pci_generic.c
+> +++ b/drivers/bus/mhi/host/pci_generic.c
+> @@ -557,6 +557,8 @@ static const struct pci_device_id mhi_pci_id_table[] = {
+>  		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
+>  	{ PCI_DEVICE(0x1eac, 0x1002), /* EM160R-GL (sdx24) */
+>  		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
+> +	{ PCI_DEVICE(0x1eac, 0x2001), /* EM120R-GL for FCCL (sdx24) */
+> +		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
+>  	/* T99W175 (sdx55), Both for eSIM and Non-eSIM */
+>  	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0ab),
+>  		.driver_data = (kernel_ulong_t) &mhi_foxconn_sdx55_info },
+> -- 
+> 2.7.4
 > 
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
-Best regards,
-Krzysztof
+-- 
+மணிவண்ணன் சதாசிவம்
