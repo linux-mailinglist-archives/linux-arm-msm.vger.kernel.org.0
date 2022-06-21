@@ -2,374 +2,243 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6B3595538FC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jun 2022 19:36:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 83C88553940
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jun 2022 19:57:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233993AbiFURgv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Jun 2022 13:36:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36888 "EHLO
+        id S241434AbiFUR5n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Jun 2022 13:57:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48210 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230056AbiFURgv (ORCPT
+        with ESMTP id S233529AbiFUR5m (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Jun 2022 13:36:51 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 521442C673
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jun 2022 10:36:50 -0700 (PDT)
+        Tue, 21 Jun 2022 13:57:42 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B2301D0D9;
+        Tue, 21 Jun 2022 10:57:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1655833010; x=1687369010;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=7dtSdv2ZTXpK2fsXDZe9XL2Qxe7+dC//5XeQcudEShM=;
-  b=X3nFv0vfAFoxnHOMKrteS5hK5tozp478FNk9KXYN98A2iJyp5xGyh8/f
-   cfDHrTGBgZdfvq4A8nwnDnFIEISG2/BPwZYwMvFbcJsoK0n2C72kHCEVo
-   v23cPIRw3IUgEu+p0sqart+DBwBVM/ZT1APpC+Q1IMxCg1HqBcvU9ZoH3
-   o=;
-Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 21 Jun 2022 10:36:50 -0700
+  t=1655834261; x=1687370261;
+  h=from:to:cc:subject:date:message-id;
+  bh=IhpY0nvaFsgCuREHN0wAidroPYiiZ/Yc0RCBikSIN8s=;
+  b=etvoddiJDCTrhIgWEkaNs69M+e61z8BxA4yNlEYGTGp1tdhTk4l7azNy
+   OTGtZwsxR0xjJ49yqOn+l9foW2+rm/It25w4wlEneTeInRlQUEJWnemnJ
+   dP/RQF70ip8yt/4ILOG2swgaZW0/YX/ah9gFr0GP9YdJIilMw9vG3Q61z
+   Y=;
+Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
+  by alexa-out.qualcomm.com with ESMTP; 21 Jun 2022 10:57:41 -0700
 X-QCInternal: smtphost
-Received: from nasanex01b.na.qualcomm.com ([10.46.141.250])
-  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Jun 2022 10:36:49 -0700
-Received: from [10.71.110.111] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Tue, 21 Jun
- 2022 10:36:48 -0700
-Message-ID: <5b1f7e55-024e-3509-79b3-3da34766e2da@quicinc.com>
-Date:   Tue, 21 Jun 2022 10:36:48 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Subject: Re: [Freedreno] [PATCH v3 4/4] drm/msm/dpu: Add interface support for
- CRC debugfs
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <quic_abhinavk@quicinc.com>,
-        <dri-devel@lists.freedesktop.org>, <swboyd@chromium.org>,
-        <robdclark@gmail.com>, <seanpaul@chromium.org>,
-        <quic_aravindh@quicinc.com>, <freedreno@lists.freedesktop.org>
-References: <20220621005033.274-1-quic_jesszhan@quicinc.com>
- <20220621005033.274-4-quic_jesszhan@quicinc.com>
- <CAA8EJpop8=4_2xGrNt0fL4qGjYQK9+0VuQ8nq=OOXVJF7aoauQ@mail.gmail.com>
-From:   Jessica Zhang <quic_jesszhan@quicinc.com>
-In-Reply-To: <CAA8EJpop8=4_2xGrNt0fL4qGjYQK9+0VuQ8nq=OOXVJF7aoauQ@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
+  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 21 Jun 2022 10:57:39 -0700
+X-QCInternal: smtphost
+Received: from hu-vnivarth-hyd.qualcomm.com (HELO hu-sgudaval-hyd.qualcomm.com) ([10.213.111.166])
+  by ironmsg02-blr.qualcomm.com with ESMTP; 21 Jun 2022 23:27:24 +0530
+Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 3994820)
+        id 641833FF1; Tue, 21 Jun 2022 23:27:23 +0530 (+0530)
+From:   Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+To:     agross@kernel.org, bjorn.andersson@linaro.org,
+        gregkh@linuxfoundation.org, jirislaby@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     quic_msavaliy@quicinc.com, dianders@chromium.org, mka@chromium.org,
+        swboyd@chromium.org,
+        Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+Subject: [PATCH] tty: serial: qcom-geni-serial: Fix get_clk_div_rate() which otherwise could return a sub-optimal clock rate.
+Date:   Tue, 21 Jun 2022 23:27:19 +0530
+Message-Id: <1655834239-20812-1-git-send-email-quic_vnivarth@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-Spam-Status: No, score=-4.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+In the logic around call to clk_round_rate, for some corner conditions,
+get_clk_div_rate() could return an sub-optimal clock rate. Also, if an
+exact clock rate was not found lowest clock was being returned.
 
+Search for suitable clock rate in 2 steps
+a) exact match or within 2% tolerance
+b) within 5% tolerance
+This also takes care of corner conditions.
 
-On 6/20/2022 11:36 PM, Dmitry Baryshkov wrote:
-> On Tue, 21 Jun 2022 at 03:50, Jessica Zhang <quic_jesszhan@quicinc.com> wrote:
->>
->> Add support for writing CRC values for the interface block to
->> the debugfs by calling the necessary MISR setup/collect methods.
->>
->> Changes since V1:
->> - Set values_cnt to only include phys with backing hw_intf
->> - Loop over all drm_encs connected to crtc
->>
->> Changes since V2:
->> - Remove vblank.h inclusion
->> - Change `pos + i` to `pos + entries`
->> - Initialize values_cnt to 0 for encoder
->> - Change DPU_CRTC_CRC_SOURCE_INTF to DPU_CRTC_CRC_SOURCE_ENCODER (and
->>    "intf" to "enc")
->> - Change dpu_encoder_get_num_phys to dpu_encoder_get_num_hw_intfs
->> - Add checks for setup_misr and collect_misr in
->>    dpu_encoder_get_num_hw_intfs
->>
->> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
->> ---
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c    | 50 +++++++++++++++-
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h    |  3 +
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 64 +++++++++++++++++++++
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h | 22 +++++++
->>   4 files changed, 138 insertions(+), 1 deletion(-)
->>
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
->> index 69a1257d3b6d..b4e8a4432796 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
->> @@ -79,6 +79,8 @@ static enum dpu_crtc_crc_source dpu_crtc_parse_crc_source(const char *src_name)
->>          if (!strcmp(src_name, "auto") ||
->>              !strcmp(src_name, "lm"))
->>                  return DPU_CRTC_CRC_SOURCE_LAYER_MIXER;
->> +       if (!strcmp(src_name, "enc"))
-> 
-> "encoder" unless you have any strong reason (like being compatible
-> with other platforms).
+Fixes: c2194bc999d4 ("tty: serial: qcom-geni-serial: Remove uart frequency table. Instead, find suitable frequency with call to clk_round_rate")
+Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+---
+ drivers/tty/serial/qcom_geni_serial.c | 134 ++++++++++++++++++++++++++--------
+ 1 file changed, 102 insertions(+), 32 deletions(-)
 
-Sure
+diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
+index 2e23b65..8d247c1 100644
+--- a/drivers/tty/serial/qcom_geni_serial.c
++++ b/drivers/tty/serial/qcom_geni_serial.c
+@@ -943,52 +943,123 @@ static int qcom_geni_serial_startup(struct uart_port *uport)
+ 	return 0;
+ }
+ 
+-static unsigned long get_clk_div_rate(struct clk *clk, unsigned int baud,
+-			unsigned int sampling_rate, unsigned int *clk_div)
++static unsigned long find_clk_rate_in_tol(struct clk *clk, unsigned int desired_clk,
++			unsigned int *clk_div, unsigned int percent_tol, bool *exact_match)
+ {
++	unsigned long freq;
++	unsigned long div, maxdiv, new_div;
++	unsigned long long mult;
+ 	unsigned long ser_clk;
+-	unsigned long desired_clk;
+-	unsigned long freq, prev;
+-	unsigned long div, maxdiv;
+-	int64_t mult;
+-
+-	desired_clk = baud * sampling_rate;
+-	if (!desired_clk) {
+-		pr_err("%s: Invalid frequency\n", __func__);
+-		return 0;
+-	}
++	unsigned long test_freq, offset, new_freq;
+ 
++	ser_clk = 0;
+ 	maxdiv = CLK_DIV_MSK >> CLK_DIV_SHFT;
+-	prev = 0;
++	div = 1;
+ 
+-	for (div = 1; div <= maxdiv; div++) {
+-		mult = div * desired_clk;
+-		if (mult > ULONG_MAX)
++	while (div <= maxdiv) {
++		mult = (unsigned long long)div * desired_clk;
++		if (mult != (unsigned long)mult)
+ 			break;
+ 
+-		freq = clk_round_rate(clk, (unsigned long)mult);
+-		if (!(freq % desired_clk)) {
+-			ser_clk = freq;
+-			break;
++		/*
++		 * Loop requesting a freq within tolerance and possibly exact freq.
++		 *
++		 * We'll keep track of the lowest freq inexact match we found
++		 * but always try to find a perfect match. NOTE: this algorithm
++		 * could miss a slightly better freq if there's more than one
++		 * freq between (freq - offset) and (freq) but (freq) can't be made
++		 * exactly, but that's OK.
++		 *
++		 * This absolutely relies on the fact that the Qualcomm clock
++		 * driver always rounds up.
++		 * We make use of exact_match as an I/O param.
++		 */
++
++		/* look only for exact match if within tolerance is already found */
++		if (ser_clk)
++			offset = 0;
++		else
++			offset = (mult * percent_tol) / 100;
++
++		test_freq = mult - offset;
++		freq = clk_round_rate(clk, test_freq);
++
++		/*
++		 * A dead-on freq is an insta-win, look for it only in 1st run
++		 */
++		if (*exact_match) {
++			if (!(freq % desired_clk)) {
++				ser_clk = freq;
++				*clk_div = freq / desired_clk;
++				return ser_clk;
++			}
++		}
++
++		if (!ser_clk) {
++			new_div = DIV_ROUND_CLOSEST(freq, desired_clk);
++			new_freq = new_div * desired_clk;
++			offset = (new_freq * percent_tol) / 100;
++
++			if (new_freq - offset <= freq && freq <= new_freq + offset) {
++				/* Save the first (lowest freq) within tolerance */
++				ser_clk = freq;
++				*clk_div = new_div;
++				/* no more search for exact match required in 2nd run */
++				if (!(*exact_match))
++					break;
++			}
+ 		}
+ 
+-		if (!prev)
+-			ser_clk = freq;
+-		else if (prev == freq)
++		div = freq / desired_clk + 1;
++
++		/*
++		 * Only time clock framework doesn't round up is if
++		 * we're past the max clock rate. We're done searching
++		 * if that's the case.
++		 */
++		if (freq < test_freq)
+ 			break;
++	}
++
++	*exact_match = false;
++	return ser_clk;
++}
++
++static unsigned long get_clk_div_rate(struct clk *clk, unsigned int baud,
++			unsigned int sampling_rate, unsigned int *clk_div)
++{
++	unsigned long ser_clk;
++	unsigned long desired_clk;
++	unsigned long desired_tol;
++	bool exact_match;
+ 
+-		prev = freq;
++	desired_clk = baud * sampling_rate;
++	if (!desired_clk) {
++		pr_err("%s: Invalid frequency\n", __func__);
++		return 0;
+ 	}
+ 
+-	if (!ser_clk) {
+-		pr_err("%s: Can't find matching DFS entry for baud %d\n",
+-								__func__, baud);
++	/* try to find exact clock rate or within 2% tolerance */
++	ser_clk = 0;
++	exact_match = true;
++	desired_tol = 2;
++
++	ser_clk = find_clk_rate_in_tol(clk, desired_clk, clk_div, desired_tol, &exact_match);
++	if (ser_clk) {
++		if (!exact_match)
++			pr_warn("Cannot find exact match clk_rate, using one within 2 percent tolerance\n");
+ 		return ser_clk;
+ 	}
+ 
+-	*clk_div = ser_clk / desired_clk;
+-	if (!(*clk_div))
+-		*clk_div = 1;
++	/* try within 5% tolerance now, no need to look for exact match */
++	exact_match = false;
++	desired_tol = 5;
++
++	ser_clk = find_clk_rate_in_tol(clk, desired_clk, clk_div, desired_tol, &exact_match);
++	if (ser_clk)
++		pr_warn("Cannot find exact match clk_rate, using one within 5 percent tolerance\n");
++	else
++		pr_err("Cannot find suitable clk_rate, giving up\n");
+ 
+ 	return ser_clk;
+ }
+@@ -1021,8 +1092,7 @@ static void qcom_geni_serial_set_termios(struct uart_port *uport,
+ 	if (ver >= QUP_SE_VERSION_2_5)
+ 		sampling_rate /= 2;
+ 
+-	clk_rate = get_clk_div_rate(port->se.clk, baud,
+-		sampling_rate, &clk_div);
++	clk_rate = get_clk_div_rate(port->se.clk, baud, sampling_rate, &clk_div);
+ 	if (!clk_rate)
+ 		goto out_restart_rx;
+ 
+-- 
+Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, hosted by the Linux Foundation.
 
-> 
->> +               return DPU_CRTC_CRC_SOURCE_ENCODER;
->>
->>          return DPU_CRTC_CRC_SOURCE_INVALID;
->>   }
->> @@ -94,8 +96,16 @@ static int dpu_crtc_verify_crc_source(struct drm_crtc *crtc,
->>                  return -EINVAL;
->>          }
->>
->> -       if (source == DPU_CRTC_CRC_SOURCE_LAYER_MIXER)
->> +       if (source == DPU_CRTC_CRC_SOURCE_LAYER_MIXER) {
->>                  *values_cnt = crtc_state->num_mixers;
->> +       } else if (source == DPU_CRTC_CRC_SOURCE_ENCODER) {
->> +               struct drm_encoder *drm_enc;
->> +
->> +               *values_cnt = 0;
->> +
->> +               drm_for_each_encoder_mask(drm_enc, crtc->dev, crtc->state->encoder_mask)
->> +                       *values_cnt += dpu_encoder_get_num_hw_intfs(drm_enc);
->> +       }
->>
->>          return 0;
->>   }
->> @@ -116,6 +126,14 @@ static void dpu_crtc_setup_lm_misr(struct dpu_crtc_state *crtc_state)
->>          }
->>   }
->>
->> +static void dpu_crtc_setup_encoder_misr(struct drm_crtc *crtc)
->> +{
->> +       struct drm_encoder *drm_enc;
->> +
->> +       drm_for_each_encoder_mask(drm_enc, crtc->dev, crtc->state->encoder_mask)
->> +               dpu_encoder_setup_misr(drm_enc);
->> +}
->> +
->>   static int dpu_crtc_set_crc_source(struct drm_crtc *crtc, const char *src_name)
->>   {
->>          enum dpu_crtc_crc_source source = dpu_crtc_parse_crc_source(src_name);
->> @@ -164,6 +182,8 @@ static int dpu_crtc_set_crc_source(struct drm_crtc *crtc, const char *src_name)
->>
->>          if (source == DPU_CRTC_CRC_SOURCE_LAYER_MIXER)
->>                  dpu_crtc_setup_lm_misr(crtc_state);
->> +       else if (source == DPU_CRTC_CRC_SOURCE_ENCODER)
->> +               dpu_crtc_setup_encoder_misr(crtc);
->>          else
->>                  ret = -EINVAL;
->>
->> @@ -212,6 +232,28 @@ static int dpu_crtc_get_lm_crc(struct drm_crtc *crtc,
->>                          drm_crtc_accurate_vblank_count(crtc), crcs);
->>   }
->>
->> +static int dpu_crtc_get_encoder_crc(struct drm_crtc *crtc, u32 *crcs)
->> +{
->> +       struct drm_encoder *drm_enc;
->> +       int rc, pos = 0;
->> +
-> 
-> Extra empty line.
-
-Noted.
-
-> 
->> +
->> +       drm_for_each_encoder_mask(drm_enc, crtc->dev, crtc->state->encoder_mask) {
->> +               rc = dpu_encoder_get_crc(drm_enc, crcs, pos);
->> +               if (rc < 0) {
->> +                       if (rc != -ENODATA)
->> +                               DRM_DEBUG_DRIVER("MISR read failed\n");
->> +
->> +                       return rc;
->> +               }
->> +
->> +               pos += rc;
->> +       }
->> +
->> +       return drm_crtc_add_crc_entry(crtc, true,
->> +                       drm_crtc_accurate_vblank_count(crtc), crcs);
->> +}
->> +
->>   static int dpu_crtc_get_crc(struct drm_crtc *crtc)
->>   {
->>          struct dpu_crtc_state *crtc_state = to_dpu_crtc_state(crtc->state);
->> @@ -226,6 +268,12 @@ static int dpu_crtc_get_crc(struct drm_crtc *crtc)
->>          if (crtc_state->crc_source == DPU_CRTC_CRC_SOURCE_LAYER_MIXER) {
->>                  BUILD_BUG_ON(ARRAY_SIZE(crcs) < ARRAY_SIZE(crtc_state->mixers));
->>                  return dpu_crtc_get_lm_crc(crtc, crtc_state, crcs);
->> +       } else if (crtc_state->crc_source == DPU_CRTC_CRC_SOURCE_ENCODER) {
->> +               if (ARRAY_SIZE(crcs) < INTF_MAX)
->> +                       DPU_ERROR("crcs array of size %ld less than %d\n",
->> +                                       ARRAY_SIZE(crcs), INTF_MAX);
-> 
-> Ok. With the crcs array being local you don't have to preallocate it
-> here and pass it as an argument.
-> Just declare it in the dpu_crtc_get_encoder_crc(). Then you can
-> allocate it as `u32 crcs[INTF_MAX]` and remove the check.
-> 
-
-Sure.
-
->> +
->> +               return dpu_crtc_get_encoder_crc(crtc, crcs);
->>          }
->>
->>          return 0;
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
->> index aa897ec28ad3..b49cf8ae126f 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
->> @@ -1,5 +1,6 @@
->>   /* SPDX-License-Identifier: GPL-2.0-only */
->>   /*
->> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
->>    * Copyright (c) 2015-2021 The Linux Foundation. All rights reserved.
->>    * Copyright (C) 2013 Red Hat
->>    * Author: Rob Clark <robdclark@gmail.com>
->> @@ -78,11 +79,13 @@ struct dpu_crtc_smmu_state_data {
->>    * enum dpu_crtc_crc_source: CRC source
->>    * @DPU_CRTC_CRC_SOURCE_NONE: no source set
->>    * @DPU_CRTC_CRC_SOURCE_LAYER_MIXER: CRC in layer mixer
->> + * @DPU_CRTC_CRC_SOURCE_ENCODER: CRC in encoder
->>    * @DPU_CRTC_CRC_SOURCE_INVALID: Invalid source
->>    */
->>   enum dpu_crtc_crc_source {
->>          DPU_CRTC_CRC_SOURCE_NONE = 0,
->>          DPU_CRTC_CRC_SOURCE_LAYER_MIXER,
->> +       DPU_CRTC_CRC_SOURCE_ENCODER,
->>          DPU_CRTC_CRC_SOURCE_MAX,
->>          DPU_CRTC_CRC_SOURCE_INVALID = -1
->>   };
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->> index 52516eb20cb8..a8f841180383 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->> @@ -225,6 +225,70 @@ bool dpu_encoder_is_widebus_enabled(const struct drm_encoder *drm_enc)
->>          return dpu_enc->wide_bus_en;
->>   }
->>
->> +int dpu_encoder_get_num_hw_intfs(const struct drm_encoder *drm_enc)
-> 
-> dpu_encoder_get_crc_values_cnt(), please.
-
-Sure
-
-Thanks,
-
-Jessica Zhang
-
-> 
->> +{
->> +       struct dpu_encoder_virt *dpu_enc;
->> +       int i, num_intf = 0;
->> +
->> +       dpu_enc = to_dpu_encoder_virt(drm_enc);
->> +
->> +       for (i = 0; i < dpu_enc->num_phys_encs; i++) {
->> +               struct dpu_encoder_phys *phys = dpu_enc->phys_encs[i];
->> +
->> +               if (phys->hw_intf && phys->hw_intf->ops.setup_misr
->> +                               && phys->hw_intf->ops.collect_misr)
->> +                       num_intf++;
->> +       }
->> +
->> +       return num_intf;
->> +}
->> +
->> +void dpu_encoder_setup_misr(const struct drm_encoder *drm_enc)
->> +{
->> +       struct dpu_encoder_virt *dpu_enc;
->> +
->> +       int i;
->> +
->> +       dpu_enc = to_dpu_encoder_virt(drm_enc);
->> +
->> +       for (i = 0; i < dpu_enc->num_phys_encs; i++) {
->> +               struct dpu_encoder_phys *phys = dpu_enc->phys_encs[i];
->> +
->> +               if (!phys->hw_intf || !phys->hw_intf->ops.setup_misr)
->> +                       continue;
->> +
->> +               phys->hw_intf->ops.setup_misr(phys->hw_intf, true, 1);
->> +       }
->> +}
->> +
->> +int dpu_encoder_get_crc(const struct drm_encoder *drm_enc, u32 *crcs, int pos)
->> +{
->> +       struct dpu_encoder_virt *dpu_enc;
->> +
->> +       int i, rc = 0, entries_added = 0;
->> +
->> +       if (!drm_enc->crtc) {
->> +               DRM_ERROR("no crtc found for encoder %d\n", drm_enc->index);
->> +               return -EINVAL;
->> +       }
->> +
->> +       dpu_enc = to_dpu_encoder_virt(drm_enc);
->> +
->> +       for (i = 0; i < dpu_enc->num_phys_encs; i++) {
->> +               struct dpu_encoder_phys *phys = dpu_enc->phys_encs[i];
->> +
->> +               if (!phys->hw_intf || !phys->hw_intf->ops.collect_misr)
->> +                       continue;
->> +
->> +               rc = phys->hw_intf->ops.collect_misr(phys->hw_intf, &crcs[pos + entries_added]);
->> +               if (rc)
->> +                       return rc;
->> +               entries_added++;
->> +       }
->> +
->> +       return entries_added;
->> +}
->> +
->>   static void _dpu_encoder_setup_dither(struct dpu_hw_pingpong *hw_pp, unsigned bpc)
->>   {
->>          struct dpu_hw_dither_cfg dither_cfg = { 0 };
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
->> index 781d41c91994..749e0144d2de 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
->> @@ -1,5 +1,6 @@
->>   /* SPDX-License-Identifier: GPL-2.0-only */
->>   /*
->> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
->>    * Copyright (c) 2015-2018, The Linux Foundation. All rights reserved.
->>    * Copyright (C) 2013 Red Hat
->>    * Author: Rob Clark <robdclark@gmail.com>
->> @@ -174,6 +175,27 @@ int dpu_encoder_get_vsync_count(struct drm_encoder *drm_enc);
->>
->>   bool dpu_encoder_is_widebus_enabled(const struct drm_encoder *drm_enc);
->>
->> +/**
->> + * dpu_encoder_get_num_hw_intfs - get number of physical encoders contained
->> + *     in virtual encoder
->> + * @drm_enc:    Pointer to previously created drm encoder structure
->> + * Returns:     Number of physical encoders for given drm encoder
->> + */
->> +int dpu_encoder_get_num_hw_intfs(const struct drm_encoder *drm_enc);
->> +
->> +/**
->> + * dpu_encoder_setup_misr - enable misr calculations
->> + * @drm_enc:    Pointer to previously created drm encoder structure
->> + */
->> +void dpu_encoder_setup_misr(const struct drm_encoder *drm_encoder);
->> +
->> +/**
->> + * dpu_encoder_get_crc - get the crc value from interface blocks
->> + * @drm_enc:    Pointer to previously created drm encoder structure
->> + * Returns:     0 on success, error otherwise
->> + */
->> +int dpu_encoder_get_crc(const struct drm_encoder *drm_enc, u32 *crcs, int pos);
->> +
->>   /**
->>    * dpu_encoder_use_dsc_merge - returns true if the encoder uses DSC merge topology.
->>    * @drm_enc:    Pointer to previously created drm encoder structure
->> --
->> 2.35.1
->>
-> 
-> 
-> -- 
-> With best wishes
-> Dmitry
