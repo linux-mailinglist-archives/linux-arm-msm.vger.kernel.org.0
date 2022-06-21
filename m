@@ -2,263 +2,173 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 00ACA553D03
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jun 2022 23:11:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 162F6553D57
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jun 2022 23:18:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1355709AbiFUVFP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Jun 2022 17:05:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51548 "EHLO
+        id S1355980AbiFUVOj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Jun 2022 17:14:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60018 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1356826AbiFUVEx (ORCPT
+        with ESMTP id S1355902AbiFUVN0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Jun 2022 17:04:53 -0400
-Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B39143055A
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jun 2022 13:53:58 -0700 (PDT)
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1o3koX-0003Nu-CG; Tue, 21 Jun 2022 22:49:33 +0200
-Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
-        by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1o3koE-001tq7-4E; Tue, 21 Jun 2022 22:49:15 +0200
-Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1o3koE-000HIi-Od; Tue, 21 Jun 2022 22:49:14 +0200
-Date:   Tue, 21 Jun 2022 22:49:14 +0200
-From:   Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-To:     Jon Hunter <jonathanh@nvidia.com>, Stephen Boyd <sboyd@kernel.org>
-Cc:     Michael Turquette <mturquette@baylibre.com>,
-        Russell King <linux@armlinux.org.uk>,
-        Nuno =?utf-8?B?U8Oh?= <nuno.sa@analog.com>,
-        Jean Delvare <jdelvare@suse.com>,
-        Guenter Roeck <linux@roeck-us.net>,
-        Lars Povlsen <lars.povlsen@microchip.com>,
-        Steen Hegelund <Steen.Hegelund@microchip.com>,
-        UNGLinuxDriver@microchip.com, linux-hwmon@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Michael Hennerich <Michael.Hennerich@analog.com>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Herbert Xu <herbert@gondor.apana.org.au>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Bartosz Golaszewski <brgl@bgdev.pl>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Paul Cercueil <paul@crapouillou.net>,
-        Alessandro Zummo <a.zummo@towertech.it>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Wim Van Sebroeck <wim@linux-watchdog.org>,
-        Claudiu Beznea <claudiu.beznea@microchip.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Lee Jones <lee.jones@linaro.org>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        Oleksij Rempel <linux@rempel-privat.de>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Mark Brown <broonie@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        Tomislav Denis <tomislav.denis@avl.com>,
-        Heiko Stuebner <heiko@sntech.de>, linux-iio@vger.kernel.org,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        dri-devel@lists.freedesktop.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-i2c@vger.kernel.org,
-        Nobuhiro Iwamatsu <nobuhiro1.iwamatsu@toshiba.co.jp>,
-        linux-clk@vger.kernel.org, linux-watchdog@vger.kernel.org,
-        linux-rtc@vger.kernel.org, Michal Simek <michal.simek@xilinx.com>,
-        linux-stm32@st-md-mailman.stormreply.com,
-        Andy Gross <agross@kernel.org>,
-        Alexandru Ardelean <aardelean@deviqon.com>,
-        Keguang Zhang <keguang.zhang@gmail.com>,
-        Patrice Chotard <patrice.chotard@foss.st.com>,
-        linux-pwm@vger.kernel.org, kernel@pengutronix.de,
-        linux-arm-msm@vger.kernel.org,
-        Anand Ashok Dumbre <anand.ashok.dumbre@xilinx.com>,
-        Vladimir Zapolskiy <vz@mleia.com>, linux-gpio@vger.kernel.org,
-        =?utf-8?B?QW5kcsOp?= Gustavo Nakagomi Lopez <andregnl@usp.br>,
-        Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+        Tue, 21 Jun 2022 17:13:26 -0400
+Received: from NAM10-DM6-obe.outbound.protection.outlook.com (mail-dm6nam10on2061.outbound.protection.outlook.com [40.107.93.61])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA62533348;
+        Tue, 21 Jun 2022 14:00:05 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=ZikeTw0S7ttyzgdzUwFhbCUqhlGkSHs6vGsOB2gVwsQN8WFaC4xFxReXjKQndC2dmmu2VdwXrdnCAB+dIVllZXtJfPAPZWwmWphLJHRSYGwYaIe+LAzpxUjQ8CZJNPJSIYCryJg3qv6vBE0mRte82PEjH4MHvrNPMcO3P5xOLbz+O7RjWD7KKaCMZhWhHsF9D0QcQQzd5uD4te84DCy8Tckxg3Z08EAXXkohzrmLJo7s85+XkQ3Ut77NA+ldNAs81uRjkKaO6/rlaElx4EoMbMcjFZLbhlwFsQXubsXVozHhTsX5gEI5rZsnZv9qM8jrFdy8GFx3CHUSKS8zUyDMig==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=L2zPddrz7DMH2w1GwVWYEI6yBRnFoUWwhGSJj5EH538=;
+ b=eceuP3QNjy0tlStTbvYBBLsKtkSx3VzEThxHLSRZGQsPzb8thRMRG422tz7QLikA1ZWxLnQHzQ5c0hNhQDzLT4Ygo48QhfjrgsraT37mjWsKtIrHOfemw0Fq5i7VB24wigDRqjyqPbJoN4xcL980NpaKTgd8u9BKxKteZ429XBuTstGX7T2RukUCxWY2uxWFUVEGyLHKd+h/lGIY735V3bBlDTsrmCb7oCuPbaYmDEnfWBNxS/5YfJlmc/9VZrvPkmn3yG7T9LtMklPX7hBYgGqhAgQdh2bFljAEXTjLqwWr8bIPZZTxGkA0PWNLbSpaq6Xyk2dh5Jbx/+IahSUkAw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 12.22.5.238) smtp.rcpttodomain=svenpeter.dev smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=L2zPddrz7DMH2w1GwVWYEI6yBRnFoUWwhGSJj5EH538=;
+ b=BttZqUv4GkeEhYDXThM9SJ5dEvYS3UOV8Wy8kAwXUtt5gfWDaQV8jVt8CI1KRqFp8+6aOf01vY4as7EERb+tjYMRADoJ3BR8vViTBNw1CJdkDAK83+/uq1myr6vYaZBWJLVNeXjknHylytm3oNpQM7c+K5uwirvXZR0Pj4pq9mOFwibkegXoz5SzMGrLi+AzU3aY9WK2FhsgIbVisjfPuLdVqeFKE4imb8DTnlr2ob6wXyy2hQWpgTWMEWdEvC681N4KSrI38teYgl+scbGMXTT3mMz6rHZKP8gy/bCxb3HJ8dyyyY6ODzrybSYWidKWAtchC+myY+BBB+YPfs9ArQ==
+Received: from BN6PR20CA0053.namprd20.prod.outlook.com (2603:10b6:404:151::15)
+ by DM6PR12MB4371.namprd12.prod.outlook.com (2603:10b6:5:2a3::23) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5353.15; Tue, 21 Jun
+ 2022 21:00:03 +0000
+Received: from BN8NAM11FT008.eop-nam11.prod.protection.outlook.com
+ (2603:10b6:404:151:cafe::2c) by BN6PR20CA0053.outlook.office365.com
+ (2603:10b6:404:151::15) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5353.22 via Frontend
+ Transport; Tue, 21 Jun 2022 21:00:03 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 12.22.5.238)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 12.22.5.238 as permitted sender) receiver=protection.outlook.com;
+ client-ip=12.22.5.238; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (12.22.5.238) by
+ BN8NAM11FT008.mail.protection.outlook.com (10.13.177.95) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
+ 15.20.5353.14 via Frontend Transport; Tue, 21 Jun 2022 21:00:03 +0000
+Received: from drhqmail202.nvidia.com (10.126.190.181) by
+ DRHQMAIL105.nvidia.com (10.27.9.14) with Microsoft SMTP Server (TLS) id
+ 15.0.1497.32; Tue, 21 Jun 2022 21:00:01 +0000
+Received: from drhqmail203.nvidia.com (10.126.190.182) by
+ drhqmail202.nvidia.com (10.126.190.181) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Tue, 21 Jun 2022 14:00:00 -0700
+Received: from Asurada-Nvidia (10.127.8.12) by mail.nvidia.com
+ (10.126.190.182) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22 via Frontend
+ Transport; Tue, 21 Jun 2022 13:59:57 -0700
+Date:   Tue, 21 Jun 2022 13:59:55 -0700
+From:   Nicolin Chen <nicolinc@nvidia.com>
+To:     Jason Gunthorpe <jgg@nvidia.com>,
+        "Tian, Kevin" <kevin.tian@intel.com>
+CC:     "robin.murphy@arm.com" <robin.murphy@arm.com>,
+        "joro@8bytes.org" <joro@8bytes.org>,
+        "will@kernel.org" <will@kernel.org>,
+        "marcan@marcan.st" <marcan@marcan.st>,
+        "sven@svenpeter.dev" <sven@svenpeter.dev>,
+        "robdclark@gmail.com" <robdclark@gmail.com>,
+        "baolu.lu@linux.intel.com" <baolu.lu@linux.intel.com>,
+        "matthias.bgg@gmail.com" <matthias.bgg@gmail.com>,
+        "orsonzhai@gmail.com" <orsonzhai@gmail.com>,
+        "baolin.wang7@gmail.com" <baolin.wang7@gmail.com>,
+        "zhang.lyra@gmail.com" <zhang.lyra@gmail.com>,
+        "jean-philippe@linaro.org" <jean-philippe@linaro.org>,
+        "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
+        "jordan@cosmicpenguin.net" <jordan@cosmicpenguin.net>,
+        "thierry.reding@gmail.com" <thierry.reding@gmail.com>,
+        "alyssa@rosenzweig.io" <alyssa@rosenzweig.io>,
+        "linux-s390@vger.kernel.org" <linux-s390@vger.kernel.org>,
+        "saiprakash.ranjan@codeaurora.org" <saiprakash.ranjan@codeaurora.org>,
+        "kvm@vger.kernel.org" <kvm@vger.kernel.org>,
+        "jonathanh@nvidia.com" <jonathanh@nvidia.com>,
+        "linux-arm-kernel@lists.infradead.org" 
+        <linux-arm-kernel@lists.infradead.org>,
+        "yangyingliang@huawei.com" <yangyingliang@huawei.com>,
+        "gerald.schaefer@linux.ibm.com" <gerald.schaefer@linux.ibm.com>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "christophe.jaillet@wanadoo.fr" <christophe.jaillet@wanadoo.fr>,
         "linux-tegra@vger.kernel.org" <linux-tegra@vger.kernel.org>,
-        linux-amlogic@lists.infradead.org,
-        Amireddy Mallikarjuna reddy 
-        <mallikarjunax.reddy@linux.intel.com>, linux-mips@vger.kernel.org,
-        linux-spi@vger.kernel.org, Cai Huoqing <caihuoqing@baidu.com>,
-        linux-crypto@vger.kernel.org,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        dmaengine@vger.kernel.org
-Subject: Re: [PATCH v8 01/16] clk: generalize devm_clk_get() a bit
-Message-ID: <20220621204914.byokkrxiznvod7vq@pengutronix.de>
-References: <20220314141643.22184-1-u.kleine-koenig@pengutronix.de>
- <20220314141643.22184-2-u.kleine-koenig@pengutronix.de>
- <d6b890c8-bfb5-cfa5-c6d8-ee245701c077@nvidia.com>
+        "tglx@linutronix.de" <tglx@linutronix.de>,
+        "virtualization@lists.linux-foundation.org" 
+        <virtualization@lists.linux-foundation.org>,
+        "isaacm@codeaurora.org" <isaacm@codeaurora.org>,
+        "cohuck@redhat.com" <cohuck@redhat.com>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "iommu@lists.linux-foundation.org" <iommu@lists.linux-foundation.org>,
+        "linux-mediatek@lists.infradead.org" 
+        <linux-mediatek@lists.infradead.org>,
+        "dwmw2@infradead.org" <dwmw2@infradead.org>
+Subject: Re: [PATCH v2 5/5] vfio/iommu_type1: Simplify group attachment
+Message-ID: <YrIxG616H5Pi0Qod@Asurada-Nvidia>
+References: <20220616000304.23890-1-nicolinc@nvidia.com>
+ <20220616000304.23890-6-nicolinc@nvidia.com>
+ <BL1PR11MB52710E360B50DDA99C9A65D18CAC9@BL1PR11MB5271.namprd11.prod.outlook.com>
+ <YquxcH2S1fM+llOf@Asurada-Nvidia>
+ <BN9PR11MB5276C7BFA77C2C176491B56A8CAF9@BN9PR11MB5276.namprd11.prod.outlook.com>
+ <Yq0JKBiQfTkWh4nq@Asurada-Nvidia>
+ <20220620040317.GD5219@nvidia.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="uzxszqlixhftbuhf"
+Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <d6b890c8-bfb5-cfa5-c6d8-ee245701c077@nvidia.com>
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+In-Reply-To: <20220620040317.GD5219@nvidia.com>
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: 411cd746-5d6e-41c0-c242-08da53c90330
+X-MS-TrafficTypeDiagnostic: DM6PR12MB4371:EE_
+X-Microsoft-Antispam-PRVS: <DM6PR12MB43716BA7C7D60392851AF721ABB39@DM6PR12MB4371.namprd12.prod.outlook.com>
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: /E1h6WDkvbtStPqf/PKdR7QqRL8imWhkrZ8wFMOmjIL7hJPTwK970ScQSskzv/f7VV283OPC8of4cP+eSeb5GWW3hmpPvDtqjAOsZoHm1nXZCZmlTjijI0BrCTlxlxVHXSdTdIEmwHlVagQGxMs8xVo59T6XouJEKeoWddyNgas7aTyAftf0SDFTY8c6hrmXl+953ojmm44PQ6CFPmgnnX0Pc3RgggDaVw0pK/jo3deu5LbCO9RG7oQ1J4urL0nd+LGoKWhjiOC/62Jk+ntMw3OsiYioa1wuODHrVW2vLx0V9XpzZSkUHxPNwZ2G1Rq3YhkbF/yy80eDrgpYlgoL/z32nKXbmwqQLrI6nDNMUEeA4jR6dCtwHlMcYbAWqr/zCUmzm+lf241+ZMhW98xPys24BJ0RDGucEU8F6NqRDS3LE2KN4V9Ni97R479Xc0mQlElD23abDdZvU9QSTzc0v9I1MT8yupYne/C0nnHZxdVnBSolORgyBqnrTEsj7D8tyVDdQAX9OJPciZCu/2StbH5PW23NKbHKuGFxPWZM+14drseXl88+HENXgcoznYaekcGqm3C3eOCnRYS8IA9+VNYDh0LD21j3JfWr4Feoo8YkHFWBk9YdcsuSD4tn/+zooynylGWLziEAyA/J4VumKzZrq9WHJ92/7QlICBqnRYO0GUEZ7NqR9e1t5DnJm5vO0LVTjaUNBHp1WetTdII+LiaqauXITya9UcCP6K6/s9+IOUQrt/x1Qi25ficuGLih
+X-Forefront-Antispam-Report: CIP:12.22.5.238;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:InfoNoRecords;CAT:NONE;SFS:(13230016)(4636009)(39860400002)(376002)(396003)(136003)(346002)(40470700004)(36840700001)(46966006)(40460700003)(356005)(5660300002)(55016003)(81166007)(47076005)(41300700001)(336012)(33716001)(4326008)(7416002)(40480700001)(82740400003)(9686003)(426003)(82310400005)(316002)(186003)(54906003)(110136005)(86362001)(70586007)(70206006)(8676002)(2906002)(8936002)(36860700001)(83380400001)(26005)(478600001)(7406005)(36900700001);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Jun 2022 21:00:03.1686
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 411cd746-5d6e-41c0-c242-08da53c90330
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[12.22.5.238];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: BN8NAM11FT008.eop-nam11.prod.protection.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR12MB4371
+X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FORGED_SPF_HELO,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Mon, Jun 20, 2022 at 01:03:17AM -0300, Jason Gunthorpe wrote:
+> On Fri, Jun 17, 2022 at 04:07:20PM -0700, Nicolin Chen wrote:
+> 
+> > > > > > +     vfio_iommu_aper_expand(iommu, &iova_copy);
+> > > > >
+> > > > > but now it's done for every group detach. The aperture is decided
+> > > > > by domain geometry which is not affected by attached groups.
+> > > >
+> > > > Yea, I've noticed this part. Actually Jason did this change for
+> > > > simplicity, and I think it'd be safe to do so?
+> > > 
+> > > Perhaps detach_destroy() can return a Boolean to indicate whether
+> > > a domain is destroyed.
+> > 
+> > It could be a solution but doesn't feel that common for a clean
+> > function to have a return value indicating a special case. Maybe
+> > passing in "&domain" so that we can check if it's NULL after?
+> 
+> It is harmless to do every time, it just burns a few CPU cycles on a
+> slow path. We don't need complexity to optmize it.
 
---uzxszqlixhftbuhf
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+OK. I will keep it simple then. If Kevin or other has a further
+objection, please let us know.
 
-On Tue, Jun 21, 2022 at 08:57:00PM +0100, Jon Hunter wrote:
-> Some of our Tegra boards are not booting with the current -next and
-> bisect is pointing to this commit. Looking at the boot log I am
-> seeing the following panic ...
->=20
-> [    2.097048] 8<--- cut here ---
-> [    2.097053] Unable to handle kernel paging request at virtual address =
-c216c810
-> [    2.097060] [c216c810] *pgd=3D0201141e(bad)
-> [    2.097079] Internal error: Oops: 8000000d [#1] SMP ARM
-> [    2.097088] Modules linked in:
-> [    2.097097] CPU: 1 PID: 1 Comm: swapper/0 Not tainted 5.19.0-rc3-next-=
-20220621-g34d1d36073ea #1
-> [    2.097107] Hardware name: NVIDIA Tegra SoC (Flattened Device Tree)
-> [    2.097113] PC is at 0xc216c810
-> [    2.097123] LR is at devm_clk_release+0x18/0x24
-> [    2.097150] pc : [<c216c810>]    lr : [<c088cb04>]    psr: a0000013
-> [    2.097155] sp : f080dde8  ip : 000006cf  fp : c18d4854
-> [    2.097161] r10: c1501850  r9 : c1a04d10  r8 : c1c4efa0
-> [    2.097166] r7 : c216c810  r6 : f080de1c  r5 : c2737680  r4 : c26a9680
-> [    2.097172] r3 : c216c810  r2 : 00000000  r1 : c2737840  r0 : c2082840
-> [    2.097179] Flags: NzCv  IRQs on  FIQs on  Mode SVC_32  ISA ARM  Segme=
-nt none
-> [    2.097187] Control: 10c5387d  Table: 0020404a  DAC: 00000051
-> [    2.097191] Register r0 information: slab kmalloc-192 start c2082840 p=
-ointer offset 0 size 192
-> [    2.097216] Register r1 information: slab kmalloc-128 start c2737800 p=
-ointer offset 64 size 128
-> [    2.097236] Register r2 information: NULL pointer
-> [    2.097244] Register r3 information: slab kmalloc-1k start c216c800 po=
-inter offset 16 size 1024
-> [    2.097263] Register r4 information: slab kmalloc-64 start c26a9680 po=
-inter offset 0 size 64
-> [    2.097282] Register r5 information: slab kmalloc-128 start c2737680 p=
-ointer offset 0 size 128
-> [    2.097301] Register r6 information: 2-page vmalloc region starting at=
- 0xf080c000 allocated at kernel_clone+0xb4/0x3e8
-> [    2.097321] Register r7 information: slab kmalloc-1k start c216c800 po=
-inter offset 16 size 1024
-> [    2.097341] Register r8 information: non-slab/vmalloc memory
-> [    2.097348] Register r9 information: non-slab/vmalloc memory
-> [    2.097355] Register r10 information: non-slab/vmalloc memory
-> [    2.097362] Register r11 information: non-slab/vmalloc memory
-> [    2.097369] Register r12 information: non-paged memory
-> [    2.097375] Process swapper/0 (pid: 1, stack limit =3D 0x(ptrval))
-> [    2.097384] Stack: (0xf080dde8 to 0xf080e000)
-> [    2.097394] dde0:                   c2737800 c0a72d38 c18d4854 c053049=
-0 c216c810 f080de1c
-> [    2.097404] de00: c2120000 00000005 c216c9c0 80000013 0000017e c0a73d6=
-8 00000008 c2629e00
-> [    2.097413] de20: c2737880 5640e141 c216c810 c216c810 00000205 c1c09dd=
-4 00000000 c27375b8
-> [    2.097422] de40: c2091700 c0a6e9a0 c216c810 c0a6f288 c216c810 c1c09dd=
-4 c216c810 00000000
-> [    2.097430] de60: c27375b8 c0a6f3c0 c1caa8e0 c216c810 c216c810 c0a6f45=
-0 00000000 c216c810
-> [    2.097439] de80: c1c09dd4 c2120000 c27375b8 c0a6f850 00000000 c1c09dd=
-4 c0a6f7c4 c0a6d4c0
-> [    2.097447] dea0: 00000000 c2091458 c2286434 5640e141 c1be7f08 c1c09dd=
-4 c2737580 c1be7f08
-> [    2.097455] dec0: 00000000 c0a6e484 c1615714 c1be7c50 c1c09dd4 c212000=
-0 c189a99c 00000000
-> [    2.097464] dee0: c2120000 c0a701a0 c1c494e0 c2120000 c189a99c c030214=
-4 0000017d c0364438
-> [    2.097472] df00: c16da8bc c1626700 00000000 00000006 00000006 c16554c=
-8 00000000 c2120000
-> [    2.097480] df20: c15105bc c14f9778 c2091700 c20917d9 00000000 5640e14=
-1 c1a88930 c16da8bc
-> [    2.097488] df40: c1c59000 5640e141 c16da8bc c1c59000 c1953b4c c18d483=
-4 00000007 c1801340
-> [    2.097497] df60: 00000006 00000006 00000000 c18004dc c2120000 c18004d=
-c f080df74 c1a04cc0
-> [    2.097505] df80: c106bbf0 00000000 00000000 00000000 00000000 0000000=
-0 00000000 c106bc08
-> [    2.097513] dfa0: 00000000 c106bbf0 00000000 c03001a8 00000000 0000000=
-0 00000000 00000000
-> [    2.097520] dfc0: 00000000 00000000 00000000 00000000 00000000 0000000=
-0 00000000 00000000
-> [    2.097528] dfe0: 00000000 00000000 00000000 00000000 00000013 0000000=
-0 00000000 00000000
-> [    2.097542]  devm_clk_release from release_nodes+0x58/0xc0
-> [    2.097575]  release_nodes from devres_release_all+0x7c/0xc0
-> [    2.097596]  devres_release_all from device_unbind_cleanup+0xc/0x60
-> [    2.097626]  device_unbind_cleanup from really_probe+0x1f4/0x2a8
-> [    2.097650]  really_probe from __driver_probe_device+0x84/0xe4
-> [    2.097673]  __driver_probe_device from driver_probe_device+0x30/0xd0
-> [    2.097696]  driver_probe_device from __driver_attach+0x8c/0xf0
-> [    2.097713]  __driver_attach from bus_for_each_dev+0x70/0xb0
-> [    2.097729]  bus_for_each_dev from bus_add_driver+0x168/0x1f4
-> [    2.097749]  bus_add_driver from driver_register+0x7c/0x118
-> [    2.097766]  driver_register from do_one_initcall+0x44/0x1ec
-> [    2.097784]  do_one_initcall from kernel_init_freeable+0x1d4/0x224
-> [    2.097803]  kernel_init_freeable from kernel_init+0x18/0x12c
-> [    2.097820]  kernel_init from ret_from_fork+0x14/0x2c
-> [    2.097831] Exception stack(0xf080dfb0 to 0xf080dff8)
-> [    2.097839] dfa0:                                     00000000 0000000=
-0 00000000 00000000
-> [    2.097847] dfc0: 00000000 00000000 00000000 00000000 00000000 0000000=
-0 00000000 00000000
-> [    2.097854] dfe0: 00000000 00000000 00000000 00000000 00000013 00000000
-> [    2.097862] Code: c2288680 ffffffff 00000000 00000000 (c2288680)
-> [    2.097872] ---[ end trace 0000000000000000 ]---
->=20
->=20
-> Let me know if you have any thoughts.
-
-Yeah, sorry, there is already a fix at
-https://lore.kernel.org/linux-clk/20220620171815.114212-1-u.kleine-koenig@p=
-engutronix.de
-
-(Pro tipp: The commit in next has a Link: footer. If you follow the
-link, you find the thread that was actually applied (i.e. v9) and where
-the fix is also contained.)
-
-@Stephen: It would be a great favour to our testers if you could apply
-the fix ...
-
-Best regards
-Uwe
-
---=20
-Pengutronix e.K.                           | Uwe Kleine-K=F6nig            |
-Industrial Linux Solutions                 | https://www.pengutronix.de/ |
-
---uzxszqlixhftbuhf
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEfnIqFpAYrP8+dKQLwfwUeK3K7AkFAmKyLscACgkQwfwUeK3K
-7AnhOwgAoJ7+WVNat5QtQxPAov0GgQ/NeeLpTVS16heM9RAVaRuezJxOr7k7z/AN
-DSNd0SEFBPDE8PkdUrAbIY607zkPkKaLrKQFpjhDciHceMDazKEoKdALu/lMM409
-sCiY8s2KTYhosNBXTORdQ2ItBXOWazKLe6M+WWiIWu9Sa83Ulagv5CifqiCvUBrc
-g1x7kXPbQDMorRwwT+nuQ5Ph03wEef0UMGyS/20yU966XafejCZCkfTALLJWiGzt
-NRO6lO+0NlxhEY8ccLGw+Lu3svkIMOX08s829MM0IF3GwWi5ktZmZ/QN291tKRlT
-xZbpiGeH4vZPdETbfxbl1w7F+4JFmQ==
-=qUR3
------END PGP SIGNATURE-----
-
---uzxszqlixhftbuhf--
+Thanks
+Nic
