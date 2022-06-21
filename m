@@ -2,63 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DBF9B5530C4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jun 2022 13:23:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1FA125531A1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jun 2022 14:06:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349237AbiFULXn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Jun 2022 07:23:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38298 "EHLO
+        id S1349197AbiFUMGr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Jun 2022 08:06:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46328 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349938AbiFULXg (ORCPT
+        with ESMTP id S1348773AbiFUMGr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Jun 2022 07:23:36 -0400
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFCC038A4;
-        Tue, 21 Jun 2022 04:23:35 -0700 (PDT)
-Received: by mail-ed1-x532.google.com with SMTP id es26so17201750edb.4;
-        Tue, 21 Jun 2022 04:23:35 -0700 (PDT)
+        Tue, 21 Jun 2022 08:06:47 -0400
+Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C0C92B24C;
+        Tue, 21 Jun 2022 05:06:46 -0700 (PDT)
+Received: by mail-ej1-x636.google.com with SMTP id h23so26978178ejj.12;
+        Tue, 21 Jun 2022 05:06:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=7QvLRXiq8Bnt0eVtULkdQpLTyiJt3SvSjod+5Ee1wHE=;
-        b=HMxM/aSlAuvaJsppaX7ddSubVt1WRfhY6JdmStM/lact7dWcIhwpBX7cz+FHKMJm6t
-         2HupTlKSz0UHEjqwnyxZx1HOJvnoyAivxWsEi8kTIgPsxu1mTbRYGAeE+twEt/wBycAi
-         m5+u5LKdDaif2kZxbUni7KGQKiXxONlXDlYtafEwt0gNn743reBmGHcJEmwoNig4EL1E
-         OttNdoPwbVgtBrnRtgy0NSUxQamjNPKlTrSyI8FeVJrVEpYglXBfg07kVMwnNMGj8xa5
-         DWzkvQHd5JFDkfY807CwqOe+f0w2VsRZHtJrh+eBTSxHDqKBljSoq6QPqOO2pg3r3Ii+
-         2DCw==
+        bh=uIvJMdQn/cBqnDvtzgtOjH4SsP+GQUhFYvsFWjOXHDM=;
+        b=H4kXQ+xTTa/Hyrvi3hVFraWBPj3KNV91Iwe4g19INSDVkUZoBtwsfhYckycQaeHeUA
+         rhDkA1kCmys5yWumgOaVBhNG7xoVxhWi1n4tJSxW5SHcnuRwqOj66mR3YqWcE5zJ+Xy9
+         bnnVZZwiwI94wCBYxCxsrEUosmdZOSspJyjFLIfyJB4w+1UloI93LzyrcYFCXx8QV7qd
+         WaNkPb51ohVK3enSaP+7T+yrs+BgoljkXhUGRad5/j738lWnU20PwXVRXBm80M/F0leM
+         5B3CULjnt2390435dTSUKcxenn+IY90G/dJa6D9hUb5O1KOZbreX2oQEX+kiCbbAcy+U
+         GZvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=7QvLRXiq8Bnt0eVtULkdQpLTyiJt3SvSjod+5Ee1wHE=;
-        b=yPHTSrdhiapBHqipRWmZGQhW923uPCq7wwF9VggDMqXhrrvmrg9ETVyDZMZGhlS9qD
-         KeIFJHXc7cT/ZuxJyZ/hb2jst9Mo9M753qZZCOGPZpEdCeIykwMVt4Zi8i/IaNdYTH67
-         bFyzykRHbdQSfQ/y1y5AxHrFRkpUc15frD2GUsL8ZDjcKXdLE3T25I6JnkEDQ49ssuYo
-         DcnurzBwLwRGqBPdRtFUEcbOmF/mrfrYjs3GJerkr2JYUj5fxJJgPyY12esuMK+SNpaD
-         T2nx6cG2CKC2C2FVKp9F+JnvBPHF5rit1/vmSuWUfQRDFXU3WAwhzNS/SEufIkCXMzbt
-         D4rg==
-X-Gm-Message-State: AJIora/KPA0CNtLffWlacGOMQ3SVnFYpvPUERNBvsFybBFVWjkeLJP8X
-        hpfRJslqL+jH0oNfoQAr3Ik=
-X-Google-Smtp-Source: AGRyM1sL1ZkhLrEB/tV8w83l9vV8GuWECpMuHhwAq6ozTvxgrj1WCBu30JWPo8tUpOaWLX9Cpm7q7g==
-X-Received: by 2002:a05:6402:5388:b0:435:71b:5d44 with SMTP id ew8-20020a056402538800b00435071b5d44mr34535569edb.364.1655810614370;
-        Tue, 21 Jun 2022 04:23:34 -0700 (PDT)
+        bh=uIvJMdQn/cBqnDvtzgtOjH4SsP+GQUhFYvsFWjOXHDM=;
+        b=xD8sB97tJ6yA9e4nbLkNfL0NWsZXXw+Upw4p/r1QImw1oYBrX2AoNS6080P49scIKd
+         8aRlxki9eEp5uGtd9qIVDfJsAUE8jC6aLklMrPHErDCwvuVsLIBN19oic5M1loQRVwm/
+         +TxhSSL2bcxE0opIFgJVeZV9qyang28zyi8mhVbZcrtyRLb96kZraos6sNrxPfbQ/VXV
+         SUXN59dnQlSO3jFaxIPDTR4u8vcUCcI/PZq6pjb67YK9kqJ2HUY7Zr8Xh9jE5rINUMtB
+         h9TjgJz32SyH5r1jJ0uwubm3HpYkZxPpZ3QmXAA/jFKMZ0jaMIU/LMOFXgSOtlO/3znZ
+         kBkg==
+X-Gm-Message-State: AJIora8JWtiZoLW0F/ppH2CxN/vjDqTmHai3I5iB6Jj/6cuss7DvvZEb
+        iVBIFdczVDDM+G1VrrTLI0A=
+X-Google-Smtp-Source: AGRyM1so+nJD+Zkt6+BQ3wIJ/ZbCHw1Klgyeljh6VxhoKuOnqeWAvQtHFPAeC53G98CI38TjB5TqmA==
+X-Received: by 2002:a17:907:1b0d:b0:6ff:22a1:d58a with SMTP id mp13-20020a1709071b0d00b006ff22a1d58amr26604955ejc.293.1655813204987;
+        Tue, 21 Jun 2022 05:06:44 -0700 (PDT)
 Received: from fedora.robimarko.hr (dh207-99-158.xnet.hr. [88.207.99.158])
-        by smtp.googlemail.com with ESMTPSA id a12-20020a50858c000000b0042617ba638esm12394840edh.24.2022.06.21.04.23.32
+        by smtp.googlemail.com with ESMTPSA id b17-20020a1709063cb100b0070b7875aa6asm4798424ejh.166.2022.06.21.05.06.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Jun 2022 04:23:33 -0700 (PDT)
+        Tue, 21 Jun 2022 05:06:44 -0700 (PDT)
 From:   Robert Marko <robimarko@gmail.com>
-To:     svarbanov@mm-sol.com, agross@kernel.org,
-        bjorn.andersson@linaro.org, lpieralisi@kernel.org, robh@kernel.org,
-        kw@linux.com, bhelgaas@google.com, p.zabel@pengutronix.de,
-        jingoohan1@gmail.com, linux-pci@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        johan+linaro@kernel.org
+To:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 Cc:     Robert Marko <robimarko@gmail.com>
-Subject: [PATCH v2] PCI: qcom: fix IPQ8074 Gen2 support
-Date:   Tue, 21 Jun 2022 13:23:30 +0200
-Message-Id: <20220621112330.448754-1-robimarko@gmail.com>
+Subject: [PATCH] arm64: dts: ipq8074: fix NAND node name
+Date:   Tue, 21 Jun 2022 14:06:42 +0200
+Message-Id: <20220621120642.518575-1-robimarko@gmail.com>
 X-Mailer: git-send-email 2.36.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -72,102 +69,27 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-IPQ8074 has one Gen2 and one Gen3 port, currently the Gen2 port will
-cause the system to hang as its using DBI registers in the .init
-and those are only accesible after phy_power_on().
+Per schema it should be nand-controller@79b0000 instead of nand@79b0000.
+Fix it to match nand-controller.yaml requirements.
 
-So solve this by splitting the DBI read/writes to .post_init.
-
-Fixes: a0fd361db8e5 ("PCI: dwc: Move "dbi", "dbi2", and "addr_space" resource setup into common code")
 Signed-off-by: Robert Marko <robimarko@gmail.com>
 ---
-Changes in v2:
-* Rebase onto next-20220621
----
- drivers/pci/controller/dwc/pcie-qcom.c | 48 +++++++++++++++-----------
- 1 file changed, 28 insertions(+), 20 deletions(-)
+ arch/arm64/boot/dts/qcom/ipq8074.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-index 51fed83484af..da6d79d61397 100644
---- a/drivers/pci/controller/dwc/pcie-qcom.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom.c
-@@ -1061,9 +1061,7 @@ static int qcom_pcie_init_2_3_3(struct qcom_pcie *pcie)
- 	struct qcom_pcie_resources_2_3_3 *res = &pcie->res.v2_3_3;
- 	struct dw_pcie *pci = pcie->pci;
- 	struct device *dev = pci->dev;
--	u16 offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
- 	int i, ret;
--	u32 val;
+diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
+index 34f79860b3c5..7e683aec3ab3 100644
+--- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
+@@ -736,7 +736,7 @@ qpic_bam: dma-controller@7984000 {
+ 			status = "disabled";
+ 		};
  
- 	for (i = 0; i < ARRAY_SIZE(res->rst); i++) {
- 		ret = reset_control_assert(res->rst[i]);
-@@ -1120,6 +1118,33 @@ static int qcom_pcie_init_2_3_3(struct qcom_pcie *pcie)
- 		goto err_clk_aux;
- 	}
- 
-+	return 0;
-+
-+err_clk_aux:
-+	clk_disable_unprepare(res->ahb_clk);
-+err_clk_ahb:
-+	clk_disable_unprepare(res->axi_s_clk);
-+err_clk_axi_s:
-+	clk_disable_unprepare(res->axi_m_clk);
-+err_clk_axi_m:
-+	clk_disable_unprepare(res->iface);
-+err_clk_iface:
-+	/*
-+	 * Not checking for failure, will anyway return
-+	 * the original failure in 'ret'.
-+	 */
-+	for (i = 0; i < ARRAY_SIZE(res->rst); i++)
-+		reset_control_assert(res->rst[i]);
-+
-+	return ret;
-+}
-+
-+static int qcom_pcie_post_init_2_3_3(struct qcom_pcie *pcie)
-+{
-+	struct dw_pcie *pci = pcie->pci;
-+	u16 offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
-+	u32 val;
-+
- 	writel(SLV_ADDR_SPACE_SZ,
- 		pcie->parf + PCIE20_v3_PARF_SLV_ADDR_SPACE_SIZE);
- 
-@@ -1147,24 +1172,6 @@ static int qcom_pcie_init_2_3_3(struct qcom_pcie *pcie)
- 		PCI_EXP_DEVCTL2);
- 
- 	return 0;
--
--err_clk_aux:
--	clk_disable_unprepare(res->ahb_clk);
--err_clk_ahb:
--	clk_disable_unprepare(res->axi_s_clk);
--err_clk_axi_s:
--	clk_disable_unprepare(res->axi_m_clk);
--err_clk_axi_m:
--	clk_disable_unprepare(res->iface);
--err_clk_iface:
--	/*
--	 * Not checking for failure, will anyway return
--	 * the original failure in 'ret'.
--	 */
--	for (i = 0; i < ARRAY_SIZE(res->rst); i++)
--		reset_control_assert(res->rst[i]);
--
--	return ret;
- }
- 
- static int qcom_pcie_get_resources_2_7_0(struct qcom_pcie *pcie)
-@@ -1598,6 +1605,7 @@ static const struct qcom_pcie_ops ops_2_4_0 = {
- static const struct qcom_pcie_ops ops_2_3_3 = {
- 	.get_resources = qcom_pcie_get_resources_2_3_3,
- 	.init = qcom_pcie_init_2_3_3,
-+	.post_init = qcom_pcie_post_init_2_3_3,
- 	.deinit = qcom_pcie_deinit_2_3_3,
- 	.ltssm_enable = qcom_pcie_2_3_2_ltssm_enable,
- };
+-		qpic_nand: nand@79b0000 {
++		qpic_nand: nand-controller@79b0000 {
+ 			compatible = "qcom,ipq8074-nand";
+ 			reg = <0x079b0000 0x10000>;
+ 			#address-cells = <1>;
 -- 
 2.36.1
 
