@@ -2,198 +2,356 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BDD38552B03
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jun 2022 08:35:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1FB89552B0A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jun 2022 08:36:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345514AbiFUGfw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Jun 2022 02:35:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50782 "EHLO
+        id S235008AbiFUGgz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Jun 2022 02:36:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51474 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345379AbiFUGfv (ORCPT
+        with ESMTP id S1344171AbiFUGgy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Jun 2022 02:35:51 -0400
-Received: from esa.hc3962-90.iphmx.com (esa.hc3962-90.iphmx.com [216.71.142.165])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A03514016;
-        Mon, 20 Jun 2022 23:35:50 -0700 (PDT)
+        Tue, 21 Jun 2022 02:36:54 -0400
+Received: from mail-qv1-xf2f.google.com (mail-qv1-xf2f.google.com [IPv6:2607:f8b0:4864:20::f2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7FD61A385
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jun 2022 23:36:52 -0700 (PDT)
+Received: by mail-qv1-xf2f.google.com with SMTP id cu16so18416367qvb.7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jun 2022 23:36:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qccesdkim1;
-  t=1655793349; x=1656398149;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=Olgr2CImIPeQDsMuNDy8nGManjqcUHqUzWaTUOyNLSA=;
-  b=j9LcM087rC+fk8N1yU/IuBlxbT7ANnBiR/XlSiukiQGubGHv56R67W6W
-   fzOAa1N+YEM4o9hVowsxgxHTS9pC+//Jk2osUKv1RWDZCgtW2PavePvvJ
-   32VKqGUMstUqK2JM09zJabmNYO+oaQZ1XcScCWJ00eUV1By4fWfL2hr/c
-   o=;
-Received: from mail-co1nam11lp2171.outbound.protection.outlook.com (HELO NAM11-CO1-obe.outbound.protection.outlook.com) ([104.47.56.171])
-  by ob1.hc3962-90.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Jun 2022 06:35:47 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=NFlfR0dWOcnoXsGvu0G5kH5ZnZIm6szDnDPr4mJKgmBNWBqPxNdOHvZyk3guq9h1Yb+71bPbviRQuRxzv3PK0aPWDtPoR73SUz0UVl8LU1l0ukIFPvsQHH071+gXJ8xPBF3jZz/eqxfaZcNop5HPhnr6QyvFSNT6/26NUIi2p8MmOJG87S27v3xV65q/hB7NOFkz50t8pmrTyMfx4pqz9p0LBzce+eoG5lgB199g55Hb1s6GcxqGaL+jE9lvpugP5g3L+7G8VLMh/9rH7QFHdgNvnO7t9/EJRhsKnx3k6vBxuEWBhp2ST/T3BTF2SrMVToKFCKVm3tgGfS1ve5Kolg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Olgr2CImIPeQDsMuNDy8nGManjqcUHqUzWaTUOyNLSA=;
- b=jTvjzWCliimb3O9Afq5u3K96eI27qFrBzU8r0DFQtmIGgFNQYPUK5Ws6+zKdlSx9T7F/OebE3J5u6zlOWr8XhjKan94274sZsYfKr1GxHMUsAYGxSkI+2ro2mo7Oz2EKSRN8dqMh2yvtHKtRgA1FJ0UErsWv/eU0Ous/reuX2ZQeBD/cbojjx1KHDxtsIMV9ToupbGNwgYpOywgUqrov4M6uyGrKgEL7VYY+6J23RRJR6EhuwMLTIEu0hCqDwnMJk4kxbOJBIB5lfT1QDbyGu8q1JpFWQ7R4ChhVq6jr36F1d1xTzz72402P+iqQmh6OmJjsyvO0tjd4kji65oHBaQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=quicinc.com; dmarc=pass action=none header.from=quicinc.com;
- dkim=pass header.d=quicinc.com; arc=none
-Received: from BN0PR02MB7950.namprd02.prod.outlook.com (2603:10b6:408:168::20)
- by SJ0PR02MB8767.namprd02.prod.outlook.com (2603:10b6:a03:3d3::22) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5353.16; Tue, 21 Jun
- 2022 06:35:41 +0000
-Received: from BN0PR02MB7950.namprd02.prod.outlook.com
- ([fe80::a13d:7d3e:ad78:6656]) by BN0PR02MB7950.namprd02.prod.outlook.com
- ([fe80::a13d:7d3e:ad78:6656%6]) with mapi id 15.20.5353.022; Tue, 21 Jun 2022
- 06:35:41 +0000
-From:   "SURAJ ASHOK MAGAR (Temp) (QUIC)" <quic_smagar@quicinc.com>
-To:     Josh Boyer <jwboyer@kernel.org>,
-        "SURAJ ASHOK MAGAR (Temp) (QUIC)" <quic_smagar@quicinc.com>
-CC:     "linux-firmware@kernel.org" <linux-firmware@kernel.org>,
-        "mka@chromium.org" <mka@chromium.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "linux-bluethooth@vger.kernel.org" <linux-bluethooth@vger.kernel.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "Sai Teja Aluvala (Temp) (QUIC)" <quic_saluvala@quicinc.com>,
-        "Balakrishna Godavarthi (QUIC)" <quic_bgodavar@quicinc.com>,
-        "Atul Dhudase (QUIC)" <quic_adhudase@quicinc.com>
-Subject: RE: qca: Add firmware files for BT chip WCN6750
-Thread-Topic: qca: Add firmware files for BT chip WCN6750
-Thread-Index: AdhpIB6MU+5/g0nCTJqnkH+FPhjNswL7rQCABAqS+nA=
-Date:   Tue, 21 Jun 2022 06:35:40 +0000
-Message-ID: <BN0PR02MB79503A0F37DC142E914EB94CF9B39@BN0PR02MB7950.namprd02.prod.outlook.com>
-References: <BN0PR02MB7950BE0DF597C420F4FAC5ECF9D79@BN0PR02MB7950.namprd02.prod.outlook.com>
- <CA+5PVA7hdmFGEtOa672QVYgaX-Pmv3w+2vexo7-CXqmUabT40Q@mail.gmail.com>
-In-Reply-To: <CA+5PVA7hdmFGEtOa672QVYgaX-Pmv3w+2vexo7-CXqmUabT40Q@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=quicinc.com;
-x-ms-exchange-messagesentrepresentingtype: 1
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 32c3f2c2-d24a-4962-e124-08da535042cf
-x-ms-traffictypediagnostic: SJ0PR02MB8767:EE_
-x-ld-processed: 98e9ba89-e1a1-4e38-9007-8bdabc25de1d,ExtAddr
-x-microsoft-antispam-prvs: <SJ0PR02MB876705626A5852ED523B05B885B39@SJ0PR02MB8767.namprd02.prod.outlook.com>
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: TxboHX9WW8wFNVpz+gLPOXJLUjcqh6c3TRl2XZTqKbVdzMK8gmIzjF7WqfpqMMBrCZPFNTe3dzivHAQ7g9/y9xZdbvyFWgPlkbyhsjpGw0mY7vKs0jleN8N10cafJ7QSKaX3fnP+LdZq83MmrdbMzW0ChHY/x8JinknWYSCcZ2m6U5YsJVjNAJVKxZ+ItlknXS6FKL3TTlP4xyJ0EMZXgI75/hyvqgFh9oycIDnI/CqvGRjIHLNJJZH9ia78jXS9u6vKit3f0sz/XNOEX/YK4ltjpBzQ/VJ79XvlyFjTR2AnvJsh17NCFU07DTmj7liEH9Rs+iEXcnpJF40WKz/wzYr/Ok06CA7JRKZMmj8LJcKGbcpbM2d6pYjoVX6G4E9BjVjj0dj4QCPboRuI29z15PsqbZeHk8urWPUmfdLWsHr7Yjcbvznp8kz/7MlcVou9HRyV1Rl9ELNN7QV9TTwUaIZEW1yIiRJo0T3G6xlB7xhHaEPjsyE+uLmloVOXybdzFYwh8CilpUEdyTbEfGJuLO9RaBJYzn9hhEoGDheewdoW5sAJW7iwUPE/wfOrXGYr09sb6BDSsycZ2bqu3Qsn65eKQ8rtsIhQM096DWeGwitTiYnmGqNaZekmGja0TOFTo8Y3SjzlrdeDgNTdi+nrlcfhyvTxgffkLDtaxqGVpTSCUYD/UExQ+iraGR4jwPuOlZtYs2W3MGJiR26Uge6bDHr+iiZzVisT2sy5IgKeP/gYHBvUbAGHwxO3gOD4mWFwne66Ci+/D6fdwAQl77uvUA==
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BN0PR02MB7950.namprd02.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230016)(4636009)(39860400002)(346002)(136003)(396003)(366004)(376002)(2906002)(186003)(6506007)(55016003)(76116006)(54906003)(316002)(478600001)(4326008)(110136005)(53546011)(26005)(71200400001)(966005)(9686003)(86362001)(122000001)(8936002)(52536014)(66946007)(66556008)(38070700005)(66446008)(107886003)(7696005)(8676002)(5660300002)(83380400001)(38100700002)(66476007)(41300700001)(33656002)(64756008);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?VHViLzYyTkpQdU14M2N6V1ZTNHY2eE9tTkpqWlkrSjNNenJyYVF6N0xPczdq?=
- =?utf-8?B?eEdidkExOCtDaEQ4dXFmZ1BsWVY5Uk4vK0d0L3hPMHJvUG9kdE9COW00NVJ0?=
- =?utf-8?B?VERETDZzVE9sTm55NlVQVTVJaTVLTXNUbXdHdVhRYzRHckdXYUdRVFpudWhs?=
- =?utf-8?B?cStYSGR4bGRFdmk4VEJUTEo4M2tQWTl0a3E5Q1grRTFITkZkaFg1Uy9yYjlH?=
- =?utf-8?B?TUg2dU9tNU5VV0ZWMEtjWm1SOHQwQU5xTlJjampEbG1MSFkxQnZ4UkhoNUV0?=
- =?utf-8?B?SXFGMTRLWW80S0N4eWFodGZDUGRnOHgybVU3SGh5U2R1WWtBYkJqQm9KNlZH?=
- =?utf-8?B?WEppVDJaOEozWXJuRkRrUmxQYU50VW1zcDZmeVZwaFZNOUlqMmU0ZHAycmZX?=
- =?utf-8?B?YkdUNmxFRHh2ekZ3MFdNNkhtUlFERUNzZU9KMHBsbmZ5dnFrL0RoQVM3MUtI?=
- =?utf-8?B?LzdHdkozS2htM1IxK2JKTlFMc2E3UmI3Q2pCRmd2d011WlR4MDgvL2lkMitN?=
- =?utf-8?B?SXhUQVB0RGdycTV1Zm1ZYlBDZ202dW81MzNocHBDTVgzNHB2ays3TDB0cmds?=
- =?utf-8?B?Sm1QWjhQWUNYWGU5RjU3VUd0eEIzOU1OUDVVdTA3bml4OE56SXY3Nk9Cd2RL?=
- =?utf-8?B?VE1MVGVhQXIzdDJuZU9VZmxhdXhzb3dFcndhdlYwSnZtdnBVdVJBSW5DMStR?=
- =?utf-8?B?Z011NHZuYkIyaWpoRjNwQW94RGpLa2xNald0U2FzUHdRTENlRVFPT2ZQR0t3?=
- =?utf-8?B?MkpLeklKS0FoSlhqajhpbVlMNmVFc2txMTZ4N0tmMzJkQnVwV3RBZzhnb01L?=
- =?utf-8?B?bWk5SnFVUWcwbW4vQXltUGd0amM3aVFOaDA4VEthZG8zUWZ6OGEraEY2Y3kz?=
- =?utf-8?B?U3BpaXBXZnRBSnVsd2VKUys1MWRiWVYyRzN3UWFnNWxKSS9NNVluT3dpS1Zl?=
- =?utf-8?B?bTQyMnZFMnlMbDJ5OFJ5aEZiZXhoV0hjbVI2aEtSWVBzMVFvNDJsS2dWampv?=
- =?utf-8?B?Y1lMRENGMjFmZVZwYnhTOFZQcFhtT29ZeEdFK3ZIdE0vTFgzbm1BOGY5aEE4?=
- =?utf-8?B?VjZVaTNmUE5lMVB1YklZUzlXamlNQTdMZDVLUjlaaXEwUmR6TGV4OHNuSjVy?=
- =?utf-8?B?ZWdaRU5EL09Cek84RExNQXNjWWhCZzN5VDd5NC9rNEViRDRLeGEzMXp5aWJq?=
- =?utf-8?B?MWpldExPam44STQ3YTBXdFZyejRCdGdaZGVGK0x3Y0YxK3JsTCtERUhnZnhh?=
- =?utf-8?B?T21GUFdiQ01SOTBJNysrNXJoUzh6aGNtT2ErSUl6bVdDREcvL0NGYk02clcw?=
- =?utf-8?B?am55eWgxSkovbHEyZnI0RHJjYWdlZ0FvTmdxMkdqYS9rblJUVVU5UC9Jelo4?=
- =?utf-8?B?bHNPMzVNSUhnUENIazkxNXByQTVOclB2N1I1ZWFYN0lTL2NJMktUbzdXL3hN?=
- =?utf-8?B?UHVUSCtqY0c1dUJmS09XL2tKRHVQUm9tTitqUUI2WWhhdjU0NVZndk55Mnh1?=
- =?utf-8?B?SVVpNzZUaDFybVlCd0xvSWQxUVdWU2c4M2JtNU54SXNjWUVwTFFFVDVWOU5K?=
- =?utf-8?B?dEs0VWR3RGJSZXUvWlZmN2EyNHB4NG1uVFFURGtGZGJBV3ZBN3JMdHBURTRR?=
- =?utf-8?B?dkYwR3FQUzhQREFJZHV5aE1VM2RvM2V2N2V0b2tUR2M4MzdVK2ZsYTRBNzBY?=
- =?utf-8?B?b1BNMFFqdk1mbk5wTnE4bk5mQjJoaEs1NmhCaUx6UWNmOExMZUdTNGYzWks3?=
- =?utf-8?B?R1haMjRkdVdMcG9kTjBHTi9Xek9ZZ2VZaElzVmZGNGY4cFZaV0xsYmd3S1VN?=
- =?utf-8?B?LzFMcHZRVUc5VXdKTWpBd2tpRURTQ2RZd3FZcVBvWCt2L1phaTlteGMxVVhx?=
- =?utf-8?B?MmFsUXAxKytFRDFMRDVjQnQrYU9hQkI3aE9pRnFBVW03cEFVVmE3TXJGNzZm?=
- =?utf-8?B?dFI2QmNUU0p2L0dFc3RkdTBJd0xsNHBYcW5VMmVUS1RGb3c1RFV6TVZ2VFhG?=
- =?utf-8?B?SjYwUnNRWjd4Vms4VlV5SVR2MXdtb2FIT0c4T29CZ1ArOTVsR0lTamhQemhy?=
- =?utf-8?B?bFZsem5XZ2lWM0lmcUhHeWd4VVJUTUs3bzN4MDc3NWlaSEUwMlU2OE93M0JG?=
- =?utf-8?B?SEJlbkZPVXBQdThyRkprN2hNaDZ5bHRZRGlKSGp5dW0vcEVsT2w3dEpORFJL?=
- =?utf-8?B?YWNGVkZQaVV5cVRqb2h0ZnpOOHFTM1RDQ1lWVjdOK2U4STNLVWc1L2R0eVA0?=
- =?utf-8?B?dmRjNXl6SmNLaEVxWW5IdzBwU2RoWlRaa29PV3NRYktiZXh6cC9kaUVEU2VO?=
- =?utf-8?B?MUQzaktUN1dZaTl1TncxTE1EKzhSVDdoZ2JVMDNUWGs4TEFLQTUwUT09?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=SdYAf0CG4PNu6HaL1R4YWUXvsANAVZ1d3Ff5jO+XX/o=;
+        b=BgyjGi8Kll/nY9iMWbO+yX4P1KrWvK2SXIDlYEwzzNSs2Gy4JRRpX+YPBUur1kpzRn
+         3XW7G/g68fFsPqXFA7XVxjAB2MXJ2moX3X3aZZEPvhkowJzhH6+YXq0G9gsWd4UlYZaf
+         CAkWw3n4EhMQRpMvBGudJ5WvQLDAsGveqxwAOub+NgVo8KdytiMHEwdTAT0tFATTD5OW
+         bOe0d3H8KzFO0kuPZvFsvBwoBZmcBgiHoFHlcJQ/pAVvfK6P0S3UK14MtbPF9NBjQA7E
+         ziX3SrmL6z/YyBZc6xRAiYZC6CGCYjup/bXqMIFudKjVfdpUbCxjxCE+qvpH7VeqesWY
+         Q07A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=SdYAf0CG4PNu6HaL1R4YWUXvsANAVZ1d3Ff5jO+XX/o=;
+        b=y2+3NtPnqbD0aIKYRaBmK7m3h8Ae0ji8pZupFHlgCuaMgr5pA21nG7FP4F9uNQCVPf
+         FyHO4KmdOjdvkz4Tu58HMrdCjMGmnSYIe3t3mYW4wMy6K+inXUkFiVMFFubiyEGVx+5G
+         k5OpmnJj9MWKkJiMj0qUo2p+lpVzDFI0h9LcIOhREytp6X5EUEOUKiy0zbl2nMFAex4P
+         9wcbNdFHp16NISkUbocgM4cv9N6FTUicDlRooOlG6TeR2/MJ1WyU+4pV1+1Ok3kfsgKU
+         eaTBLmdNp7m+gn+awYhpcwyq49aPbXRmEJZ7fi1Sgn03azNyPpoHeLeSxoGKM9MJzSyf
+         LjuA==
+X-Gm-Message-State: AJIora/ncCz+RdLmNBV94soccryC/wHevN1Bs6BZaDHGEIJQJCLjffAy
+        Snmc0Hg92DHrUnG954Ct//V7fB+25tr4Uyg007cBvw==
+X-Google-Smtp-Source: AGRyM1sgvs4T1KdbFI2Xrz2PHWL1lxqs/p7pJoPRU/K6IcKDHFKXdMSnBsogQ4/oyuZ68tf23uUtkph1CYn1/AxiHZs=
+X-Received: by 2002:ad4:5b81:0:b0:465:ded8:780 with SMTP id
+ 1-20020ad45b81000000b00465ded80780mr21900114qvp.119.1655793411659; Mon, 20
+ Jun 2022 23:36:51 -0700 (PDT)
 MIME-Version: 1.0
-X-OriginatorOrg: quicinc.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: BN0PR02MB7950.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 32c3f2c2-d24a-4962-e124-08da535042cf
-X-MS-Exchange-CrossTenant-originalarrivaltime: 21 Jun 2022 06:35:40.9599
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 98e9ba89-e1a1-4e38-9007-8bdabc25de1d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: Z9/EFDNvhQabGvf4yoe2wQEqSKipjl1KXubVorhphHN0x4gvaaWDvB5BB6mISyaCWC2iRF+ERecJZb9mobU71g==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR02MB8767
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_PASS,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+References: <20220621005033.274-1-quic_jesszhan@quicinc.com> <20220621005033.274-4-quic_jesszhan@quicinc.com>
+In-Reply-To: <20220621005033.274-4-quic_jesszhan@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Tue, 21 Jun 2022 09:36:40 +0300
+Message-ID: <CAA8EJpop8=4_2xGrNt0fL4qGjYQK9+0VuQ8nq=OOXVJF7aoauQ@mail.gmail.com>
+Subject: Re: [PATCH v3 4/4] drm/msm/dpu: Add interface support for CRC debugfs
+To:     Jessica Zhang <quic_jesszhan@quicinc.com>
+Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
+        seanpaul@chromium.org, swboyd@chromium.org,
+        quic_aravindh@quicinc.com, quic_abhinavk@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-SGkgSm9zaCwNCg0KWWVzLCBpdCBpcyB1cGRhdGVkLg0KDQpVcGRhdGVkIGZpcm13YXJlIGZpbGVz
-IHdpdGg6DQogICAgQkxFIGF1ZGlvDQogICAgQVNEIGFsZ29yaXRobSBpbXByb3ZlbWVudHMNCiAg
-ICBMUEFQQyByZWxhdGVkIG9wdGltaXphdGlvbnMNCiAgICBMRSBwb3dlciBjb250cm9sIGNoYW5n
-ZXMNCiAgICBBMkRQK0xFIGNvbmN1cnJlbmN5IGltcHJvdmVtZW50cw0KICAgIEVUU0kgcmVsYXRl
-ZCBjaGFuZ2VzIGZvciBRSFMuDQoNClBsZWFzZSBmaW5kIHB1bGwgcmVxdWVzdCBzbmFwc2hvdCBh
-bmQgdXBkYXRlZCBjb21taXQgbWVzc2FnZSBhdmFpbGFibGUgaW4gdGhlIGdpdCByZXBvc2l0b3J5
-Lg0KDQoNCg0KDQpUaGUgZm9sbG93aW5nIGNoYW5nZXMgc2luY2UgY29tbWl0IDI1MWQyOTAwNGZm
-Y2UzNDYyNzc5ZGJkMDgwNzNhMmNkOGRmZDIwODc6DQoNCiAgYW1kZ3B1OiB1cGRhdGUgYmVpZ2Ug
-Z29ieSBmaXJtd2FyZSBmb3IgMjIuMTAgKDIwMjItMDUtMTYgMTU6MjU6MzggLTA0MDApDQoNCmFy
-ZSBhdmFpbGFibGUgaW4gdGhlIGdpdCByZXBvc2l0b3J5IGF0Og0KDQogIGh0dHBzOi8vZ2l0aHVi
-LmNvbS9zdXJhajcxNC9CVC1maXJtd2FyZS5naXQgbWFpbg0KDQpmb3IgeW91IHRvIGZldGNoIGNo
-YW5nZXMgdXAgdG8gOTJmMTA4ODQ1NGY0MDhmYTI5ZjFlY2E5ZjhmOTJjMjA4ODgxYzA5OToNCg0K
-ICAgICAgcWNhOiBVcGRhdGUgZmlybXdhcmUgZmlsZXMgZm9yIEJUIGNoaXAgV0NONjc1MC4gKDIw
-MjItMDYtMjEgMTE6NTY6NDAgKzA1MzApDQoNCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NClN1cmFqIE1hZ2FyICgxKToNCiAg
-ICAgIHFjYTogVXBkYXRlIGZpcm13YXJlIGZpbGVzIGZvciBCVCBjaGlwIFdDTjY3NTAuDQoNCiBx
-Y2EvbXNidGZ3MTEubWJuIHwgQmluIDEyOTM0OCAtPiAxNTU1NjggYnl0ZXMNCiBxY2EvbXNidGZ3
-MTEudGx2IHwgQmluIDExNzEzNiAtPiAxNDMzNTYgYnl0ZXMNCiBxY2EvbXNudjExLmJpbiAgIHwg
-QmluIDU2MzMgLT4gNTgyNyBieXRlcw0KIDMgZmlsZXMgY2hhbmdlZCwgMCBpbnNlcnRpb25zKCsp
-LCAwIGRlbGV0aW9ucygtKQ0KDQoNCg0KDQpSZWdhcmRzLA0KU3VyYWogTWFnYXINCg0KLS0tLS1P
-cmlnaW5hbCBNZXNzYWdlLS0tLS0NCkZyb206IEpvc2ggQm95ZXIgPGp3Ym95ZXJAa2VybmVsLm9y
-Zz4gDQpTZW50OiBUdWVzZGF5LCBNYXkgMzEsIDIwMjIgMTA6MjMgUE0NClRvOiBTVVJBSiBBU0hP
-SyBNQUdBUiAoVGVtcCkgKFFVSUMpIDxxdWljX3NtYWdhckBxdWljaW5jLmNvbT4NCkNjOiBsaW51
-eC1maXJtd2FyZUBrZXJuZWwub3JnOyBta2FAY2hyb21pdW0ub3JnOyBsaW51eC1rZXJuZWxAdmdl
-ci5rZXJuZWwub3JnOyBsaW51eC1ibHVldGhvb3RoQHZnZXIua2VybmVsLm9yZzsgbGludXgtYXJt
-LW1zbUB2Z2VyLmtlcm5lbC5vcmc7IFNhaSBUZWphIEFsdXZhbGEgKFRlbXApIChRVUlDKSA8cXVp
-Y19zYWx1dmFsYUBxdWljaW5jLmNvbT47IEJhbGFrcmlzaG5hIEdvZGF2YXJ0aGkgKFFVSUMpIDxx
-dWljX2Jnb2RhdmFyQHF1aWNpbmMuY29tPjsgQXR1bCBEaHVkYXNlIChRVUlDKSA8cXVpY19hZGh1
-ZGFzZUBxdWljaW5jLmNvbT4NClN1YmplY3Q6IFJlOiBxY2E6IEFkZCBmaXJtd2FyZSBmaWxlcyBm
-b3IgQlQgY2hpcCBXQ042NzUwDQoNCk9uIFR1ZSwgTWF5IDI0LCAyMDIyIGF0IDU6MTIgQU0gU1VS
-QUogQVNIT0sgTUFHQVIgKFRlbXApIChRVUlDKSA8cXVpY19zbWFnYXJAcXVpY2luYy5jb20+IHdy
-b3RlOg0KPg0KPiBIZWxsbyBUZWFtLA0KPg0KPg0KPg0KPiBQbGVhc2UgaW5jbHVkZSBmaXJtd2Fy
-ZSBiaW5zIGZvciBXQ042NzUwLiBDaGFuZ2UgaW5jbHVkZXMgdXBkYXRlZCBUTFYgZmlsZXMgdG8g
-Zml4IEJUIFNTUi4NCj4NCj4gU25hcHNob3Qgb2YgcHVsbCByZXF1ZXN0IGlzIGFzIGJlbG93LCBs
-ZXQgbWUga25vdyBpZiBhbnl0aGluZyBpcyBtaXNzaW5nLg0KPg0KPg0KPiBUaGUgZm9sbG93aW5n
-IGNoYW5nZXMgc2luY2UgY29tbWl0IDI1MWQyOTAwNGZmY2UzNDYyNzc5ZGJkMDgwNzNhMmNkOGRm
-ZDIwODc6DQo+DQo+ICAgYW1kZ3B1OiB1cGRhdGUgYmVpZ2UgZ29ieSBmaXJtd2FyZSBmb3IgMjIu
-MTAgKDIwMjItMDUtMTYgMTU6MjU6MzggDQo+IC0wNDAwKQ0KPg0KPiBhcmUgYXZhaWxhYmxlIGlu
-IHRoZSBnaXQgcmVwb3NpdG9yeSBhdDoNCj4NCj4gICBodHRwczovL2dpdGh1Yi5jb20vc3VyYWo3
-MTQvQlQtZmlybXdhcmUuZ2l0IG1haW4NCj4NCj4gZm9yIHlvdSB0byBmZXRjaCBjaGFuZ2VzIHVw
-IHRvIGRjMTMyMTNlMzdjZjQ5YmM4OGUwMjRiMzdhMjNlMzlkMjJiM2Q1ZmE6DQo+DQo+ICAgICAg
-IHFjYTogQWRkIGZpcm13YXJlIGZpbGVzIGZvciBCVCBjaGlwIFdDTjY3NTAuICAgICBUaGlzIGNv
-bW1pdCB3aWxsIGFkZCByZXF1aXJlZCBmaXJtd2FyZSBmaWxlcyBmb3IgV0NONjc1MC4gKDIwMjIt
-MDUtMTcgMTU6NDY6MDAgKzA1MzApDQoNClRoZXNlIGFscmVhZHkgZXhpc3QuICBTbyB0aGV5IGFy
-ZW4ndCBiZWluZyBhZGRlZCwgdGhleSdyZSBiZWluZyB1cGRhdGVkLiAgSXMgdGhhdCBjb3JyZWN0
-Pw0KDQo+IC0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0NCj4NCj4gU3VyYWogTWFnYXIgKDEpOg0KPg0KPiAgICAgICBxY2E6IEFk
-ZCBmaXJtd2FyZSBmaWxlcyBmb3IgQlQgY2hpcCBXQ042NzUwLg0KPg0KPiAgICAgICBUaGlzIGNv
-bW1pdCB3aWxsIGFkZCByZXF1aXJlZCBmaXJtd2FyZSBmaWxlcyBmb3IgV0NONjc1MC4NCg0KQ2Fu
-IHlvdSBhZGQgc29tZSBpbmZvcm1hdGlvbiBpbiB0aGUgY29tbWl0IG1lc3NhZ2UgYWJvdXQgd2hh
-dCBpcyBiZWluZyB1cGRhdGVkPw0KDQpqb3NoDQo=
+On Tue, 21 Jun 2022 at 03:50, Jessica Zhang <quic_jesszhan@quicinc.com> wrote:
+>
+> Add support for writing CRC values for the interface block to
+> the debugfs by calling the necessary MISR setup/collect methods.
+>
+> Changes since V1:
+> - Set values_cnt to only include phys with backing hw_intf
+> - Loop over all drm_encs connected to crtc
+>
+> Changes since V2:
+> - Remove vblank.h inclusion
+> - Change `pos + i` to `pos + entries`
+> - Initialize values_cnt to 0 for encoder
+> - Change DPU_CRTC_CRC_SOURCE_INTF to DPU_CRTC_CRC_SOURCE_ENCODER (and
+>   "intf" to "enc")
+> - Change dpu_encoder_get_num_phys to dpu_encoder_get_num_hw_intfs
+> - Add checks for setup_misr and collect_misr in
+>   dpu_encoder_get_num_hw_intfs
+>
+> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+> ---
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c    | 50 +++++++++++++++-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h    |  3 +
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 64 +++++++++++++++++++++
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h | 22 +++++++
+>  4 files changed, 138 insertions(+), 1 deletion(-)
+>
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> index 69a1257d3b6d..b4e8a4432796 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> @@ -79,6 +79,8 @@ static enum dpu_crtc_crc_source dpu_crtc_parse_crc_source(const char *src_name)
+>         if (!strcmp(src_name, "auto") ||
+>             !strcmp(src_name, "lm"))
+>                 return DPU_CRTC_CRC_SOURCE_LAYER_MIXER;
+> +       if (!strcmp(src_name, "enc"))
+
+"encoder" unless you have any strong reason (like being compatible
+with other platforms).
+
+> +               return DPU_CRTC_CRC_SOURCE_ENCODER;
+>
+>         return DPU_CRTC_CRC_SOURCE_INVALID;
+>  }
+> @@ -94,8 +96,16 @@ static int dpu_crtc_verify_crc_source(struct drm_crtc *crtc,
+>                 return -EINVAL;
+>         }
+>
+> -       if (source == DPU_CRTC_CRC_SOURCE_LAYER_MIXER)
+> +       if (source == DPU_CRTC_CRC_SOURCE_LAYER_MIXER) {
+>                 *values_cnt = crtc_state->num_mixers;
+> +       } else if (source == DPU_CRTC_CRC_SOURCE_ENCODER) {
+> +               struct drm_encoder *drm_enc;
+> +
+> +               *values_cnt = 0;
+> +
+> +               drm_for_each_encoder_mask(drm_enc, crtc->dev, crtc->state->encoder_mask)
+> +                       *values_cnt += dpu_encoder_get_num_hw_intfs(drm_enc);
+> +       }
+>
+>         return 0;
+>  }
+> @@ -116,6 +126,14 @@ static void dpu_crtc_setup_lm_misr(struct dpu_crtc_state *crtc_state)
+>         }
+>  }
+>
+> +static void dpu_crtc_setup_encoder_misr(struct drm_crtc *crtc)
+> +{
+> +       struct drm_encoder *drm_enc;
+> +
+> +       drm_for_each_encoder_mask(drm_enc, crtc->dev, crtc->state->encoder_mask)
+> +               dpu_encoder_setup_misr(drm_enc);
+> +}
+> +
+>  static int dpu_crtc_set_crc_source(struct drm_crtc *crtc, const char *src_name)
+>  {
+>         enum dpu_crtc_crc_source source = dpu_crtc_parse_crc_source(src_name);
+> @@ -164,6 +182,8 @@ static int dpu_crtc_set_crc_source(struct drm_crtc *crtc, const char *src_name)
+>
+>         if (source == DPU_CRTC_CRC_SOURCE_LAYER_MIXER)
+>                 dpu_crtc_setup_lm_misr(crtc_state);
+> +       else if (source == DPU_CRTC_CRC_SOURCE_ENCODER)
+> +               dpu_crtc_setup_encoder_misr(crtc);
+>         else
+>                 ret = -EINVAL;
+>
+> @@ -212,6 +232,28 @@ static int dpu_crtc_get_lm_crc(struct drm_crtc *crtc,
+>                         drm_crtc_accurate_vblank_count(crtc), crcs);
+>  }
+>
+> +static int dpu_crtc_get_encoder_crc(struct drm_crtc *crtc, u32 *crcs)
+> +{
+> +       struct drm_encoder *drm_enc;
+> +       int rc, pos = 0;
+> +
+
+Extra empty line.
+
+> +
+> +       drm_for_each_encoder_mask(drm_enc, crtc->dev, crtc->state->encoder_mask) {
+> +               rc = dpu_encoder_get_crc(drm_enc, crcs, pos);
+> +               if (rc < 0) {
+> +                       if (rc != -ENODATA)
+> +                               DRM_DEBUG_DRIVER("MISR read failed\n");
+> +
+> +                       return rc;
+> +               }
+> +
+> +               pos += rc;
+> +       }
+> +
+> +       return drm_crtc_add_crc_entry(crtc, true,
+> +                       drm_crtc_accurate_vblank_count(crtc), crcs);
+> +}
+> +
+>  static int dpu_crtc_get_crc(struct drm_crtc *crtc)
+>  {
+>         struct dpu_crtc_state *crtc_state = to_dpu_crtc_state(crtc->state);
+> @@ -226,6 +268,12 @@ static int dpu_crtc_get_crc(struct drm_crtc *crtc)
+>         if (crtc_state->crc_source == DPU_CRTC_CRC_SOURCE_LAYER_MIXER) {
+>                 BUILD_BUG_ON(ARRAY_SIZE(crcs) < ARRAY_SIZE(crtc_state->mixers));
+>                 return dpu_crtc_get_lm_crc(crtc, crtc_state, crcs);
+> +       } else if (crtc_state->crc_source == DPU_CRTC_CRC_SOURCE_ENCODER) {
+> +               if (ARRAY_SIZE(crcs) < INTF_MAX)
+> +                       DPU_ERROR("crcs array of size %ld less than %d\n",
+> +                                       ARRAY_SIZE(crcs), INTF_MAX);
+
+Ok. With the crcs array being local you don't have to preallocate it
+here and pass it as an argument.
+Just declare it in the dpu_crtc_get_encoder_crc(). Then you can
+allocate it as `u32 crcs[INTF_MAX]` and remove the check.
+
+> +
+> +               return dpu_crtc_get_encoder_crc(crtc, crcs);
+>         }
+>
+>         return 0;
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
+> index aa897ec28ad3..b49cf8ae126f 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
+> @@ -1,5 +1,6 @@
+>  /* SPDX-License-Identifier: GPL-2.0-only */
+>  /*
+> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
+>   * Copyright (c) 2015-2021 The Linux Foundation. All rights reserved.
+>   * Copyright (C) 2013 Red Hat
+>   * Author: Rob Clark <robdclark@gmail.com>
+> @@ -78,11 +79,13 @@ struct dpu_crtc_smmu_state_data {
+>   * enum dpu_crtc_crc_source: CRC source
+>   * @DPU_CRTC_CRC_SOURCE_NONE: no source set
+>   * @DPU_CRTC_CRC_SOURCE_LAYER_MIXER: CRC in layer mixer
+> + * @DPU_CRTC_CRC_SOURCE_ENCODER: CRC in encoder
+>   * @DPU_CRTC_CRC_SOURCE_INVALID: Invalid source
+>   */
+>  enum dpu_crtc_crc_source {
+>         DPU_CRTC_CRC_SOURCE_NONE = 0,
+>         DPU_CRTC_CRC_SOURCE_LAYER_MIXER,
+> +       DPU_CRTC_CRC_SOURCE_ENCODER,
+>         DPU_CRTC_CRC_SOURCE_MAX,
+>         DPU_CRTC_CRC_SOURCE_INVALID = -1
+>  };
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> index 52516eb20cb8..a8f841180383 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> @@ -225,6 +225,70 @@ bool dpu_encoder_is_widebus_enabled(const struct drm_encoder *drm_enc)
+>         return dpu_enc->wide_bus_en;
+>  }
+>
+> +int dpu_encoder_get_num_hw_intfs(const struct drm_encoder *drm_enc)
+
+dpu_encoder_get_crc_values_cnt(), please.
+
+> +{
+> +       struct dpu_encoder_virt *dpu_enc;
+> +       int i, num_intf = 0;
+> +
+> +       dpu_enc = to_dpu_encoder_virt(drm_enc);
+> +
+> +       for (i = 0; i < dpu_enc->num_phys_encs; i++) {
+> +               struct dpu_encoder_phys *phys = dpu_enc->phys_encs[i];
+> +
+> +               if (phys->hw_intf && phys->hw_intf->ops.setup_misr
+> +                               && phys->hw_intf->ops.collect_misr)
+> +                       num_intf++;
+> +       }
+> +
+> +       return num_intf;
+> +}
+> +
+> +void dpu_encoder_setup_misr(const struct drm_encoder *drm_enc)
+> +{
+> +       struct dpu_encoder_virt *dpu_enc;
+> +
+> +       int i;
+> +
+> +       dpu_enc = to_dpu_encoder_virt(drm_enc);
+> +
+> +       for (i = 0; i < dpu_enc->num_phys_encs; i++) {
+> +               struct dpu_encoder_phys *phys = dpu_enc->phys_encs[i];
+> +
+> +               if (!phys->hw_intf || !phys->hw_intf->ops.setup_misr)
+> +                       continue;
+> +
+> +               phys->hw_intf->ops.setup_misr(phys->hw_intf, true, 1);
+> +       }
+> +}
+> +
+> +int dpu_encoder_get_crc(const struct drm_encoder *drm_enc, u32 *crcs, int pos)
+> +{
+> +       struct dpu_encoder_virt *dpu_enc;
+> +
+> +       int i, rc = 0, entries_added = 0;
+> +
+> +       if (!drm_enc->crtc) {
+> +               DRM_ERROR("no crtc found for encoder %d\n", drm_enc->index);
+> +               return -EINVAL;
+> +       }
+> +
+> +       dpu_enc = to_dpu_encoder_virt(drm_enc);
+> +
+> +       for (i = 0; i < dpu_enc->num_phys_encs; i++) {
+> +               struct dpu_encoder_phys *phys = dpu_enc->phys_encs[i];
+> +
+> +               if (!phys->hw_intf || !phys->hw_intf->ops.collect_misr)
+> +                       continue;
+> +
+> +               rc = phys->hw_intf->ops.collect_misr(phys->hw_intf, &crcs[pos + entries_added]);
+> +               if (rc)
+> +                       return rc;
+> +               entries_added++;
+> +       }
+> +
+> +       return entries_added;
+> +}
+> +
+>  static void _dpu_encoder_setup_dither(struct dpu_hw_pingpong *hw_pp, unsigned bpc)
+>  {
+>         struct dpu_hw_dither_cfg dither_cfg = { 0 };
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
+> index 781d41c91994..749e0144d2de 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
+> @@ -1,5 +1,6 @@
+>  /* SPDX-License-Identifier: GPL-2.0-only */
+>  /*
+> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
+>   * Copyright (c) 2015-2018, The Linux Foundation. All rights reserved.
+>   * Copyright (C) 2013 Red Hat
+>   * Author: Rob Clark <robdclark@gmail.com>
+> @@ -174,6 +175,27 @@ int dpu_encoder_get_vsync_count(struct drm_encoder *drm_enc);
+>
+>  bool dpu_encoder_is_widebus_enabled(const struct drm_encoder *drm_enc);
+>
+> +/**
+> + * dpu_encoder_get_num_hw_intfs - get number of physical encoders contained
+> + *     in virtual encoder
+> + * @drm_enc:    Pointer to previously created drm encoder structure
+> + * Returns:     Number of physical encoders for given drm encoder
+> + */
+> +int dpu_encoder_get_num_hw_intfs(const struct drm_encoder *drm_enc);
+> +
+> +/**
+> + * dpu_encoder_setup_misr - enable misr calculations
+> + * @drm_enc:    Pointer to previously created drm encoder structure
+> + */
+> +void dpu_encoder_setup_misr(const struct drm_encoder *drm_encoder);
+> +
+> +/**
+> + * dpu_encoder_get_crc - get the crc value from interface blocks
+> + * @drm_enc:    Pointer to previously created drm encoder structure
+> + * Returns:     0 on success, error otherwise
+> + */
+> +int dpu_encoder_get_crc(const struct drm_encoder *drm_enc, u32 *crcs, int pos);
+> +
+>  /**
+>   * dpu_encoder_use_dsc_merge - returns true if the encoder uses DSC merge topology.
+>   * @drm_enc:    Pointer to previously created drm encoder structure
+> --
+> 2.35.1
+>
+
+
+-- 
+With best wishes
+Dmitry
