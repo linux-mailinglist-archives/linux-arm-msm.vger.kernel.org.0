@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6C1D45539F1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jun 2022 21:00:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8E87B553A02
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jun 2022 21:10:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231897AbiFUTAJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Jun 2022 15:00:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55538 "EHLO
+        id S1352916AbiFUTJg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Jun 2022 15:09:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60204 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245194AbiFUTAG (ORCPT
+        with ESMTP id S1352842AbiFUTJd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Jun 2022 15:00:06 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4EA832A268
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jun 2022 12:00:04 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id t25so23906190lfg.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jun 2022 12:00:04 -0700 (PDT)
+        Tue, 21 Jun 2022 15:09:33 -0400
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7315222A9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jun 2022 12:09:31 -0700 (PDT)
+Received: by mail-lj1-x22a.google.com with SMTP id s10so16554875ljh.12
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jun 2022 12:09:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=6fjMjr211YE9YcIQWwQaRZfIoF2o601X8To7eThZCiA=;
-        b=JC/7niSPsJ0iKH+blG56YnE5G8oObtz7l5leDaLqSh1cPQixTKplCxrdd6G5g0aCag
-         ixPCy7kMe/0pzU2aQ0dSVUnlBbp1lnHQrzXmbQfwZnxVwPyY4r3Elt3DOTISgMjM5l4D
-         c773jMp0cVHVMoQWtthfGuCQX7clEaIhibW59mF2OazXxSZ7IhW8GNCEw3J4IRvE3jJy
-         f3O8GvAkQBucJFFCDfXE4dsUauvHpp4s+Z1Ue5YbYAw7cf5p1pg0uEO1CoiQKxoqR9os
-         ho0sxgdf13ftuAcYlpBffww6hUkLPUTj/zckqHgBQFhZClC94l07Q5bnPIJW62C9Fw90
-         yHTA==
+        bh=N+CKs/MdDNeIXKqg/peSNpt0QR5CtVV30OB0kmctgDo=;
+        b=iVhfwHhIa9Vk3yrDkSkHcZx/O3qpbd2ezkl8qQ4XdCT/Xs3kIzsJcHm3DqCuTVsih8
+         wfVBF8ZzUPz0+jaAyqo7q7yO1PZY6xQN3CIWGoIJy0IkKTmKw2j3wo2Noh4v5vlgbpyz
+         CBeSxZM6LZ8dPVUor1RYuYAUJMXKW6Wp3d1Lnmu9VFbKRlSZ6cW2Q1BSQJRtA/xjW1NT
+         vTB2SWE0cO1f3i/6uO1FWfN4aQzZI/I1dh65neWwtpzv9Ln15OaCOYBVvmJW1AmqCriY
+         vF1aC1WMJywpkKwuOIaQcOVAYtsl8nB7JZ+DCifAN/Vj8wniUshXwCX36hDZQ8nHbPvS
+         j9YA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=6fjMjr211YE9YcIQWwQaRZfIoF2o601X8To7eThZCiA=;
-        b=0n3M7eh5phwYxajEUO0yCYSewk5IgkXiRKgELMY2bFGLVQT7dplMXyGyBx2FYcYONv
-         oBhkVKmELFXRQHmgzgH/7j3h8hY2Ogv93yP80codQbR6xgEE091AU8cYpD69lZwI+hSp
-         q7wLwHZfV2teR86NNYl2dAkkLjmNdamu4agFGk1DvbFg2i1JvlNOTCm/8TJI1HxqC4wM
-         uZEOFNngH0K2Y7Y7af94EFCKcuhZDdbqby0rakRGPGUEWf+keRKy6ja4q5hnBqSvJBYf
-         9RP9Dd15opoDmkW2uTcG0gOqqThI8q8Ty8dPr3JdtxPtSWwk11hUKRgb6HJ6DN6HPG8V
-         sDLg==
-X-Gm-Message-State: AJIora9bz5356OyhSb8w9aUK8cJclDvuJKu8c0hwN0F5GuusVG9abzRA
-        9zsrPs8vGSH+MNP3HS8RMFTL2Q==
-X-Google-Smtp-Source: AGRyM1tTwTGocDhWlMkEi3nkgXGoxnkT2ptk3Q/PpeJxeI6Wy1TAEbaq/L9tcVznRBBHUDnp7PiDpQ==
-X-Received: by 2002:a19:5214:0:b0:47f:8f4e:9829 with SMTP id m20-20020a195214000000b0047f8f4e9829mr1025330lfb.161.1655838002612;
-        Tue, 21 Jun 2022 12:00:02 -0700 (PDT)
+        bh=N+CKs/MdDNeIXKqg/peSNpt0QR5CtVV30OB0kmctgDo=;
+        b=kThZ7rb/gErd6Kb+cDVkbc58BtYf8wHDXWo5Kqiu/V3N6pj/6g88V5exZvCoMH4zGv
+         zuYqU9lNk4dmarq4pecLxQoBrLRtI+/1CwIonQBAXW001whD4cJETx8d0tzGuTtJ78Zu
+         xczHBUyuFfkagxh29+Jc3BaS3uaD10T6fvEHF/CwfGK07QI1xafRvKKUfBKdJUp7ZLAz
+         kxEdDrJ9KbFeSeC0eKY35zfxqBBNYEO2eq7HEmjs/vw7Di/vsBYPV6CO3ZsHNUoqb/eu
+         Q8Iaa25801ttEgHyU6/jVMkuK2rNyCJ3ih5PFDm18BQrdjWz0QhLQ64SWYpb24lIJDO5
+         iSMw==
+X-Gm-Message-State: AJIora9we+JJq5enrJayLTnXK9be1xGNpZ5mFbQOGkLn9UnD8jkFtD7L
+        6LlHyZyQE2tXMxwhhKsviQJ+Hw==
+X-Google-Smtp-Source: AGRyM1t+UYNo3yqTQePlymhYwIBugeRmXDicBMI65qLJgLc+UfeGqSNklac9iZwD27zQld3rOaXzZQ==
+X-Received: by 2002:a2e:2c0e:0:b0:25a:6b43:eff8 with SMTP id s14-20020a2e2c0e000000b0025a6b43eff8mr6782427ljs.299.1655838569854;
+        Tue, 21 Jun 2022 12:09:29 -0700 (PDT)
 Received: from [192.168.43.7] ([188.162.64.230])
-        by smtp.gmail.com with ESMTPSA id s25-20020a2e2c19000000b0024f3d1daed6sm2104748ljs.94.2022.06.21.12.00.01
+        by smtp.gmail.com with ESMTPSA id l30-20020a19495e000000b00479019e1b66sm2269713lfj.39.2022.06.21.12.09.28
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 21 Jun 2022 12:00:02 -0700 (PDT)
-Message-ID: <043d02d3-e03e-f19d-4692-237c43236744@linaro.org>
-Date:   Tue, 21 Jun 2022 22:00:00 +0300
+        Tue, 21 Jun 2022 12:09:29 -0700 (PDT)
+Message-ID: <fbf04495-7831-f1a8-5832-8927cde7cda6@linaro.org>
+Date:   Tue, 21 Jun 2022 22:09:27 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.10.0
-Subject: Re: [v3 4/5] drm/msm/disp/dpu1: use atomic enable/disable callbacks
- for encoder functions
+Subject: Re: [v3 5/5] drm/msm/disp/dpu1: add PSR support for eDP interface in
+ dpu driver
 Content-Language: en-GB
 To:     Vinod Polimera <quic_vpolimer@quicinc.com>, y@qualcomm.com,
         dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
@@ -64,14 +64,14 @@ Cc:     linux-kernel@vger.kernel.org, robdclark@gmail.com,
         dianders@chromium.org, swboyd@chromium.org,
         quic_kalyant@quicinc.com, quic_sbillaka@quicinc.com
 References: <y> <1655808800-3996-1-git-send-email-quic_vpolimer@quicinc.com>
- <1655808800-3996-5-git-send-email-quic_vpolimer@quicinc.com>
+ <1655808800-3996-6-git-send-email-quic_vpolimer@quicinc.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <1655808800-3996-5-git-send-email-quic_vpolimer@quicinc.com>
+In-Reply-To: <1655808800-3996-6-git-send-email-quic_vpolimer@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -80,55 +80,195 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 21/06/2022 13:53, Vinod Polimera wrote:
-> Use atomic variants for encoder callback functions such that
-> certain states like self-refresh can be accessed as part of
-> enable/disable sequence.
+> Enable PSR on eDP interface using drm self-refresh librabry.
+> This patch uses a trigger from self-refresh library to enter/exit
+> into PSR, when there are no updates from framework.
 > 
 > Signed-off-by: Kalyan Thota <quic_kalyant@quicinc.com>
 > Signed-off-by: Vinod Polimera <quic_vpolimer@quicinc.com>
-
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
-
 > ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 10 ++++++----
->   1 file changed, 6 insertions(+), 4 deletions(-)
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c    | 36 ++++++++++++++++++++++++-----
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 20 +++++++++++++++-
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c     |  2 +-
+>   3 files changed, 50 insertions(+), 8 deletions(-)
 > 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> index b56f777..c6e4f03 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> @@ -18,6 +18,7 @@
+>   #include <drm/drm_probe_helper.h>
+>   #include <drm/drm_rect.h>
+>   #include <drm/drm_vblank.h>
+> +#include <drm/drm_self_refresh_helper.h>
+>   
+>   #include "dpu_kms.h"
+>   #include "dpu_hw_lm.h"
+> @@ -955,24 +956,39 @@ static void dpu_crtc_disable(struct drm_crtc *crtc,
+>   									      crtc);
+>   	struct dpu_crtc *dpu_crtc = to_dpu_crtc(crtc);
+>   	struct dpu_crtc_state *cstate = to_dpu_crtc_state(crtc->state);
+> -	struct drm_encoder *encoder;
+> +	struct drm_encoder *encoder = NULL;
+>   	unsigned long flags;
+>   	bool release_bandwidth = false;
+>   
+>   	DRM_DEBUG_KMS("crtc%d\n", crtc->base.id);
+>   
+> +	if (old_crtc_state->self_refresh_active) {
+> +		drm_for_each_encoder_mask(encoder, crtc->dev,
+> +					old_crtc_state->encoder_mask) {
+> +			dpu_encoder_assign_crtc(encoder, NULL);
+
+I think we should drop dpu_encoder_assign_crtc completely and use your 
+new helpers instead. Having to manually duplicate existing link sounds 
+like a bad idea.
+
+> +		}
+> +		return;
+> +	}
+> +
+>   	/* Disable/save vblank irq handling */
+>   	drm_crtc_vblank_off(crtc);
+>   
+>   	drm_for_each_encoder_mask(encoder, crtc->dev,
+>   				  old_crtc_state->encoder_mask) {
+> -		/* in video mode, we hold an extra bandwidth reference
+> +		/*
+> +		 * in video mode, we hold an extra bandwidth reference
+
+Unrelated to this patch.
+
+>   		 * as we cannot drop bandwidth at frame-done if any
+>   		 * crtc is being used in video mode.
+>   		 */
+>   		if (dpu_encoder_get_intf_mode(encoder) == INTF_MODE_VIDEO)
+>   			release_bandwidth = true;
+> -		dpu_encoder_assign_crtc(encoder, NULL);
+> +		/*
+> +		 * If disable is triggered during psr active(e.g: screen dim in PSR),
+> +		 * we will need encoder->crtc connection to process the device sleep &
+> +		 * preserve it during psr sequence.
+> +		 */
+> +		if (!crtc->state->self_refresh_active)
+> +			dpu_encoder_assign_crtc(encoder, NULL);
+>   	}
+>   
+>   	/* wait for frame_event_done completion */
+> @@ -1020,7 +1036,9 @@ static void dpu_crtc_enable(struct drm_crtc *crtc,
+>   	struct dpu_crtc *dpu_crtc = to_dpu_crtc(crtc);
+>   	struct drm_encoder *encoder;
+>   	bool request_bandwidth = false;
+> +	struct drm_crtc_state *old_crtc_state;
+>   
+> +	old_crtc_state = drm_atomic_get_old_crtc_state(state, crtc);
+>   	pm_runtime_get_sync(crtc->dev->dev);
+>   
+>   	DRM_DEBUG_KMS("crtc%d\n", crtc->base.id);
+> @@ -1042,8 +1060,9 @@ static void dpu_crtc_enable(struct drm_crtc *crtc,
+>   	trace_dpu_crtc_enable(DRMID(crtc), true, dpu_crtc);
+>   	dpu_crtc->enabled = true;
+>   
+> -	drm_for_each_encoder_mask(encoder, crtc->dev, crtc->state->encoder_mask)
+> -		dpu_encoder_assign_crtc(encoder, crtc);
+> +	if (!old_crtc_state->self_refresh_active)
+> +		drm_for_each_encoder_mask(encoder, crtc->dev, crtc->state->encoder_mask)
+> +			dpu_encoder_assign_crtc(encoder, crtc);
+>   
+>   	/* Enable/restore vblank irq handling */
+>   	drm_crtc_vblank_on(crtc);
+> @@ -1525,7 +1544,7 @@ struct drm_crtc *dpu_crtc_init(struct drm_device *dev, struct drm_plane *plane,
+>   {
+>   	struct drm_crtc *crtc = NULL;
+>   	struct dpu_crtc *dpu_crtc = NULL;
+> -	int i;
+> +	int i, ret;
+>   
+>   	dpu_crtc = kzalloc(sizeof(*dpu_crtc), GFP_KERNEL);
+>   	if (!dpu_crtc)
+> @@ -1562,6 +1581,11 @@ struct drm_crtc *dpu_crtc_init(struct drm_device *dev, struct drm_plane *plane,
+>   	/* initialize event handling */
+>   	spin_lock_init(&dpu_crtc->event_lock);
+>   
+> +	ret = drm_self_refresh_helper_init(crtc);
+> +	if (ret)
+> +		DPU_ERROR("Failed to initialize %s with self-refresh helpers %d\n",
+> +			crtc->name, ret);
+> +
+>   	DRM_DEBUG_KMS("%s: successfully initialized crtc\n", dpu_crtc->name);
+>   	return crtc;
+>   }
 > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> index 52516eb..cc2809b 100644
+> index cc2809b..234e95d 100644
 > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
 > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> @@ -1130,7 +1130,8 @@ void dpu_encoder_virt_runtime_resume(struct drm_encoder *drm_enc)
->   	mutex_unlock(&dpu_enc->enc_lock);
+> @@ -225,6 +225,11 @@ bool dpu_encoder_is_widebus_enabled(const struct drm_encoder *drm_enc)
+>   	return dpu_enc->wide_bus_en;
 >   }
 >   
-> -static void dpu_encoder_virt_enable(struct drm_encoder *drm_enc)
-> +static void dpu_encoder_virt_atomic_enable(struct drm_encoder *drm_enc,
-> +					struct drm_atomic_state *state)
+> +static inline bool is_self_refresh_active(const struct drm_crtc_state *state)
+> +{
+> +	return (state && state->self_refresh_active);
+> +}
+> +
+>   static void _dpu_encoder_setup_dither(struct dpu_hw_pingpong *hw_pp, unsigned bpc)
 >   {
->   	struct dpu_encoder_virt *dpu_enc = NULL;
->   	int ret = 0;
-> @@ -1166,7 +1167,8 @@ static void dpu_encoder_virt_enable(struct drm_encoder *drm_enc)
->   	mutex_unlock(&dpu_enc->enc_lock);
->   }
+>   	struct dpu_hw_dither_cfg dither_cfg = { 0 };
+> @@ -592,7 +597,8 @@ static int dpu_encoder_virt_atomic_check(
+>   		if (drm_atomic_crtc_needs_modeset(crtc_state)) {
+>   			dpu_rm_release(global_state, drm_enc);
 >   
-> -static void dpu_encoder_virt_disable(struct drm_encoder *drm_enc)
-> +static void dpu_encoder_virt_atomic_disable(struct drm_encoder *drm_enc,
-> +					struct drm_atomic_state *state)
+> -			if (!crtc_state->active_changed || crtc_state->active)
+> +			if (!crtc_state->active_changed || crtc_state->active ||
+> +					crtc_state->self_refresh_active)
+
+This condition should be changed to use enabled rather than active. 
+Quoting KMS documentation: 'The driver must not release any shared 
+resources if active is set to false but enable still true...'
+
+>   				ret = dpu_rm_reserve(&dpu_kms->rm, global_state,
+>   						drm_enc, crtc_state, topology);
+>   		}
+> @@ -1171,11 +1177,23 @@ static void dpu_encoder_virt_atomic_disable(struct drm_encoder *drm_enc,
+>   					struct drm_atomic_state *state)
 >   {
 >   	struct dpu_encoder_virt *dpu_enc = NULL;
+> +	struct drm_crtc *crtc;
+> +	struct drm_crtc_state *old_state;
 >   	int i = 0;
-> @@ -2332,8 +2334,8 @@ static void dpu_encoder_frame_done_timeout(struct timer_list *t)
 >   
->   static const struct drm_encoder_helper_funcs dpu_encoder_helper_funcs = {
->   	.atomic_mode_set = dpu_encoder_virt_atomic_mode_set,
-> -	.disable = dpu_encoder_virt_disable,
-> -	.enable = dpu_encoder_virt_enable,
-> +	.atomic_disable = dpu_encoder_virt_atomic_disable,
-> +	.atomic_enable = dpu_encoder_virt_atomic_enable,
->   	.atomic_check = dpu_encoder_virt_atomic_check,
->   };
+>   	dpu_enc = to_dpu_encoder_virt(drm_enc);
+>   	DPU_DEBUG_ENC(dpu_enc, "\n");
 >   
+> +	crtc = dpu_enc->crtc;
+> +	old_state = drm_atomic_get_old_crtc_state(state, crtc);
+> +
+> +	/*
+> +	 * The encoder disabled already occurred when self refresh mode
+> +	 * was set earlier, in the old_state for the corresponding crtc.
+> +	 */
+> +	if (drm_enc->encoder_type == DRM_MODE_ENCODER_TMDS && is_self_refresh_active(old_state))
+> +		return;
+> +
+
+Why do you need to check the encoder_type?
+
+>   	mutex_lock(&dpu_enc->enc_lock);
+>   	dpu_enc->enabled = false;
+>   
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> index bce4764..cc0a674 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> @@ -507,7 +507,7 @@ static void dpu_kms_wait_for_commit_done(struct msm_kms *kms,
+>   		return;
+>   	}
+>   
+> -	if (!crtc->state->active) {
+> +	if (!drm_atomic_crtc_effectively_active(crtc->state)) {
+>   		DPU_DEBUG("[crtc:%d] not active\n", crtc->base.id);
+>   		return;
+>   	}
 
 
 -- 
