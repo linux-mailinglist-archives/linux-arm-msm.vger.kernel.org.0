@@ -2,69 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1BD83552A6D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jun 2022 07:20:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 544D2552A7B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jun 2022 07:35:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229742AbiFUFUj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Jun 2022 01:20:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41984 "EHLO
+        id S1345004AbiFUFfi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Jun 2022 01:35:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48294 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229547AbiFUFUj (ORCPT
+        with ESMTP id S1344735AbiFUFfh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Jun 2022 01:20:39 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DEA7E20F5E;
-        Mon, 20 Jun 2022 22:20:34 -0700 (PDT)
+        Tue, 21 Jun 2022 01:35:37 -0400
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57AF421E1C
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jun 2022 22:35:35 -0700 (PDT)
+Received: by mail-pj1-x1035.google.com with SMTP id f16so10659538pjj.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jun 2022 22:35:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1655788835; x=1687324835;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=DHSwKRgJsyYqRpbIo7MscdGTpcs4Eo8hYcQLX/hkNxY=;
-  b=ENfexzcipqqrH/4R8Ski/BDN4ugeE1DifUNcKNLzJZFiY6NMgh8fwGBm
-   K+uOwG8GRZpO6RHZF20pqAQ2OagGCfS5R/x1Mqe7TKkl6Zpj1lxdEO5x1
-   VyEghvyIQs3gF8w037tDzFJqhWsdIZKzHEedROrK1ZACeVC+xejT2ycTe
-   8=;
-Received: from ironmsg04-sd.qualcomm.com ([10.53.140.144])
-  by alexa-out.qualcomm.com with ESMTP; 20 Jun 2022 22:20:35 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Jun 2022 22:14:09 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Mon, 20 Jun 2022 22:14:08 -0700
-Received: from [10.79.142.210] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Mon, 20 Jun
- 2022 22:14:04 -0700
-Message-ID: <485a8545-569f-1d2f-5c38-7fdec8d234bf@quicinc.com>
-Date:   Tue, 21 Jun 2022 10:43:48 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.0
-Subject: Re: [PATCH V8 0/7] Add driver support for Data Capture and Compare
- Engine(DCC) for SM8150,SC7280,SC7180,SDM845
-Content-Language: en-US
-To:     Andy Gross <agross@kernel.org>,
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=uAPSJt+nDjTHM6C/f2cx5+BNHLbog5+o0iqQeYTP3zA=;
+        b=YQC1sqxZ4SX2wJYUbBXA3sg7z9wCkuQA2/i3asOe8m3BFwEeeaFUHonSgS8vWwwWiZ
+         LCHFicXUinbtkH57W4ICnGNc5Vhs74wzUtikYkGxq4MoNvt+JxxZ2heO3nnFMuTLcx90
+         Xh2Q0OynQBx9b4Jk2LLEenO/evR3aRx9SySVQ=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=uAPSJt+nDjTHM6C/f2cx5+BNHLbog5+o0iqQeYTP3zA=;
+        b=7iGy2I0YJtmmXUQ6cBMalUeRXL2S9G43mO2DJ8jjJv+l5qwOD8HCC3bcFJkkj7yACO
+         0YcSDFN+mlZVZIR6u3OsbVi56wqogv709/M62FoU9mlfPD3aOr41LATallG4MIZY2g9D
+         tTRs/dmUvJk8rD/Lba45Rx6lDGQ4qc4tHz3hU3BynaBt7yvpOh0zX2UUwmNPh20wT9kx
+         JY2dbElD15JRB6lne15ztZpm2XSvRHg9JkT0hfv1BxGuKiepMUyzwewz/oZM1MMKXUtb
+         AVrL91FR51BAoSNRVqXrE0lIrBIDRgkjnq5yZijLEfX+6VoozwY4GeJTebcmdFfqmHP2
+         o6Jg==
+X-Gm-Message-State: AJIora98qPehEkMC7lGx9iDo+75wDZ0Eyd494+X7x808DyEsaCUW90vo
+        RyYGVL7aybKEvjwjIcYW7bAUJA==
+X-Google-Smtp-Source: AGRyM1tu32aVbPWhF4gId85QXFQlkfBpqw62RfTfleWsXKnPSog13hiass7OZr2jBK2aaj0wWEeSXg==
+X-Received: by 2002:a17:902:7202:b0:167:79d1:f with SMTP id ba2-20020a170902720200b0016779d1000fmr26773774plb.3.1655789734851;
+        Mon, 20 Jun 2022 22:35:34 -0700 (PDT)
+Received: from joebar-glaptop.lan (c-71-202-34-56.hsd1.ca.comcast.net. [71.202.34.56])
+        by smtp.gmail.com with ESMTPSA id k7-20020a63ab47000000b00408af01cb42sm10061676pgp.81.2022.06.20.22.35.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 20 Jun 2022 22:35:34 -0700 (PDT)
+From:   "Joseph S. Barrera III" <joebar@chromium.org>
+To:     LKML <linux-kernel@vger.kernel.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        Alexandru M Stan <amstan@chromium.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        "Joseph S. Barrera III" <joebar@chromium.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, Alex Elder <elder@ieee.org>
-CC:     <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>,
-        "Sai Prakash Ranjan" <quic_saipraka@quicinc.com>,
-        Sibi Sankar <quic_sibis@quicinc.com>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>
-References: <cover.1653475467.git.quic_schowdhu@quicinc.com>
-From:   Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-In-Reply-To: <cover.1653475467.git.quic_schowdhu@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: [PATCH v9 0/5] arm64: dts: qcom: sc7180: Add five new trogdor-based boards
+Date:   Mon, 20 Jun 2022 22:33:46 -0700
+Message-Id: <20220621053351.650431-1-joebar@chromium.org>
+X-Mailer: git-send-email 2.31.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -73,143 +72,152 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+This series adds five new trogdor-based boards to upstream.
+The patches should be applied *after* applying
+https://lore.kernel.org/all/20220602190621.1646679-1-swboyd@chromium.org/
+(arm64: dts: qcom: Remove duplicate sc7180-trogdor include on lazor/homestar)
 
-On 5/25/2022 4:43 PM, Souradeep Chowdhury wrote:
-> DCC(Data Capture and Compare) is a DMA engine designed for debugging purposes.
-> In case of a system crash or manual software triggers by the user the DCC hardware
-> stores the value at the register addresses which can be used for debugging purposes.
-> The DCC driver provides the user with debugfs interface to configure the register
-> addresses. The options that the DCC hardware provides include reading from registers,
-> writing to registers, first reading and then writing to registers and looping
-> through the values of the same register.
->
-> In certain cases a register write needs to be executed for accessing the rest of the
-> registers, also the user might want to record the changing values of a register with
-> time for which he has the option to use the loop feature.
->
-> The options mentioned above are exposed to the user by debugfs files once the driver
-> is probed. The details and usage of this debugfs files are documented in
-> Documentation/ABI/testing/debugfs-driver-dcc.
->
-> As an example let us consider a couple of debug scenarios where DCC has been proved to be
-> effective for debugging purposes:-
->
-> i)TimeStamp Related Issue
->
-> On SC7180, there was a coresight timestamp issue where it would occasionally be all 0
-> instead of proper timestamp values.
->
-> Proper timestamp:
-> Idx:3373; ID:10; I_TIMESTAMP : Timestamp.; Updated val = 0x13004d8f5b7aa; CC=0x9e
->
-> Zero timestamp:
-> Idx:3387; ID:10; I_TIMESTAMP : Timestamp.; Updated val = 0x0; CC=0xa2
->
-> Now this is a non-fatal issue and doesn't need a system reset, but still needs
-> to be rootcaused and fixed for those who do care about coresight etm traces.
-> Since this is a timestamp issue, we would be looking for any timestamp related
-> clocks and such.
->
-> We get all the clk register details from IP documentation and configure it
-> via DCC config_read debugfs node. Before that we set the current linked list.
->
-> /* Program the linked list with the addresses */
-> echo R 0x10c004 > /sys/kernel/debug/dcc/../3/config
-> echo R 0x10c008 > /sys/kernel/debug/dcc/../3/config
-> echo R 0x10c00c > /sys/kernel/debug/dcc/../3/config
-> echo R 0x10c010 > /sys/kernel/debug/dcc/../3/config
-> ..... and so on for other timestamp related clk registers
->
-> /* Other way of specifying is in "addr len" pair, in below case it
-> specifies to capture 4 words starting 0x10C004 */
->
-> echo R 0x10C004 4 > /sys/kernel/debug/dcc/../3/config_read
->
-> /* Enable DCC */
-> echo 1 > /sys/kernel/debug/dcc/../3/enable
->
-> /* Run the timestamp test for working case */
->
-> /* Send SW trigger */
-> echo 1 > /sys/kernel/debug/dcc/../trigger
->
-> /* Read SRAM */
-> cat /dev/dcc_sram > dcc_sram1.bin
->
-> /* Run the timestamp test for non-working case */
->
-> /* Send SW trigger */
-> echo 1 > /sys/kernel/debug/dcc/../trigger
->
-> /* Read SRAM */
-> cat /dev/dcc_sram > dcc_sram2.bin
->
-> Get the parser from [1] and checkout the latest branch.
->
-> /* Parse the SRAM bin */
-> python dcc_parser.py -s dcc_sram1.bin --v2 -o output/
-> python dcc_parser.py -s dcc_sram2.bin --v2 -o output/
->
-> Sample parsed output of dcc_sram1.bin:
->
-> <hwioDump version="1">
->          <timestamp>03/14/21</timestamp>
->              <generator>Linux DCC Parser</generator>
->                  <chip name="None" version="None">
->                  <register address="0x0010c004" value="0x80000000" />
->                  <register address="0x0010c008" value="0x00000008" />
->                  <register address="0x0010c00c" value="0x80004220" />
->                  <register address="0x0010c010" value="0x80000000" />
->              </chip>
->      <next_ll_offset>next_ll_offset : 0x1c </next_ll_offset>
-> </hwioDump>
->
-> ii)NOC register errors
->
-> A particular class of registers called NOC which are functional registers was reporting
-> errors while logging the values.To trace these errors the DCC has been used effectively.
-> The steps followed were similar to the ones mentioned above.
-> In addition to NOC registers a few other dependent registers were configured in DCC to
-> monitor it's values during a crash. A look at the dependent register values revealed that
-> the crash was happening due to a secured access to one of these dependent registers.
-> All these debugging activity and finding the root cause was achieved using DCC.
->
-> DCC parser is available at the following open source location
->
-> https://source.codeaurora.org/quic/la/platform/vendor/qcom-opensource/tools/tree/dcc_parser
->
-> Changes in V8
->
-> *The DCC interface for debugfs has been changed as per comments on v7.
->   The new interface details are documented in Documentation/ABI/testing/debugfs-driver-dcc.
->
-> Souradeep Chowdhury (7):
->    dt-bindings: Added the yaml bindings for DCC
->    soc: qcom: dcc:Add driver support for Data Capture and Compare
->      unit(DCC)
->    MAINTAINERS: Add the entry for DCC(Data Capture and Compare) driver
->      support
->    arm64: dts: qcom: sm8150: Add Data Capture and Compare(DCC) support
->      node
->    arm64: dts: qcom: sc7280: Add Data Capture and Compare(DCC) support
->      node
->    arm64: dts: qcom: sc7180: Add Data Capture and Compare(DCC) support
->      node
->    arm64: dts: qcom: sdm845: Add Data Capture and Compare(DCC) support
->      node
->
->   Documentation/ABI/testing/debugfs-driver-dcc       |   95 ++
->   .../devicetree/bindings/arm/msm/qcom,dcc.yaml      |   43 +
->   MAINTAINERS                                        |    8 +
->   arch/arm64/boot/dts/qcom/sc7180.dtsi               |    6 +
->   arch/arm64/boot/dts/qcom/sc7280.dtsi               |    6 +
->   arch/arm64/boot/dts/qcom/sdm845.dtsi               |    6 +
->   arch/arm64/boot/dts/qcom/sm8150.dtsi               |    6 +
->   drivers/soc/qcom/Kconfig                           |    8 +
->   drivers/soc/qcom/Makefile                          |    1 +
->   drivers/soc/qcom/dcc.c                             | 1359 ++++++++++++++++++++
->   10 files changed, 1538 insertions(+)
->   create mode 100644 Documentation/ABI/testing/debugfs-driver-dcc
->   create mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,dcc.yaml
->   create mode 100644 drivers/soc/qcom/dcc.c
-Gentle Ping.
+The patches do *not* expect
+https://lore.kernel.org/all/20220518172525.3319993-1-swboyd@chromium.org/
+(sc7180-trogdor: Split out keyboard node and describe detachables)
+to be applied.
+
+The compatibles in this series are documented by Doug's series
+https://lore.kernel.org/r/20220520143502.v4.5.Ie8713bc0377672ed8dd71189e66fc0b77226fb85@changeid
+
+This version includes corrections to the series change descriptions,
+based on fetching earlier versions of the series and diffing each patch.
+
+Changes in v9:
+- Restore two lines accidentally removed from ap_sar_sensor.
+- Simplify trackpad enabling (51d30402be75).
+- Simplify trackpad enabling (51d30402be75).
+
+Changes in v8:
+- Incorporate the deletion of the usb_c1 node from 9f9fb70a7294.
+
+Changes in v7:
+- Restore changes requested by Doug.
+- Restore changes requested by Doug.
+- Only include sc7180.dtsi in sc7180-trogdor.dtsi (19794489fa24).
+- Simplify spi0/spi6 labeling (d277cab7afc7).
+- Simplify trackpad enabling (51d30402be75).
+- Restore mrbland patch.
+- Only include sc7180.dtsi in sc7180-trogdor.dtsi (19794489fa24).
+- Simplify spi0/spi6 labeling (d277cab7afc7).
+- Simplify trackpad enabling (51d30402be75).
+- Only include sc7180.dtsi in sc7180-trogdor.dtsi (19794489fa24).
+- Simplify spi0/spi6 labeling (d277cab7afc7).
+- Remove #include of <arm/cros-ec-keyboard.dtsi>.
+- Accidentally removed two lines from ap_sar_sensor.
+- Simplify spi0/spi6 labeling (d277cab7afc7).
+- Remove #include of <arm/cros-ec-keyboard.dtsi>.
+
+Changes in v6:
+- Only include sc7180.dtsi in sc7180-trogdor.dtsi (19794489fa24).
+- Simplify spi0/spi6 labeling (d277cab7afc7).
+- Simplify trackpad enabling (51d30402be75).
+- Accidentally deleted changes requested by Doug.
+- Accidentally deleted changes requested by Doug.
+- Remove mrbland patch.
+- Copy changes to ap_sar_sensor from v5.4.
+- Add #include of <arm/cros-ec-keyboard.dtsi>.
+- Add #include of <arm/cros-ec-keyboard.dtsi> from v5.4.
+
+Changes in v5:
+- Replaced _ in node name with -
+- Ordered nodes by name
+- Remove extra newline
+- Add comment that compatible will be filled in per-board
+- Replace _ in node name with -
+- Order nodes by name.
+- Add comment that compatible will be filled in per-board.
+
+Changes in v4:
+- Cleaned up rt5682s files
+- Restored camcc definition
+- Added missing version history
+- Add missing version history
+- Add missing version history
+- Fix description (no downstream bits removed).
+- Add missing version history.
+- Fix description (no downstream bits removed).
+- Add missing version history.
+
+Changes in v3:
+- Removed camcc definition
+- First inclusion in this series
+- First inclusion in series.
+
+Changes in v2:
+- Word wrapped patch description.
+- Removed "Author" from patch description.
+- Fixed whitespace around "en_pp3300_dx_edp"
+- Add word wrapping to patch description.
+- Remove "Author" from patch description.
+- Fix whitespace around "en_pp3300_dx_edp".
+- First inclusion in series.
+
+Joseph S. Barrera III (5):
+  arm64: dts: qcom: sc7180: Add wormdingler dts files
+  arm64: dts: qcom: sc7180: Add quackingstick dts files
+  arm64: dts: qcom: sc7180: Add mrbland dts files
+  arm64: dts: qcom: sc7180: Add pazquel dts files
+  arm64: dts: qcom: sc7180: Add kingoftown dts files
+
+ arch/arm64/boot/dts/qcom/Makefile             |  18 +
+ .../dts/qcom/sc7180-trogdor-kingoftown-r0.dts |  44 ++
+ .../dts/qcom/sc7180-trogdor-kingoftown-r1.dts |  17 +
+ .../dts/qcom/sc7180-trogdor-kingoftown.dtsi   | 224 ++++++++++
+ .../qcom/sc7180-trogdor-mrbland-rev0-auo.dts  |  22 +
+ .../qcom/sc7180-trogdor-mrbland-rev0-boe.dts  |  22 +
+ .../dts/qcom/sc7180-trogdor-mrbland-rev0.dtsi |  53 +++
+ .../qcom/sc7180-trogdor-mrbland-rev1-auo.dts  |  22 +
+ .../qcom/sc7180-trogdor-mrbland-rev1-boe.dts  |  24 ++
+ .../boot/dts/qcom/sc7180-trogdor-mrbland.dtsi | 344 +++++++++++++++
+ .../sc7180-trogdor-pazquel-lte-parade.dts     |  22 +
+ .../qcom/sc7180-trogdor-pazquel-lte-ti.dts    |  22 +
+ .../qcom/sc7180-trogdor-pazquel-parade.dts    |  17 +
+ .../dts/qcom/sc7180-trogdor-pazquel-ti.dts    |  17 +
+ .../boot/dts/qcom/sc7180-trogdor-pazquel.dtsi | 221 ++++++++++
+ .../sc7180-trogdor-quackingstick-r0-lte.dts   |  38 ++
+ .../qcom/sc7180-trogdor-quackingstick-r0.dts  |  26 ++
+ .../qcom/sc7180-trogdor-quackingstick.dtsi    | 318 ++++++++++++++
+ .../sc7180-trogdor-wormdingler-rev0-boe.dts   |  22 +
+ .../sc7180-trogdor-wormdingler-rev0-inx.dts   |  22 +
+ .../qcom/sc7180-trogdor-wormdingler-rev0.dtsi |  53 +++
+ ...0-trogdor-wormdingler-rev1-boe-rt5682s.dts |  29 ++
+ .../sc7180-trogdor-wormdingler-rev1-boe.dts   |  28 ++
+ ...0-trogdor-wormdingler-rev1-inx-rt5682s.dts |  29 ++
+ .../sc7180-trogdor-wormdingler-rev1-inx.dts   |  22 +
+ .../dts/qcom/sc7180-trogdor-wormdingler.dtsi  | 408 ++++++++++++++++++
+ 26 files changed, 2084 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown-r0.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown-r1.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-mrbland-rev0-auo.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-mrbland-rev0-boe.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-mrbland-rev0.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-mrbland-rev1-auo.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-mrbland-rev1-boe.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-mrbland.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel-lte-parade.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel-lte-ti.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel-parade.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel-ti.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-quackingstick-r0-lte.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-quackingstick-r0.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-quackingstick.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev0-boe.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev0-inx.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev0.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev1-boe-rt5682s.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev1-boe.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev1-inx-rt5682s.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev1-inx.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler.dtsi
+
+-- 
+2.31.0
+
