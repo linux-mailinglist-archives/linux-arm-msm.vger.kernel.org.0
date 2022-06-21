@@ -2,118 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 51BE35535D1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jun 2022 17:21:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1DC23553734
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jun 2022 18:03:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352650AbiFUPVS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Jun 2022 11:21:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59146 "EHLO
+        id S1353389AbiFUQDM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Jun 2022 12:03:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44306 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237311AbiFUPVS (ORCPT
+        with ESMTP id S1353545AbiFUQC6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Jun 2022 11:21:18 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95CD328705;
-        Tue, 21 Jun 2022 08:21:16 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id g27so12782612wrb.10;
-        Tue, 21 Jun 2022 08:21:16 -0700 (PDT)
+        Tue, 21 Jun 2022 12:02:58 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD7AC2657A
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jun 2022 09:02:13 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id mf9so8153481ejb.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jun 2022 09:02:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:from:to:cc:subject:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=qd+fXNIigO6bT/TI4/YvAL8F3wpHGElIc1OVu6S8MEo=;
-        b=hm+qUkm+3WNmF/VXhDTQ7wkhJUBeAZiFDPrDnEp8BWAeR8d3pFOZeDGCyK1N39ydx0
-         yn8pHHS0DXq3j8mR/JozSCkdo9RTvoNhnzYbPtyzqGiyQzxGCzmQzCBrM7T24pHY7K/m
-         7fUZHwx7l0mi4092IciMkNS+PfTw1X6n0fxqXrB+vDJyS/Ydl2MnVH38Awygy9hd1y3K
-         L4jcq8kOeXqn0m/mHeM53cn+C1yzvT29hbEVXUQK/C6bcOoHaUwdq32A+AEt6677EbVr
-         toLz3Yz2L/2ZVww0CFftAe58d2/nT4CH26d/AAAKG3nahAP4N6Bt0/KJMX1XhRQB3VNI
-         tLag==
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=ajIufaZS31L5JGgBZ3aj5H5ZSklCRI8PNMvHL2oafFw=;
+        b=TbjJf5zpVMUIhuON7L5caOsWN1RSMkNH4eTucjnQ+TOGgUGSs/J9dl7n8G9Z3uOLsS
+         go4x+wTu3yJfXNZGli7paJzK232anQdm/Vgn99gPxnrBXve8mMhkbq79K0OgMxmAVz3R
+         MHiXrUBpOS82MmyxyTzEqrcy+yhbH4RBMk6nlbwaJw3RnverxVBR8BLnfoYeFYhLo75/
+         jcnBZOLdzu+ZhL6IGsw7BG8uXxBU0JVyi4YsanybY5+GXzqihbZhZ7CzlyWdH9ZKBU3Z
+         50f2wP4+jn2U4ey4kK3rqtzKsh/8Igz38hUURZVF2Dzph0sojs1K/lmbQDpLVQzEyXyl
+         B3OQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:from:to:cc:subject:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=qd+fXNIigO6bT/TI4/YvAL8F3wpHGElIc1OVu6S8MEo=;
-        b=uBpcz58g2MTjqG/E45Pz0RLak2h7up0vpt4JrE7BIbhkBi5F/E93Bu+CbUTq1ATHhT
-         neih6YfBldgSmh/p3BDUSEhdjzErUFfwsOEPzv8X9PqIPrXmqWsv+a9EuydFsNRJVZ7w
-         ewcRGtrO9HEo1i1xOcI1sQxoc6lQswAEqznpCpBBXQinNmOXymiXZGsb9y71BwuRiYkc
-         M1O3Qy+7ruBX/PMJEIPdji4fX70OgNxxjXN7dfh68X9mATyNSiDbJbjCgIJJF1Qzkxjk
-         6bBCtTtj47UfD+WdiIPHQ7v1kaWNphLcnl/APaxfk/vYEatRDLwhhGfYWBRDF4g2oaum
-         2TOA==
-X-Gm-Message-State: AJIora8ACHyB5JxYq4zPRk+2Ie+iXSP69OES8mjobAoAE1FUEaCBND9n
-        W5wJHiVSGuzR5xetp9ZjY8w=
-X-Google-Smtp-Source: AGRyM1tQfP7qGqIvY8mVsTifRoAdgXmtbjWBgNERiEbu572ag1ss0LEijGLxMRoKfsRanU1QFaSf7g==
-X-Received: by 2002:adf:e801:0:b0:21b:873f:ed62 with SMTP id o1-20020adfe801000000b0021b873fed62mr17015242wrm.17.1655824875093;
-        Tue, 21 Jun 2022 08:21:15 -0700 (PDT)
-Received: from Ansuel-xps. (93-42-70-190.ip85.fastwebnet.it. [93.42.70.190])
-        by smtp.gmail.com with ESMTPSA id f23-20020a7bcc17000000b0039740903c39sm18405298wmh.7.2022.06.21.08.21.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Jun 2022 08:21:14 -0700 (PDT)
-Message-ID: <62b1e1ea.1c69fb81.aafda.3244@mx.google.com>
-X-Google-Original-Message-ID: <YrHh6YN6WiGOH1d4@Ansuel-xps.>
-Date:   Tue, 21 Jun 2022 17:21:13 +0200
-From:   Christian Marangi <ansuelsmth@gmail.com>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Michael Turquette <mturquette@baylibre.com>,
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=ajIufaZS31L5JGgBZ3aj5H5ZSklCRI8PNMvHL2oafFw=;
+        b=j79SFJ52xCvQEuDW6WBwCbzzS4mqhoGbQxG4BV2lnMdUbHo8vkbhqTvnFCldzE01vc
+         xwQIbiad4Ac+ld/xyw+h96oeX3HXKqNvykQH8hNoPhu21CCRHDf1H0gblzY9FHh09fMh
+         2RQe0KqXlS/fEGztyeBHa7BmkY6eyszVSZGKqy15YMcPPRpLHjT+pb0TotnOjwVL0Jux
+         pO5DoOVnBck12LpdARe28ZVHSnBy8LPawLARltR7VEBOBatKXNAaNXGurpK+xqdNh/AG
+         Bw03vI97arPNDdms226/hbsoKWNq9jgRGTbmO3CL42gB4PAJerZJJGzOjkWnKvmIzMzy
+         gmvg==
+X-Gm-Message-State: AJIora9x++igFc21p0gWJIkPi/E8ZVB+gKWHepYSkLxUf0mVHdt5F5PO
+        JwVdnZnrypmFPsuq51MXoHPxdg==
+X-Google-Smtp-Source: AGRyM1tJ7negbS1AH/+t/TmQDM/W7Td5eE5Db99BDGFKcNAC3cPdeq3N/XH0C1NPOygluBZ3K/vcSQ==
+X-Received: by 2002:a17:906:9c82:b0:6df:c5f0:d456 with SMTP id fj2-20020a1709069c8200b006dfc5f0d456mr26930081ejc.287.1655827332290;
+        Tue, 21 Jun 2022 09:02:12 -0700 (PDT)
+Received: from [192.168.0.221] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id z15-20020a1709060f0f00b006ff19354f9fsm7821657eji.215.2022.06.21.09.02.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 21 Jun 2022 09:02:11 -0700 (PDT)
+Message-ID: <94152e7d-184a-6b7a-6468-2678de410883@linaro.org>
+Date:   Tue, 21 Jun 2022 18:02:10 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: Re: [PATCH 1/9] dt-bindings: arm: qcom: fix Alcatel OneTouch Idol 3
+ compatibles
+Content-Language: en-US
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Stephen Boyd <sboyd@codeaurora.org>,
+        Rob Herring <robh@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH] clk: qcom: gcc-ipq806x: use parent_data for the last
- remaining entry
-References: <20220620215150.1875557-1-dmitry.baryshkov@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220620215150.1875557-1-dmitry.baryshkov@linaro.org>
+        Vinod Koul <vkoul@kernel.org>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        linux-kernel@vger.kernel.org
+References: <20220520123252.365762-1-krzysztof.kozlowski@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220520123252.365762-1-krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jun 21, 2022 at 12:51:50AM +0300, Dmitry Baryshkov wrote:
-> Use parent_data for the last remaining entry (pll4). This clock is
-> provided by the lcc device.
+On 20/05/2022 14:32, Krzysztof Kozlowski wrote:
+> The MSM8916 Alcatel OneTouch Idol 3 does not use MTP fallbacks in
+> compatibles:
 > 
-> Fixes: cb02866f9a74 ("clk: qcom: gcc-ipq806x: convert parent_names to parent_data")
-> Cc: Ansuel Smith <ansuelsmth@gmail.com>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>   msm8916-alcatel-idol347.dtb: /: compatible: 'oneOf' conditional failed, one must be fixed:
+>     ['alcatel,idol347', 'qcom,msm8916'] is too short
+> 
+> Reported-by: Rob Herring <robh@kernel.org>
+> Fixes: e9dd2f7204ed ("dt-bindings: arm: qcom: Document alcatel,idol347 board")
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > ---
->  drivers/clk/qcom/gcc-ipq806x.c | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/clk/qcom/gcc-ipq806x.c b/drivers/clk/qcom/gcc-ipq806x.c
-> index 718de17a1e60..6447f3e81b55 100644
-> --- a/drivers/clk/qcom/gcc-ipq806x.c
-> +++ b/drivers/clk/qcom/gcc-ipq806x.c
-> @@ -79,7 +79,9 @@ static struct clk_regmap pll4_vote = {
->  	.enable_mask = BIT(4),
->  	.hw.init = &(struct clk_init_data){
->  		.name = "pll4_vote",
-> -		.parent_names = (const char *[]){ "pll4" },
-> +		.parent_data = &(const struct clk_parent_data){
-> +			.fw_name = "pll4", .name = "pll4",
-> +		},
->  		.num_parents = 1,
->  		.ops = &clk_pll_vote_ops,
->  	},
-> -- 
-> 2.35.1
+>  Documentation/devicetree/bindings/arm/qcom.yaml | 3 +--
+>  1 file changed, 1 insertion(+), 2 deletions(-)
 > 
 
-Hi my intention was finding a way to directly reference the hw clk from
-the lcc driver instead of using fw_name/name parent data. Wonder if that
-would be a better solution... Seems wrong to me to eventually add also
-the pll4 clk in the dts to correctly use the fw_name definition (when
-that will be fixed in the ipq8064 dtsi)
+I pinged about the patchset two weeks ago. There were no responses, but
+this one here is actually a fix.  Others document missing stuff, which
+although is not a fix, but still necessary to reduce amount of dtbs
+check warnings.
 
--- 
-	Ansuel
+Shall I treat the silence as this won't be picked up? I can take it
+instead, but it will create some conflicts because several people are
+doing similar as here...
+
+Best regards,
+Krzysztof
