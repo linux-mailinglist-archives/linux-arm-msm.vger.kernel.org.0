@@ -2,49 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 50A8C55288B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jun 2022 02:15:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8A86E552893
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jun 2022 02:18:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343900AbiFUAOz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Jun 2022 20:14:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43126 "EHLO
+        id S235915AbiFUASC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Jun 2022 20:18:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44964 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343680AbiFUAOy (ORCPT
+        with ESMTP id S231244AbiFUASB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Jun 2022 20:14:54 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 830161A04A
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jun 2022 17:14:51 -0700 (PDT)
+        Mon, 20 Jun 2022 20:18:01 -0400
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8067A1A04A
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jun 2022 17:18:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1655770491; x=1687306491;
+  t=1655770680; x=1687306680;
   h=message-id:date:mime-version:subject:to:cc:references:
    from:in-reply-to:content-transfer-encoding;
-  bh=VSa0/uVjec05dowPfNkSKt+TqCSi3Jk9QyVcijG+jiE=;
-  b=RLqci5hz6tVl1rArqK2br4C4YjMsHycEj4ZzlxQNhXL9wD4c9LhtJbG+
-   mtoxNnkSEAovtsqTApj6NtKyE1kTM28QNdTqv0J7Wz78xi49doYBBStQD
-   zlW3s5hGLnbzwOZFeAHM/p2UiYujWmD6G2a4kky4Gl+nd5goILVVKb0/5
-   Q=;
-Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
-  by alexa-out.qualcomm.com with ESMTP; 20 Jun 2022 17:14:51 -0700
+  bh=9CM761RPUf3H+9foG8Vhn4+yZioOjyJpb6+jXL+c35s=;
+  b=D7mhEj3JI1NCcucIszdog25fucY1XB30p00KD7yhl6GUZPrYFdEZhLLY
+   FVAyBCSD6sOwMhNmoqo/6uZ9NVH8mNuMxd2LlxhR8CpJUD8PwbqjUO+uU
+   OxdFXg9iySJj3ozfCR2yQ9NY41qcyMBU7Xk1xygttMIKnTeRrzP/6PBw9
+   8=;
+Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 20 Jun 2022 17:18:00 -0700
 X-QCInternal: smtphost
 Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Jun 2022 17:14:51 -0700
+  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Jun 2022 17:17:59 -0700
 Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
  nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Mon, 20 Jun 2022 17:14:50 -0700
+ 15.2.986.22; Mon, 20 Jun 2022 17:17:59 -0700
 Received: from [10.111.166.89] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Mon, 20 Jun
- 2022 17:14:48 -0700
-Message-ID: <0a6d7174-a238-c1df-ba71-6b451061e4fe@quicinc.com>
-Date:   Mon, 20 Jun 2022 17:14:46 -0700
+ 2022 17:17:57 -0700
+Message-ID: <392c678d-0047-89e0-3400-67aef22076e3@quicinc.com>
+Date:   Mon, 20 Jun 2022 17:17:54 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.6.2
-Subject: Re: [PATCH v1 3/4] drm/msm/dpu: merge base_off with blk_off in struct
- dpu_hw_blk_reg_map
+Subject: Re: [PATCH v1 4/4] drm/msm/dpu: move struct dpu_hw_blk definition to
+ dpu_hw_utils.h
 Content-Language: en-US
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
@@ -55,9 +55,9 @@ CC:     Stephen Boyd <swboyd@chromium.org>,
         <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
         <freedreno@lists.freedesktop.org>
 References: <20220601161349.1517667-1-dmitry.baryshkov@linaro.org>
- <20220601161349.1517667-4-dmitry.baryshkov@linaro.org>
+ <20220601161349.1517667-5-dmitry.baryshkov@linaro.org>
 From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20220601161349.1517667-4-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220601161349.1517667-5-dmitry.baryshkov@linaro.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
@@ -76,258 +76,195 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 On 6/1/2022 9:13 AM, Dmitry Baryshkov wrote:
-> There is little point in keeping a separate MDP address and block offset
-> in this struct. Merge them to form a new blk_addr field used for all
-> register access.
+> There is little point in having a separate header just for a single
+> opaque struct definition. Drop it now and move the struct to the
+> dpu_hw_util.h header.
 > 
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 > ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c        | 3 +--
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c        | 3 +--
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c       | 3 +--
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c | 3 +--
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c       | 3 +--
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c         | 3 +--
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_merge3d.c    | 3 +--
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c   | 5 ++---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c       | 3 +--
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c        | 3 +--
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c       | 6 +++---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h       | 7 +++----
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_vbif.c       | 3 +--
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c         | 3 +--
->   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c           | 2 +-
->   15 files changed, 20 insertions(+), 33 deletions(-)
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h      |  1 -
+>   .../drm/msm/disp/dpu1/dpu_encoder_phys_wb.c   |  1 -
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_blk.h    | 25 -------------------
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h    |  1 -
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.h   |  2 --
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h   |  1 -
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.h     |  1 -
+>   .../gpu/drm/msm/disp/dpu1/dpu_hw_merge3d.h    |  1 -
+>   .../gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h   |  1 -
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h   |  1 -
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h    |  1 -
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h   |  7 ++++++
+>   12 files changed, 7 insertions(+), 36 deletions(-)
+>   delete mode 100644 drivers/gpu/drm/msm/disp/dpu1/dpu_hw_blk.h
 > 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-> index 1120ff408dae..e12b7fa48a7b 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-> @@ -58,8 +58,7 @@ static const struct dpu_ctl_cfg *_ctl_offset(enum dpu_ctl ctl,
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
+> index b8785c394fcc..da64b0f639a9 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
+> @@ -12,7 +12,6 @@
+>   #include <drm/drm_crtc.h>
+>   #include "dpu_kms.h"
+>   #include "dpu_core_perf.h"
+> -#include "dpu_hw_blk.h"
 >   
->   	for (i = 0; i < m->ctl_count; i++) {
->   		if (ctl == m->ctl[i].id) {
-> -			b->base_off = addr;
-> -			b->blk_off = m->ctl[i].base;
-> +			b->blk_addr = addr + m->ctl[i].base;
->   			b->log_mask = DPU_DBG_MASK_CTL;
->   			return &m->ctl[i];
->   		}
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c
-> index dfe6e4c11917..411689ae6382 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c
-> @@ -166,8 +166,7 @@ static struct dpu_dsc_cfg *_dsc_offset(enum dpu_dsc dsc,
+>   #define DPU_CRTC_NAME_SIZE	12
 >   
->   	for (i = 0; i < m->dsc_count; i++) {
->   		if (dsc == m->dsc[i].id) {
-> -			b->base_off = addr;
-> -			b->blk_off = m->dsc[i].base;
-> +			b->blk_addr = addr + m->dsc[i].base;
->   			b->log_mask = DPU_DBG_MASK_DSC;
->   			return &m->dsc[i];
->   		}
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c
-> index 8196ae47dea8..8ab5ace34a2d 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c
-> @@ -80,8 +80,7 @@ static const struct dpu_dspp_cfg *_dspp_offset(enum dpu_dspp dspp,
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
+> index 53bb4639c8e9..1db6b75cd1f6 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
+> @@ -12,7 +12,6 @@
+>   #include "dpu_hw_top.h"
+>   #include "dpu_hw_wb.h"
+>   #include "dpu_hw_lm.h"
+> -#include "dpu_hw_blk.h"
+>   #include "dpu_hw_merge3d.h"
+>   #include "dpu_hw_interrupts.h"
+>   #include "dpu_core_irq.h"
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_blk.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_blk.h
+> deleted file mode 100644
+> index 52e92f37eda4..000000000000
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_blk.h
+> +++ /dev/null
+> @@ -1,25 +0,0 @@
+> -/* SPDX-License-Identifier: GPL-2.0-only */
+> -/* Copyright (c) 2017-2018, The Linux Foundation. All rights reserved.
+> - */
+> -
+> -#ifndef _DPU_HW_BLK_H
+> -#define _DPU_HW_BLK_H
+> -
+> -#include <linux/types.h>
+> -#include <linux/list.h>
+> -
+> -struct dpu_hw_blk;
+> -
+> -
+> -/**
+> - * struct dpu_hw_blk - definition of hardware block object
+> - * @list: list of hardware blocks
+> - * @type: hardware block type
+> - * @id: instance id
+> - * @refcount: reference/usage count
+> - */
+> -struct dpu_hw_blk {
+> -	/* opaque */
+> -};
+> -
+> -#endif /*_DPU_HW_BLK_H */
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
+> index 5755307089b5..7d9ad6a3f9f6 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
+> @@ -10,7 +10,6 @@
+>   #include "dpu_hw_util.h"
+>   #include "dpu_hw_catalog.h"
+>   #include "dpu_hw_sspp.h"
+> -#include "dpu_hw_blk.h"
 >   
->   	for (i = 0; i < m->dspp_count; i++) {
->   		if (dspp == m->dspp[i].id) {
-> -			b->base_off = addr;
-> -			b->blk_off = m->dspp[i].base;
-> +			b->blk_addr = addr + m->dspp[i].base;
->   			b->log_mask = DPU_DBG_MASK_DSPP;
->   			return &m->dspp[i];
->   		}
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
-> index d83503ea2419..cf1b6d84c18a 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
-> @@ -401,8 +401,7 @@ u32 dpu_core_irq_read(struct dpu_kms *dpu_kms, int irq_idx)
->   static void __intr_offset(const struct dpu_mdss_cfg *m,
->   		void __iomem *addr, struct dpu_hw_blk_reg_map *hw)
->   {
-> -	hw->base_off = addr;
-> -	hw->blk_off = m->mdp[0].base;
-> +	hw->blk_addr = addr + m->mdp[0].base;
->   }
+>   /**
+>    * dpu_ctl_mode_sel: Interface mode selection
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.h
+> index 7fa189cfcb06..05ecfdfac93b 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.h
+> @@ -5,8 +5,6 @@
+>   #ifndef _DPU_HW_DSPP_H
+>   #define _DPU_HW_DSPP_H
 >   
->   struct dpu_hw_intr *dpu_hw_intr_init(void __iomem *addr,
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
-> index c7eb314f1d7a..d8aff0f459f8 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
-> @@ -77,8 +77,7 @@ static const struct dpu_intf_cfg *_intf_offset(enum dpu_intf intf,
->   	for (i = 0; i < m->intf_count; i++) {
->   		if ((intf == m->intf[i].id) &&
->   		(m->intf[i].type != INTF_NONE)) {
-> -			b->base_off = addr;
-> -			b->blk_off = m->intf[i].base;
-> +			b->blk_addr = addr + m->intf[i].base;
->   			b->log_mask = DPU_DBG_MASK_INTF;
->   			return &m->intf[i];
->   		}
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
-> index 87a4a5869b9b..75d55fd65f19 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
-> @@ -43,8 +43,7 @@ static const struct dpu_lm_cfg *_lm_offset(enum dpu_lm mixer,
+> -#include "dpu_hw_blk.h"
+> -
+>   struct dpu_hw_dspp;
 >   
->   	for (i = 0; i < m->mixer_count; i++) {
->   		if (mixer == m->mixer[i].id) {
-> -			b->base_off = addr;
-> -			b->blk_off = m->mixer[i].base;
-> +			b->blk_addr = addr + m->mixer[i].base;
->   			b->log_mask = DPU_DBG_MASK_LM;
->   			return &m->mixer[i];
->   		}
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_merge3d.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_merge3d.c
-> index 538691f7bf66..def0a87fdba5 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_merge3d.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_merge3d.c
-> @@ -23,8 +23,7 @@ static const struct dpu_merge_3d_cfg *_merge_3d_offset(enum dpu_merge_3d idx,
+>   /**
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
+> index 7b2d96ac61e8..c262430e4dbd 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
+> @@ -8,7 +8,6 @@
+>   #include "dpu_hw_catalog.h"
+>   #include "dpu_hw_mdss.h"
+>   #include "dpu_hw_util.h"
+> -#include "dpu_hw_blk.h"
 >   
->   	for (i = 0; i < m->merge_3d_count; i++) {
->   		if (idx == m->merge_3d[i].id) {
-> -			b->base_off = addr;
-> -			b->blk_off = m->merge_3d[i].base;
-> +			b->blk_addr = addr + m->merge_3d[i].base;
->   			b->log_mask = DPU_DBG_MASK_PINGPONG;
->   			return &m->merge_3d[i];
->   		}
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c
-> index 0aa63636bc9a..0fcad9760b6f 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c
-> @@ -51,8 +51,7 @@ static const struct dpu_pingpong_cfg *_pingpong_offset(enum dpu_pingpong pp,
+>   struct dpu_hw_intf;
 >   
->   	for (i = 0; i < m->pingpong_count; i++) {
->   		if (pp == m->pingpong[i].id) {
-> -			b->base_off = addr;
-> -			b->blk_off = m->pingpong[i].base;
-> +			b->blk_addr = addr + m->pingpong[i].base;
->   			b->log_mask = DPU_DBG_MASK_PINGPONG;
->   			return &m->pingpong[i];
->   		}
-> @@ -156,7 +155,7 @@ static int dpu_hw_pp_poll_timeout_wr_ptr(struct dpu_hw_pingpong *pp,
->   		return -EINVAL;
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.h
+> index d8052fb2d5da..652ddfdedec3 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.h
+> @@ -8,7 +8,6 @@
 >   
->   	c = &pp->hw;
-> -	rc = readl_poll_timeout(c->base_off + c->blk_off + PP_LINE_COUNT,
-> +	rc = readl_poll_timeout(c->blk_addr + PP_LINE_COUNT,
->   			val, (val & 0xffff) >= 1, 10, timeout_us);
+>   #include "dpu_hw_mdss.h"
+>   #include "dpu_hw_util.h"
+> -#include "dpu_hw_blk.h"
 >   
->   	return rc;
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
-> index 876ae8faa8e5..102c21bb4192 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
-> @@ -769,8 +769,7 @@ static const struct dpu_sspp_cfg *_sspp_offset(enum dpu_sspp sspp,
->   	if ((sspp < SSPP_MAX) && catalog && addr && b) {
->   		for (i = 0; i < catalog->sspp_count; i++) {
->   			if (sspp == catalog->sspp[i].id) {
-> -				b->base_off = addr;
-> -				b->blk_off = catalog->sspp[i].base;
-> +				b->blk_addr = addr + catalog->sspp[i].base;
->   				b->log_mask = DPU_DBG_MASK_SSPP;
->   				return &catalog->sspp[i];
->   			}
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c
-> index 843cb607d411..c3110a25a30d 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c
-> @@ -285,8 +285,7 @@ static const struct dpu_mdp_cfg *_top_offset(enum dpu_mdp mdp,
+>   struct dpu_hw_mixer;
 >   
->   	for (i = 0; i < m->mdp_count; i++) {
->   		if (mdp == m->mdp[i].id) {
-> -			b->base_off = addr;
-> -			b->blk_off = m->mdp[i].base;
-> +			b->blk_addr = addr + m->mdp[i].base;
->   			b->log_mask = DPU_DBG_MASK_TOP;
->   			return &m->mdp[i];
->   		}
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c
-> index 512316f25a51..b2104001d2aa 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c
-> @@ -80,13 +80,13 @@ void dpu_reg_write(struct dpu_hw_blk_reg_map *c,
->   	/* don't need to mutex protect this */
->   	if (c->log_mask & dpu_hw_util_log_mask)
->   		DPU_DEBUG_DRIVER("[%s:0x%X] <= 0x%X\n",
-> -				name, c->blk_off + reg_off, val);
-> -	writel_relaxed(val, c->base_off + c->blk_off + reg_off);
-> +				name, reg_off, val);
-> +	writel_relaxed(val, c->blk_addr + reg_off);
->   }
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_merge3d.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_merge3d.h
+> index 870bdb14613e..81fd1d5f718e 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_merge3d.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_merge3d.h
+> @@ -8,7 +8,6 @@
+>   #include "dpu_hw_catalog.h"
+>   #include "dpu_hw_mdss.h"
+>   #include "dpu_hw_util.h"
+> -#include "dpu_hw_blk.h"
 >   
->   int dpu_reg_read(struct dpu_hw_blk_reg_map *c, u32 reg_off)
->   {
-> -	return readl_relaxed(c->base_off + c->blk_off + reg_off);
-> +	return readl_relaxed(c->blk_addr + reg_off);
->   }
+>   struct dpu_hw_merge_3d;
 >   
->   u32 *dpu_hw_util_get_log_mask_ptr(void)
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h
+> index 12758468d9ca..c00223441d99 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h
+> @@ -8,7 +8,6 @@
+>   #include "dpu_hw_catalog.h"
+>   #include "dpu_hw_mdss.h"
+>   #include "dpu_hw_util.h"
+> -#include "dpu_hw_blk.h"
+>   
+>   #define DITHER_MATRIX_SZ 16
+>   
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
+> index 7f7338fcddeb..78b1bc9e004f 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
+> @@ -8,7 +8,6 @@
+>   #include "dpu_hw_catalog.h"
+>   #include "dpu_hw_mdss.h"
+>   #include "dpu_hw_util.h"
+> -#include "dpu_hw_blk.h"
+>   #include "dpu_formats.h"
+>   
+>   struct dpu_hw_pipe;
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h
+> index 3aa10c89ca1b..a1a9e44bed36 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h
+> @@ -8,7 +8,6 @@
+>   #include "dpu_hw_catalog.h"
+>   #include "dpu_hw_mdss.h"
+>   #include "dpu_hw_util.h"
+> -#include "dpu_hw_blk.h"
+>   
+>   struct dpu_hw_mdp;
+>   
 > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h
-> index b745ef4ac16f..d5338701fc2b 100644
+> index d5338701fc2b..49d89d706200 100644
 > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h
 > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h
-> @@ -17,12 +17,11 @@
->    * This is the common struct maintained by each sub block
->    * for mapping the register offsets in this block to the
->    * absoulute IO address
-> - * @base_off:     mdp register mapped offset
-> - * @blk_off:      pipe offset relative to mdss offset
-> + * @blk_addr:     hw block register mapped address
-> + * @log_mask:     log mask for this block
->    */
->   struct dpu_hw_blk_reg_map {
-> -	void __iomem *base_off;
-> -	u32 blk_off;
-> +	void __iomem *blk_addr;
+> @@ -25,6 +25,13 @@ struct dpu_hw_blk_reg_map {
 >   	u32 log_mask;
 >   };
 >   
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_vbif.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_vbif.c
-> index 41ca4b179f1a..16c56e240706 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_vbif.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_vbif.c
-> @@ -220,8 +220,7 @@ static const struct dpu_vbif_cfg *_top_offset(enum dpu_vbif vbif,
->   
->   	for (i = 0; i < m->vbif_count; i++) {
->   		if (vbif == m->vbif[i].id) {
-> -			b->base_off = addr;
-> -			b->blk_off = m->vbif[i].base;
-> +			b->blk_addr = addr + m->vbif[i].base;
->   			b->log_mask = DPU_DBG_MASK_VBIF;
->   			return &m->vbif[i];
->   		}
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c
-> index 12f32cd3075e..2d28afdf860e 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c
-> @@ -60,8 +60,7 @@ static const struct dpu_wb_cfg *_wb_offset(enum dpu_wb wb,
->   
->   	for (i = 0; i < m->wb_count; i++) {
->   		if (wb == m->wb[i].id) {
-> -			b->base_off = addr;
-> -			b->blk_off = m->wb[i].base;
-> +			b->blk_addr = addr + m->wb[i].base;
->   			return &m->wb[i];
->   		}
->   	}
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> index a3bfc0fe72a8..a526345abc69 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> @@ -951,7 +951,7 @@ static void dpu_kms_mdp_snapshot(struct msm_disp_state *disp_state, struct msm_k
->   				dpu_kms->mmio + cat->wb[i].base, "wb_%d", i);
->   
->   	msm_disp_snapshot_add_block(disp_state, cat->mdp[0].len,
-> -			dpu_kms->mmio + top->hw.blk_off, "top");
-> +			dpu_kms->mmio + cat->mdp[0].base, "top");
->   
->   	pm_runtime_put_sync(&dpu_kms->pdev->dev);
->   }
+> +/**
+> + * struct dpu_hw_blk - opaque hardware block object
+> + */
+> +struct dpu_hw_blk {
+> +	/* opaque */
+> +};
+> +
+>   /**
+>    * struct dpu_hw_scaler3_de_cfg : QSEEDv3 detail enhancer configuration
+>    * @enable:         detail enhancer enable/disable
