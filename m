@@ -2,70 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4193C5526BA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jun 2022 23:51:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 94116552875
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jun 2022 02:01:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242451AbiFTVvz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Jun 2022 17:51:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52752 "EHLO
+        id S245221AbiFUABV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Jun 2022 20:01:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37122 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229608AbiFTVvy (ORCPT
+        with ESMTP id S244334AbiFUABU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Jun 2022 17:51:54 -0400
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EED581A064
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jun 2022 14:51:52 -0700 (PDT)
-Received: by mail-lj1-x22f.google.com with SMTP id j22so6731389ljg.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jun 2022 14:51:52 -0700 (PDT)
+        Mon, 20 Jun 2022 20:01:20 -0400
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C58DD13D4A
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jun 2022 17:01:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=5VB+OjNM0FgonA9OHE0Kg6JQZj4dnCquoYDOQxZe7mo=;
-        b=cSQ/oyUJ0l8bbipEuGZvIJbKdKDyUZMNlwVg8LRafAdPRUa9D0djloP235lZUMRwDw
-         jkwaAYtU8t3g8YuYJdS2FZQrwcyVIJgxS6yZ227PYhN3yWad1AqT6BpZ1YFeqRIM+ASv
-         1DyE29iwPK17YCir+i3cl2T8kumxk9VIfX8hsMl7YD9PrMWrXB+5n36815k+usCQFwsJ
-         MthIcOk+TC8tuata+ssCePg0xWkbggqN7EJ8Ejj55/4XDWNwPN/jNXD0BDjXMJByJCLY
-         jXzIABNP1yLrVbVaDiEU2LdU0UiWWtfRM0gypEMQaFl3sqsi5eRICLOqzKzgcLoUo2sU
-         yZwQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=5VB+OjNM0FgonA9OHE0Kg6JQZj4dnCquoYDOQxZe7mo=;
-        b=MyufGT7mspAvxYjbSIC3eTbaUa0QQflxvwZn4/JZPUI93RFmtMgyz/cyCn0+K+SFzO
-         xXRLQZxE3MK/+8ECxVQdeXfMfAoN8ZoLDPUdAUJJqkN1js8VYpGHhKyc9f89/F9cedFi
-         0l7CDlfeHPw/0BoSrF5x8QHVNf32D0Cr3f7yDTuzPOWqmbr8Y8k16AEXqxDk2eieXG52
-         BYJomGC+bCOj0t4mqpOaJkdEMqaXGRDuJnETtX1mOHXCvqqUo/JhIIzpm2U7WKJBy7hs
-         PdYL9i+UZ0sK9RO/8PGc5UOLCVbz05PVAd/U3+WLgUSkLBFEmLdHG7xFL+lgXTmpwbe0
-         tYKA==
-X-Gm-Message-State: AJIora8t4sAk0qtJRaWk/gKAC6p2taWTBAeNlgotmuW92L2Ku70mnhpU
-        EMh/OSxa6lBAkr4c1RkFx9i+nA==
-X-Google-Smtp-Source: AGRyM1vMoxB1T2TWeP+vflMBzhmgPmXF5Lj32pDYPWXE9f/D85wvLBD/f/9hzHWJX5L/IGNQX5slig==
-X-Received: by 2002:a2e:bf02:0:b0:25a:6348:95c6 with SMTP id c2-20020a2ebf02000000b0025a634895c6mr6553256ljr.183.1655761911351;
-        Mon, 20 Jun 2022 14:51:51 -0700 (PDT)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id s30-20020a195e1e000000b00479307e4a1bsm1897989lfb.135.2022.06.20.14.51.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Jun 2022 14:51:50 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Taniya Das <quic_tdas@quicinc.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, Ansuel Smith <ansuelsmth@gmail.com>
-Subject: [PATCH] clk: qcom: gcc-ipq806x: use parent_data for the last remaining entry
-Date:   Tue, 21 Jun 2022 00:51:50 +0300
-Message-Id: <20220620215150.1875557-1-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.35.1
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1655769678; x=1687305678;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=U58Lb2CGxNevpu0nzxDmrMNGM8rfY9T66uO2KszRmoc=;
+  b=D/6/PmLVH3tnQ6bnsdq8UkjiBZa8SuQE9w/ZaFFHRoGDD5y7cEKeDcrH
+   diGczlHYJ3waNSivwegHY5LxfPKWISeYqgq9coxAlO3tkAxrwLji+HRiL
+   lF1u0PydAEuCM9UEpaZ5dUJoAGgJ9k108/LmHwJQF89wj18/N2jdnGPo0
+   8=;
+Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 20 Jun 2022 17:01:18 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Jun 2022 17:01:17 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Mon, 20 Jun 2022 17:01:16 -0700
+Received: from [10.111.166.89] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Mon, 20 Jun
+ 2022 17:01:14 -0700
+Message-ID: <53b5e687-58d8-acdb-c631-022b11a4275e@quicinc.com>
+Date:   Mon, 20 Jun 2022 17:01:12 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [PATCH v1 1/4] drm/msm/dpu: drop xin_id from struct
+ dpu_hw_blk_reg_map
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+CC:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20220601161349.1517667-1-dmitry.baryshkov@linaro.org>
+ <20220601161349.1517667-2-dmitry.baryshkov@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20220601161349.1517667-2-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -74,31 +73,32 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Use parent_data for the last remaining entry (pll4). This clock is
-provided by the lcc device.
 
-Fixes: cb02866f9a74 ("clk: qcom: gcc-ipq806x: convert parent_names to parent_data")
-Cc: Ansuel Smith <ansuelsmth@gmail.com>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/clk/qcom/gcc-ipq806x.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/clk/qcom/gcc-ipq806x.c b/drivers/clk/qcom/gcc-ipq806x.c
-index 718de17a1e60..6447f3e81b55 100644
---- a/drivers/clk/qcom/gcc-ipq806x.c
-+++ b/drivers/clk/qcom/gcc-ipq806x.c
-@@ -79,7 +79,9 @@ static struct clk_regmap pll4_vote = {
- 	.enable_mask = BIT(4),
- 	.hw.init = &(struct clk_init_data){
- 		.name = "pll4_vote",
--		.parent_names = (const char *[]){ "pll4" },
-+		.parent_data = &(const struct clk_parent_data){
-+			.fw_name = "pll4", .name = "pll4",
-+		},
- 		.num_parents = 1,
- 		.ops = &clk_pll_vote_ops,
- 	},
--- 
-2.35.1
-
+On 6/1/2022 9:13 AM, Dmitry Baryshkov wrote:
+> Drop the unused field xin_id.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h | 2 --
+>   1 file changed, 2 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h
+> index 550b2e2b3e34..e8adb118fa85 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h
+> @@ -20,13 +20,11 @@
+>    * @base_off:     mdp register mapped offset
+>    * @blk_off:      pipe offset relative to mdss offset
+>    * @length        length of register block offset
+> - * @xin_id        xin id
+>    */
+>   struct dpu_hw_blk_reg_map {
+>   	void __iomem *base_off;
+>   	u32 blk_off;
+>   	u32 length;
+> -	u32 xin_id;
+>   	u32 log_mask;
+>   };
+>   
