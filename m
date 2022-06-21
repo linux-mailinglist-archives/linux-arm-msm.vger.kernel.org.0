@@ -2,104 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4411D553377
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jun 2022 15:19:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 51BE35535D1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jun 2022 17:21:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351361AbiFUNTq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Jun 2022 09:19:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44512 "EHLO
+        id S1352650AbiFUPVS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Jun 2022 11:21:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59146 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351410AbiFUNTS (ORCPT
+        with ESMTP id S237311AbiFUPVS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Jun 2022 09:19:18 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2C7522505;
-        Tue, 21 Jun 2022 06:18:06 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 4EFB1B816BF;
-        Tue, 21 Jun 2022 13:18:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48233C3411C;
-        Tue, 21 Jun 2022 13:18:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1655817484;
-        bh=RtUe+YE8cUHP2cPCHPPT+9RzwFZCRXFfUKZJSO4gf7A=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=tY4G5uLg/ZgLvp3Rin3eVnNTL+6ffuGuM0DF/xs+uJ5AD/EgXB6yUvHHwCOv03jZs
-         xJrB171Um3I/ZrL6YgamfNN4i8iz4Bj4OUXN2mcE9cxhhhD8fCrnp7bG3MOXD9C7Dn
-         yhGEy6kzOwjzyTCLd8QOSFhop9Ww1qDkrvbzXl6baPtmNZevuFLFG6i6TU2LmK41pr
-         jGh8OfBXxdkrFg383LHvqtu+pqM2HbzoloesbLQke+xMJvfgtm3CPIu3fC7MsN9wdt
-         aHHjhRskI1C6hQ5QVqu/aOveTtJj7OlGAZGJxhyIOIrUOc7ry9eEuiqxZO4UilW5BJ
-         QJakkvvyAGAVQ==
-Date:   Tue, 21 Jun 2022 18:47:51 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Slark Xiao <slark_xiao@163.com>
-Cc:     quic_hemantk@quicinc.com, gregkh@linuxfoundation.org,
-        loic.poulain@linaro.org, mhi@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        christophe.jaillet@wanadoo.fr
-Subject: Re: [PATCH] bus: mhi: host: Add support for Cinterion MV31-W with
- new device ID
-Message-ID: <20220621131751.GD17181@thinkpad>
-References: <20220601061915.10946-1-slark_xiao@163.com>
+        Tue, 21 Jun 2022 11:21:18 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95CD328705;
+        Tue, 21 Jun 2022 08:21:16 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id g27so12782612wrb.10;
+        Tue, 21 Jun 2022 08:21:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:from:to:cc:subject:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=qd+fXNIigO6bT/TI4/YvAL8F3wpHGElIc1OVu6S8MEo=;
+        b=hm+qUkm+3WNmF/VXhDTQ7wkhJUBeAZiFDPrDnEp8BWAeR8d3pFOZeDGCyK1N39ydx0
+         yn8pHHS0DXq3j8mR/JozSCkdo9RTvoNhnzYbPtyzqGiyQzxGCzmQzCBrM7T24pHY7K/m
+         7fUZHwx7l0mi4092IciMkNS+PfTw1X6n0fxqXrB+vDJyS/Ydl2MnVH38Awygy9hd1y3K
+         L4jcq8kOeXqn0m/mHeM53cn+C1yzvT29hbEVXUQK/C6bcOoHaUwdq32A+AEt6677EbVr
+         toLz3Yz2L/2ZVww0CFftAe58d2/nT4CH26d/AAAKG3nahAP4N6Bt0/KJMX1XhRQB3VNI
+         tLag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:from:to:cc:subject:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=qd+fXNIigO6bT/TI4/YvAL8F3wpHGElIc1OVu6S8MEo=;
+        b=uBpcz58g2MTjqG/E45Pz0RLak2h7up0vpt4JrE7BIbhkBi5F/E93Bu+CbUTq1ATHhT
+         neih6YfBldgSmh/p3BDUSEhdjzErUFfwsOEPzv8X9PqIPrXmqWsv+a9EuydFsNRJVZ7w
+         ewcRGtrO9HEo1i1xOcI1sQxoc6lQswAEqznpCpBBXQinNmOXymiXZGsb9y71BwuRiYkc
+         M1O3Qy+7ruBX/PMJEIPdji4fX70OgNxxjXN7dfh68X9mATyNSiDbJbjCgIJJF1Qzkxjk
+         6bBCtTtj47UfD+WdiIPHQ7v1kaWNphLcnl/APaxfk/vYEatRDLwhhGfYWBRDF4g2oaum
+         2TOA==
+X-Gm-Message-State: AJIora8ACHyB5JxYq4zPRk+2Ie+iXSP69OES8mjobAoAE1FUEaCBND9n
+        W5wJHiVSGuzR5xetp9ZjY8w=
+X-Google-Smtp-Source: AGRyM1tQfP7qGqIvY8mVsTifRoAdgXmtbjWBgNERiEbu572ag1ss0LEijGLxMRoKfsRanU1QFaSf7g==
+X-Received: by 2002:adf:e801:0:b0:21b:873f:ed62 with SMTP id o1-20020adfe801000000b0021b873fed62mr17015242wrm.17.1655824875093;
+        Tue, 21 Jun 2022 08:21:15 -0700 (PDT)
+Received: from Ansuel-xps. (93-42-70-190.ip85.fastwebnet.it. [93.42.70.190])
+        by smtp.gmail.com with ESMTPSA id f23-20020a7bcc17000000b0039740903c39sm18405298wmh.7.2022.06.21.08.21.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 21 Jun 2022 08:21:14 -0700 (PDT)
+Message-ID: <62b1e1ea.1c69fb81.aafda.3244@mx.google.com>
+X-Google-Original-Message-ID: <YrHh6YN6WiGOH1d4@Ansuel-xps.>
+Date:   Tue, 21 Jun 2022 17:21:13 +0200
+From:   Christian Marangi <ansuelsmth@gmail.com>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH] clk: qcom: gcc-ipq806x: use parent_data for the last
+ remaining entry
+References: <20220620215150.1875557-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20220601061915.10946-1-slark_xiao@163.com>
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+In-Reply-To: <20220620215150.1875557-1-dmitry.baryshkov@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jun 01, 2022 at 02:19:15PM +0800, Slark Xiao wrote:
-
-Please use pci_generic in the subject as this change belongs to that driver:
-
-bus: mhi: host: pci_generic: Add Cinterion MV31-W with new baseline
-
-> As Thales would use a new baseline, so we need to add
-> a new device ID to separate it from previous.
+On Tue, Jun 21, 2022 at 12:51:50AM +0300, Dmitry Baryshkov wrote:
+> Use parent_data for the last remaining entry (pll4). This clock is
+> provided by the lcc device.
 > 
-
-Thales refers to Cinterion MV31-W, right? Better just use Cinterion MV31-W.
-Like,
-
-Cinterion MV31-W modem with a new baseline (firmware) is sold as a separate
-product with different device ID. So add support for the same reusing the
-config.
-
-Thanks,
-Mani
-
-> Signed-off-by: Slark Xiao <slark_xiao@163.com>
+> Fixes: cb02866f9a74 ("clk: qcom: gcc-ipq806x: convert parent_names to parent_data")
+> Cc: Ansuel Smith <ansuelsmth@gmail.com>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->  drivers/bus/mhi/host/pci_generic.c | 3 +++
->  1 file changed, 3 insertions(+)
+>  drivers/clk/qcom/gcc-ipq806x.c | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
 > 
-> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-> index 6fbc5915ea36..a2a4fd2cd13d 100644
-> --- a/drivers/bus/mhi/host/pci_generic.c
-> +++ b/drivers/bus/mhi/host/pci_generic.c
-> @@ -578,6 +578,9 @@ static const struct pci_device_id mhi_pci_id_table[] = {
->  	/* MV31-W (Cinterion) */
->  	{ PCI_DEVICE(0x1269, 0x00b3),
->  		.driver_data = (kernel_ulong_t) &mhi_mv31_info },
-> +	/* MV31-W (Cinterion), based on new baseline */
-> +	{ PCI_DEVICE(0x1269, 0x00b4),
-> +		.driver_data = (kernel_ulong_t) &mhi_mv31_info },
->  	/* MV32-WA (Cinterion) */
->  	{ PCI_DEVICE(0x1269, 0x00ba),
->  		.driver_data = (kernel_ulong_t) &mhi_mv32_info },
+> diff --git a/drivers/clk/qcom/gcc-ipq806x.c b/drivers/clk/qcom/gcc-ipq806x.c
+> index 718de17a1e60..6447f3e81b55 100644
+> --- a/drivers/clk/qcom/gcc-ipq806x.c
+> +++ b/drivers/clk/qcom/gcc-ipq806x.c
+> @@ -79,7 +79,9 @@ static struct clk_regmap pll4_vote = {
+>  	.enable_mask = BIT(4),
+>  	.hw.init = &(struct clk_init_data){
+>  		.name = "pll4_vote",
+> -		.parent_names = (const char *[]){ "pll4" },
+> +		.parent_data = &(const struct clk_parent_data){
+> +			.fw_name = "pll4", .name = "pll4",
+> +		},
+>  		.num_parents = 1,
+>  		.ops = &clk_pll_vote_ops,
+>  	},
 > -- 
-> 2.25.1
+> 2.35.1
 > 
+
+Hi my intention was finding a way to directly reference the hw clk from
+the lcc driver instead of using fw_name/name parent data. Wonder if that
+would be a better solution... Seems wrong to me to eventually add also
+the pll4 clk in the dts to correctly use the fw_name definition (when
+that will be fixed in the ipq8064 dtsi)
 
 -- 
-மணிவண்ணன் சதாசிவம்
+	Ansuel
