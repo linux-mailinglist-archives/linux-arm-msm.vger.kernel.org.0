@@ -2,74 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 313535555B0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jun 2022 23:06:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2148E556DC8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jun 2022 23:22:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237329AbiFVVGR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Jun 2022 17:06:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44854 "EHLO
+        id S234545AbiFVVWI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Jun 2022 17:22:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52030 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231616AbiFVVGQ (ORCPT
+        with ESMTP id S230465AbiFVVWH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Jun 2022 17:06:16 -0400
-Received: from mail-oa1-x31.google.com (mail-oa1-x31.google.com [IPv6:2001:4860:4864:20::31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF409FD8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jun 2022 14:06:15 -0700 (PDT)
-Received: by mail-oa1-x31.google.com with SMTP id 586e51a60fabf-101b4f9e825so19590785fac.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jun 2022 14:06:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=76nBAAwaqrTlWdOy83Weff0cq7sUUQgoIpTvu/weE60=;
-        b=ws5vzg8YDl2rVjeKq0/ejT9iB0I0EBany/LQ3Zf4sz4GXU0pHEpuNIus47qOCFGzA0
-         NNNOkrA7SQ3DBDnWEswpC2FowcUH9h8K0n0uGjPrJtpslkITCGJQCjVrDoKETVV6wQhA
-         iizKH7cph+Dcn+Mv1PhYuwJmyPJex45D5D7t3SX/qL67Kos+qLIV9uF61L14v/qSercK
-         9/02wKB2UQtts+X5zqB3NBDeBBlLjESQlovWqx6izlmJupkN0ycQn7LBJGzsP3c4pbcE
-         C38/+NpT9MNtFoj+QDlZs4HkaICbFuIok9kiaFdP4J+C9LTkeNBER+6o/iiuaUVP2jej
-         CU3A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=76nBAAwaqrTlWdOy83Weff0cq7sUUQgoIpTvu/weE60=;
-        b=utD3vjBT3EycZEi9kwg1E9H4lSDrmMpxo5139fOjy3SRRzEWbg0nbRiBtM/JmQO3PW
-         jXezWEnVLCAYheh7v2GpgerM/4rM4VkpAFcYrc9+3XCuNPgGlJ8pAG1gH4lG2yNFSsoR
-         00B6sBXgbyyHvbzXiKiyiVriT+qieZNVK7meo1heywmb4OoaG0mg5HthxBEAnefxG/MB
-         Kvbet0wn8lQJqfnEtPX2ZfbgDHD89FMEkq+zEHuGt5vYQ3vs7RpE6R+dBvMLRw7Mfnjl
-         OVq7IZQ3ZtZhRZqRrHiwCOoPaH/e1A7QSPxzX6YjPXRZWB+yeHWyCP15XYPkrDvEM86p
-         pqnQ==
-X-Gm-Message-State: AJIora+bh1muV+Vl586pJfHt3M+8AaG7V3XEAIqUQVjRKvrtYmpVx353
-        GvRKefq7CC1Y6N3PTycpWDdyKQ==
-X-Google-Smtp-Source: AGRyM1tXfsG7aKhHAIKjiAxDLVyWaekfv1oJVncfIz0/sdO+UnQeg2nhSH8A+Kraebr4HFfDUTaG7g==
-X-Received: by 2002:a05:6870:d791:b0:101:ad64:1e74 with SMTP id bd17-20020a056870d79100b00101ad641e74mr216310oab.162.1655931975221;
-        Wed, 22 Jun 2022 14:06:15 -0700 (PDT)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id b28-20020a0568301dfc00b0061691db3807sm521774otj.23.2022.06.22.14.06.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Jun 2022 14:06:14 -0700 (PDT)
-Date:   Wed, 22 Jun 2022 16:06:12 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Johan Hovold <johan@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 1/6] dt-bindings: arm: qcom: Document additional
- sc8280xp devices
-Message-ID: <YrOERL276MFbG2mb@builder.lan>
-References: <20220622041224.627803-1-bjorn.andersson@linaro.org>
- <20220622041224.627803-2-bjorn.andersson@linaro.org>
- <YrLXCx90bn7Id4Bn@hovoldconsulting.com>
+        Wed, 22 Jun 2022 17:22:07 -0400
+Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0CD9E1CB2C;
+        Wed, 22 Jun 2022 14:22:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1655932926; x=1687468926;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=wbr1pl9iV24n71aLN4ufD61f/bpnnMShwneyl4/fWGA=;
+  b=bwKae3CUuC9IdN2uQOlC6U5CsF9KIRAIYavnleRAqTJl+fhf35ACxi0g
+   KgL99B9BGNlkj9ehOoY+L34ocuu9K+19J6gaTUfqSjV3YQUf6glFrRQLb
+   8c+jaPl+IqD7OXvWsOC0dunKA2pWW/2roY2oZX29Dl7boc2YfvkZazmvi
+   AL54Iy2+ic4XpGP2pzrqmm4cX3dO6OXjHF9OIY06Y4g5PUebXjizw8MUp
+   G10SYYicNcgo7liZDavW8wD/ezXZjzzrIffVwYa5XNvyMSoao+DWTb81T
+   SUUNivuNFUSq+7SANNPiiMxO9UQ/pZfjokn3nJGRHelgMRDeP+lTfw3VJ
+   w==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10386"; a="366871337"
+X-IronPort-AV: E=Sophos;i="5.92,212,1650956400"; 
+   d="scan'208";a="366871337"
+Received: from fmsmga003.fm.intel.com ([10.253.24.29])
+  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Jun 2022 14:22:05 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.92,212,1650956400"; 
+   d="scan'208";a="677755811"
+Received: from lkp-server02.sh.intel.com (HELO a67cc04a5eeb) ([10.239.97.151])
+  by FMSMGA003.fm.intel.com with ESMTP; 22 Jun 2022 14:22:02 -0700
+Received: from kbuild by a67cc04a5eeb with local (Exim 4.95)
+        (envelope-from <lkp@intel.com>)
+        id 1o47nW-0001hj-22;
+        Wed, 22 Jun 2022 21:22:02 +0000
+Date:   Thu, 23 Jun 2022 05:21:15 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Vinod Polimera <quic_vpolimer@quicinc.com>, y@qualcomm.com,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
+Cc:     llvm@lists.linux.dev, kbuild-all@lists.01.org,
+        Vinod Polimera <quic_vpolimer@quicinc.com>,
+        linux-kernel@vger.kernel.org, robdclark@gmail.com,
+        dianders@chromium.org, swboyd@chromium.org,
+        quic_kalyant@quicinc.com, dmitry.baryshkov@linaro.org,
+        quic_sbillaka@quicinc.com
+Subject: Re: [v3 5/5] drm/msm/disp/dpu1: add PSR support for eDP interface in
+ dpu driver
+Message-ID: <202206230551.H0oXeV2E-lkp@intel.com>
+References: <1655808800-3996-6-git-send-email-quic_vpolimer@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <YrLXCx90bn7Id4Bn@hovoldconsulting.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+In-Reply-To: <1655808800-3996-6-git-send-email-quic_vpolimer@quicinc.com>
+X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -77,56 +71,93 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 22 Jun 03:47 CDT 2022, Johan Hovold wrote:
+Hi Vinod,
 
-> On Tue, Jun 21, 2022 at 09:12:19PM -0700, Bjorn Andersson wrote:
-> > Add the CRD (Customer Reference Design?) and the Lenovo Thinkpad X13s to
-> 
-> Qualcomm refers to "Compute Reference Design", for example, in commit
-> 427b249504ea ("arm64: dts: qcom: sc7280-crd: Add device tree files for
-> CRD").
-> 
+Thank you for the patch! Perhaps something to improve:
 
-I'll align with that expansion of the abbreviation, thanks.
+[auto build test WARNING on drm/drm-next]
+[also build test WARNING on drm-exynos/exynos-drm-next drm-tip/drm-tip tegra-drm/drm/tegra/for-next linus/master v5.19-rc3 next-20220622]
+[cannot apply to drm-intel/for-linux-next airlied/drm-next]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch]
 
-> > the valid device compatibles found on the sc8280xp platform.
-> > 
-> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > ---
-> > 
-> > Changes since v1:
-> > - Added the two missing board compatibles
-> > 
-> >  Documentation/devicetree/bindings/arm/qcom.yaml | 2 ++
-> >  1 file changed, 2 insertions(+)
-> > 
-> > diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
-> > index 5c06d1bfc046..6ec7521be19d 100644
-> > --- a/Documentation/devicetree/bindings/arm/qcom.yaml
-> > +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
-> > @@ -238,6 +238,8 @@ properties:
-> >  
-> >        - items:
-> >            - enum:
-> > +              - lenovo,thinkpad-x13s
-> > +              - qcom,sc8280xp-crd
-> >                - qcom,sc8280xp-qrd
-> 
-> I believe the "qcom,sc8280xp-qrd" entry was a mistake and should have
-> been "-crd" all along? Perhaps you should remove that entry in this
-> patch.
+url:    https://github.com/intel-lab-lkp/linux/commits/Vinod-Polimera/drm-msm-dp-Add-basic-PSR-support-for-eDP/20220621-195406
+base:   git://anongit.freedesktop.org/drm/drm drm-next
+config: arm64-randconfig-r025-20220622 (https://download.01.org/0day-ci/archive/20220623/202206230551.H0oXeV2E-lkp@intel.com/config)
+compiler: clang version 15.0.0 (https://github.com/llvm/llvm-project 8b8d126598ce7bd5243da7f94f69fa1104288bee)
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # install arm64 cross compiling tool for clang build
+        # apt-get install binutils-aarch64-linux-gnu
+        # https://github.com/intel-lab-lkp/linux/commit/2c3c31343481a4faf2402cf513c85fb7d75ce205
+        git remote add linux-review https://github.com/intel-lab-lkp/linux
+        git fetch --no-tags linux-review Vinod-Polimera/drm-msm-dp-Add-basic-PSR-support-for-eDP/20220621-195406
+        git checkout 2c3c31343481a4faf2402cf513c85fb7d75ce205
+        # save the config file
+        mkdir build_dir && cp config build_dir/.config
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=arm64 SHELL=/bin/bash
 
-It was a mistake on my part adding the QRD when apparently I had a CRD,
-but I still believe both exists, so I'd prefer to just keep them around.
+If you fix the issue, kindly add following tag where applicable
+Reported-by: kernel test robot <lkp@intel.com>
 
-Regards,
-Bjorn
+All warnings (new ones prefixed by >>):
 
-> 
-> >            - const: qcom,sc8280xp
-> 
-> Looks good otherwise:
-> 
-> Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-> 
-> Johan
+>> drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c:1064:3: warning: add explicit braces to avoid dangling else [-Wdangling-else]
+                   drm_for_each_encoder_mask(encoder, crtc->dev, crtc->state->encoder_mask)
+                   ^
+   include/drm/drm_encoder.h:314:3: note: expanded from macro 'drm_for_each_encoder_mask'
+                   for_each_if ((encoder_mask) & drm_encoder_mask(encoder))
+                   ^
+   include/drm/drm_util.h:63:53: note: expanded from macro 'for_each_if'
+   #define for_each_if(condition) if (!(condition)) {} else
+                                                       ^
+   1 warning generated.
+
+
+vim +1064 drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  1032  
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  1033  static void dpu_crtc_enable(struct drm_crtc *crtc,
+351f950db4ab28 Maxime Ripard     2020-10-08  1034  		struct drm_atomic_state *state)
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  1035  {
+e12e5263bf1d8d Rob Clark         2020-09-07  1036  	struct dpu_crtc *dpu_crtc = to_dpu_crtc(crtc);
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  1037  	struct drm_encoder *encoder;
+35c719da95c0d2 Rob Clark         2020-08-11  1038  	bool request_bandwidth = false;
+2c3c31343481a4 Vinod Polimera    2022-06-21  1039  	struct drm_crtc_state *old_crtc_state;
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  1040  
+2c3c31343481a4 Vinod Polimera    2022-06-21  1041  	old_crtc_state = drm_atomic_get_old_crtc_state(state, crtc);
+b77d0f0d4ee757 Sean Paul         2018-11-16  1042  	pm_runtime_get_sync(crtc->dev->dev);
+b77d0f0d4ee757 Sean Paul         2018-11-16  1043  
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  1044  	DRM_DEBUG_KMS("crtc%d\n", crtc->base.id);
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  1045  
+241b507c166fef Rob Clark         2019-08-20  1046  	drm_for_each_encoder_mask(encoder, crtc->dev, crtc->state->encoder_mask) {
+241b507c166fef Rob Clark         2019-08-20  1047  		/* in video mode, we hold an extra bandwidth reference
+241b507c166fef Rob Clark         2019-08-20  1048  		 * as we cannot drop bandwidth at frame-done if any
+241b507c166fef Rob Clark         2019-08-20  1049  		 * crtc is being used in video mode.
+241b507c166fef Rob Clark         2019-08-20  1050  		 */
+241b507c166fef Rob Clark         2019-08-20  1051  		if (dpu_encoder_get_intf_mode(encoder) == INTF_MODE_VIDEO)
+241b507c166fef Rob Clark         2019-08-20  1052  			request_bandwidth = true;
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  1053  		dpu_encoder_register_frame_event_callback(encoder,
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  1054  				dpu_crtc_frame_event_cb, (void *)crtc);
+241b507c166fef Rob Clark         2019-08-20  1055  	}
+241b507c166fef Rob Clark         2019-08-20  1056  
+241b507c166fef Rob Clark         2019-08-20  1057  	if (request_bandwidth)
+241b507c166fef Rob Clark         2019-08-20  1058  		atomic_inc(&_dpu_crtc_get_kms(crtc)->bandwidth_ref);
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  1059  
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  1060  	trace_dpu_crtc_enable(DRMID(crtc), true, dpu_crtc);
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  1061  	dpu_crtc->enabled = true;
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  1062  
+2c3c31343481a4 Vinod Polimera    2022-06-21  1063  	if (!old_crtc_state->self_refresh_active)
+a796ba2cb3dde3 Sean Paul         2018-11-16 @1064  		drm_for_each_encoder_mask(encoder, crtc->dev, crtc->state->encoder_mask)
+a796ba2cb3dde3 Sean Paul         2018-11-16  1065  			dpu_encoder_assign_crtc(encoder, crtc);
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  1066  
+2f2eb723b50b4d Rajesh Yadav      2018-07-13  1067  	/* Enable/restore vblank irq handling */
+2f2eb723b50b4d Rajesh Yadav      2018-07-13  1068  	drm_crtc_vblank_on(crtc);
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  1069  }
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  1070  
+
+-- 
+0-DAY CI Kernel Test Service
+https://01.org/lkp
