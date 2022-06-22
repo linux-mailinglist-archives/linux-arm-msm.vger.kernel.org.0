@@ -2,78 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6FC43554EB7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jun 2022 17:09:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 02E90554EC1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jun 2022 17:11:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1359047AbiFVPJB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Jun 2022 11:09:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42938 "EHLO
+        id S1359119AbiFVPK5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Jun 2022 11:10:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44928 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1359164AbiFVPIl (ORCPT
+        with ESMTP id S1359111AbiFVPKy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Jun 2022 11:08:41 -0400
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E701C2DA89
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jun 2022 08:08:36 -0700 (PDT)
-Received: by mail-ej1-x632.google.com with SMTP id u15so7238673ejc.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jun 2022 08:08:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :references:from:in-reply-to:content-transfer-encoding;
-        bh=GbOJQbCPXXFQWcBB2NA2p6q5ubRmVUJFNDbSoq8WWes=;
-        b=QpzQ8IqF4+E6u9y6gcaykwSNvt+WZSEw6Qm8CfS5bdebU8w50WYSD+LhSNsFo7IqYI
-         wc6naJWlvFAenLoP/BlvW5dhD6KEHEwxGVTL4aovxDOwzHZUJQPPGVXy61e4C/XKkKdU
-         Kj0LOS5tZAHOLgOhXpIi1ia4LgBZasqViFzA7H8j/KGZTq5ySkG+Z2SQflqKiPvI1vvB
-         DDro1YRWeEmG4AqXPWBvXtuAMDjaYfsjKbLpJ0Hbw1ha9rnwOkbmkawRS8jnTw4cuSu/
-         bbDs3dgNQx3IF+4QSKhdWaTGBcB2dmNpAyALq5zGTwlQ6iWqCnqw1CTkUz2ogTEKq9/o
-         InKQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=GbOJQbCPXXFQWcBB2NA2p6q5ubRmVUJFNDbSoq8WWes=;
-        b=6o9/9VDtPjcoyOpv21RsCTIBM+MJxyoppRUi8XMqrKbqN2dkhHPt0FHhYVHGED3R0b
-         zo0C8Km0OZbytPjcAhYv16TOj9abUm2WNHS7XXDP0H95RAKkG/k1WZFNVxPswnVJqmL1
-         uUpTCE59X+hmSrn+4g7uHE/m6y/clzoZpMhe5qMxbFFipBTquneGzy4HAS44JGKF24DW
-         B2P7+lCuMJDVHw9YtHQKo6Q70vN/ObodMF7kGoI7vD3yticOwVEOTe9ax8LbdJE8sjNV
-         IpwNYeuvzAgcvHhr4qxs/hiH42xdBzAD95blQ7P3+L27LRiQBWCahzMr2wpPUL+mcvUL
-         MR+A==
-X-Gm-Message-State: AJIora/Y6jyfpRafmNzs+tse51y4Fco7gXO2ztdysMPPtbzZkZ1emtMv
-        Yfef/+JrUscSTep/4Q0DYrs5zg==
-X-Google-Smtp-Source: AGRyM1uQtjqkSd7z3x0Z+zwX6gwY0VPrtqmnMZ43RgvyIsvA51gBRnK4Lr4IJG+qwTZA2wb7ORRFQQ==
-X-Received: by 2002:a17:906:5d0b:b0:722:ebcc:b10c with SMTP id g11-20020a1709065d0b00b00722ebccb10cmr3488593ejt.175.1655910515407;
-        Wed, 22 Jun 2022 08:08:35 -0700 (PDT)
-Received: from [192.168.0.226] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id t24-20020a056402021800b004356a647d08sm11299011edv.94.2022.06.22.08.08.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 Jun 2022 08:08:35 -0700 (PDT)
-Message-ID: <c9ec14db-1ddd-7316-4ef6-9d57509f3fad@linaro.org>
-Date:   Wed, 22 Jun 2022 17:08:33 +0200
+        Wed, 22 Jun 2022 11:10:54 -0400
+Received: from relay01.th.seeweb.it (relay01.th.seeweb.it [IPv6:2001:4b7a:2000:18::162])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CC663DDFA;
+        Wed, 22 Jun 2022 08:10:53 -0700 (PDT)
+Received: from [192.168.1.101] (abxi223.neoplus.adsl.tpnet.pl [83.9.2.223])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 4C27420569;
+        Wed, 22 Jun 2022 17:10:51 +0200 (CEST)
+Message-ID: <51965fa3-d146-70f1-2ad8-db6197989348@somainline.org>
+Date:   Wed, 22 Jun 2022 17:10:50 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.10.0
-Subject: Re: [PATCH V2 3/8] clk: qcom: Add Global Clock controller (GCC)
- driver for IPQ5018
+Subject: Re: [PATCH v2 4/6] arm64: dts: qcom: sc8280xp: Add reference device
 Content-Language: en-US
-To:     Sricharan R <quic_srichara@quicinc.com>, agross@kernel.org,
-        bjorn.andersson@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, mturquette@baylibre.com,
-        sboyd@kernel.org, linus.walleij@linaro.org,
-        catalin.marinas@arm.com, p.zabel@pengutronix.de,
-        quic_varada@quicinc.com, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-References: <20220621161126.15883-1-quic_srichara@quicinc.com>
- <20220621161126.15883-4-quic_srichara@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220621161126.15883-4-quic_srichara@quicinc.com>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Johan Hovold <johan@kernel.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20220622041224.627803-1-bjorn.andersson@linaro.org>
+ <20220622041224.627803-5-bjorn.andersson@linaro.org>
+ <099cc82f-d52f-315f-189d-bcc40c1afd49@somainline.org>
+ <YrMccQXwsz/zC/gl@hovoldconsulting.com>
+ <9d0c1897-195f-0548-ea5d-ffc35768f518@somainline.org>
+ <b2c9faf0-95a8-772f-c211-f1599b35f8f8@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+In-Reply-To: <b2c9faf0-95a8-772f-c211-f1599b35f8f8@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -82,116 +57,57 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21/06/2022 18:11, Sricharan R wrote:
-> From: Varadarajan Narayanan <quic_varada@quicinc.com>
+
+
+On 22.06.2022 16:48, Krzysztof Kozlowski wrote:
+> On 22/06/2022 16:36, Konrad Dybcio wrote:
+>>
+>>
+>> On 22.06.2022 15:43, Johan Hovold wrote:
+>>> On Wed, Jun 22, 2022 at 02:33:02PM +0200, Konrad Dybcio wrote:
+>>>> On 22.06.2022 06:12, Bjorn Andersson wrote:
+>>>
+>>>>> +&qup2_i2c5 {
+>>>>> +	clock-frequency = <400000>;
+>>>>> +
+>>>>> +	pinctrl-names = "default";
+>>>>> +	pinctrl-0 = <&qup2_i2c5_default>, <&kybd_default>, <&tpad_default>;
+>>>>> +
+>>>>> +	status = "okay";
+>>>>> +
+>>>> I think all device DTs generally have 'status = "okay"' at the beginning. Should we change that?
+>>>>
+>>>
+>>> No, quite the opposite, status go at the end.
+>> Then all other device DTs should be updated, as in dts/qcom/
+>> everybody keeps it first in non-SoC/PMIC files.
 > 
-> Add support for the global clock controller found on IPQ5018
-> based devices.
+> The word "should" is a bit too much here, but I agree, we can update all
+> of them to match one, chosen approach.
 > 
-> Co-developed-by: Sricharan R <quic_srichara@quicinc.com>
-> Signed-off-by: Sricharan R <quic_srichara@quicinc.com>
-> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-
-Thank you for your patch. There is something to discuss/improve.
-
-> ---
->  drivers/clk/qcom/Kconfig       |    7 +
->  drivers/clk/qcom/Makefile      |    1 +
->  drivers/clk/qcom/gcc-ipq5018.c | 3995 ++++++++++++++++++++++++++++++++
->  3 files changed, 4003 insertions(+)
->  create mode 100644 drivers/clk/qcom/gcc-ipq5018.c
+> However the location for "status" property is more important for the
+> definition of nodes in DTSI, because it's the least important piece
+> there and also kind of expected - here go properties + I disable it. For
+> me this is more important.
 > 
-> diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
-> index d01436be6d7a..294fb975db85 100644
-> --- a/drivers/clk/qcom/Kconfig
-> +++ b/drivers/clk/qcom/Kconfig
-> @@ -172,6 +172,13 @@ config IPQ_GCC_8074
->  	  i2c, USB, SD/eMMC, etc. Select this for the root clock
->  	  of ipq8074.
->  
-> +config IPQ_GCC_5018
-> +	tristate "IPQ5018 Global Clock Controller"
-> +	help
-> +	 Support for global clock controller on ipq5018 devices.
-> +	 Say Y if you want to use peripheral devices such as UART, SPI,
-> +	 i2c, USB, SD/eMMC, etc.
-> +
->  config MSM_GCC_8660
->  	tristate "MSM8660 Global Clock Controller"
->  	help
-> diff --git a/drivers/clk/qcom/Makefile b/drivers/clk/qcom/Makefile
-> index 671cf5821af1..33ab4ce9b863 100644
-> --- a/drivers/clk/qcom/Makefile
-> +++ b/drivers/clk/qcom/Makefile
-> @@ -26,6 +26,7 @@ obj-$(CONFIG_IPQ_GCC_4019) += gcc-ipq4019.o
->  obj-$(CONFIG_IPQ_GCC_6018) += gcc-ipq6018.o
->  obj-$(CONFIG_IPQ_GCC_806X) += gcc-ipq806x.o
->  obj-$(CONFIG_IPQ_GCC_8074) += gcc-ipq8074.o
-> +obj-$(CONFIG_IPQ_GCC_5018) += gcc-ipq5018.o
->  obj-$(CONFIG_IPQ_LCC_806X) += lcc-ipq806x.o
->  obj-$(CONFIG_MDM_GCC_9607) += gcc-mdm9607.o
->  obj-$(CONFIG_MDM_GCC_9615) += gcc-mdm9615.o
+> For node redefinition in DTS, I see benefits in two approaches:
+> 1. Let me first enable the node and then configure it.
+> 2. Let me configure the node and enable it.
+I looked around non-qcom device trees and it looks like the common
+consensus is 2. Although I personally visually prefer 1. and it's
+been used in all qcom arm64 DTs to date, I don't think there are any
+blockers for us to switch to 1. going forward to keep it consistent.
 
-(...)
+That's if we want to clean up the existing ones, as changing the rules
+and not applying that to the older files will make for a huge mess as
+time goes on and will unnecessarily prolong the review process (as
+existing DTs are commonly a source of reference and people make
+certain choices based on those).
 
-> +
-> +static int gcc_ipq5018_probe(struct platform_device *pdev)
-> +{
-> +	int ret;
-> +	struct regmap *regmap;
-> +	struct qcom_cc_desc ipq5018_desc = gcc_ipq5018_desc;
-> +
-> +	regmap = qcom_cc_map(pdev, &ipq5018_desc);
-> +	if (IS_ERR(regmap))
-> +		return PTR_ERR(regmap);
-> +
-> +	clk_alpha_pll_configure(&ubi32_pll_main, regmap, &ubi32_pll_config);
-> +
-> +	ret = qcom_cc_really_probe(pdev, &ipq5018_desc, regmap);
+I don't think the DTS specification or the Linux docs explicitly which
+one to choose though.
 
-return qcom_cc_really_probe(....)
-
-> +	if (ret) {
-> +		dev_err(&pdev->dev, "Failed to register ipq5018 GCC clocks\n");
-> +		return ret;
-> +	}
-> +
-> +	dev_info(&pdev->dev, "Registered ipq5018 GCC clocks provider");
-
-No probe success messages. This pollutes the log and there is other
-infrastructure to check for successful probe.
-
-> +
-> +	return ret;
-> +}
-> +
-> +static struct platform_driver gcc_ipq5018_driver = {
-> +	.probe = gcc_ipq5018_probe,
-> +	.driver = {
-> +		.name   = "qcom,gcc-ipq5018",
-> +		.owner  = THIS_MODULE,
-
-No need for owner.
-
-> +		.of_match_table = gcc_ipq5018_match_table,
-> +	},
-> +};
-> +
-> +static int __init gcc_ipq5018_init(void)
-> +{
-> +	return platform_driver_register(&gcc_ipq5018_driver);
-> +}
-> +core_initcall(gcc_ipq5018_init);
-> +
-> +static void __exit gcc_ipq5018_exit(void)
-> +{
-> +	platform_driver_unregister(&gcc_ipq5018_driver);
-> +}
-> +module_exit(gcc_ipq5018_exit);
-> +
-> +MODULE_DESCRIPTION("Qualcomm Technologies, Inc. GCC IPQ5018 Driver");
-> +MODULE_LICENSE("GPL v2");
-
-
-Best regards,
-Krzysztof
+Konrad
+> 
+> Best regards,
+> Krzysztof
