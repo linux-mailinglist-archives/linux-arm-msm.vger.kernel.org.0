@@ -2,95 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4BFB2555148
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jun 2022 18:25:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4AEA95551C7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jun 2022 18:55:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1354065AbiFVQZi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Jun 2022 12:25:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34254 "EHLO
+        id S1376572AbiFVQyU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Jun 2022 12:54:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57904 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241588AbiFVQZh (ORCPT
+        with ESMTP id S1377634AbiFVQyQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Jun 2022 12:25:37 -0400
-Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48DD127CE5;
-        Wed, 22 Jun 2022 09:25:36 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id 96605CE21C5;
-        Wed, 22 Jun 2022 16:25:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B84EC34114;
-        Wed, 22 Jun 2022 16:25:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1655915132;
-        bh=wr8H/XPR1kOwD16IrHY0mrY7tliBGunYubB7Rn8wDao=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=TN4QoDLGAx9uMTaxQ2uFd+UxxVRHlChnFWLc9tsubNyhtv5w9jlHShFr4TdWdbKZT
-         DZqw68xKfmFxTvUR74TI8TZawFBBCv2oC0hshj9Z6F9g1ws/SRaH4CpuqJbAvz1rZa
-         co6vNjgwVCGcPsweyvJF4vaoweIydbbDiY0EWDGHBQppkIC04DF0nTb/n972D6xZZO
-         R8MryKpn7U49K1jtpM3IU6Q2tod+m4xzlCW/vCpI2fRrsOD/3fiRggZBJ2tIaphREu
-         5plW3En8TyUUSNjAAMhgqQPKm8DsO/hrgPM1t4CZ82qqZIVcdAaR1mVc38dMymfqa8
-         EUZVUo4P9UP/g==
-Date:   Wed, 22 Jun 2022 21:55:19 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Slark Xiao <slark_xiao@163.com>
-Cc:     quic_hemantk@quicinc.com, gregkh@linuxfoundation.org,
-        loic.poulain@linaro.org, dnlplm@gmail.com, bbhatt@codeaurora.org,
-        mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] bus: mhi: host: pci_generic: Add Cinterion MV31-W
- with new baseline
-Message-ID: <20220622162519.GD6263@thinkpad>
-References: <20220622032544.17713-1-slark_xiao@163.com>
+        Wed, 22 Jun 2022 12:54:16 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58D4DD80;
+        Wed, 22 Jun 2022 09:54:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1655916855; x=1687452855;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=Mkvb6JV3WucgqjS4lQ47IhKgB1nOOh2VtgzcVyQdrB8=;
+  b=Hu2wpLNF2R1Zn9iDi15j6Hz64syuspCnW9BkVg7HhiTUk1m1QzCtcvoF
+   N7W7FpRNlzUqu6GEKAHU4ehFG7AJI5z4GEr9pbTzbA3LkEUGoRW2UXgRx
+   0cTYAVs0+2xuRj1YLR4uqUxwuYL0TzGI5NIZAKicQjGMCsRAeR0/I1oOd
+   8=;
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 22 Jun 2022 09:54:15 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Jun 2022 09:54:14 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Wed, 22 Jun 2022 09:54:14 -0700
+Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Wed, 22 Jun 2022 09:54:13 -0700
+From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
+To:     <robdclark@gmail.com>, <sean@poorly.run>, <swboyd@chromium.org>,
+        <dianders@chromium.org>, <vkoul@kernel.org>, <daniel@ffwll.ch>,
+        <airlied@linux.ie>, <agross@kernel.org>,
+        <dmitry.baryshkov@linaro.org>, <bjorn.andersson@linaro.org>
+CC:     <quic_abhinavk@quicinc.com>, <quic_aravindh@quicinc.com>,
+        <quic_khsieh@quicinc.com>, <quic_sbillaka@quicinc.com>,
+        <freedreno@lists.freedesktop.org>,
+        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: [PATCH] drm/msm/dp: reset drm_dev to NULL at dp_display_unbind()
+Date:   Wed, 22 Jun 2022 09:54:05 -0700
+Message-ID: <1655916845-31760-1-git-send-email-quic_khsieh@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20220622032544.17713-1-slark_xiao@163.com>
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jun 22, 2022 at 11:25:44AM +0800, Slark Xiao wrote:
-> Cinterion MV31-W modem with a new baseline (firmware) is sold as a separate
-> product with different device ID. So add support for the same reusing the
-> config.
-> 
-> Signed-off-by: Slark Xiao <slark_xiao@163.com>
+During msm initialize phase, dp_display_unbind() will be called to undo
+initializations had been done by dp_display_bind() previously if there is
+error happen at msm_drm_bind. Under this kind of circumstance, drm_device
+may not be populated completed which causes system crash at drm_dev_dbg().
+This patch reset drm_dev to NULL so that following drm_dev_dbg() will not
+refer to any internal fields of drm_device to prevent system from crashing.
+Below are panic stack trace,
 
-Applied to mhi-next!
+[   53.584904] Unable to handle kernel paging request at virtual address 0000000070018001
+.
+[   53.702212] Hardware name: Qualcomm Technologies, Inc. sc7280 CRD platform (rev5+) (DT)
+[   53.710445] pstate: 20400009 (nzCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[   53.717596] pc : string_nocheck+0x1c/0x64
+[   53.721738] lr : string+0x54/0x60
+[   53.725162] sp : ffffffc013d6b650
+[   53.728590] pmr_save: 000000e0
+[   53.731743] x29: ffffffc013d6b650 x28: 0000000000000002 x27: 0000000000ffffff
+[   53.739083] x26: ffffffc013d6b710 x25: ffffffd07a066ae0 x24: ffffffd07a419f97
+[   53.746420] x23: ffffffd07a419f99 x22: ffffff81fef360d4 x21: ffffff81fef364d4
+[   53.753760] x20: ffffffc013d6b6f8 x19: ffffffd07a06683c x18: 0000000000000000
+[   53.761093] x17: 4020386678302f30 x16: 00000000000000b0 x15: ffffffd0797523c8
+[   53.768429] x14: 0000000000000004 x13: ffff0000ffffff00 x12: ffffffd07a066b2c
+[   53.775780] x11: 0000000000000000 x10: 000000000000013c x9 : 0000000000000000
+[   53.783117] x8 : ffffff81fef364d4 x7 : 0000000000000000 x6 : 0000000000000000
+[   53.790445] x5 : 0000000000000000 x4 : ffff0a00ffffff04 x3 : ffff0a00ffffff04
+[   53.797783] x2 : 0000000070018001 x1 : ffffffffffffffff x0 : ffffff81fef360d4
+[   53.805136] Call trace:
+[   53.807667]  string_nocheck+0x1c/0x64
+[   53.811439]  string+0x54/0x60
+[   53.814498]  vsnprintf+0x374/0x53c
+[   53.818009]  pointer+0x3dc/0x40c
+[   53.821340]  vsnprintf+0x398/0x53c
+[   53.824854]  vscnprintf+0x3c/0x88
+[   53.828274]  __trace_array_vprintk+0xcc/0x2d4
+[   53.832768]  trace_array_printk+0x8c/0xb4
+[   53.836900]  drm_trace_printf+0x74/0x9c
+[   53.840875]  drm_dev_dbg+0xfc/0x1b8
+[   53.844480]  dp_pm_suspend+0x70/0xf8
+[   53.848164]  dpm_run_callback+0x60/0x1a0
+[   53.852222]  __device_suspend+0x304/0x3f4
+[   53.856363]  dpm_suspend+0xf8/0x3a8
+[   53.859959]  dpm_suspend_start+0x8c/0xc0
 
-Thanks,
-Mani
+Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+---
+ drivers/gpu/drm/msm/dp/dp_display.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-> ---
->  drivers/bus/mhi/host/pci_generic.c | 3 +++
->  1 file changed, 3 insertions(+)
-> 
-> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-> index 841626727f6b..062662b3778b 100644
-> --- a/drivers/bus/mhi/host/pci_generic.c
-> +++ b/drivers/bus/mhi/host/pci_generic.c
-> @@ -578,6 +578,9 @@ static const struct pci_device_id mhi_pci_id_table[] = {
->  	/* MV31-W (Cinterion) */
->  	{ PCI_DEVICE(0x1269, 0x00b3),
->  		.driver_data = (kernel_ulong_t) &mhi_mv31_info },
-> +	/* MV31-W (Cinterion), based on new baseline */
-> +	{ PCI_DEVICE(0x1269, 0x00b4),
-> +		.driver_data = (kernel_ulong_t) &mhi_mv31_info },
->  	/* MV32-WA (Cinterion) */
->  	{ PCI_DEVICE(0x1269, 0x00ba),
->  		.driver_data = (kernel_ulong_t) &mhi_mv32_info },
-> -- 
-> 2.25.1
-> 
-
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+index 2b72639..02fff70 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.c
++++ b/drivers/gpu/drm/msm/dp/dp_display.c
+@@ -316,6 +316,8 @@ static void dp_display_unbind(struct device *dev, struct device *master,
+ 
+ 	dp_power_client_deinit(dp->power);
+ 	dp_aux_unregister(dp->aux);
++	dp->drm_dev = NULL;
++	dp->aux->drm_dev = NULL;
+ 	priv->dp[dp->id] = NULL;
+ }
+ 
 -- 
-மணிவண்ணன் சதாசிவம்
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
