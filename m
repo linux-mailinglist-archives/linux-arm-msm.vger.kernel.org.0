@@ -2,60 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 72D48554973
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jun 2022 14:17:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 25D44554874
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jun 2022 14:15:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1354065AbiFVJY1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Jun 2022 05:24:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55230 "EHLO
+        id S239827AbiFVJo3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Jun 2022 05:44:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41248 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239195AbiFVJYY (ORCPT
+        with ESMTP id S236577AbiFVJo2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Jun 2022 05:24:24 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6629C101E4;
-        Wed, 22 Jun 2022 02:24:23 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 0448D619FD;
-        Wed, 22 Jun 2022 09:24:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 630BBC34114;
-        Wed, 22 Jun 2022 09:24:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1655889862;
-        bh=iTS+u7yAATjiH/+SOJmoPgp7RM/UZWMzGzrc2qaVMWg=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Rp9xF2QsZVLdyXNltQ2e9gGIVh1ye/REClnPUQRW9RxJBmNfQgVVX0JpnYRhjSoT6
-         un1Qi3QFlhKACflBymjE5i8q+7UynjLORwGzFuKli+Fds3RvKfFaw7xDR+wnH1MyfD
-         FrVtDUv8kK8/43U6RjaZfu2c7mIpRaEhrbQQAnvPsx1hPuLKDy4owL+On/JqaMKtEA
-         t5UoTOm0QWWDd0XQyL9sUZSgBSPDNXFSbNI1YjDYrLMuCvxxcBzxoXeKYQBy6He+GR
-         rJpbUNa1ISDt0UgVbY7KeXKQLyWbIJBfe82o09yq2Q+P1Nf4U3L/HTDtzRbEvwsnx+
-         Z2PLELmRgGUzw==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1o3waw-0002hV-Kz; Wed, 22 Jun 2022 11:24:19 +0200
-Date:   Wed, 22 Jun 2022 11:24:18 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Wed, 22 Jun 2022 05:44:28 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA0D72F669
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jun 2022 02:44:25 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id t25so26798008lfg.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jun 2022 02:44:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=eDoj9XBjlJalKZkL5HvzavpXxAgbFSYMY5tzbVqjyOk=;
+        b=q8rNzdoPDRkyeA5fLJKBKa5SpEXSt62LdZ/dfFAwxgVxMk3VZdlcynaNTLmo7A6S9h
+         /BTHLGRDOmDQ4cYtSOF5ydklE+GKigAHwzYHqn6m5XXWllN+FtON+Un6uF+FTacjt5jw
+         aXft0oP9628lepDtdB3QDq/vboscZmzP0QJlmn6zG1A1zptlnB/Vk9E6HYrsE7o8W/b1
+         yrVagcSUcxRwxbgPC5qoVVonoKVzmPlAlvZO+nKQ9mOEL06p/Tbt2FAhh7GBJqRvgEjj
+         RKsqImpl0Yygaw4jnDkxLaGmTXUgBqiZaBW4NdNZny3zEAvCSsqdHFCCPoNin1NMyJZl
+         b6EA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=eDoj9XBjlJalKZkL5HvzavpXxAgbFSYMY5tzbVqjyOk=;
+        b=Gkpr/0i9fHNPbjBkQPpiD55tEvacg+yMwV2FWzFGF36Su4Vif62m1TtOnvUnStalyJ
+         KIOFo4NK8C0HQupfyO/ssD/8a7rJEW3bqn67THZPemIBSMnwVVQk2DAIQo1CWu9rWoh9
+         C8mv+TCjRyCCyaVXD+Bh8y4H9TLHpYfbQaFrhrpZsFyj9b9Q1nB1EUDLHrpuCyQIUUP0
+         2KpygvsO1FRakXjGpNTzQVAmsmhaHLTQaD5n2NuPKiHOjz8P9kV7kOBoF4AalmGsXLl4
+         kWQ8goqc4aFkYLoXWCCTjADKhexk53LnkICKGR0rblqMrN76BQ0xBBHUJT9Xm+j+PtFg
+         rtlQ==
+X-Gm-Message-State: AJIora/Gr7dXFxvSEVd4SKGeA1ISNBpC+WwuJPq5IR3SgSEw2rCMEhJT
+        3utrhf1LyEZL2xda6+ltTOHgwg==
+X-Google-Smtp-Source: AGRyM1ss/n2a4hc2pIp8ohDnfcsyTRSO+ZQesyluR0Z5aCJoa2ihn7Xu57iaKDR6p+twm62HkX3dsQ==
+X-Received: by 2002:a05:6512:33d0:b0:47d:de8d:f4c7 with SMTP id d16-20020a05651233d000b0047dde8df4c7mr1652671lfg.362.1655891064203;
+        Wed, 22 Jun 2022 02:44:24 -0700 (PDT)
+Received: from [192.168.1.212] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id j9-20020a2e8009000000b0025575338c41sm2359783ljg.127.2022.06.22.02.44.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 22 Jun 2022 02:44:23 -0700 (PDT)
+Message-ID: <3ccbcaa0-d5b6-9f46-03c3-2a3e0ee72782@linaro.org>
+Date:   Wed, 22 Jun 2022 12:44:22 +0300
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: Re: [PATCH v2 1/2] dt-bindings: arm: qcom: document qcom,msm-id and
+ qcom,board-id
+Content-Language: en-GB
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 5/6] arm64: dts: qcom: add SA8540P and ADP
-Message-ID: <YrLfwnbmdcniKeOG@hovoldconsulting.com>
-References: <20220622041224.627803-1-bjorn.andersson@linaro.org>
- <20220622041224.627803-6-bjorn.andersson@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220622041224.627803-6-bjorn.andersson@linaro.org>
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Cc:     Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Amit Pundir <amit.pundir@linaro.org>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Kumar Gala <galak@codeaurora.org>,
+        Stephen Boyd <sboyd@kernel.org>
+References: <20220621185649.37391-1-krzysztof.kozlowski@linaro.org>
+ <20220621185649.37391-2-krzysztof.kozlowski@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220621185649.37391-2-krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -63,245 +87,227 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jun 21, 2022 at 09:12:23PM -0700, Bjorn Andersson wrote:
-> Introduce the Qualcomm SA8540P automotive platform and the SA8295P ADP
-> development board.
+On 21/06/2022 21:56, Krzysztof Kozlowski wrote:
+> The top level qcom,msm-id and qcom,board-id properties are utilized by
+> bootloaders on Qualcomm MSM platforms to determine which device tree
+> should be used and passed to the kernel.
 > 
-> The SA8540P and SC8280XP are fairly similar, so the SA8540P is built
-> ontop of the SC8280XP dtsi to reduce duplication. As more advanced
-> features are integrated this might be re-evaluated.
+> The commit b32e592d3c28 ("devicetree: bindings: Document qcom board
+> compatible format") from 2015 was a consensus during discussion about
+> upstreaming qcom,msm-id and qcom,board-id fields.  There are however still
+> problems with that consensus:
+> 1. It was reached 7 years ago but it turned out its implementation did
+>     not reach all possible products.
 > 
-> This initial contribution supports SMP, CPUFreq, cluster idle, UFS, RPMh
-> regulators, debug UART, PMICs, remoteprocs (NSPs crashes shortly after
-> booting) and USB.
+> 2. Initially additional tool (dtbTool) was needed for parsing these
+>     fields to create a QCDT image consisting of multiple DTBs, later the
+>     bootloaders were improved and they use these qcom,msm-id and
+>     qcom,board-id properties directly.
 > 
-> The SA8295P ADP contains four PM8450 PMICs, which according to their
-> revid are compatible with PM8150. They are defined within the ADP for
-> now, to avoid creating additional .dtsi files for PM8150 with just
-> addresses changed - and to allow using the labels from the schematics.
+> 3. Extracting relevant information from the board compatible requires
+>     this additional tool (dtbTool), which makes the build process more
+>     complicated and not easily reproducible (DTBs are modified after the
+>     kernel build).
 > 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> 4. Some versions of Qualcomm bootloaders expect these properties even
+>     when booting with a single DTB.  The community is stuck with these
+>     bootloaders thus they require properties in the DTBs.
+> 
+> Since several upstreamed Qualcomm SoC-based boards require these
+> properties to properly boot and the properties are reportedly used by
+> bootloaders, document them.
+> 
+> Link: https://lore.kernel.org/r/a3c932d1-a102-ce18-deea-18cbbd05ecab@linaro.org/
+> Co-developed-by: Kumar Gala <galak@codeaurora.org>
+> Signed-off-by: Kumar Gala <galak@codeaurora.org>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > ---
-
-No change log?
-
->  arch/arm64/boot/dts/qcom/Makefile        |   1 +
->  arch/arm64/boot/dts/qcom/sa8295p-adp.dts | 427 +++++++++++++++++++++++
->  arch/arm64/boot/dts/qcom/sa8540p.dtsi    | 133 +++++++
->  3 files changed, 561 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/sa8295p-adp.dts
->  create mode 100644 arch/arm64/boot/dts/qcom/sa8540p.dtsi
+>   .../devicetree/bindings/arm/qcom.yaml         | 123 ++++++++++++++++++
+>   include/dt-bindings/arm/qcom,ids.h            |  30 +++++
+>   2 files changed, 153 insertions(+)
+>   create mode 100644 include/dt-bindings/arm/qcom,ids.h
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index ceeae094a59f..2f416b84b71c 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -52,6 +52,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-1000.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-4000.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= qrb5165-rb5.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sa8155p-adp.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= sa8295p-adp.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-idp.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-coachz-r1.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-coachz-r1-lte.dtb
-> diff --git a/arch/arm64/boot/dts/qcom/sa8295p-adp.dts b/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
+> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+> index 6c38c1387afd..05b98cde4653 100644
+> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
+> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+> @@ -403,6 +403,129 @@ properties:
+>                 - qcom,sm8450-qrd
+>             - const: qcom,sm8450
+>   
+> +  # Board compatibles go above
+> +
+> +  qcom,msm-id:
+> +    $ref: /schemas/types.yaml#/definitions/uint32-matrix
+> +    minItems: 1
+> +    maxItems: 8
+> +    items:
+> +      items:
+> +        - description: |
+> +            MSM chipset ID - an exact match value consisting of three bitfields::
+> +             - bits 0-15  - The unique MSM chipset ID
+> +             - bits 16-31 - Reserved; should be 0
+> +        - description: |
+> +            Hardware revision ID - a chipset specific 32-bit ID representing
+> +            the version of the chipset.  It is best a match value - the
+> +            bootloader will look for the closest possible match.
+> +    deprecated: true
+> +    description:
+> +      The MSM chipset and hardware revision use by Qualcomm bootloaders.  It
+> +      can optionally be an array of these to indicate multiple hardware that
+> +      use the same device tree.  It is expected that the bootloader will use
+> +      this information at boot-up to decide which device tree to use when given
+> +      multiple device trees, some of which may not be compatible with the
+> +      actual hardware.  It is the bootloader's responsibility to pass the
+> +      correct device tree to the kernel.
+> +      The property is deprecated - it is not expected on newer boards
+> +      (starting with SM8350).
+
+I have been thinking about this for quite a while. I think this patch is 
+good.
+
+With this paragraph (and the corresponding paragraph from the next item) 
+rephrased to remove references to 'newer boards':
+
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+> +
+> +  qcom,board-id:
+> +    $ref: /schemas/types.yaml#/definitions/uint32-matrix
+> +    minItems: 1
+> +    maxItems: 8
+> +    items:
+> +      oneOf:
+> +        - maxItems: 2
+> +          items:
+> +            - description: |
+> +                Board ID consisting of three bitfields::
+> +                  - bits 31-24 - Unused
+> +                  - bits 23-16 - Platform Version Major
+> +                  - bits 15-8  - Platform Version Minor
+> +                  - bits 7-0   - Platform Type
+> +                Platform Type field is an exact match value.  The
+> +                Platform Major/Minor field is a best match.  The bootloader will
+> +                look for the closest possible match.
+> +            - description: |
+> +                Subtype ID unique to a Platform Type/Chipset ID.  For a given
+> +                Platform Type, there will typically only be a single board and the
+> +                subtype_id will be 0.  However in some cases board variants may
+> +                need to be distinguished by different subtype_id values.
+> +        # OnePlus uses a variant of board-id with four elements:
+> +        - minItems: 4
+> +          items:
+> +            - const: 8
+> +            - const: 0
+> +            - description: OnePlus board ID
+> +            - description: OnePlus subtype ID
+> +    deprecated: true
+> +    description:
+> +      The board type and revision information.  It can optionally be an array
+> +      of these to indicate multiple boards that use the same device tree.  It
+> +      is expected that the bootloader will use this information at boot-up to
+> +      decide which device tree to use when given multiple device trees, some of
+> +      which may not be compatible with the actual hardware.  It is the
+> +      bootloader's responsibility to pass the correct device tree to the
+> +      kernel
+> +      The property is deprecated - it is not expected on newer boards
+> +      (starting with SM8350).
+> +
+> +allOf:
+> +  # Explicit allow-list for older SoCs. The legacy properties are not allowed
+> +  # on newer SoCs.
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            enum:
+> +              - qcom,apq8026
+> +              - qcom,apq8094
+> +              - qcom,apq8096
+> +              - qcom,msm8992
+> +              - qcom,msm8994
+> +              - qcom,msm8996
+> +              - qcom,msm8998
+> +              - qcom,sdm630
+> +              - qcom,sdm632
+> +              - qcom,sdm845
+> +              - qcom,sdx55
+> +              - qcom,sdx65
+> +              - qcom,sm6125
+> +              - qcom,sm6350
+> +              - qcom,sm7225
+> +              - qcom,sm8150
+> +              - qcom,sm8250
+> +    then:
+> +      properties:
+> +        qcom,board-id: true
+> +        qcom,msm-id: true
+> +    else:
+> +      properties:
+> +        qcom,board-id: false
+> +        qcom,msm-id: false
+> +
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            enum:
+> +              - oneplus,cheeseburger
+> +              - oneplus,dumpling
+> +              - oneplus,enchilada
+> +              - oneplus,fajita
+> +    then:
+> +      properties:
+> +        qcom,board-id:
+> +          items:
+> +            minItems: 4
+> +    else:
+> +      properties:
+> +        qcom,board-id:
+> +          items:
+> +            maxItems: 2
+> +
+>   additionalProperties: true
+>   
+>   ...
+> diff --git a/include/dt-bindings/arm/qcom,ids.h b/include/dt-bindings/arm/qcom,ids.h
 > new file mode 100644
-> index 000000000000..8dbcd95966b0
+> index 000000000000..eaf86c18650f
 > --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
-
-> +&remoteproc_adsp {
-> +	status = "okay";
-
-Please move the status properties last also for ADP.
-
-> +	firmware-name = "qcom/sa8540p/adsp.mbn";
-> +};
-
-> +/* PINCTRL */
-> +&pm8450c_gpios {
-> +	usb2_en_state: usb2-en-state {
-> +		pins = "gpio9";
-> +		function = "normal";
-> +		output-high;
-> +		power-source = <0>;
-> +	};
-> +};
-> +
-> +&pm8450e_gpios {
-> +	usb3_en_state: usb3-en-state {
-> +		pins = "gpio5";
-> +		function = "normal";
-> +		output-high;
-> +		power-source = <0>;
-> +	};
-> +};
-> +
-> +&pm8450g_gpios {
-> +	usb4_en_state: usb4-en-state {
-> +		pins = "gpio5";
-> +		function = "normal";
-> +		output-high;
-> +		power-source = <0>;
-> +	};
-> +
-> +	usb5_en_state: usb5-en-state {
-> +		pins = "gpio9";
-> +		function = "normal";
-> +		output-high;
-> +		power-source = <0>;
-> +	};
-> +};
-
-Perhaps hold off with adding these always-on VBUS "regulators" until
-adding support for the multiport controller?
-
-> diff --git a/arch/arm64/boot/dts/qcom/sa8540p.dtsi b/arch/arm64/boot/dts/qcom/sa8540p.dtsi
-> new file mode 100644
-> index 000000000000..8ea2886fbab2
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/sa8540p.dtsi
-> @@ -0,0 +1,133 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
+> +++ b/include/dt-bindings/arm/qcom,ids.h
+> @@ -0,0 +1,30 @@
+> +/* SPDX-License-Identifier: GPL-2.0-only */
 > +/*
-> + * Copyright (c) 2021, The Linux Foundation. All rights reserved.
-> + * Copyright (c) 2022, Linaro Limited
+> + * Copyright (c) 2015, The Linux Foundation. All rights reserved.
+> + * Copyright (c) 2022 Linaro Ltd
+> + * Author: Krzysztof Kozlowski <krzk@kernel.org> based on previous work of Kumar Gala.
 > + */
+> +#ifndef _DT_BINDINGS_ARM_QCOM_IDS_H
+> +#define _DT_BINDINGS_ARM_QCOM_IDS_H
 > +
-> +#include "sc8280xp.dtsi"
+> +/* qcom,msm-id */
+> +#define QCOM_ID_APQ8026				199
+> +#define QCOM_ID_MSM8916				206
+> +#define QCOM_ID_MSM8994				207
+> +#define QCOM_ID_MSM8996_3_0			246
+> +#define QCOM_ID_APQ8016				247
+> +#define QCOM_ID_MSM8216				248
+> +#define QCOM_ID_MSM8116				249
+> +#define QCOM_ID_MSM8616				250
+> +#define QCOM_ID_MSM8998				292
+> +#define QCOM_ID_SDM845				321
 > +
-> +/delete-node/ &cpu0_opp_table;
-> +/delete-node/ &cpu4_opp_table;
+> +/* qcom,board-id */
+> +#define QCOM_BOARD_ID(a, major, minor) \
+> +	(((major & 0xff) << 16) | ((minor & 0xff) << 8) | QCOM_BOARD_ID_##a)
 > +
-> +/ {
-> +	cpu0_opp_table: cpu0-opp-table {
-> +		compatible = "operating-points-v2";
-> +		opp-shared;
+> +#define QCOM_BOARD_ID_MTP			8
+> +#define QCOM_BOARD_ID_DRAGONBOARD		10
+> +#define QCOM_BOARD_ID_SBC			24
 > +
-> +		opp-403200000 {
-> +			opp-hz = /bits/ 64 <403200000>;
-> +		};
-> +		opp-499200000 {
-> +			opp-hz = /bits/ 64 <499200000>;
-> +		};
-> +		opp-595200000 {
-> +			opp-hz = /bits/ 64 <595200000>;
-> +		};
-> +		opp-710400000 {
-> +			opp-hz = /bits/ 64 <710400000>;
-> +		};
-> +		opp-806400000 {
-> +			opp-hz = /bits/ 64 <806400000>;
-> +		};
-> +		opp-902400000 {
-> +			opp-hz = /bits/ 64 <902400000>;
-> +		};
-> +		opp-1017600000 {
-> +			opp-hz = /bits/ 64 <1017600000>;
-> +		};
-> +		opp-1113600000 {
-> +			opp-hz = /bits/ 64 <1113600000>;
-> +		};
-> +		opp-1209600000 {
-> +			opp-hz = /bits/ 64 <1209600000>;
-> +		};
-> +		opp-1324800000 {
-> +			opp-hz = /bits/ 64 <1324800000>;
-> +		};
-> +		opp-1440000000 {
-> +			opp-hz = /bits/ 64 <1440000000>;
-> +		};
-> +		opp-1555200000 {
-> +			opp-hz = /bits/ 64 <1555200000>;
-> +		};
-> +		opp-1670400000 {
-> +			opp-hz = /bits/ 64 <1670400000>;
-> +		};
-> +		opp-1785600000 {
-> +			opp-hz = /bits/ 64 <1785600000>;
-> +		};
-> +		opp-1881600000 {
-> +			opp-hz = /bits/ 64 <1881600000>;
-> +		};
-> +		opp-2016000000 {
-> +			opp-hz = /bits/ 64 <2016000000>;
-> +		};
-> +		opp-2131200000 {
-> +			opp-hz = /bits/ 64 <2131200000>;
-> +		};
-> +		opp-2246400000 {
-> +			opp-hz = /bits/ 64 <2246400000>;
-> +		};
-> +	};
-> +
-> +	cpu4_opp_table: cpu4-opp-table {
-> +		compatible = "operating-points-v2";
-> +		opp-shared;
-> +
-> +		opp-825600000 {
-> +			opp-hz = /bits/ 64 <825600000>;
-> +		};
-> +		opp-940800000 {
-> +			opp-hz = /bits/ 64 <940800000>;
-> +		};
-> +		opp-1056000000 {
-> +			opp-hz = /bits/ 64 <1056000000>;
-> +		};
-> +		opp-1171200000 {
-> +			opp-hz = /bits/ 64 <1171200000>;
-> +		};
-> +		opp-1286400000 {
-> +			opp-hz = /bits/ 64 <1286400000>;
-> +		};
-> +		opp-1401600000 {
-> +			opp-hz = /bits/ 64 <1401600000>;
-> +		};
-> +		opp-1516800000 {
-> +			opp-hz = /bits/ 64 <1516800000>;
-> +		};
-> +		opp-1632000000 {
-> +			opp-hz = /bits/ 64 <1632000000>;
-> +		};
-> +		opp-1747200000 {
-> +			opp-hz = /bits/ 64 <1747200000>;
-> +		};
-> +		opp-1862400000 {
-> +			opp-hz = /bits/ 64 <1862400000>;
-> +		};
-> +		opp-1977600000 {
-> +			opp-hz = /bits/ 64 <1977600000>;
-> +		};
-> +		opp-2073600000 {
-> +			opp-hz = /bits/ 64 <2073600000>;
-> +		};
-> +		opp-2169600000 {
-> +			opp-hz = /bits/ 64 <2169600000>;
-> +		};
-> +		opp-2284800000 {
-> +			opp-hz = /bits/ 64 <2284800000>;
-> +		};
-> +		opp-2380800000 {
-> +			opp-hz = /bits/ 64 <2380800000>;
-> +		};
-> +		opp-2496000000 {
-> +			opp-hz = /bits/ 64 <2496000000>;
-> +		};
-> +		opp-2592000000 {
-> +			opp-hz = /bits/ 64 <2592000000>;
-> +		};
-> +	};
-> +};
-> +
-> +&rpmhpd {
-> +	compatible = "qcom,sa8540p-rpmhpd";
-> +};
+> +#endif /* _DT_BINDINGS_ARM_QCOM_IDS_H */
 
-Should we add sa8540p compatibles (with sc8280xp as fallback) for the
-other peripherals from the start in case we find out that there are
-indeed differences down the line?
 
-Looks good otherwise:
-
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-
-Johan
+-- 
+With best wishes
+Dmitry
