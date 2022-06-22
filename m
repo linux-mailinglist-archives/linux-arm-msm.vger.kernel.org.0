@@ -2,54 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A823E5547FA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jun 2022 14:12:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 31B08554902
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jun 2022 14:16:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1357118AbiFVL4N (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Jun 2022 07:56:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38342 "EHLO
+        id S1357293AbiFVL7M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Jun 2022 07:59:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41354 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234290AbiFVL4J (ORCPT
+        with ESMTP id S1357169AbiFVL7K (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Jun 2022 07:56:09 -0400
-Received: from relay01.th.seeweb.it (relay01.th.seeweb.it [IPv6:2001:4b7a:2000:18::162])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D856A1D306
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jun 2022 04:56:07 -0700 (PDT)
-Received: from [192.168.1.101] (abxi223.neoplus.adsl.tpnet.pl [83.9.2.223])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 8211F20634;
-        Wed, 22 Jun 2022 13:56:05 +0200 (CEST)
-Message-ID: <93fd2970-5d07-f86d-b3a5-a4ebd8a2fa61@somainline.org>
-Date:   Wed, 22 Jun 2022 13:56:04 +0200
+        Wed, 22 Jun 2022 07:59:10 -0400
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6FF493CA78;
+        Wed, 22 Jun 2022 04:59:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1655899141; x=1687435141;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=Lr/u0iIly9juJsCDQg+gxnesL/0/rlagsE/GYqfpsMc=;
+  b=T+mQC6HE23MT/O0WIJxVN4BLWaQJrsdcQ2VO32CvKIPJlpbgTefpLdB4
+   MuB36VEv2fy5WUqDDBVnmKzFqlgav/BWEz8p6dnqd33Z3dZ/0mW3cvrO0
+   JLR7Xzft2vkRpyCL3jP+FYWYZsUH2A/TBsaxCsrcjgi001/9mUWlLVE64
+   k=;
+Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 22 Jun 2022 04:59:01 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Jun 2022 04:59:00 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Wed, 22 Jun 2022 04:59:00 -0700
+Received: from [10.216.32.54] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Wed, 22 Jun
+ 2022 04:58:54 -0700
+Message-ID: <dbfe1e7c-19dc-2d20-700a-c26f0bf721e5@quicinc.com>
+Date:   Wed, 22 Jun 2022 17:28:50 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: [PATCH v3 1/2] dt-bindings: arm: qcom: document qcom,msm-id and
- qcom,board-id
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Subject: Re: [PATCH v4 1/4] dt-bindings: interconnect: qcom,sdm845-cpu-bwmon:
+ add BWMON device
 Content-Language: en-US
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Amit Pundir <amit.pundir@linaro.org>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Kumar Gala <galak@codeaurora.org>
-References: <20220622114856.6243-1-krzysztof.kozlowski@linaro.org>
- <20220622114856.6243-2-krzysztof.kozlowski@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-In-Reply-To: <20220622114856.6243-2-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+CC:     Andy Gross <agross@kernel.org>, Georgi Djakov <djakov@kernel.org>,
+        "Rob Herring" <robh+dt@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        "Will Deacon" <will@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        "Rob Herring" <robh@kernel.org>
+References: <20220601101140.170504-1-krzysztof.kozlowski@linaro.org>
+ <20220601101140.170504-2-krzysztof.kozlowski@linaro.org>
+ <Yp5tjUICIEUptKSx@ripper> <3e4e504c-5a38-43cd-ea8d-afbbb72eacad@linaro.org>
+From:   Rajendra Nayak <quic_rjendra@quicinc.com>
+In-Reply-To: <3e4e504c-5a38-43cd-ea8d-afbbb72eacad@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -60,215 +78,69 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 22.06.2022 13:48, Krzysztof Kozlowski wrote:
-> The top level qcom,msm-id and qcom,board-id properties are utilized by
-> bootloaders on Qualcomm MSM platforms to determine which device tree
-> should be used and passed to the kernel.
-> 
-> The commit b32e592d3c28 ("devicetree: bindings: Document qcom board
-> compatible format") from 2015 was a consensus during discussion about
-> upstreaming qcom,msm-id and qcom,board-id fields.  There are however still
-> problems with that consensus:
-> 1. It was reached 7 years ago but it turned out its implementation did
->    not reach all possible products.
-> 
-> 2. Initially additional tool (dtbTool) was needed for parsing these
->    fields to create a QCDT image consisting of multiple DTBs, later the
->    bootloaders were improved and they use these qcom,msm-id and
->    qcom,board-id properties directly.
-> 
-> 3. Extracting relevant information from the board compatible requires
->    this additional tool (dtbTool), which makes the build process more
->    complicated and not easily reproducible (DTBs are modified after the
->    kernel build).
-> 
-> 4. Some versions of Qualcomm bootloaders expect these properties even
->    when booting with a single DTB.  The community is stuck with these
->    bootloaders thus they require properties in the DTBs.
-> 
-> Since several upstreamed Qualcomm SoC-based boards require these
-> properties to properly boot and the properties are reportedly used by
-> bootloaders, document them.
-> 
-> Link: https://lore.kernel.org/r/a3c932d1-a102-ce18-deea-18cbbd05ecab@linaro.org/
-> Co-developed-by: Kumar Gala <galak@codeaurora.org>
-> Signed-off-by: Kumar Gala <galak@codeaurora.org>
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  .../devicetree/bindings/arm/qcom.yaml         | 121 ++++++++++++++++++
->  include/dt-bindings/arm/qcom,ids.h            |  30 +++++
->  2 files changed, 151 insertions(+)
->  create mode 100644 include/dt-bindings/arm/qcom,ids.h
-> 
-> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
-> index 6c38c1387afd..431e3ff31d75 100644
-> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
-> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
-> @@ -403,6 +403,127 @@ properties:
->                - qcom,sm8450-qrd
->            - const: qcom,sm8450
->  
-> +  # Board compatibles go above
-> +
-> +  qcom,msm-id:
-> +    $ref: /schemas/types.yaml#/definitions/uint32-matrix
-> +    minItems: 1
-> +    maxItems: 8
-> +    items:
-> +      items:
-> +        - description: |
-> +            MSM chipset ID - an exact match value consisting of two bitfields::
-> +             - bits 0-15  - The unique MSM chipset ID
-> +             - bits 16-31 - Reserved; should be 0
-> +        - description: |
-> +            Hardware revision ID - a chipset specific 32-bit ID representing
-> +            the version of the chipset.  It is best a match value - the
-> +            bootloader will look for the closest possible match.
-> +    deprecated: true
-> +    description:
-> +      The MSM chipset and hardware revision use by Qualcomm bootloaders.  It
-> +      can optionally be an array of these to indicate multiple hardware that
-> +      use the same device tree.  It is expected that the bootloader will use
-> +      this information at boot-up to decide which device tree to use when given
-> +      multiple device trees, some of which may not be compatible with the
-> +      actual hardware.  It is the bootloader's responsibility to pass the
-> +      correct device tree to the kernel.
-> +      The property is deprecated.
-> +
-> +  qcom,board-id:
-> +    $ref: /schemas/types.yaml#/definitions/uint32-matrix
-> +    minItems: 1
-> +    maxItems: 8
-> +    items:
-> +      oneOf:
-> +        - maxItems: 2
-> +          items:
-> +            - description: |
-> +                Board ID consisting of three bitfields::
-> +                  - bits 31-24 - Unused
-> +                  - bits 23-16 - Platform Version Major
-> +                  - bits 15-8  - Platform Version Minor
-> +                  - bits 7-0   - Platform Type
-> +                Platform Type field is an exact match value.  The
-> +                Platform Major/Minor field is a best match.  The bootloader will
-> +                look for the closest possible match.
-> +            - description: |
-> +                Subtype ID unique to a Platform Type/Chipset ID.  For a given
-> +                Platform Type, there will typically only be a single board and the
-> +                subtype_id will be 0.  However in some cases board variants may
-> +                need to be distinguished by different subtype_id values.
-> +        # OnePlus uses a variant of board-id with four elements:
-> +        - minItems: 4
-> +          items:
-> +            - const: 8
-> +            - const: 0
-> +            - description: OnePlus board ID
-> +            - description: OnePlus subtype ID
-> +    deprecated: true
-> +    description:
-> +      The board type and revision information.  It can optionally be an array
-> +      of these to indicate multiple boards that use the same device tree.  It
-> +      is expected that the bootloader will use this information at boot-up to
-> +      decide which device tree to use when given multiple device trees, some of
-> +      which may not be compatible with the actual hardware.  It is the
-> +      bootloader's responsibility to pass the correct device tree to the
-> +      kernel
-> +      The property is deprecated.
-> +
-> +allOf:
-> +  # Explicit allow-list for older SoCs. The legacy properties are not allowed
-> +  # on newer SoCs.
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          contains:
-> +            enum:
-> +              - qcom,apq8026
-> +              - qcom,apq8094
-> +              - qcom,apq8096
-> +              - qcom,msm8992
-> +              - qcom,msm8994
-> +              - qcom,msm8996
-> +              - qcom,msm8998
-> +              - qcom,sdm630
-> +              - qcom,sdm632
-> +              - qcom,sdm845
-> +              - qcom,sdx55
-> +              - qcom,sdx65
-> +              - qcom,sm6125
-> +              - qcom,sm6350
-> +              - qcom,sm7225
-> +              - qcom,sm8150
-> +              - qcom,sm8250
-> +    then:
-> +      properties:
-> +        qcom,board-id: true
-> +        qcom,msm-id: true
-> +    else:
-> +      properties:
-> +        qcom,board-id: false
-> +        qcom,msm-id: false
-> +
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          contains:
-> +            enum:
-> +              - oneplus,cheeseburger
-> +              - oneplus,dumpling
-> +              - oneplus,enchilada
-> +              - oneplus,fajita
-> +    then:
-> +      properties:
-> +        qcom,board-id:
-> +          items:
-> +            minItems: 4
-> +    else:
-> +      properties:
-> +        qcom,board-id:
-> +          items:
-> +            maxItems: 2
-> +
->  additionalProperties: true
->  
->  ...
-> diff --git a/include/dt-bindings/arm/qcom,ids.h b/include/dt-bindings/arm/qcom,ids.h
-> new file mode 100644
-> index 000000000000..df4a07b898cc
-> --- /dev/null
-> +++ b/include/dt-bindings/arm/qcom,ids.h
-> @@ -0,0 +1,30 @@
-> +/* SPDX-License-Identifier: GPL-2.0-only */
-> +/*
-> + * Copyright (c) 2015, The Linux Foundation. All rights reserved.
-> + * Copyright (c) 2022 Linaro Ltd
-> + * Author: Krzysztof Kozlowski <krzk@kernel.org> based on previous work of Kumar Gala.
-> + */
-> +#ifndef _DT_BINDINGS_ARM_QCOM_IDS_H
-> +#define _DT_BINDINGS_ARM_QCOM_IDS_H
-> +
-> +/* qcom,msm-id */
-> +#define QCOM_ID_APQ8026				199
-> +#define QCOM_ID_MSM8916				206
-> +#define QCOM_ID_MSM8994				207
-> +#define QCOM_ID_MSM8996				246
-> +#define QCOM_ID_APQ8016				247
-> +#define QCOM_ID_MSM8216				248
-> +#define QCOM_ID_MSM8116				249
-> +#define QCOM_ID_MSM8616				250
-> +#define QCOM_ID_MSM8998				292
-> +#define QCOM_ID_SDM845				321
-These are the same ones used in the qcom socid driver. Perhaps they can be exported from there?
+On 6/7/2022 12:20 PM, Krzysztof Kozlowski wrote:
+> On 06/06/2022 23:11, Bjorn Andersson wrote:
+>> On Wed 01 Jun 03:11 PDT 2022, Krzysztof Kozlowski wrote:
+>>
+>>> Add bindings for the Qualcomm Bandwidth Monitor device providing
+>>> performance data on interconnects.  The bindings describe only BWMON
+>>> version 4, e.g. the instance on SDM845 between CPU and Last Level Cache
+>>> Controller.
+>>>
+>>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>>> Reviewed-by: Rob Herring <robh@kernel.org>
+>>> Acked-by: Georgi Djakov <djakov@kernel.org>
+>>> ---
+>>>   .../interconnect/qcom,sdm845-cpu-bwmon.yaml   | 97 +++++++++++++++++++
+>>>   1 file changed, 97 insertions(+)
+>>>   create mode 100644 Documentation/devicetree/bindings/interconnect/qcom,sdm845-cpu-bwmon.yaml
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/interconnect/qcom,sdm845-cpu-bwmon.yaml b/Documentation/devicetree/bindings/interconnect/qcom,sdm845-cpu-bwmon.yaml
+>>> new file mode 100644
+>>> index 000000000000..8c82e06ee432
+>>> --- /dev/null
+>>> +++ b/Documentation/devicetree/bindings/interconnect/qcom,sdm845-cpu-bwmon.yaml
+>>> @@ -0,0 +1,97 @@
+>>> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+>>> +%YAML 1.2
+>>> +---
+>>> +$id: http://devicetree.org/schemas/interconnect/qcom,sdm845-cpu-bwmon.yaml#
+>>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>>> +
+>>> +title: Qualcomm Interconnect Bandwidth Monitor
+>>> +
+>>> +maintainers:
+>>> +  - Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>>> +
+>>> +description:
+>>> +  Bandwidth Monitor measures current throughput on buses between various NoC
+>>> +  fabrics and provides information when it crosses configured thresholds.
+>>> +
+>>> +properties:
+>>> +  compatible:
+>>> +    enum:
+>>> +      - qcom,sdm845-cpu-bwmon       # BWMON v4
+>>
+>> It seems the thing that's called bwmon v4 is compatible with a number of
+>> different platforms, should we add a generic compatible to the binding
+>> as well, to avoid having to update the implementation for each SoC?
+>>
+>> (I.e. "qcom,sdm845-cpu-bwmon", "qcom,bwmon-v4")
 
-Konrad
-> +
-> +/* qcom,board-id */
-> +#define QCOM_BOARD_ID(a, major, minor) \
-> +	(((major & 0xff) << 16) | ((minor & 0xff) << 8) | QCOM_BOARD_ID_##a)
-> +
-> +#define QCOM_BOARD_ID_MTP			8
-> +#define QCOM_BOARD_ID_DRAGONBOARD		10
-> +#define QCOM_BOARD_ID_SBC			24
-> +
-> +#endif /* _DT_BINDINGS_ARM_QCOM_IDS_H */
+it seems pretty useful to have the "qcom,bwmon-v4" and "qcom,bwmon-v5"
+compatibles, I tried these patches on a sc7280 device which has a bwmon4
+between the cpu and caches (and also has a bwmon5 between the caches and DDR)
+and the driver works with zero changes.
+
+> 
+> I am hesitant. I could not find BWMON IP block versioning in the
+> Qualcomm docs. Only the downstream sources had it. Therefore I think it
+> is more applicable to use this one as fallback for other boards, e.g.:
+> 
+> "qcom,sdm660-cpu-bwmon", "qcom,sdm845-cpu-bwmon"
+> (even if the number is a bit odd - newer comes as last compatible).
+> 
+> What's your preference?
+> 
+> Best regards,
+> Krzysztof
