@@ -2,120 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 33E70554F86
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jun 2022 17:39:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5BECB555100
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jun 2022 18:13:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1358071AbiFVPj0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Jun 2022 11:39:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39858 "EHLO
+        id S1359554AbiFVQN5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Jun 2022 12:13:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50180 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234570AbiFVPjZ (ORCPT
+        with ESMTP id S1376571AbiFVQNw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Jun 2022 11:39:25 -0400
-Received: from relay01.th.seeweb.it (relay01.th.seeweb.it [IPv6:2001:4b7a:2000:18::162])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD8372E0A0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jun 2022 08:39:24 -0700 (PDT)
-Received: from [192.168.1.101] (abxi223.neoplus.adsl.tpnet.pl [83.9.2.223])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id DE60B1FFEA;
-        Wed, 22 Jun 2022 17:39:22 +0200 (CEST)
-Message-ID: <5158fe83-88b1-1081-df7f-4118ce6f5ec0@somainline.org>
-Date:   Wed, 22 Jun 2022 17:39:22 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: [PATCH v2 4/6] arm64: dts: qcom: sc8280xp: Add reference device
-Content-Language: en-US
-To:     Johan Hovold <johan@kernel.org>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Wed, 22 Jun 2022 12:13:52 -0400
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A71E25E9F;
+        Wed, 22 Jun 2022 09:13:51 -0700 (PDT)
+Received: by mail-ed1-x52c.google.com with SMTP id c13so20139110eds.10;
+        Wed, 22 Jun 2022 09:13:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=cE/2OYYz5mN+xKGqyzZkM7i8jyDkRjpQ6WY0c9nnpkI=;
+        b=nUQ08BYK5oFMjhuwIdhfb68k27dg61OmpVwaXYMS2hbVZ9fdyf4oALt66tdaAUL1B3
+         rWBbo4MtyGKruasxn6e7dLhgHxT7LvmG0Pv//40q50rgMdT2GxH75jMdCs2hmJWfoBAA
+         b0rday1T6F/TkSeyE2Q/HBQBDt5gmvhgDjldLPtLkUD1T2+gjpW9bvme1SJnwqbMN4Pg
+         m2ToIWwJfj8bYsPP2DD4hddV+T6+336irst/x0Qkk+OmjsdYvg5Cn72N7wSYlVDKsKAv
+         t/xheAfXiJoPoZL/hy7MrwiCT23C/OylmEHjICTSiQq0MSMLxXIvM87lGKoLoy7Ag+0e
+         aYdQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=cE/2OYYz5mN+xKGqyzZkM7i8jyDkRjpQ6WY0c9nnpkI=;
+        b=rG46YWwaT1ZlnUHJNnYLBqCAUBAFOrl0Bo4tqoiIA6nfJEBFaAH0oO+IX24llsGIZ5
+         7PxtQKcjjiUUxsfj1CIeVKnXb/XjceUonDllX9UDFBRi4qjLiWrdp26BW4hHhZxZGDOD
+         Byc17Iy9d25cPo08+uTExJUPLJC5i0R79N+vPjAAqMuRI6oGX0reEkQs+fqfGOQxe/un
+         2X7YMOhFupeFHiM2vjFVSxS+xNKLD0F5e3vpLQQFlxJxf6ENJSZ4zsXsqdZCieRjj0/r
+         YaKQdNbeqtWsdH75fe1oEX8LpFqU8/a29XkoOFJg73HxsEg+g7Fr9Sybe8kzaVqNjqU0
+         al+w==
+X-Gm-Message-State: AJIora88chQXhsgato30gS/5kiZ2wq3b150Bgf6g9wBkUZdij4pbv2U9
+        zm//uvMfSB3Q319w9PyFZCs=
+X-Google-Smtp-Source: AGRyM1tWD6g6LO0qhLnaY9KN6b/00f7QxioRtjLEKur7v1cPD63I0UcdtnaoF4NQCs9CgxoC6rjd9w==
+X-Received: by 2002:a05:6402:348e:b0:435:a912:355f with SMTP id v14-20020a056402348e00b00435a912355fmr4947487edc.326.1655914429451;
+        Wed, 22 Jun 2022 09:13:49 -0700 (PDT)
+Received: from localhost.localdomain ([185.107.95.225])
+        by smtp.gmail.com with ESMTPSA id sd14-20020a1709076e0e00b007072dc80e06sm9576036ejc.190.2022.06.22.09.13.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 22 Jun 2022 09:13:48 -0700 (PDT)
+From:   Yassine Oudjana <yassine.oudjana@gmail.com>
+X-Google-Original-From: Yassine Oudjana <y.oudjana@protonmail.com>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Banajit Goswami <bgoswami@quicinc.com>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>
+Cc:     Yassine Oudjana <y.oudjana@protonmail.com>,
+        Yassine Oudjana <yassine.oudjana@gmail.com>,
+        devicetree@vger.kernel.org, alsa-devel@alsa-project.org,
+        linux-arm-msm@vger.kernel.org, phone-devel@vger.kernel.org,
         linux-kernel@vger.kernel.org
-References: <20220622041224.627803-1-bjorn.andersson@linaro.org>
- <20220622041224.627803-5-bjorn.andersson@linaro.org>
- <099cc82f-d52f-315f-189d-bcc40c1afd49@somainline.org>
- <YrMccQXwsz/zC/gl@hovoldconsulting.com>
- <9d0c1897-195f-0548-ea5d-ffc35768f518@somainline.org>
- <b2c9faf0-95a8-772f-c211-f1599b35f8f8@linaro.org>
- <51965fa3-d146-70f1-2ad8-db6197989348@somainline.org>
- <YrM0vhXpY3uWgprs@hovoldconsulting.com>
- <e7d9150b-8332-6394-f6cf-0e59d0cf931b@somainline.org>
- <YrM3KX3HLjsYrQvf@hovoldconsulting.com>
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-In-Reply-To: <YrM3KX3HLjsYrQvf@hovoldconsulting.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Subject: [PATCH v2 0/3] ASoC: dt-bindings: Add bindings for WCD9335 DAIs
+Date:   Wed, 22 Jun 2022 20:13:19 +0400
+Message-Id: <20220622161322.168017-1-y.oudjana@protonmail.com>
+X-Mailer: git-send-email 2.36.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Add DT bindings for WCD9335 DAIs and use them in the driver as well
+as all device trees currently using WCD9335.
 
+Changes since v1:
+ - Make header guard match path
+ - Maintain the alphabetical order in msm8996-xiaomi-gemini includes
 
-On 22.06.2022 17:37, Johan Hovold wrote:
-> On Wed, Jun 22, 2022 at 05:30:24PM +0200, Konrad Dybcio wrote:
->> On 22.06.2022 17:26, Johan Hovold wrote:
->>> On Wed, Jun 22, 2022 at 05:10:50PM +0200, Konrad Dybcio wrote:
->>>> On 22.06.2022 16:48, Krzysztof Kozlowski wrote:
->>>>> On 22/06/2022 16:36, Konrad Dybcio wrote:
->>>>>> On 22.06.2022 15:43, Johan Hovold wrote:
-> 
->>>>>>> No, quite the opposite, status go at the end.
->>>>>> Then all other device DTs should be updated, as in dts/qcom/
->>>>>> everybody keeps it first in non-SoC/PMIC files.
->>>>>
->>>>> The word "should" is a bit too much here, but I agree, we can update all
->>>>> of them to match one, chosen approach.
->>>>>
->>>>> However the location for "status" property is more important for the
->>>>> definition of nodes in DTSI, because it's the least important piece
->>>>> there and also kind of expected - here go properties + I disable it. For
->>>>> me this is more important.
->>>
->>> Right, and this is the argument for keeping status last, something which
->>> is well defined.
->>>
->>> If you look at some of the qcom dtsi it's hard to determine whether a
->>> node is disabled or not because the status property does not actually go
->>> "first" but is rather typically mixed up somewhere in the middle (or
->>> upper part) of nodes.
->>>
->>>>> For node redefinition in DTS, I see benefits in two approaches:
->>>>> 1. Let me first enable the node and then configure it.
->>>>> 2. Let me configure the node and enable it.
->>>
->>> So for consistency, just put status last everywhere (dtsi and dts) and
->>> be done with it.
->> That works.
-> 
-> Actually, it looks like a lot of the qcom dtsi already do this too (i.e.
-> put status last). The dts may be more inconsistent on this matter
-> judging from a quick look.
-Yes, as I mentioned this concerns the device-specific trees, as
-the includable ones are (or well, should have been made) fine.
+Yassine Oudjana (3):
+  ASoC: dt-bindings: Add bindings for WCD9335 DAIs
+  ASoC: wcd9335: Use DT bindings instead of local DAI definitions
+  arm64: dts: qcom: Use WCD9335 DT bindings
 
-Konrad
-> 
->>>> I looked around non-qcom device trees and it looks like the common
->>>> consensus is 2. Although I personally visually prefer 1. and it's
->>>> been used in all qcom arm64 DTs to date, I don't think there are any
->>>> blockers for us to switch to 1. going forward to keep it consistent.
->>>
->>> You mean inconsistent with the majority of dts? ;)
->> Not like anything involving Qualcomm was ever consistent or compliant
->> with the majority :D
-> 
-> Heh. :)
-> 
-> Johan
+ MAINTAINERS                                       |  1 +
+ arch/arm64/boot/dts/qcom/apq8096-db820c.dts       |  5 +++--
+ .../arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dts |  5 +++--
+ .../boot/dts/qcom/msm8996-xiaomi-scorpio.dts      |  5 +++--
+ include/dt-bindings/sound/qcom,wcd9335.h          | 15 +++++++++++++++
+ sound/soc/codecs/wcd9335.c                        | 13 ++-----------
+ 6 files changed, 27 insertions(+), 17 deletions(-)
+ create mode 100644 include/dt-bindings/sound/qcom,wcd9335.h
+
+-- 
+2.36.1
+
