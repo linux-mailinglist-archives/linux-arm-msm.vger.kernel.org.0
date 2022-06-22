@@ -2,63 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 08F35554BC2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jun 2022 15:49:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 136E9554BCA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jun 2022 15:51:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1357451AbiFVNtm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Jun 2022 09:49:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41010 "EHLO
+        id S232302AbiFVNvZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Jun 2022 09:51:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42670 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1357493AbiFVNtj (ORCPT
+        with ESMTP id S1347786AbiFVNvZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Jun 2022 09:49:39 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD5D62AC40;
-        Wed, 22 Jun 2022 06:49:38 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 4E7C461B4A;
-        Wed, 22 Jun 2022 13:49:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99C63C34114;
-        Wed, 22 Jun 2022 13:49:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1655905777;
-        bh=s/BTpD1smaZjhWjSTCDLGZE1k7ODXU40+GIAkraIWEQ=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=lPDad96kmLy1MwuS+kg2oxCr9Nk6F3628i7Kiy47bUuA0TS5uOATOvW6gzIk1Va+V
-         caZvU+/G7izv4S4DqVGWXOA+eMtxn1fSugp21S7xU+Uuq9SdnVrTL1Zpk04VXSWDQR
-         FX9S6HLtqrSHtxVeOu0mt4BB/cmGoy909NoL73S+JytR5f+fFE8q4sz8tSf7iXXn7F
-         nPrWBDHDYbF9N4+tAiEDz79h9R4rVB5NchFcZ6wjzdO7k0ggS7+t4E1v6neH/O0fNL
-         FPtJBA1eMIgWwk6Ajs6ednHOBHLV2e6WQWuqY8O87Co3d+VAsB4x3b2qAaWoYWjw7K
-         HlstxSM6BA4Pg==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1o40je-0006ZX-CV; Wed, 22 Jun 2022 15:49:34 +0200
-Date:   Wed, 22 Jun 2022 15:49:34 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 6/6] arm64: dts: qcom: sc8280xp: add Lenovo Thinkpad
- X13s devicetree
-Message-ID: <YrMd7nX8Tu5eu6hU@hovoldconsulting.com>
-References: <20220622041224.627803-1-bjorn.andersson@linaro.org>
- <20220622041224.627803-7-bjorn.andersson@linaro.org>
- <fb234ad7-6a95-d5f2-9ebc-48ac2dd8fb8a@somainline.org>
+        Wed, 22 Jun 2022 09:51:25 -0400
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDD362ED5A
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jun 2022 06:51:23 -0700 (PDT)
+Received: by mail-ej1-x629.google.com with SMTP id g26so13010334ejb.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jun 2022 06:51:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=1tMe+AiU8DKRx6/oa1fADyFtfsdt5zf5zus2rlM628Y=;
+        b=WLrqEPTDWCxELbbCYBkNzQrlci4iuDiO0DU2ioBN9DwcW7jQ7pOE+5VP1zoWQnflXZ
+         dTaN6XDGRWpJSvQIkolJpH6dMOgXlqqiGej5wPGxL+YAggm3OuMAv0cl4q4wDs6QtzrH
+         M5G/FfnuufzkHuYqhYgUb2JRvxkQexCB3PTug=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=1tMe+AiU8DKRx6/oa1fADyFtfsdt5zf5zus2rlM628Y=;
+        b=AbHcI3rWBZijSkDNqxJvlSL5hsdNvM8ztFHK3N2P2YYDOlNzmcAqYG3wlour9bVm6p
+         AIVb1GurqjVEVuim63TU0lHLb2Joq2nB051K0aSqyEnyBIB1Ab2FsEZaGsR9h2ZcKe6o
+         76HFsCzc38M4BtYbARCqbL4XqisyYvivF9KDFTDiuLVWxYcyhTp8XmCENIydQMgwB5q9
+         1D2rsdgw/gDAncE1UMXMG5Ad4QHRFOjLh5tdReFNCzMv+VwkJapuvqe1vs5V0cPLFNwf
+         L4cZTn+m01pFnGv+7MVoah+zDXbeFhx8FxRAXiXB41kHLSFqUMD9Wk7xt3RaVDQ9N+py
+         HsNg==
+X-Gm-Message-State: AJIora9lTZzcbciXxyYmquysXETd3zk17hRf6zpl5jF0c5FGpUdcUtpv
+        jyNUzOsYw1hfrDS591KEgXv4MNu9huqfJg==
+X-Google-Smtp-Source: AGRyM1uH/86X1DUxHh46+uaxMWzwayN8LOlT1eryLsWK16lPAdkHMMm3WVGkbba456gW8Lt8y6qmnA==
+X-Received: by 2002:a17:906:4fc4:b0:6da:b4c6:fadb with SMTP id i4-20020a1709064fc400b006dab4c6fadbmr3355553ejw.282.1655905882280;
+        Wed, 22 Jun 2022 06:51:22 -0700 (PDT)
+Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com. [209.85.221.44])
+        by smtp.gmail.com with ESMTPSA id h7-20020a0564020e8700b004355dc75066sm12746637eda.86.2022.06.22.06.51.20
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 22 Jun 2022 06:51:20 -0700 (PDT)
+Received: by mail-wr1-f44.google.com with SMTP id k22so17083802wrd.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jun 2022 06:51:20 -0700 (PDT)
+X-Received: by 2002:a05:6000:1c0d:b0:216:c9f4:2b83 with SMTP id
+ ba13-20020a0560001c0d00b00216c9f42b83mr3489538wrb.405.1655905879653; Wed, 22
+ Jun 2022 06:51:19 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <fb234ad7-6a95-d5f2-9ebc-48ac2dd8fb8a@somainline.org>
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+References: <20220520143502.v4.1.I71e42c6174f1cec17da3024c9f73ba373263b9b6@changeid>
+ <20220520143502.v4.4.I1318c1ae2ce55ade1d092fc21df846360b15c560@changeid> <e5a7367b-af35-b382-0f2a-e68fe07a4123@linaro.org>
+In-Reply-To: <e5a7367b-af35-b382-0f2a-e68fe07a4123@linaro.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Wed, 22 Jun 2022 06:51:07 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=V9nfJq0_Xvfwid8ev1m9zW2n0zRPSo6fPepHOks8E=PA@mail.gmail.com>
+Message-ID: <CAD=FV=V9nfJq0_Xvfwid8ev1m9zW2n0zRPSo6fPepHOks8E=PA@mail.gmail.com>
+Subject: Re: [PATCH v4 4/5] dt-bindings: arm: qcom: Add / fix sc7280 board bindings
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Alexandru M Stan <amstan@chromium.org>,
+        patches@lists.linux.dev,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Julius Werner <jwerner@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>,
+        "Joseph S . Barrera III" <joebar@chromium.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, Stephen Boyd <sboyd@codeaurora.org>,
+        LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -66,95 +87,41 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jun 22, 2022 at 02:39:43PM +0200, Konrad Dybcio wrote:
-> On 22.06.2022 06:12, Bjorn Andersson wrote:
-> > From: Johan Hovold <johan+linaro@kernel.org>
-> > 
-> > Add an initial Lenovo Thinkpad X13s devicetree.
-> > 
-> > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Hi,
+
+On Wed, Jun 22, 2022 at 1:27 AM Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
+>
+> On 20/05/2022 23:38, Douglas Anderson wrote:
+> > This copy-pastes compatibles from sc7280-based boards from the device
+> > trees to the yaml file. It also fixes the CRD/IDP bindings which had
+> > gotten stale.
+> >
+> > Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> > Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+> > Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > > ---
-> > 
-> > Changs since v1:
-> > - New patch
-> > 
-> >  arch/arm64/boot/dts/qcom/Makefile             |   1 +
-> >  .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    | 393 ++++++++++++++++++
-> >  2 files changed, 394 insertions(+)
-> >  create mode 100644 arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-> > 
-> > diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> > index 2f416b84b71c..43053f1f6be9 100644
-> > --- a/arch/arm64/boot/dts/qcom/Makefile
-> > +++ b/arch/arm64/boot/dts/qcom/Makefile
-> > @@ -91,6 +91,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-idp.dtb
-> >  dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-idp2.dtb
-> >  dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-crd-r3.dtb
-> >  dtb-$(CONFIG_ARCH_QCOM)	+= sc8280xp-crd.dtb
-> > +dtb-$(CONFIG_ARCH_QCOM)	+= sc8280xp-lenovo-thinkpad-x13s.dtb
-> >  dtb-$(CONFIG_ARCH_QCOM)	+= sdm630-sony-xperia-ganges-kirin.dtb
-> >  dtb-$(CONFIG_ARCH_QCOM)	+= sdm630-sony-xperia-nile-discovery.dtb
-> >  dtb-$(CONFIG_ARCH_QCOM)	+= sdm630-sony-xperia-nile-pioneer.dtb
-> > diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-> > new file mode 100644
-> > index 000000000000..58d3d8035751
-> > --- /dev/null
-> > +++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-> > @@ -0,0 +1,393 @@
-> > +// SPDX-License-Identifier: BSD-3-Clause
-> > +/*
-> > + * Copyright (c) 2021, The Linux Foundation. All rights reserved.
-> > + * Copyright (c) 2022, Linaro Limited
-> > + */
-> > +
-> > +/dts-v1/;
-> > +
-> > +#include <dt-bindings/gpio/gpio.h>
-> Can be moved to SoC dtsi.
+> > It should be noted that these match the sc7280 boards as of the top of
+> > the "for-next" branch of the tree
+> > git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git
+> >
+> > (no changes since v2)
+> >
+> > Changes in v2:
+> > - Use a "description" instead of a comment for each item.
+>
+> What's the plan for these patches? This is one was reviewed, the 5/5 had
+> comments. Is there going to be resend or pick up?
+>
+> Some other folks work depends on this.
 
-Again, no, the SoC dtsi does not need that header and we include files
-where they are used.
+I thought patch 5/5 was waiting on Bjorn to say whether he wanted a
+change or was happy the way it was.
 
-> > +&qup0_i2c4 {
-> > +	clock-frequency = <400000>;
-> > +
-> > +	pinctrl-names = "default";
-> > +	pinctrl-0 = <&qup0_i2c4_default>, <&ts0_default>;
-> > +
-> > +	status = "okay";
-> Again, the ordering of status= question from one of the previous patches.
+In general this series, like all of the Qualcomm dts patches at the
+moment, is blocked waiting for Bjorn to have time to land things. I'm
+assuming that if Bjorn wants the 5th patch changed then he will still
+land the first 4 patches and then I can make changes to 5/5 and send
+it as a standalone patch.
 
-This is the right order, but the ADP dts hasn't been updated yet.
- 
-> 
-> > +
-> > +	/* FIXME: verify, missing on some x13s */
-> Won't this fail gracefully-ish if it's absent?
-
-Sure, but that's not the point. I don't access to a X13s with a
-touchscreen yet so the i2c address and hid descriptor address has not
-been verified yet.
-
-> > +	touchscreen@10 {
-> > +		compatible = "hid-over-i2c";
-> > +		reg = <0x10>;
-> > +		hid-descr-addr = <0x1>;
-> > +		interrupts-extended = <&tlmm 175 IRQ_TYPE_LEVEL_LOW>;
-> > +		vdd-supply = <&vreg_misc_3p3>;
-> > +	};
-> > +};
-
-> > +/* PINCTRL - additions to nodes defined in sc8280xp.dtsi */
-> Seems redundant.
-
-Again, no. But I've dropped the reference to sc8280xp.dtsi.
-
-> > +	tpad_default: tpad-default-state {
-
-> > +		int-n {
-> Same comment as in the reference device dt.
-
-I think it's better to keep the child node as documentation.
-
-Johan
+-Doug
