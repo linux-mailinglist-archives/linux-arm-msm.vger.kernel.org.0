@@ -2,83 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 136E9554BCA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jun 2022 15:51:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9E0A4554BD8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jun 2022 15:53:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232302AbiFVNvZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Jun 2022 09:51:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42670 "EHLO
+        id S1357722AbiFVNxB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Jun 2022 09:53:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43866 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347786AbiFVNvZ (ORCPT
+        with ESMTP id S1357677AbiFVNw7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Jun 2022 09:51:25 -0400
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDD362ED5A
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jun 2022 06:51:23 -0700 (PDT)
-Received: by mail-ej1-x629.google.com with SMTP id g26so13010334ejb.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jun 2022 06:51:23 -0700 (PDT)
+        Wed, 22 Jun 2022 09:52:59 -0400
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EEDECBF4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jun 2022 06:52:52 -0700 (PDT)
+Received: by mail-ej1-x632.google.com with SMTP id pk21so11295600ejb.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jun 2022 06:52:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=1tMe+AiU8DKRx6/oa1fADyFtfsdt5zf5zus2rlM628Y=;
-        b=WLrqEPTDWCxELbbCYBkNzQrlci4iuDiO0DU2ioBN9DwcW7jQ7pOE+5VP1zoWQnflXZ
-         dTaN6XDGRWpJSvQIkolJpH6dMOgXlqqiGej5wPGxL+YAggm3OuMAv0cl4q4wDs6QtzrH
-         M5G/FfnuufzkHuYqhYgUb2JRvxkQexCB3PTug=
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=i58AvAf3xFLhQ/L4OE2PIGkyGZEELgf2pk8ePev6kB4=;
+        b=ZkBEZC+r/wMombXRguzU+DolPji+n50SYFb6A0PR3PacPtUpGCNYgvsZVodwBvhB+Y
+         HrormOXJ+myRBnLX1j5uZOwGsLSXr9ktsBD6s6AwWO/tz+1mPzzjLyQgYzQID2Rj43GW
+         OPbZM2TqykrzmCbZcIYyQpswfX0SbmVk21uxtoCDAriIIcSFrEnyXqlH7+vQ3o4S/FMW
+         iiHreXsvl9piaIunAUaUmlNdw39EhsXKLbw+UBzxjHCUtuvb6c/sxy9Vd0L9F+jg2O1r
+         /CroBhvjd8bv0uW0EjJE5ocqOhWF9BeMROOIPhEnMlYVCH0HypyoKfUAdyiBvH6ynf/H
+         w7hg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=1tMe+AiU8DKRx6/oa1fADyFtfsdt5zf5zus2rlM628Y=;
-        b=AbHcI3rWBZijSkDNqxJvlSL5hsdNvM8ztFHK3N2P2YYDOlNzmcAqYG3wlour9bVm6p
-         AIVb1GurqjVEVuim63TU0lHLb2Joq2nB051K0aSqyEnyBIB1Ab2FsEZaGsR9h2ZcKe6o
-         76HFsCzc38M4BtYbARCqbL4XqisyYvivF9KDFTDiuLVWxYcyhTp8XmCENIydQMgwB5q9
-         1D2rsdgw/gDAncE1UMXMG5Ad4QHRFOjLh5tdReFNCzMv+VwkJapuvqe1vs5V0cPLFNwf
-         L4cZTn+m01pFnGv+7MVoah+zDXbeFhx8FxRAXiXB41kHLSFqUMD9Wk7xt3RaVDQ9N+py
-         HsNg==
-X-Gm-Message-State: AJIora9lTZzcbciXxyYmquysXETd3zk17hRf6zpl5jF0c5FGpUdcUtpv
-        jyNUzOsYw1hfrDS591KEgXv4MNu9huqfJg==
-X-Google-Smtp-Source: AGRyM1uH/86X1DUxHh46+uaxMWzwayN8LOlT1eryLsWK16lPAdkHMMm3WVGkbba456gW8Lt8y6qmnA==
-X-Received: by 2002:a17:906:4fc4:b0:6da:b4c6:fadb with SMTP id i4-20020a1709064fc400b006dab4c6fadbmr3355553ejw.282.1655905882280;
-        Wed, 22 Jun 2022 06:51:22 -0700 (PDT)
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com. [209.85.221.44])
-        by smtp.gmail.com with ESMTPSA id h7-20020a0564020e8700b004355dc75066sm12746637eda.86.2022.06.22.06.51.20
-        for <linux-arm-msm@vger.kernel.org>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=i58AvAf3xFLhQ/L4OE2PIGkyGZEELgf2pk8ePev6kB4=;
+        b=UUlDm3FgDqFoC/p1udDaSFKgHOp9zQoWyNkRSIdtxCcSCwGv97ojLAb9hlfQzAQMHi
+         3CmLy2Pn5AQzT+I1JC4/HvQEJnLbhm0ftuHK9NxBxxWePPYmVFPJ3ngWOyGlAwT7d7YY
+         klbVILypu6OymH7eckGLr4+SIFcKKYKovynuK6NGift5s1NC57qWmc1J+e2IQ5uB4JE+
+         6nMOpcgtTNx9i1tHoAWpIgmfkCi01G8ZGyKvBwlVP5L+KcUSySXyWvq1+xMOC72S62qY
+         IqioIcweOM4vPJka3cjt0+l7tSXitVn97f0Qu4q9TVaW55lfRqBYScWTiokiH9FGUY8J
+         ybbw==
+X-Gm-Message-State: AJIora86/Hl12IzCmPL5TmSxjGfZ4QV6VzLVLH0BTjy1szRTvi9yo1MK
+        nkdTzgSZILXKuuwpmZGD9TJYpw==
+X-Google-Smtp-Source: AGRyM1vah6C9m/j0HXJ9FZUYU4HSpCWgqDbDo7mMu1bIGnoxi3GAUHrMtda/2yQgJJS6TrXv5OUtPA==
+X-Received: by 2002:a17:906:33db:b0:70f:12c0:4ade with SMTP id w27-20020a17090633db00b0070f12c04ademr3286585eja.320.1655905971223;
+        Wed, 22 Jun 2022 06:52:51 -0700 (PDT)
+Received: from [192.168.0.224] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id kx10-20020a170907774a00b00722df6db8f3sm3296099ejc.115.2022.06.22.06.52.50
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 Jun 2022 06:51:20 -0700 (PDT)
-Received: by mail-wr1-f44.google.com with SMTP id k22so17083802wrd.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jun 2022 06:51:20 -0700 (PDT)
-X-Received: by 2002:a05:6000:1c0d:b0:216:c9f4:2b83 with SMTP id
- ba13-20020a0560001c0d00b00216c9f42b83mr3489538wrb.405.1655905879653; Wed, 22
- Jun 2022 06:51:19 -0700 (PDT)
+        Wed, 22 Jun 2022 06:52:50 -0700 (PDT)
+Message-ID: <64eb52ee-b3ac-3d94-cfce-ceb1c88dddb6@linaro.org>
+Date:   Wed, 22 Jun 2022 15:52:49 +0200
 MIME-Version: 1.0
-References: <20220520143502.v4.1.I71e42c6174f1cec17da3024c9f73ba373263b9b6@changeid>
- <20220520143502.v4.4.I1318c1ae2ce55ade1d092fc21df846360b15c560@changeid> <e5a7367b-af35-b382-0f2a-e68fe07a4123@linaro.org>
-In-Reply-To: <e5a7367b-af35-b382-0f2a-e68fe07a4123@linaro.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Wed, 22 Jun 2022 06:51:07 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=V9nfJq0_Xvfwid8ev1m9zW2n0zRPSo6fPepHOks8E=PA@mail.gmail.com>
-Message-ID: <CAD=FV=V9nfJq0_Xvfwid8ev1m9zW2n0zRPSo6fPepHOks8E=PA@mail.gmail.com>
-Subject: Re: [PATCH v4 4/5] dt-bindings: arm: qcom: Add / fix sc7280 board bindings
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Alexandru M Stan <amstan@chromium.org>,
-        patches@lists.linux.dev,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Julius Werner <jwerner@chromium.org>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: Re: [PATCH v4 4/4] arm64: dts: qcom: sdm845: Add CPU BWMON
+Content-Language: en-US
+To:     Rajendra Nayak <quic_rjendra@quicinc.com>,
         Andy Gross <agross@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>,
-        "Joseph S . Barrera III" <joebar@chromium.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, Stephen Boyd <sboyd@codeaurora.org>,
-        LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Georgi Djakov <djakov@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Cc:     Thara Gopinath <thara.gopinath@linaro.org>
+References: <20220601101140.170504-1-krzysztof.kozlowski@linaro.org>
+ <20220601101140.170504-5-krzysztof.kozlowski@linaro.org>
+ <bc423d7b-df03-d4e2-2898-0873db710943@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <bc423d7b-df03-d4e2-2898-0873db710943@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -87,41 +83,88 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On 22/06/2022 13:46, Rajendra Nayak wrote:
+> 
+> On 6/1/2022 3:41 PM, Krzysztof Kozlowski wrote:
+>> Add device node for CPU-memory BWMON device (bandwidth monitoring) on
+>> SDM845 measuring bandwidth between CPU (gladiator_noc) and Last Level
+>> Cache (memnoc).  Usage of this BWMON allows to remove fixed bandwidth
+>> votes from cpufreq (CPU nodes) thus achieve high memory throughput even
+>> with lower CPU frequencies.
+>>
+>> Performance impact (SDM845-MTP RB3 board, linux next-20220422):
+>> 1. No noticeable impact when running with schedutil or performance
+>>     governors.
+>>
+>> 2. When comparing to customized kernel with synced interconnects and
+>>     without bandwidth votes from CPU freq, the sysbench memory tests
+>>     show significant improvement with bwmon for blocksizes past the L3
+>>     cache.  The results for such superficial comparison:
+>>
+>> sysbench memory test, results in MB/s (higher is better)
+>>   bs kB |  type |    V  | V+no bw votes | bwmon | benefit %
+>>       1 | W/seq | 14795 |          4816 |  4985 |      3.5%
+>>      64 | W/seq | 41987 |         10334 | 10433 |      1.0%
+>>    4096 | W/seq | 29768 |          8728 | 32007 |    266.7%
+>>   65536 | W/seq | 17711 |          4846 | 18399 |    279.6%
+>> 262144 | W/seq | 16112 |          4538 | 17429 |    284.1%
+>>      64 | R/seq | 61202 |         67092 | 66804 |     -0.4%
+>>    4096 | R/seq | 23871 |          5458 | 24307 |    345.4%
+>>   65536 | R/seq | 18554 |          4240 | 18685 |    340.7%
+>> 262144 | R/seq | 17524 |          4207 | 17774 |    322.4%
+>>      64 | W/rnd |  2663 |          1098 |  1119 |      1.9%
+>>   65536 | W/rnd |   600 |           316 |   610 |     92.7%
+>>      64 | R/rnd |  4915 |          4784 |  4594 |     -4.0%
+>>   65536 | R/rnd |   664 |           281 |   678 |    140.7%
+>>
+>> Legend:
+>> bs kB: block size in KB (small block size means only L1-3 caches are
+>>        used
+>> type: R - read, W - write, seq - sequential, rnd - random
+>> V: vanilla (next-20220422)
+>> V + no bw votes: vanilla without bandwidth votes from CPU freq
+>> bwmon: bwmon without bandwidth votes from CPU freq
+>> benefit %: difference between vanilla without bandwidth votes and bwmon
+>>             (higher is better)
+>>
+>> Co-developed-by: Thara Gopinath <thara.gopinath@linaro.org>
+>> Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> ---
+>>   arch/arm64/boot/dts/qcom/sdm845.dtsi | 54 ++++++++++++++++++++++++++++
+>>   1 file changed, 54 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+>> index 83e8b63f0910..adffb9c70566 100644
+>> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+>> @@ -2026,6 +2026,60 @@ llcc: system-cache-controller@1100000 {
+>>   			interrupts = <GIC_SPI 582 IRQ_TYPE_LEVEL_HIGH>;
+>>   		};
+>>   
+>> +		pmu@1436400 {
+>> +			compatible = "qcom,sdm845-cpu-bwmon";
+>> +			reg = <0 0x01436400 0 0x600>;
+>> +
+>> +			interrupts = <GIC_SPI 581 IRQ_TYPE_LEVEL_HIGH>;
+>> +
+>> +			interconnects = <&gladiator_noc MASTER_APPSS_PROC 3 &mem_noc SLAVE_EBI1 3>,
+>> +					<&osm_l3 MASTER_OSM_L3_APPS &osm_l3 SLAVE_OSM_L3>;
+>> +			interconnect-names = "ddr", "l3c";
+> 
+> Is this the pmu/bwmon instance between the cpu and caches or the one between the caches and DDR?
 
-On Wed, Jun 22, 2022 at 1:27 AM Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
->
-> On 20/05/2022 23:38, Douglas Anderson wrote:
-> > This copy-pastes compatibles from sc7280-based boards from the device
-> > trees to the yaml file. It also fixes the CRD/IDP bindings which had
-> > gotten stale.
-> >
-> > Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> > Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
-> > Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> > ---
-> > It should be noted that these match the sc7280 boards as of the top of
-> > the "for-next" branch of the tree
-> > git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git
-> >
-> > (no changes since v2)
-> >
-> > Changes in v2:
-> > - Use a "description" instead of a comment for each item.
->
-> What's the plan for these patches? This is one was reviewed, the 5/5 had
-> comments. Is there going to be resend or pick up?
->
-> Some other folks work depends on this.
+To my understanding this is the one between CPU and caches.
 
-I thought patch 5/5 was waiting on Bjorn to say whether he wanted a
-change or was happy the way it was.
+> Depending on which one it is, shouldn;t we just be scaling either one and not both the interconnect paths?
 
-In general this series, like all of the Qualcomm dts patches at the
-moment, is blocked waiting for Bjorn to have time to land things. I'm
-assuming that if Bjorn wants the 5th patch changed then he will still
-land the first 4 patches and then I can make changes to 5/5 and send
-it as a standalone patch.
+The interconnects are the same as ones used for CPU nodes, therefore if
+we want to scale both when scaling CPU, then we also want to scale both
+when seeing traffic between CPU and cache.
 
--Doug
+Maybe the assumption here is not correct, so basically the two
+interconnects in CPU nodes are also not proper?
+
+
+Best regards,
+Krzysztof
