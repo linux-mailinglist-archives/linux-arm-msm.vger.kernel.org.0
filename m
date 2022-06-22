@@ -2,70 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A099455460A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jun 2022 14:10:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 605485546E2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jun 2022 14:11:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352156AbiFVIag (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Jun 2022 04:30:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55338 "EHLO
+        id S232455AbiFVIdu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Jun 2022 04:33:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59444 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353498AbiFVIaa (ORCPT
+        with ESMTP id S1354004AbiFVIde (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Jun 2022 04:30:30 -0400
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 494971033
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jun 2022 01:30:29 -0700 (PDT)
-Received: by mail-wm1-x334.google.com with SMTP id x6-20020a1c7c06000000b003972dfca96cso8519192wmc.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jun 2022 01:30:29 -0700 (PDT)
+        Wed, 22 Jun 2022 04:33:34 -0400
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1AC5718396
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jun 2022 01:33:32 -0700 (PDT)
+Received: by mail-ed1-x536.google.com with SMTP id o10so22828862edi.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jun 2022 01:33:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :references:from:in-reply-to:content-transfer-encoding;
-        bh=Ms/HKnagjpWOkTSuqrlOB4okpfVHQ9DTgJbAyIUZ6V4=;
-        b=K3zDe3mPlB00MLjcFS42DXpYKYf2TVGmfQ3L8zKJgwUqbSXfnDPEcFBgyHRdKgDFXF
-         WsBAZWWYEX5jzyiDDm2DMpIeXWkjx2wXt1wdHGcP1VnWaUH6spt4wZgKC2TH4MKD3zEk
-         P6R8ZEcEvYlrKyuRH8sTk5ZjWNmP1jJlFyASryr9LldFHKLV+LGX4VK5+Zpsz26/P0DP
-         rQ+v6cEdI9WP0jooa+fkrx2UUO/Xc9m9qkXW85yLtRb7mcw2ENOkj3tRu+O49LGOOJd2
-         4S9nLF6lqzajDSNtiTff1JmVj8JKk5UTIKhFstK7gzzcwlJxt/WoKitTHv0ZEUjn+o0r
-         4Gag==
+        bh=qRakZp5pSMYhL6XIJv26moqr0Al+sHh6pOGmxdJQIII=;
+        b=o2n9rxPaSrA4T+KJc8P6WKj85N0u6YbvtL8c9ZO8j6Ofr8tYdESYqjOnlqn3YTEb6t
+         ewwm0FT5KkFSAQdTRQvufxPG6NkZt/grwOruVj7u5Qhar+id93/l1h0mfpXnbBlNb4kd
+         GSFh/0pJ6IAT+kOpKBbzPz++6BxyDWh47cwoWZP0yfOhLIlYJ9rLZhY/YmWs0V9W9/a/
+         H6k8jU8EcEPbSIpFtQ/BsIPeZffKahhPOsF9UBM5VxocyUAYbGKXZC2I+JQIS98fHT3G
+         mA+EXb/LZXZgwggcUkQedgW4x22mrVPVy1oMt5rZUlKqOEGjFNReokhpu6WzJrvxnWmO
+         PPsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=Ms/HKnagjpWOkTSuqrlOB4okpfVHQ9DTgJbAyIUZ6V4=;
-        b=WNL4X2YrMiUCtrxsrGKQTmoC0KuvzPYzwVyXt0SOiXepNcXBunhPtQebU3oIF+1XE1
-         xXvFfuHgT+iTiEkNhzL/Gs+f3uhPIVRaSKGz0QudU+Oy4vQTsqmbKVCHdhrlFrnrTXE8
-         WSBwd+91SkQEVQrTp9HihPUdpfcitHrki8riZ1PnmKD7CmE8vayaqTEqSXAcHRsaZ0td
-         tO9uEXXNT/pjfNa47I2HqyKF+n53sjLaTs0Wufe/ygvWvoLqOilrJLO40R4jJIw+09rD
-         qbkE5eSeAxt3EMuA+s4ldQjA59qzjrmm+7MzKttNWSuK+zIT03xcinzrqrztEk9A/9MP
-         yiAg==
-X-Gm-Message-State: AJIora9DbuEdYORTRYzMiFkO68gjnu9rQXDI3SpAeJI886BHuDA/2FbT
-        6K1luz01byTrDRwk14QeeXlsyA==
-X-Google-Smtp-Source: AGRyM1tQ7QLdivgUmT4kY5FU+N9htHIPI5XIgL1dnBJAH1mNMWUvvNWGHru4x1XpllOOMXFcFsPe2Q==
-X-Received: by 2002:a1c:44c5:0:b0:3a0:2ae2:5277 with SMTP id r188-20020a1c44c5000000b003a02ae25277mr1741579wma.30.1655886627887;
-        Wed, 22 Jun 2022 01:30:27 -0700 (PDT)
+        bh=qRakZp5pSMYhL6XIJv26moqr0Al+sHh6pOGmxdJQIII=;
+        b=5CIpa4PTuDTlvD9YU4n2oOintBHHKpUZmAADDEIjG9SwgaQUTjRyBB7/qjqIxhcWEo
+         LkDKSD2uQs5KljieiG3i1JRx4rz2P8XtOm4DFNZ6TVkVK9w/CJ5l1OwP4CCXfdVF52yj
+         LIqv3vM2ygmooH+YKXNfhILaxFmrctRkcC4dnBKu7KDfQ5+KdN5K8liX5h0zFj0UnE44
+         7pbZt/Hea3K1uOhjRZlftUqFwFbz/uIp+PKiwFwGp48i83oLZknUWzWRLoHpmmW/VjL3
+         uMNRvh4X/424lpN4rihu/hqXAVFZ54/Gj/o1HByD226OTyJExubvdJRv1MHI52HlIj5J
+         fgwQ==
+X-Gm-Message-State: AJIora/JIFertpVWXpaCYZvqNWb+Z9NeIiwE+Q9B/ZNu2fl1o0lXZm24
+        Hn/9Y+Ry3qE2fWNRBNDj9ehFJQ==
+X-Google-Smtp-Source: AGRyM1vZAfoRBSAbcGlOtrkZW9xrmbi2gm+avyL7ia7RJgDzQXicYVnr6RnRLuw7MjtdyfMoV1dGFw==
+X-Received: by 2002:a05:6402:278e:b0:431:73ab:49b9 with SMTP id b14-20020a056402278e00b0043173ab49b9mr2696567ede.415.1655886810677;
+        Wed, 22 Jun 2022 01:33:30 -0700 (PDT)
 Received: from [192.168.0.223] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id y12-20020a5d620c000000b0021b866397a7sm12912224wru.1.2022.06.22.01.30.26
+        by smtp.gmail.com with ESMTPSA id l2-20020a1709060cc200b006feed200464sm8902090ejh.131.2022.06.22.01.33.29
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 Jun 2022 01:30:26 -0700 (PDT)
-Message-ID: <0a35d997-7e7e-8847-7c87-edd33719f7a3@linaro.org>
-Date:   Wed, 22 Jun 2022 10:30:25 +0200
+        Wed, 22 Jun 2022 01:33:30 -0700 (PDT)
+Message-ID: <6aa08062-4587-edc7-1638-fed797874eaf@linaro.org>
+Date:   Wed, 22 Jun 2022 10:33:29 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.10.0
-Subject: Re: [PATCH 1/2] arm64: dts: qcom: adjust whitespace around '='
+Subject: Re: [PATCH v3 21/40] arm64: dts: qcom: align gpio-key node names with
+ dtschema
 Content-Language: en-US
-To:     Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>,
-        arm@kernel.org, soc@kernel.org, Andy Gross <agross@kernel.org>,
+To:     arm@kernel.org, soc@kernel.org, Arnd Bergmann <arnd@arndb.de>,
+        Olof Johansson <olof@lixom.net>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-References: <20220526204248.832139-1-krzysztof.kozlowski@linaro.org>
+References: <20220616005224.18391-1-krzysztof.kozlowski@linaro.org>
+ <20220616005333.18491-21-krzysztof.kozlowski@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220526204248.832139-1-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220616005333.18491-21-krzysztof.kozlowski@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -78,20 +81,54 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26/05/2022 22:42, Krzysztof Kozlowski wrote:
-> Fix whitespace coding style: use single space instead of tabs or
-> multiple spaces around '=' sign in property assignment.  No functional
-> changes (same DTB).
+On 16/06/2022 02:53, Krzysztof Kozlowski wrote:
+> The node names should be generic and DT schema expects certain pattern
+> (e.g. with key/button/switch).
 > 
 > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> 
 > ---
+>  arch/arm64/boot/dts/qcom/apq8096-db820c.dts   |  2 +-
+>  .../boot/dts/qcom/msm8916-alcatel-idol347.dts |  2 +-
+>  .../arm64/boot/dts/qcom/msm8916-asus-z00l.dts |  4 ++--
+>  .../arm64/boot/dts/qcom/msm8916-huawei-g7.dts |  2 +-
+>  .../boot/dts/qcom/msm8916-longcheer-l8150.dts |  2 +-
+>  .../boot/dts/qcom/msm8916-longcheer-l8910.dts |  2 +-
+>  .../qcom/msm8916-samsung-a2015-common.dtsi    |  6 +++---
+>  .../boot/dts/qcom/msm8916-samsung-j5.dts      |  4 ++--
+>  .../dts/qcom/msm8916-samsung-serranove.dts    |  6 +++---
+>  .../dts/qcom/msm8916-wingtech-wt88047.dts     |  2 +-
+>  .../boot/dts/qcom/msm8992-xiaomi-libra.dts    |  2 +-
+>  .../dts/qcom/msm8994-msft-lumia-octagon.dtsi  | 10 +++++-----
+>  .../qcom/msm8994-sony-xperia-kitakami.dtsi    |  2 +-
+>  .../boot/dts/qcom/msm8996-xiaomi-common.dtsi  |  6 +++---
+>  .../boot/dts/qcom/msm8998-fxtec-pro1.dts      | 20 +++++++++----------
+>  .../boot/dts/qcom/msm8998-oneplus-common.dtsi |  6 +++---
+>  .../dts/qcom/msm8998-sony-xperia-yoshino.dtsi |  8 ++++----
+>  arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi  |  2 +-
+>  arch/arm64/boot/dts/qcom/sc7280-idp.dtsi      |  2 +-
+>  .../dts/qcom/sdm630-sony-xperia-nile.dtsi     |  8 ++++----
+>  .../boot/dts/qcom/sdm632-fairphone-fp3.dts    |  2 +-
+>  .../boot/dts/qcom/sdm660-xiaomi-lavender.dts  |  2 +-
+>  arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi    |  2 +-
+>  arch/arm64/boot/dts/qcom/sdm845-db845c.dts    |  4 ++--
+>  .../boot/dts/qcom/sdm845-oneplus-common.dtsi  |  4 ++--
+>  .../boot/dts/qcom/sdm845-shift-axolotl.dts    |  2 +-
+>  .../dts/qcom/sdm845-sony-xperia-tama.dtsi     |  2 +-
+>  .../boot/dts/qcom/sdm845-xiaomi-beryllium.dts |  2 +-
+>  .../boot/dts/qcom/sdm850-lenovo-yoga-c630.dts |  4 ++--
+>  .../qcom/sm6125-sony-xperia-seine-pdx201.dts  |  2 +-
+>  .../boot/dts/qcom/sm7225-fairphone-fp4.dts    |  2 +-
+>  arch/arm64/boot/dts/qcom/sm8150-hdk.dts       |  4 ++--
+>  .../dts/qcom/sm8150-microsoft-surface-duo.dts |  4 ++--
+>  arch/arm64/boot/dts/qcom/sm8250-hdk.dts       |  4 ++--
+>  .../boot/dts/qcom/sm8250-sony-xperia-edo.dtsi |  2 +-
+>  .../dts/qcom/sm8350-sony-xperia-sagami.dtsi   |  2 +-
+>  36 files changed, 71 insertions(+), 71 deletions(-)
 > 
-> Output compared with dtx_diff and fdtdump.
 
-Any comments on these two patches? If there are no objections I'll take
-them with rest of cleanups.
+Bjorn,
 
+Any comments on Qualcomm parts? Shall I grab them with rest of cleanups?
 
 Best regards,
 Krzysztof
