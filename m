@@ -2,57 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 99AB7554A4A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jun 2022 14:46:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6A5EB554A87
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jun 2022 15:10:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237361AbiFVMq5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Jun 2022 08:46:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46986 "EHLO
+        id S234694AbiFVNKG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Jun 2022 09:10:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60150 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343770AbiFVMq4 (ORCPT
+        with ESMTP id S1352817AbiFVNJ5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Jun 2022 08:46:56 -0400
-Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 088B43526C;
-        Wed, 22 Jun 2022 05:46:56 -0700 (PDT)
+        Wed, 22 Jun 2022 09:09:57 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB63F3138B;
+        Wed, 22 Jun 2022 06:09:42 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id 6D297CE1FA1;
-        Wed, 22 Jun 2022 12:46:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C52CC34114;
-        Wed, 22 Jun 2022 12:46:49 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 7DF1CB81EB5;
+        Wed, 22 Jun 2022 13:09:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35158C34114;
+        Wed, 22 Jun 2022 13:09:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1655902012;
-        bh=/JpW+MAHG6QANCQr3Dhf2Dft36ErEiGWlnr8flDHyx4=;
+        s=k20201202; t=1655903380;
+        bh=NsupuDvFVEzxG4bNGH8iGooT4sCes2l2/JfLnXk6bz4=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=UXKN57sGJH8mvMvKBd9DwnAWiSGlnl3txMLFktjIqifSztLXkACZQk3EW0IXqVRIe
-         2KnTRFlA1ZO9z8bMCU1Q6E2lIQrDHBb4ejyk/l4lxy0DoAGHDz0YJSgG+pG406CQS8
-         a8T/Ci1ODscDlnjiMkSDCONDCjYyWf4z4AiiUUU0eaZAqL2EVeV33dD0COgsAI4YUg
-         YMIr25VPmVPA7uikrS0LRAgRwss5XUZDD2np98dJlNOI8tXE4Yn/sBnd1dEmCrfbL4
-         fV512pxos0Crfdq8aLqCz5A6qLhkUBEISIVmHpYxBQJyq63aBvYjEXmgHtdk+ozF7q
-         ifjVTHNRDE2QA==
-Date:   Wed, 22 Jun 2022 13:46:46 +0100
-From:   Mark Brown <broonie@kernel.org>
-To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        robh+dt@kernel.org, quic_plai@quicinc.com, bgoswami@quicinc.com,
-        perex@perex.cz, tiwai@suse.com, srinivas.kandagatla@linaro.org,
-        quic_rohkumar@quicinc.com, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org, linux-kernel@vger.kernel.org,
-        swboyd@chromium.org, judyhsiao@chromium.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH 1/2] ASoC: google: dt-bindings: Update
- sc7280-audioreach-herobrine compatible name
-Message-ID: <YrMPNpE+RWIZP372@sirena.org.uk>
-References: <1655892799-29641-1-git-send-email-quic_srivasam@quicinc.com>
- <1655892799-29641-2-git-send-email-quic_srivasam@quicinc.com>
+        b=PP7SAnmb4sHFNgLrdLLGJ19baVNHJ4VTk3ITSLDUpbKhwYeDUe0S/QjOlAeu7FN5f
+         lPRkpXZKjER/jM77taOZ3Jdj6dIpBfjGJoXa9eJpzFsbZesSdtJ0usTlctNkULroC0
+         n6gw8NH8Sw0EHcSvkdnJFZuOiPstFiwFv5G3sfMPC8+ibMh+9TIlw8erPoshlBn4p6
+         zILpsElhWPVpKZ5ASpfUxWdAiSJDuzsb1zN4TsUMeacKCmVk7wkyiqa2g7DXjgg6KU
+         xiMcYeZ0b/CIWJpO7IaxH8mzqRku8LxAAZ/zklHDPbm0j2W5muAvmDKwuMlJXmVrQo
+         0w/82e3CzLWdQ==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1o406y-0006Fb-EU; Wed, 22 Jun 2022 15:09:37 +0200
+Date:   Wed, 22 Jun 2022 15:09:36 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 4/6] arm64: dts: qcom: sc8280xp: Add reference device
+Message-ID: <YrMUkL3fh2vcmo4l@hovoldconsulting.com>
+References: <20220622041224.627803-1-bjorn.andersson@linaro.org>
+ <20220622041224.627803-5-bjorn.andersson@linaro.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="vKK8oBS2+ubOpulY"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1655892799-29641-2-git-send-email-quic_srivasam@quicinc.com>
-X-Cookie: Truckers welcome.
+In-Reply-To: <20220622041224.627803-5-bjorn.andersson@linaro.org>
 X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -63,35 +63,115 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Tue, Jun 21, 2022 at 09:12:22PM -0700, Bjorn Andersson wrote:
+> Add basic support for the SC8280XP reference device, which allows it to
+> boot to a shell (using EFIFB) with functional storage (UFS), USB,
+> keyboard, touchpad, touchscreen, backlight and remoteprocs.
+> 
+> The PMICs are, per socinfo, reused from other platforms. But given that
+> the address of the PMICs doesn't match other cases and that it's
+> desirable to label things according to the schematics a new dtsi file is
+> created to represent the reference combination of PMICs.
+> 
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
+> 
+> Changes since v1:
+> - Reordered "status" last
+> - Fixed invalid PMIC gpio 0
+> - Replaced "hid" name with touchscreen, touchpad and keyboard
+> - Added &xo_board_clk frequency
 
---vKK8oBS2+ubOpulY
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
+> @@ -0,0 +1,432 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * Copyright (c) 2021, The Linux Foundation. All rights reserved.
+> + * Copyright (c) 2022, Linaro Limited
+> + */
+> +
+> +/dts-v1/;
+> +
+> +#include <dt-bindings/gpio/gpio.h>
 
-On Wed, Jun 22, 2022 at 03:43:18PM +0530, Srinivasa Rao Mandadapu wrote:
-> Update audioreach based compatible string for sc7280 based ADSP enabled
-> platforms.
+> +#include <dt-bindings/input/gpio-keys.h>
 
->    compatible:
->      enum:
->        - google,sc7280-herobrine
-> +      - google,sc7280-audioreach-herobrine
+This one is unused and should be dropped.
 
-Isn't the DSP firmware selection a purely software one?
+> +#include <dt-bindings/input/input.h>
 
---vKK8oBS2+ubOpulY
-Content-Type: application/pgp-signature; name="signature.asc"
+And this one belongs in sc8280xp-pmics.dtsi where it's used.
 
------BEGIN PGP SIGNATURE-----
+> +#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+> +
+> +#include "sc8280xp.dtsi"
+> +#include "sc8280xp-pmics.dtsi"
+> +
+> +/ {
+> +	model = "Qualcomm SC8280XP CRD";
+> +	compatible = "qcom,sc8280xp-crd", "qcom,sc8280xp";
+> +
+> +	aliases {
+> +		serial0 = &qup2_uart17;
+> +	};
+> +
+> +	backlight {
+> +		compatible = "pwm-backlight";
+> +		pwms = <&pmc8280c_lpg 3 1000000>;
+> +		enable-gpios = <&pmc8280_1_gpios 8 GPIO_ACTIVE_HIGH>;
+> +		power-supply = <&vreg_edp_bl>;
+> +
+> +		pinctrl-names = "default";
+> +		pinctrl-0 = <&edp_bl_en>, <&edp_bl_pwm>;
+> +	};
+> +
+> +	chosen {
+> +		stdout-path = "serial0:115200n8";
+> +	};
+> +
+> +	vreg_edp_bl: edp-bl-regulator {
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmKzDzUACgkQJNaLcl1U
-h9Cq9Qf/XODQj9ijI4XCvV7JMPgGqnBmpV961ywot0AgWRVTxh+vn1mYXulQq/YU
-/NJgVpeyp/+JHvSX7IRr+HpbmaSWp9Yu+GfroD8P47PyceQ+7TEHU4CM7QdxeOAU
-bBonT5ukV9nRtaREKW4nKjhTdzGkSa84o3k2zMVUB+1S02LyilDEpQNQ7SrYrJeQ
-zIuArN368oSuNYKelxjViqp0knxVQ40YBo8ib6Z749YCtBZCGYDJXUvur722XJ/t
-VQPqMf00GufWgH1esQVoVUOJmO9S9WsmO/zj9SHXHFvGMF3BPj9fpy1YVeS1a4vr
-cZpjmtLdGdzCiim7L0OmcyB6Ky4jRg==
-=wlSz
------END PGP SIGNATURE-----
+The fixed regulator nodes should be renamed "regulator-edp-bl"...
 
---vKK8oBS2+ubOpulY--
+> +		compatible = "regulator-fixed";
+> +
+> +		regulator-name = "VREG_EDP_BL";
+> +		regulator-min-microvolt = <3600000>;
+> +		regulator-max-microvolt = <3600000>;
+> +
+> +		gpio = <&pmc8280_1_gpios 9 GPIO_ACTIVE_HIGH>;
+> +		enable-active-high;
+> +
+> +		pinctrl-names = "default";
+> +		pinctrl-0 = <&edp_bl_reg_en>;
+> +
+> +		regulator-boot-on;
+> +	};
+> +
+> +	vreg_misc_3p3: misc-3p3-regulator {
+
+...and "regulator-misc-3p3" (e.g. so we have a common prefix to sort
+by).
+
+> +		compatible = "regulator-fixed";
+> +
+> +		regulator-name = "VREG_MISC_3P3";
+> +		regulator-min-microvolt = <3300000>;
+> +		regulator-max-microvolt = <3300000>;
+> +
+> +		gpio = <&pmc8280_1_gpios 1 GPIO_ACTIVE_HIGH>;
+> +		enable-active-high;
+> +
+> +		pinctrl-names = "default";
+> +		pinctrl-0 = <&misc_3p3_reg_en>;
+> +
+> +		regulator-boot-on;
+> +		regulator-always-on;
+> +	};
+> +
+> +	reserved-memory {
+> +	};
+> +};
+
+Johan
