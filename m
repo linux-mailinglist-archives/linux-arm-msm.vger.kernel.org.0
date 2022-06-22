@@ -2,68 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C87DB556E03
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jun 2022 23:52:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 034BB556E24
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jun 2022 23:59:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234786AbiFVVwI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Jun 2022 17:52:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38776 "EHLO
+        id S1346894AbiFVV73 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Jun 2022 17:59:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44146 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233434AbiFVVwH (ORCPT
+        with ESMTP id S242135AbiFVV71 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Jun 2022 17:52:07 -0400
-Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B1AD3F885;
-        Wed, 22 Jun 2022 14:52:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1655934727; x=1687470727;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=OKSjDCXBPWAqYOO2qdqkra9IDNhXCaifuwSh1mco7lw=;
-  b=n3V2YEHp6hS6lhXR2hE5PiSf52yrE2/AVjGx3oy2bDh/q2NOTiX4cKdC
-   +i3myZL3HYgUrziMxkSsfjYSyOW2TJZH7dithQpwdTYN3KeN+7OvMhEKl
-   KBH051ycH9dfHDzb+zA3ZxepqLT1zGo2YLatlRs+pu/mBHl2/KuK0FaPI
-   eNl5UwjrfFKmsXg4aN3YrBfF8ag5Huz0fSvxeiy49qAxGht7OkOtFTNPJ
-   KcWx9dgoIVxEjFYXbbYlpw+1GSaV5OFxHuxGpZ7R6R2cMTLzxsIJJHEmT
-   WCC7hPOi/2AiZJLhlCoF7FqI/cr3+uhvFO4Aicdx5xmTfonCrMkhrh74M
-   A==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10386"; a="366876566"
-X-IronPort-AV: E=Sophos;i="5.92,215,1650956400"; 
-   d="scan'208";a="366876566"
-Received: from orsmga005.jf.intel.com ([10.7.209.41])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Jun 2022 14:52:06 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.92,215,1650956400"; 
-   d="scan'208";a="765057657"
-Received: from lkp-server02.sh.intel.com (HELO a67cc04a5eeb) ([10.239.97.151])
-  by orsmga005.jf.intel.com with ESMTP; 22 Jun 2022 14:52:03 -0700
-Received: from kbuild by a67cc04a5eeb with local (Exim 4.95)
-        (envelope-from <lkp@intel.com>)
-        id 1o48GY-0001jI-TA;
-        Wed, 22 Jun 2022 21:52:02 +0000
-Date:   Thu, 23 Jun 2022 05:51:45 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>,
-        agross@kernel.org, bjorn.andersson@linaro.org,
-        gregkh@linuxfoundation.org, jirislaby@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     llvm@lists.linux.dev, kbuild-all@lists.01.org,
-        quic_msavaliy@quicinc.com, dianders@chromium.org, mka@chromium.org,
-        swboyd@chromium.org,
-        Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-Subject: Re: [PATCH] tty: serial: qcom-geni-serial: Fix get_clk_div_rate()
- which otherwise could return a sub-optimal clock rate.
-Message-ID: <202206230511.W02MMaf8-lkp@intel.com>
-References: <1655834239-20812-1-git-send-email-quic_vnivarth@quicinc.com>
+        Wed, 22 Jun 2022 17:59:27 -0400
+Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5A4BE0E4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jun 2022 14:59:18 -0700 (PDT)
+Received: by mail-pf1-x434.google.com with SMTP id n12so10340581pfq.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jun 2022 14:59:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=8siI/lLc2nLNx8FsNQ2lGqGWrHp1NmoTI0mwEHPoRDQ=;
+        b=jnK2syri+t8agaUJJuKxnc4PvNimABVzx/hMCNzSy4l7UU3MqmIKP2sMhSTgI4OFJV
+         APIEHEyJ68FfNP3u90w88YAFZaOvIB12o8tngNo2QrzPgFT2fTpHEdfGxi/iuc5gRX5c
+         Q4R+Dio1niqKl2HEoSUcgms62FgRwwDbGHiJY=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=8siI/lLc2nLNx8FsNQ2lGqGWrHp1NmoTI0mwEHPoRDQ=;
+        b=T6pE2bMR+ZWlz76zUoKzGsGVKj1hx1WXUJ9d6BEDs27jVjFpX6Ff0aXrzOUIaOkvOj
+         8hjLMg+3c4W96FHRGvJv3r9J2b7nb3HbvyoNsvtDLzz0PhhuIV5uxGTjwXXUoGb48w/t
+         fUA77pcqvpy/15k/K4xeGDp0UO6U5I7cG4jH3+xc5oLyeeEcqwmhdW9nbfcBtgQ2ctFS
+         aTIVQvzr2RSkjHW1eQ5ypVb7gBPWoAWDrScYR+4Ynt3Xt1nzRzdqJDUAuwl55Ka9dJFZ
+         GPildUt2g1qokqXVRHCLiCytQqt2WVnmUMgfLWbCILQpke0/ZRvlc5rnsZdF1IwjyOuE
+         BMMw==
+X-Gm-Message-State: AJIora9FXdYU0MfAfD5ghwo7k6+jrK++HKvQlnmnX94zHixya2LuxMa1
+        RJdi/94fwpEnmSWoschoZbX/kQ==
+X-Google-Smtp-Source: AGRyM1tRP8qOdBmSSJjI3JaaCymV9JUuET7vjHVH/kuIYQVeHzT1VkVWWOvR1vA/Z71UyyITT8bWKg==
+X-Received: by 2002:a63:2055:0:b0:404:3941:e05e with SMTP id r21-20020a632055000000b004043941e05emr4706603pgm.66.1655935158109;
+        Wed, 22 Jun 2022 14:59:18 -0700 (PDT)
+Received: from joebar-glaptop.lan (c-71-202-34-56.hsd1.ca.comcast.net. [71.202.34.56])
+        by smtp.gmail.com with ESMTPSA id nk15-20020a17090b194f00b001ec9d45776bsm255916pjb.42.2022.06.22.14.59.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 22 Jun 2022 14:59:17 -0700 (PDT)
+From:   "Joseph S. Barrera III" <joebar@chromium.org>
+To:     LKML <linux-kernel@vger.kernel.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Alexandru M Stan <amstan@chromium.org>,
+        "Joseph S. Barrera III" <joebar@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: [PATCH v10 0/5] arm64: dts: qcom: sc7180: Add five new trogdor-based boards
+Date:   Wed, 22 Jun 2022 14:58:00 -0700
+Message-Id: <20220622215805.1121982-1-joebar@chromium.org>
+X-Mailer: git-send-email 2.31.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1655834239-20812-1-git-send-email-quic_vnivarth@quicinc.com>
-X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -71,44 +72,157 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Vijaya,
+This series adds five new trogdor-based boards to upstream.
+The patches should be applied *after* applying
+https://lore.kernel.org/all/20220602190621.1646679-1-swboyd@chromium.org/
+(arm64: dts: qcom: Remove duplicate sc7180-trogdor include on lazor/homestar)
 
-Thank you for the patch! Yet something to improve:
+The patches do *not* expect
+https://lore.kernel.org/all/20220518172525.3319993-1-swboyd@chromium.org/
+(sc7180-trogdor: Split out keyboard node and describe detachables)
+to be applied.
 
-[auto build test ERROR on tty/tty-testing]
-[also build test ERROR on linus/master v5.19-rc3 next-20220622]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch]
+The compatibles in this series are documented by Doug's series
+https://lore.kernel.org/r/20220520143502.v4.5.Ie8713bc0377672ed8dd71189e66fc0b77226fb85@changeid
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Vijaya-Krishna-Nivarthi/tty-serial-qcom-geni-serial-Fix-get_clk_div_rate-which-otherwise-could-return-a-sub-optimal-clock-rate/20220622-015826
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/gregkh/tty.git tty-testing
-config: arm-randconfig-r036-20220622 (https://download.01.org/0day-ci/archive/20220623/202206230511.W02MMaf8-lkp@intel.com/config)
-compiler: clang version 15.0.0 (https://github.com/llvm/llvm-project 8b8d126598ce7bd5243da7f94f69fa1104288bee)
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # install arm cross compiling tool for clang build
-        # apt-get install binutils-arm-linux-gnueabi
-        # https://github.com/intel-lab-lkp/linux/commit/668659f1481053090a9dbe9c83bd769de527a5c2
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review Vijaya-Krishna-Nivarthi/tty-serial-qcom-geni-serial-Fix-get_clk_div_rate-which-otherwise-could-return-a-sub-optimal-clock-rate/20220622-015826
-        git checkout 668659f1481053090a9dbe9c83bd769de527a5c2
-        # save the config file
-        mkdir build_dir && cp config build_dir/.config
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=arm SHELL=/bin/bash
+Version 9 included many corrections to the series change descriptions,
+based on fetching earlier versions of the series and diffing each patch.
 
-If you fix the issue, kindly add following tag where applicable
-Reported-by: kernel test robot <lkp@intel.com>
+Changes in v10:
+- Remove 'include sc7180.dtsi' from *all* sc7180-trogdor-pazquel* files.
+- Remove 'include sc7180.dtsi' from *all* sc7180-trogdor-kingoftown* files.
+- Move "okay" for ap_tp_i2c to proper location.
 
-All errors (new ones prefixed by >>):
+Changes in v9:
+- Restore two lines accidentally removed from ap_sar_sensor.
+- Simplify trackpad enabling (51d30402be75).
+- Simplify trackpad enabling (51d30402be75).
 
->> ld.lld: error: undefined symbol: __aeabi_uldivmod
-   >>> referenced by qcom_geni_serial.c
-   >>>               tty/serial/qcom_geni_serial.o:(find_clk_rate_in_tol) in archive drivers/built-in.a
-   >>> did you mean: __aeabi_uidivmod
-   >>> defined in: arch/arm/lib/lib.a(lib1funcs.o)
+Changes in v8:
+- Incorporate the deletion of the usb_c1 node from 9f9fb70a7294.
+
+Changes in v7:
+- Restore changes requested by Doug.
+- Restore changes requested by Doug.
+- Only include sc7180.dtsi in sc7180-trogdor.dtsi (19794489fa24).
+- Simplify spi0/spi6 labeling (d277cab7afc7).
+- Simplify trackpad enabling (51d30402be75).
+- Restore mrbland patch.
+- Only include sc7180.dtsi in sc7180-trogdor.dtsi (19794489fa24).
+- Simplify spi0/spi6 labeling (d277cab7afc7).
+- Simplify trackpad enabling (51d30402be75).
+- Only include sc7180.dtsi in sc7180-trogdor.dtsi (19794489fa24).
+- Simplify spi0/spi6 labeling (d277cab7afc7).
+- Remove #include of <arm/cros-ec-keyboard.dtsi>.
+- Accidentally removed two lines from ap_sar_sensor.
+- Simplify spi0/spi6 labeling (d277cab7afc7).
+- Remove #include of <arm/cros-ec-keyboard.dtsi>.
+
+Changes in v6:
+- Only include sc7180.dtsi in sc7180-trogdor.dtsi (19794489fa24).
+- Simplify spi0/spi6 labeling (d277cab7afc7).
+- Simplify trackpad enabling (51d30402be75).
+- Accidentally deleted changes requested by Doug.
+- Accidentally deleted changes requested by Doug.
+- Remove mrbland patch.
+- Copy changes to ap_sar_sensor from v5.4.
+- Add #include of <arm/cros-ec-keyboard.dtsi>.
+- Add #include of <arm/cros-ec-keyboard.dtsi> from v5.4.
+
+Changes in v5:
+- Replaced _ in node name with -
+- Ordered nodes by name
+- Remove extra newline
+- Add comment that compatible will be filled in per-board
+- Replace _ in node name with -
+- Order nodes by name.
+- Add comment that compatible will be filled in per-board.
+
+Changes in v4:
+- Cleaned up rt5682s files
+- Restored camcc definition
+- Added missing version history
+- Add missing version history
+- Add missing version history
+- Fix description (no downstream bits removed).
+- Add missing version history.
+- Fix description (no downstream bits removed).
+- Add missing version history.
+
+Changes in v3:
+- Removed camcc definition
+- First inclusion in this series
+- First inclusion in series.
+
+Changes in v2:
+- Word wrapped patch description.
+- Removed "Author" from patch description.
+- Fixed whitespace around "en_pp3300_dx_edp"
+- Add word wrapping to patch description.
+- Remove "Author" from patch description.
+- Fix whitespace around "en_pp3300_dx_edp".
+- First inclusion in series.
+
+Joseph S. Barrera III (5):
+  arm64: dts: qcom: sc7180: Add wormdingler dts files
+  arm64: dts: qcom: sc7180: Add quackingstick dts files
+  arm64: dts: qcom: sc7180: Add mrbland dts files
+  arm64: dts: qcom: sc7180: Add pazquel dts files
+  arm64: dts: qcom: sc7180: Add kingoftown dts files
+
+ arch/arm64/boot/dts/qcom/Makefile             |  18 +
+ .../dts/qcom/sc7180-trogdor-kingoftown-r0.dts |  43 ++
+ .../dts/qcom/sc7180-trogdor-kingoftown-r1.dts |  16 +
+ .../dts/qcom/sc7180-trogdor-kingoftown.dtsi   | 224 ++++++++++
+ .../qcom/sc7180-trogdor-mrbland-rev0-auo.dts  |  22 +
+ .../qcom/sc7180-trogdor-mrbland-rev0-boe.dts  |  22 +
+ .../dts/qcom/sc7180-trogdor-mrbland-rev0.dtsi |  53 +++
+ .../qcom/sc7180-trogdor-mrbland-rev1-auo.dts  |  22 +
+ .../qcom/sc7180-trogdor-mrbland-rev1-boe.dts  |  24 ++
+ .../boot/dts/qcom/sc7180-trogdor-mrbland.dtsi | 344 +++++++++++++++
+ .../sc7180-trogdor-pazquel-lte-parade.dts     |  21 +
+ .../qcom/sc7180-trogdor-pazquel-lte-ti.dts    |  21 +
+ .../qcom/sc7180-trogdor-pazquel-parade.dts    |  16 +
+ .../dts/qcom/sc7180-trogdor-pazquel-ti.dts    |  16 +
+ .../boot/dts/qcom/sc7180-trogdor-pazquel.dtsi | 221 ++++++++++
+ .../sc7180-trogdor-quackingstick-r0-lte.dts   |  38 ++
+ .../qcom/sc7180-trogdor-quackingstick-r0.dts  |  26 ++
+ .../qcom/sc7180-trogdor-quackingstick.dtsi    | 318 ++++++++++++++
+ .../sc7180-trogdor-wormdingler-rev0-boe.dts   |  22 +
+ .../sc7180-trogdor-wormdingler-rev0-inx.dts   |  22 +
+ .../qcom/sc7180-trogdor-wormdingler-rev0.dtsi |  53 +++
+ ...0-trogdor-wormdingler-rev1-boe-rt5682s.dts |  29 ++
+ .../sc7180-trogdor-wormdingler-rev1-boe.dts   |  28 ++
+ ...0-trogdor-wormdingler-rev1-inx-rt5682s.dts |  29 ++
+ .../sc7180-trogdor-wormdingler-rev1-inx.dts   |  22 +
+ .../dts/qcom/sc7180-trogdor-wormdingler.dtsi  | 408 ++++++++++++++++++
+ 26 files changed, 2078 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown-r0.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown-r1.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-mrbland-rev0-auo.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-mrbland-rev0-boe.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-mrbland-rev0.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-mrbland-rev1-auo.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-mrbland-rev1-boe.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-mrbland.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel-lte-parade.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel-lte-ti.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel-parade.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel-ti.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-quackingstick-r0-lte.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-quackingstick-r0.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-quackingstick.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev0-boe.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev0-inx.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev0.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev1-boe-rt5682s.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev1-boe.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev1-inx-rt5682s.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev1-inx.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler.dtsi
 
 -- 
-0-DAY CI Kernel Test Service
-https://01.org/lkp
+2.31.0
+
