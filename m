@@ -2,120 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6AD6D554231
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jun 2022 07:18:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 220085542DF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jun 2022 08:25:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1357066AbiFVFSp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Jun 2022 01:18:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58194 "EHLO
+        id S231675AbiFVGLm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Jun 2022 02:11:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57016 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1356903AbiFVFS3 (ORCPT
+        with ESMTP id S230517AbiFVGLl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Jun 2022 01:18:29 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42A1835878;
-        Tue, 21 Jun 2022 22:18:24 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id DD5DAB81B1F;
-        Wed, 22 Jun 2022 05:18:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BA20C34114;
-        Wed, 22 Jun 2022 05:18:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1655875101;
-        bh=VoV8OGSZ0jorZeFVFgHmp7IeeSZV7t8CzZfDnFCBZuM=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=ae4psxoNF+hbYlE8i4wuyynB1QHpCSs+URyM/jWAAwxBaD/wGP/IMFuBKKdgWjnOf
-         7zziA3DQ/En+AR0W7aCuKzLw6QQF6g8AtVt0j+4+oRmSW2xIn4xDnXiACu+o0urfKo
-         qNHRXi3opuTOcd7ITbf/t3wCGKDJd2kL9mE00aXw8UwbbZf+en6IQF6EIuDclbJwvj
-         hlPiEPLJPnFKVDdk2ngd4vv2dcLAYshGrTBVBrj0BkQ8nB8cJLdlaIib3Qm+Z3rg8j
-         6Qy9g0ZDKzlXhvSdL83L80mT7izuwNVjhAeTXKKXSi06pGfjE1HrtBf2mt+VrMdp48
-         xLbDQ4rc5sKBA==
-Date:   Wed, 22 Jun 2022 10:48:17 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Andrey Konovalov <andrey.konovalov@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     agross@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: qcs404: fix default pinctrl settings
- for blsp1_spi1
-Message-ID: <YrKmGfUrOw5awgNw@matsya>
-References: <20220611195713.131597-1-andrey.konovalov@linaro.org>
+        Wed, 22 Jun 2022 02:11:41 -0400
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2250520F4B;
+        Tue, 21 Jun 2022 23:11:40 -0700 (PDT)
+Received: by mail-ej1-x62b.google.com with SMTP id v1so31878185ejg.13;
+        Tue, 21 Jun 2022 23:11:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=UW2Ck9w89+CRbSGkJklsBtZoHdtGh6tH/2JzcL/UeIs=;
+        b=ZhQS152JxW4cErBWVBT/CBqcn1OxR/7hxNTSEg1QnWtG8/VvBfQccC520UTUyfmBQl
+         bxYshbZgmA7AGe0bykq+WAp8mod1GR0FJfTijbSGs4deievvk46aFAlYykIsWRGKX1En
+         SFhJf1RMW7JpBS/ewTG8bRBl0K94+rQ2GbM/aNPv2634wQGkf38vQETVKzWAMpBTKOB1
+         9hGzK4xrA8gnowqlcfXDWZaLwUzAjJ3EnDYdC10AHzx9H5tyocH5tiWZkMQrNr249B3g
+         T3il3m9MnxyE7yKuK1iZ+oMsem/QFLiPBHxcaNa225lCVvxoi0QHaYwigh/k3RQfhPXM
+         WxUw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=UW2Ck9w89+CRbSGkJklsBtZoHdtGh6tH/2JzcL/UeIs=;
+        b=CWeDfvYSSxw1ZPpdNxDRdTh015qy5x4tncFxYgPWrP8E5ifw2QxXx0tCacwK9k9TnD
+         tU2rjqfOK4j1ZMlnl28IyNzxlC4FodIo5fipHSThuB4ldF44pwgeSoxPJqZ3PKRke7rC
+         /sE+UXleaUshr5hVcx4r831/Z6jESla7xQcZDZmhfGPAhwCE/brgyKTVTMCD9SCwtpnG
+         1SS/ChxWwpqPglp45DM3hnkFUyuT7/wrzlttUEU4X7P1j32ZVALbjK+XhPg+2czJbDZA
+         5hON1MHH7Ups6wLoYAwCGo7PpOAnTW2hTQn9WEK+TocV5bGbrdLuG/ROexS5tITrlPKd
+         K7cA==
+X-Gm-Message-State: AJIora/cQh9ZSYGoZnesbhU+8sPsd21DizO5iBSqIzoElpDxN1ac6mpc
+        TLCb/y8aTGwcRJAevPAh610=
+X-Google-Smtp-Source: AGRyM1urqCYHq44g/9jk0TQ1Yx4JIHQbieaeZQTZRxKAqzdghsklsf4K1NPbXPEYAM750UzhGcDDeA==
+X-Received: by 2002:a17:906:7a56:b0:722:df69:3bd5 with SMTP id i22-20020a1709067a5600b00722df693bd5mr1482293ejo.581.1655878298528;
+        Tue, 21 Jun 2022 23:11:38 -0700 (PDT)
+Received: from localhost.localdomain ([185.107.95.225])
+        by smtp.gmail.com with ESMTPSA id p1-20020a05640210c100b004357dca07cdsm7347566edu.88.2022.06.21.23.11.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 21 Jun 2022 23:11:37 -0700 (PDT)
+From:   Yassine Oudjana <yassine.oudjana@gmail.com>
+X-Google-Original-From: Yassine Oudjana <y.oudjana@protonmail.com>
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Banajit Goswami <bgoswami@quicinc.com>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>
+Cc:     Yassine Oudjana <y.oudjana@protonmail.com>,
+        Yassine Oudjana <yassine.oudjana@gmail.com>,
+        alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] ASoC: qcom: apq8096: set driver name correctly
+Date:   Wed, 22 Jun 2022 10:11:06 +0400
+Message-Id: <20220622061106.35071-1-y.oudjana@protonmail.com>
+X-Mailer: git-send-email 2.36.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220611195713.131597-1-andrey.konovalov@linaro.org>
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11-06-22, 22:57, Andrey Konovalov wrote:
-> The current settings refer to "blsp_spi1" function which isn't defined.
-> For this reason an attempt to enable blsp1_spi1 interface results in
-> the probe failure below:
-> 
-> [    3.492900] qcs404-pinctrl 1000000.pinctrl: invalid function blsp_spi1 in map table
-> [    3.502460] qcs404-pinctrl 1000000.pinctrl: invalid function blsp_spi1 in map table
-> [    3.517725] qcs404-pinctrl 1000000.pinctrl: invalid function blsp_spi1 in map table
-> [    3.532998] qcs404-pinctrl 1000000.pinctrl: invalid function blsp_spi1 in map table
-> [    3.548277] spi_qup: probe of 78b6000.spi failed with error -22
-> 
-> Fix this by making the functions used in qcs404.dtsi to match the contents
-> of drivers/pinctrl/qcom/pinctrl-qcs404.c.
+From: Yassine Oudjana <y.oudjana@protonmail.com>
 
-Right, I cannot find blsp_spi1 which is the only one which is missing,
-not sure why...
+Set driver name to allow matching different UCM2 configurations
+for the multiple devices sharing the same APQ8096 ASoC.
 
-Bjorn do you recall why SPI1 is treated differently...
+Signed-off-by: Yassine Oudjana <y.oudjana@protonmail.com>
+---
+ sound/soc/qcom/apq8096.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-> 
-> Signed-off-by: Andrey Konovalov <andrey.konovalov@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/qcs404.dtsi | 21 +++++++++++++++++++--
->  1 file changed, 19 insertions(+), 2 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/qcs404.dtsi b/arch/arm64/boot/dts/qcom/qcs404.dtsi
-> index d912166b7552..0d9e1f19aa67 100644
-> --- a/arch/arm64/boot/dts/qcom/qcs404.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/qcs404.dtsi
-> @@ -669,8 +669,25 @@ blsp1_spi0_default: blsp1-spi0-default {
->  			};
->  
->  			blsp1_spi1_default: blsp1-spi1-default {
-> -				pins = "gpio22", "gpio23", "gpio24", "gpio25";
-> -				function = "blsp_spi1";
-> +				mosi {
-> +					pins = "gpio22";
-> +					function = "blsp_spi_mosi_a1";
-> +				};
-> +
-> +				miso {
-> +					pins = "gpio23";
-> +					function = "blsp_spi_miso_a1";
-> +				};
-> +
-> +				cs_n {
-> +					pins = "gpio24";
-> +					function = "blsp_spi_cs_n_a1";
-> +				};
-> +
-> +				clk {
-> +					pins = "gpio25";
-> +					function = "blsp_spi_clk_a1";
-> +				};
->  			};
->  
->  			blsp1_spi2_default: blsp1-spi2-default {
-> -- 
-> 2.25.1
-
+diff --git a/sound/soc/qcom/apq8096.c b/sound/soc/qcom/apq8096.c
+index c7b7d0864d1a..5d07b38f6d72 100644
+--- a/sound/soc/qcom/apq8096.c
++++ b/sound/soc/qcom/apq8096.c
+@@ -113,6 +113,7 @@ static int apq8096_platform_probe(struct platform_device *pdev)
+ 	if (!card)
+ 		return -ENOMEM;
+ 
++	card->driver_name = "apq8096";
+ 	card->dev = dev;
+ 	card->owner = THIS_MODULE;
+ 	dev_set_drvdata(dev, card);
 -- 
-~Vinod
+2.36.1
+
