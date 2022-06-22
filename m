@@ -2,113 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 025485548A6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jun 2022 14:15:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 40BDE554780
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jun 2022 14:12:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245383AbiFVKH4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Jun 2022 06:07:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58438 "EHLO
+        id S239961AbiFVKPZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Jun 2022 06:15:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34232 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346603AbiFVKHz (ORCPT
+        with ESMTP id S1352374AbiFVKNn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Jun 2022 06:07:55 -0400
-Received: from relay03.th.seeweb.it (relay03.th.seeweb.it [5.144.164.164])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 807CABFF
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jun 2022 03:07:52 -0700 (PDT)
-Received: from [192.168.1.101] (abxi223.neoplus.adsl.tpnet.pl [83.9.2.223])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 1565820554;
-        Wed, 22 Jun 2022 12:07:46 +0200 (CEST)
-Message-ID: <bc646661-9be5-5256-5ec9-a27623003693@somainline.org>
-Date:   Wed, 22 Jun 2022 12:07:45 +0200
+        Wed, 22 Jun 2022 06:13:43 -0400
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9CD4415729;
+        Wed, 22 Jun 2022 03:13:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1655892822; x=1687428822;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=45HUCslR63O2eDoFf6sU5iI/mplnXmcLJYZs0gw37HM=;
+  b=yQZCPnAjRLOpoIlFpSRPkr/RaYPTI6xMBBmUM/zaB9y5T6Kg/EDnLb2w
+   HgN2fZuNSQm9h/E5Oec+jnnFAV/FWLf9s6p21ZCF3HDF5d7TFpanDZQqz
+   R4NDk1hVDWZMh7taN0+Xe2U23SgraQjq1HpYpMl9298ttgCVkx74nPUTS
+   U=;
+Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 22 Jun 2022 03:13:42 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Jun 2022 03:13:41 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Wed, 22 Jun 2022 03:13:41 -0700
+Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Wed, 22 Jun 2022 03:13:35 -0700
+From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
+        <lgirdwood@gmail.com>, <broonie@kernel.org>, <robh+dt@kernel.org>,
+        <quic_plai@quicinc.com>, <bgoswami@quicinc.com>, <perex@perex.cz>,
+        <tiwai@suse.com>, <srinivas.kandagatla@linaro.org>,
+        <quic_rohkumar@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <alsa-devel@alsa-project.org>, <linux-kernel@vger.kernel.org>,
+        <swboyd@chromium.org>, <judyhsiao@chromium.org>,
+        <devicetree@vger.kernel.org>
+CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Subject: [PATCH 0/2] Update machine driver for audioreach solution
+Date:   Wed, 22 Jun 2022 15:43:17 +0530
+Message-ID: <1655892799-29641-1-git-send-email-quic_srivasam@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: [PATCH v6 1/6] arm64: dts: qcom: sm8350: Replace integers with
- rpmpd defines
-Content-Language: en-US
-To:     Robert Foss <robert.foss@linaro.org>, bjorn.andersson@linaro.org,
-        agross@kernel.org, mturquette@baylibre.com, sboyd@kernel.org,
-        robh+dt@kernel.org, krzk+dt@kernel.org, jonathan@marek.ca,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-References: <20220621233412.506768-1-robert.foss@linaro.org>
- <20220621233412.506768-2-robert.foss@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-In-Reply-To: <20220621233412.506768-2-robert.foss@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+This patch set is to update sc7280 machine driver for audioreach support.
 
+Srinivasa Rao Mandadapu (2):
+  ASoC: google: dt-bindings: Update sc7280-audioreach-herobrine
+    compatible name
+  ASoC: qcom: Add driver support for audioreach solution
 
-On 22.06.2022 01:34, Robert Foss wrote:
-> Replace &rpmhpd power domain integers with their respective defines
-> in order to improve legibility.
-> 
-> Signed-off-by: Robert Foss <robert.foss@linaro.org>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+ .../bindings/sound/google,sc7280-herobrine.yaml    |  1 +
+ sound/soc/qcom/sc7280.c                            | 34 ++++++++++++++++++++++
+ 2 files changed, 35 insertions(+)
 
-Konrad
->  arch/arm64/boot/dts/qcom/sm8350.dtsi | 16 ++++++++--------
->  1 file changed, 8 insertions(+), 8 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-> index c0137bdcf94b..52428b6df64e 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-> @@ -1656,8 +1656,8 @@ mpss: remoteproc@4080000 {
->  			clocks = <&rpmhcc RPMH_CXO_CLK>;
->  			clock-names = "xo";
->  
-> -			power-domains = <&rpmhpd 0>,
-> -					<&rpmhpd 12>;
-> +			power-domains = <&rpmhpd SM8350_CX>,
-> +					<&rpmhpd SM8350_MSS>;
->  			power-domain-names = "cx", "mss";
->  
->  			interconnects = <&mc_virt MASTER_LLCC &mc_virt SLAVE_EBI1>;
-> @@ -2167,8 +2167,8 @@ slpi: remoteproc@5c00000 {
->  			clocks = <&rpmhcc RPMH_CXO_CLK>;
->  			clock-names = "xo";
->  
-> -			power-domains = <&rpmhpd 4>,
-> -					<&rpmhpd 5>;
-> +			power-domains = <&rpmhpd SM8350_LCX>,
-> +					<&rpmhpd SM8350_LMX>;
->  			power-domain-names = "lcx", "lmx";
->  
->  			memory-region = <&pil_slpi_mem>;
-> @@ -2235,8 +2235,8 @@ cdsp: remoteproc@98900000 {
->  			clocks = <&rpmhcc RPMH_CXO_CLK>;
->  			clock-names = "xo";
->  
-> -			power-domains = <&rpmhpd 0>,
-> -					<&rpmhpd 10>;
-> +			power-domains = <&rpmhpd SM8350_CX>,
-> +					<&rpmhpd SM8350_MXC>;
->  			power-domain-names = "cx", "mxc";
->  
->  			interconnects = <&compute_noc MASTER_CDSP_PROC &mc_virt SLAVE_EBI1>;
-> @@ -2540,8 +2540,8 @@ adsp: remoteproc@17300000 {
->  			clocks = <&rpmhcc RPMH_CXO_CLK>;
->  			clock-names = "xo";
->  
-> -			power-domains = <&rpmhpd 4>,
-> -					<&rpmhpd 5>;
-> +			power-domains = <&rpmhpd SM8350_LCX>,
-> +					<&rpmhpd SM8350_LMX>;
->  			power-domain-names = "lcx", "lmx";
->  
->  			memory-region = <&pil_adsp_mem>;
+-- 
+2.7.4
+
