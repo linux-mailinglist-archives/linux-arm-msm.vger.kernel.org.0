@@ -2,87 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 91D49554344
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jun 2022 09:04:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9B129554367
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jun 2022 09:04:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352299AbiFVHA3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Jun 2022 03:00:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40480 "EHLO
+        id S1352069AbiFVHDt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Jun 2022 03:03:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42508 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349639AbiFVHA1 (ORCPT
+        with ESMTP id S1352098AbiFVHDr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Jun 2022 03:00:27 -0400
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE290369E9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jun 2022 00:00:25 -0700 (PDT)
-Received: by mail-wr1-x432.google.com with SMTP id n1so21736910wrg.12
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jun 2022 00:00:25 -0700 (PDT)
+        Wed, 22 Jun 2022 03:03:47 -0400
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64A25369D5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jun 2022 00:03:45 -0700 (PDT)
+Received: by mail-lf1-x130.google.com with SMTP id c4so26167756lfj.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jun 2022 00:03:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=b/Ja2hBJrDIyLQOgEyheQP9Iy9WcTGSkCNMUgwPIYZk=;
-        b=q7KUZSP/8hX3EFAM2R6hC1nbfSsCIawlFtOugo8immdtRYxSjx02bYlLwg2Vo7KE2k
-         9DZmkK122M5HiaOgvAnygTZ9TlxOaMTTde/fWCFG+vs3WUMla9XjFXhtBeDHX/No1paK
-         rY7AyCmSViHA5ahQqEuxj06iaZZdCk7wjP6zxUKarFr+4OKLt2PuBbm7Eh15BLJ4Ah6K
-         /eQkb4S3UzmrM2n55joAqlQ3/yQ4Az2vh7STMMUdAZy1JnFU/tAffx+CeMQpWlQeeXE6
-         2tvibmOVNVvYss3ts31cbthnmfPAHCBsnloUpfwNbzArHSNxkaDta3rpFC1MLVZOWiiv
-         B+aA==
+        bh=YERJcMOnhf7YdepXzuOu1ICAIwURGU9KIuX/lgmjuVo=;
+        b=VeMQggitH6vIywIo3XNlC/o5Xi45Ws9wLYXL/2QvJ1xYp/KvCWZ7Ms+XOlHD8FEOre
+         XAWqtnosMq3SvS5sW2meaDwmXu3iHsPcVgSsCcOxuzV4fgcqIOh4LeZyG9udXU3INAmU
+         QKj1uht41px53icB1fjscDsDRL82viptOrNGzzqPnZR4cIKRCZpCPSaT6MHZVsXZsq9O
+         rVxhqhBW+SJGD5Eof3+FlcsvEo5FEqbazd6aModuvGPGn4JO4GX9f9GWF1+7slHOS3Su
+         JZo79j9KOds39dlXQQ2sefCkJB3jnxNoMlKDQraQUaG1SCoopK5Ax9rh4y6mIlCmPC7j
+         GigA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=b/Ja2hBJrDIyLQOgEyheQP9Iy9WcTGSkCNMUgwPIYZk=;
-        b=BLURn27ZbmhB5gkxGvaNWzDLjgeHSUhE//3j4h+j0/X+1biUKOv9yk2Z2f6iP3tQLv
-         Np0uV4bpGUFKdwGH0rjMQ0zIL2f+IQgTezM4tZlwt7ioTv9lrmWyYLH2i0jXsQ6LPort
-         DTQhQp7qoYd8hTL80QyDYfItaJnn4ReaSszufWJBUgzdJ+pTVPoYhe22dhMbTqzXZjuE
-         dTK0QdREOzQUruer/exYfTcoXTWrx1/D9bIpbM8dpCKRM8ax1y8AWYm/y9NFt1ZiQRfB
-         o9lWmZ93ilHRL/ci4l80MHb+/dU5ShH/ToyMe21CGEBkK6rzcCafkDrkYxDlvlzbETY4
-         6gYw==
-X-Gm-Message-State: AJIora8XPxEAmaRRECaFAvVrhfkqVfgMMO4NHZE86XRFlJPfabUwYgZZ
-        7DlL3f/bBtdQOlnPxLtwTuSijA==
-X-Google-Smtp-Source: AGRyM1tYARg4sIUvffhSMqjIYpOrduq3LmXqYNfnJstzbMV8Ms9t2EaokDJ07vuxYyd9oHlWZIXkXA==
-X-Received: by 2002:a5d:5888:0:b0:217:fffd:6aae with SMTP id n8-20020a5d5888000000b00217fffd6aaemr1630824wrf.330.1655881224182;
-        Wed, 22 Jun 2022 00:00:24 -0700 (PDT)
-Received: from [192.168.0.223] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id l8-20020a1ced08000000b0039744bd664esm24054554wmh.13.2022.06.22.00.00.22
+        bh=YERJcMOnhf7YdepXzuOu1ICAIwURGU9KIuX/lgmjuVo=;
+        b=76e1kZx3SvPKYaytBDxnC5NtFi2m7dwVTkXnXddwkh/8VR8/q5G3xZmzrU94b6XGpr
+         7GEXInhqrq58WjiXpiXf3I3syPrBcK61is5eN4wCQuCaYUJ3eY50vKaPmrW9mo0X1O9P
+         VNS2+tPiuHgtTkQSHEakO14VmZB2RB76nC4Es95cJp8gt6MAxBRptZinwwDdp1av61b5
+         oN6FykDeUndqd+9LaP71a0/Cq1xiFtdO3bNiBuibl/f9IpernIWzcVwpVs42AxLtRzqQ
+         uWF+8RJjp3YfIGJFlwdnaAl20ibKUnB9MVo4Gp8JYFaZ9iP77SYXAXd1WRWd16AxaRDl
+         8SSQ==
+X-Gm-Message-State: AJIora/Aoj8EafmXBXq+xMOudU31fR2PzEtjMRNG0bhuO8JzIgu1ijBx
+        2a26H+cKMSocoWVQHqf0y2LNCg==
+X-Google-Smtp-Source: AGRyM1tTLNAo7oEkZI5yLv+nUNHVjPEiA5lCsNiiw3d4kjelPJ1AyosgX42lNQ8wo/hr6+G+CdVkuw==
+X-Received: by 2002:a05:6512:6d4:b0:47f:7940:f70 with SMTP id u20-20020a05651206d400b0047f79400f70mr1341831lff.47.1655881423444;
+        Wed, 22 Jun 2022 00:03:43 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id s19-20020a2e2c13000000b002558e1bec75sm2321283ljs.5.2022.06.22.00.03.42
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 Jun 2022 00:00:23 -0700 (PDT)
-Message-ID: <70300b95-8b4d-5029-bfbb-544abbc64441@linaro.org>
-Date:   Wed, 22 Jun 2022 09:00:22 +0200
+        Wed, 22 Jun 2022 00:03:43 -0700 (PDT)
+Message-ID: <6f22fe3a-2197-b373-8c48-5c146648166e@linaro.org>
+Date:   Wed, 22 Jun 2022 10:03:42 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.10.0
-Subject: Re: [PATCH v2 1/2] dt-bindings: arm: qcom: document qcom,msm-id and
- qcom,board-id
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Amit Pundir <amit.pundir@linaro.org>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Kumar Gala <galak@codeaurora.org>,
-        Stephen Boyd <sboyd@kernel.org>
-References: <20220621185649.37391-1-krzysztof.kozlowski@linaro.org>
- <20220621185649.37391-2-krzysztof.kozlowski@linaro.org>
- <609d1f0f-daca-4fde-3315-5d8e171ca5c4@linaro.org>
- <7ef854a5-0e56-c71e-447a-f52cdcf51ef0@linaro.org>
- <CAA8EJpp3HqsPOcz1t9W=cjExuddjEV2MaA10L5mMgcUrmqUmAQ@mail.gmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <CAA8EJpp3HqsPOcz1t9W=cjExuddjEV2MaA10L5mMgcUrmqUmAQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
+Subject: Re: [PATCH v2] PCI: qcom: fix IPQ8074 Gen2 support
+Content-Language: en-GB
+To:     Bjorn Helgaas <helgaas@kernel.org>
+Cc:     Robert Marko <robimarko@gmail.com>, svarbanov@mm-sol.com,
+        agross@kernel.org, bjorn.andersson@linaro.org,
+        lpieralisi@kernel.org, robh@kernel.org, kw@linux.com,
+        bhelgaas@google.com, p.zabel@pengutronix.de, jingoohan1@gmail.com,
+        linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, johan+linaro@kernel.org
+References: <20220621211604.GA1334281@bhelgaas>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220621211604.GA1334281@bhelgaas>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -90,160 +78,58 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21/06/2022 21:49, Dmitry Baryshkov wrote:
-> On Tue, 21 Jun 2022 at 22:32, Krzysztof Kozlowski
-> <krzysztof.kozlowski@linaro.org> wrote:
->>
->> On 21/06/2022 21:26, Dmitry Baryshkov wrote:
->>> On 21/06/2022 21:56, Krzysztof Kozlowski wrote:
->>>> The top level qcom,msm-id and qcom,board-id properties are utilized by
->>>> bootloaders on Qualcomm MSM platforms to determine which device tree
->>>> should be used and passed to the kernel.
->>>>
->>>> The commit b32e592d3c28 ("devicetree: bindings: Document qcom board
->>>> compatible format") from 2015 was a consensus during discussion about
->>>> upstreaming qcom,msm-id and qcom,board-id fields.  There are however still
->>>> problems with that consensus:
->>>> 1. It was reached 7 years ago but it turned out its implementation did
->>>>     not reach all possible products.
->>>>
->>>> 2. Initially additional tool (dtbTool) was needed for parsing these
->>>>     fields to create a QCDT image consisting of multiple DTBs, later the
->>>>     bootloaders were improved and they use these qcom,msm-id and
->>>>     qcom,board-id properties directly.
+On 22/06/2022 00:16, Bjorn Helgaas wrote:
+> On Tue, Jun 21, 2022 at 11:45:12PM +0300, Dmitry Baryshkov wrote:
+>> On Tue, 21 Jun 2022 at 23:32, Bjorn Helgaas <helgaas@kernel.org> wrote:
+>>> On Tue, Jun 21, 2022 at 01:23:30PM +0200, Robert Marko wrote:
+>>>> IPQ8074 has one Gen2 and one Gen3 port, currently the Gen2 port will
+>>>> cause the system to hang as its using DBI registers in the .init
+>>>> and those are only accesible after phy_power_on().
 >>>
->>> I might be mistaken here. I think it was expected that dtbTool would use
->>> board compat strings to generate qcom,msm-id and qcom,board-id
->>> properties. It's not that the bootloaders were improved.
->>
->> Don't ask me, I am new to this.
->>
->> https://lore.kernel.org/all/02ab0276-b078-fe66-8596-fcec4378722b@somainline.org/
-> 
-> 
-> 
-> 
->>
+>>> Is the fact that IPQ8074 has both a Gen2 and a Gen3 port relevant to
+>>> this patch?  I don't see the connection.
 >>>
->>>>
->>>> 3. Extracting relevant information from the board compatible requires
->>>>     this additional tool (dtbTool), which makes the build process more
->>>>     complicated and not easily reproducible (DTBs are modified after the
->>>>     kernel build).
->>>>
->>>> 4. Some versions of Qualcomm bootloaders expect these properties even
->>>>     when booting with a single DTB.  The community is stuck with these
->>>>     bootloaders thus they require properties in the DTBs.
->>>>
->>>> Since several upstreamed Qualcomm SoC-based boards require these
->>>> properties to properly boot and the properties are reportedly used by
->>>> bootloaders, document them.
->>>>
->>>> Link: https://lore.kernel.org/r/a3c932d1-a102-ce18-deea-18cbbd05ecab@linaro.org/
->>>> Co-developed-by: Kumar Gala <galak@codeaurora.org>
->>>> Signed-off-by: Kumar Gala <galak@codeaurora.org>
->>>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->>>> ---
->>>>   .../devicetree/bindings/arm/qcom.yaml         | 123 ++++++++++++++++++
->>>>   include/dt-bindings/arm/qcom,ids.h            |  30 +++++
->>>>   2 files changed, 153 insertions(+)
->>>>   create mode 100644 include/dt-bindings/arm/qcom,ids.h
->>>>
->>>> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
->>>> index 6c38c1387afd..05b98cde4653 100644
->>>> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
->>>> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
->>>> @@ -403,6 +403,129 @@ properties:
->>>>                 - qcom,sm8450-qrd
->>>>             - const: qcom,sm8450
->>>>
->>>> +  # Board compatibles go above
->>>> +
->>>> +  qcom,msm-id:
->>>> +    $ref: /schemas/types.yaml#/definitions/uint32-matrix
->>>> +    minItems: 1
->>>> +    maxItems: 8
->>>> +    items:
->>>> +      items:
->>>> +        - description: |
->>>> +            MSM chipset ID - an exact match value consisting of three bitfields::
+>>> I see that qcom_pcie_host_init() does:
 >>>
->>> two bitfields
->>
->> Right, thanks.
->>
+>>>    qcom_pcie_host_init
+>>>      pcie->cfg->ops->init(pcie)
+>>>      phy_power_on(pcie->phy)
+>>>      pcie->cfg->ops->post_init(pcie)
 >>>
->>>> +             - bits 0-15  - The unique MSM chipset ID
->>>> +             - bits 16-31 - Reserved; should be 0
->>>> +        - description: |
->>>> +            Hardware revision ID - a chipset specific 32-bit ID representing
->>>> +            the version of the chipset.  It is best a match value - the
->>>> +            bootloader will look for the closest possible match.
->>>> +    deprecated: true
->>>> +    description:
->>>> +      The MSM chipset and hardware revision use by Qualcomm bootloaders.  It
->>>> +      can optionally be an array of these to indicate multiple hardware that
->>>> +      use the same device tree.  It is expected that the bootloader will use
->>>> +      this information at boot-up to decide which device tree to use when given
->>>> +      multiple device trees, some of which may not be compatible with the
->>>> +      actual hardware.  It is the bootloader's responsibility to pass the
->>>> +      correct device tree to the kernel.
->>>> +      The property is deprecated - it is not expected on newer boards
->>>> +      (starting with SM8350).
+>>> and that you're moving DBI register accesses from
+>>> qcom_pcie_init_2_3_3() to qcom_pcie_post_init_2_3_3().
 >>>
->>> Could you please elaborate this?
+>>> But I also see DBI register accesses in other .init() functions:
+>>>
+>>>    qcom_pcie_init_2_1_0
+>>>    qcom_pcie_init_1_0_0      (oddly out of order)
+>>>    qcom_pcie_init_2_3_2
+>>>    qcom_pcie_init_2_4_0
+>>>
+>>> Why do these accesses not need to be moved?  I assume it's because
+>>> pcie->phy is an optional PHY and phy_power_on() does nothing on those
+>>> controllers?
+>>>
+>>> Whatever the reason, I think the DBI accesses should be done
+>>> consistently in .post_init().  I see that Dmitry's previous patches
+>>> removed all those .post_init() functions, but I think the consistency
+>>> is worth having.
+>>>
+>>> Perhaps we could reorder the patches so this patch comes first, moves
+>>> the DBI accesses into .post_init(), then Dmitry's patches could be
+>>> rebased on top to drop the clock handling?
 >>
->> Second paragraph:
->> https://lore.kernel.org/all/20220522195138.35943-1-konrad.dybcio@somainline.org/
+>> I don't think there is a need to reorder patches. My patches do not
+>> remove support for post_init(), they drop the callbacks code. Thus one
+>> can reinstate necessary code back.
 > 
-> I think this is something peculiar to Sony. Public lahaina (sm8350)
-> dts files contain both these properties:
-> 
-> https://github.com/MiCode/kernel_devicetree/blob/zeus-s-oss/qcom/lahaina-hdk.dts
-> https://github.com/MiCode/kernel_devicetree/blob/zeus-s-oss/qcom/lahaina-v2.1.dtsi
-> 
->>
->> Plus consensus with Rob:
->> https://lore.kernel.org/all/CAL_JsqKL-mtAQ8Q9H4vLGM8izVVzDPbUAVWSdS8AmGjN6X6kcA@mail.gmail.com/
-> 
-> I'm not sure here. But sm8350 and sm8450 dtsi files use these
-> properties. I've linked lahaina files above.
-> The waiptio dtsi (sm8450) are present at the same URL.
+> There's not a *need* to reorder them, but I think it would make the
+> patches smaller and more readable because we wouldn't be removing and
+> then re-adding the functions.
 
-If you did not like where the consensus is going during the discussion
-last week, I would expect to join the discussion. Not to comment after I
-implement it.
+Ack. I'm fine then with rebasing my patches on top of Robert's patchset. 
+I'll send the next revision after getting this patchset into the form.
 
-> 
->>
->>> If the AOSP team were to add e.g.
->>> SM8350-HDK to their single RB3+RB5 images, they would still need the
->>> qcom,board-id/qcom,msm-id properties to let the bootloader choose proper
->>> DTB.
->>
->> If you have any email addresses in mind, please Cc them to invite in
->> discussions. Otherwise I am afraid it won't be allowed. The feedback I
->> got before was that SM8350 and newer do not require this property. Feel
->> free to propose other way to solve comments (see "consensus with Rob"
->> above).
-> 
-> Amit is in CC list. In the past he used these properties to allow
-> single-image booting of RB3 and RB5.
-> In fact I might prefer adding more of these properties to the dts
-> files, where it makes sense, to allow adding more dt files to the
-> images we create.
-> I'd really like to be able to boot a single image on all my boards
-> (rb3, rb5, db410c, db820, ifc6560, etc).
-
-You have several options here. Use the board-compatible-encoded-scheme,
-which was merged like 6 years ago or something. Bootloader could parse
-it, dtbTool as well. Add a generic property, like Rob wanted (and
-probably fix bootloader). Or find any other way to satisfy Rob's
-comments. These properties were not accepted 6 years ago and the board
-compatible approach was merged instead. If 6 years is not enough to
-change the bootloaders, nothing will happen here ever, so we need to
-make some statement.
-
-
-Best regards,
-Krzysztof
+-- 
+With best wishes
+Dmitry
