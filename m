@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AC11D556F07
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jun 2022 01:29:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EB5DA556F0B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jun 2022 01:29:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235713AbiFVX3B (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Jun 2022 19:29:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42370 "EHLO
+        id S1377328AbiFVX3C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Jun 2022 19:29:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42408 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1377504AbiFVX27 (ORCPT
+        with ESMTP id S1377329AbiFVX3A (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Jun 2022 19:28:59 -0400
-Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E40D42496
+        Wed, 22 Jun 2022 19:29:00 -0400
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9546424A6
         for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jun 2022 16:28:58 -0700 (PDT)
-Received: by mail-pl1-x629.google.com with SMTP id q18so5240583pld.13
+Received: by mail-pj1-x1035.google.com with SMTP id i8-20020a17090aee8800b001ecc929d14dso2517594pjz.0
         for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jun 2022 16:28:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:subject:date:message-id:mime-version
+        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=tOZXlpuTA4Ot1JmkfebL6RgPQAjlDzmYkpBsGcpYO4U=;
-        b=BuF+GiXUAd96Z8jA1Wo9P8THiXA15NaBEneYMk1PzxwtnrOPyp+BlEKjTIyKGJmvdX
-         4fFyjuJg5BY4/LXXM08VkiY6+W+akDO4Qu5PoRiMC0oncmWM9fiL7ahsv9SERwLS5nfz
-         J2mqWdrWz3H5fMjIjeT3W8IMUf5+LIxw5xNKf2pGZCh9HbwdAM0EXYK5X1JszaUu340k
-         XUCKTtUKqvrdoB0a6oiJ/9VR+Oz+1R/ssyHaR9CB1w8VvNvSqLAR0819ypOXVmhkLCQ+
-         1RDXmu08ICzlkgW33YS9j/YtC1+Xht93kFTQfMEITJFQMp7sxFpOG69ATZmT9gGDTvN1
-         XBWA==
+        bh=hLzS98auu4febZeywb1kJ/b/UaFrA5NEXBvc0oFVba0=;
+        b=Wh/vMBTt3XEkvprHbw60EglbKKQxjHIZaqP8BDnJKDPbvoEyoNTFF4LF4aWVddDbrp
+         eyP74K2cGHt4Jbw/U7ftg8DB7UNs10mtNy4Hm3EMdl0oEFVO6IIRfRAW8Kcgzzi1ls79
+         dgo/2uXBnOfrb/AEZ5F/PQbL3mqp0Xf6xHHNLH7XRhL2uxWDIpEZPcxRPh8k3vurKTtw
+         VYrMtTCCdUqVLvsGCk/fZsm0aAT+2skKA6oSo7+V8rZ8rppoMni8NR3qqXzwwuA1aQX2
+         nN1kY9SiCvvdN0PDdYRwrLz5oogA19B4islKsO0LlKoUD3joRdKDHAGiacf1D9LPh/4q
+         S+vw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=tOZXlpuTA4Ot1JmkfebL6RgPQAjlDzmYkpBsGcpYO4U=;
-        b=COhJdENaI6nW8RYygZVxpOZIjZo1EaRsmAOsRyT2ArdRJlOyQwmfCmgHACTZUgUlqy
-         q7pHkOcy+I8WPUPv+cROaIe8UQLkOaeDwDNz87l4xAqIPfkh8E7PLNgxxxnjUZnLm8iS
-         L1Qt1S9bsoJnw2iUROUITojJ7SeaaE0PZ0ksaH4dBHQ4f3AkNPgoMjrnhhpFiJRFnrJF
-         ZCpgjp/yy24KBVg0OxK06BoJP7Lo8Thzwqf4aVwidDp3ztTyr+kbJZDQY8ZfaiETycnM
-         orgJmhYD4IakX1ZcJVsjWgenacu7c2pBt5msSu3jBrhqpxVQasWAtvlWf3fWIactWK98
-         3pJg==
-X-Gm-Message-State: AJIora921dBYIz92vpg8AckE5d36PrqR51W3aZ41rSwBflDGvrfdGzBz
-        koKOCWMIKLmAs3SQOMXFXwqDUg==
-X-Google-Smtp-Source: AGRyM1tXaBZIVfnxvpWSWJkbsbF+iTtzFv7VJqGMzqzj5sRt7jR8NKUashW6BYNbEuQ3eWyUmAXDMA==
-X-Received: by 2002:a17:902:e888:b0:16a:1b3d:aac4 with SMTP id w8-20020a170902e88800b0016a1b3daac4mr21214976plg.80.1655940537015;
-        Wed, 22 Jun 2022 16:28:57 -0700 (PDT)
+        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=hLzS98auu4febZeywb1kJ/b/UaFrA5NEXBvc0oFVba0=;
+        b=IiAvdjuJ2YvtNQizFka5htldj4YL3s6snupQN/DyqCjuekYRIvDy/agwrYstSXYj2o
+         GOuydhKRVFSqNEvsSqY6/que8RD5KgvgNk7ufHsw8gVRKRQC5ZbTQLP3ivalVXfFoX62
+         l2oN9vsMb2m+GqNMHQQtRvhTBYrlrNklHD833UPVLZHMghzOET8FudBRXESliMWIAmtC
+         H+iCDrNgeATdXlstrCwN4e+mVbXZOqRav5/vVHPfgqbTmN8uTTRjcXxbnajNH9/qyZu+
+         mMf3ehVfA0SIbZ/PZLXLEdrQ+dJgUvm7B133suUWbwhYCILV1x9nREiZ8OgcxblTgl98
+         GbTQ==
+X-Gm-Message-State: AJIora9npqxITnN/+kKk/XkFkGt33F8g6JTGXynfIhnDw/ZoYd7ijGyY
+        //bgVtPqT6cNBlN5Fs7maKP4HQ==
+X-Google-Smtp-Source: AGRyM1tJ/WWBqLRMXSS7a7wJSUMu5X1d5KAVQn8BDVUxziPil6mW1PXgu2UCKjPQuAXZVj6DHF/M8g==
+X-Received: by 2002:a17:902:f689:b0:16a:4021:8848 with SMTP id l9-20020a170902f68900b0016a40218848mr8502195plg.23.1655940538097;
+        Wed, 22 Jun 2022 16:28:58 -0700 (PDT)
 Received: from prec5560.. (71-212-119-14.tukw.qwest.net. [71.212.119.14])
-        by smtp.gmail.com with ESMTPSA id h2-20020a170902f70200b001622c377c3esm13297863plo.117.2022.06.22.16.28.56
+        by smtp.gmail.com with ESMTPSA id h2-20020a170902f70200b001622c377c3esm13297863plo.117.2022.06.22.16.28.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Jun 2022 16:28:56 -0700 (PDT)
+        Wed, 22 Jun 2022 16:28:57 -0700 (PDT)
 From:   Robert Foss <robert.foss@linaro.org>
 To:     bjorn.andersson@linaro.org, agross@kernel.org,
         mturquette@baylibre.com, sboyd@kernel.org, robh+dt@kernel.org,
@@ -56,10 +56,12 @@ To:     bjorn.andersson@linaro.org, agross@kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>
-Subject: [PATCH v7 0/6] SM8350 Display/GPU clock enablement
-Date:   Thu, 23 Jun 2022 01:28:40 +0200
-Message-Id: <20220622232846.852771-1-robert.foss@linaro.org>
+Subject: [PATCH v7 1/6] arm64: dts: qcom: sm8350: Replace integers with rpmpd defines
+Date:   Thu, 23 Jun 2022 01:28:41 +0200
+Message-Id: <20220622232846.852771-2-robert.foss@linaro.org>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20220622232846.852771-1-robert.foss@linaro.org>
+References: <20220622232846.852771-1-robert.foss@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -72,47 +74,69 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Changes since v2
- - Dropped "clk: Introduce CLK_ASSUME_ENABLED_WHEN_UNUSED"
- - Dropped "clk: qcom: sm8250-dispcc: Flag shared RCGs as assumed enable"
- - Dropped "clk: qcom: rcg2: Cache rate changes for parked RCGs"
+Replace &rpmhpd power domain integers with their respective defines
+in order to improve legibility.
 
-Changes since v3:
- - Dropped RBs & SoBs for bigger changes
- - Changed author to me for patches with big changes
+Signed-off-by: Robert Foss <robert.foss@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+---
 
-Changes since v5:
- - Reverted dispcc-sm8350 split from dispcc-sm8250
-   and related .index changes - Bjorn
- - Re-added Tags that were thrown out due to the 
-   above revert
+Changes since v6
+ - Add r-b - Konrad
 
 
-Jonathan Marek (2):
-  clk: qcom: add support for SM8350 DISPCC
-  dt-bindings: clock: Add Qcom SM8350 DISPCC bindings
 
-Robert Foss (4):
-  arm64: dts: qcom: sm8350: Replace integers with rpmpd defines
-  clk: qcom: add support for SM8350 GPUCC
-  dt-bindings: clock: Add Qcom SM8350 GPUCC bindings
-  arm64: dts: qcom: sm8350: Add DISPCC node
+ arch/arm64/boot/dts/qcom/sm8350.dtsi | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
- .../bindings/clock/qcom,dispcc-sm8x50.yaml    |   6 +-
- .../bindings/clock/qcom,gpucc-sm8350.yaml     |  72 ++
- arch/arm64/boot/dts/qcom/sm8350.dtsi          |  42 +-
- drivers/clk/qcom/Kconfig                      |  14 +-
- drivers/clk/qcom/Makefile                     |   1 +
- drivers/clk/qcom/dispcc-sm8250.c              |  63 +-
- drivers/clk/qcom/gpucc-sm8350.c               | 637 ++++++++++++++++++
- .../dt-bindings/clock/qcom,dispcc-sm8350.h    |   1 +
- include/dt-bindings/clock/qcom,gpucc-sm8350.h |  52 ++
- 9 files changed, 874 insertions(+), 14 deletions(-)
- create mode 100644 Documentation/devicetree/bindings/clock/qcom,gpucc-sm8350.yaml
- create mode 100644 drivers/clk/qcom/gpucc-sm8350.c
- create mode 120000 include/dt-bindings/clock/qcom,dispcc-sm8350.h
- create mode 100644 include/dt-bindings/clock/qcom,gpucc-sm8350.h
-
+diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+index c0137bdcf94b..52428b6df64e 100644
+--- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+@@ -1656,8 +1656,8 @@ mpss: remoteproc@4080000 {
+ 			clocks = <&rpmhcc RPMH_CXO_CLK>;
+ 			clock-names = "xo";
+ 
+-			power-domains = <&rpmhpd 0>,
+-					<&rpmhpd 12>;
++			power-domains = <&rpmhpd SM8350_CX>,
++					<&rpmhpd SM8350_MSS>;
+ 			power-domain-names = "cx", "mss";
+ 
+ 			interconnects = <&mc_virt MASTER_LLCC &mc_virt SLAVE_EBI1>;
+@@ -2167,8 +2167,8 @@ slpi: remoteproc@5c00000 {
+ 			clocks = <&rpmhcc RPMH_CXO_CLK>;
+ 			clock-names = "xo";
+ 
+-			power-domains = <&rpmhpd 4>,
+-					<&rpmhpd 5>;
++			power-domains = <&rpmhpd SM8350_LCX>,
++					<&rpmhpd SM8350_LMX>;
+ 			power-domain-names = "lcx", "lmx";
+ 
+ 			memory-region = <&pil_slpi_mem>;
+@@ -2235,8 +2235,8 @@ cdsp: remoteproc@98900000 {
+ 			clocks = <&rpmhcc RPMH_CXO_CLK>;
+ 			clock-names = "xo";
+ 
+-			power-domains = <&rpmhpd 0>,
+-					<&rpmhpd 10>;
++			power-domains = <&rpmhpd SM8350_CX>,
++					<&rpmhpd SM8350_MXC>;
+ 			power-domain-names = "cx", "mxc";
+ 
+ 			interconnects = <&compute_noc MASTER_CDSP_PROC &mc_virt SLAVE_EBI1>;
+@@ -2540,8 +2540,8 @@ adsp: remoteproc@17300000 {
+ 			clocks = <&rpmhcc RPMH_CXO_CLK>;
+ 			clock-names = "xo";
+ 
+-			power-domains = <&rpmhpd 4>,
+-					<&rpmhpd 5>;
++			power-domains = <&rpmhpd SM8350_LCX>,
++					<&rpmhpd SM8350_LMX>;
+ 			power-domain-names = "lcx", "lmx";
+ 
+ 			memory-region = <&pil_adsp_mem>;
 -- 
 2.34.1
 
