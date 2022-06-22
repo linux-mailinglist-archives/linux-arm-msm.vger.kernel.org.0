@@ -2,188 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5009755436F
+	by mail.lfdr.de (Postfix) with ESMTP id 9CACA554370
 	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jun 2022 09:04:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351354AbiFVGsw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Jun 2022 02:48:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58370 "EHLO
+        id S1351580AbiFVGtx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Jun 2022 02:49:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59078 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351301AbiFVGsv (ORCPT
+        with ESMTP id S1351595AbiFVGt1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Jun 2022 02:48:51 -0400
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F59935A83;
-        Tue, 21 Jun 2022 23:48:50 -0700 (PDT)
-Received: by mail-ej1-x634.google.com with SMTP id h23so32048155ejj.12;
-        Tue, 21 Jun 2022 23:48:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=GBoEfewX7uE5qiTFF5ceaeSxviE76/D0VbXLBnCtMOk=;
-        b=EUth92aS+ARXNsUtB82Fn+0F0yahSJwW0aRp3pWoXXG95IKw1RArK9Ig7q3Rce1Ehw
-         IB9YD315FvrufeFHauaTVDmyU561dpJJXVoxeP+YEOqYEB0GnwGjYYtO1LZlK0o6QfsS
-         BWFYFQiQlRYg0TliVlsC5C5feb19tNjrrKtR8kj8DM6+fCRVWi11MZKCMVbP+keN1pSk
-         Y1EH0SW0kUa5wZx/+ZvoXeYEPP577kv00tMCUDJ/q/mSmcBZtgAtalgDCO97V29+FF0L
-         wIqsPe04Qtlfs5uOqGtzgmol7qNeUSdazWS2kf76TziOEgPdeiTWHQ3efBkkbD6pe2Jo
-         fq3g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=GBoEfewX7uE5qiTFF5ceaeSxviE76/D0VbXLBnCtMOk=;
-        b=wMpAhawFPNW0Vdq5mzXoLO3H6+bcWlRzhsQHAM/MSerW/lfrdAh327/f4b5EJr9o1U
-         rss20o2TKsJovRRyhkNJh1GwfaZO3tIgdRJ5ttArdvxfkPPozKOKk7mnK1CjkR6h4xp6
-         9eUpqMmp0Jho38Sk1H4UzNToJJ58nw07+gFJ45PxoEyebsSWI7ixJdqSul44AkHLva3b
-         OCkaougOXLz4hlP4aSs9TFhwwCnG1ZCIbUFY+t6OCrR72zXlBkA6r/z35tg//x0DWaQz
-         10cWARIzPsp3RTccztRMUo2tkA0jEDVeDNB7dkzu2voZwlQ4sffSDnX8koGnmwES4unx
-         Jetg==
-X-Gm-Message-State: AJIora+SJVDS8Gs5YITqaYkFttRKiDHrPzgm3MCi5IOpyCg+H76n2Ltp
-        9P/wphD2OWvOF9y/6+P+KIo=
-X-Google-Smtp-Source: AGRyM1vWBsfxuaNlo0tjKP0/6jEDWmmlRypkx4HG/8dsYU+wsKOh1CtyzxerPhaniyY/3W5GIrXT8A==
-X-Received: by 2002:a17:906:6a27:b0:708:1282:cbe9 with SMTP id qw39-20020a1709066a2700b007081282cbe9mr1767404ejc.186.1655880528800;
-        Tue, 21 Jun 2022 23:48:48 -0700 (PDT)
-Received: from localhost.localdomain ([185.107.95.225])
-        by smtp.gmail.com with ESMTPSA id sd12-20020a1709076e0c00b00722e8c47cc9sm1197148ejc.181.2022.06.21.23.48.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Jun 2022 23:48:47 -0700 (PDT)
-From:   Yassine Oudjana <yassine.oudjana@gmail.com>
-X-Google-Original-From: Yassine Oudjana <y.oudjana@protonmail.com>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Banajit Goswami <bgoswami@quicinc.com>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>
-Cc:     Yassine Oudjana <y.oudjana@protonmail.com>,
-        Yassine Oudjana <yassine.oudjana@gmail.com>,
-        devicetree@vger.kernel.org, alsa-devel@alsa-project.org,
-        linux-arm-msm@vger.kernel.org, phone-devel@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH 3/3] arm64: dts: qcom: Use WCD9335 DT bindings
-Date:   Wed, 22 Jun 2022 10:47:58 +0400
-Message-Id: <20220622064758.40543-4-y.oudjana@protonmail.com>
-X-Mailer: git-send-email 2.36.1
-In-Reply-To: <20220622064758.40543-1-y.oudjana@protonmail.com>
-References: <20220622064758.40543-1-y.oudjana@protonmail.com>
+        Wed, 22 Jun 2022 02:49:27 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FDE136163;
+        Tue, 21 Jun 2022 23:49:26 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 2D36BB81C50;
+        Wed, 22 Jun 2022 06:49:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD321C34114;
+        Wed, 22 Jun 2022 06:49:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1655880563;
+        bh=5X/2z3DnYFBTxCdVc6BnK643pFWE6202pXELvDL5LrQ=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=RzmrczCIbl4FiR4E7XPxESCAURY5n313J2+FHmgOpuDrE2u8WSwJja01eGG+k3e3G
+         gQAULe2ivqoYZtLua7b7530q9iqz0HXPCGjDhyYvraD61p3A6HD7S0LfDa1HJy9Ity
+         vNjNNZu5OV/KKIKg33XRFoQhUeJJIv/VjJ7QeZpa9TTrRh4peo09HuFXwKtCQsIRxr
+         n+/5KxDp19d9ivthUYpdMgiaVEqqe8fegkJr1rHzV5nWcCqndEbrZi5RTx2IGwVn9R
+         gztmtakDNfyeSd/kaSnI1Gx8wpofZyg1czgtcJzCQ2U2Viw06l4bJ+t53dlyqzQgvH
+         BlxN/2/403aWw==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1o3uAx-0003ON-UD; Wed, 22 Jun 2022 08:49:20 +0200
+Date:   Wed, 22 Jun 2022 08:49:19 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Bjorn Helgaas <helgaas@kernel.org>
+Cc:     Robert Marko <robimarko@gmail.com>, svarbanov@mm-sol.com,
+        agross@kernel.org, bjorn.andersson@linaro.org,
+        lpieralisi@kernel.org, robh@kernel.org, kw@linux.com,
+        bhelgaas@google.com, p.zabel@pengutronix.de, jingoohan1@gmail.com,
+        linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, johan+linaro@kernel.org
+Subject: Re: [PATCH v2] PCI: qcom: fix IPQ8074 Gen2 support
+Message-ID: <YrK7b1GaEMuANGtR@hovoldconsulting.com>
+References: <20220621112330.448754-1-robimarko@gmail.com>
+ <20220621203211.GA1330530@bhelgaas>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220621203211.GA1330530@bhelgaas>
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Yassine Oudjana <y.oudjana@protonmail.com>
+On Tue, Jun 21, 2022 at 03:32:11PM -0500, Bjorn Helgaas wrote:
+> On Tue, Jun 21, 2022 at 01:23:30PM +0200, Robert Marko wrote:
+> > IPQ8074 has one Gen2 and one Gen3 port, currently the Gen2 port will
+> > cause the system to hang as its using DBI registers in the .init
+> > and those are only accesible after phy_power_on().
+> 
+> Is the fact that IPQ8074 has both a Gen2 and a Gen3 port relevant to
+> this patch?  I don't see the connection.
+> 
+> I see that qcom_pcie_host_init() does:
+> 
+>   qcom_pcie_host_init
+>     pcie->cfg->ops->init(pcie)
+>     phy_power_on(pcie->phy)
+>     pcie->cfg->ops->post_init(pcie)
+> 
+> and that you're moving DBI register accesses from
+> qcom_pcie_init_2_3_3() to qcom_pcie_post_init_2_3_3().
+> 
+> But I also see DBI register accesses in other .init() functions:
+> 
+>   qcom_pcie_init_2_1_0
+>   qcom_pcie_init_1_0_0      (oddly out of order)
+>   qcom_pcie_init_2_3_2
+>   qcom_pcie_init_2_4_0
+> 
+> Why do these accesses not need to be moved?  I assume it's because
+> pcie->phy is an optional PHY and phy_power_on() does nothing on those
+> controllers?
 
-Replace DAI indices in codec nodes with definitions from the WCD9335
-DT bindings for devices that use WCD9335.
+At least the QMP PHY driver does not implement the PHY power_on op and
+instead fires everything up already at phy_init(). That may explain the
+difference in behaviour here.
 
-Signed-off-by: Yassine Oudjana <y.oudjana@protonmail.com>
----
- arch/arm64/boot/dts/qcom/apq8096-db820c.dts         | 5 +++--
- arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dts  | 5 +++--
- arch/arm64/boot/dts/qcom/msm8996-xiaomi-scorpio.dts | 5 +++--
- 3 files changed, 9 insertions(+), 6 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/apq8096-db820c.dts b/arch/arm64/boot/dts/qcom/apq8096-db820c.dts
-index 49afbb1a066a..ff915cd8e5a6 100644
---- a/arch/arm64/boot/dts/qcom/apq8096-db820c.dts
-+++ b/arch/arm64/boot/dts/qcom/apq8096-db820c.dts
-@@ -13,6 +13,7 @@
- #include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
- #include <dt-bindings/sound/qcom,q6afe.h>
- #include <dt-bindings/sound/qcom,q6asm.h>
-+#include <dt-bindings/sound/qcom,wcd9335.h>
- 
- /*
-  * GPIO name legend: proper name = the GPIO line is used as GPIO
-@@ -1009,7 +1010,7 @@ platform {
- 	};
- 
- 		codec {
--			sound-dai = <&wcd9335 6>;
-+			sound-dai = <&wcd9335 AIF4_PB>;
- 		};
- 	};
- 
-@@ -1024,7 +1025,7 @@ platform {
- 		};
- 
- 		codec {
--			sound-dai = <&wcd9335 1>;
-+			sound-dai = <&wcd9335 AIF1_CAP>;
- 		};
- 	};
- };
-diff --git a/arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dts b/arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dts
-index 22978d06f85b..261f2ea7def0 100644
---- a/arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dts
-@@ -9,6 +9,7 @@
- #include <dt-bindings/sound/qcom,q6afe.h>
- #include <dt-bindings/sound/qcom,q6asm.h>
- #include <dt-bindings/input/ti-drv260x.h>
-+#include <dt-bindings/sound/qcom,wcd9335.h>
- 
- / {
- 	model = "Xiaomi Mi 5";
-@@ -193,7 +194,7 @@ platform {
- 		};
- 
- 		codec {
--			sound-dai = <&wcd9335 6>;
-+			sound-dai = <&wcd9335 AIF4_PB>;
- 		};
- 	};
- 
-@@ -208,7 +209,7 @@ platform {
- 		};
- 
- 		codec {
--			sound-dai = <&wcd9335 1>;
-+			sound-dai = <&wcd9335 AIF1_CAP>;
- 		};
- 	};
- };
-diff --git a/arch/arm64/boot/dts/qcom/msm8996-xiaomi-scorpio.dts b/arch/arm64/boot/dts/qcom/msm8996-xiaomi-scorpio.dts
-index 1e2dd6763ad1..c9f935cfb587 100644
---- a/arch/arm64/boot/dts/qcom/msm8996-xiaomi-scorpio.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8996-xiaomi-scorpio.dts
-@@ -9,6 +9,7 @@
- #include "pmi8996.dtsi"
- #include <dt-bindings/sound/qcom,q6afe.h>
- #include <dt-bindings/sound/qcom,q6asm.h>
-+#include <dt-bindings/sound/qcom,wcd9335.h>
- 
- / {
- 	model = "Xiaomi Mi Note 2";
-@@ -171,7 +172,7 @@ platform {
- 		};
- 
- 		codec {
--			sound-dai = <&wcd9335 6>;
-+			sound-dai = <&wcd9335 AIF4_PB>;
- 		};
- 	};
- 
-@@ -186,7 +187,7 @@ platform {
- 		};
- 
- 		codec {
--			sound-dai = <&wcd9335 1>;
-+			sound-dai = <&wcd9335 AIF1_CAP>;
- 		};
- 	};
- };
--- 
-2.36.1
-
+Johan
