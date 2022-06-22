@@ -2,75 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DD9EC554997
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jun 2022 14:17:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D0D3D55493A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jun 2022 14:17:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241306AbiFVIVQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Jun 2022 04:21:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45912 "EHLO
+        id S240400AbiFVIZZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Jun 2022 04:25:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48570 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238469AbiFVIVQ (ORCPT
+        with ESMTP id S234348AbiFVIZY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Jun 2022 04:21:16 -0400
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B820381A6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jun 2022 01:21:15 -0700 (PDT)
-Received: by mail-lj1-x22e.google.com with SMTP id g12so12340439ljk.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jun 2022 01:21:14 -0700 (PDT)
+        Wed, 22 Jun 2022 04:25:24 -0400
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EEB2B37BF0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jun 2022 01:25:22 -0700 (PDT)
+Received: by mail-ej1-x630.google.com with SMTP id sb34so3509225ejc.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jun 2022 01:25:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=hH4k7mItas1ozJafGvT+HMnXj4jefZuKB4OxUVSVNAM=;
-        b=mJkFkMl2HoaHNHloqTF8OhEapW5qRboQ3QqXnKasJMpkRIzVZNkat8VeBcpTvmA6fE
-         i6ILOZgsDuHbTHwa+vsDXfq2jzHfqaO7eOmm9G28tI67ezFcu3tE2mjlJHgoZqVjCf3I
-         GYXmqEM+WWluAHFwKj26fzP9Z1BLgV/XHWXJ7+f1NrY8u8C8wrO3EJ/U9QU1AW3PWCAD
-         f2jGXng3nolkxfxTRwe7rCoQ+e7cG0mu2QxfXV5KT9d5kwL0sE+yD6Zd6vtLOIhYF6eS
-         ulN+9LndwNre2tKRSZZtdFiKkNoeXQF1VNujqPEAh+KWmgxQxCiuF3h5qTAf6AbV1bQP
-         SV5w==
+        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
+         :content-transfer-encoding;
+        bh=Sk7O8lq07lQl5L3t5X6FFNtNHOKCXJGWanHL8zfryQY=;
+        b=nE57QXyZ+uLvpFZbraeiA4sJT4OtDPcsAI9qW642P2/Wp2wlW8hLV7FQYC9+735+WE
+         OPB12XTPs9yLe4YlYPwW7/Y4dekJEBEjurThbDv2JB9TQSuQXZWKnnw6lssIjLUFtOAL
+         xOg8rBREGSf9rrBEL0V4GyXq0/y47BY4bd1SxzWiKJoyWFD/w5bePBAVhtyynitzDPYH
+         qc33wXGoTqj2kiiYK/wGnoJTPE4OqU4tBZWxTmWHVheHo2lozE5KVWSQso4sHfRhNndm
+         +11zb92S8W5/WfktCsyEUeJH6mwwaSoH11H7WmvViAiHrkXYEMZPJNXsprEw7rYB47pd
+         x2eA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=hH4k7mItas1ozJafGvT+HMnXj4jefZuKB4OxUVSVNAM=;
-        b=dOUDkvbNL/GHu0WEcrzxau4tEVqL1DxzazrEu9qF4Hhma8GlR0YeS6cfQZkmPns7gv
-         rrXr5ZO9Pl4LlfcnuHLJgFjyOUEU8epVMdHkmwq8Uilmq8I00RTtq0g6F/YKr+krCj3r
-         x5DpAKvZDYhW7N+trmlF0gcG7/Cfcxz9DMBgvBPMG30F7xqQdTf0hrtz6CLvZ4wiyBfq
-         HaMMhjTlYzRmyRZLqDi3RXZPrfOqXz46Ebsi6Mbh6hAw89fcgdgTjwNKw+WKFW1apJxA
-         jI7tDNKvUmNxz9a2cfzwDk1/rhL/VMN6+pt+F8zwFjgc70hCXdhACEyxKK2idiI91eHM
-         HcJA==
-X-Gm-Message-State: AJIora9phZY58xxTDoxQPazyPFKHQWc8jr0vkhAwp72PKyaC191E6g+B
-        3TiTKIU35I8RFcFTnI75vfTzCg==
-X-Google-Smtp-Source: AGRyM1vZI4BCaoHbqoZW1pO9dUwTGGxOVqzVqDXrvgflmNzYZJzZL3puwPzeX8wGyGh3wFeYnsEV7w==
-X-Received: by 2002:a05:651c:20d:b0:255:7ad5:50c2 with SMTP id y13-20020a05651c020d00b002557ad550c2mr1159916ljn.438.1655886073351;
-        Wed, 22 Jun 2022 01:21:13 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id x27-20020a19e01b000000b0047975170628sm2474802lfg.96.2022.06.22.01.21.12
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 Jun 2022 01:21:12 -0700 (PDT)
-Message-ID: <c072077a-cc16-c8f8-fcfa-891b3357cb66@linaro.org>
-Date:   Wed, 22 Jun 2022 11:21:12 +0300
+        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=Sk7O8lq07lQl5L3t5X6FFNtNHOKCXJGWanHL8zfryQY=;
+        b=3Cgw5OIYf5EVm1tQ0eOvOXQeRrC+iBwNTIKySWWDxruTKPgCUMLBCe7MVphRxmwfP6
+         YYXCnYl1nxte+AzB0/jhedmpOeckTl6Aq8/KWcJl1JUxlQiFooZ9VpnkB1NZxZByfveM
+         YN4kvHeG63p7VxqrcMbexzBPlFEp02ntHTJlP299wAEiQTBgUTXrxZ5j1G4BZbck+mGJ
+         nN3WL5LS6zIAuQla/UVNzsDcySclEqmqOWkXKDxEDdLTbih8SilNEF0oRuH1UIG22Q6a
+         azLpwIEemNBw5ws9gLixNgwT7t1F6IpEsBII0fsRSJp2MQ/jXOV8/ytVQCEr6Vi2Uq99
+         vhEA==
+X-Gm-Message-State: AJIora8JhztpccOyca0yhW32sqqrCq9Is37LO1hNeGKy2ZVZRn1nysrc
+        VZx3CkHIyiLqH/ChLbUSGcLaFw==
+X-Google-Smtp-Source: AGRyM1u3EImERlNbTceP1iq3dl3z6SkR6Z0617AtkvGI/qiz1PIqSTKt0YthoOabCGYpE6GlFM8hXA==
+X-Received: by 2002:a17:906:209:b0:712:12d8:b52b with SMTP id 9-20020a170906020900b0071212d8b52bmr2000410ejd.394.1655886321475;
+        Wed, 22 Jun 2022 01:25:21 -0700 (PDT)
+Received: from localhost.localdomain (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id r2-20020a17090609c200b006fef0c7072esm8917082eje.144.2022.06.22.01.25.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 22 Jun 2022 01:25:20 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     robh+dt@kernel.org, agross@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, krzysztof.kozlowski@linaro.org,
+        devicetree@vger.kernel.org, bjorn.andersson@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 01/12] dt-bindings: vendor-prefixes: add Shift GmbH
+Date:   Wed, 22 Jun 2022 10:25:18 +0200
+Message-Id: <165588573167.12753.11773180092884098160.b4-ty@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20220521164550.91115-1-krzysztof.kozlowski@linaro.org>
+References: <20220521164550.91115-1-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: Removal of qcom,board-id and qcom,msm-id
-Content-Language: en-GB
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>,
-        krzysztof.kozlowski@linaro.org
-Cc:     agross@kernel.org, arnd@arndb.de, bjorn.andersson@linaro.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, olof@lixom.net, robh@kernel.org,
-        sboyd@kernel.org
-References: <a3c932d1-a102-ce18-deea-18cbbd05ecab@linaro.org>
- <20220522195138.35943-1-konrad.dybcio@somainline.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20220522195138.35943-1-konrad.dybcio@somainline.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -78,36 +72,33 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22/05/2022 22:51, Konrad Dybcio wrote:
-> Hi,
+On Sat, 21 May 2022 18:45:39 +0200, Krzysztof Kozlowski wrote:
+> Add prefix for SHIFT GmbH, phone manufacturer
+> (https://www.shiftphones.com/en/).
 > 
-> removing these properties will not bring almost any benefit (other than making
-> some checks happy any saving some <200 LoC) and will make the lives of almost
-> all people doing independent development for linux-on-msm harder. There are
-> almost unironically like 3 people outside Linaro and QUIC who have
-> non-vendor-fused development boards AND the sources to rebuild the
-> bootloader on their own. Making it harder to boot is only going to
-> discourage people from developing on these devices, which is already not
-> that pleasant, especially with newer platforms where you have to fight with
-> the oh-so-bright ideas of Android boot chain..
 > 
-> This only concerns devices released before sm8350, as the new ones will not
-> even boot with these properties present (or at least SONY Sagami, but I
-> doubt it's an isolated case), so other than completing support for older
-> devices, it won't be an issue going forward, anyway.
 
-I almost missed this part of the discussion (and Krzysztof had to point 
-me to it in discussion of his patches).
+Applied, thanks!
 
-I think this is a Sony peculiarity. At least the distributed SM8350 
-(lahaina) and SM8450 (waipio) Qualcomm device trees use these properties:
+[01/12] dt-bindings: vendor-prefixes: add Shift GmbH
+        https://git.kernel.org/krzk/linux-dt/c/de0f2f0d6f35a583aaade4c290d9e8c3e03970b3
+[02/12] dt-bindings: arm: qcom: add missing MSM8998 board compatibles
+        https://git.kernel.org/krzk/linux-dt/c/a47214e3fde968d4b251b5de8eb16c32f2b0262e
+[03/12] dt-bindings: arm: qcom: add missing MSM8992 board compatibles
+        https://git.kernel.org/krzk/linux-dt/c/581704606d4ec5b8e6749b7abc200795e845a0a2
+[04/12] dt-bindings: arm: qcom: add missing QCS404 board compatibles
+        https://git.kernel.org/krzk/linux-dt/c/1ceefa2a55ce7d9e4b8901b22e981f8965f9c4e3
+[05/12] dt-bindings: arm: qcom: add missing SDM630 board compatibles
+        https://git.kernel.org/krzk/linux-dt/c/4fc3efba32057a76155449a2713ff242109a65a0
+[06/12] dt-bindings: arm: qcom: add missing SDM636 board compatibles
+        https://git.kernel.org/krzk/linux-dt/c/7e86c41be0bebd01e2f0c87cd5b00c5746ab4089
+[07/12] dt-bindings: arm: qcom: add missing SDM845 board compatibles
+        https://git.kernel.org/krzk/linux-dt/c/1facf9135a1b846c7f4e8db044b425b81a7bffff
+[08/12] dt-bindings: arm: qcom: add missing SM6125 board compatibles
+        https://git.kernel.org/krzk/linux-dt/c/103a90f68bf1f30b46de5c08c19c9f8e97530024
+[09/12] dt-bindings: arm: qcom: add missing SM6350 board compatibles
+        https://git.kernel.org/krzk/linux-dt/c/f9702486c77ba74f65859098e3d8e4bdb2e8a745
 
-https://github.com/MiCode/kernel_devicetree/blob/zeus-s-oss/qcom/lahaina-hdk.dts
-https://github.com/MiCode/kernel_devicetree/blob/zeus-s-oss/qcom/lahaina-v2.1.dtsi
-https://github.com/MiCode/kernel_devicetree/blob/zeus-s-oss/qcom/waipio-qrd-pm8010.dts
-https://github.com/MiCode/kernel_devicetree/blob/zeus-s-oss/qcom/waipio-v2.dtsi
-
-
+Best regards,
 -- 
-With best wishes
-Dmitry
+Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
