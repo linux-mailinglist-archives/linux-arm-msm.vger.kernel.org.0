@@ -2,63 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BA454555591
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jun 2022 22:57:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 28039555596
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jun 2022 22:57:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231616AbiFVU5Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Jun 2022 16:57:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39240 "EHLO
+        id S245653AbiFVU5n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Jun 2022 16:57:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39388 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230144AbiFVU5X (ORCPT
+        with ESMTP id S244773AbiFVU5m (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Jun 2022 16:57:23 -0400
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6C70186FE
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jun 2022 13:57:21 -0700 (PDT)
-Received: by mail-ej1-x632.google.com with SMTP id u15so9151134ejc.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jun 2022 13:57:21 -0700 (PDT)
+        Wed, 22 Jun 2022 16:57:42 -0400
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0EA6D186FE
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jun 2022 13:57:41 -0700 (PDT)
+Received: by mail-ed1-x535.google.com with SMTP id cf14so15864257edb.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jun 2022 13:57:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=kxnuHmLGyITyuJDC4SS30IEft3M8dZ4Ya6gP8MJhMNg=;
-        b=QFSFaEaeJQxCaHLKIP2QqHitJCIMZXiIsfGS1ifVx/IfRhI7Tkpengt7pNtBzu3mLg
-         6WJw0biLZF/o031nUuEOuDsgWl1zKjsSSJC7fzYjAE1Jq3QhY2HYgkgihpTWUPq1zkbH
-         +xVK+tDAjIKhEcS96aqjzvEUOnT6hrAa3Zk0Y=
+        bh=PRHKL/PCh7uXTEVmvzsqwR97j4jnEpJ37ZwcTnRNvyY=;
+        b=JrK4AgfieY7iUl/TlyvCpR+aSalICydr1GM9EJaGrnuIsxQrjeveuSgEf23RvIdYLD
+         U7shVro3lwFkUBMoDdZEK+A3SDD9K+JohD0MPPSwnT1YjHrP8kwMZZKM18SeWJLEqf4z
+         yGuFfbETIr+QFFiB5HvzT1GyrUTcb2ByOEWYk=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=kxnuHmLGyITyuJDC4SS30IEft3M8dZ4Ya6gP8MJhMNg=;
-        b=WxWLnYguyTedatHZAIPlnuotrl0qlRHKpPEBX6P3A5C7eO9I+8lTzudRpeFCc13449
-         AZ54JcMW9LYkzp6fcgL0aDpBsEyzyVENM5vgY37PX1+F7z3wQPeQhi19hOLLZcd8Gu+9
-         gWNEZ070e4c/jbfg94fPFVI43cEhq2W6pOcY2Y5//lP5YZ8UvccvunRl9pi8/sMFHL1O
-         fJZ4IyYq43IHUCBfnOStp50rSfv2TTGLd41nVemErLqVQl+aCcBhOCWsyz/MiJs2nPPn
-         6f3rx3rdPy9oumuM1ndf2pwo9LH+Ebj+VRsdftj/0N/627obkNInRahGGzmOvokT6+Kt
-         4adA==
-X-Gm-Message-State: AJIora8JAif02eldUtYM54eKnwLr8pFGauUecEe+XHFXUeq+7VHG7owb
-        MwiX5FrQvSKMi8orCLNCsTRXSYfWUr5mbZSfyzE=
-X-Google-Smtp-Source: AGRyM1tW+Rdgnm7blHeH8LpAIrng+fu8xkmzhxEHVJmFoOC9dbvYKMiwLSHQu9GvoaVWuQ+LFDD/VA==
-X-Received: by 2002:a17:907:6e01:b0:704:8c0e:872f with SMTP id sd1-20020a1709076e0100b007048c0e872fmr4874103ejc.387.1655931440136;
-        Wed, 22 Jun 2022 13:57:20 -0700 (PDT)
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com. [209.85.221.50])
-        by smtp.gmail.com with ESMTPSA id lt26-20020a170906fa9a00b00722e50dab2csm3213414ejb.109.2022.06.22.13.57.18
+        bh=PRHKL/PCh7uXTEVmvzsqwR97j4jnEpJ37ZwcTnRNvyY=;
+        b=26ngaU/5Iyhi0GB6ymtv2+k/D/5U0bRzcOnh7mw/3lJICpJaaOvcZZ3+kCjWa+GqZ+
+         3udvPamG5SBHIHk3+iyXC2GZ8bX2s3ec6Q4gb5kCf0+ALhXTHcnEx6znvw8VOAAdUvFI
+         V/lZNXsJ5A1CVHTCywLj7TX4uweQnnof2SxK1/u4YYbPzlaqDqi/MW15XOcKmdM8+pwi
+         GufOmyhXmAerGx3irlFjiNYCMkZ1UVbC7rYGFP7RU/VhyZGLwmL4JvCyOac7fZtjJHTU
+         zz6z8XIrAP251SfswaJO8Q5yf0/CVsPvLzh5YdyfbRP+8V6v8bUUexqydrtHOK5DRAMY
+         igig==
+X-Gm-Message-State: AJIora/ln9V1DZ91p6UAaJvwA3/TEQ+tnX4U70F9AvTRy8mZyU/JIeRV
+        +1Ga5QVvjsLmr3pVlxXI9LWRduEKqv5yg0+15TE=
+X-Google-Smtp-Source: AGRyM1uFmcVRfTHFmq7o/q5de3WWZHTCV4/JFxmkls9PD3UcbOJxb+JcwdzY0oyYU2hJpPR/3+02+g==
+X-Received: by 2002:aa7:d685:0:b0:435:7910:f110 with SMTP id d5-20020aa7d685000000b004357910f110mr6272743edr.247.1655931458935;
+        Wed, 22 Jun 2022 13:57:38 -0700 (PDT)
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com. [209.85.221.47])
+        by smtp.gmail.com with ESMTPSA id o2-20020a170906768200b0070b8a467c82sm9790558ejm.22.2022.06.22.13.57.37
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 Jun 2022 13:57:19 -0700 (PDT)
-Received: by mail-wr1-f50.google.com with SMTP id w17so25075860wrg.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jun 2022 13:57:18 -0700 (PDT)
-X-Received: by 2002:adf:fb12:0:b0:20c:79b2:a200 with SMTP id
- c18-20020adffb12000000b0020c79b2a200mr5248141wrr.617.1655931438474; Wed, 22
- Jun 2022 13:57:18 -0700 (PDT)
+        Wed, 22 Jun 2022 13:57:37 -0700 (PDT)
+Received: by mail-wr1-f47.google.com with SMTP id g27so18447194wrb.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jun 2022 13:57:37 -0700 (PDT)
+X-Received: by 2002:adf:f90d:0:b0:20c:de32:4d35 with SMTP id
+ b13-20020adff90d000000b0020cde324d35mr4985933wrr.583.1655931457096; Wed, 22
+ Jun 2022 13:57:37 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220621053351.650431-1-joebar@chromium.org> <20220620223345.v9.4.I41e2c2dc12961fe000ebc4d4ef6f0bc5da1259ea@changeid>
-In-Reply-To: <20220620223345.v9.4.I41e2c2dc12961fe000ebc4d4ef6f0bc5da1259ea@changeid>
+References: <20220621053351.650431-1-joebar@chromium.org> <20220620223345.v9.5.Ib62291487a664a65066d18a3e83c5428a6d2cc6c@changeid>
+In-Reply-To: <20220620223345.v9.5.Ib62291487a664a65066d18a3e83c5428a6d2cc6c@changeid>
 From:   Doug Anderson <dianders@chromium.org>
-Date:   Wed, 22 Jun 2022 13:57:06 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=WS0dQyNe6X3+baCztM2bZbYBzdRoAir09Ad1otWtz9ag@mail.gmail.com>
-Message-ID: <CAD=FV=WS0dQyNe6X3+baCztM2bZbYBzdRoAir09Ad1otWtz9ag@mail.gmail.com>
-Subject: Re: [PATCH v9 4/5] arm64: dts: qcom: sc7180: Add pazquel dts files
+Date:   Wed, 22 Jun 2022 13:57:24 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=W4T8R3b9V+m-xtebPJK2gXA+O5H2G8yXHVQ5BTa84JEA@mail.gmail.com>
+Message-ID: <CAD=FV=W4T8R3b9V+m-xtebPJK2gXA+O5H2G8yXHVQ5BTa84JEA@mail.gmail.com>
+Subject: Re: [PATCH v9 5/5] arm64: dts: qcom: sc7180: Add kingoftown dts files
 To:     "Joseph S. Barrera III" <joebar@chromium.org>
 Cc:     LKML <linux-kernel@vger.kernel.org>,
         Stephen Boyd <swboyd@chromium.org>,
@@ -86,70 +86,60 @@ Hi,
 On Mon, Jun 20, 2022 at 10:35 PM Joseph S. Barrera III
 <joebar@chromium.org> wrote:
 >
-> Pazquel is a trogdor-based board. These dts files are unchanged copies
+> Kingoftown is a trogdor-based board. These dts files are unchanged copies
 > from the downstream Chrome OS 5.4 kernel.
 >
 > Signed-off-by: Joseph S. Barrera III <joebar@chromium.org>
 > ---
 >
 > Changes in v9:
-> - Restore two lines accidentally removed from ap_sar_sensor.
 > - Simplify trackpad enabling (51d30402be75).
 >
 > Changes in v7:
-> - Only include sc7180.dtsi in sc7180-trogdor.dtsi (19794489fa24).
 > - Simplify spi0/spi6 labeling (d277cab7afc7).
 > - Remove #include of <arm/cros-ec-keyboard.dtsi>.
-> - Accidentally removed two lines from ap_sar_sensor.
 >
 > Changes in v6:
-> - Copy changes to ap_sar_sensor from v5.4.
-> - Add #include of <arm/cros-ec-keyboard.dtsi>.
+> - Add #include of <arm/cros-ec-keyboard.dtsi> from v5.4.
 >
 > Changes in v4:
 > - Fix description (no downstream bits removed).
 > - Add missing version history.
 >
-> Changes in v3:
+> Changes in v2:
 > - First inclusion in series.
 >
->  arch/arm64/boot/dts/qcom/Makefile             |   4 +
->  .../sc7180-trogdor-pazquel-lte-parade.dts     |  22 ++
->  .../qcom/sc7180-trogdor-pazquel-lte-ti.dts    |  22 ++
->  .../qcom/sc7180-trogdor-pazquel-parade.dts    |  17 ++
->  .../dts/qcom/sc7180-trogdor-pazquel-ti.dts    |  17 ++
->  .../boot/dts/qcom/sc7180-trogdor-pazquel.dtsi | 221 ++++++++++++++++++
->  6 files changed, 303 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel-lte-parade.dts
->  create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel-lte-ti.dts
->  create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel-parade.dts
->  create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel-ti.dts
->  create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel.dtsi
+>  arch/arm64/boot/dts/qcom/Makefile             |   2 +
+>  .../dts/qcom/sc7180-trogdor-kingoftown-r0.dts |  44 ++++
+>  .../dts/qcom/sc7180-trogdor-kingoftown-r1.dts |  17 ++
+>  .../dts/qcom/sc7180-trogdor-kingoftown.dtsi   | 224 ++++++++++++++++++
+>  4 files changed, 287 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown-r0.dts
+>  create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown-r1.dts
+>  create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown.dtsi
 >
 > diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index 5cfd6316768c..dc26704dfe34 100644
+> index dc26704dfe34..a9f2ad013179 100644
 > --- a/arch/arm64/boot/dts/qcom/Makefile
 > +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -79,6 +79,10 @@ dtb-$(CONFIG_ARCH_QCOM)      += sc7180-trogdor-mrbland-rev0-auo.dtb
->  dtb-$(CONFIG_ARCH_QCOM)        += sc7180-trogdor-mrbland-rev0-boe.dtb
->  dtb-$(CONFIG_ARCH_QCOM)        += sc7180-trogdor-mrbland-rev1-auo.dtb
->  dtb-$(CONFIG_ARCH_QCOM)        += sc7180-trogdor-mrbland-rev1-boe.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)        += sc7180-trogdor-pazquel-lte-parade.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)        += sc7180-trogdor-pazquel-lte-ti.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)        += sc7180-trogdor-pazquel-parade.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)        += sc7180-trogdor-pazquel-ti.dtb
->  dtb-$(CONFIG_ARCH_QCOM)        += sc7180-trogdor-pompom-r1.dtb
->  dtb-$(CONFIG_ARCH_QCOM)        += sc7180-trogdor-pompom-r1-lte.dtb
->  dtb-$(CONFIG_ARCH_QCOM)        += sc7180-trogdor-pompom-r2.dtb
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel-lte-parade.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel-lte-parade.dts
+> @@ -60,6 +60,8 @@ dtb-$(CONFIG_ARCH_QCOM)       += sc7180-trogdor-coachz-r3-lte.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)        += sc7180-trogdor-homestar-r2.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)        += sc7180-trogdor-homestar-r3.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)        += sc7180-trogdor-homestar-r4.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)        += sc7180-trogdor-kingoftown-r0.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)        += sc7180-trogdor-kingoftown-r1.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)        += sc7180-trogdor-lazor-r0.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)        += sc7180-trogdor-lazor-r1.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)        += sc7180-trogdor-lazor-r1-kb.dtb
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown-r0.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown-r0.dts
 > new file mode 100644
-> index 000000000000..ecedab8d1662
+> index 000000000000..85aec1be98fc
 > --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel-lte-parade.dts
-> @@ -0,0 +1,22 @@
+> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown-r0.dts
+> @@ -0,0 +1,44 @@
 > +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 > +/*
-> + * Google Pazquel board device tree source
+> + * Google Kingoftown board device tree source
 > + *
 > + * Copyright 2021 Google LLC.
 > + */
@@ -158,57 +148,8 @@ On Mon, Jun 20, 2022 at 10:35 PM Joseph S. Barrera III
 > +
 > +#include "sc7180.dtsi"
 
-Repeating my comment from v8:
-
-This is not good and was an important part of "Simplify!" sc7180.dtsi
-should only be included by sc7180-trogdor.dtsi.
-
-
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel.dtsi
-> new file mode 100644
-> index 000000000000..5485f50f89ad
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel.dtsi
-> @@ -0,0 +1,221 @@
-> +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
-> +/*
-> + * Google Pazquel board device tree source
-> + *
-> + * Copyright 2021 Google LLC.
-> + */
-> +
-> +#include "sc7180-trogdor.dtsi"
-> +
-> +&ap_sar_sensor {
-> +       compatible = "semtech,sx9324";
-> +       semtech,ph0-pin = <1 3 3>;
-> +       semtech,ph1-pin = <3 1 3>;
-> +       semtech,ph2-pin = <1 3 3>;
-> +       semtech,ph3-pin = <0 0 0>;
-> +       semtech,ph01-resolution = <1024>;
-> +       semtech,ph23-resolution = <1024>;
-> +       semtech,startup-sensor = <1>;
-> +       semtech,ph01-proxraw-strength = <3>;
-> +       semtech,ph23-proxraw-strength = <1>;
-> +       semtech,avg-pos-strength = <128>;
-> +       semtech,input-analog-gain = <0>;
-> +       semtech,cs-idle-sleep = "gnd";
-> +
-> +       /delete-property/ svdd-supply;
-> +       vdd-supply = <&pp1800_prox>;
-> +};
-> +
-> +/delete-node/&trackpad;
-> +&ap_tp_i2c {
-
-You need status = "okay"; here since Stephen's "Simplify!" patch
-series means that the i2c node itself is now disabled by default.
-
-
-> +       trackpad: trackpad@15 {
-> +               status = "okay";
-
-You _don't_ need the status = "okay"; here.
-
+Just like for pazquel, the fact that you have "sc7180.dtsi" included
+here means that you didn't incorporate the "Simplify!" changes
+properly. Please try again.
 
 -Doug
