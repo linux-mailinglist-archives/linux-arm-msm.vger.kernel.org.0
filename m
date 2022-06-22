@@ -2,71 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 64343556E3E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jun 2022 00:01:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A07D1556ED6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jun 2022 01:06:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349932AbiFVV7u (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Jun 2022 17:59:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44172 "EHLO
+        id S1377046AbiFVXGb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Jun 2022 19:06:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56244 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1357308AbiFVV7j (ORCPT
+        with ESMTP id S1377054AbiFVXGa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Jun 2022 17:59:39 -0400
-Received: from mail-pg1-x531.google.com (mail-pg1-x531.google.com [IPv6:2607:f8b0:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B2892ED67
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jun 2022 14:59:26 -0700 (PDT)
-Received: by mail-pg1-x531.google.com with SMTP id q140so17302983pgq.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jun 2022 14:59:26 -0700 (PDT)
+        Wed, 22 Jun 2022 19:06:30 -0400
+Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E22241337
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jun 2022 16:06:28 -0700 (PDT)
+Received: by mail-oi1-x232.google.com with SMTP id e131so3030414oif.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jun 2022 16:06:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=1pdhObJ96JAdNQFR2R9fpWGMOXrHx/rMFv6zCCsOHAk=;
-        b=hVrctEGuVG5RsRxCqLMNa7VyAR77RxPywMJC0ts/2Tv/RtkdREBNccc2tLIg9h2/Hy
-         w64cbCFd8tk1LcJE4sC2dtKLvhuRyc+MUQOmTLlMNsp0uyaLhUwakkQhQZPZXiV72ATy
-         lkZXPjA+9Rv8jlfhnOmZEzYcZDmEawypUh47I=
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=zXYmgG7iQa+o9ruLpRc7lOxD4CdoD1Y1uoQiQlZDBqc=;
+        b=mTtoaFOOfvNf4OZWfFlLAwO3xBU1ZbIfli/EpJWBPWL57xAc4P0gpXqigLIUGMdodO
+         iLCaAkNdy6EuDlcxS68SBMXabFnO2ARQRmBIyu3Y0tYcd/YL6c1E42rVQO20rdxwXxRB
+         GjHg+TEOx1GXpp6gBmaHN7KSNqxpEK8UUZUuc=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=1pdhObJ96JAdNQFR2R9fpWGMOXrHx/rMFv6zCCsOHAk=;
-        b=AyE7p4oAEBvSKKTksm4HX8anpm9VUBFKHLyGvsXNZ6XJiTdREEiKb7TPtZg1F3mt8r
-         RwxaoA4VJVDA6EWJjJTe/T5v7+RQioiablkYknfLjY1OJIqQqo4fQvc5IVS+JFlI40S/
-         2bdeu9xrJrhzmjKuwEQUvW5CTWj+pC93+lc3Mj07nRRA17KKA1MFi9qnxFNfMk5n4itx
-         mtv/3Vn9lHQ1we9ONMPSdTxbTbNxB8FZZyDB9eARglGZTsOa+2WLp5X+cM3ljJ6hVvgl
-         794E6mrMreD5ZDx5UnLr31csAy/I6HGWh3Wu6wxpVFzBR2Yxa8zlifEO23XHNOd/jR0I
-         OXCw==
-X-Gm-Message-State: AJIora+gRKQr5hcDW0q5dRmIm0+BOt07ZoXzOZfnD8VBPSobzRC491D7
-        1maNzjqA+XPaZZRG6m2eI4R83MTfMNIThg==
-X-Google-Smtp-Source: AGRyM1vf9pMP4Tou3fz1iLeTLO+gLSIOfI+g/h5s5a0eua2xRAP9kBxmB0nBOjXM0LMGaraNojvT9A==
-X-Received: by 2002:a65:6b8a:0:b0:3db:7dc5:fec2 with SMTP id d10-20020a656b8a000000b003db7dc5fec2mr4559579pgw.223.1655935165832;
-        Wed, 22 Jun 2022 14:59:25 -0700 (PDT)
-Received: from joebar-glaptop.lan (c-71-202-34-56.hsd1.ca.comcast.net. [71.202.34.56])
-        by smtp.gmail.com with ESMTPSA id nk15-20020a17090b194f00b001ec9d45776bsm255916pjb.42.2022.06.22.14.59.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Jun 2022 14:59:25 -0700 (PDT)
-From:   "Joseph S. Barrera III" <joebar@chromium.org>
-To:     LKML <linux-kernel@vger.kernel.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Alexandru M Stan <amstan@chromium.org>,
-        "Joseph S. Barrera III" <joebar@chromium.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH v10 5/5] arm64: dts: qcom: sc7180: Add kingoftown dts files
-Date:   Wed, 22 Jun 2022 14:58:05 -0700
-Message-Id: <20220622145717.v10.5.Ib62291487a664a65066d18a3e83c5428a6d2cc6c@changeid>
-X-Mailer: git-send-email 2.31.0
-In-Reply-To: <20220622215805.1121982-1-joebar@chromium.org>
-References: <20220622215805.1121982-1-joebar@chromium.org>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=zXYmgG7iQa+o9ruLpRc7lOxD4CdoD1Y1uoQiQlZDBqc=;
+        b=uztBNpwYMn+E+P96CVuIrdkneJ1dx2H53+C+j68P9pWF6/Ojm2v5MmenqxbLUzdTsU
+         htIpRYJtcKzZM4rOazf6tcXcPd8YFiMJtgJwIEZH7PfgAY9fgnQeIWqTGiLuJ+BDKXnE
+         Xuc3xanofOMCvifUkqUvOOv32gFAa7Udx+zeV1mi0kiqQjoKpZZho8ufb/I7/+R42kix
+         Q2ZmV2xfLAQEWdk5YUdNhQpU0d7n26FylF0k0+F+zbyp5fVQYIfTB1KpoUjFX05XH3Rh
+         UXPpQa9q02Jf6SqbHotYZ5HY0BeYLx3+/OdR+3U0o2OUc7Cvhki5gEfUODWE0u7dfYsO
+         Usgg==
+X-Gm-Message-State: AJIora/hkbb/VEd9OT9d0GQ8mWA6YXLIHyE7uQN4/nDGxR6wHRQT5tne
+        XpJTScc22Cmn/pwwM+DcRlWi+VKhmAbUMPfKDEU/rg==
+X-Google-Smtp-Source: AGRyM1sij7Q/JNEXGd7mMJDDr0w3hnSkJAGMS2ASw1mgiG7IRIYHTxAgGCXltmU7phsqEKjTP5u7yYopM3/j3D5vue0=
+X-Received: by 2002:a05:6808:e87:b0:32e:4789:d2c with SMTP id
+ k7-20020a0568080e8700b0032e47890d2cmr430242oil.193.1655939187670; Wed, 22 Jun
+ 2022 16:06:27 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 22 Jun 2022 19:06:27 -0400
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <1655834239-20812-1-git-send-email-quic_vnivarth@quicinc.com>
+References: <1655834239-20812-1-git-send-email-quic_vnivarth@quicinc.com>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date:   Wed, 22 Jun 2022 19:06:27 -0400
+Message-ID: <CAE-0n507Rh1Q4Wcp9f=PVxkgY-L7ZNuZMH6sZw=+ajeUk=UC5Q@mail.gmail.com>
+Subject: Re: [PATCH] tty: serial: qcom-geni-serial: Fix get_clk_div_rate()
+ which otherwise could return a sub-optimal clock rate.
+To:     Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>,
+        agross@kernel.org, bjorn.andersson@linaro.org,
+        gregkh@linuxfoundation.org, jirislaby@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-serial@vger.kernel.org
+Cc:     quic_msavaliy@quicinc.com, dianders@chromium.org, mka@chromium.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -74,355 +70,205 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Kingoftown is a trogdor-based board. These dts files are unchanged copies
-from the downstream Chrome OS 5.4 kernel.
+Quoting Vijaya Krishna Nivarthi (2022-06-21 10:57:19)
+> In the logic around call to clk_round_rate, for some corner conditions,
 
-Signed-off-by: Joseph S. Barrera III <joebar@chromium.org>
----
+clk_round_rate(), not the parethesis to indicate it's a function.
 
-Changes in v10:
-- Remove 'include sc7180.dtsi' from *all* sc7180-trogdor-kingoftown* files.
+> get_clk_div_rate() could return an sub-optimal clock rate. Also, if an
+> exact clock rate was not found lowest clock was being returned.
+>
+> Search for suitable clock rate in 2 steps
+> a) exact match or within 2% tolerance
+> b) within 5% tolerance
+> This also takes care of corner conditions.
+>
+> Fixes: c2194bc999d4 ("tty: serial: qcom-geni-serial: Remove uart frequency table. Instead, find suitable frequency with call to clk_round_rate")
+> Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+> ---
+>  drivers/tty/serial/qcom_geni_serial.c | 134 ++++++++++++++++++++++++++--------
+>  1 file changed, 102 insertions(+), 32 deletions(-)
+>
+> diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
+> index 2e23b65..8d247c1 100644
+> --- a/drivers/tty/serial/qcom_geni_serial.c
+> +++ b/drivers/tty/serial/qcom_geni_serial.c
+> @@ -943,52 +943,123 @@ static int qcom_geni_serial_startup(struct uart_port *uport)
+>         return 0;
+>  }
+>
+> -static unsigned long get_clk_div_rate(struct clk *clk, unsigned int baud,
+> -                       unsigned int sampling_rate, unsigned int *clk_div)
+> +static unsigned long find_clk_rate_in_tol(struct clk *clk, unsigned int desired_clk,
+> +                       unsigned int *clk_div, unsigned int percent_tol, bool *exact_match)
 
-Changes in v9:
-- Simplify trackpad enabling (51d30402be75).
+Do we really need to pass in a bool pointer here for 'exact_match'?
+Can't we calculate the exact match value in the callsite and simply pass
+a bool (not pointer) to constrain the logic in this function?
 
-Changes in v7:
-- Simplify spi0/spi6 labeling (d277cab7afc7).
-- Remove #include of <arm/cros-ec-keyboard.dtsi>.
+>  {
+> +       unsigned long freq;
+> +       unsigned long div, maxdiv, new_div;
+> +       unsigned long long mult;
 
-Changes in v6:
-- Add #include of <arm/cros-ec-keyboard.dtsi> from v5.4.
+I think u64 is used more often than unsigned long long.
 
-Changes in v4:
-- Fix description (no downstream bits removed).
-- Add missing version history.
+>         unsigned long ser_clk;
+> -       unsigned long desired_clk;
+> -       unsigned long freq, prev;
+> -       unsigned long div, maxdiv;
+> -       int64_t mult;
+> -
+> -       desired_clk = baud * sampling_rate;
+> -       if (!desired_clk) {
+> -               pr_err("%s: Invalid frequency\n", __func__);
+> -               return 0;
+> -       }
+> +       unsigned long test_freq, offset, new_freq;
+>
+> +       ser_clk = 0;
+>         maxdiv = CLK_DIV_MSK >> CLK_DIV_SHFT;
+> -       prev = 0;
+> +       div = 1;
+>
+> -       for (div = 1; div <= maxdiv; div++) {
+> -               mult = div * desired_clk;
+> -               if (mult > ULONG_MAX)
+> +       while (div <= maxdiv) {
+> +               mult = (unsigned long long)div * desired_clk;
 
-Changes in v2:
-- First inclusion in series.
+Cast to u64?
 
- arch/arm64/boot/dts/qcom/Makefile             |   2 +
- .../dts/qcom/sc7180-trogdor-kingoftown-r0.dts |  43 ++++
- .../dts/qcom/sc7180-trogdor-kingoftown-r1.dts |  16 ++
- .../dts/qcom/sc7180-trogdor-kingoftown.dtsi   | 224 ++++++++++++++++++
- 4 files changed, 285 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown-r0.dts
- create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown-r1.dts
- create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown.dtsi
+> +               if (mult != (unsigned long)mult)
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index dc26704dfe34..a9f2ad013179 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -60,6 +60,8 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-coachz-r3-lte.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-homestar-r2.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-homestar-r3.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-homestar-r4.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-kingoftown-r0.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-kingoftown-r1.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-r0.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-r1.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-r1-kb.dtb
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown-r0.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown-r0.dts
-new file mode 100644
-index 000000000000..d9ee042a16d9
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown-r0.dts
-@@ -0,0 +1,43 @@
-+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
-+/*
-+ * Google Kingoftown board device tree source
-+ *
-+ * Copyright 2021 Google LLC.
-+ */
-+
-+/dts-v1/;
-+
-+#include "sc7180-trogdor-ti-sn65dsi86.dtsi"
-+#include "sc7180-trogdor-kingoftown.dtsi"
-+
-+/ {
-+	model = "Google Kingoftown (rev0)";
-+	compatible = "google,kingoftown-rev0", "qcom,sc7180";
-+};
-+
-+/*
-+ * In rev1+, the enable pin of pp3300_fp_tp will be tied to pp1800_l10a
-+ * power rail instead, since kingoftown does not have FP.
-+ */
-+&pp3300_fp_tp {
-+	gpio = <&tlmm 74 GPIO_ACTIVE_HIGH>;
-+	enable-active-high;
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&en_fp_rails>;
-+};
-+
-+&tlmm {
-+	en_fp_rails: en-fp-rails {
-+		pinmux {
-+			pins = "gpio74";
-+			function = "gpio";
-+		};
-+
-+		pinconf {
-+			pins = "gpio74";
-+			drive-strength = <2>;
-+			bias-disable;
-+		};
-+	};
-+};
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown-r1.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown-r1.dts
-new file mode 100644
-index 000000000000..4c178696dd8f
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown-r1.dts
-@@ -0,0 +1,16 @@
-+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
-+/*
-+ * Google Kingoftown board device tree source
-+ *
-+ * Copyright 2021 Google LLC.
-+ */
-+
-+/dts-v1/;
-+
-+#include "sc7180-trogdor-parade-ps8640.dtsi"
-+#include "sc7180-trogdor-kingoftown.dtsi"
-+
-+/ {
-+	model = "Google Kingoftown (rev1+)";
-+	compatible = "google,kingoftown", "qcom,sc7180";
-+};
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown.dtsi
-new file mode 100644
-index 000000000000..2268f3e7b5f2
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown.dtsi
-@@ -0,0 +1,224 @@
-+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
-+/*
-+ * Google Kingoftown board device tree source
-+ *
-+ * Copyright 2021 Google LLC.
-+ */
-+
-+#include "sc7180-trogdor.dtsi"
-+#include "sc7180-trogdor-lte-sku.dtsi"
-+
-+&alc5682 {
-+	compatible = "realtek,rt5682s";
-+	realtek,dmic1-clk-pin = <2>;
-+	realtek,dmic-clk-rate-hz = <2048000>;
-+};
-+
-+&ap_tp_i2c {
-+	status = "okay";
-+};
-+
-+ap_ts_pen_1v8: &i2c4 {
-+	status = "okay";
-+	clock-frequency = <400000>;
-+
-+	ap_ts: touchscreen@10 {
-+		compatible = "elan,ekth3500";
-+		reg = <0x10>;
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&ts_int_l>, <&ts_reset_l>;
-+
-+		interrupt-parent = <&tlmm>;
-+		interrupts = <9 IRQ_TYPE_LEVEL_LOW>;
-+
-+		vcc33-supply = <&pp3300_ts>;
-+
-+		reset-gpios = <&tlmm 8 GPIO_ACTIVE_LOW>;
-+	};
-+};
-+
-+&keyboard_controller {
-+	function-row-physmap = <
-+		MATRIX_KEY(0x00, 0x02, 0)       /* T1 */
-+		MATRIX_KEY(0x03, 0x02, 0)       /* T2 */
-+		MATRIX_KEY(0x02, 0x02, 0)       /* T3 */
-+		MATRIX_KEY(0x01, 0x02, 0)       /* T4 */
-+		MATRIX_KEY(0x03, 0x04, 0)       /* T5 */
-+		MATRIX_KEY(0x02, 0x04, 0)       /* T6 */
-+		MATRIX_KEY(0x01, 0x04, 0)       /* T7 */
-+		MATRIX_KEY(0x02, 0x09, 0)       /* T8 */
-+		MATRIX_KEY(0x01, 0x09, 0)       /* T9 */
-+		MATRIX_KEY(0x00, 0x04, 0)       /* T10 */
-+	>;
-+	linux,keymap = <
-+		MATRIX_KEY(0x00, 0x02, KEY_BACK)
-+		MATRIX_KEY(0x03, 0x02, KEY_REFRESH)
-+		MATRIX_KEY(0x02, 0x02, KEY_ZOOM)
-+		MATRIX_KEY(0x01, 0x02, KEY_SCALE)
-+		MATRIX_KEY(0x03, 0x04, KEY_SYSRQ)
-+		MATRIX_KEY(0x02, 0x04, KEY_BRIGHTNESSDOWN)
-+		MATRIX_KEY(0x01, 0x04, KEY_BRIGHTNESSUP)
-+		MATRIX_KEY(0x02, 0x09, KEY_MUTE)
-+		MATRIX_KEY(0x01, 0x09, KEY_VOLUMEDOWN)
-+		MATRIX_KEY(0x00, 0x04, KEY_VOLUMEUP)
-+
-+		CROS_STD_MAIN_KEYMAP
-+	>;
-+};
-+
-+&panel {
-+	compatible = "edp-panel";
-+};
-+
-+&pp3300_dx_edp {
-+	gpio = <&tlmm 67 GPIO_ACTIVE_HIGH>;
-+};
-+
-+&sound {
-+	compatible = "google,sc7180-trogdor";
-+	model = "sc7180-rt5682s-max98357a-1mic";
-+};
-+
-+&wifi {
-+	qcom,ath10k-calibration-variant = "GO_KINGOFTOWN";
-+};
-+
-+/* PINCTRL - modifications to sc7180-trogdor.dtsi */
-+
-+&en_pp3300_dx_edp {
-+	pinmux {
-+		pins = "gpio67";
-+	};
-+
-+	pinconf {
-+		pins = "gpio67";
-+	};
-+};
-+
-+/* PINCTRL - board-specific pinctrl */
-+
-+&tlmm {
-+	gpio-line-names = "TP_INT_L",		/* 0 */
-+			  "AP_RAM_ID0",
-+			  "AP_SKU_ID2",
-+			  "AP_RAM_ID1",
-+			  "",
-+			  "AP_RAM_ID2",
-+			  "AP_TP_I2C_SDA",
-+			  "AP_TP_I2C_SCL",
-+			  "TS_RESET_L",
-+			  "TS_INT_L",
-+			  "",			/* 10 */
-+			  "EDP_BRIJ_IRQ",
-+			  "AP_EDP_BKLTEN",
-+			  "",
-+			  "",
-+			  "EDP_BRIJ_I2C_SDA",
-+			  "EDP_BRIJ_I2C_SCL",
-+			  "HUB_RST_L",
-+			  "",
-+			  "",
-+			  "",			/* 20 */
-+			  "",
-+			  "",
-+			  "AMP_EN",
-+			  "",
-+			  "",
-+			  "",
-+			  "",
-+			  "HP_IRQ",
-+			  "",
-+			  "",			/* 30 */
-+			  "AP_BRD_ID2",
-+			  "BRIJ_SUSPEND",
-+			  "AP_BRD_ID0",
-+			  "AP_H1_SPI_MISO",
-+			  "AP_H1_SPI_MOSI",
-+			  "AP_H1_SPI_CLK",
-+			  "AP_H1_SPI_CS_L",
-+			  "BT_UART_CTS",
-+			  "BT_UART_RTS",
-+			  "BT_UART_TXD",	/* 40 */
-+			  "BT_UART_RXD",
-+			  "H1_AP_INT_ODL",
-+			  "",
-+			  "UART_AP_TX_DBG_RX",
-+			  "UART_DBG_TX_AP_RX",
-+			  "HP_I2C_SDA",
-+			  "HP_I2C_SCL",
-+			  "FORCED_USB_BOOT",
-+			  "AMP_BCLK",
-+			  "AMP_LRCLK",		/* 50 */
-+			  "AMP_DIN",
-+			  "",
-+			  "HP_BCLK",
-+			  "HP_LRCLK",
-+			  "HP_DOUT",
-+			  "HP_DIN",
-+			  "HP_MCLK",
-+			  "AP_SKU_ID0",
-+			  "AP_EC_SPI_MISO",
-+			  "AP_EC_SPI_MOSI",	/* 60 */
-+			  "AP_EC_SPI_CLK",
-+			  "AP_EC_SPI_CS_L",
-+			  "AP_SPI_CLK",
-+			  "AP_SPI_MOSI",
-+			  "AP_SPI_MISO",
-+			  /*
-+			   * AP_FLASH_WP_L is crossystem ABI. Schematics
-+			   * call it BIOS_FLASH_WP_L.
-+			   */
-+			  "AP_FLASH_WP_L",
-+			  "EN_PP3300_DX_EDP",
-+			  "AP_SPI_CS0_L",
-+			  "",
-+			  "",			/* 70 */
-+			  "",
-+			  "",
-+			  "",
-+			  "EN_FP_RAILS",
-+			  "UIM2_DATA",
-+			  "UIM2_CLK",
-+			  "UIM2_RST",
-+			  "UIM2_PRESENT_L",
-+			  "UIM1_DATA",
-+			  "UIM1_CLK",		/* 80 */
-+			  "UIM1_RST",
-+			  "",
-+			  "CODEC_PWR_EN",
-+			  "HUB_EN",
-+			  "",
-+			  "",
-+			  "",
-+			  "",
-+			  "",
-+			  "AP_SKU_ID1",		/* 90 */
-+			  "AP_RST_REQ",
-+			  "",
-+			  "AP_BRD_ID1",
-+			  "AP_EC_INT_L",
-+			  "",
-+			  "",
-+			  "",
-+			  "",
-+			  "",
-+			  "",			/* 100 */
-+			  "",
-+			  "",
-+			  "",
-+			  "EDP_BRIJ_EN",
-+			  "",
-+			  "",
-+			  "",
-+			  "",
-+			  "",
-+			  "",			/* 110 */
-+			  "",
-+			  "",
-+			  "",
-+			  "",
-+			  "AP_TS_PEN_I2C_SDA",
-+			  "AP_TS_PEN_I2C_SCL",
-+			  "DP_HOT_PLUG_DET",
-+			  "EC_IN_RW_ODL";
-+};
--- 
-2.31.0
+What is this checking for? Do we expect the rate to be larger than
+32-bits on 32-bit machines?
 
+>                         break;
+>
+> -               freq = clk_round_rate(clk, (unsigned long)mult);
+> -               if (!(freq % desired_clk)) {
+> -                       ser_clk = freq;
+> -                       break;
+> +               /*
+> +                * Loop requesting a freq within tolerance and possibly exact freq.
+> +                *
+> +                * We'll keep track of the lowest freq inexact match we found
+> +                * but always try to find a perfect match. NOTE: this algorithm
+> +                * could miss a slightly better freq if there's more than one
+> +                * freq between (freq - offset) and (freq) but (freq) can't be made
+> +                * exactly, but that's OK.
+> +                *
+> +                * This absolutely relies on the fact that the Qualcomm clock
+> +                * driver always rounds up.
+> +                * We make use of exact_match as an I/O param.
+> +                */
+> +
+> +               /* look only for exact match if within tolerance is already found */
+> +               if (ser_clk)
+> +                       offset = 0;
+> +               else
+> +                       offset = (mult * percent_tol) / 100;
+
+This needs to use div_u64() to be compatible with 32-bit machines.
+
+> +
+> +               test_freq = mult - offset;
+> +               freq = clk_round_rate(clk, test_freq);
+> +
+> +               /*
+> +                * A dead-on freq is an insta-win, look for it only in 1st run
+> +                */
+> +               if (*exact_match) {
+> +                       if (!(freq % desired_clk)) {
+> +                               ser_clk = freq;
+> +                               *clk_div = freq / desired_clk;
+> +                               return ser_clk;
+> +                       }
+> +               }
+> +
+> +               if (!ser_clk) {
+> +                       new_div = DIV_ROUND_CLOSEST(freq, desired_clk);
+> +                       new_freq = new_div * desired_clk;
+> +                       offset = (new_freq * percent_tol) / 100;
+> +
+> +                       if (new_freq - offset <= freq && freq <= new_freq + offset) {
+> +                               /* Save the first (lowest freq) within tolerance */
+> +                               ser_clk = freq;
+> +                               *clk_div = new_div;
+> +                               /* no more search for exact match required in 2nd run */
+> +                               if (!(*exact_match))
+> +                                       break;
+> +                       }
+>                 }
+>
+> -               if (!prev)
+> -                       ser_clk = freq;
+> -               else if (prev == freq)
+> +               div = freq / desired_clk + 1;
+> +
+> +               /*
+> +                * Only time clock framework doesn't round up is if
+> +                * we're past the max clock rate. We're done searching
+> +                * if that's the case.
+> +                */
+> +               if (freq < test_freq)
+>                         break;
+> +       }
+> +
+> +       *exact_match = false;
+> +       return ser_clk;
+> +}
+> +
+> +static unsigned long get_clk_div_rate(struct clk *clk, unsigned int baud,
+> +                       unsigned int sampling_rate, unsigned int *clk_div)
+> +{
+> +       unsigned long ser_clk;
+> +       unsigned long desired_clk;
+> +       unsigned long desired_tol;
+> +       bool exact_match;
+>
+> -               prev = freq;
+> +       desired_clk = baud * sampling_rate;
+> +       if (!desired_clk) {
+> +               pr_err("%s: Invalid frequency\n", __func__);
+> +               return 0;
+>         }
+>
+> -       if (!ser_clk) {
+> -               pr_err("%s: Can't find matching DFS entry for baud %d\n",
+> -                                                               __func__, baud);
+> +       /* try to find exact clock rate or within 2% tolerance */
+> +       ser_clk = 0;
+> +       exact_match = true;
+> +       desired_tol = 2;
+> +
+> +       ser_clk = find_clk_rate_in_tol(clk, desired_clk, clk_div, desired_tol, &exact_match);
+> +       if (ser_clk) {
+> +               if (!exact_match)
+> +                       pr_warn("Cannot find exact match clk_rate, using one within 2 percent tolerance\n");
+
+Should this be a pr_warn_once()? Because otherwise users are going to
+see this error potentially quite often if tolerances can't be achieved.
+
+>                 return ser_clk;
+>         }
+>
+> -       *clk_div = ser_clk / desired_clk;
+> -       if (!(*clk_div))
+> -               *clk_div = 1;
+> +       /* try within 5% tolerance now, no need to look for exact match */
+> +       exact_match = false;
+> +       desired_tol = 5;
+> +
+> +       ser_clk = find_clk_rate_in_tol(clk, desired_clk, clk_div, desired_tol, &exact_match);
+> +       if (ser_clk)
+> +               pr_warn("Cannot find exact match clk_rate, using one within 5 percent tolerance\n");
+
+This is a debug print?
+
+> +       else
+> +               pr_err("Cannot find suitable clk_rate, giving up\n");
+>
+>         return ser_clk;
+>  }
