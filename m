@@ -2,40 +2,40 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6A5EB554A87
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jun 2022 15:10:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5998B554A8F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jun 2022 15:11:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234694AbiFVNKG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Jun 2022 09:10:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60150 "EHLO
+        id S1352459AbiFVNLM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Jun 2022 09:11:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60964 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352817AbiFVNJ5 (ORCPT
+        with ESMTP id S1352562AbiFVNLJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Jun 2022 09:09:57 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB63F3138B;
-        Wed, 22 Jun 2022 06:09:42 -0700 (PDT)
+        Wed, 22 Jun 2022 09:11:09 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F5C522B12;
+        Wed, 22 Jun 2022 06:11:08 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 7DF1CB81EB5;
-        Wed, 22 Jun 2022 13:09:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35158C34114;
-        Wed, 22 Jun 2022 13:09:40 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 0C74C619EC;
+        Wed, 22 Jun 2022 13:11:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66655C34114;
+        Wed, 22 Jun 2022 13:11:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1655903380;
-        bh=NsupuDvFVEzxG4bNGH8iGooT4sCes2l2/JfLnXk6bz4=;
+        s=k20201202; t=1655903467;
+        bh=PJzXe925HCqsYaa0YKzQGk6/8QcoNdNCI3+zoH4oCOw=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=PP7SAnmb4sHFNgLrdLLGJ19baVNHJ4VTk3ITSLDUpbKhwYeDUe0S/QjOlAeu7FN5f
-         lPRkpXZKjER/jM77taOZ3Jdj6dIpBfjGJoXa9eJpzFsbZesSdtJ0usTlctNkULroC0
-         n6gw8NH8Sw0EHcSvkdnJFZuOiPstFiwFv5G3sfMPC8+ibMh+9TIlw8erPoshlBn4p6
-         zILpsElhWPVpKZ5ASpfUxWdAiSJDuzsb1zN4TsUMeacKCmVk7wkyiqa2g7DXjgg6KU
-         xiMcYeZ0b/CIWJpO7IaxH8mzqRku8LxAAZ/zklHDPbm0j2W5muAvmDKwuMlJXmVrQo
-         0w/82e3CzLWdQ==
+        b=Z28Ejs30GtBeePmJS4SvW7mW4DuI0E3OIXcbvfMWglYmkX4vTXF2Tf7R4dTNOoR+h
+         XGe6lNq88FK8RORGj6TNsPQXZDdpb9Gl3rve+62Uo4wLb5ITFbXkwgPKuxZiCoRx64
+         xds5VDgmm2dQgBvwJ16YtWttHtXR+WXQmlMg50mmClzFPMvZkhvkKzwJij3n2GWKH9
+         vbdOZxh3JurBtFtFwWZToIy9wAXc/9QnZmAzzLpSeZWzEkikGEEbi2RbTEbcA3N+6S
+         T9UtObpuwuVJRjMvQ52H4w4pWWFoZ4s/NCKU+D0cKVGPRFRS6gvUZNF46+LnXH1T2v
+         O2P83DSIS7RmA==
 Received: from johan by xi.lan with local (Exim 4.94.2)
         (envelope-from <johan@kernel.org>)
-        id 1o406y-0006Fb-EU; Wed, 22 Jun 2022 15:09:37 +0200
-Date:   Wed, 22 Jun 2022 15:09:36 +0200
+        id 1o408N-0006GG-ME; Wed, 22 Jun 2022 15:11:03 +0200
+Date:   Wed, 22 Jun 2022 15:11:03 +0200
 From:   Johan Hovold <johan@kernel.org>
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>,
@@ -45,14 +45,14 @@ Cc:     Andy Gross <agross@kernel.org>,
         Jassi Brar <jassisinghbrar@gmail.com>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 4/6] arm64: dts: qcom: sc8280xp: Add reference device
-Message-ID: <YrMUkL3fh2vcmo4l@hovoldconsulting.com>
+Subject: Re: [PATCH v2 5/6] arm64: dts: qcom: add SA8540P and ADP
+Message-ID: <YrMU56wa322hH/VR@hovoldconsulting.com>
 References: <20220622041224.627803-1-bjorn.andersson@linaro.org>
- <20220622041224.627803-5-bjorn.andersson@linaro.org>
+ <20220622041224.627803-6-bjorn.andersson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220622041224.627803-5-bjorn.andersson@linaro.org>
+In-Reply-To: <20220622041224.627803-6-bjorn.andersson@linaro.org>
 X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -63,28 +63,28 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jun 21, 2022 at 09:12:22PM -0700, Bjorn Andersson wrote:
-> Add basic support for the SC8280XP reference device, which allows it to
-> boot to a shell (using EFIFB) with functional storage (UFS), USB,
-> keyboard, touchpad, touchscreen, backlight and remoteprocs.
+On Tue, Jun 21, 2022 at 09:12:23PM -0700, Bjorn Andersson wrote:
+> Introduce the Qualcomm SA8540P automotive platform and the SA8295P ADP
+> development board.
 > 
-> The PMICs are, per socinfo, reused from other platforms. But given that
-> the address of the PMICs doesn't match other cases and that it's
-> desirable to label things according to the schematics a new dtsi file is
-> created to represent the reference combination of PMICs.
+> The SA8540P and SC8280XP are fairly similar, so the SA8540P is built
+> ontop of the SC8280XP dtsi to reduce duplication. As more advanced
+> features are integrated this might be re-evaluated.
+> 
+> This initial contribution supports SMP, CPUFreq, cluster idle, UFS, RPMh
+> regulators, debug UART, PMICs, remoteprocs (NSPs crashes shortly after
+> booting) and USB.
+> 
+> The SA8295P ADP contains four PM8450 PMICs, which according to their
+> revid are compatible with PM8150. They are defined within the ADP for
+> now, to avoid creating additional .dtsi files for PM8150 with just
+> addresses changed - and to allow using the labels from the schematics.
 > 
 > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
-> 
-> Changes since v1:
-> - Reordered "status" last
-> - Fixed invalid PMIC gpio 0
-> - Replaced "hid" name with touchscreen, touchpad and keyboard
-> - Added &xo_board_clk frequency
 
 > --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-> @@ -0,0 +1,432 @@
+> +++ b/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
+> @@ -0,0 +1,427 @@
 > +// SPDX-License-Identifier: BSD-3-Clause
 > +/*
 > + * Copyright (c) 2021, The Linux Foundation. All rights reserved.
@@ -96,82 +96,13 @@ On Tue, Jun 21, 2022 at 09:12:22PM -0700, Bjorn Andersson wrote:
 > +#include <dt-bindings/gpio/gpio.h>
 
 > +#include <dt-bindings/input/gpio-keys.h>
-
-This one is unused and should be dropped.
-
 > +#include <dt-bindings/input/input.h>
 
-And this one belongs in sc8280xp-pmics.dtsi where it's used.
+Both of these are unused for ADP and should be removed.
 
 > +#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+> +#include <dt-bindings/spmi/spmi.h>
 > +
-> +#include "sc8280xp.dtsi"
-> +#include "sc8280xp-pmics.dtsi"
-> +
-> +/ {
-> +	model = "Qualcomm SC8280XP CRD";
-> +	compatible = "qcom,sc8280xp-crd", "qcom,sc8280xp";
-> +
-> +	aliases {
-> +		serial0 = &qup2_uart17;
-> +	};
-> +
-> +	backlight {
-> +		compatible = "pwm-backlight";
-> +		pwms = <&pmc8280c_lpg 3 1000000>;
-> +		enable-gpios = <&pmc8280_1_gpios 8 GPIO_ACTIVE_HIGH>;
-> +		power-supply = <&vreg_edp_bl>;
-> +
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&edp_bl_en>, <&edp_bl_pwm>;
-> +	};
-> +
-> +	chosen {
-> +		stdout-path = "serial0:115200n8";
-> +	};
-> +
-> +	vreg_edp_bl: edp-bl-regulator {
-
-The fixed regulator nodes should be renamed "regulator-edp-bl"...
-
-> +		compatible = "regulator-fixed";
-> +
-> +		regulator-name = "VREG_EDP_BL";
-> +		regulator-min-microvolt = <3600000>;
-> +		regulator-max-microvolt = <3600000>;
-> +
-> +		gpio = <&pmc8280_1_gpios 9 GPIO_ACTIVE_HIGH>;
-> +		enable-active-high;
-> +
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&edp_bl_reg_en>;
-> +
-> +		regulator-boot-on;
-> +	};
-> +
-> +	vreg_misc_3p3: misc-3p3-regulator {
-
-...and "regulator-misc-3p3" (e.g. so we have a common prefix to sort
-by).
-
-> +		compatible = "regulator-fixed";
-> +
-> +		regulator-name = "VREG_MISC_3P3";
-> +		regulator-min-microvolt = <3300000>;
-> +		regulator-max-microvolt = <3300000>;
-> +
-> +		gpio = <&pmc8280_1_gpios 1 GPIO_ACTIVE_HIGH>;
-> +		enable-active-high;
-> +
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&misc_3p3_reg_en>;
-> +
-> +		regulator-boot-on;
-> +		regulator-always-on;
-> +	};
-> +
-> +	reserved-memory {
-> +	};
-> +};
+> +#include "sa8540p.dtsi"
 
 Johan
