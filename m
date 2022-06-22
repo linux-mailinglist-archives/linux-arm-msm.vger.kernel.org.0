@@ -2,70 +2,47 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 86BE55548F5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jun 2022 14:16:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8B31B554778
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jun 2022 14:12:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1357827AbiFVLvR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Jun 2022 07:51:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34334 "EHLO
+        id S1357882AbiFVLxq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Jun 2022 07:53:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36620 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1357824AbiFVLvQ (ORCPT
+        with ESMTP id S1357673AbiFVLxo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Jun 2022 07:51:16 -0400
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5BFFC3D1C5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jun 2022 04:51:15 -0700 (PDT)
-Received: by mail-wm1-x336.google.com with SMTP id a10so9073539wmj.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jun 2022 04:51:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=c9w4bwtREX8nNxnCJ4ROlU+z/YylZHWW3hvnhHQQpAA=;
-        b=cqklHNnyjnfFcAar8iI4gHILb+4hfpNLGaFoodo64C4mQFXNjY2I+TWl1JFayff/oM
-         Rx4ws/x7NOqdb61bvQSaHhH149osNhcZoI3WgYQyQY0xZ7cZ1dnaBNFV+yB9I0W8UQjv
-         uEI0zu8ctl3YTpCu8XN0bBpkiBnVM9zCdNk4lTe30iW+P/Bd0OutlqDUlWhwKpTVyRSp
-         7gXzRYDmEbL9KcYFcP+V/Uq9m7N/ut4BT5FcX72rPLGHr5Bn+VAODiKKpmr2hnVLaYTz
-         G6Ow9Ll/7NpDew9nAsQtrPDiMgZAd0HUreYO8iDEeszErhMIlD7GofSVxypU84qHA8KZ
-         gNXQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=c9w4bwtREX8nNxnCJ4ROlU+z/YylZHWW3hvnhHQQpAA=;
-        b=z0aZ/dnHD6qY1qkqBp2Nv1jk+7rsUT//reCgnrg0TDmjSJ02bzrh4C4vFGjR0O/64h
-         X9brxwupxyhpbzwJZ62JqS4l8slEj7l2KrhRX/bJdLzB4qY73298n0FZ/5p+LM4SVIu0
-         OC4a6I9hQ4OzK0VOuy7AofoQIi9AeC0fyDEcYcdHEza8Osot9VIZZ00LnR4BQyYV6nLL
-         AfMO/FZJ0Gmip5gAo82Mo2/yzIF2n6YguBTsY1B+oO1rVLUIAN8DJjA0cvIABls9jJtw
-         YGhg+4b6KjkeN9YobXlElOV8bd2eh5qK2R6isjsrBYYPQuf53lbHjbb8LSlnzLQalWV6
-         ogAw==
-X-Gm-Message-State: AJIora+GBm2wbXQIM67UEd5hL827j5hmLP7PKFsFX0663WpGJHzfPCdv
-        COuzUgj5NyuvsIxahWv+SEZll44cD2Vp1g==
-X-Google-Smtp-Source: AGRyM1vY6dzQFX/lLmpc9uzsCLpzlXMkcyPEqJytcNNSoD0/6BeNPcZqMr7yK3Sgg13mxF4Ys5C8iA==
-X-Received: by 2002:a1c:7408:0:b0:3a0:2481:c81d with SMTP id p8-20020a1c7408000000b003a02481c81dmr3628918wmc.55.1655898673974;
-        Wed, 22 Jun 2022 04:51:13 -0700 (PDT)
-Received: from localhost.localdomain (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id h15-20020a5d504f000000b0021b8a78fba3sm10775543wrt.95.2022.06.22.04.51.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Jun 2022 04:51:13 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Rob Herring <robh@kernel.org>
-Subject: [PATCH v2] dt-bindings: firmware: document Qualcomm QCS404 and SM6125 SCM
-Date:   Wed, 22 Jun 2022 13:51:09 +0200
-Message-Id: <20220622115109.6724-1-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
+        Wed, 22 Jun 2022 07:53:44 -0400
+Received: from relay03.th.seeweb.it (relay03.th.seeweb.it [IPv6:2001:4b7a:2000:18::164])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D7B432051;
+        Wed, 22 Jun 2022 04:53:41 -0700 (PDT)
+Received: from [192.168.1.101] (abxi223.neoplus.adsl.tpnet.pl [83.9.2.223])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id E207120603;
+        Wed, 22 Jun 2022 13:53:39 +0200 (CEST)
+Message-ID: <d0b55a37-428e-8081-6785-11be20aa14c7@somainline.org>
+Date:   Wed, 22 Jun 2022 13:53:39 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: Re: Removal of qcom,board-id and qcom,msm-id
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        krzysztof.kozlowski@linaro.org
+Cc:     agross@kernel.org, arnd@arndb.de, bjorn.andersson@linaro.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, olof@lixom.net, robh@kernel.org,
+        sboyd@kernel.org
+References: <a3c932d1-a102-ce18-deea-18cbbd05ecab@linaro.org>
+ <20220522195138.35943-1-konrad.dybcio@somainline.org>
+ <c072077a-cc16-c8f8-fcfa-891b3357cb66@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+In-Reply-To: <c072077a-cc16-c8f8-fcfa-891b3357cb66@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -73,36 +50,41 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Document the compatible for Qualcomm QCS404 and SM6125 SCM.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Acked-by: Rob Herring <robh@kernel.org>
 
----
+On 22.06.2022 10:21, Dmitry Baryshkov wrote:
+> On 22/05/2022 22:51, Konrad Dybcio wrote:
+>> Hi,
+>>
+>> removing these properties will not bring almost any benefit (other than making
+>> some checks happy any saving some <200 LoC) and will make the lives of almost
+>> all people doing independent development for linux-on-msm harder. There are
+>> almost unironically like 3 people outside Linaro and QUIC who have
+>> non-vendor-fused development boards AND the sources to rebuild the
+>> bootloader on their own. Making it harder to boot is only going to
+>> discourage people from developing on these devices, which is already not
+>> that pleasant, especially with newer platforms where you have to fight with
+>> the oh-so-bright ideas of Android boot chain..
+>>
+>> This only concerns devices released before sm8350, as the new ones will not
+>> even boot with these properties present (or at least SONY Sagami, but I
+>> doubt it's an isolated case), so other than completing support for older
+>> devices, it won't be an issue going forward, anyway.
+> 
+> I almost missed this part of the discussion (and Krzysztof had to point me to it in discussion of his patches).
+> 
+> I think this is a Sony peculiarity. At least the distributed SM8350 (lahaina) and SM8450 (waipio) Qualcomm device trees use these properties:
+> 
+> https://github.com/MiCode/kernel_devicetree/blob/zeus-s-oss/qcom/lahaina-hdk.dts
+> https://github.com/MiCode/kernel_devicetree/blob/zeus-s-oss/qcom/lahaina-v2.1.dtsi
+> https://github.com/MiCode/kernel_devicetree/blob/zeus-s-oss/qcom/waipio-qrd-pm8010.dts
+> https://github.com/MiCode/kernel_devicetree/blob/zeus-s-oss/qcom/waipio-v2.dtsi
+> 
+> 
+Hi, 
 
-Changes since v1:
-1. Mention also SM6125 in commit msg (it was already in the patch
-   itself).
-2. Add Rob's ack.
----
- Documentation/devicetree/bindings/firmware/qcom,scm.txt | 2 ++
- 1 file changed, 2 insertions(+)
+I was puzzled on this back when I first tried to get mainline booting on 8350 too. What I think happened, is that msm-id is used in some code paths, but not others (remember there are plenty of combinations including various Google's inventions from all over the years: QCDT, DTBO, vendor_boot, AVB signage, A/B presence/absence of recovery partition, virtual partitions etc etc).
 
-diff --git a/Documentation/devicetree/bindings/firmware/qcom,scm.txt b/Documentation/devicetree/bindings/firmware/qcom,scm.txt
-index 0f4e5ab26477..0eb9759d8d8d 100644
---- a/Documentation/devicetree/bindings/firmware/qcom,scm.txt
-+++ b/Documentation/devicetree/bindings/firmware/qcom,scm.txt
-@@ -23,8 +23,10 @@ Required properties:
-  * "qcom,scm-msm8994"
-  * "qcom,scm-msm8996"
-  * "qcom,scm-msm8998"
-+ * "qcom,scm-qcs404"
-  * "qcom,scm-sc7180"
-  * "qcom,scm-sc7280"
-+ * "qcom,scm-sm6125"
-  * "qcom,scm-sdm845"
-  * "qcom,scm-sdx55"
-  * "qcom,scm-sm6350"
--- 
-2.34.1
+Frankly, I have no idea why they are still here, but for booting just the kernel (no vendor_boot / GKI / dtbo mess), they need to be absent, at least on Sagami devices. This may be a bug in the Qualcomm bootloader, but they officially have to go with the GKI path to pass Google's compatibility tests, so this may not have been thouroughly tested (if at all), though I highly doubt this is going to change, as vendors are generally reluctant to update their bootloaders and Qualcomm is probably not interested in messing with a useless-to-the-main-purpose feature.
 
+Konrad
