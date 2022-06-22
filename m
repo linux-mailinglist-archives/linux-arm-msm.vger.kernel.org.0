@@ -2,77 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 94960554475
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jun 2022 10:11:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 13F285543F3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jun 2022 10:10:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1354289AbiFVICl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Jun 2022 04:02:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33122 "EHLO
+        id S230518AbiFVIKV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Jun 2022 04:10:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38490 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351684AbiFVICk (ORCPT
+        with ESMTP id S1351463AbiFVIKN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Jun 2022 04:02:40 -0400
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0D0537A8F
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jun 2022 01:02:38 -0700 (PDT)
-Received: by mail-wm1-x32e.google.com with SMTP id h14-20020a1ccc0e000000b0039eff745c53so4345762wmb.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jun 2022 01:02:38 -0700 (PDT)
+        Wed, 22 Jun 2022 04:10:13 -0400
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 720D737AB0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jun 2022 01:10:11 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id i10so18460054wrc.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jun 2022 01:10:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language
-         :from:to:references:in-reply-to:content-transfer-encoding;
-        bh=m863z0pgWMZqiS8zLvuIC/ZbrigTpOaSH5CDWyLnu/I=;
-        b=jpiD1Cv93PTPRpfRT6QQv3Izru048qNqQsp514pPfQ9QtAtZW9rEH9h4cz7TZtuGlc
-         AAEO/bZWKPXFXieaJk5XvTGRYAB7R9jxBmTcdU75m16U5FpUeJk446EQK26yi5gDrbE5
-         BHet2i0KJKePeaFyt+5J+6gy0PgBMdjl/w8Ym8h8Wf4f7VQHrJ5TB8hLRlUcjwQkxAKm
-         pUzrj/bKagvRh/NrLGCI9Z4BQ5WZtH2pYbKWVXCiirv9Up0SriPaDdaGbTzMrI8OGvwh
-         JpoJUJ0E4Tdmw+nQtEOZAyD2/4v5gLrPjgzKWkx+d5qlF7pn5lH1vhbttiIXNEqadqFb
-         kIYg==
+         :from:to:cc:references:in-reply-to:content-transfer-encoding;
+        bh=R4bw93UekXSuHSNQNFdF25jj0RvEbEo1Y6oF5ocRdUA=;
+        b=y8KcT8rvsYu8HA14LSGX6EEHr0vF1AvJn3gOJM2PNGWVaNv+JrHT5dp0/8UBB81s0L
+         hIZxJA+HfXeXAxxAonODbCzkA5b2ELnT2H5j5MqrniEKrRucdiUhiP4cCzrOfB7fUbTE
+         fdLa3TcWvZ7Npq/jDcHWKionjAd9HHNZd/izAqKwvwVCEzyjEEIhYnOe7ibVuSXhV3Zu
+         OBRlwUMsVYSHUUzG0oIVt/aO52FbNs1I06gZ60iU1cnEpA4ek2NwGUJKIAU0BSxmGVLj
+         6iZEZQZ5oepqx3M2fAieIRigKER9FGocGEP5Lc4v2paguhy9yCdLqEViYWGuXLlKB7aQ
+         05KA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:from:to:references:in-reply-to
+         :content-language:from:to:cc:references:in-reply-to
          :content-transfer-encoding;
-        bh=m863z0pgWMZqiS8zLvuIC/ZbrigTpOaSH5CDWyLnu/I=;
-        b=lxbO3SWWsKKrDxkWVTDBEPJqQisNHjUUTrer+mo/kw74/L+1P8Hwfmzwb23Ty7ZZMf
-         p6Fpbk9fEaB6Eu9+shfpMDWXxCOooPwMVBctxZNtevRmqBa3fERWB4pKE7zdkeLZogJi
-         WCVDlUxzppvSPngGfOr98GyU3KKyLFHwmSiPlVHlxcwt9RJJv93D/14cj1zgOkTbFpzS
-         uEUiI6kh7xENhvyfAmxASJLqM2khgOdHo2I4Dr41PVhWcflD4T2OlkEoyUASPqAxpr9Q
-         0SQyFBJprifqnd+qvxnLwDe2VNYE9zoW/akWQBvXMA38DzleD7jHxE+fTaNFChGiLdvE
-         DLaw==
-X-Gm-Message-State: AJIora8UL5zdGUVIgRZYFtdPqxrZi3XltD6q/sM1Os1sqXHQr0rzulBs
-        HrI05pkhNFAdq3Q4d4APNAhDGw==
-X-Google-Smtp-Source: AGRyM1vd91Id0y+PwjJQkEJRyS0YCzLfSoMbi9ZYYYNQ3pflBLh8T3fqS5OLwnS21TKB0bX8qm8g0Q==
-X-Received: by 2002:a7b:c1d1:0:b0:39c:605c:1530 with SMTP id a17-20020a7bc1d1000000b0039c605c1530mr2498931wmj.80.1655884957569;
-        Wed, 22 Jun 2022 01:02:37 -0700 (PDT)
+        bh=R4bw93UekXSuHSNQNFdF25jj0RvEbEo1Y6oF5ocRdUA=;
+        b=3D4G1xa67PiZz7DkcRvKUDjBM+QDrxlatVO2xKR4OCSsbMpz7csg7aFgIezZO+ij0a
+         wr4pGYCYEN+ZKBGeCp9DBuy95kp5Tc4F7PHdvJ0QTM6GTWwop0WncUhDjKEoLG14lEST
+         Sa+Qe/MwjWSSe64WT+TP++fZngNu2v9JeanMYnqyOQVH6G8a9gn+MAw4rWu64iopgvSw
+         d43uLryBNk/uDKkCruKODouE+4GNnAyR+cjjueT4YtM1d9Y/STMs95QzUT5kMSEa+Paf
+         6p/GNeaqfICEK60ftzcHSdyjBB4Zi9imExv92zyTtXf0c8tsZSd6FtCazqEKsL0EXiX5
+         TDrw==
+X-Gm-Message-State: AJIora+m4vDTc0O4aYmIAVukBmq8VUdSoOypn4gbkAdYddzZJgCoHu3M
+        1P/TQBJV0GLfN69BPHmJcGHKGQ==
+X-Google-Smtp-Source: AGRyM1voQW/E38nFU688OGDk6JDbvoKpvS+nN9DwGpbMQI2UNcJ9Leh1CU28PlIW7x/VWyEl9Jkyjw==
+X-Received: by 2002:a5d:648e:0:b0:217:d2cb:d6b2 with SMTP id o14-20020a5d648e000000b00217d2cbd6b2mr1974096wri.433.1655885410015;
+        Wed, 22 Jun 2022 01:10:10 -0700 (PDT)
 Received: from [192.168.0.223] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id p19-20020a05600c359300b0039c54bb28f2sm21720775wmq.36.2022.06.22.01.02.36
+        by smtp.gmail.com with ESMTPSA id n17-20020a5d4c51000000b0021b962f4256sm4673759wrt.80.2022.06.22.01.10.08
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 Jun 2022 01:02:37 -0700 (PDT)
-Message-ID: <320422f3-3873-341a-55a1-6892a7d7cd87@linaro.org>
-Date:   Wed, 22 Jun 2022 10:02:36 +0200
+        Wed, 22 Jun 2022 01:10:09 -0700 (PDT)
+Message-ID: <5251a825-0093-e54e-e652-1bf86edbe5fa@linaro.org>
+Date:   Wed, 22 Jun 2022 10:10:08 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.10.0
-Subject: Re: [PATCH 2/6] ARM: dts: qcom: use dedicated QFPROM compatibles
+Subject: Re: [PATCH 01/12] dt-bindings: vendor-prefixes: add Shift GmbH
 Content-Language: en-US
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-References: <20220505113802.243301-1-krzysztof.kozlowski@linaro.org>
- <20220505113802.243301-2-krzysztof.kozlowski@linaro.org>
- <a0dbea42-7a6b-142b-17a0-c819040b7129@linaro.org>
-In-Reply-To: <a0dbea42-7a6b-142b-17a0-c819040b7129@linaro.org>
+Cc:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>
+References: <20220521164550.91115-1-krzysztof.kozlowski@linaro.org>
+ <1334adaa-83f4-8682-7033-1549cfd8af49@linaro.org>
+In-Reply-To: <1334adaa-83f4-8682-7033-1549cfd8af49@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -80,24 +77,19 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 20/06/2022 21:11, Krzysztof Kozlowski wrote:
-> On 05/05/2022 13:37, Krzysztof Kozlowski wrote:
->> Use dedicated compatibles for QFPROM on APQ8064, IPQ8064 and MSM9874,
->> which is expected by the bindings.
+On 08/06/2022 12:56, Krzysztof Kozlowski wrote:
+> On 21/05/2022 18:45, Krzysztof Kozlowski wrote:
+>> Add prefix for SHIFT GmbH, phone manufacturer
+>> (https://www.shiftphones.com/en/).
 >>
 >> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->> ---
->>  arch/arm/boot/dts/qcom-apq8064.dtsi | 2 +-
->>  arch/arm/boot/dts/qcom-apq8084.dtsi | 2 +-
->>  arch/arm/boot/dts/qcom-ipq8064.dtsi | 2 +-
->>  arch/arm/boot/dts/qcom-msm8974.dtsi | 2 +-
->>  4 files changed, 4 insertions(+), 4 deletions(-)
->>
 > 
-> I'll take the bindings (patch #1) but what about DTS here? Any comments?
+> Bjorn,
+> 
+> A lot of new boards and patches might conflict with these series, so can
+> you pick it up early?
 
-Then I assume there is no problem me taking it.
-
+Okay... so I'll take it.
 
 Best regards,
 Krzysztof
