@@ -2,70 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CA85D554F04
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jun 2022 17:22:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 15095554F2C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jun 2022 17:27:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1359285AbiFVPWG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Jun 2022 11:22:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55682 "EHLO
+        id S1359394AbiFVP1M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Jun 2022 11:27:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59254 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1359275AbiFVPWF (ORCPT
+        with ESMTP id S1359386AbiFVP1E (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Jun 2022 11:22:05 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 424A13EA93;
-        Wed, 22 Jun 2022 08:22:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1655911323; x=1687447323;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=TRZjpIn58SQu0SVEKwga6r31mUEtI9Ahtm4FmxL6kQ4=;
-  b=gppD/KyQtC7Fk3DJ6FQyc+I/xesuloY5FTen3l+soKb2MRzBEWnZQ0gE
-   vcsPwCwyt8cPPaCJIBGac3YQKyxGnVNAy8G1Sj4JdOPzuCnu1X6ZyXr3w
-   g2AKIVTwKtnRNgUxxyJWV4jcwMHG3Uc8aPr9gAanKb+ezPFQ23L70Dhs9
-   E=;
-Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
-  by alexa-out.qualcomm.com with ESMTP; 22 Jun 2022 08:22:03 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Jun 2022 08:22:02 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 22 Jun 2022 08:22:01 -0700
-Received: from [10.110.58.84] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Wed, 22 Jun
- 2022 08:22:00 -0700
-Message-ID: <e27517c8-874e-1002-938b-1471fc338bb9@quicinc.com>
-Date:   Wed, 22 Jun 2022 08:21:59 -0700
+        Wed, 22 Jun 2022 11:27:04 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE61D39165;
+        Wed, 22 Jun 2022 08:27:02 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 81CB6B81F99;
+        Wed, 22 Jun 2022 15:27:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49CF9C34114;
+        Wed, 22 Jun 2022 15:27:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1655911620;
+        bh=LofunbVPsAFbpla4sYsGRa5somVhJXmX25y4hisPFLE=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=iO9wu6LuSXMwYekG555g50Hr2oFdpIYyQCDO13mFFXKh8nvTyB8I44mTfXYTvlXJl
+         6EYUFkKrVjcm88QWmgznWlYtnCAwDMZGOeozOy8qA1ZnfhVBnWK45C9D1pNjpGoJDZ
+         1IyngjrXXhi8+tzPD0j3UIOB40LjoNd0eLYelq9WKa44VyVIYqkASKERgtbQFL2PVZ
+         23ixMA8XKowPVtPTcJ1Jpaxzc7K5lMWP9uZAI20kmeg9kIYdqhyBH4dYdpJfpQyZ9T
+         s7P0wmOsIoaHrLUjbSr72tbNG+1GL/YWc/ey/3oBTp2bggi/gI+6bdZKiFAvGjF6Ki
+         3WzF+Cl2Ev6lA==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1o42Fq-0007Hf-IN; Wed, 22 Jun 2022 17:26:55 +0200
+Date:   Wed, 22 Jun 2022 17:26:54 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Konrad Dybcio <konrad.dybcio@somainline.org>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 4/6] arm64: dts: qcom: sc8280xp: Add reference device
+Message-ID: <YrM0vhXpY3uWgprs@hovoldconsulting.com>
+References: <20220622041224.627803-1-bjorn.andersson@linaro.org>
+ <20220622041224.627803-5-bjorn.andersson@linaro.org>
+ <099cc82f-d52f-315f-189d-bcc40c1afd49@somainline.org>
+ <YrMccQXwsz/zC/gl@hovoldconsulting.com>
+ <9d0c1897-195f-0548-ea5d-ffc35768f518@somainline.org>
+ <b2c9faf0-95a8-772f-c211-f1599b35f8f8@linaro.org>
+ <51965fa3-d146-70f1-2ad8-db6197989348@somainline.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: [PATCH v8 1/2] drm/msm/dp: force link training for display
- resolution change
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
-        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
-        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@linux.ie>,
-        <agross@kernel.org>, <bjorn.andersson@linaro.org>
-CC:     <quic_abhinavk@quicinc.com>, <quic_aravindh@quicinc.com>,
-        <quic_sbillaka@quicinc.com>, <freedreno@lists.freedesktop.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <1655399361-10842-1-git-send-email-quic_khsieh@quicinc.com>
- <1655399361-10842-2-git-send-email-quic_khsieh@quicinc.com>
- <f127060a-5648-fa40-81a0-be1be05b3951@linaro.org>
-From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
-In-Reply-To: <f127060a-5648-fa40-81a0-be1be05b3951@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <51965fa3-d146-70f1-2ad8-db6197989348@somainline.org>
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -74,127 +70,75 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Wed, Jun 22, 2022 at 05:10:50PM +0200, Konrad Dybcio wrote:
+> 
+> 
+> On 22.06.2022 16:48, Krzysztof Kozlowski wrote:
+> > On 22/06/2022 16:36, Konrad Dybcio wrote:
+> >>
+> >>
+> >> On 22.06.2022 15:43, Johan Hovold wrote:
+> >>> On Wed, Jun 22, 2022 at 02:33:02PM +0200, Konrad Dybcio wrote:
+> >>>> On 22.06.2022 06:12, Bjorn Andersson wrote:
+> >>>
+> >>>>> +&qup2_i2c5 {
+> >>>>> +	clock-frequency = <400000>;
+> >>>>> +
+> >>>>> +	pinctrl-names = "default";
+> >>>>> +	pinctrl-0 = <&qup2_i2c5_default>, <&kybd_default>, <&tpad_default>;
+> >>>>> +
+> >>>>> +	status = "okay";
+> >>>>> +
+> >>>> I think all device DTs generally have 'status = "okay"' at the beginning. Should we change that?
+> >>>>
+> >>>
+> >>> No, quite the opposite, status go at the end.
+> >> Then all other device DTs should be updated, as in dts/qcom/
+> >> everybody keeps it first in non-SoC/PMIC files.
+> > 
+> > The word "should" is a bit too much here, but I agree, we can update all
+> > of them to match one, chosen approach.
+> > 
+> > However the location for "status" property is more important for the
+> > definition of nodes in DTSI, because it's the least important piece
+> > there and also kind of expected - here go properties + I disable it. For
+> > me this is more important.
 
-On 6/22/2022 12:26 AM, Dmitry Baryshkov wrote:
-> On 16/06/2022 20:09, Kuogee Hsieh wrote:
->> Display resolution change is implemented through drm modeset. Older
->> modeset (resolution) has to be disabled first before newer modeset
->> (resolution) can be enabled. Display disable will turn off both
->> pixel clock and main link clock so that main link have to be
->> re-trained during display enable to have new video stream flow
->> again. At current implementation, display enable function manually
->> kicks up irq_hpd_handle which will read panel link status and start
->> link training if link status is not in sync state.
->>
->> However, there is rare case that a particular panel links status keep
->> staying in sync for some period of time after main link had been shut
->> down previously at display disabled. In this case, main link retraining
->> will not be executed by irq_hdp_handle(). Hence video stream of newer
->> display resolution will fail to be transmitted to panel due to main
->> link is not in sync between host and panel.
->>
->> This patch will bypass irq_hpd_handle() in favor of directly call
->> dp_ctrl_on_stream() to always perform link training in regardless of
->> main link status. So that no unexpected exception resolution change
->> failure cases will happen. Also this implementation are more efficient
->> than manual kicking off irq_hpd_handle function.
->>
->> Changes in v2:
->> -- set force_link_train flag on DP only (is_edp == false)
->>
->> Changes in v3:
->> -- revise commit  text
->> -- add Fixes tag
->>
->> Changes in v4:
->> -- revise commit  text
->>
->> Changes in v5:
->> -- fix spelling at commit text
->>
->> Changes in v6:
->> -- split dp_ctrl_on_stream() for phy test case
->> -- revise commit text for modeset
->>
->> Changes in v7:
->> -- drop 0 assignment at local variable (ret = 0)
->>
->> Changes in v8:
->> -- add patch to remove pixel_rate from dp_ctrl
->>
->> Fixes: 62671d2ef24b ("drm/msm/dp: fixes wrong connection state caused 
->> by failure of link train")
->> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
->> ---
->>   drivers/gpu/drm/msm/dp/dp_ctrl.c    | 31 
->> +++++++++++++++++++++++--------
->>   drivers/gpu/drm/msm/dp/dp_ctrl.h    |  3 ++-
->>   drivers/gpu/drm/msm/dp/dp_display.c | 13 ++++++-------
->>   3 files changed, 31 insertions(+), 16 deletions(-)
->>
->> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c 
->> b/drivers/gpu/drm/msm/dp/dp_ctrl.c
->> index af7a80c..01028b5 100644
->> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
->> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
->> @@ -1551,7 +1551,7 @@ static int 
->> dp_ctrl_process_phy_test_request(struct dp_ctrl_private *ctrl)
->>         ret = dp_ctrl_on_link(&ctrl->dp_ctrl);
->>       if (!ret)
->> -        ret = dp_ctrl_on_stream(&ctrl->dp_ctrl);
->> +        ret = dp_ctrl_on_stream_phy_test_report(&ctrl->dp_ctrl);
->>       else
->>           DRM_ERROR("failed to enable DP link controller\n");
->>   @@ -1807,7 +1807,27 @@ static int dp_ctrl_link_retrain(struct 
->> dp_ctrl_private *ctrl)
->>       return dp_ctrl_setup_main_link(ctrl, &training_step);
->>   }
->>   -int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl)
->> +int dp_ctrl_on_stream_phy_test_report(struct dp_ctrl *dp_ctrl)
->> +{
->> +    int ret;
->> +    struct dp_ctrl_private *ctrl;
->> +
->> +    ctrl = container_of(dp_ctrl, struct dp_ctrl_private, dp_ctrl);
->> +
->> +    ctrl->dp_ctrl.pixel_rate = ctrl->panel->dp_mode.drm_mode.clock;
->
-> Stephen has raised an interesting question. Comparing this to the 
-> dp_ctrl_on_stream(), he noticed that we do not halve the pixel clock 
-> here (if the wide bus is supported). So, the question is if this is 
-> correct or not.
->
-pixel is for video stream which has nothing to do phy test.
+Right, and this is the argument for keeping status last, something which
+is well defined.
 
-Therefore no half pixel clock rate required for phy test.
+If you look at some of the qcom dtsi it's hard to determine whether a
+node is disabled or not because the status property does not actually go
+"first" but is rather typically mixed up somewhere in the middle (or
+upper part) of nodes.
 
->> +
->> +    ret = dp_ctrl_enable_stream_clocks(ctrl);
->> +    if (ret) {
->> +        DRM_ERROR("Failed to start pixel clocks. ret=%d\n", ret);
->> +        return ret;
->> +    }
->> +
->> +    dp_ctrl_send_phy_test_pattern(ctrl);
->> +
->> +    return 0;
->> +}
->> +
->> +int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl, bool force_link_train)
->>   {
->>       int ret = 0;
->>       bool mainlink_ready = false;
->> @@ -1843,12 +1863,7 @@ int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl)
->>           goto end;
->>       }
->>   -    if (ctrl->link->sink_request & DP_TEST_LINK_PHY_TEST_PATTERN) {
->> -        dp_ctrl_send_phy_test_pattern(ctrl);
->> -        return 0;
->> -    }
->> -
->> -    if (!dp_ctrl_channel_eq_ok(ctrl))
->> +    if (force_link_train || !dp_ctrl_channel_eq_ok(ctrl))
->>           dp_ctrl_link_retrain(ctrl);
->>         /* stop txing train pattern to end link training */
->
->
+> > For node redefinition in DTS, I see benefits in two approaches:
+> > 1. Let me first enable the node and then configure it.
+> > 2. Let me configure the node and enable it.
+
+So for consistency, just put status last everywhere (dtsi and dts) and
+be done with it.
+
+> I looked around non-qcom device trees and it looks like the common
+> consensus is 2. Although I personally visually prefer 1. and it's
+> been used in all qcom arm64 DTs to date, I don't think there are any
+> blockers for us to switch to 1. going forward to keep it consistent.
+
+You mean inconsistent with the majority of dts? ;)
+
+> That's if we want to clean up the existing ones, as changing the rules
+> and not applying that to the older files will make for a huge mess as
+> time goes on and will unnecessarily prolong the review process (as
+> existing DTs are commonly a source of reference and people make
+> certain choices based on those).
+
+That's a fair point. Consistency is good, and dt snipped tends to be
+copied, but it's not the end of the world to not update old dts either.
+
+> I don't think the DTS specification or the Linux docs explicitly which
+> one to choose though.
+
+No, but a praxis has been developed over time (e.g. compatible first,
+reg second, status last).
+
+Johan
