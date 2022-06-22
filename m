@@ -2,75 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9B129554367
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jun 2022 09:04:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A89DB5543E3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jun 2022 10:10:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352069AbiFVHDt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Jun 2022 03:03:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42508 "EHLO
+        id S232890AbiFVH0o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Jun 2022 03:26:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59576 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352098AbiFVHDr (ORCPT
+        with ESMTP id S231675AbiFVH0n (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Jun 2022 03:03:47 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64A25369D5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jun 2022 00:03:45 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id c4so26167756lfj.12
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jun 2022 00:03:45 -0700 (PDT)
+        Wed, 22 Jun 2022 03:26:43 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 136F53700F
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jun 2022 00:26:42 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id t24so14053293lfr.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jun 2022 00:26:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=YERJcMOnhf7YdepXzuOu1ICAIwURGU9KIuX/lgmjuVo=;
-        b=VeMQggitH6vIywIo3XNlC/o5Xi45Ws9wLYXL/2QvJ1xYp/KvCWZ7Ms+XOlHD8FEOre
-         XAWqtnosMq3SvS5sW2meaDwmXu3iHsPcVgSsCcOxuzV4fgcqIOh4LeZyG9udXU3INAmU
-         QKj1uht41px53icB1fjscDsDRL82viptOrNGzzqPnZR4cIKRCZpCPSaT6MHZVsXZsq9O
-         rVxhqhBW+SJGD5Eof3+FlcsvEo5FEqbazd6aModuvGPGn4JO4GX9f9GWF1+7slHOS3Su
-         JZo79j9KOds39dlXQQ2sefCkJB3jnxNoMlKDQraQUaG1SCoopK5Ax9rh4y6mIlCmPC7j
-         GigA==
+        bh=nVINeQucA0hcOfl1Yl3NKcwENV+ClW7oKgC+Qvvycso=;
+        b=A+bC1zR9Iyi6DtY8D0mBXn29lLBQ6l0+WcVTYf82rCLB3Tf/CekLrKRsSco0GzqToP
+         TXXD+lu6JMBzvRoqrDnqWcuGOfWUDPdvJWCD5U0fM3BaWqebSVKPvnDuYFrGgWHB0BHr
+         x94eLHaGWSTI/jXa4reXZS0ILn6n5qtkmVlso0YP9war5DXgh58Ev2jS9JP5E1AY3X4E
+         agrVLRQH6RvaShxUuKX0agzdL582WLNOsePbY1XTEj3vyxxPhU7csSnP0ODVroLeAMkJ
+         l77VY29GRznM+B3ONJ6Gt5UfGu7oPNKXHg7L5+YIRna4RJzWNhNPAznRLCmyE47PkXlm
+         N/5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=YERJcMOnhf7YdepXzuOu1ICAIwURGU9KIuX/lgmjuVo=;
-        b=76e1kZx3SvPKYaytBDxnC5NtFi2m7dwVTkXnXddwkh/8VR8/q5G3xZmzrU94b6XGpr
-         7GEXInhqrq58WjiXpiXf3I3syPrBcK61is5eN4wCQuCaYUJ3eY50vKaPmrW9mo0X1O9P
-         VNS2+tPiuHgtTkQSHEakO14VmZB2RB76nC4Es95cJp8gt6MAxBRptZinwwDdp1av61b5
-         oN6FykDeUndqd+9LaP71a0/Cq1xiFtdO3bNiBuibl/f9IpernIWzcVwpVs42AxLtRzqQ
-         uWF+8RJjp3YfIGJFlwdnaAl20ibKUnB9MVo4Gp8JYFaZ9iP77SYXAXd1WRWd16AxaRDl
-         8SSQ==
-X-Gm-Message-State: AJIora/Aoj8EafmXBXq+xMOudU31fR2PzEtjMRNG0bhuO8JzIgu1ijBx
-        2a26H+cKMSocoWVQHqf0y2LNCg==
-X-Google-Smtp-Source: AGRyM1tTLNAo7oEkZI5yLv+nUNHVjPEiA5lCsNiiw3d4kjelPJ1AyosgX42lNQ8wo/hr6+G+CdVkuw==
-X-Received: by 2002:a05:6512:6d4:b0:47f:7940:f70 with SMTP id u20-20020a05651206d400b0047f79400f70mr1341831lff.47.1655881423444;
-        Wed, 22 Jun 2022 00:03:43 -0700 (PDT)
+        bh=nVINeQucA0hcOfl1Yl3NKcwENV+ClW7oKgC+Qvvycso=;
+        b=7Y1xtwi/RzSlfISH9Y3TzVk7H69tJr+R2AwGBj/7BycVas45qaSJC1Sn7ALQwpcDD3
+         BpzkfoZZx/wyzWBn/9w7FTtXBi8aYBKCNFx8K5s/60aGPDZ6xn/E9PTXAdK7yYhAPQxY
+         6ymZTqQQoU0lv3Pe1XbrXrfJ00qnUD+AtP9pdH6N/C7f03KFP03y2ovXOB/G11DxEiSr
+         avM0xZuISCr7RWGFBXLJVdnatGvK6WarvEQs5efdvLXxIpUdeShXI3VcFf9jjkTgIViI
+         IBbJnFQe/tPIl+ecphsqUQLWibM7FXS5kfmr234RBeTtHCH1Tqn1ZqUUurpDbK30IST5
+         uChA==
+X-Gm-Message-State: AJIora9TC1vjb7az7dutUVu+NJjzR7Wyuq8oyZmL1A3mn2reZ0zFiGdb
+        /FOMbycTF6Z6zIIqX0w2oW7y7A==
+X-Google-Smtp-Source: AGRyM1s9XrHyP76QQ25ODf9GWmEg2gHGYNQxgUj3tWjupzrc+W5EIBfAY6Kk3S4lbVzlo8jSPMtdsw==
+X-Received: by 2002:a05:6512:39d5:b0:47f:6e9a:5bf with SMTP id k21-20020a05651239d500b0047f6e9a05bfmr1314275lfu.580.1655882800383;
+        Wed, 22 Jun 2022 00:26:40 -0700 (PDT)
 Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id s19-20020a2e2c13000000b002558e1bec75sm2321283ljs.5.2022.06.22.00.03.42
+        by smtp.gmail.com with ESMTPSA id s28-20020a19771c000000b0047f84ecae2esm488904lfc.236.2022.06.22.00.26.39
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 Jun 2022 00:03:43 -0700 (PDT)
-Message-ID: <6f22fe3a-2197-b373-8c48-5c146648166e@linaro.org>
-Date:   Wed, 22 Jun 2022 10:03:42 +0300
+        Wed, 22 Jun 2022 00:26:39 -0700 (PDT)
+Message-ID: <f127060a-5648-fa40-81a0-be1be05b3951@linaro.org>
+Date:   Wed, 22 Jun 2022 10:26:39 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.10.0
-Subject: Re: [PATCH v2] PCI: qcom: fix IPQ8074 Gen2 support
+Subject: Re: [PATCH v8 1/2] drm/msm/dp: force link training for display
+ resolution change
 Content-Language: en-GB
-To:     Bjorn Helgaas <helgaas@kernel.org>
-Cc:     Robert Marko <robimarko@gmail.com>, svarbanov@mm-sol.com,
-        agross@kernel.org, bjorn.andersson@linaro.org,
-        lpieralisi@kernel.org, robh@kernel.org, kw@linux.com,
-        bhelgaas@google.com, p.zabel@pengutronix.de, jingoohan1@gmail.com,
-        linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, johan+linaro@kernel.org
-References: <20220621211604.GA1334281@bhelgaas>
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
+        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
+        vkoul@kernel.org, daniel@ffwll.ch, airlied@linux.ie,
+        agross@kernel.org, bjorn.andersson@linaro.org
+Cc:     quic_abhinavk@quicinc.com, quic_aravindh@quicinc.com,
+        quic_sbillaka@quicinc.com, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <1655399361-10842-1-git-send-email-quic_khsieh@quicinc.com>
+ <1655399361-10842-2-git-send-email-quic_khsieh@quicinc.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20220621211604.GA1334281@bhelgaas>
+In-Reply-To: <1655399361-10842-2-git-send-email-quic_khsieh@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -78,57 +81,123 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22/06/2022 00:16, Bjorn Helgaas wrote:
-> On Tue, Jun 21, 2022 at 11:45:12PM +0300, Dmitry Baryshkov wrote:
->> On Tue, 21 Jun 2022 at 23:32, Bjorn Helgaas <helgaas@kernel.org> wrote:
->>> On Tue, Jun 21, 2022 at 01:23:30PM +0200, Robert Marko wrote:
->>>> IPQ8074 has one Gen2 and one Gen3 port, currently the Gen2 port will
->>>> cause the system to hang as its using DBI registers in the .init
->>>> and those are only accesible after phy_power_on().
->>>
->>> Is the fact that IPQ8074 has both a Gen2 and a Gen3 port relevant to
->>> this patch?  I don't see the connection.
->>>
->>> I see that qcom_pcie_host_init() does:
->>>
->>>    qcom_pcie_host_init
->>>      pcie->cfg->ops->init(pcie)
->>>      phy_power_on(pcie->phy)
->>>      pcie->cfg->ops->post_init(pcie)
->>>
->>> and that you're moving DBI register accesses from
->>> qcom_pcie_init_2_3_3() to qcom_pcie_post_init_2_3_3().
->>>
->>> But I also see DBI register accesses in other .init() functions:
->>>
->>>    qcom_pcie_init_2_1_0
->>>    qcom_pcie_init_1_0_0      (oddly out of order)
->>>    qcom_pcie_init_2_3_2
->>>    qcom_pcie_init_2_4_0
->>>
->>> Why do these accesses not need to be moved?  I assume it's because
->>> pcie->phy is an optional PHY and phy_power_on() does nothing on those
->>> controllers?
->>>
->>> Whatever the reason, I think the DBI accesses should be done
->>> consistently in .post_init().  I see that Dmitry's previous patches
->>> removed all those .post_init() functions, but I think the consistency
->>> is worth having.
->>>
->>> Perhaps we could reorder the patches so this patch comes first, moves
->>> the DBI accesses into .post_init(), then Dmitry's patches could be
->>> rebased on top to drop the clock handling?
->>
->> I don't think there is a need to reorder patches. My patches do not
->> remove support for post_init(), they drop the callbacks code. Thus one
->> can reinstate necessary code back.
+On 16/06/2022 20:09, Kuogee Hsieh wrote:
+> Display resolution change is implemented through drm modeset. Older
+> modeset (resolution) has to be disabled first before newer modeset
+> (resolution) can be enabled. Display disable will turn off both
+> pixel clock and main link clock so that main link have to be
+> re-trained during display enable to have new video stream flow
+> again. At current implementation, display enable function manually
+> kicks up irq_hpd_handle which will read panel link status and start
+> link training if link status is not in sync state.
 > 
-> There's not a *need* to reorder them, but I think it would make the
-> patches smaller and more readable because we wouldn't be removing and
-> then re-adding the functions.
+> However, there is rare case that a particular panel links status keep
+> staying in sync for some period of time after main link had been shut
+> down previously at display disabled. In this case, main link retraining
+> will not be executed by irq_hdp_handle(). Hence video stream of newer
+> display resolution will fail to be transmitted to panel due to main
+> link is not in sync between host and panel.
+> 
+> This patch will bypass irq_hpd_handle() in favor of directly call
+> dp_ctrl_on_stream() to always perform link training in regardless of
+> main link status. So that no unexpected exception resolution change
+> failure cases will happen. Also this implementation are more efficient
+> than manual kicking off irq_hpd_handle function.
+> 
+> Changes in v2:
+> -- set force_link_train flag on DP only (is_edp == false)
+> 
+> Changes in v3:
+> -- revise commit  text
+> -- add Fixes tag
+> 
+> Changes in v4:
+> -- revise commit  text
+> 
+> Changes in v5:
+> -- fix spelling at commit text
+> 
+> Changes in v6:
+> -- split dp_ctrl_on_stream() for phy test case
+> -- revise commit text for modeset
+> 
+> Changes in v7:
+> -- drop 0 assignment at local variable (ret = 0)
+> 
+> Changes in v8:
+> -- add patch to remove pixel_rate from dp_ctrl
+> 
+> Fixes: 62671d2ef24b ("drm/msm/dp: fixes wrong connection state caused by failure of link train")
+> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+> ---
+>   drivers/gpu/drm/msm/dp/dp_ctrl.c    | 31 +++++++++++++++++++++++--------
+>   drivers/gpu/drm/msm/dp/dp_ctrl.h    |  3 ++-
+>   drivers/gpu/drm/msm/dp/dp_display.c | 13 ++++++-------
+>   3 files changed, 31 insertions(+), 16 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> index af7a80c..01028b5 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> @@ -1551,7 +1551,7 @@ static int dp_ctrl_process_phy_test_request(struct dp_ctrl_private *ctrl)
+>   
+>   	ret = dp_ctrl_on_link(&ctrl->dp_ctrl);
+>   	if (!ret)
+> -		ret = dp_ctrl_on_stream(&ctrl->dp_ctrl);
+> +		ret = dp_ctrl_on_stream_phy_test_report(&ctrl->dp_ctrl);
+>   	else
+>   		DRM_ERROR("failed to enable DP link controller\n");
+>   
+> @@ -1807,7 +1807,27 @@ static int dp_ctrl_link_retrain(struct dp_ctrl_private *ctrl)
+>   	return dp_ctrl_setup_main_link(ctrl, &training_step);
+>   }
+>   
+> -int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl)
+> +int dp_ctrl_on_stream_phy_test_report(struct dp_ctrl *dp_ctrl)
+> +{
+> +	int ret;
+> +	struct dp_ctrl_private *ctrl;
+> +
+> +	ctrl = container_of(dp_ctrl, struct dp_ctrl_private, dp_ctrl);
+> +
+> +	ctrl->dp_ctrl.pixel_rate = ctrl->panel->dp_mode.drm_mode.clock;
 
-Ack. I'm fine then with rebasing my patches on top of Robert's patchset. 
-I'll send the next revision after getting this patchset into the form.
+Stephen has raised an interesting question. Comparing this to the 
+dp_ctrl_on_stream(), he noticed that we do not halve the pixel clock 
+here (if the wide bus is supported). So, the question is if this is 
+correct or not.
+
+> +
+> +	ret = dp_ctrl_enable_stream_clocks(ctrl);
+> +	if (ret) {
+> +		DRM_ERROR("Failed to start pixel clocks. ret=%d\n", ret);
+> +		return ret;
+> +	}
+> +
+> +	dp_ctrl_send_phy_test_pattern(ctrl);
+> +
+> +	return 0;
+> +}
+> +
+> +int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl, bool force_link_train)
+>   {
+>   	int ret = 0;
+>   	bool mainlink_ready = false;
+> @@ -1843,12 +1863,7 @@ int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl)
+>   		goto end;
+>   	}
+>   
+> -	if (ctrl->link->sink_request & DP_TEST_LINK_PHY_TEST_PATTERN) {
+> -		dp_ctrl_send_phy_test_pattern(ctrl);
+> -		return 0;
+> -	}
+> -
+> -	if (!dp_ctrl_channel_eq_ok(ctrl))
+> +	if (force_link_train || !dp_ctrl_channel_eq_ok(ctrl))
+>   		dp_ctrl_link_retrain(ctrl);
+>   
+>   	/* stop txing train pattern to end link training */
+
 
 -- 
 With best wishes
