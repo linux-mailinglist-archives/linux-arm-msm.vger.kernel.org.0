@@ -2,54 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 02E90554EC1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jun 2022 17:11:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5C972554ED2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jun 2022 17:14:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1359119AbiFVPK5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Jun 2022 11:10:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44928 "EHLO
+        id S1359510AbiFVPOG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Jun 2022 11:14:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47300 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1359111AbiFVPKy (ORCPT
+        with ESMTP id S1359154AbiFVPNJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Jun 2022 11:10:54 -0400
-Received: from relay01.th.seeweb.it (relay01.th.seeweb.it [IPv6:2001:4b7a:2000:18::162])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CC663DDFA;
-        Wed, 22 Jun 2022 08:10:53 -0700 (PDT)
-Received: from [192.168.1.101] (abxi223.neoplus.adsl.tpnet.pl [83.9.2.223])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 4C27420569;
-        Wed, 22 Jun 2022 17:10:51 +0200 (CEST)
-Message-ID: <51965fa3-d146-70f1-2ad8-db6197989348@somainline.org>
-Date:   Wed, 22 Jun 2022 17:10:50 +0200
+        Wed, 22 Jun 2022 11:13:09 -0400
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 891513980B
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jun 2022 08:13:05 -0700 (PDT)
+Received: by mail-ed1-x52e.google.com with SMTP id o10so24350966edi.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jun 2022 08:13:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :references:from:in-reply-to:content-transfer-encoding;
+        bh=Dd9o2JrmgxuX9CbeMpsJCVutDNWP2KQDZreRpDw1RAo=;
+        b=FjYAv8ZhVHzMNIOB5DLrHWhMDOoSii6hdAQpHJrCHbHno4nufxXe4yNmaxmt/bsI1m
+         OSRdXLUsBWItZ+eT+B/iZ5BXMdKBMAd1VSnU/vWVn4Jm/NoPxQuoy9P47Q0PASAjxLiK
+         zTUOfOb5tKteyL6Jf3vgQL5R4WGs84yPMSSJgbi/4DItldcaB3xYFfwlyMFkXR1zGBvk
+         K0HOOZODtUTEYzowO6w7u/8HhJoAzr2FU43ojVEJOcEFI7oF+iftTkT1+W6lCoTe/4CZ
+         ADtUrzgwAGWfkwlgjBWoN45mrag+3qgM9GXSDJoUFK+ePMSJJ3SceHTGy3ID0Xb3Etp9
+         ErFw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=Dd9o2JrmgxuX9CbeMpsJCVutDNWP2KQDZreRpDw1RAo=;
+        b=lj67S50Dd6AMAPLwy4e7eA1C5fgFa9W4jYmg4wlUg4GhPTXtXJZCYorSpDajFntECF
+         S5xWePYqvM/m6r3A5sItrQB9nEz46yw/RD+zLBOl6LqlMlFWtXjRRLTXHYYRpnvCWCx+
+         VEk8tX/K/U6wKemzN64Un2XJXoWsTY13BrJTbhr/XWzuhWDuYyq85ULHSPR23bG9RIci
+         AYzhHbGW7gAM2tebHsWwJ5ybyYWzBfVY3fn8JWKYICUDJTAU65r++T9rrFIpB9CwS2Pm
+         Q0gTypwP9org1ew0FYheTLenmO/TIoQY10CQZGDsmoqQFLEz4cAjP8jNYVbnPyy18iPH
+         65Lw==
+X-Gm-Message-State: AJIora8qnl3IJZK7sYQz+7xby1a3w7XamLLuiOzB8ZkWJ60j0GEQYlLw
+        8rmhNCdzPjqU7Jvd6bWFS9a4yA==
+X-Google-Smtp-Source: AGRyM1toMruHcn/GPFWYSw4dsfrauoOf2Q4fnnKbo/geN2QJFcJBjyRmHxtlFDczm6DzN0aV53vLHg==
+X-Received: by 2002:a05:6402:195:b0:431:5499:35eb with SMTP id r21-20020a056402019500b00431549935ebmr4713416edv.346.1655910783959;
+        Wed, 22 Jun 2022 08:13:03 -0700 (PDT)
+Received: from [192.168.0.226] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id e19-20020a170906315300b00704cf66d415sm9632020eje.13.2022.06.22.08.13.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 22 Jun 2022 08:13:03 -0700 (PDT)
+Message-ID: <11697f16-67b1-d32a-eea4-18f56631c72f@linaro.org>
+Date:   Wed, 22 Jun 2022 17:13:01 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.10.0
-Subject: Re: [PATCH v2 4/6] arm64: dts: qcom: sc8280xp: Add reference device
+Subject: Re: [PATCH V2 4/8] dt-bindings: pinctrl: qcom: Add ipq5018 pinctrl
+ bindings
 Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Johan Hovold <johan@kernel.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20220622041224.627803-1-bjorn.andersson@linaro.org>
- <20220622041224.627803-5-bjorn.andersson@linaro.org>
- <099cc82f-d52f-315f-189d-bcc40c1afd49@somainline.org>
- <YrMccQXwsz/zC/gl@hovoldconsulting.com>
- <9d0c1897-195f-0548-ea5d-ffc35768f518@somainline.org>
- <b2c9faf0-95a8-772f-c211-f1599b35f8f8@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-In-Reply-To: <b2c9faf0-95a8-772f-c211-f1599b35f8f8@linaro.org>
+To:     Sricharan R <quic_srichara@quicinc.com>, agross@kernel.org,
+        bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, mturquette@baylibre.com,
+        sboyd@kernel.org, linus.walleij@linaro.org,
+        catalin.marinas@arm.com, p.zabel@pengutronix.de,
+        quic_varada@quicinc.com, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+References: <20220621161126.15883-1-quic_srichara@quicinc.com>
+ <20220621161126.15883-5-quic_srichara@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220621161126.15883-5-quic_srichara@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -57,57 +82,168 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 22.06.2022 16:48, Krzysztof Kozlowski wrote:
-> On 22/06/2022 16:36, Konrad Dybcio wrote:
->>
->>
->> On 22.06.2022 15:43, Johan Hovold wrote:
->>> On Wed, Jun 22, 2022 at 02:33:02PM +0200, Konrad Dybcio wrote:
->>>> On 22.06.2022 06:12, Bjorn Andersson wrote:
->>>
->>>>> +&qup2_i2c5 {
->>>>> +	clock-frequency = <400000>;
->>>>> +
->>>>> +	pinctrl-names = "default";
->>>>> +	pinctrl-0 = <&qup2_i2c5_default>, <&kybd_default>, <&tpad_default>;
->>>>> +
->>>>> +	status = "okay";
->>>>> +
->>>> I think all device DTs generally have 'status = "okay"' at the beginning. Should we change that?
->>>>
->>>
->>> No, quite the opposite, status go at the end.
->> Then all other device DTs should be updated, as in dts/qcom/
->> everybody keeps it first in non-SoC/PMIC files.
+On 21/06/2022 18:11, Sricharan R wrote:
+> From: Varadarajan Narayanan <quic_varada@quicinc.com>
 > 
-> The word "should" is a bit too much here, but I agree, we can update all
-> of them to match one, chosen approach.
+> Add device tree binding Documentation details for ipq5018
+> pinctrl driver.
 > 
-> However the location for "status" property is more important for the
-> definition of nodes in DTSI, because it's the least important piece
-> there and also kind of expected - here go properties + I disable it. For
-> me this is more important.
+> Co-developed-by: Nitheesh Sekar <quic_nsekar@quicinc.com>
+> Co-developed-by: Sricharan R <quic_srichara@quicinc.com>
+> Signed-off-by: Sricharan R <quic_srichara@quicinc.com>
+> Signed-off-by: Nitheesh Sekar <quic_nsekar@quicinc.com>
+> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+
+SoB should go after Co-developed.
+
+https://elixir.bootlin.com/linux/v5.17.1/source/Documentation/process/submitting-patches.rst#L473
+
+> ---
+>  .../pinctrl/qcom,ipq5018-pinctrl.yaml         | 145 ++++++++++++++++++
+>  1 file changed, 145 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,ipq5018-pinctrl.yaml
 > 
-> For node redefinition in DTS, I see benefits in two approaches:
-> 1. Let me first enable the node and then configure it.
-> 2. Let me configure the node and enable it.
-I looked around non-qcom device trees and it looks like the common
-consensus is 2. Although I personally visually prefer 1. and it's
-been used in all qcom arm64 DTs to date, I don't think there are any
-blockers for us to switch to 1. going forward to keep it consistent.
+> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,ipq5018-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,ipq5018-pinctrl.yaml
+> new file mode 100644
+> index 000000000000..9b16c08bd127
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,ipq5018-pinctrl.yaml
+> @@ -0,0 +1,145 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/pinctrl/qcom,ipq5018-pinctrl.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Technologies, Inc. IPQ5018 TLMM block
+> +
+> +maintainers:
+> +  - Varadarajan Narayanan <quic_varada@quicinc.com>
+> +  - Sricharan R <quic_srichara@quicinc.com>
+> +  - Nitheesh Sekar <quic_nsekar@quicinc.com>
+> +
+> +description: |
+> +  This binding describes the Top Level Mode Multiplexer block found in the
+> +  IPQ5018 platform.
+> +
+> +properties:
+> +  compatible:
+> +    const: qcom,ipq5018-pinctrl
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  interrupts:
+> +    description: Specifies the TLMM summary IRQ
+> +    maxItems: 1
+> +
+> +  interrupt-controller: true
+> +
+> +  '#interrupt-cells':
+> +    description:
+> +      Specifies the PIN numbers and Flags, as defined in defined in
+> +      include/dt-bindings/interrupt-controller/irq.h
+> +    const: 2
+> +
+> +  gpio-controller: true
+> +
+> +  '#gpio-cells':
+> +    description: Specifying the pin number and flags, as defined in
+> +      include/dt-bindings/gpio/gpio.h
+> +    const: 2
+> +
+> +  gpio-ranges:
+> +    maxItems: 1
+> +
+> +#PIN CONFIGURATION NODES
+> +patternProperties:
+> +  '-pinmux$':
+> +    type: object
+> +    description:
+> +      Pinctrl node's client devices use subnodes for desired pin configuration.
+> +      Client device subnodes use below standard properties.
+> +    $ref: "/schemas/pinctrl/pincfg-node.yaml"
 
-That's if we want to clean up the existing ones, as changing the rules
-and not applying that to the older files will make for a huge mess as
-time goes on and will unnecessarily prolong the review process (as
-existing DTs are commonly a source of reference and people make
-certain choices based on those).
+No need for quotes
 
-I don't think the DTS specification or the Linux docs explicitly which
-one to choose though.
+> +
+> +    properties:
+> +      pins:
+> +        description:
+> +          List of gpio pins affected by the properties specified in this
+> +          subnode.
+> +        items:
+> +          oneOf:
+> +            - pattern: "^gpio([1-9]|[1-7][0-9]|80)$"
 
-Konrad
-> 
-> Best regards,
-> Krzysztof
+Use consistent quotes in the patch: either ' or ". Don't mix.
+
+> +        minItems: 1
+> +        maxItems: 4
+> +
+> +      function:
+> +        description:
+> +          Specify the alternative function to be configured for the specified
+> +          pins.
+> +        enum: [ atest_char, atest_char0, atest_char1, atest_char2, atest_char3,
+> +          audio_pdm0, audio_pdm1, audio_rxbclk, audio_rxd, audio_rxfsync,
+> +          audio_rxmclk, audio_txbclk, audio_txd, audio_txfsync, audio_txmclk,
+> +          blsp0_i2c, blsp0_spi, blsp0_uart0, blsp0_uart1, blsp1_i2c0,
+> +          blsp1_i2c1, blsp1_spi0, blsp1_spi1, blsp1_uart0, blsp1_uart1,
+> +          blsp1_uart2, blsp2_i2c0, blsp2_i2c1, blsp2_spi, blsp2_spi0,
+> +          blsp2_spi1, btss0, btss1, btss10, btss11, btss12, btss13, btss2,
+> +          btss3, btss4, btss5, btss6, btss7, btss8, btss9, burn0, burn1,
+> +          cri_trng, cri_trng0, cri_trng1, cxc_clk, cxc_data, dbg_out, eud_gpio,
+> +          gcc_plltest, gcc_tlmm, gpio, mac0, mac1, mdc, mdio, pcie0_clk,
+> +          pcie0_wake, pcie1_clk, pcie1_wake, pll_test, prng_rosc, pwm0, pwm1,
+> +          pwm2, pwm3, qdss_cti_trig_in_a0, qdss_cti_trig_in_a1,
+> +          qdss_cti_trig_in_b0, qdss_cti_trig_in_b1, qdss_cti_trig_out_a0,
+> +          qdss_cti_trig_out_a1, qdss_cti_trig_out_b0, qdss_cti_trig_out_b1,
+> +          qdss_traceclk_a, qdss_traceclk_b, qdss_tracectl_a, qdss_tracectl_b,
+> +          qdss_tracedata_a, qdss_tracedata_b, qspi_clk, qspi_cs, qspi0, qspi1,
+> +          qspi2, qspi3, reset_out, sdc1_clk, sdc1_cmd, sdc10, sdc11, sdc12,
+> +          sdc13, wci0, wci1, wci2, wci3, wci4, wci5, wci6, wci7, wsa_swrm,
+> +          wsi_clk3, wsi_data3, wsis_reset, xfem0, xfem1, xfem2, xfem3, xfem4,
+> +          xfem5, xfem6, xfem7 ]
+> +
+> +      drive-strength:
+> +        enum: [2, 4, 6, 8, 10, 12, 14, 16]
+> +        default: 2
+> +        description:
+> +          Selects the drive strength for the specified pins, in mA.
+> +
+> +      bias-pull-down: true
+> +
+> +      bias-pull-up: true
+> +
+> +      bias-disable: true
+> +
+> +      output-high: true
+> +
+> +      output-low: true
+> +
+> +    required:
+> +      - pins
+> +      - function
+> +
+> +    additionalProperties: false
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - interrupts
+> +  - interrupt-controller
+> +  - '#interrupt-cells'
+> +  - gpio-controller
+> +  - '#gpio-cells'
+> +  - gpio-ranges
+
+Missing allOf with reference to pinctrl schema.
+
+> +
+> +additionalProperties: false
+> +
+
+
+Best regards,
+Krzysztof
