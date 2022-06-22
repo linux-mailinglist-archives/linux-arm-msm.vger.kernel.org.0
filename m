@@ -2,150 +2,199 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 49F66555311
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jun 2022 20:14:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5E4B25553D4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jun 2022 20:56:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1377522AbiFVSOO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Jun 2022 14:14:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41284 "EHLO
+        id S1358284AbiFVS4t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Jun 2022 14:56:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40512 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1377484AbiFVSOM (ORCPT
+        with ESMTP id S1376265AbiFVS4p (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Jun 2022 14:14:12 -0400
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFA8E3C713
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jun 2022 11:14:10 -0700 (PDT)
-Received: by mail-lj1-x231.google.com with SMTP id bn8so3023560ljb.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jun 2022 11:14:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=tOaTUPPd6PdnEExOp4k5WWfYtYj0K5ouhfpsiU0MJ+w=;
-        b=lMSz4dBNNkjwUgQVLw2XHuk6MaRJIayQLYaVfK4Jg5y35/dTMC79+wGsynebGHJPzu
-         oEke8IHC9DqEek694z88Vsyk9VHBG+98m0tvqwI6Gv47nFn7SaHIi8fIMqyZei/q7i9j
-         AbJBhCa8grNO6PMrhiSwdzC9AwDyUnhf8NbfvnKAo9XXUTs9MgsIpu5QHq2KPFWhjQJt
-         AdgoTxsY/5ooIOCtlABRvN19t8xjZwvlfqE1QDNAND/moluseFEqnsmhOJbTFZ0BGD5g
-         fBSCyKEgKo+avosEChFcl4zGwUtdyxowcDOPMKyiCrUhNOE8XRFAM60zzgB2Hwo4mOpK
-         ePzQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=tOaTUPPd6PdnEExOp4k5WWfYtYj0K5ouhfpsiU0MJ+w=;
-        b=Rp/X822V/tgru6qHy8xGuBCcGu4gsWwoCKy0UTFGvdJchE2VLrYPXNJnG2xqluHGbX
-         KNcVoPoafQt3JuMLdbNDE2S8Juat4jeVAUlXD3Ek4E5og/rvH8EJCp7Ft5WayRQcxtcX
-         cdLylg0/f7v4UL4h3ew66v7JqunbsLKlTrBRhvKxqqFPguo8uOoBg27mFx5xyhxqRldH
-         FxJgozmZ0y8GX/8Oz4O8cempmt1Ymf0z/d4dotnI38EOBZEQqv0cAyLeTVx4+yBDE4Qg
-         +pKFHHp+ulw6Qdhp1lpjbg8vqCW628EwJQVWdm8Io8dlL+OSDUIa/A1mArbQDToFcYfi
-         YlZg==
-X-Gm-Message-State: AJIora907rMxyprxYxc94pcqceSICNJbPggtlszVxXE0i0iRyEt53Ocg
-        pDn67WZM9F7XG0z105EgB8rftw==
-X-Google-Smtp-Source: AGRyM1sDZSQ9wOQc+S8b6FOus1k4rbB5EVldDN3tKv3CSF+uyrl2CuvZ7MLOW3KGU6zXdS6vurt5qw==
-X-Received: by 2002:a2e:a16f:0:b0:25a:7527:95ce with SMTP id u15-20020a2ea16f000000b0025a752795cemr2622679ljl.305.1655921649232;
-        Wed, 22 Jun 2022 11:14:09 -0700 (PDT)
-Received: from [192.168.1.212] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id u1-20020a199201000000b0047255d210dbsm2641802lfd.10.2022.06.22.11.14.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 Jun 2022 11:14:08 -0700 (PDT)
-Message-ID: <fb4310fd-61b1-08ab-c1fb-ed530684a390@linaro.org>
-Date:   Wed, 22 Jun 2022 21:14:07 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: [PATCH] drm/msm/dp: reset drm_dev to NULL at dp_display_unbind()
-Content-Language: en-GB
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>, robdclark@gmail.com,
-        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
-        vkoul@kernel.org, daniel@ffwll.ch, airlied@linux.ie,
-        agross@kernel.org, bjorn.andersson@linaro.org
-Cc:     quic_abhinavk@quicinc.com, quic_aravindh@quicinc.com,
-        quic_sbillaka@quicinc.com, freedreno@lists.freedesktop.org,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Wed, 22 Jun 2022 14:56:45 -0400
+Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [81.169.146.166])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 480D03A735;
+        Wed, 22 Jun 2022 11:56:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1655924195;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=0ka+e5CwrN5MVcA+6Ffzw9FiJob8j1H7d6oQqpb8Ud8=;
+    b=K6FD2FMfI6s/FXqzJb63CuyoSdVGtQzHaJ8gt8fsPtIJdrWUKLbQ0+nams0qXRGQ1x
+    JtSxMyYK0OwadcMjkZXhW5ur1O3uGey3rsc9Pw5XiAClzEPMxzjcrI823nac0G9zAeb2
+    oYEdA4CA7g2JDuO504iEZnXlFNKR+E/mOc24AM0ZGoqPQ1LKpCp7adePvJ0VM7TFu4Zv
+    tceP2buHrGkYGfpLmKn9YXdCPYqYHZusKnccn+Hdx4+VISLFK7OlogiqUH1M2Xu4AJ16
+    oVKqSjL1TrLReYl/VLMfoTbwG/ggQ5nwMoVWuymAlXr2yw5aKnl59hmanYQXO883KuzU
+    81vA==
+Authentication-Results: strato.com;
+    dkim=none
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u267FZF9PwpcNKLVrK88/6Y="
+X-RZG-CLASS-ID: mo00
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 47.46.0 AUTH)
+    with ESMTPSA id g32597y5MIuZOtr
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Wed, 22 Jun 2022 20:56:35 +0200 (CEST)
+Date:   Wed, 22 Jun 2022 20:56:26 +0200
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-References: <1655916845-31760-1-git-send-email-quic_khsieh@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <1655916845-31760-1-git-send-email-quic_khsieh@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Subject: Re: [PATCH v2 3/6] arm64: dts: qcom: add SC8280XP platform
+Message-ID: <YrNl2jS3Stcl2DP8@gerhold.net>
+References: <20220622041224.627803-1-bjorn.andersson@linaro.org>
+ <20220622041224.627803-4-bjorn.andersson@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20220622041224.627803-4-bjorn.andersson@linaro.org>
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22/06/2022 19:54, Kuogee Hsieh wrote:
-> During msm initialize phase, dp_display_unbind() will be called to undo
-> initializations had been done by dp_display_bind() previously if there is
-> error happen at msm_drm_bind. Under this kind of circumstance, drm_device
-> may not be populated completed which causes system crash at drm_dev_dbg().
-> This patch reset drm_dev to NULL so that following drm_dev_dbg() will not
-> refer to any internal fields of drm_device to prevent system from crashing.
-> Below are panic stack trace,
+On Tue, Jun 21, 2022 at 09:12:21PM -0700, Bjorn Andersson wrote:
+> Introduce initial support for the Qualcomm SC8280XP platform, aka 8cx
+> Gen 3. This initial contribution supports SMP, CPUfreq, CPU cluster
+> idling, GCC, TLMM, SMMU, RPMh regulators, power-domains and clocks,
+> interconnects, some QUPs, UFS, remoteprocs, USB, watchdog, LLCC and
+> tsens.
 > 
-> [   53.584904] Unable to handle kernel paging request at virtual address 0000000070018001
-> .
-> [   53.702212] Hardware name: Qualcomm Technologies, Inc. sc7280 CRD platform (rev5+) (DT)
-> [   53.710445] pstate: 20400009 (nzCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-> [   53.717596] pc : string_nocheck+0x1c/0x64
-> [   53.721738] lr : string+0x54/0x60
-> [   53.725162] sp : ffffffc013d6b650
-> [   53.728590] pmr_save: 000000e0
-> [   53.731743] x29: ffffffc013d6b650 x28: 0000000000000002 x27: 0000000000ffffff
-> [   53.739083] x26: ffffffc013d6b710 x25: ffffffd07a066ae0 x24: ffffffd07a419f97
-> [   53.746420] x23: ffffffd07a419f99 x22: ffffff81fef360d4 x21: ffffff81fef364d4
-> [   53.753760] x20: ffffffc013d6b6f8 x19: ffffffd07a06683c x18: 0000000000000000
-> [   53.761093] x17: 4020386678302f30 x16: 00000000000000b0 x15: ffffffd0797523c8
-> [   53.768429] x14: 0000000000000004 x13: ffff0000ffffff00 x12: ffffffd07a066b2c
-> [   53.775780] x11: 0000000000000000 x10: 000000000000013c x9 : 0000000000000000
-> [   53.783117] x8 : ffffff81fef364d4 x7 : 0000000000000000 x6 : 0000000000000000
-> [   53.790445] x5 : 0000000000000000 x4 : ffff0a00ffffff04 x3 : ffff0a00ffffff04
-> [   53.797783] x2 : 0000000070018001 x1 : ffffffffffffffff x0 : ffffff81fef360d4
-> [   53.805136] Call trace:
-> [   53.807667]  string_nocheck+0x1c/0x64
-> [   53.811439]  string+0x54/0x60
-> [   53.814498]  vsnprintf+0x374/0x53c
-> [   53.818009]  pointer+0x3dc/0x40c
-> [   53.821340]  vsnprintf+0x398/0x53c
-> [   53.824854]  vscnprintf+0x3c/0x88
-> [   53.828274]  __trace_array_vprintk+0xcc/0x2d4
-> [   53.832768]  trace_array_printk+0x8c/0xb4
-> [   53.836900]  drm_trace_printf+0x74/0x9c
-> [   53.840875]  drm_dev_dbg+0xfc/0x1b8
-> [   53.844480]  dp_pm_suspend+0x70/0xf8
-> [   53.848164]  dpm_run_callback+0x60/0x1a0
-> [   53.852222]  __device_suspend+0x304/0x3f4
-> [   53.856363]  dpm_suspend+0xf8/0x3a8
-> [   53.859959]  dpm_suspend_start+0x8c/0xc0
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 > 
-> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
-> ---
->   drivers/gpu/drm/msm/dp/dp_display.c | 2 ++
->   1 file changed, 2 insertions(+)
+>  arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 2145 ++++++++++++++++++++++++
+>  1 file changed, 2145 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/sc8280xp.dtsi
 > 
-> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-> index 2b72639..02fff70 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_display.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-> @@ -316,6 +316,8 @@ static void dp_display_unbind(struct device *dev, struct device *master,
->   
->   	dp_power_client_deinit(dp->power);
->   	dp_aux_unregister(dp->aux);
-> +	dp->drm_dev = NULL;
-> +	dp->aux->drm_dev = NULL;
->   	priv->dp[dp->id] = NULL;
->   }
->   
+> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> new file mode 100644
+> index 000000000000..ac13965a181e
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+[...]
+> +	reserved-memory {
+> +		#address-cells = <2>;
+> +		#size-cells = <2>;
+> +		ranges;
+> +
+> +		memory@80000000 {
+> +			reg = <0 0x80000000 0 0x860000>;
+> +			no-map;
+> +		};
+> +
+> +		cmd_db: memory@80860000 {
+> +			compatible = "qcom,cmd-db";
+> +			reg = <0 0x80860000 0 0x20000>;
+> +			no-map;
+> +		};
+> +
+> +		memory@80880000 {
+> +			reg = <0 0x80880000 0 0x80000>;
+> +			no-map;
+> +		};
+> +
+> +		smem_mem: smem@80900000 {
+> +			compatible = "qcom,smem";
+> +			reg = <0 0x80900000 0 0x200000>;
+> +			no-map;
+> +			hwlocks = <&tcsr_mutex 3>;
+> +		};
+> +
+> +		memory@80b00000 {
+> +			reg = <0 0x80b00000 0 0x100000>;
+> +			no-map;
+> +		};
+> +
+> +		memory@83b00000 {
+> +			reg = <0 0x83b00000 0 0x1700000>;
+> +			no-map;
+> +		};
+> +
+> +		memory@85b00000 {
+> +			reg = <0 0x85b00000 0 0xc00000>;
+> +			no-map;
+> +		};
+> +
+> +		pil_adsp_mem: memory@86c00000 {
+> +			reg = <0 0x86c00000 0 0x2000000>;
+> +			no-map;
+> +		};
+> +
+> +		pil_nsp0_mem: memory@8a100000 {
+> +			reg = <0 0x8a100000 0 0x1e00000>;
+> +			no-map;
+> +		};
+> +
+> +		pil_nsp1_mem: memory@8c600000 {
+> +			reg = <0 0x8c600000 0 0x1e00000>;
+> +			no-map;
+> +		};
+> +
+> +		memory@aeb00000 {
+> +			reg = <0 0xaeb00000 0 0x16600000>;
+> +			no-map;
+> +		};
 
+Doesn't memory@ still cause the dtbs_check warnings? Similar to
 
--- 
-With best wishes
-Dmitry
+> soc/qcom/qcom,smem.example.dt.yaml: memory@fa00000: 'device_type' is a required property
+>         From schema: dtschema/schemas/memory.yaml
+
+as in [1]. If I understood it correctly there Rob said that memory@
+shouldn't be used for reserved-memory. Perhaps even reserved-memory@
+might be better then.
+
+The device tree specification on the other hand suggests using the
+purpose of the reserved memory, like we did on older SoCs:
+
+> 3.5.2 /reserved-memory/ child nodes
+> Following the generic-names recommended practice, node names should
+> reflect the purpose of the node (ie. “framebuffer” or “dma-pool”).
+
+[1]: https://lore.kernel.org/linux-arm-msm/CAL_Jsq+66j8Y5y+PQ+mezkaxN1pfHFKz524YUF4Lz_OU5E-mZQ@mail.gmail.com/
+
+> +		timer@17c20000 {
+> +			compatible = "arm,armv7-timer-mem";
+> +			#address-cells = <2>;
+> +			#size-cells = <2>;
+> +			ranges;
+> +			reg = <0x0 0x17c20000 0x0 0x1000>;
+> +			clock-frequency = <19200000>;
+[...]
+> +		};
+> +	timer {
+> +		compatible = "arm,armv8-timer";
+> +		interrupts = <GIC_PPI 13 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,
+> +			     <GIC_PPI 14 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,
+> +			     <GIC_PPI 11 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,
+> +			     <GIC_PPI 10 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>;
+> +		clock-frequency = <19200000>;
+> +	};
+
+Is the "clock-frequency" really needed for these two?
+
+The binding docs are pretty clear that this should be configured by the
+firmware instead:
+
+> Should be present only where necessary to work around broken firmware
+> which does not configure CNTFRQ on all CPUs to a uniform correct
+> value. Use of this property is strongly discouraged; fix your firmware
+> unless absolutely impossible.
+
+I hope Qualcomm's firmware is actually improving on newer platforms
+and not making big steps backwards. :-)
+
+Thanks,
+Stephan
