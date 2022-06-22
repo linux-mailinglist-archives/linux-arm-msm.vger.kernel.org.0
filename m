@@ -2,65 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 672DB554C96
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jun 2022 16:16:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9820F554CB2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jun 2022 16:19:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1358156AbiFVOQK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Jun 2022 10:16:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37350 "EHLO
+        id S1358029AbiFVOTA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Jun 2022 10:19:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36962 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1358162AbiFVOPv (ORCPT
+        with ESMTP id S1358340AbiFVOSU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Jun 2022 10:15:51 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18F36393F5;
-        Wed, 22 Jun 2022 07:15:18 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id BAE01B81F31;
-        Wed, 22 Jun 2022 14:15:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 824FEC34114;
-        Wed, 22 Jun 2022 14:15:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1655907315;
-        bh=OR7xiTCWZs1tjxHWPG20iS6R15OoZpcmvJbr8d4jd0E=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=e+Iz6+HniIaTGnxsu76Y1gwTDILMFU8si5DqybZK+lWvIPucw/FbW2BM5nq0AbAOT
-         x05bP8sk04ZgZTR9lXHMq18vKi9rguum7xWKGJH8WNZTnSHrmzObQzPxwnh/l64WbL
-         AuGsHUk59tKIjzEKUtltV7E0oKQSCyOf90GxMZeEsNt3MoN4rpBBV9rkqdDToF0zRo
-         QeC+IMpB/AsuIAD/EtbhYPkqt9/iT0P8HZ5e5Hz9bZCvuyTUZd1idY23fk21sG6Znu
-         GlUHbPTpgR1qMmlCMnXXm7/mwYs6k7m9nB2uxwVGsTTqiMJdG6d7yJhtn2Qk4/TtnQ
-         RZW/yQX/FE2Lw==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1o418S-0006kJ-N9; Wed, 22 Jun 2022 16:15:12 +0200
-Date:   Wed, 22 Jun 2022 16:15:12 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+        Wed, 22 Jun 2022 10:18:20 -0400
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B2802E0A6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jun 2022 07:18:07 -0700 (PDT)
+Received: by mail-ed1-x52f.google.com with SMTP id c13so19661885eds.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jun 2022 07:18:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=QpQTfmUdTKRwCxGO0jA6r2xEp5W5muPwnPlhJzJ0An0=;
+        b=dWh7HnH44d6vuZ9fE3bmvUBY+wqWvGgEldwna09o9kMdOqXGZR7QTIOXWzbrJHdF1v
+         PWWrDEImTU83EjU1LWrVrGUNUOubeN6hWfl9Ek6ajCRD7JPySgbc6ZtuvjSmPhzn3D89
+         Cx1jS3ylPu+HP4oANS+zl96/xRdCQYNvMOkGGdBULipg2i9Kw2XZO+UbAi/OyjcPAsdl
+         exUaY7vlwEiWaOV9k39YAx2Kx5uov/wuAHFtshWPXcn8rKOskc9640JMYt8fO7+SJCUZ
+         4xdjCciJQfh5YUCCCOZHXCZAEDrkv4khuhjMIT5HyU8tSQImE6wmTPthrBMqEHXT5wIk
+         dyqw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=QpQTfmUdTKRwCxGO0jA6r2xEp5W5muPwnPlhJzJ0An0=;
+        b=bbNn0zbT6WZQiSME25sKjNzxI/uyrILvbzOokp3rd8oNxzAGKXM6GdKGPhf5+dkem7
+         vychRgqUireWO0P64+GZRbuQLaWlPL0Wf2DWhiDHtHt5bmfZPOf+df6PnXAH0WplWA7r
+         1AETcODSAlJv4+oEyeCsId5Ue5J1FbgJk25VuauZgK5aN9PMMZ8Frhf2bf5eHofRhCGJ
+         qjFsd1nU05udYLb8loO+rjOn2ANsl21HKiN37uh/WVNLOOUkOeswumkCZgfs3UH1KUa4
+         ntwVy5I2UsLAY1cARzA6p0PY7yVoWN5NdpAZZl1cyUTu3MzQU9iYJ80vLaUrp/Cu0HQu
+         n5pA==
+X-Gm-Message-State: AJIora/JwT9wq30IzMFpLsaD5rXGxTVVmGBP7b35uBu+aiYY/VP9lu0y
+        6HNsxKae1KRD005nlyLIwI25AbzlvTINOg==
+X-Google-Smtp-Source: AGRyM1tST5OqWHL1DDARx8o3mZQ7lpDnQqQ2k2nLeZV0MIDXdudnJDntwx5CLU+YY2PCyKCdurKKAQ==
+X-Received: by 2002:a05:6402:1f0a:b0:435:6e0a:7aba with SMTP id b10-20020a0564021f0a00b004356e0a7abamr4513357edb.318.1655907485535;
+        Wed, 22 Jun 2022 07:18:05 -0700 (PDT)
+Received: from [192.168.0.225] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id nb36-20020a1709071ca400b0070beb9401d9sm9615013ejc.171.2022.06.22.07.18.04
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 22 Jun 2022 07:18:05 -0700 (PDT)
+Message-ID: <2fd94a25-0d0e-98d2-a06e-b0439f4d31be@linaro.org>
+Date:   Wed, 22 Jun 2022 16:18:04 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: Re: [PATCH v3] arm64: dts: qcom: sc8280xp: add Lenovo Thinkpad X13s
+ devicetree
+Content-Language: en-US
+To:     Johan Hovold <johan+linaro@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
         Manivannan Sadhasivam <mani@kernel.org>,
         Jassi Brar <jassisinghbrar@gmail.com>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 5/6] arm64: dts: qcom: add SA8540P and ADP
-Message-ID: <YrMj8HS2aMexHHLx@hovoldconsulting.com>
-References: <20220622041224.627803-1-bjorn.andersson@linaro.org>
- <20220622041224.627803-6-bjorn.andersson@linaro.org>
- <8fc661d7-6f75-59d8-fa19-76193ed2f4fe@somainline.org>
- <YrMc0Y7PIDQpP2xw@hovoldconsulting.com>
- <f7e066d0-3493-f531-3357-10dca20e1f95@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <f7e066d0-3493-f531-3357-10dca20e1f95@linaro.org>
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+References: <YrMVqifgV4kZaP7F@hovoldconsulting.com>
+ <20220622132617.24604-1-johan+linaro@kernel.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220622132617.24604-1-johan+linaro@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -68,31 +81,29 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jun 22, 2022 at 04:11:15PM +0200, Krzysztof Kozlowski wrote:
-> On 22/06/2022 15:44, Johan Hovold wrote:
-> > On Wed, Jun 22, 2022 at 02:37:02PM +0200, Konrad Dybcio wrote:
-> >> On 22.06.2022 06:12, Bjorn Andersson wrote:
-> > 
-> >>> --- /dev/null
-> >>> +++ b/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
-> >>> @@ -0,0 +1,427 @@
-> >>> +// SPDX-License-Identifier: BSD-3-Clause
-> >>> +/*
-> >>> + * Copyright (c) 2021, The Linux Foundation. All rights reserved.
-> >>> + * Copyright (c) 2022, Linaro Limited
-> >>> + */
-> >>> +
-> >>> +/dts-v1/;
-> >>> +
-> >>> +#include <dt-bindings/gpio/gpio.h>
-> >> Can be moved to SoC dtsi.
-> > 
-> > No, the SoC dtsi does not use any defines from that header file.
+On 22/06/2022 15:26, Johan Hovold wrote:
+> Add an initial devicetree for the Lenovo Thinkpad X13s with support for
+> USB, backlight, keyboard, touchpad, touchscreen (to be verified), PMICs
+> and remoteprocs.
 > 
-> Even if the DTSI used these constants, it is a good practice to include
-> headers in each file using them. The same as we always do for C code.
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> ---
+> 
+> Changes since v2
+>  - Amend commit message
+>  - Drop unused include files (depends on updating sc8280xp-pmics.dtsi)
+>  - Rename fixed-regulator nodes
+>  - Shorten two comments
+>  - Drop a couple of newline separators in the pinctrl nodes
+> 
+> Changs since v1:
+>  - New patch
+> 
 
-Yes, that's what I said in my slightly more verbose answer to the same
-comment to one of the other patches.
+For the v3:
 
-Johan
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+
+Best regards,
+Krzysztof
