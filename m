@@ -2,123 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BA4105576FA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jun 2022 11:47:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BFDED557736
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jun 2022 11:56:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231285AbiFWJqq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Jun 2022 05:46:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48476 "EHLO
+        id S231367AbiFWJ4B (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Jun 2022 05:56:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57382 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231261AbiFWJqk (ORCPT
+        with ESMTP id S231171AbiFWJ4A (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Jun 2022 05:46:40 -0400
-Received: from mx.kernkonzept.com (serv1.kernkonzept.com [IPv6:2a01:4f8:1c1c:b490::2])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 928AF49B40;
-        Thu, 23 Jun 2022 02:46:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=kernkonzept.com; s=mx1; h=Content-Transfer-Encoding:MIME-Version:References
-        :In-Reply-To:Message-Id:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:
-        Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-        Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-        List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=WHVNOWKI6E4FR1UMwztSAeuKd9LQg2I0ttlKUhNAPeg=; b=qsHXnbhy3QNW19LAuOZaQS0pxp
-        hCrtuLX6IuZ+Ne0SWUYA7xhYqipshJ6U+jSclsywEWnSweaIvbGDCTcvY3M/AGCXA8CkX2/KpMZmw
-        wySHztja7GIlfTs53jEWFF0vcGprWGbUIqbmjafa4q7F067xRTzUG6zL0UqfLVloNg4RNTeillQfD
-        LAtwNCq8hweGAzNmOPFkzVA7P2TeSXPVMvy9mLmutMv4+6ghAYuXVKc+X3toE8lgODWWMrVlaaqYf
-        tP4eIKhphPsmu8OEBp103Suo5QRRPohGxA5N9MhVNfLtXJKEoklQqIO0RQzXtY+TDFBFGME4/AD4u
-        25g9p/3w==;
-Received: from [10.22.3.24] (helo=kernkonzept.com)
-        by mx.kernkonzept.com with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim 4.94.2)
-        id 1o4JQ3-005qg2-3h; Thu, 23 Jun 2022 11:46:35 +0200
-From:   Stephan Gerhold <stephan.gerhold@kernkonzept.com>
-To:     Mark Brown <broonie@kernel.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        Stephan Gerhold <stephan.gerhold@kernkonzept.com>
-Subject: [PATCH 3/3] regulator: qcom_smd: Add PM8909 RPM regulators
-Date:   Thu, 23 Jun 2022 11:46:14 +0200
-Message-Id: <20220623094614.1410180-4-stephan.gerhold@kernkonzept.com>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20220623094614.1410180-1-stephan.gerhold@kernkonzept.com>
-References: <20220623094614.1410180-1-stephan.gerhold@kernkonzept.com>
+        Thu, 23 Jun 2022 05:56:00 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C684E46158
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jun 2022 02:55:58 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id i18so18779814lfu.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jun 2022 02:55:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=7I3TTWN/wwecpZB3nSKMxEQGHr0b18hK3/YGntHqpBA=;
+        b=USyuzvpLnWwvFy1lJjpUXIVRpcZYiLKJAcsuVnYfqiBnV102zpy7fueziMhn2hufjN
+         h4twOEQhWIuonqAnuLn20dl8z81gVcRsMqcS8qgjPHR1JapoGgCVx47tZJXbbtdLZqRJ
+         x5+it83WvReQj8rF5dwqsB9y8PTElnkMEfunpTyKk/l8ia/rU9J88YJR+dI9iHjjGC7Q
+         dZ+K/djNtq+2nhgZfpgYUcY+xBZ3TxepPwermtqxWPf7qIakouHNUyGdYNMVgUxTrhfE
+         wlv/C79XLKcsekEBYBzCFTbCpcaI+vD941Y35hxEP4Gvvt7MDMSaX8x9fmuzj8C+9s3t
+         kKLw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=7I3TTWN/wwecpZB3nSKMxEQGHr0b18hK3/YGntHqpBA=;
+        b=tt1NyNMjKY8m09LddIwW4/oDTG6Fu/uMobCrz6P0QozY23OVs2ou/wDHKpvSUIkRr9
+         xGvVL/2SuKHNRc9L0eB79Guek4M055e4Ompk46XED+FGVb5pCONHx1TU174CLhLN9tbK
+         pGcR3mZ5soRB0OfPKa5/HlRthYKth6dYHknK0uhifemuDsnnnRvSBBuuRX8HfcklcuiX
+         rDaoMRVDvjSmkzmUoKGdjJ3SVwPLosQILMrsyru1luABc7yFzgtBs1JHgniSOoCIlgWV
+         hEJ3SYkNusk8sqGVyImcdFeneR66d/cKWpuSxLDnfe6UYD8Xr0snOhYWBniUxH4IEKBj
+         lgPw==
+X-Gm-Message-State: AJIora+XyjXZohJk1A9FcFg1VzqtRW2Rr5csgEKq9+hxGXeshe6PXUUI
+        IDyYnKB/EzmHyO0pI1zopmMDNg==
+X-Google-Smtp-Source: AGRyM1v4Q9yvmE7pbfBTUrw/Cd6mLuzEEELlqBH4NjBS6PsAsDd6asGEcJhZXpEdI1KBWqts81YnjA==
+X-Received: by 2002:a05:6512:304d:b0:47d:c236:566f with SMTP id b13-20020a056512304d00b0047dc236566fmr4848838lfb.641.1655978157101;
+        Thu, 23 Jun 2022 02:55:57 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id s9-20020a056512214900b004790b5a0b22sm2923672lfr.239.2022.06.23.02.55.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 23 Jun 2022 02:55:56 -0700 (PDT)
+Message-ID: <4c4efb31-14c8-9e58-edc2-7e2f787e6976@linaro.org>
+Date:   Thu, 23 Jun 2022 12:55:55 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: Re: Removal of qcom,board-id and qcom,msm-id
+Content-Language: en-GB
+To:     Konrad Dybcio <konrad.dybcio@somainline.org>,
+        krzysztof.kozlowski@linaro.org
+Cc:     agross@kernel.org, arnd@arndb.de, bjorn.andersson@linaro.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, olof@lixom.net, robh@kernel.org,
+        sboyd@kernel.org
+References: <a3c932d1-a102-ce18-deea-18cbbd05ecab@linaro.org>
+ <20220522195138.35943-1-konrad.dybcio@somainline.org>
+ <c072077a-cc16-c8f8-fcfa-891b3357cb66@linaro.org>
+ <d0b55a37-428e-8081-6785-11be20aa14c7@somainline.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <d0b55a37-428e-8081-6785-11be20aa14c7@somainline.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The set of regulators available in the PM8909 PMIC is similar to PM8916
-which is already supported by the driver. s3, s4 and l16 are missing.
-However, probing the SPMI hardware identification registers using the
-qcom_spmi-regulator driver reveals that the regulators in PM8909 are
-actually some kind of mixture between PM8916 and PM8226:
+On 22/06/2022 14:53, Konrad Dybcio wrote:
+> 
+> 
+> On 22.06.2022 10:21, Dmitry Baryshkov wrote:
+>> On 22/05/2022 22:51, Konrad Dybcio wrote:
+>>> Hi,
+>>>
+>>> removing these properties will not bring almost any benefit (other than making
+>>> some checks happy any saving some <200 LoC) and will make the lives of almost
+>>> all people doing independent development for linux-on-msm harder. There are
+>>> almost unironically like 3 people outside Linaro and QUIC who have
+>>> non-vendor-fused development boards AND the sources to rebuild the
+>>> bootloader on their own. Making it harder to boot is only going to
+>>> discourage people from developing on these devices, which is already not
+>>> that pleasant, especially with newer platforms where you have to fight with
+>>> the oh-so-bright ideas of Android boot chain..
+>>>
+>>> This only concerns devices released before sm8350, as the new ones will not
+>>> even boot with these properties present (or at least SONY Sagami, but I
+>>> doubt it's an isolated case), so other than completing support for older
+>>> devices, it won't be an issue going forward, anyway.
+>>
+>> I almost missed this part of the discussion (and Krzysztof had to point me to it in discussion of his patches).
+>>
+>> I think this is a Sony peculiarity. At least the distributed SM8350 (lahaina) and SM8450 (waipio) Qualcomm device trees use these properties:
+>>
+>> https://github.com/MiCode/kernel_devicetree/blob/zeus-s-oss/qcom/lahaina-hdk.dts
+>> https://github.com/MiCode/kernel_devicetree/blob/zeus-s-oss/qcom/lahaina-v2.1.dtsi
+>> https://github.com/MiCode/kernel_devicetree/blob/zeus-s-oss/qcom/waipio-qrd-pm8010.dts
+>> https://github.com/MiCode/kernel_devicetree/blob/zeus-s-oss/qcom/waipio-v2.dtsi
+>>
+>>
+> Hi,
+> 
+> I was puzzled on this back when I first tried to get mainline booting on 8350 too. What I think happened, is that msm-id is used in some code paths, but not others (remember there are plenty of combinations including various Google's inventions from all over the years: QCDT, DTBO, vendor_boot, AVB signage, A/B presence/absence of recovery partition, virtual partitions etc etc).
+> 
+> Frankly, I have no idea why they are still here, but for booting just the kernel (no vendor_boot / GKI / dtbo mess), they need to be absent, at least on Sagami devices. This may be a bug in the Qualcomm bootloader, but they officially have to go with the GKI path to pass Google's compatibility tests, so this may not have been thouroughly tested (if at all), though I highly doubt this is going to change, as vendors are generally reluctant to update their bootloaders and Qualcomm is probably not interested in messing with a useless-to-the-main-purpose feature.
 
-  - ult_lo_smps (= pm8916_buck_lvo_smps): s1
-  - ult_ho_smps (= pm8916_buck_hvo_smps): s2
-  - ult_nldo (= pm8916_nldo): l1, l2, l3, l10
-  - ult_pldo (= pm8916_pldo): l4, l8, l9, l12-l15, l17, l18
-  - pldo (= pm8226_pldo): l5, l6, l7, l11
+I remember that on early sm8450 boards/bootloaders we had the issues 
+with the bootloader (I don't remember exact details). However I just 
+checked the SM4850-HDK + the downstream kernel + appended dtb (which 
+contains qcom,msm-id and qcom,board-id properties) and the kernel boots 
+fine. So, I can suppose, there was some kind of an issue, which got 
+fixed with later ABL releases.
 
-Use this mapping to add the rpm_regulator_data for PM8909 by reusing
-the existing regulator definitions.
+Anyway the latest Krzysztof's text seems fine to me. And if anybody adds 
+these properties to the DT, he knows what he is doing and why.
 
-Signed-off-by: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
----
- drivers/regulator/qcom_smd-regulator.c | 24 ++++++++++++++++++++++++
- 1 file changed, 24 insertions(+)
-
-diff --git a/drivers/regulator/qcom_smd-regulator.c b/drivers/regulator/qcom_smd-regulator.c
-index 8b2d884cd693..59024c639141 100644
---- a/drivers/regulator/qcom_smd-regulator.c
-+++ b/drivers/regulator/qcom_smd-regulator.c
-@@ -784,6 +784,29 @@ static const struct rpm_regulator_data rpm_pm8841_regulators[] = {
- 	{}
- };
- 
-+static const struct rpm_regulator_data rpm_pm8909_regulators[] = {
-+	{ "s1", QCOM_SMD_RPM_SMPA, 1, &pm8916_buck_lvo_smps, "vdd_s1" },
-+	{ "s2", QCOM_SMD_RPM_SMPA, 2, &pm8916_buck_hvo_smps, "vdd_s2" },
-+	{ "l1", QCOM_SMD_RPM_LDOA, 1, &pm8916_nldo, "vdd_l1" },
-+	{ "l2", QCOM_SMD_RPM_LDOA, 2, &pm8916_nldo, "vdd_l2_l5" },
-+	{ "l3", QCOM_SMD_RPM_LDOA, 3, &pm8916_nldo, "vdd_l3_l6_l10" },
-+	{ "l4", QCOM_SMD_RPM_LDOA, 4, &pm8916_pldo, "vdd_l4_l7" },
-+	{ "l5", QCOM_SMD_RPM_LDOA, 5, &pm8226_pldo, "vdd_l2_l5" },
-+	{ "l6", QCOM_SMD_RPM_LDOA, 6, &pm8226_pldo, "vdd_l3_l6_l10" },
-+	{ "l7", QCOM_SMD_RPM_LDOA, 7, &pm8226_pldo, "vdd_l4_l7" },
-+	{ "l8", QCOM_SMD_RPM_LDOA, 8, &pm8916_pldo, "vdd_l8_l11_l15_l18" },
-+	{ "l9", QCOM_SMD_RPM_LDOA, 9, &pm8916_pldo, "vdd_l9_l12_l14_l17" },
-+	{ "l10", QCOM_SMD_RPM_LDOA, 10, &pm8916_nldo, "vdd_l3_l6_l10" },
-+	{ "l11", QCOM_SMD_RPM_LDOA, 11, &pm8226_pldo, "vdd_l8_l11_l15_l18" },
-+	{ "l12", QCOM_SMD_RPM_LDOA, 12, &pm8916_pldo, "vdd_l9_l12_l14_l17" },
-+	{ "l13", QCOM_SMD_RPM_LDOA, 13, &pm8916_pldo, "vdd_l13" },
-+	{ "l14", QCOM_SMD_RPM_LDOA, 14, &pm8916_pldo, "vdd_l9_l12_l14_l17" },
-+	{ "l15", QCOM_SMD_RPM_LDOA, 15, &pm8916_pldo, "vdd_l8_l11_l15_l18" },
-+	{ "l17", QCOM_SMD_RPM_LDOA, 17, &pm8916_pldo, "vdd_l9_l12_l14_l17" },
-+	{ "l18", QCOM_SMD_RPM_LDOA, 18, &pm8916_pldo, "vdd_l8_l11_l15_l18" },
-+	{}
-+};
-+
- static const struct rpm_regulator_data rpm_pm8916_regulators[] = {
- 	{ "s1", QCOM_SMD_RPM_SMPA, 1, &pm8916_buck_lvo_smps, "vdd_s1" },
- 	{ "s2", QCOM_SMD_RPM_SMPA, 2, &pm8916_buck_lvo_smps, "vdd_s2" },
-@@ -1222,6 +1245,7 @@ static const struct rpm_regulator_data rpm_pm2250_regulators[] = {
- static const struct of_device_id rpm_of_match[] = {
- 	{ .compatible = "qcom,rpm-mp5496-regulators", .data = &rpm_mp5496_regulators },
- 	{ .compatible = "qcom,rpm-pm8841-regulators", .data = &rpm_pm8841_regulators },
-+	{ .compatible = "qcom,rpm-pm8909-regulators", .data = &rpm_pm8909_regulators },
- 	{ .compatible = "qcom,rpm-pm8916-regulators", .data = &rpm_pm8916_regulators },
- 	{ .compatible = "qcom,rpm-pm8226-regulators", .data = &rpm_pm8226_regulators },
- 	{ .compatible = "qcom,rpm-pm8941-regulators", .data = &rpm_pm8941_regulators },
 -- 
-2.30.2
-
+With best wishes
+Dmitry
