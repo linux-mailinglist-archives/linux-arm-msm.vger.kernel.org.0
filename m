@@ -2,73 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2F154557DC6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jun 2022 16:29:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 85526557E04
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jun 2022 16:44:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231526AbiFWO3D (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Jun 2022 10:29:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57890 "EHLO
+        id S231478AbiFWOoC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Jun 2022 10:44:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38974 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231803AbiFWO3C (ORCPT
+        with ESMTP id S231159AbiFWOoB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Jun 2022 10:29:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 03FFD45537
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jun 2022 07:28:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1655994539;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding;
-        bh=WD6aAT4eAfkhBAGxc5usx5w9FCyTvm/RJ0Dv5y8ZHUg=;
-        b=LUL52ma29PfNPz6sWUK35UC0yOwUdBPgllsZVCkvIXiz4+EEFvREGt/akXpqELNQLnVRCa
-        ahidn44ArhC3PRjPtaQ+6fPIHAMIirwpR4B2nERsZYW4MPNYFRk+YHavOkgM1zjF7V+or1
-        HDMbRZUlEbF+KX1G35Tvhr/ibgfLYT0=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- us-mta-298-rLNyJdJSMdaspMsupiNaeA-1; Thu, 23 Jun 2022 10:28:57 -0400
-X-MC-Unique: rLNyJdJSMdaspMsupiNaeA-1
-Received: by mail-qk1-f198.google.com with SMTP id bs17-20020a05620a471100b006a734d3910dso23584305qkb.22
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jun 2022 07:28:57 -0700 (PDT)
+        Thu, 23 Jun 2022 10:44:01 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B1EC2EA05
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jun 2022 07:44:00 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id x3so6080692lfd.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jun 2022 07:44:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=GGJIrQZ1dGSDsKYzwTH8HIyaaJizqDdsQhaO3cSd77A=;
+        b=VyZDga2b/+FX3G3SKJuI1An91g3UxE0TwKAwvFaK/fL0Fqvkz2FEMxknoUnozT8+dB
+         3kTZp5StOUpoFilAHKDb+M5haITHntU/I+BPELbwz/Nw9Bdbw7ZmuKi0JrdLWRTlzRrr
+         4gUDayGFMJ1tSOd5omRo8sPPTSdz/s/8oCXCNfI+/lTH9Wj3kYp1smHCHOv8KWSPsCoH
+         WhFZEQPAsHtzB1AztC72raIhyUlh2N3esPKrKAaH3YQidQAkKxtxryJWi0M8bot6A6G7
+         yRfDzvR2ubk0s3WPEadN6gV6KHvH0YkK2n01SgW32PphAhc4Bul61AAc8Q8h9GGlzZjo
+         cjaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=WD6aAT4eAfkhBAGxc5usx5w9FCyTvm/RJ0Dv5y8ZHUg=;
-        b=7b6gJy4xyG/1EUu1IsBye6Hw0AFIvsyxxN/18Y5stEYyUxZgnMIzYnM+GMeoUh59f5
-         SLSntLupXYBHWzCm8qViffZfMU9pdVtCINXem6Db3oyIg2iUx3el9Q5WjX8QwAWTDn6X
-         sOgFprJ98UyFSbJTGOneLNtCvbKDglC/iemBcsi5C9QXasFRSgS/BTKb9fqt6dTHIcQy
-         M4hgixiGg1LgXpjEJsXF8vkqEZvTgL0Y2JdTQZ/ndf+TRjJkk9Vyi4VweDUPs9g1zBva
-         69tpEOMGH13U5Wh539v/YcbfsDB1T35bQ1MthzxrX2WU4rHnGSdRSLvX1vYvjcpddZvx
-         KFqQ==
-X-Gm-Message-State: AJIora9sK1Pew1p/aUzvoCzSeKdA23HxJ+Lozlf0veArG3UBvV+dhfio
-        vwIUJ9pZ/kwoaMoBBWLNoYApl7MqtA6my/GLO0EJghfmU68zNMNOwRob/C9gO7v+j02VY9L0LCH
-        DGEwh9y+YiQ5SUz5urPnGfqvG0Q==
-X-Received: by 2002:a05:6214:b69:b0:470:4d46:a399 with SMTP id ey9-20020a0562140b6900b004704d46a399mr14931482qvb.68.1655994537268;
-        Thu, 23 Jun 2022 07:28:57 -0700 (PDT)
-X-Google-Smtp-Source: AGRyM1s3HQBpI082cjSWrflbTXyicJSxjqvis1d5yO6iArcXxXYDi5XlJzjhdU6+uUThw6LfTCvY2Q==
-X-Received: by 2002:a05:6214:b69:b0:470:4d46:a399 with SMTP id ey9-20020a0562140b6900b004704d46a399mr14931452qvb.68.1655994536929;
-        Thu, 23 Jun 2022 07:28:56 -0700 (PDT)
-Received: from xps13.redhat.com (c-98-239-145-235.hsd1.wv.comcast.net. [98.239.145.235])
-        by smtp.gmail.com with ESMTPSA id d124-20020a379b82000000b006a6ae9150fesm18412531qke.41.2022.06.23.07.28.55
+        bh=GGJIrQZ1dGSDsKYzwTH8HIyaaJizqDdsQhaO3cSd77A=;
+        b=6NgOfpdq2PoHtUw18oYA2e8TIbj0tQcV1sbpuYMP1PbwU67uvkk/Xlbptjw6RVu4DB
+         WpONU1w6MfSqRynbuE/V9JnBV78DM6RM8jIOga7bg+sLorbmQdfx+S9/WYSqSXxWNsMv
+         dJL6VYj4mvF5cfNITzPJBnQvtvv9t63qegAI/hnlRw2NSvdwP8/Bk3Rmq1TRvJQjIuto
+         iboLKJ39EZjysz/Dfp2em7D40njAp3H98HfMctEecl6NgytlKJPhAMxczL01Q1tvy2iG
+         W8zzL0Ad0JOdFdwZWNIdcZ8rkV4rukkPG35O/EYr2apTP3TGxjZUG0xyULW/WB2IcpND
+         OfcQ==
+X-Gm-Message-State: AJIora/AF+tFAS5VMHDAwK73PRiAZ6PsQHPKeXatVJDvt3QlHohABnia
+        hQvZn/Q3iNXOEMMuSINyjJ2VOw==
+X-Google-Smtp-Source: AGRyM1vu4XsRKStXmVemK3XSOHQdmb7PE2OQGpbcamLonbZcjvVe2ZA5WEVQUTLq0JFh+Vw55ulpZg==
+X-Received: by 2002:a05:6512:318a:b0:47f:9fdc:fdb with SMTP id i10-20020a056512318a00b0047f9fdc0fdbmr3363003lfe.584.1655995438923;
+        Thu, 23 Jun 2022 07:43:58 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id x4-20020a056512078400b0047f6c48a603sm1829647lfr.202.2022.06.23.07.43.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Jun 2022 07:28:56 -0700 (PDT)
-From:   Brian Masney <bmasney@redhat.com>
-To:     bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org
-Cc:     agross@kernel.org, mturquette@baylibre.com, sboyd@kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        ahalaney@redhat.com, echanude@redhat.com
-Subject: [PATCH] clk: qcom: sc8280xp: add parent to gcc_ufs_phy_axi_clk for sa8540p
-Date:   Thu, 23 Jun 2022 10:28:37 -0400
-Message-Id: <20220623142837.3140680-1-bmasney@redhat.com>
-X-Mailer: git-send-email 2.36.1
+        Thu, 23 Jun 2022 07:43:58 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Rob Herring <robh@kernel.org>,
+        Masahiro Yamada <masahiroy@kernel.org>,
+        Michal Marek <michal.lkml@markovi.net>,
+        Nick Desaulniers <ndesaulniers@google.com>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Tom Rini <trini@konsulko.com>, linux-kbuild@vger.kernel.org
+Subject: [PATCH v3] kbuild: Enable DT schema checks for %.dtb targets
+Date:   Thu, 23 Jun 2022 17:43:57 +0300
+Message-Id: <20220623144357.297252-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-Content-type: text/plain
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-3.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -76,80 +72,73 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The sa8540p automotive board has the same SOC as the sc8280xp. In order
-to get the first UFS controller working on the sa8540p,
-GCC_UFS_REF_CLKREF_CLK needs to be setup as a parent to
-GCC_UFS_PHY_AXI_CLK.
+It is possible to build a single dtb, but not with DT schema validation
+enabled. Enable the schema validation to run for %.dtb and %.dtbo
+targets. Anyone building a dtb for a specific platform *should* pay
+attention to schema warnings.
 
-This clock name came from the DTS for the downstream MSM 5.4 kernel
-sources for the sa8540p. It also references GCC_UFS_CARD_CLKREF_CLK,
-however that wasn't needed to get the first UFS controller working.
+This could be supported with a separate %.dt.yaml target instead.
+However, the .dt.yaml format is considered an intermediate format and
+could possibly go away at some point if schema checking is integrated
+into dtc. Also, the plan is to enable the schema checks by default once
+platforms are free of warnings, and this is a move in that direction.
 
-Signed-off-by: Brian Masney <bmasney@redhat.com>
+This patch differs from the previous one ([1]) in the fact that it
+requires specifying VALIDATE_DT=1 to run the checks while doing the
+build. Thus default build procedures would not obtain additional build
+dependency, while maintainers can still build a single DTB file an get
+only corresponding warnings.
+
+[1] https://lore.kernel.org/all/20210913145146.766080-1-robh@kernel.org/
+
+Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc: Tom Rini <trini@konsulko.com>
+Cc: Masahiro Yamada <masahiroy@kernel.org>
+Cc: linux-kbuild@vger.kernel.org
+Co-developed-by: Rob Herring <robh@kernel.org>
+Signed-off-by: Rob Herring <robh@kernel.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
-I originally added this under GCC_UFS_PHY_PHY_AUX_CLK since that's
-what's in the downstream DTS. I was getting errors about
-GCC_UFS_PHY_AXI_CLK being stuck at off so I moved it there.
+ Makefile | 18 ++++++++++++++----
+ 1 file changed, 14 insertions(+), 4 deletions(-)
 
-Also I don't have access to any documentation for this board so I'm
-hoping that someone with docs access can verify that this is the
-appropriate place to put this.
-
- drivers/clk/qcom/gcc-sc8280xp.c | 27 ++++++++++++++-------------
- 1 file changed, 14 insertions(+), 13 deletions(-)
-
-diff --git a/drivers/clk/qcom/gcc-sc8280xp.c b/drivers/clk/qcom/gcc-sc8280xp.c
-index 4b894442fdf5..4639b50da418 100644
---- a/drivers/clk/qcom/gcc-sc8280xp.c
-+++ b/drivers/clk/qcom/gcc-sc8280xp.c
-@@ -5685,6 +5685,19 @@ static struct clk_branch gcc_ufs_phy_ahb_clk = {
- 	},
- };
+diff --git a/Makefile b/Makefile
+index c43d825a3c4c..0942922384c4 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1365,11 +1365,17 @@ endif
  
-+static struct clk_branch gcc_ufs_ref_clkref_clk = {
-+	.halt_reg = 0x8c058,
-+	.halt_check = BRANCH_HALT,
-+	.clkr = {
-+		.enable_reg = 0x8c058,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(const struct clk_init_data) {
-+			.name = "gcc_ufs_ref_clkref_clk",
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
+ ifneq ($(dtstree),)
+ 
+-%.dtb: include/config/kernel.release scripts_dtc
+-	$(Q)$(MAKE) $(build)=$(dtstree) $(dtstree)/$@
++ifneq ($(VALIDATE_DT),)
++DT_YAML = $(dtstree)/$*.dt.yaml
++DT_CHECK = dt_binding_check
++export CHECK_DTBS=y
++endif
+ 
+-%.dtbo: include/config/kernel.release scripts_dtc
+-	$(Q)$(MAKE) $(build)=$(dtstree) $(dtstree)/$@
++%.dtb: include/config/kernel.release scripts_dtc $(DT_CHECK)
++	$(Q)$(MAKE) $(build)=$(dtstree) $(dtstree)/$@ $(DT_YAML)
 +
- static struct clk_branch gcc_ufs_phy_axi_clk = {
- 	.halt_reg = 0x77010,
- 	.halt_check = BRANCH_HALT_VOTED,
-@@ -5696,6 +5709,7 @@ static struct clk_branch gcc_ufs_phy_axi_clk = {
- 		.hw.init = &(const struct clk_init_data) {
- 			.name = "gcc_ufs_phy_axi_clk",
- 			.parent_hws = (const struct clk_hw*[]){
-+				&gcc_ufs_ref_clkref_clk.clkr.hw,
- 				&gcc_ufs_phy_axi_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
-@@ -5899,19 +5913,6 @@ static struct clk_branch gcc_ufs_phy_unipro_core_hw_ctl_clk = {
- 	},
- };
++%.dtbo: include/config/kernel.release scripts_dtc $(DT_CHECK)
++	$(Q)$(MAKE) $(build)=$(dtstree) $(dtstree)/$@ $(DT_YAML)
  
--static struct clk_branch gcc_ufs_ref_clkref_clk = {
--	.halt_reg = 0x8c058,
--	.halt_check = BRANCH_HALT,
--	.clkr = {
--		.enable_reg = 0x8c058,
--		.enable_mask = BIT(0),
--		.hw.init = &(const struct clk_init_data) {
--			.name = "gcc_ufs_ref_clkref_clk",
--			.ops = &clk_branch2_ops,
--		},
--	},
--};
--
- static struct clk_branch gcc_usb2_hs0_clkref_clk = {
- 	.halt_reg = 0x8c044,
- 	.halt_check = BRANCH_HALT,
+ PHONY += dtbs dtbs_install dtbs_check
+ dtbs: include/config/kernel.release scripts_dtc
+@@ -1654,6 +1660,10 @@ help:
+ 	@echo  '		3: more obscure warnings, can most likely be ignored'
+ 	@echo  '		e: warnings are being treated as errors'
+ 	@echo  '		Multiple levels can be combined with W=12 or W=123'
++	@$(if $(dtstree), \
++		echo '  make VALIDATE_DT=y [targets] Validate all DT processsed during the build'; \
++		echo '         This can be applied both to "dtbs" and to individual "foo.dtb" targets' ; \
++		)
+ 	@echo  ''
+ 	@echo  'Execute "make" or "make all" to build all targets marked with [*] '
+ 	@echo  'For further info see the ./README file'
 -- 
-2.36.1
+2.35.1
 
