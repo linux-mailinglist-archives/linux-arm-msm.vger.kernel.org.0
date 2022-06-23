@@ -2,65 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 843C65572C7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jun 2022 08:02:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DE5F55572CD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jun 2022 08:06:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229528AbiFWGC2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Jun 2022 02:02:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40884 "EHLO
+        id S229687AbiFWGGc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Jun 2022 02:06:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43076 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229437AbiFWGC2 (ORCPT
+        with ESMTP id S229437AbiFWGG0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Jun 2022 02:02:28 -0400
+        Thu, 23 Jun 2022 02:06:26 -0400
 Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CE2B44771;
-        Wed, 22 Jun 2022 23:02:27 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0669E19F98;
+        Wed, 22 Jun 2022 23:06:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1655964147; x=1687500147;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=kQy3/S0oY9NNHYhqGTErgRO6snEJoyWavRF1Xgt/bO4=;
-  b=kZ5c/na3nC8k0n6fhaSJO1xXgo/T27o4xs0q++2EkBCr46Jnm/bL876P
-   4vUrbDL9N1QsXseoAhVBxWkBPpUxzYMP8qk2TzPbV5lj06vqzzvGsBGF7
-   cCtfezwySAu+T7D9p1iL7IsvJF2Zp8yKLmXhT9W4PvCW3LvbvvN+SrEhT
-   Q=;
-Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
-  by alexa-out.qualcomm.com with ESMTP; 22 Jun 2022 23:02:27 -0700
+  t=1655964385; x=1687500385;
+  h=message-id:date:mime-version:subject:to:references:from:
+   in-reply-to:content-transfer-encoding;
+  bh=kY+gYmv2uINKm3GjTgEhRJAEIxUH+bB/vOSpMyPge0M=;
+  b=M6jDUIbRnzSHI2nkhntJLVJTBMFEmk+XMDr+wabTOqf5JXs5kS++ovQY
+   5fZhVG+vOCCOofghgjJ4uO84oFRxlsoW2d0wo/THE1uIhspVzYC+8b4Xo
+   BtcxDp0w5I7CgdqZ+03Ti6LoG5Yp1ffc8pLdHCu9bjRnDUdWPIWnaBB3Q
+   8=;
+Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
+  by alexa-out.qualcomm.com with ESMTP; 22 Jun 2022 23:06:25 -0700
 X-QCInternal: smtphost
 Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Jun 2022 23:02:26 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Jun 2022 23:06:24 -0700
+Received: from nalasex01c.na.qualcomm.com (10.47.97.35) by
  nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 22 Jun 2022 23:02:26 -0700
-Received: from [10.50.26.56] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ 15.2.986.22; Wed, 22 Jun 2022 23:06:23 -0700
+Received: from [10.242.242.148] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Wed, 22 Jun
- 2022 23:02:22 -0700
-Message-ID: <21d5fc44-4870-02bb-70b4-d9e1188c9cc1@quicinc.com>
-Date:   Thu, 23 Jun 2022 11:32:18 +0530
+ 2022 23:06:18 -0700
+Message-ID: <d891e8a9-a4f9-b6c7-8f51-3823f60120fa@quicinc.com>
+Date:   Thu, 23 Jun 2022 11:36:15 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.1
-Subject: Re: [PATCHv2] iommu/arm-smmu-qcom: Add debug support for TLB sync
- timeouts
+ Thunderbird/91.8.0
+Subject: Re: [PATCH V2 3/8] clk: qcom: Add Global Clock controller (GCC)
+ driver for IPQ5018
 Content-Language: en-US
-To:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
-        "Joerg Roedel" <joro@8bytes.org>
-CC:     <iommu@lists.linux-foundation.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <quic_guptap@quicinc.com>, Rob Clark <robdclark@chromium.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-References: <20220526041403.9984-1-quic_saipraka@quicinc.com>
-From:   Sai Prakash Ranjan <quic_saipraka@quicinc.com>
-In-Reply-To: <20220526041403.9984-1-quic_saipraka@quicinc.com>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        <agross@kernel.org>, <bjorn.andersson@linaro.org>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <mturquette@baylibre.com>, <sboyd@kernel.org>,
+        <linus.walleij@linaro.org>, <catalin.marinas@arm.com>,
+        <p.zabel@pengutronix.de>, <quic_varada@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <linux-gpio@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>
+References: <20220621161126.15883-1-quic_srichara@quicinc.com>
+ <20220621161126.15883-4-quic_srichara@quicinc.com>
+ <c9ec14db-1ddd-7316-4ef6-9d57509f3fad@linaro.org>
+From:   Sricharan Ramabadhran <quic_srichara@quicinc.com>
+In-Reply-To: <c9ec14db-1ddd-7316-4ef6-9d57509f3fad@linaro.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+ nalasex01c.na.qualcomm.com (10.47.97.35)
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -71,31 +76,102 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 5/26/2022 9:44 AM, Sai Prakash Ranjan wrote:
-> TLB sync timeouts can be due to various reasons such as TBU power down
-> or pending TCU/TBU invalidation/sync and so on. Debugging these often
-> require dumping of some implementation defined registers to know the
-> status of TBU/TCU operations and some of these registers are not
-> accessible in non-secure world such as from kernel and requires SMC
-> calls to read them in the secure world. So, add this debug support
-> to dump implementation defined registers for TLB sync timeout issues.
->
-> Signed-off-by: Sai Prakash Ranjan <quic_saipraka@quicinc.com>
-> ---
->
-> Changes in v2:
->   * Use scm call consistently so that it works on older chipsets where
->     some of these regs are secure registers.
->   * Add device specific data to get the implementation defined register
->     offsets.
->
-> ---
->   drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 161 ++++++++++++++++++---
->   drivers/iommu/arm/arm-smmu/arm-smmu.c      |   2 +
->   drivers/iommu/arm/arm-smmu/arm-smmu.h      |   1 +
->   3 files changed, 146 insertions(+), 18 deletions(-)
 
-Any comments on this patch?
+On 6/22/2022 8:38 PM, Krzysztof Kozlowski wrote:
+> On 21/06/2022 18:11, Sricharan R wrote:
+>> From: Varadarajan Narayanan <quic_varada@quicinc.com>
+>>
+>> Add support for the global clock controller found on IPQ5018
+>> based devices.
+>>
+>> Co-developed-by: Sricharan R <quic_srichara@quicinc.com>
+>> Signed-off-by: Sricharan R <quic_srichara@quicinc.com>
+>> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> Thank you for your patch. There is something to discuss/improve.
+>
+>> ---
+>>   drivers/clk/qcom/Kconfig       |    7 +
+>>   drivers/clk/qcom/Makefile      |    1 +
+>>   drivers/clk/qcom/gcc-ipq5018.c | 3995 ++++++++++++++++++++++++++++++++
+>>   3 files changed, 4003 insertions(+)
+>>   create mode 100644 drivers/clk/qcom/gcc-ipq5018.c
+>>
+>> diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
+>> index d01436be6d7a..294fb975db85 100644
+>> --- a/drivers/clk/qcom/Kconfig
+>> +++ b/drivers/clk/qcom/Kconfig
+>> @@ -172,6 +172,13 @@ config IPQ_GCC_8074
+>>   	  i2c, USB, SD/eMMC, etc. Select this for the root clock
+>>   	  of ipq8074.
+>>   
+>> +config IPQ_GCC_5018
+>> +	tristate "IPQ5018 Global Clock Controller"
+>> +	help
+>> +	 Support for global clock controller on ipq5018 devices.
+>> +	 Say Y if you want to use peripheral devices such as UART, SPI,
+>> +	 i2c, USB, SD/eMMC, etc.
+>> +
+>>   config MSM_GCC_8660
+>>   	tristate "MSM8660 Global Clock Controller"
+>>   	help
+>> diff --git a/drivers/clk/qcom/Makefile b/drivers/clk/qcom/Makefile
+>> index 671cf5821af1..33ab4ce9b863 100644
+>> --- a/drivers/clk/qcom/Makefile
+>> +++ b/drivers/clk/qcom/Makefile
+>> @@ -26,6 +26,7 @@ obj-$(CONFIG_IPQ_GCC_4019) += gcc-ipq4019.o
+>>   obj-$(CONFIG_IPQ_GCC_6018) += gcc-ipq6018.o
+>>   obj-$(CONFIG_IPQ_GCC_806X) += gcc-ipq806x.o
+>>   obj-$(CONFIG_IPQ_GCC_8074) += gcc-ipq8074.o
+>> +obj-$(CONFIG_IPQ_GCC_5018) += gcc-ipq5018.o
+>>   obj-$(CONFIG_IPQ_LCC_806X) += lcc-ipq806x.o
+>>   obj-$(CONFIG_MDM_GCC_9607) += gcc-mdm9607.o
+>>   obj-$(CONFIG_MDM_GCC_9615) += gcc-mdm9615.o
+> (...)
+>
+>> +
+>> +static int gcc_ipq5018_probe(struct platform_device *pdev)
+>> +{
+>> +	int ret;
+>> +	struct regmap *regmap;
+>> +	struct qcom_cc_desc ipq5018_desc = gcc_ipq5018_desc;
+>> +
+>> +	regmap = qcom_cc_map(pdev, &ipq5018_desc);
+>> +	if (IS_ERR(regmap))
+>> +		return PTR_ERR(regmap);
+>> +
+>> +	clk_alpha_pll_configure(&ubi32_pll_main, regmap, &ubi32_pll_config);
+>> +
+>> +	ret = qcom_cc_really_probe(pdev, &ipq5018_desc, regmap);
+> return qcom_cc_really_probe(....)
 
-Thanks,
-Sai
+  ok.
+
+
+>> +	if (ret) {
+>> +		dev_err(&pdev->dev, "Failed to register ipq5018 GCC clocks\n");
+>> +		return ret;
+>> +	}
+>> +
+>> +	dev_info(&pdev->dev, "Registered ipq5018 GCC clocks provider");
+> No probe success messages. This pollutes the log and there is other
+> infrastructure to check for successful probe.
+
+  ok.
+
+
+>> +
+>> +	return ret;
+>> +}
+>> +
+>> +static struct platform_driver gcc_ipq5018_driver = {
+>> +	.probe = gcc_ipq5018_probe,
+>> +	.driver = {
+>> +		.name   = "qcom,gcc-ipq5018",
+>> +		.owner  = THIS_MODULE,
+> No need for owner.
+
+  ok.
+
+Regards,
+     Sricharan
+
