@@ -2,83 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2B0F85573E0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jun 2022 09:26:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 840E7557479
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jun 2022 09:50:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230262AbiFWH0I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Jun 2022 03:26:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44320 "EHLO
+        id S229841AbiFWHuY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Jun 2022 03:50:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36514 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229667AbiFWH0H (ORCPT
+        with ESMTP id S229643AbiFWHuW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Jun 2022 03:26:07 -0400
-Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 158E54616E;
-        Thu, 23 Jun 2022 00:26:05 -0700 (PDT)
-Received: by mail-ed1-f52.google.com with SMTP id z19so10372571edb.11;
-        Thu, 23 Jun 2022 00:26:05 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=R6a8DdfHxenCBzF3dq4dxp9GwEChi5fgdNd/WHlOcfQ=;
-        b=6ZxWpcTZSMX39xQf2PFfMxawrP+XWoPjPdoXOYMTmeNEVL1B4NaJ7wpV+s3dZfwR4A
-         eGOk0IQ8p7bm8tejznIDpqAC4g9GnFQD1UhPxaXtMLPg/Z5Cc27r04bgbjxDUFBThpmc
-         /4SSRaZUzbsQrj3Nj5BS7hwJ34TRazJEUNl/myNAMEi2BVobeQ3UkcIlZqNZRvjuIboA
-         en67RvfwirfArqcMH6wC+DxMO83QCI+C8L85vl8OjzsyLDPe0goiBRHguGAWjXWZBWc4
-         1YfcrwIJXx9FYTmOoFVC4ysf0mhxhKLvij2GziKda681LCQdH6QFkE4MfTzh0xJVH0+a
-         xKpA==
-X-Gm-Message-State: AJIora+Vp6n2wuLS91xutWB7F6+EkMBzpzH3acYy7LcZdQZOjkHGGpxW
-        5NpCpW9ZXt8EjhDNYiOHNJo=
-X-Google-Smtp-Source: AGRyM1tvWz9FgM1YUo4FSxo1ULZmBptXI2Y2wXjouVQNxsHbgsiomjt6JjYIFtvNC42sJOR9KGY70Q==
-X-Received: by 2002:a50:cb8b:0:b0:435:68a3:4d40 with SMTP id k11-20020a50cb8b000000b0043568a34d40mr9038890edi.394.1655969163690;
-        Thu, 23 Jun 2022 00:26:03 -0700 (PDT)
-Received: from ?IPV6:2a0b:e7c0:0:107::70f? ([2a0b:e7c0:0:107::70f])
-        by smtp.gmail.com with ESMTPSA id lb21-20020a170907785500b007219c20dcd8sm7648295ejc.196.2022.06.23.00.26.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 23 Jun 2022 00:26:03 -0700 (PDT)
-Message-ID: <59ee9f60-06be-573b-24bf-5a6460107c55@kernel.org>
-Date:   Thu, 23 Jun 2022 09:26:01 +0200
+        Thu, 23 Jun 2022 03:50:22 -0400
+Received: from mail.forindustry.pl (mail.forindustry.pl [37.187.225.170])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3DD34115F
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jun 2022 00:50:22 -0700 (PDT)
+Received: by mail.forindustry.pl (Postfix, from userid 1002)
+        id 139CDA3200; Thu, 23 Jun 2022 07:40:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=forindustry.pl;
+        s=mail; t=1655970036;
+        bh=Vw5jk5D1DE7WK/GNf/MxRQNyAyPYcC0rMJLibxKTj58=;
+        h=Date:From:To:Subject:From;
+        b=LGgFiGjpCP3nM8uZLDq3ym+2S5dkY9rN2dZOjbIlbymZ5eOVAJSbUcmnspgMOVZIN
+         S4AXQ9phW0JhatoJrzbYzlUJ1LuU+KfU0v4WTwsN3iiUOcNFmaD4MTjGGRP8lJeb2d
+         WCUh2Jx+ByUKCcUMw+aYGqiaL9RKAhKZ3V8byjYT6lBqwt8ACvKvRrOBrAARNpoFSf
+         IWdRaxLk5lIlpGFWXJhmoH8t/CkDoi2ui/PlXUZC9oZ7vV1x5Rfex3BvyajT8uEevS
+         Xr3x3cQJil2ndzxe8+84ow/gf7+RCuZ+PW8TIcjnxNseSufYQXXaF5axDgxYG/sYH2
+         o2aRUGQEOv55Q==
+Received: by mail.forindustry.pl for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jun 2022 07:40:27 GMT
+Message-ID: <20220623064500-0.1.3z.vuk2.0.na8l2rkk36@forindustry.pl>
+Date:   Thu, 23 Jun 2022 07:40:27 GMT
+From:   =?UTF-8?Q? "Arkadiusz_Soko=C5=82owski" ?= 
+        <arkadiusz.sokolowski@forindustry.pl>
+To:     <linux-arm-msm@vger.kernel.org>
+Subject: Koszty instalacji fotowoltaicznej
+X-Mailer: mail.forindustry.pl
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: [PATCH v2 2/6] serial: msm: Rename UART_* defines to MSM_UART_*
-Content-Language: en-US
-To:     =?UTF-8?Q?Ilpo_J=c3=a4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-        linux-serial@vger.kernel.org, Greg KH <gregkh@linuxfoundation.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20220621124958.3342-1-ilpo.jarvinen@linux.intel.com>
- <20220621124958.3342-3-ilpo.jarvinen@linux.intel.com>
-From:   Jiri Slaby <jirislaby@kernel.org>
-In-Reply-To: <20220621124958.3342-3-ilpo.jarvinen@linux.intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
-        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-        NICE_REPLY_A,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21. 06. 22, 14:49, Ilpo Järvinen wrote:
-> Using UART_* to name defines is a bit problematic. When trying to do
-> unrelated cleanup which also involved tweaking header inclusion logic,
-> caused UART_CSR from serial_reg.h to leak into msm's namespace which is
-> also among msm defines. Thus, rename all UART_* ones to MSM_UART_* to
-> avoid eliminate possibility of collisions.
-> 
-> Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Dzie=C5=84 dobry,
 
-Reviewed-by: Jiri Slaby <jirislaby@kernel.org>
+stworzyli=C5=9Bmy specjaln=C4=85 ofert=C4=99 dla firm, na kompleksow=C4=85=
+ obs=C5=82ug=C4=99 inwestycji w fotowoltaik=C4=99.
 
+Specjalizujemy si=C4=99 w zakresie doboru, monta=C5=BCu i serwisie instal=
+acji fotowoltaicznych, dysponujemy najnowocze=C5=9Bniejszymi rozwi=C4=85z=
+ania, kt=C3=B3re zapewni=C4=85 Pa=C5=84stwu oczekiwane rezultaty.
 
--- 
-js
-suse labs
+Mo=C5=BCemy przygotowa=C4=87 dla Pa=C5=84stwa wst=C4=99pn=C4=85 kalkulacj=
+=C4=99 i przeanalizowa=C4=87 efekty mo=C5=BCliwe do osi=C4=85gni=C4=99cia=
+=2E
+
+Czy s=C4=85 Pa=C5=84stwo otwarci na wst=C4=99pn=C4=85 rozmow=C4=99 w tym =
+temacie?
+
+Pozdrawiam,
+Arkadiusz Soko=C5=82owski
