@@ -2,249 +2,206 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E05845588AB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jun 2022 21:25:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A5DC85589A7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jun 2022 22:01:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230177AbiFWTZ3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Jun 2022 15:25:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45290 "EHLO
+        id S229485AbiFWUBg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Jun 2022 16:01:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60042 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229797AbiFWTZT (ORCPT
+        with ESMTP id S229455AbiFWUBf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Jun 2022 15:25:19 -0400
-Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5124115A38
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jun 2022 11:38:08 -0700 (PDT)
-Received: by mail-pj1-x102f.google.com with SMTP id g10-20020a17090a708a00b001ea8aadd42bso488916pjk.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jun 2022 11:38:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=eVp8FQoB9Ya05mhSC/1JWB3NP7Z+oQHFDaIPb5/+300=;
-        b=X60xoP/aTtoyst0wTd+PWujVCxHkVNY8XAFhplusmrcaoI8R28Pl5VTh0VdRq2Xfxo
-         u5E6pWsCmiNq5SLJc0TNIzaKrUW6k82XPVc5NQEkv7Yu4a8rEq90Aoq5143sPUWQ6uTS
-         AXFETfGqfbZGIeeoTzQVQQ5HCKzk1JrljQnio=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=eVp8FQoB9Ya05mhSC/1JWB3NP7Z+oQHFDaIPb5/+300=;
-        b=YsTs2w2En0y5St5IbOfVvonbbmUrOGsUxT3317KV5zqiRDu5wiiIkReZcHc3Gfs4vt
-         nhHMURAU6/ADHIdTT2EQd0ToqVTbDHg4mT53PFSbKGoY44Z6ZHRsFK9OM2cfCRD8MnMw
-         boLRu57ACBYi6oI9txJoAhcaUX2XGMiGCXq3i++y2RXRUex1HMZe5914r7PM5Uu5jTa7
-         WSEECNWntGRhx9hRmLN3tMsbjwXtjo1koVffq6KNni5mwoipXdrmg5IPIej9BdHnnG0M
-         PliqzuS9y7jUiU6MC6K/K3Mjv0KhIuzczPOYpCOHGZdFcgm/CxNQeJISvOcGE+RgFiFc
-         gw4g==
-X-Gm-Message-State: AJIora+V32m8JopZAHqbHMOpR83ZlvfEVNp2aUF0JgCsPMFr7cfviFyq
-        CBwnWk6uvJcI/Hu6VGkItTJ1fQ==
-X-Google-Smtp-Source: AGRyM1twkUARsx68os7RRPBG/tykIifd20D/Xtcu7G7VRIakXKkvcP8g9leSX4Fm1it8MgB+xPUflA==
-X-Received: by 2002:a17:90a:7e86:b0:1ec:8606:b3c4 with SMTP id j6-20020a17090a7e8600b001ec8606b3c4mr5407957pjl.186.1656009488247;
-        Thu, 23 Jun 2022 11:38:08 -0700 (PDT)
-Received: from localhost ([2620:15c:11a:202:3cb9:498e:158b:4935])
-        by smtp.gmail.com with UTF8SMTPSA id b5-20020a170902e94500b0016a0f4af4b1sm114927pll.183.2022.06.23.11.38.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 23 Jun 2022 11:38:07 -0700 (PDT)
-Date:   Thu, 23 Jun 2022 11:38:06 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Pavan Kondeti <quic_pkondeti@quicinc.com>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Krishna Kurapati <quic_kriskura@quicinc.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Mathias Nyman <mathias.nyman@intel.com>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, quic_ppratap@quicinc.com,
-        quic_vpulyala@quicinc.com
-Subject: Re: [PATCH v20 2/5] usb: dwc3: core: Host wake up support from
- system suspend
-Message-ID: <YrSzDhgAvMx4TwD2@google.com>
-References: <1654158277-12921-1-git-send-email-quic_kriskura@quicinc.com>
- <1654158277-12921-3-git-send-email-quic_kriskura@quicinc.com>
- <YpkRDi2m7cLaKYEf@google.com>
- <Yp5nf2w8uVZ38/XZ@google.com>
- <Yqd9IHQEj3Ex+FcF@google.com>
- <YqjLHyUVEjf7I3MI@google.com>
- <20220616091110.GA24114@hu-pkondeti-hyd.qualcomm.com>
- <YqtlRQOwb3t6Xtd0@google.com>
- <20220620085415.GA13744@hu-pkondeti-hyd.qualcomm.com>
+        Thu, 23 Jun 2022 16:01:35 -0400
+Received: from NAM11-CO1-obe.outbound.protection.outlook.com (mail-co1nam11on2056.outbound.protection.outlook.com [40.107.220.56])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18CF237A87;
+        Thu, 23 Jun 2022 13:01:34 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=Ioz+3T6XL/LOssSuOvDzhkh7lr4NxBmrBOpZSkczDCC870NdSesfT+mWbugGkbpxTp1YoVv+KGLUqrR6YoZN97ym7764a3PBU4UB/HD009GaPcIADAZxCvJn0aovrTxSXWGaFUkb0wTt1sUMo2+p5EZU2bP0vWScOuiH9fT7QnHHYT6W6lKKCLuRPXrmm7s5ekHgCDEUmmltbt8EK1KNzpzFsk5vMyPUO4T+5Zw7laP/AFqaun/RGQ4AO4YxULjp7IUNfAJTyO2tT2shx1cg6Szg/R2UZLB/LVjBFmmj+SluNXJoKHOWbVd8ZQ/xkxlntwctdX2VZeTpP54EP8Ah0Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=F86+RvzjkgjzMtSa8CwsA63oaKihCbAPxS/B+zVQWH4=;
+ b=XWo+NSFjycn8F0mOlZHtyhn8ifCegdJ3I2RvkElRmGVfmBWOEDAG8hxH4ty+ywTmBoEVmlUjFT2g+7uGilBupXrmxBnug3eJZWkJoEZBJQ7clZSq/o/Ze/FOK1uFHV5HNrCwBK/ZMoLVFOIiRzl2K0YAHUg08AaRdHSt+YEBwDk7dAIUf2ZB3RUjnRhsBBwF/qzPNYqhAfFo/Vw8LfW/AIYjVxvkTdcNGzQyLi35+Apodn6gslZ+MhrijQ07Papu39ygQma5jJulMJXsMbvIpJJudvzpklgAj7HA5HF9lCH1iQcCf/AUMeT7nfkd7c4Sbd6ItMXxOE1D1R/eagv5aw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 12.22.5.235) smtp.rcpttodomain=linux.intel.com smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=F86+RvzjkgjzMtSa8CwsA63oaKihCbAPxS/B+zVQWH4=;
+ b=JIAyEzIH2R2iPILKwFCZIi1wAz2utkwn6aeRrYUHx4S52d83MV5Hkxc5AhLgQqQeJfF3oevKLmySZxL7hpXHYp0R0dNvl/vHJ6raMPH00I9JhkfWgq3htGFp4beF4UnWvhFHmo27ayBsS3ip8f5DMQwEAP3ommYMAJBz8OtVfVFCIzI6VB8TLFKssbxPueIPxejbBxU6uXeaBSHtFwdOiQ31193ISSinowmhBPbMYSCSdoqSfkRhEpJOkMJX10FyG0QQ323CRh7yzta/qqwIsXEsS1snHioJzhmEjVUW0FYCBZ/d13a1yxF7HbgAzkQbyaJL5WFvUoHI81pfa+W3ZA==
+Received: from BN6PR14CA0046.namprd14.prod.outlook.com (2603:10b6:404:13f::32)
+ by SN1PR12MB2525.namprd12.prod.outlook.com (2603:10b6:802:29::28) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5353.17; Thu, 23 Jun
+ 2022 20:01:32 +0000
+Received: from BN8NAM11FT049.eop-nam11.prod.protection.outlook.com
+ (2603:10b6:404:13f:cafe::98) by BN6PR14CA0046.outlook.office365.com
+ (2603:10b6:404:13f::32) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5353.18 via Frontend
+ Transport; Thu, 23 Jun 2022 20:01:31 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 12.22.5.235)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 12.22.5.235 as permitted sender) receiver=protection.outlook.com;
+ client-ip=12.22.5.235; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (12.22.5.235) by
+ BN8NAM11FT049.mail.protection.outlook.com (10.13.177.157) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
+ 15.20.5373.15 via Frontend Transport; Thu, 23 Jun 2022 20:01:31 +0000
+Received: from rnnvmail205.nvidia.com (10.129.68.10) by DRHQMAIL107.nvidia.com
+ (10.27.9.16) with Microsoft SMTP Server (TLS) id 15.0.1497.32; Thu, 23 Jun
+ 2022 20:01:31 +0000
+Received: from rnnvmail204.nvidia.com (10.129.68.6) by rnnvmail205.nvidia.com
+ (10.129.68.10) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.26; Thu, 23 Jun
+ 2022 13:01:30 -0700
+Received: from Asurada-Nvidia.nvidia.com (10.127.8.10) by mail.nvidia.com
+ (10.129.68.6) with Microsoft SMTP Server id 15.2.986.26 via Frontend
+ Transport; Thu, 23 Jun 2022 13:01:27 -0700
+From:   Nicolin Chen <nicolinc@nvidia.com>
+To:     <joro@8bytes.org>, <will@kernel.org>, <marcan@marcan.st>,
+        <sven@svenpeter.dev>, <robin.murphy@arm.com>,
+        <robdclark@gmail.com>, <baolu.lu@linux.intel.com>,
+        <matthias.bgg@gmail.com>, <orsonzhai@gmail.com>,
+        <baolin.wang7@gmail.com>, <zhang.lyra@gmail.com>,
+        <jean-philippe@linaro.org>, <alex.williamson@redhat.com>,
+        <jgg@nvidia.com>, <kevin.tian@intel.com>
+CC:     <suravee.suthikulpanit@amd.com>, <alyssa@rosenzweig.io>,
+        <dwmw2@infradead.org>, <yong.wu@mediatek.com>,
+        <mjrosato@linux.ibm.com>, <gerald.schaefer@linux.ibm.com>,
+        <thierry.reding@gmail.com>, <vdumpa@nvidia.com>,
+        <jonathanh@nvidia.com>, <cohuck@redhat.com>,
+        <thunder.leizhen@huawei.com>, <tglx@linutronix.de>,
+        <chenxiang66@hisilicon.com>, <christophe.jaillet@wanadoo.fr>,
+        <john.garry@huawei.com>, <yangyingliang@huawei.com>,
+        <jordan@cosmicpenguin.net>, <iommu@lists.linux-foundation.org>,
+        <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>,
+        <linux-mediatek@lists.infradead.org>, <linux-s390@vger.kernel.org>,
+        <linux-tegra@vger.kernel.org>,
+        <virtualization@lists.linux-foundation.org>, <kvm@vger.kernel.org>
+Subject: [PATCH v3 0/5] Simplify vfio_iommu_type1 attach/detach routine
+Date:   Thu, 23 Jun 2022 13:00:24 -0700
+Message-ID: <20220623200029.26007-1-nicolinc@nvidia.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20220620085415.GA13744@hu-pkondeti-hyd.qualcomm.com>
-X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: 76548f47-483f-43be-535a-08da55532af8
+X-MS-TrafficTypeDiagnostic: SN1PR12MB2525:EE_
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?XbHupQRekQ/jWGmhFPXbCar4gKVjHlyVGsmHEQU069ocuou0rvok7c1jeLWc?=
+ =?us-ascii?Q?DZYn/bVfp7lgf6EqZDB88kQ66QzuGskMXIX3cDOHIJ3gggjC0FMubLyF5xHq?=
+ =?us-ascii?Q?mZhWk0hZnleTbgUzhk/zkpUBkJFOLdvwwFTEFtBnwljKp8K5y529//PEKyMQ?=
+ =?us-ascii?Q?uxiDXb0fBz72ktufTP7OLpEASCcNbq54sv50Ui/L5pBQCdl/veDhE0xAdETc?=
+ =?us-ascii?Q?kvAgzBGq65QM4VZZNQxbPJcRidbv1MZ4H5BpjDwlLGLPBhfHDnz2MPZyDUxG?=
+ =?us-ascii?Q?mmfTxPaRUBF1IgO05NrXnYWNsGj09jL3mRGEt5TTThh6rZcoTJEeWenTbEI7?=
+ =?us-ascii?Q?olDCW/7buNYCQNAIJmtzvEtGHM0RCsC7Xuma1VPXyNKPy1iQceJFPpyhD0wq?=
+ =?us-ascii?Q?8sf8SUIDU6xkWAx7HOzF8hnzU2NZzK5d/Tf8Wai0QgrTe1eIv4IACaeAp0zg?=
+ =?us-ascii?Q?7/tzkUiy3P6atov25Yxlg8Fuc8V58VlP0FkgUaAwAHJa5MvVjL88RG17eSo7?=
+ =?us-ascii?Q?7M2kEvJIrgOJV0znUWQ9vGCmyPhU7PzKn13IstacxU73hQo6lBCCNJzoRtm8?=
+ =?us-ascii?Q?1oF+WzQaSOCKzJDvA99hRXp8sWocOteVZYMOTuUuYLgCnAM70o6MIufiLweZ?=
+ =?us-ascii?Q?Rqpi0xWKP3cJTDkDwQYdjNTh+S1XCKry7P7P4zC2ZhBzoUns/IW1WZDW5jRT?=
+ =?us-ascii?Q?ER+bTnY6I90ndhEfzG55FJRdnKmIQeNFmpra15QHnRL0Ip7Y/Cifdjk9nQTe?=
+ =?us-ascii?Q?l9FsajEyzxFTbzX2NMnZgRcK7V9E4PaphTISG/tbLWR4ipDi2HUhMD3Waegc?=
+ =?us-ascii?Q?2RhjdEaAige8tqpkoqM2mePVV60Qwn+/1d0JIc9f7hNEBcEsgpL6pdN8TM6n?=
+ =?us-ascii?Q?M/CKPAXZg73II45c31ccUP8AaBfEjJDH2xZ8sB8+q4vGn1qVxLuQ2JXBP5Uj?=
+ =?us-ascii?Q?tGAyQD8HeDVqjlglitoUi9XdDPR2AcQnrpljXAIH7cLp7ZGbhESni0slS+qi?=
+ =?us-ascii?Q?I3BCbKgYReew7Xen/K4UKHUqdA=3D=3D?=
+X-Forefront-Antispam-Report: CIP:12.22.5.235;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:InfoNoRecords;CAT:NONE;SFS:(13230016)(4636009)(346002)(136003)(39860400002)(396003)(376002)(46966006)(36840700001)(40470700004)(316002)(966005)(54906003)(8676002)(70206006)(186003)(356005)(40480700001)(4326008)(41300700001)(36756003)(8936002)(81166007)(2906002)(86362001)(7416002)(5660300002)(2616005)(26005)(478600001)(7696005)(110136005)(921005)(82740400003)(1076003)(7406005)(336012)(36860700001)(82310400005)(6666004)(426003)(70586007)(83380400001)(40460700003)(47076005)(83996005)(2101003)(36900700001);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Jun 2022 20:01:31.6191
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 76548f47-483f-43be-535a-08da55532af8
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[12.22.5.235];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: BN8NAM11FT049.eop-nam11.prod.protection.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN1PR12MB2525
+X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FORGED_SPF_HELO,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jun 20, 2022 at 02:24:15PM +0530, Pavan Kondeti wrote:
-> +Felipe, Bjorn
-> 
-> On Thu, Jun 16, 2022 at 10:15:49AM -0700, Matthias Kaehlcke wrote:
-> > On Thu, Jun 16, 2022 at 02:41:10PM +0530, Pavan Kondeti wrote:
-> > > Hi Matthias/Krishna,
-> > > 
-> > > On Tue, Jun 14, 2022 at 10:53:35AM -0700, Matthias Kaehlcke wrote:
-> > > > On Mon, Jun 13, 2022 at 11:08:32AM -0700, Matthias Kaehlcke wrote:
-> > > > > On Mon, Jun 06, 2022 at 01:45:51PM -0700, Matthias Kaehlcke wrote:
-> > > > > > On Thu, Jun 02, 2022 at 12:35:42PM -0700, Matthias Kaehlcke wrote:
-> > > > > > > Hi Krishna,
-> > > > > > > 
-> > > > > > > with this version I see xHCI errors on my SC7180 based system, like
-> > > > > > > these:
-> > > > > > > 
-> > > > > > > [   65.352605] xhci-hcd xhci-hcd.13.auto: xHC error in resume, USBSTS 0x401, Reinit
-> > > > > > > 
-> > > > > > > [  101.307155] xhci-hcd xhci-hcd.13.auto: WARN: xHC CMD_RUN timeout
-> > > > > > > 
-> > > > > > > After resume a downstream hub isn't enumerated again.
-> > > > > > > 
-> > > > > > > So far I didn't see those with v13, but I aso saw the first error with
-> > > > > > > v16.
-> > > > > > 
-> > > > > > It also happens with v13, but only when a wakeup capable vUSB <= 2
-> > > > > > device is plugged in. Initially I used a wakeup capable USB3 to
-> > > > > > Ethernet adapter to trigger the wakeup case, however older versions
-> > > > > > of this series that use usb_wakeup_enabled_descendants() to check
-> > > > > > for wakeup capable devices didn't actually check for vUSB > 2
-> > > > > > devices.
-> > > > > > 
-> > > > > > So the case were the controller/PHYs is powered down works, but
-> > > > > > the controller is unhappy when the runtime PM path is used during
-> > > > > > system suspend.
-> > > > > 
-> > > > > The issue isn't seen on all systems using dwc3-qcom and the problem starts
-> > > > > during probe(). The expected probe sequence is something like this:
-> > > > > 
-> > > > > dwc3_qcom_probe
-> > > > >   dwc3_qcom_of_register_core
-> > > > >     dwc3_probe
-> > > > > 
-> > > > >   if (device_can_wakeup(&qcom->dwc3->dev))
-> > > > >     ...
-> > > > > 
-> > > > > The important part is that device_can_wakeup() is called after dwc3_probe()
-> > > > > has completed. That's what I see on a QC SC7280 system, where wakeup is
-> > > > > generally working with these patches.
-> > > > > 
-> > > > > However on a QC SC7180 system dwc3_probe() is deferred and only executed after
-> > > > > dwc3_qcom_probe(). As a result the device_can_wakeup() call returns false.
-> > > > > With that the controller/driver ends up in an unhappy state after system
-> > > > > suspend.
-> > > > > 
-> > > > > Probing is deferred on SC7180 because device_links_check_suppliers() finds
-> > > > > that '88e3000.phy' isn't ready yet.
-> > > > 
-> > > > It seems device links could be used to make sure the dwc3 core is present:
-> > > > 
-> > > >   Another example for an inconsistent state would be a device link that
-> > > >   represents a driver presence dependency, yet is added from the consumer’s
-> > > >   ->probe callback while the supplier hasn’t probed yet: Had the driver core
-> > > >   known about the device link earlier, it wouldn’t have probed the consumer
-> > > >   in the first place. The onus is thus on the consumer to check presence of
-> > > >   the supplier after adding the link, and defer probing on non-presence.
-> > > > 
-> > > >   https://www.kernel.org/doc/html/v5.18/driver-api/device_link.html#usage
-> > > > 
-> > > > 
-> > > > You could add something like this to dwc3_qcom_of_register_core():
-> > > > 
-> > > > 
-> > > >   device_link_add(dev, &qcom->dwc3->dev,
-> > > >   		  DL_FLAG_AUTOREMOVE_CONSUMER | DL_FLAG_AUTOPROBE_CONSUMER);
-> > > > 
-> > > >   if (qcom->dwc3->dev.links.status != DL_DEV_DRIVER_BOUND)
-> > > >       ret = -EPROBE_DEFER;
-> > > > 
-> > > > 
-> > > I am not very sure how the device_link_add() API works. we are the parent and
-> > > creating a depdency on child probe. That does not sound correct to me.
-> > 
-> > The functional dependency is effectively there, the driver already assumes that
-> > the dwc3 core was probed when of_platform_populate() returns.
-> > 
-> > The device link itself doesn't create the dependency on the probe(), the check
-> > of the link status below does.
-> > 
-> > Another option would be to add a link to the PHYs to the dwc3-qcom node in
-> > the device tree, but I don't think that would be a better solution (and I
-> > expect Rob would oppose this).
-> > 
-> > I'm open to other solutions, so far the device link is the cleanest that came
-> > to my mind.
-> > 
-> > I think the root issue is the driver architecture, with two interdependent
-> > drivers for the same IP block, instead of a single framework driver with a
-> > common part (dwc3 core) and vendor specific hooks/data.
-> > 
-> > > Any ways, I have another question.
-> > > 
-> > > When dwc3_qcom_of_register_core() returns error back to dwc3_qcom_probe(), we
-> > > goto depopulate label which calls of_platform_depopulate() which destroy the
-> > > child devices that are populated. how does that ensure that child probe is
-> > > completed by the time, our probe is called again. The child device it self is
-> > > gone. Is this working because when our probe is called next time, the child
-> > > probe depenencies are resolved?
-> > 
-> > Good point! It doesn't really ensure that the child is probed (actually it
-> > won't be probed and DL_FLAG_AUTOPROBE_CONSUMER doesn't make sense here), it
-> > could happen that dwc3_qcom_probe() is deferred multiple times, but eventually
-> > the PHYs should be ready and dwc3_probe() be invoked through
-> > of_platform_populate().
-> 
-> This is a generic problem i.e if a parent can only proceed after the child
-> devices are bounded (i.e probed successfully), how to ensure this behavior
-> from the parent's probe? Since we can't block the parent probe (async probe is
-> not the default behavior), we have to identify the condition that the children
-> are deferring probe, so that parent also can do that.
-> 
-> Can we add a API in drivers core to tell if a device probe is deferred or
-> not? This can be done by testing list_empty(&dev->p->deferred_probe) under
-> deferred_probe_mutex mutex. The parent can return EPROBE_DEFER based on this
-> API return value.
+This is a preparatory series for IOMMUFD v2 patches. It enforces error
+code -EMEDIUMTYPE in iommu_attach_device() and iommu_attach_group() when
+an IOMMU domain and a device/group are incompatible. It also drops the
+useless domain->ops check since it won't fail in current environment.
 
-That could be an option.
+These allow VFIO iommu code to simplify its group attachment routine, by
+avoiding the extra IOMMU domain allocations and attach/detach sequences
+of the old code.
 
-> Another alternative would be explicitly checking if the child device suppliers
-> are ready or not before adding child device. That would require decoupling
-> of_platform_populate() to creating devices and adding devices.
+Worths mentioning the exact match for enforce_cache_coherency is removed
+with this series, since there's very less value in doing that since KVM
+won't be able to take advantage of it -- this just wastes domain memory.
+Instead, we rely on Intel IOMMU driver taking care of that internally.
 
-It might require a new API since there are plenty of users of
-of_platform_populate() that rely on the current behavior.
+This is on github:
+https://github.com/nicolinc/iommufd/commits/vfio_iommu_attach
 
-> Note that this problem is not just limited to suppliers not ready. if the
-> dwc3-qcom is made asynchronous probe, then its child also probed
-> asynchronously and there is no guarantee that child would be probed by the
-> time of_platform_populate() is returned.  The bus notifier might come handy
-> in this case. The parent can register for this notifier and waiting for
-> the children device's BUS_NOTIFY_BOUND_DRIVER/BUS_NOTIFY_DRIVER_NOT_BOUND
-> notifications. This would also work in our case, if we move to
-> of_platform_populate() outside the probe().
+Changelog
+v3:
+ * Dropped all dev_err since -EMEDIUMTYPE clearly indicates what error.
+ * Updated commit message of enforce_cache_coherency removing patch.
+ * Updated commit message of domain->ops removing patch.
+ * Replaced "goto out_unlock" with simply mutex_unlock() and return.
+ * Added a line of comments for -EMEDIUMTYPE return check.
+ * Moved iommu_get_msi_cookie() into alloc_attach_domain() as a cookie
+   should be logically tied to the lifetime of a domain itself.
+ * Added Kevin's "Reviewed-by".
+v2: https://lore.kernel.org/kvm/20220616000304.23890-1-nicolinc@nvidia.com/
+ * Added -EMEDIUMTYPE to more IOMMU drivers that fit the category.
+ * Changed dev_err to dev_dbg for -EMEDIUMTYPE to avoid kernel log spam.
+ * Dropped iommu_ops patch, and removed domain->ops in VFIO directly,
+   since there's no mixed-driver use case that would fail the sanity.
+ * Updated commit log of the patch removing enforce_cache_coherency.
+ * Fixed a misplace of "num_non_pinned_groups--" in detach_group patch.
+ * Moved "num_non_pinned_groups++" in PATCH-5 to the common path between
+   domain-reusing and new-domain pathways, like the code previously did.
+ * Fixed a typo in EMEDIUMTYPE patch.
+v1: https://lore.kernel.org/kvm/20220606061927.26049-1-nicolinc@nvidia.com/
 
-If I understand correctly the outcome would be a probe() in two stages. The
-first does as much as it can do without the dwc3 core and leaves the device
-in a state where it isn't really functional, and the second stage does the
-rest when BUS_NOTIFY_BOUND_DRIVER is received for the dwc3 core device.
+Jason Gunthorpe (1):
+  vfio/iommu_type1: Prefer to reuse domains vs match enforced cache
+    coherency
 
-A concern could be the need for additional conditions in some code paths to
-deal with the half-initialized device.
+Nicolin Chen (4):
+  iommu: Return -EMEDIUMTYPE for incompatible domain and device/group
+  vfio/iommu_type1: Remove the domain->ops comparison
+  vfio/iommu_type1: Clean up update_dirty_scope in detach_group()
+  vfio/iommu_type1: Simplify group attachment
 
-Why would of_platform_populate() be moved outside of probe()?
+ drivers/iommu/amd/iommu.c                   |   2 +-
+ drivers/iommu/apple-dart.c                  |   4 +-
+ drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c |  15 +-
+ drivers/iommu/arm/arm-smmu/arm-smmu.c       |   6 +-
+ drivers/iommu/arm/arm-smmu/qcom_iommu.c     |   9 +-
+ drivers/iommu/intel/iommu.c                 |  10 +-
+ drivers/iommu/iommu.c                       |  28 ++
+ drivers/iommu/ipmmu-vmsa.c                  |   4 +-
+ drivers/iommu/mtk_iommu_v1.c                |   2 +-
+ drivers/iommu/omap-iommu.c                  |   3 +-
+ drivers/iommu/s390-iommu.c                  |   2 +-
+ drivers/iommu/sprd-iommu.c                  |   6 +-
+ drivers/iommu/tegra-gart.c                  |   2 +-
+ drivers/iommu/virtio-iommu.c                |   3 +-
+ drivers/vfio/vfio_iommu_type1.c             | 340 ++++++++++----------
+ 15 files changed, 225 insertions(+), 211 deletions(-)
 
-To avoid the half-initialized device probe() could block until
-BUS_NOTIFY_BOUND_DRIVER is received. Probably that should be done with a
-timeout to avoid blocking forever in case of a problem with probing the
-dwc3 core.
+-- 
+2.17.1
+
