@@ -2,76 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BFDED557736
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jun 2022 11:56:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7D16F55783E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jun 2022 12:54:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231367AbiFWJ4B (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Jun 2022 05:56:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57382 "EHLO
+        id S231304AbiFWKyI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Jun 2022 06:54:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52248 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231171AbiFWJ4A (ORCPT
+        with ESMTP id S231292AbiFWKyH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Jun 2022 05:56:00 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C684E46158
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jun 2022 02:55:58 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id i18so18779814lfu.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jun 2022 02:55:58 -0700 (PDT)
+        Thu, 23 Jun 2022 06:54:07 -0400
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF79E4B843
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jun 2022 03:54:06 -0700 (PDT)
+Received: by mail-ej1-x630.google.com with SMTP id lw20so17869286ejb.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jun 2022 03:54:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=7I3TTWN/wwecpZB3nSKMxEQGHr0b18hK3/YGntHqpBA=;
-        b=USyuzvpLnWwvFy1lJjpUXIVRpcZYiLKJAcsuVnYfqiBnV102zpy7fueziMhn2hufjN
-         h4twOEQhWIuonqAnuLn20dl8z81gVcRsMqcS8qgjPHR1JapoGgCVx47tZJXbbtdLZqRJ
-         x5+it83WvReQj8rF5dwqsB9y8PTElnkMEfunpTyKk/l8ia/rU9J88YJR+dI9iHjjGC7Q
-         dZ+K/djNtq+2nhgZfpgYUcY+xBZ3TxepPwermtqxWPf7qIakouHNUyGdYNMVgUxTrhfE
-         wlv/C79XLKcsekEBYBzCFTbCpcaI+vD941Y35hxEP4Gvvt7MDMSaX8x9fmuzj8C+9s3t
-         kKLw==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ITqWXPM0CMutsVQgWnD+dufUaUOFlV5N4sbMJ4eWGxc=;
+        b=LBG1ZLEW6BFd+jvGvjrJU1oXS33K++g2frwy0dEaIVaujicywMYeScGmpjkyr/cd9L
+         OkNUVjFZQtz6k4pMKqLIZpHrijNdToZnVo+EKLfVVxQJpg0+5Vt0wVA93X8zwNTTaYe2
+         157z6rXWbggVB4nEnHqJfDEmwEu8Q2xOx5p5I4qwx4T/Dgw2zcGFs2XffsppfZupqg7c
+         edXqDVXcDmtj3l0qkHvocpFH0lBpzqDI4EsZTCQRgXUpudVRC6t/7kHG/B40lmponObN
+         f7QLGBQQG3Yj6Ci/ZMFeRduqZH9FWx61VtKCbCEOsftqcc0oIgS2SpwUJ84l6pTCjxlq
+         Ll6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=7I3TTWN/wwecpZB3nSKMxEQGHr0b18hK3/YGntHqpBA=;
-        b=tt1NyNMjKY8m09LddIwW4/oDTG6Fu/uMobCrz6P0QozY23OVs2ou/wDHKpvSUIkRr9
-         xGvVL/2SuKHNRc9L0eB79Guek4M055e4Ompk46XED+FGVb5pCONHx1TU174CLhLN9tbK
-         pGcR3mZ5soRB0OfPKa5/HlRthYKth6dYHknK0uhifemuDsnnnRvSBBuuRX8HfcklcuiX
-         rDaoMRVDvjSmkzmUoKGdjJ3SVwPLosQILMrsyru1luABc7yFzgtBs1JHgniSOoCIlgWV
-         hEJ3SYkNusk8sqGVyImcdFeneR66d/cKWpuSxLDnfe6UYD8Xr0snOhYWBniUxH4IEKBj
-         lgPw==
-X-Gm-Message-State: AJIora+XyjXZohJk1A9FcFg1VzqtRW2Rr5csgEKq9+hxGXeshe6PXUUI
-        IDyYnKB/EzmHyO0pI1zopmMDNg==
-X-Google-Smtp-Source: AGRyM1v4Q9yvmE7pbfBTUrw/Cd6mLuzEEELlqBH4NjBS6PsAsDd6asGEcJhZXpEdI1KBWqts81YnjA==
-X-Received: by 2002:a05:6512:304d:b0:47d:c236:566f with SMTP id b13-20020a056512304d00b0047dc236566fmr4848838lfb.641.1655978157101;
-        Thu, 23 Jun 2022 02:55:57 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id s9-20020a056512214900b004790b5a0b22sm2923672lfr.239.2022.06.23.02.55.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 23 Jun 2022 02:55:56 -0700 (PDT)
-Message-ID: <4c4efb31-14c8-9e58-edc2-7e2f787e6976@linaro.org>
-Date:   Thu, 23 Jun 2022 12:55:55 +0300
+        bh=ITqWXPM0CMutsVQgWnD+dufUaUOFlV5N4sbMJ4eWGxc=;
+        b=FCWPbg+pyq8E8W72f4F8Wxe6GrLuh5scwnw5Jt6/7p85tzPXeFuzTZG/pXfy0po5Qo
+         lUknm3zjWpGXIYfcS0WEg9ZcMnEAVOLj0tQLs2vraErmLq+AMoaKHfCp+DpwNW9nX867
+         E6YhnRaEBB0rsFdam6XLLww5KhjfX/qCsyNIGnMwyTwA2oNQMLbK6T0zf7hvz0tm0f7L
+         rrxxTjPqPMPpOLLBA4Rhe07pPfpa7YTn2MQVODJ5SbL3VWcI34775cXAisufaxDxWP/O
+         TRvcOvuzKO6OL+3tDiIr0AwgyFQmLcaWQUmhyxFAA7DV9ZnyjpzI1WUJSoWli8y4G+mL
+         vm/Q==
+X-Gm-Message-State: AJIora9OQOjgLNdwd8VE4Fb4vUGWrYGq1LinPJqHfQJ5Y2wfGNn6ZDvN
+        2y5Trr6vsC/YpjgCiRh5uWnM1w==
+X-Google-Smtp-Source: AGRyM1vbv2UsG+PPRTCgO6q66zSNufB51hMleDw8etsnFIZ0GMqq+d+Gqvdhi9dVLDt9P86ejDK1cQ==
+X-Received: by 2002:a17:907:3f84:b0:724:2ec:b474 with SMTP id hr4-20020a1709073f8400b0072402ecb474mr3175563ejc.644.1655981645363;
+        Thu, 23 Jun 2022 03:54:05 -0700 (PDT)
+Received: from localhost.localdomain (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id k27-20020a17090632db00b00721d8e5bf0bsm7854096ejk.6.2022.06.23.03.54.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 23 Jun 2022 03:54:04 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Amit Pundir <amit.pundir@linaro.org>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v4 0/3] dt-bindings: arm: qcom: qcom,board-id and qcom,msm-id
+Date:   Thu, 23 Jun 2022 12:53:58 +0200
+Message-Id: <20220623105401.168122-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: Removal of qcom,board-id and qcom,msm-id
-Content-Language: en-GB
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>,
-        krzysztof.kozlowski@linaro.org
-Cc:     agross@kernel.org, arnd@arndb.de, bjorn.andersson@linaro.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, olof@lixom.net, robh@kernel.org,
-        sboyd@kernel.org
-References: <a3c932d1-a102-ce18-deea-18cbbd05ecab@linaro.org>
- <20220522195138.35943-1-konrad.dybcio@somainline.org>
- <c072077a-cc16-c8f8-fcfa-891b3357cb66@linaro.org>
- <d0b55a37-428e-8081-6785-11be20aa14c7@somainline.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <d0b55a37-428e-8081-6785-11be20aa14c7@somainline.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -80,54 +79,56 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22/06/2022 14:53, Konrad Dybcio wrote:
-> 
-> 
-> On 22.06.2022 10:21, Dmitry Baryshkov wrote:
->> On 22/05/2022 22:51, Konrad Dybcio wrote:
->>> Hi,
->>>
->>> removing these properties will not bring almost any benefit (other than making
->>> some checks happy any saving some <200 LoC) and will make the lives of almost
->>> all people doing independent development for linux-on-msm harder. There are
->>> almost unironically like 3 people outside Linaro and QUIC who have
->>> non-vendor-fused development boards AND the sources to rebuild the
->>> bootloader on their own. Making it harder to boot is only going to
->>> discourage people from developing on these devices, which is already not
->>> that pleasant, especially with newer platforms where you have to fight with
->>> the oh-so-bright ideas of Android boot chain..
->>>
->>> This only concerns devices released before sm8350, as the new ones will not
->>> even boot with these properties present (or at least SONY Sagami, but I
->>> doubt it's an isolated case), so other than completing support for older
->>> devices, it won't be an issue going forward, anyway.
->>
->> I almost missed this part of the discussion (and Krzysztof had to point me to it in discussion of his patches).
->>
->> I think this is a Sony peculiarity. At least the distributed SM8350 (lahaina) and SM8450 (waipio) Qualcomm device trees use these properties:
->>
->> https://github.com/MiCode/kernel_devicetree/blob/zeus-s-oss/qcom/lahaina-hdk.dts
->> https://github.com/MiCode/kernel_devicetree/blob/zeus-s-oss/qcom/lahaina-v2.1.dtsi
->> https://github.com/MiCode/kernel_devicetree/blob/zeus-s-oss/qcom/waipio-qrd-pm8010.dts
->> https://github.com/MiCode/kernel_devicetree/blob/zeus-s-oss/qcom/waipio-v2.dtsi
->>
->>
-> Hi,
-> 
-> I was puzzled on this back when I first tried to get mainline booting on 8350 too. What I think happened, is that msm-id is used in some code paths, but not others (remember there are plenty of combinations including various Google's inventions from all over the years: QCDT, DTBO, vendor_boot, AVB signage, A/B presence/absence of recovery partition, virtual partitions etc etc).
-> 
-> Frankly, I have no idea why they are still here, but for booting just the kernel (no vendor_boot / GKI / dtbo mess), they need to be absent, at least on Sagami devices. This may be a bug in the Qualcomm bootloader, but they officially have to go with the GKI path to pass Google's compatibility tests, so this may not have been thouroughly tested (if at all), though I highly doubt this is going to change, as vendors are generally reluctant to update their bootloaders and Qualcomm is probably not interested in messing with a useless-to-the-main-purpose feature.
+Hi,
 
-I remember that on early sm8450 boards/bootloaders we had the issues 
-with the bootloader (I don't remember exact details). However I just 
-checked the SM4850-HDK + the downstream kernel + appended dtb (which 
-contains qcom,msm-id and qcom,board-id properties) and the kernel boots 
-fine. So, I can suppose, there was some kind of an issue, which got 
-fixed with later ABL releases.
+Changes since v3
+================
+1. Patch #1: Define all SoC IDs, based on Qualcomm socid driver (Konrad). Keep
+   Dmitry Rb tag, even though it is quite a change.
+2. New patch #2: use bindings in the socid driver.  The patch fails on checkpatch:
+   "Macros with complex values should be enclosed in parentheses"
+   but that's expected considering the macro contents.
 
-Anyway the latest Krzysztof's text seems fine to me. And if anybody adds 
-these properties to the DT, he knows what he is doing and why.
+Changes since v2
+================
+1. Adjust description of new fields after review (Dmitry).
+2. Change name of msm8996 define (Dmitry).
+3. Add Rb tags.
+
+Changes since v1
+================
+1. Make the qcom,board-id and qcom,msm-id properties deprecated and limited to
+   certain SoCs (Rob).
+2. Extend the qcom,board-id schema to match OnePlus variant - four elements -
+   and drop DTS patches splitting four into two touples (Stephan).
+
+Description
+===========
+The discussion [1] brought several arguments for keeping the qcom,board-id and
+qcom,msm-id properties.  Keeping means we should document them, so the DT
+schema checks pass.
+
+I revived old patch [2] with several changes and improvements.  The commit msg
+hopefully collects feedback from the discussion.
+
+Best regards,
+Krzysztof
+
+[1] https://lore.kernel.org/r/a3c932d1-a102-ce18-deea-18cbbd05ecab@linaro.org/
+[2] https://lore.kernel.org/all/1425503602-24916-1-git-send-email-galak@codeaurora.org/
+
+Krzysztof Kozlowski (3):
+  dt-bindings: arm: qcom: document qcom,msm-id and qcom,board-id
+  soc: qcom: socinfo: create soc_id table from bindings
+  arm64: dts: qcom: msm8992-xiaomi-libra: split qcom,msm-id into tuples
+
+ .../devicetree/bindings/arm/qcom.yaml         | 121 ++++++++
+ .../boot/dts/qcom/msm8992-xiaomi-libra.dts    |   2 +-
+ drivers/soc/qcom/socinfo.c                    | 259 +++++++++---------
+ include/dt-bindings/arm/qcom,ids.h            | 146 ++++++++++
+ 4 files changed, 401 insertions(+), 127 deletions(-)
+ create mode 100644 include/dt-bindings/arm/qcom,ids.h
 
 -- 
-With best wishes
-Dmitry
+2.34.1
+
