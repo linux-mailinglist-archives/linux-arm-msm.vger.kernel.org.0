@@ -2,69 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 85526557E04
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jun 2022 16:44:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A6F33557E5A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jun 2022 16:58:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231478AbiFWOoC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Jun 2022 10:44:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38974 "EHLO
+        id S231975AbiFWO6o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Jun 2022 10:58:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53308 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231159AbiFWOoB (ORCPT
+        with ESMTP id S231744AbiFWO6o (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Jun 2022 10:44:01 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B1EC2EA05
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jun 2022 07:44:00 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id x3so6080692lfd.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jun 2022 07:44:00 -0700 (PDT)
+        Thu, 23 Jun 2022 10:58:44 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B48DB24F03
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jun 2022 07:58:42 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id fi2so708245ejb.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jun 2022 07:58:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=GGJIrQZ1dGSDsKYzwTH8HIyaaJizqDdsQhaO3cSd77A=;
-        b=VyZDga2b/+FX3G3SKJuI1An91g3UxE0TwKAwvFaK/fL0Fqvkz2FEMxknoUnozT8+dB
-         3kTZp5StOUpoFilAHKDb+M5haITHntU/I+BPELbwz/Nw9Bdbw7ZmuKi0JrdLWRTlzRrr
-         4gUDayGFMJ1tSOd5omRo8sPPTSdz/s/8oCXCNfI+/lTH9Wj3kYp1smHCHOv8KWSPsCoH
-         WhFZEQPAsHtzB1AztC72raIhyUlh2N3esPKrKAaH3YQidQAkKxtxryJWi0M8bot6A6G7
-         yRfDzvR2ubk0s3WPEadN6gV6KHvH0YkK2n01SgW32PphAhc4Bul61AAc8Q8h9GGlzZjo
-         cjaA==
+        bh=Y3C1rVPk3dPdQBmkyB1J9bluo/i+1VAHektHpfoJOfg=;
+        b=eVaMHAr2oC82IAagxnteHFSDcz7RlK0q2TZUuHIizv2N5Kq5o9RBYn/2V1MywyL6i3
+         QdvHiX21MNjDcFOs1BNL08YsmRqqaK2gHafg2vinVJWoSAzyueB8pPLhYNI5LG0nB9r/
+         vV5y7JVBLEqNCeAkpLHApqchL5gU6ZszSf9o9VN3nXvz8xfZ5Dck4nLvPRMdeXuEmjQj
+         qipaYGlOKb/1pUDtZIDAwncuSheh1K6YvswOOoQ2j9RZRr0gxegpYYBEeNAe3YydJ/hb
+         SnVN4vWa+HZ1pqlzp2+Si1/DLDAUNA7xyvZQLkPZw57CKTEt0lN3p7t8bcF2jYk6fAjv
+         9j7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=GGJIrQZ1dGSDsKYzwTH8HIyaaJizqDdsQhaO3cSd77A=;
-        b=6NgOfpdq2PoHtUw18oYA2e8TIbj0tQcV1sbpuYMP1PbwU67uvkk/Xlbptjw6RVu4DB
-         WpONU1w6MfSqRynbuE/V9JnBV78DM6RM8jIOga7bg+sLorbmQdfx+S9/WYSqSXxWNsMv
-         dJL6VYj4mvF5cfNITzPJBnQvtvv9t63qegAI/hnlRw2NSvdwP8/Bk3Rmq1TRvJQjIuto
-         iboLKJ39EZjysz/Dfp2em7D40njAp3H98HfMctEecl6NgytlKJPhAMxczL01Q1tvy2iG
-         W8zzL0Ad0JOdFdwZWNIdcZ8rkV4rukkPG35O/EYr2apTP3TGxjZUG0xyULW/WB2IcpND
-         OfcQ==
-X-Gm-Message-State: AJIora/AF+tFAS5VMHDAwK73PRiAZ6PsQHPKeXatVJDvt3QlHohABnia
-        hQvZn/Q3iNXOEMMuSINyjJ2VOw==
-X-Google-Smtp-Source: AGRyM1vu4XsRKStXmVemK3XSOHQdmb7PE2OQGpbcamLonbZcjvVe2ZA5WEVQUTLq0JFh+Vw55ulpZg==
-X-Received: by 2002:a05:6512:318a:b0:47f:9fdc:fdb with SMTP id i10-20020a056512318a00b0047f9fdc0fdbmr3363003lfe.584.1655995438923;
-        Thu, 23 Jun 2022 07:43:58 -0700 (PDT)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id x4-20020a056512078400b0047f6c48a603sm1829647lfr.202.2022.06.23.07.43.58
+        bh=Y3C1rVPk3dPdQBmkyB1J9bluo/i+1VAHektHpfoJOfg=;
+        b=ieDA30jHHh9ArlY/2Lqox7EUsknkDvCNgBsYzQlnWtTlbr1szWcR8emVxuX7OgkaPJ
+         24XSNNVb4GP7an0E8Etq8QUjk/1YREuw0iq07pPsMhCpgrqVLNU5hR/KPfO0pMkuGpM2
+         GOiOPcEQKiCJJ8rI4ZDB/AMV/ACqWfSJOp2Y+i6i709z8UT3HDNgeCjGY5B/P0+44jD2
+         gNdfGkF1V6DDNBWP3m1fL3IqToF4lATuRkg1kZXWLGqeNlCLtSxugWZeo1ZYfFXB6bU4
+         AdBJ2k3IkC3JFWgI+5dAVDMtaqE0VXFXskJZI1ZKUfqDqV/DuBxtd5MSI0eQWx6Zm6xW
+         CLXw==
+X-Gm-Message-State: AJIora+OYjEaXb/HvjsgHFA5Q8I6E2K3EAlgVeIFNEEl/nxX5cTt++x4
+        htr6H0ghPklARG4w7wirvx8dIQ==
+X-Google-Smtp-Source: AGRyM1sci6mwJozc2hMmlhymIpKJZRmDhVDXZoRmJzbimMA7FpKYPx4rRJO+hTuNriUckbfyZ4eqSA==
+X-Received: by 2002:a17:907:9816:b0:726:2b90:4bab with SMTP id ji22-20020a170907981600b007262b904babmr939600ejc.544.1655996321231;
+        Thu, 23 Jun 2022 07:58:41 -0700 (PDT)
+Received: from localhost.localdomain (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id c18-20020a05640227d200b0042617ba6396sm18238783ede.32.2022.06.23.07.58.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Jun 2022 07:43:58 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Rob Herring <robh@kernel.org>,
-        Masahiro Yamada <masahiroy@kernel.org>,
-        Michal Marek <michal.lkml@markovi.net>,
-        Nick Desaulniers <ndesaulniers@google.com>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Tom Rini <trini@konsulko.com>, linux-kbuild@vger.kernel.org
-Subject: [PATCH v3] kbuild: Enable DT schema checks for %.dtb targets
-Date:   Thu, 23 Jun 2022 17:43:57 +0300
-Message-Id: <20220623144357.297252-1-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.35.1
+        Thu, 23 Jun 2022 07:58:40 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Rob Herring <robh@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        linux-arm-msm@vger.kernel.org
+Subject: [GIT PULL] dt-bindings: qcom for v5.20
+Date:   Thu, 23 Jun 2022 16:58:37 +0200
+Message-Id: <20220623145837.456817-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -72,73 +71,76 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-It is possible to build a single dtb, but not with DT schema validation
-enabled. Enable the schema validation to run for %.dtb and %.dtbo
-targets. Anyone building a dtb for a specific platform *should* pay
-attention to schema warnings.
+Hi Rob and Bjorn,
 
-This could be supported with a separate %.dt.yaml target instead.
-However, the .dt.yaml format is considered an intermediate format and
-could possibly go away at some point if schema checking is integrated
-into dtc. Also, the plan is to enable the schema checks by default once
-platforms are free of warnings, and this is a move in that direction.
+I am fixing/improving quite a lot of Qualcomm bindings and I produced several
+separate patchsets. They wait on mailing list for quite a long time, in some
+cases two months, so I decided to grab all them and send in one organized pull.
 
-This patch differs from the previous one ([1]) in the fact that it
-requires specifying VALIDATE_DT=1 to run the checks while doing the
-build. Thus default build procedures would not obtain additional build
-dependency, while maintainers can still build a single DTB file an get
-only corresponding warnings.
+All patches here got Rob's ack.
 
-[1] https://lore.kernel.org/all/20210913145146.766080-1-robh@kernel.org/
+This also brings compatibles for Qualcomm boards, therefore it might be
+desirable to merge everything through Bjorn's tree, however at this point I
+want to just get it merged as fast as possible, because I am really afraid they
+will miss the v5.20 cycle.  Therefore the pull is towards Rob, but maybe
+First-comes-first-served is also good approach.
 
-Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc: Tom Rini <trini@konsulko.com>
-Cc: Masahiro Yamada <masahiroy@kernel.org>
-Cc: linux-kbuild@vger.kernel.org
-Co-developed-by: Rob Herring <robh@kernel.org>
-Signed-off-by: Rob Herring <robh@kernel.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- Makefile | 18 ++++++++++++++----
- 1 file changed, 14 insertions(+), 4 deletions(-)
+Best regards,
+Krzysztof
 
-diff --git a/Makefile b/Makefile
-index c43d825a3c4c..0942922384c4 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1365,11 +1365,17 @@ endif
- 
- ifneq ($(dtstree),)
- 
--%.dtb: include/config/kernel.release scripts_dtc
--	$(Q)$(MAKE) $(build)=$(dtstree) $(dtstree)/$@
-+ifneq ($(VALIDATE_DT),)
-+DT_YAML = $(dtstree)/$*.dt.yaml
-+DT_CHECK = dt_binding_check
-+export CHECK_DTBS=y
-+endif
- 
--%.dtbo: include/config/kernel.release scripts_dtc
--	$(Q)$(MAKE) $(build)=$(dtstree) $(dtstree)/$@
-+%.dtb: include/config/kernel.release scripts_dtc $(DT_CHECK)
-+	$(Q)$(MAKE) $(build)=$(dtstree) $(dtstree)/$@ $(DT_YAML)
-+
-+%.dtbo: include/config/kernel.release scripts_dtc $(DT_CHECK)
-+	$(Q)$(MAKE) $(build)=$(dtstree) $(dtstree)/$@ $(DT_YAML)
- 
- PHONY += dtbs dtbs_install dtbs_check
- dtbs: include/config/kernel.release scripts_dtc
-@@ -1654,6 +1660,10 @@ help:
- 	@echo  '		3: more obscure warnings, can most likely be ignored'
- 	@echo  '		e: warnings are being treated as errors'
- 	@echo  '		Multiple levels can be combined with W=12 or W=123'
-+	@$(if $(dtstree), \
-+		echo '  make VALIDATE_DT=y [targets] Validate all DT processsed during the build'; \
-+		echo '         This can be applied both to "dtbs" and to individual "foo.dtb" targets' ; \
-+		)
- 	@echo  ''
- 	@echo  'Execute "make" or "make all" to build all targets marked with [*] '
- 	@echo  'For further info see the ./README file'
--- 
-2.35.1
 
+The following changes since commit f2906aa863381afb0015a9eb7fefad885d4e5a56:
+
+  Linux 5.19-rc1 (2022-06-05 17:18:54 -0700)
+
+are available in the Git repository at:
+
+  https://git.kernel.org/pub/scm/linux/kernel/git/krzk/linux-dt.git tags/dt-bindings-qcom-5.20
+
+for you to fetch changes up to f9702486c77ba74f65859098e3d8e4bdb2e8a745:
+
+  dt-bindings: arm: qcom: add missing SM6350 board compatibles (2022-06-22 10:11:34 +0200)
+
+----------------------------------------------------------------
+Devicetree bindings for Qualcomm for v5.20
+
+Cleanup, fixes and additions of missing pieces for Qualcomm bindings.
+These are address dtbs_check warnings and do not bring new hardware
+(new compatibles are added for existing boards/hardware).
+
+----------------------------------------------------------------
+Krzysztof Kozlowski (24):
+      dt-bindings: soc: qcom,rpmh-rsc: simplify qcom,tcs-config
+      spi: dt-bindings: qcom,spi-geni-qcom: allow three interconnects
+      dt-bindings: soc: qcom: aoss: document qcom,sm8450-aoss-qmp
+      dt-bindings: soc: qcom: qcom,smd-rpm: add power-controller
+      dt-bindings: nvmem: qfprom: add IPQ8064 and SDM630 compatibles
+      dt-bindings: leds: qcom-wled: fix number of addresses
+      dt-bindings: arm: qcom: fix Alcatel OneTouch Idol 3 compatibles
+      dt-bindings: arm: qcom: fix Longcheer L8150 compatibles
+      dt-bindings: arm: qcom: fix MSM8916 MTP compatibles
+      dt-bindings: arm: qcom: fix MSM8994 boards compatibles
+      dt-bindings: arm: qcom: add missing MSM8916 board compatibles
+      dt-bindings: arm: qcom: add missing MSM8994 board compatibles
+      dt-bindings: arm: qcom: add missing SM8150 board compatibles
+      dt-bindings: arm: qcom: add missing SM8250 board compatibles
+      dt-bindings: arm: qcom: add missing SM8350 board compatibles
+      dt-bindings: vendor-prefixes: add Shift GmbH
+      dt-bindings: arm: qcom: add missing MSM8998 board compatibles
+      dt-bindings: arm: qcom: add missing MSM8992 board compatibles
+      dt-bindings: arm: qcom: add missing QCS404 board compatibles
+      dt-bindings: arm: qcom: add missing SDM630 board compatibles
+      dt-bindings: arm: qcom: add missing SDM636 board compatibles
+      dt-bindings: arm: qcom: add missing SDM845 board compatibles
+      dt-bindings: arm: qcom: add missing SM6125 board compatibles
+      dt-bindings: arm: qcom: add missing SM6350 board compatibles
+
+ Documentation/devicetree/bindings/arm/qcom.yaml    | 108 +++++++++++++++++++--
+ .../bindings/leds/backlight/qcom-wled.yaml         |   9 +-
+ .../devicetree/bindings/nvmem/qcom,qfprom.yaml     |   2 +
+ .../bindings/soc/qcom/qcom,aoss-qmp.yaml           |   1 +
+ .../bindings/soc/qcom/qcom,rpmh-rsc.yaml           |  33 +++----
+ .../devicetree/bindings/soc/qcom/qcom,smd-rpm.yaml |   3 +
+ .../bindings/spi/qcom,spi-geni-qcom.yaml           |   5 +-
+ .../devicetree/bindings/vendor-prefixes.yaml       |   2 +
+ 8 files changed, 133 insertions(+), 30 deletions(-)
