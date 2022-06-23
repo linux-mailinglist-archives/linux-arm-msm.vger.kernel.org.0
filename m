@@ -2,50 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 90F5E5579E8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jun 2022 14:05:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 349F55579EA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jun 2022 14:05:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231717AbiFWMEp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Jun 2022 08:04:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52154 "EHLO
+        id S231631AbiFWMEq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Jun 2022 08:04:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52272 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231708AbiFWMEi (ORCPT
+        with ESMTP id S231756AbiFWMEl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Jun 2022 08:04:38 -0400
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 685974B42F
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jun 2022 05:04:32 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id i18so19326888lfu.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jun 2022 05:04:32 -0700 (PDT)
+        Thu, 23 Jun 2022 08:04:41 -0400
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 681EC4B424
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jun 2022 05:04:31 -0700 (PDT)
+Received: by mail-lj1-x22c.google.com with SMTP id by38so1230227ljb.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jun 2022 05:04:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=l4v06pir8BnrBBj0ls39eeym2+zaCxMALQgwSDSsGCU=;
-        b=X555fxSbDxrZ/6MCXqe5e46ShTfmWHcALxDAYr0dEE+Imn2jzLWlbdqbTphVAWO2WZ
-         y4VGGgiruzIXa8MC2XiayZz2q+LUTsBIZuG8YUEaCv+0MV1qk9VlG/BIdS4SzeSOr+5U
-         iOp5Nz/xf76vP1bO2hNR0HVscCpZtlg+i4q8FDxDrURUfog6bJLdbr+1SZNvCe6MU89D
-         qJ5cW7bLMlvMNTTdaY4z63rNH5GeM4amNH/1XTmTjLaCXwLifyP5dD5G9gqy8NCm21pK
-         aOuajA5Dtns7XOx/aGMY4e1nevJ/cLys9/iMQs7cAhdqRt5OCdZdvl8ylkwgMgJQzGkp
-         x7iw==
+        bh=+ZSA6xHQZ9aqASlGuBjY/Lc+K6EWssVTLnudC8h7Ugc=;
+        b=jEPdaVuSYHVAXI7PQcfhMs4Y48HYVRpwDx3OONIo7QHh2qHN6THTxsy+0wO7neM4QW
+         lSbhb5hAp+p/xUydOV8w+tOmQUkPGz50ayN71VkENvO0xhls1Zy+D64YB27CTbuBjTb2
+         tCydXhELrmdwaNphsLdp0bXh9N76gERgiaDfGKgM4anRcgHCMlrAXODA86MxZDFlh/Ky
+         hkBXBMDLzPTiRzOxKZJaiZukIbfEI2deubmkajDchSWwVGyN0JnDMNOHMKag2/Iiaon8
+         eh+qRooEG/E1BlNqWRUW+wIpholTv8Xldpm5Bt/wB3ADYORn1cT3PoIR4Spkroa7o/6/
+         Ev4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=l4v06pir8BnrBBj0ls39eeym2+zaCxMALQgwSDSsGCU=;
-        b=QPlLyBV0bpjxHThYkmzy5jgGLa8IWyShgVKM3yXASM/wrK8QHDRevgVfZ88BYM4CUi
-         qqgXMA+KrospZc/sy9b3TUjWYRvML0+ARJNk+1t/9mafOTW7ye4xJUEUT6KFajypuFI3
-         42a5bhu3DUDq+dBHMfQr+ZZcK0yyTMb6Y3p5wEWyHk83ALJYwGxwVKo2UXJXD9Zu0SiR
-         gdKB3vCeUbLeCdN/t+ByBDwYtSEaX8NM5DCmLsB+yTGEwvkn9xOtAQHcsni4jalhw3UM
-         UcdnMSPO5maVlZChbclO+RKSeZlJTyHcUlN75DQgENiB7y1cFAhqR479793w37RgxzyQ
-         LJqQ==
-X-Gm-Message-State: AJIora/FD1JgJeWowvQIXp+hZCL5jeQ/IsRaSoWVnW0VflEdDh6xzoQn
-        Gigm6KPguLpoBgCBWf2KgAqsiQ==
-X-Google-Smtp-Source: AGRyM1u16w/dCwSh8ku2jFBX2Bo79H8keNAp4wo9dIxNAU9PbQpArZOt7sEcbqpxdXflkdhCczQlpQ==
-X-Received: by 2002:a05:6512:3f1e:b0:47f:40e2:9fd8 with SMTP id y30-20020a0565123f1e00b0047f40e29fd8mr5398055lfa.110.1655985870502;
-        Thu, 23 Jun 2022 05:04:30 -0700 (PDT)
+        bh=+ZSA6xHQZ9aqASlGuBjY/Lc+K6EWssVTLnudC8h7Ugc=;
+        b=hfBA6ThyxsLAQE/G0qhEw3QqOJRdjByTwBTQfmBFu/JT94zG7Bg6JJN6S78g/i2CH2
+         5jU1EK8CVb33ie+ebhmz+tHQCzsmOJSW5y4gQNQo39/uC8DN6Mruwa34Jmh3i9k4iNt4
+         947m6Bvh6mHRu1alnIFf/QGz4UEWNzfezXAKS76zJ00lcte8XqlaY9Ex8o71T0QjiSjf
+         Bmtsvo8csRlokAibwtrV6HlqGRWigal2kkPam0WEUz4EwUsSzhN/0TWay7c46UsgfV7k
+         O8F70UYEX1IWN+ZYbjMJgnu/Xp+mU2y8DG5Ct2SHHongyPbNj8gqRY536pEihz1VRSXX
+         6+Vg==
+X-Gm-Message-State: AJIora/jU31myIIpGI03zVQeodvBWeElbcOZnGCygjo3ifvEFZlkCnzK
+        dIgI8KV8Z6UukbQbVpQYP1M/pg==
+X-Google-Smtp-Source: AGRyM1vyTttTf9/+DOHZEFqBUI8Pj1xvEChHdF/WQ4rT74eb+M5p7WPr4E+2gOh2gRvp14Eyf/lSGg==
+X-Received: by 2002:a2e:a78a:0:b0:25a:8c6a:f3c7 with SMTP id c10-20020a2ea78a000000b0025a8c6af3c7mr3421276ljf.218.1655985871235;
+        Thu, 23 Jun 2022 05:04:31 -0700 (PDT)
 Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id 18-20020ac25f52000000b0047f6b4a53cdsm1799888lfz.172.2022.06.23.05.04.29
+        by smtp.gmail.com with ESMTPSA id 18-20020ac25f52000000b0047f6b4a53cdsm1799888lfz.172.2022.06.23.05.04.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Thu, 23 Jun 2022 05:04:30 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
@@ -58,9 +58,9 @@ To:     Andy Gross <agross@kernel.org>,
         Taniya Das <quic_tdas@quicinc.com>
 Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         devicetree@vger.kernel.org
-Subject: [PATCH 14/15] ARM: dts: qcom: apq8064: add clocks to the MMCC device node
-Date:   Thu, 23 Jun 2022 15:04:17 +0300
-Message-Id: <20220623120418.250589-15-dmitry.baryshkov@linaro.org>
+Subject: [PATCH 15/15] ARM: dts: qcom: msm8960: add clocks to the MMCC device node
+Date:   Thu, 23 Jun 2022 15:04:18 +0300
+Message-Id: <20220623120418.250589-16-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220623120418.250589-1-dmitry.baryshkov@linaro.org>
 References: <20220623120418.250589-1-dmitry.baryshkov@linaro.org>
@@ -81,22 +81,22 @@ and clock-names properties to the MMCC device tree node.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- arch/arm/boot/dts/qcom-apq8064.dtsi | 16 ++++++++++++++++
+ arch/arm/boot/dts/qcom-msm8960.dtsi | 16 ++++++++++++++++
  1 file changed, 16 insertions(+)
 
-diff --git a/arch/arm/boot/dts/qcom-apq8064.dtsi b/arch/arm/boot/dts/qcom-apq8064.dtsi
-index 9ea279f04a78..87b92cb95e77 100644
---- a/arch/arm/boot/dts/qcom-apq8064.dtsi
-+++ b/arch/arm/boot/dts/qcom-apq8064.dtsi
-@@ -861,6 +861,22 @@ mmcc: clock-controller@4000000 {
+diff --git a/arch/arm/boot/dts/qcom-msm8960.dtsi b/arch/arm/boot/dts/qcom-msm8960.dtsi
+index c7058da58be5..b65659801b6e 100644
+--- a/arch/arm/boot/dts/qcom-msm8960.dtsi
++++ b/arch/arm/boot/dts/qcom-msm8960.dtsi
+@@ -164,6 +164,22 @@ clock-controller@4000000 {
  			#clock-cells = <1>;
  			#power-domain-cells = <1>;
  			#reset-cells = <1>;
 +			clocks = <&pxo_board>,
 +				 <&gcc PLL3>,
 +				 <&gcc PLL8_VOTE>,
-+				 <&dsi0_phy 1>,
-+				 <&dsi0_phy 0>,
++				 <0>,
++				 <0>,
 +				 <0>,
 +				 <0>,
 +				 <0>;
