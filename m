@@ -2,68 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A6F33557E5A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jun 2022 16:58:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6ACC1557EA4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jun 2022 17:32:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231975AbiFWO6o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Jun 2022 10:58:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53308 "EHLO
+        id S231987AbiFWPce (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Jun 2022 11:32:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43182 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231744AbiFWO6o (ORCPT
+        with ESMTP id S231905AbiFWPcd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Jun 2022 10:58:44 -0400
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B48DB24F03
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jun 2022 07:58:42 -0700 (PDT)
-Received: by mail-ej1-x62c.google.com with SMTP id fi2so708245ejb.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jun 2022 07:58:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Y3C1rVPk3dPdQBmkyB1J9bluo/i+1VAHektHpfoJOfg=;
-        b=eVaMHAr2oC82IAagxnteHFSDcz7RlK0q2TZUuHIizv2N5Kq5o9RBYn/2V1MywyL6i3
-         QdvHiX21MNjDcFOs1BNL08YsmRqqaK2gHafg2vinVJWoSAzyueB8pPLhYNI5LG0nB9r/
-         vV5y7JVBLEqNCeAkpLHApqchL5gU6ZszSf9o9VN3nXvz8xfZ5Dck4nLvPRMdeXuEmjQj
-         qipaYGlOKb/1pUDtZIDAwncuSheh1K6YvswOOoQ2j9RZRr0gxegpYYBEeNAe3YydJ/hb
-         SnVN4vWa+HZ1pqlzp2+Si1/DLDAUNA7xyvZQLkPZw57CKTEt0lN3p7t8bcF2jYk6fAjv
-         9j7Q==
+        Thu, 23 Jun 2022 11:32:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 76D0941989
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jun 2022 08:32:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1655998351;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=b2n5xLD7AQDK+GpcG4O4X1piM0yxBHUCyVpdCvBcmLA=;
+        b=jLsuyRQ0L4+mpIGD3ZTFv6MBqlConFdYHax7tTtXC/GhXy3gKWmxKoJBR2do0ELW7Ks45P
+        y4A0heWJQj7sN+Cl9G94Zud2iIKGD9iDsq3el4Xq69Xz2BbwpYk32TduA7g9hUuQt20vPo
+        jYNh6knHlQxatb6QRYwt7y24EnPE1ok=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ us-mta-665-eARE9DbbP_mWRwuf7U4McA-1; Thu, 23 Jun 2022 11:32:30 -0400
+X-MC-Unique: eARE9DbbP_mWRwuf7U4McA-1
+Received: by mail-qk1-f198.google.com with SMTP id ay8-20020a05620a178800b006a76e584761so23818071qkb.13
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jun 2022 08:32:30 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Y3C1rVPk3dPdQBmkyB1J9bluo/i+1VAHektHpfoJOfg=;
-        b=ieDA30jHHh9ArlY/2Lqox7EUsknkDvCNgBsYzQlnWtTlbr1szWcR8emVxuX7OgkaPJ
-         24XSNNVb4GP7an0E8Etq8QUjk/1YREuw0iq07pPsMhCpgrqVLNU5hR/KPfO0pMkuGpM2
-         GOiOPcEQKiCJJ8rI4ZDB/AMV/ACqWfSJOp2Y+i6i709z8UT3HDNgeCjGY5B/P0+44jD2
-         gNdfGkF1V6DDNBWP3m1fL3IqToF4lATuRkg1kZXWLGqeNlCLtSxugWZeo1ZYfFXB6bU4
-         AdBJ2k3IkC3JFWgI+5dAVDMtaqE0VXFXskJZI1ZKUfqDqV/DuBxtd5MSI0eQWx6Zm6xW
-         CLXw==
-X-Gm-Message-State: AJIora+OYjEaXb/HvjsgHFA5Q8I6E2K3EAlgVeIFNEEl/nxX5cTt++x4
-        htr6H0ghPklARG4w7wirvx8dIQ==
-X-Google-Smtp-Source: AGRyM1sci6mwJozc2hMmlhymIpKJZRmDhVDXZoRmJzbimMA7FpKYPx4rRJO+hTuNriUckbfyZ4eqSA==
-X-Received: by 2002:a17:907:9816:b0:726:2b90:4bab with SMTP id ji22-20020a170907981600b007262b904babmr939600ejc.544.1655996321231;
-        Thu, 23 Jun 2022 07:58:41 -0700 (PDT)
-Received: from localhost.localdomain (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id c18-20020a05640227d200b0042617ba6396sm18238783ede.32.2022.06.23.07.58.40
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=b2n5xLD7AQDK+GpcG4O4X1piM0yxBHUCyVpdCvBcmLA=;
+        b=LxpJ5BlY7DrxKfHCkagJdnU4pimBs7MRaaXDdQWNGsr+Dh1JT0zTWPdtM9tD3tJt+R
+         E87psnSTWCwSNsLzM/s0f3CRBR/3Bc/T4VDqofYBonyG6y7+PLc6274C5D/i3g4T6FVH
+         u3JR8dxl6SHzQZr7jXL53JlJhEsdX2+JF+Tvnuft/ZgHGcffVJmvWmuFE3G3yJ3JnX6f
+         3EVIj7/I6kh9yNUt4yG4t3djMyp40Hd+dwuGwGc4mFGOH467tUHXLq6y1ReAz2gP0xq4
+         URzl0C6jJf9lLa8O7FbceGl32KSlvsqxXF3KDk4DifBAx8O34RxazG8SgZ60+AUZEaC9
+         Pslg==
+X-Gm-Message-State: AJIora87MsUwErp6CNqJu2kSFSS2RyrUIExZ7V/GOIzH/HectwtyQ+PD
+        zxo2L9W3/KXuvuneSPecWO6nOCTVEZX9/13cSpOYJyuLxjfpUwzhmH5kUfkYS9Eh3GVtB3lc4wV
+        GehBUufMBPqAASeFAyNtAGK0FLQ==
+X-Received: by 2002:a05:6214:29ca:b0:46b:92c5:9f3b with SMTP id gh10-20020a05621429ca00b0046b92c59f3bmr32129039qvb.20.1655998349428;
+        Thu, 23 Jun 2022 08:32:29 -0700 (PDT)
+X-Google-Smtp-Source: AGRyM1v3ddAmHP4GNMm6NGiuKRAyJLCHiaGoJECW7QzVyWqpeYX0hMGqRDuYk0d3CinVTSkb2kBBeA==
+X-Received: by 2002:a05:6214:29ca:b0:46b:92c5:9f3b with SMTP id gh10-20020a05621429ca00b0046b92c59f3bmr32129018qvb.20.1655998349055;
+        Thu, 23 Jun 2022 08:32:29 -0700 (PDT)
+Received: from halaneylaptop ([2600:1700:1ff0:d0e0::46])
+        by smtp.gmail.com with ESMTPSA id y29-20020a37f61d000000b006a3325fd985sm18291762qkj.13.2022.06.23.08.32.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Jun 2022 07:58:40 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Rob Herring <robh@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        linux-arm-msm@vger.kernel.org
-Subject: [GIT PULL] dt-bindings: qcom for v5.20
-Date:   Thu, 23 Jun 2022 16:58:37 +0200
-Message-Id: <20220623145837.456817-1-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
+        Thu, 23 Jun 2022 08:32:28 -0700 (PDT)
+Date:   Thu, 23 Jun 2022 10:32:26 -0500
+From:   Andrew Halaney <ahalaney@redhat.com>
+To:     Brian Masney <bmasney@redhat.com>
+Cc:     bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
+        agross@kernel.org, mturquette@baylibre.com, sboyd@kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        echanude@redhat.com
+Subject: Re: [PATCH] clk: qcom: sc8280xp: add parent to gcc_ufs_phy_axi_clk
+ for sa8540p
+Message-ID: <20220623153226.drrbx2jolrxxe7as@halaneylaptop>
+References: <20220623142837.3140680-1-bmasney@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220623142837.3140680-1-bmasney@redhat.com>
+X-Spam-Status: No, score=-3.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -71,76 +79,93 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rob and Bjorn,
+On Thu, Jun 23, 2022 at 10:28:37AM -0400, Brian Masney wrote:
+> The sa8540p automotive board has the same SOC as the sc8280xp. In order
+> to get the first UFS controller working on the sa8540p,
+> GCC_UFS_REF_CLKREF_CLK needs to be setup as a parent to
+> GCC_UFS_PHY_AXI_CLK.
+> 
+> This clock name came from the DTS for the downstream MSM 5.4 kernel
+> sources for the sa8540p. It also references GCC_UFS_CARD_CLKREF_CLK,
+> however that wasn't needed to get the first UFS controller working.
+> 
 
-I am fixing/improving quite a lot of Qualcomm bindings and I produced several
-separate patchsets. They wait on mailing list for quite a long time, in some
-cases two months, so I decided to grab all them and send in one organized pull.
+I'm not knowledgable enough on the clock subsystem or have access to
+documentation to comment on correctness outside of the 5.4 MSM kernel
+you mentioned, but I think this probably deserves a Fixes: tag?
 
-All patches here got Rob's ack.
+I can at least also comment that without this change the sa8540p doesn't
+boot on the QDrive3 boards we have.
 
-This also brings compatibles for Qualcomm boards, therefore it might be
-desirable to merge everything through Bjorn's tree, however at this point I
-want to just get it merged as fast as possible, because I am really afraid they
-will miss the v5.20 cycle.  Therefore the pull is towards Rob, but maybe
-First-comes-first-served is also good approach.
+Thanks,
+Andrew
 
-Best regards,
-Krzysztof
+> Signed-off-by: Brian Masney <bmasney@redhat.com>
+> ---
+> I originally added this under GCC_UFS_PHY_PHY_AUX_CLK since that's
+> what's in the downstream DTS. I was getting errors about
+> GCC_UFS_PHY_AXI_CLK being stuck at off so I moved it there.
+> 
+> Also I don't have access to any documentation for this board so I'm
+> hoping that someone with docs access can verify that this is the
+> appropriate place to put this.
+> 
+>  drivers/clk/qcom/gcc-sc8280xp.c | 27 ++++++++++++++-------------
+>  1 file changed, 14 insertions(+), 13 deletions(-)
+> 
+> diff --git a/drivers/clk/qcom/gcc-sc8280xp.c b/drivers/clk/qcom/gcc-sc8280xp.c
+> index 4b894442fdf5..4639b50da418 100644
+> --- a/drivers/clk/qcom/gcc-sc8280xp.c
+> +++ b/drivers/clk/qcom/gcc-sc8280xp.c
+> @@ -5685,6 +5685,19 @@ static struct clk_branch gcc_ufs_phy_ahb_clk = {
+>  	},
+>  };
+>  
+> +static struct clk_branch gcc_ufs_ref_clkref_clk = {
+> +	.halt_reg = 0x8c058,
+> +	.halt_check = BRANCH_HALT,
+> +	.clkr = {
+> +		.enable_reg = 0x8c058,
+> +		.enable_mask = BIT(0),
+> +		.hw.init = &(const struct clk_init_data) {
+> +			.name = "gcc_ufs_ref_clkref_clk",
+> +			.ops = &clk_branch2_ops,
+> +		},
+> +	},
+> +};
+> +
+>  static struct clk_branch gcc_ufs_phy_axi_clk = {
+>  	.halt_reg = 0x77010,
+>  	.halt_check = BRANCH_HALT_VOTED,
+> @@ -5696,6 +5709,7 @@ static struct clk_branch gcc_ufs_phy_axi_clk = {
+>  		.hw.init = &(const struct clk_init_data) {
+>  			.name = "gcc_ufs_phy_axi_clk",
+>  			.parent_hws = (const struct clk_hw*[]){
+> +				&gcc_ufs_ref_clkref_clk.clkr.hw,
+>  				&gcc_ufs_phy_axi_clk_src.clkr.hw,
+>  			},
+>  			.num_parents = 1,
+> @@ -5899,19 +5913,6 @@ static struct clk_branch gcc_ufs_phy_unipro_core_hw_ctl_clk = {
+>  	},
+>  };
+>  
+> -static struct clk_branch gcc_ufs_ref_clkref_clk = {
+> -	.halt_reg = 0x8c058,
+> -	.halt_check = BRANCH_HALT,
+> -	.clkr = {
+> -		.enable_reg = 0x8c058,
+> -		.enable_mask = BIT(0),
+> -		.hw.init = &(const struct clk_init_data) {
+> -			.name = "gcc_ufs_ref_clkref_clk",
+> -			.ops = &clk_branch2_ops,
+> -		},
+> -	},
+> -};
+> -
+>  static struct clk_branch gcc_usb2_hs0_clkref_clk = {
+>  	.halt_reg = 0x8c044,
+>  	.halt_check = BRANCH_HALT,
+> -- 
+> 2.36.1
+> 
 
-
-The following changes since commit f2906aa863381afb0015a9eb7fefad885d4e5a56:
-
-  Linux 5.19-rc1 (2022-06-05 17:18:54 -0700)
-
-are available in the Git repository at:
-
-  https://git.kernel.org/pub/scm/linux/kernel/git/krzk/linux-dt.git tags/dt-bindings-qcom-5.20
-
-for you to fetch changes up to f9702486c77ba74f65859098e3d8e4bdb2e8a745:
-
-  dt-bindings: arm: qcom: add missing SM6350 board compatibles (2022-06-22 10:11:34 +0200)
-
-----------------------------------------------------------------
-Devicetree bindings for Qualcomm for v5.20
-
-Cleanup, fixes and additions of missing pieces for Qualcomm bindings.
-These are address dtbs_check warnings and do not bring new hardware
-(new compatibles are added for existing boards/hardware).
-
-----------------------------------------------------------------
-Krzysztof Kozlowski (24):
-      dt-bindings: soc: qcom,rpmh-rsc: simplify qcom,tcs-config
-      spi: dt-bindings: qcom,spi-geni-qcom: allow three interconnects
-      dt-bindings: soc: qcom: aoss: document qcom,sm8450-aoss-qmp
-      dt-bindings: soc: qcom: qcom,smd-rpm: add power-controller
-      dt-bindings: nvmem: qfprom: add IPQ8064 and SDM630 compatibles
-      dt-bindings: leds: qcom-wled: fix number of addresses
-      dt-bindings: arm: qcom: fix Alcatel OneTouch Idol 3 compatibles
-      dt-bindings: arm: qcom: fix Longcheer L8150 compatibles
-      dt-bindings: arm: qcom: fix MSM8916 MTP compatibles
-      dt-bindings: arm: qcom: fix MSM8994 boards compatibles
-      dt-bindings: arm: qcom: add missing MSM8916 board compatibles
-      dt-bindings: arm: qcom: add missing MSM8994 board compatibles
-      dt-bindings: arm: qcom: add missing SM8150 board compatibles
-      dt-bindings: arm: qcom: add missing SM8250 board compatibles
-      dt-bindings: arm: qcom: add missing SM8350 board compatibles
-      dt-bindings: vendor-prefixes: add Shift GmbH
-      dt-bindings: arm: qcom: add missing MSM8998 board compatibles
-      dt-bindings: arm: qcom: add missing MSM8992 board compatibles
-      dt-bindings: arm: qcom: add missing QCS404 board compatibles
-      dt-bindings: arm: qcom: add missing SDM630 board compatibles
-      dt-bindings: arm: qcom: add missing SDM636 board compatibles
-      dt-bindings: arm: qcom: add missing SDM845 board compatibles
-      dt-bindings: arm: qcom: add missing SM6125 board compatibles
-      dt-bindings: arm: qcom: add missing SM6350 board compatibles
-
- Documentation/devicetree/bindings/arm/qcom.yaml    | 108 +++++++++++++++++++--
- .../bindings/leds/backlight/qcom-wled.yaml         |   9 +-
- .../devicetree/bindings/nvmem/qcom,qfprom.yaml     |   2 +
- .../bindings/soc/qcom/qcom,aoss-qmp.yaml           |   1 +
- .../bindings/soc/qcom/qcom,rpmh-rsc.yaml           |  33 +++----
- .../devicetree/bindings/soc/qcom/qcom,smd-rpm.yaml |   3 +
- .../bindings/spi/qcom,spi-geni-qcom.yaml           |   5 +-
- .../devicetree/bindings/vendor-prefixes.yaml       |   2 +
- 8 files changed, 133 insertions(+), 30 deletions(-)
