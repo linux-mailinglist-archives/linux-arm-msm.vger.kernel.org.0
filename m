@@ -2,54 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C2BB955791C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jun 2022 13:54:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EE0A95579C3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jun 2022 14:04:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229826AbiFWLyy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Jun 2022 07:54:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39904 "EHLO
+        id S231218AbiFWMEZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Jun 2022 08:04:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51868 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230150AbiFWLyx (ORCPT
+        with ESMTP id S230308AbiFWMEY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Jun 2022 07:54:53 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 889EB4D25E;
-        Thu, 23 Jun 2022 04:54:52 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 1FA9260AE7;
-        Thu, 23 Jun 2022 11:54:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E784C3411B;
-        Thu, 23 Jun 2022 11:54:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1655985291;
-        bh=dHt3+07omt2XAmM8gjsWqT8aOL7xpCjkVLX4ZbDVQos=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=scbhjG2rMELOXPRqmj1Di0gdxZy23/pOZEXodhH/YAhajjJQ9u60X39M3bKTDrSby
-         bxbLpxoZAj3TU6wtDBibzkvUP9HX+Eoq9qObjuSZfDSYimt0EdOd99ruIW//hJA/Sm
-         bSBtl45vkFpZoUVXr1peqR9r/7ja0osstosxnZbZ0Nd8mwIj9byntJOakhEyg7nYMz
-         IJa0aodTXTZ3R2J3uHfAybVgE+7VQF29SfqzoW6sWfok6O8TjWXDY5YHuo2Hl+nM2L
-         OBlvKc0DBSTlNvE+Zr7r0uH9dBaeOTke/oyAzdXCytOnH4wosHRrvzcwKj9keWQVrW
-         vu3vdzB4WBU9g==
-Date:   Thu, 23 Jun 2022 17:24:36 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Qiang Yu <quic_qianyu@quicinc.com>
-Cc:     quic_hemantk@quicinc.com, loic.poulain@linaro.org,
-        quic_jhugo@quicinc.com, mhi@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_cang@quicinc.com
-Subject: Re: [PATCH v4 1/1] bus: mhi: host: Move IRQ allocation to controller
- registration phase
-Message-ID: <20220623115436.GA15542@thinkpad>
-References: <1655952183-66792-1-git-send-email-quic_qianyu@quicinc.com>
+        Thu, 23 Jun 2022 08:04:24 -0400
+Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76B0F49686
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jun 2022 05:04:22 -0700 (PDT)
+Received: by mail-lj1-x22b.google.com with SMTP id j22so16418589ljg.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jun 2022 05:04:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=v7et27IRUk2k+HUEgIcsFLwxxHmQwI7l6JUUzLDBsDc=;
+        b=KcpHCRcWvm/ulz+wpkoaC/geinThaUQRFjuod5igkXPGrK8EqLXaIaDn4me6JA26ec
+         I9BqJdWShqXlH8RaZuZ+7kfVpYVw9Rip/gbacrfiueJ0yfCsNvqZN4yzGfh4WpxSTNZX
+         WJpAwlIQC38Jv+kCNbgkFFVIm1IlB0QPlfOd0/C+uOcw50tlIKJetryRq6ytqy+ibaCd
+         +tp38l1d/0DllEF6aHPzxai11+sVT8qs+5kJLSRjObewxGr6fjiVh04zjQwm3lXbb3Xz
+         zfuyw7+iR7X8qZuV5Bhy1CubvRbNsYfYYLkOKZt0r2x21CZFb1tyEhLc3Myop9CSFIDM
+         Gx3g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=v7et27IRUk2k+HUEgIcsFLwxxHmQwI7l6JUUzLDBsDc=;
+        b=q/s2dtjiq9hvsrss5jUkibVmpOM1wHI7gJ4SthKmVCf14kDjsP7k6bxoI8jWUXcXPI
+         BCvdn/ITnOJf7ZLCBHBjJ5OSEdAu1o344uGZ+NFmVQ74QwMALveQlt3jTJdLVmGQPlpC
+         DnROc85Pr6G3mO4X3eLePtJhdxWsR0v/kzWhVqqivXBh02HeOyc4MiJA8qhrTeFTe6Bx
+         SaR/6VERc00pANn1HmrBXjmSj+MlxLPqPgXo91C3gBkWSSKkNUwlAWHE1NvdQL/UkPG8
+         N7iC4DW9LcTKXaqQ9jonUvwxAKOVdXv3342ZRImXs560rODB5TcoVITeY5pXAOcaq/OL
+         eELA==
+X-Gm-Message-State: AJIora+Vae6G6/DnvoD1hyJRuM7fhlMnIwtgPtQvlpNU0z/GMzFn7ME7
+        umN8Bd2WFItEzMDebFqy/9XOPQ==
+X-Google-Smtp-Source: AGRyM1uvNJlETkOr1+KEwsow/xxOEGDhK1iETUdJqRGLPjMPSi5IzK7uPBF7PG0aVymgUDK0AvWf8g==
+X-Received: by 2002:a05:651c:510:b0:255:9d3a:b0c3 with SMTP id o16-20020a05651c051000b002559d3ab0c3mr4535350ljp.18.1655985859386;
+        Thu, 23 Jun 2022 05:04:19 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id 18-20020ac25f52000000b0047f6b4a53cdsm1799888lfz.172.2022.06.23.05.04.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 23 Jun 2022 05:04:18 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Taniya Das <quic_tdas@quicinc.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: [PATCH 00/15] clk: qcom: use parent_hws/_data for APQ8064 clocks
+Date:   Thu, 23 Jun 2022 15:04:03 +0300
+Message-Id: <20220623120418.250589-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <1655952183-66792-1-git-send-email-quic_qianyu@quicinc.com>
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -58,158 +74,43 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jun 23, 2022 at 10:43:03AM +0800, Qiang Yu wrote:
-> During runtime, the MHI endpoint may be powered up/down several times.
-> So instead of allocating and destroying the IRQs all the time, let's just
-> enable/disable IRQs during power up/down.
-> 
-> The IRQs will be allocated during mhi_register_controller() and freed
-> during mhi_unregister_controller(). This works well for things like PCI
-> hotplug also as once the PCI device gets removed, the controller will
-> get unregistered. And once it comes back, it will get registered back
-> and even if the IRQ configuration changes (MSI), that will get accounted.
-> 
-> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
+This series converts the APQ8064/MSM8960 clock drivers, bindings and DTs
+to use parent_hws/_data and excplicit clock binding in DT.
 
-I thought I already gave my r-o-b. But anyway,
+Dependencies: [1] (whole series), [2], [3]
 
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+[1] https://lore.kernel.org/linux-arm-msm/20220521151437.1489111-1-dmitry.baryshkov@linaro.org/
+[2] https://lore.kernel.org/linux-arm-msm/20220617122922.769562-2-dmitry.baryshkov@linaro.org/
+[3] https://lore.kernel.org/linux-arm-msm/20220617122922.769562-3-dmitry.baryshkov@linaro.org/
 
-I'll wait for a review from Jeff before applying.
+Dmitry Baryshkov (15):
+  dt-bindings: clocks: qcom,gcc-apq8064: define clocks/-names properties
+  dt-bindings: clocks: qcom,mmcc: define clocks/clock-names for MSM8960
+  clk: qcom: gcc-msm8960: use ARRAY_SIZE instead of specifying
+    num_parents
+  clk: qcom: gcc-msm8960: use parent_hws/_data instead of parent_names
+  clk: qcom: lcc-msm8960: use macros to implement mi2s clocks
+  clk: qcom: lcc-msm8960: use parent_hws/_data instead of parent_names
+  clk: qcom: mmcc-msm8960: use ARRAY_SIZE instead of specifying
+    num_parents
+  clk: qcom: mmcc-msm8960: move clock parent tables down
+  clk: qcom: mmcc-msm8960: use parent_hws/_data instead of parent_names
+  ARM: dts: qcom: apq8064: add clocks to the LCC device node
+  ARM: dts: qcom: msm8960: add clocks to the LCC device node
+  ARM: dts: qcom: apq8064: add clocks to the GCC device node
+  ARM: dts: qcom: msm8960: add clocks to the GCC device node
+  ARM: dts: qcom: apq8064: add clocks to the MMCC device node
+  ARM: dts: qcom: msm8960: add clocks to the MMCC device node
 
-Thanks,
-Mani
-
-> ---
-> v3->v4: move mhi_init_irq_setup() above mhi_alloc_device()
-> v2->v3: change commit text and comments.
-> v1->v2: Rewrite commit text. Remove a random change. Use
->         inline enables.
-> 
->  drivers/bus/mhi/host/init.c | 17 ++++++++++++++++-
->  drivers/bus/mhi/host/pm.c   | 19 +++++++++++++------
->  2 files changed, 29 insertions(+), 7 deletions(-)
-> 
-> diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
-> index cbb86b2..a1d37da 100644
-> --- a/drivers/bus/mhi/host/init.c
-> +++ b/drivers/bus/mhi/host/init.c
-> @@ -179,6 +179,12 @@ int mhi_init_irq_setup(struct mhi_controller *mhi_cntrl)
->  				   "bhi", mhi_cntrl);
->  	if (ret)
->  		return ret;
-> +	/*
-> +	 * IRQs should be enabled during mhi_async_power_up(), so disable them explicitly here.
-> +	 * Due to the use of IRQF_SHARED flag as default while requesting IRQs, we assume that
-> +	 * IRQ_NOAUTOEN is not applicable.
-> +	 */
-> +	disable_irq(mhi_cntrl->irq[0]);
->  
->  	for (i = 0; i < mhi_cntrl->total_ev_rings; i++, mhi_event++) {
->  		if (mhi_event->offload_ev)
-> @@ -200,6 +206,8 @@ int mhi_init_irq_setup(struct mhi_controller *mhi_cntrl)
->  				mhi_cntrl->irq[mhi_event->irq], i);
->  			goto error_request;
->  		}
-> +
-> +		disable_irq(mhi_cntrl->irq[mhi_event->irq]);
->  	}
->  
->  	return 0;
-> @@ -979,12 +987,16 @@ int mhi_register_controller(struct mhi_controller *mhi_cntrl,
->  		goto err_destroy_wq;
->  	}
->  
-> +	ret = mhi_init_irq_setup(mhi_cntrl);
-> +	if (ret)
-> +		goto err_ida_free;
-> +
->  	/* Register controller with MHI bus */
->  	mhi_dev = mhi_alloc_device(mhi_cntrl);
->  	if (IS_ERR(mhi_dev)) {
->  		dev_err(mhi_cntrl->cntrl_dev, "Failed to allocate MHI device\n");
->  		ret = PTR_ERR(mhi_dev);
-> -		goto err_ida_free;
-> +		goto error_setup_irq;
->  	}
->  
->  	mhi_dev->dev_type = MHI_DEVICE_CONTROLLER;
-> @@ -1007,6 +1019,8 @@ int mhi_register_controller(struct mhi_controller *mhi_cntrl,
->  
->  err_release_dev:
->  	put_device(&mhi_dev->dev);
-> +error_setup_irq:
-> +	mhi_deinit_free_irq(mhi_cntrl);
->  err_ida_free:
->  	ida_free(&mhi_controller_ida, mhi_cntrl->index);
->  err_destroy_wq:
-> @@ -1027,6 +1041,7 @@ void mhi_unregister_controller(struct mhi_controller *mhi_cntrl)
->  	struct mhi_chan *mhi_chan = mhi_cntrl->mhi_chan;
->  	unsigned int i;
->  
-> +	mhi_deinit_free_irq(mhi_cntrl);
->  	mhi_destroy_debugfs(mhi_cntrl);
->  
->  	destroy_workqueue(mhi_cntrl->hiprio_wq);
-> diff --git a/drivers/bus/mhi/host/pm.c b/drivers/bus/mhi/host/pm.c
-> index dc2e8ff..4a42186 100644
-> --- a/drivers/bus/mhi/host/pm.c
-> +++ b/drivers/bus/mhi/host/pm.c
-> @@ -500,7 +500,7 @@ static void mhi_pm_disable_transition(struct mhi_controller *mhi_cntrl)
->  	for (i = 0; i < mhi_cntrl->total_ev_rings; i++, mhi_event++) {
->  		if (mhi_event->offload_ev)
->  			continue;
-> -		free_irq(mhi_cntrl->irq[mhi_event->irq], mhi_event);
-> +		disable_irq(mhi_cntrl->irq[mhi_event->irq]);
->  		tasklet_kill(&mhi_event->task);
->  	}
->  
-> @@ -1060,12 +1060,13 @@ static void mhi_deassert_dev_wake(struct mhi_controller *mhi_cntrl,
->  
->  int mhi_async_power_up(struct mhi_controller *mhi_cntrl)
->  {
-> +	struct mhi_event *mhi_event = mhi_cntrl->mhi_event;
->  	enum mhi_state state;
->  	enum mhi_ee_type current_ee;
->  	enum dev_st_transition next_state;
->  	struct device *dev = &mhi_cntrl->mhi_dev->dev;
->  	u32 interval_us = 25000; /* poll register field every 25 milliseconds */
-> -	int ret;
-> +	int ret, i;
->  
->  	dev_info(dev, "Requested to power ON\n");
->  
-> @@ -1117,9 +1118,15 @@ int mhi_async_power_up(struct mhi_controller *mhi_cntrl)
->  		mhi_write_reg(mhi_cntrl, mhi_cntrl->bhi, BHI_INTVEC, 0);
->  	}
->  
-> -	ret = mhi_init_irq_setup(mhi_cntrl);
-> -	if (ret)
-> -		goto error_exit;
-> +	/* IRQs have been requested during probe, so we just need to enable them. */
-> +	enable_irq(mhi_cntrl->irq[0]);
-> +
-> +	for (i = 0; i < mhi_cntrl->total_ev_rings; i++, mhi_event++) {
-> +		if (mhi_event->offload_ev)
-> +			continue;
-> +
-> +		enable_irq(mhi_cntrl->irq[mhi_event->irq]);
-> +	}
->  
->  	/* Transition to next state */
->  	next_state = MHI_IN_PBL(current_ee) ?
-> @@ -1182,7 +1189,7 @@ void mhi_power_down(struct mhi_controller *mhi_cntrl, bool graceful)
->  	/* Wait for shutdown to complete */
->  	flush_work(&mhi_cntrl->st_worker);
->  
-> -	free_irq(mhi_cntrl->irq[0], mhi_cntrl);
-> +	disable_irq(mhi_cntrl->irq[0]);
->  }
->  EXPORT_SYMBOL_GPL(mhi_power_down);
->  
-> -- 
-> Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
-> 
+ .../bindings/clock/qcom,gcc-apq8064.yaml      |   9 +
+ .../devicetree/bindings/clock/qcom,mmcc.yaml  |  31 ++
+ arch/arm/boot/dts/qcom-apq8064.dtsi           |  35 ++
+ arch/arm/boot/dts/qcom-msm8960.dtsi           |  39 +-
+ drivers/clk/qcom/gcc-msm8960.c                | 436 ++++++++++-------
+ drivers/clk/qcom/lcc-msm8960.c                | 211 +++-----
+ drivers/clk/qcom/mmcc-msm8960.c               | 454 +++++++++++-------
+ 7 files changed, 713 insertions(+), 502 deletions(-)
 
 -- 
-மணிவண்ணன் சதாசிவம்
+2.35.1
+
