@@ -2,147 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A7F13556F1C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jun 2022 01:29:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 50EAC556FDE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jun 2022 03:28:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1377348AbiFVX3H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Jun 2022 19:29:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42512 "EHLO
+        id S237639AbiFWB2Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Jun 2022 21:28:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49678 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1377337AbiFVX3D (ORCPT
+        with ESMTP id S1343614AbiFWB2K (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Jun 2022 19:29:03 -0400
-Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9CE4042496
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jun 2022 16:29:02 -0700 (PDT)
-Received: by mail-pf1-x435.google.com with SMTP id w6so10286904pfw.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jun 2022 16:29:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=ry6HLkGyc4JY1yzT6QsAW5x1N1xm0JB7SEDy/5pktSE=;
-        b=oNKxRsOU4pc50gLSBldZGqm/bcScOvod55uXzAd3x3ksz/oGD/RnPyNuOlg3WB+Wnm
-         vAHIXs7S2vgid7AjgLP5TJKsluRi1xamubIqmtiICAqjPaPCJXz7M0oD5pIC3SvHJRco
-         yXhzOgtbakdSQrZ+fkHTrTI7xpFxl+OuWDomZl/pSbls0HyTmivIuFLyHVrtgOkKPRvM
-         UOh8fQPTHXwpFjYUqbVTJ7DawBSg6YKIRzNYqNt+oxJXSQDCSSroj765vsfGhQ1Gx1tD
-         0eMM4oItqK/+f6ZeXRk8RxBDcugtomHgpS8p6nN0Kr4/YMdAgHBYt+7JzJ7F8ValfotQ
-         Mo8g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=ry6HLkGyc4JY1yzT6QsAW5x1N1xm0JB7SEDy/5pktSE=;
-        b=FhwhlAS7K0fzuNNRCb6SGXA1TUDm99cBy4WTb8pxWQqnHdL0l57Ri5XUi/ILnnQHAG
-         lyHxnZsV+G5EEAftXR9OTKgQbieDGl7lbZakpl7E6ut6r+IjsVUGRE/8rdKMkaG6aIZM
-         vLLnkqVsHUqsZjYjoIyrwCFh86ZsD54E6/oZbCdfRE+CSZ6yD97oRFHYFz6Bbmg7bvy/
-         vphC7YmfOTRhV8Qxh5Gy+Acztyuc4sIZELyarpTLKJlko7F+Hrx6Kvgfk+sIfCbQo5oJ
-         1I+NTX1iAbJOcZGu15zQIqzod3VJuDD69pRRVdWQ5zZ5O0xlJObzxhCqNeNAaDYsAPNc
-         7SuA==
-X-Gm-Message-State: AJIora8uSWJvER39eHSd7dhG1Dg7jhJWn4N3+cltj3C51UoL9U9oHBqm
-        Ux9sW6FHuN/UM6zYVaV4y/ATnA==
-X-Google-Smtp-Source: AGRyM1seRUK0Zn7SnxHrspJOLxYW5N5KYB2xwrDRlbpkDSrBE365AschZ8QAd0viGvrmai91z1+NVw==
-X-Received: by 2002:a05:6a00:ad0:b0:4e1:2d96:2ab0 with SMTP id c16-20020a056a000ad000b004e12d962ab0mr37790377pfl.3.1655940542086;
-        Wed, 22 Jun 2022 16:29:02 -0700 (PDT)
-Received: from prec5560.. (71-212-119-14.tukw.qwest.net. [71.212.119.14])
-        by smtp.gmail.com with ESMTPSA id h2-20020a170902f70200b001622c377c3esm13297863plo.117.2022.06.22.16.29.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Jun 2022 16:29:01 -0700 (PDT)
-From:   Robert Foss <robert.foss@linaro.org>
-To:     bjorn.andersson@linaro.org, agross@kernel.org,
-        mturquette@baylibre.com, sboyd@kernel.org, robh+dt@kernel.org,
-        krzk+dt@kernel.org, jonathan@marek.ca, robert.foss@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>
-Subject: [PATCH v7 6/6] arm64: dts: qcom: sm8350: Add DISPCC node
-Date:   Thu, 23 Jun 2022 01:28:46 +0200
-Message-Id: <20220622232846.852771-7-robert.foss@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220622232846.852771-1-robert.foss@linaro.org>
-References: <20220622232846.852771-1-robert.foss@linaro.org>
+        Wed, 22 Jun 2022 21:28:10 -0400
+Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6688C1758A;
+        Wed, 22 Jun 2022 18:28:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1655947684; x=1687483684;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=FVJa2+JGTCHuOb6NnEu37R8kKk2s4YcOMsTCEJXQcog=;
+  b=nfK/ZSbT8CgjOScdaM/5lU3+AFNNAHdVtN63K59q6p/2ndNOu+jQ0QxF
+   crmKLVR5FMXrDzw35gYybMUWf8uMIa/X1drK+3Sze5WjRWiZCBHQ+AdQZ
+   exrm3rdZ65qyUnOubB9ssJDCbLhu858mwwaLVF8v6BeBnWFSTd+sWve8C
+   q5slLBfgVZzEANLm4AYG2A8KT2/UzEKVZBObiNCieOmB1X0ASvpcysuhZ
+   0K3EZkLqC975pBk+PvIDO4Lzl8dHjTHSw7TR5HtYChOeuMC+cTAOqhbNF
+   7m2mtUPnKOg6nDVk/sbcJhHGhYyil9p+mVsPjDRqJElW9BwatCvKE7Ao/
+   g==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10386"; a="263625916"
+X-IronPort-AV: E=Sophos;i="5.92,215,1650956400"; 
+   d="scan'208";a="263625916"
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Jun 2022 18:28:02 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.92,215,1650956400"; 
+   d="scan'208";a="730624806"
+Received: from lkp-server01.sh.intel.com (HELO 68b931ab7ac1) ([10.239.97.150])
+  by fmsmga001.fm.intel.com with ESMTP; 22 Jun 2022 18:27:59 -0700
+Received: from kbuild by 68b931ab7ac1 with local (Exim 4.95)
+        (envelope-from <lkp@intel.com>)
+        id 1o4BdW-0000Fq-N0;
+        Thu, 23 Jun 2022 01:27:58 +0000
+Date:   Thu, 23 Jun 2022 08:25:53 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>,
+        agross@kernel.org, bjorn.andersson@linaro.org,
+        gregkh@linuxfoundation.org, jirislaby@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     kbuild-all@lists.01.org, quic_msavaliy@quicinc.com,
+        dianders@chromium.org, mka@chromium.org, swboyd@chromium.org,
+        Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+Subject: Re: [PATCH] tty: serial: qcom-geni-serial: Fix get_clk_div_rate()
+ which otherwise could return a sub-optimal clock rate.
+Message-ID: <202206230849.dxzRCvaU-lkp@intel.com>
+References: <1655834239-20812-1-git-send-email-quic_vnivarth@quicinc.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1655834239-20812-1-git-send-email-quic_vnivarth@quicinc.com>
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,
+        SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the dispcc clock-controller DT node for sm8350.
+Hi Vijaya,
 
-Signed-off-by: Robert Foss <robert.foss@linaro.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
----
+Thank you for the patch! Yet something to improve:
 
+[auto build test ERROR on tty/tty-testing]
+[also build test ERROR on linus/master v5.19-rc3 next-20220622]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch]
 
-Changes since v2
- - Remove interconnect include - Bjorn
+url:    https://github.com/intel-lab-lkp/linux/commits/Vijaya-Krishna-Nivarthi/tty-serial-qcom-geni-serial-Fix-get_clk_div_rate-which-otherwise-could-return-a-sub-optimal-clock-rate/20220622-015826
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/gregkh/tty.git tty-testing
+config: arm-randconfig-r016-20220622 (https://download.01.org/0day-ci/archive/20220623/202206230849.dxzRCvaU-lkp@intel.com/config)
+compiler: arm-linux-gnueabi-gcc (GCC) 11.3.0
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # https://github.com/intel-lab-lkp/linux/commit/668659f1481053090a9dbe9c83bd769de527a5c2
+        git remote add linux-review https://github.com/intel-lab-lkp/linux
+        git fetch --no-tags linux-review Vijaya-Krishna-Nivarthi/tty-serial-qcom-geni-serial-Fix-get_clk_div_rate-which-otherwise-could-return-a-sub-optimal-clock-rate/20220622-015826
+        git checkout 668659f1481053090a9dbe9c83bd769de527a5c2
+        # save the config file
+        mkdir build_dir && cp config build_dir/.config
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.3.0 make.cross W=1 O=build_dir ARCH=arm SHELL=/bin/bash
 
-Changes since v3
- - Switch from .fw_name to .index
+If you fix the issue, kindly add following tag where applicable
+Reported-by: kernel test robot <lkp@intel.com>
 
-Changes since v5
- - Revert .fw_name to .index change
+All errors (new ones prefixed by >>):
 
-Changes since v6
- - Add r-b - Konrad
+   arm-linux-gnueabi-ld: arm-linux-gnueabi-ld: DWARF error: could not find abbrev number 121
+   drivers/tty/serial/qcom_geni_serial.o: in function `find_clk_rate_in_tol':
+>> qcom_geni_serial.c:(.text+0x764): undefined reference to `__aeabi_uldivmod'
 
-
-
- arch/arm64/boot/dts/qcom/sm8350.dtsi | 26 ++++++++++++++++++++++++++
- 1 file changed, 26 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-index 52428b6df64e..99464cd1299e 100644
---- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-@@ -4,6 +4,7 @@
-  */
- 
- #include <dt-bindings/interrupt-controller/arm-gic.h>
-+#include <dt-bindings/clock/qcom,dispcc-sm8350.h>
- #include <dt-bindings/clock/qcom,gcc-sm8350.h>
- #include <dt-bindings/clock/qcom,rpmh.h>
- #include <dt-bindings/dma/qcom-gpi.h>
-@@ -2525,6 +2526,31 @@ usb_2_dwc3: usb@a800000 {
- 			};
- 		};
- 
-+		dispcc: clock-controller@af00000 {
-+			compatible = "qcom,sm8350-dispcc";
-+			reg = <0 0x0af00000 0 0x10000>;
-+			clocks = <&rpmhcc RPMH_CXO_CLK>,
-+				 <0>,
-+				 <0>,
-+				 <0>,
-+				 <0>,
-+				 <0>,
-+				 <0>;
-+			clock-names = "bi_tcxo",
-+				      "dsi0_phy_pll_out_byteclk",
-+				      "dsi0_phy_pll_out_dsiclk",
-+				      "dsi1_phy_pll_out_byteclk",
-+				      "dsi1_phy_pll_out_dsiclk",
-+				      "dp_phy_pll_link_clk",
-+				      "dp_phy_pll_vco_div_clk";
-+			#clock-cells = <1>;
-+			#reset-cells = <1>;
-+			#power-domain-cells = <1>;
-+
-+			power-domains = <&rpmhpd SM8350_MMCX>;
-+			power-domain-names = "mmcx";
-+		};
-+
- 		adsp: remoteproc@17300000 {
- 			compatible = "qcom,sm8350-adsp-pas";
- 			reg = <0 0x17300000 0 0x100>;
 -- 
-2.34.1
-
+0-DAY CI Kernel Test Service
+https://01.org/lkp
