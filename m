@@ -2,73 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DE5F55572CD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jun 2022 08:06:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4A27B5572DB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jun 2022 08:09:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229687AbiFWGGc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Jun 2022 02:06:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43076 "EHLO
+        id S229683AbiFWGII (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Jun 2022 02:08:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44684 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229437AbiFWGG0 (ORCPT
+        with ESMTP id S229730AbiFWGID (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Jun 2022 02:06:26 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0669E19F98;
-        Wed, 22 Jun 2022 23:06:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1655964385; x=1687500385;
-  h=message-id:date:mime-version:subject:to:references:from:
-   in-reply-to:content-transfer-encoding;
-  bh=kY+gYmv2uINKm3GjTgEhRJAEIxUH+bB/vOSpMyPge0M=;
-  b=M6jDUIbRnzSHI2nkhntJLVJTBMFEmk+XMDr+wabTOqf5JXs5kS++ovQY
-   5fZhVG+vOCCOofghgjJ4uO84oFRxlsoW2d0wo/THE1uIhspVzYC+8b4Xo
-   BtcxDp0w5I7CgdqZ+03Ti6LoG5Yp1ffc8pLdHCu9bjRnDUdWPIWnaBB3Q
-   8=;
-Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
-  by alexa-out.qualcomm.com with ESMTP; 22 Jun 2022 23:06:25 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Jun 2022 23:06:24 -0700
-Received: from nalasex01c.na.qualcomm.com (10.47.97.35) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 22 Jun 2022 23:06:23 -0700
-Received: from [10.242.242.148] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Wed, 22 Jun
- 2022 23:06:18 -0700
-Message-ID: <d891e8a9-a4f9-b6c7-8f51-3823f60120fa@quicinc.com>
-Date:   Thu, 23 Jun 2022 11:36:15 +0530
+        Thu, 23 Jun 2022 02:08:03 -0400
+Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3085E44A1C;
+        Wed, 22 Jun 2022 23:07:51 -0700 (PDT)
+Received: by mail-ej1-f52.google.com with SMTP id t5so6298509eje.1;
+        Wed, 22 Jun 2022 23:07:51 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=t6P+OEr0vrvpoPfUHObsMCgB6b3hmJkinrDt6rRS438=;
+        b=8BUgWMSfTAhLk4L1Ji+3kgabm7zr1yzHrTGc00QxJqGGJZkysZhkbfbNQQcFBMdFi3
+         1uSAglJXg9UbNjg3JRd/6MXT49vN2JrEm+W+dUvN8kyu61+LMVBnnK5e+UulMLOwLAbZ
+         K9L+mJNflekphxNqy1WQ+cJcbA2esR1hM90kThCPWIdNoT9h1ipA1P2qiZYrwllDQCxf
+         zN9ryX83xN9rRZ9qyvpsLc2BYS9KCIoUDlhcE+RLQmL8fGgRBmNcQ3sLkULGSvOijijc
+         u6F+176UrxPRsr6e/cXkKxH86OiOV44JKlkasJg8ILJrphed2HzBw1Y+u3MThTqSjUP8
+         +7zg==
+X-Gm-Message-State: AJIora+cwpAapQaPGoGIMtat7sz8+WhDmeHE4WECVdpqYch8sQH+aqBs
+        z087ckBFjrs+eCRHf3grWOw=
+X-Google-Smtp-Source: AGRyM1tn6B67l/KiBQ/N+kEIHBz4CdfpAEFNHBqKz02petrPe74UxMGHsnlG2ds/8MuCKUkLJu1t9A==
+X-Received: by 2002:a17:906:dc8f:b0:723:a62a:cd0e with SMTP id cs15-20020a170906dc8f00b00723a62acd0emr2420289ejc.444.1655964469427;
+        Wed, 22 Jun 2022 23:07:49 -0700 (PDT)
+Received: from ?IPV6:2a0b:e7c0:0:107::70f? ([2a0b:e7c0:0:107::70f])
+        by smtp.gmail.com with ESMTPSA id d21-20020a056402517500b00435640c141esm13717890ede.93.2022.06.22.23.07.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 22 Jun 2022 23:07:48 -0700 (PDT)
+Message-ID: <9284b3dd-3da5-1a52-1e92-a434cfe2e1e1@kernel.org>
+Date:   Thu, 23 Jun 2022 08:07:47 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.0
-Subject: Re: [PATCH V2 3/8] clk: qcom: Add Global Clock controller (GCC)
- driver for IPQ5018
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: Re: [PATCH] tty: serial: qcom-geni-serial: Fix get_clk_div_rate()
+ which otherwise could return a sub-optimal clock rate.
 Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        <agross@kernel.org>, <bjorn.andersson@linaro.org>,
-        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <mturquette@baylibre.com>, <sboyd@kernel.org>,
-        <linus.walleij@linaro.org>, <catalin.marinas@arm.com>,
-        <p.zabel@pengutronix.de>, <quic_varada@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <linux-gpio@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>
-References: <20220621161126.15883-1-quic_srichara@quicinc.com>
- <20220621161126.15883-4-quic_srichara@quicinc.com>
- <c9ec14db-1ddd-7316-4ef6-9d57509f3fad@linaro.org>
-From:   Sricharan Ramabadhran <quic_srichara@quicinc.com>
-In-Reply-To: <c9ec14db-1ddd-7316-4ef6-9d57509f3fad@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+To:     Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>,
+        agross@kernel.org, bjorn.andersson@linaro.org,
+        gregkh@linuxfoundation.org, linux-arm-msm@vger.kernel.org,
+        linux-serial@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     quic_msavaliy@quicinc.com, dianders@chromium.org, mka@chromium.org,
+        swboyd@chromium.org
+References: <1655834239-20812-1-git-send-email-quic_vnivarth@quicinc.com>
+From:   Jiri Slaby <jirislaby@kernel.org>
+In-Reply-To: <1655834239-20812-1-git-send-email-quic_vnivarth@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        NICE_REPLY_A,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -76,102 +68,213 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 21. 06. 22, 19:57, Vijaya Krishna Nivarthi wrote:
+> In the logic around call to clk_round_rate, for some corner conditions,
+> get_clk_div_rate() could return an sub-optimal clock rate. Also, if an
+> exact clock rate was not found lowest clock was being returned.
+> 
+> Search for suitable clock rate in 2 steps
+> a) exact match or within 2% tolerance
+> b) within 5% tolerance
+> This also takes care of corner conditions.
+> 
+> Fixes: c2194bc999d4 ("tty: serial: qcom-geni-serial: Remove uart frequency table. Instead, find suitable frequency with call to clk_round_rate")
 
-On 6/22/2022 8:38 PM, Krzysztof Kozlowski wrote:
-> On 21/06/2022 18:11, Sricharan R wrote:
->> From: Varadarajan Narayanan <quic_varada@quicinc.com>
->>
->> Add support for the global clock controller found on IPQ5018
->> based devices.
->>
->> Co-developed-by: Sricharan R <quic_srichara@quicinc.com>
->> Signed-off-by: Sricharan R <quic_srichara@quicinc.com>
->> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-> Thank you for your patch. There is something to discuss/improve.
->
->> ---
->>   drivers/clk/qcom/Kconfig       |    7 +
->>   drivers/clk/qcom/Makefile      |    1 +
->>   drivers/clk/qcom/gcc-ipq5018.c | 3995 ++++++++++++++++++++++++++++++++
->>   3 files changed, 4003 insertions(+)
->>   create mode 100644 drivers/clk/qcom/gcc-ipq5018.c
->>
->> diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
->> index d01436be6d7a..294fb975db85 100644
->> --- a/drivers/clk/qcom/Kconfig
->> +++ b/drivers/clk/qcom/Kconfig
->> @@ -172,6 +172,13 @@ config IPQ_GCC_8074
->>   	  i2c, USB, SD/eMMC, etc. Select this for the root clock
->>   	  of ipq8074.
->>   
->> +config IPQ_GCC_5018
->> +	tristate "IPQ5018 Global Clock Controller"
->> +	help
->> +	 Support for global clock controller on ipq5018 devices.
->> +	 Say Y if you want to use peripheral devices such as UART, SPI,
->> +	 i2c, USB, SD/eMMC, etc.
->> +
->>   config MSM_GCC_8660
->>   	tristate "MSM8660 Global Clock Controller"
->>   	help
->> diff --git a/drivers/clk/qcom/Makefile b/drivers/clk/qcom/Makefile
->> index 671cf5821af1..33ab4ce9b863 100644
->> --- a/drivers/clk/qcom/Makefile
->> +++ b/drivers/clk/qcom/Makefile
->> @@ -26,6 +26,7 @@ obj-$(CONFIG_IPQ_GCC_4019) += gcc-ipq4019.o
->>   obj-$(CONFIG_IPQ_GCC_6018) += gcc-ipq6018.o
->>   obj-$(CONFIG_IPQ_GCC_806X) += gcc-ipq806x.o
->>   obj-$(CONFIG_IPQ_GCC_8074) += gcc-ipq8074.o
->> +obj-$(CONFIG_IPQ_GCC_5018) += gcc-ipq5018.o
->>   obj-$(CONFIG_IPQ_LCC_806X) += lcc-ipq806x.o
->>   obj-$(CONFIG_MDM_GCC_9607) += gcc-mdm9607.o
->>   obj-$(CONFIG_MDM_GCC_9615) += gcc-mdm9615.o
-> (...)
->
->> +
->> +static int gcc_ipq5018_probe(struct platform_device *pdev)
->> +{
->> +	int ret;
->> +	struct regmap *regmap;
->> +	struct qcom_cc_desc ipq5018_desc = gcc_ipq5018_desc;
->> +
->> +	regmap = qcom_cc_map(pdev, &ipq5018_desc);
->> +	if (IS_ERR(regmap))
->> +		return PTR_ERR(regmap);
->> +
->> +	clk_alpha_pll_configure(&ubi32_pll_main, regmap, &ubi32_pll_config);
->> +
->> +	ret = qcom_cc_really_probe(pdev, &ipq5018_desc, regmap);
-> return qcom_cc_really_probe(....)
+Hmm, provided the complexity, was this worth it -- how many typos/bugs 
+can be in such complex and twisted functions?
 
-  ok.
+The original intention was not to touch the driver when new HW arrives. 
+Now it looks like you'd be chasing corner cases like these for quite 
+some releases.
 
+So going back in time, reconsidering the whole thing: how often do you 
+expect the original rate table would need to be updated?
 
->> +	if (ret) {
->> +		dev_err(&pdev->dev, "Failed to register ipq5018 GCC clocks\n");
->> +		return ret;
->> +	}
->> +
->> +	dev_info(&pdev->dev, "Registered ipq5018 GCC clocks provider");
-> No probe success messages. This pollutes the log and there is other
-> infrastructure to check for successful probe.
+NACK
 
-  ok.
+in any way -- see my comment below -- if you really want to go this 
+path, you'd need to split this.
 
+> Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+> ---
+>   drivers/tty/serial/qcom_geni_serial.c | 134 ++++++++++++++++++++++++++--------
+>   1 file changed, 102 insertions(+), 32 deletions(-)
+> 
+> diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
+> index 2e23b65..8d247c1 100644
+> --- a/drivers/tty/serial/qcom_geni_serial.c
+> +++ b/drivers/tty/serial/qcom_geni_serial.c
+> @@ -943,52 +943,123 @@ static int qcom_geni_serial_startup(struct uart_port *uport)
+>   	return 0;
+>   }
+>   
+> -static unsigned long get_clk_div_rate(struct clk *clk, unsigned int baud,
+> -			unsigned int sampling_rate, unsigned int *clk_div)
+> +static unsigned long find_clk_rate_in_tol(struct clk *clk, unsigned int desired_clk,
+> +			unsigned int *clk_div, unsigned int percent_tol, bool *exact_match)
+>   {
+> +	unsigned long freq;
+> +	unsigned long div, maxdiv, new_div;
+> +	unsigned long long mult;
+>   	unsigned long ser_clk;
+> -	unsigned long desired_clk;
+> -	unsigned long freq, prev;
+> -	unsigned long div, maxdiv;
+> -	int64_t mult;
+> -
+> -	desired_clk = baud * sampling_rate;
+> -	if (!desired_clk) {
+> -		pr_err("%s: Invalid frequency\n", __func__);
+> -		return 0;
+> -	}
+> +	unsigned long test_freq, offset, new_freq;
+>   
+> +	ser_clk = 0;
+>   	maxdiv = CLK_DIV_MSK >> CLK_DIV_SHFT;
+> -	prev = 0;
+> +	div = 1;
+>   
+> -	for (div = 1; div <= maxdiv; div++) {
+> -		mult = div * desired_clk;
+> -		if (mult > ULONG_MAX)
+> +	while (div <= maxdiv) {
+> +		mult = (unsigned long long)div * desired_clk;
+> +		if (mult != (unsigned long)mult)
+>   			break;
+>   
+> -		freq = clk_round_rate(clk, (unsigned long)mult);
+> -		if (!(freq % desired_clk)) {
+> -			ser_clk = freq;
+> -			break;
+> +		/*
+> +		 * Loop requesting a freq within tolerance and possibly exact freq.
+> +		 *
+> +		 * We'll keep track of the lowest freq inexact match we found
+> +		 * but always try to find a perfect match. NOTE: this algorithm
+> +		 * could miss a slightly better freq if there's more than one
+> +		 * freq between (freq - offset) and (freq) but (freq) can't be made
+> +		 * exactly, but that's OK.
+> +		 *
+> +		 * This absolutely relies on the fact that the Qualcomm clock
+> +		 * driver always rounds up.
+> +		 * We make use of exact_match as an I/O param.
+> +		 */
+> +
+> +		/* look only for exact match if within tolerance is already found */
+> +		if (ser_clk)
+> +			offset = 0;
+> +		else
+> +			offset = (mult * percent_tol) / 100;
+> +
+> +		test_freq = mult - offset;
+> +		freq = clk_round_rate(clk, test_freq);
+> +
+> +		/*
+> +		 * A dead-on freq is an insta-win, look for it only in 1st run
+> +		 */
+> +		if (*exact_match) {
+> +			if (!(freq % desired_clk)) {
+> +				ser_clk = freq;
+> +				*clk_div = freq / desired_clk;
+> +				return ser_clk;
+> +			}
+> +		}
+> +
+> +		if (!ser_clk) {
+> +			new_div = DIV_ROUND_CLOSEST(freq, desired_clk);
+> +			new_freq = new_div * desired_clk;
+> +			offset = (new_freq * percent_tol) / 100;
+> +
+> +			if (new_freq - offset <= freq && freq <= new_freq + offset) {
+> +				/* Save the first (lowest freq) within tolerance */
+> +				ser_clk = freq;
+> +				*clk_div = new_div;
+> +				/* no more search for exact match required in 2nd run */
+> +				if (!(*exact_match))
+> +					break;
+> +			}
+>   		}
+>   
+> -		if (!prev)
+> -			ser_clk = freq;
+> -		else if (prev == freq)
+> +		div = freq / desired_clk + 1;
+> +
+> +		/*
+> +		 * Only time clock framework doesn't round up is if
+> +		 * we're past the max clock rate. We're done searching
+> +		 * if that's the case.
+> +		 */
+> +		if (freq < test_freq)
+>   			break;
+> +	}
+> +
+> +	*exact_match = false;
+> +	return ser_clk;
+> +}
+> +
+> +static unsigned long get_clk_div_rate(struct clk *clk, unsigned int baud,
+> +			unsigned int sampling_rate, unsigned int *clk_div)
 
->> +
->> +	return ret;
->> +}
->> +
->> +static struct platform_driver gcc_ipq5018_driver = {
->> +	.probe = gcc_ipq5018_probe,
->> +	.driver = {
->> +		.name   = "qcom,gcc-ipq5018",
->> +		.owner  = THIS_MODULE,
-> No need for owner.
+This cannot be reviewed properly. Care to split this into 2-3 patches? 
+Looks at the nesting and the complexity, it also looks like you need 
+more helper functions.
 
-  ok.
+> +{
+> +	unsigned long ser_clk;
+> +	unsigned long desired_clk;
+> +	unsigned long desired_tol;
+> +	bool exact_match;
+>   
+> -		prev = freq;
+> +	desired_clk = baud * sampling_rate;
+> +	if (!desired_clk) {
+> +		pr_err("%s: Invalid frequency\n", __func__);
+> +		return 0;
+>   	}
+>   
+> -	if (!ser_clk) {
+> -		pr_err("%s: Can't find matching DFS entry for baud %d\n",
+> -								__func__, baud);
+> +	/* try to find exact clock rate or within 2% tolerance */
+> +	ser_clk = 0;
+> +	exact_match = true;
+> +	desired_tol = 2;
+> +
+> +	ser_clk = find_clk_rate_in_tol(clk, desired_clk, clk_div, desired_tol, &exact_match);
+> +	if (ser_clk) {
+> +		if (!exact_match)
+> +			pr_warn("Cannot find exact match clk_rate, using one within 2 percent tolerance\n");
+>   		return ser_clk;
+>   	}
+>   
+> -	*clk_div = ser_clk / desired_clk;
+> -	if (!(*clk_div))
+> -		*clk_div = 1;
+> +	/* try within 5% tolerance now, no need to look for exact match */
+> +	exact_match = false;
+> +	desired_tol = 5;
+> +
+> +	ser_clk = find_clk_rate_in_tol(clk, desired_clk, clk_div, desired_tol, &exact_match);
+> +	if (ser_clk)
+> +		pr_warn("Cannot find exact match clk_rate, using one within 5 percent tolerance\n");
+> +	else
+> +		pr_err("Cannot find suitable clk_rate, giving up\n");
+>   
+>   	return ser_clk;
+>   }
+> @@ -1021,8 +1092,7 @@ static void qcom_geni_serial_set_termios(struct uart_port *uport,
+>   	if (ver >= QUP_SE_VERSION_2_5)
+>   		sampling_rate /= 2;
+>   
+> -	clk_rate = get_clk_div_rate(port->se.clk, baud,
+> -		sampling_rate, &clk_div);
+> +	clk_rate = get_clk_div_rate(port->se.clk, baud, sampling_rate, &clk_div);
+>   	if (!clk_rate)
+>   		goto out_restart_rx;
+>   
 
-Regards,
-     Sricharan
-
+thanks,
+-- 
+js
+suse labs
