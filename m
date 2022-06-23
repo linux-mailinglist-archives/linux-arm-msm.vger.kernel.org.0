@@ -2,305 +2,247 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 150B9557308
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jun 2022 08:24:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 33F5A557310
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jun 2022 08:28:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229874AbiFWGYh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Jun 2022 02:24:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56116 "EHLO
+        id S229839AbiFWG2h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Jun 2022 02:28:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58706 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229788AbiFWGYg (ORCPT
+        with ESMTP id S229673AbiFWG2Y (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Jun 2022 02:24:36 -0400
-Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AFE9B1F2F3;
-        Wed, 22 Jun 2022 23:24:34 -0700 (PDT)
-Received: by mail-ed1-f41.google.com with SMTP id z19so10184629edb.11;
-        Wed, 22 Jun 2022 23:24:34 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=LAvZX/HQkXO+elF8yokNflr5QirVV5UEMq0oc8yUmpE=;
-        b=H1QCGFAiKimL121wWL7ryTlUzVoy18ZZo3ogiU97f2XBKIP1gT7+BfV+JrJ8SG6ddx
-         +QWf7TOYL29iZXfZ4YE9KXE0PiGC5R8NREQfQEAT9ca3Wj/3FZcjlPSTrMFCju0y4kP7
-         jTW6DPoahiDSIE7luo3aLAqDdH8yRutlMSRLTJArI6F5elUFe9IhURLEEdzVHxahOQ+N
-         EjBmT12wFFbfNRtUOmcHuJWVZLo7QTuHBx9UAS/0S2lCHlbZV+qKcDIKOUp+XPHuRvtv
-         EHoUIguLSpWragDO7l11nrq3w/DT5vtfqIGvJEzufO7xXQI5QNRhgqZfUReVcqiVe0cG
-         72Xw==
-X-Gm-Message-State: AJIora/EcFNa2Lrhjih4T/99Ry10ot0ISgloPoHl26rWG2UiMCu5PbUf
-        bYwxVia7I81h5/me1mlq2io=
-X-Google-Smtp-Source: AGRyM1tXK+zbk/q7v6rZQSSUdcFgCIHc2bT1UPKLfaDfqrsExbpJ5FIF9I+SeCqIjTwcP9jNNt1zeQ==
-X-Received: by 2002:a50:9f6a:0:b0:435:5804:e07 with SMTP id b97-20020a509f6a000000b0043558040e07mr8785271edf.178.1655965473018;
-        Wed, 22 Jun 2022 23:24:33 -0700 (PDT)
-Received: from ?IPV6:2a0b:e7c0:0:107::70f? ([2a0b:e7c0:0:107::70f])
-        by smtp.gmail.com with ESMTPSA id r1-20020a170906280100b006fefd1d5c2bsm10374858ejc.148.2022.06.22.23.24.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 Jun 2022 23:24:32 -0700 (PDT)
-Message-ID: <469ba743-69bd-b322-9e14-2f15cd1f9bda@kernel.org>
-Date:   Thu, 23 Jun 2022 08:24:31 +0200
+        Thu, 23 Jun 2022 02:28:24 -0400
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C43AF23BC8;
+        Wed, 22 Jun 2022 23:28:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1655965702; x=1687501702;
+  h=message-id:date:mime-version:subject:to:references:from:
+   in-reply-to:content-transfer-encoding;
+  bh=3eQdg8gNVfXkqvGq9nAFd3PiojMBSkoxdKaO/7cuy5c=;
+  b=IRX6Z0TRCmIu6wZcnSLGlTWHlJCgIx3ULLcWY3jFCFQxyXbs1LBXkgvR
+   xayeklHOHvj6bNtY7eb+pDK4slzpH+bNzNOjHYSxvWrIray/gSb5d8Mne
+   hN/MQJfIroqMwrcANmiWHGa8SxatfZsQXdD+FRbZSxaEssZOD7pGVq+58
+   0=;
+Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 22 Jun 2022 23:28:22 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Jun 2022 23:28:22 -0700
+Received: from nalasex01c.na.qualcomm.com (10.47.97.35) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Wed, 22 Jun 2022 23:28:21 -0700
+Received: from [10.242.242.148] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Wed, 22 Jun
+ 2022 23:28:16 -0700
+Message-ID: <fc41f100-3246-15aa-3b4b-76c47e393976@quicinc.com>
+Date:   Thu, 23 Jun 2022 11:58:12 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: [PATCH v2 1/6] serial: msm: Convert container_of UART_TO_MSM to
- static inline
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.0
+Subject: Re: [PATCH V2 4/8] dt-bindings: pinctrl: qcom: Add ipq5018 pinctrl
+ bindings
 Content-Language: en-US
-To:     =?UTF-8?Q?Ilpo_J=c3=a4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-        linux-serial@vger.kernel.org, Greg KH <gregkh@linuxfoundation.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20220621124958.3342-1-ilpo.jarvinen@linux.intel.com>
- <20220621124958.3342-2-ilpo.jarvinen@linux.intel.com>
-From:   Jiri Slaby <jirislaby@kernel.org>
-In-Reply-To: <20220621124958.3342-2-ilpo.jarvinen@linux.intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        <agross@kernel.org>, <bjorn.andersson@linaro.org>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <mturquette@baylibre.com>, <sboyd@kernel.org>,
+        <linus.walleij@linaro.org>, <catalin.marinas@arm.com>,
+        <p.zabel@pengutronix.de>, <quic_varada@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <linux-gpio@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>
+References: <20220621161126.15883-1-quic_srichara@quicinc.com>
+ <20220621161126.15883-5-quic_srichara@quicinc.com>
+ <11697f16-67b1-d32a-eea4-18f56631c72f@linaro.org>
+From:   Sricharan Ramabadhran <quic_srichara@quicinc.com>
+In-Reply-To: <11697f16-67b1-d32a-eea4-18f56631c72f@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
-        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-        NICE_REPLY_A,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no
-        version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21. 06. 22, 14:49, Ilpo Järvinen wrote:
-> Create static inline instead of define.
 
-I know it's obvious, but next time, it would be nice if you specify why 
-you're doing things, not what you're doing. I.e. amending something 
-like: ", because it's more obvious, type safer, much more readable, and 
-avoids bad macro expansion -- uart_port can "escape" as it is not in 
-parentheses."
+On 6/22/2022 8:43 PM, Krzysztof Kozlowski wrote:
+> On 21/06/2022 18:11, Sricharan R wrote:
+>> From: Varadarajan Narayanan <quic_varada@quicinc.com>
+>>
+>> Add device tree binding Documentation details for ipq5018
+>> pinctrl driver.
+>>
+>> Co-developed-by: Nitheesh Sekar <quic_nsekar@quicinc.com>
+>> Co-developed-by: Sricharan R <quic_srichara@quicinc.com>
+>> Signed-off-by: Sricharan R <quic_srichara@quicinc.com>
+>> Signed-off-by: Nitheesh Sekar <quic_nsekar@quicinc.com>
+>> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> SoB should go after Co-developed.
+>
+> https://elixir.bootlin.com/linux/v5.17.1/source/Documentation/process/submitting-patches.rst#L473
 
-> Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-
-Reviewed-by: Jiri Slaby <jirislaby@kernel.org>
-
-> ---
->   drivers/tty/serial/msm_serial.c | 49 +++++++++++++++++----------------
->   1 file changed, 26 insertions(+), 23 deletions(-)
-> 
-> diff --git a/drivers/tty/serial/msm_serial.c b/drivers/tty/serial/msm_serial.c
-> index e676ec761f18..15cab9c4b295 100644
-> --- a/drivers/tty/serial/msm_serial.c
-> +++ b/drivers/tty/serial/msm_serial.c
-> @@ -181,7 +181,10 @@ struct msm_port {
->   	struct msm_dma		rx_dma;
->   };
->   
-> -#define UART_TO_MSM(uart_port)	container_of(uart_port, struct msm_port, uart)
-> +static inline struct msm_port *to_msm_port(struct uart_port *up)
-> +{
-> +	return container_of(up, struct msm_port, uart);
-> +}
->   
->   static
->   void msm_write(struct uart_port *port, unsigned int val, unsigned int off)
-> @@ -221,7 +224,7 @@ static void msm_serial_set_mnd_regs_tcxoby4(struct uart_port *port)
->   
->   static void msm_serial_set_mnd_regs(struct uart_port *port)
->   {
-> -	struct msm_port *msm_port = UART_TO_MSM(port);
-> +	struct msm_port *msm_port = to_msm_port(port);
->   
->   	/*
->   	 * These registers don't exist so we change the clk input rate
-> @@ -404,7 +407,7 @@ static inline void msm_wait_for_xmitr(struct uart_port *port)
->   
->   static void msm_stop_tx(struct uart_port *port)
->   {
-> -	struct msm_port *msm_port = UART_TO_MSM(port);
-> +	struct msm_port *msm_port = to_msm_port(port);
->   
->   	msm_port->imr &= ~UART_IMR_TXLEV;
->   	msm_write(port, msm_port->imr, UART_IMR);
-> @@ -412,7 +415,7 @@ static void msm_stop_tx(struct uart_port *port)
->   
->   static void msm_start_tx(struct uart_port *port)
->   {
-> -	struct msm_port *msm_port = UART_TO_MSM(port);
-> +	struct msm_port *msm_port = to_msm_port(port);
->   	struct msm_dma *dma = &msm_port->tx_dma;
->   
->   	/* Already started in DMA mode */
-> @@ -690,7 +693,7 @@ static void msm_start_rx_dma(struct msm_port *msm_port)
->   
->   static void msm_stop_rx(struct uart_port *port)
->   {
-> -	struct msm_port *msm_port = UART_TO_MSM(port);
-> +	struct msm_port *msm_port = to_msm_port(port);
->   	struct msm_dma *dma = &msm_port->rx_dma;
->   
->   	msm_port->imr &= ~(UART_IMR_RXLEV | UART_IMR_RXSTALE);
-> @@ -702,7 +705,7 @@ static void msm_stop_rx(struct uart_port *port)
->   
->   static void msm_enable_ms(struct uart_port *port)
->   {
-> -	struct msm_port *msm_port = UART_TO_MSM(port);
-> +	struct msm_port *msm_port = to_msm_port(port);
->   
->   	msm_port->imr |= UART_IMR_DELTA_CTS;
->   	msm_write(port, msm_port->imr, UART_IMR);
-> @@ -714,7 +717,7 @@ static void msm_handle_rx_dm(struct uart_port *port, unsigned int misr)
->   	struct tty_port *tport = &port->state->port;
->   	unsigned int sr;
->   	int count = 0;
-> -	struct msm_port *msm_port = UART_TO_MSM(port);
-> +	struct msm_port *msm_port = to_msm_port(port);
->   
->   	if ((msm_read(port, UART_SR) & UART_SR_OVERRUN)) {
->   		port->icount.overrun++;
-> @@ -837,7 +840,7 @@ static void msm_handle_rx(struct uart_port *port)
->   static void msm_handle_tx_pio(struct uart_port *port, unsigned int tx_count)
->   {
->   	struct circ_buf *xmit = &port->state->xmit;
-> -	struct msm_port *msm_port = UART_TO_MSM(port);
-> +	struct msm_port *msm_port = to_msm_port(port);
->   	unsigned int num_chars;
->   	unsigned int tf_pointer = 0;
->   	void __iomem *tf;
-> @@ -883,7 +886,7 @@ static void msm_handle_tx_pio(struct uart_port *port, unsigned int tx_count)
->   
->   static void msm_handle_tx(struct uart_port *port)
->   {
-> -	struct msm_port *msm_port = UART_TO_MSM(port);
-> +	struct msm_port *msm_port = to_msm_port(port);
->   	struct circ_buf *xmit = &msm_port->uart.state->xmit;
->   	struct msm_dma *dma = &msm_port->tx_dma;
->   	unsigned int pio_count, dma_count, dma_min;
-> @@ -947,7 +950,7 @@ static void msm_handle_delta_cts(struct uart_port *port)
->   static irqreturn_t msm_uart_irq(int irq, void *dev_id)
->   {
->   	struct uart_port *port = dev_id;
-> -	struct msm_port *msm_port = UART_TO_MSM(port);
-> +	struct msm_port *msm_port = to_msm_port(port);
->   	struct msm_dma *dma = &msm_port->rx_dma;
->   	unsigned long flags;
->   	unsigned int misr;
-> @@ -1002,7 +1005,7 @@ static unsigned int msm_get_mctrl(struct uart_port *port)
->   
->   static void msm_reset(struct uart_port *port)
->   {
-> -	struct msm_port *msm_port = UART_TO_MSM(port);
-> +	struct msm_port *msm_port = to_msm_port(port);
->   	unsigned int mr;
->   
->   	/* reset everything */
-> @@ -1055,7 +1058,7 @@ static const struct msm_baud_map *
->   msm_find_best_baud(struct uart_port *port, unsigned int baud,
->   		   unsigned long *rate)
->   {
-> -	struct msm_port *msm_port = UART_TO_MSM(port);
-> +	struct msm_port *msm_port = to_msm_port(port);
->   	unsigned int divisor, result;
->   	unsigned long target, old, best_rate = 0, diff, best_diff = ULONG_MAX;
->   	const struct msm_baud_map *entry, *end, *best;
-> @@ -1124,7 +1127,7 @@ static int msm_set_baud_rate(struct uart_port *port, unsigned int baud,
->   			     unsigned long *saved_flags)
->   {
->   	unsigned int rxstale, watermark, mask;
-> -	struct msm_port *msm_port = UART_TO_MSM(port);
-> +	struct msm_port *msm_port = to_msm_port(port);
->   	const struct msm_baud_map *entry;
->   	unsigned long flags, rate;
->   
-> @@ -1185,7 +1188,7 @@ static int msm_set_baud_rate(struct uart_port *port, unsigned int baud,
->   
->   static void msm_init_clock(struct uart_port *port)
->   {
-> -	struct msm_port *msm_port = UART_TO_MSM(port);
-> +	struct msm_port *msm_port = to_msm_port(port);
->   
->   	clk_prepare_enable(msm_port->clk);
->   	clk_prepare_enable(msm_port->pclk);
-> @@ -1194,7 +1197,7 @@ static void msm_init_clock(struct uart_port *port)
->   
->   static int msm_startup(struct uart_port *port)
->   {
-> -	struct msm_port *msm_port = UART_TO_MSM(port);
-> +	struct msm_port *msm_port = to_msm_port(port);
->   	unsigned int data, rfr_level, mask;
->   	int ret;
->   
-> @@ -1246,7 +1249,7 @@ static int msm_startup(struct uart_port *port)
->   
->   static void msm_shutdown(struct uart_port *port)
->   {
-> -	struct msm_port *msm_port = UART_TO_MSM(port);
-> +	struct msm_port *msm_port = to_msm_port(port);
->   
->   	msm_port->imr = 0;
->   	msm_write(port, 0, UART_IMR); /* disable interrupts */
-> @@ -1262,7 +1265,7 @@ static void msm_shutdown(struct uart_port *port)
->   static void msm_set_termios(struct uart_port *port, struct ktermios *termios,
->   			    struct ktermios *old)
->   {
-> -	struct msm_port *msm_port = UART_TO_MSM(port);
-> +	struct msm_port *msm_port = to_msm_port(port);
->   	struct msm_dma *dma = &msm_port->rx_dma;
->   	unsigned long flags;
->   	unsigned int baud, mr;
-> @@ -1416,7 +1419,7 @@ static int msm_verify_port(struct uart_port *port, struct serial_struct *ser)
->   static void msm_power(struct uart_port *port, unsigned int state,
->   		      unsigned int oldstate)
->   {
-> -	struct msm_port *msm_port = UART_TO_MSM(port);
-> +	struct msm_port *msm_port = to_msm_port(port);
->   
->   	switch (state) {
->   	case 0:
-> @@ -1435,7 +1438,7 @@ static void msm_power(struct uart_port *port, unsigned int state,
->   #ifdef CONFIG_CONSOLE_POLL
->   static int msm_poll_get_char_single(struct uart_port *port)
->   {
-> -	struct msm_port *msm_port = UART_TO_MSM(port);
-> +	struct msm_port *msm_port = to_msm_port(port);
->   	unsigned int rf_reg = msm_port->is_uartdm ? UARTDM_RF : UART_RF;
->   
->   	if (!(msm_read(port, UART_SR) & UART_SR_RX_READY))
-> @@ -1489,7 +1492,7 @@ static int msm_poll_get_char(struct uart_port *port)
->   {
->   	u32 imr;
->   	int c;
-> -	struct msm_port *msm_port = UART_TO_MSM(port);
-> +	struct msm_port *msm_port = to_msm_port(port);
->   
->   	/* Disable all interrupts */
->   	imr = msm_read(port, UART_IMR);
-> @@ -1509,7 +1512,7 @@ static int msm_poll_get_char(struct uart_port *port)
->   static void msm_poll_put_char(struct uart_port *port, unsigned char c)
->   {
->   	u32 imr;
-> -	struct msm_port *msm_port = UART_TO_MSM(port);
-> +	struct msm_port *msm_port = to_msm_port(port);
->   
->   	/* Disable all interrupts */
->   	imr = msm_read(port, UART_IMR);
-> @@ -1677,7 +1680,7 @@ static void msm_console_write(struct console *co, const char *s,
->   	BUG_ON(co->index < 0 || co->index >= UART_NR);
->   
->   	port = msm_get_port_from_line(co->index);
-> -	msm_port = UART_TO_MSM(port);
-> +	msm_port = to_msm_port(port);
->   
->   	__msm_console_write(port, s, count, msm_port->is_uartdm);
->   }
-> @@ -1808,7 +1811,7 @@ static int msm_serial_probe(struct platform_device *pdev)
->   
->   	port = msm_get_port_from_line(line);
->   	port->dev = &pdev->dev;
-> -	msm_port = UART_TO_MSM(port);
-> +	msm_port = to_msm_port(port);
->   
->   	id = of_match_device(msm_uartdm_table, &pdev->dev);
->   	if (id)
+  ok, will follow this.
 
 
--- 
-js
-suse labs
+>> ---
+>>   .../pinctrl/qcom,ipq5018-pinctrl.yaml         | 145 ++++++++++++++++++
+>>   1 file changed, 145 insertions(+)
+>>   create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,ipq5018-pinctrl.yaml
+>>
+>> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,ipq5018-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,ipq5018-pinctrl.yaml
+>> new file mode 100644
+>> index 000000000000..9b16c08bd127
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,ipq5018-pinctrl.yaml
+>> @@ -0,0 +1,145 @@
+>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/pinctrl/qcom,ipq5018-pinctrl.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: Qualcomm Technologies, Inc. IPQ5018 TLMM block
+>> +
+>> +maintainers:
+>> +  - Varadarajan Narayanan <quic_varada@quicinc.com>
+>> +  - Sricharan R <quic_srichara@quicinc.com>
+>> +  - Nitheesh Sekar <quic_nsekar@quicinc.com>
+>> +
+>> +description: |
+>> +  This binding describes the Top Level Mode Multiplexer block found in the
+>> +  IPQ5018 platform.
+>> +
+>> +properties:
+>> +  compatible:
+>> +    const: qcom,ipq5018-pinctrl
+>> +
+>> +  reg:
+>> +    maxItems: 1
+>> +
+>> +  interrupts:
+>> +    description: Specifies the TLMM summary IRQ
+>> +    maxItems: 1
+>> +
+>> +  interrupt-controller: true
+>> +
+>> +  '#interrupt-cells':
+>> +    description:
+>> +      Specifies the PIN numbers and Flags, as defined in defined in
+>> +      include/dt-bindings/interrupt-controller/irq.h
+>> +    const: 2
+>> +
+>> +  gpio-controller: true
+>> +
+>> +  '#gpio-cells':
+>> +    description: Specifying the pin number and flags, as defined in
+>> +      include/dt-bindings/gpio/gpio.h
+>> +    const: 2
+>> +
+>> +  gpio-ranges:
+>> +    maxItems: 1
+>> +
+>> +#PIN CONFIGURATION NODES
+>> +patternProperties:
+>> +  '-pinmux$':
+>> +    type: object
+>> +    description:
+>> +      Pinctrl node's client devices use subnodes for desired pin configuration.
+>> +      Client device subnodes use below standard properties.
+>> +    $ref: "/schemas/pinctrl/pincfg-node.yaml"
+> No need for quotes
+
+  ok.
+
+
+>> +
+>> +    properties:
+>> +      pins:
+>> +        description:
+>> +          List of gpio pins affected by the properties specified in this
+>> +          subnode.
+>> +        items:
+>> +          oneOf:
+>> +            - pattern: "^gpio([1-9]|[1-7][0-9]|80)$"
+> Use consistent quotes in the patch: either ' or ". Don't mix.
+
+  ok.
+
+
+>> +        minItems: 1
+>> +        maxItems: 4
+>> +
+>> +      function:
+>> +        description:
+>> +          Specify the alternative function to be configured for the specified
+>> +          pins.
+>> +        enum: [ atest_char, atest_char0, atest_char1, atest_char2, atest_char3,
+>> +          audio_pdm0, audio_pdm1, audio_rxbclk, audio_rxd, audio_rxfsync,
+>> +          audio_rxmclk, audio_txbclk, audio_txd, audio_txfsync, audio_txmclk,
+>> +          blsp0_i2c, blsp0_spi, blsp0_uart0, blsp0_uart1, blsp1_i2c0,
+>> +          blsp1_i2c1, blsp1_spi0, blsp1_spi1, blsp1_uart0, blsp1_uart1,
+>> +          blsp1_uart2, blsp2_i2c0, blsp2_i2c1, blsp2_spi, blsp2_spi0,
+>> +          blsp2_spi1, btss0, btss1, btss10, btss11, btss12, btss13, btss2,
+>> +          btss3, btss4, btss5, btss6, btss7, btss8, btss9, burn0, burn1,
+>> +          cri_trng, cri_trng0, cri_trng1, cxc_clk, cxc_data, dbg_out, eud_gpio,
+>> +          gcc_plltest, gcc_tlmm, gpio, mac0, mac1, mdc, mdio, pcie0_clk,
+>> +          pcie0_wake, pcie1_clk, pcie1_wake, pll_test, prng_rosc, pwm0, pwm1,
+>> +          pwm2, pwm3, qdss_cti_trig_in_a0, qdss_cti_trig_in_a1,
+>> +          qdss_cti_trig_in_b0, qdss_cti_trig_in_b1, qdss_cti_trig_out_a0,
+>> +          qdss_cti_trig_out_a1, qdss_cti_trig_out_b0, qdss_cti_trig_out_b1,
+>> +          qdss_traceclk_a, qdss_traceclk_b, qdss_tracectl_a, qdss_tracectl_b,
+>> +          qdss_tracedata_a, qdss_tracedata_b, qspi_clk, qspi_cs, qspi0, qspi1,
+>> +          qspi2, qspi3, reset_out, sdc1_clk, sdc1_cmd, sdc10, sdc11, sdc12,
+>> +          sdc13, wci0, wci1, wci2, wci3, wci4, wci5, wci6, wci7, wsa_swrm,
+>> +          wsi_clk3, wsi_data3, wsis_reset, xfem0, xfem1, xfem2, xfem3, xfem4,
+>> +          xfem5, xfem6, xfem7 ]
+>> +
+>> +      drive-strength:
+>> +        enum: [2, 4, 6, 8, 10, 12, 14, 16]
+>> +        default: 2
+>> +        description:
+>> +          Selects the drive strength for the specified pins, in mA.
+>> +
+>> +      bias-pull-down: true
+>> +
+>> +      bias-pull-up: true
+>> +
+>> +      bias-disable: true
+>> +
+>> +      output-high: true
+>> +
+>> +      output-low: true
+>> +
+>> +    required:
+>> +      - pins
+>> +      - function
+>> +
+>> +    additionalProperties: false
+>> +
+>> +required:
+>> +  - compatible
+>> +  - reg
+>> +  - interrupts
+>> +  - interrupt-controller
+>> +  - '#interrupt-cells'
+>> +  - gpio-controller
+>> +  - '#gpio-cells'
+>> +  - gpio-ranges
+> Missing allOf with reference to pinctrl schema.
+
+   ok, will fix this.
+
+Regards,
+   Sricharan
+
