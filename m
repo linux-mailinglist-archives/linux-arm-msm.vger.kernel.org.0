@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E887855727A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jun 2022 07:11:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 22E9D557289
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jun 2022 07:23:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229648AbiFWFL1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Jun 2022 01:11:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39404 "EHLO
+        id S229480AbiFWFXB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Jun 2022 01:23:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48808 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229640AbiFWFK4 (ORCPT
+        with ESMTP id S229448AbiFWFW7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Jun 2022 01:10:56 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4DBA743EF7;
-        Wed, 22 Jun 2022 21:56:52 -0700 (PDT)
+        Thu, 23 Jun 2022 01:22:59 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C36D10BB;
+        Wed, 22 Jun 2022 22:22:57 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 077B3B821BD;
-        Thu, 23 Jun 2022 04:56:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B10D3C3411B;
-        Thu, 23 Jun 2022 04:56:48 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id A0CC8B821A2;
+        Thu, 23 Jun 2022 05:22:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9030C3411B;
+        Thu, 23 Jun 2022 05:22:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1655960209;
-        bh=7NGWiP7w2/KsMG4zeZeSF2thFnKJWhK9wepK+9ZyTbk=;
+        s=k20201202; t=1655961775;
+        bh=owDuiE+iIDj2pyw4w03M5oR6ZHfgA91fiInMpPvY13Y=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=bq9aC+hU2DAGDskJedAwYyFP1mR1YO0dUw/oRS4VsNngM+5esffT4Yb6oQtNVXFio
-         IDNXwepW5I0mVUjFgURYfV2sZ77zmsNg6aedBvPnVZj5Aip1X0A+JDgRy8LvV2P+Sp
-         BLMFXmdYFuy41yhwcOecRzDPz2wQisixbygQ/AwjR2zSSu/WLmACLwhzJ1FcKYalAt
-         y20PsnXt+795h0MMq8p0AW+/4j/5cO341+1JYsv+jqs+zRfDA29UCvgWWIozd9kSbV
-         6vXh3PUqV/BFPZrLMMdk5Z4VoSLuMNOzKE09+XHCJOoJ4eU00Vzvdx77y6UM+VKStd
-         sKqKpBmRvCTEQ==
-Date:   Thu, 23 Jun 2022 10:26:44 +0530
+        b=tTlg4+cyCkA0EtoKWKMe3hwZCC6Wre+VNBGmfoeYJmStXxHliAFqgzA3lqJ9SltBq
+         STcw4twrXLkLqhX7iobS0TkirvVtQqtqgvgVf8e+YwG9Kfw+V9SGMtFwmo5jNCBYUE
+         DlWbBhzG8C3hKyFL96BbGWHlW83fqcR3KViuua9Krn+zyyxsFaHm08yv0ELZNTjvlG
+         3SNkpgN4JNjar66tsfnXHFTjPgBX+F5yJw28Cx7r4cTiztoqlK2B7O/KOqm+waAHf0
+         AXHOwUx+OSjwCm2vyk5lOJvNqkfCeG16jK7Mbgx+Dj9uxkeh72mgmu4ws0mT4aoHDd
+         BRcxpb5rUNjfg==
+Date:   Thu, 23 Jun 2022 10:52:50 +0530
 From:   Vinod Koul <vkoul@kernel.org>
-To:     Robert Foss <robert.foss@linaro.org>
-Cc:     bjorn.andersson@linaro.org, agross@kernel.org,
-        mturquette@baylibre.com, sboyd@kernel.org, robh+dt@kernel.org,
-        krzk+dt@kernel.org, jonathan@marek.ca,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>
-Subject: Re: [PATCH v7 2/6] clk: qcom: add support for SM8350 GPUCC
-Message-ID: <YrPyjKs0jG0xjgPW@matsya>
-References: <20220622232846.852771-1-robert.foss@linaro.org>
- <20220622232846.852771-3-robert.foss@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/4] arm64: dts: qcom: add SC8280XP platform
+Message-ID: <YrP4qs+GIlaS7Wzy@matsya>
+References: <20220607214113.4057684-1-bjorn.andersson@linaro.org>
+ <20220607214113.4057684-3-bjorn.andersson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220622232846.852771-3-robert.foss@linaro.org>
+In-Reply-To: <20220607214113.4057684-3-bjorn.andersson@linaro.org>
 X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -60,119 +60,63 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23-06-22, 01:28, Robert Foss wrote:
-> The GPUCC manages the clocks for the Adreno GPU found on the
-> sm8350 SoCs.
-> 
-> Signed-off-by: Robert Foss <robert.foss@linaro.org>
-> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
-> ---
-> 
-> Changes since v1
->  - Remove .name assignments for clk_parent_data - Dmitry
->  - Use ARRAY_SIZE where possible - Dmitry
->  - Remove commented out code - Dmitry
->  - Set CLAMP_IO flag for gpu_gx_gdsc - Dmitry
->  - Assign .parent_hws instead of .hw - Dmitry
-> 
-> Changes since v2
->  - Switch license to dual BSD/GPL - Bjorn
->  - Add Jonathans SoB - Jonathan
->  - Add Linaro to copyright statement - Bjorn
->  - Make .hw.init assignment const - Bjorn
->  - Extract & deduplicate bi_tcxo parent_data - Bjorn
->  - Removed further .name assignment - Bjorn
->  - Move of_device_id declaration - Bjorn
-> 
-> Changes since v3
->  - Change license to BSD/GPL - Rob/Bjorn
->  - Switch from .fw_name to .index
-> 
-> Changes since v4
->  - Change year of copyright statement
->  - Change to dual license for header file - Rob
-> 
-> Changes since v5
->  - Change hex to lower case - Konrad
-> 
-> Changes since v6
->  - Change hex to lower case - Konrad
->  - Change license go GPL 2.0 only - Konrad
-> 
-> 
->  drivers/clk/qcom/Kconfig        |   8 +
->  drivers/clk/qcom/Makefile       |   1 +
->  drivers/clk/qcom/gpucc-sm8350.c | 637 ++++++++++++++++++++++++++++++++
->  3 files changed, 646 insertions(+)
->  create mode 100644 drivers/clk/qcom/gpucc-sm8350.c
-> 
-> diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
-> index bc4dcf356d82..b11235c21952 100644
-> --- a/drivers/clk/qcom/Kconfig
-> +++ b/drivers/clk/qcom/Kconfig
-> @@ -712,6 +712,14 @@ config SM_GPUCC_8250
->  	  Say Y if you want to support graphics controller devices and
->  	  functionality such as 3D graphics.
->  
-> +config SM_GPUCC_8350
-> +	tristate "SM8350 Graphics Clock Controller"
-> +	select SM_GCC_8350
-> +	help
-> +	  Support for the graphics clock controller on SM8350 devices.
-> +	  Say Y if you want to support graphics controller devices and
-> +	  functionality such as 3D graphics.
-> +
->  config SM_VIDEOCC_8150
->  	tristate "SM8150 Video Clock Controller"
->  	select SM_GCC_8150
-> diff --git a/drivers/clk/qcom/Makefile b/drivers/clk/qcom/Makefile
-> index 36789f5233ef..ef9c64824424 100644
-> --- a/drivers/clk/qcom/Makefile
-> +++ b/drivers/clk/qcom/Makefile
-> @@ -101,6 +101,7 @@ obj-$(CONFIG_SM_GCC_8450) += gcc-sm8450.o
->  obj-$(CONFIG_SM_GPUCC_6350) += gpucc-sm6350.o
->  obj-$(CONFIG_SM_GPUCC_8150) += gpucc-sm8150.o
->  obj-$(CONFIG_SM_GPUCC_8250) += gpucc-sm8250.o
-> +obj-$(CONFIG_SM_GPUCC_8350) += gpucc-sm8350.o
->  obj-$(CONFIG_SM_VIDEOCC_8150) += videocc-sm8150.o
->  obj-$(CONFIG_SM_VIDEOCC_8250) += videocc-sm8250.o
->  obj-$(CONFIG_SPMI_PMIC_CLKDIV) += clk-spmi-pmic-div.o
-> diff --git a/drivers/clk/qcom/gpucc-sm8350.c b/drivers/clk/qcom/gpucc-sm8350.c
-> new file mode 100644
-> index 000000000000..d13fa813d190
-> --- /dev/null
-> +++ b/drivers/clk/qcom/gpucc-sm8350.c
-> @@ -0,0 +1,637 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/*
-> + * Copyright (c) 2019-2020, The Linux Foundation. All rights reserved.
-> + * Copyright (c) 2022, Linaro Limited
-> + */
-> +
-> +#include <linux/clk.h>
-> +#include <linux/err.h>
-> +#include <linux/kernel.h>
-> +#include <linux/module.h>
-> +#include <linux/of_device.h>
-> +#include <linux/of.h>
-> +#include <linux/regmap.h>
-> +
-> +#include <dt-bindings/clock/qcom,gpucc-sm8350.h>
-> +
-> +#include "clk-alpha-pll.h"
-> +#include "clk-branch.h"
-> +#include "clk-pll.h"
-> +#include "clk-rcg.h"
-> +#include "clk-regmap.h"
-> +#include "common.h"
-> +#include "clk-regmap-mux.h"
-> +#include "clk-regmap-divider.h"
-> +#include "gdsc.h"
-> +#include "reset.h"
+On 07-06-22, 14:41, Bjorn Andersson wrote:
 
-nit: this could be sorted alphabetically. Otherwise looks good to me
+> +	cpus {
+> +		#address-cells = <2>;
+> +		#size-cells = <0>;
+> +
+> +		CPU0: cpu@0 {
+> +			device_type = "cpu";
+> +			compatible = "qcom,kryo";
 
-Reviewed-by: Vinod Koul <vkoul@kernel.org>
+Generic kryo and not kryoxxx?
+
+> +	firmware {
+> +		scm: scm {
+> +			compatible = "qcom,scm-sc8280xp", "qcom,scm";
+
+I dont see patch documenting this compatible, was it added earlier, if
+not pls add..
+
+> +		};
+> +	};
+> +
+> +	aggre1_noc: interconncet-aggre1-noc {
+
+s/interconncet/interconnect
+
+Hmmm I thought it was required that node name should be interconnect@x
+
+> +		qup1: geniqup@ac0000 {
+> +			compatible = "qcom,geni-se-qup";
+> +			reg = <0 0x00ac0000 0 0x6000>;
+> +			clocks = <&gcc GCC_QUPV3_WRAP_1_M_AHB_CLK>,
+> +				 <&gcc GCC_QUPV3_WRAP_1_S_AHB_CLK>;
+> +			clock-names = "m-ahb", "s-ahb";
+> +			iommus = <&apps_smmu 0x83 0>;
+> +
+> +			#address-cells = <2>;
+> +			#size-cells = <2>;
+> +			ranges;
+> +
+> +			status = "disabled";
+> +		};
+
+why add this, if no i2c/spi/uarts are defined under this..?
+
+> +		usb_0_hsphy: phy@88e5000 {
+> +			compatible = "qcom,sc8280xp-usb-hs-phy",
+> +				     "qcom,usb-snps-hs-5nm-phy";
+> +			reg = <0 0x088e5000 0 0x400>;
+
+this doesn't match with node address above (I think W=1 would warn you
+of such mismatches, useful to run on new dts
+
+> +
+> +		spmi_bus: spmi@c440000 {
+
+Is the new v7 spmi or older one?
 
 -- 
 ~Vinod
