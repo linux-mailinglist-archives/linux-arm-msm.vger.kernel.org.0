@@ -2,106 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E0605558BC4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jun 2022 01:34:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9D2A1558C00
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jun 2022 01:54:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229514AbiFWXe1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Jun 2022 19:34:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44418 "EHLO
+        id S231326AbiFWXyd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Jun 2022 19:54:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59910 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229454AbiFWXe0 (ORCPT
+        with ESMTP id S231455AbiFWXyV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Jun 2022 19:34:26 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E4AC53A61;
-        Thu, 23 Jun 2022 16:34:25 -0700 (PDT)
+        Thu, 23 Jun 2022 19:54:21 -0400
+Received: from mail-oa1-x2f.google.com (mail-oa1-x2f.google.com [IPv6:2001:4860:4864:20::2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B893A3915D
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jun 2022 16:54:19 -0700 (PDT)
+Received: by mail-oa1-x2f.google.com with SMTP id 586e51a60fabf-101e1a33fe3so1540482fac.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jun 2022 16:54:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1656027265; x=1687563265;
-  h=from:to:cc:subject:date:message-id:mime-version;
-  bh=/31sRhd3eMfjJCpxCgFwnrLmD7Dvnq2PU5xG/V6yQRQ=;
-  b=PaSBIZ1Y+/qQF6XoBVGbNNjb/sFwqVE44e9AhpQ0I5P+GnOyguNFMgRk
-   aKsW9hfvQYvXDfvpo2MqMnkbDWUSqyH6L80PI3PNYPyVQx2MyvGG+tzQj
-   eAGIxj9rr71MvWBm7GqHiIGMT2ooaTImUALJEPUB7rvUYkcwNrC4D6Gbo
-   Y=;
-Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 23 Jun 2022 16:34:25 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Jun 2022 16:34:24 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Thu, 23 Jun 2022 16:34:24 -0700
-Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Thu, 23 Jun 2022 16:34:23 -0700
-From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
-To:     <robdclark@gmail.com>, <sean@poorly.run>, <swboyd@chromium.org>,
-        <dianders@chromium.org>, <vkoul@kernel.org>, <daniel@ffwll.ch>,
-        <airlied@linux.ie>, <agross@kernel.org>,
-        <dmitry.baryshkov@linaro.org>, <bjorn.andersson@linaro.org>
-CC:     <quic_abhinavk@quicinc.com>, <quic_aravindh@quicinc.com>,
-        <quic_khsieh@quicinc.com>, <quic_sbillaka@quicinc.com>,
-        <freedreno@lists.freedesktop.org>,
-        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: [PATCH] drm/msm/dp:  no dp_hpd_unplug_handle() required for eDP
-Date:   Thu, 23 Jun 2022 16:34:16 -0700
-Message-ID: <1656027256-6552-1-git-send-email-quic_khsieh@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=/ZRKS8M3PlLIxcLTOe45gcNo3hCUxvnL/TPPCZLcOQQ=;
+        b=AdsjtPTK6x0ZFa7KUThSEwUcXUsBdMkEWTbE+4WKICbUl0fsYIXJna5NZ0X1q+B9tm
+         uB4RYvT30L5gEVE08holT8cDbIxXHMR2k1IAw7fHOoY+/I0prw6YhWcQzg5qZ+Zwg2WJ
+         F8cddecOsXTXtO+wlzGoHBgt4shNF2ohfS7BI=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=/ZRKS8M3PlLIxcLTOe45gcNo3hCUxvnL/TPPCZLcOQQ=;
+        b=dH/KdBlF19RiD0NSnaCpmxrfTw1JOuPuXcdhdRBAMSGj1OnXvpAXzpLAUN/IMMFyrk
+         E8yRi1H+Ncq2KT7I1NEQMndsw5PgIWMGG3aezqpfTpBrHqN+NRS7yV9RQmGOJnWAyhkP
+         wt9Cez4zoL68ghZ4GfhOYpv6CATioKMjypCEJV9N+Og3KwistwWl+mt6BMbVOFP1A1eX
+         SYPYHeaaYfJywC0Yd49FJIFZP6MseKK5Ewfl6s1XJPCKZcNzU99xo6szBRdN0l9yGJSS
+         0iJ7kfaOCrLKobiuLX8DxgBQaSNxM4bLajrufBFvYjd1thPzyLdyxaex5d9+oaMwqenB
+         RMuQ==
+X-Gm-Message-State: AJIora/Dgkde8KRwTai+4rogM/QnRqWXbecncf6bFIsabDmEXNXMEEkb
+        mnODRxXo91yNlgLDlbrAV7+SJkTPUUOY3SPmV6iPa2s4ynM=
+X-Google-Smtp-Source: AGRyM1tnOnLxsvh+Cfqhj27PAdr1KJbxy8do/+OK84eawWEnu68e3dULtfRfvmcEjKDa7CK8fO4ktSYEjJDKDQwVBBA=
+X-Received: by 2002:a05:6870:b381:b0:fe:2004:b3b5 with SMTP id
+ w1-20020a056870b38100b000fe2004b3b5mr336448oap.63.1656028459113; Thu, 23 Jun
+ 2022 16:54:19 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 23 Jun 2022 16:54:18 -0700
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+In-Reply-To: <20220623223119.1858863-1-gwendal@chromium.org>
+References: <20220623223119.1858863-1-gwendal@chromium.org>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date:   Thu, 23 Jun 2022 16:54:18 -0700
+Message-ID: <CAE-0n50NfsHcK17=wDv1zY5=qNQSORzdJHECCAG-bX2Qhpm7pg@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: sc7280: Rename sar sensor labels
+To:     Gwendal Grignou <gwendal@chromium.org>, bjorn.andersson@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, mka@chromium.org,
+        dianders@chromium.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-eDP implementation does not reuried to support hpd signal. Therefore
-it only has either ST_DISPLAY_OFF or ST_CONNECTED state during normal
-operation. This patch remove unnecessary dp_hpd_unplug_handle() for
-eDP but still keep dp_hpd_plug_handle() to support eDP to either
-booting up or resume from ST_DISCONNECTED state.
+Quoting Gwendal Grignou (2022-06-23 15:31:19)
+> To ease matching configuration of sysfs attributes for particular
+> sensor, match label reported by iio 'label' attribute with the location
+> label generated by ChromeOS config tool.
+>
+> Signed-off-by: Gwendal Grignou <gwendal@chromium.org>
+> ---
 
-Fixes: 391c96ff0555 ("drm/msm/dp: Support only IRQ_HPD and REPLUG interrupts for eDP")
-Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
----
- drivers/gpu/drm/msm/dp/dp_display.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index da5c03a..ef9794e 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -1666,7 +1666,7 @@ void dp_bridge_enable(struct drm_bridge *drm_bridge)
- 		return;
- 	}
- 
--	if (dp->is_edp)
-+	if (dp->is_edp && dp_display->hpd_state == ST_DISCONNECTED)
- 		dp_hpd_plug_handle(dp_display, 0);
- 
- 	mutex_lock(&dp_display->event_mutex);
-@@ -1737,9 +1737,6 @@ void dp_bridge_post_disable(struct drm_bridge *drm_bridge)
- 
- 	dp_display = container_of(dp, struct dp_display_private, dp_display);
- 
--	if (dp->is_edp)
--		dp_hpd_unplug_handle(dp_display, 0);
--
- 	mutex_lock(&dp_display->event_mutex);
- 
- 	state = dp_display->hpd_state;
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
-
+>  arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
+> index 9cb1bc8ed6b5c..8b96fad5fdd4c 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
+> @@ -388,7 +388,7 @@ ap_sar_sensor0: proximity@28 {
+>
+>                 vdd-supply = <&pp1800_prox>;
+>
+> -               label = "proximity-wifi-lte0";
+> +               label = "proximity-wifi_cellular-0";
+>                 status = "disabled";
+>         };
+>
+> @@ -404,7 +404,7 @@ ap_sar_sensor1: proximity@2c {
+>
+>                 vdd-supply = <&pp1800_prox>;
+>
+> -               label = "proximity-wifi-lte1";
+> +               label = "proximity-wifi_cellular-1";
+>                 status = "disabled";
+>         };
+>  };
+> --
+> 2.37.0.rc0.104.g0611611a94-goog
+>
