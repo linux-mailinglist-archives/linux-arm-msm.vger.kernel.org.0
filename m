@@ -2,50 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E110A5579CE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jun 2022 14:04:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 882345579D4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jun 2022 14:04:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231363AbiFWMEf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Jun 2022 08:04:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51994 "EHLO
+        id S231701AbiFWMEi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Jun 2022 08:04:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52108 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231508AbiFWME3 (ORCPT
+        with ESMTP id S231598AbiFWMEe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Jun 2022 08:04:29 -0400
-Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E07E49686
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jun 2022 05:04:25 -0700 (PDT)
-Received: by mail-lj1-x233.google.com with SMTP id bn8so5696167ljb.2
+        Thu, 23 Jun 2022 08:04:34 -0400
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51932496A8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jun 2022 05:04:26 -0700 (PDT)
+Received: by mail-lf1-x136.google.com with SMTP id x3so5284708lfd.2
         for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jun 2022 05:04:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=yf/yx25JwN/CNAUtHPPwkTUDXLMD54uQut5mDpGElUM=;
-        b=DfJ/5yZlOD8HGBZYKKssrvGhhIC+EvkQu4yYGkrlt3faubECHb8VtGnJ9eSbq7Is7L
-         IXhVbb/GG1wlUXGKz81UieeCaJO01UWnRWz2YxIKhE0WFPCiacRW6SOAiCFKghBgV8uk
-         zItfnLn+enXTrK4H3REUOQpn03YcGI+hiJNBTZTi8bOiXNRxPSZ890HM7GXBhSi2e3O/
-         S+MkBgfuIbDL1hU22yCyAQFT/m+s29VfGBe7u27f6DBRt0E5VTEPn0NftCSZ7KWiBK1G
-         lJbVSCDGBvjQViPOGuwcuIPLF9UsQ8kaN1DluuPOBB0P0sNKTlF2yg+YjJ++611udIwG
-         qkng==
+        bh=UiJAIQH+L9+uN6VGb9S2vDqkLLCLa8YUEqig3NBbRlk=;
+        b=aAgLgHKEcHviHjnGyIFIm7C4pWEW5M5SdEv7SLjLLhWjzGj1YoZ699Hsge+KuddEkN
+         dJO8WJtLb8a8COdPIvLpM4h19GffgVi5CrnkDZgLzPKBKWv1DSqoxo73opBJiI8dIVxy
+         E1p96BnTAjrwt02lYHZ+X+xAIApSM3YrQu4NzoFc3QIIutmBtzyiaORZR+tU/jm7BiId
+         5SXkmVU5R/XZXSnOgfa03V11IVYinw63Fi6RzgVOPigZNEG/wJQOL8u8qR7Cjw+4JWFt
+         6Y3Djh8kws2CZmbhfEwJTAuDOw+DNqQI/Cqr9Fjc+ic2+rt1JjZXdMKzzX5g6bj9YF8+
+         TSMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=yf/yx25JwN/CNAUtHPPwkTUDXLMD54uQut5mDpGElUM=;
-        b=cuTChkHwlscWOcr0661sBF0l81IXh9lOtJNz2khs0jwY/KLuulmUsHHrAIsQR5VwGY
-         TvY9+0pV48Jaxy/KuV6gO/0sGGQkl/BAqB4az00AKbpCVioflhUeScELN7xOFEK1o+C3
-         2NM4t1pLftKT/PQTg6oEUflLdgYX6VrZQkk08yhikTuZFBPQ7MyiVTvOsorBlZ46G9QB
-         4kZ8utT52pCxceGulcfYzztVhcXm8exNnFdy/1Mcigg5ifFpbmhcfTRxRK1259MwobSY
-         O+i258tj2eYuDuZsQZlJZw3kfsHCEetcDYsBMweOkZisgCiLOdbXF9b+YWPOHRZEYE59
-         8QwA==
-X-Gm-Message-State: AJIora+PVS/FtRUyV16NZdCuUk4basRoZoZuGL5e1IEguzAzyKNthi9L
-        sjbT+8y9sdZUYcEwHWmWTg1uIg==
-X-Google-Smtp-Source: AGRyM1u/O0NgxYeKA0KNd1BMeM6hc9aHpLhdHM4kX7GmYDOksjx642511xiPmqQ2SrZCgjFJ1rvbTw==
-X-Received: by 2002:a2e:918f:0:b0:25a:7164:f408 with SMTP id f15-20020a2e918f000000b0025a7164f408mr4497705ljg.523.1655985863591;
-        Thu, 23 Jun 2022 05:04:23 -0700 (PDT)
+        bh=UiJAIQH+L9+uN6VGb9S2vDqkLLCLa8YUEqig3NBbRlk=;
+        b=mcw1gr/lSw3HdDTQ4eX2gADKVmomyJe4yYf+pUTFsUdgOv5kxhteWPU64RSFj/MELs
+         HLoOOTjocaGt3p3VKPJyNk6vOSK+D1NUTE2uZm0msMqBWsZSr68ooWHCaMbnfJIGfyIT
+         dF+BtCDj7F96hHfFkErqzEd22nphEqKOmvxlh52z1R68Y0+C6uOX6TTAGUBL1mT8sKYO
+         q/zW8x98pmSpuhWnzGORl+7bREXPkPYysZDzEenxcLvk2Uvk0WvbXoj39j60t1LG2+if
+         GKpBNvz19FTj94gRx42KMTd4AHmUdSuNCTdN++dn2V+GnQKGJWlt5+l1o1Kn3S1FnuvQ
+         tlgg==
+X-Gm-Message-State: AJIora9B2mAMQLSVtW/SrFvio0AoyECz5hoSAhhOV34/wCthJbuln9v/
+        IS9qtnB5uxib4BGAd86+lMJjtg==
+X-Google-Smtp-Source: AGRyM1sseeHX1Ai+SIGx5XMY4hZMPKiSM7468kskgD20dhPzboifXHxSx2ujW40qscIZ+wuRRCWr5w==
+X-Received: by 2002:a05:6512:3042:b0:47f:ac02:28e9 with SMTP id b2-20020a056512304200b0047fac0228e9mr943511lfb.448.1655985864353;
+        Thu, 23 Jun 2022 05:04:24 -0700 (PDT)
 Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id 18-20020ac25f52000000b0047f6b4a53cdsm1799888lfz.172.2022.06.23.05.04.22
+        by smtp.gmail.com with ESMTPSA id 18-20020ac25f52000000b0047f6b4a53cdsm1799888lfz.172.2022.06.23.05.04.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Thu, 23 Jun 2022 05:04:23 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
@@ -58,9 +58,9 @@ To:     Andy Gross <agross@kernel.org>,
         Taniya Das <quic_tdas@quicinc.com>
 Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         devicetree@vger.kernel.org
-Subject: [PATCH 05/15] clk: qcom: lcc-msm8960: use macros to implement mi2s clocks
-Date:   Thu, 23 Jun 2022 15:04:08 +0300
-Message-Id: <20220623120418.250589-6-dmitry.baryshkov@linaro.org>
+Subject: [PATCH 06/15] clk: qcom: lcc-msm8960: use parent_hws/_data instead of parent_names
+Date:   Thu, 23 Jun 2022 15:04:09 +0300
+Message-Id: <20220623120418.250589-7-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220623120418.250589-1-dmitry.baryshkov@linaro.org>
 References: <20220623120418.250589-1-dmitry.baryshkov@linaro.org>
@@ -76,224 +76,191 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Split and extend existing CLK_AIF_OSR_DIV macro to implement mi2s
-clocks. This simplifies the driver and removes extra code duplication.
-
-The clock mi2s_div_clk used .enable_reg/.enable_bit, however these
-fields are not used with by the clk_regmap_div_ops, thus they are
-silently dropped. Clock enablement is handled in the mi2s_bit_div_clk
-clock.
+Convert the clock driver to specify parent data rather than parent
+names, to actually bind using 'clock-names' specified in the DTS rather
+than global clock names. Use parent_hws where possible to refer parent
+clocks directly, skipping the lookup.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/clk/qcom/lcc-msm8960.c | 142 +++++++--------------------------
- 1 file changed, 27 insertions(+), 115 deletions(-)
+ drivers/clk/qcom/lcc-msm8960.c | 69 ++++++++++++++++++----------------
+ 1 file changed, 37 insertions(+), 32 deletions(-)
 
 diff --git a/drivers/clk/qcom/lcc-msm8960.c b/drivers/clk/qcom/lcc-msm8960.c
-index 84817cf2b6bd..99a3d2d486b4 100644
+index 99a3d2d486b4..3926184cc91b 100644
 --- a/drivers/clk/qcom/lcc-msm8960.c
 +++ b/drivers/clk/qcom/lcc-msm8960.c
-@@ -86,112 +86,7 @@ static struct freq_tbl clk_tbl_aif_osr_393[] = {
- 	{ }
+@@ -33,7 +33,9 @@ static struct clk_pll pll4 = {
+ 	.status_bit = 16,
+ 	.clkr.hw.init = &(struct clk_init_data){
+ 		.name = "pll4",
+-		.parent_names = (const char *[]){ "pxo" },
++		.parent_data = (const struct clk_parent_data[]){
++			{ .fw_name = "pxo", .name = "pxo_board" },
++		},
+ 		.num_parents = 1,
+ 		.ops = &clk_pll_ops,
+ 	},
+@@ -49,9 +51,9 @@ static const struct parent_map lcc_pxo_pll4_map[] = {
+ 	{ P_PLL4, 2 }
  };
  
--static struct clk_rcg mi2s_osr_src = {
--	.ns_reg = 0x48,
--	.md_reg = 0x4c,
--	.mn = {
--		.mnctr_en_bit = 8,
--		.mnctr_reset_bit = 7,
--		.mnctr_mode_shift = 5,
--		.n_val_shift = 24,
--		.m_val_shift = 8,
--		.width = 8,
--	},
--	.p = {
--		.pre_div_shift = 3,
--		.pre_div_width = 2,
--	},
--	.s = {
--		.src_sel_shift = 0,
--		.parent_map = lcc_pxo_pll4_map,
--	},
--	.freq_tbl = clk_tbl_aif_osr_393,
--	.clkr = {
--		.enable_reg = 0x48,
--		.enable_mask = BIT(9),
--		.hw.init = &(struct clk_init_data){
--			.name = "mi2s_osr_src",
--			.parent_names = lcc_pxo_pll4,
--			.num_parents = 2,
--			.ops = &clk_rcg_ops,
--			.flags = CLK_SET_RATE_GATE,
--		},
--	},
--};
--
--static const char * const lcc_mi2s_parents[] = {
--	"mi2s_osr_src",
--};
--
--static struct clk_branch mi2s_osr_clk = {
--	.halt_reg = 0x50,
--	.halt_bit = 1,
--	.halt_check = BRANCH_HALT_ENABLE,
--	.clkr = {
--		.enable_reg = 0x48,
--		.enable_mask = BIT(17),
--		.hw.init = &(struct clk_init_data){
--			.name = "mi2s_osr_clk",
--			.parent_names = lcc_mi2s_parents,
--			.num_parents = 1,
--			.ops = &clk_branch_ops,
--			.flags = CLK_SET_RATE_PARENT,
--		},
--	},
--};
--
--static struct clk_regmap_div mi2s_div_clk = {
--	.reg = 0x48,
--	.shift = 10,
--	.width = 4,
--	.clkr = {
--		.enable_reg = 0x48,
--		.enable_mask = BIT(15),
--		.hw.init = &(struct clk_init_data){
--			.name = "mi2s_div_clk",
--			.parent_names = lcc_mi2s_parents,
--			.num_parents = 1,
--			.ops = &clk_regmap_div_ops,
--		},
--	},
--};
--
--static struct clk_branch mi2s_bit_div_clk = {
--	.halt_reg = 0x50,
--	.halt_bit = 0,
--	.halt_check = BRANCH_HALT_ENABLE,
--	.clkr = {
--		.enable_reg = 0x48,
--		.enable_mask = BIT(15),
--		.hw.init = &(struct clk_init_data){
--			.name = "mi2s_bit_div_clk",
--			.parent_names = (const char *[]){ "mi2s_div_clk" },
--			.num_parents = 1,
--			.ops = &clk_branch_ops,
--			.flags = CLK_SET_RATE_PARENT,
--		},
--	},
--};
--
--static struct clk_regmap_mux mi2s_bit_clk = {
--	.reg = 0x48,
--	.shift = 14,
--	.width = 1,
--	.clkr = {
--		.hw.init = &(struct clk_init_data){
--			.name = "mi2s_bit_clk",
--			.parent_names = (const char *[]){
--				"mi2s_bit_div_clk",
--				"mi2s_codec_clk",
--			},
--			.num_parents = 2,
--			.ops = &clk_regmap_mux_closest_ops,
--			.flags = CLK_SET_RATE_PARENT,
--		},
--	},
--};
--
--#define CLK_AIF_OSR_DIV(prefix, _ns, _md, hr)			\
-+#define CLK_AIF_OSR_SRC(prefix, _ns, _md)			\
- static struct clk_rcg prefix##_osr_src = {			\
- 	.ns_reg = _ns,						\
- 	.md_reg = _md,						\
-@@ -228,14 +123,15 @@ static struct clk_rcg prefix##_osr_src = {			\
- static const char * const lcc_##prefix##_parents[] = {		\
- 	#prefix "_osr_src",					\
- };								\
--								\
-+
-+#define CLK_AIF_OSR_CLK(prefix, _ns, hr, en_bit)		\
- static struct clk_branch prefix##_osr_clk = {			\
- 	.halt_reg = hr,						\
- 	.halt_bit = 1,						\
- 	.halt_check = BRANCH_HALT_ENABLE,			\
- 	.clkr = {						\
- 		.enable_reg = _ns,				\
--		.enable_mask = BIT(21),				\
-+		.enable_mask = BIT(en_bit),			\
+-static const char * const lcc_pxo_pll4[] = {
+-	"pxo",
+-	"pll4_vote",
++static const struct clk_parent_data lcc_pxo_pll4[] = {
++	{ .fw_name = "pxo", .name = "pxo_board" },
++	{ .fw_name = "pll4_vote", .name = "pll4_vote" },
+ };
+ 
+ static struct freq_tbl clk_tbl_aif_osr_492[] = {
+@@ -112,17 +114,13 @@ static struct clk_rcg prefix##_osr_src = {			\
+ 		.enable_mask = BIT(9),				\
  		.hw.init = &(struct clk_init_data){		\
- 			.name = #prefix "_osr_clk",		\
- 			.parent_names = lcc_##prefix##_parents,	\
-@@ -245,11 +141,12 @@ static struct clk_branch prefix##_osr_clk = {			\
+ 			.name = #prefix "_osr_src",		\
+-			.parent_names = lcc_pxo_pll4,		\
+-			.num_parents = 2,			\
++			.parent_data = lcc_pxo_pll4,		\
++			.num_parents = ARRAY_SIZE(lcc_pxo_pll4), \
+ 			.ops = &clk_rcg_ops,			\
+ 			.flags = CLK_SET_RATE_GATE,		\
  		},						\
  	},							\
  };								\
 -								\
-+
-+#define CLK_AIF_OSR_DIV_CLK(prefix, _ns, _width)		\
- static struct clk_regmap_div prefix##_div_clk = {		\
- 	.reg = _ns,						\
- 	.shift = 10,						\
--	.width = 8,						\
-+	.width = _width,					\
+-static const char * const lcc_##prefix##_parents[] = {		\
+-	#prefix "_osr_src",					\
+-};								\
+ 
+ #define CLK_AIF_OSR_CLK(prefix, _ns, hr, en_bit)		\
+ static struct clk_branch prefix##_osr_clk = {			\
+@@ -134,7 +132,9 @@ static struct clk_branch prefix##_osr_clk = {			\
+ 		.enable_mask = BIT(en_bit),			\
+ 		.hw.init = &(struct clk_init_data){		\
+ 			.name = #prefix "_osr_clk",		\
+-			.parent_names = lcc_##prefix##_parents,	\
++			.parent_hws = (const struct clk_hw*[]){	\
++				&prefix##_osr_src.clkr.hw,	\
++			},					\
+ 			.num_parents = 1,			\
+ 			.ops = &clk_branch_ops,			\
+ 			.flags = CLK_SET_RATE_PARENT,		\
+@@ -150,7 +150,9 @@ static struct clk_regmap_div prefix##_div_clk = {		\
  	.clkr = {						\
  		.hw.init = &(struct clk_init_data){		\
  			.name = #prefix "_div_clk",		\
-@@ -259,14 +156,15 @@ static struct clk_regmap_div prefix##_div_clk = {		\
+-			.parent_names = lcc_##prefix##_parents,	\
++			.parent_hws = (const struct clk_hw*[]){	\
++				&prefix##_osr_src.clkr.hw,	\
++			},					\
+ 			.num_parents = 1,			\
+ 			.ops = &clk_regmap_div_ops,		\
  		},						\
- 	},							\
- };								\
--								\
-+
-+#define CLK_AIF_OSR_BIT_DIV_CLK(prefix, _ns, hr, en_bit)	\
- static struct clk_branch prefix##_bit_div_clk = {		\
- 	.halt_reg = hr,						\
- 	.halt_bit = 0,						\
- 	.halt_check = BRANCH_HALT_ENABLE,			\
- 	.clkr = {						\
- 		.enable_reg = _ns,				\
--		.enable_mask = BIT(19),				\
-+		.enable_mask = BIT(en_bit),			\
+@@ -167,9 +169,9 @@ static struct clk_branch prefix##_bit_div_clk = {		\
+ 		.enable_mask = BIT(en_bit),			\
  		.hw.init = &(struct clk_init_data){		\
  			.name = #prefix "_bit_div_clk",		\
- 			.parent_names = (const char *[]){	\
-@@ -278,10 +176,11 @@ static struct clk_branch prefix##_bit_div_clk = {		\
- 		},						\
- 	},							\
- };								\
--								\
-+
-+#define CLK_AIF_OSR_BIT_CLK(prefix, _ns, _shift)		\
- static struct clk_regmap_mux prefix##_bit_clk = {		\
- 	.reg = _ns,						\
--	.shift = 18,						\
-+	.shift = _shift,					\
- 	.width = 1,						\
+-			.parent_names = (const char *[]){	\
+-				#prefix "_div_clk"		\
+-			}, 					\
++			.parent_hws = (const struct clk_hw*[]){	\
++				&prefix##_div_clk.clkr.hw,	\
++			},					\
+ 			.num_parents = 1,			\
+ 			.ops = &clk_branch_ops,			\
+ 			.flags = CLK_SET_RATE_PARENT,		\
+@@ -185,9 +187,10 @@ static struct clk_regmap_mux prefix##_bit_clk = {		\
  	.clkr = {						\
  		.hw.init = &(struct clk_init_data){		\
-@@ -295,7 +194,20 @@ static struct clk_regmap_mux prefix##_bit_clk = {		\
- 			.flags = CLK_SET_RATE_PARENT,		\
- 		},						\
- 	},							\
--}
-+};
-+
-+CLK_AIF_OSR_SRC(mi2s, 0x48, 0x4c)
-+CLK_AIF_OSR_CLK(mi2s, 0x48, 0x50, 17)
-+CLK_AIF_OSR_DIV_CLK(mi2s, 0x48, 4)
-+CLK_AIF_OSR_BIT_DIV_CLK(mi2s, 0x48, 0x50, 15)
-+CLK_AIF_OSR_BIT_CLK(mi2s, 0x48, 14)
-+
-+#define CLK_AIF_OSR_DIV(prefix, _ns, _md, hr)			\
-+	CLK_AIF_OSR_SRC(prefix, _ns, _md)			\
-+	CLK_AIF_OSR_CLK(prefix, _ns, hr, 21)			\
-+	CLK_AIF_OSR_DIV_CLK(prefix, _ns, 8)			\
-+	CLK_AIF_OSR_BIT_DIV_CLK(prefix, _ns, hr, 19)		\
-+	CLK_AIF_OSR_BIT_CLK(prefix, _ns, 18)
+ 			.name = #prefix "_bit_clk",		\
+-			.parent_names = (const char *[]){	\
+-				#prefix "_bit_div_clk",		\
+-				#prefix "_codec_clk",		\
++			.parent_data = (const struct clk_parent_data[]){ \
++				{ .hw = &prefix##_bit_div_clk.clkr.hw, }, \
++				{ .fw_name = #prefix "_codec_clk", \
++				  .name = #prefix "_codec_clk", }, \
+ 			},					\
+ 			.num_parents = 2,			\
+ 			.ops = &clk_regmap_mux_closest_ops,	\
+@@ -273,8 +276,8 @@ static struct clk_rcg pcm_src = {
+ 		.enable_mask = BIT(9),
+ 		.hw.init = &(struct clk_init_data){
+ 			.name = "pcm_src",
+-			.parent_names = lcc_pxo_pll4,
+-			.num_parents = 2,
++			.parent_data = lcc_pxo_pll4,
++			.num_parents = ARRAY_SIZE(lcc_pxo_pll4),
+ 			.ops = &clk_rcg_ops,
+ 			.flags = CLK_SET_RATE_GATE,
+ 		},
+@@ -290,7 +293,9 @@ static struct clk_branch pcm_clk_out = {
+ 		.enable_mask = BIT(11),
+ 		.hw.init = &(struct clk_init_data){
+ 			.name = "pcm_clk_out",
+-			.parent_names = (const char *[]){ "pcm_src" },
++			.parent_hws = (const struct clk_hw*[]){
++				&pcm_src.clkr.hw
++			},
+ 			.num_parents = 1,
+ 			.ops = &clk_branch_ops,
+ 			.flags = CLK_SET_RATE_PARENT,
+@@ -305,9 +310,9 @@ static struct clk_regmap_mux pcm_clk = {
+ 	.clkr = {
+ 		.hw.init = &(struct clk_init_data){
+ 			.name = "pcm_clk",
+-			.parent_names = (const char *[]){
+-				"pcm_clk_out",
+-				"pcm_codec_clk",
++			.parent_data = (const struct clk_parent_data[]){
++				{ .hw = &pcm_clk_out.clkr.hw },
++				{ .fw_name = "pcm_codec_clk", .name = "pcm_codec_clk" },
+ 			},
+ 			.num_parents = 2,
+ 			.ops = &clk_regmap_mux_closest_ops,
+@@ -341,18 +346,14 @@ static struct clk_rcg slimbus_src = {
+ 		.enable_mask = BIT(9),
+ 		.hw.init = &(struct clk_init_data){
+ 			.name = "slimbus_src",
+-			.parent_names = lcc_pxo_pll4,
+-			.num_parents = 2,
++			.parent_data = lcc_pxo_pll4,
++			.num_parents = ARRAY_SIZE(lcc_pxo_pll4),
+ 			.ops = &clk_rcg_ops,
+ 			.flags = CLK_SET_RATE_GATE,
+ 		},
+ 	},
+ };
  
- CLK_AIF_OSR_DIV(codec_i2s_mic, 0x60, 0x64, 0x68);
- CLK_AIF_OSR_DIV(spare_i2s_mic, 0x78, 0x7c, 0x80);
+-static const char * const lcc_slimbus_parents[] = {
+-	"slimbus_src",
+-};
+-
+ static struct clk_branch audio_slimbus_clk = {
+ 	.halt_reg = 0xd4,
+ 	.halt_bit = 0,
+@@ -362,7 +363,9 @@ static struct clk_branch audio_slimbus_clk = {
+ 		.enable_mask = BIT(10),
+ 		.hw.init = &(struct clk_init_data){
+ 			.name = "audio_slimbus_clk",
+-			.parent_names = lcc_slimbus_parents,
++			.parent_hws = (const struct clk_hw*[]){
++				&slimbus_src.clkr.hw,
++			},
+ 			.num_parents = 1,
+ 			.ops = &clk_branch_ops,
+ 			.flags = CLK_SET_RATE_PARENT,
+@@ -379,7 +382,9 @@ static struct clk_branch sps_slimbus_clk = {
+ 		.enable_mask = BIT(12),
+ 		.hw.init = &(struct clk_init_data){
+ 			.name = "sps_slimbus_clk",
+-			.parent_names = lcc_slimbus_parents,
++			.parent_hws = (const struct clk_hw*[]){
++				&slimbus_src.clkr.hw,
++			},
+ 			.num_parents = 1,
+ 			.ops = &clk_branch_ops,
+ 			.flags = CLK_SET_RATE_PARENT,
 -- 
 2.35.1
 
