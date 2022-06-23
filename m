@@ -2,59 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9D2A1558C00
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jun 2022 01:54:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 20D09558C04
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jun 2022 01:56:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231326AbiFWXyd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Jun 2022 19:54:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59910 "EHLO
+        id S230421AbiFWX4E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Jun 2022 19:56:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33012 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231455AbiFWXyV (ORCPT
+        with ESMTP id S229669AbiFWX4E (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Jun 2022 19:54:21 -0400
-Received: from mail-oa1-x2f.google.com (mail-oa1-x2f.google.com [IPv6:2001:4860:4864:20::2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B893A3915D
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jun 2022 16:54:19 -0700 (PDT)
-Received: by mail-oa1-x2f.google.com with SMTP id 586e51a60fabf-101e1a33fe3so1540482fac.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jun 2022 16:54:19 -0700 (PDT)
+        Thu, 23 Jun 2022 19:56:04 -0400
+Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 844B860E27
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jun 2022 16:56:03 -0700 (PDT)
+Received: by mail-ej1-x636.google.com with SMTP id lw20so1393204ejb.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jun 2022 16:56:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=/ZRKS8M3PlLIxcLTOe45gcNo3hCUxvnL/TPPCZLcOQQ=;
-        b=AdsjtPTK6x0ZFa7KUThSEwUcXUsBdMkEWTbE+4WKICbUl0fsYIXJna5NZ0X1q+B9tm
-         uB4RYvT30L5gEVE08holT8cDbIxXHMR2k1IAw7fHOoY+/I0prw6YhWcQzg5qZ+Zwg2WJ
-         F8cddecOsXTXtO+wlzGoHBgt4shNF2ohfS7BI=
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=BVigjp2D3j30VmmAUGuUg4ONNfJwbNHPkTd4YHafSpc=;
+        b=AqfZas0SvEfK4MOwq8p9b40HmkA9KMEEJGXWGRCK9IcGkFLs9qKqYeIFPC+EwYGbBg
+         nHOYQKTw4x5W+UwbPRyhIfoN+HS8wo/+NIxk3HWzetM1aPkqIc970ggG9t2CwfTmBHBH
+         jdD2GPAMlxkDUfJ5LR3yZF9icZFt+lHuhRWlU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=/ZRKS8M3PlLIxcLTOe45gcNo3hCUxvnL/TPPCZLcOQQ=;
-        b=dH/KdBlF19RiD0NSnaCpmxrfTw1JOuPuXcdhdRBAMSGj1OnXvpAXzpLAUN/IMMFyrk
-         E8yRi1H+Ncq2KT7I1NEQMndsw5PgIWMGG3aezqpfTpBrHqN+NRS7yV9RQmGOJnWAyhkP
-         wt9Cez4zoL68ghZ4GfhOYpv6CATioKMjypCEJV9N+Og3KwistwWl+mt6BMbVOFP1A1eX
-         SYPYHeaaYfJywC0Yd49FJIFZP6MseKK5Ewfl6s1XJPCKZcNzU99xo6szBRdN0l9yGJSS
-         0iJ7kfaOCrLKobiuLX8DxgBQaSNxM4bLajrufBFvYjd1thPzyLdyxaex5d9+oaMwqenB
-         RMuQ==
-X-Gm-Message-State: AJIora/Dgkde8KRwTai+4rogM/QnRqWXbecncf6bFIsabDmEXNXMEEkb
-        mnODRxXo91yNlgLDlbrAV7+SJkTPUUOY3SPmV6iPa2s4ynM=
-X-Google-Smtp-Source: AGRyM1tnOnLxsvh+Cfqhj27PAdr1KJbxy8do/+OK84eawWEnu68e3dULtfRfvmcEjKDa7CK8fO4ktSYEjJDKDQwVBBA=
-X-Received: by 2002:a05:6870:b381:b0:fe:2004:b3b5 with SMTP id
- w1-20020a056870b38100b000fe2004b3b5mr336448oap.63.1656028459113; Thu, 23 Jun
- 2022 16:54:19 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 23 Jun 2022 16:54:18 -0700
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=BVigjp2D3j30VmmAUGuUg4ONNfJwbNHPkTd4YHafSpc=;
+        b=yxg71PAiWB61rd85tEZ28sAus2tPMyZBt2BxFoPfKwSDc/FNkoBO4a8ZjD6FUAz56Q
+         pbUpnzKJO0kMa6VoV9xsS5+MACB+/1q2H5/EtcaTvtnmIkrK5xEcVL8Vo/pvo4IVpiXx
+         zDDT4aChxucv1cqXjdjvk6NslBnkR9OUcCVAvMHEJKmJNT/cgRh8xu7poQ8xx3FJFAQy
+         GZ6lECdfB/EbnWwWIYLATfWTsOcbjZwMtkmBG8+xEzOXGcXWdJx4BzUT9JXvPlnn6j4I
+         DNKYeXnZE8fShTRSa9ILqMp1/MHIHQqRfX8mUAbLRzj9B2fClJg/IV2U2sHnzmizJoT0
+         KApw==
+X-Gm-Message-State: AJIora8iIiZovZtFmVEdJ0VYrY3ApfKI2xObsgFjBi0VtXLDlXrr8yTu
+        rngsWgdroN4scGadNNTRyxIs2G3vt0WqOjD1
+X-Google-Smtp-Source: AGRyM1v09PrbrU/gJlQVbhzE1r3cciKw54Dff9dBWLE720xzKZZcQ/V5aM/FQSWpxRKdoFYFMXxf5A==
+X-Received: by 2002:a17:907:3e03:b0:722:e694:438 with SMTP id hp3-20020a1709073e0300b00722e6940438mr11121450ejc.755.1656028561948;
+        Thu, 23 Jun 2022 16:56:01 -0700 (PDT)
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com. [209.85.128.41])
+        by smtp.gmail.com with ESMTPSA id v10-20020a1709063bca00b006ffa19b7782sm229177ejf.74.2022.06.23.16.56.01
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 23 Jun 2022 16:56:01 -0700 (PDT)
+Received: by mail-wm1-f41.google.com with SMTP id j5-20020a05600c1c0500b0039c5dbbfa48so2398536wms.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jun 2022 16:56:01 -0700 (PDT)
+X-Received: by 2002:a05:600c:5112:b0:397:53f5:e15b with SMTP id
+ o18-20020a05600c511200b0039753f5e15bmr479478wms.93.1656028560976; Thu, 23 Jun
+ 2022 16:56:00 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20220623223119.1858863-1-gwendal@chromium.org>
 References: <20220623223119.1858863-1-gwendal@chromium.org>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Thu, 23 Jun 2022 16:54:18 -0700
-Message-ID: <CAE-0n50NfsHcK17=wDv1zY5=qNQSORzdJHECCAG-bX2Qhpm7pg@mail.gmail.com>
+In-Reply-To: <20220623223119.1858863-1-gwendal@chromium.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Thu, 23 Jun 2022 16:55:47 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=UbkWjuDjGODjFaAqUA4bBnPe_-fLMJf55cNm_eSi-XTw@mail.gmail.com>
+Message-ID: <CAD=FV=UbkWjuDjGODjFaAqUA4bBnPe_-fLMJf55cNm_eSi-XTw@mail.gmail.com>
 Subject: Re: [PATCH] arm64: dts: qcom: sc7280: Rename sar sensor labels
-To:     Gwendal Grignou <gwendal@chromium.org>, bjorn.andersson@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, mka@chromium.org,
-        dianders@chromium.org
+To:     Gwendal Grignou <gwendal@chromium.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
@@ -66,41 +74,17 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Gwendal Grignou (2022-06-23 15:31:19)
+Hi,
+
+On Thu, Jun 23, 2022 at 3:31 PM Gwendal Grignou <gwendal@chromium.org> wrote:
+>
 > To ease matching configuration of sysfs attributes for particular
 > sensor, match label reported by iio 'label' attribute with the location
 > label generated by ChromeOS config tool.
 >
 > Signed-off-by: Gwendal Grignou <gwendal@chromium.org>
 > ---
-
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-
 >  arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi | 4 ++--
 >  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
-> index 9cb1bc8ed6b5c..8b96fad5fdd4c 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
-> @@ -388,7 +388,7 @@ ap_sar_sensor0: proximity@28 {
->
->                 vdd-supply = <&pp1800_prox>;
->
-> -               label = "proximity-wifi-lte0";
-> +               label = "proximity-wifi_cellular-0";
->                 status = "disabled";
->         };
->
-> @@ -404,7 +404,7 @@ ap_sar_sensor1: proximity@2c {
->
->                 vdd-supply = <&pp1800_prox>;
->
-> -               label = "proximity-wifi-lte1";
-> +               label = "proximity-wifi_cellular-1";
->                 status = "disabled";
->         };
->  };
-> --
-> 2.37.0.rc0.104.g0611611a94-goog
->
+
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
