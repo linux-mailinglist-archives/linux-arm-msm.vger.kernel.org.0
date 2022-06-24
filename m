@@ -2,271 +2,260 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 49EC45595DA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jun 2022 10:55:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3B3375595E5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jun 2022 10:59:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231408AbiFXIvj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Jun 2022 04:51:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38414 "EHLO
+        id S230311AbiFXI7G (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Jun 2022 04:59:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46612 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231778AbiFXIvS (ORCPT
+        with ESMTP id S229830AbiFXI7F (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Jun 2022 04:51:18 -0400
-Received: from mail-qv1-xf35.google.com (mail-qv1-xf35.google.com [IPv6:2607:f8b0:4864:20::f35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39FE4792B3;
-        Fri, 24 Jun 2022 01:51:08 -0700 (PDT)
-Received: by mail-qv1-xf35.google.com with SMTP id n15so3596209qvh.12;
-        Fri, 24 Jun 2022 01:51:08 -0700 (PDT)
+        Fri, 24 Jun 2022 04:59:05 -0400
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6229D633D;
+        Fri, 24 Jun 2022 01:59:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=iOkJMguCySKiYgS3jaAKrTeCcltfp+Ak4u2IsO3Ufzc=;
-        b=OS9y9gyqqlzBUxmT5C5qu5Bzoov0SFyiZghT1n2aZ6NXxe47VHQ2fxNtwNcSSNMSZc
-         TLujETxvVIzU7ZaBySBQKfS2B3GmzGsJpW+Z/sx4QadJF5AwweatiW25cA3VyBl1kw4f
-         zNMjb8JP1KkoOOfGDi+DB+JbPmAsmUF0R5Cg4eJMCW8YAAbZeXrYNGyTbemUqRJaAAFR
-         B4D5wo0c2JB38NP4yV7DgMhzIXzGj3A0YM3utDucRIkmA41mENTxYzywcYEfuIi3CwKS
-         uFKzXfk35U42oPGU4YEOm7oi/UkPjeMRqkd7aaof02RHFSuDe0GGxkrSWBYWdvd+9VaU
-         83Bg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=iOkJMguCySKiYgS3jaAKrTeCcltfp+Ak4u2IsO3Ufzc=;
-        b=tS3v0/k+bOIyt2aTinm1L4dITVjEQHa2mHXV8s11+T2EenNTNsiyLfJJwm9/U6HrtL
-         UTH6ZRoZ/GQPTddG1QEVz18TcZOVOQLjQfUU78GxpboLB8dsgfOnGNScwQABtJPXTft4
-         RDb4vq/f30JR4Cn2ut1vi1txC3/etekoiFFnv+Njj1QxNSh+V0uKjVAgOU9KvuGcL/uT
-         NW+TrfKhilMJOiREUqnUL4Lahud8UdTG1ZY2sSYddqp1FaEGK++F2Tzk/Ju5U2AggR2g
-         etdqbDGvUI7BJp6Qi1h6U25GZT+ACLHlM+1H+ywm3jrRTgY2W3YThaaFkgsl8KvvyCKL
-         nTIg==
-X-Gm-Message-State: AJIora+HzIpDg+UCgqdD3hInz8ffIGPyr2R3y85VxN4FSdZeGS+QeBia
-        qt4k3BvbeDyAuYHPjeUBCTHRIca4H4zLgEcAhSY=
-X-Google-Smtp-Source: AGRyM1uiyXBd99GGaJBVR8C85XZmoBzCNHgrHQ/Wwsu4HOvyYcJpTRur+mwswijaZ+WAJ/rBF4BpXrIwIkgbPjNMzeg=
-X-Received: by 2002:a05:6214:2129:b0:470:396d:19c4 with SMTP id
- r9-20020a056214212900b00470396d19c4mr24485321qvc.34.1656060667403; Fri, 24
- Jun 2022 01:51:07 -0700 (PDT)
-MIME-Version: 1.0
-References: <20220623182542.1116677-1-robimarko@gmail.com> <20220624010103.GA23758@quicinc.com>
-In-Reply-To: <20220624010103.GA23758@quicinc.com>
-From:   Robert Marko <robimarko@gmail.com>
-Date:   Fri, 24 Jun 2022 10:50:56 +0200
-Message-ID: <CAOX2RU7yKuV4i_9YRs9fx2DTTvAndWFFw3cYtQ3qFk9m1zZJVg@mail.gmail.com>
-Subject: Re: [PATCH] dt-bindings: firmware: qcom-scm: convert to dtschema
-To:     Guru Das Srinagesh <quic_gurus@quicinc.com>
-Cc:     Andy Gross <agross@kernel.org>,
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1656061144; x=1687597144;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:content-transfer-encoding:in-reply-to;
+  bh=ljZR3kvR/OGEYgbIV1wxUkEznb8b1nQMhgYJxvhzmJI=;
+  b=WaAMVSipUXLHgmM40ys/0n9r0hhy3mdqyTLE++/AUZJACnB/HHGCTTMB
+   um7DRJNF0mu4BWWJks75j2pfwOJy5/tkNK1jLLDt2MPJP/lmu+h7wRaxR
+   lAAQ2SbsiTTBPy1kD/Kx7PaWGdIcnv+/n20JDFXNvmOO94AQGjl+QCnYF
+   4=;
+Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 24 Jun 2022 01:59:04 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Jun 2022 01:59:03 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Fri, 24 Jun 2022 01:59:02 -0700
+Received: from hu-pkondeti-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Fri, 24 Jun 2022 01:58:56 -0700
+Date:   Fri, 24 Jun 2022 14:28:53 +0530
+From:   Pavan Kondeti <quic_pkondeti@quicinc.com>
+To:     Matthias Kaehlcke <mka@chromium.org>
+CC:     Pavan Kondeti <quic_pkondeti@quicinc.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        "Krishna Kurapati" <quic_kriskura@quicinc.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        krzysztof.kozlowski+dt@linaro.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Devicetree List <devicetree@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        "Andy Gross" <agross@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Mathias Nyman <mathias.nyman@intel.com>,
+        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>, <quic_ppratap@quicinc.com>,
+        <quic_vpulyala@quicinc.com>
+Subject: Re: [PATCH v20 2/5] usb: dwc3: core: Host wake up support from
+ system suspend
+Message-ID: <20220624085853.GA11991@hu-pkondeti-hyd.qualcomm.com>
+References: <1654158277-12921-1-git-send-email-quic_kriskura@quicinc.com>
+ <1654158277-12921-3-git-send-email-quic_kriskura@quicinc.com>
+ <YpkRDi2m7cLaKYEf@google.com>
+ <Yp5nf2w8uVZ38/XZ@google.com>
+ <Yqd9IHQEj3Ex+FcF@google.com>
+ <YqjLHyUVEjf7I3MI@google.com>
+ <20220616091110.GA24114@hu-pkondeti-hyd.qualcomm.com>
+ <YqtlRQOwb3t6Xtd0@google.com>
+ <20220620085415.GA13744@hu-pkondeti-hyd.qualcomm.com>
+ <YrSzDhgAvMx4TwD2@google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <YrSzDhgAvMx4TwD2@google.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 24 Jun 2022 at 03:01, Guru Das Srinagesh <quic_gurus@quicinc.com> wrote:
->
-> On Thu, Jun 23, 2022 at 08:25:42PM +0200, Robert Marko wrote:
-> > Convert bindings for Qualcomm SCM to dtschema.
-> >
-> > SoC compatibles that were used, but not documented were added.
-> >
-> > Signed-off-by: Robert Marko <robimarko@gmail.com>
-> > ---
-> >  .../devicetree/bindings/firmware/qcom,scm.txt |  57 --------
-> >  .../bindings/firmware/qcom,scm.yaml           | 124 ++++++++++++++++++
-> >  2 files changed, 124 insertions(+), 57 deletions(-)
-> >  delete mode 100644 Documentation/devicetree/bindings/firmware/qcom,scm.txt
-> >  create mode 100644 Documentation/devicetree/bindings/firmware/qcom,scm.yaml
-> >
-> > diff --git a/Documentation/devicetree/bindings/firmware/qcom,scm.txt b/Documentation/devicetree/bindings/firmware/qcom,scm.txt
-> > deleted file mode 100644
-> > index 0f4e5ab26477..000000000000
-> > --- a/Documentation/devicetree/bindings/firmware/qcom,scm.txt
-> > +++ /dev/null
-> > @@ -1,57 +0,0 @@
-> > -QCOM Secure Channel Manager (SCM)
-> > -
-> > -Qualcomm processors include an interface to communicate to the secure firmware.
-> > -This interface allows for clients to request different types of actions.  These
-> > -can include CPU power up/down, HDCP requests, loading of firmware, and other
-> > -assorted actions.
-> > -
-> > -Required properties:
-> > -- compatible: must contain one of the following:
-> > - * "qcom,scm-apq8064"
-> > - * "qcom,scm-apq8084"
-> > - * "qcom,scm-ipq4019"
-> > - * "qcom,scm-ipq806x"
-> > - * "qcom,scm-ipq8074"
-> > - * "qcom,scm-mdm9607"
-> > - * "qcom,scm-msm8226"
-> > - * "qcom,scm-msm8660"
-> > - * "qcom,scm-msm8916"
-> > - * "qcom,scm-msm8953"
-> > - * "qcom,scm-msm8960"
-> > - * "qcom,scm-msm8974"
-> > - * "qcom,scm-msm8976"
-> > - * "qcom,scm-msm8994"
-> > - * "qcom,scm-msm8996"
-> > - * "qcom,scm-msm8998"
-> > - * "qcom,scm-sc7180"
-> > - * "qcom,scm-sc7280"
-> > - * "qcom,scm-sdm845"
-> > - * "qcom,scm-sdx55"
-> > - * "qcom,scm-sm6350"
-> > - * "qcom,scm-sm8150"
-> > - * "qcom,scm-sm8250"
-> > - * "qcom,scm-sm8350"
-> > - * "qcom,scm-sm8450"
-> > - and:
-> > - * "qcom,scm"
-> > -- clocks: Specifies clocks needed by the SCM interface, if any:
-> > - * core clock required for "qcom,scm-apq8064", "qcom,scm-msm8660" and
-> > -   "qcom,scm-msm8960"
-> > - * core, iface and bus clocks required for "qcom,scm-apq8084",
-> > -   "qcom,scm-msm8916", "qcom,scm-msm8953", "qcom,scm-msm8974" and "qcom,scm-msm8976"
-> > -- clock-names: Must contain "core" for the core clock, "iface" for the interface
-> > -  clock and "bus" for the bus clock per the requirements of the compatible.
-> > -- qcom,dload-mode: phandle to the TCSR hardware block and offset of the
-> > -                download mode control register (optional)
-> > -
-> > -Example for MSM8916:
-> > -
-> > -     firmware {
-> > -             scm {
-> > -                     compatible = "qcom,msm8916", "qcom,scm";
-> > -                     clocks = <&gcc GCC_CRYPTO_CLK> ,
-> > -                              <&gcc GCC_CRYPTO_AXI_CLK>,
-> > -                              <&gcc GCC_CRYPTO_AHB_CLK>;
-> > -                     clock-names = "core", "bus", "iface";
-> > -             };
-> > -     };
-> > diff --git a/Documentation/devicetree/bindings/firmware/qcom,scm.yaml b/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
-> > new file mode 100644
-> > index 000000000000..7dd7beb39846
-> > --- /dev/null
-> > +++ b/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
-> > @@ -0,0 +1,124 @@
-> > +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> > +%YAML 1.2
-> > +---
-> > +$id: http://devicetree.org/schemas/firmware/qcom,scm.yaml#
-> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> > +
-> > +title: QCOM Secure Channel Manager (SCM) bindings
-> > +
-> > +maintainers:
-> > +  - Robert Marko <robimarko@gmail.com>
->
-> I'd like to volunteer my name as well, if that's okay:
->
-> Guru Das Srinagesh <quic_gurus@quicinc.com>
+On Thu, Jun 23, 2022 at 11:38:06AM -0700, Matthias Kaehlcke wrote:
+> On Mon, Jun 20, 2022 at 02:24:15PM +0530, Pavan Kondeti wrote:
+> > +Felipe, Bjorn
+> > 
+> > On Thu, Jun 16, 2022 at 10:15:49AM -0700, Matthias Kaehlcke wrote:
+> > > On Thu, Jun 16, 2022 at 02:41:10PM +0530, Pavan Kondeti wrote:
+> > > > Hi Matthias/Krishna,
+> > > > 
+> > > > On Tue, Jun 14, 2022 at 10:53:35AM -0700, Matthias Kaehlcke wrote:
+> > > > > On Mon, Jun 13, 2022 at 11:08:32AM -0700, Matthias Kaehlcke wrote:
+> > > > > > On Mon, Jun 06, 2022 at 01:45:51PM -0700, Matthias Kaehlcke wrote:
+> > > > > > > On Thu, Jun 02, 2022 at 12:35:42PM -0700, Matthias Kaehlcke wrote:
+> > > > > > > > Hi Krishna,
+> > > > > > > > 
+> > > > > > > > with this version I see xHCI errors on my SC7180 based system, like
+> > > > > > > > these:
+> > > > > > > > 
+> > > > > > > > [   65.352605] xhci-hcd xhci-hcd.13.auto: xHC error in resume, USBSTS 0x401, Reinit
+> > > > > > > > 
+> > > > > > > > [  101.307155] xhci-hcd xhci-hcd.13.auto: WARN: xHC CMD_RUN timeout
+> > > > > > > > 
+> > > > > > > > After resume a downstream hub isn't enumerated again.
+> > > > > > > > 
+> > > > > > > > So far I didn't see those with v13, but I aso saw the first error with
+> > > > > > > > v16.
+> > > > > > > 
+> > > > > > > It also happens with v13, but only when a wakeup capable vUSB <= 2
+> > > > > > > device is plugged in. Initially I used a wakeup capable USB3 to
+> > > > > > > Ethernet adapter to trigger the wakeup case, however older versions
+> > > > > > > of this series that use usb_wakeup_enabled_descendants() to check
+> > > > > > > for wakeup capable devices didn't actually check for vUSB > 2
+> > > > > > > devices.
+> > > > > > > 
+> > > > > > > So the case were the controller/PHYs is powered down works, but
+> > > > > > > the controller is unhappy when the runtime PM path is used during
+> > > > > > > system suspend.
+> > > > > > 
+> > > > > > The issue isn't seen on all systems using dwc3-qcom and the problem starts
+> > > > > > during probe(). The expected probe sequence is something like this:
+> > > > > > 
+> > > > > > dwc3_qcom_probe
+> > > > > >   dwc3_qcom_of_register_core
+> > > > > >     dwc3_probe
+> > > > > > 
+> > > > > >   if (device_can_wakeup(&qcom->dwc3->dev))
+> > > > > >     ...
+> > > > > > 
+> > > > > > The important part is that device_can_wakeup() is called after dwc3_probe()
+> > > > > > has completed. That's what I see on a QC SC7280 system, where wakeup is
+> > > > > > generally working with these patches.
+> > > > > > 
+> > > > > > However on a QC SC7180 system dwc3_probe() is deferred and only executed after
+> > > > > > dwc3_qcom_probe(). As a result the device_can_wakeup() call returns false.
+> > > > > > With that the controller/driver ends up in an unhappy state after system
+> > > > > > suspend.
+> > > > > > 
+> > > > > > Probing is deferred on SC7180 because device_links_check_suppliers() finds
+> > > > > > that '88e3000.phy' isn't ready yet.
+> > > > > 
+> > > > > It seems device links could be used to make sure the dwc3 core is present:
+> > > > > 
+> > > > >   Another example for an inconsistent state would be a device link that
+> > > > >   represents a driver presence dependency, yet is added from the consumer’s
+> > > > >   ->probe callback while the supplier hasn’t probed yet: Had the driver core
+> > > > >   known about the device link earlier, it wouldn’t have probed the consumer
+> > > > >   in the first place. The onus is thus on the consumer to check presence of
+> > > > >   the supplier after adding the link, and defer probing on non-presence.
+> > > > > 
+> > > > >   https://www.kernel.org/doc/html/v5.18/driver-api/device_link.html#usage
+> > > > > 
+> > > > > 
+> > > > > You could add something like this to dwc3_qcom_of_register_core():
+> > > > > 
+> > > > > 
+> > > > >   device_link_add(dev, &qcom->dwc3->dev,
+> > > > >   		  DL_FLAG_AUTOREMOVE_CONSUMER | DL_FLAG_AUTOPROBE_CONSUMER);
+> > > > > 
+> > > > >   if (qcom->dwc3->dev.links.status != DL_DEV_DRIVER_BOUND)
+> > > > >       ret = -EPROBE_DEFER;
+> > > > > 
+> > > > > 
+> > > > I am not very sure how the device_link_add() API works. we are the parent and
+> > > > creating a depdency on child probe. That does not sound correct to me.
+> > > 
+> > > The functional dependency is effectively there, the driver already assumes that
+> > > the dwc3 core was probed when of_platform_populate() returns.
+> > > 
+> > > The device link itself doesn't create the dependency on the probe(), the check
+> > > of the link status below does.
+> > > 
+> > > Another option would be to add a link to the PHYs to the dwc3-qcom node in
+> > > the device tree, but I don't think that would be a better solution (and I
+> > > expect Rob would oppose this).
+> > > 
+> > > I'm open to other solutions, so far the device link is the cleanest that came
+> > > to my mind.
+> > > 
+> > > I think the root issue is the driver architecture, with two interdependent
+> > > drivers for the same IP block, instead of a single framework driver with a
+> > > common part (dwc3 core) and vendor specific hooks/data.
+> > > 
+> > > > Any ways, I have another question.
+> > > > 
+> > > > When dwc3_qcom_of_register_core() returns error back to dwc3_qcom_probe(), we
+> > > > goto depopulate label which calls of_platform_depopulate() which destroy the
+> > > > child devices that are populated. how does that ensure that child probe is
+> > > > completed by the time, our probe is called again. The child device it self is
+> > > > gone. Is this working because when our probe is called next time, the child
+> > > > probe depenencies are resolved?
+> > > 
+> > > Good point! It doesn't really ensure that the child is probed (actually it
+> > > won't be probed and DL_FLAG_AUTOPROBE_CONSUMER doesn't make sense here), it
+> > > could happen that dwc3_qcom_probe() is deferred multiple times, but eventually
+> > > the PHYs should be ready and dwc3_probe() be invoked through
+> > > of_platform_populate().
+> > 
+> > This is a generic problem i.e if a parent can only proceed after the child
+> > devices are bounded (i.e probed successfully), how to ensure this behavior
+> > from the parent's probe? Since we can't block the parent probe (async probe is
+> > not the default behavior), we have to identify the condition that the children
+> > are deferring probe, so that parent also can do that.
+> > 
+> > Can we add a API in drivers core to tell if a device probe is deferred or
+> > not? This can be done by testing list_empty(&dev->p->deferred_probe) under
+> > deferred_probe_mutex mutex. The parent can return EPROBE_DEFER based on this
+> > API return value.
+> 
+> That could be an option.
+> 
+> > Another alternative would be explicitly checking if the child device suppliers
+> > are ready or not before adding child device. That would require decoupling
+> > of_platform_populate() to creating devices and adding devices.
+> 
+> It might require a new API since there are plenty of users of
+> of_platform_populate() that rely on the current behavior.
 
-Hi,
-Sure, will add you to v2.
+Agree. A new API is needed. we also have to consider multiple children
+scenario, where one child is ready but others are not etc.
 
->
-> > +
-> > +description: |
-> ...
-> > +
-> > +  '#reset-cells':
-> > +    const: 1
->
-> This isn't part of the original file - could you please explain why this is
-> being added?
+> 
+> > Note that this problem is not just limited to suppliers not ready. if the
+> > dwc3-qcom is made asynchronous probe, then its child also probed
+> > asynchronously and there is no guarantee that child would be probed by the
+> > time of_platform_populate() is returned.  The bus notifier might come handy
+> > in this case. The parent can register for this notifier and waiting for
+> > the children device's BUS_NOTIFY_BOUND_DRIVER/BUS_NOTIFY_DRIVER_NOT_BOUND
+> > notifications. This would also work in our case, if we move to
+> > of_platform_populate() outside the probe().
+> 
+> If I understand correctly the outcome would be a probe() in two stages. The
+> first does as much as it can do without the dwc3 core and leaves the device
+> in a state where it isn't really functional, and the second stage does the
+> rest when BUS_NOTIFY_BOUND_DRIVER is received for the dwc3 core device.
+> 
+> A concern could be the need for additional conditions in some code paths to
+> deal with the half-initialized device.
+> 
+> Why would of_platform_populate() be moved outside of probe()?
+> 
+> To avoid the half-initialized device probe() could block until
+> BUS_NOTIFY_BOUND_DRIVER is received. Probably that should be done with a
+> timeout to avoid blocking forever in case of a problem with probing the
+> dwc3 core.
 
-Yes, its not part of the original file, however I noticed that a lot of SCM
-nodes were adding #reset-cells, and upon looking at the SCM code its
-clear that it is being registered as a reset controller so #reset-cells are
-appropriate.
+Right, we have to split the probe() into two parts. The second stage which
+runs asynchronously should wait for the dwc3 core probe to happen. if at all
+dwc3 core probe is falied (in which case also we get a notification) for any
+reason other than EPROBE_DEFER, we have to undo the first stage.
 
-However, since its not really being used via phandles #reset-cells did
-not really matter, hence why I did not add them to be required,
-this is something that DT guys can probably clarify.
-
-Regards,
-Robert
->
-> > +
-> > +  qcom,dload-mode:
-> > +    $ref: /schemas/types.yaml#/definitions/phandle-array
-> > +    description:
-> > +      Phandle to the TCSR hardware block and offset of the download mode control register
-> > +
-> > +required:
-> > +  - compatible
-> > +
-> > +allOf:
-> > +  - if:
-> > +      properties:
-> > +        compatible:
-> > +          contains:
-> > +            enum:
-> > +              - qcom,scm-apq8064
-> > +              - qcom,scm-msm8660
-> > +              - qcom,scm-msm8960
-> > +    then:
-> > +      properties:
-> > +        clocks:
-> > +          items:
-> > +            - description: SCM core clock
-> > +        clock-names:
-> > +          items:
-> > +            - const: core
-> > +
-> > +  - if:
-> > +      properties:
-> > +        compatible:
-> > +          contains:
-> > +            enum:
-> > +              - qcom,scm-apq8084
-> > +              - qcom,scm-mdm9607
-> > +              - qcom,scm-msm8916
-> > +              - qcom,scm-msm8953
-> > +              - qcom,scm-msm8974
-> > +              - qcom,scm-msm8976
-> > +    then:
-> > +      properties:
-> > +        clocks:
-> > +          items:
-> > +            - description: SCM core clock
-> > +            - description: SCM bus clock
-> > +            - description: SCM interface clock
-> > +        clock-names:
-> > +          items:
-> > +            - const: core
-> > +            - const: bus
-> > +            - const: iface
->
-> Thanks, I had this YAML conversion patch done locally, but couldn't figure out
-> how to represent the above logic in YAML. Thank you for this patch.
->
-> > +
-> > +additionalProperties: false
-> > +
-> > +examples:
-> > +  - |
-> > +    #include <dt-bindings/clock/qcom,gcc-msm8916.h>
-> > +    firmware {
-> > +      scm {
-> > +        compatible = "qcom,scm-msm8916", "qcom,scm";
-> > +
-> > +        clocks = <&gcc GCC_CRYPTO_CLK>,
-> > +                 <&gcc GCC_CRYPTO_AXI_CLK>,
-> > +                 <&gcc GCC_CRYPTO_AHB_CLK>;
-> > +        clock-names = "core", "bus", "iface";
-> > +        qcom,dload-mode = <&tcsr 0x6100>;
-> > +      };
-> > +    };
-> > --
-> > 2.36.1
-> >
+Thansk,
+Pavan
