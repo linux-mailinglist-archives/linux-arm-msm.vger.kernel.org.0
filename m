@@ -2,136 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2991355A223
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jun 2022 21:56:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6942555A24A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jun 2022 22:03:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230324AbiFXTvT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Jun 2022 15:51:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42432 "EHLO
+        id S231605AbiFXUAl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Jun 2022 16:00:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50212 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230077AbiFXTvS (ORCPT
+        with ESMTP id S230495AbiFXUAk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Jun 2022 15:51:18 -0400
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36CC07FD24;
-        Fri, 24 Jun 2022 12:51:16 -0700 (PDT)
-Received: by mail-ed1-x52f.google.com with SMTP id ej4so4873753edb.7;
-        Fri, 24 Jun 2022 12:51:16 -0700 (PDT)
+        Fri, 24 Jun 2022 16:00:40 -0400
+Received: from mail-oa1-x2e.google.com (mail-oa1-x2e.google.com [IPv6:2001:4860:4864:20::2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A422982885
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Jun 2022 13:00:38 -0700 (PDT)
+Received: by mail-oa1-x2e.google.com with SMTP id 586e51a60fabf-1048b8a38bbso5145531fac.12
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Jun 2022 13:00:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=IlyhdFMImGeb91lejRrs7vQ8r+23EDsm+NrRwbaFfRE=;
-        b=enHeReQVjJ/UJTqaKyFAhtCBoqIf4KF5UPWDs6zNR4rPduhPJrYpKY1MwhZV4RXVOK
-         vKyBgy8GeEju7Jv6VV67X+bNvMQOxX6V7idVurYMSaGWHnrAgobi1e1XXJWPkqFKirIj
-         2gz0IDsUJWHJt2ZNg67fZY+7FRNOM3VtG+42JJj5DAwrqo9fzTwRRpyinlB8N4oTIbNq
-         Z9B8tl0htTaROmO6eo2pTduVeOHQy3Sqa/VlIGvLv+HRP2A20pTEFggtwNKXKVZqw7Zb
-         AwYpkS74KAXhX2x35AJFPxgD/mFnkmN0TRilXOKqyTjzm3QEUwgB2zSYm+Ai7JUJgFBT
-         D19Q==
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=oSfiCBI6rADUaj04vQ0405OWvsI1kvVtIUHFA11oGr0=;
+        b=AzTPUiC43Gj/6Z9t+n4i14I6mGkZI/39weVhrwvNGDiaTV4vwIKZbNSfRAN5wtW1nF
+         oDCOsFoC7WQUkXmCGuGxCvYrus4LASoYLkbeuSQnfDmRtkfY21qyLZ2A/1TkZLVaBiKV
+         io052kql7sg6+CHv5tGOG8Qn3PSb0td2XoY50=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=IlyhdFMImGeb91lejRrs7vQ8r+23EDsm+NrRwbaFfRE=;
-        b=NoXtdAJ+5BISl2RR7r25pCQoHoAaQbvCck0Zo+0cbptduaZb7vawxUArBLrwOcb7Ny
-         aNRR7lT6A3hJh1z3MiBjjrwac3yBq8e132fVh+bKbiMScnhr1DU6T0dCNelXTWZLgf1V
-         oTrN9jGr/XlJZmLQ2AgD6hB+xS5C0uCQAI2pB8KJ4MJzvlCamIry+aLYWjyu44r9ycgz
-         pYAy1lCSTeAUCjF1XrSeqpvThH2sfxlVfeiB7+IDEl47fcww3v+M25r/WFELysLmFw/Z
-         WmOYIIrqlOK49NaMVf2q71rBM8/pp4Hqj3pr2kehhkRn1oL5Gl1v53DAtF1BCHTtgyWu
-         4WGA==
-X-Gm-Message-State: AJIora8i3arYmZXF9HRFA9OqtQxuZIvNMguIk8usJkyALuZEk8L7MiiG
-        Xn6pPzPJqOfbZ15jD3lUsfg=
-X-Google-Smtp-Source: AGRyM1tqs6Ke+BiFNzHottRZZOBZEqN8+W2JhAZk/a1fKvA9kbXP2z0IsZAy0X5EFEu3cOHTZ2UVvA==
-X-Received: by 2002:aa7:dad6:0:b0:435:7a44:7480 with SMTP id x22-20020aa7dad6000000b004357a447480mr981415eds.138.1656100274625;
-        Fri, 24 Jun 2022 12:51:14 -0700 (PDT)
-Received: from fedora.robimarko.hr (dh207-98-60.xnet.hr. [88.207.98.60])
-        by smtp.googlemail.com with ESMTPSA id jz27-20020a17090775fb00b007246492658asm1586316ejc.117.2022.06.24.12.51.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Jun 2022 12:51:14 -0700 (PDT)
-From:   Robert Marko <robimarko@gmail.com>
-To:     bjorn.andersson@linaro.org, agross@kernel.org,
-        linus.walleij@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Robert Marko <robimarko@gmail.com>
-Subject: [PATCH] pinctrl: qcom: spmi-gpio: make the irqchip immutable
-Date:   Fri, 24 Jun 2022 21:51:12 +0200
-Message-Id: <20220624195112.894916-1-robimarko@gmail.com>
-X-Mailer: git-send-email 2.36.1
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=oSfiCBI6rADUaj04vQ0405OWvsI1kvVtIUHFA11oGr0=;
+        b=WnTJC89QHUGHWlVkmQipBquTQrnRJmim+XV8luccKIZAzop6+NlOTx0ERhJSINQyE6
+         2A8HJsbNk7HyH4Prp919dOc32zRXIRbeBvWPWy8c29r8WHtkGlILjevBKhtMS6js6Ghv
+         dRCNj/EO+p/jgftUPY6ZIoUqhIUvLDwC+9u7wjIgs836EOn3iaIDvpaUZiW9duhd/9Uz
+         TWox6eUYB7X/w9Ul76OFOB7CLCntMwN/BBbZmBZXmiQZaCoHjzTbZUR9ljgrFzuU90JB
+         z4v2oJhPLnUGgLbD+9uzPpQKKygaRc8xvPX+SA6tSK9UO1Yu3sYpbphI2wpLks+/+PEU
+         BV/g==
+X-Gm-Message-State: AJIora+K9Dy+4FDEmeNyCmO/VZvYry9a/XyP5uk6SlbZBkfaBiZYZ1d0
+        ir6w/iO2CY7LPtrZG9kKVnISSsNmL4qKcnVVnQ5OfzJRkWw=
+X-Google-Smtp-Source: AGRyM1vLrNlfEUnoqHSJ2ARj6K9GI68cyGAkEp1ju+dJRkgXCY63E4sSustNSy9m4JbTmpCAiuev4LGT2ZxCahAMIj0=
+X-Received: by 2002:a05:6870:b381:b0:fe:2004:b3b5 with SMTP id
+ w1-20020a056870b38100b000fe2004b3b5mr461990oap.63.1656100837975; Fri, 24 Jun
+ 2022 13:00:37 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 24 Jun 2022 13:00:37 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <1656090912-18074-3-git-send-email-quic_khsieh@quicinc.com>
+References: <1656090912-18074-1-git-send-email-quic_khsieh@quicinc.com> <1656090912-18074-3-git-send-email-quic_khsieh@quicinc.com>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date:   Fri, 24 Jun 2022 13:00:37 -0700
+Message-ID: <CAE-0n52RW+UFJ=hqMWjwR8qvEbww7QjzPW1nhL3Atd97QXAnYw@mail.gmail.com>
+Subject: Re: [PATCH v1 2/3] drm/msm/dp: decoupling dp->id out of dp
+ controller_id at scxxxx_dp_cfg table
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>, agross@kernel.org,
+        airlied@linux.ie, bjorn.andersson@linaro.org, daniel@ffwll.ch,
+        dianders@chromium.org, dmitry.baryshkov@linaro.org,
+        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
+        sean@poorly.run, vkoul@kernel.org
+Cc:     quic_abhinavk@quicinc.com, quic_aravindh@quicinc.com,
+        quic_sbillaka@quicinc.com, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Commit 6c846d026d49 ("gpio: Don't fiddle with irqchips marked as
-immutable") added a warning to indicate if the gpiolib is altering the
-internals of irqchips.
+Quoting Kuogee Hsieh (2022-06-24 10:15:11)
+> Current the index (dp->id) of DP descriptor table (scxxxx_dp_cfg[]) are tightly
+> coupled with DP controller_id. This means DP use controller id 0 must be placed
+> at first entry of DP descriptor table (scxxxx_dp_cfg[]). Otherwise the internal
+> INTF will mismatch controller_id. This will cause controller kickoff wrong
+> interface timing engine and cause dpu_encoder_phys_vid_wait_for_commit_done
+> vblank timeout error.
+>
+> This patch add controller_id field into struct msm_dp_desc to break the tightly
+> coupled relationship between index (dp->id) of DP descriptor table with DP
+> controller_id.
 
-Following this change the following warning is now observed for the SPMI
-PMIC pinctrl driver:
-gpio gpiochip1: (200f000.spmi:pmic@0:gpio@c000): not an immutable chip, please consider fixing it!
+Please no. This reverts the intention of commit bb3de286d992
+("drm/msm/dp: Support up to 3 DP controllers")
 
-Fix this by making the irqchip in the SPMI PMIC pinctrl driver immutable.
+    A new enum is introduced to document the connection between the
+    instances referenced in the dpu_intf_cfg array and the controllers in
+    the DP driver and sc7180 is updated.
 
-Signed-off-by: Robert Marko <robimarko@gmail.com>
----
- drivers/pinctrl/qcom/pinctrl-spmi-gpio.c | 22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
-
-diff --git a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
-index c3255b0bece4..406ee0933d0b 100644
---- a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
-+++ b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
-@@ -171,7 +171,6 @@ struct pmic_gpio_state {
- 	struct regmap	*map;
- 	struct pinctrl_dev *ctrl;
- 	struct gpio_chip chip;
--	struct irq_chip irq;
- 	u8 usid;
- 	u8 pid_base;
- };
-@@ -988,6 +987,17 @@ static void *pmic_gpio_populate_parent_fwspec(struct gpio_chip *chip,
- 	return fwspec;
- }
- 
-+static const struct irq_chip spmi_gpio_irq_chip = {
-+	.name		= "spmi-gpio",
-+	.irq_ack	= irq_chip_ack_parent,
-+	.irq_mask	= irq_chip_mask_parent,
-+	.irq_unmask	= irq_chip_unmask_parent,
-+	.irq_set_type	= irq_chip_set_type_parent,
-+	.irq_set_wake	= irq_chip_set_wake_parent,
-+	.flags		= IRQCHIP_IMMUTABLE | IRQCHIP_MASK_ON_SUSPEND,
-+	GPIOCHIP_IRQ_RESOURCE_HELPERS,
-+};
-+
- static int pmic_gpio_probe(struct platform_device *pdev)
- {
- 	struct irq_domain *parent_domain;
-@@ -1081,16 +1091,8 @@ static int pmic_gpio_probe(struct platform_device *pdev)
- 	if (!parent_domain)
- 		return -ENXIO;
- 
--	state->irq.name = "spmi-gpio",
--	state->irq.irq_ack = irq_chip_ack_parent,
--	state->irq.irq_mask = irq_chip_mask_parent,
--	state->irq.irq_unmask = irq_chip_unmask_parent,
--	state->irq.irq_set_type = irq_chip_set_type_parent,
--	state->irq.irq_set_wake = irq_chip_set_wake_parent,
--	state->irq.flags = IRQCHIP_MASK_ON_SUSPEND,
--
- 	girq = &state->chip.irq;
--	girq->chip = &state->irq;
-+	gpio_irq_chip_set_chip(girq, &spmi_gpio_irq_chip);
- 	girq->default_type = IRQ_TYPE_NONE;
- 	girq->handler = handle_level_irq;
- 	girq->fwnode = of_node_to_fwnode(state->dev->of_node);
--- 
-2.36.1
-
+It sounds like the intent of that commit failed to make a strong enough
+connection. Now it needs to match the INTF number as well? I can't
+really figure out what is actually wrong, because this patch undoes that
+intentional tight coupling. Is the next patch the important part that
+flips the order of the two interfaces?
