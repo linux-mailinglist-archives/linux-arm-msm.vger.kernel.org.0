@@ -2,96 +2,204 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DAC0C55A435
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Jun 2022 00:11:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6D50855A44F
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Jun 2022 00:19:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231201AbiFXWLt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Jun 2022 18:11:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33980 "EHLO
+        id S231602AbiFXWTO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Jun 2022 18:19:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39338 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230458AbiFXWLs (ORCPT
+        with ESMTP id S229757AbiFXWTO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Jun 2022 18:11:48 -0400
-Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1068087D4F;
-        Fri, 24 Jun 2022 15:11:48 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id 87C20CE2E73;
-        Fri, 24 Jun 2022 22:11:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E99D5C34114;
-        Fri, 24 Jun 2022 22:11:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1656108705;
-        bh=zC/TQWUhx14RtF6bjzwQYVG5JLJVewaK3p4NYDij21Y=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=BaTjWfs9C735LFyrl6I271K+mk1XSXmVOE143ZHBWY8j6FmF/wAVXr8+zA+cAdbxJ
-         QNctVsMV6/cWh3ASXWoaaQKStPbnXXOuNhqrkuoX1d7RvXRX4L62nQNeKo1lP4NTwN
-         xz7NSySEbcp5L7bh6Yca0Nwcm8gfzoB72UVHVKyepN4m+9yljdFYvVTNDT4tmiDVfy
-         BOOs1fviabeKc64dupMTlq1625dpVgO/jta+R+OOnIupO2vr6DIvq/iNr8vNSvImTL
-         iU4iv3DB4j9J5teg9ICQ+TUyogCkFBIxcNJR6RQM59IkP/Lm9kVCZFPeYBt/qWFtdZ
-         WxY8bFVJhLQWw==
-Message-ID: <53402d57-ee3f-59b9-a8dc-59fa659f3662@kernel.org>
-Date:   Fri, 24 Jun 2022 15:11:43 -0700
+        Fri, 24 Jun 2022 18:19:14 -0400
+Received: from mail-oa1-x2c.google.com (mail-oa1-x2c.google.com [IPv6:2001:4860:4864:20::2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 313F685D1C
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Jun 2022 15:19:13 -0700 (PDT)
+Received: by mail-oa1-x2c.google.com with SMTP id 586e51a60fabf-101d96fe0a5so5632111fac.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Jun 2022 15:19:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc:content-transfer-encoding;
+        bh=CyvBY3o6akwDhbTyUnp7S1ZlB8cDpp5Z1nlTYcNTFxU=;
+        b=auGjjc0Mj0VFveoavb01xQCfpkr+jD11y+oq6aS0lfPFoo2Qoe784OKRry3x4sZRLO
+         pwv+0hCmGexeAavPgfq+10X+qBzoMtcKHMKAMlu7nT4fpInzFMGHcPs+ugPK/AEHHmqu
+         RkDn1P3TXhxU/boNeBoIdAEb7yO/fom6ZEX88=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc:content-transfer-encoding;
+        bh=CyvBY3o6akwDhbTyUnp7S1ZlB8cDpp5Z1nlTYcNTFxU=;
+        b=qM9GiMtqE6BQKYiLBd8c3dYypGyYMpm4p+vXMrWIFGNkBBWiqnWqtoAAjwibdCjC63
+         RTQa6jAAW1tx6V1/rMnY1AD7tiAGYp3+k23x0s7FsywDYP/TaFSUwaZqO5rF1+o0k9m0
+         AoqECi0IaxTzynbTLgv/T1rRKYwDMDwnazMsvoK0Trnb4Jm+ssIexET4E4gNF2cKQ2fM
+         5y2P+hD/rACOWNTFckRklRApx58k9Ndd+HFIO2zjjowBBWPBCSPB47aPY6pEOBwPE0KD
+         NPkulxGrwt7oQjrGyx2dy52d9jwzLcqXqCOg1bTvLx0jvWhdaG3uklD94x4s2niXIAa8
+         p42g==
+X-Gm-Message-State: AJIora89n9zSjOdixXLkNrXtgqsmXzt7N2hJ7/xjaDVeMANDEZtnTs1Y
+        drydaF8oRkZyXU9SyECwYc5yU+5WlQgPfrpMOFIoIw==
+X-Google-Smtp-Source: AGRyM1ta9IChV8i9AY3F7HqXJ7U2xfER4Z9xoWBB3POe6nuFgx0iOlcYkdI2qbn3ObkLqTjmum1sin2idrz6vVpTVgM=
+X-Received: by 2002:a05:6870:b381:b0:fe:2004:b3b5 with SMTP id
+ w1-20020a056870b38100b000fe2004b3b5mr810637oap.63.1656109152273; Fri, 24 Jun
+ 2022 15:19:12 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 24 Jun 2022 15:19:11 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Subject: Re: [PATCH RESEND v9 1/5] arc: dts: Harmonize EHCI/OHCI DT nodes name
-Content-Language: en-US
-To:     Serge Semin <Sergey.Semin@baikalelectronics.ru>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Michael Ellerman <mpe@ellerman.id.au>,
-        Vladimir Zapolskiy <vz@mleia.com>,
-        Alexey Brodkin <abrodkin@synopsys.com>,
-        Vineet Gupta <vgupta@synopsys.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        linux-usb@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Vineet Gupta <vgupta@kernel.org>
-Cc:     Serge Semin <fancer.lancer@gmail.com>,
-        Khuong Dinh <khuong@os.amperecomputing.com>,
-        Patrice Chotard <patrice.chotard@st.com>,
-        Benjamin Herrenschmidt <benh@kernel.crashing.org>,
-        Paul Mackerras <paulus@samba.org>,
-        linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linuxppc-dev@lists.ozlabs.org, linux-snps-arc@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20220624141622.7149-1-Sergey.Semin@baikalelectronics.ru>
- <20220624141622.7149-2-Sergey.Semin@baikalelectronics.ru>
-From:   Vineet Gupta <vgupta@kernel.org>
-In-Reply-To: <20220624141622.7149-2-Sergey.Semin@baikalelectronics.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <fa7f8bf1-33cd-5515-0143-6596df2bd740@quicinc.com>
+References: <1656090912-18074-1-git-send-email-quic_khsieh@quicinc.com>
+ <1656090912-18074-3-git-send-email-quic_khsieh@quicinc.com>
+ <CAE-0n52RW+UFJ=hqMWjwR8qvEbww7QjzPW1nhL3Atd97QXAnYw@mail.gmail.com>
+ <007ea4c9-9701-f4ab-3278-5d36bf2018c4@quicinc.com> <CAE-0n53kNCK0ajHfY2WQr5HEQZtZSBLnhfbTuZwaUNEOZhsKPg@mail.gmail.com>
+ <fa7f8bf1-33cd-5515-0143-6596df2bd740@quicinc.com>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date:   Fri, 24 Jun 2022 15:19:11 -0700
+Message-ID: <CAE-0n51g-EVsC-i9=sJV-ySa8VnE+yT7cg=b-TNMi9+3uBiOVA@mail.gmail.com>
+Subject: Re: [PATCH v1 2/3] drm/msm/dp: decoupling dp->id out of dp
+ controller_id at scxxxx_dp_cfg table
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>, agross@kernel.org,
+        airlied@linux.ie, bjorn.andersson@linaro.org, daniel@ffwll.ch,
+        dianders@chromium.org, dmitry.baryshkov@linaro.org,
+        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
+        sean@poorly.run, vkoul@kernel.org
+Cc:     quic_abhinavk@quicinc.com, quic_aravindh@quicinc.com,
+        quic_sbillaka@quicinc.com, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On 6/24/22 07:16, Serge Semin wrote:
-> In accordance with the Generic EHCI/OHCI bindings the corresponding node
-> name is suppose to comply with the Generic USB HCD DT schema, which
-> requires the USB nodes to have the name acceptable by the regexp:
-> "^usb(@.*)?"  . Make sure the "generic-ehci" and "generic-ohci"-compatible
-> nodes are correctly named.
+Quoting Kuogee Hsieh (2022-06-24 14:49:57)
 >
-> Signed-off-by: Serge Semin<Sergey.Semin@baikalelectronics.ru>
-> Acked-by: Alexey Brodkin<abrodkin@synopsys.com>
-> Acked-by: Krzysztof Kozlowski<krzk@kernel.org>
+> On 6/24/2022 2:40 PM, Stephen Boyd wrote:
+> > Quoting Kuogee Hsieh (2022-06-24 14:17:50)
+> >> On 6/24/2022 1:00 PM, Stephen Boyd wrote:
+> >>> Quoting Kuogee Hsieh (2022-06-24 10:15:11)
+> >>>> Current the index (dp->id) of DP descriptor table (scxxxx_dp_cfg[]) =
+are tightly
+> >>>> coupled with DP controller_id. This means DP use controller id 0 mus=
+t be placed
+> >>>> at first entry of DP descriptor table (scxxxx_dp_cfg[]). Otherwise t=
+he internal
+> >>>> INTF will mismatch controller_id. This will cause controller kickoff=
+ wrong
+> >>>> interface timing engine and cause dpu_encoder_phys_vid_wait_for_comm=
+it_done
+> >>>> vblank timeout error.
+> >>>>
+> >>>> This patch add controller_id field into struct msm_dp_desc to break =
+the tightly
+> >>>> coupled relationship between index (dp->id) of DP descriptor table w=
+ith DP
+> >>>> controller_id.
+> >>> Please no. This reverts the intention of commit bb3de286d992
+> >>> ("drm/msm/dp: Support up to 3 DP controllers")
+> >>>
+> >>>       A new enum is introduced to document the connection between the
+> >>>       instances referenced in the dpu_intf_cfg array and the controll=
+ers in
+> >>>       the DP driver and sc7180 is updated.
+> >>>
+> >>> It sounds like the intent of that commit failed to make a strong enou=
+gh
+> >>> connection. Now it needs to match the INTF number as well? I can't
+> >>> really figure out what is actually wrong, because this patch undoes t=
+hat
+> >>> intentional tight coupling. Is the next patch the important part that
+> >>> flips the order of the two interfaces?
+> >> The commit bb3de286d992have two problems,
+> >>
+> >> 1)=C2=A0 The below sc7280_dp_cfg will not work, if eDP use
+> >> MSM_DP_CONTROLLER_2 instead of=C2=A0 MSM_DP_CONTROLLER_1
+> > Why would we use three indices for an soc that only has two indices
+> > possible? This is not a real problem?
+>
+> I do not what will happen at future, it may have more dp controller use
+> late.
+>
+> at current soc, below table has only one eDP will not work either.
+>
+> static const struct msm_dp_config sc7280_dp_cfg =3D {
+>   =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 .descs =3D (const struct msm=
+_dp_desc[]) {
+>   =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0 [MSM_DP_CONTROLLER_1] =3D { .io_start =3D 0x0aea0000,
+> .connector_type =3D DRM_MODE_CONNECTOR_eDP, .wide_bus_en =3D true },
+>
+>   =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 .num_descs =3D 1,
 
-This slipped thru cracks. Now on for-curr.
+So the MSM_DP_CONTROLLER_* number needs to match what exactly?
 
-Thx,
--Vineet
+>
+> >
+> >> since it have num_descs =3D2 but eDP is at index 2 (CONTROLLER_2) whic=
+h
+> >> never be reached.
+> >>
+> >> static const struct msm_dp_config sc7280_dp_cfg =3D {
+> >>   =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 .descs =3D (const struct =
+msm_dp_desc[]) {
+> >>   =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0 [MSM_DP_CONTROLLER_2] =3D { .io_start =3D 0x0aea00=
+00,
+> >> .connector_type =3D DRM_MODE_CONNECTOR_eDP, .wide_bus_en =3D true },
+> >>   =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0 [MSM_DP_CONTROLLER_0] =3D { .io_start =3D 0x0ae900=
+00,
+> >> .connector_type =3D DRM_MODE_CONNECTOR_DisplayPort, .wide_bus_en =3D t=
+rue },
+> >>   =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 },
+> >>   =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 .num_descs =3D 2,
+> >> };
+> >>
+> >> 2)=C2=A0 DP always has index of 0 (dp->id =3D 0) and the first one to =
+call
+> >> msm_dp_modeset_init(). This make DP always place at head of bridge cha=
+in.
+> > What does this mean? Are you talking about the list of bridges in drm
+> > core, i.e. 'bridge_list'?
+> yes,
+
+I changed the drm_bridge_add() API and that doesn't make any difference.
+The corruption is still seen. That would imply it is not the order of
+the list of bridges.
+
+---8<---
+diff --git a/drivers/gpu/drm/drm_bridge.c b/drivers/gpu/drm/drm_bridge.c
+index e275b4ca344b..e3518101b65e 100644
+--- a/drivers/gpu/drm/drm_bridge.c
++++ b/drivers/gpu/drm/drm_bridge.c
+@@ -165,7 +165,7 @@ void drm_bridge_add(struct drm_bridge *bridge)
+ 	mutex_init(&bridge->hpd_mutex);
+
+ 	mutex_lock(&bridge_lock);
+-	list_add_tail(&bridge->list, &bridge_list);
++	list_add(&bridge->list, &bridge_list);
+ 	mutex_unlock(&bridge_lock);
+ }
+ EXPORT_SYMBOL(drm_bridge_add);
+
+> >
+> >> At next patch eDP must be placed at head of bridge chain to fix eDP
+> >> corruption issue. This is the purpose of this patch. I will revise the
+> >> commit text.
+> >>
+> > Wouldn't that be "broken" again if we decided to change drm_bridge_add(=
+)
+> > to add to the list head instead of list tail? Or if somehow
+> > msm_dp_modeset_init() was called in a different order so that the DP
+> > bridge was added before the eDP bridge?
+>
+> we have no control of drm_bridge_add().
+>
+> Since drm perform screen update following bridge chain sequentially, we
+> have to make sure primary always update first.
+>
