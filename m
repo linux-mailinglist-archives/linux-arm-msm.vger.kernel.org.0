@@ -2,99 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8DC92559652
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jun 2022 11:20:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DF341559705
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jun 2022 11:52:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231535AbiFXJUQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Jun 2022 05:20:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35838 "EHLO
+        id S229849AbiFXJwV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Jun 2022 05:52:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38442 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230245AbiFXJUP (ORCPT
+        with ESMTP id S229469AbiFXJwR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Jun 2022 05:20:15 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 240FC680BB;
-        Fri, 24 Jun 2022 02:20:15 -0700 (PDT)
+        Fri, 24 Jun 2022 05:52:17 -0400
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 729A7794E7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Jun 2022 02:52:16 -0700 (PDT)
+Received: by mail-ej1-x635.google.com with SMTP id cw10so3638841ejb.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Jun 2022 02:52:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1656062415; x=1687598415;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references;
-  bh=FH5MRkjexNSBtIFQJCSSojv/QFrWgGXcfNpOdTHtJRE=;
-  b=I8FDs6ug8UkpLg372J61PZDEK4dIaBIAdRiEU/0CwioWPIpfNXdFFsVn
-   xxi8Fj3mPMfo13SqgM4OjOSPnAUhYacJXFab6rxY4HJNi6rkX2YJTgS3P
-   hxzqI4F249QTbC3lHW7NQQvPRn/f+ArE2oG8xicgJ5tO8WEJoMj5m928o
-   c=;
-Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
-  by alexa-out.qualcomm.com with ESMTP; 24 Jun 2022 02:20:15 -0700
-X-QCInternal: smtphost
-Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 24 Jun 2022 02:20:13 -0700
-X-QCInternal: smtphost
-Received: from hu-krichai-hyd.qualcomm.com (HELO hu-sgudaval-hyd.qualcomm.com) ([10.213.110.37])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 24 Jun 2022 14:49:55 +0530
-Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 4058933)
-        id 147913E69; Fri, 24 Jun 2022 14:49:55 +0530 (+0530)
-From:   Krishna chaitanya chundru <quic_krichai@quicinc.com>
-To:     helgaas@kernel.org
-Cc:     linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_vbadigan@quicinc.com,
-        quic_hemantk@quicinc.com, quic_nitegupt@quicinc.com,
-        quic_skananth@quicinc.com, quic_ramkri@quicinc.com,
-        manivannan.sadhasivam@linaro.org, swboyd@chromium.org,
-        dmitry.baryshkov@linaro.org,
-        Krishna chaitanya chundru <quic_krichai@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org (open list:OPEN FIRMWARE AND FLATTENED
-        DEVICE TREE BINDINGS)
-Subject: [PATCH v1 3/3] arm64: dts: qcom: sc7280: Add missing pcie clocks
-Date:   Fri, 24 Jun 2022 14:49:51 +0530
-Message-Id: <1656062391-14567-4-git-send-email-quic_krichai@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1656062391-14567-1-git-send-email-quic_krichai@quicinc.com>
-References: <1656062391-14567-1-git-send-email-quic_krichai@quicinc.com>
-X-Spam-Status: No, score=-4.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :references:from:in-reply-to:content-transfer-encoding;
+        bh=rivE4wr8UJbawIIZz5aCEb4ZT16feQhkHfAphnrA6WU=;
+        b=uGneM71SQXFdic/t3HGx3tsStz5Qf4y9dXBWUgspI0995RcXcn4IYS7syHPwcRyVUc
+         WwGFfefcpd48S8sI74mHc12zc3vJBPS4ChSzrEmrbXI+odU+6jNV4KZuueSe+tx15RU0
+         jd6uKblRbSC0jmWgPQBhh1VsW20Wrbp/ByeZRchbsguXhCvKD+M7Ros6v7KiAuhmxTBA
+         iekZXm1+h/Jhm92dnXnUZ7ybm4m0I4fd4Lcsc1ZVA5CrYz1yZtIccQUoF4aM8//TMKQY
+         6VzED93Rbd3e66t37ayYGrNp5rjkpoiSBfkisrvrgbdxL5UjQ5cAdrLJ8LKX/6ha9PMp
+         DK4g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=rivE4wr8UJbawIIZz5aCEb4ZT16feQhkHfAphnrA6WU=;
+        b=0DqRD4Tqg/75vMPvcmn3XmC7G/Mz5akMReGRQMaHMH09cy/6ChRmplvPc5Q9fU8RI3
+         9fj3L1+QEsnbo60wiiL/VmvFzKKuzJUU+N1U+2X1q2R2zqT3pD27tFHa3SMS5pneEBhw
+         qA0/WqetD/AvrrSOwJY7R/Re0bVehoV09dA/FCYsT2mI+RrUgTucab2EJRx7HyQz61Wh
+         RBuNrhga8KfVcHba8Yq2tI4BCOqYGWVzLZnaKg7ZorjmlOPRPd/Iph1qUgqmyM+BDI9H
+         9oRjDUqdzEQ47u+MW1IzPlKiz+eBWzywfhDCsvFozStef2G32Ls/foD9BEO/OgT65/lg
+         e3yw==
+X-Gm-Message-State: AJIora+UopcrisBmzsd65vJYFPGL9Xn/siel7oHet0sZ028QZ5EgC3Yz
+        w4ggLZZeVUCBEp2K58nNCMtkvvwBIQcWPA==
+X-Google-Smtp-Source: AGRyM1thP2j2F1e2C7KdSKxzE1Ry8ZMuQ/aeS7RCYjBG/O6aI3BQ7HnUd6GUGN4g3imvS3JUTHQHwg==
+X-Received: by 2002:a17:906:76d7:b0:726:31da:55a with SMTP id q23-20020a17090676d700b0072631da055amr2041726ejn.607.1656064335085;
+        Fri, 24 Jun 2022 02:52:15 -0700 (PDT)
+Received: from [192.168.0.234] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id b15-20020a50e38f000000b0042dc8dd59c7sm1596608edm.51.2022.06.24.02.52.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 24 Jun 2022 02:52:14 -0700 (PDT)
+Message-ID: <26cdc24c-e0e8-1059-f6ca-11c08615eeca@linaro.org>
+Date:   Fri, 24 Jun 2022 11:52:13 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: Re: [PATCH] dt-bindings: firmware: qcom-scm: convert to dtschema
+Content-Language: en-US
+To:     Robert Marko <robimarko@gmail.com>, agross@kernel.org,
+        bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        David Heidelberg <david@ixit.cz>
+References: <20220623182542.1116677-1-robimarko@gmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220623182542.1116677-1-robimarko@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add missing pcie clocks.
+On 23/06/2022 20:25, Robert Marko wrote:
+> Convert bindings for Qualcomm SCM to dtschema.
+> 
+> SoC compatibles that were used, but not documented were added.
+> 
+> Signed-off-by: Robert Marko <robimarko@gmail.com>
 
-Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
----
- arch/arm64/boot/dts/qcom/sc7280.dtsi | 4 ++++
- 1 file changed, 4 insertions(+)
+This was already submitted:
+https://lore.kernel.org/all/20211218194038.26913-1-david@ixit.cz/
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index e66fc67..a5ce095 100644
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -2043,6 +2043,8 @@
- 				 <&gcc GCC_PCIE_1_SLV_AXI_CLK>,
- 				 <&gcc GCC_PCIE_1_SLV_Q2A_AXI_CLK>,
- 				 <&gcc GCC_AGGRE_NOC_PCIE_TBU_CLK>,
-+				 <&gcc GCC_AGGRE_NOC_PCIE_CENTER_SF_AXI_CLK>,
-+				 <&gcc GCC_AGGRE_NOC_PCIE_1_AXI_CLK>,
- 				 <&gcc GCC_DDRSS_PCIE_SF_CLK>;
- 
- 			clock-names = "pipe",
-@@ -2055,6 +2057,8 @@
- 				      "bus_slave",
- 				      "slave_q2a",
- 				      "tbu",
-+				      "aggre0",
-+				      "aggre1",
- 				      "ddrss_sf_tbu";
- 
- 			assigned-clocks = <&gcc GCC_PCIE_1_AUX_CLK>;
--- 
-2.7.4
+David,
+Do you intend to work on the bindings you submitted before? There are
+several pending on your side (things to be fixed), so I am not sure if
+work is abandoned or just waiting.
 
+Best regards,
+Krzysztof
