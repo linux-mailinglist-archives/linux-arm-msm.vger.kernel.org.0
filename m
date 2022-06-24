@@ -2,82 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 23D5F559D34
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jun 2022 17:24:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 642C4559DDD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jun 2022 17:56:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232303AbiFXPX6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Jun 2022 11:23:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34072 "EHLO
+        id S229889AbiFXP4b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Jun 2022 11:56:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59150 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232255AbiFXPX4 (ORCPT
+        with ESMTP id S229797AbiFXP4a (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Jun 2022 11:23:56 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A5D14EDC5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Jun 2022 08:23:51 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id e10so3541392wra.11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Jun 2022 08:23:51 -0700 (PDT)
+        Fri, 24 Jun 2022 11:56:30 -0400
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B39651300
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Jun 2022 08:56:29 -0700 (PDT)
+Received: by mail-ej1-x62a.google.com with SMTP id ay16so5583588ejb.6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Jun 2022 08:56:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=+bhqNUnBw2VlBb+vKh9BVjK86IEzMRn9rbxeRT0RpzU=;
-        b=unSq8mf41jKUNz0zl0xeXhApqvYec4N3cTR8n5fovaRhwmji9yx7zuESRXHRXiIgtb
-         kbkB9TDS6IQFZtFmjwOYK6SS2XmBHK/SGChPmng3OZGRqr5o1Eu9OYieOjdRmwYRldOe
-         XptsV14p+JHshQP7F3oBh05e6GPreOfhXUpnqAhQo3yOMHWQu4Dsp829OUV1a++xItDc
-         B94B+a2nf0H6T4gUUrBefrDJ7RzZMxETNjhcir5Re9++JIz88YRFgFl0mT/DPRzQGicO
-         5KnUPkgJzqnO8mEm/Fj8vH/JPd93G6DAnle4x0/9ZrC4deqywXDK/DASo9VEp43Ot8FZ
-         mu8w==
+        bh=AaFxO9SuZohGHBEsd2J56jr4tSjiHPXK/R2ry2JENjE=;
+        b=vt6cyA7dGTtFmHXywId9KEZiBRu6Tc7UXnMPSE3k9tp0QmTLM0Zm7Q1/W+yW5z5iHI
+         UhAZAFEzNPHhMYZDTrldas64A5d8Pq535Pig4Kevogv4dS5TK7DXCo4xSJeil2HX0O2N
+         P64wZoeDttkYWQWrIC0SFruLZeU376vYdvkwxyDvOuDZephiy8oXrxN7z2QH7vtZRVXG
+         pEPXdxR1y06sW8nfc1hE9/I74Ot+JkrJad0cgwOC+UAaiH6dkdZkT5lWwb37CVYn9Lre
+         Xygqkv1I+vg6bGZe3THe9nDTipv9cc3fPfGn74Njmj2zL/QT0rcSA8qnme8cSt1t9TWl
+         UwRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=+bhqNUnBw2VlBb+vKh9BVjK86IEzMRn9rbxeRT0RpzU=;
-        b=XBQzlRsSIjUArztodfoYJSPmN7Mh4FvbnSlnqjqQFhKt+YST+KwovJaihCSJ1NmULM
-         VFJB81xmbsedOcwBmWClYwmpbOGWk/q4Zw5Una5b3fXGmDLiaOS1MUkNZsT5iv1zwwEj
-         nck6wlms/U+TXf9oNjwQYT6xKDzvyAnhSKaeiA7HKsESJLhe7TgEebbfNzL3WTb3SI9V
-         dHZWfmh+QmYer8zNswxVe+/TQbXqOnSfwEULNIaXlQn3FgrOMk0HTctocGZjIlttPdCJ
-         cQr/QXP/SCAoyCMfxhAvqQ+RrCuPFq+reCoLGkrXxwPpeIY9K354S+8cRF8fQlOVllmk
-         hUoQ==
-X-Gm-Message-State: AJIora/4I6/FghcIHjqcDvIQT7fMHWIb7IdkT8xuV00QBxBRJBb6UQKg
-        4KCh5y2GBm1JII4QUUsgcX6GOQ==
-X-Google-Smtp-Source: AGRyM1s9YBvmKfcs61SMXYZ8cH6Yai5Wzlk65zklCRkC8/sqfy96FjnpPWRBJJj5I7pxa5IPeTokBw==
-X-Received: by 2002:adf:df8a:0:b0:21b:9219:634c with SMTP id z10-20020adfdf8a000000b0021b9219634cmr13427248wrl.669.1656084229815;
-        Fri, 24 Jun 2022 08:23:49 -0700 (PDT)
+        bh=AaFxO9SuZohGHBEsd2J56jr4tSjiHPXK/R2ry2JENjE=;
+        b=edL5elwBCbqTiWOVZ0VI1XdQ/U1VsmugE923gHG/6BJKfv+eFmgXsv8q4AWUDek1WW
+         TOuNTXiZqNdEwnIqJLXWVFFYMghx84ZoEV7hKMB/t/ls0cmXW+SkuYFnHnPcW9nMfEVa
+         CIz3l7sxAtn6NS6n0QoXwrhN0e+e7a2n3DkpRRhZW75pHmk7SWwQzVbeCRA4NbFsyjbt
+         FIi+rCdyBtCpewT5MeLkFeOqnAQvAYDwLq+y0Z5JKgyPDThpjbNljOxyq3hOCh/yiXMs
+         VPObG3HUC001jk5uKTBBfqVmrevLGNJfVivYpNZc1bhN9H8Yd1Lyu1ChkobW4KyOwRxQ
+         lKvg==
+X-Gm-Message-State: AJIora+gfQOYjzw2vePQEXg8VeQ2vpIOk83vrDOvFKJURjufwZ7+Zy8J
+        Oy3EbdoZhqjk1ghBMs0VVXfAOg==
+X-Google-Smtp-Source: AGRyM1v5SgKoPUxGG1PM7JZa1kZuMlcddv1KTTToFLgBec5fNAIFK4ZKiqhHNoQFo6VQLdoUZtzMGg==
+X-Received: by 2002:a17:906:530b:b0:722:e9ad:e90 with SMTP id h11-20020a170906530b00b00722e9ad0e90mr14288881ejo.676.1656086187984;
+        Fri, 24 Jun 2022 08:56:27 -0700 (PDT)
 Received: from [192.168.0.237] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id k31-20020a05600c1c9f00b0039c5642e430sm3309268wms.20.2022.06.24.08.23.48
+        by smtp.gmail.com with ESMTPSA id kj20-20020a170907765400b00722dac96232sm1319451ejc.126.2022.06.24.08.56.26
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 24 Jun 2022 08:23:49 -0700 (PDT)
-Message-ID: <329101e6-4f81-78c3-818b-8d70905248a6@linaro.org>
-Date:   Fri, 24 Jun 2022 17:23:47 +0200
+        Fri, 24 Jun 2022 08:56:27 -0700 (PDT)
+Message-ID: <cfed6d9f-3200-424a-0fa6-5c1de1f7fd1a@linaro.org>
+Date:   Fri, 24 Jun 2022 17:56:26 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.10.0
-Subject: Re: [PATCH v1 3/3] arm64: dts: qcom: sc7280: Add missing pcie clocks
+Subject: Re: [PATCH 01/15] dt-bindings: clocks: qcom,gcc-apq8064: define
+ clocks/-names properties
 Content-Language: en-US
-To:     Krishna chaitanya chundru <quic_krichai@quicinc.com>,
-        helgaas@kernel.org
-Cc:     linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_vbadigan@quicinc.com,
-        quic_hemantk@quicinc.com, quic_nitegupt@quicinc.com,
-        quic_skananth@quicinc.com, quic_ramkri@quicinc.com,
-        manivannan.sadhasivam@linaro.org, swboyd@chromium.org,
-        dmitry.baryshkov@linaro.org, Andy Gross <agross@kernel.org>,
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Michael Turquette <mturquette@baylibre.com>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>
-References: <1656062391-14567-1-git-send-email-quic_krichai@quicinc.com>
- <1656062391-14567-4-git-send-email-quic_krichai@quicinc.com>
+        Taniya Das <quic_tdas@quicinc.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <20220623120418.250589-1-dmitry.baryshkov@linaro.org>
+ <20220623120418.250589-2-dmitry.baryshkov@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <1656062391-14567-4-git-send-email-quic_krichai@quicinc.com>
+In-Reply-To: <20220623120418.250589-2-dmitry.baryshkov@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -85,41 +83,14 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 24/06/2022 11:19, Krishna chaitanya chundru wrote:
-> Add missing pcie clocks.
+On 23/06/2022 14:04, Dmitry Baryshkov wrote:
+> Define clock/clock-names properties of the GCC device node to be
+> used on MSM8960/APQ8064 platforms.
 > 
-> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-> ---
->  arch/arm64/boot/dts/qcom/sc7280.dtsi | 4 ++++
->  1 file changed, 4 insertions(+)
-> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Thank you for your patch. There is something to discuss/improve.
 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> index e66fc67..a5ce095 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> @@ -2043,6 +2043,8 @@
->  				 <&gcc GCC_PCIE_1_SLV_AXI_CLK>,
->  				 <&gcc GCC_PCIE_1_SLV_Q2A_AXI_CLK>,
->  				 <&gcc GCC_AGGRE_NOC_PCIE_TBU_CLK>,
-> +				 <&gcc GCC_AGGRE_NOC_PCIE_CENTER_SF_AXI_CLK>,
-> +				 <&gcc GCC_AGGRE_NOC_PCIE_1_AXI_CLK>,
->  				 <&gcc GCC_DDRSS_PCIE_SF_CLK>;
->  
->  			clock-names = "pipe",
-> @@ -2055,6 +2057,8 @@
->  				      "bus_slave",
->  				      "slave_q2a",
->  				      "tbu",
-> +				      "aggre0",
-> +				      "aggre1",
->  				      "ddrss_sf_tbu";
-
-Unfortunately wrong order.
-
-Please test your patches with `make dtbs_check`.
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 
 Best regards,
