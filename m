@@ -2,74 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 73A7755A4A6
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Jun 2022 01:12:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E327355A4C3
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Jun 2022 01:25:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232006AbiFXXMu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Jun 2022 19:12:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43962 "EHLO
+        id S230366AbiFXXZS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Jun 2022 19:25:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52956 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232001AbiFXXMu (ORCPT
+        with ESMTP id S230220AbiFXXZS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Jun 2022 19:12:50 -0400
-Received: from mail-oo1-xc2e.google.com (mail-oo1-xc2e.google.com [IPv6:2607:f8b0:4864:20::c2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A086288B19
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Jun 2022 16:12:49 -0700 (PDT)
-Received: by mail-oo1-xc2e.google.com with SMTP id i19-20020a4ad093000000b004256ad0893fso760012oor.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Jun 2022 16:12:49 -0700 (PDT)
+        Fri, 24 Jun 2022 19:25:18 -0400
+Received: from mail-qk1-x732.google.com (mail-qk1-x732.google.com [IPv6:2607:f8b0:4864:20::732])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8DFFF81520
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Jun 2022 16:25:16 -0700 (PDT)
+Received: by mail-qk1-x732.google.com with SMTP id k20so3034631qkj.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Jun 2022 16:25:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc:content-transfer-encoding;
-        bh=yUaUlIMPAe3wvXnfRM5gi/o9kg0TXggL9B/IQ5XoR14=;
-        b=KmbtAF/HUwJQPL9R+/SHHlpK6bf5UsbrnR8kNiAgyPnzFI/NFDn2EEmjfpO3ZaRR3h
-         qbt49v0otRmZ6AbsFxHqo1zKUYVlJmKKByrLpQMbjyGDUlT/qdZKAqe2x8EawZN5IpYz
-         CuOXJGVE0gUAfSJWMAdJHk8IwzujuKLd2ejTo=
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=FpOasnc+MpC6k8YV2n5CgA0BI1oTbTynNjCcV+ZfHRs=;
+        b=NHb6sx16M7MktkZ3Jo61dJAtykBLRQ7L90BYWPv2UYfd7gTYH2Imv7sGo8sVPuwlCd
+         3MzSMUw6RsrSdaH9kaWcFR/nhX3HUHTrofuDUv3N9XBWRtkmXMs74x9X1h6D7hUvEloQ
+         xZqSxQLB41Sd3P5nsLa3wY60AtTBzwR9xksRX1rO+ijLlptnUAkOt4a4dbPrFdO6ZUOI
+         eJf7OJQp9wYcRSj39MRpVP+exzOBiqETNrSMynq1cLm60ZfW39poLkgFd/c4XlEzX92Z
+         urgI7E+FNaezix5BisyfzLdTRLV6DWggT8YDLErAQ+32QXk6815I9uprKrMtEBtLDi3/
+         v7IA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=yUaUlIMPAe3wvXnfRM5gi/o9kg0TXggL9B/IQ5XoR14=;
-        b=r/54p1t/sGK29ddFjXQhawnp5lUgfQ46KnADqPSj1tYscwQGRJB+zLl5Tb2A0DwoJu
-         +rEftY2P0Iw5cj7mkACV6eCUL3UryKSiXDWooY8ABffhsyjNl6cP2Tle0mD7OZGodgLn
-         8HDD8toC7mhXNaGf+ZBn0l/osiL6QzwaN44UZOqzUUpcKYmIaSEvi19aJuMJA8Z4o1uN
-         L02DHL09EZqWTFcwdFaO8u8nlr355Ly26yIUnXQKC6qyKThrii/rgJcKoQAr1/Yi5ujt
-         JlCY75qkQSjgLeoFDsMmbAYrb+S80+q7LFFZRSFWIRnn827DgAiy3TYXWUAF9poQA45q
-         /VjQ==
-X-Gm-Message-State: AJIora8a9KsC5OyJgqJUamGhC5D/G3GDkjNL3K+x3Sg2MsTVDskA0ryT
-        g+44dLxge3ChGNRd4gk9HiWh0v+bU4t6tcjTxZKbmQ==
-X-Google-Smtp-Source: AGRyM1u+zQwL2M2+LhjYYBJM+V6JwxPLfyNbwqTgSpF9LXZ+0EnlDVkdDj+tlkI7rGfOi4l5ouEEmbRFSndfkF/HJ3g=
-X-Received: by 2002:a4a:98a6:0:b0:41b:e04e:70ce with SMTP id
- a35-20020a4a98a6000000b0041be04e70cemr683244ooj.25.1656112369023; Fri, 24 Jun
- 2022 16:12:49 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 24 Jun 2022 16:12:48 -0700
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=FpOasnc+MpC6k8YV2n5CgA0BI1oTbTynNjCcV+ZfHRs=;
+        b=sL40A7AyJSBhuEttMZw3HewIUj84Hh2TiIR3QepDTRvdJO2Is2lTUuVC4L47I7bsw0
+         4REtwvMzTM9GiN6YHlYD0bTmbUZd+SiJSYJ31wwDjifDa/59t9Vxo6rS41TcyHHEwb6I
+         Rqycrg60+qzhMsjM/N7aZ5Ulx216ldacpE3k0PHPsezf9Yo7Rtmb5llziGybxeib/iij
+         hdpla348M2sBsuqN5L62j1gmqYIvQ1WAcjsKguRteytYzHcYz7H7PY7tD/9K5HqF+G1B
+         x7Scyg10+r4QOtTXBM8UxHjUt7dC6ukvbSjkd2agAkEpozCGLNt2DPUwxfun8zDAyRy5
+         fMLA==
+X-Gm-Message-State: AJIora+jXOm2OOaEsOrOpLcWtFxfIBld5pQeAc8Oko4+TcCWmyc6aKYP
+        X/kRo3g5Knb5qofkkP/AcL7HzYIY9e8njfkmOZ5RFw==
+X-Google-Smtp-Source: AGRyM1uO6ak+ggMtjMmbHyuZ535rKKAdH4kKHL57dRRG0x0TBx5SohM1ORVa07kNl56sasfydWaRzHmOt05i/wBTFkY=
+X-Received: by 2002:a05:620a:31a0:b0:6a7:549f:a788 with SMTP id
+ bi32-20020a05620a31a000b006a7549fa788mr1285171qkb.203.1656113115648; Fri, 24
+ Jun 2022 16:25:15 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <326912ff-9771-0711-366d-79acd436908b@quicinc.com>
 References: <1656090912-18074-1-git-send-email-quic_khsieh@quicinc.com>
  <1656090912-18074-3-git-send-email-quic_khsieh@quicinc.com>
- <CAE-0n52RW+UFJ=hqMWjwR8qvEbww7QjzPW1nhL3Atd97QXAnYw@mail.gmail.com>
- <007ea4c9-9701-f4ab-3278-5d36bf2018c4@quicinc.com> <CAE-0n53kNCK0ajHfY2WQr5HEQZtZSBLnhfbTuZwaUNEOZhsKPg@mail.gmail.com>
- <fa7f8bf1-33cd-5515-0143-6596df2bd740@quicinc.com> <CAE-0n51g-EVsC-i9=sJV-ySa8VnE+yT7cg=b-TNMi9+3uBiOVA@mail.gmail.com>
- <326912ff-9771-0711-366d-79acd436908b@quicinc.com>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Fri, 24 Jun 2022 16:12:48 -0700
-Message-ID: <CAE-0n51qrdrFtSr0vRwgYkMgSZfnzQuinaUROQsp30QoDchWQA@mail.gmail.com>
+ <CAE-0n52RW+UFJ=hqMWjwR8qvEbww7QjzPW1nhL3Atd97QXAnYw@mail.gmail.com> <007ea4c9-9701-f4ab-3278-5d36bf2018c4@quicinc.com>
+In-Reply-To: <007ea4c9-9701-f4ab-3278-5d36bf2018c4@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Sat, 25 Jun 2022 02:25:04 +0300
+Message-ID: <CAA8EJprd_kkqU4GZ_p2cZbALCBDE-uFHsnPHXRnra0jZsY_bnA@mail.gmail.com>
 Subject: Re: [PATCH v1 2/3] drm/msm/dp: decoupling dp->id out of dp
  controller_id at scxxxx_dp_cfg table
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>, agross@kernel.org,
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>
+Cc:     Stephen Boyd <swboyd@chromium.org>, agross@kernel.org,
         airlied@linux.ie, bjorn.andersson@linaro.org, daniel@ffwll.ch,
-        dianders@chromium.org, dmitry.baryshkov@linaro.org,
-        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
-        sean@poorly.run, vkoul@kernel.org
-Cc:     quic_abhinavk@quicinc.com, quic_aravindh@quicinc.com,
+        dianders@chromium.org, dri-devel@lists.freedesktop.org,
+        robdclark@gmail.com, sean@poorly.run, vkoul@kernel.org,
+        quic_abhinavk@quicinc.com, quic_aravindh@quicinc.com,
         quic_sbillaka@quicinc.com, freedreno@lists.freedesktop.org,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -78,36 +74,69 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Kuogee Hsieh (2022-06-24 15:53:45)
+On Sat, 25 Jun 2022 at 00:17, Kuogee Hsieh <quic_khsieh@quicinc.com> wrote:
 >
-> MSM_DP_CONTROLLER_1 need to match to the index =3D 1 of sc7280_dp_cfg[] <=
-=3D=3D This is correct
 >
-> The problem is sc7280_dp_cfg[] have two entries since eDP place at index
-> of MSM_DP_CONTROLLER_1.
+> On 6/24/2022 1:00 PM, Stephen Boyd wrote:
+> > Quoting Kuogee Hsieh (2022-06-24 10:15:11)
+> >> Current the index (dp->id) of DP descriptor table (scxxxx_dp_cfg[]) are tightly
+> >> coupled with DP controller_id. This means DP use controller id 0 must be placed
+> >> at first entry of DP descriptor table (scxxxx_dp_cfg[]). Otherwise the internal
+> >> INTF will mismatch controller_id. This will cause controller kickoff wrong
+> >> interface timing engine and cause dpu_encoder_phys_vid_wait_for_commit_done
+> >> vblank timeout error.
+> >>
+> >> This patch add controller_id field into struct msm_dp_desc to break the tightly
+> >> coupled relationship between index (dp->id) of DP descriptor table with DP
+> >> controller_id.
+> > Please no. This reverts the intention of commit bb3de286d992
+> > ("drm/msm/dp: Support up to 3 DP controllers")
+> >
+> >      A new enum is introduced to document the connection between the
+> >      instances referenced in the dpu_intf_cfg array and the controllers in
+> >      the DP driver and sc7180 is updated.
+> >
+> > It sounds like the intent of that commit failed to make a strong enough
+> > connection. Now it needs to match the INTF number as well? I can't
+> > really figure out what is actually wrong, because this patch undoes that
+> > intentional tight coupling. Is the next patch the important part that
+> > flips the order of the two interfaces?
 >
-> but .num_desc =3D 1=C2=A0 <=3D=3D this said only have one entry at sc7280=
-_dp_cfg[]
-> table. Therefore eDP will never be found at for loop=C2=A0 at
-> _dpu_kms_initialize_displayport().
+> The commit bb3de286d992have two problems,
 >
+> 1)  The below sc7280_dp_cfg will not work, if eDP use
+> MSM_DP_CONTROLLER_2 instead of  MSM_DP_CONTROLLER_1
+>
+> since it have num_descs =2 but eDP is at index 2 (CONTROLLER_2) which
+> never be reached.
+>
+> static const struct msm_dp_config sc7280_dp_cfg = {
+>          .descs = (const struct msm_dp_desc[]) {
+>                  [MSM_DP_CONTROLLER_2] = { .io_start = 0x0aea0000,
+> .connector_type = DRM_MODE_CONNECTOR_eDP, .wide_bus_en = true },
+>                  [MSM_DP_CONTROLLER_0] = { .io_start = 0x0ae90000,
+> .connector_type = DRM_MODE_CONNECTOR_DisplayPort, .wide_bus_en = true },
+>          },
+>          .num_descs = 2,
 
-Yes, but what else does the MSM_DP_CONTROLLER_1 need to match? Because
-the intention of the previous commit was to make it so the order of
-sc7280_dp_cfg couldn't be messed up and not match the
-MSM_DP_CONTROLLER_1 value that lives in sc7280_intf[].
+Please change num_descs to 3. Or better eliminate it completely and
+iterate up to MSM_DP_CONTROLLER_MAX, checking whether the entry
+contains real values or is just a zero sentinel entry.
 
+> };
 >
-> Sorry, my mistake. it is not in drm_bridge_add.
+> 2)  DP always has index of 0 (dp->id = 0) and the first one to call
+> msm_dp_modeset_init(). This make DP always place at head of bridge chain.
 >
-> It should be in dpu_encoder_init() of _dpu_kms_initialize_displayport().
->
-> can you make below changes (patch) to _dpu_kms_initialize_displayport().
->
+> At next patch eDP must be placed at head of bridge chain to fix eDP
+> corruption issue. This is the purpose of this patch. I will revise the
+> commit text.
 
-Yes, I've made that change to try to understand the problem. I still
-don't understand, sadly. Does flipping the order of iteration through
-'priv->dp' somehow mean that the crtc that is assigned to the eDP
-connector is left unchanged? Whereas without registering the eDP encoder
-first means we have to change the crtc for the eDP encoder and that
-can't be done atomically?
+This text doesn't make sense to me. The dp->id has nothing to do with
+the bridge chains. Each dp entry is a head of the corresponding bridge
+chain. DP with dp->id = 0 and eDP with dp->id = whatever will be parts
+of different encoder -> bridges -> connector chains.
+
+-- 
+With best wishes
+Dmitry
