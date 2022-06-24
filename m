@@ -2,59 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 84EFD558CA4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jun 2022 03:10:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 48D94558CDF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jun 2022 03:36:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229523AbiFXBK4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Jun 2022 21:10:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55640 "EHLO
+        id S229759AbiFXBgA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Jun 2022 21:36:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45642 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229475AbiFXBKz (ORCPT
+        with ESMTP id S229475AbiFXBgA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Jun 2022 21:10:55 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4A82522E9;
-        Thu, 23 Jun 2022 18:10:54 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 76503B824E9;
-        Fri, 24 Jun 2022 01:10:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EC7BC3411D;
-        Fri, 24 Jun 2022 01:10:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1656033052;
-        bh=NmgagNBV9gwyhlChqhV/v07V/dIV0rkFErcWLoUCSAw=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=HwHYvAZ4Ia+YMvOHpa9O7bQy34QnFxHF0HREeVjJNj1xbvp5RrFQK3Dl2QIylJD0q
-         FNzYHu+lLFeNpjhZO8ZL9ud7L4bW95bZ/5wuNNemDGu0iqkUBwbdE/WePnn3XxuVDz
-         +KI4zEDOuRVwcnySCWv66QIn/1sczkmhKIH9BacbSh57H8Io35NjxUexYhSGlKFH83
-         wlgTwV6uZKlLfo12+Iy10uO1jcZ+5sQ8H2KBVDdlTgv/QPId4JL8LO6sNJBeDzFjKw
-         VBs4/E3YqoPY5t9bFAOMoL/MFiT01m4cki7WSqBOmM1K0jDv33dgTU9qkVoBacnvTk
-         i05q3WYediiZQ==
-Content-Type: text/plain; charset="utf-8"
+        Thu, 23 Jun 2022 21:36:00 -0400
+Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FBAC5677A;
+        Thu, 23 Jun 2022 18:35:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1656034559; x=1687570559;
+  h=message-id:date:mime-version:cc:subject:to:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=gyA97i97HwL5wq54DYwFbjfmzziuSTurfIWHXSjG3gU=;
+  b=nZ3EdQ4LB3Jl8N2xyPUKDufei4aMw6C99PRF+nC2WwjQrP5pByLRC0je
+   fYA/u0eFTu3CHgpePAbfbBve5gzFe1LxTFrVCMiEt3j4hfk+t7BgXgFQF
+   hFj/40ieBwH27qgYQjzqglnjPlCLftcPYKicrEnUbrN2M1Vm3TpqSWLJ7
+   g1QAp+nsTN5ulZc0t7uTNH5N00XA17n241cRgzuWePhofC5F6GVWnEDW1
+   P6s0jKs0RzgmMVvLhK9gEASowjq3zdaTAKjslI5lQ1T7HSqyZKQ4dOdF+
+   r4q3NmigepAGfsKI2rW3jm7zXTuOMQpwiTTlMO94eMJViUAqPOFppP3Li
+   Q==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10387"; a="367212186"
+X-IronPort-AV: E=Sophos;i="5.92,217,1650956400"; 
+   d="scan'208";a="367212186"
+Received: from fmsmga008.fm.intel.com ([10.253.24.58])
+  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Jun 2022 18:35:59 -0700
+X-IronPort-AV: E=Sophos;i="5.92,217,1650956400"; 
+   d="scan'208";a="645038369"
+Received: from wenli3x-mobl.ccr.corp.intel.com (HELO [10.249.168.117]) ([10.249.168.117])
+  by fmsmga008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Jun 2022 18:35:51 -0700
+Message-ID: <270eec00-8aee-2288-4069-d604e6da2925@linux.intel.com>
+Date:   Fri, 24 Jun 2022 09:35:49 +0800
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20220620153956.1723269-1-dmitry.baryshkov@linaro.org>
-References: <20220620153956.1723269-1-dmitry.baryshkov@linaro.org>
-Subject: Re: [PATCH 1/2] clk: fixed-rate: add devm_clk_hw_register_fixed_rate
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-clk@vger.kernel.org
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Vinod Koul <vkoul@kernel.org>
-Date:   Thu, 23 Jun 2022 18:10:50 -0700
-User-Agent: alot/0.10
-Message-Id: <20220624011052.1EC7BC3411D@smtp.kernel.org>
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Cc:     baolu.lu@linux.intel.com, suravee.suthikulpanit@amd.com,
+        alyssa@rosenzweig.io, dwmw2@infradead.org, yong.wu@mediatek.com,
+        mjrosato@linux.ibm.com, gerald.schaefer@linux.ibm.com,
+        thierry.reding@gmail.com, vdumpa@nvidia.com, jonathanh@nvidia.com,
+        cohuck@redhat.com, thunder.leizhen@huawei.com, tglx@linutronix.de,
+        chenxiang66@hisilicon.com, christophe.jaillet@wanadoo.fr,
+        john.garry@huawei.com, yangyingliang@huawei.com,
+        jordan@cosmicpenguin.net, iommu@lists.linux-foundation.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
+        linux-s390@vger.kernel.org, linux-tegra@vger.kernel.org,
+        virtualization@lists.linux-foundation.org, kvm@vger.kernel.org
+Subject: Re: [PATCH v3 1/5] iommu: Return -EMEDIUMTYPE for incompatible domain
+ and device/group
+Content-Language: en-US
+To:     Nicolin Chen <nicolinc@nvidia.com>, joro@8bytes.org,
+        will@kernel.org, marcan@marcan.st, sven@svenpeter.dev,
+        robin.murphy@arm.com, robdclark@gmail.com, matthias.bgg@gmail.com,
+        orsonzhai@gmail.com, baolin.wang7@gmail.com, zhang.lyra@gmail.com,
+        jean-philippe@linaro.org, alex.williamson@redhat.com,
+        jgg@nvidia.com, kevin.tian@intel.com
+References: <20220623200029.26007-1-nicolinc@nvidia.com>
+ <20220623200029.26007-2-nicolinc@nvidia.com>
+From:   Baolu Lu <baolu.lu@linux.intel.com>
+In-Reply-To: <20220623200029.26007-2-nicolinc@nvidia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.9 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -62,32 +79,23 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Dmitry Baryshkov (2022-06-20 08:39:55)
-> Add devm_clk_hw_register_fixed_rate(), devres-managed helper to register
-> fixed-rate clock.
->=20
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  drivers/clk/clk-asm9260.c    |  2 +-
->  drivers/clk/clk-fixed-rate.c | 28 ++++++++++++++++++++++++----
->  include/linux/clk-provider.h | 27 ++++++++++++++++++++-------
->  3 files changed, 45 insertions(+), 12 deletions(-)
->=20
-> diff --git a/drivers/clk/clk-asm9260.c b/drivers/clk/clk-asm9260.c
-> index bacebd457e6f..4da5f38249bf 100644
-> --- a/drivers/clk/clk-asm9260.c
-> +++ b/drivers/clk/clk-asm9260.c
-> @@ -278,7 +278,7 @@ static void __init asm9260_acc_init(struct device_nod=
-e *np)
->         ref_clk =3D of_clk_get_parent_name(np, 0);
->         hw =3D __clk_hw_register_fixed_rate(NULL, NULL, pll_clk,
->                         ref_clk, NULL, NULL, 0, rate, 0,
-> -                       CLK_FIXED_RATE_PARENT_ACCURACY);
-> +                       CLK_FIXED_RATE_PARENT_ACCURACY, false);
+On 2022/6/24 04:00, Nicolin Chen wrote:
+> diff --git a/drivers/iommu/mtk_iommu_v1.c b/drivers/iommu/mtk_iommu_v1.c
+> index e1cb51b9866c..5386d889429d 100644
+> --- a/drivers/iommu/mtk_iommu_v1.c
+> +++ b/drivers/iommu/mtk_iommu_v1.c
+> @@ -304,7 +304,7 @@ static int mtk_iommu_v1_attach_device(struct iommu_domain *domain, struct device
+>   	/* Only allow the domain created internally. */
+>   	mtk_mapping = data->mapping;
+>   	if (mtk_mapping->domain != domain)
+> -		return 0;
+> +		return -EMEDIUMTYPE;
+>   
+>   	if (!data->m4u_dom) {
+>   		data->m4u_dom = dom;
 
-Can you also make this usage into a macro so that it doesn't change in
-the future when a new argument is added?
+This change looks odd. It turns the return value from success to
+failure. Is it a bug? If so, it should go through a separated fix patch.
 
-> =20
->         if (IS_ERR(hw))
->                 panic("%pOFn: can't register REFCLK. Check DT!", np);
+Best regards,
+baolu
