@@ -2,244 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0F638558C8C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jun 2022 03:01:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9775B558CA3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jun 2022 03:09:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230493AbiFXBBJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Jun 2022 21:01:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48748 "EHLO
+        id S229738AbiFXBJd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Jun 2022 21:09:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55314 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229901AbiFXBBH (ORCPT
+        with ESMTP id S229523AbiFXBJc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Jun 2022 21:01:07 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E71C51337;
-        Thu, 23 Jun 2022 18:01:05 -0700 (PDT)
+        Thu, 23 Jun 2022 21:09:32 -0400
+Received: from mail-oa1-x2e.google.com (mail-oa1-x2e.google.com [IPv6:2001:4860:4864:20::2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D472F522EA
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jun 2022 18:09:30 -0700 (PDT)
+Received: by mail-oa1-x2e.google.com with SMTP id 586e51a60fabf-1048b8a38bbso1736669fac.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jun 2022 18:09:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1656032465; x=1687568465;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=Cu3gs3fP0Lb/Tmh6S3V8jqns1LEH+E+/NnZiIgmAzA0=;
-  b=Czp2CkWrUMvrXPUydAHPutOoNqIXwMfsPsUGX5kC5yMpMmzxgPopgxIq
-   76M18/eHWC5spzCh6y9XKkM3wfy5xet0UaHH1FyfVQsfEV1+HPn9RtccF
-   n7rk3/IN7zQD2sofvWmeVxKZrFj5dNrmWZ+yokuXI5nBdBsrbfna5rj6b
-   w=;
-Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 23 Jun 2022 18:01:05 -0700
-X-QCInternal: smtphost
-Received: from nasanex01b.na.qualcomm.com ([10.46.141.250])
-  by ironmsg02-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Jun 2022 18:01:05 -0700
-Received: from quicinc.com (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Thu, 23 Jun
- 2022 18:01:04 -0700
-Date:   Thu, 23 Jun 2022 18:01:03 -0700
-From:   Guru Das Srinagesh <quic_gurus@quicinc.com>
-To:     Robert Marko <robimarko@gmail.com>
-CC:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
-        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH] dt-bindings: firmware: qcom-scm: convert to dtschema
-Message-ID: <20220624010103.GA23758@quicinc.com>
-References: <20220623182542.1116677-1-robimarko@gmail.com>
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=OCHZxokmpPS3ghyjxdWAlsOmOJoJ7RkmN7lu9vpq/qc=;
+        b=mgmCgBe5WxBpH89yuOr301hjK5lL5qvKpX+q0WY3Kvk8Uct1ju85U3VL84gbnUbFGm
+         umtfp93y0TObeGA/vX0kAbt5pmZnBdQTd3LOEemB+ztk752fsZT48g2k4qF4gTuG3BxW
+         yMWg66ompzCQcsliNLhBFppZ8A6TCE7euehNM=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=OCHZxokmpPS3ghyjxdWAlsOmOJoJ7RkmN7lu9vpq/qc=;
+        b=6hAsAZlI2W/eYCSUXtvAN0ucohirPzDAcHYyTITdJGUV5i9bnGqXg6pC1oX6tqjY/I
+         PG/G6o7QRCqZygoluWTG8kGxnA4On2ysT2tNGanu8PDpsX0IDGMjG8GZwqlNYlwHJiT7
+         h0l09NjL+j4TSNdW/5w/7peqKElsKCoeBg4ZzAaAlDlS82TVfp5MO8fQiUrG/i7/TLC0
+         9tfxz8iMfbOf0op+8aTGoKFgTP4VuYHt/GQpB1a3NWNXVrM0+slbSqBfMNpxuDExgTxd
+         dy43+emLQ0SaaR0DGPCN4PMd/R++isRCDhkuqTDEvMCYc3ytCis3xgcPF80qlUCQVJrB
+         H2ow==
+X-Gm-Message-State: AJIora9sg5tpLnGdZqWSzZp3V2Rt+TfsJ2zVClokxSvcfSVY0Nv0Bg97
+        CNgTJuwa67u8WqcfjZLu50WiL0vffxH0xUruXfR11g==
+X-Google-Smtp-Source: AGRyM1tXirInAlabjW2wEws7IJSezLdoi0NAHbcTGFYyFOOwxy2J/0t4iXkfHnq/bVhSuIcagOvo549caWEkIJTT/0w=
+X-Received: by 2002:a05:6870:b627:b0:102:f25:a460 with SMTP id
+ cm39-20020a056870b62700b001020f25a460mr481377oab.193.1656032970163; Thu, 23
+ Jun 2022 18:09:30 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 23 Jun 2022 18:09:29 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20220623182542.1116677-1-robimarko@gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+In-Reply-To: <20220620153956.1723269-2-dmitry.baryshkov@linaro.org>
+References: <20220620153956.1723269-1-dmitry.baryshkov@linaro.org> <20220620153956.1723269-2-dmitry.baryshkov@linaro.org>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date:   Thu, 23 Jun 2022 18:09:29 -0700
+Message-ID: <CAE-0n50P1sre19Vn76m2JuyNV1dLsBt7dOA30rnGPS_z3=aVjw@mail.gmail.com>
+Subject: Re: [PATCH 2/2] phy: qcom-qmp-ufs: provide symbol clocks
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        Vinod Koul <vkoul@kernel.org>
+Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        linux-clk@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jun 23, 2022 at 08:25:42PM +0200, Robert Marko wrote:
-> Convert bindings for Qualcomm SCM to dtschema.
-> 
-> SoC compatibles that were used, but not documented were added.
-> 
-> Signed-off-by: Robert Marko <robimarko@gmail.com>
-> ---
->  .../devicetree/bindings/firmware/qcom,scm.txt |  57 --------
->  .../bindings/firmware/qcom,scm.yaml           | 124 ++++++++++++++++++
->  2 files changed, 124 insertions(+), 57 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/firmware/qcom,scm.txt
->  create mode 100644 Documentation/devicetree/bindings/firmware/qcom,scm.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/firmware/qcom,scm.txt b/Documentation/devicetree/bindings/firmware/qcom,scm.txt
-> deleted file mode 100644
-> index 0f4e5ab26477..000000000000
-> --- a/Documentation/devicetree/bindings/firmware/qcom,scm.txt
-> +++ /dev/null
-> @@ -1,57 +0,0 @@
-> -QCOM Secure Channel Manager (SCM)
-> -
-> -Qualcomm processors include an interface to communicate to the secure firmware.
-> -This interface allows for clients to request different types of actions.  These
-> -can include CPU power up/down, HDCP requests, loading of firmware, and other
-> -assorted actions.
-> -
-> -Required properties:
-> -- compatible: must contain one of the following:
-> - * "qcom,scm-apq8064"
-> - * "qcom,scm-apq8084"
-> - * "qcom,scm-ipq4019"
-> - * "qcom,scm-ipq806x"
-> - * "qcom,scm-ipq8074"
-> - * "qcom,scm-mdm9607"
-> - * "qcom,scm-msm8226"
-> - * "qcom,scm-msm8660"
-> - * "qcom,scm-msm8916"
-> - * "qcom,scm-msm8953"
-> - * "qcom,scm-msm8960"
-> - * "qcom,scm-msm8974"
-> - * "qcom,scm-msm8976"
-> - * "qcom,scm-msm8994"
-> - * "qcom,scm-msm8996"
-> - * "qcom,scm-msm8998"
-> - * "qcom,scm-sc7180"
-> - * "qcom,scm-sc7280"
-> - * "qcom,scm-sdm845"
-> - * "qcom,scm-sdx55"
-> - * "qcom,scm-sm6350"
-> - * "qcom,scm-sm8150"
-> - * "qcom,scm-sm8250"
-> - * "qcom,scm-sm8350"
-> - * "qcom,scm-sm8450"
-> - and:
-> - * "qcom,scm"
-> -- clocks: Specifies clocks needed by the SCM interface, if any:
-> - * core clock required for "qcom,scm-apq8064", "qcom,scm-msm8660" and
-> -   "qcom,scm-msm8960"
-> - * core, iface and bus clocks required for "qcom,scm-apq8084",
-> -   "qcom,scm-msm8916", "qcom,scm-msm8953", "qcom,scm-msm8974" and "qcom,scm-msm8976"
-> -- clock-names: Must contain "core" for the core clock, "iface" for the interface
-> -  clock and "bus" for the bus clock per the requirements of the compatible.
-> -- qcom,dload-mode: phandle to the TCSR hardware block and offset of the
-> -		   download mode control register (optional)
-> -
-> -Example for MSM8916:
-> -
-> -	firmware {
-> -		scm {
-> -			compatible = "qcom,msm8916", "qcom,scm";
-> -			clocks = <&gcc GCC_CRYPTO_CLK> ,
-> -				 <&gcc GCC_CRYPTO_AXI_CLK>,
-> -				 <&gcc GCC_CRYPTO_AHB_CLK>;
-> -			clock-names = "core", "bus", "iface";
-> -		};
-> -	};
-> diff --git a/Documentation/devicetree/bindings/firmware/qcom,scm.yaml b/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
-> new file mode 100644
-> index 000000000000..7dd7beb39846
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
-> @@ -0,0 +1,124 @@
-> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/firmware/qcom,scm.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+Quoting Dmitry Baryshkov (2022-06-20 08:39:56)
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+> index a2526068232b..0f31d3255897 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+> @@ -1167,6 +1167,54 @@ static int qcom_qmp_phy_ufs_clk_init(struct device *dev, const struct qmp_phy_cf
+>         return devm_clk_bulk_get(dev, num, qmp->clks);
+>  }
+>
+> +static void phy_clk_release_provider(void *res)
+> +{
+> +       of_clk_del_provider(res);
+> +}
 > +
-> +title: QCOM Secure Channel Manager (SCM) bindings
+> +#define UFS_SYMBOL_CLOCKS 3
 > +
-> +maintainers:
-> +  - Robert Marko <robimarko@gmail.com>
+> +static int phy_symbols_clk_register(struct qcom_qmp *qmp, struct device_node *np)
+> +{
+> +       struct clk_hw_onecell_data *clk_data;
+> +       struct clk_hw *hw;
+> +       int ret;
+> +
+> +       clk_data = devm_kzalloc(qmp->dev, struct_size(clk_data, hws, UFS_SYMBOL_CLOCKS), GFP_KERNEL);
+> +       clk_data->num = UFS_SYMBOL_CLOCKS;
+> +
+> +       hw = devm_clk_hw_register_fixed_rate(qmp->dev, "ufs_rx_symbol_0_clk_src",
+> +                                                          NULL, 0, 0);
+> +       if (IS_ERR(hw))
+> +               return PTR_ERR(hw);
+> +
+> +       clk_data->hws[0] = hw;
+> +
+> +       hw = devm_clk_hw_register_fixed_rate(qmp->dev, "ufs_rx_symbol_1_clk_src",
+> +                                                          NULL, 0, 0);
+> +       if (IS_ERR(hw))
+> +               return PTR_ERR(hw);
+> +
+> +       clk_data->hws[1] = hw;
+> +
+> +       hw = devm_clk_hw_register_fixed_rate(qmp->dev, "ufs_tx_symbol_0_clk_src",
+> +                                                          NULL, 0, 0);
 
-I'd like to volunteer my name as well, if that's okay:
+This line should be aligned with the opening parenthesis. Same for the
+above other two.
 
-Guru Das Srinagesh <quic_gurus@quicinc.com>
+> +       if (IS_ERR(hw))
+> +               return PTR_ERR(hw);
+> +
+> +       clk_data->hws[2] = hw;
+> +
+> +       ret = of_clk_add_hw_provider(np, of_clk_hw_onecell_get, clk_data);
+> +       if (ret)
+> +               return ret;
+> +
+> +        /*
 
-> +
-> +description: |
-...
-> +
-> +  '#reset-cells':
-> +    const: 1
+This is tabbed weird. It doesn't align with the if above.
 
-This isn't part of the original file - could you please explain why this is
-being added?
 
+> +         * Roll a devm action because the clock provider is the child node, but
+> +         * the child node is not actually a device.
+> +         */
+> +        return devm_add_action_or_reset(qmp->dev, phy_clk_release_provider, np);
+> +}
 > +
-> +  qcom,dload-mode:
-> +    $ref: /schemas/types.yaml#/definitions/phandle-array
-> +    description:
-> +      Phandle to the TCSR hardware block and offset of the download mode control register
-> +
-> +required:
-> +  - compatible
-> +
-> +allOf:
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          contains:
-> +            enum:
-> +              - qcom,scm-apq8064
-> +              - qcom,scm-msm8660
-> +              - qcom,scm-msm8960
-> +    then:
-> +      properties:
-> +        clocks:
-> +          items:
-> +            - description: SCM core clock
-> +        clock-names:
-> +          items:
-> +            - const: core
-> +
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          contains:
-> +            enum:
-> +              - qcom,scm-apq8084
-> +              - qcom,scm-mdm9607
-> +              - qcom,scm-msm8916
-> +              - qcom,scm-msm8953
-> +              - qcom,scm-msm8974
-> +              - qcom,scm-msm8976
-> +    then:
-> +      properties:
-> +        clocks:
-> +          items:
-> +            - description: SCM core clock
-> +            - description: SCM bus clock
-> +            - description: SCM interface clock
-> +        clock-names:
-> +          items:
-> +            - const: core
-> +            - const: bus
-> +            - const: iface
-
-Thanks, I had this YAML conversion patch done locally, but couldn't figure out
-how to represent the above logic in YAML. Thank you for this patch.
-
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/clock/qcom,gcc-msm8916.h>
-> +    firmware {
-> +      scm {
-> +        compatible = "qcom,scm-msm8916", "qcom,scm";
-> +
-> +        clocks = <&gcc GCC_CRYPTO_CLK>,
-> +                 <&gcc GCC_CRYPTO_AXI_CLK>,
-> +                 <&gcc GCC_CRYPTO_AHB_CLK>;
-> +        clock-names = "core", "bus", "iface";
-> +        qcom,dload-mode = <&tcsr 0x6100>;
-> +      };
-> +    };
-> -- 
-> 2.36.1
-> 
+>  static const struct phy_ops qcom_qmp_ufs_ops = {
+>         .power_on       = qcom_qmp_phy_ufs_enable,
+>         .power_off      = qcom_qmp_phy_ufs_disable,
