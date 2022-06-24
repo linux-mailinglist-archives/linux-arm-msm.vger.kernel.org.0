@@ -2,78 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 670EC559EB9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jun 2022 18:42:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 19424559EEE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jun 2022 19:06:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229757AbiFXQkd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Jun 2022 12:40:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37452 "EHLO
+        id S230146AbiFXQ6U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Jun 2022 12:58:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52202 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230284AbiFXQkc (ORCPT
+        with ESMTP id S230299AbiFXQ6S (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Jun 2022 12:40:32 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id EB6314E38E
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Jun 2022 09:40:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1656088830;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=n8dnSmLnMjgwT5vMe64j54S8t18apFExaSS8ijTHrlc=;
-        b=XCkHwt++pTsZlCrdSz01rMol1vqceci5sdgs8+B7MyKsyh+lkyVZ20M7Nq3Ng1F2Zv0yDA
-        fv+0EozS4Us3OkYGNo9o2nerwxISWuLPZxW+db0dSZ16X/bnXDGYliTNHJys5sqk6viTIo
-        R3JeSP+RLFfPWQRLJuk26W9F3ltaU5c=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- us-mta-98-RRebSAA2PT-0w_pDsj0XTg-1; Fri, 24 Jun 2022 12:40:29 -0400
-X-MC-Unique: RRebSAA2PT-0w_pDsj0XTg-1
-Received: by mail-qk1-f199.google.com with SMTP id o70-20020a37a549000000b006af05e7eca3so2046876qke.10
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Jun 2022 09:40:29 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=n8dnSmLnMjgwT5vMe64j54S8t18apFExaSS8ijTHrlc=;
-        b=GLKoNv671DNIDHSOzYGB1GfQMqNCVdnpgS6zbb2+XaFdr2kCpy+RzOR5KKyEVFjFjr
-         /Kuk4ohzQRDddc1605x1+liuRSV9Fm1mqNviPRenutpWezv5uLqCC11xdTG0kdfgyztT
-         DnoHYwpGRXvBkbS1o2j5Dbkn/Y2cO5m3q5W3zqJGlB9jeG9+gQqIZBtPahikq9aEJg2U
-         n8U1X4ihtUuWWnrwp6Xz9scxGzldVJKMNwwJLwJRjH4ynpxPR5TWTO5siWPRwCejNQd7
-         6Ak/vFlnicoIycv/m1WFa6BUflEbBk6lWyc9L8xsCi6yC8FxFz6Os/9w2Xo0EZjty/9O
-         PVNg==
-X-Gm-Message-State: AJIora9TPayESWI2GCr0N5Jkt4EatTWC9XMHHpV0kj+dA1ChkJ8+t7Qk
-        0ES0FOYyWMZKV5kCOWYR90OJpeWyiPREeWzDb8Jst/1bnHJ7xpiMFWiQfNaTVG8yOOxzdyRyVod
-        voqItp5yA/LAa6fk+5WoBxtxyWA==
-X-Received: by 2002:a05:620a:570:b0:6ab:91fc:59c6 with SMTP id p16-20020a05620a057000b006ab91fc59c6mr11437613qkp.707.1656088828951;
-        Fri, 24 Jun 2022 09:40:28 -0700 (PDT)
-X-Google-Smtp-Source: AGRyM1vqIV6HjcrEOXeE3hIpiQoSxjY9PaPqQRY3anfHa/xGyouZ9QZhIZc62/U1nlcbovrv0ARCZQ==
-X-Received: by 2002:a05:620a:570:b0:6ab:91fc:59c6 with SMTP id p16-20020a05620a057000b006ab91fc59c6mr11437579qkp.707.1656088828311;
-        Fri, 24 Jun 2022 09:40:28 -0700 (PDT)
-Received: from xps13 (c-98-239-145-235.hsd1.wv.comcast.net. [98.239.145.235])
-        by smtp.gmail.com with ESMTPSA id o1-20020a05620a2a0100b006a79479657fsm2408131qkp.108.2022.06.24.09.40.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Jun 2022 09:40:27 -0700 (PDT)
-Date:   Fri, 24 Jun 2022 12:40:26 -0400
-From:   Brian Masney <bmasney@redhat.com>
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
-        agross@kernel.org, mturquette@baylibre.com,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        ahalaney@redhat.com, echanude@redhat.com
-Subject: Re: [PATCH] clk: qcom: sc8280xp: add parent to gcc_ufs_phy_axi_clk
- for sa8540p
-Message-ID: <YrXo+i3wwl2ERKIj@xps13>
-References: <20220623142837.3140680-1-bmasney@redhat.com>
- <20220624002055.58BCFC341C0@smtp.kernel.org>
+        Fri, 24 Jun 2022 12:58:18 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE5C715A23;
+        Fri, 24 Jun 2022 09:58:16 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id C5A5F62332;
+        Fri, 24 Jun 2022 16:58:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF978C34114;
+        Fri, 24 Jun 2022 16:58:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1656089895;
+        bh=bmjW0L9nBQ/qqSNhC4ItlcSlicgrkNcmWQM3N14CDmg=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:From;
+        b=WEH5JAo0hdRAOr4JdFAMcAxOs2+L3+sG7qIsvWk6vo5yfcvgxOFNbeRfshss8M5QC
+         ib28oIilf2WiHbzclR54zk3w1ki0JyfFxeJCvyI14BpGg3RKo+ZOOlxpxqGToZuKz6
+         kTuhGfX1jY7pgJka5ksnbeXX/r36yA/998a3ajS1ZVYLnx85Bd99alZgu5uPfgOc5f
+         bFFviRI3HJA5K0VDlyyYjJXMjlMgSh8BbSZp9gXP0iD/+x7dAZbP+FMPeToffe7Puy
+         tZtCOD7xXeLvj2giPyQ4w0jeZ19zJncVAtMfNvz3I/e6hlBcB1t45Fsp6yh28/Je2W
+         fbh8VkVMT7uOw==
+Date:   Fri, 24 Jun 2022 11:58:13 -0500
+From:   Bjorn Helgaas <helgaas@kernel.org>
+To:     Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Cc:     linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_vbadigan@quicinc.com,
+        quic_hemantk@quicinc.com, quic_nitegupt@quicinc.com,
+        quic_skananth@quicinc.com, quic_ramkri@quicinc.com,
+        manivannan.sadhasivam@linaro.org, swboyd@chromium.org,
+        dmitry.baryshkov@linaro.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>
+Subject: Re: [PATCH v1 2/3] dt-bindings: pci: QCOM sc7280 add missing clocks.
+Message-ID: <20220624165813.GA1541013@bhelgaas>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220624002055.58BCFC341C0@smtp.kernel.org>
-User-Agent: Mutt/2.2.5 (2022-05-16)
-X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
+In-Reply-To: <1656062391-14567-3-git-send-email-quic_krichai@quicinc.com>
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -81,29 +64,51 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jun 23, 2022 at 05:20:53PM -0700, Stephen Boyd wrote:
-> Quoting Brian Masney (2022-06-23 07:28:37)
-> > diff --git a/drivers/clk/qcom/gcc-sc8280xp.c b/drivers/clk/qcom/gcc-sc8280xp.c
-> > index 4b894442fdf5..4639b50da418 100644
-> > --- a/drivers/clk/qcom/gcc-sc8280xp.c
-> > +++ b/drivers/clk/qcom/gcc-sc8280xp.c
-> > @@ -5696,6 +5709,7 @@ static struct clk_branch gcc_ufs_phy_axi_clk = {
-> >                 .hw.init = &(const struct clk_init_data) {
-> >                         .name = "gcc_ufs_phy_axi_clk",
-> >                         .parent_hws = (const struct clk_hw*[]){
-> > +                               &gcc_ufs_ref_clkref_clk.clkr.hw,
-> >                                 &gcc_ufs_phy_axi_clk_src.clkr.hw,
-> >                         },
-> >                         .num_parents = 1,
+On Fri, Jun 24, 2022 at 02:49:50PM +0530, Krishna chaitanya chundru wrote:
+> Add missing clocks.
+
+When you revise this, please make your subject line match the history:
+
+  dt-bindings: PCI: qcom: Add schema for sc7280 chipset
+  dt-bindings: PCI: qcom: Specify reg-names explicitly
+  dt-bindings: PCI: qcom: Do not require resets on msm8996 platforms
+  dt-bindings: PCI: qcom: Convert to YAML
+
+So your subject line should be something like:
+
+  dt-bindings: PCI: qcom: Add sc7280 aggre0 and aggre1 clocks
+
+Please also include the names of the clocks you're adding in the
+commit log.  This will make the commit log history more specific and
+useful for future readers.
+
+This also applies to the other patches.
+
+> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> ---
+>  Documentation/devicetree/bindings/pci/qcom,pcie.yaml | 2 ++
+>  1 file changed, 2 insertions(+)
 > 
-> num_parents needs an update. 
+> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> index 0b69b12..313b981 100644
+> --- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> @@ -438,6 +438,8 @@ allOf:
+>              - const: slave_q2a # Slave Q2A clock
+>              - const: tbu # PCIe TBU clock
+>              - const: ddrss_sf_tbu # PCIe SF TBU clock
+> +            - const: aggre0 # Aggre NoC PCIE CENTER SF AXI clock
+> +            - const: aggre1 # Aggre NoC PCIe1 AXI clock
 
-Oops!
+I assume the stuff after "#" is comment and could thus be made
+consistent: s/PCIE/PCIe/, is "PCIe1" a typo for "PCIe" or different?
+Seems like weird/inconsistent capitalization in general ("CENTER"),
+but if you're matching language in a spec, please do that and ignore
+my comment :)
 
-> But this is a branch, not a mux, so it can't have more than one
-> parent.
-
-Would a mux be represented with 'struct clk_rcg2'?
-
-Brian
-
+>          resets:
+>            maxItems: 1
+>          reset-names:
+> -- 
+> 2.7.4
+> 
