@@ -2,67 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E02B6558C21
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jun 2022 02:09:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 44A26558C31
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jun 2022 02:21:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229887AbiFXAJu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Jun 2022 20:09:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42832 "EHLO
+        id S229645AbiFXAU7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Jun 2022 20:20:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50698 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229576AbiFXAJt (ORCPT
+        with ESMTP id S229476AbiFXAU7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Jun 2022 20:09:49 -0400
-Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com [IPv6:2607:f8b0:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD9735D103
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jun 2022 17:09:48 -0700 (PDT)
-Received: by mail-ot1-x32c.google.com with SMTP id a8-20020a05683012c800b0060c027c8afdso686424otq.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jun 2022 17:09:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=tNICjC0mqZ74g4NWx01ZNVZ2tkGnF23qOG9pMURoZhI=;
-        b=keigWUEC4et/ph4vYev3R+C43rBbm6avYfx1ICG8YUlMjI17zFbQ2NqdKaLjP20MgD
-         03TUpRIu3LgOXZ1LnijQy9VU1OpjjuxDho5zFrbATU/RB9F/5S2AJ9Z0bf26Xo+1ooT0
-         XGnZvujpKw3kMWwkNxBRfcYiO47Af/Ydzdzyk=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=tNICjC0mqZ74g4NWx01ZNVZ2tkGnF23qOG9pMURoZhI=;
-        b=Ovd5+8/EuI+YLiJShHdAyCi1I/6feVHFJ60JsVX6vqurDvnCOpYTWFrXRyBtgwt0ya
-         KQHPvWMUzB0Vwr/VLqWvVFNFe6XDglKiM8h3oYMyepr6cZ9Jg1sCidzSrTLgTYM6JKad
-         /Af7yMzUe8dTH6HSMRQxTWacVZkG8HYIvQ2oac6JyPxvh4Tc3MzwFCRd8+GKRCoB+c1R
-         rND3hM4NHbp5a4XmKsomWL33qCZ4qQULms3E46G9DBFWXs4C7Xb23oE+7peSnT5So009
-         YUaAn9qtGrk5yCoq5sArofuqbJrJvCEURatonAaokOXv69xVYYnOReNM4t0mau4BQYSF
-         OS6Q==
-X-Gm-Message-State: AJIora/hroiKtGKudvll+nNfaKnlKbUovDN00hkdmb3eL5HbIY/85bJq
-        l/LSMmgkMURaBz74lBh2D7gK2Bbkt1rs/LSyurby5w==
-X-Google-Smtp-Source: AGRyM1toYtnlSvt/KriWql1qkmbYZ0fd3ZbL7W+3GyjF+TFTpfJIy6lNOXNS1wd+UjrciaaVGHz2lZIw6TxPwoIv6+Y=
-X-Received: by 2002:a9d:729b:0:b0:60c:21bd:97c0 with SMTP id
- t27-20020a9d729b000000b0060c21bd97c0mr4954986otj.77.1656029388070; Thu, 23
- Jun 2022 17:09:48 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 23 Jun 2022 17:09:47 -0700
+        Thu, 23 Jun 2022 20:20:59 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBB745DC1B;
+        Thu, 23 Jun 2022 17:20:57 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id A0A80B824D7;
+        Fri, 24 Jun 2022 00:20:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58BCFC341C0;
+        Fri, 24 Jun 2022 00:20:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1656030055;
+        bh=yK4Zpaw3ZHGZQHmZW7TtaxpLVjkSC7bBZS4WR2KxmTI=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=l9lTf31ikj9HsC9DhtTjkjjCpEYRAdMH3kimqLIVG3W15+EyEHhihk+8pTTSpAsof
+         TajdkAlbhriZweDazz6c0I+lwjUmnsLKqKHjq0zfXfq6Gt/HGlA/jHss8iT9YjaW9B
+         Ya/eGHv1jIdxTW9U2xaSQeH8OqeB1v6g7XTKGgoWfQSbfILAhimMYHi1Km2YN0uoL4
+         QMtLc1zufVAJrYQ6H9H9loZEFxxPMzD4Y0s/HBia/GmEuhv50CMmSG0gVffzXFin6T
+         QscbOifhjqdcu3GJk9eklNmJ8LK+TcYsxkdyFKFBPq2b/uR8JBwvtIR9pJWA19rBxU
+         fveX6EbJn3JOw==
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-In-Reply-To: <1656027256-6552-1-git-send-email-quic_khsieh@quicinc.com>
-References: <1656027256-6552-1-git-send-email-quic_khsieh@quicinc.com>
-From:   Stephen Boyd <swboyd@chromium.org>
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20220623142837.3140680-1-bmasney@redhat.com>
+References: <20220623142837.3140680-1-bmasney@redhat.com>
+Subject: Re: [PATCH] clk: qcom: sc8280xp: add parent to gcc_ufs_phy_axi_clk for sa8540p
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     agross@kernel.org, mturquette@baylibre.com,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        ahalaney@redhat.com, echanude@redhat.com
+To:     Brian Masney <bmasney@redhat.com>, bjorn.andersson@linaro.org,
+        linux-arm-msm@vger.kernel.org
+Date:   Thu, 23 Jun 2022 17:20:53 -0700
 User-Agent: alot/0.10
-Date:   Thu, 23 Jun 2022 17:09:47 -0700
-Message-ID: <CAE-0n534jvnjX5TShZw7CB9Cu9F7yowhwUosNkJE8t_R4xHYOw@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm/dp: no dp_hpd_unplug_handle() required for eDP
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>, agross@kernel.org,
-        airlied@linux.ie, bjorn.andersson@linaro.org, daniel@ffwll.ch,
-        dianders@chromium.org, dmitry.baryshkov@linaro.org,
-        robdclark@gmail.com, sean@poorly.run, vkoul@kernel.org
-Cc:     quic_abhinavk@quicinc.com, quic_aravindh@quicinc.com,
-        quic_sbillaka@quicinc.com, freedreno@lists.freedesktop.org,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+Message-Id: <20220624002055.58BCFC341C0@smtp.kernel.org>
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -71,52 +57,20 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Kuogee Hsieh (2022-06-23 16:34:16)
-> eDP implementation does not reuried to support hpd signal. Therefore
+Quoting Brian Masney (2022-06-23 07:28:37)
+> diff --git a/drivers/clk/qcom/gcc-sc8280xp.c b/drivers/clk/qcom/gcc-sc828=
+0xp.c
+> index 4b894442fdf5..4639b50da418 100644
+> --- a/drivers/clk/qcom/gcc-sc8280xp.c
+> +++ b/drivers/clk/qcom/gcc-sc8280xp.c
+> @@ -5696,6 +5709,7 @@ static struct clk_branch gcc_ufs_phy_axi_clk =3D {
+>                 .hw.init =3D &(const struct clk_init_data) {
+>                         .name =3D "gcc_ufs_phy_axi_clk",
+>                         .parent_hws =3D (const struct clk_hw*[]){
+> +                               &gcc_ufs_ref_clkref_clk.clkr.hw,
+>                                 &gcc_ufs_phy_axi_clk_src.clkr.hw,
+>                         },
+>                         .num_parents =3D 1,
 
-s/reuried/require/
-
-> it only has either ST_DISPLAY_OFF or ST_CONNECTED state during normal
-> operation. This patch remove unnecessary dp_hpd_unplug_handle() for
-> eDP but still keep dp_hpd_plug_handle() to support eDP to either
-> booting up or resume from ST_DISCONNECTED state.
-
-I take it that making this change also fixes a glitch seen on the eDP
-panel when a second modeset happens? Can you add that detail to the
-commit text? The way it reads makes it sound like this is purely a
-cleanup patch, but then there's a Fixes tag so it must be a bug fix or
-worthy optimization, neither of which is described.
-
->
-> Fixes: 391c96ff0555 ("drm/msm/dp: Support only IRQ_HPD and REPLUG interrupts for eDP")
-> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-> ---
->  drivers/gpu/drm/msm/dp/dp_display.c | 5 +----
->  1 file changed, 1 insertion(+), 4 deletions(-)
->
-> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-> index da5c03a..ef9794e 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_display.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-> @@ -1666,7 +1666,7 @@ void dp_bridge_enable(struct drm_bridge *drm_bridge)
->                 return;
->         }
->
-> -       if (dp->is_edp)
-> +       if (dp->is_edp && dp_display->hpd_state == ST_DISCONNECTED)
->                 dp_hpd_plug_handle(dp_display, 0);
->
->         mutex_lock(&dp_display->event_mutex);
-> @@ -1737,9 +1737,6 @@ void dp_bridge_post_disable(struct drm_bridge *drm_bridge)
->
->         dp_display = container_of(dp, struct dp_display_private, dp_display);
->
-> -       if (dp->is_edp)
-> -               dp_hpd_unplug_handle(dp_display, 0);
-
-dp_hpd_unplug_handle() has a !edp check, and from what I can tell after
-this patch that condition will always trigger? But then I wonder why we
-aren't masking the irqs for hpd when the eDP display is disabled.
-Shouldn't we at least be doing that so that we don't get spurious hpd
-irqs when the eDP display is off or on the path to suspend where I
-suspect the power may be removed from the panel?
+num_parents needs an update. But this is a branch, not a mux, so it
+can't have more than one parent.
