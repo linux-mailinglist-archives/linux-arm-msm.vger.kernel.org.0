@@ -2,91 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E81F855A133
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jun 2022 20:55:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C4CC755A10C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jun 2022 20:55:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230308AbiFXScC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Jun 2022 14:32:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57412 "EHLO
+        id S229873AbiFXSpU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Jun 2022 14:45:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44010 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229981AbiFXScA (ORCPT
+        with ESMTP id S231483AbiFXSpS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Jun 2022 14:32:00 -0400
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 1B95A7C516;
-        Fri, 24 Jun 2022 11:32:00 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id E9BE31042;
-        Fri, 24 Jun 2022 11:31:59 -0700 (PDT)
-Received: from [10.57.84.111] (unknown [10.57.84.111])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 862573F792;
-        Fri, 24 Jun 2022 11:31:53 -0700 (PDT)
-Message-ID: <c9dee5e3-4525-b9bf-3775-30995d59af9e@arm.com>
-Date:   Fri, 24 Jun 2022 19:31:47 +0100
+        Fri, 24 Jun 2022 14:45:18 -0400
+Received: from mail-pg1-x533.google.com (mail-pg1-x533.google.com [IPv6:2607:f8b0:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C14362710;
+        Fri, 24 Jun 2022 11:45:16 -0700 (PDT)
+Received: by mail-pg1-x533.google.com with SMTP id l4so3145922pgh.13;
+        Fri, 24 Jun 2022 11:45:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=2PJf9ZqRPQG5hDGmci7MSLL4PtNxINmMcqph4ZWlr04=;
+        b=jXC2+LI0A2PyLqhkgdZINUMyFwAOJeqF4mFW2PL3mHngL8oxti+0LA2nwoV+XGBY7U
+         P9s6b9HcySIZ2AD7j2bNedeADazLvFNVoClgcFPHfoRfsFRohhSsnTd6QL0c12VFDlXJ
+         9BEszLvKhHZCQXyR717cbQ7OCpa81vAkyFSQ6uolQMgvpaHmzSQ0pNhlCooNGpf2S43s
+         XrxaWgS8NjXRYeuP0D+osvjmk2ThPimDmZH6p49iZk2fRchwr5MuwtqsVvCDQMClNqU1
+         bTIZn9E/TTVTZxSUnqouCCoLIoWwxXsPIkV9lqboA+leXFrXXBzbzjBAGTUgNSSmFblI
+         4zQQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=2PJf9ZqRPQG5hDGmci7MSLL4PtNxINmMcqph4ZWlr04=;
+        b=11bVkVHALN1Rwl/8dxsoJ5/KdH6R/cQsdS/SwuK2BKYR4nbrmnYM80LYOs4GXcbF+8
+         PlC8bwsu+bf95wmIFVyRWjGHtq9R3JXfO1mhLwXdKcXs7zvtYp3MAIUs038JdNmf/D9H
+         UWAJm1LaO9CusTaU9D3nzCMzSnKyYWs/TxfHcqDwsfpq9C2uuMlykEJ3i0lispZzYUlz
+         C+Jo56ZsbwVWHE0e+eYyRm3iMliozDkapDcxn+xIrgKLcET/kqT63MlJCTqsPfrZzoEd
+         vWcqS01oW7I5wEqYqTfTd5snqkkVFoipUMMx4sM8Im/qVu5Fbz8ZS1tmuQifAeTgMYao
+         5u7w==
+X-Gm-Message-State: AJIora/ojiwFHU4rr02R4aQsj2/NzqZe5/ssJlKu/0ns1sezsa9ZL71h
+        uzf5oXcfDV+SlHv124odcG0/W5S0tb8=
+X-Google-Smtp-Source: AGRyM1tkOLhGf4SvybcPUuKUjF3i9l9HXNkyA6Q7ggGzOp7H0Rifvhib5L2DGPqO1fC+16R/pvEpDA==
+X-Received: by 2002:a05:6a00:1ac7:b0:525:4ef2:175 with SMTP id f7-20020a056a001ac700b005254ef20175mr548025pfv.50.1656096315791;
+        Fri, 24 Jun 2022 11:45:15 -0700 (PDT)
+Received: from localhost ([2a00:79e1:abd:4a00:2703:3c72:eb1a:cffd])
+        by smtp.gmail.com with ESMTPSA id b8-20020a170902650800b00168a651316csm2130525plk.270.2022.06.24.11.45.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 24 Jun 2022 11:45:14 -0700 (PDT)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Rob Clark <robdclark@chromium.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH] drm/msm/gem: Fix error return on fence id alloc fail
+Date:   Fri, 24 Jun 2022 11:45:28 -0700
+Message-Id: <20220624184528.4036837-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.36.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: [PATCH v2 3/5] vfio/iommu_type1: Remove the domain->ops
- comparison
-Content-Language: en-GB
-To:     Jason Gunthorpe <jgg@nvidia.com>
-Cc:     Nicolin Chen <nicolinc@nvidia.com>,
-        "Tian, Kevin" <kevin.tian@intel.com>,
-        "joro@8bytes.org" <joro@8bytes.org>,
-        "will@kernel.org" <will@kernel.org>,
-        "marcan@marcan.st" <marcan@marcan.st>,
-        "sven@svenpeter.dev" <sven@svenpeter.dev>,
-        "robdclark@gmail.com" <robdclark@gmail.com>,
-        "baolu.lu@linux.intel.com" <baolu.lu@linux.intel.com>,
-        "matthias.bgg@gmail.com" <matthias.bgg@gmail.com>,
-        "orsonzhai@gmail.com" <orsonzhai@gmail.com>,
-        "baolin.wang7@gmail.com" <baolin.wang7@gmail.com>,
-        "zhang.lyra@gmail.com" <zhang.lyra@gmail.com>,
-        "jean-philippe@linaro.org" <jean-philippe@linaro.org>,
-        "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
-        "suravee.suthikulpanit@amd.com" <suravee.suthikulpanit@amd.com>,
-        "alyssa@rosenzweig.io" <alyssa@rosenzweig.io>,
-        "dwmw2@infradead.org" <dwmw2@infradead.org>,
-        "yong.wu@mediatek.com" <yong.wu@mediatek.com>,
-        "mjrosato@linux.ibm.com" <mjrosato@linux.ibm.com>,
-        "gerald.schaefer@linux.ibm.com" <gerald.schaefer@linux.ibm.com>,
-        "thierry.reding@gmail.com" <thierry.reding@gmail.com>,
-        "vdumpa@nvidia.com" <vdumpa@nvidia.com>,
-        "jonathanh@nvidia.com" <jonathanh@nvidia.com>,
-        "cohuck@redhat.com" <cohuck@redhat.com>,
-        "thunder.leizhen@huawei.com" <thunder.leizhen@huawei.com>,
-        "tglx@linutronix.de" <tglx@linutronix.de>,
-        "christophe.jaillet@wanadoo.fr" <christophe.jaillet@wanadoo.fr>,
-        "john.garry@huawei.com" <john.garry@huawei.com>,
-        "chenxiang66@hisilicon.com" <chenxiang66@hisilicon.com>,
-        "saiprakash.ranjan@codeaurora.org" <saiprakash.ranjan@codeaurora.org>,
-        "isaacm@codeaurora.org" <isaacm@codeaurora.org>,
-        "yangyingliang@huawei.com" <yangyingliang@huawei.com>,
-        "jordan@cosmicpenguin.net" <jordan@cosmicpenguin.net>,
-        "iommu@lists.linux-foundation.org" <iommu@lists.linux-foundation.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "linux-arm-kernel@lists.infradead.org" 
-        <linux-arm-kernel@lists.infradead.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "linux-mediatek@lists.infradead.org" 
-        <linux-mediatek@lists.infradead.org>,
-        "linux-s390@vger.kernel.org" <linux-s390@vger.kernel.org>,
-        "linux-tegra@vger.kernel.org" <linux-tegra@vger.kernel.org>,
-        "virtualization@lists.linux-foundation.org" 
-        <virtualization@lists.linux-foundation.org>,
-        "kvm@vger.kernel.org" <kvm@vger.kernel.org>
-References: <20220616000304.23890-1-nicolinc@nvidia.com>
- <20220616000304.23890-4-nicolinc@nvidia.com>
- <BL1PR11MB52717050DBDE29A81637BBFA8CAC9@BL1PR11MB5271.namprd11.prod.outlook.com>
- <YqutYjgtFOTXCF0+@Asurada-Nvidia>
- <6e1280c5-4b22-ebb3-3912-6c72bc169982@arm.com>
- <20220624131611.GM4147@nvidia.com>
-From:   Robin Murphy <robin.murphy@arm.com>
-In-Reply-To: <20220624131611.GM4147@nvidia.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-6.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -94,53 +75,29 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2022-06-24 14:16, Jason Gunthorpe wrote:
-> On Wed, Jun 22, 2022 at 08:54:45AM +0100, Robin Murphy wrote:
->> On 2022-06-16 23:23, Nicolin Chen wrote:
->>> On Thu, Jun 16, 2022 at 06:40:14AM +0000, Tian, Kevin wrote:
->>>
->>>>> The domain->ops validation was added, as a precaution, for mixed-driver
->>>>> systems. However, at this moment only one iommu driver is possible. So
->>>>> remove it.
->>>>
->>>> It's true on a physical platform. But I'm not sure whether a virtual platform
->>>> is allowed to include multiple e.g. one virtio-iommu alongside a virtual VT-d
->>>> or a virtual smmu. It might be clearer to claim that (as Robin pointed out)
->>>> there is plenty more significant problems than this to solve instead of simply
->>>> saying that only one iommu driver is possible if we don't have explicit code
->>>> to reject such configuration. 😊
->>>
->>> Will edit this part. Thanks!
->>
->> Oh, physical platforms with mixed IOMMUs definitely exist already. The main
->> point is that while bus_set_iommu still exists, the core code effectively
->> *does* prevent multiple drivers from registering - even in emulated cases
->> like the example above, virtio-iommu and VT-d would both try to
->> bus_set_iommu(&pci_bus_type), and one of them will lose. The aspect which
->> might warrant clarification is that there's no combination of supported
->> drivers which claim non-overlapping buses *and* could appear in the same
->> system - even if you tried to contrive something by emulating, say, VT-d
->> (PCI) alongside rockchip-iommu (platform), you could still only describe one
->> or the other due to ACPI vs. Devicetree.
-> 
-> Right, and that is still something we need to protect against with
-> this ops check. VFIO is not checking that the bus's are the same
-> before attempting to re-use a domain.
-> 
-> So it is actually functional and does protect against systems with
-> multiple iommu drivers on different busses.
+From: Rob Clark <robdclark@chromium.org>
 
-But as above, which systems *are* those? Everything that's on my radar 
-would have drivers all competing for the platform bus - Intel and s390 
-are somewhat the odd ones out in that respect, but are also non-issues 
-as above. FWIW my iommu/bus dev branch has got as far as the final bus 
-ops removal and allowing multiple driver registrations, and before it 
-allows that, it does now have the common attach check that I sketched 
-out in the previous discussion of this.
+This was a typo, we didn't actually want to return zero.
 
-It's probably also noteworthy that domain->ops is no longer the same 
-domain->ops that this code was written to check, and may now be 
-different between domains from the same driver.
+Fixes: a61acbbe9cf8 ("drm/msm: Track "seqno" fences by idr")
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+---
+ drivers/gpu/drm/msm/msm_gem_submit.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Thanks,
-Robin.
+diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
+index 3c3a0cfade36..c9e4aeb14f4a 100644
+--- a/drivers/gpu/drm/msm/msm_gem_submit.c
++++ b/drivers/gpu/drm/msm/msm_gem_submit.c
+@@ -928,7 +928,7 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
+ 						    INT_MAX, GFP_KERNEL);
+ 	}
+ 	if (submit->fence_id < 0) {
+-		ret = submit->fence_id = 0;
++		ret = submit->fence_id;
+ 		submit->fence_id = 0;
+ 	}
+ 
+-- 
+2.36.1
+
