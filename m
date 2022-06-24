@@ -2,61 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5904D55A345
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jun 2022 23:07:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 66A7655A363
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jun 2022 23:17:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231510AbiFXVHA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Jun 2022 17:07:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39614 "EHLO
+        id S230125AbiFXVR5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Jun 2022 17:17:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49916 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231707AbiFXVG5 (ORCPT
+        with ESMTP id S229758AbiFXVR4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Jun 2022 17:06:57 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7076985D1F;
-        Fri, 24 Jun 2022 14:06:49 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 5E2DDB82C3A;
-        Fri, 24 Jun 2022 21:06:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C542AC34114;
-        Fri, 24 Jun 2022 21:06:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1656104802;
-        bh=T7qFMP9F8OdEyOzO8L7hDgPUIHk20/SjsuNA7mm3H3E=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:From;
-        b=E8B7zaWej1LCg91sVtYDKamZbZDXTEnlN720Dpd6TyUxeBPHAlH1wA7hyBairLfQG
-         qvRwC1x/bxNgGThZllbdTgybsz5oEIxjUF+XdNknAn/elRzrhIRaHGU9HqU0vPbH7f
-         0CcAu55atHrf5Gr3iUeNb5E2NzP//Zt8VYmHueCXig6RkSWSOxNl3nXlS+YahpeFTQ
-         rDrLWMvI1HKOdlDiRhYZ/EWk/Jd2vpzHB5CYtWebM6MUYogZIzf3YsASsY1bsN0Oa4
-         AzfCg+Ofatftv2M1qbx83buLIc4b1QJjiAx3Y9364MfcC10xKOv+n1M9eP6peGkQf1
-         f/z30lW78Bzrw==
-Date:   Fri, 24 Jun 2022 16:06:40 -0500
-From:   Bjorn Helgaas <helgaas@kernel.org>
-To:     Krishna chaitanya chundru <quic_krichai@quicinc.com>
-Cc:     linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_vbadigan@quicinc.com,
-        quic_hemantk@quicinc.com, quic_nitegupt@quicinc.com,
-        quic_skananth@quicinc.com, quic_ramkri@quicinc.com,
-        manivannan.sadhasivam@linaro.org, swboyd@chromium.org,
-        dmitry.baryshkov@linaro.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Prasad Malisetty <pmaliset@qti.qualcomm.com>
-Subject: Re: [PATCH v1 1/3] PCI: qcom: Add missing sc7280 clocks in PCIe
- driver
-Message-ID: <20220624210640.GA1558213@bhelgaas>
+        Fri, 24 Jun 2022 17:17:56 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4712FBFE;
+        Fri, 24 Jun 2022 14:17:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1656105474; x=1687641474;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=oXy5HhC7O8BQutw+O6SMcz5I+YvGlUPqUb8wDFujtUU=;
+  b=yZ9CVgOf5yGlP3bXckFz7een8A8t4w3eH3t1EoxYjR2UVkKdbVeMDHSF
+   qaWBkL6QdMiQosdCFomy5RIbw3RqXMNAKSjbwXx4RXnJk/IEW2d0FoeJg
+   BXv7QAQVj8SzhowmDQ+yUT8fVxUeWqFeCt3M1P9xZFl5+0l6L9/dsLN8z
+   g=;
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 24 Jun 2022 14:17:54 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Jun 2022 14:17:53 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Fri, 24 Jun 2022 14:17:52 -0700
+Received: from [10.110.58.84] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Fri, 24 Jun
+ 2022 14:17:51 -0700
+Message-ID: <007ea4c9-9701-f4ab-3278-5d36bf2018c4@quicinc.com>
+Date:   Fri, 24 Jun 2022 14:17:50 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220624170501.GA1541553@bhelgaas>
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: Re: [PATCH v1 2/3] drm/msm/dp: decoupling dp->id out of dp
+ controller_id at scxxxx_dp_cfg table
+Content-Language: en-US
+To:     Stephen Boyd <swboyd@chromium.org>, <agross@kernel.org>,
+        <airlied@linux.ie>, <bjorn.andersson@linaro.org>,
+        <daniel@ffwll.ch>, <dianders@chromium.org>,
+        <dmitry.baryshkov@linaro.org>, <dri-devel@lists.freedesktop.org>,
+        <robdclark@gmail.com>, <sean@poorly.run>, <vkoul@kernel.org>
+CC:     <quic_abhinavk@quicinc.com>, <quic_aravindh@quicinc.com>,
+        <quic_sbillaka@quicinc.com>, <freedreno@lists.freedesktop.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <1656090912-18074-1-git-send-email-quic_khsieh@quicinc.com>
+ <1656090912-18074-3-git-send-email-quic_khsieh@quicinc.com>
+ <CAE-0n52RW+UFJ=hqMWjwR8qvEbww7QjzPW1nhL3Atd97QXAnYw@mail.gmail.com>
+From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
+In-Reply-To: <CAE-0n52RW+UFJ=hqMWjwR8qvEbww7QjzPW1nhL3Atd97QXAnYw@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -65,52 +74,55 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-[update Prasad's email address since pmaliset@codeaurora.org bounced]
 
-On Fri, Jun 24, 2022 at 12:05:03PM -0500, Bjorn Helgaas wrote:
-> [+cc Prasad, who added sc7280]
-> 
-> On Fri, Jun 24, 2022 at 02:49:49PM +0530, Krishna chaitanya chundru wrote:
-> > Add missing clocks in the pcie driver.
-> 
-> s/pcie/PCIe/ as in subject.  Also, please mention the names of the
-> clocks here, too.
-> 
-> Does this add new functionality, or did sc7280 just never work in the
-> first place?
-> 
-> If this fixes a problem, it's nice to mention the user-visible symptom
-> in the commit log to make it easier to connect this fix with the
-> problem.
-> 
-> Looks like sc7280 was added by Prasad with b89ff410253d ("PCI: qcom:
-> Replace ops with struct pcie_cfg in pcie match data"), and I assume it
-> was tested at that time.
-> 
-> If I had noticed, I would have asked that b89ff410253d be a strict
-> conversion to struct qcom_pcie_cfg with no functional changes, with
-> sc7280 support being added in a separate patch by itself.
-> 
-> > Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-> > ---
-> >  drivers/pci/controller/dwc/pcie-qcom.c | 3 +++
-> >  1 file changed, 3 insertions(+)
-> > 
-> > diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> > index 2ea1375..a7202f0 100644
-> > --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> > +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> > @@ -1548,7 +1548,10 @@ static const struct qcom_pcie_cfg sm8450_pcie1_cfg = {
-> >  static const struct qcom_pcie_cfg sc7280_cfg = {
-> >  	.ops = &ops_1_9_0,
-> >  	.has_tbu_clk = true,
-> > +	.has_ddrss_sf_tbu_clk = true,
-> >  	.pipe_clk_need_muxing = true,
-> > +	.has_aggre0_clk = true,
-> > +	.has_aggre1_clk = true,
-> >  };
-> >  
-> >  static const struct qcom_pcie_cfg sc8180x_cfg = {
-> > -- 
-> > 2.7.4
-> > 
+On 6/24/2022 1:00 PM, Stephen Boyd wrote:
+> Quoting Kuogee Hsieh (2022-06-24 10:15:11)
+>> Current the index (dp->id) of DP descriptor table (scxxxx_dp_cfg[]) are tightly
+>> coupled with DP controller_id. This means DP use controller id 0 must be placed
+>> at first entry of DP descriptor table (scxxxx_dp_cfg[]). Otherwise the internal
+>> INTF will mismatch controller_id. This will cause controller kickoff wrong
+>> interface timing engine and cause dpu_encoder_phys_vid_wait_for_commit_done
+>> vblank timeout error.
+>>
+>> This patch add controller_id field into struct msm_dp_desc to break the tightly
+>> coupled relationship between index (dp->id) of DP descriptor table with DP
+>> controller_id.
+> Please no. This reverts the intention of commit bb3de286d992
+> ("drm/msm/dp: Support up to 3 DP controllers")
+>
+>      A new enum is introduced to document the connection between the
+>      instances referenced in the dpu_intf_cfg array and the controllers in
+>      the DP driver and sc7180 is updated.
+>
+> It sounds like the intent of that commit failed to make a strong enough
+> connection. Now it needs to match the INTF number as well? I can't
+> really figure out what is actually wrong, because this patch undoes that
+> intentional tight coupling. Is the next patch the important part that
+> flips the order of the two interfaces?
+
+The commit bb3de286d992have two problems,
+
+1)  The below sc7280_dp_cfg will not work, if eDP use 
+MSM_DP_CONTROLLER_2 instead of  MSM_DP_CONTROLLER_1
+
+since it have num_descs =2 but eDP is at index 2 (CONTROLLER_2) which 
+never be reached.
+
+static const struct msm_dp_config sc7280_dp_cfg = {
+         .descs = (const struct msm_dp_desc[]) {
+                 [MSM_DP_CONTROLLER_2] = { .io_start = 0x0aea0000, 
+.connector_type = DRM_MODE_CONNECTOR_eDP, .wide_bus_en = true },
+                 [MSM_DP_CONTROLLER_0] = { .io_start = 0x0ae90000, 
+.connector_type = DRM_MODE_CONNECTOR_DisplayPort, .wide_bus_en = true },
+         },
+         .num_descs = 2,
+};
+
+2)  DP always has index of 0 (dp->id = 0) and the first one to call 
+msm_dp_modeset_init(). This make DP always place at head of bridge chain.
+
+At next patch eDP must be placed at head of bridge chain to fix eDP 
+corruption issue. This is the purpose of this patch. I will revise the 
+commit text.
+
+
