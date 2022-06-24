@@ -2,58 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B8CC2559FCD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jun 2022 20:07:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BAD3155A026
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jun 2022 20:07:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230474AbiFXR1T (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Jun 2022 13:27:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51008 "EHLO
+        id S231328AbiFXR1U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Jun 2022 13:27:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52864 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231737AbiFXR0y (ORCPT
+        with ESMTP id S232202AbiFXR05 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Jun 2022 13:26:54 -0400
-Received: from mail-il1-f179.google.com (mail-il1-f179.google.com [209.85.166.179])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 470AC2A242;
-        Fri, 24 Jun 2022 10:26:47 -0700 (PDT)
-Received: by mail-il1-f179.google.com with SMTP id i17so1896370ils.12;
-        Fri, 24 Jun 2022 10:26:47 -0700 (PDT)
+        Fri, 24 Jun 2022 13:26:57 -0400
+Received: from mail-io1-f53.google.com (mail-io1-f53.google.com [209.85.166.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8358FEE33;
+        Fri, 24 Jun 2022 10:26:56 -0700 (PDT)
+Received: by mail-io1-f53.google.com with SMTP id s17so3379510iob.7;
+        Fri, 24 Jun 2022 10:26:56 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
          :message-id;
-        bh=vZ0KuXzCWjXQ6AOsXh2KIfZrb6C7pE5QQouNmQuZeM8=;
-        b=ABNNc6AlB50Tq7S1qoNUr0v/4EGyhjD2Ex4eiZohbT96jr6TqU8ckxV8gT3goUOjmz
-         GMr0hHuumHijyCK8Xe/LTcM86SHtMSJGLE8iLLkasgPFGix5vUpreaG5SsOCu3gcQvKe
-         KBzrWWucc9OXscrZe5zPZtZYQihM6mPCvJOfkeqqAL7NtH6NRZGJroxCFiX1k/j72ro/
-         i4xxT6/BuCBUgv3lRSI9GZusLLaMPMQY/b014bx0I0FETmpa2ks6WIIFjvKSIcquyeK+
-         lymyZbPbnzWzKnMUzbDGK4iFdGBU/xJofm8GF5mL91mAGZgnEHUb6Mbk964LcPTi4ulO
-         2CZw==
-X-Gm-Message-State: AJIora/0V/OliWyDXK+bLnwq4UHZlwGXtl2yo5FzwxQkrP16eoj59YWO
-        z49SxYU7CP6XMznJNdxcaQ==
-X-Google-Smtp-Source: AGRyM1sBSKVmc+LUuAPAyJCPs6KiKiCCRkgo+ta5nSdAMPAK8ZAQAS7zk/gkV6LhWB/SkzLPVhM2Gw==
-X-Received: by 2002:a92:c567:0:b0:2d1:6268:2fd5 with SMTP id b7-20020a92c567000000b002d162682fd5mr25811ilj.255.1656091606321;
-        Fri, 24 Jun 2022 10:26:46 -0700 (PDT)
+        bh=f/f/wxl/bFty+5iBK1OwUM+39GiNxLXhVThB2jedR6c=;
+        b=Jojdlag4e+QpNJC/V3YDooxNBMdb9zmULnQdLRudOCPnpUjbGdy7NRdLpo38XAjG/A
+         dPgWwT8MHIuGGws9IJiPPn212fiQzk4Eru0aYkgWoagSlxN3HTGwRBag6217Ph+RgGDI
+         Lv0UKlj8GNjM+P824BI/wy45sqhRbr2yIr6jEIbGRUMApf+yJ8Mod/bsszPz8NI1lKIB
+         pLv13NL8aR5sg+pmD7t/nPR9afmeN3/i2qJy02IQ0aIl+HUiyrfVm6Z8++iT3IFa6Y6p
+         Lto3t1noeviCHl+OA4Fy5os4uMacIGIjNZ0ir3bDfZXBcEM+EjQXoJVdvZQ8w6GAiqwQ
+         blmw==
+X-Gm-Message-State: AJIora+bE+qofxDb8mNUI2azShG6eNKQefs4CK0BmmN/I1GlO3YwnoXK
+        QjkSQRwWgtmh98isAbewCw==
+X-Google-Smtp-Source: AGRyM1vcSlSWL1sgowZx/3+XTz8PV774nht015v17RE+GXDieDsLBz3KrAnzO9PGOXvDejvBdCXeqg==
+X-Received: by 2002:a5d:9342:0:b0:654:9336:81d7 with SMTP id i2-20020a5d9342000000b00654933681d7mr43080ioo.136.1656091615761;
+        Fri, 24 Jun 2022 10:26:55 -0700 (PDT)
 Received: from robh.at.kernel.org ([64.188.179.253])
-        by smtp.gmail.com with ESMTPSA id k16-20020a023350000000b00339cb105ae7sm1342385jak.92.2022.06.24.10.26.45
+        by smtp.gmail.com with ESMTPSA id s12-20020a92d90c000000b002d92c91da91sm1344661iln.77.2022.06.24.10.26.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Jun 2022 10:26:46 -0700 (PDT)
-Received: (nullmailer pid 146338 invoked by uid 1000);
+        Fri, 24 Jun 2022 10:26:55 -0700 (PDT)
+Received: (nullmailer pid 146352 invoked by uid 1000);
         Fri, 24 Jun 2022 17:26:34 -0000
 From:   Rob Herring <robh@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Stephen Boyd <swboyd@chromium.org>,
-        Michael Turquette <mturquette@baylibre.com>,
+To:     Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+Cc:     Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-clk@vger.kernel.org, Andy Gross <agross@kernel.org>
-In-Reply-To: <20220623114737.247703-2-dmitry.baryshkov@linaro.org>
-References: <20220623114737.247703-1-dmitry.baryshkov@linaro.org> <20220623114737.247703-2-dmitry.baryshkov@linaro.org>
-Subject: Re: [PATCH v1 1/4] dt-bindings: clock: qcom: add bindings for dispcc on SM8450
+        Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Mark Brown <broonie@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+In-Reply-To: <20220623094614.1410180-3-stephan.gerhold@kernkonzept.com>
+References: <20220623094614.1410180-1-stephan.gerhold@kernkonzept.com> <20220623094614.1410180-3-stephan.gerhold@kernkonzept.com>
+Subject: Re: [PATCH 2/3] regulator: dt-bindings: qcom,smd-rpm: Add PM8909
 Date:   Fri, 24 Jun 2022 11:26:34 -0600
-Message-Id: <1656091594.372061.146337.nullmailer@robh.at.kernel.org>
+Message-Id: <1656091594.427255.146351.nullmailer@robh.at.kernel.org>
 X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
         FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
         HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
@@ -65,38 +64,32 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 23 Jun 2022 14:47:34 +0300, Dmitry Baryshkov wrote:
-> Add device tree bindings for the display clock controller on Qualcomm
-> SM8450 platform.
+On Thu, 23 Jun 2022 11:46:13 +0200, Stephan Gerhold wrote:
+> Document the "qcom,rpm-pm8909-regulators" compatible for describing
+> the regulators available in the PM8909 PMIC (controlled via the RPM
+> firmware).
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> PM8909 is very similar to the existing PM8916 but lacks 3 of the
+> regulators (s3, s4 and l16).
+> 
+> Signed-off-by: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
 > ---
->  .../bindings/clock/qcom,dispcc-sm8450.yaml    | 132 ++++++++++++++++++
->  1 file changed, 132 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/clock/qcom,dispcc-sm8450.yaml
+>  .../devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml | 4 ++++
+>  1 file changed, 4 insertions(+)
 > 
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+Running 'make dtbs_check' with the schema in this patch gives the
+following warnings. Consider if they are expected or the schema is
+incorrect. These may not be new warnings.
 
-yamllint warnings/errors:
+Note that it is not yet a requirement to have 0 warnings for dtbs_check.
+This will change in the future.
 
-dtschema/dtc warnings/errors:
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/clock/qcom,dispcc-sm8450.example.dtb: clock-controller@af00000: clocks: [[4294967295, 0], [4294967295, 1], [4294967295, 0], [4294967295, 1], [4294967295, 0], [4294967295, 1, 0, 0, 0, 0, 0, 0, 0, 0], [4294967295]] is too short
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/clock/qcom,dispcc-sm8450.yaml
+Full log is available here: https://patchwork.ozlabs.org/patch/
 
-doc reference errors (make refcheckdocs):
 
-See https://patchwork.ozlabs.org/patch/
-
-This check can fail if there are any dependencies. The base for a patch
-series is generally the most recent rc1.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit.
+pm8994-regulators: 'vdd_lvs1_2' does not match any of the regexes: '.*-supply$', '^((s|l|lvs|5vs)[0-9]*)|(boost-bypass)|(bob)$', 'pinctrl-[0-9]+'
+	arch/arm64/boot/dts/qcom/msm8992-lg-bullhead-rev-101.dtb
+	arch/arm64/boot/dts/qcom/msm8992-lg-bullhead-rev-10.dtb
+	arch/arm64/boot/dts/qcom/msm8992-xiaomi-libra.dtb
 
