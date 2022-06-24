@@ -2,88 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0782855A3B3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jun 2022 23:37:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6BEC655A3CD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jun 2022 23:41:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231823AbiFXVgh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Jun 2022 17:36:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36368 "EHLO
+        id S231510AbiFXVkX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Jun 2022 17:40:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39622 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231737AbiFXVgf (ORCPT
+        with ESMTP id S230075AbiFXVkX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Jun 2022 17:36:35 -0400
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 332D586AEF
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Jun 2022 14:36:34 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id n1so4715472wrg.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Jun 2022 14:36:34 -0700 (PDT)
+        Fri, 24 Jun 2022 17:40:23 -0400
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 215CF87B45
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Jun 2022 14:40:22 -0700 (PDT)
+Received: by mail-ed1-x534.google.com with SMTP id z11so5186181edp.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Jun 2022 14:40:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ffwll.ch; s=google;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=EED3vnOPhW5HQ8YAgdkgScBE6T0z6mEdTDgk247qQfc=;
-        b=WadTCqDP0V4rAF8HAlcy0X/PnIJOjzKPkDdHPTro+kqCRYT+gCC5GF4t8mDtCtDSNb
-         rPLyZjDlm/6sblHBJJCI5s7usMmCS/DfApEMz6ZyowIME9LXRyjiFkcLPHcqhetR4GXD
-         EQ3X3rT5LgVBpUB/RDmWe5YcEszpvrLR9MqFk=
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=FZYod/LHle/jfmWY/zvHrx8O3LfygSNaaLJbeeaZy9Y=;
+        b=DJ9UIKSaDy12f3GUuM7BXgQfiPoT1tdOHJpXBuuYiRAnyaqQSjwsLm4lUs+FHTrtk2
+         LQVknHtWZmBnM1asHoNucamNkZ4o/mp0QAs9srJymrFPcXvA+B0Yu3ZssKtFcdl2HwJG
+         gplTqpsHbl802WvWckpxCq4yTxwUI5B06ZJy8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :in-reply-to;
-        bh=EED3vnOPhW5HQ8YAgdkgScBE6T0z6mEdTDgk247qQfc=;
-        b=fDPi428NmYwA0cUFX5w6xKe+ej284H9cemlXlhKbyOZdH2JU6yYIw1KZoWsZ8lIuOw
-         4fxZyNKX+xtC+kkrpqhRSmjoJQK7IC0qhV9GWO/hPEoXvzj2lvX8DPMuTF3f81IcoZix
-         ElEXP/G3W6yWroC1mz3XvqCEOcFMHXA6GwRykn1uWqk1/OZL6+yHKvH4UDbp/AdfZFNb
-         AXm08aaRuucc2cm6jkLPTF1pX4cB7kOwNAjRvrrm4vV/AaLaLkMKvhb7bjLmzwKf33fr
-         6z9dNz2/aBUTFbmCf4I0F2IO6XoISuLtLvXcwMXpSDaLwFVYt7NPgrjArHBhnt+wahu9
-         4GfQ==
-X-Gm-Message-State: AJIora+8XavpzF6g/E8zefX8U/+0KvWsg8mKC2Feig8nNAkMxhKuv9la
-        G39SO7QljeilSYimNqrXy+p3UQ==
-X-Google-Smtp-Source: AGRyM1sgTPuLeRxT2gO007WHe4JDXARxYXU5GXXIcyUT33/w2vaThz5p9yps7/wsQpifqalASGj8Bw==
-X-Received: by 2002:adf:db89:0:b0:21b:84a6:9cce with SMTP id u9-20020adfdb89000000b0021b84a69ccemr1023759wri.675.1656106592570;
-        Fri, 24 Jun 2022 14:36:32 -0700 (PDT)
-Received: from phenom.ffwll.local ([2a02:168:57f4:0:efd0:b9e5:5ae6:c2fa])
-        by smtp.gmail.com with ESMTPSA id b15-20020adff90f000000b0021b90cc66a1sm3395415wrr.2.2022.06.24.14.36.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Jun 2022 14:36:32 -0700 (PDT)
-Date:   Fri, 24 Jun 2022 23:36:30 +0200
-From:   Daniel Vetter <daniel@ffwll.ch>
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Daniel Vetter <daniel@ffwll.ch>
-Subject: Re: [PATCH] drm/msm/gem: Drop obj lock in msm_gem_free_object()
-Message-ID: <YrYuXvI8ZyHGWAwZ@phenom.ffwll.local>
-Mail-Followup-To: Rob Clark <robdclark@gmail.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-References: <20220613205032.2652374-1-robdclark@gmail.com>
- <CAE-0n51ADDijFnPwAQNwYE=62Rj4ZeQ38G7D=Xx3s5x7MRm18A@mail.gmail.com>
- <CAF6AEGtKiv+Y+BQSKvoydEN7W629_BRJR_sMEdFqsWCDRwsSQQ@mail.gmail.com>
- <YrYlgiQYSIoJFqwH@phenom.ffwll.local>
- <CAF6AEGvXUsyVUubhPJy0B=ZDoxofFgPkKh=7g2BEnRwt1N+qmw@mail.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=FZYod/LHle/jfmWY/zvHrx8O3LfygSNaaLJbeeaZy9Y=;
+        b=dq0Lc8R72B4lqPD+KSv8noyRvJX6Nzx3PpA8TKG4713q7BVF2bnK1XomopXbr+zdU3
+         ni1dmAIRp1ZJBQgBAW7qn0ZAI0ELyA8qgixp73EBrwyKHU5s94XZCkCAtjeQcZ4pQZld
+         BfB74hEX3My+NTBZDmU1vYfdBY6VJ7FDGowpT/ipzO1ACLPzTvq2C/mUlyHFTCqQ+sPK
+         WjK6J5+s1Wwmti498sREX7qBeeieGL/J5Kla/ftyZTVdOM7ud1Ogo3ky0NWUeSNM6iA2
+         A1SHqdNHUfQqbBoN/OlsTHJalxyc27DXEORmTsW3rMdtwZsQZndRCq4LFoYIDOjEVG8y
+         v7lw==
+X-Gm-Message-State: AJIora87SaaE5+JR+8Dc0DnIigeNgZWqCqf73flXSM3GIr5NaDFc3nIp
+        YoFKC1K/pRwkiO5mt9mnVKjHBTT3Bgtmf7C9pt0=
+X-Google-Smtp-Source: AGRyM1tOzIJx4kyJOiKeNdj98mDhKaX2qB7qYBbS1pY4l65itzMynS1vPhNyCAlOk+qAwPRGuIRT5A==
+X-Received: by 2002:a05:6402:2684:b0:435:dcaf:29b3 with SMTP id w4-20020a056402268400b00435dcaf29b3mr1464225edd.358.1656106820547;
+        Fri, 24 Jun 2022 14:40:20 -0700 (PDT)
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com. [209.85.128.52])
+        by smtp.gmail.com with ESMTPSA id bg6-20020a170906a04600b00722e31fcf42sm1711147ejb.184.2022.06.24.14.40.18
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 24 Jun 2022 14:40:19 -0700 (PDT)
+Received: by mail-wm1-f52.google.com with SMTP id k129so591441wme.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Jun 2022 14:40:18 -0700 (PDT)
+X-Received: by 2002:a7b:c392:0:b0:39c:4d27:e698 with SMTP id
+ s18-20020a7bc392000000b0039c4d27e698mr1150788wmj.57.1656106818114; Fri, 24
+ Jun 2022 14:40:18 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAF6AEGvXUsyVUubhPJy0B=ZDoxofFgPkKh=7g2BEnRwt1N+qmw@mail.gmail.com>
-X-Operating-System: Linux phenom 5.10.0-8-amd64 
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
+References: <1656090912-18074-1-git-send-email-quic_khsieh@quicinc.com> <1656090912-18074-2-git-send-email-quic_khsieh@quicinc.com>
+In-Reply-To: <1656090912-18074-2-git-send-email-quic_khsieh@quicinc.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Fri, 24 Jun 2022 14:40:06 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=XD0Nb8GiaqEM52rEkUeVjuo46hBv9YUizdDu9zOH6QfA@mail.gmail.com>
+Message-ID: <CAD=FV=XD0Nb8GiaqEM52rEkUeVjuo46hBv9YUizdDu9zOH6QfA@mail.gmail.com>
+Subject: Re: [PATCH v1 1/3] drm/msm/dp: move struc of msm_display_info to msm_drv.h
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>
+Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Vinod Koul <vkoul@kernel.org>, Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Andy Gross <agross@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        "Abhinav Kumar (QUIC)" <quic_abhinavk@quicinc.com>,
+        "Aravind Venkateswaran (QUIC)" <quic_aravindh@quicinc.com>,
+        Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -91,111 +85,98 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jun 24, 2022 at 02:28:25PM -0700, Rob Clark wrote:
-> On Fri, Jun 24, 2022 at 1:58 PM Daniel Vetter <daniel@ffwll.ch> wrote:
-> >
-> > On Thu, Jun 16, 2022 at 06:59:46AM -0700, Rob Clark wrote:
-> > > On Thu, Jun 16, 2022 at 1:28 AM Stephen Boyd <swboyd@chromium.org> wrote:
-> > > >
-> > > > Quoting Rob Clark (2022-06-13 13:50:32)
-> > > > > diff --git a/drivers/gpu/drm/msm/msm_gem.h b/drivers/gpu/drm/msm/msm_gem.h
-> > > > > index d608339c1643..432032ad4aed 100644
-> > > > > --- a/drivers/gpu/drm/msm/msm_gem.h
-> > > > > +++ b/drivers/gpu/drm/msm/msm_gem.h
-> > > > > @@ -229,7 +229,19 @@ msm_gem_unlock(struct drm_gem_object *obj)
-> > > > >  static inline bool
-> > > > >  msm_gem_is_locked(struct drm_gem_object *obj)
-> > > > >  {
-> > > > > -       return dma_resv_is_locked(obj->resv);
-> > > > > +       /*
-> > > > > +        * Destroying the object is a special case.. msm_gem_free_object()
-> > > > > +        * calls many things that WARN_ON if the obj lock is not held.  But
-> > > > > +        * acquiring the obj lock in msm_gem_free_object() can cause a
-> > > > > +        * locking order inversion between reservation_ww_class_mutex and
-> > > > > +        * fs_reclaim.
-> > > > > +        *
-> > > > > +        * This deadlock is not actually possible, because no one should
-> > > > > +        * be already holding the lock when msm_gem_free_object() is called.
-> > > > > +        * Unfortunately lockdep is not aware of this detail.  So when the
-> > > > > +        * refcount drops to zero, we pretend it is already locked.
-> > > > > +        */
-> > > > > +       return dma_resv_is_locked(obj->resv) || (kref_read(&obj->refcount) == 0);
-> > > >
-> > > > Instead of modifying this function can we push down the fact that this
-> > > > function is being called from the free path and skip checking this
-> > > > condition in that case? Or add some "_locked/free_path" wrappers that
-> > > > skip the lock assertion? That would make it clearer to understand while
-> > > > reading the code that it is locked when it is asserted to be locked, and
-> > > > that we don't care when we're freeing because all references to the
-> > > > object are gone.
-> > >
-> > > that was my earlier attempt, and I wasn't too happy with the result.
-> > > And then I realized if refcount==0 then by definition we aren't racing
-> > > with anyone else ;-)
-> >
-> > I think that's not entirely correct, at least not for fairly reasonable
-> > shrinker designs:
-> >
-> > If the shrinker trylocks for throwing stuff out it might race with a
-> > concurrent finalization. Depends a bit upon your design, but usually
-> > that's possible.
-> 
-> Kinda but in fact no.  At least not if your shrinker is designed properly.
-> 
-> The shrinker does kref_get_unless_zero() and bails in the case that
-> we've already started finalizing.  See:
-> 
-> https://patchwork.freedesktop.org/patch/490160/
+Hi,
 
-Oh you have the order differently than what I'd have typed. If you do
-dma_resv_trylock under the lru lock then the kref_get_unless_zero isn't
-needed.
+On Fri, Jun 24, 2022 at 10:15 AM Kuogee Hsieh <quic_khsieh@quicinc.com> wrote:
+>
+> With current implementation, communication between interface driver and
+> upper mdss encoder layer are implemented through function calls. This
+> increase code complexity. Since struct msm_display_info contains msm
+> generic display information, it can be expended to contains more useful
+> information, such as widebus and dcs, in future to serve as communication
+> channel purpose between interface driver and upper mdss encoder layer so
+> that existing function calls can be eliminated.
+> This patch more struct msm_display_info to msm_drv.h to be visible by
+> whole msm scope.
+>
+> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+> ---
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h | 20 --------------------
+>  drivers/gpu/drm/msm/msm_drv.h               | 19 +++++++++++++++++++
+>  2 files changed, 19 insertions(+), 20 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
+> index 781d41c..6b604c5 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
+> @@ -19,26 +19,6 @@
+>  #define IDLE_TIMEOUT   (66 - 16/2)
+>
+>  /**
+> - * struct msm_display_info - defines display properties
+> - * @intf_type:          DRM_MODE_ENCODER_ type
+> - * @capabilities:       Bitmask of display flags
+> - * @num_of_h_tiles:     Number of horizontal tiles in case of split interface
+> - * @h_tile_instance:    Controller instance used per tile. Number of elements is
+> - *                      based on num_of_h_tiles
+> - * @is_te_using_watchdog_timer:  Boolean to indicate watchdog TE is
+> - *                              used instead of panel TE in cmd mode panels
+> - * @dsc:               DSC configuration data for DSC-enabled displays
+> - */
+> -struct msm_display_info {
+> -       int intf_type;
+> -       uint32_t capabilities;
+> -       uint32_t num_of_h_tiles;
+> -       uint32_t h_tile_instance[MAX_H_TILES_PER_DISPLAY];
+> -       bool is_te_using_watchdog_timer;
+> -       struct msm_display_dsc_config *dsc;
 
-Ofc if you do it like you do then you need your locking check trickery.
- 
-> > There won't be a problem since you'll serialize on a lock eventually. But
-> > if you drop all your locking debug checks like this then it's very hard to
-> > figure this out :-)
-> >
-> > Ofc you can adjust your refcounting scheme to make this impossible, but
-> > then there's also not really any need to call any functions which might
-> > need some locking, since by that time all that stuff must have been
-> > cleaned up already (or the refcount could not have dropped to zero). Like
-> > if any iova mapping holds a reference you never have these problems.
-> >
-> > Long story short, this kind of design freaks me out big time. Especially
-> > when it involves both a cross-driver refcount like the gem_bo one and a
-> > cross driver lock ...
-> >
-> > The standard way to fix this is to trylock dma_resv on cleanup and push to
-> > a worker if you can't get it. This is what ttm and i915 does. Might be
-> > good to lift that into drm_gem.c helpers and just use it.
-> 
-> We used to do that (but unconditionally).. and got rid of it because
-> it was causing jank issues (lots of queued up finalizers delaying
-> retire work, or something along those lines, IIRC).  I guess back then
-> struct_mutex was also involved, and it might not be as bad if we only
-> took the async path if we didn't win the trylock.  But IMO that is
-> totally unnecessary.  And I kinda am skeptical about pushing too much
-> locking stuff to drm core.
+So in the structure you're "moving" there's this member called "dsc".
 
-Yeah with dev->struct_mutex and unconditionally it's going to be terrible.
-It really should't be that bad.
 
-Pulling back into the big picture, I really don't like drivers to spin
-their own world for this stuff. And with the ttm drivers (and the i915-gem
-one or so) doing one thing, I think msm should do the same. Unless there's
-a reason why that's really stupid, and then we should probably switch ttm
-over to that too?
+> -};
+> -
+> -/**
+>   * dpu_encoder_assign_crtc - Link the encoder to the crtc it's assigned to
+>   * @encoder:   encoder pointer
+>   * @crtc:      crtc pointer
+> diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
+> index fdbaad5..f9c263b 100644
+> --- a/drivers/gpu/drm/msm/msm_drv.h
+> +++ b/drivers/gpu/drm/msm/msm_drv.h
+> @@ -106,11 +106,30 @@ struct msm_drm_thread {
+>         struct kthread_worker *worker;
+>  };
+>
+> +<<<<<<< HEAD
 
-If ever driver uses dma_resv differently in the cleanup paths (which are
-really the tricky ones) then cross driver code reading becomes an exercise
-in pitfall counting and leg regeneration :-(
+The above doesn't look like valid C to me.
 
-Also I really don't care about which bikeshed we settle on, as least as
-they're all the same.
--Daniel
--- 
-Daniel Vetter
-Software Engineer, Intel Corporation
-http://blog.ffwll.ch
+
+>  /* DSC config */
+>  struct msm_display_dsc_config {
+>         struct drm_dsc_config *drm;
+>  };
+>
+> +/**
+> + * struct msm_display_info - defines display properties
+> + * @intf_type:          DRM_MODE_ENCODER_ type
+> + * @capabilities:       Bitmask of display flags
+> + * @num_of_h_tiles:     Number of horizontal tiles in case of split interface
+> + * @h_tile_instance:    Controller instance used per tile. Number of elements is
+> + *                      based on num_of_h_tiles
+> + * @is_te_using_watchdog_timer:  Boolean to indicate watchdog TE is
+> + *                              used instead of panel TE in cmd mode panels
+> + */
+> +struct msm_display_info {
+> +       int intf_type;
+> +       uint32_t capabilities;
+> +       uint32_t num_of_h_tiles;
+> +       uint32_t h_tile_instance[MAX_H_TILES_PER_DISPLAY];
+> +       bool is_te_using_watchdog_timer;
+
+...but then when you "move" the structure to its new location, which
+should be a noop, then <poof> the "dsc" variable vanishes (along with
+the kernel doc description of it before the structure).
+
+-Doug
