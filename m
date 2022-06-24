@@ -2,62 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AF5EE55A068
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jun 2022 20:08:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2B39F55A06D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jun 2022 20:08:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231199AbiFXR1T (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Jun 2022 13:27:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52896 "EHLO
+        id S231395AbiFXR1V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Jun 2022 13:27:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51010 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230160AbiFXR0r (ORCPT
+        with ESMTP id S231739AbiFXR0y (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Jun 2022 13:26:47 -0400
-Received: from mail-il1-f181.google.com (mail-il1-f181.google.com [209.85.166.181])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE37B15731;
-        Fri, 24 Jun 2022 10:26:43 -0700 (PDT)
-Received: by mail-il1-f181.google.com with SMTP id p13so1958902ilq.0;
-        Fri, 24 Jun 2022 10:26:43 -0700 (PDT)
+        Fri, 24 Jun 2022 13:26:54 -0400
+Received: from mail-io1-f46.google.com (mail-io1-f46.google.com [209.85.166.46])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB7352559B;
+        Fri, 24 Jun 2022 10:26:45 -0700 (PDT)
+Received: by mail-io1-f46.google.com with SMTP id z191so3373901iof.6;
+        Fri, 24 Jun 2022 10:26:45 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
          :message-id;
-        bh=pG44rlutVz8or+Ka4stYxBDxJcy/zH2ZBfdoozeWmIQ=;
-        b=h0yMMxQs212+R43sXJ+SFDT8t878vKvXYnXGy0J7kq+U5bWCKjr12zuNxCUQ1NENH7
-         f4GjjLvPo6kDu+Wy5nG91pTHx09mdQc0uOQ1c9ft8JRxO1HX9pGxK0rGB6417NxgHumb
-         ZK/veQhl5D/1at20RoZdq/DdMe8dhkF3xWQlmevWcrfX7Cko9dEUjIXibYgStshCPSUZ
-         upfHbKBvsZiPrvBtSTZ/T0wfCLFlWuZg0i7wDZP12X/W4txO+LoR33mXxWI5oU1gMnaf
-         DuJSSmQY9J4ClZG2E833u/FvumlAH5iyZErdyU9MoljWtuLCdYuyLQpFv5MuyCJKmpCX
-         9P+g==
-X-Gm-Message-State: AJIora8p6MIoWPGfYdpkNaXhf+tYqHmg5XC7+VyWuO6LgSMg0lvXrzeh
-        EHLZ5BTmE6Fgma4l3F2hJQ==
-X-Google-Smtp-Source: AGRyM1sp8qJgtkAHwQ7xSchoyFjcFRtWdFDawd+7XUChsAzX5klGJTS7YDEzNpsD5lqJ/34v5mQAFg==
-X-Received: by 2002:a05:6e02:16cc:b0:2da:63c7:257e with SMTP id 12-20020a056e0216cc00b002da63c7257emr25166ilx.285.1656091602736;
-        Fri, 24 Jun 2022 10:26:42 -0700 (PDT)
+        bh=n2XNNHfnlSzPCpBxhAe6aF2TsSHsKDP/VUmQAtti+ps=;
+        b=LkkIWWo9Vou612Jvm/ZNYmdNzmnusgkETjkk9tQRpmP+7HFW4C2tTTLGcfvFJp8ljx
+         5Eq2u4wlDFg8LenV16TTfBFFNN4TkEvut1sj/UgZ1IhFeSWF5/a7/oo3hZotXtr/m+jV
+         HLaaj022f244dviPqbbwlC340fg6fza8XWyjDrPl9+/certNkzAEArA7Sk7IqwUiAEtw
+         RIjhwqZKw+QDjf0++UTrFvPIVC0urB+hg/zxD2LXCJUw2RnuFbbWs8IwVxBoEEYAPlb3
+         VClnS/8m8hgVE0ttLS+tvF7jUCtGL1eLUUQywdhMOWBUgFZO5/C0548kRNYUCRY8THMk
+         er2Q==
+X-Gm-Message-State: AJIora/uqdn5JjtJenggTV36v7myioHtklYgbNwUMbe7JCqBxRZ3TpA2
+        nZHW8LLXtmt3MFCedD9IdA==
+X-Google-Smtp-Source: AGRyM1sf4ha7eK26cIM7jLNomU3rhP57Kcz5dGvzHk+OKIszOwQIVSEmCb7pX+/RoCjgFzkNOR6bYA==
+X-Received: by 2002:a05:6638:4889:b0:331:b103:a74c with SMTP id ct9-20020a056638488900b00331b103a74cmr158177jab.66.1656091604724;
+        Fri, 24 Jun 2022 10:26:44 -0700 (PDT)
 Received: from robh.at.kernel.org ([64.188.179.253])
-        by smtp.gmail.com with ESMTPSA id z6-20020a05660217c600b006692192baf7sm1495029iox.25.2022.06.24.10.26.41
+        by smtp.gmail.com with ESMTPSA id p70-20020a022949000000b00339d2cd8da1sm1274202jap.152.2022.06.24.10.26.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Jun 2022 10:26:42 -0700 (PDT)
-Received: (nullmailer pid 146336 invoked by uid 1000);
+        Fri, 24 Jun 2022 10:26:44 -0700 (PDT)
+Received: (nullmailer pid 146350 invoked by uid 1000);
         Fri, 24 Jun 2022 17:26:34 -0000
 From:   Rob Herring <robh@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Rob Clark <robdclark@gmail.com>,
-        Amit Pundir <amit.pundir@linaro.org>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-arm-msm@vger.kernel.org, Kumar Gala <galak@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        devicetree@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>, linux-kernel@vger.kernel.org
-In-Reply-To: <20220623105401.168122-2-krzysztof.kozlowski@linaro.org>
-References: <20220623105401.168122-1-krzysztof.kozlowski@linaro.org> <20220623105401.168122-2-krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH v4 1/3] dt-bindings: arm: qcom: document qcom,msm-id and qcom,board-id
+To:     Sricharan R <quic_srichara@quicinc.com>
+Cc:     linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, quic_varada@quicinc.com,
+        linus.walleij@linaro.org, catalin.marinas@arm.com,
+        mturquette@baylibre.com, robh+dt@kernel.org,
+        p.zabel@pengutronix.de, linux-clk@vger.kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, sboyd@kernel.org,
+        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
+        agross@kernel.org, devicetree@vger.kernel.org
+In-Reply-To: <20220621161126.15883-3-quic_srichara@quicinc.com>
+References: <20220621161126.15883-1-quic_srichara@quicinc.com> <20220621161126.15883-3-quic_srichara@quicinc.com>
+Subject: Re: [PATCH V2 2/8] dt-bindings: arm64: ipq5018: Add binding descriptions for clock and reset
 Date:   Fri, 24 Jun 2022 11:26:34 -0600
-Message-Id: <1656091594.364332.146335.nullmailer@robh.at.kernel.org>
+Message-Id: <1656091594.420060.146349.nullmailer@robh.at.kernel.org>
 X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
         FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
         HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
@@ -69,94 +65,37 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 23 Jun 2022 12:53:59 +0200, Krzysztof Kozlowski wrote:
-> The top level qcom,msm-id and qcom,board-id properties are utilized by
-> bootloaders on Qualcomm MSM platforms to determine which device tree
-> should be used and passed to the kernel.
+On Tue, 21 Jun 2022 21:41:20 +0530, Sricharan R wrote:
+> From: Varadarajan Narayanan <quic_varada@quicinc.com>
 > 
-> The commit b32e592d3c28 ("devicetree: bindings: Document qcom board
-> compatible format") from 2015 was a consensus during discussion about
-> upstreaming qcom,msm-id and qcom,board-id fields.  There are however still
-> problems with that consensus:
-> 1. It was reached 7 years ago but it turned out its implementation did
->    not reach all possible products.
+> This patch adds support for the global clock controller found on
+> the IPQ5018 based devices.
 > 
-> 2. Initially additional tool (dtbTool) was needed for parsing these
->    fields to create a QCDT image consisting of multiple DTBs, later the
->    bootloaders were improved and they use these qcom,msm-id and
->    qcom,board-id properties directly.
-> 
-> 3. Extracting relevant information from the board compatible requires
->    this additional tool (dtbTool), which makes the build process more
->    complicated and not easily reproducible (DTBs are modified after the
->    kernel build).
-> 
-> 4. Some versions of Qualcomm bootloaders expect these properties even
->    when booting with a single DTB.  The community is stuck with these
->    bootloaders thus they require properties in the DTBs.
-> 
-> Since several upstreamed Qualcomm SoC-based boards require these
-> properties to properly boot and the properties are reportedly used by
-> bootloaders, document them.
-> 
-> Link: https://lore.kernel.org/r/a3c932d1-a102-ce18-deea-18cbbd05ecab@linaro.org/
-> Co-developed-by: Kumar Gala <galak@codeaurora.org>
-> Signed-off-by: Kumar Gala <galak@codeaurora.org>
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Co-developed-by: Sricharan R <quic_srichara@quicinc.com>
+> Signed-off-by: Sricharan R <quic_srichara@quicinc.com>
+> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
 > ---
->  .../devicetree/bindings/arm/qcom.yaml         | 121 +++++++++++++++
->  include/dt-bindings/arm/qcom,ids.h            | 146 ++++++++++++++++++
->  2 files changed, 267 insertions(+)
->  create mode 100644 include/dt-bindings/arm/qcom,ids.h
+>  .../bindings/clock/qcom,gcc-other.yaml        |   3 +
+>  include/dt-bindings/clock/qcom,gcc-ipq5018.h  | 188 ++++++++++++++++++
+>  include/dt-bindings/reset/qcom,gcc-ipq5018.h  | 122 ++++++++++++
+>  3 files changed, 313 insertions(+)
+>  create mode 100644 include/dt-bindings/clock/qcom,gcc-ipq5018.h
+>  create mode 100644 include/dt-bindings/reset/qcom,gcc-ipq5018.h
 > 
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+Running 'make dtbs_check' with the schema in this patch gives the
+following warnings. Consider if they are expected or the schema is
+incorrect. These may not be new warnings.
 
-yamllint warnings/errors:
+Note that it is not yet a requirement to have 0 warnings for dtbs_check.
+This will change in the future.
 
-dtschema/dtc warnings/errors:
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/arm/qcom.yaml: properties:qcom,board-id:items: 'oneOf' conditional failed, one must be fixed:
-	{'oneOf': [{'maxItems': 2, 'items': [{'description': 'Board ID consisting of three bitfields::\n  - bits 31-24 - Unused\n  - bits 23-16 - Platform Version Major\n  - bits 15-8  - Platform Version Minor\n  - bits 7-0   - Platform Type\nPlatform Type field is an exact match value.  The\nPlatform Major/Minor field is a best match.  The bootloader will\nlook for the closest possible match.\n'}, {'description': 'Subtype ID unique to a Platform Type/Chipset ID.  For a given\nPlatform Type, there will typically only be a single board and the\nsubtype_id will be 0.  However in some cases board variants may\nneed to be distinguished by different subtype_id values.\n'}]}, {'minItems': 4, 'items': [{'const': 8}, {'const': 0}, {'description': 'OnePlus board ID'}, {'description': 'OnePlus subtype ID'}]}]} is not of type 'array'
-	{'maxItems': 2, 'items': [{'description': 'Board ID consisting of three bitfields::\n  - bits 31-24 - Unused\n  - bits 23-16 - Platform Version Major\n  - bits 15-8  - Platform Version Minor\n  - bits 7-0   - Platform Type\nPlatform Type field is an exact match value.  The\nPlatform Major/Minor field is a best match.  The bootloader will\nlook for the closest possible match.\n'}, {'description': 'Subtype ID unique to a Platform Type/Chipset ID.  For a given\nPlatform Type, there will typically only be a single board and the\nsubtype_id will be 0.  However in some cases board variants may\nneed to be distinguished by different subtype_id values.\n'}]} should not be valid under {'required': ['maxItems']}
-		hint: "maxItems" is not needed with an "items" list
-	/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/arm/qcom.yaml: properties:qcom,board-id:items:oneOf:1: 'oneOf' conditional failed, one must be fixed:
-		[{'const': 8}, {'const': 0}, {'description': 'OnePlus board ID'}, {'description': 'OnePlus subtype ID'}] is too long
-		[{'const': 8}, {'const': 0}, {'description': 'OnePlus board ID'}, {'description': 'OnePlus subtype ID'}] is too short
-		False schema does not allow 4
-		1 was expected
-		4 is greater than the maximum of 2
-		4 is greater than the maximum of 3
-		hint: "minItems" is only needed if less than the "items" list length
-		from schema $id: http://devicetree.org/meta-schemas/items.yaml#
-	/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/arm/qcom.yaml: properties:qcom,board-id:items:oneOf:1: 'oneOf' conditional failed, one must be fixed:
-		[{'const': 8}, {'const': 0}, {'description': 'OnePlus board ID'}, {'description': 'OnePlus subtype ID'}] is too long
-		[{'const': 8}, {'const': 0}, {'description': 'OnePlus board ID'}, {'description': 'OnePlus subtype ID'}] is too short
-		False schema does not allow 4
-		1 was expected
-		4 is greater than the maximum of 2
-		4 is greater than the maximum of 3
-		hint: "minItems" is only needed if less than the "items" list length
-		from schema $id: http://devicetree.org/meta-schemas/items.yaml#
-	from schema $id: http://devicetree.org/meta-schemas/keywords.yaml#
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/arm/qcom.yaml: ignoring, error in schema: properties: qcom,board-id: items
-Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.example.dtb:0:0: /: failed to match any schema with compatible: ['arrow,apq8096-db820c', 'qcom,apq8096-sbc', 'qcom,apq8096']
-Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.example.dtb:0:0: /: failed to match any schema with compatible: ['arrow,apq8096-db820c', 'qcom,apq8096-sbc', 'qcom,apq8096']
-Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.example.dtb:0:0: /: failed to match any schema with compatible: ['arrow,apq8096-db820c', 'qcom,apq8096-sbc', 'qcom,apq8096']
+Full log is available here: https://patchwork.ozlabs.org/patch/
 
-doc reference errors (make refcheckdocs):
 
-See https://patchwork.ozlabs.org/patch/
+gcc@1800000: '#power-domain-cells' is a required property
+	arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dtb
 
-This check can fail if there are any dependencies. The base for a patch
-series is generally the most recent rc1.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit.
+gcc@1800000: Unevaluated properties are not allowed ('#clock-cells', '#reset-cells', 'clock-names', 'clocks', 'reg' were unexpected)
+	arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dtb
 
