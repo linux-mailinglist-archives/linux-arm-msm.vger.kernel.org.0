@@ -2,79 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B064055A338
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jun 2022 23:03:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5904D55A345
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jun 2022 23:07:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232019AbiFXVCK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Jun 2022 17:02:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34160 "EHLO
+        id S231510AbiFXVHA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Jun 2022 17:07:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39614 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232002AbiFXVCI (ORCPT
+        with ESMTP id S231707AbiFXVG5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Jun 2022 17:02:08 -0400
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8187979463
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Jun 2022 14:02:07 -0700 (PDT)
-Received: by mail-ej1-x633.google.com with SMTP id ay16so7085222ejb.6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Jun 2022 14:02:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Or58d3ZkEn57TFqLS2gsXrc8iLHGrlKLbW8WGHYFJRc=;
-        b=hAWheESAndEXKAPbcUiqlEueWvXAeJOuFEGkSwpyB7xj3pkczS6kBS5vMNKLC+N4hl
-         fbhuEaZlkv9aPLOglB7zgD6r6ICdBm9a8yhU/IVxiTyr0mJTB3BqtymT1jMS0XFgybXq
-         Wef4CYmSGYRxPZYezK9LaBzQifGnobDAuguds=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Or58d3ZkEn57TFqLS2gsXrc8iLHGrlKLbW8WGHYFJRc=;
-        b=HnDEVagprs8JXnbjxLLXnGEPKZ0rdgimz9l/6biXmtQAUKytZWN49NwPkwY66oocdK
-         Ly7WHqGM2mOQMvtfHheg8povg4pr0AEdaMqU2GXxAVQ2NghPZXrmo8PfuaBodwu0zDim
-         npiLFtdnsPSiTKlRJ43OgKFuJbc3ec9/96oIBBjyrWadGRGmCiR/Rubh6VhD+hScel7v
-         HNmFmpBILA1zSpTaglJmgg9sUFvXSrGH6y68xgUCgNlgW8vEkG+K1wssmgQ9EMpwK0rI
-         xbICWQPzMh1MTa9oEm7gdgLxqEVM1cWY4jjlb7PRYhtPrwyEnsquvZyhw/nhblqhXEGw
-         XMTg==
-X-Gm-Message-State: AJIora8HhcbznFe5DTUJCjpRxwk7FO2th3hn09vxyEMazTPjj6ZOo2zM
-        mvgr7+bP9N19x6LwHrFXSCTijPd+yPmL8W8vdZs=
-X-Google-Smtp-Source: AGRyM1siaqU2BK98RGgAAv/EiH8sEN/XL3pYTVGUYMtlODlNm1fJ8g+Iro6Z+3VfjS8ywXBjeyfsaw==
-X-Received: by 2002:a17:907:e92:b0:722:efe6:90fc with SMTP id ho18-20020a1709070e9200b00722efe690fcmr965470ejc.44.1656104525847;
-        Fri, 24 Jun 2022 14:02:05 -0700 (PDT)
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com. [209.85.221.43])
-        by smtp.gmail.com with ESMTPSA id jz27-20020a17090775fb00b006fecf74395bsm1727282ejc.8.2022.06.24.14.02.04
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 24 Jun 2022 14:02:05 -0700 (PDT)
-Received: by mail-wr1-f43.google.com with SMTP id m1so4682355wrb.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Jun 2022 14:02:04 -0700 (PDT)
-X-Received: by 2002:adf:f90d:0:b0:20c:de32:4d35 with SMTP id
- b13-20020adff90d000000b0020cde324d35mr874128wrr.583.1656104524155; Fri, 24
- Jun 2022 14:02:04 -0700 (PDT)
-MIME-Version: 1.0
-References: <20220624185612.35493-1-joebar@chromium.org>
-In-Reply-To: <20220624185612.35493-1-joebar@chromium.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Fri, 24 Jun 2022 14:01:52 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=UbrdqXYaabK0YEyjX0zszxMkU72-4fc10zyPTs_oKG_w@mail.gmail.com>
-Message-ID: <CAD=FV=UbrdqXYaabK0YEyjX0zszxMkU72-4fc10zyPTs_oKG_w@mail.gmail.com>
-Subject: Re: [PATCH v11 0/5] arm64: dts: qcom: sc7180: Add five new
- trogdor-based boards
-To:     "Joseph S. Barrera III" <joebar@chromium.org>
-Cc:     LKML <linux-kernel@vger.kernel.org>,
-        Alexandru M Stan <amstan@chromium.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Andy Gross <agross@kernel.org>,
+        Fri, 24 Jun 2022 17:06:57 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7076985D1F;
+        Fri, 24 Jun 2022 14:06:49 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 5E2DDB82C3A;
+        Fri, 24 Jun 2022 21:06:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C542AC34114;
+        Fri, 24 Jun 2022 21:06:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1656104802;
+        bh=T7qFMP9F8OdEyOzO8L7hDgPUIHk20/SjsuNA7mm3H3E=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:From;
+        b=E8B7zaWej1LCg91sVtYDKamZbZDXTEnlN720Dpd6TyUxeBPHAlH1wA7hyBairLfQG
+         qvRwC1x/bxNgGThZllbdTgybsz5oEIxjUF+XdNknAn/elRzrhIRaHGU9HqU0vPbH7f
+         0CcAu55atHrf5Gr3iUeNb5E2NzP//Zt8VYmHueCXig6RkSWSOxNl3nXlS+YahpeFTQ
+         rDrLWMvI1HKOdlDiRhYZ/EWk/Jd2vpzHB5CYtWebM6MUYogZIzf3YsASsY1bsN0Oa4
+         AzfCg+Ofatftv2M1qbx83buLIc4b1QJjiAx3Y9364MfcC10xKOv+n1M9eP6peGkQf1
+         f/z30lW78Bzrw==
+Date:   Fri, 24 Jun 2022 16:06:40 -0500
+From:   Bjorn Helgaas <helgaas@kernel.org>
+To:     Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Cc:     linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_vbadigan@quicinc.com,
+        quic_hemantk@quicinc.com, quic_nitegupt@quicinc.com,
+        quic_skananth@quicinc.com, quic_ramkri@quicinc.com,
+        manivannan.sadhasivam@linaro.org, swboyd@chromium.org,
+        dmitry.baryshkov@linaro.org, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Prasad Malisetty <pmaliset@qti.qualcomm.com>
+Subject: Re: [PATCH v1 1/3] PCI: qcom: Add missing sc7280 clocks in PCIe
+ driver
+Message-ID: <20220624210640.GA1558213@bhelgaas>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220624170501.GA1541553@bhelgaas>
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -82,65 +65,52 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+[update Prasad's email address since pmaliset@codeaurora.org bounced]
 
-On Fri, Jun 24, 2022 at 11:57 AM Joseph S. Barrera III
-<joebar@chromium.org> wrote:
->
-> This series adds five new trogdor-based boards to upstream.
-> The patches should be applied *after* applying
-> https://lore.kernel.org/all/20220602190621.1646679-1-swboyd@chromium.org/
-> (arm64: dts: qcom: Remove duplicate sc7180-trogdor include on lazor/homestar)
->
-> The patches do *not* expect
-> https://lore.kernel.org/all/20220518172525.3319993-1-swboyd@chromium.org/
-> (sc7180-trogdor: Split out keyboard node and describe detachables)
-> to be applied.
->
-> The compatibles in this series are documented by Doug's series
-> https://lore.kernel.org/r/20220520143502.v4.5.Ie8713bc0377672ed8dd71189e66fc0b77226fb85@changeid
->
-> Changes in v11:
-> - Add 'include sc7180-trogdor.dtsi' to sc7180-trogdor-pazquel-* files.
-> - Add 'include sc7180-trogdor.dtsi' to sc7180-trogdor-kingoftown-* files.
-> - Restore 'include sc7180.dtsi' to sc7180-trogdor-ti-sn65dsi86.dtsi.
-
-I'm a bit baffled. Why did you add an include of "sc7180.dtsi" to
-sc7180-trogdor-ti-sn65dsi86.dtsi? Am I missing something? The way you
-have it will cause "sc7180.dtsi" to be included twice. For instance,
-let's look at "sc7180-trogdor-coachz-r3.dts". It has:
-
-#include "sc7180-trogdor-coachz.dtsi"
-
-That will in turn cause these includes:
-
-#include "sc7180-trogdor.dtsi"
-#include "sc7180-trogdor-ti-sn65dsi86.dtsi"
-
-That will in turn do:
-
-/* From sc7180-trogdor.dtsi */
-#include <dt-bindings/gpio/gpio.h>
-#include <dt-bindings/input/gpio-keys.h>
-#include <dt-bindings/input/input.h>
-#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
-#include <dt-bindings/sound/sc7180-lpass.h>
-
-#include "sc7180.dtsi"
-#include "pm6150.dtsi"
-#include "pm6150l.dtsi"
-
-/* From sc7180-trogdor-ti-sn65dsi86.dtsi */
-#include "sc7180.dtsi"
-#include <dt-bindings/gpio/gpio.h>
-
-...and, as you can see, "sc7180.dtsi" will get included twice. That
-will break things since it will undo some of the changes that
-sc7180-trogdor.dtsi did. ...and, in fact, I just tried putting your
-patches on an sc7180 device that uses the TI bridge chip and it,
-unsurprisingly, doesn't boot.
-
-If you just remove that one addition then I think we can finally be
-done with this series. I tried that and my device boots.
-
--Doug
+On Fri, Jun 24, 2022 at 12:05:03PM -0500, Bjorn Helgaas wrote:
+> [+cc Prasad, who added sc7280]
+> 
+> On Fri, Jun 24, 2022 at 02:49:49PM +0530, Krishna chaitanya chundru wrote:
+> > Add missing clocks in the pcie driver.
+> 
+> s/pcie/PCIe/ as in subject.  Also, please mention the names of the
+> clocks here, too.
+> 
+> Does this add new functionality, or did sc7280 just never work in the
+> first place?
+> 
+> If this fixes a problem, it's nice to mention the user-visible symptom
+> in the commit log to make it easier to connect this fix with the
+> problem.
+> 
+> Looks like sc7280 was added by Prasad with b89ff410253d ("PCI: qcom:
+> Replace ops with struct pcie_cfg in pcie match data"), and I assume it
+> was tested at that time.
+> 
+> If I had noticed, I would have asked that b89ff410253d be a strict
+> conversion to struct qcom_pcie_cfg with no functional changes, with
+> sc7280 support being added in a separate patch by itself.
+> 
+> > Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> > ---
+> >  drivers/pci/controller/dwc/pcie-qcom.c | 3 +++
+> >  1 file changed, 3 insertions(+)
+> > 
+> > diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> > index 2ea1375..a7202f0 100644
+> > --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> > +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> > @@ -1548,7 +1548,10 @@ static const struct qcom_pcie_cfg sm8450_pcie1_cfg = {
+> >  static const struct qcom_pcie_cfg sc7280_cfg = {
+> >  	.ops = &ops_1_9_0,
+> >  	.has_tbu_clk = true,
+> > +	.has_ddrss_sf_tbu_clk = true,
+> >  	.pipe_clk_need_muxing = true,
+> > +	.has_aggre0_clk = true,
+> > +	.has_aggre1_clk = true,
+> >  };
+> >  
+> >  static const struct qcom_pcie_cfg sc8180x_cfg = {
+> > -- 
+> > 2.7.4
+> > 
