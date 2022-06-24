@@ -2,62 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 781795598E8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jun 2022 13:59:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 52E695598F9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jun 2022 14:01:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230008AbiFXL7p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Jun 2022 07:59:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48436 "EHLO
+        id S230520AbiFXMAF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Jun 2022 08:00:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48654 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229778AbiFXL7o (ORCPT
+        with ESMTP id S230425AbiFXMAE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Jun 2022 07:59:44 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08563766B6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Jun 2022 04:59:42 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id i18so4062985lfu.8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Jun 2022 04:59:41 -0700 (PDT)
+        Fri, 24 Jun 2022 08:00:04 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 499527E016
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Jun 2022 05:00:01 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id a13so4045290lfr.10
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Jun 2022 05:00:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=WifiVvyZtAR2ko3JP+VP7s2Sac2A/gN4u/xAeTXeaMw=;
-        b=wlVglKYrgZrAvKJjmGCbSu/HRskm/F+NaTwQ3Gp+RNgV0wLPuqsQ7PP0wXAR457PLq
-         Ui6Rhurz4pXGfZDdFIFusovm4rwmtjsrEc8p6deQ+xyardJN9SkwRSB5YnKlWGh+lK/H
-         7PjdEPJyOyjXH/hsE5ALVHI65xsjAhVzjbH/6ztxiYMml2psKh+Uz42xYVNMjUGCuozB
-         R5EbVxd3BGiq+hZd7nWtLX15sMfDOT4yvRejoD+FxoSNzCx1iyjdZQisiU+AUIa0H4/1
-         jRDh2B0+SO83eVRdcmJ5ggNdgk62JjByfg+s5UMFOV8wFpgwDojcglu/5I0IMLMn4pW2
-         L0Vg==
+        bh=p8a54kHUC74uWm194BlTVU3tRlk7CchK44/KJ1a/oWw=;
+        b=RYiFfreS5ZT98btdp6eoyR+sZ3X/50pkvPbKD/rHksiojmIPHSzaZNc5e7TgYTEB6v
+         oMz7jtUimr8ffeNT8j0NOctK5BLfpL+tbLKpAfQ2f8qKePmq2WLWIOFhB8dzEMR726Ii
+         I/GMNx4/qFsw5FaYKI2Z3t35iop2YgdmYdFxoVATm9Q9OJm0AfYvJVHvIupXatMLFKFz
+         kEbYJEK+j8kEggV5SlaBD5iBbeHhkN9PiwSJqawykynClnYJE94jHGngfOqk7i6kFlJv
+         UuHrxmYGKI9pWM9qKefyuSobiPsiuW6R2tqROztbOVNjR1VMcCuiAbmhvp4Zj4xzigHq
+         r3zw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=WifiVvyZtAR2ko3JP+VP7s2Sac2A/gN4u/xAeTXeaMw=;
-        b=sheO50I97G+AsuNr8lHOnnfLjK6SCeMw8hfajr0tZPDJ3FXcbUihTGPbitrPxRYP1h
-         Gntd1lxXlrNgpe0M27Tk5YiE4JwCiUTYdnnxI/HUN5H4lVFjed/cd3wR4K/qM2H7UJb4
-         wfMlicK4gYjqIwe8/KRH63rG0yTcT1ezG0yxZ3vEPIPSn5FSJRaw0zy1a6wuXH0kdEY+
-         UG9z5I5XkqpkV/Bs2tFxLbA59ohmzlPYQYCRWNhqks5eThmjL94W7e8ZPr6OWnHLUfxt
-         Ive7S2AJGQ/d2UYLt5E44WKbOk8pWjVUNK2Dywcyi8ookUja7azYlSx6/NY1Fgq9cpQz
-         cPKw==
-X-Gm-Message-State: AJIora+OeJQ0yyk3KTEfs6xAEFYCuxV42nlPcsOXEjea8UAMzLdKY/TQ
-        tHoiDs5/dMkxU5/OVMFhA7D60Q==
-X-Google-Smtp-Source: AGRyM1updTHUqWz+9wHIelEj6dA15WFrLNPp0rFYLDsjWWb1rrYtHN5+4h06NCxbLvy42pPVDEgrNg==
-X-Received: by 2002:a19:771d:0:b0:47f:95ef:1d66 with SMTP id s29-20020a19771d000000b0047f95ef1d66mr8715093lfc.590.1656071980346;
-        Fri, 24 Jun 2022 04:59:40 -0700 (PDT)
+        bh=p8a54kHUC74uWm194BlTVU3tRlk7CchK44/KJ1a/oWw=;
+        b=QLjO8DUgXe+grkh5UsL3J+suA9eAC4O+yOJ16NV32H2LW3r91LgIm9f1LZ7qxhiD/r
+         66u+jkiEEYsXawdl4Xw9u4EHI2nFR2FTqmGncge09cmwmkTwyJjr5i0t4ROn3w+Kapzz
+         ZW33UdAu2i8IBx9/raZh3geyzuOrUw5aFfo6oGDvMFThEH//o3tpJPznL2C3UOZr6oAQ
+         zZn5Q7u/VxfgM40+sy7YIwsN+nBLsWS6vKQ+BgAJdsQ7TNvKoxT3/svh0ZCwXcoA8TDg
+         2m9W/THf6jrl0afDt2KqeY4noC93kQj+tAEQhFHOVKi40tVdoLt4MJfAk2oz8yOOlj0v
+         QtIQ==
+X-Gm-Message-State: AJIora906cPXIBYkybGU6fupX92IxkeprYkowqejASZ+STPJ6otvMAYt
+        WQB+ZZ3SoKICxE3S+qQpxQPU/Q==
+X-Google-Smtp-Source: AGRyM1sENlKmkw69YMN7KGv2mHNnwQXAJvEIeSL4Exlj4Jg+gZNuX495Ml+aUqq4BGpBrolhx1EaRw==
+X-Received: by 2002:a05:6512:2249:b0:478:f926:ad7 with SMTP id i9-20020a056512224900b00478f9260ad7mr8703367lfu.511.1656071999580;
+        Fri, 24 Jun 2022 04:59:59 -0700 (PDT)
 Received: from localhost.localdomain (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
-        by smtp.gmail.com with ESMTPSA id w10-20020a2e9bca000000b0025a65ed7aa4sm262345ljj.51.2022.06.24.04.59.39
+        by smtp.gmail.com with ESMTPSA id bu35-20020a05651216a300b0047255d211b9sm333402lfb.232.2022.06.24.04.59.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Jun 2022 04:59:40 -0700 (PDT)
+        Fri, 24 Jun 2022 04:59:59 -0700 (PDT)
 From:   Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>,
+Cc:     Andy Gross <agross@kernel.org>, Stephen Boyd <sboyd@kernel.org>,
         Michael Turquette <mturquette@baylibre.com>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org
-Subject: [PATCH v8 2/7] arm64: dts: qcom: sm8450: Add description of camera clock controller
-Date:   Fri, 24 Jun 2022 14:59:17 +0300
-Message-Id: <20220624115917.2524868-3-vladimir.zapolskiy@linaro.org>
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
+Subject: [PATCH v8 3/7] clk: qcom: clk-alpha-pll: fix clk_trion_pll_configure description
+Date:   Fri, 24 Jun 2022 14:59:57 +0300
+Message-Id: <20220624115957.2524892-1-vladimir.zapolskiy@linaro.org>
 X-Mailer: git-send-email 2.33.0
 In-Reply-To: <20220624115917.2524868-1-vladimir.zapolskiy@linaro.org>
 References: <20220624115917.2524868-1-vladimir.zapolskiy@linaro.org>
@@ -65,7 +63,7 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -73,70 +71,33 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add description of QCOM SM8450 camera clock controller.
+After merging lucid and trion pll functions in commit 0b01489475c6
+("clk: qcom: clk-alpha-pll: same regs and ops for trion and lucid")
+the function clk_trion_pll_configure() is left with an old description
+header, which results in a W=2 compile time warning, fix it.
 
+Acked-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 ---
-Changes from v7 to v8:
-* rebased on top of v5.19-rc2,
-* minor improvement to the commit message.
-
-Changes from v6 to v7:
-* rebased on top of v5.19-rc1.
-
-Changes from v5 to v6:
-* rebased on top of linux-next.
-
-Changes from v3 to v5:
+Changes from v1 to v8:
 * none.
 
-Changes from v2 to v3:
-* account a renamed header file.
+ drivers/clk/qcom/clk-alpha-pll.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Changes from v1 to v2:
-* disabled camcc device tree node by default.
-
- arch/arm64/boot/dts/qcom/sm8450.dtsi | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-index 7d08fad76371..fad813a21df5 100644
---- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-@@ -6,6 +6,7 @@
- #include <dt-bindings/interrupt-controller/arm-gic.h>
- #include <dt-bindings/clock/qcom,gcc-sm8450.h>
- #include <dt-bindings/clock/qcom,rpmh.h>
-+#include <dt-bindings/clock/qcom,sm8450-camcc.h>
- #include <dt-bindings/dma/qcom-gpi.h>
- #include <dt-bindings/gpio/gpio.h>
- #include <dt-bindings/mailbox/qcom-ipcc.h>
-@@ -2288,6 +2289,25 @@ IPCC_MPROC_SIGNAL_GLINK_QMP
- 			};
- 		};
+diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
+index 4406cf609aae..288692f0ea39 100644
+--- a/drivers/clk/qcom/clk-alpha-pll.c
++++ b/drivers/clk/qcom/clk-alpha-pll.c
+@@ -1439,7 +1439,7 @@ const struct clk_ops clk_alpha_pll_postdiv_fabia_ops = {
+ EXPORT_SYMBOL_GPL(clk_alpha_pll_postdiv_fabia_ops);
  
-+		camcc: clock-controller@ade0000 {
-+			compatible = "qcom,sm8450-camcc";
-+			reg = <0 0x0ade0000 0 0x20000>;
-+			status = "disabled";
-+			clocks = <&gcc GCC_CAMERA_AHB_CLK>,
-+				 <&rpmhcc RPMH_CXO_CLK>,
-+				 <&rpmhcc RPMH_CXO_CLK_A>,
-+				 <&sleep_clk>;
-+			clock-names = "iface",
-+				      "bi_tcxo",
-+				      "bi_tcxo_ao",
-+				      "sleep_clk";
-+			power-domains = <&rpmhpd SM8450_MMCX>;
-+			required-opps = <&rpmhpd_opp_low_svs>;
-+			#clock-cells = <1>;
-+			#reset-cells = <1>;
-+			#power-domain-cells = <1>;
-+		};
-+
- 		pdc: interrupt-controller@b220000 {
- 			compatible = "qcom,sm8450-pdc", "qcom,pdc";
- 			reg = <0 0x0b220000 0 0x30000>, <0 0x174000f0 0 0x64>;
+ /**
+- * clk_lucid_pll_configure - configure the lucid pll
++ * clk_trion_pll_configure - configure the trion pll
+  *
+  * @pll: clk alpha pll
+  * @regmap: register map
 -- 
 2.33.0
 
