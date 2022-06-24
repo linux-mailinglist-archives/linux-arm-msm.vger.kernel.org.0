@@ -2,89 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 20D09558C04
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jun 2022 01:56:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A5471558C12
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jun 2022 02:03:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230421AbiFWX4E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Jun 2022 19:56:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33012 "EHLO
+        id S231219AbiFXADe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Jun 2022 20:03:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38434 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229669AbiFWX4E (ORCPT
+        with ESMTP id S229645AbiFXADd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Jun 2022 19:56:04 -0400
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 844B860E27
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jun 2022 16:56:03 -0700 (PDT)
-Received: by mail-ej1-x636.google.com with SMTP id lw20so1393204ejb.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jun 2022 16:56:03 -0700 (PDT)
+        Thu, 23 Jun 2022 20:03:33 -0400
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8FDE754BFE;
+        Thu, 23 Jun 2022 17:03:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=BVigjp2D3j30VmmAUGuUg4ONNfJwbNHPkTd4YHafSpc=;
-        b=AqfZas0SvEfK4MOwq8p9b40HmkA9KMEEJGXWGRCK9IcGkFLs9qKqYeIFPC+EwYGbBg
-         nHOYQKTw4x5W+UwbPRyhIfoN+HS8wo/+NIxk3HWzetM1aPkqIc970ggG9t2CwfTmBHBH
-         jdD2GPAMlxkDUfJ5LR3yZF9icZFt+lHuhRWlU=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=BVigjp2D3j30VmmAUGuUg4ONNfJwbNHPkTd4YHafSpc=;
-        b=yxg71PAiWB61rd85tEZ28sAus2tPMyZBt2BxFoPfKwSDc/FNkoBO4a8ZjD6FUAz56Q
-         pbUpnzKJO0kMa6VoV9xsS5+MACB+/1q2H5/EtcaTvtnmIkrK5xEcVL8Vo/pvo4IVpiXx
-         zDDT4aChxucv1cqXjdjvk6NslBnkR9OUcCVAvMHEJKmJNT/cgRh8xu7poQ8xx3FJFAQy
-         GZ6lECdfB/EbnWwWIYLATfWTsOcbjZwMtkmBG8+xEzOXGcXWdJx4BzUT9JXvPlnn6j4I
-         DNKYeXnZE8fShTRSa9ILqMp1/MHIHQqRfX8mUAbLRzj9B2fClJg/IV2U2sHnzmizJoT0
-         KApw==
-X-Gm-Message-State: AJIora8iIiZovZtFmVEdJ0VYrY3ApfKI2xObsgFjBi0VtXLDlXrr8yTu
-        rngsWgdroN4scGadNNTRyxIs2G3vt0WqOjD1
-X-Google-Smtp-Source: AGRyM1v09PrbrU/gJlQVbhzE1r3cciKw54Dff9dBWLE720xzKZZcQ/V5aM/FQSWpxRKdoFYFMXxf5A==
-X-Received: by 2002:a17:907:3e03:b0:722:e694:438 with SMTP id hp3-20020a1709073e0300b00722e6940438mr11121450ejc.755.1656028561948;
-        Thu, 23 Jun 2022 16:56:01 -0700 (PDT)
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com. [209.85.128.41])
-        by smtp.gmail.com with ESMTPSA id v10-20020a1709063bca00b006ffa19b7782sm229177ejf.74.2022.06.23.16.56.01
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 23 Jun 2022 16:56:01 -0700 (PDT)
-Received: by mail-wm1-f41.google.com with SMTP id j5-20020a05600c1c0500b0039c5dbbfa48so2398536wms.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jun 2022 16:56:01 -0700 (PDT)
-X-Received: by 2002:a05:600c:5112:b0:397:53f5:e15b with SMTP id
- o18-20020a05600c511200b0039753f5e15bmr479478wms.93.1656028560976; Thu, 23 Jun
- 2022 16:56:00 -0700 (PDT)
-MIME-Version: 1.0
-References: <20220623223119.1858863-1-gwendal@chromium.org>
-In-Reply-To: <20220623223119.1858863-1-gwendal@chromium.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Thu, 23 Jun 2022 16:55:47 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=UbkWjuDjGODjFaAqUA4bBnPe_-fLMJf55cNm_eSi-XTw@mail.gmail.com>
-Message-ID: <CAD=FV=UbkWjuDjGODjFaAqUA4bBnPe_-fLMJf55cNm_eSi-XTw@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: sc7280: Rename sar sensor labels
-To:     Gwendal Grignou <gwendal@chromium.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1656029012; x=1687565012;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=V+hXaNzG1xRg90Us21edRjM0CTBX8UcXbRwupTdVLP4=;
+  b=cFYTK54l0Jj3I3KYIToLQgh2MBUdxyveACW4z74SGmzLY78dBMlA2Ces
+   gJhBGQNfJIfQhtwa4d7XWjLXs74/YuMT/+UrtWBoFpycfC/5V1zxgfr3O
+   kAoWJOq5ve7TsbkEfnJFg0bVzs3rz9UDFIU+ImMNbNX9hVSX2mjXQnvSf
+   0=;
+Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 23 Jun 2022 17:03:32 -0700
+X-QCInternal: smtphost
+Received: from nasanex01b.na.qualcomm.com ([10.46.141.250])
+  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Jun 2022 17:03:31 -0700
+Received: from quicinc.com (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Thu, 23 Jun
+ 2022 17:03:31 -0700
+Date:   Thu, 23 Jun 2022 17:03:30 -0700
+From:   Guru Das Srinagesh <quic_gurus@quicinc.com>
+To:     Andy Shevchenko <andy.shevchenko@gmail.com>
+CC:     Aidan MacDonald <aidanmacdonald.0x0@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Banajit Goswami <bgoswami@codeaurora.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Chanwoo Choi <cw00.choi@samsung.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+        MyungJoo Ham <myungjoo.ham@samsung.com>,
+        Michael Walle <michael@walle.cc>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Bartosz Golaszewski <brgl@bgdev.pl>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Marc Zyngier <maz@kernel.org>,
+        Lee Jones <lee.jones@linaro.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Cristian Ciocaltea <cristian.ciocaltea@gmail.com>,
+        Chen-Yu Tsai <wens@csie.org>, <tharvey@gateworks.com>,
+        <rjones@gateworks.com>, Matti Vaittinen <mazziesaccount@gmail.com>,
+        <orsonzhai@gmail.com>, <baolin.wang7@gmail.com>,
+        <zhang.lyra@gmail.com>, Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Samuel Holland <samuel@sholland.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Takashi Iwai <tiwai@suse.com>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        <linux-actions@lists.infradead.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-arm Mailing List <linux-arm-kernel@lists.infradead.org>,
+        <linux-sunxi@lists.linux.dev>,
+        ALSA Development Mailing List <alsa-devel@alsa-project.org>
+Subject: Re: [PATCH 18/49] mfd: qcom-pm8008: Add broken_mask_unmask irq chip
+ flag
+Message-ID: <20220624000329.GB21400@quicinc.com>
+References: <20220620200644.1961936-1-aidanmacdonald.0x0@gmail.com>
+ <20220620200644.1961936-19-aidanmacdonald.0x0@gmail.com>
+ <CAHp75Vea8F5ogP8kjfdP4SK3aeohoRnkGZ7LtsLuwfXwL+APvA@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <CAHp75Vea8F5ogP8kjfdP4SK3aeohoRnkGZ7LtsLuwfXwL+APvA@mail.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Tue, Jun 21, 2022 at 11:35:09AM +0200, Andy Shevchenko wrote:
+> On Mon, Jun 20, 2022 at 10:08 PM Aidan MacDonald
+> <aidanmacdonald.0x0@gmail.com> wrote:
+> >
+> > The qcom-pm8008 appears to use "1 to enable" convention for
+> > enabling interrupts, with separate set and clear registers.
+> > It's relying on masks and unmasks being inverted from their
+> 
+> It relies
+> 
+> > intuitive meaning, so it needs the broken_mask_unmask flag.
+> 
+> How has it worked until now?
 
-On Thu, Jun 23, 2022 at 3:31 PM Gwendal Grignou <gwendal@chromium.org> wrote:
->
-> To ease matching configuration of sysfs attributes for particular
-> sensor, match label reported by iio 'label' attribute with the location
-> label generated by ChromeOS config tool.
->
-> Signed-off-by: Gwendal Grignou <gwendal@chromium.org>
-> ---
->  arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+It is as Aidan rightly pointed out. When I was writing the pm8008 driver, I
+found that the mask and unmask terminology used in the framework was inverted
+when it came to the hardware, so I had to make do and swap them.
 
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+It works because in regmap_irq_sync_unlock(), the same mask is used to update
+mask_reg and unmask_reg, except that it is inverted for updating the unmask
+register. So, by just swapping which register gets updated with the plain mask
+and which one gets updated with the inverted mask, I could use the framework to
+accomplish the setting and clearing of the correct registers.
