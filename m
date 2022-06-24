@@ -2,72 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 186A9559F4A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jun 2022 19:26:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4D99355A017
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jun 2022 20:07:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232157AbiFXRZi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Jun 2022 13:25:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51606 "EHLO
+        id S230073AbiFXR1S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Jun 2022 13:27:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51396 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230160AbiFXRZZ (ORCPT
+        with ESMTP id S232116AbiFXR0z (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Jun 2022 13:25:25 -0400
-Received: from mail-oa1-x2c.google.com (mail-oa1-x2c.google.com [IPv6:2001:4860:4864:20::2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB73881C57
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Jun 2022 10:23:35 -0700 (PDT)
-Received: by mail-oa1-x2c.google.com with SMTP id 586e51a60fabf-101d2e81bceso4731653fac.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Jun 2022 10:23:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=XbZbGNfhjt2oAj/A489g96X9oJYW0QO+shnAI190mdI=;
-        b=XoIJcUUWicQDBxKC3woD+J63DN5sxq7Pqr+oVtUxMqwMx4eXujTcPUx8CNYqNCYu4z
-         dDO2aECNhRmjWFWSAI7wS0sEYxVrgt2Sw5IO0QSctJ/2n5Gt+nsqNTG9zOkVtD6uUcWH
-         7r8vkr0bSYftg4ku9svIF35kcLp5hQcXGcpSqCvJBQQdJjbFlTtWtormkMZdDWM7TmEK
-         CzPNcDgCe/4H477IST0MQS+NIl/FLMTNbALaC/rJwLI0bqb73LM4MvPU7ej9lPiIRdaF
-         6ZzP3Fv9jRmVZOBhc62vbziQHm+Ot4gSyBwPzDp2JZmv+JZRyi9RdcgyN8GQQD/NV8Da
-         obIg==
+        Fri, 24 Jun 2022 13:26:55 -0400
+Received: from mail-il1-f171.google.com (mail-il1-f171.google.com [209.85.166.171])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A821B34650;
+        Fri, 24 Jun 2022 10:26:52 -0700 (PDT)
+Received: by mail-il1-f171.google.com with SMTP id a16so1918127ilr.6;
+        Fri, 24 Jun 2022 10:26:52 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=XbZbGNfhjt2oAj/A489g96X9oJYW0QO+shnAI190mdI=;
-        b=K5Uj44Mnxy/8bWsLWsiDmS+NZvg82sIymzQ8/DQmoHZRvh7KAKzq1zTIHNnp4Bqe3z
-         lZSaBk6FmHJR99Zffp1jriYOOXdlZxQ5uyzqYxa2SLr1LoPMCA8xK9Vao4/1ag+w1AJ5
-         gc2PjhC2YHRrkkICEf0esq8ARpGalvXpNckYOEn+uJp45vmFq2pcOLbVDHiVw6Injvg7
-         AxQBZ1ebP5fzRr+M9yG3K19XmyKMsycHIe3JKX4V2gM3hOuGwTMLwTiQXkyQsIzmYLmz
-         ED6K/WsUkZuTWftyLX9C6WTOXmW3+HzfT+2ttWPcWL8uuB47mq2hRv5ojaprsaiq+a2+
-         LtFg==
-X-Gm-Message-State: AJIora/8pEqNeDpYycRerKfGPUUKpD4fLumiPq+jjVEhB6czEpDF7wEV
-        Pfo7TrvXL/UvgY5LSbM1oxTMvA==
-X-Google-Smtp-Source: AGRyM1sKhr3pirbcv0CxaXGtVfvWOuyImVuIFPfkXT9D9ljaDRYy+4WEVjyBnifzu6Uu+nZl+ETnGw==
-X-Received: by 2002:a05:6870:4348:b0:f1:ec31:10e7 with SMTP id x8-20020a056870434800b000f1ec3110e7mr41315oah.156.1656091412759;
-        Fri, 24 Jun 2022 10:23:32 -0700 (PDT)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id j79-20020acaeb52000000b0032f0eb4aad5sm1387143oih.46.2022.06.24.10.23.31
+        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
+         :message-id;
+        bh=Hcu9Y5I2TimI6GlhyMhgQe9uEC4LVq7xIAa/nAEPBC8=;
+        b=Ks9Kxud5Ef+I3tMy+o1ZwmojUgWitXjhm+aOI+TAM+04nwtxS5Y4ixfMDKV45zMDMl
+         xNr1C+I4tmkK2aqyAf87mcOULKZoq/ZX+XVgrrHr79686T5Id6dKPPAJQEhY2saPyaT0
+         Eh4KnkR0cjXYld71EopeDXFBiXWEzxKQ1GQou6rUu7UkJx86rkRFnT7f5cWwGyS/adKS
+         8a8mJwS9Z89/1ewYgwN+LPvw0nSLJG3FqhEYsIU+FCOJ8Db48beet0FsB5bLV/GnQuaS
+         VNqFZUUf+HcYiqUzeZc4FpzVnq8TfTQgw358aMvjRadnfv39OXfqAaKqlGaY6k9HuL+7
+         BmUg==
+X-Gm-Message-State: AJIora9rzcVhj4Zz/mVgjnyCbuBakjjT1gUQ3I71b7tklDn+Q1JyVQjq
+        p/Aw5+PyuA7RuZi/2HLdRw==
+X-Google-Smtp-Source: AGRyM1vzAHHR7MUdvcHbYB9plvLeB5pijXtWczq677bgA2sQBUma/I2wqLWx2WXMYorxt26CDMLDSg==
+X-Received: by 2002:a92:a041:0:b0:2d7:7935:effa with SMTP id b1-20020a92a041000000b002d77935effamr44849ilm.222.1656091611881;
+        Fri, 24 Jun 2022 10:26:51 -0700 (PDT)
+Received: from robh.at.kernel.org ([64.188.179.253])
+        by smtp.gmail.com with ESMTPSA id s12-20020a92d90c000000b002d92c91da91sm1344610iln.77.2022.06.24.10.26.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Jun 2022 10:23:32 -0700 (PDT)
-Date:   Fri, 24 Jun 2022 12:23:30 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org
-Subject: Re: [PATCH v8 2/7] arm64: dts: qcom: sm8450: Add description of
- camera clock controller
-Message-ID: <YrXzEqtfLi2vmTXE@builder.lan>
-References: <20220624115917.2524868-1-vladimir.zapolskiy@linaro.org>
- <20220624115917.2524868-3-vladimir.zapolskiy@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220624115917.2524868-3-vladimir.zapolskiy@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        Fri, 24 Jun 2022 10:26:51 -0700 (PDT)
+Received: (nullmailer pid 146334 invoked by uid 1000);
+        Fri, 24 Jun 2022 17:26:34 -0000
+From:   Rob Herring <robh@kernel.org>
+To:     Sricharan R <quic_srichara@quicinc.com>
+Cc:     linux-kernel@vger.kernel.org, robh+dt@kernel.org,
+        devicetree@vger.kernel.org, sboyd@kernel.org,
+        linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org,
+        mturquette@baylibre.com, linux-clk@vger.kernel.org,
+        linux-gpio@vger.kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        agross@kernel.org, quic_varada@quicinc.com,
+        linus.walleij@linaro.org, linux-arm-kernel@lists.infradead.org,
+        catalin.marinas@arm.com, p.zabel@pengutronix.de
+In-Reply-To: <20220621161126.15883-5-quic_srichara@quicinc.com>
+References: <20220621161126.15883-1-quic_srichara@quicinc.com> <20220621161126.15883-5-quic_srichara@quicinc.com>
+Subject: Re: [PATCH V2 4/8] dt-bindings: pinctrl: qcom: Add ipq5018 pinctrl bindings
+Date:   Fri, 24 Jun 2022 11:26:34 -0600
+Message-Id: <1656091594.356132.146333.nullmailer@robh.at.kernel.org>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -75,78 +65,61 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri 24 Jun 06:59 CDT 2022, Vladimir Zapolskiy wrote:
-
-> Add description of QCOM SM8450 camera clock controller.
+On Tue, 21 Jun 2022 21:41:22 +0530, Sricharan R wrote:
+> From: Varadarajan Narayanan <quic_varada@quicinc.com>
 > 
-> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+> Add device tree binding Documentation details for ipq5018
+> pinctrl driver.
+> 
+> Co-developed-by: Nitheesh Sekar <quic_nsekar@quicinc.com>
+> Co-developed-by: Sricharan R <quic_srichara@quicinc.com>
+> Signed-off-by: Sricharan R <quic_srichara@quicinc.com>
+> Signed-off-by: Nitheesh Sekar <quic_nsekar@quicinc.com>
+> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
 > ---
-> Changes from v7 to v8:
-> * rebased on top of v5.19-rc2,
-> * minor improvement to the commit message.
+>  .../pinctrl/qcom,ipq5018-pinctrl.yaml         | 145 ++++++++++++++++++
+>  1 file changed, 145 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,ipq5018-pinctrl.yaml
 > 
-> Changes from v6 to v7:
-> * rebased on top of v5.19-rc1.
-> 
-> Changes from v5 to v6:
-> * rebased on top of linux-next.
-> 
-> Changes from v3 to v5:
-> * none.
-> 
-> Changes from v2 to v3:
-> * account a renamed header file.
-> 
-> Changes from v1 to v2:
-> * disabled camcc device tree node by default.
-> 
->  arch/arm64/boot/dts/qcom/sm8450.dtsi | 20 ++++++++++++++++++++
->  1 file changed, 20 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> index 7d08fad76371..fad813a21df5 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> @@ -6,6 +6,7 @@
->  #include <dt-bindings/interrupt-controller/arm-gic.h>
->  #include <dt-bindings/clock/qcom,gcc-sm8450.h>
->  #include <dt-bindings/clock/qcom,rpmh.h>
-> +#include <dt-bindings/clock/qcom,sm8450-camcc.h>
->  #include <dt-bindings/dma/qcom-gpi.h>
->  #include <dt-bindings/gpio/gpio.h>
->  #include <dt-bindings/mailbox/qcom-ipcc.h>
-> @@ -2288,6 +2289,25 @@ IPCC_MPROC_SIGNAL_GLINK_QMP
->  			};
->  		};
->  
-> +		camcc: clock-controller@ade0000 {
-> +			compatible = "qcom,sm8450-camcc";
-> +			reg = <0 0x0ade0000 0 0x20000>;
-> +			status = "disabled";
 
-Please put the status last.
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
-Regards,
-Bjorn
+yamllint warnings/errors:
+./Documentation/devicetree/bindings/pinctrl/qcom,ipq5018-pinctrl.yaml:72:11: [warning] wrong indentation: expected 16 but found 10 (indentation)
+./Documentation/devicetree/bindings/pinctrl/qcom,ipq5018-pinctrl.yaml:73:11: [warning] wrong indentation: expected 16 but found 10 (indentation)
+./Documentation/devicetree/bindings/pinctrl/qcom,ipq5018-pinctrl.yaml:74:11: [warning] wrong indentation: expected 16 but found 10 (indentation)
+./Documentation/devicetree/bindings/pinctrl/qcom,ipq5018-pinctrl.yaml:75:11: [warning] wrong indentation: expected 16 but found 10 (indentation)
+./Documentation/devicetree/bindings/pinctrl/qcom,ipq5018-pinctrl.yaml:76:11: [warning] wrong indentation: expected 16 but found 10 (indentation)
+./Documentation/devicetree/bindings/pinctrl/qcom,ipq5018-pinctrl.yaml:77:11: [warning] wrong indentation: expected 16 but found 10 (indentation)
+./Documentation/devicetree/bindings/pinctrl/qcom,ipq5018-pinctrl.yaml:78:11: [warning] wrong indentation: expected 16 but found 10 (indentation)
+./Documentation/devicetree/bindings/pinctrl/qcom,ipq5018-pinctrl.yaml:79:11: [warning] wrong indentation: expected 16 but found 10 (indentation)
+./Documentation/devicetree/bindings/pinctrl/qcom,ipq5018-pinctrl.yaml:80:11: [warning] wrong indentation: expected 16 but found 10 (indentation)
+./Documentation/devicetree/bindings/pinctrl/qcom,ipq5018-pinctrl.yaml:81:11: [warning] wrong indentation: expected 16 but found 10 (indentation)
+./Documentation/devicetree/bindings/pinctrl/qcom,ipq5018-pinctrl.yaml:82:11: [warning] wrong indentation: expected 16 but found 10 (indentation)
+./Documentation/devicetree/bindings/pinctrl/qcom,ipq5018-pinctrl.yaml:83:11: [warning] wrong indentation: expected 16 but found 10 (indentation)
+./Documentation/devicetree/bindings/pinctrl/qcom,ipq5018-pinctrl.yaml:84:11: [warning] wrong indentation: expected 16 but found 10 (indentation)
+./Documentation/devicetree/bindings/pinctrl/qcom,ipq5018-pinctrl.yaml:85:11: [warning] wrong indentation: expected 16 but found 10 (indentation)
+./Documentation/devicetree/bindings/pinctrl/qcom,ipq5018-pinctrl.yaml:86:11: [warning] wrong indentation: expected 16 but found 10 (indentation)
+./Documentation/devicetree/bindings/pinctrl/qcom,ipq5018-pinctrl.yaml:87:11: [warning] wrong indentation: expected 16 but found 10 (indentation)
+./Documentation/devicetree/bindings/pinctrl/qcom,ipq5018-pinctrl.yaml:88:11: [warning] wrong indentation: expected 16 but found 10 (indentation)
+./Documentation/devicetree/bindings/pinctrl/qcom,ipq5018-pinctrl.yaml:89:11: [warning] wrong indentation: expected 16 but found 10 (indentation)
+./Documentation/devicetree/bindings/pinctrl/qcom,ipq5018-pinctrl.yaml:90:11: [warning] wrong indentation: expected 16 but found 10 (indentation)
 
-> +			clocks = <&gcc GCC_CAMERA_AHB_CLK>,
-> +				 <&rpmhcc RPMH_CXO_CLK>,
-> +				 <&rpmhcc RPMH_CXO_CLK_A>,
-> +				 <&sleep_clk>;
-> +			clock-names = "iface",
-> +				      "bi_tcxo",
-> +				      "bi_tcxo_ao",
-> +				      "sleep_clk";
-> +			power-domains = <&rpmhpd SM8450_MMCX>;
-> +			required-opps = <&rpmhpd_opp_low_svs>;
-> +			#clock-cells = <1>;
-> +			#reset-cells = <1>;
-> +			#power-domain-cells = <1>;
-> +		};
-> +
->  		pdc: interrupt-controller@b220000 {
->  			compatible = "qcom,sm8450-pdc", "qcom,pdc";
->  			reg = <0 0x0b220000 0 0x30000>, <0 0x174000f0 0 0x64>;
-> -- 
-> 2.33.0
-> 
+dtschema/dtc warnings/errors:
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.ozlabs.org/patch/
+
+This check can fail if there are any dependencies. The base for a patch
+series is generally the most recent rc1.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit.
+
