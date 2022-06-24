@@ -2,60 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5010A559F88
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jun 2022 19:26:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DEFDC559F5B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jun 2022 19:26:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231737AbiFXRLR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Jun 2022 13:11:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33638 "EHLO
+        id S231978AbiFXROv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Jun 2022 13:14:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36232 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229969AbiFXRLQ (ORCPT
+        with ESMTP id S231983AbiFXROu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Jun 2022 13:11:16 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01602522CB;
-        Fri, 24 Jun 2022 10:11:15 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id A8437B82AD2;
-        Fri, 24 Jun 2022 17:11:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32448C34114;
-        Fri, 24 Jun 2022 17:11:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1656090673;
-        bh=D4lolD9AmX1X3qRrzPxA81y4WM5Ett/5C8PadMrGeuM=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:From;
-        b=FmpLm8M97dO7waV33x83kLNE4i9x4eMGvpGfYRgoD9WF28TPSAIW4vo2DdWq4+/90
-         NHUTMIjfd1104CN+zSztDYHFxWPUlONCtUYyB1qxrbnIMgADhYDjjYGzfgm8t4GB0f
-         Bniut/HbPAZ7pk7noSboHdG+yyJgph35kviu65bXPMeaj42Ei0rAZjDThtkFyUxEdc
-         gYSEX5PO0OywTeWH0GcClrRes6FIDptN/6Y/pNfqtaDAVz1MkHBylNcga8Qnsy65kK
-         +/dZvYWJuH6Lh46HaN8vKxPCdRUopRBfH28q6Fc59uRHMLHgAyM9fTxMIuwiq97vXv
-         1BxfDWKHGXUQQ==
-Date:   Fri, 24 Jun 2022 12:11:11 -0500
-From:   Bjorn Helgaas <helgaas@kernel.org>
-To:     Krishna chaitanya chundru <quic_krichai@quicinc.com>
-Cc:     linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_vbadigan@quicinc.com,
-        quic_hemantk@quicinc.com, quic_nitegupt@quicinc.com,
-        quic_skananth@quicinc.com, quic_ramkri@quicinc.com,
-        manivannan.sadhasivam@linaro.org, swboyd@chromium.org,
+        Fri, 24 Jun 2022 13:14:50 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66453647A0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Jun 2022 10:14:48 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id g18so3941541wrb.10
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Jun 2022 10:14:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=ktu3ikYNE7irPLarQIpMZpPOBYDmyDcsFDEun1kygEY=;
+        b=xi9MZOPXRCdoh9sO8tIFIGDgvS9dqWXO3XDyam9oNMuirIIWFHfz20y14sMxxpqGIT
+         SOcuoeLbfj3s7aZMasQ/REd2xJGE4+YLgO8TbMaT+gCZtd9H+0LRXQUWB16W0htXNpuf
+         nyYqF+5xS1ZaUFBVys39bJUQo+t/uRywgLUcgb1hs/5GkNWejnhrGHhGW9VKrld0n2EW
+         AbETSPvLqdL8vVWVydLgUG3xWQY15O1Gd04XuAI9KzhYlOfcHS/WllVm89ucIjkc/2gH
+         Rq78KNq0DxCHzgnb5pD+cOJdCidEfOF4jfIbwUrMxQj2EGvD2Z5WAwARhkifoDNmf05e
+         qeZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=ktu3ikYNE7irPLarQIpMZpPOBYDmyDcsFDEun1kygEY=;
+        b=hHIDDt7Mx5bQvSFDPWPhLYSAkcjLAWqnrsaaa593d7yakI0VkXNkV/oiQhQOG1Y6xE
+         uUsjGyD3pWcb1Vb65765+NllcZgoWPAaUdXkjEYAghK1Qx0H0xU0uIut89PYeaRbyMdi
+         Lm7G8SgNbZRbn8IoJegMbe/KZQ+LnejRDTbkM9CvyEh3GRdZazj020EuYnT4IJ7Sl7kq
+         JUfkDQD+SMKcU8faST1Jx4xdpyzo9NsOm3Tzqs/8/bLoZZTxTQUvA5aCHfyELTZEFxVx
+         tWFAtUEO5spMV9Llm9CedFrgNZ67oz51YQLXMST/0JcLuFXBT+GoBAK8OovFjAEniYNY
+         sM6A==
+X-Gm-Message-State: AJIora/+IfGJMeaNnN8JQmPRE5+/gnJ1/rvM2bNZaA5slo1hXipN9QEo
+        JpqpRjP5gnQbObYhTEgB7vkBIg==
+X-Google-Smtp-Source: AGRyM1sLQYGZAaX+lFxtBA94oQIWAvZYbgECA77xFxvwaOZQm0PFlwQ5AY512c5CrAbgrYnDliPWmg==
+X-Received: by 2002:a05:6000:184c:b0:21b:b6ac:8cb6 with SMTP id c12-20020a056000184c00b0021bb6ac8cb6mr197570wri.154.1656090886924;
+        Fri, 24 Jun 2022 10:14:46 -0700 (PDT)
+Received: from [192.168.0.237] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id az33-20020a05600c602100b003a03b4cb7cfsm2781255wmb.38.2022.06.24.10.14.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 24 Jun 2022 10:14:46 -0700 (PDT)
+Message-ID: <1f426a67-2cf2-b67e-3cd0-a4c452591baa@linaro.org>
+Date:   Fri, 24 Jun 2022 19:14:44 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: Re: [PATCH RESEND v9 2/5] arm: dts: lpc18xx: Harmonize EHCI/OHCI DT
+ nodes name
+Content-Language: en-US
+To:     Serge Semin <Sergey.Semin@baikalelectronics.ru>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Felipe Balbi <balbi@kernel.org>,
+        Michael Ellerman <mpe@ellerman.id.au>,
+        Vladimir Zapolskiy <vz@mleia.com>,
+        Alexey Brodkin <abrodkin@synopsys.com>,
+        Vineet Gupta <vgupta@synopsys.com>,
+        Rob Herring <robh+dt@kernel.org>,
         Rob Herring <robh@kernel.org>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>
-Subject: Re: [PATCH v2] PCI: qcom: Allow L1 and its sub states
-Message-ID: <20220624171111.GA1542083@bhelgaas>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1655298939-392-1-git-send-email-quic_krichai@quicinc.com>
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        linux-usb@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Serge Semin <fancer.lancer@gmail.com>,
+        Khuong Dinh <khuong@os.amperecomputing.com>,
+        Patrice Chotard <patrice.chotard@st.com>,
+        Benjamin Herrenschmidt <benh@kernel.crashing.org>,
+        Paul Mackerras <paulus@samba.org>,
+        linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linuxppc-dev@lists.ozlabs.org, linux-snps-arc@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20220624141622.7149-1-Sergey.Semin@baikalelectronics.ru>
+ <20220624141622.7149-3-Sergey.Semin@baikalelectronics.ru>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220624141622.7149-3-Sergey.Semin@baikalelectronics.ru>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -63,52 +96,24 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jun 15, 2022 at 06:45:39PM +0530, Krishna chaitanya chundru wrote:
-> Allow L1 and its sub-states in the qcom pcie driver.
-> By default this is disabled in the hardware. So enabling it explicitly.
+On 24/06/2022 16:16, Serge Semin wrote:
+> In accordance with the Generic EHCI/OHCI bindings the corresponding node
+> name is suppose to comply with the Generic USB HCD DT schema, which
+> requires the USB nodes to have the name acceptable by the regexp:
+> "^usb(@.*)?" . Make sure the "generic-ehci" and "generic-ohci"-compatible
+> nodes are correctly named.
 > 
-> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-
-I have a vague memory of my questions at [1] being answered, but I
-don't see the answers on the mailing list.  Maybe I missed it?
-
-We should expand the commit log a bit with those details.
-
-I'm also hoping for an ack from Stanimir, Andy, or Bjorn A., since
-they're listed as maintainers of this driver.
-
-[1] https://lore.kernel.org/r/20220615154422.GA941075@bhelgaas
-
+> Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
+> Acked-by: Vladimir Zapolskiy <vz@mleia.com>
+> Acked-by: Krzysztof Kozlowski <krzk@kernel.org>
 > ---
->  drivers/pci/controller/dwc/pcie-qcom.c | 8 ++++++++
->  1 file changed, 8 insertions(+)
-> 
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> index 6ab9089..0d8efcc 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> @@ -41,6 +41,9 @@
->  #define L23_CLK_RMV_DIS				BIT(2)
->  #define L1_CLK_RMV_DIS				BIT(1)
->  
-> +#define PCIE20_PARF_PM_CTRL			0x20
-> +#define REQ_NOT_ENTR_L1				BIT(5)
-> +
->  #define PCIE20_PARF_PHY_CTRL			0x40
->  #define PHY_CTRL_PHY_TX0_TERM_OFFSET_MASK	GENMASK(20, 16)
->  #define PHY_CTRL_PHY_TX0_TERM_OFFSET(x)		((x) << 16)
-> @@ -1267,6 +1270,11 @@ static int qcom_pcie_init_2_7_0(struct qcom_pcie *pcie)
->  	val |= BIT(4);
->  	writel(val, pcie->parf + PCIE20_PARF_MHI_CLOCK_RESET_CTRL);
->  
-> +	/* Enable L1 and L1ss */
-> +	val = readl(pcie->parf + PCIE20_PARF_PM_CTRL);
-> +	val &= ~REQ_NOT_ENTR_L1;
-> +	writel(val, pcie->parf + PCIE20_PARF_PM_CTRL);
-> +
->  	if (IS_ENABLED(CONFIG_PCI_MSI)) {
->  		val = readl(pcie->parf + PCIE20_PARF_AXI_MSTR_WR_ADDR_HALT);
->  		val |= BIT(31);
-> -- 
-> 2.7.4
-> 
+>  arch/arm/boot/dts/lpc18xx.dtsi | 4 ++--
+
+You should split the patchset per architecture, because maybe that's why
+no one picks it up?
+
+Let me pick up ARM bits through my cleanup series. If anyone objects,
+please let me know.
+
+Best regards,
+Krzysztof
