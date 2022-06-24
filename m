@@ -2,78 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2C6FD559F46
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jun 2022 19:26:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0F76F559F43
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jun 2022 19:26:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232409AbiFXRUh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Jun 2022 13:20:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41758 "EHLO
+        id S232285AbiFXRVC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Jun 2022 13:21:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40028 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232218AbiFXRUK (ORCPT
+        with ESMTP id S232287AbiFXRUr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Jun 2022 13:20:10 -0400
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04AB277FD2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Jun 2022 10:19:34 -0700 (PDT)
-Received: by mail-ed1-x535.google.com with SMTP id z7so4352250edm.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Jun 2022 10:19:34 -0700 (PDT)
+        Fri, 24 Jun 2022 13:20:47 -0400
+Received: from mail-oo1-xc31.google.com (mail-oo1-xc31.google.com [IPv6:2607:f8b0:4864:20::c31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BEC3347AFD
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Jun 2022 10:20:33 -0700 (PDT)
+Received: by mail-oo1-xc31.google.com with SMTP id f10-20020a4aa68a000000b0042579cb6238so594353oom.7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Jun 2022 10:20:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=KS34vGYRSEeom0zBAYcIutCueN9pUJGrVfFONWYZS6I=;
-        b=MQpUNRQdH2CMCUcbwB0qvConkQ0Y41WRRGOC1mrEUw9Dc+Sjbe5enP+cumPAVrTUta
-         B+L0hqHj5RQsjBSMgV4CGhybdo47EDlRYS4obEZpRzwd3HfVDa3Y7Vba+ZF0qcqQfug5
-         o2NeMp7YD0JEJ5/GBVm5lYHwBjXzgpkYuIc6zqMEpWiFBtolOa4APvfnYMwba9JcrQqq
-         6sx4bIK6zd/7hxghZEqNNQajIxkpCGl7oE6bbMHN1BtW/cttI4DDeII8LOy6mU2EMYIX
-         X4MCTblnDY8ac2pnui+utOl8zKefVGlEhgZZl8Q3ijRsWCeXPKrqnQSz7XsKz8bb6Fq4
-         XyVg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=DqHISH2vFNBZeTwwkM15NyX61DG2AnPuCHUHcBvWsb0=;
+        b=RcrQzPEREsM/Qv1CABQEbaJ2bNzLJzf3bwVVXGg8LPVcyGoFZLVCqSP3Im7ihqtawO
+         joKj7YenBndxd+e6BuT7FBdh15I8XXcVfwoM7X5OHdOyBBTmIGhrppjrLC6PSac1XyHl
+         bWkYWzWkbtOmOcfTFqgSQ6JxfhRoeIL8WYYZ7nUaFwFNL0Lewy1bIlchXNCtp27hHxnX
+         8mneFNqv94QOSbDzaBgW13OZdrjsxga9M3wl5e/Y8cWI7nxKtNxQPh+CYf6z8Vu113la
+         4KRFM7tyvcJj5mfTZfukqA+s2cTgJKJqSI0lUEEZJLdcEI27vqm8KPKdwxi9XGfsKFHv
+         nekQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=KS34vGYRSEeom0zBAYcIutCueN9pUJGrVfFONWYZS6I=;
-        b=CbtH783TazNhmn/pRVSr075MjGfr42gjC4l/w3IF5KpHPoyR4R697jNu02Ak6+g2rm
-         FuB3+3cRb+eSVOHIP9fNguA5f+2lk9vh5ve0s44K0Vg4ss/O1e1a5VK+FgP9e2ILCvom
-         kadND9mj7RKwCbKgpL3KQQHe+ymmAuEqlfSIhZzHZtjU/7SL35/dE69x6AdtU8oYRRws
-         mcMiCGCe7NYGsfRDxWm9ZOLqiHtEVuPqx1VCUtdTSvYv4DI88C9hNYd8fByn4ddzS3tK
-         XDNU5VMQtDdRawzwHKbsemsUIGbyHxj0G9ca1P9eVraoOyO3H8vgPSJYva0rZ3TyOyuA
-         IARg==
-X-Gm-Message-State: AJIora823Fxd04i12xPeDiaqo0QIwnqkgsr3qrpiJvAC/6CpD5k7IzPp
-        1JVFBvz0J+V0Q9AQ5UMj0rNDeg==
-X-Google-Smtp-Source: AGRyM1sy0G4UxBbA4d5YsqvS5law/GMKQEGgXv43hk/UUfo4dMXlTbf3wk4hUoOrGV/kkymXUz9C8Q==
-X-Received: by 2002:aa7:c6d9:0:b0:435:706a:4578 with SMTP id b25-20020aa7c6d9000000b00435706a4578mr196157eds.24.1656091173189;
-        Fri, 24 Jun 2022 10:19:33 -0700 (PDT)
-Received: from localhost.localdomain (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id i24-20020a170906251800b007262a1c8d20sm1445456ejb.19.2022.06.24.10.19.31
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=DqHISH2vFNBZeTwwkM15NyX61DG2AnPuCHUHcBvWsb0=;
+        b=cxPVYMrkcWmlRoC6wq2CiVGcHNVAJ99fgpKIU4KlnPmShPECqtxxRhLYNO9tw8RNgY
+         1THtUZilsKDEXzGv8nwYhfMUCyCS18uxD6izm3ffQGoBESAieM0qU+L2JtazJBM7rhey
+         j9to5dt7j9xwwYsj759ltHxxLnDpmtX795i58mImMRK0HUTd9REK/SGwUdJDvx3q7lE0
+         9bh4aMXNwy4A5nm8eZiOZXZOuoWUYEexP59UUEOnvoTG1ElA1zCjt1dM8oC7ux2CD4Nk
+         xrZn62hJYzizLvB0y8Qu8OV6HFJIaNPTjJPQMzeW4qS4SAYrf9VJKE4YVxP1dv6S9mDi
+         bTiQ==
+X-Gm-Message-State: AJIora95vpAgWQcYzHXkXacdXzUZlHIVogcSJKHmR8lwg8n9pNVnq6j9
+        VnWnsg99Kc14DKIAXi3ZReQcxA==
+X-Google-Smtp-Source: AGRyM1u15um2JVxI2f2Fm8VmUHw+cPB1Tt1w7qJI87ULXayijK8h940nti+Ls/lra4W0ag2L/ugyjw==
+X-Received: by 2002:a4a:96b3:0:b0:422:23d3:46de with SMTP id s48-20020a4a96b3000000b0042223d346demr57904ooi.70.1656091232992;
+        Fri, 24 Jun 2022 10:20:32 -0700 (PDT)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id l17-20020a05687014d100b000f349108868sm2175596oab.44.2022.06.24.10.20.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Jun 2022 10:19:32 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     gregkh@linuxfoundation.org, mpe@ellerman.id.au,
-        abrodkin@synopsys.com, agross@kernel.org, robh@kernel.org,
-        vz@mleia.com, Sergey.Semin@baikalelectronics.ru,
-        bjorn.andersson@linaro.org, linux-usb@vger.kernel.org,
-        balbi@kernel.org, vgupta@synopsys.com, krzk@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, robh+dt@kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        patrice.chotard@st.com, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, paulus@samba.org,
-        linux-arm-kernel@lists.infradead.org, fancer.lancer@gmail.com,
-        linux-snps-arc@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linuxppc-dev@lists.ozlabs.org, benh@kernel.crashing.org,
-        khuong@os.amperecomputing.com
-Subject: Re: (subset) [PATCH RESEND v9 2/5] arm: dts: lpc18xx: Harmonize EHCI/OHCI DT nodes name
-Date:   Fri, 24 Jun 2022 19:19:30 +0200
-Message-Id: <165609116546.68884.16917167353605359946.b4-ty@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220624141622.7149-3-Sergey.Semin@baikalelectronics.ru>
-References: <20220624141622.7149-1-Sergey.Semin@baikalelectronics.ru> <20220624141622.7149-3-Sergey.Semin@baikalelectronics.ru>
+        Fri, 24 Jun 2022 10:20:32 -0700 (PDT)
+Date:   Fri, 24 Jun 2022 12:20:30 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
+Subject: Re: [PATCH v8 7/7] clk: qcom: add camera clock controller driver for
+ SM8450 SoC
+Message-ID: <YrXyXrGkYyxugOR7@builder.lan>
+References: <20220624115917.2524868-1-vladimir.zapolskiy@linaro.org>
+ <20220624120006.2524968-1-vladimir.zapolskiy@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220624120006.2524968-1-vladimir.zapolskiy@linaro.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -81,21 +73,201 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 24 Jun 2022 17:16:18 +0300, Serge Semin wrote:
-> In accordance with the Generic EHCI/OHCI bindings the corresponding node
-> name is suppose to comply with the Generic USB HCD DT schema, which
-> requires the USB nodes to have the name acceptable by the regexp:
-> "^usb(@.*)?" . Make sure the "generic-ehci" and "generic-ohci"-compatible
-> nodes are correctly named.
+On Fri 24 Jun 07:00 CDT 2022, Vladimir Zapolskiy wrote:
+
+> Add  camera clock controller driver found on QCOM SM8450 SoC.
 > 
+> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+> ---
+> Changes from v7 to v8:
+> * narrowed down the list of included header files,
+> * constified .hw.init anonymous structs.
 > 
-> [...]
+> Changes from v6 to v7:
+> * none.
+> 
+> Changes from v5 to v6:
+> * fixed a topology of power domains aroung titan_top GDSC.
+> 
+> Changes from v3 to v5:
+> * none.
+> 
+> Changes from v2 to v3:
+> * took into account a renamed header file,
+> * constified a couple of struct pll_vco objects,
+> * deprioritized module init level.
+> 
+> Changes from v1 to v2:
+> * none.
+> 
+>  drivers/clk/qcom/Kconfig        |    7 +
+>  drivers/clk/qcom/Makefile       |    1 +
+>  drivers/clk/qcom/camcc-sm8450.c | 2865 +++++++++++++++++++++++++++++++
+>  3 files changed, 2873 insertions(+)
+>  create mode 100644 drivers/clk/qcom/camcc-sm8450.c
+> 
+> diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
+> index bc4dcf356d82..372633ab917f 100644
+> --- a/drivers/clk/qcom/Kconfig
+> +++ b/drivers/clk/qcom/Kconfig
+> @@ -608,6 +608,13 @@ config SM_CAMCC_8250
+>  	  Support for the camera clock controller on SM8250 devices.
+>  	  Say Y if you want to support camera devices and camera functionality.
+>  
+> +config SM_CAMCC_8450
+> +	tristate "SM8450 Camera Clock Controller"
+> +	select SM_GCC_8450
+> +	help
+> +	  Support for the camera clock controller on SM8450 devices.
+> +	  Say Y if you want to support camera devices and camera functionality.
+> +
+>  config SM_DISPCC_6125
+>  	tristate "SM6125 Display Clock Controller"
+>  	depends on SM_GCC_6125
+> diff --git a/drivers/clk/qcom/Makefile b/drivers/clk/qcom/Makefile
+> index 36789f5233ef..18dd1cc14e0f 100644
+> --- a/drivers/clk/qcom/Makefile
+> +++ b/drivers/clk/qcom/Makefile
+> @@ -88,6 +88,7 @@ obj-$(CONFIG_SDM_VIDEOCC_845) += videocc-sdm845.o
+>  obj-$(CONFIG_SDX_GCC_55) += gcc-sdx55.o
+>  obj-$(CONFIG_SDX_GCC_65) += gcc-sdx65.o
+>  obj-$(CONFIG_SM_CAMCC_8250) += camcc-sm8250.o
+> +obj-$(CONFIG_SM_CAMCC_8450) += camcc-sm8450.o
+>  obj-$(CONFIG_SM_DISPCC_6125) += dispcc-sm6125.o
+>  obj-$(CONFIG_SM_DISPCC_6350) += dispcc-sm6350.o
+>  obj-$(CONFIG_SM_DISPCC_8250) += dispcc-sm8250.o
+> diff --git a/drivers/clk/qcom/camcc-sm8450.c b/drivers/clk/qcom/camcc-sm8450.c
+> new file mode 100644
+> index 000000000000..fa89ac86dd96
+> --- /dev/null
+> +++ b/drivers/clk/qcom/camcc-sm8450.c
+> @@ -0,0 +1,2865 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) 2020-2021, The Linux Foundation. All rights reserved.
+> + */
+> +
+> +#include <linux/clk-provider.h>
+> +#include <linux/mod_devicetable.h>
+> +#include <linux/module.h>
+> +#include <linux/platform_device.h>
+> +#include <linux/regmap.h>
+> +
+> +#include <dt-bindings/clock/qcom,sm8450-camcc.h>
+> +
+> +#include "clk-alpha-pll.h"
+> +#include "clk-branch.h"
+> +#include "clk-pll.h"
+> +#include "clk-rcg.h"
+> +#include "clk-regmap-divider.h"
+> +#include "clk-regmap-mux.h"
+> +#include "clk-regmap.h"
+> +#include "common.h"
+> +#include "gdsc.h"
+> +#include "reset.h"
+> +
 
-Applied, thanks!
+As this is a new driver & binding, please add:
 
-[2/5] arm: dts: lpc18xx: Harmonize EHCI/OHCI DT nodes name
-      https://git.kernel.org/krzk/linux/c/986fd5fe55cb369c34a1dc65b1469aac536a6d50
+enum {
+	DT_IFACE,
+	DT_BI_TCXO,
+	DT_BI_TCXO_AO,
+	DT_SLEEP_CLK
+};
 
-Best regards,
--- 
-Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+here and use these for .index instead of .fw_name through out the driver
+to avoid the string compare based lookup.
+
+To make it clear to the DTS author I would prefer that you drop
+clock-names from the binding when doing this.
+
+(The order of the enum needs to match the order of the clocks property
+when this change is done)
+
+> +enum {
+> +	P_BI_TCXO,
+> +	P_CAM_CC_PLL0_OUT_EVEN,
+> +	P_CAM_CC_PLL0_OUT_MAIN,
+> +	P_CAM_CC_PLL0_OUT_ODD,
+> +	P_CAM_CC_PLL1_OUT_EVEN,
+> +	P_CAM_CC_PLL2_OUT_EVEN,
+> +	P_CAM_CC_PLL2_OUT_MAIN,
+> +	P_CAM_CC_PLL3_OUT_EVEN,
+> +	P_CAM_CC_PLL4_OUT_EVEN,
+> +	P_CAM_CC_PLL5_OUT_EVEN,
+> +	P_CAM_CC_PLL6_OUT_EVEN,
+> +	P_CAM_CC_PLL7_OUT_EVEN,
+> +	P_CAM_CC_PLL8_OUT_EVEN,
+> +	P_SLEEP_CLK,
+> +};
+> +
+> +static const struct pll_vco lucid_evo_vco[] = {
+> +	{ 249600000, 2000000000, 0 },
+> +};
+> +
+> +static const struct pll_vco rivian_evo_vco[] = {
+> +	{ 864000000, 1056000000, 0 },
+> +};
+> +
+> +static const struct alpha_pll_config cam_cc_pll0_config = {
+> +	.l = 0x3e,
+> +	.alpha = 0x8000,
+> +	.config_ctl_val = 0x20485699,
+> +	.config_ctl_hi_val = 0x00182261,
+> +	.config_ctl_hi1_val = 0x32aa299c,
+> +	.user_ctl_val = 0x00008400,
+> +	.user_ctl_hi_val = 0x00000805,
+> +};
+> +
+> +static struct clk_alpha_pll cam_cc_pll0 = {
+> +	.offset = 0x0,
+> +	.vco_table = lucid_evo_vco,
+> +	.num_vco = ARRAY_SIZE(lucid_evo_vco),
+> +	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_LUCID_EVO],
+> +	.clkr = {
+> +		.hw.init = &(const struct clk_init_data){
+> +			.name = "cam_cc_pll0",
+> +			.parent_data = &(const struct clk_parent_data){
+> +				.fw_name = "bi_tcxo",
+> +			},
+
+You have 9 instances of this, how about having creating an additional
+constant for this?
+
+static const struct clk_parent_data gcc_parent_data_tcxo = { .index = DT_BI_TCXO };
+
+> +			.num_parents = 1,
+> +			.ops = &clk_alpha_pll_lucid_evo_ops,
+> +		},
+> +	},
+> +};
+> +
+> +static const struct clk_div_table post_div_table_cam_cc_pll0_out_even[] = {
+> +	{ 0x1, 2 },
+> +	{ }
+> +};
+> +
+> +static struct clk_alpha_pll_postdiv cam_cc_pll0_out_even = {
+> +	.offset = 0x0,
+> +	.post_div_shift = 10,
+> +	.post_div_table = post_div_table_cam_cc_pll0_out_even,
+> +	.num_post_div = ARRAY_SIZE(post_div_table_cam_cc_pll0_out_even),
+> +	.width = 4,
+> +	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_LUCID_EVO],
+> +	.clkr.hw.init = &(const struct clk_init_data){
+> +		.name = "cam_cc_pll0_out_even",
+> +		.parent_data = &(const struct clk_parent_data){
+
+Please include a space inbetween ) and { in all these.
+
+> +			.hw = &cam_cc_pll0.clkr.hw,
+> +		},
+> +		.num_parents = 1,
+> +		.flags = CLK_SET_RATE_PARENT,
+> +		.ops = &clk_alpha_pll_postdiv_lucid_evo_ops,
+> +	},
+> +};
+
+Regards,
+Bjorn
