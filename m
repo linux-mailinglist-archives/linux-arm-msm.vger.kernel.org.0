@@ -2,69 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5FA6A55A525
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Jun 2022 01:57:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5950A55A52D
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Jun 2022 02:00:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231867AbiFXX4r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Jun 2022 19:56:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49310 "EHLO
+        id S230475AbiFYAA2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Jun 2022 20:00:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52342 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231843AbiFXX4r (ORCPT
+        with ESMTP id S229530AbiFYAA1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Jun 2022 19:56:47 -0400
-Received: from mail-qv1-xf32.google.com (mail-qv1-xf32.google.com [IPv6:2607:f8b0:4864:20::f32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8ABC28AC3A
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Jun 2022 16:56:46 -0700 (PDT)
-Received: by mail-qv1-xf32.google.com with SMTP id t16so6891011qvh.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Jun 2022 16:56:46 -0700 (PDT)
+        Fri, 24 Jun 2022 20:00:27 -0400
+Received: from mail-qk1-x72d.google.com (mail-qk1-x72d.google.com [IPv6:2607:f8b0:4864:20::72d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4979E8BEF5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Jun 2022 17:00:26 -0700 (PDT)
+Received: by mail-qk1-x72d.google.com with SMTP id f14so3124916qkm.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Jun 2022 17:00:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=bDqcC2b/5E2itIbFrgVYQxn7bAcfIKhqscuNTJZx+CA=;
-        b=a9mE97C3QaiYWUG64qjCNkOPtCdN8jzRl8JZKYxOyZz0b9y7+MwI4XGSm8ixBsGDby
-         Zm7jjSZvM2QrhKZq92yMle23dgXLeYmtjTrwEJ+waWnXxfw2gkQ0GyQ7p7euwPtI+IKn
-         XZsNd51AbT/HULq4mYTapVRZUjcKTTFDcCXmtsI2xI2kkjsLPLwTvukcyXptdqAYNAQ6
-         8c8OmPSWTJkyHqxxSzHjmSmIi9BHTabogvlsKcvSYAUCGgIy+pkkHGUd3kcCnOXZFrYM
-         UhU0vJ22TWqt/iMR41h20ztEia6xsn7CsGS5DJUKuxZPAaxn0lQIDEsD9dZw8maW//aG
-         Rh1Q==
+        bh=IJAvhDroqXmrsqH4iFc0E0GuqNL82U57VX6UdPTB9n4=;
+        b=UjArEFJwORom6BY7pUnOBCcQ0EVVDgVYIpnJWPp0BMyABVVRD1xExo45roAleP5uys
+         R5ue84Q/xYTkg7Pk/QwD/ZTYk6pmkULGBg2rJ7g2+5NS7XmUTsc1KYWB4KfJN8p3NXTT
+         JsFzxwEboUM+nV0Ve4r6i8fbRenjKlWnX4glXb00XQtdtsZ0e592YIGwQ1/ZB1V4s7hO
+         qSx1QU3tiwgnZu5QfxwijJbNrQTx5TvlYracdQUpOb5ljOy/s68U4W1pPS++J9fEdJ+6
+         lyGxPm3Yv2FpyrxYiI/K9538LR/Z8KpAEwdXIq/AW2poyhpws3a75rNPyZw2JJRIjPWw
+         mPbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=bDqcC2b/5E2itIbFrgVYQxn7bAcfIKhqscuNTJZx+CA=;
-        b=txPiB2Fc77c6HzcMhSsA0IxDbP3iUUXTl2+DLyJnLWwrj1nPJx0E6G21gOmQVL8W1R
-         NFoMrVVHs4yJNGFFjNA0qv0tWEeh2zxglzaHEE5mVcqxouiiljH7PO91L6kNfTn5QfDG
-         F7XAMuwJQ6Jp7PM4RmtJqfiz4p4wx0KFK3IjLG2y4AthP8ydG5HzcDVspTLZCZJRmAUK
-         1iEKd1JqP8xEKP2DMPxB31rcDnlB3Hh8gjUooSGgmWO/JHeYh2LPnJDtD3UHPVbXk/Cn
-         +Z9VRaMBHuB/R8UFbl1w8DUG3z7GFi06Yhx3v+8M/PpNH79S8EpHICNyoD8IL0ggPaDt
-         22Sg==
-X-Gm-Message-State: AJIora9iGoQ26y86qY6x3ajTyq0aW1QyzgQBYJkydCcy4ovvrqudP8fR
-        yESrjWrTvyKMBUipekWLIh5fU+WmtQ8+Q+wgeO2icQ==
-X-Google-Smtp-Source: AGRyM1tBPqtZTmiqo/rFRTDaEkcl5dCeMpdanVuGujU7QBwRNzyiHPfJ4k4LbCShiUJN+35Huj4wIXG1XxVN+LcSKn8=
-X-Received: by 2002:a05:622a:34a:b0:304:f25a:ecf0 with SMTP id
- r10-20020a05622a034a00b00304f25aecf0mr1448087qtw.62.1656115005671; Fri, 24
- Jun 2022 16:56:45 -0700 (PDT)
+        bh=IJAvhDroqXmrsqH4iFc0E0GuqNL82U57VX6UdPTB9n4=;
+        b=kExcTaeBfV9c7LRnEre2ickyOwfsFU0BfeRKY0xjRn1w244v/MbnPDMPhyqbg9zXWp
+         pIZu3PeNxgjGBJS/KjKt6DV0EqoUzIiqjE15o/euth5VwWGOsEi28yNP2TalGmdCGjG9
+         b/CThB7gHzOcvbHWw+dLSIN165fRxBUnmnRpIDuPqsJ3N8iZxVPgdysNgzUJzmw1S39g
+         mq+BCCUV96XbmnKRWl7m5Qp4huFQbprF49X4GQfuj0FWjSl2EG+ocVUxj42cYxLdm27r
+         hDj0GsRtbx9lAzOUWdRBChtFUwjQBuKbfSCgWmweDBqBq1tAi4U3RS4Y4ac02aQmK5Il
+         fbkg==
+X-Gm-Message-State: AJIora9ssth5dS4iWxfC/oNHOATZX7t7utp1/rJkmnkqx9KNvUdd9gl7
+        TD6XaWygva1MRAAIAJawii2BkA0fpUwnNlDSfX+CZg==
+X-Google-Smtp-Source: AGRyM1tKMU1zp+sgdctuv70FNenlX/Oh6sbMw452AJpPiUL9wpU9PVXvgjjHaSl5eBf1lE3MMCyE6Eg6264uUtkypd4=
+X-Received: by 2002:a05:620a:4156:b0:6a6:f8d2:6d9e with SMTP id
+ k22-20020a05620a415600b006a6f8d26d9emr1424978qko.30.1656115225461; Fri, 24
+ Jun 2022 17:00:25 -0700 (PDT)
 MIME-Version: 1.0
-References: <1656090912-18074-1-git-send-email-quic_khsieh@quicinc.com> <1656090912-18074-4-git-send-email-quic_khsieh@quicinc.com>
-In-Reply-To: <1656090912-18074-4-git-send-email-quic_khsieh@quicinc.com>
+References: <20220623120418.250589-1-dmitry.baryshkov@linaro.org>
+ <20220623120418.250589-3-dmitry.baryshkov@linaro.org> <21efbf73-74af-8f80-3577-b82f39e161e6@linaro.org>
+In-Reply-To: <21efbf73-74af-8f80-3577-b82f39e161e6@linaro.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Sat, 25 Jun 2022 02:56:34 +0300
-Message-ID: <CAA8EJpoppiw=vxkw9vvsn0mYmgYjU-WCd3w_pRyd-7PNneRv1A@mail.gmail.com>
-Subject: Re: [PATCH v1 3/3] drm/msm/dp: place edp at head of drm bridge chain
- to fix screen corruption
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>
-Cc:     dri-devel@lists.freedesktop.org, robdclark@gmail.com,
-        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
-        vkoul@kernel.org, daniel@ffwll.ch, airlied@linux.ie,
-        agross@kernel.org, bjorn.andersson@linaro.org,
-        quic_abhinavk@quicinc.com, quic_aravindh@quicinc.com,
-        quic_sbillaka@quicinc.com, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Date:   Sat, 25 Jun 2022 03:00:14 +0300
+Message-ID: <CAA8EJpp+pTPjFnGXaWvjUBFc=B9b=OwnHYUP33MNQOsaxwqk4w@mail.gmail.com>
+Subject: Re: [PATCH 02/15] dt-bindings: clocks: qcom,mmcc: define
+ clocks/clock-names for MSM8960
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -72,63 +75,67 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 24 Jun 2022 at 20:15, Kuogee Hsieh <quic_khsieh@quicinc.com> wrote:
+On Fri, 24 Jun 2022 at 18:57, Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
 >
-> The msm_dp_modeset_init() is used to attach DP driver to drm bridge chain.
-> msm_dp_modeset_init() is executed in the order of index (dp->id) of DP
-> descriptor table.
+> On 23/06/2022 14:04, Dmitry Baryshkov wrote:
+> > Define clock/clock-names properties of the MMCC device node to be used
+> > on MSM8960/APQ8064 platform.
+> >
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> >  .../devicetree/bindings/clock/qcom,mmcc.yaml  | 31 +++++++++++++++++++
+> >  1 file changed, 31 insertions(+)
+> >
+> > diff --git a/Documentation/devicetree/bindings/clock/qcom,mmcc.yaml b/Documentation/devicetree/bindings/clock/qcom,mmcc.yaml
+> > index d02fe6dc79b5..c13243682365 100644
+> > --- a/Documentation/devicetree/bindings/clock/qcom,mmcc.yaml
+> > +++ b/Documentation/devicetree/bindings/clock/qcom,mmcc.yaml
+> > @@ -82,6 +82,37 @@ then:
+> >      - clock-names
+> >
+> >  allOf:
+> > +  - if:
+> > +      properties:
+> > +        compatible:
+> > +          contains:
+> > +            enum:
+> > +              - qcom,mmcc-apq8064
+> > +              - qcom,mmcc-msm8960
+> > +    then:
+> > +      properties:
+> > +        clocks:
+> > +          items:
+> > +            - description: Board PXO source
+> > +            - description: PLL 3 clock
+> > +            - description: PLL 3 Vote clock
+> > +            - description: DSI phy instance 1 dsi clock
+> > +            - description: DSI phy instance 1 byte clock
+> > +            - description: DSI phy instance 2 dsi clock
+> > +            - description: DSI phy instance 2 byte clock
+> > +            - description: HDMI phy PLL clock
+> > +
+> > +        clock-names:
+> > +          items:
+> > +            - const: pxo
+> > +            - const: pll3
+> > +            - const: pll8_vote
+> > +            - const: dsi1pll
+> > +            - const: dsi1pllbyte
+> > +            - const: dsi2pll
+> > +            - const: dsi2pllbyte
+> > +            - const: hdmipll
 >
-> Currently, DP is placed at first entry (dp->id = 0) of descriptor table
-> and eDP is placed at secondary entry (dp->id = 1 ) of descriptor table.
-> This means DP will be placed at head of bridge chain and eDP will be
-> placed right after DP at bridge chain.
+> The clocks are listed in properties, so they have min/max constraints
+> set implicitly. Are you sure this now works fine?
 
-No, the dp->ids do not have anything to do with the bridge chains.
+I mentioned this while listing dependencies in the patchset description (00/15):
 
-> Drm screen update is happen sequentially in the order from head to tail
-> of bridge chain. Therefore external DP display will have screen updated
-> happen before primary eDP display if external DP display presented.
-> This is wrong screen update order and cause one frame time screen
-> corruption happen at primary display during external DP plugged in.
->
-> This patch place eDP at first entry (dp->id = 0) of descriptor table and
-> place DP at secondary entry (dp->id = 1) to have primary eDP locate at
-> head of bridge chain. This correct screen update order and eliminated
-> the one frame time screen corruption happen d at primary display.
->
-> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-> ---
->  drivers/gpu/drm/msm/dp/dp_display.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-> index a87a9d8..2755ff3 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_display.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-> @@ -143,10 +143,10 @@ static const struct msm_dp_config sc7180_dp_cfg = {
->
->  static const struct msm_dp_config sc7280_dp_cfg = {
->         .descs = (const struct msm_dp_desc[]) {
-> -               { .io_start = 0x0ae90000, .connector_type = DRM_MODE_CONNECTOR_DisplayPort,
-> -               .controller_id = MSM_DP_CONTROLLER_0, .wide_bus_en = true },
->                 { .io_start = 0x0aea0000, .connector_type = DRM_MODE_CONNECTOR_eDP,
->                 .controller_id = MSM_DP_CONTROLLER_1, .wide_bus_en = true },
-> +               { .io_start = 0x0ae90000, .connector_type = DRM_MODE_CONNECTOR_DisplayPort,
-> +               .controller_id = MSM_DP_CONTROLLER_0, .wide_bus_en = true },
+Dependencies: [1] (whole series), [2], [3]
+[...]
+[2] https://lore.kernel.org/linux-arm-msm/20220617122922.769562-2-dmitry.baryshkov@linaro.org/
 
-If the correctness of DP display depends on the order of entries in
-the dp_desc table, something is terribly wrong in the driver. Please
-fix that rather than working around it by shuffling the entries in the
-array.
-
->         },
->         .num_descs = 2,
->  };
-> --
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
->
-
+This patch moves clocks/clock-names to the conditional clause.
 
 -- 
 With best wishes
