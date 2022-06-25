@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 084E855AD8D
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Jun 2022 01:27:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D13E955AD72
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Jun 2022 01:27:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233678AbiFYXZb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 25 Jun 2022 19:25:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50624 "EHLO
+        id S233675AbiFYXZa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 25 Jun 2022 19:25:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50644 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233682AbiFYXZZ (ORCPT
+        with ESMTP id S233686AbiFYXZ0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 25 Jun 2022 19:25:25 -0400
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A2D812740
-        for <linux-arm-msm@vger.kernel.org>; Sat, 25 Jun 2022 16:25:24 -0700 (PDT)
-Received: by mail-lj1-x232.google.com with SMTP id q9so6822483ljp.4
-        for <linux-arm-msm@vger.kernel.org>; Sat, 25 Jun 2022 16:25:24 -0700 (PDT)
+        Sat, 25 Jun 2022 19:25:26 -0400
+Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46CAC12636
+        for <linux-arm-msm@vger.kernel.org>; Sat, 25 Jun 2022 16:25:25 -0700 (PDT)
+Received: by mail-lj1-x235.google.com with SMTP id bn8so6830719ljb.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 25 Jun 2022 16:25:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Hdb4viUyeoAD3fZen4yT5k9HKKhtb5+3CiGbC1gKk9s=;
-        b=xbsTqFqQexvvHfrZi1dlvI9ZNFG8D7ERnivLTne4psFP3hfe/sPxatA+bD/E04umzp
-         hLJZTi1B6m/jE3g86e1STMv53E5qLOW/XSc5GVpqXL7NuTYo3GxlwqRPL77/dtr3QWFH
-         bUYrwm/WmhaTK3IhSfNqEKwGlpuPDuSNh2NhHETKbQ5MRz9y+3dgDMcF/qQFNIQImuFe
-         IE853UvgSNvdkPk7lCZR2kkourLqc4IRuJ4od7v1mtQcNNTCgLFVmUNWGT1paKfaCU4x
-         PQLfzk+roEVTYhfMARlfDDarWoKFdoJ6p3kGVyNtOsWbHHjCzCnWHHmnp/n4IjtsFgO0
-         4Z6A==
+        bh=sEhrVNP4ho0a6wzg1hnkprZhy63vathkG01hxy93+fM=;
+        b=r+tBaIp3OCvknjpU5NF+TwgdnsAdEC+S/LB7683mI9TdRtWb4hAhq0rlfgzriG4m2G
+         QKIaPDgn9EgR4PmMQxJuuYFMYn8NbR1xvHstmWCCE+L1KnOnh15tgt7QxvZXnGsPYQY3
+         Rs42BNwARr//kfVoWUf9EdQaQuLuq6GC/vJTNJIP2LY9v+BHlz+YO6dpRmvsjUfiGm6E
+         h3lFuC0VYlPbbEv3HExuJBRCPKuq8AYR3A7gcO1FZ9fWWtOSLG4LXmvWwjZhW3YZ/7n1
+         HZYZQwCPq9rcLP8etglqfiXk4panH+J+tHhQ6iSrxHWgZCn5r17i5ytLXkxlFxOpc7le
+         T8ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Hdb4viUyeoAD3fZen4yT5k9HKKhtb5+3CiGbC1gKk9s=;
-        b=o7tAiTmHrh8umrg/wvgPYzEu1jaNObTGe8t+b6i4KYdbHU5e9ORFe0MCjVWnTLNVhX
-         hKU3sz2Hfa77AbVFB6elsVCQXsZwPPcWryAk5tc0OZo99F0uXT3N/0zbC8qsPyatoNV/
-         uran/sTWBrdYl3NJp9FnZXMFMJezjBolIYFn14FcHfRlzwAOTE06c1E6bAxUsoaQDoN7
-         INTSmrTgwPPUFoGgcRT+VeEFMG5IOzO2aLO9ziE2RdfVPpQyg70bXifjrP3YFYVW3hwh
-         iXUPdmKPMaT+/LBAkeM2s1sDgK6Vvhlf9sAUYCq0tWmmB/W2Arjb+UCKlGBMOVD5s2N5
-         L1Ew==
-X-Gm-Message-State: AJIora+xE/0Yba0NnpLM2SRQS6oFjwYspeHHYNzDoMgyssEfIIrZ/4NA
-        pXeIQF87T75STum0eZ1gnKi68Q==
-X-Google-Smtp-Source: AGRyM1u9aNew+NK48saWr9Dc/XVH20eCl2qQ3t31waI1ojmThAAMB/hymwBhpE3MDndjE/rzLQnXeg==
-X-Received: by 2002:a2e:a54a:0:b0:25a:7010:4aee with SMTP id e10-20020a2ea54a000000b0025a70104aeemr3071829ljn.245.1656199522603;
-        Sat, 25 Jun 2022 16:25:22 -0700 (PDT)
+        bh=sEhrVNP4ho0a6wzg1hnkprZhy63vathkG01hxy93+fM=;
+        b=PVrPVuBI7TX8Roc8sU99CvKFrMyQeQzPyZeUj0QQoGgMt/V2LnyIiTSlDZHtaPJsDa
+         DOOL9E/tDNnM4FBh5Hct7Ojv8r+DNu27LdXBb7RMbwMKBwxWy1Z/VkCdHN5ec3BVyODp
+         2XhL9vpbabAAi142pi26MITRr0wyY9xLSk05FMmU1qb/hG0tG2ZpIxfaVIwih/FjP27S
+         dsi3DRpu6dV5g79JRnho/twNzejkzZ1Qs924U2UK9E2Xo6CmajGHUQzK84ytVElgev+D
+         11am4UwnsGWjLliwGizbNoDNc7jsnVvsmO+xXCwDEiVNd171ptn6E+e/VOEvxflrHPDz
+         56YA==
+X-Gm-Message-State: AJIora8YL0VRm2+HzFwfzLMFx5dycV82Ffuz365LoVb1qsNz/INXA0RP
+        8WwbfGS/tcuNtVk3qAW1gWAlfEZBdHL/aHQo
+X-Google-Smtp-Source: AGRyM1scWr55DMLw7LMTumP/EB6qyNN54qt7LcCEaF2EEiEPYp2TeJ0HLcQV5tAbVY71hlW4fobTXg==
+X-Received: by 2002:a2e:bf14:0:b0:255:b789:576b with SMTP id c20-20020a2ebf14000000b00255b789576bmr3141976ljr.47.1656199523688;
+        Sat, 25 Jun 2022 16:25:23 -0700 (PDT)
 Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id s8-20020a056512202800b0047f750ecd8csm1093694lfs.67.2022.06.25.16.25.21
+        by smtp.gmail.com with ESMTPSA id s8-20020a056512202800b0047f750ecd8csm1093694lfs.67.2022.06.25.16.25.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 25 Jun 2022 16:25:22 -0700 (PDT)
+        Sat, 25 Jun 2022 16:25:23 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -57,9 +57,9 @@ Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         Krishna Manikandan <quic_mkrishn@quicinc.com>,
         AngeloGioacchino Del Regno 
         <angelogioacchino.delregno@somainline.org>
-Subject: [PATCH 07/11] dt-bindings: display/mdm: add gcc-bus clock to dpu-smd845
-Date:   Sun, 26 Jun 2022 02:25:09 +0300
-Message-Id: <20220625232513.522599-8-dmitry.baryshkov@linaro.org>
+Subject: [PATCH 08/11] dt-bindings: display/msm: add mdp-opp-table to dpu-sdm845
+Date:   Sun, 26 Jun 2022 02:25:10 +0300
+Message-Id: <20220625232513.522599-9-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220625232513.522599-1-dmitry.baryshkov@linaro.org>
 References: <20220625232513.522599-1-dmitry.baryshkov@linaro.org>
@@ -75,33 +75,45 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add gcc-bus clock required for the SDM845 DPU device tree node.
+On SDM845 platforms DPU device tree node contains child object
+mdp-opp-table providing OPP table for the DPU. Add it to the list of
+properties to let sdm845.dtsi to validate.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- Documentation/devicetree/bindings/display/msm/dpu-sdm845.yaml | 2 ++
- 1 file changed, 2 insertions(+)
+ .../devicetree/bindings/display/msm/dpu-sdm845.yaml      | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
 diff --git a/Documentation/devicetree/bindings/display/msm/dpu-sdm845.yaml b/Documentation/devicetree/bindings/display/msm/dpu-sdm845.yaml
-index 9253e0ca9fca..0dc16326bf8e 100644
+index 0dc16326bf8e..cc95adcf8f11 100644
 --- a/Documentation/devicetree/bindings/display/msm/dpu-sdm845.yaml
 +++ b/Documentation/devicetree/bindings/display/msm/dpu-sdm845.yaml
-@@ -29,6 +29,7 @@ properties:
+@@ -50,6 +50,10 @@ properties:
+     maxItems: 1
  
-   clocks:
-     items:
-+      - description: Display GCC bus clock
-       - description: Display ahb clock
-       - description: Display axi clock
-       - description: Display core clock
-@@ -36,6 +37,7 @@ properties:
+   operating-points-v2: true
++
++  mdp-opp-table:
++    $ref: /schemas/opp/opp-v2.yaml#
++
+   ports:
+     $ref: /schemas/graph.yaml#/properties/ports
+     description: |
+@@ -116,11 +120,12 @@ examples:
+                           <0x0aeb0000 0x2008>;
+                     reg-names = "mdp", "vbif";
  
-   clock-names:
-     items:
-+      - const: gcc-bus
-       - const: iface
-       - const: bus
-       - const: core
+-                    clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
++                    clocks = <&gcc GCC_DISP_AXI_CLK>,
++                             <&dispcc DISP_CC_MDSS_AHB_CLK>,
+                              <&dispcc DISP_CC_MDSS_AXI_CLK>,
+                              <&dispcc DISP_CC_MDSS_MDP_CLK>,
+                              <&dispcc DISP_CC_MDSS_VSYNC_CLK>;
+-                    clock-names = "iface", "bus", "core", "vsync";
++                    clock-names = "gcc-bus", "iface", "bus", "core", "vsync";
+ 
+                     interrupt-parent = <&mdss>;
+                     interrupts = <0>;
 -- 
 2.35.1
 
