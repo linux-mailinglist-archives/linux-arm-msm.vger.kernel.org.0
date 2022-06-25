@@ -2,81 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D4D6C55A531
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Jun 2022 02:03:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D29D155A54E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Jun 2022 02:15:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229530AbiFYADp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Jun 2022 20:03:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54288 "EHLO
+        id S230431AbiFYANW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Jun 2022 20:13:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60758 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229450AbiFYADo (ORCPT
+        with ESMTP id S231982AbiFYANW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Jun 2022 20:03:44 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92F82443F8;
-        Fri, 24 Jun 2022 17:03:43 -0700 (PDT)
+        Fri, 24 Jun 2022 20:13:22 -0400
+Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A244320BEE
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Jun 2022 17:13:20 -0700 (PDT)
+Received: by mail-pj1-x102e.google.com with SMTP id 73-20020a17090a0fcf00b001eaee69f600so4241312pjz.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Jun 2022 17:13:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1656115423; x=1687651423;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=5zsRd2FmDjnpHqpKciQF159pAMneCQMfxYJryDIj4+w=;
-  b=NFjeSGvBH6RQPRBBDLIaNGS4axCpcFOdxw5jDG2cUhERMNSSTd6XBvKe
-   YaiJs7pIhwVO36jkRzdaOBxRH+eeDbvlrNXSjDS+v89yrk/VMc7v9GvpW
-   Qzthw4UEz41PxaiU+ndalWzLQ5yvylSWHr7X0p4Qk7r44p7SPAZ4Uw8fx
-   k=;
-Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
-  by alexa-out.qualcomm.com with ESMTP; 24 Jun 2022 17:03:43 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Jun 2022 17:03:43 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Fri, 24 Jun 2022 17:03:42 -0700
-Received: from [10.111.161.199] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Fri, 24 Jun
- 2022 17:03:39 -0700
-Message-ID: <5cf094cf-343a-82d7-91c4-1284683f9748@quicinc.com>
-Date:   Fri, 24 Jun 2022 17:03:37 -0700
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=0TjCZxNeURxvfJlBGLiL6m2P8w/St+OKVS0jmgudiNY=;
+        b=WH2pfcsnmA0g9dVGchBGxzu0ZB/E/YZ500twZrFG8iTbtS77b/TGQkrG7deqcHCdFP
+         krc/+62q47vIuR/uTVOGZnA6M4UxrcIo7SY5raTlqRQS3RCMAX6R/p+miZfjam/R1167
+         zZa5V1U9WE2Vb9g05QSXvaHkhKLUgBJFFPtII=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=0TjCZxNeURxvfJlBGLiL6m2P8w/St+OKVS0jmgudiNY=;
+        b=IPdthXf4EG3JZUDZ74AIWq2FofOA+bbdI6aFjp9m/QFBGCoGE5PnhPG2Jxmj1S5scA
+         ORcRu2XPRtIrB234/ARBgcQZppJX9EUhOzJzPwGwUWMbg3uWd7Y4KZnS/+sGl2xAJREh
+         UHIOoeyDwooPjjth+I5gegt/9ZxSu6s24NWBPlL9mJLOMHr3wtmPSDvDqCD2aKbqyqO+
+         I4AAnf1RXTP568Kj2U/YXAPguwFeULEPNzS6ds1+Kqpb/mpUHfWCg6UFctI0GyY9/j7O
+         9CQPYLHh1r9y4scOTgGqQIMhbb0hmZ/r3A6iOTLzeA0cMtF/E/JDvPx8tG1GAB9HFIrP
+         4RzQ==
+X-Gm-Message-State: AJIora9rOP+mKlKa+BlwHpGcCnbPquranRRXoZX4adnv1gUurGDQzwJZ
+        08tR8d487LUkOCGXfXzTloyTMA==
+X-Google-Smtp-Source: AGRyM1u5gNBZSz9VALVIyN+xtr9yQR6lttni1iE0wVlXyu1GQcCM/x6X7eefyM4ILpQb5tEGaoE4SQ==
+X-Received: by 2002:a17:903:110c:b0:168:fa61:1440 with SMTP id n12-20020a170903110c00b00168fa611440mr1553981plh.149.1656116000090;
+        Fri, 24 Jun 2022 17:13:20 -0700 (PDT)
+Received: from joebar-glaptop.lan (c-71-202-34-56.hsd1.ca.comcast.net. [71.202.34.56])
+        by smtp.gmail.com with ESMTPSA id e14-20020a170902ef4e00b0016a275623c1sm2372303plx.219.2022.06.24.17.13.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 24 Jun 2022 17:13:19 -0700 (PDT)
+From:   "Joseph S. Barrera III" <joebar@chromium.org>
+To:     LKML <linux-kernel@vger.kernel.org>
+Cc:     Alexandru M Stan <amstan@chromium.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        "Joseph S. Barrera III" <joebar@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: [PATCH v12 0/5] arm64: dts: qcom: sc7180: Add five new trogdor-based boards
+Date:   Fri, 24 Jun 2022 17:10:04 -0700
+Message-Id: <20220625001009.417452-1-joebar@chromium.org>
+X-Mailer: git-send-email 2.31.0
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH v1 2/3] drm/msm/dp: decoupling dp->id out of dp
- controller_id at scxxxx_dp_cfg table
-Content-Language: en-US
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Stephen Boyd <swboyd@chromium.org>, <agross@kernel.org>,
-        <airlied@linux.ie>, <bjorn.andersson@linaro.org>,
-        <daniel@ffwll.ch>, <dianders@chromium.org>,
-        <dmitry.baryshkov@linaro.org>, <dri-devel@lists.freedesktop.org>,
-        <robdclark@gmail.com>, <sean@poorly.run>, <vkoul@kernel.org>
-CC:     <quic_aravindh@quicinc.com>, <quic_sbillaka@quicinc.com>,
-        <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <1656090912-18074-1-git-send-email-quic_khsieh@quicinc.com>
- <1656090912-18074-3-git-send-email-quic_khsieh@quicinc.com>
- <CAE-0n52RW+UFJ=hqMWjwR8qvEbww7QjzPW1nhL3Atd97QXAnYw@mail.gmail.com>
- <007ea4c9-9701-f4ab-3278-5d36bf2018c4@quicinc.com>
- <CAE-0n53kNCK0ajHfY2WQr5HEQZtZSBLnhfbTuZwaUNEOZhsKPg@mail.gmail.com>
- <fa7f8bf1-33cd-5515-0143-6596df2bd740@quicinc.com>
- <CAE-0n51g-EVsC-i9=sJV-ySa8VnE+yT7cg=b-TNMi9+3uBiOVA@mail.gmail.com>
- <326912ff-9771-0711-366d-79acd436908b@quicinc.com>
- <CAE-0n51qrdrFtSr0vRwgYkMgSZfnzQuinaUROQsp30QoDchWQA@mail.gmail.com>
- <0ff3d6a3-dc5c-7c77-f8a1-6c4f6c1a3215@quicinc.com>
- <CAE-0n515hMKqQ+Vj1Sg54PpwkbWMYJ77QN+y+KZNBWymjhpWKw@mail.gmail.com>
- <66ff4642-f268-f5b0-7e28-b196368c508a@quicinc.com>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <66ff4642-f268-f5b0-7e28-b196368c508a@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -84,155 +72,146 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Stephen / Dmitry
+This series adds five new trogdor-based boards to upstream.
+The patches should be applied *after* applying
+https://lore.kernel.org/all/20220602190621.1646679-1-swboyd@chromium.org/
+(arm64: dts: qcom: Remove duplicate sc7180-trogdor include on lazor/homestar)
 
-Let me try to explain the issue kuogee is trying to fix below:
+The patches do *not* expect
+https://lore.kernel.org/all/20220518172525.3319993-1-swboyd@chromium.org/
+(sc7180-trogdor: Split out keyboard node and describe detachables)
+to be applied.
 
-On 6/24/2022 4:56 PM, Kuogee Hsieh wrote:
-> 
-> On 6/24/2022 4:45 PM, Stephen Boyd wrote:
->> Quoting Kuogee Hsieh (2022-06-24 16:30:59)
->>> On 6/24/2022 4:12 PM, Stephen Boyd wrote:
->>>> Quoting Kuogee Hsieh (2022-06-24 15:53:45)
->>>>> MSM_DP_CONTROLLER_1 need to match to the index = 1 of 
->>>>> sc7280_dp_cfg[] <== This is correct
->>>>>
->>>>> The problem is sc7280_dp_cfg[] have two entries since eDP place at 
->>>>> index
->>>>> of MSM_DP_CONTROLLER_1.
->>>>>
->>>>> but .num_desc = 1  <== this said only have one entry at 
->>>>> sc7280_dp_cfg[]
->>>>> table. Therefore eDP will never be found at for loop  at
->>>>> _dpu_kms_initialize_displayport().
->>>>>
->>>> Yes, but what else does the MSM_DP_CONTROLLER_1 need to match? Because
->>>> the intention of the previous commit was to make it so the order of
->>>> sc7280_dp_cfg couldn't be messed up and not match the
->>>> MSM_DP_CONTROLLER_1 value that lives in sc7280_intf[].
->>>
->>> at  _dpu_kms_initialize_displayport()
->>>
->>>> -             info.h_tile_instance[0] = i; <== assign i to become dp 
->>>> controller id, "i" is index of scxxxx_dp_cfg[]
->>> This what I mean MSM_DP_CONTROLLER_1 need to match to index = 1 of
->>> scxxxx_dp_cfg[].
->>>
->>> it it is not match, then MSM_DP_CONTROLLER_1 with match to different 
->>> INTF.
->> I thought we matched the INTF instance by searching through
->> sc7280_intf[] for a matching MSM_DP_CONTROLLER_1 and then returning that
->> INTF number. See dpu_encoder_get_intf() and the caller.
-> 
-> yes, but the controller_id had been over written by dp->id.
-> 
-> u32 controller_id = disp_info->h_tile_instance[i];
-> 
-> 
-> See below code.
-> 
-> 
->>          for (i = 0; i < disp_info->num_of_h_tiles && !ret; i++) {
->>                  /*
->>                   * Left-most tile is at index 0, content is 
->> controller id
->>                   * h_tile_instance_ids[2] = {0, 1}; DSI0 = left, DSI1 
->> = right
->>                   * h_tile_instance_ids[2] = {1, 0}; DSI1 = left, DSI0 
->> = right
->>                   */
->>                  u32 controller_id = disp_info->h_tile_instance[i];   
->> <== kuogee assign dp->id to controller_id
->>
->>                  if (disp_info->num_of_h_tiles > 1) {
->>                          if (i == 0)
->>                                  phys_params.split_role = 
->> ENC_ROLE_MASTER;
->>                          else
->>                                  phys_params.split_role = ENC_ROLE_SLAVE;
->>                  } else {
->>                          phys_params.split_role = ENC_ROLE_SOLO;
->>                  }
->>
->>                  DPU_DEBUG("h_tile_instance %d = %d, split_role %d\n",
->>                                  i, controller_id, 
->> phys_params.split_role);
->>
->>                  phys_params.intf_idx = 
->> dpu_encoder_get_intf(dpu_kms->catalog,
->>
->>                intf_type,
->>
->>                controller_id);
+The compatibles in this series are documented by Doug's series
+https://lore.kernel.org/r/20220520143502.v4.5.Ie8713bc0377672ed8dd71189e66fc0b77226fb85@changeid
 
+Version 9 included many corrections to the series change descriptions,
+based on fetching earlier versions of the series and diffing each patch.
 
-So let me try to explain this as this is what i understood from the 
-patch and how kuogee explained me.
+Changes in v12:
+- Replace 'include sc7180.dtsi' with 'include sc7180-trogdor.dtsi'
+  in sc7180-trogdor-ti-sn65dsi86.dtsi.
 
-The ordering of the array still matters here and thats what he is trying 
-to address with the second change.
+Changes in v11:
+- Add 'include sc7180-trogdor.dtsi' to sc7180-trogdor-pazquel-* files.
+- Add 'include sc7180-trogdor.dtsi' to sc7180-trogdor-kingoftown-* files.
+- Restore 'include sc7180.dtsi' to sc7180-trogdor-ti-sn65dsi86.dtsi.
 
-So as per him, he tried to swap the order of entries like below and that 
-did not work and that is incorrect behavior because he still retained 
-the MSM_DP_CONTROLLER_x field for the table like below:
+Changes in v10:
+- Move "okay" for ap_tp_i2c to proper location.
+- Remove 'include sc7180.dtsi' from *all* sc7180-trogdor-pazquel* files.
+- Remove 'include sc7180.dtsi' from *all* sc7180-trogdor-kingoftown* files.
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c 
-b/drivers/gpu/drm/msm/dp/dp_display.c
-index dcd80c8a794c..7816e82452ca 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -140,8 +140,8 @@ static const struct msm_dp_config sc7180_dp_cfg = {
+Changes in v9:
+- Restore two lines accidentally removed from ap_sar_sensor.
+- Simplify trackpad enabling (51d30402be75).
+- Correct errors in series change history.
 
-  static const struct msm_dp_config sc7280_dp_cfg = {
-         .descs = (const struct msm_dp_desc[]) {
--               [MSM_DP_CONTROLLER_0] = { .io_start = 0x0ae90000, 
-.connector_type = DRM_MODE_CONNECTOR_DisplayPort, .wide_bus_en = true },
-                 [MSM_DP_CONTROLLER_1] = { .io_start = 0x0aea0000, 
-.connector_type = DRM_MODE_CONNECTOR_eDP, .wide_bus_en = true },
-+               [MSM_DP_CONTROLLER_0] = { .io_start = 0x0ae90000, 
-.connector_type = DRM_MODE_CONNECTOR_DisplayPort, .wide_bus_en = true },
-         },
-         .num_descs = 2,
-  };
+Changes in v8:
+- Incorporate the deletion of the usb_c1 node from 9f9fb70a7294.
 
+Changes in v7:
+- Accidentally removed two lines from ap_sar_sensor.
+- Only include sc7180.dtsi in sc7180-trogdor.dtsi (19794489fa24).
+- Remove #include of <arm/cros-ec-keyboard.dtsi>.
+- Restore changes requested by Doug.
+- Restore mrbland patch.
+- Simplify spi0/spi6 labeling (d277cab7afc7).
+- Simplify trackpad enabling (51d30402be75).
 
-The reason order is important is because  in this function below, even 
-though it matches the address to find which one to use it loops through 
-the array and so the value of *id will change depending on which one is 
-located where.
+Changes in v6:
+- Accidentally deleted changes requested by Doug.
+- Add #include of <arm/cros-ec-keyboard.dtsi>.
+- Copy changes to ap_sar_sensor from v5.4.
+- Remove mrbland patch.
+- Only include sc7180.dtsi in sc7180-trogdor.dtsi (19794489fa24).
+- Simplify spi0/spi6 labeling (d277cab7afc7).
+- Simplify trackpad enabling (51d30402be75).
 
-static const struct msm_dp_desc *dp_display_get_desc(struct 
-platform_device *pdev,
-                              unsigned int *id)
-{
-     const struct msm_dp_config *cfg = of_device_get_match_data(&pdev->dev);
-     struct resource *res;
-     int i;
+Changes in v5:
+- Add comment that compatible will be filled in per-board.
+- Order nodes by name.
+- Remove extra newline
+- Replace _ in node name with -
 
-     res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-     if (!res)
-         return NULL;
+Changes in v4:
+- Cleaned up rt5682s files
+- Restored camcc definition
+- Fix description (no downstream bits removed).
+- Add missing version history.
 
-     for (i = 0; i < cfg->num_descs; i++) {
-         if (cfg->descs[i].io_start == res->start) {
-             *id = i;
-             return &cfg->descs[i];
-         }
-     }
+Changes in v3:
+- Removed camcc definition
+- First inclusion in series.
 
-In dp_display_bind(), dp->id is used as the index of assigning the 
-dp_display,
+Changes in v2:
+- Add word wrapping to patch description.
+- First inclusion in series.
+- Fix whitespace around "en_pp3300_dx_edp".
+- Remove "Author" from patch description.
+- Word wrap patch description.
 
-priv->dp[dp->id] = &dp->dp_display;
+Joseph S. Barrera III (5):
+  arm64: dts: qcom: sc7180: Add wormdingler dts files
+  arm64: dts: qcom: sc7180: Add quackingstick dts files
+  arm64: dts: qcom: sc7180: Add mrbland dts files
+  arm64: dts: qcom: sc7180: Add pazquel dts files
+  arm64: dts: qcom: sc7180: Add kingoftown dts files
 
-And now in _dpu_kms_initialize_displayport(), in the array this will 
-decide the value of info.h_tile_instance[0] which will be assigned to 
-just the index i.
+ arch/arm64/boot/dts/qcom/Makefile             |  18 +
+ .../dts/qcom/sc7180-trogdor-kingoftown-r0.dts |  44 ++
+ .../dts/qcom/sc7180-trogdor-kingoftown-r1.dts |  17 +
+ .../dts/qcom/sc7180-trogdor-kingoftown.dtsi   | 225 ++++++++++
+ .../qcom/sc7180-trogdor-mrbland-rev0-auo.dts  |  22 +
+ .../qcom/sc7180-trogdor-mrbland-rev0-boe.dts  |  22 +
+ .../dts/qcom/sc7180-trogdor-mrbland-rev0.dtsi |  53 +++
+ .../qcom/sc7180-trogdor-mrbland-rev1-auo.dts  |  22 +
+ .../qcom/sc7180-trogdor-mrbland-rev1-boe.dts  |  24 ++
+ .../boot/dts/qcom/sc7180-trogdor-mrbland.dtsi | 344 +++++++++++++++
+ .../sc7180-trogdor-pazquel-lte-parade.dts     |  22 +
+ .../qcom/sc7180-trogdor-pazquel-lte-ti.dts    |  22 +
+ .../qcom/sc7180-trogdor-pazquel-parade.dts    |  17 +
+ .../dts/qcom/sc7180-trogdor-pazquel-ti.dts    |  17 +
+ .../boot/dts/qcom/sc7180-trogdor-pazquel.dtsi | 221 ++++++++++
+ .../sc7180-trogdor-quackingstick-r0-lte.dts   |  38 ++
+ .../qcom/sc7180-trogdor-quackingstick-r0.dts  |  26 ++
+ .../qcom/sc7180-trogdor-quackingstick.dtsi    | 318 ++++++++++++++
+ .../dts/qcom/sc7180-trogdor-ti-sn65dsi86.dtsi |   1 +
+ .../sc7180-trogdor-wormdingler-rev0-boe.dts   |  22 +
+ .../sc7180-trogdor-wormdingler-rev0-inx.dts   |  22 +
+ .../qcom/sc7180-trogdor-wormdingler-rev0.dtsi |  53 +++
+ ...0-trogdor-wormdingler-rev1-boe-rt5682s.dts |  29 ++
+ .../sc7180-trogdor-wormdingler-rev1-boe.dts   |  28 ++
+ ...0-trogdor-wormdingler-rev1-inx-rt5682s.dts |  29 ++
+ .../sc7180-trogdor-wormdingler-rev1-inx.dts   |  22 +
+ .../dts/qcom/sc7180-trogdor-wormdingler.dtsi  | 408 ++++++++++++++++++
+ 27 files changed, 2086 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown-r0.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown-r1.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-mrbland-rev0-auo.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-mrbland-rev0-boe.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-mrbland-rev0.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-mrbland-rev1-auo.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-mrbland-rev1-boe.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-mrbland.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel-lte-parade.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel-lte-ti.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel-parade.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel-ti.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-quackingstick-r0-lte.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-quackingstick-r0.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-quackingstick.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev0-boe.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev0-inx.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev0.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev1-boe-rt5682s.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev1-boe.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev1-inx-rt5682s.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev1-inx.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler.dtsi
 
-info.h_tile_instance[0] is then used as the controller id to find from 
-the catalog table.
+-- 
+2.31.0
 
-So if this order is not retained it does not work.
-
-Thats the issue he is trying to address to make the order of entries 
-irrelevant in the table in dp_display.c
