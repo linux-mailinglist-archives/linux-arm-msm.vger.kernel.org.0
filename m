@@ -2,72 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4A01855AD81
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Jun 2022 01:27:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CDDE655ADFA
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Jun 2022 03:40:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233660AbiFYXZd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 25 Jun 2022 19:25:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50666 "EHLO
+        id S233588AbiFZBkB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 25 Jun 2022 21:40:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50720 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233695AbiFYXZ3 (ORCPT
+        with ESMTP id S233541AbiFZBkB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 25 Jun 2022 19:25:29 -0400
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F94310551
-        for <linux-arm-msm@vger.kernel.org>; Sat, 25 Jun 2022 16:25:27 -0700 (PDT)
-Received: by mail-lj1-x22f.google.com with SMTP id o23so6779726ljg.13
-        for <linux-arm-msm@vger.kernel.org>; Sat, 25 Jun 2022 16:25:27 -0700 (PDT)
+        Sat, 25 Jun 2022 21:40:01 -0400
+Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0230F13D5C
+        for <linux-arm-msm@vger.kernel.org>; Sat, 25 Jun 2022 18:40:00 -0700 (PDT)
+Received: by mail-pl1-x632.google.com with SMTP id q18so5236901pld.13
+        for <linux-arm-msm@vger.kernel.org>; Sat, 25 Jun 2022 18:39:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=GtR9Oh52X/bgTP8VZdLkGe+JVhZ2QZlEpAdaPA1dRmE=;
-        b=dThMxlVT6Gssn2GFrZRU1o4HwygU8lPEgtiwc7CaCEZnxz0u/GYQimCl3+1VWCZWQ+
-         lTWwzXZo2Op2nz0LV3PvMXx+lekIc1RzPGdgV6HbQaVgA8Bgs9woHRCqBZfOBhTMM9Jh
-         QrYJBNYW37zEyMq5pC4LWgqSvaMvxIeaB0nhSPcB4JBtwjZV8bf7wUgtRFFTvgTO9Z2H
-         e3Q6VicrL8u4HH0hdTP1k38r+GhfXixTHSS6nwQNxbQoM1/I1P17psDu+v5DEiUJJvkf
-         eS/yqGiAlSMrNUnN3yBKyZavmG71N0HffuufTFxJU7mYQhJOIZ07PrFOOCqoNqIyOUqB
-         hiXA==
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Srp/EXNpLzg2U+1jpiVWipYx2E7RDsq+GqrwFGqqee8=;
+        b=MRZctG7Tj2P7uyeZvSA+yhlqoEkIoVAML9xi6pdoMkwmMXsQKhKtmNqdwBWbxll2ea
+         9svV2JdNJtismM4bqmwrjTjzmws+1AGVo3kJihyfm39LJ8UZraogCZwGuw7An7vuZC5Y
+         mVnjDauZ5JyEnHpJYkkz/TSDT/zFljwgNQA1k=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=GtR9Oh52X/bgTP8VZdLkGe+JVhZ2QZlEpAdaPA1dRmE=;
-        b=r5gUwYcAsFnY/gcAN3vC+c0rQLrP4ZzebL6jh4v7v1mIcdXpgqB/+ZyWPEh3loJuBm
-         iJkMMHQ26xvZ3a3aezBRyrNEe1ZPcvq8Oj0ROEk5B0JjnbAIVgr6gBAM0EQdVuELPhoa
-         Yjnwoky8HLovETN4EmerygI8VnNrMqf65m+pEKfAdf7GvMJCSHEgTke4T4AoT5XXkES8
-         xcVFACxsBSH/VGIqn40d2iNq4aFOnGK+nysREB5PrFyp18h6BNOZH2HRAPzbDVaQXE8I
-         dF3fILtX0yLxKvHQnP2D4+/FfROeTukECn2yUfzRyzc1Ln5DoBhDCrJumlWH+Ietx/FI
-         WY9g==
-X-Gm-Message-State: AJIora8Go8Sn/UP65v6bkMIYCJ/UeHvCAA1jT16H6P+m+APSHx17+O+i
-        fPD0ihw+vy9hpgQgkiDdSmw4Aw==
-X-Google-Smtp-Source: AGRyM1tnwBMoNMWjSHU6ZdtjU/uQTZx05ZkGCw8CKVkVN+jFupDGowR20u+K5GxPJhcm6Z5KhZtAlQ==
-X-Received: by 2002:a2e:b888:0:b0:25a:9a7b:6967 with SMTP id r8-20020a2eb888000000b0025a9a7b6967mr3021528ljp.205.1656199526845;
-        Sat, 25 Jun 2022 16:25:26 -0700 (PDT)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id s8-20020a056512202800b0047f750ecd8csm1093694lfs.67.2022.06.25.16.25.25
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Srp/EXNpLzg2U+1jpiVWipYx2E7RDsq+GqrwFGqqee8=;
+        b=Sz4bQHabN1h9aZ0JZO5EzLI9y4PmGj6fWOHY4Zlew7e4e7j4EoGJEsOYdqtqLgbj/f
+         +yzVCUinGb6FJ+Jk6j73Nttac9mJE56H/eays+liFiwRQHQrgr4PrvQkwwqDt/Fn8RS2
+         Jd45GCSITU+hSsR174mpf8BoiNJWpDnfsiSckQNRdoCP+/JukMLcApOjWb1LVlQLP+P1
+         Bqm8+BYMK7K2J/2kHHgVtoDWzazuUfkeV3UcH1JYkYWWawq+nPO9s1o6LQeh/bC7AZVq
+         FHiWMS/nuFdt/Ux4q6Wtd5Sr26vPFQwPvKNPJ6VGHtDp0VhsWkArhVnDrxu6RThDWTBU
+         B1Zw==
+X-Gm-Message-State: AJIora/i36uXo6xnPuZ8uQVBU2RxUzSibII8oiIjF36LuhD+A4DIWjJV
+        wDZ2HAKIRWLjvtGIw1kNEDUJmA==
+X-Google-Smtp-Source: AGRyM1uUshWNdamy7bieEQgd1CHfnXdRkDBdChOwefpxd6jgtkMJeSkhGKxhZKVKEu5IoWgr8Suk+g==
+X-Received: by 2002:a17:902:d384:b0:16a:6622:de87 with SMTP id e4-20020a170902d38400b0016a6622de87mr7208456pld.132.1656207598909;
+        Sat, 25 Jun 2022 18:39:58 -0700 (PDT)
+Received: from joebar-glaptop.attlocal.net ([107.126.90.40])
+        by smtp.gmail.com with ESMTPSA id m13-20020a170902e40d00b00167838b82e0sm4283200ple.205.2022.06.25.18.39.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 25 Jun 2022 16:25:26 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+        Sat, 25 Jun 2022 18:39:58 -0700 (PDT)
+From:   "Joseph S. Barrera III" <joebar@chromium.org>
+To:     LKML <linux-kernel@vger.kernel.org>
+Cc:     Alexandru M Stan <amstan@chromium.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        "Joseph S. Barrera III" <joebar@chromium.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>
-Subject: [PATCH 11/11] dt-bindings: display/msm: move common DPU properties to dpu-common.yaml
-Date:   Sun, 26 Jun 2022 02:25:13 +0300
-Message-Id: <20220625232513.522599-12-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220625232513.522599-1-dmitry.baryshkov@linaro.org>
-References: <20220625232513.522599-1-dmitry.baryshkov@linaro.org>
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: [PATCH v14 0/5] arm64: dts: qcom: sc7180: Add five new trogdor-based boards
+Date:   Sat, 25 Jun 2022 18:39:01 -0700
+Message-Id: <20220626013906.885523-1-joebar@chromium.org>
+X-Mailer: git-send-email 2.31.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -75,325 +72,149 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Move properties common to all DPU DT nodes to the dpu-common.yaml
+This series adds five new trogdor-based boards to upstream.
+The patches should be applied *after* applying
+https://lore.kernel.org/all/20220602190621.1646679-1-swboyd@chromium.org/
+(arm64: dts: qcom: Remove duplicate sc7180-trogdor include on lazor/homestar)
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- .../bindings/display/msm/dpu-common.yaml      | 47 +++++++++++++++++++
- .../bindings/display/msm/dpu-msm8998.yaml     | 28 ++---------
- .../bindings/display/msm/dpu-qcm2290.yaml     | 29 ++----------
- .../bindings/display/msm/dpu-sc7180.yaml      | 32 ++-----------
- .../bindings/display/msm/dpu-sc7280.yaml      | 32 ++-----------
- .../bindings/display/msm/dpu-sdm845.yaml      | 32 ++-----------
- 6 files changed, 67 insertions(+), 133 deletions(-)
- create mode 100644 Documentation/devicetree/bindings/display/msm/dpu-common.yaml
+The patches do *not* expect
+https://lore.kernel.org/all/20220518172525.3319993-1-swboyd@chromium.org/
+(sc7180-trogdor: Split out keyboard node and describe detachables)
+to be applied.
 
-diff --git a/Documentation/devicetree/bindings/display/msm/dpu-common.yaml b/Documentation/devicetree/bindings/display/msm/dpu-common.yaml
-new file mode 100644
-index 000000000000..f3465ee3a4ab
---- /dev/null
-+++ b/Documentation/devicetree/bindings/display/msm/dpu-common.yaml
-@@ -0,0 +1,47 @@
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/display/msm/dpu-common.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm Display DPU dt properties (common properties)
-+
-+maintainers:
-+  - Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-+  - Krishna Manikandan <quic_mkrishn@quicinc.com>
-+  - Rob Clark <robdclark@gmail.com>
-+
-+description: |
-+  Device tree bindings for the DPU display controller, common properties.
-+
-+properties:
-+  interrupts:
-+    maxItems: 1
-+
-+  power-domains:
-+    maxItems: 1
-+
-+  operating-points-v2: true
-+
-+  ports:
-+    $ref: /schemas/graph.yaml#/properties/ports
-+    description: |
-+      Contains the list of output ports from DPU device. These ports
-+      connect to interfaces that are external to the DPU hardware,
-+      such as DSI, DP etc. Each output port contains an endpoint that
-+      describes how it is connected to an external interface.
-+
-+patternProperties:
-+  (mdp-)?opp-table:
-+    $ref: /schemas/opp/opp-v2.yaml#
-+
-+required:
-+  - compatible
-+  - reg
-+  - reg-names
-+  - clocks
-+  - interrupts
-+  - power-domains
-+  - operating-points-v2
-+  - ports
-+
-+additionalProperties: true
-diff --git a/Documentation/devicetree/bindings/display/msm/dpu-msm8998.yaml b/Documentation/devicetree/bindings/display/msm/dpu-msm8998.yaml
-index 5caf46a1dd88..2207601c83df 100644
---- a/Documentation/devicetree/bindings/display/msm/dpu-msm8998.yaml
-+++ b/Documentation/devicetree/bindings/display/msm/dpu-msm8998.yaml
-@@ -47,21 +47,8 @@ properties:
-       - const: core
-       - const: vsync
- 
--  interrupts:
--    maxItems: 1
--
--  power-domains:
--    maxItems: 1
--
--  operating-points-v2: true
-   ports:
-     $ref: /schemas/graph.yaml#/properties/ports
--    description: |
--      Contains the list of output ports from DPU device. These ports
--      connect to interfaces that are external to the DPU hardware,
--      such as DSI, DP etc. Each output port contains an endpoint that
--      describes how it is connected to an external interface.
--
-     properties:
-       port@0:
-         $ref: /schemas/graph.yaml#/properties/port
-@@ -75,17 +62,10 @@ properties:
-       - port@0
-       - port@1
- 
--required:
--  - compatible
--  - reg
--  - reg-names
--  - clocks
--  - interrupts
--  - power-domains
--  - operating-points-v2
--  - ports
--
--additionalProperties: false
-+allOf:
-+  - $ref: "/schemas/display/msm/dpu-common.yaml#"
-+
-+unevaluatedProperties: false
- 
- examples:
-   - |
-diff --git a/Documentation/devicetree/bindings/display/msm/dpu-qcm2290.yaml b/Documentation/devicetree/bindings/display/msm/dpu-qcm2290.yaml
-index 8027319b1aad..8a0d6eda6e7c 100644
---- a/Documentation/devicetree/bindings/display/msm/dpu-qcm2290.yaml
-+++ b/Documentation/devicetree/bindings/display/msm/dpu-qcm2290.yaml
-@@ -43,22 +43,8 @@ properties:
-       - const: lut
-       - const: vsync
- 
--  interrupts:
--    maxItems: 1
--
--  power-domains:
--    maxItems: 1
--
--  operating-points-v2: true
--
-   ports:
-     $ref: /schemas/graph.yaml#/properties/ports
--    description: |
--      Contains the list of output ports from DPU device. These ports
--      connect to interfaces that are external to the DPU hardware,
--      such as DSI. Each output port contains an endpoint that
--      describes how it is connected to an external interface.
--
-     properties:
-       port@0:
-         $ref: /schemas/graph.yaml#/properties/port
-@@ -67,17 +53,10 @@ properties:
-     required:
-       - port@0
- 
--required:
--  - compatible
--  - reg
--  - reg-names
--  - clocks
--  - interrupts
--  - power-domains
--  - operating-points-v2
--  - ports
--
--additionalProperties: false
-+allOf:
-+  - $ref: "/schemas/display/msm/dpu-common.yaml#"
-+
-+unevaluatedProperties: false
- 
- examples:
-   - |
-diff --git a/Documentation/devicetree/bindings/display/msm/dpu-sc7180.yaml b/Documentation/devicetree/bindings/display/msm/dpu-sc7180.yaml
-index 42921f25baa4..1047192b5b36 100644
---- a/Documentation/devicetree/bindings/display/msm/dpu-sc7180.yaml
-+++ b/Documentation/devicetree/bindings/display/msm/dpu-sc7180.yaml
-@@ -45,25 +45,8 @@ properties:
-       - const: core
-       - const: vsync
- 
--  interrupts:
--    maxItems: 1
--
--  power-domains:
--    maxItems: 1
--
--  operating-points-v2: true
--
--  mdp-opp-table:
--    $ref: /schemas/opp/opp-v2.yaml#
--
-   ports:
-     $ref: /schemas/graph.yaml#/properties/ports
--    description: |
--      Contains the list of output ports from DPU device. These ports
--      connect to interfaces that are external to the DPU hardware,
--      such as DSI, DP etc. Each output port contains an endpoint that
--      describes how it is connected to an external interface.
--
-     properties:
-       port@0:
-         $ref: /schemas/graph.yaml#/properties/port
-@@ -76,17 +59,10 @@ properties:
-     required:
-       - port@0
- 
--required:
--  - compatible
--  - reg
--  - reg-names
--  - clocks
--  - interrupts
--  - power-domains
--  - operating-points-v2
--  - ports
--
--additionalProperties: false
-+allOf:
-+  - $ref: "/schemas/display/msm/dpu-common.yaml#"
-+
-+unevaluatedProperties: false
- 
- examples:
-   - |
-diff --git a/Documentation/devicetree/bindings/display/msm/dpu-sc7280.yaml b/Documentation/devicetree/bindings/display/msm/dpu-sc7280.yaml
-index 49c4a055d20f..543d90a84853 100644
---- a/Documentation/devicetree/bindings/display/msm/dpu-sc7280.yaml
-+++ b/Documentation/devicetree/bindings/display/msm/dpu-sc7280.yaml
-@@ -44,25 +44,8 @@ properties:
-       - const: core
-       - const: vsync
- 
--  interrupts:
--    maxItems: 1
--
--  power-domains:
--    maxItems: 1
--
--  operating-points-v2: true
--
--  opp-table:
--    $ref: /schemas/opp/opp-v2.yaml#
--
-   ports:
-     $ref: /schemas/graph.yaml#/properties/ports
--    description: |
--      Contains the list of output ports from DPU device. These ports
--      connect to interfaces that are external to the DPU hardware,
--      such as DSI, DP etc. Each output port contains an endpoint that
--      describes how it is connected to an external interface.
--
-     properties:
-       port@0:
-         $ref: /schemas/graph.yaml#/properties/port
-@@ -75,17 +58,10 @@ properties:
-     required:
-       - port@0
- 
--required:
--  - compatible
--  - reg
--  - reg-names
--  - clocks
--  - interrupts
--  - power-domains
--  - operating-points-v2
--  - ports
--
--additionalProperties: false
-+allOf:
-+  - $ref: "/schemas/display/msm/dpu-common.yaml#"
-+
-+unevaluatedProperties: false
- 
- examples:
-   - |
-diff --git a/Documentation/devicetree/bindings/display/msm/dpu-sdm845.yaml b/Documentation/devicetree/bindings/display/msm/dpu-sdm845.yaml
-index cc95adcf8f11..796c13d73ea3 100644
---- a/Documentation/devicetree/bindings/display/msm/dpu-sdm845.yaml
-+++ b/Documentation/devicetree/bindings/display/msm/dpu-sdm845.yaml
-@@ -43,25 +43,8 @@ properties:
-       - const: core
-       - const: vsync
- 
--  interrupts:
--    maxItems: 1
--
--  power-domains:
--    maxItems: 1
--
--  operating-points-v2: true
--
--  mdp-opp-table:
--    $ref: /schemas/opp/opp-v2.yaml#
--
-   ports:
-     $ref: /schemas/graph.yaml#/properties/ports
--    description: |
--      Contains the list of output ports from DPU device. These ports
--      connect to interfaces that are external to the DPU hardware,
--      such as DSI, DP etc. Each output port contains an endpoint that
--      describes how it is connected to an external interface.
--
-     properties:
-       port@0:
-         $ref: /schemas/graph.yaml#/properties/port
-@@ -75,17 +58,10 @@ properties:
-       - port@0
-       - port@1
- 
--required:
--  - compatible
--  - reg
--  - reg-names
--  - clocks
--  - interrupts
--  - power-domains
--  - operating-points-v2
--  - ports
--
--additionalProperties: false
-+allOf:
-+  - $ref: "/schemas/display/msm/dpu-common.yaml#"
-+
-+unevaluatedProperties: false
- 
- examples:
-   - |
+The compatibles in this series are documented by Doug's series
+https://lore.kernel.org/r/20220520143502.v4.5.Ie8713bc0377672ed8dd71189e66fc0b77226fb85@changeid
+
+Changes in v14:
+- Remove unidiomatic compile-time test for duplicate include.
+
+Changes in v13:
+- Remove 'include sc7180-trogdor.dtsi' in sc7180-trogdor-ti-sn65dsi86.dtsi.
+- Add compile-time test for duplicate include in sc7180-trogdor.dtsi.
+
+Changes in v12:
+- Replace 'include sc7180.dtsi' with 'include sc7180-trogdor.dtsi'
+  in sc7180-trogdor-ti-sn65dsi86.dtsi.
+
+Changes in v11:
+- Restore 'include sc7180.dtsi' to sc7180-trogdor-ti-sn65dsi86.dtsi.
+- Add 'include sc7180-trogdor.dtsi' to sc7180-trogdor-pazquel-* files.
+- Add 'include sc7180-trogdor.dtsi' to sc7180-trogdor-kingoftown-* files.
+
+Changes in v10:
+- Move "okay" for ap_tp_i2c to proper location.
+- Remove 'include sc7180.dtsi' from *all* sc7180-trogdor-pazquel* files.
+- Remove 'include sc7180.dtsi' from *all* sc7180-trogdor-kingoftown* files.
+
+Changes in v9:
+- Correct version history, based on diffing earlier patches.
+- Restore two lines accidentally removed from ap_sar_sensor.
+- Simplify trackpad enabling (51d30402be75).
+
+Changes in v8:
+- Incorporate the deletion of the usb_c1 node from 9f9fb70a7294.
+
+Changes in v7:
+- Accidentally removed two lines from ap_sar_sensor.
+- Only include sc7180.dtsi in sc7180-trogdor.dtsi (19794489fa24).
+- Remove #include of <arm/cros-ec-keyboard.dtsi>.
+- Restore changes requested by Doug.
+- Restore mrbland patch.
+- Simplify spi0/spi6 labeling (d277cab7afc7).
+- Simplify trackpad enabling (51d30402be75).
+
+Changes in v6:
+- Accidentally deleted changes requested by Doug.
+- Add #include of <arm/cros-ec-keyboard.dtsi>.
+- Copy changes to ap_sar_sensor from v5.4.
+- Only include sc7180.dtsi in sc7180-trogdor.dtsi (19794489fa24).
+- Remove mrbland patch.
+- Simplify spi0/spi6 labeling (d277cab7afc7).
+- Simplify trackpad enabling (51d30402be75).
+
+Changes in v5:
+- Add comment that compatible will be filled in per-board.
+- Order nodes by name.
+- Remove extra newline.
+- Replace _ in node name with -.
+
+Changes in v4:
+- Add missing version history.
+- Clean up rt5682s files.
+- Fix description (no downstream bits removed).
+- Restore camcc definition.
+
+Changes in v3:
+- Remove camcc definition.
+- First inclusion in series.
+
+Changes in v2:
+- Add word wrapping to patch description.
+- First inclusion in series.
+- Fix whitespace around "en_pp3300_dx_edp".
+- Remove "Author" from patch description.
+- Word wrap patch description.
+
+Joseph S. Barrera III (5):
+  arm64: dts: qcom: sc7180: Add wormdingler dts files
+  arm64: dts: qcom: sc7180: Add quackingstick dts files
+  arm64: dts: qcom: sc7180: Add mrbland dts files
+  arm64: dts: qcom: sc7180: Add pazquel dts files
+  arm64: dts: qcom: sc7180: Add kingoftown dts files
+
+ arch/arm64/boot/dts/qcom/Makefile             |  18 +
+ .../dts/qcom/sc7180-trogdor-kingoftown-r0.dts |  44 ++
+ .../dts/qcom/sc7180-trogdor-kingoftown-r1.dts |  17 +
+ .../dts/qcom/sc7180-trogdor-kingoftown.dtsi   | 225 ++++++++++
+ .../qcom/sc7180-trogdor-mrbland-rev0-auo.dts  |  22 +
+ .../qcom/sc7180-trogdor-mrbland-rev0-boe.dts  |  22 +
+ .../dts/qcom/sc7180-trogdor-mrbland-rev0.dtsi |  53 +++
+ .../qcom/sc7180-trogdor-mrbland-rev1-auo.dts  |  22 +
+ .../qcom/sc7180-trogdor-mrbland-rev1-boe.dts  |  24 ++
+ .../boot/dts/qcom/sc7180-trogdor-mrbland.dtsi | 344 +++++++++++++++
+ .../sc7180-trogdor-pazquel-lte-parade.dts     |  22 +
+ .../qcom/sc7180-trogdor-pazquel-lte-ti.dts    |  22 +
+ .../qcom/sc7180-trogdor-pazquel-parade.dts    |  17 +
+ .../dts/qcom/sc7180-trogdor-pazquel-ti.dts    |  17 +
+ .../boot/dts/qcom/sc7180-trogdor-pazquel.dtsi | 221 ++++++++++
+ .../sc7180-trogdor-quackingstick-r0-lte.dts   |  38 ++
+ .../qcom/sc7180-trogdor-quackingstick-r0.dts  |  26 ++
+ .../qcom/sc7180-trogdor-quackingstick.dtsi    | 318 ++++++++++++++
+ .../sc7180-trogdor-wormdingler-rev0-boe.dts   |  22 +
+ .../sc7180-trogdor-wormdingler-rev0-inx.dts   |  22 +
+ .../qcom/sc7180-trogdor-wormdingler-rev0.dtsi |  53 +++
+ ...0-trogdor-wormdingler-rev1-boe-rt5682s.dts |  29 ++
+ .../sc7180-trogdor-wormdingler-rev1-boe.dts   |  28 ++
+ ...0-trogdor-wormdingler-rev1-inx-rt5682s.dts |  29 ++
+ .../sc7180-trogdor-wormdingler-rev1-inx.dts   |  22 +
+ .../dts/qcom/sc7180-trogdor-wormdingler.dtsi  | 408 ++++++++++++++++++
+ 26 files changed, 2085 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown-r0.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown-r1.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-mrbland-rev0-auo.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-mrbland-rev0-boe.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-mrbland-rev0.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-mrbland-rev1-auo.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-mrbland-rev1-boe.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-mrbland.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel-lte-parade.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel-lte-ti.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel-parade.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel-ti.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-quackingstick-r0-lte.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-quackingstick-r0.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-quackingstick.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev0-boe.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev0-inx.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev0.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev1-boe-rt5682s.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev1-boe.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev1-inx-rt5682s.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev1-inx.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler.dtsi
+
 -- 
-2.35.1
+2.31.0
 
