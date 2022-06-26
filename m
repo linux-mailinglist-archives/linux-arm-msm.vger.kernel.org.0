@@ -2,71 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EB04D55AE01
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Jun 2022 03:40:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 557FE55AE46
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Jun 2022 04:52:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233537AbiFZBkK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 25 Jun 2022 21:40:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50858 "EHLO
+        id S232327AbiFZCvD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 25 Jun 2022 22:51:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53950 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233760AbiFZBkJ (ORCPT
+        with ESMTP id S233777AbiFZCvD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 25 Jun 2022 21:40:09 -0400
-Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13EE513DDB
-        for <linux-arm-msm@vger.kernel.org>; Sat, 25 Jun 2022 18:40:08 -0700 (PDT)
-Received: by mail-pj1-x102d.google.com with SMTP id g10-20020a17090a708a00b001ea8aadd42bso6249808pjk.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 25 Jun 2022 18:40:08 -0700 (PDT)
+        Sat, 25 Jun 2022 22:51:03 -0400
+Received: from mail-oa1-x29.google.com (mail-oa1-x29.google.com [IPv6:2001:4860:4864:20::29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD4B211A3D
+        for <linux-arm-msm@vger.kernel.org>; Sat, 25 Jun 2022 19:51:00 -0700 (PDT)
+Received: by mail-oa1-x29.google.com with SMTP id 586e51a60fabf-101e1a33fe3so8810363fac.11
+        for <linux-arm-msm@vger.kernel.org>; Sat, 25 Jun 2022 19:51:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=nzoGjJoEHKpORRoUrplPySEuSAZeqKKUuI9JgZi/IOk=;
-        b=Tm3rvFDzRoG+sp6f7eEdpnH0n8j849acTDGwDRsrjhYIliFxEQbLcTQ9A5Ws6PEsV8
-         CB7Iy5bmAtAPEQUKDQShXVn9LVOEd31zqMIdR8m+MZo+S5hXzm8OPsbZkf4UUv/Fk4GT
-         JoDm6htBGYMULkk+lxoEY3hTwvKXirDVscRkc=
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=FWO45eIYFBQmwmscjEO8obu5eF0m7SDwa2uDfj2lCtQ=;
+        b=kNeXyQ+bY7oXYtqNCldU5st/KY8gDUnZellzOC74iz6rmOFKtz4QADeBtJLwUwzJxw
+         Vonxli42R0/RnTOoU8eKazgrYfCEFM1qQjVhoc22sjmUlHn+dq57JA12zw3TIxYMZZeR
+         3MoEy3E0WaJuBXHdEN6Pr4Ah6PqpISRRWEc34afLT/AuotYzFL83UD+6Z9v1jq45XrX0
+         jbVut31AyYORTHW+30MS7JcPky2ksQhw+2AA3JC8qf6zZxcHzFKdlNgxUvOLF8vEUfC8
+         LsrfN7j6qSVW28T2LODeOAKn2WOHbDDb32MY+oPsveBT8te16B4yXDw0d1er71lZClWc
+         oLvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=nzoGjJoEHKpORRoUrplPySEuSAZeqKKUuI9JgZi/IOk=;
-        b=J3AFiihySfiEfqNzN0VmteucnWV6hr6OvW0qhXJfeAYGLz9zsQQR7BWa3dzh4dUeUx
-         CDRg2qswL+6RPp4Lvp/NAgjDD6HFOzI3iGLBalZ24z3Lu/BU6cRddpVIJYALsjhGH6D9
-         DUxdurT8UdrUsBVEUYoLCGcn2o05VMgzz7BoR6+ZPIYqLvGBGNggvGg+ZkH+t8ItrUjz
-         6rnwaDztqZ1RDWe9+RGH7NdIuwJ+Jube+XVCJAB6kh5f7z/CzxahUeEA1WS4dJRnKMD9
-         UBuz4NYTX4uphvaTn69MXMbBX9/646PtEJl03l+OIrcpFhZ8VrmL0Me0BSFsKA9T8eds
-         OMhw==
-X-Gm-Message-State: AJIora++nUKkjgd2+ivJOHLoZYh3+AhkGFURBkG0845VlszUKklC4Z3P
-        oPDnmtB2uCMvSODGQv4NWM7LaA==
-X-Google-Smtp-Source: AGRyM1sHt3FfozxLK/xuFx1GhLt873g7xR53TmzXIES7Tyc+kog8ptjlN7unX4adLA8bUvgLIV5DjQ==
-X-Received: by 2002:a17:90b:3b44:b0:1ec:d7a8:7528 with SMTP id ot4-20020a17090b3b4400b001ecd7a87528mr12743755pjb.231.1656207607476;
-        Sat, 25 Jun 2022 18:40:07 -0700 (PDT)
-Received: from joebar-glaptop.attlocal.net ([107.126.90.40])
-        by smtp.gmail.com with ESMTPSA id m13-20020a170902e40d00b00167838b82e0sm4283200ple.205.2022.06.25.18.40.06
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=FWO45eIYFBQmwmscjEO8obu5eF0m7SDwa2uDfj2lCtQ=;
+        b=o7Qgjc+gjFFhUjuxEpmcbsJ8SP+0vYKuxhWPdzRk7v2fgzAjpwji5lWLSHlBbh/Z17
+         LwfvI8dPq2ZTid7mlCAtvLB55+zS3jQtBScb9qZX+IXh0rAJw9WWV/J26S5dP5O4Crzz
+         altKrOtWxFayBLAwBlK2FoF53lKx3V+6FtD/thHpVpPWwOHrP8UkhkYPaWpU05mA3gCj
+         dt23uU9VJb38dxISq9ogcqUlLbXl+Tz/wgZjOmD8+ITiTYw+1i40GPBNUwXL/HL4fEe1
+         P5QLWPegoxl8d88H5N2fKXBbsmRorxNdQXRkeNc8o39Om2t1YaWQgHXdrKwUuNT77YXW
+         slZQ==
+X-Gm-Message-State: AJIora8ddAfP/SQ9zYtK+8naIPoecpROIhO2kdQ1H1cK3PilA0xMaqc0
+        OUNGEUP0OZtn8nOEwUjOAIs+Vg==
+X-Google-Smtp-Source: AGRyM1tAYBW3863GYNQjAozn1ppqNTY1kF4OWUYjYm5F61IMBqhsJcDqOoSxpX4dFnVRkb6IZ8Y8QA==
+X-Received: by 2002:a05:6870:4390:b0:101:ce58:7f53 with SMTP id r16-20020a056870439000b00101ce587f53mr6945293oah.8.1656211859902;
+        Sat, 25 Jun 2022 19:50:59 -0700 (PDT)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id l4-20020a056820030400b0041b87a7a654sm3866487ooe.37.2022.06.25.19.50.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 25 Jun 2022 18:40:07 -0700 (PDT)
-From:   "Joseph S. Barrera III" <joebar@chromium.org>
-To:     LKML <linux-kernel@vger.kernel.org>
-Cc:     Alexandru M Stan <amstan@chromium.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        "Joseph S. Barrera III" <joebar@chromium.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH v14 5/5] arm64: dts: qcom: sc7180: Add kingoftown dts files
-Date:   Sat, 25 Jun 2022 18:39:06 -0700
-Message-Id: <20220625183538.v14.5.Ib62291487a664a65066d18a3e83c5428a6d2cc6c@changeid>
-X-Mailer: git-send-email 2.31.0
-In-Reply-To: <20220626013906.885523-1-joebar@chromium.org>
-References: <20220626013906.885523-1-joebar@chromium.org>
+        Sat, 25 Jun 2022 19:50:59 -0700 (PDT)
+Date:   Sat, 25 Jun 2022 21:50:57 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Judy Hsiao <judyhsiao@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+        dianders@chromium.org, mka@chromium.org, cychiang@google.com,
+        judyhsiao@google.com, tzungbi@chromium.org, swboyd@chromium.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [v3 0/3] Add dtsi for sc7280 herobrine boards that using rt5682
+ codec
+Message-ID: <YrfJkQYFCsxPpUzi@builder.lan>
+References: <20220525014308.1853576-1-judyhsiao@chromium.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220525014308.1853576-1-judyhsiao@chromium.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -74,363 +76,58 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Kingoftown is a trogdor-based board. These dts files are unchanged copies
-from the downstream Chrome OS 5.4 kernel.
+On Tue 24 May 20:43 CDT 2022, Judy Hsiao wrote:
 
-Signed-off-by: Joseph S. Barrera III <joebar@chromium.org>
----
+> Put sound node and lpass_cpu node settings for boards that use rt5682
+> codec in the sc7280-herobrine-audio-rt5682.dtsi as there are different
+> choices of headset codec for herobrine projects. Common audio setting
+> for the internal speaker is in sc7280-herobrine.dtsi.
+> 
+> This series depends on:
+> "Add lpass pin control support for audio on sc7280 based targets" [1]
+> "Add soundcard support for sc7280 based platforms" [2]
+> 
+> [1]
+> https://patchwork.kernel.org/project/linux-arm-msm/list/?series=638776
 
-(no changes since v11)
+Afaict this is applied.
 
-Changes in v11:
-- Add 'include sc7180-trogdor.dtsi' to sc7180-trogdor-kingoftown-* files.
+> [2]
+> https://patchwork.kernel.org/project/linux-arm-msm/list/?series=643589
+> 
 
-Changes in v10:
-- Remove 'include sc7180.dtsi' from *all* sc7180-trogdor-kingoftown* files.
+But [2] doesn't compile and hence this series doesn't compile.
 
-Changes in v9:
-- Simplify trackpad enabling (51d30402be75).
+Can you please submit a single series with all the audio dts patches you
+want me to apply, where it's possible to run "make dtbs" after every
+single patch in the series.
 
-Changes in v7:
-- Simplify spi0/spi6 labeling (d277cab7afc7).
-- Remove #include of <arm/cros-ec-keyboard.dtsi>.
+Thanks,
+Bjorn
 
-Changes in v6:
-- Add #include of <arm/cros-ec-keyboard.dtsi> from v5.4.
-
-Changes in v4:
-- Fix description (no downstream bits removed).
-- Add missing version history.
-
-Changes in v2:
-- First inclusion in series.
-
- arch/arm64/boot/dts/qcom/Makefile             |   2 +
- .../dts/qcom/sc7180-trogdor-kingoftown-r0.dts |  44 ++++
- .../dts/qcom/sc7180-trogdor-kingoftown-r1.dts |  17 ++
- .../dts/qcom/sc7180-trogdor-kingoftown.dtsi   | 225 ++++++++++++++++++
- 4 files changed, 288 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown-r0.dts
- create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown-r1.dts
- create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown.dtsi
-
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index dc26704dfe34..a9f2ad013179 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -60,6 +60,8 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-coachz-r3-lte.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-homestar-r2.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-homestar-r3.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-homestar-r4.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-kingoftown-r0.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-kingoftown-r1.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-r0.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-r1.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-r1-kb.dtb
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown-r0.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown-r0.dts
-new file mode 100644
-index 000000000000..1a62e8d435ab
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown-r0.dts
-@@ -0,0 +1,44 @@
-+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
-+/*
-+ * Google Kingoftown board device tree source
-+ *
-+ * Copyright 2021 Google LLC.
-+ */
-+
-+/dts-v1/;
-+
-+#include "sc7180-trogdor.dtsi"
-+#include "sc7180-trogdor-ti-sn65dsi86.dtsi"
-+#include "sc7180-trogdor-kingoftown.dtsi"
-+
-+/ {
-+	model = "Google Kingoftown (rev0)";
-+	compatible = "google,kingoftown-rev0", "qcom,sc7180";
-+};
-+
-+/*
-+ * In rev1+, the enable pin of pp3300_fp_tp will be tied to pp1800_l10a
-+ * power rail instead, since kingoftown does not have FP.
-+ */
-+&pp3300_fp_tp {
-+	gpio = <&tlmm 74 GPIO_ACTIVE_HIGH>;
-+	enable-active-high;
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&en_fp_rails>;
-+};
-+
-+&tlmm {
-+	en_fp_rails: en-fp-rails {
-+		pinmux {
-+			pins = "gpio74";
-+			function = "gpio";
-+		};
-+
-+		pinconf {
-+			pins = "gpio74";
-+			drive-strength = <2>;
-+			bias-disable;
-+		};
-+	};
-+};
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown-r1.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown-r1.dts
-new file mode 100644
-index 000000000000..e0752ba7df11
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown-r1.dts
-@@ -0,0 +1,17 @@
-+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
-+/*
-+ * Google Kingoftown board device tree source
-+ *
-+ * Copyright 2021 Google LLC.
-+ */
-+
-+/dts-v1/;
-+
-+#include "sc7180-trogdor.dtsi"
-+#include "sc7180-trogdor-parade-ps8640.dtsi"
-+#include "sc7180-trogdor-kingoftown.dtsi"
-+
-+/ {
-+	model = "Google Kingoftown (rev1+)";
-+	compatible = "google,kingoftown", "qcom,sc7180";
-+};
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown.dtsi
-new file mode 100644
-index 000000000000..a19406cd29a5
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown.dtsi
-@@ -0,0 +1,225 @@
-+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
-+/*
-+ * Google Kingoftown board device tree source
-+ *
-+ * Copyright 2021 Google LLC.
-+ */
-+
-+/* This file must be included after sc7180-trogdor.dtsi */
-+
-+#include "sc7180-trogdor-lte-sku.dtsi"
-+
-+&alc5682 {
-+	compatible = "realtek,rt5682s";
-+	realtek,dmic1-clk-pin = <2>;
-+	realtek,dmic-clk-rate-hz = <2048000>;
-+};
-+
-+&ap_tp_i2c {
-+	status = "okay";
-+};
-+
-+ap_ts_pen_1v8: &i2c4 {
-+	status = "okay";
-+	clock-frequency = <400000>;
-+
-+	ap_ts: touchscreen@10 {
-+		compatible = "elan,ekth3500";
-+		reg = <0x10>;
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&ts_int_l>, <&ts_reset_l>;
-+
-+		interrupt-parent = <&tlmm>;
-+		interrupts = <9 IRQ_TYPE_LEVEL_LOW>;
-+
-+		vcc33-supply = <&pp3300_ts>;
-+
-+		reset-gpios = <&tlmm 8 GPIO_ACTIVE_LOW>;
-+	};
-+};
-+
-+&keyboard_controller {
-+	function-row-physmap = <
-+		MATRIX_KEY(0x00, 0x02, 0)       /* T1 */
-+		MATRIX_KEY(0x03, 0x02, 0)       /* T2 */
-+		MATRIX_KEY(0x02, 0x02, 0)       /* T3 */
-+		MATRIX_KEY(0x01, 0x02, 0)       /* T4 */
-+		MATRIX_KEY(0x03, 0x04, 0)       /* T5 */
-+		MATRIX_KEY(0x02, 0x04, 0)       /* T6 */
-+		MATRIX_KEY(0x01, 0x04, 0)       /* T7 */
-+		MATRIX_KEY(0x02, 0x09, 0)       /* T8 */
-+		MATRIX_KEY(0x01, 0x09, 0)       /* T9 */
-+		MATRIX_KEY(0x00, 0x04, 0)       /* T10 */
-+	>;
-+	linux,keymap = <
-+		MATRIX_KEY(0x00, 0x02, KEY_BACK)
-+		MATRIX_KEY(0x03, 0x02, KEY_REFRESH)
-+		MATRIX_KEY(0x02, 0x02, KEY_ZOOM)
-+		MATRIX_KEY(0x01, 0x02, KEY_SCALE)
-+		MATRIX_KEY(0x03, 0x04, KEY_SYSRQ)
-+		MATRIX_KEY(0x02, 0x04, KEY_BRIGHTNESSDOWN)
-+		MATRIX_KEY(0x01, 0x04, KEY_BRIGHTNESSUP)
-+		MATRIX_KEY(0x02, 0x09, KEY_MUTE)
-+		MATRIX_KEY(0x01, 0x09, KEY_VOLUMEDOWN)
-+		MATRIX_KEY(0x00, 0x04, KEY_VOLUMEUP)
-+
-+		CROS_STD_MAIN_KEYMAP
-+	>;
-+};
-+
-+&panel {
-+	compatible = "edp-panel";
-+};
-+
-+&pp3300_dx_edp {
-+	gpio = <&tlmm 67 GPIO_ACTIVE_HIGH>;
-+};
-+
-+&sound {
-+	compatible = "google,sc7180-trogdor";
-+	model = "sc7180-rt5682s-max98357a-1mic";
-+};
-+
-+&wifi {
-+	qcom,ath10k-calibration-variant = "GO_KINGOFTOWN";
-+};
-+
-+/* PINCTRL - modifications to sc7180-trogdor.dtsi */
-+
-+&en_pp3300_dx_edp {
-+	pinmux {
-+		pins = "gpio67";
-+	};
-+
-+	pinconf {
-+		pins = "gpio67";
-+	};
-+};
-+
-+/* PINCTRL - board-specific pinctrl */
-+
-+&tlmm {
-+	gpio-line-names = "TP_INT_L",		/* 0 */
-+			  "AP_RAM_ID0",
-+			  "AP_SKU_ID2",
-+			  "AP_RAM_ID1",
-+			  "",
-+			  "AP_RAM_ID2",
-+			  "AP_TP_I2C_SDA",
-+			  "AP_TP_I2C_SCL",
-+			  "TS_RESET_L",
-+			  "TS_INT_L",
-+			  "",			/* 10 */
-+			  "EDP_BRIJ_IRQ",
-+			  "AP_EDP_BKLTEN",
-+			  "",
-+			  "",
-+			  "EDP_BRIJ_I2C_SDA",
-+			  "EDP_BRIJ_I2C_SCL",
-+			  "HUB_RST_L",
-+			  "",
-+			  "",
-+			  "",			/* 20 */
-+			  "",
-+			  "",
-+			  "AMP_EN",
-+			  "",
-+			  "",
-+			  "",
-+			  "",
-+			  "HP_IRQ",
-+			  "",
-+			  "",			/* 30 */
-+			  "AP_BRD_ID2",
-+			  "BRIJ_SUSPEND",
-+			  "AP_BRD_ID0",
-+			  "AP_H1_SPI_MISO",
-+			  "AP_H1_SPI_MOSI",
-+			  "AP_H1_SPI_CLK",
-+			  "AP_H1_SPI_CS_L",
-+			  "BT_UART_CTS",
-+			  "BT_UART_RTS",
-+			  "BT_UART_TXD",	/* 40 */
-+			  "BT_UART_RXD",
-+			  "H1_AP_INT_ODL",
-+			  "",
-+			  "UART_AP_TX_DBG_RX",
-+			  "UART_DBG_TX_AP_RX",
-+			  "HP_I2C_SDA",
-+			  "HP_I2C_SCL",
-+			  "FORCED_USB_BOOT",
-+			  "AMP_BCLK",
-+			  "AMP_LRCLK",		/* 50 */
-+			  "AMP_DIN",
-+			  "",
-+			  "HP_BCLK",
-+			  "HP_LRCLK",
-+			  "HP_DOUT",
-+			  "HP_DIN",
-+			  "HP_MCLK",
-+			  "AP_SKU_ID0",
-+			  "AP_EC_SPI_MISO",
-+			  "AP_EC_SPI_MOSI",	/* 60 */
-+			  "AP_EC_SPI_CLK",
-+			  "AP_EC_SPI_CS_L",
-+			  "AP_SPI_CLK",
-+			  "AP_SPI_MOSI",
-+			  "AP_SPI_MISO",
-+			  /*
-+			   * AP_FLASH_WP_L is crossystem ABI. Schematics
-+			   * call it BIOS_FLASH_WP_L.
-+			   */
-+			  "AP_FLASH_WP_L",
-+			  "EN_PP3300_DX_EDP",
-+			  "AP_SPI_CS0_L",
-+			  "",
-+			  "",			/* 70 */
-+			  "",
-+			  "",
-+			  "",
-+			  "EN_FP_RAILS",
-+			  "UIM2_DATA",
-+			  "UIM2_CLK",
-+			  "UIM2_RST",
-+			  "UIM2_PRESENT_L",
-+			  "UIM1_DATA",
-+			  "UIM1_CLK",		/* 80 */
-+			  "UIM1_RST",
-+			  "",
-+			  "CODEC_PWR_EN",
-+			  "HUB_EN",
-+			  "",
-+			  "",
-+			  "",
-+			  "",
-+			  "",
-+			  "AP_SKU_ID1",		/* 90 */
-+			  "AP_RST_REQ",
-+			  "",
-+			  "AP_BRD_ID1",
-+			  "AP_EC_INT_L",
-+			  "",
-+			  "",
-+			  "",
-+			  "",
-+			  "",
-+			  "",			/* 100 */
-+			  "",
-+			  "",
-+			  "",
-+			  "EDP_BRIJ_EN",
-+			  "",
-+			  "",
-+			  "",
-+			  "",
-+			  "",
-+			  "",			/* 110 */
-+			  "",
-+			  "",
-+			  "",
-+			  "",
-+			  "AP_TS_PEN_I2C_SDA",
-+			  "AP_TS_PEN_I2C_SCL",
-+			  "DP_HOT_PLUG_DET",
-+			  "EC_IN_RW_ODL";
-+};
--- 
-2.31.0
-
+> 
+> Changes Since V2:
+>     -- Add bias-disable for i2s ws line.
+>     -- Fix typo in the commit message.
+> 
+> Changes Since V1:
+>     -- Remove sound-dai-cells in sound node.
+>     -- Add dependency list.
+>     -- Update patch subject.
+> 
+> Judy Hsiao (3):
+>   arm64: dts: qcom: sc7280: herobrine: Add pinconf settings for mi2s1
+>   arm64: dts: qcom: sc7280: Add sc7280-herobrine-audio-rt5682.dtsi
+>   arm64: dts: qcom: sc7280: include sc7280-herobrine-audio-rt5682.dtsi
+>     in villager and herobrine-r1
+> 
+>  .../qcom/sc7280-herobrine-audio-rt5682.dtsi   | 121 ++++++++++++++++++
+>  .../qcom/sc7280-herobrine-herobrine-r1.dts    |   1 +
+>  .../dts/qcom/sc7280-herobrine-villager-r0.dts |   1 +
+>  .../arm64/boot/dts/qcom/sc7280-herobrine.dtsi |  15 +++
+>  4 files changed, 138 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-audio-rt5682.dtsi
+> 
+> -- 
+> 2.36.1.124.g0e6072fb45-goog
+> 
