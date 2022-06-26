@@ -2,69 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5A38F55B3E4
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Jun 2022 21:58:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D019655B3F5
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Jun 2022 22:04:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230484AbiFZT4B (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 26 Jun 2022 15:56:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51790 "EHLO
+        id S232047AbiFZUAZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 26 Jun 2022 16:00:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55982 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231627AbiFZTzw (ORCPT
+        with ESMTP id S231767AbiFZUAY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 26 Jun 2022 15:55:52 -0400
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18E8E558C
-        for <linux-arm-msm@vger.kernel.org>; Sun, 26 Jun 2022 12:55:47 -0700 (PDT)
-Received: by mail-ej1-x62d.google.com with SMTP id sb34so14874577ejc.11
-        for <linux-arm-msm@vger.kernel.org>; Sun, 26 Jun 2022 12:55:47 -0700 (PDT)
+        Sun, 26 Jun 2022 16:00:24 -0400
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 373DE1008
+        for <linux-arm-msm@vger.kernel.org>; Sun, 26 Jun 2022 13:00:23 -0700 (PDT)
+Received: by mail-ej1-x62b.google.com with SMTP id g26so14942732ejb.5
+        for <linux-arm-msm@vger.kernel.org>; Sun, 26 Jun 2022 13:00:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=AuJrrJqEZIpaT7sDq4oe+HIdIK2RPnds4Jst8C6taz8=;
-        b=ib0s0QfwtbcSXes7aB+A+XkDncWDH+Ye1RpwO8hJE3QJD20/q/k+WOBWCN4Di+ZeJK
-         HSdJpXGLHbfUBAxRxhnAjFzbGzvVEr3fyW+Qj+v7fqSv/CTf1tBsDO3bsocNJhxQEh1u
-         o4PBfqN1en+SW8CNrcz9H5n/Zs27Lady/RdNSCwRdVpw55fV4S4OlSh6eAlEPBSYqTBO
-         8oebqcOzOzPWXttpsixQYG673+RAhytc8g1VGBzVil8NdbUe7dfFiDlhKVSCgntGwRWZ
-         kgYtgzh+HczWxmdiOVjBHElsfHSxKpCfiUlN/Bi3HjSX1E6ZOmHac0M0iHPIaUNzGihU
-         fM/w==
+        bh=56YzwVQKdHGziCBUUIednU1Z8rEBgdNoppTuq6x0/M8=;
+        b=NnwoGGTb7v+KSqJ5iDMFmofL3n9nM5O/+xjyqJ1YBYmQxbiEZ6Li1wJ1SL9/RwCMW5
+         5CPkIKEP+HSlofaZ9XBU4e0al5O4FU19sS/XS7+j+afROckxahWfDAhw8OIkcmp07nvR
+         oD/kXv1XlmWdg1MOrZdBWgh1u53lgeR6IkkG9jJR8+A1+pH37c7rxWs2odAD/J+vSHA9
+         T5JcfaMFIKQ6AONnA5rzdDflDt1/o4K7UFqb0aGD59e/Q/UviFnjmZbTWAhz02E1KDo+
+         iRzVmy+FaEn/NppE6okbwI4JSBAAozt9O2b/hqwDrfJpgwOhERwAZ+V50J//BTG24mG/
+         nNxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=AuJrrJqEZIpaT7sDq4oe+HIdIK2RPnds4Jst8C6taz8=;
-        b=596eXZj8sMcZMOYy+E9fHh/RuQfySw9VoNIvMJfRaedsVc4CZIF+jS5vpuzjZr/FNo
-         /Ubxc0C8JqJLLL3JClIe6HIDk/u65mNOmFwwqfeJ8CcQNvlFYfWmGbd4rR0LDNLFwSH9
-         H1lCi+L0YdkuCiCqt0HV9tP9BO3zXWFhHDf8rSikZDmK20BdQpPaqRRRddVYJUaUYgdO
-         +5OCKSeWk4HIKnNezPTtopnEoanwBwW7J4X1XKNf2bstBhyKIJhIOZAcGaaZhIQ8YZps
-         2weUk0UnwiMG7b7q1LuafZTA0RoMbNWCCgOzQb+czVE6BWBg/EJcDrppF7CDOvB0ss+U
-         rKZQ==
-X-Gm-Message-State: AJIora/+86yWt2LLfQAmQj9a901pYq9DUDZLkkfV/gzjOqgyFeo17oiK
-        obq5AGVRO0kO/lF+XLgPHApLbQ==
-X-Google-Smtp-Source: AGRyM1ukZ+ZOpVrIGCktCeBPNgxUPOy4HPAQP+M+09LoQllzMk0p8xb5kT53u9O2rEy/oFG6vgrsVA==
-X-Received: by 2002:a17:907:1c0b:b0:711:cc52:2920 with SMTP id nc11-20020a1709071c0b00b00711cc522920mr9355175ejc.301.1656273345722;
-        Sun, 26 Jun 2022 12:55:45 -0700 (PDT)
+        bh=56YzwVQKdHGziCBUUIednU1Z8rEBgdNoppTuq6x0/M8=;
+        b=7vW7o4xMnj2yRDzh3yQbHl+37jR4xFFx+XZ/PXZssQZIWMTA032i+bPwYFVSktQ79h
+         mH72Yz4ecGyJc5gyaTkOorUDzt/YbAxeF2Uhwmn9Zb7Wy85y/6SjqyDgMo1EKkcYW/I3
+         ebsw/QZK7CoezmvqqPMGs21tjENXfvuynayoKi9+ikIxh4Ul6854w6FoM2KjpCX1h1Jw
+         z2ZX7CCbHjw20jPUtoHXslXNOewaC7+J5SkbhBZkiJ3faq9tXLuheo2YaMKQavSOUyGi
+         eT785fqKmchx8Jr7n2TiSs7XDrFebCnDmWbHbqtMp7Qab6TuQhcu5JDZXKWDOXdWo1yE
+         iB1g==
+X-Gm-Message-State: AJIora9Tnd5cijvLrZcApiRkhvWCCjyRujJjzYEQ5XLkQIrmocLXNJ/D
+        6NTM05HXq6mTjm2PTUyobZB9Yg==
+X-Google-Smtp-Source: AGRyM1smRDpHE9xz9/L06jkLVOqTAUdavGeWX6/lobROMiqKscv2iJGPLP10Se3MtGyQnK2ImDbuJw==
+X-Received: by 2002:a17:907:6e9f:b0:711:d2cb:63d8 with SMTP id sh31-20020a1709076e9f00b00711d2cb63d8mr9794470ejc.232.1656273621773;
+        Sun, 26 Jun 2022 13:00:21 -0700 (PDT)
 Received: from [192.168.0.245] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id j15-20020aa7ca4f000000b0043559d9e8b9sm6316641edt.53.2022.06.26.12.55.44
+        by smtp.gmail.com with ESMTPSA id i17-20020a1709061e5100b00704b196e59bsm4099635ejj.185.2022.06.26.13.00.20
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 26 Jun 2022 12:55:45 -0700 (PDT)
-Message-ID: <aae09aaa-ace5-265d-5d6d-8f2950be16bf@linaro.org>
-Date:   Sun, 26 Jun 2022 21:55:44 +0200
+        Sun, 26 Jun 2022 13:00:21 -0700 (PDT)
+Message-ID: <9dd87d64-5124-a75b-be8a-1b056da645ce@linaro.org>
+Date:   Sun, 26 Jun 2022 22:00:20 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.10.0
-Subject: Re: [PATCH] ARM: dts: add missing compatible for pm8916
+Subject: Re: [PATCH v4 3/3] dt-bindings: firmware: convert Qualcomm SCM
+ binding to the yaml
 Content-Language: en-US
 To:     David Heidelberg <david@ixit.cz>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Robert Marko <robimarko@gmail.com>,
+        Das Srinagesh <quic_gurus@quicinc.com>
 Cc:     ~okias/devicetree@lists.sr.ht, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20220626191540.176574-1-david@ixit.cz>
+References: <20220626183247.142776-1-david@ixit.cz>
+ <20220626183247.142776-3-david@ixit.cz>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220626191540.176574-1-david@ixit.cz>
+In-Reply-To: <20220626183247.142776-3-david@ixit.cz>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -77,17 +81,148 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26/06/2022 21:15, David Heidelberg wrote:
-> Format should be: device specific, generic compatible.
+On 26/06/2022 20:32, David Heidelberg wrote:
+> Convert Qualcomm SCM firmware binding to the yaml format.
+> 
+> This commit also:
+>  - adds qcom,scm-mdm9607 into list which has only core clock
+>  - adds qcom,scm-sm6125, qcom,scm-ipq6018
+>  - #reset-cells, because the property is already used
 > 
 > Signed-off-by: David Heidelberg <david@ixit.cz>
-> ---
->  arch/arm64/boot/dts/qcom/pm8916.dtsi | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> --
+> v4:
+>  - added clocks minItems and maxItems
+>  - removed quotes from $id and $schema
+>  - adjusted description of TCSR HW block
 
-This was already fixed:
+Thank you for your patch. There is something to discuss/improve.
 
-https://lore.kernel.org/all/20220507194913.261121-7-krzysztof.kozlowski@linaro.org/
+> +properties:
+> +  compatible:
+> +    items:
+> +      - enum:
+> +          - qcom,scm-apq8064
+> +          - qcom,scm-apq8084
+> +          - qcom,scm-ipq4019
+> +          - qcom,scm-ipq6018
+> +          - qcom,scm-ipq806x
+> +          - qcom,scm-ipq8074
+> +          - qcom,scm-mdm9607
+> +          - qcom,scm-msm8226
+> +          - qcom,scm-msm8660
+> +          - qcom,scm-msm8916
+> +          - qcom,scm-msm8953
+> +          - qcom,scm-msm8960
+> +          - qcom,scm-msm8974
+> +          - qcom,scm-msm8976
+> +          - qcom,scm-msm8994
+> +          - qcom,scm-msm8996
+> +          - qcom,scm-msm8998
+> +          - qcom,scm-sc7180
+> +          - qcom,scm-sc7280
+> +          - qcom,scm-sdm845
+> +          - qcom,scm-sdx55
+> +          - qcom,scm-sm6125
+> +          - qcom,scm-sm6350
+> +          - qcom,scm-sm8150
+> +          - qcom,scm-sm8250
+> +          - qcom,scm-sm8350
+> +          - qcom,scm-sm8450
+> +          - qcom,scm-qcs404
+> +      - const: qcom,scm
+> +
+> +  clocks:
+> +    minItems: 1
+> +    maxItems: 3
+> +
+> +  clock-names:
+> +    minItems: 1
+> +    maxItems: 3
+> +
+> +  '#reset-cells':
+> +    const: 1
+> +
+> +  qcom,dload-mode:
+> +    $ref: /schemas/types.yaml#/definitions/phandle-array
+> +    items:
+> +      - items:
+> +          - description: phandle to TCSR hardware block
+> +          - description: offset of the download mode control register
+> +    description: TCSR hardware block
+> +
+> +allOf:
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            enum:
+> +              - qcom,scm-apq8064
+> +              - qcom,scm-mdm9607
+> +              - qcom,scm-msm8660
+> +              - qcom,scm-msm8960
+> +    then:
+> +      properties:
+> +        clock-names:
+> +          items:
+> +            - const: core
+> +
+> +        clocks:
+> +          maxItems: 1
+> +
+> +      required:
+> +        - clocks
+> +        - clock-names
+> +
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            enum:
+> +              - qcom,scm-apq8084
+> +              - qcom,scm-msm8916
+> +              - qcom,scm-msm8953
+> +              - qcom,scm-msm8974
+> +              - qcom,scm-msm8976
+> +    then:
+> +      properties:
+> +        clock-names:
+> +          items:
+> +            - const: core
+> +            - const: bus
+> +            - const: iface
+> +
+> +        clocks:
+> +          minItems: 3
+> +          maxItems: 3
+> +
+> +
+
+Just one blank line.
+
+> +      required:
+> +        - clocks
+> +        - clock-names
+> +
+> +required:
+> +  - compatible
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    include <dt-bindings/clock/qcom,gcc-msm8916.h>
+> +
+> +    firmware {
+> +        scm {
+> +            compatible = "qcom,msm8916", "qcom,scm";
+> +            clocks = <&gcc GCC_CRYPTO_CLK>,
+> +                     <&gcc GCC_CRYPTO_AXI_CLK>,
+> +                     <&gcc GCC_CRYPTO_AHB_CLK>;
+> +            clock-names = "core", "bus", "iface";
+> +        };
+> +    };
+
 
 Best regards,
 Krzysztof
