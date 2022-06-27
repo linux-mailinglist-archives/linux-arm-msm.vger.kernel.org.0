@@ -2,79 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3CF4B55DE90
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jun 2022 15:29:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 38F0A55C5C3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jun 2022 14:51:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239408AbiF0VX3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Jun 2022 17:23:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60790 "EHLO
+        id S236805AbiF0V2M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Jun 2022 17:28:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35450 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238349AbiF0VX2 (ORCPT
+        with ESMTP id S239254AbiF0V2L (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Jun 2022 17:23:28 -0400
-Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62D5362F8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jun 2022 14:23:27 -0700 (PDT)
-Received: by mail-lj1-x22d.google.com with SMTP id bn8so12545059ljb.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jun 2022 14:23:27 -0700 (PDT)
+        Mon, 27 Jun 2022 17:28:11 -0400
+Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A769B1B
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jun 2022 14:28:05 -0700 (PDT)
+Received: by mail-pj1-x1029.google.com with SMTP id g20-20020a17090a579400b001ed52939d72so5195013pji.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jun 2022 14:28:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=/wLPUoy2pPh5k2BqmFFOQy1JZHLjbPr706Aorr9RkCg=;
-        b=ZUvtm84o5Xus6asD33Qz20UyzTK82ynVsnvqIECW2CLfDOWIdFwz79aOYCZXfn4si6
-         Ofx2gMQcJPnuq13TzHmlG/CsnjPBslYItdIM8B0NCxiVYI/McIWlZ/Z4kayA6HQsKLeB
-         5vKcA303I1x4QKCPydiaj6cA8XvkldMirOnaXWAtn9kLhvi4j18Axjt6/DyHxfKQcaJZ
-         buSdq3CqcUBWJ3u/+gtBVjy/j4ImB39eVf3tBIDT/C8K62t7Q0TjU6uO16f0WycK4wel
-         bZFFHCrcY614cmIRdsq7OjLtWc7vk5gMY4k1F7KGqXyKbketsU3epjWnW8+0V8KURHRA
-         5R0g==
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=IC7TunaQ/xxlxC2LBpizkSNCL0cDYUe5ayoNlSMPh6E=;
+        b=H6XDobC1AiHh5J73dkLHzYIrrrCEJPdnn+FCW18IWWlGQmJmPx3b2yljz1ZTQLuE59
+         iOCr1l4OfOr3x+yacL6AB7ZO5mSOAilV/DoaFy1QU/Yk6KWtckZ4Z+BCBW0O0GEx1y78
+         Xd2GPzmjtzlHIO+Jy7ukvbsz/ugWG5Vv3wXnQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=/wLPUoy2pPh5k2BqmFFOQy1JZHLjbPr706Aorr9RkCg=;
-        b=tu0+0BJh+zOHGh/wiBGQm9HOH32GXQFsNh9GjnbXsvYrgfHtjn/kwCx4qQJABnJ7AC
-         JwNi+fzILJrncqr41tYot84zM+P47HHYr0apZILpxpT2XoS7TnjvnFYngU3UfNrLkULm
-         T9Jy+GhSEKhTe58GGQifotU1md+01zMQJAzIoy7YVhU0jLsnNHD4BgZZqvMEGlEh/OiW
-         /G98pkUe9xQRPfVpwuPJihTXoKk22bsSpYCXAOvtGCpsillBKP36+Qpm52RWgY7hmN+K
-         2RXD+ErVrePxvsx2YirxZFboXnrARS30DudM9D5Gvpwmgak1ifv02wCNmLwDsG7LZsYL
-         ETDA==
-X-Gm-Message-State: AJIora+RC7+Mw90zbWREztrNXvkDVJKobsada4stm+K+th27ahEU/mVG
-        kIS6xVH62GPNSnDVpoVW74nVUA==
-X-Google-Smtp-Source: AGRyM1sopHDGUg40Tmfjl6TKQ3fPR8QMuGTPk5+XM5+KH9vn2PFRQl0J662G84sETgPQUtNaQIRYbA==
-X-Received: by 2002:a05:651c:a04:b0:25b:bc07:8884 with SMTP id k4-20020a05651c0a0400b0025bbc078884mr4939922ljq.39.1656365005631;
-        Mon, 27 Jun 2022 14:23:25 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id q10-20020a056512210a00b0047da5e98e66sm1946927lfr.1.2022.06.27.14.23.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 27 Jun 2022 14:23:24 -0700 (PDT)
-Message-ID: <84819c2b-54b5-218e-6d42-bdd8a5fe9103@linaro.org>
-Date:   Tue, 28 Jun 2022 00:23:24 +0300
+        bh=IC7TunaQ/xxlxC2LBpizkSNCL0cDYUe5ayoNlSMPh6E=;
+        b=iH2aq96MhjJRTvoYMH9os5VGqqjZtkzFjumJX0OZnM7AVHYaSFt6eTV/y4WXp8rJkE
+         qdbk1KXQaHalEizrTnFO0GdE6olcF86ouzQdh6mEcbYfbfrcUS1VqvLr8ky/w+MRHLPk
+         JLasGUxjljzPibh1yEjIa3eLua5Mhbqx4xHY7lCSu7E6b8yC0me1XcZLYFpPsNCQ9P0f
+         9cMYGRLxaqj4h5ufUWpyiDeN7pgrK/UgeZN+Rf8wpOQEEokUrTleZZY5Viob8gZgSZBV
+         hOdx5H1fLDv+WwUHAAj4avXgT//OIliKqNG9/kKa6q48DhYnziw4P/5p9sD4wu4d86Gj
+         /OAw==
+X-Gm-Message-State: AJIora/uTAlWJCjnixmQuLwtHOYu+xgT8JIWdOL6x5JZu16osXZ5xpg7
+        /DhtDpWu/oJieOy5UyiM7pmTbQ==
+X-Google-Smtp-Source: AGRyM1sUMT65y3/uEMYvOOKKzBXu6sJiMW2ElwpPPzeIBzgnozkorDsAtlO3/aPoKTYb1MkHVnasRg==
+X-Received: by 2002:a17:903:291:b0:168:c6b3:1976 with SMTP id j17-20020a170903029100b00168c6b31976mr148767plr.9.1656365284800;
+        Mon, 27 Jun 2022 14:28:04 -0700 (PDT)
+Received: from smtp.gmail.com ([2620:15c:202:201:102:e83c:44ae:47db])
+        by smtp.gmail.com with ESMTPSA id w20-20020a1709029a9400b0015e8d4eb231sm7697115plp.123.2022.06.27.14.28.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 27 Jun 2022 14:28:04 -0700 (PDT)
+From:   Stephen Boyd <swboyd@chromium.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+        linux-arm-msm@vger.kernel.org, Benson Leung <bleung@chromium.org>,
+        Guenter Roeck <groeck@chromium.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Hsin-Yi Wang <hsinyi@chromium.org>,
+        "Joseph S. Barrera III" <joebar@chromium.org>
+Subject: [PATCH v2] arm64: dts: qcom: sc7180-trogdor: Split out keyboard node and describe detachables
+Date:   Mon, 27 Jun 2022 14:28:02 -0700
+Message-Id: <20220627212802.3593012-1-swboyd@chromium.org>
+X-Mailer: git-send-email 2.37.0.rc0.161.g10f37bed90-goog
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: [PATCH] drm/msm/dp: use ARRAY_SIZE for calculating num_descs
-Content-Language: en-GB
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-References: <20220627165413.657142-1-dmitry.baryshkov@linaro.org>
- <9f82dd3f-5ecc-4e1d-6cce-0749b8316d49@quicinc.com>
- <CAA8EJprR23ugdi926BDtGOGdGEqvWBgOQfekyJjD_OFE3yx0Aw@mail.gmail.com>
- <9e7c1015-80e6-308d-7910-95d27df174b4@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <9e7c1015-80e6-308d-7910-95d27df174b4@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -83,147 +70,213 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 28/06/2022 00:01, Kuogee Hsieh wrote:
-> 
-> On 6/27/2022 1:05 PM, Dmitry Baryshkov wrote:
->> On Mon, 27 Jun 2022 at 22:26, Kuogee Hsieh <quic_khsieh@quicinc.com> 
->> wrote:
->>>
->>> On 6/27/2022 9:54 AM, Dmitry Baryshkov wrote:
->>>> If for some reason the msm_dp_config::descs array starts from non-zero
->>>> index or contains the hole, setting the msm_dp_config::num_descs might
->>>> be not that obvious and error-prone. Use ARRAY_SIZE to set this field
->>>> rather than encoding the value manually.
->>>>
->>>> Reported-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
->>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>>> ---
->>>>    drivers/gpu/drm/msm/dp/dp_display.c | 46 
->>>> +++++++++++++++++------------
->>>>    1 file changed, 27 insertions(+), 19 deletions(-)
->>>>
->>>> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c 
->>>> b/drivers/gpu/drm/msm/dp/dp_display.c
->>>> index f87fa3ba1e25..6fed738a9467 100644
->>>> --- a/drivers/gpu/drm/msm/dp/dp_display.c
->>>> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
->>>> @@ -131,35 +131,43 @@ struct msm_dp_config {
->>>>        size_t num_descs;
->>>>    };
->>>>
->>>> +static const struct msm_dp_desc sc7180_dp_descs[] = {
->>>> +     [MSM_DP_CONTROLLER_0] = { .io_start = 0x0ae90000, 
->>>> .connector_type = DRM_MODE_CONNECTOR_DisplayPort },
->>>> +};
->>>> +
->>>>    static const struct msm_dp_config sc7180_dp_cfg = {
->>>> -     .descs = (const struct msm_dp_desc[]) {
->>>> -             [MSM_DP_CONTROLLER_0] = { .io_start = 0x0ae90000, 
->>>> .connector_type = DRM_MODE_CONNECTOR_DisplayPort },
->>>> -     },
->>>> -     .num_descs = 1,
->>>> +     .descs = sc7180_dp_descs,
->>>> +     .num_descs = ARRAY_SIZE(sc7180_dp_descs),
->>>> +};
->>>> +
->>> why you want to do that?
->>>
->>> It is very clear only one entry, why you want to make it 2 entry here?
->>>
->>> can you just embedded MSM_DP_COTROLLER_x into struct msm_dp_config?
->> Because we had enough stories of using a manually set 'number of
->> something' field. So I'd prefer to have it done automatically.
->> Also using the indexed array spares us from 'look for the DP
->> controller number N' functions. You can just get it.
-> 
-> static const struct msm_dp_config sc7280_dp_cfg = {
->           .descs = (const struct msm_dp_desc[]) {
->                   [MSM_DP_CONTROLLER_1] = { .io_start = 0x0aea0000, 
-> .connector_type = DRM_MODE_CONNECTOR_eDP, .wide_bus_en = true },
->           },
->           .num_descs = ARRAY_SIZE(sc7280_dp_descs),
+Trogdor devices that have a detachable keyboard still have a
+non-detachable keyboard input device present because we include the
+cros-ec-keyboard.dtsi snippet in the top-level sc7180-trogdor.dtsi file
+that every variant board includes. We do this because the
+keyboard-controller node also provides some buttons like the power
+button and volume buttons. Unfortunately, this means we register a
+keyboard input device that doesn't do anything on boards with a
+detachable keyboard.
 
-This will not work.
+Change the node's compatible on detachables to the newly introduced
+"google,cros-ec-keyb-switches" compatible to indicate that there are
+only switches and no keyboard to register. Similarly, move the keyboard
+include that defines the keyboard-controller node out of
+sc7180-trogdor.dtsi to boards that actually have a keyboard so that the
+matrix properties are not defined on boards with the switches
+compatible. Future boards can either use the include approach or the
+node definition approach to describe a keyboard with possible switches
+or just some switches.
 
-> };
-> 
-> At above example table, it just waste one entry. is it ok?
+Cc: Benson Leung <bleung@chromium.org>
+Cc: Guenter Roeck <groeck@chromium.org>
+Cc: Douglas Anderson <dianders@chromium.org>
+Cc: Hsin-Yi Wang <hsinyi@chromium.org>
+Cc: "Joseph S. Barrera III" <joebar@chromium.org>
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+---
 
-I'd assume this is an interim development state. Then it's fine. In the 
-final version one would fill all existing DP controllers starting from 0.
+Changes from v1 (https://lore.kernel.org/r/20220518172525.3319993-1-swboyd@chromium.org):
+ * Rebased onto Joe's series applied on top of qcom's arm64-fixes-for-4.19
+ * Updated more dtsi files
 
-> 
-> can you elaborate  more on 'look for the DP controller number N' 
-> functions, where is it?
+ arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi        | 4 ++++
+ arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi      | 6 ++++++
+ arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown.dtsi    | 2 +-
+ arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi         | 1 +
+ arch/arm64/boot/dts/qcom/sc7180-trogdor-mrbland.dtsi       | 6 ++++++
+ arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel.dtsi       | 1 +
+ arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi        | 2 ++
+ arch/arm64/boot/dts/qcom/sc7180-trogdor-quackingstick.dtsi | 6 ++++++
+ arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts             | 2 ++
+ arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler.dtsi   | 4 ++++
+ arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi               | 1 -
+ 11 files changed, 33 insertions(+), 2 deletions(-)
 
-Ignore this.
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
+index 8ac1f1e61006..7ee407f7b6bb 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
+@@ -81,6 +81,10 @@ &camcc {
+ };
+ 
+ &cros_ec {
++	keyboard-controller {
++		compatible = "google,cros-ec-keyb-switches";
++	};
++
+ 	cros_ec_proximity: proximity {
+ 		compatible = "google,cros-ec-mkbp-proximity";
+ 		label = "proximity-wifi";
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi
+index d1e2df5164ea..1bd6c7dcd9e9 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi
+@@ -114,6 +114,12 @@ &camcc {
+ 	status = "okay";
+ };
+ 
++&cros_ec {
++	keyboard-controller {
++		compatible = "google,cros-ec-keyb-switches";
++	};
++};
++
+ &panel {
+ 	compatible = "samsung,atna33xc20";
+ 	enable-gpios = <&tlmm 12 GPIO_ACTIVE_HIGH>;
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown.dtsi
+index a19406cd29a5..74f0e07ea5cf 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown.dtsi
+@@ -6,7 +6,7 @@
+  */
+ 
+ /* This file must be included after sc7180-trogdor.dtsi */
+-
++#include <arm/cros-ec-keyboard.dtsi>
+ #include "sc7180-trogdor-lte-sku.dtsi"
+ 
+ &alc5682 {
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
+index 88f6a7d4d020..2cf7d5212c61 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
+@@ -6,6 +6,7 @@
+  */
+ 
+ /* This file must be included after sc7180-trogdor.dtsi */
++#include <arm/cros-ec-keyboard.dtsi>
+ 
+ &ap_sar_sensor {
+ 	semtech,cs0-ground;
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-mrbland.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-mrbland.dtsi
+index 33d1d8a29038..97cba7f8064f 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-mrbland.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-mrbland.dtsi
+@@ -58,6 +58,12 @@ &camcc {
+ 	status = "okay";
+ };
+ 
++&cros_ec {
++	keyboard-controller {
++		compatible = "google,cros-ec-keyb-switches";
++	};
++};
++
+ &dsi0 {
+ 
+ 	panel: panel@0 {
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel.dtsi
+index 2d13b94e9313..56d787785fd5 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel.dtsi
+@@ -6,6 +6,7 @@
+  */
+ 
+ /* This file must be included after sc7180-trogdor.dtsi */
++#include <arm/cros-ec-keyboard.dtsi>
+ 
+ &ap_sar_sensor {
+ 	compatible = "semtech,sx9324";
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi
+index 3df4920295ad..a7582fb547ee 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi
+@@ -6,6 +6,8 @@
+  */
+ 
+ #include "sc7180-trogdor.dtsi"
++/* Must come after sc7180-trogdor.dtsi to modify cros_ec */
++#include <arm/cros-ec-keyboard.dtsi>
+ #include "sc7180-trogdor-ti-sn65dsi86.dtsi"
+ 
+ / {
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-quackingstick.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-quackingstick.dtsi
+index 574b78eb4f28..695b04fe7221 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-quackingstick.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-quackingstick.dtsi
+@@ -46,6 +46,12 @@ &camcc {
+ 	status = "okay";
+ };
+ 
++&cros_ec {
++	keyboard-controller {
++		compatible = "google,cros-ec-keyb-switches";
++	};
++};
++
+ &dsi0 {
+ 	panel: panel@0 {
+ 		/* Compatible will be filled in per-board */
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts
+index 352827e5740a..59a23d0e9651 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts
+@@ -8,6 +8,8 @@
+ /dts-v1/;
+ 
+ #include "sc7180-trogdor.dtsi"
++/* Must come after sc7180-trogdor.dtsi to modify cros_ec */
++#include <arm/cros-ec-keyboard.dtsi>
+ #include "sc7180-trogdor-ti-sn65dsi86.dtsi"
+ 
+ / {
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler.dtsi
+index 701dd11a12cf..6312108e8b3e 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler.dtsi
+@@ -104,6 +104,10 @@ &cros_ec {
+ 	base_detection: cbas {
+ 		compatible = "google,cros-cbas";
+ 	};
++
++	keyboard-controller {
++		compatible = "google,cros-ec-keyb-switches";
++	};
+ };
+ 
+ &dsi0 {
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+index e55dbaa6dc12..1a4f2e8cc3dc 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+@@ -903,7 +903,6 @@ cros_ec_fp: ec@0 {
+ 	};
+ };
+ 
+-#include <arm/cros-ec-keyboard.dtsi>
+ #include <arm/cros-ec-sbs.dtsi>
+ 
+ &uart3 {
 
-> 
-> 
->>>> +static const struct msm_dp_desc sc7280_dp_descs[] = {
->>>> +     [MSM_DP_CONTROLLER_0] = { .io_start = 0x0ae90000, 
->>>> .connector_type = DRM_MODE_CONNECTOR_DisplayPort, .wide_bus_en = 
->>>> true },
->>>> +     [MSM_DP_CONTROLLER_1] = { .io_start = 0x0aea0000, 
->>>> .connector_type = DRM_MODE_CONNECTOR_eDP, .wide_bus_en = true },
->>>>    };
->>>>
->>>>    static const struct msm_dp_config sc7280_dp_cfg = {
->>>> -     .descs = (const struct msm_dp_desc[]) {
->>>> -             [MSM_DP_CONTROLLER_0] = { .io_start = 0x0ae90000, 
->>>> .connector_type = DRM_MODE_CONNECTOR_DisplayPort, .wide_bus_en = 
->>>> true },
->>>> -             [MSM_DP_CONTROLLER_1] = { .io_start = 0x0aea0000, 
->>>> .connector_type = DRM_MODE_CONNECTOR_eDP, .wide_bus_en = true },
->>>> -     },
->>>> -     .num_descs = 2,
->>>> +     .descs = sc7280_dp_descs,
->>>> +     .num_descs = ARRAY_SIZE(sc7280_dp_descs),
->>>> +};
->>>> +
->>>> +static const struct msm_dp_desc sc8180x_dp_descs[] = {
->>>> +     [MSM_DP_CONTROLLER_0] = { .io_start = 0x0ae90000, 
->>>> .connector_type = DRM_MODE_CONNECTOR_DisplayPort },
->>>> +     [MSM_DP_CONTROLLER_1] = { .io_start = 0x0ae98000, 
->>>> .connector_type = DRM_MODE_CONNECTOR_DisplayPort },
->>>> +     [MSM_DP_CONTROLLER_2] = { .io_start = 0x0ae9a000, 
->>>> .connector_type = DRM_MODE_CONNECTOR_eDP },
->>>>    };
->>>>
->>>>    static const struct msm_dp_config sc8180x_dp_cfg = {
->>>> -     .descs = (const struct msm_dp_desc[]) {
->>>> -             [MSM_DP_CONTROLLER_0] = { .io_start = 0x0ae90000, 
->>>> .connector_type = DRM_MODE_CONNECTOR_DisplayPort },
->>>> -             [MSM_DP_CONTROLLER_1] = { .io_start = 0x0ae98000, 
->>>> .connector_type = DRM_MODE_CONNECTOR_DisplayPort },
->>>> -             [MSM_DP_CONTROLLER_2] = { .io_start = 0x0ae9a000, 
->>>> .connector_type = DRM_MODE_CONNECTOR_eDP },
->>>> -     },
->>>> -     .num_descs = 3,
->>>> +     .descs = sc8180x_dp_descs,
->>>> +     .num_descs = ARRAY_SIZE(sc8180x_dp_descs),
->>>> +};
->>>> +
->>>> +static const struct msm_dp_desc sm8350_dp_descs[] = {
->>>> +     [MSM_DP_CONTROLLER_0] = { .io_start = 0x0ae90000, 
->>>> .connector_type = DRM_MODE_CONNECTOR_DisplayPort },
->>>>    };
->>>>
->>>>    static const struct msm_dp_config sm8350_dp_cfg = {
->>>> -     .descs = (const struct msm_dp_desc[]) {
->>>> -             [MSM_DP_CONTROLLER_0] = { .io_start = 0x0ae90000, 
->>>> .connector_type = DRM_MODE_CONNECTOR_DisplayPort },
->>>> -     },
->>>> -     .num_descs = 1,
->>>> +     .descs = sm8350_dp_descs,
->>>> +     .num_descs = ARRAY_SIZE(sm8350_dp_descs),
->>>>    };
->>>>
->>>>    static const struct of_device_id dp_dt_match[] = {
->>
->>
-
-
+base-commit: d640974d1c4ee510fcc8f05f0ddaaf9d17b47643
+prerequisite-patch-id: e4e5e59ecf0e67976cbf6e54a85e5ba2018dc0ff
+prerequisite-patch-id: dc0ebbff0f2ed6c8674bdebef127d7f10b7dacbf
+prerequisite-patch-id: 41a558fdc22515e78b2caeb3630ecd075072eb74
+prerequisite-patch-id: 90167e33f0cd4d8aa92cb6221964779de53d8cf4
+prerequisite-patch-id: b7cfa974f20a01ba2121cbe61dc1c9ac70ec8442
 -- 
-With best wishes
-Dmitry
+https://chromeos.dev
+
