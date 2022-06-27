@@ -2,103 +2,171 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A197D55D334
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jun 2022 15:11:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6309655C93B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jun 2022 14:56:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236727AbiF0OHy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Jun 2022 10:07:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47660 "EHLO
+        id S236724AbiF0OKI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Jun 2022 10:10:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51712 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236697AbiF0OHx (ORCPT
+        with ESMTP id S236778AbiF0OKH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Jun 2022 10:07:53 -0400
-Received: from mx.kernkonzept.com (serv1.kernkonzept.com [IPv6:2a01:4f8:1c1c:b490::2])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5901312ACF;
-        Mon, 27 Jun 2022 07:07:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=kernkonzept.com; s=mx1; h=In-Reply-To:Content-Type:MIME-Version:References:
-        Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:
-        Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-        Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-        List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=lo8YsPDdBOH9TT2g4EDcAKIrZ1oPIx9jlxewAjSpJR8=; b=GwztnKaqgVXNeLdjQ27GbjeQig
-        7IEjBiOFuO3QpNOJuRRs3caLXOo+ebAc77h1pDdN08p6caEyYaNPGznDtFiRCYh71WveiypxHc1ck
-        HwRHLzSD9q74rgZSmjJPIQa5EDbRWXuiYnhRL2RYgSTsQaWBsdMfEZf5FeStlEKepEY2GL91+Cvc9
-        5PAD5shGmKsn5yX+Q0MQpLJ4wKwm2NE0PtSXyzdAevrwN3gJI9qMW5l2k4ePRwoUO3+qp+yud/m4O
-        +Wzafhf/CHT/pUlcM/qhxWraqs/SRpvF9FZnSPKsZ0HrUW3MDPOR5lrfOJXwy+kxtp7muOMo24k2q
-        j+whfl2g==;
-Received: from [10.22.3.24] (helo=kernkonzept.com)
-        by mx.kernkonzept.com with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim 4.94.2)
-        id 1o5pP0-006DLv-Bc; Mon, 27 Jun 2022 16:07:46 +0200
-Date:   Mon, 27 Jun 2022 16:07:39 +0200
-From:   Stephan Gerhold <stephan.gerhold@kernkonzept.com>
-To:     Rob Herring <robh@kernel.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Mark Brown <broonie@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Subject: Re: [PATCH 2/3] regulator: dt-bindings: qcom,smd-rpm: Add PM8909
-Message-ID: <Yrm5q/2giqUDd0oa@kernkonzept.com>
-References: <20220623094614.1410180-1-stephan.gerhold@kernkonzept.com>
- <20220623094614.1410180-3-stephan.gerhold@kernkonzept.com>
- <1656091594.427255.146351.nullmailer@robh.at.kernel.org>
+        Mon, 27 Jun 2022 10:10:07 -0400
+Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69E9313D57;
+        Mon, 27 Jun 2022 07:10:02 -0700 (PDT)
+Received: by mail-pf1-x431.google.com with SMTP id c205so9134149pfc.7;
+        Mon, 27 Jun 2022 07:10:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=sender:message-id:date:mime-version:user-agent:content-language:to
+         :cc:references:from:subject:in-reply-to:content-transfer-encoding;
+        bh=ST6/uI8tXZH7pQ+ernx/OpLdl4iQTKy4m9qi3OodjQ4=;
+        b=kIw8mhUiKbPeLo0As7uG2MNu5ap8qTeY/RACkMNYn8LsaVMPzOu/OJtP44qHEBcAkH
+         sYGcmzEWrS2vCmL0B88d5G5CvdLkqmU77kwt2LnIOsqYaXUAk0De06YlREObw7UPOH2T
+         NAPabwtB6pzztaY7esa3xh1SpwjTyxaK+5/TXIb/f2raXilEFSnH8Ycmbso/Wx6GaCbx
+         g0MwqdfXJTur9rvTRBdrybxRyRD4stI6otaX7/kwQwQ1Ln9voIFM3Yba9wdxtnvkxFF2
+         8GjtA210HW7ONZ9rU2KHEp8MVN17q5qhJ08UNJ1/Qv1efRsCrod7IWDleV0IIbAgAH/R
+         ZIbA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:sender:message-id:date:mime-version:user-agent
+         :content-language:to:cc:references:from:subject:in-reply-to
+         :content-transfer-encoding;
+        bh=ST6/uI8tXZH7pQ+ernx/OpLdl4iQTKy4m9qi3OodjQ4=;
+        b=VcirpalS5CsHei2aaEuw1bk/Wo1RjfFD0dG0NOmQ03s8HHmPue8uP+vAo562Z9+uPn
+         vynJTrTP2oAlVq2fm4eLYdIS90wEe+y2FHLtU5Hn9jTsf0Hjc5ZTQDPwBn4ShsrAv8mU
+         nGiIU9mrnbc2rBZL6thG+060hMvp6kiCfYcv/Cn3kk1c2VDg7QIzDG7jDfoY6flZuSWU
+         Ynch1FidGVMh+O8R//M00Zf3cEs1OWn+jMMjEJtEn8Hp2dSjyQIejsV9Xv8nYrkJ48mW
+         fNPg3fCJpXvG9YvA6rSVzIIdL5eopuaTRtKxyFxPF5d+gpzRKjpwoUnEGpSqv2rUSFqm
+         TUkQ==
+X-Gm-Message-State: AJIora+8mBe3ILTDXZ2ONE6T4kJb+46LW7QIKGpjTD9E5YV8Z4mpcG+5
+        R6Jqg2oo1Cz89zY5LW7EeEA=
+X-Google-Smtp-Source: AGRyM1tBQeXN7XNGVt3OnoOjUNRnLyC6rpMTRKosrRaZA7d2TM4t51FfNE/Aa2S1l/R/utkVhVvSKg==
+X-Received: by 2002:a63:6e08:0:b0:40c:7557:c4aa with SMTP id j8-20020a636e08000000b0040c7557c4aamr13192976pgc.356.1656339001070;
+        Mon, 27 Jun 2022 07:10:01 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c? ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id em20-20020a17090b015400b001eae86cf683sm7390569pjb.42.2022.06.27.07.09.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 27 Jun 2022 07:10:00 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Message-ID: <a0c31814-43e9-bbe4-57d3-d97724e8ae60@roeck-us.net>
+Date:   Mon, 27 Jun 2022 07:09:58 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1656091594.427255.146351.nullmailer@robh.at.kernel.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Content-Language: en-US
+To:     Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
+        Wim Van Sebroeck <wim@linux-watchdog.org>
+Cc:     Loic Poulain <loic.poulain@linaro.org>,
+        linux-watchdog@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <20220627111432.2625168-1-stephan.gerhold@kernkonzept.com>
+ <20220627111432.2625168-3-stephan.gerhold@kernkonzept.com>
+From:   Guenter Roeck <linux@roeck-us.net>
+Subject: Re: [PATCH 2/3] watchdog: pm8916_wdt: Report reboot reason
+In-Reply-To: <20220627111432.2625168-3-stephan.gerhold@kernkonzept.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-1.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        NICE_REPLY_A,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jun 24, 2022 at 11:26:34AM -0600, Rob Herring wrote:
-> On Thu, 23 Jun 2022 11:46:13 +0200, Stephan Gerhold wrote:
-> > Document the "qcom,rpm-pm8909-regulators" compatible for describing
-> > the regulators available in the PM8909 PMIC (controlled via the RPM
-> > firmware).
-> > 
-> > PM8909 is very similar to the existing PM8916 but lacks 3 of the
-> > regulators (s3, s4 and l16).
-> > 
-> > Signed-off-by: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
-> > ---
-> >  .../devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml | 4 ++++
-> >  1 file changed, 4 insertions(+)
-> > 
+On 6/27/22 04:14, Stephan Gerhold wrote:
+> The PM8916 PMIC provides "power-off reason" (POFF_REASON) registers
+> to allow detecting why the board was powered off or rebooted. This
+> can be used to expose if a reset happened due to a watchdog timeout.
+> The watchdog API also provides status bits for overtemperature and
+> undervoltage which happen to be reported in the same PMIC register.
 > 
-> Running 'make dtbs_check' with the schema in this patch gives the
-> following warnings. Consider if they are expected or the schema is
-> incorrect. These may not be new warnings.
+> Make this information available as part of the watchdog device
+> so userspace can decide to handle the situation accordingly.
 > 
-> Note that it is not yet a requirement to have 0 warnings for dtbs_check.
-> This will change in the future.
+> Signed-off-by: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+> ---
+>   drivers/watchdog/pm8916_wdt.c | 25 ++++++++++++++++++++++++-
+>   1 file changed, 24 insertions(+), 1 deletion(-)
 > 
-> Full log is available here: https://patchwork.ozlabs.org/patch/
-> 
-> 
-> pm8994-regulators: 'vdd_lvs1_2' does not match any of the regexes: '.*-supply$', '^((s|l|lvs|5vs)[0-9]*)|(boost-bypass)|(bob)$', 'pinctrl-[0-9]+'
-> 	arch/arm64/boot/dts/qcom/msm8992-lg-bullhead-rev-101.dtb
-> 	arch/arm64/boot/dts/qcom/msm8992-lg-bullhead-rev-10.dtb
-> 	arch/arm64/boot/dts/qcom/msm8992-xiaomi-libra.dtb
-> 
+> diff --git a/drivers/watchdog/pm8916_wdt.c b/drivers/watchdog/pm8916_wdt.c
+> index 670cd79f4cf9..3fc03fdae466 100644
+> --- a/drivers/watchdog/pm8916_wdt.c
+> +++ b/drivers/watchdog/pm8916_wdt.c
+> @@ -9,6 +9,12 @@
+>   #include <linux/regmap.h>
+>   #include <linux/watchdog.h>
+>   
+> +#define PON_POFF_REASON1		0x0c
+> +#define PON_POFF_REASON1_PMIC_WD	BIT(2)
+> +#define PON_POFF_REASON2		0x0d
+> +#define PON_POFF_REASON2_UVLO		BIT(5)
+> +#define PON_POFF_REASON2_OTST3		BIT(6)
+> +
+>   #define PON_INT_RT_STS			0x10
+>   #define PMIC_WD_BARK_STS_BIT		BIT(6)
+>   
+> @@ -110,12 +116,14 @@ static irqreturn_t pm8916_wdt_isr(int irq, void *arg)
+>   }
+>   
+>   static const struct watchdog_info pm8916_wdt_ident = {
+> -	.options = WDIOF_SETTIMEOUT | WDIOF_KEEPALIVEPING | WDIOF_MAGICCLOSE,
+> +	.options = WDIOF_SETTIMEOUT | WDIOF_KEEPALIVEPING | WDIOF_MAGICCLOSE |
+> +		   WDIOF_OVERHEAT | WDIOF_CARDRESET | WDIOF_POWERUNDER,
+>   	.identity = "QCOM PM8916 PON WDT",
+>   };
+>   
+>   static const struct watchdog_info pm8916_wdt_pt_ident = {
+>   	.options = WDIOF_SETTIMEOUT | WDIOF_KEEPALIVEPING | WDIOF_MAGICCLOSE |
+> +		   WDIOF_OVERHEAT | WDIOF_CARDRESET | WDIOF_POWERUNDER |
+>   		   WDIOF_PRETIMEOUT,
+>   	.identity = "QCOM PM8916 PON WDT",
+>   };
+> @@ -135,6 +143,7 @@ static int pm8916_wdt_probe(struct platform_device *pdev)
+>   	struct pm8916_wdt *wdt;
+>   	struct device *parent;
+>   	int err, irq;
+> +	u8 poff[2];
+>   
+>   	wdt = devm_kzalloc(dev, sizeof(*wdt), GFP_KERNEL);
+>   	if (!wdt)
+> @@ -175,6 +184,20 @@ static int pm8916_wdt_probe(struct platform_device *pdev)
+>   		wdt->wdev.info = &pm8916_wdt_ident;
+>   	}
+>   
+> +	err = regmap_bulk_read(wdt->regmap, wdt->baseaddr + PON_POFF_REASON1,
+> +			       &poff, ARRAY_SIZE(poff));
+> +	if (err == 0) {
+> +		dev_dbg(dev, "POFF reason: %#x %#x\n", poff[0], poff[1]);
+> +		if (poff[0] & PON_POFF_REASON1_PMIC_WD)
+> +			wdt->wdev.bootstatus |= WDIOF_CARDRESET;
+> +		if (poff[1] & PON_POFF_REASON2_UVLO)
+> +			wdt->wdev.bootstatus |= WDIOF_POWERUNDER;
+> +		if (poff[1] & PON_POFF_REASON2_OTST3)
+> +			wdt->wdev.bootstatus |= WDIOF_OVERHEAT;
+> +	} else {
+> +		dev_err(dev, "failed to read POFF reason: %d\n", err);
+> +	}
 
-Thanks for the (automated) report, Rob! :)
+Error handling first, please:
 
-The failure is unrelated to my patch. It seems to be a simple typo in
-the device tree (not a mistake in the DT schema) so I posted a quick fix
-in a separate patch:
+	if (err) {
+	} else {
+	}
 
-https://lore.kernel.org/linux-arm-msm/20220627135938.2901871-1-stephan.gerhold@kernkonzept.com/
-
-It should land separately through the Qualcomm tree so no need to wait
-for it to be applied. :)
+Also, decide if this is indeed an error or not. If it is an error, abort
+probe. Otherwise use dev_warn() and explain why the problem is ignored /
+not fatal.
 
 Thanks,
-Stephan
+Guenter
+
+> +
+>   	/* Configure watchdog to hard-reset mode */
+>   	err = regmap_write(wdt->regmap,
+>   			   wdt->baseaddr + PON_PMIC_WD_RESET_S2_CTL,
+
