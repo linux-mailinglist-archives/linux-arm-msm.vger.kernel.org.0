@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7307A55CD1F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jun 2022 15:02:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D0C4C55DDD1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jun 2022 15:28:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241392AbiF0WY4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Jun 2022 18:24:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58070 "EHLO
+        id S238395AbiF0WgM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Jun 2022 18:36:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44138 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240399AbiF0WYz (ORCPT
+        with ESMTP id S240878AbiF0WgK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Jun 2022 18:24:55 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF2A8120BD;
-        Mon, 27 Jun 2022 15:24:54 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        Mon, 27 Jun 2022 18:36:10 -0400
+Received: from relay08.th.seeweb.it (relay08.th.seeweb.it [IPv6:2001:4b7a:2000:18::169])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53226205E0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jun 2022 15:36:07 -0700 (PDT)
+Received: from SoMainline.org (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 4357B61414;
-        Mon, 27 Jun 2022 22:24:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4264EC34115;
-        Mon, 27 Jun 2022 22:24:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1656368693;
-        bh=Dz3HpkUv4fKNgIq7sc2kWxwjKmENaIL6SD0TXzXDuLc=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=f0/Y3grrCnDj9Xmfj4ZBk9NYLU6/TA9juRAlfDg3I3ej5CF019Ynei+4RnZ6nsEIh
-         O2M3D2VHasM122LfoFnFu+KircbN84k0vX9GCL86lLnTGAZUB+C94ilPJyDVj2+vXe
-         cDbHRYw+zjQqGboRLke8eMkd6Q1k8mCKlvlcFvSSAZAxFhmfN/fTmUxt3EeNR6Nqcf
-         GU0Tyi3yYiVvhI394Gg93ReSJ4zNTt+5N8i83HmcCRYWdj+KdLcACXfOX+eQWFy587
-         hyeK+fO2WfMbMkbk0TfHZ6uKZseXJPktTzye9Q4ifeCAjXGys/yYqRNgFUxdqPhrS3
-         xFhiX7bFn90Jw==
-Date:   Mon, 27 Jun 2022 23:24:48 +0100
-From:   Mark Brown <broonie@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Jaroslav Kysela <perex@perex.cz>,
-        Takashi Iwai <tiwai@suse.com>, srinivas.kandagatla@linaro.org,
-        robh+dt@kernel.org, krzk+dt@kernel.org,
-        alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH v3 1/2] ASoC: qcom: lpass: Fix apq8016 compat string to
- match yaml
-Message-ID: <YrouMMYhzpUb0JzO@sirena.org.uk>
-References: <20220429220349.1142759-1-bryan.odonoghue@linaro.org>
- <20220429220349.1142759-2-bryan.odonoghue@linaro.org>
- <YroVtj4zXXcHygxD@builder.lan>
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id B36953F812;
+        Tue, 28 Jun 2022 00:36:05 +0200 (CEST)
+Date:   Tue, 28 Jun 2022 00:36:03 +0200
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Stephen Boyd <sboyd@kernel.org>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rajeev Nandan <quic_rajeevny@quicinc.com>,
+        Vladimir Lypak <vladimir.lypak@gmail.com>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Jonathan Marek <jonathan@marek.ca>, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Subject: Re: [PATCH v2 03/11] clk: fixed-factor: Introduce
+ *clk_hw_register_fixed_factor_parent_hw()
+Message-ID: <20220627223603.5dxxbqqqjddkgdnb@SoMainline.org>
+References: <20220601220747.1145095-1-marijn.suijten@somainline.org>
+ <20220601220747.1145095-4-marijn.suijten@somainline.org>
+ <CAA8EJpomtbN0+ocD2pRbkYriUY4D9OnjgoFzL9qNHhPm3Uz5cQ@mail.gmail.com>
+ <20220609221211.684C1C34114@smtp.kernel.org>
+ <20220610074632.abtec5kulbclund4@SoMainline.org>
+ <20220610190112.1352DC34114@smtp.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="d+VUBwpC4ge/k0B2"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <YroVtj4zXXcHygxD@builder.lan>
-X-Cookie: Your supervisor is thinking about you.
-X-Spam-Status: No, score=-7.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+In-Reply-To: <20220610190112.1352DC34114@smtp.kernel.org>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -64,34 +64,41 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 2022-06-10 12:01:10, Stephen Boyd wrote:
+> Quoting Marijn Suijten (2022-06-10 00:46:32)
+> > On 2022-06-09 15:12:09, Stephen Boyd wrote:
+> > > Quoting Dmitry Baryshkov (2022-06-02 03:20:19)
+> > > > On Thu, 2 Jun 2022 at 01:07, Marijn Suijten
+> > > > <marijn.suijten@somainline.org> wrote:
+> > > > > diff --git a/drivers/clk/clk-fixed-factor.c b/drivers/clk/clk-fixed-factor.c
+> > > > > index 54942d758ee6..fabb98d0cdb2 100644
+> > > > > --- a/drivers/clk/clk-fixed-factor.c
+> > > > > +++ b/drivers/clk/clk-fixed-factor.c
+> > > > > @@ -148,17 +151,50 @@ struct clk_hw *devm_clk_hw_register_fixed_factor_index(struct device *dev,
+> > > > >                 const char *name, unsigned int index, unsigned long flags,
+> > > > >                 unsigned int mult, unsigned int div)
+> > > > >  {
+> > > > > -       return __clk_hw_register_fixed_factor(dev, NULL, name, NULL, index,
+> > > > > -                                             flags, mult, div, true);
+> > > > > +       return __clk_hw_register_fixed_factor(dev, NULL, name, NULL, NULL,
+> > > > > +                                             index, flags, mult, div, true);
+> > > > 
+> > > > Here (and several times later) you are inserting an argument and then
+> > > > moving arguments to the next line. My slight preference would be to
+> > > > just insert the arg (and maybe break the line if it gets too long) w/o
+> > > > touching the next lines.
+> > 
+> > That'll definitely look odd, as we'll end up with index floating on a
+> > single line, all on its own.
+> 
+> Pretty sure Dmitry is suggesting to make the line longer, not put the
+> index on a line by itself. Ignore the 80-column limit.
 
---d+VUBwpC4ge/k0B2
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+There's a "(and maybe break the line if it gets too long)" in there, but
+it's ugly especially for short (ie. "0,") arguments.  I'm following your
+request to ignore 80-columns as a limit.
 
-On Mon, Jun 27, 2022 at 03:40:22PM -0500, Bjorn Andersson wrote:
+Will resend this after being able to physically build-test it tomorrow,
+thanks!
 
-> On Fri 29 Apr 17:03 CDT 2022, Bryan O'Donoghue wrote:
->=20
-> Adding the sound maintainers to To/Cc, please advice if you would prefer
-> Bryan to resubmit the patch with proper recipients.
-
-Yes, please.
-
---d+VUBwpC4ge/k0B2
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmK6Li8ACgkQJNaLcl1U
-h9CF3gf/WXKPaL/hczugrKTgYGim6uhugTHPvAP2gc3nBogE2cIhiv2gHJHJsVGR
-II6zquLLRRUGD1r6CjN6IOKvtYZ9tAMauhluTfAHclZiLmnv0po28f3wIbVf4zns
-ImdPUcJ2ipJ9nKLHl5pi5LDINEmSSbZwj/xehxT8D7JUKleVjq5yElAGLWF6ThSp
-Gwe0KbMBI55gDQJgjM6xJrT5mDBC/0Lt6uv6PsD/IDCgjJLuQ5t/O5gRwUKTrJai
-G47F8J39CkmhO1u2Tl+McqbZ334I1UrPsG92AH+5FgQSaiGnO2AZayL3IliHL1hW
-Oh3oVKv4Qk5QzIGi+FCai8qecbT89Q==
-=yy0D
------END PGP SIGNATURE-----
-
---d+VUBwpC4ge/k0B2--
+- Marijn
