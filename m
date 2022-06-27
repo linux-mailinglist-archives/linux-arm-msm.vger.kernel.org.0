@@ -2,190 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D7E5655C1F1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jun 2022 14:45:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 186EA55DE1C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jun 2022 15:28:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233627AbiF0Koq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Jun 2022 06:44:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45180 "EHLO
+        id S234448AbiF0LPH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Jun 2022 07:15:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38018 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232895AbiF0Kop (ORCPT
+        with ESMTP id S234471AbiF0LPG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Jun 2022 06:44:45 -0400
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F3D563B2;
-        Mon, 27 Jun 2022 03:44:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1656326684; x=1687862684;
-  h=from:to:cc:subject:date:message-id:mime-version;
-  bh=lx+sq5BrYtlEATfMj2qSuWCQq/LYicVL0fuwLFTf85k=;
-  b=qnM245RDku6rbAxyGynWMv2J6zFQ3WHGBzUTOMGzpmLtwndtoY7XFY50
-   Ye/+ISVGiDME7CZsY9FIfSCNf2ExkmYNaVfFKAEzXgqU9AVdBJVYDzTlH
-   iJLS0IKZ9Q3SAlWlOOtwOCRbS6Zo0Mcp22xWnqz83YqCPdQfqwM6bctYJ
-   I=;
-Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 27 Jun 2022 03:44:44 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jun 2022 03:44:43 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Mon, 27 Jun 2022 03:44:42 -0700
-Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Mon, 27 Jun 2022 03:44:37 -0700
-From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
-        <lgirdwood@gmail.com>, <broonie@kernel.org>, <robh+dt@kernel.org>,
-        <quic_plai@quicinc.com>, <bgoswami@quicinc.com>, <perex@perex.cz>,
-        <tiwai@suse.com>, <srinivas.kandagatla@linaro.org>,
-        <quic_rohkumar@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <alsa-devel@alsa-project.org>, <linux-kernel@vger.kernel.org>,
-        <swboyd@chromium.org>, <judyhsiao@chromium.org>,
-        <devicetree@vger.kernel.org>
-CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Subject: [PATCH v2] ASoC: qcom: Add driver support for audioreach solution
-Date:   Mon, 27 Jun 2022 16:14:22 +0530
-Message-ID: <1656326662-14524-1-git-send-email-quic_srivasam@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+        Mon, 27 Jun 2022 07:15:06 -0400
+Received: from mx.kernkonzept.com (serv1.kernkonzept.com [IPv6:2a01:4f8:1c1c:b490::2])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CED7F64FC
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jun 2022 04:15:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=kernkonzept.com; s=mx1; h=Content-Transfer-Encoding:MIME-Version:Message-Id
+        :Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+        List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=clyFm7ZlvqCigNziCXoNHaIsHcxkM61AEKy22Ewt020=; b=jfQfzwQhiVeqQtbTbkHOHfge7T
+        wDEai1DnEZI84JmkOFPP7ISBBOhZlgKEDh8EnXrSV6EN+dUPXWCcJahcWj08vyIw5kR/qaH6o/ks2
+        vste2OzcRYCefdkHfqDEcgMXnsLrsmzviNFYrqZiLnAmoHqpkPYLyPopIYDR983RTvFSYlWYa95fD
+        CBEtmj7oE3dwq7AK+0mI1CxNqp3+bfBN5smAqTVDTCX8Z1tb/IumjJ4QFu4CzuKhiww/lPoTbDcDM
+        TiEuFNzAB43zmg96iLtZZ1L7LTlyMxggdwEZv0GzYaZK2WY9LXubxJM9nyJtenucaI6sFlamyh8ye
+        3iPTBfQg==;
+Received: from [10.22.3.24] (helo=kernkonzept.com)
+        by mx.kernkonzept.com with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim 4.94.2)
+        id 1o5mhm-006C6l-Ae; Mon, 27 Jun 2022 13:14:58 +0200
+From:   Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+To:     Wim Van Sebroeck <wim@linux-watchdog.org>,
+        Guenter Roeck <linux@roeck-us.net>
+Cc:     Loic Poulain <loic.poulain@linaro.org>,
+        linux-watchdog@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+Subject: [PATCH 0/3] watchdog: pm8916_wdt: Some minor improvements
+Date:   Mon, 27 Jun 2022 13:14:29 +0200
+Message-Id: <20220627111432.2625168-1-stephan.gerhold@kernkonzept.com>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add Machine driver support for audioreach solution, which uses
-ADSP in SC7280 based paltforms.
+Optimize the pm8916_wdt.c driver a bit by pinging the watchdog using a
+write instead of read-modify-write. Also report the reboot reason to
+userspace and (temporarily) ping the watchdog from the kernel if it was
+already enabled by the bootloader.
 
-Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
----
-Changes Since V1:
-    -- Remove audioreach compatible name.
-    -- Remove dt-binding patch.
+Stephan Gerhold (3):
+  watchdog: pm8916_wdt: Avoid read of write-only PET register
+  watchdog: pm8916_wdt: Report reboot reason
+  watchdog: pm8916_wdt: Handle watchdog enabled by bootloader
 
- sound/soc/qcom/sc7280.c | 33 +++++++++++++++++++++++++++++++++
- 1 file changed, 33 insertions(+)
+ drivers/watchdog/pm8916_wdt.c | 36 +++++++++++++++++++++++++++++++----
+ 1 file changed, 32 insertions(+), 4 deletions(-)
 
-diff --git a/sound/soc/qcom/sc7280.c b/sound/soc/qcom/sc7280.c
-index 34cdb99..da7469a 100644
---- a/sound/soc/qcom/sc7280.c
-+++ b/sound/soc/qcom/sc7280.c
-@@ -19,9 +19,11 @@
- #include "../codecs/rt5682s.h"
- #include "common.h"
- #include "lpass.h"
-+#include "qdsp6/q6afe.h"
- 
- #define DEFAULT_MCLK_RATE              19200000
- #define RT5682_PLL_FREQ (48000 * 512)
-+#define MI2S_BCLK_RATE		1536000
- 
- struct sc7280_snd_data {
- 	struct snd_soc_card card;
-@@ -79,6 +81,7 @@ static int sc7280_headset_init(struct snd_soc_pcm_runtime *rtd)
- 	case MI2S_PRIMARY:
- 	case LPASS_CDC_DMA_RX0:
- 	case LPASS_CDC_DMA_TX3:
-+	case TX_CODEC_DMA_TX_3:
- 		for_each_rtd_codec_dais(rtd, i, codec_dai) {
- 			rval = snd_soc_component_set_jack(component, &pdata->hs_jack, NULL);
- 			if (rval != 0 && rval != -ENOTSUPP) {
-@@ -164,10 +167,14 @@ static int sc7280_init(struct snd_soc_pcm_runtime *rtd)
- 	switch (cpu_dai->id) {
- 	case MI2S_PRIMARY:
- 	case LPASS_CDC_DMA_TX3:
-+	case TX_CODEC_DMA_TX_3:
- 		return sc7280_headset_init(rtd);
- 	case LPASS_CDC_DMA_RX0:
- 	case LPASS_CDC_DMA_VA_TX0:
- 	case MI2S_SECONDARY:
-+	case RX_CODEC_DMA_RX_0:
-+	case SECONDARY_MI2S_RX:
-+	case VA_CODEC_DMA_TX_0:
- 		return 0;
- 	case LPASS_DP_RX:
- 		return sc7280_hdmi_init(rtd);
-@@ -195,6 +202,10 @@ static int sc7280_snd_hw_params(struct snd_pcm_substream *substream,
- 	switch (cpu_dai->id) {
- 	case LPASS_CDC_DMA_TX3:
- 	case LPASS_CDC_DMA_RX0:
-+	case RX_CODEC_DMA_RX_0:
-+	case SECONDARY_MI2S_RX:
-+	case TX_CODEC_DMA_TX_3:
-+	case VA_CODEC_DMA_TX_0:
- 		for_each_rtd_codec_dais(rtd, i, codec_dai) {
- 			sruntime = snd_soc_dai_get_stream(codec_dai, substream->stream);
- 			if (sruntime != ERR_PTR(-ENOTSUPP))
-@@ -245,6 +256,9 @@ static int sc7280_snd_prepare(struct snd_pcm_substream *substream)
- 	switch (cpu_dai->id) {
- 	case LPASS_CDC_DMA_RX0:
- 	case LPASS_CDC_DMA_TX3:
-+	case RX_CODEC_DMA_RX_0:
-+	case TX_CODEC_DMA_TX_3:
-+	case VA_CODEC_DMA_TX_0:
- 		return sc7280_snd_swr_prepare(substream);
- 	default:
- 		break;
-@@ -263,6 +277,9 @@ static int sc7280_snd_hw_free(struct snd_pcm_substream *substream)
- 	switch (cpu_dai->id) {
- 	case LPASS_CDC_DMA_RX0:
- 	case LPASS_CDC_DMA_TX3:
-+	case RX_CODEC_DMA_RX_0:
-+	case TX_CODEC_DMA_TX_3:
-+	case VA_CODEC_DMA_TX_0:
- 		if (sruntime && data->stream_prepared[cpu_dai->id]) {
- 			sdw_disable_stream(sruntime);
- 			sdw_deprepare_stream(sruntime);
-@@ -291,6 +308,10 @@ static void sc7280_snd_shutdown(struct snd_pcm_substream *substream)
- 					       SNDRV_PCM_STREAM_PLAYBACK);
- 		}
- 		break;
-+	case SECONDARY_MI2S_RX:
-+		snd_soc_dai_set_sysclk(cpu_dai, Q6AFE_LPASS_CLK_ID_SEC_MI2S_IBIT,
-+					       0, SNDRV_PCM_STREAM_PLAYBACK);
-+		break;
- 	default:
- 		break;
- 	}
-@@ -298,14 +319,26 @@ static void sc7280_snd_shutdown(struct snd_pcm_substream *substream)
- 
- static int sc7280_snd_startup(struct snd_pcm_substream *substream)
- {
-+	unsigned int fmt = SND_SOC_DAIFMT_CBS_CFS;
-+	unsigned int codec_dai_fmt = SND_SOC_DAIFMT_CBS_CFS;
- 	struct snd_soc_pcm_runtime *rtd = substream->private_data;
- 	struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(rtd, 0);
-+	struct snd_soc_dai *codec_dai = asoc_rtd_to_codec(rtd, 0);
- 	int ret = 0;
- 
- 	switch (cpu_dai->id) {
- 	case MI2S_PRIMARY:
- 		ret = sc7280_rt5682_init(rtd);
- 		break;
-+	case SECONDARY_MI2S_RX:
-+		codec_dai_fmt |= SND_SOC_DAIFMT_NB_NF | SND_SOC_DAIFMT_I2S;
-+
-+		snd_soc_dai_set_sysclk(cpu_dai, Q6AFE_LPASS_CLK_ID_SEC_MI2S_IBIT,
-+			MI2S_BCLK_RATE, SNDRV_PCM_STREAM_PLAYBACK);
-+
-+		snd_soc_dai_set_fmt(cpu_dai, fmt);
-+		snd_soc_dai_set_fmt(codec_dai, codec_dai_fmt);
-+		break;
- 	default:
- 		break;
- 	}
 -- 
-2.7.4
+2.30.2
 
