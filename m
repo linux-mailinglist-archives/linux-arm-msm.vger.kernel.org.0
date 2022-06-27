@@ -2,62 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 030E955C955
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jun 2022 14:56:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9B25A55D118
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jun 2022 15:08:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241054AbiF0UEK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Jun 2022 16:04:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45118 "EHLO
+        id S240923AbiF0UEN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Jun 2022 16:04:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45180 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241006AbiF0UD6 (ORCPT
+        with ESMTP id S241007AbiF0UD7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Jun 2022 16:03:58 -0400
+        Mon, 27 Jun 2022 16:03:59 -0400
 Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E570A19C2E
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jun 2022 13:03:57 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F66C1C933
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jun 2022 13:03:59 -0700 (PDT)
 Received: by mail-oi1-x235.google.com with SMTP id l81so14334995oif.9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jun 2022 13:03:57 -0700 (PDT)
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jun 2022 13:03:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=NZ6CKfiIArqTgDMaWPbCAnT13DlxrNGDoUSwUCUYiT8=;
-        b=lzZx9sY5lgcV1X5Dk6RqdM3/HLuNrj45xe8aYClnKcOe5u8mswNdUOAr2akInG5Mtk
-         SKnnuvkJdiy7mNlLRvarERncRgqjDewsmXzKh4VxtrzHJ3ilwBwBxG46c3AtFqQTFTx9
-         r4bf/ra8QcxkzklPmPHulZRGIUmxo/+O+13Yuv6ZgG4ADgOfxuxi6wzf0Ke811tlacOe
-         zywPmUfC0CEiJd3rV6vhkyIQNnmpPAau22hFB2TUFZmc8ba7pzS0yT1qlXm03oaWQOsB
-         GJEeK4pGkWjPfAMCn9x4eMZM46WN4lxYJ6zWWc02urTR5KfCiIzzZiBHVU+O67l3PgZE
-         jUYQ==
+        bh=XNfcJEGE5VeJcaSJmH6wYZAst8nPhZtvYhkILSijpK0=;
+        b=ndsdvUK4AAUrHcVZ1J4HwNh23+J9c+ZNsJPVvCmjyaXb51ODwpjv8b3VR/Swx+FGXS
+         BceDBZbmpWbLX6qNIL1KmaAAF/+2x/uCkgO+lsu0UtYeL0ss6YQYWuB3tsR635rxs3Cf
+         qJHkKgG8tdEVucAmbvXX9WiwsLoBSy9L3y7F8gg+2gZHPW/rUJCigvr9q9MU8lw052CP
+         zX9jiFAIC5wXZxkWr+iE50rpXwX2aGiilm1EgiWSeKflJlxd0B0W4ujYYLbcKe0iHx9Q
+         rWN9TuNuE2poon33dSpk+ZPfAPczGNvqPrt4uii2FhvRtWxOUiorN6bazddjkSaY1Sow
+         G+5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=NZ6CKfiIArqTgDMaWPbCAnT13DlxrNGDoUSwUCUYiT8=;
-        b=tX6zrvVJyqmW2mnI1QzlWUvrzGIfQdrChntILEQIqMb5uZ2A3FDdAOMujCLkQCryY4
-         emlxt6iixw2IXX5IBlctHDl9Qznrv1vx8YJGzpHGecrI4IKh0HL9vtjgzrL2JWGNWPdS
-         ryKjuzsbSr0yKSLVU4M5cEpxDRUQn1gsrefhoG8OeIo6cTBN/WZxy8IKVpXcGNgEU86r
-         QcDOOiMgPOCnvjcYZ8PDe1haBBSZziUcoKi0zOd5xt+GsZc7STrlgM4a1zSz+sg+GLjE
-         f+484jCsjlWjcx5YZPOT2QhZ7LQQmYDeez1LOXwkrvOPuU/pZSrlypvFEgcZBWU5aBZb
-         3qoA==
-X-Gm-Message-State: AJIora/CucIMzGhYKttt+TZvgmdymmqlUfpPZfS2PjkBD/XrZ22hxlku
-        AxUj2Rw0R0BtP7qyHWuTHLmjd3X/3HIy4Q==
-X-Google-Smtp-Source: AGRyM1sYXAD28ZU4/L1pUvBWczo1bWog7/GJrvIyZlWd+5qTL+HYXh42fFo/lKnPWA8SHlwrQ4xhSA==
-X-Received: by 2002:a05:6808:2212:b0:335:2198:99a9 with SMTP id bd18-20020a056808221200b00335219899a9mr11889630oib.234.1656360237231;
-        Mon, 27 Jun 2022 13:03:57 -0700 (PDT)
+        bh=XNfcJEGE5VeJcaSJmH6wYZAst8nPhZtvYhkILSijpK0=;
+        b=gsK1+DXXJv31EigfQlM6IBv5rFN4YPO9baz1J1dTYIH6/fJP2Abu3iR7waNrgt+IEF
+         /9DWGEc1tLbgDCVnxUEajmTRa76tU/t3fzBZbXKxdPFDodH0LNXfi1uOksvWmz34rNoJ
+         1NGKOPZDGHQ/T/SfKmV/t9MtMGfLDIUfnbPgu3ApPb3Lcdt7GDjIHgWD8Hpcx9z29N8H
+         XoAsamaV15EEuoIjeHqISzMLnKhB+TkeiO6MQF8V8XTALi8Ig5uxZmqMsNWCk6sVSAW1
+         NUt5mhToZI/weCYwfaAw1XZ9drID9lsvenYabai2PxZnYIW7FYJfuFnMd+FPOsSKHnO8
+         /iTQ==
+X-Gm-Message-State: AJIora/DOcijNt53Acc48nbHcSalTo47dtFy6pWqL4i4wSiFi6XsJqnC
+        KsfpLO+dZeuBzp5DIIHca1/svQ==
+X-Google-Smtp-Source: AGRyM1t4SlUC4fU5SXrb81Y8uVsAPJ87BS0b0ICBHEeIvOz2iUFpcj0q1aNfLM1V902xikJ5hhVnjA==
+X-Received: by 2002:a05:6808:f12:b0:32f:7be5:9d5a with SMTP id m18-20020a0568080f1200b0032f7be59d5amr12137113oiw.150.1656360238767;
+        Mon, 27 Jun 2022 13:03:58 -0700 (PDT)
 Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id m16-20020a4a9510000000b0041bdf977c6dsm6428729ooi.31.2022.06.27.13.03.56
+        by smtp.gmail.com with ESMTPSA id m16-20020a4a9510000000b0041bdf977c6dsm6428729ooi.31.2022.06.27.13.03.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Jun 2022 13:03:56 -0700 (PDT)
+        Mon, 27 Jun 2022 13:03:58 -0700 (PDT)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
-        <u.kleine-koenig@pengutronix.de>, Andy Gross <agross@kernel.org>
-Cc:     kernel@pengutronix.de, linux-arm-msm@vger.kernel.org
-Subject: Re: (subset) [PATCH] soc: qcom: apr: Drop redundant check in .remove()
-Date:   Mon, 27 Jun 2022 15:03:08 -0500
-Message-Id: <165636016349.3080661.8854793329816369056.b4-ty@linaro.org>
+To:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        devicetree@vger.kernel.org,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Andy Gross <agross@kernel.org>
+Subject: Re: (subset) [PATCH] arm64: dts: qcom: sm8250: Disable camcc by default
+Date:   Mon, 27 Jun 2022 15:03:09 -0500
+Message-Id: <165636016349.3080661.7786445899115469360.b4-ty@linaro.org>
 X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20220618203913.35785-1-u.kleine-koenig@pengutronix.de>
-References: <20220618203913.35785-1-u.kleine-koenig@pengutronix.de>
+In-Reply-To: <20220518091943.734478-1-vladimir.zapolskiy@linaro.org>
+References: <20220518091943.734478-1-vladimir.zapolskiy@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -71,17 +73,17 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 18 Jun 2022 22:39:13 +0200, Uwe Kleine-König wrote:
-> The remove callback is only called by the driver core if there is a
-> driver to unbind, so there is no need to check dev->driver to be
-> non-NULL.
+On Wed, 18 May 2022 12:19:43 +0300, Vladimir Zapolskiy wrote:
+> At the moment there are no changes in SM8250 board files, which require
+> camera clock controller to run, whenever it is needed for a particular
+> board, the status of camcc device node will be changed in a board file.
 > 
 > 
 
 Applied, thanks!
 
-[1/1] soc: qcom: apr: Drop redundant check in .remove()
-      commit: bc0f149376894343839c4b156fa5653958fda496
+[1/1] arm64: dts: qcom: sm8250: Disable camcc by default
+      commit: 1b3bfc4066c34da2f7808acf16344ac43722c2b7
 
 Best regards,
 -- 
