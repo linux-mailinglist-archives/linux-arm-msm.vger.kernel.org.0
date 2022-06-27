@@ -2,111 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EBFDC55D8B9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jun 2022 15:20:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D4CA755E2A4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jun 2022 15:35:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234788AbiF0OBR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Jun 2022 10:01:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37604 "EHLO
+        id S235346AbiF0OAR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Jun 2022 10:00:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36140 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234670AbiF0OBQ (ORCPT
+        with ESMTP id S236342AbiF0OAK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Jun 2022 10:01:16 -0400
-Received: from mx.kernkonzept.com (serv1.kernkonzept.com [IPv6:2a01:4f8:1c1c:b490::2])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93BC0DEB0;
-        Mon, 27 Jun 2022 07:01:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=kernkonzept.com; s=mx1; h=Content-Transfer-Encoding:MIME-Version:Message-Id
-        :Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
-        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
-        List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=vAjMALe0QzZbtIhy7o4JtnqIha+kmJ5693T6l0K4LhI=; b=CNkmecZh8q6YomIURCE40o6THk
-        B/svTvBN5mzewrQXQVqd3Lbw1uPODBWZv88hLRqAwHYcbQqT5YMo8rNyTfUVlc8GfoQDcGxXVQSCj
-        /Cs+eAhpMx0lbF9lXuy0VHSlWGSIumZZLCoXrFz9piq6ImmWJtfjiRlqpb8P5vEjWbatuMbd8R0Q8
-        VHKgDaZ+AGlY+t8JUZ5+1s1niBauEvpR64qu8MLTvKMEw3zgMnDU3/c2PnD/dMSuBC59UK3UwU7Bx
-        Z+HjHDErZWi7g++xIPb0F5Lc/WvLcSy1Uu5gfvjtQNHKleTl3yFLI0WQdiIhJnYCQxEbn+SVO6y2t
-        rxeF3XVg==;
-Received: from [10.22.3.24] (helo=kernkonzept.com)
-        by mx.kernkonzept.com with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim 4.94.2)
-        id 1o5pId-006DHr-Lt; Mon, 27 Jun 2022 16:01:11 +0200
-From:   Stephan Gerhold <stephan.gerhold@kernkonzept.com>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
-        Rob Herring <robh@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>
-Subject: [PATCH] arm64: dts: qcom: msm8992-*: Fix vdd_lvs1_2-supply typo
-Date:   Mon, 27 Jun 2022 15:59:38 +0200
-Message-Id: <20220627135938.2901871-1-stephan.gerhold@kernkonzept.com>
-X-Mailer: git-send-email 2.30.2
+        Mon, 27 Jun 2022 10:00:10 -0400
+Received: from mail-io1-xd2f.google.com (mail-io1-xd2f.google.com [IPv6:2607:f8b0:4864:20::d2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DC60BE0A
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jun 2022 07:00:04 -0700 (PDT)
+Received: by mail-io1-xd2f.google.com with SMTP id i194so9584468ioa.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jun 2022 07:00:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=UAGsVNxzk8vNVq19Sa60bi66Tur02wHflrMgGeyRF+s=;
+        b=CQWg2HiBV3Oqv2N5JkIFVX6uhued3VniNsN/6MZnprAs0w0befTTVXJdYdXld6Xccc
+         rQqhPIeHYBAO/y9KxoFV4oc6o+VDqNiKqgjbnjH1e1IjUR37VeMWP0muj3YzV12B8BVw
+         B3QxynUfGs/RXAH7r/660sm6WiDOf2KZ7Nw+0=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=UAGsVNxzk8vNVq19Sa60bi66Tur02wHflrMgGeyRF+s=;
+        b=yJ9Def4/DB6udTQlF8VDncDUM0fYwbOh6eMzXKVTDKcnxAm9bh61q3IE2AvZlC6wv9
+         bOISIahMteJVmf8QZzR5piqbxP6eonWVVzxBeiwUMibhxsv4DpuMg/O7KFKo3HxdrkNB
+         0ZOu1Y4aewUvDxA/TKg62ce13sLCDbcZYDxBNH6uz/pu6W/1ZNCDiZp54ujbN399aEdk
+         0bZyDTTSSCyG5CqjFE93xbFvHf/sMPCoICd7i2xC49t1vt6Bo05+7MuqLCs2gorp2e9O
+         9CEa+k9pGJlmyTQWa0zQH96ZLYtWjkQ52wgXe+oKDAZpEpY7VPttNVsU+HCy9mCgx50o
+         hwug==
+X-Gm-Message-State: AJIora8bRem0FiOELEwtg4h9lf9t3izB7wAbdqRz6kC341xmnb/mM/Fl
+        aL69QLodLnhLrhLuLy2zP3dIBW8qnjs9NnfY
+X-Google-Smtp-Source: AGRyM1sVhcsE+Z/325S9Wmt8bsOfL9mMHTvPs/YptpKvGaS/vewwajSpsqNKZrwLuq+T0654vYOkKw==
+X-Received: by 2002:a5d:9919:0:b0:675:48c7:d959 with SMTP id x25-20020a5d9919000000b0067548c7d959mr1465425iol.27.1656338403671;
+        Mon, 27 Jun 2022 07:00:03 -0700 (PDT)
+Received: from mail-il1-f170.google.com (mail-il1-f170.google.com. [209.85.166.170])
+        by smtp.gmail.com with ESMTPSA id i6-20020a056e020d8600b002d90ac862b6sm4600514ilj.55.2022.06.27.07.00.03
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 27 Jun 2022 07:00:03 -0700 (PDT)
+Received: by mail-il1-f170.google.com with SMTP id i17so6051423ils.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jun 2022 07:00:03 -0700 (PDT)
+X-Received: by 2002:a05:6e02:1a6b:b0:2d3:ae9f:112f with SMTP id
+ w11-20020a056e021a6b00b002d3ae9f112fmr7618358ilv.187.1656338402699; Mon, 27
+ Jun 2022 07:00:02 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+References: <20220626013906.885523-1-joebar@chromium.org> <20220625183538.v14.2.I0977b1a08830d0caa8bfb1bdedb4ecceac709a7f@changeid>
+In-Reply-To: <20220625183538.v14.2.I0977b1a08830d0caa8bfb1bdedb4ecceac709a7f@changeid>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Mon, 27 Jun 2022 06:59:41 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=U9sQ5qFzP3jBWt7CipJuyFjvwiDjybwrMS+j6orDrcjg@mail.gmail.com>
+Message-ID: <CAD=FV=U9sQ5qFzP3jBWt7CipJuyFjvwiDjybwrMS+j6orDrcjg@mail.gmail.com>
+Subject: Re: [PATCH v14 2/5] arm64: dts: qcom: sc7180: Add quackingstick dts files
+To:     "Joseph S. Barrera III" <joebar@chromium.org>
+Cc:     LKML <linux-kernel@vger.kernel.org>,
+        Alexandru M Stan <amstan@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-"make dtbs_check" complains about the missing "-supply" suffix for
-vdd_lvs1_2 which is clearly a typo, originally introduced in the
-msm8994-smd-rpm.dtsi file and apparently later copied to
-msm8992-xiaomi-libra.dts:
+Hi,
 
-msm8992-lg-bullhead-rev-10/101.dtb: pm8994-regulators: 'vdd_lvs1_2'
-does not match any of the regexes:
-  '.*-supply$', '^((s|l|lvs|5vs)[0-9]*)|(boost-bypass)|(bob)$', 'pinctrl-[0-9]+'
-From schema: regulator/qcom,smd-rpm-regulator.yaml
+On Sat, Jun 25, 2022 at 6:40 PM Joseph S. Barrera III
+<joebar@chromium.org> wrote:
+>
+> Quackingstick is a trogdor-based board. These dts files are copies from
+> the downstream Chrome OS 5.4 kernel, but with downstream bits removed.
+>
+> Signed-off-by: Joseph S. Barrera III <joebar@chromium.org>
+>
+> ---
+>
+> (no changes since v8)
+>
+> Changes in v8:
+> - Incorporate the deletion of the usb_c1 node from 9f9fb70a7294.
+>
+> Changes in v7:
+> - Restore changes requested by Doug.
+> - Only include sc7180.dtsi in sc7180-trogdor.dtsi (19794489fa24).
+> - Simplify spi0/spi6 labeling (d277cab7afc7).
+> - Simplify trackpad enabling (51d30402be75).
+>
+> Changes in v6:
+> - Accidentally deleted changes requested by Doug.
+>
+> Changes in v5:
+> - Remove extra newline
+> - Add comment that compatible will be filled in per-board
+>
+> Changes in v4:
+> - Add missing version history
+>
+> Changes in v3:
+> - First inclusion in this series
+>
+>  arch/arm64/boot/dts/qcom/Makefile             |   2 +
+>  .../sc7180-trogdor-quackingstick-r0-lte.dts   |  38 +++
+>  .../qcom/sc7180-trogdor-quackingstick-r0.dts  |  26 ++
+>  .../qcom/sc7180-trogdor-quackingstick.dtsi    | 318 ++++++++++++++++++
+>  4 files changed, 384 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-quackingstick-r0-lte.dts
+>  create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-quackingstick-r0.dts
+>  create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-quackingstick.dtsi
 
-msm8992-xiaomi-libra.dtb: pm8994-regulators: 'vdd_lvs1_2'
-does not match any of the regexes:
-  '.*-supply$', '^((s|l|lvs|5vs)[0-9]*)|(boost-bypass)|(bob)$', 'pinctrl-[0-9]+'
-From schema: regulator/qcom,smd-rpm-regulator.yaml
-
-Reported-by: Rob Herring <robh@kernel.org>
-Cc: Konrad Dybcio <konrad.dybcio@somainline.org>
-Fixes: f3b2c99e73be ("arm64: dts: Enable onboard SDHCI on msm8992")
-Fixes: 0f5cdb31e850 ("arm64: dts: qcom: Add Xiaomi Libra (Mi 4C) device tree")
-Signed-off-by: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
----
-This fixes the dtbs_check failure reported by Rob in my unrelated patch:
-https://lore.kernel.org/linux-arm-msm/1656091594.427255.146351.nullmailer@robh.at.kernel.org/
----
- arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi | 2 +-
- arch/arm64/boot/dts/qcom/msm8992-xiaomi-libra.dts | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi b/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi
-index 3b0cc85d6674..71e373b11de9 100644
---- a/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi
-@@ -74,7 +74,7 @@ pm8994_regulators: pm8994-regulators {
- 		vdd_l17_29-supply = <&vph_pwr>;
- 		vdd_l20_21-supply = <&vph_pwr>;
- 		vdd_l25-supply = <&pm8994_s5>;
--		vdd_lvs1_2 = <&pm8994_s4>;
-+		vdd_lvs1_2-supply = <&pm8994_s4>;
- 
- 		/* S1, S2, S6 and S12 are managed by RPMPD */
- 
-diff --git a/arch/arm64/boot/dts/qcom/msm8992-xiaomi-libra.dts b/arch/arm64/boot/dts/qcom/msm8992-xiaomi-libra.dts
-index 7748b745a5df..afa91ca9a3dc 100644
---- a/arch/arm64/boot/dts/qcom/msm8992-xiaomi-libra.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8992-xiaomi-libra.dts
-@@ -171,7 +171,7 @@ pm8994-regulators {
- 		vdd_l17_29-supply = <&vph_pwr>;
- 		vdd_l20_21-supply = <&vph_pwr>;
- 		vdd_l25-supply = <&pm8994_s5>;
--		vdd_lvs1_2 = <&pm8994_s4>;
-+		vdd_lvs1_2-supply = <&pm8994_s4>;
- 
- 		/* S1, S2, S6 and S12 are managed by RPMPD */
- 
--- 
-2.30.2
-
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
