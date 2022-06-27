@@ -2,144 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3496655C140
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jun 2022 14:44:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6DA9155CD4B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jun 2022 15:02:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238657AbiF0L7F (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Jun 2022 07:59:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34298 "EHLO
+        id S240307AbiF0MQv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Jun 2022 08:16:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53462 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239956AbiF0L6d (ORCPT
+        with ESMTP id S240300AbiF0MQu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Jun 2022 07:58:33 -0400
-Received: from esa.hc3962-90.iphmx.com (esa.hc3962-90.iphmx.com [216.71.140.77])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5220111824;
-        Mon, 27 Jun 2022 04:56:54 -0700 (PDT)
+        Mon, 27 Jun 2022 08:16:50 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65641DF10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jun 2022 05:16:46 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id d17so7154737wrc.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jun 2022 05:16:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=qti.qualcomm.com; i=@qti.qualcomm.com; q=dns/txt;
-  s=qccesdkim1; t=1656331015; x=1656935815;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=14rSDzQDWWKfMzsERjTpdmzzHvV+Lyp4GH4UYkeobb8=;
-  b=ksYQcXEcKV+vS1UrZY2BlqphuGEercYSf9RnXo8CMvylLd8ylePyQtN+
-   TglUP3jnCs1io72IAxl2onJ3K1zKFm8ea0bmLpkxGKK5Rl9DFy4B0zLD5
-   jULlg7b5SgeNlLnjIBashyOmaha85VKrYm2PWaunUx2KyYaqVTANBjqNX
-   I=;
-Received: from mail-co1nam11lp2171.outbound.protection.outlook.com (HELO NAM11-CO1-obe.outbound.protection.outlook.com) ([104.47.56.171])
-  by ob1.hc3962-90.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jun 2022 11:56:52 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=OiSnMUtDp/vpEahmfEGSL6UwGp0VYzb0WGOFNL5v4tT2D7l6LAML/YgffotsyLZemeaZo7aRyX8t1h+FAocc5TLCSX4o2Xy1PkgoxceLyShs+DE0ht/DGN6EkbzDNxwXEHoqtHuGLyDXfS12QpzaxPev81gEmWE2hR9CYl6QrkMeWe6McWWHOOVW4lQjfVfQyXGwPXvQH2l6Nc6xjVu8xdKRPmAAUG2Ip75wgJNgZUo/CL8gp53Vm3zORM/RMC1opzmeExzDxcXLMljALu5hddkXn0W7QlrBKP8YEVLQECtc+jhPs4acehjgrh2pyQVkluC2DFTXvYL3n9U/6FhJAw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=14rSDzQDWWKfMzsERjTpdmzzHvV+Lyp4GH4UYkeobb8=;
- b=kgBsmClWdFAZqr3On1ypFLPfsCDBSIAuy+o4zJJecdtXxbxQ5YpSwD90nbjelrjIVHs0Me/UDYJR63Y37Onomv8YQZYf+wf3bSHVSmbGBFq99/RICB1YdI9CK/cBnY3wVBTXiNbrzsbMjjZjsGAqBoKZYbM4nA1Uimm8O1OLiveBFh7Nrz/HmGljSzXK7tl0sfEdHyEzGcOiAdRRQHLkhpIhJVZKvvp36woTyNXhZcHleJcPC8bMTCZAI+uWP98AVYgWOhnFChj9NtEb6k9Fs0KTQ1HZTvbklA4Nb6KmPVbULrqS1uTQoev8dBBQP+oShhN0PBQiadN3hen68y6CwA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=qti.qualcomm.com; dmarc=pass action=none
- header.from=qti.qualcomm.com; dkim=pass header.d=qti.qualcomm.com; arc=none
-Received: from BN0PR02MB8142.namprd02.prod.outlook.com (2603:10b6:408:16a::19)
- by CH2PR02MB6680.namprd02.prod.outlook.com (2603:10b6:610:7b::10) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5373.18; Mon, 27 Jun
- 2022 11:56:48 +0000
-Received: from BN0PR02MB8142.namprd02.prod.outlook.com
- ([fe80::e5c0:a312:44d2:1643]) by BN0PR02MB8142.namprd02.prod.outlook.com
- ([fe80::e5c0:a312:44d2:1643%8]) with mapi id 15.20.5373.018; Mon, 27 Jun 2022
- 11:56:48 +0000
-From:   Kalyan Thota <kalyant@qti.qualcomm.com>
-To:     "dmitry.baryshkov@linaro.org" <dmitry.baryshkov@linaro.org>,
-        "Kalyan Thota (QUIC)" <quic_kalyant@quicinc.com>,
-        "robdclark@gmail.com" <robdclark@gmail.com>
-CC:     "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "freedreno@lists.freedesktop.org" <freedreno@lists.freedesktop.org>,
-        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "dianders@chromium.org" <dianders@chromium.org>,
-        "swboyd@chromium.org" <swboyd@chromium.org>,
-        "Vinod Polimera (QUIC)" <quic_vpolimer@quicinc.com>,
-        "Abhinav Kumar (QUIC)" <quic_abhinavk@quicinc.com>
-Subject: RE: [v1 2/2] drm/msm/disp/dpu1: enable crtc color management based on
- encoder topology
-Thread-Topic: [v1 2/2] drm/msm/disp/dpu1: enable crtc color management based
- on encoder topology
-Thread-Index: AQHYhU5AAbQkARW/HES6dMe24pNm161ZtQIAgAl1r1A=
-Date:   Mon, 27 Jun 2022 11:56:48 +0000
-Message-ID: <BN0PR02MB81426CB90870085223C308A496B99@BN0PR02MB8142.namprd02.prod.outlook.com>
-References: <1655802387-15275-1-git-send-email-quic_kalyant@quicinc.com>
- <1655802387-15275-2-git-send-email-quic_kalyant@quicinc.com>
- <CAA8EJponMDAXDAZ9zpkYEZvONDAztuXhjwZ6y7rgo1HtQOMtfQ@mail.gmail.com>
-In-Reply-To: <CAA8EJponMDAXDAZ9zpkYEZvONDAztuXhjwZ6y7rgo1HtQOMtfQ@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-Mentions: robdclark@gmail.com
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=qti.qualcomm.com;
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: e132575f-4668-41d3-a7b7-08da58341db9
-x-ms-traffictypediagnostic: CH2PR02MB6680:EE_
-x-ld-processed: 98e9ba89-e1a1-4e38-9007-8bdabc25de1d,ExtAddr
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: FbZ2AqylT+E/R0oPWoP1Gmuznmj/mj074TUWMcwCjB24Tk1NsV5zv8HrjlP24GiwWHBBIAzysYktT0YZE8Tdq7eOCRcGvcL6w/vP4ObVDu1oe2f43n7OqB3KEwEAmKuX9fYoIdRXqKmhcTi8iienKZG9lqebzV8VCbFuvD0D8pN0A6NGaGfKmjribQQyiCu/lI95ZQCXj3WqNotii4SixVMcYlRGDUa0mMf+X2cyJWP25YEjTf++kmIJpdbVUU6gh1t4kYyxNfh963WIjJ0cmHb+BA81yUogF1KVfotNvNid5+LGnF5HHnHExLbb4CZ6wlEU7QWnPvfruz+sMnzj7XGIqkD2bwngFB9aHiT4j0GjiRLH75SGwjbELCIkrnoPmmQ+ULLYEpEmx8w71bGfIt7/QFYUISuwSrqWMrEZ1JoKWvcR28frvSEa4Px4iGJ3fEbHXVWEhO5exdiBx+bat5/vLdmDzKfhU3mJjMI1F1Tyq+CIXdOXQo2s5c1sneflyVD3xkNp0r8Fqx5/NTX90wfIliB4LQcAjgvEo575nLWQtAT/Bbah6XZ5z00CwNwl3sHvpoJM73ou10FWpK22qc2kH7ERPWYpAYxc0jYfrk/AwZ2Rzz0k4PTMb4Xinjp/7HMyb7zeUch9FflRAw8hB+wS233PKpql+kALPtbt1IlfLIvPUGb2isa7RQAykyU5pdQdt66Ag3WbuIs0c8giFa5/AMvDhwMxCUyWFvWQwN4r8a4tssfYlu5Rg5EwvYmyZQM+YTNHgAFVidA2FnqXvL8kuvLBjVjaDKRbcXGR3+E=
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BN0PR02MB8142.namprd02.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230016)(4636009)(136003)(376002)(39860400002)(396003)(346002)(366004)(107886003)(41300700001)(30864003)(52536014)(122000001)(54906003)(110136005)(71200400001)(66476007)(83380400001)(316002)(66946007)(38070700005)(4326008)(38100700002)(8936002)(86362001)(478600001)(186003)(5660300002)(55016003)(66446008)(9686003)(26005)(53546011)(7696005)(64756008)(2906002)(66556008)(76116006)(8676002)(33656002)(6506007);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?RzBZNGhVMDlxbnJ2bUhmVVlMTm5RZ2xJWHhqME5RT3VZT3FlWXgwdUJKSGJY?=
- =?utf-8?B?Z2JuMmhjb2JiVkRMS3F6UTBVVXExcjJ6SFRUNUFpdU9RdTAzME0wRlhONkpq?=
- =?utf-8?B?eHNaWjlYd0xKVmQwWU5SZU5JaDlSUW0rRVkyc1lua2ZCcXhlT05lMXNjWHdv?=
- =?utf-8?B?WjdUNWFia2c2Snp0eG9UZ1NiUW1ZWGFKZU1ESHJrYlpWUDN1a01FZFdVL0xG?=
- =?utf-8?B?eVovc2M2RDNVeGFXSnExZ3ozYVFveW9qeVp2YlIySjQ0YThMazNIOTkyTHIy?=
- =?utf-8?B?NjZuNXQwQms4Ymx6eTNWVnNGMlAxSi9heXJOTmd0b1hZK1RuVExrYmJUQVVN?=
- =?utf-8?B?YXdnVWlDWnQ1dHNSTi9lWnRwSjJzTGZVOERvZVd6TGVqZ3pCM01QT0dFM1FC?=
- =?utf-8?B?NFVBYzZNcVFtcnJ6NXV1U29PWTV4TlhwSEozQTVSSEtxSjNTdWdOQXlkd0ZI?=
- =?utf-8?B?UUxIbFFCMmJrODFjN3BuSFRjeFdkNVNqUHdmUVNMT0J5UHdYWEw2SlRjOTBx?=
- =?utf-8?B?L25MWEo1TGhwdWJGNkt0UTNCTkhCdVEyeFQ3MnVhL2pyZnFjUEN2ZHkwYnAw?=
- =?utf-8?B?UEhYaHJtcHBtNlk4QmdlZU4yVVlZTkxMUlpnOURBRSthQkNzTkJFeXhQNWM2?=
- =?utf-8?B?ZnduZlViQ294YjJhYlR2NlZ2T3kwYVhQU0p5T3NHcCtIVndaSE8yVDQ3aHRh?=
- =?utf-8?B?QzdsMW9tU3U1Y3hFMFVYMVNrOEVBdFdXNnhYUFNXL1pVK1FHU0s3Ym5lSk81?=
- =?utf-8?B?OVc4OE5aYzlaaVVORVU2ZDNFRHhGWmgxZnArN1hrdlRjVUFaYTh3cUNzRXRC?=
- =?utf-8?B?WnVvMTBsVGpvd0RmL0VMcUZpQjNZMkNIbkpzQ3BhYmFhUjNDbEkwQnB3dHFa?=
- =?utf-8?B?Q3diRTJTZjcxRGhkUnF1cGtmazR0a0xPazFIWndOdWFsaHRtcFRjQ0NNUEhB?=
- =?utf-8?B?dHV1cE9NNzE2S1Y0bUdQYy9kZUU3bmRjSEQrRXU2OXpGczVjUG1WcVZsVFBJ?=
- =?utf-8?B?TUZxWk5tUG5ORnBHQWU0TS9qcjJpblp6MFlZSTZ3SWIvU2JZSk5vR1JadmhF?=
- =?utf-8?B?b3UxcXZsMUFERHdNaEVkK2hzTFNnQk5UekV3MmdDNTlIQmpCSGJpNnQ3aVQr?=
- =?utf-8?B?eEJWSGtFK2FNamN0QS9KUVBBVk51VnZMOG1wdmh3T1RTTXYwaGtLbjZjdjVs?=
- =?utf-8?B?eVlYRzdJZjd4QlNlNTZSRXhjUGt3RGNKanhsUndod3c5UmFTTFUyYWxDbjkx?=
- =?utf-8?B?UjE3UGFnQmxta3V3bG5FMWhFVGtyOWFuVnJEYVdqS1hGa013NUlzSm1vUzhD?=
- =?utf-8?B?ZmJoVEtpeVVldWl6L1htRlJkZU1JVHZZUUFUR2tDUm56VURCdTZtZloxUTI1?=
- =?utf-8?B?Z0dDNFhYOW5TVmEzWldoQm1ZcE9wR0RqUHVuT3J6VGhwR29HcGVzYXREQnVz?=
- =?utf-8?B?cUlSejd0bWFLYTJmY3NKWkNPZXFXRHEwaFQ4QmpZTkpDVFVoV0VUWFNWV1Zj?=
- =?utf-8?B?U0pRNnZUL2hqZHE5cFNFL2R6Y0IybzE3STlEenl2emFSM0tuVlFhSld4K055?=
- =?utf-8?B?VjdJc3V1dll2VE9xWkNVd2Rkc242ZUZ0VXVQcGNuamkrV040QlVkdUpJeU1T?=
- =?utf-8?B?M3U4cC9pamhuMnFXQURuWTJzUXFZSW9OU2xWc3pJdy9VZmgwVUhNNnEzSk5O?=
- =?utf-8?B?Z280anhNSUJVTU53M3VMcW5Zb1Mrd080Z0NwMHI4M0NkN21tMkZoNHJXZURC?=
- =?utf-8?B?YU1PcEpNd1MzZzBsQmhCWEpjZkNMTXNsR1V4L3NJOHJMMDY4Nnc4aXJncWxB?=
- =?utf-8?B?dXdHYUdlTWRNWlA1QmFGeEtsVEZxOHYrQjRiOTJOT0phQlZjWmc3SUQrNE43?=
- =?utf-8?B?ZldhYUFxR0ZYdkZWSHozU3dLQytjMlhvcmJZV2pYcUtIdHhMZlNoUVk2Q3ZQ?=
- =?utf-8?B?WjcyTjQ1LzFDazNlY3Mzc0JHejN5RUlReUhqRlpNTEdzRnlMUlEybXM3Y0dw?=
- =?utf-8?B?ZmNDeWZoWXM1UHJvTDA1NzQydGhqUXNwS0gxcFJ1SG9SV0RDdEVVMnZ1RWd4?=
- =?utf-8?B?VmdjTjh4VDVYSmoyT2ZJUDJHVTZMVWsySysyNHdxUHZ4T3lTeVRFeWo2TER4?=
- =?utf-8?B?a0R5ZlZqazFkN244QnowT1lsMUVvVHYrZW9tZG1UOHA2eU5PY2wyVXhOWlVR?=
- =?utf-8?B?bEE9PQ==?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+        d=baylibre-com.20210112.gappssmtp.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:organization:in-reply-to
+         :content-transfer-encoding;
+        bh=ZsjdSWI1dFBJ7YGuqHhIbjXEmr/6Uni+zazm8HbX0EY=;
+        b=Jl0jRxJDGjUe91UnJSbAwJ/WC2vG+3R9OL6pGF9FffxgZ8IIdDF0hQJsO5gyYTIlrn
+         SZtYTIDbRKP1lZnCs1cSjNfR1g4GCnzrjSA79JZShBJu6r6XOi02DbSkgCGi2ZBQJnmY
+         2O5WG13No/rry6YVmQ/kkPe04Dgp+79Z94KByfFvl9M5aXr6Lcr/yeRqnECFDiv8HzVR
+         ITUO/rwrxEP5LhV/2XECtX68ONY37Hy7YMmE0ORSCYz2edVICEJ/WNVkrib/ReL9CgJL
+         0IpQoBR9Ew91G4NfSlAQ1JOGfQ7axFVR/XoohV8icKdOtbpAA5Q1CZtYb9Sv25mYh0+T
+         4c8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:organization:in-reply-to
+         :content-transfer-encoding;
+        bh=ZsjdSWI1dFBJ7YGuqHhIbjXEmr/6Uni+zazm8HbX0EY=;
+        b=gqoptx2HDqRfJAO6lKosAXINZ12URqW4J7Yid+rUYTwsqmBd/J3tjQ/GLlsXarCL5W
+         UHDxd411iG3nrfkBNxsiahcio9LLgGN07D+cDD93QVz7VwrkMPDa0jJQeNMrr+S0tHP0
+         tGnJ4lfaDp+UKdOTThufwxPjyBzgw0CR0ToY9u1HX/9q3g35B19FNeTqmzRIwp1NJT6n
+         bkQ9BO0QIwODMlnFFnmE+ZtDjhQFmmsD7LAsLsdk6JBdvuiJ6RMLQvxZIv2MuWnAfuhG
+         X9HNwHjmZPixMNftuRGwQBcERtekvFezQ2Q+adEHBC9nCSc8w1GvGJqScl6UTbKgeIIA
+         ItfA==
+X-Gm-Message-State: AJIora90jau7DPVeFbVzHvldyge5XigyXzMZZe90hoEH/ZOMIiDpXwFz
+        wGv4QyfDhvkobcqhl2eCTV0Xnw==
+X-Google-Smtp-Source: AGRyM1stJvuUMq11Jk6Wu0JPJqP+yBHs1gGKNUoIriimHZ0myVXXLApExu1LlTpQJEEZq+QeVYVUZA==
+X-Received: by 2002:a5d:6e0b:0:b0:21a:3a12:df12 with SMTP id h11-20020a5d6e0b000000b0021a3a12df12mr12794891wrz.516.1656332204569;
+        Mon, 27 Jun 2022 05:16:44 -0700 (PDT)
+Received: from ?IPV6:2001:861:44c0:66c0:6f56:f3c6:ba4f:bf5c? ([2001:861:44c0:66c0:6f56:f3c6:ba4f:bf5c])
+        by smtp.gmail.com with ESMTPSA id n8-20020a05600c304800b003a04b248896sm2578809wmh.35.2022.06.27.05.16.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 27 Jun 2022 05:16:44 -0700 (PDT)
+Message-ID: <4d5d53c0-b0ab-1426-9da8-b2bc9fe06959@baylibre.com>
+Date:   Mon, 27 Jun 2022 14:16:40 +0200
 MIME-Version: 1.0
-X-OriginatorOrg: qti.qualcomm.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: BN0PR02MB8142.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e132575f-4668-41d3-a7b7-08da58341db9
-X-MS-Exchange-CrossTenant-originalarrivaltime: 27 Jun 2022 11:56:48.6439
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 98e9ba89-e1a1-4e38-9007-8bdabc25de1d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: UHKHpIUo+Su9XjSmUdZu24eYDyVi2G6/AFwlr9hYXH459CCKxwcx54+8w/CkezqTAI7s+guC2KG0Cyc7c1w6QhFxb6sznfFa5AE6so4KCp8=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH2PR02MB6680
-X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,RCVD_IN_DNSWL_MED,SPF_HELO_PASS,SPF_PASS,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Subject: Re: [PATCH RESEND v5 15/18] PCI: dwc: Add dw_ prefix to the pcie_port
+ structure name
+Content-Language: en-US
+To:     Serge Semin <Sergey.Semin@baikalelectronics.ru>,
+        Rob Herring <robh@kernel.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Richard Zhu <hongxing.zhu@nxp.com>,
+        Lucas Stach <l.stach@pengutronix.de>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Minghuan Lian <minghuan.Lian@nxp.com>,
+        Mingkai Hu <mingkai.hu@nxp.com>, Roy Zang <roy.zang@nxp.com>,
+        Yue Wang <yue.wang@Amlogic.com>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Jonathan Chocron <jonnyc@amazon.com>,
+        Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
+        Jesper Nilsson <jesper.nilsson@axis.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Paul Walmsley <paul.walmsley@sifive.com>,
+        Greentime Hu <greentime.hu@sifive.com>,
+        Rahul Tanwar <rtanwar@maxlinear.com>,
+        Srikanth Thokala <srikanth.thokala@intel.com>,
+        Xiaowei Song <songxiaowei@hisilicon.com>,
+        Binghui Wang <wangbinghui@hisilicon.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Pratyush Anand <pratyush.anand@gmail.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+        Masami Hiramatsu <mhiramat@kernel.org>,
+        Nobuhiro Iwamatsu <nobuhiro1.iwamatsu@toshiba.co.jp>
+Cc:     Serge Semin <fancer.lancer@gmail.com>,
+        Alexey Malahov <Alexey.Malahov@baikalelectronics.ru>,
+        Pavel Parkhomenko <Pavel.Parkhomenko@baikalelectronics.ru>,
+        Frank Li <Frank.Li@nxp.com>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-omap@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
+        linux-amlogic@lists.infradead.org, linux-arm-kernel@axis.com,
+        linux-rockchip@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-tegra@vger.kernel.org
+References: <20220624143428.8334-1-Sergey.Semin@baikalelectronics.ru>
+ <20220624143428.8334-16-Sergey.Semin@baikalelectronics.ru>
+From:   Neil Armstrong <narmstrong@baylibre.com>
+Organization: Baylibre
+In-Reply-To: <20220624143428.8334-16-Sergey.Semin@baikalelectronics.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
         T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -147,208 +128,1016 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-VGhhbmtzIGZvciB0aGUgY29tbWVudHMsIERtaXRyeS4gSSBoYXZlbid0IG5vdGljZWQgbW9kZS0+
-aGRpc3BsYXkgYmVpbmcgdXNlZC4gTXkgaWRlYSB3YXMgdG8gcnVuIHRocnUgdGhlIHRvcG9sb2d5
-IGFuZCB0aWUgdXAgdGhlIGVuY29kZXJzIHdpdGggZHNwcCB0byB0aGUgQ1JUQ3MuDQpTaW5jZSBt
-b2RlIGlzIGF2YWlsYWJsZSBvbmx5IGluIHRoZSBjb21taXQsIHdlIGNhbm5vdCB1c2UgdGhlIGRw
-dV9lbmNvZGVyX2dldF90b3BvbG9neSBkdXJpbmcgaW5pdGlhbGl6YXRpb24gc2VxdWVuY2UuDQoN
-ClRoZSByZXF1aXJlbWVudCBoZXJlIGlzIHRoYXQgd2hlbiB3ZSBpbml0aWFsaXplIHRoZSBjcnRj
-LCB3ZSBuZWVkIHRvIGVuYWJsZSBkcm1fY3J0Y19lbmFibGVfY29sb3JfbWdtdCBvbmx5IGZvciB0
-aGUgY3J0Y3MgdGhhdCBzdXBwb3J0IGl0LiBBcyBJIHVuZGVyc3RhbmQgZnJvbSBSb2IsIGNocm9t
-ZSBmcmFtZXdvcmsgd2lsbCBjaGVjayBmb3IgdGhlIGVuYWJsZW1lbnQgaW4gb3JkZXIgdG8gZXhl
-cmNpc2UgdGhlIGZlYXR1cmUuDQoNCkRvIHlvdSBoYXZlIGFueSBpZGVhcyBvbiBob3cgdG8gaGFu
-ZGxlIHRoaXMgcmVxdWlyZW1lbnQgPyBTaW5jZSB3ZSB3aWxsIHJlc2VydmUgdGhlIGRzcHAncyBv
-bmx5IHdoZW4gYSBjb21taXQgaXMgaXNzdWVkLCBJIGd1ZXNzIGl0IHdpbGwgYmUgdG9vIGxhdGUg
-dG8gZW5hYmxlIGNvbG9yIG1hbmFnZW1lbnQgYnkgdGhlbi4NCg0KQHJvYmRjbGFya0BnbWFpbC5j
-b20NCklzIGl0IG9rYXksIGlmIHdlIGRpc2FibGUgY29sb3IgbWFuYWdlbWVudCBmb3IgYWxsIHRo
-ZSBjcnRjcyBkdXJpbmcgaW5pdGlhbGl6YXRpb24gYW5kIGVuYWJsZSBpdCB3aGVuIHdlIGhhdmUg
-ZHNwcHMgYXZhaWxhYmxlIGR1cmluZyBtb2Rlc2V0LiBDYW4gd2UgZnJhbWV3b3JrIGNvZGUgcXVl
-cnkgZm9yIHRoZSBwcm9wZXJ0eSBiZWZvcmUgaXNzdWluZyBhIGNvbW1pdCBmb3IgdGhlIGZyYW1l
-IGFmdGVyIG1vZGVzZXQgPw0KDQpUaGFua3MsDQpLYWx5YW4NCg0KPiAtLS0tLU9yaWdpbmFsIE1l
-c3NhZ2UtLS0tLQ0KPiBGcm9tOiBEbWl0cnkgQmFyeXNoa292IDxkbWl0cnkuYmFyeXNoa292QGxp
-bmFyby5vcmc+DQo+IFNlbnQ6IFR1ZXNkYXksIEp1bmUgMjEsIDIwMjIgNDo0MyBQTQ0KPiBUbzog
-S2FseWFuIFRob3RhIChRVUlDKSA8cXVpY19rYWx5YW50QHF1aWNpbmMuY29tPg0KPiBDYzogeUBx
-dWFsY29tbS5jb207IGRyaS1kZXZlbEBsaXN0cy5mcmVlZGVza3RvcC5vcmc7IGxpbnV4LWFybS0N
-Cj4gbXNtQHZnZXIua2VybmVsLm9yZzsgZnJlZWRyZW5vQGxpc3RzLmZyZWVkZXNrdG9wLm9yZzsN
-Cj4gZGV2aWNldHJlZUB2Z2VyLmtlcm5lbC5vcmc7IGxpbnV4LWtlcm5lbEB2Z2VyLmtlcm5lbC5v
-cmc7DQo+IHJvYmRjbGFya0BnbWFpbC5jb207IGRpYW5kZXJzQGNocm9taXVtLm9yZzsgc3dib3lk
-QGNocm9taXVtLm9yZzsNCj4gVmlub2QgUG9saW1lcmEgKFFVSUMpIDxxdWljX3Zwb2xpbWVyQHF1
-aWNpbmMuY29tPjsgQWJoaW5hdiBLdW1hciAoUVVJQykNCj4gPHF1aWNfYWJoaW5hdmtAcXVpY2lu
-Yy5jb20+DQo+IFN1YmplY3Q6IFJlOiBbdjEgMi8yXSBkcm0vbXNtL2Rpc3AvZHB1MTogZW5hYmxl
-IGNydGMgY29sb3IgbWFuYWdlbWVudCBiYXNlZA0KPiBvbiBlbmNvZGVyIHRvcG9sb2d5DQo+IA0K
-PiBXQVJOSU5HOiBUaGlzIGVtYWlsIG9yaWdpbmF0ZWQgZnJvbSBvdXRzaWRlIG9mIFF1YWxjb21t
-LiBQbGVhc2UgYmUgd2FyeSBvZg0KPiBhbnkgbGlua3Mgb3IgYXR0YWNobWVudHMsIGFuZCBkbyBu
-b3QgZW5hYmxlIG1hY3Jvcy4NCj4gDQo+IEdlbmVyaWMgY29tbWVudDogeUBxdWFsY29tbS5jb20g
-YWRkcmVzcyBib3VuY2VzLiBQbGVhc2UgcmVtb3ZlIGl0IGZyb20NCj4gdGhlIGNjIGxpc3QuIElm
-IHlvdSBuZWVkIHRvIHNlbmQgYSBwYXRjaCBmb3IgdGhlIGludGVybmFsIHJlYXNvbnMsIHBsZWFz
-ZSB1c2UgQmNjLg0KPiANCj4gT24gVHVlLCAyMSBKdW4gMjAyMiBhdCAxMjowNiwgS2FseWFuIFRo
-b3RhIDxxdWljX2thbHlhbnRAcXVpY2luYy5jb20+IHdyb3RlOg0KPiA+DQo+ID4gQ3J0YyBjb2xv
-ciBtYW5hZ2VtZW50IG5lZWRzIHRvIGJlIHJlZ2lzdGVyZWQgb25seSBmb3IgdGhlIGNydGMgd2hp
-Y2gNCj4gPiBoYXMgdGhlIGNhcGFiaWxpdHkgdG8gaGFuZGxlIGl0LiBTaW5jZSB0b3BvbG9neSBk
-ZWNpZGVzIHdoaWNoIGVuY29kZXINCj4gPiB3aWxsIGdldCB0aGUgZHNwcCBodyBibG9jaywgdGll
-IHVwIHRoZSBjcnRjIGFuZCB0aGUgZW5jb2RlciB0b2dldGhlcg0KPiA+IChlbmNvZGVyLT5wb3Nz
-aWJsZV9jcnRjcykNCj4gPg0KPiA+IENoYW5nZS1JZDogSWY1YTBmMzM1NDdiNmY1MjdjYTRiOGZi
-Yjc4NDI0YjE0MWRiYmQ3MTENCj4gDQo+IE5vIGNoYW5nZS1pZCdzIHBsZWFzZS4gVGhpcyBpcyBu
-b3QgdGhlIGdlcnJpdC4NCj4gDQo+ID4gU2lnbmVkLW9mZi1ieTogS2FseWFuIFRob3RhIDxxdWlj
-X2thbHlhbnRAcXVpY2luYy5jb20+DQo+ID4gLS0tDQo+ID4gIGRyaXZlcnMvZ3B1L2RybS9tc20v
-ZGlzcC9kcHUxL2RwdV9jcnRjLmMgICAgfCAgOCArKysrKystLQ0KPiA+ICBkcml2ZXJzL2dwdS9k
-cm0vbXNtL2Rpc3AvZHB1MS9kcHVfY3J0Yy5oICAgIHwgIDIgKy0NCj4gPiAgZHJpdmVycy9ncHUv
-ZHJtL21zbS9kaXNwL2RwdTEvZHB1X2VuY29kZXIuYyB8IDIwICsrKysrKysrKysrKysrKystLS0t
-DQo+ID4gZHJpdmVycy9ncHUvZHJtL21zbS9kaXNwL2RwdTEvZHB1X2VuY29kZXIuaCB8ICA1ICsr
-KysrDQo+ID4gIGRyaXZlcnMvZ3B1L2RybS9tc20vZGlzcC9kcHUxL2RwdV9rbXMuYyAgICAgfCAy
-MiArKysrKysrKysrKysrKysrKystLS0tDQo+ID4gIDUgZmlsZXMgY2hhbmdlZCwgNDYgaW5zZXJ0
-aW9ucygrKSwgMTEgZGVsZXRpb25zKC0pDQo+ID4NCj4gPiBkaWZmIC0tZ2l0IGEvZHJpdmVycy9n
-cHUvZHJtL21zbS9kaXNwL2RwdTEvZHB1X2NydGMuYw0KPiA+IGIvZHJpdmVycy9ncHUvZHJtL21z
-bS9kaXNwL2RwdTEvZHB1X2NydGMuYw0KPiA+IGluZGV4IDc3NjM1NTguLjI5MTNhY2IgMTAwNjQ0
-DQo+ID4gLS0tIGEvZHJpdmVycy9ncHUvZHJtL21zbS9kaXNwL2RwdTEvZHB1X2NydGMuYw0KPiA+
-ICsrKyBiL2RyaXZlcnMvZ3B1L2RybS9tc20vZGlzcC9kcHUxL2RwdV9jcnRjLmMNCj4gPiBAQCAt
-MTUxMSw3ICsxNTExLDcgQEAgc3RhdGljIGNvbnN0IHN0cnVjdCBkcm1fY3J0Y19oZWxwZXJfZnVu
-Y3MNCj4gPiBkcHVfY3J0Y19oZWxwZXJfZnVuY3MgPSB7DQo+ID4NCj4gPiAgLyogaW5pdGlhbGl6
-ZSBjcnRjICovDQo+ID4gIHN0cnVjdCBkcm1fY3J0YyAqZHB1X2NydGNfaW5pdChzdHJ1Y3QgZHJt
-X2RldmljZSAqZGV2LCBzdHJ1Y3QgZHJtX3BsYW5lDQo+ICpwbGFuZSwNCj4gPiAtICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgIHN0cnVjdCBkcm1fcGxhbmUgKmN1cnNvcikNCj4gPiArICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgIHN0cnVjdCBkcm1fcGxhbmUgKmN1cnNvciwgdW5z
-aWduZWQgaW50DQo+ID4gKyBlbmNfbWFzaykNCj4gPiAgew0KPiA+ICAgICAgICAgc3RydWN0IGRy
-bV9jcnRjICpjcnRjID0gTlVMTDsNCj4gPiAgICAgICAgIHN0cnVjdCBkcHVfY3J0YyAqZHB1X2Ny
-dGMgPSBOVUxMOyBAQCAtMTU0NCw3ICsxNTQ0LDExIEBADQo+ID4gc3RydWN0IGRybV9jcnRjICpk
-cHVfY3J0Y19pbml0KHN0cnVjdCBkcm1fZGV2aWNlICpkZXYsIHN0cnVjdA0KPiA+IGRybV9wbGFu
-ZSAqcGxhbmUsDQo+ID4NCj4gPiAgICAgICAgIGRybV9jcnRjX2hlbHBlcl9hZGQoY3J0YywgJmRw
-dV9jcnRjX2hlbHBlcl9mdW5jcyk7DQo+ID4NCj4gPiAtICAgICAgIGRybV9jcnRjX2VuYWJsZV9j
-b2xvcl9tZ210KGNydGMsIDAsIHRydWUsIDApOw0KPiA+ICsgICAgICAgLyogUmVnaXN0ZXIgY3J0
-YyBjb2xvciBtYW5hZ2VtZW50IGlmIHRoZSBlbmNvZGVyIGhhcyBkc3BwLCB1c2UgdGhlDQo+ID4g
-KyAgICAgICAgKiBjcnRjIHRvIG1hcmsgaXQgYXMgcG9zc2libGVfY3J0Y3MgZm9yIHRoYXQgZW5j
-b2Rlci4NCj4gPiArICAgICAgICAqLw0KPiA+ICsgICAgICAgaWYoQklUKGNydGMtPmluZGV4KSAm
-IGVuY19tYXNrKQ0KPiANCj4gU28sIHdlIGFyZSBjaGVja2luZyBDUlRDJ3MgaW5kZXggYWdhaW5z
-dCB0aGUgZW5jb2RlcidzIG1hc2s/IFRoaXMgaXMNCj4gY291bnRlcmludHVpdGl2ZS4NCj4gDQo+
-ID4gKyAgICAgICAgICAgICAgIGRybV9jcnRjX2VuYWJsZV9jb2xvcl9tZ210KGNydGMsIDAsIHRy
-dWUsIDApOw0KPiA+DQo+ID4gICAgICAgICAvKiBzYXZlIHVzZXIgZnJpZW5kbHkgQ1JUQyBuYW1l
-IGZvciBsYXRlciAqLw0KPiA+ICAgICAgICAgc25wcmludGYoZHB1X2NydGMtPm5hbWUsIERQVV9D
-UlRDX05BTUVfU0laRSwgImNydGMldSIsDQo+ID4gY3J0Yy0+YmFzZS5pZCk7IGRpZmYgLS1naXQg
-YS9kcml2ZXJzL2dwdS9kcm0vbXNtL2Rpc3AvZHB1MS9kcHVfY3J0Yy5oDQo+ID4gYi9kcml2ZXJz
-L2dwdS9kcm0vbXNtL2Rpc3AvZHB1MS9kcHVfY3J0Yy5oDQo+ID4gaW5kZXggYjg3ODVjMy4uMGE2
-NDU4ZSAxMDA2NDQNCj4gPiAtLS0gYS9kcml2ZXJzL2dwdS9kcm0vbXNtL2Rpc3AvZHB1MS9kcHVf
-Y3J0Yy5oDQo+ID4gKysrIGIvZHJpdmVycy9ncHUvZHJtL21zbS9kaXNwL2RwdTEvZHB1X2NydGMu
-aA0KPiA+IEBAIC0yNjksNyArMjY5LDcgQEAgdm9pZCBkcHVfY3J0Y19jb21wbGV0ZV9jb21taXQo
-c3RydWN0IGRybV9jcnRjDQo+ICpjcnRjKTsNCj4gPiAgICogQFJldHVybjogbmV3IGNydGMgb2Jq
-ZWN0IG9yIGVycm9yDQo+ID4gICAqLw0KPiA+ICBzdHJ1Y3QgZHJtX2NydGMgKmRwdV9jcnRjX2lu
-aXQoc3RydWN0IGRybV9kZXZpY2UgKmRldiwgc3RydWN0IGRybV9wbGFuZQ0KPiAqcGxhbmUsDQo+
-ID4gLSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHN0cnVjdCBkcm1fcGxhbmUgKmN1cnNv
-cik7DQo+ID4gKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHN0cnVjdCBkcm1fcGxhbmUg
-KmN1cnNvciwgdW5zaWduZWQgaW50DQo+ID4gKyBlbmNfbWFzayk7DQo+ID4NCj4gPiAgLyoqDQo+
-ID4gICAqIGRwdV9jcnRjX3JlZ2lzdGVyX2N1c3RvbV9ldmVudCAtIGFwaSBmb3IgZW5hYmxpbmcv
-ZGlzYWJsaW5nIGNydGMNCj4gPiBldmVudCBkaWZmIC0tZ2l0IGEvZHJpdmVycy9ncHUvZHJtL21z
-bS9kaXNwL2RwdTEvZHB1X2VuY29kZXIuYw0KPiA+IGIvZHJpdmVycy9ncHUvZHJtL21zbS9kaXNw
-L2RwdTEvZHB1X2VuY29kZXIuYw0KPiA+IGluZGV4IGYyY2I0OTcuLjg5M2NlNjggMTAwNjQ0DQo+
-ID4gLS0tIGEvZHJpdmVycy9ncHUvZHJtL21zbS9kaXNwL2RwdTEvZHB1X2VuY29kZXIuYw0KPiA+
-ICsrKyBiL2RyaXZlcnMvZ3B1L2RybS9tc20vZGlzcC9kcHUxL2RwdV9lbmNvZGVyLmMNCj4gPiBA
-QCAtMTMsNiArMTMsOCBAQA0KPiA+ICAjaW5jbHVkZSA8ZHJtL2RybV9jcnRjLmg+DQo+ID4gICNp
-bmNsdWRlIDxkcm0vZHJtX2ZpbGUuaD4NCj4gPiAgI2luY2x1ZGUgPGRybS9kcm1fcHJvYmVfaGVs
-cGVyLmg+DQo+ID4gKyNpbmNsdWRlIDxkcm0vZHJtX2JyaWRnZS5oPg0KPiA+ICsjaW5jbHVkZSA8
-ZHJtL2RybV9icmlkZ2VfY29ubmVjdG9yLmg+DQo+ID4NCj4gPiAgI2luY2x1ZGUgIm1zbV9kcnYu
-aCINCj4gPiAgI2luY2x1ZGUgImRwdV9rbXMuaCINCj4gPiBAQCAtNTExLDEzICs1MTMsMTggQEAg
-dm9pZCBkcHVfZW5jb2Rlcl9oZWxwZXJfc3BsaXRfY29uZmlnKA0KPiA+ICAgICAgICAgfQ0KPiA+
-ICB9DQo+ID4NCj4gPiAtc3RhdGljIHN0cnVjdCBtc21fZGlzcGxheV90b3BvbG9neSBkcHVfZW5j
-b2Rlcl9nZXRfdG9wb2xvZ3koDQo+ID4gLSAgICAgICAgICAgICAgICAgICAgICAgc3RydWN0IGRw
-dV9lbmNvZGVyX3ZpcnQgKmRwdV9lbmMsDQo+ID4gK3N0cnVjdCBtc21fZGlzcGxheV90b3BvbG9n
-eSBkcHVfZW5jb2Rlcl9nZXRfdG9wb2xvZ3koDQo+ID4gKyAgICAgICAgICAgICAgICAgICAgICAg
-c3RydWN0IGRybV9lbmNvZGVyICpkcm1fZW5jLA0KPiA+ICAgICAgICAgICAgICAgICAgICAgICAg
-IHN0cnVjdCBkcHVfa21zICpkcHVfa21zLA0KPiA+ICAgICAgICAgICAgICAgICAgICAgICAgIHN0
-cnVjdCBkcm1fZGlzcGxheV9tb2RlICptb2RlKSAgew0KPiA+ICAgICAgICAgc3RydWN0IG1zbV9k
-aXNwbGF5X3RvcG9sb2d5IHRvcG9sb2d5ID0gezB9Ow0KPiA+ICsgICAgICAgc3RydWN0IGRwdV9l
-bmNvZGVyX3ZpcnQgKmRwdV9lbmM7DQo+ID4gKyAgICAgICBzdHJ1Y3QgZHJtX2JyaWRnZSAqYnJp
-ZGdlOw0KPiA+ICAgICAgICAgaW50IGksIGludGZfY291bnQgPSAwOw0KPiA+ICsgICAgICAgYm9v
-bCBwcmltYXJ5X2Rpc3BsYXkgPSBmYWxzZTsNCj4gPiArDQo+ID4gKyAgICAgICBkcHVfZW5jID0g
-dG9fZHB1X2VuY29kZXJfdmlydChkcm1fZW5jKTsNCj4gPg0KPiA+ICAgICAgICAgZm9yIChpID0g
-MDsgaSA8IE1BWF9QSFlTX0VOQ09ERVJTX1BFUl9WSVJUVUFMOyBpKyspDQo+ID4gICAgICAgICAg
-ICAgICAgIGlmIChkcHVfZW5jLT5waHlzX2VuY3NbaV0pIEBAIC01NDIsNyArNTQ5LDEyIEBAIHN0
-YXRpYw0KPiA+IHN0cnVjdCBtc21fZGlzcGxheV90b3BvbG9neSBkcHVfZW5jb2Rlcl9nZXRfdG9w
-b2xvZ3koDQo+ID4gICAgICAgICBlbHNlDQo+ID4gICAgICAgICAgICAgICAgIHRvcG9sb2d5Lm51
-bV9sbSA9IChtb2RlLT5oZGlzcGxheSA+DQo+ID4gTUFYX0hESVNQTEFZX1NQTElUKSA/IDIgOiAx
-Ow0KPiA+DQo+ID4gLSAgICAgICBpZiAoZHB1X2VuYy0+ZGlzcF9pbmZvLmludGZfdHlwZSA9PSBE
-Uk1fTU9ERV9FTkNPREVSX0RTSSkgew0KPiA+ICsgICAgICAgZHJtX2Zvcl9lYWNoX2JyaWRnZV9p
-bl9jaGFpbihkcm1fZW5jLCBicmlkZ2UpIHsNCj4gPiArICAgICAgICAgICAgICAgaWYgKGJyaWRn
-ZS0+dHlwZSAhPSBEUk1fTU9ERV9DT05ORUNUT1JfRGlzcGxheVBvcnQpDQo+ID4gKyAgICAgICAg
-ICAgICAgICAgICAgICAgcHJpbWFyeV9kaXNwbGF5ID0gdHJ1ZTsNCj4gPiArICAgICAgIH0NCj4g
-DQo+IEkgbXVzdCBhZG1pdCwgSSBuZXZlciBhY3R1YWxseSBsaWtlZCB0aGUgb3JpZ2luYWwgKGlu
-dGZfdHlwZSA9PSBEU0kpIGNoZWNrLiBIb3dldmVyDQo+IHRoZSBuZXcgb25lIGlzIGV2ZW4gd29y
-c2UuIFdlIGFyZSBjaGVja2luZyB0aGUgd2hvbGUgYnJpZGdlIGNoYWluIGluIGFuDQo+IGF0dGVt
-cHQgdG8gcnVsZSBvdXQgdGhlIERQIHBvcnRzIGZvciB3aGF0ZXZlciByZWFzb24uIFdoYXQgYWJv
-dXQgdGhlIEhETUkNCj4gcG9ydHM/IFNob3VsZCB0aGV5IGJlIGFsc28gZnJvd25lZCB1cG9uPw0K
-PiBUaGUgdWdseSBwYXJ0IGlzIHRoYXQgd2UgYXJlIG1ha2luZyB0aGUgZGVjaXNpb24gZm9yIHRo
-ZSB1c2VyLCB3aGljaCBkaXNwbGF5cyBhcmUNCj4gInByaW1hcnkiIGZvciBoaW0uIENhbiB3ZSBs
-ZXQgdGhlIHVzZXIgbWFrZSB0aGlzIHNldHRpbmc/DQo+IA0KPiA+ICsNCj4gPiArICAgICAgIGlm
-IChwcmltYXJ5X2Rpc3BsYXkpIHsNCj4gPiAgICAgICAgICAgICAgICAgaWYgKGRwdV9rbXMtPmNh
-dGFsb2ctPmRzcHAgJiYNCj4gPiAgICAgICAgICAgICAgICAgICAgICAgICAoZHB1X2ttcy0+Y2F0
-YWxvZy0+ZHNwcF9jb3VudCA+PSB0b3BvbG9neS5udW1fbG0pKQ0KPiA+ICAgICAgICAgICAgICAg
-ICAgICAgICAgIHRvcG9sb2d5Lm51bV9kc3BwID0gdG9wb2xvZ3kubnVtX2xtOyBAQCAtNjAxLDcN
-Cj4gPiArNjEzLDcgQEAgc3RhdGljIGludCBkcHVfZW5jb2Rlcl92aXJ0X2F0b21pY19jaGVjaygN
-Cj4gPiAgICAgICAgICAgICAgICAgfQ0KPiA+ICAgICAgICAgfQ0KPiA+DQo+ID4gLSAgICAgICB0
-b3BvbG9neSA9IGRwdV9lbmNvZGVyX2dldF90b3BvbG9neShkcHVfZW5jLCBkcHVfa21zLCBhZGpf
-bW9kZSk7DQo+ID4gKyAgICAgICB0b3BvbG9neSA9IGRwdV9lbmNvZGVyX2dldF90b3BvbG9neShk
-cm1fZW5jLCBkcHVfa21zLA0KPiA+ICsgYWRqX21vZGUpOw0KPiANCj4gZXh0cmEgd2hpdGVzcGFj
-ZSBjaGFuZ2UuIFBsZWFzZSBkcm9wLg0KPiANCj4gPg0KPiA+ICAgICAgICAgLyogUmVzZXJ2ZSBk
-eW5hbWljIHJlc291cmNlcyBub3cuICovDQo+ID4gICAgICAgICBpZiAoIXJldCkgew0KPiA+IGRp
-ZmYgLS1naXQgYS9kcml2ZXJzL2dwdS9kcm0vbXNtL2Rpc3AvZHB1MS9kcHVfZW5jb2Rlci5oDQo+
-ID4gYi9kcml2ZXJzL2dwdS9kcm0vbXNtL2Rpc3AvZHB1MS9kcHVfZW5jb2Rlci5oDQo+ID4gaW5k
-ZXggMWYzOTMyNy4uYzRkYWY3YyAxMDA2NDQNCj4gPiAtLS0gYS9kcml2ZXJzL2dwdS9kcm0vbXNt
-L2Rpc3AvZHB1MS9kcHVfZW5jb2Rlci5oDQo+ID4gKysrIGIvZHJpdmVycy9ncHUvZHJtL21zbS9k
-aXNwL2RwdTEvZHB1X2VuY29kZXIuaA0KPiA+IEBAIC0xNzIsNCArMTcyLDkgQEAgaW50IGRwdV9l
-bmNvZGVyX2dldF92c3luY19jb3VudChzdHJ1Y3QNCj4gZHJtX2VuY29kZXINCj4gPiAqZHJtX2Vu
-Yyk7DQo+ID4NCj4gPiAgYm9vbCBkcHVfZW5jb2Rlcl9pc193aWRlYnVzX2VuYWJsZWQoY29uc3Qg
-c3RydWN0IGRybV9lbmNvZGVyDQo+ID4gKmRybV9lbmMpOw0KPiA+DQo+ID4gK3N0cnVjdCBtc21f
-ZGlzcGxheV90b3BvbG9neSBkcHVfZW5jb2Rlcl9nZXRfdG9wb2xvZ3koDQo+ID4gKyAgICAgICAg
-ICAgICAgICAgICAgICAgc3RydWN0IGRybV9lbmNvZGVyICpkcm1fZW5jLA0KPiA+ICsgICAgICAg
-ICAgICAgICAgICAgICAgIHN0cnVjdCBkcHVfa21zICpkcHVfa21zLA0KPiA+ICsgICAgICAgICAg
-ICAgICAgICAgICAgIHN0cnVjdCBkcm1fZGlzcGxheV9tb2RlICptb2RlKTsNCj4gPiArDQo+ID4g
-ICNlbmRpZiAvKiBfX0RQVV9FTkNPREVSX0hfXyAqLw0KPiA+IGRpZmYgLS1naXQgYS9kcml2ZXJz
-L2dwdS9kcm0vbXNtL2Rpc3AvZHB1MS9kcHVfa21zLmMNCj4gPiBiL2RyaXZlcnMvZ3B1L2RybS9t
-c20vZGlzcC9kcHUxL2RwdV9rbXMuYw0KPiA+IGluZGV4IDNhNGRhMGQuLjQ4NmZmOWQgMTAwNjQ0
-DQo+ID4gLS0tIGEvZHJpdmVycy9ncHUvZHJtL21zbS9kaXNwL2RwdTEvZHB1X2ttcy5jDQo+ID4g
-KysrIGIvZHJpdmVycy9ncHUvZHJtL21zbS9kaXNwL2RwdTEvZHB1X2ttcy5jDQo+ID4gQEAgLTY4
-Nyw5ICs2ODcsMTIgQEAgc3RhdGljIGludCBfZHB1X2ttc19kcm1fb2JqX2luaXQoc3RydWN0IGRw
-dV9rbXMNCj4gKmRwdV9rbXMpDQo+ID4gICAgICAgICB1bnNpZ25lZCBjdXJzb3JfaWR4ID0gMDsN
-Cj4gPiAgICAgICAgIHVuc2lnbmVkIHByaW1hcnlfaWR4ID0gMDsNCj4gPiAgICAgICAgIGJvb2wg
-cGluX292ZXJsYXlzOw0KPiA+ICsgICAgICAgdW5zaWduZWQgaW50IG1heF9kc3BwX2NvdW50ID0g
-MDsNCj4gPiArICAgICAgIHVuc2lnbmVkIGludCBlbmNfbWFzayA9IDA7DQo+ID4NCj4gPiAgICAg
-ICAgIHN0cnVjdCBtc21fZHJtX3ByaXZhdGUgKnByaXY7DQo+ID4gICAgICAgICBzdHJ1Y3QgZHB1
-X21kc3NfY2ZnICpjYXRhbG9nOw0KPiA+ICsgICAgICAgc3RydWN0IG1zbV9kaXNwbGF5X3RvcG9s
-b2d5IHRvcG9sb2d5ID0gezB9Ow0KPiA+DQo+ID4gICAgICAgICBpbnQgcHJpbWFyeV9wbGFuZXNf
-aWR4ID0gMCwgY3Vyc29yX3BsYW5lc19pZHggPSAwLCBpLCByZXQ7DQo+ID4gICAgICAgICBpbnQg
-bWF4X2NydGNfY291bnQ7DQo+ID4gQEAgLTc1NCwxMCArNzU3LDE5IEBAIHN0YXRpYyBpbnQgX2Rw
-dV9rbXNfZHJtX29ial9pbml0KHN0cnVjdCBkcHVfa21zDQo+ICpkcHVfa21zKQ0KPiA+ICAgICAg
-ICAgfQ0KPiA+DQo+ID4gICAgICAgICBtYXhfY3J0Y19jb3VudCA9IG1pbihtYXhfY3J0Y19jb3Vu
-dCwgcHJpbWFyeV9wbGFuZXNfaWR4KTsNCj4gPiArICAgICAgIG1heF9kc3BwX2NvdW50ID0gY2F0
-YWxvZy0+ZHNwcF9jb3VudDsNCj4gPiArDQo+ID4gKyAgICAgICBkcm1fZm9yX2VhY2hfZW5jb2Rl
-cihlbmNvZGVyLCBkZXYpIHsNCj4gPiArICAgICAgICAgICAgICAgdG9wb2xvZ3kgPSBkcHVfZW5j
-b2Rlcl9nZXRfdG9wb2xvZ3koZW5jb2RlciwgZHB1X2ttcywNCj4gPiArIE5VTEwpOw0KPiANCj4g
-VGhpcyBjYW4gY3Jhc2ggZHB1X2VuY29kZXJfZ2V0X3RvcG9sb2d5KCkgYmVjYXVzZSBpdCBjaGVj
-a3MgbW9kZS0+aGRpc3BsYXkuDQo+IEFuZCB0aGUgY2hlY2sgYW55d2F5IGlzIGZ1dGlsZSBoZXJl
-LiBXZSBkbyBub3Qga25vdyBpZiB0aGUgZW5jb2RlciBpcyBnb2luZyB0bw0KPiB1c2UgMSBvciAy
-IExNcyAoc2luY2Ugd2UgZG8gbm90IGtub3cgdGhlIHJlc29sdXRpb24pLCBzbyB3ZSBkbyBub3Qg
-a25vdw0KPiB3aGV0aGVyIGl0IHdpbGwgdXNlIDEgb3IgMiBEU1BQIGJsb2Nrcy4NCj4gDQo+ID4g
-KyAgICAgICAgICAgICAgIGlmICh0b3BvbG9neS5udW1fZHNwcCA+IDAgJiYgKHRvcG9sb2d5Lm51
-bV9kc3BwIDw9DQo+IG1heF9kc3BwX2NvdW50KSkgew0KPiA+ICsgICAgICAgICAgICAgICAgICAg
-ICAgIGVuY19tYXNrIHw9IEJJVChlbmNvZGVyLT5pbmRleCk7DQo+ID4gKyAgICAgICAgICAgICAg
-ICAgICAgICAgbWF4X2RzcHBfY291bnQgLT0gdG9wb2xvZ3kubnVtX2RzcHA7DQo+ID4gKyAgICAg
-ICAgICAgICAgIH0NCj4gPiArICAgICAgIH0NCj4gPg0KPiA+ICAgICAgICAgLyogQ3JlYXRlIG9u
-ZSBDUlRDIHBlciBlbmNvZGVyICovDQo+ID4gICAgICAgICBmb3IgKGkgPSAwOyBpIDwgbWF4X2Ny
-dGNfY291bnQ7IGkrKykgew0KPiA+IC0gICAgICAgICAgICAgICBjcnRjID0gZHB1X2NydGNfaW5p
-dChkZXYsIHByaW1hcnlfcGxhbmVzW2ldLCBjdXJzb3JfcGxhbmVzW2ldKTsNCj4gPiArICAgICAg
-ICAgICAgICAgY3J0YyA9IGRwdV9jcnRjX2luaXQoZGV2LCBwcmltYXJ5X3BsYW5lc1tpXSwNCj4g
-PiArIGN1cnNvcl9wbGFuZXNbaV0sIGVuY19tYXNrKTsNCj4gPiAgICAgICAgICAgICAgICAgaWYg
-KElTX0VSUihjcnRjKSkgew0KPiA+ICAgICAgICAgICAgICAgICAgICAgICAgIHJldCA9IFBUUl9F
-UlIoY3J0Yyk7DQo+ID4gICAgICAgICAgICAgICAgICAgICAgICAgcmV0dXJuIHJldDsNCj4gPiBA
-QCAtNzY1LDkgKzc3NywxMSBAQCBzdGF0aWMgaW50IF9kcHVfa21zX2RybV9vYmpfaW5pdChzdHJ1
-Y3QgZHB1X2ttcw0KPiAqZHB1X2ttcykNCj4gPiAgICAgICAgICAgICAgICAgcHJpdi0+Y3J0Y3Nb
-cHJpdi0+bnVtX2NydGNzKytdID0gY3J0YzsNCj4gPiAgICAgICAgIH0NCj4gPg0KPiA+IC0gICAg
-ICAgLyogQWxsIENSVENzIGFyZSBjb21wYXRpYmxlIHdpdGggYWxsIGVuY29kZXJzICovDQo+ID4g
-LSAgICAgICBkcm1fZm9yX2VhY2hfZW5jb2RlcihlbmNvZGVyLCBkZXYpDQo+ID4gLSAgICAgICAg
-ICAgICAgIGVuY29kZXItPnBvc3NpYmxlX2NydGNzID0gKDEgPDwgcHJpdi0+bnVtX2NydGNzKSAt
-IDE7DQo+ID4gKyAgICAgICAvKiBBdHRhY2ggQ1JUQydzIHRvIGNvbXBhdGlhYmxlIGVuY29kZXJz
-ICovDQo+IA0KPiBjb21wYXRpYmxlDQo+IA0KPiANCj4gPiArICAgICAgIGRybV9mb3JfZWFjaF9l
-bmNvZGVyKGVuY29kZXIsIGRldikgew0KPiA+ICsgICAgICAgICAgICAgICBlbmNvZGVyLT5wb3Nz
-aWJsZV9jcnRjcyA9IChlbmNfbWFzayAmIEJJVChlbmNvZGVyLT5pbmRleCkpID8NCj4gPiArICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgIEJJVChlbmNvZGVyLT5pbmRleCkgOiAoKCgxIDw8
-IHByaXYtPm51bV9jcnRjcykgLSAxKSAmDQo+IH5lbmNfbWFzayk7DQo+ID4gKyAgICAgICB9DQo+
-ID4NCj4gPiAgICAgICAgIHJldHVybiAwOw0KPiA+ICB9DQo+ID4gLS0NCj4gPiAyLjcuNA0KPiA+
-DQo+IA0KPiANCj4gLS0NCj4gV2l0aCBiZXN0IHdpc2hlcw0KPiBEbWl0cnkNCg==
+On 24/06/2022 16:34, Serge Semin wrote:
+> All of the DW PCIe core driver entities have names with the dw_ prefix in
+> order to easily distinguish local and common PCIe name spaces. All except
+> the pcie_port structure which contains the DW PCIe Root Port descriptor.
+> For historical reason the structure has retained the original name since
+> commit 340cba6092c2 ("pci: Add PCIe driver for Samsung Exynos") when
+> the DW PCIe IP-core support was added to the kernel. Let's finally fix
+> that by adding the dw_ prefix to the structure name and by adding the _rp
+> suffix to be similar to the EP counterpart. Thus the name will be coherent
+> with the common driver naming policy. It shall make the driver code more
+> readable eliminating visual confusion between the local and generic PCI
+> name spaces.
+> 
+> Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
+> Reviewed-by: Rob Herring <robh@kernel.org>
+> 
+> ---
+> 
+> Changelog v4:
+> - This is a new patch created on the v4 lap of the series.
+> ---
+>   drivers/pci/controller/dwc/pci-dra7xx.c       | 12 +++----
+>   drivers/pci/controller/dwc/pci-exynos.c       |  6 ++--
+>   drivers/pci/controller/dwc/pci-imx6.c         |  6 ++--
+>   drivers/pci/controller/dwc/pci-keystone.c     | 20 +++++------
+>   drivers/pci/controller/dwc/pci-layerscape.c   |  2 +-
+>   drivers/pci/controller/dwc/pci-meson.c        |  2 +-
+>   drivers/pci/controller/dwc/pcie-al.c          |  6 ++--
+>   drivers/pci/controller/dwc/pcie-armada8k.c    |  4 +--
+>   drivers/pci/controller/dwc/pcie-artpec6.c     |  4 +--
+>   .../pci/controller/dwc/pcie-designware-host.c | 36 +++++++++----------
+>   .../pci/controller/dwc/pcie-designware-plat.c |  2 +-
+>   drivers/pci/controller/dwc/pcie-designware.h  | 30 ++++++++--------
+>   drivers/pci/controller/dwc/pcie-dw-rockchip.c |  4 +--
+>   drivers/pci/controller/dwc/pcie-fu740.c       |  2 +-
+>   drivers/pci/controller/dwc/pcie-histb.c       | 10 +++---
+>   drivers/pci/controller/dwc/pcie-intel-gw.c    |  6 ++--
+>   drivers/pci/controller/dwc/pcie-keembay.c     |  4 +--
+>   drivers/pci/controller/dwc/pcie-kirin.c       |  2 +-
+>   drivers/pci/controller/dwc/pcie-qcom.c        |  4 +--
+>   drivers/pci/controller/dwc/pcie-spear13xx.c   |  6 ++--
+>   drivers/pci/controller/dwc/pcie-tegra194.c    | 22 ++++++------
+>   drivers/pci/controller/dwc/pcie-uniphier.c    | 10 +++---
+>   drivers/pci/controller/dwc/pcie-visconti.c    |  6 ++--
+>   23 files changed, 103 insertions(+), 103 deletions(-)
+> 
+> diff --git a/drivers/pci/controller/dwc/pci-dra7xx.c b/drivers/pci/controller/dwc/pci-dra7xx.c
+> index dfcdeb432dc8..a174b680b2a7 100644
+> --- a/drivers/pci/controller/dwc/pci-dra7xx.c
+> +++ b/drivers/pci/controller/dwc/pci-dra7xx.c
+> @@ -178,7 +178,7 @@ static void dra7xx_pcie_enable_interrupts(struct dra7xx_pcie *dra7xx)
+>   	dra7xx_pcie_enable_msi_interrupts(dra7xx);
+>   }
+>   
+> -static int dra7xx_pcie_host_init(struct pcie_port *pp)
+> +static int dra7xx_pcie_host_init(struct dw_pcie_rp *pp)
+>   {
+>   	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+>   	struct dra7xx_pcie *dra7xx = to_dra7xx_pcie(pci);
+> @@ -202,7 +202,7 @@ static const struct irq_domain_ops intx_domain_ops = {
+>   	.xlate = pci_irqd_intx_xlate,
+>   };
+>   
+> -static int dra7xx_pcie_handle_msi(struct pcie_port *pp, int index)
+> +static int dra7xx_pcie_handle_msi(struct dw_pcie_rp *pp, int index)
+>   {
+>   	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+>   	unsigned long val;
+> @@ -224,7 +224,7 @@ static int dra7xx_pcie_handle_msi(struct pcie_port *pp, int index)
+>   	return 1;
+>   }
+>   
+> -static void dra7xx_pcie_handle_msi_irq(struct pcie_port *pp)
+> +static void dra7xx_pcie_handle_msi_irq(struct dw_pcie_rp *pp)
+>   {
+>   	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+>   	int ret, i, count, num_ctrls;
+> @@ -255,8 +255,8 @@ static void dra7xx_pcie_msi_irq_handler(struct irq_desc *desc)
+>   {
+>   	struct irq_chip *chip = irq_desc_get_chip(desc);
+>   	struct dra7xx_pcie *dra7xx;
+> +	struct dw_pcie_rp *pp;
+>   	struct dw_pcie *pci;
+> -	struct pcie_port *pp;
+>   	unsigned long reg;
+>   	u32 bit;
+>   
+> @@ -344,7 +344,7 @@ static irqreturn_t dra7xx_pcie_irq_handler(int irq, void *arg)
+>   	return IRQ_HANDLED;
+>   }
+>   
+> -static int dra7xx_pcie_init_irq_domain(struct pcie_port *pp)
+> +static int dra7xx_pcie_init_irq_domain(struct dw_pcie_rp *pp)
+>   {
+>   	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+>   	struct device *dev = pci->dev;
+> @@ -475,7 +475,7 @@ static int dra7xx_add_pcie_port(struct dra7xx_pcie *dra7xx,
+>   {
+>   	int ret;
+>   	struct dw_pcie *pci = dra7xx->pci;
+> -	struct pcie_port *pp = &pci->pp;
+> +	struct dw_pcie_rp *pp = &pci->pp;
+>   	struct device *dev = pci->dev;
+>   
+>   	pp->irq = platform_get_irq(pdev, 1);
+> diff --git a/drivers/pci/controller/dwc/pci-exynos.c b/drivers/pci/controller/dwc/pci-exynos.c
+> index 467c8d1cd7e4..2044d191fba6 100644
+> --- a/drivers/pci/controller/dwc/pci-exynos.c
+> +++ b/drivers/pci/controller/dwc/pci-exynos.c
+> @@ -249,7 +249,7 @@ static int exynos_pcie_link_up(struct dw_pcie *pci)
+>   	return (val & PCIE_ELBI_XMLH_LINKUP);
+>   }
+>   
+> -static int exynos_pcie_host_init(struct pcie_port *pp)
+> +static int exynos_pcie_host_init(struct dw_pcie_rp *pp)
+>   {
+>   	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+>   	struct exynos_pcie *ep = to_exynos_pcie(pci);
+> @@ -276,7 +276,7 @@ static int exynos_add_pcie_port(struct exynos_pcie *ep,
+>   				       struct platform_device *pdev)
+>   {
+>   	struct dw_pcie *pci = &ep->pci;
+> -	struct pcie_port *pp = &pci->pp;
+> +	struct dw_pcie_rp *pp = &pci->pp;
+>   	struct device *dev = &pdev->dev;
+>   	int ret;
+>   
+> @@ -406,7 +406,7 @@ static int __maybe_unused exynos_pcie_resume_noirq(struct device *dev)
+>   {
+>   	struct exynos_pcie *ep = dev_get_drvdata(dev);
+>   	struct dw_pcie *pci = &ep->pci;
+> -	struct pcie_port *pp = &pci->pp;
+> +	struct dw_pcie_rp *pp = &pci->pp;
+>   	int ret;
+>   
+>   	ret = regulator_bulk_enable(ARRAY_SIZE(ep->supplies), ep->supplies);
+> diff --git a/drivers/pci/controller/dwc/pci-imx6.c b/drivers/pci/controller/dwc/pci-imx6.c
+> index 7a285fb0f619..5ea01ed4674d 100644
+> --- a/drivers/pci/controller/dwc/pci-imx6.c
+> +++ b/drivers/pci/controller/dwc/pci-imx6.c
+> @@ -863,7 +863,7 @@ static int imx6_pcie_start_link(struct dw_pcie *pci)
+>   	return ret;
+>   }
+>   
+> -static int imx6_pcie_host_init(struct pcie_port *pp)
+> +static int imx6_pcie_host_init(struct dw_pcie_rp *pp)
+>   {
+>   	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+>   	struct imx6_pcie *imx6_pcie = to_imx6_pcie(pci);
+> @@ -992,7 +992,7 @@ static int imx6_pcie_resume_noirq(struct device *dev)
+>   {
+>   	int ret;
+>   	struct imx6_pcie *imx6_pcie = dev_get_drvdata(dev);
+> -	struct pcie_port *pp = &imx6_pcie->pci->pp;
+> +	struct dw_pcie_rp *pp = &imx6_pcie->pci->pp;
+>   
+>   	if (!(imx6_pcie->drvdata->flags & IMX6_PCIE_FLAG_SUPPORTS_SUSPEND))
+>   		return 0;
+> @@ -1291,7 +1291,7 @@ static struct platform_driver imx6_pcie_driver = {
+>   static void imx6_pcie_quirk(struct pci_dev *dev)
+>   {
+>   	struct pci_bus *bus = dev->bus;
+> -	struct pcie_port *pp = bus->sysdata;
+> +	struct dw_pcie_rp *pp = bus->sysdata;
+>   
+>   	/* Bus parent is the PCI bridge, its parent is this platform driver */
+>   	if (!bus->dev.parent || !bus->dev.parent->parent)
+> diff --git a/drivers/pci/controller/dwc/pci-keystone.c b/drivers/pci/controller/dwc/pci-keystone.c
+> index d10e5fd0f83c..c3d88aa27dd4 100644
+> --- a/drivers/pci/controller/dwc/pci-keystone.c
+> +++ b/drivers/pci/controller/dwc/pci-keystone.c
+> @@ -147,7 +147,7 @@ static void ks_pcie_app_writel(struct keystone_pcie *ks_pcie, u32 offset,
+>   
+>   static void ks_pcie_msi_irq_ack(struct irq_data *data)
+>   {
+> -	struct pcie_port *pp  = irq_data_get_irq_chip_data(data);
+> +	struct dw_pcie_rp *pp  = irq_data_get_irq_chip_data(data);
+>   	struct keystone_pcie *ks_pcie;
+>   	u32 irq = data->hwirq;
+>   	struct dw_pcie *pci;
+> @@ -167,7 +167,7 @@ static void ks_pcie_msi_irq_ack(struct irq_data *data)
+>   
+>   static void ks_pcie_compose_msi_msg(struct irq_data *data, struct msi_msg *msg)
+>   {
+> -	struct pcie_port *pp = irq_data_get_irq_chip_data(data);
+> +	struct dw_pcie_rp *pp = irq_data_get_irq_chip_data(data);
+>   	struct keystone_pcie *ks_pcie;
+>   	struct dw_pcie *pci;
+>   	u64 msi_target;
+> @@ -192,7 +192,7 @@ static int ks_pcie_msi_set_affinity(struct irq_data *irq_data,
+>   
+>   static void ks_pcie_msi_mask(struct irq_data *data)
+>   {
+> -	struct pcie_port *pp = irq_data_get_irq_chip_data(data);
+> +	struct dw_pcie_rp *pp = irq_data_get_irq_chip_data(data);
+>   	struct keystone_pcie *ks_pcie;
+>   	u32 irq = data->hwirq;
+>   	struct dw_pcie *pci;
+> @@ -216,7 +216,7 @@ static void ks_pcie_msi_mask(struct irq_data *data)
+>   
+>   static void ks_pcie_msi_unmask(struct irq_data *data)
+>   {
+> -	struct pcie_port *pp = irq_data_get_irq_chip_data(data);
+> +	struct dw_pcie_rp *pp = irq_data_get_irq_chip_data(data);
+>   	struct keystone_pcie *ks_pcie;
+>   	u32 irq = data->hwirq;
+>   	struct dw_pcie *pci;
+> @@ -247,7 +247,7 @@ static struct irq_chip ks_pcie_msi_irq_chip = {
+>   	.irq_unmask = ks_pcie_msi_unmask,
+>   };
+>   
+> -static int ks_pcie_msi_host_init(struct pcie_port *pp)
+> +static int ks_pcie_msi_host_init(struct dw_pcie_rp *pp)
+>   {
+>   	pp->msi_irq_chip = &ks_pcie_msi_irq_chip;
+>   	return dw_pcie_allocate_domains(pp);
+> @@ -390,7 +390,7 @@ static void ks_pcie_setup_rc_app_regs(struct keystone_pcie *ks_pcie)
+>   	u32 val;
+>   	u32 num_viewport = ks_pcie->num_viewport;
+>   	struct dw_pcie *pci = ks_pcie->pci;
+> -	struct pcie_port *pp = &pci->pp;
+> +	struct dw_pcie_rp *pp = &pci->pp;
+>   	u64 start, end;
+>   	struct resource *mem;
+>   	int i;
+> @@ -428,7 +428,7 @@ static void ks_pcie_setup_rc_app_regs(struct keystone_pcie *ks_pcie)
+>   static void __iomem *ks_pcie_other_map_bus(struct pci_bus *bus,
+>   					   unsigned int devfn, int where)
+>   {
+> -	struct pcie_port *pp = bus->sysdata;
+> +	struct dw_pcie_rp *pp = bus->sysdata;
+>   	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+>   	struct keystone_pcie *ks_pcie = to_keystone_pcie(pci);
+>   	u32 reg;
+> @@ -456,7 +456,7 @@ static struct pci_ops ks_child_pcie_ops = {
+>    */
+>   static int ks_pcie_v3_65_add_bus(struct pci_bus *bus)
+>   {
+> -	struct pcie_port *pp = bus->sysdata;
+> +	struct dw_pcie_rp *pp = bus->sysdata;
+>   	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+>   	struct keystone_pcie *ks_pcie = to_keystone_pcie(pci);
+>   
+> @@ -574,7 +574,7 @@ static void ks_pcie_msi_irq_handler(struct irq_desc *desc)
+>   	struct keystone_pcie *ks_pcie = irq_desc_get_handler_data(desc);
+>   	u32 offset = irq - ks_pcie->msi_host_irq;
+>   	struct dw_pcie *pci = ks_pcie->pci;
+> -	struct pcie_port *pp = &pci->pp;
+> +	struct dw_pcie_rp *pp = &pci->pp;
+>   	struct device *dev = pci->dev;
+>   	struct irq_chip *chip = irq_desc_get_chip(desc);
+>   	u32 vector, reg, pos;
+> @@ -799,7 +799,7 @@ static int __init ks_pcie_init_id(struct keystone_pcie *ks_pcie)
+>   	return 0;
+>   }
+>   
+> -static int __init ks_pcie_host_init(struct pcie_port *pp)
+> +static int __init ks_pcie_host_init(struct dw_pcie_rp *pp)
+>   {
+>   	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+>   	struct keystone_pcie *ks_pcie = to_keystone_pcie(pci);
+> diff --git a/drivers/pci/controller/dwc/pci-layerscape.c b/drivers/pci/controller/dwc/pci-layerscape.c
+> index 6a4f0619bb1c..879b8692f96a 100644
+> --- a/drivers/pci/controller/dwc/pci-layerscape.c
+> +++ b/drivers/pci/controller/dwc/pci-layerscape.c
+> @@ -74,7 +74,7 @@ static void ls_pcie_fix_error_response(struct ls_pcie *pcie)
+>   	iowrite32(PCIE_ABSERR_SETTING, pci->dbi_base + PCIE_ABSERR);
+>   }
+>   
+> -static int ls_pcie_host_init(struct pcie_port *pp)
+> +static int ls_pcie_host_init(struct dw_pcie_rp *pp)
+>   {
+>   	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+>   	struct ls_pcie *pcie = to_ls_pcie(pci);
+> diff --git a/drivers/pci/controller/dwc/pci-meson.c b/drivers/pci/controller/dwc/pci-meson.c
+> index f44bf347904a..c1527693bed9 100644
+> --- a/drivers/pci/controller/dwc/pci-meson.c
+> +++ b/drivers/pci/controller/dwc/pci-meson.c
+> @@ -370,7 +370,7 @@ static int meson_pcie_link_up(struct dw_pcie *pci)
+>   	return 0;
+>   }
+>   
+> -static int meson_pcie_host_init(struct pcie_port *pp)
+> +static int meson_pcie_host_init(struct dw_pcie_rp *pp)
+>   {
+>   	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+>   	struct meson_pcie *mp = to_meson_pcie(pci);
+> diff --git a/drivers/pci/controller/dwc/pcie-al.c b/drivers/pci/controller/dwc/pcie-al.c
+> index e8afa50129a8..b8cb77c9c4bd 100644
+> --- a/drivers/pci/controller/dwc/pcie-al.c
+> +++ b/drivers/pci/controller/dwc/pcie-al.c
+> @@ -217,7 +217,7 @@ static inline void al_pcie_target_bus_set(struct al_pcie *pcie,
+>   static void __iomem *al_pcie_conf_addr_map_bus(struct pci_bus *bus,
+>   					       unsigned int devfn, int where)
+>   {
+> -	struct pcie_port *pp = bus->sysdata;
+> +	struct dw_pcie_rp *pp = bus->sysdata;
+>   	struct al_pcie *pcie = to_al_pcie(to_dw_pcie_from_pp(pp));
+>   	unsigned int busnr = bus->number;
+>   	struct al_pcie_target_bus_cfg *target_bus_cfg = &pcie->target_bus_cfg;
+> @@ -245,7 +245,7 @@ static struct pci_ops al_child_pci_ops = {
+>   static void al_pcie_config_prepare(struct al_pcie *pcie)
+>   {
+>   	struct al_pcie_target_bus_cfg *target_bus_cfg;
+> -	struct pcie_port *pp = &pcie->pci->pp;
+> +	struct dw_pcie_rp *pp = &pcie->pci->pp;
+>   	unsigned int ecam_bus_mask;
+>   	u32 cfg_control_offset;
+>   	u8 subordinate_bus;
+> @@ -289,7 +289,7 @@ static void al_pcie_config_prepare(struct al_pcie *pcie)
+>   	al_pcie_controller_writel(pcie, cfg_control_offset, reg);
+>   }
+>   
+> -static int al_pcie_host_init(struct pcie_port *pp)
+> +static int al_pcie_host_init(struct dw_pcie_rp *pp)
+>   {
+>   	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+>   	struct al_pcie *pcie = to_al_pcie(pci);
+> diff --git a/drivers/pci/controller/dwc/pcie-armada8k.c b/drivers/pci/controller/dwc/pcie-armada8k.c
+> index 4e2552dcf982..8b113d3f3095 100644
+> --- a/drivers/pci/controller/dwc/pcie-armada8k.c
+> +++ b/drivers/pci/controller/dwc/pcie-armada8k.c
+> @@ -166,7 +166,7 @@ static int armada8k_pcie_start_link(struct dw_pcie *pci)
+>   	return 0;
+>   }
+>   
+> -static int armada8k_pcie_host_init(struct pcie_port *pp)
+> +static int armada8k_pcie_host_init(struct dw_pcie_rp *pp)
+>   {
+>   	u32 reg;
+>   	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+> @@ -233,7 +233,7 @@ static int armada8k_add_pcie_port(struct armada8k_pcie *pcie,
+>   				  struct platform_device *pdev)
+>   {
+>   	struct dw_pcie *pci = pcie->pci;
+> -	struct pcie_port *pp = &pci->pp;
+> +	struct dw_pcie_rp *pp = &pci->pp;
+>   	struct device *dev = &pdev->dev;
+>   	int ret;
+>   
+> diff --git a/drivers/pci/controller/dwc/pcie-artpec6.c b/drivers/pci/controller/dwc/pcie-artpec6.c
+> index 2f15441770e1..98102079e26d 100644
+> --- a/drivers/pci/controller/dwc/pcie-artpec6.c
+> +++ b/drivers/pci/controller/dwc/pcie-artpec6.c
+> @@ -97,7 +97,7 @@ static void artpec6_pcie_writel(struct artpec6_pcie *artpec6_pcie, u32 offset, u
+>   static u64 artpec6_pcie_cpu_addr_fixup(struct dw_pcie *pci, u64 pci_addr)
+>   {
+>   	struct artpec6_pcie *artpec6_pcie = to_artpec6_pcie(pci);
+> -	struct pcie_port *pp = &pci->pp;
+> +	struct dw_pcie_rp *pp = &pci->pp;
+>   	struct dw_pcie_ep *ep = &pci->ep;
+>   
+>   	switch (artpec6_pcie->mode) {
+> @@ -315,7 +315,7 @@ static void artpec6_pcie_deassert_core_reset(struct artpec6_pcie *artpec6_pcie)
+>   	usleep_range(100, 200);
+>   }
+>   
+> -static int artpec6_pcie_host_init(struct pcie_port *pp)
+> +static int artpec6_pcie_host_init(struct dw_pcie_rp *pp)
+>   {
+>   	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+>   	struct artpec6_pcie *artpec6_pcie = to_artpec6_pcie(pci);
+> diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
+> index 7ff2b7555b91..95256434913f 100644
+> --- a/drivers/pci/controller/dwc/pcie-designware-host.c
+> +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
+> @@ -53,7 +53,7 @@ static struct msi_domain_info dw_pcie_msi_domain_info = {
+>   };
+>   
+>   /* MSI int handler */
+> -irqreturn_t dw_handle_msi_irq(struct pcie_port *pp)
+> +irqreturn_t dw_handle_msi_irq(struct dw_pcie_rp *pp)
+>   {
+>   	int i, pos;
+>   	unsigned long val;
+> @@ -88,7 +88,7 @@ irqreturn_t dw_handle_msi_irq(struct pcie_port *pp)
+>   static void dw_chained_msi_isr(struct irq_desc *desc)
+>   {
+>   	struct irq_chip *chip = irq_desc_get_chip(desc);
+> -	struct pcie_port *pp;
+> +	struct dw_pcie_rp *pp;
+>   
+>   	chained_irq_enter(chip, desc);
+>   
+> @@ -100,7 +100,7 @@ static void dw_chained_msi_isr(struct irq_desc *desc)
+>   
+>   static void dw_pci_setup_msi_msg(struct irq_data *d, struct msi_msg *msg)
+>   {
+> -	struct pcie_port *pp = irq_data_get_irq_chip_data(d);
+> +	struct dw_pcie_rp *pp = irq_data_get_irq_chip_data(d);
+>   	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+>   	u64 msi_target;
+>   
+> @@ -123,7 +123,7 @@ static int dw_pci_msi_set_affinity(struct irq_data *d,
+>   
+>   static void dw_pci_bottom_mask(struct irq_data *d)
+>   {
+> -	struct pcie_port *pp = irq_data_get_irq_chip_data(d);
+> +	struct dw_pcie_rp *pp = irq_data_get_irq_chip_data(d);
+>   	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+>   	unsigned int res, bit, ctrl;
+>   	unsigned long flags;
+> @@ -142,7 +142,7 @@ static void dw_pci_bottom_mask(struct irq_data *d)
+>   
+>   static void dw_pci_bottom_unmask(struct irq_data *d)
+>   {
+> -	struct pcie_port *pp = irq_data_get_irq_chip_data(d);
+> +	struct dw_pcie_rp *pp = irq_data_get_irq_chip_data(d);
+>   	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+>   	unsigned int res, bit, ctrl;
+>   	unsigned long flags;
+> @@ -161,7 +161,7 @@ static void dw_pci_bottom_unmask(struct irq_data *d)
+>   
+>   static void dw_pci_bottom_ack(struct irq_data *d)
+>   {
+> -	struct pcie_port *pp  = irq_data_get_irq_chip_data(d);
+> +	struct dw_pcie_rp *pp  = irq_data_get_irq_chip_data(d);
+>   	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+>   	unsigned int res, bit, ctrl;
+>   
+> @@ -185,7 +185,7 @@ static int dw_pcie_irq_domain_alloc(struct irq_domain *domain,
+>   				    unsigned int virq, unsigned int nr_irqs,
+>   				    void *args)
+>   {
+> -	struct pcie_port *pp = domain->host_data;
+> +	struct dw_pcie_rp *pp = domain->host_data;
+>   	unsigned long flags;
+>   	u32 i;
+>   	int bit;
+> @@ -213,7 +213,7 @@ static void dw_pcie_irq_domain_free(struct irq_domain *domain,
+>   				    unsigned int virq, unsigned int nr_irqs)
+>   {
+>   	struct irq_data *d = irq_domain_get_irq_data(domain, virq);
+> -	struct pcie_port *pp = domain->host_data;
+> +	struct dw_pcie_rp *pp = domain->host_data;
+>   	unsigned long flags;
+>   
+>   	raw_spin_lock_irqsave(&pp->lock, flags);
+> @@ -229,7 +229,7 @@ static const struct irq_domain_ops dw_pcie_msi_domain_ops = {
+>   	.free	= dw_pcie_irq_domain_free,
+>   };
+>   
+> -int dw_pcie_allocate_domains(struct pcie_port *pp)
+> +int dw_pcie_allocate_domains(struct dw_pcie_rp *pp)
+>   {
+>   	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+>   	struct fwnode_handle *fwnode = of_node_to_fwnode(pci->dev->of_node);
+> @@ -255,7 +255,7 @@ int dw_pcie_allocate_domains(struct pcie_port *pp)
+>   	return 0;
+>   }
+>   
+> -static void dw_pcie_free_msi(struct pcie_port *pp)
+> +static void dw_pcie_free_msi(struct dw_pcie_rp *pp)
+>   {
+>   	if (pp->msi_irq)
+>   		irq_set_chained_handler_and_data(pp->msi_irq, NULL, NULL);
+> @@ -272,7 +272,7 @@ static void dw_pcie_free_msi(struct pcie_port *pp)
+>   	}
+>   }
+>   
+> -static void dw_pcie_msi_init(struct pcie_port *pp)
+> +static void dw_pcie_msi_init(struct dw_pcie_rp *pp)
+>   {
+>   	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+>   	u64 msi_target = (u64)pp->msi_data;
+> @@ -285,7 +285,7 @@ static void dw_pcie_msi_init(struct pcie_port *pp)
+>   	dw_pcie_writel_dbi(pci, PCIE_MSI_ADDR_HI, upper_32_bits(msi_target));
+>   }
+>   
+> -int dw_pcie_host_init(struct pcie_port *pp)
+> +int dw_pcie_host_init(struct dw_pcie_rp *pp)
+>   {
+>   	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+>   	struct device *dev = pci->dev;
+> @@ -436,7 +436,7 @@ int dw_pcie_host_init(struct pcie_port *pp)
+>   }
+>   EXPORT_SYMBOL_GPL(dw_pcie_host_init);
+>   
+> -void dw_pcie_host_deinit(struct pcie_port *pp)
+> +void dw_pcie_host_deinit(struct dw_pcie_rp *pp)
+>   {
+>   	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+>   
+> @@ -455,7 +455,7 @@ static void __iomem *dw_pcie_other_conf_map_bus(struct pci_bus *bus,
+>   {
+>   	int type;
+>   	u32 busdev;
+> -	struct pcie_port *pp = bus->sysdata;
+> +	struct dw_pcie_rp *pp = bus->sysdata;
+>   	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+>   
+>   	/*
+> @@ -487,7 +487,7 @@ static int dw_pcie_rd_other_conf(struct pci_bus *bus, unsigned int devfn,
+>   				 int where, int size, u32 *val)
+>   {
+>   	int ret;
+> -	struct pcie_port *pp = bus->sysdata;
+> +	struct dw_pcie_rp *pp = bus->sysdata;
+>   	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+>   
+>   	ret = pci_generic_config_read(bus, devfn, where, size, val);
+> @@ -503,7 +503,7 @@ static int dw_pcie_wr_other_conf(struct pci_bus *bus, unsigned int devfn,
+>   				 int where, int size, u32 val)
+>   {
+>   	int ret;
+> -	struct pcie_port *pp = bus->sysdata;
+> +	struct dw_pcie_rp *pp = bus->sysdata;
+>   	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+>   
+>   	ret = pci_generic_config_write(bus, devfn, where, size, val);
+> @@ -523,7 +523,7 @@ static struct pci_ops dw_child_pcie_ops = {
+>   
+>   void __iomem *dw_pcie_own_conf_map_bus(struct pci_bus *bus, unsigned int devfn, int where)
+>   {
+> -	struct pcie_port *pp = bus->sysdata;
+> +	struct dw_pcie_rp *pp = bus->sysdata;
+>   	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+>   
+>   	if (PCI_SLOT(devfn) > 0)
+> @@ -539,7 +539,7 @@ static struct pci_ops dw_pcie_ops = {
+>   	.write = pci_generic_config_write,
+>   };
+>   
+> -void dw_pcie_setup_rc(struct pcie_port *pp)
+> +void dw_pcie_setup_rc(struct dw_pcie_rp *pp)
+>   {
+>   	u32 val, ctrl, num_ctrls;
+>   	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+> diff --git a/drivers/pci/controller/dwc/pcie-designware-plat.c b/drivers/pci/controller/dwc/pcie-designware-plat.c
+> index abf1afac6064..97de6ad7f9db 100644
+> --- a/drivers/pci/controller/dwc/pcie-designware-plat.c
+> +++ b/drivers/pci/controller/dwc/pcie-designware-plat.c
+> @@ -87,7 +87,7 @@ static int dw_plat_add_pcie_port(struct dw_plat_pcie *dw_plat_pcie,
+>   				 struct platform_device *pdev)
+>   {
+>   	struct dw_pcie *pci = dw_plat_pcie->pci;
+> -	struct pcie_port *pp = &pci->pp;
+> +	struct dw_pcie_rp *pp = &pci->pp;
+>   	struct device *dev = &pdev->dev;
+>   	int ret;
+>   
+> diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
+> index 13bffa3eaed6..32df3ebccf19 100644
+> --- a/drivers/pci/controller/dwc/pcie-designware.h
+> +++ b/drivers/pci/controller/dwc/pcie-designware.h
+> @@ -155,8 +155,8 @@
+>   #define MAX_IATU_IN			256
+>   #define MAX_IATU_OUT			256
+>   
+> -struct pcie_port;
+>   struct dw_pcie;
+> +struct dw_pcie_rp;
+>   struct dw_pcie_ep;
+>   
+>   enum dw_pcie_region_type {
+> @@ -173,11 +173,11 @@ enum dw_pcie_device_mode {
+>   };
+>   
+>   struct dw_pcie_host_ops {
+> -	int (*host_init)(struct pcie_port *pp);
+> -	int (*msi_host_init)(struct pcie_port *pp);
+> +	int (*host_init)(struct dw_pcie_rp *pp);
+> +	int (*msi_host_init)(struct dw_pcie_rp *pp);
+>   };
+>   
+> -struct pcie_port {
+> +struct dw_pcie_rp {
+>   	bool			has_msi_ctrl:1;
+>   	bool			cfg0_io_shared:1;
+>   	u64			cfg0_base;
+> @@ -267,7 +267,7 @@ struct dw_pcie {
+>   	size_t			atu_size;
+>   	u32			num_ib_windows;
+>   	u32			num_ob_windows;
+> -	struct pcie_port	pp;
+> +	struct dw_pcie_rp	pp;
+>   	struct dw_pcie_ep	ep;
+>   	const struct dw_pcie_ops *ops;
+>   	unsigned int		version;
+> @@ -380,33 +380,33 @@ static inline void dw_pcie_stop_link(struct dw_pcie *pci)
+>   }
+>   
+>   #ifdef CONFIG_PCIE_DW_HOST
+> -irqreturn_t dw_handle_msi_irq(struct pcie_port *pp);
+> -void dw_pcie_setup_rc(struct pcie_port *pp);
+> -int dw_pcie_host_init(struct pcie_port *pp);
+> -void dw_pcie_host_deinit(struct pcie_port *pp);
+> -int dw_pcie_allocate_domains(struct pcie_port *pp);
+> +irqreturn_t dw_handle_msi_irq(struct dw_pcie_rp *pp);
+> +void dw_pcie_setup_rc(struct dw_pcie_rp *pp);
+> +int dw_pcie_host_init(struct dw_pcie_rp *pp);
+> +void dw_pcie_host_deinit(struct dw_pcie_rp *pp);
+> +int dw_pcie_allocate_domains(struct dw_pcie_rp *pp);
+>   void __iomem *dw_pcie_own_conf_map_bus(struct pci_bus *bus, unsigned int devfn,
+>   				       int where);
+>   #else
+> -static inline irqreturn_t dw_handle_msi_irq(struct pcie_port *pp)
+> +static inline irqreturn_t dw_handle_msi_irq(struct dw_pcie_rp *pp)
+>   {
+>   	return IRQ_NONE;
+>   }
+>   
+> -static inline void dw_pcie_setup_rc(struct pcie_port *pp)
+> +static inline void dw_pcie_setup_rc(struct dw_pcie_rp *pp)
+>   {
+>   }
+>   
+> -static inline int dw_pcie_host_init(struct pcie_port *pp)
+> +static inline int dw_pcie_host_init(struct dw_pcie_rp *pp)
+>   {
+>   	return 0;
+>   }
+>   
+> -static inline void dw_pcie_host_deinit(struct pcie_port *pp)
+> +static inline void dw_pcie_host_deinit(struct dw_pcie_rp *pp)
+>   {
+>   }
+>   
+> -static inline int dw_pcie_allocate_domains(struct pcie_port *pp)
+> +static inline int dw_pcie_allocate_domains(struct dw_pcie_rp *pp)
+>   {
+>   	return 0;
+>   }
+> diff --git a/drivers/pci/controller/dwc/pcie-dw-rockchip.c b/drivers/pci/controller/dwc/pcie-dw-rockchip.c
+> index 8c5bb9d7cc36..c1e7653e508e 100644
+> --- a/drivers/pci/controller/dwc/pcie-dw-rockchip.c
+> +++ b/drivers/pci/controller/dwc/pcie-dw-rockchip.c
+> @@ -186,7 +186,7 @@ static int rockchip_pcie_start_link(struct dw_pcie *pci)
+>   	return 0;
+>   }
+>   
+> -static int rockchip_pcie_host_init(struct pcie_port *pp)
+> +static int rockchip_pcie_host_init(struct dw_pcie_rp *pp)
+>   {
+>   	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+>   	struct rockchip_pcie *rockchip = to_rockchip_pcie(pci);
+> @@ -288,7 +288,7 @@ static int rockchip_pcie_probe(struct platform_device *pdev)
+>   {
+>   	struct device *dev = &pdev->dev;
+>   	struct rockchip_pcie *rockchip;
+> -	struct pcie_port *pp;
+> +	struct dw_pcie_rp *pp;
+>   	int ret;
+>   
+>   	rockchip = devm_kzalloc(dev, sizeof(*rockchip), GFP_KERNEL);
+> diff --git a/drivers/pci/controller/dwc/pcie-fu740.c b/drivers/pci/controller/dwc/pcie-fu740.c
+> index 02cc70d8cc06..da059f1c9e92 100644
+> --- a/drivers/pci/controller/dwc/pcie-fu740.c
+> +++ b/drivers/pci/controller/dwc/pcie-fu740.c
+> @@ -236,7 +236,7 @@ static int fu740_pcie_start_link(struct dw_pcie *pci)
+>   	return ret;
+>   }
+>   
+> -static int fu740_pcie_host_init(struct pcie_port *pp)
+> +static int fu740_pcie_host_init(struct dw_pcie_rp *pp)
+>   {
+>   	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+>   	struct fu740_pcie *afp = to_fu740_pcie(pci);
+> diff --git a/drivers/pci/controller/dwc/pcie-histb.c b/drivers/pci/controller/dwc/pcie-histb.c
+> index 410555dccb6d..e2b80f10030d 100644
+> --- a/drivers/pci/controller/dwc/pcie-histb.c
+> +++ b/drivers/pci/controller/dwc/pcie-histb.c
+> @@ -74,7 +74,7 @@ static void histb_pcie_writel(struct histb_pcie *histb_pcie, u32 reg, u32 val)
+>   	writel(val, histb_pcie->ctrl + reg);
+>   }
+>   
+> -static void histb_pcie_dbi_w_mode(struct pcie_port *pp, bool enable)
+> +static void histb_pcie_dbi_w_mode(struct dw_pcie_rp *pp, bool enable)
+>   {
+>   	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+>   	struct histb_pcie *hipcie = to_histb_pcie(pci);
+> @@ -88,7 +88,7 @@ static void histb_pcie_dbi_w_mode(struct pcie_port *pp, bool enable)
+>   	histb_pcie_writel(hipcie, PCIE_SYS_CTRL0, val);
+>   }
+>   
+> -static void histb_pcie_dbi_r_mode(struct pcie_port *pp, bool enable)
+> +static void histb_pcie_dbi_r_mode(struct dw_pcie_rp *pp, bool enable)
+>   {
+>   	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+>   	struct histb_pcie *hipcie = to_histb_pcie(pci);
+> @@ -180,7 +180,7 @@ static int histb_pcie_start_link(struct dw_pcie *pci)
+>   	return 0;
+>   }
+>   
+> -static int histb_pcie_host_init(struct pcie_port *pp)
+> +static int histb_pcie_host_init(struct dw_pcie_rp *pp)
+>   {
+>   	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+>   	struct histb_pcie *hipcie = to_histb_pcie(pci);
+> @@ -219,7 +219,7 @@ static void histb_pcie_host_disable(struct histb_pcie *hipcie)
+>   		regulator_disable(hipcie->vpcie);
+>   }
+>   
+> -static int histb_pcie_host_enable(struct pcie_port *pp)
+> +static int histb_pcie_host_enable(struct dw_pcie_rp *pp)
+>   {
+>   	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+>   	struct histb_pcie *hipcie = to_histb_pcie(pci);
+> @@ -297,7 +297,7 @@ static int histb_pcie_probe(struct platform_device *pdev)
+>   {
+>   	struct histb_pcie *hipcie;
+>   	struct dw_pcie *pci;
+> -	struct pcie_port *pp;
+> +	struct dw_pcie_rp *pp;
+>   	struct device_node *np = pdev->dev.of_node;
+>   	struct device *dev = &pdev->dev;
+>   	enum of_gpio_flags of_flags;
+> diff --git a/drivers/pci/controller/dwc/pcie-intel-gw.c b/drivers/pci/controller/dwc/pcie-intel-gw.c
+> index 5ba144924ff8..07bc54886d71 100644
+> --- a/drivers/pci/controller/dwc/pcie-intel-gw.c
+> +++ b/drivers/pci/controller/dwc/pcie-intel-gw.c
+> @@ -343,7 +343,7 @@ static void __intel_pcie_remove(struct intel_pcie *pcie)
+>   static int intel_pcie_remove(struct platform_device *pdev)
+>   {
+>   	struct intel_pcie *pcie = platform_get_drvdata(pdev);
+> -	struct pcie_port *pp = &pcie->pci.pp;
+> +	struct dw_pcie_rp *pp = &pcie->pci.pp;
+>   
+>   	dw_pcie_host_deinit(pp);
+>   	__intel_pcie_remove(pcie);
+> @@ -373,7 +373,7 @@ static int __maybe_unused intel_pcie_resume_noirq(struct device *dev)
+>   	return intel_pcie_host_setup(pcie);
+>   }
+>   
+> -static int intel_pcie_rc_init(struct pcie_port *pp)
+> +static int intel_pcie_rc_init(struct dw_pcie_rp *pp)
+>   {
+>   	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+>   	struct intel_pcie *pcie = dev_get_drvdata(pci->dev);
+> @@ -403,7 +403,7 @@ static int intel_pcie_probe(struct platform_device *pdev)
+>   	const struct intel_pcie_soc *data;
+>   	struct device *dev = &pdev->dev;
+>   	struct intel_pcie *pcie;
+> -	struct pcie_port *pp;
+> +	struct dw_pcie_rp *pp;
+>   	struct dw_pcie *pci;
+>   	int ret;
+>   
+> diff --git a/drivers/pci/controller/dwc/pcie-keembay.c b/drivers/pci/controller/dwc/pcie-keembay.c
+> index 1ac29a6eef22..58f3caf75cff 100644
+> --- a/drivers/pci/controller/dwc/pcie-keembay.c
+> +++ b/drivers/pci/controller/dwc/pcie-keembay.c
+> @@ -231,7 +231,7 @@ static void keembay_pcie_msi_irq_handler(struct irq_desc *desc)
+>   	struct keembay_pcie *pcie = irq_desc_get_handler_data(desc);
+>   	struct irq_chip *chip = irq_desc_get_chip(desc);
+>   	u32 val, mask, status;
+> -	struct pcie_port *pp;
+> +	struct dw_pcie_rp *pp;
+>   
+>   	/*
+>   	 * Keem Bay PCIe Controller provides an additional IP logic on top of
+> @@ -332,7 +332,7 @@ static int keembay_pcie_add_pcie_port(struct keembay_pcie *pcie,
+>   				      struct platform_device *pdev)
+>   {
+>   	struct dw_pcie *pci = &pcie->pci;
+> -	struct pcie_port *pp = &pci->pp;
+> +	struct dw_pcie_rp *pp = &pci->pp;
+>   	struct device *dev = &pdev->dev;
+>   	u32 val;
+>   	int ret;
+> diff --git a/drivers/pci/controller/dwc/pcie-kirin.c b/drivers/pci/controller/dwc/pcie-kirin.c
+> index a52cad269f85..7f67aad71df4 100644
+> --- a/drivers/pci/controller/dwc/pcie-kirin.c
+> +++ b/drivers/pci/controller/dwc/pcie-kirin.c
+> @@ -620,7 +620,7 @@ static int kirin_pcie_start_link(struct dw_pcie *pci)
+>   	return 0;
+>   }
+>   
+> -static int kirin_pcie_host_init(struct pcie_port *pp)
+> +static int kirin_pcie_host_init(struct dw_pcie_rp *pp)
+>   {
+>   	pp->bridge->ops = &kirin_pci_ops;
+>   
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index 2ea13750b492..a9b2322624d5 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -1381,7 +1381,7 @@ static int qcom_pcie_config_sid_sm8250(struct qcom_pcie *pcie)
+>   	return 0;
+>   }
+>   
+> -static int qcom_pcie_host_init(struct pcie_port *pp)
+> +static int qcom_pcie_host_init(struct dw_pcie_rp *pp)
+>   {
+>   	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+>   	struct qcom_pcie *pcie = to_qcom_pcie(pci);
+> @@ -1564,7 +1564,7 @@ static const struct dw_pcie_ops dw_pcie_ops = {
+>   static int qcom_pcie_probe(struct platform_device *pdev)
+>   {
+>   	struct device *dev = &pdev->dev;
+> -	struct pcie_port *pp;
+> +	struct dw_pcie_rp *pp;
+>   	struct dw_pcie *pci;
+>   	struct qcom_pcie *pcie;
+>   	const struct qcom_pcie_cfg *pcie_cfg;
+> diff --git a/drivers/pci/controller/dwc/pcie-spear13xx.c b/drivers/pci/controller/dwc/pcie-spear13xx.c
+> index 1569e82b5568..7fd698da144e 100644
+> --- a/drivers/pci/controller/dwc/pcie-spear13xx.c
+> +++ b/drivers/pci/controller/dwc/pcie-spear13xx.c
+> @@ -85,7 +85,7 @@ static irqreturn_t spear13xx_pcie_irq_handler(int irq, void *arg)
+>   	struct spear13xx_pcie *spear13xx_pcie = arg;
+>   	struct pcie_app_reg __iomem *app_reg = spear13xx_pcie->app_base;
+>   	struct dw_pcie *pci = spear13xx_pcie->pci;
+> -	struct pcie_port *pp = &pci->pp;
+> +	struct dw_pcie_rp *pp = &pci->pp;
+>   	unsigned int status;
+>   
+>   	status = readl(&app_reg->int_sts);
+> @@ -121,7 +121,7 @@ static int spear13xx_pcie_link_up(struct dw_pcie *pci)
+>   	return 0;
+>   }
+>   
+> -static int spear13xx_pcie_host_init(struct pcie_port *pp)
+> +static int spear13xx_pcie_host_init(struct dw_pcie_rp *pp)
+>   {
+>   	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+>   	struct spear13xx_pcie *spear13xx_pcie = to_spear13xx_pcie(pci);
+> @@ -155,7 +155,7 @@ static int spear13xx_add_pcie_port(struct spear13xx_pcie *spear13xx_pcie,
+>   				   struct platform_device *pdev)
+>   {
+>   	struct dw_pcie *pci = spear13xx_pcie->pci;
+> -	struct pcie_port *pp = &pci->pp;
+> +	struct dw_pcie_rp *pp = &pci->pp;
+>   	struct device *dev = &pdev->dev;
+>   	int ret;
+>   
+> diff --git a/drivers/pci/controller/dwc/pcie-tegra194.c b/drivers/pci/controller/dwc/pcie-tegra194.c
+> index cc2678490162..65135f5c4a4a 100644
+> --- a/drivers/pci/controller/dwc/pcie-tegra194.c
+> +++ b/drivers/pci/controller/dwc/pcie-tegra194.c
+> @@ -311,7 +311,7 @@ struct tegra_pcie_soc {
+>   	enum dw_pcie_device_mode mode;
+>   };
+>   
+> -static void apply_bad_link_workaround(struct pcie_port *pp)
+> +static void apply_bad_link_workaround(struct dw_pcie_rp *pp)
+>   {
+>   	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+>   	struct tegra194_pcie *pcie = to_tegra_pcie(pci);
+> @@ -349,7 +349,7 @@ static irqreturn_t tegra_pcie_rp_irq_handler(int irq, void *arg)
+>   {
+>   	struct tegra194_pcie *pcie = arg;
+>   	struct dw_pcie *pci = &pcie->pci;
+> -	struct pcie_port *pp = &pci->pp;
+> +	struct dw_pcie_rp *pp = &pci->pp;
+>   	u32 val, tmp;
+>   	u16 val_w;
+>   
+> @@ -698,7 +698,7 @@ static inline void init_host_aspm(struct tegra194_pcie *pcie) { return; }
+>   static inline void init_debugfs(struct tegra194_pcie *pcie) { return; }
+>   #endif
+>   
+> -static void tegra_pcie_enable_system_interrupts(struct pcie_port *pp)
+> +static void tegra_pcie_enable_system_interrupts(struct dw_pcie_rp *pp)
+>   {
+>   	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+>   	struct tegra194_pcie *pcie = to_tegra_pcie(pci);
+> @@ -736,7 +736,7 @@ static void tegra_pcie_enable_system_interrupts(struct pcie_port *pp)
+>   			   val_w);
+>   }
+>   
+> -static void tegra_pcie_enable_legacy_interrupts(struct pcie_port *pp)
+> +static void tegra_pcie_enable_legacy_interrupts(struct dw_pcie_rp *pp)
+>   {
+>   	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+>   	struct tegra194_pcie *pcie = to_tegra_pcie(pci);
+> @@ -757,7 +757,7 @@ static void tegra_pcie_enable_legacy_interrupts(struct pcie_port *pp)
+>   	appl_writel(pcie, val, APPL_INTR_EN_L1_8_0);
+>   }
+>   
+> -static void tegra_pcie_enable_msi_interrupts(struct pcie_port *pp)
+> +static void tegra_pcie_enable_msi_interrupts(struct dw_pcie_rp *pp)
+>   {
+>   	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+>   	struct tegra194_pcie *pcie = to_tegra_pcie(pci);
+> @@ -770,7 +770,7 @@ static void tegra_pcie_enable_msi_interrupts(struct pcie_port *pp)
+>   	appl_writel(pcie, val, APPL_INTR_EN_L0_0);
+>   }
+>   
+> -static void tegra_pcie_enable_interrupts(struct pcie_port *pp)
+> +static void tegra_pcie_enable_interrupts(struct dw_pcie_rp *pp)
+>   {
+>   	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+>   	struct tegra194_pcie *pcie = to_tegra_pcie(pci);
+> @@ -851,7 +851,7 @@ static void config_gen3_gen4_eq_presets(struct tegra194_pcie *pcie)
+>   	dw_pcie_writel_dbi(pci, GEN3_RELATED_OFF, val);
+>   }
+>   
+> -static int tegra194_pcie_host_init(struct pcie_port *pp)
+> +static int tegra194_pcie_host_init(struct dw_pcie_rp *pp)
+>   {
+>   	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+>   	struct tegra194_pcie *pcie = to_tegra_pcie(pci);
+> @@ -916,7 +916,7 @@ static int tegra194_pcie_start_link(struct dw_pcie *pci)
+>   {
+>   	u32 val, offset, speed, tmp;
+>   	struct tegra194_pcie *pcie = to_tegra_pcie(pci);
+> -	struct pcie_port *pp = &pci->pp;
+> +	struct dw_pcie_rp *pp = &pci->pp;
+>   	bool retry = true;
+>   
+>   	if (pcie->mode == DW_PCIE_EP_TYPE) {
+> @@ -1212,7 +1212,7 @@ static int tegra_pcie_bpmp_set_pll_state(struct tegra194_pcie *pcie,
+>   
+>   static void tegra_pcie_downstream_dev_to_D0(struct tegra194_pcie *pcie)
+>   {
+> -	struct pcie_port *pp = &pcie->pci.pp;
+> +	struct dw_pcie_rp *pp = &pcie->pci.pp;
+>   	struct pci_bus *child, *root_bus = NULL;
+>   	struct pci_dev *pdev;
+>   
+> @@ -1443,7 +1443,7 @@ static void tegra_pcie_unconfig_controller(struct tegra194_pcie *pcie)
+>   static int tegra_pcie_init_controller(struct tegra194_pcie *pcie)
+>   {
+>   	struct dw_pcie *pci = &pcie->pci;
+> -	struct pcie_port *pp = &pci->pp;
+> +	struct dw_pcie_rp *pp = &pci->pp;
+>   	int ret;
+>   
+>   	ret = tegra_pcie_config_controller(pcie, false);
+> @@ -1961,7 +1961,7 @@ static int tegra194_pcie_probe(struct platform_device *pdev)
+>   	struct device *dev = &pdev->dev;
+>   	struct resource *atu_dma_res;
+>   	struct tegra194_pcie *pcie;
+> -	struct pcie_port *pp;
+> +	struct dw_pcie_rp *pp;
+>   	struct dw_pcie *pci;
+>   	struct phy **phys;
+>   	char *name;
+> diff --git a/drivers/pci/controller/dwc/pcie-uniphier.c b/drivers/pci/controller/dwc/pcie-uniphier.c
+> index b45ac3754242..48c3eba817b4 100644
+> --- a/drivers/pci/controller/dwc/pcie-uniphier.c
+> +++ b/drivers/pci/controller/dwc/pcie-uniphier.c
+> @@ -171,7 +171,7 @@ static void uniphier_pcie_irq_enable(struct uniphier_pcie *pcie)
+>   
+>   static void uniphier_pcie_irq_mask(struct irq_data *d)
+>   {
+> -	struct pcie_port *pp = irq_data_get_irq_chip_data(d);
+> +	struct dw_pcie_rp *pp = irq_data_get_irq_chip_data(d);
+>   	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+>   	struct uniphier_pcie *pcie = to_uniphier_pcie(pci);
+>   	unsigned long flags;
+> @@ -188,7 +188,7 @@ static void uniphier_pcie_irq_mask(struct irq_data *d)
+>   
+>   static void uniphier_pcie_irq_unmask(struct irq_data *d)
+>   {
+> -	struct pcie_port *pp = irq_data_get_irq_chip_data(d);
+> +	struct dw_pcie_rp *pp = irq_data_get_irq_chip_data(d);
+>   	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+>   	struct uniphier_pcie *pcie = to_uniphier_pcie(pci);
+>   	unsigned long flags;
+> @@ -225,7 +225,7 @@ static const struct irq_domain_ops uniphier_intx_domain_ops = {
+>   
+>   static void uniphier_pcie_irq_handler(struct irq_desc *desc)
+>   {
+> -	struct pcie_port *pp = irq_desc_get_handler_data(desc);
+> +	struct dw_pcie_rp *pp = irq_desc_get_handler_data(desc);
+>   	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+>   	struct uniphier_pcie *pcie = to_uniphier_pcie(pci);
+>   	struct irq_chip *chip = irq_desc_get_chip(desc);
+> @@ -258,7 +258,7 @@ static void uniphier_pcie_irq_handler(struct irq_desc *desc)
+>   	chained_irq_exit(chip, desc);
+>   }
+>   
+> -static int uniphier_pcie_config_legacy_irq(struct pcie_port *pp)
+> +static int uniphier_pcie_config_legacy_irq(struct dw_pcie_rp *pp)
+>   {
+>   	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+>   	struct uniphier_pcie *pcie = to_uniphier_pcie(pci);
+> @@ -295,7 +295,7 @@ static int uniphier_pcie_config_legacy_irq(struct pcie_port *pp)
+>   	return ret;
+>   }
+>   
+> -static int uniphier_pcie_host_init(struct pcie_port *pp)
+> +static int uniphier_pcie_host_init(struct dw_pcie_rp *pp)
+>   {
+>   	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+>   	struct uniphier_pcie *pcie = to_uniphier_pcie(pci);
+> diff --git a/drivers/pci/controller/dwc/pcie-visconti.c b/drivers/pci/controller/dwc/pcie-visconti.c
+> index 50f80f07e4db..71026fefa366 100644
+> --- a/drivers/pci/controller/dwc/pcie-visconti.c
+> +++ b/drivers/pci/controller/dwc/pcie-visconti.c
+> @@ -178,7 +178,7 @@ static void visconti_pcie_stop_link(struct dw_pcie *pci)
+>    */
+>   static u64 visconti_pcie_cpu_addr_fixup(struct dw_pcie *pci, u64 cpu_addr)
+>   {
+> -	struct pcie_port *pp = &pci->pp;
+> +	struct dw_pcie_rp *pp = &pci->pp;
+>   
+>   	return cpu_addr & ~pp->io_base;
+>   }
+> @@ -190,7 +190,7 @@ static const struct dw_pcie_ops dw_pcie_ops = {
+>   	.stop_link = visconti_pcie_stop_link,
+>   };
+>   
+> -static int visconti_pcie_host_init(struct pcie_port *pp)
+> +static int visconti_pcie_host_init(struct dw_pcie_rp *pp)
+>   {
+>   	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+>   	struct visconti_pcie *pcie = dev_get_drvdata(pci->dev);
+> @@ -278,7 +278,7 @@ static int visconti_add_pcie_port(struct visconti_pcie *pcie,
+>   				  struct platform_device *pdev)
+>   {
+>   	struct dw_pcie *pci = &pcie->pci;
+> -	struct pcie_port *pp = &pci->pp;
+> +	struct dw_pcie_rp *pp = &pci->pp;
+>   
+>   	pp->irq = platform_get_irq_byname(pdev, "intr");
+>   	if (pp->irq < 0)
+
+
+For pci-meson.c:
+Reviewed-by: Neil Armstrong <narmstrong@baylibre.com>
