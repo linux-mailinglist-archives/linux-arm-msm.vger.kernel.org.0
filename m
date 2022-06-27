@@ -2,93 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5EE6655C2DF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jun 2022 14:47:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 54C0455C472
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jun 2022 14:49:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238791AbiF0V3e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Jun 2022 17:29:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37858 "EHLO
+        id S241798AbiF0V4s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Jun 2022 17:56:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60374 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239155AbiF0V3d (ORCPT
+        with ESMTP id S241576AbiF0Vzr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Jun 2022 17:29:33 -0400
-Received: from relay01.th.seeweb.it (relay01.th.seeweb.it [IPv6:2001:4b7a:2000:18::162])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E8A413E87;
-        Mon, 27 Jun 2022 14:29:32 -0700 (PDT)
-Received: from SoMainline.org (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 928F820641;
-        Mon, 27 Jun 2022 23:29:30 +0200 (CEST)
-Date:   Mon, 27 Jun 2022 23:29:29 +0200
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        Mon, 27 Jun 2022 17:55:47 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76F9713F6D;
+        Mon, 27 Jun 2022 14:55:07 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id w20so18893392lfa.11;
+        Mon, 27 Jun 2022 14:55:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=F2rE4WiiB56ceX/DgU00bSkUe75l3cXsNOMmf38a5Zs=;
+        b=FEQZCSvyunp3uzDnTXHU3J/w472GKsWStwPmmqVUW3M4BP99nff9fjklYCAHVRzl+l
+         7PdPnItOj7cM3MRIkTh9SYZeCgI860HuNoo0QIqzoGF7nPyBNo87fn1boR9Pp1JAzIJ/
+         q+JiDvehmhxeWN2Gd/gusxeyvN+rP1/yIu3lX0trXcrL4GgpR6enBsApW/oo3wMQY7q9
+         Fwb0vnJ60iHDy91jMTXIicoxCKhW+TwmfcozTcVnc5LaahfYFH6N1f5Qk0Uzdc1nm25J
+         uoTGc0lXxv1te35Psxvd38IaQ3ajm5XnaZKZJ43VPquSrUEPOgTbqT8XLbioBY3VSeSU
+         a1VQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=F2rE4WiiB56ceX/DgU00bSkUe75l3cXsNOMmf38a5Zs=;
+        b=SIOGZ70tBkDxm0NdY6Fc1enom4aplr7T1fM0v3tya7Tnb+PISpgb7mptGgUkQX6K5F
+         GJdu0Ib40hF4PsWRi5Brp5MHcFqq2iBqvV/idiAphmcANRSRUkXzf1TCkpdlV3lYTYOh
+         ezSVM0Kqf8YuRk7jhnJ80HRb+ZNb7yNID9X/jDMlo4aZ474Hc8OXT1LqPqMNKfs9Xk+C
+         Nw/pnqtZLzpRMZOZsuouNHycFab/FiokYyR0wOUTeQC3FXL2ZCKbh1nR0HA4xyGA4/h6
+         +kYlIENqRwjSL/yt9ASHpiTFVNepyO2+N/STJqdW18u6GNGb+FiS9XmleNu2roYyC6x3
+         Vm+A==
+X-Gm-Message-State: AJIora9vLBXs7lcYBGYB1vBWP+jq+n12UkNYLPYjkd4ASyYh5JupfIIs
+        aK2An+To5tqBRAcuj6TBIhQ=
+X-Google-Smtp-Source: AGRyM1uL2KKsGpEUiiGMb12gLYw6jj+9Trew1WchHkWhPJ/Yvh3dZrjyPSRGRIj4HHPU4BOHiEr71Q==
+X-Received: by 2002:a05:6512:2356:b0:47f:8756:737b with SMTP id p22-20020a056512235600b0047f8756737bmr9981225lfu.212.1656366905748;
+        Mon, 27 Jun 2022 14:55:05 -0700 (PDT)
+Received: from mobilestation ([95.79.140.178])
+        by smtp.gmail.com with ESMTPSA id g1-20020a0565123b8100b0047f9d9a4186sm1944482lfv.165.2022.06.27.14.55.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 27 Jun 2022 14:55:05 -0700 (PDT)
+Date:   Tue, 28 Jun 2022 00:55:02 +0300
+From:   Serge Semin <fancer.lancer@gmail.com>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Serge Semin <Sergey.Semin@baikalelectronics.ru>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Michael Turquette <mturquette@baylibre.com>,
+        Felipe Balbi <balbi@kernel.org>,
+        Michael Ellerman <mpe@ellerman.id.au>,
+        Vladimir Zapolskiy <vz@mleia.com>,
+        Alexey Brodkin <abrodkin@synopsys.com>,
+        Vineet Gupta <vgupta@synopsys.com>,
         Rob Herring <robh+dt@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        linux-usb@vger.kernel.org,
+        Patrice Chotard <patrice.chotard@foss.st.com>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@somainline.org>
-Subject: Re: [PATCH v3 7/7] arm64: dts: qcom: msm8916: add clocks to the GCC
- device node
-Message-ID: <20220627212929.vzg4a5psypx343q2@SoMainline.org>
-References: <20220619212735.1244953-1-dmitry.baryshkov@linaro.org>
- <20220619212735.1244953-8-dmitry.baryshkov@linaro.org>
+        Khuong Dinh <khuong@os.amperecomputing.com>,
+        Patrice Chotard <patrice.chotard@st.com>,
+        Benjamin Herrenschmidt <benh@kernel.crashing.org>,
+        Paul Mackerras <paulus@samba.org>,
+        linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linuxppc-dev@lists.ozlabs.org, linux-snps-arc@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH RESEND v9 4/5] arm: dts: stih407-family: Harmonize DWC
+ USB3 DT nodes name
+Message-ID: <20220627215502.4caxt2ebsdi4ue7l@mobilestation>
+References: <20220624141622.7149-1-Sergey.Semin@baikalelectronics.ru>
+ <20220624141622.7149-5-Sergey.Semin@baikalelectronics.ru>
+ <59d8a34a-a211-d00a-2243-6ad51cfa4204@linaro.org>
+ <20220624204524.nveittak6ruksuvq@mobilestation>
+ <8b384f4e-7114-7afb-98d6-af71709525d6@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220619212735.1244953-8-dmitry.baryshkov@linaro.org>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
-        version=3.4.6
+In-Reply-To: <8b384f4e-7114-7afb-98d6-af71709525d6@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2022-06-20 00:27:35, Dmitry Baryshkov wrote:
-> As we are converting this platform to use DT clock bindings, add clocks
-> and clock-names properties to the MMCC device tree node.
+On Sun, Jun 26, 2022 at 12:42:48PM +0200, Krzysztof Kozlowski wrote:
+> On 24/06/2022 22:45, Serge Semin wrote:
+> > On Fri, Jun 24, 2022 at 07:18:57PM +0200, Krzysztof Kozlowski wrote:
+> >> On 24/06/2022 16:16, Serge Semin wrote:
+> >>> In accordance with the DWC USB3 bindings the corresponding node
+> >>> name is suppose to comply with the Generic USB HCD DT schema, which
+> >>> requires the USB nodes to have the name acceptable by the regexp:
+> >>> "^usb(@.*)?" . Make sure the "snps,dwc3"-compatible nodes are correctly
+> >>> named.
+> >>>
+> >>> Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
+> >>> Acked-by: Krzysztof Kozlowski <krzk@kernel.org>
+> >>> Reviewed-by: Patrice Chotard <patrice.chotard@st.com>
+> >>> ---
+> >>>  arch/arm/boot/dts/stih407-family.dtsi | 2 +-
+> >>>  1 file changed, 1 insertion(+), 1 deletion(-)
+> >>>
+> >>> diff --git a/arch/arm/boot/dts/stih407-family.dtsi b/arch/arm/boot/dts/stih407-family.dtsi
+> >>> index 1713f7878117..7ba528315dbe 100644
+> >>> --- a/arch/arm/boot/dts/stih407-family.dtsi
+> >>> +++ b/arch/arm/boot/dts/stih407-family.dtsi
+> >>> @@ -725,7 +725,7 @@ st_dwc3: dwc3@8f94000 {
+> >>>  
+> >>>  			status = "disabled";
+> >>>  
+> >>> -			dwc3: dwc3@9900000 {
+> >>> +			dwc3: usb@9900000 {
+> >>
+> > 
+> >> This does not apply. What tree is it based on?
+> > 
+> > That's weird. The series has been rebased onto the mainline kernel v5.19-rc3.
+> > Do you have the stih407 dtsi fixed on your local repo?
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+> It conflicts with my change:
+> https://lore.kernel.org/all/20220526203632.831039-1-krzysztof.kozlowski@linaro.org/
+> 
+> I'll apply with local fixups.
 
-> ---
->  arch/arm64/boot/dts/qcom/msm8916.dtsi | 14 ++++++++++++++
->  1 file changed, 14 insertions(+)
+Ok. Thanks.
+
+-Sergey
+
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-> index 05472510e29d..562c42ce2c5c 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-> @@ -934,6 +934,20 @@ gcc: clock-controller@1800000 {
->  			#reset-cells = <1>;
->  			#power-domain-cells = <1>;
->  			reg = <0x01800000 0x80000>;
-> +			clocks = <&xo_board>,
-> +				 <&sleep_clk>,
-> +				 <&dsi_phy0 1>,
-> +				 <&dsi_phy0 0>,
-> +				 <0>,
-> +				 <0>,
-> +				 <0>;
-> +			clock-names = "xo",
-> +				      "sleep_clk",
-> +				      "dsi0pll",
-> +				      "dsi0pllbyte",
-> +				      "ext_mclk",
-> +				      "ext_pri_i2s",
-> +				      "ext_sec_i2s";
->  		};
->  
->  		tcsr_mutex: hwlock@1905000 {
-> -- 
-> 2.35.1
 > 
+> Best regards,
+> Krzysztof
