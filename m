@@ -2,71 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3EC6755C9DB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jun 2022 14:57:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5164B55CB30
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jun 2022 14:59:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241040AbiF0UEG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Jun 2022 16:04:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45390 "EHLO
+        id S240967AbiF0UEH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Jun 2022 16:04:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45418 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240947AbiF0UDr (ORCPT
+        with ESMTP id S240949AbiF0UDs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Jun 2022 16:03:47 -0400
-Received: from mail-oo1-xc2c.google.com (mail-oo1-xc2c.google.com [IPv6:2607:f8b0:4864:20::c2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E48601CB06
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jun 2022 13:03:46 -0700 (PDT)
-Received: by mail-oo1-xc2c.google.com with SMTP id g8-20020a4ac4c8000000b00425a0f2b493so869606ooq.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jun 2022 13:03:46 -0700 (PDT)
+        Mon, 27 Jun 2022 16:03:48 -0400
+Received: from mail-oo1-xc33.google.com (mail-oo1-xc33.google.com [IPv6:2607:f8b0:4864:20::c33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D93B61CB09
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jun 2022 13:03:47 -0700 (PDT)
+Received: by mail-oo1-xc33.google.com with SMTP id n11-20020a4ad12b000000b00425b01c3326so267306oor.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jun 2022 13:03:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:subject:date:message-id:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=HmW7NHlc2F8dYXX3wKYrd6wCu9K6Bcpsop4DyzRdkHM=;
-        b=y/3xEwxBw8ybGgCtx4O5OFcrlVpfbSP9Zc498vJXiryyW0PE9qMreg72ZMKyrZsohI
-         cfRa1z7qs26T7x4ZUmpfxa6JSKJ1ynKaV3WJQQE/u59ijdbaKgum3BDNF7NS1GqJn541
-         I+HnLRfDQhnouwz40a8mTyUdMQ738zpB2qI8ZeU3TdWQ5z482fNO1JrRlSyl6wZ4r2RG
-         iWpsCN349kDrvya1IjsXh9xwhOQ0+M3K+5lgcJWQEOMaeETbJQKkXeEkCJhoLD4vrkzP
-         n9pvIRM0wbQlTBcziEuKVktF9HAwQTk9ACkgW/gPDLL0HLcWNwELvyRfGOUdQ9ZPDL+F
-         hfvg==
+        bh=LGnZblasPJMZg6/JNpQsvyqp9LN9SUuVtya5U0kSw+8=;
+        b=VSRPVrcICYS2BS1eCHZ9q+J4DnQwKLwIWzJUiS67PRmUMh56gomcQ3BDYx16eozC0b
+         +tboi2va7rNkKUjAFkS9B5u1/0DZbnzW28GcuucSHQHHr381+7goHOMWu1MqOc6ahQNi
+         8mHk/2UihkomeC/Ky+imcVYzjPDMBPcPtM8f4G6/I2N64reweuUqwoM++SPuLH+3muTU
+         uTWmugPVVVapNgKC5uDJXy9eWpTO3W01UUGfWbl3efuXzs/pkaBDvnmka3sfm4SSnXB1
+         m1FONVwSHMCUOsTSiz82qN5Lmt6H0w5+5Vm0eTxtyOQu+c3oMhkOJPCpHJlBxtAe/WyH
+         73pw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=HmW7NHlc2F8dYXX3wKYrd6wCu9K6Bcpsop4DyzRdkHM=;
-        b=eGXNmizcV4eJT1wrfiNSoJfcBy+clIbtwcHri4Bg+258fLFbk8Kd2ITmoEGktsQLcv
-         DrJmDFHjtGtnb6hKZuhnyc7i78Dyhcp9rdNu7GoFn3/a/OfnKRxlKi/YeVp02QsSU2EI
-         EdQUKwYnpSjx1qK9EsiwHBV3+t3mZU6EwQCx2G1GRVOy21Pfr5HWzTv9MKiLlkMiua98
-         JgrBSs/QSZ0PqJf16S7LDN71MgaODKJUNDU5QHwxsLhfGbapXgt7moDnI+Mxw6S8xArE
-         dmlflvm7ATTGZNrNs2zt4yaoVkkvje3CrxizPBVUDH1/L3Ix3sFN2mbWCTncgaOO1tw0
-         RQQg==
-X-Gm-Message-State: AJIora/8go9ZP1QJbfrMte3yf+jLjQd7I9pKDsNmAPmRqgUnVca2/XiA
-        gphWLWe5Iq+xn6mkVsytCmbmVQ==
-X-Google-Smtp-Source: AGRyM1v1LT4W3dC8w/TKrwuSEDNmyV/FvjO4VpiI4Y1XKqqVkN5+VZtz0FFB46abdtCjVbJeKT14/g==
-X-Received: by 2002:a4a:81c1:0:b0:425:b01b:f757 with SMTP id s1-20020a4a81c1000000b00425b01bf757mr1022959oog.1.1656360226076;
-        Mon, 27 Jun 2022 13:03:46 -0700 (PDT)
+        bh=LGnZblasPJMZg6/JNpQsvyqp9LN9SUuVtya5U0kSw+8=;
+        b=73jkUAfWo7cSmHCLA32pgFYpHTEqgTGU6go6YRs9FZTTyadkD9d69wPE44EHqyXOp2
+         D4eQ0tAsVIhupPeX2lrdjHwSAysSCthykkx6Tbv+irg8U1lmA7K+uelrnMQgOHkqfIdc
+         iXEP1xjCPamVkcTFUyqCHOdFqyB5ZTzcmo9b5ct1tKTbKAtzUJ1b9nOSnmKyzm7CskPj
+         BHUQ02Yrar/nXxvW6F6cNT1vz2jAhIM9grK8W9+K9ewpIRFdqO44FwKy8ll79O0Bj6yb
+         wbvhzFH4d9yapcKUA6HNTb7WBfqxmpi4kLLkddCZxwkfqdnDiAXSnFBjN3rKlluyiAJK
+         OwaA==
+X-Gm-Message-State: AJIora+PWcXU9SlqU9k9UHD4voh8L4JGXXaw3bK7s0dbqWjD9BEico1Z
+        BMxBiVwQmRCufImVA8ayiEOuDg==
+X-Google-Smtp-Source: AGRyM1sWcO/2gxyrz2AsRRM4slEsfIlAkVqHFEXchQYvprMxvwwexefgHGNtrnV0gfoQH3K7hFBuIw==
+X-Received: by 2002:a4a:2a0e:0:b0:425:8739:7a7b with SMTP id k14-20020a4a2a0e000000b0042587397a7bmr6548301oof.81.1656360227454;
+        Mon, 27 Jun 2022 13:03:47 -0700 (PDT)
 Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id m16-20020a4a9510000000b0041bdf977c6dsm6428729ooi.31.2022.06.27.13.03.44
+        by smtp.gmail.com with ESMTPSA id m16-20020a4a9510000000b0041bdf977c6dsm6428729ooi.31.2022.06.27.13.03.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Jun 2022 13:03:45 -0700 (PDT)
+        Mon, 27 Jun 2022 13:03:46 -0700 (PDT)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     quic_rohkumar@quicinc.com, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, srinivas.kandagatla@linaro.org,
-        robh+dt@kernel.org, swboyd@chromium.org,
+        linux-arm-msm@vger.kernel.org, robh+dt@kernel.org,
+        srinivas.kandagatla@linaro.org, swboyd@chromium.org,
         devicetree@vger.kernel.org,
         Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
         judyhsiao@chromium.org, agross@kernel.org, dianders@chromium.org
-Subject: Re: [PATCH v14 0/4] Add lpass pin control support for audio on sc7280 based targets
-Date:   Mon, 27 Jun 2022 15:03:01 -0500
-Message-Id: <165636016349.3080661.6166496276966890494.b4-ty@linaro.org>
+Subject: Re: [PATCH v15 0/4] Add lpass pin control support for audio on sc7280 based targets
+Date:   Mon, 27 Jun 2022 15:03:02 -0500
+Message-Id: <165636016347.3080661.12244851783136095286.b4-ty@linaro.org>
 X-Mailer: git-send-email 2.32.0
-In-Reply-To: <1651763004-32533-1-git-send-email-quic_srivasam@quicinc.com>
-References: <1651763004-32533-1-git-send-email-quic_srivasam@quicinc.com>
+In-Reply-To: <1655108645-1517-1-git-send-email-quic_srivasam@quicinc.com>
+References: <1655108645-1517-1-git-send-email-quic_srivasam@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -74,10 +74,13 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 5 May 2022 20:33:20 +0530, Srinivasa Rao Mandadapu wrote:
+On Mon, 13 Jun 2022 13:54:01 +0530, Srinivasa Rao Mandadapu wrote:
 > This patch set is to add lpass pin control support for Audio over I2S,
 > wcd codec and digital mics.
 > 
+> Changes Since V14:
+>     -- Move secondary MI2S pinmux specifications to new file.
+>     -- Add qcom,adsp-bypass-mode boolean property in lpass_tlmm Node.
 > Changes Since V13:
 >     -- Remove redundant properties in lpass lpi pin control nodes.
 >     -- Sort lpass lpi pin control nodes.
