@@ -2,99 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7BC7F55CAFC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jun 2022 14:59:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 635F255D193
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jun 2022 15:09:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240300AbiF0Tfn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Jun 2022 15:35:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51834 "EHLO
+        id S240593AbiF0Tot (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Jun 2022 15:44:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57244 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236184AbiF0Tfm (ORCPT
+        with ESMTP id S231872AbiF0Tot (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Jun 2022 15:35:42 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5766A62EC;
-        Mon, 27 Jun 2022 12:35:41 -0700 (PDT)
+        Mon, 27 Jun 2022 15:44:49 -0400
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1DB419026;
+        Mon, 27 Jun 2022 12:44:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1656358541; x=1687894541;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=PZ6plud3Rf5fEMbZRuJvL10vqzgxzYsgamogPc/ulSs=;
-  b=zi+neXZS5Tfo8fYmWYaZOlttgNGauVp6rk2ICfxqGMGlQse7BKBO7maI
-   eN5wZGHT8LvaOr6ITx1HFWxxGYmFMckpxD0oewFFbcRNNQfEBHQ2M5Lua
-   GqUZfBFVk/15lH2LNTw1JuzUqSUBPQVIqubt+ixvOSNDPq/3LahM1Xvqf
-   0=;
-Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 27 Jun 2022 12:35:41 -0700
+  t=1656359087; x=1687895087;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=EKcrWv1hq/h1NGE3SQ79xrzHsQ93vU4b2aszg+ojf1c=;
+  b=fGEhRVGUIjMIudqUUa0aLDMqwLKzx5iighcz29t594Oag70d/NBx5/pi
+   R67oe+fl4JYHrXOv3mZx7OnKm/I4gqmX7OGKy0mNMdhGap2+f9w5Bd34c
+   H/xCJNrnNQRnT1MC3MxVnfVpCTxxl9QUYvzjLhpw84FYhQN5LPouZANjH
+   Y=;
+Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 27 Jun 2022 12:44:47 -0700
 X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jun 2022 12:35:40 -0700
-Received: from nalasex01c.na.qualcomm.com (10.47.97.35) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+Received: from nasanex01b.na.qualcomm.com ([10.46.141.250])
+  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jun 2022 12:44:47 -0700
+Received: from hu-gurus-sd.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Mon, 27 Jun 2022 12:35:40 -0700
-Received: from [10.216.11.205] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Mon, 27 Jun
- 2022 12:35:35 -0700
-Message-ID: <1a58e260-773e-754c-6f85-b4b2cbd19d2a@quicinc.com>
-Date:   Tue, 28 Jun 2022 01:05:31 +0530
+ 15.2.986.22; Mon, 27 Jun 2022 12:44:47 -0700
+From:   Guru Das Srinagesh <quic_gurus@quicinc.com>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+CC:     David Heidelberg <david@ixit.cz>,
+        Robert Marko <robimarko@gmail.com>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>,
+        Elliot Berman <quic_eberman@quicinc.com>,
+        Guru Das Srinagesh <quic_gurus@quicinc.com>
+Subject: [PATCH 0/5] SCM: Add support for wait-queue aware firmware
+Date:   Mon, 27 Jun 2022 12:44:31 -0700
+Message-ID: <1656359076-13018-1-git-send-email-quic_gurus@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.0
-Subject: Re: [PATCH V2 5/8] pinctrl: qcom: Add IPQ5018 pinctrl driver
-Content-Language: en-US
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-CC:     <agross@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <mturquette@baylibre.com>,
-        <sboyd@kernel.org>, <linus.walleij@linaro.org>,
-        <catalin.marinas@arm.com>, <p.zabel@pengutronix.de>,
-        <quic_varada@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-clk@vger.kernel.org>, <linux-gpio@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>
-References: <20220621161126.15883-1-quic_srichara@quicinc.com>
- <20220621161126.15883-6-quic_srichara@quicinc.com>
- <YrU1b+37DeZqIMTh@builder.lan>
-From:   Sricharan Ramabadhran <quic_srichara@quicinc.com>
-In-Reply-To: <YrU1b+37DeZqIMTh@builder.lan>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
+ nasanex01b.na.qualcomm.com (10.46.141.250)
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Thanks Bjorn for your review
+This patch series enables the QCOM SCM driver to support firmware (FW) versions
+that expect the high-level OS (HLOS) to be tolerant of SCM call requests not
+being processed right away and, instead, being placed on a wait-queue in FW and
+processed accordingly.
 
-On 6/24/2022 9:24 AM, Bjorn Andersson wrote:
-> On Tue 21 Jun 11:11 CDT 2022, Sricharan R wrote:
-> [..]
->> +
->> +static const struct of_device_id ipq5018_pinctrl_of_match[] = {
->> +	{ .compatible = "qcom,ipq5018-pinctrl", },
-> Please make this qcom,ipq5018-tlmm, as requested in the binding.
+The problem this feature is fixing is as follows. In a scenario where there is
+a VM in addition to HLOS (and an underlying hypervisor):
 
+1. HLOS makes an SMC call on core 5
+2. The hypervisor scheduling interrupt interrupts this SMC call.
+3. The hypervisor schedules the VM on core 5.
+4. The VM makes an SMC call on core 5.
+5. The SMC call is non-interruptibly stuck on FW spinlock on core 5.
+6. HLOS cannot reschedule since core 5 is not responding to Reschedule IPIs.
+7. Watchdog timer expires waiting for core 5.
 
-  Sure will do.
+This problem is solved by FW returning a new return code SCM_WAITQ_SLEEP to
+HLOS right away when it is overwhelmed by the VM's SMC call. HLOS then places
+the call on a wait-queue and wakes it up when it receives an interrupt that
+signifies "all-clear".
 
->
-> With that:
->
-> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+This new design also supports scenarios involving only HLOS (and no other VMs).
+Such scenarios make use of a second new return code SCM_WAITQ_WAKE.
 
+There are three new SMC calls also being defined in this design that, together
+with the two new return codes, form the handshake protocol between Linux and
+FW.
 
-   Thanks for that.
+This design is also backwards-compatible with existing firmware versions that
+do not support this feature.
 
-Regards,
-   Sricharan
+Guru Das Srinagesh (5):
+  dt-bindings: firmware: qcom-scm: Add "allow-multi-call" property
+  firmware: qcom: scm: Optionally remove SCM call serialization
+  dt-bindings: firmware: qcom-scm: Add optional interrupt
+  firmware: qcom: scm: Add wait-queue helper functions
+  firmware: qcom: scm: Add wait-queue handling logic
+
+ .../devicetree/bindings/firmware/qcom,scm.txt      |   4 +
+ drivers/firmware/qcom_scm-smc.c                    | 143 +++++++++++++++++++--
+ drivers/firmware/qcom_scm.c                        | 124 +++++++++++++++++-
+ drivers/firmware/qcom_scm.h                        |  14 ++
+ 4 files changed, 275 insertions(+), 10 deletions(-)
+
+-- 
+2.7.4
 
