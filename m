@@ -2,58 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B26F155D5C7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jun 2022 15:15:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B52C655D8D5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jun 2022 15:20:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235469AbiF0NbT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Jun 2022 09:31:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41448 "EHLO
+        id S235741AbiF0Nbb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Jun 2022 09:31:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41596 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235734AbiF0NbQ (ORCPT
+        with ESMTP id S235862AbiF0Nba (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Jun 2022 09:31:16 -0400
-Received: from mail-il1-f179.google.com (mail-il1-f179.google.com [209.85.166.179])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 108E76464;
-        Mon, 27 Jun 2022 06:31:16 -0700 (PDT)
-Received: by mail-il1-f179.google.com with SMTP id o4so6007564ilm.9;
-        Mon, 27 Jun 2022 06:31:16 -0700 (PDT)
+        Mon, 27 Jun 2022 09:31:30 -0400
+Received: from mail-il1-f178.google.com (mail-il1-f178.google.com [209.85.166.178])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A25464D1;
+        Mon, 27 Jun 2022 06:31:22 -0700 (PDT)
+Received: by mail-il1-f178.google.com with SMTP id f15so5554357ilj.11;
+        Mon, 27 Jun 2022 06:31:22 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
          :message-id;
-        bh=LtzvoZ7h5igET6i8THXPAZcwOLCBY2ELyGc79uNyoyY=;
-        b=j2gqXczQvlilAygKlonqwsW3rcqI8IiMVMfhTeQ3nrdqpjL9BD4DAUzOluo9ILCgP3
-         yJftuz3MjFyY4wlf4LVl69YZuC3MtsZ0aJsBCwLFFoAKaLiaNUec5jZ35tGTv86FaJUF
-         KL30Ynj6CjKA0c3/+5bbqeDKpI0UiVN42K69HvbWwgXPOmZfqfuWmOad7u6kAL4SymIq
-         XOfHVf37SAEulCRDG4YISRWBfXDFM7d1qzNQdMtmLNr08OMzJGzz5I+pkpNHfngyGYRO
-         +n6eps1jKNzZJXYsk7aP6TUxy5JHeHRcUN+d+UYXvNsJVwGJo/MvQ9qzj1B8YUSOpIeV
-         zFuA==
-X-Gm-Message-State: AJIora8xxQwDGEj/Zl6wVZQ7nyHnyWBfccQrTr28zb6EKYM0K/vOF5hc
-        j+QQborUVuaF5exW4x/Ep1+ZC8kTjg==
-X-Google-Smtp-Source: AGRyM1t3dHcseGI2deMwdUEop3Mnu1zq3XfE63FQzk/dovJ2L1IsmcMcxvjB9s68MZ1YGiRnYRiMfw==
-X-Received: by 2002:a92:7a10:0:b0:2d9:401e:db19 with SMTP id v16-20020a927a10000000b002d9401edb19mr7226596ilc.87.1656336675274;
-        Mon, 27 Jun 2022 06:31:15 -0700 (PDT)
+        bh=O3oWnTG8KQeUOXE+tF99Ob8V+uF1Dfm/P8wjh/JeAlk=;
+        b=j66T7JSDLYVgJD+9TeOc3oJLuEEniGTj3RAZCFPu6lpmD2vgRgfmPpaGuvf5/Rerwf
+         PuluGF3h4aa5fW0MKR/shST0GwWlALwInFHvg3l+n37BTmA+yq1XPOsGCsnTwNbHF2JM
+         zlqlRHyI4PBjXU0AzLUr3YrgvRMXsbOMLx/Q7+h2VD7kIc1bXranXSxvBy2yP+LtzRGe
+         OpgqfaSAfcbSpdtMo7LwMcqWifZ9b8kK4lKssWQd8IXLdD0UA7aANKqdLs1TA2RjYoHR
+         nxj2WNjQbV9VWzViFy9lVPZ2stHN6XSTU9ZRWqLnK8l2D3DELXYm0BeQPYoEt2t7HmSI
+         Nbmw==
+X-Gm-Message-State: AJIora8xP7sNdBTM5cS9LJt53D92AOoZ/AU10QjNNwwXyc4dQ/1tXZPv
+        o4sHI/nmgnQS7R8yO2sG9Q==
+X-Google-Smtp-Source: AGRyM1vWtaIhACOQOQMsgnt+n3jf+IKZqVw4040pmWlao9K1ELx7Bq4lfexSogX/+UwoY8nmusC7Uw==
+X-Received: by 2002:a05:6e02:180e:b0:2d3:c497:710 with SMTP id a14-20020a056e02180e00b002d3c4970710mr7211011ilv.166.1656336681749;
+        Mon, 27 Jun 2022 06:31:21 -0700 (PDT)
 Received: from robh.at.kernel.org ([64.188.179.253])
-        by smtp.gmail.com with ESMTPSA id r14-20020a92cd8e000000b002d11397f4f9sm4521040ilb.74.2022.06.27.06.31.14
+        by smtp.gmail.com with ESMTPSA id bt6-20020a056638430600b0033c9beb0e19sm1294495jab.22.2022.06.27.06.31.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Jun 2022 06:31:14 -0700 (PDT)
-Received: (nullmailer pid 2285168 invoked by uid 1000);
+        Mon, 27 Jun 2022 06:31:21 -0700 (PDT)
+Received: (nullmailer pid 2285170 invoked by uid 1000);
         Mon, 27 Jun 2022 13:31:09 -0000
 From:   Rob Herring <robh@kernel.org>
 To:     David Heidelberg <david@ixit.cz>
-Cc:     Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
+Cc:     Caleb Connolly <caleb@connolly.tech>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-kernel@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Stephen Boyd <sboyd@kernel.org>,
+        Andy Gross <agross@kernel.org>, ~okias/devicetree@lists.sr.ht,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Robert Marko <robimarko@gmail.com>,
-        Das Srinagesh <quic_gurus@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, ~okias/devicetree@lists.sr.ht
-In-Reply-To: <20220626183247.142776-3-david@ixit.cz>
-References: <20220626183247.142776-1-david@ixit.cz> <20220626183247.142776-3-david@ixit.cz>
-Subject: Re: [PATCH v4 3/3] dt-bindings: firmware: convert Qualcomm SCM binding to the yaml
+        Lee Jones <lee.jones@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+In-Reply-To: <20220626191630.176835-1-david@ixit.cz>
+References: <20220626191630.176835-1-david@ixit.cz>
+Subject: Re: [PATCH v3] dt-bindings: mfd: convert to yaml Qualcomm SPMI PMIC
 Date:   Mon, 27 Jun 2022 07:31:09 -0600
-Message-Id: <1656336669.648862.2285167.nullmailer@robh.at.kernel.org>
+Message-Id: <1656336669.656251.2285169.nullmailer@robh.at.kernel.org>
 X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
         FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
         HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
@@ -65,33 +65,38 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, 26 Jun 2022 20:32:47 +0200, David Heidelberg wrote:
-> Convert Qualcomm SCM firmware binding to the yaml format.
+On Sun, 26 Jun 2022 21:16:30 +0200, David Heidelberg wrote:
+> Convert Qualcomm SPMI PMIC binding to yaml format.
 > 
-> This commit also:
->  - adds qcom,scm-mdm9607 into list which has only core clock
->  - adds qcom,scm-sm6125, qcom,scm-ipq6018
->  - #reset-cells, because the property is already used
+> Additional changes:
+>  - filled many missing compatibles
 > 
+> Co-developed-by: Caleb Connolly <caleb@connolly.tech>
 > Signed-off-by: David Heidelberg <david@ixit.cz>
-> --
-> v4:
->  - added clocks minItems and maxItems
->  - removed quotes from $id and $schema
->  - adjusted description of TCSR HW block
-> v3:
->  - add preceding patches for ARM and arm64 adding missing compatible strings
->  - extended with missing compatible strings
->  - added two additional maintainers, see https://lkml.org/lkml/2022/6/23/1969
-> v2:
->  - changed maintainer to Bjorn
->  - document #reset-cells
 > ---
->  .../devicetree/bindings/firmware/qcom,scm.txt |  57 -------
->  .../bindings/firmware/qcom,scm.yaml           | 140 ++++++++++++++++++
->  2 files changed, 140 insertions(+), 57 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/firmware/qcom,scm.txt
->  create mode 100644 Documentation/devicetree/bindings/firmware/qcom,scm.yaml
+> v3:
+>  - added subnodes, there are two not converted to YAML yet, but it works
+>  - now it prints milion directly unrelated warning to this binding
+>    (it's related to the included subnodes bindings, can be merged,
+>     but it'll generate more warnings and preferably anyone can takeover
+>     from here)
+>  - add qcom,pmx65
+> 
+> v2:
+>  - changed author to myself, kept Caleb as co-author
+>  - moved nodename to properties
+>  - add nodenames for pm* with deprecated property
+>  - add ^$ to pattern properties
+>  - dropped interrupt-names property
+>  - added reg prop. to the nodes which have register in nodename
+>  - added compatible pmx55
+> Signed-off-by: David Heidelberg <david@ixit.cz>
+> ---
+>  .../bindings/mfd/qcom,spmi-pmic.txt           |  94 ---------
+>  .../bindings/mfd/qcom,spmi-pmic.yaml          | 191 ++++++++++++++++++
+>  2 files changed, 191 insertions(+), 94 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt
+>  create mode 100644 Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
 > 
 
 My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
@@ -100,11 +105,7 @@ on your patch (DT_CHECKER_FLAGS is new in v5.13):
 yamllint warnings/errors:
 
 dtschema/dtc warnings/errors:
-Error: Documentation/devicetree/bindings/firmware/qcom,scm.example.dts:18.17-18 syntax error
-FATAL ERROR: Unable to parse input tree
-make[1]: *** [scripts/Makefile.lib:383: Documentation/devicetree/bindings/firmware/qcom,scm.example.dtb] Error 1
-make[1]: *** Waiting for unfinished jobs....
-make: *** [Makefile:1404: dt_binding_check] Error 2
+./Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml: Unable to find schema file matching $id: http://devicetree.org/schemas/thermal/qcom,spmi-temp-alarm.yaml
 
 doc reference errors (make refcheckdocs):
 
