@@ -2,66 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DE72E55C6B0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jun 2022 14:53:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3B92655D1AF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jun 2022 15:09:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240981AbiF0UD4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Jun 2022 16:03:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45210 "EHLO
+        id S240873AbiF0UD5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Jun 2022 16:03:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44902 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240875AbiF0UDk (ORCPT
+        with ESMTP id S240923AbiF0UDl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Jun 2022 16:03:40 -0400
-Received: from mail-oo1-xc34.google.com (mail-oo1-xc34.google.com [IPv6:2607:f8b0:4864:20::c34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C51531AD94
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jun 2022 13:03:39 -0700 (PDT)
-Received: by mail-oo1-xc34.google.com with SMTP id p6-20020a4aa846000000b0042599456d32so1196280oom.9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jun 2022 13:03:39 -0700 (PDT)
+        Mon, 27 Jun 2022 16:03:41 -0400
+Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D6151C928
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jun 2022 13:03:40 -0700 (PDT)
+Received: by mail-ot1-x331.google.com with SMTP id b23-20020a9d7557000000b00616c7999865so3692777otl.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jun 2022 13:03:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=kg9Lplck6C1OMqSfFDk+G4buDHgPZV23JpoAqicydy0=;
-        b=NonGnbSoNI1BC87eY6LKkuQ7kCQUp2Jd1xDjR/w+nrJRBAmPA7j/aNWx5fChsczAVw
-         BX0eYT87O2ioJueR2lzpfLGQb7eU2B+bBgSsn/A3gH7QY8lruzBl2lRV/IVFFLYq0FI0
-         sHYOWh5fZ+tRstalFzG7mS9iu758EOG1gkC6ziw1YX8eti/4dgveTLQtng7npAoSP1AD
-         pn140eYHWthCY6x+MQUwg4cvZQZU9hHBTtiJnr9wNNq2K7PWME/gZiQvO7TzWMEQXb6W
-         0S8Ni9A8itSK1VulCt9KQC2Q5oNGMsfSqaxt9S9UVMvNeaw9ibGaVKJSfkPH3gWwD6YB
-         gfbA==
+        bh=oXLNR87hZXB2BaGwjAbGrIgnuTRGcLyTJcvz1mjW7C4=;
+        b=jGglD01gBVLvGfKWTlpLsDiX+nxNpFpmDWnpA7YxT4uAY3M8t4lY1iQC5t/1178VuF
+         i++aDx/rRL9kjOajguCZC58Pqv7lciobJEdYh2kisRl0jWe9oPlUJnNQoh2a9TE/PoOy
+         dep7UPrWTCqGv9aqqCKP5isWT0yD2RgME72pEEz/tRTZahf5DueZ9Vd7yLvl0IoWI2CE
+         5SG7K2Kn0+tZ/RzHsY66gNWzGQVsHpElDyuzdeMqdXfNKGyt9hE2bEB3ngHl+GwEH9qI
+         ix6o+NcAVjPvUdVfARCRHqcIymOchWxLY2SvlWi7E2JImdjFQVaNAT29mlfJp/ChtKWz
+         ABFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=kg9Lplck6C1OMqSfFDk+G4buDHgPZV23JpoAqicydy0=;
-        b=fV13YYEXfpF2zlPU8SaKiQYhAfqZ6yduBPNCUor/nLEoLn259ZMDEmtLqwHrCd5wZq
-         9xQwM8qlDeqjJUhdhmpHg1zRsgkyKN7vvJK4pQFQQ7hisYvXQYTlkZXXQifgutOd+aQB
-         p6zjVye/0k0FSqpCkdTvuKiTy/lre31/9eWfjp4q/6CWA/Yzn8+EN8FBFVtCCLjLrHBQ
-         gWwFv1BYxZlLSpkoKwyTuY6xaH/Igb54g/nzivvSMlqBSgN/TTz+Zk+igOy6bsRTu/nB
-         kL/WvrtCgTR0ILtzqfGuaoM2RmYKBJHjDGu9b9PN5TYO4/iydDL5OEEmwhLwspqRukK5
-         2pUw==
-X-Gm-Message-State: AJIora8x/ZHRNjJphjH6DuJHgnGE+A2dYTAXTWSCuKg5WLbF2xySngCU
-        hsHmr6V7xn26EjpTUdjRAe4mYQ==
-X-Google-Smtp-Source: AGRyM1vxJ8WBOYYFjvttN0XXj2vftx4ZWg8xnp23Pud9EBsHMbFUN2i/tcaFfOEegljMuC5wel7TEg==
-X-Received: by 2002:a4a:944c:0:b0:41c:18de:d334 with SMTP id j12-20020a4a944c000000b0041c18ded334mr6498382ooi.4.1656360219008;
-        Mon, 27 Jun 2022 13:03:39 -0700 (PDT)
+        bh=oXLNR87hZXB2BaGwjAbGrIgnuTRGcLyTJcvz1mjW7C4=;
+        b=mO5OHqwcAhSiLSm+i4U6XASydZLpXtstGP7EcIdrISNVY7Cmt8jwIq9l4mPUrtphGn
+         AJYZrmE2uBWYxbiUnFqdmgKsaOrP1wVBvux4debPTIePv/jvvS6617YhJkaxUJ3NZSR3
+         Eel0sl2g5oZfvBKHBjTkUCQ1Lzr/NjrqepB3OqrWTIhs/8IcGqopYQQxvEwdVPk8k4J6
+         e9srYHuj8WG2MpQh+EjVND3N3h1lQBsYumKkAw0JMD+QBmrkavnKjbqFLD2puQNeWepu
+         Qk7YFIHJ3HbRRD4dY/u3WGcLYvgE6+mntxJIDVhCFjNrvF1f5nNVonuBXAHo94/mjWSQ
+         BftA==
+X-Gm-Message-State: AJIora8K5TNJWwU/wUTGQVWnt3JMKzNJgYy447So1uC0hBm4nqcvb0Ts
+        sgHZE71FrG3fdls7CIslTtezICV4BdvwUw==
+X-Google-Smtp-Source: AGRyM1tkBVLGZfkWH05mFyNDkb3CspCdg8RWZEaWrLwoDOb3Fc8dMwlIJaIEwXYt2ycHSKt6eIPFOg==
+X-Received: by 2002:a05:6830:6105:b0:616:a94b:502a with SMTP id ca5-20020a056830610500b00616a94b502amr6779760otb.150.1656360220275;
+        Mon, 27 Jun 2022 13:03:40 -0700 (PDT)
 Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id m16-20020a4a9510000000b0041bdf977c6dsm6428729ooi.31.2022.06.27.13.03.37
+        by smtp.gmail.com with ESMTPSA id m16-20020a4a9510000000b0041bdf977c6dsm6428729ooi.31.2022.06.27.13.03.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Jun 2022 13:03:38 -0700 (PDT)
+        Mon, 27 Jun 2022 13:03:39 -0700 (PDT)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     linux-kernel@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org,
         Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        Andy Gross <agross@kernel.org>
-Cc:     Rob Herring <robh@kernel.org>
-Subject: Re: (subset) [PATCH v2] dt-bindings: firmware: document Qualcomm QCS404 and SM6125 SCM
-Date:   Mon, 27 Jun 2022 15:02:56 -0500
-Message-Id: <165636016349.3080661.7253501335863287391.b4-ty@linaro.org>
+        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org
+Cc:     Stephen Boyd <sboyd@kernel.org>
+Subject: Re: (subset) [PATCH v2] firmware: qcom_scm-legacy: correct kerneldoc
+Date:   Mon, 27 Jun 2022 15:02:57 -0500
+Message-Id: <165636016349.3080661.3547963870365610015.b4-ty@linaro.org>
 X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20220622115109.6724-1-krzysztof.kozlowski@linaro.org>
-References: <20220622115109.6724-1-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220519073410.7358-1-krzysztof.kozlowski@linaro.org>
+References: <20220519073410.7358-1-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -75,15 +72,18 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 22 Jun 2022 13:51:09 +0200, Krzysztof Kozlowski wrote:
-> Document the compatible for Qualcomm QCS404 and SM6125 SCM.
+On Thu, 19 May 2022 09:34:10 +0200, Krzysztof Kozlowski wrote:
+> Correct kerneldoc warnings like:
+> 
+>   drivers/firmware/qcom_scm-legacy.c:133:
+>     warning: Function parameter or member 'dev' not described in 'scm_legacy_call'
 > 
 > 
 
 Applied, thanks!
 
-[1/1] dt-bindings: firmware: document Qualcomm QCS404 and SM6125 SCM
-      commit: 86b78de5fd4ba550a239dea9cade355fd58efa56
+[1/1] firmware: qcom_scm-legacy: correct kerneldoc
+      commit: ebf21bbc2ff56ad42994f04ada64280bc819bb0b
 
 Best regards,
 -- 
