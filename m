@@ -2,131 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B958255D424
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jun 2022 15:13:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DB3F355C5CE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jun 2022 14:51:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233087AbiF0Hu6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Jun 2022 03:50:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55904 "EHLO
+        id S233295AbiF0IbT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Jun 2022 04:31:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58060 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232606AbiF0Hu5 (ORCPT
+        with ESMTP id S233590AbiF0IbF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Jun 2022 03:50:57 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0096E2DD3;
-        Mon, 27 Jun 2022 00:50:56 -0700 (PDT)
+        Mon, 27 Jun 2022 04:31:05 -0400
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFC826305
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jun 2022 01:30:55 -0700 (PDT)
+Received: by mail-ej1-x635.google.com with SMTP id pk21so17566156ejb.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jun 2022 01:30:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1656316257; x=1687852257;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version;
-  bh=h/AoKKoXNc3Rq8V2c3hlG/7uD1Te+5Trb9BH8fj762M=;
-  b=uM22t4eanplIaWh8mq7RPOSBKNQ73n7vIvzvKQwQstl0Ugr8GgbhTS/g
-   6oGSbQQcqI7IcuAhYuYqM9A0FyBLv+xjJDNL1gGL0VkFMvmxxqDMBSkfn
-   EbIQ6f1Fbry7qoEit8YkA3fc0BIl7sDzvfeYmrfaA3b6gM57Wl15yHw4F
-   I=;
-Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 27 Jun 2022 00:50:01 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jun 2022 00:50:00 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Mon, 27 Jun 2022 00:50:00 -0700
-Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Mon, 27 Jun 2022 00:49:54 -0700
-From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
-        <lgirdwood@gmail.com>, <broonie@kernel.org>, <robh+dt@kernel.org>,
-        <quic_plai@quicinc.com>, <bgoswami@quicinc.com>, <perex@perex.cz>,
-        <tiwai@suse.com>, <srinivas.kandagatla@linaro.org>,
-        <quic_rohkumar@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <alsa-devel@alsa-project.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <swboyd@chromium.org>,
-        <judyhsiao@chromium.org>, Linus Walleij <linus.walleij@linaro.org>,
-        <linux-gpio@vger.kernel.org>
-CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Subject: [PATCH v5 2/2] pinctrl: qcom: sc7280: Add clock optional check for ADSP bypass targets
-Date:   Mon, 27 Jun 2022 13:19:24 +0530
-Message-ID: <1656316164-28666-3-git-send-email-quic_srivasam@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1656316164-28666-1-git-send-email-quic_srivasam@quicinc.com>
-References: <1656316164-28666-1-git-send-email-quic_srivasam@quicinc.com>
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language
+         :from:to:references:in-reply-to:content-transfer-encoding;
+        bh=r/k/Wup5MZ0W8s3nAcDiEGYXaMuQoL3NODuPPee+xMA=;
+        b=lV0hqjwlV3MZhzxNn8J0ngh91fVXmi9vWf/WIa5/b2W1b9+8oIcFRgKOPrdy+8dASR
+         DOdrhMBP+fGLUTzjFZcAkLERbuOw/AEEQlxqYHhNhNrZ18MI1wAyuyOJgJAlRMOStXts
+         pxJ0ngjLsurtzrBRPUCQVX1+dMoWH2hBa8MqTyE5pLkJbOPVg2gJcRpoTIfM4aVY/1Lz
+         +oNOJz7kwGPZ/nSVXeXvg/udtItq05wcqGBlIengWSF+eNWJXyBA036sa3papisnP6sE
+         XoDS2OOwa0O8pEu0ASXNFVkFmRhISkXRsK0HvE8ENyV7PmT+u4oN3sQjlYeY4LSrdCRL
+         +Iew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:from:to:references:in-reply-to
+         :content-transfer-encoding;
+        bh=r/k/Wup5MZ0W8s3nAcDiEGYXaMuQoL3NODuPPee+xMA=;
+        b=ufV1cat7ltO4Ain3fL8yjJEAOwEDJ6Qt6oa90eIlptiahq1gzSzwGToQTrWa+BhSpa
+         bzq2KJvEMneuGAFbfg0hi7K2mJ8ix//Z/lw4KL7J7UfhTpn5FdbbZo2xzADPVVy1XRs9
+         D8SzObr/u209ppTL/ExaTaBxHbLPIfC9lGnfhN4iiFfO4l0efy5bYJP4Pw+u1oBv0izM
+         Xz5HC5QuxZFqsv36hgBXSMgJBF1IxXQfrXGGdTqEqaC7+Rlp/zKmKCrv59VZ33iNp90h
+         BT0nqmif8x4El0eaJCo2O3P6VpqRb/LQAnNlCHZ2YoPElRjB25H1szKUUewe3a7EbO+A
+         AKZA==
+X-Gm-Message-State: AJIora/f7Sh1Y7MGCdyus8xaLee40HDmsv3DTwK1nndUVh1KYSO39wyT
+        4Hsj2wMYC2lYESVB4bTXRdND3w==
+X-Google-Smtp-Source: AGRyM1tnzpEH5baCKq/SmMFgmvAPOw8Kzw5ImotQVhY6SXQgyGQuIua8gVHp77Z1u1oYmIlUc9d81g==
+X-Received: by 2002:a17:906:5512:b0:726:be2c:a2e5 with SMTP id r18-20020a170906551200b00726be2ca2e5mr643759ejp.88.1656318654433;
+        Mon, 27 Jun 2022 01:30:54 -0700 (PDT)
+Received: from [192.168.0.246] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id x6-20020aa7cd86000000b0043574d27ddasm7019774edv.16.2022.06.27.01.30.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 27 Jun 2022 01:30:53 -0700 (PDT)
+Message-ID: <f61cd23e-2e37-accb-6e6c-69fcab0cc3d7@linaro.org>
+Date:   Mon, 27 Jun 2022 10:30:52 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: Re: [PATCH 1/2] arm64: dts: qcom: adjust whitespace around '='
+Content-Language: en-US
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>,
+        arm@kernel.org, soc@kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20220526204248.832139-1-krzysztof.kozlowski@linaro.org>
+ <0a35d997-7e7e-8847-7c87-edd33719f7a3@linaro.org>
+In-Reply-To: <0a35d997-7e7e-8847-7c87-edd33719f7a3@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Update lpass lpi pin control driver, with clock optional check for ADSP
-disabled platforms. This check required for distingushing ADSP based
-platforms and ADSP bypass platforms.
-In case of ADSP enabled platforms, where audio is routed through ADSP
-macro and decodec GDSC Switches are triggered as clocks by pinctrl
-driver and ADSP firmware controls them. So It's mandatory to enable
-them in ADSP based solutions.
-In case of ADSP bypass platforms clock voting is optional as these macro
-and dcodec GDSC switches are maintained as power domains and operated from
-lpass clock drivers.
-Remove redundant private data variable is_clk_optional.
+On 22/06/2022 10:30, Krzysztof Kozlowski wrote:
+> On 26/05/2022 22:42, Krzysztof Kozlowski wrote:
+>> Fix whitespace coding style: use single space instead of tabs or
+>> multiple spaces around '=' sign in property assignment.  No functional
+>> changes (same DTB).
+>>
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>>
+>> ---
+>>
+>> Output compared with dtx_diff and fdtdump.
+> 
+> Any comments on these two patches? If there are no objections I'll take
+> them with rest of cleanups.
 
-Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
----
- drivers/pinctrl/qcom/pinctrl-lpass-lpi.c        | 2 +-
- drivers/pinctrl/qcom/pinctrl-lpass-lpi.h        | 1 -
- drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c | 1 -
- 3 files changed, 1 insertion(+), 3 deletions(-)
+I understand - no objections. :)
 
-diff --git a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
-index 74810ec..e97ce45 100644
---- a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
-+++ b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
-@@ -401,7 +401,7 @@ int lpi_pinctrl_probe(struct platform_device *pdev)
- 		return dev_err_probe(dev, PTR_ERR(pctrl->slew_base),
- 				     "Slew resource not provided\n");
- 
--	if (data->is_clk_optional)
-+	if (of_property_read_bool(dev->of_node, "qcom,adsp-bypass-mode"))
- 		ret = devm_clk_bulk_get_optional(dev, MAX_LPI_NUM_CLKS, pctrl->clks);
- 	else
- 		ret = devm_clk_bulk_get(dev, MAX_LPI_NUM_CLKS, pctrl->clks);
-diff --git a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.h b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.h
-index 759d5d8..afbac2a 100644
---- a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.h
-+++ b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.h
-@@ -77,7 +77,6 @@ struct lpi_pinctrl_variant_data {
- 	int ngroups;
- 	const struct lpi_function *functions;
- 	int nfunctions;
--	bool is_clk_optional;
- };
- 
- int lpi_pinctrl_probe(struct platform_device *pdev);
-diff --git a/drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c b/drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c
-index 2add9a4..d615b6c5 100644
---- a/drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c
-+++ b/drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c
-@@ -141,7 +141,6 @@ static const struct lpi_pinctrl_variant_data sc7280_lpi_data = {
- 	.ngroups = ARRAY_SIZE(sc7280_groups),
- 	.functions = sc7280_functions,
- 	.nfunctions = ARRAY_SIZE(sc7280_functions),
--	.is_clk_optional = true,
- };
- 
- static const struct of_device_id lpi_pinctrl_of_match[] = {
--- 
-2.7.4
-
+Best regards,
+Krzysztof
