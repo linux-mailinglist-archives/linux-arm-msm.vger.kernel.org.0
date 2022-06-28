@@ -2,313 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8A2C555EC3F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jun 2022 20:09:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4A07855ECF9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jun 2022 20:49:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234705AbiF1SJ6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Jun 2022 14:09:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54172 "EHLO
+        id S232285AbiF1Stn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Jun 2022 14:49:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48586 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234710AbiF1SJ5 (ORCPT
+        with ESMTP id S232025AbiF1Stm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Jun 2022 14:09:57 -0400
-Received: from mail-yw1-x112f.google.com (mail-yw1-x112f.google.com [IPv6:2607:f8b0:4864:20::112f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0B2F17E3F
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jun 2022 11:09:54 -0700 (PDT)
-Received: by mail-yw1-x112f.google.com with SMTP id 00721157ae682-3176b6ed923so125313857b3.11
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jun 2022 11:09:54 -0700 (PDT)
+        Tue, 28 Jun 2022 14:49:42 -0400
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA941248FD;
+        Tue, 28 Jun 2022 11:49:41 -0700 (PDT)
+Received: by mail-ej1-x630.google.com with SMTP id cw10so27669631ejb.3;
+        Tue, 28 Jun 2022 11:49:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=LYcXptv76jiUKLMxUytxxor8YPRPJV8ed1Ksm57QMfY=;
-        b=gPaHaeaaI978b5ydBeuwCXwB7p5+rQlSV6qxfhLqvTHAolXdRgH8jO8iMj9MKGX2Mz
-         fZH0DdWiowmwJ8lSWm0ZCZ+yjf0cCUVW53JB1iFi2sItpocpjFjm4tbySPjzqRplqQr7
-         o2wkPTO8Ypud1ki4voNQUIE+PtXs2d0UJXppZ7zoWulorSoLG2mYpuxqKBiuIBzgMk+T
-         klTK8NLAY3n5ZQnPicfJjI3Z5G7B6D2nzZmnN/5r+RBUnHk+tO8L+AfVimj9wc198spi
-         6l2MXrGL1n/2vnY7thTm9OlNWdzJKD7gzIZTg23EjGMeP/fmtGnR7dG8XyT8cQiF0UJr
-         uO2g==
+        d=gmail.com; s=20210112;
+        h=from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=5ObwhxGoXe2ARX6DreYdA3iy7rl42wiy5qX/jBWrSpM=;
+        b=nVGPtX9pniV/ybRejCUwJ7N9XYru7cWW5qzGh+AqY8r9tZZsUf9eDP8ACkL7Ylnh77
+         qcP5ANLB+fYXAwnzbpLalaxIvQnz7SxhfXFsejmUIoQXWDj6jFPgVuLl9lNEu5SJp8k7
+         CAVYc+5O2CVvaEArqAd7yDh3LTLBhT5pMEsxPWvmMPn2z18Z+0jlIKBzF4TgUXlYPlDk
+         91YUJBZE+1Ilhqp5SWx9guw20ewvZel8IbfMQiMy57BUisnkMCx8Z1y78YJSq5hrQlpJ
+         C1obfYnCvy38qBBu1Lrcr0EDDVUifm0pl5Toywvj0pEyxgEdtKfRHjwXnxmhP/Hhod3W
+         moRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=LYcXptv76jiUKLMxUytxxor8YPRPJV8ed1Ksm57QMfY=;
-        b=YeWflWpakfV/6ArzniulNxnJEv9DsbCXhpOSXMimrCKLCGsiaChYWGs8JIrrDovcRB
-         nth5hB0mo6szKpBdz3ya+/KhHknkDMvXl8egGevO62wE/6G3y3GW8Fs/dFY1sPHLc4GD
-         M2fW/5EfHOvNA9IktYiWuwBgR5fr3nK1fBOXZOiA/5O1cGBWPu417Bb+N0s8QDLhJhXl
-         NOZxstTQD+1SEmXd2Lxol1G4mQKBl3oDZNrO60QwWkzSf8k1X9byDTy3Q1MvcYlVDUp5
-         4xsXOxAOTRY7K91tMMNpVjwy/ksYbqgz7p6m7esRzaez25yHgih9kFaxAjVPK83uKG16
-         2PaQ==
-X-Gm-Message-State: AJIora9LnkF2o7cqGdUbTzdTrhSnhF/PmsVL+HvsT7Bn5xi2dVSqsBqv
-        aGa3SF/E4SdVHwLwLEcDAygdzhORpEDiZSmXt9Xgaw==
-X-Google-Smtp-Source: AGRyM1vXSF/CgiisBepoUdbqGMK1G70avpb5M7kcqEegWFWm9L/EdrvdapqcodHm0q1VzDBGk3UOcFlAe/HDnnYt2hE=
-X-Received: by 2002:a0d:ca16:0:b0:31b:7adf:d91 with SMTP id
- m22-20020a0dca16000000b0031b7adf0d91mr21041838ywd.455.1656439793741; Tue, 28
- Jun 2022 11:09:53 -0700 (PDT)
-MIME-Version: 1.0
-References: <20201121020232.908850-1-saravanak@google.com> <20201121020232.908850-14-saravanak@google.com>
- <YrmXpcU1NTYW6T/n@linaro.org> <CAGETcx8dwNcZFFzhhv=kMhpuQnyaEekrycpAmGusD-s+qfvA9g@mail.gmail.com>
- <YrskVLshWeps+NXw@linaro.org>
-In-Reply-To: <YrskVLshWeps+NXw@linaro.org>
-From:   Saravana Kannan <saravanak@google.com>
-Date:   Tue, 28 Jun 2022 11:09:17 -0700
-Message-ID: <CAGETcx8F0wP+RA0KpjOJeZfc=DVG-MbM_=SkRHD4UhD2ReL7Kw@mail.gmail.com>
-Subject: Re: [PATCH v2 13/17] driver core: Use device's fwnode to check if it
- is waiting for suppliers
-To:     Abel Vesa <abel.vesa@linaro.org>
-Cc:     "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Len Brown <lenb@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Ard Biesheuvel <ardb@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Frank Rowand <frowand.list@gmail.com>,
-        Marc Zyngier <maz@kernel.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Tomi Valkeinen <tomi.valkeinen@ti.com>,
-        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-        Grygorii Strashko <grygorii.strashko@ti.com>,
-        kernel-team@android.com, linux-acpi@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-efi@vger.kernel.org,
-        devicetree@vger.kernel.org,
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=5ObwhxGoXe2ARX6DreYdA3iy7rl42wiy5qX/jBWrSpM=;
+        b=xioUlA1D32acYj61dQMPZP16O2ADYCqBfudPL+c0zBc2k4CDtC80TxPl4gW3GCWsZB
+         YMOnfKZPgilF4TUMZQn17L9z+46gXJQaTVXuy3vqLqWM2GdSdH4W1KK+O4B2MX9VG6HO
+         bUX+4t6InNtxnYQ7DlajzErClWWaFOxi0PtJvWfx8LOEpZCMYqcT2KYrTCQRDGNpEdOe
+         ehoIy6tZv5CRN0L5bJe9NKyoFLwJi/+YEhCBL/7mYZLMgaYRO8zWllHKPjP2ZKkEueUD
+         oEQm0NfSMk/xhqpoCCA8X0MEdM57ObzTipkbONyjzhl/JvR/UmdwQ8lSVV25SANs77eD
+         xTAA==
+X-Gm-Message-State: AJIora+TbjQklnbnk9WbiAfqtOAAKjQ5AywJ4yfCdAiECU2fCQk9wTK1
+        tAp6AP1j8Nb3JLqrK4oTQQw=
+X-Google-Smtp-Source: AGRyM1t+WIYcP7ofsz0WZlACCfJz8MlGeYIB1VazUOXiK1PyGbMd+9sYo6v4vwUtXqoYKfii2vXGmQ==
+X-Received: by 2002:a17:906:2bc2:b0:726:d02f:dea with SMTP id n2-20020a1709062bc200b00726d02f0deamr4392270ejg.60.1656442180000;
+        Tue, 28 Jun 2022 11:49:40 -0700 (PDT)
+Received: from localhost.localdomain (93-42-70-190.ip85.fastwebnet.it. [93.42.70.190])
+        by smtp.googlemail.com with ESMTPSA id t21-20020a05640203d500b0043573c59ea0sm9747593edw.90.2022.06.28.11.49.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 28 Jun 2022 11:49:39 -0700 (PDT)
+From:   Christian Marangi <ansuelsmth@gmail.com>
+To:     Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-17.6 required=5.0 tests=BAYES_00,DKIMWL_WL_MED,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        ENV_AND_HDR_SPF_MATCH,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,USER_IN_DEF_DKIM_WL,USER_IN_DEF_SPF_WL
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Jens Axboe <axboe@kernel.dk>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Christian Marangi <ansuelsmth@gmail.com>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
+Subject: [PATCH v3 0/4] Krait Documentation conversion
+Date:   Tue, 28 Jun 2022 20:41:33 +0200
+Message-Id: <20220628184137.21678-1-ansuelsmth@gmail.com>
+X-Mailer: git-send-email 2.36.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jun 28, 2022 at 8:55 AM Abel Vesa <abel.vesa@linaro.org> wrote:
->
-> On 22-06-27 15:30:25, Saravana Kannan wrote:
-> > On Mon, Jun 27, 2022 at 4:42 AM Abel Vesa <abel.vesa@linaro.org> wrote:
-> > >
-> > > On 20-11-20 18:02:28, Saravana Kannan wrote:
-> > > > To check if a device is still waiting for its supplier devices to be
-> > > > added, we used to check if the devices is in a global
-> > > > waiting_for_suppliers list. Since the global list will be deleted in
-> > > > subsequent patches, this patch stops using this check.
-> > > >
-> > > > Instead, this patch uses a more device specific check. It checks if the
-> > > > device's fwnode has any fwnode links that haven't been converted to
-> > > > device links yet.
-> > > >
-> > > > Signed-off-by: Saravana Kannan <saravanak@google.com>
-> > > > ---
-> > > >  drivers/base/core.c | 18 ++++++++----------
-> > > >  1 file changed, 8 insertions(+), 10 deletions(-)
-> > > >
-> > > > diff --git a/drivers/base/core.c b/drivers/base/core.c
-> > > > index 395dece1c83a..1873cecb0cc4 100644
-> > > > --- a/drivers/base/core.c
-> > > > +++ b/drivers/base/core.c
-> > > > @@ -51,6 +51,7 @@ static DEFINE_MUTEX(wfs_lock);
-> > > >  static LIST_HEAD(deferred_sync);
-> > > >  static unsigned int defer_sync_state_count = 1;
-> > > >  static DEFINE_MUTEX(fwnode_link_lock);
-> > > > +static bool fw_devlink_is_permissive(void);
-> > > >
-> > > >  /**
-> > > >   * fwnode_link_add - Create a link between two fwnode_handles.
-> > > > @@ -995,13 +996,13 @@ int device_links_check_suppliers(struct device *dev)
-> > > >        * Device waiting for supplier to become available is not allowed to
-> > > >        * probe.
-> > > >        */
-> > > > -     mutex_lock(&wfs_lock);
-> > > > -     if (!list_empty(&dev->links.needs_suppliers) &&
-> > > > -         dev->links.need_for_probe) {
-> > > > -             mutex_unlock(&wfs_lock);
-> > > > +     mutex_lock(&fwnode_link_lock);
-> > > > +     if (dev->fwnode && !list_empty(&dev->fwnode->suppliers) &&
-> > > > +         !fw_devlink_is_permissive()) {
-> > > > +             mutex_unlock(&fwnode_link_lock);
-> > >
-> > > Hi Saravana,
-> > >
-> > > First of, sorry for going back to this.
-> >
-> > No worries at all. If there's an issue with fw_devlink, I want to have it fixed.
-> >
-> > > There is a scenario where this check will not work and probably should
-> > > work. It goes like this:
-> > >
-> > > A clock controller is not allowed to probe because it uses a clock from a child device of a
-> > > consumer, like so:
-> > >
-> > >         dispcc: clock-controller@af00000 {
-> > >                 clocks = <&dsi0_phy 0>;
-> > >         };
-> > >
-> > >         mdss: mdss@ae00000 {
-> > >                 clocks = <&dispcc DISP_CC_MDSS_MDP_CLK>;
-> > >
-> > >                 dsi0_phy: dsi-phy@ae94400 {
-> > >                         clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
-> > >                 };
-> > >         };
-> > >
-> > > This is a real scenario actually, but I stripped it down to the essentials.
-> >
-> > I'm well aware of this scenario and explicitly wrote code to address this :)
-> >
->
-> Actually, the problem seems to be when you have two dsi phys.
-> Like so:
->
->          dispcc: clock-controller@af00000 {
->                  clocks = <&dsi0_phy 0>;
->                  clocks = <&dsi1_phy 0>;
->          };
->
->          mdss: mdss@ae00000 {
->                  clocks = <&dispcc DISP_CC_MDSS_MDP_CLK>;
->
->                  dsi0_phy: dsi-phy@ae94400 {
->                          clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
->                  };
->
->                  dsi1_phy: dsi-phy@ae64400 {
->                          clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
->                  };
->          };
->
-> And from what I've seen happening so far is that the device_is_dependent
-> check for the parent of the supplier (if it also a consumer) seems to return
-> false on second pass of the same link due to the DL_FLAG_SYNC_STATE_ONLY
-> being set this time around.
->
-> > See this comment in fw_devlink_create_devlink()
-> >
-> >        /*
-> >          * If we can't find the supplier device from its fwnode, it might be
-> >          * due to a cyclic dependency between fwnodes. Some of these cycles can
-> >          * be broken by applying logic. Check for these types of cycles and
-> >          * break them so that devices in the cycle probe properly.
-> >          *
-> >          * If the supplier's parent is dependent on the consumer, then the
-> >          * consumer and supplier have a cyclic dependency. Since fw_devlink
-> >          * can't tell which of the inferred dependencies are incorrect, don't
-> >          * enforce probe ordering between any of the devices in this cyclic
-> >          * dependency. Do this by relaxing all the fw_devlink device links in
-> >          * this cycle and by treating the fwnode link between the consumer and
-> >          * the supplier as an invalid dependency.
-> >          */
-> >
->
-> So when this thing you mentioned above is happening for the second dsi
-> phy (order doesn't matter), since the dsi phy itself cannot be found,
-> the device_is_dependent is run for the same link: dispcc -> mdss
-> (supplier -> consumer), but again, since it has the
-> DL_FLAG_SYNC_STATE_ONLY this time around, it will skip that specific
-> link.
+This series convert the krait-cc and the kpps-acc/gcc Documentation to
+yaml.
 
-Ugh... I knew there was this gap, but didn't expect it to be a real world issue.
+This series comes form a split of a bigger series that got too big and
+now hard to review.
 
-There are different ways of addressing this and they all fall
-somewhere within a spectrum of:
-"stop enforcing very specific edges of the dependency graph when you
-find a cycles"
-To
-"just don't enforce any dependency for devices in a cycle and let the
-drivers figure out when to -EPROBE_DEFER".
+While they are still more or less wrong and doesn't really reflect real
+driver implementation, they are converted to prepare for a fixup later
+when dts and driver are finally fixed.
 
-And each of those are of varying complexity. Ideally I'd prefer to
-relax specific edges, but I need to balance it out with the code
-complexity. Let me soak this for a few weeks to decide on what option
-to take.
+Minor changes are done to the kpss-gcc driver and minor fixes are done to
+the various affected dts to fix dtbs_check warning with the new introduced
+schema.
 
-Thanks for the report.
+v3:
+- Update all Sob
+- Rework kpss-gcc Documentation with the new finding
+- Fix dtbs_check warning
+v2:
+- Fix bot error by adding missing #clock-cells
 
--Saravana
+Changelog for previous series "Modernize rest of the krait drivers"
+that was split to smaller series (only Documentation changes):
+v7:
+- Rework kpss-gcc Documentation (split patch for pure conversion and
+  tweaks)
+v6:
+- Address comments from Rob
+- Fix warning from make dtbs_check
+v5:
+- Address comments from Krzysztof
+v4:
+- Fix more dt-bindings bug errors
+v3:
+- Split Documentation files for kpss and krait-cc
+v2:
+- fix missing new line on patch 16 (krait-cc patch)
 
->
-> > Applying this comment to your example, dispcc is the "consumer",
-> > dsi0_phy is the "supplier" and mdss is the "supplier's parent".
-> >
-> > And because we can't guarantee the order of addition of these top
-> > level devices is why I also have this piece of recursive call inside
-> > __fw_devlink_link_to_suppliers():
-> >
-> >                 /*
-> >                  * If a device link was successfully created to a supplier, we
-> >                  * now need to try and link the supplier to all its suppliers.
-> >                  *
-> >                  * This is needed to detect and delete false dependencies in
-> >                  * fwnode links that haven't been converted to a device link
-> >                  * yet. See comments in fw_devlink_create_devlink() for more
-> >                  * details on the false dependency.
-> >                  *
-> >                  * Without deleting these false dependencies, some devices will
-> >                  * never probe because they'll keep waiting for their false
-> >                  * dependency fwnode links to be converted to device links.
-> >                  */
-> >                 sup_dev = get_dev_from_fwnode(sup);
-> >                 __fw_devlink_link_to_suppliers(sup_dev, sup_dev->fwnode);
-> >                 put_device(sup_dev);
-> >
-> > So when mdss gets added, we'll link it to dispcc and then check if
-> > dispcc has any suppliers it needs to link to. And that's when the
-> > logic will catch the cycle and fix it.
-> >
-> > Can you tell me why this wouldn't unblock the probing of dispcc? Are
-> > you actually hitting this on a device? If so, can you please check why
-> > this logic isn't sufficient to catch and undo the cycle?
-> >
->
-> This is happening on Qualcomm SDM845 with Linus's tree.
->
-> > Thanks,
-> > Saravana
-> >
-> > > So, the dsi0_phy will be "device_add'ed" (through of_platform_populate) by the mdss probe.
-> > > The mdss will probe defer waiting for the DISP_CC_MDSS_MDP_CLK, while
-> > > the dispcc will probe defer waiting for the dsi0_phy (supplier).
-> > >
-> > > Basically, this 'supplier availability check' does not work when a supplier might
-> > > be populated by a consumer of the device that is currently trying to probe.
-> > >
-> > >
-> > > Abel
-> > >
-> > >
-> > > >               return -EPROBE_DEFER;
-> > > >       }
-> > > > -     mutex_unlock(&wfs_lock);
-> > > > +     mutex_unlock(&fwnode_link_lock);
-> > > >
-> > > >       device_links_write_lock();
-> > > >
-> > > > @@ -1167,10 +1168,7 @@ static ssize_t waiting_for_supplier_show(struct device *dev,
-> > > >       bool val;
-> > > >
-> > > >       device_lock(dev);
-> > > > -     mutex_lock(&wfs_lock);
-> > > > -     val = !list_empty(&dev->links.needs_suppliers)
-> > > > -           && dev->links.need_for_probe;
-> > > > -     mutex_unlock(&wfs_lock);
-> > > > +     val = !list_empty(&dev->fwnode->suppliers);
-> > > >       device_unlock(dev);
-> > > >       return sysfs_emit(buf, "%u\n", val);
-> > > >  }
-> > > > @@ -2202,7 +2200,7 @@ static int device_add_attrs(struct device *dev)
-> > > >                       goto err_remove_dev_groups;
-> > > >       }
-> > > >
-> > > > -     if (fw_devlink_flags && !fw_devlink_is_permissive()) {
-> > > > +     if (fw_devlink_flags && !fw_devlink_is_permissive() && dev->fwnode) {
-> > > >               error = device_create_file(dev, &dev_attr_waiting_for_supplier);
-> > > >               if (error)
-> > > >                       goto err_remove_dev_online;
-> > > > --
-> > > > 2.29.2.454.gaff20da3a2-goog
-> > > >
-> > > >
-> >
+Christian Marangi (4):
+  dt-bindings: clock: Convert qcom,krait-cc to yaml
+  dt-bindings: arm: msm: Convert kpss-acc driver Documentation to yaml
+  dt-bindings: arm: msm: Rework kpss-gcc driver Documentation to yaml
+  ARM: dts: qcom: fix various wrong definition for kpss-gcc node
+
+ .../bindings/arm/msm/qcom,kpss-acc.txt        | 49 ----------
+ .../bindings/arm/msm/qcom,kpss-acc.yaml       | 94 +++++++++++++++++++
+ .../bindings/arm/msm/qcom,kpss-gcc.txt        | 44 ---------
+ .../bindings/arm/msm/qcom,kpss-gcc.yaml       | 89 ++++++++++++++++++
+ .../bindings/clock/qcom,krait-cc.txt          | 34 -------
+ .../bindings/clock/qcom,krait-cc.yaml         | 59 ++++++++++++
+ arch/arm/boot/dts/qcom-apq8064.dtsi           |  2 +-
+ arch/arm/boot/dts/qcom-ipq8064.dtsi           |  4 +-
+ arch/arm/boot/dts/qcom-mdm9615.dtsi           |  2 +-
+ arch/arm/boot/dts/qcom-msm8660.dtsi           |  2 +-
+ arch/arm/boot/dts/qcom-msm8960.dtsi           |  7 +-
+ 11 files changed, 252 insertions(+), 134 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,kpss-acc.txt
+ create mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,kpss-acc.yaml
+ delete mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.txt
+ create mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.yaml
+ delete mode 100644 Documentation/devicetree/bindings/clock/qcom,krait-cc.txt
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,krait-cc.yaml
+
+-- 
+2.36.1
+
