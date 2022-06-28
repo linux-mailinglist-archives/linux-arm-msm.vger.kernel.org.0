@@ -2,73 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1F19755C53B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jun 2022 14:50:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D386755DB9A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jun 2022 15:24:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243539AbiF1JwS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Jun 2022 05:52:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45038 "EHLO
+        id S1344535AbiF1J7Z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Jun 2022 05:59:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57180 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237556AbiF1JwR (ORCPT
+        with ESMTP id S245187AbiF1J7L (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Jun 2022 05:52:17 -0400
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 826EA2D1EA
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jun 2022 02:52:16 -0700 (PDT)
-Received: by mail-wm1-x332.google.com with SMTP id f190so6706910wma.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jun 2022 02:52:16 -0700 (PDT)
+        Tue, 28 Jun 2022 05:59:11 -0400
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 677282E9E3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jun 2022 02:59:10 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id r20so16908851wra.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jun 2022 02:59:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=h0dx8b2m9emaFg28RzQYMub6uEPgbsswWWeNTpjU7qQ=;
-        b=yGhCsGSHTA94c6E1fD9v92SudyesEEv8gdzs/101JV5D0Ff9ufUgbZQdcj9G2EoTi4
-         XQT2FgGPEbIgNV9KQ9HTch9hvUBUyMlDn4BaeB610u61u0UZDM80Xa3uoWKCOhRk3IdP
-         3/PyKzFXM7oeZ8XPWzKEm16LTWp6DTY9zbaCesElDFH1UH2Iwc+6Lqy6vmcDZnqes1hK
-         RQPrPypCIzpdUYbuwXuAiyP2iEx9DCkut2nyzMEbEBicIwSzwXe04Ue4QRv/m6BZMeQ0
-         nBI2o2nfxEWhHYfg3ak56VKsstMzUevktyKDeh+DRgK7XIbeVRWsSN2YO9hFpB7bBuLB
-         C4aA==
+        bh=4TnV2KxyP2DV/2uDmzCbdYwAkBIDFDITNxmSAAlof8Y=;
+        b=ORXopAl49yqtPpSQXoB46D2aTOgSJnlpOKwh5Xf257b9HiSYJHzyPj5T0eWCB0dAYd
+         Nk+lIlx0wZFK262bf0RpR2W7aKgZCzHoUWyc/k2hGdEzjPyLtfXIXAs6KC30P9lHuX7n
+         8WMzdDMk3Ff4QGpr+FjaWHHXWK4ayKffTR0EqS5ay725cWWnR1nUrOWy1UsdmVXKxOj1
+         4ZxYOv2+XZ0ECFomyDdh+uixrRkdSMlwH/fm5T9xtQCj0Bxm/5Pfa8df39SJi9mtSqUa
+         UrvsOuOiUTePwYcCXl0KiMcbnG/ZsVeZT+hIFoLEGS7VdwpInYngC+U3kzH/OBTKCdDl
+         YkYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=h0dx8b2m9emaFg28RzQYMub6uEPgbsswWWeNTpjU7qQ=;
-        b=dmvlTB3rLjI8xgULduaz5ani1WMpHdIj3yan9Yy05kvh8WjOlRKII8Al6ojRjFfpMO
-         aUtItrakOmvCBlLjuOodL3uN4D2ksAuMNNAoJwSqLrMi18pm+8M0XVxj8dDidfmly5FH
-         lV0YI5yw0b32rgMrsH4ElOlADEZwVtvR5ZFiSwQu5oAkBDEMT4WG51EESG9Xu7WOEkuV
-         J0Tln1UqKrPPi8BIrVAtiA+ZX8TxwgKG2lR8laW0wh+Dxx+stOEOfLAa2deHuL/5Jtay
-         un4RRIaiQwqFRuMOJfnvsnNanGcs0WQdlsRhP+th2GO9KkDu4PW4Zu8/3L4fTt3iVk7q
-         alkA==
-X-Gm-Message-State: AJIora83Ml9vHmWXKPExfBUTQemwPziflfzG7Z0bW1eGvvVkiuoq2JaZ
-        gSw0P6RF9pgAuVL/rXCCX9qSiA==
-X-Google-Smtp-Source: AGRyM1uapA977RluRFtVzd0TSebkEw2JE1FoN9JKJR+3Yxjz50DUatvzSM6CR/sdeF92mRVFkjDrOA==
-X-Received: by 2002:a05:600c:3d10:b0:3a0:4956:9a84 with SMTP id bh16-20020a05600c3d1000b003a049569a84mr12695330wmb.133.1656409935070;
-        Tue, 28 Jun 2022 02:52:15 -0700 (PDT)
+        bh=4TnV2KxyP2DV/2uDmzCbdYwAkBIDFDITNxmSAAlof8Y=;
+        b=e/0mZ3OpsWkrVjRJd4RYDjcWQg31HzBNK9j0znhebY/8MvNOTxAZwKsXlGjogabHHc
+         h7sDPB36Pxe/I7JDj8AfI2SVcRipSP2KLX5C/JxRKE8IvAe62CoqG3YBLYlTZezX2L/T
+         SDpxUGyEK5t/qVPcjx2R10EgLSFZYii+7I/CrcafeIvyFqxJCcLQEGEPGudZpNuJ4qh2
+         QGfApPj+rcR1wOb0bad6VKY1slAQ4W1ni6W8URzDqAuNeL3duJrq1BGiQF7xiotYBeO1
+         80di4HrjsWgng1xaWu4s2kfQ+AWIcHb07gSsRXhhPg0ExaPfo8IK6pj1+pzFtLSa9ae7
+         Bs8g==
+X-Gm-Message-State: AJIora+efu/8d19X4qBYwssCv0bJcUQ1bc7iFY3xV/6YRdklQOQ+E6qK
+        JqC/ODlcCg2S9fiiUsyUsUURQYV0cfe1rg==
+X-Google-Smtp-Source: AGRyM1tH7b0VprI98Ze11HXVcKyr6F+lCSIzw+gTZdn9IA/63fU8SqeINP07L31cByN7A7UDLTymxg==
+X-Received: by 2002:a5d:59a8:0:b0:21d:1bdd:44b9 with SMTP id p8-20020a5d59a8000000b0021d1bdd44b9mr3417839wrr.7.1656410348977;
+        Tue, 28 Jun 2022 02:59:08 -0700 (PDT)
 Received: from [192.168.0.252] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id n8-20020a05600c304800b003a04b248896sm5853940wmh.35.2022.06.28.02.52.13
+        by smtp.gmail.com with ESMTPSA id d9-20020a05600c3ac900b003a03be22f9fsm17712354wms.18.2022.06.28.02.59.07
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 28 Jun 2022 02:52:14 -0700 (PDT)
-Message-ID: <575ac859-377d-8ce0-70e0-827a3d75baca@linaro.org>
-Date:   Tue, 28 Jun 2022 11:52:13 +0200
+        Tue, 28 Jun 2022 02:59:08 -0700 (PDT)
+Message-ID: <7580e511-169e-4b9e-061d-1ef6893dcb72@linaro.org>
+Date:   Tue, 28 Jun 2022 11:59:06 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.10.0
-Subject: Re: [PATCH v2 1/2] soc: qcom: cmd-db: replace strncpy() with
- strscpy_pad()
+Subject: Re: [PATCH v2] soc: qcom: cmd-db: replace strscpy_pad() with
+ strncpy()
 Content-Language: en-US
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>
-References: <20220519073301.7072-1-krzysztof.kozlowski@linaro.org>
- <CAD=FV=VQ_O2eH2+bnEegOQuBmqMhD7ixiRV3=ukuU9SnPaBSDA@mail.gmail.com>
+To:     Douglas Anderson <dianders@chromium.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Matthias Kaehlcke <mka@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20220627171816.v2.1.Ie7b480cd99e2c13319220cbc108caf2bcd41286b@changeid>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <CAD=FV=VQ_O2eH2+bnEegOQuBmqMhD7ixiRV3=ukuU9SnPaBSDA@mail.gmail.com>
+In-Reply-To: <20220627171816.v2.1.Ie7b480cd99e2c13319220cbc108caf2bcd41286b@changeid>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -79,79 +79,69 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 28/06/2022 01:06, Doug Anderson wrote:
-> Hi,
+On 28/06/2022 02:18, Douglas Anderson wrote:
+> Commit ac0126a01735 ("soc: qcom: cmd-db: replace strncpy() with
+> strscpy_pad()") breaks booting on my sc7280-herobrine-herobrine
+> device. From printouts I see that at bootup the function is called
+> with an id of "lnbclka2" which is 8 bytes big.
 > 
-> On Thu, May 19, 2022 at 12:33 AM Krzysztof Kozlowski
-> <krzysztof.kozlowski@linaro.org> wrote:
->>
->> The use of strncpy() is considered deprecated for NUL-terminated
->> strings[1].  Replace strncpy() with strscpy_pad(), to keep existing
->> pad-behavior of strncpy.  This fixes W=1 warning:
->>
->>   drivers/soc/qcom/cmd-db.c: In function ‘cmd_db_get_header.part.0’:
->>   drivers/soc/qcom/cmd-db.c:151:9: warning: ‘strncpy’ specified bound 8 equals destination size [-Wstringop-truncation]
->>     151 |         strncpy(query, id, sizeof(query));
->>
->> [1] https://www.kernel.org/doc/html/latest/process/deprecated.html#strncpy-on-nul-terminated-strings
->>
->> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->> Reviewed-by: Stephen Boyd <sboyd@kernel.org>
->>
->> ---
->>
->> Changes since v1:
->> 1. Split series per subsystem.
->> 2. Add tag.
->> ---
->>  drivers/soc/qcom/cmd-db.c | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/drivers/soc/qcom/cmd-db.c b/drivers/soc/qcom/cmd-db.c
->> index dd872017f345..c5137c25d819 100644
->> --- a/drivers/soc/qcom/cmd-db.c
->> +++ b/drivers/soc/qcom/cmd-db.c
->> @@ -148,7 +148,7 @@ static int cmd_db_get_header(const char *id, const struct entry_header **eh,
->>                 return ret;
->>
->>         /* Pad out query string to same length as in DB */
->> -       strncpy(query, id, sizeof(query));
->> +       strscpy_pad(query, id, sizeof(query));
+> Previously all 8 bytes of this string were copied to the
+> destination. Now only 7 bytes will be copied since strscpy_pad() saves
+> a byte for '\0' termination.
 > 
-> Sorry to report that this breaks booting on
-> sc7280-herobrine-herobrine-r1. 
-
-Sorry to break booting and thanks for the report.
-
-> I believe that the function was
-> actually _relying_ on the "unsafe" behavior of strncpy(). Specifically
-> I think:
-> * The source string (id) was a '\0' terminated string.
-> * The destination (query) was a fixed 8-byte string and doesn't need
-> to be '\0' terminated.
+> We don't need the '\0' termination in the destination. Let's go back
+> to strncpy(). According to the warning:
+>   If a caller is using non-NUL-terminated strings, strncpy() can still
+>   be used, but destinations should be marked with the __nonstring
+>   attribute to avoid future compiler warnings.
+> ...so we'll do that.
 > 
-> So before your change we could actually support 8-byte strings. Now we
-> can't because you'll only copy 7 bytes to the destination to leave
-> room for the '\0' termination...
+> While we're at it, let's change the query array to use
+> "sizeof(ent->id)" so it can't possibly go out of sync with our later
+> copy.
 > 
-> Looking at printouts, I see, for instance at least one ID that looks
-> like "lnbclka2".
-
-Ah, crap... I did not expect that.
-
+> Fixes: ac0126a01735 ("soc: qcom: cmd-db: replace strncpy() with strscpy_pad()")
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
 > 
-> Given the requirements of this function(), the old strncpy() is
-> actually _exactly_ what we want. Is there any way to disable the
-> warning? If not, I guess we could make "query" be 9 bytes bit, or
-> "sizeof(ent->id) + 1" bytes big... Happy to post a patch, but it's
-> basically a bikeshed for how you want it fixed (there are dozens of
-> ways) and I'd rather you just tell me instead of me guessing.
+> ---
+> 
+> Changes in v2:
+> - Size array with "sizeof(ent->id)"
+> 
+>  drivers/soc/qcom/cmd-db.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/soc/qcom/cmd-db.c b/drivers/soc/qcom/cmd-db.c
+> index c5137c25d819..ffd2660b2890 100644
+> --- a/drivers/soc/qcom/cmd-db.c
+> +++ b/drivers/soc/qcom/cmd-db.c
+> @@ -141,14 +141,14 @@ static int cmd_db_get_header(const char *id, const struct entry_header **eh,
+>  	const struct rsc_hdr *rsc_hdr;
+>  	const struct entry_header *ent;
+>  	int ret, i, j;
+> -	u8 query[8];
+> +	u8 query[sizeof(ent->id)] __nonstring;
+>  
+>  	ret = cmd_db_ready();
+>  	if (ret)
+>  		return ret;
+>  
+>  	/* Pad out query string to same length as in DB */
 
-If the source was not a string, I would propose memcpy(). Since it is a
-string, I would prefer to have safe copy, so increased size. However I
-see you sent now patches, so let me actually respond there.
+I would find useful a comment that length of the ID can be equal to
+sizeof(query)... so no one will need to increment the counter of wasted
+time on this. :)
 
-Thanks for the analysis, much appreciated!
+But beside that, thanks for the fix:
+
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+> -	strscpy_pad(query, id, sizeof(query));
+> +	strncpy(query, id, sizeof(query));
+>  
+>  	for (i = 0; i < MAX_SLV_ID; i++) {
+>  		rsc_hdr = &cmd_db_header->header[i];
 
 
 Best regards,
