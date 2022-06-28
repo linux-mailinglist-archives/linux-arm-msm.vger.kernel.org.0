@@ -2,53 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 11BE255E478
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jun 2022 15:39:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5F30655E482
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jun 2022 15:39:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242243AbiF1N2G (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Jun 2022 09:28:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57408 "EHLO
+        id S240691AbiF1N33 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Jun 2022 09:29:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57314 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346395AbiF1N1Y (ORCPT
+        with ESMTP id S1345544AbiF1N2J (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Jun 2022 09:27:24 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC3B132ECF;
-        Tue, 28 Jun 2022 06:25:30 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 8C49DB81E1D;
-        Tue, 28 Jun 2022 13:25:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34723C341CD;
-        Tue, 28 Jun 2022 13:25:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1656422728;
-        bh=YkY3YRpWZjvY3kzFvaZglL+Asozb4pp9bZcELGWrGP8=;
-        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-        b=fSjGTW16tfddElttpgXGHZGOCkexNrDlFnx52h3IqdSzQcDln9QZJ76un6mbTjaEi
-         3OpLPiRCAcgBBq8nggxSh4YZAJy/AlmjQF84WXQLTHO+iG3EG6pal8A3g56XJaIkPc
-         75abf7TZSzKL2MNgWxUfBjLpl59aK9G5tMxfbVyTj4GxIv1Pe4gD/6sw5gBhM3STX/
-         N6x8OrmFjOahz2y9YJFuOrh6MU3xkxkxiLZldmJu17w7+8Q77R1o5SEDRtvveXRWul
-         4Z/dSTQxmJeAgfSwdB5Y8GeVo0RRWJ166v9l7M1F6YYjbGj6/lftIgdSMuSjJ6+Nbj
-         VnQEi7jp74ayg==
-From:   Mark Brown <broonie@kernel.org>
-To:     lgirdwood@gmail.com, bryan.odonoghue@linaro.org,
-        bjorn.andersson@linaro.org
-Cc:     perex@perex.cz, devicetree@vger.kernel.org,
-        alsa-devel@alsa-project.org, srinivas.kandagatla@linaro.org,
-        linux-arm-msm@vger.kernel.org, krzk+dt@kernel.org, tiwai@suse.com,
-        robh+dt@kernel.org
-In-Reply-To: <20220628002858.2638442-1-bryan.odonoghue@linaro.org>
-References: <20220628002858.2638442-1-bryan.odonoghue@linaro.org>
-Subject: Re: (subset) [PATCH v4 0/2] Fix apq8016 compat string
-Message-Id: <165642272593.1448965.607600751272662680.b4-ty@kernel.org>
-Date:   Tue, 28 Jun 2022 14:25:25 +0100
+        Tue, 28 Jun 2022 09:28:09 -0400
+Received: from mail-qk1-x72c.google.com (mail-qk1-x72c.google.com [IPv6:2607:f8b0:4864:20::72c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2EF5F9FC8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jun 2022 06:27:52 -0700 (PDT)
+Received: by mail-qk1-x72c.google.com with SMTP id z16so4681665qkj.7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jun 2022 06:27:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=0aMNqmnMIKi7I+oM6Vp8+9eJ8fBtT2TW4TZeFgJi3fQ=;
+        b=ic/oVE++fn5k1NV7kQALi6XGEpYofohGQkFZG9DwgUaJuJfylrH3XxlNM0cQoCbBIM
+         DJuuAsQ5Gk/2EnAlJY0qf7tzNZbUlrKFJvDBUU9Ag9q6KPMK7EkBTYsak4Bs76iy+AGB
+         e66nvxfFyt+p79zKrFPOZfTlYpbAn980ykkGl0wvQnuqLdbPXagmadFuojAFaZJaPeaP
+         7yEMArdWzAixYfuCI9fh5RrBzmngWSZSi5SsRevJUbw9BopMWgqDXDfuoLY7OA7JRg4H
+         PUa2/HyC9B1TSFeX1zUowg0zCkBFMh4m+mqi4ZT/B3ddtGlbcAZWgGkFIuvsOCdZjw5R
+         8p0w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=0aMNqmnMIKi7I+oM6Vp8+9eJ8fBtT2TW4TZeFgJi3fQ=;
+        b=zfttu2aj9WzaJb1Z25mQS9L6gjJRibABr2artYz1IEd8k/7NXmgOtKzL2pytkd3CDO
+         R/PeRH/DxnhN7GXhLLSjm0xmtn1Sn4E+TBHOdHxS1g+f2WcISV57raAOT4rC7vxUvUWm
+         EF4Sfduuqj1NxXZ9zEUJFIoPRjdDJTdxJK4JJxctRgDQwSOq1O/ld9UJ+tak8htUB7Et
+         Obur4yky5cduQu0L5+lulueZYoIcSBy94IBNXjr2ukEMt9p43iV5kMe44vP6buLZ5+il
+         fh4xuxBocl+4UI9VsfGqdtBtpEaS/JxKPdJ7HM92sF3kCcUsOL2EHxOOABVe+ig5Fz+Z
+         YhOQ==
+X-Gm-Message-State: AJIora+CwCfr4/2AWjauuZav48aIjoqQqQm8IvF/HLTHztwLrkP4wtTh
+        4PgOcfsrNOdqa2GJCQvdGnePv/yWdMokKPEQuWBpUw==
+X-Google-Smtp-Source: AGRyM1uFzx5XNDSGUv3VsL7v2OiaMA2icVF5JOU4zDf8SI+B/+wfHtiB9FSjEjdS1E/Sbs+16KnN2332vmlti9fKlRo=
+X-Received: by 2002:a05:620a:2a0e:b0:6a7:8346:1601 with SMTP id
+ o14-20020a05620a2a0e00b006a783461601mr11247731qkp.593.1656422871286; Tue, 28
+ Jun 2022 06:27:51 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+References: <20220501202025.211567-1-konrad.dybcio@somainline.org>
+ <20220501202025.211567-2-konrad.dybcio@somainline.org> <CAA8EJpqM5i88UKSrQyG1pMM6NQb8naTri-jNt++q7oKB-zdGAg@mail.gmail.com>
+ <e57300bb-163b-2963-e55e-a5d0b0678f4f@somainline.org>
+In-Reply-To: <e57300bb-163b-2963-e55e-a5d0b0678f4f@somainline.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Tue, 28 Jun 2022 16:27:40 +0300
+Message-ID: <CAA8EJppvye=3-Wp09Wk0eO5tJ=pvu2kdM7ipz+HMOow0Qs69RA@mail.gmail.com>
+Subject: Re: [PATCH v3 2/2] thermal: qcom: tsens-v1: Add support for MSM8992/4 TSENS
+To:     Konrad Dybcio <konrad.dybcio@somainline.org>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, martin.botka@somainline.org,
+        angelogioacchino.delregno@somainline.org,
+        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
+        Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Zhang Rui <rui.zhang@intel.com>, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -57,40 +77,102 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 28 Jun 2022 01:28:56 +0100, Bryan O'Donoghue wrote:
-> V4:
-> - Adds Bjorn's RB to first patch
-> - Adds missing people to To/Cc list
-> 
-> V3:
-> - Marks qcom,lpass-cpu-apq8016 as deprecated instead of removing - Bjorn
-> 
-> [...]
+On Tue, 28 Jun 2022 at 16:19, Konrad Dybcio
+<konrad.dybcio@somainline.org> wrote:
+>
+>
+>
+> On 27.06.2022 17:15, Dmitry Baryshkov wrote:
+> > On Sun, 1 May 2022 at 23:21, Konrad Dybcio <konrad.dybcio@somainline.org> wrote:
+> >>
+> >> MSM8994, despite being heavily based on MSM8974, uses the
+> >> 1.2 version of TSENS. Also, 8994 being 8994, it has a custom
+> >> way of calculating the slope.
+> >>
+> >> MSM8992 in turn is a cut-down version of MSM8994 and uses
+> >> the same TSENS hardware, albeit with a different set of sensors.
+> >>
+> >> Also tested on 8976 (by a person who didn't want to be named)
+> >> to make sure the 11->16 max_sensors changes didn't break anything.
+> >>
+> >> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+> >> ---
+> >> Changes since v2:
+> >>
+> >> - don't use slope before it's initialized (whoops!)
+> >> - don't re-assign the same value to p[0..15]
+> >> - free calib_rsel
+> >> - use the same ops for 8992 and 8994
+> >>
+> >>  drivers/thermal/qcom/tsens-v1.c | 293 ++++++++++++++++++++++++++++++--
+> >>  drivers/thermal/qcom/tsens.c    |   6 +
+> >>  drivers/thermal/qcom/tsens.h    |   2 +-
+> >>  3 files changed, 288 insertions(+), 13 deletions(-)
+> >>
+> >> diff --git a/drivers/thermal/qcom/tsens-v1.c b/drivers/thermal/qcom/tsens-v1.c
+> >> index 573e261ccca7..58864962f370 100644
+> >> --- a/drivers/thermal/qcom/tsens-v1.c
+> >> +++ b/drivers/thermal/qcom/tsens-v1.c
+> >> @@ -142,6 +142,99 @@
+> >>  #define CAL_SEL_MASK   7
+> >>  #define CAL_SEL_SHIFT  0
+> >>
+> >> +/* eeprom layout data for 8994 */
+> >> +#define MSM8994_BASE0_MASK     0x3ff
+> >> +#define MSM8994_BASE1_MASK     0xffc00
+> >> +#define MSM8994_BASE0_SHIFT    0
+> >> +#define MSM8994_BASE1_SHIFT    10
+> >
+> > Generally I feel that all the _MASK values can be better generated
+> > using the GENMASK and newly defined _SHIFT value.
+> Yes, I agree, however I think it'd be better to do it for
+> all the defines in this file at once in a separate commit.
 
-Applied to
+Then I'd suggest fixing the file first and adding 8992/4 on top of that.
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
+>
+> Konrad
+> >
+> >> +
+> >> +#define MSM8994_S0_MASK        0xf00000
+> >> +#define MSM8994_S1_MASK        0xf000000
+> >> +#define MSM8994_S2_MASK        0xf0000000
+> >> +#define MSM8994_S3_MASK        0xf
+> >> +#define MSM8994_S4_MASK        0xf0
+> >> +#define MSM8994_S5_MASK        0xf00
+> >> +#define MSM8994_S6_MASK        0xf000
+> >> +#define MSM8994_S7_MASK        0xf0000
+> >> +#define MSM8994_S8_MASK        0xf00000
+> >> +#define MSM8994_S9_MASK        0xf000000
+> >> +#define MSM8994_S10_MASK       0xf0000000
+> >> +#define MSM8994_S11_MASK       0xf
+> >> +#define MSM8994_S12_MASK       0xf0
+> >> +#define MSM8994_S13_MASK       0xf00
+> >> +#define MSM8994_S14_MASK       0xf000
+> >> +#define MSM8994_S15_MASK       0xf0000
+> >> +
+> >> +#define MSM8994_S0_SHIFT       20
+> >> +#define MSM8994_S1_SHIFT       24
+> >> +#define MSM8994_S2_SHIFT       28
+> >> +#define MSM8994_S3_SHIFT       0
+> >> +#define MSM8994_S4_SHIFT       4
+> >> +#define MSM8994_S5_SHIFT       8
+> >> +#define MSM8994_S6_SHIFT       12
+> >> +#define MSM8994_S7_SHIFT       16
+> >> +#define MSM8994_S8_SHIFT       20
+> >> +#define MSM8994_S9_SHIFT       24
+> >> +#define MSM8994_S10_SHIFT      28
+> >> +#define MSM8994_S11_SHIFT      0
+> >> +#define MSM8994_S12_SHIFT      4
+> >> +#define MSM8994_S13_SHIFT      8
+> >> +#define MSM8994_S14_SHIFT      12
+> >> +#define MSM8994_S15_SHIFT      16
+> >
+> > [skipped the rest]
+> >
 
-Thanks!
 
-[1/2] ASoC: qcom: lpass: Fix apq8016 compat string to match yaml
-      commit: 2a2ef688b1b03eea3a5b020d9bef50d015f619be
 
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
+-- 
+With best wishes
+Dmitry
