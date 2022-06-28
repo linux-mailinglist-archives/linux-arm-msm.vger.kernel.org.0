@@ -2,42 +2,34 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 22E2655C585
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jun 2022 14:51:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B520755D52A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jun 2022 15:15:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243515AbiF1IA0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Jun 2022 04:00:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55688 "EHLO
+        id S243685AbiF1IKD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Jun 2022 04:10:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32972 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231845AbiF1IAZ (ORCPT
+        with ESMTP id S243601AbiF1IKC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Jun 2022 04:00:25 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F53213D5B;
-        Tue, 28 Jun 2022 01:00:25 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        Tue, 28 Jun 2022 04:10:02 -0400
+Received: from m-r2.th.seeweb.it (m-r2.th.seeweb.it [5.144.164.171])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB3E8275C9;
+        Tue, 28 Jun 2022 01:10:00 -0700 (PDT)
+Received: from [192.168.1.101] (abxi223.neoplus.adsl.tpnet.pl [83.9.2.223])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id B12496104E;
-        Tue, 28 Jun 2022 08:00:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17A9EC3411D;
-        Tue, 28 Jun 2022 08:00:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1656403224;
-        bh=aijp6DmSOsxg3ML/b3u+5AynjVUvqqeBYGfLP419iiY=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=G9hPPftkQRDi9dE8PgfFfmgGI4uMPXNZzI9LIXJm4MIyHQ/gwgVjhbVI2B688IhyL
-         v3qyt6Mzj6i7CXBlnkwDp3t4hyZ37hT0ndseXrxS0ewM2wloO+zasMTkrQOXAArBHT
-         whmR+vvGy0UFnIHU2H/5tetzqn5ovHGOzAtNcyRAABhyLRBzh8DkpQWmDvgoE1vUeL
-         k6OnQzAEljTP9b5fD4o+I4RD2i4bmx5z3F8d2MofYYvxhvqnpOJshicCQc0E4fdw7X
-         GxhlFVb0tFx+c5AhwFRKJvUYwt+/qKQuFmlKV7/XLo9z3gebxkeH4jbdF14by3jDec
-         Qhd/Z5s8kCCQQ==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1o668y-0005xl-Mz; Tue, 28 Jun 2022 10:00:21 +0200
-Date:   Tue, 28 Jun 2022 10:00:20 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 59A933F775;
+        Tue, 28 Jun 2022 10:09:58 +0200 (CEST)
+Message-ID: <00aefa9b-5d91-629b-9fa6-fadd6df5a469@somainline.org>
+Date:   Tue, 28 Jun 2022 10:09:57 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: Re: [PATCH v3] arm64: dts: qcom: sc8280xp: add Lenovo Thinkpad X13s
+ devicetree
+Content-Language: en-US
+To:     Johan Hovold <johan@kernel.org>
 Cc:     Johan Hovold <johan+linaro@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Andy Gross <agross@kernel.org>,
@@ -47,43 +39,47 @@ Cc:     Johan Hovold <johan+linaro@kernel.org>,
         Jassi Brar <jassisinghbrar@gmail.com>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3] arm64: dts: qcom: sc8280xp: add Lenovo Thinkpad X13s
- devicetree
-Message-ID: <Yrq1FAscp+jE7GQs@hovoldconsulting.com>
 References: <YrMVqifgV4kZaP7F@hovoldconsulting.com>
  <20220622132617.24604-1-johan+linaro@kernel.org>
  <96394aa2-aefc-63c4-d86f-15c06d092d75@somainline.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <96394aa2-aefc-63c4-d86f-15c06d092d75@somainline.org>
-X-Spam-Status: No, score=-7.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+ <Yrq1FAscp+jE7GQs@hovoldconsulting.com>
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+In-Reply-To: <Yrq1FAscp+jE7GQs@hovoldconsulting.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jun 27, 2022 at 01:38:47PM +0200, Konrad Dybcio wrote:
-> On 22.06.2022 15:26, Johan Hovold wrote:
-> > Add an initial devicetree for the Lenovo Thinkpad X13s with support for
-> > USB, backlight, keyboard, touchpad, touchscreen (to be verified), PMICs
-> > and remoteprocs.
-> > 
-> > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> > Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Krzysztof's tag wasn't here in the version I posted.
 
-> > +	reserved-memory {
-> > +	};
-> You still haven't explained this weird node (I don't believe
-> the thing doesn't mind you poking at 'secure' regions, and even
-> if otherwise, it is unused for now).
+On 28.06.2022 10:00, Johan Hovold wrote:
+> On Mon, Jun 27, 2022 at 01:38:47PM +0200, Konrad Dybcio wrote:
+>> On 22.06.2022 15:26, Johan Hovold wrote:
+>>> Add an initial devicetree for the Lenovo Thinkpad X13s with support for
+>>> USB, backlight, keyboard, touchpad, touchscreen (to be verified), PMICs
+>>> and remoteprocs.
+>>>
+>>> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+>>> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> 
+> Krzysztof's tag wasn't here in the version I posted.
+Patchwork recently started pulling them in automatically when
+downloading a mbox file.
 
-It's just unused for now, so sure, we can remove it until we need it.
-
-Johan
+Konrad
+> 
+>>> +	reserved-memory {
+>>> +	};
+>> You still haven't explained this weird node (I don't believe
+>> the thing doesn't mind you poking at 'secure' regions, and even
+>> if otherwise, it is unused for now).
+> 
+> It's just unused for now, so sure, we can remove it until we need it.
+> 
+> Johan
