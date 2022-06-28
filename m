@@ -2,71 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 07BC555EF20
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jun 2022 22:18:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1D80255EF34
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jun 2022 22:21:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231995AbiF1USv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Jun 2022 16:18:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58388 "EHLO
+        id S231248AbiF1UVu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Jun 2022 16:21:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33840 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232176AbiF1USU (ORCPT
+        with ESMTP id S230505AbiF1UV2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Jun 2022 16:18:20 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D20B3ED13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jun 2022 13:14:04 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id y32so24225184lfa.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jun 2022 13:14:03 -0700 (PDT)
+        Tue, 28 Jun 2022 16:21:28 -0400
+Received: from mail-oa1-x36.google.com (mail-oa1-x36.google.com [IPv6:2001:4860:4864:20::36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2762DE52
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jun 2022 13:19:16 -0700 (PDT)
+Received: by mail-oa1-x36.google.com with SMTP id 586e51a60fabf-101d96fe0a5so18589604fac.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jun 2022 13:19:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:user-agent:in-reply-to:references
-         :message-id:mime-version:content-transfer-encoding;
-        bh=I2/+5dhRyxuL3Gg1aHlNPvG7vh2LZmL80DGuAx1dO9M=;
-        b=v3/T1HH6xPCsUlhJlqTNwOl2XQgII4I7NrSNEm49EGWF7H8o48QfRduFpQHTuyrvYB
-         L+eYialYzpCRveZPv0LJjUlUsxFY+7/aiuTfmBCaU2a4Q873qI+HQ+va/lF/9f30KV8l
-         mmr3lb0W0+vlo9X5zk7RGZuDTb7Moy+8oPaOhVI7PIvbB1oo9ajzQQIBnxKcbD9BVwYi
-         OMU3PZEmtEtWQMMWYTLjJYgsfhd879dmueMMW2+6JYH/GL/WShJO5AQmVAcvKZquP4i3
-         drc8JzRa1TDSf/+8sWC3nbT072L6DGSsDWrHiO9Fc8W6FOYZbxhkF3rYDTArdJ5oeNn4
-         9sqQ==
+        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
+         :content-transfer-encoding;
+        bh=TCcMfFRtuhcnVZP9mkAnGiDz0f6ZT8Z4OqJ7ET/FUrU=;
+        b=Jal3fOHABSnUElZ8o0vsXuyk//GtCzW9cGLepf1PYxzeeyvccgublrQeOVpMT/5fjy
+         M4FbF2W5h31spifuQzU3U6U2WM1q6pPr8zqgbJB2ayEfX5M/7puMrvOxX+oHJKEH8UH9
+         qmtBCozdL0O3c4P7NZ85hlvczOVMeZ2k+FDrVPFX1qrjFqu7OD9w6UMPn2EVS9alp1yZ
+         +11TSA2T0INvP5FIe8Y2GG87dDhhQc8gRbechyk0K2ReJzz4lSp6LLuASjHYF4jwmnIL
+         g/EMD25yD3mJKS0n1j7qxOk0pZ9xlA85gaO5MSq5qKftq96FWdgIhDJXHQ/0RRBIGbWh
+         oqpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:user-agent:in-reply-to
-         :references:message-id:mime-version:content-transfer-encoding;
-        bh=I2/+5dhRyxuL3Gg1aHlNPvG7vh2LZmL80DGuAx1dO9M=;
-        b=XZ4ahQZ3wrKq2qGcLp+y53FwXJwps28pBWKB6YKK49YXoxQeksIOXyyd+0EZcCYV0Z
-         Ti5OFOIvSXwxqnNFA08rAvUg//golcs+pl/UsMSf6BTcTYQn6E6lBrh9+uxgjiEjyYve
-         58kTWws8VNW6kTerWJAgD0TYQ5e4C5xmG9zqqGtX/BRyV3r7NSvmRO1m2v//+/lvjbRJ
-         CNLGH9YYTIIM4NmYDGmuqODk9e6pS81izCjIuhaQO6DCM0+NXyguU5DrodA8X2QzGkbX
-         AugOBELLfEABWgfYdsLwjzqdhCnolxMpvE710AchH5ZfHgIFb+dUAzCf4nEsILWwASbN
-         Z2eQ==
-X-Gm-Message-State: AJIora+MifeLrt6NQlAWKV+cUlDA83yJplahu7+fSbohok115s4tK4xQ
-        y+07lzE4qBG5Md/iGhltI2bM3rsVHRhQtg==
-X-Google-Smtp-Source: AGRyM1uCBKBW3awWOv+JynlB8eHhjWlAkHdDt0Ja1lpBzywpjcpIvfZ1hMjxuqk+Ua0Nz1wdceJyqA==
-X-Received: by 2002:a05:6512:3f84:b0:47f:673c:31b7 with SMTP id x4-20020a0565123f8400b0047f673c31b7mr13979453lfa.473.1656447242387;
-        Tue, 28 Jun 2022 13:14:02 -0700 (PDT)
-Received: from [127.0.0.1] ([188.162.64.167])
-        by smtp.gmail.com with ESMTPSA id a15-20020a056512200f00b004811bf4999csm901113lfb.290.2022.06.28.13.14.01
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 28 Jun 2022 13:14:01 -0700 (PDT)
-Date:   Tue, 28 Jun 2022 23:13:56 +0300
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>, robdclark@gmail.com,
-        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
-        vkoul@kernel.org, daniel@ffwll.ch, airlied@linux.ie,
-        agross@kernel.org, bjorn.andersson@linaro.org
-CC:     quic_abhinavk@quicinc.com, quic_aravindh@quicinc.com,
-        quic_khsieh@quicinc.com, quic_sbillaka@quicinc.com,
-        freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH=5D_drm/msm/dp=3A_make_eDP_pa?= =?US-ASCII?Q?nel_as_the_first_connected_connector?=
-User-Agent: K-9 Mail for Android
-In-Reply-To: <1656429606-2765-1-git-send-email-quic_khsieh@quicinc.com>
-References: <1656429606-2765-1-git-send-email-quic_khsieh@quicinc.com>
-Message-ID: <F35C87BF-46A5-41D3-B8A5-B2AB4A24252D@linaro.org>
+        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=TCcMfFRtuhcnVZP9mkAnGiDz0f6ZT8Z4OqJ7ET/FUrU=;
+        b=ZQHJLqxKkjpsZoZGtNg+urwzq09jT/l5f4dp2igkUO9y5pW+KIm2hwtyk2u9uNn88X
+         ia17ewzBLJ9g4nU2xOSWli6FYIAuNhxIrQKqQRZKt4DTsKQOpNeDuE/lhr9IMBte0Y57
+         8LS3yzfuxLpN3v2VLuaT9c92v7DTDko96BQ9dz+XtA/rFRI3ZFHOVuax+3pW2zE5N53T
+         QG/xBzkuyl9Vm9mbauGwtWY7gFO/h9UJXKTEK88K8LWPUk0lU8x/TfOhlP9IHnUfXPY3
+         QnfW92CtBsPkmtXlMxf0+MwuQ8FYolM8JyVWF+zmhXd3MACXpNCXsPqWaIqqDs9LoTnP
+         x1xw==
+X-Gm-Message-State: AJIora9QQQBxXyf4balPaPJACdFKisSwlmges0DbZdgefHFOi6LDUgjN
+        RFZDtisbk68BwnaXpEjOn365Rw==
+X-Google-Smtp-Source: AGRyM1uS9oXAEb/kDm4KVv9+HRisJG2CyJsvRd+zbAogIYh5jQtGRqn5Wof4gXMG4zs6pf1ij8mCwA==
+X-Received: by 2002:a05:6871:420b:b0:108:be11:7e42 with SMTP id li11-20020a056871420b00b00108be117e42mr846361oab.133.1656447555445;
+        Tue, 28 Jun 2022 13:19:15 -0700 (PDT)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id a12-20020a056870d60c00b000f30837129esm9536923oaq.55.2022.06.28.13.19.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 28 Jun 2022 13:19:14 -0700 (PDT)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Michael Turquette <mturquette@baylibre.com>,
+        Andy Gross <agross@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Ansuel Smith <ansuelsmth@gmail.com>,
+        Sricharan R <sricharan@codeaurora.org>
+Subject: Re: [PATCH v2 0/3] Small fixes/improvement for hfpll and krait
+Date:   Tue, 28 Jun 2022 15:18:51 -0500
+Message-Id: <165644753306.10525.8110695593593375784.b4-ty@linaro.org>
+X-Mailer: git-send-email 2.32.0
+In-Reply-To: <20220430054458.31321-1-ansuelsmth@gmail.com>
+References: <20220430054458.31321-1-ansuelsmth@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -77,43 +75,29 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Sat, 30 Apr 2022 07:44:55 +0200, Ansuel Smith wrote:
+> This series has small fixes/improvement to the hfpll and krait clk
+> driver.
+> 
+> This comes from another series that got split to better facilitate the
+> merge since it was grown to 21 patches and was getting hard to review.
+> 
+> For hfpll, a conversion to read_poll macro and introduction
+> of a timeout to prevent a stall.
+> For krait, a fix for the mux sel logic and an introduction for
+> 8064 errata.
+> 
+> [...]
 
+Applied, thanks!
 
-On 28 June 2022 18:20:06 GMT+03:00, Kuogee Hsieh <quic_khsieh@quicinc=2Eco=
-m> wrote:
->Some userspace presumes that the first connected connector is the main
->display, where it's supposed to display e=2Eg=2E the login screen=2E For
->laptops, this should be the main panel=2E
->
->This patch call drm_helper_move_panel_connectors_to_head() after
->drm_bridge_connector_init() to make sure eDP stay at head of
->connected connector list=2E This fixes unexpected corruption happen
->at eDP panel if eDP is not placed at head of connected connector
->list=2E
+[1/3] clk: qcom: clk-hfpll: use poll_timeout macro
+      commit: fcfbfe373d41b4728ffec075f8f91b6572a88c27
+[2/3] clk: qcom: clk-krait: unlock spin after mux completion
+      commit: df83d2c9e72910416f650ade1e07cc314ff02731
+[3/3] clk: qcom: clk-krait: add apq/ipq8064 errata workaround
+      commit: 898d0d6483a9360f1968e0a900465c1fa152a4a9
 
-The change itself is a good fix anyway=2E (And I'd ack it=2E) However I wo=
-uld like to understand why does it fix the corruption issue=2E What is we h=
-ave eDP and DSI, with DSI ending up before the eDP? Would we see the issue?
-Also could you please describe the mind of corruption you are observing?
-
-
->
->Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc=2Ecom>
->---
-> drivers/gpu/drm/msm/dp/dp_drm=2Ec | 2 ++
-> 1 file changed, 2 insertions(+)
->
->diff --git a/drivers/gpu/drm/msm/dp/dp_drm=2Ec b/drivers/gpu/drm/msm/dp/d=
-p_drm=2Ec
->index ce0ec3a=2E=2E2d18884 100644
->--- a/drivers/gpu/drm/msm/dp/dp_drm=2Ec
->+++ b/drivers/gpu/drm/msm/dp/dp_drm=2Ec
->@@ -136,5 +136,7 @@ struct drm_connector *dp_drm_connector_init(struct ms=
-m_dp *dp_display)
->=20
-> 	drm_connector_attach_encoder(connector, dp_display->encoder);
->=20
->+	drm_helper_move_panel_connectors_to_head(dp_display->drm_dev);
->+
-> 	return connector;
-> }
+Best regards,
+-- 
+Bjorn Andersson <bjorn.andersson@linaro.org>
