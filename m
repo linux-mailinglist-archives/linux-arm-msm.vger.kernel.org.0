@@ -2,71 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8F50455E8E1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jun 2022 18:37:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 29AEC55E65B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jun 2022 18:27:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232038AbiF1PlQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Jun 2022 11:41:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49106 "EHLO
+        id S1347112AbiF1Pog (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Jun 2022 11:44:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53658 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347929AbiF1PlN (ORCPT
+        with ESMTP id S1347609AbiF1Poe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Jun 2022 11:41:13 -0400
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA69462C6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jun 2022 08:41:12 -0700 (PDT)
+        Tue, 28 Jun 2022 11:44:34 -0400
+Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A24336B49
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jun 2022 08:44:33 -0700 (PDT)
+Received: by mail-ej1-x636.google.com with SMTP id g26so26618915ejb.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jun 2022 08:44:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1656430872; x=1687966872;
-  h=message-id:date:mime-version:subject:to:references:cc:
-   from:in-reply-to:content-transfer-encoding;
-  bh=umUEFXkxpRuTFxwhPM3gZ5RAxhtH9douX/WuwYj1eSA=;
-  b=UPrUE4WyatCGyPTQz6aaHSrx5JrnYjHpfTb4UAkM3OhQXBK+AjWfaNu1
-   Ic6G1RrBSazm6AFVj/fnqFaBjkQolim54SbOxcgqRlnTAgMu5foAvvKuj
-   iD45ORd7Ggd9RhRANrmh4+KLekOO+ybdRtyhR51wtnCwZDrZaTuNONe8u
-   E=;
-Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 28 Jun 2022 08:41:12 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Jun 2022 08:41:12 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Tue, 28 Jun 2022 08:41:11 -0700
-Received: from [10.110.113.167] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Tue, 28 Jun
- 2022 08:41:10 -0700
-Message-ID: <aae228c6-b1e0-91eb-8b05-a7ac38e271e0@quicinc.com>
-Date:   Tue, 28 Jun 2022 08:41:10 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: Fwd: [PATCH v2 3/3] drm/msm/dp: remove dp_display_en/disable
- prototypes and data argument
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-References: <20220617232434.1139950-3-dmitry.baryshkov@linaro.org>
- <c60af04c-4985-88de-5110-341fa985b276@quicinc.com>
-CC:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=406yLlQLKjMCPBS3XzimDcu/hdIBGhJCqQAdv4NXB8c=;
+        b=KcZM9Z4k5Wgnc+FacREdF75fAvwKxd+Bax2++TOk3qKmi9pMLTdT71+X/LdpZeyRnR
+         nlbcfSk+m1vbWPfmYqvkgbwgtiu53+Xx32W0pkjKpVlNzFFdVMCyMzfyFgIuvbWzuWP9
+         se6ACTywYSGX9nEjnZMPJUx37yFRfd82T8RtNqZfN1etWnHap7QeTnWHY0PA7eEjAxUH
+         P5bsdmE77lDW20+7ZZfsYM8D4ynPYZbI3XoFeAsU+lB8uQlVASQnSaeJkS3NOHzKMsFR
+         yaJQBFJNIB/N/edZVVa8z+XSXc05ZGtvEjCB2c+EDAe8QHKAc9exDq9sP8LQNhzSk15Z
+         mj3A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=406yLlQLKjMCPBS3XzimDcu/hdIBGhJCqQAdv4NXB8c=;
+        b=aCCaolK7BdGVFznDusEjLFXNLTqSaGzk5FdUvcP7nvlObXwJopLqWu/Q7NuSMJqaUX
+         YY4b3+h6e7kRJR4Md8+BGDMnRb/7qZlIH+cYKxwIeY/KQPBD3k5lAXn+04EnsTE8G/86
+         /ieyQCID78I7IFc6blHMOjuVgj+4tXk1gtDDGTAa+3qHgGWdrVrM+KyDuQxZYmoUy50/
+         XV1kuE/etI6tI7gyA1zVZMB23jh9eX3EsvFEU43qu6HsCZkcMi1yB7ObOSs7kFcA1Sjw
+         gidtriHyAAciI9EHuOXl5iFdM8B5yznEZsBwG3Achju5ss9NtV32yEF9NE3tkxYsurZt
+         rE0w==
+X-Gm-Message-State: AJIora+RdItBanDwc5p7BGGnTbdG3oWtUJi7rnCyWYRaWWslGtpAy4vN
+        KOIBhHLg8tkp2WAk6sFMJV88jg==
+X-Google-Smtp-Source: AGRyM1sj3GoND2FtW75ZdMgcEf/UpyLQ3OzOh/0DO82t4LLsflF1HgMMTXpWkyWEa/fq5eXR0H4Sew==
+X-Received: by 2002:a17:907:9689:b0:71e:56c1:838b with SMTP id hd9-20020a170907968900b0071e56c1838bmr18607147ejc.304.1656431071520;
+        Tue, 28 Jun 2022 08:44:31 -0700 (PDT)
+Received: from linaro.org ([94.52.112.99])
+        by smtp.gmail.com with ESMTPSA id n22-20020a1709067b5600b00722ea7a7febsm6561195ejo.194.2022.06.28.08.44.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 28 Jun 2022 08:44:30 -0700 (PDT)
+Date:   Tue, 28 Jun 2022 18:44:29 +0300
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     Saravana Kannan <saravanak@google.com>
+Cc:     "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Len Brown <lenb@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Ard Biesheuvel <ardb@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Frank Rowand <frowand.list@gmail.com>,
+        Marc Zyngier <maz@kernel.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Tomi Valkeinen <tomi.valkeinen@ti.com>,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        Grygorii Strashko <grygorii.strashko@ti.com>,
+        kernel-team@android.com, linux-acpi@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-efi@vger.kernel.org,
+        devicetree@vger.kernel.org, Andrei Damian <A.Damian@nxp.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>
-From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
-In-Reply-To: <c60af04c-4985-88de-5110-341fa985b276@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2 13/17] driver core: Use device's fwnode to check if it
+ is waiting for suppliers
+Message-ID: <Yrsh3b+jBuOxRzxO@linaro.org>
+References: <20201121020232.908850-1-saravanak@google.com>
+ <20201121020232.908850-14-saravanak@google.com>
+ <YrmXpcU1NTYW6T/n@linaro.org>
+ <CAGETcx8dwNcZFFzhhv=kMhpuQnyaEekrycpAmGusD-s+qfvA9g@mail.gmail.com>
+ <YrsdLQrOtg1qdaoE@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <YrsdLQrOtg1qdaoE@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -74,73 +91,214 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 22-06-28 18:24:29, Abel Vesa wrote:
+> On 22-06-27 15:30:25, Saravana Kannan wrote:
+> > On Mon, Jun 27, 2022 at 4:42 AM Abel Vesa <abel.vesa@linaro.org> wrote:
+> > >
 
-On 6/24/2022 10:37 AM, Abhinav Kumar wrote:
+Oups, forget this reply since it not to the right message-id.
+
+Will do it properly right now.
+
+
+> > > On 20-11-20 18:02:28, Saravana Kannan wrote:
+> > > > To check if a device is still waiting for its supplier devices to be
+> > > > added, we used to check if the devices is in a global
+> > > > waiting_for_suppliers list. Since the global list will be deleted in
+> > > > subsequent patches, this patch stops using this check.
+> > > >
+> > > > Instead, this patch uses a more device specific check. It checks if the
+> > > > device's fwnode has any fwnode links that haven't been converted to
+> > > > device links yet.
+> > > >
+> > > > Signed-off-by: Saravana Kannan <saravanak@google.com>
+> > > > ---
+> > > >  drivers/base/core.c | 18 ++++++++----------
+> > > >  1 file changed, 8 insertions(+), 10 deletions(-)
+> > > >
+> > > > diff --git a/drivers/base/core.c b/drivers/base/core.c
+> > > > index 395dece1c83a..1873cecb0cc4 100644
+> > > > --- a/drivers/base/core.c
+> > > > +++ b/drivers/base/core.c
+> > > > @@ -51,6 +51,7 @@ static DEFINE_MUTEX(wfs_lock);
+> > > >  static LIST_HEAD(deferred_sync);
+> > > >  static unsigned int defer_sync_state_count = 1;
+> > > >  static DEFINE_MUTEX(fwnode_link_lock);
+> > > > +static bool fw_devlink_is_permissive(void);
+> > > >
+> > > >  /**
+> > > >   * fwnode_link_add - Create a link between two fwnode_handles.
+> > > > @@ -995,13 +996,13 @@ int device_links_check_suppliers(struct device *dev)
+> > > >        * Device waiting for supplier to become available is not allowed to
+> > > >        * probe.
+> > > >        */
+> > > > -     mutex_lock(&wfs_lock);
+> > > > -     if (!list_empty(&dev->links.needs_suppliers) &&
+> > > > -         dev->links.need_for_probe) {
+> > > > -             mutex_unlock(&wfs_lock);
+> > > > +     mutex_lock(&fwnode_link_lock);
+> > > > +     if (dev->fwnode && !list_empty(&dev->fwnode->suppliers) &&
+> > > > +         !fw_devlink_is_permissive()) {
+> > > > +             mutex_unlock(&fwnode_link_lock);
+> > >
+> > > Hi Saravana,
+> > >
+> > > First of, sorry for going back to this.
+> >
+> > No worries at all. If there's an issue with fw_devlink, I want to have it fixed.
+> >
+> > > There is a scenario where this check will not work and probably should
+> > > work. It goes like this:
+> > >
+> > > A clock controller is not allowed to probe because it uses a clock from a child device of a
+> > > consumer, like so:
+> > >
+> > >         dispcc: clock-controller@af00000 {
+> > >                 clocks = <&dsi0_phy 0>;
+> > >         };
+> > >
+> > >         mdss: mdss@ae00000 {
+> > >                 clocks = <&dispcc DISP_CC_MDSS_MDP_CLK>;
+> > >
+> > >                 dsi0_phy: dsi-phy@ae94400 {
+> > >                         clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
+> > >                 };
+> > >         };
+> > >
+> > > This is a real scenario actually, but I stripped it down to the essentials.
+> >
+> > I'm well aware of this scenario and explicitly wrote code to address this :)
+> >
 >
+> Actually, the problem seems to be when you have two dsi phys.
+> Like so:
 >
+>          dispcc: clock-controller@af00000 {
+>                  clocks = <&dsi0_phy 0>;
+>                  clocks = <&dsi1_phy 0>;
+>          };
 >
-> -------- Forwarded Message --------
-> Subject: [PATCH v2 3/3] drm/msm/dp: remove dp_display_en/disable 
-> prototypes and data argument
-> Date: Sat, 18 Jun 2022 02:24:34 +0300
-> From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> To: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
-> Abhinav Kumar <quic_abhinavk@quicinc.com>
-> CC: Stephen Boyd <swboyd@chromium.org>, David Airlie 
-> <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>, Bjorn Andersson 
-> <bjorn.andersson@linaro.org>, linux-arm-msm@vger.kernel.org, 
-> dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+>          mdss: mdss@ae00000 {
+>                  clocks = <&dispcc DISP_CC_MDSS_MDP_CLK>;
 >
-> Remove unused dp_display_en/disable prototypes. While we are at it,
-> remove extra 'data' argument that is unused.
+>                  dsi0_phy: dsi-phy@ae94400 {
+>                          clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
+>                  };
 >
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-> ---
-> Changes since v1:
-> - Rebased and dropped the dp_display_enable() chunk
-> ---
->  drivers/gpu/drm/msm/dp/dp_display.c | 9 +++------
->  1 file changed, 3 insertions(+), 6 deletions(-)
+> 		 dsi1_phy: dsi-phy@ae64400 {
+>                          clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
+>                  };
+>          };
 >
-> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c 
-> b/drivers/gpu/drm/msm/dp/dp_display.c
-> index 96defacc92dc..c17a799d3009 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_display.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-> @@ -608,9 +608,6 @@ static int dp_hpd_plug_handle(struct 
-> dp_display_private *dp, u32 data)
->      return 0;
->  };
->  -static int dp_display_enable(struct dp_display_private *dp, bool 
-> force_link_train);
-> -static int dp_display_disable(struct dp_display_private *dp, u32 data);
-> -
->  static void dp_display_handle_plugged_change(struct msm_dp *dp_display,
->          bool plugged)
->  {
-> @@ -894,7 +891,7 @@ static int dp_display_post_enable(struct msm_dp 
-> *dp_display)
->      return 0;
->  }
->  -static int dp_display_disable(struct dp_display_private *dp, u32 data)
-> +static int dp_display_disable(struct dp_display_private *dp)
->  {
->      struct msm_dp *dp_display = &dp->dp_display;
->  @@ -1676,7 +1673,7 @@ void dp_bridge_enable(struct drm_bridge 
-> *drm_bridge)
->      rc = dp_display_post_enable(dp);
->      if (rc) {
->          DRM_ERROR("DP display post enable failed, rc=%d\n", rc);
-> -        dp_display_disable(dp_display, 0);
-> +        dp_display_disable(dp_display);
->      }
->       /* completed connection */
-> @@ -1717,7 +1714,7 @@ void dp_bridge_post_disable(struct drm_bridge 
-> *drm_bridge)
->          return;
->      }
->  -    dp_display_disable(dp_display, 0);
-> +    dp_display_disable(dp_display);
->       state =  dp_display->hpd_state;
->      if (state == ST_DISCONNECT_PENDING) {
+> And from what I've seen happening so far is that the device_is_dependent
+> check for the parent of the supplier (if it also a consumer) seems to return
+> false on second pass of the same link due to the DL_FLAG_SYNC_STATE_ONLY
+> being set this time around.
+>
+> > See this comment in fw_devlink_create_devlink()
+> >
+> >        /*
+> >          * If we can't find the supplier device from its fwnode, it might be
+> >          * due to a cyclic dependency between fwnodes. Some of these cycles can
+> >          * be broken by applying logic. Check for these types of cycles and
+> >          * break them so that devices in the cycle probe properly.
+> >          *
+> >          * If the supplier's parent is dependent on the consumer, then the
+> >          * consumer and supplier have a cyclic dependency. Since fw_devlink
+> >          * can't tell which of the inferred dependencies are incorrect, don't
+> >          * enforce probe ordering between any of the devices in this cyclic
+> >          * dependency. Do this by relaxing all the fw_devlink device links in
+> >          * this cycle and by treating the fwnode link between the consumer and
+> >          * the supplier as an invalid dependency.
+> >          */
+> >
+>
+> So when this thing you mentioned above is happening for the second dsi
+> phy (order doesn't matter), since the dsi phy itself cannot be found,
+> the device_is_dependent is run for the same link: dispcc -> mdss
+> (supplier -> consumer), but again, since it has the
+> DL_FLAG_SYNC_STATE_ONLY this time around, it will skip that specific
+> link.
+>
+> > Applying this comment to your example, dispcc is the "consumer",
+> > dsi0_phy is the "supplier" and mdss is the "supplier's parent".
+> >
+> > And because we can't guarantee the order of addition of these top
+> > level devices is why I also have this piece of recursive call inside
+> > __fw_devlink_link_to_suppliers():
+> >
+> >                 /*
+> >                  * If a device link was successfully created to a supplier, we
+> >                  * now need to try and link the supplier to all its suppliers.
+> >                  *
+> >                  * This is needed to detect and delete false dependencies in
+> >                  * fwnode links that haven't been converted to a device link
+> >                  * yet. See comments in fw_devlink_create_devlink() for more
+> >                  * details on the false dependency.
+> >                  *
+> >                  * Without deleting these false dependencies, some devices will
+> >                  * never probe because they'll keep waiting for their false
+> >                  * dependency fwnode links to be converted to device links.
+> >                  */
+> >                 sup_dev = get_dev_from_fwnode(sup);
+> >                 __fw_devlink_link_to_suppliers(sup_dev, sup_dev->fwnode);
+> >                 put_device(sup_dev);
+> >
+> > So when mdss gets added, we'll link it to dispcc and then check if
+> > dispcc has any suppliers it needs to link to. And that's when the
+> > logic will catch the cycle and fix it.
+> >
+> > Can you tell me why this wouldn't unblock the probing of dispcc? Are
+> > you actually hitting this on a device? If so, can you please check why
+> > this logic isn't sufficient to catch and undo the cycle?
+> >
+>
+> This is happening on Qualcomm SDM845 with Linus's tree.
+>
+> > Thanks,
+> > Saravana
+> >
+> > > So, the dsi0_phy will be "device_add'ed" (through of_platform_populate) by the mdss probe.
+> > > The mdss will probe defer waiting for the DISP_CC_MDSS_MDP_CLK, while
+> > > the dispcc will probe defer waiting for the dsi0_phy (supplier).
+> > >
+> > > Basically, this 'supplier availability check' does not work when a supplier might
+> > > be populated by a consumer of the device that is currently trying to probe.
+> > >
+> > >
+> > > Abel
+> > >
+> > >
+> > > >               return -EPROBE_DEFER;
+> > > >       }
+> > > > -     mutex_unlock(&wfs_lock);
+> > > > +     mutex_unlock(&fwnode_link_lock);
+> > > >
+> > > >       device_links_write_lock();
+> > > >
+> > > > @@ -1167,10 +1168,7 @@ static ssize_t waiting_for_supplier_show(struct device *dev,
+> > > >       bool val;
+> > > >
+> > > >       device_lock(dev);
+> > > > -     mutex_lock(&wfs_lock);
+> > > > -     val = !list_empty(&dev->links.needs_suppliers)
+> > > > -           && dev->links.need_for_probe;
+> > > > -     mutex_unlock(&wfs_lock);
+> > > > +     val = !list_empty(&dev->fwnode->suppliers);
+> > > >       device_unlock(dev);
+> > > >       return sysfs_emit(buf, "%u\n", val);
+> > > >  }
+> > > > @@ -2202,7 +2200,7 @@ static int device_add_attrs(struct device *dev)
+> > > >                       goto err_remove_dev_groups;
+> > > >       }
+> > > >
+> > > > -     if (fw_devlink_flags && !fw_devlink_is_permissive()) {
+> > > > +     if (fw_devlink_flags && !fw_devlink_is_permissive() && dev->fwnode) {
+> > > >               error = device_create_file(dev, &dev_attr_waiting_for_supplier);
+> > > >               if (error)
+> > > >                       goto err_remove_dev_online;
+> > > > --
+> > > > 2.29.2.454.gaff20da3a2-goog
+> > > >
+> > > >
+> >
