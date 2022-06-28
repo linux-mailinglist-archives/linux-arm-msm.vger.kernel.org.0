@@ -2,86 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B003855E5F4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jun 2022 18:26:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AF3A255E6C8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jun 2022 18:30:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347225AbiF1Oid (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Jun 2022 10:38:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49324 "EHLO
+        id S1347498AbiF1Oz7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Jun 2022 10:55:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33872 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346874AbiF1Oid (ORCPT
+        with ESMTP id S1347483AbiF1Ozx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Jun 2022 10:38:33 -0400
-Received: from mail-io1-f52.google.com (mail-io1-f52.google.com [209.85.166.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 923F7240A6;
-        Tue, 28 Jun 2022 07:38:32 -0700 (PDT)
-Received: by mail-io1-f52.google.com with SMTP id p69so13028291iod.10;
-        Tue, 28 Jun 2022 07:38:32 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=7CrZnSenKek654/97AlEV8LBLvyOsBKP8Iwz71p4ah0=;
-        b=y8NKfZpt9/QoquGo8+AGxNHSsCduoDdQSyw1VpGdcgRJMCegmLB+W0Zy02ncwOHnc3
-         8tCbJ6btXNSFKA+WUTmkN/HO/8ki7o9Go1CNdqA6iamCZl7d2fROA3OJU/W6Vvey9eg2
-         n1sUaw0PntZSVPI/9KYzSxWbe/+0utc2EbH9P82uUeaS/9rLJj/CturlpW+qapEJQ9X3
-         0z7FI0n4CiL3txbMQZNzJamUpiu3kur2zJahc1HYOsYBTfDaBsDMkx91/UC1qFIJdNhD
-         RnPC4+Plmdlg6BReFYat9kmIcoaxqwSZAbdAdHUH1I+DgSKsV0arqV12lYt0kx8pNEVW
-         bG5w==
-X-Gm-Message-State: AJIora+aIOM6OOmSA6492g8L0VfTxdLp2tFyE6p+4z8jPQl7bbw5If3B
-        8/JJSBh759kTF53W1PClN/lHrQZCqA==
-X-Google-Smtp-Source: AGRyM1tHobz2HHZ9ZW7lmUlWJYgEIxqzEnozzVpJe3OIRiHCxfP+ZbuX9OIAJQCNim3DX5gCHqZOyQ==
-X-Received: by 2002:a05:6602:27cd:b0:669:3d8d:4d77 with SMTP id l13-20020a05660227cd00b006693d8d4d77mr9655992ios.216.1656427111678;
-        Tue, 28 Jun 2022 07:38:31 -0700 (PDT)
-Received: from robh.at.kernel.org ([64.188.179.253])
-        by smtp.gmail.com with ESMTPSA id f9-20020a02a109000000b00339e3a22dbbsm6144706jag.21.2022.06.28.07.38.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Jun 2022 07:38:31 -0700 (PDT)
-Received: (nullmailer pid 427504 invoked by uid 1000);
-        Tue, 28 Jun 2022 14:38:27 -0000
-Date:   Tue, 28 Jun 2022 08:38:27 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Tue, 28 Jun 2022 10:55:53 -0400
+Received: from mx.kernkonzept.com (serv1.kernkonzept.com [IPv6:2a01:4f8:1c1c:b490::2])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B92ECDD;
+        Tue, 28 Jun 2022 07:55:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=kernkonzept.com; s=mx1; h=Content-Transfer-Encoding:MIME-Version:Message-Id
+        :Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+        List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=jZuySzSeLPFuyMaTbHvbearnnMYPsF7DujhGSdwCgEk=; b=VJkDFJ9xpIuezY184IWpafJEVa
+        BdgUla15BpGJTbhmHWL2DuOctCaP4MFE/xlXGsc6D04ondvaiZWBwqwafE0+WEYSLLcdMhCCiqtZV
+        o7ibufE9hbHUdNVLqTUHeOaOYRPlfuh4PqNMWbCJEJ/bAe+g7gqOjgYOwy9h6zM+ucO00Cm0GKBch
+        JkXqv3JPcc3vvZc+oiKfx/+DFAJ8eUtRnurMpmlmzcBvxEKqmSqpr95ysumosEpdOuf/9VnjXdHfv
+        fxSY1Bk2o2EpjgTOMHQQ/KFX7Eju9gVTGAhqP0z6n3EEaQkA1Tor95yk8KjAQg/aolVuWct82BYn/
+        VgKBngXQ==;
+Received: from [10.22.3.24] (helo=kernkonzept.com)
+        by mx.kernkonzept.com with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim 4.94.2)
+        id 1o6Ccy-006LlH-TT; Tue, 28 Jun 2022 16:55:44 +0200
+From:   Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+To:     Linus Walleij <linus.walleij@linaro.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>
-Subject: Re: [PATCH 02/11] dt-bindings: display/msm: move qcom,sdm845-mdss
- schema to mdss.yaml
-Message-ID: <20220628143827.GA425727-robh@kernel.org>
-References: <20220625232513.522599-1-dmitry.baryshkov@linaro.org>
- <20220625232513.522599-3-dmitry.baryshkov@linaro.org>
+        Stephan Gerhold <stephan@gerhold.net>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org,
+        Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+Subject: [PATCH 0/2] pinctrl: qcom: Add pinctrl driver for MSM8909
+Date:   Tue, 28 Jun 2022 16:55:00 +0200
+Message-Id: <20220628145502.4158234-1-stephan.gerhold@kernkonzept.com>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220625232513.522599-3-dmitry.baryshkov@linaro.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Jun 26, 2022 at 02:25:04AM +0300, Dmitry Baryshkov wrote:
-> Move schema for qcom,sdm845-mdss from dpu-sdm845.yaml to mdss.yaml so
-> that the dpu file describes only the DPU schema.
-> 
-> While we are at it, rename display-controller node to mdp to reflect
-> actual node name in the sdm845.dtsi file.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  .../bindings/display/msm/dpu-sdm845.yaml      | 137 +++++-------------
->  .../devicetree/bindings/display/msm/mdss.yaml | 112 ++++++++++++--
->  2 files changed, 135 insertions(+), 114 deletions(-)
+Make it possible to control GPIOs/pins on the MSM8909 SoC by adding
+the necessary definitions for the existing Qualcomm TLMM driver.
 
-What's the base for this series? Patch 1 applied, the rest did not.
+Stephan Gerhold (2):
+  dt-bindings: pinctrl: Add DT schema for qcom,msm8909-tlmm
+  pinctrl: qcom: Add pinctrl driver for MSM8909
 
-Rob
+ .../bindings/pinctrl/qcom,msm8909-tlmm.yaml   | 152 +++
+ drivers/pinctrl/qcom/Kconfig                  |   8 +
+ drivers/pinctrl/qcom/Makefile                 |   1 +
+ drivers/pinctrl/qcom/pinctrl-msm8909.c        | 956 ++++++++++++++++++
+ 4 files changed, 1117 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,msm8909-tlmm.yaml
+ create mode 100644 drivers/pinctrl/qcom/pinctrl-msm8909.c
+
+-- 
+2.30.2
+
