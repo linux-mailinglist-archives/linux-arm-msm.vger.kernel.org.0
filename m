@@ -2,67 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 24F8355E860
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jun 2022 18:35:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1A07955E900
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jun 2022 18:40:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346736AbiF1Nnt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Jun 2022 09:43:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47672 "EHLO
+        id S1346804AbiF1No1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Jun 2022 09:44:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48002 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346862AbiF1Nnj (ORCPT
+        with ESMTP id S1346795AbiF1NoY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Jun 2022 09:43:39 -0400
-Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 334121D308
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jun 2022 06:43:38 -0700 (PDT)
-Received: by mail-pj1-x1030.google.com with SMTP id m14-20020a17090a668e00b001ee6ece8368so6675507pjj.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jun 2022 06:43:38 -0700 (PDT)
+        Tue, 28 Jun 2022 09:44:24 -0400
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CEC8B22B25
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jun 2022 06:44:22 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id i25so12260439wrc.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jun 2022 06:44:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=1981ByijFES4Z51VKfKpaqL9mzBb3Klm3MJNFz1LN/Q=;
-        b=iMtXOFUICTVdHSxy2et3XQLWdCcymKIrE960JXJYygPsX5hsTLgbjSqlUp1MZ0oKJj
-         GZ9FKM1BFHNVuCEzkdqzhTvB3jSr0s7hIYI4u7Bm6ALCT3IoE/xYDEmiTE018aJaWO21
-         N8aEK79WNO3k+e2nm2zmHYMDSdOblAmciiv4c=
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=3FEXn91GVNvx8HwFiV6McvXwtAYEGKEWO5SJ8ez8JNk=;
+        b=cQhC6qT+DMM5ZBiRXB+TolvS3WHRrq92BFhnMzhzuqvM/6XB31Er753Eyfqv0/wlzJ
+         YiJu1jjh6qQ4q6sh7JNp9Vq8MmKlbOStXrtaD6orvq7gQQjYhjaS5fR1MktZpWOkOZrI
+         NVewqBeA1knlgvFHs5cXeNrYkDnh1pBblVI5Aqvv0vO573YMnju9olba60+5jS1yGSA2
+         RESwmIJM2BWTYQSlQqamGJ5HK0WmYkjFWIaXwz5gzwpFm2T/SGCwSvR+YnT/pawxbwE3
+         RTiULhs5r1pYUgF+14ijkS4yo69FiCFIkCA18LIBUEUcnDh/2lZ6aZBafiBBJQLaky2p
+         iQ+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=1981ByijFES4Z51VKfKpaqL9mzBb3Klm3MJNFz1LN/Q=;
-        b=n5yPUaUUlZfxC+vvJWt62QImE2GGu2vkLibxr4lEu28Emxv5163o4QCBh4vM6/AgxF
-         gOwtbQoNRTM5g3aWNzSGSbzYvo/tyEn2YmLB+WGdennr8v8l/slAI5xrU8Uvar2fyCol
-         +59HmAPht+rNZgswbV2PForOMPg71WMc7bhfjwNE4z3TLfm2OA+oNkHmfAVtoJuRR5XC
-         pOzBXV/UBebim3mrC3wY+O+QckuYQomJzchZAQYNh34BKdTaUslHZP+5vORvx92NozDw
-         8Jqw3FmQ747YuE5uf05JYqULCcm29IhEf/A9OYQof4rvkwKevFAJhuffW+9bpfG8ISxm
-         rNQQ==
-X-Gm-Message-State: AJIora+mpTC+dnGBhUeVn7ONV02H9BTNeI95slYnyUfNbAPiVMWThjPF
-        43YPNag/jPEoUDtx/pWzYV9GyQ==
-X-Google-Smtp-Source: AGRyM1vROI5ZbSMg9ZLu8nsfvS9fFnxl9Zl5EGmk1xq1YkMOpWjVrGZOnWDOJo4m81UOSjjVVba8XQ==
-X-Received: by 2002:a17:90a:ab16:b0:1ed:2251:a878 with SMTP id m22-20020a17090aab1600b001ed2251a878mr22439498pjq.231.1656423817685;
-        Tue, 28 Jun 2022 06:43:37 -0700 (PDT)
-Received: from tictac2.mtv.corp.google.com ([2620:15c:202:201:18c2:6594:17be:c241])
-        by smtp.gmail.com with ESMTPSA id 22-20020aa79116000000b00527af57598fsm3107197pfh.43.2022.06.28.06.43.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Jun 2022 06:43:37 -0700 (PDT)
-From:   Douglas Anderson <dianders@chromium.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Douglas Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        bh=3FEXn91GVNvx8HwFiV6McvXwtAYEGKEWO5SJ8ez8JNk=;
+        b=t/GK6SxeX22FuS6gTjZDBroBtpQGSP5kss2+KuMmGRIsVWtAeVut/49ef0XzN/uuvC
+         2oWltBlp3uLGCBonq8zVw0x1YTkYbAksF3J218hlSlaqlZsQQ4czB6f0QiYsXFKk8vop
+         MzMQ1u/VN1iFz3/JMFvfa9xiKyT4ypF2XeIMPpweawm7QQ7u26iM5b4ZbN+MZDHdCaKJ
+         VMjW77ybse5dhSAUViH1qarJjkOUuph8l0LZXpKOoutO+JGzx88lwpAVX9zQoXfPRASu
+         ChFXicI94jFgPHOp1wZiEnjs30jCFhA0Ma0C1BJpNai+Eg+cHqUc6z/wQ+fBXcPVm894
+         blLg==
+X-Gm-Message-State: AJIora/AzOPXaqfl33dnMFYGbKhf0rhR0fdvIomBmCkDXmdf2/sdhq6K
+        YEJ2QHW9rL9E39NLt0VQtpqmbQ==
+X-Google-Smtp-Source: AGRyM1vOL3iJx9aPbVl+WWVYTNj+VQf6Ga9GcQC0+nx3Z9lKt3KI5pedg+47iJ57k3QW+4p9L337PQ==
+X-Received: by 2002:adf:e60a:0:b0:21b:8af9:e78a with SMTP id p10-20020adfe60a000000b0021b8af9e78amr17881899wrm.395.1656423861425;
+        Tue, 28 Jun 2022 06:44:21 -0700 (PDT)
+Received: from [192.168.0.254] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id t7-20020a05600001c700b002167efdd549sm13673863wrx.38.2022.06.28.06.44.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 28 Jun 2022 06:44:20 -0700 (PDT)
+Message-ID: <c70e269d-4481-5d01-5db9-268e967c90e0@linaro.org>
+Date:   Tue, 28 Jun 2022 15:44:19 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: Re: [PATCH v3] soc: qcom: cmd-db: replace strscpy_pad() with
+ strncpy()
+Content-Language: en-US
+To:     Douglas Anderson <dianders@chromium.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Matthias Kaehlcke <mka@chromium.org>,
         Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
         Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH v3] soc: qcom: cmd-db: replace strscpy_pad() with strncpy()
-Date:   Tue, 28 Jun 2022 06:43:13 -0700
-Message-Id: <20220628064301.v3.1.Ie7b480cd99e2c13319220cbc108caf2bcd41286b@changeid>
-X-Mailer: git-send-email 2.37.0.rc0.161.g10f37bed90-goog
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+References: <20220628064301.v3.1.Ie7b480cd99e2c13319220cbc108caf2bcd41286b@changeid>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220628064301.v3.1.Ie7b480cd99e2c13319220cbc108caf2bcd41286b@changeid>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -70,67 +79,38 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Commit ac0126a01735 ("soc: qcom: cmd-db: replace strncpy() with
-strscpy_pad()") breaks booting on my sc7280-herobrine-herobrine
-device. From printouts I see that at bootup the function is called
-with an id of "lnbclka2" which is 8 bytes big.
+On 28/06/2022 15:43, Douglas Anderson wrote:
+> Commit ac0126a01735 ("soc: qcom: cmd-db: replace strncpy() with
+> strscpy_pad()") breaks booting on my sc7280-herobrine-herobrine
+> device. From printouts I see that at bootup the function is called
+> with an id of "lnbclka2" which is 8 bytes big.
+> 
+> Previously all 8 bytes of this string were copied to the
+> destination. Now only 7 bytes will be copied since strscpy_pad() saves
+> a byte for '\0' termination.
+> 
+> We don't need the '\0' termination in the destination. Let's go back
+> to strncpy(). According to the warning:
+>   If a caller is using non-NUL-terminated strings, strncpy() can still
+>   be used, but destinations should be marked with the __nonstring
+>   attribute to avoid future compiler warnings.
+> ...so we'll do that.
+> 
+> While we're at it, let's change the query array to use
+> "sizeof(ent->id)" so it can't possibly go out of sync with our later
+> copy.
+> 
+> Fixes: ac0126a01735 ("soc: qcom: cmd-db: replace strncpy() with strscpy_pad()")
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+> 
+> Changes in v3:
+> - Add comment that query isn't necessarily '\0' terminated.
+> 
 
-Previously all 8 bytes of this string were copied to the
-destination. Now only 7 bytes will be copied since strscpy_pad() saves
-a byte for '\0' termination.
+Thanks!
 
-We don't need the '\0' termination in the destination. Let's go back
-to strncpy(). According to the warning:
-  If a caller is using non-NUL-terminated strings, strncpy() can still
-  be used, but destinations should be marked with the __nonstring
-  attribute to avoid future compiler warnings.
-...so we'll do that.
-
-While we're at it, let's change the query array to use
-"sizeof(ent->id)" so it can't possibly go out of sync with our later
-copy.
-
-Fixes: ac0126a01735 ("soc: qcom: cmd-db: replace strncpy() with strscpy_pad()")
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
-
-Changes in v3:
-- Add comment that query isn't necessarily '\0' terminated.
-
-Changes in v2:
-- Size array with "sizeof(ent->id)"
-
- drivers/soc/qcom/cmd-db.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
-
-diff --git a/drivers/soc/qcom/cmd-db.c b/drivers/soc/qcom/cmd-db.c
-index c5137c25d819..629a7188b576 100644
---- a/drivers/soc/qcom/cmd-db.c
-+++ b/drivers/soc/qcom/cmd-db.c
-@@ -141,14 +141,18 @@ static int cmd_db_get_header(const char *id, const struct entry_header **eh,
- 	const struct rsc_hdr *rsc_hdr;
- 	const struct entry_header *ent;
- 	int ret, i, j;
--	u8 query[8];
-+	u8 query[sizeof(ent->id)] __nonstring;
- 
- 	ret = cmd_db_ready();
- 	if (ret)
- 		return ret;
- 
--	/* Pad out query string to same length as in DB */
--	strscpy_pad(query, id, sizeof(query));
-+	/*
-+	 * Pad out query string to same length as in DB. NOTE: the output
-+	 * query string is not necessarily '\0' terminated if it bumps up
-+	 * against the max size. That's OK and expected.
-+	 */
-+	strncpy(query, id, sizeof(query));
- 
- 	for (i = 0; i < MAX_SLV_ID; i++) {
- 		rsc_hdr = &cmd_db_header->header[i];
--- 
-2.37.0.rc0.161.g10f37bed90-goog
-
+Best regards,
+Krzysztof
