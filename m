@@ -2,166 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 927B955D965
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jun 2022 15:21:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4940655CE65
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jun 2022 15:05:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240331AbiF0Xz7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Jun 2022 19:55:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37122 "EHLO
+        id S241767AbiF1ASi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Jun 2022 20:18:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45794 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235320AbiF0Xz6 (ORCPT
+        with ESMTP id S240124AbiF1ASh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Jun 2022 19:55:58 -0400
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 875EF186E7;
-        Mon, 27 Jun 2022 16:55:57 -0700 (PDT)
+        Mon, 27 Jun 2022 20:18:37 -0400
+Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67C5E63EC
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jun 2022 17:18:34 -0700 (PDT)
+Received: by mail-pj1-x1031.google.com with SMTP id g16-20020a17090a7d1000b001ea9f820449so14115141pjl.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jun 2022 17:18:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1656374157; x=1687910157;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=rq/4gEVKFpg5ay0+GYJpcJLfsj+qRRQffLwqTvVaOEs=;
-  b=MXIHmMizfzvBr8uPqhS7UiuhmsNYM3ZFizOpOI+m2FpnA94bEJHZJhwI
-   zBku+iiR7bzlrEoxi1dqH312+G2UO5qDgBzaa3LUPIQ/7OMUSGVEYyevO
-   EzAE/qssrxVR3j1vGZOE8u02JCWPqY8TYPCbwFdJFlx7ZXjuoHC3rg6cI
-   Y=;
-Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 27 Jun 2022 16:55:56 -0700
-X-QCInternal: smtphost
-Received: from nasanex01b.na.qualcomm.com ([10.46.141.250])
-  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jun 2022 16:55:56 -0700
-Received: from hu-collinsd-lv.qualcomm.com (10.49.16.6) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Mon, 27 Jun 2022 16:55:56 -0700
-From:   David Collins <quic_collinsd@quicinc.com>
-To:     Stephen Boyd <sboyd@kernel.org>,
-        Steven Rostedt <rostedt@goodmis.org>,
-        Ingo Molnar <mingo@redhat.com>, <linux-kernel@vger.kernel.org>
-CC:     David Collins <quic_collinsd@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>,
-        Ankit Gupta <ankgupta@codeaurora.org>,
-        "Gilad Avidov" <gavidov@codeaurora.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        <stable@vger.kernel.org>
-Subject: [PATCH] spmi: trace: fix stack-out-of-bound access in SPMI tracing functions
-Date:   Mon, 27 Jun 2022 16:55:12 -0700
-Message-ID: <20220627235512.2272783-1-quic_collinsd@quicinc.com>
-X-Mailer: git-send-email 2.25.1
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=cb42boPy1G1/5Oq0/d+fF1u+WVmX2leD5qZiodotCIE=;
+        b=Di/8PzeuQjGITwPzQck0cLBCACqwOY9vVvNW4SuMuVueccNd876kEWZz25qObwdpHP
+         EcrYtnu9yqated8h1s5YlFl//qhF1M11m/6bvHhS5ZRHCDwW89wAX7Eqpb+jvgInw7bC
+         SDlWjT31LraalaCVyFyGybU9tlKtgvSpSXtII=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=cb42boPy1G1/5Oq0/d+fF1u+WVmX2leD5qZiodotCIE=;
+        b=e2O7o4vx6uoaIzuqL8sCwO7rmXIWX/+tacNHQPEDI6W+bLHzBbqNiwe0O4eOI3puHg
+         q1pMFh2RFnCGEA0ZrrqHHgW4DBmvEOpHMgzAuUbNkDzz0elJ61lKQ5zFHLaaHsl4dRU9
+         Va0Zmkw7FNZ3mikaCV5l3IfBUe8RbFixtnUMYVaUi1L8UsH3dmwGUVLf3VQzQUjo/UcK
+         Fmqe/VS/Pf6T1aV1dlhZ7ROlOmpDtywzvjD0zZL74R6scHm2pI9T1aBjBRcmxC6Kb6rZ
+         DZMZyKEuz/6h2Sp12B5ow2qhGUWcGCO1iwJsOMg6LkkT+wkUnSv7OVZHOUAb0JUPp6Mt
+         PFjQ==
+X-Gm-Message-State: AJIora/8NVn4/xL1mv2lQwgDWUiECY+VYvilpHlCmDdlBlJoorztrnn3
+        krWEYgWUESv3bF4pomajC7PVlw==
+X-Google-Smtp-Source: AGRyM1vqpJj3o338WU9NKhAyPbugDeASo72cZie953H7mClxPONahvkDajKKa7FWGJfS4VtK1Iq8+g==
+X-Received: by 2002:a17:902:c94b:b0:16a:3f98:84fd with SMTP id i11-20020a170902c94b00b0016a3f9884fdmr2124658pla.70.1656375513959;
+        Mon, 27 Jun 2022 17:18:33 -0700 (PDT)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:202:201:18c2:6594:17be:c241])
+        by smtp.gmail.com with ESMTPSA id jj2-20020a170903048200b0016a4db1343fsm7780149plb.190.2022.06.27.17.18.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 27 Jun 2022 17:18:33 -0700 (PDT)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Douglas Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH v2] soc: qcom: cmd-db: replace strscpy_pad() with strncpy()
+Date:   Mon, 27 Jun 2022 17:18:27 -0700
+Message-Id: <20220627171816.v2.1.Ie7b480cd99e2c13319220cbc108caf2bcd41286b@changeid>
+X-Mailer: git-send-email 2.37.0.rc0.161.g10f37bed90-goog
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.49.16.6]
-X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-trace_spmi_write_begin() and trace_spmi_read_end() both call
-memcpy() with a length of "len + 1".  This leads to one extra
-byte being read beyond the end of the specified buffer.  Fix
-this out-of-bound memory access by using a length of "len"
-instead.
+Commit ac0126a01735 ("soc: qcom: cmd-db: replace strncpy() with
+strscpy_pad()") breaks booting on my sc7280-herobrine-herobrine
+device. From printouts I see that at bootup the function is called
+with an id of "lnbclka2" which is 8 bytes big.
 
-Here is a KASAN log showing the issue:
+Previously all 8 bytes of this string were copied to the
+destination. Now only 7 bytes will be copied since strscpy_pad() saves
+a byte for '\0' termination.
 
-BUG: KASAN: stack-out-of-bounds in trace_event_raw_event_spmi_read_end+0x1d0/0x234
-Read of size 2 at addr ffffffc0265b7540 by task thermal@2.0-ser/1314
-...
-Call trace:
- dump_backtrace+0x0/0x3e8
- show_stack+0x2c/0x3c
- dump_stack_lvl+0xdc/0x11c
- print_address_description+0x74/0x384
- kasan_report+0x188/0x268
- kasan_check_range+0x270/0x2b0
- memcpy+0x90/0xe8
- trace_event_raw_event_spmi_read_end+0x1d0/0x234
- spmi_read_cmd+0x294/0x3ac
- spmi_ext_register_readl+0x84/0x9c
- regmap_spmi_ext_read+0x144/0x1b0 [regmap_spmi]
- _regmap_raw_read+0x40c/0x754
- regmap_raw_read+0x3a0/0x514
- regmap_bulk_read+0x418/0x494
- adc5_gen3_poll_wait_hs+0xe8/0x1e0 [qcom_spmi_adc5_gen3]
- ...
- __arm64_sys_read+0x4c/0x60
- invoke_syscall+0x80/0x218
- el0_svc_common+0xec/0x1c8
- ...
+We don't need the '\0' termination in the destination. Let's go back
+to strncpy(). According to the warning:
+  If a caller is using non-NUL-terminated strings, strncpy() can still
+  be used, but destinations should be marked with the __nonstring
+  attribute to avoid future compiler warnings.
+...so we'll do that.
 
-addr ffffffc0265b7540 is located in stack of task thermal@2.0-ser/1314 at offset 32 in frame:
- adc5_gen3_poll_wait_hs+0x0/0x1e0 [qcom_spmi_adc5_gen3]
+While we're at it, let's change the query array to use
+"sizeof(ent->id)" so it can't possibly go out of sync with our later
+copy.
 
-this frame has 1 object:
- [32, 33) 'status'
+Fixes: ac0126a01735 ("soc: qcom: cmd-db: replace strncpy() with strscpy_pad()")
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
 
-Memory state around the buggy address:
- ffffffc0265b7400: 00 00 00 00 00 00 00 00 00 00 00 00 f1 f1 f1 f1
- ffffffc0265b7480: 04 f3 f3 f3 00 00 00 00 00 00 00 00 00 00 00 00
->ffffffc0265b7500: 00 00 00 00 f1 f1 f1 f1 01 f3 f3 f3 00 00 00 00
-                                           ^
- ffffffc0265b7580: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
- ffffffc0265b7600: f1 f1 f1 f1 01 f2 07 f2 f2 f2 01 f3 00 00 00 00
-==================================================================
-
-Fixes: a9fce374815d ("spmi: add command tracepoints for SPMI")
-Cc: stable@vger.kernel.org
-Signed-off-by: David Collins <quic_collinsd@quicinc.com>
 ---
- include/trace/events/spmi.h | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/include/trace/events/spmi.h b/include/trace/events/spmi.h
-index 8b60efe18ba6..a6819fd85cdf 100644
---- a/include/trace/events/spmi.h
-+++ b/include/trace/events/spmi.h
-@@ -21,15 +21,15 @@ TRACE_EVENT(spmi_write_begin,
- 		__field		( u8,         sid       )
- 		__field		( u16,        addr      )
- 		__field		( u8,         len       )
--		__dynamic_array	( u8,   buf,  len + 1   )
-+		__dynamic_array	( u8,   buf,  len       )
- 	),
+Changes in v2:
+- Size array with "sizeof(ent->id)"
+
+ drivers/soc/qcom/cmd-db.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/soc/qcom/cmd-db.c b/drivers/soc/qcom/cmd-db.c
+index c5137c25d819..ffd2660b2890 100644
+--- a/drivers/soc/qcom/cmd-db.c
++++ b/drivers/soc/qcom/cmd-db.c
+@@ -141,14 +141,14 @@ static int cmd_db_get_header(const char *id, const struct entry_header **eh,
+ 	const struct rsc_hdr *rsc_hdr;
+ 	const struct entry_header *ent;
+ 	int ret, i, j;
+-	u8 query[8];
++	u8 query[sizeof(ent->id)] __nonstring;
  
- 	TP_fast_assign(
- 		__entry->opcode = opcode;
- 		__entry->sid    = sid;
- 		__entry->addr   = addr;
--		__entry->len    = len + 1;
--		memcpy(__get_dynamic_array(buf), buf, len + 1);
-+		__entry->len    = len;
-+		memcpy(__get_dynamic_array(buf), buf, len);
- 	),
+ 	ret = cmd_db_ready();
+ 	if (ret)
+ 		return ret;
  
- 	TP_printk("opc=%d sid=%02d addr=0x%04x len=%d buf=0x[%*phD]",
-@@ -92,7 +92,7 @@ TRACE_EVENT(spmi_read_end,
- 		__field		( u16,        addr      )
- 		__field		( int,        ret       )
- 		__field		( u8,         len       )
--		__dynamic_array	( u8,   buf,  len + 1   )
-+		__dynamic_array	( u8,   buf,  len       )
- 	),
+ 	/* Pad out query string to same length as in DB */
+-	strscpy_pad(query, id, sizeof(query));
++	strncpy(query, id, sizeof(query));
  
- 	TP_fast_assign(
-@@ -100,8 +100,8 @@ TRACE_EVENT(spmi_read_end,
- 		__entry->sid    = sid;
- 		__entry->addr   = addr;
- 		__entry->ret    = ret;
--		__entry->len    = len + 1;
--		memcpy(__get_dynamic_array(buf), buf, len + 1);
-+		__entry->len    = len;
-+		memcpy(__get_dynamic_array(buf), buf, len);
- 	),
- 
- 	TP_printk("opc=%d sid=%02d addr=0x%04x ret=%d len=%02d buf=0x[%*phD]",
+ 	for (i = 0; i < MAX_SLV_ID; i++) {
+ 		rsc_hdr = &cmd_db_header->header[i];
 -- 
-2.25.1
+2.37.0.rc0.161.g10f37bed90-goog
 
