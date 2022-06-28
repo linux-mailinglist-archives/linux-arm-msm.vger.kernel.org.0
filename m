@@ -2,145 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4E23555E465
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jun 2022 15:39:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BA04155E474
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jun 2022 15:39:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232105AbiF1NVh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Jun 2022 09:21:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40560 "EHLO
+        id S239820AbiF1N2F (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Jun 2022 09:28:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57238 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346203AbiF1NVQ (ORCPT
+        with ESMTP id S1346101AbiF1N1K (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Jun 2022 09:21:16 -0400
-Received: from m-r2.th.seeweb.it (m-r2.th.seeweb.it [IPv6:2001:4b7a:2000:18::171])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7620C3207C
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jun 2022 06:19:21 -0700 (PDT)
-Received: from [192.168.1.101] (abxi223.neoplus.adsl.tpnet.pl [83.9.2.223])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id D1CFD3EEC7;
-        Tue, 28 Jun 2022 15:19:17 +0200 (CEST)
-Message-ID: <e57300bb-163b-2963-e55e-a5d0b0678f4f@somainline.org>
-Date:   Tue, 28 Jun 2022 15:19:17 +0200
+        Tue, 28 Jun 2022 09:27:10 -0400
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C615326C7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jun 2022 06:25:25 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id e28so12528104wra.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jun 2022 06:25:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=nexus-software-ie.20210112.gappssmtp.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=CKn2dypMjl//s7j5EiwsdZOXhfwq674TABBiuFBlpDM=;
+        b=x2OpHdF1FzcOsB230wGtKvY7rbtz97uba8M8ySomN+j+XXYdCjPOpLBne46nBCIMCy
+         PrTwfjUhnEbntHCwS1JgkCZOIfnjiF8P4ssoB1e+/3nGBQk6p9KqpU18fIh3XMJfW8PA
+         NN6RBkBt9SLwzO4KgUwG8UxIZe7MPCtk82dUzYDHcXP8C12UNKiEH1rKdOGNz4JN7t+T
+         mKA8ggkhHxG3O1/WPF8KzwCOKsEob6SRKUfkyMvqzqKa60vn8RLFKBbNGwf5VF/5WtAv
+         ux79dHBwZ4NSDooIrW3eQ1GGKAfiRF4cgef5MDk/ovO8E6ZZwnajI9KfImbT9II9biR7
+         Qc9g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=CKn2dypMjl//s7j5EiwsdZOXhfwq674TABBiuFBlpDM=;
+        b=HG+H1mKv5wut1kR0KJCapB5Tnz5WOZ/7hqRSoKYUVLX1s7iiW/AuHgYwc8D3zm7Jjm
+         EFniV2KgU9vgNrCFmN/KwW6qu0gCH8i/495qGJnXuk25kp+92B4jkt9PyydQ8dbpC/G0
+         on8lbUjgIEw6E/bTeL/kir+2RRR0PQgmlOhRlO2KiPenYmTUTpsntEmX3XtotUi3TxHt
+         CnKA+qb8nvLNYjQ6onsl1+K1h/+fQ2iC3nVxJplvrL8c+2Dw2jnUb/4LCa7tWyaoELq/
+         GfRHWFXo9rbTJbiO9J1LO1TXhLZdmfDkZJUofNUf1QqM+73DA+mIX6WnF+57LN3HwsZW
+         EuyQ==
+X-Gm-Message-State: AJIora+VeCOZF/Xi55JGO/nvJvjfs0FK78GS2Bx3eXpYpOzAgftH3kwP
+        5p9++xLB9WVRXEjxGfXbXT1ogFfI+tuASA==
+X-Google-Smtp-Source: AGRyM1tU4KPGbD+msQMaaYfAKuHpqNJm7R8fnemJkU0QpA+/c1aS9eYuoEnlIO3YouI51OGosYwJlA==
+X-Received: by 2002:adf:fe83:0:b0:21b:9cc6:4c91 with SMTP id l3-20020adffe83000000b0021b9cc64c91mr18439262wrr.414.1656422723925;
+        Tue, 28 Jun 2022 06:25:23 -0700 (PDT)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id a2-20020adfbc42000000b0021ba1b6186csm15049119wrh.40.2022.06.28.06.25.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 28 Jun 2022 06:25:23 -0700 (PDT)
+Message-ID: <c8699827-bdec-cef2-9174-9aa769a2ceeb@nexus-software.ie>
+Date:   Tue, 28 Jun 2022 14:25:22 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: [PATCH v3 2/2] thermal: qcom: tsens-v1: Add support for MSM8992/4
- TSENS
+ Thunderbird/91.9.0
+Subject: Re: [PATCH v4 1/2] ASoC: qcom: lpass: Fix apq8016 compat string to
+ match yaml
 Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, martin.botka@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
-        Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20220501202025.211567-1-konrad.dybcio@somainline.org>
- <20220501202025.211567-2-konrad.dybcio@somainline.org>
- <CAA8EJpqM5i88UKSrQyG1pMM6NQb8naTri-jNt++q7oKB-zdGAg@mail.gmail.com>
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-In-Reply-To: <CAA8EJpqM5i88UKSrQyG1pMM6NQb8naTri-jNt++q7oKB-zdGAg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
+To:     Mark Brown <broonie@kernel.org>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc:     lgirdwood@gmail.com, bjorn.andersson@linaro.org, perex@perex.cz,
+        tiwai@suse.com, srinivas.kandagatla@linaro.org, robh+dt@kernel.org,
+        krzk+dt@kernel.org, alsa-devel@alsa-project.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+References: <20220628002858.2638442-1-bryan.odonoghue@linaro.org>
+ <20220628002858.2638442-2-bryan.odonoghue@linaro.org>
+ <Yrrf5X8wstW+DXHF@sirena.org.uk>
+ <14f6b7eb-cacb-91a5-ce06-9702618513b9@linaro.org>
+ <Yrru6n6HnEAAz/2Y@sirena.org.uk>
+From:   Bryan O'Donoghue <pure.logic@nexus-software.ie>
+In-Reply-To: <Yrru6n6HnEAAz/2Y@sirena.org.uk>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 28/06/2022 13:07, Mark Brown wrote:
+> On Tue, Jun 28, 2022 at 12:48:20PM +0100, Bryan O'Donoghue wrote:
+>> On 28/06/2022 12:03, Mark Brown wrote:
+> 
+>>> This doesn't apply against current code, please check and resend.
+> 
+>> What's the tree you are applying to here ?
+> 
+> The ASoC tree.
 
+V4 applies to your branches for-next, for-linus and the tag 
+asoc-fix-v5.19-rc3
 
-On 27.06.2022 17:15, Dmitry Baryshkov wrote:
-> On Sun, 1 May 2022 at 23:21, Konrad Dybcio <konrad.dybcio@somainline.org> wrote:
->>
->> MSM8994, despite being heavily based on MSM8974, uses the
->> 1.2 version of TSENS. Also, 8994 being 8994, it has a custom
->> way of calculating the slope.
->>
->> MSM8992 in turn is a cut-down version of MSM8994 and uses
->> the same TSENS hardware, albeit with a different set of sensors.
->>
->> Also tested on 8976 (by a person who didn't want to be named)
->> to make sure the 11->16 max_sensors changes didn't break anything.
->>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
->> ---
->> Changes since v2:
->>
->> - don't use slope before it's initialized (whoops!)
->> - don't re-assign the same value to p[0..15]
->> - free calib_rsel
->> - use the same ops for 8992 and 8994
->>
->>  drivers/thermal/qcom/tsens-v1.c | 293 ++++++++++++++++++++++++++++++--
->>  drivers/thermal/qcom/tsens.c    |   6 +
->>  drivers/thermal/qcom/tsens.h    |   2 +-
->>  3 files changed, 288 insertions(+), 13 deletions(-)
->>
->> diff --git a/drivers/thermal/qcom/tsens-v1.c b/drivers/thermal/qcom/tsens-v1.c
->> index 573e261ccca7..58864962f370 100644
->> --- a/drivers/thermal/qcom/tsens-v1.c
->> +++ b/drivers/thermal/qcom/tsens-v1.c
->> @@ -142,6 +142,99 @@
->>  #define CAL_SEL_MASK   7
->>  #define CAL_SEL_SHIFT  0
->>
->> +/* eeprom layout data for 8994 */
->> +#define MSM8994_BASE0_MASK     0x3ff
->> +#define MSM8994_BASE1_MASK     0xffc00
->> +#define MSM8994_BASE0_SHIFT    0
->> +#define MSM8994_BASE1_SHIFT    10
-> 
-> Generally I feel that all the _MASK values can be better generated
-> using the GENMASK and newly defined _SHIFT value.
-Yes, I agree, however I think it'd be better to do it for
-all the defines in this file at once in a separate commit.
+https://git.linaro.org/people/bryan.odonoghue/kernel.git/log/?h=8916-asoc-fix-v5.19-rc3
 
-Konrad
-> 
->> +
->> +#define MSM8994_S0_MASK        0xf00000
->> +#define MSM8994_S1_MASK        0xf000000
->> +#define MSM8994_S2_MASK        0xf0000000
->> +#define MSM8994_S3_MASK        0xf
->> +#define MSM8994_S4_MASK        0xf0
->> +#define MSM8994_S5_MASK        0xf00
->> +#define MSM8994_S6_MASK        0xf000
->> +#define MSM8994_S7_MASK        0xf0000
->> +#define MSM8994_S8_MASK        0xf00000
->> +#define MSM8994_S9_MASK        0xf000000
->> +#define MSM8994_S10_MASK       0xf0000000
->> +#define MSM8994_S11_MASK       0xf
->> +#define MSM8994_S12_MASK       0xf0
->> +#define MSM8994_S13_MASK       0xf00
->> +#define MSM8994_S14_MASK       0xf000
->> +#define MSM8994_S15_MASK       0xf0000
->> +
->> +#define MSM8994_S0_SHIFT       20
->> +#define MSM8994_S1_SHIFT       24
->> +#define MSM8994_S2_SHIFT       28
->> +#define MSM8994_S3_SHIFT       0
->> +#define MSM8994_S4_SHIFT       4
->> +#define MSM8994_S5_SHIFT       8
->> +#define MSM8994_S6_SHIFT       12
->> +#define MSM8994_S7_SHIFT       16
->> +#define MSM8994_S8_SHIFT       20
->> +#define MSM8994_S9_SHIFT       24
->> +#define MSM8994_S10_SHIFT      28
->> +#define MSM8994_S11_SHIFT      0
->> +#define MSM8994_S12_SHIFT      4
->> +#define MSM8994_S13_SHIFT      8
->> +#define MSM8994_S14_SHIFT      12
->> +#define MSM8994_S15_SHIFT      16
-> 
-> [skipped the rest]
-> 
+https://git.linaro.org/people/bryan.odonoghue/kernel.git/log/?h=8916-for-next
+
+https://git.linaro.org/people/bryan.odonoghue/kernel.git/log/?h=8916-for-linus
+
+I don't see an obvious master branch there.
+
+I based V5 with the change you requested on  650516f1c1e0a - 
+(asoc/for-next) Merge remote-tracking branch 'asoc/for-5.20'
+
+https://yhbt.net/lore/all/20220628120435.3044939-1-bryan.odonoghue@linaro.org/
+
+Please let me know if I have the wrong branch.
+
+---
+bod
