@@ -2,185 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B107155E795
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jun 2022 18:33:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1D9D655EA0E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jun 2022 18:43:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233331AbiF1QZ1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Jun 2022 12:25:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44272 "EHLO
+        id S233508AbiF1Qkm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Jun 2022 12:40:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54686 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233812AbiF1QYs (ORCPT
+        with ESMTP id S1347860AbiF1Qj4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Jun 2022 12:24:48 -0400
-Received: from mail-yb1-xb31.google.com (mail-yb1-xb31.google.com [IPv6:2607:f8b0:4864:20::b31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4B263914D
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jun 2022 09:17:01 -0700 (PDT)
-Received: by mail-yb1-xb31.google.com with SMTP id d5so23066318yba.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jun 2022 09:17:01 -0700 (PDT)
+        Tue, 28 Jun 2022 12:39:56 -0400
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD3CF24F2B
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jun 2022 09:37:35 -0700 (PDT)
+Received: by mail-wm1-x335.google.com with SMTP id m184so7697891wme.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jun 2022 09:37:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=a+P6wSeN2x0ZvD2/JjzHKyqS9/n/5A6tY5jiA6Lhnb8=;
-        b=svPPiUXmjLu4A2+b3rJgoCqrzxWVmAH7KXTvVP4AwaLTDrIN9AN3BtNG2XiV2ycJ8x
-         6Y9oMX5BQlCl6K+KL9J1KxqNRcb1MdTb/c18nJgwvmc5rVyOe8EKUyj+KrCbNC70iJoL
-         OlJOsi9x5Scvw9W8cP8d/OYBAk6luTiA/PE8w/jzj7tOJ+ICpHFzyCnfh2xqrRn3YVLo
-         nvgpT4pJzONw4hikJOgq/y8DRHjrG2lOfrc2hEWRc02ovhuxlfgkK9/gOnTwVGME5DOU
-         4AXMX65QfUYiz76GEkrT/465op3M51kj45IkhJmeQobRe1+J32FVHZumFFaJBd9Gan88
-         /wYA==
+        d=gmail.com; s=20210112;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=zTrnKXsP357t4essNdCGgt/pIcSI3m0gn7jRuKNWiEQ=;
+        b=dYQyZu9hKQVdrmwLqjZuuis22j79t0huSOLkc/q7KbSN2p5jEDEmGQKqxKccXO4PEQ
+         /AF/u57LtJgqmCBOmjUXGL9LVX3784EwUj7hbppVcj/fRXLNxRe4Zn6KJsf9uH6TVtZs
+         Qm6EjILKgODglsV1SG+Vzn4jqAenxwNHHN4gB7I8CUYz+wJ+20h6HaE7BzonhBbSffEC
+         q6Hm7zIG/4bzIW9KxOYoJ+4T/kvaavYZX0DXsF3BJONMyOUsicaZoVq5xJOshlgck260
+         5IiRk3gZ9x0e7Bu1fpYJytGdiA0otZ5WOfhrmUp7lyS9I17yjPUSYuDznR/GJrW6r6A/
+         qqDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=a+P6wSeN2x0ZvD2/JjzHKyqS9/n/5A6tY5jiA6Lhnb8=;
-        b=rgI4hACi4h+c3qQJPRhjvBoGK4jhRVpQLgzih5sFoZoeLpQuvrHYxQfXsREUyyk9vl
-         Ao8xVLXY12AqG4WDHr/Wo/50a2NM2fmA6E9tzTvoApQ6hq5eFtY7BmK4yw9O1psQHR5Q
-         HXU1UgfdkinLgtiFd/In/hxv71tFOdUdwqrWGx7P007GCSs1COlaEHWf3WXsfSsGNQZX
-         Tq6RZYiGabhyQEbfsaiPx4s5sm3d7kVdzQSkQpdpM7Zxz1OWyE/CH/vil/oAI+bY86CZ
-         bJjklydWUw8ElXb7WGJDHCaYnhwqsvCqh9BzhZd2K4FtunJvf76d3OcBzsEQcGuBg7tR
-         t3cA==
-X-Gm-Message-State: AJIora9m8uq1xYPDev07MiVI75OrzjUaZgTzvDevrAFagddGpQA6TqbO
-        GM+0nMkqNQs6N1CkY1rt1swhwgsugIWHUc9q9w6eoQ==
-X-Google-Smtp-Source: AGRyM1vHa4WRnJlk4sln0xuJGdVhcpu8QS15R2N9PrbVvkglI7Nzwr0PBFdp1lTun6HJ/nUSS1O/TmeoEjFZPidRK0U=
-X-Received: by 2002:a25:5bc3:0:b0:669:b722:beb8 with SMTP id
- p186-20020a255bc3000000b00669b722beb8mr20258885ybb.447.1656433020483; Tue, 28
- Jun 2022 09:17:00 -0700 (PDT)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=zTrnKXsP357t4essNdCGgt/pIcSI3m0gn7jRuKNWiEQ=;
+        b=p0fOcC/jCoDzJiEzJsMC7LchOYi4E2LOQgLzu7+42AiW3TWovdj6MZdukgKMkwW+iJ
+         501ZcV3WsYYf+GrvQAWguN95qu1rDLVkzy0OlbH+C3erxuCtPklpi4wD5CmkYWZ8jmh/
+         UOnB3Px8fsWeO1wowxwPNAhbRGOLyu0HaclFFZThDSWoMj1fWVoOFp5vfEG4d8tO0Sbv
+         i4HtEpTMMeXaHaCk3d6MSlHP4NqWBeLDGq0+Y8zXM5EW/UVEJTCdNOM8nF2KZEQi9hR6
+         SMUsC+rDdBBTeMKMbNraKvX2Ut24W65fXTc9/2SeYSv621eIKDPj7L0saqKQ9HLbaOVu
+         Vr4Q==
+X-Gm-Message-State: AJIora/w8pk7ttaE6nbekmDqD+Vdw1gWsuxNVcP+TUeH40YN62KLVXAl
+        3xhv/+BWjjWtXBMHYga8MzV2GirUIMG7305cwZCIjr+Bikw=
+X-Google-Smtp-Source: AGRyM1uOPdxafZdL1L2hYPRlKZOts53RkqBtiPY4vRVqV7TiAXTMG9m44Ga3PBCJeX+pOZH4DKOC2Gr5zsxTPxL6B/Y=
+X-Received: by 2002:a05:600c:4f96:b0:39c:951e:66b7 with SMTP id
+ n22-20020a05600c4f9600b0039c951e66b7mr556966wmq.84.1656434254256; Tue, 28 Jun
+ 2022 09:37:34 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220628020110.1601693-1-saravanak@google.com>
- <20220628020110.1601693-3-saravanak@google.com> <20220628140025.qpom64ptru4ub6fu@distanz.ch>
-In-Reply-To: <20220628140025.qpom64ptru4ub6fu@distanz.ch>
-From:   Saravana Kannan <saravanak@google.com>
-Date:   Tue, 28 Jun 2022 09:16:24 -0700
-Message-ID: <CAGETcx_7jS3H2cphiXdk=NBfmuPzsusEwPBx75n3PrP6YTnjnA@mail.gmail.com>
-Subject: Re: [PATCH v1 2/2] serial: Set probe_no_timeout for all DT based drivers
-To:     Tobias Klauser <tklauser@distanz.ch>
-Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Laurentiu Tudor <laurentiu.tudor@nxp.com>,
-        Jiri Slaby <jirislaby@kernel.org>,
-        Michael Ellerman <mpe@ellerman.id.au>,
-        Benjamin Herrenschmidt <benh@kernel.crashing.org>,
-        Paul Mackerras <paulus@samba.org>,
-        Joel Stanley <joel@jms.id.au>,
-        Andrew Jeffery <andrew@aj.id.au>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Ray Jui <rjui@broadcom.com>,
-        Scott Branden <sbranden@broadcom.com>,
-        Broadcom internal kernel review list 
-        <bcm-kernel-feedback-list@broadcom.com>,
-        Nicolas Saenz Julienne <nsaenz@kernel.org>,
-        Al Cooper <alcooperx@gmail.com>,
-        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-        Paul Cercueil <paul@crapouillou.net>,
-        Vladimir Zapolskiy <vz@mleia.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-        Masami Hiramatsu <mhiramat@kernel.org>,
-        Russell King <linux@armlinux.org.uk>,
-        Vineet Gupta <vgupta@kernel.org>,
-        Richard Genoud <richard.genoud@gmail.com>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Claudiu Beznea <claudiu.beznea@microchip.com>,
-        Alexander Shiyan <shc_work@mail.ru>,
-        Baruch Siach <baruch@tkos.co.il>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Karol Gugala <kgugala@antmicro.com>,
-        Mateusz Holenko <mholenko@antmicro.com>,
-        Gabriel Somlo <gsomlo@gmail.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Taichi Sugaya <sugaya.taichi@socionext.com>,
-        Takao Orito <orito.takao@socionext.com>,
-        Liviu Dudau <liviu.dudau@arm.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Pali Rohar <pali@kernel.org>,
-        Andreas Farber <afaerber@suse.de>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Laxman Dewangan <ldewangan@nvidia.com>,
-        Palmer Dabbelt <palmer@dabbelt.com>,
-        Paul Walmsley <paul.walmsley@sifive.com>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Baolin Wang <baolin.wang7@gmail.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Patrice Chotard <patrice.chotard@foss.st.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        "David S. Miller" <davem@davemloft.net>,
-        Hammer Hsieh <hammerh0314@gmail.com>,
-        Peter Korsgaard <jacmet@sunsite.dk>,
-        Timur Tabi <timur@kernel.org>,
-        Michal Simek <michal.simek@xilinx.com>,
-        Rob Herring <robh@kernel.org>,
-        sascha hauer <sha@pengutronix.de>, peng fan <peng.fan@nxp.com>,
-        kevin hilman <khilman@kernel.org>,
-        ulf hansson <ulf.hansson@linaro.org>,
-        len brown <len.brown@intel.com>, pavel machek <pavel@ucw.cz>,
-        joerg roedel <joro@8bytes.org>, will deacon <will@kernel.org>,
-        andrew lunn <andrew@lunn.ch>,
-        heiner kallweit <hkallweit1@gmail.com>,
-        eric dumazet <edumazet@google.com>,
-        jakub kicinski <kuba@kernel.org>,
-        paolo abeni <pabeni@redhat.com>,
-        linus walleij <linus.walleij@linaro.org>,
-        hideaki yoshifuji <yoshfuji@linux-ipv6.org>,
-        david ahern <dsahern@kernel.org>, kernel-team@android.com,
-        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-        iommu@lists.linux-foundation.org, netdev@vger.kernel.org,
-        linux-gpio@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
-        linux-serial@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-aspeed@lists.ozlabs.org,
-        linux-rpi-kernel@lists.infradead.org, linux-mips@vger.kernel.org,
-        linux-mediatek@lists.infradead.org, linux-tegra@vger.kernel.org,
-        linux-snps-arc@lists.infradead.org,
-        linux-amlogic@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-actions@lists.infradead.org,
-        linux-unisoc@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-riscv@lists.infradead.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        sparclinux@vger.kernel.org, Ahmad Fatoum <a.fatoum@pengutronix.de>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Tue, 28 Jun 2022 09:37:48 -0700
+Message-ID: <CAF6AEGvswNKdd02EYKYv5Zjv7f+mcqeWC7hHQ1SBjqYzN_ZHnA@mail.gmail.com>
+Subject: [pull] drm/msm: drm-msm-fixes-2022-06-28 for v5.19-rc5
+To:     Dave Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
+Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-17.6 required=5.0 tests=BAYES_00,DKIMWL_WL_MED,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        ENV_AND_HDR_SPF_MATCH,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,USER_IN_DEF_DKIM_WL,USER_IN_DEF_SPF_WL
-        autolearn=unavailable autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jun 28, 2022 at 7:00 AM Tobias Klauser <tklauser@distanz.ch> wrote:
->
-> On 2022-06-28 at 04:01:03 +0200, Saravana Kannan <saravanak@google.com> wrote:
-> > diff --git a/drivers/tty/serial/8250/8250_acorn.c b/drivers/tty/serial/8250/8250_acorn.c
-> > index 758c4aa203ab..5a6f2f67de4f 100644
-> > --- a/drivers/tty/serial/8250/8250_acorn.c
-> > +++ b/drivers/tty/serial/8250/8250_acorn.c
-> > @@ -114,7 +114,6 @@ static const struct ecard_id serial_cids[] = {
-> >  static struct ecard_driver serial_card_driver = {
-> >       .probe          = serial_card_probe,
-> >       .remove         = serial_card_remove,
-> > -     .id_table       = serial_cids,
->
-> Is this change intentional? All other drivers are only changed to set
-> .probe_no_time and I don't see anything mentioned in the commit message
-> re. this driver's change.
+Hi Dave,
 
-No, that's a mistake. Thanks for catching it! I'll check this patch again.
+A couple remaining fixes for v5.19, summary below (and in tag msg)
 
--Saravana
+The following changes since commit a6e2af64a79afa7f1b29375b5231e840a84bb845:
+
+  drm/msm/dp: force link training for display resolution change
+(2022-06-18 09:14:06 -0700)
+
+are available in the Git repository at:
+
+  https://gitlab.freedesktop.org/drm/msm.git tags/drm-msm-fixes-2022-06-28
+
+for you to fetch changes up to 08de214138cdea438a0dfcb10d355a6650c6017c:
+
+  drm/msm/gem: Fix error return on fence id alloc fail (2022-06-27
+12:48:27 -0700)
+
+----------------------------------------------------------------
+Fixes for v5.19-rc5
+
+- Fix to increment vsync_cnt before calling drm_crtc_handle_vblank so that
+  userspace sees the value *after* it is incremented if waiting for vblank
+  events
+- Fix to reset drm_dev to NULL in dp_display_unbind to avoid a crash in
+  probe/bind error paths
+- Fix to resolve the smatch error of de-referencing before NULL check in
+  dpu_encoder_phys_wb.c
+- Fix error return to userspace if fence-id allocation fails in submit
+  ioctl
+
+----------------------------------------------------------------
+Kuogee Hsieh (1):
+      drm/msm/dp: reset drm_dev to NULL at dp_display_unbind()
+
+Rob Clark (1):
+      drm/msm/gem: Fix error return on fence id alloc fail
+
+Stephen Boyd (1):
+      drm/msm/dpu: Increment vsync_cnt before waking up userspace
+
+sunliming (1):
+      drm/msm/dpu: Fix variable dereferenced before check
+
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c         |  3 ++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c | 10 +++++-----
+ drivers/gpu/drm/msm/dp/dp_display.c                 |  2 ++
+ drivers/gpu/drm/msm/msm_gem_submit.c                |  2 +-
+ 4 files changed, 10 insertions(+), 7 deletions(-)
