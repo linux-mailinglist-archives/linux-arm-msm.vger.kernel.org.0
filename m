@@ -2,68 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F353455C310
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jun 2022 14:47:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C990E55C582
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jun 2022 14:51:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243195AbiF1DcM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Jun 2022 23:32:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51388 "EHLO
+        id S230437AbiF1Exa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Jun 2022 00:53:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42304 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243227AbiF1DcH (ORCPT
+        with ESMTP id S230252AbiF1Ex3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Jun 2022 23:32:07 -0400
-Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEB48EB0;
-        Mon, 27 Jun 2022 20:32:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1656387125; x=1687923125;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=0aHN4mfLxYQCQhyA6ZlbNE5JoJBgYv0+uTjZnOONln0=;
-  b=P/YgSdgVcwhbhFeikaXra5mmJJyJEpgnLVt4YTh/irrzf3s+g7X4J0Ft
-   5W1yS4Lrn29c5h4+F1lff8uydvhZR2jGCoEIVBd581Y6zgBEmj3jUeVDn
-   ksoc8fsSQLjqUONP5LNlyYOXQ7nZVQIgqa8yduflInPIQxM8LY41s7adS
-   +l5I3jSWMMBWrreRTmQnXb4dvS18JxKTtk6+3LBiW+BLijlR8KTy/QZfW
-   9lukShzsUvWML04IJ1pEOttofNKq1PlkU3ouXZezWMZWEhM42T2M0r/bG
-   OQHzrbw/QpApiPe3m5HndimurJCcW/oxjhg63OLUjzLNSqHQTCg8GgYB+
-   w==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10391"; a="262033251"
-X-IronPort-AV: E=Sophos;i="5.92,227,1650956400"; 
-   d="scan'208";a="262033251"
-Received: from fmsmga006.fm.intel.com ([10.253.24.20])
-  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jun 2022 20:32:05 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.92,227,1650956400"; 
-   d="scan'208";a="836485895"
-Received: from lkp-server01.sh.intel.com (HELO 68b931ab7ac1) ([10.239.97.150])
-  by fmsmga006.fm.intel.com with ESMTP; 27 Jun 2022 20:32:01 -0700
-Received: from kbuild by 68b931ab7ac1 with local (Exim 4.95)
-        (envelope-from <lkp@intel.com>)
-        id 1o61xI-0009Sd-HC;
-        Tue, 28 Jun 2022 03:32:00 +0000
-Date:   Tue, 28 Jun 2022 11:31:51 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Sricharan R <quic_srichara@quicinc.com>, agross@kernel.org,
-        bjorn.andersson@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, mturquette@baylibre.com,
-        sboyd@kernel.org, linus.walleij@linaro.org,
-        catalin.marinas@arm.com, p.zabel@pengutronix.de,
-        quic_varada@quicinc.com, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-Cc:     llvm@lists.linux.dev, kbuild-all@lists.01.org
-Subject: Re: [PATCH V2 5/8] pinctrl: qcom: Add IPQ5018 pinctrl driver
-Message-ID: <202206281113.juwklxoO-lkp@intel.com>
-References: <20220621161126.15883-6-quic_srichara@quicinc.com>
+        Tue, 28 Jun 2022 00:53:29 -0400
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0686555BE;
+        Mon, 27 Jun 2022 21:53:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1656392008; x=1687928008;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=viPNkMdb58HG/W547EJ7J39/RXb62Uz7idjCzex5stE=;
+  b=gccBqND7ldkmWOWDBmyF8gsBSCjBOclNtNqrnSKpfKSNahrFHQDQiF89
+   50FM5nr09Y15ydnzY1FHQx+rnYvlnXs2ud2+OnhM1vxm5cONtnDgo9rwV
+   zlFRc6wGImaPz4ZzgfQWeaDpaFCR7hiAV8O4s7fBrmbRYwJWitoysZxy0
+   k=;
+Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 27 Jun 2022 21:53:27 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jun 2022 21:53:27 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Mon, 27 Jun 2022 21:53:26 -0700
+Received: from [10.50.29.215] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Mon, 27 Jun
+ 2022 21:53:22 -0700
+Message-ID: <a1c6e3c9-962d-411e-7fbf-9e760e9dc8c0@quicinc.com>
+Date:   Tue, 28 Jun 2022 10:23:19 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220621161126.15883-6-quic_srichara@quicinc.com>
-X-Spam-Status: No, score=-4.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.0
+Subject: Re: [PATCH V15 6/9] mfd: pm8008: Use i2c_new_dummy_device() API
+Content-Language: en-US
+To:     Lee Jones <lee.jones@linaro.org>
+CC:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <swboyd@chromium.org>,
+        <quic_collinsd@quicinc.com>, <quic_subbaram@quicinc.com>,
+        <quic_jprakash@quicinc.com>
+References: <1655200111-18357-1-git-send-email-quic_c_skakit@quicinc.com>
+ <1655200111-18357-7-git-send-email-quic_c_skakit@quicinc.com>
+ <YquZRcuRCrdF+Q1z@google.com>
+ <eccbb030-97f7-3a6c-958e-05adcdca6210@quicinc.com>
+ <YrAt6dq6ty9p8d05@google.com>
+ <a11732d6-a9b1-7ead-e89a-564a57a7192b@quicinc.com>
+ <503f1a8b-eadb-d3a6-6e24-d60437f778b6@quicinc.com>
+ <YrlfF+DMlGFsVBdk@google.com>
+From:   "Satya Priya Kakitapalli (Temp)" <quic_c_skakit@quicinc.com>
+In-Reply-To: <YrlfF+DMlGFsVBdk@google.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -71,58 +79,252 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Sricharan,
 
-Thank you for the patch! Perhaps something to improve:
+On 6/27/2022 1:11 PM, Lee Jones wrote:
+> On Mon, 27 Jun 2022, Satya Priya Kakitapalli (Temp) wrote:
+>
+>> Hi Lee,
+>>
+>>
+>> On 6/20/2022 4:37 PM, Satya Priya Kakitapalli (Temp) wrote:
+>>> On 6/20/2022 1:50 PM, Lee Jones wrote:
+>>>> On Mon, 20 Jun 2022, Satya Priya Kakitapalli (Temp) wrote:
+>>>>
+>>>>> On 6/17/2022 2:27 AM, Lee Jones wrote:
+>>>>>> On Tue, 14 Jun 2022, Satya Priya wrote:
+>>>>>>
+>>>>>>> Use i2c_new_dummy_device() to register pm8008-regulator
+>>>>>>> client present at a different address space, instead of
+>>>>>>> defining a separate DT node. This avoids calling the probe
+>>>>>>> twice for the same chip, once for each client pm8008-infra
+>>>>>>> and pm8008-regulator.
+>>>>>>>
+>>>>>>> As a part of this define pm8008_regmap_init() to do regmap
+>>>>>>> init for both the clients and define pm8008_get_regmap() to
+>>>>>>> pass the regmap to the regulator driver.
+>>>>>>>
+>>>>>>> Signed-off-by: Satya Priya <quic_c_skakit@quicinc.com>
+>>>>>>> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+>>>>>>> ---
+>>>>>>> Changes in V15:
+>>>>>>>     - None.
+>>>>>>>
+>>>>>>> Changes in V14:
+>>>>>>>     - None.
+>>>>>>>
+>>>>>>> Changes in V13:
+>>>>>>>     - None.
+>>>>>>>
+>>>>>>>     drivers/mfd/qcom-pm8008.c       | 34
+>>>>>>> ++++++++++++++++++++++++++++++++--
+>>>>>>>     include/linux/mfd/qcom_pm8008.h |  9 +++++++++
+>>>>>>>     2 files changed, 41 insertions(+), 2 deletions(-)
+>>>>>>>     create mode 100644 include/linux/mfd/qcom_pm8008.h
+>>>>>>>
+>>>>>>> diff --git a/drivers/mfd/qcom-pm8008.c b/drivers/mfd/qcom-pm8008.c
+>>>>>>> index 569ffd50..55e2a8e 100644
+>>>>>>> --- a/drivers/mfd/qcom-pm8008.c
+>>>>>>> +++ b/drivers/mfd/qcom-pm8008.c
+>>>>>>> @@ -9,6 +9,7 @@
+>>>>>>>     #include <linux/interrupt.h>
+>>>>>>>     #include <linux/irq.h>
+>>>>>>>     #include <linux/irqdomain.h>
+>>>>>>> +#include <linux/mfd/qcom_pm8008.h>
+>>>>>>>     #include <linux/module.h>
+>>>>>>>     #include <linux/of_device.h>
+>>>>>>>     #include <linux/of_platform.h>
+>>>>>>> @@ -57,6 +58,7 @@ enum {
+>>>>>>>     struct pm8008_data {
+>>>>>>>         struct device *dev;
+>>>>>>> +    struct regmap *regulators_regmap;
+>>>>>>>         int irq;
+>>>>>>>         struct regmap_irq_chip_data *irq_data;
+>>>>>>>     };
+>>>>>>> @@ -150,6 +152,12 @@ static struct regmap_config
+>>>>>>> qcom_mfd_regmap_cfg = {
+>>>>>>>         .max_register    = 0xFFFF,
+>>>>>>>     };
+>>>>>>> +struct regmap *pm8008_get_regmap(const struct pm8008_data *chip)
+>>>>>>> +{
+>>>>>>> +    return chip->regulators_regmap;
+>>>>>>> +}
+>>>>>>> +EXPORT_SYMBOL_GPL(pm8008_get_regmap);
+>>>>>> Seems like abstraction for the sake of abstraction.
+>>>>>>
+>>>>>> Why not do the dereference inside the regulator driver?
+>>>>> To derefer this in the regulator driver, we need to have the
+>>>>> pm8008_data
+>>>>> struct definition in the qcom_pm8008 header file.
+>>>>>
+>>>>> I think it doesn't look great to have only that structure in
+>>>>> header and all
+>>>>> other structs and enum in the mfd driver.
+>>>> Then why pass 'pm8008_data' at all?
+>>>
+>>> There is one more option, instead of passing the pm8008_data, we could
+>>> pass the pdev->dev.parent and get the pm8008 chip data directly in the
+>>> pm8008_get_regmap() like below
+>>>
+>>>
+>>> struct regmap *pm8008_get_regmap(const struct device *dev)
+>>>   {
+>>>       const struct pm8008_data *chip = dev_get_drvdata(dev);
+>>>
+>>>       return chip->regulators_regmap;
+>>> }
+>>> EXPORT_SYMBOL_GPL(pm8008_get_regmap);
+>>>
+>>>
+>>> By doing this we can avoid having declaration of pm8008_data also in the
+>>> header. Please let me know if this looks good.
+>>>
+>> Could you please confirm on this?
+>>
+>>>> What's preventing you from passing 'regmap'?
+>>>
+>>> I didn't get what you meant here, could you please elaborate a bit?
+> Ah yes.  I authored you a patch, but became distracted. Here:
+>
+> -----8<--------------------8<-------
+>
+> From: Lee Jones <lee.jones@linaro.org>
+>
+> mfd: pm8008: Remove driver data structure pm8008_data
+>      
+> Maintaining a local driver data structure that is never shared
+> outside of the core device is an unnecessary complexity.  Half of the
+> attributes were not used outside of a single function, one of which
+> was not used at all.  The remaining 2 are generic and can be passed
+> around as required.
 
-[auto build test WARNING on clk/clk-next]
-[also build test WARNING on robh/for-next linusw-pinctrl/devel linus/master v5.19-rc4 next-20220627]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch]
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Sricharan-R/Add-minimal-boot-support-for-IPQ5018/20220622-001751
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git clk-next
-config: arm64-allyesconfig (https://download.01.org/0day-ci/archive/20220628/202206281113.juwklxoO-lkp@intel.com/config)
-compiler: clang version 15.0.0 (https://github.com/llvm/llvm-project 016342e319fd31e41cf5ed16a6140a8ea2de74dd)
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # install arm64 cross compiling tool for clang build
-        # apt-get install binutils-aarch64-linux-gnu
-        # https://github.com/intel-lab-lkp/linux/commit/5986a00923b330deb4c2c70e0d531507a19fb840
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review Sricharan-R/Add-minimal-boot-support-for-IPQ5018/20220622-001751
-        git checkout 5986a00923b330deb4c2c70e0d531507a19fb840
-        # save the config file
-        mkdir build_dir && cp config build_dir/.config
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=arm64 SHELL=/bin/bash arch/arm64/kernel/ drivers/clk/qcom/ drivers/pinctrl/qcom/
-
-If you fix the issue, kindly add following tag where applicable
-Reported-by: kernel test robot <lkp@intel.com>
-
-All warnings (new ones prefixed by >>):
-
->> drivers/pinctrl/qcom/pinctrl-ipq5018.c:252:27: warning: unused variable '_groups' [-Wunused-const-variable]
-   static const char * const _groups[] = {
-                             ^
-   1 warning generated.
+Okay, but we still need to store the regulators_regmap, which is 
+required in the pm8008 regulator driver. Could we use a global variable 
+for it?
 
 
-vim +/_groups +252 drivers/pinctrl/qcom/pinctrl-ipq5018.c
-
-   251	
- > 252	static const char * const _groups[] = {
-   253		"gpio0", "gpio1", "gpio2", "gpio3", "gpio4", "gpio5", "gpio6", "gpio7",
-   254		"gpio8", "gpio9", "gpio10", "gpio11", "gpio12", "gpio13", "gpio14",
-   255		"gpio15", "gpio16", "gpio17", "gpio18", "gpio19", "gpio20", "gpio21",
-   256		"gpio22", "gpio23", "gpio24", "gpio25", "gpio26", "gpio27", "gpio28",
-   257		"gpio29", "gpio30", "gpio31", "gpio32", "gpio33", "gpio34", "gpio35",
-   258		"gpio36", "gpio37", "gpio38", "gpio39", "gpio40", "gpio41", "gpio42",
-   259		"gpio43", "gpio44", "gpio45", "gpio46",
-   260	};
-   261	
-
--- 
-0-DAY CI Kernel Test Service
-https://01.org/lkp
+> Signed-off-by: Lee Jones <lee.jones@linaro.org>
+> ---
+>   drivers/mfd/qcom-pm8008.c | 53 ++++++++++++++++++-----------------------------
+>   1 file changed, 20 insertions(+), 33 deletions(-)
+>
+> diff --git a/drivers/mfd/qcom-pm8008.c b/drivers/mfd/qcom-pm8008.c
+> index c472d7f8103c4..4b8ff947762f2 100644
+> --- a/drivers/mfd/qcom-pm8008.c
+> +++ b/drivers/mfd/qcom-pm8008.c
+> @@ -54,13 +54,6 @@ enum {
+>   
+>   #define PM8008_PERIPH_OFFSET(paddr)	(paddr - PM8008_PERIPH_0_BASE)
+>   
+> -struct pm8008_data {
+> -	struct device *dev;
+> -	struct regmap *regmap;
+> -	int irq;
+> -	struct regmap_irq_chip_data *irq_data;
+> -};
+> -
+>   static unsigned int p0_offs[] = {PM8008_PERIPH_OFFSET(PM8008_PERIPH_0_BASE)};
+>   static unsigned int p1_offs[] = {PM8008_PERIPH_OFFSET(PM8008_PERIPH_1_BASE)};
+>   static unsigned int p2_offs[] = {PM8008_PERIPH_OFFSET(PM8008_PERIPH_2_BASE)};
+> @@ -150,7 +143,7 @@ static struct regmap_config qcom_mfd_regmap_cfg = {
+>   	.max_register	= 0xFFFF,
+>   };
+>   
+> -static int pm8008_init(struct pm8008_data *chip)
+> +static int pm8008_init(struct regmap *regmap)
+>   {
+>   	int rc;
+>   
+> @@ -160,34 +153,31 @@ static int pm8008_init(struct pm8008_data *chip)
+>   	 * This is required to enable the writing of TYPE registers in
+>   	 * regmap_irq_sync_unlock().
+>   	 */
+> -	rc = regmap_write(chip->regmap,
+> -			 (PM8008_TEMP_ALARM_ADDR | INT_SET_TYPE_OFFSET),
+> -			 BIT(0));
+> +	rc = regmap_write(regmap, (PM8008_TEMP_ALARM_ADDR | INT_SET_TYPE_OFFSET), BIT(0));
+>   	if (rc)
+>   		return rc;
+>   
+>   	/* Do the same for GPIO1 and GPIO2 peripherals */
+> -	rc = regmap_write(chip->regmap,
+> -			 (PM8008_GPIO1_ADDR | INT_SET_TYPE_OFFSET), BIT(0));
+> +	rc = regmap_write(regmap, (PM8008_GPIO1_ADDR | INT_SET_TYPE_OFFSET), BIT(0));
+>   	if (rc)
+>   		return rc;
+>   
+> -	rc = regmap_write(chip->regmap,
+> -			 (PM8008_GPIO2_ADDR | INT_SET_TYPE_OFFSET), BIT(0));
+> +	rc = regmap_write(regmap, (PM8008_GPIO2_ADDR | INT_SET_TYPE_OFFSET), BIT(0));
+>   
+>   	return rc;
+>   }
+>   
+> -static int pm8008_probe_irq_peripherals(struct pm8008_data *chip,
+> +static int pm8008_probe_irq_peripherals(struct device *dev,
+> +					struct regmap *regmap,
+>   					int client_irq)
+>   {
+>   	int rc, i;
+>   	struct regmap_irq_type *type;
+>   	struct regmap_irq_chip_data *irq_data;
+>   
+> -	rc = pm8008_init(chip);
+> +	rc = pm8008_init(regmap);
+>   	if (rc) {
+> -		dev_err(chip->dev, "Init failed: %d\n", rc);
+> +		dev_err(dev, "Init failed: %d\n", rc);
+>   		return rc;
+>   	}
+>   
+> @@ -207,10 +197,10 @@ static int pm8008_probe_irq_peripherals(struct pm8008_data *chip,
+>   				IRQ_TYPE_LEVEL_HIGH | IRQ_TYPE_LEVEL_LOW);
+>   	}
+>   
+> -	rc = devm_regmap_add_irq_chip(chip->dev, chip->regmap, client_irq,
+> +	rc = devm_regmap_add_irq_chip(dev, regmap, client_irq,
+>   			IRQF_SHARED, 0, &pm8008_irq_chip, &irq_data);
+>   	if (rc) {
+> -		dev_err(chip->dev, "Failed to add IRQ chip: %d\n", rc);
+> +		dev_err(dev, "Failed to add IRQ chip: %d\n", rc);
+>   		return rc;
+>   	}
+>   
+> @@ -220,26 +210,23 @@ static int pm8008_probe_irq_peripherals(struct pm8008_data *chip,
+>   static int pm8008_probe(struct i2c_client *client)
+>   {
+>   	int rc;
+> -	struct pm8008_data *chip;
+> -
+> -	chip = devm_kzalloc(&client->dev, sizeof(*chip), GFP_KERNEL);
+> -	if (!chip)
+> -		return -ENOMEM;
+> +	struct device *dev;
+> +	struct regmap *regmap;
+>   
+> -	chip->dev = &client->dev;
+> -	chip->regmap = devm_regmap_init_i2c(client, &qcom_mfd_regmap_cfg);
+> -	if (!chip->regmap)
+> +	dev = &client->dev;
+> +	regmap = devm_regmap_init_i2c(client, &qcom_mfd_regmap_cfg);
+> +	if (!regmap)
+>   		return -ENODEV;
+>   
+> -	i2c_set_clientdata(client, chip);
+> +	i2c_set_clientdata(client, regmap);
+>   
+> -	if (of_property_read_bool(chip->dev->of_node, "interrupt-controller")) {
+> -		rc = pm8008_probe_irq_peripherals(chip, client->irq);
+> +	if (of_property_read_bool(dev->of_node, "interrupt-controller")) {
+> +		rc = pm8008_probe_irq_peripherals(dev, regmap, client->irq);
+>   		if (rc)
+> -			dev_err(chip->dev, "Failed to probe irq periphs: %d\n", rc);
+> +			dev_err(dev, "Failed to probe irq periphs: %d\n", rc);
+>   	}
+>   
+> -	return devm_of_platform_populate(chip->dev);
+> +	return devm_of_platform_populate(dev);
+>   }
+>   
+>   static const struct of_device_id pm8008_match[] = {
+>
