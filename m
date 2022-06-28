@@ -2,82 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7AEAD55D66F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jun 2022 15:16:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B683855E3AE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jun 2022 15:37:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230200AbiF1MkW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Jun 2022 08:40:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37528 "EHLO
+        id S1345904AbiF1MqS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Jun 2022 08:46:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42984 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241188AbiF1MkV (ORCPT
+        with ESMTP id S1345897AbiF1MqQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Jun 2022 08:40:21 -0400
-Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFA542F3A5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jun 2022 05:40:19 -0700 (PDT)
-Received: by mail-lj1-x22a.google.com with SMTP id b19so1998234ljf.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jun 2022 05:40:19 -0700 (PDT)
+        Tue, 28 Jun 2022 08:46:16 -0400
+Received: from mail-yw1-x112a.google.com (mail-yw1-x112a.google.com [IPv6:2607:f8b0:4864:20::112a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B72FE237E6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jun 2022 05:46:15 -0700 (PDT)
+Received: by mail-yw1-x112a.google.com with SMTP id 00721157ae682-3176b6ed923so115399737b3.11
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jun 2022 05:46:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=MxGQ2YnHxmb3Xl+ErDnQ7bNnCMEH/xS4R9A6OhgAyBQ=;
-        b=D23p5i8aSaHruyf6k2IMFcGEVw+8l++o9fpr2kVhtnDcpjNwW53b4MxVpaSYrKQfCA
-         lFIk18dm3nwRm6BWYuw7qZ+54QM44tGSPjl2O/Hp2k/myW7McE5ho1R77JDl5BLrACn5
-         03AiPgzDEN12vz4+TgpTT4XECRmZ95Bfq/56ym9uf5jpoVnI03sBVNwRflympFMFaMwK
-         CfFz3TpiN+CTcM7lHFaK573lRwkRtOn0TCqBhaDduxGsQkJo4VwkSX9sf7GnfyTaOSYp
-         AJY5dyFp6SkbeW6nbLKjd8WrI4moyugEyd0vG0CoCJfOMv73+/2Wkiqu3B5jLjTFzGnp
-         s36Q==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=+/o7h6HDeouJmmTiR7/vdU7nOVyyfqQGDGcnD2AIrn4=;
+        b=P+XLSx7yD8akGOAU998jjSG/8kO1Cz+yxlAH/FwcQbXDiaJXmDqgI3mMrkS7lIyapb
+         /NoF0vqvlp1YzbNRhwdpaV48X1uu4DcJEEwQfInGa3hosNqzHQHWXGSc75BJnrjdFkyO
+         1753LezlvlhuEnGgEQ1yKLDDXd4pKrLuRXeMkqGSUbnw27ndRq+PDLLZ6qqdZ5gxwuO7
+         p0iSwrXPeKhU3h1qZzdQYiIIahp25+uxTASMPTVovDcSJXD9xW1BWrCQ3HVYd2BSy1uS
+         AvUHT/jBURD3HeO82AyZ8Em257ivuuZpqgQcjnHvr4krG9DI4HBN9/U+LJY3Zk6H0/uu
+         m79Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=MxGQ2YnHxmb3Xl+ErDnQ7bNnCMEH/xS4R9A6OhgAyBQ=;
-        b=PI27R31WngS+eKsDs71lyWLPqS8Us9QqmyHWicrAWW1WQqhUyRqOY6he225nx3nOAL
-         FBw0WM22Mjc/nm42lrk6TYAf+UJTCd2sKtOdLvB8dyL9tgvWgfsSeef9NOps2tQQuCSF
-         SZMjX+NEGbPmkodeKUpp97ej34D10If4psd1hCvHVnHzftpSVp/16ct5oGkj7urMco1m
-         dPQl87h5mR9ewyngVp0LShmWZy8RTNzZDGXOC/JubvuPMhKxMrZvIwed2EohEfvhkgcR
-         +8XjZ0BFufCsviZzpfmHbRAqVgg5mrVUCS2f+hLh/oWSiCCcfjfFeBA23njKBfe9YLJs
-         3+Yg==
-X-Gm-Message-State: AJIora/BKSQqG+OKhUtpL7ryd+WCrsP7Nd/0aVH0GCIVBPugpDtkGEIU
-        x+J2oS8/vghCc5zpoqPFi+sXtg==
-X-Google-Smtp-Source: AGRyM1vBGhayZNdb04az1HWjpH7np+Pmdf/O+Yrv8cGXpzXHAcXN+fvKIgyHZkZ97fnqSTN58GATJg==
-X-Received: by 2002:a2e:9c9:0:b0:25a:6847:c9c8 with SMTP id 192-20020a2e09c9000000b0025a6847c9c8mr9194486ljj.266.1656420016865;
-        Tue, 28 Jun 2022 05:40:16 -0700 (PDT)
-Received: from [192.168.1.212] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id k18-20020a05651c061200b0025bcdb5f7a8sm424871lje.127.2022.06.28.05.40.15
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 28 Jun 2022 05:40:16 -0700 (PDT)
-Message-ID: <eb516b67-9c9e-251b-3fea-8d2830e1ab89@linaro.org>
-Date:   Tue, 28 Jun 2022 15:40:15 +0300
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=+/o7h6HDeouJmmTiR7/vdU7nOVyyfqQGDGcnD2AIrn4=;
+        b=QPWc5oeNgx6IdWBqkMxdtEEogZgAOEETu5fUz9IcxuozbYDxF0ojDezbr/vNhAm7qO
+         Gm0n0wXKea+dvnYMF6Y29b2AIOD4DlDFmvFfYNYgqfyX/K8bfNC0NWD94cMC9iW4JIyG
+         D3EwN1AIca7N3BSW8RymSLn+1mXdLPY70DJtwv3l7KnUq5XrJrMrIxxOgXQQCyzfABzZ
+         5mCd3btDzJ0FjB8qcJRmwku9titFOlXTfWCUvNfarajpwcIFuvY2hTj4AnizFsKWlRiY
+         BRLsweIdXqGCTYF3e4cusz+v6TSd8DogPiqB9NW5xN88NZwQKLyRw0GHLmxFg1p/OtOM
+         FLug==
+X-Gm-Message-State: AJIora+VcQKEgO3aHdF20rP29nlYQx7LUaauBE5CPP4CrW0iapQ97Lmt
+        JJywozGWA2zHQHASkNvalXB1NYM8MZX9AJZHt/YQZQ==
+X-Google-Smtp-Source: AGRyM1s7TJ7lIQB0P1Y0YWoiaMimpZET5SYEiRTwTddSx4NLLUKMWn0W0kXJByprycc3O4v/t6iZ2umtbvHx3WCkyis=
+X-Received: by 2002:a0d:eace:0:b0:317:87ac:b3a8 with SMTP id
+ t197-20020a0deace000000b0031787acb3a8mr21730890ywe.126.1656420374836; Tue, 28
+ Jun 2022 05:46:14 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: [PATCH v3 5/7] clk: qcom: gcc-msm8916: move
- gcc_mss_q6_bimc_axi_clk down
-Content-Language: en-GB
-To:     Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Michael Turquette <mturquette@baylibre.com>,
+References: <20220201134108.2677578-1-vkoul@kernel.org> <YhUVAwtfjuIdKrRQ@matsya>
+ <1c66890b-6736-61ef-7d16-619f90ced4a0@linaro.org> <4f1ae43c-0f22-19fe-0794-3cc268104396@linaro.org>
+In-Reply-To: <4f1ae43c-0f22-19fe-0794-3cc268104396@linaro.org>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Tue, 28 Jun 2022 14:46:03 +0200
+Message-ID: <CACRpkdaSC1dSgQYJEXfL9OG-Jq9Q1UeMwuM6tjozd_oCVF_oMQ@mail.gmail.com>
+Subject: Re: [PATCH v3 0/2] spmi: pmic-arb: Add support for PMIC v7
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Stephen Boyd <sboyd@kernel.org>, Vinod Koul <vkoul@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@somainline.org>
-References: <20220619212735.1244953-1-dmitry.baryshkov@linaro.org>
- <20220619212735.1244953-6-dmitry.baryshkov@linaro.org>
- <20220627211844.6kwk2kyalgyb3ysm@SoMainline.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20220627211844.6kwk2kyalgyb3ysm@SoMainline.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+        David Collins <quic_collinsd@quicinc.com>,
+        linux-arm-msm@vger.kernel.org,
+        David Dai <daidavid1@codeaurora.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -85,86 +72,38 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 28/06/2022 00:18, Marijn Suijten wrote:
-> On 2022-06-20 00:27:33, Dmitry Baryshkov wrote:
->> The gcc_mss_q6_bimc_axi_clk clock depends on the bimc_ddr_clk_src clock.
->> Move it down in the file to come after the source clock.
->>
->> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> 
-> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-> 
->> ---
->>   drivers/clk/qcom/gcc-msm8916.c | 34 +++++++++++++++++-----------------
->>   1 file changed, 17 insertions(+), 17 deletions(-)
->>
->> diff --git a/drivers/clk/qcom/gcc-msm8916.c b/drivers/clk/qcom/gcc-msm8916.c
->> index 7962edbdbcf6..4d726ca4b0da 100644
->> --- a/drivers/clk/qcom/gcc-msm8916.c
->> +++ b/drivers/clk/qcom/gcc-msm8916.c
->> @@ -2594,23 +2594,6 @@ static struct clk_branch gcc_mss_cfg_ahb_clk = {
->>   	},
->>   };
->>   
->> -static struct clk_branch gcc_mss_q6_bimc_axi_clk = {
->> -	.halt_reg = 0x49004,
->> -	.clkr = {
->> -		.enable_reg = 0x49004,
->> -		.enable_mask = BIT(0),
->> -		.hw.init = &(struct clk_init_data){
->> -			.name = "gcc_mss_q6_bimc_axi_clk",
->> -			.parent_names = (const char *[]){
->> -				"bimc_ddr_clk_src",
->> -			},
->> -			.num_parents = 1,
->> -			.flags = CLK_SET_RATE_PARENT,
->> -			.ops = &clk_branch2_ops,
->> -		},
->> -	},
->> -};
->> -
->>   static struct clk_branch gcc_oxili_ahb_clk = {
->>   	.halt_reg = 0x59028,
->>   	.clkr = {
->> @@ -2860,6 +2843,23 @@ static struct clk_branch gcc_bimc_gpu_clk = {
->>   	},
->>   };
->>   
->> +static struct clk_branch gcc_mss_q6_bimc_axi_clk = {
-> 
-> How'd you settle on placing it here?  It isn't right below
-> bimc_ddr_clk_src, nor the last user of bimc_ddr_clk_src, doesn't seem to
-> have any alphabetical or .enable_reg related ordering to the other clks
-> either?
+On Sat, Jun 18, 2022 at 5:30 PM Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
+> On 01/05/2022 22:41, Dmitry Baryshkov wrote:
+> > On 22/02/2022 19:53, Vinod Koul wrote:
+> >> On 01-02-22, 19:11, Vinod Koul wrote:
+> >>> Hello,
+> >>>
+> >>> The is version 3 of support for PMIC v7. I have added a new property
+> >>> qcom,bus-id for supporting v7 and then add driver changes for v7
+> >>>
+> >>> This depends on yaml conversion patch:
+> >>> https://lore.kernel.org/linux-arm-msm/20211227170151.73116-1-david@ixit.cz/
+> >>>
+> >>
+> >> Any feedback on this...
+> >
+> > Another gracious reminder about these patches. At this moment this is
+> > one of the important pieces lacking for the full SM8450 support in the
+> > upstream kernel.
+>
+> Stephen, yet another ping. This is the blocking point for the further
+> SM8450 progress.
 
-Hmm, I was looking for the last bimc_ddr_clk_src user. Let's see if I 
-can find a better place then.
+Pending since february!
 
-> 
->> +	.halt_reg = 0x49004,
->> +	.clkr = {
->> +		.enable_reg = 0x49004,
->> +		.enable_mask = BIT(0),
->> +		.hw.init = &(struct clk_init_data){
->> +			.name = "gcc_mss_q6_bimc_axi_clk",
->> +			.parent_names = (const char *[]){
->> +				"bimc_ddr_clk_src",
->> +			},
->> +			.num_parents = 1,
->> +			.flags = CLK_SET_RATE_PARENT,
->> +			.ops = &clk_branch2_ops,
->> +		},
->> +	},
->> +};
->> +
->>   static struct clk_branch gcc_jpeg_tbu_clk = {
->>   	.halt_reg = 0x12034,
->>   	.clkr = {
->> -- 
->> 2.35.1
->>
+I would rather suspect something is wrong and it somehow goes
+into the spam or wrong inbox on Stephen's end.
 
+Sounds like something Bjorn could solve if Stephen don't have time
+to manage the SPMI subsystem right now? If it's OK with Stephen
+or he simply don't respond we can just queue the stuff in the SoC
+tree I assume?
 
--- 
-With best wishes
-Dmitry
+Yours,
+Linus Walleij
