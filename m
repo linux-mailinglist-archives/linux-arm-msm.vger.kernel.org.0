@@ -2,74 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9BF8055DF4B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jun 2022 15:30:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7CC6455DC03
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jun 2022 15:25:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238758AbiF1Apf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Jun 2022 20:45:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42092 "EHLO
+        id S243049AbiF1B3Z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Jun 2022 21:29:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51792 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242006AbiF1Apc (ORCPT
+        with ESMTP id S243044AbiF1B3Y (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Jun 2022 20:45:32 -0400
-Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com [IPv6:2607:f8b0:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40A0C1C102
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jun 2022 17:45:11 -0700 (PDT)
-Received: by mail-pf1-x42e.google.com with SMTP id t21so10550656pfq.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jun 2022 17:45:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=+07R8ZyMp+5hGqx337Jl/FxePBkgkf4MJf4MdZjVvcc=;
-        b=BmzEJhHRJMJi6PYyaBJJSBT3lBP29VNlUbYB7YVfvy0drJKiq/XH3IuJTxarSjH3l8
-         8IU6M7Qd87PQW6u2KGW8rHJxXo/X/+4VRuQc2uvCX/byZrn8W9AtLnNwH4WH/6N9bKRL
-         StXyEu/5UCLwa9B6luALA3rjMKBkbvOwLtEIO9/S0RGuL1X4gmgDhftLqyD8ByTmrssy
-         IH++5JZS06ngLaH6V45EkiRs7GreJG1NT1jwjhdFWQMf0JfLU1vXHxihq5jaTHMcnmZo
-         OqayBDP2VInUV0+WIjRipDA+hUQVkBE256yJby+82uAprgh+Xc6o3vYQKOkB5R9cbGuv
-         lCUQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=+07R8ZyMp+5hGqx337Jl/FxePBkgkf4MJf4MdZjVvcc=;
-        b=J6McRbWHm97qjUo5pPoX6P2jgaOpCdylQbm6bHE0uhDT5Oazp8X+iPuN/owDvySzFf
-         SLgvJPjhomXy0cCsBq0qQ/lncDyt8/k9DCyMZArb89uZKsoWrOKBEg7DWYVBWhIixe8M
-         ezX5fd5bX8tsdS/5Hbs/ggieHuf1fuyzCyuAmlTvUHP7q0MMuH0nTUFP3L4I5ghf8nve
-         snUB2tl7GgbvGpjBVZNluwlLdalpE2mQkzBxftq1tP3kQa2LO362BvN677PFXA/oLda2
-         9L1bFd6QFOb2MU8sv47ygLKSIgAzpNgwWD0ywTyGyXJYdZ7MTC7EHAk9Oawzj/8KaapY
-         Ns+g==
-X-Gm-Message-State: AJIora/eq4q4CzobZCDZyswhQ1Li2VyS3bEXWiaZhNY90FizO2EOeKiD
-        er/69jAqCOzDhSD+5kKCuZNE4g==
-X-Google-Smtp-Source: AGRyM1vCH3BDKnJBbhchtIKQE4gHvwE+EJtNJ0TOcyD7LgIP0eTEV8PXiq2/zzhhDt0rBSro7m27YQ==
-X-Received: by 2002:a63:90c7:0:b0:40d:3c0d:33f4 with SMTP id a190-20020a6390c7000000b0040d3c0d33f4mr14973935pge.334.1656377110718;
-        Mon, 27 Jun 2022 17:45:10 -0700 (PDT)
-Received: from localhost ([122.172.201.58])
-        by smtp.gmail.com with ESMTPSA id jf20-20020a170903269400b0015e8d4eb25fsm7762019plb.169.2022.06.27.17.45.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Jun 2022 17:45:10 -0700 (PDT)
-Date:   Tue, 28 Jun 2022 06:15:07 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Rob Herring <robh@kernel.org>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Ilia Lin <ilia.lin@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] dt-bindings: cpufreq: qcom-cpufreq-nvmem: fix board
- compatible in example
-Message-ID: <20220628004507.kghkkf6vx3l2hpqe@vireshk-i7>
-References: <20220627143340.477120-1-krzysztof.kozlowski@linaro.org>
- <20220627195040.GA2840123-robh@kernel.org>
+        Mon, 27 Jun 2022 21:29:24 -0400
+Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3104766D;
+        Mon, 27 Jun 2022 18:29:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1656379763; x=1687915763;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=zVM39Trhl2hg5S6mqEpQJmIRMAE8wh097bxFRFFGXL8=;
+  b=ik8doJj4eEQ2GN5ht0IN+XgYFEV/q/WN2BkA5bbbi0SQr+l+rdB6es5w
+   B31gFmpa4ij5mJZ3KhbjRBKD9yDi3H6HUugUP/fijqNzrJvzn152tZGCL
+   e+FA3YKCIRuLzjwDg7kb8oZHAoWh+soBzbb8bXp5xguE0dgPA4mHSUwo1
+   OYGQxOX+cN7ENDo1ar+rNbks8b/za/5QVtcuZ1O6P5jXoQo/qa+U/9Noy
+   x9yr/HvyJPxe1f4CKHgvsVwbpWvWsoHc5yVKQvagR6TYQHuIN/me/MlHm
+   LhWbsv4XZ1roAmIVQVjQ25RCnB5sj1yM/Z9r1fLU4omnC6WIJsXn5mL6f
+   Q==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10391"; a="279149560"
+X-IronPort-AV: E=Sophos;i="5.92,227,1650956400"; 
+   d="scan'208";a="279149560"
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jun 2022 18:29:23 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.92,227,1650956400"; 
+   d="scan'208";a="732546014"
+Received: from lkp-server01.sh.intel.com (HELO 68b931ab7ac1) ([10.239.97.150])
+  by fmsmga001.fm.intel.com with ESMTP; 27 Jun 2022 18:29:19 -0700
+Received: from kbuild by 68b931ab7ac1 with local (Exim 4.95)
+        (envelope-from <lkp@intel.com>)
+        id 1o602T-0009LC-S6;
+        Tue, 28 Jun 2022 01:29:13 +0000
+Date:   Tue, 28 Jun 2022 09:28:58 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Sricharan R <quic_srichara@quicinc.com>, agross@kernel.org,
+        bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, mturquette@baylibre.com,
+        sboyd@kernel.org, linus.walleij@linaro.org,
+        catalin.marinas@arm.com, p.zabel@pengutronix.de,
+        quic_varada@quicinc.com, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+Cc:     llvm@lists.linux.dev, kbuild-all@lists.01.org
+Subject: Re: [PATCH V2 3/8] clk: qcom: Add Global Clock controller (GCC)
+ driver for IPQ5018
+Message-ID: <202206280917.m3YJRqsF-lkp@intel.com>
+References: <20220621161126.15883-4-quic_srichara@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220627195040.GA2840123-robh@kernel.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+In-Reply-To: <20220621161126.15883-4-quic_srichara@quicinc.com>
+X-Spam-Status: No, score=-7.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -77,31 +72,154 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 27-06-22, 13:50, Rob Herring wrote:
-> On Mon, Jun 27, 2022 at 04:33:40PM +0200, Krzysztof Kozlowski wrote:
-> > In the example, alone compatible "qcom,qcs404" is not correct.  Add
-> > proper board compatibles for QCS404 Evaluation Board.
-> > 
-> > Reported-by: Rob Herring <robh@kernel.org>
-> > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> > 
-> > ---
-> > 
-> > Can be picked up independently, although the issue reported by Rob was
-> > caused by:
-> > https://lore.kernel.org/all/CAL_JsqKXDs=QHKob2Xy6vAFZfnkM9ggfmqf9TNA1hv8TScTmgQ@mail.gmail.com/
-> 
-> Best to go in that tree unless it's going to take weeks...
+Hi Sricharan,
 
-Lemme know Krzysztof about the timing, I am going to send a pull
-request for cpufreq fixes very soon, so I can take it as well if you
-want.
+Thank you for the patch! Perhaps something to improve:
 
-> > ---
-> >  .../devicetree/bindings/cpufreq/qcom-cpufreq-nvmem.yaml       | 4 ++--
-> >  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> Acked-by: Rob Herring <robh@kernel.org>
+[auto build test WARNING on clk/clk-next]
+[also build test WARNING on robh/for-next linusw-pinctrl/devel linus/master v5.19-rc4 next-20220627]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Sricharan-R/Add-minimal-boot-support-for-IPQ5018/20220622-001751
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git clk-next
+config: arm64-allyesconfig (https://download.01.org/0day-ci/archive/20220628/202206280917.m3YJRqsF-lkp@intel.com/config)
+compiler: clang version 15.0.0 (https://github.com/llvm/llvm-project 016342e319fd31e41cf5ed16a6140a8ea2de74dd)
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # install arm64 cross compiling tool for clang build
+        # apt-get install binutils-aarch64-linux-gnu
+        # https://github.com/intel-lab-lkp/linux/commit/d7a0e1d14ecebd407df120468035592246a71cd6
+        git remote add linux-review https://github.com/intel-lab-lkp/linux
+        git fetch --no-tags linux-review Sricharan-R/Add-minimal-boot-support-for-IPQ5018/20220622-001751
+        git checkout d7a0e1d14ecebd407df120468035592246a71cd6
+        # save the config file
+        mkdir build_dir && cp config build_dir/.config
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=arm64 SHELL=/bin/bash arch/arm64/kernel/ drivers/clk/qcom/ drivers/pinctrl/qcom/
+
+If you fix the issue, kindly add following tag where applicable
+Reported-by: kernel test robot <lkp@intel.com>
+
+All warnings (new ones prefixed by >>):
+
+>> drivers/clk/qcom/gcc-ipq5018.c:118:37: warning: unused variable 'gcc_xo_gpll0_out_main_div2' [-Wunused-const-variable]
+   static const struct clk_parent_data gcc_xo_gpll0_out_main_div2[] = {
+                                       ^
+>> drivers/clk/qcom/gcc-ipq5018.c:123:32: warning: unused variable 'gcc_xo_gpll0_out_main_div2_map' [-Wunused-const-variable]
+   static const struct parent_map gcc_xo_gpll0_out_main_div2_map[] = {
+                                  ^
+>> drivers/clk/qcom/gcc-ipq5018.c:201:37: warning: unused variable 'gcc_xo_gpll0_gpll4_gpll2' [-Wunused-const-variable]
+   static const struct clk_parent_data gcc_xo_gpll0_gpll4_gpll2[] = {
+                                       ^
+>> drivers/clk/qcom/gcc-ipq5018.c:208:32: warning: unused variable 'gcc_xo_gpll0_gpll4_gpll2_map' [-Wunused-const-variable]
+   static const struct parent_map gcc_xo_gpll0_gpll4_gpll2_map[] = {
+                                  ^
+   4 warnings generated.
+
+
+vim +/gcc_xo_gpll0_out_main_div2 +118 drivers/clk/qcom/gcc-ipq5018.c
+
+   117	
+ > 118	static const struct clk_parent_data gcc_xo_gpll0_out_main_div2[] = {
+   119		{ .fw_name = "xo", .name = "xo", },
+   120		{ .fw_name = "gpll0_out_main_div2", .name = "gpll0_out_main_div2", },
+   121	};
+   122	
+ > 123	static const struct parent_map gcc_xo_gpll0_out_main_div2_map[] = {
+   124		{ P_XO, 0 },
+   125		{ P_GPLL0_DIV2, 1 },
+   126	};
+   127	
+   128	static const struct clk_parent_data gcc_xo_gpll0_gpll4[] = {
+   129		{ .fw_name = "xo", .name = "xo", },
+   130		{ .fw_name = "gpll0", .name = "gpll0", },
+   131		{ .fw_name = "gpll4", .name = "gpll4", },
+   132	};
+   133	
+   134	static const struct parent_map gcc_xo_gpll0_gpll4_map[] = {
+   135		{ P_XO, 0 },
+   136		{ P_GPLL0, 1 },
+   137		{ P_GPLL4, 2 },
+   138	};
+   139	
+   140	static const struct clk_parent_data gcc_xo_gpll0_core_pi_sleep_clk[] = {
+   141		{ .fw_name = "xo", .name = "xo", },
+   142		{ .fw_name = "gpll0", .name = "gpll0", },
+   143		{ .fw_name = "sleep_clk", .name = "sleep_clk", },
+   144	};
+   145	
+   146	static const struct parent_map gcc_xo_gpll0_core_pi_sleep_clk_map[] = {
+   147		{ P_XO, 0 },
+   148		{ P_GPLL0, 2 },
+   149		{ P_CORE_PI_SLEEP_CLK, 6 },
+   150	};
+   151	
+   152	static const struct clk_parent_data gcc_xo_gpll0_gpll0_out_main_div2_sleep_clk[] = {
+   153		{ .fw_name = "xo", .name = "xo", },
+   154		{ .fw_name = "gpll0", .name = "gpll0", },
+   155		{ .fw_name = "gpll0_out_main_div2", .name = "gpll0_out_main_div2", },
+   156		{ .fw_name = "sleep_clk", .name = "sleep_clk", },
+   157	};
+   158	
+   159	static const struct parent_map gcc_xo_gpll0_gpll0_out_main_div2_sleep_clk_map[] = {
+   160		{ P_XO, 0 },
+   161		{ P_GPLL0, 1 },
+   162		{ P_GPLL0_DIV2, 4 },
+   163		{ P_CORE_PI_SLEEP_CLK, 6 },
+   164	};
+   165	
+   166	static const struct clk_parent_data gcc_xo_gpll0_gpll2_gpll0_out_main_div2[] = {
+   167		{ .fw_name = "xo", .name = "xo", },
+   168		{ .fw_name = "gpll0", .name = "gpll0", },
+   169		{ .fw_name = "gpll2", .name = "gpll2", },
+   170		{ .fw_name = "gpll0_out_main_div2", .name = "gpll0_out_main_div2", },
+   171	};
+   172	
+   173	static const struct parent_map gcc_xo_gpll0_gpll2_gpll0_out_main_div2_map[] = {
+   174		{ P_XO, 0 },
+   175		{ P_GPLL0, 1 },
+   176		{ P_GPLL2, 2 },
+   177		{ P_GPLL0_DIV2, 4 },
+   178	};
+   179	
+   180	static const struct clk_parent_data gcc_xo_gpll4_gpll0_gpll0_out_main_div2[] = {
+   181		{ .fw_name = "xo", .name = "xo", },
+   182		{ .fw_name = "gpll4", .name = "gpll4", },
+   183		{ .fw_name = "gpll0", .name = "gpll0", },
+   184		{ .fw_name = "gpll0_out_main_div2", .name = "gpll0_out_main_div2", },
+   185	};
+   186	
+   187	static const struct parent_map gcc_xo_gpll4_gpll0_gpll0_out_main_div2_map1[] = {
+   188		{ P_XO, 0 },
+   189		{ P_GPLL4, 1 },
+   190		{ P_GPLL0, 2 },
+   191		{ P_GPLL0_DIV2, 4 },
+   192	};
+   193	
+   194	static const struct parent_map gcc_xo_gpll4_gpll0_gpll0_out_main_div2_map2[] = {
+   195		{ P_XO, 0 },
+   196		{ P_GPLL4, 1 },
+   197		{ P_GPLL0, 3 },
+   198		{ P_GPLL0_DIV2, 4 },
+   199	};
+   200	
+ > 201	static const struct clk_parent_data gcc_xo_gpll0_gpll4_gpll2[] = {
+   202		{ .fw_name = "xo", .name = "xo", },
+   203		{ .fw_name = "gpll0", .name = "gpll0", },
+   204		{ .fw_name = "gpll4", .name = "gpll4", },
+   205		{ .fw_name = "gpll2", .name = "gpll2", },
+   206	};
+   207	
+ > 208	static const struct parent_map gcc_xo_gpll0_gpll4_gpll2_map[] = {
+   209		{ P_XO, 0 },
+   210		{ P_GPLL0, 1 },
+   211		{ P_GPLL4, 3 },
+   212		{ P_GPLL2, 4 },
+   213	};
+   214	
 
 -- 
-viresh
+0-DAY CI Kernel Test Service
+https://01.org/lkp
