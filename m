@@ -2,84 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 139BE55C16F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jun 2022 14:45:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5FFAB55D336
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jun 2022 15:11:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345091AbiF1KuM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Jun 2022 06:50:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49616 "EHLO
+        id S243923AbiF1Kyz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Jun 2022 06:54:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52934 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345090AbiF1KuL (ORCPT
+        with ESMTP id S231682AbiF1Kyy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Jun 2022 06:50:11 -0400
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EEB7024BFA
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jun 2022 03:50:09 -0700 (PDT)
-Received: by mail-wr1-x432.google.com with SMTP id n1so17044570wrg.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jun 2022 03:50:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=D5Yp5z0uikP6kZlGS2YEDpfiM1NMX3Tdy1o4tE54EkA=;
-        b=Hg+wVajBl/9GBW5iP5GGK542lVYHM9R+b6dZWTYA7FDr47v9J6UeJGHXiLJTbCEJ6v
-         WHjCoMSJdZ/W6vpEsQ5wQ8FEm7LOHPqGbY0/janBLRCclpjjR2ahzmumZgpjhQ3mU3Zz
-         9Zd9+YgvoVxJqzunjKGfA0ap0YWqSuM1NOp6Nb1YWaucHgh5uj0+kiJB3QEMS7cJvl9t
-         /1Czsxg+/cWEall8YwkcLog2xVRlmlTZ2hu2padxJJOQno/eXf8hOissbXfcF5yMrBM3
-         dUvj3+OeReeO1KrwnNRbUjw5g9Qcs6be3RoB7VM0Agk3ajrl8Rx4r6pyVdncShKfdlB3
-         QuaA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=D5Yp5z0uikP6kZlGS2YEDpfiM1NMX3Tdy1o4tE54EkA=;
-        b=36X7nRrZaxe27wFrvT0xuYuraXuMeakA9d8KJ6oVDrLhd9dkEmJLPaO1wyHXuik6Y5
-         d3N8445oUCtFberRr/W3NLts5cyre8O/R4sKo1J0XmbZY2AFjHTOiLGgmkGhJTFA9Er0
-         LHVYqjSa4yDMWKo1Gtw+0u4M+xFttKagYh6l/bGl/kwC+Hb0KdI+uYuqFSK0V0K/JJt5
-         yRbo8LpX1G4GeZ0LlMooiwjIVgUFVVT2iGGKHXrk1nJS++pytbo105U/4oda1Zhh3V5r
-         0xeZy2EjiSi4etWTzv5xnbeVwYxUKNvI2LjWqNV85xTCoVYUehp1f269AjjiybjlOoAc
-         wIig==
-X-Gm-Message-State: AJIora93L4ywTuQUfMyXmyDYVQKNLhLzV/DA5DYFT8ZA8GdidroedsJS
-        iDygE4iZcA6nD2VmdDxCcPv1XQ==
-X-Google-Smtp-Source: AGRyM1t7ldsuF7FbFQ8lRlxojUnda3gtbTbepfnR5FLUMtmeZyXYf5l0XxZNFLDSGICVmiAPYzeSbg==
-X-Received: by 2002:adf:ed0d:0:b0:21b:978f:e53 with SMTP id a13-20020adfed0d000000b0021b978f0e53mr17045714wro.8.1656413408515;
-        Tue, 28 Jun 2022 03:50:08 -0700 (PDT)
-Received: from [192.168.0.252] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id n18-20020a05600c501200b003a04d19dab3sm3538689wmr.3.2022.06.28.03.50.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 28 Jun 2022 03:50:07 -0700 (PDT)
-Message-ID: <c43d4c9e-54d6-7b00-0ff7-e114850302ad@linaro.org>
-Date:   Tue, 28 Jun 2022 12:50:06 +0200
+        Tue, 28 Jun 2022 06:54:54 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F5BD31902;
+        Tue, 28 Jun 2022 03:54:54 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id A022361978;
+        Tue, 28 Jun 2022 10:54:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC517C3411D;
+        Tue, 28 Jun 2022 10:54:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1656413693;
+        bh=Fs76fzPiX5CmqDm7rtqXmeYxffdzK/gh1PH56GM7A/A=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=CWxnowEIkHAserwFzSMJCMqahu7NvtMa9ZpyTfJPzy0/5EOwwdrKlYBA4KDNjd46V
+         6S1Tq2iGDWKNvPZ6gZGFpir1kicU+VCDnJL384wniHm/3rGpl+mv0rJFBYI1HtFFSk
+         NMvpc7/d15Xsltl4uy9/ig5oYPM80xVjhK9/ZUa3d2Tf581X27Dgub0Ms/s5bsNIZG
+         75kvBcnUVSTN3at2IaFuOxmitya78R4qdZ1M2La+gE5sIct0s5IN794dPxMvtdoAcq
+         nd6d7d5juLJ9CXedoW9Wop3mvU/RtulX2iWf8WkhpUQ/b0D1w6enipuCnbNyM5RVTe
+         wrYwU6Y+3I9Nw==
+Date:   Tue, 28 Jun 2022 11:54:47 +0100
+From:   Mark Brown <broonie@kernel.org>
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc:     lgirdwood@gmail.com, bjorn.andersson@linaro.org, perex@perex.cz,
+        tiwai@suse.com, srinivas.kandagatla@linaro.org, robh+dt@kernel.org,
+        krzk+dt@kernel.org, alsa-devel@alsa-project.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH v4 1/2] ASoC: qcom: lpass: Fix apq8016 compat string to
+ match yaml
+Message-ID: <Yrrd96ecPni13xq2@sirena.org.uk>
+References: <20220628002858.2638442-1-bryan.odonoghue@linaro.org>
+ <20220628002858.2638442-2-bryan.odonoghue@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: [PATCH v4 4/4] arm64: dts: qcom: sdm845: Add CPU BWMON
-Content-Language: en-US
-To:     Rajendra Nayak <quic_rjendra@quicinc.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Georgi Djakov <djakov@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        Thara Gopinath <thara.gopinath@linaro.org>
-References: <20220601101140.170504-1-krzysztof.kozlowski@linaro.org>
- <20220601101140.170504-5-krzysztof.kozlowski@linaro.org>
- <bc423d7b-df03-d4e2-2898-0873db710943@quicinc.com>
- <64eb52ee-b3ac-3d94-cfce-ceb1c88dddb6@linaro.org>
- <042cb765-113b-9335-edae-595addf50dd0@quicinc.com>
- <23320e3c-40c3-12bb-0a1c-7e659a1961f2@linaro.org>
- <YrfSWw9Wpq5TsRUt@builder.lan>
- <47e1fcb4-237b-b880-b1b2-3910cc19e727@linaro.org>
- <59b5115e-0fe5-dbe1-552b-c29e771c0583@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <59b5115e-0fe5-dbe1-552b-c29e771c0583@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="iQPZ8z0FvK3SbyzZ"
+Content-Disposition: inline
+In-Reply-To: <20220628002858.2638442-2-bryan.odonoghue@linaro.org>
+X-Cookie: I like your SNOOPY POSTER!!
+X-Spam-Status: No, score=-7.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -88,112 +60,40 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 28/06/2022 12:36, Rajendra Nayak wrote:
-> 
-> On 6/27/2022 6:09 PM, Krzysztof Kozlowski wrote:
->> On 26/06/2022 05:28, Bjorn Andersson wrote:
->>> On Thu 23 Jun 07:58 CDT 2022, Krzysztof Kozlowski wrote:
->>>
->>>> On 23/06/2022 08:48, Rajendra Nayak wrote:
->>>>>>>> diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
->>>>>>>> index 83e8b63f0910..adffb9c70566 100644
->>>>>>>> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
->>>>>>>> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
->>>>>>>> @@ -2026,6 +2026,60 @@ llcc: system-cache-controller@1100000 {
->>>>>>>>     			interrupts = <GIC_SPI 582 IRQ_TYPE_LEVEL_HIGH>;
->>>>>>>>     		};
->>>>>>>>     
->>>>>>>> +		pmu@1436400 {
->>>>>>>> +			compatible = "qcom,sdm845-cpu-bwmon";
->>>>>>>> +			reg = <0 0x01436400 0 0x600>;
->>>>>>>> +
->>>>>>>> +			interrupts = <GIC_SPI 581 IRQ_TYPE_LEVEL_HIGH>;
->>>>>>>> +
->>>>>>>> +			interconnects = <&gladiator_noc MASTER_APPSS_PROC 3 &mem_noc SLAVE_EBI1 3>,
->>>>>>>> +					<&osm_l3 MASTER_OSM_L3_APPS &osm_l3 SLAVE_OSM_L3>;
->>>>>>>> +			interconnect-names = "ddr", "l3c";
->>>>>>>
->>>>>>> Is this the pmu/bwmon instance between the cpu and caches or the one between the caches and DDR?
->>>>>>
->>>>>> To my understanding this is the one between CPU and caches.
->>>>>
->>>>> Ok, but then because the OPP table lists the DDR bw first and Cache bw second, isn't the driver
->>>>> ending up comparing the bw values thrown by the pmu against the DDR bw instead of the Cache BW?
->>>>
->>>> I double checked now and you're right.
->>>>
->>>>> Atleast with my testing on sc7280 I found this to mess things up and I always was ending up at
->>>>> higher OPPs even while the system was completely idle. Comparing the values against the Cache bw
->>>>> fixed it.(sc7280 also has a bwmon4 instance between the cpu and caches and a bwmon5 between the cache
->>>>> and DDR)
->>>>
->>>> In my case it exposes different issue - under performance. Somehow the
->>>> bwmon does not report bandwidth high enough to vote for high bandwidth.
->>>>
->>>> After removing the DDR interconnect and bandwidth OPP values I have for:
->>>> sysbench --threads=8 --time=60 --memory-total-size=20T --test=memory
->>>> --memory-block-size=4M run
->>>>
->>>> 1. Vanilla: 29768 MB/s
->>>> 2. Vanilla without CPU votes: 8728 MB/s
->>>> 3. Previous bwmon (voting too high): 32007 MB/s
->>>> 4. Fixed bwmon 24911 MB/s
->>>> Bwmon does not vote for maximum L3 speed:
->>>> bwmon report 9408 MB/s (thresholds set: <9216000 15052801>
->>>> )
->>>> osm l3 aggregate 14355 MBps -> 897 MHz, level 7, bw 14355 MBps
->>>>
->>>> Maybe that's just problem with missing governor which would vote for
->>>> bandwidth rounding up or anticipating higher needs.
->>>>
->>>>>>> Depending on which one it is, shouldn;t we just be scaling either one and not both the interconnect paths?
->>>>>>
->>>>>> The interconnects are the same as ones used for CPU nodes, therefore if
->>>>>> we want to scale both when scaling CPU, then we also want to scale both
->>>>>> when seeing traffic between CPU and cache.
->>>>>
->>>>> Well, they were both associated with the CPU node because with no other input to decide on _when_
->>>>> to scale the caches and DDR, we just put a mapping table which simply mapped a CPU freq to a L3 _and_
->>>>> DDR freq. So with just one input (CPU freq) we decided on what should be both the L3 freq and DDR freq.
->>>>>
->>>>> Now with 2 pmu's, we have 2 inputs, so we can individually scale the L3 based on the cache PMU
->>>>> counters and DDR based on the DDR PMU counters, no?
->>>>>
->>>>> Since you said you have plans to add the other pmu support as well (bwmon5 between the cache and DDR)
->>>>> how else would you have the OPP table associated with that pmu instance? Would you again have both the
->>>>> L3 and DDR scale based on the inputs from that bwmon too?
->>>>
->>>> Good point, thanks for sharing. I think you're right. I'll keep only the
->>>> l3c interconnect path.
->>>>
->>>
->>> If I understand correctly, <&osm_l3 MASTER_OSM_L3_APPS &osm_l3
->>> SLAVE_OSM_L3> relates to the L3 cache speed, which sits inside the CPU
->>> subsystem. As such traffic hitting this cache will not show up in either
->>> bwmon instance.
->>>
->>> The path <&gladiator_noc MASTER_APPSS_PROC 3 &mem_noc SLAVE_EBI1 3>
->>> affects the DDR frequency. So the traffic measured by the cpu-bwmon
->>> would be the CPU subsystems traffic that missed the L1/L2/L3 caches and
->>> hits the memory bus towards DDR.
-> 
-> That seems right, looking some more into the downstream code and register definitions
-> I see the 2 bwmon instances actually lie on the path outside CPU SS towards DDR,
-> first one (bwmon4) is between the CPUSS and LLCC (system cache) and the second one
-> (bwmon5) between LLCC and DDR. So we should use the counters from bwmon4 to
-> scale the CPU-LLCC path (and not L3), on sc7280 that would mean splitting the
-> <&gem_noc MASTER_APPSS_PROC 3 &mc_virt SLAVE_EBI1 3> into
-> <&gem_noc MASTER_APPSS_PROC 3 &gem_noc SLAVE_LLCC 3> (voting based on the bwmon4 inputs)
-> and <&mc_virt MASTER_LLCC 3 &mc_virt SLAVE_EBI1 3> (voting based on the bwmon5 inputs)
-> and similar for sdm845 too.
-> 
-> L3 should perhaps still be voted based on the cpu freq as done today.
 
-This would mean that original bandwidth values (800 - 7216 MB/s) were
-correct. However we have still your observation that bwmon kicks in very
-fast and my measurements that sampled bwmon data shows bandwidth ~20000
-MB/s.
+--iQPZ8z0FvK3SbyzZ
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
+On Tue, Jun 28, 2022 at 01:28:57AM +0100, Bryan O'Donoghue wrote:
+> The documented yaml compat string for the apq8016 is
+> "qcom,apq8016-lpass-cpu" not "qcom,lpass-cpu-apq8016". Looking at the oth=
+er
+> lpass compat strings the general form is "qcom,socnum-lpass-cpu".
+>=20
+> We need to fix both the driver and dts to match.
+>=20
+> Fixes: dc1ebd1811e9 ("ASoC: qcom: Add apq8016 lpass driver support")
 
-Best regards,
-Krzysztof
+This isn't really a fix and it's breaking an ABI which has been there
+since 2015.  By tagging this as a fix you're doubtless going to get the
+stable people trying to backport it which will most likely break some
+users.
+
+--iQPZ8z0FvK3SbyzZ
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmK63fYACgkQJNaLcl1U
+h9Antwf/Z4Ctein0L7OvsA9zHtMBH5LNxHlRKyTZ7Qgkg2kL3u1J7fDIF0Rjp66f
+AS5fRMXIOUSbzij1j1jO4EbNXVQnFOVyGgFKzv4L8Dh3ZGtEAzVglWEIwrwvdaif
+yEJYlGnoa8ERRMAeujuWAaXvRbGT2YLs5Naf4NG1x8oUqy+U1Ze+CuwE4Pi72HNC
+oe+D059bZrbD8YCdNOCoPkIYYliDDftskW0bqmBAuW31d0G8UtnR8exoLdiVEeGO
+5/KGlLvgpbx5CArLZ8jKTUm8NwYr/1OskTYM5PV3LzPyeKGIucy5HbeWAYQz0K0N
+8fW13yKwgi0yVHSI/ScHiWP8sK8EVQ==
+=gOCL
+-----END PGP SIGNATURE-----
+
+--iQPZ8z0FvK3SbyzZ--
