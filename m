@@ -2,69 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4CB7255DAE1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jun 2022 15:23:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1F19755C53B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jun 2022 14:50:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344233AbiF1JXU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Jun 2022 05:23:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48592 "EHLO
+        id S243539AbiF1JwS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Jun 2022 05:52:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45038 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344160AbiF1JXR (ORCPT
+        with ESMTP id S237556AbiF1JwR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Jun 2022 05:23:17 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2A8219023
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jun 2022 02:23:10 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id d17so11101500wrc.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jun 2022 02:23:10 -0700 (PDT)
+        Tue, 28 Jun 2022 05:52:17 -0400
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 826EA2D1EA
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jun 2022 02:52:16 -0700 (PDT)
+Received: by mail-wm1-x332.google.com with SMTP id f190so6706910wma.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jun 2022 02:52:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=czfPpDJHs7J+piUiFRqpKaLtdiOGZv8sTnfz/AiCY3E=;
-        b=bNlyXdNJMiDMSiGy4FDB/w5B0HJlkKjZEKHkPjtLIpJgbFeSniqTHKu5zE+Agd/XOT
-         sKSJNfC5yOvBJqhUm5pU8NENJOBPcvLq8fXPEpEa1W6STe5s5YXmUhsbBirORTOEwjk7
-         x9Ni8rwYBey+RkxvvtM44mZBb4Czrm9XHkGkypflD1/YMazjCGB2vVj3FcdIo74McBSF
-         pEi4SKMTfRbuBf972fNv4bcna+Qmgsi2r2EC3skUh0Y5RrE+L2P4QxJB44zVkB3Nw8cA
-         nv9PzMbJyVGymxbNCsJRcVHP0tPRrqafVC+d6reWFrDed8oLx0rbJTFqhOi4t0mAIDoT
-         UNvg==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=h0dx8b2m9emaFg28RzQYMub6uEPgbsswWWeNTpjU7qQ=;
+        b=yGhCsGSHTA94c6E1fD9v92SudyesEEv8gdzs/101JV5D0Ff9ufUgbZQdcj9G2EoTi4
+         XQT2FgGPEbIgNV9KQ9HTch9hvUBUyMlDn4BaeB610u61u0UZDM80Xa3uoWKCOhRk3IdP
+         3/PyKzFXM7oeZ8XPWzKEm16LTWp6DTY9zbaCesElDFH1UH2Iwc+6Lqy6vmcDZnqes1hK
+         RQPrPypCIzpdUYbuwXuAiyP2iEx9DCkut2nyzMEbEBicIwSzwXe04Ue4QRv/m6BZMeQ0
+         nBI2o2nfxEWhHYfg3ak56VKsstMzUevktyKDeh+DRgK7XIbeVRWsSN2YO9hFpB7bBuLB
+         C4aA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=czfPpDJHs7J+piUiFRqpKaLtdiOGZv8sTnfz/AiCY3E=;
-        b=aRkpule9zBQ4X+jf4mZ25eWC6ypUF2h0hFLrAo0Lvx0D8V+Vzz4IzrbmJrbsc/qUc/
-         jXO30yyeCPFpZh0oOlfyAhJcAbSZEGL4ljyjM6lIqMrAt0bLd5xPHK9BWhzgWCB+znjx
-         c8kzDYkjueEI1iFrPChP3bxN9UVAoibpN5DUSdB3RDyZx/IM4Xq6D6yKAd/8dm5UGkTO
-         Ww62dkjy7jG6lr05yS/HOrbgeLG9DGQXAA+oI+ht4xHu8f3/vqsNABQtBB/boXykwAIv
-         JYNW7CM8FsUMlYepXlQAJ018gbH/lpKMXR0ZqKmPp5OxVZuz5FWU7ylX67z8mdWThUM2
-         XrKA==
-X-Gm-Message-State: AJIora85RgLgH7l+GOzEJT2qbIv2CKNHIKDL88DGDppX2Shty1iLt+NL
-        kJo/QZu2HvRN+dbtSV7NIoUDbw==
-X-Google-Smtp-Source: AGRyM1tskEhayAStBRqLvIw37j7NKJYmUXe1595je1HJUJxMNs+fIvjanpQr6b3jJXdGXjKiKszGNg==
-X-Received: by 2002:a05:6000:2a5:b0:21d:2204:134a with SMTP id l5-20020a05600002a500b0021d2204134amr369727wry.67.1656408189470;
-        Tue, 28 Jun 2022 02:23:09 -0700 (PDT)
-Received: from localhost.localdomain (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id 5-20020a05600c230500b0039c8a22554bsm16235025wmo.27.2022.06.28.02.23.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Jun 2022 02:23:08 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Rob Herring <robh@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        linux-arm-msm@vger.kernel.org
-Subject: [GIT PULL] dt-bindings: qcom for v5.20, version 2
-Date:   Tue, 28 Jun 2022 11:22:53 +0200
-Message-Id: <20220628092253.21905-1-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
+        bh=h0dx8b2m9emaFg28RzQYMub6uEPgbsswWWeNTpjU7qQ=;
+        b=dmvlTB3rLjI8xgULduaz5ani1WMpHdIj3yan9Yy05kvh8WjOlRKII8Al6ojRjFfpMO
+         aUtItrakOmvCBlLjuOodL3uN4D2ksAuMNNAoJwSqLrMi18pm+8M0XVxj8dDidfmly5FH
+         lV0YI5yw0b32rgMrsH4ElOlADEZwVtvR5ZFiSwQu5oAkBDEMT4WG51EESG9Xu7WOEkuV
+         J0Tln1UqKrPPi8BIrVAtiA+ZX8TxwgKG2lR8laW0wh+Dxx+stOEOfLAa2deHuL/5Jtay
+         un4RRIaiQwqFRuMOJfnvsnNanGcs0WQdlsRhP+th2GO9KkDu4PW4Zu8/3L4fTt3iVk7q
+         alkA==
+X-Gm-Message-State: AJIora83Ml9vHmWXKPExfBUTQemwPziflfzG7Z0bW1eGvvVkiuoq2JaZ
+        gSw0P6RF9pgAuVL/rXCCX9qSiA==
+X-Google-Smtp-Source: AGRyM1uapA977RluRFtVzd0TSebkEw2JE1FoN9JKJR+3Yxjz50DUatvzSM6CR/sdeF92mRVFkjDrOA==
+X-Received: by 2002:a05:600c:3d10:b0:3a0:4956:9a84 with SMTP id bh16-20020a05600c3d1000b003a049569a84mr12695330wmb.133.1656409935070;
+        Tue, 28 Jun 2022 02:52:15 -0700 (PDT)
+Received: from [192.168.0.252] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id n8-20020a05600c304800b003a04b248896sm5853940wmh.35.2022.06.28.02.52.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 28 Jun 2022 02:52:14 -0700 (PDT)
+Message-ID: <575ac859-377d-8ce0-70e0-827a3d75baca@linaro.org>
+Date:   Tue, 28 Jun 2022 11:52:13 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: Re: [PATCH v2 1/2] soc: qcom: cmd-db: replace strncpy() with
+ strscpy_pad()
+Content-Language: en-US
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>
+References: <20220519073301.7072-1-krzysztof.kozlowski@linaro.org>
+ <CAD=FV=VQ_O2eH2+bnEegOQuBmqMhD7ixiRV3=ukuU9SnPaBSDA@mail.gmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <CAD=FV=VQ_O2eH2+bnEegOQuBmqMhD7ixiRV3=ukuU9SnPaBSDA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -72,85 +79,80 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rob and Bjorn,
+On 28/06/2022 01:06, Doug Anderson wrote:
+> Hi,
+> 
+> On Thu, May 19, 2022 at 12:33 AM Krzysztof Kozlowski
+> <krzysztof.kozlowski@linaro.org> wrote:
+>>
+>> The use of strncpy() is considered deprecated for NUL-terminated
+>> strings[1].  Replace strncpy() with strscpy_pad(), to keep existing
+>> pad-behavior of strncpy.  This fixes W=1 warning:
+>>
+>>   drivers/soc/qcom/cmd-db.c: In function ‘cmd_db_get_header.part.0’:
+>>   drivers/soc/qcom/cmd-db.c:151:9: warning: ‘strncpy’ specified bound 8 equals destination size [-Wstringop-truncation]
+>>     151 |         strncpy(query, id, sizeof(query));
+>>
+>> [1] https://www.kernel.org/doc/html/latest/process/deprecated.html#strncpy-on-nul-terminated-strings
+>>
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> Reviewed-by: Stephen Boyd <sboyd@kernel.org>
+>>
+>> ---
+>>
+>> Changes since v1:
+>> 1. Split series per subsystem.
+>> 2. Add tag.
+>> ---
+>>  drivers/soc/qcom/cmd-db.c | 2 +-
+>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/soc/qcom/cmd-db.c b/drivers/soc/qcom/cmd-db.c
+>> index dd872017f345..c5137c25d819 100644
+>> --- a/drivers/soc/qcom/cmd-db.c
+>> +++ b/drivers/soc/qcom/cmd-db.c
+>> @@ -148,7 +148,7 @@ static int cmd_db_get_header(const char *id, const struct entry_header **eh,
+>>                 return ret;
+>>
+>>         /* Pad out query string to same length as in DB */
+>> -       strncpy(query, id, sizeof(query));
+>> +       strscpy_pad(query, id, sizeof(query));
+> 
+> Sorry to report that this breaks booting on
+> sc7280-herobrine-herobrine-r1. 
 
-On top of my previous pull few days ago:
-https://lore.kernel.org/all/20220623145837.456817-1-krzysztof.kozlowski@linaro.org/
+Sorry to break booting and thanks for the report.
 
-Difference is only one new patch - the cpufreq bindings fix.
+> I believe that the function was
+> actually _relying_ on the "unsafe" behavior of strncpy(). Specifically
+> I think:
+> * The source string (id) was a '\0' terminated string.
+> * The destination (query) was a fixed 8-byte string and doesn't need
+> to be '\0' terminated.
+> 
+> So before your change we could actually support 8-byte strings. Now we
+> can't because you'll only copy 7 bytes to the destination to leave
+> room for the '\0' termination...
+> 
+> Looking at printouts, I see, for instance at least one ID that looks
+> like "lnbclka2".
 
+Ah, crap... I did not expect that.
 
-Message from previous pull:
+> 
+> Given the requirements of this function(), the old strncpy() is
+> actually _exactly_ what we want. Is there any way to disable the
+> warning? If not, I guess we could make "query" be 9 bytes bit, or
+> "sizeof(ent->id) + 1" bytes big... Happy to post a patch, but it's
+> basically a bikeshed for how you want it fixed (there are dozens of
+> ways) and I'd rather you just tell me instead of me guessing.
 
-I am fixing/improving quite a lot of Qualcomm bindings and I produced several
-separate patchsets. They wait on mailing list for quite a long time, in some
-cases two months, so I decided to grab all them and send in one organized pull.
+If the source was not a string, I would propose memcpy(). Since it is a
+string, I would prefer to have safe copy, so increased size. However I
+see you sent now patches, so let me actually respond there.
 
-All patches here got Rob's ack.
+Thanks for the analysis, much appreciated!
 
-This also brings compatibles for Qualcomm boards, therefore it might be
-desirable to merge everything through Bjorn's tree, however at this point I
-want to just get it merged as fast as possible, because I am really afraid they
-will miss the v5.20 cycle.  Therefore the pull is towards Rob, but maybe
-First-comes-first-served is also good approach.
 
 Best regards,
 Krzysztof
-
-The following changes since commit f2906aa863381afb0015a9eb7fefad885d4e5a56:
-
-  Linux 5.19-rc1 (2022-06-05 17:18:54 -0700)
-
-are available in the Git repository at:
-
-  https://git.kernel.org/pub/scm/linux/kernel/git/krzk/linux-dt.git tags/dt-bindings-qcom-5.20-2
-
-for you to fetch changes up to 062529700fdb843eee921961eb3cbc6a51419491:
-
-  dt-bindings: cpufreq: qcom-cpufreq-nvmem: fix board compatible in example (2022-06-28 10:28:50 +0200)
-
-----------------------------------------------------------------
-Devicetree bindings for Qualcomm for v5.20
-
-Cleanup, fixes and additions of missing pieces for Qualcomm bindings.
-These are address dtbs_check warnings and do not bring new hardware
-(new compatibles are added for existing boards/hardware).
-
-----------------------------------------------------------------
-Krzysztof Kozlowski (25):
-      dt-bindings: soc: qcom,rpmh-rsc: simplify qcom,tcs-config
-      spi: dt-bindings: qcom,spi-geni-qcom: allow three interconnects
-      dt-bindings: soc: qcom: aoss: document qcom,sm8450-aoss-qmp
-      dt-bindings: soc: qcom: qcom,smd-rpm: add power-controller
-      dt-bindings: nvmem: qfprom: add IPQ8064 and SDM630 compatibles
-      dt-bindings: leds: qcom-wled: fix number of addresses
-      dt-bindings: arm: qcom: fix Alcatel OneTouch Idol 3 compatibles
-      dt-bindings: arm: qcom: fix Longcheer L8150 compatibles
-      dt-bindings: arm: qcom: fix MSM8916 MTP compatibles
-      dt-bindings: arm: qcom: fix MSM8994 boards compatibles
-      dt-bindings: arm: qcom: add missing MSM8916 board compatibles
-      dt-bindings: arm: qcom: add missing MSM8994 board compatibles
-      dt-bindings: arm: qcom: add missing SM8150 board compatibles
-      dt-bindings: arm: qcom: add missing SM8250 board compatibles
-      dt-bindings: arm: qcom: add missing SM8350 board compatibles
-      dt-bindings: vendor-prefixes: add Shift GmbH
-      dt-bindings: arm: qcom: add missing MSM8998 board compatibles
-      dt-bindings: arm: qcom: add missing MSM8992 board compatibles
-      dt-bindings: arm: qcom: add missing QCS404 board compatibles
-      dt-bindings: arm: qcom: add missing SDM630 board compatibles
-      dt-bindings: arm: qcom: add missing SDM636 board compatibles
-      dt-bindings: arm: qcom: add missing SDM845 board compatibles
-      dt-bindings: arm: qcom: add missing SM6125 board compatibles
-      dt-bindings: arm: qcom: add missing SM6350 board compatibles
-      dt-bindings: cpufreq: qcom-cpufreq-nvmem: fix board compatible in example
-
- Documentation/devicetree/bindings/arm/qcom.yaml    | 108 +++++++++++++++++++--
- .../bindings/cpufreq/qcom-cpufreq-nvmem.yaml       |   4 +-
- .../bindings/leds/backlight/qcom-wled.yaml         |   9 +-
- .../devicetree/bindings/nvmem/qcom,qfprom.yaml     |   2 +
- .../bindings/soc/qcom/qcom,aoss-qmp.yaml           |   1 +
- .../bindings/soc/qcom/qcom,rpmh-rsc.yaml           |  33 +++----
- .../devicetree/bindings/soc/qcom/qcom,smd-rpm.yaml |   3 +
- .../bindings/spi/qcom,spi-geni-qcom.yaml           |   5 +-
- .../devicetree/bindings/vendor-prefixes.yaml       |   2 +
- 9 files changed, 135 insertions(+), 32 deletions(-)
