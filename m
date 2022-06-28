@@ -2,181 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 597E455ED0B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jun 2022 20:50:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7F7C355EE0E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jun 2022 21:47:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234134AbiF1St6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Jun 2022 14:49:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48696 "EHLO
+        id S231995AbiF1Trg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Jun 2022 15:47:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38098 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233853AbiF1Str (ORCPT
+        with ESMTP id S232574AbiF1TrW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Jun 2022 14:49:47 -0400
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DCCC2494B;
-        Tue, 28 Jun 2022 11:49:46 -0700 (PDT)
-Received: by mail-ej1-x629.google.com with SMTP id sb34so27571562ejc.11;
-        Tue, 28 Jun 2022 11:49:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=3hs1h6z81DTKF28gSkM1hmpoN1hgElxYH3buRnm51V4=;
-        b=Rz6A0UYLrFVNp59roNRJ/OoDCj8CZW2aTol+JZVxP5SBujZ6Ypnx1J0xJfuKQs+UhB
-         dGRyvhNFoZ8oS62bC21BtO0w+9w3U9k6l2ZBBWYpfoCmUvXKZA90orDcwjP6wnC7GsHL
-         ZnZWg7Lyf2xONtDn/eE31A4ihKiEEcLJM1doPEAMYi6oOveQnquwD7n9eG7fY9XuXs9F
-         AhmU3XAUY4esVgzREu1ExKfofz0fd0KIFvym7/2RU6Cdqiqnrm1SazWSpoPw7TN6VaKO
-         Pxb8D5rolp8rga4TvNMPpPsuB0fhtEwG+O5u7cAuT7Hh6kU52JuUeKCd1guXOJNfQujO
-         AoMg==
+        Tue, 28 Jun 2022 15:47:22 -0400
+Received: from mail-il1-f179.google.com (mail-il1-f179.google.com [209.85.166.179])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 600AE657B;
+        Tue, 28 Jun 2022 12:43:05 -0700 (PDT)
+Received: by mail-il1-f179.google.com with SMTP id p14so8869021ile.1;
+        Tue, 28 Jun 2022 12:43:04 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=3hs1h6z81DTKF28gSkM1hmpoN1hgElxYH3buRnm51V4=;
-        b=MnowJGb0x7uT8EybC2oUJcuT2x39Wvinw4qiCi3wbIQ2vyjGQCAMr84cJEa29widDo
-         VEPGAzgXYaTQB8A5t1BmVO6Ao768/ePacpT1Bf3o2sXAy/+NbtGifCKh5qXCIYpGmvM8
-         YoKvGcMbfaHdzkiJc8m17oIuy5JfrSFsi3rK85hXZMiUXWzfaX++BQ2kMPCMQVthAoS6
-         gPdFL7evsWTe5LmjclrF9hlhXaZyIZk6rnt+lxYU2T2FAsTv033qdJ6/kOUpxHMyG5ux
-         5oIXHqGefIcJ/9HJDi15upBd3Ei/hhRKxH1zEUYNssrYQsue2phRatP89ntlLRlZSkdR
-         o19Q==
-X-Gm-Message-State: AJIora/5yL0LvG2ikp0BBsSPjx1fULBw8NE7VueIClxlNs0k9C8/IPPU
-        DsafKQGR6dF+P2s3qEAadBA=
-X-Google-Smtp-Source: AGRyM1sFNqH2o0iEzWOXlPTJ+cex7HQa6KdetSBAEqklx7/FKY8oRD+IXSINVWhZGuby7hfHm7tMtg==
-X-Received: by 2002:a17:907:1b25:b0:6da:8206:fc56 with SMTP id mp37-20020a1709071b2500b006da8206fc56mr851746ejc.81.1656442184865;
-        Tue, 28 Jun 2022 11:49:44 -0700 (PDT)
-Received: from localhost.localdomain (93-42-70-190.ip85.fastwebnet.it. [93.42.70.190])
-        by smtp.googlemail.com with ESMTPSA id t21-20020a05640203d500b0043573c59ea0sm9747593edw.90.2022.06.28.11.49.43
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=VHVKVN3IX7q5QzhaWKonzv3cqLL801D7VMqTJfjBH8g=;
+        b=dSb8EdVti2Q9VGSfer6ePqppL5+KxT7nXnmKm9mqtMDcA/6Bilk4oaGEd4v9vCXuGt
+         p/Qh8pxsXwvBja63uEq6BoXb0qkIJ5AHmq43plpvqrMKpzoCw4pLs2Jbx1huZHsnOVib
+         F4Z7G079XELDyrFRuZFsuUJyqMk4fQimmQi8Y32WSrBo31JqqlRrtOEY6FL9xDFGj6Ka
+         R4VlxOAtAZvoaxFmy1PEovsxMGSyrjavWDyADxYBWv3/t7g3TQ5M0UYxx81Z/KNzYxlJ
+         fE435Q5AthghO535BLhhfjxslpxvmoSx7OTrwaOn9WHPcUabUfeOCkoGmqSieL2Z8VCY
+         xLsQ==
+X-Gm-Message-State: AJIora+4B/c3biW4wC2Bqo/cb6puq5moPtO/GvG+CLfpWRU649E6/unr
+        VJS3T3Zv5faHqP8iMU+lvg==
+X-Google-Smtp-Source: AGRyM1thY7k8pboASgqZUmOKDkN+wYthPaxZ2hPfQa6CL7bFuO78NVmRq9Fl1FcLGhXHSV4B4sPAVQ==
+X-Received: by 2002:a05:6e02:1c4b:b0:2d9:5706:7a50 with SMTP id d11-20020a056e021c4b00b002d957067a50mr11254928ilg.257.1656445384222;
+        Tue, 28 Jun 2022 12:43:04 -0700 (PDT)
+Received: from robh.at.kernel.org ([64.188.179.253])
+        by smtp.gmail.com with ESMTPSA id w1-20020a5ed601000000b00675305c58bdsm4024486iom.18.2022.06.28.12.43.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Jun 2022 11:49:44 -0700 (PDT)
-From:   Christian Marangi <ansuelsmth@gmail.com>
-To:     Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+        Tue, 28 Jun 2022 12:43:03 -0700 (PDT)
+Received: (nullmailer pid 860430 invoked by uid 1000);
+        Tue, 28 Jun 2022 19:43:01 -0000
+Date:   Tue, 28 Jun 2022 13:43:01 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Christian Marangi <ansuelsmth@gmail.com>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>, linux-clk@vger.kernel.org,
         Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, Jens Axboe <axboe@kernel.dk>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Christian Marangi <ansuelsmth@gmail.com>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
-Subject: [PATCH v3 4/4] ARM: dts: qcom: fix various wrong definition for kpss-gcc node
-Date:   Tue, 28 Jun 2022 20:41:37 +0200
-Message-Id: <20220628184137.21678-5-ansuelsmth@gmail.com>
-X-Mailer: git-send-email 2.36.1
-In-Reply-To: <20220628184137.21678-1-ansuelsmth@gmail.com>
-References: <20220628184137.21678-1-ansuelsmth@gmail.com>
+        devicetree@vger.kernel.org, Stephen Boyd <sboyd@kernel.org>,
+        linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 1/3] dt-bindings: clock: add pcm reset for ipq806x lcc
+Message-ID: <20220628194301.GA860372-robh@kernel.org>
+References: <20220621163326.16858-1-ansuelsmth@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220621163326.16858-1-ansuelsmth@gmail.com>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Fix dtbs_check warning now that we have a correct kpss-gcc yaml
-schema. Add additional qcom,kpss-gcc compatible to differentiate
-devices where kpss-gcc should provide a clk and where kpss-gcc should
-just provide the registers and the syscon phandle.
-Add missing #clock-cells and remove useless clock-output-names for
-ipq806x.
-Add missing binding for msm8090 kpss-gcc node.
+On Tue, 21 Jun 2022 18:33:24 +0200, Christian Marangi wrote:
+> Add pcm reset define for ipq806x lcc.
+> 
+> Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+> ---
+> v2:
+> - Fix Sob tag
+> 
+>  include/dt-bindings/clock/qcom,lcc-ipq806x.h | 2 ++
+>  1 file changed, 2 insertions(+)
+> 
 
-Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
----
- arch/arm/boot/dts/qcom-apq8064.dtsi | 2 +-
- arch/arm/boot/dts/qcom-ipq8064.dtsi | 4 ++--
- arch/arm/boot/dts/qcom-mdm9615.dtsi | 2 +-
- arch/arm/boot/dts/qcom-msm8660.dtsi | 2 +-
- arch/arm/boot/dts/qcom-msm8960.dtsi | 7 +++++--
- 5 files changed, 10 insertions(+), 7 deletions(-)
-
-diff --git a/arch/arm/boot/dts/qcom-apq8064.dtsi b/arch/arm/boot/dts/qcom-apq8064.dtsi
-index a1c8ae516d21..a79eda05a7c2 100644
---- a/arch/arm/boot/dts/qcom-apq8064.dtsi
-+++ b/arch/arm/boot/dts/qcom-apq8064.dtsi
-@@ -836,7 +836,7 @@ mmcc: clock-controller@4000000 {
- 		};
- 
- 		l2cc: clock-controller@2011000 {
--			compatible	= "qcom,kpss-gcc", "syscon";
-+			compatible	= "qcom,kpss-gcc-apq8064", "qcom,kpss-gcc", "syscon";
- 			reg		= <0x2011000 0x1000>;
- 		};
- 
-diff --git a/arch/arm/boot/dts/qcom-ipq8064.dtsi b/arch/arm/boot/dts/qcom-ipq8064.dtsi
-index 996f4458d9fc..34b20b3d2243 100644
---- a/arch/arm/boot/dts/qcom-ipq8064.dtsi
-+++ b/arch/arm/boot/dts/qcom-ipq8064.dtsi
-@@ -780,11 +780,11 @@ tcsr: syscon@1a400000 {
- 		};
- 
- 		l2cc: clock-controller@2011000 {
--			compatible = "qcom,kpss-gcc", "syscon";
-+			compatible = "qcom,kpss-gcc-ipq8064", "qcom,kpss-gcc", "syscon";
- 			reg = <0x2011000 0x1000>;
- 			clocks = <&gcc PLL8_VOTE>, <&gcc PXO_SRC>;
- 			clock-names = "pll8_vote", "pxo";
--			clock-output-names = "acpu_l2_aux";
-+			#clock-cells = <0>;
- 		};
- 
- 		lcc: clock-controller@28000000 {
-diff --git a/arch/arm/boot/dts/qcom-mdm9615.dtsi b/arch/arm/boot/dts/qcom-mdm9615.dtsi
-index 4d4f37cebf21..216668b4f274 100644
---- a/arch/arm/boot/dts/qcom-mdm9615.dtsi
-+++ b/arch/arm/boot/dts/qcom-mdm9615.dtsi
-@@ -152,7 +152,7 @@ lcc: clock-controller@28000000 {
- 		};
- 
- 		l2cc: clock-controller@2011000 {
--			compatible = "qcom,kpss-gcc", "syscon";
-+			compatible = "qcom,kpss-gcc-mdm9615", "qcom,kpss-gcc", "syscon";
- 			reg = <0x02011000 0x1000>;
- 		};
- 
-diff --git a/arch/arm/boot/dts/qcom-msm8660.dtsi b/arch/arm/boot/dts/qcom-msm8660.dtsi
-index a258abb23a64..db90f336f029 100644
---- a/arch/arm/boot/dts/qcom-msm8660.dtsi
-+++ b/arch/arm/boot/dts/qcom-msm8660.dtsi
-@@ -391,7 +391,7 @@ vibrator@4a {
- 		};
- 
- 		l2cc: clock-controller@2082000 {
--			compatible	= "qcom,kpss-gcc", "syscon";
-+			compatible	= "qcom,kpss-gcc-msm8660", "qcom,kpss-gcc", "syscon";
- 			reg		= <0x02082000 0x1000>;
- 		};
- 
-diff --git a/arch/arm/boot/dts/qcom-msm8960.dtsi b/arch/arm/boot/dts/qcom-msm8960.dtsi
-index 4a2d74cf01d2..a11a0fe7e0a9 100644
---- a/arch/arm/boot/dts/qcom-msm8960.dtsi
-+++ b/arch/arm/boot/dts/qcom-msm8960.dtsi
-@@ -63,7 +63,7 @@ cxo_board {
- 			clock-output-names = "cxo_board";
- 		};
- 
--		pxo_board {
-+		pxo_board: pxo_board {
- 			compatible = "fixed-clock";
- 			#clock-cells = <0>;
- 			clock-frequency = <27000000>;
-@@ -148,8 +148,11 @@ clock-controller@4000000 {
- 		};
- 
- 		l2cc: clock-controller@2011000 {
--			compatible	= "qcom,kpss-gcc", "syscon";
-+			compatible	= "qcom,kpss-gcc-msm8960", "qcom,kpss-gcc", "syscon";
- 			reg		= <0x2011000 0x1000>;
-+			clocks		= <&gcc PLL8_VOTE>, <&pxo_board>;
-+			clock-names	= "pll8_vote", "pxo";
-+			#clock-cells	= <0>;
- 		};
- 
- 		rpm@108000 {
--- 
-2.36.1
-
+Acked-by: Rob Herring <robh@kernel.org>
