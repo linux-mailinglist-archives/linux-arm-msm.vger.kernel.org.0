@@ -2,73 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5F30655E482
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jun 2022 15:39:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 96BB455E4CD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jun 2022 15:39:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240691AbiF1N33 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Jun 2022 09:29:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57314 "EHLO
+        id S1345718AbiF1NeJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Jun 2022 09:34:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36578 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345544AbiF1N2J (ORCPT
+        with ESMTP id S1346682AbiF1Ndo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Jun 2022 09:28:09 -0400
-Received: from mail-qk1-x72c.google.com (mail-qk1-x72c.google.com [IPv6:2607:f8b0:4864:20::72c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2EF5F9FC8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jun 2022 06:27:52 -0700 (PDT)
-Received: by mail-qk1-x72c.google.com with SMTP id z16so4681665qkj.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jun 2022 06:27:52 -0700 (PDT)
+        Tue, 28 Jun 2022 09:33:44 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9506B38F;
+        Tue, 28 Jun 2022 06:33:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=0aMNqmnMIKi7I+oM6Vp8+9eJ8fBtT2TW4TZeFgJi3fQ=;
-        b=ic/oVE++fn5k1NV7kQALi6XGEpYofohGQkFZG9DwgUaJuJfylrH3XxlNM0cQoCbBIM
-         DJuuAsQ5Gk/2EnAlJY0qf7tzNZbUlrKFJvDBUU9Ag9q6KPMK7EkBTYsak4Bs76iy+AGB
-         e66nvxfFyt+p79zKrFPOZfTlYpbAn980ykkGl0wvQnuqLdbPXagmadFuojAFaZJaPeaP
-         7yEMArdWzAixYfuCI9fh5RrBzmngWSZSi5SsRevJUbw9BopMWgqDXDfuoLY7OA7JRg4H
-         PUa2/HyC9B1TSFeX1zUowg0zCkBFMh4m+mqi4ZT/B3ddtGlbcAZWgGkFIuvsOCdZjw5R
-         8p0w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=0aMNqmnMIKi7I+oM6Vp8+9eJ8fBtT2TW4TZeFgJi3fQ=;
-        b=zfttu2aj9WzaJb1Z25mQS9L6gjJRibABr2artYz1IEd8k/7NXmgOtKzL2pytkd3CDO
-         R/PeRH/DxnhN7GXhLLSjm0xmtn1Sn4E+TBHOdHxS1g+f2WcISV57raAOT4rC7vxUvUWm
-         EF4Sfduuqj1NxXZ9zEUJFIoPRjdDJTdxJK4JJxctRgDQwSOq1O/ld9UJ+tak8htUB7Et
-         Obur4yky5cduQu0L5+lulueZYoIcSBy94IBNXjr2ukEMt9p43iV5kMe44vP6buLZ5+il
-         fh4xuxBocl+4UI9VsfGqdtBtpEaS/JxKPdJ7HM92sF3kCcUsOL2EHxOOABVe+ig5Fz+Z
-         YhOQ==
-X-Gm-Message-State: AJIora+CwCfr4/2AWjauuZav48aIjoqQqQm8IvF/HLTHztwLrkP4wtTh
-        4PgOcfsrNOdqa2GJCQvdGnePv/yWdMokKPEQuWBpUw==
-X-Google-Smtp-Source: AGRyM1uFzx5XNDSGUv3VsL7v2OiaMA2icVF5JOU4zDf8SI+B/+wfHtiB9FSjEjdS1E/Sbs+16KnN2332vmlti9fKlRo=
-X-Received: by 2002:a05:620a:2a0e:b0:6a7:8346:1601 with SMTP id
- o14-20020a05620a2a0e00b006a783461601mr11247731qkp.593.1656422871286; Tue, 28
- Jun 2022 06:27:51 -0700 (PDT)
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1656423222; x=1687959222;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=YaeCBtQatyqDjijpk5TIF7bbHrkUDXzBl7LKNogOJaE=;
+  b=icBqkWFpHWW7ytd3SfXs61igyaI6dIXmLKCXK6wMXTi0A29PCz/2AnZ7
+   6BV+N7bnkk9IoMsXu5KEk+Rxq+OkZSu4xVwr3P84QV7MO55lPKf/mqZiz
+   FkSCRpKFWC1tOJa+rC4K92KZlF2qJdaohsI2Ctzq1y6mIOUdtsF+ivmiu
+   A=;
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 28 Jun 2022 06:33:42 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Jun 2022 06:33:43 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Tue, 28 Jun 2022 06:33:41 -0700
+Received: from [10.216.26.50] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Tue, 28 Jun
+ 2022 06:33:36 -0700
+Message-ID: <f6f26717-fb62-0700-cc2e-d6cfe3643e4b@quicinc.com>
+Date:   Tue, 28 Jun 2022 19:03:33 +0530
 MIME-Version: 1.0
-References: <20220501202025.211567-1-konrad.dybcio@somainline.org>
- <20220501202025.211567-2-konrad.dybcio@somainline.org> <CAA8EJpqM5i88UKSrQyG1pMM6NQb8naTri-jNt++q7oKB-zdGAg@mail.gmail.com>
- <e57300bb-163b-2963-e55e-a5d0b0678f4f@somainline.org>
-In-Reply-To: <e57300bb-163b-2963-e55e-a5d0b0678f4f@somainline.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 28 Jun 2022 16:27:40 +0300
-Message-ID: <CAA8EJppvye=3-Wp09Wk0eO5tJ=pvu2kdM7ipz+HMOow0Qs69RA@mail.gmail.com>
-Subject: Re: [PATCH v3 2/2] thermal: qcom: tsens-v1: Add support for MSM8992/4 TSENS
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, martin.botka@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
-        Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@linaro.org>,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Subject: Re: [PATCH 4/5] firmware: qcom: scm: Add wait-queue helper functions
+Content-Language: en-US
+To:     Guru Das Srinagesh <quic_gurus@quicinc.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        "Philipp Zabel" <p.zabel@pengutronix.de>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+CC:     David Heidelberg <david@ixit.cz>,
+        Robert Marko <robimarko@gmail.com>,
+        Elliot Berman <quic_eberman@quicinc.com>
+References: <1656359076-13018-1-git-send-email-quic_gurus@quicinc.com>
+ <1656359076-13018-5-git-send-email-quic_gurus@quicinc.com>
+From:   Rajendra Nayak <quic_rjendra@quicinc.com>
+In-Reply-To: <1656359076-13018-5-git-send-email-quic_gurus@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -77,102 +72,401 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 28 Jun 2022 at 16:19, Konrad Dybcio
-<konrad.dybcio@somainline.org> wrote:
->
->
->
-> On 27.06.2022 17:15, Dmitry Baryshkov wrote:
-> > On Sun, 1 May 2022 at 23:21, Konrad Dybcio <konrad.dybcio@somainline.org> wrote:
-> >>
-> >> MSM8994, despite being heavily based on MSM8974, uses the
-> >> 1.2 version of TSENS. Also, 8994 being 8994, it has a custom
-> >> way of calculating the slope.
-> >>
-> >> MSM8992 in turn is a cut-down version of MSM8994 and uses
-> >> the same TSENS hardware, albeit with a different set of sensors.
-> >>
-> >> Also tested on 8976 (by a person who didn't want to be named)
-> >> to make sure the 11->16 max_sensors changes didn't break anything.
-> >>
-> >> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-> >> ---
-> >> Changes since v2:
-> >>
-> >> - don't use slope before it's initialized (whoops!)
-> >> - don't re-assign the same value to p[0..15]
-> >> - free calib_rsel
-> >> - use the same ops for 8992 and 8994
-> >>
-> >>  drivers/thermal/qcom/tsens-v1.c | 293 ++++++++++++++++++++++++++++++--
-> >>  drivers/thermal/qcom/tsens.c    |   6 +
-> >>  drivers/thermal/qcom/tsens.h    |   2 +-
-> >>  3 files changed, 288 insertions(+), 13 deletions(-)
-> >>
-> >> diff --git a/drivers/thermal/qcom/tsens-v1.c b/drivers/thermal/qcom/tsens-v1.c
-> >> index 573e261ccca7..58864962f370 100644
-> >> --- a/drivers/thermal/qcom/tsens-v1.c
-> >> +++ b/drivers/thermal/qcom/tsens-v1.c
-> >> @@ -142,6 +142,99 @@
-> >>  #define CAL_SEL_MASK   7
-> >>  #define CAL_SEL_SHIFT  0
-> >>
-> >> +/* eeprom layout data for 8994 */
-> >> +#define MSM8994_BASE0_MASK     0x3ff
-> >> +#define MSM8994_BASE1_MASK     0xffc00
-> >> +#define MSM8994_BASE0_SHIFT    0
-> >> +#define MSM8994_BASE1_SHIFT    10
-> >
-> > Generally I feel that all the _MASK values can be better generated
-> > using the GENMASK and newly defined _SHIFT value.
-> Yes, I agree, however I think it'd be better to do it for
-> all the defines in this file at once in a separate commit.
-
-Then I'd suggest fixing the file first and adding 8992/4 on top of that.
-
->
-> Konrad
-> >
-> >> +
-> >> +#define MSM8994_S0_MASK        0xf00000
-> >> +#define MSM8994_S1_MASK        0xf000000
-> >> +#define MSM8994_S2_MASK        0xf0000000
-> >> +#define MSM8994_S3_MASK        0xf
-> >> +#define MSM8994_S4_MASK        0xf0
-> >> +#define MSM8994_S5_MASK        0xf00
-> >> +#define MSM8994_S6_MASK        0xf000
-> >> +#define MSM8994_S7_MASK        0xf0000
-> >> +#define MSM8994_S8_MASK        0xf00000
-> >> +#define MSM8994_S9_MASK        0xf000000
-> >> +#define MSM8994_S10_MASK       0xf0000000
-> >> +#define MSM8994_S11_MASK       0xf
-> >> +#define MSM8994_S12_MASK       0xf0
-> >> +#define MSM8994_S13_MASK       0xf00
-> >> +#define MSM8994_S14_MASK       0xf000
-> >> +#define MSM8994_S15_MASK       0xf0000
-> >> +
-> >> +#define MSM8994_S0_SHIFT       20
-> >> +#define MSM8994_S1_SHIFT       24
-> >> +#define MSM8994_S2_SHIFT       28
-> >> +#define MSM8994_S3_SHIFT       0
-> >> +#define MSM8994_S4_SHIFT       4
-> >> +#define MSM8994_S5_SHIFT       8
-> >> +#define MSM8994_S6_SHIFT       12
-> >> +#define MSM8994_S7_SHIFT       16
-> >> +#define MSM8994_S8_SHIFT       20
-> >> +#define MSM8994_S9_SHIFT       24
-> >> +#define MSM8994_S10_SHIFT      28
-> >> +#define MSM8994_S11_SHIFT      0
-> >> +#define MSM8994_S12_SHIFT      4
-> >> +#define MSM8994_S13_SHIFT      8
-> >> +#define MSM8994_S14_SHIFT      12
-> >> +#define MSM8994_S15_SHIFT      16
-> >
-> > [skipped the rest]
-> >
 
 
+On 6/28/2022 1:14 AM, Guru Das Srinagesh wrote:
+> When the firmware (FW) supports multiple requests per VM, and the VM also
+> supports it via the `enable-multi-call` device tree flag, the floodgates
 
--- 
-With best wishes
-Dmitry
+the bindings actually define 'allow-multi-call'
+
+> are thrown open for them to all reach the firmware at the same time.
+> 
+> Since the firmware currently being used has limited resources, it guards
+> them with a resource lock and puts requests on a wait-queue internally
+> and signals to HLOS that it is doing so. It does this by returning two
+> new return values in addition to success or error: SCM_WAITQ_SLEEP and
+> SCM_WAITQ_WAKE.
+> 
+>    1) SCM_WAITQ_SLEEP:
+> 
+>    	When an SCM call receives this return value instead of success
+>    	or error, FW has placed this call on a wait-queue and
+>    	has signalled HLOS to put it to non-interruptible sleep. (The
+> 	mechanism to wake it back up will be described in detail in the
+> 	next patch for the sake of simplicity.)
+> 
+> 	Along with this return value, FW also passes to HLOS `wq_ctx` -
+> 	a unique number (UID) identifying the wait-queue that it has put
+> 	the call on, internally. This is to help HLOS with its own
+> 	bookkeeping to wake this sleeping call later.
+> 
+> 	Additionally, FW also passes to HLOS `smc_call_ctx` - a UID
+> 	identifying the SCM call thus being put to sleep. This is also
+> 	for HLOS' bookkeeping to wake this call up later.
+> 
+> 	These two additional values are passed via the a1 and a2
+> 	registers.
+> 
+> 	N.B.: The "ctx" in the above UID names = "context".
+> 
+>    2) SCM_WAITQ_WAKE:
+> 
+>    	When an SCM call receives this return value instead of success
+>    	or error, FW wishes to signal HLOS to wake up a (different)
+>    	previously sleeping call.
+> 
+>    	FW tells HLOS which call to wake up via the additional return
+>    	values `wq_ctx`, `smc_call_ctx` and `flags`. The first two have
+>    	already been explained above.
+> 
+>    	`flags` can be either WAKE_ONE or WAKE_ALL. Meaning, wake either
+>    	one, or all, of the SCM calls that HLOS is associating with the
+>    	given `wq_ctx`.
+> 
+> A sleeping SCM call can be woken up by either an interrupt that FW
+> raises, or via a SCM_WAITQ_WAKE return value for a new SCM call.
+> 
+> The handshake mechanism that HLOS uses to talk to FW about wait-queue
+> operations involves three new SMC calls. These are:
+> 
+>    1) get_wq_ctx():
+> 
+>      	Arguments: 	None
+>      	Returns:	wq_ctx, flags, more_pending
+> 
+>      	Get the wait-queue context, and wake up either one or all of the
+>      	sleeping SCM calls associated with that wait-queue.
+> 
+>      	Additionally, repeat this if there are more wait-queues that are
+>      	ready to have their requests woken up (`more_pending`).
+> 
+>    2) wq_resume(smc_call_ctx):
+> 
+>    	Arguments:	smc_call_ctx
+> 
+>    	HLOS needs to issue this in response to receiving an
+>    	IRQ, passing to FW the same smc_call_ctx that FW
+>    	receives from HLOS via the get_wq_ctx() call.
+> 
+>    3) wq_wake_ack(smc_call_ctx):
+> 
+>    	Arguments:	smc_call_ctx
+> 
+>    	HLOS needs to issue this in response to receiving an
+>    	SCM_WAITQ_WAKE, passing to FW the same smc_call_ctx that FW
+>    	passed to HLOS via the SMC_WAITQ_WAKE call.
+> 
+> (Reminder that the full handshake mechanism will be detailed in the
+> subsequent patch.)
+> 
+> Also add the interrupt handler that wakes up a sleeping SCM call.
+> 
+> Signed-off-by: Guru Das Srinagesh <quic_gurus@quicinc.com>
+> ---
+>   drivers/firmware/qcom_scm-smc.c |  56 +++++++++++++++++++
+>   drivers/firmware/qcom_scm.c     | 118 +++++++++++++++++++++++++++++++++++++++-
+>   drivers/firmware/qcom_scm.h     |  12 ++++
+>   3 files changed, 185 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/firmware/qcom_scm-smc.c b/drivers/firmware/qcom_scm-smc.c
+> index 66193c2..4150da1 100644
+> --- a/drivers/firmware/qcom_scm-smc.c
+> +++ b/drivers/firmware/qcom_scm-smc.c
+> @@ -53,6 +53,62 @@ static void __scm_smc_do_quirk(const struct arm_smccc_args *smc,
+>   	} while (res->a0 == QCOM_SCM_INTERRUPTED);
+>   }
+>   
+> +static void fill_wq_resume_args(struct arm_smccc_args *resume, u32 smc_call_ctx)
+> +{
+> +	memset(resume->args, 0, ARRAY_SIZE(resume->args));
+> +
+> +	resume->args[0] = ARM_SMCCC_CALL_VAL(ARM_SMCCC_STD_CALL,
+> +			 ARM_SMCCC_SMC_64, ARM_SMCCC_OWNER_SIP,
+> +			 SCM_SMC_FNID(QCOM_SCM_SVC_WAITQ, QCOM_SCM_WAITQ_RESUME));
+> +
+> +	resume->args[1] = QCOM_SCM_ARGS(1);
+> +
+> +	resume->args[2] = smc_call_ctx;
+> +}
+> +
+> +static void fill_wq_wake_ack_args(struct arm_smccc_args *wake_ack, u32 smc_call_ctx)
+> +{
+> +	memset(wake_ack->args, 0, ARRAY_SIZE(wake_ack->args));
+> +
+> +	wake_ack->args[0] = ARM_SMCCC_CALL_VAL(ARM_SMCCC_STD_CALL,
+> +			 ARM_SMCCC_SMC_64, ARM_SMCCC_OWNER_SIP,
+> +			 SCM_SMC_FNID(QCOM_SCM_SVC_WAITQ, QCOM_SCM_WAITQ_ACK));
+> +
+> +	wake_ack->args[1] = QCOM_SCM_ARGS(1);
+> +
+> +	wake_ack->args[2] = smc_call_ctx;
+> +}
+> +
+> +static void fill_get_wq_ctx_args(struct arm_smccc_args *get_wq_ctx)
+> +{
+> +	memset(get_wq_ctx->args, 0, ARRAY_SIZE(get_wq_ctx->args));
+> +
+> +	get_wq_ctx->args[0] = ARM_SMCCC_CALL_VAL(ARM_SMCCC_STD_CALL,
+> +			 ARM_SMCCC_SMC_64, ARM_SMCCC_OWNER_SIP,
+> +			 SCM_SMC_FNID(QCOM_SCM_SVC_WAITQ, QCOM_SCM_WAITQ_GET_WQ_CTX));
+> +}
+> +
+> +int scm_get_wq_ctx(u32 *wq_ctx, u32 *flags, u32 *more_pending)
+> +{
+> +	int ret;
+> +	struct arm_smccc_args get_wq_ctx = {0};
+> +	struct arm_smccc_res get_wq_res;
+> +
+> +	fill_get_wq_ctx_args(&get_wq_ctx);
+> +
+> +	__scm_smc_do_quirk(&get_wq_ctx, &get_wq_res);
+> +	/* Guaranteed to return only success or error, no WAITQ_* */
+> +	ret = get_wq_res.a0;
+> +	if (ret)
+> +		return ret;
+> +
+> +	*wq_ctx = get_wq_res.a1;
+> +	*flags  = get_wq_res.a2;
+> +	*more_pending = get_wq_res.a3;
+> +
+> +	return 0;
+> +}
+> +
+>   static void __scm_smc_do(const struct arm_smccc_args *smc,
+>   			 struct arm_smccc_res *res, bool atomic)
+>   {
+> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
+> index 4046073..248126c 100644
+> --- a/drivers/firmware/qcom_scm.c
+> +++ b/drivers/firmware/qcom_scm.c
+> @@ -3,8 +3,12 @@
+>    * Copyright (C) 2015 Linaro Ltd.
+>    * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
+>    */
+> +#define pr_fmt(fmt)     "qcom-scm: %s: " fmt, __func__
+> +
+>   #include <linux/platform_device.h>
+> +#include <linux/idr.h>
+>   #include <linux/init.h>
+> +#include <linux/interrupt.h>
+>   #include <linux/cpumask.h>
+>   #include <linux/export.h>
+>   #include <linux/dma-mapping.h>
+> @@ -12,10 +16,13 @@
+>   #include <linux/types.h>
+>   #include <linux/qcom_scm.h>
+>   #include <linux/of.h>
+> +#include <linux/of_irq.h>
+>   #include <linux/of_address.h>
+>   #include <linux/of_platform.h>
+>   #include <linux/clk.h>
+>   #include <linux/reset-controller.h>
+> +#include <linux/spinlock.h>
+> +#include <linux/ktime.h>
+>   #include <linux/arm-smccc.h>
+>   
+>   #include "qcom_scm.h"
+> @@ -29,12 +36,19 @@ bool qcom_scm_allow_multicall = false;
+>   #define SCM_HAS_IFACE_CLK	BIT(1)
+>   #define SCM_HAS_BUS_CLK		BIT(2)
+>   
+> +struct qcom_scm_waitq {
+> +	struct idr idr;
+> +	spinlock_t idr_lock;
+> +	struct work_struct scm_irq_work;
+> +};
+> +
+>   struct qcom_scm {
+>   	struct device *dev;
+>   	struct clk *core_clk;
+>   	struct clk *iface_clk;
+>   	struct clk *bus_clk;
+>   	struct reset_controller_dev reset;
+> +	struct qcom_scm_waitq waitq;
+>   
+>   	u64 dload_mode_addr;
+>   };
+> @@ -56,10 +70,14 @@ struct qcom_scm_mem_map_info {
+>   static const u8 qcom_scm_cpu_cold_bits[QCOM_SCM_BOOT_MAX_CPUS] = {
+>   	0, BIT(0), BIT(3), BIT(5)
+>   };
+> +
+>   static const u8 qcom_scm_cpu_warm_bits[QCOM_SCM_BOOT_MAX_CPUS] = {
+>   	BIT(2), BIT(1), BIT(4), BIT(6)
+>   };
+>   
+> +#define QCOM_SMC_WAITQ_FLAG_WAKE_ONE	BIT(0)
+> +#define QCOM_SMC_WAITQ_FLAG_WAKE_ALL	BIT(1)
+> +
+>   static const char * const qcom_scm_convention_names[] = {
+>   	[SMC_CONVENTION_UNKNOWN] = "unknown",
+>   	[SMC_CONVENTION_ARM_32] = "smc arm 32",
+> @@ -1266,11 +1284,92 @@ bool qcom_scm_is_available(void)
+>   }
+>   EXPORT_SYMBOL(qcom_scm_is_available);
+>   
+> +struct completion *qcom_scm_lookup_wq(struct qcom_scm *scm, u32 wq_ctx)
+> +{
+> +	struct completion *wq = NULL;
+> +	u32 wq_ctx_idr = wq_ctx;
+> +	unsigned long flags;
+> +	int err;
+> +
+> +	spin_lock_irqsave(&scm->waitq.idr_lock, flags);
+> +	wq = idr_find(&scm->waitq.idr, wq_ctx);
+> +	if (wq)
+> +		goto out;
+> +
+> +	wq = devm_kzalloc(scm->dev, sizeof(*wq), GFP_ATOMIC);
+> +	if (!wq) {
+> +		wq = ERR_PTR(-ENOMEM);
+> +		goto out;
+> +	}
+> +
+> +	init_completion(wq);
+> +
+> +	err = idr_alloc_u32(&scm->waitq.idr, wq, &wq_ctx_idr,
+> +			    U32_MAX, GFP_ATOMIC);
+> +	if (err < 0) {
+> +		devm_kfree(scm->dev, wq);
+> +		wq = ERR_PTR(err);
+> +	}
+> +
+> +out:
+> +	spin_unlock_irqrestore(&scm->waitq.idr_lock, flags);
+> +	return wq;
+> +}
+> +
+> +void scm_waitq_flag_handler(struct completion *wq, u32 flags)
+> +{
+> +	switch (flags) {
+> +	case QCOM_SMC_WAITQ_FLAG_WAKE_ONE:
+> +		complete(wq);
+> +		break;
+> +	case QCOM_SMC_WAITQ_FLAG_WAKE_ALL:
+> +		complete_all(wq);
+> +		break;
+> +	default:
+> +		pr_err("invalid flags: %u\n", flags);
+> +	}
+> +}
+> +
+> +static void scm_irq_work(struct work_struct *work)
+> +{
+> +	int ret;
+> +	u32 wq_ctx, flags, more_pending = 0;
+> +	struct completion *wq_to_wake;
+> +	struct qcom_scm_waitq *w = container_of(work, struct qcom_scm_waitq, scm_irq_work);
+> +	struct qcom_scm *scm = container_of(w, struct qcom_scm, waitq);
+> +
+> +	do {
+> +		ret = scm_get_wq_ctx(&wq_ctx, &flags, &more_pending);
+> +		if (ret) {
+> +			pr_err("GET_WQ_CTX SMC call failed: %d\n", ret);
+> +			return;
+> +		}
+> +
+> +		wq_to_wake = qcom_scm_lookup_wq(scm, wq_ctx);
+> +		if (IS_ERR_OR_NULL(wq_to_wake)) {
+> +			pr_err("No waitqueue found for wq_ctx %d: %ld\n",
+> +					wq_ctx, PTR_ERR(wq_to_wake));
+> +			return;
+> +		}
+> +
+> +		scm_waitq_flag_handler(wq_to_wake, flags);
+> +	} while (more_pending);
+> +}
+> +
+> +static irqreturn_t qcom_scm_irq_handler(int irq, void *p)
+> +{
+> +	struct qcom_scm *scm = p;
+> +
+> +	schedule_work(&scm->waitq.scm_irq_work);
+> +
+> +	return IRQ_HANDLED;
+> +}
+> +
+>   static int qcom_scm_probe(struct platform_device *pdev)
+>   {
+>   	struct qcom_scm *scm;
+>   	unsigned long clks;
+> -	int ret;
+> +	int irq, ret;
+>   
+>   	scm = devm_kzalloc(&pdev->dev, sizeof(*scm), GFP_KERNEL);
+>   	if (!scm)
+> @@ -1333,12 +1432,28 @@ static int qcom_scm_probe(struct platform_device *pdev)
+>   	if (ret)
+>   		return ret;
+>   
+> +	platform_set_drvdata(pdev, scm);
+> +
+>   	__scm = scm;
+>   	__scm->dev = &pdev->dev;
+>   
+> +	spin_lock_init(&__scm->waitq.idr_lock);
+> +	idr_init(&__scm->waitq.idr);
+>   	qcom_scm_allow_multicall = of_property_read_bool(__scm->dev->of_node,
+>   							"allow-multi-call");
+>   
+> +	INIT_WORK(&__scm->waitq.scm_irq_work, scm_irq_work);
+> +
+> +	irq = platform_get_irq(pdev, 0);
+> +	if (irq) {
+> +		ret = devm_request_threaded_irq(__scm->dev, irq, NULL,
+> +			qcom_scm_irq_handler, IRQF_ONESHOT, "qcom-scm", __scm);
+> +		if (ret < 0) {
+> +			pr_err("Failed to request qcom-scm irq: %d\n", ret);
+> +			return ret;
+> +		}
+> +	}
+> +
+>   	__get_convention();
+>   
+>   	/*
+> @@ -1354,6 +1469,7 @@ static int qcom_scm_probe(struct platform_device *pdev)
+>   
+>   static void qcom_scm_shutdown(struct platform_device *pdev)
+>   {
+> +	idr_destroy(&__scm->waitq.idr);
+>   	/* Clean shutdown, disable download mode to allow normal restart */
+>   	if (download_mode)
+>   		qcom_scm_set_download_mode(false);
+> diff --git a/drivers/firmware/qcom_scm.h b/drivers/firmware/qcom_scm.h
+> index c0a4d6b..ae3a331 100644
+> --- a/drivers/firmware/qcom_scm.h
+> +++ b/drivers/firmware/qcom_scm.h
+> @@ -62,6 +62,11 @@ struct qcom_scm_res {
+>   	u64 result[MAX_QCOM_SCM_RETS];
+>   };
+>   
+> +struct qcom_scm;
+> +extern struct completion *qcom_scm_lookup_wq(struct qcom_scm *scm, u32 wq_ctx);
+> +extern void scm_waitq_flag_handler(struct completion *wq, u32 flags);
+> +extern int scm_get_wq_ctx(u32 *wq_ctx, u32 *flags, u32 *more_pending);
+> +
+>   #define SCM_SMC_FNID(s, c)	((((s) & 0xFF) << 8) | ((c) & 0xFF))
+>   extern int __scm_smc_call(struct device *dev, const struct qcom_scm_desc *desc,
+>   			  enum qcom_scm_convention qcom_convention,
+> @@ -131,6 +136,11 @@ extern int scm_legacy_call(struct device *dev, const struct qcom_scm_desc *desc,
+>   #define QCOM_SCM_SMMU_CONFIG_ERRATA1		0x03
+>   #define QCOM_SCM_SMMU_CONFIG_ERRATA1_CLIENT_ALL	0x02
+>   
+> +#define QCOM_SCM_SVC_WAITQ			0x24
+> +#define QCOM_SCM_WAITQ_ACK			0x01
+> +#define QCOM_SCM_WAITQ_RESUME			0x02
+> +#define QCOM_SCM_WAITQ_GET_WQ_CTX		0x03
+> +
+>   extern void __qcom_scm_init(void);
+>   
+>   /* common error codes */
+> @@ -141,6 +151,8 @@ extern void __qcom_scm_init(void);
+>   #define QCOM_SCM_EINVAL_ARG	-2
+>   #define QCOM_SCM_ERROR		-1
+>   #define QCOM_SCM_INTERRUPTED	1
+> +#define QCOM_SCM_WAITQ_SLEEP	2
+> +#define QCOM_SCM_WAITQ_WAKE	3
+>   
+>   static inline int qcom_scm_remap_error(int err)
+>   {
