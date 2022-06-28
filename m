@@ -2,66 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4940655CE65
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jun 2022 15:05:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5B15E55E301
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jun 2022 15:36:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241767AbiF1ASi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Jun 2022 20:18:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45794 "EHLO
+        id S241245AbiF1A3G (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Jun 2022 20:29:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32804 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240124AbiF1ASh (ORCPT
+        with ESMTP id S233155AbiF1A3F (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Jun 2022 20:18:37 -0400
-Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67C5E63EC
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jun 2022 17:18:34 -0700 (PDT)
-Received: by mail-pj1-x1031.google.com with SMTP id g16-20020a17090a7d1000b001ea9f820449so14115141pjl.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jun 2022 17:18:34 -0700 (PDT)
+        Mon, 27 Jun 2022 20:29:05 -0400
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 140F2FED
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jun 2022 17:29:04 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id l68so1344956wml.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jun 2022 17:29:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
+        d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=cb42boPy1G1/5Oq0/d+fF1u+WVmX2leD5qZiodotCIE=;
-        b=Di/8PzeuQjGITwPzQck0cLBCACqwOY9vVvNW4SuMuVueccNd876kEWZz25qObwdpHP
-         EcrYtnu9yqated8h1s5YlFl//qhF1M11m/6bvHhS5ZRHCDwW89wAX7Eqpb+jvgInw7bC
-         SDlWjT31LraalaCVyFyGybU9tlKtgvSpSXtII=
+        bh=loKOPYEWFVKgOL34le0TQOd8p13z6rW/uil4PBQiVZo=;
+        b=OhdpsxGnp2/q17T55ktpvb/b6MmmJXnaW2TaL51pjQydoKSVKvjp5C/WkAHat5kkc4
+         ogilw7mi9Je2FLlZZO1M8tw6LDovGZ2VHZRghSYs8liGrOFGL8ZkfXbZ5a9d/RKSWeqZ
+         8o3UOcjM6Jjv8JqEZIR971EdJQ4mFvqU+txeOQ7iCiw9Zo6/fuaCEmtjy4+SGunADfF5
+         AwlYhVQsHDhzqF27WZf3leCUgteQ9R1lnqTNy40DMpLXkEORtsrftXxXYn1NhhKBtnw0
+         GLLQ/87HJmD8ABw/8LQGvpvNpG2XCWsgk7s1ZzecS7k6AXtFy9mXvLDOwn8Fik4NNxKy
+         J9gA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=cb42boPy1G1/5Oq0/d+fF1u+WVmX2leD5qZiodotCIE=;
-        b=e2O7o4vx6uoaIzuqL8sCwO7rmXIWX/+tacNHQPEDI6W+bLHzBbqNiwe0O4eOI3puHg
-         q1pMFh2RFnCGEA0ZrrqHHgW4DBmvEOpHMgzAuUbNkDzz0elJ61lKQ5zFHLaaHsl4dRU9
-         Va0Zmkw7FNZ3mikaCV5l3IfBUe8RbFixtnUMYVaUi1L8UsH3dmwGUVLf3VQzQUjo/UcK
-         Fmqe/VS/Pf6T1aV1dlhZ7ROlOmpDtywzvjD0zZL74R6scHm2pI9T1aBjBRcmxC6Kb6rZ
-         DZMZyKEuz/6h2Sp12B5ow2qhGUWcGCO1iwJsOMg6LkkT+wkUnSv7OVZHOUAb0JUPp6Mt
-         PFjQ==
-X-Gm-Message-State: AJIora/8NVn4/xL1mv2lQwgDWUiECY+VYvilpHlCmDdlBlJoorztrnn3
-        krWEYgWUESv3bF4pomajC7PVlw==
-X-Google-Smtp-Source: AGRyM1vqpJj3o338WU9NKhAyPbugDeASo72cZie953H7mClxPONahvkDajKKa7FWGJfS4VtK1Iq8+g==
-X-Received: by 2002:a17:902:c94b:b0:16a:3f98:84fd with SMTP id i11-20020a170902c94b00b0016a3f9884fdmr2124658pla.70.1656375513959;
-        Mon, 27 Jun 2022 17:18:33 -0700 (PDT)
-Received: from tictac2.mtv.corp.google.com ([2620:15c:202:201:18c2:6594:17be:c241])
-        by smtp.gmail.com with ESMTPSA id jj2-20020a170903048200b0016a4db1343fsm7780149plb.190.2022.06.27.17.18.33
+        bh=loKOPYEWFVKgOL34le0TQOd8p13z6rW/uil4PBQiVZo=;
+        b=2212Kug9Q3OZT9VfNmS73YbU8Wcru2FKUd1tM9DiujvddEMnoBM2QbmPWRUuxS0tGp
+         i/ZnlRH802QwSjOPN584lPjT0YEe0Oce0Mf9Z4DlIvxIMd6ElikEHMAWpmfnGvf4/M+u
+         1/pCP/DcJ3U3YQIcHJTaD3QwqMhU+HHxEdHxtfgBPuQHi4rCkFFdq1JB7uMe4yLIYn/l
+         u+3XY1+VuLJg0Pb9mgbl+b8++15Q3rffLLHiNaiGZ/BCYACvjJGfi6fejXEBeXMgealg
+         Hon+DdMuSnMKi2pmtb2zPvJPbvJwVXeGGfJ2XHo/1FoxpbnhELLTLtHNP7iEhbdUvD0q
+         Pp0g==
+X-Gm-Message-State: AJIora+yscX22GO7pe0UWFa35HZnfxLglfM3i0AnNVlruMoHDfrAipK5
+        ry5wtJ0nPn82k3nDP929CV2H9w==
+X-Google-Smtp-Source: AGRyM1trccyFgpOxm8KXrYfjR5QINHk1rCNh5iLz0EYzh8UxKqRWlYjP2MEwkDM3xR0Bez+UNxkvlA==
+X-Received: by 2002:a1c:2902:0:b0:3a0:2a05:c639 with SMTP id p2-20020a1c2902000000b003a02a05c639mr18924451wmp.31.1656376142540;
+        Mon, 27 Jun 2022 17:29:02 -0700 (PDT)
+Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id o42-20020a05600c512a00b0039c5cecf206sm15863560wms.4.2022.06.27.17.29.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Jun 2022 17:18:33 -0700 (PDT)
-From:   Douglas Anderson <dianders@chromium.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Douglas Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH v2] soc: qcom: cmd-db: replace strscpy_pad() with strncpy()
-Date:   Mon, 27 Jun 2022 17:18:27 -0700
-Message-Id: <20220627171816.v2.1.Ie7b480cd99e2c13319220cbc108caf2bcd41286b@changeid>
-X-Mailer: git-send-email 2.37.0.rc0.161.g10f37bed90-goog
+        Mon, 27 Jun 2022 17:29:02 -0700 (PDT)
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+To:     lgirdwood@gmail.com, broonie@kernel.org, bjorn.andersson@linaro.org
+Cc:     perex@perex.cz, tiwai@suse.com, srinivas.kandagatla@linaro.org,
+        robh+dt@kernel.org, krzk+dt@kernel.org,
+        alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, bryan.odonoghue@linaro.org
+Subject: [PATCH v4 0/2] Fix apq8016 compat string
+Date:   Tue, 28 Jun 2022 01:28:56 +0100
+Message-Id: <20220628002858.2638442-1-bryan.odonoghue@linaro.org>
+X-Mailer: git-send-email 2.36.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -70,59 +70,36 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Commit ac0126a01735 ("soc: qcom: cmd-db: replace strncpy() with
-strscpy_pad()") breaks booting on my sc7280-herobrine-herobrine
-device. From printouts I see that at bootup the function is called
-with an id of "lnbclka2" which is 8 bytes big.
+V4:
+- Adds Bjorn's RB to first patch
+- Adds missing people to To/Cc list
 
-Previously all 8 bytes of this string were copied to the
-destination. Now only 7 bytes will be copied since strscpy_pad() saves
-a byte for '\0' termination.
+V3:
+- Marks qcom,lpass-cpu-apq8016 as deprecated instead of removing - Bjorn
 
-We don't need the '\0' termination in the destination. Let's go back
-to strncpy(). According to the warning:
-  If a caller is using non-NUL-terminated strings, strncpy() can still
-  be used, but destinations should be marked with the __nonstring
-  attribute to avoid future compiler warnings.
-...so we'll do that.
+V2:
+- Adds Reviewed-by: - Srini
+- Adds Fixes - Srini
 
-While we're at it, let's change the query array to use
-"sizeof(ent->id)" so it can't possibly go out of sync with our later
-copy.
+V1:
+Reusing the apq8016 on msm8939 I found running checkpatch that the compat
+string for the LPASS was throwing a warning.
 
-Fixes: ac0126a01735 ("soc: qcom: cmd-db: replace strncpy() with strscpy_pad()")
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+This is easily fixed by alinging the YAML, DTS and driver to the documented
+compat string
 
----
+-			compatible = "qcom,lpass-cpu-apq8016";
++			compatible = "qcom,apq8016-lpass-cpu";
 
-Changes in v2:
-- Size array with "sizeof(ent->id)"
+Bryan O'Donoghue (2):
+  ASoC: qcom: lpass: Fix apq8016 compat string to match yaml
+  arm64: dts: qcom: Fix apq8016 compat string to match yaml
 
- drivers/soc/qcom/cmd-db.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/msm8916.dtsi | 2 +-
+ sound/soc/qcom/lpass-apq8016.c        | 1 +
+ sound/soc/qcom/lpass-cpu.c            | 5 +++++
+ 3 files changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/soc/qcom/cmd-db.c b/drivers/soc/qcom/cmd-db.c
-index c5137c25d819..ffd2660b2890 100644
---- a/drivers/soc/qcom/cmd-db.c
-+++ b/drivers/soc/qcom/cmd-db.c
-@@ -141,14 +141,14 @@ static int cmd_db_get_header(const char *id, const struct entry_header **eh,
- 	const struct rsc_hdr *rsc_hdr;
- 	const struct entry_header *ent;
- 	int ret, i, j;
--	u8 query[8];
-+	u8 query[sizeof(ent->id)] __nonstring;
- 
- 	ret = cmd_db_ready();
- 	if (ret)
- 		return ret;
- 
- 	/* Pad out query string to same length as in DB */
--	strscpy_pad(query, id, sizeof(query));
-+	strncpy(query, id, sizeof(query));
- 
- 	for (i = 0; i < MAX_SLV_ID; i++) {
- 		rsc_hdr = &cmd_db_header->header[i];
 -- 
-2.37.0.rc0.161.g10f37bed90-goog
+2.36.1
 
