@@ -2,68 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 22C5155EF4C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jun 2022 22:24:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0A28855EF92
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jun 2022 22:26:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232262AbiF1UXT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Jun 2022 16:23:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33806 "EHLO
+        id S233204AbiF1UZ4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Jun 2022 16:25:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41380 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232589AbiF1UV6 (ORCPT
+        with ESMTP id S229748AbiF1UZg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Jun 2022 16:21:58 -0400
-Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C6103DA46
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jun 2022 13:19:48 -0700 (PDT)
-Received: by mail-oi1-x22c.google.com with SMTP id bd16so18754590oib.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jun 2022 13:19:48 -0700 (PDT)
+        Tue, 28 Jun 2022 16:25:36 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BAA692CDF5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jun 2022 13:23:34 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id x3so24326674lfd.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jun 2022 13:23:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=w9akEpWjpFO6hjhyJx9Y+tDRi/S2EVK4TDjKFYDvfs0=;
-        b=wpQUk82d9u+De26Krts5vTw3aFP+/sFRqhKM6bR5Rt0bo7K8mODmavPRQjlJ21LVpZ
-         tNeHxK0wGqcm0Sd+iR/w1iF0ATN5RvSAg+QTCgV3/OQEiFqE3l26ggM8KBBIyUbfRtws
-         FW4STg2ATuE/JCH+vazOpOvWU0yoe+rrrI3htYj0tX/FTTf5qMCP3yvtCJt3OicwFo/t
-         wj842ASlcJubglx83ENzBOpXBDCTOjgLOFuPBmIBHyk2CNB6bNNCwpQxL1MfosD8jlGv
-         4tsktTLGjW3MTQT+jAmInIWiFhanRDdCO+CYFOLoTryHd4Nuklr702SGVCnUMMsUf/p/
-         kyWQ==
+        h=date:from:to:cc:subject:user-agent:in-reply-to:references
+         :message-id:mime-version:content-transfer-encoding;
+        bh=PSiDBq1vHVGruF5gmift1cVNTE3Pc+1B023GXA2YLB0=;
+        b=rXMj0QvvPFuZZACKXgsVU3QtxEZVwkYfhioneWIZToSxJKdleOY4aM/47BoW7/8LjU
+         +qG1Ht609bqqOTare592WDTS0g8AGy77YtXndgidzqO0JhC184d46Kv6Hu/2KL2sVCLa
+         4z/bLtat5iVoSuZOQI65xuj8q+OE+wu8QeT973aLh6YczE3V+FzmxSIQoHPPGUU615Ss
+         Q+XhbusB8tvRvHRbBPoI5JkS8nduDHCqai8OTVuwjq7DjXVCxBK1YN4AvUB0NJKIvvpL
+         /HOcPxzo4PWHW4YgjtAWhxWJq78UXV41zPF7sIbVTmgkITpbblf79W4rkjbzOlCDXIG5
+         I4mA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=w9akEpWjpFO6hjhyJx9Y+tDRi/S2EVK4TDjKFYDvfs0=;
-        b=30tQ2TM+hz2PNHRULe9bL2tTJr/peIGAgm6DPtlfQPg5naRJLNCookO8rqKPtRf5RH
-         eqMIZxPmuUYle0waTsFEA9ZP28zr4LAFtzwRMjxqP9DchyWyOGZ7oim6rE9xA7gd9nlI
-         N5wGe3HpNNGdELobMRWfQhgtppVcFgWQvrltHYs1lbFAwdbCSGdymE9MrKESDOEgxy0H
-         wQhZY2hoPVn7toOCMS3s6/EIisJ8f9XpHeSTxev6Szq3gYh/7U6/1XwyLUK1P4ykcVI3
-         mX7WsuDTVuY/bt6V2tAUatGyU/3e/KAbCtM4INuV1ouCZA1LiIkiFvI1x9lIHuTkkty2
-         4e3w==
-X-Gm-Message-State: AJIora+x2jA2b0/8YuodmmeXgW3lV/ADh3Ncw/QJC5cWNcwCI0Fr0l73
-        lK3wMILnA1v+XoekLr8SueTfuw==
-X-Google-Smtp-Source: AGRyM1tBCCsVOK0J4ehYUt1GzQHkwGzVqAxQ+RwgiuwWLynjvWMrEyglSK38onq6bXg7jcl0NaeWvg==
-X-Received: by 2002:a05:6808:1392:b0:335:a45d:81fe with SMTP id c18-20020a056808139200b00335a45d81femr920778oiw.213.1656447587385;
-        Tue, 28 Jun 2022 13:19:47 -0700 (PDT)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id a12-20020a056870d60c00b000f30837129esm9536923oaq.55.2022.06.28.13.19.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Jun 2022 13:19:46 -0700 (PDT)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Stephan Gerhold <stephan.gerhold@kernkonzept.com>
-Cc:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        h=x-gm-message-state:date:from:to:cc:subject:user-agent:in-reply-to
+         :references:message-id:mime-version:content-transfer-encoding;
+        bh=PSiDBq1vHVGruF5gmift1cVNTE3Pc+1B023GXA2YLB0=;
+        b=o8N3UAHe4QkVeueQf0SqrH8DNQb7lP3yE0KEor647O2tFkcLtfW69wdVx6BbWwB95w
+         vPRw5sZB+XGe2LHmxppezyY+raMG5vWLrLyknFU8/XtcMOQBWqNlqbTzJGdyLh3NbuQG
+         E3yrBzuiDbqILvXMF7cwyblzD2XBRV+x86QC40WPnDPaDyAOHYJMsdu41RIn8caC81Zc
+         iNGUmKIa/t5fIfvL2ZzS2QJwBdmq6SwrVVJOYMPpsep1tBXjhe/vBvIh5+AkOE4RbZAA
+         r4uz21G3B56QJ7WriIcBMjXnqTup+ksojjOFNkwIX/V+zL0sEEaA/Iuo2/HM4XJSDoGD
+         G8Tg==
+X-Gm-Message-State: AJIora+RsH2Z6Um/1i+izPd2fBifRk0PYL4Kwkn+QR93D72hsddQaoXT
+        Ew7lQqU5ioe/r9kAkVMmKGcJLjfd4pqhag==
+X-Google-Smtp-Source: AGRyM1tDeENnyhfxSshBuZ+qiok+9180c45UZ+TKyeeKPYkVKtwRGFHLRib4/fs3xuOZVTdUEQ+hrQ==
+X-Received: by 2002:ac2:5df7:0:b0:47f:640d:45e8 with SMTP id z23-20020ac25df7000000b0047f640d45e8mr12573068lfq.21.1656447812537;
+        Tue, 28 Jun 2022 13:23:32 -0700 (PDT)
+Received: from [127.0.0.1] ([188.162.64.167])
+        by smtp.gmail.com with ESMTPSA id bj11-20020a2eaa8b000000b0025a72db0cf1sm1903233ljb.118.2022.06.28.13.23.31
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 28 Jun 2022 13:23:32 -0700 (PDT)
+Date:   Tue, 28 Jun 2022 23:23:28 +0300
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Rob Herring <robh@kernel.org>
+CC:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>
-Subject: Re: (subset) [PATCH] arm64: dts: qcom: msm8992-*: Fix vdd_lvs1_2-supply typo
-Date:   Tue, 28 Jun 2022 15:19:13 -0500
-Message-Id: <165644753306.10525.17050921216384493070.b4-ty@linaro.org>
-X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20220627135938.2901871-1-stephan.gerhold@kernkonzept.com>
-References: <20220627135938.2901871-1-stephan.gerhold@kernkonzept.com>
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Krishna Manikandan <quic_mkrishn@quicinc.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_08/11=5D_dt-bindings=3A_displa?= =?US-ASCII?Q?y/msm=3A_add_mdp-opp-table_to_dpu-sdm845?=
+User-Agent: K-9 Mail for Android
+In-Reply-To: <20220627180506.GA2679395-robh@kernel.org>
+References: <20220625232513.522599-1-dmitry.baryshkov@linaro.org> <20220625232513.522599-9-dmitry.baryshkov@linaro.org> <20220627180506.GA2679395-robh@kernel.org>
+Message-ID: <772E0163-AC47-47E1-A0C6-CA04CA874282@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -74,24 +77,67 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 27 Jun 2022 15:59:38 +0200, Stephan Gerhold wrote:
-> "make dtbs_check" complains about the missing "-supply" suffix for
-> vdd_lvs1_2 which is clearly a typo, originally introduced in the
-> msm8994-smd-rpm.dtsi file and apparently later copied to
-> msm8992-xiaomi-libra.dts:
-> 
-> msm8992-lg-bullhead-rev-10/101.dtb: pm8994-regulators: 'vdd_lvs1_2'
-> does not match any of the regexes:
->   '.*-supply$', '^((s|l|lvs|5vs)[0-9]*)|(boost-bypass)|(bob)$', 'pinctrl-[0-9]+'
-> From schema: regulator/qcom,smd-rpm-regulator.yaml
-> 
-> [...]
 
-Applied, thanks!
 
-[1/1] arm64: dts: qcom: msm8992-*: Fix vdd_lvs1_2-supply typo
-      commit: 5fb779558f1c97e2bf2794cb59553e569c38e2f9
+On 27 June 2022 21:05:06 GMT+03:00, Rob Herring <robh@kernel=2Eorg> wrote:
+>On Sun, Jun 26, 2022 at 02:25:10AM +0300, Dmitry Baryshkov wrote:
+>> On SDM845 platforms DPU device tree node contains child object
+>> mdp-opp-table providing OPP table for the DPU=2E Add it to the list of
+>> properties to let sdm845=2Edtsi to validate=2E
+>>=20
+>> Signed-off-by: Dmitry Baryshkov <dmitry=2Ebaryshkov@linaro=2Eorg>
+>> ---
+>>  =2E=2E=2E/devicetree/bindings/display/msm/dpu-sdm845=2Eyaml      | 9 +=
+++++++--
+>>  1 file changed, 7 insertions(+), 2 deletions(-)
+>>=20
+>> diff --git a/Documentation/devicetree/bindings/display/msm/dpu-sdm845=
+=2Eyaml b/Documentation/devicetree/bindings/display/msm/dpu-sdm845=2Eyaml
+>> index 0dc16326bf8e=2E=2Ecc95adcf8f11 100644
+>> --- a/Documentation/devicetree/bindings/display/msm/dpu-sdm845=2Eyaml
+>> +++ b/Documentation/devicetree/bindings/display/msm/dpu-sdm845=2Eyaml
+>> @@ -50,6 +50,10 @@ properties:
+>>      maxItems: 1
+>> =20
+>>    operating-points-v2: true
+>> +
+>> +  mdp-opp-table:
+>
+>Is there another kind of opp-table besides mdp? Node names should be=20
+>generic=2E
 
-Best regards,
--- 
-Bjorn Andersson <bjorn.andersson@linaro.org>
+Ack=2E Now if we rename the node to opp-table, should we define the old na=
+me with deprecated: true?
+
+>
+>> +    $ref: /schemas/opp/opp-v2=2Eyaml#
+>> +
+>>    ports:
+>>      $ref: /schemas/graph=2Eyaml#/properties/ports
+>>      description: |
+>> @@ -116,11 +120,12 @@ examples:
+>>                            <0x0aeb0000 0x2008>;
+>>                      reg-names =3D "mdp", "vbif";
+>> =20
+>> -                    clocks =3D <&dispcc DISP_CC_MDSS_AHB_CLK>,
+>> +                    clocks =3D <&gcc GCC_DISP_AXI_CLK>,
+>> +                             <&dispcc DISP_CC_MDSS_AHB_CLK>,
+>
+>What does the OPP table have to do with clocks? Adding a clock anywhere=
+=20
+>but the end is an ABI break=2E
+
+I should split this to a separate patch=2E And, I must admit, this clock c=
+hange has already landed=2E We did not think that it is an ABI break since =
+we have clock-names here=2E
+
+>
+>>                               <&dispcc DISP_CC_MDSS_AXI_CLK>,
+>>                               <&dispcc DISP_CC_MDSS_MDP_CLK>,
+>>                               <&dispcc DISP_CC_MDSS_VSYNC_CLK>;
+>> -                    clock-names =3D "iface", "bus", "core", "vsync";
+>> +                    clock-names =3D "gcc-bus", "iface", "bus", "core",=
+ "vsync";
+>> =20
+>>                      interrupt-parent =3D <&mdss>;
+>>                      interrupts =3D <0>;
