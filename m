@@ -2,295 +2,185 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C3B1E55E6F3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jun 2022 18:31:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B107155E795
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jun 2022 18:33:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348051AbiF1PzI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Jun 2022 11:55:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34714 "EHLO
+        id S233331AbiF1QZ1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Jun 2022 12:25:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44272 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348036AbiF1PzH (ORCPT
+        with ESMTP id S233812AbiF1QYs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Jun 2022 11:55:07 -0400
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E518935AB1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jun 2022 08:55:04 -0700 (PDT)
-Received: by mail-ed1-x52c.google.com with SMTP id o9so18188152edt.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jun 2022 08:55:04 -0700 (PDT)
+        Tue, 28 Jun 2022 12:24:48 -0400
+Received: from mail-yb1-xb31.google.com (mail-yb1-xb31.google.com [IPv6:2607:f8b0:4864:20::b31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4B263914D
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jun 2022 09:17:01 -0700 (PDT)
+Received: by mail-yb1-xb31.google.com with SMTP id d5so23066318yba.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jun 2022 09:17:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=DL6UdLR7FEJazkCj2FBmbmojXNOORr6ZP3bxU8f4s34=;
-        b=l0dA5NX94rb9ZtgdVBBElJ7NSfh1y1w9K5EBLTCi6RyVbe81X5TmiiqC/bsBYdeHsA
-         VKjaosDs3VClNI0MJyP4z+CekQuEBc7r1lgfi17LJUxp8uxAVRpsPNfhD0jkS2wRPhFD
-         g70V1tChV3KlHnnkaVw13E/AzJpuuwwrcY4PoY+s+cGG+9M3lh9BSTUGVxX++ofdUUab
-         QmLAnTgAGAjzn6/yiCkJUnxWgTYdg45D2Uh7N+TzXuGTGqhwbGOKE5GnhXSJJ/42TTsK
-         dzSkP9Z6qw2a+vvUPHveUIfSQl3kJWIfYvKHGSmqsVHF3Tqg3qgH6AghHVOmWXscDGcF
-         n5ug==
+        d=google.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=a+P6wSeN2x0ZvD2/JjzHKyqS9/n/5A6tY5jiA6Lhnb8=;
+        b=svPPiUXmjLu4A2+b3rJgoCqrzxWVmAH7KXTvVP4AwaLTDrIN9AN3BtNG2XiV2ycJ8x
+         6Y9oMX5BQlCl6K+KL9J1KxqNRcb1MdTb/c18nJgwvmc5rVyOe8EKUyj+KrCbNC70iJoL
+         OlJOsi9x5Scvw9W8cP8d/OYBAk6luTiA/PE8w/jzj7tOJ+ICpHFzyCnfh2xqrRn3YVLo
+         nvgpT4pJzONw4hikJOgq/y8DRHjrG2lOfrc2hEWRc02ovhuxlfgkK9/gOnTwVGME5DOU
+         4AXMX65QfUYiz76GEkrT/465op3M51kj45IkhJmeQobRe1+J32FVHZumFFaJBd9Gan88
+         /wYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=DL6UdLR7FEJazkCj2FBmbmojXNOORr6ZP3bxU8f4s34=;
-        b=dzciDEn5DumiuTy1WQw+NBWFc1HWsv5AoVmNcH70bNx7Ybv2WNe/BUbcTIBw6RgoaR
-         75K9gWjQbB7mBsuq/PSf4JXsLHWrb19yv9PkdOrsHCWXjedxP2/Nd/ZqOUoDqm43gqgY
-         2sDd5y7VE6RvRew/t2jFE0bgJzgHjGaVx3Q0RP9MgJ4WgXywr6luKDXwptMzI9MwrrjP
-         IadzSiBWBfx/mPCGU7kSLYPI+/tKqG75Bav6a3bNB49rmF79edx3aIam1vITBHhE4LcR
-         2CEadgZVtyGlq8h9v6qG13fcjS83YW+CJB/XD/BNoLLWt4T1wmJGRho4G+qgogQVMGRq
-         OCow==
-X-Gm-Message-State: AJIora/MVxuS/Gc3mHyg3D9eidwZ+kTpYPyDGVVx2wQHWogZa53UlNm+
-        aC+D0Jz2cb72hxp3KJtqHxuKBA==
-X-Google-Smtp-Source: AGRyM1u9rro4xRv9FJA6pS1u5agZm7Yo8S41wqUnC+qxUtvszIakDl3IlWWUuftH/pjc1KRB2WmOhg==
-X-Received: by 2002:a05:6402:328f:b0:435:7f7a:7666 with SMTP id f15-20020a056402328f00b004357f7a7666mr23627336eda.168.1656431703419;
-        Tue, 28 Jun 2022 08:55:03 -0700 (PDT)
-Received: from linaro.org ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id y1-20020aa7c241000000b004355dc75066sm9726089edo.86.2022.06.28.08.55.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Jun 2022 08:55:02 -0700 (PDT)
-Date:   Tue, 28 Jun 2022 18:55:00 +0300
-From:   Abel Vesa <abel.vesa@linaro.org>
-To:     Saravana Kannan <saravanak@google.com>
-Cc:     "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Len Brown <lenb@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Ard Biesheuvel <ardb@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Frank Rowand <frowand.list@gmail.com>,
-        Marc Zyngier <maz@kernel.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Tomi Valkeinen <tomi.valkeinen@ti.com>,
-        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-        Grygorii Strashko <grygorii.strashko@ti.com>,
-        kernel-team@android.com, linux-acpi@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-efi@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2 13/17] driver core: Use device's fwnode to check if it
- is waiting for suppliers
-Message-ID: <YrskVLshWeps+NXw@linaro.org>
-References: <20201121020232.908850-1-saravanak@google.com>
- <20201121020232.908850-14-saravanak@google.com>
- <YrmXpcU1NTYW6T/n@linaro.org>
- <CAGETcx8dwNcZFFzhhv=kMhpuQnyaEekrycpAmGusD-s+qfvA9g@mail.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=a+P6wSeN2x0ZvD2/JjzHKyqS9/n/5A6tY5jiA6Lhnb8=;
+        b=rgI4hACi4h+c3qQJPRhjvBoGK4jhRVpQLgzih5sFoZoeLpQuvrHYxQfXsREUyyk9vl
+         Ao8xVLXY12AqG4WDHr/Wo/50a2NM2fmA6E9tzTvoApQ6hq5eFtY7BmK4yw9O1psQHR5Q
+         HXU1UgfdkinLgtiFd/In/hxv71tFOdUdwqrWGx7P007GCSs1COlaEHWf3WXsfSsGNQZX
+         Tq6RZYiGabhyQEbfsaiPx4s5sm3d7kVdzQSkQpdpM7Zxz1OWyE/CH/vil/oAI+bY86CZ
+         bJjklydWUw8ElXb7WGJDHCaYnhwqsvCqh9BzhZd2K4FtunJvf76d3OcBzsEQcGuBg7tR
+         t3cA==
+X-Gm-Message-State: AJIora9m8uq1xYPDev07MiVI75OrzjUaZgTzvDevrAFagddGpQA6TqbO
+        GM+0nMkqNQs6N1CkY1rt1swhwgsugIWHUc9q9w6eoQ==
+X-Google-Smtp-Source: AGRyM1vHa4WRnJlk4sln0xuJGdVhcpu8QS15R2N9PrbVvkglI7Nzwr0PBFdp1lTun6HJ/nUSS1O/TmeoEjFZPidRK0U=
+X-Received: by 2002:a25:5bc3:0:b0:669:b722:beb8 with SMTP id
+ p186-20020a255bc3000000b00669b722beb8mr20258885ybb.447.1656433020483; Tue, 28
+ Jun 2022 09:17:00 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAGETcx8dwNcZFFzhhv=kMhpuQnyaEekrycpAmGusD-s+qfvA9g@mail.gmail.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+References: <20220628020110.1601693-1-saravanak@google.com>
+ <20220628020110.1601693-3-saravanak@google.com> <20220628140025.qpom64ptru4ub6fu@distanz.ch>
+In-Reply-To: <20220628140025.qpom64ptru4ub6fu@distanz.ch>
+From:   Saravana Kannan <saravanak@google.com>
+Date:   Tue, 28 Jun 2022 09:16:24 -0700
+Message-ID: <CAGETcx_7jS3H2cphiXdk=NBfmuPzsusEwPBx75n3PrP6YTnjnA@mail.gmail.com>
+Subject: Re: [PATCH v1 2/2] serial: Set probe_no_timeout for all DT based drivers
+To:     Tobias Klauser <tklauser@distanz.ch>
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Laurentiu Tudor <laurentiu.tudor@nxp.com>,
+        Jiri Slaby <jirislaby@kernel.org>,
+        Michael Ellerman <mpe@ellerman.id.au>,
+        Benjamin Herrenschmidt <benh@kernel.crashing.org>,
+        Paul Mackerras <paulus@samba.org>,
+        Joel Stanley <joel@jms.id.au>,
+        Andrew Jeffery <andrew@aj.id.au>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Ray Jui <rjui@broadcom.com>,
+        Scott Branden <sbranden@broadcom.com>,
+        Broadcom internal kernel review list 
+        <bcm-kernel-feedback-list@broadcom.com>,
+        Nicolas Saenz Julienne <nsaenz@kernel.org>,
+        Al Cooper <alcooperx@gmail.com>,
+        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+        Paul Cercueil <paul@crapouillou.net>,
+        Vladimir Zapolskiy <vz@mleia.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+        Masami Hiramatsu <mhiramat@kernel.org>,
+        Russell King <linux@armlinux.org.uk>,
+        Vineet Gupta <vgupta@kernel.org>,
+        Richard Genoud <richard.genoud@gmail.com>,
+        Nicolas Ferre <nicolas.ferre@microchip.com>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Claudiu Beznea <claudiu.beznea@microchip.com>,
+        Alexander Shiyan <shc_work@mail.ru>,
+        Baruch Siach <baruch@tkos.co.il>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Karol Gugala <kgugala@antmicro.com>,
+        Mateusz Holenko <mholenko@antmicro.com>,
+        Gabriel Somlo <gsomlo@gmail.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Taichi Sugaya <sugaya.taichi@socionext.com>,
+        Takao Orito <orito.takao@socionext.com>,
+        Liviu Dudau <liviu.dudau@arm.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Pali Rohar <pali@kernel.org>,
+        Andreas Farber <afaerber@suse.de>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Laxman Dewangan <ldewangan@nvidia.com>,
+        Palmer Dabbelt <palmer@dabbelt.com>,
+        Paul Walmsley <paul.walmsley@sifive.com>,
+        Orson Zhai <orsonzhai@gmail.com>,
+        Baolin Wang <baolin.wang7@gmail.com>,
+        Chunyan Zhang <zhang.lyra@gmail.com>,
+        Patrice Chotard <patrice.chotard@foss.st.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Hammer Hsieh <hammerh0314@gmail.com>,
+        Peter Korsgaard <jacmet@sunsite.dk>,
+        Timur Tabi <timur@kernel.org>,
+        Michal Simek <michal.simek@xilinx.com>,
+        Rob Herring <robh@kernel.org>,
+        sascha hauer <sha@pengutronix.de>, peng fan <peng.fan@nxp.com>,
+        kevin hilman <khilman@kernel.org>,
+        ulf hansson <ulf.hansson@linaro.org>,
+        len brown <len.brown@intel.com>, pavel machek <pavel@ucw.cz>,
+        joerg roedel <joro@8bytes.org>, will deacon <will@kernel.org>,
+        andrew lunn <andrew@lunn.ch>,
+        heiner kallweit <hkallweit1@gmail.com>,
+        eric dumazet <edumazet@google.com>,
+        jakub kicinski <kuba@kernel.org>,
+        paolo abeni <pabeni@redhat.com>,
+        linus walleij <linus.walleij@linaro.org>,
+        hideaki yoshifuji <yoshfuji@linux-ipv6.org>,
+        david ahern <dsahern@kernel.org>, kernel-team@android.com,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        iommu@lists.linux-foundation.org, netdev@vger.kernel.org,
+        linux-gpio@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
+        linux-serial@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-aspeed@lists.ozlabs.org,
+        linux-rpi-kernel@lists.infradead.org, linux-mips@vger.kernel.org,
+        linux-mediatek@lists.infradead.org, linux-tegra@vger.kernel.org,
+        linux-snps-arc@lists.infradead.org,
+        linux-amlogic@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-actions@lists.infradead.org,
+        linux-unisoc@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-riscv@lists.infradead.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        sparclinux@vger.kernel.org, Ahmad Fatoum <a.fatoum@pengutronix.de>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-17.6 required=5.0 tests=BAYES_00,DKIMWL_WL_MED,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        ENV_AND_HDR_SPF_MATCH,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE,USER_IN_DEF_DKIM_WL,USER_IN_DEF_SPF_WL
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22-06-27 15:30:25, Saravana Kannan wrote:
-> On Mon, Jun 27, 2022 at 4:42 AM Abel Vesa <abel.vesa@linaro.org> wrote:
-> >
-> > On 20-11-20 18:02:28, Saravana Kannan wrote:
-> > > To check if a device is still waiting for its supplier devices to be
-> > > added, we used to check if the devices is in a global
-> > > waiting_for_suppliers list. Since the global list will be deleted in
-> > > subsequent patches, this patch stops using this check.
-> > >
-> > > Instead, this patch uses a more device specific check. It checks if the
-> > > device's fwnode has any fwnode links that haven't been converted to
-> > > device links yet.
-> > >
-> > > Signed-off-by: Saravana Kannan <saravanak@google.com>
-> > > ---
-> > >  drivers/base/core.c | 18 ++++++++----------
-> > >  1 file changed, 8 insertions(+), 10 deletions(-)
-> > >
-> > > diff --git a/drivers/base/core.c b/drivers/base/core.c
-> > > index 395dece1c83a..1873cecb0cc4 100644
-> > > --- a/drivers/base/core.c
-> > > +++ b/drivers/base/core.c
-> > > @@ -51,6 +51,7 @@ static DEFINE_MUTEX(wfs_lock);
-> > >  static LIST_HEAD(deferred_sync);
-> > >  static unsigned int defer_sync_state_count = 1;
-> > >  static DEFINE_MUTEX(fwnode_link_lock);
-> > > +static bool fw_devlink_is_permissive(void);
-> > >
-> > >  /**
-> > >   * fwnode_link_add - Create a link between two fwnode_handles.
-> > > @@ -995,13 +996,13 @@ int device_links_check_suppliers(struct device *dev)
-> > >        * Device waiting for supplier to become available is not allowed to
-> > >        * probe.
-> > >        */
-> > > -     mutex_lock(&wfs_lock);
-> > > -     if (!list_empty(&dev->links.needs_suppliers) &&
-> > > -         dev->links.need_for_probe) {
-> > > -             mutex_unlock(&wfs_lock);
-> > > +     mutex_lock(&fwnode_link_lock);
-> > > +     if (dev->fwnode && !list_empty(&dev->fwnode->suppliers) &&
-> > > +         !fw_devlink_is_permissive()) {
-> > > +             mutex_unlock(&fwnode_link_lock);
-> >
-> > Hi Saravana,
-> >
-> > First of, sorry for going back to this.
+On Tue, Jun 28, 2022 at 7:00 AM Tobias Klauser <tklauser@distanz.ch> wrote:
 >
-> No worries at all. If there's an issue with fw_devlink, I want to have it fixed.
+> On 2022-06-28 at 04:01:03 +0200, Saravana Kannan <saravanak@google.com> wrote:
+> > diff --git a/drivers/tty/serial/8250/8250_acorn.c b/drivers/tty/serial/8250/8250_acorn.c
+> > index 758c4aa203ab..5a6f2f67de4f 100644
+> > --- a/drivers/tty/serial/8250/8250_acorn.c
+> > +++ b/drivers/tty/serial/8250/8250_acorn.c
+> > @@ -114,7 +114,6 @@ static const struct ecard_id serial_cids[] = {
+> >  static struct ecard_driver serial_card_driver = {
+> >       .probe          = serial_card_probe,
+> >       .remove         = serial_card_remove,
+> > -     .id_table       = serial_cids,
 >
-> > There is a scenario where this check will not work and probably should
-> > work. It goes like this:
-> >
-> > A clock controller is not allowed to probe because it uses a clock from a child device of a
-> > consumer, like so:
-> >
-> >         dispcc: clock-controller@af00000 {
-> >                 clocks = <&dsi0_phy 0>;
-> >         };
-> >
-> >         mdss: mdss@ae00000 {
-> >                 clocks = <&dispcc DISP_CC_MDSS_MDP_CLK>;
-> >
-> >                 dsi0_phy: dsi-phy@ae94400 {
-> >                         clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
-> >                 };
-> >         };
-> >
-> > This is a real scenario actually, but I stripped it down to the essentials.
->
-> I'm well aware of this scenario and explicitly wrote code to address this :)
->
+> Is this change intentional? All other drivers are only changed to set
+> .probe_no_time and I don't see anything mentioned in the commit message
+> re. this driver's change.
 
-Actually, the problem seems to be when you have two dsi phys.
-Like so:
+No, that's a mistake. Thanks for catching it! I'll check this patch again.
 
-         dispcc: clock-controller@af00000 {
-                 clocks = <&dsi0_phy 0>;
-                 clocks = <&dsi1_phy 0>;
-         };
-
-         mdss: mdss@ae00000 {
-                 clocks = <&dispcc DISP_CC_MDSS_MDP_CLK>;
-
-                 dsi0_phy: dsi-phy@ae94400 {
-                         clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
-                 };
-
-		 dsi1_phy: dsi-phy@ae64400 {
-                         clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
-                 };
-         };
-
-And from what I've seen happening so far is that the device_is_dependent
-check for the parent of the supplier (if it also a consumer) seems to return
-false on second pass of the same link due to the DL_FLAG_SYNC_STATE_ONLY
-being set this time around.
-
-> See this comment in fw_devlink_create_devlink()
->
->        /*
->          * If we can't find the supplier device from its fwnode, it might be
->          * due to a cyclic dependency between fwnodes. Some of these cycles can
->          * be broken by applying logic. Check for these types of cycles and
->          * break them so that devices in the cycle probe properly.
->          *
->          * If the supplier's parent is dependent on the consumer, then the
->          * consumer and supplier have a cyclic dependency. Since fw_devlink
->          * can't tell which of the inferred dependencies are incorrect, don't
->          * enforce probe ordering between any of the devices in this cyclic
->          * dependency. Do this by relaxing all the fw_devlink device links in
->          * this cycle and by treating the fwnode link between the consumer and
->          * the supplier as an invalid dependency.
->          */
->
-
-So when this thing you mentioned above is happening for the second dsi
-phy (order doesn't matter), since the dsi phy itself cannot be found,
-the device_is_dependent is run for the same link: dispcc -> mdss
-(supplier -> consumer), but again, since it has the
-DL_FLAG_SYNC_STATE_ONLY this time around, it will skip that specific
-link.
-
-> Applying this comment to your example, dispcc is the "consumer",
-> dsi0_phy is the "supplier" and mdss is the "supplier's parent".
->
-> And because we can't guarantee the order of addition of these top
-> level devices is why I also have this piece of recursive call inside
-> __fw_devlink_link_to_suppliers():
->
->                 /*
->                  * If a device link was successfully created to a supplier, we
->                  * now need to try and link the supplier to all its suppliers.
->                  *
->                  * This is needed to detect and delete false dependencies in
->                  * fwnode links that haven't been converted to a device link
->                  * yet. See comments in fw_devlink_create_devlink() for more
->                  * details on the false dependency.
->                  *
->                  * Without deleting these false dependencies, some devices will
->                  * never probe because they'll keep waiting for their false
->                  * dependency fwnode links to be converted to device links.
->                  */
->                 sup_dev = get_dev_from_fwnode(sup);
->                 __fw_devlink_link_to_suppliers(sup_dev, sup_dev->fwnode);
->                 put_device(sup_dev);
->
-> So when mdss gets added, we'll link it to dispcc and then check if
-> dispcc has any suppliers it needs to link to. And that's when the
-> logic will catch the cycle and fix it.
->
-> Can you tell me why this wouldn't unblock the probing of dispcc? Are
-> you actually hitting this on a device? If so, can you please check why
-> this logic isn't sufficient to catch and undo the cycle?
->
-
-This is happening on Qualcomm SDM845 with Linus's tree.
-
-> Thanks,
-> Saravana
->
-> > So, the dsi0_phy will be "device_add'ed" (through of_platform_populate) by the mdss probe.
-> > The mdss will probe defer waiting for the DISP_CC_MDSS_MDP_CLK, while
-> > the dispcc will probe defer waiting for the dsi0_phy (supplier).
-> >
-> > Basically, this 'supplier availability check' does not work when a supplier might
-> > be populated by a consumer of the device that is currently trying to probe.
-> >
-> >
-> > Abel
-> >
-> >
-> > >               return -EPROBE_DEFER;
-> > >       }
-> > > -     mutex_unlock(&wfs_lock);
-> > > +     mutex_unlock(&fwnode_link_lock);
-> > >
-> > >       device_links_write_lock();
-> > >
-> > > @@ -1167,10 +1168,7 @@ static ssize_t waiting_for_supplier_show(struct device *dev,
-> > >       bool val;
-> > >
-> > >       device_lock(dev);
-> > > -     mutex_lock(&wfs_lock);
-> > > -     val = !list_empty(&dev->links.needs_suppliers)
-> > > -           && dev->links.need_for_probe;
-> > > -     mutex_unlock(&wfs_lock);
-> > > +     val = !list_empty(&dev->fwnode->suppliers);
-> > >       device_unlock(dev);
-> > >       return sysfs_emit(buf, "%u\n", val);
-> > >  }
-> > > @@ -2202,7 +2200,7 @@ static int device_add_attrs(struct device *dev)
-> > >                       goto err_remove_dev_groups;
-> > >       }
-> > >
-> > > -     if (fw_devlink_flags && !fw_devlink_is_permissive()) {
-> > > +     if (fw_devlink_flags && !fw_devlink_is_permissive() && dev->fwnode) {
-> > >               error = device_create_file(dev, &dev_attr_waiting_for_supplier);
-> > >               if (error)
-> > >                       goto err_remove_dev_online;
-> > > --
-> > > 2.29.2.454.gaff20da3a2-goog
-> > >
-> > >
->
+-Saravana
