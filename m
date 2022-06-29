@@ -2,379 +2,191 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0B46A55FB9D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jun 2022 11:18:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 06AFE55FBC3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jun 2022 11:22:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232435AbiF2JRa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Jun 2022 05:17:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57686 "EHLO
+        id S232706AbiF2JV5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Jun 2022 05:21:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34134 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232434AbiF2JR3 (ORCPT
+        with ESMTP id S232696AbiF2JVz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Jun 2022 05:17:29 -0400
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E21B2CCB5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jun 2022 02:17:28 -0700 (PDT)
-Received: by mail-wm1-x336.google.com with SMTP id l68so3911428wml.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jun 2022 02:17:28 -0700 (PDT)
+        Wed, 29 Jun 2022 05:21:55 -0400
+Received: from mail-qk1-x72e.google.com (mail-qk1-x72e.google.com [IPv6:2607:f8b0:4864:20::72e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 665FE369D0;
+        Wed, 29 Jun 2022 02:21:52 -0700 (PDT)
+Received: by mail-qk1-x72e.google.com with SMTP id n10so8124786qkn.10;
+        Wed, 29 Jun 2022 02:21:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=fGzsSbhePCvlbCCPw/IqM5avct7w4V5zMeMb12IcdyU=;
-        b=mG0wG4qjmKMk4StUY06VuS8kxxjkwd0El67xTIHh8025crOCogWI+lxiO3cs4hzhIi
-         x9qO3yxq7lbp9lCbayIRcoqxXbeudfrBdjCd8diYXXb+KH7rzWSak+/9E+1C1MbL/cQD
-         8W1fkzzCxEeFpVzF7KrRA6qwy/Wa/HjKDYT8n1SBxB5XZMNHOnAy6/PK/ANcobjyJC3H
-         xkb6zvIJ9r3uhSqrOFbp7WysUAWCHySHiCTVUBlNG2aZArOeJ9j3u+LfFo4OvMurUZAJ
-         s56431xJuaxsmdnP8deV323OFChtFwYyrFczHGpMFQqJpGzBeiIHwjW6HPyf5pSSTg45
-         DnEg==
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=xyKbiBGwe12VV4+hIYZhHutByUcZnqEu2BFeb6ToEVc=;
+        b=Ru4+mVFxOSkJ7OAFQ3tloi+JJTVyK6/e8NHNSXgkYVnfAnpZbGlH720kSMNkKOVNoP
+         3Nf4ML7iI3+jAkW8vmuq23ATUDiO3PWYg/Vh23hSlsSHBeWY6MhQACDOkYrFr/lOW8Qj
+         7YqBUk5cH6Ml4/AkHJLtDBakAc9A9jIap8JlgdNpZPDxnzdalgk2PN5Wie44gGvUj3dD
+         JhTuI+9FDaY/iuse7Xs07LBLHCDBSaFcvp5KhkqCJt/jwT1AhgO6PQ2oThQdwLEJN5ni
+         +vSUgmu1TF/OarZedRIndxHmBWYxfjqyr9fnJnmS/ugldZU2Vl1lwGhWAUVl8C1rFhg4
+         KX6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=fGzsSbhePCvlbCCPw/IqM5avct7w4V5zMeMb12IcdyU=;
-        b=339ZadzndKiy4Iw3gt1UcaNyPVFPoGiEZdnevjQ+GZ9gUZ3L+FjHinckjDbMl01vAd
-         5W8Zv2qeywMYdNGSyqlU0dJbWIA3l/3QoYOOzi9h+CS0gF8ykuvq32p3IRqQy2uFN9X0
-         1L6Z+N9aXAbROf4mARkxE9FMcpCXR62/5brpXm5yE4FrBqq18QDKNMMIAhwyF8z7X6t+
-         uDGApYCwaacm9wEC81ODn6SYzMP3lgTMdeF25WmpxAyMrvAGic/LC4MGQ6BVSWY3rzo+
-         bOMRnsPIGWTIwZtse75Qxn7uDcwekjyrCvEFjyGQ4GOhLe65FGsyrGxn8hdiqaENgP4f
-         iJvg==
-X-Gm-Message-State: AJIora+EeP3VK7vJr2M0D5AfHeBESfeXU5lXtoztVy0gZbqYP2f2t5p+
-        QotwrQhbd3GBWJ/8SDkID/22Tg==
-X-Google-Smtp-Source: AGRyM1sQWP9tn/Cvmm8ojk9Iyih7EZQ3PdnEIvrYPyhbMZtF7+IDieHwRiacJaFLeBuoLWLU3LZTYA==
-X-Received: by 2002:a1c:19c3:0:b0:39c:6479:3ca with SMTP id 186-20020a1c19c3000000b0039c647903camr4269385wmz.27.1656494246739;
-        Wed, 29 Jun 2022 02:17:26 -0700 (PDT)
-Received: from srini-hackbase.lan (cpc90716-aztw32-2-0-cust825.18-1.cable.virginm.net. [86.26.103.58])
-        by smtp.gmail.com with ESMTPSA id t18-20020a05600c199200b003a03a8475bfsm2896443wmq.16.2022.06.29.02.17.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Jun 2022 02:17:25 -0700 (PDT)
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-To:     bjorn.andersson@linaro.org, linus.walleij@linaro.org
-Cc:     robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH 2/2] pinctrl: qcom: Add sm8450 lpass lpi pinctrl driver
-Date:   Wed, 29 Jun 2022 10:17:16 +0100
-Message-Id: <20220629091716.68771-3-srinivas.kandagatla@linaro.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20220629091716.68771-1-srinivas.kandagatla@linaro.org>
-References: <20220629091716.68771-1-srinivas.kandagatla@linaro.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=xyKbiBGwe12VV4+hIYZhHutByUcZnqEu2BFeb6ToEVc=;
+        b=piDf4eSaRELe9V51n0kAbVRfEHfr3X9KYN3W8IkDrOU5SzP9ENRzrHqc1BXj10Q0Gm
+         xITQ8wAWufpMfk+TubnZShMntDh14vm4cq3YFIRg8dEb2MgBEiudeUclCOQKSOvhd3MJ
+         GcXnSdAfjMv/AyyqlwDzqQ8DfA70Hh5ckwCX/+so13DGRjLrGyrHYINK+EG0I+QtEQuf
+         ji5A8AO/1fXY0a64RivKpkYXKxXZHhk/PYJX4XX7u5jtl35HDRKKN9nEYS7clRYLQkvx
+         ZEdiSHrYGs+dYLBExU+qz81gagWTbq1e+BgEncVdyrATsJCSlUUCB9DpHI7gjBMRLOhC
+         GYNg==
+X-Gm-Message-State: AJIora/DjjtyoENp4B7qhYqLela/4dAyceKaBI7Zl8xak7+valqLScb3
+        TwV4BUfMct2fO9H3sZWakipiI9Z92pDKpsS85m4=
+X-Google-Smtp-Source: AGRyM1uSJPl40kSPwFIPa9wBNkco+vAkh6Zme01ouImI9Tnrlo2A3m6pVGIB9ptmIFV7EyqMJf7DSjFQQ8WmaPi1MQ8=
+X-Received: by 2002:a05:620a:1a28:b0:6b1:4d4d:c7c3 with SMTP id
+ bk40-20020a05620a1a2800b006b14d4dc7c3mr435716qkb.522.1656494511367; Wed, 29
+ Jun 2022 02:21:51 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20220624104420.257368-1-robimarko@gmail.com>
+In-Reply-To: <20220624104420.257368-1-robimarko@gmail.com>
+From:   Robert Marko <robimarko@gmail.com>
+Date:   Wed, 29 Jun 2022 11:21:40 +0200
+Message-ID: <CAOX2RU5iou-N2N0N9bMD49AufXMe04U84DNARGfJzUX2CdFzrQ@mail.gmail.com>
+Subject: Re: [PATCH v4 1/2] PCI: qcom: Move IPQ8074 DBI register accesses
+ after phy_power_on()
+To:     Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        lpieralisi@kernel.org, Rob Herring <robh@kernel.org>, kw@linux.com,
+        Bjorn Helgaas <bhelgaas@google.com>, p.zabel@pengutronix.de,
+        jingoohan1@gmail.com, linux-pci@vger.kernel.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        johan+linaro@kernel.org,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add pinctrl driver to support pin configuration for LPASS
-(Low Power Audio SubSystem) LPI (Low Power Island) pinctrl
-on SM8450.
+On Fri, 24 Jun 2022 at 12:44, Robert Marko <robimarko@gmail.com> wrote:
+>
+> Currently the Gen2 port in IPQ8074 will cause the system to hang as it
+> accesses DBI registers in qcom_pcie_init_2_3_3(), and those are only
+> accesible after phy_power_on().
+>
+> Move the DBI read/writes to a new qcom_pcie_post_init_2_3_3(), which is
+> executed after phy_power_on().
+>
+> Fixes: a0fd361db8e5 ("PCI: dwc: Move "dbi", "dbi2", and "addr_space" resource setup into common code")
+> Signed-off-by: Robert Marko <robimarko@gmail.com>
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-This IP is an additional pin control block for Audio Pins on top the
-existing SoC Top level pin-controller.
+Hi,
+Bjorn, is there something else I need to fixup?
 
-Hardware setup looks like:
-
-    TLMM GPIO[165 - 187] --> LPASS LPI GPIO [0 - 22]
-
-This pin controller has some similarities compared to Top level
-msm SoC Pin controller like 'each pin belongs to a single group'
-and so on. However this one is intended to control only audio
-pins in particular, which can not be configured/touched by the
-Top level SoC pin controller except setting them as gpios.
-Apart from this, slew rate is also available in this block for
-certain pins which are connected to SLIMbus or SoundWire Bus.
-
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
----
- drivers/pinctrl/qcom/Kconfig                  |   9 +
- drivers/pinctrl/qcom/Makefile                 |   1 +
- .../pinctrl/qcom/pinctrl-sm8450-lpass-lpi.c   | 240 ++++++++++++++++++
- 3 files changed, 250 insertions(+)
- create mode 100644 drivers/pinctrl/qcom/pinctrl-sm8450-lpass-lpi.c
-
-diff --git a/drivers/pinctrl/qcom/Kconfig b/drivers/pinctrl/qcom/Kconfig
-index 3daeb9772391..c4d6089bf38c 100644
---- a/drivers/pinctrl/qcom/Kconfig
-+++ b/drivers/pinctrl/qcom/Kconfig
-@@ -373,6 +373,15 @@ config PINCTRL_SM8450
- 	  Qualcomm Technologies Inc TLMM block found on the Qualcomm
- 	  Technologies Inc SM8450 platform.
- 
-+config PINCTRL_SM8450_LPASS_LPI
-+	tristate "Qualcomm Technologies Inc SM8450 LPASS LPI pin controller driver"
-+	depends on GPIOLIB
-+	depends on PINCTRL_LPASS_LPI
-+	help
-+	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
-+	  Qualcomm Technologies Inc LPASS (Low Power Audio SubSystem) LPI
-+	  (Low Power Island) found on the Qualcomm Technologies Inc SM8450 platform.
-+
- config PINCTRL_LPASS_LPI
- 	tristate "Qualcomm Technologies Inc LPASS LPI pin controller driver"
- 	select PINMUX
-diff --git a/drivers/pinctrl/qcom/Makefile b/drivers/pinctrl/qcom/Makefile
-index 4f0ee7597f81..e3de2cd6e1d8 100644
---- a/drivers/pinctrl/qcom/Makefile
-+++ b/drivers/pinctrl/qcom/Makefile
-@@ -43,4 +43,5 @@ obj-$(CONFIG_PINCTRL_SM8250) += pinctrl-sm8250.o
- obj-$(CONFIG_PINCTRL_SM8250_LPASS_LPI) += pinctrl-sm8250-lpass-lpi.o
- obj-$(CONFIG_PINCTRL_SM8350) += pinctrl-sm8350.o
- obj-$(CONFIG_PINCTRL_SM8450) += pinctrl-sm8450.o
-+obj-$(CONFIG_PINCTRL_SM8450_LPASS_LPI) += pinctrl-sm8450-lpass-lpi.o
- obj-$(CONFIG_PINCTRL_LPASS_LPI) += pinctrl-lpass-lpi.o
-diff --git a/drivers/pinctrl/qcom/pinctrl-sm8450-lpass-lpi.c b/drivers/pinctrl/qcom/pinctrl-sm8450-lpass-lpi.c
-new file mode 100644
-index 000000000000..c3c8c34148f1
---- /dev/null
-+++ b/drivers/pinctrl/qcom/pinctrl-sm8450-lpass-lpi.c
-@@ -0,0 +1,240 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Copyright (c) 2022 Linaro Ltd.
-+ */
-+
-+#include <linux/gpio/driver.h>
-+#include <linux/module.h>
-+#include <linux/platform_device.h>
-+
-+#include "pinctrl-lpass-lpi.h"
-+
-+enum lpass_lpi_functions {
-+	LPI_MUX_dmic1_clk,
-+	LPI_MUX_dmic1_data,
-+	LPI_MUX_dmic2_clk,
-+	LPI_MUX_dmic2_data,
-+	LPI_MUX_dmic3_clk,
-+	LPI_MUX_dmic3_data,
-+	LPI_MUX_dmic4_clk,
-+	LPI_MUX_dmic4_data,
-+	LPI_MUX_i2s1_clk,
-+	LPI_MUX_i2s1_data,
-+	LPI_MUX_i2s1_ws,
-+	LPI_MUX_i2s2_clk,
-+	LPI_MUX_i2s2_data,
-+	LPI_MUX_i2s2_ws,
-+	LPI_MUX_i2s3_clk,
-+	LPI_MUX_i2s3_data,
-+	LPI_MUX_i2s3_ws,
-+	LPI_MUX_i2s4_clk,
-+	LPI_MUX_i2s4_data,
-+	LPI_MUX_i2s4_ws,
-+	LPI_MUX_qua_mi2s_data,
-+	LPI_MUX_qua_mi2s_sclk,
-+	LPI_MUX_qua_mi2s_ws,
-+	LPI_MUX_swr_rx_clk,
-+	LPI_MUX_swr_rx_data,
-+	LPI_MUX_swr_tx_clk,
-+	LPI_MUX_swr_tx_data,
-+	LPI_MUX_wsa_swr_clk,
-+	LPI_MUX_wsa_swr_data,
-+	LPI_MUX_wsa2_swr_clk,
-+	LPI_MUX_wsa2_swr_data,
-+	LPI_MUX_slimbus_clk,
-+	LPI_MUX_slimbus_data,
-+	LPI_MUX_ext_mclk1_a,
-+	LPI_MUX_ext_mclk1_b,
-+	LPI_MUX_ext_mclk1_c,
-+	LPI_MUX_ext_mclk1_d,
-+	LPI_MUX_ext_mclk1_e,
-+	LPI_MUX_gpio,
-+	LPI_MUX__,
-+};
-+
-+static int gpio0_pins[] = { 0 };
-+static int gpio1_pins[] = { 1 };
-+static int gpio2_pins[] = { 2 };
-+static int gpio3_pins[] = { 3 };
-+static int gpio4_pins[] = { 4 };
-+static int gpio5_pins[] = { 5 };
-+static int gpio6_pins[] = { 6 };
-+static int gpio7_pins[] = { 7 };
-+static int gpio8_pins[] = { 8 };
-+static int gpio9_pins[] = { 9 };
-+static int gpio10_pins[] = { 10 };
-+static int gpio11_pins[] = { 11 };
-+static int gpio12_pins[] = { 12 };
-+static int gpio13_pins[] = { 13 };
-+static int gpio14_pins[] = { 14 };
-+static int gpio15_pins[] = { 15 };
-+static int gpio16_pins[] = { 16 };
-+static int gpio17_pins[] = { 17 };
-+static int gpio18_pins[] = { 18 };
-+static int gpio19_pins[] = { 19 };
-+static int gpio20_pins[] = { 20 };
-+static int gpio21_pins[] = { 21 };
-+static int gpio22_pins[] = { 22 };
-+
-+static const struct pinctrl_pin_desc sm8450_lpi_pins[] = {
-+	PINCTRL_PIN(0, "gpio0"),
-+	PINCTRL_PIN(1, "gpio1"),
-+	PINCTRL_PIN(2, "gpio2"),
-+	PINCTRL_PIN(3, "gpio3"),
-+	PINCTRL_PIN(4, "gpio4"),
-+	PINCTRL_PIN(5, "gpio5"),
-+	PINCTRL_PIN(6, "gpio6"),
-+	PINCTRL_PIN(7, "gpio7"),
-+	PINCTRL_PIN(8, "gpio8"),
-+	PINCTRL_PIN(9, "gpio9"),
-+	PINCTRL_PIN(10, "gpio10"),
-+	PINCTRL_PIN(11, "gpio11"),
-+	PINCTRL_PIN(12, "gpio12"),
-+	PINCTRL_PIN(13, "gpio13"),
-+	PINCTRL_PIN(14, "gpio14"),
-+	PINCTRL_PIN(15, "gpio15"),
-+	PINCTRL_PIN(16, "gpio16"),
-+	PINCTRL_PIN(17, "gpio17"),
-+	PINCTRL_PIN(18, "gpio18"),
-+	PINCTRL_PIN(19, "gpio19"),
-+	PINCTRL_PIN(20, "gpio20"),
-+	PINCTRL_PIN(21, "gpio21"),
-+	PINCTRL_PIN(22, "gpio22"),
-+};
-+
-+static const char * const swr_tx_clk_groups[] = { "gpio0" };
-+static const char * const swr_tx_data_groups[] = { "gpio1", "gpio2", "gpio14" };
-+static const char * const swr_rx_clk_groups[] = { "gpio3" };
-+static const char * const swr_rx_data_groups[] = { "gpio4", "gpio5", "gpio15" };
-+static const char * const dmic1_clk_groups[] = { "gpio6" };
-+static const char * const dmic1_data_groups[] = { "gpio7" };
-+static const char * const dmic2_clk_groups[] = { "gpio8" };
-+static const char * const dmic2_data_groups[] = { "gpio9" };
-+static const char * const dmic4_clk_groups[] = { "gpio17" };
-+static const char * const dmic4_data_groups[] = { "gpio18" };
-+static const char * const i2s2_clk_groups[] = { "gpio10" };
-+static const char * const i2s2_ws_groups[] = { "gpio11" };
-+static const char * const dmic3_clk_groups[] = { "gpio12" };
-+static const char * const dmic3_data_groups[] = { "gpio13" };
-+static const char * const qua_mi2s_sclk_groups[] = { "gpio0" };
-+static const char * const qua_mi2s_ws_groups[] = { "gpio1" };
-+static const char * const qua_mi2s_data_groups[] = { "gpio2", "gpio3", "gpio4", "gpio5" };
-+static const char * const i2s1_clk_groups[] = { "gpio6" };
-+static const char * const i2s1_ws_groups[] = { "gpio7" };
-+static const char * const i2s1_data_groups[] = { "gpio8", "gpio9" };
-+static const char * const wsa_swr_clk_groups[] = { "gpio10" };
-+static const char * const wsa_swr_data_groups[] = { "gpio11" };
-+static const char * const wsa2_swr_clk_groups[] = { "gpio15" };
-+static const char * const wsa2_swr_data_groups[] = { "gpio16" };
-+static const char * const i2s2_data_groups[] = { "gpio15", "gpio16" };
-+static const char * const i2s4_ws_groups[] = { "gpio13" };
-+static const char * const i2s4_clk_groups[] = { "gpio12" };
-+static const char * const i2s4_data_groups[] = { "gpio17", "gpio18" };
-+static const char * const slimbus_clk_groups[] = { "gpio19"};
-+static const char * const i2s3_clk_groups[] = { "gpio19"};
-+static const char * const i2s3_ws_groups[] = { "gpio20"};
-+static const char * const i2s3_data_groups[] = { "gpio21", "gpio22"};
-+static const char * const slimbus_data_groups[] = { "gpio20"};
-+static const char * const ext_mclk1_c_groups[] = { "gpio5" };
-+static const char * const ext_mclk1_b_groups[] = { "gpio9" };
-+static const char * const ext_mclk1_a_groups[] = { "gpio13" };
-+static const char * const ext_mclk1_d_groups[] = { "gpio14" };
-+static const char * const ext_mclk1_e_groups[] = { "gpio22" };
-+
-+static const struct lpi_pingroup sm8450_groups[] = {
-+	LPI_PINGROUP(0, 0, swr_tx_clk, qua_mi2s_sclk, _, _),
-+	LPI_PINGROUP(1, 2, swr_tx_data, qua_mi2s_ws, _, _),
-+	LPI_PINGROUP(2, 4, swr_tx_data, qua_mi2s_data, _, _),
-+	LPI_PINGROUP(3, 8, swr_rx_clk, qua_mi2s_data, _, _),
-+	LPI_PINGROUP(4, 10, swr_rx_data, qua_mi2s_data, _, _),
-+	LPI_PINGROUP(5, 12, swr_rx_data, ext_mclk1_c, qua_mi2s_data, _),
-+	LPI_PINGROUP(6, LPI_NO_SLEW, dmic1_clk, i2s1_clk, _,  _),
-+	LPI_PINGROUP(7, LPI_NO_SLEW, dmic1_data, i2s1_ws, _, _),
-+	LPI_PINGROUP(8, LPI_NO_SLEW, dmic2_clk, i2s1_data, _, _),
-+	LPI_PINGROUP(9, LPI_NO_SLEW, dmic2_data, i2s1_data, ext_mclk1_b, _),
-+	LPI_PINGROUP(10, 16, i2s2_clk, wsa_swr_clk, _, _),
-+	LPI_PINGROUP(11, 18, i2s2_ws, wsa_swr_data, _, _),
-+	LPI_PINGROUP(12, LPI_NO_SLEW, dmic3_clk, i2s4_clk, _, _),
-+	LPI_PINGROUP(13, LPI_NO_SLEW, dmic3_data, i2s4_ws, ext_mclk1_a, _),
-+	LPI_PINGROUP(14, 6, swr_tx_data, ext_mclk1_d, _, _),
-+	LPI_PINGROUP(15, 20, i2s2_data, wsa2_swr_clk, _, _),
-+	LPI_PINGROUP(16, 22, i2s2_data, wsa2_swr_data, _, _),
-+	LPI_PINGROUP(17, LPI_NO_SLEW, dmic4_clk, i2s4_data, _, _),
-+	LPI_PINGROUP(18, LPI_NO_SLEW, dmic4_data, i2s4_data, _, _),
-+	LPI_PINGROUP(19, LPI_NO_SLEW, i2s3_clk, slimbus_clk, _, _),
-+	LPI_PINGROUP(20, LPI_NO_SLEW, i2s3_ws, slimbus_data, _, _),
-+	LPI_PINGROUP(21, LPI_NO_SLEW, i2s3_data, _, _, _),
-+	LPI_PINGROUP(22, LPI_NO_SLEW, i2s3_data, ext_mclk1_e, _, _),
-+};
-+
-+static const struct lpi_function sm8450_functions[] = {
-+	LPI_FUNCTION(dmic1_clk),
-+	LPI_FUNCTION(dmic1_data),
-+	LPI_FUNCTION(dmic2_clk),
-+	LPI_FUNCTION(dmic2_data),
-+	LPI_FUNCTION(dmic3_clk),
-+	LPI_FUNCTION(dmic3_data),
-+	LPI_FUNCTION(dmic4_clk),
-+	LPI_FUNCTION(dmic4_data),
-+	LPI_FUNCTION(i2s1_clk),
-+	LPI_FUNCTION(i2s1_data),
-+	LPI_FUNCTION(i2s1_ws),
-+	LPI_FUNCTION(i2s2_clk),
-+	LPI_FUNCTION(i2s2_data),
-+	LPI_FUNCTION(i2s2_ws),
-+	LPI_FUNCTION(i2s3_clk),
-+	LPI_FUNCTION(i2s3_data),
-+	LPI_FUNCTION(i2s3_ws),
-+	LPI_FUNCTION(i2s4_clk),
-+	LPI_FUNCTION(i2s4_data),
-+	LPI_FUNCTION(i2s4_ws),
-+	LPI_FUNCTION(qua_mi2s_data),
-+	LPI_FUNCTION(qua_mi2s_sclk),
-+	LPI_FUNCTION(qua_mi2s_ws),
-+	LPI_FUNCTION(swr_rx_clk),
-+	LPI_FUNCTION(swr_rx_data),
-+	LPI_FUNCTION(swr_tx_clk),
-+	LPI_FUNCTION(swr_tx_data),
-+	LPI_FUNCTION(slimbus_clk),
-+	LPI_FUNCTION(slimbus_data),
-+	LPI_FUNCTION(wsa_swr_clk),
-+	LPI_FUNCTION(wsa_swr_data),
-+	LPI_FUNCTION(wsa2_swr_clk),
-+	LPI_FUNCTION(wsa2_swr_data),
-+	LPI_FUNCTION(ext_mclk1_a),
-+	LPI_FUNCTION(ext_mclk1_b),
-+	LPI_FUNCTION(ext_mclk1_c),
-+	LPI_FUNCTION(ext_mclk1_d),
-+	LPI_FUNCTION(ext_mclk1_e),
-+};
-+
-+static const struct lpi_pinctrl_variant_data sm8450_lpi_data = {
-+	.pins = sm8450_lpi_pins,
-+	.npins = ARRAY_SIZE(sm8450_lpi_pins),
-+	.groups = sm8450_groups,
-+	.ngroups = ARRAY_SIZE(sm8450_groups),
-+	.functions = sm8450_functions,
-+	.nfunctions = ARRAY_SIZE(sm8450_functions),
-+};
-+
-+static const struct of_device_id lpi_pinctrl_of_match[] = {
-+	{
-+	       .compatible = "qcom,sm8450-lpass-lpi-pinctrl",
-+	       .data = &sm8450_lpi_data,
-+	},
-+	{ }
-+};
-+MODULE_DEVICE_TABLE(of, lpi_pinctrl_of_match);
-+
-+static struct platform_driver lpi_pinctrl_driver = {
-+	.driver = {
-+		   .name = "qcom-sm8450-lpass-lpi-pinctrl",
-+		   .of_match_table = lpi_pinctrl_of_match,
-+	},
-+	.probe = lpi_pinctrl_probe,
-+	.remove = lpi_pinctrl_remove,
-+};
-+
-+module_platform_driver(lpi_pinctrl_driver);
-+MODULE_DESCRIPTION("QTI SM8450 LPI GPIO pin control driver");
-+MODULE_LICENSE("GPL");
--- 
-2.25.1
-
+Regards,
+Robert
+> ---
+> Changes in v4:
+> * Correct title and description
+>
+> Changes in v3:
+> * Make sure it applies onto 5.19-rc3
+> * Update the commit description to make it clear this only affects the
+> Gen2 port
+>
+> Changes in v2:
+> * Rebase onto next-20220621
+> ---
+>  drivers/pci/controller/dwc/pcie-qcom.c | 48 +++++++++++++++-----------
+>  1 file changed, 28 insertions(+), 20 deletions(-)
+>
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index a1f1aca2fb59..24708d5d817d 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -1061,9 +1061,7 @@ static int qcom_pcie_init_2_3_3(struct qcom_pcie *pcie)
+>         struct qcom_pcie_resources_2_3_3 *res = &pcie->res.v2_3_3;
+>         struct dw_pcie *pci = pcie->pci;
+>         struct device *dev = pci->dev;
+> -       u16 offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
+>         int i, ret;
+> -       u32 val;
+>
+>         for (i = 0; i < ARRAY_SIZE(res->rst); i++) {
+>                 ret = reset_control_assert(res->rst[i]);
+> @@ -1120,6 +1118,33 @@ static int qcom_pcie_init_2_3_3(struct qcom_pcie *pcie)
+>                 goto err_clk_aux;
+>         }
+>
+> +       return 0;
+> +
+> +err_clk_aux:
+> +       clk_disable_unprepare(res->ahb_clk);
+> +err_clk_ahb:
+> +       clk_disable_unprepare(res->axi_s_clk);
+> +err_clk_axi_s:
+> +       clk_disable_unprepare(res->axi_m_clk);
+> +err_clk_axi_m:
+> +       clk_disable_unprepare(res->iface);
+> +err_clk_iface:
+> +       /*
+> +        * Not checking for failure, will anyway return
+> +        * the original failure in 'ret'.
+> +        */
+> +       for (i = 0; i < ARRAY_SIZE(res->rst); i++)
+> +               reset_control_assert(res->rst[i]);
+> +
+> +       return ret;
+> +}
+> +
+> +static int qcom_pcie_post_init_2_3_3(struct qcom_pcie *pcie)
+> +{
+> +       struct dw_pcie *pci = pcie->pci;
+> +       u16 offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
+> +       u32 val;
+> +
+>         writel(SLV_ADDR_SPACE_SZ,
+>                 pcie->parf + PCIE20_v3_PARF_SLV_ADDR_SPACE_SIZE);
+>
+> @@ -1147,24 +1172,6 @@ static int qcom_pcie_init_2_3_3(struct qcom_pcie *pcie)
+>                 PCI_EXP_DEVCTL2);
+>
+>         return 0;
+> -
+> -err_clk_aux:
+> -       clk_disable_unprepare(res->ahb_clk);
+> -err_clk_ahb:
+> -       clk_disable_unprepare(res->axi_s_clk);
+> -err_clk_axi_s:
+> -       clk_disable_unprepare(res->axi_m_clk);
+> -err_clk_axi_m:
+> -       clk_disable_unprepare(res->iface);
+> -err_clk_iface:
+> -       /*
+> -        * Not checking for failure, will anyway return
+> -        * the original failure in 'ret'.
+> -        */
+> -       for (i = 0; i < ARRAY_SIZE(res->rst); i++)
+> -               reset_control_assert(res->rst[i]);
+> -
+> -       return ret;
+>  }
+>
+>  static int qcom_pcie_get_resources_2_7_0(struct qcom_pcie *pcie)
+> @@ -1596,6 +1603,7 @@ static const struct qcom_pcie_ops ops_2_4_0 = {
+>  static const struct qcom_pcie_ops ops_2_3_3 = {
+>         .get_resources = qcom_pcie_get_resources_2_3_3,
+>         .init = qcom_pcie_init_2_3_3,
+> +       .post_init = qcom_pcie_post_init_2_3_3,
+>         .deinit = qcom_pcie_deinit_2_3_3,
+>         .ltssm_enable = qcom_pcie_2_3_2_ltssm_enable,
+>  };
+> --
+> 2.36.1
+>
