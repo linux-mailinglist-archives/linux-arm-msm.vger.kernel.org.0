@@ -2,275 +2,170 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E338C560A54
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jun 2022 21:33:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B4A71560A96
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jun 2022 21:47:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230382AbiF2Tdr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Jun 2022 15:33:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42818 "EHLO
+        id S230073AbiF2Trj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Jun 2022 15:47:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51884 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229460AbiF2Tdr (ORCPT
+        with ESMTP id S229864AbiF2Tri (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Jun 2022 15:33:47 -0400
-Received: from mail-pg1-x534.google.com (mail-pg1-x534.google.com [IPv6:2607:f8b0:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7AAF22B1A
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jun 2022 12:33:43 -0700 (PDT)
-Received: by mail-pg1-x534.google.com with SMTP id s206so7253942pgs.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jun 2022 12:33:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=xcgTsOBcCCmAqgvSJCfdJb1ZnAUw5E+RtC3/ZrG2YmM=;
-        b=dewAmd6FSCssJU85qaYMQHjIvQ3595Yw8tktnMiLA7skETiJin56JxXLOcjXQhV9+O
-         huWHrgZjWf4ZBG6Tlgbd1NSx1gPellEqVpAY+o/VayuadaJ3resgCVx4qo5xthqVubar
-         OamLhT55tubW+XIjdFtAHXF8dr9UXoUEqAvaw=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=xcgTsOBcCCmAqgvSJCfdJb1ZnAUw5E+RtC3/ZrG2YmM=;
-        b=pSAhmoV6RdqtgcevPmpOLYzO8Od7ODa5s/duY9JFN/4TvCClvgKO0GvF0qoLFYJiUc
-         NHYVaBDkMYTYfjo27etqxHUd4jsiVbFQA1oRjx7vWOPxSPvTtx3uMri9VOQGgqJiZKWd
-         v5ycCZswK3Dl/lgTnG9INo7kTc0wb0xwQsRGvwe3Z3JuXa7AeRRhZPUP+uRBsSVS6nly
-         kSyuyCr6rXs3Gvr1CVHAnHw370xvq11D/4e9fp05jGK8JZ3C9FZjW63u6PkZ34IzVIFd
-         6vQCgyN2PJTL/JocpnvBulfWzZ3tP6iB4M7J2WGQ9YHTKEDCJkG3eIZAzG2ZdxQrtTZ/
-         trPw==
-X-Gm-Message-State: AJIora/m4rJe7s/M2MEkA/j0f9EDKGVCRWUWeL2xFwq9b+TXpcMGkUZv
-        6leMKx2RlLEKAX/iJzrfZTtuJw==
-X-Google-Smtp-Source: AGRyM1speEdW8XN3x69iZSrs/2mCaVZS2QWLEAWucKQqhfpHrSD6oQg5wvUiEEaSHJCjZKTGNRKkXg==
-X-Received: by 2002:a63:9042:0:b0:40d:bb3:79e0 with SMTP id a63-20020a639042000000b0040d0bb379e0mr4268168pge.70.1656531223280;
-        Wed, 29 Jun 2022 12:33:43 -0700 (PDT)
-Received: from localhost ([2620:15c:11a:202:d97e:acfb:9af9:ab11])
-        by smtp.gmail.com with UTF8SMTPSA id gb5-20020a17090b060500b001e31c7aad6fsm2645670pjb.20.2022.06.29.12.33.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 29 Jun 2022 12:33:42 -0700 (PDT)
-Date:   Wed, 29 Jun 2022 12:33:39 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Krishna chaitanya chundru <quic_krichai@quicinc.com>
-Cc:     helgaas@kernel.org, linux-pci@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_vbadigan@quicinc.com, quic_hemantk@quicinc.com,
-        quic_nitegupt@quicinc.com, quic_skananth@quicinc.com,
-        quic_ramkri@quicinc.com, manivannan.sadhasivam@linaro.org,
-        swboyd@chromium.org, dmitry.baryshkov@linaro.org,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>
-Subject: Re: [PATCH v2 1/2] PCI: qcom: Add system PM support
-Message-ID: <YrypE5KlICZgmEi0@google.com>
-References: <1656055682-18817-1-git-send-email-quic_krichai@quicinc.com>
- <1656495214-4028-1-git-send-email-quic_krichai@quicinc.com>
- <1656495214-4028-2-git-send-email-quic_krichai@quicinc.com>
+        Wed, 29 Jun 2022 15:47:38 -0400
+Received: from NAM12-MW2-obe.outbound.protection.outlook.com (mail-mw2nam12on2086.outbound.protection.outlook.com [40.107.244.86])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5E363A1AD;
+        Wed, 29 Jun 2022 12:47:36 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=f0PJX5RBvOQJXizsm7XXk5ibev9vGSpfBPSn4WdyVa5ghrFuCQFae5qTXcaCWk6xS50Ef/p/HkBXOBmsVjA7GSq0W2eq+KIuffcDoaZoYolI1NDr0MvrSTY053ipmO2PVyyaaQXT4tavqhKI9CHxoCfkCFGy1kOcBBhGf6n9MtJ35ko4u5+I5Ax4ujWkOxP2zwAK7PD70e+7Qkjg0pPHFXmnMGt6NqUdYsNVr1EQLipy5WBUC7Hn0pt3XBrNzCLDZrPmLyXF0lsq+nfhUqZ5qepSUqM2y9ZuOorMdihawoNmQC/FMYyD5SO3kuu1KkcN3SYX8phA+obprcgkMPlQ3A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=4t2tMU26BQlyqKCQrdW0JpcVFyJO+mK2EE2oPATlIlA=;
+ b=jpTRnHFVFndMxq3v3N/DsLcCopksASQG2tSes+XRlcpr3NnnfzOmb6ARuSVY9cqWty9YxbYZLjlUNDIb3fjuGcpXqA8rs/QTcVC+at7FX8scfWeM0owd1Rv9bWAlOeBQAdLcPg76BIHX1Lm2aqbErpTuH+foXu0ybORfWxub6Ynj1vC8FTN5WxuuY61N9xEpF01IqOLXZAxHxd2gIRiGQBUeNK41aompUfEUYfS1nRlQS7BbdjadblK0joCyscNYO4f6zPBw9Pyt5QRgDjDbuWnJJxd5zNlZ6AVCuB44s74ojp9iQFAufp49AubKBO+hVh2beXmWSHg+TGTjAijR8Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 12.22.5.234) smtp.rcpttodomain=rosenzweig.io smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=4t2tMU26BQlyqKCQrdW0JpcVFyJO+mK2EE2oPATlIlA=;
+ b=kbSpzWzRS1YUALOvepkAP54VOl8DFy3BXMyZtvElr0/sgXBKuvsoovdvw/j7z29Xy+8+zNA+uGQYhodL2XVyI/k4D33mMLIxVZcaQgU4SLywxUt8qaAE6D7UOxG0834eE3JdNBZm6kevU3BXtq1ZZSbCH4bSjRSXp0SvgJRCM0gMqwHd96XA+jrHf46f7zrbcfupeajYgYobAVhrbTvQvzSMqjx6tgaVqvsxapPmh5R4roDsl93Fv0LZc93VithZBkTENvMgwrkCzuGlAro2zxj3BQOrCLWE3ZQKDuFyEQ6JE5jO3Q5sw43iYRuHskEmbwN/+/FJ0a7wg7foxqnOAg==
+Received: from DS7PR03CA0055.namprd03.prod.outlook.com (2603:10b6:5:3b5::30)
+ by BL1PR12MB5221.namprd12.prod.outlook.com (2603:10b6:208:30b::9) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5373.18; Wed, 29 Jun
+ 2022 19:47:35 +0000
+Received: from DM6NAM11FT049.eop-nam11.prod.protection.outlook.com
+ (2603:10b6:5:3b5:cafe::74) by DS7PR03CA0055.outlook.office365.com
+ (2603:10b6:5:3b5::30) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5373.17 via Frontend
+ Transport; Wed, 29 Jun 2022 19:47:35 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 12.22.5.234)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 12.22.5.234 as permitted sender) receiver=protection.outlook.com;
+ client-ip=12.22.5.234; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (12.22.5.234) by
+ DM6NAM11FT049.mail.protection.outlook.com (10.13.172.188) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
+ 15.20.5373.15 via Frontend Transport; Wed, 29 Jun 2022 19:47:34 +0000
+Received: from rnnvmail203.nvidia.com (10.129.68.9) by DRHQMAIL101.nvidia.com
+ (10.27.9.10) with Microsoft SMTP Server (TLS) id 15.0.1497.32; Wed, 29 Jun
+ 2022 19:47:34 +0000
+Received: from rnnvmail202.nvidia.com (10.129.68.7) by rnnvmail203.nvidia.com
+ (10.129.68.9) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.26; Wed, 29 Jun
+ 2022 12:47:33 -0700
+Received: from Asurada-Nvidia (10.127.8.14) by mail.nvidia.com (10.129.68.7)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.26 via Frontend
+ Transport; Wed, 29 Jun 2022 12:47:31 -0700
+Date:   Wed, 29 Jun 2022 12:47:30 -0700
+From:   Nicolin Chen <nicolinc@nvidia.com>
+To:     Yong Wu <yong.wu@mediatek.com>
+CC:     "Tian, Kevin" <kevin.tian@intel.com>,
+        Jason Gunthorpe <jgg@nvidia.com>,
+        Baolu Lu <baolu.lu@linux.intel.com>,
+        "linux-s390@vger.kernel.org" <linux-s390@vger.kernel.org>,
+        "cohuck@redhat.com" <cohuck@redhat.com>,
+        "jordan@cosmicpenguin.net" <jordan@cosmicpenguin.net>,
+        "linux-tegra@vger.kernel.org" <linux-tegra@vger.kernel.org>,
+        "thierry.reding@gmail.com" <thierry.reding@gmail.com>,
+        "will@kernel.org" <will@kernel.org>,
+        "alyssa@rosenzweig.io" <alyssa@rosenzweig.io>,
+        "jean-philippe@linaro.org" <jean-philippe@linaro.org>,
+        "kvm@vger.kernel.org" <kvm@vger.kernel.org>,
+        "zhang.lyra@gmail.com" <zhang.lyra@gmail.com>,
+        "iommu@lists.linux-foundation.org" <iommu@lists.linux-foundation.org>,
+        "jonathanh@nvidia.com" <jonathanh@nvidia.com>,
+        "yangyingliang@huawei.com" <yangyingliang@huawei.com>,
+        "orsonzhai@gmail.com" <orsonzhai@gmail.com>,
+        "gerald.schaefer@linux.ibm.com" <gerald.schaefer@linux.ibm.com>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
+        "christophe.jaillet@wanadoo.fr" <christophe.jaillet@wanadoo.fr>,
+        "matthias.bgg@gmail.com" <matthias.bgg@gmail.com>,
+        "tglx@linutronix.de" <tglx@linutronix.de>,
+        "virtualization@lists.linux-foundation.org" 
+        <virtualization@lists.linux-foundation.org>,
+        "linux-arm-kernel@lists.infradead.org" 
+        <linux-arm-kernel@lists.infradead.org>,
+        "dwmw2@infradead.org" <dwmw2@infradead.org>,
+        "marcan@marcan.st" <marcan@marcan.st>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "baolin.wang7@gmail.com" <baolin.wang7@gmail.com>,
+        "linux-mediatek@lists.infradead.org" 
+        <linux-mediatek@lists.infradead.org>,
+        "robin.murphy@arm.com" <robin.murphy@arm.com>
+Subject: Re: [PATCH v3 1/5] iommu: Return -EMEDIUMTYPE for incompatible
+ domain and device/group
+Message-ID: <YrysUpY4mdzA0h76@Asurada-Nvidia>
+References: <20220623200029.26007-1-nicolinc@nvidia.com>
+ <20220623200029.26007-2-nicolinc@nvidia.com>
+ <270eec00-8aee-2288-4069-d604e6da2925@linux.intel.com>
+ <YrUk8IINqDEZLfIa@Asurada-Nvidia>
+ <8a5e9c81ab1487154828af3ca21e62e39bcce18c.camel@mediatek.com>
+ <BN9PR11MB527629DEF740C909A7B7BEB38CB49@BN9PR11MB5276.namprd11.prod.outlook.com>
+ <19cfb1b85a347c70c6b0937bbbca4a176a724454.camel@mediatek.com>
+ <20220624181943.GV4147@nvidia.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <1656495214-4028-2-git-send-email-quic_krichai@quicinc.com>
-X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+In-Reply-To: <20220624181943.GV4147@nvidia.com>
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: 8d217259-e4d1-4143-1a2e-08da5a0836ac
+X-MS-TrafficTypeDiagnostic: BL1PR12MB5221:EE_
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: tial0svSqsOBWr4UrH8SCwFIjyQnY3PhwdCieiCRyW+x6vi6nufunUUzfl8XQu8vEaRhJjGBAe4pGe+ZKAfR+B3ov2ln3fdvF0zUhQDAoDJZAm1CfwEJ2JURkCkbc2Q478avagu2XGxhl64JAxb8w+lDpT8aK3PHZ/LfhjAQoqrimWhE2UhfvN24fwDp23yFkeRn+H/kaZ79l4vS2s8AbT/vCOT6O3Jvk0Y6HEcDPlc0VC6l3C/01Q3BPHx0oPlI9KDRXO4pMSE5pvnkF8RmYHIfIISfgUWB7nsuhuzHWuBojcb6rsblTsRxNH0Fp1lK17/I1anKUpXUNmyOKW9OIHIg6Evd4yVFb5DvzvcQ7xaMbss+QpYJQv6oOxwC2QmSNsH3x7ybT5PNdcUMxSMpFf4zX6htMZ77H6It2PS0ueapWuyq+3vJ4+5Vvc0gB2Dxly6eOldTjlwgi/Q6YcJlwHTiIyOpua7KNiNJVOCZn9jas+cQTv46a0febV9sve/Z4MeylJc2s4MbOkEL367bIRjRTbdXy7qmC/y8a8Cn4dagtC3VPlg34Nnm4aD6dWo+5U36sBQOe8N1UVpIdYcZu8eZJ4WIEdJA0ok2GiIdHvicgQbnlGX56hNp4gCurZw+0FZ3KS9CcnYyVuWGMg7oi7o3i4b/FV+KaivcYLJXFieb2yCtFDXk0UOIkhe4saVqE0wh44G0seXU9OKYk+fij1dEt11l7/CKpaRSkWBojSOF+IOwWIih6hk4tDde2pb/MaCPEwtaJFvcdYb2jrqQXLv8ADvPXts+hOQmbXpusmZeVStCPYWHCV9iSMXicf0t5CiYmppSKIA/rg0RSoztiw==
+X-Forefront-Antispam-Report: CIP:12.22.5.234;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:InfoNoRecords;CAT:NONE;SFS:(13230016)(4636009)(376002)(346002)(136003)(39860400002)(396003)(46966006)(40470700004)(36840700001)(8676002)(70206006)(70586007)(4326008)(9686003)(36860700001)(7416002)(41300700001)(478600001)(26005)(86362001)(40480700001)(82740400003)(40460700003)(6916009)(186003)(81166007)(55016003)(8936002)(356005)(47076005)(82310400005)(33716001)(2906002)(336012)(54906003)(316002)(426003)(7406005)(5660300002)(83380400001)(4744005)(36900700001);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Jun 2022 19:47:34.8739
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8d217259-e4d1-4143-1a2e-08da5a0836ac
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[12.22.5.234];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: DM6NAM11FT049.eop-nam11.prod.protection.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL1PR12MB5221
+X-Spam-Status: No, score=-1.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FORGED_SPF_HELO,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jun 29, 2022 at 03:03:33PM +0530, Krishna chaitanya chundru wrote:
-> Add suspend and resume pm callbacks.
+On Fri, Jun 24, 2022 at 03:19:43PM -0300, Jason Gunthorpe wrote:
+> On Fri, Jun 24, 2022 at 06:35:49PM +0800, Yong Wu wrote:
 > 
-> When system suspends, and if the link is in L1ss, disable the clocks
-> so that system enters into low power state to save the maximum power.
-> And when the system resumes, enable the clocks back if they are
-> disabled in the suspend path.
+> > > > It's not used in VFIO context. "return 0" just satisfy the iommu
+> > > > framework to go ahead. and yes, here we only allow the shared
+> > > > "mapping-domain" (All the devices share a domain created
+> > > > internally).
 > 
-> Changes since v1:
-> 	- Fixed compilation errors.
+> What part of the iommu framework is trying to attach a domain and
+> wants to see success when the domain was not actually attached ?
 > 
-> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-> ---
->  drivers/pci/controller/dwc/pcie-qcom.c | 81 ++++++++++++++++++++++++++++++++++
->  1 file changed, 81 insertions(+)
+> > > What prevent this driver from being used in VFIO context?
+> > 
+> > Nothing prevent this. Just I didn't test.
 > 
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> index 6ab9089..8e9ef37 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> @@ -41,6 +41,9 @@
->  #define L23_CLK_RMV_DIS				BIT(2)
->  #define L1_CLK_RMV_DIS				BIT(1)
->  
-> +#define PCIE20_PARF_PM_STTS                     0x24
-> +#define PCIE20_PARF_PM_STTS_LINKST_IN_L1SUB    BIT(8)
-> +
->  #define PCIE20_PARF_PHY_CTRL			0x40
->  #define PHY_CTRL_PHY_TX0_TERM_OFFSET_MASK	GENMASK(20, 16)
->  #define PHY_CTRL_PHY_TX0_TERM_OFFSET(x)		((x) << 16)
-> @@ -190,6 +193,8 @@ struct qcom_pcie_ops {
->  	void (*post_deinit)(struct qcom_pcie *pcie);
->  	void (*ltssm_enable)(struct qcom_pcie *pcie);
->  	int (*config_sid)(struct qcom_pcie *pcie);
-> +	int (*enable_clks)(struct qcom_pcie *pcie);
-> +	int (*disable_clks)(struct qcom_pcie *pcie);
->  };
->  
->  struct qcom_pcie_cfg {
-> @@ -199,6 +204,7 @@ struct qcom_pcie_cfg {
->  	unsigned int has_ddrss_sf_tbu_clk:1;
->  	unsigned int has_aggre0_clk:1;
->  	unsigned int has_aggre1_clk:1;
-> +	unsigned int support_pm_ops:1;
+> This is why it is wrong to return success here.
 
-nit: s/support_pm_ops/supports_system_suspend/ ?
+Hi Yong, would you or someone you know be able to confirm whether
+this "return 0" is still a must or not?
 
-It's not really the ops that are supported, but system suspend. 'supports'
-(with an 's' at the end) to specify a characteristic of the
-driver/controller (similar to the 'has_<something>'s above), rather than
-an imperative of what the driver should do.
+Considering that it's an old 32-bit platform for MTK, if it would
+take time to do so, I'd like to drop the change in MTK driver and
+note in commit log for you or other MTK folks to change in future.
 
-In any case, it's just a nit :)
-
->  };
->  
->  struct qcom_pcie {
-> @@ -209,6 +215,7 @@ struct qcom_pcie {
->  	struct phy *phy;
->  	struct gpio_desc *reset;
->  	const struct qcom_pcie_cfg *cfg;
-> +	unsigned int is_suspended:1;
->  };
->  
->  #define to_qcom_pcie(x)		dev_get_drvdata((x)->dev)
-> @@ -1308,6 +1315,23 @@ static void qcom_pcie_post_deinit_2_7_0(struct qcom_pcie *pcie)
->  	clk_disable_unprepare(res->pipe_clk);
->  }
->  
-> +static int qcom_pcie_enable_clks_2_7_0(struct qcom_pcie *pcie)
-> +{
-> +	struct qcom_pcie_resources_2_7_0 *res = &pcie->res.v2_7_0;
-> +
-> +	return clk_bulk_prepare_enable(res->num_clks, res->clks);
-> +}
-> +
-> +static int qcom_pcie_disable_clks_2_7_0(struct qcom_pcie *pcie)
-> +{
-> +	struct qcom_pcie_resources_2_7_0 *res = &pcie->res.v2_7_0;
-> +
-> +	clk_bulk_disable_unprepare(res->num_clks, res->clks);
-> +
-> +	return 0;
-> +}
-> +
-> +
-
-nit: delete one empty line
-
->  static int qcom_pcie_link_up(struct dw_pcie *pci)
->  {
->  	u16 offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
-> @@ -1485,6 +1509,8 @@ static const struct qcom_pcie_ops ops_2_7_0 = {
->  	.ltssm_enable = qcom_pcie_2_3_2_ltssm_enable,
->  	.post_init = qcom_pcie_post_init_2_7_0,
->  	.post_deinit = qcom_pcie_post_deinit_2_7_0,
-> +	.enable_clks = qcom_pcie_enable_clks_2_7_0,
-> +	.disable_clks = qcom_pcie_disable_clks_2_7_0,
->  };
->  
->  /* Qcom IP rev.: 1.9.0 */
-> @@ -1548,6 +1574,7 @@ static const struct qcom_pcie_cfg sc7280_cfg = {
->  	.ops = &ops_1_9_0,
->  	.has_tbu_clk = true,
->  	.pipe_clk_need_muxing = true,
-> +	.support_pm_ops = true,
->  };
->  
->  static const struct dw_pcie_ops dw_pcie_ops = {
-> @@ -1591,6 +1618,8 @@ static int qcom_pcie_probe(struct platform_device *pdev)
->  
->  	pcie->cfg = pcie_cfg;
->  
-> +	pcie->is_suspended = false;
-
-not strictly necessary because of kzalloc, but does no harm either.
-
-> +
->  	pcie->reset = devm_gpiod_get_optional(dev, "perst", GPIOD_OUT_HIGH);
->  	if (IS_ERR(pcie->reset)) {
->  		ret = PTR_ERR(pcie->reset);
-> @@ -1645,6 +1674,57 @@ static int qcom_pcie_probe(struct platform_device *pdev)
->  	return ret;
->  }
->  
-> +static int __maybe_unused qcom_pcie_pm_suspend(struct device *dev)
-> +{
-> +	struct qcom_pcie *pcie = dev_get_drvdata(dev);
-> +	u32 val;
-> +
-> +	if (!pcie->cfg->support_pm_ops)
-> +		return 0;
-> +
-> +	/* if the link is not in l1ss don't turn off clocks */
-> +	val = readl(pcie->parf + PCIE20_PARF_PM_STTS);
-> +	if (!(val & PCIE20_PARF_PM_STTS_LINKST_IN_L1SUB)) {
-> +		dev_err(dev, "Link is not in L1ss\n");
-
-If this is an error, should the function return an error? Otherwise maybe it
-should be a warning.
-
-> +		return 0;
-> +	}
-> +
-> +	if (pcie->cfg->ops->disable_clks)
-> +		pcie->cfg->ops->disable_clks(pcie);
-> +
-> +	if (pcie->cfg->ops->post_deinit)
-> +		pcie->cfg->ops->post_deinit(pcie);
-> +
-> +	pcie->is_suspended = true;
-> +
-> +	return 0;
-> +}
-> +
-> +static int __maybe_unused qcom_pcie_pm_resume(struct device *dev)
-> +{
-> +	struct qcom_pcie *pcie = dev_get_drvdata(dev);
-> +
-> +	if (!pcie->cfg->support_pm_ops)
-> +		return 0;
-> +
-> +	if (!pcie->is_suspended)
-> +		return 0;
-> +
-> +	if (pcie->cfg->ops->enable_clks)
-> +		pcie->cfg->ops->enable_clks(pcie);
-> +
-> +	if (pcie->cfg->ops->post_init)
-> +		pcie->cfg->ops->post_init(pcie);
-> +
-> +	pcie->is_suspended = false;
-> +
-> +	return 0;
-> +}
-> +
-> +static const struct dev_pm_ops qcom_pcie_pm_ops = {
-> +	SET_NOIRQ_SYSTEM_SLEEP_PM_OPS(qcom_pcie_pm_suspend, qcom_pcie_pm_resume)
-> +};
-> +
->  static const struct of_device_id qcom_pcie_match[] = {
->  	{ .compatible = "qcom,pcie-apq8084", .data = &apq8084_cfg },
->  	{ .compatible = "qcom,pcie-ipq8064", .data = &ipq8064_cfg },
-> @@ -1679,6 +1759,7 @@ static struct platform_driver qcom_pcie_driver = {
->  	.probe = qcom_pcie_probe,
->  	.driver = {
->  		.name = "qcom-pcie",
-> +		.pm = &qcom_pcie_pm_ops,
->  		.suppress_bind_attrs = true,
->  		.of_match_table = qcom_pcie_match,
->  	},
-> -- 
-> 2.7.4
-> 
+Thanks
+Nic
