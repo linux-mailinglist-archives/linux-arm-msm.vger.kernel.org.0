@@ -2,64 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 70B4A5601FD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jun 2022 16:07:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2B74F5601FA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jun 2022 16:07:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233719AbiF2ODk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Jun 2022 10:03:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59082 "EHLO
+        id S233443AbiF2ODP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Jun 2022 10:03:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58834 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233522AbiF2ODU (ORCPT
+        with ESMTP id S233239AbiF2ODO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Jun 2022 10:03:20 -0400
-Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43AE424BFE
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jun 2022 07:03:20 -0700 (PDT)
-Received: by mail-pj1-x1032.google.com with SMTP id w1-20020a17090a6b8100b001ef26ab992bso1101257pjj.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jun 2022 07:03:20 -0700 (PDT)
+        Wed, 29 Jun 2022 10:03:14 -0400
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B5B5B1C8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jun 2022 07:03:10 -0700 (PDT)
+Received: by mail-ej1-x632.google.com with SMTP id ge10so32816226ejb.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jun 2022 07:03:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=wUdJGFFVlAa/5h96T7Dca7RxEjviGiQF/SXSNff6OLY=;
-        b=hW6DR2c9kKezRBMq40sp5APKYkLznXmh0OB+hxzUbt0kI/VYzOq8N4bCpzf9/tSP4t
-         +nN6syselZjvb0FKMlegvcvXiCGzw+jb1IdUjxV5dakDYAcwpVDiswqz9tz6GbjWyeb5
-         k8QMSwM9FxnXu2zE4uFKGbuTnHKeXmpriWWik1a4je64JZSF0L8TUZNOfiSDZdkTjIYY
-         Pkvhu5BxGeGLC27Txt1iBfJKulQNzk0wQhAWsPkYZgq5iiYus0skaOCvmQAZS709RFIn
-         y5w4GBNS9SnMg9nVtRSEndjZ8IXo8S0sHH+y+FKUtBea12my97vq3X5kP6RzOSNYtH2j
-         wGMg==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=X21RDYcZyPdAdSSiWnF38ilXDUTAkDc85p4urcENWOs=;
+        b=zp6x20OMhnXPHzNNi8WXugTMQFDEqCtld64Is1YD14JQCItQk0qaYwSpD1zeZmO/I8
+         JAn4GAgxjF8nFRDdIP2xbh0uvfE6wa7w+sVJK0IYyM6Qon7wsewcSuTMpXS6grEENUuN
+         2sjKO2jNlLLJlPyw2lmQv6YAx0oZrDL1pJels5dy2jy8xSAoHvKwYmCvMYX5UFmUxutN
+         Dw3BPl8BD99rKr5Dkz5RInSpxo55gFMUql9l4hDDPxF3KLe54xNhT03VZhL3ypi0L8an
+         eAOLZqhsA/+wNgGGEXH5My3uVM/1A7Zh+G97JQmTZ654pB613w5h0CkjgVuJ/YNmI5qf
+         sV3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=wUdJGFFVlAa/5h96T7Dca7RxEjviGiQF/SXSNff6OLY=;
-        b=cUYzWgv0qbh52BsLCniXXyq6SLjPIWoIJID+GTJFcNbzSA5NHKD+qGfiDHI+tGeKDp
-         X1fv+0nfZT9W9Wjunhy6v3+BjoOJ3M54bG2/NpBQB2YubL9SFCI8gSI4GD7alPJq5198
-         T1+o+9l6WIDJodTgWgShBRtQb9MWSOFYX8fU8CYvPTH1VzS7WNWuVXzShbWNSNVC3bgZ
-         BCcP0CCDhqxpv5I64IYMzapUZWef5z3IpMDizOjVUdjziiLCrLGIsG4/xTvJ005vFeEy
-         pC+lSPC2HyGji5LuLs6eiMk62drXb/JtFPnVihGwrOqDgGpci38qseUxHu5dPR/Ee8NR
-         T3Hg==
-X-Gm-Message-State: AJIora/moWALUwBlTAdOeELadVFAIZIZvuxB/XommNgYmXszsA+wnlAq
-        jExkkAqWMzsA7sItKbbkWUNsoWo7enmXA24h8m6kcQ==
-X-Google-Smtp-Source: AGRyM1tqMWn5frCYyWd148Fa8LvqnzLMpxu5jKi3yMOQ16Yt2HmJoGiHTqANfTH7ozxqwv1PhwtLGtxcptdoQG0dl3A=
-X-Received: by 2002:a17:902:d50b:b0:16a:2cb3:74f7 with SMTP id
- b11-20020a170902d50b00b0016a2cb374f7mr9546718plg.6.1656511399681; Wed, 29 Jun
- 2022 07:03:19 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=X21RDYcZyPdAdSSiWnF38ilXDUTAkDc85p4urcENWOs=;
+        b=zYH1C/NiVGcrOZbQN8uIxJZtw6ZtWQ3vnrTJCfFLum030StrIkr+KtfSCQB4bYIzkh
+         h2cRX7NqRSXcuHRkZIOoYkrjth2vqjynRLSLLTaNpI3bDsGEvKi5ck6V8hmXC0hSg3ZI
+         WZ4XEeeXKpDuzBBH+L3NwYvMCQFWdFELxfiXTt7swZRVBFO+I818H+jJiThDWvYRCvHt
+         dRLZp5niMrjLjtd0C3eue7zgEd0ZwB0l7z+wCtAaz8yNv4PuNeJdUEAhIrYvIbAaRdCL
+         10h/abwyG17cZloGnfVUBGsTKTW1tn6fr9IrVVkyfASvkatBhZ/sQX5CRxERemXBjCaS
+         uNzw==
+X-Gm-Message-State: AJIora+3wi25aLBSbT7CAlS73vJhQ8552eYNh9hWvUloS0IqzVuesO3t
+        40YbGcoEqM9XbyrfdlsXA1nTZQ==
+X-Google-Smtp-Source: AGRyM1vfBpeK5a2y8Ai17mRG/zLK0C47Ezcpl3fOTQHlpYcTCUwBcZxJdjE29jGIN0w0jpEOhFnqJg==
+X-Received: by 2002:a17:906:9245:b0:726:3b57:1046 with SMTP id c5-20020a170906924500b007263b571046mr3576647ejx.221.1656511386646;
+        Wed, 29 Jun 2022 07:03:06 -0700 (PDT)
+Received: from localhost.localdomain (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id f9-20020a17090660c900b007262a5e2204sm7739260ejk.153.2022.06.29.07.03.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 29 Jun 2022 07:03:05 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Georgi Djakov <djakov@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Cc:     Rajendra Nayak <quic_rjendra@quicinc.com>
+Subject: [PATCH v6 0/4] soc/arm64: qcom: Add initial version of bwmon
+Date:   Wed, 29 Jun 2022 16:02:58 +0200
+Message-Id: <20220629140302.236715-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-References: <20220629084816.125515-1-stephan.gerhold@kernkonzept.com> <20220629084816.125515-2-stephan.gerhold@kernkonzept.com>
-In-Reply-To: <20220629084816.125515-2-stephan.gerhold@kernkonzept.com>
-From:   Loic Poulain <loic.poulain@linaro.org>
-Date:   Wed, 29 Jun 2022 16:02:43 +0200
-Message-ID: <CAMZdPi9X=MELm8OJ=tKi3J6BMrxawgeXZwQy4O6Sp1XWrhEZuQ@mail.gmail.com>
-Subject: Re: [PATCH v2 1/3] watchdog: pm8916_wdt: Avoid read of write-only PET register
-To:     Stephan Gerhold <stephan.gerhold@kernkonzept.com>
-Cc:     Wim Van Sebroeck <wim@linux-watchdog.org>,
-        Guenter Roeck <linux@roeck-us.net>,
-        linux-watchdog@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -67,45 +75,82 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 29 Jun 2022 at 10:48, Stephan Gerhold
-<stephan.gerhold@kernkonzept.com> wrote:
->
-> PMIC_WD_RESET_PET is a write-only register that is used to ping
-> the watchdog. It does not make sense to use read-modify-write
-> for it: a register read will never return anything but zero.
-> (And actually even if it did we would still want to write again
-> to ensure the watchdog is pinged.)
->
-> Reduce the overhead for the watchdog ping slightly by using
-> regmap_write() directly instead.
->
-> Signed-off-by: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
-> Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Hi,
 
-Reviewed-by: Loic Poulain <loic.poulain@linaro.org>
+Changes since v5
+================
+1. Rename compatible (and files) to qcom,msm8998-llcc-bwmon as Rajendra suggested.
+   Keep the reviews/acks as the change is not significant.
+2. Update comment in DTS, update description in bindings and in Kconfig.
 
-> ---
-> Changes in v2: Add Guenter's Reviewed-by
-> ---
->  drivers/watchdog/pm8916_wdt.c | 5 ++---
->  1 file changed, 2 insertions(+), 3 deletions(-)
->
-> diff --git a/drivers/watchdog/pm8916_wdt.c b/drivers/watchdog/pm8916_wdt.c
-> index 0937b8d33104..670cd79f4cf9 100644
-> --- a/drivers/watchdog/pm8916_wdt.c
-> +++ b/drivers/watchdog/pm8916_wdt.c
-> @@ -58,9 +58,8 @@ static int pm8916_wdt_ping(struct watchdog_device *wdev)
->  {
->         struct pm8916_wdt *wdt = watchdog_get_drvdata(wdev);
->
-> -       return regmap_update_bits(wdt->regmap,
-> -                                 wdt->baseaddr + PON_PMIC_WD_RESET_PET,
-> -                                 WATCHDOG_PET_BIT, WATCHDOG_PET_BIT);
-> +       return regmap_write(wdt->regmap, wdt->baseaddr + PON_PMIC_WD_RESET_PET,
-> +                           WATCHDOG_PET_BIT);
->  }
->
->  static int pm8916_wdt_configure_timers(struct watchdog_device *wdev)
-> --
-> 2.30.2
->
+Changes since v4
+================
+1. Patch #1 (binding): Use qcom,msm8998-cpu-bwmon fallback compatible, only one
+   interconnect. Rename to qcom,msm8998-cpu-bwmon.yaml. This reflects
+   discussion with Bjorn, about the proper fallback compatible. Driver was
+   tested only on SDM845, so only that one compatible is actually implemented.
+   Keep the reviews/acks as the change is not significant.
+2. Patch #4 (DTS): Use qcom,msm8998-cpu-bwmon fallback compatible, only one
+   interconnect, use the LLCC bandwidth in OPP.
+
+remove unused irq_enable (kbuild robot);
+Changes since v3
+================
+1. Patch #2 (bwmon): remove unused irq_enable (kbuild robot);
+   split bwmon_clear() into clearing counters and interrupts, so bwmon_start()
+   does not clear the counters twice.
+
+Changes since v2
+================
+1. Spent a lot of time on benchmarking and learning the BWMON behavior.
+2. Drop PM/OPP patch - applied.
+3. Patch #1: drop opp-avg-kBps.
+4. Patch #2: Add several comments explaining pieces of code and BWMON, extend
+   commit msg with measurements, extend help message, add new #defines to document
+   some magic values, reorder bwmon clear/disable/enable operations to match
+   downstream source and document this with comments, fix unit count from 1 MB
+   to 65 kB.
+5. Patch #4: drop opp-avg-kBps.
+6. Add accumulated Rb tags.
+
+Changes since v1
+================
+1. Add defconfig change.
+2. Fix missing semicolon in MODULE_AUTHOR.
+3. Add original downstream (msm-4.9 tree) copyrights to the driver.
+
+Description
+===========
+BWMON is a data bandwidth monitor providing throughput/bandwidth over certain
+interconnect links in a SoC.  It might be used to gather current bus usage and
+vote for interconnect bandwidth, thus adjusting the bus speed based on actual
+usage.
+
+The work is built on top of Thara Gopinath's patches with several cleanups,
+changes and simplifications.
+
+Cc: Rajendra Nayak <quic_rjendra@quicinc.com>
+
+Best regards,
+Krzysztof
+
+Krzysztof Kozlowski (4):
+  dt-bindings: interconnect: qcom,msm8998-cpu-bwmon: add BWMON device
+  soc: qcom: icc-bwmon: Add bandwidth monitoring driver
+  arm64: defconfig: enable Qualcomm Bandwidth Monitor
+  arm64: dts: qcom: sdm845: Add CPU BWMON
+
+ .../interconnect/qcom,msm8998-llcc-bwmon.yaml |  85 ++++
+ MAINTAINERS                                   |   7 +
+ arch/arm64/boot/dts/qcom/sdm845.dtsi          |  37 ++
+ arch/arm64/configs/defconfig                  |   1 +
+ drivers/soc/qcom/Kconfig                      |  15 +
+ drivers/soc/qcom/Makefile                     |   1 +
+ drivers/soc/qcom/icc-bwmon.c                  | 421 ++++++++++++++++++
+ 7 files changed, 567 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/interconnect/qcom,msm8998-llcc-bwmon.yaml
+ create mode 100644 drivers/soc/qcom/icc-bwmon.c
+
+-- 
+2.34.1
+
