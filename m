@@ -2,93 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0B69B55FD71
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jun 2022 12:39:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2213255FD9C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jun 2022 12:42:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232415AbiF2Kh4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Jun 2022 06:37:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46394 "EHLO
+        id S233206AbiF2Kkc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Jun 2022 06:40:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49202 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231431AbiF2Kh4 (ORCPT
+        with ESMTP id S231659AbiF2Kkc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Jun 2022 06:37:56 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B52253E0E8;
-        Wed, 29 Jun 2022 03:37:55 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 48F8D60E96;
-        Wed, 29 Jun 2022 10:37:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9AEAC34114;
-        Wed, 29 Jun 2022 10:37:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1656499074;
-        bh=NBWbrjWKhIsl/d/4tqSoGWJc9m+TIA0ZojUt4mMAaFM=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=MU4PBiNZw1Jj0IXdHMvobaUSXdmz3IuGBebYF1L5eLnlluL9KupehlQdyS4lsv2K8
-         sm8gf7qK/UM5VtD+qKQgTbVDMjlf9eE5gK4gSuJota4EI0TW+kFNvYiXG/JlUL1y1m
-         zPE3HO/SocI9nJBLyCW2RRpA6xljpu2PkmeLHa4xaHwNC6F47F+i7qd1gaonbgZOqP
-         xEhWDw6gc6WERoTeJhZzznvmJPKDyu4WL9cFetIMS2Ovfu+rb5nyjOAHkxAh0Duowe
-         6sLWvUBuaSxy2s8UsxNpwmerqfh+zhFUsbVE5HNScScY4BgkF1sTTIW6EYRA8j98bc
-         1kP1ospiz8S1A==
-Date:   Wed, 29 Jun 2022 16:07:47 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Hemant Kumar <quic_hemantk@quicinc.com>,
+        Wed, 29 Jun 2022 06:40:32 -0400
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 426F73DDC8;
+        Wed, 29 Jun 2022 03:40:31 -0700 (PDT)
+Received: by mail-ed1-x52d.google.com with SMTP id r18so13706036edb.9;
+        Wed, 29 Jun 2022 03:40:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:from:to:cc:subject:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=OZGHhwFxChxDscfWMdp/0hPM41tz4KYeItHFPAfWjXg=;
+        b=n6Dj+ubBXgTqBcQ9GNePKalUQR+A4y9r7wELKNOq+i+y3ys8mIlCGuKMsyIj2RKOsS
+         UJQ1d+xB/qbS3xIAqK0empxdbC8+z0TOCeRE9mR2MYXNLxFerD7GB8CTvoyPOeqHXuaD
+         xr6q3vSt2oE6Kn3svS1jLygTCnRloyqsvL+42iQ3N44L95f2NDeSmiMOFzU2h8RS7AA3
+         eVrqhVYzGJIqy4bHlepIiDMwhurmwoVGWTW6Gq2Ru1RLF7mAzPv4UAmuTaMSabmohgtN
+         Kwl/IluHg50DS7wuN9KVMapGq8XasqfGHoDUgr4JtR/8AguKPnIvZxDzUraAZOBtW5zR
+         /nXg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:from:to:cc:subject:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=OZGHhwFxChxDscfWMdp/0hPM41tz4KYeItHFPAfWjXg=;
+        b=pj2W/Ka+P8vXJZxtGitlKkAMoAyx0ZY+Md73rNCzyg1Mmxz6Pq4FOr++60ZQPkJR5E
+         UZzkqg/TvbsRWZf7kNgwiJ2SsSqRu2iwAqF5jk47y9WCxYtKrX0UYemeLezg0gtabJc1
+         PoxblufHKAzP4grBciF7Sa0sva1xNfiauiZeABF+UkDWFUJzadbELKC5r6qq4u5R/y2e
+         wja13U62pJvcTcSHLTvTS/yCGlX2VjnmtBs5dX3i5scY+/zUb9BhRch/JZTVSJyyTTnS
+         xa1Ok7Zis/LKTuAujOmb2tbEqHr456SO6Y3Fj066J7iGWf4PCzQLYbyxXt0THH3kDBEZ
+         9WQw==
+X-Gm-Message-State: AJIora/d9tlCIbcYHTtemaDAlEGnPq7+RuhuOrgTbYYC2oTgfrFGLlLh
+        Oes0Gp3LD5PHQ8lGN8DDiM+UgKW5LSM=
+X-Google-Smtp-Source: AGRyM1uWD4Bgc7cQ374NBKdJUhsnzAdBJRMDBDRHEPbI7ogeu6aX2BELORIGdQo2w+wfdKG7xYyWfw==
+X-Received: by 2002:a05:6402:5214:b0:437:5b1d:9966 with SMTP id s20-20020a056402521400b004375b1d9966mr3378608edd.16.1656499229681;
+        Wed, 29 Jun 2022 03:40:29 -0700 (PDT)
+Received: from Ansuel-xps. (93-42-70-190.ip85.fastwebnet.it. [93.42.70.190])
+        by smtp.gmail.com with ESMTPSA id h18-20020a1709060f5200b006fe9e717143sm7579266ejj.94.2022.06.29.03.40.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 29 Jun 2022 03:40:29 -0700 (PDT)
+Message-ID: <62bc2c1d.1c69fb81.09d2.e244@mx.google.com>
+X-Google-Original-Message-ID: <YrwsG4w3piWq+7QX@Ansuel-xps.>
+Date:   Wed, 29 Jun 2022 12:40:27 +0200
+From:   Christian Marangi <ansuelsmth@gmail.com>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Jens Axboe <axboe@kernel.dk>,
         Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Loic Poulain <loic.poulain@linaro.org>, mhi@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] bus: mhi: host: pci_generic: Add another Foxconn T99W175
-Message-ID: <20220629103747.GA21691@thinkpad>
-References: <20220627170717.2252335-1-bjorn.andersson@linaro.org>
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: [PATCH v3 2/4] dt-bindings: arm: msm: Convert kpss-acc driver
+ Documentation to yaml
+References: <20220628184137.21678-1-ansuelsmth@gmail.com>
+ <20220628184137.21678-3-ansuelsmth@gmail.com>
+ <e625e2c9-7321-51fa-b9bb-40ed9742ffcc@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20220627170717.2252335-1-bjorn.andersson@linaro.org>
-X-Spam-Status: No, score=-7.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+In-Reply-To: <e625e2c9-7321-51fa-b9bb-40ed9742ffcc@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jun 27, 2022 at 10:07:17AM -0700, Bjorn Andersson wrote:
-> The Foxconn e0c3 device identifies itself as a T99W175 X55, add support
-> for this to the pci_generic driver.
+On Wed, Jun 29, 2022 at 08:14:12AM +0200, Krzysztof Kozlowski wrote:
+> On 28/06/2022 20:41, Christian Marangi wrote:
+> > Convert kpss-acc driver Documentation to yaml.
+> > The original Documentation was wrong all along. Fix it while we are
+> > converting it.
+> > The example was wrong as kpss-acc-v2 should only expose the regs but we
+> > don't have any driver that expose additional clocks. The kpss-acc driver
+> > is only specific to v1. For this exact reason, limit all the additional
+> > bindings (clocks, clock-names, clock-output-names and #clock-cells) to
+> > v1 and also flag that these bindings should NOT be used for v2.
+> > 
+> > Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+> > Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
 > 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-
-Applied to mhi-next!
-
-Thanks,
-Mani
-
-> ---
->  drivers/bus/mhi/host/pci_generic.c | 3 +++
->  1 file changed, 3 insertions(+)
+> This is still not fixed and not tested. Since 4 versions of this
+> patchset (previously was part of other set).
 > 
-> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-> index 57d5f611a979..bf82d90f9ca9 100644
-> --- a/drivers/bus/mhi/host/pci_generic.c
-> +++ b/drivers/bus/mhi/host/pci_generic.c
-> @@ -571,6 +571,9 @@ static const struct pci_device_id mhi_pci_id_table[] = {
->  	/* T99W175 (sdx55), Based on Qualcomm new baseline */
->  	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0bf),
->  		.driver_data = (kernel_ulong_t) &mhi_foxconn_sdx55_info },
-> +	/* T99W175 (sdx55) */
-> +	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0c3),
-> +		.driver_data = (kernel_ulong_t) &mhi_foxconn_sdx55_info },
->  	/* T99W368 (sdx65) */
->  	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0d8),
->  		.driver_data = (kernel_ulong_t) &mhi_foxconn_sdx65_info },
-> -- 
-> 2.35.1
+> I retract my review. Please test the bindings.
 > 
+> Best regards,
+> Krzysztof
+
+Thing is that I tested them and on my side I don't have such errors.
+
+I'm using the linux-next branch. Should I use something else that have
+newer schema files?
+
+Also on other patch there are some error reported that are unrelated to
+my change and that looks strange.
 
 -- 
-மணிவண்ணன் சதாசிவம்
+	Ansuel
