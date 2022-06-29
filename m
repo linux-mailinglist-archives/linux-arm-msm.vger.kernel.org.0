@@ -2,115 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2213255FD9C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jun 2022 12:42:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A317455FDB3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jun 2022 12:46:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233206AbiF2Kkc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Jun 2022 06:40:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49202 "EHLO
+        id S229836AbiF2KqL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Jun 2022 06:46:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53446 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231659AbiF2Kkc (ORCPT
+        with ESMTP id S229716AbiF2KqJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Jun 2022 06:40:32 -0400
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 426F73DDC8;
-        Wed, 29 Jun 2022 03:40:31 -0700 (PDT)
-Received: by mail-ed1-x52d.google.com with SMTP id r18so13706036edb.9;
-        Wed, 29 Jun 2022 03:40:31 -0700 (PDT)
+        Wed, 29 Jun 2022 06:46:09 -0400
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC81E3E0CB
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jun 2022 03:46:07 -0700 (PDT)
+Received: by mail-ej1-x629.google.com with SMTP id mf9so31833646ejb.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jun 2022 03:46:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:from:to:cc:subject:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=OZGHhwFxChxDscfWMdp/0hPM41tz4KYeItHFPAfWjXg=;
-        b=n6Dj+ubBXgTqBcQ9GNePKalUQR+A4y9r7wELKNOq+i+y3ys8mIlCGuKMsyIj2RKOsS
-         UJQ1d+xB/qbS3xIAqK0empxdbC8+z0TOCeRE9mR2MYXNLxFerD7GB8CTvoyPOeqHXuaD
-         xr6q3vSt2oE6Kn3svS1jLygTCnRloyqsvL+42iQ3N44L95f2NDeSmiMOFzU2h8RS7AA3
-         eVrqhVYzGJIqy4bHlepIiDMwhurmwoVGWTW6Gq2Ru1RLF7mAzPv4UAmuTaMSabmohgtN
-         Kwl/IluHg50DS7wuN9KVMapGq8XasqfGHoDUgr4JtR/8AguKPnIvZxDzUraAZOBtW5zR
-         /nXg==
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=W6PblvzjwJsUNdixxqPbFxxCesgaMuSRJo0IV7rsaEE=;
+        b=oWCshr8Sig4TgVaJI44cjK1triaw06iiT8JAoWmlY1sjQfkCy17eatc59Jx6qxZY9F
+         nSEVq0Ubkl3k2gorW3qn2Hp2wT766fZDPbxzBlXLwPj8nT05qDLS+RXlGz5283sV3Tlw
+         Qq8VqoFTyvRSfQGVJJbipigiP5Pc8z2gQvii/wqSIZL5eiTjNCpi5FmjyfvlgFCNYnKP
+         cFabpf9ZIDR5hEye7dgEOThDXekIQyTivRKFe6WXNOlSPz7FMKNYeSePaZdzkJ8p2bjK
+         PSCWQb4E5dB9uuOTEWb+FMNRf50WZd2oNP+rCZyl9ydW59zOZa7RlIa0vsfWaIfIsAEb
+         qxQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:from:to:cc:subject:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=OZGHhwFxChxDscfWMdp/0hPM41tz4KYeItHFPAfWjXg=;
-        b=pj2W/Ka+P8vXJZxtGitlKkAMoAyx0ZY+Md73rNCzyg1Mmxz6Pq4FOr++60ZQPkJR5E
-         UZzkqg/TvbsRWZf7kNgwiJ2SsSqRu2iwAqF5jk47y9WCxYtKrX0UYemeLezg0gtabJc1
-         PoxblufHKAzP4grBciF7Sa0sva1xNfiauiZeABF+UkDWFUJzadbELKC5r6qq4u5R/y2e
-         wja13U62pJvcTcSHLTvTS/yCGlX2VjnmtBs5dX3i5scY+/zUb9BhRch/JZTVSJyyTTnS
-         xa1Ok7Zis/LKTuAujOmb2tbEqHr456SO6Y3Fj066J7iGWf4PCzQLYbyxXt0THH3kDBEZ
-         9WQw==
-X-Gm-Message-State: AJIora/d9tlCIbcYHTtemaDAlEGnPq7+RuhuOrgTbYYC2oTgfrFGLlLh
-        Oes0Gp3LD5PHQ8lGN8DDiM+UgKW5LSM=
-X-Google-Smtp-Source: AGRyM1uWD4Bgc7cQ374NBKdJUhsnzAdBJRMDBDRHEPbI7ogeu6aX2BELORIGdQo2w+wfdKG7xYyWfw==
-X-Received: by 2002:a05:6402:5214:b0:437:5b1d:9966 with SMTP id s20-20020a056402521400b004375b1d9966mr3378608edd.16.1656499229681;
-        Wed, 29 Jun 2022 03:40:29 -0700 (PDT)
-Received: from Ansuel-xps. (93-42-70-190.ip85.fastwebnet.it. [93.42.70.190])
-        by smtp.gmail.com with ESMTPSA id h18-20020a1709060f5200b006fe9e717143sm7579266ejj.94.2022.06.29.03.40.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Jun 2022 03:40:29 -0700 (PDT)
-Message-ID: <62bc2c1d.1c69fb81.09d2.e244@mx.google.com>
-X-Google-Original-Message-ID: <YrwsG4w3piWq+7QX@Ansuel-xps.>
-Date:   Wed, 29 Jun 2022 12:40:27 +0200
-From:   Christian Marangi <ansuelsmth@gmail.com>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=W6PblvzjwJsUNdixxqPbFxxCesgaMuSRJo0IV7rsaEE=;
+        b=UljoNByb3ZuCS/XYZw4A8DakZKluD+igbbdaRmkbP53PZ0948Lo0pzNzb42LESuvMv
+         d5jg+moVX/MNXwn6CDS7nk/agB1bp4suSpEC1m2Iutwcc2hF4k/DhNik35cHln0W4+dX
+         ZEbH2c3eDZr+ymwCynTNvSx3Q/QLZ00FkIrXj2tlMGE9oPzusI3KBahzKutgGgym44Z3
+         g7V8/EH8pCx8KC55RrxZLtt/9IG7t1G5oAHCeg7KU+f9Lh2/0vcKIxc8Uv0ClBwDInIm
+         RbhR+ymYXTgJvVu5i+cX6miZJirJcKJ7uDoyYS9KdwNImIC6OOUsW/j4eQm/7/Wwga1F
+         iwaw==
+X-Gm-Message-State: AJIora8ppEjUEo/Dh0T3B0n30l0Rk2lwZzY0wzL5PVnjWlYLmnhobZ1Z
+        dGqVO0f6gTF1D2Po0AYIMu9oHQ==
+X-Google-Smtp-Source: AGRyM1tyS2WfFfYASPJC+t6WUWS3hSdUIOTkd3TViReO0HxUsV95x9yb99WnVOW139Oas8rdXvfyxQ==
+X-Received: by 2002:a17:906:9508:b0:726:9589:6da7 with SMTP id u8-20020a170906950800b0072695896da7mr2531593ejx.505.1656499566304;
+        Wed, 29 Jun 2022 03:46:06 -0700 (PDT)
+Received: from [192.168.0.184] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id l3-20020a170906078300b006feba31171bsm7673762ejc.11.2022.06.29.03.46.04
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 29 Jun 2022 03:46:05 -0700 (PDT)
+Message-ID: <269146ad-7b4b-9d8f-23c2-2b0443ab62ec@linaro.org>
+Date:   Wed, 29 Jun 2022 12:46:03 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: Re: [PATCH 1/3] dt-bindings: thermal: qcom-tsens: Drop redundant
+ compatibles
+Content-Language: en-US
+To:     Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>
+Cc:     Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, Jens Axboe <axboe@kernel.dk>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        Krzysztof Kozlowski <krzk@kernel.org>
-Subject: Re: [PATCH v3 2/4] dt-bindings: arm: msm: Convert kpss-acc driver
- Documentation to yaml
-References: <20220628184137.21678-1-ansuelsmth@gmail.com>
- <20220628184137.21678-3-ansuelsmth@gmail.com>
- <e625e2c9-7321-51fa-b9bb-40ed9742ffcc@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <e625e2c9-7321-51fa-b9bb-40ed9742ffcc@linaro.org>
+        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        Stephan Gerhold <stephan@gerhold.net>
+References: <20220627131415.2868938-1-stephan.gerhold@kernkonzept.com>
+ <20220627131415.2868938-2-stephan.gerhold@kernkonzept.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220627131415.2868938-2-stephan.gerhold@kernkonzept.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jun 29, 2022 at 08:14:12AM +0200, Krzysztof Kozlowski wrote:
-> On 28/06/2022 20:41, Christian Marangi wrote:
-> > Convert kpss-acc driver Documentation to yaml.
-> > The original Documentation was wrong all along. Fix it while we are
-> > converting it.
-> > The example was wrong as kpss-acc-v2 should only expose the regs but we
-> > don't have any driver that expose additional clocks. The kpss-acc driver
-> > is only specific to v1. For this exact reason, limit all the additional
-> > bindings (clocks, clock-names, clock-output-names and #clock-cells) to
-> > v1 and also flag that these bindings should NOT be used for v2.
-> > 
-> > Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-> > Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
+On 27/06/2022 15:14, Stephan Gerhold wrote:
+> Since the SoC compatibles must be followed by the IP version compatible
+> (e.g. compatible = "qcom,msm8916-tsens", "qcom,tsens-v0_1";) it is
+> redundant to list all the SoC compatibles again in the if statement.
+> It will already match the IP-version compatible.
 > 
-> This is still not fixed and not tested. Since 4 versions of this
-> patchset (previously was part of other set).
+> The list has already become inconsistent since for example
+> "qcom,msm8939-tsens" is covered by the if statement but is not listed
+> there explicitly like the other SoCs.
 > 
-> I retract my review. Please test the bindings.
+> Simplify this by dropping the redundant SoC compatibles. ipq8064 and
+> msm8960 are still needed because they do not have an IP-version
+> compatible.
 > 
-> Best regards,
-> Krzysztof
+> Signed-off-by: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
 
-Thing is that I tested them and on my side I don't have such errors.
 
-I'm using the linux-next branch. Should I use something else that have
-newer schema files?
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Also on other patch there are some error reported that are unrelated to
-my change and that looks strange.
 
--- 
-	Ansuel
+Best regards,
+Krzysztof
