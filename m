@@ -2,65 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 35BC255F337
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jun 2022 04:11:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9A7DF55F4E5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jun 2022 06:13:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231199AbiF2CKG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Jun 2022 22:10:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58730 "EHLO
+        id S231142AbiF2EL4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Jun 2022 00:11:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59756 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231145AbiF2CJ6 (ORCPT
+        with ESMTP id S229967AbiF2ELz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Jun 2022 22:09:58 -0400
-Received: from mail-il1-f177.google.com (mail-il1-f177.google.com [209.85.166.177])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D490A2EA21;
-        Tue, 28 Jun 2022 19:09:56 -0700 (PDT)
-Received: by mail-il1-f177.google.com with SMTP id a16so9378431ilr.6;
-        Tue, 28 Jun 2022 19:09:56 -0700 (PDT)
+        Wed, 29 Jun 2022 00:11:55 -0400
+Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30CDE326D2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jun 2022 21:11:54 -0700 (PDT)
+Received: by mail-oi1-x22d.google.com with SMTP id l81so20015906oif.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jun 2022 21:11:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=MdFPqd732DS30jFNC43fudujZD0ohWzK0v59dUm/e+g=;
+        b=uT8x4i4bwxUgQuVFU7XLfQLJyui3EMpoCgaPELdMwaGhPYQge7itji9XlRIS67E+/+
+         633Wxci6LnX9u4naBYcNVP04lZZio2krFvkpzFrkiyyTX3sz36vUvGhM9xhFRyhQCUXy
+         sRiaeN+ucbZBk5QFpkOrvwnG/exUlb7yDuQpdRDVnQxH9mqQF0J2WJ06ntca2G0CTkkA
+         my/XM4HBYrNaO77i0IEuuF81WYYFCD2Zl9HdHCTRPx9I+33t/nmNxIyO5YRF6H0hWnYG
+         k0oM30JywHcpX5m8pQzKEFA3HVZZyDZDYhzSnJuo54XhYi08CGCPSd+SoBKZVLXtDNc+
+         z2qg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
-         :message-id;
-        bh=+E+IwrlF8yVm8FNfRDWHfRgRNf789XE4MP3pOdLVg04=;
-        b=gQXe4CFY2nT0W0nEh8W8yEUFHDYwMLoVpa0B5Il9W/+t9vq9mPKVd1qtHE2mfP8MXE
-         VH+ffus6s0aMxUEekFY0igYBwxUzaYDSca9PH8WU2FyBQDjpdYRTzwZAcV98WSBDr5/2
-         0NgjVkCE6eGHSRZNDpWsXuALco4goIF4XHqljUkH/ERvQLgh6GxaKvvdlASM1Da7WarL
-         L7QFCHIKeLWE9goLEdWnnMlYf5nxcN5j+fV+0IHf1w2QwL8zrCbgJ8dSd9HLOUoMugcT
-         BMF3gzfLePuu69kJ4phW2oue+b3AuijqpTX8QGC1VMM3IIP4CEWfuBDxEiZ0/qiQXPwr
-         Cs9w==
-X-Gm-Message-State: AJIora+SbXrBJNev0T2Y4BOw7ZKmVPTETSXVeupBDY2/XJCWfn6UNGXF
-        A20oAXD3GN4KxS3+DLSOfQ==
-X-Google-Smtp-Source: AGRyM1vOfFiGO+DjQDQmIuMMu0i0Dd2Uu/SlNrumhi5j6JrS/pttau9aR1iYNwMFpZXBciwfjZR7Kw==
-X-Received: by 2002:a05:6e02:198e:b0:2d9:5a65:6ce1 with SMTP id g14-20020a056e02198e00b002d95a656ce1mr645556ilf.50.1656468595932;
-        Tue, 28 Jun 2022 19:09:55 -0700 (PDT)
-Received: from robh.at.kernel.org ([64.188.179.253])
-        by smtp.gmail.com with ESMTPSA id z19-20020a05663822b300b00331f1f828adsm6789737jas.16.2022.06.28.19.09.54
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=MdFPqd732DS30jFNC43fudujZD0ohWzK0v59dUm/e+g=;
+        b=MPGRJ4x7H5FLpMZkfN9HvZ5l0hGDGTrt3uAbnzeW6w59CyXWuXgnuB8gZOAujYDxe2
+         ipRCxYnIPK9iTh+aKn8KElbBDLZsCKljPhK/XLeWlR9CCJz+LAU0cjYjqiVx0SpV1zP4
+         0VU8z9EBA9/W3bLKI5cUyzDrVc5ycJDR9qiD7SZvkmBNKq41RyWUYCbM255BBjx6U4dm
+         yIh0q0ElYXltdCyjYmYAXpoGpsDlEkvwyQXidVcUNknExZd5YmnfAa08IlJe5S3gUlna
+         ws1IloW/UWkkilKCXmvdEcsvPRpyDtHlPBGsTIEC3Jjq92WfW2qgZgXYdwQf7KZmrVPg
+         KFMw==
+X-Gm-Message-State: AJIora/53TdLj1Ya/5MkBr6Hz5uo1kW8+vLIY0A8h0M88JxGwGNTWagc
+        aIB7LppGy6k4pxiWFk1YWzrraA==
+X-Google-Smtp-Source: AGRyM1uVZfbtak6txUqQT6+yqXmqHE+bs9G3w8uy1R0KuBW7xTMCozDJGoHJI/sKL0l90zqysGDDRA==
+X-Received: by 2002:a05:6808:171c:b0:334:9342:63ef with SMTP id bc28-20020a056808171c00b00334934263efmr886955oib.63.1656475913546;
+        Tue, 28 Jun 2022 21:11:53 -0700 (PDT)
+Received: from ripper.. (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id p12-20020a9d4e0c000000b00616ec82b29bsm1578692otf.35.2022.06.28.21.11.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Jun 2022 19:09:55 -0700 (PDT)
-Received: (nullmailer pid 1403674 invoked by uid 1000);
-        Wed, 29 Jun 2022 02:09:39 -0000
-From:   Rob Herring <robh@kernel.org>
-To:     Christian Marangi <ansuelsmth@gmail.com>
+        Tue, 28 Jun 2022 21:11:52 -0700 (PDT)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc:     Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Jens Axboe <axboe@kernel.dk>, Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        linux-arm-msm@vger.kernel.org,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Stephen Boyd <sboyd@kernel.org>, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        Johan Hovold <johan@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-In-Reply-To: <20220628184137.21678-2-ansuelsmth@gmail.com>
-References: <20220628184137.21678-1-ansuelsmth@gmail.com> <20220628184137.21678-2-ansuelsmth@gmail.com>
-Subject: Re: [PATCH v3 1/4] dt-bindings: clock: Convert qcom,krait-cc to yaml
-Date:   Tue, 28 Jun 2022 20:09:39 -0600
-Message-Id: <1656468579.892280.1403673.nullmailer@robh.at.kernel.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
+Subject: [PATCH v3 0/5] arm64: dts: qcom: Introduce SC8280XP
+Date:   Tue, 28 Jun 2022 21:14:33 -0700
+Message-Id: <20220629041438.1352536-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.35.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -68,44 +74,36 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 28 Jun 2022 20:41:34 +0200, Christian Marangi wrote:
-> Convert qcom,krait-cc to yaml Documentation.
-> 
-> Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-> Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
-> Acked-by: Rob Herring <robh@kernel.org>
-> ---
->  .../bindings/clock/qcom,krait-cc.txt          | 34 -----------
->  .../bindings/clock/qcom,krait-cc.yaml         | 59 +++++++++++++++++++
->  2 files changed, 59 insertions(+), 34 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/clock/qcom,krait-cc.txt
->  create mode 100644 Documentation/devicetree/bindings/clock/qcom,krait-cc.yaml
-> 
+This series introduces the Qualcomm 8cx Gen 3 platform, with basic support for
+the CRD reference device and the SA8295P automotive development platform.
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+The Lenovo Thinkpad X13s dts was part of this series, but Johan reposed a
+polished version at [1], which I intend to merge on top of this series.
 
-yamllint warnings/errors:
+[1] https://lore.kernel.org/all/20220622132617.24604-1-johan+linaro@kernel.org/
 
-dtschema/dtc warnings/errors:
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/iio/temperature/adi,ltc2983.yaml: patternProperties:^thermistor@:properties:adi,excitation-current-nanoamp: '$ref' should not be valid under {'const': '$ref'}
-	hint: Standard unit suffix properties don't need a type $ref
-	from schema $id: http://devicetree.org/meta-schemas/core.yaml#
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/iio/temperature/adi,ltc2983.yaml: ignoring, error in schema: patternProperties: ^thermistor@: properties: adi,excitation-current-nanoamp
-Documentation/devicetree/bindings/iio/temperature/adi,ltc2983.example.dtb:0:0: /example-0/spi/ltc2983@0: failed to match any schema with compatible: ['adi,ltc2983']
+Bjorn Andersson (5):
+  dt-bindings: arm: qcom: Document additional sc8280xp devices
+  dt-bindings: mailbox: qcom-ipcc: Add NSP1 client
+  arm64: dts: qcom: add SC8280XP platform
+  arm64: dts: qcom: sc8280xp: Add reference device
+  arm64: dts: qcom: add SA8540P and ADP
 
-doc reference errors (make refcheckdocs):
+ .../devicetree/bindings/arm/qcom.yaml         |    2 +
+ arch/arm64/boot/dts/qcom/Makefile             |    2 +
+ arch/arm64/boot/dts/qcom/sa8295p-adp.dts      |  406 ++++
+ arch/arm64/boot/dts/qcom/sa8540p.dtsi         |  133 +
+ arch/arm64/boot/dts/qcom/sc8280xp-crd.dts     |  427 ++++
+ arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi  |  109 +
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi        | 2142 +++++++++++++++++
+ include/dt-bindings/mailbox/qcom-ipcc.h       |    1 +
+ 8 files changed, 3222 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/sa8295p-adp.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sa8540p.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/sc8280xp.dtsi
 
-See https://patchwork.ozlabs.org/patch/
-
-This check can fail if there are any dependencies. The base for a patch
-series is generally the most recent rc1.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit.
+-- 
+2.35.1
 
