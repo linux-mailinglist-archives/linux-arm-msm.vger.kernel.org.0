@@ -2,318 +2,340 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8C0A355FD33
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jun 2022 12:33:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4CFBE55FD63
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jun 2022 12:37:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233085AbiF2K3Z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Jun 2022 06:29:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39528 "EHLO
+        id S232071AbiF2KhE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Jun 2022 06:37:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45692 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231811AbiF2K3Y (ORCPT
+        with ESMTP id S230288AbiF2KhD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Jun 2022 06:29:24 -0400
-Received: from esa.hc3962-90.iphmx.com (esa.hc3962-90.iphmx.com [216.71.142.165])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C56C33D4A5;
-        Wed, 29 Jun 2022 03:29:22 -0700 (PDT)
+        Wed, 29 Jun 2022 06:37:03 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0C7B3E0D3;
+        Wed, 29 Jun 2022 03:37:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qccesdkim1;
-  t=1656498562; x=1657103362;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=9W8yjZZRwRuboWz57P1f3CS+hsf+nrDVf9Py8zSYCY4=;
-  b=HT72jQPv9QLGWWCicgBS3U+3qnMksgPBF8SNa/fcnz+SKnZdGnAaepMI
-   ixzukMkCxlEnLQr9fMLNT2Igh7mzfxk1F4YCR9vGqnQcbK+IN5esEySWz
-   WhJs7CzfWUxw3bbcbwgcIGgsr/iGI+ZBiJ4NkRLZOv9mGvXrDYhoUIa3E
-   U=;
-Received: from mail-dm6nam11lp2169.outbound.protection.outlook.com (HELO NAM11-DM6-obe.outbound.protection.outlook.com) ([104.47.57.169])
-  by ob1.hc3962-90.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Jun 2022 10:29:21 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=I+q1aLkU+hoe5xoEQ+6lFMQn2MWp4S98MRA1DXPYsvolEI4jGFduGv8FHThBZxUMWbVMx2skLk97JXpZQwjLRhDD6T7XndGxZRnTFgbw5tKpxlsY5HYren2kVAHZp64rVMzUILq3eWqbsPrlr9lTcgeGq6J+A/gBwbpuBbFaxXVYYfDr0EAe7XU1TgvTPtGAuqWFtp78jObVr0CAiS5D/aqqNxcUvcQfjwHfTbA9u4WfBbpu59pD55gCujAj1XRTomKShD3elwBvqx88aeMAoIoNXFDopek4bpYkRTCqID2pWmtZ9eXXzghthVIb4ZfFzcPlKkxx8rOdQO66MJGZ9A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=9W8yjZZRwRuboWz57P1f3CS+hsf+nrDVf9Py8zSYCY4=;
- b=gXHIZv33eD2y1R5AEY/oCHR9YlujpKJbNQopPQRHOPwQZWuH5tlqgK8n2++6Q7iqYWs2v7m5/KQmiEcMNf378tPqhjz58+9rtE6+Z95vRjbVr92SFIv+eyoV/quQ5ScAgdxrh9+zJNuCFRkC0X3v9LSmPIaGftzxl0Ty5GNEw60Pd90h7EGYx6kthuld4SuYH5tLFYCNlSv9fekilzi53n1ixbz/gUT8BEuQYSmkjVTeugXimciRMW6xM5IdgTKn0n/MGGr7k9PLllVR4++T8idb+L3sRF6FWik8MKSb0MTdOXAQW12FqqWdYSukOxPKzHf1JpBxSzcgxxX733nFiQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=quicinc.com; dmarc=pass action=none header.from=quicinc.com;
- dkim=pass header.d=quicinc.com; arc=none
-Received: from BL0PR02MB4564.namprd02.prod.outlook.com (2603:10b6:208:4d::13)
- by BYAPR02MB4040.namprd02.prod.outlook.com (2603:10b6:a02:f8::14) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5395.14; Wed, 29 Jun
- 2022 10:29:18 +0000
-Received: from BL0PR02MB4564.namprd02.prod.outlook.com
- ([fe80::74ed:8851:fc13:a4ad]) by BL0PR02MB4564.namprd02.prod.outlook.com
- ([fe80::74ed:8851:fc13:a4ad%5]) with mapi id 15.20.5373.018; Wed, 29 Jun 2022
- 10:29:18 +0000
-From:   "Vijaya Krishna Nivarthi (Temp) (QUIC)" <quic_vnivarth@quicinc.com>
-To:     Jiri Slaby <jirislaby@kernel.org>,
-        "Vijaya Krishna Nivarthi (Temp) (QUIC)" <quic_vnivarth@quicinc.com>,
-        "agross@kernel.org" <agross@kernel.org>,
-        "bjorn.andersson@linaro.org" <bjorn.andersson@linaro.org>,
-        "gregkh@linuxfoundation.org" <gregkh@linuxfoundation.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "linux-serial@vger.kernel.org" <linux-serial@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-CC:     "Mukesh Savaliya (QUIC)" <quic_msavaliy@quicinc.com>,
-        "dianders@chromium.org" <dianders@chromium.org>,
-        "mka@chromium.org" <mka@chromium.org>,
-        "swboyd@chromium.org" <swboyd@chromium.org>
-Subject: RE: [PATCH] tty: serial: qcom-geni-serial: Fix get_clk_div_rate()
- which otherwise could return a sub-optimal clock rate.
-Thread-Topic: [PATCH] tty: serial: qcom-geni-serial: Fix get_clk_div_rate()
- which otherwise could return a sub-optimal clock rate.
-Thread-Index: AQHYhZhque1aSuxCn0uPTvCaN8nem61cg+2AgAm2ImA=
-Date:   Wed, 29 Jun 2022 10:29:18 +0000
-Message-ID: <BL0PR02MB45642CE7A0D9A67366FDDE4FFABB9@BL0PR02MB4564.namprd02.prod.outlook.com>
-References: <1655834239-20812-1-git-send-email-quic_vnivarth@quicinc.com>
- <9284b3dd-3da5-1a52-1e92-a434cfe2e1e1@kernel.org>
-In-Reply-To: <9284b3dd-3da5-1a52-1e92-a434cfe2e1e1@kernel.org>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=quicinc.com;
-x-ms-exchange-messagesentrepresentingtype: 1
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 4d1bb3d4-5ccb-4d1d-f69f-08da59ba3900
-x-ms-traffictypediagnostic: BYAPR02MB4040:EE_
-x-ld-processed: 98e9ba89-e1a1-4e38-9007-8bdabc25de1d,ExtAddr
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: 2tgkVm/2ktm5NhW9ZzKVUEaW0AClMLQS/fsddjG+JspyaZv9teDpUV0bjkWr/hgxKlm79TijUI9qfNxDJQ3YnizBQqoAX52lFa1jCBqhX9PS7zCU5lvujz5+PQv20aSNXhxLLS33JOYgMJaHTayegGw2G4vXTRawJEktPN3sAs3e59tL8g/Z5ORZPyBsvl48mJMkvCbkJeA+mEfVeed/7JMyAUctfumaZngSQO+To5wBv2z7PMlQLPSK9orcQa827f8S2o0SU+hfao/DPPrRoJQLbNgBDrrWfHPUVvz6jna76zLSj08oBjl1FnerWoh6QE7ZN7idHboQxUy6fk6cB5GuKtoJAjE7M7dI9PzWYWnWpexULRTAsEBdbZ07YnQoFl1ubEvzsXZRovz00Sbuj7LtMj0B2oQS+lY/FeMDpUsi+zm96W0xVd1eLma9Np3xmIO4KeNzI/WlBjdZn5915pXZZtK2GTbTt5nVmUYuGlN1U2Hmbr7MvlBZm38kVUhB1J7xcYF98kHC8tGSIYIwDVzkD4phOXx32/hY3MG9MRGl+KcBq5gfflm7Q+pGU8RWrn0QesaVoRWD8f3cBdGdwzwJgwxTdCJfVs7+tv5EIhdBUovPmqbShjOGTAeY0kSaIsZ6mHly91YJb0CxEqDMLHNXx4M6ykJR9AFydsypokIuxFjHXNfxEXjMf/8hAvKeraehSrGyw4WipRDlzpph1W/hAEt/dQJUC6SFAa3S0vyXoaHp+JfTrR8gDVV++rvYlH+3AK/uWkJKwe2L7utIsjpUqhs7JYu8RySD4amqBsg=
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL0PR02MB4564.namprd02.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230016)(4636009)(39860400002)(346002)(366004)(396003)(376002)(136003)(54906003)(186003)(33656002)(83380400001)(38070700005)(41300700001)(55016003)(6506007)(7696005)(122000001)(38100700002)(53546011)(55236004)(9686003)(110136005)(71200400001)(26005)(316002)(478600001)(2906002)(8676002)(66556008)(66476007)(66446008)(4326008)(76116006)(66946007)(64756008)(8936002)(86362001)(52536014)(7416002)(5660300002);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?Sm41Ylo5bEF5cEJvQ29Xb0VmMG1vVFdNNjhjTlhJQjZDN2s3bGRVeVh2TFhv?=
- =?utf-8?B?NW1kNm1vejhTSGR6OThTaEJRRHBSUUdVYjR2Lzlvb0t2M2dJNytudUIzNytw?=
- =?utf-8?B?amNRbE5XeForYXdzUGJtSExIMzl5V3JRNWE5dnNPZWoxZzNoRUxtZXdmcG1C?=
- =?utf-8?B?VUMzREJOMmYzVktLZTZQSWlJU0pJTyt4TXN4K2x1aUh0M2tYM29JN0xhUFpB?=
- =?utf-8?B?SDhSenRpT1haZ3N6cllqNWZFY01tellHQ3YrTkZnNUJjRFRMQzNZcUdQTzVF?=
- =?utf-8?B?K2lGS2FwWE9RSXhvdEdrZEJRMjRUallURjNEOUZTeGgrL1JYYkZtenhLYi93?=
- =?utf-8?B?RmFMVjlOZkpXbmR0Y093aUlxOUJzYzNvWmlZZzJqZVZjM3p0UVpzUjc0UVpa?=
- =?utf-8?B?SVYrYS9uQ2JxWFg2ZlJGTEx3R3FHOEg0Rkk0TzNnOTQxSXdyOFBwcWs3Uy9I?=
- =?utf-8?B?WnZmT3E2T1pJYTQ3SmtTZ1o4RUdCdTB1VzZQNEZTNWQwdmtCTTZsQURSVFQ3?=
- =?utf-8?B?WEVDVjZ5QS8zaDlkcTNHVDMxZit4eWRzbjkxcWRDa1BiQTJ0TTF3Y0NYZStQ?=
- =?utf-8?B?TW5uTHhzNGpSS29FOEtQWk1PS2ZCcGw4MURhMWFpQjc2MG56a09WQ0ltczVu?=
- =?utf-8?B?UEIvVndwbHpHWk0zT1VGRUpEakFCRUYyUFFlc2pOMlJUYy9CdzZPVnYrYldL?=
- =?utf-8?B?aHdockx5bnVscUtaQW1Ubm9VS0RHQ0pZdEhNdnpiLzJCK2Q3eGtYTkVBeDBv?=
- =?utf-8?B?V0NMNjZicDZTejJiL1ZtSjIvb1ZLNGhOaDhxbWhtZU9HRnFma01YNTVVOGlS?=
- =?utf-8?B?VDhNRTR0MHE0R000Z3RZWDZsaDdLVktReHVsVFRYN1BCWFpHSklLNzdoalcz?=
- =?utf-8?B?bWJSd0VaSEg0d3ZBZFhkLy9UTGdBdVhIbjVyNFBKRTZJUzF0dVlrSWZBdWxw?=
- =?utf-8?B?OUZmYVZWMGprNU1LeGtLSjFOVDhYNVNhVmJpdVg2dFhQaWJuaUxOWDFNM3o5?=
- =?utf-8?B?dmN1cS9RN3ZXcFVsdXFlOFVDVnF2L0xkWlBDdmFMTy9lRDN0WWFvZ2Q0bk5i?=
- =?utf-8?B?andQdysrZ1U5RlNJMVlVRGhDaWwwOGdDdWR3UzhxMnNoT1pqc29POE1uU0xD?=
- =?utf-8?B?azZnT2FMZ0hyeSt4aWxxZk5venlrc3FDWnh0UGRTSm5LTWQxeHFRTnY4UGx0?=
- =?utf-8?B?Wm1YN2RMLzhIb2xWVWFPRTc1dytzZ1hDVWh2b3ZFR1YyejB0bjcvb2laR2hV?=
- =?utf-8?B?MGJOVTRtbHZYeEh0RGNnc3VtZDQxNFliOHYxR3ZYWEU0c243Q2F4QnBJcWlV?=
- =?utf-8?B?ajZvNHBvdnd5SFJoN092azBpamg3aGVFczJYYUpOZUprM2dndE9rU3FReldq?=
- =?utf-8?B?Rjk4Wm9rUXhFRmhEUUJacTgzMmM5Zlgyck9pcG5DVS9pQzVmbWtIOUNGKzNV?=
- =?utf-8?B?S09CbzI2RXRVU2U5RldjZjBDZE5rOHg4ZXdZRXZocUwyWmlmNWdlYUZRQU1k?=
- =?utf-8?B?cVJIUnVmYzhBOGpzRVRXVjRmNyt3ay9uS3VFczZ4Z3FZRW1mMmszK1Y2cXhI?=
- =?utf-8?B?ZDJwQUFTbDBjU1czVjZVRC9YT21zOGtKcXE1dlZkRVNBZjBhZzNVc0QwNWtY?=
- =?utf-8?B?RU9HdUNyUmJEZ3BSeHFSZkgwSWhQaXJsanQrL1VGaG1iV0V2b3pjdjkxUHlB?=
- =?utf-8?B?TVAvblgxemovaVpiWG5OTE5qd085VzNSUWJNMUdwaUJubElCd0lFaDdsTHo0?=
- =?utf-8?B?S1YrdXYvblhGd252bGU1UnkwNFF0UDF1M3kyOFBEdTZHVGNsY1ljRHJrYTZ5?=
- =?utf-8?B?NmUycGhJUWF3UURjdFBUdFpqdWE2K05Fd2FxRUJuUFhZcU9QaDFPdW9HWkhy?=
- =?utf-8?B?a1VNRW9QOUV4bGNCYnhkQnZudXpWRWIvTHpDQ00yUUJpcXFmOU5sWXBiQTlN?=
- =?utf-8?B?TDVtVU1vZmI1eHNYOVUvTDIxTWl6ZDBCZkdLZnNGY0xqRlN6R2dWeEttMHhJ?=
- =?utf-8?B?VVd6NjluODdXT1pqL3U5YnhEa3YxSzJUeE1QMko2cjAwWFpRbjVkQm5KZzRk?=
- =?utf-8?B?UXBHei9DSks2bzArWVpXUE40M2ZaSDFUWlg0Q0lqNy80V3ViNVd3TFJtVWJw?=
- =?utf-8?Q?KfGAx57CTThaoR7uoUiMpR/Aj?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1656499022; x=1688035022;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=LQeILLA1BXJ6+grFLNHKzTn5xHEkC56L7kE5l4wvGnw=;
+  b=IUJe+oeCFlm/CaxK4DplYTY89/bmU585EgLdOU+STk03spqXJ0jzmsYk
+   owHRSXePa0qISxoE4aghSotyNFbzDpx4ANcm/bRGq+jjojOcp/VA7vY6c
+   lhBh7eb5OXxdaufp80EV6sK5bI/Lx0j8TP0AxdcPA0K5NJGHhr6Qoz1ur
+   4=;
+Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
+  by alexa-out.qualcomm.com with ESMTP; 29 Jun 2022 03:37:02 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Jun 2022 03:37:01 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Wed, 29 Jun 2022 03:37:01 -0700
+Received: from [10.206.17.189] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Wed, 29 Jun
+ 2022 03:36:57 -0700
+Message-ID: <4112b5af-15de-007c-fcc2-c31ce9f9e426@quicinc.com>
+Date:   Wed, 29 Jun 2022 16:06:54 +0530
 MIME-Version: 1.0
-X-OriginatorOrg: quicinc.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: BL0PR02MB4564.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4d1bb3d4-5ccb-4d1d-f69f-08da59ba3900
-X-MS-Exchange-CrossTenant-originalarrivaltime: 29 Jun 2022 10:29:18.1187
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 98e9ba89-e1a1-4e38-9007-8bdabc25de1d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 2nvjnZlQ+YxenSmHfHji9bSFf2xazaKDIlNuEQKOZJ62qB4/qHILI9MUTTU12gKVZE+DkcXB0kZCdYxm/NtTdgnVxfmsPNwpn0Y5+FQ6mfY=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BYAPR02MB4040
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.0
+Subject: Re: [PATCH V15 6/9] mfd: pm8008: Use i2c_new_dummy_device() API
+Content-Language: en-US
+To:     Lee Jones <lee.jones@linaro.org>
+CC:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <swboyd@chromium.org>,
+        <quic_collinsd@quicinc.com>, <quic_subbaram@quicinc.com>,
+        <quic_jprakash@quicinc.com>
+References: <1655200111-18357-1-git-send-email-quic_c_skakit@quicinc.com>
+ <1655200111-18357-7-git-send-email-quic_c_skakit@quicinc.com>
+ <YquZRcuRCrdF+Q1z@google.com>
+ <eccbb030-97f7-3a6c-958e-05adcdca6210@quicinc.com>
+ <YrAt6dq6ty9p8d05@google.com>
+ <a11732d6-a9b1-7ead-e89a-564a57a7192b@quicinc.com>
+ <503f1a8b-eadb-d3a6-6e24-d60437f778b6@quicinc.com>
+ <YrlfF+DMlGFsVBdk@google.com>
+ <a1c6e3c9-962d-411e-7fbf-9e760e9dc8c0@quicinc.com>
+ <Yrqw1YRyCGG+d4GL@google.com>
+From:   "Satya Priya Kakitapalli (Temp)" <quic_c_skakit@quicinc.com>
+In-Reply-To: <Yrqw1YRyCGG+d4GL@google.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_PASS,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-SGkNCg0KPiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPiBGcm9tOiBKaXJpIFNsYWJ5IDxq
-aXJpc2xhYnlAa2VybmVsLm9yZz4NCj4gU2VudDogVGh1cnNkYXksIEp1bmUgMjMsIDIwMjIgMTE6
-MzggQU0NCj4gVG86IFZpamF5YSBLcmlzaG5hIE5pdmFydGhpIChUZW1wKSAoUVVJQykgPHF1aWNf
-dm5pdmFydGhAcXVpY2luYy5jb20+Ow0KPiBhZ3Jvc3NAa2VybmVsLm9yZzsgYmpvcm4uYW5kZXJz
-c29uQGxpbmFyby5vcmc7DQo+IGdyZWdraEBsaW51eGZvdW5kYXRpb24ub3JnOyBsaW51eC1hcm0t
-bXNtQHZnZXIua2VybmVsLm9yZzsgbGludXgtDQo+IHNlcmlhbEB2Z2VyLmtlcm5lbC5vcmc7IGxp
-bnV4LWtlcm5lbEB2Z2VyLmtlcm5lbC5vcmcNCj4gQ2M6IE11a2VzaCBTYXZhbGl5YSAoUVVJQykg
-PHF1aWNfbXNhdmFsaXlAcXVpY2luYy5jb20+Ow0KPiBkaWFuZGVyc0BjaHJvbWl1bS5vcmc7IG1r
-YUBjaHJvbWl1bS5vcmc7IHN3Ym95ZEBjaHJvbWl1bS5vcmcNCj4gU3ViamVjdDogUmU6IFtQQVRD
-SF0gdHR5OiBzZXJpYWw6IHFjb20tZ2VuaS1zZXJpYWw6IEZpeCBnZXRfY2xrX2Rpdl9yYXRlKCkN
-Cj4gd2hpY2ggb3RoZXJ3aXNlIGNvdWxkIHJldHVybiBhIHN1Yi1vcHRpbWFsIGNsb2NrIHJhdGUu
-DQo+IA0KPiBXQVJOSU5HOiBUaGlzIGVtYWlsIG9yaWdpbmF0ZWQgZnJvbSBvdXRzaWRlIG9mIFF1
-YWxjb21tLiBQbGVhc2UgYmUgd2FyeQ0KPiBvZiBhbnkgbGlua3Mgb3IgYXR0YWNobWVudHMsIGFu
-ZCBkbyBub3QgZW5hYmxlIG1hY3Jvcy4NCj4gDQo+IE9uIDIxLiAwNi4gMjIsIDE5OjU3LCBWaWph
-eWEgS3Jpc2huYSBOaXZhcnRoaSB3cm90ZToNCj4gPiBJbiB0aGUgbG9naWMgYXJvdW5kIGNhbGwg
-dG8gY2xrX3JvdW5kX3JhdGUsIGZvciBzb21lIGNvcm5lcg0KPiA+IGNvbmRpdGlvbnMsDQo+ID4g
-Z2V0X2Nsa19kaXZfcmF0ZSgpIGNvdWxkIHJldHVybiBhbiBzdWItb3B0aW1hbCBjbG9jayByYXRl
-LiBBbHNvLCBpZiBhbg0KPiA+IGV4YWN0IGNsb2NrIHJhdGUgd2FzIG5vdCBmb3VuZCBsb3dlc3Qg
-Y2xvY2sgd2FzIGJlaW5nIHJldHVybmVkLg0KPiA+DQo+ID4gU2VhcmNoIGZvciBzdWl0YWJsZSBj
-bG9jayByYXRlIGluIDIgc3RlcHMNCj4gPiBhKSBleGFjdCBtYXRjaCBvciB3aXRoaW4gMiUgdG9s
-ZXJhbmNlDQo+ID4gYikgd2l0aGluIDUlIHRvbGVyYW5jZQ0KPiA+IFRoaXMgYWxzbyB0YWtlcyBj
-YXJlIG9mIGNvcm5lciBjb25kaXRpb25zLg0KPiA+DQo+ID4gRml4ZXM6IGMyMTk0YmM5OTlkNCAo
-InR0eTogc2VyaWFsOiBxY29tLWdlbmktc2VyaWFsOiBSZW1vdmUgdWFydA0KPiA+IGZyZXF1ZW5j
-eSB0YWJsZS4gSW5zdGVhZCwgZmluZCBzdWl0YWJsZSBmcmVxdWVuY3kgd2l0aCBjYWxsIHRvDQo+
-ID4gY2xrX3JvdW5kX3JhdGUiKQ0KPiANCj4gSG1tLCBwcm92aWRlZCB0aGUgY29tcGxleGl0eSwg
-d2FzIHRoaXMgd29ydGggaXQgLS0gaG93IG1hbnkgdHlwb3MvYnVncw0KPiBjYW4gYmUgaW4gc3Vj
-aCBjb21wbGV4IGFuZCB0d2lzdGVkIGZ1bmN0aW9ucz8NCj4gDQo+IFRoZSBvcmlnaW5hbCBpbnRl
-bnRpb24gd2FzIG5vdCB0byB0b3VjaCB0aGUgZHJpdmVyIHdoZW4gbmV3IEhXIGFycml2ZXMuDQo+
-IE5vdyBpdCBsb29rcyBsaWtlIHlvdSdkIGJlIGNoYXNpbmcgY29ybmVyIGNhc2VzIGxpa2UgdGhl
-c2UgZm9yIHF1aXRlIHNvbWUNCj4gcmVsZWFzZXMuDQo+IA0KPiBTbyBnb2luZyBiYWNrIGluIHRp
-bWUsIHJlY29uc2lkZXJpbmcgdGhlIHdob2xlIHRoaW5nOiBob3cgb2Z0ZW4gZG8geW91DQo+IGV4
-cGVjdCB0aGUgb3JpZ2luYWwgcmF0ZSB0YWJsZSB3b3VsZCBuZWVkIHRvIGJlIHVwZGF0ZWQ/DQo+
-IA0KPiBOQUNLDQo+IA0KPiBpbiBhbnkgd2F5IC0tIHNlZSBteSBjb21tZW50IGJlbG93IC0tIGlm
-IHlvdSByZWFsbHkgd2FudCB0byBnbyB0aGlzIHBhdGgsDQo+IHlvdSdkIG5lZWQgdG8gc3BsaXQg
-dGhpcy4NCj4gDQoNCkkgc2ltcGxpZmllZCB0aGUgcGF0Y2ggdG8gYWRkcmVzcyBvdGhlciBmZWVk
-YmFja3MgdG9vIGFuZCBJIGJlbGlldmUgaXRzIGxlc3MgY29tcGxleCBhbmQgbW9yZSByZWFkYWJs
-ZSBub3cuDQpUaGUgZnVuY3Rpb24gYXJlIGFib3V0IDUwIExPQyBhbmQgMjAgTE9DICh3aXRob3V0
-IGNvbW1lbnRzKSBhbmQgc3BsaXR0aW5nIHRoZW0gZnVydGhlciBpcyBwb3NzaWJseSBkaWZmaWN1
-bHQ/DQpUaGFuayB5b3UuDQoNCg0KPiA+IFNpZ25lZC1vZmYtYnk6IFZpamF5YSBLcmlzaG5hIE5p
-dmFydGhpIDxxdWljX3ZuaXZhcnRoQHF1aWNpbmMuY29tPg0KPiA+IC0tLQ0KPiA+ICAgZHJpdmVy
-cy90dHkvc2VyaWFsL3Fjb21fZ2VuaV9zZXJpYWwuYyB8IDEzNA0KPiArKysrKysrKysrKysrKysr
-KysrKysrKysrKy0tLS0tLS0tDQo+ID4gICAxIGZpbGUgY2hhbmdlZCwgMTAyIGluc2VydGlvbnMo
-KyksIDMyIGRlbGV0aW9ucygtKQ0KPiA+DQo+ID4gZGlmZiAtLWdpdCBhL2RyaXZlcnMvdHR5L3Nl
-cmlhbC9xY29tX2dlbmlfc2VyaWFsLmMNCj4gPiBiL2RyaXZlcnMvdHR5L3NlcmlhbC9xY29tX2dl
-bmlfc2VyaWFsLmMNCj4gPiBpbmRleCAyZTIzYjY1Li44ZDI0N2MxIDEwMDY0NA0KPiA+IC0tLSBh
-L2RyaXZlcnMvdHR5L3NlcmlhbC9xY29tX2dlbmlfc2VyaWFsLmMNCj4gPiArKysgYi9kcml2ZXJz
-L3R0eS9zZXJpYWwvcWNvbV9nZW5pX3NlcmlhbC5jDQo+ID4gQEAgLTk0Myw1MiArOTQzLDEyMyBA
-QCBzdGF0aWMgaW50IHFjb21fZ2VuaV9zZXJpYWxfc3RhcnR1cChzdHJ1Y3QNCj4gdWFydF9wb3J0
-ICp1cG9ydCkNCj4gPiAgICAgICByZXR1cm4gMDsNCj4gPiAgIH0NCj4gPg0KPiA+IC1zdGF0aWMg
-dW5zaWduZWQgbG9uZyBnZXRfY2xrX2Rpdl9yYXRlKHN0cnVjdCBjbGsgKmNsaywgdW5zaWduZWQg
-aW50IGJhdWQsDQo+ID4gLSAgICAgICAgICAgICAgICAgICAgIHVuc2lnbmVkIGludCBzYW1wbGlu
-Z19yYXRlLCB1bnNpZ25lZCBpbnQgKmNsa19kaXYpDQo+ID4gK3N0YXRpYyB1bnNpZ25lZCBsb25n
-IGZpbmRfY2xrX3JhdGVfaW5fdG9sKHN0cnVjdCBjbGsgKmNsaywgdW5zaWduZWQgaW50DQo+IGRl
-c2lyZWRfY2xrLA0KPiA+ICsgICAgICAgICAgICAgICAgICAgICB1bnNpZ25lZCBpbnQgKmNsa19k
-aXYsIHVuc2lnbmVkIGludCBwZXJjZW50X3RvbCwNCj4gPiArYm9vbCAqZXhhY3RfbWF0Y2gpDQo+
-ID4gICB7DQo+ID4gKyAgICAgdW5zaWduZWQgbG9uZyBmcmVxOw0KPiA+ICsgICAgIHVuc2lnbmVk
-IGxvbmcgZGl2LCBtYXhkaXYsIG5ld19kaXY7DQo+ID4gKyAgICAgdW5zaWduZWQgbG9uZyBsb25n
-IG11bHQ7DQo+ID4gICAgICAgdW5zaWduZWQgbG9uZyBzZXJfY2xrOw0KPiA+IC0gICAgIHVuc2ln
-bmVkIGxvbmcgZGVzaXJlZF9jbGs7DQo+ID4gLSAgICAgdW5zaWduZWQgbG9uZyBmcmVxLCBwcmV2
-Ow0KPiA+IC0gICAgIHVuc2lnbmVkIGxvbmcgZGl2LCBtYXhkaXY7DQo+ID4gLSAgICAgaW50NjRf
-dCBtdWx0Ow0KPiA+IC0NCj4gPiAtICAgICBkZXNpcmVkX2NsayA9IGJhdWQgKiBzYW1wbGluZ19y
-YXRlOw0KPiA+IC0gICAgIGlmICghZGVzaXJlZF9jbGspIHsNCj4gPiAtICAgICAgICAgICAgIHBy
-X2VycigiJXM6IEludmFsaWQgZnJlcXVlbmN5XG4iLCBfX2Z1bmNfXyk7DQo+ID4gLSAgICAgICAg
-ICAgICByZXR1cm4gMDsNCj4gPiAtICAgICB9DQo+ID4gKyAgICAgdW5zaWduZWQgbG9uZyB0ZXN0
-X2ZyZXEsIG9mZnNldCwgbmV3X2ZyZXE7DQo+ID4NCj4gPiArICAgICBzZXJfY2xrID0gMDsNCj4g
-PiAgICAgICBtYXhkaXYgPSBDTEtfRElWX01TSyA+PiBDTEtfRElWX1NIRlQ7DQo+ID4gLSAgICAg
-cHJldiA9IDA7DQo+ID4gKyAgICAgZGl2ID0gMTsNCj4gPg0KPiA+IC0gICAgIGZvciAoZGl2ID0g
-MTsgZGl2IDw9IG1heGRpdjsgZGl2KyspIHsNCj4gPiAtICAgICAgICAgICAgIG11bHQgPSBkaXYg
-KiBkZXNpcmVkX2NsazsNCj4gPiAtICAgICAgICAgICAgIGlmIChtdWx0ID4gVUxPTkdfTUFYKQ0K
-PiA+ICsgICAgIHdoaWxlIChkaXYgPD0gbWF4ZGl2KSB7DQo+ID4gKyAgICAgICAgICAgICBtdWx0
-ID0gKHVuc2lnbmVkIGxvbmcgbG9uZylkaXYgKiBkZXNpcmVkX2NsazsNCj4gPiArICAgICAgICAg
-ICAgIGlmIChtdWx0ICE9ICh1bnNpZ25lZCBsb25nKW11bHQpDQo+ID4gICAgICAgICAgICAgICAg
-ICAgICAgIGJyZWFrOw0KPiA+DQo+ID4gLSAgICAgICAgICAgICBmcmVxID0gY2xrX3JvdW5kX3Jh
-dGUoY2xrLCAodW5zaWduZWQgbG9uZyltdWx0KTsNCj4gPiAtICAgICAgICAgICAgIGlmICghKGZy
-ZXEgJSBkZXNpcmVkX2NsaykpIHsNCj4gPiAtICAgICAgICAgICAgICAgICAgICAgc2VyX2NsayA9
-IGZyZXE7DQo+ID4gLSAgICAgICAgICAgICAgICAgICAgIGJyZWFrOw0KPiA+ICsgICAgICAgICAg
-ICAgLyoNCj4gPiArICAgICAgICAgICAgICAqIExvb3AgcmVxdWVzdGluZyBhIGZyZXEgd2l0aGlu
-IHRvbGVyYW5jZSBhbmQgcG9zc2libHkgZXhhY3QgZnJlcS4NCj4gPiArICAgICAgICAgICAgICAq
-DQo+ID4gKyAgICAgICAgICAgICAgKiBXZSdsbCBrZWVwIHRyYWNrIG9mIHRoZSBsb3dlc3QgZnJl
-cSBpbmV4YWN0IG1hdGNoIHdlIGZvdW5kDQo+ID4gKyAgICAgICAgICAgICAgKiBidXQgYWx3YXlz
-IHRyeSB0byBmaW5kIGEgcGVyZmVjdCBtYXRjaC4gTk9URTogdGhpcyBhbGdvcml0aG0NCj4gPiAr
-ICAgICAgICAgICAgICAqIGNvdWxkIG1pc3MgYSBzbGlnaHRseSBiZXR0ZXIgZnJlcSBpZiB0aGVy
-ZSdzIG1vcmUgdGhhbiBvbmUNCj4gPiArICAgICAgICAgICAgICAqIGZyZXEgYmV0d2VlbiAoZnJl
-cSAtIG9mZnNldCkgYW5kIChmcmVxKSBidXQgKGZyZXEpIGNhbid0IGJlIG1hZGUNCj4gPiArICAg
-ICAgICAgICAgICAqIGV4YWN0bHksIGJ1dCB0aGF0J3MgT0suDQo+ID4gKyAgICAgICAgICAgICAg
-Kg0KPiA+ICsgICAgICAgICAgICAgICogVGhpcyBhYnNvbHV0ZWx5IHJlbGllcyBvbiB0aGUgZmFj
-dCB0aGF0IHRoZSBRdWFsY29tbSBjbG9jaw0KPiA+ICsgICAgICAgICAgICAgICogZHJpdmVyIGFs
-d2F5cyByb3VuZHMgdXAuDQo+ID4gKyAgICAgICAgICAgICAgKiBXZSBtYWtlIHVzZSBvZiBleGFj
-dF9tYXRjaCBhcyBhbiBJL08gcGFyYW0uDQo+ID4gKyAgICAgICAgICAgICAgKi8NCj4gPiArDQo+
-ID4gKyAgICAgICAgICAgICAvKiBsb29rIG9ubHkgZm9yIGV4YWN0IG1hdGNoIGlmIHdpdGhpbiB0
-b2xlcmFuY2UgaXMgYWxyZWFkeSBmb3VuZCAqLw0KPiA+ICsgICAgICAgICAgICAgaWYgKHNlcl9j
-bGspDQo+ID4gKyAgICAgICAgICAgICAgICAgICAgIG9mZnNldCA9IDA7DQo+ID4gKyAgICAgICAg
-ICAgICBlbHNlDQo+ID4gKyAgICAgICAgICAgICAgICAgICAgIG9mZnNldCA9IChtdWx0ICogcGVy
-Y2VudF90b2wpIC8gMTAwOw0KPiA+ICsNCj4gPiArICAgICAgICAgICAgIHRlc3RfZnJlcSA9IG11
-bHQgLSBvZmZzZXQ7DQo+ID4gKyAgICAgICAgICAgICBmcmVxID0gY2xrX3JvdW5kX3JhdGUoY2xr
-LCB0ZXN0X2ZyZXEpOw0KPiA+ICsNCj4gPiArICAgICAgICAgICAgIC8qDQo+ID4gKyAgICAgICAg
-ICAgICAgKiBBIGRlYWQtb24gZnJlcSBpcyBhbiBpbnN0YS13aW4sIGxvb2sgZm9yIGl0IG9ubHkg
-aW4gMXN0IHJ1bg0KPiA+ICsgICAgICAgICAgICAgICovDQo+ID4gKyAgICAgICAgICAgICBpZiAo
-KmV4YWN0X21hdGNoKSB7DQo+ID4gKyAgICAgICAgICAgICAgICAgICAgIGlmICghKGZyZXEgJSBk
-ZXNpcmVkX2NsaykpIHsNCj4gPiArICAgICAgICAgICAgICAgICAgICAgICAgICAgICBzZXJfY2xr
-ID0gZnJlcTsNCj4gPiArICAgICAgICAgICAgICAgICAgICAgICAgICAgICAqY2xrX2RpdiA9IGZy
-ZXEgLyBkZXNpcmVkX2NsazsNCj4gPiArICAgICAgICAgICAgICAgICAgICAgICAgICAgICByZXR1
-cm4gc2VyX2NsazsNCj4gPiArICAgICAgICAgICAgICAgICAgICAgfQ0KPiA+ICsgICAgICAgICAg
-ICAgfQ0KPiA+ICsNCj4gPiArICAgICAgICAgICAgIGlmICghc2VyX2Nsaykgew0KPiA+ICsgICAg
-ICAgICAgICAgICAgICAgICBuZXdfZGl2ID0gRElWX1JPVU5EX0NMT1NFU1QoZnJlcSwgZGVzaXJl
-ZF9jbGspOw0KPiA+ICsgICAgICAgICAgICAgICAgICAgICBuZXdfZnJlcSA9IG5ld19kaXYgKiBk
-ZXNpcmVkX2NsazsNCj4gPiArICAgICAgICAgICAgICAgICAgICAgb2Zmc2V0ID0gKG5ld19mcmVx
-ICogcGVyY2VudF90b2wpIC8gMTAwOw0KPiA+ICsNCj4gPiArICAgICAgICAgICAgICAgICAgICAg
-aWYgKG5ld19mcmVxIC0gb2Zmc2V0IDw9IGZyZXEgJiYgZnJlcSA8PSBuZXdfZnJlcSArIG9mZnNl
-dCkgew0KPiA+ICsgICAgICAgICAgICAgICAgICAgICAgICAgICAgIC8qIFNhdmUgdGhlIGZpcnN0
-IChsb3dlc3QgZnJlcSkgd2l0aGluIHRvbGVyYW5jZSAqLw0KPiA+ICsgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgIHNlcl9jbGsgPSBmcmVxOw0KPiA+ICsgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICpjbGtfZGl2ID0gbmV3X2RpdjsNCj4gPiArICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAvKiBubyBtb3JlIHNlYXJjaCBmb3IgZXhhY3QgbWF0Y2ggcmVxdWlyZWQgaW4gMm5kIHJ1
-biAqLw0KPiA+ICsgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGlmICghKCpleGFjdF9tYXRj
-aCkpDQo+ID4gKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBicmVhazsNCj4g
-PiArICAgICAgICAgICAgICAgICAgICAgfQ0KPiA+ICAgICAgICAgICAgICAgfQ0KPiA+DQo+ID4g
-LSAgICAgICAgICAgICBpZiAoIXByZXYpDQo+ID4gLSAgICAgICAgICAgICAgICAgICAgIHNlcl9j
-bGsgPSBmcmVxOw0KPiA+IC0gICAgICAgICAgICAgZWxzZSBpZiAocHJldiA9PSBmcmVxKQ0KPiA+
-ICsgICAgICAgICAgICAgZGl2ID0gZnJlcSAvIGRlc2lyZWRfY2xrICsgMTsNCj4gPiArDQo+ID4g
-KyAgICAgICAgICAgICAvKg0KPiA+ICsgICAgICAgICAgICAgICogT25seSB0aW1lIGNsb2NrIGZy
-YW1ld29yayBkb2Vzbid0IHJvdW5kIHVwIGlzIGlmDQo+ID4gKyAgICAgICAgICAgICAgKiB3ZSdy
-ZSBwYXN0IHRoZSBtYXggY2xvY2sgcmF0ZS4gV2UncmUgZG9uZSBzZWFyY2hpbmcNCj4gPiArICAg
-ICAgICAgICAgICAqIGlmIHRoYXQncyB0aGUgY2FzZS4NCj4gPiArICAgICAgICAgICAgICAqLw0K
-PiA+ICsgICAgICAgICAgICAgaWYgKGZyZXEgPCB0ZXN0X2ZyZXEpDQo+ID4gICAgICAgICAgICAg
-ICAgICAgICAgIGJyZWFrOw0KPiA+ICsgICAgIH0NCj4gPiArDQo+ID4gKyAgICAgKmV4YWN0X21h
-dGNoID0gZmFsc2U7DQo+ID4gKyAgICAgcmV0dXJuIHNlcl9jbGs7DQo+ID4gK30NCj4gPiArDQo+
-ID4gK3N0YXRpYyB1bnNpZ25lZCBsb25nIGdldF9jbGtfZGl2X3JhdGUoc3RydWN0IGNsayAqY2xr
-LCB1bnNpZ25lZCBpbnQgYmF1ZCwNCj4gPiArICAgICAgICAgICAgICAgICAgICAgdW5zaWduZWQg
-aW50IHNhbXBsaW5nX3JhdGUsIHVuc2lnbmVkIGludA0KPiA+ICsqY2xrX2RpdikNCj4gDQo+IFRo
-aXMgY2Fubm90IGJlIHJldmlld2VkIHByb3Blcmx5LiBDYXJlIHRvIHNwbGl0IHRoaXMgaW50byAy
-LTMgcGF0Y2hlcz8NCj4gTG9va3MgYXQgdGhlIG5lc3RpbmcgYW5kIHRoZSBjb21wbGV4aXR5LCBp
-dCBhbHNvIGxvb2tzIGxpa2UgeW91IG5lZWQgbW9yZQ0KPiBoZWxwZXIgZnVuY3Rpb25zLg0KPiAN
-Cj4gPiArew0KPiA+ICsgICAgIHVuc2lnbmVkIGxvbmcgc2VyX2NsazsNCj4gPiArICAgICB1bnNp
-Z25lZCBsb25nIGRlc2lyZWRfY2xrOw0KPiA+ICsgICAgIHVuc2lnbmVkIGxvbmcgZGVzaXJlZF90
-b2w7DQo+ID4gKyAgICAgYm9vbCBleGFjdF9tYXRjaDsNCj4gPg0KPiA+IC0gICAgICAgICAgICAg
-cHJldiA9IGZyZXE7DQo+ID4gKyAgICAgZGVzaXJlZF9jbGsgPSBiYXVkICogc2FtcGxpbmdfcmF0
-ZTsNCj4gPiArICAgICBpZiAoIWRlc2lyZWRfY2xrKSB7DQo+ID4gKyAgICAgICAgICAgICBwcl9l
-cnIoIiVzOiBJbnZhbGlkIGZyZXF1ZW5jeVxuIiwgX19mdW5jX18pOw0KPiA+ICsgICAgICAgICAg
-ICAgcmV0dXJuIDA7DQo+ID4gICAgICAgfQ0KPiA+DQo+ID4gLSAgICAgaWYgKCFzZXJfY2xrKSB7
-DQo+ID4gLSAgICAgICAgICAgICBwcl9lcnIoIiVzOiBDYW4ndCBmaW5kIG1hdGNoaW5nIERGUyBl
-bnRyeSBmb3IgYmF1ZCAlZFxuIiwNCj4gPiAtICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIF9fZnVuY19fLCBiYXVkKTsNCj4gPiArICAg
-ICAvKiB0cnkgdG8gZmluZCBleGFjdCBjbG9jayByYXRlIG9yIHdpdGhpbiAyJSB0b2xlcmFuY2Ug
-Ki8NCj4gPiArICAgICBzZXJfY2xrID0gMDsNCj4gPiArICAgICBleGFjdF9tYXRjaCA9IHRydWU7
-DQo+ID4gKyAgICAgZGVzaXJlZF90b2wgPSAyOw0KPiA+ICsNCj4gPiArICAgICBzZXJfY2xrID0g
-ZmluZF9jbGtfcmF0ZV9pbl90b2woY2xrLCBkZXNpcmVkX2NsaywgY2xrX2RpdiwgZGVzaXJlZF90
-b2wsDQo+ICZleGFjdF9tYXRjaCk7DQo+ID4gKyAgICAgaWYgKHNlcl9jbGspIHsNCj4gPiArICAg
-ICAgICAgICAgIGlmICghZXhhY3RfbWF0Y2gpDQo+ID4gKyAgICAgICAgICAgICAgICAgICAgIHBy
-X3dhcm4oIkNhbm5vdCBmaW5kIGV4YWN0IG1hdGNoIGNsa19yYXRlLCB1c2luZw0KPiA+ICsgb25l
-IHdpdGhpbiAyIHBlcmNlbnQgdG9sZXJhbmNlXG4iKTsNCj4gPiAgICAgICAgICAgICAgIHJldHVy
-biBzZXJfY2xrOw0KPiA+ICAgICAgIH0NCj4gPg0KPiA+IC0gICAgICpjbGtfZGl2ID0gc2VyX2Ns
-ayAvIGRlc2lyZWRfY2xrOw0KPiA+IC0gICAgIGlmICghKCpjbGtfZGl2KSkNCj4gPiAtICAgICAg
-ICAgICAgICpjbGtfZGl2ID0gMTsNCj4gPiArICAgICAvKiB0cnkgd2l0aGluIDUlIHRvbGVyYW5j
-ZSBub3csIG5vIG5lZWQgdG8gbG9vayBmb3IgZXhhY3QgbWF0Y2ggKi8NCj4gPiArICAgICBleGFj
-dF9tYXRjaCA9IGZhbHNlOw0KPiA+ICsgICAgIGRlc2lyZWRfdG9sID0gNTsNCj4gPiArDQo+ID4g
-KyAgICAgc2VyX2NsayA9IGZpbmRfY2xrX3JhdGVfaW5fdG9sKGNsaywgZGVzaXJlZF9jbGssIGNs
-a19kaXYsIGRlc2lyZWRfdG9sLA0KPiAmZXhhY3RfbWF0Y2gpOw0KPiA+ICsgICAgIGlmIChzZXJf
-Y2xrKQ0KPiA+ICsgICAgICAgICAgICAgcHJfd2FybigiQ2Fubm90IGZpbmQgZXhhY3QgbWF0Y2gg
-Y2xrX3JhdGUsIHVzaW5nIG9uZSB3aXRoaW4gNQ0KPiBwZXJjZW50IHRvbGVyYW5jZVxuIik7DQo+
-ID4gKyAgICAgZWxzZQ0KPiA+ICsgICAgICAgICAgICAgcHJfZXJyKCJDYW5ub3QgZmluZCBzdWl0
-YWJsZSBjbGtfcmF0ZSwgZ2l2aW5nIHVwXG4iKTsNCj4gPg0KPiA+ICAgICAgIHJldHVybiBzZXJf
-Y2xrOw0KPiA+ICAgfQ0KPiA+IEBAIC0xMDIxLDggKzEwOTIsNyBAQCBzdGF0aWMgdm9pZCBxY29t
-X2dlbmlfc2VyaWFsX3NldF90ZXJtaW9zKHN0cnVjdA0KPiB1YXJ0X3BvcnQgKnVwb3J0LA0KPiA+
-ICAgICAgIGlmICh2ZXIgPj0gUVVQX1NFX1ZFUlNJT05fMl81KQ0KPiA+ICAgICAgICAgICAgICAg
-c2FtcGxpbmdfcmF0ZSAvPSAyOw0KPiA+DQo+ID4gLSAgICAgY2xrX3JhdGUgPSBnZXRfY2xrX2Rp
-dl9yYXRlKHBvcnQtPnNlLmNsaywgYmF1ZCwNCj4gPiAtICAgICAgICAgICAgIHNhbXBsaW5nX3Jh
-dGUsICZjbGtfZGl2KTsNCj4gPiArICAgICBjbGtfcmF0ZSA9IGdldF9jbGtfZGl2X3JhdGUocG9y
-dC0+c2UuY2xrLCBiYXVkLCBzYW1wbGluZ19yYXRlLA0KPiA+ICsgJmNsa19kaXYpOw0KPiA+ICAg
-ICAgIGlmICghY2xrX3JhdGUpDQo+ID4gICAgICAgICAgICAgICBnb3RvIG91dF9yZXN0YXJ0X3J4
-Ow0KPiA+DQo+IA0KPiB0aGFua3MsDQo+IC0tDQo+IGpzDQo+IHN1c2UgbGFicw0K
+
+On 6/28/2022 1:12 PM, Lee Jones wrote:
+> On Tue, 28 Jun 2022, Satya Priya Kakitapalli (Temp) wrote:
+>
+>> On 6/27/2022 1:11 PM, Lee Jones wrote:
+>>> On Mon, 27 Jun 2022, Satya Priya Kakitapalli (Temp) wrote:
+>>>
+>>>> Hi Lee,
+>>>>
+>>>>
+>>>> On 6/20/2022 4:37 PM, Satya Priya Kakitapalli (Temp) wrote:
+>>>>> On 6/20/2022 1:50 PM, Lee Jones wrote:
+>>>>>> On Mon, 20 Jun 2022, Satya Priya Kakitapalli (Temp) wrote:
+>>>>>>
+>>>>>>> On 6/17/2022 2:27 AM, Lee Jones wrote:
+>>>>>>>> On Tue, 14 Jun 2022, Satya Priya wrote:
+>>>>>>>>
+>>>>>>>>> Use i2c_new_dummy_device() to register pm8008-regulator
+>>>>>>>>> client present at a different address space, instead of
+>>>>>>>>> defining a separate DT node. This avoids calling the probe
+>>>>>>>>> twice for the same chip, once for each client pm8008-infra
+>>>>>>>>> and pm8008-regulator.
+>>>>>>>>>
+>>>>>>>>> As a part of this define pm8008_regmap_init() to do regmap
+>>>>>>>>> init for both the clients and define pm8008_get_regmap() to
+>>>>>>>>> pass the regmap to the regulator driver.
+>>>>>>>>>
+>>>>>>>>> Signed-off-by: Satya Priya <quic_c_skakit@quicinc.com>
+>>>>>>>>> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+>>>>>>>>> ---
+>>>>>>>>> Changes in V15:
+>>>>>>>>>      - None.
+>>>>>>>>>
+>>>>>>>>> Changes in V14:
+>>>>>>>>>      - None.
+>>>>>>>>>
+>>>>>>>>> Changes in V13:
+>>>>>>>>>      - None.
+>>>>>>>>>
+>>>>>>>>>      drivers/mfd/qcom-pm8008.c       | 34
+>>>>>>>>> ++++++++++++++++++++++++++++++++--
+>>>>>>>>>      include/linux/mfd/qcom_pm8008.h |  9 +++++++++
+>>>>>>>>>      2 files changed, 41 insertions(+), 2 deletions(-)
+>>>>>>>>>      create mode 100644 include/linux/mfd/qcom_pm8008.h
+>>>>>>>>>
+>>>>>>>>> diff --git a/drivers/mfd/qcom-pm8008.c b/drivers/mfd/qcom-pm8008.c
+>>>>>>>>> index 569ffd50..55e2a8e 100644
+>>>>>>>>> --- a/drivers/mfd/qcom-pm8008.c
+>>>>>>>>> +++ b/drivers/mfd/qcom-pm8008.c
+>>>>>>>>> @@ -9,6 +9,7 @@
+>>>>>>>>>      #include <linux/interrupt.h>
+>>>>>>>>>      #include <linux/irq.h>
+>>>>>>>>>      #include <linux/irqdomain.h>
+>>>>>>>>> +#include <linux/mfd/qcom_pm8008.h>
+>>>>>>>>>      #include <linux/module.h>
+>>>>>>>>>      #include <linux/of_device.h>
+>>>>>>>>>      #include <linux/of_platform.h>
+>>>>>>>>> @@ -57,6 +58,7 @@ enum {
+>>>>>>>>>      struct pm8008_data {
+>>>>>>>>>          struct device *dev;
+>>>>>>>>> +    struct regmap *regulators_regmap;
+>>>>>>>>>          int irq;
+>>>>>>>>>          struct regmap_irq_chip_data *irq_data;
+>>>>>>>>>      };
+>>>>>>>>> @@ -150,6 +152,12 @@ static struct regmap_config
+>>>>>>>>> qcom_mfd_regmap_cfg = {
+>>>>>>>>>          .max_register    = 0xFFFF,
+>>>>>>>>>      };
+>>>>>>>>> +struct regmap *pm8008_get_regmap(const struct pm8008_data *chip)
+>>>>>>>>> +{
+>>>>>>>>> +    return chip->regulators_regmap;
+>>>>>>>>> +}
+>>>>>>>>> +EXPORT_SYMBOL_GPL(pm8008_get_regmap);
+>>>>>>>> Seems like abstraction for the sake of abstraction.
+>>>>>>>>
+>>>>>>>> Why not do the dereference inside the regulator driver?
+>>>>>>> To derefer this in the regulator driver, we need to have the
+>>>>>>> pm8008_data
+>>>>>>> struct definition in the qcom_pm8008 header file.
+>>>>>>>
+>>>>>>> I think it doesn't look great to have only that structure in
+>>>>>>> header and all
+>>>>>>> other structs and enum in the mfd driver.
+>>>>>> Then why pass 'pm8008_data' at all?
+>>>>> There is one more option, instead of passing the pm8008_data, we could
+>>>>> pass the pdev->dev.parent and get the pm8008 chip data directly in the
+>>>>> pm8008_get_regmap() like below
+>>>>>
+>>>>>
+>>>>> struct regmap *pm8008_get_regmap(const struct device *dev)
+>>>>>    {
+>>>>>        const struct pm8008_data *chip = dev_get_drvdata(dev);
+>>>>>
+>>>>>        return chip->regulators_regmap;
+>>>>> }
+>>>>> EXPORT_SYMBOL_GPL(pm8008_get_regmap);
+>>>>>
+>>>>>
+>>>>> By doing this we can avoid having declaration of pm8008_data also in the
+>>>>> header. Please let me know if this looks good.
+>>>>>
+>>>> Could you please confirm on this?
+>>>>
+>>>>>> What's preventing you from passing 'regmap'?
+>>>>> I didn't get what you meant here, could you please elaborate a bit?
+>>> Ah yes.  I authored you a patch, but became distracted. Here:
+>>>
+>>> -----8<--------------------8<-------
+>>>
+>>> From: Lee Jones <lee.jones@linaro.org>
+>>>
+>>> mfd: pm8008: Remove driver data structure pm8008_data
+>>> Maintaining a local driver data structure that is never shared
+>>> outside of the core device is an unnecessary complexity.  Half of the
+>>> attributes were not used outside of a single function, one of which
+>>> was not used at all.  The remaining 2 are generic and can be passed
+>>> around as required.
+>>
+>> Okay, but we still need to store the regulators_regmap, which is required in
+>> the pm8008 regulator driver. Could we use a global variable for it?
+> Look down ...
+>
+>>> Signed-off-by: Lee Jones <lee.jones@linaro.org>
+>>> ---
+>>>    drivers/mfd/qcom-pm8008.c | 53 ++++++++++++++++++-----------------------------
+>>>    1 file changed, 20 insertions(+), 33 deletions(-)
+>>>
+>>> diff --git a/drivers/mfd/qcom-pm8008.c b/drivers/mfd/qcom-pm8008.c
+>>> index c472d7f8103c4..4b8ff947762f2 100644
+>>> --- a/drivers/mfd/qcom-pm8008.c
+>>> +++ b/drivers/mfd/qcom-pm8008.c
+>>> @@ -54,13 +54,6 @@ enum {
+>>>    #define PM8008_PERIPH_OFFSET(paddr)	(paddr - PM8008_PERIPH_0_BASE)
+>>> -struct pm8008_data {
+>>> -	struct device *dev;
+>>> -	struct regmap *regmap;
+>>> -	int irq;
+>>> -	struct regmap_irq_chip_data *irq_data;
+>>> -};
+>>> -
+>>>    static unsigned int p0_offs[] = {PM8008_PERIPH_OFFSET(PM8008_PERIPH_0_BASE)};
+>>>    static unsigned int p1_offs[] = {PM8008_PERIPH_OFFSET(PM8008_PERIPH_1_BASE)};
+>>>    static unsigned int p2_offs[] = {PM8008_PERIPH_OFFSET(PM8008_PERIPH_2_BASE)};
+>>> @@ -150,7 +143,7 @@ static struct regmap_config qcom_mfd_regmap_cfg = {
+>>>    	.max_register	= 0xFFFF,
+>>>    };
+>>> -static int pm8008_init(struct pm8008_data *chip)
+>>> +static int pm8008_init(struct regmap *regmap)
+>>>    {
+>>>    	int rc;
+>>> @@ -160,34 +153,31 @@ static int pm8008_init(struct pm8008_data *chip)
+>>>    	 * This is required to enable the writing of TYPE registers in
+>>>    	 * regmap_irq_sync_unlock().
+>>>    	 */
+>>> -	rc = regmap_write(chip->regmap,
+>>> -			 (PM8008_TEMP_ALARM_ADDR | INT_SET_TYPE_OFFSET),
+>>> -			 BIT(0));
+>>> +	rc = regmap_write(regmap, (PM8008_TEMP_ALARM_ADDR | INT_SET_TYPE_OFFSET), BIT(0));
+>>>    	if (rc)
+>>>    		return rc;
+>>>    	/* Do the same for GPIO1 and GPIO2 peripherals */
+>>> -	rc = regmap_write(chip->regmap,
+>>> -			 (PM8008_GPIO1_ADDR | INT_SET_TYPE_OFFSET), BIT(0));
+>>> +	rc = regmap_write(regmap, (PM8008_GPIO1_ADDR | INT_SET_TYPE_OFFSET), BIT(0));
+>>>    	if (rc)
+>>>    		return rc;
+>>> -	rc = regmap_write(chip->regmap,
+>>> -			 (PM8008_GPIO2_ADDR | INT_SET_TYPE_OFFSET), BIT(0));
+>>> +	rc = regmap_write(regmap, (PM8008_GPIO2_ADDR | INT_SET_TYPE_OFFSET), BIT(0));
+>>>    	return rc;
+>>>    }
+>>> -static int pm8008_probe_irq_peripherals(struct pm8008_data *chip,
+>>> +static int pm8008_probe_irq_peripherals(struct device *dev,
+>>> +					struct regmap *regmap,
+>>>    					int client_irq)
+>>>    {
+>>>    	int rc, i;
+>>>    	struct regmap_irq_type *type;
+>>>    	struct regmap_irq_chip_data *irq_data;
+>>> -	rc = pm8008_init(chip);
+>>> +	rc = pm8008_init(regmap);
+>>>    	if (rc) {
+>>> -		dev_err(chip->dev, "Init failed: %d\n", rc);
+>>> +		dev_err(dev, "Init failed: %d\n", rc);
+>>>    		return rc;
+>>>    	}
+>>> @@ -207,10 +197,10 @@ static int pm8008_probe_irq_peripherals(struct pm8008_data *chip,
+>>>    				IRQ_TYPE_LEVEL_HIGH | IRQ_TYPE_LEVEL_LOW);
+>>>    	}
+>>> -	rc = devm_regmap_add_irq_chip(chip->dev, chip->regmap, client_irq,
+>>> +	rc = devm_regmap_add_irq_chip(dev, regmap, client_irq,
+>>>    			IRQF_SHARED, 0, &pm8008_irq_chip, &irq_data);
+>>>    	if (rc) {
+>>> -		dev_err(chip->dev, "Failed to add IRQ chip: %d\n", rc);
+>>> +		dev_err(dev, "Failed to add IRQ chip: %d\n", rc);
+>>>    		return rc;
+>>>    	}
+>>> @@ -220,26 +210,23 @@ static int pm8008_probe_irq_peripherals(struct pm8008_data *chip,
+>>>    static int pm8008_probe(struct i2c_client *client)
+>>>    {
+>>>    	int rc;
+>>> -	struct pm8008_data *chip;
+>>> -
+>>> -	chip = devm_kzalloc(&client->dev, sizeof(*chip), GFP_KERNEL);
+>>> -	if (!chip)
+>>> -		return -ENOMEM;
+>>> +	struct device *dev;
+>>> +	struct regmap *regmap;
+>>> -	chip->dev = &client->dev;
+>>> -	chip->regmap = devm_regmap_init_i2c(client, &qcom_mfd_regmap_cfg);
+>>> -	if (!chip->regmap)
+>>> +	dev = &client->dev;
+>>> +	regmap = devm_regmap_init_i2c(client, &qcom_mfd_regmap_cfg);
+>>> +	if (!regmap)
+>>>    		return -ENODEV;
+>>> -	i2c_set_clientdata(client, chip);
+>>> +	i2c_set_clientdata(client, regmap);
+> Here ^
+
+
+I have added a dummy device and set the client data by passing regmap, 
+see below:
+
++       regulators_client = i2c_new_dummy_device(client->adapter, 
+client->addr + 1);
++       if (IS_ERR(regulators_client)) {
++               dev_err(dev, "can't attach client\n");
++               return PTR_ERR(regulators_client);
++       }
++
++       regulators_regmap = devm_regmap_init_i2c(regulators_client, 
+&qcom_mfd_regmap_cfg[1]);
++       if (!regmap)
++               return -ENODEV;
++
++       i2c_set_clientdata(client, regulators_regmap);
+
+Now if i try to get this regmap from regulator driver by doing
+
+struct regmap *regmap = dev_get_drvdata(pdev->dev.parent);
+
+it still gets me the regmap of pm8008@8 device and not the regulator 
+device regmap (0x9). Not sure if I'm missing something here.
+
+
+>>> -	if (of_property_read_bool(chip->dev->of_node, "interrupt-controller")) {
+>>> -		rc = pm8008_probe_irq_peripherals(chip, client->irq);
+>>> +	if (of_property_read_bool(dev->of_node, "interrupt-controller")) {
+>>> +		rc = pm8008_probe_irq_peripherals(dev, regmap, client->irq);
+>>>    		if (rc)
+>>> -			dev_err(chip->dev, "Failed to probe irq periphs: %d\n", rc);
+>>> +			dev_err(dev, "Failed to probe irq periphs: %d\n", rc);
+>>>    	}
+>>> -	return devm_of_platform_populate(chip->dev);
+>>> +	return devm_of_platform_populate(dev);
+>>>    }
+>>>    static const struct of_device_id pm8008_match[] = {
+>>>
