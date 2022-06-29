@@ -2,115 +2,161 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4854B5609DB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jun 2022 20:58:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 03CCA560A19
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jun 2022 21:14:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230267AbiF2S6L (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Jun 2022 14:58:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43260 "EHLO
+        id S229654AbiF2TOV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Jun 2022 15:14:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56826 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229729AbiF2S6K (ORCPT
+        with ESMTP id S229456AbiF2TOV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Jun 2022 14:58:10 -0400
-Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F086CBF40
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jun 2022 11:58:05 -0700 (PDT)
-Received: by mail-lj1-x233.google.com with SMTP id by38so20079748ljb.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jun 2022 11:58:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:user-agent:in-reply-to:references
-         :message-id:mime-version:content-transfer-encoding;
-        bh=QYZAgrfhk49lzLUuFjw6B1O7Zz6sl6FqL+L4Ejbb/r4=;
-        b=qSia/dWyaWJ9BNfd7r3B8IDOa994IYlAmU2aa/+oHVn4fpjphPOg7L6/tfkI33z7A8
-         us7a5wZ1HFmxvyYimOJZU3qWHVq6OcOh1M25XTuc+C6KasU77ONzrIIFv5UPyZ55YbHL
-         Z4bdq5el5TRvSCUUpcdXvlYLmsW4OEN+HB3tZYEJUgqeaHBNclIOScCLN7QW4TiEyM+a
-         de9SGChXZ6LdTUXNFe3jzLLGwyQpFp3EgUcnJy28POPwlaxh0R3yQvKYfGRwif2g95JZ
-         GhRqPMWDzN5U1bRyHexW1YkQ/+GzhdO04ePNp1WZmranQ7B645Zd1Qxu8UGnhcfTebHe
-         TFVw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:user-agent:in-reply-to
-         :references:message-id:mime-version:content-transfer-encoding;
-        bh=QYZAgrfhk49lzLUuFjw6B1O7Zz6sl6FqL+L4Ejbb/r4=;
-        b=6yCB1LG4UyjrKjpgRcwhG9OYj03AYU//sDpB6w2JQty7kO6jmLSAP87B/sWg5mE9JT
-         TWYkrwjOwg2FDOMMdFNehkua2ZJ0CSjUwydviqPQjihnqpqshikGvy4f8AnPz4NIyqOx
-         BRdzvYLgctmgIUaZ2EQ0Wx4CubnV74g+RfCO8owfV4Swo6k5hwX1WPUp5gBngvZ3xoOQ
-         UIGbhmFrsxpqD1agiDi9ba6TdVc28J2PtfZ2YDCHFipe2ECHA7GqkOy7Bxyuj3LU6atg
-         YZ/Bocw1Da3GJmBhsUdNjY2mvZr1keNHLuOnVYMOcvWmUV3ekQIFYLk6T0yHtKgzvAEM
-         STFw==
-X-Gm-Message-State: AJIora9vDbjlFhyqYCGSpSm5cofrmsjyQwQAcTjVCJ56TqYf+gsLQR/z
-        l2aJhr7fsILLWADJJmkLp9d1zg==
-X-Google-Smtp-Source: AGRyM1vK3aRgMtM4vp3JC8oLZ1h6/8DljR5JiFPtpWzVEDfclPLBY/0pg6p1L99EUupCdECV+pl1BQ==
-X-Received: by 2002:a2e:8552:0:b0:25a:99bd:5f9e with SMTP id u18-20020a2e8552000000b0025a99bd5f9emr2821338ljj.519.1656529084357;
-        Wed, 29 Jun 2022 11:58:04 -0700 (PDT)
-Received: from [127.0.0.1] ([94.25.229.210])
-        by smtp.gmail.com with ESMTPSA id h15-20020a2eb0ef000000b00255500154fasm2248617ljl.52.2022.06.29.11.58.03
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 29 Jun 2022 11:58:03 -0700 (PDT)
-Date:   Wed, 29 Jun 2022 21:57:58 +0300
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Rob Herring <robh@kernel.org>
-CC:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_08/11=5D_dt-bindings=3A_displa?= =?US-ASCII?Q?y/msm=3A_add_mdp-opp-table_to_dpu-sdm845?=
-User-Agent: K-9 Mail for Android
-In-Reply-To: <6e1b37e6-83e8-a920-61d9-044b08e93605@linaro.org>
-References: <20220625232513.522599-1-dmitry.baryshkov@linaro.org> <20220625232513.522599-9-dmitry.baryshkov@linaro.org> <20220627180506.GA2679395-robh@kernel.org> <772E0163-AC47-47E1-A0C6-CA04CA874282@linaro.org> <6e1b37e6-83e8-a920-61d9-044b08e93605@linaro.org>
-Message-ID: <5407A5CD-D8AF-41B3-9F16-67A30940D844@linaro.org>
+        Wed, 29 Jun 2022 15:14:21 -0400
+Received: from mo4-p02-ob.smtp.rzone.de (mo4-p02-ob.smtp.rzone.de [81.169.146.171])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4DA073CA5B
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jun 2022 12:14:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1656529877;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=3hHfIWpV+x7WyjiHFVeyfhViAFLAvFBESTeE075T914=;
+    b=bFm8cR2R3YsDjM82CB3n+yFcNWfMZuAw5s40TERoW/8suU6C29ggArandpmBiOQRoc
+    4UUwATwRvSzyIwFiLI69xOZRUGcQ18yOThwf0wlkY3AhTvX4IKJAw9FR1Ntm1sNN2JZz
+    DGiQEb1TlxS2OOXoFhmG5pCtI41GcCgO+5ZRMjpIxTxfeWpKHjxTjIxuJ979+SDV5rUe
+    lTpgMn+jMnwblwBHBFjjjEUDYPF61aUB5PYYLgH+/M7p384jnJjy7CFr1zeIvL/qFiF/
+    kc1MhtRTbvs+241ondEHLwqmY0EgvPHfrQiRKxwf5C421uMxMCxgLHGpXIKdKZXN7Sau
+    QnLg==
+Authentication-Results: strato.com;
+    dkim=none
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u267FZF9PwpcNKLUrK8+86Y="
+X-RZG-CLASS-ID: mo00
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 47.46.1 AUTH)
+    with ESMTPSA id yfdd30y5TJBH0fQ
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Wed, 29 Jun 2022 21:11:17 +0200 (CEST)
+Date:   Wed, 29 Jun 2022 21:11:16 +0200
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc:     ilia.lin@kernel.org, agross@kernel.org, bjorn.andersson@linaro.org,
+        rafael@kernel.org, viresh.kumar@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [RESEND PATCH 4/5] cpufreq: qcom-cpufreq-nvmem: Rename qcs404
+ data to cpr_genpd
+Message-ID: <Yryj1Nv/Yu8wShzo@gerhold.net>
+References: <20220629130303.3288306-1-bryan.odonoghue@linaro.org>
+ <20220629130303.3288306-5-bryan.odonoghue@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220629130303.3288306-5-bryan.odonoghue@linaro.org>
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_PASS,
+        SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Wed, Jun 29, 2022 at 02:03:02PM +0100, Bryan O'Donoghue wrote:
+> At the moment the CPR genpd based code is named after the qcs404 however
+> msm8936, msm8939 and other antecedent processors of the qcs404 can also
+> make use of this data.
+> 
+> Rename it to reflect a more generic use.
+> 
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
+There is another power domain that needs to be scaled together with the
+CPU frequency on MSM8916 and MSM8939: (VDD)MX. How do you handle that?
 
-On 29 June 2022 12:23:48 GMT+03:00, Krzysztof Kozlowski <krzysztof=2Ekozlo=
-wski@linaro=2Eorg> wrote:
->On 28/06/2022 22:23, Dmitry Baryshkov wrote:
->
->>>> +    $ref: /schemas/opp/opp-v2=2Eyaml#
->>>> +
->>>>    ports:
->>>>      $ref: /schemas/graph=2Eyaml#/properties/ports
->>>>      description: |
->>>> @@ -116,11 +120,12 @@ examples:
->>>>                            <0x0aeb0000 0x2008>;
->>>>                      reg-names =3D "mdp", "vbif";
->>>> =20
->>>> -                    clocks =3D <&dispcc DISP_CC_MDSS_AHB_CLK>,
->>>> +                    clocks =3D <&gcc GCC_DISP_AXI_CLK>,
->>>> +                             <&dispcc DISP_CC_MDSS_AHB_CLK>,
->>>
->>> What does the OPP table have to do with clocks? Adding a clock anywher=
-e=20
->>> but the end is an ABI break=2E
->>=20
->> I should split this to a separate patch=2E And, I must admit, this cloc=
-k change has already landed=2E We did not think that it is an ABI break sin=
-ce we have clock-names here=2E
->
->xxx-names are only a helper and order of items is always strict, thus
->any change in the order is always ABI break=2E
+In downstream this is part of the CPR driver and specified as follows:
 
-Ack, we will keep this in mind=2E However in this case we have already mad=
-e this change=2E So the question in his do we cope with it=2E
+	qcom,vdd-mx-corner-map = <4 5 7>;
+	qcom,vdd-mx-vmin-method = <4>;
+	vdd-mx-supply = <&pm8916_l3_corner_ao>;
+	qcom,vdd-mx-vmax = <7>;
+	qcom,cpr-corner-map = <1 1 2 2 3 3 3 3 3>; /* MSM8916 */
+	qcom,cpr-corner-map = <1 1 1 2 2 2 2 2 2 2 2 2 2 2 3 3 3 3 3 3
+			       3 3 3 3 3 3 3 3>; /* MSM8939 */
 
---=20
-With best wishes
-Dmitry
+On MSM8916 this means to vote for MX corner 4 (&rpmpd_opp_svs_soc) for
+the first two frequencies, then corner 5 (&rpmpd_opp_nominal) and corner 7
+(&rpmpd_opp_super_turbo) for the remaining CPU frequencies. It's similar
+for MSM8939, you just have more OPPs there.
+
+There was a semi-related discussion about this in [1] (a bit mixed with
+potential ways how to do CPU frequency scaling without CPR). It's been a
+while but I think the conclusion back then was that it's easiest to
+attach both "mx" and "cpr" in this driver and then scale it as part of
+the OPP table.
+
+[1]: https://lore.kernel.org/linux-arm-msm/20200403013119.GB20625@builder.lan/
+
+I'll attach an excerpt of the changes that I used on MSM8916 at the end
+of the mail. Note that it does not actually work as-is: IIRC at the
+moment there is still nothing that actually enables the power domains
+listed for CPUs. The CPR driver does not check that, but rpmpd does and
+just ignores the votes.
+
+I submitted a possible patch for this but it just got stuck at some
+point because of all the complexity involved:
+https://lore.kernel.org/linux-pm/20200826093328.88268-1-stephan@gerhold.net/
+
+Shortly said: I think you do not just want "cpr" here but also "mx".
+
+Thanks,
+Stephan
+
+static const char *msm8916_genpd_names[] = { "mx", "cpr", NULL };
+
+cpu@0 {
+	power-domains = <&CPU_PD0>, <&rpmpd MSM8916_VDDMX_AO>, <&cpr>;
+	power-domain-names = "psci", "mx", "cpr";
+};
+
+cpu_opp_table: cpu-opp-table {
+	compatible = "operating-points-v2-kryo-cpu";
+	opp-shared;
+
+	opp-200000000 {
+		opp-hz = /bits/ 64 <200000000>;
+		required-opps = <&rpmpd_opp_svs_soc>, <&cpr_opp1>;
+	};
+	opp-400000000 {
+		opp-hz = /bits/ 64 <400000000>;
+		required-opps = <&rpmpd_opp_svs_soc>, <&cpr_opp2>;
+	};
+	opp-533333000 {
+		opp-hz = /bits/ 64 <533333000>;
+		required-opps = <&rpmpd_opp_nominal>, <&cpr_opp3>;
+	};
+	opp-800000000 {
+		opp-hz = /bits/ 64 <800000000>;
+		required-opps = <&rpmpd_opp_nominal>, <&cpr_opp4>;
+	};
+	opp-998400000 {
+		opp-hz = /bits/ 64 <998400000>;
+		required-opps = <&rpmpd_opp_super_turbo>, <&cpr_opp5>;
+	};
+	opp-1094400000 {
+		opp-hz = /bits/ 64 <1094400000>;
+		required-opps = <&rpmpd_opp_super_turbo>, <&cpr_opp6>;
+	};
+	opp-1152000000 {
+		opp-hz = /bits/ 64 <1152000000>;
+		required-opps = <&rpmpd_opp_super_turbo>, <&cpr_opp7>;
+	};
+	opp-1209600000 {
+		opp-hz = /bits/ 64 <1209600000>;
+		required-opps = <&rpmpd_opp_super_turbo>, <&cpr_opp8>;
+	};
+	opp-1363200000 {
+		opp-hz = /bits/ 64 <1363200000>;
+		required-opps = <&rpmpd_opp_super_turbo>, <&cpr_opp9>;
+	};
+};
