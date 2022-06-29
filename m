@@ -2,81 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 606E2560051
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jun 2022 14:45:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5C4435600D8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jun 2022 15:10:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231735AbiF2MnT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Jun 2022 08:43:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43276 "EHLO
+        id S233593AbiF2NDL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Jun 2022 09:03:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34792 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232700AbiF2MnS (ORCPT
+        with ESMTP id S233514AbiF2NDJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Jun 2022 08:43:18 -0400
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1446922B22
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jun 2022 05:43:17 -0700 (PDT)
-Received: by mail-ej1-x633.google.com with SMTP id mf9so32444656ejb.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jun 2022 05:43:17 -0700 (PDT)
+        Wed, 29 Jun 2022 09:03:09 -0400
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DDB16C26
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jun 2022 06:03:06 -0700 (PDT)
+Received: by mail-wm1-x330.google.com with SMTP id k129so7919913wme.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jun 2022 06:03:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=8IGT3XO8mbcnscwzaJJ/fju1+Y/JsHqAOuPdeXWHctc=;
-        b=mMjaPolO8e6kz36GKdQJsOiiFESlqqTfIh2LeMv8A6WG2Idy2x0+oIvs3YuYDHHT5P
-         d3o5SCSb+IQq4l6IfWXfoVlEbsZ3nSD1E7BZWk+FDoXNtWNhAikCILntUhgF43Hoxpye
-         pvi6rD3VUVI/DAgiuSWxnjfoOefX2jeOxpwp1Y286zFGjuW2qR6le8q8RasDokUukl0i
-         DubWw8ipwr2KpNynMpEMGvnatUpbaYCUJSqtHsOLLnlCbG62SHRbnmj0SErFXEqSaEaL
-         KRpjzdtpadzx7dKOW+yG4CTSkwg7UmT0d16DcdcR8hpWizPdczHr3ZfM7tiaxiT649DV
-         teKA==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=LohcD18nlQ+6W427GJ2K1kt6TSNfZnpRNiSGMheeips=;
+        b=jCu1LYGCwdgppXnuWg0ZvIwnBm4lHUhp0t6I7wq3O0HF0zuwFpi7iPNd5F1ggyNGdD
+         Uy5zF86WsFYoj3OHrbSVOmo/IY8yYcS9buEOsyGE0HlDjhm887KGe0FUEPftPG3E+28t
+         9PgaKDtNjqGB7GdI4o4IrM7hruiABbGMp9PPM/SCxLjuBScB8dUr1wGIOolziG2vFefw
+         Uvgw2nrtloEixaUkvE2QmWzbqvXRQ+G1XWs5AH8EvTWXS+/EYMLdFffOiDQjLT3aSyjE
+         xZ2i3+Z38EIZd49JFx/7Mzzc5DybkhsXfFfUjXMfnuPqYKtr+1UVQibiFGOKb0YpJmHX
+         eqzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=8IGT3XO8mbcnscwzaJJ/fju1+Y/JsHqAOuPdeXWHctc=;
-        b=ePQlZmKu+IcVOVALioxSTkf5AFfxtXVT2s8a89Hxlhju09grFNVbKGCwbUVSdidu58
-         B2XrKywTGJWw/XXw4pF4iz1oYh0O+dMqDceLRG5bclvyu5MUzqJhRiE8SUzHZYigvxLr
-         9rEyrHngPjPjZdoJRqCcI4rgIi6XkNZJDK43DaQq/wqV9y0iF+AxTbYUhoibn7meMM/+
-         V7o1CFFuJZWX/6nnNDOgjPQLVVXCQAmdfUnebQvhd57nOQB3ISf3RkZPJhFEXVT8e/ZJ
-         Ajly5EkrtfXiafz5V1PeUchwj3hlW+nOn0lCjHvBnYI57cEJbCnYax8HSQI2W2TRGZvD
-         4+ZA==
-X-Gm-Message-State: AJIora+IUL2dh/vdt5zAboq109EEX2qmGCqc0YDdiD7QhYNc5Wa1gx5e
-        OB81dwdnKkwrJsUuJt6iyBSt4w==
-X-Google-Smtp-Source: AGRyM1tEZX4qWtLp6ehowBV8ORmaWoRxrTI4PWpI3lto+2DFDjbGrVQ7xPUJM5AuV8OqHKDqUTGh4Q==
-X-Received: by 2002:a17:906:7386:b0:715:7024:3df7 with SMTP id f6-20020a170906738600b0071570243df7mr3223632ejl.543.1656506595658;
-        Wed, 29 Jun 2022 05:43:15 -0700 (PDT)
-Received: from [192.168.0.184] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id k18-20020a056402049200b0042dcbc3f302sm9836073edv.36.2022.06.29.05.43.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 29 Jun 2022 05:43:15 -0700 (PDT)
-Message-ID: <0a3f3b42-7d9b-d6bd-6afd-cd14bf909b32@linaro.org>
-Date:   Wed, 29 Jun 2022 14:43:13 +0200
+        bh=LohcD18nlQ+6W427GJ2K1kt6TSNfZnpRNiSGMheeips=;
+        b=71DcDTlRVlT3nzB1wUk2XUm0AMxX6UZEEsB8sXBlhHodHJWFsS+MMTAOEekMyDEd+u
+         CSssjSUs7iuKYPp9jQvsdEbQtPyYbcyRPDyyn9KHOP4TG0n2Bs8nompod0ZCZmJxdaXx
+         Cdr2SismaxfHEFGKQYTSc3ZOOqop2pshluNdDv4rWPidME3I1NNmV9EcW8P2d/ED/8Zu
+         OQnJ+PtQ0hD2Xd5+n1F+xuwNLdo3j3k8yfb9L8B1Lw3qGUlvkkvZlwXZDZjA0dC77tfg
+         JWZlGLNxh5ol50EqJ+H7p2kgYdslQac7pwRL9Pk7lsXEhNPkGCZscFVYAq71wlNs4GYL
+         io8Q==
+X-Gm-Message-State: AJIora/pDeK2+po4FhlOgCQ6dB66+6wblP6VSk3OrJ5wBSUfp+lhhDb5
+        z/WT9Uo5Rwhrdlwqk6uz7JEr5Q==
+X-Google-Smtp-Source: AGRyM1suqyEaDNY90LxZuwNUL3qYV1iZwH1FclDeTxACXRgX6r1imALYCKwVS8QyOzcbvFxJItfPow==
+X-Received: by 2002:a05:600c:2113:b0:3a0:432c:a8e8 with SMTP id u19-20020a05600c211300b003a0432ca8e8mr3678064wml.71.1656507785391;
+        Wed, 29 Jun 2022 06:03:05 -0700 (PDT)
+Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id g1-20020adffc81000000b00213ba3384aesm17056979wrr.35.2022.06.29.06.03.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 29 Jun 2022 06:03:04 -0700 (PDT)
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+To:     ilia.lin@kernel.org, agross@kernel.org, bjorn.andersson@linaro.org,
+        rafael@kernel.org, viresh.kumar@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org
+Cc:     linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Subject: [RESEND PATCH 0/5] qcom-cpufreq-nvmem: Add msm8939 with some fixups
+Date:   Wed, 29 Jun 2022 14:02:58 +0100
+Message-Id: <20220629130303.3288306-1-bryan.odonoghue@linaro.org>
+X-Mailer: git-send-email 2.36.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: [PATCH 1/2] dt-bindings: pinctrl: Add DT schema for
- qcom,msm8909-tlmm
-Content-Language: en-US
-To:     Stephan Gerhold <stephan.gerhold@kernkonzept.com>
-Cc:     Linus Walleij <linus.walleij@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20220628145502.4158234-1-stephan.gerhold@kernkonzept.com>
- <20220628145502.4158234-2-stephan.gerhold@kernkonzept.com>
- <91d972d2-689c-d357-869f-fbd826173e33@linaro.org>
- <Yrw5UnFXKCZvAr2d@kernkonzept.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <Yrw5UnFXKCZvAr2d@kernkonzept.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -84,41 +70,45 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 29/06/2022 13:37, Stephan Gerhold wrote:
-> On Wed, Jun 29, 2022 at 11:38:01AM +0200, Krzysztof Kozlowski wrote:
->> On 28/06/2022 16:55, Stephan Gerhold wrote:
->>> Document the "qcom,msm8909-tlmm" compatible for the TLMM/pin control
->>> block in the MSM8909 SoC, together with the allowed GPIOs and functions.
->>>
->>> Signed-off-by: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
->>> ---
->>>  .../bindings/pinctrl/qcom,msm8909-tlmm.yaml   | 152 ++++++++++++++++++
->>>  1 file changed, 152 insertions(+)
->>>  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,msm8909-tlmm.yaml
->>>
->>> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,msm8909-tlmm.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,msm8909-tlmm.yaml
->>> new file mode 100644
->>> index 000000000000..e03530091478
->>> --- /dev/null
->>> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,msm8909-tlmm.yaml
->>> @@ -0,0 +1,152 @@
->>> [...]
->>> +patternProperties:
->>> +  '-state$':
->>> +    oneOf:
->>> +      - $ref: "#/$defs/qcom-msm8909-tlmm-state"
->>
->> No quotes here and other places, should be needed. I know you copied
->> from other bindings, but at least let's try new files to be proper.
->>
-> 
-> The quotes are necessary, since # starts a comment in YAML and the
-> property would be effectively empty. :)
-> 
-> I tried it anyway but "dt_binding_check" complains as suspected:
-> qcom,msm8909-tlmm.yaml: patternProperties:-state$:oneOf:0:$ref: None is not of type 'string'
+V1 RESEND:
 
-Yes, you're right. Thanks for checking this.
+Resending the series with a better description to give context.
 
-Best regards,
-Krzysztof
+This is a simple precursor series to add the msm8939 SoC dtsi.
+
+- dt-bindings fixes. We are missing some documentation for existing compat
+  strings in qcom-cpufreq-nvmem.yaml
+- dt-bindings add in msm8939 to qcom-cpufreq-nvmem.yaml
+- Add the msm8939 to the cpufreq-dt-platdev exclusion list
+- Fixing the naming of the code in qcom-cpufreq-nvmem so that we can
+  re-use the qcs404 code for msm8939
+- Adding msm8939 to the qcom-cpufreq-nvmem driver compat list
+
+Most of the msm8939 stuff is down to dt-bindings fixups and then adding the
+SoC dtsi. The minor exception here of needing to add the msm8939 compat to
+qcom-cpufreq-nvmem.c.
+
+A relatively tidy/scrubbed integrated tree for msm8939 is here for
+reference.
+
+https://git.linaro.org/people/bryan.odonoghue/kernel.git/log/?h=linux-next-27-06-22-msm8939-no-cpr-v4
+
+V1
+Fix up some missing compat strings for the qcom-cpufreq-nvmem yaml.
+Add in msm8939 as a compatible qcom-cpufreq-nvmem.
+
+Bryan O'Donoghue (5):
+  dt-bindings: opp: Add missing compat devices
+  dt-bindings: opp: Add msm8939 to the compatible list
+  cpufreq: blocklist Qualcomm msm8939 in cpufreq-dt-platdev
+  cpufreq: qcom-cpufreq-nvmem: Rename qcs404 data to cpr_genpd
+  cpufreq: qcom-cpufreq-nvmem: Add msm8939 as cpr_genpd
+
+ .../devicetree/bindings/cpufreq/qcom-cpufreq-nvmem.yaml  | 7 +++++++
+ drivers/cpufreq/cpufreq-dt-platdev.c                     | 1 +
+ drivers/cpufreq/qcom-cpufreq-nvmem.c                     | 9 +++++----
+ 3 files changed, 13 insertions(+), 4 deletions(-)
+
+-- 
+2.36.1
+
