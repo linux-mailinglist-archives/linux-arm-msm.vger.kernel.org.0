@@ -2,191 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 06AFE55FBC3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jun 2022 11:22:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EC5BF55FBC9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jun 2022 11:24:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232706AbiF2JV5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Jun 2022 05:21:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34134 "EHLO
+        id S231384AbiF2JXx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Jun 2022 05:23:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37118 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232696AbiF2JVz (ORCPT
+        with ESMTP id S230209AbiF2JXw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Jun 2022 05:21:55 -0400
-Received: from mail-qk1-x72e.google.com (mail-qk1-x72e.google.com [IPv6:2607:f8b0:4864:20::72e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 665FE369D0;
-        Wed, 29 Jun 2022 02:21:52 -0700 (PDT)
-Received: by mail-qk1-x72e.google.com with SMTP id n10so8124786qkn.10;
-        Wed, 29 Jun 2022 02:21:52 -0700 (PDT)
+        Wed, 29 Jun 2022 05:23:52 -0400
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E192F377D9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jun 2022 02:23:51 -0700 (PDT)
+Received: by mail-ej1-x631.google.com with SMTP id g26so31296448ejb.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jun 2022 02:23:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=xyKbiBGwe12VV4+hIYZhHutByUcZnqEu2BFeb6ToEVc=;
-        b=Ru4+mVFxOSkJ7OAFQ3tloi+JJTVyK6/e8NHNSXgkYVnfAnpZbGlH720kSMNkKOVNoP
-         3Nf4ML7iI3+jAkW8vmuq23ATUDiO3PWYg/Vh23hSlsSHBeWY6MhQACDOkYrFr/lOW8Qj
-         7YqBUk5cH6Ml4/AkHJLtDBakAc9A9jIap8JlgdNpZPDxnzdalgk2PN5Wie44gGvUj3dD
-         JhTuI+9FDaY/iuse7Xs07LBLHCDBSaFcvp5KhkqCJt/jwT1AhgO6PQ2oThQdwLEJN5ni
-         +vSUgmu1TF/OarZedRIndxHmBWYxfjqyr9fnJnmS/ugldZU2Vl1lwGhWAUVl8C1rFhg4
-         KX6Q==
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=90oPbUZjWIrdVFwHuCcwlnH1DzBnkawJPEGv8+dYOgY=;
+        b=et0B8ipcxLAqwpKDEuUybySKbX7Mop9S0Me/WEzpbuUcyy8FDLmGtl8IVobHaGXP18
+         peoX4QRbjD6Y93UNGNw1V6zR6d9t7TCmMKBPDqpUiZvuUoSS/H4/RDs47J3+ZLArrlqm
+         D/FJDtKA0gXMhgHVfSgjqAx+Ojoo9U1rt1vwhHJn/IBxPTBdnAO1XmEk1Wt3n1kTScg3
+         4rjueOV/bGoFs85iEsYxbyFk7ngNMv5Hf/b4zwx+z7hv/2OuMSZjeFsRy7TRq/8rW7em
+         wuazk9ddC36enNbbZXa2M6KTILayrU3ez5zPzLRkGlXrCc1BK4cpi0bOXvUxkozfZUlI
+         AuEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=xyKbiBGwe12VV4+hIYZhHutByUcZnqEu2BFeb6ToEVc=;
-        b=piDf4eSaRELe9V51n0kAbVRfEHfr3X9KYN3W8IkDrOU5SzP9ENRzrHqc1BXj10Q0Gm
-         xITQ8wAWufpMfk+TubnZShMntDh14vm4cq3YFIRg8dEb2MgBEiudeUclCOQKSOvhd3MJ
-         GcXnSdAfjMv/AyyqlwDzqQ8DfA70Hh5ckwCX/+so13DGRjLrGyrHYINK+EG0I+QtEQuf
-         ji5A8AO/1fXY0a64RivKpkYXKxXZHhk/PYJX4XX7u5jtl35HDRKKN9nEYS7clRYLQkvx
-         ZEdiSHrYGs+dYLBExU+qz81gagWTbq1e+BgEncVdyrATsJCSlUUCB9DpHI7gjBMRLOhC
-         GYNg==
-X-Gm-Message-State: AJIora/DjjtyoENp4B7qhYqLela/4dAyceKaBI7Zl8xak7+valqLScb3
-        TwV4BUfMct2fO9H3sZWakipiI9Z92pDKpsS85m4=
-X-Google-Smtp-Source: AGRyM1uSJPl40kSPwFIPa9wBNkco+vAkh6Zme01ouImI9Tnrlo2A3m6pVGIB9ptmIFV7EyqMJf7DSjFQQ8WmaPi1MQ8=
-X-Received: by 2002:a05:620a:1a28:b0:6b1:4d4d:c7c3 with SMTP id
- bk40-20020a05620a1a2800b006b14d4dc7c3mr435716qkb.522.1656494511367; Wed, 29
- Jun 2022 02:21:51 -0700 (PDT)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=90oPbUZjWIrdVFwHuCcwlnH1DzBnkawJPEGv8+dYOgY=;
+        b=d2YqSfDqNj4Re/AWVhQ7Xp3yukf0gYWcHanegnM107CC2dEWOBahuGBZW6tnHrhSe0
+         PezU/V5xQqQuLFIqfG7Rhk4AUn3Z7izfCzdEsLwfHKam+mCGxOGMXCREwrD3+rwdQJJM
+         R60Q+8ReLaX0jPAlxtM/xlumn3v1HeIC5cXP4gPRLW1ePPIZrwPnyh6uWIfLZVRmvMFW
+         lDu3K/V52TCz3mnN9pUaicKHbH6Oc8m2SRcjeSoBw7tcEW2tf05oihSW42VBjJfJXkpv
+         AVfW9EQ9RSQbTuLTXowt/ISYGPPeIB+vqJS+9Bpem81mbn4u0rP9FsWJEEmJd9XbHqIF
+         EWsw==
+X-Gm-Message-State: AJIora8Z/COzbbZd8fDxG5NJ4fUSFdUHuisW4EmOUDVSO0z5tNdL4o9n
+        WgQSKEaGyp310VlU1KsJeBwyRg==
+X-Google-Smtp-Source: AGRyM1sH34zUmPzWXRo+UkpWhTTGzBc2msaGYCRe6PpnoP/U/CXe6rqkeba7JnLYw13W5oRY1ZhUTQ==
+X-Received: by 2002:a17:906:d555:b0:726:2b3a:d80a with SMTP id cr21-20020a170906d55500b007262b3ad80amr2412956ejc.144.1656494630452;
+        Wed, 29 Jun 2022 02:23:50 -0700 (PDT)
+Received: from [192.168.0.183] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id bq15-20020a056402214f00b00435a742e350sm11074643edb.75.2022.06.29.02.23.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 29 Jun 2022 02:23:49 -0700 (PDT)
+Message-ID: <6e1b37e6-83e8-a920-61d9-044b08e93605@linaro.org>
+Date:   Wed, 29 Jun 2022 11:23:48 +0200
 MIME-Version: 1.0
-References: <20220624104420.257368-1-robimarko@gmail.com>
-In-Reply-To: <20220624104420.257368-1-robimarko@gmail.com>
-From:   Robert Marko <robimarko@gmail.com>
-Date:   Wed, 29 Jun 2022 11:21:40 +0200
-Message-ID: <CAOX2RU5iou-N2N0N9bMD49AufXMe04U84DNARGfJzUX2CdFzrQ@mail.gmail.com>
-Subject: Re: [PATCH v4 1/2] PCI: qcom: Move IPQ8074 DBI register accesses
- after phy_power_on()
-To:     Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Andy Gross <agross@kernel.org>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: Re: [PATCH 08/11] dt-bindings: display/msm: add mdp-opp-table to
+ dpu-sdm845
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Herring <robh@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        lpieralisi@kernel.org, Rob Herring <robh@kernel.org>, kw@linux.com,
-        Bjorn Helgaas <bhelgaas@google.com>, p.zabel@pengutronix.de,
-        jingoohan1@gmail.com, linux-pci@vger.kernel.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        johan+linaro@kernel.org,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Krishna Manikandan <quic_mkrishn@quicinc.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>
+References: <20220625232513.522599-1-dmitry.baryshkov@linaro.org>
+ <20220625232513.522599-9-dmitry.baryshkov@linaro.org>
+ <20220627180506.GA2679395-robh@kernel.org>
+ <772E0163-AC47-47E1-A0C6-CA04CA874282@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <772E0163-AC47-47E1-A0C6-CA04CA874282@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 24 Jun 2022 at 12:44, Robert Marko <robimarko@gmail.com> wrote:
->
-> Currently the Gen2 port in IPQ8074 will cause the system to hang as it
-> accesses DBI registers in qcom_pcie_init_2_3_3(), and those are only
-> accesible after phy_power_on().
->
-> Move the DBI read/writes to a new qcom_pcie_post_init_2_3_3(), which is
-> executed after phy_power_on().
->
-> Fixes: a0fd361db8e5 ("PCI: dwc: Move "dbi", "dbi2", and "addr_space" resource setup into common code")
-> Signed-off-by: Robert Marko <robimarko@gmail.com>
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+On 28/06/2022 22:23, Dmitry Baryshkov wrote:
 
-Hi,
-Bjorn, is there something else I need to fixup?
+>>> +    $ref: /schemas/opp/opp-v2.yaml#
+>>> +
+>>>    ports:
+>>>      $ref: /schemas/graph.yaml#/properties/ports
+>>>      description: |
+>>> @@ -116,11 +120,12 @@ examples:
+>>>                            <0x0aeb0000 0x2008>;
+>>>                      reg-names = "mdp", "vbif";
+>>>  
+>>> -                    clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
+>>> +                    clocks = <&gcc GCC_DISP_AXI_CLK>,
+>>> +                             <&dispcc DISP_CC_MDSS_AHB_CLK>,
+>>
+>> What does the OPP table have to do with clocks? Adding a clock anywhere 
+>> but the end is an ABI break.
+> 
+> I should split this to a separate patch. And, I must admit, this clock change has already landed. We did not think that it is an ABI break since we have clock-names here.
 
-Regards,
-Robert
-> ---
-> Changes in v4:
-> * Correct title and description
->
-> Changes in v3:
-> * Make sure it applies onto 5.19-rc3
-> * Update the commit description to make it clear this only affects the
-> Gen2 port
->
-> Changes in v2:
-> * Rebase onto next-20220621
-> ---
->  drivers/pci/controller/dwc/pcie-qcom.c | 48 +++++++++++++++-----------
->  1 file changed, 28 insertions(+), 20 deletions(-)
->
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> index a1f1aca2fb59..24708d5d817d 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> @@ -1061,9 +1061,7 @@ static int qcom_pcie_init_2_3_3(struct qcom_pcie *pcie)
->         struct qcom_pcie_resources_2_3_3 *res = &pcie->res.v2_3_3;
->         struct dw_pcie *pci = pcie->pci;
->         struct device *dev = pci->dev;
-> -       u16 offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
->         int i, ret;
-> -       u32 val;
->
->         for (i = 0; i < ARRAY_SIZE(res->rst); i++) {
->                 ret = reset_control_assert(res->rst[i]);
-> @@ -1120,6 +1118,33 @@ static int qcom_pcie_init_2_3_3(struct qcom_pcie *pcie)
->                 goto err_clk_aux;
->         }
->
-> +       return 0;
-> +
-> +err_clk_aux:
-> +       clk_disable_unprepare(res->ahb_clk);
-> +err_clk_ahb:
-> +       clk_disable_unprepare(res->axi_s_clk);
-> +err_clk_axi_s:
-> +       clk_disable_unprepare(res->axi_m_clk);
-> +err_clk_axi_m:
-> +       clk_disable_unprepare(res->iface);
-> +err_clk_iface:
-> +       /*
-> +        * Not checking for failure, will anyway return
-> +        * the original failure in 'ret'.
-> +        */
-> +       for (i = 0; i < ARRAY_SIZE(res->rst); i++)
-> +               reset_control_assert(res->rst[i]);
-> +
-> +       return ret;
-> +}
-> +
-> +static int qcom_pcie_post_init_2_3_3(struct qcom_pcie *pcie)
-> +{
-> +       struct dw_pcie *pci = pcie->pci;
-> +       u16 offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
-> +       u32 val;
-> +
->         writel(SLV_ADDR_SPACE_SZ,
->                 pcie->parf + PCIE20_v3_PARF_SLV_ADDR_SPACE_SIZE);
->
-> @@ -1147,24 +1172,6 @@ static int qcom_pcie_init_2_3_3(struct qcom_pcie *pcie)
->                 PCI_EXP_DEVCTL2);
->
->         return 0;
-> -
-> -err_clk_aux:
-> -       clk_disable_unprepare(res->ahb_clk);
-> -err_clk_ahb:
-> -       clk_disable_unprepare(res->axi_s_clk);
-> -err_clk_axi_s:
-> -       clk_disable_unprepare(res->axi_m_clk);
-> -err_clk_axi_m:
-> -       clk_disable_unprepare(res->iface);
-> -err_clk_iface:
-> -       /*
-> -        * Not checking for failure, will anyway return
-> -        * the original failure in 'ret'.
-> -        */
-> -       for (i = 0; i < ARRAY_SIZE(res->rst); i++)
-> -               reset_control_assert(res->rst[i]);
-> -
-> -       return ret;
->  }
->
->  static int qcom_pcie_get_resources_2_7_0(struct qcom_pcie *pcie)
-> @@ -1596,6 +1603,7 @@ static const struct qcom_pcie_ops ops_2_4_0 = {
->  static const struct qcom_pcie_ops ops_2_3_3 = {
->         .get_resources = qcom_pcie_get_resources_2_3_3,
->         .init = qcom_pcie_init_2_3_3,
-> +       .post_init = qcom_pcie_post_init_2_3_3,
->         .deinit = qcom_pcie_deinit_2_3_3,
->         .ltssm_enable = qcom_pcie_2_3_2_ltssm_enable,
->  };
-> --
-> 2.36.1
->
+xxx-names are only a helper and order of items is always strict, thus
+any change in the order is always ABI break.
+
+Best regards,
+Krzysztof
