@@ -2,161 +2,275 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 03CCA560A19
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jun 2022 21:14:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E338C560A54
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jun 2022 21:33:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229654AbiF2TOV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Jun 2022 15:14:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56826 "EHLO
+        id S230382AbiF2Tdr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Jun 2022 15:33:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42818 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229456AbiF2TOV (ORCPT
+        with ESMTP id S229460AbiF2Tdr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Jun 2022 15:14:21 -0400
-Received: from mo4-p02-ob.smtp.rzone.de (mo4-p02-ob.smtp.rzone.de [81.169.146.171])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4DA073CA5B
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jun 2022 12:14:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1656529877;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=3hHfIWpV+x7WyjiHFVeyfhViAFLAvFBESTeE075T914=;
-    b=bFm8cR2R3YsDjM82CB3n+yFcNWfMZuAw5s40TERoW/8suU6C29ggArandpmBiOQRoc
-    4UUwATwRvSzyIwFiLI69xOZRUGcQ18yOThwf0wlkY3AhTvX4IKJAw9FR1Ntm1sNN2JZz
-    DGiQEb1TlxS2OOXoFhmG5pCtI41GcCgO+5ZRMjpIxTxfeWpKHjxTjIxuJ979+SDV5rUe
-    lTpgMn+jMnwblwBHBFjjjEUDYPF61aUB5PYYLgH+/M7p384jnJjy7CFr1zeIvL/qFiF/
-    kc1MhtRTbvs+241ondEHLwqmY0EgvPHfrQiRKxwf5C421uMxMCxgLHGpXIKdKZXN7Sau
-    QnLg==
-Authentication-Results: strato.com;
-    dkim=none
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u267FZF9PwpcNKLUrK8+86Y="
-X-RZG-CLASS-ID: mo00
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 47.46.1 AUTH)
-    with ESMTPSA id yfdd30y5TJBH0fQ
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Wed, 29 Jun 2022 21:11:17 +0200 (CEST)
-Date:   Wed, 29 Jun 2022 21:11:16 +0200
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc:     ilia.lin@kernel.org, agross@kernel.org, bjorn.andersson@linaro.org,
-        rafael@kernel.org, viresh.kumar@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [RESEND PATCH 4/5] cpufreq: qcom-cpufreq-nvmem: Rename qcs404
- data to cpr_genpd
-Message-ID: <Yryj1Nv/Yu8wShzo@gerhold.net>
-References: <20220629130303.3288306-1-bryan.odonoghue@linaro.org>
- <20220629130303.3288306-5-bryan.odonoghue@linaro.org>
+        Wed, 29 Jun 2022 15:33:47 -0400
+Received: from mail-pg1-x534.google.com (mail-pg1-x534.google.com [IPv6:2607:f8b0:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7AAF22B1A
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jun 2022 12:33:43 -0700 (PDT)
+Received: by mail-pg1-x534.google.com with SMTP id s206so7253942pgs.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jun 2022 12:33:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=xcgTsOBcCCmAqgvSJCfdJb1ZnAUw5E+RtC3/ZrG2YmM=;
+        b=dewAmd6FSCssJU85qaYMQHjIvQ3595Yw8tktnMiLA7skETiJin56JxXLOcjXQhV9+O
+         huWHrgZjWf4ZBG6Tlgbd1NSx1gPellEqVpAY+o/VayuadaJ3resgCVx4qo5xthqVubar
+         OamLhT55tubW+XIjdFtAHXF8dr9UXoUEqAvaw=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=xcgTsOBcCCmAqgvSJCfdJb1ZnAUw5E+RtC3/ZrG2YmM=;
+        b=pSAhmoV6RdqtgcevPmpOLYzO8Od7ODa5s/duY9JFN/4TvCClvgKO0GvF0qoLFYJiUc
+         NHYVaBDkMYTYfjo27etqxHUd4jsiVbFQA1oRjx7vWOPxSPvTtx3uMri9VOQGgqJiZKWd
+         v5ycCZswK3Dl/lgTnG9INo7kTc0wb0xwQsRGvwe3Z3JuXa7AeRRhZPUP+uRBsSVS6nly
+         kSyuyCr6rXs3Gvr1CVHAnHw370xvq11D/4e9fp05jGK8JZ3C9FZjW63u6PkZ34IzVIFd
+         6vQCgyN2PJTL/JocpnvBulfWzZ3tP6iB4M7J2WGQ9YHTKEDCJkG3eIZAzG2ZdxQrtTZ/
+         trPw==
+X-Gm-Message-State: AJIora/m4rJe7s/M2MEkA/j0f9EDKGVCRWUWeL2xFwq9b+TXpcMGkUZv
+        6leMKx2RlLEKAX/iJzrfZTtuJw==
+X-Google-Smtp-Source: AGRyM1speEdW8XN3x69iZSrs/2mCaVZS2QWLEAWucKQqhfpHrSD6oQg5wvUiEEaSHJCjZKTGNRKkXg==
+X-Received: by 2002:a63:9042:0:b0:40d:bb3:79e0 with SMTP id a63-20020a639042000000b0040d0bb379e0mr4268168pge.70.1656531223280;
+        Wed, 29 Jun 2022 12:33:43 -0700 (PDT)
+Received: from localhost ([2620:15c:11a:202:d97e:acfb:9af9:ab11])
+        by smtp.gmail.com with UTF8SMTPSA id gb5-20020a17090b060500b001e31c7aad6fsm2645670pjb.20.2022.06.29.12.33.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 29 Jun 2022 12:33:42 -0700 (PDT)
+Date:   Wed, 29 Jun 2022 12:33:39 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Cc:     helgaas@kernel.org, linux-pci@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_vbadigan@quicinc.com, quic_hemantk@quicinc.com,
+        quic_nitegupt@quicinc.com, quic_skananth@quicinc.com,
+        quic_ramkri@quicinc.com, manivannan.sadhasivam@linaro.org,
+        swboyd@chromium.org, dmitry.baryshkov@linaro.org,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>
+Subject: Re: [PATCH v2 1/2] PCI: qcom: Add system PM support
+Message-ID: <YrypE5KlICZgmEi0@google.com>
+References: <1656055682-18817-1-git-send-email-quic_krichai@quicinc.com>
+ <1656495214-4028-1-git-send-email-quic_krichai@quicinc.com>
+ <1656495214-4028-2-git-send-email-quic_krichai@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20220629130303.3288306-5-bryan.odonoghue@linaro.org>
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_PASS,
-        SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+In-Reply-To: <1656495214-4028-2-git-send-email-quic_krichai@quicinc.com>
+X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jun 29, 2022 at 02:03:02PM +0100, Bryan O'Donoghue wrote:
-> At the moment the CPR genpd based code is named after the qcs404 however
-> msm8936, msm8939 and other antecedent processors of the qcs404 can also
-> make use of this data.
+On Wed, Jun 29, 2022 at 03:03:33PM +0530, Krishna chaitanya chundru wrote:
+> Add suspend and resume pm callbacks.
 > 
-> Rename it to reflect a more generic use.
+> When system suspends, and if the link is in L1ss, disable the clocks
+> so that system enters into low power state to save the maximum power.
+> And when the system resumes, enable the clocks back if they are
+> disabled in the suspend path.
 > 
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Changes since v1:
+> 	- Fixed compilation errors.
+> 
+> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> ---
+>  drivers/pci/controller/dwc/pcie-qcom.c | 81 ++++++++++++++++++++++++++++++++++
+>  1 file changed, 81 insertions(+)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index 6ab9089..8e9ef37 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -41,6 +41,9 @@
+>  #define L23_CLK_RMV_DIS				BIT(2)
+>  #define L1_CLK_RMV_DIS				BIT(1)
+>  
+> +#define PCIE20_PARF_PM_STTS                     0x24
+> +#define PCIE20_PARF_PM_STTS_LINKST_IN_L1SUB    BIT(8)
+> +
+>  #define PCIE20_PARF_PHY_CTRL			0x40
+>  #define PHY_CTRL_PHY_TX0_TERM_OFFSET_MASK	GENMASK(20, 16)
+>  #define PHY_CTRL_PHY_TX0_TERM_OFFSET(x)		((x) << 16)
+> @@ -190,6 +193,8 @@ struct qcom_pcie_ops {
+>  	void (*post_deinit)(struct qcom_pcie *pcie);
+>  	void (*ltssm_enable)(struct qcom_pcie *pcie);
+>  	int (*config_sid)(struct qcom_pcie *pcie);
+> +	int (*enable_clks)(struct qcom_pcie *pcie);
+> +	int (*disable_clks)(struct qcom_pcie *pcie);
+>  };
+>  
+>  struct qcom_pcie_cfg {
+> @@ -199,6 +204,7 @@ struct qcom_pcie_cfg {
+>  	unsigned int has_ddrss_sf_tbu_clk:1;
+>  	unsigned int has_aggre0_clk:1;
+>  	unsigned int has_aggre1_clk:1;
+> +	unsigned int support_pm_ops:1;
 
-There is another power domain that needs to be scaled together with the
-CPU frequency on MSM8916 and MSM8939: (VDD)MX. How do you handle that?
+nit: s/support_pm_ops/supports_system_suspend/ ?
 
-In downstream this is part of the CPR driver and specified as follows:
+It's not really the ops that are supported, but system suspend. 'supports'
+(with an 's' at the end) to specify a characteristic of the
+driver/controller (similar to the 'has_<something>'s above), rather than
+an imperative of what the driver should do.
 
-	qcom,vdd-mx-corner-map = <4 5 7>;
-	qcom,vdd-mx-vmin-method = <4>;
-	vdd-mx-supply = <&pm8916_l3_corner_ao>;
-	qcom,vdd-mx-vmax = <7>;
-	qcom,cpr-corner-map = <1 1 2 2 3 3 3 3 3>; /* MSM8916 */
-	qcom,cpr-corner-map = <1 1 1 2 2 2 2 2 2 2 2 2 2 2 3 3 3 3 3 3
-			       3 3 3 3 3 3 3 3>; /* MSM8939 */
+In any case, it's just a nit :)
 
-On MSM8916 this means to vote for MX corner 4 (&rpmpd_opp_svs_soc) for
-the first two frequencies, then corner 5 (&rpmpd_opp_nominal) and corner 7
-(&rpmpd_opp_super_turbo) for the remaining CPU frequencies. It's similar
-for MSM8939, you just have more OPPs there.
+>  };
+>  
+>  struct qcom_pcie {
+> @@ -209,6 +215,7 @@ struct qcom_pcie {
+>  	struct phy *phy;
+>  	struct gpio_desc *reset;
+>  	const struct qcom_pcie_cfg *cfg;
+> +	unsigned int is_suspended:1;
+>  };
+>  
+>  #define to_qcom_pcie(x)		dev_get_drvdata((x)->dev)
+> @@ -1308,6 +1315,23 @@ static void qcom_pcie_post_deinit_2_7_0(struct qcom_pcie *pcie)
+>  	clk_disable_unprepare(res->pipe_clk);
+>  }
+>  
+> +static int qcom_pcie_enable_clks_2_7_0(struct qcom_pcie *pcie)
+> +{
+> +	struct qcom_pcie_resources_2_7_0 *res = &pcie->res.v2_7_0;
+> +
+> +	return clk_bulk_prepare_enable(res->num_clks, res->clks);
+> +}
+> +
+> +static int qcom_pcie_disable_clks_2_7_0(struct qcom_pcie *pcie)
+> +{
+> +	struct qcom_pcie_resources_2_7_0 *res = &pcie->res.v2_7_0;
+> +
+> +	clk_bulk_disable_unprepare(res->num_clks, res->clks);
+> +
+> +	return 0;
+> +}
+> +
+> +
 
-There was a semi-related discussion about this in [1] (a bit mixed with
-potential ways how to do CPU frequency scaling without CPR). It's been a
-while but I think the conclusion back then was that it's easiest to
-attach both "mx" and "cpr" in this driver and then scale it as part of
-the OPP table.
+nit: delete one empty line
 
-[1]: https://lore.kernel.org/linux-arm-msm/20200403013119.GB20625@builder.lan/
+>  static int qcom_pcie_link_up(struct dw_pcie *pci)
+>  {
+>  	u16 offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
+> @@ -1485,6 +1509,8 @@ static const struct qcom_pcie_ops ops_2_7_0 = {
+>  	.ltssm_enable = qcom_pcie_2_3_2_ltssm_enable,
+>  	.post_init = qcom_pcie_post_init_2_7_0,
+>  	.post_deinit = qcom_pcie_post_deinit_2_7_0,
+> +	.enable_clks = qcom_pcie_enable_clks_2_7_0,
+> +	.disable_clks = qcom_pcie_disable_clks_2_7_0,
+>  };
+>  
+>  /* Qcom IP rev.: 1.9.0 */
+> @@ -1548,6 +1574,7 @@ static const struct qcom_pcie_cfg sc7280_cfg = {
+>  	.ops = &ops_1_9_0,
+>  	.has_tbu_clk = true,
+>  	.pipe_clk_need_muxing = true,
+> +	.support_pm_ops = true,
+>  };
+>  
+>  static const struct dw_pcie_ops dw_pcie_ops = {
+> @@ -1591,6 +1618,8 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+>  
+>  	pcie->cfg = pcie_cfg;
+>  
+> +	pcie->is_suspended = false;
 
-I'll attach an excerpt of the changes that I used on MSM8916 at the end
-of the mail. Note that it does not actually work as-is: IIRC at the
-moment there is still nothing that actually enables the power domains
-listed for CPUs. The CPR driver does not check that, but rpmpd does and
-just ignores the votes.
+not strictly necessary because of kzalloc, but does no harm either.
 
-I submitted a possible patch for this but it just got stuck at some
-point because of all the complexity involved:
-https://lore.kernel.org/linux-pm/20200826093328.88268-1-stephan@gerhold.net/
+> +
+>  	pcie->reset = devm_gpiod_get_optional(dev, "perst", GPIOD_OUT_HIGH);
+>  	if (IS_ERR(pcie->reset)) {
+>  		ret = PTR_ERR(pcie->reset);
+> @@ -1645,6 +1674,57 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+>  	return ret;
+>  }
+>  
+> +static int __maybe_unused qcom_pcie_pm_suspend(struct device *dev)
+> +{
+> +	struct qcom_pcie *pcie = dev_get_drvdata(dev);
+> +	u32 val;
+> +
+> +	if (!pcie->cfg->support_pm_ops)
+> +		return 0;
+> +
+> +	/* if the link is not in l1ss don't turn off clocks */
+> +	val = readl(pcie->parf + PCIE20_PARF_PM_STTS);
+> +	if (!(val & PCIE20_PARF_PM_STTS_LINKST_IN_L1SUB)) {
+> +		dev_err(dev, "Link is not in L1ss\n");
 
-Shortly said: I think you do not just want "cpr" here but also "mx".
+If this is an error, should the function return an error? Otherwise maybe it
+should be a warning.
 
-Thanks,
-Stephan
-
-static const char *msm8916_genpd_names[] = { "mx", "cpr", NULL };
-
-cpu@0 {
-	power-domains = <&CPU_PD0>, <&rpmpd MSM8916_VDDMX_AO>, <&cpr>;
-	power-domain-names = "psci", "mx", "cpr";
-};
-
-cpu_opp_table: cpu-opp-table {
-	compatible = "operating-points-v2-kryo-cpu";
-	opp-shared;
-
-	opp-200000000 {
-		opp-hz = /bits/ 64 <200000000>;
-		required-opps = <&rpmpd_opp_svs_soc>, <&cpr_opp1>;
-	};
-	opp-400000000 {
-		opp-hz = /bits/ 64 <400000000>;
-		required-opps = <&rpmpd_opp_svs_soc>, <&cpr_opp2>;
-	};
-	opp-533333000 {
-		opp-hz = /bits/ 64 <533333000>;
-		required-opps = <&rpmpd_opp_nominal>, <&cpr_opp3>;
-	};
-	opp-800000000 {
-		opp-hz = /bits/ 64 <800000000>;
-		required-opps = <&rpmpd_opp_nominal>, <&cpr_opp4>;
-	};
-	opp-998400000 {
-		opp-hz = /bits/ 64 <998400000>;
-		required-opps = <&rpmpd_opp_super_turbo>, <&cpr_opp5>;
-	};
-	opp-1094400000 {
-		opp-hz = /bits/ 64 <1094400000>;
-		required-opps = <&rpmpd_opp_super_turbo>, <&cpr_opp6>;
-	};
-	opp-1152000000 {
-		opp-hz = /bits/ 64 <1152000000>;
-		required-opps = <&rpmpd_opp_super_turbo>, <&cpr_opp7>;
-	};
-	opp-1209600000 {
-		opp-hz = /bits/ 64 <1209600000>;
-		required-opps = <&rpmpd_opp_super_turbo>, <&cpr_opp8>;
-	};
-	opp-1363200000 {
-		opp-hz = /bits/ 64 <1363200000>;
-		required-opps = <&rpmpd_opp_super_turbo>, <&cpr_opp9>;
-	};
-};
+> +		return 0;
+> +	}
+> +
+> +	if (pcie->cfg->ops->disable_clks)
+> +		pcie->cfg->ops->disable_clks(pcie);
+> +
+> +	if (pcie->cfg->ops->post_deinit)
+> +		pcie->cfg->ops->post_deinit(pcie);
+> +
+> +	pcie->is_suspended = true;
+> +
+> +	return 0;
+> +}
+> +
+> +static int __maybe_unused qcom_pcie_pm_resume(struct device *dev)
+> +{
+> +	struct qcom_pcie *pcie = dev_get_drvdata(dev);
+> +
+> +	if (!pcie->cfg->support_pm_ops)
+> +		return 0;
+> +
+> +	if (!pcie->is_suspended)
+> +		return 0;
+> +
+> +	if (pcie->cfg->ops->enable_clks)
+> +		pcie->cfg->ops->enable_clks(pcie);
+> +
+> +	if (pcie->cfg->ops->post_init)
+> +		pcie->cfg->ops->post_init(pcie);
+> +
+> +	pcie->is_suspended = false;
+> +
+> +	return 0;
+> +}
+> +
+> +static const struct dev_pm_ops qcom_pcie_pm_ops = {
+> +	SET_NOIRQ_SYSTEM_SLEEP_PM_OPS(qcom_pcie_pm_suspend, qcom_pcie_pm_resume)
+> +};
+> +
+>  static const struct of_device_id qcom_pcie_match[] = {
+>  	{ .compatible = "qcom,pcie-apq8084", .data = &apq8084_cfg },
+>  	{ .compatible = "qcom,pcie-ipq8064", .data = &ipq8064_cfg },
+> @@ -1679,6 +1759,7 @@ static struct platform_driver qcom_pcie_driver = {
+>  	.probe = qcom_pcie_probe,
+>  	.driver = {
+>  		.name = "qcom-pcie",
+> +		.pm = &qcom_pcie_pm_ops,
+>  		.suppress_bind_attrs = true,
+>  		.of_match_table = qcom_pcie_match,
+>  	},
+> -- 
+> 2.7.4
+> 
