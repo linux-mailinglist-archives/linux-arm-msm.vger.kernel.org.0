@@ -2,166 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 221BE560B0A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jun 2022 22:31:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7475F560B84
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jun 2022 23:19:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230326AbiF2UbA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Jun 2022 16:31:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55790 "EHLO
+        id S229570AbiF2VTI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Jun 2022 17:19:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59720 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229615AbiF2Ua6 (ORCPT
+        with ESMTP id S229539AbiF2VTH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Jun 2022 16:30:58 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D61B24F27;
-        Wed, 29 Jun 2022 13:30:57 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id D587E620FD;
-        Wed, 29 Jun 2022 20:30:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10AC1C34114;
-        Wed, 29 Jun 2022 20:30:53 +0000 (UTC)
-Date:   Wed, 29 Jun 2022 16:30:52 -0400
-From:   Steven Rostedt <rostedt@goodmis.org>
-To:     Jim Cromie <jim.cromie@gmail.com>
-Cc:     jbaron@akamai.com, linux-kernel@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, amd-gfx@lists.freedesktop.org,
-        intel-gvt-dev@lists.freedesktop.org,
-        intel-gfx@lists.freedesktop.org, gregkh@linuxfoundation.org,
-        daniel.vetter@ffwll.ch, seanpaul@chromium.org, robdclark@gmail.com,
-        mathieu.desnoyers@efficios.com, quic_saipraka@quicinc.com,
-        will@kernel.org, catalin.marinas@arm.com,
-        quic_psodagud@quicinc.com, maz@kernel.org, arnd@arndb.de,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, mingo@redhat.com
-Subject: Re: [PATCH v2 26/27] dyndbg: 4 new trace-events: pr_debug, dev_dbg,
- drm_{,dev}debug
-Message-ID: <20220629163052.6656c0cb@gandalf.local.home>
-In-Reply-To: <20220516225640.3102269-27-jim.cromie@gmail.com>
-References: <20220516225640.3102269-1-jim.cromie@gmail.com>
-        <20220516225640.3102269-27-jim.cromie@gmail.com>
-X-Mailer: Claws Mail 3.17.8 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
+        Wed, 29 Jun 2022 17:19:07 -0400
+Received: from mail-pg1-x533.google.com (mail-pg1-x533.google.com [IPv6:2607:f8b0:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 347DB12741;
+        Wed, 29 Jun 2022 14:19:07 -0700 (PDT)
+Received: by mail-pg1-x533.google.com with SMTP id d129so16483979pgc.9;
+        Wed, 29 Jun 2022 14:19:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=os8p+GPAgFQmOrekd67LxmGjSZ9E3oajR6XVGq4rXGs=;
+        b=Fxa7JJ3tBHPzRrzLasvGyK11P7IMVCNsoz9yBpjCyeHc+PjcVwYvdEk6F3Sj/Hqe5K
+         27ZH6wW65NtW05mDIiGHxfl7iulE9Wb6ZDLfc7N0wkfnaZQ0u255pw6f2ZXioQ+g8zJu
+         r+XjqGvAG6Ob5J7fABtrw1dIC2hpuIR/FhFAPBXj5qkZ8WaqG6hQ/Igpw9WWVV3svRmU
+         atSV23qmTPeuOeBv5E2I0bJJOrDLZIL6JcpKnuLDwy7kBcPEnOvgHIjJMEi7DjaQA/Zn
+         gGq6ws2qdCXzxmBU1lNcFRbR2Hno+yiStMuyzqmdQvtLAEV30/cFeLOOUIjZWB9Gwn0k
+         IV3Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=os8p+GPAgFQmOrekd67LxmGjSZ9E3oajR6XVGq4rXGs=;
+        b=kfYbAi76+YeKcPVZoxAlGiQSV+ixDedbzMRNV7jnc95zq/l7BFOFqic06ig+myHuFb
+         OOQVNUGQROY71PIFDhk/XKoFGXEPDy5jYEyO00RldATgVgadqsayr2R5q3SgIgu6RlFM
+         DSYkVpPK7Bq5rAk8oCQGG2Zc1S82wF2lZjPb/aCoxM+Rqwmp2lrXnYIibUzzBU3ODVlo
+         f8/TUADlblK/Z3OfK7pZWKeWQdYOCusbxDLDQWglx7FbGHdt9INbNfJuKS4aSA5TI6ar
+         S+8XP6fphuj2hHug8Wj8a9bFMhWREgvSF2CW8FvAXvez3YqDQ9rkACPY6Dh7qwKFcbSE
+         Ospw==
+X-Gm-Message-State: AJIora9LySnGNnYc3jtgAnk/4iycf4IY5l2gQTJ1fJh5WWSWzz4mAJAH
+        TRY/stASQWjMcJ9E4REswhs=
+X-Google-Smtp-Source: AGRyM1uwm93lIJuDOjZiKwc+5OlO5luquq44ur9YrjetzeEh60E0gVYtcFvgBeeABInX7xJ5DufvRw==
+X-Received: by 2002:a05:6a00:21c8:b0:4fd:f89f:ec0e with SMTP id t8-20020a056a0021c800b004fdf89fec0emr12174218pfj.83.1656537546574;
+        Wed, 29 Jun 2022 14:19:06 -0700 (PDT)
+Received: from localhost ([2601:1c0:5200:a6:307:a401:7b76:c6e5])
+        by smtp.gmail.com with ESMTPSA id bt11-20020a17090af00b00b001d95c09f877sm2660330pjb.35.2022.06.29.14.19.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 29 Jun 2022 14:19:05 -0700 (PDT)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Rob Clark <robdclark@chromium.org>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+        Dan Carpenter <dan.carpenter@oracle.com>,
+        Emma Anholt <emma@anholt.net>,
+        linux-kernel@vger.kernel.org (open list),
+        Sean Paul <sean@poorly.run>
+Subject: [PATCH 0/2] drm/msm: A couple GPU devcore enhancements
+Date:   Wed, 29 Jun 2022 14:19:14 -0700
+Message-Id: <20220629211919.563585-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.36.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-6.7 required=5.0 tests=BAYES_00,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+From: Rob Clark <robdclark@chromium.org>
 
-Sorry for the late review. I finally got some time to look at this.
+A couple things useful for debugging iova faults:
 
-On Mon, 16 May 2022 16:56:39 -0600
-Jim Cromie <jim.cromie@gmail.com> wrote:
+1. caputre all buffer addresses and sizes even if we don't capture their
+   contents.
+2. capture the GEM buffer debug labels
 
+Rob Clark (2):
+  drm/msm/gpu: Capture all BO addr+size in devcore
+  drm/msm/gpu: Add GEM debug label to devcore
 
-> diff --git a/include/trace/events/drm.h b/include/trace/events/drm.h
-> new file mode 100644
-> index 000000000000..6de80dd68620
-> --- /dev/null
-> +++ b/include/trace/events/drm.h
-> @@ -0,0 +1,68 @@
-> +/* SPDX-License-Identifier: GPL-2.0 */
-> +#undef TRACE_SYSTEM
-> +#define TRACE_SYSTEM drm
-> +
-> +#if !defined(_TRACE_DRM_H) || defined(TRACE_HEADER_MULTI_READ)
-> +#define _TRACE_DRM_H
-> +
-> +#include <linux/tracepoint.h>
-> +
-> +/* drm_debug() was called, pass its args */
-> +TRACE_EVENT(drm_debug,
-> +	    TP_PROTO(int drm_debug_category, struct va_format *vaf),
-> +
-> +	    TP_ARGS(drm_debug_category, vaf),
-> +
-> +	    TP_STRUCT__entry(
-> +		    __field(int, drm_debug_category)
-> +		    __dynamic_array(char, msg, 256)
-> +		    ),
-> +
-> +	    TP_fast_assign(
-> +		    int len;
-> +
-> +		    __entry->drm_debug_category = drm_debug_category;
-> +		    vsnprintf(__get_str(msg), 256, vaf->fmt, *vaf->va);
-> +
-> +		    len = strlen(__get_str(msg));
-> +		    if (len > 0 && (__get_str(msg)[len - 1] == '\n'))
-> +			    len -= 1;
-> +		    __get_str(msg)[len] = 0;
-> +		    ),
-> +
-> +	    TP_printk("%s", __get_str(msg))
-> +);
-> +
-> +/* drm_devdbg() was called, pass its args, preserving order */
-> +TRACE_EVENT(drm_devdbg,
-> +	    TP_PROTO(const struct device *dev, int drm_debug_category, struct va_format *vaf),
-> +
-> +	    TP_ARGS(dev, drm_debug_category, vaf),
-> +
-> +	    TP_STRUCT__entry(
-> +		    __field(const struct device*, dev)
-> +		    __field(int, drm_debug_category)
-> +		    __dynamic_array(char, msg, 256)
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c |  1 +
+ drivers/gpu/drm/msm/msm_gpu.c           | 40 ++++++++-----------------
+ drivers/gpu/drm/msm/msm_gpu.h           |  1 +
+ 3 files changed, 14 insertions(+), 28 deletions(-)
 
-You do not want to hardcode the 256 here. That will cause 256 bytes to be
-reserved on the buffer, and you will not get that back. Might as well make
-it a static array, as you also add 4 bytes to for the offset and size.
+-- 
+2.36.1
 
-I think you want (haven't tested it)
-
-		__dynamic_array(char, msg, get_msg_size(vaf))
-
-Where you have:
-
-static unsigned int get_msg_size(struct va_format *vaf)
-{
-	va_list aq;
-	unsigned int ret;
-
-	va_copy(aq, vaf->va);
-	ret = vsnprintf(NULL, 0, vaf->fmt, aq);
-	va_end(aq);
-
-	return min(ret + 1, 256);
-}
-
-What is in the last parameter of __dynamic_array() is used to calculate the
-size needed to store the dynamic array.
-
-Hmm, looking at other users of __dynamic_array(), this appears to be a
-constant problem. I need to document this better.
-
--- Steve
-
-
-> +		    ),
-> +
-> +	    TP_fast_assign(
-> +		    int len;
-> +
-> +		    __entry->drm_debug_category = drm_debug_category;
-> +		    __entry->dev = dev;
-> +		    vsnprintf(__get_str(msg), 256, vaf->fmt, *vaf->va);
-> +
-> +		    len = strlen(__get_str(msg));
-> +		    if (len > 0 && (__get_str(msg)[len - 1] == '\n'))
-> +			    len -= 1;
-> +		    __get_str(msg)[len] = 0;
-> +		    ),
-> +
-> +	    TP_printk("cat:%d, %s %s", __entry->drm_debug_category,
-> +		      dev_name(__entry->dev), __get_str(msg))
-> +);
-> +
-> +#endif /* _TRACE_DRM_H */
-> +
