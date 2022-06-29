@@ -2,73 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D26A155F5AE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jun 2022 07:32:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 731C055F658
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jun 2022 08:16:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229590AbiF2FcN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Jun 2022 01:32:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52736 "EHLO
+        id S231807AbiF2GOR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Jun 2022 02:14:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55404 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229475AbiF2FcM (ORCPT
+        with ESMTP id S231246AbiF2GOQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Jun 2022 01:32:12 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40F7527B2F;
-        Tue, 28 Jun 2022 22:32:11 -0700 (PDT)
+        Wed, 29 Jun 2022 02:14:16 -0400
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2FD619C27
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jun 2022 23:14:15 -0700 (PDT)
+Received: by mail-ej1-x629.google.com with SMTP id fw3so2756737ejc.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jun 2022 23:14:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1656480731; x=1688016731;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=HIMONIVkKmgkvahLcy/boT057QXRUoGCDFGbCyd0dk0=;
-  b=k21jNLsOWiu2Uf+yr5ZbbfokNbBqDO9DGzCijuxQv9jWQJ619TlbEOtB
-   nKpSxjJjaeN2ejbuMZUcmMxIXaPIR2s1XqbE8SqUInGKKharzt5ubulrV
-   805Ef6ZBPViy37VEMBmHkK2kTaipZ2/yFSUAP52IDjLGEzkWt2dgbcNa/
-   w=;
-Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 28 Jun 2022 22:32:10 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Jun 2022 22:32:10 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Tue, 28 Jun 2022 22:32:09 -0700
-Received: from [10.216.41.7] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Tue, 28 Jun
- 2022 22:32:03 -0700
-Message-ID: <654c8819-5721-838e-4148-6fbdc5fc2dcd@quicinc.com>
-Date:   Wed, 29 Jun 2022 11:01:58 +0530
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=MmF1du2ylVDr8xJMUNJ8PZh1/Xb57TfnDF3b9gRJpt0=;
+        b=FKgRXwQCFkXdqFwyGiX3cIUWyDWovuprXZ/ONaoPETsY5/YgrbFdFxiScnnAMLGBIl
+         uR51YLCM8v/yHodq8992rO5zrgLlGlsT3NLEL861ZEND+kwEsihdZ13Ucqo9NBPlT1Gi
+         C8WILUvP18ED581LFsaxNtNiUSOecljuY+lDt7SwuW12qR4kZ7uhzTNbipG0MTX25DG+
+         OFrDWIxhX8oOCmeRFHHd4iGFpKnAzOXN+GhP71LLiOL7sSuefPVBfOpyZvBKvmU4pCW6
+         lUS7nctXfNAmss5nbUZhwVRrMj39GlIHS/FaH9kP4UDaopo8p2vUiU1sbEQkKX42Lf6H
+         mlsw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=MmF1du2ylVDr8xJMUNJ8PZh1/Xb57TfnDF3b9gRJpt0=;
+        b=vsKR8sQYYRjyq8/bci5YqKRNr+BRAz7XV+qP89C7xsdopYKYVz8aCdteig8i/oCJjn
+         pGGdys4qxWgSk/5TXaTOWq7A20D8iYFrk36j62Uf0EfE5iiV/ak5DTMlLaC0+s4rDLAa
+         l50tKWgLwMEHBSEvFELkuS2KhbKVwJgxm+qJO5Lb7Dy1D5gQM2Sd635DQxEB4Uwycbhz
+         aCxhH6KQXZexywqapeNUKDXLvKdaMkJHlNSLEcPiYNVPoNbWPs/UASshU98pNc9xRGkU
+         x55h2iYx7gFUXTClxwr6wOmU6rafz+QNZik8AfglqbECyMeKttrqnPTI8q8whRyBGb/W
+         iVMQ==
+X-Gm-Message-State: AJIora+TBo/tbzScJ8x3/s7dc1m1QnDH5cmuZN/PcAK7moeD0gCbpPN9
+        Hoq+kO/ePiidrTC0u/WVwfqPyA==
+X-Google-Smtp-Source: AGRyM1sL8drXcAVjnDFcws+DixDxqtS4d3ygjMxZkQkzufaPqB/t4/hIsYtbViUbltel0oQSOYvYCw==
+X-Received: by 2002:a17:907:1c9d:b0:726:3666:2ea4 with SMTP id nb29-20020a1709071c9d00b0072636662ea4mr1665574ejc.547.1656483254247;
+        Tue, 28 Jun 2022 23:14:14 -0700 (PDT)
+Received: from [192.168.0.181] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id d17-20020a1709061f5100b0072846e4dbd9sm534911ejk.215.2022.06.28.23.14.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 28 Jun 2022 23:14:13 -0700 (PDT)
+Message-ID: <e625e2c9-7321-51fa-b9bb-40ed9742ffcc@linaro.org>
+Date:   Wed, 29 Jun 2022 08:14:12 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.2
-Subject: Re: [PATCH v2 1/2] drm/msm/a6xx: Add support for a new 7c3 sku
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: Re: [PATCH v3 2/4] dt-bindings: arm: msm: Convert kpss-acc driver
+ Documentation to yaml
 Content-Language: en-US
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-CC:     freedreno <freedreno@lists.freedesktop.org>,
-        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS 
-        <devicetree@vger.kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Chia-I Wu <olvaffe@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        "Jonathan Marek" <jonathan@marek.ca>,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        "Sean Paul" <sean@poorly.run>, <linux-kernel@vger.kernel.org>
-References: <20220510132256.v2.1.Ibf12c1b99feecc4130f1e3130a3fc4ddd710a2e9@changeid>
- <YrvVPiLQL6d4MrFV@builder.lan>
-From:   Akhil P Oommen <quic_akhilpo@quicinc.com>
-In-Reply-To: <YrvVPiLQL6d4MrFV@builder.lan>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To:     Christian Marangi <ansuelsmth@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Jens Axboe <axboe@kernel.dk>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzk@kernel.org>
+References: <20220628184137.21678-1-ansuelsmth@gmail.com>
+ <20220628184137.21678-3-ansuelsmth@gmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220628184137.21678-3-ansuelsmth@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -77,44 +84,23 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 6/29/2022 9:59 AM, Bjorn Andersson wrote:
-> On Tue 10 May 02:53 CDT 2022, Akhil P Oommen wrote:
->
->> Add a new sku to the fuse map of 7c3 gpu.
->>
->> Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
-> Is this series still needed/wanted? I've been waiting for patch 1 to be
-> merged in the driver so that I can pick up the dts change.
->
-> Regards,
-> Bjorn
-Internally, this sku is on hold. So we can drop this series for now. I 
-will resend it if required in future.
+On 28/06/2022 20:41, Christian Marangi wrote:
+> Convert kpss-acc driver Documentation to yaml.
+> The original Documentation was wrong all along. Fix it while we are
+> converting it.
+> The example was wrong as kpss-acc-v2 should only expose the regs but we
+> don't have any driver that expose additional clocks. The kpss-acc driver
+> is only specific to v1. For this exact reason, limit all the additional
+> bindings (clocks, clock-names, clock-output-names and #clock-cells) to
+> v1 and also flag that these bindings should NOT be used for v2.
+> 
+> Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+> Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
 
--Akhil.
+This is still not fixed and not tested. Since 4 versions of this
+patchset (previously was part of other set).
 
->
->> ---
->>
->> (no changes since v1)
->>
->>   drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 2 ++
->>   1 file changed, 2 insertions(+)
->>
->> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
->> index 841e47a..61bb21d 100644
->> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
->> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
->> @@ -1771,6 +1771,8 @@ static u32 adreno_7c3_get_speed_bin(u32 fuse)
->>   		return 0;
->>   	else if (fuse == 190)
->>   		return 1;
->> +	else if (fuse == 96)
->> +		return 2;
->>   
->>   	return UINT_MAX;
->>   }
->> -- 
->> 2.7.4
->>
+I retract my review. Please test the bindings.
 
+Best regards,
+Krzysztof
