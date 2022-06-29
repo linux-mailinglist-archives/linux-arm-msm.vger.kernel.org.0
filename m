@@ -2,104 +2,235 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B550055FC78
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jun 2022 11:54:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 28D9C55FCC6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jun 2022 12:01:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233039AbiF2Jnu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Jun 2022 05:43:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56740 "EHLO
+        id S233222AbiF2KBK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Jun 2022 06:01:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46142 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232816AbiF2Jnt (ORCPT
+        with ESMTP id S233224AbiF2KBF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Jun 2022 05:43:49 -0400
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A94D3B3D7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jun 2022 02:43:48 -0700 (PDT)
-Received: by mail-ej1-x62f.google.com with SMTP id g26so31397402ejb.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jun 2022 02:43:48 -0700 (PDT)
+        Wed, 29 Jun 2022 06:01:05 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 188163DA77;
+        Wed, 29 Jun 2022 03:01:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=Hhp4iRKsB2fd3GYkMrO2usPvXFHFBKKxfJTZ32PkYi8=;
-        b=uBHK1iXDpPOcx19wUFVC+45GKpJJVU45LOk7BiTSxcdCl5yz/NKu/Et9XqBXQue68i
-         rwMZNvBERx2PsEzpqQ0zfdRHqvoITqxj1vMJ72+fgFK9ifn9yXB+dV8TlZPJJiGZ845+
-         nZWvuDBRUiGh0WqXkzeKA/JOq9iWKHZ7JIxfnu+TCEXa32/E5kDFNySs82uLLoPSO/MZ
-         oxzh3j9QDqFDy/J1GlwpoAUe618+KPJnEWXIqhlTM/yaSDRw2BzS3Io+WeMEEY0V+Bn7
-         5GDIOhlyO4ObprlBmd1l1NTS932hKjxDIjDyeR246XaYMnneWcG31qwgjVTuS0RvcXFZ
-         5lMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=Hhp4iRKsB2fd3GYkMrO2usPvXFHFBKKxfJTZ32PkYi8=;
-        b=CIGqvHnaAGqsjbOAG7BIYAABaHcmlgNs6asrL6PDbotBBvuFo1zzTBTiRkhlqoxT9m
-         lsyAP28P43MSgSlYVNQnjTIDhGSQxPNXvzRfa9s9pGDKZwnWTyf9L8B4hGfLKKMN3ZzW
-         JNgP5Zv8P5VlaHAoWqU/JFL124zUSNH4P4h+LhWFHjeTjVepCwcgLfRC+08VEjNTm+qM
-         /Pf3QyxGHTwO0mPx0CUkjgwYXducuhOM02e+Fee2Q2+tr7Nn9ki3RoxOhSZFkPGo/Fu/
-         VIQ/H+7GMHtERjm8rJPNWRWi1X2bfilGraYeUu3Omv/BZaYVe7m2NQASnSDZuVuENjGD
-         ksvg==
-X-Gm-Message-State: AJIora9jhigEuYUWD+9YnDGgHfMb9v9pXyU8OXoJ89eO9TCgas5m5081
-        fg1Ej27PhdnaoWptg8Q+ZKC/Xw==
-X-Google-Smtp-Source: AGRyM1tVb5Pr3M9ohRSkQukBaigP2Svf1r1uvTIEe45lKwy0lFJ4Isx+daxWnNjOeIci/FPWsukU3Q==
-X-Received: by 2002:a17:907:2d8c:b0:726:2b37:6d44 with SMTP id gt12-20020a1709072d8c00b007262b376d44mr2450515ejc.224.1656495826870;
-        Wed, 29 Jun 2022 02:43:46 -0700 (PDT)
-Received: from [192.168.0.183] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id t4-20020a17090605c400b00706242d297fsm7379465ejt.212.2022.06.29.02.43.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 29 Jun 2022 02:43:46 -0700 (PDT)
-Message-ID: <cf52fbf4-2105-8fa9-5f3b-601a6e132e97@linaro.org>
-Date:   Wed, 29 Jun 2022 11:43:45 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: [PATCH v4 1/3] dt-bindings: thermal: tsens: Add msm8992/4
- compatibles
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>,
-        ~postmarketos/upstreaming@lists.sr.ht
-Cc:     martin.botka@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@linaro.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20220628142359.93100-1-konrad.dybcio@somainline.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220628142359.93100-1-konrad.dybcio@somainline.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1656496864; x=1688032864;
+  h=from:to:cc:subject:date:message-id;
+  bh=Oiuw9HRkwrHzXSQ2ahL9/W1hkjCXG3OGJrLDI40HLPI=;
+  b=frk4eW7EmuEu9c2vVMDCGtgV5RczU+VE4ETU44TuysGJVohAS2MxnHOD
+   KU+th8dpSItsv07oPVdg8Qu/KvXFDpWE4e8Nq1IUW4d7nQ9/stUwKgL5n
+   MGNt+CO5t1Y5BwKCtVil8+hBzxXTA2ZtxZa44cnoh+FwTtOLZNI6ncVjC
+   k=;
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 29 Jun 2022 03:01:04 -0700
+X-QCInternal: smtphost
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 29 Jun 2022 03:01:02 -0700
+X-QCInternal: smtphost
+Received: from hu-vnivarth-hyd.qualcomm.com (HELO hu-sgudaval-hyd.qualcomm.com) ([10.213.111.166])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 29 Jun 2022 15:30:45 +0530
+Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 3994820)
+        id 8FFD1404C; Wed, 29 Jun 2022 15:30:44 +0530 (+0530)
+From:   Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+To:     agross@kernel.org, bjorn.andersson@linaro.org,
+        konrad.dybcio@somainline.org, gregkh@linuxfoundation.org,
+        jirislaby@kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-serial@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     quic_msavaliy@quicinc.com, dianders@chromium.org, mka@chromium.org,
+        swboyd@chromium.org,
+        Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+Subject: [V2] tty: serial: qcom-geni-serial: Fix get_clk_div_rate() which otherwise could return a sub-optimal clock rate.
+Date:   Wed, 29 Jun 2022 15:30:41 +0530
+Message-Id: <1656496841-5853-1-git-send-email-quic_vnivarth@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-Spam-Status: No, score=-4.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 28/06/2022 16:23, Konrad Dybcio wrote:
-> Add the compatibles for msm8992/4 TSENS hardware.
-> 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-> ---
-> No changes.
+In the logic around call to clk_round_rate(), for some corner conditions,
+get_clk_div_rate() could return an sub-optimal clock rate. Also, if an
+exact clock rate was not found lowest clock was being returned.
 
-Rob's ack disappeared...
+Search for suitable clock rate in 2 steps
+a) exact match or within 2% tolerance
+b) within 5% tolerance
+This also takes care of corner conditions.
 
+Reported-by: kernel test robot <lkp@intel.com>
+Fixes: c2194bc999d4 ("tty: serial: qcom-geni-serial: Remove uart frequency table. Instead, find suitable frequency with call to clk_round_rate")
+Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+---
+v2: removed minor optimisations to make more readable
+v1: intial patch contained slightly complicated logic
+---
+ drivers/tty/serial/qcom_geni_serial.c | 122 +++++++++++++++++++++++++---------
+ 1 file changed, 90 insertions(+), 32 deletions(-)
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
+index 2e23b65..d0696d1 100644
+--- a/drivers/tty/serial/qcom_geni_serial.c
++++ b/drivers/tty/serial/qcom_geni_serial.c
+@@ -943,52 +943,111 @@ static int qcom_geni_serial_startup(struct uart_port *uport)
+ 	return 0;
+ }
+ 
+-static unsigned long get_clk_div_rate(struct clk *clk, unsigned int baud,
+-			unsigned int sampling_rate, unsigned int *clk_div)
++static unsigned long find_clk_rate_in_tol(struct clk *clk, unsigned int desired_clk,
++			unsigned int *clk_div, unsigned int percent_tol, bool exact_match)
+ {
++	unsigned long freq;
++	unsigned long div, maxdiv, new_div;
++	u64 mult;
+ 	unsigned long ser_clk;
+-	unsigned long desired_clk;
+-	unsigned long freq, prev;
+-	unsigned long div, maxdiv;
+-	int64_t mult;
+-
+-	desired_clk = baud * sampling_rate;
+-	if (!desired_clk) {
+-		pr_err("%s: Invalid frequency\n", __func__);
+-		return 0;
+-	}
++	unsigned long test_freq, offset, new_freq;
+ 
++	ser_clk = 0;
+ 	maxdiv = CLK_DIV_MSK >> CLK_DIV_SHFT;
+-	prev = 0;
++	div = 1;
+ 
+-	for (div = 1; div <= maxdiv; div++) {
+-		mult = div * desired_clk;
+-		if (mult > ULONG_MAX)
++	while (div <= maxdiv) {
++		mult = (u64)div * desired_clk;
++		if (mult != (unsigned long)mult)
+ 			break;
+ 
+-		freq = clk_round_rate(clk, (unsigned long)mult);
++		/*
++		 * Loop requesting a freq within tolerance and possibly exact freq.
++		 *
++		 * We'll keep track of the lowest freq inexact match we found
++		 * but always try to find a perfect match. NOTE: this algorithm
++		 * could miss a slightly better freq if there's more than one
++		 * freq between (freq - offset) and (freq) but (freq) can't be made
++		 * exactly, but that's OK.
++		 *
++		 * This absolutely relies on the fact that the Qualcomm clock
++		 * driver always rounds up.
++		 * We make use of exact_match as an I/O param.
++		 */
++
++		/* look only for exact match if within tolerance is already found */
++		if (ser_clk)
++			offset = 0;
++		else
++			offset = div_u64(mult * percent_tol, 100);
++
++		test_freq = mult - offset;
++		freq = clk_round_rate(clk, test_freq);
++
++		/*
++		 * A dead-on freq is an insta-win
++		 */
+ 		if (!(freq % desired_clk)) {
+ 			ser_clk = freq;
+-			break;
++			*clk_div = freq / desired_clk;
++			return ser_clk;
+ 		}
+ 
+-		if (!prev)
+-			ser_clk = freq;
+-		else if (prev == freq)
+-			break;
++		if (!ser_clk) {
++			new_div = DIV_ROUND_CLOSEST(freq, desired_clk);
++			new_freq = new_div * desired_clk;
++			offset = (new_freq * percent_tol) / 100;
++
++			if (new_freq - offset <= freq && freq <= new_freq + offset) {
++				/* Save the first (lowest freq) within tolerance */
++				ser_clk = freq;
++				*clk_div = new_div;
++				/* no more search for exact match required in 2nd run */
++				if (!exact_match)
++					break;
++			}
++		}
+ 
+-		prev = freq;
++		div = freq / desired_clk + 1;
++
++		/*
++		 * Only time clock framework doesn't round up is if
++		 * we're past the max clock rate. We're done searching
++		 * if that's the case.
++		 */
++		if (freq < test_freq)
++			break;
+ 	}
+ 
+-	if (!ser_clk) {
+-		pr_err("%s: Can't find matching DFS entry for baud %d\n",
+-								__func__, baud);
+-		return ser_clk;
++	return ser_clk;
++}
++
++static unsigned long get_clk_div_rate(struct clk *clk, unsigned int baud,
++			unsigned int sampling_rate, unsigned int *clk_div)
++{
++	unsigned long ser_clk;
++	unsigned long desired_clk;
++
++	desired_clk = baud * sampling_rate;
++	if (!desired_clk) {
++		pr_err("%s: Invalid frequency\n", __func__);
++		return 0;
+ 	}
+ 
+-	*clk_div = ser_clk / desired_clk;
+-	if (!(*clk_div))
+-		*clk_div = 1;
++	ser_clk = 0;
++	/*
++	 * try to find exact clock rate or within 2% tolerance,
++	 * then within 5% tolerance
++	 */
++	ser_clk = find_clk_rate_in_tol(clk, desired_clk, clk_div, 2, true);
++	if (!ser_clk)
++		ser_clk = find_clk_rate_in_tol(clk, desired_clk, clk_div, 5, false);
++
++	if (!ser_clk)
++		pr_err("Couldn't find suitable clock rate for %d\n", desired_clk);
++	else
++		pr_debug("desired_clk-%d, ser_clk-%d, clk_div-%d\n",
++			desired_clk, ser_clk, *clk_div);
+ 
+ 	return ser_clk;
+ }
+@@ -1021,8 +1080,7 @@ static void qcom_geni_serial_set_termios(struct uart_port *uport,
+ 	if (ver >= QUP_SE_VERSION_2_5)
+ 		sampling_rate /= 2;
+ 
+-	clk_rate = get_clk_div_rate(port->se.clk, baud,
+-		sampling_rate, &clk_div);
++	clk_rate = get_clk_div_rate(port->se.clk, baud, sampling_rate, &clk_div);
+ 	if (!clk_rate)
+ 		goto out_restart_rx;
+ 
+-- 
+Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, hosted by the Linux Foundation.
 
-
-Best regards,
-Krzysztof
