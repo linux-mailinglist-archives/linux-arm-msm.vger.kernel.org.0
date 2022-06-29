@@ -2,70 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F0F1C5601F3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jun 2022 16:07:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ECA935601FE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jun 2022 16:07:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233429AbiF2ODs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Jun 2022 10:03:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59722 "EHLO
+        id S233514AbiF2OEM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Jun 2022 10:04:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60230 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233585AbiF2ODl (ORCPT
+        with ESMTP id S231777AbiF2OEJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Jun 2022 10:03:41 -0400
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E6C365DA
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jun 2022 07:03:38 -0700 (PDT)
-Received: by mail-ed1-x52a.google.com with SMTP id k20so953076edj.13
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jun 2022 07:03:38 -0700 (PDT)
+        Wed, 29 Jun 2022 10:04:09 -0400
+Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2869865DA
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jun 2022 07:04:08 -0700 (PDT)
+Received: by mail-pj1-x1030.google.com with SMTP id a11-20020a17090acb8b00b001eca0041455so1054663pju.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jun 2022 07:04:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=3Fm2QBWRMAcf2SqfXkovtfoitzjHh0Xu8DtDfFRKdko=;
-        b=WE0ux5jIlaFg4gsQbxItLzp5FFtBXMzl1rQaeggZCsOcNFK23ToF4N5Ahxi1xs4fsB
-         kvw6CyeG0YngZ7zEsWP0n/K2Jxul0VCPriuQmqpaBoVpzAO6ed7VHpwPIQEzm8rWIZWz
-         rR4v8PJIrak1HHpJ0coFqXZcjR7950OBwvXjAheWWzbyunZlyz1hxJiBOskN8OESjB65
-         tv1ml8dXftsGEpEO13BXu7FVqjbmrxa1uHSBr1kFvaovTyNFg1HMYsTdPCloCXCQbfKH
-         1tsNgvHKJ7eSDjb6zKTiMlYNdeRSgNBNJZrFxKOUk6KQWKmwFQoWbIqssAB6/dsue/RC
-         OfPA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=EdrRI7wdzcTMpJgXQkU/GBqrnQC4E3t/koP9BuwI4hk=;
+        b=Hq+3CZOcQWTta/OuScGhL1xbqamKUTJbRiqbNVIvykzRrTCR/Y6C5Sc4zCunkzNdA+
+         1nR2a1pdqSg+1QtWDu91e2oV0Ey+3fo9UcH00NMvkRgzBLXAukXkTUq+QeSXUZAveKx4
+         W4+rbEg4KVn9UFMOMmHUBYo6pF8A4rzWIBU3okIZsd/uKL1J442GzYDxTJQcCdnqx2ZP
+         Rtj6eYXyAfIDLqsCY8QNEOR+iCIY2J5dH5kEH/fYp56Cbr7+f6rBj6UkRqR8zAXdtVQn
+         phy2nut5GdYAKnNKxXQ/QtHc8QZZelMQhhn/HPe0c8u2ZQkCC3Y8jFkJRS+2gvjJSgF1
+         BKUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=3Fm2QBWRMAcf2SqfXkovtfoitzjHh0Xu8DtDfFRKdko=;
-        b=uqPsbs23mfn67VtJ/UrrYeGzr2qpJMPGRA9xsEurOqQjKWsN1U6jnlC7afFiAvIuRq
-         jMUCgIQOdqEi3ku6OHGf3bRxit9oTK9Ipe9THCSimiwsy/p4VTCLGppZhsG+YI1170kp
-         Q9qfzC5fTGZqKGQr5OGDNYiCtdOD6cQj4zY+VmOsGhMnMkXgU5e3uE1hNTnAOdgJxryz
-         NX66424CJBxozAhiw/AzomJ4XABmMe+xqrwrShFCIYZwQnsmjyc9HFT2VPNS2jcT57dE
-         eWKOtPjbnTabQiJqRGTjv3MsSUmrLXjsyAMA1Y8ZgSK571Z0ke9OFHJRQG9FC708j2mZ
-         iWdw==
-X-Gm-Message-State: AJIora/JiV8xD4V2ioiOYVguHYU8YWXeiIv36uSWiv3S/PRZ2Nve3ANI
-        Ol5rtO0AQfCp3PCjIt2uHOMU6A==
-X-Google-Smtp-Source: AGRyM1sXo01E7PomYrFjczxvDI2c1Y8J1q7hLBW6UtX+TBb9e4omxuFhlvhkJIPJF8FB43noub0UnQ==
-X-Received: by 2002:a05:6402:501d:b0:437:e000:a898 with SMTP id p29-20020a056402501d00b00437e000a898mr1307482eda.265.1656511416959;
-        Wed, 29 Jun 2022 07:03:36 -0700 (PDT)
-Received: from localhost.localdomain (88-107-17-60.dynamic.dsl.as9105.com. [88.107.17.60])
-        by smtp.gmail.com with ESMTPSA id x2-20020aa7d382000000b00435640c141esm11377343edq.93.2022.06.29.07.03.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Jun 2022 07:03:36 -0700 (PDT)
-From:   Caleb Connolly <caleb.connolly@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Caleb Connolly <caleb.connolly@linaro.org>,
-        Stephan Gerhold <stephan@gerhold.net>
-Subject: [PATCH v2] dmaengine: qcom: bam_dma: fix runtime PM underflow
-Date:   Wed, 29 Jun 2022 15:03:23 +0100
-Message-Id: <20220629140323.116981-1-caleb.connolly@linaro.org>
-X-Mailer: git-send-email 2.36.1
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=EdrRI7wdzcTMpJgXQkU/GBqrnQC4E3t/koP9BuwI4hk=;
+        b=pMdGmRffTsdFg/iv6gTCaAIxiqRzS5xEiaZoR1sQvn4N6d+NqIVHOxk5Os4oaPtHau
+         cxDPPZqIK1gNXfHbfdgDIdVdjSCagdDBhmJ6xSkulATh0mjC18NbKP6csQ7uRD1ULRVh
+         EFA9zz5JSqHYB/LlfdG5TKpLF7Bfcoj4hQ+adyzi1cBEs/ThLPxTFzSI1IbiGgN1kC+D
+         Tb3xEz7ROtsCgY3w1bByrYRHmNQt/TbzVfwim4hEG97zbp3XxIe+PVA8Iuk8w9rnbfiZ
+         cFHRGG7sNWmwTbw6k1wJIpjGeCzFUUawDRzIuolwLBTWqKxyiAf9EZw0e5QC9P+eKYdl
+         TFGg==
+X-Gm-Message-State: AJIora/gWoZ/K3haAVtolvNComVi/jSNcqxwtZ8IQ5KFmiHrRTmg6WP/
+        GrQ1n8v+GoHmU/z4y5U9sl3Od+608aXrjAQy8OHMzQ==
+X-Google-Smtp-Source: AGRyM1tD3gOPXMBjoTZ9lNpZVsjL5tP7UGhJEIGW47E5nFXRUEUZUSIitGuFnNEgEDESNFahoUcNaTwXSgQ5nAub0Jk=
+X-Received: by 2002:a17:90a:4209:b0:1df:b907:ed3d with SMTP id
+ o9-20020a17090a420900b001dfb907ed3dmr4064205pjg.40.1656511447530; Wed, 29 Jun
+ 2022 07:04:07 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20220629084816.125515-1-stephan.gerhold@kernkonzept.com> <20220629084816.125515-3-stephan.gerhold@kernkonzept.com>
+In-Reply-To: <20220629084816.125515-3-stephan.gerhold@kernkonzept.com>
+From:   Loic Poulain <loic.poulain@linaro.org>
+Date:   Wed, 29 Jun 2022 16:03:31 +0200
+Message-ID: <CAMZdPi88AU3J+S+ayzEAiqN+_FcJKJS=6PCH+HVj7+HtpXmuhg@mail.gmail.com>
+Subject: Re: [PATCH v2 2/3] watchdog: pm8916_wdt: Report reboot reason
+To:     Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+Cc:     Wim Van Sebroeck <wim@linux-watchdog.org>,
+        Guenter Roeck <linux@roeck-us.net>,
+        linux-watchdog@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -73,133 +67,91 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Commit dbad41e7bb5f ("dmaengine: qcom: bam_dma: check if the runtime pm enabled")
-caused unbalanced pm_runtime_get/put() calls when the bam is
-controlled remotely. This commit reverts it and just enables pm_runtime
-in all cases, the clk_* functions already just nop the clock is NULL.
+On Wed, 29 Jun 2022 at 10:48, Stephan Gerhold
+<stephan.gerhold@kernkonzept.com> wrote:
+>
+> The PM8916 PMIC provides "power-off reason" (POFF_REASON) registers
+> to allow detecting why the board was powered off or rebooted. This
+> can be used to expose if a reset happened due to a watchdog timeout.
+> The watchdog API also provides status bits for overtemperature and
+> undervoltage which happen to be reported in the same PMIC register.
+>
+> Make this information available as part of the watchdog device
+> so userspace can decide to handle the situation accordingly.
+>
+> Signed-off-by: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
 
-Also clean up a bit by removing unnecessary bamclk null checks.
+Reviewed-by: Loic Poulain <loic.poulain@linaro.org>
 
-Suggested-by: Stephan Gerhold <stephan@gerhold.net>
-Fixes: dbad41e7bb5f ("dmaengine: qcom: bam_dma: check if the runtime pm enabled")
-Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
----
-
-Boot tested on a OnePlus 6
-
-v1 can be found here:
-https://lore.kernel.org/linux-arm-msm/20220609195043.1544625-1-caleb.connolly@linaro.org/
-
- drivers/dma/qcom/bam_dma.c | 39 +++++++++++---------------------------
- 1 file changed, 11 insertions(+), 28 deletions(-)
-
-diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
-index 87f6ca1541cf..2ff787df513e 100644
---- a/drivers/dma/qcom/bam_dma.c
-+++ b/drivers/dma/qcom/bam_dma.c
-@@ -558,14 +558,6 @@ static int bam_alloc_chan(struct dma_chan *chan)
- 	return 0;
- }
- 
--static int bam_pm_runtime_get_sync(struct device *dev)
--{
--	if (pm_runtime_enabled(dev))
--		return pm_runtime_get_sync(dev);
--
--	return 0;
--}
--
- /**
-  * bam_free_chan - Frees dma resources associated with specific channel
-  * @chan: specified channel
-@@ -581,7 +573,7 @@ static void bam_free_chan(struct dma_chan *chan)
- 	unsigned long flags;
- 	int ret;
- 
--	ret = bam_pm_runtime_get_sync(bdev->dev);
-+	ret = pm_runtime_get_sync(bdev->dev);
- 	if (ret < 0)
- 		return;
- 
-@@ -784,7 +776,7 @@ static int bam_pause(struct dma_chan *chan)
- 	unsigned long flag;
- 	int ret;
- 
--	ret = bam_pm_runtime_get_sync(bdev->dev);
-+	ret = pm_runtime_get_sync(bdev->dev);
- 	if (ret < 0)
- 		return ret;
- 
-@@ -810,7 +802,7 @@ static int bam_resume(struct dma_chan *chan)
- 	unsigned long flag;
- 	int ret;
- 
--	ret = bam_pm_runtime_get_sync(bdev->dev);
-+	ret = pm_runtime_get_sync(bdev->dev);
- 	if (ret < 0)
- 		return ret;
- 
-@@ -919,7 +911,7 @@ static irqreturn_t bam_dma_irq(int irq, void *data)
- 	if (srcs & P_IRQ)
- 		tasklet_schedule(&bdev->task);
- 
--	ret = bam_pm_runtime_get_sync(bdev->dev);
-+	ret = pm_runtime_get_sync(bdev->dev);
- 	if (ret < 0)
- 		return IRQ_NONE;
- 
-@@ -1037,7 +1029,7 @@ static void bam_start_dma(struct bam_chan *bchan)
- 	if (!vd)
- 		return;
- 
--	ret = bam_pm_runtime_get_sync(bdev->dev);
-+	ret = pm_runtime_get_sync(bdev->dev);
- 	if (ret < 0)
- 		return;
- 
-@@ -1374,11 +1366,6 @@ static int bam_dma_probe(struct platform_device *pdev)
- 	if (ret)
- 		goto err_unregister_dma;
- 
--	if (!bdev->bamclk) {
--		pm_runtime_disable(&pdev->dev);
--		return 0;
--	}
--
- 	pm_runtime_irq_safe(&pdev->dev);
- 	pm_runtime_set_autosuspend_delay(&pdev->dev, BAM_DMA_AUTOSUSPEND_DELAY);
- 	pm_runtime_use_autosuspend(&pdev->dev);
-@@ -1462,10 +1449,8 @@ static int __maybe_unused bam_dma_suspend(struct device *dev)
- {
- 	struct bam_device *bdev = dev_get_drvdata(dev);
- 
--	if (bdev->bamclk) {
--		pm_runtime_force_suspend(dev);
--		clk_unprepare(bdev->bamclk);
--	}
-+	pm_runtime_force_suspend(dev);
-+	clk_unprepare(bdev->bamclk);
- 
- 	return 0;
- }
-@@ -1475,13 +1460,11 @@ static int __maybe_unused bam_dma_resume(struct device *dev)
- 	struct bam_device *bdev = dev_get_drvdata(dev);
- 	int ret;
- 
--	if (bdev->bamclk) {
--		ret = clk_prepare(bdev->bamclk);
--		if (ret)
--			return ret;
-+	ret = clk_prepare(bdev->bamclk);
-+	if (ret)
-+		return ret;
- 
--		pm_runtime_force_resume(dev);
--	}
-+	pm_runtime_force_resume(dev);
- 
- 	return 0;
- }
--- 
-2.36.1
-
+> ---
+> Changes in v2: Improve error handling (suggested by Guenter)
+> ---
+>  drivers/watchdog/pm8916_wdt.c | 26 +++++++++++++++++++++++++-
+>  1 file changed, 25 insertions(+), 1 deletion(-)
+>
+> diff --git a/drivers/watchdog/pm8916_wdt.c b/drivers/watchdog/pm8916_wdt.c
+> index 670cd79f4cf9..49f1a5204526 100644
+> --- a/drivers/watchdog/pm8916_wdt.c
+> +++ b/drivers/watchdog/pm8916_wdt.c
+> @@ -9,6 +9,12 @@
+>  #include <linux/regmap.h>
+>  #include <linux/watchdog.h>
+>
+> +#define PON_POFF_REASON1               0x0c
+> +#define PON_POFF_REASON1_PMIC_WD       BIT(2)
+> +#define PON_POFF_REASON2               0x0d
+> +#define PON_POFF_REASON2_UVLO          BIT(5)
+> +#define PON_POFF_REASON2_OTST3         BIT(6)
+> +
+>  #define PON_INT_RT_STS                 0x10
+>  #define PMIC_WD_BARK_STS_BIT           BIT(6)
+>
+> @@ -110,12 +116,14 @@ static irqreturn_t pm8916_wdt_isr(int irq, void *arg)
+>  }
+>
+>  static const struct watchdog_info pm8916_wdt_ident = {
+> -       .options = WDIOF_SETTIMEOUT | WDIOF_KEEPALIVEPING | WDIOF_MAGICCLOSE,
+> +       .options = WDIOF_SETTIMEOUT | WDIOF_KEEPALIVEPING | WDIOF_MAGICCLOSE |
+> +                  WDIOF_OVERHEAT | WDIOF_CARDRESET | WDIOF_POWERUNDER,
+>         .identity = "QCOM PM8916 PON WDT",
+>  };
+>
+>  static const struct watchdog_info pm8916_wdt_pt_ident = {
+>         .options = WDIOF_SETTIMEOUT | WDIOF_KEEPALIVEPING | WDIOF_MAGICCLOSE |
+> +                  WDIOF_OVERHEAT | WDIOF_CARDRESET | WDIOF_POWERUNDER |
+>                    WDIOF_PRETIMEOUT,
+>         .identity = "QCOM PM8916 PON WDT",
+>  };
+> @@ -135,6 +143,7 @@ static int pm8916_wdt_probe(struct platform_device *pdev)
+>         struct pm8916_wdt *wdt;
+>         struct device *parent;
+>         int err, irq;
+> +       u8 poff[2];
+>
+>         wdt = devm_kzalloc(dev, sizeof(*wdt), GFP_KERNEL);
+>         if (!wdt)
+> @@ -175,6 +184,21 @@ static int pm8916_wdt_probe(struct platform_device *pdev)
+>                 wdt->wdev.info = &pm8916_wdt_ident;
+>         }
+>
+> +       err = regmap_bulk_read(wdt->regmap, wdt->baseaddr + PON_POFF_REASON1,
+> +                              &poff, ARRAY_SIZE(poff));
+> +       if (err) {
+> +               dev_err(dev, "failed to read POFF reason: %d\n", err);
+> +               return err;
+> +       }
+> +
+> +       dev_dbg(dev, "POFF reason: %#x %#x\n", poff[0], poff[1]);
+> +       if (poff[0] & PON_POFF_REASON1_PMIC_WD)
+> +               wdt->wdev.bootstatus |= WDIOF_CARDRESET;
+> +       if (poff[1] & PON_POFF_REASON2_UVLO)
+> +               wdt->wdev.bootstatus |= WDIOF_POWERUNDER;
+> +       if (poff[1] & PON_POFF_REASON2_OTST3)
+> +               wdt->wdev.bootstatus |= WDIOF_OVERHEAT;
+> +
+>         /* Configure watchdog to hard-reset mode */
+>         err = regmap_write(wdt->regmap,
+>                            wdt->baseaddr + PON_PMIC_WD_RESET_S2_CTL,
+> --
+> 2.30.2
+>
