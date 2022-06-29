@@ -2,76 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0474255F546
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jun 2022 06:30:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CD0AB55F571
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jun 2022 07:00:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229868AbiF2E35 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Jun 2022 00:29:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44848 "EHLO
+        id S229541AbiF2FAN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Jun 2022 01:00:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60952 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229623AbiF2E34 (ORCPT
+        with ESMTP id S229475AbiF2FAM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Jun 2022 00:29:56 -0400
-Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 919D22A25B
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jun 2022 21:29:53 -0700 (PDT)
-Received: by mail-oi1-x235.google.com with SMTP id h65so20029356oia.11
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jun 2022 21:29:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=LsNHzGbkuQ0ikYT/nQZumtGtHKyGK4TJkVZyZ8Oslx4=;
-        b=zTBheeC9uY3ar46fXbbYgTH1O05N1u298bqy4nNOcoohcEmDfXUDmut0iOYG+xdl2c
-         Y9rZQPmLNOiQr/O07Zfik/QSer4mX43ruVWSvEhhSOrgSlYJSl7wcukLqv2yD85cBDB9
-         t26B5SAkGTch5Yvng2cpsP9oiqlCEsVjq96VvOrou2/gOqjp4jN3kqfW+FTQE/RxAnRE
-         Bk4lVmAMA1W8ad58wDSxJFycFkvZOrKBUHQfkr9q76y/tBSAAWeWu8OEuyx0R8JoXa4g
-         afptFf3Cut7L+u/bDr+TTptIOJOh1x09L0LYCp2jcjiMeWPdRrYXMWdPOIHo/EZTKttK
-         Eqsg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=LsNHzGbkuQ0ikYT/nQZumtGtHKyGK4TJkVZyZ8Oslx4=;
-        b=ABi5NjZ4nTOxY24UR59dyQkJMiWdESyrqxmsC3nfxUIf4ePo3SJTmwg3D56LaKlSuL
-         C7Cv9J+BXat4Fj/F3ZwKXMz4hu1MZ3zKuLvBHsIiX4DPVxLppp+4EJoxw3v6nYVJavku
-         RaKMppYEfXKELwsmmlSbC5Su6QZM4kUBRU8mvmM+aqiFtstT4sYRvFo9aqrmEJf8tB0A
-         Hao5T/Ifdu3IOyKePWtH29qzYQ5vLJhetm2sW1zkliQAT55v2c4ftaSVX3VFospbdmez
-         eoFBZhj1+y9SAJkXaMVgaQAZgcZAyeLwSjVEraL0b7V/XadEkB6YgUH/3UrRColkQRd8
-         wRIw==
-X-Gm-Message-State: AJIora/BbqqZvT56TzOvp6RwZfmVPPfNxqPNUdiI9wVaAKP8mP5uYLmR
-        yq4rAmxsJOZz9fUSQhs/9IYXyw==
-X-Google-Smtp-Source: AGRyM1urAWT89N7cpLwph3oPJCnPahOlsnfZJ9b7JsB3ugSECMdMylrbT0nE50nn9tcWXfcklF7JSQ==
-X-Received: by 2002:a05:6808:68e:b0:335:4901:1b2f with SMTP id k14-20020a056808068e00b0033549011b2fmr842227oig.149.1656476992933;
-        Tue, 28 Jun 2022 21:29:52 -0700 (PDT)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id r15-20020a056830080f00b0060c574ebae6sm8965045ots.76.2022.06.28.21.29.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Jun 2022 21:29:52 -0700 (PDT)
-Date:   Tue, 28 Jun 2022 23:29:50 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Akhil P Oommen <quic_akhilpo@quicinc.com>
-Cc:     freedreno <freedreno@lists.freedesktop.org>,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Rob Clark <robdclark@gmail.com>,
-        OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS 
-        <devicetree@vger.kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Chia-I Wu <olvaffe@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        Sean Paul <sean@poorly.run>, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 1/2] drm/msm/a6xx: Add support for a new 7c3 sku
-Message-ID: <YrvVPiLQL6d4MrFV@builder.lan>
-References: <20220510132256.v2.1.Ibf12c1b99feecc4130f1e3130a3fc4ddd710a2e9@changeid>
+        Wed, 29 Jun 2022 01:00:12 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E40291DA65;
+        Tue, 28 Jun 2022 22:00:09 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 6FFAB60F81;
+        Wed, 29 Jun 2022 05:00:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7494C34114;
+        Wed, 29 Jun 2022 05:00:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1656478808;
+        bh=LzISrZ8nawMpb8hJijKZtkKzjzGJ15T7qX5GvMY7oiQ=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=eVx7YZs4x7vexbi+1+THxjafiRTSvaILsUm0Sj3CSwUrugrohLYMtolLOwoCdXSL3
+         ZqONu9hS7VAlynL84rwny0h2JAI/oWglqHxS6SKs3Js6yzfsUeJt5nKzNVQGRiL1J5
+         7HyIm3vGLAnuA8B21Crwe88BJr5Sf+AdIAjMdh7cvSvtRculfhBS2Pp7ZpjCjy3wRx
+         fT3SSTUDtAQ6hZvRAJShf8+sszlfwh8IOHwCtixYwnn+l3ZhhpHNiYPGXpfCZCjh2U
+         pIwdUTCOT48ANgQ4xGVhgc/ZcoPucxwmVdm71z2GHfMjRA0RRAeuXHWJiNdDy4Rq3y
+         gLol19pyRWAKQ==
+Date:   Wed, 29 Jun 2022 10:30:04 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        broonie@kernel.org, robh+dt@kernel.org, quic_plai@quicinc.com,
+        bgoswami@quicinc.com, perex@perex.cz, tiwai@suse.com,
+        srinivas.kandagatla@linaro.org, quic_rohkumar@quicinc.com,
+        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        swboyd@chromium.org, judyhsiao@chromium.org
+Subject: Re: [PATCH v5 0/2] Add software clock gating requirement check
+Message-ID: <YrvcVOo+f3+W4aoz@matsya>
+References: <1654863815-3970-1-git-send-email-quic_srivasam@quicinc.com>
+ <YrQfs7HUIOV5x8Ub@matsya>
+ <7b532c96-e36b-207e-532c-8b41f7106831@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220510132256.v2.1.Ibf12c1b99feecc4130f1e3130a3fc4ddd710a2e9@changeid>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+In-Reply-To: <7b532c96-e36b-207e-532c-8b41f7106831@quicinc.com>
+X-Spam-Status: No, score=-7.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -80,38 +61,20 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 10 May 02:53 CDT 2022, Akhil P Oommen wrote:
+On 27-06-22, 18:01, Srinivasa Rao Mandadapu wrote:
+> 
+> On 6/23/2022 1:39 PM, Vinod Koul wrote:
+> Thanks for your time Vinod!!!
+> > On 10-06-22, 17:53, Srinivasa Rao Mandadapu wrote:
+> > > This patch set is to add software clock gating requirement check
+> > This fails to apply for me, please rebase on sdw-next and resend
+> > 
+> > Thanks
+> 
+> It seems one patch is missing in your branch, which accepted by Mark brown.
 
-> Add a new sku to the fuse map of 7c3 gpu.
-> 
-> Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+Ok. Pls send on -next and if there are conflicts we can coordinate with
+Mark.
 
-Is this series still needed/wanted? I've been waiting for patch 1 to be
-merged in the driver so that I can pick up the dts change.
-
-Regards,
-Bjorn
-
-> ---
-> 
-> (no changes since v1)
-> 
->  drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 2 ++
->  1 file changed, 2 insertions(+)
-> 
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> index 841e47a..61bb21d 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> @@ -1771,6 +1771,8 @@ static u32 adreno_7c3_get_speed_bin(u32 fuse)
->  		return 0;
->  	else if (fuse == 190)
->  		return 1;
-> +	else if (fuse == 96)
-> +		return 2;
->  
->  	return UINT_MAX;
->  }
-> -- 
-> 2.7.4
-> 
+-- 
+~Vinod
