@@ -2,60 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B1F9955F97F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jun 2022 09:46:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9BFE755F9A2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jun 2022 09:56:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232449AbiF2HpV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Jun 2022 03:45:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60356 "EHLO
+        id S232484AbiF2HxT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Jun 2022 03:53:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37648 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232208AbiF2HpU (ORCPT
+        with ESMTP id S232520AbiF2HxG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Jun 2022 03:45:20 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 186DC381A1;
-        Wed, 29 Jun 2022 00:45:20 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id B891FB821E9;
-        Wed, 29 Jun 2022 07:45:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60AA3C34114;
-        Wed, 29 Jun 2022 07:45:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1656488717;
-        bh=KPsgs8cYmzbFpz1SwOImxvV/uU9kcBZIAD+8codpXLQ=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=ImpbNVd+JxaeZ8Tnquye4c9vziA7b9nPF959oSBvvWhMB7SILDNMvwuSCoZtzLNLQ
-         JzFAT1CGfatpQsg6lIsQdb1BZii5Eb+HWI1CLi4JJ1+TKDoCAql3e3twWRzn0gVCg3
-         j8D44U/P4FHxzeYZlUN9VPqYISWI6XI6YKYtzkAbvMb59wKxterFwWJNTI4zLBvIen
-         JqT9belF7T5+nTAb948LtUSroPwjI6oaBsPyUs/wsEbbF3CrKF49YLyPfVrL9ItGvh
-         /Bt7HkhP9LXXnM5oEcRDBF3NUR0wOkXb/FjwzFt1mBxADIXV83hPoTwDmwwn8A5ZZo
-         jb2xHFqIYIdZQ==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1o6SNq-00014n-PL; Wed, 29 Jun 2022 09:45:10 +0200
-Date:   Wed, 29 Jun 2022 09:45:10 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Johan Hovold <johan+linaro@kernel.org>
-Subject: Re: [PATCH v3 5/5] arm64: dts: qcom: add SA8540P and ADP
-Message-ID: <YrwDBpvW4PIWRQ4X@hovoldconsulting.com>
-References: <20220629041438.1352536-1-bjorn.andersson@linaro.org>
- <20220629041438.1352536-6-bjorn.andersson@linaro.org>
+        Wed, 29 Jun 2022 03:53:06 -0400
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9C883BBC7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jun 2022 00:52:55 -0700 (PDT)
+Received: by mail-ed1-x52c.google.com with SMTP id z19so20965585edb.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jun 2022 00:52:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=teySt0pfe1Fl6EJ0ZuEY5uNGoMIrDwOQRCk/lxEIa6o=;
+        b=K64DhEKw+AgSltwOxeQ0c8C2FCcOksM+do+eTV2cix59m6OCYKyc+vihLA6PvjPt5w
+         ykY1AAZVLxLoAZaR5ANvBE7mLZIjHIRqZnAsj4yrdwi+4qGGDUOF0ITL7XXWIAtVIZHN
+         G2NzNZEGMlHSvs50P0UP6jQNtgYxAtlOMV2babYIvwCUWqWMGa/nmhqDQgpm7Pm9zfgv
+         JMRZg5pCWXmqINVYZNiZ+MJPj521yLOf+3LWNrE4TTLoNblS50LpH3uQq22PqOEiiGBd
+         OcwkZBk4Z8XweCXaFuXSPj5c+aEaDZwTYN2Wi9VwCq0cTJZFTR/kcQaAy9UAFvbTTsWJ
+         u24g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=teySt0pfe1Fl6EJ0ZuEY5uNGoMIrDwOQRCk/lxEIa6o=;
+        b=Bi8lLGyN38rupn5GP/DqQRbEFlU57+8yxpnsYg1wYRykUQNAq2Drh7mOr/NesHP+c/
+         m6KPKOM2tVZGcF8+DmkS81NWvEMXzgfN7GE5ftLVnLvZocw6vbASueq1DuPEeVZxyaTN
+         8yIM60fj6+9DW1fjoWzffrW5UjTw0ay4BI2D4/YZzlAgrNQoPQYXXWeFCF92i8++rX8E
+         cDtWkfopLX/hrOs+MdiQukjtvi9AyriZBA//Uhkg9J+3+CUohVtg0PW//8XgHmQlcJU9
+         fzPtzU5hLGV9egjpnuUKav3ouFD6eFYOLY0iki7df7Mi3bvtYfE74NrYBGaN4jRJzs2S
+         TMWw==
+X-Gm-Message-State: AJIora9+EkU5zquvDd33XsoM44YPcjKH8f5mugqwArtVdLeJGkCR8Z8a
+        DTGDqRqKslq70M20jLDtpn7I/AiPmjc91g==
+X-Google-Smtp-Source: AGRyM1ve+eWHy1pLQJ5e60zFGg+uYODIvAuCqfuQnHIBJbRUTWOoZhbqbgueEeoU9X5EA5kdTqKv8g==
+X-Received: by 2002:aa7:cb83:0:b0:435:9170:8e3b with SMTP id r3-20020aa7cb83000000b0043591708e3bmr2539172edt.144.1656489174232;
+        Wed, 29 Jun 2022 00:52:54 -0700 (PDT)
+Received: from localhost.localdomain (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id t2-20020a056402020200b00437db6acaeesm432173edv.95.2022.06.29.00.52.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 29 Jun 2022 00:52:53 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Georgi Djakov <djakov@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Subject: [PATCH v5 0/4] soc/arm64: qcom: Add initial version of bwmon
+Date:   Wed, 29 Jun 2022 09:52:46 +0200
+Message-Id: <20220629075250.17610-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220629041438.1352536-6-bjorn.andersson@linaro.org>
-X-Spam-Status: No, score=-7.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -64,54 +74,74 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jun 28, 2022 at 09:14:38PM -0700, Bjorn Andersson wrote:
-> Introduce the Qualcomm SA8540P automotive platform and the SA8295P ADP
-> development board.
-> 
-> The SA8540P and SC8280XP are fairly similar, so the SA8540P is built
-> ontop of the SC8280XP dtsi to reduce duplication. As more advanced
-> features are integrated this might be re-evaluated.
-> 
-> This initial contribution supports SMP, CPUFreq, cluster idle, UFS, RPMh
-> regulators, debug UART, PMICs, remoteprocs (NSPs crashes shortly after
-> booting) and USB.
-> 
-> The SA8295P ADP contains four PM8450 PMICs, which according to their
-> revid are compatible with PM8150. They are defined within the ADP for
-> now, to avoid creating additional .dtsi files for PM8150 with just
-> addresses changed - and to allow using the labels from the schematics.
-> 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-> ---
-> 
-> Changes since v2:
-> - Sorted "status" property last throughout the patch
-> - Dropped empty reserved-memory node
-> - Dropped multiport vbus-enable pinctrl states for now
+Hi,
 
-> +/* PINCTRL */
-> +&pm8450c_gpios {
-> +	usb2_en_state: usb2-en-state {
-> +		pins = "gpio9";
-> +		function = "normal";
-> +		output-high;
-> +		power-source = <0>;
-> +	};
-> +};
-> +
-> +&pm8450e_gpios {
-> +	usb3_en_state: usb3-en-state {
-> +		pins = "gpio5";
-> +		function = "normal";
-> +		output-high;
-> +		power-source = <0>;
-> +	};
-> +};
+Changes since v4
+================
+1. Patch #1 (binding): Use qcom,msm8998-cpu-bwmon fallback compatible, only one
+   interconnect. Rename to qcom,msm8998-cpu-bwmon.yaml. This reflects
+   discussion with Bjorn, about the proper fallback compatible. Driver was
+   tested only on SDM845, so only that one compatible is actually implemented.
+   Keep the reviews/acks as the change is not significant.
+2. Patch #4 (DTS): Use qcom,msm8998-cpu-bwmon fallback compatible, only one
+   interconnect, use the LLCC bandwidth in OPP.
 
-You forgot to remove these two when you removed the other multiport
-vbus-enable states.
+remove unused irq_enable (kbuild robot);
+Changes since v3
+================
+1. Patch #2 (bwmon): remove unused irq_enable (kbuild robot);
+   split bwmon_clear() into clearing counters and interrupts, so bwmon_start()
+   does not clear the counters twice.
 
-Looks good otherwise.
+Changes since v2
+================
+1. Spent a lot of time on benchmarking and learning the BWMON behavior.
+2. Drop PM/OPP patch - applied.
+3. Patch #1: drop opp-avg-kBps.
+4. Patch #2: Add several comments explaining pieces of code and BWMON, extend
+   commit msg with measurements, extend help message, add new #defines to document
+   some magic values, reorder bwmon clear/disable/enable operations to match
+   downstream source and document this with comments, fix unit count from 1 MB
+   to 65 kB.
+5. Patch #4: drop opp-avg-kBps.
+6. Add accumulated Rb tags.
 
-Johan
+Changes since v1
+================
+1. Add defconfig change.
+2. Fix missing semicolon in MODULE_AUTHOR.
+3. Add original downstream (msm-4.9 tree) copyrights to the driver.
+
+Description
+===========
+BWMON is a data bandwidth monitor providing throughput/bandwidth over certain
+interconnect links in a SoC.  It might be used to gather current bus usage and
+vote for interconnect bandwidth, thus adjusting the bus speed based on actual
+usage.
+
+The work is built on top of Thara Gopinath's patches with several cleanups,
+changes and simplifications.
+
+Best regards,
+Krzysztof
+
+Krzysztof Kozlowski (4):
+  dt-bindings: interconnect: qcom,msm8998-cpu-bwmon: add BWMON device
+  soc: qcom: icc-bwmon: Add bandwidth monitoring driver
+  arm64: defconfig: enable Qualcomm Bandwidth Monitor
+  arm64: dts: qcom: sdm845: Add CPU BWMON
+
+ .../interconnect/qcom,msm8998-cpu-bwmon.yaml  |  80 ++++
+ MAINTAINERS                                   |   7 +
+ arch/arm64/boot/dts/qcom/sdm845.dtsi          |  38 ++
+ arch/arm64/configs/defconfig                  |   1 +
+ drivers/soc/qcom/Kconfig                      |  15 +
+ drivers/soc/qcom/Makefile                     |   1 +
+ drivers/soc/qcom/icc-bwmon.c                  | 421 ++++++++++++++++++
+ 7 files changed, 563 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/interconnect/qcom,msm8998-cpu-bwmon.yaml
+ create mode 100644 drivers/soc/qcom/icc-bwmon.c
+
+-- 
+2.34.1
+
