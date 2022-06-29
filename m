@@ -2,80 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 76F65560C2F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Jun 2022 00:16:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4D63F560C5F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Jun 2022 00:39:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229632AbiF2WPX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Jun 2022 18:15:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39754 "EHLO
+        id S230188AbiF2WjM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Jun 2022 18:39:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51898 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229945AbiF2WPW (ORCPT
+        with ESMTP id S230080AbiF2WhJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Jun 2022 18:15:22 -0400
-Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B247F33E8A
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jun 2022 15:15:20 -0700 (PDT)
-Received: by mail-oi1-x22d.google.com with SMTP id be10so23556203oib.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jun 2022 15:15:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=mVoh40gI4rO7l5P610TuxYrPnSY080uxRzgBN6iYHPw=;
-        b=J1EwYJaAuhZYWSzaIMQPrFvichlEBV0wEJXVGgxiGkfuiW+LSAUKhLXvFor3y/gY1I
-         g3G55YwwfAtYsFNCQU8luQfEzkAkaPjhdlG7yLKWNA4GRVnA32+sM/PnVfP6m/I2yL3N
-         QBDpAhJJfkc47+mpEs2pdgJjynB//53l3WQeM=
+        Wed, 29 Jun 2022 18:37:09 -0400
+Received: from mail-io1-f48.google.com (mail-io1-f48.google.com [209.85.166.48])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8CE221DA45;
+        Wed, 29 Jun 2022 15:37:07 -0700 (PDT)
+Received: by mail-io1-f48.google.com with SMTP id z191so17439763iof.6;
+        Wed, 29 Jun 2022 15:37:07 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=mVoh40gI4rO7l5P610TuxYrPnSY080uxRzgBN6iYHPw=;
-        b=XxUyIMR1M3hCZb8np+W3w4+NxHfLfzgmL7jDIlx7FGvxrFRDJiSfdrDAhRz+m5VYFB
-         mm8LClEThLDqM+GS4CrXipRoq/bcOfFaLOHmkb4ImgYbx1QQKqJk3HLzr+WqYHyPRba1
-         iZBEejbjl+qkINBsFhL16z/npHOWJRVJMR9GM0ST8V6piGc3cMyenX5j7T81GxfBMyt0
-         KfxJdyv0+U8ktN4yW5NXzY89GN057mO4jeoj39+MlmvlVG8XFdE/x6nhnxPO0mnKe31G
-         d3w9hqdOsxXWfNYY67RfkgzLmzEjzmITfM0dc6bSwRiiQKWdAfvl8agB9/SKqbpjkG9R
-         JTAA==
-X-Gm-Message-State: AJIora/drLvuPs8lxgmacESWroxEP895WJxXshWDX/Y6y2cmOIF0Jkot
-        CCRrnULyZlRGwMOu0P0I/PjIlkT0cQQiSivAuxo6tw==
-X-Google-Smtp-Source: AGRyM1tbuJ+dTBm80e52XefpYch+GdMWbSr4bA36AZQ68tY4ma07ZyFuFFne+0loAcndzlIIccRQmt/8JirxK9nrK/k=
-X-Received: by 2002:a05:6808:171c:b0:334:9342:63ef with SMTP id
- bc28-20020a056808171c00b00334934263efmr3625283oib.63.1656540920035; Wed, 29
- Jun 2022 15:15:20 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 29 Jun 2022 15:15:19 -0700
-MIME-Version: 1.0
-In-Reply-To: <20220628053148.GA21797@hu-pkondeti-hyd.qualcomm.com>
-References: <1654158277-12921-1-git-send-email-quic_kriskura@quicinc.com>
- <YpkRDi2m7cLaKYEf@google.com> <Yp5nf2w8uVZ38/XZ@google.com>
- <Yqd9IHQEj3Ex+FcF@google.com> <YqjLHyUVEjf7I3MI@google.com>
- <20220616091110.GA24114@hu-pkondeti-hyd.qualcomm.com> <YqtlRQOwb3t6Xtd0@google.com>
- <20220620085415.GA13744@hu-pkondeti-hyd.qualcomm.com> <CAE-0n52bq9feA6BVdAp791SWQtT1Yj4M2ppg3o_KOaRFO8r+0Q@mail.gmail.com>
- <20220628053148.GA21797@hu-pkondeti-hyd.qualcomm.com>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Wed, 29 Jun 2022 15:15:19 -0700
-Message-ID: <CAE-0n50PGw_XSZ0-iV7gem6+-LENoq6ZVOwX3f+0XjkrHg-rLw@mail.gmail.com>
-Subject: Re: [PATCH v20 2/5] usb: dwc3: core: Host wake up support from system suspend
-To:     Pavan Kondeti <quic_pkondeti@quicinc.com>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Krishna Kurapati <quic_kriskura@quicinc.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
+        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
+         :message-id;
+        bh=sLQ/4d3QFAtHYu+uCD8QMISazPHvyTrVmvteNeKvuaQ=;
+        b=oJ65tYdYb/RqGjj1/azJ7QR/N1GMOeY2BwxT6UkOFg4x3SUCu2BO8vbDq2giqMuGp+
+         9fiVEyocdz61rmgkJnUQL0Dp1hV0Y8I9i9VZ9ivonz5+cmkou+4rUXYH2QJUwbY3RpRD
+         yuZ3dW6Qy9PZKCS1uUN919x4KtFBZBXM/NY1tRQIQzc4Z5WwZXKoesVpx7BfRqOfprNK
+         WZwO30Ilqis9RGZkQmLEf7T1LsxWMTeWN076LuT2OTpR9+CnpBaivNArGgUmP1rhUNQX
+         BQ90tGTfBZIJAJeS3YpVdll/VzZ0YImzRzR332Jqjb7wUlTg5pGGL3xeM4j4iGX2eal2
+         rzhQ==
+X-Gm-Message-State: AJIora+u8/ZCiIF2O/NYWRwAqBKXKiR+TYYw38/U0qt21JFQxcCDjA1P
+        PxCxhmOEi2kcdoletJDsAA==
+X-Google-Smtp-Source: AGRyM1sghOTGd6KQzVVMS0L07/3dc/2oKvsyva/HwzKPzivIp90kjrJpUzWax9hkpqTcOZ7IJSoZtA==
+X-Received: by 2002:a05:6638:2385:b0:332:236c:3b98 with SMTP id q5-20020a056638238500b00332236c3b98mr3326022jat.160.1656542226764;
+        Wed, 29 Jun 2022 15:37:06 -0700 (PDT)
+Received: from robh.at.kernel.org ([64.188.179.253])
+        by smtp.gmail.com with ESMTPSA id m47-20020a026a6f000000b00339d0617be1sm7750609jaf.35.2022.06.29.15.37.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 29 Jun 2022 15:37:06 -0700 (PDT)
+Received: (nullmailer pid 1042494 invoked by uid 1000);
+        Wed, 29 Jun 2022 22:36:59 -0000
+From:   Rob Herring <robh@kernel.org>
+To:     Christian Marangi <ansuelsmth@gmail.com>
+Cc:     devicetree@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Jens Axboe <axboe@kernel.dk>,
         Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Mathias Nyman <mathias.nyman@intel.com>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, quic_ppratap@quicinc.com,
-        quic_vpulyala@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, linux-clk@vger.kernel.org,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-kernel@vger.kernel.org
+In-Reply-To: <20220629121441.6552-4-ansuelsmth@gmail.com>
+References: <20220629121441.6552-1-ansuelsmth@gmail.com> <20220629121441.6552-4-ansuelsmth@gmail.com>
+Subject: Re: [PATCH v4 3/5] dt-bindings: arm: msm: Rework kpss-gcc driver Documentation to yaml
+Date:   Wed, 29 Jun 2022 16:36:59 -0600
+Message-Id: <1656542219.667164.1042488.nullmailer@robh.at.kernel.org>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -83,56 +68,84 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Pavan Kondeti (2022-06-27 22:31:48)
-> On Mon, Jun 27, 2022 at 01:02:49PM -0700, Stephen Boyd wrote:
-> > Quoting Pavan Kondeti (2022-06-20 01:54:15)
-> > >
-> > > Would like to hear other people thoughts on this.
-> > >
-> >
-> > I'm not following very closely but it sounds like a problem that may be
-> > solved by using the component driver code (see
-> > include/linux/component.h). That would let you move anything that needs
-> > to be done once the child devices probe to the aggregate driver 'bind'
-> > function (see struct component_master_ops::bind).
->
-> Thanks Stephen for letting us know about the component device framework.
->
-> IIUC,
->
-> - dwc3-qcom (parent of the dwc3 core) registers as a component master by
-> calling component_master_add_with_match() before calling
-> of_platform_populate(). The match callback could be as simple as comparing
-> the device against our child device.
->
-> - The dwc3 core (child) at the end of its probe can add as a component by calling
-> component_add().
->
-> - The above triggers the component_master_ops::bind callback implemented in
->   dwc3-qcom driver which signals that we are good to go.
->
-> - The dwc-qcom can call component_bind_all() to finish the formality i.e
->   telling the dwc3 core that we are good to go.
->
-> Is my understanding correct? This is what we are looking for i.e a way for
-> the child device(s) to signal the parent when the former is bounded.
+On Wed, 29 Jun 2022 14:14:39 +0200, Christian Marangi wrote:
+> Rework kpss-gcc driver Documentation to yaml Documentation.
+> The current kpss-gcc Documentation have major problems and can't be
+> converted directly. Introduce various changes to the original
+> Documentation.
+> 
+> Add #clock-cells additional binding as this clock outputs a static clk
+> named acpu_l2_aux with supported compatible.
+> Only some compatible require and outputs a clock, for the others, set
+> only the reg as a required binding to correctly export the kpss-gcc
+> registers. As the reg is shared also add the required syscon compatible.
+> 
+> Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+> ---
+>  .../bindings/arm/msm/qcom,kpss-gcc.txt        | 44 ---------
+>  .../bindings/arm/msm/qcom,kpss-gcc.yaml       | 90 +++++++++++++++++++
+>  2 files changed, 90 insertions(+), 44 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.txt
+>  create mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.yaml
+> 
 
-Sounds about right to me.
+Running 'make dtbs_check' with the schema in this patch gives the
+following warnings. Consider if they are expected or the schema is
+incorrect. These may not be new warnings.
 
->
-> Also what happens when the child device probe fails for any reason. i.e
-> component_add() would never be called so the master driver i.e dwc3-qcom would
-> wait indefinitely. May be it needs to implement a timeout or runtime suspend
-> etc should take care of keeping the resoures in suspend state.
+Note that it is not yet a requirement to have 0 warnings for dtbs_check.
+This will change in the future.
 
-When the child fails probe, it should return -EPROBE_DEFER if probe
-needs to be deferred. Then the driver will attempt probe at a later
-time. If probe fails without defer then it will never work and dwc3-qcom
-will wait indefinitely. Not much we can do in that situation.
+Full log is available here: https://patchwork.ozlabs.org/patch/
 
-dwc3-qcom should wait for dwc3 core to call component_add() and then do
-whatever needs to be done once the dwc3 core is registered in the
-dwc3-qcom bind callback. Honestly this may all be a little overkill if
-there's only two drivers here, dwc3-qcom and dwc3 core. It could
-probably just be some callback from dwc3 core at the end of probe that
-calls some function in dwc3-qcom.
+
+clock-controller@2011000: clock-names: False schema does not allow ['pll8_vote', 'pxo']
+	arch/arm/boot/dts/qcom-ipq8064-ap148.dtb
+	arch/arm/boot/dts/qcom-ipq8064-rb3011.dtb
+
+clock-controller@2011000: 'clock-output-names' does not match any of the regexes: 'pinctrl-[0-9]+'
+	arch/arm/boot/dts/qcom-ipq8064-ap148.dtb
+	arch/arm/boot/dts/qcom-ipq8064-rb3011.dtb
+
+clock-controller@2011000: compatible:0: 'qcom,kpss-gcc' is not one of ['qcom,kpss-gcc-ipq8064', 'qcom,kpss-gcc-apq8064', 'qcom,kpss-gcc-msm8974', 'qcom,kpss-gcc-msm8960', 'qcom,kpss-gcc-msm8660', 'qcom,kpss-gcc-mdm9615']
+	arch/arm/boot/dts/qcom-apq8064-asus-nexus7-flo.dtb
+	arch/arm/boot/dts/qcom-apq8064-cm-qs600.dtb
+	arch/arm/boot/dts/qcom-apq8064-ifc6410.dtb
+	arch/arm/boot/dts/qcom-apq8064-sony-xperia-lagan-yuga.dtb
+	arch/arm/boot/dts/qcom-ipq8064-ap148.dtb
+	arch/arm/boot/dts/qcom-ipq8064-rb3011.dtb
+	arch/arm/boot/dts/qcom-mdm9615-wp8548-mangoh-green.dtb
+	arch/arm/boot/dts/qcom-msm8960-cdp.dtb
+
+clock-controller@2011000: compatible:1: 'qcom,kpss-gcc' was expected
+	arch/arm/boot/dts/qcom-apq8064-asus-nexus7-flo.dtb
+	arch/arm/boot/dts/qcom-apq8064-cm-qs600.dtb
+	arch/arm/boot/dts/qcom-apq8064-ifc6410.dtb
+	arch/arm/boot/dts/qcom-apq8064-sony-xperia-lagan-yuga.dtb
+	arch/arm/boot/dts/qcom-ipq8064-ap148.dtb
+	arch/arm/boot/dts/qcom-ipq8064-rb3011.dtb
+	arch/arm/boot/dts/qcom-mdm9615-wp8548-mangoh-green.dtb
+	arch/arm/boot/dts/qcom-msm8960-cdp.dtb
+
+clock-controller@2011000: compatible: ['qcom,kpss-gcc', 'syscon'] is too short
+	arch/arm/boot/dts/qcom-apq8064-asus-nexus7-flo.dtb
+	arch/arm/boot/dts/qcom-apq8064-cm-qs600.dtb
+	arch/arm/boot/dts/qcom-apq8064-ifc6410.dtb
+	arch/arm/boot/dts/qcom-apq8064-sony-xperia-lagan-yuga.dtb
+	arch/arm/boot/dts/qcom-ipq8064-ap148.dtb
+	arch/arm/boot/dts/qcom-ipq8064-rb3011.dtb
+	arch/arm/boot/dts/qcom-mdm9615-wp8548-mangoh-green.dtb
+	arch/arm/boot/dts/qcom-msm8960-cdp.dtb
+
+clock-controller@2082000: compatible:0: 'qcom,kpss-gcc' is not one of ['qcom,kpss-gcc-ipq8064', 'qcom,kpss-gcc-apq8064', 'qcom,kpss-gcc-msm8974', 'qcom,kpss-gcc-msm8960', 'qcom,kpss-gcc-msm8660', 'qcom,kpss-gcc-mdm9615']
+	arch/arm/boot/dts/qcom-apq8060-dragonboard.dtb
+	arch/arm/boot/dts/qcom-msm8660-surf.dtb
+
+clock-controller@2082000: compatible:1: 'qcom,kpss-gcc' was expected
+	arch/arm/boot/dts/qcom-apq8060-dragonboard.dtb
+	arch/arm/boot/dts/qcom-msm8660-surf.dtb
+
+clock-controller@2082000: compatible: ['qcom,kpss-gcc', 'syscon'] is too short
+	arch/arm/boot/dts/qcom-apq8060-dragonboard.dtb
+	arch/arm/boot/dts/qcom-msm8660-surf.dtb
+
