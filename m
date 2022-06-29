@@ -2,124 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5C13755F9BE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jun 2022 09:57:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1819355FAFD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jun 2022 10:49:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229846AbiF2HzU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Jun 2022 03:55:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42356 "EHLO
+        id S232905AbiF2Ist (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Jun 2022 04:48:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33796 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231629AbiF2HzU (ORCPT
+        with ESMTP id S232901AbiF2Isr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Jun 2022 03:55:20 -0400
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3376525F9;
-        Wed, 29 Jun 2022 00:55:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1656489314; x=1688025314;
-  h=from:to:cc:subject:date:message-id:mime-version;
-  bh=QH2e8YbYNE2n6mUVI4ZdSzcrVKNaUgrSOCe7/29sjP4=;
-  b=xpT/4lKUXX4wZrNtLbRIH8COCJ0/LlbXf/L66UAPAnbEjRA2RGC7JrOa
-   3nYDeWXlCH54mtkwqmRZITNQOmOt1sTNGoOsafDFSUJiKEC9pIDUsK47U
-   ++uwAE3zZrFQMqlDTszKSPmRcGfznPVw4FsAngeWSxiH6+6ZPKpZUTTl5
-   M=;
-Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 29 Jun 2022 00:55:13 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Jun 2022 00:55:12 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 29 Jun 2022 00:55:12 -0700
-Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 29 Jun 2022 00:55:05 -0700
-From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
-        <lgirdwood@gmail.com>, <broonie@kernel.org>, <robh+dt@kernel.org>,
-        <quic_plai@quicinc.com>, <bgoswami@quicinc.com>, <perex@perex.cz>,
-        <tiwai@suse.com>, <srinivas.kandagatla@linaro.org>,
-        <quic_rohkumar@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <alsa-devel@alsa-project.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <swboyd@chromium.org>,
-        <judyhsiao@chromium.org>, Linus Walleij <linus.walleij@linaro.org>,
-        <linux-gpio@vger.kernel.org>
-CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Subject: [PATCH v2] pinctrl: qcom: sc7280: Fix compile bug
-Date:   Wed, 29 Jun 2022 13:24:50 +0530
-Message-ID: <1656489290-20881-1-git-send-email-quic_srivasam@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+        Wed, 29 Jun 2022 04:48:47 -0400
+Received: from mx.kernkonzept.com (serv1.kernkonzept.com [IPv6:2a01:4f8:1c1c:b490::2])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 019773CA69;
+        Wed, 29 Jun 2022 01:48:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=kernkonzept.com; s=mx1; h=Content-Transfer-Encoding:MIME-Version:Message-Id
+        :Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+        List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=P1k34az4QuGx1B9bktihgNb2sebWNTAJQ1q0AlyQj00=; b=dAYNbbxxZ6yM98ungoOfGIbzEy
+        1HXsCNlj98NoIjl0Eo5zO3FA9LIIhbrnuWIQBnSQgv4lCUv1hChr/lgm3HuqUXd2RiHML2YyQTcku
+        ul9czCf8pGqvPKi+SFq11j75TkVG3eIvjkAo2yLb2eUl97SClKfgmRRHRlRu6IdWUpgZEw24rauUP
+        IEMyDJUZuS4BPk1aXjA7vCTtPywW7M+dhu0Sbrqo/FsFUY64DAouRrZRSkzz9PNuIE83M/xEtf69U
+        3B2UFZ0KIMoAUc8XAow6EOT/BAPWW+IgzEsjB52I/R+rOl+E4s3uLOflJ82d6WlJyQKkWEgnLxWqq
+        MqtTw9Tw==;
+Received: from [10.22.3.24] (helo=kernkonzept.com)
+        by mx.kernkonzept.com with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim 4.94.2)
+        id 1o6TNG-006RUL-A2; Wed, 29 Jun 2022 10:48:38 +0200
+From:   Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+To:     Wim Van Sebroeck <wim@linux-watchdog.org>,
+        Guenter Roeck <linux@roeck-us.net>
+Cc:     Loic Poulain <loic.poulain@linaro.org>,
+        linux-watchdog@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+Subject: [PATCH v2 0/3] watchdog: pm8916_wdt: Some minor improvements
+Date:   Wed, 29 Jun 2022 10:48:13 +0200
+Message-Id: <20220629084816.125515-1-stephan.gerhold@kernkonzept.com>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Fix the compilation error, caused by updating constant variable.
-Hence remove redundant constant variable, which is no more useful
-as per new design.
+Optimize the pm8916_wdt.c driver a bit by pinging the watchdog using a
+write instead of read-modify-write. Also report the reboot reason to
+userspace and (temporarily) ping the watchdog from the kernel if it was
+already enabled by the bootloader.
 
-The issue is due to some unstaged changes. Fix it up.
-
-Fixes: 36fe26843d6d ("pinctrl: qcom: sc7280: Add clock optional check for ADSP bypass targets")
-
-Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
 ---
-Changes Since V1:
-    -- Fix typo errors in commit message.
+Changes in v2: Improve error handling (suggested by Guenter)
 
- drivers/pinctrl/qcom/pinctrl-lpass-lpi.c | 5 +----
- drivers/pinctrl/qcom/pinctrl-lpass-lpi.h | 1 -
- 2 files changed, 1 insertion(+), 5 deletions(-)
+Stephan Gerhold (3):
+  watchdog: pm8916_wdt: Avoid read of write-only PET register
+  watchdog: pm8916_wdt: Report reboot reason
+  watchdog: pm8916_wdt: Handle watchdog enabled by bootloader
 
-diff --git a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
-index b5d1b99..e97ce45 100644
---- a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
-+++ b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
-@@ -388,9 +388,6 @@ int lpi_pinctrl_probe(struct platform_device *pdev)
- 	pctrl->data = data;
- 	pctrl->dev = &pdev->dev;
- 
--	data->is_clk_optional = of_property_read_bool(dev->of_node,
--						      "qcom,adsp-bypass-mode");
--
- 	pctrl->clks[0].id = "core";
- 	pctrl->clks[1].id = "audio";
- 
-@@ -404,7 +401,7 @@ int lpi_pinctrl_probe(struct platform_device *pdev)
- 		return dev_err_probe(dev, PTR_ERR(pctrl->slew_base),
- 				     "Slew resource not provided\n");
- 
--	if (data->is_clk_optional)
-+	if (of_property_read_bool(dev->of_node, "qcom,adsp-bypass-mode"))
- 		ret = devm_clk_bulk_get_optional(dev, MAX_LPI_NUM_CLKS, pctrl->clks);
- 	else
- 		ret = devm_clk_bulk_get(dev, MAX_LPI_NUM_CLKS, pctrl->clks);
-diff --git a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.h b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.h
-index 759d5d8..afbac2a 100644
---- a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.h
-+++ b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.h
-@@ -77,7 +77,6 @@ struct lpi_pinctrl_variant_data {
- 	int ngroups;
- 	const struct lpi_function *functions;
- 	int nfunctions;
--	bool is_clk_optional;
- };
- 
- int lpi_pinctrl_probe(struct platform_device *pdev);
+ drivers/watchdog/pm8916_wdt.c | 41 +++++++++++++++++++++++++++++++----
+ 1 file changed, 37 insertions(+), 4 deletions(-)
+
 -- 
-2.7.4
+2.30.2
 
