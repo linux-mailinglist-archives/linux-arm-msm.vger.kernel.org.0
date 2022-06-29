@@ -2,136 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 687D655FEAF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jun 2022 13:32:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AD0D355FEC0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jun 2022 13:37:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232682AbiF2LcL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Jun 2022 07:32:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37422 "EHLO
+        id S232773AbiF2LhO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Jun 2022 07:37:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42526 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232389AbiF2LcK (ORCPT
+        with ESMTP id S232638AbiF2LhO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Jun 2022 07:32:10 -0400
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7B363EF0A
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jun 2022 04:32:05 -0700 (PDT)
-Received: by mail-ej1-x62e.google.com with SMTP id d2so20224393ejy.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jun 2022 04:32:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=z7YdxvHVrANcl7/MwaXyOEvtHd06mWAjfHecZi9wxDA=;
-        b=wGH6hq8FO42nMsH7uuRTjyg1xyAs0bk732kzq6bPIZKP0VVWLVmchGvj9wufryAbMo
-         7EbCmPP9FkNAA5gjUP1pNiMUBQpHEvmLP0S30OiA++FnBwbAlKpc9MLUms6jkTLdjSCy
-         dBeCogdBD6h+ETxna6DBOJw17214BgCxfr7+Ctyda3FWsG1Dnu1KWxS8VxeURS92tSmC
-         K7qMbqF0eGzhSNME+tftxIeWCND/9y0h9zRR9DE6NLa6i+0639DI4Zg57KZ40NkKK0gA
-         DgaReJvdAUvZrO5GjBW7M4kCsaxdbP9kOQ1F7VobumPa3sa3E68YFkr95E6aWjEQepk+
-         tZxA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=z7YdxvHVrANcl7/MwaXyOEvtHd06mWAjfHecZi9wxDA=;
-        b=y+wNitEHfDpGPVvyoc/kTI+3kcdjPiSyqhltFBM41Mevf0nUQFo+Ner4WEvwTTAi+f
-         tggj5+UbSmIMQr+ouwN7gY08xKKDj0F8ifwyGXtGOIcXVxRkmX8d6pJq+qxLu/8WJue9
-         Fq3EpWPhV74NqjtK+ozx9c2nSmUGTVUJaK5JcLnTQqUbftFUGzjRo4n13widABt4Ts0P
-         YAP0DWQmP/j3mxrSwTX7t9dD2DUmlHhI263/KjAR5jJchvnoVYfkl1vVvnkHwpRrClm4
-         1vjOW8Whx/pBkj7Dxz+0UwIoOz7n0/gkeQuH1N8THGoi+EydJ3/xI2pgD/SXsgzIAc9v
-         ke/w==
-X-Gm-Message-State: AJIora+PTuBgGpZIC0f3HEj8PpSSUlzPGJPnZtiRu7noRUCgLXOLC3t6
-        PKMvuHj16OkwoFwsaTbiZvqKXg==
-X-Google-Smtp-Source: AGRyM1vCAkX9bFVsQfuTLGX2ok/ViPnL2u3W6VZSGnPeXBWryLaSYEnMX7e/7rGW7Grc+BVzqHHXaw==
-X-Received: by 2002:a17:906:1ca:b0:715:73f3:b50f with SMTP id 10-20020a17090601ca00b0071573f3b50fmr2799072ejj.374.1656502324385;
-        Wed, 29 Jun 2022 04:32:04 -0700 (PDT)
-Received: from [192.168.0.184] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id fx24-20020a170906b75800b006fec63e564bsm7616985ejb.30.2022.06.29.04.32.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 29 Jun 2022 04:32:03 -0700 (PDT)
-Message-ID: <479a021a-36eb-7b44-9e14-51e16d1b64fb@linaro.org>
-Date:   Wed, 29 Jun 2022 13:32:02 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: [PATCH v5 4/4] arm64: dts: qcom: sdm845: Add CPU BWMON
-Content-Language: en-US
-To:     Rajendra Nayak <quic_rjendra@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
+        Wed, 29 Jun 2022 07:37:14 -0400
+Received: from mx.kernkonzept.com (serv1.kernkonzept.com [IPv6:2a01:4f8:1c1c:b490::2])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F5AAB7F1;
+        Wed, 29 Jun 2022 04:37:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=kernkonzept.com; s=mx1; h=In-Reply-To:Content-Type:MIME-Version:References:
+        Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:
+        Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+        Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+        List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=SSCPB9pAS9pvDKAWwMFfH89gInRxYovar8rDhCnxRHg=; b=DX5Xm9MwAXtkIm20QZxbhCZkSJ
+        IIKRCau45yfAPH1ZJGPk1+Dk1urm0m+5hLkSKdkSYlyXWO5FJngUZmtLakMiWFHBqJrXEF1qNOnK4
+        IBSZpGLenQOCyutD5NmZh+MNrVoSX29vmmm2CAEWG4b9CsXK5BpoZ14IQNk3DOexageyJQxI+QGKK
+        60RE4C74Q+BclH0TA+aMA+7+7EmiqAgvMLY0aIAoC6TFYqmyIeodohMe7XQwjzr7dI0L5EEFyNxJC
+        RotL/aEskwlj/weqLDo8dQpL6OLCHm3HpMyYbmfdRsUpWZYX1Mhd3KUc8moiYIImkpLCY67lkPKAi
+        NqZSS0pQ==;
+Received: from [10.22.3.24] (helo=kernkonzept.com)
+        by mx.kernkonzept.com with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim 4.94.2)
+        id 1o6W0I-006Sbe-5S; Wed, 29 Jun 2022 13:37:06 +0200
+Date:   Wed, 29 Jun 2022 13:37:00 +0200
+From:   Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Linus Walleij <linus.walleij@linaro.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Georgi Djakov <djakov@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Cc:     Thara Gopinath <thara.gopinath@gmail.com>
-References: <20220629075250.17610-1-krzysztof.kozlowski@linaro.org>
- <20220629075250.17610-5-krzysztof.kozlowski@linaro.org>
- <87b83a0c-0ea2-6839-1d90-8f1145ed9ed2@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <87b83a0c-0ea2-6839-1d90-8f1145ed9ed2@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH 1/2] dt-bindings: pinctrl: Add DT schema for
+ qcom,msm8909-tlmm
+Message-ID: <Yrw5UnFXKCZvAr2d@kernkonzept.com>
+References: <20220628145502.4158234-1-stephan.gerhold@kernkonzept.com>
+ <20220628145502.4158234-2-stephan.gerhold@kernkonzept.com>
+ <91d972d2-689c-d357-869f-fbd826173e33@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <91d972d2-689c-d357-869f-fbd826173e33@linaro.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 29/06/2022 13:22, Rajendra Nayak wrote:
+On Wed, Jun 29, 2022 at 11:38:01AM +0200, Krzysztof Kozlowski wrote:
+> On 28/06/2022 16:55, Stephan Gerhold wrote:
+> > Document the "qcom,msm8909-tlmm" compatible for the TLMM/pin control
+> > block in the MSM8909 SoC, together with the allowed GPIOs and functions.
+> > 
+> > Signed-off-by: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+> > ---
+> >  .../bindings/pinctrl/qcom,msm8909-tlmm.yaml   | 152 ++++++++++++++++++
+> >  1 file changed, 152 insertions(+)
+> >  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,msm8909-tlmm.yaml
+> > 
+> > diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,msm8909-tlmm.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,msm8909-tlmm.yaml
+> > new file mode 100644
+> > index 000000000000..e03530091478
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/pinctrl/qcom,msm8909-tlmm.yaml
+> > @@ -0,0 +1,152 @@
+> > [...]
+> > +patternProperties:
+> > +  '-state$':
+> > +    oneOf:
+> > +      - $ref: "#/$defs/qcom-msm8909-tlmm-state"
 > 
+> No quotes here and other places, should be needed. I know you copied
+> from other bindings, but at least let's try new files to be proper.
 > 
-> On 6/29/2022 1:22 PM, Krzysztof Kozlowski wrote:
->> Add device node for CPU-memory BWMON device (bandwidth monitoring) on
->> SDM845 measuring bandwidth between CPU (gladiator_noc) and Last Level
->> Cache (memnoc).  Usage of this BWMON allows to remove fixed bandwidth
->> votes from cpufreq (CPU nodes) thus achieve high memory throughput even
->> with lower CPU frequencies.
->>
->> Co-developed-by: Thara Gopinath <thara.gopinath@gmail.com>
->> Signed-off-by: Thara Gopinath <thara.gopinath@gmail.com>
->> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->> ---
->>   arch/arm64/boot/dts/qcom/sdm845.dtsi | 38 ++++++++++++++++++++++++++++
->>   1 file changed, 38 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
->> index 83e8b63f0910..e0f088996390 100644
->> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
->> @@ -2026,6 +2026,44 @@ llcc: system-cache-controller@1100000 {
->>   			interrupts = <GIC_SPI 582 IRQ_TYPE_LEVEL_HIGH>;
->>   		};
->>   
->> +		pmu@1436400 {
->> +			compatible = "qcom,sdm845-cpu-bwmon", "qcom,msm8998-cpu-bwmon";
->> +			reg = <0 0x01436400 0 0x600>;
->> +			interrupts = <GIC_SPI 581 IRQ_TYPE_LEVEL_HIGH>;
->> +			interconnects = <&gladiator_noc MASTER_APPSS_PROC 3 &mem_noc SLAVE_LLCC 3>;
->> +
->> +			operating-points-v2 = <&cpu_bwmon_opp_table>;
->> +
->> +			cpu_bwmon_opp_table: opp-table {
->> +				compatible = "operating-points-v2";
->> +
->> +				/*
->> +				 * The interconnect paths bandwidths taken from
->> +				 * cpu4_opp_table bandwidth.
->> +				 * They also match different tables from
->> +				 * msm-4.9 downstream kernel:
->> +				 *  - the OSM L3 from bandwidth table of
->> +				 *    qcom,cpu4-l3lat-mon (qcom,core-dev-table);
->> +				 *    bus width: 16 bytes;
->> +				 */
-> 
-> Maybe the comment needs an update?
 
-Yes, a bit.
+The quotes are necessary, since # starts a comment in YAML and the
+property would be effectively empty. :)
 
-Best regards,
-Krzysztof
+I tried it anyway but "dt_binding_check" complains as suspected:
+qcom,msm8909-tlmm.yaml: patternProperties:-state$:oneOf:0:$ref: None is not of type 'string'
+
+Thanks,
+Stephan
