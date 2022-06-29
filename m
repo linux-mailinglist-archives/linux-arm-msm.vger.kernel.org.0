@@ -2,70 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C07735601DE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jun 2022 16:07:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F0F1C5601F3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jun 2022 16:07:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233470AbiF2ODR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Jun 2022 10:03:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58886 "EHLO
+        id S233429AbiF2ODs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Jun 2022 10:03:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59722 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233395AbiF2ODP (ORCPT
+        with ESMTP id S233585AbiF2ODl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Jun 2022 10:03:15 -0400
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B38AC3A
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jun 2022 07:03:13 -0700 (PDT)
-Received: by mail-ej1-x633.google.com with SMTP id sb34so32737887ejc.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jun 2022 07:03:13 -0700 (PDT)
+        Wed, 29 Jun 2022 10:03:41 -0400
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E6C365DA
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jun 2022 07:03:38 -0700 (PDT)
+Received: by mail-ed1-x52a.google.com with SMTP id k20so953076edj.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jun 2022 07:03:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=tQRh0AY/h380Rf7RaIfP/jHK8L0FIrKA6XtVoZoWfV4=;
-        b=Am0EqkwqnJ+nScjx0qimn2TpOAgLHVGbGcH0BWx2cVoMd0D1CKxBmAfxxBnPlN4ELQ
-         VokscOphPWVRkZs9im65x1wrsgMdqytXPSLBK/NhFFzvUE/oF89/bYs8EIMMbGK4l3Qc
-         G533sezxIDSqn4bxW6LkkiRc55kLYS/Q5wnngJoY8KphmGEYqHKOB5oPg8g2Nhpt8FSw
-         c0ie7pwZ+Dl0ZvYgULSZZsARP3UcNaEy/4wB968Lx/UiR2kiHGx6Gug8N9O1QfbI1KYb
-         Ngs3G46TuTr7qJSKwymAd69EIZHsfQGl5erTLa85M3nz9ca9U84cKYuo3mrDVk/X95gM
-         2Rqg==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=3Fm2QBWRMAcf2SqfXkovtfoitzjHh0Xu8DtDfFRKdko=;
+        b=WE0ux5jIlaFg4gsQbxItLzp5FFtBXMzl1rQaeggZCsOcNFK23ToF4N5Ahxi1xs4fsB
+         kvw6CyeG0YngZ7zEsWP0n/K2Jxul0VCPriuQmqpaBoVpzAO6ed7VHpwPIQEzm8rWIZWz
+         rR4v8PJIrak1HHpJ0coFqXZcjR7950OBwvXjAheWWzbyunZlyz1hxJiBOskN8OESjB65
+         tv1ml8dXftsGEpEO13BXu7FVqjbmrxa1uHSBr1kFvaovTyNFg1HMYsTdPCloCXCQbfKH
+         1tsNgvHKJ7eSDjb6zKTiMlYNdeRSgNBNJZrFxKOUk6KQWKmwFQoWbIqssAB6/dsue/RC
+         OfPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=tQRh0AY/h380Rf7RaIfP/jHK8L0FIrKA6XtVoZoWfV4=;
-        b=7StePaYNvpoHUPNV7aT3cMFsIwTdxU8Dehfawb3B8cJHaKLlfhB57tXx1EEbASmlw4
-         PN+L9bsMQ8Dg5a7vn569MRc45DLzcidoQUM+yfoxit4JWC/PiMEcvpPRquvvJ9FfaTAz
-         cZjQxbkDIO70rECkG6PJAgKxhop6WFgYW1ARCrfLa3mS5eHa+3QUjgRd6/EkGNgeYFQv
-         HQngf9CEmjaAnXdKtM6MTUxsjaURgNe+Zbr58YwD1AwnjhDrm++BHYtZH+wEInbRvClT
-         dlrKFr1YfN8Mic/bsXFCypvOz0VUldLCU4or025MD2hvGWdmHYQck1Gl3zn06eMcJ4f6
-         +g9Q==
-X-Gm-Message-State: AJIora/A47U/i/G/7RP5+xZYZO7eeTndw9wgLbDqFOZiaKGMgRC3jxU5
-        t3gZP0Sn9dW7DjXKxT/sErSi+A==
-X-Google-Smtp-Source: AGRyM1u6kqu/4/CGXf/PPcS4tuZ9ayEa1ehTWowPq+CmB/q5kkDZkH3KcRYC9QqinCpM8twU0WFJow==
-X-Received: by 2002:a17:906:cc87:b0:722:fb3e:9f9c with SMTP id oq7-20020a170906cc8700b00722fb3e9f9cmr3463389ejb.624.1656511391664;
-        Wed, 29 Jun 2022 07:03:11 -0700 (PDT)
-Received: from localhost.localdomain (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id f9-20020a17090660c900b007262a5e2204sm7739260ejk.153.2022.06.29.07.03.10
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=3Fm2QBWRMAcf2SqfXkovtfoitzjHh0Xu8DtDfFRKdko=;
+        b=uqPsbs23mfn67VtJ/UrrYeGzr2qpJMPGRA9xsEurOqQjKWsN1U6jnlC7afFiAvIuRq
+         jMUCgIQOdqEi3ku6OHGf3bRxit9oTK9Ipe9THCSimiwsy/p4VTCLGppZhsG+YI1170kp
+         Q9qfzC5fTGZqKGQr5OGDNYiCtdOD6cQj4zY+VmOsGhMnMkXgU5e3uE1hNTnAOdgJxryz
+         NX66424CJBxozAhiw/AzomJ4XABmMe+xqrwrShFCIYZwQnsmjyc9HFT2VPNS2jcT57dE
+         eWKOtPjbnTabQiJqRGTjv3MsSUmrLXjsyAMA1Y8ZgSK571Z0ke9OFHJRQG9FC708j2mZ
+         iWdw==
+X-Gm-Message-State: AJIora/JiV8xD4V2ioiOYVguHYU8YWXeiIv36uSWiv3S/PRZ2Nve3ANI
+        Ol5rtO0AQfCp3PCjIt2uHOMU6A==
+X-Google-Smtp-Source: AGRyM1sXo01E7PomYrFjczxvDI2c1Y8J1q7hLBW6UtX+TBb9e4omxuFhlvhkJIPJF8FB43noub0UnQ==
+X-Received: by 2002:a05:6402:501d:b0:437:e000:a898 with SMTP id p29-20020a056402501d00b00437e000a898mr1307482eda.265.1656511416959;
+        Wed, 29 Jun 2022 07:03:36 -0700 (PDT)
+Received: from localhost.localdomain (88-107-17-60.dynamic.dsl.as9105.com. [88.107.17.60])
+        by smtp.gmail.com with ESMTPSA id x2-20020aa7d382000000b00435640c141esm11377343edq.93.2022.06.29.07.03.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Jun 2022 07:03:11 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+        Wed, 29 Jun 2022 07:03:36 -0700 (PDT)
+From:   Caleb Connolly <caleb.connolly@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Cc:     Rajendra Nayak <quic_rjendra@quicinc.com>,
-        Thara Gopinath <thara.gopinath@gmail.com>
-Subject: [PATCH v6 4/4] arm64: dts: qcom: sdm845: Add CPU BWMON
-Date:   Wed, 29 Jun 2022 16:03:02 +0200
-Message-Id: <20220629140302.236715-5-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220629140302.236715-1-krzysztof.kozlowski@linaro.org>
-References: <20220629140302.236715-1-krzysztof.kozlowski@linaro.org>
+        Vinod Koul <vkoul@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Caleb Connolly <caleb.connolly@linaro.org>,
+        Stephan Gerhold <stephan@gerhold.net>
+Subject: [PATCH v2] dmaengine: qcom: bam_dma: fix runtime PM underflow
+Date:   Wed, 29 Jun 2022 15:03:23 +0100
+Message-Id: <20220629140323.116981-1-caleb.connolly@linaro.org>
+X-Mailer: git-send-email 2.36.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -78,67 +73,133 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add device node for CPU-memory BWMON device (bandwidth monitoring) on
-SDM845 measuring bandwidth between CPU (gladiator_noc) and Last Level
-Cache (memnoc).  Usage of this BWMON allows to remove fixed bandwidth
-votes from cpufreq (CPU nodes) thus achieve high memory throughput even
-with lower CPU frequencies.
+Commit dbad41e7bb5f ("dmaengine: qcom: bam_dma: check if the runtime pm enabled")
+caused unbalanced pm_runtime_get/put() calls when the bam is
+controlled remotely. This commit reverts it and just enables pm_runtime
+in all cases, the clk_* functions already just nop the clock is NULL.
 
-Co-developed-by: Thara Gopinath <thara.gopinath@gmail.com>
-Signed-off-by: Thara Gopinath <thara.gopinath@gmail.com>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Also clean up a bit by removing unnecessary bamclk null checks.
+
+Suggested-by: Stephan Gerhold <stephan@gerhold.net>
+Fixes: dbad41e7bb5f ("dmaengine: qcom: bam_dma: check if the runtime pm enabled")
+Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sdm845.dtsi | 37 ++++++++++++++++++++++++++++
- 1 file changed, 37 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-index 83e8b63f0910..1872fea04785 100644
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -2026,6 +2026,43 @@ llcc: system-cache-controller@1100000 {
- 			interrupts = <GIC_SPI 582 IRQ_TYPE_LEVEL_HIGH>;
- 		};
+Boot tested on a OnePlus 6
+
+v1 can be found here:
+https://lore.kernel.org/linux-arm-msm/20220609195043.1544625-1-caleb.connolly@linaro.org/
+
+ drivers/dma/qcom/bam_dma.c | 39 +++++++++++---------------------------
+ 1 file changed, 11 insertions(+), 28 deletions(-)
+
+diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
+index 87f6ca1541cf..2ff787df513e 100644
+--- a/drivers/dma/qcom/bam_dma.c
++++ b/drivers/dma/qcom/bam_dma.c
+@@ -558,14 +558,6 @@ static int bam_alloc_chan(struct dma_chan *chan)
+ 	return 0;
+ }
  
-+		pmu@1436400 {
-+			compatible = "qcom,sdm845-llcc-bwmon", "qcom,msm8998-llcc-bwmon";
-+			reg = <0 0x01436400 0 0x600>;
-+			interrupts = <GIC_SPI 581 IRQ_TYPE_LEVEL_HIGH>;
-+			interconnects = <&gladiator_noc MASTER_APPSS_PROC 3 &mem_noc SLAVE_LLCC 3>;
-+
-+			operating-points-v2 = <&llcc_bwmon_opp_table>;
-+
-+			llcc_bwmon_opp_table: opp-table {
-+				compatible = "operating-points-v2";
-+
-+				/*
-+				 * The interconnect path bandwidth taken from
-+				 * cpu4_opp_table bandwidth for OSM L3
-+				 * interconnect.  This also matches the OSM L3
-+				 * from bandwidth table of qcom,cpu4-l3lat-mon
-+				 * (qcom,core-dev-table, bus width: 16 bytes)
-+				 * from msm-4.9 downstream kernel.
-+				 */
-+				opp-0 {
-+					opp-peak-kBps = <4800000>;
-+				};
-+				opp-1 {
-+					opp-peak-kBps = <9216000>;
-+				};
-+				opp-2 {
-+					opp-peak-kBps = <15052800>;
-+				};
-+				opp-3 {
-+					opp-peak-kBps = <20889600>;
-+				};
-+				opp-4 {
-+					opp-peak-kBps = <25497600>;
-+				};
-+			};
-+		};
-+
- 		pcie0: pci@1c00000 {
- 			compatible = "qcom,pcie-sdm845";
- 			reg = <0 0x01c00000 0 0x2000>,
+-static int bam_pm_runtime_get_sync(struct device *dev)
+-{
+-	if (pm_runtime_enabled(dev))
+-		return pm_runtime_get_sync(dev);
+-
+-	return 0;
+-}
+-
+ /**
+  * bam_free_chan - Frees dma resources associated with specific channel
+  * @chan: specified channel
+@@ -581,7 +573,7 @@ static void bam_free_chan(struct dma_chan *chan)
+ 	unsigned long flags;
+ 	int ret;
+ 
+-	ret = bam_pm_runtime_get_sync(bdev->dev);
++	ret = pm_runtime_get_sync(bdev->dev);
+ 	if (ret < 0)
+ 		return;
+ 
+@@ -784,7 +776,7 @@ static int bam_pause(struct dma_chan *chan)
+ 	unsigned long flag;
+ 	int ret;
+ 
+-	ret = bam_pm_runtime_get_sync(bdev->dev);
++	ret = pm_runtime_get_sync(bdev->dev);
+ 	if (ret < 0)
+ 		return ret;
+ 
+@@ -810,7 +802,7 @@ static int bam_resume(struct dma_chan *chan)
+ 	unsigned long flag;
+ 	int ret;
+ 
+-	ret = bam_pm_runtime_get_sync(bdev->dev);
++	ret = pm_runtime_get_sync(bdev->dev);
+ 	if (ret < 0)
+ 		return ret;
+ 
+@@ -919,7 +911,7 @@ static irqreturn_t bam_dma_irq(int irq, void *data)
+ 	if (srcs & P_IRQ)
+ 		tasklet_schedule(&bdev->task);
+ 
+-	ret = bam_pm_runtime_get_sync(bdev->dev);
++	ret = pm_runtime_get_sync(bdev->dev);
+ 	if (ret < 0)
+ 		return IRQ_NONE;
+ 
+@@ -1037,7 +1029,7 @@ static void bam_start_dma(struct bam_chan *bchan)
+ 	if (!vd)
+ 		return;
+ 
+-	ret = bam_pm_runtime_get_sync(bdev->dev);
++	ret = pm_runtime_get_sync(bdev->dev);
+ 	if (ret < 0)
+ 		return;
+ 
+@@ -1374,11 +1366,6 @@ static int bam_dma_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		goto err_unregister_dma;
+ 
+-	if (!bdev->bamclk) {
+-		pm_runtime_disable(&pdev->dev);
+-		return 0;
+-	}
+-
+ 	pm_runtime_irq_safe(&pdev->dev);
+ 	pm_runtime_set_autosuspend_delay(&pdev->dev, BAM_DMA_AUTOSUSPEND_DELAY);
+ 	pm_runtime_use_autosuspend(&pdev->dev);
+@@ -1462,10 +1449,8 @@ static int __maybe_unused bam_dma_suspend(struct device *dev)
+ {
+ 	struct bam_device *bdev = dev_get_drvdata(dev);
+ 
+-	if (bdev->bamclk) {
+-		pm_runtime_force_suspend(dev);
+-		clk_unprepare(bdev->bamclk);
+-	}
++	pm_runtime_force_suspend(dev);
++	clk_unprepare(bdev->bamclk);
+ 
+ 	return 0;
+ }
+@@ -1475,13 +1460,11 @@ static int __maybe_unused bam_dma_resume(struct device *dev)
+ 	struct bam_device *bdev = dev_get_drvdata(dev);
+ 	int ret;
+ 
+-	if (bdev->bamclk) {
+-		ret = clk_prepare(bdev->bamclk);
+-		if (ret)
+-			return ret;
++	ret = clk_prepare(bdev->bamclk);
++	if (ret)
++		return ret;
+ 
+-		pm_runtime_force_resume(dev);
+-	}
++	pm_runtime_force_resume(dev);
+ 
+ 	return 0;
+ }
 -- 
-2.34.1
+2.36.1
 
