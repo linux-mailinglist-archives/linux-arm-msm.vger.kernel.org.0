@@ -2,91 +2,147 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BF8E8561C4F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Jun 2022 15:59:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 88EBF561DFE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Jun 2022 16:34:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235628AbiF3N7j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Jun 2022 09:59:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36576 "EHLO
+        id S237135AbiF3OeB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Jun 2022 10:34:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40062 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236032AbiF3N5c (ORCPT
+        with ESMTP id S236277AbiF3Odt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Jun 2022 09:57:32 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 040B33D1DB
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Jun 2022 06:51:11 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id i1so22920445wrb.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Jun 2022 06:51:11 -0700 (PDT)
+        Thu, 30 Jun 2022 10:33:49 -0400
+Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com [IPv6:2607:f8b0:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09DD1AE5C
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Jun 2022 07:18:36 -0700 (PDT)
+Received: by mail-ot1-x32c.google.com with SMTP id m24-20020a0568301e7800b00616b5c114d4so12939017otr.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Jun 2022 07:18:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nexus-software-ie.20210112.gappssmtp.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=khhhKEx7sq0lhFI5dAc/uroAM1XbW+1ilHTIbm20NOk=;
-        b=IzIubZ2zHoYlYou+XMnS/w7qqtOu8O2/iHyQ0fRBknk1JezEUL2fXLcQ0XO2OXflLA
-         RYhM2g5XXgNQDlKssZqOhEdfHgy55IiOMgR5Dpuh6KaRjQgHsKf66FSCsPQ1C0fxLbul
-         qA/SB23L9jOqIUUEnQlvEZtEF2OuzJ7Ka574b7f3BMVO1gHAZ0WUVU2Z3CecdH+Aqk8/
-         mdvR762wnZXTBw9QxwoBuJf+/FXbP0u+65u+U2ujFr9NHj/a7nmA8DqGeU8Hi4OsLzbu
-         H5fT9Qu5tKq7kVHvHxLUJS7q5uQuLDOulsJQmkcrkMuarhpuwix9bmjIQ4e+XoBNcuCw
-         qyZA==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=UKo47eRwZLqOtIrb9MKf+6m0GMopJmkATiSd2gO3qbY=;
+        b=OMZKzP51T9zH8ddRl/B6r/fPanoxskVeywxtbh3g18v/DFZAnaekqUgrNljfvUVVbn
+         1Xg96wnvXkyGNt7LisqVFnDWuYGxo7wcMwPKsoBPPEjx1coiODlfsVFEBXGgQzhMl8nm
+         IV197EaWoBeq0GkSBH8H+I2r8tssvkmTIpDoimyuG4ceKupSRCGhNmo1mqy54hnVHH9T
+         3b8exQJ/pY9h3OrOzeyFI/8vWzAdeB9CJ0QElsMU8db1Vhz59UvoBfIrJ0X5gTkdlirv
+         IEgO3n3ryq02Dg8hGBuEqaNxNInlrUmhnBcmfE7NbDBrbl6ex4LeQJoZgcsyjN7HX90t
+         f59A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=khhhKEx7sq0lhFI5dAc/uroAM1XbW+1ilHTIbm20NOk=;
-        b=V3epmC4yKirQvefLlkwnBbLKUWxYfwTdAsvJEvCTVLaGrl5kQ6gD8M8+UXC56DYHxj
-         jf730db2fpbAMrOO+H/bDrrTn1P82IGwcMO/LeSSKLn4HCAvNIi0IDtOCFcF+Z4FowV8
-         4D6EgPJT3tcTCoYHSiNYM4gA6HeNdcBDfd9lUT6Y3Cit4zgD499/w/9GAAsZD6Gmk9e7
-         VGaM/vFfOPytGRlO7LGnkb+d5+Q1kGDicKHMuKiGs1Sgk09N5EWBZitmexvMiQ4a9vID
-         +ZG27iZpsGoOSP68HoRNgWVYmnUqP7vURR6D4aVcaRat7IReowZHakNSwFDUPeNC4XaX
-         xjVA==
-X-Gm-Message-State: AJIora99iAGlvBcGCfy44Hwc4FgGa5B3WHNNnqW0sOFhrpfH0GQMeyW7
-        6jp8C+hJ4sjHqTnkGU6vRYIHRA==
-X-Google-Smtp-Source: AGRyM1vE4U4MTgejf927B0v+n25IWe0zlGcsj47f/J55lkCIu2INvuKzX5utIS9G3vILgCqPP1Jt6Q==
-X-Received: by 2002:adf:d084:0:b0:21b:8a7c:d260 with SMTP id y4-20020adfd084000000b0021b8a7cd260mr8341928wrh.68.1656597069950;
-        Thu, 30 Jun 2022 06:51:09 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id b16-20020a5d6350000000b0021b8905e797sm19069457wrw.69.2022.06.30.06.51.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 30 Jun 2022 06:51:09 -0700 (PDT)
-Message-ID: <89fb276e-fe3b-3719-5ca2-c58766f7adb6@nexus-software.ie>
-Date:   Thu, 30 Jun 2022 14:51:08 +0100
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=UKo47eRwZLqOtIrb9MKf+6m0GMopJmkATiSd2gO3qbY=;
+        b=2WcbAUePofXIynkBPQRH9ws6a0P7bYWYyyGkuUxNA14qM/RxX+N4ujB3XlfF/Wr979
+         UN0PCsV9SEYQADIKEQBWYjGiOJwaseTjV9Ue7qq+7BNW6o4eDYIleta4iHG3I2V+oRYC
+         o6H6gJKSqhC1oPvbuaE6NELR4P6CZHYBni1WOdL52PGwYr/++jFqBgH5IQArbDoKonmP
+         xd4+Akr/DwVB3KCuHGA8iC6CEgyA8E6U+c2aSZYglZqwXm4dbd6A9IAZ4IYx0WLmdTO9
+         MxftwC5I4PJ7/QOyO824HwmE+XbXaswhvDCy1yGhOQAnWu3d/sqC0Kv+YIk5vw6+hXk2
+         j8gg==
+X-Gm-Message-State: AJIora9mwuXZq9p3fZvrBLMpsAOQbcbPu6L+rMPleWqSgtk9atT6JZ8Z
+        DmbRoSdv1lINVae9JfFnu35WpJcrapGK0A==
+X-Google-Smtp-Source: AGRyM1vFfXnm58GfvKKmrQUCEv0TWeibI+q0clBmyfCEd+bphEKgFThB5Lc2P9qbVpK8bd2M6zYkhA==
+X-Received: by 2002:a05:6830:2a11:b0:616:831e:37f4 with SMTP id y17-20020a0568302a1100b00616831e37f4mr4143597otu.203.1656598715163;
+        Thu, 30 Jun 2022 07:18:35 -0700 (PDT)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id g13-20020a05683030ad00b0060afaae0e34sm11200311ots.0.2022.06.30.07.18.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 30 Jun 2022 07:18:33 -0700 (PDT)
+Date:   Thu, 30 Jun 2022 09:18:32 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Andrey Konovalov <andrey.konovalov@linaro.org>, agross@kernel.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: qcs404: fix default pinctrl settings
+ for blsp1_spi1
+Message-ID: <Yr2wuHpedbS4RELd@builder.lan>
+References: <20220611195713.131597-1-andrey.konovalov@linaro.org>
+ <YrKmGfUrOw5awgNw@matsya>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.0
-Subject: Re: [PATCH 1/2] dt-bindings: mailbox: qcom: Add syscon const for
- relevant entries
-Content-Language: en-US
-To:     Rob Herring <robh@kernel.org>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc:     bjorn.andersson@linaro.org, agross@kernel.org,
-        devicetree@vger.kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        robh+dt@kernel.org, jassisinghbrar@gmail.com,
-        linux-arm-msm@vger.kernel.org
-References: <20220630043536.3308546-1-bryan.odonoghue@linaro.org>
- <20220630043536.3308546-2-bryan.odonoghue@linaro.org>
- <1656596665.792233.2569459.nullmailer@robh.at.kernel.org>
-From:   Bryan O'Donoghue <pure.logic@nexus-software.ie>
-In-Reply-To: <1656596665.792233.2569459.nullmailer@robh.at.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <YrKmGfUrOw5awgNw@matsya>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 30/06/2022 14:44, Rob Herring wrote:
-> dtschema/dtc warnings/errors:
-> /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.example.dtb: mailbox@b011000: compatible: 'oneOf' conditional failed, one must be fixed:
-> 	['qcom,qcs404-apcs-apps-global'] is too short
+On Wed 22 Jun 00:18 CDT 2022, Vinod Koul wrote:
 
-ah... the example
+> On 11-06-22, 22:57, Andrey Konovalov wrote:
+> > The current settings refer to "blsp_spi1" function which isn't defined.
+> > For this reason an attempt to enable blsp1_spi1 interface results in
+> > the probe failure below:
+> > 
+> > [    3.492900] qcs404-pinctrl 1000000.pinctrl: invalid function blsp_spi1 in map table
+> > [    3.502460] qcs404-pinctrl 1000000.pinctrl: invalid function blsp_spi1 in map table
+> > [    3.517725] qcs404-pinctrl 1000000.pinctrl: invalid function blsp_spi1 in map table
+> > [    3.532998] qcs404-pinctrl 1000000.pinctrl: invalid function blsp_spi1 in map table
+> > [    3.548277] spi_qup: probe of 78b6000.spi failed with error -22
+> > 
+> > Fix this by making the functions used in qcs404.dtsi to match the contents
+> > of drivers/pinctrl/qcom/pinctrl-qcs404.c.
+> 
+> Right, I cannot find blsp_spi1 which is the only one which is missing,
+> not sure why...
+> 
+> Bjorn do you recall why SPI1 is treated differently...
+> 
 
-will fix
+Looking at the available pinctrl functions, I believe that blsp_spi1 has
+two possible mux options; identified b y blsp_spi_*_a1 and
+blsp_spi_*_b1.
 
----
-bod
+Regards,
+Bjorn
+
+> > 
+> > Signed-off-by: Andrey Konovalov <andrey.konovalov@linaro.org>
+> > ---
+> >  arch/arm64/boot/dts/qcom/qcs404.dtsi | 21 +++++++++++++++++++--
+> >  1 file changed, 19 insertions(+), 2 deletions(-)
+> > 
+> > diff --git a/arch/arm64/boot/dts/qcom/qcs404.dtsi b/arch/arm64/boot/dts/qcom/qcs404.dtsi
+> > index d912166b7552..0d9e1f19aa67 100644
+> > --- a/arch/arm64/boot/dts/qcom/qcs404.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/qcs404.dtsi
+> > @@ -669,8 +669,25 @@ blsp1_spi0_default: blsp1-spi0-default {
+> >  			};
+> >  
+> >  			blsp1_spi1_default: blsp1-spi1-default {
+> > -				pins = "gpio22", "gpio23", "gpio24", "gpio25";
+> > -				function = "blsp_spi1";
+> > +				mosi {
+> > +					pins = "gpio22";
+> > +					function = "blsp_spi_mosi_a1";
+> > +				};
+> > +
+> > +				miso {
+> > +					pins = "gpio23";
+> > +					function = "blsp_spi_miso_a1";
+> > +				};
+> > +
+> > +				cs_n {
+> > +					pins = "gpio24";
+> > +					function = "blsp_spi_cs_n_a1";
+> > +				};
+> > +
+> > +				clk {
+> > +					pins = "gpio25";
+> > +					function = "blsp_spi_clk_a1";
+> > +				};
+> >  			};
+> >  
+> >  			blsp1_spi2_default: blsp1-spi2-default {
+> > -- 
+> > 2.25.1
+> 
+> -- 
+> ~Vinod
