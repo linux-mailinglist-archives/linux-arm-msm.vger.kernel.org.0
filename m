@@ -2,67 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0F53A562244
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Jun 2022 20:45:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2A6CA56224E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Jun 2022 20:47:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236413AbiF3SoK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Jun 2022 14:44:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57144 "EHLO
+        id S236752AbiF3Srh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Jun 2022 14:47:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58978 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234038AbiF3SoJ (ORCPT
+        with ESMTP id S235957AbiF3Srh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Jun 2022 14:44:09 -0400
-Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D26722CDDD;
-        Thu, 30 Jun 2022 11:44:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1656614648; x=1688150648;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=dYv/UTYgVlfEsqp2DTCmC737DJrOyfrarI+FKWvwhMA=;
-  b=PiDkqQrt3SwX1E2SIQMaVwaPc49yekcfqAPCuF7aCdNtGjX/lpy9VMBx
-   fbtjtcPwlNYgqwfgXqQgerXvMFnVwT5T4eMUS2X9T5zKE1Hhwpd/iETg8
-   6W34fwASbbc3lgrrXbwPB2JKljFXHpA+g2KxPE3nuzhPT/Bi/lPjyo/Yo
-   +IIS4Lw9WEqgkHqGVO3pTU0IlqEZTqP1uTp4jUBaDThnB+uRA1b4Bdz3B
-   AhUxqLQVKt3jsI3MfFS+v+anYJb0UkvsO9m2TUKJKbGLePDHzjk47bOon
-   cZUVxf4dEwjbolX9k4gSuspMaCUZyMDZv3c0W2GVGjYgk27/++JIXlhEB
-   Q==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10394"; a="283534633"
-X-IronPort-AV: E=Sophos;i="5.92,235,1650956400"; 
-   d="scan'208";a="283534633"
-Received: from fmsmga007.fm.intel.com ([10.253.24.52])
-  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Jun 2022 11:44:08 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.92,235,1650956400"; 
-   d="scan'208";a="595917126"
-Received: from lkp-server01.sh.intel.com (HELO 68b931ab7ac1) ([10.239.97.150])
-  by fmsmga007.fm.intel.com with ESMTP; 30 Jun 2022 11:44:06 -0700
-Received: from kbuild by 68b931ab7ac1 with local (Exim 4.95)
-        (envelope-from <lkp@intel.com>)
-        id 1o6z93-000D50-By;
-        Thu, 30 Jun 2022 18:44:05 +0000
-Date:   Fri, 1 Jul 2022 02:44:01 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Taniya Das <quic_tdas@quicinc.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     kbuild-all@lists.01.org, Douglas Anderson <dianders@chromium.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Taniya Das <quic_tdas@quicinc.com>
-Subject: Re: [PATCH v1] arm64: dts: qcom: sc7280: Update lpassaudio clock
- controller for resets
-Message-ID: <202207010242.gFemy13K-lkp@intel.com>
-References: <20220614161118.12458-1-quic_tdas@quicinc.com>
+        Thu, 30 Jun 2022 14:47:37 -0400
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3086A3E5DA
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Jun 2022 11:47:36 -0700 (PDT)
+Received: by mail-ed1-x529.google.com with SMTP id z19so24277edb.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Jun 2022 11:47:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=eVJf+csww7NgU7sUXv/h8AbxcDBzbGKo87FnaDBx4Cs=;
+        b=LGe0vDF7k6UISWYS2d9ThHRH2Z84OcezJQrQ3AkjfHeW5trDgbh3ggig7VShrL7opF
+         TAx0r57qOPCQBtI262bGVJ1AB5iCef3Ttm7aDqQplr4FFNNn1wtpBz75x3msz2Dz/RmA
+         tHvV3x9R+PF2mqIiJyaH0d8m4+DGRUPl9QdZj01JRbnQ+sQfsSNTEJ2APQEiWn4OG2Og
+         qtBUjrCMy5bAcmwMh4Z2CRa58lIk11DZIa5aZUvyQp8yNOrYWhNXlzjN1p0cgQ7r6YNR
+         lHqEgD+ImM5U7fhixyu8yMpn5mjRk3iaTPXrkrY3a1IPdi3gNuXwweQJpHGz2Qf7ushU
+         fsAQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=eVJf+csww7NgU7sUXv/h8AbxcDBzbGKo87FnaDBx4Cs=;
+        b=Kffz6nuJNTEyFxKx/YzKEhyzxka30F0gjunG2FihglpsfcXnzyShVeE7YdelCF9Gr3
+         fYGydOTLgC9B/iAQdJPx2dHbaDk71S9BEZ9yrK7VTJlrJncJaj+x4PWqEkqnpDEPb8ml
+         vs0JCS5KMHiYlOOiqkJ0sd0o/siRw0jiZXJaqVjnkincynli42GCKnE5KR4/3rRZQOMD
+         JoUJnZyIBaHtDgnT/ppSBsls0aOMkS/8EwzLwiNlrNQkpJPkoVzkLbf9aNVk0aiwKJR5
+         aThDllmpjjhSLZQ1Rmype0UNDakTd1M3uD7DYqyTriVs2j/snwkicizJXqV2ZMJyhzvZ
+         kiFw==
+X-Gm-Message-State: AJIora+JmmwBoOYlTQaikSisI2afDLtI1/jnmj0BPuGZm/jbJSAVdB+D
+        wwwKbXakOH7zcUQVTlUbSTE0F9hKGbZKnQ==
+X-Google-Smtp-Source: AGRyM1uKfwX7D58VjkiBSEl6rDEaCCrFmkc4BWirvW22vmo/yYLHVHephUtX7i2yaEbh9/oP31T9Rw==
+X-Received: by 2002:a05:6402:5256:b0:435:9017:e5d3 with SMTP id t22-20020a056402525600b004359017e5d3mr13593629edd.258.1656614854784;
+        Thu, 30 Jun 2022 11:47:34 -0700 (PDT)
+Received: from [192.168.0.190] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id x10-20020a170906298a00b00722e8f4b459sm9525826eje.93.2022.06.30.11.47.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 30 Jun 2022 11:47:34 -0700 (PDT)
+Message-ID: <7a3efafc-71b2-c474-bb73-6959c701f459@linaro.org>
+Date:   Thu, 30 Jun 2022 20:47:32 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220614161118.12458-1-quic_tdas@quicinc.com>
-X-Spam-Status: No, score=-4.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: Re: [PATCH] dt-bindings: pm8941-misc: Fix usb_id and usb_vbus
+ definitions
+Content-Language: en-US
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, agross@kernel.org,
+        bjorn.andersson@linaro.org, myungjoo.ham@samsung.com,
+        cw00.choi@samsung.com, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, gurus@codeaurora.org,
+        aghayal@codeaurora.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+References: <20220630042357.3308128-1-bryan.odonoghue@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220630042357.3308128-1-bryan.odonoghue@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -70,38 +78,54 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Taniya,
+On 30/06/2022 06:23, Bryan O'Donoghue wrote:
+> dts validation is throwing an error for me on 8916 and 8939 with
+> extcon@1300. In this case we have usb_vbus but not usb_id.
+> 
+> Looking at the pm8941-misc driver we can have usb_id, usb_vbus or both at
+> the same time.
 
-Thank you for the patch! Yet something to improve:
+Implementation is not the best reason to change bindings. Implementation
+can change, bindings should not.
 
-[auto build test ERROR on robh/for-next]
-[also build test ERROR on linus/master v5.19-rc4 next-20220630]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch]
+> 
+> Expand the definition with anyOf to capture the three different valid
+> modes.
+> 
+> Fixes: 4fcdd677c4ea ("bindings: pm8941-misc: Add support for VBUS detection")
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> ---
+>  .../devicetree/bindings/extcon/qcom,pm8941-misc.yaml | 12 ++++++++----
+>  1 file changed, 8 insertions(+), 4 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/extcon/qcom,pm8941-misc.yaml b/Documentation/devicetree/bindings/extcon/qcom,pm8941-misc.yaml
+> index 6a9c96f0352ac..1bc412a4ac5e6 100644
+> --- a/Documentation/devicetree/bindings/extcon/qcom,pm8941-misc.yaml
+> +++ b/Documentation/devicetree/bindings/extcon/qcom,pm8941-misc.yaml
+> @@ -27,10 +27,14 @@ properties:
+>  
+>    interrupt-names:
+>      minItems: 1
+> -    items:
+> -      - const: usb_id
+> -      - const: usb_vbus
+> -
+> +    anyOf:
+> +      - items:
+> +          - const: usb_id
+> +          - const: usb_vbus
+> +      - items:
+> +          - const: usb_id
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Taniya-Das/arm64-dts-qcom-sc7280-Update-lpassaudio-clock-controller-for-resets/20220615-001326
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
-config: arm64-defconfig (https://download.01.org/0day-ci/archive/20220701/202207010242.gFemy13K-lkp@intel.com/config)
-compiler: aarch64-linux-gcc (GCC) 11.3.0
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # https://github.com/intel-lab-lkp/linux/commit/3156737d3479e335c9ffd0d65e51b1ae6b6d1ec5
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review Taniya-Das/arm64-dts-qcom-sc7280-Update-lpassaudio-clock-controller-for-resets/20220615-001326
-        git checkout 3156737d3479e335c9ffd0d65e51b1ae6b6d1ec5
-        # save the config file
-        mkdir build_dir && cp config build_dir/.config
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.3.0 make.cross W=1 O=build_dir ARCH=arm64 SHELL=/bin/bash
+I don't think you can have ID connected and VBUS disconnected, therefore
+is it even possible to have missing VBUS interrupt?
 
-If you fix the issue, kindly add following tag where applicable
-Reported-by: kernel test robot <lkp@intel.com>
+> +      - items:
+> +          - const: usb_vbus
+>  required:
+>    - compatible
+>    - reg
 
-All errors (new ones prefixed by >>):
 
->> ERROR: Input tree has errors, aborting (use -f to force output)
-
--- 
-0-DAY CI Kernel Test Service
-https://01.org/lkp
+Best regards,
+Krzysztof
