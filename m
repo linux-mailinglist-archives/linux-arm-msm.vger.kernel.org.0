@@ -2,73 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C95E4562210
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Jun 2022 20:31:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4A45956222C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Jun 2022 20:37:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236658AbiF3Sah (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Jun 2022 14:30:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45656 "EHLO
+        id S236380AbiF3Shs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Jun 2022 14:37:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51218 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236660AbiF3Sah (ORCPT
+        with ESMTP id S233011AbiF3Shs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Jun 2022 14:30:37 -0400
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A2A642A0E
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Jun 2022 11:30:35 -0700 (PDT)
-Received: by mail-ed1-x52d.google.com with SMTP id cf14so27689105edb.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Jun 2022 11:30:35 -0700 (PDT)
+        Thu, 30 Jun 2022 14:37:48 -0400
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5D5D43396
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Jun 2022 11:37:46 -0700 (PDT)
+Received: by mail-ed1-x532.google.com with SMTP id e2so42638edv.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Jun 2022 11:37:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=8HMvgDx0M45hOe9EzGAGdmmBFNF04LJ7caeVS5Jltm8=;
-        b=I0Vj0nW8bONLNtF/M3fSTsRtcr+3vp0s5xn6kieZd2YagFyEH59dTgYRoNVVl3e8SJ
-         CfDNk4pq4B/V3S0UOnERenMxrbwzJqPZtNagRNAi054J37qoGYTs1y2jVtlI7SJ4NJhd
-         U7N4gRAvP+QARTwqkf1YOxspcUKugRIXBNlgt/TFDB9VOrgoHZ0p1LtjjPtwwTyNiUKx
-         Ay5TLzocbIUS9/ZyIr7F9899+VFeN+SKq/ajtjUpSbA3AofF90AqCVgr1Bzd9To016VJ
-         pRYvajT3FpbLD0yqzBX6vvfVdVYpS/nIDwnFGNDbLfRB9YmrO9sqnHuwYVgYkwdE7fcJ
-         sJIQ==
+        bh=UGGrUYFGtLESoSS2rsNev5359I+9qUzB9ek9G4Qz7uw=;
+        b=BMDwOu1iMHdN/94k0T57BSZk6Ka2rjPA+yoEJvBvvMc/Gwo6WSABuWeZmjb68VZxsC
+         cf/ddiswpYS37nUGMgrVNctpRxdymbfFaWTVgIyQbSHsW7DLYsRXUb+rGAZ5Bm6q9ITT
+         BM9SrGQGZhCGmnVmirm6lxkoy9aVsforz+HxYqh87vp8+fzspUmnm8kLgXe9Hl6qjyk4
+         edIuRV5ceN4gtJzGoO+F9o7OYHLvO/RTG+kWp7yj05N2Dy8CYs8X3pf3mk9LZyoMT/ga
+         1/V1DqJEx8+Ivzhrq3esF5osKtBoo9jZEsIFusx5B7bmDX8D+EoEVzb+bnp8GwtEF7qr
+         nQwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=8HMvgDx0M45hOe9EzGAGdmmBFNF04LJ7caeVS5Jltm8=;
-        b=z2y+4Yg9mojQ6rvJxZZnhZKItkSg8A1AxG3oEMiZGXF2rE7C4hQo/E3xcCCBaPVfCA
-         zS5l79DI+miDLc4JQLSXDW24hLKs30nEs67/lD8nXKIQf8hgRe1Ce2x1bIxUL9TYH+za
-         GCc20kPZ32tIvBoUXZwHS00Ue6iBWF2LY/NfJxWcBmp06uLQbNBmPE/ORS2uxCz0eSzB
-         SGcPAWwUAvIXeMY5bBT2zsUfiZ0BpcSfmychuTFIifa4qL1cyC6vwOuCTs638rQ8dE1u
-         1q+QJ1P5BGPw+jqyedQk0uvCFCvhFiKkEY3xDJDZEaZMP8lpAuizOTAMdQapGmsrHpNf
-         tuAg==
-X-Gm-Message-State: AJIora9lXBvT3Q3FYT/kjyvpd+LoBWsEw818TZ5R9baYSnaNe9h+S+KZ
-        ob9/4A8uEnqUn6R6eucnRIF4yQ==
-X-Google-Smtp-Source: AGRyM1s4MONlgYXs7qxpA3tmdCGfx/WaTLR64DFqg92GMhzYfpDH56CO77DwihQhw6Y6IHLTTjcdxQ==
-X-Received: by 2002:a05:6402:d5e:b0:435:dc14:d457 with SMTP id ec30-20020a0564020d5e00b00435dc14d457mr13333068edb.58.1656613833032;
-        Thu, 30 Jun 2022 11:30:33 -0700 (PDT)
+        bh=UGGrUYFGtLESoSS2rsNev5359I+9qUzB9ek9G4Qz7uw=;
+        b=ILs4EAxi0zHYg+CZTdJhLHWkHDMjkU19KHcPUp0y9LajSYJqGRMHZfr5SZ33/QcMJ+
+         WJsPq33QN5JQ31ef7wj01uXRuZc//+Eq/LuGPHexpXHVqxVrf5ZTotpxB5lvi8UoPqC+
+         WE121oEDuegjd8/pbhaKq94RDtolWrV+DTPSmZ/c17z6obO7FCYknw7EpJOgVTyte5Jq
+         wOOo3+76Lb2xteepAXJfJ0S7mHnpvdAyL0kLGAZWSRNzPuZ4CLUz6SvAioEAQsRF0hBg
+         MjfW1YVT3TnDabdAAE6AjofhYFPQ/jU6wq/MbfoFl1xtiW/tk2aq2yn+NcTlx1mvMxph
+         d0RQ==
+X-Gm-Message-State: AJIora/EywJwzYmSOzBYBS0mWPaUvlt3On049EzfeW9rt0QmW9gj2Q9/
+        ecmWRjxy22eU73gOknQVx58K+Q==
+X-Google-Smtp-Source: AGRyM1u3+PvK76fsXCzRLEryKlS/LLxqIEfJGGkbPSWvuPgDleiH5x/0VdYGGFhx9tY7hChc96qMkA==
+X-Received: by 2002:a05:6402:42c8:b0:435:b99c:35f9 with SMTP id i8-20020a05640242c800b00435b99c35f9mr13853065edc.137.1656614265507;
+        Thu, 30 Jun 2022 11:37:45 -0700 (PDT)
 Received: from [192.168.0.190] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id c11-20020aa7c98b000000b00435a912358dsm13601687edt.30.2022.06.30.11.30.31
+        by smtp.gmail.com with ESMTPSA id s12-20020a170906354c00b0072637b9c8c0sm8669926eja.219.2022.06.30.11.37.44
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 30 Jun 2022 11:30:32 -0700 (PDT)
-Message-ID: <306aa2da-9393-2a01-63a4-e1c81fa85e39@linaro.org>
-Date:   Thu, 30 Jun 2022 20:30:31 +0200
+        Thu, 30 Jun 2022 11:37:44 -0700 (PDT)
+Message-ID: <7824e14b-89fb-a816-441d-012d76def59a@linaro.org>
+Date:   Thu, 30 Jun 2022 20:37:43 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.10.0
-Subject: Re: [PATCH] FROMLIST: arm64: dts: qcom: Add LTE SKUs for
- sc7280-villager family
+Subject: Re: [PATCH 1/2] dt-bindings: mailbox: qcom: Add syscon const for
+ relevant entries
 Content-Language: en-US
-To:     Jimmy Chen <jinghung.chen3@hotmail.com>,
-        LKML <linux-kernel@vger.kernel.org>
-Cc:     swboyd@chromium.org, dianders@chromium.org,
-        Jimmy Chen <jinghung.chen43@yahoo.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-References: <SG2PR03MB5006F091C2016ADE8A9A208ECCBA9@SG2PR03MB5006.apcprd03.prod.outlook.com>
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, agross@kernel.org,
+        bjorn.andersson@linaro.org, jassisinghbrar@gmail.com,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+References: <20220630043536.3308546-1-bryan.odonoghue@linaro.org>
+ <20220630043536.3308546-2-bryan.odonoghue@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <SG2PR03MB5006F091C2016ADE8A9A208ECCBA9@SG2PR03MB5006.apcprd03.prod.outlook.com>
+In-Reply-To: <20220630043536.3308546-2-bryan.odonoghue@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -81,180 +77,83 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 30/06/2022 08:26, Jimmy Chen wrote:
-> From: Jimmy Chen <jinghung.chen43@yahoo.com>
+On 30/06/2022 06:35, Bryan O'Donoghue wrote:
+> msm8916, msm8939, msm8953, msm8994 and qcs404 already declare or should
+> declare syscon as they have drivers that use syscon inside of the apcs-kpss
+> block.
 > 
-> This adds LTE skus for villager device tree files.
+> grep apcs arch/arm64/boot/dts/qcom/* | grep syscon
 > 
-> Signed-off-by: Jimmy Chen <jinghung.chen43@yahoo.com>
-> Signed-off-by: Jimmy Chen <jinghung.chen3@hotmail.com>
+> Add in the additional syscon in the documentation for the above mentioned
+> parts.
 
-Use one identity and fix the subject - it's corrupted.
+Subject should have prefix:
+dt-bindings: mailbox: qcom,apcs-kpss-global:
 
+> 
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 > ---
+>  .../mailbox/qcom,apcs-kpss-global.yaml        | 44 ++++++++++---------
+>  1 file changed, 24 insertions(+), 20 deletions(-)
 > 
->  arch/arm64/boot/dts/qcom/Makefile                 |  3 +++
->  .../arm64/boot/dts/qcom/sc7280-chrome-common.dtsi |  7 -------
->  arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts |  1 +
->  .../qcom/sc7280-herobrine-herobrine-r1-lte.dts    | 14 ++++++++++++++
->  .../boot/dts/qcom/sc7280-herobrine-lte-sku.dtsi   | 15 +++++++++++++++
->  .../dts/qcom/sc7280-herobrine-villager-r0-lte.dts | 14 ++++++++++++++
->  .../dts/qcom/sc7280-herobrine-villager-r1-lte.dts | 14 ++++++++++++++
->  arch/arm64/boot/dts/qcom/sc7280-idp.dtsi          |  1 +
->  8 files changed, 62 insertions(+), 7 deletions(-)
->  create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r1-lte.dts
->  create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-lte-sku.dtsi
->  create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r0-lte.dts
->  create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1-lte.dts
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index 2f8aec2cc6db6..ab1066883c468 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -85,7 +85,10 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-r1.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-r1-lte.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-crd.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-herobrine-r1.dtb
-> +dtb-$(CONFIG_ARCH_QCOM) += sc7280-herobrine-herobrine-r1-lte.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-villager-r0.dtb
-> +dtb-$(CONFIG_ARCH_QCOM) += sc7280-herobrine-villager-r0-lte.dtb
-> +dtb-$(CONFIG_ARCH_QCOM) += sc7280-herobrine-villager-r1-lte.dtb
-
-This looks not aligned with other entries.
-
->  dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-idp.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-idp2.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-crd-r3.dtb
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi b/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
-> index 9f4a9c263c351..b1f83ddb4e23a 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
-> @@ -83,13 +83,6 @@ spi_flash: flash@0 {
->  	};
->  };
+> diff --git a/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml b/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml
+> index 3b5ba7ecc19d9..f342494fd6108 100644
+> --- a/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml
+> +++ b/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml
+> @@ -15,26 +15,30 @@ maintainers:
 >  
-> -/* Modem setup is different on Chrome setups than typical Qualcomm setup */
-> -&remoteproc_mpss {
-> -	status = "okay";
-> -	compatible = "qcom,sc7280-mss-pil";
-> -	iommus = <&apps_smmu 0x124 0x0>, <&apps_smmu 0x488 0x7>;
-> -	memory-region = <&mba_mem>, <&mpss_mem>;
-> -};
->  
->  /* Increase the size from 2.5MB to 8MB */
->  &rmtfs_mem {
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts b/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts
-> index a4ac33c4fd59a..7aaba5e51af01 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts
-> @@ -8,6 +8,7 @@
->  /dts-v1/;
->  
->  #include "sc7280-herobrine.dtsi"
-> +#include "sc7280-herobrine-lte-sku.dtsi"
->  
->  / {
->  	model = "Qualcomm Technologies, Inc. sc7280 CRD platform (rev5+)";
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r1-lte.dts b/arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r1-lte.dts
-> new file mode 100644
-> index 0000000000000..e37773fd63b3b
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r1-lte.dts
-> @@ -0,0 +1,14 @@
-> +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
-> +/*
-> + * Google Herobrine board device tree source
-> + *
-> + * Copyright 2022 Google LLC.
-> + */
-> +
-> +#include "sc7280-herobrine-villager-r0.dts"
-> +#include "sc7280-herobrine-lte-sku.dtsi"
-> +
-> +/{
-> +	model = "Google Herobrine (rev1+) with LTE";
-> +	compatible = "google,herobrine-sku0", "qcom,sc7280";
+>  properties:
+>    compatible:
+> -    enum:
+> -      - qcom,ipq6018-apcs-apps-global
+> -      - qcom,ipq8074-apcs-apps-global
+> -      - qcom,msm8916-apcs-kpss-global
+> -      - qcom,msm8939-apcs-kpss-global
+> -      - qcom,msm8953-apcs-kpss-global
+> -      - qcom,msm8976-apcs-kpss-global
+> -      - qcom,msm8994-apcs-kpss-global
+> -      - qcom,msm8996-apcs-hmss-global
+> -      - qcom,msm8998-apcs-hmss-global
+> -      - qcom,qcm2290-apcs-hmss-global
+> -      - qcom,qcs404-apcs-apps-global
+> -      - qcom,sc7180-apss-shared
+> -      - qcom,sc8180x-apss-shared
+> -      - qcom,sdm660-apcs-hmss-global
+> -      - qcom,sdm845-apss-shared
+> -      - qcom,sm6125-apcs-hmss-global
+> -      - qcom,sm6115-apcs-hmss-global
+> -      - qcom,sm8150-apss-shared
+> -
+> +    oneOf:
+> +      - items:
+> +          - enum:
+> +              - qcom,ipq6018-apcs-apps-global
+> +              - qcom,ipq8074-apcs-apps-global
+> +              - qcom,msm8976-apcs-kpss-global
+> +              - qcom,msm8996-apcs-hmss-global
+> +              - qcom,msm8998-apcs-hmss-global
+> +              - qcom,qcm2290-apcs-hmss-global
+> +              - qcom,sc7180-apss-shared
+> +              - qcom,sc8180x-apss-shared
+> +              - qcom,sdm660-apcs-hmss-global
+> +              - qcom,sdm845-apss-shared
+> +              - qcom,sm6125-apcs-hmss-global
+> +              - qcom,sm6115-apcs-hmss-global
+> +              - qcom,sm8150-apss-shared
 
-DT bindings update is needed. Unless it is already part of some other
-set, but then this should be explained in some cover letter.
+These are not items, but one item, so enum directly under oneOf.
 
-> +};
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-lte-sku.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine-lte-sku.dtsi
-> new file mode 100644
-> index 0000000000000..c628910b310d3
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-lte-sku.dtsi
-> @@ -0,0 +1,15 @@
-> +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
-> +  /*
-> +   * Google Herobrine dts fragment for LTE SKUs
-> +   *
-> +   * Copyright 2022 Google LLC.
-> +   */
-> +/* Modem setup is different on Chrome setups than typical Qualcomm setup */
-> +&remoteproc_mpss {
-> +	status = "okay";
-> +	compatible = "qcom,sc7280-mss-pil";
-> +	iommus = <&apps_smmu 0x124 0x0>, <&apps_smmu 0x488 0x7>;
-> +	memory-region = <&mba_mem>, <&mpss_mem>;
-> +	firmware-name = "qcom/sc7280-herobrine/modem/mba.mbn",
-> +			"qcom/sc7280-herobrine/modem/qdsp6sw.mbn";
-> +};
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r0-lte.dts b/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r0-lte.dts
-> new file mode 100644
-> index 0000000000000..672cb78e3088f
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r0-lte.dts
-> @@ -0,0 +1,14 @@
-> +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
-> +/*
-> + * Google Villager board device tree source
-> + *
-> + * Copyright 2022 Google LLC.
-> + */
-> +
-> +#include "sc7280-herobrine-villager-r0.dts"
-> +#include "sc7280-herobrine-lte-sku.dtsi"
-> +
-> +/ {
-> +	model = "Google Villager (rev0) with LTE";
-> +	compatible = "google,villager-rev0-sku0", "qcom,sc7280";
-> +};
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1-lte.dts b/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1-lte.dts
-> new file mode 100644
-> index 0000000000000..2f05a19cc388e
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1-lte.dts
-> @@ -0,0 +1,14 @@
-> +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
-> +/*
-> + * Google Villager board device tree source
-> + *
-> + * Copyright 2022 Google LLC.
-> + */
-> +
-> +#include "sc7280-herobrine-villager-r1.dts"
-> +#include "sc7280-herobrine-lte-sku.dtsi"
-> +
-> +/ {
-> +	model = "Google Villager (rev1+) with LTE";
-> +	compatible = "google,villager-sku0", "qcom,sc7280";
-> +};
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-> index 5eb668991e249..6928a0908fcd6 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-> @@ -13,6 +13,7 @@
->  #include "pmk8350.dtsi"
+> +      - items:
+> +          - enum:
+> +              - qcom,msm8916-apcs-kpss-global
+> +              - qcom,msm8939-apcs-kpss-global
+> +              - qcom,msm8953-apcs-kpss-global
+> +              - qcom,msm8994-apcs-kpss-global
+> +              - qcom,qcs404-apcs-apps-global
+> +          - const: syscon
+>    reg:
+>      maxItems: 1
 >  
->  #include "sc7280-chrome-common.dtsi"
-> +#include "sc7280-herobrine-lte-sku.dtsi"
-
-This looks like independent commit.
-
->  
->  / {
->  	aliases {
 
 
 Best regards,
