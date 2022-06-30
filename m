@@ -2,79 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1E43B561963
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Jun 2022 13:42:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0176A56197C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Jun 2022 13:46:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234211AbiF3Ll7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Jun 2022 07:41:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56352 "EHLO
+        id S235127AbiF3LqX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Jun 2022 07:46:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60684 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230350AbiF3Ll6 (ORCPT
+        with ESMTP id S235159AbiF3LqQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Jun 2022 07:41:58 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BEEEE523AA;
-        Thu, 30 Jun 2022 04:41:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1656589318; x=1688125318;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=AnUwEBzguN4yrlQIkaV5hrzKocIGpAcr2W1vCv14+W4=;
-  b=o/tzACGsQ2/QIvGnyVHpruXf2PFGwc2EQnarJ9RMksbfJPQ/u6EoAyLI
-   yqOuTXkruoY/qoxvsCgjFY81Fkhb1H9sp2A3haKa8E3qT63g9SBILLCe7
-   S9Lk7JxzY92gKNWzEWpYLDeOle49mc3EuNmfs9vYPe7raS/Vi8ON0pCs2
-   Q=;
-Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
-  by alexa-out.qualcomm.com with ESMTP; 30 Jun 2022 04:41:57 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Jun 2022 04:41:56 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Thu, 30 Jun 2022 04:41:56 -0700
-Received: from [10.253.75.186] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Thu, 30 Jun
- 2022 04:41:51 -0700
-Message-ID: <7601feb4-1255-2978-f0bc-4c25f501e67f@quicinc.com>
-Date:   Thu, 30 Jun 2022 19:41:49 +0800
+        Thu, 30 Jun 2022 07:46:16 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2BA115A45D;
+        Thu, 30 Jun 2022 04:46:12 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id E03DAB82A3F;
+        Thu, 30 Jun 2022 11:46:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DB23C3411E;
+        Thu, 30 Jun 2022 11:46:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1656589569;
+        bh=KZbwbKY8OlqEXl4fG8750X4KhP+vZADjW8qGjUTlxNQ=;
+        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+        b=sXP+op3TTdzeum6xf7A0Mw75HgNt1ocO0cyfnr8m79CLzc6pr/5l0cThAnbkE1xNO
+         iM8llkQrRpeAJpwTUGojkhXXskFCVKZoFhXUCPLi1aKlGgsDyh2iuRdqfOeye+ekXM
+         BjODwm459vvnpwP1UgtUfiG6RL4CgLn7Tck+Rx1e8pIMXUvUI0vB/u00XyiyE5NgKO
+         QgTNw9EDDL/2brLXDR3Pyb2qj5Iig2HHLnsBFLcStez0fDJl6g6vEhsmrtk1IR+4TU
+         TcczZfxwrHkIuz+xHOxjYYpyfWAUy/UheOO48KN0pMNhNReUdN1JjgU7b1UbFNvjFw
+         9HzBrIHiBjr+Q==
+From:   Mark Brown <broonie@kernel.org>
+To:     yassine.oudjana@gmail.com, bjorn.andersson@linaro.org,
+        srinivas.kandagatla@linaro.org, lgirdwood@gmail.com,
+        krzysztof.kozlowski+dt@linaro.org, robh+dt@kernel.org,
+        perex@perex.cz, bgoswami@quicinc.com, tiwai@suse.com,
+        agross@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, y.oudjana@protonmail.com,
+        phone-devel@vger.kernel.org, alsa-devel@alsa-project.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+In-Reply-To: <20220622161322.168017-1-y.oudjana@protonmail.com>
+References: <20220622161322.168017-1-y.oudjana@protonmail.com>
+Subject: Re: (subset) [PATCH v2 0/3] ASoC: dt-bindings: Add bindings for WCD9335 DAIs
+Message-Id: <165658956629.346792.3984245362995741043.b4-ty@kernel.org>
+Date:   Thu, 30 Jun 2022 12:46:06 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH v11 0/9] Coresight: Add support for TPDM and TPDA
-Content-Language: en-US
-To:     Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        "Bjorn Andersson" <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-CC:     Leo Yan <leo.yan@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        <coresight@lists.linaro.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Tao Zhang <quic_taozha@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>
-References: <20220620120101.2906-1-quic_jinlmao@quicinc.com>
-From:   Jinlong Mao <quic_jinlmao@quicinc.com>
-In-Reply-To: <20220620120101.2906-1-quic_jinlmao@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-7.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -83,141 +59,42 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Reviewers,
+On Wed, 22 Jun 2022 20:13:19 +0400, Yassine Oudjana wrote:
+> Add DT bindings for WCD9335 DAIs and use them in the driver as well
+> as all device trees currently using WCD9335.
+> 
+> Changes since v1:
+>  - Make header guard match path
+>  - Maintain the alphabetical order in msm8996-xiaomi-gemini includes
+> 
+> [...]
 
-Please help to review V11 patches.
+Applied to
 
-Thanks
-Jinlong Mao
-On 6/20/2022 8:00 PM, Mao Jinlong wrote:
-> This series adds support for the trace performance monitoring and
-> diagnostics hardware (TPDM and TPDA). It is composed of two major
-> elements.
-> a) Changes for original coresight framework to support for TPDM and TPDA.
-> b) Add driver code for TPDM and TPDA.
->
-> Introduction of changes for original coresight framework
-> Support TPDM as new coresight source.
-> Since only STM and ETM are supported as coresight source originally.
-> TPDM is a newly added coresight source. We need to change
-> the original way of saving coresight path to support more types source
-> for coresight driver.
-> The following patch is to add support more coresight sources.
->      coresight: core: Use IDR for non-cpu bound sources' paths.
->
-> Introduction of TPDM and TPDA
-> TPDM - The trace performance monitoring and diagnostics monitor or TPDM in
-> short serves as data collection component for various dataset types
-> specified in the QPMDA(Qualcomm performance monitoring and diagnostics
-> architecture) spec. The primary use case of the TPDM is to collect data
-> from different data sources and send it to a TPDA for packetization,
-> timestamping and funneling.
->       Coresight: Add coresight TPDM source driver
->       dt-bindings: arm: Adds CoreSight TPDM hardware definitions
->       coresight-tpdm: Add DSB dataset support
->       coresight-tpdm: Add integration test support
->       docs: sysfs: coresight: Add sysfs ABI documentation for TPDM
->
-> TPDA - The trace performance monitoring and diagnostics aggregator or
-> TPDA in short serves as an arbitration and packetization engine for the
-> performance monitoring and diagnostics network as specified in the QPMDA
-> (Qualcomm performance monitoring and diagnostics architecture)
-> specification. The primary use case of the TPDA is to provide
-> packetization, funneling and timestamping of Monitor data as specified
-> in the QPMDA specification.
-> The following patch is to add driver for TPDA.
->       Coresight: Add TPDA link driver
->       dt-bindings: arm: Adds CoreSight TPDA hardware definitions
->
-> The last patch of this series is a device tree modification, which add
-> the TPDM and TPDA configuration to device tree for validating.
->      ARM: dts: msm: Add coresight components for SM8250
->      ARM: dts: msm: Add tpdm mm/prng for sm8250
->
-> Once this series patches are applied properly, the tpdm and tpda nodes
-> should be observed at the coresight path /sys/bus/coresight/devices
-> e.g.
-> /sys/bus/coresight/devices # ls -l | grep tpd
-> tpda0 -> ../../../devices/platform/soc@0/6004000.tpda/tpda0
-> tpdm0 -> ../../../devices/platform/soc@0/6c08000.mm.tpdm/tpdm0
->
-> We can use the commands are similar to the below to validate TPDMs.
-> Enable coresight sink first.
->
-> echo 1 > /sys/bus/coresight/devices/tmc_etf0/enable_sink
-> echo 1 > /sys/bus/coresight/devices/tpdm0/enable_source
-> echo 1 > /sys/bus/coresight/devices/tpdm0/integration_test
-> echo 2 > /sys/bus/coresight/devices/tpdm0/integration_test
-> The test data will be collected in the coresight sink which is enabled.
-> If rwp register of the sink is keeping updating when do
-> integration_test (by cat tmc_etf0/mgmt/rwp), it means there is data
-> generated from TPDM to sink.
->
-> There must be a tpda between tpdm and the sink. When there are some
-> other trace event hw components in the same HW block with tpdm, tpdm
-> and these hw components will connect to the coresight funnel. When
-> there is only tpdm trace hw in the HW block, tpdm will connect to
-> tpda directly.
->    
->      +---------------+                +-------------+
->      |  tpdm@6c08000 |                |tpdm@684C000 |
->      +-------|-------+                +------|------+
->              |                               |
->      +-------|-------+                       |
->      | funnel@6c0b000|                       |
->      +-------|-------+                       |
->              |                               |
->      +-------|-------+                       |
->      |funnel@6c2d000 |                       |
->      +-------|-------+                       |
->              |                               |
->              |    +---------------+          |
->              +----- tpda@6004000  -----------+
->                   +-------|-------+
->                           |
->                   +-------|-------+
->                   |funnel@6005000 |
->                   +---------------+
->
-> This patch series depends on patch series
-> "coresight: Add new API to allocate trace source ID values".
-> https://patchwork.kernel.org/project/linux-arm-kernel/cover/20220308205000.27646-1-mike.leach@linaro.org/
->
-> Changes from V10:
-> 1. Change dev_info to dev_dbg in TPDM/TPDA drivers. -- Suzuki K Poulose <suzuki.poulose@arm.com>
-> 2. Merge sysfs API change of integration_test to integration_test driver
-> change. -- -- Suzuki K Poulose <suzuki.poulose@arm.com>
->
-> Mao Jinlong (9):
->    coresight: core: Use IDR for non-cpu bound sources' paths.
->    Coresight: Add coresight TPDM source driver
->    dt-bindings: arm: Adds CoreSight TPDM hardware definitions
->    coresight-tpdm: Add DSB dataset support
->    coresight-tpdm: Add integration test support
->    Coresight: Add TPDA link driver
->    dt-bindings: arm: Adds CoreSight TPDA hardware definitions
->    arm64: dts: qcom: sm8250: Add coresight components
->    arm64: dts: qcom: sm8250: Add tpdm mm/prng
->
->   .../testing/sysfs-bus-coresight-devices-tpdm  |  13 +
->   .../bindings/arm/qcom,coresight-tpda.yaml     | 111 +++
->   .../bindings/arm/qcom,coresight-tpdm.yaml     |  93 +++
->   MAINTAINERS                                   |   2 +
->   arch/arm64/boot/dts/qcom/sm8250.dtsi          | 671 ++++++++++++++++++
->   drivers/hwtracing/coresight/Kconfig           |  23 +
->   drivers/hwtracing/coresight/Makefile          |   2 +
->   drivers/hwtracing/coresight/coresight-core.c  |  42 +-
->   drivers/hwtracing/coresight/coresight-tpda.c  | 206 ++++++
->   drivers/hwtracing/coresight/coresight-tpda.h  |  35 +
->   drivers/hwtracing/coresight/coresight-tpdm.c  | 259 +++++++
->   drivers/hwtracing/coresight/coresight-tpdm.h  |  62 ++
->   include/linux/coresight.h                     |   1 +
->   13 files changed, 1508 insertions(+), 12 deletions(-)
->   create mode 100644 Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
->   create mode 100644 Documentation/devicetree/bindings/arm/qcom,coresight-tpda.yaml
->   create mode 100644 Documentation/devicetree/bindings/arm/qcom,coresight-tpdm.yaml
->   create mode 100644 drivers/hwtracing/coresight/coresight-tpda.c
->   create mode 100644 drivers/hwtracing/coresight/coresight-tpda.h
->   create mode 100644 drivers/hwtracing/coresight/coresight-tpdm.c
->   create mode 100644 drivers/hwtracing/coresight/coresight-tpdm.h
->
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
+
+Thanks!
+
+[1/3] ASoC: dt-bindings: Add bindings for WCD9335 DAIs
+      commit: 53447365ccb442bbd3dfffc2d7fd96203770dfb6
+[2/3] ASoC: wcd9335: Use DT bindings instead of local DAI definitions
+      commit: 66348f178d5a842c8afe52c3b743fb4af24cdb2a
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
