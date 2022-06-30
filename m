@@ -2,53 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 032C0561B6A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Jun 2022 15:32:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 611D2561B72
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Jun 2022 15:35:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232428AbiF3NcO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Jun 2022 09:32:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37032 "EHLO
+        id S230518AbiF3NfA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Jun 2022 09:35:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39374 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234211AbiF3NcN (ORCPT
+        with ESMTP id S230305AbiF3Ne7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Jun 2022 09:32:13 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E7EB366B7;
-        Thu, 30 Jun 2022 06:32:13 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id BF78A61F89;
-        Thu, 30 Jun 2022 13:32:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FDAEC34115;
-        Thu, 30 Jun 2022 13:32:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1656595932;
-        bh=P4ygcIAZvGne77x7p3ESNwZJYO63gwNBVMImtEJj/Aw=;
-        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-        b=uaLMUe0Kjgw7n42wD8QtWWvbYn63qmHgABLj0+dirlxPm7dLoQ8BxA3CimjMDUhB8
-         e52pmNAiqhXWOJIukn5AgG8zcO2cEcVKw6PmvTkMXeZpYrLSqdu0NVy1ydMyH/DKCQ
-         hVyKYIazGjilWAK6i9GvmJuKaMeV2ACUWbmJ7b54Rxqb8zaHHWyAyTXxINIA4pvCV2
-         5cPn/IJ2TYqaYYAhLIxFRsaRWcRtibZ6tdmN6QgyNvALkv9pMsmzgXlgvaTjy4Mmft
-         HeUzOxJonMkfb7otYacjhbuGzEPksBxuETqyuyMf8KJwSO0Ao4SEhOb6rWrX0RChNV
-         Hfc/RZV5a/NPA==
-From:   Mark Brown <broonie@kernel.org>
-To:     stephan.gerhold@kernkonzept.com
-Cc:     bjorn.andersson@linaro.org, krzysztof.kozlowski+dt@linaro.org,
-        linux-arm-msm@vger.kernel.org, lgirdwood@gmail.com,
-        agross@kernel.org, linux-kernel@vger.kernel.org,
-        robh+dt@kernel.org, devicetree@vger.kernel.org
-In-Reply-To: <20220623094614.1410180-1-stephan.gerhold@kernkonzept.com>
-References: <20220623094614.1410180-1-stephan.gerhold@kernkonzept.com>
-Subject: Re: [PATCH 0/3] regulator: qcom_smd: Add PM8909 and fix pm8916_pldo range
-Message-Id: <165659593011.540699.6977460772131709701.b4-ty@kernel.org>
-Date:   Thu, 30 Jun 2022 14:32:10 +0100
+        Thu, 30 Jun 2022 09:34:59 -0400
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5E9A28720
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Jun 2022 06:34:54 -0700 (PDT)
+Received: by mail-lj1-x233.google.com with SMTP id b23so23121081ljh.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Jun 2022 06:34:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=Cs0qaK6bESbp2DFdkuLn3sAtIu+NiQn2SQSD9VgJFpI=;
+        b=wx6eI1NSAdoeV0j8dNWEEiceAeuA8jMZOLSZ+CwRcN2U0KxSgnqdufycWwKZJ2S7dR
+         Lq+VQPVPv0+hubv4MABp6tREvsCcovpEHpyj7wHsN46wENGYEJTPwTzT1xpu6cVwR75i
+         2QLItxQwRVXHzcv482DASalbOYhZxPKVsTdmEhD5KVxi/m1l/9XHNdYEHPW+OzVPjXLI
+         FAn84pmM/a0Sa9WtInGvRbRsx11n4qKdymbdJt+Qn3cuJ48NYrPZ9knozJT4ZZNMCC3x
+         MD6Tihx6dM7axGRn9NLNP8zM2iEHiMCMDg45U5ELuM1tq/2XwQlmYQgMPUPyj4I9jcgg
+         kCKw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=Cs0qaK6bESbp2DFdkuLn3sAtIu+NiQn2SQSD9VgJFpI=;
+        b=XiDOYZjiTaMwoHgbw4PTNKpz2Rn9aw/ET0myOWqW4y98HM+zhsSOGYk3MiADN4giCk
+         9yDlfwhavJ9TNOKokJJq3NhUJ/CElwkwT7bfbg2wGBoT93XB6wymsz8mm5bCuO/qTSiy
+         wUXFYuhTxfA4LI+EtyIHPMQvr3oCB6w7hIQm0MTZOQOiVQZKhODl2hrwv8WNWhkYd4eX
+         euMzmnUqfOhUQFLT5LTSnJznBfMXcTed1Y5osvlLfqatBjphRrUj/PNNTCbTISYxvtJz
+         Zju12ersAM9agb87l10+xOUhywVePBYDKQz7yd94tCZciSl6OtOgu4NVfvvJV/7RNvz4
+         vB8A==
+X-Gm-Message-State: AJIora8AwctRur6sAtTwjohXHw6mB1GP3CL0PSJ0JMK3M9b2IIt7MtIy
+        x3ivWlYdWdZ5nD3gFTNotaCyhw==
+X-Google-Smtp-Source: AGRyM1tb35ZQuDsFSQ4qqgwkA6YUl7UROEuTommfMO7KDPyAcEPquNXQrTpl+3AcOW8skHiYe6j0/w==
+X-Received: by 2002:a05:651c:11d0:b0:25a:978e:4892 with SMTP id z16-20020a05651c11d000b0025a978e4892mr5411337ljo.517.1656596092401;
+        Thu, 30 Jun 2022 06:34:52 -0700 (PDT)
+Received: from [192.168.1.102] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
+        by smtp.gmail.com with ESMTPSA id z9-20020a0565120c0900b004793240041esm3101067lfu.277.2022.06.30.06.34.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 30 Jun 2022 06:34:51 -0700 (PDT)
+Message-ID: <6c6dddb7-a2d1-e93c-7448-6edb8ae3e665@linaro.org>
+Date:   Thu, 30 Jun 2022 16:34:48 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH v9 5/7] clk: qcom: clk-alpha-pll: add Lucid EVO PLL
+ configuration interfaces
+Content-Language: en-US
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
+References: <20220630081742.2554006-1-vladimir.zapolskiy@linaro.org>
+ <20220630081825.2554069-1-vladimir.zapolskiy@linaro.org>
+ <Yr2TitZR3Yv8z/V1@matsya>
+From:   Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+In-Reply-To: <Yr2TitZR3Yv8z/V1@matsya>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -56,45 +80,27 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 23 Jun 2022 11:46:11 +0200, Stephan Gerhold wrote:
-> Fix the voltage range for the pm8916_pldo in the qcom_smd-regulator
-> driver and add definitions for the regulators available in PM8909.
+Hi Vinod,
+
+On 6/30/22 15:14, Vinod Koul wrote:
+> On 30-06-22, 11:18, Vladimir Zapolskiy wrote:
+>> Add controls for Lucid EVO PLL configuration and export control functions
+>> to clock controller drivers.
 > 
-> Stephan Gerhold (3):
->   regulator: qcom_smd: Fix pm8916_pldo range
->   regulator: dt-bindings: qcom,smd-rpm: Add PM8909
->   regulator: qcom_smd: Add PM8909 RPM regulators
+> This sound fine but maybe add why we are adding this (to be used in
+> dispcc driver)... motivation helps :)
 > 
-> [...]
 
-Applied to
+sure, and please note, that it's used by camcc as well, basically it's a reason
+why this change is found in the series :)
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-next
+> Other than this nit, lgtm:
+> 
+> Reviewed-by: Vinod Koul <vkoul@kernel.org>
+> 
 
-Thanks!
+Thanks you for review!
 
-[1/3] regulator: qcom_smd: Fix pm8916_pldo range
-      commit: e8977917e116d1571dacb8e9864474551c1c12bd
-[2/3] regulator: dt-bindings: qcom,smd-rpm: Add PM8909
-      commit: 8cbb948a7cc2875d09234e2ce0424bc501c370b9
-[3/3] regulator: qcom_smd: Add PM8909 RPM regulators
-      commit: bc4d193238be4ef8ecee1ba0e0371169ad448c31
-
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
+--
+Best wishes,
+Vladimir
