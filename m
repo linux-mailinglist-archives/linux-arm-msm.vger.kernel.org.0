@@ -2,73 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BE45B5626E5
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Jul 2022 01:19:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 424935626CE
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Jul 2022 01:19:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232029AbiF3XLT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Jun 2022 19:11:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59406 "EHLO
+        id S232173AbiF3XMT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Jun 2022 19:12:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60530 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232016AbiF3XLP (ORCPT
+        with ESMTP id S232252AbiF3XMP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Jun 2022 19:11:15 -0400
-Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE0E65926A
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Jun 2022 16:11:09 -0700 (PDT)
-Received: by mail-ot1-x331.google.com with SMTP id m24-20020a0568301e7800b00616b5c114d4so532856otr.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Jun 2022 16:11:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=/9jdD7+1+i1Lm60svXWsJgxbEFp2/Oeat9F5av8m7uY=;
-        b=ynbe5POgPeLGuOGH8qwfK+MAkOMQKMg/sOvFUIv2Lp8h7jwzaq3Iz9Q7XwCDuppnN2
-         tpYB14FFIzI4i6s90p8TCDyoGEdNHcKmwroQZQYEyC/AlK/+f8SClpsJe6Bxm28Jytn1
-         UgcHN5pqFnUtP44Pwk3l7LfPteUOYjgIjre4UZPNOKUBPhNEy4nKXNCcKvJP+oX9cUjR
-         DJYRWGwlKU8BIc0GGrWF9ztt+54fHSbBcIzeOkMwZBi2iCuWQB3jjMRflT2o/C4KIjDc
-         /1HwInPB+slMTrIH2zr9z9OwUwcr4uAhK7KcbuvvhgyysIkv7OGiPjgk6bKbpkR0ajEQ
-         TscA==
+        Thu, 30 Jun 2022 19:12:15 -0400
+Received: from mail-il1-f175.google.com (mail-il1-f175.google.com [209.85.166.175])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BB6559266;
+        Thu, 30 Jun 2022 16:12:01 -0700 (PDT)
+Received: by mail-il1-f175.google.com with SMTP id w10so368764ilj.4;
+        Thu, 30 Jun 2022 16:12:01 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=/9jdD7+1+i1Lm60svXWsJgxbEFp2/Oeat9F5av8m7uY=;
-        b=pZiIDW8TkUM/2IFncDtelzoL4qEZCmgqm0Eq+dXESp1TsrF6ST1Y6EkQId7ZWMoygk
-         8GLX9UeQD3uMaC6cCnwn0jh4Gri33yuwAbjdIRFRLmPKqlmPZS39fHY6REflbvet62ef
-         y+pVFB7lr9kK4v14MFNMbpvLqvpdl0u53GIGwaqoAUtQFL6HScp2Lg86K199Wn8UWjxr
-         AeaP1f7GXg223DvkH/YGKXOMS2jYR7qOzLSnBoBKq7Q9wf8zly9lHdRLV405XxbTKmPc
-         o09qQB3qD08rqBygWiQwt0w5/BlkmKQxZOSbzHUf9U0mhHYTbXEv81rn8+23fhVX4oPI
-         z1SA==
-X-Gm-Message-State: AJIora9vvojlsg/hNNmWGBK12QGsbF5wiOng4PFXnfpADEzJCgruEOaT
-        Gh8v9MWI6+D2kGogVdXrPDHl8A==
-X-Google-Smtp-Source: AGRyM1vBfSGHeJKr39L7bBI0Wp641fmclQNLEE0MJMll9iNLLlO+JE+GUgn5SMqOlb0/rNJ9hdKpRw==
-X-Received: by 2002:a9d:754a:0:b0:616:bd96:a37e with SMTP id b10-20020a9d754a000000b00616bd96a37emr5265514otl.325.1656630668992;
-        Thu, 30 Jun 2022 16:11:08 -0700 (PDT)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id n2-20020a4aa7c2000000b00420c4e021e8sm11439551oom.38.2022.06.30.16.11.07
+        bh=JR5S4FbFlm7AB5LCYD9+AL7FKrg6jOTlb2pwSAOVR1Q=;
+        b=aHiUSHZmpfGLR0+cVIViN//sa5e4nxnUqN0Q1zvYLAhNQ4DdAYmygnIgKLo7NWO39a
+         glp8hW0UfDEGt7BcotQ6P5CTtmGz9Hxz83mlnd4we0N4qR68YsbDRBQ5Ga7jV1ntHl7G
+         u9C0GMdfCVkD5Xiz08hSo6CT3NCSjivv0lcv6WMPatFr3fJZTvmPYqgLGYgqm93lzN8L
+         nrH8xNWXrYd7yDZWY/Gv/nHACVA6Y/Q0ot5caFzT87oqg+ftIwS6cnsv/YAIjWpUwv3W
+         b7Se/GLv8LnxykhS8dzszCh7n/Dne1bLDky3abFTEjPFmAwNrRXmG6BPJ1AJX1+cgcBY
+         mnxw==
+X-Gm-Message-State: AJIora+xA8WHAvkVWtYGdwFulT2OGs8F5j4J5X81P++Cez8bLQ1A1psA
+        oNnrptSyyBZ8ut2BoGCqTQ==
+X-Google-Smtp-Source: AGRyM1uBaPXhKWPlpc8IwKyqrezf9NwpIw7AH2Glps8IXHvnspekczjlquysBEytKUZDVq41aMdZkg==
+X-Received: by 2002:a05:6e02:1845:b0:2da:bc96:8ab2 with SMTP id b5-20020a056e02184500b002dabc968ab2mr6657738ilv.22.1656630721191;
+        Thu, 30 Jun 2022 16:12:01 -0700 (PDT)
+Received: from robh.at.kernel.org ([64.188.179.248])
+        by smtp.gmail.com with ESMTPSA id j194-20020a0263cb000000b00331f8fff9a3sm9119127jac.64.2022.06.30.16.12.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Jun 2022 16:11:08 -0700 (PDT)
-Date:   Thu, 30 Jun 2022 18:11:06 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Cc:     Caleb Connolly <caleb@connolly.tech>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
+        Thu, 30 Jun 2022 16:12:00 -0700 (PDT)
+Received: (nullmailer pid 3506024 invoked by uid 1000);
+        Thu, 30 Jun 2022 23:11:59 -0000
+Date:   Thu, 30 Jun 2022 17:11:59 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-input@vger.kernel.org,
-        phone-devel@vger.kernel.org
-Subject: Re: [PATCH 1/3] input: add event codes for user programmable switch
- events
-Message-ID: <Yr4timTL6mBlik0m@builder.lan>
-References: <20220516142158.1612109-1-caleb@connolly.tech>
+        Krishna Manikandan <quic_mkrishn@quicinc.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>
+Subject: Re: [PATCH 11/11] dt-bindings: display/msm: move common DPU
+ properties to dpu-common.yaml
+Message-ID: <20220630231159.GA3497845-robh@kernel.org>
+References: <20220625232513.522599-1-dmitry.baryshkov@linaro.org>
+ <20220625232513.522599-12-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220516142158.1612109-1-caleb@connolly.tech>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+In-Reply-To: <20220625232513.522599-12-dmitry.baryshkov@linaro.org>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -76,65 +69,80 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 16 May 09:22 CDT 2022, Caleb Connolly wrote:
-
-> Add SW_PROG{1,2,3,4} for device switches which are handled by userspace.
+On Sun, Jun 26, 2022 at 02:25:13AM +0300, Dmitry Baryshkov wrote:
+> Move properties common to all DPU DT nodes to the dpu-common.yaml
 > 
-> This can be used for devices with "generic" switches which are intended
-> to be user-programmable, for example OnePlus phones contain a tri-state
-> key which can be used for switching between mute/vibrate/ring, or
-> programmed by the user to perform any arbitrary actions.
-> 
-> These are analogous to the keys KEY_PROG{1,2,3,4} found on some
-> keyboards.
-> 
-> Signed-off-by: Caleb Connolly <caleb@connolly.tech>
-
-This looks reasonable to me.
-
-Dmitry, what do you think?
-
-Regards,
-Bjorn
-
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
-> See the next patch in this series for an example usecase.
-> ---
->  include/linux/mod_devicetable.h        | 2 +-
->  include/uapi/linux/input-event-codes.h | 6 +++++-
->  2 files changed, 6 insertions(+), 2 deletions(-)
+>  .../bindings/display/msm/dpu-common.yaml      | 47 +++++++++++++++++++
+>  .../bindings/display/msm/dpu-msm8998.yaml     | 28 ++---------
+>  .../bindings/display/msm/dpu-qcm2290.yaml     | 29 ++----------
+>  .../bindings/display/msm/dpu-sc7180.yaml      | 32 ++-----------
+>  .../bindings/display/msm/dpu-sc7280.yaml      | 32 ++-----------
+>  .../bindings/display/msm/dpu-sdm845.yaml      | 32 ++-----------
+>  6 files changed, 67 insertions(+), 133 deletions(-)
+>  create mode 100644 Documentation/devicetree/bindings/display/msm/dpu-common.yaml
 > 
-> diff --git a/include/linux/mod_devicetable.h b/include/linux/mod_devicetable.h
-> index 5da5d990ff58..45364fbeaaf7 100644
-> --- a/include/linux/mod_devicetable.h
-> +++ b/include/linux/mod_devicetable.h
-> @@ -326,7 +326,7 @@ struct pcmcia_device_id {
->  #define INPUT_DEVICE_ID_LED_MAX		0x0f
->  #define INPUT_DEVICE_ID_SND_MAX		0x07
->  #define INPUT_DEVICE_ID_FF_MAX		0x7f
-> -#define INPUT_DEVICE_ID_SW_MAX		0x10
-> +#define INPUT_DEVICE_ID_SW_MAX		0x14
->  #define INPUT_DEVICE_ID_PROP_MAX	0x1f
-> 
->  #define INPUT_DEVICE_ID_MATCH_BUS	1
-> diff --git a/include/uapi/linux/input-event-codes.h b/include/uapi/linux/input-event-codes.h
-> index dff8e7f17074..339153886a13 100644
-> --- a/include/uapi/linux/input-event-codes.h
-> +++ b/include/uapi/linux/input-event-codes.h
-> @@ -917,7 +917,11 @@
->  #define SW_MUTE_DEVICE		0x0e  /* set = device disabled */
->  #define SW_PEN_INSERTED		0x0f  /* set = pen inserted */
->  #define SW_MACHINE_COVER	0x10  /* set = cover closed */
-> -#define SW_MAX			0x10
-> +#define SW_PROG1		0x11  /* set = program 1 (user defined) */
-> +#define SW_PROG2		0x12  /* set = program 2 (user defined) */
-> +#define SW_PROG3		0x13  /* set = program 3 (user defined) */
-> +#define SW_PROG4		0x14  /* set = program 4 (user defined) */
-> +#define SW_MAX			0x14
->  #define SW_CNT			(SW_MAX+1)
-> 
->  /*
-> --
-> 2.36.1
-> 
-> 
+> diff --git a/Documentation/devicetree/bindings/display/msm/dpu-common.yaml b/Documentation/devicetree/bindings/display/msm/dpu-common.yaml
+> new file mode 100644
+> index 000000000000..f3465ee3a4ab
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/display/msm/dpu-common.yaml
+> @@ -0,0 +1,47 @@
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/display/msm/dpu-common.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Display DPU dt properties (common properties)
+> +
+> +maintainers:
+> +  - Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> +  - Krishna Manikandan <quic_mkrishn@quicinc.com>
+> +  - Rob Clark <robdclark@gmail.com>
+> +
+> +description: |
+> +  Device tree bindings for the DPU display controller, common properties.
+
+Common properties for QCom DPU display controller
+
+> +
+> +properties:
+> +  interrupts:
+> +    maxItems: 1
+> +
+> +  power-domains:
+> +    maxItems: 1
+> +
+> +  operating-points-v2: true
+> +
+> +  ports:
+> +    $ref: /schemas/graph.yaml#/properties/ports
+
+Now this schema is applied twice.
+
+> +    description: |
+> +      Contains the list of output ports from DPU device. These ports
+> +      connect to interfaces that are external to the DPU hardware,
+> +      such as DSI, DP etc. Each output port contains an endpoint that
+> +      describes how it is connected to an external interface.
+
+This description is marginally useful. Each port will say it is an 
+output to X. So you could just remove.
+
+> +
+> +patternProperties:
+> +  (mdp-)?opp-table:
+> +    $ref: /schemas/opp/opp-v2.yaml#
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - reg-names
+> +  - clocks
+> +  - interrupts
+> +  - power-domains
+> +  - operating-points-v2
+> +  - ports
+> +
+> +additionalProperties: true
