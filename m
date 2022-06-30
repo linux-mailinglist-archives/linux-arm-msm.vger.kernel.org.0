@@ -2,66 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A38B956264B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Jul 2022 00:54:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 34DCE562653
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Jul 2022 00:59:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231278AbiF3Wyq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Jun 2022 18:54:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45560 "EHLO
+        id S230008AbiF3W7g (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Jun 2022 18:59:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48784 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229449AbiF3Wyp (ORCPT
+        with ESMTP id S229651AbiF3W7g (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Jun 2022 18:54:45 -0400
-Received: from mail-oa1-x2b.google.com (mail-oa1-x2b.google.com [IPv6:2001:4860:4864:20::2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5AC5A51B0E
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Jun 2022 15:54:44 -0700 (PDT)
-Received: by mail-oa1-x2b.google.com with SMTP id 586e51a60fabf-101d2e81bceso1341264fac.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Jun 2022 15:54:44 -0700 (PDT)
+        Thu, 30 Jun 2022 18:59:36 -0400
+Received: from mail-oa1-x33.google.com (mail-oa1-x33.google.com [IPv6:2001:4860:4864:20::33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF8E24D167
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Jun 2022 15:59:31 -0700 (PDT)
+Received: by mail-oa1-x33.google.com with SMTP id 586e51a60fabf-f2a4c51c45so1250994fac.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Jun 2022 15:59:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=3lD40KEKT7Wukxn/u0ptGeCLnmqn7Gkmr+m0V0CGjeY=;
-        b=fpKGXcr5qxRb10nUtk+wuHOvdGilTP8D4uYumm8KQHqsnuqSEUS5R0iB6KqnVEaNW7
-         ePPJ5YhsNGuhWSM8eo/v1sb9f5TuWfJ6ZVJyYSAYbqCD8FCYEyTiXcMPtkFl3pMSe8KP
-         6ePd/Zoo2t08Gs7UG26B+/N59o+6EGkdS9jt8jkNbYWYdrkHQg2wAH3aewgf2d6nZhD+
-         Zp7bo9GW5Hgc08yDoBF/Dd3ovovM6EjSHQ3FTSEyLcMxW2/7J3ffSZo4sZh+VqxhPawg
-         YcuceHdiniXa+pMJzRgZgqcfPmcOYxNxDIqg38B/CrkMQsxo8foEFYrmZyOjFFR8c3c/
-         GYnQ==
+        bh=X+YOW7gymoq6p54kuAg0y4LK1kLT0zocnaMJboxGrsU=;
+        b=LFmipgv0Q2D25QLpPe/Pg0B/X3coeBlnwZnf7GrtlboNOw0qhexKayD2jMjcUhS+Rc
+         /v3OyIAKAKO6VFF5QjmcuZsht15IwshhudaBuW1QxETOYmRMPAFN4W5ijt2JCtvoirYl
+         WseBLetocdfIRqd2YU4SKtZwRrEkoGRUFdCg0Ju+rr9cc+XttMOCHZTFnpgtDqkKbgK7
+         aCXoyG/S0yqzP9KNqKaBvIKvCWlOk2iZOz/INnIsuzK1FUlvIAwWbFFrW4qLhMZTxwc6
+         kYLkB2gmjBa7LO2THTqtJiEyBZjmru0wR893piOalfoUSFBC6PedlhJqJqPfH2NmY/rZ
+         5eCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=3lD40KEKT7Wukxn/u0ptGeCLnmqn7Gkmr+m0V0CGjeY=;
-        b=gSP3LGNRkMv29qyNtS24A2Vyav56e1iWrpFbBqO2baRAvM65OIRA4wEpxYrQTxSL2R
-         44f4pFni2DwqqC3so78+LTNG5p2qXZ6aNl4kxYYb3yhzQSraPXcxo44ly2817iEi2nll
-         lzE1CFSM/IOUQDZbdJ7+SFLK/0xNUsjE0Q4r0RmbGvEMIF8Bxxecnj4dCcV2wi1o28Ei
-         YqaRdVTdaIMmd+DH6A+c+z2keXUdQ8qyox0re9qWha7i8kp5esBpCdwiAkNlMgEZrC8c
-         7h+s3Js2bpxTSt5APvQZSXlKMPPP+T1YfiCygIG9iu5jnvM6OeQTTJytSsk4Lx/XrR+K
-         G4Yg==
-X-Gm-Message-State: AJIora/P2BxgMUQxRRWO/8VxgghgoFrrnUwfdJhTDEvb2DbRXt1uO12F
-        CjUItbJUKuGNcUEE9NsbAQYBdg==
-X-Google-Smtp-Source: AGRyM1vMdyp5BIQ2KSmnDC8VRNhl4y7m9dXHjm2FHsaLfpyBPIT04hamOmY7uBnt/j2kuX4JVPWufw==
-X-Received: by 2002:a05:6870:f2a3:b0:fe:51a2:cc61 with SMTP id u35-20020a056870f2a300b000fe51a2cc61mr6755357oap.3.1656629683578;
-        Thu, 30 Jun 2022 15:54:43 -0700 (PDT)
+        bh=X+YOW7gymoq6p54kuAg0y4LK1kLT0zocnaMJboxGrsU=;
+        b=p4I8KjjQsxE97U4ZpDXXB+O1YHT3VzgkMaftHzsrC3V9Sfd0mNhekgje8ex/klXq07
+         WGjoc7CfGiYYYhWnckqG4k2xT3RMZrjVC8HC2gO6ku4eNo7e27RQu+4NuXJg+Ay2nYVy
+         LqVUTEP9te3SPTlgte15oKx9mAf9+W159Sn+UXbjhCDbJOiV8RYIZF78AH/xOxGsEMjr
+         gHH2xwWSNzwvl27gOqAeHALJDjYf2fece41UoKRcq09uOy0Ra2IWFdIhZSH6Td3pDtiZ
+         wqHI40momqKRCAQKdlReT5Zop7IN7qhU9SNAOYpiWieMiXpPQVUkXFBO2PHNTW6tw/Hf
+         iqfw==
+X-Gm-Message-State: AJIora8LSJITt7ebIQ2ltB8KfitPUkOiLgKjStjZh41x8/mBZwZwdiLL
+        qVK7XYYgvGENB7rgjaY4sAxIoA==
+X-Google-Smtp-Source: AGRyM1v1gpzW6017TKVLsRI3kd4o5RZjQ1cOKjRE1jlcR8QCX1c4TZxVbRXb9mu58am9PIxOFJ9zQQ==
+X-Received: by 2002:a05:6870:f616:b0:f2:dac0:e339 with SMTP id ek22-20020a056870f61600b000f2dac0e339mr8223802oab.116.1656629971234;
+        Thu, 30 Jun 2022 15:59:31 -0700 (PDT)
 Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id g14-20020a056870340e00b00101afc7b263sm13611952oah.9.2022.06.30.15.54.42
+        by smtp.gmail.com with ESMTPSA id s24-20020a056808009800b00333f889c9c2sm10642248oic.33.2022.06.30.15.59.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Jun 2022 15:54:42 -0700 (PDT)
-Date:   Thu, 30 Jun 2022 17:54:41 -0500
+        Thu, 30 Jun 2022 15:59:30 -0700 (PDT)
+Date:   Thu, 30 Jun 2022 17:59:28 -0500
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, bhupesh.linux@gmail.com,
-        linux-kernel@vger.kernel.org, robh@kernel.org
-Subject: Re: [PATCH v2 6/6] arm64: dts: qcom: ipq8074: Fix 'max-frequency'
- value for sdhci node
-Message-ID: <Yr4psYiCCbi15RMe@builder.lan>
-References: <20220514215424.1007718-1-bhupesh.sharma@linaro.org>
- <20220514215424.1007718-7-bhupesh.sharma@linaro.org>
+To:     Robert Marko <robimarko@gmail.com>
+Cc:     agross@kernel.org, jassisinghbrar@gmail.com, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, mturquette@baylibre.com,
+        sboyd@kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-clk@vger.kernel.org
+Subject: Re: [PATCH v4 4/6] mailbox: qcom-apcs-ipc: add IPQ8074 APSS clock
+ controller support
+Message-ID: <Yr4q0G1AT4YSOIU5@builder.lan>
+References: <20220515204540.477711-1-robimarko@gmail.com>
+ <20220515204540.477711-4-robimarko@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220514215424.1007718-7-bhupesh.sharma@linaro.org>
+In-Reply-To: <20220515204540.477711-4-robimarko@gmail.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -72,44 +75,63 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat 14 May 16:54 CDT 2022, Bhupesh Sharma wrote:
+On Sun 15 May 15:45 CDT 2022, Robert Marko wrote:
 
-> Since the Qualcomm sdhci-msm device-tree binding has been converted
-> to yaml format, 'make dtbs_check' reports issues with
-> 'max-frequency' value for ipq8074 sdhci node:
+> IPQ8074 has the APSS clock controller utilizing the same register space as
+> the APCS, so provide access to the APSS utilizing a child device like
+> IPQ6018 does as well, but just by utilizing the IPQ8074 specific APSS
+> clock driver.
 > 
->  arch/arm64/boot/dts/qcom/ipq8074-hk01.dtb: mmc@7824900:
->   max-frequency:0:0: 384000000 is greater than the maximum of 200000000
+> Also, APCS register space in IPQ8074 is 0x6000 so max_register needs to be
+> updated to 0x5FFC.
 > 
-> Fix the same.
-> 
-> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Cc: Rob Herring <robh@kernel.org>
-> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+> Signed-off-by: Robert Marko <robimarko@gmail.com>
 > ---
->  arch/arm64/boot/dts/qcom/ipq8074.dtsi | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  drivers/mailbox/qcom-apcs-ipc-mailbox.c | 8 ++++++--
+>  1 file changed, 6 insertions(+), 2 deletions(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-> index ab2a1e7955b5..b2d71af9b419 100644
-> --- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-> @@ -388,7 +388,7 @@ sdhc_1: mmc@7824900 {
->  				 <&gcc GCC_SDCC1_APPS_CLK>,
->  				 <&xo>;
->  			clock-names = "iface", "core", "xo";
-> -			max-frequency = <384000000>;
-> +			max-frequency = <200000000>;
+> diff --git a/drivers/mailbox/qcom-apcs-ipc-mailbox.c b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
+> index 80a54d81412e..b3b9debf5673 100644
+> --- a/drivers/mailbox/qcom-apcs-ipc-mailbox.c
+> +++ b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
+> @@ -33,6 +33,10 @@ static const struct qcom_apcs_ipc_data ipq6018_apcs_data = {
+>  	.offset = 8, .clk_name = "qcom,apss-ipq6018-clk"
+>  };
+>  
+> +static const struct qcom_apcs_ipc_data ipq8074_apcs_data = {
+> +	.offset = 8, .clk_name = "qcom,apss-ipq8074-clk"
+> +};
+> +
+>  static const struct qcom_apcs_ipc_data msm8916_apcs_data = {
+>  	.offset = 8, .clk_name = "qcom-apcs-msm8916-clk"
+>  };
+> @@ -57,7 +61,7 @@ static const struct regmap_config apcs_regmap_config = {
+>  	.reg_bits = 32,
+>  	.reg_stride = 4,
+>  	.val_bits = 32,
+> -	.max_register = 0x1008,
+> +	.max_register = 0x5FFC,
 
-This might match the binding, but someone put 384000000 there for a
-reason. Perhaps the binding needs to be updated instead?
+Please use lower case hex digits.
+
+And please send the mailbox patches separately, to make it clear for the
+maintainers that this can be picked independently of others.
 
 Regards,
 Bjorn
 
->  			mmc-ddr-1_8v;
->  			mmc-hs200-1_8v;
->  			mmc-hs400-1_8v;
+>  	.fast_io = true,
+>  };
+>  
+> @@ -142,7 +146,7 @@ static int qcom_apcs_ipc_remove(struct platform_device *pdev)
+>  /* .data is the offset of the ipc register within the global block */
+>  static const struct of_device_id qcom_apcs_ipc_of_match[] = {
+>  	{ .compatible = "qcom,ipq6018-apcs-apps-global", .data = &ipq6018_apcs_data },
+> -	{ .compatible = "qcom,ipq8074-apcs-apps-global", .data = &msm8994_apcs_data },
+> +	{ .compatible = "qcom,ipq8074-apcs-apps-global", .data = &ipq8074_apcs_data },
+>  	{ .compatible = "qcom,msm8916-apcs-kpss-global", .data = &msm8916_apcs_data },
+>  	{ .compatible = "qcom,msm8939-apcs-kpss-global", .data = &msm8916_apcs_data },
+>  	{ .compatible = "qcom,msm8953-apcs-kpss-global", .data = &msm8994_apcs_data },
 > -- 
-> 2.35.3
+> 2.36.1
 > 
