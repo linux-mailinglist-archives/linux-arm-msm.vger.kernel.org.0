@@ -2,74 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0001F5612B2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Jun 2022 08:45:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C4BDD56148F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Jun 2022 10:19:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231566AbiF3GpS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Jun 2022 02:45:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47834 "EHLO
+        id S233333AbiF3IT3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Jun 2022 04:19:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44154 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232717AbiF3GpR (ORCPT
+        with ESMTP id S233434AbiF3ITH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Jun 2022 02:45:17 -0400
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 338E72FFDA
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jun 2022 23:45:15 -0700 (PDT)
-Received: by mail-lj1-x22c.google.com with SMTP id q9so21816396ljp.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jun 2022 23:45:15 -0700 (PDT)
+        Thu, 30 Jun 2022 04:19:07 -0400
+Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 508E63B9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Jun 2022 01:17:48 -0700 (PDT)
+Received: by mail-lj1-x232.google.com with SMTP id by38so22052917ljb.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Jun 2022 01:17:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:subject:user-agent:in-reply-to:references:message-id
-         :mime-version:content-transfer-encoding;
-        bh=fTV3UZJ8iWa2cSqb4oJMbGSxrzXh4aLO9yzSsaSbNW8=;
-        b=sQ9mpyLEUMu6hJYiXdFDncQJ0BJCa0ot78zi4pUlPT7BFc1v8Yh/MQgyo0E1wiOljb
-         Tl+6R0AfPc8ImR3AKsWMP7G4PYLa7h9v/XJXineSAeEC7LsEAFB6eVp+2rYOYsI0xjyT
-         XN3rDDxv+lrxceIdHxjWz8g19DPvLUBPkzsk74lvrlyodedG8fFbBi/EuzJl6r8VD4O7
-         yr2ko687WHJ/ZkL786xe9BD+SEjfimE+KQ6a8rcT8yZRs0/bG8HQzAgiaNmyjf8Og9uy
-         NgLzAeooWsIXOgd2H0VjXBhgLabIex/hIXQTmUAEGltppttpn5fD2ZcSt1gOFezRQ5tE
-         DYzw==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=iwgwXCkgqhWhsAYcDwBGLHI9mFw90gt72ulhS68U2Tk=;
+        b=MngPsYYp9yTp+LiWi6ew/M9vK4DeUiYv2hq/teOhHL9u2Y2nqC6dMWQdsqcXqGIODw
+         5tMduKfmxgvq6EO4slP/MOuEhJ/WvLvwZotvNohXUK99MuXA0lQ3a1xEkb4EDqkR0W5c
+         8kbBmk9EL5S2NMCd2ExsuIU3tTL9EqkRwuX/nggVOQ5vc6ClSG9xdxDChYJi9i6HjR+J
+         +L+HRmDhZgsSiNW91MuMe/Nqi5uRaBAIxBTqknL5q0fRd9m8cC9MbShyVurX4faqetor
+         KlWrThKAjCog5/QDKZZoX4QqiYCm6mEv5CvTTntXJ0UtWOwcrMFN9+E0VCrOhrs8PNhb
+         K46A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:subject:user-agent:in-reply-to
-         :references:message-id:mime-version:content-transfer-encoding;
-        bh=fTV3UZJ8iWa2cSqb4oJMbGSxrzXh4aLO9yzSsaSbNW8=;
-        b=tRV1MUV/ENo+cL1H+/n6JoLA4HVoyTkWcJVq+ncHuAp3Tdf8BzdJ2GiS11jlFKu1Vt
-         7bEzmFBeusmZvErbt+5BtjmVQuVnFtqIJisWCHbiXsvAkrk+qrD7+PWyAgfY8Kr/4vlb
-         ccp5zDrU5+U1NyoaQMIaanhPjpa/lF6QwOORkMHGUzMI/a1ET7wONUytxkvypcGLuqHR
-         9/zWR5wTc9u/vGLBRS16wkbFGF2rx1QFXk16LRAD2kl0Vn4EZuYrxd3GqjRTFlKvvmkX
-         9zZXDHm0nhkyrLYKkrwCcLZoGEvpnwQ7VAON+W0m57gsFASui1NTj7LTRCoMxiVMDYnL
-         9NpA==
-X-Gm-Message-State: AJIora/q9AWMG1QGysWtPVEuWUgiWPJMamM9DzxEH6LqvsTfQeCEmePA
-        3JonRLbTnL9oYX/xo9VJ6+1eMA==
-X-Google-Smtp-Source: AGRyM1sg5NrMfFA43dw9hkBCjjzWbbjZlTBQWU2W1F81EEQzjiWxr05HUwdPiFvHyKlySpuzKLH/Pw==
-X-Received: by 2002:a05:651c:158c:b0:250:a23d:2701 with SMTP id h12-20020a05651c158c00b00250a23d2701mr4209164ljq.475.1656571513552;
-        Wed, 29 Jun 2022 23:45:13 -0700 (PDT)
-Received: from [127.0.0.1] ([94.25.229.210])
-        by smtp.gmail.com with ESMTPSA id 20-20020ac25f54000000b0047fa0251460sm2942546lfz.174.2022.06.29.23.45.12
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 29 Jun 2022 23:45:12 -0700 (PDT)
-Date:   Thu, 30 Jun 2022 09:43:05 +0300
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Christian Marangi <ansuelsmth@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=iwgwXCkgqhWhsAYcDwBGLHI9mFw90gt72ulhS68U2Tk=;
+        b=AbvuTDmPtFktaEwsEWdz24K43drgxvGUU0drlEOTI68rKmAJe2PcIUvJRJzvxNhN7/
+         iOADJ0O/IvNPrBqVkkhF9p8f13H+Genqhgftk6doTceGj85E8Dk6VRMnNunL8eJxIeLh
+         9XgyGI4KQuBdFKg5ddO3uk7xUqT469TMQPrfxI6hmxGKFpbaRYGRppj1JM1dtjwpM1fq
+         ex0cI0cWabOFBC/R2z+fhPZ9DcZuOjlY84b/S4S9Y4FOvQl+t6m/UwFdo/0KjSd/+oAa
+         EDkpY7Sxy1t4+uSBE2d/U7hFjX3vlmK2eNHgYAg+x4+FIvsacHyA6acYsXvtRWF7nj/Z
+         ibnA==
+X-Gm-Message-State: AJIora8bFcQNX6+6KQI5YNhENGQqQELuViCmUhp6yAKxWApxYPZwrqsp
+        l2/QwHcJ3sE6GElsPhntRvQ/iA==
+X-Google-Smtp-Source: AGRyM1vG5Bcu+l/FIdi7zPxP8vjkhzHPb/yFlAt0h9EmzNtCM6r+XXga3thU/FLotGxVtQDRs9fYkg==
+X-Received: by 2002:a2e:b049:0:b0:25a:89a2:df44 with SMTP id d9-20020a2eb049000000b0025a89a2df44mr4456080ljl.207.1656577066598;
+        Thu, 30 Jun 2022 01:17:46 -0700 (PDT)
+Received: from localhost.localdomain (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
+        by smtp.gmail.com with ESMTPSA id p18-20020a2eb992000000b0025bda317bdcsm913623ljp.88.2022.06.30.01.17.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 30 Jun 2022 01:17:44 -0700 (PDT)
+From:   Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>,
         Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, Jens Axboe <axboe@kernel.dk>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v4_3/5=5D_dt-bindings=3A_arm=3A_msm=3A_R?= =?US-ASCII?Q?ework_kpss-gcc_driver_Documentation_to_yaml?=
-User-Agent: K-9 Mail for Android
-In-Reply-To: <20220629121441.6552-4-ansuelsmth@gmail.com>
-References: <20220629121441.6552-1-ansuelsmth@gmail.com> <20220629121441.6552-4-ansuelsmth@gmail.com>
-Message-ID: <D90DE67E-DA29-4A0D-BBC1-C8209FDF69D3@linaro.org>
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org
+Subject: [PATCH v9 0/7] clk: qcom: add camera clock controller driver for SM8450 SoC
+Date:   Thu, 30 Jun 2022 11:17:40 +0300
+Message-Id: <20220630081742.2554006-1-vladimir.zapolskiy@linaro.org>
+X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -80,190 +71,78 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+The patchset adds support of a camera clock controller found on
+QCOM SM8450 SoC, noticeably a camcc pll2 is a new "rivian evo"
+type of pll, its generic support is added in the series.
 
+Note that SM8450 ES variant has a slightly different configurtion,
+the published version is intended to support SM8450 CS SoC.
 
-On 29 June 2022 15:14:39 GMT+03:00, Christian Marangi <ansuelsmth@gmail=2E=
-com> wrote:
->Rework kpss-gcc driver Documentation to yaml Documentation=2E
->The current kpss-gcc Documentation have major problems and can't be
->converted directly=2E Introduce various changes to the original
->Documentation=2E
->
->Add #clock-cells additional binding as this clock outputs a static clk
->named acpu_l2_aux with supported compatible=2E
->Only some compatible require and outputs a clock, for the others, set
->only the reg as a required binding to correctly export the kpss-gcc
->registers=2E As the reg is shared also add the required syscon compatible=
-=2E
->
->Signed-off-by: Christian Marangi <ansuelsmth@gmail=2Ecom>
->---
-> =2E=2E=2E/bindings/arm/msm/qcom,kpss-gcc=2Etxt        | 44 ---------
-> =2E=2E=2E/bindings/arm/msm/qcom,kpss-gcc=2Eyaml       | 90 +++++++++++++=
-++++++
-> 2 files changed, 90 insertions(+), 44 deletions(-)
-> delete mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,kpss-g=
-cc=2Etxt
-> create mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,kpss-g=
-cc=2Eyaml
->
->diff --git a/Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc=2Etx=
-t b/Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc=2Etxt
->deleted file mode 100644
->index e628758950e1=2E=2E000000000000
->--- a/Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc=2Etxt
->+++ /dev/null
->@@ -1,44 +0,0 @@
->-Krait Processor Sub-system (KPSS) Global Clock Controller (GCC)
->-
->-PROPERTIES
->-
->-- compatible:
->-	Usage: required
->-	Value type: <string>
->-	Definition: should be one of the following=2E The generic compatible
->-			"qcom,kpss-gcc" should also be included=2E
->-			"qcom,kpss-gcc-ipq8064", "qcom,kpss-gcc"
->-			"qcom,kpss-gcc-apq8064", "qcom,kpss-gcc"
->-			"qcom,kpss-gcc-msm8974", "qcom,kpss-gcc"
->-			"qcom,kpss-gcc-msm8960", "qcom,kpss-gcc"
->-
->-- reg:
->-	Usage: required
->-	Value type: <prop-encoded-array>
->-	Definition: base address and size of the register region
->-
->-- clocks:
->-	Usage: required
->-	Value type: <prop-encoded-array>
->-	Definition: reference to the pll parents=2E
->-
->-- clock-names:
->-	Usage: required
->-	Value type: <stringlist>
->-	Definition: must be "pll8_vote", "pxo"=2E
->-
->-- clock-output-names:
->-	Usage: required
->-	Value type: <string>
->-	Definition: Name of the output clock=2E Typically acpu_l2_aux indicatin=
-g
->-		    an L2 cache auxiliary clock=2E
->-
->-Example:
->-
->-	l2cc: clock-controller@2011000 {
->-		compatible =3D "qcom,kpss-gcc-ipq8064", "qcom,kpss-gcc";
->-		reg =3D <0x2011000 0x1000>;
->-		clocks =3D <&gcc PLL8_VOTE>, <&gcc PXO_SRC>;
->-		clock-names =3D "pll8_vote", "pxo";
->-		clock-output-names =3D "acpu_l2_aux";
->-	};
->diff --git a/Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc=2Eya=
-ml b/Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc=2Eyaml
->new file mode 100644
->index 000000000000=2E=2E27f7df7e3ec4
->--- /dev/null
->+++ b/Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc=2Eyaml
->@@ -0,0 +1,90 @@
->+# SPDX-License-Identifier: GPL-2=2E0-only OR BSD-2-Clause
->+%YAML 1=2E2
->+---
->+$id: http://devicetree=2Eorg/schemas/arm/msm/qcom,kpss-gcc=2Eyaml#
->+$schema: http://devicetree=2Eorg/meta-schemas/core=2Eyaml#
->+
->+title: Krait Processor Sub-system (KPSS) Global Clock Controller (GCC)
->+
->+maintainers:
->+  - Christian Marangi <ansuelsmth@gmail=2Ecom>
->+
->+description: |
->+  Krait Processor Sub-system (KPSS) Global Clock Controller (GCC)=2E Use=
-d
->+  to control L2 mux (in the current implementation) and provide access
->+  to the kpss-gcc registers=2E
->+
->+properties:
->+  compatible:
->+    items:
->+      - enum:
->+          - qcom,kpss-gcc-ipq8064
->+          - qcom,kpss-gcc-apq8064
->+          - qcom,kpss-gcc-msm8974
->+          - qcom,kpss-gcc-msm8960
->+          - qcom,kpss-gcc-msm8660
->+          - qcom,kpss-gcc-mdm9615
->+      - const: qcom,kpss-gcc
->+      - const: syscon
->+
->+  reg:
->+    maxItems: 1
->+
->+  clocks:
->+    items:
->+      - description: phandle to pll8_vote
->+      - description: phandle to pxo_board
->+
->+  clock-names:
->+    items:
->+      - const: pll8_vote
->+      - const: pxo
->+
->+  '#clock-cells':
->+    const: 0
->+
->+required:
->+  - compatible
->+  - reg
->+
->+if:
->+  properties:
->+    compatible:
->+      contains:
->+        enum:
->+          - qcom,kpss-gcc-ipq8064
->+          - qcom,kpss-gcc-apq8064
->+          - qcom,kpss-gcc-msm8974
->+          - qcom,kpss-gcc-msm8960
->+then:
->+  required:
->+    - clocks
->+    - clock-names
->+    - '#clock-cells'
->+else:
->+  properties:
->+    clock: false
->+    clock-names: false
->+    '#clock-cells': false
+Changes from v8 to v9:
+* removed clock-names property per request from Bjorn,
+* corrected a path in the yaml file to the added include file,
+* put status property as the last one in the list of properties,
+* non-functional changes in the clock provider driver code.
 
-I suppose this chunk is not so correct=2E We can not describe these proper=
-ties as required since current DTs do not have them=2E Also if somebody dec=
-ides to fix the mdm9615 or msm8660 platforms, he works have to change this =
-(again)=2E Thus I'd just leave this whole chunk out=2E
+Changes from v7 to v8:
+* rebased on top of v5.19-rc2,
+* added Stephen's tags,
+* improved an example found in added yaml file,
+* improved some of the commit messages,
+* narrowed down a list of included headers,
+* constified .hw.init anonymous structs.
 
->+
->+additionalProperties: false
->+
->+examples:
->+  - |
->+    #include <dt-bindings/clock/qcom,gcc-ipq806x=2Eh>
->+
->+    clock-controller@2011000 {
->+      compatible =3D "qcom,kpss-gcc-ipq8064", "qcom,kpss-gcc", "syscon";
->+      reg =3D <0x2011000 0x1000>;
->+      clocks =3D <&gcc PLL8_VOTE>, <&pxo_board>;
->+      clock-names =3D "pll8_vote", "pxo";
->+      #clock-cells =3D <0>;
->+    };
->+
->+  - |
->+    clock-controller@2011000 {
->+      compatible =3D "qcom,kpss-gcc-mdm9615", "qcom,kpss-gcc", "syscon";
->+      reg =3D <0x02011000 0x1000>;
->+    };
->+=2E=2E=2E
->+
+Changes from v6 to v7:
+* rebased on top of v5.19-rc1,
+* fixed a warning in a usage example found in yaml file.
 
---=20
-With best wishes
-Dmitry
+Changes from v5 to v6:
+* rebased on top of linux-next,
+* added Rob's tag,
+* fixed a topology of power domains around titan_top.
+
+Changes from v4 to v5:
+* fixed the same typo in a usage example found in yaml file as in v3
+  change.
+
+Changes from v3 to v4:
+* fixed a changed path in the yaml file.
+
+Changes from v2 to v3:
+* fixed a typo in a usage example found in yaml file,
+* renamed dt related files to match the compatible "qcom,sm8450-camcc",
+* minor fixes in the driver per review requests from Bjorn,
+* added Bjorn's tag to a change of exported symbols namespace.
+
+Changes from v1 to v2:
+* updated qcom,camcc-sm8450.yaml according to review comments from Rob,
+* changed qcom,camcc-sm8450.h licence to dual one,
+* disabled camcc device tree node by default,
+* added Stephen's tag,
+* rebased the series on top of clk-for-5.18
+
+Vladimir Zapolskiy (7):
+  dt-bindings: clock: add QCOM SM8450 camera clock bindings
+  arm64: dts: qcom: sm8450: Add description of camera clock controller
+  clk: qcom: clk-alpha-pll: fix clk_trion_pll_configure description
+  clk: qcom: clk-alpha-pll: limit exported symbols to GPL licensed code
+  clk: qcom: clk-alpha-pll: add Lucid EVO PLL configuration interfaces
+  clk: qcom: clk-alpha-pll: add Rivian EVO PLL configuration interfaces
+  clk: qcom: add camera clock controller driver for SM8450 SoC
+
+ .../bindings/clock/qcom,sm8450-camcc.yaml     |   80 +
+ arch/arm64/boot/dts/qcom/sm8450.dtsi          |   16 +
+ drivers/clk/qcom/Kconfig                      |    7 +
+ drivers/clk/qcom/Makefile                     |    1 +
+ drivers/clk/qcom/camcc-sm8450.c               | 2856 +++++++++++++++++
+ drivers/clk/qcom/clk-alpha-pll.c              |  144 +-
+ drivers/clk/qcom/clk-alpha-pll.h              |   11 +-
+ include/dt-bindings/clock/qcom,sm8450-camcc.h |  159 +
+ 8 files changed, 3268 insertions(+), 6 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,sm8450-camcc.yaml
+ create mode 100644 drivers/clk/qcom/camcc-sm8450.c
+ create mode 100644 include/dt-bindings/clock/qcom,sm8450-camcc.h
+
+-- 
+2.33.0
+
