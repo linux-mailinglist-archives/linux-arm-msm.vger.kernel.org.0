@@ -2,63 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A73A2562067
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Jun 2022 18:37:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D957D56206F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Jun 2022 18:38:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236249AbiF3QhB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Jun 2022 12:37:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42810 "EHLO
+        id S235913AbiF3QiZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Jun 2022 12:38:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44334 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235814AbiF3QhA (ORCPT
+        with ESMTP id S235586AbiF3QiW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Jun 2022 12:37:00 -0400
-Received: from mx07-00178001.pphosted.com (mx08-00178001.pphosted.com [91.207.212.93])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6941F3B559;
-        Thu, 30 Jun 2022 09:36:59 -0700 (PDT)
-Received: from pps.filterd (m0046660.ppops.net [127.0.0.1])
-        by mx07-00178001.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 25UDw2pc015110;
-        Thu, 30 Jun 2022 18:36:50 +0200
+        Thu, 30 Jun 2022 12:38:22 -0400
+Received: from mx07-00178001.pphosted.com (mx07-00178001.pphosted.com [185.132.182.106])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C32FDBE;
+        Thu, 30 Jun 2022 09:38:21 -0700 (PDT)
+Received: from pps.filterd (m0288072.ppops.net [127.0.0.1])
+        by mx07-00178001.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 25UDoHCu022718;
+        Thu, 30 Jun 2022 18:38:14 +0200
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foss.st.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=selector1;
- bh=PPK7NJXmodZO2xtaWKpT2ki8JN6en9ktaebVlvJYU0M=;
- b=tElMf53uO4MQd5obAVU2EXwhBYahEIvAisQM0Jlz1WtsxJBdK8k8qZDjfaDPugJPUMcg
- rCY0TP934ffw3jfgUIYvehxRwjm0j4/svm9Kcukj2it2QtF2rxLUNRl1ZwKNZoEeJh5R
- 1Tm1KSP2R20ADF77XYtEWtyH1GSxpX4lqs6M+wwLbzFDJwXur5XCTY58pl7cGZ4MjXXR
- BRPVPlp9pjJKaa/UoRROkPMHrpQr89gsDKf03kq8DvjAJ6tgac4KL1Byo9fmeYerhe8t
- BwWF6i1qaYPOTEEXctjvkAK5id7fWZF4HLJJv+8l34q7kjvHof2IzOaXxLPOLfceEWTz tA== 
+ bh=FrQeBHR6fqzTGcaG15KwsehVgR6R2e3NuHEqyCZdBOk=;
+ b=K55UqAeegWzDo9W1lrolxuhwWSsHjKz5OkV37sTf0hFrdsYz70xU1fnP7UuxRqE/09VD
+ 8xFumWPmhvph8fzMuEFdDcoCWtYPaz2MDbVJhPd23Gl6nzc5t+GGUMKHGQJSfmhb9SrL
+ SHuxW6bdj7ihYn8Y7vGy0nnfmIhDxAww+h72jvTQpsl08sYj6Aor9/mms8BWBwNsL+73
+ T8Rv6mjFbM4j7SI2OrqtcxCa/A3sZzqE9XjfmaGzAACmw4VYt3R3lnyN9lFUi1KVr/EX
+ fe8d2VLx43nutwuyEBH/Z3T2GEuypJJqnhwxOaKbatsTqZ7DTXf+EonBhUwYkqhB8+vp gQ== 
 Received: from beta.dmz-eu.st.com (beta.dmz-eu.st.com [164.129.1.35])
-        by mx07-00178001.pphosted.com (PPS) with ESMTPS id 3h1d648y1w-1
+        by mx07-00178001.pphosted.com (PPS) with ESMTPS id 3h1d2mh4jf-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 30 Jun 2022 18:36:50 +0200
+        Thu, 30 Jun 2022 18:38:14 +0200
 Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
-        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id 05CC610002A;
-        Thu, 30 Jun 2022 18:36:49 +0200 (CEST)
+        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id 3E6DF10002A;
+        Thu, 30 Jun 2022 18:38:13 +0200 (CEST)
 Received: from Webmail-eu.st.com (shfdag1node2.st.com [10.75.129.70])
-        by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id 012DC226FC5;
-        Thu, 30 Jun 2022 18:36:49 +0200 (CEST)
-Received: from [10.252.24.34] (10.75.127.44) by SHFDAG1NODE2.st.com
+        by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id 3956E226FC5;
+        Thu, 30 Jun 2022 18:38:13 +0200 (CEST)
+Received: from [10.252.24.34] (10.75.127.47) by SHFDAG1NODE2.st.com
  (10.75.129.70) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256) id 15.1.2308.20; Thu, 30 Jun
- 2022 18:36:45 +0200
-Message-ID: <7881ee36-89f6-3ba9-f4ac-7c4e614728dd@foss.st.com>
-Date:   Thu, 30 Jun 2022 18:36:45 +0200
+ 2022 18:38:12 +0200
+Message-ID: <1afe75e1-ab57-a321-d319-2d1b8d2b199d@foss.st.com>
+Date:   Thu, 30 Jun 2022 18:38:12 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.9.1
-Subject: Re: [PATCH 1/2] remoteproc: core: Introduce rproc_del_carveout
+Subject: Re: [PATCH 2/2] remoteproc: core: Introduce rproc_mem_entry_free
 Content-Language: en-US
 To:     Chris Lew <quic_clew@quicinc.com>, <bjorn.andersson@linaro.org>,
         <mathieu.poirier@linaro.org>
 CC:     <linux-remoteproc@vger.kernel.org>,
         <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
 References: <1654888985-3846-1-git-send-email-quic_clew@quicinc.com>
- <1654888985-3846-2-git-send-email-quic_clew@quicinc.com>
+ <1654888985-3846-3-git-send-email-quic_clew@quicinc.com>
 From:   Arnaud POULIQUEN <arnaud.pouliquen@foss.st.com>
-In-Reply-To: <1654888985-3846-2-git-send-email-quic_clew@quicinc.com>
+In-Reply-To: <1654888985-3846-3-git-send-email-quic_clew@quicinc.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.75.127.44]
+X-Originating-IP: [10.75.127.47]
 X-ClientProxiedBy: SFHDAG2NODE3.st.com (10.75.127.6) To SHFDAG1NODE2.st.com
  (10.75.129.70)
 X-Proofpoint-Virus-Version: vendor=baseguard
@@ -74,68 +74,55 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+
 
 On 6/10/22 21:23, Chris Lew wrote:
-> To mirror the exported rproc_add_carveout(), add a rproc_del_carveout()
-> so memory carveout resources added by devices outside of remoteproc can
-> manage the resource lifetime more accurately.
+> Introduce a helper to free the rproc_mem_entry allocated by
+> rproc_mem_entry_init(). This helper is to help manage rproc carveouts
+> added to an rproc outside of remoteproc.
 > 
 > Signed-off-by: Chris Lew <quic_clew@quicinc.com>
 > ---
->  drivers/remoteproc/remoteproc_core.c | 20 ++++++++++++++++++++
+>  drivers/remoteproc/remoteproc_core.c | 13 +++++++++++++
 >  include/linux/remoteproc.h           |  1 +
->  2 files changed, 21 insertions(+)
+>  2 files changed, 14 insertions(+)
 > 
 > diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
-> index 02a04ab34a23..ee71fccae970 100644
+> index ee71fccae970..161691fd2e96 100644
 > --- a/drivers/remoteproc/remoteproc_core.c
 > +++ b/drivers/remoteproc/remoteproc_core.c
-> @@ -1001,6 +1001,26 @@ void rproc_add_carveout(struct rproc *rproc, struct rproc_mem_entry *mem)
->  EXPORT_SYMBOL(rproc_add_carveout);
+> @@ -1069,6 +1069,19 @@ rproc_mem_entry_init(struct device *dev,
+>  EXPORT_SYMBOL(rproc_mem_entry_init);
 >  
 >  /**
-> + * rproc_del_carveout() - remove an allocated carveout region
-> + * @rproc: rproc handle
-> + * @mem: memory entry to register
+> + * rproc_mem_entry_free() - free a rproc_mem_entry struct
+> + * @mem: rproc_mem_entry allocated by rproc_mem_entry_init()
 > + *
-> + * This function removes specified memory entry in @rproc carveouts list.
+> + * This function frees a rproc_mem_entry_struct that was allocated by
+> + * rproc_mem_entry_init().
 > + */
-> +void rproc_del_carveout(struct rproc *rproc, struct rproc_mem_entry *mem)
+> +void rproc_mem_entry_free(struct rproc_mem_entry *mem)
 > +{
-> +	struct rproc_mem_entry *entry, *tmp;
-> +
-> +	list_for_each_entry_safe(entry, tmp, &rproc->carveouts, node) {
-> +		if (entry == mem) {
-> +			list_del(&mem->node);
-> +			return;
-> +		}
-> +	}
+> +	kfree(mem);
 > +}
-> +EXPORT_SYMBOL(rproc_del_carveout);
+> +EXPORT_SYMBOL(rproc_mem_entry_free);
 
-This API seems to me quite dangerous because it can be called while carveouts are in use.
-At least some checks should be added...
-
-What about using rproc_resource_cleanup instead?
-
-Regards,
-Arnaud
+Same concerns for this one.
 
 > +
 > +/**
->   * rproc_mem_entry_init() - allocate and initialize rproc_mem_entry struct
+>   * rproc_of_resm_mem_entry_init() - allocate and initialize rproc_mem_entry struct
+>   * from a reserved memory phandle
 >   * @dev: pointer on device struct
->   * @va: virtual address
 > diff --git a/include/linux/remoteproc.h b/include/linux/remoteproc.h
-> index 7c943f0a2fc4..43112aa78ffe 100644
+> index 43112aa78ffe..9b039f37da12 100644
 > --- a/include/linux/remoteproc.h
 > +++ b/include/linux/remoteproc.h
-> @@ -658,6 +658,7 @@ struct rproc *devm_rproc_alloc(struct device *dev, const char *name,
->  int devm_rproc_add(struct device *dev, struct rproc *rproc);
->  
->  void rproc_add_carveout(struct rproc *rproc, struct rproc_mem_entry *mem);
-> +void rproc_del_carveout(struct rproc *rproc, struct rproc_mem_entry *mem);
+> @@ -666,6 +666,7 @@ rproc_mem_entry_init(struct device *dev,
+>  		     int (*alloc)(struct rproc *, struct rproc_mem_entry *),
+>  		     int (*release)(struct rproc *, struct rproc_mem_entry *),
+>  		     const char *name, ...);
+> +void rproc_mem_entry_free(struct rproc_mem_entry *mem);
 >  
 >  struct rproc_mem_entry *
->  rproc_mem_entry_init(struct device *dev,
+>  rproc_of_resm_mem_entry_init(struct device *dev, u32 of_resm_idx, size_t len,
