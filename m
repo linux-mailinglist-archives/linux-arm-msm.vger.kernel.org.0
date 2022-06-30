@@ -2,207 +2,154 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DB1E75625A5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Jun 2022 23:53:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C2D435625BB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Jun 2022 23:56:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237201AbiF3Vw4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Jun 2022 17:52:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41734 "EHLO
+        id S237336AbiF3V4t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Jun 2022 17:56:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45996 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237682AbiF3Vwv (ORCPT
+        with ESMTP id S236933AbiF3V4r (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Jun 2022 17:52:51 -0400
-Received: from mail-io1-f54.google.com (mail-io1-f54.google.com [209.85.166.54])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B324E564CB;
-        Thu, 30 Jun 2022 14:52:50 -0700 (PDT)
-Received: by mail-io1-f54.google.com with SMTP id s17so504407iob.7;
-        Thu, 30 Jun 2022 14:52:50 -0700 (PDT)
+        Thu, 30 Jun 2022 17:56:47 -0400
+Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB175564FB
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Jun 2022 14:56:45 -0700 (PDT)
+Received: by mail-ot1-x32d.google.com with SMTP id n12-20020a9d64cc000000b00616ebd87fc4so423920otl.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Jun 2022 14:56:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=8CS533fsVHbJlembFtrJaJOunJ/hjtVlmQosQykPOVU=;
+        b=S/NpE6Kmx1CbuLYF7W63lIhTpwApNv2nYfn5k5hCaG3+u2eXBUGmP4fIq1dUGisMTw
+         Z6TQkg5prg5MB0VGbx9nu39MvWpSFbdJ1IrFg5Q2urI0X65FMnfcAfjTMGnjMurkDFXL
+         mdRJfacHhU6owX7jQL2PfmlJ+MMb0y/YegKjxg+VP8ppTBvgEUKR4LSdhAEgHeByL+dO
+         /OFZCk5YDGbsigwdkuje2nI7PEPlHeX/BsG5isNHPTyxPT4GeRfjOypgmegh4jSEstao
+         5cDNQrLoivLUoQgFZ1Wr3/wwZpEzvT59MTfLSNRjIsQkZiK+5KhOAZEM6E5JhwQMyvHZ
+         gENw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=Pd9YdFtXTAdBiVjUKDDX58WMS8bfFXnbd3z8gjNaxBk=;
-        b=N3tnr01hGnDDKhkDHnF1qdAd7BIi31y4uLcC0etck5z04cLWguyvIYNvsm+XslrlJf
-         0HW+3pd4HaZ2W4K5iitU/tpGDI8yVV6PRICQ7uwRT3Z2/nzbQtMYxjBhb+tCgbgxtn/B
-         RMz/N1TdZ05Ff1v88gmYK1sXVYuhM+8FDmlguYuCdf1RHPh2zqCwAn0UwHztCXx4IOlK
-         KP0vbfydBXfiz1lU2SsWNJjpoUHgc8O/JCpAsN3gjDKzHwA6YXhzh4bBaDW1C79MAlSB
-         MtX6tbZnnEI91VRRMu912HXltyxGold4KuSPYt7bnkKgFIYqLIpHaFZ4h6U6PD7EsU02
-         h6wg==
-X-Gm-Message-State: AJIora/HshpnIsmDauLKhyk1L21w63H5Cop9Vb0c1ZlNXZpIRMZbK2cP
-        iweG4laJe5pPdAEo8HC3QA==
-X-Google-Smtp-Source: AGRyM1vdhQs6rgNjn7lJf44FBibULmBK9NHhdmaES6lxuj5OVArNTesjPyjy4bFZssm+xslv86uMzg==
-X-Received: by 2002:a05:6638:3d83:b0:33c:805a:77eb with SMTP id ci3-20020a0566383d8300b0033c805a77ebmr6840964jab.237.1656625969978;
-        Thu, 30 Jun 2022 14:52:49 -0700 (PDT)
-Received: from robh.at.kernel.org ([64.188.179.248])
-        by smtp.gmail.com with ESMTPSA id e2-20020a5d9242000000b006758cc4aa76sm2155836iol.29.2022.06.30.14.52.48
+        bh=8CS533fsVHbJlembFtrJaJOunJ/hjtVlmQosQykPOVU=;
+        b=06AI/msDuZtVlhReWZBv1WgfetSCns1ypUEaWNNLsGm+Lj0I05DjYcK07xjExLaYSx
+         KiaiVA4vhVbm2xcM+0uOsI+w6h4UtveiC0TzNINTVZ3cNtw2tmiUB42Aurqd+FucapBZ
+         6sS5bWS1/RPl2T2H/1mHYsESKHx2tEPdNXy/Qc7WXfHvDL7DAaO+tNjrIsP66GBEKv8X
+         gQofmkZx0fCucTAawq+z9/4K3R5fSSZPRJCVoOvLI7snBpPfislz7MuicZZ+w2L4u8LB
+         G029M2BvZihdZpL5Pzm81kxX3icfLG8EPut6jab+dDfnKPstqlKavenWcKkKjf0aA7V4
+         GWtQ==
+X-Gm-Message-State: AJIora+WLROs9OHSonPLNpdfUM7Bv39kkgx+F3e5Q7bjQPm1Wf+qXKOu
+        dLpFvbqSS41TSXve95kulmC3fg==
+X-Google-Smtp-Source: AGRyM1tTcC8XQCvCGbbV3733NDMYY/C1kLs9792XFAckdaiHz/q/E2fq1m/b7ST5yNLUq66kTwVARA==
+X-Received: by 2002:a9d:2f25:0:b0:616:9255:2ff with SMTP id h34-20020a9d2f25000000b00616925502ffmr5006588otb.87.1656626205292;
+        Thu, 30 Jun 2022 14:56:45 -0700 (PDT)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id r6-20020a056870580600b001089aef1815sm8952855oap.20.2022.06.30.14.56.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Jun 2022 14:52:49 -0700 (PDT)
-Received: (nullmailer pid 3380142 invoked by uid 1000);
-        Thu, 30 Jun 2022 21:52:47 -0000
-Date:   Thu, 30 Jun 2022 15:52:47 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH v1 2/4] clk: qcom: Add support for Display Clock
- Controller on SM8450
-Message-ID: <20220630215247.GA3375216-robh@kernel.org>
-References: <20220623114737.247703-1-dmitry.baryshkov@linaro.org>
- <20220623114737.247703-3-dmitry.baryshkov@linaro.org>
+        Thu, 30 Jun 2022 14:56:44 -0700 (PDT)
+Date:   Thu, 30 Jun 2022 16:56:42 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Dylan Van Assche <me@dylanvanassche.be>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom/sdm845-shift-axolotl: Enable pmi9889
+ LPG LED
+Message-ID: <Yr4cGj7MujkXZ161@builder.lan>
+References: <20220512054439.13971-1-me@dylanvanassche.be>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220623114737.247703-3-dmitry.baryshkov@linaro.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,UPPERCASE_50_75
-        autolearn=no autolearn_force=no version=3.4.6
+In-Reply-To: <20220512054439.13971-1-me@dylanvanassche.be>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jun 23, 2022 at 02:47:35PM +0300, Dmitry Baryshkov wrote:
-> Add support for the dispcc on Qualcomm SM8450 platform.
+On Thu 12 May 00:44 CDT 2022, Dylan Van Assche wrote:
+
+> Enables the RGB notification LED on the SHIFT 6mq (sdm845-shift-axolotl)
+> with the Qualcomm Light Pulse Generator bindings by Bjorn Andersson [1].
+> Patches are merged in for-next branch of linux-leds.
+> Tested these changes on the SHIFT 6mq.
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> [1] https://git.kernel.org/pub/scm/linux/kernel/git/pavel/linux-leds.git/commit/?h=for-next&id=a8e53db46f19f67be6a26488aafb7d10c78e33bd
+> 
+> Signed-off-by: Dylan Van Assche <me@dylanvanassche.be>
 > ---
->  drivers/clk/qcom/Kconfig                      |    9 +
->  drivers/clk/qcom/Makefile                     |    1 +
->  drivers/clk/qcom/dispcc-sm8450.c              | 1806 +++++++++++++++++
->  .../dt-bindings/clock/qcom,dispcc-sm8450.h    |  103 +
-
-This belongs in binding patch.
-
->  4 files changed, 1919 insertions(+)
->  create mode 100644 drivers/clk/qcom/dispcc-sm8450.c
->  create mode 100644 include/dt-bindings/clock/qcom,dispcc-sm8450.h
-
-
-> diff --git a/include/dt-bindings/clock/qcom,dispcc-sm8450.h b/include/dt-bindings/clock/qcom,dispcc-sm8450.h
-> new file mode 100644
-> index 000000000000..653ce8d47fe6
-> --- /dev/null
-> +++ b/include/dt-bindings/clock/qcom,dispcc-sm8450.h
-> @@ -0,0 +1,103 @@
-> +/* SPDX-License-Identifier: GPL-2.0-only */
-
-Dual license.
-
-> +/*
-> + * Copyright (c) 2020, The Linux Foundation. All rights reserved.
-
-It's 2022.
-
-> + */
-> +
-> +#ifndef _DT_BINDINGS_CLK_QCOM_DISP_CC_SM8450_H
-> +#define _DT_BINDINGS_CLK_QCOM_DISP_CC_SM8450_H
-> +
-> +/* DISP_CC clocks */
-> +#define DISP_CC_MDSS_AHB1_CLK					0
-> +#define DISP_CC_MDSS_AHB_CLK					1
-> +#define DISP_CC_MDSS_AHB_CLK_SRC				2
-> +#define DISP_CC_MDSS_BYTE0_CLK					3
-> +#define DISP_CC_MDSS_BYTE0_CLK_SRC				4
-> +#define DISP_CC_MDSS_BYTE0_DIV_CLK_SRC				5
-> +#define DISP_CC_MDSS_BYTE0_INTF_CLK				6
-> +#define DISP_CC_MDSS_BYTE1_CLK					7
-> +#define DISP_CC_MDSS_BYTE1_CLK_SRC				8
-> +#define DISP_CC_MDSS_BYTE1_DIV_CLK_SRC				9
-> +#define DISP_CC_MDSS_BYTE1_INTF_CLK				10
-> +#define DISP_CC_MDSS_DPTX0_AUX_CLK				11
-> +#define DISP_CC_MDSS_DPTX0_AUX_CLK_SRC				12
-> +#define DISP_CC_MDSS_DPTX0_CRYPTO_CLK				13
-> +#define DISP_CC_MDSS_DPTX0_LINK_CLK				14
-> +#define DISP_CC_MDSS_DPTX0_LINK_CLK_SRC				15
-> +#define DISP_CC_MDSS_DPTX0_LINK_DIV_CLK_SRC			16
-> +#define DISP_CC_MDSS_DPTX0_LINK_INTF_CLK			17
-> +#define DISP_CC_MDSS_DPTX0_PIXEL0_CLK				18
-> +#define DISP_CC_MDSS_DPTX0_PIXEL0_CLK_SRC			19
-> +#define DISP_CC_MDSS_DPTX0_PIXEL1_CLK				20
-> +#define DISP_CC_MDSS_DPTX0_PIXEL1_CLK_SRC			21
-> +#define DISP_CC_MDSS_DPTX0_USB_ROUTER_LINK_INTF_CLK		22
-> +#define DISP_CC_MDSS_DPTX1_AUX_CLK				23
-> +#define DISP_CC_MDSS_DPTX1_AUX_CLK_SRC				24
-> +#define DISP_CC_MDSS_DPTX1_CRYPTO_CLK				25
-> +#define DISP_CC_MDSS_DPTX1_LINK_CLK				26
-> +#define DISP_CC_MDSS_DPTX1_LINK_CLK_SRC				27
-> +#define DISP_CC_MDSS_DPTX1_LINK_DIV_CLK_SRC			28
-> +#define DISP_CC_MDSS_DPTX1_LINK_INTF_CLK			29
-> +#define DISP_CC_MDSS_DPTX1_PIXEL0_CLK				30
-> +#define DISP_CC_MDSS_DPTX1_PIXEL0_CLK_SRC			31
-> +#define DISP_CC_MDSS_DPTX1_PIXEL1_CLK				32
-> +#define DISP_CC_MDSS_DPTX1_PIXEL1_CLK_SRC			33
-> +#define DISP_CC_MDSS_DPTX1_USB_ROUTER_LINK_INTF_CLK		34
-> +#define DISP_CC_MDSS_DPTX2_AUX_CLK				35
-> +#define DISP_CC_MDSS_DPTX2_AUX_CLK_SRC				36
-> +#define DISP_CC_MDSS_DPTX2_CRYPTO_CLK				37
-> +#define DISP_CC_MDSS_DPTX2_LINK_CLK				38
-> +#define DISP_CC_MDSS_DPTX2_LINK_CLK_SRC				39
-> +#define DISP_CC_MDSS_DPTX2_LINK_DIV_CLK_SRC			40
-> +#define DISP_CC_MDSS_DPTX2_LINK_INTF_CLK			41
-> +#define DISP_CC_MDSS_DPTX2_PIXEL0_CLK				42
-> +#define DISP_CC_MDSS_DPTX2_PIXEL0_CLK_SRC			43
-> +#define DISP_CC_MDSS_DPTX2_PIXEL1_CLK				44
-> +#define DISP_CC_MDSS_DPTX2_PIXEL1_CLK_SRC			45
-> +#define DISP_CC_MDSS_DPTX3_AUX_CLK				46
-> +#define DISP_CC_MDSS_DPTX3_AUX_CLK_SRC				47
-> +#define DISP_CC_MDSS_DPTX3_CRYPTO_CLK				48
-> +#define DISP_CC_MDSS_DPTX3_LINK_CLK				49
-> +#define DISP_CC_MDSS_DPTX3_LINK_CLK_SRC				50
-> +#define DISP_CC_MDSS_DPTX3_LINK_DIV_CLK_SRC			51
-> +#define DISP_CC_MDSS_DPTX3_LINK_INTF_CLK			52
-> +#define DISP_CC_MDSS_DPTX3_PIXEL0_CLK				53
-> +#define DISP_CC_MDSS_DPTX3_PIXEL0_CLK_SRC			54
-> +#define DISP_CC_MDSS_ESC0_CLK					55
-> +#define DISP_CC_MDSS_ESC0_CLK_SRC				56
-> +#define DISP_CC_MDSS_ESC1_CLK					57
-> +#define DISP_CC_MDSS_ESC1_CLK_SRC				58
-> +#define DISP_CC_MDSS_MDP1_CLK					59
-> +#define DISP_CC_MDSS_MDP_CLK					60
-> +#define DISP_CC_MDSS_MDP_CLK_SRC				61
-> +#define DISP_CC_MDSS_MDP_LUT1_CLK				62
-> +#define DISP_CC_MDSS_MDP_LUT_CLK				63
-> +#define DISP_CC_MDSS_NON_GDSC_AHB_CLK				64
-> +#define DISP_CC_MDSS_PCLK0_CLK					65
-> +#define DISP_CC_MDSS_PCLK0_CLK_SRC				66
-> +#define DISP_CC_MDSS_PCLK1_CLK					67
-> +#define DISP_CC_MDSS_PCLK1_CLK_SRC				68
-> +#define DISP_CC_MDSS_ROT1_CLK					69
-> +#define DISP_CC_MDSS_ROT_CLK					70
-> +#define DISP_CC_MDSS_ROT_CLK_SRC				71
-> +#define DISP_CC_MDSS_RSCC_AHB_CLK				72
-> +#define DISP_CC_MDSS_RSCC_VSYNC_CLK				73
-> +#define DISP_CC_MDSS_VSYNC1_CLK					74
-> +#define DISP_CC_MDSS_VSYNC_CLK					75
-> +#define DISP_CC_MDSS_VSYNC_CLK_SRC				76
-> +#define DISP_CC_PLL0						77
-> +#define DISP_CC_PLL1						78
-> +#define DISP_CC_SLEEP_CLK					79
-> +#define DISP_CC_SLEEP_CLK_SRC					80
-> +#define DISP_CC_XO_CLK						81
-> +#define DISP_CC_XO_CLK_SRC					82
-> +
-> +/* DISP_CC resets */
-> +#define DISP_CC_MDSS_CORE_BCR					0
-> +#define DISP_CC_MDSS_CORE_INT2_BCR				1
-> +#define DISP_CC_MDSS_RSCC_BCR					2
-> +
-> +/* DISP_CC GDSCR */
-> +#define MDSS_GDSC				0
-> +#define MDSS_INT2_GDSC				1
-> +
-> +#endif
-> -- 
-> 2.35.1
+>  .../boot/dts/qcom/sdm845-shift-axolotl.dts    | 29 +++++++++++++++++++
+>  1 file changed, 29 insertions(+)
 > 
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts b/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
+> index 847f6217a77b..af412ac2c9d0 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
+> +++ b/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
+> @@ -2,11 +2,13 @@
+>  /*
+>   * Copyright (c) 2022, Alexander Martinz <amartinz@shiftphones.com>
+>   * Copyright (c) 2022, Caleb Connolly <caleb@connolly.tech>
+> + * Copyright (c) 2022, Dylan Van Assche <me@dylanvanassche.be>
+>   */
+>  
+>  /dts-v1/;
+>  
+>  #include <dt-bindings/gpio/gpio.h>
+> +#include <dt-bindings/leds/common.h>
+>  #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+>  #include "sdm845.dtsi"
+>  #include "pm8998.dtsi"
+> @@ -554,6 +556,33 @@ &pmi8998_smb2 {
+>  	monitored-battery = <&battery>;
+>  };
+>  
+> +&pmi8998_lpg {
+
+We don't have this node, because no one has reviewed
+https://lore.kernel.org/all/20220505022706.1692554-1-bjorn.andersson@linaro.org/#t
+yet.
+
+If anyone could take a look I'd be happy to merge this as well.
+
+Thanks,
+Bjorn
+
+> +	status = "okay";
+> +
+> +	multi-led {
+> +		color = <LED_COLOR_ID_RGB>;
+> +		function = LED_FUNCTION_STATUS;
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		led@3 {
+> +			reg = <3>;
+> +			color = <LED_COLOR_ID_BLUE>;
+> +		};
+> +
+> +		led@4 {
+> +			reg = <4>;
+> +			color = <LED_COLOR_ID_GREEN>;
+> +		};
+> +
+> +		led@5 {
+> +			reg = <5>;
+> +			color = <LED_COLOR_ID_RED>;
+> +		};
+> +	};
+> +};
+> +
+>  &qup_uart9_default {
+>  	pinconf-rx {
+>  		pins = "gpio5";
+> -- 
+> 2.36.1
 > 
