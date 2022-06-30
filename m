@@ -2,76 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7F48C5623ED
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Jun 2022 22:09:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A189C56240C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Jun 2022 22:18:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237088AbiF3UJJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Jun 2022 16:09:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38954 "EHLO
+        id S231290AbiF3USw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Jun 2022 16:18:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47356 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236986AbiF3UJI (ORCPT
+        with ESMTP id S237239AbiF3USr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Jun 2022 16:09:08 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD2A25591
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Jun 2022 13:09:07 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id v14so168316wra.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Jun 2022 13:09:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=vENloKw4Zyjc0gCri5jvH4/9LY/XC5cl5dQKTcjvaCs=;
-        b=FGWWuFmCEgl3+th2ubwE35nFIPRxd7fdfBftL6oT63kl3iQMJDA+uPfe2GRBaNcMCu
-         L3u4E1akwlsi2DFUjhIFjDiLrXWoL/3W2z6ut0w6Ej9gvGnPZHUpm2zWYLwsBSOjl9bJ
-         Emjw8EU5pMJhtrPv1ZcDD5Qq9tc/jXtNb5F24mjgKgRW547pR5hzdElR825oZbs0pIJG
-         BaIsHl25EyWv4l35cMA30TzaFR5mQB8/VYFae3Jsn9yQX3kqvzc3zLoqTWQJp89vYyOH
-         0Or95dJxBkW/zKzWyZUVf51AgW9AgSJ6HbgazG/2qbiLxcLS++zK/hNedE78SM3Qn5jA
-         a51Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=vENloKw4Zyjc0gCri5jvH4/9LY/XC5cl5dQKTcjvaCs=;
-        b=VlWlsXDLRF40DYj+SnkZWJS8tvQZGoXzqpjNf5uYjhoJCaUW2WaY3BzKdg7AnrzwiY
-         Vd9VqVEJCJLmB+9nxayR0b9hdFmtZc32/9frPOApBeUxmqph8/rKJ1aGG6xnkAH8PvNX
-         CbH8a1i3piXrgecRomKEPMPuteEeWmPr7dvDFYb9EXsypmyCO5LfDCJHWrQje77NkUZi
-         CIZFfr+EUrsAg3G0gZAgpISeAvbP+uL+NmqyiCkmN8O5aqOVqMezN8GaOZy00jrZdrHa
-         E8RlgpoOlWpNycpXmTD1K1IqzeYbB85xb1qRys0OYd2SRhZ3mob1e13qvze+PQE6KAXQ
-         Y5+A==
-X-Gm-Message-State: AJIora++OaZwtvLo9xvkfz9P6SpM0WXAYpbxL6eBuAuK675rEdjnWQzT
-        rQUidSAZK62i0v40XpY8Qj9eUA==
-X-Google-Smtp-Source: AGRyM1t6Q/lH53ojAoEjykLx6b3VMs8L7aT1RpJP89ZOCk1tkN9pqeUVE/KoGXvtAYp7d7zHU4CmBg==
-X-Received: by 2002:a5d:59c5:0:b0:21d:1864:3154 with SMTP id v5-20020a5d59c5000000b0021d18643154mr10222553wry.719.1656619746417;
-        Thu, 30 Jun 2022 13:09:06 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id l3-20020a1c7903000000b003a04962ad3esm3962303wme.31.2022.06.30.13.09.05
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 30 Jun 2022 13:09:05 -0700 (PDT)
-Message-ID: <ef06f83c-e521-29da-b59b-a0cd4c2aef10@linaro.org>
-Date:   Thu, 30 Jun 2022 21:09:04 +0100
+        Thu, 30 Jun 2022 16:18:47 -0400
+Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [85.215.255.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 951494883A;
+        Thu, 30 Jun 2022 13:18:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1656620309;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=jTBh8tpUX4wS523jclqgriqIEwT1It3h9ZxxUKd4K3w=;
+    b=Ubkd7PR1Ml9pFUB48ByHTQBPaguLqxqeSK12bVHkWL2V9we8Jt5qg2tlBtN3Qj+iA5
+    uj0IBBU6CIvZ3wLV3XTF7IbLPmzLCkC1HtBRggADtkVPxkEEXnIiDjXCfav8Nbgc2bVj
+    UsWplxEZeXbc8sQHefmniQzlrBeO9pbO8VP6jyBMK5C28sQCZabngGbKNS28WCyXaYBk
+    2dm3Utv2GjXq/22ZVHzx5RLnYjna6G6P+6BfS4DRjWQg0jud45UHneKV56zsVQtLjxkW
+    9Nt/lkjjXTTF1jl4MZ5oX7ok1LUttsTZQnQpG2di36RkyvNobO/Fl5ZJfp8ovbcAnRCO
+    VMhg==
+Authentication-Results: strato.com;
+    dkim=none
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u267FZF9PwpcNKLUrK8+86Y="
+X-RZG-CLASS-ID: mo00
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 47.46.1 AUTH)
+    with ESMTPSA id yfdd30y5UKIS4u1
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Thu, 30 Jun 2022 22:18:28 +0200 (CEST)
+Date:   Thu, 30 Jun 2022 22:18:13 +0200
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        robdclark@gmail.com, quic_abhinavk@quicinc.com,
+        dmitry.baryshkov@linaro.org, sean@poorly.run, airlied@linux.ie,
+        daniel@ffwll.ch, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        bjorn.andersson@linaro.org, quic_mkrishn@quicinc.com,
+        swboyd@chromium.org, freedreno@lists.freedesktop.org
+Subject: Re: [Freedreno] [PATCH 3/7] dt-bindings: msm: dsi: Fix power-domains
+ constraint
+Message-ID: <Yr4E+AsXRBZuYCpx@gerhold.net>
+References: <20220630120845.3356144-1-bryan.odonoghue@linaro.org>
+ <20220630120845.3356144-4-bryan.odonoghue@linaro.org>
+ <225e70ec-553d-4d44-fc61-543128b2ad67@linaro.org>
+ <054043a5-3643-aa5b-4204-8cacb7b3ae9a@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.0
-Subject: Re: [PATCH] dt-bindings: pm8941-misc: Fix usb_id and usb_vbus
- definitions
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        agross@kernel.org, bjorn.andersson@linaro.org,
-        myungjoo.ham@samsung.com, cw00.choi@samsung.com,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        gurus@codeaurora.org, aghayal@codeaurora.org
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-References: <20220630042357.3308128-1-bryan.odonoghue@linaro.org>
- <7a3efafc-71b2-c474-bb73-6959c701f459@linaro.org>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <7a3efafc-71b2-c474-bb73-6959c701f459@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <054043a5-3643-aa5b-4204-8cacb7b3ae9a@linaro.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_PASS,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -79,94 +68,47 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 30/06/2022 19:47, Krzysztof Kozlowski wrote:
-> On 30/06/2022 06:23, Bryan O'Donoghue wrote:
->> dts validation is throwing an error for me on 8916 and 8939 with
->> extcon@1300. In this case we have usb_vbus but not usb_id.
->>
->> Looking at the pm8941-misc driver we can have usb_id, usb_vbus or both at
->> the same time.
+On Thu, Jun 30, 2022 at 08:49:03PM +0100, Bryan O'Donoghue wrote:
+> On 30/06/2022 20:01, Krzysztof Kozlowski wrote:
+> > On 30/06/2022 14:08, Bryan O'Donoghue wrote:
+> > > The existing msm8916.dtsi does not depend on nor require power-domains.
+> > > Drop from the list of required.
+> > 
+> > That's not good reason. The bindings are about hardware so the question
+> > is whether being a part of power domain or toggling power domain on/off
+> > is considered required for the DSI.
 > 
-> Implementation is not the best reason to change bindings. Implementation
-> can change, bindings should not.
+> AFAIK no but, I will check this again and if it is definitely not required,
+> I'll churn the commit log to describe it better.
 > 
->>
->> Expand the definition with anyOf to capture the three different valid
->> modes.
->>
->> Fixes: 4fcdd677c4ea ("bindings: pm8941-misc: Add support for VBUS detection")
->> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->> ---
->>   .../devicetree/bindings/extcon/qcom,pm8941-misc.yaml | 12 ++++++++----
->>   1 file changed, 8 insertions(+), 4 deletions(-)
->>
->> diff --git a/Documentation/devicetree/bindings/extcon/qcom,pm8941-misc.yaml b/Documentation/devicetree/bindings/extcon/qcom,pm8941-misc.yaml
->> index 6a9c96f0352ac..1bc412a4ac5e6 100644
->> --- a/Documentation/devicetree/bindings/extcon/qcom,pm8941-misc.yaml
->> +++ b/Documentation/devicetree/bindings/extcon/qcom,pm8941-misc.yaml
->> @@ -27,10 +27,14 @@ properties:
->>   
->>     interrupt-names:
->>       minItems: 1
->> -    items:
->> -      - const: usb_id
->> -      - const: usb_vbus
->> -
->> +    anyOf:
->> +      - items:
->> +          - const: usb_id
->> +          - const: usb_vbus
->> +      - items:
->> +          - const: usb_id
-> 
-> I don't think you can have ID connected and VBUS disconnected, therefore
-> is it even possible to have missing VBUS interrupt?
 
-So the driver code does support that configuration
+The power domain in the DSI node is used together with the OPP table to
+vote for performance states depending on the clock frequency of the byte
+clock. In the downstream kernel this is part of the clock driver.
+In mainline this needs to be done in the consumer driver.
 
-info->id_irq = platform_get_irq_byname(pdev, "usb_id");
-if (info->id_irq > 0) {
-         ret = devm_request_threaded_irq(dev, info->id_irq, NULL,
-                                 qcom_usb_irq_handler,
-                                 IRQF_TRIGGER_RISING |
-                                 IRQF_TRIGGER_FALLING | IRQF_ONESHOT,
-                                 pdev->name, info);
-         if (ret < 0) {
-                 dev_err(dev, "failed to request handler for ID IRQ\n");
-                 return ret;
-         }
-}
+The MSM8916 port was never really optimized for power usage. With
+incomplete interconnect support etc the power domains tend to be at
+maximum state most of the time, so it does not cause any issues if you
+forget to vote for performance states in some places.
 
-info->vbus_irq = platform_get_irq_byname(pdev, "usb_vbus");
-if (info->vbus_irq > 0) {
-         ret = devm_request_threaded_irq(dev, info->vbus_irq, NULL,
-                                 qcom_usb_irq_handler,
-                                 IRQF_TRIGGER_RISING |
-                                 IRQF_TRIGGER_FALLING | IRQF_ONESHOT,
-                                 pdev->name, info);
-         if (ret < 0) {
-                 dev_err(dev, "failed to request handler for VBUS IRQ\n");
-                 return ret;
-         }
-}
+In general, the situation on MSM8916/MSM8939 is not really any different
+from newer SoCs. The downstream MSM8916 gcc driver contains:
 
-Looking at what we have in upstream we declare the usb_vbus interrupt 
-but no platform that I can see declares a usb_id interrupt.
+static struct rcg_clk byte0_clk_src = {
+	/* ... */
+	.c = {
+		/* ... */
+		VDD_DIG_FMAX_MAP2(LOW, 94400000, NOMINAL, 188500000),
+	},
+};
 
-In practice the USB host driver drivers/usb/chipidea/core.c gets an 
-extcon from a GPIO instead of from the pm8941 block.
+which should be ideally translated into an OPP table with
+power-domains = <&rpmpd MSM8916_VDDCX>; similar to newer SoCs.
 
-arch/arm64/boot/dts/qcom/msm8916-huawei-g7.dts
-arch/arm64/boot/dts/qcom/msm8916-asus-z00l.dts
+(I'm not saying that "power-domains" should be required, just that it
+ could be added for MSM8916/MSM8939 if someone wants to properly
+ power-optimize them...)
 
-On the T2a platform we use an external USB type-c controller which owns 
-both vbus and usb_id/role but, in that case we don't want to switch on 
-this driver at all...
-
-Yep, I agree with you. I don't see a valid use-case for this driver 
-without usb_vbus.
-
-I'll tweak the bindings to reflect.
-
----
-bod
+Thanks,
+Stephan
