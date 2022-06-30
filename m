@@ -2,74 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0DEA45620D9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Jun 2022 19:07:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 76DAB5620FB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Jun 2022 19:13:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236404AbiF3RHt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Jun 2022 13:07:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36348 "EHLO
+        id S235898AbiF3RM3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Jun 2022 13:12:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39430 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229531AbiF3RHs (ORCPT
+        with ESMTP id S235130AbiF3RMW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Jun 2022 13:07:48 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FB303ED1C
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Jun 2022 10:07:47 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id k15so5629937lfv.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Jun 2022 10:07:47 -0700 (PDT)
+        Thu, 30 Jun 2022 13:12:22 -0400
+Received: from mail-oi1-x22b.google.com (mail-oi1-x22b.google.com [IPv6:2607:f8b0:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4126A3ED3D
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Jun 2022 10:12:21 -0700 (PDT)
+Received: by mail-oi1-x22b.google.com with SMTP id w83so123173oiw.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Jun 2022 10:12:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:user-agent:in-reply-to:references
-         :message-id:mime-version:content-transfer-encoding;
-        bh=5h9m2r1as3dVO5Ej+4ZiJew20CUmK76LyEozgtg6ehk=;
-        b=RpClWCfbqMGu2IaKWsyy/R7HM5UFKNt5IfpnOqCRNW7IeAGO0hOQ8gg3W3l8GwANGS
-         DndKo5NBBpM7M4OzjLhDl4yyHG1a2jZ4FTPnoNrWLzvsn56ATwrLWpSkSt5wSv3rKAzi
-         b1UlsdO/ZFFZxcP7I301pb460P5tLR90qusgBA9D80fQZCRHaYD/f/Mndrmv46pmuxKa
-         qEzW8NhW1huy78tXn0ahmqTf/fRTK83e6KpRM2Og0b/4LkNTnPkTIS2PQ3Ww9KSWtv6m
-         aaO7S3XYrMgcSvL2T3iBfBcprAhBJamvksBcnSLMCPD8Pwrhs6FSQnvorU6rgaqtRhRa
-         q6qg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=y6DkU6unvFq/epfz0T61FMvsr3c8FnoPOdbOM2kIYTM=;
+        b=DJd5lnw20Em6KF++SAOBDORtfraTfBV4IERCyfIRJYJP1xrQx/lueDRvDMTe7RkrLD
+         cfbeaFCWF7wFbN6QqVi9Xd7JWKeAlbvOiKMasiHfH9IZjSYgRfIxkUR/jG4U8xAJcJgR
+         jpjltNE5Pi1gQt7Q+ls53U6ohlbXFxGVLL5VM7lF4XjY6OZhxeFL/yvjlivTlbLwmF0v
+         i/3Vl/laIl26jQWi7eD/CnO+YsjVvhJoxMn0hjqo3VwaDzJgqb08ai9YM7q0RjLc62Gj
+         3VwarAOReV2NoQgYVxCilzZp5GV8iRdkVihrDUAEJqmEEoBEeZtxTXvag2clKroC/eX3
+         BRsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:user-agent:in-reply-to
-         :references:message-id:mime-version:content-transfer-encoding;
-        bh=5h9m2r1as3dVO5Ej+4ZiJew20CUmK76LyEozgtg6ehk=;
-        b=fIG9hAIOmFKaHV56hciEY3cT9cTcxCmt/sW/yMIZsLDpl1gkF6fZvh4mCu30r+XFKg
-         GRA28kIJg/vlJSH+NPWc5e02GzmPUchi6LsimeGp5W11+ZrvMMkPCnbB0Pxli9NzBCS7
-         9SaAklvH3Cq4f/mN3PDN/dzfW3ReHAH6VvORWfudqTDneeOmTr5c7Y65Zcl3buCYwaTT
-         eq454rmaVFvLlU0x/iPgOhHt7g+6cMh3dkSONEnYFXQfFvEoB8D4e79k/KwUeL3LxMnk
-         06Fqwq9mjBFOv1bDd5e/4CUZ1s8C+FBvPM0S8B/HziWS38cUfSC6JR042N3G7PFaYdT2
-         T5HQ==
-X-Gm-Message-State: AJIora+ypHZ3BDBWlrBhtd92yp779Dm/ekP1JBR0Xquj0syNOpwVwn+9
-        vwlOl1z4aX5PjBrQUPEd3ytK4g==
-X-Google-Smtp-Source: AGRyM1sYxOrvJE5VNAQuV35nuPVYN8Uc4ZOlo7XwTERwo1oW9GaijikgQCz+byZALgT7XFQduQmvEg==
-X-Received: by 2002:a05:6512:3e0e:b0:47f:6a95:9b98 with SMTP id i14-20020a0565123e0e00b0047f6a959b98mr6372997lfv.177.1656608865898;
-        Thu, 30 Jun 2022 10:07:45 -0700 (PDT)
-Received: from [127.0.0.1] ([94.25.229.210])
-        by smtp.gmail.com with ESMTPSA id c7-20020a19e347000000b004791fc12f6asm3194067lfk.46.2022.06.30.10.07.43
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 30 Jun 2022 10:07:44 -0700 (PDT)
-Date:   Thu, 30 Jun 2022 20:07:41 +0300
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, robdclark@gmail.com,
-        quic_abhinavk@quicinc.com, sean@poorly.run, airlied@linux.ie,
-        daniel@ffwll.ch, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org
-CC:     quic_mkrishn@quicinc.com, swboyd@chromium.org,
-        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        devicetree@vger.kernel.org, bryan.odonoghue@linaro.org
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_2/7=5D_dt-bindings=3A_msm=3A_ds?= =?US-ASCII?Q?i=3A_Fix_operating-points-v2_constraint?=
-User-Agent: K-9 Mail for Android
-In-Reply-To: <20220630120845.3356144-3-bryan.odonoghue@linaro.org>
-References: <20220630120845.3356144-1-bryan.odonoghue@linaro.org> <20220630120845.3356144-3-bryan.odonoghue@linaro.org>
-Message-ID: <6334180D-C29F-4EB4-BD2D-1F832E9FF990@linaro.org>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=y6DkU6unvFq/epfz0T61FMvsr3c8FnoPOdbOM2kIYTM=;
+        b=MGkP70meeCnB04xKs7g8UOdJqXqBAIVjtCQIH61n64sen5nQ3HlSmCdKdK19mmGrjN
+         6vFOZ0+SF/91C7X171RnVHOUOt13XrTkqdwN3kmWwJOSj/Jc0uB3wnUzaRi+65kf8zCE
+         lqvvluqrSs9quGM/47rHvAd/LHrKOGx79K1WnFLfFSTEy4TchtLOaftascL+WmSpk9iK
+         UknTiSqrLU219RPPFMezkQbnTLhukH84lJNbM6Y8qSWXrkaOAH7OPHrGoleMgAsqAiF3
+         E43GJbrW2Ccsab/WuS4NIEE2rWQTQQqtePjPT8sN/58yUDhl/lSbUWArVHz7s8cUS9YE
+         keKA==
+X-Gm-Message-State: AJIora/A0ReD8LZEHqildC/+45buPn8jCJwjbFEfYjVozHVf1Z5zOdAI
+        trhQsrAqCHItWX1f6c3ySMzcOg==
+X-Google-Smtp-Source: AGRyM1vYV/1SLXnnhRjMlNdBGcQm2Z5iYiXBH0NyUJBWczzuTWGpf7kSSRTOVOSf9682pD+uViAOtw==
+X-Received: by 2002:a05:6808:1486:b0:335:b75d:6c1c with SMTP id e6-20020a056808148600b00335b75d6c1cmr5100164oiw.263.1656609140545;
+        Thu, 30 Jun 2022 10:12:20 -0700 (PDT)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id 65-20020a4a1a44000000b0035eb4e5a6bbsm11341066oof.17.2022.06.30.10.12.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 30 Jun 2022 10:12:19 -0700 (PDT)
+Date:   Thu, 30 Jun 2022 12:12:17 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
+Subject: Re: [PATCH v9 7/7] clk: qcom: add camera clock controller driver for
+ SM8450 SoC
+Message-ID: <Yr3ZcclsaBJP55Bs@builder.lan>
+References: <20220630081742.2554006-1-vladimir.zapolskiy@linaro.org>
+ <20220630081831.2554107-1-vladimir.zapolskiy@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220630081831.2554107-1-vladimir.zapolskiy@linaro.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -77,42 +73,13 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Thu 30 Jun 03:18 CDT 2022, Vladimir Zapolskiy wrote:
 
+> Add  camera clock controller driver found on QCOM SM8450 SoC.
+> 
+> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 
-On 30 June 2022 15:08:40 GMT+03:00, Bryan O'Donoghue <bryan=2Eodonoghue@li=
-naro=2Eorg> wrote:
->The existing msm8916=2Edtsi does not depend on nor require operating poin=
-ts=2E
->
->Fixes: 4dbe55c97741 ("dt-bindings: msm: dsi: add yaml schemas for DSI bin=
-dings")
->Signed-off-by: Bryan O'Donoghue <bryan=2Eodonoghue@linaro=2Eorg>
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-
-Reviewed-by: Dmitry Baryshkov <dmitry=2Ebaryshkov@linaro=2Eorg>
-
->---
-> =2E=2E=2E/devicetree/bindings/display/msm/dsi-controller-main=2Eyaml    =
- | 1 -
-> 1 file changed, 1 deletion(-)
->
->diff --git a/Documentation/devicetree/bindings/display/msm/dsi-controller=
--main=2Eyaml b/Documentation/devicetree/bindings/display/msm/dsi-controller=
--main=2Eyaml
->index 717a5d255ffe4=2E=2E101adec8d9152 100644
->--- a/Documentation/devicetree/bindings/display/msm/dsi-controller-main=
-=2Eyaml
->+++ b/Documentation/devicetree/bindings/display/msm/dsi-controller-main=
-=2Eyaml
->@@ -137,7 +137,6 @@ required:
->   - assigned-clocks
->   - assigned-clock-parents
->   - power-domains
->-  - operating-points-v2
->   - ports
->=20
-> additionalProperties: false
-
---=20
-With best wishes
-Dmitry
+Regards,
+Bjorn
