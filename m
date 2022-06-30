@@ -2,273 +2,187 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E04205618F9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Jun 2022 13:21:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 352ED561908
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Jun 2022 13:24:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233845AbiF3LUT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Jun 2022 07:20:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34160 "EHLO
+        id S232664AbiF3LXy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Jun 2022 07:23:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37782 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234683AbiF3LUN (ORCPT
+        with ESMTP id S232808AbiF3LXy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Jun 2022 07:20:13 -0400
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86D574D4ED;
-        Thu, 30 Jun 2022 04:20:11 -0700 (PDT)
-Received: by mail-ej1-x62f.google.com with SMTP id ay16so38361867ejb.6;
-        Thu, 30 Jun 2022 04:20:11 -0700 (PDT)
+        Thu, 30 Jun 2022 07:23:54 -0400
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 814DD4475C
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Jun 2022 04:23:52 -0700 (PDT)
+Received: by mail-ej1-x62b.google.com with SMTP id g26so38353314ejb.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Jun 2022 04:23:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:from:to:cc:subject:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=s8MO9mMa1bq2hJggtQa7J+wxVNTG6bz7mxC4q8MXXFI=;
-        b=ozapMMM+OpcCkvZB2MwOtC0ncVnDKR0WF4UiDQdsmDHZGD4DTFwmSyMjseFxfBIlYB
-         /stb3g3PgJFHBE+1TrUOpO9MB6pwGfLDWc89XE6YJePjyLaHsLzfNZk7NxyXpo+UjN/V
-         Ap/wGWW3RwutxyrDNmK0snOLVDGnn6Poh0ENdgxVWHviPRkKyTIJcLoW/LlF/RcM7XLw
-         TWXbGqtdWF5+Y1jzpbUuzTxhfCkUVQCoCW6VV+PjGGEn0oKNDE+dPNuw4XyOgGsnuwmj
-         OAezAOhkZfCm8WGG3hg/6S4YmoQ/5vNUx5aEssEJ8mOF0ARWda08fiFSYzcH8As8PFv1
-         OHZA==
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=cl2/aCRmz32z0M8hATk63KFl8RD4GPOSvWPssViTZUo=;
+        b=cn6dgKQrEDTdE1btrPB4ifpslzzEQroEEzzek9jnManHYUnf9nqJ2zGHKZv1k6tIUA
+         rmZKjIf9x/kZ1oxQ4PtR2SsYw3xZTbZXWI85Yng8GRkUkaphKp/mQDVQIr2s4HRp/ZTe
+         m4vUZO4bmWD/xWJzI1eBnsSZfjlMFtoqhLNm8OP+FU1c8/6jrcff/r5/Yh3wgc+KY9yO
+         6XBa5MLRLXXsIhzNFCVX4PEajTiTSHmpJRDG0nXYNQ2RYVRJ+YOV7xDVU461/SML/xoH
+         3PsnUmNjAHdALjD9P6CZwPcLtgV0Lls9cj6ladKn7KnYtBowAP0ddzQQklKhLz/WyekD
+         a0Eg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:from:to:cc:subject:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=s8MO9mMa1bq2hJggtQa7J+wxVNTG6bz7mxC4q8MXXFI=;
-        b=s+INmmq2/h1Z6GG5GVKq//zVOuPwKS8qiDsBhJObEF6oWv1aVOl5xf3xbZn8DF9ow+
-         zDXC6K8/Jr/ExcrdNoiFDvTeIf+X6zth3EC1qoAHwxfsLoes6l3O1+2NGQPgJGVk80a4
-         tC4bFw2XPmoHQkuhi+tqaIG4/dbfIbSCiohvB9UdVTXuR04QQW2SoXLW+B8vsu9nzJAs
-         Zrp0fy0QQENz4Of89YpD4Tu30SEZOAli1LqL0vv0WfKOsk+XDnsUMBO1iT8H245kdQrJ
-         USRsrubOfnwKrzB7lEzjH+zgPXEyitj/Y/HRjpurNpZ+M/ccUy3ikOgAMDKOgkXTTHXy
-         zoPQ==
-X-Gm-Message-State: AJIora+LoQTblIjdz//EVp6Or4g9Q1NHUw36SD1ixm2010kwwjICAZFV
-        qTteHdEQmX7nScw5f3taPUU=
-X-Google-Smtp-Source: AGRyM1vfpQq6ZOVJ0VDwuAbaEwiREFT06sNqfr7RErBzIzhM45kbRbqxz071SdAVbUmH6oK7r82Aog==
-X-Received: by 2002:a17:907:2d9f:b0:726:8e98:63f9 with SMTP id gt31-20020a1709072d9f00b007268e9863f9mr8584152ejc.28.1656588009884;
-        Thu, 30 Jun 2022 04:20:09 -0700 (PDT)
-Received: from Ansuel-xps. (93-42-70-190.ip85.fastwebnet.it. [93.42.70.190])
-        by smtp.gmail.com with ESMTPSA id s3-20020a1709067b8300b0070efa110afcsm8919142ejo.83.2022.06.30.04.20.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Jun 2022 04:20:09 -0700 (PDT)
-Message-ID: <62bd86e9.1c69fb81.0796.06ac@mx.google.com>
-X-Google-Original-Message-ID: <Yr2G51HPmXz+RDHm@Ansuel-xps.>
-Date:   Thu, 30 Jun 2022 13:20:07 +0200
-From:   Christian Marangi <ansuelsmth@gmail.com>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=cl2/aCRmz32z0M8hATk63KFl8RD4GPOSvWPssViTZUo=;
+        b=m+QX7nwIuHZCaTWZqC24Aq6nO/g5XmTBZLzQWY/nrGWOhhkJkLwcwydwKWrt7CjceT
+         cTFeKlExQHXwZ4ev9LJPp28grkEJCt1E01yja7Lg4D1P7/oZ4GfrSswovViYgayNS0Vn
+         hFkzSD6tN0wz1CZqL4xTkhQ+foedEjAjI/LJ43HvwehqK22ct7tAwOoFJmIY/RLmWfqf
+         RwzpAEHoK4i/FSs42lZI1kXfSa8bD9pI+HsGTqxOIkxn2bzJjr7JwG4Hv3sHjBuMSQ4k
+         F0Qao4WrQ2wRgcFpxaktU7ucz0UAYbGNQlogbi+6XFUC50e8CnQnmwSCQjhoLKbW4nyy
+         uE/g==
+X-Gm-Message-State: AJIora8cZ8hemtQdh3+5dbXRQ3OGHX/ZZIFLpQhxvT8JQKnxpY3aSD73
+        v0D0AE+Wq/7nxQYRY2S70j8AUg==
+X-Google-Smtp-Source: AGRyM1vzV8t/NFxmlrbioqZlidD6qaapajGaXld+er4AVudrw4e+3F+0nTH5/wCK8ErRIl6XX2keVg==
+X-Received: by 2002:a17:906:76c9:b0:726:f0f2:6504 with SMTP id q9-20020a17090676c900b00726f0f26504mr8121841ejn.213.1656588231034;
+        Thu, 30 Jun 2022 04:23:51 -0700 (PDT)
+Received: from [192.168.0.189] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id q14-20020a1709066ace00b00722e603c39asm9018739ejs.31.2022.06.30.04.23.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 30 Jun 2022 04:23:50 -0700 (PDT)
+Message-ID: <1de5d955-91f9-032c-0ceb-2e48d04464dc@linaro.org>
+Date:   Thu, 30 Jun 2022 13:23:49 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: Re: [PATCH v6 1/4] dt-bindings: interconnect: qcom,msm8998-cpu-bwmon:
+ add BWMON device
+Content-Language: en-US
+To:     Rajendra Nayak <quic_rjendra@quicinc.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, Jens Axboe <axboe@kernel.dk>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
-Subject: Re: [PATCH v4 3/5] dt-bindings: arm: msm: Rework kpss-gcc driver
- Documentation to yaml
-References: <20220629121441.6552-1-ansuelsmth@gmail.com>
- <20220629121441.6552-4-ansuelsmth@gmail.com>
- <D90DE67E-DA29-4A0D-BBC1-C8209FDF69D3@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <D90DE67E-DA29-4A0D-BBC1-C8209FDF69D3@linaro.org>
+        Georgi Djakov <djakov@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Cc:     Rob Herring <robh@kernel.org>
+References: <20220629140302.236715-1-krzysztof.kozlowski@linaro.org>
+ <20220629140302.236715-2-krzysztof.kozlowski@linaro.org>
+ <55cf5a2f-7be2-bb65-09d6-d4d5af4d2f0f@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <55cf5a2f-7be2-bb65-09d6-d4d5af4d2f0f@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jun 30, 2022 at 09:43:05AM +0300, Dmitry Baryshkov wrote:
+On 30/06/2022 13:14, Rajendra Nayak wrote:
 > 
+> On 6/29/2022 7:32 PM, Krzysztof Kozlowski wrote:
+>> Add bindings for the Qualcomm Bandwidth Monitor device providing
+>> performance data on interconnects.  The bindings describe only BWMON CPU
+>> (version 4), e.g. the instance which appeared for the first on Qualcomm
+>> MSM8998 SoC and is also used on SDM845.  This BWMON device sits between
+>> CPU and Last Level Cache Controller.
+>>
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> Reviewed-by: Rob Herring <robh@kernel.org>
+>> Acked-by: Georgi Djakov <djakov@kernel.org>
+>> ---
+>>   .../interconnect/qcom,msm8998-llcc-bwmon.yaml | 85 +++++++++++++++++++
+>>   1 file changed, 85 insertions(+)
+>>   create mode 100644 Documentation/devicetree/bindings/interconnect/qcom,msm8998-llcc-bwmon.yaml
+>>
+>> diff --git a/Documentation/devicetree/bindings/interconnect/qcom,msm8998-llcc-bwmon.yaml b/Documentation/devicetree/bindings/interconnect/qcom,msm8998-llcc-bwmon.yaml
+>> new file mode 100644
+>> index 000000000000..76e09658d615
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/interconnect/qcom,msm8998-llcc-bwmon.yaml
+>> @@ -0,0 +1,85 @@
+>> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/interconnect/qcom,msm8998-llcc-bwmon.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: Qualcomm Interconnect Bandwidth Monitor
+>> +
+>> +maintainers:
+>> +  - Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> +
+>> +description: |
+>> +  Bandwidth Monitor measures current throughput on buses between various NoC
+>> +  fabrics and provides information when it crosses configured thresholds.
+>> +
+>> +  Certain SoCs might have more than one Bandwidth Monitors, for example on SDM845::
+>> +   - Measuring the bandwidth between CPUs and Last Level Cache Controller -
+>> +     called LLCC BWMON,
+>> +   - Measuring the bandwidth between Last Level Cache Controller and memory (DDR).
+>> +
+>> +properties:
+>> +  compatible:
+>> +    oneOf:
+>> +      - items:
+>> +          - enum:
+>> +              - qcom,sdm845-llcc-bwmon
+>> +          - const: qcom,msm8998-llcc-bwmon
+>> +      - const: qcom,msm8998-llcc-bwmon       # BWMON v4
+>> +
+>> +  interconnects:
+>> +    maxItems: 1
+>> +
+>> +  interrupts:
+>> +    maxItems: 1
+>> +
+>> +  operating-points-v2: true
+>> +  opp-table: true
+>> +
+>> +  reg:
+>> +    # BWMON v4 (currently described) and BWMON v5 use one register address
+>> +    # space.  BWMON v2 uses two register spaces - not yet described.
+>> +    maxItems: 1
+>> +
+>> +required:
+>> +  - compatible
+>> +  - interconnects
+>> +  - interrupts
+>> +  - operating-points-v2
+>> +  - opp-table
+>> +  - reg
+>> +
+>> +additionalProperties: false
+>> +
+>> +examples:
+>> +  - |
+>> +    #include <dt-bindings/interconnect/qcom,sdm845.h>
+>> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+>> +
+>> +    pmu@1436400 {
+>> +        compatible = "qcom,sdm845-llcc-bwmon", "qcom,msm8998-llcc-bwmon";
 > 
-> On 29 June 2022 15:14:39 GMT+03:00, Christian Marangi <ansuelsmth@gmail.com> wrote:
-> >Rework kpss-gcc driver Documentation to yaml Documentation.
-> >The current kpss-gcc Documentation have major problems and can't be
-> >converted directly. Introduce various changes to the original
-> >Documentation.
-> >
-> >Add #clock-cells additional binding as this clock outputs a static clk
-> >named acpu_l2_aux with supported compatible.
-> >Only some compatible require and outputs a clock, for the others, set
-> >only the reg as a required binding to correctly export the kpss-gcc
-> >registers. As the reg is shared also add the required syscon compatible.
-> >
-> >Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-> >---
-> > .../bindings/arm/msm/qcom,kpss-gcc.txt        | 44 ---------
-> > .../bindings/arm/msm/qcom,kpss-gcc.yaml       | 90 +++++++++++++++++++
-> > 2 files changed, 90 insertions(+), 44 deletions(-)
-> > delete mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.txt
-> > create mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.yaml
-> >
-> >diff --git a/Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.txt b/Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.txt
-> >deleted file mode 100644
-> >index e628758950e1..000000000000
-> >--- a/Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.txt
-> >+++ /dev/null
-> >@@ -1,44 +0,0 @@
-> >-Krait Processor Sub-system (KPSS) Global Clock Controller (GCC)
-> >-
-> >-PROPERTIES
-> >-
-> >-- compatible:
-> >-	Usage: required
-> >-	Value type: <string>
-> >-	Definition: should be one of the following. The generic compatible
-> >-			"qcom,kpss-gcc" should also be included.
-> >-			"qcom,kpss-gcc-ipq8064", "qcom,kpss-gcc"
-> >-			"qcom,kpss-gcc-apq8064", "qcom,kpss-gcc"
-> >-			"qcom,kpss-gcc-msm8974", "qcom,kpss-gcc"
-> >-			"qcom,kpss-gcc-msm8960", "qcom,kpss-gcc"
-> >-
-> >-- reg:
-> >-	Usage: required
-> >-	Value type: <prop-encoded-array>
-> >-	Definition: base address and size of the register region
-> >-
-> >-- clocks:
-> >-	Usage: required
-> >-	Value type: <prop-encoded-array>
-> >-	Definition: reference to the pll parents.
-> >-
-> >-- clock-names:
-> >-	Usage: required
-> >-	Value type: <stringlist>
-> >-	Definition: must be "pll8_vote", "pxo".
-> >-
-> >-- clock-output-names:
-> >-	Usage: required
-> >-	Value type: <string>
-> >-	Definition: Name of the output clock. Typically acpu_l2_aux indicating
-> >-		    an L2 cache auxiliary clock.
-> >-
-> >-Example:
-> >-
-> >-	l2cc: clock-controller@2011000 {
-> >-		compatible = "qcom,kpss-gcc-ipq8064", "qcom,kpss-gcc";
-> >-		reg = <0x2011000 0x1000>;
-> >-		clocks = <&gcc PLL8_VOTE>, <&gcc PXO_SRC>;
-> >-		clock-names = "pll8_vote", "pxo";
-> >-		clock-output-names = "acpu_l2_aux";
-> >-	};
-> >diff --git a/Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.yaml b/Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.yaml
-> >new file mode 100644
-> >index 000000000000..27f7df7e3ec4
-> >--- /dev/null
-> >+++ b/Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.yaml
-> >@@ -0,0 +1,90 @@
-> >+# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
-> >+%YAML 1.2
-> >+---
-> >+$id: http://devicetree.org/schemas/arm/msm/qcom,kpss-gcc.yaml#
-> >+$schema: http://devicetree.org/meta-schemas/core.yaml#
-> >+
-> >+title: Krait Processor Sub-system (KPSS) Global Clock Controller (GCC)
-> >+
-> >+maintainers:
-> >+  - Christian Marangi <ansuelsmth@gmail.com>
-> >+
-> >+description: |
-> >+  Krait Processor Sub-system (KPSS) Global Clock Controller (GCC). Used
-> >+  to control L2 mux (in the current implementation) and provide access
-> >+  to the kpss-gcc registers.
-> >+
-> >+properties:
-> >+  compatible:
-> >+    items:
-> >+      - enum:
-> >+          - qcom,kpss-gcc-ipq8064
-> >+          - qcom,kpss-gcc-apq8064
-> >+          - qcom,kpss-gcc-msm8974
-> >+          - qcom,kpss-gcc-msm8960
-> >+          - qcom,kpss-gcc-msm8660
-> >+          - qcom,kpss-gcc-mdm9615
-> >+      - const: qcom,kpss-gcc
-> >+      - const: syscon
-> >+
-> >+  reg:
-> >+    maxItems: 1
-> >+
-> >+  clocks:
-> >+    items:
-> >+      - description: phandle to pll8_vote
-> >+      - description: phandle to pxo_board
-> >+
-> >+  clock-names:
-> >+    items:
-> >+      - const: pll8_vote
-> >+      - const: pxo
-> >+
-> >+  '#clock-cells':
-> >+    const: 0
-> >+
-> >+required:
-> >+  - compatible
-> >+  - reg
-> >+
-> >+if:
-> >+  properties:
-> >+    compatible:
-> >+      contains:
-> >+        enum:
-> >+          - qcom,kpss-gcc-ipq8064
-> >+          - qcom,kpss-gcc-apq8064
-> >+          - qcom,kpss-gcc-msm8974
-> >+          - qcom,kpss-gcc-msm8960
-> >+then:
-> >+  required:
-> >+    - clocks
-> >+    - clock-names
-> >+    - '#clock-cells'
-> >+else:
-> >+  properties:
-> >+    clock: false
-> >+    clock-names: false
-> >+    '#clock-cells': false
+> so with this compatible fallback scheme, I am trying to understand what
+> do I need to do if I have to add support for another SoC for instance.
 > 
-> I suppose this chunk is not so correct. We can not describe these properties as required since current DTs do not have them. Also if somebody decides to fix the mdm9615 or msm8660 platforms, he works have to change this (again). Thus I'd just leave this whole chunk out.
->
+> I just update the binding with the new SoC compatible (lets say qcom,sc7280-llcc-bwmon)
+> and in the device tree node use it as
+> 	compatible = "qcom,sc7280-llcc-bwmon", "qcom,sdm845-llcc-bwmon", "qcom,msm8998-llcc-bwmon";
+> without any updates in the driver?
 
-With a quick check I notice that all the other platform doesn't have
-pxo_board or PLL8_VOTE clk so they wouln't work with the current
-driver... to me it seems they are just exposing the kpss-gcc reg with
-syscon and they are used in the rpm driver... This is very similar to
-the acc-v1 and acc-v2 separation where acc-v2 only provide the reg and
-nothing else. Wonder if we should do the same here or add clk support
-only for the specific compatible as I did here...
+I expect:
+"qcom,sc7280-llcc-bwmon", "qcom,msm8998-llcc-bwmon";
+and you need to add sc7280 compatible to the driver. The actual proper
+solution in my patch would be to use msm8998 compatible in the driver,
+but I did not test MSM8998.
 
-In both case dts changes are required and a similar chunk is necessary.
+Maybe we should switch to that anyway?
 
-> >+
-> >+additionalProperties: false
-> >+
-> >+examples:
-> >+  - |
-> >+    #include <dt-bindings/clock/qcom,gcc-ipq806x.h>
-> >+
-> >+    clock-controller@2011000 {
-> >+      compatible = "qcom,kpss-gcc-ipq8064", "qcom,kpss-gcc", "syscon";
-> >+      reg = <0x2011000 0x1000>;
-> >+      clocks = <&gcc PLL8_VOTE>, <&pxo_board>;
-> >+      clock-names = "pll8_vote", "pxo";
-> >+      #clock-cells = <0>;
-> >+    };
-> >+
-> >+  - |
-> >+    clock-controller@2011000 {
-> >+      compatible = "qcom,kpss-gcc-mdm9615", "qcom,kpss-gcc", "syscon";
-> >+      reg = <0x02011000 0x1000>;
-> >+    };
-> >+...
-> >+
-> 
-> -- 
-> With best wishes
-> Dmitry
-
--- 
-	Ansuel
+Best regards,
+Krzysztof
