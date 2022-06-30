@@ -2,77 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5D0D55616FC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Jun 2022 11:59:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A0193561765
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Jun 2022 12:14:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234063AbiF3J7r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Jun 2022 05:59:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34442 "EHLO
+        id S233582AbiF3KO3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Jun 2022 06:14:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52238 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234120AbiF3J7q (ORCPT
+        with ESMTP id S234812AbiF3KOZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Jun 2022 05:59:46 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07BAC43ED3;
-        Thu, 30 Jun 2022 02:59:45 -0700 (PDT)
+        Thu, 30 Jun 2022 06:14:25 -0400
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D21D744A37
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Jun 2022 03:14:18 -0700 (PDT)
+Received: by mail-ej1-x633.google.com with SMTP id u12so37977641eja.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Jun 2022 03:14:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1656583186; x=1688119186;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=PbCJIkwbMIohcJTtEctIOPXTf8+WgT696gxof40+8pQ=;
-  b=kf4ME2AnebV1EFNKEizBRseF5rLAoTEIt669hZPluwpAVOyTmOMzCegp
-   d4KQy0RUstIKRkguvPdj5hkDubY2g3vc+P4MQLMUS5O0Ed0l7k1lai61s
-   XtJc9H/03yEtt84P1D91A1hpQiR1vSzfSBc4RCwe3f9MY7H1QOn4L0lrE
-   c=;
-Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
-  by alexa-out.qualcomm.com with ESMTP; 30 Jun 2022 02:59:45 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Jun 2022 02:59:45 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Thu, 30 Jun 2022 02:59:44 -0700
-Received: from [10.216.56.62] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Thu, 30 Jun
- 2022 02:59:37 -0700
-Message-ID: <4b1631f9-220f-c378-164c-f7eea9db22ef@quicinc.com>
-Date:   Thu, 30 Jun 2022 15:29:33 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Subject: Re: [PATCH v2 1/2] PCI: qcom: Add system PM support
-Content-Language: en-US
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-CC:     <helgaas@kernel.org>, <linux-pci@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_vbadigan@quicinc.com>, <quic_hemantk@quicinc.com>,
-        <quic_nitegupt@quicinc.com>, <quic_skananth@quicinc.com>,
-        <quic_ramkri@quicinc.com>, <swboyd@chromium.org>,
-        <dmitry.baryshkov@linaro.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Gz9U498Ga7oW36mbkP5elxAzpUunXzjXqS0lF6Fh1go=;
+        b=qsmrg2Xbr6hN9gngstsAMVB19+D9tKyENvVOZRQ3A2xe6F1qs71TO+Tmd/HV1wpIj4
+         KUaYE7FgretY2BvKwNzbTCeLcAn+lCgYxLCkxBCu907ytbdFIO3Ks8HbaA+++ArRxNMI
+         OaSX5b94zjCkXHGbrGOjlZArP9adN595Y8Z64f9gus6xNWcBVHGLMceFCkd7OXT/SNBt
+         9HVFkUANQRuAzLYkJfQAGL3Pxykg+B95H9n9C8rXGb0o6Bg86aIvE9Mg3YMx7fzhQTTq
+         oa/+28TAVfwMy+hEJ389pHjm+dCkS//1D8Fj/bRLnVhQpwSfHdHVPLcI6UWBuPxLRbe/
+         djdw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Gz9U498Ga7oW36mbkP5elxAzpUunXzjXqS0lF6Fh1go=;
+        b=AU2v+RIPD66QoSFd9tfdw1WIBpOSZJ0RXO6R1Rlo5xN22ZJUuvmJ8/Tap5Rb2FnTvj
+         Y07PNu/E0vkMZF6xaYlPhcEQ/gZ0R3qEed1f/BGsguMKtCvnmIAXp304r9AnXfsY9Q3u
+         OWiCyB7rLF0omh2r31CiXHRpskhLmnOLbqCTLoT1YHO1aWpJhQbH77yY6XjrPKAdy2hb
+         Q2+EJG+xlFmjrrDiBXca/ZvuBIy7bm39oHJjM7kN6b+Ww7MRK2pXtS0n9Q2KOJCAnCnX
+         id+OSB9QZ1sC+s0iB8HzYQ4iofMLTTsGhuleOpDoGNb2NysYDALdwCwWsZpeUdlTX6Ud
+         iQfA==
+X-Gm-Message-State: AJIora+DXPXxsINlR72n+cseyaawKNFJVCkzTN2Ia6oc15PlsPjv7mvW
+        q24cqJv2+N4eRYCFNlNN2zso/A==
+X-Google-Smtp-Source: AGRyM1u5pG6fts56IVeSD0MlCFfNtg1PUlGS28CTdoZXtAbU6Q1DdHp4BHKz5rT+0dHdUKYd0KGstQ==
+X-Received: by 2002:a17:906:3f09:b0:712:466:e04a with SMTP id c9-20020a1709063f0900b007120466e04amr8045243ejj.719.1656584057197;
+        Thu, 30 Jun 2022 03:14:17 -0700 (PDT)
+Received: from localhost.localdomain ([94.52.112.99])
+        by smtp.gmail.com with ESMTPSA id i3-20020a170906444300b006feec47dae7sm9000105ejp.149.2022.06.30.03.14.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 30 Jun 2022 03:14:16 -0700 (PDT)
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Rob Herring <robh@kernel.org>,
-        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>
-References: <1656055682-18817-1-git-send-email-quic_krichai@quicinc.com>
- <1656495214-4028-1-git-send-email-quic_krichai@quicinc.com>
- <1656495214-4028-2-git-send-email-quic_krichai@quicinc.com>
- <20220630043415.GA5012@thinkpad>
-From:   Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
-In-Reply-To: <20220630043415.GA5012@thinkpad>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Rob Herring <robh@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Abel Vesa <abel.vesa@linaro.org>
+Subject: [PATCH v2] arm64: dts: qcom: sdm845: Switch PSCI cpu idle states from PC to OSI
+Date:   Thu, 30 Jun 2022 13:14:03 +0300
+Message-Id: <20220630101403.1888541-1-abel.vesa@linaro.org>
+X-Mailer: git-send-email 2.34.3
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -80,116 +73,452 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Switch from the flat PC idle states of sdm845 to OSI hierarchical idle
+states. The exceptions are the cheza plaftorms, which need to remain with
+PC idle states. So in order allow all the other platforms to switch,
+while cheza platforms to remain the same, replace the PC idle states with
+the OSI ones in the main SDM845 dtsi, and then override the inherited OSI
+states with PC ones, delete inherited psci cpus nodes, domain idle states
+and power domain properties.
 
-On 6/30/2022 10:04 AM, Manivannan Sadhasivam wrote:
-> On Wed, Jun 29, 2022 at 03:03:33PM +0530, Krishna chaitanya chundru wrote:
->> Add suspend and resume pm callbacks.
->>
->> When system suspends, and if the link is in L1ss, disable the clocks
->> so that system enters into low power state to save the maximum power.
->> And when the system resumes, enable the clocks back if they are
->> disabled in the suspend path.
->>
-> Why only during L1ss and not L2/L3?
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+---
 
-with aspm the link will automatically go to L1ss. for L2/L3 entry we 
-need to explicitly send
+Changes since v1:
+ * fixed the commit message as suggested by Krzysztof
+ * dropped blank line sdm845 dtsi
+ * renamed sdm845 dtsi psci subnodes to power domain cpus and cluster
+ * fixed indentation for idle states in cheza dtsi
 
-PME turn off which we are not doing now. So we are checking only for L1ss.
+ arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi | 132 ++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sdm845.dtsi       | 135 ++++++++++++---------
+ 2 files changed, 213 insertions(+), 54 deletions(-)
 
->
->> Changes since v1:
->> 	- Fixed compilation errors.
->>
->> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
->> ---
->>   drivers/pci/controller/dwc/pcie-qcom.c | 81 ++++++++++++++++++++++++++++++++++
->>   1 file changed, 81 insertions(+)
->>
->> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
->> index 6ab9089..8e9ef37 100644
->> --- a/drivers/pci/controller/dwc/pcie-qcom.c
->> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
->> @@ -41,6 +41,9 @@
->>   #define L23_CLK_RMV_DIS				BIT(2)
->>   #define L1_CLK_RMV_DIS				BIT(1)
->>   
->> +#define PCIE20_PARF_PM_STTS                     0x24
->> +#define PCIE20_PARF_PM_STTS_LINKST_IN_L1SUB    BIT(8)
->> +
->>   #define PCIE20_PARF_PHY_CTRL			0x40
->>   #define PHY_CTRL_PHY_TX0_TERM_OFFSET_MASK	GENMASK(20, 16)
->>   #define PHY_CTRL_PHY_TX0_TERM_OFFSET(x)		((x) << 16)
->> @@ -190,6 +193,8 @@ struct qcom_pcie_ops {
->>   	void (*post_deinit)(struct qcom_pcie *pcie);
->>   	void (*ltssm_enable)(struct qcom_pcie *pcie);
->>   	int (*config_sid)(struct qcom_pcie *pcie);
->> +	int (*enable_clks)(struct qcom_pcie *pcie);
->> +	int (*disable_clks)(struct qcom_pcie *pcie);
-> I think these could vary between platforms. Like some other platform may try to
-> disable regulators etc... So use names such as suspend and resume.
-Sure will change in the next patch.
->>   };
->>   
->>   struct qcom_pcie_cfg {
->> @@ -199,6 +204,7 @@ struct qcom_pcie_cfg {
->>   	unsigned int has_ddrss_sf_tbu_clk:1;
->>   	unsigned int has_aggre0_clk:1;
->>   	unsigned int has_aggre1_clk:1;
->> +	unsigned int support_pm_ops:1;
->>   };
->>   
->>   struct qcom_pcie {
->> @@ -209,6 +215,7 @@ struct qcom_pcie {
->>   	struct phy *phy;
->>   	struct gpio_desc *reset;
->>   	const struct qcom_pcie_cfg *cfg;
->> +	unsigned int is_suspended:1;
-> Why do you need this flag? Is suspend going to happen multiple times in
-> an out-of-order manner?
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi b/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
+index e7e4cc5936aa..13d3d7328210 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
+@@ -145,6 +145,138 @@ panel_in_edp: endpoint {
+ 	};
+ };
 
-We are using this flag in the resume function to check whether we 
-suspended and disabled
++&psci {
++	/delete-node/ cpu0;
++	/delete-node/ cpu1;
++	/delete-node/ cpu2;
++	/delete-node/ cpu3;
++	/delete-node/ cpu4;
++	/delete-node/ cpu5;
++	/delete-node/ cpu6;
++	/delete-node/ cpu7;
++	/delete-node/ cpu-cluster0;
++};
++
++&cpus {
++	/delete-node/ domain-idle-states;
++};
++
++&cpu_idle_states {
++	LITTLE_CPU_SLEEP_0: cpu-sleep-0-0 {
++		compatible = "arm,idle-state";
++		idle-state-name = "little-power-down";
++		arm,psci-suspend-param = <0x40000003>;
++		entry-latency-us = <350>;
++		exit-latency-us = <461>;
++		min-residency-us = <1890>;
++		local-timer-stop;
++	};
++
++	LITTLE_CPU_SLEEP_1: cpu-sleep-0-1 {
++		compatible = "arm,idle-state";
++		idle-state-name = "little-rail-power-down";
++		arm,psci-suspend-param = <0x40000004>;
++		entry-latency-us = <360>;
++		exit-latency-us = <531>;
++		min-residency-us = <3934>;
++		local-timer-stop;
++	};
++
++	BIG_CPU_SLEEP_0: cpu-sleep-1-0 {
++		compatible = "arm,idle-state";
++		idle-state-name = "big-power-down";
++		arm,psci-suspend-param = <0x40000003>;
++		entry-latency-us = <264>;
++		exit-latency-us = <621>;
++		min-residency-us = <952>;
++		local-timer-stop;
++	};
++
++	BIG_CPU_SLEEP_1: cpu-sleep-1-1 {
++		compatible = "arm,idle-state";
++		idle-state-name = "big-rail-power-down";
++		arm,psci-suspend-param = <0x40000004>;
++		entry-latency-us = <702>;
++		exit-latency-us = <1061>;
++		min-residency-us = <4488>;
++		local-timer-stop;
++	};
++
++	CLUSTER_SLEEP_0: cluster-sleep-0 {
++		compatible = "arm,idle-state";
++		idle-state-name = "cluster-power-down";
++		arm,psci-suspend-param = <0x400000F4>;
++		entry-latency-us = <3263>;
++		exit-latency-us = <6562>;
++		min-residency-us = <9987>;
++		local-timer-stop;
++	};
++};
++
++&CPU0 {
++	/delete-property/ power-domains;
++	/delete-property/ power-domain-names;
++	cpu-idle-states = <&LITTLE_CPU_SLEEP_0
++			   &LITTLE_CPU_SLEEP_1
++			   &CLUSTER_SLEEP_0>;
++};
++
++&CPU1 {
++	/delete-property/ power-domains;
++	/delete-property/ power-domain-names;
++	cpu-idle-states = <&LITTLE_CPU_SLEEP_0
++			   &LITTLE_CPU_SLEEP_1
++			   &CLUSTER_SLEEP_0>;
++};
++
++&CPU2 {
++	/delete-property/ power-domains;
++	/delete-property/ power-domain-names;
++	cpu-idle-states = <&LITTLE_CPU_SLEEP_0
++			   &LITTLE_CPU_SLEEP_1
++			   &CLUSTER_SLEEP_0>;
++};
++
++&CPU3 {
++	/delete-property/ power-domains;
++	/delete-property/ power-domain-names;
++	cpu-idle-states = <&LITTLE_CPU_SLEEP_0
++			   &LITTLE_CPU_SLEEP_1
++			   &CLUSTER_SLEEP_0>;
++};
++
++&CPU4 {
++	/delete-property/ power-domains;
++	/delete-property/ power-domain-names;
++	cpu-idle-states = <&BIG_CPU_SLEEP_0
++			   &BIG_CPU_SLEEP_1
++			   &CLUSTER_SLEEP_0>;
++};
++
++&CPU5 {
++	/delete-property/ power-domains;
++	/delete-property/ power-domain-names;
++	cpu-idle-states = <&BIG_CPU_SLEEP_0
++			   &BIG_CPU_SLEEP_1
++			   &CLUSTER_SLEEP_0>;
++};
++
++&CPU6 {
++	/delete-property/ power-domains;
++	/delete-property/ power-domain-names;
++	cpu-idle-states = <&BIG_CPU_SLEEP_0
++			   &BIG_CPU_SLEEP_1
++			   &CLUSTER_SLEEP_0>;
++};
++
++&CPU7 {
++	/delete-property/ power-domains;
++	/delete-property/ power-domain-names;
++	cpu-idle-states = <&BIG_CPU_SLEEP_0
++			   &BIG_CPU_SLEEP_1
++			   &CLUSTER_SLEEP_0>;
++};
++
+ /*
+  * Reserved memory changes
+  *
+diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+index 83439739de37..491b3d66ffc0 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+@@ -188,7 +188,7 @@ spss_mem: spss@97b00000 {
+ 		};
+ 	};
 
-the clocks in the suspend path. And we want to use this flag to control 
-the access to dbi etc
+-	cpus {
++	cpus: cpus {
+ 		#address-cells = <2>;
+ 		#size-cells = <0>;
 
-after suspend.
+@@ -197,15 +197,14 @@ CPU0: cpu@0 {
+ 			compatible = "qcom,kryo385";
+ 			reg = <0x0 0x0>;
+ 			enable-method = "psci";
+-			cpu-idle-states = <&LITTLE_CPU_SLEEP_0
+-					   &LITTLE_CPU_SLEEP_1
+-					   &CLUSTER_SLEEP_0>;
+ 			capacity-dmips-mhz = <611>;
+ 			dynamic-power-coefficient = <290>;
+ 			qcom,freq-domain = <&cpufreq_hw 0>;
+ 			operating-points-v2 = <&cpu0_opp_table>;
+ 			interconnects = <&gladiator_noc MASTER_APPSS_PROC 3 &mem_noc SLAVE_EBI1 3>,
+ 					<&osm_l3 MASTER_OSM_L3_APPS &osm_l3 SLAVE_OSM_L3>;
++			power-domains = <&CPU_PD0>;
++			power-domain-names = "psci";
+ 			#cooling-cells = <2>;
+ 			next-level-cache = <&L2_0>;
+ 			L2_0: l2-cache {
+@@ -222,15 +221,14 @@ CPU1: cpu@100 {
+ 			compatible = "qcom,kryo385";
+ 			reg = <0x0 0x100>;
+ 			enable-method = "psci";
+-			cpu-idle-states = <&LITTLE_CPU_SLEEP_0
+-					   &LITTLE_CPU_SLEEP_1
+-					   &CLUSTER_SLEEP_0>;
+ 			capacity-dmips-mhz = <611>;
+ 			dynamic-power-coefficient = <290>;
+ 			qcom,freq-domain = <&cpufreq_hw 0>;
+ 			operating-points-v2 = <&cpu0_opp_table>;
+ 			interconnects = <&gladiator_noc MASTER_APPSS_PROC 3 &mem_noc SLAVE_EBI1 3>,
+ 					<&osm_l3 MASTER_OSM_L3_APPS &osm_l3 SLAVE_OSM_L3>;
++			power-domains = <&CPU_PD1>;
++			power-domain-names = "psci";
+ 			#cooling-cells = <2>;
+ 			next-level-cache = <&L2_100>;
+ 			L2_100: l2-cache {
+@@ -244,15 +242,14 @@ CPU2: cpu@200 {
+ 			compatible = "qcom,kryo385";
+ 			reg = <0x0 0x200>;
+ 			enable-method = "psci";
+-			cpu-idle-states = <&LITTLE_CPU_SLEEP_0
+-					   &LITTLE_CPU_SLEEP_1
+-					   &CLUSTER_SLEEP_0>;
+ 			capacity-dmips-mhz = <611>;
+ 			dynamic-power-coefficient = <290>;
+ 			qcom,freq-domain = <&cpufreq_hw 0>;
+ 			operating-points-v2 = <&cpu0_opp_table>;
+ 			interconnects = <&gladiator_noc MASTER_APPSS_PROC 3 &mem_noc SLAVE_EBI1 3>,
+ 					<&osm_l3 MASTER_OSM_L3_APPS &osm_l3 SLAVE_OSM_L3>;
++			power-domains = <&CPU_PD2>;
++			power-domain-names = "psci";
+ 			#cooling-cells = <2>;
+ 			next-level-cache = <&L2_200>;
+ 			L2_200: l2-cache {
+@@ -266,9 +263,6 @@ CPU3: cpu@300 {
+ 			compatible = "qcom,kryo385";
+ 			reg = <0x0 0x300>;
+ 			enable-method = "psci";
+-			cpu-idle-states = <&LITTLE_CPU_SLEEP_0
+-					   &LITTLE_CPU_SLEEP_1
+-					   &CLUSTER_SLEEP_0>;
+ 			capacity-dmips-mhz = <611>;
+ 			dynamic-power-coefficient = <290>;
+ 			qcom,freq-domain = <&cpufreq_hw 0>;
+@@ -276,6 +270,8 @@ &LITTLE_CPU_SLEEP_1
+ 			interconnects = <&gladiator_noc MASTER_APPSS_PROC 3 &mem_noc SLAVE_EBI1 3>,
+ 					<&osm_l3 MASTER_OSM_L3_APPS &osm_l3 SLAVE_OSM_L3>;
+ 			#cooling-cells = <2>;
++			power-domains = <&CPU_PD3>;
++			power-domain-names = "psci";
+ 			next-level-cache = <&L2_300>;
+ 			L2_300: l2-cache {
+ 				compatible = "cache";
+@@ -289,14 +285,13 @@ CPU4: cpu@400 {
+ 			reg = <0x0 0x400>;
+ 			enable-method = "psci";
+ 			capacity-dmips-mhz = <1024>;
+-			cpu-idle-states = <&BIG_CPU_SLEEP_0
+-					   &BIG_CPU_SLEEP_1
+-					   &CLUSTER_SLEEP_0>;
+ 			dynamic-power-coefficient = <442>;
+ 			qcom,freq-domain = <&cpufreq_hw 1>;
+ 			operating-points-v2 = <&cpu4_opp_table>;
+ 			interconnects = <&gladiator_noc MASTER_APPSS_PROC 3 &mem_noc SLAVE_EBI1 3>,
+ 					<&osm_l3 MASTER_OSM_L3_APPS &osm_l3 SLAVE_OSM_L3>;
++			power-domains = <&CPU_PD4>;
++			power-domain-names = "psci";
+ 			#cooling-cells = <2>;
+ 			next-level-cache = <&L2_400>;
+ 			L2_400: l2-cache {
+@@ -311,14 +306,13 @@ CPU5: cpu@500 {
+ 			reg = <0x0 0x500>;
+ 			enable-method = "psci";
+ 			capacity-dmips-mhz = <1024>;
+-			cpu-idle-states = <&BIG_CPU_SLEEP_0
+-					   &BIG_CPU_SLEEP_1
+-					   &CLUSTER_SLEEP_0>;
+ 			dynamic-power-coefficient = <442>;
+ 			qcom,freq-domain = <&cpufreq_hw 1>;
+ 			operating-points-v2 = <&cpu4_opp_table>;
+ 			interconnects = <&gladiator_noc MASTER_APPSS_PROC 3 &mem_noc SLAVE_EBI1 3>,
+ 					<&osm_l3 MASTER_OSM_L3_APPS &osm_l3 SLAVE_OSM_L3>;
++			power-domains = <&CPU_PD5>;
++			power-domain-names = "psci";
+ 			#cooling-cells = <2>;
+ 			next-level-cache = <&L2_500>;
+ 			L2_500: l2-cache {
+@@ -333,14 +327,13 @@ CPU6: cpu@600 {
+ 			reg = <0x0 0x600>;
+ 			enable-method = "psci";
+ 			capacity-dmips-mhz = <1024>;
+-			cpu-idle-states = <&BIG_CPU_SLEEP_0
+-					   &BIG_CPU_SLEEP_1
+-					   &CLUSTER_SLEEP_0>;
+ 			dynamic-power-coefficient = <442>;
+ 			qcom,freq-domain = <&cpufreq_hw 1>;
+ 			operating-points-v2 = <&cpu4_opp_table>;
+ 			interconnects = <&gladiator_noc MASTER_APPSS_PROC 3 &mem_noc SLAVE_EBI1 3>,
+ 					<&osm_l3 MASTER_OSM_L3_APPS &osm_l3 SLAVE_OSM_L3>;
++			power-domains = <&CPU_PD6>;
++			power-domain-names = "psci";
+ 			#cooling-cells = <2>;
+ 			next-level-cache = <&L2_600>;
+ 			L2_600: l2-cache {
+@@ -355,14 +348,13 @@ CPU7: cpu@700 {
+ 			reg = <0x0 0x700>;
+ 			enable-method = "psci";
+ 			capacity-dmips-mhz = <1024>;
+-			cpu-idle-states = <&BIG_CPU_SLEEP_0
+-					   &BIG_CPU_SLEEP_1
+-					   &CLUSTER_SLEEP_0>;
+ 			dynamic-power-coefficient = <442>;
+ 			qcom,freq-domain = <&cpufreq_hw 1>;
+ 			operating-points-v2 = <&cpu4_opp_table>;
+ 			interconnects = <&gladiator_noc MASTER_APPSS_PROC 3 &mem_noc SLAVE_EBI1 3>,
+ 					<&osm_l3 MASTER_OSM_L3_APPS &osm_l3 SLAVE_OSM_L3>;
++			power-domains = <&CPU_PD7>;
++			power-domain-names = "psci";
+ 			#cooling-cells = <2>;
+ 			next-level-cache = <&L2_700>;
+ 			L2_700: l2-cache {
+@@ -407,53 +399,35 @@ core7 {
+ 			};
+ 		};
 
->>   };
->>   
->>   #define to_qcom_pcie(x)		dev_get_drvdata((x)->dev)
->> @@ -1308,6 +1315,23 @@ static void qcom_pcie_post_deinit_2_7_0(struct qcom_pcie *pcie)
->>   	clk_disable_unprepare(res->pipe_clk);
->>   }
->>   
-> [...]
->
->> +static const struct dev_pm_ops qcom_pcie_pm_ops = {
->> +	SET_NOIRQ_SYSTEM_SLEEP_PM_OPS(qcom_pcie_pm_suspend, qcom_pcie_pm_resume)
-> Use the new macro: NOIRQ_SYSTEM_SLEEP_PM_OPS
-Will update in the next patch.
->> +};
->> +
->>   static const struct of_device_id qcom_pcie_match[] = {
->>   	{ .compatible = "qcom,pcie-apq8084", .data = &apq8084_cfg },
->>   	{ .compatible = "qcom,pcie-ipq8064", .data = &ipq8064_cfg },
->> @@ -1679,6 +1759,7 @@ static struct platform_driver qcom_pcie_driver = {
->>   	.probe = qcom_pcie_probe,
->>   	.driver = {
->>   		.name = "qcom-pcie",
->> +		.pm = &qcom_pcie_pm_ops,
-> There will be warnings when CONFIG_PM_SLEEP is not set. So use below,
-will update in the next patch.
->
-> 		.pm = pm_sleep_ptr(&qcom_pcie_pm_ops),
->
-> Thanks,
-> Mani
->
->>   		.suppress_bind_attrs = true,
->>   		.of_match_table = qcom_pcie_match,
->>   	},
->> -- 
->> 2.7.4
->>
+-		idle-states {
++		cpu_idle_states: idle-states {
+ 			entry-method = "psci";
+
+ 			LITTLE_CPU_SLEEP_0: cpu-sleep-0-0 {
+ 				compatible = "arm,idle-state";
+-				idle-state-name = "little-power-down";
+-				arm,psci-suspend-param = <0x40000003>;
++				idle-state-name = "little-rail-power-collapse";
++				arm,psci-suspend-param = <0x40000004>;
+ 				entry-latency-us = <350>;
+ 				exit-latency-us = <461>;
+ 				min-residency-us = <1890>;
+ 				local-timer-stop;
+ 			};
+
+-			LITTLE_CPU_SLEEP_1: cpu-sleep-0-1 {
+-				compatible = "arm,idle-state";
+-				idle-state-name = "little-rail-power-down";
+-				arm,psci-suspend-param = <0x40000004>;
+-				entry-latency-us = <360>;
+-				exit-latency-us = <531>;
+-				min-residency-us = <3934>;
+-				local-timer-stop;
+-			};
+-
+ 			BIG_CPU_SLEEP_0: cpu-sleep-1-0 {
+ 				compatible = "arm,idle-state";
+-				idle-state-name = "big-power-down";
+-				arm,psci-suspend-param = <0x40000003>;
++				idle-state-name = "big-rail-power-collapse";
++				arm,psci-suspend-param = <0x40000004>;
+ 				entry-latency-us = <264>;
+ 				exit-latency-us = <621>;
+ 				min-residency-us = <952>;
+ 				local-timer-stop;
+ 			};
++		};
+
+-			BIG_CPU_SLEEP_1: cpu-sleep-1-1 {
+-				compatible = "arm,idle-state";
+-				idle-state-name = "big-rail-power-down";
+-				arm,psci-suspend-param = <0x40000004>;
+-				entry-latency-us = <702>;
+-				exit-latency-us = <1061>;
+-				min-residency-us = <4488>;
+-				local-timer-stop;
+-			};
+-
++		domain-idle-states {
+ 			CLUSTER_SLEEP_0: cluster-sleep-0 {
+-				compatible = "arm,idle-state";
+-				idle-state-name = "cluster-power-down";
+-				arm,psci-suspend-param = <0x400000F4>;
++				compatible = "domain-idle-state";
++				idle-state-name = "cluster-power-collapse";
++				arm,psci-suspend-param = <0x4100c244>;
+ 				entry-latency-us = <3263>;
+ 				exit-latency-us = <6562>;
+ 				min-residency-us = <9987>;
+@@ -1050,9 +1024,62 @@ slpi_smp2p_in: slave-kernel {
+ 		};
+ 	};
+
+-	psci {
++	psci: psci {
+ 		compatible = "arm,psci-1.0";
+ 		method = "smc";
++
++		CPU_PD0: power-domain-cpu0 {
++			#power-domain-cells = <0>;
++			power-domains = <&CLUSTER_PD>;
++			domain-idle-states = <&LITTLE_CPU_SLEEP_0>;
++		};
++
++		CPU_PD1: power-domain-cpu1 {
++			#power-domain-cells = <0>;
++			power-domains = <&CLUSTER_PD>;
++			domain-idle-states = <&LITTLE_CPU_SLEEP_0>;
++		};
++
++		CPU_PD2: power-domain-cpu2 {
++			#power-domain-cells = <0>;
++			power-domains = <&CLUSTER_PD>;
++			domain-idle-states = <&LITTLE_CPU_SLEEP_0>;
++		};
++
++		CPU_PD3: power-domain-cpu3 {
++			#power-domain-cells = <0>;
++			power-domains = <&CLUSTER_PD>;
++			domain-idle-states = <&LITTLE_CPU_SLEEP_0>;
++		};
++
++		CPU_PD4: power-domain-cpu4 {
++			#power-domain-cells = <0>;
++			power-domains = <&CLUSTER_PD>;
++			domain-idle-states = <&BIG_CPU_SLEEP_0>;
++		};
++
++		CPU_PD5: power-domain-cpu5 {
++			#power-domain-cells = <0>;
++			power-domains = <&CLUSTER_PD>;
++			domain-idle-states = <&BIG_CPU_SLEEP_0>;
++		};
++
++		CPU_PD6: power-domain-cpu6 {
++			#power-domain-cells = <0>;
++			power-domains = <&CLUSTER_PD>;
++			domain-idle-states = <&BIG_CPU_SLEEP_0>;
++		};
++
++		CPU_PD7: power-domain-cpu7 {
++			#power-domain-cells = <0>;
++			power-domains = <&CLUSTER_PD>;
++			domain-idle-states = <&BIG_CPU_SLEEP_0>;
++		};
++
++		CLUSTER_PD: power-domain-cluster {
++			#power-domain-cells = <0>;
++			domain-idle-states = <&CLUSTER_SLEEP_0>;
++		};
+ 	};
+
+ 	soc: soc@0 {
+--
+2.34.3
+
