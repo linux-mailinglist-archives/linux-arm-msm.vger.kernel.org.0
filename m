@@ -2,79 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A8B3A562371
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Jun 2022 21:49:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 517625623A1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Jun 2022 21:56:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235686AbiF3TtQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Jun 2022 15:49:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47826 "EHLO
+        id S236197AbiF3T4u (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Jun 2022 15:56:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55604 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234038AbiF3TtH (ORCPT
+        with ESMTP id S235729AbiF3T4t (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Jun 2022 15:49:07 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 472541D32D
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Jun 2022 12:49:06 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id cl1so104516wrb.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Jun 2022 12:49:06 -0700 (PDT)
+        Thu, 30 Jun 2022 15:56:49 -0400
+Received: from mail-oi1-x231.google.com (mail-oi1-x231.google.com [IPv6:2607:f8b0:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4EC244A0F
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Jun 2022 12:56:47 -0700 (PDT)
+Received: by mail-oi1-x231.google.com with SMTP id r82so717298oig.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Jun 2022 12:56:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=6tnKa6j0KUTAns+9a5hu7e9HMdmQnDavnOA9sl0AIJw=;
-        b=njyHn6aTwltxlDIvONhFpvjWImdwFbcxV+4iHtUnmq17Z2D2qLtMXnUyw7I1zpOZX5
-         DJxgodxX1pg57tqiCqKtVwDfitRIWbUeosHao0kCyMemcdLbpQ3gGXS60ftMr+swK8JJ
-         XMbvAsyvlDTGVU90VTN5GrC6vkMNEYQ/q4mggitoR4nitzTuHo/T3rZP1vssev6UBIIU
-         BKAyX9cpWILuv8wkR2dFcpXCgNnprozdL9dJlDrMYfu8fNOp0HKQa5Uxng1lC5nvpGn3
-         cVRnQUfVNadjAkNMpjM/UY7fmJp9eqo+8jJ4lmupI90NHghoS7YhHqbbYZ5zWQbA/B/s
-         LLrw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=gboqnFzZ9ZxrTwUZ6WoU6968NwUUgD1UzCCueja8BgY=;
+        b=I+h5q/QxmSgU2Xn6TLqFpiyXdlVZ919B4FJoNbgwmk3sIYwyarHIJ86nxrcCPpb4bx
+         skrcEy4pYPPBpeyQ1AZBHx6JFHj1QPOSRFane0fNyRGpyUw7JRHile4y4wW+LwZ+4cLR
+         TtP+sgAkSVRz1HyjXn/kXfjEux0Otz6kKePg0OcIH3zXSQlALgV4tTeRSM/DOPpQo19X
+         rGpzy00/i/JIATf27P0BP+zVeKhX/Bwtadr5N5mzgHGEqhzc92VcosxKBojsre483aVd
+         lC4wlpP73Mkc7S2Y0uYP6Eft2e1UTg5GXMFDNKi73aHrH4xzizt0caA1BfUFp0VNk5Tc
+         7prg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=6tnKa6j0KUTAns+9a5hu7e9HMdmQnDavnOA9sl0AIJw=;
-        b=wG/X0S6G+ykgBOw+IjhKcPCKPfT0DWDclKav54uUb1fpjriGKhfeVn8LYAkGbCfY7q
-         FK8247h0aNhhNxExjBpEi6FKf4PRlEvD7NpX7/viIYXJZshD8xCqh6UB8/A3R7itrq13
-         IsSNAqFmJxSWJRzDDGqC7XJG0FyXiT96Dcwla9sw4omZw7jRdzPVa8rhE3ovI7AIeWXS
-         a0ykYh6RE6DjTgHfxDnd806fvxeKJu4apLJuoMT2rdCTo55W0FKWa5A7y18C0ZjaK9B4
-         9GrTiZSRCEPr+mEuaQTBoRL0aGX5l8pv/0EfnDtFRiyGUcF7C6fotuNvzkcoFWBHiyrc
-         ZPSw==
-X-Gm-Message-State: AJIora+0b/dWFvgFZJrvHdri9KlSe3cbp3em1J5p1a+KOXpLNgynOpCS
-        y5Xtvwd3wJC7EKNEz1OGlsdnyA==
-X-Google-Smtp-Source: AGRyM1sZHMnJrHelAuAUGs13a3YkMH9sihf7xkfePW0UaKfmk8KPRg67Ro+MceNbycq1UCObq1QnZQ==
-X-Received: by 2002:adf:e252:0:b0:21b:827e:4c63 with SMTP id bl18-20020adfe252000000b0021b827e4c63mr9834152wrb.307.1656618544868;
-        Thu, 30 Jun 2022 12:49:04 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id g20-20020a7bc4d4000000b0039c798b2dc5sm3634442wmk.8.2022.06.30.12.49.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 30 Jun 2022 12:49:04 -0700 (PDT)
-Message-ID: <054043a5-3643-aa5b-4204-8cacb7b3ae9a@linaro.org>
-Date:   Thu, 30 Jun 2022 20:49:03 +0100
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=gboqnFzZ9ZxrTwUZ6WoU6968NwUUgD1UzCCueja8BgY=;
+        b=0GUSB8t38t27P4vfAjWDa5wmqvnyVSBIyWgDkZ/gji9pDrpakLEuDn8Pkahq+mvlSB
+         TUCA7t8Aw9gm6olmawn6oBLx4R7UqNMB9+yTE5+477ve3NZS4aDyNzyq471OJOp26ndp
+         Zb+q3BFSK4eA6vHYk4rjIL/w/XDs0qO4RvKQ1xDxa9cSjpPyH1VhNwditOcQVPG26Fla
+         r8TMtNB3ELdVJPzQdTxdulz73fQLWgGV1HsaZG/UgxP3i/igdqXqA3RqH4r9/xH4Uqok
+         5fiDt/WsP20OZ5kVuo4djSQo4YSCR7GjJUqlwYci3Oo1bPP7GOVXlJdI1CQEr9wWTepG
+         YIJQ==
+X-Gm-Message-State: AJIora85svdRqG2mCFkvNMniQIsQLiN0dfRuG6HIs1UxtX00hxL4ayBx
+        4cHb0e5nWdALfyb5jLIONU4exRnPjEgErg==
+X-Google-Smtp-Source: AGRyM1tUfOefuvaZG6KMm5IzvtBIQ0uGoQ5jBW6zY56LCV44QQt1Xp03TNrIfDW5/93qhc1L3b4jYQ==
+X-Received: by 2002:a05:6808:f12:b0:335:c055:768e with SMTP id m18-20020a0568080f1200b00335c055768emr3410019oiw.186.1656619007244;
+        Thu, 30 Jun 2022 12:56:47 -0700 (PDT)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id bl29-20020a056808309d00b0032ed2343100sm10842807oib.14.2022.06.30.12.56.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 30 Jun 2022 12:56:46 -0700 (PDT)
+Date:   Thu, 30 Jun 2022 14:56:44 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     phone-devel@vger.kernel.org, Pavel Machek <pavel@ucw.cz>,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-leds@vger.kernel.org,
+        Rob Herring <robh@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Satya Priya <quic_c_skakit@quicinc.com>,
+        Matthias Kaehlcke <mka@chromium.org>
+Subject: Re: [PATCH v3 2/4] leds: qcom-lpg: Add PM660L configuration and
+ compatible
+Message-ID: <Yr3//P1IHJQV3mMt@builder.lan>
+References: <20220511190718.764445-1-marijn.suijten@somainline.org>
+ <20220511190718.764445-2-marijn.suijten@somainline.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.0
-Subject: Re: [PATCH 3/7] dt-bindings: msm: dsi: Fix power-domains constraint
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        robdclark@gmail.com, quic_abhinavk@quicinc.com,
-        dmitry.baryshkov@linaro.org, sean@poorly.run, airlied@linux.ie,
-        daniel@ffwll.ch, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org
-Cc:     quic_mkrishn@quicinc.com, swboyd@chromium.org,
-        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        devicetree@vger.kernel.org
-References: <20220630120845.3356144-1-bryan.odonoghue@linaro.org>
- <20220630120845.3356144-4-bryan.odonoghue@linaro.org>
- <225e70ec-553d-4d44-fc61-543128b2ad67@linaro.org>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <225e70ec-553d-4d44-fc61-543128b2ad67@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220511190718.764445-2-marijn.suijten@somainline.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -82,15 +83,75 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 30/06/2022 20:01, Krzysztof Kozlowski wrote:
-> On 30/06/2022 14:08, Bryan O'Donoghue wrote:
->> The existing msm8916.dtsi does not depend on nor require power-domains.
->> Drop from the list of required.
+On Wed 11 May 14:07 CDT 2022, Marijn Suijten wrote:
+
+> Inherit PM660L PMIC LPG/triled block configuration from downstream
+> drivers and DT sources, consisting of a triled block with automatic
+> trickle charge control and source selection, three colored led channels
+> belonging to the synchronized triled block and one loose PWM channel.
 > 
-> That's not good reason. The bindings are about hardware so the question
-> is whether being a part of power domain or toggling power domain on/off
-> is considered required for the DSI.
+> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
 
-AFAIK no but, I will check this again and if it is definitely not 
-required, I'll churn the commit log to describe it better.
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
+Pavel, please pick this change and I'll pick the dts changes through the
+qcom tree.
+
+Regards,
+Bjorn
+
+> ---
+> 
+> Changes since v2:
+> - Constify channels struct-array (Bjorn);
+> - Correct LUT size to 49 slots (Bjorn).
+> 
+> v2: https://lore.kernel.org/linux-leds/20220507221123.2201668-1-marijn.suijten@somainline.org/T/#u
+> 
+> Changes since v1:
+> - Rebased to pick up pm8350c in the diff-context (Pavel).
+> 
+> v1: https://lore.kernel.org/linux-leds/20220504205704.699500-1-marijn.suijten@somainline.org/T/#u
+> 
+>  drivers/leds/rgb/leds-qcom-lpg.c | 18 ++++++++++++++++++
+>  1 file changed, 18 insertions(+)
+> 
+> diff --git a/drivers/leds/rgb/leds-qcom-lpg.c b/drivers/leds/rgb/leds-qcom-lpg.c
+> index cfa3362b2457..44b0d1a563df 100644
+> --- a/drivers/leds/rgb/leds-qcom-lpg.c
+> +++ b/drivers/leds/rgb/leds-qcom-lpg.c
+> @@ -1271,6 +1271,23 @@ static int lpg_remove(struct platform_device *pdev)
+>  	return 0;
+>  }
+>  
+> +static const struct lpg_data pm660l_lpg_data = {
+> +	.lut_base = 0xb000,
+> +	.lut_size = 49,
+> +
+> +	.triled_base = 0xd000,
+> +	.triled_has_atc_ctl = true,
+> +	.triled_has_src_sel = true,
+> +
+> +	.num_channels = 4,
+> +	.channels = (const struct lpg_channel_data[]) {
+> +		{ .base = 0xb100, .triled_mask = BIT(5) },
+> +		{ .base = 0xb200, .triled_mask = BIT(6) },
+> +		{ .base = 0xb300, .triled_mask = BIT(7) },
+> +		{ .base = 0xb400 },
+> +	},
+> +};
+> +
+>  static const struct lpg_data pm8916_pwm_data = {
+>  	.num_channels = 1,
+>  	.channels = (const struct lpg_channel_data[]) {
+> @@ -1391,6 +1408,7 @@ static const struct lpg_data pm8350c_pwm_data = {
+>  };
+>  
+>  static const struct of_device_id lpg_of_table[] = {
+> +	{ .compatible = "qcom,pm660l-lpg", .data = &pm660l_lpg_data },
+>  	{ .compatible = "qcom,pm8150b-lpg", .data = &pm8150b_lpg_data },
+>  	{ .compatible = "qcom,pm8150l-lpg", .data = &pm8150l_lpg_data },
+>  	{ .compatible = "qcom,pm8350c-pwm", .data = &pm8350c_pwm_data },
+> -- 
+> 2.36.1
+> 
