@@ -2,151 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 53873560FEB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Jun 2022 06:12:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5008F560FFA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Jun 2022 06:24:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229797AbiF3EKr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Jun 2022 00:10:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58004 "EHLO
+        id S231590AbiF3EYD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Jun 2022 00:24:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37326 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231977AbiF3EKl (ORCPT
+        with ESMTP id S229732AbiF3EYC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Jun 2022 00:10:41 -0400
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B769E393F1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jun 2022 21:10:37 -0700 (PDT)
-Received: by mail-wm1-x330.google.com with SMTP id m184so10531305wme.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jun 2022 21:10:37 -0700 (PDT)
+        Thu, 30 Jun 2022 00:24:02 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 287B032EE1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jun 2022 21:24:01 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id o4so21411543wrh.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jun 2022 21:24:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nexus-software-ie.20210112.gappssmtp.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=208GMSX5gYG7ZWlHbNAB3NjhHqI6KTTBfChR003rass=;
-        b=ZBR/J5DP3+qcmhyEQ1VO2wpXe/UUJTp7es5GEp/vqhLQlbDlm9ZRQ7P/5i2b2bZ2CG
-         OFdYcGwYPUme38hdaK9BIxvKL9Hd8HlE5eGL3NiwkCALMUS+iZWfakRwtQzUoVkQ3GTh
-         5k6N5muLCg2gs5Im2J+bQml/YMXRNzjW9yRg2C3HPJwoL9z+mlA69Gy/wCwCnNkeZT0p
-         onHwPKImlHQDPpGW54CwRItOTrK3mytalJ3VGaeLry1DA6Mu0+mvGZHmg+882qKm8GP3
-         OoAR4Y/t0uK1Yhl+3M1DobF6G5DbJzFfeKf1eduWM9sweLPA4/SP6ECznmXZqiiSn/LU
-         yLIw==
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=+gc2pfqdlbXIZ0VWFy8LDQmiYN4Kvsy5JJdLdp7+YMo=;
+        b=wmyNSYLyh3OTKn2BuKgHKW2bZsCk777Bej8jjoIQpWSBskVJsS8zzAvoNCIxKIQLWy
+         6wAfGm4AE39f5hm5OLxkibcz85RPO8aD01bbdA+RsmS/JUCU+KozCqlnrDRKaiDQxO1f
+         I8/cErG63rx6DilRwVDb0WpvsYXVUAWzPTB8jP8KsU8R5eYhEXTlkNM8PCdzr9zNCMeM
+         iYHcXra6nLgGhwZS5l6O6MkaDShZJ5+OxJcnY8YBlYkB1YDosdRI1dZO32Z1rgY2Vjq0
+         DGCUAlxMlmtuYjUP2fLw7jOMQe6ZCaj4mrqKPtwAA3BYzkTdg81zaOzYHsaoNMjo5cyj
+         izZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=208GMSX5gYG7ZWlHbNAB3NjhHqI6KTTBfChR003rass=;
-        b=XeXWlCwhlThWbNjGxClShnU1kF5LSEXuUXP2BSZ+NYDXXt0FkRXzMsvLOPZ15pmr1m
-         cw5OCDZ72ZJ2n7TXeh2DgNzbznB+Z3/8FNjQ2G6n0ExUUpDZQcU8KeTh2mq7U3pWhRF9
-         1l101C7gaFXYPSIXt+CLTENOf02HYxurarhozPxZBC1ufhojgp+PSg7NSfnlXzHLLVdj
-         nwOY4K9oKpzd5R+84nZptXPI2NeHxFDE5Z8+yKp5Q9IyiLbY47NvBimPLUCKeoUjP5H0
-         GivBxTyL86Jys1a/lu09pa4Puy8gH1Q7/FUqcI0KzjaOY0m84g2VKKgS/YUDw1F0zfni
-         2aRA==
-X-Gm-Message-State: AJIora819vD6tWVVoQJ3Pc9elf+gPCNtn/WyDY1zCLidC4eVVtco7zrM
-        b3TQ4heshJdMdFpBPPdfZOjhIA==
-X-Google-Smtp-Source: AGRyM1vJ5a/hVCn9v/GNPHBHfodqb9V2qpq0FRrTdnp69bxOdOwcudYmU5tDSPC6GAfQsnfNyZNogA==
-X-Received: by 2002:a05:600c:350:b0:3a0:4910:9ebc with SMTP id u16-20020a05600c035000b003a049109ebcmr7574533wmd.148.1656562236349;
-        Wed, 29 Jun 2022 21:10:36 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id bk20-20020a0560001d9400b0021b8b998ca5sm17092678wrb.107.2022.06.29.21.10.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 29 Jun 2022 21:10:35 -0700 (PDT)
-Message-ID: <3168903b-6850-a9eb-ead5-1389aa37485c@nexus-software.ie>
-Date:   Thu, 30 Jun 2022 05:10:34 +0100
+        bh=+gc2pfqdlbXIZ0VWFy8LDQmiYN4Kvsy5JJdLdp7+YMo=;
+        b=McvDt7DCuwI5FtymRc9o8bfhqaUJsF5JyHgP2xBoju3oM1xJhXh3rL2R9TY/AT67tK
+         DN7iJlfrrNBiXE6gLBuhYCUmm/5GWfkTlFqXNszqaanFRz5TgnqJsj64+6QukfEDdutw
+         oBGTlNSApC5BkVpKaxFWfAanntK72+kf6wu/0liUVbSHwDdB1H/Ee+AFKsvRqq7+HSBS
+         ofh/5WF5i3c/QLks7oDFrRxnHzN16ey1pRCqxl2K6zDnMX4TqOtc1LwPk2Ika/AB7XCX
+         nlSQWspA2XNhj/afgONnn8q5k8dCW08hh6vUjwUuquX3d5QZZJ3zakVkWRDCuSIyMJSD
+         LFvw==
+X-Gm-Message-State: AJIora9+YYDRhBbHMdK13w7YS8r9oHmZvsuRlKf8PsddqeV2EoDT1oii
+        VhE33IxDDGnS+Hh4vpOkjQ+xX5jsKYscOQ==
+X-Google-Smtp-Source: AGRyM1u+q7RLVYTy7D1ioa/GA24TzTsVQh2hDlkZ19jwfVnkPYA5pEkFsR9A8gojXhWJNEgRZ0XMEQ==
+X-Received: by 2002:adf:ef42:0:b0:21b:8e58:f24b with SMTP id c2-20020adfef42000000b0021b8e58f24bmr6327192wrp.257.1656563039767;
+        Wed, 29 Jun 2022 21:23:59 -0700 (PDT)
+Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id u20-20020a05600c19d400b0039c4f53c4fdsm1328634wmq.45.2022.06.29.21.23.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 29 Jun 2022 21:23:59 -0700 (PDT)
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org,
+        myungjoo.ham@samsung.com, cw00.choi@samsung.com,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        gurus@codeaurora.org, aghayal@codeaurora.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        bryan.odonoghue@linaro.org
+Subject: [PATCH] dt-bindings: pm8941-misc: Fix usb_id and usb_vbus definitions
+Date:   Thu, 30 Jun 2022 05:23:57 +0100
+Message-Id: <20220630042357.3308128-1-bryan.odonoghue@linaro.org>
+X-Mailer: git-send-email 2.36.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.0
-Subject: Re: [RESEND PATCH 1/5] dt-bindings: opp: Add missing compat devices
-Content-Language: en-US
-To:     Rob Herring <robh@kernel.org>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc:     krzysztof.kozlowski+dt@linaro.org, devicetree@vger.kernel.org,
-        ilia.lin@kernel.org, robh+dt@kernel.org, agross@kernel.org,
-        linux-pm@vger.kernel.org, rafael@kernel.org,
-        bjorn.andersson@linaro.org, krzk+dt@kernel.org,
-        viresh.kumar@linaro.org, linux-arm-msm@vger.kernel.org
-References: <20220629130303.3288306-1-bryan.odonoghue@linaro.org>
- <20220629130303.3288306-2-bryan.odonoghue@linaro.org>
- <1656542219.641791.1042479.nullmailer@robh.at.kernel.org>
-From:   Bryan O'Donoghue <pure.logic@nexus-software.ie>
-In-Reply-To: <1656542219.641791.1042479.nullmailer@robh.at.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 29/06/2022 23:36, Rob Herring wrote:
-> On Wed, 29 Jun 2022 14:02:59 +0100, Bryan O'Donoghue wrote:
->> A number of devices listed in drivers/cpufreq/qcom-cpufreq-nvmem.c appear
->> to be missing from the compatible list.
->>
->> Cc: ilia.lin@kernel.org
->> Cc: robh+dt@kernel.org
->> Cc: krzk+dt@kernel.org
->> Cc: devicetree@vger.kernel.org
->> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->> ---
->>   .../devicetree/bindings/cpufreq/qcom-cpufreq-nvmem.yaml     | 6 ++++++
->>   1 file changed, 6 insertions(+)
->>
-> 
-> My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-> on your patch (DT_CHECKER_FLAGS is new in v5.13):
-> 
-> yamllint warnings/errors:
-> 
-> dtschema/dtc warnings/errors:
-> /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.example.dtb: /: cpus:cpu@0: 'power-domains' is a required property
-> 	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/cpufreq/qcom-cpufreq-nvmem.yaml
-> /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.example.dtb: /: cpus:cpu@0: 'power-domain-names' is a required property
-> 	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/cpufreq/qcom-cpufreq-nvmem.yaml
-> /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.example.dtb: /: cpus:cpu@1: 'power-domains' is a required property
-> 	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/cpufreq/qcom-cpufreq-nvmem.yaml
-> /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.example.dtb: /: cpus:cpu@1: 'power-domain-names' is a required property
-> 	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/cpufreq/qcom-cpufreq-nvmem.yaml
-> /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.example.dtb: /: cpus:cpu@100: 'power-domains' is a required property
-> 	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/cpufreq/qcom-cpufreq-nvmem.yaml
-> /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.example.dtb: /: cpus:cpu@100: 'power-domain-names' is a required property
-> 	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/cpufreq/qcom-cpufreq-nvmem.yaml
-> /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.example.dtb: /: cpus:cpu@101: 'power-domains' is a required property
-> 	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/cpufreq/qcom-cpufreq-nvmem.yaml
-> /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.example.dtb: /: cpus:cpu@101: 'power-domain-names' is a required property
-> 	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/cpufreq/qcom-cpufreq-nvmem.yaml
-> /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.example.dtb: /: opp-table-0:opp-307200000: 'required-opps' is a required property
-> 	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/cpufreq/qcom-cpufreq-nvmem.yaml
-> /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.example.dtb: /: opp-table-0:opp-1401600000: 'required-opps' is a required property
-> 	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/cpufreq/qcom-cpufreq-nvmem.yaml
-> /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.example.dtb: /: opp-table-0:opp-1593600000: 'required-opps' is a required property
-> 	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/cpufreq/qcom-cpufreq-nvmem.yaml
-> /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.example.dtb: /: opp-table-1:opp-307200000: 'required-opps' is a required property
-> 	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/cpufreq/qcom-cpufreq-nvmem.yaml
-> /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.example.dtb: /: opp-table-1:opp-1804800000: 'required-opps' is a required property
-> 	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/cpufreq/qcom-cpufreq-nvmem.yaml
-> /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.example.dtb: /: opp-table-1:opp-1900800000: 'required-opps' is a required property
-> 	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/cpufreq/qcom-cpufreq-nvmem.yaml
-> /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.example.dtb: /: opp-table-1:opp-2150400000: 'required-opps' is a required property
-> 	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/cpufreq/qcom-cpufreq-nvmem.yaml
-> 
-> doc reference errors (make refcheckdocs):
-> 
-> See https://patchwork.ozlabs.org/patch/
-> 
-> This check can fail if there are any dependencies. The base for a patch
-> series is generally the most recent rc1.
-> 
-> If you already ran 'make dt_binding_check' and didn't see the above
-> error(s), then make sure 'yamllint' is installed and dt-schema is up to
-> date:
-> 
-> pip3 install dtschema --upgrade
-> 
-> Please check and re-submit.
-> 
+dts validation is throwing an error for me on 8916 and 8939 with
+extcon@1300. In this case we have usb_vbus but not usb_id.
 
-Well I didn't see those errors but, I don't mind fixing them.
+Looking at the pm8941-misc driver we can have usb_id, usb_vbus or both at
+the same time.
 
-I'll do a V2 for these
+Expand the definition with anyOf to capture the three different valid
+modes.
+
+Fixes: 4fcdd677c4ea ("bindings: pm8941-misc: Add support for VBUS detection")
+Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+---
+ .../devicetree/bindings/extcon/qcom,pm8941-misc.yaml | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
+
+diff --git a/Documentation/devicetree/bindings/extcon/qcom,pm8941-misc.yaml b/Documentation/devicetree/bindings/extcon/qcom,pm8941-misc.yaml
+index 6a9c96f0352ac..1bc412a4ac5e6 100644
+--- a/Documentation/devicetree/bindings/extcon/qcom,pm8941-misc.yaml
++++ b/Documentation/devicetree/bindings/extcon/qcom,pm8941-misc.yaml
+@@ -27,10 +27,14 @@ properties:
+ 
+   interrupt-names:
+     minItems: 1
+-    items:
+-      - const: usb_id
+-      - const: usb_vbus
+-
++    anyOf:
++      - items:
++          - const: usb_id
++          - const: usb_vbus
++      - items:
++          - const: usb_id
++      - items:
++          - const: usb_vbus
+ required:
+   - compatible
+   - reg
+-- 
+2.36.1
+
