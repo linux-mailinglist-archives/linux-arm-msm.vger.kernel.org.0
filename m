@@ -2,82 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 99AF9561042
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Jun 2022 06:35:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 33EC3561047
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Jun 2022 06:35:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231990AbiF3Ee1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Jun 2022 00:34:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45034 "EHLO
+        id S231852AbiF3Efm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Jun 2022 00:35:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45864 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232153AbiF3Ee0 (ORCPT
+        with ESMTP id S231416AbiF3Efm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Jun 2022 00:34:26 -0400
-Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78563237CA
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jun 2022 21:34:25 -0700 (PDT)
-Received: by mail-pf1-x430.google.com with SMTP id d17so16975968pfq.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jun 2022 21:34:25 -0700 (PDT)
+        Thu, 30 Jun 2022 00:35:42 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1771A1F2D7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jun 2022 21:35:41 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id i25so19858705wrc.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jun 2022 21:35:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=ve/vXBI5N+hLr5sCxzL7fj/EAUdEfCHLabZmvvVnHmI=;
-        b=KOAdovB2Ezy8cAIx4fJetquqz+9T3XczFsn5nK3MTESaEEphQmvF32YhuUw2lTBVHb
-         8EB+wkjBehfoXKzO7bCB2Zmdhh2tr6BRFZKsHy1F5RBPEUhIj4AsKyrKIJ0IuUwBqgrw
-         qtZShd3TMB/o2g+TaXIG/cXlo4VaKm543PDLaGg5zT2VsLICzRCN6XnLYACYyE9eVsUO
-         i7R1wF4khrGJ/9UHV+7+fhJoH4Oz0QdwCKDHUHjf7skkW7U6AkyiL0Dzhptt3XH4Vp7z
-         MdESzhA7AyHQ4KmRRMQbfzUj6QO3YlzuegXXdSWluMugTFJ1V38lXZQf+WKAJki/nkUq
-         eUGw==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=mF82bNKU7H4VWQP1YGukVst2LLNLKLALPHMqosyLacQ=;
+        b=sFewG08kIEOas7MAKG8nACszaWiiZX9jCyBqLE/xBMk3SfClZEGO8IhZLjWcJ2fgPU
+         lnHAn/0mOi0tu3hovtuId46ERS/2EN2fQ3f6WWBeqtkX8YAKo49eAF67kCGEc8atWCly
+         pb7oOXfxHlUYYNIw/ycdg5XUeYCsxTBuDZ0ypgEn3l2fsNhFjGPwFClbs0ZvbKKWu2mR
+         UL7KhMYDIRwOoT6VgywuDsFe+4irSHen6muKLUY0zsvWJ5O2EcxKC1FCnIUN5JAMPoNg
+         dQYoivATX/59pc+CEi9UGyLu88QDAkE/q+oMHs4qdlfl1t0M0UxgKD7kaPHiuRyn+zi+
+         AKpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=ve/vXBI5N+hLr5sCxzL7fj/EAUdEfCHLabZmvvVnHmI=;
-        b=L+GNkvocPfZKDQ99k+lhItNdQLCNmhMgacO3u/THwKpMIk0Qx09kRW5zl/woEV1x49
-         H4okwGIc8VVKLM7e4TJ91Z1DsoBbB9HAqXnUcnChZ8Dl6shCk+YsEG3T25kCEYd5s2zw
-         V5oTUN8uEZjdOScAF5n8h3AXgaNSreD62j12wiFI9NtrBKbzyZS3J1JV+1QQc8P5cvxN
-         xZHpzZYiQa5lpFPlGem3G61C3zVfaRdoc+Cner3B0oNlKh7nrAB6/1nFFl2q6l1zMIbo
-         8MjV4nN2ZBe5A1ZF9d8RmpYmIHZhkDKClUphE01GNi55TnR6NRPNYATQIeD4XPSZFCo5
-         boFg==
-X-Gm-Message-State: AJIora/b7xwcPvFD36lQ09XXUqsVB63kfoNXAyB/cvQItEFpS9rpN0Dc
-        5wdxbGTd9e9rcGXLIqWCYBjs/EcJPDUM
-X-Google-Smtp-Source: AGRyM1s3sTW3qj/6y0W+Kw9RGDfAOKTyDtk1auDsy0RslDnd8VNf1JtWl1JkuAjacIc+qv0bFPij9w==
-X-Received: by 2002:a63:210f:0:b0:40d:dd27:8361 with SMTP id h15-20020a63210f000000b0040ddd278361mr6034809pgh.306.1656563664914;
-        Wed, 29 Jun 2022 21:34:24 -0700 (PDT)
-Received: from thinkpad ([59.92.102.209])
-        by smtp.gmail.com with ESMTPSA id t129-20020a625f87000000b005259578e8fcsm9061064pfb.181.2022.06.29.21.34.18
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=mF82bNKU7H4VWQP1YGukVst2LLNLKLALPHMqosyLacQ=;
+        b=lFhtAgGrVU/+8F+5Q005RWXTANZK/V8cwbsdBbwDzojmfhXzre10ODEu7n2M7/2hyC
+         BlQCDPJyT3Z8t/D1FuXaDZuQ8rwyUVPMlYXyhgn3nTTVdFV2mqgz7rpyzSwYqdcB6TBR
+         KD8bRl+VHZvjWFPiJPBqCvFaZXT1LBWv9tJv88Zt8Z/5cZVIBnh+WM5/LdSe7XoOhEau
+         zHkfsbUabaTtgtNVFH0+3KNHaIgm3J3mQY6c1ar+X2dPbGSoMOgKYfrOFIr7ln1OV9Up
+         D6MMqVMO4O4FqOhYbj2lntQyXQ9ZQX1G7IVyqBrWOGAh0DsBtYQxlZ/TGTNKNwb2r0zA
+         hYXA==
+X-Gm-Message-State: AJIora+ov9R2SacumkCWoVbbV+8/R8cz61HjKIxfnn2yewfnslOvcrvX
+        kpyYfrO83dfQnvNFTo7E3uUq/g==
+X-Google-Smtp-Source: AGRyM1sYqdpwtzWOHk363f7BKWapsJVRhHSOK/anpZD6GbS9MUXD6TzzAcvrrYxs8k2VHxfWMvJN3Q==
+X-Received: by 2002:a5d:53ca:0:b0:21b:940f:8e29 with SMTP id a10-20020a5d53ca000000b0021b940f8e29mr6400535wrw.490.1656563739666;
+        Wed, 29 Jun 2022 21:35:39 -0700 (PDT)
+Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id k1-20020a5d6281000000b0021b9e360523sm18642335wru.8.2022.06.29.21.35.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Jun 2022 21:34:24 -0700 (PDT)
-Date:   Thu, 30 Jun 2022 10:04:15 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Krishna chaitanya chundru <quic_krichai@quicinc.com>
-Cc:     helgaas@kernel.org, linux-pci@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_vbadigan@quicinc.com, quic_hemantk@quicinc.com,
-        quic_nitegupt@quicinc.com, quic_skananth@quicinc.com,
-        quic_ramkri@quicinc.com, swboyd@chromium.org,
-        dmitry.baryshkov@linaro.org,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>
-Subject: Re: [PATCH v2 1/2] PCI: qcom: Add system PM support
-Message-ID: <20220630043415.GA5012@thinkpad>
-References: <1656055682-18817-1-git-send-email-quic_krichai@quicinc.com>
- <1656495214-4028-1-git-send-email-quic_krichai@quicinc.com>
- <1656495214-4028-2-git-send-email-quic_krichai@quicinc.com>
+        Wed, 29 Jun 2022 21:35:39 -0700 (PDT)
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org,
+        jassisinghbrar@gmail.com, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        bryan.odonoghue@linaro.org
+Subject: [PATCH 0/2] Two apcs-kpss-global.yaml fixes
+Date:   Thu, 30 Jun 2022 05:35:34 +0100
+Message-Id: <20220630043536.3308546-1-bryan.odonoghue@linaro.org>
+X-Mailer: git-send-email 2.36.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <1656495214-4028-2-git-send-email-quic_krichai@quicinc.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -85,108 +70,23 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jun 29, 2022 at 03:03:33PM +0530, Krishna chaitanya chundru wrote:
-> Add suspend and resume pm callbacks.
-> 
-> When system suspends, and if the link is in L1ss, disable the clocks
-> so that system enters into low power state to save the maximum power.
-> And when the system resumes, enable the clocks back if they are
-> disabled in the suspend path.
-> 
+Adding in msm8939.dtsi and running the binding checks is throwing up two
+errors for me.
 
-Why only during L1ss and not L2/L3?
+In the first instance we use syscon on the 8939 and should declare it in
+the compat list. Doing a quick grep it looks like that fix should be
+applied to a number of existing declarations too.
 
-> Changes since v1:
-> 	- Fixed compilation errors.
-> 
-> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-> ---
->  drivers/pci/controller/dwc/pcie-qcom.c | 81 ++++++++++++++++++++++++++++++++++
->  1 file changed, 81 insertions(+)
-> 
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> index 6ab9089..8e9ef37 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> @@ -41,6 +41,9 @@
->  #define L23_CLK_RMV_DIS				BIT(2)
->  #define L1_CLK_RMV_DIS				BIT(1)
->  
-> +#define PCIE20_PARF_PM_STTS                     0x24
-> +#define PCIE20_PARF_PM_STTS_LINKST_IN_L1SUB    BIT(8)
-> +
->  #define PCIE20_PARF_PHY_CTRL			0x40
->  #define PHY_CTRL_PHY_TX0_TERM_OFFSET_MASK	GENMASK(20, 16)
->  #define PHY_CTRL_PHY_TX0_TERM_OFFSET(x)		((x) << 16)
-> @@ -190,6 +193,8 @@ struct qcom_pcie_ops {
->  	void (*post_deinit)(struct qcom_pcie *pcie);
->  	void (*ltssm_enable)(struct qcom_pcie *pcie);
->  	int (*config_sid)(struct qcom_pcie *pcie);
-> +	int (*enable_clks)(struct qcom_pcie *pcie);
-> +	int (*disable_clks)(struct qcom_pcie *pcie);
+In the second instance we just need to document clock-output-names for the
+a53 mux PLL.
 
-I think these could vary between platforms. Like some other platform may try to
-disable regulators etc... So use names such as suspend and resume.
+Bryan O'Donoghue (2):
+  dt-bindings: mailbox: qcom: Add syscon const for relevant entries
+  dt-bindings: mailbox: qcom: Add clock-output-names
 
->  };
->  
->  struct qcom_pcie_cfg {
-> @@ -199,6 +204,7 @@ struct qcom_pcie_cfg {
->  	unsigned int has_ddrss_sf_tbu_clk:1;
->  	unsigned int has_aggre0_clk:1;
->  	unsigned int has_aggre1_clk:1;
-> +	unsigned int support_pm_ops:1;
->  };
->  
->  struct qcom_pcie {
-> @@ -209,6 +215,7 @@ struct qcom_pcie {
->  	struct phy *phy;
->  	struct gpio_desc *reset;
->  	const struct qcom_pcie_cfg *cfg;
-> +	unsigned int is_suspended:1;
-
-Why do you need this flag? Is suspend going to happen multiple times in
-an out-of-order manner?
-
->  };
->  
->  #define to_qcom_pcie(x)		dev_get_drvdata((x)->dev)
-> @@ -1308,6 +1315,23 @@ static void qcom_pcie_post_deinit_2_7_0(struct qcom_pcie *pcie)
->  	clk_disable_unprepare(res->pipe_clk);
->  }
->  
-
-[...]
-
-> +static const struct dev_pm_ops qcom_pcie_pm_ops = {
-> +	SET_NOIRQ_SYSTEM_SLEEP_PM_OPS(qcom_pcie_pm_suspend, qcom_pcie_pm_resume)
-
-Use the new macro: NOIRQ_SYSTEM_SLEEP_PM_OPS
-
-> +};
-> +
->  static const struct of_device_id qcom_pcie_match[] = {
->  	{ .compatible = "qcom,pcie-apq8084", .data = &apq8084_cfg },
->  	{ .compatible = "qcom,pcie-ipq8064", .data = &ipq8064_cfg },
-> @@ -1679,6 +1759,7 @@ static struct platform_driver qcom_pcie_driver = {
->  	.probe = qcom_pcie_probe,
->  	.driver = {
->  		.name = "qcom-pcie",
-> +		.pm = &qcom_pcie_pm_ops,
-
-There will be warnings when CONFIG_PM_SLEEP is not set. So use below,
-
-		.pm = pm_sleep_ptr(&qcom_pcie_pm_ops),
-
-Thanks,
-Mani
-
->  		.suppress_bind_attrs = true,
->  		.of_match_table = qcom_pcie_match,
->  	},
-> -- 
-> 2.7.4
-> 
+ .../mailbox/qcom,apcs-kpss-global.yaml        | 49 +++++++++++--------
+ 1 file changed, 29 insertions(+), 20 deletions(-)
 
 -- 
-மணிவண்ணன் சதாசிவம்
+2.36.1
+
