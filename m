@@ -2,62 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E9233562666
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Jul 2022 01:05:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 11D9D56266B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Jul 2022 01:06:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229607AbiF3XFa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Jun 2022 19:05:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53304 "EHLO
+        id S230186AbiF3XGb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Jun 2022 19:06:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54324 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230267AbiF3XF3 (ORCPT
+        with ESMTP id S229647AbiF3XGa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Jun 2022 19:05:29 -0400
-Received: from mail-io1-f46.google.com (mail-io1-f46.google.com [209.85.166.46])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FD5053EFE;
-        Thu, 30 Jun 2022 16:05:26 -0700 (PDT)
-Received: by mail-io1-f46.google.com with SMTP id r133so678337iod.3;
-        Thu, 30 Jun 2022 16:05:26 -0700 (PDT)
+        Thu, 30 Jun 2022 19:06:30 -0400
+Received: from mail-io1-f45.google.com (mail-io1-f45.google.com [209.85.166.45])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4A655724F;
+        Thu, 30 Jun 2022 16:06:28 -0700 (PDT)
+Received: by mail-io1-f45.google.com with SMTP id p128so691518iof.1;
+        Thu, 30 Jun 2022 16:06:28 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=StGBGoL887RV+pa/gU61O9aI/AKdQo+rQc4kYJWNvEs=;
-        b=uZFxFyzlEzqQUrEf0Y2CyMWTmxq+bKeiopVct24BdpSJjs0kCnRV+mEetgbn056y4R
-         fd+UpGgijlI2cQlfyXIxma+rgIPr+hU2UhxM6bMiQpNFwumgz1MNvFDzCkP5hpyJVDZn
-         1jR+a0nMRvy6PW2l+BEp0mH+CXgvl6Dq+gwYj63kGL17VFihvvAXu14zF654KxyEE/rj
-         js2L2EY/7zsw5zoVyLV1jVUBuAM2m8H7i9C/UTPf2nu9YqR8eJKAz+qlf5xYPMV5Kko1
-         5f2fFdE6GNj4HzrhXBm32LacKxe6lQPVLJIUAJEC7hm3mNhY8x4oNLOKoak66bf+7mjJ
-         Mm/A==
-X-Gm-Message-State: AJIora/XExzTV6BQH1RKOFqHAzU8A0Pw3q+BDmzUKytYHG9AMHmGIE5I
-        XOBLnrGanBXHonmPJzgkpg==
-X-Google-Smtp-Source: AGRyM1v/aoxZAZ2Wd8c6Wfbrup41HjLkIz2dHcIR+iDZh4hon5mfkYSCCwYh1CwFlBDU3oLojlC+wg==
-X-Received: by 2002:a05:6638:430d:b0:33c:d3e2:ab04 with SMTP id bt13-20020a056638430d00b0033cd3e2ab04mr5621513jab.319.1656630325460;
-        Thu, 30 Jun 2022 16:05:25 -0700 (PDT)
+        bh=dJf2WYWpGf7ZUYdOKXvLNmyrEzQg826Cfl8/PV8rr18=;
+        b=3RRPn26ZLl7zg36VtBpWKpwkpE8rr18bCcQCdWxdqh+3hDbCsAXO4Mj3hiVb4Gv3z7
+         gcwmES2nUtT30KoFmAPJKXEIWCzIKilWNL/ZZn1Edpu6OS4BPQ4qzw4e4bM2YH5NEugB
+         p4nqrWszOamuTR9DFvL5LuZgorH6D4iIuq0mt3EtFv8P3FoOQrzAm7lTzvqs0BcCxUm9
+         kRpCpnsn3k2Cxpfwhzsgx/VOoT96ABe3iqjW4K/5lEH4sq/S7tDlq6Ueb8iuflExJxOq
+         r35F4uitQ93wVoq0NQ0XVLPPyUUi+c0WncsfSIe4S6/k3cNZdaM2wLsJtQSNlnpjIUgN
+         2FBg==
+X-Gm-Message-State: AJIora/rH33ifRT/ITbUll7+0taImY4xV2SnmCsaLTLr7oUbqMacYkfs
+        8usPDrHPcjudqYTo1WBknQ==
+X-Google-Smtp-Source: AGRyM1uqhD4MCteCjyBXeR7G4tc9fN4rpz7F8ubkcDdON8CUqUcFR3Ch9h/GzVuts+BDi7npUGkssw==
+X-Received: by 2002:a05:6638:3a07:b0:33d:1340:8ac4 with SMTP id cn7-20020a0566383a0700b0033d13408ac4mr3927832jab.113.1656630387939;
+        Thu, 30 Jun 2022 16:06:27 -0700 (PDT)
 Received: from robh.at.kernel.org ([64.188.179.248])
-        by smtp.gmail.com with ESMTPSA id s12-20020a92d90c000000b002d92c91da91sm8526396iln.77.2022.06.30.16.05.24
+        by smtp.gmail.com with ESMTPSA id y9-20020a92c749000000b002d8fbf31678sm8449874ilp.82.2022.06.30.16.06.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Jun 2022 16:05:25 -0700 (PDT)
-Received: (nullmailer pid 3495873 invoked by uid 1000);
-        Thu, 30 Jun 2022 23:05:23 -0000
-Date:   Thu, 30 Jun 2022 17:05:23 -0600
+        Thu, 30 Jun 2022 16:06:27 -0700 (PDT)
+Received: (nullmailer pid 3497641 invoked by uid 1000);
+        Thu, 30 Jun 2022 23:06:26 -0000
+Date:   Thu, 30 Jun 2022 17:06:26 -0600
 From:   Rob Herring <robh@kernel.org>
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+Cc:     AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krishna Manikandan <quic_mkrishn@quicinc.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>
-Subject: Re: [PATCH 06/11] dt-bindings: display/msm: move qcom,msm8998-mdss
- schema to mdss.yaml
-Message-ID: <20220630230523.GA3494161-robh@kernel.org>
+        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH 10/11] dt-bindings: display/msm: add opp-table to
+ dpu-sc7280
+Message-ID: <20220630230626.GA3497589-robh@kernel.org>
 References: <20220625232513.522599-1-dmitry.baryshkov@linaro.org>
- <20220625232513.522599-7-dmitry.baryshkov@linaro.org>
+ <20220625232513.522599-11-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220625232513.522599-7-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220625232513.522599-11-dmitry.baryshkov@linaro.org>
 X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
         FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
         HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
@@ -69,16 +70,15 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Jun 26, 2022 at 02:25:08AM +0300, Dmitry Baryshkov wrote:
-> Move schema for qcom,msm8998-mdss from dpu-msm8998.yaml to mdss.yaml so
-> that the dpu file describes only the DPU schema.
+On Sun, 26 Jun 2022 02:25:12 +0300, Dmitry Baryshkov wrote:
+> On sc7280 platforms DPU device tree node contains child object
+> opp-table providing OPP table for the DPU. Add it to the list of
+> properties to let sc7280.dtsi to validate.
 > 
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->  .../bindings/display/msm/dpu-msm8998.yaml     | 142 +++++-------------
->  .../devicetree/bindings/display/msm/mdss.yaml |  25 +++
->  2 files changed, 65 insertions(+), 102 deletions(-)
+>  Documentation/devicetree/bindings/display/msm/dpu-sc7280.yaml | 3 +++
+>  1 file changed, 3 insertions(+)
+> 
 
-Similar issues in the rest of these MDSS moves.
-
-Rob
+Acked-by: Rob Herring <robh@kernel.org>
