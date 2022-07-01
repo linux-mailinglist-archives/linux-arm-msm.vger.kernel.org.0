@@ -2,66 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 424935626CE
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Jul 2022 01:19:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9D4D8562800
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Jul 2022 03:12:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232173AbiF3XMT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Jun 2022 19:12:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60530 "EHLO
+        id S232387AbiGABKz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Jun 2022 21:10:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59918 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232252AbiF3XMP (ORCPT
+        with ESMTP id S229563AbiGABKy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Jun 2022 19:12:15 -0400
-Received: from mail-il1-f175.google.com (mail-il1-f175.google.com [209.85.166.175])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BB6559266;
-        Thu, 30 Jun 2022 16:12:01 -0700 (PDT)
-Received: by mail-il1-f175.google.com with SMTP id w10so368764ilj.4;
-        Thu, 30 Jun 2022 16:12:01 -0700 (PDT)
+        Thu, 30 Jun 2022 21:10:54 -0400
+Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2ED695A2C1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Jun 2022 18:10:53 -0700 (PDT)
+Received: by mail-pj1-x102e.google.com with SMTP id dw10-20020a17090b094a00b001ed00a16eb4so1169192pjb.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Jun 2022 18:10:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=riTJwa3bSi1lLAzR0nqCjL0PHBsnxUZ/utBEO403z1w=;
+        b=ltNB9b6L0WGcQxcX0/zTfMYJWLZ5Ohm0RVW23tFGV26KJCU4e9EuEgAabskt1fun7R
+         sDaVg3iYXC2n+vMsd+iFqp/kURHYFb4mqL6qBPMauoi5W+lzr8NKcvB7IbRIWMuNGmEe
+         Km++r1KUdVbrGUMBhkWoymNyhyKB+dYqkklYg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=JR5S4FbFlm7AB5LCYD9+AL7FKrg6jOTlb2pwSAOVR1Q=;
-        b=aHiUSHZmpfGLR0+cVIViN//sa5e4nxnUqN0Q1zvYLAhNQ4DdAYmygnIgKLo7NWO39a
-         glp8hW0UfDEGt7BcotQ6P5CTtmGz9Hxz83mlnd4we0N4qR68YsbDRBQ5Ga7jV1ntHl7G
-         u9C0GMdfCVkD5Xiz08hSo6CT3NCSjivv0lcv6WMPatFr3fJZTvmPYqgLGYgqm93lzN8L
-         nrH8xNWXrYd7yDZWY/Gv/nHACVA6Y/Q0ot5caFzT87oqg+ftIwS6cnsv/YAIjWpUwv3W
-         b7Se/GLv8LnxykhS8dzszCh7n/Dne1bLDky3abFTEjPFmAwNrRXmG6BPJ1AJX1+cgcBY
-         mnxw==
-X-Gm-Message-State: AJIora+xA8WHAvkVWtYGdwFulT2OGs8F5j4J5X81P++Cez8bLQ1A1psA
-        oNnrptSyyBZ8ut2BoGCqTQ==
-X-Google-Smtp-Source: AGRyM1uBaPXhKWPlpc8IwKyqrezf9NwpIw7AH2Glps8IXHvnspekczjlquysBEytKUZDVq41aMdZkg==
-X-Received: by 2002:a05:6e02:1845:b0:2da:bc96:8ab2 with SMTP id b5-20020a056e02184500b002dabc968ab2mr6657738ilv.22.1656630721191;
-        Thu, 30 Jun 2022 16:12:01 -0700 (PDT)
-Received: from robh.at.kernel.org ([64.188.179.248])
-        by smtp.gmail.com with ESMTPSA id j194-20020a0263cb000000b00331f8fff9a3sm9119127jac.64.2022.06.30.16.12.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Jun 2022 16:12:00 -0700 (PDT)
-Received: (nullmailer pid 3506024 invoked by uid 1000);
-        Thu, 30 Jun 2022 23:11:59 -0000
-Date:   Thu, 30 Jun 2022 17:11:59 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=riTJwa3bSi1lLAzR0nqCjL0PHBsnxUZ/utBEO403z1w=;
+        b=D6Qc6Ql7n2GJhcKmrGaEM11dhsFVqo5QjckdOdgCzDQYkoQ64vgmlaySt1f0SVrFY7
+         9akod7Xdb98p3oSoXEoNpu+g9VCA2pmohoMlKSEfVOyN/wloZRL9aqg6X+r9rvWJv8yW
+         uNfqBn5APk+UOA8pkV8KR2++0eXdQneyQNmGQfyM4RnPx9KaPuTBQaoLxmhfwzZD4/p5
+         1Wq6vX6dGZubW1txJ6hgcKkoNpAXzKMs4I55a7ocjsDo65nM1a3KFd1PLSaKyL0GIgh0
+         hv3DOeuT4mLh+b2SY4hx6KdLuEQVTHHDIf8ENX96teJROBiN3eSN02Suhyl8PBT69gZ1
+         jSLw==
+X-Gm-Message-State: AJIora8RLJDGE0aWVOfvFvFvZBnao584elOwbydyTlq9u0SCoLoUZxvg
+        meTDZXyYDziCSeZ7haNMMhGtZA==
+X-Google-Smtp-Source: AGRyM1vDSzuWMSHmKGJrOwsdSFxwevV5a9CXWieue+Xhh8FwWZKfTik7az0sP8Slnk1ABp9iIsgQhA==
+X-Received: by 2002:a17:90a:7c05:b0:1ee:e40c:589b with SMTP id v5-20020a17090a7c0500b001eee40c589bmr13559159pjf.78.1656637852674;
+        Thu, 30 Jun 2022 18:10:52 -0700 (PDT)
+Received: from localhost ([2620:15c:11a:202:dca8:e419:789:7bec])
+        by smtp.gmail.com with UTF8SMTPSA id pc3-20020a17090b3b8300b001ef3f85d1aasm2179295pjb.9.2022.06.30.18.10.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 30 Jun 2022 18:10:52 -0700 (PDT)
+Date:   Thu, 30 Jun 2022 18:10:50 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        Pavan Kondeti <quic_pkondeti@quicinc.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Felipe Balbi <balbi@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>
-Subject: Re: [PATCH 11/11] dt-bindings: display/msm: move common DPU
- properties to dpu-common.yaml
-Message-ID: <20220630231159.GA3497845-robh@kernel.org>
-References: <20220625232513.522599-1-dmitry.baryshkov@linaro.org>
- <20220625232513.522599-12-dmitry.baryshkov@linaro.org>
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Mathias Nyman <mathias.nyman@intel.com>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, quic_ppratap@quicinc.com,
+        quic_vpulyala@quicinc.com
+Subject: Re: [PATCH v20 2/5] usb: dwc3: core: Host wake up support from
+ system suspend
+Message-ID: <Yr5JmrSaus8xKpM9@google.com>
+References: <Yp5nf2w8uVZ38/XZ@google.com>
+ <Yqd9IHQEj3Ex+FcF@google.com>
+ <YqjLHyUVEjf7I3MI@google.com>
+ <20220616091110.GA24114@hu-pkondeti-hyd.qualcomm.com>
+ <YqtlRQOwb3t6Xtd0@google.com>
+ <20220620085415.GA13744@hu-pkondeti-hyd.qualcomm.com>
+ <CAE-0n52bq9feA6BVdAp791SWQtT1Yj4M2ppg3o_KOaRFO8r+0Q@mail.gmail.com>
+ <20220628053148.GA21797@hu-pkondeti-hyd.qualcomm.com>
+ <CAE-0n50PGw_XSZ0-iV7gem6+-LENoq6ZVOwX3f+0XjkrHg-rLw@mail.gmail.com>
+ <c16a1c37-9183-8d0c-a5ad-39b897a0ab24@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20220625232513.522599-12-dmitry.baryshkov@linaro.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <c16a1c37-9183-8d0c-a5ad-39b897a0ab24@quicinc.com>
+X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -69,80 +91,80 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Jun 26, 2022 at 02:25:13AM +0300, Dmitry Baryshkov wrote:
-> Move properties common to all DPU DT nodes to the dpu-common.yaml
+On Thu, Jun 30, 2022 at 11:43:01PM +0530, Krishna Kurapati PSSNV wrote:
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  .../bindings/display/msm/dpu-common.yaml      | 47 +++++++++++++++++++
->  .../bindings/display/msm/dpu-msm8998.yaml     | 28 ++---------
->  .../bindings/display/msm/dpu-qcm2290.yaml     | 29 ++----------
->  .../bindings/display/msm/dpu-sc7180.yaml      | 32 ++-----------
->  .../bindings/display/msm/dpu-sc7280.yaml      | 32 ++-----------
->  .../bindings/display/msm/dpu-sdm845.yaml      | 32 ++-----------
->  6 files changed, 67 insertions(+), 133 deletions(-)
->  create mode 100644 Documentation/devicetree/bindings/display/msm/dpu-common.yaml
+> On 6/30/2022 3:45 AM, Stephen Boyd wrote:
+> > Quoting Pavan Kondeti (2022-06-27 22:31:48)
+> > > On Mon, Jun 27, 2022 at 01:02:49PM -0700, Stephen Boyd wrote:
+> > > > Quoting Pavan Kondeti (2022-06-20 01:54:15)
+> > > > > Would like to hear other people thoughts on this.
+> > > > > 
+> > > > I'm not following very closely but it sounds like a problem that may be
+> > > > solved by using the component driver code (see
+> > > > include/linux/component.h). That would let you move anything that needs
+> > > > to be done once the child devices probe to the aggregate driver 'bind'
+> > > > function (see struct component_master_ops::bind).
+> > > Thanks Stephen for letting us know about the component device framework.
+> > > 
+> > > IIUC,
+> > > 
+> > > - dwc3-qcom (parent of the dwc3 core) registers as a component master by
+> > > calling component_master_add_with_match() before calling
+> > > of_platform_populate(). The match callback could be as simple as comparing
+> > > the device against our child device.
+> > > 
+> > > - The dwc3 core (child) at the end of its probe can add as a component by calling
+> > > component_add().
+> > > 
+> > > - The above triggers the component_master_ops::bind callback implemented in
+> > >    dwc3-qcom driver which signals that we are good to go.
+> > > 
+> > > - The dwc-qcom can call component_bind_all() to finish the formality i.e
+> > >    telling the dwc3 core that we are good to go.
+> > > 
+> > > Is my understanding correct? This is what we are looking for i.e a way for
+> > > the child device(s) to signal the parent when the former is bounded.
+> > Sounds about right to me.
+> > 
+> > > Also what happens when the child device probe fails for any reason. i.e
+> > > component_add() would never be called so the master driver i.e dwc3-qcom would
+> > > wait indefinitely. May be it needs to implement a timeout or runtime suspend
+> > > etc should take care of keeping the resoures in suspend state.
+> > When the child fails probe, it should return -EPROBE_DEFER if probe
+> > needs to be deferred. Then the driver will attempt probe at a later
+> > time. If probe fails without defer then it will never work and dwc3-qcom
+> > will wait indefinitely. Not much we can do in that situation.
+> Hi Stephen,
 > 
-> diff --git a/Documentation/devicetree/bindings/display/msm/dpu-common.yaml b/Documentation/devicetree/bindings/display/msm/dpu-common.yaml
-> new file mode 100644
-> index 000000000000..f3465ee3a4ab
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/display/msm/dpu-common.yaml
-> @@ -0,0 +1,47 @@
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/display/msm/dpu-common.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm Display DPU dt properties (common properties)
-> +
-> +maintainers:
-> +  - Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> +  - Krishna Manikandan <quic_mkrishn@quicinc.com>
-> +  - Rob Clark <robdclark@gmail.com>
-> +
-> +description: |
-> +  Device tree bindings for the DPU display controller, common properties.
+>   Thanks for the idea. But doesn't adding dwc3 as a component to an agg
+> driver meanthat this change needs to be done on all glue drivers, as
+> component_bind_all( ) from master componentis supposed to let the dwc3
+> core know that we are good to go ?
 
-Common properties for QCom DPU display controller
+Ideally all glue drivers would add component support, however I don't think
+it is strictly necessary. Currently the dwc3 core already assumes that
+everything is in place when it is probed. The core could have empty bind()
+and unbind() callbacks, with that things in the core would remain
+essentially as they are and the core doesn't depend on the glue driver to
+call component_bind_all().
 
-> +
-> +properties:
-> +  interrupts:
-> +    maxItems: 1
-> +
-> +  power-domains:
-> +    maxItems: 1
-> +
-> +  operating-points-v2: true
-> +
-> +  ports:
-> +    $ref: /schemas/graph.yaml#/properties/ports
+> > dwc3-qcom should wait for dwc3 core to call component_add() and then do
+> > whatever needs to be done once the dwc3 core is registered in the
+> > dwc3-qcom bind callback. Honestly this may all be a little overkill if
+> > there's only two drivers here, dwc3-qcom and dwc3 core. It could
+> > probably just be some callback from dwc3 core at the end of probe that
+> > calls some function in dwc3-qcom.
+> Since the issue we are facing is that the ssphy device links are not ready
+> causing the dwc3 probe not being invoked, can we add an API as Pavan
+> suggested
+> to check if deferred_probe listfor dwc3 device is empty or not andbased on
+> that we can choose to defer our qcomprobe ? In this case, we don't need to
+> touch the dwc3 core driver and would be making changesonly in qcom glue
+> driver.
 
-Now this schema is applied twice.
-
-> +    description: |
-> +      Contains the list of output ports from DPU device. These ports
-> +      connect to interfaces that are external to the DPU hardware,
-> +      such as DSI, DP etc. Each output port contains an endpoint that
-> +      describes how it is connected to an external interface.
-
-This description is marginally useful. Each port will say it is an 
-output to X. So you could just remove.
-
-> +
-> +patternProperties:
-> +  (mdp-)?opp-table:
-> +    $ref: /schemas/opp/opp-v2.yaml#
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - reg-names
-> +  - clocks
-> +  - interrupts
-> +  - power-domains
-> +  - operating-points-v2
-> +  - ports
-> +
-> +additionalProperties: true
+As mentioned above, it shouldn't be necessary to add component support to
+all the glue drivers. An API to check for deferred probing is an option,
+however there is a possible race condition: When the dwc3-qcom driver checks
+for a deferred probe the core could still be probing, in that situation the
+glue would proceed before the core driver is ready. That could be avoided
+with the component based approach.
