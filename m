@@ -2,59 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6A4FE562E3C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Jul 2022 10:30:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 96254562E40
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Jul 2022 10:30:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235841AbiGAI34 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 1 Jul 2022 04:29:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34082 "EHLO
+        id S236366AbiGAIa0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 1 Jul 2022 04:30:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35428 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236129AbiGAI3q (ORCPT
+        with ESMTP id S236374AbiGAIaK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 1 Jul 2022 04:29:46 -0400
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F32271242
-        for <linux-arm-msm@vger.kernel.org>; Fri,  1 Jul 2022 01:29:44 -0700 (PDT)
-Received: by mail-ej1-x634.google.com with SMTP id mf9so2812765ejb.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Jul 2022 01:29:44 -0700 (PDT)
+        Fri, 1 Jul 2022 04:30:10 -0400
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 446616D572
+        for <linux-arm-msm@vger.kernel.org>; Fri,  1 Jul 2022 01:29:58 -0700 (PDT)
+Received: by mail-ej1-x631.google.com with SMTP id o25so2743974ejm.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Jul 2022 01:29:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=dxZbpRkh5l4JeCdeImv9Ijljaa3y0PVNYCMebKYCl5U=;
-        b=JzK4vRtf2boD93GH5GeGpymBSJi2/wRmfBUvwyV19BN6BECcAB5LUoqtwFaeVfUBPz
-         nY3OwaYESyX7QZ2Tnule/458OtqLPPcxlVeD/+2ZKHRAQhy5jC2pcksMsOQuFSWnqOxJ
-         Tpfj6eWejLln5hf23mQfXSdxfxSI7BWuccMLNcFpgO3LjeEJ7gi0P8vjxNPZsL7Nw7hm
-         e7QVEpvH84B7eLpa/73jfdZ+TC8BBN1cB0VRzFDCkijH+T39KeYCFXZW3uh5MbZgS+oD
-         l3Zz1bfBNd6KWcd2PZeAZkA7B9oi/Hzjkfhqv740zDyyVEkVfoXgOGqsp7veVEdGnqt4
-         2ltw==
+        bh=W2JBG9IMgo5iuUpGjo0Ma0emVBYFSehxFIdcsMEXUdA=;
+        b=arFQqYu6F88L3CXLHaovq6nC8iPoIB5p/cUlMA41dv82tviQib8TEVgLwkCk5Oyu5M
+         O2nhQgu0phboN7L+EY4ZSPWK7by9eue8AdroQbTlVFfK34VGzZtIsT5FhmxfB1z2REgC
+         2TxfH0ogXBYtzT1QoRTuJThP+EktiC9LGj6rhgFfQMPPAossEMyTL3ofHZY+lNP9HkQR
+         boptAY61H7EZd0f7mJlPhkpha3bZzBPm8Xl/yKKijjUYLdHES4yXURuUAbQ+KkdD8HJ3
+         3mJVoHQAjtNw/3XQmf1tSMvI22n3zAy8DTuGDhGXdYjiXw+kacaTQTm10pQxKR0XOHtD
+         eNYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=dxZbpRkh5l4JeCdeImv9Ijljaa3y0PVNYCMebKYCl5U=;
-        b=QmJlq/CiDGuZ2oZYZ5udqpSYe8cgKin5oyvX9U3zahkFcGrAqNCvDCC0/GbFxNxJWT
-         tyye2fj14fuA1lvHkrtPjvdFCKdFnWekfta1+0Pie9tumhkLmq0o+6IhKd+vI9bZE+vF
-         YxD10vkdsthB0ZRSZS/Qc0FG0QpRGtrbtJDa0K3g056Pl55rl3jW5AQCv/gbd2+VRQV+
-         JrP6TtRLbluQ9UAU9YOTbWCtZ8UyvlqqzW8XI8MtZozw0oS6pvgWui7YDrI+75E5DVL1
-         AK6iOiJ3At9siqRZeHGpswKjDXsy0dm9Fb/NiVsTmQpmT9mlRdIS2ggqSkvDcQYbHNmG
-         L/Jw==
-X-Gm-Message-State: AJIora9N5zxVYFGXcZzbSHZIbtPLeS52UfM+MbSK7k7MBxHGZf6WZGb9
-        6K4WZowxsjWngJrYR3NAX3/Efg==
-X-Google-Smtp-Source: AGRyM1vRa+C2UOMEzZXuI0s812xXVlGPUrJ3Cy8g8SB9jAZEyZodSm6NyqwYhJ9kBMUX7Gh97vNwVw==
-X-Received: by 2002:a17:906:7288:b0:722:da04:da51 with SMTP id b8-20020a170906728800b00722da04da51mr13174406ejl.316.1656664182607;
-        Fri, 01 Jul 2022 01:29:42 -0700 (PDT)
+        bh=W2JBG9IMgo5iuUpGjo0Ma0emVBYFSehxFIdcsMEXUdA=;
+        b=GVRjT7UXvJkqGhc0B1EOS4nOltT/y9NQTWOHbHUsLvglLZzRcU0gMu1ZQv8bIXvBoF
+         vuSrNG7uYjkxJmf78F+sWpltxwCiw41O6RuhP3bY1j4ZCNSoIViJs66sfblg31bKpOKg
+         y1u2AhL4OVtyRUnXxtlQD8ua433OyzN4I+RFlZYbY9L7IZJiCNci5bjbre1VonHaBP1V
+         zhsxqEMctlk+W9Dn1tpoJKXEIcjtVuYdzl8U3kzYaa2K6crbbH5pAo3Dzc/Z9K/4odtk
+         csvf6qVvrK3Il1eiCEubFZ457bs7qwpHhuAvga1ENPfCvZY+v3yC0/zrWDDusMJGoX8x
+         fKHw==
+X-Gm-Message-State: AJIora/wIsdPWVPFT9LsUc1BdS+KSJsN3UXPApo7UreHEovnICBrEffd
+        wfeVYkyftBW8hjoBgFBIM3LvHA==
+X-Google-Smtp-Source: AGRyM1vv2YExw/cf6QKoCypS6wU8W0tcFVHArFOydF7PZL2zFGDhvteLzs9veunwCivobmZcttE8wQ==
+X-Received: by 2002:a17:906:dc8f:b0:725:28d1:422d with SMTP id cs15-20020a170906dc8f00b0072528d1422dmr12676225ejc.131.1656664196827;
+        Fri, 01 Jul 2022 01:29:56 -0700 (PDT)
 Received: from [192.168.0.190] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id s6-20020a1709062ec600b00711d88ae162sm10147597eji.24.2022.07.01.01.29.41
+        by smtp.gmail.com with ESMTPSA id v10-20020a1709063bca00b00706e8ac43b8sm10100208ejf.199.2022.07.01.01.29.55
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 01 Jul 2022 01:29:42 -0700 (PDT)
-Message-ID: <3c17965c-a588-0580-c7d5-f6252712c35d@linaro.org>
-Date:   Fri, 1 Jul 2022 10:29:40 +0200
+        Fri, 01 Jul 2022 01:29:56 -0700 (PDT)
+Message-ID: <9115208b-23c9-0741-2fe0-9e833800375a@linaro.org>
+Date:   Fri, 1 Jul 2022 10:29:55 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.10.0
-Subject: Re: [PATCH 01/10] dt-bindings: PCI: qcom: Fix reset conditional
+Subject: Re: [PATCH 02/10] dt-bindings: PCI: qcom: Fix msi-interrupt
+ conditional
 Content-Language: en-US
 To:     Johan Hovold <johan+linaro@kernel.org>,
         Bjorn Helgaas <bhelgaas@google.com>,
@@ -69,9 +70,9 @@ Cc:     Rob Herring <robh+dt@kernel.org>,
         linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20220629141000.18111-1-johan+linaro@kernel.org>
- <20220629141000.18111-2-johan+linaro@kernel.org>
+ <20220629141000.18111-3-johan+linaro@kernel.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220629141000.18111-2-johan+linaro@kernel.org>
+In-Reply-To: <20220629141000.18111-3-johan+linaro@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -85,10 +86,9 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 29/06/2022 16:09, Johan Hovold wrote:
-> Fix the reset conditional which always evaluated to true due to a
-> misspelled property name ("compatibles" in plural).
+> Fix the msi-interrupt conditional which always evaluated to false due to
+> a misspelled property name ("compatibles" in plural).
 > 
-> Fixes: 6700a9b00f0a ("dt-bindings: PCI: qcom: Do not require resets on msm8996 platforms")
 > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 
 
