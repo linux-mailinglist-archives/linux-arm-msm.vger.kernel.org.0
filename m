@@ -2,74 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5571C5630DB
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Jul 2022 12:01:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5978D5630EE
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Jul 2022 12:04:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234914AbiGAKBI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 1 Jul 2022 06:01:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53412 "EHLO
+        id S234227AbiGAKEm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 1 Jul 2022 06:04:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57060 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234983AbiGAKBG (ORCPT
+        with ESMTP id S232260AbiGAKEi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 1 Jul 2022 06:01:06 -0400
-Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EABBA7434D
-        for <linux-arm-msm@vger.kernel.org>; Fri,  1 Jul 2022 03:01:03 -0700 (PDT)
-Received: by mail-pj1-x1032.google.com with SMTP id g20-20020a17090a579400b001ed52939d72so2178710pji.4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Jul 2022 03:01:03 -0700 (PDT)
+        Fri, 1 Jul 2022 06:04:38 -0400
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60A8E74359
+        for <linux-arm-msm@vger.kernel.org>; Fri,  1 Jul 2022 03:04:33 -0700 (PDT)
+Received: by mail-wm1-x32c.google.com with SMTP id u12-20020a05600c210c00b003a02b16d2b8so1267549wml.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Jul 2022 03:04:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=EU+80uB9AuFDDwuDBeiwAOcy+KrpS749JH5BAOBcYCY=;
-        b=RQhyCVoJpISo4lW6ptfdIP1t2P+XiiVWvh7e5vn3W4BYATzrNOxd60d4k1GEEV9SL/
-         9q/LZbrj7KEpHzy536su0G4HRm4Z+ASlnecJZH3wF3NpTP3eygNTaDLYO2GzwnQR7M5t
-         FRVO301n6EcrOlF8BUEXNPI8ItnfRv5Lz5rdKct8qQBZCwhqpBD4lWyGCUxSBLM/2lCX
-         Zp/kvsTzutYgg6rE0h+Dq9JGR1Wbj20SFrvJD0DBs76bVLZ9DkQtZcSnJRu8qNMEXdLt
-         tYETEGNTgN0tM1wHhNM722aMFKs0F2nzuDQCum4RtACWqsB2jt7SJZ60KXf9bEHFkSWJ
-         9JCA==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=WVWYtq9qgpkICN1wpy8/eRBhp82z5RdrXpx5rdm1/pM=;
+        b=bPB1oTsiALdh1aHAewG8DDcM7Y6A308OEyrAZWkwEvXTz5xweEJTwuKxEwlfjKUdKh
+         0rY5dc8uQwpO6CTGdtjYbNYLlgyed69w2KRyoxIJlQPsXaWtAwbznwGLycU2Tpd38M/X
+         iW8U/gj+q8msZlBrTuxOSLaAq3e6NYJAr05Rc8FXRjBEJkexj8f17PRk1WkNVrK+DmqS
+         SzosC856omyRf+FiTX2o4vDKU5mxWcg1Fvwjy2IyBT27Ki6a6rgihS16bhFh8zxyxZRr
+         3FJvK5OsNNB4MqaYgUFIDAXrZ6tFufcOfvuPwtzxNLqQZlHMCwXrMhxLfAGcbS7Z/fvm
+         FXQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=EU+80uB9AuFDDwuDBeiwAOcy+KrpS749JH5BAOBcYCY=;
-        b=pfA5k1CbAm02u+eruAOM25Ctyb6/IdZYAMUVXrWigSsBewE3PGbxQ2BtEa2pHKCvmE
-         nwTWTkKKWqRBBQcEwrU5VVtPCdYqxgPuW+FVY/P6KclE/42XAldhcccLlUh4JZygZybw
-         U2FRKmDsXH8/ARitDd9aWJe9oCFmse+fYosonkj21mQDMW7aUbE1EQ115GGj4bBPYNMe
-         Ky7VeJHXKARZxaFpSe9n8KBioMHOvYYDkeyil+bGzPSeYMNTqz9XwSBA1qVUJqvQwBgL
-         mf8SZ2T0wmdpcRb23gOQYSdxiPq9AItGJpy8Oquo1HIljA+OLkTDc6L4qlPXWQPQoHDT
-         7oJQ==
-X-Gm-Message-State: AJIora8mXtFKWwFHXDxiEH7ODFd2Mj0+OvYdGUE2opBjzo7rHeyQIalU
-        87F3axjibxwM/9z5DNS4MxCRlA==
-X-Google-Smtp-Source: AGRyM1tV1beAgmHJBBN4pNbi1B7WPOwBFJgQ1MJ2XehV5ju/UBeogLNx5INSiFlIR65SHcj52wr0qg==
-X-Received: by 2002:a17:902:f543:b0:16a:54c6:78c0 with SMTP id h3-20020a170902f54300b0016a54c678c0mr19537321plf.22.1656669663309;
-        Fri, 01 Jul 2022 03:01:03 -0700 (PDT)
-Received: from localhost ([122.172.201.58])
-        by smtp.gmail.com with ESMTPSA id x1-20020a636301000000b004085adf1372sm14913513pgb.77.2022.07.01.03.01.02
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=WVWYtq9qgpkICN1wpy8/eRBhp82z5RdrXpx5rdm1/pM=;
+        b=3Q4is1lvmdOf5JBNe3O1giDmSTLhQVrUXa69dUX34QTa8eZBQKlAY1OiVRxGgiqLf8
+         h4xNtwf54+GYCowgnq0fu/dQqYfZGo7HMKuoNYyQEaGDFXUmg2vmgGRvq7qUuxKt5vCC
+         6JPkavcE/UPiU5A0ZdfW9WNJTiKxa/60YTblIo8AVjfBBUNVnS794onhGtH513ldKu5D
+         VyaOMU647V0oMaeg98TKUNxMlduk7vWBWgYsAVENmCswXK4Ro68J7xXsS7sKqYaPpNOG
+         efGXBdAft0RK64Oj1jKrGeod2jzYYCoPoBQ9Evi9fu5a7Uk7muxDZ+K4Cfm8Ehs04kff
+         rsPg==
+X-Gm-Message-State: AJIora/7ffIW5yXXFghucEQQQbx5lRLXZN1UcTVmSB96Iie8dCdMP4KZ
+        AHQIVtZMawHJ4NmVeK2bVY7tIg==
+X-Google-Smtp-Source: AGRyM1uPuOCbP0a6mF/0olXBoqm4K2ERnhaH8Qv2XtSK2cfhaQt8X/8B8T3N/FCTkxmypHAt2j+g7Q==
+X-Received: by 2002:a7b:c1d2:0:b0:3a0:4c75:87cf with SMTP id a18-20020a7bc1d2000000b003a04c7587cfmr17126392wmj.200.1656669871886;
+        Fri, 01 Jul 2022 03:04:31 -0700 (PDT)
+Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id l34-20020a05600c1d2200b003a03e63e428sm7834172wms.36.2022.07.01.03.04.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 Jul 2022 03:01:02 -0700 (PDT)
-Date:   Fri, 1 Jul 2022 15:31:00 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Jiri Slaby <jirislaby@kernel.org>, linux-pm@vger.kernel.org,
-        Vincent Guittot <vincent.guittot@linaro.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>, Nishanth Menon <nm@ti.com>,
-        linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH V2 24/30] serial: qcom: Migrate to dev_pm_opp_set_config()
-Message-ID: <20220701100100.bxv4t4t7iqphalpv@vireshk-i7>
-References: <cover.1656660185.git.viresh.kumar@linaro.org>
- <1f3328dafaf9e2944fba8ec9e55e3072a63a4192.1656660185.git.viresh.kumar@linaro.org>
- <Yr6z5ixRTsIbZvsq@kroah.com>
- <20220701092458.tzqv7yul476kh2o7@vireshk-i7>
- <Yr7AwAZeSPeQKDPU@kroah.com>
+        Fri, 01 Jul 2022 03:04:31 -0700 (PDT)
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org,
+        myungjoo.ham@samsung.com, cw00.choi@samsung.com,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        stephan@gerhold.net, marijn.suijten@somainline.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        bryan.odonoghue@linaro.org
+Subject: [PATCH v2] dt-bindings: pm8941-misc: Fix usb_id and usb_vbus definitions
+Date:   Fri,  1 Jul 2022 11:04:05 +0100
+Message-Id: <20220701100405.3586820-1-bryan.odonoghue@linaro.org>
+X-Mailer: git-send-email 2.36.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Yr7AwAZeSPeQKDPU@kroah.com>
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
@@ -80,53 +71,46 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 01-07-22, 11:39, Greg Kroah-Hartman wrote:
-> It's now more complex for simple drivers like this, right?
+dts validation is throwing an error for me on 8916 and 8939 with
+extcon@1300. In that case we have usb_vbus but not usb_id.
 
-They need to add a structure, yes.
+It wasn't immediately obvious if there was a valid use-case for the
+existing code for usb_id in isolation, however discussing further, we
+concluded that usb_id, usb_vbus or (usb_id | usb_vbus) are valid
+combinations as an external IC may be responsible for usb_id or usb_vbus.
 
-> Why not
-> provide translations of the devm_pm_opp_set_clkname() to use internally
-> devm_pm_opp_set_config() if you want to do complex things,
+Expand the definition with anyOf to capture the three different valid
+modes.
 
-That can be done, yes.
+Fixes: 4fcdd677c4ea ("bindings: pm8941-misc: Add support for VBUS detection")
+Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+---
+ .../devicetree/bindings/extcon/qcom,pm8941-misc.yaml | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-> allowing you
-> to continue to do simple things without the overhead of a driver having
-> to create a structure on the stack
-
-I didn't think of it as complexity, and I still feel it is okay-ish.
-
-> and remember how the "const char *[]"
-> syntax looks like (seriously, that's crazy).
-
-The syntax can be fixed, if we want, by avoiding the cast with
-something like this:
-
-diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-index a018b45c5a9a..1a5480214a43 100644
---- a/drivers/mmc/host/sdhci-msm.c
-+++ b/drivers/mmc/host/sdhci-msm.c
-@@ -2559,8 +2559,9 @@ static int sdhci_msm_probe(struct platform_device *pdev)
-        const struct sdhci_msm_offset *msm_offset;
-        const struct sdhci_msm_variant_info *var_info;
-        struct device_node *node = pdev->dev.of_node;
-+       const char *clks[] = { "core" };
-        struct dev_pm_opp_config opp_config = {
--               .clk_names = (const char *[]){ "core" },
-+               .clk_names = clks,
-                .clk_count = 1,
-        };
-
-> Make it simple for simple things, and provide the ability to do complex
-> things only if that is required.
-
-I still feel it isn't too bad for simple cases right now too, it is
-just a structure to fill out but I don't have hard feelings for
-keeping the old API around. I just feel it isn't too helpful to keep
-the old interfaces around, it will just confuse people at the best.
-
-Anyway, I will keep them around.
-
+diff --git a/Documentation/devicetree/bindings/extcon/qcom,pm8941-misc.yaml b/Documentation/devicetree/bindings/extcon/qcom,pm8941-misc.yaml
+index 6a9c96f0352ac..1bc412a4ac5e6 100644
+--- a/Documentation/devicetree/bindings/extcon/qcom,pm8941-misc.yaml
++++ b/Documentation/devicetree/bindings/extcon/qcom,pm8941-misc.yaml
+@@ -27,10 +27,14 @@ properties:
+ 
+   interrupt-names:
+     minItems: 1
+-    items:
+-      - const: usb_id
+-      - const: usb_vbus
+-
++    anyOf:
++      - items:
++          - const: usb_id
++          - const: usb_vbus
++      - items:
++          - const: usb_id
++      - items:
++          - const: usb_vbus
+ required:
+   - compatible
+   - reg
 -- 
-viresh
+2.36.1
+
