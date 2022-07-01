@@ -2,65 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D38A5563B40
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Jul 2022 22:49:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 98A3B563B9A
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Jul 2022 23:15:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231896AbiGAUm1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 1 Jul 2022 16:42:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42760 "EHLO
+        id S232356AbiGAU4K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 1 Jul 2022 16:56:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55308 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229768AbiGAUmW (ORCPT
+        with ESMTP id S232303AbiGAU4J (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 1 Jul 2022 16:42:22 -0400
-Received: from mail-io1-f44.google.com (mail-io1-f44.google.com [209.85.166.44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7172F5A2EC;
-        Fri,  1 Jul 2022 13:42:21 -0700 (PDT)
-Received: by mail-io1-f44.google.com with SMTP id l24so3315561ion.13;
-        Fri, 01 Jul 2022 13:42:21 -0700 (PDT)
+        Fri, 1 Jul 2022 16:56:09 -0400
+Received: from mail-io1-f43.google.com (mail-io1-f43.google.com [209.85.166.43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6FFA75A2F6;
+        Fri,  1 Jul 2022 13:56:09 -0700 (PDT)
+Received: by mail-io1-f43.google.com with SMTP id v185so3351389ioe.11;
+        Fri, 01 Jul 2022 13:56:09 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=vM/upYcwOh1+SZ1rqeo3tt3B3M86DMnseUqG48wZe5k=;
-        b=7xG7mc92qYmhyXmNXYy5Hqs2QuctA89zwan3DdDemet+/Viry344T8gzqWsdr1WL+J
-         VaMsRHMDK2RNY2OFkxD3wcKaea7hhiIiSI0d3GvnVQdFXe1EJDpPXNfTdAnk1io1fTp9
-         lvvSXZonWxNgXrT/IS603DyaXB0ql5fHh38VgpbK3dUDPich6dT2l6nyYjY4rbzPVmtd
-         oqiMzxmbIyF8zaNxYDXXb7f6TjgV7f6D4TIL4WW//Q3yk1iSN5capaXyHCp8FuQ+3F1N
-         TlVIgetM8GPSmmP/Ml/81AvkkqOoIp4pwYDojeZfPLdz42c9ha5/vxb2a3eEsLhH8Vr7
-         pc+g==
-X-Gm-Message-State: AJIora+bBkpPV2Gs2cSTuMeebBL2aAlH8c8UGpQqsFF/vPVFst8Iux+j
-        vo6mkG5K/uXt7K4yqir9SMRFRPVtbg==
-X-Google-Smtp-Source: AGRyM1v30pRisZeVusp5pd7mbB1cRaCLYFygRA7dI5dnmQ0SINatHfddKzyi0/9QX6rZPAvfD4uPNQ==
-X-Received: by 2002:a05:6602:1409:b0:5e7:487:133c with SMTP id t9-20020a056602140900b005e70487133cmr8708481iov.196.1656708140714;
-        Fri, 01 Jul 2022 13:42:20 -0700 (PDT)
+        bh=jsHTPyFmq7Sy/mfOS5zfc7d0iulgz+NtZu6W3N5zRAo=;
+        b=hIJZy1MDksUQxHXd9Gwnn0/XdNFSVUAW+cDNkRC7/G4YrcXqzvQ8o1GArLIiPP0gcX
+         LuvVMf/Xbwua1+fmwTIdbdJR5Ml+69w1wA5ENnENrQDb3hZLoHoRQsnbCgWEAOwqO1Oz
+         CdDCuO1qqlwRs8YMWrhalzM8K2l/jcsCVX1Bk9j5yk7fJ7LKRjZngfaegKagazdVwU7x
+         7LHlcdNCd86vxi7oHyCGmZdzwcVS01Yotu6HtUVQMNWjMvzEN8WhOzEy+R0Uumexwz9X
+         gvC7vRvtodX/yPqder8M8Jt+UadvFj2kNTNHTKiOJU3zxnQ0LcbzgOvwX7IpaoaIrSzt
+         K9NA==
+X-Gm-Message-State: AJIora/AkOJc+teErlRggylR90ILiv+zkAJgC9oCkkN3SMgM/HUBP0dD
+        0J1p8PbfvgzAj/RyZRQvig==
+X-Google-Smtp-Source: AGRyM1tWhOAMhI/G1nHCHB8F/0l+0sNkNKm/PicJFZKRwQLIspy5H3+uNzWMeIU5aGdMVpyuHMpTGg==
+X-Received: by 2002:a5d:984a:0:b0:675:7a87:d7bd with SMTP id p10-20020a5d984a000000b006757a87d7bdmr8657261ios.115.1656708968694;
+        Fri, 01 Jul 2022 13:56:08 -0700 (PDT)
 Received: from robh.at.kernel.org ([64.188.179.248])
-        by smtp.gmail.com with ESMTPSA id a14-20020a056638018e00b00335d7c314b1sm10199730jaq.53.2022.07.01.13.42.19
+        by smtp.gmail.com with ESMTPSA id n6-20020a92d9c6000000b002da835550fbsm7119497ilq.33.2022.07.01.13.56.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 Jul 2022 13:42:20 -0700 (PDT)
-Received: (nullmailer pid 1490617 invoked by uid 1000);
-        Fri, 01 Jul 2022 20:42:18 -0000
-Date:   Fri, 1 Jul 2022 14:42:18 -0600
+        Fri, 01 Jul 2022 13:56:08 -0700 (PDT)
+Received: (nullmailer pid 1513930 invoked by uid 1000);
+        Fri, 01 Jul 2022 20:56:06 -0000
+Date:   Fri, 1 Jul 2022 14:56:06 -0600
 From:   Rob Herring <robh@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, Alex Elder <elder@linaro.org>,
-        Robert Foss <robert.foss@linaro.org>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Subject: Re: [PATCH] dt-bindings: qcom: readme: document preferred compatible
- naming
-Message-ID: <20220701204218.GA1478943-robh@kernel.org>
-References: <20220701074659.12680-1-krzysztof.kozlowski@linaro.org>
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
+        krzysztof.kozlowski+dt@linaro.org, marijn.suijten@somainline.org,
+        linux-arm-msm@vger.kernel.org, cw00.choi@samsung.com,
+        myungjoo.ham@samsung.com, stephan@gerhold.net, robh+dt@kernel.org,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH v2] dt-bindings: pm8941-misc: Fix usb_id and usb_vbus
+ definitions
+Message-ID: <20220701205606.GA1513870-robh@kernel.org>
+References: <20220701100405.3586820-1-bryan.odonoghue@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220701074659.12680-1-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220701100405.3586820-1-bryan.odonoghue@linaro.org>
 X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
         FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
         HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
@@ -72,58 +66,23 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jul 01, 2022 at 09:46:59AM +0200, Krzysztof Kozlowski wrote:
-> Compatibles can come in two formats.  Either "vendor,ip-soc" or
-> "vendor,soc-ip".  Qualcomm bindings were mixing both of usages, so add a
-> readme file documenting preferred policy.
-
-Is this all I needed to do to stop this from QCom? </sarcasm>
-
-This convention is not QCom specific, though the error mostly is. 
-Perhaps this should be documented generically.
-
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+On Fri, 01 Jul 2022 11:04:05 +0100, Bryan O'Donoghue wrote:
+> dts validation is throwing an error for me on 8916 and 8939 with
+> extcon@1300. In that case we have usb_vbus but not usb_id.
 > 
+> It wasn't immediately obvious if there was a valid use-case for the
+> existing code for usb_id in isolation, however discussing further, we
+> concluded that usb_id, usb_vbus or (usb_id | usb_vbus) are valid
+> combinations as an external IC may be responsible for usb_id or usb_vbus.
+> 
+> Expand the definition with anyOf to capture the three different valid
+> modes.
+> 
+> Fixes: 4fcdd677c4ea ("bindings: pm8941-misc: Add support for VBUS detection")
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 > ---
+>  .../devicetree/bindings/extcon/qcom,pm8941-misc.yaml | 12 ++++++++----
+>  1 file changed, 8 insertions(+), 4 deletions(-)
 > 
-> Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-> Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Cc: Vinod Koul <vkoul@kernel.org>
-> Cc: Alex Elder <elder@linaro.org>
-> Cc: Robert Foss <robert.foss@linaro.org>
-> Cc: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> ---
->  .../devicetree/bindings/soc/qcom/README.rst      | 16 ++++++++++++++++
->  1 file changed, 16 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/soc/qcom/README.rst
-> 
-> diff --git a/Documentation/devicetree/bindings/soc/qcom/README.rst b/Documentation/devicetree/bindings/soc/qcom/README.rst
-> new file mode 100644
-> index 000000000000..322b329ac7c1
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/soc/qcom/README.rst
-> @@ -0,0 +1,16 @@
-> +.. SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
-> +
-> +Qualcomm SoC compatibles naming convention
-> +==========================================
-> +1. When adding new compatibles in new bindings, use the format:
-> +   ::
-> +
-> +     qcom,SoC-IP
-> +
-> +   For example:
-> +   ::
-> +
-> +     qcom,sdm845-llcc-bwmon
 
-Assuming the list of possible SoCs was maintained, you could make this a 
-schema. Though there might be false positives.
-
-> +
-> +2. When adding new compatibles to existing bindings, use the format
-> +   in the existing binding, even if it contradicts the above.
-> -- 
-> 2.34.1
-> 
-> 
+Reviewed-by: Rob Herring <robh@kernel.org>
