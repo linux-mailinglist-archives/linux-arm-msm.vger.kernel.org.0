@@ -2,38 +2,38 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DE7DF56394B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Jul 2022 20:48:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E2D0A563956
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Jul 2022 20:53:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230212AbiGASqx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 1 Jul 2022 14:46:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36792 "EHLO
+        id S230230AbiGASt3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 1 Jul 2022 14:49:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39474 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229553AbiGASqx (ORCPT
+        with ESMTP id S229553AbiGASt2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 1 Jul 2022 14:46:53 -0400
+        Fri, 1 Jul 2022 14:49:28 -0400
 Received: from mail-4022.proton.ch (mail-4022.proton.ch [185.70.40.22])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DBD3344C6
-        for <linux-arm-msm@vger.kernel.org>; Fri,  1 Jul 2022 11:46:51 -0700 (PDT)
-Date:   Fri, 01 Jul 2022 18:46:40 +0000
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A21553F8B4
+        for <linux-arm-msm@vger.kernel.org>; Fri,  1 Jul 2022 11:49:27 -0700 (PDT)
+Date:   Fri, 01 Jul 2022 18:49:16 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=connolly.tech;
-        s=protonmail; t=1656701209; x=1656960409;
-        bh=Y5fzhHEQzXr1TjcKrd5HowR3mxV+jXMy30QqWAFASuc=;
+        s=protonmail; t=1656701366; x=1656960566;
+        bh=zQWT4Uc8+YmYw2TxYPvOLJlF/WYStwcBkfDP+kL3slk=;
         h=Date:To:From:Cc:Reply-To:Subject:Message-ID:In-Reply-To:
          References:Feedback-ID:From:To:Cc:Date:Subject:Reply-To:
          Feedback-ID:Message-ID;
-        b=P5naxX4WrHW2BtWg1QCbMy/x6OzFDeVzSApY8zpSnbpKwrb+fOwzBEuT40W5Ij7XS
-         oRBUBYdS9gJbohKTt4SeUkR0D13zG6XIcjdTICgfBvObZRssTOHnjsdHOaMrndt2hL
-         kyie3FqxV0w2WD6MdhN5Wh5Vm6zzngwtjJoXS4QI=
+        b=jwXHH/O0q5vKDe5ybHjy1io/I/lEKQhLM3MQOa4UEg50DEOZgwcj/6/yjxJ63SY9h
+         WpGaaIQrxEXOJsPX31nEh0+a+oRv1Oi4OGr7RoghUe5MhCPq8XXxJpbliA7BpmsYME
+         hbW2uXzBo2MpLL8bZ8Ezer6gywYTyB9lsFt9tzHc=
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
 From:   Caleb Connolly <caleb@connolly.tech>
 Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
 Reply-To: Caleb Connolly <caleb@connolly.tech>
-Subject: Re: [PATCH 1/4] arm64: dts: qcom: Add LPG to pm8916, pm8994, pmi8994 and pmi8998
-Message-ID: <2e506766-39f3-b70f-b91e-ce120293d05e@connolly.tech>
-In-Reply-To: <20220505022706.1692554-2-bjorn.andersson@linaro.org>
-References: <20220505022706.1692554-1-bjorn.andersson@linaro.org> <20220505022706.1692554-2-bjorn.andersson@linaro.org>
+Subject: Re: [PATCH 2/4] arm64: dts: qcom: sdm845: Enable user LEDs on DB845c
+Message-ID: <d12442a6-a0f1-0cb4-caa0-b7bb22fff28d@connolly.tech>
+In-Reply-To: <20220505022706.1692554-3-bjorn.andersson@linaro.org>
+References: <20220505022706.1692554-1-bjorn.andersson@linaro.org> <20220505022706.1692554-3-bjorn.andersson@linaro.org>
 Feedback-ID: 10753939:user:proton
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -50,111 +50,66 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 On 05/05/2022 03:27, Bjorn Andersson wrote:
-> Add PWM/LPG nodes to the PMICs currently supported by the binding.
+> The DB845c has 4 "user LEDs", the last one is already supported as it's
+> just wired to a gpio. Now that the LPG binding is in place we can wire
+> up the other 3 LEDs as well.
 >
 > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-fwiw:
 Reviewed-by: Caleb Connolly <caleb@connolly.tech>
 > ---
->   arch/arm64/boot/dts/qcom/pm8916.dtsi  |  8 ++++++++
->   arch/arm64/boot/dts/qcom/pm8994.dtsi  | 10 ++++++++++
->   arch/arm64/boot/dts/qcom/pmi8994.dtsi | 10 ++++++++++
->   arch/arm64/boot/dts/qcom/pmi8998.dtsi | 11 ++++++++++-
->   4 files changed, 38 insertions(+), 1 deletion(-)
+>   arch/arm64/boot/dts/qcom/sdm845-db845c.dts | 31 ++++++++++++++++++++++
+>   1 file changed, 31 insertions(+)
 >
-> diff --git a/arch/arm64/boot/dts/qcom/pm8916.dtsi b/arch/arm64/boot/dts/q=
-com/pm8916.dtsi
-> index d58902432812..99bf8387bfb6 100644
-> --- a/arch/arm64/boot/dts/qcom/pm8916.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/pm8916.dtsi
-> @@ -125,6 +125,14 @@ pm8916_1: pmic@1 {
->   =09=09#address-cells =3D <1>;
->   =09=09#size-cells =3D <0>;
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot=
+/dts/qcom/sdm845-db845c.dts
+> index 194ebeb3259c..e4d3de0a1e6d 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+> +++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+> @@ -5,6 +5,7 @@
 >
-> +=09=09pm8916_pwm: pwm {
-> +=09=09=09compatible =3D "qcom,pm8916-pwm";
-> +
-> +=09=09=09#pwm-cells =3D <2>;
-> +
-> +=09=09=09status =3D "disabled";
-> +=09=09};
-> +
->   =09=09pm8916_vib: vibrator@c000 {
->   =09=09=09compatible =3D "qcom,pm8916-vib";
->   =09=09=09reg =3D <0xc000>;
-> diff --git a/arch/arm64/boot/dts/qcom/pm8994.dtsi b/arch/arm64/boot/dts/q=
-com/pm8994.dtsi
-> index 5ab46117d737..ab342397fcd8 100644
-> --- a/arch/arm64/boot/dts/qcom/pm8994.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/pm8994.dtsi
-> @@ -135,6 +135,16 @@ pmic@1 {
->   =09=09#address-cells =3D <1>;
->   =09=09#size-cells =3D <0>;
+>   /dts-v1/;
 >
-> +=09=09pm8994_lpg: lpg {
-> +=09=09=09compatible =3D "qcom,pm8994-lpg";
-> +
-> +=09=09=09#address-cells =3D <1>;
-> +=09=09=09#size-cells =3D <0>;
-> +=09=09=09#pwm-cells =3D <2>;
-> +
-> +=09=09=09status =3D "disabled";
-> +=09=09};
-> +
->   =09=09pm8994_spmi_regulators: regulators {
->   =09=09=09compatible =3D "qcom,pm8994-regulators";
->   =09=09};
-> diff --git a/arch/arm64/boot/dts/qcom/pmi8994.dtsi b/arch/arm64/boot/dts/=
-qcom/pmi8994.dtsi
-> index 6e7c252568e6..b1b50c99ada2 100644
-> --- a/arch/arm64/boot/dts/qcom/pmi8994.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/pmi8994.dtsi
-> @@ -27,6 +27,16 @@ pmic@3 {
->   =09=09#address-cells =3D <1>;
->   =09=09#size-cells =3D <0>;
->
-> +=09=09pmi8994_lpg: lpg {
-> +=09=09=09compatible =3D "qcom,pmi8994-lpg";
-> +
-> +=09=09=09#address-cells =3D <1>;
-> +=09=09=09#size-cells =3D <0>;
-> +=09=09=09#pwm-cells =3D <2>;
-> +
-> +=09=09=09status =3D "disabled";
-> +=09=09};
-> +
->   =09=09pmi8994_spmi_regulators: regulators {
->   =09=09=09compatible =3D "qcom,pmi8994-regulators";
->   =09=09=09#address-cells =3D <1>;
-> diff --git a/arch/arm64/boot/dts/qcom/pmi8998.dtsi b/arch/arm64/boot/dts/=
-qcom/pmi8998.dtsi
-> index 0fef5f113f05..7af106683f8d 100644
-> --- a/arch/arm64/boot/dts/qcom/pmi8998.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/pmi8998.dtsi
-> @@ -42,6 +42,16 @@ lab: lab {
->   =09=09=09};
->   =09=09};
->
-> +=09=09pmi8998_lpg: lpg {
-> +=09=09=09compatible =3D "qcom,pmi8998-lpg";
-> +
-> +=09=09=09#address-cells =3D <1>;
-> +=09=09=09#size-cells =3D <0>;
-> +=09=09=09#pwm-cells =3D <2>;
-> +
-> +=09=09=09status =3D "disabled";
-> +=09=09};
-> +
->   =09=09pmi8998_wled: leds@d800 {
->   =09=09=09compatible =3D "qcom,pmi8998-wled";
->   =09=09=09reg =3D <0xd800 0xd900>;
-> @@ -52,6 +62,5 @@ pmi8998_wled: leds@d800 {
->
->   =09=09=09status =3D "disabled";
->   =09=09};
-> -
+> +#include <dt-bindings/leds/common.h>
+>   #include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
+>   #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+>   #include <dt-bindings/sound/qcom,q6afe.h>
+> @@ -606,6 +607,36 @@ resin {
 >   =09};
 >   };
+>
+> +&pmi8998_lpg {
+> +=09status =3D "okay";
+> +
+> +=09qcom,power-source =3D <1>;
+> +
+> +=09led@3 {
+> +=09=09reg =3D <3>;
+> +=09=09color =3D <LED_COLOR_ID_GREEN>;
+> +=09=09function =3D LED_FUNCTION_HEARTBEAT;
+> +=09=09function-enumerator =3D <3>;
+> +
+> +=09=09linux,default-trigger =3D "heartbeat";
+> +=09=09default-state =3D "on";
+> +=09};
+> +
+> +=09led@4 {
+> +=09=09reg =3D <4>;
+> +=09=09color =3D <LED_COLOR_ID_GREEN>;
+> +=09=09function =3D LED_FUNCTION_INDICATOR;
+> +=09=09function-enumerator =3D <2>;
+> +=09};
+> +
+> +=09led@5 {
+> +=09=09reg =3D <5>;
+> +=09=09color =3D <LED_COLOR_ID_GREEN>;
+> +=09=09function =3D LED_FUNCTION_INDICATOR;
+> +=09=09function-enumerator =3D <1>;
+> +=09};
+> +};
+> +
+>   /* QUAT I2S Uses 4 I2S SD Lines for audio on LT9611 HDMI Bridge */
+>   &q6afedai {
+>   =09qi2s@22 {
 > --
 > 2.35.1
 >
