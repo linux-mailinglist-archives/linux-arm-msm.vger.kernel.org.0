@@ -2,267 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D46485630FB
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Jul 2022 12:06:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C1B31563123
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Jul 2022 12:15:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234398AbiGAKGZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 1 Jul 2022 06:06:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58952 "EHLO
+        id S235241AbiGAKPl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 1 Jul 2022 06:15:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37958 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233881AbiGAKGX (ORCPT
+        with ESMTP id S231942AbiGAKPj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 1 Jul 2022 06:06:23 -0400
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30F8E76973
-        for <linux-arm-msm@vger.kernel.org>; Fri,  1 Jul 2022 03:06:22 -0700 (PDT)
-Received: by mail-wr1-x433.google.com with SMTP id o4so2481293wrh.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Jul 2022 03:06:22 -0700 (PDT)
+        Fri, 1 Jul 2022 06:15:39 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2CA0C76942;
+        Fri,  1 Jul 2022 03:15:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=TiLVWLx63nyWyTQAY2zgpzwOLEkwTA7TBvrzJVEFLY0=;
-        b=VSZVgCiBv/LEcqG2i3/LoY3K4GYoKYc2g6vdrRUe29yEfPFb9V51iIkJK+zv3OdM5e
-         qtHsJdmdYcFdJCUlaOv2H1WxOrlI+3SNu7zPZOvaT/KVxyMnEb/gK12j18ujfpF7f6XO
-         3Yk2ec7KueUUSu7TgNl7blf75Qarbcrv7rO7VQkzAeuCHeCvCr9sszsOIXvR1SiSr58o
-         pZFk1STeu4NF4OOuoFA+X0PFR28Dzu9TYoowMOFn/+ndBwLHUQf/fV2GTXi3Tlpca/tl
-         Zib7Lk7hnnpPOeaufSjJfLbEt0O57Iq9EFtlKrkKvEQSkG9/yBAdz8HX4AZIm0XNyZDp
-         uaHw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=TiLVWLx63nyWyTQAY2zgpzwOLEkwTA7TBvrzJVEFLY0=;
-        b=K3eB9q19D65UVXLlBLN/RE4WQbDu4wWBmPw5KJYeT0CEEBkxGjkziX7MBdEmtlBHjn
-         OuLfWs26+cIgTMeerd8SJMIzW40WRW+GtfviZE73bo7T7gbkhLbbdzyVkxl+i3o6stBN
-         f5gM3rT7ud/5fiLpemoNWY+xKIxMLO70Xq6i52ZXQhQW9Ly1G/MY+FP6dxOqWdOz4s8P
-         qFDR75IvzHf8lu2SY8sjOvEDOfCzigXyplRGfkKlMMYiYRBcMo3VHCoODFsWbCSVxZ5W
-         0t4lIyZ2Ywk7UR7mL47I3Mpa2VcdDl4jS1j81FwgejUs6s49VqWk1DxhPqWxd3xzNM8h
-         I1kA==
-X-Gm-Message-State: AJIora8Rixv3mebFxG+DTw5kZFfQXJ1mQoxojTKBdhf5vrfSLiQQHSIO
-        84+My7Rmxhaez17Ji1KShvlZfg==
-X-Google-Smtp-Source: AGRyM1v3jB4wo495BGQVx5FDNFneed+hnet73p0jiqLRbahpKYdgWd4wUhG3+uvOA7F2UScGQdXpFQ==
-X-Received: by 2002:a5d:660d:0:b0:21b:899f:5d69 with SMTP id n13-20020a5d660d000000b0021b899f5d69mr11988627wru.688.1656669980647;
-        Fri, 01 Jul 2022 03:06:20 -0700 (PDT)
-Received: from [192.168.86.238] (cpc90716-aztw32-2-0-cust825.18-1.cable.virginm.net. [86.26.103.58])
-        by smtp.googlemail.com with ESMTPSA id a1-20020a05600c348100b003a03be22f9fsm193981wmq.18.2022.07.01.03.06.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 01 Jul 2022 03:06:20 -0700 (PDT)
-Message-ID: <864aac78-d3a4-0008-345f-d210582b100e@linaro.org>
-Date:   Fri, 1 Jul 2022 11:06:18 +0100
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1656670538; x=1688206538;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=tjB+YWtXrkSRn425vyGQBHRy7XsCGQmbQOkFimaKvD8=;
+  b=mGlH6Ehl4+p81Okw+KAPIJ8ISKWWOor6jcsuLgWeklkjkPq/S4mFaAR7
+   zW7HxKB5YTd2mklPt2aAyW01+GOomRDxHWRnR4att7T+0rqTCKiKFdkye
+   kVFOylkjldrDHyuhz+A0ya4u0RQMaipMPq/cfv8811uBEo4P+PKztL7fK
+   8=;
+Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
+  by alexa-out.qualcomm.com with ESMTP; 01 Jul 2022 03:15:37 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jul 2022 03:15:36 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Fri, 1 Jul 2022 03:15:36 -0700
+Received: from hu-pkondeti-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Fri, 1 Jul 2022 03:15:30 -0700
+Date:   Fri, 1 Jul 2022 15:45:26 +0530
+From:   Pavan Kondeti <quic_pkondeti@quicinc.com>
+To:     Matthias Kaehlcke <mka@chromium.org>
+CC:     Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Pavan Kondeti <quic_pkondeti@quicinc.com>,
+        "Bjorn Andersson" <bjorn.andersson@linaro.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Doug Anderson <dianders@chromium.org>,
+        "Mathias Nyman" <mathias.nyman@intel.com>,
+        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>, <quic_ppratap@quicinc.com>,
+        <quic_vpulyala@quicinc.com>
+Subject: Re: [PATCH v20 2/5] usb: dwc3: core: Host wake up support from
+ system suspend
+Message-ID: <20220701101526.GA30468@hu-pkondeti-hyd.qualcomm.com>
+References: <Yqd9IHQEj3Ex+FcF@google.com>
+ <YqjLHyUVEjf7I3MI@google.com>
+ <20220616091110.GA24114@hu-pkondeti-hyd.qualcomm.com>
+ <YqtlRQOwb3t6Xtd0@google.com>
+ <20220620085415.GA13744@hu-pkondeti-hyd.qualcomm.com>
+ <CAE-0n52bq9feA6BVdAp791SWQtT1Yj4M2ppg3o_KOaRFO8r+0Q@mail.gmail.com>
+ <20220628053148.GA21797@hu-pkondeti-hyd.qualcomm.com>
+ <CAE-0n50PGw_XSZ0-iV7gem6+-LENoq6ZVOwX3f+0XjkrHg-rLw@mail.gmail.com>
+ <c16a1c37-9183-8d0c-a5ad-39b897a0ab24@quicinc.com>
+ <Yr5JmrSaus8xKpM9@google.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Subject: Re: [PATCH 1/2] dt-bindings: pinctrl: qcom: Add sm8450 lpass lpi
- pinctrl bindings
-Content-Language: en-US
-To:     Rob Herring <robh@kernel.org>
-Cc:     bjorn.andersson@linaro.org, linus.walleij@linaro.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20220629091716.68771-1-srinivas.kandagatla@linaro.org>
- <20220629091716.68771-2-srinivas.kandagatla@linaro.org>
- <20220630210848.GA3295428-robh@kernel.org>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-In-Reply-To: <20220630210848.GA3295428-robh@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <Yr5JmrSaus8xKpM9@google.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-thanks Rob,
-
-On 30/06/2022 22:08, Rob Herring wrote:
-> On Wed, Jun 29, 2022 at 10:17:15AM +0100, Srinivas Kandagatla wrote:
->> Add device tree binding Documentation details for Qualcomm SM8450
->> LPASS(Low Power Audio Sub System) LPI(Low Power Island) pinctrl driver.
->>
->> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
->> ---
->>   .../qcom,sm8450-lpass-lpi-pinctrl.yaml        | 138 ++++++++++++++++++
->>   1 file changed, 138 insertions(+)
->>   create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sm8450-lpass-lpi-pinctrl.yaml
->>
->> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sm8450-lpass-lpi-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sm8450-lpass-lpi-pinctrl.yaml
->> new file mode 100644
->> index 000000000000..b49d70b9ba9a
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,sm8450-lpass-lpi-pinctrl.yaml
->> @@ -0,0 +1,138 @@
->> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
->> +%YAML 1.2
->> +---
->> +$id: http://devicetree.org/schemas/pinctrl/qcom,sm8450-lpass-lpi-pinctrl.yaml#
->> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->> +
->> +title: Qualcomm Technologies, Inc. Low Power Audio SubSystem (LPASS)
->> +  Low Power Island (LPI) TLMM block
->> +
->> +maintainers:
->> +  - Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
->> +
->> +description: |
->> +  This binding describes the Top Level Mode Multiplexer block found in the
->> +  LPASS LPI IP on most Qualcomm SoCs
->> +
->> +properties:
->> +  compatible:
->> +    const: qcom,sm8450-lpass-lpi-pinctrl
->> +
->> +  reg:
->> +    minItems: 2
->> +    maxItems: 2
+On Thu, Jun 30, 2022 at 06:10:50PM -0700, Matthias Kaehlcke wrote:
+> > > dwc3-qcom should wait for dwc3 core to call component_add() and then do
+> > > whatever needs to be done once the dwc3 core is registered in the
+> > > dwc3-qcom bind callback. Honestly this may all be a little overkill if
+> > > there's only two drivers here, dwc3-qcom and dwc3 core. It could
+> > > probably just be some callback from dwc3 core at the end of probe that
+> > > calls some function in dwc3-qcom.
+> > Since the issue we are facing is that the ssphy device links are not ready
+> > causing the dwc3 probe not being invoked, can we add an API as Pavan
+> > suggested
+> > to check if deferred_probe listfor dwc3 device is empty or not andbased on
+> > that we can choose to defer our qcomprobe ? In this case, we don't need to
+> > touch the dwc3 core driver and would be making changesonly in qcom glue
+> > driver.
 > 
-> What is each entry?
+> As mentioned above, it shouldn't be necessary to add component support to
+> all the glue drivers. An API to check for deferred probing is an option,
+> however there is a possible race condition: When the dwc3-qcom driver checks
+> for a deferred probe the core could still be probing, in that situation the
+> glue would proceed before the core driver is ready. That could be avoided
+> with the component based approach.
 
-These are tlmm and slew register base address.
+The race can happen only if asynchronous probe is enabled, otherwise the
+child's probe happens synchronously in of_platform_populate() 
 
-This has been like this in previous bindings for sm8250 and sc7280 lpi 
-binding.
+OTOH, would the below condition suffice for our needs here? if our device
+is not bounded to a driver, we check the state of initcalls and return
+either error or -EPROBE_DEFER
 
-Are you suggesting that we should add a description for reg for more 
-clarity?
-
-
-> 
->> +
->> +  clocks:
->> +    items:
->> +      - description: LPASS Core voting clock
->> +      - description: LPASS Audio voting clock
->> +
->> +  clock-names:
->> +    items:
->> +      - const: core
->> +      - const: audio
->> +
->> +  gpio-controller: true
->> +
->> +  '#gpio-cells':
->> +    description: Specifying the pin number and flags, as defined in
->> +      include/dt-bindings/gpio/gpio.h
->> +    const: 2
->> +
->> +  gpio-ranges:
->> +    maxItems: 1
->> +
->> +#PIN CONFIGURATION NODES
->> +patternProperties:
->> +  '-pins$':
->> +    type: object
->> +    description:
->> +      Pinctrl node's client devices use subnodes for desired pin configuration.
->> +      Client device subnodes use below standard properties.
->> +    $ref: "/schemas/pinctrl/pincfg-node.yaml"
->> +
->> +    properties:
->> +      pins:
->> +        description:
->> +          List of gpio pins affected by the properties specified in this
->> +          subnode.
->> +        items:
->> +          oneOf:
->> +            - pattern: "^gpio([0-9]|[1-9][0-9])$"
-> 
-> Don't need oneOf with only 1.
-> 
-I think other lpass lpi bindings need that fix too.
-
->> +        minItems: 1
->> +        maxItems: 23
->> +
->> +      function:
->> +        enum: [ swr_tx_clk, swr_tx_data, swr_rx_clk, swr_rx_data,
->> +                dmic1_clk, dmic1_data, dmic2_clk, dmic2_data, dmic4_clk,
->> +                dmic4_data, i2s2_clk, i2s2_ws, dmic3_clk, dmic3_data,
->> +                qua_mi2s_sclk, qua_mi2s_ws, qua_mi2s_data, i2s1_clk, i2s1_ws,
->> +                i2s1_data, wsa_swr_clk, wsa_swr_data, wsa2_swr_clk,
->> +                wsa2_swr_data, i2s2_data, i2s4_ws, i2s4_clk, i2s4_data,
->> +                slimbus_clk, i2s3_clk, i2s3_ws, i2s3_data, slimbus_data,
->> +                ext_mclk1_c, ext_mclk1_b, ext_mclk1_a, ext_mclk1_d,
->> +                ext_mclk1_e ]
->> +
->> +        description:
->> +          Specify the alternative function to be configured for the specified
->> +          pins.
->> +
->> +      drive-strength:
->> +        enum: [2, 4, 6, 8, 10, 12, 14, 16]
->> +        default: 2
->> +        description:
->> +          Selects the drive strength for the specified pins, in mA.
->> +
->> +      slew-rate:
->> +        enum: [0, 1, 2, 3]
->> +        default: 0
->> +        description: |
->> +            0: No adjustments
->> +            1: Higher Slew rate (faster edges)
->> +            2: Lower Slew rate (slower edges)
->> +            3: Reserved (No adjustments)
-> 
-> Indent should be 2 more, not 4.
-
-true, Will fix this in next spin.
-
+diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
+index 7b6eff5..519a503 100644
+--- a/drivers/usb/dwc3/dwc3-qcom.c
++++ b/drivers/usb/dwc3/dwc3-qcom.c
+@@ -722,6 +722,9 @@ static int dwc3_qcom_of_register_core(struct platform_device *pdev)
+ 		dev_err(dev, "failed to get dwc3 platform device\n");
+ 	}
+ 
++	if (!qcom->dwc3->dev.driver)
++		return driver_deferred_probe_check_state(&qcom->dwc3->dev);
++
+ node_put:
+ 	of_node_put(dwc3_np);
+ 
 Thanks,
-Srini
-> 
->> +
->> +      bias-pull-down: true
->> +
->> +      bias-pull-up: true
->> +
->> +      bias-disable: true
->> +
->> +      output-high: true
->> +
->> +      output-low: true
->> +
->> +    required:
->> +      - pins
->> +      - function
->> +
->> +    additionalProperties: false
->> +
->> +allOf:
->> +  - $ref: "pinctrl.yaml#"
->> +
->> +required:
->> +  - compatible
->> +  - reg
->> +  - clocks
->> +  - clock-names
->> +  - gpio-controller
->> +  - '#gpio-cells'
->> +  - gpio-ranges
->> +
->> +additionalProperties: false
->> +
->> +examples:
->> +  - |
->> +    #include <dt-bindings/sound/qcom,q6afe.h>
->> +    lpi_tlmm: pinctrl@3440000 {
->> +        compatible = "qcom,sm8450-lpass-lpi-pinctrl";
->> +        reg = <0x3440000 0x20000>,
->> +              <0x34d0000 0x10000>;
->> +        clocks = <&q6prmcc LPASS_HW_MACRO_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
->> +                 <&q6prmcc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
->> +        clock-names = "core", "audio";
->> +        gpio-controller;
->> +        #gpio-cells = <2>;
->> +        gpio-ranges = <&lpi_tlmm 0 0 23>;
->> +    };
->> -- 
->> 2.25.1
->>
->>
+Pavan
