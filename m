@@ -2,64 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3BCC0562DBD
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Jul 2022 10:21:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4C941562E0E
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Jul 2022 10:25:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234596AbiGAIVD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 1 Jul 2022 04:21:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48740 "EHLO
+        id S232503AbiGAIWo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 1 Jul 2022 04:22:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48926 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232650AbiGAIVB (ORCPT
+        with ESMTP id S236285AbiGAIVi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 1 Jul 2022 04:21:01 -0400
-Received: from mail-pg1-x52d.google.com (mail-pg1-x52d.google.com [IPv6:2607:f8b0:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23C6070E54
-        for <linux-arm-msm@vger.kernel.org>; Fri,  1 Jul 2022 01:20:59 -0700 (PDT)
-Received: by mail-pg1-x52d.google.com with SMTP id s206so1779295pgs.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Jul 2022 01:20:59 -0700 (PDT)
+        Fri, 1 Jul 2022 04:21:38 -0400
+Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2A6071BCF
+        for <linux-arm-msm@vger.kernel.org>; Fri,  1 Jul 2022 01:21:24 -0700 (PDT)
+Received: by mail-pj1-x102f.google.com with SMTP id h9-20020a17090a648900b001ecb8596e43so1956290pjj.5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Jul 2022 01:21:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=xl1HN34mhSotDnvkt8tXbixjNJQAdLGe7tUjPgb4h/M=;
-        b=i7M5+MWQM/Wqyk1fA5iuLZE9bqsbrbc3WDWPOdi3fxmV/AJTwIEE7Si1xPTx5n2Xhn
-         LOSApbAqXS878yYMItr7z4UBSPclNrnv36g5iFVV6jM84cVz4aZ1MCOHvI4E9Lw5JF2u
-         u6SeJygVMbhOGlHlVjNyuv/RcUvYRGwMFWpcpNQJVYbNsAPnd79yR7+c9NJ8IMookw+U
-         MkTEgtPVhXcuZ7cijPlnKYk0euz/zP2qHiPxelFniNIa1bjPNnBOqMx6nTor+cFORIbK
-         HEQ2dTbvlms6brsUkKvwNKNz+C+cX7Ful6WWCTold3g5lPNYADIzEr2fTSm+w6C5shAJ
-         Wrbw==
+        bh=jb0snNKbqdGMcNSHmZUstipe/vA8ntyU7tLSAh8qCE4=;
+        b=EmWdXESfxTD6CClfgXeW3XMNSv/G8xk8QvfxlF5biP6edTuTajQaVQMVDMpOdy7Fuv
+         MwktxJ+WJTVnMxJhs1Gt4E6SyL9e0EQF3iWsiK/Aifv7j0qHi6OiVTmSQ1dunx/oI6ty
+         bY8yGaJDED/u5I76xENmYt5NI3WaoCl+80vM3DMnJWlKurKeE2tZ6SzpuqU3dfPSRHJh
+         E7NAgHUpWVjxfDsLEWGa636YIKIemPdqiFQEgVykN8HoNsjUSMcIIQPW5sDXdqkWtnmU
+         8+9h5nbQKWOjn7ZdmKio1PcWeIPAzY0nvAROsypuOs3sPOZvKhBZLZLJx4jsTf4+bhcg
+         sgmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=xl1HN34mhSotDnvkt8tXbixjNJQAdLGe7tUjPgb4h/M=;
-        b=ycuNQKtnGjvCH6uM+TG6wlK8K1wtUI4zaeSIQLYZ829i5+HFuh8QuOTE08ZGLTw3bN
-         zVLUuEDgAvEYbmNpASDmCb1NOdQebs6YhRVhZjz428GQSlk45n7nfWiqjxsO52C+EbPA
-         hEXCJDq8YAXDqkejLU864Uqz1I9FW+9KIWTaVYWrxXT30X+qc61GkwP87RALUH+YQX6H
-         I/TuVbsqlcOcFJl7TRsA3QLrJ88CApcSWONaQuiCtq06gp5qlTDepJN1sSA0HHyOEzvb
-         PmjGt0SKKQ75EM4vcgeeHPntgSnXchogY14HqHt3FPXNTcCm/3FK9iFoVE/bA1T6AeYG
-         mdpg==
-X-Gm-Message-State: AJIora8xGtAZ5Isno7Qem6e3qH6sXX7nATRh9GThs+BzpLnWVnUX2uUR
-        fNxGNXFSdwMRcqfpVqzbqJaAFw==
-X-Google-Smtp-Source: AGRyM1uXWoz/xWc2GMqHOJsNXnU5IHLjBXiEnxQDiL/VVRBiBKY0HSQeRbsyqOL4jGI0ag21bGXGrQ==
-X-Received: by 2002:a05:6a00:c91:b0:525:8c3f:269 with SMTP id a17-20020a056a000c9100b005258c3f0269mr20249956pfv.66.1656663658830;
-        Fri, 01 Jul 2022 01:20:58 -0700 (PDT)
+        bh=jb0snNKbqdGMcNSHmZUstipe/vA8ntyU7tLSAh8qCE4=;
+        b=aLR9uJngjhM4eD02SHaohf5zsXHRVGj1IGCZAc52qN2dlL4LEko8hhleQ5BnLpvsMK
+         RAMwzVk8C7A2c+G/7LRlS6y+4HLPTWpBZ42PeAyoNQaGMBThjE+oGYSHL0g/a7kQLUeT
+         QQYgO8PzRuiz7IBOIZgspM+LyPAQP+JZCvlwsy9ianv35+mebRH52g5sZOpHaYoYsor3
+         Zf7nUMkZ7+Pk3mmKaKQehKP+rs9n4f0stRNZlXdWFpC770xGIuBuxTV0rXPM3qOxS2+C
+         oVjf5mVAVDLO5gqs+BGWnJFzunBh0eYVzb2HPUVlMKINSrnEmj9MXiTTHsaQ6B0J8QvS
+         9d+A==
+X-Gm-Message-State: AJIora81BCRls85ZF8XrwUEgylA2/rIFG7GtYh5l/BUllWWwA300qQJR
+        RMSG/46cQnl7USspakpR6COi2w==
+X-Google-Smtp-Source: AGRyM1u7YOcVYA6e7JC8Afc3cO0uF+FowHj00X8PP+5fdNddz6P/PTLix/S0GqoELPlK91hqfqoM/g==
+X-Received: by 2002:a17:90a:e2c5:b0:1ec:ea7f:a85c with SMTP id fr5-20020a17090ae2c500b001ecea7fa85cmr15486494pjb.232.1656663684098;
+        Fri, 01 Jul 2022 01:21:24 -0700 (PDT)
 Received: from localhost ([122.172.201.58])
-        by smtp.gmail.com with ESMTPSA id n1-20020a170902dc8100b00163c6ac211fsm14910383pld.111.2022.07.01.01.20.58
+        by smtp.gmail.com with ESMTPSA id e12-20020a170902784c00b0016a35649186sm14830427pln.195.2022.07.01.01.21.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 Jul 2022 01:20:58 -0700 (PDT)
+        Fri, 01 Jul 2022 01:21:23 -0700 (PDT)
 From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Ilia Lin <ilia.lin@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>
-Cc:     linux-pm@vger.kernel.org,
+To:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>
+Cc:     Viresh Kumar <viresh.kumar@linaro.org>, linux-pm@vger.kernel.org,
         Vincent Guittot <vincent.guittot@linaro.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
         Stephen Boyd <sboyd@kernel.org>, Nishanth Menon <nm@ti.com>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH V2 05/30] cpufreq: qcom-nvmem: Migrate to dev_pm_opp_set_config()
-Date:   Fri,  1 Jul 2022 13:50:00 +0530
-Message-Id: <cb712d0b383af3f15d7583f30a82284b06731367.1656660185.git.viresh.kumar@linaro.org>
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: [PATCH V2 14/30] drm/msm: Migrate to dev_pm_opp_set_config()
+Date:   Fri,  1 Jul 2022 13:50:09 +0530
+Message-Id: <31b74e43d3af263e1b943bca1dd3debe885521d8.1656660185.git.viresh.kumar@linaro.org>
 X-Mailer: git-send-email 2.31.1.272.g89b43f80a514
 In-Reply-To: <cover.1656660185.git.viresh.kumar@linaro.org>
 References: <cover.1656660185.git.viresh.kumar@linaro.org>
@@ -67,7 +69,7 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -82,168 +84,140 @@ Lets start using it.
 
 Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 ---
- drivers/cpufreq/qcom-cpufreq-nvmem.c | 109 +++++++--------------------
- 1 file changed, 28 insertions(+), 81 deletions(-)
+ drivers/gpu/drm/msm/adreno/a5xx_gpu.c   |  8 ++++++--
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c   | 10 +++++-----
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c |  6 +++++-
+ drivers/gpu/drm/msm/dp/dp_ctrl.c        |  6 +++++-
+ drivers/gpu/drm/msm/dsi/dsi_host.c      |  6 +++++-
+ 5 files changed, 26 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/cpufreq/qcom-cpufreq-nvmem.c b/drivers/cpufreq/qcom-cpufreq-nvmem.c
-index 6dfa86971a75..863548f59c3e 100644
---- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
-+++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
-@@ -55,9 +55,7 @@ struct qcom_cpufreq_match_data {
- };
+diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+index c424e9a37669..6ebb5a28c501 100644
+--- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+@@ -1723,10 +1723,14 @@ static void check_speed_bin(struct device *dev)
+ {
+ 	struct nvmem_cell *cell;
+ 	u32 val;
++	struct dev_pm_opp_config config = {
++		.supported_hw = &val,
++		.supported_hw_count = 1,
++	};
  
- struct qcom_cpufreq_drv {
--	struct opp_table **names_opp_tables;
--	struct opp_table **hw_opp_tables;
--	struct opp_table **genpd_opp_tables;
-+	int *opp_tokens;
- 	u32 versions;
- 	const struct qcom_cpufreq_match_data *data;
- };
-@@ -315,72 +313,43 @@ static int qcom_cpufreq_probe(struct platform_device *pdev)
+ 	/*
+ 	 * If the OPP table specifies a opp-supported-hw property then we have
+-	 * to set something with dev_pm_opp_set_supported_hw() or the table
++	 * to set something with dev_pm_opp_set_config() or the table
+ 	 * doesn't get populated so pick an arbitrary value that should
+ 	 * ensure the default frequencies are selected but not conflict with any
+ 	 * actual bins
+@@ -1748,7 +1752,7 @@ static void check_speed_bin(struct device *dev)
+ 		nvmem_cell_put(cell);
  	}
- 	of_node_put(np);
  
--	drv->names_opp_tables = kcalloc(num_possible_cpus(),
--				  sizeof(*drv->names_opp_tables),
-+	drv->opp_tokens = kcalloc(num_possible_cpus(), sizeof(*drv->opp_tokens),
- 				  GFP_KERNEL);
--	if (!drv->names_opp_tables) {
-+	if (!drv->opp_tokens) {
- 		ret = -ENOMEM;
- 		goto free_drv;
- 	}
--	drv->hw_opp_tables = kcalloc(num_possible_cpus(),
--				  sizeof(*drv->hw_opp_tables),
--				  GFP_KERNEL);
--	if (!drv->hw_opp_tables) {
--		ret = -ENOMEM;
--		goto free_opp_names;
--	}
+-	devm_pm_opp_set_supported_hw(dev, &val, 1);
++	devm_pm_opp_set_config(dev, &config);
+ }
+ 
+ struct msm_gpu *a5xx_gpu_init(struct drm_device *dev)
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+index 42ed9a3c4905..82801311f7d4 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+@@ -1800,6 +1800,10 @@ static int a6xx_set_supported_hw(struct device *dev, struct adreno_rev rev)
+ 	u32 supp_hw = UINT_MAX;
+ 	u32 speedbin;
+ 	int ret;
++	struct dev_pm_opp_config config = {
++		.supported_hw = &supp_hw,
++		.supported_hw_count = 1,
++	};
+ 
+ 	ret = adreno_read_speedbin(dev, &speedbin);
+ 	/*
+@@ -1818,11 +1822,7 @@ static int a6xx_set_supported_hw(struct device *dev, struct adreno_rev rev)
+ 	supp_hw = fuse_to_supp_hw(dev, rev, speedbin);
+ 
+ done:
+-	ret = devm_pm_opp_set_supported_hw(dev, &supp_hw, 1);
+-	if (ret)
+-		return ret;
 -
--	drv->genpd_opp_tables = kcalloc(num_possible_cpus(),
--					sizeof(*drv->genpd_opp_tables),
--					GFP_KERNEL);
--	if (!drv->genpd_opp_tables) {
--		ret = -ENOMEM;
--		goto free_opp;
--	}
+-	return 0;
++	return devm_pm_opp_set_config(dev, &config);
+ }
  
- 	for_each_possible_cpu(cpu) {
-+		struct dev_pm_opp_config config = {
-+			.supported_hw = NULL,
-+		};
-+
- 		cpu_dev = get_cpu_device(cpu);
- 		if (NULL == cpu_dev) {
- 			ret = -ENODEV;
--			goto free_genpd_opp;
-+			goto free_opp;
- 		}
+ static const struct adreno_gpu_funcs funcs = {
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+index e23e2552e802..2213ce52d2fa 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+@@ -1215,12 +1215,16 @@ static int dpu_kms_init(struct drm_device *ddev)
+ 	struct dev_pm_opp *opp;
+ 	int ret = 0;
+ 	unsigned long max_freq = ULONG_MAX;
++	struct dev_pm_opp_config config = {
++		.clk_names = (const char *[]){ "core" },
++		.clk_count = 1,
++	};
  
- 		if (drv->data->get_version) {
-+			config.supported_hw = &drv->versions;
-+			config.supported_hw_count = 1;
+ 	dpu_kms = devm_kzalloc(&pdev->dev, sizeof(*dpu_kms), GFP_KERNEL);
+ 	if (!dpu_kms)
+ 		return -ENOMEM;
  
--			if (pvs_name) {
--				drv->names_opp_tables[cpu] = dev_pm_opp_set_prop_name(
--								     cpu_dev,
--								     pvs_name);
--				if (IS_ERR(drv->names_opp_tables[cpu])) {
--					ret = PTR_ERR(drv->names_opp_tables[cpu]);
--					dev_err(cpu_dev, "Failed to add OPP name %s\n",
--						pvs_name);
--					goto free_opp;
--				}
--			}
--
--			drv->hw_opp_tables[cpu] = dev_pm_opp_set_supported_hw(
--									 cpu_dev, &drv->versions, 1);
--			if (IS_ERR(drv->hw_opp_tables[cpu])) {
--				ret = PTR_ERR(drv->hw_opp_tables[cpu]);
--				dev_err(cpu_dev,
--					"Failed to set supported hardware\n");
--				goto free_genpd_opp;
--			}
-+			if (pvs_name)
-+				config.prop_name = pvs_name;
- 		}
+-	ret = devm_pm_opp_set_clkname(dev, "core");
++	ret = devm_pm_opp_set_config(dev, &config);
+ 	if (ret)
+ 		return ret;
+ 	/* OPP table is optional */
+diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+index b7f5b8d3bbd6..0c8fc151b4be 100644
+--- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
++++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+@@ -2022,6 +2022,10 @@ struct dp_ctrl *dp_ctrl_get(struct device *dev, struct dp_link *link,
+ {
+ 	struct dp_ctrl_private *ctrl;
+ 	int ret;
++	struct dev_pm_opp_config config = {
++		.clk_names = (const char *[]){ "ctrl_link" },
++		.clk_count = 1,
++	};
  
- 		if (drv->data->genpd_names) {
--			drv->genpd_opp_tables[cpu] =
--				dev_pm_opp_attach_genpd(cpu_dev,
--							drv->data->genpd_names,
--							NULL);
--			if (IS_ERR(drv->genpd_opp_tables[cpu])) {
--				ret = PTR_ERR(drv->genpd_opp_tables[cpu]);
--				if (ret != -EPROBE_DEFER)
--					dev_err(cpu_dev,
--						"Could not attach to pm_domain: %d\n",
--						ret);
--				goto free_genpd_opp;
-+			config.genpd_names = drv->data->genpd_names;
-+			config.virt_devs = NULL;
-+		}
-+
-+		if (config.supported_hw || config.genpd_names) {
-+			drv->opp_tokens[cpu] = dev_pm_opp_set_config(cpu_dev, &config);
-+			if (drv->opp_tokens[cpu] < 0) {
-+				ret = drv->opp_tokens[cpu];
-+				dev_err(cpu_dev, "Failed to set OPP config\n");
-+				goto free_opp;
- 			}
- 		}
+ 	if (!dev || !panel || !aux ||
+ 	    !link || !catalog) {
+@@ -2035,7 +2039,7 @@ struct dp_ctrl *dp_ctrl_get(struct device *dev, struct dp_link *link,
+ 		return ERR_PTR(-ENOMEM);
  	}
-@@ -395,27 +364,10 @@ static int qcom_cpufreq_probe(struct platform_device *pdev)
- 	ret = PTR_ERR(cpufreq_dt_pdev);
- 	dev_err(cpu_dev, "Failed to register platform device\n");
  
--free_genpd_opp:
--	for_each_possible_cpu(cpu) {
--		if (IS_ERR(drv->genpd_opp_tables[cpu]))
--			break;
--		dev_pm_opp_detach_genpd(drv->genpd_opp_tables[cpu]);
--	}
--	kfree(drv->genpd_opp_tables);
- free_opp:
--	for_each_possible_cpu(cpu) {
--		if (IS_ERR(drv->names_opp_tables[cpu]))
--			break;
--		dev_pm_opp_put_prop_name(drv->names_opp_tables[cpu]);
--	}
--	for_each_possible_cpu(cpu) {
--		if (IS_ERR(drv->hw_opp_tables[cpu]))
--			break;
--		dev_pm_opp_put_supported_hw(drv->hw_opp_tables[cpu]);
--	}
--	kfree(drv->hw_opp_tables);
--free_opp_names:
--	kfree(drv->names_opp_tables);
-+	for_each_possible_cpu(cpu)
-+		dev_pm_opp_clear_config(drv->opp_tokens[cpu]);
-+	kfree(drv->opp_tokens);
- free_drv:
- 	kfree(drv);
+-	ret = devm_pm_opp_set_clkname(dev, "ctrl_link");
++	ret = devm_pm_opp_set_config(dev, &config);
+ 	if (ret) {
+ 		dev_err(dev, "invalid DP OPP table in device tree\n");
+ 		/* caller do PTR_ERR(opp_table) */
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+index a95d5df52653..35b6722d1cf9 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_host.c
++++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+@@ -2034,6 +2034,10 @@ int msm_dsi_host_init(struct msm_dsi *msm_dsi)
+ 	struct msm_dsi_host *msm_host = NULL;
+ 	struct platform_device *pdev = msm_dsi->pdev;
+ 	int ret;
++	struct dev_pm_opp_config config = {
++		.clk_names = (const char *[]){ "byte" },
++		.clk_count = 1,
++	};
  
-@@ -429,15 +381,10 @@ static int qcom_cpufreq_remove(struct platform_device *pdev)
+ 	msm_host = devm_kzalloc(&pdev->dev, sizeof(*msm_host), GFP_KERNEL);
+ 	if (!msm_host) {
+@@ -2095,7 +2099,7 @@ int msm_dsi_host_init(struct msm_dsi *msm_dsi)
+ 		goto fail;
+ 	}
  
- 	platform_device_unregister(cpufreq_dt_pdev);
- 
--	for_each_possible_cpu(cpu) {
--		dev_pm_opp_put_supported_hw(drv->names_opp_tables[cpu]);
--		dev_pm_opp_put_supported_hw(drv->hw_opp_tables[cpu]);
--		dev_pm_opp_detach_genpd(drv->genpd_opp_tables[cpu]);
--	}
-+	for_each_possible_cpu(cpu)
-+		dev_pm_opp_clear_config(drv->opp_tokens[cpu]);
- 
--	kfree(drv->names_opp_tables);
--	kfree(drv->hw_opp_tables);
--	kfree(drv->genpd_opp_tables);
-+	kfree(drv->opp_tokens);
- 	kfree(drv);
- 
- 	return 0;
+-	ret = devm_pm_opp_set_clkname(&pdev->dev, "byte");
++	ret = devm_pm_opp_set_config(&pdev->dev, &config);
+ 	if (ret)
+ 		return ret;
+ 	/* OPP table is optional */
 -- 
 2.31.1.272.g89b43f80a514
 
