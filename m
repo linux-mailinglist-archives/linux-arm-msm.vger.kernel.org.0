@@ -2,81 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5FC435631C7
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Jul 2022 12:45:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 833C556320D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Jul 2022 12:59:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236830AbiGAKpM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 1 Jul 2022 06:45:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42526 "EHLO
+        id S235392AbiGAK7t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 1 Jul 2022 06:59:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57992 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236872AbiGAKpL (ORCPT
+        with ESMTP id S235907AbiGAK7s (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 1 Jul 2022 06:45:11 -0400
-Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38102796B8
-        for <linux-arm-msm@vger.kernel.org>; Fri,  1 Jul 2022 03:45:10 -0700 (PDT)
-Received: by mail-pj1-x1031.google.com with SMTP id i8-20020a17090aee8800b001ecc929d14dso5093506pjz.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Jul 2022 03:45:10 -0700 (PDT)
+        Fri, 1 Jul 2022 06:59:48 -0400
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6559D7E033;
+        Fri,  1 Jul 2022 03:59:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=zxTdft5xNc7J8YFkSd0py1mf7N70+0aOCnidcdDs4tE=;
-        b=ycBL6j7quvTaf4N2uH4qr5V5PJiE2qYg6RDtf3wGfWZ20kZ1/e7HeFZgrmeKpiYoyW
-         tX8A/trz9n9re9jLM4PNvXI0wMZFeGiaTZnmmLcqiWVQooz+YECRs4tKatbhEEDZc0MT
-         esoRcS5s6dFvoMg2C5iYlleymPjiheKbdRyoqfxa7h4ZR8eyL4JZeUckeDg3xQZ608M5
-         VfV58heci1FR0owz9/LVV9skWeKbe0FKH34lbR0Jnm1QB7v12OsTAO+cuTq3By9SdLYR
-         2djQVxGBVe5/qU8kruvZUWlKi+DVH/xoQa1O+cLunfYkri5jhmxN67WJJj2kQEUiljbG
-         Yh5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=zxTdft5xNc7J8YFkSd0py1mf7N70+0aOCnidcdDs4tE=;
-        b=uUajQYyUXw0jLk9br00l/g5jZ889XKT4hHSpwx/YsSZF1zaPT+gy+VH2tX5wlx3Gye
-         ha+4G64SR+LzSJWQczDQy/GuhoR8Wd5q4j8vjIUrGv39BlkHa9ANjAsWTz1A0GXcjK52
-         JbrVkXCbb7VtdDb2R9N9STxtBT5V3lruV3Q3zttjJcKeUM3L3wz1oVG8p7fK2MYUEMkf
-         GfGyMp6XD4q49a0BfXIx/5WynnfQADhpdto+k1njImdClI6sVe2+CqEC9HwnYCujQEsy
-         tGUrEFNlJXW6EZJp79UMzVWNDJYA1Nglr/xLhD8QA9o3VaBuQ6/FlWJrNJVEabFI+GhD
-         baFg==
-X-Gm-Message-State: AJIora/+IBwwR9eSTbKr7xKCvMdXPp+cyqamx9ammu1fcP0tXB312PZa
-        RAjGIb5R632wz8OFssAYlU8NOA==
-X-Google-Smtp-Source: AGRyM1vcSAY0ujJGydXrcRkYqJzibc2oSfglSmRCbOojCJpiZiuG7yhIJ1q+GW9zp6C5bvb5W3g9Bg==
-X-Received: by 2002:a17:902:9041:b0:16a:aef:7b84 with SMTP id w1-20020a170902904100b0016a0aef7b84mr20829039plz.124.1656672309760;
-        Fri, 01 Jul 2022 03:45:09 -0700 (PDT)
-Received: from localhost ([122.172.201.58])
-        by smtp.gmail.com with ESMTPSA id h5-20020a170902f7c500b00163bfaf0b17sm11820122plw.233.2022.07.01.03.45.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 Jul 2022 03:45:09 -0700 (PDT)
-Date:   Fri, 1 Jul 2022 16:15:07 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Jiri Slaby <jirislaby@kernel.org>, linux-pm@vger.kernel.org,
-        Vincent Guittot <vincent.guittot@linaro.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>, Nishanth Menon <nm@ti.com>,
-        linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH V2 24/30] serial: qcom: Migrate to dev_pm_opp_set_config()
-Message-ID: <20220701104507.b2k76y2s2hewfn25@vireshk-i7>
-References: <cover.1656660185.git.viresh.kumar@linaro.org>
- <1f3328dafaf9e2944fba8ec9e55e3072a63a4192.1656660185.git.viresh.kumar@linaro.org>
- <Yr6z5ixRTsIbZvsq@kroah.com>
- <20220701092458.tzqv7yul476kh2o7@vireshk-i7>
- <Yr7AwAZeSPeQKDPU@kroah.com>
- <20220701100100.bxv4t4t7iqphalpv@vireshk-i7>
- <Yr7J6f6+EQfXFjYN@kroah.com>
- <20220701102926.uwvn7rurbxdybzeu@vireshk-i7>
- <Yr7PUxdOKYp91mG0@kroah.com>
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1656673187; x=1688209187;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=zwXiI7LNSRTMgOwPQ//yw+saai2jTHywEYViefmeQtg=;
+  b=x/Sl6nlPVwlq/3EJDPeyasqTl94pBIl/bv4cTUksmADoZMNUZGjJMOAy
+   oY8jPOu3FnH8gv3uvKX01erYHb3F45+0gjUdL0luz7r2P41yy62qXZk1+
+   4li22eb6GJZqBfWenQNiNd5Jiqu0TtYGMLNbRymrpQI47U3QXPlYHrEAj
+   A=;
+Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 01 Jul 2022 03:59:47 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jul 2022 03:59:46 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Fri, 1 Jul 2022 03:59:46 -0700
+Received: from [10.216.5.206] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Fri, 1 Jul 2022
+ 03:59:42 -0700
+Message-ID: <aa754d43-ec58-97c7-e50b-0459a850e302@quicinc.com>
+Date:   Fri, 1 Jul 2022 16:29:38 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Yr7PUxdOKYp91mG0@kroah.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Subject: Re: [PATCH 4/5] firmware: qcom: scm: Add wait-queue helper functions
+Content-Language: en-US
+To:     Guru Das Srinagesh <quic_gurus@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        "Philipp Zabel" <p.zabel@pengutronix.de>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+CC:     David Heidelberg <david@ixit.cz>,
+        Robert Marko <robimarko@gmail.com>,
+        Elliot Berman <quic_eberman@quicinc.com>
+References: <1656359076-13018-1-git-send-email-quic_gurus@quicinc.com>
+ <1656359076-13018-5-git-send-email-quic_gurus@quicinc.com>
+From:   Rajendra Nayak <quic_rjendra@quicinc.com>
+In-Reply-To: <1656359076-13018-5-git-send-email-quic_gurus@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -84,16 +72,148 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 01-07-22, 12:41, Greg Kroah-Hartman wrote:
-> That feels completely wrong, don't have NULL for a name, make a fake name
-> or something.  Don't make all users in the kernel have a horrible
-> interface just for one piece of broken hardware out there.
+
+On 6/28/2022 1:14 AM, Guru Das Srinagesh wrote:
+> When the firmware (FW) supports multiple requests per VM, and the VM also
+> supports it via the `enable-multi-call` device tree flag, the floodgates
+> are thrown open for them to all reach the firmware at the same time.
 > 
-> Worst case, name it "".
+> Since the firmware currently being used has limited resources, it guards
+> them with a resource lock and puts requests on a wait-queue internally
+> and signals to HLOS that it is doing so. It does this by returning two
+> new return values in addition to success or error: SCM_WAITQ_SLEEP and
+> SCM_WAITQ_WAKE.
+> 
+>    1) SCM_WAITQ_SLEEP:
+> 
+>    	When an SCM call receives this return value instead of success
+>    	or error, FW has placed this call on a wait-queue and
+>    	has signalled HLOS to put it to non-interruptible sleep. (The
+> 	mechanism to wake it back up will be described in detail in the
+> 	next patch for the sake of simplicity.)
+> 
+> 	Along with this return value, FW also passes to HLOS `wq_ctx` -
+> 	a unique number (UID) identifying the wait-queue that it has put
+> 	the call on, internally. This is to help HLOS with its own
+> 	bookkeeping to wake this sleeping call later.
+> 
+> 	Additionally, FW also passes to HLOS `smc_call_ctx` - a UID
+> 	identifying the SCM call thus being put to sleep. This is also
+> 	for HLOS' bookkeeping to wake this call up later.
+> 
+> 	These two additional values are passed via the a1 and a2
+> 	registers.
+> 
+> 	N.B.: The "ctx" in the above UID names = "context".
+> 
+>    2) SCM_WAITQ_WAKE:
+> 
+>    	When an SCM call receives this return value instead of success
+>    	or error, FW wishes to signal HLOS to wake up a (different)
+>    	previously sleeping call.
 
-This name goes into the second argument of clk_get(dev, const char *con_id);
+What happens to this SCM call itself (The one which gets an SCM_WAITQ_WAKE returned
+instead of a success or failure)?
+is it processed? how does the firmware in that case return a success or error?
 
-I will see how else I should hack it :)
+> 
+>    	FW tells HLOS which call to wake up via the additional return
+>    	values `wq_ctx`, `smc_call_ctx` and `flags`. The first two have
+>    	already been explained above.
+> 
+>    	`flags` can be either WAKE_ONE or WAKE_ALL. Meaning, wake either
+>    	one, or all, of the SCM calls that HLOS is associating with the
+>    	given `wq_ctx`.
+> 
+> A sleeping SCM call can be woken up by either an interrupt that FW
+> raises, or via a SCM_WAITQ_WAKE return value for a new SCM call.
+> 
+> The handshake mechanism that HLOS uses to talk to FW about wait-queue
+> operations involves three new SMC calls. These are:
+> 
+>    1) get_wq_ctx():
+> 
+>      	Arguments: 	None
+>      	Returns:	wq_ctx, flags, more_pending
+> 
+>      	Get the wait-queue context, and wake up either one or all of the
+>      	sleeping SCM calls associated with that wait-queue.
+> 
+>      	Additionally, repeat this if there are more wait-queues that are
+>      	ready to have their requests woken up (`more_pending`).
+> 
+>    2) wq_resume(smc_call_ctx):
+> 
+>    	Arguments:	smc_call_ctx
+> 
+>    	HLOS needs to issue this in response to receiving an
+>    	IRQ, passing to FW the same smc_call_ctx that FW
+>    	receives from HLOS via the get_wq_ctx() call.
+> 
+>    3) wq_wake_ack(smc_call_ctx):
+> 
+>    	Arguments:	smc_call_ctx
+> 
+>    	HLOS needs to issue this in response to receiving an
+>    	SCM_WAITQ_WAKE, passing to FW the same smc_call_ctx that FW
+>    	passed to HLOS via the SMC_WAITQ_WAKE call.
+> 
+> (Reminder that the full handshake mechanism will be detailed in the
+> subsequent patch.)
+> 
+> Also add the interrupt handler that wakes up a sleeping SCM call.
+> 
+> Signed-off-by: Guru Das Srinagesh <quic_gurus@quicinc.com>
 
--- 
-viresh
+[]...
+
+> +
+>   static int qcom_scm_probe(struct platform_device *pdev)
+>   {
+>   	struct qcom_scm *scm;
+>   	unsigned long clks;
+> -	int ret;
+> +	int irq, ret;
+>   
+>   	scm = devm_kzalloc(&pdev->dev, sizeof(*scm), GFP_KERNEL);
+>   	if (!scm)
+> @@ -1333,12 +1432,28 @@ static int qcom_scm_probe(struct platform_device *pdev)
+>   	if (ret)
+>   		return ret;
+>   
+> +	platform_set_drvdata(pdev, scm);
+> +
+>   	__scm = scm;
+>   	__scm->dev = &pdev->dev;
+>   
+> +	spin_lock_init(&__scm->waitq.idr_lock);
+> +	idr_init(&__scm->waitq.idr);
+>   	qcom_scm_allow_multicall = of_property_read_bool(__scm->dev->of_node,
+>   							"allow-multi-call");
+>   
+> +	INIT_WORK(&__scm->waitq.scm_irq_work, scm_irq_work);
+> +
+> +	irq = platform_get_irq(pdev, 0);
+> +	if (irq) {
+> +		ret = devm_request_threaded_irq(__scm->dev, irq, NULL,
+> +			qcom_scm_irq_handler, IRQF_ONESHOT, "qcom-scm", __scm);
+> +		if (ret < 0) {
+> +			pr_err("Failed to request qcom-scm irq: %d\n", ret);
+
+idr_destroy()?
+
+> +			return ret;
+> +		}
+> +	}
+> +
+>   	__get_convention();
+>   
+>   	/*
+> @@ -1354,6 +1469,7 @@ static int qcom_scm_probe(struct platform_device *pdev)
+>   
+>   static void qcom_scm_shutdown(struct platform_device *pdev)
+>   {
+> +	idr_destroy(&__scm->waitq.idr);
+>   	/* Clean shutdown, disable download mode to allow normal restart */
+>   	if (download_mode)
+>   		qcom_scm_set_download_mode(false);
