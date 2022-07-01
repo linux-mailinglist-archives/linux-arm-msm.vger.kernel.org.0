@@ -2,169 +2,282 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9D4D8562800
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Jul 2022 03:12:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CF96056283F
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Jul 2022 03:28:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232387AbiGABKz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Jun 2022 21:10:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59918 "EHLO
+        id S232735AbiGAB0z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Jun 2022 21:26:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41104 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229563AbiGABKy (ORCPT
+        with ESMTP id S231535AbiGAB0y (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Jun 2022 21:10:54 -0400
-Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2ED695A2C1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Jun 2022 18:10:53 -0700 (PDT)
-Received: by mail-pj1-x102e.google.com with SMTP id dw10-20020a17090b094a00b001ed00a16eb4so1169192pjb.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Jun 2022 18:10:53 -0700 (PDT)
+        Thu, 30 Jun 2022 21:26:54 -0400
+Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0A995A47A
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Jun 2022 18:26:51 -0700 (PDT)
+Received: by mail-yb1-xb4a.google.com with SMTP id j198-20020a25d2cf000000b0066d2f5b87e7so767172ybg.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Jun 2022 18:26:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=riTJwa3bSi1lLAzR0nqCjL0PHBsnxUZ/utBEO403z1w=;
-        b=ltNB9b6L0WGcQxcX0/zTfMYJWLZ5Ohm0RVW23tFGV26KJCU4e9EuEgAabskt1fun7R
-         sDaVg3iYXC2n+vMsd+iFqp/kURHYFb4mqL6qBPMauoi5W+lzr8NKcvB7IbRIWMuNGmEe
-         Km++r1KUdVbrGUMBhkWoymNyhyKB+dYqkklYg=
+        d=google.com; s=20210112;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=enThZq3GNhnkWKPd/daPanpJOP+0ijq4hNHtFP2b8Uo=;
+        b=ZGHrQo8oKcs/1MxqUV66WuroIOiuRhyDQTe/h9dNu56quZHoJH2GUaDbRl2ttRwgEe
+         SWqVcY/Veo5jphceJDpwMYzMdOJ0QXdCPktWf948t9BiLW5nmwSSwTlpJciNH3VIewIt
+         3ASh6A26F+KmkZttZjFaUnZEb4Vdr+50D/q0gexLqMMmpJA7NpBHgj2jcBkr1ZyXcHXM
+         U6Xnoa3WH+ep5XzMHbrLnEz24W5g5SeejVYD0NuN3ckqaoVAfjVlh+5k/BsS4sAB5hq6
+         ohdGwKO24kRPaNPr4udjwZ2k4/3lgZFaY78w+9+WaY8oo3hWqIQJ8JqaHbOBVz/YVY0e
+         BS/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=riTJwa3bSi1lLAzR0nqCjL0PHBsnxUZ/utBEO403z1w=;
-        b=D6Qc6Ql7n2GJhcKmrGaEM11dhsFVqo5QjckdOdgCzDQYkoQ64vgmlaySt1f0SVrFY7
-         9akod7Xdb98p3oSoXEoNpu+g9VCA2pmohoMlKSEfVOyN/wloZRL9aqg6X+r9rvWJv8yW
-         uNfqBn5APk+UOA8pkV8KR2++0eXdQneyQNmGQfyM4RnPx9KaPuTBQaoLxmhfwzZD4/p5
-         1Wq6vX6dGZubW1txJ6hgcKkoNpAXzKMs4I55a7ocjsDo65nM1a3KFd1PLSaKyL0GIgh0
-         hv3DOeuT4mLh+b2SY4hx6KdLuEQVTHHDIf8ENX96teJROBiN3eSN02Suhyl8PBT69gZ1
-         jSLw==
-X-Gm-Message-State: AJIora8RLJDGE0aWVOfvFvFvZBnao584elOwbydyTlq9u0SCoLoUZxvg
-        meTDZXyYDziCSeZ7haNMMhGtZA==
-X-Google-Smtp-Source: AGRyM1vDSzuWMSHmKGJrOwsdSFxwevV5a9CXWieue+Xhh8FwWZKfTik7az0sP8Slnk1ABp9iIsgQhA==
-X-Received: by 2002:a17:90a:7c05:b0:1ee:e40c:589b with SMTP id v5-20020a17090a7c0500b001eee40c589bmr13559159pjf.78.1656637852674;
-        Thu, 30 Jun 2022 18:10:52 -0700 (PDT)
-Received: from localhost ([2620:15c:11a:202:dca8:e419:789:7bec])
-        by smtp.gmail.com with UTF8SMTPSA id pc3-20020a17090b3b8300b001ef3f85d1aasm2179295pjb.9.2022.06.30.18.10.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 30 Jun 2022 18:10:52 -0700 (PDT)
-Date:   Thu, 30 Jun 2022 18:10:50 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        Pavan Kondeti <quic_pkondeti@quicinc.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=enThZq3GNhnkWKPd/daPanpJOP+0ijq4hNHtFP2b8Uo=;
+        b=1dcpoAZhsX82GV9A7AzEoM12XkMLkc9F1SeCTioc7uVbhgLPktM5RNAjNCh6Rh3pIA
+         UzFyjWVs7WqR2ggROCvJZ5KzJP1wYdj3skIFpRuP/dDtn6rdNq/rUljt0ttMW9x1zZkR
+         8An3IPaJevy1axWHcYyZIEru2AXfOsYG76gOXjE6Y/pzW1ubpF2flmtgFBHqlKOlCp9q
+         Q2xweGUaaMNp13y1wWSaWkoTNgJzO7gjred1o8nn8rIyYIDSwqDht6e/Gr4ngDG2pc92
+         DsnsVcQsyfay//JXW12IUre3J2+WqruPehOhpIJQVvsGzyhhMvtvtq1ksYqzb+LKFN2M
+         Alcg==
+X-Gm-Message-State: AJIora8DXmnl88PhkTJv0ndXEOGCofyvCQCQ4n/qvPA+TzLVtvdjcbZa
+        EXnOiQYlnwiEcqIAUm6tn31BdvDSTb3YLGk=
+X-Google-Smtp-Source: AGRyM1uVtkICZeFb41qzlKfYUlr23L197fZnFh7B1zLJMqch7Nth1saNWtsGGUH9YN1+Q9+ZxuB5n3WOpcD3GoA=
+X-Received: from saravanak.san.corp.google.com ([2620:15c:2d:3:3973:d0f0:34a8:bf61])
+ (user=saravanak job=sendgmr) by 2002:a25:4b02:0:b0:66c:8709:44d1 with SMTP id
+ y2-20020a254b02000000b0066c870944d1mr12352911yba.602.1656638811027; Thu, 30
+ Jun 2022 18:26:51 -0700 (PDT)
+Date:   Thu, 30 Jun 2022 18:26:38 -0700
+Message-Id: <20220701012647.2007122-1-saravanak@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.37.0.rc0.161.g10f37bed90-goog
+Subject: [PATCH v2 0/2] Fix console probe delay when stdout-path isn't set
+From:   Saravana Kannan <saravanak@google.com>
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Laurentiu Tudor <laurentiu.tudor@nxp.com>,
+        Jiri Slaby <jirislaby@kernel.org>,
+        Michael Ellerman <mpe@ellerman.id.au>,
+        Benjamin Herrenschmidt <benh@kernel.crashing.org>,
+        Paul Mackerras <paulus@samba.org>,
+        Joel Stanley <joel@jms.id.au>,
+        Andrew Jeffery <andrew@aj.id.au>,
+        Nicolas Saenz Julienne <nsaenz@kernel.org>,
+        Broadcom internal kernel review list 
+        <bcm-kernel-feedback-list@broadcom.com>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Ray Jui <rjui@broadcom.com>,
+        Scott Branden <sbranden@broadcom.com>,
+        Al Cooper <alcooperx@gmail.com>,
+        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+        Paul Cercueil <paul@crapouillou.net>,
+        Vladimir Zapolskiy <vz@mleia.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+        Masami Hiramatsu <mhiramat@kernel.org>,
+        Tobias Klauser <tklauser@distanz.ch>,
+        Russell King <linux@armlinux.org.uk>,
+        Vineet Gupta <vgupta@kernel.org>,
+        Richard Genoud <richard.genoud@gmail.com>,
+        Nicolas Ferre <nicolas.ferre@microchip.com>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Claudiu Beznea <claudiu.beznea@microchip.com>,
+        Alexander Shiyan <shc_work@mail.ru>,
+        Baruch Siach <baruch@tkos.co.il>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Karol Gugala <kgugala@antmicro.com>,
+        Mateusz Holenko <mholenko@antmicro.com>,
+        Gabriel Somlo <gsomlo@gmail.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Taichi Sugaya <sugaya.taichi@socionext.com>,
+        Takao Orito <orito.takao@socionext.com>,
+        Liviu Dudau <liviu.dudau@arm.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
         Andy Gross <agross@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Mathias Nyman <mathias.nyman@intel.com>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, quic_ppratap@quicinc.com,
-        quic_vpulyala@quicinc.com
-Subject: Re: [PATCH v20 2/5] usb: dwc3: core: Host wake up support from
- system suspend
-Message-ID: <Yr5JmrSaus8xKpM9@google.com>
-References: <Yp5nf2w8uVZ38/XZ@google.com>
- <Yqd9IHQEj3Ex+FcF@google.com>
- <YqjLHyUVEjf7I3MI@google.com>
- <20220616091110.GA24114@hu-pkondeti-hyd.qualcomm.com>
- <YqtlRQOwb3t6Xtd0@google.com>
- <20220620085415.GA13744@hu-pkondeti-hyd.qualcomm.com>
- <CAE-0n52bq9feA6BVdAp791SWQtT1Yj4M2ppg3o_KOaRFO8r+0Q@mail.gmail.com>
- <20220628053148.GA21797@hu-pkondeti-hyd.qualcomm.com>
- <CAE-0n50PGw_XSZ0-iV7gem6+-LENoq6ZVOwX3f+0XjkrHg-rLw@mail.gmail.com>
- <c16a1c37-9183-8d0c-a5ad-39b897a0ab24@quicinc.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <c16a1c37-9183-8d0c-a5ad-39b897a0ab24@quicinc.com>
-X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Pali Rohar <pali@kernel.org>,
+        Andreas Farber <afaerber@suse.de>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Laxman Dewangan <ldewangan@nvidia.com>,
+        Palmer Dabbelt <palmer@dabbelt.com>,
+        Paul Walmsley <paul.walmsley@sifive.com>,
+        Orson Zhai <orsonzhai@gmail.com>,
+        Baolin Wang <baolin.wang7@gmail.com>,
+        Chunyan Zhang <zhang.lyra@gmail.com>,
+        Patrice Chotard <patrice.chotard@foss.st.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Hammer Hsieh <hammerh0314@gmail.com>,
+        Peter Korsgaard <jacmet@sunsite.dk>,
+        Timur Tabi <timur@kernel.org>,
+        Michal Simek <michal.simek@xilinx.com>,
+        Saravana Kannan <saravanak@google.com>
+Cc:     Rob Herring <robh@kernel.org>, sascha hauer <sha@pengutronix.de>,
+        peng fan <peng.fan@nxp.com>, kevin hilman <khilman@kernel.org>,
+        ulf hansson <ulf.hansson@linaro.org>,
+        len brown <len.brown@intel.com>, pavel machek <pavel@ucw.cz>,
+        joerg roedel <joro@8bytes.org>, will deacon <will@kernel.org>,
+        andrew lunn <andrew@lunn.ch>,
+        heiner kallweit <hkallweit1@gmail.com>,
+        eric dumazet <edumazet@google.com>,
+        jakub kicinski <kuba@kernel.org>,
+        paolo abeni <pabeni@redhat.com>,
+        linus walleij <linus.walleij@linaro.org>,
+        hideaki yoshifuji <yoshfuji@linux-ipv6.org>,
+        david ahern <dsahern@kernel.org>, kernel-team@android.com,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        iommu@lists.linux-foundation.org, netdev@vger.kernel.org,
+        linux-gpio@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
+        linux-serial@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-aspeed@lists.ozlabs.org,
+        linux-rpi-kernel@lists.infradead.org, linux-mips@vger.kernel.org,
+        linux-mediatek@lists.infradead.org, linux-tegra@vger.kernel.org,
+        linux-snps-arc@lists.infradead.org,
+        linux-amlogic@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-actions@lists.infradead.org,
+        linux-unisoc@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-riscv@lists.infradead.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        sparclinux@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-9.6 required=5.0 tests=BAYES_00,DKIMWL_WL_MED,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,USER_IN_DEF_DKIM_WL
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jun 30, 2022 at 11:43:01PM +0530, Krishna Kurapati PSSNV wrote:
-> 
-> On 6/30/2022 3:45 AM, Stephen Boyd wrote:
-> > Quoting Pavan Kondeti (2022-06-27 22:31:48)
-> > > On Mon, Jun 27, 2022 at 01:02:49PM -0700, Stephen Boyd wrote:
-> > > > Quoting Pavan Kondeti (2022-06-20 01:54:15)
-> > > > > Would like to hear other people thoughts on this.
-> > > > > 
-> > > > I'm not following very closely but it sounds like a problem that may be
-> > > > solved by using the component driver code (see
-> > > > include/linux/component.h). That would let you move anything that needs
-> > > > to be done once the child devices probe to the aggregate driver 'bind'
-> > > > function (see struct component_master_ops::bind).
-> > > Thanks Stephen for letting us know about the component device framework.
-> > > 
-> > > IIUC,
-> > > 
-> > > - dwc3-qcom (parent of the dwc3 core) registers as a component master by
-> > > calling component_master_add_with_match() before calling
-> > > of_platform_populate(). The match callback could be as simple as comparing
-> > > the device against our child device.
-> > > 
-> > > - The dwc3 core (child) at the end of its probe can add as a component by calling
-> > > component_add().
-> > > 
-> > > - The above triggers the component_master_ops::bind callback implemented in
-> > >    dwc3-qcom driver which signals that we are good to go.
-> > > 
-> > > - The dwc-qcom can call component_bind_all() to finish the formality i.e
-> > >    telling the dwc3 core that we are good to go.
-> > > 
-> > > Is my understanding correct? This is what we are looking for i.e a way for
-> > > the child device(s) to signal the parent when the former is bounded.
-> > Sounds about right to me.
-> > 
-> > > Also what happens when the child device probe fails for any reason. i.e
-> > > component_add() would never be called so the master driver i.e dwc3-qcom would
-> > > wait indefinitely. May be it needs to implement a timeout or runtime suspend
-> > > etc should take care of keeping the resoures in suspend state.
-> > When the child fails probe, it should return -EPROBE_DEFER if probe
-> > needs to be deferred. Then the driver will attempt probe at a later
-> > time. If probe fails without defer then it will never work and dwc3-qcom
-> > will wait indefinitely. Not much we can do in that situation.
-> Hi Stephen,
-> 
->   Thanks for the idea. But doesn't adding dwc3 as a component to an agg
-> driver meanthat this change needs to be done on all glue drivers, as
-> component_bind_all( ) from master componentis supposed to let the dwc3
-> core know that we are good to go ?
+These patches are on top of driver-core-next.
 
-Ideally all glue drivers would add component support, however I don't think
-it is strictly necessary. Currently the dwc3 core already assumes that
-everything is in place when it is probed. The core could have empty bind()
-and unbind() callbacks, with that things in the core would remain
-essentially as they are and the core doesn't depend on the glue driver to
-call component_bind_all().
+Even if stdout-path isn't set in DT, this patch should take console
+probe times back to how they were before the deferred_probe_timeout
+clean up series[1].
 
-> > dwc3-qcom should wait for dwc3 core to call component_add() and then do
-> > whatever needs to be done once the dwc3 core is registered in the
-> > dwc3-qcom bind callback. Honestly this may all be a little overkill if
-> > there's only two drivers here, dwc3-qcom and dwc3 core. It could
-> > probably just be some callback from dwc3 core at the end of probe that
-> > calls some function in dwc3-qcom.
-> Since the issue we are facing is that the ssphy device links are not ready
-> causing the dwc3 probe not being invoked, can we add an API as Pavan
-> suggested
-> to check if deferred_probe listfor dwc3 device is empty or not andbased on
-> that we can choose to defer our qcomprobe ? In this case, we don't need to
-> touch the dwc3 core driver and would be making changesonly in qcom glue
-> driver.
+v1->v2:
+- Fixed the accidental change that Tobias pointed out.
+- Added Tested-by tag
 
-As mentioned above, it shouldn't be necessary to add component support to
-all the glue drivers. An API to check for deferred probing is an option,
-however there is a possible race condition: When the dwc3-qcom driver checks
-for a deferred probe the core could still be probing, in that situation the
-glue would proceed before the core driver is ready. That could be avoided
-with the component based approach.
+[1] - https://lore.kernel.org/lkml/20220601070707.3946847-1-saravanak@google.com/
+
+-Saravana
+
+cc: Rob Herring <robh@kernel.org>
+cc: sascha hauer <sha@pengutronix.de>
+cc: peng fan <peng.fan@nxp.com>
+cc: kevin hilman <khilman@kernel.org>
+cc: ulf hansson <ulf.hansson@linaro.org>
+cc: len brown <len.brown@intel.com>
+cc: pavel machek <pavel@ucw.cz>
+cc: joerg roedel <joro@8bytes.org>
+cc: will deacon <will@kernel.org>
+cc: andrew lunn <andrew@lunn.ch>
+cc: heiner kallweit <hkallweit1@gmail.com>
+cc: russell king <linux@armlinux.org.uk>
+cc: "david s. miller" <davem@davemloft.net>
+cc: eric dumazet <edumazet@google.com>
+cc: jakub kicinski <kuba@kernel.org>
+cc: paolo abeni <pabeni@redhat.com>
+cc: linus walleij <linus.walleij@linaro.org>
+cc: hideaki yoshifuji <yoshfuji@linux-ipv6.org>
+cc: david ahern <dsahern@kernel.org>
+cc: kernel-team@android.com
+cc: linux-kernel@vger.kernel.org
+cc: linux-pm@vger.kernel.org
+cc: iommu@lists.linux-foundation.org
+cc: netdev@vger.kernel.org
+cc: linux-gpio@vger.kernel.org
+Cc: kernel@pengutronix.de
+
+Saravana Kannan (2):
+  driver core: Add probe_no_timeout flag for drivers
+  serial: Set probe_no_timeout for all DT based drivers
+
+ drivers/base/base.h                         |  1 +
+ drivers/base/core.c                         |  7 +++++++
+ drivers/base/dd.c                           |  3 +++
+ drivers/tty/ehv_bytechan.c                  |  1 +
+ drivers/tty/goldfish.c                      |  1 +
+ drivers/tty/hvc/hvc_opal.c                  |  1 +
+ drivers/tty/serial/8250/8250_aspeed_vuart.c |  1 +
+ drivers/tty/serial/8250/8250_bcm2835aux.c   |  1 +
+ drivers/tty/serial/8250/8250_bcm7271.c      |  1 +
+ drivers/tty/serial/8250/8250_dw.c           |  1 +
+ drivers/tty/serial/8250/8250_em.c           |  1 +
+ drivers/tty/serial/8250/8250_ingenic.c      |  1 +
+ drivers/tty/serial/8250/8250_lpc18xx.c      |  1 +
+ drivers/tty/serial/8250/8250_mtk.c          |  1 +
+ drivers/tty/serial/8250/8250_of.c           |  1 +
+ drivers/tty/serial/8250/8250_omap.c         |  1 +
+ drivers/tty/serial/8250/8250_pxa.c          |  1 +
+ drivers/tty/serial/8250/8250_tegra.c        |  1 +
+ drivers/tty/serial/8250/8250_uniphier.c     |  1 +
+ drivers/tty/serial/altera_jtaguart.c        |  1 +
+ drivers/tty/serial/altera_uart.c            |  1 +
+ drivers/tty/serial/amba-pl011.c             |  1 +
+ drivers/tty/serial/apbuart.c                |  1 +
+ drivers/tty/serial/ar933x_uart.c            |  1 +
+ drivers/tty/serial/arc_uart.c               |  1 +
+ drivers/tty/serial/atmel_serial.c           |  1 +
+ drivers/tty/serial/bcm63xx_uart.c           |  1 +
+ drivers/tty/serial/clps711x.c               |  1 +
+ drivers/tty/serial/cpm_uart/cpm_uart_core.c |  1 +
+ drivers/tty/serial/digicolor-usart.c        |  1 +
+ drivers/tty/serial/fsl_linflexuart.c        |  1 +
+ drivers/tty/serial/fsl_lpuart.c             |  1 +
+ drivers/tty/serial/imx.c                    |  1 +
+ drivers/tty/serial/lantiq.c                 |  1 +
+ drivers/tty/serial/liteuart.c               |  1 +
+ drivers/tty/serial/lpc32xx_hs.c             |  1 +
+ drivers/tty/serial/max310x.c                |  1 +
+ drivers/tty/serial/meson_uart.c             |  1 +
+ drivers/tty/serial/milbeaut_usio.c          |  1 +
+ drivers/tty/serial/mpc52xx_uart.c           |  1 +
+ drivers/tty/serial/mps2-uart.c              |  1 +
+ drivers/tty/serial/msm_serial.c             |  1 +
+ drivers/tty/serial/mvebu-uart.c             |  1 +
+ drivers/tty/serial/mxs-auart.c              |  1 +
+ drivers/tty/serial/omap-serial.c            |  1 +
+ drivers/tty/serial/owl-uart.c               |  1 +
+ drivers/tty/serial/pic32_uart.c             |  1 +
+ drivers/tty/serial/pmac_zilog.c             |  1 +
+ drivers/tty/serial/pxa.c                    |  1 +
+ drivers/tty/serial/qcom_geni_serial.c       |  1 +
+ drivers/tty/serial/rda-uart.c               |  1 +
+ drivers/tty/serial/samsung_tty.c            |  1 +
+ drivers/tty/serial/sc16is7xx.c              |  1 +
+ drivers/tty/serial/serial-tegra.c           |  1 +
+ drivers/tty/serial/sh-sci.c                 |  1 +
+ drivers/tty/serial/sifive.c                 |  1 +
+ drivers/tty/serial/sprd_serial.c            |  1 +
+ drivers/tty/serial/st-asc.c                 |  1 +
+ drivers/tty/serial/stm32-usart.c            |  1 +
+ drivers/tty/serial/sunhv.c                  |  1 +
+ drivers/tty/serial/sunplus-uart.c           |  1 +
+ drivers/tty/serial/sunsab.c                 |  1 +
+ drivers/tty/serial/sunsu.c                  |  1 +
+ drivers/tty/serial/sunzilog.c               |  1 +
+ drivers/tty/serial/tegra-tcu.c              |  1 +
+ drivers/tty/serial/uartlite.c               |  1 +
+ drivers/tty/serial/ucc_uart.c               |  1 +
+ drivers/tty/serial/vt8500_serial.c          |  1 +
+ drivers/tty/serial/xilinx_uartps.c          |  1 +
+ include/linux/device.h                      |  7 +++++++
+ include/linux/device/driver.h               | 11 +++++++++++
+ 71 files changed, 95 insertions(+)
+
+-- 
+2.37.0.rc0.161.g10f37bed90-goog
+
