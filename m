@@ -2,179 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1E4095634E8
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Jul 2022 16:13:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1FC4E56364C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Jul 2022 16:58:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232000AbiGAONx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 1 Jul 2022 10:13:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59850 "EHLO
+        id S229681AbiGAO6h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 1 Jul 2022 10:58:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54120 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230408AbiGAONw (ORCPT
+        with ESMTP id S230426AbiGAO6f (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 1 Jul 2022 10:13:52 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C2A138DAF;
-        Fri,  1 Jul 2022 07:13:51 -0700 (PDT)
+        Fri, 1 Jul 2022 10:58:35 -0400
+Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5531E205FD
+        for <linux-arm-msm@vger.kernel.org>; Fri,  1 Jul 2022 07:58:34 -0700 (PDT)
+Received: by mail-pj1-x102d.google.com with SMTP id g7so2868741pjj.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Jul 2022 07:58:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1656684832; x=1688220832;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references;
-  bh=jvcWb3wyK4oXONKNFq0h9eFMRH9SpOBxEGRZFxKd7lY=;
-  b=fb3alwF4ko09T++YwSRlz4gjRZeT+ITP1SOpQb6lSOh3wO5raJMIfnJX
-   sBG6lpys6o4WbZCx8On7jltgZCxsw20xeic0z0pVc4qu0E0jFY8NV4nxE
-   X97Iw5Sg9Yh53rN3u2bZiEhNZdJBedWAiTW8sJQzbOsoqvQzOQCPmFlCb
-   I=;
-Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
-  by alexa-out.qualcomm.com with ESMTP; 01 Jul 2022 07:13:51 -0700
-X-QCInternal: smtphost
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 01 Jul 2022 07:13:49 -0700
-X-QCInternal: smtphost
-Received: from hu-krichai-hyd.qualcomm.com (HELO hu-sgudaval-hyd.qualcomm.com) ([10.213.110.37])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 01 Jul 2022 19:43:31 +0530
-Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 4058933)
-        id E226C425F; Fri,  1 Jul 2022 19:43:30 +0530 (+0530)
-From:   Krishna chaitanya chundru <quic_krichai@quicinc.com>
-To:     helgaas@kernel.org
-Cc:     linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, mka@chromium.org,
-        quic_vbadigan@quicinc.com, quic_hemantk@quicinc.com,
-        quic_nitegupt@quicinc.com, quic_skananth@quicinc.com,
-        quic_ramkri@quicinc.com, manivannan.sadhasivam@linaro.org,
-        swboyd@chromium.org, dmitry.baryshkov@linaro.org,
-        Krishna chaitanya chundru <quic_krichai@quicinc.com>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Rob Herring <robh@kernel.org>,
-        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>
-Subject: [PATCH v3 2/2] PCI: qcom: Restrict pci transactions after pci suspend
-Date:   Fri,  1 Jul 2022 19:43:19 +0530
-Message-Id: <1656684800-31278-3-git-send-email-quic_krichai@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1656684800-31278-1-git-send-email-quic_krichai@quicinc.com>
-References: <1656495214-4028-1-git-send-email-quic_krichai@quicinc.com>
- <1656684800-31278-1-git-send-email-quic_krichai@quicinc.com>
-X-Spam-Status: No, score=-4.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=rkpnlSkk4qpL76Q9krzznDoVYhFZ+rUshI4F4KRqe3M=;
+        b=mxa1Ao15KkXA77XwSOFZKBA4ApknMDG7Fc9wFWLRPQk5uz88B/4TxL2k58UXlrneVR
+         jXcgSKrB8R50aAyq+ny0APa7nykSKFGPJHo+E5SX79HxXjkJQTfF/+xxCp0vtgY0Uthw
+         0nMG+tcu40IEBhdNirXqn5pUKKH4qSihUcJ/Cao8z1nlS/G689tC9+JIW6Ip5/Db/fq7
+         fFV750KnECmZMI1kd6N1Re3wdpvv+FKTD5+R2VMP+dU6oHzcXk8KwCHQU0SP2sc1gvur
+         aXuTSpzVR33yNwLV6pSXIXlBq7K0Dz88d02puu/Awa1TOGQoqM+rayy8IbKHiHNWHI8Q
+         cqlA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=rkpnlSkk4qpL76Q9krzznDoVYhFZ+rUshI4F4KRqe3M=;
+        b=XOz3s2U/SH7PYUpkAqzhSrmbpQ5D0SNjV4Q2s8eLOou/HYTRPQBDlhXDU69Vv3e+Bk
+         Sk6KDemBLGkb39oIkOpwX1JAAm+aFYB/Xg6i/B3bCuBpi++8VT31E2mS7qq/R0Ss84d/
+         c1b4eHw4P0IZV4kK9lvgXMAh2kHvPDrwnytIdKfWfuaJLcRGAsuDE8VTVtL67bwtybDS
+         zAi9nj3q7dU9kfBbold6R7Rl99Z+hfd2mFV3Yffv+ZyhZlIrbemkROf0kRcQWcogtWs1
+         8Rsb9eJL6UweOWSZ5eUkENsqXEY7WRpFUiYE87WetBF8/mTel/SL+XkdPk1E9brGcYtn
+         gY/A==
+X-Gm-Message-State: AJIora8SkPoOaVdHn9Ln6oKwDD7HZ+PDtiwIK5yIqrhU7JHXt6miEvGE
+        ieSJKApda2y+EZIVxSccQw+y5Q==
+X-Google-Smtp-Source: AGRyM1tGoZAz4ozl54hjtVhmv2BgnjXF8W1zzZHLqPCFSakUSRkwxVbfPNXOeZJE96ALHobBrH8CXA==
+X-Received: by 2002:a17:903:18d:b0:16a:6faf:c15c with SMTP id z13-20020a170903018d00b0016a6fafc15cmr20304593plg.87.1656687513814;
+        Fri, 01 Jul 2022 07:58:33 -0700 (PDT)
+Received: from localhost.localdomain ([2401:4900:1c5e:e6c0:8e75:c988:f80f:8bec])
+        by smtp.gmail.com with ESMTPSA id y19-20020a170902e19300b0016b844cd7e9sm9641399pla.115.2022.07.01.07.58.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 01 Jul 2022 07:58:33 -0700 (PDT)
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+To:     linux-pm@vger.kernel.org
+Cc:     bhupesh.sharma@linaro.org, bhupesh.linux@gmail.com,
+        linux-kernel@vger.kernel.org, bjorn.andersson@linaro.org,
+        Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        linux-arm-msm@vger.kernel.org
+Subject: [PATCH 0/3] Add support for tsens controller reinit via trustzone
+Date:   Fri,  1 Jul 2022 20:28:12 +0530
+Message-Id: <20220701145815.2037993-1-bhupesh.sharma@linaro.org>
+X-Mailer: git-send-email 2.35.3
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-If the endpoint device state is D0 and irq's are not freed, then
-kernel try to mask interrupts in system suspend path by writing
-in to the vector table (for MSIX interrupts) and config space (for MSI's).
+Some versions of QCoM tsens controller might enter a
+'bad state' causing sensor temperatures/interrupts status
+to be in an 'invalid' state.
 
-These transactions are initiated in the pm suspend after pcie clocks got
-disabled as part of platform driver pm  suspend call. Due to it, these
-transactions are resulting in un-clocked access and eventually to crashes.
+It is recommended to re-initialize the tsens controller
+via trustzone (secure registers) using scm call(s) when that
+happens.
 
-So added a logic in qcom driver to restrict these unclocked access.
-And updated the logic to check the link state before masking
-or unmasking the interrupts.
+This patchset adds the support for the same.
 
-Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
----
- drivers/pci/controller/dwc/pcie-designware-host.c | 14 +++++++--
- drivers/pci/controller/dwc/pcie-qcom.c            | 36 +++++++++++++++++++++--
- 2 files changed, 46 insertions(+), 4 deletions(-)
+Cc: Amit Kucheria <amitk@kernel.org>
+Cc: Thara Gopinath <thara.gopinath@gmail.com>
+Cc: linux-pm@vger.kernel.org
+Cc: linux-arm-msm@vger.kernel.org
 
-diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
-index 2fa86f3..2a46b40 100644
---- a/drivers/pci/controller/dwc/pcie-designware-host.c
-+++ b/drivers/pci/controller/dwc/pcie-designware-host.c
-@@ -29,13 +29,23 @@ static void dw_msi_ack_irq(struct irq_data *d)
- 
- static void dw_msi_mask_irq(struct irq_data *d)
- {
--	pci_msi_mask_irq(d);
-+	struct pcie_port *pp = irq_data_get_irq_chip_data(d->parent_data);
-+	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
-+
-+	if (dw_pcie_link_up(pci))
-+		pci_msi_mask_irq(d);
-+
- 	irq_chip_mask_parent(d);
- }
- 
- static void dw_msi_unmask_irq(struct irq_data *d)
- {
--	pci_msi_unmask_irq(d);
-+	struct pcie_port *pp = irq_data_get_irq_chip_data(d->parent_data);
-+	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
-+
-+	if (dw_pcie_link_up(pci))
-+		pci_msi_unmask_irq(d);
-+
- 	irq_chip_unmask_parent(d);
- }
- 
-diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-index d7ede0c..f0e9079 100644
---- a/drivers/pci/controller/dwc/pcie-qcom.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom.c
-@@ -1335,11 +1335,41 @@ static int qcom_pcie_suspend_2_7_0(struct qcom_pcie *pcie)
- 	return 0;
- }
- 
-+static u32 qcom_pcie_read_dbi(struct dw_pcie *pci, void __iomem *base,
-+				u32 reg, size_t size)
-+{
-+	struct qcom_pcie *pcie = to_qcom_pcie(pci);
-+	u32 val;
-+
-+	if (pcie->is_suspended)
-+		return PCIBIOS_BAD_REGISTER_NUMBER;
-+
-+	dw_pcie_read(base + reg, size, &val);
-+	return val;
-+}
-+
-+static void qcom_pcie_write_dbi(struct dw_pcie *pci, void __iomem *base,
-+				u32 reg, size_t size, u32 val)
-+{
-+	struct qcom_pcie *pcie = to_qcom_pcie(pci);
-+
-+	if (pcie->is_suspended)
-+		return;
-+
-+	dw_pcie_write(base + reg, size, val);
-+}
-+
- static int qcom_pcie_link_up(struct dw_pcie *pci)
- {
--	u16 offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
--	u16 val = readw(pci->dbi_base + offset + PCI_EXP_LNKSTA);
-+	struct qcom_pcie *pcie = to_qcom_pcie(pci);
-+	u16 offset;
-+	u16 val;
-+
-+	if (pcie->is_suspended)
-+		return false;
- 
-+	offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
-+	val = readw(pci->dbi_base + offset + PCI_EXP_LNKSTA);
- 	return !!(val & PCI_EXP_LNKSTA_DLLLA);
- }
- 
-@@ -1583,6 +1613,8 @@ static const struct qcom_pcie_cfg sc7280_cfg = {
- static const struct dw_pcie_ops dw_pcie_ops = {
- 	.link_up = qcom_pcie_link_up,
- 	.start_link = qcom_pcie_start_link,
-+	.read_dbi = qcom_pcie_read_dbi,
-+	.write_dbi = qcom_pcie_write_dbi,
- };
- 
- static int qcom_pcie_probe(struct platform_device *pdev)
+Bhupesh Sharma (3):
+  firmware: qcom_scm: Add support for tsens reinit workaround
+  thermal: qcom: tsens: Add support for 'needs_reinit_wa' for sm8150
+  thermal: qcom: tsens: Implement re-initialization workaround quirk
+
+ drivers/firmware/qcom_scm.c     |  17 +++
+ drivers/firmware/qcom_scm.h     |   4 +
+ drivers/thermal/qcom/tsens-v2.c |  14 ++
+ drivers/thermal/qcom/tsens.c    | 241 +++++++++++++++++++++++++++++++-
+ drivers/thermal/qcom/tsens.h    |  12 +-
+ include/linux/qcom_scm.h        |   2 +
+ 6 files changed, 282 insertions(+), 8 deletions(-)
+
 -- 
-2.7.4
+2.35.3
 
