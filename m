@@ -2,70 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6AEC756296B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Jul 2022 05:11:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 77230562970
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Jul 2022 05:15:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234012AbiGADLH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Jun 2022 23:11:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59548 "EHLO
+        id S233024AbiGADPN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Jun 2022 23:15:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34804 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233910AbiGADK7 (ORCPT
+        with ESMTP id S233299AbiGADPM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Jun 2022 23:10:59 -0400
-Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A90B64D7A
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Jun 2022 20:10:35 -0700 (PDT)
-Received: by mail-oi1-x230.google.com with SMTP id be10so1873551oib.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Jun 2022 20:10:35 -0700 (PDT)
+        Thu, 30 Jun 2022 23:15:12 -0400
+Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44B9C43ADF
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Jun 2022 20:15:10 -0700 (PDT)
+Received: by mail-oi1-x22d.google.com with SMTP id i3so1843303oif.13
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Jun 2022 20:15:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=ifsT2wWYpR3GIDej6kj9iuP5yZJl2zk/c+ZcBDquvTw=;
-        b=DDdHHzPUj6tFM3Ado8BDbAXR1U26zWTe596bqmQ+wliUkAycKWe8nh/xaLuyN5+n2m
-         MkSS20r3t6l2QBmxiYnXdE2ojj1h+c7tM8TEtkrV3Bc0uw5crJ1aXaRgn4J7a2CWZn75
-         EXABTWG1upx+Itdm4FfqWQJhB/m89c6kUsy9ZTAr61gpt6szAZIvRcI6DB3COTImR/+6
-         0DbSS+izNcy4A4GZr0uivE7PsU4AZY9Q8jhSsnxt9c8njk+6YhntErSsIvF3DotMNY9+
-         had/UYOLX6kH+xLBpJtHKQztJC8AMv54fU9BLmBqd54Kv350XV1oTPke/zIaa0VXybCn
-         TSjw==
+        bh=BxMVRlozs5gaL5y+tksQaCZPN44sJr80WYAWh7e65c8=;
+        b=VuZxcn7NzbAx1RYFKd3d6ugSfHcjpGYDGgiOadaY/oAjEp9D6yvBn8qGzGNmpltxOf
+         cROV/qrCwTB7SOajxmHjEv1vC49BiQIWKxvsOBNv25QrvctiLdUugGHZ08AxSG0jGe9H
+         Jj4sK30uQv+M3XRx1dBx3pvwCR4AlRb6mAJcOVI0hpd4Y5pQ3B/qTWhIGXT0ifxs9MCi
+         yU6idl++JaO9N3sGA7dmTrCvj2kVe3ey0Fcl/ktEzr6R4Bupnm9tN608XyGFCW7EX6BL
+         fcUFDmpxXu6bFW58xnqnLgA+Jh4RLE9tN+8PhsFm+TO9hkMSd1pHkMLWq93ieYELBRM5
+         3HTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=ifsT2wWYpR3GIDej6kj9iuP5yZJl2zk/c+ZcBDquvTw=;
-        b=bIEnx+6/iz5Ke/G1KXDwEgXTadMDg7A7UQt17lwGib7ILWuEWQj3tibFvCAplSjkD9
-         MvXh88WOWMNlPSGKNOZ2q8ni5X8ZCnhC5Vs46dChN3CPI0tpgUjWS2YLxoRjn85vtCrp
-         dH5wkS2Bb4S3G3r9Ky4lJIQculIgAyXWuYBgSNpD2VQ3sjgTbUqyzXObRU2WCMW1Zejg
-         2ULS/1zRe7lf9KIfx4wRKilzZXd/bSLdEcPi0tqR144SkW7QnpdLEV6LUk3Eej5IdbSq
-         K89f6vBYzQvLlaSdahoKDzSTKP4nBIqQjL5H3ehdxEyHg2xQyRbzXHnNRh4IJ81uHTXI
-         8dhw==
-X-Gm-Message-State: AJIora8DYtCXswuuDhhM0Mv5H9vzfhx+5O6dljV2TvntehHfgjfObNPv
-        kb+u2QEsliFPZNGjNtr6rAvW7tHo9cfk/g==
-X-Google-Smtp-Source: AGRyM1tPh3ymkg591521d/uHcA5BmIIn6/MhffzQolzJ3zLSYJ/eM4iUBUrmz60HDpTZg0p3+dct2g==
-X-Received: by 2002:aca:3b06:0:b0:32e:8bb7:bef7 with SMTP id i6-20020aca3b06000000b0032e8bb7bef7mr7365838oia.246.1656645034261;
-        Thu, 30 Jun 2022 20:10:34 -0700 (PDT)
+        bh=BxMVRlozs5gaL5y+tksQaCZPN44sJr80WYAWh7e65c8=;
+        b=toaguO5hWBGypj5OGr8ZV+MtXRmnaT2258Gu/r0t4IvjsgyLah+Sw/HqdHNFOWUf5K
+         4SzkcS4A9PdKTzsB6SR3BokNvOHpO/p+IVxV6qIvkaactWt7XN1Uz7vTQFh93MSSpPrN
+         Ddsd1q85okITnopBWK5lTDGH84B73tBNrXpZzZSimw8w3ALU5A+CZ9TWwuZAzC6J8tje
+         6Aj0RW6Q050mwUuNCz1uaJXliBTq6TmgeLwrupSH2SCGdNQTlIIOGzAPGv+EU5zwZqpr
+         0u4EITwKcr8XIDVQ8Iw2KNgvrBp79Q9K9HAYwWubNt5ms3gec6zLW1eo09f8D1utufrA
+         u7vQ==
+X-Gm-Message-State: AJIora+tqE9onE850IPLo6bOP7gWaGwPBAdFKqQ4zwUufLYb4Ig+iUuI
+        JAUXd9LkJj3urlTFYcXRoVPYcA==
+X-Google-Smtp-Source: AGRyM1ssBoPtQRcmEAjnjYBiorhZ2EAIrmmwQ9Fy88H4Rw50wh6VlhhnIza68G+u/M6FNXgpBHeW8g==
+X-Received: by 2002:aca:2204:0:b0:335:5bd4:f6db with SMTP id b4-20020aca2204000000b003355bd4f6dbmr8457410oic.201.1656645308146;
+        Thu, 30 Jun 2022 20:15:08 -0700 (PDT)
 Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id i16-20020a05683033f000b00616b835f5e7sm10387117otu.43.2022.06.30.20.10.29
+        by smtp.gmail.com with ESMTPSA id o4-20020a9d4104000000b0060bfb4e4033sm12205091ote.9.2022.06.30.20.15.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Jun 2022 20:10:30 -0700 (PDT)
-Date:   Thu, 30 Jun 2022 22:10:27 -0500
+        Thu, 30 Jun 2022 20:15:07 -0700 (PDT)
+Date:   Thu, 30 Jun 2022 22:15:05 -0500
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
-        mchehab@kernel.org, hverkuil@xs4all.nl, robert.foss@linaro.org,
-        jonathan@marek.ca, andrey.konovalov@linaro.org,
-        todor.too@gmail.com, agross@kernel.org, jgrahsl@snap.com,
-        hfink@snap.com, vladimir.zapolskiy@linaro.org,
-        dmitry.baryshkov@linaro.org, konrad.dybcio@somainline.org
-Subject: Re: [PATCH v3 3/5] arm64: dts: qcom: sm8250: camss: Define ports
- address/size cells
-Message-ID: <Yr5lo799md1XcAkU@builder.lan>
-References: <20220606132029.2221257-1-bryan.odonoghue@linaro.org>
- <20220606132029.2221257-4-bryan.odonoghue@linaro.org>
+To:     Luca Weiss <luca@z3ntu.xyz>
+Cc:     linux-arm-msm@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/2] ARM: dts: qcom: msm8974-*: re-add remoteproc supplies
+Message-ID: <Yr5mua6i6WxoAlzB@builder.lan>
+References: <20220606160421.1641778-1-luca@z3ntu.xyz>
+ <20220606160421.1641778-2-luca@z3ntu.xyz>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220606132029.2221257-4-bryan.odonoghue@linaro.org>
+In-Reply-To: <20220606160421.1641778-2-luca@z3ntu.xyz>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
@@ -76,44 +76,20 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 06 Jun 08:20 CDT 2022, Bryan O'Donoghue wrote:
+On Mon 06 Jun 11:04 CDT 2022, Luca Weiss wrote:
 
-> The ports {} address and size cells definition is the same for every
-> derived 8250 board so, we should define it in the core sm8250.dtsi.
+> As part of a recent cleanup commit, the remoteproc supplies for adsp and
+> modem were removed from msm8974.dtsi and now need to be set in the
+> device dts. Do so.
 > 
-> Suggested-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-> Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Fixes: f300826d27be ("ARM: dts: qcom-msm8974: Sort and clean up nodes")
+> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
 > ---
->  arch/arm64/boot/dts/qcom/sm8250.dtsi | 5 +++++
->  1 file changed, 5 insertions(+)
+> Bjorn, could you please pick this up for -fixes so it lands in an
+> upcoming 5.19-rc?
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> index 2bc11cad3a44..aa9a13364865 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> @@ -3395,6 +3395,11 @@ camss: camss@ac6a000 {
->  					     "cam_hf_0_mnoc",
->  					     "cam_sf_0_mnoc",
->  					     "cam_sf_icp_mnoc";
-> +
-> +			ports {
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
 
-Adding these without subnodes that make use of them will cause
-dtbs_check to complain.
-
-So although it would save a little bit of duplication, let's add them
-when/where it's needed.
+As reported by lkp, this doesn't build. Am I missing something?
 
 Regards,
 Bjorn
-
-> +			};
->  		};
->  
->  		camcc: clock-controller@ad00000 {
-> -- 
-> 2.36.1
-> 
