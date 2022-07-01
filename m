@@ -2,73 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 77230562970
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Jul 2022 05:15:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9052C56297D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Jul 2022 05:17:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233024AbiGADPN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Jun 2022 23:15:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34804 "EHLO
+        id S233989AbiGADQ6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Jun 2022 23:16:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36310 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233299AbiGADPM (ORCPT
+        with ESMTP id S234043AbiGADQv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Jun 2022 23:15:12 -0400
-Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44B9C43ADF
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Jun 2022 20:15:10 -0700 (PDT)
-Received: by mail-oi1-x22d.google.com with SMTP id i3so1843303oif.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Jun 2022 20:15:10 -0700 (PDT)
+        Thu, 30 Jun 2022 23:16:51 -0400
+Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com [IPv6:2607:f8b0:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6972664D68
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Jun 2022 20:16:50 -0700 (PDT)
+Received: by mail-ot1-x334.google.com with SMTP id e14-20020a9d018e000000b00618ca3183a0so266978ote.13
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Jun 2022 20:16:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=BxMVRlozs5gaL5y+tksQaCZPN44sJr80WYAWh7e65c8=;
-        b=VuZxcn7NzbAx1RYFKd3d6ugSfHcjpGYDGgiOadaY/oAjEp9D6yvBn8qGzGNmpltxOf
-         cROV/qrCwTB7SOajxmHjEv1vC49BiQIWKxvsOBNv25QrvctiLdUugGHZ08AxSG0jGe9H
-         Jj4sK30uQv+M3XRx1dBx3pvwCR4AlRb6mAJcOVI0hpd4Y5pQ3B/qTWhIGXT0ifxs9MCi
-         yU6idl++JaO9N3sGA7dmTrCvj2kVe3ey0Fcl/ktEzr6R4Bupnm9tN608XyGFCW7EX6BL
-         fcUFDmpxXu6bFW58xnqnLgA+Jh4RLE9tN+8PhsFm+TO9hkMSd1pHkMLWq93ieYELBRM5
-         3HTw==
+        bh=HPNd4ReapLodwhnbZtj5CIOKPYAgQKMIlbQzUVzo7PA=;
+        b=KgpRiaQlIInDtNWwve1xr8qYAEVPtOLJSS1jE74EkT3DPKl/jQttI+vc0RdNjD5SYw
+         tfyEDkQmueRl6sgGxQ4sSLROHm9f6O6wnbgbsdQ8ZNqM0rITQFfgKm+JuHRNPoLEbjvH
+         P6JiruMLvhfpqCeMYTKRzJ1ZQp+2lmLdCgirJA2JK+pd8Rdpl+Qn8/GFjuRaMouW35NY
+         t7EczL0tzK5RLMSL5zEpBmEUbRuPWHWjxh+probLRdM4CvOq2X288oC6r3IcKLywyOLL
+         4VqQ8P714xErkirPgvHVr9++FDnfmWyWAG8aewvfSiTA0LZzmhhhEqfzbQf3eltFY/G4
+         F0dQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=BxMVRlozs5gaL5y+tksQaCZPN44sJr80WYAWh7e65c8=;
-        b=toaguO5hWBGypj5OGr8ZV+MtXRmnaT2258Gu/r0t4IvjsgyLah+Sw/HqdHNFOWUf5K
-         4SzkcS4A9PdKTzsB6SR3BokNvOHpO/p+IVxV6qIvkaactWt7XN1Uz7vTQFh93MSSpPrN
-         Ddsd1q85okITnopBWK5lTDGH84B73tBNrXpZzZSimw8w3ALU5A+CZ9TWwuZAzC6J8tje
-         6Aj0RW6Q050mwUuNCz1uaJXliBTq6TmgeLwrupSH2SCGdNQTlIIOGzAPGv+EU5zwZqpr
-         0u4EITwKcr8XIDVQ8Iw2KNgvrBp79Q9K9HAYwWubNt5ms3gec6zLW1eo09f8D1utufrA
-         u7vQ==
-X-Gm-Message-State: AJIora+tqE9onE850IPLo6bOP7gWaGwPBAdFKqQ4zwUufLYb4Ig+iUuI
-        JAUXd9LkJj3urlTFYcXRoVPYcA==
-X-Google-Smtp-Source: AGRyM1ssBoPtQRcmEAjnjYBiorhZ2EAIrmmwQ9Fy88H4Rw50wh6VlhhnIza68G+u/M6FNXgpBHeW8g==
-X-Received: by 2002:aca:2204:0:b0:335:5bd4:f6db with SMTP id b4-20020aca2204000000b003355bd4f6dbmr8457410oic.201.1656645308146;
-        Thu, 30 Jun 2022 20:15:08 -0700 (PDT)
+        bh=HPNd4ReapLodwhnbZtj5CIOKPYAgQKMIlbQzUVzo7PA=;
+        b=rc5sb2SZFwk3wIk+3ddbrmbnQcZKUHFfpAlnZv2d3G1pOt9K2VKRyLIXcJvMD4bbgn
+         qToNAEPCcchs87rwaOEc20JTvdGVycR7utQBhdKz1rMXCa53uZPBCMvrctMyKrTAa3ga
+         9wk4ffhuhDh5kiEMIKyj36zLOvpPhx6ly3HXwubdEqpBSnpUSEMklWocVzT8tkMiyLJp
+         CekDZZZyulDiZNafXLgkWczO+ShmbJwkhdTfNeezvN4ycHJdfV4Pgc3t+uz7qYByjGr6
+         Ce2bMIYfGtAsDopY2uD7mGnBvL0RVVtOA6eB6TO8DAIMKdQMGhn/ODKqu9Yxrx37P8B3
+         iRWw==
+X-Gm-Message-State: AJIora/z5a9reMkY1D6OsASruAK7TBLW8tlVINZ4+0m7Gr3QdWOrawVH
+        5+9FthK1tzys1FZ4C4Pxq8Lo6w==
+X-Google-Smtp-Source: AGRyM1uO+s50h/3fmKyKSQ72i2tbY3t4VXAXY3PiTJmIZ5tobtdNuA66C58BgCeCFycW6fHZs/26wA==
+X-Received: by 2002:a05:6830:4491:b0:618:b000:97b1 with SMTP id r17-20020a056830449100b00618b00097b1mr2996109otv.148.1656645409774;
+        Thu, 30 Jun 2022 20:16:49 -0700 (PDT)
 Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id o4-20020a9d4104000000b0060bfb4e4033sm12205091ote.9.2022.06.30.20.15.07
+        by smtp.gmail.com with ESMTPSA id 7-20020a9d0807000000b0061706c58a9bsm2867121oty.61.2022.06.30.20.16.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Jun 2022 20:15:07 -0700 (PDT)
-Date:   Thu, 30 Jun 2022 22:15:05 -0500
+        Thu, 30 Jun 2022 20:16:49 -0700 (PDT)
+Date:   Thu, 30 Jun 2022 22:16:47 -0500
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Luca Weiss <luca@z3ntu.xyz>
-Cc:     linux-arm-msm@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
+To:     Teguh Sobirin <teguh@sobir.in>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/2] ARM: dts: qcom: msm8974-*: re-add remoteproc supplies
-Message-ID: <Yr5mua6i6WxoAlzB@builder.lan>
-References: <20220606160421.1641778-1-luca@z3ntu.xyz>
- <20220606160421.1641778-2-luca@z3ntu.xyz>
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        phone-devel@vger.kernel.org
+Subject: Re: [PATCH 7/7] fixup! arm64: dts: qcom: add support for AYN Odin
+ Base and Pro
+Message-ID: <Yr5nH5O4gJlCIsmI@builder.lan>
+References: <20220606230522.107428-1-teguh@sobir.in>
+ <SEZPR03MB66669DF0DECE022290F7C9E9DDA29@SEZPR03MB6666.apcprd03.prod.outlook.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220606160421.1641778-2-luca@z3ntu.xyz>
+In-Reply-To: <SEZPR03MB66669DF0DECE022290F7C9E9DDA29@SEZPR03MB6666.apcprd03.prod.outlook.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -76,20 +74,32 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 06 Jun 11:04 CDT 2022, Luca Weiss wrote:
+On Mon 06 Jun 18:05 CDT 2022, Teguh Sobirin wrote:
 
-> As part of a recent cleanup commit, the remoteproc supplies for adsp and
-> modem were removed from msm8974.dtsi and now need to be set in the
-> device dts. Do so.
-> 
-> Fixes: f300826d27be ("ARM: dts: qcom-msm8974: Sort and clean up nodes")
-> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
-> ---
-> Bjorn, could you please pick this up for -fixes so it lands in an
-> upcoming 5.19-rc?
-> 
+Please squash this with the commit you're trying to fix and repost with
+a cover-letter.
 
-As reported by lkp, this doesn't build. Am I missing something?
-
-Regards,
+Thanks,
 Bjorn
+
+> Signed-off-by: Teguh Sobirin <teguh@sobir.in>
+> ---
+>  arch/arm64/boot/dts/qcom/sdm845-ayn-odin.dts | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845-ayn-odin.dts b/arch/arm64/boot/dts/qcom/sdm845-ayn-odin.dts
+> index 545debd7c275..8deeb375bc1a 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845-ayn-odin.dts
+> +++ b/arch/arm64/boot/dts/qcom/sdm845-ayn-odin.dts
+> @@ -133,7 +133,7 @@ vdda_usb1_ss_core:
+>  		vdda_qusb_hs0_1p8:
+>  		vdda_qusb_hs0_3p1:
+>  		vdda_mipi_dsi0_1p2:
+> -		
+> +
+>  		vdda_ufs1_1p2:
+>  
+>  		vreg_l1a_0p875: ldo1 {
+> -- 
+> 2.30.2
+> 
