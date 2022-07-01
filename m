@@ -2,100 +2,164 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B7EDC56393F
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Jul 2022 20:39:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DE7DF56394B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Jul 2022 20:48:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229508AbiGASiX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 1 Jul 2022 14:38:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59456 "EHLO
+        id S230212AbiGASqx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 1 Jul 2022 14:46:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36792 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229491AbiGASiW (ORCPT
+        with ESMTP id S229553AbiGASqx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 1 Jul 2022 14:38:22 -0400
-Received: from mail-io1-f47.google.com (mail-io1-f47.google.com [209.85.166.47])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C1E71C125;
-        Fri,  1 Jul 2022 11:38:21 -0700 (PDT)
-Received: by mail-io1-f47.google.com with SMTP id y18so3085223iof.2;
-        Fri, 01 Jul 2022 11:38:21 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=JFCuwZEGgnwKogwS2rb4M4/WgT3C/xL2jGrRo19barQ=;
-        b=gzt0HLkU/EnzSnKZIT8PPc4BWed/E8j3NJx2GVpB6Ju2wxgi2RStfzrQ+oAzM8Wmpf
-         JXZ9HhGFIZoDFE2D+Zw2QIO/VoSw088uMTnl/11kTyL43NCY5ObipLQwP1GQYA7t0yF4
-         b2wYRuEcP40JvKL0yeEqH6dnHr1CNjUMZ0OhAYPsS4GF2qw+zKaoTNM2DOBaT3f3f6CK
-         zmCkTUK9LaW4d1C3caBJYKZkzRGD9zWSDyUICRX8vLmngyAGPaii3LHSIvZV5Y0XX6ju
-         CD3aj/DloTi3prnoKIRJ13VT8wUOqao/5RhM4LDcsooxPQqnc5rHn78Hd4yX5ksz/E3v
-         LuQQ==
-X-Gm-Message-State: AJIora8v1ALGnopIWLvjRTJ0kM7Q1x6DZVgBKTs3sEkaGQ3J3UZyvpoh
-        GumDHD0/ypWdh43/c3zddy3fPBqEQw==
-X-Google-Smtp-Source: AGRyM1tFLVvxZZTJZOKCOqsLHuzfA/xaz+jEPQd5u+nxRGC5u+1Ag3I61t1MmqHlM07u2fPMmqZFPg==
-X-Received: by 2002:a6b:7012:0:b0:675:43e5:58a1 with SMTP id l18-20020a6b7012000000b0067543e558a1mr8337072ioc.4.1656700700922;
-        Fri, 01 Jul 2022 11:38:20 -0700 (PDT)
-Received: from robh.at.kernel.org ([64.188.179.248])
-        by smtp.gmail.com with ESMTPSA id a17-20020a056e0208b100b002d955fab9dbsm9352343ilt.23.2022.07.01.11.38.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 Jul 2022 11:38:20 -0700 (PDT)
-Received: (nullmailer pid 1288873 invoked by uid 1000);
-        Fri, 01 Jul 2022 18:38:19 -0000
-Date:   Fri, 1 Jul 2022 12:38:19 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Johan Hovold <johan@kernel.org>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 03/10] dt-bindings: PCI: qcom: Enumerate platforms with
- single msi interrupt
-Message-ID: <20220701183819.GB1284915-robh@kernel.org>
-References: <20220629141000.18111-1-johan+linaro@kernel.org>
- <20220629141000.18111-4-johan+linaro@kernel.org>
- <c20ba06c-b37a-e91c-84c6-6d2147bb2478@linaro.org>
- <Yr6ykvru52aDZhFm@hovoldconsulting.com>
+        Fri, 1 Jul 2022 14:46:53 -0400
+Received: from mail-4022.proton.ch (mail-4022.proton.ch [185.70.40.22])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DBD3344C6
+        for <linux-arm-msm@vger.kernel.org>; Fri,  1 Jul 2022 11:46:51 -0700 (PDT)
+Date:   Fri, 01 Jul 2022 18:46:40 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=connolly.tech;
+        s=protonmail; t=1656701209; x=1656960409;
+        bh=Y5fzhHEQzXr1TjcKrd5HowR3mxV+jXMy30QqWAFASuc=;
+        h=Date:To:From:Cc:Reply-To:Subject:Message-ID:In-Reply-To:
+         References:Feedback-ID:From:To:Cc:Date:Subject:Reply-To:
+         Feedback-ID:Message-ID;
+        b=P5naxX4WrHW2BtWg1QCbMy/x6OzFDeVzSApY8zpSnbpKwrb+fOwzBEuT40W5Ij7XS
+         oRBUBYdS9gJbohKTt4SeUkR0D13zG6XIcjdTICgfBvObZRssTOHnjsdHOaMrndt2hL
+         kyie3FqxV0w2WD6MdhN5Wh5Vm6zzngwtjJoXS4QI=
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+From:   Caleb Connolly <caleb@connolly.tech>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Reply-To: Caleb Connolly <caleb@connolly.tech>
+Subject: Re: [PATCH 1/4] arm64: dts: qcom: Add LPG to pm8916, pm8994, pmi8994 and pmi8998
+Message-ID: <2e506766-39f3-b70f-b91e-ce120293d05e@connolly.tech>
+In-Reply-To: <20220505022706.1692554-2-bjorn.andersson@linaro.org>
+References: <20220505022706.1692554-1-bjorn.andersson@linaro.org> <20220505022706.1692554-2-bjorn.andersson@linaro.org>
+Feedback-ID: 10753939:user:proton
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Yr6ykvru52aDZhFm@hovoldconsulting.com>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jul 01, 2022 at 10:38:42AM +0200, Johan Hovold wrote:
-> On Fri, Jul 01, 2022 at 10:33:35AM +0200, Krzysztof Kozlowski wrote:
-> > On 29/06/2022 16:09, Johan Hovold wrote:
-> > > Explicitly enumerate the older platforms that have a single msi host
-> > > interrupt. This allows for adding further platforms without resorting
-> > > to nested conditionals.
-> > > 
-> > > Drop the redundant comment about older chipsets instead of moving it.
-> > > 
-> > > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> > 
-> > This does not exist in linux-next, so it should be squashed it with the
-> > previous series.
-> 
-> As mentioned in the cover letter this depends on the MSI series that has
-> unfortunately not yet been merged.
-> 
-> That series is self-contained and ready to be merged, so this follow-up
-> does not need to be squashed in.
 
-I suspect that Bjorn would rather squash these in.
 
-Rob
+On 05/05/2022 03:27, Bjorn Andersson wrote:
+> Add PWM/LPG nodes to the PMICs currently supported by the binding.
+>
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+fwiw:
+Reviewed-by: Caleb Connolly <caleb@connolly.tech>
+> ---
+>   arch/arm64/boot/dts/qcom/pm8916.dtsi  |  8 ++++++++
+>   arch/arm64/boot/dts/qcom/pm8994.dtsi  | 10 ++++++++++
+>   arch/arm64/boot/dts/qcom/pmi8994.dtsi | 10 ++++++++++
+>   arch/arm64/boot/dts/qcom/pmi8998.dtsi | 11 ++++++++++-
+>   4 files changed, 38 insertions(+), 1 deletion(-)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/pm8916.dtsi b/arch/arm64/boot/dts/q=
+com/pm8916.dtsi
+> index d58902432812..99bf8387bfb6 100644
+> --- a/arch/arm64/boot/dts/qcom/pm8916.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/pm8916.dtsi
+> @@ -125,6 +125,14 @@ pm8916_1: pmic@1 {
+>   =09=09#address-cells =3D <1>;
+>   =09=09#size-cells =3D <0>;
+>
+> +=09=09pm8916_pwm: pwm {
+> +=09=09=09compatible =3D "qcom,pm8916-pwm";
+> +
+> +=09=09=09#pwm-cells =3D <2>;
+> +
+> +=09=09=09status =3D "disabled";
+> +=09=09};
+> +
+>   =09=09pm8916_vib: vibrator@c000 {
+>   =09=09=09compatible =3D "qcom,pm8916-vib";
+>   =09=09=09reg =3D <0xc000>;
+> diff --git a/arch/arm64/boot/dts/qcom/pm8994.dtsi b/arch/arm64/boot/dts/q=
+com/pm8994.dtsi
+> index 5ab46117d737..ab342397fcd8 100644
+> --- a/arch/arm64/boot/dts/qcom/pm8994.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/pm8994.dtsi
+> @@ -135,6 +135,16 @@ pmic@1 {
+>   =09=09#address-cells =3D <1>;
+>   =09=09#size-cells =3D <0>;
+>
+> +=09=09pm8994_lpg: lpg {
+> +=09=09=09compatible =3D "qcom,pm8994-lpg";
+> +
+> +=09=09=09#address-cells =3D <1>;
+> +=09=09=09#size-cells =3D <0>;
+> +=09=09=09#pwm-cells =3D <2>;
+> +
+> +=09=09=09status =3D "disabled";
+> +=09=09};
+> +
+>   =09=09pm8994_spmi_regulators: regulators {
+>   =09=09=09compatible =3D "qcom,pm8994-regulators";
+>   =09=09};
+> diff --git a/arch/arm64/boot/dts/qcom/pmi8994.dtsi b/arch/arm64/boot/dts/=
+qcom/pmi8994.dtsi
+> index 6e7c252568e6..b1b50c99ada2 100644
+> --- a/arch/arm64/boot/dts/qcom/pmi8994.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/pmi8994.dtsi
+> @@ -27,6 +27,16 @@ pmic@3 {
+>   =09=09#address-cells =3D <1>;
+>   =09=09#size-cells =3D <0>;
+>
+> +=09=09pmi8994_lpg: lpg {
+> +=09=09=09compatible =3D "qcom,pmi8994-lpg";
+> +
+> +=09=09=09#address-cells =3D <1>;
+> +=09=09=09#size-cells =3D <0>;
+> +=09=09=09#pwm-cells =3D <2>;
+> +
+> +=09=09=09status =3D "disabled";
+> +=09=09};
+> +
+>   =09=09pmi8994_spmi_regulators: regulators {
+>   =09=09=09compatible =3D "qcom,pmi8994-regulators";
+>   =09=09=09#address-cells =3D <1>;
+> diff --git a/arch/arm64/boot/dts/qcom/pmi8998.dtsi b/arch/arm64/boot/dts/=
+qcom/pmi8998.dtsi
+> index 0fef5f113f05..7af106683f8d 100644
+> --- a/arch/arm64/boot/dts/qcom/pmi8998.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/pmi8998.dtsi
+> @@ -42,6 +42,16 @@ lab: lab {
+>   =09=09=09};
+>   =09=09};
+>
+> +=09=09pmi8998_lpg: lpg {
+> +=09=09=09compatible =3D "qcom,pmi8998-lpg";
+> +
+> +=09=09=09#address-cells =3D <1>;
+> +=09=09=09#size-cells =3D <0>;
+> +=09=09=09#pwm-cells =3D <2>;
+> +
+> +=09=09=09status =3D "disabled";
+> +=09=09};
+> +
+>   =09=09pmi8998_wled: leds@d800 {
+>   =09=09=09compatible =3D "qcom,pmi8998-wled";
+>   =09=09=09reg =3D <0xd800 0xd900>;
+> @@ -52,6 +62,5 @@ pmi8998_wled: leds@d800 {
+>
+>   =09=09=09status =3D "disabled";
+>   =09=09};
+> -
+>   =09};
+>   };
+> --
+> 2.35.1
+>
+
+--
+Kind Regards,
+Caleb
+
