@@ -2,48 +2,48 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 833C556320D
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Jul 2022 12:59:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 21FEE56321B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Jul 2022 13:02:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235392AbiGAK7t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 1 Jul 2022 06:59:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57992 "EHLO
+        id S232866AbiGALCi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 1 Jul 2022 07:02:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60436 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235907AbiGAK7s (ORCPT
+        with ESMTP id S229553AbiGALCi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 1 Jul 2022 06:59:48 -0400
+        Fri, 1 Jul 2022 07:02:38 -0400
 Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6559D7E033;
-        Fri,  1 Jul 2022 03:59:47 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B8C480484;
+        Fri,  1 Jul 2022 04:02:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1656673187; x=1688209187;
+  t=1656673357; x=1688209357;
   h=message-id:date:mime-version:subject:to:cc:references:
    from:in-reply-to:content-transfer-encoding;
-  bh=zwXiI7LNSRTMgOwPQ//yw+saai2jTHywEYViefmeQtg=;
-  b=x/Sl6nlPVwlq/3EJDPeyasqTl94pBIl/bv4cTUksmADoZMNUZGjJMOAy
-   oY8jPOu3FnH8gv3uvKX01erYHb3F45+0gjUdL0luz7r2P41yy62qXZk1+
-   4li22eb6GJZqBfWenQNiNd5Jiqu0TtYGMLNbRymrpQI47U3QXPlYHrEAj
-   A=;
-Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 01 Jul 2022 03:59:47 -0700
+  bh=pe9vh1uyJgmG4VqwbDIu3cgOWmm2SU16n90rLgoPYMc=;
+  b=kxw3fEgogxgiJkDCDhY9P+L6UwuwI04EvWV1XMfa88XZ+yLvvuzFoTgm
+   UFB4jSGO29bhaTuFt9yqAFii1lY1w+jGir1EK53GFozwNthy3EMk7ubDQ
+   MZpcYBcbFhCQ0i6+gWJqdV5lvsJDEBVotvGP0HfNfdUo30dYOMUyh8jIK
+   Y=;
+Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 01 Jul 2022 04:02:36 -0700
 X-QCInternal: smtphost
 Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jul 2022 03:59:46 -0700
+  by ironmsg02-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jul 2022 04:02:36 -0700
 Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
  nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Fri, 1 Jul 2022 03:59:46 -0700
+ 15.2.986.22; Fri, 1 Jul 2022 04:02:36 -0700
 Received: from [10.216.5.206] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Fri, 1 Jul 2022
- 03:59:42 -0700
-Message-ID: <aa754d43-ec58-97c7-e50b-0459a850e302@quicinc.com>
-Date:   Fri, 1 Jul 2022 16:29:38 +0530
+ 04:02:32 -0700
+Message-ID: <ec04538b-93e2-fa93-4043-c489a0f228e8@quicinc.com>
+Date:   Fri, 1 Jul 2022 16:32:28 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.8.1
-Subject: Re: [PATCH 4/5] firmware: qcom: scm: Add wait-queue helper functions
+Subject: Re: [PATCH 5/5] firmware: qcom: scm: Add wait-queue handling logic
 Content-Language: en-US
 To:     Guru Das Srinagesh <quic_gurus@quicinc.com>,
         Andy Gross <agross@kernel.org>,
@@ -54,11 +54,11 @@ CC:     David Heidelberg <david@ixit.cz>,
         Robert Marko <robimarko@gmail.com>,
         Elliot Berman <quic_eberman@quicinc.com>
 References: <1656359076-13018-1-git-send-email-quic_gurus@quicinc.com>
- <1656359076-13018-5-git-send-email-quic_gurus@quicinc.com>
+ <1656359076-13018-6-git-send-email-quic_gurus@quicinc.com>
 From:   Rajendra Nayak <quic_rjendra@quicinc.com>
-In-Reply-To: <1656359076-13018-5-git-send-email-quic_gurus@quicinc.com>
+In-Reply-To: <1656359076-13018-6-git-send-email-quic_gurus@quicinc.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
@@ -73,147 +73,261 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
+
 On 6/28/2022 1:14 AM, Guru Das Srinagesh wrote:
-> When the firmware (FW) supports multiple requests per VM, and the VM also
-> supports it via the `enable-multi-call` device tree flag, the floodgates
-> are thrown open for them to all reach the firmware at the same time.
+> Add logic to handle QCOM_SCM_WAITQ_SLEEP or QCOM_SCM_WAITQ_WAKE return
+> codes.
 > 
-> Since the firmware currently being used has limited resources, it guards
-> them with a resource lock and puts requests on a wait-queue internally
-> and signals to HLOS that it is doing so. It does this by returning two
-> new return values in addition to success or error: SCM_WAITQ_SLEEP and
-> SCM_WAITQ_WAKE.
+> Scenario 1: Requests made by 2 different VMs:
 > 
->    1) SCM_WAITQ_SLEEP:
+>    VM_1                     VM_2                            Firmware
+>      │                        │                                 │
+>      │                        │                                 │
+>      │                        │                                 │
+>      │                        │                                 │
+>      │      REQUEST_1         │                                 │
+>      ├────────────────────────┼─────────────────────────────────┤
+>      │                        │                                 │
+>      │                        │                              ┌──┼──┐
+>      │                        │                              │  │  │
+>      │                        │     REQUEST_2                │  │  │
+>      │                        ├──────────────────────────────┼──┤  │
+>      │                        │                              │  │  │Resource
+>      │                        │                              │  │  │is busy
+>      │                        │       {WQ_SLEEP}             │  │  │
+>      │                        │◄─────────────────────────────┼──┤  │
+>      │                        │  wq_ctx, smc_call_ctx        │  │  │
+>      │                        │                              └──┼──┘
+>      │   REQUEST_1 COMPLETE   │                                 │
+>      │◄───────────────────────┼─────────────────────────────────┤
+>      │                        │                                 │
+>      │                        │         IRQ                     │
+>      │                        │◄─-------------------------------│
+>      │                        │                                 │
+>      │                        │      get_wq_ctx()               │
+>      │                        ├────────────────────────────────►│
+>      │                        │                                 │
+>      │                        │                                 │
+>      │                        │◄────────────────────────────────┤
+>      │                        │   wq_ctx, flags, and            │
+>      │                        │        more_pending             │
+>      │                        │                                 │
+>      │                        │                                 │
+>      │                        │ wq_resume(smc_call_ctx)         │
+>      │                        ├────────────────────────────────►│
+>      │                        │                                 │
+>      │                        │                                 │
+>      │                        │      REQUEST_2 COMPLETE         │
+>      │                        │◄────────────────────────────────┤
+>      │                        │                                 │
+>      │                        │                                 │
 > 
->    	When an SCM call receives this return value instead of success
->    	or error, FW has placed this call on a wait-queue and
->    	has signalled HLOS to put it to non-interruptible sleep. (The
-> 	mechanism to wake it back up will be described in detail in the
-> 	next patch for the sake of simplicity.)
+> Scenario 2: Two Requests coming in from same VM:
 > 
-> 	Along with this return value, FW also passes to HLOS `wq_ctx` -
-> 	a unique number (UID) identifying the wait-queue that it has put
-> 	the call on, internally. This is to help HLOS with its own
-> 	bookkeeping to wake this sleeping call later.
-> 
-> 	Additionally, FW also passes to HLOS `smc_call_ctx` - a UID
-> 	identifying the SCM call thus being put to sleep. This is also
-> 	for HLOS' bookkeeping to wake this call up later.
-> 
-> 	These two additional values are passed via the a1 and a2
-> 	registers.
-> 
-> 	N.B.: The "ctx" in the above UID names = "context".
-> 
->    2) SCM_WAITQ_WAKE:
-> 
->    	When an SCM call receives this return value instead of success
->    	or error, FW wishes to signal HLOS to wake up a (different)
->    	previously sleeping call.
+>    VM_1                                                     Firmware
+>      │                                                          │
+>      │                                                          │
+>      │                                                          │
+>      │                                                          │
+>      │      REQUEST_1                                           │
+>      ├──────────────────────────────────────────────────────────┤
+>      │                                                          │
+>      │                                                     ┌────┼───┐
+>      │                                                     │    │   │
+>      │                                                     │    │   │
+>      │                                                     │    │   │
+>      │      REQUEST_2                                      │    │   │
+>      ├─────────────────────────────────────────────────────┼───►│   │
+>      │                                                     │    │   │Resource
+>      │                                                     │    │   │is busy
+>      │      {WQ_SLEEP}                                     │    │   │
+>      │◄────────────────────────────────────────────────────┼────┤   │
+>      │      wq_ctx, req2_smc_call_ctx                      │    │   │
+>      │                                                     │    │   │
+>      │                                                     └────┼───┘
+>      │                                                          │
+>      │      {WQ_WAKE}                                           │
+>      │◄─────────────────────────────────────────────────────────┤
+>      │      wq_ctx, req1_smc_call_ctx, flags                    │
 
-What happens to this SCM call itself (The one which gets an SCM_WAITQ_WAKE returned
-instead of a success or failure)?
-is it processed? how does the firmware in that case return a success or error?
 
+This is perhaps the same thing I asked on the previous patch,
+I am guessing {WQ_WAKE} is returned in respone to REQUEST_1?
+How do you know in this case if REQUEST_1 was a success or failure?
+
+
+>      │                                                          │
+>      │                                                          │
+>      │      wq_wake_ack(req1_smc_call_ctx)                      │
+>      ├─────────────────────────────────────────────────────────►│
+>      │                                                          │
+>      │      REQUEST_1 COMPLETE                                  │
+>      │◄─────────────────────────────────────────────────────────┤
+>      │                                                          │
+>      │                                                          │
+>      │      wq_resume(req_2_smc_call_ctx)                       │
+>      ├─────────────────────────────────────────────────────────►│
+>      │                                                          │
+>      │      REQUEST_2 COMPLETE                                  │
+>      │◄─────────────────────────────────────────────────────────┤
+>      │                                                          │
 > 
->    	FW tells HLOS which call to wake up via the additional return
->    	values `wq_ctx`, `smc_call_ctx` and `flags`. The first two have
->    	already been explained above.
+> With the exception of get_wq_ctx(), the other two newly-introduced SMC
+> calls, wq_ack() and wq_resume() can themselves return WQ_SLEEP (these
+> nested rounds of WQ_SLEEP are not shown in the above diagram for the
+> sake of simplicity). Therefore, introduce a new do-while loop to handle
+> multiple WQ_SLEEP return values for the same parent SCM call.
 > 
->    	`flags` can be either WAKE_ONE or WAKE_ALL. Meaning, wake either
->    	one, or all, of the SCM calls that HLOS is associating with the
->    	given `wq_ctx`.
-> 
-> A sleeping SCM call can be woken up by either an interrupt that FW
-> raises, or via a SCM_WAITQ_WAKE return value for a new SCM call.
-> 
-> The handshake mechanism that HLOS uses to talk to FW about wait-queue
-> operations involves three new SMC calls. These are:
-> 
->    1) get_wq_ctx():
-> 
->      	Arguments: 	None
->      	Returns:	wq_ctx, flags, more_pending
-> 
->      	Get the wait-queue context, and wake up either one or all of the
->      	sleeping SCM calls associated with that wait-queue.
-> 
->      	Additionally, repeat this if there are more wait-queues that are
->      	ready to have their requests woken up (`more_pending`).
-> 
->    2) wq_resume(smc_call_ctx):
-> 
->    	Arguments:	smc_call_ctx
-> 
->    	HLOS needs to issue this in response to receiving an
->    	IRQ, passing to FW the same smc_call_ctx that FW
->    	receives from HLOS via the get_wq_ctx() call.
-> 
->    3) wq_wake_ack(smc_call_ctx):
-> 
->    	Arguments:	smc_call_ctx
-> 
->    	HLOS needs to issue this in response to receiving an
->    	SCM_WAITQ_WAKE, passing to FW the same smc_call_ctx that FW
->    	passed to HLOS via the SMC_WAITQ_WAKE call.
-> 
-> (Reminder that the full handshake mechanism will be detailed in the
-> subsequent patch.)
-> 
-> Also add the interrupt handler that wakes up a sleeping SCM call.
+> Request Completion in the above diagram refers to either a success
+> return value (zero) or error (and not SMC_WAITQ_SLEEP or
+> SMC_WAITQ_WAKE).
 > 
 > Signed-off-by: Guru Das Srinagesh <quic_gurus@quicinc.com>
-
-[]...
-
+> ---
+>   drivers/firmware/qcom_scm-smc.c | 79 +++++++++++++++++++++++++++++++++++++----
+>   1 file changed, 72 insertions(+), 7 deletions(-)
+> 
+> diff --git a/drivers/firmware/qcom_scm-smc.c b/drivers/firmware/qcom_scm-smc.c
+> index 4150da1..fe95cc3 100644
+> --- a/drivers/firmware/qcom_scm-smc.c
+> +++ b/drivers/firmware/qcom_scm-smc.c
+> @@ -53,6 +53,9 @@ static void __scm_smc_do_quirk(const struct arm_smccc_args *smc,
+>   	} while (res->a0 == QCOM_SCM_INTERRUPTED);
+>   }
+>   
+> +#define IS_WAITQ_SLEEP_OR_WAKE(res) \
+> +	(res->a0 == QCOM_SCM_WAITQ_SLEEP || res->a0 == QCOM_SCM_WAITQ_WAKE)
 > +
->   static int qcom_scm_probe(struct platform_device *pdev)
+>   static void fill_wq_resume_args(struct arm_smccc_args *resume, u32 smc_call_ctx)
 >   {
->   	struct qcom_scm *scm;
->   	unsigned long clks;
-> -	int ret;
-> +	int irq, ret;
+>   	memset(resume->args, 0, ARRAY_SIZE(resume->args));
+> @@ -109,25 +112,80 @@ int scm_get_wq_ctx(u32 *wq_ctx, u32 *flags, u32 *more_pending)
+>   	return 0;
+>   }
 >   
->   	scm = devm_kzalloc(&pdev->dev, sizeof(*scm), GFP_KERNEL);
->   	if (!scm)
-> @@ -1333,12 +1432,28 @@ static int qcom_scm_probe(struct platform_device *pdev)
->   	if (ret)
->   		return ret;
->   
-> +	platform_set_drvdata(pdev, scm);
+> -static void __scm_smc_do(const struct arm_smccc_args *smc,
+> +static int scm_smc_do_quirk(struct device *dev, struct arm_smccc_args *smc,
+> +			    struct arm_smccc_res *res)
+> +{
+> +	struct completion *wq = NULL;
+> +	struct qcom_scm *qscm;
+> +	u32 wq_ctx, smc_call_ctx, flags;
 > +
->   	__scm = scm;
->   	__scm->dev = &pdev->dev;
->   
-> +	spin_lock_init(&__scm->waitq.idr_lock);
-> +	idr_init(&__scm->waitq.idr);
->   	qcom_scm_allow_multicall = of_property_read_bool(__scm->dev->of_node,
->   							"allow-multi-call");
->   
-> +	INIT_WORK(&__scm->waitq.scm_irq_work, scm_irq_work);
+> +	do {
+> +		__scm_smc_do_quirk(smc, res);
 > +
-> +	irq = platform_get_irq(pdev, 0);
-> +	if (irq) {
-> +		ret = devm_request_threaded_irq(__scm->dev, irq, NULL,
-> +			qcom_scm_irq_handler, IRQF_ONESHOT, "qcom-scm", __scm);
-> +		if (ret < 0) {
-> +			pr_err("Failed to request qcom-scm irq: %d\n", ret);
-
-idr_destroy()?
-
-> +			return ret;
+> +		if (IS_WAITQ_SLEEP_OR_WAKE(res)) {
+> +			wq_ctx = res->a1;
+> +			smc_call_ctx = res->a2;
+> +			flags = res->a3;
+> +
+> +			if (!dev)
+> +				return -EPROBE_DEFER;
+> +
+> +			qscm = dev_get_drvdata(dev);
+> +			wq = qcom_scm_lookup_wq(qscm, wq_ctx);
+> +			if (IS_ERR_OR_NULL(wq)) {
+> +				pr_err("No waitqueue found for wq_ctx %d: %ld\n",
+> +						wq_ctx, PTR_ERR(wq));
+> +				return PTR_ERR(wq);
+> +			}
+> +
+> +			if (res->a0 == QCOM_SCM_WAITQ_SLEEP) {
+> +				wait_for_completion(wq);
+> +				fill_wq_resume_args(smc, smc_call_ctx);
+> +				wq = NULL;
+> +				continue;
+> +			} else {
+> +				fill_wq_wake_ack_args(smc, smc_call_ctx);
+> +				continue;
+> +			}
+> +		} else if ((long)res->a0 < 0) {
+> +			/* Error, simply return to caller */
+> +			break;
+> +		} else {
+> +			/*
+> +			 * Success.
+> +			 * wq will be set only if a prior WAKE happened.
+> +			 * Its value will be the one from the prior WAKE.
+> +			 */
+> +			if (wq)
+> +				scm_waitq_flag_handler(wq, flags);
+> +			break;
 > +		}
-> +	}
+> +	} while (IS_WAITQ_SLEEP_OR_WAKE(res));
 > +
->   	__get_convention();
->   
->   	/*
-> @@ -1354,6 +1469,7 @@ static int qcom_scm_probe(struct platform_device *pdev)
->   
->   static void qcom_scm_shutdown(struct platform_device *pdev)
+> +	return 0;
+> +}
+> +
+> +static int __scm_smc_do(struct device *dev, struct arm_smccc_args *smc,
+>   			 struct arm_smccc_res *res, bool atomic)
 >   {
-> +	idr_destroy(&__scm->waitq.idr);
->   	/* Clean shutdown, disable download mode to allow normal restart */
->   	if (download_mode)
->   		qcom_scm_set_download_mode(false);
+> -	int retry_count = 0;
+> +	int ret, retry_count = 0;
+>   
+>   	if (atomic) {
+>   		__scm_smc_do_quirk(smc, res);
+> -		return;
+> +		return 0;
+>   	}
+>   
+>   	do {
+>   		if (!qcom_scm_allow_multicall)
+>   			mutex_lock(&qcom_scm_lock);
+>   
+> -		__scm_smc_do_quirk(smc, res);
+> +		ret = scm_smc_do_quirk(dev, smc, res);
+>   
+>   		if (!qcom_scm_allow_multicall)
+>   			mutex_unlock(&qcom_scm_lock);
+>   
+> +		if (ret)
+> +			return ret;
+>   
+>   		if (res->a0 == QCOM_SCM_V2_EBUSY) {
+>   			if (retry_count++ > QCOM_SCM_EBUSY_MAX_RETRY)
+> @@ -135,6 +193,8 @@ static void __scm_smc_do(const struct arm_smccc_args *smc,
+>   			msleep(QCOM_SCM_EBUSY_WAIT_MS);
+>   		}
+>   	}  while (res->a0 == QCOM_SCM_V2_EBUSY);
+> +
+> +	return 0;
+>   }
+>   
+>   
+> @@ -143,7 +203,7 @@ int __scm_smc_call(struct device *dev, const struct qcom_scm_desc *desc,
+>   		   struct qcom_scm_res *res, bool atomic)
+>   {
+>   	int arglen = desc->arginfo & 0xf;
+> -	int i;
+> +	int i, ret;
+>   	dma_addr_t args_phys = 0;
+>   	void *args_virt = NULL;
+>   	size_t alloc_len;
+> @@ -195,19 +255,24 @@ int __scm_smc_call(struct device *dev, const struct qcom_scm_desc *desc,
+>   		smc.args[SCM_SMC_LAST_REG_IDX] = args_phys;
+>   	}
+>   
+> -	__scm_smc_do(&smc, &smc_res, atomic);
+> +	ret = __scm_smc_do(dev, &smc, &smc_res, atomic);
+> +	/* ret error check follows after args_virt cleanup*/
+>   
+>   	if (args_virt) {
+>   		dma_unmap_single(dev, args_phys, alloc_len, DMA_TO_DEVICE);
+>   		kfree(args_virt);
+>   	}
+>   
+> +	if (ret)
+> +		return ret;
+> +
+>   	if (res) {
+>   		res->result[0] = smc_res.a1;
+>   		res->result[1] = smc_res.a2;
+>   		res->result[2] = smc_res.a3;
+>   	}
+>   
+> -	return (long)smc_res.a0 ? qcom_scm_remap_error(smc_res.a0) : 0;
+> +	ret = (long)smc_res.a0 ? qcom_scm_remap_error(smc_res.a0) : 0;
+>   
+> +	return ret;
+>   }
