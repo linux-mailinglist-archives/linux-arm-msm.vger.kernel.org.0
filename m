@@ -2,108 +2,224 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 591C3562C6E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Jul 2022 09:17:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 443F6562CA7
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Jul 2022 09:31:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235220AbiGAHRn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 1 Jul 2022 03:17:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44418 "EHLO
+        id S233993AbiGAHbZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 1 Jul 2022 03:31:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56818 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235062AbiGAHRk (ORCPT
+        with ESMTP id S233709AbiGAHbZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 1 Jul 2022 03:17:40 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3904A6B276;
-        Fri,  1 Jul 2022 00:17:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1656659860; x=1688195860;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version;
-  bh=d3C89lxkSV25rneKnYRK3zet+skzg3cqSdSRgWF97+s=;
-  b=tas/J0XQ1VsMCTn0BtT5eI6GVS4rw7pVd/hdDFrR00PwQ2t74E3CirPT
-   Sr4mfaxHZzaIhq/SmuEoxd+1jUI+0Qep0YmxXQLrAwn0WLAOY6GnF4ry0
-   HPTQW1mUBStwi5DyqKvyt/vaELlPrrG1moHPqIsNjnY5teKitd+7a/SNh
-   8=;
-Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 01 Jul 2022 00:17:39 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jul 2022 00:17:38 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Fri, 1 Jul 2022 00:17:38 -0700
-Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Fri, 1 Jul 2022 00:17:32 -0700
-From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
-        <lgirdwood@gmail.com>, <broonie@kernel.org>, <robh+dt@kernel.org>,
-        <quic_plai@quicinc.com>, <bgoswami@quicinc.com>, <perex@perex.cz>,
-        <tiwai@suse.com>, <srinivas.kandagatla@linaro.org>,
-        <quic_rohkumar@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <alsa-devel@alsa-project.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <swboyd@chromium.org>,
-        <judyhsiao@chromium.org>, <vkoul@kernel.org>
-CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Subject: [RESEND v5 2/2] ASoC: qcom: soundwire: Enable software clock gating requirement flag
-Date:   Fri, 1 Jul 2022 12:47:07 +0530
-Message-ID: <1656659827-27450-3-git-send-email-quic_srivasam@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1656659827-27450-1-git-send-email-quic_srivasam@quicinc.com>
-References: <1656659827-27450-1-git-send-email-quic_srivasam@quicinc.com>
+        Fri, 1 Jul 2022 03:31:25 -0400
+Received: from m-r2.th.seeweb.it (m-r2.th.seeweb.it [IPv6:2001:4b7a:2000:18::171])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01BD76B837;
+        Fri,  1 Jul 2022 00:31:22 -0700 (PDT)
+Received: from [192.168.1.101] (abxi46.neoplus.adsl.tpnet.pl [83.9.2.46])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id DF0693F7B4;
+        Fri,  1 Jul 2022 09:31:18 +0200 (CEST)
+Message-ID: <198fc303-30e5-31c7-5159-b787916ee6d8@somainline.org>
+Date:   Fri, 1 Jul 2022 09:31:17 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: Re: [PATCH V2 7/8] arm64: dts: Add ipq5018 SoC and MP03 board support
+Content-Language: en-US
+To:     Sricharan Ramabadhran <quic_srichara@quicinc.com>,
+        agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, mturquette@baylibre.com,
+        sboyd@kernel.org, linus.walleij@linaro.org,
+        catalin.marinas@arm.com, p.zabel@pengutronix.de,
+        quic_varada@quicinc.com, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+References: <20220621161126.15883-1-quic_srichara@quicinc.com>
+ <20220621161126.15883-8-quic_srichara@quicinc.com>
+ <f8aa5f81-e77c-db28-519d-7d9ee119dcf3@somainline.org>
+ <2a16703b-5b1e-5ce9-0af0-2e08da49d8ed@quicinc.com>
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+In-Reply-To: <2a16703b-5b1e-5ce9-0af0-2e08da49d8ed@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable software clock gating flag in private data for SC7280
-based platforms, which are soundwire 1.6.0 version based.
 
-Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
----
- drivers/soundwire/qcom.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
-index 5baceda..4a77e74 100644
---- a/drivers/soundwire/qcom.c
-+++ b/drivers/soundwire/qcom.c
-@@ -192,6 +192,12 @@ static const struct qcom_swrm_data swrm_v1_5_data = {
- 	.default_cols = 16,
- };
- 
-+static const struct qcom_swrm_data swrm_v1_6_data = {
-+	.default_rows = 50,
-+	.default_cols = 16,
-+	.sw_clk_gate_required = true,
-+};
-+
- #define to_qcom_sdw(b)	container_of(b, struct qcom_swrm_ctrl, bus)
- 
- static int qcom_swrm_ahb_reg_read(struct qcom_swrm_ctrl *ctrl, int reg,
-@@ -1558,7 +1564,7 @@ static const struct dev_pm_ops swrm_dev_pm_ops = {
- static const struct of_device_id qcom_swrm_of_match[] = {
- 	{ .compatible = "qcom,soundwire-v1.3.0", .data = &swrm_v1_3_data },
- 	{ .compatible = "qcom,soundwire-v1.5.1", .data = &swrm_v1_5_data },
--	{ .compatible = "qcom,soundwire-v1.6.0", .data = &swrm_v1_5_data },
-+	{ .compatible = "qcom,soundwire-v1.6.0", .data = &swrm_v1_6_data },
- 	{/* sentinel */},
- };
- 
--- 
-2.7.4
+On 28.06.2022 09:14, Sricharan Ramabadhran wrote:
+> Thanks Konrad for the review.
+> 
+> On 6/27/2022 12:02 AM, Konrad Dybcio wrote:
+>>
+>> On 21.06.2022 18:11, Sricharan R wrote:
+>>> From: Varadarajan Narayanan <quic_varada@quicinc.com>
+>>>
+>>> Add initial device tree support for the Qualcomm IPQ5018 SoC and
+>>> MP03.1-C2 board.
+>>>
+>>> Co-developed-by: Sricharan R <quic_srichara@quicinc.com>
+>>> Signed-off-by: Sricharan R <quic_srichara@quicinc.com>
+>>> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+>>> ---
+>>>   arch/arm64/boot/dts/qcom/Makefile             |   1 +
+>>>   .../arm64/boot/dts/qcom/ipq5018-mp03.1-c2.dts |  29 +++
+>>>   arch/arm64/boot/dts/qcom/ipq5018.dtsi         | 221 ++++++++++++++++++
+>>>   3 files changed, 251 insertions(+)
+>>>   create mode 100644 arch/arm64/boot/dts/qcom/ipq5018-mp03.1-c2.dts
+>>>   create mode 100644 arch/arm64/boot/dts/qcom/ipq5018.dtsi
+>>>
+>>> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+>>> index f9e6343acd03..c44e701f093c 100644
+>>> --- a/arch/arm64/boot/dts/qcom/Makefile
+>>> +++ b/arch/arm64/boot/dts/qcom/Makefile
+>>> @@ -10,6 +10,7 @@ dtb-$(CONFIG_ARCH_QCOM)    += ipq8074-hk10-c2.dtb
+>>>   dtb-$(CONFIG_ARCH_QCOM)    += msm8916-alcatel-idol347.dtb
+>>>   dtb-$(CONFIG_ARCH_QCOM)    += msm8916-asus-z00l.dtb
+>>>   dtb-$(CONFIG_ARCH_QCOM)    += msm8916-huawei-g7.dtb
+>>> +dtb-$(CONFIG_ARCH_QCOM)    += ipq5018-mp03.1-c2.dtb
+>>>   dtb-$(CONFIG_ARCH_QCOM)    += msm8916-longcheer-l8150.dtb
+>>>   dtb-$(CONFIG_ARCH_QCOM)    += msm8916-longcheer-l8910.dtb
+>>>   dtb-$(CONFIG_ARCH_QCOM)    += msm8916-mtp.dtb
+>>> diff --git a/arch/arm64/boot/dts/qcom/ipq5018-mp03.1-c2.dts b/arch/arm64/boot/dts/qcom/ipq5018-mp03.1-c2.dts
+>>> new file mode 100644
+>>> index 000000000000..d1cd080ec3db
+>>> --- /dev/null
+>>> +++ b/arch/arm64/boot/dts/qcom/ipq5018-mp03.1-c2.dts
+>>> @@ -0,0 +1,29 @@
+>>> +// SPDX-License-Identifier: GPL-2.0+ OR BSD-3-Clause
+>>> +/*
+>>> + * IPQ5018 CP01 board device tree source
+>>> + *
+>>> + * Copyright (c) 2020-2021, The Linux Foundation. All rights reserved.
+>>> + */
+>>> +
+>>> +/dts-v1/;
+>>> +
+>>> +#include "ipq5018.dtsi"
+>>> +
+>>> +/ {
+>>> +    model = "Qualcomm Technologies, Inc. IPQ5018/AP-MP03-C2";
+>>> +    compatible = "qcom,ipq5018-mp03", "qcom,ipq5018";
+>>> +
+>>> +    aliases {
+>>> +        serial0 = &blsp1_uart1;
+>>> +    };
+>>> +
+>>> +    chosen {
+>>> +        stdout-path = "serial0:115200n8";
+>>> +    };
+>>> +};
+>>> +
+>>> +&blsp1_uart1 {
+>>> +    pinctrl-0 = <&serial_1_pins>;
+>>> +    pinctrl-names = "default";
+>>> +    status = "ok";
+>>> +};
+>>> diff --git a/arch/arm64/boot/dts/qcom/ipq5018.dtsi b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
+>>> new file mode 100644
+>>> index 000000000000..084fb7b30dfd
+>>> --- /dev/null
+>>> +++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
+>>> @@ -0,0 +1,221 @@
+>>> +// SPDX-License-Identifier: GPL-2.0+ OR BSD-3-Clause
+>>> +/*
+>>> + * Copyright (c) 2017-2021, The Linux Foundation. All rights reserved.
+>>> + */
+>>> +/*
+>>> + * IPQ5018 SoC device tree source
+>>> + *
+>>> + * Copyright (c) 2019, The Linux Foundation. All rights reserved.
+>>> + */
+>>> +
+>>> +#include <dt-bindings/interrupt-controller/arm-gic.h>
+>>> +#include <dt-bindings/clock/qcom,gcc-ipq5018.h>
+>>> +#include <dt-bindings/reset/qcom,gcc-ipq5018.h>
+>>> +
+>>> +/ {
+>>> +    #address-cells = <2>;
+>>> +    #size-cells = <2>;
+>>> +    interrupt-parent = <&intc>;
+>> Hi!
+>>
+>> interrupt-parent could go first.
+> 
+>  ok.
+> 
+> 
+>>> +
+>>> +    sleep_clk: sleep-clk {
+>>> +        compatible = "fixed-clock";
+>>> +        clock-frequency = <32000>;
+>>> +        #clock-cells = <0>;
+>>> +    };
+>>> +
+>>> +    xo: xo {
+>>> +        compatible = "fixed-clock";
+>>> +        clock-frequency = <24000000>;
+>>> +        #clock-cells = <0>;
+>>> +    };
+>>> +
+>>> +    gen2clk0: gen2clk0 {
+>>> +        compatible = "fixed-clock";
+>>> +        #clock-cells = <0>;
+>>> +        clock-frequency = <125000000>;
+>>> +        clock-output-names = "pcie20_phy0_pipe_clk";
+>>> +    };
+>>> +
+>>> +    gen2clk1: gen2clk1 {
+>>> +        compatible = "fixed-clock";
+>>> +        #clock-cells = <0>;
+>>> +        clock-frequency = <125000000>;
+>>> +        clock-output-names = "pcie20_phy1_pipe_clk";
+>>> +    };
+>> I am not sure what's the current stance on this, but previously clock nodes
+>> used to be wrapped in a clocks {} node, as currently they are not sorted
+>> properly.
+>>
+>  hmm ok, yeah, see the clocks { node in some recent dts as well, will add the wrapper.
+> 
+> 
+>>> +
+>>> +    cpus: cpus {
+>> Is this label going to be used?
+>   hmm, not used, will remove.
+>>> +        #address-cells = <1>;
+>>> +        #size-cells = <0>;
+>>> +
+>>> +        CPU0: cpu@0 {
+>>> +            device_type = "cpu";
+>>> +            compatible = "arm,cortex-a53";
+>>> +            reg = <0x0>;
+>>> +            enable-method = "psci";
+>>> +            next-level-cache = <&L2_0>;
+>>> +        };
+>>> +
+>>> +        CPU1: cpu@1 {
+>>> +            device_type = "cpu";
+>>> +            compatible = "arm,cortex-a53";
+>>> +            enable-method = "psci";
+>>> +            reg = <0x1>;
+>>> +            next-level-cache = <&L2_0>;
+>>> +        };
+>>> +
+>>> +        L2_0: l2-cache {
+>>> +            compatible = "cache";
+>>> +            cache-level = <0x2>;
+>> This should probably be dec, as it's not a register.
+> 
+>    'dec' ? Sorry, i did not get that.
+Short for decimal.
 
+Konrad
+
+[snip]
