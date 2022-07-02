@@ -2,167 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D68A5563F22
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Jul 2022 10:54:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BA0C1563F34
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Jul 2022 11:14:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232127AbiGBItx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 2 Jul 2022 04:49:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52052 "EHLO
+        id S231775AbiGBJO5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 2 Jul 2022 05:14:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36732 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230096AbiGBItx (ORCPT
+        with ESMTP id S231723AbiGBJO4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 2 Jul 2022 04:49:53 -0400
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E79541A061;
-        Sat,  2 Jul 2022 01:49:49 -0700 (PDT)
-Received: by mail-wm1-x334.google.com with SMTP id c130-20020a1c3588000000b0039c6fd897b4so4962477wma.4;
-        Sat, 02 Jul 2022 01:49:49 -0700 (PDT)
+        Sat, 2 Jul 2022 05:14:56 -0400
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56DC61CFC1
+        for <linux-arm-msm@vger.kernel.org>; Sat,  2 Jul 2022 02:14:55 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id y16so7514574lfb.9
+        for <linux-arm-msm@vger.kernel.org>; Sat, 02 Jul 2022 02:14:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=xzytIjE57UyjLf5iE8uCuMXiTfnurGpdSiaoc4cIUx8=;
-        b=Zn+soKIG6jLILePplWiptlN68bslIlY1l7jNBTAK9UAEKlI7OAwZkT3o7CKgk1ucbW
-         r/73trnXdoxyLMq/hZrXPzz/xV+SZF/SYkFGngqyfXx5Sklgv5R0mE1X/Nn1VxR/OH7B
-         rQ1L7uHV1w4Nl+2mLsbhlCVYb+lKGueI6CpAvmSyQB/xCacXBY92oiH7yoxar1bRmE+c
-         jxdfI/Vfs39RzsgueWQ8g8FalQ/hrWPEeOCSufgEOCnRJb1UMPZ7wwZrVnL79jo2ztz2
-         l6f0aSMJBO8F7ra3/Yd7T3/rFKpBg0YGgeX8t7+H/oyg9+lkh2phPsPIhcYTVklTib4y
-         K5YQ==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:user-agent:in-reply-to:references
+         :message-id:mime-version:content-transfer-encoding;
+        bh=NX2NmIaWgrskjfwPJH+7yMKeoSNDxO/zb36W7GTg75M=;
+        b=pu2ix/i+k5uolnHDEBn6kZnkuLnF4NeaaM+ZpyppZrf7Zgd/85OD3FZigHNQ9dIB0o
+         pmOmwF36aC6RcEfT1eKb/P6jZbozidunmpXoOy/ybTARrqqtl6OlWaXH2h5xvS9zpOE/
+         7tkgMRKx+Fp+tZgpMecP8RQ24O/3lXm+YYsDgtcb7fLNfDIpZGJuzir7ZHG24tenoQ0U
+         k6z8RfPP7eJutpyCX/LiSpDEgsgkzLVgHwYiqCMzdM2D7KKwDC42R8k9ld22UnrEXDDV
+         Q2dkFUtIvt0lFSmxuBV4FkEWBAl6sJquJuRbvfiN0407Tj9L8DmHArsU5prG4AIk8fMy
+         82Sw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=xzytIjE57UyjLf5iE8uCuMXiTfnurGpdSiaoc4cIUx8=;
-        b=PKPRsJPWTLs8zqi32BuAFBISg3DdQ0TyPRCRSzHw02+k76rmmaNJHuyTmQnJPBP1VS
-         2wfniTjBEpBXUcGe4OyEz+lZM14bzXF/gJ7KaH7DMI3Lcrc+edqpx1j0i6IpHzlQfKZl
-         JE2Cp0j3dq8R5ZPFoVc6mxJ4lSp61gEOUmTlprsZrQzpWOnXkGZ84tyv08Hz+hgPKfXA
-         G5lcRPNhaXRBHM+Mq5gp2+AAWm2xZwTTGqAomANZaHNBxkbrN6yOD6vYq5OjFwuFg5Bz
-         dmQz80mDhkn9a3P26BPqO5fMGfgOv14EI0xYiLNw/0X/vM/Et/bcfV1r+nhb4KMfPm5O
-         svJQ==
-X-Gm-Message-State: AJIora83RpXWB30Uheb70MPGuX7HBZi/u2pXcetxnt7rKfL9CIyeDTfd
-        KBZJP1/LIROWkX3tfmG4X9E=
-X-Google-Smtp-Source: AGRyM1vYexyHDslAdR3Uj1M06vlUti3EEBOSvo+vr6jLnX8vQtjCbcTvfEi7EOARIQG4eONjvWGYCA==
-X-Received: by 2002:a1c:2b05:0:b0:3a0:2ae2:5277 with SMTP id r5-20020a1c2b05000000b003a02ae25277mr21097394wmr.30.1656751788410;
-        Sat, 02 Jul 2022 01:49:48 -0700 (PDT)
-Received: from localhost.localdomain ([2001:1670:c:f4bd:c360:335a:282d:b75f])
-        by smtp.gmail.com with ESMTPSA id q20-20020a7bce94000000b0039c4b518df4sm15904408wmj.5.2022.07.02.01.49.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 02 Jul 2022 01:49:48 -0700 (PDT)
-From:   Yassine Oudjana <yassine.oudjana@gmail.com>
-X-Google-Original-From: Yassine Oudjana <y.oudjana@protonmail.com>
-To:     Caleb Connolly <caleb.connolly@linaro.org>
-Cc:     Yassine Oudjana <yassine.oudjana@gmail.com>,
-        Yassine Oudjana <y.oudjana@protonmail.com>,
-        Andy Gross <agross@kernel.org>,
+        h=x-gm-message-state:date:from:to:cc:subject:user-agent:in-reply-to
+         :references:message-id:mime-version:content-transfer-encoding;
+        bh=NX2NmIaWgrskjfwPJH+7yMKeoSNDxO/zb36W7GTg75M=;
+        b=B2lkVjS/HXTDiv6tSdFfNms93wqeGe/Pzo+wy5SSNnYL4st7PYC1umihOHiov2KgWV
+         OtvDYZge6ANOVfsK0cyRJzn1wzL2e06NK0opUQZ5B9kEgOprMik3v9Vo5ZcoAKkOWClW
+         zr6R8uvZ7kH+ZbAcd3+8T/ckjJnbQLGMo32D1j2BIlpTkoOCfaDhj8c42W9CavWaxP49
+         RV5Vt+zHbrNamKxQQKcmEHbfbstIX8AaF5ZZIGQMbX76O2IBDo/+KrWxIpqpQkogBDcq
+         CuoF5W2X82on6wP/w+qjAvc7NPSAA8jJILXhyf0qk+zdufxrAO2KJtQEwZrYVMbeIX/h
+         4AtQ==
+X-Gm-Message-State: AJIora/fod9XSsL/fPEY2bb6OP0RryRD+l24Qs166Twov/WR0dDhMvEj
+        zkNvYy9DHb2DhU+/47wdLaPfiA==
+X-Google-Smtp-Source: AGRyM1u8086xoEnBAP3OVsJWQwmjG3MRrPwGtRAoyXEQ1eafmLxrh0cmKXcVLuR+5tkB7s3NQLJ4Pg==
+X-Received: by 2002:a05:6512:3d86:b0:47f:9adc:cc27 with SMTP id k6-20020a0565123d8600b0047f9adccc27mr11622450lfv.608.1656753293613;
+        Sat, 02 Jul 2022 02:14:53 -0700 (PDT)
+Received: from [127.0.0.1] ([94.25.229.203])
+        by smtp.gmail.com with ESMTPSA id s6-20020ac25fa6000000b0047fbf4c8bdfsm3806073lfe.143.2022.07.02.02.14.52
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 02 Jul 2022 02:14:53 -0700 (PDT)
+Date:   Sat, 02 Jul 2022 12:14:48 +0300
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Rob Herring <robh@kernel.org>,
+        Bhupesh Sharma <bhupesh.sharma@linaro.org>
+CC:     linux-mmc <linux-mmc@vger.kernel.org>,
+        Bhupesh Sharma <bhupesh.linux@gmail.com>,
+        "Gross, Andy" <agross@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] dmaengine: qcom: bam_dma: fix runtime PM underflow
-Date:   Sat,  2 Jul 2022 12:48:39 +0400
-Message-Id: <20220702084838.13233-1-y.oudjana@protonmail.com>
-X-Mailer: git-send-email 2.37.0
-In-Reply-To: <20220609195043.1544625-1-caleb.connolly@linaro.org>
-References: 
+        Ulf Hansson <ulf.hansson@linaro.org>
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_1/1=5D_dt-bindings=3A_mmc=3A_sd?= =?US-ASCII?Q?hci-msm=3A_Fix_issues_in_yaml_bindings?=
+User-Agent: K-9 Mail for Android
+In-Reply-To: <CAL_JsqLxXLFjre9h2dyoUJ=f0+pueUhSYezx_5bZ2SdpDt29xw@mail.gmail.com>
+References: <20220514220116.1008254-1-bhupesh.sharma@linaro.org> <CAL_JsqLxXLFjre9h2dyoUJ=f0+pueUhSYezx_5bZ2SdpDt29xw@mail.gmail.com>
+Message-ID: <D42FBBDC-A6BA-4374-A726-061A4478D4C7@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Yassine Oudjana <yassine.oudjana@gmail.com>
 
-From: Yassine Oudjana <y.oudjana@protonmail.com>
 
-On Thu,  9 Jun 2022 20:50:43 +0100, Caleb Connolly <caleb.connolly@linaro.org> wrote:
-> 
-> When PM runtime is disabled, pm_runtime_get() isn't called, but
-> pm_runtime_put() still is. Fix this by creating a matching wrapper
-> on pm_runtime_put_autosuspend().
-> 
-> Fixes: dbad41e7bb5f ("dmaengine: qcom: bam_dma: check if the runtime pm enabled")
-> Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
-> ---
->  drivers/dma/qcom/bam_dma.c | 18 +++++++++++++-----
->  1 file changed, 13 insertions(+), 5 deletions(-)
-> 
-> diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
-> index 87f6ca1541cf..a36dedee262e 100644
-> --- a/drivers/dma/qcom/bam_dma.c
-> +++ b/drivers/dma/qcom/bam_dma.c
-> @@ -566,6 +566,14 @@ static int bam_pm_runtime_get_sync(struct device *dev)
->  	return 0;
->  }
->  
-> +static int bam_pm_runtime_put_autosuspend(struct device *dev)
-> +{
-> +	if (pm_runtime_enabled(dev))
-> +		return pm_runtime_put_autosuspend(dev);
-> +
-> +	return 0;
-> +}
-> +
->  /**
->   * bam_free_chan - Frees dma resources associated with specific channel
->   * @chan: specified channel
-> @@ -617,7 +625,7 @@ static void bam_free_chan(struct dma_chan *chan)
->  
->  err:
->  	pm_runtime_mark_last_busy(bdev->dev);
-> -	pm_runtime_put_autosuspend(bdev->dev);
-> +	bam_pm_runtime_put_autosuspend(bdev->dev);
->  }
->  
->  /**
-> @@ -793,7 +801,7 @@ static int bam_pause(struct dma_chan *chan)
->  	bchan->paused = 1;
->  	spin_unlock_irqrestore(&bchan->vc.lock, flag);
->  	pm_runtime_mark_last_busy(bdev->dev);
-> -	pm_runtime_put_autosuspend(bdev->dev);
-> +	bam_pm_runtime_put_autosuspend(bdev->dev);
->  
->  	return 0;
->  }
-> @@ -819,7 +827,7 @@ static int bam_resume(struct dma_chan *chan)
->  	bchan->paused = 0;
->  	spin_unlock_irqrestore(&bchan->vc.lock, flag);
->  	pm_runtime_mark_last_busy(bdev->dev);
-> -	pm_runtime_put_autosuspend(bdev->dev);
-> +	bam_pm_runtime_put_autosuspend(bdev->dev);
->  
->  	return 0;
->  }
-> @@ -936,7 +944,7 @@ static irqreturn_t bam_dma_irq(int irq, void *data)
->  	}
->  
->  	pm_runtime_mark_last_busy(bdev->dev);
-> -	pm_runtime_put_autosuspend(bdev->dev);
-> +	bam_pm_runtime_put_autosuspend(bdev->dev);
->  
->  	return IRQ_HANDLED;
->  }
-> @@ -1111,7 +1119,7 @@ static void bam_start_dma(struct bam_chan *bchan)
->  			bam_addr(bdev, bchan->id, BAM_P_EVNT_REG));
->  
->  	pm_runtime_mark_last_busy(bdev->dev);
-> -	pm_runtime_put_autosuspend(bdev->dev);
-> +	bam_pm_runtime_put_autosuspend(bdev->dev);
->  }
->  
->  /**
-> -- 
-> 2.36.1
-> 
+On 2 July 2022 01:06:48 GMT+03:00, Rob Herring <robh@kernel=2Eorg> wrote:
+>On Sat, May 14, 2022 at 4:01 PM Bhupesh Sharma
+><bhupesh=2Esharma@linaro=2Eorg> wrote:
+>>
+>> Rob pointed some remaining issues in the sdhci-msm yaml
+>> bindings (via [1])=2E
+>>
+>> Fix the same by first using the 'mmc-controller=2Eyaml' as
+>> 'ref' and thereafter also fix the issues reported by
+>> 'make dtbs_check' check=2E
+>>
+>> [1]=2E https://lore=2Ekernel=2Eorg/linux-arm-msm/YnLmNCwNfoqZln12@robh=
+=2Eat=2Ekernel=2Eorg/
+>>
+>> Fixes: a45537723f4b ("dt-bindings: mmc: sdhci-msm: Convert bindings to =
+yaml")
+>> Cc: Bjorn Andersson <bjorn=2Eandersson@linaro=2Eorg>
+>> Cc: Rob Herring <robh@kernel=2Eorg>
+>> Cc: Ulf Hansson <ulf=2Ehansson@linaro=2Eorg>
+>> Signed-off-by: Bhupesh Sharma <bhupesh=2Esharma@linaro=2Eorg>
+>> ---
+>> -> This patch uses the dts changes sent (here: https://lore=2Ekernel=2E=
+org/linux-arm-msm/20220514215424=2E1007718-1-bhupesh=2Esharma@linaro=2Eorg/=
+), for fixing the dtbs_check errors=2E
+>> -> This patch is rebased on 'linux-next/master'
+>>
+>>  =2E=2E=2E/devicetree/bindings/mmc/sdhci-msm=2Eyaml    | 52 +++++++++++=
++++++---
+>>  1 file changed, 44 insertions(+), 8 deletions(-)
+>
+>There's another issue with this applied:
+>
+>Documentation/devicetree/bindings/mmc/sdhci-msm=2Eexample=2Edtb:
+>mmc@8804000: Unevaluated properties are not allowed
+>('operating-points-v2' was unexpected)
+>
+>Should just need a 'operating-points-v2: true' line=2E
+>
+>This won't show up until a fix for 'unevaluatedProperties' handling is
+>applied=2E But first I need all the issues fixed=2E
 
-Thanks for the fix!
+Could you please add a dt-validate (?) argument so that we can validate ne=
+w schemas with unevaluatedProperties working as expected, while keeping def=
+ault behaviour intact (while it gets sorted out)?
 
-On the Xiaomi Mi Note 2:
 
-Tested-by: Yassine Oudjana <y.oudjana@protonmail.com>
+>
+>Rob
+
+--=20
+With best wishes
+Dmitry
