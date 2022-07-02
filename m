@@ -2,53 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 02AE0563F19
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Jul 2022 10:49:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D68A5563F22
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Jul 2022 10:54:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229951AbiGBIgm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 2 Jul 2022 04:36:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44538 "EHLO
+        id S232127AbiGBItx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 2 Jul 2022 04:49:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52052 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229446AbiGBIgm (ORCPT
+        with ESMTP id S230096AbiGBItx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 2 Jul 2022 04:36:42 -0400
-Received: from relay05.th.seeweb.it (relay05.th.seeweb.it [IPv6:2001:4b7a:2000:18::166])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CED5C15A24
-        for <linux-arm-msm@vger.kernel.org>; Sat,  2 Jul 2022 01:36:40 -0700 (PDT)
-Received: from [192.168.1.101] (abxi46.neoplus.adsl.tpnet.pl [83.9.2.46])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id C330D3F6DB;
-        Sat,  2 Jul 2022 10:36:36 +0200 (CEST)
-Message-ID: <3d1c84f6-bd38-902f-3499-d32d0d4ab846@somainline.org>
-Date:   Sat, 2 Jul 2022 10:36:35 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: [PATCH] dt-bindings: qcom: readme: document preferred compatible
- naming
-Content-Language: en-US
-To:     Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        Sat, 2 Jul 2022 04:49:53 -0400
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E79541A061;
+        Sat,  2 Jul 2022 01:49:49 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id c130-20020a1c3588000000b0039c6fd897b4so4962477wma.4;
+        Sat, 02 Jul 2022 01:49:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=xzytIjE57UyjLf5iE8uCuMXiTfnurGpdSiaoc4cIUx8=;
+        b=Zn+soKIG6jLILePplWiptlN68bslIlY1l7jNBTAK9UAEKlI7OAwZkT3o7CKgk1ucbW
+         r/73trnXdoxyLMq/hZrXPzz/xV+SZF/SYkFGngqyfXx5Sklgv5R0mE1X/Nn1VxR/OH7B
+         rQ1L7uHV1w4Nl+2mLsbhlCVYb+lKGueI6CpAvmSyQB/xCacXBY92oiH7yoxar1bRmE+c
+         jxdfI/Vfs39RzsgueWQ8g8FalQ/hrWPEeOCSufgEOCnRJb1UMPZ7wwZrVnL79jo2ztz2
+         l6f0aSMJBO8F7ra3/Yd7T3/rFKpBg0YGgeX8t7+H/oyg9+lkh2phPsPIhcYTVklTib4y
+         K5YQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=xzytIjE57UyjLf5iE8uCuMXiTfnurGpdSiaoc4cIUx8=;
+        b=PKPRsJPWTLs8zqi32BuAFBISg3DdQ0TyPRCRSzHw02+k76rmmaNJHuyTmQnJPBP1VS
+         2wfniTjBEpBXUcGe4OyEz+lZM14bzXF/gJ7KaH7DMI3Lcrc+edqpx1j0i6IpHzlQfKZl
+         JE2Cp0j3dq8R5ZPFoVc6mxJ4lSp61gEOUmTlprsZrQzpWOnXkGZ84tyv08Hz+hgPKfXA
+         G5lcRPNhaXRBHM+Mq5gp2+AAWm2xZwTTGqAomANZaHNBxkbrN6yOD6vYq5OjFwuFg5Bz
+         dmQz80mDhkn9a3P26BPqO5fMGfgOv14EI0xYiLNw/0X/vM/Et/bcfV1r+nhb4KMfPm5O
+         svJQ==
+X-Gm-Message-State: AJIora83RpXWB30Uheb70MPGuX7HBZi/u2pXcetxnt7rKfL9CIyeDTfd
+        KBZJP1/LIROWkX3tfmG4X9E=
+X-Google-Smtp-Source: AGRyM1vYexyHDslAdR3Uj1M06vlUti3EEBOSvo+vr6jLnX8vQtjCbcTvfEi7EOARIQG4eONjvWGYCA==
+X-Received: by 2002:a1c:2b05:0:b0:3a0:2ae2:5277 with SMTP id r5-20020a1c2b05000000b003a02ae25277mr21097394wmr.30.1656751788410;
+        Sat, 02 Jul 2022 01:49:48 -0700 (PDT)
+Received: from localhost.localdomain ([2001:1670:c:f4bd:c360:335a:282d:b75f])
+        by smtp.gmail.com with ESMTPSA id q20-20020a7bce94000000b0039c4b518df4sm15904408wmj.5.2022.07.02.01.49.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 02 Jul 2022 01:49:48 -0700 (PDT)
+From:   Yassine Oudjana <yassine.oudjana@gmail.com>
+X-Google-Original-From: Yassine Oudjana <y.oudjana@protonmail.com>
+To:     Caleb Connolly <caleb.connolly@linaro.org>
+Cc:     Yassine Oudjana <yassine.oudjana@gmail.com>,
+        Yassine Oudjana <y.oudjana@protonmail.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
+        Vinod Koul <vkoul@kernel.org>,
         Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, Alex Elder <elder@linaro.org>,
-        Robert Foss <robert.foss@linaro.org>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>
-References: <20220701074659.12680-1-krzysztof.kozlowski@linaro.org>
- <20220701204218.GA1478943-robh@kernel.org>
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-In-Reply-To: <20220701204218.GA1478943-robh@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        SPF_HELO_NONE,SPF_PASS,TVD_PH_BODY_ACCOUNTS_PRE,T_SCC_BODY_TEXT_LINE
+        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] dmaengine: qcom: bam_dma: fix runtime PM underflow
+Date:   Sat,  2 Jul 2022 12:48:39 +0400
+Message-Id: <20220702084838.13233-1-y.oudjana@protonmail.com>
+X-Mailer: git-send-email 2.37.0
+In-Reply-To: <20220609195043.1544625-1-caleb.connolly@linaro.org>
+References: 
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -56,69 +77,92 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+From: Yassine Oudjana <yassine.oudjana@gmail.com>
 
+From: Yassine Oudjana <y.oudjana@protonmail.com>
 
-On 1.07.2022 22:42, Rob Herring wrote:
-> On Fri, Jul 01, 2022 at 09:46:59AM +0200, Krzysztof Kozlowski wrote:
->> Compatibles can come in two formats.  Either "vendor,ip-soc" or
->> "vendor,soc-ip".  Qualcomm bindings were mixing both of usages, so add a
->> readme file documenting preferred policy.
+On Thu,  9 Jun 2022 20:50:43 +0100, Caleb Connolly <caleb.connolly@linaro.org> wrote:
 > 
-> Is this all I needed to do to stop this from QCom? </sarcasm>
+> When PM runtime is disabled, pm_runtime_get() isn't called, but
+> pm_runtime_put() still is. Fix this by creating a matching wrapper
+> on pm_runtime_put_autosuspend().
 > 
-> This convention is not QCom specific, though the error mostly is. 
-> Perhaps this should be documented generically.
+> Fixes: dbad41e7bb5f ("dmaengine: qcom: bam_dma: check if the runtime pm enabled")
+> Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
+> ---
+>  drivers/dma/qcom/bam_dma.c | 18 +++++++++++++-----
+>  1 file changed, 13 insertions(+), 5 deletions(-)
 > 
->> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->>
->> ---
->>
->> Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
->> Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> Cc: Vinod Koul <vkoul@kernel.org>
->> Cc: Alex Elder <elder@linaro.org>
->> Cc: Robert Foss <robert.foss@linaro.org>
->> Cc: Bhupesh Sharma <bhupesh.sharma@linaro.org>
->> ---
->>  .../devicetree/bindings/soc/qcom/README.rst      | 16 ++++++++++++++++
->>  1 file changed, 16 insertions(+)
->>  create mode 100644 Documentation/devicetree/bindings/soc/qcom/README.rst
->>
->> diff --git a/Documentation/devicetree/bindings/soc/qcom/README.rst b/Documentation/devicetree/bindings/soc/qcom/README.rst
->> new file mode 100644
->> index 000000000000..322b329ac7c1
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/soc/qcom/README.rst
->> @@ -0,0 +1,16 @@
->> +.. SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
->> +
->> +Qualcomm SoC compatibles naming convention
->> +==========================================
->> +1. When adding new compatibles in new bindings, use the format:
->> +   ::
->> +
->> +     qcom,SoC-IP
->> +
->> +   For example:
->> +   ::
->> +
->> +     qcom,sdm845-llcc-bwmon
+> diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
+> index 87f6ca1541cf..a36dedee262e 100644
+> --- a/drivers/dma/qcom/bam_dma.c
+> +++ b/drivers/dma/qcom/bam_dma.c
+> @@ -566,6 +566,14 @@ static int bam_pm_runtime_get_sync(struct device *dev)
+>  	return 0;
+>  }
+>  
+> +static int bam_pm_runtime_put_autosuspend(struct device *dev)
+> +{
+> +	if (pm_runtime_enabled(dev))
+> +		return pm_runtime_put_autosuspend(dev);
+> +
+> +	return 0;
+> +}
+> +
+>  /**
+>   * bam_free_chan - Frees dma resources associated with specific channel
+>   * @chan: specified channel
+> @@ -617,7 +625,7 @@ static void bam_free_chan(struct dma_chan *chan)
+>  
+>  err:
+>  	pm_runtime_mark_last_busy(bdev->dev);
+> -	pm_runtime_put_autosuspend(bdev->dev);
+> +	bam_pm_runtime_put_autosuspend(bdev->dev);
+>  }
+>  
+>  /**
+> @@ -793,7 +801,7 @@ static int bam_pause(struct dma_chan *chan)
+>  	bchan->paused = 1;
+>  	spin_unlock_irqrestore(&bchan->vc.lock, flag);
+>  	pm_runtime_mark_last_busy(bdev->dev);
+> -	pm_runtime_put_autosuspend(bdev->dev);
+> +	bam_pm_runtime_put_autosuspend(bdev->dev);
+>  
+>  	return 0;
+>  }
+> @@ -819,7 +827,7 @@ static int bam_resume(struct dma_chan *chan)
+>  	bchan->paused = 0;
+>  	spin_unlock_irqrestore(&bchan->vc.lock, flag);
+>  	pm_runtime_mark_last_busy(bdev->dev);
+> -	pm_runtime_put_autosuspend(bdev->dev);
+> +	bam_pm_runtime_put_autosuspend(bdev->dev);
+>  
+>  	return 0;
+>  }
+> @@ -936,7 +944,7 @@ static irqreturn_t bam_dma_irq(int irq, void *data)
+>  	}
+>  
+>  	pm_runtime_mark_last_busy(bdev->dev);
+> -	pm_runtime_put_autosuspend(bdev->dev);
+> +	bam_pm_runtime_put_autosuspend(bdev->dev);
+>  
+>  	return IRQ_HANDLED;
+>  }
+> @@ -1111,7 +1119,7 @@ static void bam_start_dma(struct bam_chan *bchan)
+>  			bam_addr(bdev, bchan->id, BAM_P_EVNT_REG));
+>  
+>  	pm_runtime_mark_last_busy(bdev->dev);
+> -	pm_runtime_put_autosuspend(bdev->dev);
+> +	bam_pm_runtime_put_autosuspend(bdev->dev);
+>  }
+>  
+>  /**
+> -- 
+> 2.36.1
 > 
-> Assuming the list of possible SoCs was maintained, you could make this a 
-> schema. Though there might be false positives.
-Maybe there could be a list of *all* (maaaybe except the really vintage ones
-that could barely run Linux at all, if even..), qcom SoCs (for example based
-on the Wikipedia one [1]) that would account for future porting and could be
-updated with new platforms as they get released?
 
-Konrad
+Thanks for the fix!
 
-[1] https://en.wikipedia.org/wiki/List_of_Qualcomm_Snapdragon_processors
->
->> +
->> +2. When adding new compatibles to existing bindings, use the format
->> +   in the existing binding, even if it contradicts the above.
->> -- 
->> 2.34.1
->>
->>
+On the Xiaomi Mi Note 2:
+
+Tested-by: Yassine Oudjana <y.oudjana@protonmail.com>
