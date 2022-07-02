@@ -2,55 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C8C575640FA
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Jul 2022 17:22:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8BC7356413E
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Jul 2022 18:00:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231282AbiGBPWg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 2 Jul 2022 11:22:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34816 "EHLO
+        id S232345AbiGBP77 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 2 Jul 2022 11:59:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53224 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230079AbiGBPWg (ORCPT
+        with ESMTP id S232340AbiGBP76 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 2 Jul 2022 11:22:36 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62BA7F589;
-        Sat,  2 Jul 2022 08:22:35 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 16016B8015A;
-        Sat,  2 Jul 2022 15:22:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6894C341CB;
-        Sat,  2 Jul 2022 15:22:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1656775352;
-        bh=2tMav/HhVl/mmXhabScCO0vkRYv++C7WhpbMm8nt2mA=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=FRsZ2wzWCQ8uysvLj2Bf8YbilFK487L8K+vOGFKqOj4D5DmQ02uBH8JEARTNe6IYZ
-         wC2dJqZ8lqtYzVg42Of3jV5zWEBe45MzZC9Lj8O2XMDS6g2nCb9JQkYfm5fUTf8Bwu
-         eijuwhRb6suaY7XJjGbZ6iUD3EVuVlI3SVa77nm9FBkZJnObF8G0FN4srNEL6w/JR6
-         q3YgfmxQjFOjiwRIF8ZHP5gzSkQdmR3k/qKjVhCW6trCJzcm0ZhKNiggXrODh4cMXM
-         Hl3bBdDYA5qqfyAl6XJz5bD2kXjORxVqN2370KPCjXHVo+wv+w6LEJcZy+6+dw8vF2
-         oq2cgJ8AS8GVg==
-Received: by mail-vk1-f176.google.com with SMTP id bb7so2471240vkb.9;
-        Sat, 02 Jul 2022 08:22:32 -0700 (PDT)
-X-Gm-Message-State: AJIora/nM4BJI78/RyWBY773qEDy5qs1l00ecYwr+mTEK5Qg69Z23zS9
-        nz0huAV76t2DZQQ5tqiUSit7Rkq7Ad73yiNViA==
-X-Google-Smtp-Source: AGRyM1sElqB7nhfgozJEOtHMoMxkEWrI0RcrzkUAChO9VDVsMbWoEZZ3uVFn/Y3qE4iVzKSxxxoA2223jPGTuqIakB0=
-X-Received: by 2002:a1f:1ec8:0:b0:36c:643a:e985 with SMTP id
- e191-20020a1f1ec8000000b0036c643ae985mr14527934vke.14.1656775351619; Sat, 02
- Jul 2022 08:22:31 -0700 (PDT)
-MIME-Version: 1.0
-References: <20220514220116.1008254-1-bhupesh.sharma@linaro.org>
- <CAL_JsqLxXLFjre9h2dyoUJ=f0+pueUhSYezx_5bZ2SdpDt29xw@mail.gmail.com> <D42FBBDC-A6BA-4374-A726-061A4478D4C7@linaro.org>
-In-Reply-To: <D42FBBDC-A6BA-4374-A726-061A4478D4C7@linaro.org>
-From:   Rob Herring <robh@kernel.org>
-Date:   Sat, 2 Jul 2022 09:22:19 -0600
-X-Gmail-Original-Message-ID: <CAL_Jsq++gOUymWFf6RwoRuqCFkd9XUNqyo-17QU-UQ-o+TXLtA@mail.gmail.com>
-Message-ID: <CAL_Jsq++gOUymWFf6RwoRuqCFkd9XUNqyo-17QU-UQ-o+TXLtA@mail.gmail.com>
-Subject: Re: [PATCH 1/1] dt-bindings: mmc: sdhci-msm: Fix issues in yaml bindings
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        Sat, 2 Jul 2022 11:59:58 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 024AEBCAB
+        for <linux-arm-msm@vger.kernel.org>; Sat,  2 Jul 2022 08:59:56 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id t19so7966008lfl.5
+        for <linux-arm-msm@vger.kernel.org>; Sat, 02 Jul 2022 08:59:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:user-agent:in-reply-to:references
+         :message-id:mime-version:content-transfer-encoding;
+        bh=Hz75Rx42oXHh7NmNLOTnnxJGcRdhgiXUHBkENH9MqHA=;
+        b=t49DnnFkz+tH5eJrrVIDW1KUvaQG95jWIXLzQMKIvbpBvqNP3Roy+FMPGCu/PNyv2w
+         p8pOjYWUSSBJ0Csnt61ODgx79ahGzcV7SPqLtzBoc60unYg+cbcKwQokXJNSqKXO66Uw
+         AHciOKECs0eKerATKAPzaFm+6FKQkVmrjGYC5++MgFLUSWQHeTahilNBL634VEFgYFva
+         LnAMjDrbcLNcYi45ctSY8kTB5rdraekMug3H4ePgfW6lWDBFVdJUmKSOSclc32TvVC7s
+         ygN6y1TrlItsam5I6MBw8WUWLvdkpeFniEX9P/M9Vnc9GHq1IiXHj89dhChCv0jVrToL
+         WxDw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:user-agent:in-reply-to
+         :references:message-id:mime-version:content-transfer-encoding;
+        bh=Hz75Rx42oXHh7NmNLOTnnxJGcRdhgiXUHBkENH9MqHA=;
+        b=KWz+sWJ+ho89FIq228Ktob1JcuYnqQK6E5D6HMukUjFCi8iqjB8cQum8ojfX/dIy/N
+         /h2JtN0Z6yO7f6ORr6PZ/gj/huCAsz8bbcbsPfUmer/57kEDrJWZk0ovAqxFvEgX3iBf
+         jGWWFavb12b0caIs4xrZWGj2Em/w3WUvITv4QnjEwu5Mc3GcmediSusYGyJXzl7GTLWn
+         AjgwSzQkZa6dNdvI+AR1l4YTOk6jcfhxb2Sjr1+HtGuV1xpDKizy9m79v3qrW3F1Uk1E
+         50hGY/bwS4EkKVlwoJhKgJ03vDQpdA2MDGBkoIj5MHw5g5MmxOZeW6aOrMme79lmhiPK
+         DN0w==
+X-Gm-Message-State: AJIora+DrGU+nWh460Q8tES0mvs2rvQ4rtuIN9ESDPTGAOy+BH5wLKiS
+        4SABI0tDfZ45Ctfo0B3L0qb4gg==
+X-Google-Smtp-Source: AGRyM1tHO8HVvetVfAh0h/jVYaKiWK6Ez13CzIyaZGdFPjFEl84NdJBoTUuNYZcZFE0ahUNr+LAMpQ==
+X-Received: by 2002:a05:6512:2216:b0:481:1ed5:5a72 with SMTP id h22-20020a056512221600b004811ed55a72mr12427813lfu.142.1656777595238;
+        Sat, 02 Jul 2022 08:59:55 -0700 (PDT)
+Received: from [127.0.0.1] ([94.25.229.203])
+        by smtp.gmail.com with ESMTPSA id v6-20020a056512348600b00478f2f2f043sm4165446lfr.147.2022.07.02.08.59.54
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 02 Jul 2022 08:59:54 -0700 (PDT)
+Date:   Sat, 02 Jul 2022 18:59:48 +0300
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Rob Herring <robh@kernel.org>
+CC:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
         linux-mmc <linux-mmc@vger.kernel.org>,
         Bhupesh Sharma <bhupesh.linux@gmail.com>,
         "Gross, Andy" <agross@kernel.org>,
@@ -58,10 +59,18 @@ Cc:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
         "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Ulf Hansson <ulf.hansson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-7.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_1/1=5D_dt-bindings=3A_mmc=3A_sd?= =?US-ASCII?Q?hci-msm=3A_Fix_issues_in_yaml_bindings?=
+User-Agent: K-9 Mail for Android
+In-Reply-To: <CAL_Jsq++gOUymWFf6RwoRuqCFkd9XUNqyo-17QU-UQ-o+TXLtA@mail.gmail.com>
+References: <20220514220116.1008254-1-bhupesh.sharma@linaro.org> <CAL_JsqLxXLFjre9h2dyoUJ=f0+pueUhSYezx_5bZ2SdpDt29xw@mail.gmail.com> <D42FBBDC-A6BA-4374-A726-061A4478D4C7@linaro.org> <CAL_Jsq++gOUymWFf6RwoRuqCFkd9XUNqyo-17QU-UQ-o+TXLtA@mail.gmail.com>
+Message-ID: <36C2A924-3697-42FB-8C14-8E6E163558F2@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -69,55 +78,71 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Jul 2, 2022 at 3:14 AM Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
->
->
->
-> On 2 July 2022 01:06:48 GMT+03:00, Rob Herring <robh@kernel.org> wrote:
-> >On Sat, May 14, 2022 at 4:01 PM Bhupesh Sharma
-> ><bhupesh.sharma@linaro.org> wrote:
-> >>
-> >> Rob pointed some remaining issues in the sdhci-msm yaml
-> >> bindings (via [1]).
-> >>
-> >> Fix the same by first using the 'mmc-controller.yaml' as
-> >> 'ref' and thereafter also fix the issues reported by
-> >> 'make dtbs_check' check.
-> >>
-> >> [1]. https://lore.kernel.org/linux-arm-msm/YnLmNCwNfoqZln12@robh.at.kernel.org/
-> >>
-> >> Fixes: a45537723f4b ("dt-bindings: mmc: sdhci-msm: Convert bindings to yaml")
-> >> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> >> Cc: Rob Herring <robh@kernel.org>
-> >> Cc: Ulf Hansson <ulf.hansson@linaro.org>
-> >> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> >> ---
-> >> -> This patch uses the dts changes sent (here: https://lore.kernel.org/linux-arm-msm/20220514215424.1007718-1-bhupesh.sharma@linaro.org/), for fixing the dtbs_check errors.
-> >> -> This patch is rebased on 'linux-next/master'
-> >>
-> >>  .../devicetree/bindings/mmc/sdhci-msm.yaml    | 52 ++++++++++++++++---
-> >>  1 file changed, 44 insertions(+), 8 deletions(-)
-> >
-> >There's another issue with this applied:
-> >
-> >Documentation/devicetree/bindings/mmc/sdhci-msm.example.dtb:
-> >mmc@8804000: Unevaluated properties are not allowed
-> >('operating-points-v2' was unexpected)
-> >
-> >Should just need a 'operating-points-v2: true' line.
-> >
-> >This won't show up until a fix for 'unevaluatedProperties' handling is
-> >applied. But first I need all the issues fixed.
->
-> Could you please add a dt-validate (?) argument so that we can validate new schemas with unevaluatedProperties working as expected, while keeping default behaviour intact (while it gets sorted out)?
->
 
-I think that wouldn't work well because the schemas have to be
-reprocessed when such an option changes. Though kbuild does look for
-command line changes...
 
-In any case, I'm going to commit this to the main branch in a few
-days. There aren't many warnings left.
+On 2 July 2022 18:22:19 GMT+03:00, Rob Herring <robh@kernel=2Eorg> wrote:
+>On Sat, Jul 2, 2022 at 3:14 AM Dmitry Baryshkov
+><dmitry=2Ebaryshkov@linaro=2Eorg> wrote:
+>>
+>>
+>>
+>> On 2 July 2022 01:06:48 GMT+03:00, Rob Herring <robh@kernel=2Eorg> wrot=
+e:
+>> >On Sat, May 14, 2022 at 4:01 PM Bhupesh Sharma
+>> ><bhupesh=2Esharma@linaro=2Eorg> wrote:
+>> >>
+>> >> Rob pointed some remaining issues in the sdhci-msm yaml
+>> >> bindings (via [1])=2E
+>> >>
+>> >> Fix the same by first using the 'mmc-controller=2Eyaml' as
+>> >> 'ref' and thereafter also fix the issues reported by
+>> >> 'make dtbs_check' check=2E
+>> >>
+>> >> [1]=2E https://lore=2Ekernel=2Eorg/linux-arm-msm/YnLmNCwNfoqZln12@ro=
+bh=2Eat=2Ekernel=2Eorg/
+>> >>
+>> >> Fixes: a45537723f4b ("dt-bindings: mmc: sdhci-msm: Convert bindings =
+to yaml")
+>> >> Cc: Bjorn Andersson <bjorn=2Eandersson@linaro=2Eorg>
+>> >> Cc: Rob Herring <robh@kernel=2Eorg>
+>> >> Cc: Ulf Hansson <ulf=2Ehansson@linaro=2Eorg>
+>> >> Signed-off-by: Bhupesh Sharma <bhupesh=2Esharma@linaro=2Eorg>
+>> >> ---
+>> >> -> This patch uses the dts changes sent (here: https://lore=2Ekernel=
+=2Eorg/linux-arm-msm/20220514215424=2E1007718-1-bhupesh=2Esharma@linaro=2Eo=
+rg/), for fixing the dtbs_check errors=2E
+>> >> -> This patch is rebased on 'linux-next/master'
+>> >>
+>> >>  =2E=2E=2E/devicetree/bindings/mmc/sdhci-msm=2Eyaml    | 52 ++++++++=
+++++++++---
+>> >>  1 file changed, 44 insertions(+), 8 deletions(-)
+>> >
+>> >There's another issue with this applied:
+>> >
+>> >Documentation/devicetree/bindings/mmc/sdhci-msm=2Eexample=2Edtb:
+>> >mmc@8804000: Unevaluated properties are not allowed
+>> >('operating-points-v2' was unexpected)
+>> >
+>> >Should just need a 'operating-points-v2: true' line=2E
+>> >
+>> >This won't show up until a fix for 'unevaluatedProperties' handling is
+>> >applied=2E But first I need all the issues fixed=2E
+>>
+>> Could you please add a dt-validate (?) argument so that we can validate=
+ new schemas with unevaluatedProperties working as expected, while keeping =
+default behaviour intact (while it gets sorted out)?
+>>
+>
+>I think that wouldn't work well because the schemas have to be
+>reprocessed when such an option changes=2E Though kbuild does look for
+>command line changes=2E=2E=2E
+>
+>In any case, I'm going to commit this to the main branch in a few
+>days=2E There aren't many warnings left=2E
 
-Rob
+Ack, thanks for the explanation=2E
+
+
+--=20
+With best wishes
+Dmitry
