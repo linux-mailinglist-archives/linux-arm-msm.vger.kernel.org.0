@@ -2,133 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BA0C1563F34
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Jul 2022 11:14:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 15BB8563F3D
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Jul 2022 11:29:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231775AbiGBJO5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 2 Jul 2022 05:14:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36732 "EHLO
+        id S231938AbiGBJ3Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 2 Jul 2022 05:29:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44228 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231723AbiGBJO4 (ORCPT
+        with ESMTP id S229446AbiGBJ3P (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 2 Jul 2022 05:14:56 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56DC61CFC1
-        for <linux-arm-msm@vger.kernel.org>; Sat,  2 Jul 2022 02:14:55 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id y16so7514574lfb.9
-        for <linux-arm-msm@vger.kernel.org>; Sat, 02 Jul 2022 02:14:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:user-agent:in-reply-to:references
-         :message-id:mime-version:content-transfer-encoding;
-        bh=NX2NmIaWgrskjfwPJH+7yMKeoSNDxO/zb36W7GTg75M=;
-        b=pu2ix/i+k5uolnHDEBn6kZnkuLnF4NeaaM+ZpyppZrf7Zgd/85OD3FZigHNQ9dIB0o
-         pmOmwF36aC6RcEfT1eKb/P6jZbozidunmpXoOy/ybTARrqqtl6OlWaXH2h5xvS9zpOE/
-         7tkgMRKx+Fp+tZgpMecP8RQ24O/3lXm+YYsDgtcb7fLNfDIpZGJuzir7ZHG24tenoQ0U
-         k6z8RfPP7eJutpyCX/LiSpDEgsgkzLVgHwYiqCMzdM2D7KKwDC42R8k9ld22UnrEXDDV
-         Q2dkFUtIvt0lFSmxuBV4FkEWBAl6sJquJuRbvfiN0407Tj9L8DmHArsU5prG4AIk8fMy
-         82Sw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:user-agent:in-reply-to
-         :references:message-id:mime-version:content-transfer-encoding;
-        bh=NX2NmIaWgrskjfwPJH+7yMKeoSNDxO/zb36W7GTg75M=;
-        b=B2lkVjS/HXTDiv6tSdFfNms93wqeGe/Pzo+wy5SSNnYL4st7PYC1umihOHiov2KgWV
-         OtvDYZge6ANOVfsK0cyRJzn1wzL2e06NK0opUQZ5B9kEgOprMik3v9Vo5ZcoAKkOWClW
-         zr6R8uvZ7kH+ZbAcd3+8T/ckjJnbQLGMo32D1j2BIlpTkoOCfaDhj8c42W9CavWaxP49
-         RV5Vt+zHbrNamKxQQKcmEHbfbstIX8AaF5ZZIGQMbX76O2IBDo/+KrWxIpqpQkogBDcq
-         CuoF5W2X82on6wP/w+qjAvc7NPSAA8jJILXhyf0qk+zdufxrAO2KJtQEwZrYVMbeIX/h
-         4AtQ==
-X-Gm-Message-State: AJIora/fod9XSsL/fPEY2bb6OP0RryRD+l24Qs166Twov/WR0dDhMvEj
-        zkNvYy9DHb2DhU+/47wdLaPfiA==
-X-Google-Smtp-Source: AGRyM1u8086xoEnBAP3OVsJWQwmjG3MRrPwGtRAoyXEQ1eafmLxrh0cmKXcVLuR+5tkB7s3NQLJ4Pg==
-X-Received: by 2002:a05:6512:3d86:b0:47f:9adc:cc27 with SMTP id k6-20020a0565123d8600b0047f9adccc27mr11622450lfv.608.1656753293613;
-        Sat, 02 Jul 2022 02:14:53 -0700 (PDT)
-Received: from [127.0.0.1] ([94.25.229.203])
-        by smtp.gmail.com with ESMTPSA id s6-20020ac25fa6000000b0047fbf4c8bdfsm3806073lfe.143.2022.07.02.02.14.52
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 02 Jul 2022 02:14:53 -0700 (PDT)
-Date:   Sat, 02 Jul 2022 12:14:48 +0300
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Rob Herring <robh@kernel.org>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>
-CC:     linux-mmc <linux-mmc@vger.kernel.org>,
-        Bhupesh Sharma <bhupesh.linux@gmail.com>,
-        "Gross, Andy" <agross@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_1/1=5D_dt-bindings=3A_mmc=3A_sd?= =?US-ASCII?Q?hci-msm=3A_Fix_issues_in_yaml_bindings?=
-User-Agent: K-9 Mail for Android
-In-Reply-To: <CAL_JsqLxXLFjre9h2dyoUJ=f0+pueUhSYezx_5bZ2SdpDt29xw@mail.gmail.com>
-References: <20220514220116.1008254-1-bhupesh.sharma@linaro.org> <CAL_JsqLxXLFjre9h2dyoUJ=f0+pueUhSYezx_5bZ2SdpDt29xw@mail.gmail.com>
-Message-ID: <D42FBBDC-A6BA-4374-A726-061A4478D4C7@linaro.org>
+        Sat, 2 Jul 2022 05:29:15 -0400
+Received: from relay06.th.seeweb.it (relay06.th.seeweb.it [IPv6:2001:4b7a:2000:18::167])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6730E13F0C;
+        Sat,  2 Jul 2022 02:29:14 -0700 (PDT)
+Received: from SoMainline.org (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id A7FAE3F62F;
+        Sat,  2 Jul 2022 11:29:11 +0200 (CEST)
+Date:   Sat, 2 Jul 2022 11:29:07 +0200
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
+        myungjoo.ham@samsung.com, cw00.choi@samsung.com,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        stephan@gerhold.net, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH v2] dt-bindings: pm8941-misc: Fix usb_id and usb_vbus
+ definitions
+Message-ID: <20220702092907.u7ref3k2mqi2ibvr@SoMainline.org>
+References: <20220701100405.3586820-1-bryan.odonoghue@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220701100405.3586820-1-bryan.odonoghue@linaro.org>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 2022-07-01 11:04:05, Bryan O'Donoghue wrote:
+> dts validation is throwing an error for me on 8916 and 8939 with
+> extcon@1300. In that case we have usb_vbus but not usb_id.
+> 
+> It wasn't immediately obvious if there was a valid use-case for the
+> existing code for usb_id in isolation, however discussing further, we
+> concluded that usb_id, usb_vbus or (usb_id | usb_vbus) are valid
+> combinations as an external IC may be responsible for usb_id or usb_vbus.
+> 
+> Expand the definition with anyOf to capture the three different valid
+> modes.
+> 
+> Fixes: 4fcdd677c4ea ("bindings: pm8941-misc: Add support for VBUS detection")
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
+Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
 
-On 2 July 2022 01:06:48 GMT+03:00, Rob Herring <robh@kernel=2Eorg> wrote:
->On Sat, May 14, 2022 at 4:01 PM Bhupesh Sharma
-><bhupesh=2Esharma@linaro=2Eorg> wrote:
->>
->> Rob pointed some remaining issues in the sdhci-msm yaml
->> bindings (via [1])=2E
->>
->> Fix the same by first using the 'mmc-controller=2Eyaml' as
->> 'ref' and thereafter also fix the issues reported by
->> 'make dtbs_check' check=2E
->>
->> [1]=2E https://lore=2Ekernel=2Eorg/linux-arm-msm/YnLmNCwNfoqZln12@robh=
-=2Eat=2Ekernel=2Eorg/
->>
->> Fixes: a45537723f4b ("dt-bindings: mmc: sdhci-msm: Convert bindings to =
-yaml")
->> Cc: Bjorn Andersson <bjorn=2Eandersson@linaro=2Eorg>
->> Cc: Rob Herring <robh@kernel=2Eorg>
->> Cc: Ulf Hansson <ulf=2Ehansson@linaro=2Eorg>
->> Signed-off-by: Bhupesh Sharma <bhupesh=2Esharma@linaro=2Eorg>
->> ---
->> -> This patch uses the dts changes sent (here: https://lore=2Ekernel=2E=
-org/linux-arm-msm/20220514215424=2E1007718-1-bhupesh=2Esharma@linaro=2Eorg/=
-), for fixing the dtbs_check errors=2E
->> -> This patch is rebased on 'linux-next/master'
->>
->>  =2E=2E=2E/devicetree/bindings/mmc/sdhci-msm=2Eyaml    | 52 +++++++++++=
-+++++---
->>  1 file changed, 44 insertions(+), 8 deletions(-)
->
->There's another issue with this applied:
->
->Documentation/devicetree/bindings/mmc/sdhci-msm=2Eexample=2Edtb:
->mmc@8804000: Unevaluated properties are not allowed
->('operating-points-v2' was unexpected)
->
->Should just need a 'operating-points-v2: true' line=2E
->
->This won't show up until a fix for 'unevaluatedProperties' handling is
->applied=2E But first I need all the issues fixed=2E
+Can you also switch platform_get_irq_byname() to
+platform_get_irq_byname_optional(), to get rid of:
 
-Could you please add a dt-validate (?) argument so that we can validate ne=
-w schemas with unevaluatedProperties working as expected, while keeping def=
-ault behaviour intact (while it gets sorted out)?
+    [    1.377491] extcon-pm8941-misc 200f000.spmi:pmic@2:extcon_chgpth@1300: IRQ usb_id not found
+    [    1.380399] extcon-pm8941-misc 200f000.spmi:pmic@2:extcon_otg@1100: IRQ usb_vbus not found
 
+That'd compement this patch nicely.
 
->
->Rob
+- Marijn
 
---=20
-With best wishes
-Dmitry
+> ---
+>  .../devicetree/bindings/extcon/qcom,pm8941-misc.yaml | 12 ++++++++----
+>  1 file changed, 8 insertions(+), 4 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/extcon/qcom,pm8941-misc.yaml b/Documentation/devicetree/bindings/extcon/qcom,pm8941-misc.yaml
+> index 6a9c96f0352ac..1bc412a4ac5e6 100644
+> --- a/Documentation/devicetree/bindings/extcon/qcom,pm8941-misc.yaml
+> +++ b/Documentation/devicetree/bindings/extcon/qcom,pm8941-misc.yaml
+> @@ -27,10 +27,14 @@ properties:
+>  
+>    interrupt-names:
+>      minItems: 1
+> -    items:
+> -      - const: usb_id
+> -      - const: usb_vbus
+> -
+> +    anyOf:
+> +      - items:
+> +          - const: usb_id
+> +          - const: usb_vbus
+> +      - items:
+> +          - const: usb_id
+> +      - items:
+> +          - const: usb_vbus
+>  required:
+>    - compatible
+>    - reg
+> -- 
+> 2.36.1
+> 
