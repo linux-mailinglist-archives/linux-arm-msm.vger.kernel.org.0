@@ -2,63 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9BD7E564476
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Jul 2022 06:19:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C276F564460
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Jul 2022 06:19:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232849AbiGCEBM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 3 Jul 2022 00:01:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57174 "EHLO
+        id S232935AbiGCEBj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 3 Jul 2022 00:01:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57976 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232688AbiGCEAD (ORCPT
+        with ESMTP id S232747AbiGCEAY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 3 Jul 2022 00:00:03 -0400
-Received: from mail-oa1-x30.google.com (mail-oa1-x30.google.com [IPv6:2001:4860:4864:20::30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46AD9DEE8
-        for <linux-arm-msm@vger.kernel.org>; Sat,  2 Jul 2022 20:58:02 -0700 (PDT)
-Received: by mail-oa1-x30.google.com with SMTP id 586e51a60fabf-101ec2d6087so8855294fac.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 02 Jul 2022 20:58:02 -0700 (PDT)
+        Sun, 3 Jul 2022 00:00:24 -0400
+Received: from mail-oa1-x31.google.com (mail-oa1-x31.google.com [IPv6:2001:4860:4864:20::31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61D8CDF7B
+        for <linux-arm-msm@vger.kernel.org>; Sat,  2 Jul 2022 20:58:06 -0700 (PDT)
+Received: by mail-oa1-x31.google.com with SMTP id 586e51a60fabf-1048b8a38bbso8774627fac.12
+        for <linux-arm-msm@vger.kernel.org>; Sat, 02 Jul 2022 20:58:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=2MMLIS8cAzDkNpWsQPp28lmw+anecb/WoThsjFIeK5U=;
-        b=WC+Ziy8/Bob0X16uWX/xImZvcvjq/l5b2fLhePlorXloxVoLzhP3UfZYPi/EsxS4CY
-         jvRSKawiROUD8vmi3EEDS9HzFkY9bEXXam/n3xI42qz8xqepvAj6VuaTSHooDccdZviT
-         dDQNJOKnTxqE4mJVgoqw2+qnnklYeBIshRDiCNPzPJoABD0eoTuw3EUwWJA2urCA7Tqi
-         XJIrcrXOZJ2BC0hYOr2cPB7o2Zn9yVb76CPOPCL3W6n1s225DPmtygqle64sB1Icktrm
-         Fp1k7YSHCZa2VQah5XNB5hwFsSKZUjd6xNw8GeCKHU2Wmb5Cm+p67JnpNuj0rWN4PGvO
-         iufg==
+        bh=0RqgirN7BbHsC9UQ94U9L9bhvHlaz6I8H5K/QJE4CSk=;
+        b=KmfWKyrq2EChkZJSLOp+rwX/KH0kL85vtV4uD/TCtw/+zcmcQVqTCsUbQyGiE7OKZu
+         0Nljm4H7HRlU2mTckG2UVnAir1SDdqKnCf7T0ogU5ZZvIrE7cykTUN0TsIF1D3cea+TQ
+         WYCtz3KbkBzJs/EnMQniihYXFyrm4JUZ9JvyuapfzKM07PfdGnDAPYkWWy3E03CAo41n
+         Q5lZ7gZqTW1H0kG55BexKpDvu+TtJiUdU5xGsk/jm+445YPEis2IiRVeN0TjTL3Ho9Wq
+         NY8GDMEtwXyp6khZniCLqgQNHhXcnR/nT4Q32bsP0g3ETQ2UuSlO0JDbrUXPxMkBVGM5
+         /Szw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=2MMLIS8cAzDkNpWsQPp28lmw+anecb/WoThsjFIeK5U=;
-        b=0ZWb6YnjpuCw/ziSarjVZNlG3+c6GnG++S75sMe0Toe6BTx5jtoNqhVigq/kBKFi8d
-         FYEiN8FuWjq77YKr7tlK/Gsl3u068Enib/ejdQLaN165R+/2PoUeqAAbRYPZWWPd4rNE
-         OYHjkNLmgEgnHrFwMaQMOgzU3ENDhzkLnKaxA2/CUy7cTr7fpfNBdNJcQGlrYgMLHOr+
-         CaS9Cqm1n08gW2Wz7h3OErcSt2RHzP6nCsjiymL3KguUi0EDNBS5uqFIfcVDeKNTwtMx
-         U+6crWaEAe27Uz7FpOr8z8LTDExPPxb3lXvTBiQGaYGpOU0dScuD0MoHwwmcN8C9mUXQ
-         9Gpw==
-X-Gm-Message-State: AJIora+44AndjO5tuF0jtM+vvylITGjbQrRszAyEP/LvweP5WthvyFR/
-        DDDBdvs/Li/gBGaJksPAVHFvtQ==
-X-Google-Smtp-Source: AGRyM1sn7duHueqga+9gh3H0h8NQssXx6Jmy2XwnG3kA8FZFLOTpmcvtxRBieqIvLpype8hON72xnA==
-X-Received: by 2002:a05:6870:c598:b0:108:b7e2:ac8 with SMTP id ba24-20020a056870c59800b00108b7e20ac8mr14382014oab.1.1656820681778;
-        Sat, 02 Jul 2022 20:58:01 -0700 (PDT)
+        bh=0RqgirN7BbHsC9UQ94U9L9bhvHlaz6I8H5K/QJE4CSk=;
+        b=RfhiyiOr/rdErCn+o9+x/IOHwbfUfZVqJ67mT6zcz2kCWoAUpRdWqYAux9MMpuwfGO
+         hrFUj5urtvflQpZtTVDx7S94hFSnGUe4NQoNULQvD6fLGpFn7FBQJ3ogzA9FV3pHqmtm
+         PmM62AXbfwy/VGsl6uHtYhne+rwZVB88pGBBzdp+cDbpIg2jtcdFLsQtqAYRHkQZ1Coc
+         Cp4LcyHbtETHLmZc5bezNXl4/IUEzIR1qISZE8hZ+kzMqrYcZTPjYGZ5SttXn9X3ynBk
+         3dARSHPVMSk8TBSNI/6HFFD+y4n722pwZjDCb0ZrmKuR0btVH9UpLL0L26BShDGtezs9
+         qA5Q==
+X-Gm-Message-State: AJIora+CKONv8hNOyVNF0ZtfOtL4TD19uxhlbJWcPwTj77oDKXeXWIIp
+        bE2BlumAy/087CuU3aP+ffoglA==
+X-Google-Smtp-Source: AGRyM1uhZrXXBJ/Xo0ltwV4HMYSe8dRq9X4xTR37eLbQyJ1iiFKWE9ahSU9lsNuJl0jthRnxB89r7Q==
+X-Received: by 2002:a05:6870:5494:b0:10b:8bc9:38aa with SMTP id f20-20020a056870549400b0010b8bc938aamr12020450oan.20.1656820683002;
+        Sat, 02 Jul 2022 20:58:03 -0700 (PDT)
 Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id 25-20020aca0f19000000b0032e5d0b5d5fsm12965910oip.58.2022.07.02.20.58.00
+        by smtp.gmail.com with ESMTPSA id 25-20020aca0f19000000b0032e5d0b5d5fsm12965910oip.58.2022.07.02.20.58.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 02 Jul 2022 20:58:01 -0700 (PDT)
+        Sat, 02 Jul 2022 20:58:02 -0700 (PDT)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Rob Herring <robh+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        devicetree@vger.kernel.org, Krzysztof Kozlowski <krzk@kernel.org>
-Subject: Re: [PATCH v3 0/3] arm64: dts: qcom: Get rid of some warnings
-Date:   Sat,  2 Jul 2022 22:56:54 -0500
-Message-Id: <165682055970.445910.6231160279000811511.b4-ty@linaro.org>
+To:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Cc:     linux-clk@vger.kernel.org,
+        Michael Turquette <mturquette@baylibre.com>,
+        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        Robert Foss <robert.foss@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>
+Subject: Re: [PATCH 0/2] clk: qcom: Fix topology around titan_top power domain
+Date:   Sat,  2 Jul 2022 22:56:55 -0500
+Message-Id: <165682055970.445910.5680460160488925344.b4-ty@linaro.org>
 X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20220606065035.553533-1-vkoul@kernel.org>
-References: <20220606065035.553533-1-vkoul@kernel.org>
+In-Reply-To: <20220519214133.1728979-1-vladimir.zapolskiy@linaro.org>
+References: <20220519214133.1728979-1-vladimir.zapolskiy@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -72,24 +74,22 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 6 Jun 2022 12:20:32 +0530, Vinod Koul wrote:
-> This attempts to make W=1 free from warnings for all SM* dts files.
+On Fri, 20 May 2022 00:41:31 +0300, Vladimir Zapolskiy wrote:
+> On SDM845 abd SM8250 platforms two found VFE GDSC power domains shall
+> not be operated, if titan top is turned off, thus the former power
+> domains will be set as subdomains by a GDSC registration routine.
 > 
-> Bunch of these are releated to node not having valid unit address and being
-> present under soc node. So moving it out fixed that. Interconnect node was
-> simple rename to remove unit address which was not really valid for these
-> nodes.
+> The fixes allow to drastically simplify power domain management in CAMSS
+> driver.
 > 
 > [...]
 
 Applied, thanks!
 
-[1/3] arm64: dts: qcom: sm8450: rename interconnect nodes
-      commit: 12cfafe7b78876133474f4b3e44e0464a94f61b0
-[2/3] arm64: dts: qcom: sm8350: Move qup-opp-tables out of soc node
-      commit: e2eedde448a9be6202fd9965aef29d4b6607ee67
-[3/3] arm64: dts: qcom: sm8250: Move qup-opp-table out of soc node
-      commit: 191c85b852c122e9282797ae3ce2a36083f1e9a9
+[1/2] clk: qcom: camcc-sdm845: Fix topology around titan_top power domain
+      commit: 103dd2338bbff567bce7acd00fc5a09c806b38ec
+[2/2] clk: qcom: camcc-sm8250: Fix topology around titan_top power domain
+      commit: f8acf01a6a4f84baf05181e24bd48def4ba23f5b
 
 Best regards,
 -- 
