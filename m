@@ -2,73 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 488D956443B
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Jul 2022 06:19:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AD1E9564473
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Jul 2022 06:19:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232548AbiGCD6g (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 2 Jul 2022 23:58:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56670 "EHLO
+        id S232550AbiGCD6i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 2 Jul 2022 23:58:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56842 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232342AbiGCD5w (ORCPT
+        with ESMTP id S232438AbiGCD6T (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 2 Jul 2022 23:57:52 -0400
-Received: from mail-oa1-x2b.google.com (mail-oa1-x2b.google.com [IPv6:2001:4860:4864:20::2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5BD9B1E7
-        for <linux-arm-msm@vger.kernel.org>; Sat,  2 Jul 2022 20:57:28 -0700 (PDT)
-Received: by mail-oa1-x2b.google.com with SMTP id 586e51a60fabf-1013ecaf7e0so8768103fac.13
-        for <linux-arm-msm@vger.kernel.org>; Sat, 02 Jul 2022 20:57:28 -0700 (PDT)
+        Sat, 2 Jul 2022 23:58:19 -0400
+Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16630BCBE
+        for <linux-arm-msm@vger.kernel.org>; Sat,  2 Jul 2022 20:57:31 -0700 (PDT)
+Received: by mail-oi1-x232.google.com with SMTP id t189so8918917oie.8
+        for <linux-arm-msm@vger.kernel.org>; Sat, 02 Jul 2022 20:57:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=0sEIIBTydmdDA0Ppj3dJOzdqd1kEymErzYo788cMuCY=;
-        b=s6Amefn2uPtF7XXO5kSaYYYOeznEDr/Ks7Aj+B8L7WOvCyeeYjQlnr565U5BwTpnXX
-         SVqKlcNBX4sB4kVjNHtGtjGxr2xCI88L0y6jj3RM3YbxZKdVOrQS2SkUWccmlEUReqQ7
-         rpdujoPpeQk1GjoDKkNVf2F6F2JuibZlBfHlSKZh0bW9jV6k8EPP9be98/9cIZaat7U4
-         EPM/9m/pgh0qWNqlKGO34B5n1Wm/hPHSH0I6eqMrCpDNW1snFY5Tb+wDB8NxuLFZZqbM
-         jX95M12qjLjglL7zY62H5E6Vc6jqHqJd7q0KXXzL25pQQ5uHA5ublRGvvfGda8L6lHah
-         LVUQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=S2PQt3HxkBxUYjC+VtlXEq4NoCpstcc7waq7Ie+ZSSw=;
+        b=LcxkuQlcBom6K7cYz2cObFcKqvmFziGvIewxr5CVdQDXpiVs4Qe1p9/ma3MjpEBl0m
+         LdiaLTeEwxUPT1iylGK2uBRwa96fvGW0y6QRWq5F+NZCFL6N1e6TXJlkAQCGEx5XaKBZ
+         bMXT/f+ogoq6vs4TCzgBdramsCAz0nmWRD4br2nzTC8FHRTsVjgo15di4+fdqYbsWQIV
+         4/vga7HK3myEs7r2HcBsoYeS5QL/sXXpo879hazt2tPiyyJMP+yzm9vvBM9i2od8IqAh
+         LSpFzHsWhZD+5n1ToMnLkj0S4zSlSFpghH27+UmeVqnGiX+vxJHJBYAk1fLnQfBbxsFF
+         J2sg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=0sEIIBTydmdDA0Ppj3dJOzdqd1kEymErzYo788cMuCY=;
-        b=z1EzaQELgcCiobJTXGZtg7IEh1mkCrZYPNm0paXsLSXbEYp+MtPRrftsrBX2wCBCAI
-         UGZn/B21AKiKCEuGszdgKJeXbVDiJT3M8reI7XKiIvei9HhBlmMTekOfkRDcJlg7wRN8
-         2xnbgHN06t35lxt5TZkCJqcliZpZY6YHzVLp34G75NaOHYKaraYpihu+zY0detHoiSm6
-         7culcd0GGn2fLUHeIe3MMFXPJZw7ZpjyqLBWgW1raKggJqfhkeOJCKena/VoeBcHyXfE
-         ZxXTg8U8ms1AKbqb0uKgz7S1HcTdTvAgkjgceO1ti0/TU1Alu4odv0qCPsMyz8UKjIeT
-         pCmg==
-X-Gm-Message-State: AJIora/DlMuvrbfE0RJwXys4B2AnWC1Vtabz46iakg5LkOg/HcUh5siJ
-        x/2oCes+3GoOTz7vqpsj+SBG9Q==
-X-Google-Smtp-Source: AGRyM1uzpBXAGIvH9HjaUWn2sg5+G1VlFD3WaUpo5taL+7xJG7tSoVbciFw3x5jIb0G6c12lWzn4Lw==
-X-Received: by 2002:a05:6871:60c:b0:10b:ee7c:2e28 with SMTP id w12-20020a056871060c00b0010bee7c2e28mr746646oan.21.1656820648368;
-        Sat, 02 Jul 2022 20:57:28 -0700 (PDT)
+        bh=S2PQt3HxkBxUYjC+VtlXEq4NoCpstcc7waq7Ie+ZSSw=;
+        b=kZSZZvm2oBsnEjP1EOsq3tFERZljgwDD2Mf8jI8dmR82GFSJLNmgZwfJqV16nd/5JV
+         wINIOX/+z3Q/RWmPRbVqR/FKOPbq08Pjxvd7juMhWiO0YGMEy1jQyNX85JbBrSUpayMR
+         rt08wtV5YjNs/OFJJuOzk8I1cCftkd4nsszYKtshBa5AoAPXo9zqWRPnV1zj0+5xnHGS
+         NTPIfRDuUvPwSWFdgCqjw8lpAot/R5sc86ab7IL/AVsSSNoXYmA/+vqyvp4E5O3HIhds
+         o3ZNnPJ5pgm3+Tr6YoqvMiVthaB0sfRO9FxBB/Or+KUz/60FCoYeYZBSqiev7cPwbniW
+         EGDg==
+X-Gm-Message-State: AJIora+8w4S536C4/C2Eveq/vPfoa482djE2LByZ1x0CXcuGCGzUcBFQ
+        LU6nKcgfEc1y2lhnWct+Mdr3fQ==
+X-Google-Smtp-Source: AGRyM1vPsLVLSd2YTyZeBHDlHn82rVPH0GlTr+Bdo5oMuTiVoQgn60DY/3PL3sh3O2ct5ts3e02W/w==
+X-Received: by 2002:a05:6808:1b25:b0:32e:e59c:3901 with SMTP id bx37-20020a0568081b2500b0032ee59c3901mr13881725oib.186.1656820650648;
+        Sat, 02 Jul 2022 20:57:30 -0700 (PDT)
 Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id 25-20020aca0f19000000b0032e5d0b5d5fsm12965910oip.58.2022.07.02.20.57.27
+        by smtp.gmail.com with ESMTPSA id 25-20020aca0f19000000b0032e5d0b5d5fsm12965910oip.58.2022.07.02.20.57.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 02 Jul 2022 20:57:27 -0700 (PDT)
+        Sat, 02 Jul 2022 20:57:29 -0700 (PDT)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Rob Herring <robh+dt@kernel.org>,
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Olof Johansson <olof@lixom.net>, soc@kernel.org,
+        Arnd Bergmann <arnd@arndb.de>, arm@kernel.org
+Cc:     Li Yang <leoyang.li@nxp.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Tony Lindgren <tony@atomide.com>,
+        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
+        Joel Stanley <joel@jms.id.au>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Tero Kristo <kristo@kernel.org>,
+        =?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <zajec5@gmail.com>,
+        Hauke Mehrtens <hauke@hauke-m.de>,
+        Scott Branden <sbranden@broadcom.com>,
+        linux-rockchip@lists.infradead.org,
+        Russell King <linux@armlinux.org.uk>,
+        =?UTF-8?q?Beno=C3=AEt=20Cousson?= <bcousson@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>, linux-sunxi@lists.linux.dev,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        linux-tegra@vger.kernel.org,
+        Khuong Dinh <khuong@os.amperecomputing.com>,
+        linux-gpio@vger.kernel.org, Kevin Hilman <khilman@baylibre.com>,
+        linux-amlogic@lists.infradead.org,
+        Fabio Estevam <festevam@gmail.com>,
+        Michal Simek <michal.simek@xilinx.com>,
+        linux-samsung-soc@vger.kernel.org,
+        Vignesh Raghavendra <vigneshr@ti.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Andrew Jeffery <andrew@aj.id.au>,
+        Heiko Stuebner <heiko@sntech.de>, Nishanth Menon <nm@ti.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Peter Rosin <peda@axentia.se>,
+        linux-arm-kernel@lists.infradead.org,
+        Broadcom internal kernel review list 
+        <bcm-kernel-feedback-list@broadcom.com>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        openbmc@lists.ozlabs.org,
+        Nicolas Ferre <nicolas.ferre@microchip.com>,
+        Andy Gross <agross@kernel.org>, Wei Xu <xuwei5@hisilicon.com>,
+        linux-omap@vger.kernel.org,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>
-Subject: Re: (subset) [PATCH v2 00/12] dt-bindings: remoteproc: qcom: cleanups and improvements
-Date:   Sat,  2 Jul 2022 22:56:24 -0500
-Message-Id: <165682055969.445910.1031457068596684061.b4-ty@linaro.org>
+        devicetree@vger.kernel.org, linux-mediatek@lists.infradead.org,
+        Ray Jui <rjui@broadcom.com>,
+        Gregory Clement <gregory.clement@bootlin.com>,
+        =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        linux-input@vger.kernel.org, linux-aspeed@lists.ozlabs.org,
+        Chen-Yu Tsai <wens@csie.org>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Samuel Holland <samuel@sholland.org>,
+        Andrew Lunn <andrew@lunn.ch>,
+        Claudiu Beznea <claudiu.beznea@microchip.com>
+Subject: Re: (subset) [PATCH v2 00/48] dt-bindings: input: gpio-keys: rework matching children
+Date:   Sat,  2 Jul 2022 22:56:25 -0500
+Message-Id: <165682055971.445910.5189932421143220440.b4-ty@linaro.org>
 X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20220517070113.18023-1-krzysztof.kozlowski@linaro.org>
-References: <20220517070113.18023-1-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220609113721.379932-1-krzysztof.kozlowski@linaro.org>
+References: <20220609113721.379932-1-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -76,28 +128,27 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 17 May 2022 09:01:01 +0200, Krzysztof Kozlowski wrote:
-> Patches are mostly independent, so they can go via:
-> 1. Qualcomm SoC (dt-bindings/soc: + arm64)
-> 2. remoteproc (dt-bindings).
+On Thu, 9 Jun 2022 13:37:21 +0200, Krzysztof Kozlowski wrote:
+> Merging
+> =======
+> 1. dt-bindings: rebased on top of Rob's:
+>    https://lore.kernel.org/all/20220608211207.2058487-1-robh@kernel.org/
 > 
-> Changes since v1
-> ================
-> 1. Add review tags
-> 2. Patch 8: Remove ref from label (Rob)
+> 2. DTS patches are independent. They can be picked up directly by sub-arch
+>    maintainers, by Arnd or Olof, or eventually by me (if you wish).
 > 
 > [...]
 
 Applied, thanks!
 
-[09/12] arm64: dts: qcom: ipq6018: add label to remoteproc node
-        commit: f0b255b4f012055ab12137ecc1b68dfe12b06107
-[10/12] arm64: dts: qcom: sdm630: remove unneeded address/size cells in glink-edge
-        commit: dc74f89e3281f9ea5669831db05d56db0555ced2
-[11/12] arm64: dts: qcom: sm8350: remove duplicated glink-edge interrupt
-        commit: 140488b46b96aed232fc5e911a4455ec6e441177
-[12/12] arm64: dts: qcom: sm8450: remove duplicated glink-edge interrupt
-        commit: c372baf317f4e10e67b81594cc38607549557a93
+[27/48] arm64: dts: qcom: align gpio-key node names with dtschema
+        commit: b08f5cbd69dcd25f5ab2a0798fe3836a97a9d7c6
+[28/48] arm64: dts: qcom: correct gpio-keys properties
+        commit: 5a4b0b853a2914403746b0a1decab695202ff242
+[29/48] arm64: dts: qcom: sdm630-sony-xperia-nile: drop unneeded status from gpio-keys
+        commit: 9d8840f6ee426b6dfcb65bdf39e2898652e2b1e5
+[30/48] arm64: dts: qcom: align led node names with dtschema
+        commit: 3cfe94d660a8ebc19e78ea0a4781d7e9a1054c65
 
 Best regards,
 -- 
