@@ -2,66 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B5202564480
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Jul 2022 06:19:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C25F856441A
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Jul 2022 06:19:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232716AbiGCD7Z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 2 Jul 2022 23:59:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57166 "EHLO
+        id S232638AbiGCD7U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 2 Jul 2022 23:59:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58082 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231874AbiGCD6e (ORCPT
+        with ESMTP id S232499AbiGCD63 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 2 Jul 2022 23:58:34 -0400
-Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBFDDBC3F
-        for <linux-arm-msm@vger.kernel.org>; Sat,  2 Jul 2022 20:57:40 -0700 (PDT)
-Received: by mail-oi1-x22f.google.com with SMTP id y77so8957583oia.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 02 Jul 2022 20:57:40 -0700 (PDT)
+        Sat, 2 Jul 2022 23:58:29 -0400
+Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9ABBBF49
+        for <linux-arm-msm@vger.kernel.org>; Sat,  2 Jul 2022 20:57:36 -0700 (PDT)
+Received: by mail-oi1-x234.google.com with SMTP id l81so8913614oif.9
+        for <linux-arm-msm@vger.kernel.org>; Sat, 02 Jul 2022 20:57:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:subject:date:message-id:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=wokBQ9oSEwUwrcHF6wAKwWoV89oOxGjTHUwzBoOGs24=;
-        b=bL12LAB3rEQdAn2JQRCTf0LpRKpn+JzX3ieVgMtQT3UhMdxymbZld5z39AT1Y6okaE
-         hbpRbj54K1PFl7wgqDaGqo5NZ2C+GxYbsMX7c1xwzXFG8Zo+5nG1pu0K6HKckDGn5OsY
-         Z0nh8EJrHEblYv+5iY2cCnCMTz4r3pksGitrmtmyGJ4jbPAxqFvozDT9mDR6uqO7jH93
-         50uB3kdGLbBcOV55kyIw9qeRcay1zxHL7T+QkUOIshcbvRXzXnFfaYTlLkeTkmOsk/zC
-         F3SECl9ZxO2KnKL2d2+WEg1cJQqnz35RScCukaT4zu6sDMlWQjdhYmdIZnaNDerTOaYE
-         v4vw==
+        bh=tKpzejLshB+azhLe9/Pn6K4qRUtHqwv08GiuhB13awQ=;
+        b=Vlm2UvMOBU6j+F4uA1uua7xdjcKXAJS16yiVDzjz0fk/TohHw1n3ZuLBFOOgXJnjdL
+         cC1/iYipDv61kk1Wx2KIkpaJbPD5MjbHRvNKB3RbT1drthzxeIctUH/pmq/78cCI1G/o
+         tezcGUX8sEVS8O7jWRND0vOopeLMPVNIYzKslhsAgScNX65A16mA7o+LnjiMv1T0NoLd
+         tSO22rYNQsxjV7ggwlMj+5DTGQIL+LLHdIBKM8CIU1WF+DGZA9Rb6fyIy6dQHFFIrYtw
+         4cVpeoZfBJb1BUnGVXxmzqJq6rbq5dM4XK6dHfdm/ja1FPH8buuNbkT+OZLY1/OkBmJG
+         Flig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=wokBQ9oSEwUwrcHF6wAKwWoV89oOxGjTHUwzBoOGs24=;
-        b=7ox3kkbkIQLK+ALuT0TVHP+x0DE5dzIhVh2yZo2KpDctZ34dwY8iQLTvQNX85FM7/t
-         GBRj+VwcIruY4WargHqCHmoHti7r28i51H7aBWkrziQ5kLpIc87Bz72hxGT3KpBNDw38
-         yspzxnklvleo4FV+pCYRrnIEGIPEGuOJ7qKqiw4JFXIejX5RYv6QerozYfnN3IjtRsgT
-         W43BifDKpkzDeFiip3z9ELHZmvCXARQD1tn7H9eGil7uabm6J0aNc4gDHxIi2MeVXFLd
-         SQVGOc6+1fh4pj1bzbc/m6Czj5G8QG4YR8dDyfxkURUY6DZdUfksht9MTazNMvamxIPy
-         aqBg==
-X-Gm-Message-State: AJIora/sIjiauVUNKBQOrmYuSMauHqGBc8213kjRGtJHXbaFPGITYein
-        6mQTzI0XWWEmIQn6T7tYZOZKAw==
-X-Google-Smtp-Source: AGRyM1vuXUCA+tQfvJJg96GCfC+5BfENK66OKsnDvm3laAYX1gPBJjntoDg50GLsHL7ckr1ccrAkGA==
-X-Received: by 2002:a05:6808:10c2:b0:335:c2a8:d1f7 with SMTP id s2-20020a05680810c200b00335c2a8d1f7mr9836599ois.123.1656820655646;
-        Sat, 02 Jul 2022 20:57:35 -0700 (PDT)
+        bh=tKpzejLshB+azhLe9/Pn6K4qRUtHqwv08GiuhB13awQ=;
+        b=F/gw9MHfTDiLZEq1WIlE316OZ97fWieioCRSTQRulK3qJcBd3g30VJ8YpY5UUUHM8C
+         jBixhbrUf6w0HJe6eFCrOQdSTSQGAosiRdnearC1S24adTo2JxrAQNVzjFeP7uvkhCPt
+         nQAI2NcCG4NuPAnYf6FWwKR9XzEBNMcSRq5y5MbzuegteBA4hWwL/LUXJ0amJPXfzD42
+         Rne/wgEf1YO93HbNNmjWIu8HTWzaPvJLKsDG52WWZ1g4o9Pv5DfdiZGySRyZOocekAfb
+         uWxiKmZjgFqPVy+/C3cPX+90E7rlCarMKcI8XdjmmHHhPrObRP40wsU+vuL3j55UW4Mx
+         12Yg==
+X-Gm-Message-State: AJIora9n6JajLufCgE4UfelzuNXau4OKk7RsFXkwcs7YDM68e0RAMNVo
+        b6FLqQP80nCj8VHioOl2uX6dXA==
+X-Google-Smtp-Source: AGRyM1sZ9cAQ+ayswgOKAMc3SmLTVs5cQB5R9X2D8VC6DbfvRolsnT9XWG5MpLPLW7XQRPj01oOHcw==
+X-Received: by 2002:a05:6808:a89:b0:337:b33f:90d7 with SMTP id q9-20020a0568080a8900b00337b33f90d7mr1577812oij.262.1656820656702;
+        Sat, 02 Jul 2022 20:57:36 -0700 (PDT)
 Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id 25-20020aca0f19000000b0032e5d0b5d5fsm12965910oip.58.2022.07.02.20.57.34
+        by smtp.gmail.com with ESMTPSA id 25-20020aca0f19000000b0032e5d0b5d5fsm12965910oip.58.2022.07.02.20.57.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 02 Jul 2022 20:57:35 -0700 (PDT)
+        Sat, 02 Jul 2022 20:57:36 -0700 (PDT)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Olof Johansson <olof@lixom.net>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Olof Johansson <olof@lixom.net>,
         Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         soc@kernel.org, arm@kernel.org, Arnd Bergmann <arnd@arndb.de>
-Subject: Re: (subset) [PATCH v3 22/40] arm64: dts: qcom: correct gpio-keys properties
-Date:   Sat,  2 Jul 2022 22:56:29 -0500
-Message-Id: <165682055968.445910.595101220376167281.b4-ty@linaro.org>
+Subject: Re: (subset) [PATCH v3 23/40] arm64: dts: qcom: sdm630-sony-xperia-nile: drop unneeded status from gpio-keys
+Date:   Sat,  2 Jul 2022 22:56:30 -0500
+Message-Id: <165682055968.445910.692492980359330400.b4-ty@linaro.org>
 X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20220616005333.18491-22-krzysztof.kozlowski@linaro.org>
-References: <20220616005224.18391-1-krzysztof.kozlowski@linaro.org> <20220616005333.18491-22-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220616005333.18491-23-krzysztof.kozlowski@linaro.org>
+References: <20220616005224.18391-1-krzysztof.kozlowski@linaro.org> <20220616005333.18491-23-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -75,15 +75,15 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 15 Jun 2022 17:53:15 -0700, Krzysztof Kozlowski wrote:
-> gpio-keys children do not use unit addresses.
+On Wed, 15 Jun 2022 17:53:16 -0700, Krzysztof Kozlowski wrote:
+> Nodes do not need explicit status=okay.
 > 
 > 
 
 Applied, thanks!
 
-[22/40] arm64: dts: qcom: correct gpio-keys properties
-        commit: 5a4b0b853a2914403746b0a1decab695202ff242
+[23/40] arm64: dts: qcom: sdm630-sony-xperia-nile: drop unneeded status from gpio-keys
+        commit: 9d8840f6ee426b6dfcb65bdf39e2898652e2b1e5
 
 Best regards,
 -- 
