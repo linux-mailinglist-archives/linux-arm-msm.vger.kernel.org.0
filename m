@@ -2,71 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 82F2356443F
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Jul 2022 06:19:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2AB1456445E
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Jul 2022 06:19:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232487AbiGCEAt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 3 Jul 2022 00:00:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57068 "EHLO
+        id S229486AbiGCEBI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 3 Jul 2022 00:01:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59882 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232805AbiGCD7l (ORCPT
+        with ESMTP id S232839AbiGCEAB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 2 Jul 2022 23:59:41 -0400
-Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2C39DEEB
-        for <linux-arm-msm@vger.kernel.org>; Sat,  2 Jul 2022 20:57:58 -0700 (PDT)
-Received: by mail-oi1-x233.google.com with SMTP id w83so8974055oiw.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 02 Jul 2022 20:57:58 -0700 (PDT)
+        Sun, 3 Jul 2022 00:00:01 -0400
+Received: from mail-oa1-x2d.google.com (mail-oa1-x2d.google.com [IPv6:2001:4860:4864:20::2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B00C4DF26
+        for <linux-arm-msm@vger.kernel.org>; Sat,  2 Jul 2022 20:58:01 -0700 (PDT)
+Received: by mail-oa1-x2d.google.com with SMTP id 586e51a60fabf-fe023ab520so8803669fac.10
+        for <linux-arm-msm@vger.kernel.org>; Sat, 02 Jul 2022 20:58:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=eJ/HSOVi6T6+W5It4M/UYPcXmqIF2IGyMOvm2eYN/hg=;
-        b=cPQGTSOZ9AG/DoR8s7YJk3MwgY/duECkhznMoQhV9VHOHPgCoKbhkeSQkaUEZLdUJv
-         3kgb76sBG6wvqrVmvtWi67t17x4cm43Ga6124GkiDF7MgM7y+Lsnj/z9MHXl1B50RysP
-         Mote2c/eCti6U3mS2V53GpevNTPSSjowsciZk/sf+oY6dTzqLPT9I4SiaeLs5/oTJSun
-         IH/rlva/UrvwoZasNHEfWJgZk3QwMWMcJYQGTCFkRvahN+MRKze+4fqfL6aGf0fZI0jq
-         ioD0PhcNLqM/0Be1rwOVctffCJDVsMmSRUagjJb82X6ClUp8TTWRhA7oLU+fSh0EZRss
-         VMDw==
+        bh=6WhkiinZderBeOJxHsAhGfuvlGN4jQvGr3mcVEnHC/E=;
+        b=ROXm6HUBUB7+4plaT3RCm8eT5gipo0vfdLYpNdFJa1V2G+GeOtlT4L00JY4EI/cASY
+         dZOd6BG+lXaLnds4EmGjnO/aYIVWIMxeo8688Z9Nc5ixYdjs68gta/BuiMCYhTfYoBmL
+         e2uiQjgrQq+jGdh0l9qTWjijwrPUtA5u/Bq1u16YQ+fLFv9iqGBfGbynkkXr1B++LCh5
+         vF9HmS896miL00jmRNnoMvJZfaR1lQkCIn8ZSAhjdgm3VriN5DA3iiFniLUopXg6Oeuo
+         vgjchV4RBkLF75hyTSx0nbFT3QJ5QWOvRsA2VVNACGuGn6t9M25oxAPu+uGXBUN0giWm
+         Sosw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=eJ/HSOVi6T6+W5It4M/UYPcXmqIF2IGyMOvm2eYN/hg=;
-        b=R8hVsZEitrWQuaiTYzhcZvdjnvVzpe0TT8RjGRCR9vcgvvnYMigCJ9C6q0Lf1NTdZY
-         dZXolf2+kdR4x0sPHgWXfJMidmW2wjrK/nfs3LkkZu2CCmDM0ZlFxEDUYQke6N9j4X9m
-         FnrOT4stkK+seSmrZmVm034VnU+Q3cxK6onMTbMSeaPHFSIwalrqY4uRmkHyH4TCUfYy
-         eE1XoIbICvdWE96HhtZzNYYIlXcvJGzoTTA8v6myuKScvzcL042d0ratQ8zr5zwtQZF9
-         EK3WuBH3zvIdjw7VySwSwa8+QWYw9wr2gZUMXLPvG20+ovbi6Ai//+KmL1vNu9euaNSQ
-         /4+w==
-X-Gm-Message-State: AJIora+ySUqeiFUJKZhkPgOK2kqKpzUG26AhjmimYpIKVno3P7qvRA1I
-        bI6NerS/ivPcGfJUGAxWd1oFPw==
-X-Google-Smtp-Source: AGRyM1sXofxsPr+IeRS/vIyhp0YmRs7G23WDfuwp8Os14Ws4pDKs+/H7OT/xUXeyp/wv1Y7JyEka5g==
-X-Received: by 2002:aca:a904:0:b0:335:5e06:1e38 with SMTP id s4-20020acaa904000000b003355e061e38mr12960230oie.20.1656820678671;
-        Sat, 02 Jul 2022 20:57:58 -0700 (PDT)
+        bh=6WhkiinZderBeOJxHsAhGfuvlGN4jQvGr3mcVEnHC/E=;
+        b=Hyl0tS/zH+O4KavyahvvMVfgNG4CHVtXVJUSMudNY/j3Sq6vxBs72ey88kk2eHM16A
+         BB69gAZpvGAylLNIHLAZb/5Wh//Lbw0VNnj4rXlzCEoDQj2/k39GbEG0vyz/czIew3K7
+         tril9GDJ9IEaVzaC1O01O/SRFFLSs5fy8zRXVfn2OJpM4yaMukR3Rrow+deKn9EPYmev
+         YHpj1Mbxmwen7vGh6Bc+mLnUVJqaaYJ93Bo0FWrAwwlBL3x5trOVgupmSl0TxgSn3QvM
+         q47IQvMMP0rOstg/p5d4TCzzecHmSBWD7bjshWgBv7nhk9eepbCJyxSGVvJTXeP+UWk4
+         38Dg==
+X-Gm-Message-State: AJIora/8nPObV0zT/7WoGsLUxO3d5Ted4RnpRNEHB3HjMfNQ1IFshu2a
+        dnrBhVOuOQZTa+k+mr3ZEJEyQg==
+X-Google-Smtp-Source: AGRyM1u2LewnM4ouvLaAci96M2trkkiVNULlUbxt5GHFcPZ1EuMGmiG9/MZFHVVWP3R3fwybWoPlAQ==
+X-Received: by 2002:a05:6870:c988:b0:106:3435:11e5 with SMTP id hi8-20020a056870c98800b00106343511e5mr13551815oab.172.1656820679905;
+        Sat, 02 Jul 2022 20:57:59 -0700 (PDT)
 Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id 25-20020aca0f19000000b0032e5d0b5d5fsm12965910oip.58.2022.07.02.20.57.57
+        by smtp.gmail.com with ESMTPSA id 25-20020aca0f19000000b0032e5d0b5d5fsm12965910oip.58.2022.07.02.20.57.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 02 Jul 2022 20:57:57 -0700 (PDT)
+        Sat, 02 Jul 2022 20:57:59 -0700 (PDT)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     devicetree@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        Sireesh Kodali <sireeshkodali1@gmail.com>,
-        linux-arm-msm@vger.kernel.org
-Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        open list <linux-kernel@vger.kernel.org>
-Subject: Re: (subset) [PATCH v2 2/2] arm64: dts: qcom: msm8916: Fix typo in pronto remoteproc node
-Date:   Sat,  2 Jul 2022 22:56:51 -0500
-Message-Id: <165682055970.445910.12399555371619436680.b4-ty@linaro.org>
+To:     Stephen Boyd <swboyd@chromium.org>, Andy Gross <agross@kernel.org>
+Cc:     patches@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Douglas Anderson <dianders@chromium.org>,
+        Hsin-Yi Wang <hsinyi@chromium.org>,
+        Guenter Roeck <groeck@chromium.org>,
+        "Joseph S. Barrera III" <joebar@chromium.org>,
+        Benson Leung <bleung@chromium.org>
+Subject: Re: (subset) [PATCH v2] arm64: dts: qcom: sc7180-trogdor: Split out keyboard node and describe detachables
+Date:   Sat,  2 Jul 2022 22:56:52 -0500
+Message-Id: <165682055972.445910.5367240737082379491.b4-ty@linaro.org>
 X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20220526141740.15834-3-sireeshkodali1@gmail.com>
-References: <20220526141740.15834-1-sireeshkodali1@gmail.com> <20220526141740.15834-3-sireeshkodali1@gmail.com>
+In-Reply-To: <20220627212802.3593012-1-swboyd@chromium.org>
+References: <20220627212802.3593012-1-swboyd@chromium.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -74,17 +76,22 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 26 May 2022 19:47:40 +0530, Sireesh Kodali wrote:
-> The smem-state properties for the pronto node were incorrectly labelled,
-> reading `qcom,state*` rather than `qcom,smem-state*`. Fix that, allowing
-> the stop state to be used.
+On Mon, 27 Jun 2022 14:28:02 -0700, Stephen Boyd wrote:
+> Trogdor devices that have a detachable keyboard still have a
+> non-detachable keyboard input device present because we include the
+> cros-ec-keyboard.dtsi snippet in the top-level sc7180-trogdor.dtsi file
+> that every variant board includes. We do this because the
+> keyboard-controller node also provides some buttons like the power
+> button and volume buttons. Unfortunately, this means we register a
+> keyboard input device that doesn't do anything on boards with a
+> detachable keyboard.
 > 
-> 
+> [...]
 
 Applied, thanks!
 
-[2/2] arm64: dts: qcom: msm8916: Fix typo in pronto remoteproc node
-      commit: 5458d6f2827cd30218570f266b8d238417461f2f
+[1/1] arm64: dts: qcom: sc7180-trogdor: Split out keyboard node and describe detachables
+      commit: a10b760b7402563661fa305882b181a75a1d4894
 
 Best regards,
 -- 
