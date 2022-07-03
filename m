@@ -2,66 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D3393564417
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Jul 2022 06:19:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BBA3F56442A
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Jul 2022 06:19:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232766AbiGCD7d (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 2 Jul 2022 23:59:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56454 "EHLO
+        id S232719AbiGCD73 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 2 Jul 2022 23:59:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56842 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232544AbiGCD6g (ORCPT
+        with ESMTP id S232372AbiGCD6g (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Sat, 2 Jul 2022 23:58:36 -0400
-Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7664CBF78
-        for <linux-arm-msm@vger.kernel.org>; Sat,  2 Jul 2022 20:57:42 -0700 (PDT)
-Received: by mail-ot1-x32e.google.com with SMTP id y10-20020a9d634a000000b006167f7ce0c5so5138378otk.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 02 Jul 2022 20:57:42 -0700 (PDT)
+Received: from mail-oa1-x34.google.com (mail-oa1-x34.google.com [IPv6:2001:4860:4864:20::34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91065CE01
+        for <linux-arm-msm@vger.kernel.org>; Sat,  2 Jul 2022 20:57:43 -0700 (PDT)
+Received: by mail-oa1-x34.google.com with SMTP id 586e51a60fabf-10bec750eedso1122185fac.8
+        for <linux-arm-msm@vger.kernel.org>; Sat, 02 Jul 2022 20:57:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Sg1JuGe8NUunuT5VvGnoHM/xzW2U0bu23BAY3DCd9mM=;
-        b=yqJub9mvpzQN59zZa3saThKzScm+mFApLBtp8T9+xRKmKWFACbZZOZSjk1P5GOiaUI
-         tIhJSqYv5+gmDgVr7rzK8w7Um/lf23gXrZxpZrOhtl0Wp2PBB5tEiQMsvXNn8005rGqm
-         RcGJTChnrSgvO5wLChL8ucHKholF/LfIljFx/dgburognCswpoiGOkjaf1YFL73FrEKn
-         8rmiodktuRmRPeQfBOR61DlpTP36DEARrHDDNbR7z52phhqCH3jIkVlFMznmDu+WoSh1
-         m7faH6LloCdtokOeKl3ahpT1GE19VJ7KEFvQ7KwDoq1pLpxlu8HHGi4B34Pjda5xtjG+
-         yVsw==
+        bh=ywkPZufTnD1xHLiTv5IWpd6Pq71Ja3jgwwnqALPUIeY=;
+        b=XT7HWcqAnAn8cZm9UIgQQAPke8Mw/3lizgqKFx6p58hNuVvAqE+tVbtp80SqdvqoeG
+         yVeIu79eDZYxqE1tAkXXPWPY5bhm4K2yBkJwXgk3NuEgAf+tHoP33UkCl9hByBwBudSK
+         AcM0PxOY2doYuMO8RhMRpazTFNrCdn9eTrXxv2VFqdbftWeCTwbOMSejnMp7KrN/mvkE
+         IV9YIlSoC6X5Y869QmdQ4d3FVWddRjKMtMpQ4mCrzXXepIHXHOC92zTxhatPu2Es9e3B
+         H+IuHR/GLRoOQoeWE5mCYtaGr8vufPuCkEgIhwlYcIcRGDeG+ahy+XPj7m87eLjl32JF
+         ShmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Sg1JuGe8NUunuT5VvGnoHM/xzW2U0bu23BAY3DCd9mM=;
-        b=Ynls7WGhxx7PdNp5Fg92a17NseJEfdWNYkyALAtxZwTf2M5iqn+3SH0MnxHU4EUVt6
-         CkyCtNPyUk4qzYld4MfbX28brNGqhS2TUTnaC3PgB9fTbKNRYA437J061l2Q79UtoQVC
-         U7Tyax/md/QJu+cwcMJYC5zuftka9GleA7p7bg+PFKZGWTrPXGpDjXDfv/YyCc/gmgD3
-         MT1IN06vGrbQCzvEIhhup/GmGtGZIxmlWqHxPUnBkBBiCFzfzHk350sYxdNHUGvPu29f
-         u08FtpmfG1BKKE/3jyfwy2p3PmYc11ROA84GPJcxDeVo+vW1Y4SkPBBnx9wHbARNi0OC
-         xeZQ==
-X-Gm-Message-State: AJIora/oynEFYu5DbyrnjvNfdeV3X/TU6JpEZizNcZP4z28ZjFtmcXeF
-        +OYkRvJzj1+/HADireAuaVILsLfUQn5q3g==
-X-Google-Smtp-Source: AGRyM1snoFXagGCa2xEjxs3qlmsK0jo4W/1lMGfF8Gi5A8It9E1ZWEDYvoF5F9HJNsvP97kqVMHvAA==
-X-Received: by 2002:a9d:3e50:0:b0:616:bcbf:afed with SMTP id h16-20020a9d3e50000000b00616bcbfafedmr9801454otg.63.1656820661824;
-        Sat, 02 Jul 2022 20:57:41 -0700 (PDT)
+        bh=ywkPZufTnD1xHLiTv5IWpd6Pq71Ja3jgwwnqALPUIeY=;
+        b=xhkkwvz9y1BJArlwVLGWuzcqSx7qUTirbgWErtaKXakj5jxkMC/csmnGUxxC75BPZ0
+         9wgjLPGkfAmFdwUhOiDZfG6x1cMO4bTZpuJ3WO+ctfcZXNXBO3IL6EV/uXFmBUTa9ksm
+         ma+T9dRIs54fEK+AGefVz7gnqdZs/qLH/dEvlaqKJaDO4I1/42tmP/cU7c53eYBZ2a4y
+         oaxE4g8WDpn0NBt1zOK3NmykG6rNJb5iRorNGI73LwoZC30mednK03T/FvZ7AlmXPXx9
+         ShnJUyceLluD56e01tL71YMk7Z1iHmJBcF/NIjluX3EEED6wWmQo3YLHqjB/uOY6U8To
+         HAMg==
+X-Gm-Message-State: AJIora+smqN8ujuIK+jhZ5G/EylNOzM3g0z3D97mGXmP4RbwpmTXcuSQ
+        jeDRJm2cZgmZxflc4czfxuPVLdnvapDLew==
+X-Google-Smtp-Source: AGRyM1vWHafWg3xMomiCjHCB4819Hr7lbc+AFHzVCFuyBw55VOA+C+R+jhRui83frtUIXuGbCXUiYg==
+X-Received: by 2002:a05:6871:4707:b0:108:a985:65f0 with SMTP id py7-20020a056871470700b00108a98565f0mr13668107oab.262.1656820662938;
+        Sat, 02 Jul 2022 20:57:42 -0700 (PDT)
 Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id 25-20020aca0f19000000b0032e5d0b5d5fsm12965910oip.58.2022.07.02.20.57.40
+        by smtp.gmail.com with ESMTPSA id 25-20020aca0f19000000b0032e5d0b5d5fsm12965910oip.58.2022.07.02.20.57.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 02 Jul 2022 20:57:41 -0700 (PDT)
+        Sat, 02 Jul 2022 20:57:42 -0700 (PDT)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     linux-arm-msm@vger.kernel.org,
-        Luca Weiss <luca.weiss@fairphone.com>
-Cc:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
-        linux-kernel@vger.kernel.org,
+To:     linux-arm-msm@vger.kernel.org, Luca Weiss <luca@z3ntu.xyz>
+Cc:     Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         devicetree@vger.kernel.org, phone-devel@vger.kernel.org,
         ~postmarketos/upstreaming@lists.sr.ht
-Subject: Re: [PATCH 1/2] arm64: dts: qcom: sdm845*: replace i2s reg with constant
-Date:   Sat,  2 Jul 2022 22:56:35 -0500
-Message-Id: <165682055970.445910.11507642895650379080.b4-ty@linaro.org>
+Subject: Re: [PATCH 1/2] ARM: dts: qcom: msm8974: re-add missing pinctrl
+Date:   Sat,  2 Jul 2022 22:56:36 -0500
+Message-Id: <165682055971.445910.5175604693918801698.b4-ty@linaro.org>
 X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20220603094710.64591-1-luca.weiss@fairphone.com>
-References: <20220603094710.64591-1-luca.weiss@fairphone.com>
+In-Reply-To: <20220606160421.1641778-1-luca@z3ntu.xyz>
+References: <20220606160421.1641778-1-luca@z3ntu.xyz>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -75,18 +75,19 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 3 Jun 2022 11:47:09 +0200, Luca Weiss wrote:
-> Make it easier to understand what the reg in those nodes is by using the
-> constants provided by qcom,q6dsp-lpass-ports.h.
+On Mon, 6 Jun 2022 18:04:21 +0200, Luca Weiss wrote:
+> As part of a recent cleanup commit, the pinctrl for a few uart and i2c
+> nodes was removed. Adjust the names and/or add it back and assign it to
+> the uart and i2c nodes.
 > 
 > 
 
 Applied, thanks!
 
-[1/2] arm64: dts: qcom: sdm845*: replace i2s reg with constant
-      commit: a102644dccfe3c0e91d517d3cad2b846e793eddb
-[2/2] arm64: dts: qcom: sm8250: use constants for audio clocks
-      commit: 7858ef3cfba2e123835b1b561deb9357afbfae29
+[1/2] ARM: dts: qcom: msm8974: re-add missing pinctrl
+      commit: 03110b46c99bb0c712f46bec660b1c3f674ce100
+[2/2] ARM: dts: qcom: msm8974-*: re-add remoteproc supplies
+      (no commit info)
 
 Best regards,
 -- 
