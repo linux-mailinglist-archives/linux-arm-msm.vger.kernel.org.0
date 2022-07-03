@@ -2,75 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8BC7356413E
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Jul 2022 18:00:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CB0B75643A1
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Jul 2022 05:03:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232345AbiGBP77 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 2 Jul 2022 11:59:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53224 "EHLO
+        id S229562AbiGCDCO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 2 Jul 2022 23:02:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33672 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232340AbiGBP76 (ORCPT
+        with ESMTP id S229486AbiGCDCN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 2 Jul 2022 11:59:58 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 024AEBCAB
-        for <linux-arm-msm@vger.kernel.org>; Sat,  2 Jul 2022 08:59:56 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id t19so7966008lfl.5
-        for <linux-arm-msm@vger.kernel.org>; Sat, 02 Jul 2022 08:59:56 -0700 (PDT)
+        Sat, 2 Jul 2022 23:02:13 -0400
+Received: from mail-oa1-x29.google.com (mail-oa1-x29.google.com [IPv6:2001:4860:4864:20::29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF258658F
+        for <linux-arm-msm@vger.kernel.org>; Sat,  2 Jul 2022 20:02:11 -0700 (PDT)
+Received: by mail-oa1-x29.google.com with SMTP id 586e51a60fabf-10bda9c4b58so2538466fac.4
+        for <linux-arm-msm@vger.kernel.org>; Sat, 02 Jul 2022 20:02:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:user-agent:in-reply-to:references
-         :message-id:mime-version:content-transfer-encoding;
-        bh=Hz75Rx42oXHh7NmNLOTnnxJGcRdhgiXUHBkENH9MqHA=;
-        b=t49DnnFkz+tH5eJrrVIDW1KUvaQG95jWIXLzQMKIvbpBvqNP3Roy+FMPGCu/PNyv2w
-         p8pOjYWUSSBJ0Csnt61ODgx79ahGzcV7SPqLtzBoc60unYg+cbcKwQokXJNSqKXO66Uw
-         AHciOKECs0eKerATKAPzaFm+6FKQkVmrjGYC5++MgFLUSWQHeTahilNBL634VEFgYFva
-         LnAMjDrbcLNcYi45ctSY8kTB5rdraekMug3H4ePgfW6lWDBFVdJUmKSOSclc32TvVC7s
-         ygN6y1TrlItsam5I6MBw8WUWLvdkpeFniEX9P/M9Vnc9GHq1IiXHj89dhChCv0jVrToL
-         WxDw==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=1lSw9mgHmjRSkAahmySS+PKcK9MN0rRkjUfmzDPwwh8=;
+        b=mV7bpm9k/KZFnu73n/GBZbCbmEJ6fA9MXkwyoXVMCsa6B1EPvToNvZOMMExgaU7k1N
+         AD7Mq3Tpq9d+GrRNXiScC3UOCTR6u9ZcmXOVVico7eEOVF4/zqulWg5JhK2d9W0OpV4F
+         2Qf+ibpLP0T4kTt0JNTq3jhe3a2TzqHFG0GdRR7bbBVZPGmjWVC9QPlWJHmxvPXSgmBt
+         wIYY44rSJnW2KaM9NeZ8QAUHrX2WL+psLFkpSuF7EdASZALpnWY95Dl0TJQx9CV8GFUV
+         xfWg6nch9vZkU7KAaQXImvxEJwWR5/IHGMjMjOAmxPqs+zjOEApvMRM1KqZmBDRIMylt
+         qwfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:user-agent:in-reply-to
-         :references:message-id:mime-version:content-transfer-encoding;
-        bh=Hz75Rx42oXHh7NmNLOTnnxJGcRdhgiXUHBkENH9MqHA=;
-        b=KWz+sWJ+ho89FIq228Ktob1JcuYnqQK6E5D6HMukUjFCi8iqjB8cQum8ojfX/dIy/N
-         /h2JtN0Z6yO7f6ORr6PZ/gj/huCAsz8bbcbsPfUmer/57kEDrJWZk0ovAqxFvEgX3iBf
-         jGWWFavb12b0caIs4xrZWGj2Em/w3WUvITv4QnjEwu5Mc3GcmediSusYGyJXzl7GTLWn
-         AjgwSzQkZa6dNdvI+AR1l4YTOk6jcfhxb2Sjr1+HtGuV1xpDKizy9m79v3qrW3F1Uk1E
-         50hGY/bwS4EkKVlwoJhKgJ03vDQpdA2MDGBkoIj5MHw5g5MmxOZeW6aOrMme79lmhiPK
-         DN0w==
-X-Gm-Message-State: AJIora+DrGU+nWh460Q8tES0mvs2rvQ4rtuIN9ESDPTGAOy+BH5wLKiS
-        4SABI0tDfZ45Ctfo0B3L0qb4gg==
-X-Google-Smtp-Source: AGRyM1tHO8HVvetVfAh0h/jVYaKiWK6Ez13CzIyaZGdFPjFEl84NdJBoTUuNYZcZFE0ahUNr+LAMpQ==
-X-Received: by 2002:a05:6512:2216:b0:481:1ed5:5a72 with SMTP id h22-20020a056512221600b004811ed55a72mr12427813lfu.142.1656777595238;
-        Sat, 02 Jul 2022 08:59:55 -0700 (PDT)
-Received: from [127.0.0.1] ([94.25.229.203])
-        by smtp.gmail.com with ESMTPSA id v6-20020a056512348600b00478f2f2f043sm4165446lfr.147.2022.07.02.08.59.54
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 02 Jul 2022 08:59:54 -0700 (PDT)
-Date:   Sat, 02 Jul 2022 18:59:48 +0300
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Rob Herring <robh@kernel.org>
-CC:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        linux-mmc <linux-mmc@vger.kernel.org>,
-        Bhupesh Sharma <bhupesh.linux@gmail.com>,
-        "Gross, Andy" <agross@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_1/1=5D_dt-bindings=3A_mmc=3A_sd?= =?US-ASCII?Q?hci-msm=3A_Fix_issues_in_yaml_bindings?=
-User-Agent: K-9 Mail for Android
-In-Reply-To: <CAL_Jsq++gOUymWFf6RwoRuqCFkd9XUNqyo-17QU-UQ-o+TXLtA@mail.gmail.com>
-References: <20220514220116.1008254-1-bhupesh.sharma@linaro.org> <CAL_JsqLxXLFjre9h2dyoUJ=f0+pueUhSYezx_5bZ2SdpDt29xw@mail.gmail.com> <D42FBBDC-A6BA-4374-A726-061A4478D4C7@linaro.org> <CAL_Jsq++gOUymWFf6RwoRuqCFkd9XUNqyo-17QU-UQ-o+TXLtA@mail.gmail.com>
-Message-ID: <36C2A924-3697-42FB-8C14-8E6E163558F2@linaro.org>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=1lSw9mgHmjRSkAahmySS+PKcK9MN0rRkjUfmzDPwwh8=;
+        b=o1YNyxwr1EcxPMdztGZTbwyCqdRHtrh0061KMinFQEuqd1Lj3lFFAw8u4DhiOk66vZ
+         prPFGZh+ri7ZY0Vq2Kk7mGu3d3jar+KkQEQOSLIAm5hQcbOuPLe7dGm7p9ihHl3HA1wF
+         UCwE7ZNr9U0YONadTWam11MaZQsgHk2j6QrYsuYmZ02D0x1DpYbPuLCvneQbMPhDbd5I
+         n7MQwjst/CtQw001jAl/muK7WDnFPxxyq4CHGE20sRoXGJ9TKaRDe3T6XkwqZ9Mb+5fV
+         RbKduWo1M1OLvNYmXPu0kp8L/QVWrIvPXu3ZfV6jZYUfC1Bc8JDelYscoWDVp6tSBjx+
+         P9Ng==
+X-Gm-Message-State: AJIora9jt1nv75k2+XgySkNM/tJoWvQLhXqsVVnt4Dl8SZfbWpPNeBon
+        3S9msE7GchadqsOkdg8vsiW3+Q==
+X-Google-Smtp-Source: AGRyM1tg2rW5BLgaSXk2zuvsm05y4qROrAGXD70Go5MLwvOGM2Bltu1sGhZNU9CpPDyjFVX9Gu6GPg==
+X-Received: by 2002:a05:6870:9a28:b0:fe:4636:98aa with SMTP id fo40-20020a0568709a2800b000fe463698aamr13186547oab.21.1656817330498;
+        Sat, 02 Jul 2022 20:02:10 -0700 (PDT)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id r66-20020acada45000000b0032f7605d1a3sm13191955oig.31.2022.07.02.20.02.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 02 Jul 2022 20:02:09 -0700 (PDT)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     arm@kernel.org, soc@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        Andy Gross <agross@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
+        Olof Johansson <olof@lixom.net>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Subject: [GIT PULL] Qualcomm ARM64 DT fixes for v5.19
+Date:   Sat,  2 Jul 2022 22:02:08 -0500
+Message-Id: <20220703030208.408109-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.32.0
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -78,71 +76,57 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+The following changes since commit f2906aa863381afb0015a9eb7fefad885d4e5a56:
 
+  Linux 5.19-rc1 (2022-06-05 17:18:54 -0700)
 
-On 2 July 2022 18:22:19 GMT+03:00, Rob Herring <robh@kernel=2Eorg> wrote:
->On Sat, Jul 2, 2022 at 3:14 AM Dmitry Baryshkov
-><dmitry=2Ebaryshkov@linaro=2Eorg> wrote:
->>
->>
->>
->> On 2 July 2022 01:06:48 GMT+03:00, Rob Herring <robh@kernel=2Eorg> wrot=
-e:
->> >On Sat, May 14, 2022 at 4:01 PM Bhupesh Sharma
->> ><bhupesh=2Esharma@linaro=2Eorg> wrote:
->> >>
->> >> Rob pointed some remaining issues in the sdhci-msm yaml
->> >> bindings (via [1])=2E
->> >>
->> >> Fix the same by first using the 'mmc-controller=2Eyaml' as
->> >> 'ref' and thereafter also fix the issues reported by
->> >> 'make dtbs_check' check=2E
->> >>
->> >> [1]=2E https://lore=2Ekernel=2Eorg/linux-arm-msm/YnLmNCwNfoqZln12@ro=
-bh=2Eat=2Ekernel=2Eorg/
->> >>
->> >> Fixes: a45537723f4b ("dt-bindings: mmc: sdhci-msm: Convert bindings =
-to yaml")
->> >> Cc: Bjorn Andersson <bjorn=2Eandersson@linaro=2Eorg>
->> >> Cc: Rob Herring <robh@kernel=2Eorg>
->> >> Cc: Ulf Hansson <ulf=2Ehansson@linaro=2Eorg>
->> >> Signed-off-by: Bhupesh Sharma <bhupesh=2Esharma@linaro=2Eorg>
->> >> ---
->> >> -> This patch uses the dts changes sent (here: https://lore=2Ekernel=
-=2Eorg/linux-arm-msm/20220514215424=2E1007718-1-bhupesh=2Esharma@linaro=2Eo=
-rg/), for fixing the dtbs_check errors=2E
->> >> -> This patch is rebased on 'linux-next/master'
->> >>
->> >>  =2E=2E=2E/devicetree/bindings/mmc/sdhci-msm=2Eyaml    | 52 ++++++++=
-++++++++---
->> >>  1 file changed, 44 insertions(+), 8 deletions(-)
->> >
->> >There's another issue with this applied:
->> >
->> >Documentation/devicetree/bindings/mmc/sdhci-msm=2Eexample=2Edtb:
->> >mmc@8804000: Unevaluated properties are not allowed
->> >('operating-points-v2' was unexpected)
->> >
->> >Should just need a 'operating-points-v2: true' line=2E
->> >
->> >This won't show up until a fix for 'unevaluatedProperties' handling is
->> >applied=2E But first I need all the issues fixed=2E
->>
->> Could you please add a dt-validate (?) argument so that we can validate=
- new schemas with unevaluatedProperties working as expected, while keeping =
-default behaviour intact (while it gets sorted out)?
->>
->
->I think that wouldn't work well because the schemas have to be
->reprocessed when such an option changes=2E Though kbuild does look for
->command line changes=2E=2E=2E
->
->In any case, I'm going to commit this to the main branch in a few
->days=2E There aren't many warnings left=2E
+are available in the Git repository at:
 
-Ack, thanks for the explanation=2E
+  https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-arm64-fixes-for-5.19
 
+for you to fetch changes up to 5fb779558f1c97e2bf2794cb59553e569c38e2f9:
 
---=20
-With best wishes
-Dmitry
+  arm64: dts: qcom: msm8992-*: Fix vdd_lvs1_2-supply typo (2022-06-27 15:09:32 -0500)
+
+----------------------------------------------------------------
+Qualcomm ARM64 DT fixes for v5.19
+
+This removes duplicate includes in the sc7180-trogdor files, which
+accidentally ended up disabling nodes intended to be enabled.
+
+It corrects identifiers for CPU6/7 on MSM8994. On SM8450 the UFS node's
+interconnects property is updated to match the #interconnect-cells,
+avoiding sync_state issues and the GIC ITS is defined, to correct the
+references from the PCIe nodes. On SDM845 the display subsystem's AHB
+clock is corrected and on msm8992 devices, the supplies for lvs 1 and 2
+are correctly specified.
+
+Lastly, a welcome addition of Konrad as reviewer for the Qualcomm SoC.
+
+----------------------------------------------------------------
+Dmitry Baryshkov (2):
+      arm64: dts: qcom: sm8450 add ITS device tree node
+      arm64: dts: qcom: sdm845: use dispcc AHB clock for mdss node
+
+Konrad Dybcio (2):
+      arm64: dts: qcom: msm8994: Fix CPU6/7 reg values
+      MAINTAINERS: Add myself as a reviewer for Qualcomm ARM/64 support
+
+Stephan Gerhold (1):
+      arm64: dts: qcom: msm8992-*: Fix vdd_lvs1_2-supply typo
+
+Stephen Boyd (1):
+      arm64: dts: qcom: Remove duplicate sc7180-trogdor include on lazor/homestar
+
+Vladimir Zapolskiy (1):
+      arm64: dts: qcom: sm8450: fix interconnects property of UFS node
+
+ MAINTAINERS                                           |  1 +
+ arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi     |  2 +-
+ arch/arm64/boot/dts/qcom/msm8992-xiaomi-libra.dts     |  2 +-
+ arch/arm64/boot/dts/qcom/msm8994.dtsi                 |  4 ++--
+ arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi |  2 +-
+ arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi    |  2 +-
+ arch/arm64/boot/dts/qcom/sdm845.dtsi                  |  2 +-
+ arch/arm64/boot/dts/qcom/sm8450.dtsi                  | 14 ++++++++++++--
+ 8 files changed, 20 insertions(+), 9 deletions(-)
