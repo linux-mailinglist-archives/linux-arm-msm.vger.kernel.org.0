@@ -2,126 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CA12A5658AC
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Jul 2022 16:34:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 706E85658BF
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Jul 2022 16:36:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233968AbiGDOeG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Jul 2022 10:34:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34416 "EHLO
+        id S233947AbiGDOgD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Jul 2022 10:36:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35874 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233120AbiGDOeF (ORCPT
+        with ESMTP id S234291AbiGDOgA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Jul 2022 10:34:05 -0400
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 988F726DB
-        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Jul 2022 07:34:03 -0700 (PDT)
-Received: by mail-ed1-x533.google.com with SMTP id y8so6208521eda.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Jul 2022 07:34:03 -0700 (PDT)
+        Mon, 4 Jul 2022 10:36:00 -0400
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79D2F5F70;
+        Mon,  4 Jul 2022 07:35:58 -0700 (PDT)
+Received: by mail-ej1-x632.google.com with SMTP id q6so17021455eji.13;
+        Mon, 04 Jul 2022 07:35:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=XU/si2OudxpMibSqn9Lq87kwtqlJQ7SnogcNrsl/AzA=;
-        b=s3JEtG3oAnSlkTIpUvw6vEj9MvtOwSM36hPU7p5U/iuLa3b6fNXdjMkbfEPMWZhDaN
-         jMEGBmArVuiaVrm8Lx46W/RlGVi19F8hgWk8dxVw5gwy3yGTyUDAI1Hs+iEaMkSO9b2j
-         xzQlzfNeysJAAt/VYnmGqdqelXqUORmtciut3ho3+hkttcgBzEuc888ur+ZZF94Hlpdg
-         WdI3bE9G0aWPuAwf7yVThGJ3uppgUzk5i+B/ZmgKRWjlYwLyZg1Yrk+Nw4q0kR4n55If
-         H7efuUmbfI06/MqWk24amtyaJlgxmUi/azxOPST1xleLmhaMIQyu+5Y1J5TLMJPyL5QP
-         LYug==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Qug+tGd/uv8M8y6IpXu01dxX5KR8Rz6tR9sYA3ZUCL0=;
+        b=DxTAQz5O4CB1luNJIU1Up1n07gzJgXRIAnqXDgfOk5MQntouP1Y3dj6uC/gnuw5jZb
+         TnCqelpJRaytapG2iG9OKN3RyZOYfVN4oMeaj646i+e3YXPnUbeGHAavTgvd3xKEx8+4
+         1M1yS4FHQZ42jvzNMjXXzIYSAlcCrzsakzh/rws3fPP3KoYJhI/F9e6jMqNhypJdjigl
+         9po7hoYnJkdD5j7AhrFb50kb501gZTkq1Fv3QL2tbLysbjNgvSCrIoGULUgJIYxV6UkX
+         R2DSCGT5++IE6Y5owgAC9tRLJDeU3POgihCPWr2WQQ96hyrbHgpJAXl+wQWANrrHsVXS
+         XTKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=XU/si2OudxpMibSqn9Lq87kwtqlJQ7SnogcNrsl/AzA=;
-        b=LtKn1HvM90UXijEvefQWRqubblmruLpoig8XnmgRR58NPgoMqF76RROKXR+5WaeNhX
-         8vVy9PiOtICLGQcpnm+9Its5gOz2o/oMtkF8wEEO4SUVxtSihel20CamKqdhy0/9ZIW/
-         Cqqxf2a5pfCprGJzg86APWghFATk9z8t+MyA5FKnLjpLZeEt9fhMnuWY7eERDxL8fG8/
-         8XEcHHrZtnKMmxHno2sBSUjXGROENGBlenFSL0GUi3PeUs8w3ivWHeM3gSkns78WmcLB
-         PywSSjol3iEk4b0OMjWQaUN+706EEUsH/bfKOOz/g8+tb8iwXtx2EgmoAw6zi+JXmPYV
-         XZPQ==
-X-Gm-Message-State: AJIora8DMk7UbVfB4k/lvO4uilOOMTzPndFUYmQnH+Bj+16OpWw8eefr
-        BhB4InOG/WTskfbLPMsdTO1wu79qfKlC/Fkr0WY0YA==
-X-Google-Smtp-Source: AGRyM1sU+Y9dvWotDYGXP/0592qT4wzBpkL3CvYygXrxfJoDl4SvJKYJ07VrM7r4EGGqL2jdL80dhFXvm35WO9uZAMs=
-X-Received: by 2002:a05:6402:2789:b0:435:ac82:e8c3 with SMTP id
- b9-20020a056402278900b00435ac82e8c3mr39093288ede.250.1656945242166; Mon, 04
- Jul 2022 07:34:02 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Qug+tGd/uv8M8y6IpXu01dxX5KR8Rz6tR9sYA3ZUCL0=;
+        b=vOzzs3S6MYxdX0dcJdSgwpDk99R/XsrVo1oz20btf2uF2LMg2zmECuXJ/pa0amSGIh
+         +19zdqprowXxinnxSpf68ub4WN0avSoNSVyR4s6SJV/P7B8Q1P09x80nWAo/Mk/VuTSC
+         3MTFhEQr0ok9dTSYaeBXHbh7KJg/clFV/s6BnzvDxafJh99O+Ge7z/EvIJsPldFM9KtE
+         hpXlY740jMULC4M38LiEAlBNR7nsN/HFlIjuHDWuUeNjgDHceLro6kH4ovLWQpkryAu1
+         IvKDPPSxYthmK+SbhP1rVgYgbgmT3j97dhnbGlH9c8jAyseZKXyy36ADKtCS5ceqc3Zb
+         thmQ==
+X-Gm-Message-State: AJIora9CtnVhHOHMPEWGaAoeUbBCcveb1+6BBSPIvKZZBRT+Jsr5SGk0
+        V3wc0kE8kGuFalMyMtttDKg=
+X-Google-Smtp-Source: AGRyM1tkJnoELPZu2D35fsKBW/RVVFQHEATKOWvCaFZ9C9MpViczl3+svf0dmtNZ+x2KJOM1LC/RPg==
+X-Received: by 2002:a17:906:938a:b0:726:942a:54e8 with SMTP id l10-20020a170906938a00b00726942a54e8mr29194260ejx.225.1656945356894;
+        Mon, 04 Jul 2022 07:35:56 -0700 (PDT)
+Received: from fedora.robimarko.hr (dh207-99-90.xnet.hr. [88.207.99.90])
+        by smtp.googlemail.com with ESMTPSA id k10-20020a170906970a00b006fea59ef3a5sm14286020ejx.32.2022.07.04.07.35.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 04 Jul 2022 07:35:56 -0700 (PDT)
+From:   Robert Marko <robimarko@gmail.com>
+To:     ulf.hansson@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, konrad.dybcio@somainline.org,
+        bhupesh.sharma@linaro.org, linux-mmc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Cc:     Robert Marko <robimarko@gmail.com>
+Subject: [PATCH v2 1/2] dt-bindings: mmc: sdhci-msm: document resets
+Date:   Mon,  4 Jul 2022 16:35:53 +0200
+Message-Id: <20220704143554.1180927-1-robimarko@gmail.com>
+X-Mailer: git-send-email 2.36.1
 MIME-Version: 1.0
-References: <20220704094437.468395-1-vladimir.zapolskiy@linaro.org>
-In-Reply-To: <20220704094437.468395-1-vladimir.zapolskiy@linaro.org>
-From:   Robert Foss <robert.foss@linaro.org>
-Date:   Mon, 4 Jul 2022 16:33:50 +0200
-Message-ID: <CAG3jFyvD+0Q4sYWZ69sF8AG+mQ5Ytjj+ND9-Hi4ZjzWN-Vq+Ng@mail.gmail.com>
-Subject: Re: [PATCH] media: camss: Clean up received buffers on failed start
- of streaming
-To:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Cc:     Todor Tomov <todor.too@gmail.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Hans Verkuil <hans.verkuil@cisco.com>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 4 Jul 2022 at 11:44, Vladimir Zapolskiy
-<vladimir.zapolskiy@linaro.org> wrote:
->
-> It is required to return the received buffers, if streaming can not be
-> started. For instance media_pipeline_start() may fail with EPIPE, if
-> a link validation between entities is not passed, and in such a case
-> a user gets a kernel warning:
->
->   WARNING: CPU: 1 PID: 520 at drivers/media/common/videobuf2/videobuf2-core.c:1592 vb2_start_streaming+0xec/0x160
->   <snip>
->   Call trace:
->    vb2_start_streaming+0xec/0x160
->    vb2_core_streamon+0x9c/0x1a0
->    vb2_ioctl_streamon+0x68/0xbc
->    v4l_streamon+0x30/0x3c
->    __video_do_ioctl+0x184/0x3e0
->    video_usercopy+0x37c/0x7b0
->    video_ioctl2+0x24/0x40
->    v4l2_ioctl+0x4c/0x70
->
-> The fix is to correct the error path in video_start_streaming() of camss.
->
-> Fixes: 0ac2586c410f ("media: camss: Add files which handle the video device nodes")
-> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-> ---
->  drivers/media/platform/qcom/camss/camss-video.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
->
-> diff --git a/drivers/media/platform/qcom/camss/camss-video.c b/drivers/media/platform/qcom/camss/camss-video.c
-> index b5f12ec5c50c..d272ffa02112 100644
-> --- a/drivers/media/platform/qcom/camss/camss-video.c
-> +++ b/drivers/media/platform/qcom/camss/camss-video.c
-> @@ -495,7 +495,7 @@ static int video_start_streaming(struct vb2_queue *q, unsigned int count)
->
->         ret = media_pipeline_start(&vdev->entity, &video->pipe);
->         if (ret < 0)
-> -               return ret;
-> +               goto flush_buffers;
->
->         ret = video_check_format(video);
->         if (ret < 0)
-> @@ -524,6 +524,7 @@ static int video_start_streaming(struct vb2_queue *q, unsigned int count)
->  error:
->         media_pipeline_stop(&vdev->entity);
->
-> +flush_buffers:
->         video->ops->flush_buffers(video, VB2_BUF_STATE_QUEUED);
->
->         return ret;
-> --
-> 2.33.0
->
+Commit "mmc: sdhci-msm: Reset GCC_SDCC_BCR register for SDHC" added
+support for utilizing a hardware reset and parsing it from DT, however
+the bindings were not updated along with it.
 
-Reviewed-by: Robert Foss <robert.foss@linaro.org>
+So, document the usage of "resets" property with the limit of only one
+item.
+
+Signed-off-by: Robert Marko <robimarko@gmail.com>
+---
+ Documentation/devicetree/bindings/mmc/sdhci-msm.yaml | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml b/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
+index 31a3ce208e1a..ca8814a80443 100644
+--- a/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
++++ b/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
+@@ -116,6 +116,9 @@ properties:
+     description:
+       Should specify pin control groups used for this controller.
+ 
++  resets:
++    maxItems: 1
++
+   qcom,ddr-config:
+     $ref: /schemas/types.yaml#/definitions/uint32
+     description: platform specific settings for DDR_CONFIG reg.
+-- 
+2.36.1
+
