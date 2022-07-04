@@ -2,72 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C8A72565A03
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Jul 2022 17:38:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D9E58565A14
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Jul 2022 17:42:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232130AbiGDPid (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Jul 2022 11:38:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55982 "EHLO
+        id S233449AbiGDPmn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Jul 2022 11:42:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57922 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230311AbiGDPic (ORCPT
+        with ESMTP id S233373AbiGDPmm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Jul 2022 11:38:32 -0400
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 931D2E000
-        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Jul 2022 08:38:30 -0700 (PDT)
-Received: by mail-lj1-x229.google.com with SMTP id r9so11500375ljp.9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Jul 2022 08:38:30 -0700 (PDT)
+        Mon, 4 Jul 2022 11:42:42 -0400
+Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B214611179
+        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Jul 2022 08:42:40 -0700 (PDT)
+Received: by mail-lj1-x235.google.com with SMTP id s14so11551070ljs.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Jul 2022 08:42:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=36Fo3nrBjoWjM4WDiir3vWCMAuOSPdmTYxT8kWTupbw=;
-        b=F5iw3ocErp6G/79qF+y+Zvj/c7eDlOClKuycFQdoDdMFRpxBoxDMeuOotY/K4i+AKN
-         MvTavltYKEnlOI2huJvVql0zS37Zoc6CnTj4SKO1FakntuxPEjqpPNbpSAA67CYiq0lB
-         mlb356NkiYwVzSN+Sy/AU/h7b33HThAcbkUkWBRQn2yVYWutEY0AfMtMIhOVZgEHPn7y
-         j2/d8HTC+Ws1kytynSdw3mtkl0xyLgqFFoD18ARPnJg2+KKf/GR9JxdZlEvldZ/fTz6q
-         LpW3QAtV21IXRK2VU+G7A4QpG+Ja04eWowRfi8ZCbgJiH7kjiWaJAcxGC+2X2789MWJF
-         6Dxg==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :references:from:in-reply-to:content-transfer-encoding;
+        bh=jRnTm0+dhArAF8owZ/onzsDSwIYF8pxjVkdj1G3Cz5o=;
+        b=srzpyXDfFAOKz9xrgKk3U8OxFpXk5TyzbIYL0NMUfFcRRK04o7SPEVyh801/5rnz5e
+         ZL/ta0GZONJpuPnVEAm9/FUUTeQetAIshts9/9l1aj+EFs6zjrFIfjxANrL5/kZ9Fa4b
+         DJinEXFYO3FNmqfaDjWbWZyiYJx6GZ+j8oH2mR4GddbcOXVgLan4NDvI79VmezE4eMkl
+         LTjxe3a+vtNhWHO8BrUkbx+GOMruKUhZUBwZuBkhMrlZUndDjzrt9m0pMVLOHO/zZTOk
+         I+rIIaAVLiUdK6H1LPlnLlZuMN4xoMVlwmfTHQDgO/7BIlglVBBAfENwoA1nmbb99hZB
+         FBpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=36Fo3nrBjoWjM4WDiir3vWCMAuOSPdmTYxT8kWTupbw=;
-        b=z6XlO5tRhhSKNfircFfbAYxSSYngYtSBPwaMC2QcbnkoNhibwnK20W7I/7lcOPK/q+
-         bjHZkoFM5Vf+87OMjvh2yBPkGNE4wUyJsEtN1Y/NcgqoCiqSZwA5bcF2jk8tQ49GfT73
-         jILMteLnEkM7ABwXric6RI79dWjhbvX4ixXFafbl93wZVfRoLFwSmS1ceWb81sZ2P5wL
-         kHaYrY9vScrk6Ulnpxn/lhA00erKiV7/mb8UpCD29uqX0vDZ76LBpL6m/LRxjWHf2raZ
-         ooirAGxJoLjvL9IhmXxVgz2TbT9KC3yn53Fxni+Vc6sr/q1/KAQsNHWVbuLAxm5plszr
-         gj/Q==
-X-Gm-Message-State: AJIora/ORDaLgwHK4KovP5jKuGKA9uQNIurtJkS1GkAmK7Ip6UpqIIJp
-        Qk9r9EuKTUZy1IRKPxW+3MWWeg==
-X-Google-Smtp-Source: AGRyM1sDU5ztSDUAsix5exO9MzhM8q0VzoTIvbDo4k9dJG2fJlMpytyCEXpqIjsC7qZRlcN8VUjoYg==
-X-Received: by 2002:a2e:8e7c:0:b0:25b:fae1:8a24 with SMTP id t28-20020a2e8e7c000000b0025bfae18a24mr12824152ljk.520.1656949108867;
-        Mon, 04 Jul 2022 08:38:28 -0700 (PDT)
-Received: from krzk-bin.home ([84.20.121.239])
-        by smtp.gmail.com with ESMTPSA id d10-20020a0565123d0a00b0048110fd06c4sm4214010lfv.53.2022.07.04.08.38.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Jul 2022 08:38:28 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH] ASoC: dt-bindings: qcom,sdm845: convert to dtschema
-Date:   Mon,  4 Jul 2022 17:38:24 +0200
-Message-Id: <20220704153824.23226-1-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
+        bh=jRnTm0+dhArAF8owZ/onzsDSwIYF8pxjVkdj1G3Cz5o=;
+        b=RTctUVw0WnZWrX+PA5KipAeHWmaF+JPHxpRvaX8CBGb6aZ8hiX6ZhQsitK+1m+bTOH
+         YgD4g0GIC4Kwk7UB+xeKVR/RZidYcY55idxmf8oXtB7TWhmolAs/wJjSqzPkve8Alj7w
+         /H5y5mNqvGBTnlOJL+z95/RM+ONoOyiQ9dABuUWClP+grewzNBQkCkAN/X6k4J5OTUVg
+         XZlBLOSwFiNCz3TNTTxtTrGX44mezbfM0V45F2W1s3ZBhstL3MjFnpzMJQryByvBrmGY
+         0zEU6F/h4QQKVgrxdBPlhmoMo9DHFsfnLaL5YSUSfnk31PnzL4YjWggWirA/3MHn1LIK
+         QFbA==
+X-Gm-Message-State: AJIora8hetdhoyA4kRwJpBfBwbYXWZ7/LpWzEtR+nkULCtiTLf3iJyqe
+        N9+6NoyvnRn5lcGCRYBhKKjBxw==
+X-Google-Smtp-Source: AGRyM1vZQoubZwD5PSegPGEQF1WuQ7CzAxwM+FuzlgVx4GryS2HKGicC/YzqczbrBsHc+rbZ34RyDA==
+X-Received: by 2002:a2e:4e09:0:b0:25a:8dd7:5c40 with SMTP id c9-20020a2e4e09000000b0025a8dd75c40mr16699694ljb.74.1656949359090;
+        Mon, 04 Jul 2022 08:42:39 -0700 (PDT)
+Received: from [192.168.1.52] ([84.20.121.239])
+        by smtp.gmail.com with ESMTPSA id o4-20020a056512050400b004785b66a9a4sm1492621lfb.126.2022.07.04.08.42.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 04 Jul 2022 08:42:38 -0700 (PDT)
+Message-ID: <fc5a5d36-ebaa-3300-287e-fdc2e0c547ce@linaro.org>
+Date:   Mon, 4 Jul 2022 17:42:37 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH v2 1/2] dt-bindings: mmc: sdhci-msm: document resets
+Content-Language: en-US
+To:     Robert Marko <robimarko@gmail.com>, ulf.hansson@linaro.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        agross@kernel.org, bjorn.andersson@linaro.org,
+        konrad.dybcio@somainline.org, bhupesh.sharma@linaro.org,
+        linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <20220704143554.1180927-1-robimarko@gmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220704143554.1180927-1-robimarko@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -76,288 +77,19 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Convert the Samsung SDM845 sound card bindings to DT schema.
+On 04/07/2022 16:35, Robert Marko wrote:
+> Commit "mmc: sdhci-msm: Reset GCC_SDCC_BCR register for SDHC" added
+> support for utilizing a hardware reset and parsing it from DT, however
+> the bindings were not updated along with it.
+> 
+> So, document the usage of "resets" property with the limit of only one
+> item.
+> 
+> Signed-off-by: Robert Marko <robimarko@gmail.com>
 
-Changes during conversion: do not require 'codec' under dai-links - not
-present in all nodes of examples and DTS; not required by the driver.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- .../devicetree/bindings/sound/qcom,sdm845.txt |  91 ----------
- .../bindings/sound/qcom,sdm845.yaml           | 166 ++++++++++++++++++
- 2 files changed, 166 insertions(+), 91 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/sound/qcom,sdm845.txt
- create mode 100644 Documentation/devicetree/bindings/sound/qcom,sdm845.yaml
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-diff --git a/Documentation/devicetree/bindings/sound/qcom,sdm845.txt b/Documentation/devicetree/bindings/sound/qcom,sdm845.txt
-deleted file mode 100644
-index de4c604641da..000000000000
---- a/Documentation/devicetree/bindings/sound/qcom,sdm845.txt
-+++ /dev/null
-@@ -1,91 +0,0 @@
--* Qualcomm Technologies Inc. SDM845 ASoC sound card driver
--
--This binding describes the SDM845 sound card, which uses qdsp for audio.
--
--- compatible:
--	Usage: required
--	Value type: <stringlist>
--	Definition: must be one of this
--			"qcom,sdm845-sndcard"
--			"qcom,db845c-sndcard"
--			"lenovo,yoga-c630-sndcard"
--
--- audio-routing:
--	Usage: Optional
--	Value type: <stringlist>
--	Definition:  A list of the connections between audio components.
--		  Each entry is a pair of strings, the first being the
--		  connection's sink, the second being the connection's
--		  source. Valid names could be power supplies, MicBias
--		  of codec and the jacks on the board.
--
--- model:
--	Usage: required
--	Value type: <stringlist>
--	Definition: The user-visible name of this sound card.
--
--- aux-devs
--	Usage: optional
--	Value type: <array of phandles>
--	Definition: A list of phandles for auxiliary devices (e.g. analog
--		    amplifiers) that do not appear directly within the DAI
--		    links. Should be connected to another audio component
--		    using "audio-routing".
--
--= dailinks
--Each subnode of sndcard represents either a dailink, and subnodes of each
--dailinks would be cpu/codec/platform dais.
--
--- link-name:
--	Usage: required
--	Value type: <string>
--	Definition: User friendly name for dai link
--
--= CPU, PLATFORM, CODEC dais subnodes
--- cpu:
--	Usage: required
--	Value type: <subnode>
--	Definition: cpu dai sub-node
--
--- codec:
--	Usage: required
--	Value type: <subnode>
--	Definition: codec dai sub-node
--
--- platform:
--	Usage: Optional
--	Value type: <subnode>
--	Definition: platform dai sub-node
--
--- sound-dai:
--	Usage: required
--	Value type: <phandle>
--	Definition: dai phandle/s and port of CPU/CODEC/PLATFORM node.
--
--Example:
--
--audio {
--	compatible = "qcom,sdm845-sndcard";
--	model = "sdm845-snd-card";
--	pinctrl-names = "default", "sleep";
--	pinctrl-0 = <&pri_mi2s_active &pri_mi2s_ws_active>;
--	pinctrl-1 = <&pri_mi2s_sleep &pri_mi2s_ws_sleep>;
--
--	mm1-dai-link {
--		link-name = "MultiMedia1";
--		cpu {
--			sound-dai = <&q6asmdai MSM_FRONTEND_DAI_MULTIMEDIA1>;
--		};
--	};
--
--	pri-mi2s-dai-link {
--		link-name = "PRI MI2S Playback";
--		cpu {
--			sound-dai = <&q6afedai PRIMARY_MI2S_RX>;
--		};
--
--		platform {
--			sound-dai = <&q6routing>;
--		};
--	};
--};
-diff --git a/Documentation/devicetree/bindings/sound/qcom,sdm845.yaml b/Documentation/devicetree/bindings/sound/qcom,sdm845.yaml
-new file mode 100644
-index 000000000000..5e7e6b051cf0
---- /dev/null
-+++ b/Documentation/devicetree/bindings/sound/qcom,sdm845.yaml
-@@ -0,0 +1,166 @@
-+# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/sound/qcom,sdm845.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm Technologies Inc. SDM845 ASoC sound card
-+
-+maintainers:
-+  - Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-+
-+properties:
-+  compatible:
-+    enum:
-+      - qcom,sdm845-sndcard
-+      - qcom,db845c-sndcard
-+      - lenovo,yoga-c630-sndcard
-+
-+  audio-routing:
-+    $ref: /schemas/types.yaml#/definitions/non-unique-string-array
-+    description:
-+      A list of the connections between audio components.  Each entry is a pair
-+      of strings, the first being the connection's sink, the second being the
-+      connection's source. Valid names could be power supplies, MicBias of
-+      codec and the jacks on the board.
-+
-+  aux-devs:
-+    $ref: /schemas/types.yaml#/definitions/phandle-array
-+    description: |
-+      List of phandles for auxiliary devices (e.g. analog amplifiers) that do
-+      not appear directly within the DAI links. Should be connected to another
-+      audio component using "audio-routing".
-+
-+  model:
-+    $ref: /schemas/types.yaml#/definitions/string
-+    description: User-visible sound card name
-+
-+patternProperties:
-+  ".*-dai-link$":
-+    type: object
-+    description:
-+      Each subnode represents a dai link. Subnodes of each dai links would be
-+      cpu/codec dais.
-+
-+    properties:
-+      link-name:
-+        $ref: /schemas/types.yaml#/definitions/string
-+        description: User friendly name for dai link.
-+
-+      cpu:
-+        type: object
-+        description: CPU DAI subnode.
-+        properties:
-+          sound-dai:
-+            maxItems: 1
-+
-+      codec:
-+        type: object
-+        description: Codec DAI subnode.
-+        properties:
-+          sound-dai:
-+            minItems: 1
-+            maxItems: 4
-+
-+      platform:
-+        type: object
-+        description: Platform DAI subnode.
-+        properties:
-+          sound-dai:
-+            maxItems: 1
-+
-+    required:
-+      - link-name
-+      - cpu
-+
-+    additionalProperties: false
-+
-+required:
-+  - compatible
-+  - model
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/sound/qcom,q6afe.h>
-+    #include <dt-bindings/sound/qcom,q6asm.h>
-+
-+    sound {
-+        compatible = "qcom,sdm845-sndcard";
-+        model = "Samsung-W737";
-+
-+        audio-routing = "RX_BIAS", "MCLK",
-+                        "AMIC2", "MIC BIAS2",
-+                        "SpkrLeft IN", "SPK1 OUT",
-+                        "SpkrRight IN", "SPK2 OUT",
-+                        "MM_DL1",  "MultiMedia1 Playback",
-+                        "MM_DL3",  "MultiMedia3 Playback",
-+                        "MultiMedia2 Capture", "MM_UL2";
-+
-+        mm1-dai-link {
-+            link-name = "MultiMedia1";
-+            cpu {
-+                sound-dai = <&q6asmdai MSM_FRONTEND_DAI_MULTIMEDIA1>;
-+            };
-+        };
-+
-+        mm2-dai-link {
-+            link-name = "MultiMedia2";
-+            cpu {
-+                sound-dai = <&q6asmdai MSM_FRONTEND_DAI_MULTIMEDIA2>;
-+            };
-+        };
-+
-+        mm3-dai-link {
-+            link-name = "MultiMedia3";
-+            cpu {
-+                sound-dai = <&q6asmdai MSM_FRONTEND_DAI_MULTIMEDIA3>;
-+            };
-+        };
-+
-+        slim-dai-link {
-+            link-name = "SLIM Playback";
-+            cpu {
-+                sound-dai = <&q6afedai SLIMBUS_0_RX>;
-+            };
-+
-+            platform {
-+                sound-dai = <&q6routing>;
-+            };
-+
-+            codec {
-+                sound-dai = <&left_spkr>, <&right_spkr>, <&swm 0>, <&wcd9340 0>;
-+            };
-+        };
-+
-+        slimcap-dai-link {
-+            link-name = "SLIM Capture";
-+            cpu {
-+                sound-dai = <&q6afedai SLIMBUS_0_TX>;
-+            };
-+
-+            platform {
-+                sound-dai = <&q6routing>;
-+            };
-+
-+            codec {
-+                sound-dai = <&wcd9340 1>;
-+            };
-+        };
-+
-+        slim-wcd-dai-link {
-+            link-name = "SLIM WCD Playback";
-+            cpu {
-+                sound-dai = <&q6afedai SLIMBUS_1_RX>;
-+            };
-+
-+            platform {
-+                sound-dai = <&q6routing>;
-+            };
-+
-+            codec {
-+                sound-dai = <&wcd9340 2>;
-+            };
-+        };
-+    };
--- 
-2.34.1
 
+Best regards,
+Krzysztof
