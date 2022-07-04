@@ -2,95 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9E287565563
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Jul 2022 14:31:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1A7F556557A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Jul 2022 14:34:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234190AbiGDMbG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Jul 2022 08:31:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41146 "EHLO
+        id S233514AbiGDMeh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Jul 2022 08:34:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44384 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234174AbiGDMbC (ORCPT
+        with ESMTP id S234368AbiGDMee (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Jul 2022 08:31:02 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50FF4FD3F
-        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Jul 2022 05:30:56 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id f39so15560903lfv.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Jul 2022 05:30:56 -0700 (PDT)
+        Mon, 4 Jul 2022 08:34:34 -0400
+Received: from mail-qt1-x82b.google.com (mail-qt1-x82b.google.com [IPv6:2607:f8b0:4864:20::82b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 507CD11A29;
+        Mon,  4 Jul 2022 05:34:29 -0700 (PDT)
+Received: by mail-qt1-x82b.google.com with SMTP id bs20so9680660qtb.11;
+        Mon, 04 Jul 2022 05:34:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :references:from:in-reply-to:content-transfer-encoding;
-        bh=2WKW73jnC4LWzwI3qorj4+ZQ81YVaSquXphoilzakuA=;
-        b=VUXfxjc4uz9mvItvgzJKGaKKyy9+JPixtYfsrCplalcxutWLi9VsiA16DUjdvWUBay
-         BDWtLuOWaB6UnWumLfNIqwrEuALvpfeksgE6/acnEnyjSYvCcpI+eq7V1LgckjQ5P5UB
-         VN/MET+Eh3aVLSKGSm7CVQt+2hDdE3XEmAOm+sH75oEFWG1WHOwpdj0c/RnpJnJf/Gki
-         Q3/X+sTEFyn4Drq9baiwaoqfzNZB0VhAqW2e49URUwoOOwv3EDFuH+Rdz+oNKFpSsS6T
-         Nq5nHLgGVaw4S2WX2r+Xu87sw7ZGEhnhllN2TLvCp7fLOevNXZM/I/CN7cUurqq3t+Wa
-         9Txg==
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=HuCxlgacyUOJDWnwtep7f6783mY+/w0V/6DqwO66NRI=;
+        b=ghC9Y8w/aeqlC12qAC8s1qeyMKFfybz97SdP6DwRb5s9ovox5j365gZ+1YK0sKu7mf
+         lUOewAqvr/OoUFFZhon/camrDUy1AYhz68/48F/y5YCW5WMtEC2VKXN6fvkUCpvFP0Uq
+         piw264x/yRe5PAqBomgC28H8XjdwPy95CEWuKbtJ19PwLhFv7OI3gSh4KcrPwpP6KYMn
+         zGwHvx7waXnOWplXRGuFusCNTsS2fmReEMsupiGHSr4mf2LGSUW4KgC9Ss2Q0vCFbXvS
+         FttQZC5EtbQsO9B+sfdHyzcrR3ZkMfGiPJ2XUCtbQDvHyuOW8y3/XNegqISC8zSeVBRA
+         gtFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=2WKW73jnC4LWzwI3qorj4+ZQ81YVaSquXphoilzakuA=;
-        b=D5ySnPg8zXCdjHKQpWO+Ej1BGliuw0Viok0Nwu/espp72MbtNaKHMohiY9izqs7N8E
-         YGTyX7lMaFkVEwhvI+E+Lj8C1HoXXXtO969Jrg4V4hyimTgd+6mYeWunaDgH/xxU0fV8
-         +4mozDNnV575vXzfuwsHhmxcndwt6ER5CktlbmwIVlrQ7ZgRJIpTkSGOvn8+vZE17Bgz
-         6M4m93kwiHD9PZOQyygLqAnDJc5X1ydrDi/UOHyL4+DovRwfccAncTfrH+xeV9cDTOi4
-         6X+l/WiF2+drks9XCmB1EO8BupKj/+axDB5bQek214R+stoNCy1zPUPq/OYsyDcqqprr
-         +HSw==
-X-Gm-Message-State: AJIora+fU0Sym/H0gvdsmfknEkmkdn+1w5zDTeh2LCW5wPVGFAeo7SQr
-        bn6DXP1+TD0Q/5MrVILgS7a/Dw==
-X-Google-Smtp-Source: AGRyM1sY/fZMUL+/U63wdSeuPYyZncc1o5an/SXYkBTqwQdP2tP1zi1o6eYwviMKyV5kW1nXHLjWIA==
-X-Received: by 2002:a05:6512:e95:b0:47f:9d60:d90a with SMTP id bi21-20020a0565120e9500b0047f9d60d90amr19901224lfb.591.1656937854643;
-        Mon, 04 Jul 2022 05:30:54 -0700 (PDT)
-Received: from [192.168.1.52] ([84.20.121.239])
-        by smtp.gmail.com with ESMTPSA id t30-20020a05651c205e00b0025a75057c46sm4954452ljo.91.2022.07.04.05.30.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 04 Jul 2022 05:30:54 -0700 (PDT)
-Message-ID: <8f6f1bad-6ad7-7092-7395-145cfe565ced@linaro.org>
-Date:   Mon, 4 Jul 2022 14:30:53 +0200
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=HuCxlgacyUOJDWnwtep7f6783mY+/w0V/6DqwO66NRI=;
+        b=JpxXJq7+iHM8Vx2zIjbeOPsJMajd3MgeeZEum9s0KKfXKOiK6IOeogi+LC6y4t07zV
+         EKMtfFazC/xl2gbrJFmqXWydcZHkVu2Qvq0xqvUX5/wlcSk7peJBAuCYRzPhHhtAnIvi
+         1sWO49GMIl1b3t4FxoUujHFFXtYlUNc/Yuh76/PHWmnuyCBteRjn189lw93QUso987Wk
+         4aUwWQjIaF4i4B16Wq5cAgxQ6kwyPbSWKnomjJtObD0X0LAh+HNwpxhLcWtkoW0E9pAD
+         kniuUcniTm1jH9Wnv2WjZulvF8gxeOQgrhDrExKwjU6xtQG9B27pgRcAoDh/JBU5/It0
+         y+tw==
+X-Gm-Message-State: AJIora/L0JSwb08tMQIQY0lRNEH9+ypZeXdkJLf51D5GN/InsVZYsx9O
+        olqwI0OIMkntIJp6/ZZNBdr0XiKle40YNgiKWUo=
+X-Google-Smtp-Source: AGRyM1tYUDw2XxSwagaO0LbY2DteKv3cfIHW/A1xBBt6d+9RnVB26jcma/B9njJ5VJc2gkJoY4hvPSTPQaqofH8RtKY=
+X-Received: by 2002:a05:6214:2129:b0:470:396d:19c4 with SMTP id
+ r9-20020a056214212900b00470396d19c4mr27016066qvc.34.1656938068470; Mon, 04
+ Jul 2022 05:34:28 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: [PATCH] arm64: dts: ipq8074: move ARMv8 timer out of SoC node
-Content-Language: en-US
-To:     Robert Marko <robimarko@gmail.com>, agross@kernel.org,
-        bjorn.andersson@linaro.org, konrad.dybcio@somainline.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20220704113246.622917-1-robimarko@gmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220704113246.622917-1-robimarko@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20220704114430.625365-1-robimarko@gmail.com> <7cb6fd46-ac80-fbc5-67f7-920934bb801c@linaro.org>
+In-Reply-To: <7cb6fd46-ac80-fbc5-67f7-920934bb801c@linaro.org>
+From:   Robert Marko <robimarko@gmail.com>
+Date:   Mon, 4 Jul 2022 14:34:17 +0200
+Message-ID: <CAOX2RU5UeeAh0hzYjANd5w+Y4NfxWN0uVtbjQLGOcTzT7ZRkQA@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: ipq8074: add reset to SDHCI
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        krzysztof.kozlowski+dt@linaro.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Devicetree List <devicetree@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 04/07/2022 13:32, Robert Marko wrote:
-> The ARM timer is usually considered not part of SoC node, just like
-> other ARM designed blocks (PMU, PSCI).  This fixes dtbs_check warning:
-> 
-> arch/arm64/boot/dts/qcom/ipq8072-ax9000.dtb: soc: timer: {'compatible': ['arm,armv8-timer'], 'interrupts': [[1, 2, 3848], [1, 3, 3848], [1, 4, 3848], [1, 1, 3848]]} should not be valid under {'type': 'object'}
-> 	From schema: dtschema/schemas/simple-bus.yaml
-> 
-> Signed-off-by: Robert Marko <robimarko@gmail.com>
-> ---
->  arch/arm64/boot/dts/qcom/ipq8074.dtsi | 16 ++++++++--------
->  1 file changed, 8 insertions(+), 8 deletions(-)
-> 
+On Mon, 4 Jul 2022 at 14:29, Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
+>
+> On 04/07/2022 13:44, Robert Marko wrote:
+> > Add reset to SDHCI controller so it can be reset to avoid timeout issues
+> > after software reset due to bootloader set configuration.
+> >
+> > Signed-off-by: Robert Marko <robimarko@gmail.com>
+> > ---
+> >  arch/arm64/boot/dts/qcom/ipq8074.dtsi | 1 +
+> >  1 file changed, 1 insertion(+)
+> >
+> > diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
+> > index ddafc7de6c5f..d685ca1969a3 100644
+> > --- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
+> > @@ -482,6 +482,7 @@ sdhc_1: mmc@7824900 {
+> >                                <&gcc GCC_SDCC1_APPS_CLK>,
+> >                                <&xo>;
+> >                       clock-names = "iface", "core", "xo";
+> > +                     resets = <&gcc GCC_SDCC1_BCR>;
+>
+> I looked at the bindings and they do not allow reset property, so does
+> it depend on anything?
 
-This is a duplicate, I guess... I responded to newer patch.
+Hi Krzysztof,
+It seems like the driver changes [1] were merged at the same time as
+when bindings
+were being converted and nobody ever follow up with documenting the property.
 
+I can document the property and send a v2 if that's OK?
 
-Best regards,
-Krzysztof
+Regards,
+Robert
+
+[1] https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/drivers/mmc/host/sdhci-msm.c?h=next-20220704&id=3e5a8e8494a8122fe4eb3f167662f406cab753b9
+
+>
+>
+> Best regards,
+> Krzysztof
