@@ -2,79 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0D90B5658A2
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Jul 2022 16:29:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CA12A5658AC
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Jul 2022 16:34:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234428AbiGDO3S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Jul 2022 10:29:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60266 "EHLO
+        id S233968AbiGDOeG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Jul 2022 10:34:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34416 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231208AbiGDO3R (ORCPT
+        with ESMTP id S233120AbiGDOeF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Jul 2022 10:29:17 -0400
-Received: from mail-yb1-xb35.google.com (mail-yb1-xb35.google.com [IPv6:2607:f8b0:4864:20::b35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1FFB10B1
-        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Jul 2022 07:29:16 -0700 (PDT)
-Received: by mail-yb1-xb35.google.com with SMTP id j7so10829265ybj.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Jul 2022 07:29:16 -0700 (PDT)
+        Mon, 4 Jul 2022 10:34:05 -0400
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 988F726DB
+        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Jul 2022 07:34:03 -0700 (PDT)
+Received: by mail-ed1-x533.google.com with SMTP id y8so6208521eda.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Jul 2022 07:34:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:reply-to:sender:from:date:message-id:subject:to;
-        bh=8L3u9yLimYhqEYiPckuKAsVAuSvOnpygme4DEwcN/0I=;
-        b=Bf/vmVTnh8EhRejg8RxNRn2jb9ee2q9ErYzhp3fApr6P3EPG44bE+6JuwqHpkwSyZL
-         ug5a6g4FeQbRm0QbDKhIsPXkYJult1O05HSgF0t2lkauniY5sng28EsK613uFL1IDlYg
-         k9rqN27XzCSvYB7UkykvKuvZoSnKt7lzmQ6frNFz9Uz8W0zxDdLBtfAi64yVHia4ZCRA
-         VakjoKqWhuzlY8s2fUod9K1UOqqBh2EreYc7xKbw3h15RAPtE5372nfShgMH16yOQyaN
-         DnEwph4UPdFl0Lk2ChwP1S/izDRFD6vPGY6NpF3eJ47gsQ/DibhN8SFKLCIXi3f6vMqV
-         iLbQ==
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=XU/si2OudxpMibSqn9Lq87kwtqlJQ7SnogcNrsl/AzA=;
+        b=s3JEtG3oAnSlkTIpUvw6vEj9MvtOwSM36hPU7p5U/iuLa3b6fNXdjMkbfEPMWZhDaN
+         jMEGBmArVuiaVrm8Lx46W/RlGVi19F8hgWk8dxVw5gwy3yGTyUDAI1Hs+iEaMkSO9b2j
+         xzQlzfNeysJAAt/VYnmGqdqelXqUORmtciut3ho3+hkttcgBzEuc888ur+ZZF94Hlpdg
+         WdI3bE9G0aWPuAwf7yVThGJ3uppgUzk5i+B/ZmgKRWjlYwLyZg1Yrk+Nw4q0kR4n55If
+         H7efuUmbfI06/MqWk24amtyaJlgxmUi/azxOPST1xleLmhaMIQyu+5Y1J5TLMJPyL5QP
+         LYug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:reply-to:sender:from:date
-         :message-id:subject:to;
-        bh=8L3u9yLimYhqEYiPckuKAsVAuSvOnpygme4DEwcN/0I=;
-        b=WPeyuXPMgVDeBFSnG0GA3qmmfceN4KQEEm7mKjR0nmNXnzc8z24EtNrzSVRTtVaeJc
-         DMLjeKorjktDXd9YxH4/PRla60IlSCH66bdcsgLNX1aJgWsemDDk4mrU/SnusDYJEEqE
-         bZs7UhXiff/DP/Rjegb2Q3VKhOIbOFLik4nwondcnhjPtKVCCwfMVS7lZO0IY2VUA1HZ
-         ky0cKhMx62T5nKdP5lNcKscRi+Jm6bJIOfZmlesDrMuhEahZfBVrmXewn1b9KBXbOskB
-         7nWD4IbAWji2MUrDasDV1FZHux2TrZWsEwYa+paWam9xGH9xxcxs9xXZwTSLlXj3AvZ+
-         luKg==
-X-Gm-Message-State: AJIora99ykYXdEvhpZE7PVXYtBCW1u8XoVRm1eALkIqH2/dRDs9onZvo
-        P70Z1HxYhwc7L8lRlArmT2ji2YArRRKE6Vn+Nw==
-X-Google-Smtp-Source: AGRyM1voX2rGsvgw9fTsp1p5uPNB88BWDYFqD5vFlIEjLxCtJplHwuMPDoXxf35111NN1Eo96ubwjb0sk2NZFxP4qxE=
-X-Received: by 2002:a25:abb3:0:b0:66e:2f9a:4201 with SMTP id
- v48-20020a25abb3000000b0066e2f9a4201mr11903241ybi.125.1656944955827; Mon, 04
- Jul 2022 07:29:15 -0700 (PDT)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=XU/si2OudxpMibSqn9Lq87kwtqlJQ7SnogcNrsl/AzA=;
+        b=LtKn1HvM90UXijEvefQWRqubblmruLpoig8XnmgRR58NPgoMqF76RROKXR+5WaeNhX
+         8vVy9PiOtICLGQcpnm+9Its5gOz2o/oMtkF8wEEO4SUVxtSihel20CamKqdhy0/9ZIW/
+         Cqqxf2a5pfCprGJzg86APWghFATk9z8t+MyA5FKnLjpLZeEt9fhMnuWY7eERDxL8fG8/
+         8XEcHHrZtnKMmxHno2sBSUjXGROENGBlenFSL0GUi3PeUs8w3ivWHeM3gSkns78WmcLB
+         PywSSjol3iEk4b0OMjWQaUN+706EEUsH/bfKOOz/g8+tb8iwXtx2EgmoAw6zi+JXmPYV
+         XZPQ==
+X-Gm-Message-State: AJIora8DMk7UbVfB4k/lvO4uilOOMTzPndFUYmQnH+Bj+16OpWw8eefr
+        BhB4InOG/WTskfbLPMsdTO1wu79qfKlC/Fkr0WY0YA==
+X-Google-Smtp-Source: AGRyM1sU+Y9dvWotDYGXP/0592qT4wzBpkL3CvYygXrxfJoDl4SvJKYJ07VrM7r4EGGqL2jdL80dhFXvm35WO9uZAMs=
+X-Received: by 2002:a05:6402:2789:b0:435:ac82:e8c3 with SMTP id
+ b9-20020a056402278900b00435ac82e8c3mr39093288ede.250.1656945242166; Mon, 04
+ Jul 2022 07:34:02 -0700 (PDT)
 MIME-Version: 1.0
-Reply-To: mayumisakimoto7@gmail.com
-Sender: masakootus21@gmail.com
-Received: by 2002:a05:7000:9708:0:0:0:0 with HTTP; Mon, 4 Jul 2022 07:29:15
- -0700 (PDT)
-From:   Mayumi Sakimoto <mayumisakimot7@gmail.com>
-Date:   Mon, 4 Jul 2022 17:29:15 +0300
-X-Google-Sender-Auth: F1X5TD4pmkMacwzrHlrvtn6FWjY
-Message-ID: <CAANVZKLcY+C=ouUQCO7ZwY2gmThEgkvazgLtyAFqxvrnJG4tSQ@mail.gmail.com>
-Subject: Hello
-To:     undisclosed-recipients:;
+References: <20220704094437.468395-1-vladimir.zapolskiy@linaro.org>
+In-Reply-To: <20220704094437.468395-1-vladimir.zapolskiy@linaro.org>
+From:   Robert Foss <robert.foss@linaro.org>
+Date:   Mon, 4 Jul 2022 16:33:50 +0200
+Message-ID: <CAG3jFyvD+0Q4sYWZ69sF8AG+mQ5Ytjj+ND9-Hi4ZjzWN-Vq+Ng@mail.gmail.com>
+Subject: Re: [PATCH] media: camss: Clean up received buffers on failed start
+ of streaming
+To:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Cc:     Todor Tomov <todor.too@gmail.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Hans Verkuil <hans.verkuil@cisco.com>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=4.9 required=5.0 tests=BAYES_50,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,FREEMAIL_REPLYTO,FREEMAIL_REPLYTO_END_DIGIT,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        UNDISC_FREEM autolearn=no autolearn_force=no version=3.4.6
-X-Spam-Level: ****
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Greetings,
+On Mon, 4 Jul 2022 at 11:44, Vladimir Zapolskiy
+<vladimir.zapolskiy@linaro.org> wrote:
+>
+> It is required to return the received buffers, if streaming can not be
+> started. For instance media_pipeline_start() may fail with EPIPE, if
+> a link validation between entities is not passed, and in such a case
+> a user gets a kernel warning:
+>
+>   WARNING: CPU: 1 PID: 520 at drivers/media/common/videobuf2/videobuf2-core.c:1592 vb2_start_streaming+0xec/0x160
+>   <snip>
+>   Call trace:
+>    vb2_start_streaming+0xec/0x160
+>    vb2_core_streamon+0x9c/0x1a0
+>    vb2_ioctl_streamon+0x68/0xbc
+>    v4l_streamon+0x30/0x3c
+>    __video_do_ioctl+0x184/0x3e0
+>    video_usercopy+0x37c/0x7b0
+>    video_ioctl2+0x24/0x40
+>    v4l2_ioctl+0x4c/0x70
+>
+> The fix is to correct the error path in video_start_streaming() of camss.
+>
+> Fixes: 0ac2586c410f ("media: camss: Add files which handle the video device nodes")
+> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+> ---
+>  drivers/media/platform/qcom/camss/camss-video.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+>
+> diff --git a/drivers/media/platform/qcom/camss/camss-video.c b/drivers/media/platform/qcom/camss/camss-video.c
+> index b5f12ec5c50c..d272ffa02112 100644
+> --- a/drivers/media/platform/qcom/camss/camss-video.c
+> +++ b/drivers/media/platform/qcom/camss/camss-video.c
+> @@ -495,7 +495,7 @@ static int video_start_streaming(struct vb2_queue *q, unsigned int count)
+>
+>         ret = media_pipeline_start(&vdev->entity, &video->pipe);
+>         if (ret < 0)
+> -               return ret;
+> +               goto flush_buffers;
+>
+>         ret = video_check_format(video);
+>         if (ret < 0)
+> @@ -524,6 +524,7 @@ static int video_start_streaming(struct vb2_queue *q, unsigned int count)
+>  error:
+>         media_pipeline_stop(&vdev->entity);
+>
+> +flush_buffers:
+>         video->ops->flush_buffers(video, VB2_BUF_STATE_QUEUED);
+>
+>         return ret;
+> --
+> 2.33.0
+>
 
- I hope this email finds you well, Please accept my sincere apologies if
-my email does not meet your business or personal ethics. Please I have something
-very important to discuss with you.I need to entrust you with a
-humanitarian project, Please reply to me as soon as possible.
-
-
-Kind Regards,
-mayumi sakimoto
+Reviewed-by: Robert Foss <robert.foss@linaro.org>
