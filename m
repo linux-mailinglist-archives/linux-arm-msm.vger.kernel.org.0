@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4A76F565F62
+	by mail.lfdr.de (Postfix) with ESMTP id 7C8A5565F63
 	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jul 2022 00:16:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230389AbiGDWP6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Jul 2022 18:15:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33008 "EHLO
+        id S231206AbiGDWQA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Jul 2022 18:16:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33024 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229944AbiGDWP6 (ORCPT
+        with ESMTP id S229944AbiGDWP7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Jul 2022 18:15:58 -0400
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2943D2BC0
+        Mon, 4 Jul 2022 18:15:59 -0400
+Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA6A6B484
         for <linux-arm-msm@vger.kernel.org>; Mon,  4 Jul 2022 15:15:57 -0700 (PDT)
-Received: by mail-lj1-x22f.google.com with SMTP id a39so12413267ljq.11
+Received: by mail-lj1-x229.google.com with SMTP id s14so12455444ljs.3
         for <linux-arm-msm@vger.kernel.org>; Mon, 04 Jul 2022 15:15:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Tb0cg7d562ipFX8SeGS2ifuv2oavUfFOHpaJXDXdxcg=;
-        b=vjkPuicdcWHZlkTTkAHPmu196YNSDMoX5IGJNUsqa2Vp+IcCxDu0lpTKvZJLsxzUqT
-         6UMt5aXb1LV7mlHvid4ktZKvYhCAlkVJZbIDiIByfaC9J838gzxrxIiiOHWDexSATXGb
-         zI2r7hPPnhrmqU/7OrT2t2eZ4HNmLx8QIp52fObhQ6hZ3Y1FrT+GxBf9q+G8ivqKP5A3
-         La3tAM8/ulrlB22CR/4/wdW25s4SeImd+Nn2Mm+56ImKiZrBPEP0pYyaOHx4PfwNgns3
-         iQPAM49rCw8cuweVwjV0bP20z18ou27vxqhrGhDxrjqsSoKUIqjiUzDmXuDSLmtOAnCJ
-         9s3A==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=qMaaTD6K4yj5INE84+CHyBEn/aNUZ8YByRBxEmdS9GY=;
+        b=cZp6xF6fylogO2aUg0wHko3yH//q6LGiNN+1IhlU5LoNjPWOdFXC/fN7M+HvJCPI0y
+         DuRRYMcYzsNxaAJE8LrLYwXZ2FAqm4rHYwxLXwv90mXG2xjU7zh1UEA4cKSDcxb6FYo1
+         VOVY/CbVp7RWZf8Ir1LlHmHBz8fZODr1Ux4BZca2Y5BCbkHd/tDcbW84CdKJSpyPCCvN
+         tNAki2maSPNLYOqlNoUo/s32SAkgKC9EKj8d61NpyakLy4y40MG5hOcpkB134FrQ/aSE
+         65y42G/QjTEHdCrgtZD2tROEhuflMESL/V04XO9nQDQz/EgWbZGcWMwktYOsz20aHGLn
+         PRQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Tb0cg7d562ipFX8SeGS2ifuv2oavUfFOHpaJXDXdxcg=;
-        b=qbJO1VBrb5EJ0egO2QCVJn7aBctJgt0mNuSyYe/ehL++Sf6o6VhjkiIMOJS3pmttSR
-         vGwxkurX1BNtx1zeYm0Q8PW9HZNVsLL88oG2mh3ZyTbwFHlyodl6SEt5oKFV1ZfsIiEj
-         QPMuPPZ3bU5eV6E6NF3Vj6v0RN9nSNSSGa9p+J9r62JFLxjkv8mx9FwG5qdfeTXexJ9g
-         FV0VwkIymPPhXI7U9aOlTg9RnUp4Xy8C42S7jBs7FIiOHYB7KqMW42BG1ByFiSxPnoay
-         uq2nup2ENPVD3hRc0wX/B37xstUM5RUsjV9x52TW7y0W58DLSevx8tPBCqokanDa4Wkf
-         Gbgw==
-X-Gm-Message-State: AJIora/XNMoN1buMUi47MynJ+sq6Tst8GdNZZFwOsLsvZG1jhGyXfyIm
-        lZQ27wKnOniVhUmQUkwcj56qSw==
-X-Google-Smtp-Source: AGRyM1tT9uIUrN7GcjyY5VmuwTBxFwgVcKJ+ASECGoPIcTSkOg2vSQpXztwaABBDI5LBRqOCjHolUQ==
-X-Received: by 2002:a2e:8195:0:b0:25a:6f9b:d6a6 with SMTP id e21-20020a2e8195000000b0025a6f9bd6a6mr18799273ljg.276.1656972955460;
-        Mon, 04 Jul 2022 15:15:55 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=qMaaTD6K4yj5INE84+CHyBEn/aNUZ8YByRBxEmdS9GY=;
+        b=HiOXGRA6d0WxxM8PDk2jhSgsb/9akF1sYqlriWZMOdYo6JEg7zowGWmCORY9BfReFz
+         wW1a4F5wYdtHN0ulgw3v468FOSlZpH3QjsB+6TN6QWo/bpIYnzIcQuAMhrYb57wPsMiD
+         c3rAANxDkl6GKyM+v9E+C9bQoH9Dif6I1eCtHuMs2YNJ9RPe/3O7LgFTZoi2t2MQ4yip
+         rZpbJ83AUQaMp4Ws+I125D4Ws6zx47POIm2UKVEZOr+CPIdnwGusFivRI3WCbIygmh9f
+         WSJQ6UAsnmmaUcWD8VSjDBds5qc6JMT08tXZ3u7x9OvrV9dyzcsKDmUSJ0UDuy7qzjBb
+         7OaA==
+X-Gm-Message-State: AJIora/iOSPAZvWT0tIxmoWs5Z3uf3K03PulPVlvC5viY13yTVNiyZ7M
+        gdrYqzSsOpRjogyTt0q5FykdIw==
+X-Google-Smtp-Source: AGRyM1uFR3sxlz1crihojTuAgbEK6rvojI9bAu9oS76JB1qsAORtNrh7zczoLh7mVZr9RliEguiU/Q==
+X-Received: by 2002:a2e:b004:0:b0:25a:8d4e:a3f6 with SMTP id y4-20020a2eb004000000b0025a8d4ea3f6mr18256085ljk.70.1656972956285;
+        Mon, 04 Jul 2022 15:15:56 -0700 (PDT)
 Received: from localhost.localdomain (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
-        by smtp.gmail.com with ESMTPSA id o13-20020ac25e2d000000b0047f660822e0sm5319931lfg.289.2022.07.04.15.15.54
+        by smtp.gmail.com with ESMTPSA id o13-20020ac25e2d000000b0047f660822e0sm5319931lfg.289.2022.07.04.15.15.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Jul 2022 15:15:55 -0700 (PDT)
+        Mon, 04 Jul 2022 15:15:56 -0700 (PDT)
 From:   Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 To:     Robert Foss <robert.foss@linaro.org>,
         Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
@@ -57,15 +57,17 @@ Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Mauro Carvalho Chehab <mchehab@kernel.org>,
         Hans Verkuil <hans.verkuil@cisco.com>,
         linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: [PATCH 0/2] media: camss: Simplify and improve power management of VFEs
-Date:   Tue,  5 Jul 2022 01:15:46 +0300
-Message-Id: <20220704221548.629302-1-vladimir.zapolskiy@linaro.org>
+Subject: [PATCH 1/2] media: camss: Collect information about a number of lite VFEs
+Date:   Tue,  5 Jul 2022 01:15:47 +0300
+Message-Id: <20220704221548.629302-2-vladimir.zapolskiy@linaro.org>
 X-Mailer: git-send-email 2.33.0
+In-Reply-To: <20220704221548.629302-1-vladimir.zapolskiy@linaro.org>
+References: <20220704221548.629302-1-vladimir.zapolskiy@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -73,32 +75,106 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Since a rework of CAMSS power domain management for newer platforms done in
-commit 2f6f8af67203 ("media: camss: Refactor VFE power domain toggling"),
-all operations over CAMSS imply enablement of all power domains described
-in the correspondent device tree node. Apparently it's too excessive and it's
-quite a complicated scheme to allow simple addition of newer platforms with
-even more power domains.
+VFE lite IPs are found on CAMSS with TITAN_TOP power domains, and in
+some aspects these types of VFEs are different, in particular there
+is no need to enable VFE power domains to operate over VFE lite IPs.
 
-I would appreciate, if somebody can test the changes on db820 for any probable
-regressions.
+Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+---
+ drivers/media/platform/qcom/camss/camss.c | 20 +++++++++++---------
+ drivers/media/platform/qcom/camss/camss.h |  1 +
+ 2 files changed, 12 insertions(+), 9 deletions(-)
 
-The change is based on changes in clock framework [1] and on a recent fix-up [2]
-in camss.
-
-[1] https://lore.kernel.org/linux-clk/20220519214133.1728979-1-vladimir.zapolskiy@linaro.org/
-[2] https://lore.kernel.org/linux-media/20220704220814.629130-1-vladimir.zapolskiy@linaro.org/
-
-Vladimir Zapolskiy (2):
-  media: camss: Collect information about a number of lite VFEs
-  media: camss: Split power domain management
-
- .../media/platform/qcom/camss/camss-vfe-170.c | 20 +++++++-
- .../media/platform/qcom/camss/camss-vfe-480.c | 20 +++++++-
- drivers/media/platform/qcom/camss/camss.c     | 50 ++++++++++---------
- drivers/media/platform/qcom/camss/camss.h     |  1 +
- 4 files changed, 66 insertions(+), 25 deletions(-)
-
+diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
+index 7a929f19e79b..795eebd9af6c 100644
+--- a/drivers/media/platform/qcom/camss/camss.c
++++ b/drivers/media/platform/qcom/camss/camss.c
+@@ -1170,7 +1170,7 @@ static int camss_init_subdevices(struct camss *camss)
+ 	}
+ 
+ 	/* note: SM8250 requires VFE to be initialized before CSID */
+-	for (i = 0; i < camss->vfe_num; i++) {
++	for (i = 0; i < camss->vfe_num + camss->vfe_lite_num; i++) {
+ 		ret = msm_vfe_subdev_init(camss, &camss->vfe[i],
+ 					  &vfe_res[i], i);
+ 		if (ret < 0) {
+@@ -1242,7 +1242,7 @@ static int camss_register_entities(struct camss *camss)
+ 		goto err_reg_ispif;
+ 	}
+ 
+-	for (i = 0; i < camss->vfe_num; i++) {
++	for (i = 0; i < camss->vfe_num + camss->vfe_lite_num; i++) {
+ 		ret = msm_vfe_register_entities(&camss->vfe[i],
+ 						&camss->v4l2_dev);
+ 		if (ret < 0) {
+@@ -1314,7 +1314,7 @@ static int camss_register_entities(struct camss *camss)
+ 				}
+ 	} else {
+ 		for (i = 0; i < camss->csid_num; i++)
+-			for (k = 0; k < camss->vfe_num; k++)
++			for (k = 0; k < camss->vfe_num + camss->vfe_lite_num; k++)
+ 				for (j = 0; j < camss->vfe[k].line_num; j++) {
+ 					struct v4l2_subdev *csid = &camss->csid[i].subdev;
+ 					struct v4l2_subdev *vfe = &camss->vfe[k].line[j].subdev;
+@@ -1338,7 +1338,7 @@ static int camss_register_entities(struct camss *camss)
+ 	return 0;
+ 
+ err_link:
+-	i = camss->vfe_num;
++	i = camss->vfe_num + camss->vfe_lite_num;
+ err_reg_vfe:
+ 	for (i--; i >= 0; i--)
+ 		msm_vfe_unregister_entities(&camss->vfe[i]);
+@@ -1377,7 +1377,7 @@ static void camss_unregister_entities(struct camss *camss)
+ 
+ 	msm_ispif_unregister_entities(camss->ispif);
+ 
+-	for (i = 0; i < camss->vfe_num; i++)
++	for (i = 0; i < camss->vfe_num + camss->vfe_lite_num; i++)
+ 		msm_vfe_unregister_entities(&camss->vfe[i]);
+ }
+ 
+@@ -1579,13 +1579,15 @@ static int camss_probe(struct platform_device *pdev)
+ 		camss->version = CAMSS_845;
+ 		camss->csiphy_num = 4;
+ 		camss->csid_num = 3;
+-		camss->vfe_num = 3;
++		camss->vfe_num = 2;
++		camss->vfe_lite_num = 1;
+ 	} else if (of_device_is_compatible(dev->of_node,
+ 					   "qcom,sm8250-camss")) {
+ 		camss->version = CAMSS_8250;
+ 		camss->csiphy_num = 6;
+ 		camss->csid_num = 4;
+-		camss->vfe_num = 4;
++		camss->vfe_num = 2;
++		camss->vfe_lite_num = 2;
+ 	} else {
+ 		return -EINVAL;
+ 	}
+@@ -1607,8 +1609,8 @@ static int camss_probe(struct platform_device *pdev)
+ 			return -ENOMEM;
+ 	}
+ 
+-	camss->vfe = devm_kcalloc(dev, camss->vfe_num, sizeof(*camss->vfe),
+-				  GFP_KERNEL);
++	camss->vfe = devm_kcalloc(dev, camss->vfe_num + camss->vfe_lite_num,
++				  sizeof(*camss->vfe), GFP_KERNEL);
+ 	if (!camss->vfe)
+ 		return -ENOMEM;
+ 
+diff --git a/drivers/media/platform/qcom/camss/camss.h b/drivers/media/platform/qcom/camss/camss.h
+index 0db80cadbbaa..3acd2b3403e8 100644
+--- a/drivers/media/platform/qcom/camss/camss.h
++++ b/drivers/media/platform/qcom/camss/camss.h
+@@ -97,6 +97,7 @@ struct camss {
+ 	struct csid_device *csid;
+ 	struct ispif_device *ispif;
+ 	int vfe_num;
++	int vfe_lite_num;
+ 	struct vfe_device *vfe;
+ 	atomic_t ref_count;
+ 	int genpd_num;
 -- 
 2.33.0
 
