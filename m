@@ -2,148 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B371A565DEC
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Jul 2022 21:20:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9B782565E43
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Jul 2022 22:09:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234410AbiGDTUc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Jul 2022 15:20:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36944 "EHLO
+        id S229778AbiGDUJx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Jul 2022 16:09:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59290 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233675AbiGDTUb (ORCPT
+        with ESMTP id S229525AbiGDUJw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Jul 2022 15:20:31 -0400
-Received: from mail-qt1-x82b.google.com (mail-qt1-x82b.google.com [IPv6:2607:f8b0:4864:20::82b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDEBB60C2;
-        Mon,  4 Jul 2022 12:20:30 -0700 (PDT)
-Received: by mail-qt1-x82b.google.com with SMTP id bs20so10960167qtb.11;
-        Mon, 04 Jul 2022 12:20:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=efBiIx6Z74wz+LEYNht2L8mOGHfZ2/nsYi3si0X8qUQ=;
-        b=oUIROjQTvBzdYVfmxDoO4IvUMCJsVN0ErIlpDYdemPxncSnGAikTY+jF7Lh5tmyceE
-         okQFItfBRzQ8oa4PwELKembxTH5KTsv4LnNPp+onGOKZo+EouITj75jQ19T2gzYEj3if
-         gPho36rodSAQtXRh6xFAi2/5C8dEEtl99A7tXaQsY7Tiq64S8Ed7HFpfLvW6u58AUK+M
-         DHtR/8pR/WoEBqi3926jPFDAI33/nHtbk1JwgsXyIlYaBg3smQKG1MUAQT+j+i1U5dCH
-         RdoJ4pzBpMhdv/BwK5wQ9Tv9K2UyKMEUnmwty4GwgQ2epoQhLrjDW2Ctz6aLeTW8yDyR
-         j9ew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=efBiIx6Z74wz+LEYNht2L8mOGHfZ2/nsYi3si0X8qUQ=;
-        b=0sBvTRcSn8eZUQsQ4YuK26IURh2FoqeuS4k9sqXV4Ks84/RGUEbc/hTN9e9YbIxZ9+
-         AIAOfskXBylVl2crIiGPEhD8qLTUctq4LZsqqmZwGlgwtPR8o4DtyfQfhPHAUjUcUkJV
-         z/wQYTDuOH0y0AQU8UocCuzDWblKt0CwvD9/OuP3LHvS2BG3QPTqRS1OBBhJgG0r4jzL
-         85ekiRbQ71ERzrX3tPpR55HkbJZzYIHJXsnrgeyElNjP5I1sBhoAva4HpnLfu8WCfr8b
-         ys4+qdC8jT6KZ6GWu+LcAb5taVaAPfvx8oylD1+P+iM+cN+NwsX78mVcCevp0Gdc5RxJ
-         O1FA==
-X-Gm-Message-State: AJIora8bJIaruBqXGRjQ3VstlgITJNQ9XpVcwhIufRYWa2SUCX6wgfVL
-        +mk8HiF3PWD6pipq2orMoULGFCWlltijKena0NU=
-X-Google-Smtp-Source: AGRyM1v9fjtjLV5IOZSPd2UXznyGsSvexOh1kKFoICuxe2R5nQ/R8J3odTQoWU/bbnb5YCO8GjE1rNVnoL12U5EFUto=
-X-Received: by 2002:ac8:59c9:0:b0:31c:22a5:9a5d with SMTP id
- f9-20020ac859c9000000b0031c22a59a5dmr25171871qtf.494.1656962429931; Mon, 04
- Jul 2022 12:20:29 -0700 (PDT)
+        Mon, 4 Jul 2022 16:09:52 -0400
+Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A34826391;
+        Mon,  4 Jul 2022 13:09:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1656965391; x=1688501391;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=dORptIljIbU1gDl2c5HL9A7Fj0TfMaBEiP2o3fiaXmU=;
+  b=QbpMYlgwxRi9sO+SJ+Nmze7nlhLZ1fh6/72/ZHLt08a7ZB7X7sqSojtF
+   GjZjE6Lm3P7wrizSL5HDBuoMyduCrNPz7/rO08rG7tNE7i5HqcZC09zS8
+   craqKYNEQgsw5Ug21z6DpbIFQhf+DPAs9KRQSjwjEBB3xPKioBMFI+j9Q
+   RbnlZyY/5gaT6wIBNgkmhzbqerAY60je7grqcjTyvIBPt9omWv4Jt6tla
+   NgwngxBl+Qfoqaj9L9RlrHlnuGEHv0vBSm03hbBPmoGUa8bzD75cc+8Y/
+   826klEvGHzEx5+Tw4NuKRHrUgbPz0ZeO+t/onffCunumqHjgSTLsGwbZK
+   A==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10398"; a="281949639"
+X-IronPort-AV: E=Sophos;i="5.92,243,1650956400"; 
+   d="scan'208";a="281949639"
+Received: from fmsmga005.fm.intel.com ([10.253.24.32])
+  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Jul 2022 13:09:51 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.92,243,1650956400"; 
+   d="scan'208";a="919458027"
+Received: from lkp-server01.sh.intel.com (HELO 68b931ab7ac1) ([10.239.97.150])
+  by fmsmga005.fm.intel.com with ESMTP; 04 Jul 2022 13:09:49 -0700
+Received: from kbuild by 68b931ab7ac1 with local (Exim 4.95)
+        (envelope-from <lkp@intel.com>)
+        id 1o8SOC-000I93-D6;
+        Mon, 04 Jul 2022 20:09:48 +0000
+Date:   Tue, 5 Jul 2022 04:09:35 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        linus.walleij@linaro.org, brgl@bgdev.pl
+Cc:     kbuild-all@lists.01.org, bjorn.andersson@linaro.org,
+        sboyd@kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
+        masneyb@onstation.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: Re: [PATCH] pinctrl: qcom-pmic-gpio: Make irqchip immutable
+Message-ID: <202207050342.WcNFJKKy-lkp@intel.com>
+References: <20220704150527.361470-1-manivannan.sadhasivam@linaro.org>
 MIME-Version: 1.0
-References: <20220515204540.477711-1-robimarko@gmail.com> <20220515204540.477711-4-robimarko@gmail.com>
- <Yr4q0G1AT4YSOIU5@builder.lan>
-In-Reply-To: <Yr4q0G1AT4YSOIU5@builder.lan>
-From:   Robert Marko <robimarko@gmail.com>
-Date:   Mon, 4 Jul 2022 21:20:19 +0200
-Message-ID: <CAOX2RU6UFpZPN0EO+Jyg93x7audYPhq+yzPM2gURUmOBheTLeA@mail.gmail.com>
-Subject: Re: [PATCH v4 4/6] mailbox: qcom-apcs-ipc: add IPQ8074 APSS clock
- controller support
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        krzysztof.kozlowski+dt@linaro.org,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        Devicetree List <devicetree@vger.kernel.org>,
-        linux-clk@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220704150527.361470-1-manivannan.sadhasivam@linaro.org>
+X-Spam-Status: No, score=-5.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 1 Jul 2022 at 00:59, Bjorn Andersson <bjorn.andersson@linaro.org> wrote:
->
-> On Sun 15 May 15:45 CDT 2022, Robert Marko wrote:
->
-> > IPQ8074 has the APSS clock controller utilizing the same register space as
-> > the APCS, so provide access to the APSS utilizing a child device like
-> > IPQ6018 does as well, but just by utilizing the IPQ8074 specific APSS
-> > clock driver.
-> >
-> > Also, APCS register space in IPQ8074 is 0x6000 so max_register needs to be
-> > updated to 0x5FFC.
-> >
-> > Signed-off-by: Robert Marko <robimarko@gmail.com>
-> > ---
-> >  drivers/mailbox/qcom-apcs-ipc-mailbox.c | 8 ++++++--
-> >  1 file changed, 6 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/drivers/mailbox/qcom-apcs-ipc-mailbox.c b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
-> > index 80a54d81412e..b3b9debf5673 100644
-> > --- a/drivers/mailbox/qcom-apcs-ipc-mailbox.c
-> > +++ b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
-> > @@ -33,6 +33,10 @@ static const struct qcom_apcs_ipc_data ipq6018_apcs_data = {
-> >       .offset = 8, .clk_name = "qcom,apss-ipq6018-clk"
-> >  };
-> >
-> > +static const struct qcom_apcs_ipc_data ipq8074_apcs_data = {
-> > +     .offset = 8, .clk_name = "qcom,apss-ipq8074-clk"
-> > +};
-> > +
-> >  static const struct qcom_apcs_ipc_data msm8916_apcs_data = {
-> >       .offset = 8, .clk_name = "qcom-apcs-msm8916-clk"
-> >  };
-> > @@ -57,7 +61,7 @@ static const struct regmap_config apcs_regmap_config = {
-> >       .reg_bits = 32,
-> >       .reg_stride = 4,
-> >       .val_bits = 32,
-> > -     .max_register = 0x1008,
-> > +     .max_register = 0x5FFC,
->
-> Please use lower case hex digits.
+Hi Manivannan,
 
-Hi,
-Will fix it in v5.
+I love your patch! Perhaps something to improve:
 
->
-> And please send the mailbox patches separately, to make it clear for the
-> maintainers that this can be picked independently of others.
+[auto build test WARNING on linusw-pinctrl/devel]
+[also build test WARNING on linus/master v5.19-rc5 next-20220704]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch]
 
-Ok, will send patches 4-6 separately.
+url:    https://github.com/intel-lab-lkp/linux/commits/Manivannan-Sadhasivam/pinctrl-qcom-pmic-gpio-Make-irqchip-immutable/20220704-230712
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/linusw/linux-pinctrl.git devel
+config: arm-defconfig (https://download.01.org/0day-ci/archive/20220705/202207050342.WcNFJKKy-lkp@intel.com/config)
+compiler: arm-linux-gnueabi-gcc (GCC) 11.3.0
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # https://github.com/intel-lab-lkp/linux/commit/4de81cf5dd3098fa10c3e384d497e024675cf068
+        git remote add linux-review https://github.com/intel-lab-lkp/linux
+        git fetch --no-tags linux-review Manivannan-Sadhasivam/pinctrl-qcom-pmic-gpio-Make-irqchip-immutable/20220704-230712
+        git checkout 4de81cf5dd3098fa10c3e384d497e024675cf068
+        # save the config file
+        mkdir build_dir && cp config build_dir/.config
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.3.0 make.cross W=1 O=build_dir ARCH=arm SHELL=/bin/bash drivers/pinctrl/qcom/
 
-Regards,
-Robert
->
-> Regards,
-> Bjorn
->
-> >       .fast_io = true,
-> >  };
-> >
-> > @@ -142,7 +146,7 @@ static int qcom_apcs_ipc_remove(struct platform_device *pdev)
-> >  /* .data is the offset of the ipc register within the global block */
-> >  static const struct of_device_id qcom_apcs_ipc_of_match[] = {
-> >       { .compatible = "qcom,ipq6018-apcs-apps-global", .data = &ipq6018_apcs_data },
-> > -     { .compatible = "qcom,ipq8074-apcs-apps-global", .data = &msm8994_apcs_data },
-> > +     { .compatible = "qcom,ipq8074-apcs-apps-global", .data = &ipq8074_apcs_data },
-> >       { .compatible = "qcom,msm8916-apcs-kpss-global", .data = &msm8916_apcs_data },
-> >       { .compatible = "qcom,msm8939-apcs-kpss-global", .data = &msm8916_apcs_data },
-> >       { .compatible = "qcom,msm8953-apcs-kpss-global", .data = &msm8994_apcs_data },
-> > --
-> > 2.36.1
-> >
+If you fix the issue, kindly add following tag where applicable
+Reported-by: kernel test robot <lkp@intel.com>
+
+All warnings (new ones prefixed by >>):
+
+>> drivers/pinctrl/qcom/pinctrl-spmi-gpio.c:998:37: warning: excess elements in struct initializer
+     998 |         .flags = IRQCHIP_IMMUTABLE, IRQCHIP_MASK_ON_SUSPEND,
+         |                                     ^~~~~~~~~~~~~~~~~~~~~~~
+   drivers/pinctrl/qcom/pinctrl-spmi-gpio.c:998:37: note: (near initialization for 'pmic_gpio_irqchip')
+
+
+vim +998 drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
+
+   990	
+   991	static const struct irq_chip pmic_gpio_irqchip = {
+   992		.name = "spmi-gpio",
+   993		.irq_ack = irq_chip_ack_parent,
+   994		.irq_mask = irq_chip_mask_parent,
+   995		.irq_unmask = irq_chip_unmask_parent,
+   996		.irq_set_type = irq_chip_set_type_parent,
+   997		.irq_set_wake = irq_chip_set_wake_parent,
+ > 998		.flags = IRQCHIP_IMMUTABLE, IRQCHIP_MASK_ON_SUSPEND,
+   999		GPIOCHIP_IRQ_RESOURCE_HELPERS,
+  1000	};
+  1001	
+
+-- 
+0-DAY CI Kernel Test Service
+https://01.org/lkp
