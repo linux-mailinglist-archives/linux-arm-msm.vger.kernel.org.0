@@ -2,72 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 208BC56517C
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Jul 2022 11:59:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A59A15651AD
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Jul 2022 12:04:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233935AbiGDJ7B (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Jul 2022 05:59:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50920 "EHLO
+        id S234208AbiGDKEJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Jul 2022 06:04:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52744 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233948AbiGDJ7A (ORCPT
+        with ESMTP id S234237AbiGDKDv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Jul 2022 05:59:00 -0400
-Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A095B959A
-        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Jul 2022 02:58:59 -0700 (PDT)
-Received: by mail-pj1-x1033.google.com with SMTP id b12-20020a17090a6acc00b001ec2b181c98so13158234pjm.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Jul 2022 02:58:59 -0700 (PDT)
+        Mon, 4 Jul 2022 06:03:51 -0400
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E510FEE31
+        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Jul 2022 03:03:11 -0700 (PDT)
+Received: by mail-lf1-x12e.google.com with SMTP id t19so14266399lfl.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Jul 2022 03:03:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=WGrr02ePAubs5HwRrKkcQyXTzR45aRrdbF034mfwuek=;
-        b=YRkn44iftoICxFbnHxWFVDMjjHS7DiP93ZU1X9rDNFfLwg53IuwEbXiEXSN0RqNqX1
-         laHmRffBdsRWJLD4O2cOCdu3vx7XnrZe9D4n77vo9e+0vQPPNygZajpqJ1z9UY67nXPt
-         V+aIpymm2b+y4sYlEASWbikw987qmyonRirggf62RwsxdVY8t284qFdRpYpInj7X1hVX
-         oX5GBvdCBiAqY2ZeNkenPt9bcxnRFLMbfvJdnwPb6QooaXlWtNaC2DghB6RFwmDiGTKr
-         BfFu00TydDotXzO2sp6GCgTss23VQWaTtHXvbyw44gOh7TIuC87ajdxHaX9HsxGSNlge
-         kUcA==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=ErZw4wls9zjNOFCXIe6EDDFh4ab3lDZZmmtoZlWR0dY=;
+        b=w9LmTd0jhX810gGtspBgYoFJvLQMTTIvGy0sHKVh78nBe332rOAuFrYBVunrIBsPkg
+         d5EfUKJxoQ8S8/v/G9LR7vXzCf3Cg9+qMproAQnX27mkaBzgVlzSwJzIALLGrtgmiKB2
+         8UEOdKaykVSSim8/D2n+F2VJ/ErZ24EDb5l8lq9OmVvsUyINLrfKT0CMTaQ3LAMEAutl
+         sJwByWinXftKaocsvU7ONzpWe1/9I20wZzhklPJLJpjYhvewa+RddER9zPq0Cb8UUhW0
+         jeBEWNaP+1Um10fFIvtjpJD/oGuTFoZ0FOiuMzV5uutKQU16FLIATbpNBL6txv+2OcHK
+         +lvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=WGrr02ePAubs5HwRrKkcQyXTzR45aRrdbF034mfwuek=;
-        b=S83IIymj0+1eH3ZHA0fKUvc9/DE+Pzhn2kylWUbTopYTpuYH3/1jJ+B311SIZHSGNG
-         k2tL726fYgpCuztt5y5Ou6BLu888Vr1k5eLpnX4dl0wlDP0YVcr2K+bp/aDb97+GI6bT
-         J29fJGLUwNwuSHbx6qD0q/7oUpBrHguJ2xJ6G5fmLZzASB+CGJyYULYTVVFhMrq2uukk
-         +EkIM+a1ZT3/BJaf0MufDewljTGnLM6HaRjwGqgxN3CCy8Ln/FCx8VzocOEkgHw7U3w2
-         DZ7jyuIYUDFaIY9RNJsYMhP1iBiIclIXz9gZmbOjIOO+GKHeTmJiT0SjbPDHQeeXuqCc
-         AhPQ==
-X-Gm-Message-State: AJIora9dNW+hKkkAetX+wQo9/QgKxYvyQPDfEJYvGZCc7PLOTAQnzMkd
-        AB1+kX80XxmdbMVsesuTeDBA2w==
-X-Google-Smtp-Source: AGRyM1tQAJ7cAwh+QSo9VmbPkdVHykOKKm387L7Wh6EkVy1JK3yuq3YGdz53OY0hiqHWwsJAdQOmIQ==
-X-Received: by 2002:a17:902:c7d5:b0:16b:ea78:4eb4 with SMTP id r21-20020a170902c7d500b0016bea784eb4mr829285pla.65.1656928739180;
-        Mon, 04 Jul 2022 02:58:59 -0700 (PDT)
-Received: from localhost ([122.171.18.80])
-        by smtp.gmail.com with ESMTPSA id a3-20020a1709027e4300b0016b8b35d725sm13844964pln.95.2022.07.04.02.58.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Jul 2022 02:58:58 -0700 (PDT)
-Date:   Mon, 4 Jul 2022 15:28:56 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Pierre Gondois <pierre.gondois@arm.com>
-Cc:     linux-kernel@vger.kernel.org, Ionela.Voinescu@arm.com,
-        Dietmar.Eggemann@arm.com, "Rafael J. Wysocki" <rafael@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 0/4] cpufreq: qcom-hw: LMH irq/hotplug interractions
-Message-ID: <20220704095856.s3abmelpd2744nyl@vireshk-i7>
-References: <20220615144321.262773-1-pierre.gondois@arm.com>
- <a9ab7982-b235-ef5f-2c1b-ecbc421552d1@arm.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=ErZw4wls9zjNOFCXIe6EDDFh4ab3lDZZmmtoZlWR0dY=;
+        b=rWYWNivbCS42zmxhfK/63qOKl+xSdB7j+qu/L6g7SfIIbq5cu9DFYzpXT4gLO+r5ko
+         iVV3isZ/hKLRA62L7D8HVNicbcMWsxtYdCOdWPN6S1/lgEqP+jXWnxa3GGv6CEU5XzHo
+         UxK3FPEQdtbEWQ4R6+i+XgKGTp3t1OvRJhz0MoPRcQbwIslMga7GuR6uXVgxtM5yJYO8
+         E/Rx+vo5Z0tL2pGQto2MFxCcw9R4jofYEmOLrrFkCwU1wUb0XlWpDofgKlGDAtTwxsxy
+         5XV5p3ZM2pF9NbUcJLBO3Q/BvjE902d88fPQCLBU6qLdVVGYbMX+2U30wODFTU2+fItP
+         gdDg==
+X-Gm-Message-State: AJIora8x/6y7JfFW1WM5dZvtCeGMsCkxlkjvfObcJWbY49+DoZBXZsi2
+        NmDH8hmNk9sMUs/usr6+yzoluw==
+X-Google-Smtp-Source: AGRyM1tYyxGAgUgawsgdOQb1xSttQaKF7iWrlqMgTBURgm3N4VN14WMwCOK+yH1mCjMy5QHOVA1rOw==
+X-Received: by 2002:a05:6512:61:b0:47f:7f37:fad3 with SMTP id i1-20020a056512006100b0047f7f37fad3mr18847722lfo.318.1656928990188;
+        Mon, 04 Jul 2022 03:03:10 -0700 (PDT)
+Received: from [192.168.1.52] ([84.20.121.239])
+        by smtp.gmail.com with ESMTPSA id b13-20020a2eb90d000000b0025aa03fba32sm4851141ljb.12.2022.07.04.03.03.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 04 Jul 2022 03:03:09 -0700 (PDT)
+Message-ID: <9303ad19-b047-9710-8c35-9911e9a47bc9@linaro.org>
+Date:   Mon, 4 Jul 2022 12:03:08 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <a9ab7982-b235-ef5f-2c1b-ecbc421552d1@arm.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: Re: [PATCH] dt-bindings: qcom: readme: document preferred compatible
+ naming
+Content-Language: en-US
+To:     Rob Herring <robh@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>, Alex Elder <elder@linaro.org>,
+        Robert Foss <robert.foss@linaro.org>,
+        Bhupesh Sharma <bhupesh.sharma@linaro.org>
+References: <20220701074659.12680-1-krzysztof.kozlowski@linaro.org>
+ <20220701204218.GA1478943-robh@kernel.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220701204218.GA1478943-robh@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -76,15 +85,60 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 04-07-22, 11:55, Pierre Gondois wrote:
-> Hello,
-> I saw that:
-> https://lore.kernel.org/all/20220617064421.l4vshytmqtittzee@vireshk-i7/
+On 01/07/2022 22:42, Rob Herring wrote:
+> On Fri, Jul 01, 2022 at 09:46:59AM +0200, Krzysztof Kozlowski wrote:
+>> Compatibles can come in two formats.  Either "vendor,ip-soc" or
+>> "vendor,soc-ip".  Qualcomm bindings were mixing both of usages, so add a
+>> readme file documenting preferred policy.
 > 
-> was applied, so this patch-set would need to be rebased. Please let me
-> know if you think it requires modifications before it gets rebased,
+> Is this all I needed to do to stop this from QCom? </sarcasm>
+> 
+> This convention is not QCom specific, though the error mostly is. 
+> Perhaps this should be documented generically.
 
-Everything else looks fine, just rebase and resend. Thanks.
+Good point. I can this to writing-bindings.rst.
 
--- 
-viresh
+> 
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>>
+>> ---
+>>
+>> Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+>> Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> Cc: Vinod Koul <vkoul@kernel.org>
+>> Cc: Alex Elder <elder@linaro.org>
+>> Cc: Robert Foss <robert.foss@linaro.org>
+>> Cc: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+>> ---
+>>  .../devicetree/bindings/soc/qcom/README.rst      | 16 ++++++++++++++++
+>>  1 file changed, 16 insertions(+)
+>>  create mode 100644 Documentation/devicetree/bindings/soc/qcom/README.rst
+>>
+>> diff --git a/Documentation/devicetree/bindings/soc/qcom/README.rst b/Documentation/devicetree/bindings/soc/qcom/README.rst
+>> new file mode 100644
+>> index 000000000000..322b329ac7c1
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/soc/qcom/README.rst
+>> @@ -0,0 +1,16 @@
+>> +.. SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+>> +
+>> +Qualcomm SoC compatibles naming convention
+>> +==========================================
+>> +1. When adding new compatibles in new bindings, use the format:
+>> +   ::
+>> +
+>> +     qcom,SoC-IP
+>> +
+>> +   For example:
+>> +   ::
+>> +
+>> +     qcom,sdm845-llcc-bwmon
+> 
+> Assuming the list of possible SoCs was maintained, you could make this a 
+> schema. Though there might be false positives.
+
+Indeed it works, although I need some exceptions for existing compatibles.
+
+
+Best regards,
+Krzysztof
