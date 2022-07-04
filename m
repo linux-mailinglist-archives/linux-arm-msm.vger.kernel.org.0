@@ -2,142 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A1B35565762
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Jul 2022 15:33:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 332A75657B4
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Jul 2022 15:47:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234964AbiGDNdA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Jul 2022 09:33:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39434 "EHLO
+        id S234481AbiGDNrH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Jul 2022 09:47:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53174 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234918AbiGDNcZ (ORCPT
+        with ESMTP id S234169AbiGDNqw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Jul 2022 09:32:25 -0400
-Received: from mx.kernkonzept.com (serv1.kernkonzept.com [IPv6:2a01:4f8:1c1c:b490::2])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A43D112AC2;
-        Mon,  4 Jul 2022 06:30:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=kernkonzept.com; s=mx1; h=Content-Transfer-Encoding:MIME-Version:References
-        :In-Reply-To:Message-Id:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:
-        Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-        Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-        List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=JAH+8uIyGXaoyytv44HR9oezm9e5Wx1rOVY/LK5cjIk=; b=LkXgyh05OjnzRAO38Lde+9E5IH
-        ajV21EtMP3XVOuq5qyYmklRSaaKpDTBAZgQuESNI0ujkz7KE+QHzOgP9AvnTSAVPbpsMSmcXqo7gL
-        PMS+HxFTI58eoXO68eOlaoAN11AXsEj1F+Uh0CjHU1eS0BYIVfDhW87lg0rSwnMUTq9VdLo1qk7ue
-        LQYgZ1pCL48kLTg5OXtAOrnWmA8CkLKgovabNsadiFd5X4kLnobpcrj23pd9+Y+5hWoOfbElZRGif
-        4FpntrYqIS8QFGxkvK+uaf4zYmfvBAjkaS8sDHCbJYcjHIEi35yudooTrWR+kueSw3l64dfIvGES5
-        hcot6S/w==;
-Received: from [10.22.3.24] (helo=kernkonzept.com)
-        by mx.kernkonzept.com with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim 4.94.2)
-        id 1o8M9m-0074oF-Nv; Mon, 04 Jul 2022 15:30:30 +0200
-From:   Stephan Gerhold <stephan.gerhold@kernkonzept.com>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        Dominik Kobinski <dominikkobinski314@gmail.com>,
-        Stephan Gerhold <stephan.gerhold@kernkonzept.com>
-Subject: [PATCH 6/6] clk: qcom: smd-rpm: Add clocks for MSM8909
-Date:   Mon,  4 Jul 2022 15:30:00 +0200
-Message-Id: <20220704133000.2768380-7-stephan.gerhold@kernkonzept.com>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20220704133000.2768380-1-stephan.gerhold@kernkonzept.com>
-References: <20220704133000.2768380-1-stephan.gerhold@kernkonzept.com>
+        Mon, 4 Jul 2022 09:46:52 -0400
+Received: from mail-oa1-x36.google.com (mail-oa1-x36.google.com [IPv6:2001:4860:4864:20::36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB0076164
+        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Jul 2022 06:46:39 -0700 (PDT)
+Received: by mail-oa1-x36.google.com with SMTP id 586e51a60fabf-10be1122de0so6376078fac.7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Jul 2022 06:46:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=uw7afw8tR6bUOC0CUKqaxNcH5iBflTgpCB+SFda4iLw=;
+        b=TRT3CfyfApuGy6aVQLflRuFqTdT1iBKPaD/C9rIZuWrXShGAf1yKpB3V/qRFTtGxza
+         GhjVKpe0HpaTBWajYeyssfPTQnvOGvVXZ+tlcWS0QgQsHxQUxTwK/+Ye8BKJwUH6OTD1
+         sgi++XDjAatPkkGEqRIhZzyYnfNPhBgB9gCYFi60muYA7Ptc6C2K6LTI8918B7DkJ2zp
+         KGlfBrNFqFGYRc9IbgjfIkaqjoDc5gPVDRQ3H36lGFFLLPfxdw73a3wVUhrHxKCs/Ntm
+         FXSQf40U+XULXoKx9SWcW+ekp26F7uHU+HUwmeYl8aqiSfmqvlNPUdnl76UeGh45mvT8
+         2YeA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=uw7afw8tR6bUOC0CUKqaxNcH5iBflTgpCB+SFda4iLw=;
+        b=0LyRKTG5qdwFYUrKTjx4gSPoLDntI5apSc77D9lQyrMouz1Og8J7KAOI7tj5CGkVbV
+         B76IL35Qq8NjOvqLIrVOS/zdZ1rF+9LjE6IZK7Ru9Jd0sBR/LP8YBaM5li2KpkYKipUB
+         Er1wdUrOjOQqct5khK2VzBaJFMH+Za2y1Ma/YM/TtPl/qYaMjH/fPUD4PIphCk1FsU4w
+         eNHIvFlK5gMVT9wEwRgoDZ7UArUn0njM3jjMeGJe0D3e52Y14yC1x35jHoJGSd8/6Lgp
+         Da5DilVgC82XelQYDvaNzqYoWUL58uj7ycyAXULT3BLDRGEYTPg1lDaNwA01nU8VUzhO
+         crjA==
+X-Gm-Message-State: AJIora8SbR++cUKYBr5xjnyF+zoVbiGQJBeCfIrMcrD5Hh29poHjxKSN
+        Jj2t7u+3bnXUAJbjZJ4JQUujylDVQGWAJh62YyHVmA==
+X-Google-Smtp-Source: AGRyM1vll+7rb/D13uFGBQfQQRC4PxFD0rjiWMlK4VSNvyImZDVWxMdBsLd4pA1YqsiQQ/UOEbFCxUE1z+z7awlPhs4=
+X-Received: by 2002:a05:6870:65a4:b0:10b:f0a4:17d2 with SMTP id
+ fp36-20020a05687065a400b0010bf0a417d2mr4530145oab.241.1656942398697; Mon, 04
+ Jul 2022 06:46:38 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20220704105712.469657-1-vladimir.zapolskiy@linaro.org> <355eda8c-ccc1-3197-257e-c018d66dd98c@linaro.org>
+In-Reply-To: <355eda8c-ccc1-3197-257e-c018d66dd98c@linaro.org>
+From:   Robert Foss <robert.foss@linaro.org>
+Date:   Mon, 4 Jul 2022 15:46:27 +0200
+Message-ID: <CAG3jFysFoV87hoFE1N_wmP5iHpZ6UgTgGY5EVeZ+OoeCPYqaVQ@mail.gmail.com>
+Subject: Re: [PATCH] media: camss: Do not attach an already attached power
+ domain on MSM8916 platform
+To:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Cc:     Todor Tomov <todor.too@gmail.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Hans Verkuil <hans.verkuil@cisco.com>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-MSM8909 has mostly the same as clocks in RPM as MSM8916,
-but additionally the QPIC clock for the NAND flash controller.
+On Mon, 4 Jul 2022 at 13:08, Vladimir Zapolskiy
+<vladimir.zapolskiy@linaro.org> wrote:
+>
+> On 7/4/22 13:57, Vladimir Zapolskiy wrote:
+> > The change to dynamically allocated power domains neglected a case of
+> > CAMSS on MSM8916 platform, where a single VFE power domain is neither
+> > attached, linked or managed in runtime in any way explicitly.
+> >
+> > This is a special case and it shall be kept as is, because the power
+> > domain management is done outside of the driver, and it's very different
+> > in comparison to all other platforms supported by CAMSS.
+> >
+> > Fixes: 929684b7ef4d ("media: camss: Allocate power domain resources dynamically")
+>
+> Fixes: 6b1814e26989 ("media: camss: Allocate power domain resources dynamically")
 
-Signed-off-by: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
----
- drivers/clk/qcom/clk-smd-rpm.c | 37 +++++++++++++++++++++++++++++++++-
- 1 file changed, 36 insertions(+), 1 deletion(-)
+6b1814e26989 is the correct commit id to use.
 
-diff --git a/drivers/clk/qcom/clk-smd-rpm.c b/drivers/clk/qcom/clk-smd-rpm.c
-index 10b4e6d8d10f..56096123081c 100644
---- a/drivers/clk/qcom/clk-smd-rpm.c
-+++ b/drivers/clk/qcom/clk-smd-rpm.c
-@@ -417,6 +417,7 @@ DEFINE_CLK_SMD_RPM_BRANCH(sdm660, bi_tcxo, bi_tcxo_a, QCOM_SMD_RPM_MISC_CLK, 0,
- DEFINE_CLK_SMD_RPM(msm8916, pcnoc_clk, pcnoc_a_clk, QCOM_SMD_RPM_BUS_CLK, 0);
- DEFINE_CLK_SMD_RPM(msm8916, snoc_clk, snoc_a_clk, QCOM_SMD_RPM_BUS_CLK, 1);
- DEFINE_CLK_SMD_RPM(msm8916, bimc_clk, bimc_a_clk, QCOM_SMD_RPM_MEM_CLK, 0);
-+DEFINE_CLK_SMD_RPM(qcs404, qpic_clk, qpic_a_clk, QCOM_SMD_RPM_QPIC_CLK, 0);
- DEFINE_CLK_SMD_RPM_QDSS(msm8916, qdss_clk, qdss_a_clk, QCOM_SMD_RPM_MISC_CLK, 1);
- DEFINE_CLK_SMD_RPM_XO_BUFFER(msm8916, bb_clk1, bb_clk1_a, 1, 19200000);
- DEFINE_CLK_SMD_RPM_XO_BUFFER(msm8916, bb_clk2, bb_clk2_a, 2, 19200000);
-@@ -427,6 +428,40 @@ DEFINE_CLK_SMD_RPM_XO_BUFFER_PINCTRL(msm8916, bb_clk2_pin, bb_clk2_a_pin, 2, 192
- DEFINE_CLK_SMD_RPM_XO_BUFFER_PINCTRL(msm8916, rf_clk1_pin, rf_clk1_a_pin, 4, 19200000);
- DEFINE_CLK_SMD_RPM_XO_BUFFER_PINCTRL(msm8916, rf_clk2_pin, rf_clk2_a_pin, 5, 19200000);
- 
-+static struct clk_smd_rpm *msm8909_clks[] = {
-+	[RPM_SMD_PCNOC_CLK]		= &msm8916_pcnoc_clk,
-+	[RPM_SMD_PCNOC_A_CLK]		= &msm8916_pcnoc_a_clk,
-+	[RPM_SMD_SNOC_CLK]		= &msm8916_snoc_clk,
-+	[RPM_SMD_SNOC_A_CLK]		= &msm8916_snoc_a_clk,
-+	[RPM_SMD_BIMC_CLK]		= &msm8916_bimc_clk,
-+	[RPM_SMD_BIMC_A_CLK]		= &msm8916_bimc_a_clk,
-+	[RPM_SMD_QPIC_CLK]		= &qcs404_qpic_clk,
-+	[RPM_SMD_QPIC_CLK_A]		= &qcs404_qpic_a_clk,
-+	[RPM_SMD_QDSS_CLK]		= &msm8916_qdss_clk,
-+	[RPM_SMD_QDSS_A_CLK]		= &msm8916_qdss_a_clk,
-+	[RPM_SMD_BB_CLK1]		= &msm8916_bb_clk1,
-+	[RPM_SMD_BB_CLK1_A]		= &msm8916_bb_clk1_a,
-+	[RPM_SMD_BB_CLK2]		= &msm8916_bb_clk2,
-+	[RPM_SMD_BB_CLK2_A]		= &msm8916_bb_clk2_a,
-+	[RPM_SMD_RF_CLK1]		= &msm8916_rf_clk1,
-+	[RPM_SMD_RF_CLK1_A]		= &msm8916_rf_clk1_a,
-+	[RPM_SMD_RF_CLK2]		= &msm8916_rf_clk2,
-+	[RPM_SMD_RF_CLK2_A]		= &msm8916_rf_clk2_a,
-+	[RPM_SMD_BB_CLK1_PIN]		= &msm8916_bb_clk1_pin,
-+	[RPM_SMD_BB_CLK1_A_PIN]		= &msm8916_bb_clk1_a_pin,
-+	[RPM_SMD_BB_CLK2_PIN]		= &msm8916_bb_clk2_pin,
-+	[RPM_SMD_BB_CLK2_A_PIN]		= &msm8916_bb_clk2_a_pin,
-+	[RPM_SMD_RF_CLK1_PIN]		= &msm8916_rf_clk1_pin,
-+	[RPM_SMD_RF_CLK1_A_PIN]		= &msm8916_rf_clk1_a_pin,
-+	[RPM_SMD_RF_CLK2_PIN]		= &msm8916_rf_clk2_pin,
-+	[RPM_SMD_RF_CLK2_A_PIN]		= &msm8916_rf_clk2_a_pin,
-+};
-+
-+static const struct rpm_smd_clk_desc rpm_clk_msm8909 = {
-+	.clks = msm8909_clks,
-+	.num_clks = ARRAY_SIZE(msm8909_clks),
-+};
-+
- static struct clk_smd_rpm *msm8916_clks[] = {
- 	[RPM_SMD_PCNOC_CLK]		= &msm8916_pcnoc_clk,
- 	[RPM_SMD_PCNOC_A_CLK]		= &msm8916_pcnoc_a_clk,
-@@ -787,7 +822,6 @@ static const struct rpm_smd_clk_desc rpm_clk_msm8996 = {
- };
- 
- DEFINE_CLK_SMD_RPM(qcs404, bimc_gpu_clk, bimc_gpu_a_clk, QCOM_SMD_RPM_MEM_CLK, 2);
--DEFINE_CLK_SMD_RPM(qcs404, qpic_clk, qpic_a_clk, QCOM_SMD_RPM_QPIC_CLK, 0);
- DEFINE_CLK_SMD_RPM_XO_BUFFER_PINCTRL(qcs404, ln_bb_clk_pin, ln_bb_clk_a_pin, 8, 19200000);
- 
- static struct clk_smd_rpm *qcs404_clks[] = {
-@@ -1146,6 +1180,7 @@ static const struct rpm_smd_clk_desc rpm_clk_qcm2290 = {
- static const struct of_device_id rpm_smd_clk_match_table[] = {
- 	{ .compatible = "qcom,rpmcc-mdm9607", .data = &rpm_clk_mdm9607 },
- 	{ .compatible = "qcom,rpmcc-msm8226", .data = &rpm_clk_msm8974 },
-+	{ .compatible = "qcom,rpmcc-msm8909", .data = &rpm_clk_msm8909 },
- 	{ .compatible = "qcom,rpmcc-msm8916", .data = &rpm_clk_msm8916 },
- 	{ .compatible = "qcom,rpmcc-msm8936", .data = &rpm_clk_msm8936 },
- 	{ .compatible = "qcom,rpmcc-msm8953", .data = &rpm_clk_msm8953 },
--- 
-2.30.2
+>
+> is the correct commit id found on media/master, please let me know, if anyone
+> wishes me to resend the fix.
+>
+> > Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+> > ---
+> >   drivers/media/platform/qcom/camss/camss.c | 11 +++++++++++
+> >   1 file changed, 11 insertions(+)
+> >
+> > diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
+> > index bf716b171c02..9e2899a0cdf4 100644
+> > --- a/drivers/media/platform/qcom/camss/camss.c
+> > +++ b/drivers/media/platform/qcom/camss/camss.c
+> > @@ -1684,6 +1684,14 @@ static int camss_configure_pd(struct camss *camss)
+> >               return camss->genpd_num;
+> >       }
+> >
+> > +     /*
+> > +      * If a platform device has just one power domain, then it is attached
+> > +      * at platform_probe() level, thus there shall be no need and even no
+> > +      * option to attach it again, this is the case for CAMSS on MSM8916.
+> > +      */
+> > +     if (camss->genpd_num == 1)
+> > +             return 0;
+> > +
+> >       camss->genpd = devm_kmalloc_array(dev, camss->genpd_num,
+> >                                         sizeof(*camss->genpd), GFP_KERNEL);
+> >       if (!camss->genpd)
+> > @@ -1923,6 +1931,9 @@ void camss_delete(struct camss *camss)
+> >
+> >       pm_runtime_disable(camss->dev);
+> >
+> > +     if (camss->genpd_num == 1)
+> > +             return;
+> > +
+> >       for (i = 0; i < camss->genpd_num; i++) {
+> >               device_link_del(camss->genpd_link[i]);
+> >               dev_pm_domain_detach(camss->genpd[i], true);
+>
+> --
 
+With the commit id fixed, please add my r-b.
+
+Reviewed-by: Robert Foss <robert.foss@linaro.org>
