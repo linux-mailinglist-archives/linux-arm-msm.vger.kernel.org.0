@@ -2,111 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 45DE756526F
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Jul 2022 12:34:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6CE4E5652D8
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Jul 2022 12:57:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233791AbiGDKd5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Jul 2022 06:33:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59140 "EHLO
+        id S232842AbiGDK5T (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Jul 2022 06:57:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47960 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233898AbiGDKdu (ORCPT
+        with ESMTP id S231544AbiGDK5S (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Jul 2022 06:33:50 -0400
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8AB12EE32
-        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Jul 2022 03:33:45 -0700 (PDT)
+        Mon, 4 Jul 2022 06:57:18 -0400
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C103ADA1
+        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Jul 2022 03:57:17 -0700 (PDT)
+Received: by mail-lj1-x22a.google.com with SMTP id b19so10596092ljf.6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Jul 2022 03:57:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1656930825; x=1688466825;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:content-description:in-reply-to;
-  bh=7D6VXfCbymGOLQobeavPWYIeK6hpDpNNjUEezAOuew8=;
-  b=SaROHGcy6Hltx5tau1pRNST98TZXdI/hXgIEB89K68lOHk6B5wNuE03d
-   ipnlvpz9/PGRZTcHNQpcGv3eTSvqVGQnYWVD0BrH1Tc0HLkuAbngod7th
-   P2d801suG+W8y4o01xC27ONNKHJDXTbDzokXJmCqAXN9cqCee07qy0iiq
-   Q=;
-Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 04 Jul 2022 03:33:45 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg02-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Jul 2022 03:33:45 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Mon, 4 Jul 2022 03:33:44 -0700
-Received: from hu-ppareek-blr.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Mon, 4 Jul 2022 03:33:42 -0700
-Date:   Mon, 4 Jul 2022 16:03:38 +0530
-From:   Parikshit Pareek <quic_ppareek@quicinc.com>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-CC:     Andy Gross <agross@kernel.org>,
-        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>,
-        Prasanna Kumar <quic_kprasan@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH v3] soc: qcom: Fix the id of SA8540P SoC
-Message-ID: <20220704103338.GB19120@hu-ppareek-blr.qualcomm.com>
-References: <20220513175849.4335-1-quic_ppareek@quicinc.com>
- <YrfPTRDFvwQSIMaO@builder.lan>
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=24EtemxVLj76p6FHt7x5hSsqqbPeIvgrJ85Gzsoq1fA=;
+        b=uVie8MqTNIkbJQCyaY0q57zRzXqdSBAYsd1YZuZbPUnK61WJqRFCK1DDPTtRwuSiWB
+         5SNh7jlE7prHaqVVUjVktQcAWL6/z4i+k49hoxJ4xKa2kVvptEz1AZqeDEHZx4Wkh66s
+         RdlPVOfaca8C83kbYFKxv6+XXx3rNDsuPgkYJRKdAM2B92/ucyNvLmXBVYi9fLh1Bidr
+         xfQXD7NaE5V1p9pg5W5K5K8QUaAI2HrcKfBLwN2cb8JkdnPQookX+ONDY+ltjwX4bh3Y
+         VwzWsm48232UkyUR44i1p4xG1xWoGFA1AphtqXVpuEo7Z0xfEBB+2/sx6xcbTnVisYsT
+         MXrQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=24EtemxVLj76p6FHt7x5hSsqqbPeIvgrJ85Gzsoq1fA=;
+        b=yqQnE29Ln23fwFi2qLBMmyC1jQQrwWqAgzGlNU8MoNimMqWACnjgh+q9yKKQwov4eS
+         nZUI05IsDV0ldo1pg2+IisMV9WhBObLGYwK65b3/n08n+OQn3O3hkXPuTkqoaCt/qxO/
+         VXcnQbGXcqiXoOA1+noYEiTc0hAxF9LQ6dY1u4SRVE8Hh1RsN/VWWPc92byV9gGtHsZA
+         v1U7sGd6E334ma4IsvL8lRnbZPuRiAgZojF4Q7XZgyBxYHRIwZDrzoooomRRnSw4oGeJ
+         JQAvnffQ0Twh8QtfBAASHJdr9hDLxOHpBndzggFpS9LWL1oKJUxASmXuAnzvLbyrJsOW
+         0hCg==
+X-Gm-Message-State: AJIora98wQEw/2AF0xVtBqI5TmWsKl9QWNsrOjS3YQpp2Ch0hB4iY7+V
+        vVWbg8rX8pbCgrWeVaqErVklsA==
+X-Google-Smtp-Source: AGRyM1t1Rau0tktu2rQDrthibdA4uIfJne0lVH/uqnef5bVNfZJ/ZBKamcSOMGwBXRAf1LeSMnHxig==
+X-Received: by 2002:a05:651c:4d1:b0:25b:b6ab:5b56 with SMTP id e17-20020a05651c04d100b0025bb6ab5b56mr17068928lji.84.1656932236019;
+        Mon, 04 Jul 2022 03:57:16 -0700 (PDT)
+Received: from localhost.localdomain (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
+        by smtp.gmail.com with ESMTPSA id o4-20020a2e9444000000b0025a6d6c269esm4948741ljh.41.2022.07.04.03.57.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 04 Jul 2022 03:57:15 -0700 (PDT)
+From:   Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+To:     Robert Foss <robert.foss@linaro.org>,
+        Todor Tomov <todor.too@gmail.com>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Hans Verkuil <hans.verkuil@cisco.com>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: [PATCH] media: camss: Do not attach an already attached power domain on MSM8916 platform
+Date:   Mon,  4 Jul 2022 13:57:12 +0300
+Message-Id: <20220704105712.469657-1-vladimir.zapolskiy@linaro.org>
+X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Description: Re: [PATCH v3] soc: qcom: Fix the id of SA8540P SoC
-Content-Disposition: inline
-In-Reply-To: <YrfPTRDFvwQSIMaO@builder.lan>
-User-Agent: Mutt/1.9.4 (2018-02-28)
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Jun 25, 2022 at 10:15:25PM -0500, Bjorn Andersson wrote:
-> On Fri 13 May 12:58 CDT 2022, Parikshit Pareek wrote:
-> 
-> > Change the id of SA8540P to its correct value, i.e., 461.
-> > 
-> > Fixes: 76ee15ae1b13 ("soc: qcom: socinfo: Add some more PMICs and SoCs")
-> > Signed-off-by: Parikshit Pareek <quic_ppareek@quicinc.com>
-> > Reviewed-by: Eric Chanudet <echanude@redhat.com>
-> > Tested-by: Eric Chanudet <echanude@redhat.com>
-> > ---
-> >  drivers/soc/qcom/socinfo.c | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
-> > 
-> > diff --git a/drivers/soc/qcom/socinfo.c b/drivers/soc/qcom/socinfo.c
-> > index cee579a267a6..c37d7724c7d0 100644
-> > --- a/drivers/soc/qcom/socinfo.c
-> > +++ b/drivers/soc/qcom/socinfo.c
-> > @@ -328,7 +328,7 @@ static const struct soc_id soc_id[] = {
-> >  	{ 455, "QRB5165" },
-> >  	{ 457, "SM8450" },
-> >  	{ 459, "SM7225" },
-> > -	{ 460, "SA8540P" },
-> > +	{ 461, "SA8540P" },
-> 
-> I don't have any objections to this addition.
-> 
-> But I have a board with soc_id of 460, so can you please correct the
-> entry for that instead of removing it?
-Sure, the entry 460 should be introduced for "SA8295P". Thanks for intimation, and sorry for late response.
-> 
-> Thanks,
-> Bjorn
-> 
-> >  	{ 480, "SM8450" },
-> >  	{ 482, "SM8450" },
-> >  	{ 487, "SC7280" },
-> > -- 
-> > 2.17.1
-> > 
-Regards,
-Parikshit Pareek
+The change to dynamically allocated power domains neglected a case of
+CAMSS on MSM8916 platform, where a single VFE power domain is neither
+attached, linked or managed in runtime in any way explicitly.
+
+This is a special case and it shall be kept as is, because the power
+domain management is done outside of the driver, and it's very different
+in comparison to all other platforms supported by CAMSS.
+
+Fixes: 929684b7ef4d ("media: camss: Allocate power domain resources dynamically")
+Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+---
+ drivers/media/platform/qcom/camss/camss.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
+
+diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
+index bf716b171c02..9e2899a0cdf4 100644
+--- a/drivers/media/platform/qcom/camss/camss.c
++++ b/drivers/media/platform/qcom/camss/camss.c
+@@ -1684,6 +1684,14 @@ static int camss_configure_pd(struct camss *camss)
+ 		return camss->genpd_num;
+ 	}
+ 
++	/*
++	 * If a platform device has just one power domain, then it is attached
++	 * at platform_probe() level, thus there shall be no need and even no
++	 * option to attach it again, this is the case for CAMSS on MSM8916.
++	 */
++	if (camss->genpd_num == 1)
++		return 0;
++
+ 	camss->genpd = devm_kmalloc_array(dev, camss->genpd_num,
+ 					  sizeof(*camss->genpd), GFP_KERNEL);
+ 	if (!camss->genpd)
+@@ -1923,6 +1931,9 @@ void camss_delete(struct camss *camss)
+ 
+ 	pm_runtime_disable(camss->dev);
+ 
++	if (camss->genpd_num == 1)
++		return;
++
+ 	for (i = 0; i < camss->genpd_num; i++) {
+ 		device_link_del(camss->genpd_link[i]);
+ 		dev_pm_domain_detach(camss->genpd[i], true);
+-- 
+2.33.0
+
