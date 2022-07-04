@@ -2,150 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A9A87564E5F
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Jul 2022 09:11:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3FE9D564FA5
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Jul 2022 10:24:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233340AbiGDHKl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Jul 2022 03:10:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38192 "EHLO
+        id S232644AbiGDIY1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Jul 2022 04:24:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35786 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233350AbiGDHK2 (ORCPT
+        with ESMTP id S232038AbiGDIY1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Jul 2022 03:10:28 -0400
-Received: from APC01-PSA-obe.outbound.protection.outlook.com (mail-psaapc01olkn2103.outbound.protection.outlook.com [40.92.52.103])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3FC3B482;
-        Mon,  4 Jul 2022 00:09:43 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=UXW+FZnKNaQRM0N8ISYwMfI7Ttpw+IXZ7P6kVg4Nq2YkWa8B/nyMgpxN6LSjml9RRQJEPsvTFWBPV2cmkfREoNBV88Wlt9OMudkrm/W5BeQTgodR3l1z2eiio56V4AiWMLhfM7tACwZvuwMV2Y81aoPHx53W13OsBauispuHTgfYa7NqxXnJZyEOpDzFq1kBD7L7c+sBvES1vyoyKI6c1HVtweB+ouYTBIs403+zdbppcBa2EJ7cZypAiwphiLC2mTS4Sy1TUWLwSXhVtYiIzeKJDxFlfVOhLKJKmuI6+J8mKNawPdpTgzIB5F6QEAn0yOhWhZYiZIIqQZKmxufq/Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=W8wYao++s4eDVfvjgMy50880h7EQadQEQKiiPd8rsbo=;
- b=eefKiCJkxqM81IS9iBE0hNnWqth28tZrT3HIuqvX/OKnGUbpSK+r+Mh17Yc9Ry+c3rLCvLpyBNZzN4/L0jNeUiYciYox/xfInHomGuq+0vennqV/XC+R9yR1RX/Nb0VQv4P10H/TYMFUXarVMFh6ZfKKc6xQz1neFh9dHTARA4PhjwMsBOJSu0zwoD8SqBAr1DeZMdhs9wCJut9XTbLtDE5/WfSnnrikdyfagzw141TF49ymmlpi0QnmWaQE4DjrAbtKCi7fbrjKDcELbr9d3iiNn0A145dJ6McJ34UnfCtxD8/g84d379xuVCZdFjLLrkYSyuEGtNsr8SYUJKSVQg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=W8wYao++s4eDVfvjgMy50880h7EQadQEQKiiPd8rsbo=;
- b=oLlnSyQ8I9y74LuhcxD1kJvgfkMDUQK3G4xY7C1z9+1uIVD/M3jIOLhFWzQWj/1LDBBf8nYr2P0kCP68QPHxUvmW0UQrE80KsTPd3DjZdikichQTT6hjDmrzrG+bzqxUEqLoWISL9rnH2VQZ45TUMrOn/DoLtxIjjdidtmOH7w4NV06Q9D86SqeiZZna+WxcUPKfgNX72kzoPXQlIrnPaqnHFuxE0Pw1XiR+PlKZ+n5YIR926HZ7bhi/52P1Zbc1KGgkEwsu5TcDUHpiVnEfLft9IzVQVNMd2W53R0hL5zBYZ3EwxF2qlkfNaYeqnKt6dYcfEBkdomA0APtUfX67hQ==
-Received: from SG2PR03MB5006.apcprd03.prod.outlook.com (2603:1096:4:df::10) by
- PS1PR03MB4844.apcprd03.prod.outlook.com (2603:1096:300:87::19) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.5417.12; Mon, 4 Jul 2022 07:09:39 +0000
-Received: from SG2PR03MB5006.apcprd03.prod.outlook.com
- ([fe80::b96f:3a3b:5eef:e796]) by SG2PR03MB5006.apcprd03.prod.outlook.com
- ([fe80::b96f:3a3b:5eef:e796%5]) with mapi id 15.20.5417.012; Mon, 4 Jul 2022
- 07:09:39 +0000
-From:   Jimmy Chen <jinghung.chen3@hotmail.com>
-To:     LKML <linux-kernel@vger.kernel.org>, Andy Gross <agross@kernel.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Alan Huang <alan-huang@quanta.corp-partner.google.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: [PATCH 1/2] [V1,1/2] arm64: dts: qcom: Add LTE SKUs for sc7280-villager family
-Date:   Mon,  4 Jul 2022 15:09:24 +0800
-Message-ID: <SG2PR03MB50068F2314F65CAE43A9594ECCBE9@SG2PR03MB5006.apcprd03.prod.outlook.com>
-X-Mailer: git-send-email 2.25.1
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-TMN:  [8p0iK/RgiPntaNRYGABZFt+fD23XWVpZ]
-X-ClientProxiedBy: TYCPR01CA0042.jpnprd01.prod.outlook.com
- (2603:1096:405:1::30) To SG2PR03MB5006.apcprd03.prod.outlook.com
- (2603:1096:4:df::10)
-X-Microsoft-Original-Message-ID: <20220704150825.1.Ib53c25c4a4fe2dce6531d56d64398bd5c13632ed@changeid>
+        Mon, 4 Jul 2022 04:24:27 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1801F6575
+        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Jul 2022 01:24:26 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id a4so14587037lfm.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Jul 2022 01:24:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=69fF1tF9mBEb2kanIJekUSvdRE5qmoDw++pBNZPcjvw=;
+        b=kSSgY7GyEt8c2pgoOuNIX05Z/sdK52VPhZi4PqFzz8aMYatpczM79cSp86jFx8LUu1
+         KOxVFAKEJqwix5FOGGH1HagwhmHI2vFN6SDvAKJQ6ya68l61HpJ9TkYh93pebJKNFjXk
+         ybKYolbBY5K0ON1SvQrcbZaNWVCqIUlZqc2xIllPu7bvvZuqKh1cEOAGIpn1m9NuEp2y
+         xpUHMshsfqHUHCpHmtRWFayAUj52omBf82FU76gpcgAen/VjFRI3dY6FoIFWF/XS5fzB
+         KEetPKAaBGBW2YK6ZHvj20vMJnGNHfKOPnwA42MMnbgTmp4SnCacpJkVHPaekKA+968a
+         SzXA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=69fF1tF9mBEb2kanIJekUSvdRE5qmoDw++pBNZPcjvw=;
+        b=sieoD9LKt4iQRZ1Hzy+WZZrt0j6jJDd5dKlryU3RZpQ2qv1sIuerLtj4YgUDysjevP
+         INcWu361TpHr93TIlLzAQ65JHXqnJVNzZrgr5NBBK5r/lWEGy/CTbrnjXc9BdEDVP+KB
+         KY0g7yqmOWpVdKqB+B8I0ANptqrftH0BQJBMH2dmr+L0WjuatokaU1qRmy+DYpWMuF3v
+         xVKLznBIbE/UescAOaZtgE3byprr2hLqU/Z5xL6LiSjun+LWNupMx8QM2JmJawVF4qAh
+         kmpykAVvS2cdJWpuy9S/TMLxk69m/FjpUlgzPZ4T+NEAOmHrt10gR7r190ap6Myav0ud
+         FHYg==
+X-Gm-Message-State: AJIora940hkaRBdYf0BpK5xkuVXbT6SvTrXb0A/CDuSu/ZKy2nT9I7+G
+        e4rvtdEPqRsboD/TZ0SlA/slhg==
+X-Google-Smtp-Source: AGRyM1vCDIy+Fyfoum6KPWEzTtPA6UfgghRiB74aUg206+TuOghl5QWZz5735wpzW3KbRnc4xp5jXQ==
+X-Received: by 2002:a05:6512:104e:b0:47f:af07:6d74 with SMTP id c14-20020a056512104e00b0047faf076d74mr17686334lfb.308.1656923064460;
+        Mon, 04 Jul 2022 01:24:24 -0700 (PDT)
+Received: from [192.168.1.52] ([84.20.121.239])
+        by smtp.gmail.com with ESMTPSA id b8-20020a056512218800b0047f7c897b61sm5024423lft.129.2022.07.04.01.24.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 04 Jul 2022 01:24:23 -0700 (PDT)
+Message-ID: <1fb5f0c6-ff72-b9ba-175a-b5197ed658a7@linaro.org>
+Date:   Mon, 4 Jul 2022 10:24:22 +0200
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: efe634fd-fdcd-4867-bfd5-08da5d8c27df
-X-MS-TrafficTypeDiagnostic: PS1PR03MB4844:EE_
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: SJx0OKup8nPs6KPkraYNrLPvwAD1+MDSWctkvspY2Urs0UXv4bUoV4MOcQE3eSCQj0iJ2R199xqu/73J2jgSdJ3GyNrCBFspyVC9/45NQdGup+GQAQ7hW4IdhHX53CKuHjwqq+7AQC03f64VoGztHFVU/c3hPtuKfEDs0M+59mIZweJbaDICHCxonQC4Q7zsqB9xgRlD0wGYBfubzbITGZh/uTNNgNyHLZamH8b7Hd6jUZlGw+c96qJw7AVYLzjFhhNw/Qgq80bg7VSTy9Xp9fMABxDCWXuC15DPbuAZ2Y1r0gSW0m/Rd0HkywmNvct3XcCZ84HLK9VM3+wMJwPPaZMyWIfjupxKNWlj6SIbt8NEdfT6NqNPkot1nyjkvO2/nnGai/+kad3FldnVE6sUxAm0Nyx6ohlBPvcI2TVxmYZedR0FULsY6lolNxc0b5C0Z4QwvwAX1oqbj7lqpCKRqOTqrG6J6VSB1dgmk7bejYkklVuqjhmREWOWvB+SoSpZsCH9CzGHsER1O0EwVgxUuv2T6f9KEzn5K4vtjd6kFBl8jazHQ86EMShdJRlnmCMc5Ftajv3Kn/APiC0DZ2dH4itaD2lfsXQ2FsKmhVUovf487h97HnVR2A7y2e7fou0Q03ArYqL4E+riT+D8v0PXRQ==
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?ZFhrYfe4Xi5dy1V4h8nC2t/Bm3o4O/ki21afO+SF6esCFx0+hIasHfQVxOAK?=
- =?us-ascii?Q?RQiJiKCHsEs9sL9QEWIm3DFnI4Kul69Tu0728YFipQaCM0tLMz3rwQZ/9cCz?=
- =?us-ascii?Q?v+hpQmeg30O7HR2AF3tgHEcZ7Q9nTtyyxCz2TV6ARPUPtr70Kbp2uRGwCKBO?=
- =?us-ascii?Q?Jz8BXR4Dd22uvy5luiBMFnFEBU5n7da/8uYeYDcne/b90h7N28ozo7hUxlZm?=
- =?us-ascii?Q?oLb0t+b4UIau5h6ttEbTqmGSQmb2vA6REdnpYb5NQkKvRMU9kDClOwLigpm/?=
- =?us-ascii?Q?oLLzibNfOL3zSkMVimf37Ysg+tRKjpGvtDNBYEIT826JFEEag+6k9frKHzGW?=
- =?us-ascii?Q?8OeXtyXc64GTvDK/c7+OZnGkiaaT+WjIblkAbfBPjpNd1MiHeeL2ll9rTGWN?=
- =?us-ascii?Q?uemVZPY0G/fzX9Ld4HVHFVgYDmbWRC4y1gCoYzd3Vo+jFuKdHWqxlDfvn7/X?=
- =?us-ascii?Q?Z4ruenCTL948XR6Fyop61JmPJY6gTheQQ+i4D/ZisIZW7oF0IB9g14QO09wa?=
- =?us-ascii?Q?reslrKHKHJMxDUUxTGacUFDSzHzDaSTxI+A3cHxRTGLXeT2uwNxbPShEnfyL?=
- =?us-ascii?Q?/WiRZBlNLlTiz+z1MiQ84dpaRTPXYt5qVAo8hCrlSo/iArv88ghL1iQ0jNnA?=
- =?us-ascii?Q?usJHEx1FKhMjC9HN8QXK49z0pvL4719PauC0P/stewHNlxvxfNo+zFCtHvia?=
- =?us-ascii?Q?A7b4cYxdQ/fp+cm9dOjqZYdBXPUawNVoKtGG5dxDfFoJHqX9Av4igqKe3Rrg?=
- =?us-ascii?Q?ls13KdeJNE5rnEo8dup17e7x69RRw3gtt5oiDbHo00S0iZN77UMUl83X0udj?=
- =?us-ascii?Q?eiN2dpsK00dToJqYA84PaZ6dkiJyfndCPCbqrPQ48+frQv/ISxO5udxw0PPp?=
- =?us-ascii?Q?SDIPvb+bArHWJgIBM8O+59DqookqmCqaY+7okxF8ZOD9l3z1FzVu6WUnvJig?=
- =?us-ascii?Q?IFTh6uiHlEzXa0jZPGsv7uQ5tJ95TAthLRMEzKYxdVIYrm2W0FfmnybsLHn2?=
- =?us-ascii?Q?LwFBGRV7n5miAI1+UgboAH+uwVoKqG8QSUlnZZrRE54Q7fbmv03OimZBrpmU?=
- =?us-ascii?Q?mcyLjSXwtxJqj9CBBLVwXMGhxMToG4y6WW4ulHjzYlHFD2+EAO9hwArRLNfH?=
- =?us-ascii?Q?XWqK1oa1zVpCZWKdyRnHIynjRc3TyPwPKTCyWCF9N5Wx7sqJtjcFFwcpoUwH?=
- =?us-ascii?Q?0MSYY/Jfe22btv7rqhEjF0909HvFq7Omok3KdDfhQJ/vTG2afMW0ammJdW6J?=
- =?us-ascii?Q?cdVyF3ki3uZ2NKyTsoJhUjTlx+1UjbtH2h9zalwmUw=3D=3D?=
-X-OriginatorOrg: sct-15-20-4734-24-msonline-outlook-c0b75.templateTenant
-X-MS-Exchange-CrossTenant-Network-Message-Id: efe634fd-fdcd-4867-bfd5-08da5d8c27df
-X-MS-Exchange-CrossTenant-AuthSource: SG2PR03MB5006.apcprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Jul 2022 07:09:39.4468
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PS1PR03MB4844
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_PASS,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: Re: [PATCH v2 2/3] dt-bindings: pci: QCOM Adding sc7280 aggre0,
+ aggre1 clocks
+Content-Language: en-US
+To:     Krishna chaitanya chundru <quic_krichai@quicinc.com>,
+        helgaas@kernel.org
+Cc:     linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, mka@chromium.org,
+        quic_vbadigan@quicinc.com, quic_hemantk@quicinc.com,
+        quic_nitegupt@quicinc.com, quic_skananth@quicinc.com,
+        quic_ramkri@quicinc.com, manivannan.sadhasivam@linaro.org,
+        swboyd@chromium.org, dmitry.baryshkov@linaro.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>
+References: <1656062391-14567-1-git-send-email-quic_krichai@quicinc.com>
+ <1656691899-21315-1-git-send-email-quic_krichai@quicinc.com>
+ <1656691899-21315-3-git-send-email-quic_krichai@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <1656691899-21315-3-git-send-email-quic_krichai@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This adds yaml file for new a LTE skus for villager device.
+On 01/07/2022 18:11, Krishna chaitanya chundru wrote:
+> Adding aggre0 and aggre1 clock entries to PCIe node. 
+> 
+> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> ---
+>  Documentation/devicetree/bindings/pci/qcom,pcie.yaml | 6 ++++--
+>  1 file changed, 4 insertions(+), 2 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> index 0b69b12..8f29bdd 100644
+> --- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> @@ -423,8 +423,8 @@ allOf:
+>      then:
+>        properties:
+>          clocks:
+> -          minItems: 11
+> -          maxItems: 11
+> +          minItems: 13
+> +          maxItems: 13
+>          clock-names:
+>            items:
+>              - const: pipe # PIPE clock
+> @@ -437,6 +437,8 @@ allOf:
+>              - const: bus_slave # Slave AXI clock
+>              - const: slave_q2a # Slave Q2A clock
+>              - const: tbu # PCIe TBU clock
+> +            - const: aggre0 # Aggre NoC PCIe CENTER SF AXI clock
+> +            - const: aggre1 # Aggre NoC PCIe1 AXI clock
 
-Signed-off-by: Jimmy Chen <jinghung.chen3@hotmail.com>
----
+You ignored my comments from v1 - please don't. This is not accepted.
 
- Documentation/devicetree/bindings/arm/qcom.yaml | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+Also, please do not send new versions of patchset as reply to some other
+threads. It's extremely confusing to find it under something else.
 
-diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
-index 4dd18fbf20b68..a136b1389c2ac 100644
---- a/Documentation/devicetree/bindings/arm/qcom.yaml
-+++ b/Documentation/devicetree/bindings/arm/qcom.yaml
-@@ -529,11 +529,26 @@ properties:
-           - const: google,herobrine
-           - const: qcom,sc7280
- 
-+      - description: Google Villager (rev0)
-+        items:
-+          - const: google,villager-rev0
-+          - const: qcom,sc7280
-+
-       - description: Google Villager (newest rev)
-         items:
-           - const: google,villager
-           - const: qcom,sc7280
- 
-+      - description: Google Villager with LTE (rev0)
-+        items:
-+          - const: google,villager-rev0-sku0
-+          - const: qcom,sc7280
-+
-+      - description: Google Villager with LTE (newest rev)
-+        items:
-+          - const: google,villager-sku0
-+          - const: qcom,sc7280
-+
-       - items:
-           - enum:
-               - lenovo,flex-5g
--- 
-2.25.1
-
+Best regards,
+Krzysztof
