@@ -2,120 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8743D565688
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Jul 2022 15:07:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CB05E56576D
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Jul 2022 15:33:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233573AbiGDNHp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Jul 2022 09:07:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47446 "EHLO
+        id S234949AbiGDNc7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Jul 2022 09:32:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39392 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234780AbiGDNHl (ORCPT
+        with ESMTP id S234843AbiGDNcZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Jul 2022 09:07:41 -0400
-Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27E30FD3F
-        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Jul 2022 06:07:18 -0700 (PDT)
-Received: by mail-pj1-x1029.google.com with SMTP id ju17so4198986pjb.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Jul 2022 06:07:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=9vSwpNfijyGK+xrrZ4ktPT+fDOfewidBPv0KVUyPN8w=;
-        b=Daog+0QETcPjLevzyo5ThG79RtkL0CqCom7hkuuYfksUjPFSbwWnYTNzUMbILHd3DI
-         NF1Qu78ynNuVBxEGzjJEW2qnzI3y0NlEbiFDJGw/MChBXZLPJDw4s259eT+D8Q2dqa2O
-         yOnCOXah3RBd3klHMY5xP1wra1/75G4UsvbFKuZDY4PSjMixVMfunsFERDgtnueWwMV3
-         ND/H2alGaUoJjcDfh6LnEOhOt/TSLoZggVW3qSZeSBlH4a3TDZNNpyT0qs1Ol4svOKNy
-         uWbzHe1aZIJfglIzmsFY1d/CanOtzrCclAfIoT6/1GdK1Tjs+VC2knvI6NRXWMjNBO/8
-         uJEg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=9vSwpNfijyGK+xrrZ4ktPT+fDOfewidBPv0KVUyPN8w=;
-        b=Hwn2/MGdl9yMNk2uPkTd7QQODNxiUzcy5yVt3njwkPfMfk24U3o39OXMS5emUd9J3D
-         +AIzhItwTWleLORQ5DMv++1vEsdSytkTZk6/ins+EexJIJkhrW18Wu+YO0xqca3YjbCO
-         rxl8OiZhnse5dgXRcr3g6MlM8etdRzDtz0LrQXLbA9WCFJELpCknlGwyccmOHuRnhS03
-         pi8rB+tLkudVTyiiXzXafoUf0wS/0cYXURrFK51jFkWJOqv5BwJJblzy80TMQRw22iTV
-         X/8y/Hi2NuIUYyV9Ng6muC7WYguAnkgJoy1EDDg977khirgMDwYbm/HkLO4LnzcxU3s9
-         aSfQ==
-X-Gm-Message-State: AJIora+atkeK4nROk15EgA9je0x08GVFLiXIqp1S/sZWaH6MsSMPmIsK
-        cPywhLYmZ8/mJ88tiDMJUvkoiduCEaX3SIt4Am7wnA==
-X-Google-Smtp-Source: AGRyM1u4sHIQ7MddMLsKSjsK4IcE4neuK6lXp6uptFSzLUxcH3x1D2Q7Xm2DlPLadoDisFpUznRMQw==
-X-Received: by 2002:a17:903:1108:b0:168:fa61:1456 with SMTP id n8-20020a170903110800b00168fa611456mr36044412plh.162.1656940037531;
-        Mon, 04 Jul 2022 06:07:17 -0700 (PDT)
-Received: from leoy-ThinkPad-X240s ([154.3.32.171])
-        by smtp.gmail.com with ESMTPSA id 185-20020a6205c2000000b005284d10d8f6sm4577395pff.215.2022.07.04.06.07.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Jul 2022 06:07:17 -0700 (PDT)
-Date:   Mon, 4 Jul 2022 21:07:12 +0800
-From:   Leo Yan <leo.yan@linaro.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+        Mon, 4 Jul 2022 09:32:25 -0400
+Received: from mx.kernkonzept.com (serv1.kernkonzept.com [IPv6:2a01:4f8:1c1c:b490::2])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B611B21B1;
+        Mon,  4 Jul 2022 06:30:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=kernkonzept.com; s=mx1; h=Content-Transfer-Encoding:MIME-Version:Message-Id
+        :Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+        List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=uqUUaspXH3RMocrdO1iFs5HpcwQHE4q0i01WtWKBpNI=; b=LWnbMCwvXuVJqrMdNPM1Gbeqku
+        +5H7N91U0LsgpicmZV+ikaqgRuX3+NHLW4/x0OLcJbvDFx+I65PEm9VdAMmLqVJiXnih6/dByGJRp
+        DdrG5PTShNY3QEGOClSvvsrPAcdHOVQRwwGlf3/AGRNEhqWLccMoe928SM4bWJkyqsg2uKZDTsX8b
+        6vdM9+GVSbO0X07eT7Pp+cw12IvTd3S408od1PQvqNPqnzoxT+gSV6UNaf1lj/R2YVRkpnnQEBTKZ
+        sLIuY9RmEYWbX6ROHyekDntdEp68yxl5eM/HdOvd6rQYOdygxyjjGaN9Y678rnxhcl9c4+lQCkkhX
+        IAyg6uLg==;
+Received: from [10.22.3.24] (helo=kernkonzept.com)
+        by mx.kernkonzept.com with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim 4.94.2)
+        id 1o8M9a-0074oF-HI; Mon, 04 Jul 2022 15:30:18 +0200
+From:   Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Georgi Djakov <djakov@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Subject: Re: [PATCH v3 1/5] dt-bindings: interconnect: Update property for
- icc-rpm path tag
-Message-ID: <20220704130712.GD659023@leoy-ThinkPad-X240s>
-References: <20220704093029.1126609-1-leo.yan@linaro.org>
- <20220704093029.1126609-2-leo.yan@linaro.org>
- <18f1ee4a-5787-40d7-2eb5-50a43298845d@linaro.org>
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org,
+        Dominik Kobinski <dominikkobinski314@gmail.com>,
+        Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+Subject: [PATCH 0/6] clk: qcom: Add clocks for MSM8909
+Date:   Mon,  4 Jul 2022 15:29:54 +0200
+Message-Id: <20220704133000.2768380-1-stephan.gerhold@kernkonzept.com>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <18f1ee4a-5787-40d7-2eb5-50a43298845d@linaro.org>
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jul 04, 2022 at 02:47:13PM +0200, Krzysztof Kozlowski wrote:
-> On 04/07/2022 11:30, Leo Yan wrote:
-> > To support path tag in icc-rpm driver, the "#interconnect-cells"
-> > property is updated as enumerate values: 1 or 2.  Setting to 1 means
-> > it is compatible with old DT binding that interconnect path only
-> > contains node id; if set to 2 for "#interconnect-cells" property, then
-> > the second specifier is used as a tag (e.g. vote for which buckets).
-> > 
-> > Signed-off-by: Leo Yan <leo.yan@linaro.org>
-> > ---
-> >  .../devicetree/bindings/interconnect/qcom,rpm.yaml         | 7 ++++++-
-> >  1 file changed, 6 insertions(+), 1 deletion(-)
-> > 
-> > diff --git a/Documentation/devicetree/bindings/interconnect/qcom,rpm.yaml b/Documentation/devicetree/bindings/interconnect/qcom,rpm.yaml
-> > index 8a676fef8c1d..cdfe419e7339 100644
-> > --- a/Documentation/devicetree/bindings/interconnect/qcom,rpm.yaml
-> > +++ b/Documentation/devicetree/bindings/interconnect/qcom,rpm.yaml
-> > @@ -45,7 +45,12 @@ properties:
-> >        - qcom,sdm660-snoc
-> >  
-> >    '#interconnect-cells':
-> > -    const: 1
-> > +    description: |
-> > +      Number of interconnect specifier. Value: <1> is one cell in a
-> > +      interconnect specifier for the interconnect node id, <2> requires
-> > +      the interconnect node id and an extra path tag.
-> > +    $ref: /schemas/types.yaml#/definitions/uint32
-> 
-> Ah, too fast.  No ack. This ref is also pointless and not explained in
-> commit msg.
+Add a driver for the Global Clock Controller (GCC) that provides clocks,
+resets and power domains for the various hardware blocks in the MSM8909
+SoC. Make it possible to have longer delay between assertion/deassertion
+of particular reset signals (this is needed for the USB PHY on MSM8909).
+Finally, add the necessary definitions for the clocks controlled by the
+RPM firmware on MSM8909.
 
-I referred other DT binding file for adding $ref to specify property
-type [1], so it's confused why it's pointless, anyway, I can drop $ref
-in next spin.
+The patch set is fairly large but most of it is just boring clock
+definitions in the GCC driver. And compared to newer SoCs like SC8280XP
+with 7k+ lines in the GCC driver this is still fairly small. :-)
 
-Thanks a lot for the review!
+Stephan Gerhold (6):
+  dt-bindings: clock: Add schema for MSM8909 GCC
+  clk: qcom: Add driver for MSM8909 GCC
+  clk: qcom: reset: Allow specifying custom reset delay
+  clk: qcom: gcc-msm8909: Increase delay for USB PHY reset
+  dt-bindings: clock: qcom,rpmcc: Add MSM8909
+  clk: qcom: smd-rpm: Add clocks for MSM8909
 
-Leo
+ .../bindings/clock/qcom,gcc-msm8909.yaml      |   56 +
+ .../devicetree/bindings/clock/qcom,rpmcc.yaml |    1 +
+ drivers/clk/qcom/Kconfig                      |    8 +
+ drivers/clk/qcom/Makefile                     |    1 +
+ drivers/clk/qcom/clk-smd-rpm.c                |   37 +-
+ drivers/clk/qcom/gcc-msm8909.c                | 2731 +++++++++++++++++
+ drivers/clk/qcom/reset.c                      |    4 +-
+ drivers/clk/qcom/reset.h                      |    1 +
+ include/dt-bindings/clock/qcom,gcc-msm8909.h  |  218 ++
+ 9 files changed, 3055 insertions(+), 2 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-msm8909.yaml
+ create mode 100644 drivers/clk/qcom/gcc-msm8909.c
+ create mode 100644 include/dt-bindings/clock/qcom,gcc-msm8909.h
 
-[1] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/devicetree/bindings/arm/l2c2x0.yaml#n153
+-- 
+2.30.2
+
