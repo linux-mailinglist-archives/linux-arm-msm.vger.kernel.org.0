@@ -2,43 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 88978565F28
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Jul 2022 23:44:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 05D5F565F5A
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jul 2022 00:08:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230058AbiGDVov (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Jul 2022 17:44:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47620 "EHLO
+        id S229641AbiGDWIT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Jul 2022 18:08:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58198 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229583AbiGDVou (ORCPT
+        with ESMTP id S229582AbiGDWIS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Jul 2022 17:44:50 -0400
-Received: from relay06.th.seeweb.it (relay06.th.seeweb.it [5.144.164.167])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4C2C5FDA
-        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Jul 2022 14:44:48 -0700 (PDT)
-Received: from SoMainline.org (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 1FBC53F65F;
-        Mon,  4 Jul 2022 23:44:45 +0200 (CEST)
-Date:   Mon, 4 Jul 2022 23:44:44 +0200
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
-        myungjoo.ham@samsung.com, cw00.choi@samsung.com,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        stephan@gerhold.net, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH v3 2/2] extcon: qcom-spmi: Switch to
- platform_get_irq_byname_optional
-Message-ID: <20220704214444.p5oqik2cqo6h7723@SoMainline.org>
-References: <20220704010659.223596-1-bryan.odonoghue@linaro.org>
- <20220704010659.223596-3-bryan.odonoghue@linaro.org>
+        Mon, 4 Jul 2022 18:08:18 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF6491181F
+        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Jul 2022 15:08:17 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id z25so65231lfr.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Jul 2022 15:08:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=a34faQtwagl20LrpWELh2gVhWLFPcXFobQBVS2MYvUM=;
+        b=BmPaZMzmINyiXzdBJ1CkiXt6rp0AucG7wVHWs+yErIAGPvQUd3BdoYl4xY4WdXk2Nh
+         APvlTMuijWgZ95wQFa7uJbliJKvVFYQO1o7KOImx+UbLUsv9uvM9eT5G7xYv3iciFs6r
+         /FSS2CL81qYZPcAdv/ufvIjP3iHZdQ+y/zCsT4fVsVOq6pJZrHft/oh/+C+6t8gAz2do
+         9t61lwF6Kq+gHRM0yRUcDq+NW7E+Xyb3ukbkXmXYL/5ZthQxld7nWO20vaAU8FMLhSw7
+         4xvoH59qpT/l8sd9oCUDwkAFCDRspNEJpKap/JZj0h2Zg9TA5oYI5aZBt7K6kEXXFpyB
+         zQIQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=a34faQtwagl20LrpWELh2gVhWLFPcXFobQBVS2MYvUM=;
+        b=XQq90muODO9BCO0rhyTSb2Kn27WY5Es8xP2LyHAx2u/yl8MLfcJtsD9wkxf3uJVSM+
+         BFUh9ky5eZnt6BX4onmXv3wJzyRThUli4cTGeWqGep/8ZaNe/D3+fEnbSAT5u3Swvw9/
+         BvWc6lMFhO/nBiPgLPVmUM1bTb5eqFLhAxYinOB310t855bsq7f9bkVLhYyNDTKPkssf
+         Bq8j1cEQO4KBV3nWPaSppFm0tru16M4jtRP/V1VHOzxDmQawVJsbEVDPagLjG5BimxRQ
+         99qyReGnHjzwBhR0L8ZivKVjBCJ17h5T+cSHXwWcK2KYUSwWBU3Xsv2o/b184wqlxI9o
+         h7eQ==
+X-Gm-Message-State: AJIora90Bfm6XhPE/Lv+MRQHtJ3Stcig0FcoudnjznCto7ZsgRM2oiq7
+        9TnKRFr9Uk4ykY3Ze1euNR/8l9Xr984NxA==
+X-Google-Smtp-Source: AGRyM1s5qdCw9sHSYyY+4oX9sJnPEq2SyUJJKeGHJC5ARAOe5WA/3fb8iJX/Wjcmf+Z6SKXVb1Bc2A==
+X-Received: by 2002:a05:6512:2508:b0:480:f1cb:64a5 with SMTP id be8-20020a056512250800b00480f1cb64a5mr21167875lfb.0.1656972496056;
+        Mon, 04 Jul 2022 15:08:16 -0700 (PDT)
+Received: from localhost.localdomain (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
+        by smtp.gmail.com with ESMTPSA id h18-20020a05651c125200b0025a91928236sm5230329ljh.90.2022.07.04.15.08.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 04 Jul 2022 15:08:15 -0700 (PDT)
+From:   Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+To:     Robert Foss <robert.foss@linaro.org>,
+        Todor Tomov <todor.too@gmail.com>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Hans Verkuil <hans.verkuil@cisco.com>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: [PATCH v2] media: camss: Do not attach an already attached power domain on MSM8916 platform
+Date:   Tue,  5 Jul 2022 01:08:14 +0300
+Message-Id: <20220704220814.629130-1-vladimir.zapolskiy@linaro.org>
+X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220704010659.223596-3-bryan.odonoghue@linaro.org>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -47,55 +72,52 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2022-07-04 02:06:59, Bryan O'Donoghue wrote:
-> Valid configurations for the extcon interrupt declarations are
-> 
-> - usb_id
-> - usb_vbus
-> - (usb_id | usb_vbus)
-> 
-> In the case of a standalone usb_id or usb_vbus failure to find one of the
-> interrupts shouldn't generate a warning message.
-> 
-> Switch to using platform_get_irq_byname_optional() in order to facilitate
-> this behaviour.
-> 
-> Suggested-by: Marijn Suijten <marijn.suijten@somainline.org>
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+The change to dynamically allocated power domains neglected a case of
+CAMSS on MSM8916 platform, where a single VFE power domain is neither
+attached, linked or managed in runtime in any way explicitly.
 
-Thanks for cleaning this up!  Not sure if it is useful to mention in the
-patch description that a warning is already in place if _both_ IRQs
-happened to be missing, but that's a nit for a completely unrealistic
-case where v4 is required for other reasons.
+This is a special case and it shall be kept as is, because the power
+domain management is done outside of the driver, and it's very different
+in comparison to all other platforms supported by CAMSS.
 
-Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+Fixes: 6b1814e26989 ("media: camss: Allocate power domain resources dynamically")
+Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+---
+Changes from v1 to v2:
+* corrected the fixed commit id, which is found on media/master
 
-> ---
->  drivers/extcon/extcon-qcom-spmi-misc.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/extcon/extcon-qcom-spmi-misc.c b/drivers/extcon/extcon-qcom-spmi-misc.c
-> index eb02cb962b5e1..f72e90ceca53d 100644
-> --- a/drivers/extcon/extcon-qcom-spmi-misc.c
-> +++ b/drivers/extcon/extcon-qcom-spmi-misc.c
-> @@ -123,7 +123,7 @@ static int qcom_usb_extcon_probe(struct platform_device *pdev)
->  	if (ret)
->  		return ret;
->  
-> -	info->id_irq = platform_get_irq_byname(pdev, "usb_id");
-> +	info->id_irq = platform_get_irq_byname_optional(pdev, "usb_id");
->  	if (info->id_irq > 0) {
->  		ret = devm_request_threaded_irq(dev, info->id_irq, NULL,
->  					qcom_usb_irq_handler,
-> @@ -136,7 +136,7 @@ static int qcom_usb_extcon_probe(struct platform_device *pdev)
->  		}
->  	}
->  
-> -	info->vbus_irq = platform_get_irq_byname(pdev, "usb_vbus");
-> +	info->vbus_irq = platform_get_irq_byname_optional(pdev, "usb_vbus");
->  	if (info->vbus_irq > 0) {
->  		ret = devm_request_threaded_irq(dev, info->vbus_irq, NULL,
->  					qcom_usb_irq_handler,
-> -- 
-> 2.36.1
-> 
+ drivers/media/platform/qcom/camss/camss.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
+
+diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
+index 932968e5f1e5..7a929f19e79b 100644
+--- a/drivers/media/platform/qcom/camss/camss.c
++++ b/drivers/media/platform/qcom/camss/camss.c
+@@ -1465,6 +1465,14 @@ static int camss_configure_pd(struct camss *camss)
+ 		return camss->genpd_num;
+ 	}
+ 
++	/*
++	 * If a platform device has just one power domain, then it is attached
++	 * at platform_probe() level, thus there shall be no need and even no
++	 * option to attach it again, this is the case for CAMSS on MSM8916.
++	 */
++	if (camss->genpd_num == 1)
++		return 0;
++
+ 	camss->genpd = devm_kmalloc_array(dev, camss->genpd_num,
+ 					  sizeof(*camss->genpd), GFP_KERNEL);
+ 	if (!camss->genpd)
+@@ -1698,6 +1706,9 @@ void camss_delete(struct camss *camss)
+ 
+ 	pm_runtime_disable(camss->dev);
+ 
++	if (camss->genpd_num == 1)
++		return;
++
+ 	for (i = 0; i < camss->genpd_num; i++) {
+ 		device_link_del(camss->genpd_link[i]);
+ 		dev_pm_domain_detach(camss->genpd[i], true);
+-- 
+2.33.0
+
