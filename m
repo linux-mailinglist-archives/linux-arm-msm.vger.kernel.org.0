@@ -2,81 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A59A15651AD
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Jul 2022 12:04:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 68880565206
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Jul 2022 12:21:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234208AbiGDKEJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Jul 2022 06:04:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52744 "EHLO
+        id S234280AbiGDKUc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Jul 2022 06:20:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38580 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234237AbiGDKDv (ORCPT
+        with ESMTP id S234158AbiGDKUI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Jul 2022 06:03:51 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E510FEE31
-        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Jul 2022 03:03:11 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id t19so14266399lfl.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Jul 2022 03:03:11 -0700 (PDT)
+        Mon, 4 Jul 2022 06:20:08 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADD5911465
+        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Jul 2022 03:18:31 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id z21so14916704lfb.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Jul 2022 03:18:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=ErZw4wls9zjNOFCXIe6EDDFh4ab3lDZZmmtoZlWR0dY=;
-        b=w9LmTd0jhX810gGtspBgYoFJvLQMTTIvGy0sHKVh78nBe332rOAuFrYBVunrIBsPkg
-         d5EfUKJxoQ8S8/v/G9LR7vXzCf3Cg9+qMproAQnX27mkaBzgVlzSwJzIALLGrtgmiKB2
-         8UEOdKaykVSSim8/D2n+F2VJ/ErZ24EDb5l8lq9OmVvsUyINLrfKT0CMTaQ3LAMEAutl
-         sJwByWinXftKaocsvU7ONzpWe1/9I20wZzhklPJLJpjYhvewa+RddER9zPq0Cb8UUhW0
-         jeBEWNaP+1Um10fFIvtjpJD/oGuTFoZ0FOiuMzV5uutKQU16FLIATbpNBL6txv+2OcHK
-         +lvg==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=nK+dWoJDfR6ImhHlJu9yEcRBbILJCUUISJM4C5ncM4Y=;
+        b=QIlyZ45QnxRnU54KJSmyY8z0MglHKV/krHYsQGvCRk03H37aZasLp9FBRt0mIpaXNX
+         gUV3v5GBTd7Diq0kVsc1UwgF74Xb1ci3nCzmqZdiVUmFSUa/hVMi87Q4uqb+vme4hW52
+         RXBnzR0mIrVAXV/po11MnhrfjAgKLl8+EGn/0EdeVxAE326i5SVPjWyFNs0oZltypfPg
+         6Xf7JIiCtpo3p0wSrHTOkFTSVwa1I8P4uR/5lCdAxjCyvW4wNyEWkklZmmWq30KEYduG
+         fdy8Xj+D9MylDHpkpcM/qOxA8FfBE1CLLakSuYeHgIylZmiEpI4vf/zOvoNHW/CQRaOK
+         94EA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=ErZw4wls9zjNOFCXIe6EDDFh4ab3lDZZmmtoZlWR0dY=;
-        b=rWYWNivbCS42zmxhfK/63qOKl+xSdB7j+qu/L6g7SfIIbq5cu9DFYzpXT4gLO+r5ko
-         iVV3isZ/hKLRA62L7D8HVNicbcMWsxtYdCOdWPN6S1/lgEqP+jXWnxa3GGv6CEU5XzHo
-         UxK3FPEQdtbEWQ4R6+i+XgKGTp3t1OvRJhz0MoPRcQbwIslMga7GuR6uXVgxtM5yJYO8
-         E/Rx+vo5Z0tL2pGQto2MFxCcw9R4jofYEmOLrrFkCwU1wUb0XlWpDofgKlGDAtTwxsxy
-         5XV5p3ZM2pF9NbUcJLBO3Q/BvjE902d88fPQCLBU6qLdVVGYbMX+2U30wODFTU2+fItP
-         gdDg==
-X-Gm-Message-State: AJIora8x/6y7JfFW1WM5dZvtCeGMsCkxlkjvfObcJWbY49+DoZBXZsi2
-        NmDH8hmNk9sMUs/usr6+yzoluw==
-X-Google-Smtp-Source: AGRyM1tYyxGAgUgawsgdOQb1xSttQaKF7iWrlqMgTBURgm3N4VN14WMwCOK+yH1mCjMy5QHOVA1rOw==
-X-Received: by 2002:a05:6512:61:b0:47f:7f37:fad3 with SMTP id i1-20020a056512006100b0047f7f37fad3mr18847722lfo.318.1656928990188;
-        Mon, 04 Jul 2022 03:03:10 -0700 (PDT)
-Received: from [192.168.1.52] ([84.20.121.239])
-        by smtp.gmail.com with ESMTPSA id b13-20020a2eb90d000000b0025aa03fba32sm4851141ljb.12.2022.07.04.03.03.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 04 Jul 2022 03:03:09 -0700 (PDT)
-Message-ID: <9303ad19-b047-9710-8c35-9911e9a47bc9@linaro.org>
-Date:   Mon, 4 Jul 2022 12:03:08 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: [PATCH] dt-bindings: qcom: readme: document preferred compatible
- naming
-Content-Language: en-US
-To:     Rob Herring <robh@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        bh=nK+dWoJDfR6ImhHlJu9yEcRBbILJCUUISJM4C5ncM4Y=;
+        b=7ZtJygsvkWFQ+tWW/ehCwiDsgkMfsIO1URlyxzWRvlH3Iw0PXcMfgKG/w3H6wZ1tLw
+         OygahXpOPWoACFUdCQ7foNtfFKJhULgXxhEYHXqOmYz69Z/1C7mrgVQ5HTL7GwwwO596
+         PNWjvi6kdgGz2CHlZrAJlD9lrSp8Iq7opNjRDeJINzE860R3F3ElyGaUHtAl84/nf2hN
+         wiKyM8hyWErgKerlnz3Vld9AUmH8qNQymMg46gi6B+Ppzv7NgytwKON7XzGAJPjFy6wR
+         xaAdLuhWrkxn+ABGYgISMxlINYnFoeXM0iRTeDE/f3+g/Ap6mNYiHJkIwgikg2eA0G2w
+         bHsA==
+X-Gm-Message-State: AJIora/yCX4xILNDfStGDEcSMBp5X48VXXgQ9aOpjoAzFgcZNxeb7RDf
+        2jsE4iW+nqID9SqpHoHh23vsTw==
+X-Google-Smtp-Source: AGRyM1vk/DUUAlKArKx3qOlFGBDpgLEUpjxUfo/KdMVpcXc9wPxDTj1mRPaaYAHbj4VXJw62MRn+HQ==
+X-Received: by 2002:a05:6512:118f:b0:47f:6a1a:20d4 with SMTP id g15-20020a056512118f00b0047f6a1a20d4mr16952990lfr.428.1656929909557;
+        Mon, 04 Jul 2022 03:18:29 -0700 (PDT)
+Received: from krzk-bin.home ([84.20.121.239])
+        by smtp.gmail.com with ESMTPSA id e12-20020ac24e0c000000b00478a311d399sm5072523lfr.0.2022.07.04.03.18.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 04 Jul 2022 03:18:29 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Vinod Koul <vkoul@kernel.org>, Alex Elder <elder@linaro.org>,
         Robert Foss <robert.foss@linaro.org>,
         Bhupesh Sharma <bhupesh.sharma@linaro.org>
-References: <20220701074659.12680-1-krzysztof.kozlowski@linaro.org>
- <20220701204218.GA1478943-robh@kernel.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220701204218.GA1478943-robh@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Subject: [PATCH v2] dt-bindings: qcom: document preferred compatible naming
+Date:   Mon,  4 Jul 2022 12:18:23 +0200
+Message-Id: <20220704101823.82122-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -85,60 +78,90 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 01/07/2022 22:42, Rob Herring wrote:
-> On Fri, Jul 01, 2022 at 09:46:59AM +0200, Krzysztof Kozlowski wrote:
->> Compatibles can come in two formats.  Either "vendor,ip-soc" or
->> "vendor,soc-ip".  Qualcomm bindings were mixing both of usages, so add a
->> readme file documenting preferred policy.
-> 
-> Is this all I needed to do to stop this from QCom? </sarcasm>
-> 
-> This convention is not QCom specific, though the error mostly is. 
-> Perhaps this should be documented generically.
+Compatibles can come in two formats.  Either "vendor,ip-soc" or
+"vendor,soc-ip".  Qualcomm bindings were mixing both of usages, so add a
+DT schema file documenting preferred policy and enforcing it for all new
+compatibles, except few existing patterns.
 
-Good point. I can this to writing-bindings.rst.
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-> 
->> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->>
->> ---
->>
->> Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
->> Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> Cc: Vinod Koul <vkoul@kernel.org>
->> Cc: Alex Elder <elder@linaro.org>
->> Cc: Robert Foss <robert.foss@linaro.org>
->> Cc: Bhupesh Sharma <bhupesh.sharma@linaro.org>
->> ---
->>  .../devicetree/bindings/soc/qcom/README.rst      | 16 ++++++++++++++++
->>  1 file changed, 16 insertions(+)
->>  create mode 100644 Documentation/devicetree/bindings/soc/qcom/README.rst
->>
->> diff --git a/Documentation/devicetree/bindings/soc/qcom/README.rst b/Documentation/devicetree/bindings/soc/qcom/README.rst
->> new file mode 100644
->> index 000000000000..322b329ac7c1
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/soc/qcom/README.rst
->> @@ -0,0 +1,16 @@
->> +.. SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
->> +
->> +Qualcomm SoC compatibles naming convention
->> +==========================================
->> +1. When adding new compatibles in new bindings, use the format:
->> +   ::
->> +
->> +     qcom,SoC-IP
->> +
->> +   For example:
->> +   ::
->> +
->> +     qcom,sdm845-llcc-bwmon
-> 
-> Assuming the list of possible SoCs was maintained, you could make this a 
-> schema. Though there might be false positives.
+---
 
-Indeed it works, although I need some exceptions for existing compatibles.
+Changes since v1:
+1. Add schema instead of readme (Rob).
 
+Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Vinod Koul <vkoul@kernel.org>
+Cc: Alex Elder <elder@linaro.org>
+Cc: Robert Foss <robert.foss@linaro.org>
+Cc: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+---
+ .../devicetree/bindings/arm/qcom-soc.yaml     | 55 +++++++++++++++++++
+ 1 file changed, 55 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/arm/qcom-soc.yaml
 
-Best regards,
-Krzysztof
+diff --git a/Documentation/devicetree/bindings/arm/qcom-soc.yaml b/Documentation/devicetree/bindings/arm/qcom-soc.yaml
+new file mode 100644
+index 000000000000..1af1f16c13ab
+--- /dev/null
++++ b/Documentation/devicetree/bindings/arm/qcom-soc.yaml
+@@ -0,0 +1,55 @@
++# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/arm/qcom-soc.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm SoC compatibles naming convention
++
++maintainers:
++  - Bjorn Andersson <bjorn.andersson@linaro.org>
++
++description: |
++  Guidelines for new compatibles for SoC blocks/components.
++  When adding new compatibles in new bindings, use the format::
++    qcom,SoC-IP
++
++  For example::
++   qcom,sdm845-llcc-bwmon
++
++  When adding new compatibles to existing bindings, use the format in the
++  existing binding, even if it contradicts the above.
++
++select:
++  properties:
++    compatible:
++      pattern: "^qcom,.*(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$"
++  required:
++    - compatible
++
++properties:
++  compatible:
++    oneOf:
++      - description: Preferred naming style for compatibles of SoC components
++        pattern: "^qcom,(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$"
++
++      # Legacy namings - variations of existing patterns/compatibles are OK,
++      # but do not add completely new entries to these:
++      - pattern: "^qcom,gcc-(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$"
++      - pattern: "^qcom,mmcc-(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$"
++      - pattern: "^qcom,pcie-(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$"
++      - pattern: "^qcom,rpm-(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$"
++      - pattern: "^qcom,scm-(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$"
++      - enum:
++          - qcom,gpucc-sdm630
++          - qcom,gpucc-sdm660
++          - qcom,lcc-apq8064
++          - qcom,lcc-ipq8064
++          - qcom,lcc-mdm9615
++          - qcom,lcc-msm8960
++          - qcom,lpass-cpu-apq8016
++          - qcom,usb-ss-ipq4019-phy
++          - qcom,usb-hs-ipq4019-phy
++          - qcom,vqmmc-ipq4019-regulator
++
++additionalProperties: true
+-- 
+2.34.1
+
