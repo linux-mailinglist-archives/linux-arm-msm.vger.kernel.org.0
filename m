@@ -2,67 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2E7D7565931
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Jul 2022 17:05:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3846F5659A2
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Jul 2022 17:20:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233720AbiGDPFi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Jul 2022 11:05:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59868 "EHLO
+        id S234346AbiGDPUh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Jul 2022 11:20:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43752 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230380AbiGDPFg (ORCPT
+        with ESMTP id S234177AbiGDPUe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Jul 2022 11:05:36 -0400
-Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E60D9EE30
-        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Jul 2022 08:05:34 -0700 (PDT)
-Received: by mail-pf1-x42a.google.com with SMTP id f85so5365040pfa.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Jul 2022 08:05:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Er22kXvaN2nTH/U01YGmNngJ1WDjE8zNH8lib6jN5uA=;
-        b=GM/HTaMLJ3BZwwND0QLWYnm465VVMuA87ivCwyqlfw/z58O7A6fY1ztYpdUsAnl4O6
-         Q1juhnKu5UaHC7YKpbjNpeYFCzyGPItoNt2q9hApsBeGregLWMXMxmrlj2a7iXSW6fUR
-         DvnFd+EZe5KsSoEIVyA3RBQ+GupLGDQt2rPaUxSKYWveaC4SsJhf555PYMagjUqY0Fi2
-         KAnSeujDKSBhSL0a2U3zGi75gOec6+JND/2UPi5NqHnq5R5LAvaaiC4jorWsPp8MPjfJ
-         OsXXEv/YLoZskQR6lO8ZMgxLRP86ad+AFhoLdMVonCqQ8jzWEL0Ls0E6cOjTcCPJuJY1
-         xncA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Er22kXvaN2nTH/U01YGmNngJ1WDjE8zNH8lib6jN5uA=;
-        b=123yNNMOXGEjVOjh4P2rQ6I5ewW7R8Vt7k1BHaXCTAPq4QIwPCT1AIDKIYcnvb1Kxp
-         9tuiAVgM3bbGZY06tRpvsq2Dm5Uzy1zWryiefVvyHH8QbujIk0fOtQu9Vl0ZsEDCxeXu
-         /dtY3zxJ5EubC+nRYwTUYEFrlMSAY7cVSKOOTs0DHbTWjut69dx3GL+cUY4mO8YRpfWP
-         mCH8G98wOpuTSXhb+2InOmk/cq7Z2CMpwao0fWzgmt1I9053FKz3HWOpn/c0OyW9nHkn
-         +X5k1LQTBGZo0ytMc4U2Lu2MxcQ+rIk1eTCv+CGVFT0lk3h3BlXeMxlsZzJzGdKCXsdw
-         jMrA==
-X-Gm-Message-State: AJIora+yzmBS1Q7Mt/QllcjZBjyPCcEEtW1y71tVZPmhQmUebGcla6jF
-        6CZ0O4hn+ZuSDbYw4dc6nbM5
-X-Google-Smtp-Source: AGRyM1uO43KM7dJPBQVhWcvHjRu1UuN3SerZnzcREeZDF7nh8tuNNM1SehZW229klSp3mWZiggIqvA==
-X-Received: by 2002:a65:6944:0:b0:408:aa65:9464 with SMTP id w4-20020a656944000000b00408aa659464mr25189301pgq.160.1656947134345;
-        Mon, 04 Jul 2022 08:05:34 -0700 (PDT)
-Received: from localhost.localdomain ([220.158.158.244])
-        by smtp.gmail.com with ESMTPSA id d4-20020a170902654400b0016be96f9c8csm1648396pln.255.2022.07.04.08.05.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Jul 2022 08:05:34 -0700 (PDT)
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     linus.walleij@linaro.org, brgl@bgdev.pl
-Cc:     bjorn.andersson@linaro.org, sboyd@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-kernel@vger.kernel.org, masneyb@onstation.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH] pinctrl: qcom-pmic-gpio: Make irqchip immutable
-Date:   Mon,  4 Jul 2022 20:35:27 +0530
-Message-Id: <20220704150527.361470-1-manivannan.sadhasivam@linaro.org>
-X-Mailer: git-send-email 2.25.1
+        Mon, 4 Jul 2022 11:20:34 -0400
+Received: from bombadil.infradead.org (bombadil.infradead.org [IPv6:2607:7c80:54:3::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D7D910FE6;
+        Mon,  4 Jul 2022 08:20:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
+        Content-Type:In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:
+        Message-ID:Sender:Reply-To:Content-ID:Content-Description;
+        bh=GcBIE8F1Amhld86dWfigGM4Z1aJl6HhmPq0gymmt37g=; b=Y9uYw+EXJiWS8zl4Zcb6tlYkGl
+        d2PjqZGF64zWe7kTqQHg9Fzh1vuRY+Qsu6wLI21ezbQWf91+UTqUnV1E1/ZN9gz56acNlj0uMM++3
+        Az9GydpPSOv0hidBJnLbxULDj4ahiWUY+W8GXWYIINP67ue9B0uPRJwEf7L+II+9m1q2uc5QfdAsT
+        sB9vASPDwp6uX8bDAF5IK/AE6uhwyeTW6C2ReucCt5gCvMoeFwb02r6WeYbxAY2/ofQuzlWVh/elj
+        o8S9TIs9SbR8puNdkmYMNhmAO7tHw9iHduTFKxPEFVdvodJ10/lQS3Z2ucIYE1p3MYGTZZEXKwiZh
+        YzX+T9Sw==;
+Received: from [2601:1c0:6280:3f0::a6b3]
+        by bombadil.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
+        id 1o8NsB-009fdZ-CO; Mon, 04 Jul 2022 15:20:27 +0000
+Message-ID: <3770bc6d-b3cc-9e49-a832-4c15af0b5f1a@infradead.org>
+Date:   Mon, 4 Jul 2022 08:20:24 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH v8 2/4] soc: qcom: icc-bwmon: Add bandwidth monitoring
+ driver
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Georgi Djakov <djakov@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Cc:     Rajendra Nayak <quic_rjendra@quicinc.com>,
+        Thara Gopinath <thara.gopinath@gmail.com>
+References: <20220704121730.127925-1-krzysztof.kozlowski@linaro.org>
+ <20220704121730.127925-3-krzysztof.kozlowski@linaro.org>
+From:   Randy Dunlap <rdunlap@infradead.org>
+In-Reply-To: <20220704121730.127925-3-krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -70,60 +63,36 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Make the irqchip immutable by defining it as a const and flag it as
-IRQCHIP_IMMUTABLE. This also fixes the below warning,
+Hi,
 
-[    0.688749] gpio gpiochip1: (c440000.spmi:pmic@1:gpio@8800): not an
-immutable chip, please consider fixing it!
+On 7/4/22 05:17, Krzysztof Kozlowski wrote:
+> diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
+> index e718b8735444..2c8091535bf7 100644
+> --- a/drivers/soc/qcom/Kconfig
+> +++ b/drivers/soc/qcom/Kconfig
+> @@ -228,4 +228,19 @@ config QCOM_APR
+>  	  application processor and QDSP6. APR is
+>  	  used by audio driver to configure QDSP6
+>  	  ASM, ADM and AFE modules.
+> +
+> +config QCOM_ICC_BWMON
+> +	tristate "QCOM Interconnect Bandwidth Monitor driver"
+> +	depends on ARCH_QCOM || COMPILE_TEST
+> +	select PM_OPP
+> +	help
+> +	  Sets up driver monitoring bandwidth on various interconnects and
 
-Since this is a hierarchial irqchip, there is no need to explicitly tell
-GPIOLIB which line has triggered the IRQ (as per the documentation).
+	  Sets up driver bandwidth monitoring
 
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
- drivers/pinctrl/qcom/pinctrl-spmi-gpio.c | 21 ++++++++++++---------
- 1 file changed, 12 insertions(+), 9 deletions(-)
+would be better, I think.
 
-diff --git a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
-index fd5fff9adff0..9b7ff649e4e0 100644
---- a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
-+++ b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
-@@ -988,6 +988,17 @@ static void *pmic_gpio_populate_parent_fwspec(struct gpio_chip *chip,
- 	return fwspec;
- }
- 
-+static const struct irq_chip pmic_gpio_irqchip = {
-+	.name = "spmi-gpio",
-+	.irq_ack = irq_chip_ack_parent,
-+	.irq_mask = irq_chip_mask_parent,
-+	.irq_unmask = irq_chip_unmask_parent,
-+	.irq_set_type = irq_chip_set_type_parent,
-+	.irq_set_wake = irq_chip_set_wake_parent,
-+	.flags = IRQCHIP_IMMUTABLE, IRQCHIP_MASK_ON_SUSPEND,
-+	GPIOCHIP_IRQ_RESOURCE_HELPERS,
-+};
-+
- static int pmic_gpio_probe(struct platform_device *pdev)
- {
- 	struct irq_domain *parent_domain;
-@@ -1081,16 +1092,8 @@ static int pmic_gpio_probe(struct platform_device *pdev)
- 	if (!parent_domain)
- 		return -ENXIO;
- 
--	state->irq.name = "spmi-gpio",
--	state->irq.irq_ack = irq_chip_ack_parent,
--	state->irq.irq_mask = irq_chip_mask_parent,
--	state->irq.irq_unmask = irq_chip_unmask_parent,
--	state->irq.irq_set_type = irq_chip_set_type_parent,
--	state->irq.irq_set_wake = irq_chip_set_wake_parent,
--	state->irq.flags = IRQCHIP_MASK_ON_SUSPEND,
--
- 	girq = &state->chip.irq;
--	girq->chip = &state->irq;
-+	gpio_irq_chip_set_chip(girq, &pmic_gpio_irqchip);
- 	girq->default_type = IRQ_TYPE_NONE;
- 	girq->handler = handle_level_irq;
- 	girq->fwnode = of_node_to_fwnode(state->dev->of_node);
+> +	  based on that voting for interconnect bandwidth, adjusting their
+> +	  speed to current demand.
+> +	  Current implementation brings support for BWMON v4, used for example
+> +	  on SDM845 to measure bandwidth between CPU (gladiator_noc) and Last
+> +	  Level Cache (memnoc).  Usage of this BWMON allows to remove some of
+> +	  the fixed bandwidth votes from cpufreq (CPU nodes) thus achieve high
+> +	  memory throughput even with lower CPU frequencies.
+
 -- 
-2.25.1
-
+~Randy
