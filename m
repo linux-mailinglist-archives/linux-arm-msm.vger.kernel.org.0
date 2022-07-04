@@ -2,68 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 332A75657B4
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Jul 2022 15:47:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5B4C65657CF
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Jul 2022 15:50:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234481AbiGDNrH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Jul 2022 09:47:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53174 "EHLO
+        id S233375AbiGDNus (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Jul 2022 09:50:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57056 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234169AbiGDNqw (ORCPT
+        with ESMTP id S233634AbiGDNuq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Jul 2022 09:46:52 -0400
-Received: from mail-oa1-x36.google.com (mail-oa1-x36.google.com [IPv6:2001:4860:4864:20::36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB0076164
-        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Jul 2022 06:46:39 -0700 (PDT)
-Received: by mail-oa1-x36.google.com with SMTP id 586e51a60fabf-10be1122de0so6376078fac.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Jul 2022 06:46:39 -0700 (PDT)
+        Mon, 4 Jul 2022 09:50:46 -0400
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7587764B
+        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Jul 2022 06:50:44 -0700 (PDT)
+Received: by mail-lj1-x234.google.com with SMTP id r9so11153437ljp.9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Jul 2022 06:50:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=uw7afw8tR6bUOC0CUKqaxNcH5iBflTgpCB+SFda4iLw=;
-        b=TRT3CfyfApuGy6aVQLflRuFqTdT1iBKPaD/C9rIZuWrXShGAf1yKpB3V/qRFTtGxza
-         GhjVKpe0HpaTBWajYeyssfPTQnvOGvVXZ+tlcWS0QgQsHxQUxTwK/+Ye8BKJwUH6OTD1
-         sgi++XDjAatPkkGEqRIhZzyYnfNPhBgB9gCYFi60muYA7Ptc6C2K6LTI8918B7DkJ2zp
-         KGlfBrNFqFGYRc9IbgjfIkaqjoDc5gPVDRQ3H36lGFFLLPfxdw73a3wVUhrHxKCs/Ntm
-         FXSQf40U+XULXoKx9SWcW+ekp26F7uHU+HUwmeYl8aqiSfmqvlNPUdnl76UeGh45mvT8
-         2YeA==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=lT/WBzy1xTEwZAbHZXK8gHu8QzttQ69byOmkHs6AXd8=;
+        b=AqfDJpmMA1heNclPI30P28wHc5C1ei9kQ1TumAb8DzCU8oZrkIwlXGf8mY9NBm2rpp
+         wfvqUU3jWUWOfPwb28yw9iPI9jZyeMfbm/YRmYgrJ/mPGpp3EtJYUn9okLxwWR171VIN
+         RvJaRVFxFjaz4KpUwgtFCzMmj7cPAQobdSu2BHncy7ChcrwxMBBwkXgNiJWt+TIPIhia
+         lsrv5SV3xLHKmywyznqo15V1bkezHVZlbeK+zFk781EVJKMCxnYMJThOXjMMsx6uypJ+
+         hqvfvMrd9n0WLfCH9PPp1AmTkhVGzkMq5IauvKlOIthMPfHUnNrPxMYbghSCG4BYE6CD
+         yvGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=uw7afw8tR6bUOC0CUKqaxNcH5iBflTgpCB+SFda4iLw=;
-        b=0LyRKTG5qdwFYUrKTjx4gSPoLDntI5apSc77D9lQyrMouz1Og8J7KAOI7tj5CGkVbV
-         B76IL35Qq8NjOvqLIrVOS/zdZ1rF+9LjE6IZK7Ru9Jd0sBR/LP8YBaM5li2KpkYKipUB
-         Er1wdUrOjOQqct5khK2VzBaJFMH+Za2y1Ma/YM/TtPl/qYaMjH/fPUD4PIphCk1FsU4w
-         eNHIvFlK5gMVT9wEwRgoDZ7UArUn0njM3jjMeGJe0D3e52Y14yC1x35jHoJGSd8/6Lgp
-         Da5DilVgC82XelQYDvaNzqYoWUL58uj7ycyAXULT3BLDRGEYTPg1lDaNwA01nU8VUzhO
-         crjA==
-X-Gm-Message-State: AJIora8SbR++cUKYBr5xjnyF+zoVbiGQJBeCfIrMcrD5Hh29poHjxKSN
-        Jj2t7u+3bnXUAJbjZJ4JQUujylDVQGWAJh62YyHVmA==
-X-Google-Smtp-Source: AGRyM1vll+7rb/D13uFGBQfQQRC4PxFD0rjiWMlK4VSNvyImZDVWxMdBsLd4pA1YqsiQQ/UOEbFCxUE1z+z7awlPhs4=
-X-Received: by 2002:a05:6870:65a4:b0:10b:f0a4:17d2 with SMTP id
- fp36-20020a05687065a400b0010bf0a417d2mr4530145oab.241.1656942398697; Mon, 04
- Jul 2022 06:46:38 -0700 (PDT)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=lT/WBzy1xTEwZAbHZXK8gHu8QzttQ69byOmkHs6AXd8=;
+        b=bJf6QXv7hVoCBKVQkmIAYDueoIf3dnY3br8q8dVJZuV2KT6LYydexk1m1cAiXpggtl
+         EIkpAbo4IQokfBWuBbYlBhJbGnMPF6zne1oo8j9nN41qg1ag8u7VpbnMXmyxCvRZB7X4
+         NupiIXLO9qeozvw4scnt1FnIsHZCLicUYFz6+ZbVwjGb6QUv79olkkGtXypaimkDUYJk
+         Sy/RED0wGliCHLAWhF6SRbbhaNgQ5OJxGE5TkI/P2vVsmrJqq5lnUgVt043AQeVibhWz
+         DHArN5aQ3zWkQilYmG431ROycbQGdZWwxkzxK/l3MeyuqIGpNlpKvXy/qbo3oFInfhge
+         6AGw==
+X-Gm-Message-State: AJIora9YAx8fdgYnIyjfXPfKfQfSdq9G6iElmjir4zkKmB61XXwB5hq1
+        Lb1bj50R9qt8Ipal85AtxSR8DQ==
+X-Google-Smtp-Source: AGRyM1t2Bgk/Rcpn44SeT+dVzENdaqgmd3LwGLwpfpceBWJVJRCY8Fc0RgrqisnfShY3FN/VsR01GQ==
+X-Received: by 2002:a2e:80d3:0:b0:25a:736c:1c80 with SMTP id r19-20020a2e80d3000000b0025a736c1c80mr17375381ljg.436.1656942643213;
+        Mon, 04 Jul 2022 06:50:43 -0700 (PDT)
+Received: from [192.168.1.52] ([84.20.121.239])
+        by smtp.gmail.com with ESMTPSA id t10-20020a2e8e6a000000b0025d2bd46603sm74583ljk.131.2022.07.04.06.50.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 04 Jul 2022 06:50:42 -0700 (PDT)
+Message-ID: <5fa79e89-144c-7261-335a-8f509b182bba@linaro.org>
+Date:   Mon, 4 Jul 2022 15:50:41 +0200
 MIME-Version: 1.0
-References: <20220704105712.469657-1-vladimir.zapolskiy@linaro.org> <355eda8c-ccc1-3197-257e-c018d66dd98c@linaro.org>
-In-Reply-To: <355eda8c-ccc1-3197-257e-c018d66dd98c@linaro.org>
-From:   Robert Foss <robert.foss@linaro.org>
-Date:   Mon, 4 Jul 2022 15:46:27 +0200
-Message-ID: <CAG3jFysFoV87hoFE1N_wmP5iHpZ6UgTgGY5EVeZ+OoeCPYqaVQ@mail.gmail.com>
-Subject: Re: [PATCH] media: camss: Do not attach an already attached power
- domain on MSM8916 platform
-To:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Cc:     Todor Tomov <todor.too@gmail.com>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: Re: [PATCH v3 1/5] dt-bindings: interconnect: Update property for
+ icc-rpm path tag
+Content-Language: en-US
+To:     Leo Yan <leo.yan@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Hans Verkuil <hans.verkuil@cisco.com>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        Georgi Djakov <djakov@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+References: <20220704093029.1126609-1-leo.yan@linaro.org>
+ <20220704093029.1126609-2-leo.yan@linaro.org>
+ <18f1ee4a-5787-40d7-2eb5-50a43298845d@linaro.org>
+ <20220704130712.GD659023@leoy-ThinkPad-X240s>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220704130712.GD659023@leoy-ThinkPad-X240s>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -71,65 +84,45 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 4 Jul 2022 at 13:08, Vladimir Zapolskiy
-<vladimir.zapolskiy@linaro.org> wrote:
->
-> On 7/4/22 13:57, Vladimir Zapolskiy wrote:
-> > The change to dynamically allocated power domains neglected a case of
-> > CAMSS on MSM8916 platform, where a single VFE power domain is neither
-> > attached, linked or managed in runtime in any way explicitly.
-> >
-> > This is a special case and it shall be kept as is, because the power
-> > domain management is done outside of the driver, and it's very different
-> > in comparison to all other platforms supported by CAMSS.
-> >
-> > Fixes: 929684b7ef4d ("media: camss: Allocate power domain resources dynamically")
->
-> Fixes: 6b1814e26989 ("media: camss: Allocate power domain resources dynamically")
+On 04/07/2022 15:07, Leo Yan wrote:
+> On Mon, Jul 04, 2022 at 02:47:13PM +0200, Krzysztof Kozlowski wrote:
+>> On 04/07/2022 11:30, Leo Yan wrote:
+>>> To support path tag in icc-rpm driver, the "#interconnect-cells"
+>>> property is updated as enumerate values: 1 or 2.  Setting to 1 means
+>>> it is compatible with old DT binding that interconnect path only
+>>> contains node id; if set to 2 for "#interconnect-cells" property, then
+>>> the second specifier is used as a tag (e.g. vote for which buckets).
+>>>
+>>> Signed-off-by: Leo Yan <leo.yan@linaro.org>
+>>> ---
+>>>  .../devicetree/bindings/interconnect/qcom,rpm.yaml         | 7 ++++++-
+>>>  1 file changed, 6 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/interconnect/qcom,rpm.yaml b/Documentation/devicetree/bindings/interconnect/qcom,rpm.yaml
+>>> index 8a676fef8c1d..cdfe419e7339 100644
+>>> --- a/Documentation/devicetree/bindings/interconnect/qcom,rpm.yaml
+>>> +++ b/Documentation/devicetree/bindings/interconnect/qcom,rpm.yaml
+>>> @@ -45,7 +45,12 @@ properties:
+>>>        - qcom,sdm660-snoc
+>>>  
+>>>    '#interconnect-cells':
+>>> -    const: 1
+>>> +    description: |
+>>> +      Number of interconnect specifier. Value: <1> is one cell in a
+>>> +      interconnect specifier for the interconnect node id, <2> requires
+>>> +      the interconnect node id and an extra path tag.
+>>> +    $ref: /schemas/types.yaml#/definitions/uint32
+>>
+>> Ah, too fast.  No ack. This ref is also pointless and not explained in
+>> commit msg.
+> 
+> I referred other DT binding file for adding $ref to specify property
+> type [1], so it's confused why it's pointless, anyway, I can drop $ref
+> in next spin.
+> 
+> Thanks a lot for the review!
 
-6b1814e26989 is the correct commit id to use.
+The "arm,prefetch-offset" is not a cells property.
 
->
-> is the correct commit id found on media/master, please let me know, if anyone
-> wishes me to resend the fix.
->
-> > Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-> > ---
-> >   drivers/media/platform/qcom/camss/camss.c | 11 +++++++++++
-> >   1 file changed, 11 insertions(+)
-> >
-> > diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
-> > index bf716b171c02..9e2899a0cdf4 100644
-> > --- a/drivers/media/platform/qcom/camss/camss.c
-> > +++ b/drivers/media/platform/qcom/camss/camss.c
-> > @@ -1684,6 +1684,14 @@ static int camss_configure_pd(struct camss *camss)
-> >               return camss->genpd_num;
-> >       }
-> >
-> > +     /*
-> > +      * If a platform device has just one power domain, then it is attached
-> > +      * at platform_probe() level, thus there shall be no need and even no
-> > +      * option to attach it again, this is the case for CAMSS on MSM8916.
-> > +      */
-> > +     if (camss->genpd_num == 1)
-> > +             return 0;
-> > +
-> >       camss->genpd = devm_kmalloc_array(dev, camss->genpd_num,
-> >                                         sizeof(*camss->genpd), GFP_KERNEL);
-> >       if (!camss->genpd)
-> > @@ -1923,6 +1931,9 @@ void camss_delete(struct camss *camss)
-> >
-> >       pm_runtime_disable(camss->dev);
-> >
-> > +     if (camss->genpd_num == 1)
-> > +             return;
-> > +
-> >       for (i = 0; i < camss->genpd_num; i++) {
-> >               device_link_del(camss->genpd_link[i]);
-> >               dev_pm_domain_detach(camss->genpd[i], true);
->
-> --
-
-With the commit id fixed, please add my r-b.
-
-Reviewed-by: Robert Foss <robert.foss@linaro.org>
+Best regards,
+Krzysztof
