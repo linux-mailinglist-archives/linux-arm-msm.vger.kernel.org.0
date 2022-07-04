@@ -2,79 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A4FA55657F5
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Jul 2022 15:56:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 03BBC56583A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Jul 2022 16:04:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234867AbiGDN4k (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Jul 2022 09:56:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34084 "EHLO
+        id S233278AbiGDOEw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Jul 2022 10:04:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43240 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234531AbiGDN4Q (ORCPT
+        with ESMTP id S232549AbiGDOEv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Jul 2022 09:56:16 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A6F2D10B
-        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Jul 2022 06:56:15 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id a13so15908481lfr.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Jul 2022 06:56:14 -0700 (PDT)
+        Mon, 4 Jul 2022 10:04:51 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94160B1D
+        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Jul 2022 07:04:50 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id y16so15941009lfb.9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Jul 2022 07:04:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=Y8tf/kMFYwfWY6Q9DD4JUxR8ogCCSX7lOhzrzkly/+E=;
-        b=eraqwl5pKrfGcSwpyEi/PH7EnjWcsUGqNVP3O0kENPxHo/1vcWL1yR3Sxp6+Cu0KMC
-         +uxtZJMDv4f96ABwguszkQcf/nrrYRd/Yd4bdQrh/EcE8C6dqloVoNUWUfSDsJsoVeJb
-         fZE/ip1mj67Jn/El6hZg8aLa+QZfwWlDnVJFp6ZJh7lWng3HaN7pk4+G/JEl/tzRm30b
-         ToAgaSHsup6I+VLHElFl0k2l3IahkSUaosIDB9XLcrsJb5FhIbaGwJ+LdIEpvGaQkTv0
-         0NkymntNXi21OQZcFkymlOcDjVR2btGigsokpu1yZTF06g4klXaiISWcKN3OdhaRscZx
-         J40w==
+        bh=rsGLGImmqJHiDHb1+WwnYqEd/8jZefskys3h5JlVneg=;
+        b=iOEUfAkbgMlvzJV8wTbsTIYSWia2cd8h4wEbug5cjfJD+nWhZS9fr5o0n/WApn+7c/
+         jvvdlGxLrHBJejs8CGh0pJpPUpLABBgInxaNbHT8n/FjwdOcjFGRb9eqhNnEnfO0Wvca
+         Qk8kIqJKGuX6tEuo/1zkg3jwaoJDh/H5smM+TuP0cmMolyhxcwU9t8NYzyiq8DZfyjOL
+         fXA8sxWN/tSF5oKNq86Fz9w8C+nZ2ccYdbTZfQP1mWCnMimj5uM6YWZvRv81Pr2g6RxG
+         ksL4HO37Djdd7YeE9oF3a+EmPCAO0odkJEuWGgQg8HFvySVKVW52owvLd2AQjivOCwvC
+         qfiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=Y8tf/kMFYwfWY6Q9DD4JUxR8ogCCSX7lOhzrzkly/+E=;
-        b=gbrTZjVof1m/ZaC/CyIjM3smlStMC4v56fBT8KTU1vUzsO81wGCRlmg4IcFSLtda8P
-         ISR1l5KLwl1GP1jDUYVcHAIX4ACiwKv6Y+QXdhzb51q36wNPrCZZczZy7AtVqfRpDeEz
-         /Kgv1Zqqk/wR3FrBobJhWN51moUeJewLEaBzaNmP5gaDJNBx7WFALz/shuZxdvbS1Msg
-         A0s3D0zV4bqHcCRAm352J7xOh3Mnxbw6/9oMDz/SvsA+iXdvjUzHDSv97qAUW9unOf07
-         axupUUbmf+mHLdjMLuWLUPlCooVe6RMNl2WQruRHMvnDps6uAlSXc0S3zBPdzmfnp/yP
-         p+vQ==
-X-Gm-Message-State: AJIora+IJK3YZCO2OLpYEslCLapjQ1PRcMdXN5hIx46BETbRHJ1AtNWZ
-        EhcEHm1PipSXjNjndxM7VnJInCqq45aa5XNm
-X-Google-Smtp-Source: AGRyM1uiwmRvU31oLYiU1ECksd5NSlXwVDiXq8hQlLzcKKda91nB+pfaCbxy81niZoP6dlKPrekXPw==
-X-Received: by 2002:a05:6512:b1c:b0:481:618f:ec9 with SMTP id w28-20020a0565120b1c00b00481618f0ec9mr11690964lfu.217.1656942973396;
-        Mon, 04 Jul 2022 06:56:13 -0700 (PDT)
+        bh=rsGLGImmqJHiDHb1+WwnYqEd/8jZefskys3h5JlVneg=;
+        b=FFZ/UIkyoq/LlZA+KtmvnDevlhUaGKsAxCXVDfx3M51MCAtgBvZZd0pAOm/VVprK+q
+         /lXEHzhRaIVsDVeUeZ0OhSNyibm2GM9eXmgUVyTG2h5cjvAwfYe0pxacIBwWfzplRrsF
+         KVWlCXTpqOYBWwlbf9L/jekW8QpSbb/c8SIm/Q1V7WKtFWUoOMDbDq1VP3bDRtJyFEpF
+         0hWoCebnfNh+Rw6cmtNx1BuSThC1ip8IKSehunFLrb36P/3HtZ0ZP9NUPbA7A3ocBbK1
+         rhH2coBRk4ONfmG34yuBQSVYvDqnREvwTdF8CsfaWkCL8LIXZMoDFCVxhJv+iUETQ/H7
+         j7tA==
+X-Gm-Message-State: AJIora9+qc+PRCtqQrocAJRYVF9i/ux4cVNFq/H3eS8kgQuQCq6pjaW0
+        WKES27TlDh3XLJ7w1lHoPh7+tw==
+X-Google-Smtp-Source: AGRyM1v3grJoQs3DlcVNMtWXaPEn/5IF0uq3/rPHkUTzMzI1BGZwUeje6eJY93REVviH42628+Gjyw==
+X-Received: by 2002:a05:6512:398d:b0:482:d1b6:d7c2 with SMTP id j13-20020a056512398d00b00482d1b6d7c2mr531969lfu.628.1656943488771;
+        Mon, 04 Jul 2022 07:04:48 -0700 (PDT)
 Received: from [192.168.1.52] ([84.20.121.239])
-        by smtp.gmail.com with ESMTPSA id q17-20020ac246f1000000b00478ee191091sm5139288lfo.153.2022.07.04.06.56.12
+        by smtp.gmail.com with ESMTPSA id m10-20020a056512358a00b0047255d21129sm5163689lfr.88.2022.07.04.07.04.47
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 04 Jul 2022 06:56:12 -0700 (PDT)
-Message-ID: <181a5cc7-c274-06c0-908b-874d48e24913@linaro.org>
-Date:   Mon, 4 Jul 2022 15:56:11 +0200
+        Mon, 04 Jul 2022 07:04:48 -0700 (PDT)
+Message-ID: <52af0501-d921-9ab3-6de8-c074a2d03885@linaro.org>
+Date:   Mon, 4 Jul 2022 16:04:47 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.10.0
-Subject: Re: [PATCH] arm64: dts: ipq8074: add reset to SDHCI
+Subject: Re: [PATCH 1/6] dt-bindings: clock: Add schema for MSM8909 GCC
 Content-Language: en-US
-To:     Robert Marko <robimarko@gmail.com>
+To:     Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        krzysztof.kozlowski+dt@linaro.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Devicetree List <devicetree@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-References: <20220704114430.625365-1-robimarko@gmail.com>
- <7cb6fd46-ac80-fbc5-67f7-920934bb801c@linaro.org>
- <CAOX2RU5UeeAh0hzYjANd5w+Y4NfxWN0uVtbjQLGOcTzT7ZRkQA@mail.gmail.com>
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org,
+        Dominik Kobinski <dominikkobinski314@gmail.com>
+References: <20220704133000.2768380-1-stephan.gerhold@kernkonzept.com>
+ <20220704133000.2768380-2-stephan.gerhold@kernkonzept.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <CAOX2RU5UeeAh0hzYjANd5w+Y4NfxWN0uVtbjQLGOcTzT7ZRkQA@mail.gmail.com>
+In-Reply-To: <20220704133000.2768380-2-stephan.gerhold@kernkonzept.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -82,41 +85,74 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 04/07/2022 14:34, Robert Marko wrote:
-> On Mon, 4 Jul 2022 at 14:29, Krzysztof Kozlowski
-> <krzysztof.kozlowski@linaro.org> wrote:
->>
->> On 04/07/2022 13:44, Robert Marko wrote:
->>> Add reset to SDHCI controller so it can be reset to avoid timeout issues
->>> after software reset due to bootloader set configuration.
->>>
->>> Signed-off-by: Robert Marko <robimarko@gmail.com>
->>> ---
->>>  arch/arm64/boot/dts/qcom/ipq8074.dtsi | 1 +
->>>  1 file changed, 1 insertion(+)
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
->>> index ddafc7de6c5f..d685ca1969a3 100644
->>> --- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
->>> +++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
->>> @@ -482,6 +482,7 @@ sdhc_1: mmc@7824900 {
->>>                                <&gcc GCC_SDCC1_APPS_CLK>,
->>>                                <&xo>;
->>>                       clock-names = "iface", "core", "xo";
->>> +                     resets = <&gcc GCC_SDCC1_BCR>;
->>
->> I looked at the bindings and they do not allow reset property, so does
->> it depend on anything?
+On 04/07/2022 15:29, Stephan Gerhold wrote:
+> The Global Clock Controller (GCC) in the MSM8909 SoC provides clocks,
+> resets and power domains for the various hardware blocks in the SoC.
+> Add a DT schema to describe it, similar to other Qualcomm SoCs.
 > 
-> Hi Krzysztof,
-> It seems like the driver changes [1] were merged at the same time as
-> when bindings
-> were being converted and nobody ever follow up with documenting the property.
+> Signed-off-by: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+> ---
+>  .../bindings/clock/qcom,gcc-msm8909.yaml      |  56 +++++
+>  include/dt-bindings/clock/qcom,gcc-msm8909.h  | 218 ++++++++++++++++++
+>  2 files changed, 274 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-msm8909.yaml
+>  create mode 100644 include/dt-bindings/clock/qcom,gcc-msm8909.h
 > 
-> I can document the property and send a v2 if that's OK?
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-msm8909.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-msm8909.yaml
+> new file mode 100644
+> index 000000000000..79b50405864b
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/clock/qcom,gcc-msm8909.yaml
+> @@ -0,0 +1,56 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/clock/qcom,gcc-msm8909.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Global Clock & Reset Controller Binding for MSM8909
+> +
+> +maintainers:
+> +  - Stephan Gerhold <stephan@gerhold.net>
+> +
+> +description: |
+> +  Qualcomm global clock control module which supports the clocks, resets and
+> +  power domains on MSM8909.
+> +
+> +  See also:
+> +  - dt-bindings/clock/qcom,gcc-msm8909.h
+> +
+> +properties:
+> +  compatible:
+> +    const: qcom,gcc-msm8909
+> +
+> +  clocks:
+> +    items:
+> +      - description: XO source
+> +      - description: Sleep clock source
+> +      - description: DSI phy instance 0 dsi clock
+> +      - description: DSI phy instance 0 byte clock
+> +
+> +  clock-names:
+> +    items:
+> +      - const: xo
+> +      - const: sleep_clk
+> +      - const: dsi0pll
+> +      - const: dsi0pllbyte
+> +
+> +required:
+> +  - compatible
 
-Yes, please. Otherwise DTS change will fail checks so basically should
-not be accepted.
+Aren't clocks also required? I would assume at least XO is necessary as
+input.
+
+> +
+> +allOf:
+> +  - $ref: qcom,gcc.yaml#
+> +
+> +unevaluatedProperties: false
+
+
 
 Best regards,
 Krzysztof
