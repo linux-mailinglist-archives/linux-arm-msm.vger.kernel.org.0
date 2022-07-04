@@ -2,68 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2A8AB5650EB
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Jul 2022 11:32:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4858756512F
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Jul 2022 11:45:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233757AbiGDJcd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Jul 2022 05:32:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54792 "EHLO
+        id S233674AbiGDJor (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Jul 2022 05:44:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40314 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233713AbiGDJb7 (ORCPT
+        with ESMTP id S233264AbiGDJop (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Jul 2022 05:31:59 -0400
-Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com [IPv6:2607:f8b0:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B24CDFD8
-        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Jul 2022 02:30:54 -0700 (PDT)
-Received: by mail-pf1-x42e.google.com with SMTP id n12so8508719pfq.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Jul 2022 02:30:54 -0700 (PDT)
+        Mon, 4 Jul 2022 05:44:45 -0400
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8AE11F51
+        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Jul 2022 02:44:43 -0700 (PDT)
+Received: by mail-lf1-x130.google.com with SMTP id z13so14766168lfj.13
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Jul 2022 02:44:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=mOcKN2QE8NoS+NlXFqyzvr6uXu60h5tTF9oQlF/WJLc=;
-        b=KILEUB0HZOxwkq5/XBeqjn/uei8YrkNrsJVZViPmOdE2EraFxs3gPVlS9vaVFq0XsV
-         xyilJcHWtyG1L6ky2NJLYlqtWCz5pz9rwz8N2XqcIN6xzN5JMbDz4j45LRocgI6xjf5Q
-         xPiPdfHH1DUNY6GGxTSz6SlQLuWWdgw7Md/KsLQ0v8utLsy0q+ZMkq+BbxntG8pZ+hSa
-         cd4cbVLrBZTXVniEh8tK7lRVrIPmjEqGB6bKca0jeduHPKZ/X1OTqn8CgHgtA4WWReS6
-         e1pUIl2I5ma9I2/6Mjx5WNsCc0XSG+gYr4I/GyOYsEdOj4FRn9hJR7qiqRpmf2nf2Db2
-         gegg==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=LmdZpfhul7AYz3qW3RlxL4bqH00e3NuUlI2WNhk7Mn8=;
+        b=U2yH96tWFNOybcVxh4dfrZVVAFCcl7ZROLLuLwli+5ycQKzpJvOPETxhUeMAyQpGZe
+         tj56S0OmYqEXjBJP43yz5iaxytRUTRZ6w3/VFTWUW/PbSDKSMrfG642JDXHkUJ/Wa2Hr
+         X8EMGxirynH79U9Wdwq4CcL8nYicrSD4BR0FZ9HZaWH2Uds/C7oOLvDAEnobo9EECQxt
+         P93EKZpNRgYdnpsaeLjWa1rGvc2CXaPVLnxBgn37wmZzeRNaLqQj6iTFhKrsKXNd9s+2
+         MablvIJbAuqFQv8xRJesVmbuPX+AQVtXVglm03BfLM/2pA+dcIt5IlSjyqfApm0+L7RY
+         Odtw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=mOcKN2QE8NoS+NlXFqyzvr6uXu60h5tTF9oQlF/WJLc=;
-        b=aHubsv7QPLQKkpl4z69EybUCEJjno8BUperFlq86mKztpkrswmCe4XhprGX8rGxWOC
-         198zQE+QW4ySVrolV2CRO7nQWk728h5Nlhk5CthVu8QhkKpToD96e4UlZ3qEjnpkJ8lv
-         ns2+GniDxAJPooTeTyonMrXfiX1f41oGzo4/a5MnJoE3t9Oe+023jdkHbuSmxx8k/QaK
-         fI1FVfXYP7JJkQ28lMAL7yXZ94PJgopgfHxO6U1j3QqgdkxoNqOyClR7Pir/yWFi0zWt
-         Lwfn3Jo8147+CwSQVxRCaUJv23K+BIy3OOWP9X8Q96RZOx8EQU5VHTVhFz4C8hTdo4Zi
-         omUw==
-X-Gm-Message-State: AJIora9f+DJRQztlp4c5BBi8qBzNel61iMk9a3SkVqI46Yx2LfjuhWv/
-        wQ72mnZuhOJQtuGIsP+rKQw/fQ==
-X-Google-Smtp-Source: AGRyM1vbOAdyX1y53+MovHgyFoSWwnefAVPm2My0x0WH3rIth0QFaye33BFc8w+KNPH6F45CqTuocg==
-X-Received: by 2002:a63:69c9:0:b0:411:994d:1e12 with SMTP id e192-20020a6369c9000000b00411994d1e12mr20645259pgc.383.1656927053749;
-        Mon, 04 Jul 2022 02:30:53 -0700 (PDT)
-Received: from leo-build-box.lan ([154.3.32.171])
-        by smtp.gmail.com with ESMTPSA id ms16-20020a17090b235000b001ef81bac701sm2926177pjb.42.2022.07.04.02.30.51
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=LmdZpfhul7AYz3qW3RlxL4bqH00e3NuUlI2WNhk7Mn8=;
+        b=Ae4m+2CL/rsjL1x1+KVYyhs9CpKmInyHjDU4pZwhs/LqSaRosFa6IVqicoZlwQrwBB
+         bgMUnPUjdTGPV3yKUlCtuC6rj4M0rVrwdG0UCN7Hr8xTkl6fnGnE9Fy62A0VcW1fxWbN
+         hL0K239hBZM7NudKd2XfYVCXZMQXY8zBTcBw3B+wrgSJm/gozguBDjIujOzbJHayfbuh
+         nS2ouu9LgUDd6CWG/oGKwdC08VPsOgGPi91N60zPdWHz7iVDneCQaPu4NCSbTN3Rets5
+         i0izg+1LYeJFr3xA8bCwCIZIvgyyzttD+c21QOVu8pGydnVVuDuHIxi+jhJKqiB7/KAU
+         SBvg==
+X-Gm-Message-State: AJIora/MrosSYEtXmYHSbU68Ipetf3eD8WYDi4vhETmHZrRGTQzjluKY
+        8s1cEpxbxBF1bkwwn0jZ4o0cag==
+X-Google-Smtp-Source: AGRyM1tYuNf56EgZ3K5y1zSmnh/3A9NAy3fnjug/zGIClMQdPs9SY7ng7KgVHxFZ0ZOuqKsOB+0AKw==
+X-Received: by 2002:ac2:596f:0:b0:481:1aa9:aa4e with SMTP id h15-20020ac2596f000000b004811aa9aa4emr18535519lfp.84.1656927881877;
+        Mon, 04 Jul 2022 02:44:41 -0700 (PDT)
+Received: from localhost.localdomain (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
+        by smtp.gmail.com with ESMTPSA id u9-20020a2e1409000000b002554b7b9a16sm4872619ljd.73.2022.07.04.02.44.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Jul 2022 02:30:53 -0700 (PDT)
-From:   Leo Yan <leo.yan@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc:     Leo Yan <leo.yan@linaro.org>
-Subject: [PATCH v3 5/5] interconnect: qcom: icc-rpm: Set bandwidth and clock for bucket values
-Date:   Mon,  4 Jul 2022 17:30:29 +0800
-Message-Id: <20220704093029.1126609-6-leo.yan@linaro.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20220704093029.1126609-1-leo.yan@linaro.org>
-References: <20220704093029.1126609-1-leo.yan@linaro.org>
+        Mon, 04 Jul 2022 02:44:41 -0700 (PDT)
+From:   Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+To:     Robert Foss <robert.foss@linaro.org>,
+        Todor Tomov <todor.too@gmail.com>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Hans Verkuil <hans.verkuil@cisco.com>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: [PATCH] media: camss: Clean up received buffers on failed start of streaming
+Date:   Mon,  4 Jul 2022 12:44:37 +0300
+Message-Id: <20220704094437.468395-1-vladimir.zapolskiy@linaro.org>
+X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -76,138 +72,52 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This commit uses buckets for support bandwidth and clock rates.  It
-introduces a new function qcom_icc_bus_aggregate() to calculate the
-aggregate average and peak bandwidths for every bucket, and also it
-calculates the maximum aggregate values across all buckets.
+It is required to return the received buffers, if streaming can not be
+started. For instance media_pipeline_start() may fail with EPIPE, if
+a link validation between entities is not passed, and in such a case
+a user gets a kernel warning:
 
-The maximum aggregate values are used to calculate the final bandwidth
-requests.  And we can set the clock rate per bucket, we use SLEEP bucket
-as default bucket if a platform doesn't enable the interconnect path
-tags in DT binding; otherwise, we use WAKE bucket to set active clock
-and use SLEEP bucket for other clocks.  So far we don't use AMC bucket.
+  WARNING: CPU: 1 PID: 520 at drivers/media/common/videobuf2/videobuf2-core.c:1592 vb2_start_streaming+0xec/0x160
+  <snip>
+  Call trace:
+   vb2_start_streaming+0xec/0x160
+   vb2_core_streamon+0x9c/0x1a0
+   vb2_ioctl_streamon+0x68/0xbc
+   v4l_streamon+0x30/0x3c
+   __video_do_ioctl+0x184/0x3e0
+   video_usercopy+0x37c/0x7b0
+   video_ioctl2+0x24/0x40
+   v4l2_ioctl+0x4c/0x70
 
-Signed-off-by: Leo Yan <leo.yan@linaro.org>
+The fix is to correct the error path in video_start_streaming() of camss.
+
+Fixes: 0ac2586c410f ("media: camss: Add files which handle the video device nodes")
+Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 ---
- drivers/interconnect/qcom/icc-rpm.c | 80 ++++++++++++++++++++++++-----
- 1 file changed, 67 insertions(+), 13 deletions(-)
+ drivers/media/platform/qcom/camss/camss-video.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/interconnect/qcom/icc-rpm.c b/drivers/interconnect/qcom/icc-rpm.c
-index b025fc6b97c9..4b932eb807c7 100644
---- a/drivers/interconnect/qcom/icc-rpm.c
-+++ b/drivers/interconnect/qcom/icc-rpm.c
-@@ -302,18 +302,62 @@ static int qcom_icc_bw_aggregate(struct icc_node *node, u32 tag, u32 avg_bw,
- 	return 0;
- }
+diff --git a/drivers/media/platform/qcom/camss/camss-video.c b/drivers/media/platform/qcom/camss/camss-video.c
+index b5f12ec5c50c..d272ffa02112 100644
+--- a/drivers/media/platform/qcom/camss/camss-video.c
++++ b/drivers/media/platform/qcom/camss/camss-video.c
+@@ -495,7 +495,7 @@ static int video_start_streaming(struct vb2_queue *q, unsigned int count)
  
-+/**
-+ * qcom_icc_bus_aggregate - aggregate bandwidth by traversing all nodes
-+ * @provider: generic interconnect provider
-+ * @agg_avg: an array for aggregated average bandwidth of buckets
-+ * @agg_peak: an array for aggregated peak bandwidth of buckets
-+ * @max_agg_avg: pointer to max value of aggregated average bandwidth
-+ * @max_agg_peak: pointer to max value of aggregated peak bandwidth
-+ */
-+static void qcom_icc_bus_aggregate(struct icc_provider *provider,
-+				   u64 *agg_avg, u64 *agg_peak,
-+				   u64 *max_agg_avg, u64 *max_agg_peak)
-+{
-+	struct icc_node *node;
-+	struct qcom_icc_node *qn;
-+	int i;
-+
-+	/* Initialise aggregate values */
-+	for (i = 0; i < QCOM_ICC_NUM_BUCKETS; i++) {
-+		agg_avg[i] = 0;
-+		agg_peak[i] = 0;
-+	}
-+
-+	*max_agg_avg = 0;
-+	*max_agg_peak = 0;
-+
-+	/*
-+	 * Iterate nodes on the interconnect and aggregate bandwidth
-+	 * requests for every bucket.
-+	 */
-+	list_for_each_entry(node, &provider->nodes, node_list) {
-+		qn = node->data;
-+		for (i = 0; i < QCOM_ICC_NUM_BUCKETS; i++) {
-+			agg_avg[i] += qn->sum_avg[i];
-+			agg_peak[i] = max_t(u64, agg_peak[i], qn->max_peak[i]);
-+		}
-+	}
-+
-+	/* Find maximum values across all buckets */
-+	for (i = 0; i < QCOM_ICC_NUM_BUCKETS; i++) {
-+		*max_agg_avg = max_t(u64, *max_agg_avg, agg_avg[i]);
-+		*max_agg_peak = max_t(u64, *max_agg_peak, agg_peak[i]);
-+	}
-+}
-+
- static int qcom_icc_set(struct icc_node *src, struct icc_node *dst)
- {
- 	struct qcom_icc_provider *qp;
- 	struct qcom_icc_node *src_qn = NULL, *dst_qn = NULL;
- 	struct icc_provider *provider;
--	struct icc_node *n;
- 	u64 sum_bw;
- 	u64 max_peak_bw;
- 	u64 rate;
--	u32 agg_avg = 0;
--	u32 agg_peak = 0;
-+	u64 agg_avg[QCOM_ICC_NUM_BUCKETS], agg_peak[QCOM_ICC_NUM_BUCKETS];
-+	u64 max_agg_avg, max_agg_peak;
- 	int ret, i;
-+	int bucket;
+ 	ret = media_pipeline_start(&vdev->entity, &video->pipe);
+ 	if (ret < 0)
+-		return ret;
++		goto flush_buffers;
  
- 	src_qn = src->data;
- 	if (dst)
-@@ -321,12 +365,11 @@ static int qcom_icc_set(struct icc_node *src, struct icc_node *dst)
- 	provider = src->provider;
- 	qp = to_qcom_provider(provider);
+ 	ret = video_check_format(video);
+ 	if (ret < 0)
+@@ -524,6 +524,7 @@ static int video_start_streaming(struct vb2_queue *q, unsigned int count)
+ error:
+ 	media_pipeline_stop(&vdev->entity);
  
--	list_for_each_entry(n, &provider->nodes, node_list)
--		provider->aggregate(n, 0, n->avg_bw, n->peak_bw,
--				    &agg_avg, &agg_peak);
-+	qcom_icc_bus_aggregate(provider, agg_avg, agg_peak, &max_agg_avg,
-+			       &max_agg_peak);
++flush_buffers:
+ 	video->ops->flush_buffers(video, VB2_BUF_STATE_QUEUED);
  
--	sum_bw = icc_units_to_bps(agg_avg);
--	max_peak_bw = icc_units_to_bps(agg_peak);
-+	sum_bw = icc_units_to_bps(max_agg_avg);
-+	max_peak_bw = icc_units_to_bps(max_agg_peak);
- 
- 	ret = __qcom_icc_set(src, src_qn, sum_bw);
- 	if (ret)
-@@ -337,12 +380,23 @@ static int qcom_icc_set(struct icc_node *src, struct icc_node *dst)
- 			return ret;
- 	}
- 
--	rate = max(sum_bw, max_peak_bw);
--
--	do_div(rate, src_qn->buswidth);
--	rate = min_t(u64, rate, LONG_MAX);
--
- 	for (i = 0; i < qp->num_clks; i++) {
-+		/*
-+		 * Use WAKE bucket for active clock, otherwise, use SLEEP bucket
-+		 * for other clocks.  If a platform doesn't set interconnect
-+		 * path tags, by default use sleep bucket for all clocks.
-+		 *
-+		 * Note, AMC bucket is not supported yet.
-+		 */
-+		if (!strcmp(qp->bus_clks[i].id, "bus_a"))
-+			bucket = QCOM_ICC_BUCKET_WAKE;
-+		else
-+			bucket = QCOM_ICC_BUCKET_SLEEP;
-+
-+		rate = icc_units_to_bps(max(agg_avg[bucket], agg_peak[bucket]));
-+		do_div(rate, src_qn->buswidth);
-+		rate = min_t(u64, rate, LONG_MAX);
-+
- 		if (qp->bus_clk_rate[i] == rate)
- 			continue;
- 
+ 	return ret;
 -- 
-2.25.1
+2.33.0
 
