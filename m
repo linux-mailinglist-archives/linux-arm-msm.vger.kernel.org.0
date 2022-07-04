@@ -2,101 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9DFF4565881
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Jul 2022 16:21:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0D90B5658A2
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Jul 2022 16:29:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233860AbiGDOVH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Jul 2022 10:21:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54244 "EHLO
+        id S234428AbiGDO3S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Jul 2022 10:29:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60266 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229473AbiGDOVG (ORCPT
+        with ESMTP id S231208AbiGDO3R (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Jul 2022 10:21:06 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D217B10B5;
-        Mon,  4 Jul 2022 07:21:05 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 96067B8104A;
-        Mon,  4 Jul 2022 14:21:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BDB7C3411E;
-        Mon,  4 Jul 2022 14:21:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1656944463;
-        bh=12vzbNxNUnFOcp03yedceqZx1z1ZYE4M2dVAZ89UotM=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=S6p4JmIu5nOOrSEmp2cDT9G8ifOIRlFhh5ky5zveJCGFCzSWMu67zL9jSPMf1YxBY
-         3e63WXwyy+SH3Dair7MaPxlg4BGU5RJHDQELy18y0gTklCzsca/v9/EMU3OWW5Fxro
-         cdwitAqbl6u2dtoGJK523s718hsFw4ALC0tSxZ3Ak46CKMbovkg7vPOJq93N6wGLw5
-         7SJdisdSm8DFJ7KlTDOYx2AGv5nd0YWn0tV73PqwDvCWFr8Gb/EXl7hPYlcNtFgEt5
-         SJdj92agragpITx9sBYrdR19v+FW8SuKN9wyEYq4Y8ZMNcvwVE65lTou36rAZtoVCw
-         gHDIfK2m98gvQ==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1o8Mwh-0006yf-0j; Mon, 04 Jul 2022 16:21:03 +0200
-Date:   Mon, 4 Jul 2022 16:21:03 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Rob Herring <robh@kernel.org>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 03/10] dt-bindings: PCI: qcom: Enumerate platforms with
- single msi interrupt
-Message-ID: <YsL3T8GjDzuxfRtP@hovoldconsulting.com>
-References: <20220629141000.18111-1-johan+linaro@kernel.org>
- <20220629141000.18111-4-johan+linaro@kernel.org>
- <c20ba06c-b37a-e91c-84c6-6d2147bb2478@linaro.org>
- <Yr6ykvru52aDZhFm@hovoldconsulting.com>
- <20220701183819.GB1284915-robh@kernel.org>
+        Mon, 4 Jul 2022 10:29:17 -0400
+Received: from mail-yb1-xb35.google.com (mail-yb1-xb35.google.com [IPv6:2607:f8b0:4864:20::b35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1FFB10B1
+        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Jul 2022 07:29:16 -0700 (PDT)
+Received: by mail-yb1-xb35.google.com with SMTP id j7so10829265ybj.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Jul 2022 07:29:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:reply-to:sender:from:date:message-id:subject:to;
+        bh=8L3u9yLimYhqEYiPckuKAsVAuSvOnpygme4DEwcN/0I=;
+        b=Bf/vmVTnh8EhRejg8RxNRn2jb9ee2q9ErYzhp3fApr6P3EPG44bE+6JuwqHpkwSyZL
+         ug5a6g4FeQbRm0QbDKhIsPXkYJult1O05HSgF0t2lkauniY5sng28EsK613uFL1IDlYg
+         k9rqN27XzCSvYB7UkykvKuvZoSnKt7lzmQ6frNFz9Uz8W0zxDdLBtfAi64yVHia4ZCRA
+         VakjoKqWhuzlY8s2fUod9K1UOqqBh2EreYc7xKbw3h15RAPtE5372nfShgMH16yOQyaN
+         DnEwph4UPdFl0Lk2ChwP1S/izDRFD6vPGY6NpF3eJ47gsQ/DibhN8SFKLCIXi3f6vMqV
+         iLbQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:reply-to:sender:from:date
+         :message-id:subject:to;
+        bh=8L3u9yLimYhqEYiPckuKAsVAuSvOnpygme4DEwcN/0I=;
+        b=WPeyuXPMgVDeBFSnG0GA3qmmfceN4KQEEm7mKjR0nmNXnzc8z24EtNrzSVRTtVaeJc
+         DMLjeKorjktDXd9YxH4/PRla60IlSCH66bdcsgLNX1aJgWsemDDk4mrU/SnusDYJEEqE
+         bZs7UhXiff/DP/Rjegb2Q3VKhOIbOFLik4nwondcnhjPtKVCCwfMVS7lZO0IY2VUA1HZ
+         ky0cKhMx62T5nKdP5lNcKscRi+Jm6bJIOfZmlesDrMuhEahZfBVrmXewn1b9KBXbOskB
+         7nWD4IbAWji2MUrDasDV1FZHux2TrZWsEwYa+paWam9xGH9xxcxs9xXZwTSLlXj3AvZ+
+         luKg==
+X-Gm-Message-State: AJIora99ykYXdEvhpZE7PVXYtBCW1u8XoVRm1eALkIqH2/dRDs9onZvo
+        P70Z1HxYhwc7L8lRlArmT2ji2YArRRKE6Vn+Nw==
+X-Google-Smtp-Source: AGRyM1voX2rGsvgw9fTsp1p5uPNB88BWDYFqD5vFlIEjLxCtJplHwuMPDoXxf35111NN1Eo96ubwjb0sk2NZFxP4qxE=
+X-Received: by 2002:a25:abb3:0:b0:66e:2f9a:4201 with SMTP id
+ v48-20020a25abb3000000b0066e2f9a4201mr11903241ybi.125.1656944955827; Mon, 04
+ Jul 2022 07:29:15 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220701183819.GB1284915-robh@kernel.org>
-X-Spam-Status: No, score=-7.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Reply-To: mayumisakimoto7@gmail.com
+Sender: masakootus21@gmail.com
+Received: by 2002:a05:7000:9708:0:0:0:0 with HTTP; Mon, 4 Jul 2022 07:29:15
+ -0700 (PDT)
+From:   Mayumi Sakimoto <mayumisakimot7@gmail.com>
+Date:   Mon, 4 Jul 2022 17:29:15 +0300
+X-Google-Sender-Auth: F1X5TD4pmkMacwzrHlrvtn6FWjY
+Message-ID: <CAANVZKLcY+C=ouUQCO7ZwY2gmThEgkvazgLtyAFqxvrnJG4tSQ@mail.gmail.com>
+Subject: Hello
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=4.9 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,FREEMAIL_REPLYTO,FREEMAIL_REPLYTO_END_DIGIT,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        UNDISC_FREEM autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Level: ****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jul 01, 2022 at 12:38:19PM -0600, Rob Herring wrote:
-> On Fri, Jul 01, 2022 at 10:38:42AM +0200, Johan Hovold wrote:
-> > On Fri, Jul 01, 2022 at 10:33:35AM +0200, Krzysztof Kozlowski wrote:
-> > > On 29/06/2022 16:09, Johan Hovold wrote:
-> > > > Explicitly enumerate the older platforms that have a single msi host
-> > > > interrupt. This allows for adding further platforms without resorting
-> > > > to nested conditionals.
-> > > > 
-> > > > Drop the redundant comment about older chipsets instead of moving it.
-> > > > 
-> > > > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> > > 
-> > > This does not exist in linux-next, so it should be squashed it with the
-> > > previous series.
-> > 
-> > As mentioned in the cover letter this depends on the MSI series that has
-> > unfortunately not yet been merged.
-> > 
-> > That series is self-contained and ready to be merged, so this follow-up
-> > does not need to be squashed in.
-> 
-> I suspect that Bjorn would rather squash these in.
+Greetings,
 
-Sure. Squashing in the compatible-conditional fix makes sense, but the
-motivation for this one is the SoC added by this series so I'd argue
-that it belongs here. But either way is fine with me.
+ I hope this email finds you well, Please accept my sincere apologies if
+my email does not meet your business or personal ethics. Please I have something
+very important to discuss with you.I need to entrust you with a
+humanitarian project, Please reply to me as soon as possible.
 
-Johan
+
+Kind Regards,
+mayumi sakimoto
