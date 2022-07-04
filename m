@@ -2,67 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3C35A565DAB
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Jul 2022 20:58:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 149F3565DD8
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Jul 2022 21:15:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233985AbiGDS6F (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Jul 2022 14:58:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51222 "EHLO
+        id S233301AbiGDTPt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Jul 2022 15:15:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33858 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234174AbiGDS56 (ORCPT
+        with ESMTP id S229666AbiGDTPs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Jul 2022 14:57:58 -0400
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 354211260C
-        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Jul 2022 11:57:53 -0700 (PDT)
-Received: by mail-wm1-x32e.google.com with SMTP id m184so5882641wme.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Jul 2022 11:57:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=d5poSYlinO2iAnmaIm0CnEx4qAIHaY4O+1UlEMuYCNc=;
-        b=Cbxc+86iTX0z4WsVPx5OduAQlR9qkJU7TB0nwc6Kr1qNOKOmuUXX0DJw/PVhgaOEpA
-         n/wmw3ELdBLOOzG4MFSbUWg0ZgdOpH77GcD8zIwGedIt1aYwzCkqLEUUy8mx0GVWGWvn
-         XIRg7trM37CE4YC6Bu8BEICgISr7YUzsCJi3ELfL+TAMq/imcAsxiWiufaFrJ1nEGyXF
-         wTFu9aQfeI7OPr4MwY6WTbxJZ3jJjW0t+9GRmFf6HXJ5gQe1OQwdORBCGezbJAp7KOQU
-         126EmhjOKrZbyYhnjN2o+44jc20BKsdQgTtTcwTaqZdvh61PxlK8/PBeUWK0iS5UhjLZ
-         ZBmg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=d5poSYlinO2iAnmaIm0CnEx4qAIHaY4O+1UlEMuYCNc=;
-        b=coukmojcPhkLA5NXzQpcD+9PDa7nHaBUIIjjbHfAsvM3WwxF1itfSb127/Xf5qPNzc
-         ywyJrkSoWMW1sN3QHuDtLOvoVaCNR1daPrd0owhkXDAv7cSD25xGayUnQczomd5eRNjj
-         uy5CNjBrifx+n5BfK8FrTx1Wf27T+bwu81nW//5sQFbdwWLuzWS0Y27orFAtX58Uq3Cm
-         7VKBOMU0z3uYkOH3P9jUyPS1186hznEfirOPLNITpk/KZMkjaSkhpaq9LZTCWHV9zLge
-         jAcHseQA9MVvFZcoAEnBhjBIJ5GYErKbP5BmRlxI+wiQEw8rBPGixb8DfodkVu8aC4M4
-         SZCA==
-X-Gm-Message-State: AJIora9aGvkykLXTE25aA2rdeLi2yCpgZxCirNj6Z3b7rGi0Pw2KJZfi
-        VbazsNJ0hTxQKKJcUsCehq8iDXcE/Byvyw==
-X-Google-Smtp-Source: AGRyM1vGKLOIMfCnLIwkfuo7eLCoSbQovJPAOaBT8opy2GAUFI4vyW7duiJLDWYmedNsLyIsleeVdQ==
-X-Received: by 2002:a05:600c:255:b0:3a1:963d:2ba3 with SMTP id 21-20020a05600c025500b003a1963d2ba3mr14093642wmj.200.1656961071630;
-        Mon, 04 Jul 2022 11:57:51 -0700 (PDT)
-Received: from localhost.localdomain ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id ba15-20020a0560001c0f00b0021bae66362esm27937213wrb.58.2022.07.04.11.57.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Jul 2022 11:57:50 -0700 (PDT)
-From:   Abel Vesa <abel.vesa@linaro.org>
-To:     Mike Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>
-Cc:     linux-clk@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>
-Subject: [RFC] clk: Add clk_hw based provider enable/disable API
-Date:   Mon,  4 Jul 2022 21:57:33 +0300
-Message-Id: <20220704185733.1288578-1-abel.vesa@linaro.org>
-X-Mailer: git-send-email 2.34.3
+        Mon, 4 Jul 2022 15:15:48 -0400
+Received: from bombadil.infradead.org (bombadil.infradead.org [IPv6:2607:7c80:54:3::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6BE76351;
+        Mon,  4 Jul 2022 12:15:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
+        Content-Type:In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:
+        Message-ID:Sender:Reply-To:Content-ID:Content-Description;
+        bh=9LEtZ7AeBNN6P70RAq3sG9bOAFlAYv5x5HPRLtRJ+C4=; b=pw1Zw0tibK+sD2iCiB4IwoFEFf
+        163lTNfUK64j7CDKzhzuYZXLNznA7TJNPEpD/Durtmk4qqNOgJc9x4ZxVHbRVRLv01kzuuB+f+cJ4
+        CxTZEczO/AytaFQOJ6uSUUM7SPESP1D4ks5M3ilbVCFydWe813COKbqRkuMemd6SVkLSsGV275lM6
+        2lNbhzRQrzy8B/7wgNNs7i/NTqVTgEnKlqXUuiSb8Y/4KLM++gwtn9I7LyMKFz1+OAaSLnLpaoXs5
+        No5yJ2kqN4nvlMFZvmcm4MAkpXJ2T2z+KqBjHgHoliz1+J5f+KNZvCHbxPep6YCfEQQG/R6odJIDx
+        LRz+mfoQ==;
+Received: from [2601:1c0:6280:3f0::a6b3]
+        by bombadil.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
+        id 1o8RXr-00B9Ry-GN; Mon, 04 Jul 2022 19:15:43 +0000
+Message-ID: <d803c02c-1a9c-59be-969a-5e4daae5f59c@infradead.org>
+Date:   Mon, 4 Jul 2022 12:15:42 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH v8 2/4] soc: qcom: icc-bwmon: Add bandwidth monitoring
+ driver
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Georgi Djakov <djakov@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Cc:     Rajendra Nayak <quic_rjendra@quicinc.com>,
+        Thara Gopinath <thara.gopinath@gmail.com>
+References: <20220704121730.127925-1-krzysztof.kozlowski@linaro.org>
+ <20220704121730.127925-3-krzysztof.kozlowski@linaro.org>
+ <3770bc6d-b3cc-9e49-a832-4c15af0b5f1a@infradead.org>
+ <9cd658cd-3b8c-89d1-651d-ce81794fb68c@linaro.org>
+From:   Randy Dunlap <rdunlap@infradead.org>
+In-Reply-To: <9cd658cd-3b8c-89d1-651d-ce81794fb68c@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -70,76 +65,42 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Sometimes, a clock needs to be enabled or disabled by the provider,
-without actually touching the enable count. For example, a clock
-provider driver might choose to disable some unused clocks on sync state
-callback rather than on the default clk_disable_unused. Such clocks are
-usually enabled by bootloader and need to stay ungated until some driver
-built as module probes. So add clk_hw enable/disable to allow the clock
-provider drivers to disable such clocks on sync state callback.
 
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
----
- drivers/clk/clk.c            | 25 +++++++++++++++++++++++++
- include/linux/clk-provider.h |  2 ++
- 2 files changed, 27 insertions(+)
 
-diff --git a/drivers/clk/clk.c b/drivers/clk/clk.c
-index f00d4c1158d7..a727cffb6bba 100644
---- a/drivers/clk/clk.c
-+++ b/drivers/clk/clk.c
-@@ -1011,6 +1011,17 @@ void clk_disable(struct clk *clk)
- }
- EXPORT_SYMBOL_GPL(clk_disable);
- 
-+void clk_hw_disable(const struct clk_hw *hw)
-+{
-+	struct clk_core *core = hw->core;
-+
-+	trace_clk_disable(core);
-+	if (core->ops->disable)
-+		core->ops->disable(core->hw);
-+	trace_clk_disable_complete(core);
-+}
-+EXPORT_SYMBOL_GPL(clk_hw_disable);
-+
- static int clk_core_enable(struct clk_core *core)
- {
- 	int ret = 0;
-@@ -1176,6 +1187,20 @@ int clk_enable(struct clk *clk)
- }
- EXPORT_SYMBOL_GPL(clk_enable);
- 
-+int clk_hw_enable(const struct clk_hw *hw)
-+{
-+	struct clk_core *core = hw->core;
-+	int ret = 0;
-+
-+	trace_clk_enable(core);
-+	if (core->ops->enable)
-+		ret = core->ops->enable(core->hw);
-+	trace_clk_enable_complete(core);
-+
-+	return ret;
-+}
-+EXPORT_SYMBOL_GPL(clk_hw_enable);
-+
- /**
-  * clk_is_enabled_when_prepared - indicate if preparing a clock also enables it.
-  * @clk: clock source
-diff --git a/include/linux/clk-provider.h b/include/linux/clk-provider.h
-index c10dc4c659e2..0f9968a7a6d2 100644
---- a/include/linux/clk-provider.h
-+++ b/include/linux/clk-provider.h
-@@ -1212,6 +1212,8 @@ unsigned long clk_hw_get_flags(const struct clk_hw *hw);
- bool clk_hw_is_prepared(const struct clk_hw *hw);
- bool clk_hw_rate_is_protected(const struct clk_hw *hw);
- bool clk_hw_is_enabled(const struct clk_hw *hw);
-+int clk_hw_enable(const struct clk_hw *hw);
-+void clk_hw_disable(const struct clk_hw *hw);
- bool __clk_is_enabled(struct clk *clk);
- struct clk *__clk_lookup(const char *name);
- int __clk_mux_determine_rate(struct clk_hw *hw,
+On 7/4/22 08:22, Krzysztof Kozlowski wrote:
+> On 04/07/2022 17:20, Randy Dunlap wrote:
+>> Hi,
+>>
+>> On 7/4/22 05:17, Krzysztof Kozlowski wrote:
+>>> diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
+>>> index e718b8735444..2c8091535bf7 100644
+>>> --- a/drivers/soc/qcom/Kconfig
+>>> +++ b/drivers/soc/qcom/Kconfig
+>>> @@ -228,4 +228,19 @@ config QCOM_APR
+>>>  	  application processor and QDSP6. APR is
+>>>  	  used by audio driver to configure QDSP6
+>>>  	  ASM, ADM and AFE modules.
+>>> +
+>>> +config QCOM_ICC_BWMON
+>>> +	tristate "QCOM Interconnect Bandwidth Monitor driver"
+>>> +	depends on ARCH_QCOM || COMPILE_TEST
+>>> +	select PM_OPP
+>>> +	help
+>>> +	  Sets up driver monitoring bandwidth on various interconnects and
+>>
+>> 	  Sets up driver bandwidth monitoring
+>>
+>> would be better, I think.
+> 
+> It's a driver which monitors bandwidth, so your version sounds a bit
+> like monitoring of driver's bandwidth.
+> 
+> Maybe should be:
+>     Sets up driver which monitors bandwidth...
+> ?
+
+Yes, that's OK.
+Thanks.
+
 -- 
-2.34.3
-
+~Randy
