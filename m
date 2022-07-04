@@ -2,74 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5171B5654FA
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Jul 2022 14:18:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C0B04565551
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Jul 2022 14:30:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233408AbiGDMSg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Jul 2022 08:18:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53794 "EHLO
+        id S233968AbiGDM3H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Jul 2022 08:29:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35568 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234156AbiGDMSH (ORCPT
+        with ESMTP id S233988AbiGDM2u (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Jul 2022 08:18:07 -0400
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CE7312633
-        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Jul 2022 05:17:41 -0700 (PDT)
-Received: by mail-lj1-x22b.google.com with SMTP id v9so10836054ljk.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Jul 2022 05:17:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=C1M+FtKCNKsX4tOnqV3xDo7Y0vEiWdZsYEx0bmq2vBw=;
-        b=kgzluWAvls5eerYpL69ZSzolkF0CaWpkf9EzpVbG6E0L1l7pR39XWHBbKr5mU1Jflv
-         uuKViK6Kg/iq4NwIpV2QdaTD+aaoFNX6FEMYhN1SHkFE1BVErFf+WnUcewHo/ep2sca9
-         eN5z2VHHp734YiJgDG3HY3haLn1azLzbes0GKc/cOUCuQEhAAM7fopEETWAY+STAZAvk
-         Fng1zOxtF+R+ecobWOUQIK4iojMAFoheWVkMNPAjXWynolW6lF70JUYK71a6b0V/d2N3
-         iNdJfW2ETnbEqa/y/BH5bhS9uRwFbaNFWePpmTUCza9bmCkRxvskjUMQgrPxJXEJ8oWm
-         46NQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=C1M+FtKCNKsX4tOnqV3xDo7Y0vEiWdZsYEx0bmq2vBw=;
-        b=OnXQ4Ym01oo2Eaz3xlIigeX11ZY4vq2+QlXYEakdU2yAPWKprmmric/kemUUGMNJW9
-         uaXGzGnFnA6Lf06MDBiTtffr1+ju2/HShyWT2EHl912md1+x050UK5BQ1EEX6Bg0cQiZ
-         DuMKTC6dyaL87gcGkTlhwDXJ+Gn+54ZYs/nDN26fx8pwTTYiMo0Hs92d+Pa1xfWC3swO
-         Oa3gCsgyt9txwUWtX83BaG6OAleVCO+lfKb/1EcRAgfWKrHD0vWNUmLRKCduqzw/PT7c
-         jYOEcVKkY+rhcHDqIcJ8h7OcgVJrTRiB5vF9WC/+pYgxODWiiXBGfEwo3BaHHvk+oDcF
-         lQzg==
-X-Gm-Message-State: AJIora+n9C2Rmv0la2HUsGaoGu7Aa6m3CTymzPJGFlsny+NQqB3FZmlr
-        BRrElx5r6Trugds67H4rqufOvw==
-X-Google-Smtp-Source: AGRyM1tea0fdyzeMMijwvCjJj/z/c6EDy7K9Gdk1BfLqZOaT1ngMIkM67D9M61fD/2namUFa4HF2Qg==
-X-Received: by 2002:a2e:889a:0:b0:25a:ca71:823e with SMTP id k26-20020a2e889a000000b0025aca71823emr15873247lji.11.1656937059833;
-        Mon, 04 Jul 2022 05:17:39 -0700 (PDT)
-Received: from krzk-bin.home ([84.20.121.239])
-        by smtp.gmail.com with ESMTPSA id u11-20020a05651220cb00b0047faa01edd9sm5102149lfr.229.2022.07.04.05.17.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Jul 2022 05:17:39 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Cc:     Rajendra Nayak <quic_rjendra@quicinc.com>,
-        Thara Gopinath <thara.gopinath@gmail.com>
-Subject: [PATCH v8 4/4] arm64: dts: qcom: sdm845: Add CPU BWMON
-Date:   Mon,  4 Jul 2022 14:17:30 +0200
-Message-Id: <20220704121730.127925-5-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220704121730.127925-1-krzysztof.kozlowski@linaro.org>
-References: <20220704121730.127925-1-krzysztof.kozlowski@linaro.org>
+        Mon, 4 Jul 2022 08:28:50 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93669DBB;
+        Mon,  4 Jul 2022 05:28:21 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 3A59B612AC;
+        Mon,  4 Jul 2022 12:28:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EE31C341CD;
+        Mon,  4 Jul 2022 12:28:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1656937700;
+        bh=yQ5mAGdXNAnpq8SFpGC2WWB3XiOgrqUrNVMcn0hvwRE=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=SsiSe/NgXMl8kYo6lD+/wqnajBJhuZ+P9syws5D1c93fUnNzb5/1LJ3PY18AIwLlW
+         NttPZK0dVnP/Hc+AIulYF8q+NVA3v2a+4flAgXg0mgKz1knerTOea1MKaQGEQhUxdf
+         wO0zt7/tHNTnyG6uKyeaEMHSAq6DEldpmMJ68vewXoFQxGaKFoUinSy41JevdShZ13
+         i1m3aakHP7a5G2jOLq7qmU72nHoMFPaxG+BBSuasoX3TT1iLd9YrNAZcaWikpbz3mm
+         GbRl2F1nRJKjHXHOrpmrU5OdJdS8GI++Qbg8L0zRwQLQx90nidRLbRmJHdwL7DMMY3
+         v5DUputjAPAcw==
+Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-317a66d62dfso80543327b3.7;
+        Mon, 04 Jul 2022 05:28:20 -0700 (PDT)
+X-Gm-Message-State: AJIora8CFSe7tGyMekj+mAP0tYq6RTEjgOtNR6EKcHc9oCciWv8FDqAV
+        dZzdjMKCIBtqg1zL64CnOvt0NvEyosOxpqYglKg=
+X-Google-Smtp-Source: AGRyM1tYCIBxSqSTZRTIEwFGAVCtaVjM9UD/AlGpmHN9furm1OWL9aIe4iZUqSP2k5UTc7TGZN3LNzjHXw5LeYkjKo4=
+X-Received: by 2002:a0d:df0f:0:b0:31b:e000:7942 with SMTP id
+ i15-20020a0ddf0f000000b0031be0007942mr30962907ywe.320.1656937699632; Mon, 04
+ Jul 2022 05:28:19 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+References: <20220316213118.2352683-1-morbo@google.com> <20220321174912.164113-1-morbo@google.com>
+ <Ypp3MA9s01bWrm2i@penguin> <CAKwvOdnwCVFpMgOih4bf1RAzb6n0Q0+AqaHZxGfnafT+XzAL4A@mail.gmail.com>
+In-Reply-To: <CAKwvOdnwCVFpMgOih4bf1RAzb6n0Q0+AqaHZxGfnafT+XzAL4A@mail.gmail.com>
+From:   Arnd Bergmann <arnd@kernel.org>
+Date:   Mon, 4 Jul 2022 14:28:02 +0200
+X-Gmail-Original-Message-ID: <CAK8P3a0ZDRzWeo3hQGnsQsU3h6Sz5JfY7-N0BNZJ=diSdLrurg@mail.gmail.com>
+Message-ID: <CAK8P3a0ZDRzWeo3hQGnsQsU3h6Sz5JfY7-N0BNZJ=diSdLrurg@mail.gmail.com>
+Subject: Re: [PATCH] soc: qcom: smem: use correct format characters
+To:     Nick Desaulniers <ndesaulniers@google.com>
+Cc:     Bill Wendling <morbo@google.com>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Nathan Chancellor <nathan@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        clang-built-linux <llvm@lists.linux.dev>,
+        Justin Stitt <jstitt007@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-7.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -78,67 +68,14 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add device node for CPU-memory BWMON device (bandwidth monitoring) on
-SDM845 measuring bandwidth between CPU (gladiator_noc) and Last Level
-Cache (memnoc).  Usage of this BWMON allows to remove fixed bandwidth
-votes from cpufreq (CPU nodes) thus achieve high memory throughput even
-with lower CPU frequencies.
+On Sat, Jul 2, 2022 at 12:05 AM Nick Desaulniers
+<ndesaulniers@google.com> wrote:
+>
+> Hi Arnd,
+> Would you be able to merge this patch through the arm-soc tree? The
+> maintainers appear to be MIA here.
+> https://lore.kernel.org/lkml/20220321174912.164113-1-morbo@google.com/
 
-Co-developed-by: Thara Gopinath <thara.gopinath@gmail.com>
-Signed-off-by: Thara Gopinath <thara.gopinath@gmail.com>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- arch/arm64/boot/dts/qcom/sdm845.dtsi | 37 ++++++++++++++++++++++++++++
- 1 file changed, 37 insertions(+)
+Applied with minor conflict resolution.
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-index 83e8b63f0910..e65dedfa6cee 100644
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -2026,6 +2026,43 @@ llcc: system-cache-controller@1100000 {
- 			interrupts = <GIC_SPI 582 IRQ_TYPE_LEVEL_HIGH>;
- 		};
- 
-+		pmu@1436400 {
-+			compatible = "qcom,sdm845-bwmon", "qcom,msm8998-bwmon";
-+			reg = <0 0x01436400 0 0x600>;
-+			interrupts = <GIC_SPI 581 IRQ_TYPE_LEVEL_HIGH>;
-+			interconnects = <&gladiator_noc MASTER_APPSS_PROC 3 &mem_noc SLAVE_LLCC 3>;
-+
-+			operating-points-v2 = <&cpu_bwmon_opp_table>;
-+
-+			cpu_bwmon_opp_table: opp-table {
-+				compatible = "operating-points-v2";
-+
-+				/*
-+				 * The interconnect path bandwidth taken from
-+				 * cpu4_opp_table bandwidth for OSM L3
-+				 * interconnect.  This also matches the OSM L3
-+				 * from bandwidth table of qcom,cpu4-l3lat-mon
-+				 * (qcom,core-dev-table, bus width: 16 bytes)
-+				 * from msm-4.9 downstream kernel.
-+				 */
-+				opp-0 {
-+					opp-peak-kBps = <4800000>;
-+				};
-+				opp-1 {
-+					opp-peak-kBps = <9216000>;
-+				};
-+				opp-2 {
-+					opp-peak-kBps = <15052800>;
-+				};
-+				opp-3 {
-+					opp-peak-kBps = <20889600>;
-+				};
-+				opp-4 {
-+					opp-peak-kBps = <25497600>;
-+				};
-+			};
-+		};
-+
- 		pcie0: pci@1c00000 {
- 			compatible = "qcom,pcie-sdm845";
- 			reg = <0 0x01c00000 0 0x2000>,
--- 
-2.34.1
-
+       Arnd
