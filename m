@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E36F6567751
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jul 2022 21:08:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3C1FF567755
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jul 2022 21:08:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233286AbiGETGX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Jul 2022 15:06:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39802 "EHLO
+        id S229807AbiGETHf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Jul 2022 15:07:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41626 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233331AbiGETGH (ORCPT
+        with ESMTP id S230042AbiGETHe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Jul 2022 15:06:07 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDE4F20BEA
-        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Jul 2022 12:06:05 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id i18so22136190lfu.8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Jul 2022 12:06:05 -0700 (PDT)
+        Tue, 5 Jul 2022 15:07:34 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D03B020BF7
+        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Jul 2022 12:07:32 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id bu42so2314993lfb.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Jul 2022 12:07:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=xOhWnb540p1r36VjLLL8ynDSP8n2cvWSH5xUUPsNb0M=;
-        b=lm2URx2gBPg+e7VroVtwkgkusQ2E2ZSJiom5CZjR4M8O5n6lVaAq+I61NSMrLINxtM
-         cZfUeHCtDkFX+ch6acEweNswtrAYaAzNin4rTHPldBoZgJ6QsXvSbhKxEe1B1WF+2RCA
-         NmAJtjqhzptVu6Jo94qpW9zfG4Tyt210jTOlx5NEyzy5morfUcCvi7UoubjtrYo4F/0m
-         dY1P4lSCsbMNCgmeFI/VsmG0wnDx7qvsVhAJHaY5GHNrxbV98U8evB3bHT1qdogPSITI
-         /yPw4VTopbvhVeZCpgD47v9tS84boS2IHUtruz+4c4wzHwzT6JvKCYR5cN6HlF8Kxrhm
-         DaoQ==
+        bh=DnKgC9sCIW8SXV8tcHv5kUM+QyY61ZZmZlUgZGKqW+Q=;
+        b=f/FCG8yL4VOOTwO2rnIiAtzXPtS2mVuAe+XTDCGyoCaarSkKazd9ayjVL9aKwDZEip
+         Hge9vP9wx1uromYafvl/X1WbtDWoqQwJnSDDRxWvUYlJk7/IIEJgwqm6L3kqIUNJRVXX
+         uH/+Gtcyq+X8WA/OER4Gr1j9Xrklt89C6BCC/GQWhxSjmXDltPe22Ol/338WWA7Fl5+g
+         XFQXG7OOJrZXEVFAN9NOP0/LHeBthQ6EAglyrN8O6uI49AJsVBkOrwzfWnK7nEum83As
+         Xz4GajFeK/h1ezkCi5IQaNzhJeYb6oFeg8EpZXxgwaPX2TaoAoop/DKEfKssARrc3hJ2
+         r2hg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=xOhWnb540p1r36VjLLL8ynDSP8n2cvWSH5xUUPsNb0M=;
-        b=3zL4r+Gz7KEd/bLfFHvtXkw1TvZoZpdh9uBBJT2S0NL1FLChQD6INOiYJEUTUaSZgU
-         LriKHy98jd9WqqelRFyBZDm8bXHTJOIS6y/o6fN9GeyDF/hqLWv76gzYYA8RufHKhQ10
-         OULK+LUxV/tjCZ+1HPaDcB1zwzizyUIn03tYOXtItvGRH5jzesxDQXrwHwkeSQROpxC4
-         uP0PU9uELa46MnhdP+mXGZr774wyYmM8TwveeoJVFtGK+gSGA7ZF1VCdi5VFtKRPdShK
-         HEgBtGX9JCPUnVZ6a5EtmmZX7cUbSgwts8qPgHl7w22hyKhAZpyHtxx2zTHBD9rRgTOg
-         2M3w==
-X-Gm-Message-State: AJIora96fCO8xT5DnSqwUj6/a6TRfdwLtcyduzYRzJx+iPpy02CdHRc/
-        Pbv3RYcOiJbrFzcMNusRtCMZBQ==
-X-Google-Smtp-Source: AGRyM1uAV+E6puJrOXSAla6ccZGskpklniPb4N5wfYqqJeeFOoZDBigSJVJ8jjQIAMPwUcg8nbbJ3A==
-X-Received: by 2002:a05:6512:70c:b0:47f:8e9f:ac2 with SMTP id b12-20020a056512070c00b0047f8e9f0ac2mr24437278lfs.156.1657047963895;
-        Tue, 05 Jul 2022 12:06:03 -0700 (PDT)
+        bh=DnKgC9sCIW8SXV8tcHv5kUM+QyY61ZZmZlUgZGKqW+Q=;
+        b=8LNVjjo5ZBvsHDbmOmoG4llDjy+X7GZk+/cIT3CIe8ZxawFKyil0w5ZlsGkdtZtJAu
+         jupPSGsOZJVs8QdOV0hwvb/OjdDVlW9+s405QGBa4g3200OzpVWEDwWG2johsd9Lm4D2
+         XjuEjojgIjTGbDqgrOkB41SzfNsTGvYXVi0kEZfMPxxqHNFhsKrGERdfu1OI7N2oLzXA
+         8DdVB7ivE6QHJj8EZdMgRH2516aUxlBRFwS7XGgjG8vS8q7cdESIy7AsuzO8Ra8Ku1EI
+         fPdD10N0Y4E0t8pth0FrwF+r+Zyie2Oy2GxcMU2y9ckNk8dG+gbyWUKnESuvvTata0QJ
+         O0cw==
+X-Gm-Message-State: AJIora+UQaSaSdq0RUTESLMzCKKzESlpYAi+0D14H6oL54R3RGB1LqWa
+        PAqhMToo8/PgRsBkr9asXgAdMQ==
+X-Google-Smtp-Source: AGRyM1t0tljF3Ij4/4tcLOFFrqAsln9WIHlzzxsMkGOGWMfiIex4lo9Ypf2AWIcnRF1E4mgEv9Udkw==
+X-Received: by 2002:a05:6512:22c3:b0:47f:9396:861a with SMTP id g3-20020a05651222c300b0047f9396861amr24766566lfu.230.1657048051185;
+        Tue, 05 Jul 2022 12:07:31 -0700 (PDT)
 Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id u19-20020ac25193000000b0048326115186sm633670lfi.10.2022.07.05.12.06.03
+        by smtp.gmail.com with ESMTPSA id bj11-20020a2eaa8b000000b0025a72db0cf1sm5733629ljb.118.2022.07.05.12.07.30
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 05 Jul 2022 12:06:03 -0700 (PDT)
-Message-ID: <6562f44a-dfd8-f8c4-0271-2cda6afd7c2a@linaro.org>
-Date:   Tue, 5 Jul 2022 22:06:02 +0300
+        Tue, 05 Jul 2022 12:07:30 -0700 (PDT)
+Message-ID: <14283b06-d8d3-aa4c-6db8-eb34e597bef8@linaro.org>
+Date:   Tue, 5 Jul 2022 22:07:30 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.10.0
-Subject: Re: [PATCH v4 4/7] drm/bridge: use atomic enable/disable callbacks
- for panel bridge
+Subject: Re: [PATCH v4 6/7] drm/msm/disp/dpu1: use atomic enable/disable
+ callbacks for encoder functions
 Content-Language: en-GB
 To:     Vinod Polimera <quic_vpolimer@quicinc.com>,
         dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
@@ -67,9 +67,9 @@ Cc:     linux-kernel@vger.kernel.org, robdclark@gmail.com,
         quic_aravindh@quicinc.com, quic_abhinavk@quicinc.com,
         quic_sbillaka@quicinc.com
 References: <1657040445-13067-1-git-send-email-quic_vpolimer@quicinc.com>
- <1657040445-13067-5-git-send-email-quic_vpolimer@quicinc.com>
+ <1657040445-13067-7-git-send-email-quic_vpolimer@quicinc.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <1657040445-13067-5-git-send-email-quic_vpolimer@quicinc.com>
+In-Reply-To: <1657040445-13067-7-git-send-email-quic_vpolimer@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -83,75 +83,57 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 05/07/2022 20:00, Vinod Polimera wrote:
-> Use atomic variants for panel bridge callback functions such that
+> Use atomic variants for encoder callback functions such that
 > certain states like self-refresh can be accessed as part of
 > enable/disable sequence.
 > 
-> Signed-off-by: Sankeerth Billakanti <quic_sbillaka@quicinc.com>
+> Signed-off-by: Kalyan Thota <quic_kalyant@quicinc.com>
 > Signed-off-by: Vinod Polimera <quic_vpolimer@quicinc.com>
+> 
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+No. Your sign off should be the last tag here. Also there should be no 
+blank lines between tags.
 
 > ---
->   drivers/gpu/drm/bridge/panel.c | 20 ++++++++++++--------
->   1 file changed, 12 insertions(+), 8 deletions(-)
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 10 ++++++----
+>   1 file changed, 6 insertions(+), 4 deletions(-)
 > 
-> diff --git a/drivers/gpu/drm/bridge/panel.c b/drivers/gpu/drm/bridge/panel.c
-> index 0ee563e..eeb9546 100644
-> --- a/drivers/gpu/drm/bridge/panel.c
-> +++ b/drivers/gpu/drm/bridge/panel.c
-> @@ -108,28 +108,32 @@ static void panel_bridge_detach(struct drm_bridge *bridge)
->   		drm_connector_cleanup(connector);
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> index 5629c0b..f01a976 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> @@ -1130,7 +1130,8 @@ void dpu_encoder_virt_runtime_resume(struct drm_encoder *drm_enc)
+>   	mutex_unlock(&dpu_enc->enc_lock);
 >   }
 >   
-> -static void panel_bridge_pre_enable(struct drm_bridge *bridge)
-> +static void panel_bridge_atomic_pre_enable(struct drm_bridge *bridge,
-> +				struct drm_bridge_state *old_bridge_state)
+> -static void dpu_encoder_virt_enable(struct drm_encoder *drm_enc)
+> +static void dpu_encoder_virt_atomic_enable(struct drm_encoder *drm_enc,
+> +					struct drm_atomic_state *state)
 >   {
->   	struct panel_bridge *panel_bridge = drm_bridge_to_panel_bridge(bridge);
->   
->   	drm_panel_prepare(panel_bridge->panel);
+>   	struct dpu_encoder_virt *dpu_enc = NULL;
+>   	int ret = 0;
+> @@ -1166,7 +1167,8 @@ static void dpu_encoder_virt_enable(struct drm_encoder *drm_enc)
+>   	mutex_unlock(&dpu_enc->enc_lock);
 >   }
 >   
-> -static void panel_bridge_enable(struct drm_bridge *bridge)
-> +static void panel_bridge_atomic_enable(struct drm_bridge *bridge,
-> +				struct drm_bridge_state *old_bridge_state)
+> -static void dpu_encoder_virt_disable(struct drm_encoder *drm_enc)
+> +static void dpu_encoder_virt_atomic_disable(struct drm_encoder *drm_enc,
+> +					struct drm_atomic_state *state)
 >   {
->   	struct panel_bridge *panel_bridge = drm_bridge_to_panel_bridge(bridge);
+>   	struct dpu_encoder_virt *dpu_enc = NULL;
+>   	int i = 0;
+> @@ -2320,8 +2322,8 @@ static void dpu_encoder_frame_done_timeout(struct timer_list *t)
 >   
->   	drm_panel_enable(panel_bridge->panel);
->   }
+>   static const struct drm_encoder_helper_funcs dpu_encoder_helper_funcs = {
+>   	.atomic_mode_set = dpu_encoder_virt_atomic_mode_set,
+> -	.disable = dpu_encoder_virt_disable,
+> -	.enable = dpu_encoder_virt_enable,
+> +	.atomic_disable = dpu_encoder_virt_atomic_disable,
+> +	.atomic_enable = dpu_encoder_virt_atomic_enable,
+>   	.atomic_check = dpu_encoder_virt_atomic_check,
+>   };
 >   
-> -static void panel_bridge_disable(struct drm_bridge *bridge)
-> +static void panel_bridge_atomic_disable(struct drm_bridge *bridge,
-> +				struct drm_bridge_state *old_bridge_state)
->   {
->   	struct panel_bridge *panel_bridge = drm_bridge_to_panel_bridge(bridge);
->   
->   	drm_panel_disable(panel_bridge->panel);
->   }
->   
-> -static void panel_bridge_post_disable(struct drm_bridge *bridge)
-> +static void panel_bridge_atomic_post_disable(struct drm_bridge *bridge,
-> +				struct drm_bridge_state *old_bridge_state)
->   {
->   	struct panel_bridge *panel_bridge = drm_bridge_to_panel_bridge(bridge);
->   
-> @@ -158,10 +162,10 @@ static void panel_bridge_debugfs_init(struct drm_bridge *bridge,
->   static const struct drm_bridge_funcs panel_bridge_bridge_funcs = {
->   	.attach = panel_bridge_attach,
->   	.detach = panel_bridge_detach,
-> -	.pre_enable = panel_bridge_pre_enable,
-> -	.enable = panel_bridge_enable,
-> -	.disable = panel_bridge_disable,
-> -	.post_disable = panel_bridge_post_disable,
-> +	.atomic_pre_enable = panel_bridge_atomic_pre_enable,
-> +	.atomic_enable = panel_bridge_atomic_enable,
-> +	.atomic_disable = panel_bridge_atomic_disable,
-> +	.atomic_post_disable = panel_bridge_atomic_post_disable,
->   	.get_modes = panel_bridge_get_modes,
->   	.atomic_reset = drm_atomic_helper_bridge_reset,
->   	.atomic_duplicate_state = drm_atomic_helper_bridge_duplicate_state,
 
 
 -- 
