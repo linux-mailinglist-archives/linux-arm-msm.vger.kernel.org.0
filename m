@@ -2,61 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 84CB05670CD
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jul 2022 16:19:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1A39B56710C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jul 2022 16:29:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233387AbiGEOS6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Jul 2022 10:18:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42664 "EHLO
+        id S232989AbiGEO24 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Jul 2022 10:28:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55186 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233392AbiGEOSm (ORCPT
+        with ESMTP id S232965AbiGEO2v (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Jul 2022 10:18:42 -0400
-Received: from mail-io1-f48.google.com (mail-io1-f48.google.com [209.85.166.48])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4826C222A7;
-        Tue,  5 Jul 2022 07:14:12 -0700 (PDT)
-Received: by mail-io1-f48.google.com with SMTP id p128so11232297iof.1;
-        Tue, 05 Jul 2022 07:14:11 -0700 (PDT)
+        Tue, 5 Jul 2022 10:28:51 -0400
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33B241164
+        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Jul 2022 07:28:50 -0700 (PDT)
+Received: by mail-lj1-x231.google.com with SMTP id n15so14722441ljg.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Jul 2022 07:28:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :references:from:in-reply-to:content-transfer-encoding;
+        bh=zlsNRm2X6MLPImZjQVBD4LQfVI28AfW4RyaLrq540Ig=;
+        b=VyU9l7p3EytYWgY6C0c3ZWXTzJeb04M6alOtJc9BLR+BgTI27wjjOjjoKvBBLc/y5B
+         UzLmVKUHIoTbD+c1uvcpX7ZykpZEb2oriNmU0DG+o2Qm7E4tVHki18tF8cROHNBV5Bd1
+         UFhV3Lah4xrSyW2grgM4NoUA5+mR/1HKv7LoT/A1bQC/ew3yITwSPKpjHgKf6ArjqCUe
+         mowf23xRm5og0F2ET24nHuti+AMxyNtnPyNBYO705LDquYvz2d21G/TUV2yJcLLPu9Ti
+         HkmsEqagcQldEJozmHFYALyd11VAT/MSlnqLLqoYZSSA49fbPZMStx+uK4kAk0TG/2PH
+         h56A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
-         :message-id;
-        bh=u3B52s9BVjfLE00xH/w1pvHP0oYdlCBCswFBMFKCN8E=;
-        b=l/86pVHRaLUp9Y9Sk7Wi99OycLbkwo/MqN1grV8pR54chBReyWyAPPGDWS39jYBSmF
-         5G0dsLI8WQ7xa2NSlR9zeFGqWKx+YV/l9kdper7Pv+iUaGdeKluanWh6zvShNNuJd45G
-         Orte0iff2fkkpq7sVVxPr0subbleMU75EHlggjxOn4u8hKku052wbADC8QBa4lNrq29h
-         uupbPRNNnO0wtqSUHjikZVwXxCRxYt4fDyAhPBm5/gRAvLTvx8au/MUhuzlwNnpbrM9q
-         JVMfRo3Uu4159Y0ID3C7g8OBGrNUbSRvyR5kgXVEBjLIKtoPf09U/qnyDLO+PQqex6vg
-         gNqw==
-X-Gm-Message-State: AJIora/a2xg4vUPYZD2a2mOy1ZkXKbVYvJhdgiO6HqHezuBJ5R5dWbDS
-        XsM1yPDUYiovn50cWoTU0w==
-X-Google-Smtp-Source: AGRyM1vGWd92SH01YtAp8IRPCxtyzYzM+kpesmmk5aJTp2tiuL15Lk6/prD5mFHrx1PIjHm6qkpuSA==
-X-Received: by 2002:a05:6638:f95:b0:314:58f9:5896 with SMTP id h21-20020a0566380f9500b0031458f95896mr21218247jal.228.1657030451057;
-        Tue, 05 Jul 2022 07:14:11 -0700 (PDT)
-Received: from robh.at.kernel.org ([64.188.179.248])
-        by smtp.gmail.com with ESMTPSA id o4-20020a92d384000000b002dc0ccc4cafsm2777795ilo.49.2022.07.05.07.14.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Jul 2022 07:14:10 -0700 (PDT)
-Received: (nullmailer pid 2035858 invoked by uid 1000);
-        Tue, 05 Jul 2022 14:14:09 -0000
-From:   Rob Herring <robh@kernel.org>
-To:     Johan Hovold <johan+linaro@kernel.org>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-phy@lists.infradead.org, Vinod Koul <vkoul@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=zlsNRm2X6MLPImZjQVBD4LQfVI28AfW4RyaLrq540Ig=;
+        b=Rb1ww2vfxo0z1R+pwAei95+volRbB25EeghZqXdHbBVkoztI0YKk7dMzD40cxwmn+t
+         FgRFGgePBmEcIINMGih+nTQXbf8OGDVS9/2+YJAxOaHHFXXmxiSjyYySEKv77AFKM6+G
+         9re5a6nqk9ge8OiBMalVPcNBQJmwwNb5X+9oaAj36OmRV70GJjP7V0Qi2431SE4LlX/E
+         eIjfMF1hFqR8m+Yz+OVUMoaBl/Q/juA88yFVww0awWl3D0oK4bk8K4gEQixEhSJMRcs5
+         dQyORwEJL3ZTvgLuyXCEaoQiTu2USAj7rJDHgtNXkNzk/wnY4PcdpvY7E0O8T0WcZ0yR
+         Yj9Q==
+X-Gm-Message-State: AJIora+rv3lk6ny1O++jCfL/3I2ToOQug8mLVQYR4taGP1me0qlsO8KO
+        c6U80aGpOcQG30sd+c/hPsbo866jf5xzMA==
+X-Google-Smtp-Source: AGRyM1tCyGcsny1RJepiIU6HQgUv3ZnyQnh+0PZjq3tARwJ642YpS3/ECcELuDy2rQjTlq5j4/L1Hg==
+X-Received: by 2002:a2e:594:0:b0:25d:30fa:eaa5 with SMTP id 142-20020a2e0594000000b0025d30faeaa5mr2392706ljf.86.1657031328532;
+        Tue, 05 Jul 2022 07:28:48 -0700 (PDT)
+Received: from [192.168.1.52] ([84.20.121.239])
+        by smtp.gmail.com with ESMTPSA id b21-20020ac247f5000000b0047f642dd78csm5726321lfp.17.2022.07.05.07.28.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 05 Jul 2022 07:28:48 -0700 (PDT)
+Message-ID: <e84bb14b-a3a5-728d-e3a4-9d2e898a7aca@linaro.org>
+Date:   Tue, 5 Jul 2022 16:28:47 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH 00/13] Add ipq806x missing bindings
+Content-Language: en-US
+To:     Christian Marangi <ansuelsmth@gmail.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Rob Herring <robh+dt@kernel.org>
-In-Reply-To: <20220705094239.17174-18-johan+linaro@kernel.org>
-References: <20220705094239.17174-1-johan+linaro@kernel.org> <20220705094239.17174-18-johan+linaro@kernel.org>
-Subject: Re: [PATCH 17/43] dt-bindings: phy: qcom,qmp-pcie: add missing child node schema
-Date:   Tue, 05 Jul 2022 08:14:09 -0600
-Message-Id: <1657030449.193663.2035856.nullmailer@robh.at.kernel.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20220705133917.8405-1-ansuelsmth@gmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220705133917.8405-1-ansuelsmth@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -64,43 +79,18 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 05 Jul 2022 11:42:13 +0200, Johan Hovold wrote:
-> Add the missing the description of the PHY-provider child node which was
-> ignored when converting to DT schema.
+On 05/07/2022 15:39, Christian Marangi wrote:
+> This series try to add some of the missing bindings for ipq806x.
 > 
-> Also fix up the incorrect description that claimed that one child node
-> per lane was required.
+> This still lacks of the cpu bindings and all the bindings required
+> to scale cpu clk or L2. These will come later as the driver and
+> documentation require some changes.
 > 
-> Fixes: ccf51c1cedfd ("dt-bindings: phy: qcom,qmp: Convert QMP PHY bindings to yaml")
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> ---
->  .../bindings/phy/qcom,qmp-pcie-phy.yaml       | 88 ++++++++++++++++++-
->  1 file changed, 85 insertions(+), 3 deletions(-)
-> 
+> So for now we try to add bindings that can directly applied without
+> making changes to any drivers.
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+You mention here and in subject bindings, but your patchset does not
+have any bindings.
 
-yamllint warnings/errors:
-
-dtschema/dtc warnings/errors:
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/phy/qcom,qmp-pcie-phy.yaml: allOf:3:else:patternProperties:^phy@[0-9a-f]+$:properties:reg: {'minItems': 3, 'maxItems': 4, 'items': [{'description': 'TX'}, {'description': 'RX'}, {'description': 'PCS'}, {'description': 'PCS_MISC'}]} should not be valid under {'required': ['maxItems']}
-	hint: "maxItems" is not needed with an "items" list
-	from schema $id: http://devicetree.org/meta-schemas/items.yaml#
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/phy/qcom,qmp-pcie-phy.yaml: ignoring, error in schema: allOf: 3: else: patternProperties: ^phy@[0-9a-f]+$: properties: reg
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/patch/
-
-This check can fail if there are any dependencies. The base for a patch
-series is generally the most recent rc1.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit.
-
+Best regards,
+Krzysztof
