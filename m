@@ -2,84 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 00EF856763B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jul 2022 20:14:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C2EF056764B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jul 2022 20:21:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230118AbiGESOB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Jul 2022 14:14:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54856 "EHLO
+        id S231959AbiGESV3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Jul 2022 14:21:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58518 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229591AbiGESOA (ORCPT
+        with ESMTP id S232496AbiGESV2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Jul 2022 14:14:00 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ECD3A13F0C
-        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Jul 2022 11:13:58 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id e12so21931696lfr.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Jul 2022 11:13:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=FPRBABzcy3/6j/H39EHsr5gxtbkpnqGjLMhqvBz/Czo=;
-        b=djx0pAkFwqxgWa5my5EzUkiQpqLhNheKKV64f2/fsqX5W5FB9RS3ZDox4NcIcDRGdG
-         Ya17IYQfDClXXzbe0qmpqiwE7hXOqKYLNcmVh0TpCknQWeRXvE6/VooRJ+5cpYDLs64C
-         3pOh7GzWZGtvvEQFtJWTKUCt+lP5053ywVdpnfyANA8N9JX6cPv63LmrBikzmvX/ctUs
-         +MTl5ghz2d374ToKZosd3eCN47RfGFZGg6spPpUATZVlurK0HleOV+uKRvyIKU1xuItK
-         LqAKhCG5SEkeqcFJk3KifIBaw+wWi51JTYmsNGlFORvviG6RJvJmqR/JKwpniA/ddYMn
-         sbdw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=FPRBABzcy3/6j/H39EHsr5gxtbkpnqGjLMhqvBz/Czo=;
-        b=vShEBagTD3qWXPlQPe5XadPrvWdwJljAPjALnRmrH/3xDqD0gaG/eiVCRHzUV6oauJ
-         lhoRj5Po4HI+9/jC/NJt1Ow7rI4zUh9eDZigctOGpqUyDUcC2XsuaGAcvbP0yMWbMRlG
-         LsXmrbcPx5cVCFnVNx5ox7xPS+/nYsv3LSyyvbMs04v2one23ZiTrCO4vhQmX0+AZsG8
-         sJpR4zDcBgAccwovkKVfYIs3YgQh+k1FMN/mEiQZgTnNxZ0rcMMgcB/hKvtfNRAjrZ5U
-         B2YSbQobxTQ5tCsekU4kBYvHoEsGgaBPeYv82yMb/uzCbj3egHDA+tT4htzCxk9U8ho1
-         Umwg==
-X-Gm-Message-State: AJIora/2mW1no12iQ6+2aew73qIAp832qngCLoOVeoQj2Hi67LFxqwtg
-        2wKzLIURH1oD45iTXhGhX7Typg==
-X-Google-Smtp-Source: AGRyM1uBmRSnQOgKHceCWdDFKVuwOgtjkU/PRVtuYm24BdlUqxq1ppyibaQTEX/6mCzvVwBuEDOkWQ==
-X-Received: by 2002:a05:6512:acb:b0:481:cce:3c22 with SMTP id n11-20020a0565120acb00b004810cce3c22mr22671522lfu.45.1657044837333;
-        Tue, 05 Jul 2022 11:13:57 -0700 (PDT)
-Received: from [192.168.1.52] ([84.20.121.239])
-        by smtp.gmail.com with ESMTPSA id s14-20020a19770e000000b0047f68d77008sm5812103lfc.178.2022.07.05.11.13.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 05 Jul 2022 11:13:56 -0700 (PDT)
-Message-ID: <5b6f5e15-f3fd-badb-3ada-eb2f58053857@linaro.org>
-Date:   Tue, 5 Jul 2022 20:13:55 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH 16/43] dt-bindings: phy: qcom,qmp-pcie: drop unused
- vddp-ref-clk supply
-Content-Language: en-US
-To:     Johan Hovold <johan@kernel.org>
-Cc:     Johan Hovold <johan+linaro@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>,
+        Tue, 5 Jul 2022 14:21:28 -0400
+Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [85.215.255.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20FBB140BB;
+        Tue,  5 Jul 2022 11:21:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1657045281;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=UQh/AeOwYOytT9lqqjisAb47n38WBxn//wzctNCCTb8=;
+    b=F3fNQ79by2v5AKFvK+zRv9SKkf0apyfCvsx+N92TJvadUYg7J0WihSKHGF9SiaL8kU
+    DyAksPcDRyWyDkk8ZcZcygD38a76rQLfJHWhmY2OgOT7F55LQFy7uRMWOS13gM5P0Rak
+    BTvLhejkSg8OjDfw8eAE5cRgSKreJcAzixCwZmbf/mrryMy0/iGgk/O6DnODBp3Sl3ew
+    9l3T5ujxr+/3DzoYJxNsjI3Fw5P2y5p8Suc/6ug/kiUcCsAoVHRKEmRN6hdjsg5OyonK
+    YMKOTP6fWL4uaywR4oL1Vo95Q71c+QPrpNplngB1uVeVGIAAJVHMkWDJcncjw8lQFqlw
+    Isrw==
+Authentication-Results: strato.com;
+    dkim=none
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u267FZF9PwpcNKLVrK85/aY="
+X-RZG-CLASS-ID: mo00
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 47.46.1 AUTH)
+    with ESMTPSA id yfdd30y65ILKJAG
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Tue, 5 Jul 2022 20:21:20 +0200 (CEST)
+Date:   Tue, 5 Jul 2022 20:21:10 +0200
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20220705094239.17174-1-johan+linaro@kernel.org>
- <20220705094239.17174-17-johan+linaro@kernel.org>
- <d3a49c05-0fd0-920e-bd0a-f821e8e27b8b@linaro.org>
- <YsQkmUVla9+CDYly@hovoldconsulting.com>
- <8d739c84-ba61-a030-ea8a-63a3f45c642c@linaro.org>
- <YsQx1SMEsMnmoQ2d@hovoldconsulting.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <YsQx1SMEsMnmoQ2d@hovoldconsulting.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Subject: Re: [PATCH v2] ASoC: dt-bindings: qcom,sm8250: add SDM845 sound
+Message-ID: <YsSBFjW6riKOZZcz@gerhold.net>
+References: <20220705174702.763247-1-krzysztof.kozlowski@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220705174702.763247-1-krzysztof.kozlowski@linaro.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_PASS,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -87,55 +66,57 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 05/07/2022 14:43, Johan Hovold wrote:
-> On Tue, Jul 05, 2022 at 01:59:26PM +0200, Krzysztof Kozlowski wrote:
->> On 05/07/2022 13:46, Johan Hovold wrote:
->>>> It's okay to copy existing bindings which are applicable and then in
->>>> separate patch deprecate things or remove pieces which are not correct.
->>>> But all this in assumption that the first copy already selected only
->>>> applicable parts.
->>>
->>> But how would you be able to tell what parts I left out from the
->>> original copy 
->>
->> They are obvious and immediately visible. I see old bindings and new
->> bindings - no troubles to compare. I review new bindings - everything in
->> place.
+On Tue, Jul 05, 2022 at 07:47:02PM +0200, Krzysztof Kozlowski wrote:
+> The Qualcomm SDM845 sound card bindings are almost the same as SM8250,
+> except "pin-switches" and "widgets" properties.  These were not
+> documented in SDM845 text bindings but are actually valid for SDM845.
 > 
-> Heh, with all these conditionals in place that may be harder than it
-> sounds.
-
-True and your patchset split does not make it easier.
-
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > 
->> I don't want to review old code, inapplicable code. The patch I am
->> reviewing (the one doing the split) must bring correct bindings, except
->> these few differences like deprecated stuff.
+> ---
 > 
-> Sure, I get that. But this very patch is an example of why I tried to
-> remove things explicitly instead folding this into the original patch
-> and risking it not being noticed.
+> Changes since v1:
+> 1. Integrate into SM8250 instead of creating new file (Stephan).
 > 
-> It's not always obvious what is applicable and what is not, especially
-> when the old schema is in the state it is.
-
-Unless bindings are very precise, usually it's not visible what is
-applicable or not, so there is just no benefit in multi-step approach in
-split from old bindings. The same as with conversion of bindings, the
-assumption is that original file was not correct, so we review the final
-file.
-
+> Cc: Stephan Gerhold <stephan@gerhold.net>
+> ---
+>  .../devicetree/bindings/sound/qcom,sdm845.txt | 91 -------------------
+>  .../bindings/sound/qcom,sm8250.yaml           |  1 +
+>  2 files changed, 1 insertion(+), 91 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/sound/qcom,sdm845.txt
 > 
->>> unless I first do the split and then explicitly remove
->>> things that were presumably *never* applicable and just happened to be
->>> added because all bindings where combined in one large mess of a schema?
-> 
-> So you suggest we keep this regulator for all PHY variants even though
-> it was probably only needed for UFS on some older SoCs?
+> diff --git a/Documentation/devicetree/bindings/sound/qcom,sdm845.txt b/Documentation/devicetree/bindings/sound/qcom,sdm845.txt
+> deleted file mode 100644
+> index de4c604641da..000000000000
+> --- a/Documentation/devicetree/bindings/sound/qcom,sdm845.txt
+> +++ /dev/null
+> @@ -1,91 +0,0 @@
+[...]
+> -- compatible:
+> -	Usage: required
+> -	Value type: <stringlist>
+> -	Definition: must be one of this
+> -			"qcom,sdm845-sndcard"
+> -			"qcom,db845c-sndcard"
+> -			"lenovo,yoga-c630-sndcard"
+[...]
+> diff --git a/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml b/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml
+> index 4ecd4080bb96..7cdf9e9f4dd3 100644
+> --- a/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml
+> +++ b/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml
+> @@ -18,6 +18,7 @@ properties:
+>      enum:
+>        - qcom,apq8016-sbc-sndcard
+>        - qcom,msm8916-qdsp6-sndcard
+> +      - qcom,sdm845-sndcard
+>        - qcom,sm8250-sndcard
+>        - qcom,qrb5165-rb5-sndcard
+>  
 
-No. I commented only that reason is not a good one. The proper reason
-could be: there is or there is no such pin in the device or the history
-tells that adding it for all variants was a mistake.
+Looks like you forgot the db845c and lenovo compatible? :)
 
-Best regards,
-Krzysztof
+If you add them feel free to add my:
+Reviewed-by: Stephan Gerhold <stephan@gerhold.net>
+
+Thanks!
+Stephan
