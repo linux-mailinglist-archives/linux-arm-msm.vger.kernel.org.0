@@ -2,78 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 76466567635
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jul 2022 20:09:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 00EF856763B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jul 2022 20:14:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231717AbiGESJo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Jul 2022 14:09:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52882 "EHLO
+        id S230118AbiGESOB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Jul 2022 14:14:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54856 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229591AbiGESJm (ORCPT
+        with ESMTP id S229591AbiGESOA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Jul 2022 14:09:42 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1198C1C120
-        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Jul 2022 11:09:42 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id t24so21948744lfr.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Jul 2022 11:09:41 -0700 (PDT)
+        Tue, 5 Jul 2022 14:14:00 -0400
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ECD3A13F0C
+        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Jul 2022 11:13:58 -0700 (PDT)
+Received: by mail-lf1-x12d.google.com with SMTP id e12so21931696lfr.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Jul 2022 11:13:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=KZ+txSZEd6eaGdS33pPV0JH4E6USyI0t/l6sBEbHblc=;
-        b=qSzs1tFxGuWW9/qmDnle9cPEOyOgEyyw7V8EcR3TaAwggfpiSjfSQ3xMn5Iu1J5eBt
-         w/xHDxIc985RJKl5bqAyAWFpZvLRunz4DIqf5/4LJqORpLEEUrwqmthkdGAb+RFFD+3y
-         9016s53BdIt04/XxzbHfUYp8dxv+tyJ98O3j52F6lA/JA5Qe92k1BXNltDQgX8eWuDzD
-         HotpBzA7YBbpRv3I57ExBA2xlV4q4OmcBPTb8MRvw391I0tTntsE8ai0hho7i6rjK45Y
-         4bi3QKUQgwQIQKOPARa4QPwO2NABR6k0uW8KO/AeULabqALhEiaTVeeIWJN26LSoQWrW
-         VPLg==
+        bh=FPRBABzcy3/6j/H39EHsr5gxtbkpnqGjLMhqvBz/Czo=;
+        b=djx0pAkFwqxgWa5my5EzUkiQpqLhNheKKV64f2/fsqX5W5FB9RS3ZDox4NcIcDRGdG
+         Ya17IYQfDClXXzbe0qmpqiwE7hXOqKYLNcmVh0TpCknQWeRXvE6/VooRJ+5cpYDLs64C
+         3pOh7GzWZGtvvEQFtJWTKUCt+lP5053ywVdpnfyANA8N9JX6cPv63LmrBikzmvX/ctUs
+         +MTl5ghz2d374ToKZosd3eCN47RfGFZGg6spPpUATZVlurK0HleOV+uKRvyIKU1xuItK
+         LqAKhCG5SEkeqcFJk3KifIBaw+wWi51JTYmsNGlFORvviG6RJvJmqR/JKwpniA/ddYMn
+         sbdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=KZ+txSZEd6eaGdS33pPV0JH4E6USyI0t/l6sBEbHblc=;
-        b=7zYc46csQLd0lOkjs6JDIjURlQd0Soq7T6XJmqPEpdAyQy211Qk887FIciRTy75rgt
-         u1yoVdg2oETosN2/A6GBk/Kt21V/pYsRfbEfAqGYRdeQlimG6ppaKKyB3Q1KF16MK5q8
-         gIY4z8E+rQfvViAL3Nya33PXmWlU2T9K90HmWHt3r3SVETyFSrPOS2L5k/aIUQUIgvSd
-         QsJqs/2+TMpTMhII4aAw7aQ876aJSqeU5B0dJLYy9h3VzWUpUX7uPM1NRLF39PxL+q0d
-         AngJOgmEmfpCB2txwYQ0oKAhQiUcYPuW4XG1UBSsLmbEKEI09xmRwCoRYbXVZHb+0728
-         0V5Q==
-X-Gm-Message-State: AJIora/FXf2KzknU13ABOKQcHk7IomscJQLyNpnZ6T1kH1rfBp5bzhMn
-        Kn0fmF7aXXScZ3wsD1tbI+UtEw==
-X-Google-Smtp-Source: AGRyM1vxQ//E9lKymciMwf1NJB7Gni0S2ZqNblyggKUN1BspqjAQUF/sTdNeVi7G2reVu+4bQYgofQ==
-X-Received: by 2002:a05:6512:1193:b0:481:22b3:f198 with SMTP id g19-20020a056512119300b0048122b3f198mr22653131lfr.446.1657044580460;
-        Tue, 05 Jul 2022 11:09:40 -0700 (PDT)
+        bh=FPRBABzcy3/6j/H39EHsr5gxtbkpnqGjLMhqvBz/Czo=;
+        b=vShEBagTD3qWXPlQPe5XadPrvWdwJljAPjALnRmrH/3xDqD0gaG/eiVCRHzUV6oauJ
+         lhoRj5Po4HI+9/jC/NJt1Ow7rI4zUh9eDZigctOGpqUyDUcC2XsuaGAcvbP0yMWbMRlG
+         LsXmrbcPx5cVCFnVNx5ox7xPS+/nYsv3LSyyvbMs04v2one23ZiTrCO4vhQmX0+AZsG8
+         sJpR4zDcBgAccwovkKVfYIs3YgQh+k1FMN/mEiQZgTnNxZ0rcMMgcB/hKvtfNRAjrZ5U
+         B2YSbQobxTQ5tCsekU4kBYvHoEsGgaBPeYv82yMb/uzCbj3egHDA+tT4htzCxk9U8ho1
+         Umwg==
+X-Gm-Message-State: AJIora/2mW1no12iQ6+2aew73qIAp832qngCLoOVeoQj2Hi67LFxqwtg
+        2wKzLIURH1oD45iTXhGhX7Typg==
+X-Google-Smtp-Source: AGRyM1uBmRSnQOgKHceCWdDFKVuwOgtjkU/PRVtuYm24BdlUqxq1ppyibaQTEX/6mCzvVwBuEDOkWQ==
+X-Received: by 2002:a05:6512:acb:b0:481:cce:3c22 with SMTP id n11-20020a0565120acb00b004810cce3c22mr22671522lfu.45.1657044837333;
+        Tue, 05 Jul 2022 11:13:57 -0700 (PDT)
 Received: from [192.168.1.52] ([84.20.121.239])
-        by smtp.gmail.com with ESMTPSA id t19-20020ac243b3000000b0047f6f8f20dcsm5813186lfl.28.2022.07.05.11.09.39
+        by smtp.gmail.com with ESMTPSA id s14-20020a19770e000000b0047f68d77008sm5812103lfc.178.2022.07.05.11.13.55
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 05 Jul 2022 11:09:39 -0700 (PDT)
-Message-ID: <034cdce6-551e-84bf-76c6-cd02c5552633@linaro.org>
-Date:   Tue, 5 Jul 2022 20:09:38 +0200
+        Tue, 05 Jul 2022 11:13:56 -0700 (PDT)
+Message-ID: <5b6f5e15-f3fd-badb-3ada-eb2f58053857@linaro.org>
+Date:   Tue, 5 Jul 2022 20:13:55 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.11.0
-Subject: Re: [PATCH 7/8] dt-bindings: arm: cpus: Document "qcom,msm8909-smp"
- enable-method
+Subject: Re: [PATCH 16/43] dt-bindings: phy: qcom,qmp-pcie: drop unused
+ vddp-ref-clk supply
 Content-Language: en-US
-To:     Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+To:     Johan Hovold <johan@kernel.org>
+Cc:     Johan Hovold <johan+linaro@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        Stephan Gerhold <stephan@gerhold.net>
-References: <20220705143523.3390944-1-stephan.gerhold@kernkonzept.com>
- <20220705143523.3390944-8-stephan.gerhold@kernkonzept.com>
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20220705094239.17174-1-johan+linaro@kernel.org>
+ <20220705094239.17174-17-johan+linaro@kernel.org>
+ <d3a49c05-0fd0-920e-bd0a-f821e8e27b8b@linaro.org>
+ <YsQkmUVla9+CDYly@hovoldconsulting.com>
+ <8d739c84-ba61-a030-ea8a-63a3f45c642c@linaro.org>
+ <YsQx1SMEsMnmoQ2d@hovoldconsulting.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220705143523.3390944-8-stephan.gerhold@kernkonzept.com>
+In-Reply-To: <YsQx1SMEsMnmoQ2d@hovoldconsulting.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -81,16 +87,55 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 05/07/2022 16:35, Stephan Gerhold wrote:
-> MSM8909 is a fairly old 32-bit SoC without PSCI support, so the
-> additional CPU cores need to be initialized with a custom enable-method.
-> Fortunately it works just like on MSM8226 and MSM8916 so just add
-> an additional compatible as alias to the DT schema.
+On 05/07/2022 14:43, Johan Hovold wrote:
+> On Tue, Jul 05, 2022 at 01:59:26PM +0200, Krzysztof Kozlowski wrote:
+>> On 05/07/2022 13:46, Johan Hovold wrote:
+>>>> It's okay to copy existing bindings which are applicable and then in
+>>>> separate patch deprecate things or remove pieces which are not correct.
+>>>> But all this in assumption that the first copy already selected only
+>>>> applicable parts.
+>>>
+>>> But how would you be able to tell what parts I left out from the
+>>> original copy 
+>>
+>> They are obvious and immediately visible. I see old bindings and new
+>> bindings - no troubles to compare. I review new bindings - everything in
+>> place.
 > 
+> Heh, with all these conditionals in place that may be harder than it
+> sounds.
 
+True and your patchset split does not make it easier.
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> 
+>> I don't want to review old code, inapplicable code. The patch I am
+>> reviewing (the one doing the split) must bring correct bindings, except
+>> these few differences like deprecated stuff.
+> 
+> Sure, I get that. But this very patch is an example of why I tried to
+> remove things explicitly instead folding this into the original patch
+> and risking it not being noticed.
+> 
+> It's not always obvious what is applicable and what is not, especially
+> when the old schema is in the state it is.
 
+Unless bindings are very precise, usually it's not visible what is
+applicable or not, so there is just no benefit in multi-step approach in
+split from old bindings. The same as with conversion of bindings, the
+assumption is that original file was not correct, so we review the final
+file.
+
+> 
+>>> unless I first do the split and then explicitly remove
+>>> things that were presumably *never* applicable and just happened to be
+>>> added because all bindings where combined in one large mess of a schema?
+> 
+> So you suggest we keep this regulator for all PHY variants even though
+> it was probably only needed for UFS on some older SoCs?
+
+No. I commented only that reason is not a good one. The proper reason
+could be: there is or there is no such pin in the device or the history
+tells that adding it for all variants was a mistake.
 
 Best regards,
 Krzysztof
