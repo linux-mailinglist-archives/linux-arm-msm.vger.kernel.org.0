@@ -2,67 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B5061566F51
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jul 2022 15:36:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BD573566F7D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jul 2022 15:41:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231898AbiGENg3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Jul 2022 09:36:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51604 "EHLO
+        id S232739AbiGENla (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Jul 2022 09:41:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57788 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230220AbiGENgR (ORCPT
+        with ESMTP id S230046AbiGENlT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Jul 2022 09:36:17 -0400
-Received: from mail-qt1-x82f.google.com (mail-qt1-x82f.google.com [IPv6:2607:f8b0:4864:20::82f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06B8D71265
-        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Jul 2022 05:58:06 -0700 (PDT)
-Received: by mail-qt1-x82f.google.com with SMTP id c13so13445615qtq.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Jul 2022 05:58:05 -0700 (PDT)
+        Tue, 5 Jul 2022 09:41:19 -0400
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E15E1FCDA
+        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Jul 2022 06:03:06 -0700 (PDT)
+Received: by mail-lj1-x22d.google.com with SMTP id s14so14440877ljs.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Jul 2022 06:03:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=qMiUEOKk9r77VMVVPa8z6NBhDHlBwjJXvsubB7Baxfc=;
-        b=XZkg/spioxcX8d4p0KVTXf2AzZ+QZdxO5jRoERcJDRn+wYuBLyyF0qXMrGurDsjXJ3
-         Cwxh7oa+Tg3jd9appJk2J5mgUwI0zYSI49nCEv9ZvJorCWddYfje/ZA46AwPmDriGZX2
-         SCFTLWTbDb0f6iVSgCfwSZ2JkcJGiG7ZudIIPn2Ky0Qvun2YS+6JteCNtOZVYabpn9AH
-         kDm7ecpxsQsEPXKSPEMdNm4mAznc8UDoepnUl+tPQEfsSTUZY/T6YUD0pUjhIeg/pAkU
-         TIHzzqROEXOCQy+qVc28s2NZDhufhVqxvag0R40IhJBS9NAd8QPr/V/Ps88g+ZHM3IeQ
-         KaBg==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=1Zu4/ayyyYQ5Ucz1AuuZ8IojHLuhbZJlEcfiqr7+SQ0=;
+        b=wNoxfu+ExvvLwYJTJNIghGlhtZlrwvY06hiC0aa7kNJ7cR6yKeM+1WIef95kOnvQuK
+         W8FajZD7wjcykRaCOcWbfOEI365sV5MkaqvH3b+utnn84GxqnjNXXRUy41NvXkW0YlPI
+         XoOaWaL2hD2Li5lPIrJHbfODP8eUr9AfHX9M4O32ZBYSzweiGHHR2cdWlyksuMW007Dx
+         u8vSwhwrBnuA1Hop33BOmWC2aIjqr+RVwOOT09oREw1uHNq/Vq3373Vb5SrmvDbLLBxz
+         4wGk4USnQZDvLlWOfFgMC6rMFLfk0Vk5rgxWoqWiJkMW4fpGwHhyoqH/ltQEJeEHN0WV
+         pjJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=qMiUEOKk9r77VMVVPa8z6NBhDHlBwjJXvsubB7Baxfc=;
-        b=ks1Cxu7FVC2fTmD/oVYxGR5RTR5OQ6pWitUwrjNtMupcjy2glcw3GgFQneUSagCY9X
-         BFv+VJi+uLEu477dnGnvCC1gqsXkzb18aJoQqzYj5DSe1gqAybzz6BtEklTkOtVKAlX6
-         cbNBqXdmTNgtwpjwTQKGiYNzNwadlwx9PpOQple3ZJAyj4PpWZ4hRM/ZLST2Ze+CbV1h
-         6hhSs7B0g2BW8kuyRomVMcreZprzgbuHeLfRA39j4fgF+1Jy9EcDuehjxySj9dL98ZRa
-         RhiiJcWV5jRodYftEvpsxncENIWAMDqXkD7EdfJAscZ+u8OI0hVNXsBj08z/jVvrLcyn
-         IYrg==
-X-Gm-Message-State: AJIora99tZL+tAW6p1nB2bw33FnprK8AxM8AY/f5J5YQzVS23yA4meas
-        sGFbWuk8xu9txw6CpMXCBjcRsgOy8lLHwCGLT8UYMw==
-X-Google-Smtp-Source: AGRyM1ssdGXVsDEnncHVzsnICuUkRzm3oDpktel2aLTMIiD9A0pZ5wNtjnGOM8AVX4r9KvV3eFAob7pightug7CfKbo=
-X-Received: by 2002:ac8:5956:0:b0:31d:28dc:17c with SMTP id
- 22-20020ac85956000000b0031d28dc017cmr26185913qtz.295.1657025876136; Tue, 05
- Jul 2022 05:57:56 -0700 (PDT)
-MIME-Version: 1.0
-References: <20220705114032.22787-1-johan+linaro@kernel.org>
- <20220705114032.22787-2-johan+linaro@kernel.org> <e3b344e7-4100-e0d4-0dcd-aeef4893ad43@linaro.org>
- <YsQztl9KHS5csu4A@hovoldconsulting.com>
-In-Reply-To: <YsQztl9KHS5csu4A@hovoldconsulting.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 5 Jul 2022 15:57:45 +0300
-Message-ID: <CAA8EJppskvGeccyxAE7U3O+e_g4r-UhzwK=x1TSF-fZF-Yn67A@mail.gmail.com>
-Subject: Re: [PATCH 01/14] arm64: dts: qcom: sc7280: drop PCIe PHY clock index
-To:     Johan Hovold <johan@kernel.org>
-Cc:     Johan Hovold <johan+linaro@kernel.org>,
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=1Zu4/ayyyYQ5Ucz1AuuZ8IojHLuhbZJlEcfiqr7+SQ0=;
+        b=68YNKbXnYxXwP56JW85rnOtp9V4Rosm1GsqawJGu9JfGvsgQz7umbUcW34NRHxtQm/
+         +21hqMmXHQ/lebhX+fZfVJ+bXa+en/+LccZi1BNfkNw6dfPqYDrbrj+GJm2am4SUBPcX
+         sWKlM2JGFavhAP8xbd8Wk3kBKsm6qIdEXhqBPHhSWbpGV2M88GaWn59MROxHRQdDLKNP
+         1gCctBbiyQEvisQSNkCqQnEk8Vnzqw5EGMMAZ/e3SW7ejTePIHx4xGGcWc7GFwR3bF/l
+         L79P5gtgW7HXfEGdyRr0YoBpYhOev44e4+6N+GEPHdNq7ak3MLOL557OIaTzurt6UqpY
+         ImSg==
+X-Gm-Message-State: AJIora9KDKLpf8ih/XKnHmbcJCu5hyGTLyzYQgzvQ+LqCekcaknZuWQC
+        8icgPnMkjSsCxhEyxH5ERMeCEA==
+X-Google-Smtp-Source: AGRyM1u2pcnfgNTF1NSnG5hsBRa5MsqQGmW51gDLlR1mvGCJj9IGauPJ7o0heWsUxkUG6iBLBB5pFA==
+X-Received: by 2002:a2e:8813:0:b0:25a:94e9:b2db with SMTP id x19-20020a2e8813000000b0025a94e9b2dbmr20018198ljh.9.1657026184897;
+        Tue, 05 Jul 2022 06:03:04 -0700 (PDT)
+Received: from krzk-bin.home ([84.20.121.239])
+        by smtp.gmail.com with ESMTPSA id s14-20020a19770e000000b0047f68d77008sm5688086lfc.178.2022.07.05.06.03.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 05 Jul 2022 06:03:04 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v6 0/3] dt-bindings: arm: qcom: qcom,board-id and qcom,msm-id
+Date:   Tue,  5 Jul 2022 15:02:57 +0200
+Message-Id: <20220705130300.100882-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -73,64 +72,65 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 5 Jul 2022 at 15:51, Johan Hovold <johan@kernel.org> wrote:
->
-> On Tue, Jul 05, 2022 at 03:42:08PM +0300, Dmitry Baryshkov wrote:
-> > On 05/07/2022 14:40, Johan Hovold wrote:
-> > > The QMP PCIe PHY provides a single clock so drop the redundant clock
-> > > index.
-> > >
-> > > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> >
-> > Hmm. After checking the source code, the clocks entry of the phy@1c0e000
-> > node also needs to be fixed.
->
-> I assume you meant pci@1c08000 here? Thanks for catching that!
->
-> > And also maybe:
-> >
-> > Fixes: bd7d507935ca ("arm64: dts: qcom: sc7280: Add pcie clock support")
-> > Fixes: 92e0ee9f83b3 ("arm64: dts: qcom: sc7280: Add PCIe and PHY related
-> > nodes")
->
-> Maybe, I'm a bit reluctant to add a Fixes tags for these even if they do
-> violate the binding. But sure, why not.
+Hi,
 
-Yep, I'm also in doubt here. In this case this is more logical. I'd
-allow you to decide then.
+Changes since v5
+================
+1. Dual-license qcom,ids.h (Rob).
+2. Minor corrections in comments.
 
->
-> > > ---
-> > >   arch/arm64/boot/dts/qcom/sc7280.dtsi | 4 ++--
-> > >   1 file changed, 2 insertions(+), 2 deletions(-)
-> > >
-> > > diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> > > index e66fc67de206..b0ae2dbba50f 100644
-> > > --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> > > +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> > > @@ -818,7 +818,7 @@ gcc: clock-controller@100000 {
-> > >                     reg = <0 0x00100000 0 0x1f0000>;
-> > >                     clocks = <&rpmhcc RPMH_CXO_CLK>,
-> > >                              <&rpmhcc RPMH_CXO_CLK_A>, <&sleep_clk>,
-> > > -                            <0>, <&pcie1_lane 0>,
-> > > +                            <0>, <&pcie1_lane>,
-> > >                              <0>, <0>, <0>, <0>;
-> > >                     clock-names = "bi_tcxo", "bi_tcxo_ao", "sleep_clk",
-> > >                                   "pcie_0_pipe_clk", "pcie_1_pipe_clk",
-> > > @@ -2110,7 +2110,7 @@ pcie1_lane: phy@1c0e200 {
-> > >                             clock-names = "pipe0";
-> > >
-> > >                             #phy-cells = <0>;
-> > > -                           #clock-cells = <1>;
-> > > +                           #clock-cells = <0>;
-> > >                             clock-output-names = "pcie_1_pipe_clk";
-> > >                     };
-> > >             };
->
-> Johan
+Changes since v4
+================
+1. Change the qcom,board-id oneOf (oneOf at higher level) so newer dtschema is happy.
 
+Changes since v3
+================
+1. Patch #1: Define all SoC IDs, based on Qualcomm socid driver (Konrad). Keep
+   Dmitry Rb tag, even though it is quite a change.
+2. New patch #2: use bindings in the socid driver.  The patch fails on checkpatch:
+   "Macros with complex values should be enclosed in parentheses"
+   but that's expected considering the macro contents.
 
+Changes since v2
+================
+1. Adjust description of new fields after review (Dmitry).
+2. Change name of msm8996 define (Dmitry).
+3. Add Rb tags.
+
+Changes since v1
+================
+1. Make the qcom,board-id and qcom,msm-id properties deprecated and limited to
+   certain SoCs (Rob).
+2. Extend the qcom,board-id schema to match OnePlus variant - four elements -
+   and drop DTS patches splitting four into two touples (Stephan).
+
+Description
+===========
+The discussion [1] brought several arguments for keeping the qcom,board-id and
+qcom,msm-id properties.  Keeping means we should document them, so the DT
+schema checks pass.
+
+I revived old patch [2] with several changes and improvements.  The commit msg
+hopefully collects feedback from the discussion.
+
+Best regards,
+Krzysztof
+
+[1] https://lore.kernel.org/r/a3c932d1-a102-ce18-deea-18cbbd05ecab@linaro.org/
+[2] https://lore.kernel.org/all/1425503602-24916-1-git-send-email-galak@codeaurora.org/
+
+Krzysztof Kozlowski (3):
+  dt-bindings: arm: qcom: document qcom,msm-id and qcom,board-id
+  soc: qcom: socinfo: create soc_id table from bindings
+  arm64: dts: qcom: msm8992-xiaomi-libra: split qcom,msm-id into tuples
+
+ .../devicetree/bindings/arm/qcom.yaml         | 120 ++++++++
+ .../boot/dts/qcom/msm8992-xiaomi-libra.dts    |   2 +-
+ drivers/soc/qcom/socinfo.c                    | 259 +++++++++---------
+ include/dt-bindings/arm/qcom,ids.h            | 152 ++++++++++
+ 4 files changed, 406 insertions(+), 127 deletions(-)
+ create mode 100644 include/dt-bindings/arm/qcom,ids.h
 
 -- 
-With best wishes
-Dmitry
+2.34.1
+
