@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4415156677C
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jul 2022 12:12:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A213D566782
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jul 2022 12:13:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230422AbiGEKMb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Jul 2022 06:12:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35902 "EHLO
+        id S229751AbiGEKN1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Jul 2022 06:13:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36666 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230245AbiGEKMa (ORCPT
+        with ESMTP id S229497AbiGEKN0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Jul 2022 06:12:30 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DDA8C13FAB
-        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Jul 2022 03:12:28 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id t24so19743346lfr.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Jul 2022 03:12:28 -0700 (PDT)
+        Tue, 5 Jul 2022 06:13:26 -0400
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC9D5219A
+        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Jul 2022 03:13:24 -0700 (PDT)
+Received: by mail-lf1-x136.google.com with SMTP id e12so19723015lfr.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Jul 2022 03:13:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=mZWko2l3JM33AGERPGLEXqE2EWRggkWimZrxTdJnBrQ=;
-        b=lVgc4eTYGqLD0IaHHe8PqmVRvpVMIHWLrYx692D3ISLZALd9+vHr5AzI/P5AvGC46F
-         ovwkA24GeZhvo5gQc1mF+A+pB5Ougfktzld939IW7WlA+FjfLOgXuSuhJS1DoTV+NCwq
-         bJxoAYLt2Mvd6E0m/2gDpvRjCV0S3/KL/b7eakXGbj/rDfdocwd1YYvJ73mRiosjPoug
-         8HdNXa6oBxhYa+ss7Rc1c7HmT23Fqga1td1bKiD42Bvxa4/1oCt/QmGMnKiV7Z5ooQvZ
-         qktsH3OgfX3Z0IW6Bhwe4oZza0jMPJm5cEcRWc83nII6vck3vTzyRmjS9P3zWusVHX3z
-         r+Lg==
+        bh=/c35IP8fT9ZTu8bx278sy5MOBFHS+lNYsk/NFdibXS0=;
+        b=VRUEgCC90iVnU85xU+RHG/DIde70XjpkA5/TrUXjl6G+LF/BF93AqwJbYN4UTsmiSg
+         ZKwoSSubuK5psSk9PwQEwu/gvwmuvxD4JKv+MrMPwkclKYTWK+4bQ4twHvLdU0s+LUi+
+         498PUU+gugxVzUdLER/Ft60zv9ChROOE+IOV2YgMlp8eiB/w/69X6kzRdmvPoXp3hdmN
+         OUCurpOtcG6tVLGmHEQ1VWlPBoKmVSieQs/kYBeyzy9tbsP9x5Fp6QlcK7CgCUbez243
+         plmfL1oa1YytHlkMkW+sOaQGI9XqymTbN9b/JXR4kBz4b7XEU+kvCsLvPXtSaJF0hHJ7
+         nuoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=mZWko2l3JM33AGERPGLEXqE2EWRggkWimZrxTdJnBrQ=;
-        b=48D64I2NGLyE8RGTkQdVq6abrtpSFAePP9QQ8MBE8iC8ewz9HlE952bbW9crAqALDj
-         CthkZQ1HU70JtcSQ9XcBf82Nq2kMPzeNHCQaw/r5Rb1XdObSZaHwubXbf++LWXm5iAj4
-         AsIvrFYQJvtGnX/36mmrE/sa7o0DaiX1XClL/YHx/9vqxBpFMCvFCfMU4Jv41TtIFJrC
-         b5pGoexMnshG75Xp56kVAYfvqaVrJNZwFRcc/wNmiY5ZyFA9uI8rw+vozHGuhKAzRn4L
-         ehsjVwgoBYCU6+Scdfl9CoSVHZFpZBjSNO47pnCQgUZPPXLBcraetXwvFnjY7eWujUyv
-         6bdQ==
-X-Gm-Message-State: AJIora9HhQsGZpffOhN1oWW8f83s96DOe1YatekVyUYj9Gv/pGyOyVWU
-        cU7GH1oGgnM142XhP1xDX5SYow==
-X-Google-Smtp-Source: AGRyM1sTJIqHUj9k+zJkKMNhCH4MRxYX1aZCBKcFYO69Ra4u9QWn3nqtNVAorRS99L+Md9eq6+appg==
-X-Received: by 2002:a05:6512:114e:b0:47f:5f76:22bb with SMTP id m14-20020a056512114e00b0047f5f7622bbmr22600890lfg.648.1657015947264;
-        Tue, 05 Jul 2022 03:12:27 -0700 (PDT)
+        bh=/c35IP8fT9ZTu8bx278sy5MOBFHS+lNYsk/NFdibXS0=;
+        b=A8V200qSSL1U/urrLIEDfAUIhSWfXYEkZ8KKuESnQHkB1WzQuRHfjbKXB5D94/xw/5
+         ftrEQ9KMTqdzn0Hop8dPAoLZJKZOC0GAhaXKxskuxB0g9wa44n8nM9PemtT+f7wDGiUm
+         GihEfetxW4OJYybc+EUsZIY5JRs9e43muUbHE8c7RhezvzIE05Zmb6zcyiPvrYs8K0ZS
+         IsFZ+ejnVlC0ufng2c/2/wngvqrFIqCztxyx+tRQMr63wQ2lYCJ/eeBd2SUVDWmWpPSz
+         9UcZf/hRPCvfwEM1nOm47qif7sbQ70ZZ3FFY89wfblB9crRoV6dlyHhexrtcVZA2Pknp
+         3OzA==
+X-Gm-Message-State: AJIora/8i2RnhDSCemaky5gM+dOGB/DBur/E3tl/urPIi1gvRKIMo6qq
+        s5dwDnbFhFc8XeFrmdZtZ+zHWA==
+X-Google-Smtp-Source: AGRyM1vnKC4Ilv2ZbR68+xe7F6V4OEip7c6vXCKFCLuc1QNyaaJeIbUmjLXrzEe384x81w08hJ181g==
+X-Received: by 2002:a05:6512:2622:b0:481:5b17:58e7 with SMTP id bt34-20020a056512262200b004815b1758e7mr14581404lfb.600.1657016003330;
+        Tue, 05 Jul 2022 03:13:23 -0700 (PDT)
 Received: from [192.168.1.52] ([84.20.121.239])
-        by smtp.gmail.com with ESMTPSA id y9-20020ac24e69000000b0047f647414efsm5620858lfs.190.2022.07.05.03.12.26
+        by smtp.gmail.com with ESMTPSA id f13-20020a2eb5ad000000b0025aa51b069esm5341723ljn.5.2022.07.05.03.13.22
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 05 Jul 2022 03:12:26 -0700 (PDT)
-Message-ID: <2a5fec43-352c-b304-e0c9-761e1d2b67ec@linaro.org>
-Date:   Tue, 5 Jul 2022 12:12:25 +0200
+        Tue, 05 Jul 2022 03:13:22 -0700 (PDT)
+Message-ID: <69207215-f53d-c5b9-9cc9-214e2e3723f4@linaro.org>
+Date:   Tue, 5 Jul 2022 12:13:21 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.11.0
-Subject: Re: [PATCH 11/43] dt-bindings: phy: qcom,msm8996-qmp-pcie: deprecate
- reset names
+Subject: Re: [PATCH 12/43] dt-bindings: phy: qcom,qmp: split out PCIe PHY
+ binding
 Content-Language: en-US
 To:     Johan Hovold <johan+linaro@kernel.org>,
         Vinod Koul <vkoul@kernel.org>,
@@ -67,9 +67,9 @@ Cc:     Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20220705094239.17174-1-johan+linaro@kernel.org>
- <20220705094239.17174-12-johan+linaro@kernel.org>
+ <20220705094239.17174-13-johan+linaro@kernel.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220705094239.17174-12-johan+linaro@kernel.org>
+In-Reply-To: <20220705094239.17174-13-johan+linaro@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -83,42 +83,68 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 05/07/2022 11:42, Johan Hovold wrote:
-> Drop the unnecessary "lane" suffix from the PHY reset names and mark the
-> old names as deprecated.
+> The QMP PHY DT schema is getting unwieldy. Break out the PCIe PHY
+> binding in a separate file.
 > 
 > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 > ---
->  .../phy/qcom,msm8996-qmp-pcie-phy.yaml        | 20 +++++++++++--------
->  1 file changed, 12 insertions(+), 8 deletions(-)
+>  .../bindings/phy/qcom,qmp-pcie-phy.yaml       | 188 ++++++++++++++++++
+>  .../devicetree/bindings/phy/qcom,qmp-phy.yaml |  75 -------
+>  2 files changed, 188 insertions(+), 75 deletions(-)
+>  create mode 100644 Documentation/devicetree/bindings/phy/qcom,qmp-pcie-phy.yaml
 > 
-> diff --git a/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-pcie-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-pcie-phy.yaml
-> index 7931b1fd1476..0bea8270b37e 100644
-> --- a/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-pcie-phy.yaml
-> +++ b/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-pcie-phy.yaml
-> @@ -94,11 +94,15 @@ patternProperties:
->            - description: PHY (lane) reset
->  
->        reset-names:
-> -        items:
-> -          - enum:
-> -              - lane0
-> -              - lane1
-> -              - lane2
-> +        oneOf:
-> +          - items:
-> +              - const: lane
-> +          - items:
-> +              - enum:
-> +                  - lane0
-> +                  - lane1
-> +                  - lane2
-> +            deprecated: true
->  
+> diff --git a/Documentation/devicetree/bindings/phy/qcom,qmp-pcie-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,qmp-pcie-phy.yaml
+> new file mode 100644
+> index 000000000000..d1d4a468acc3
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/phy/qcom,qmp-pcie-phy.yaml
+> @@ -0,0 +1,188 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +
 
-How about just dropping reset-names entirely? Marking entire field
-deprecated and removing from DTS? The same in the previous patch.
+No new line.
 
-Usually one-item xxx-names do not bring any useful information.
+> +%YAML 1.2
+> +---
+> +$id: "http://devicetree.org/schemas/phy/qcom,qmp-pcie-phy.yaml#"
+> +$schema: "http://devicetree.org/meta-schemas/core.yaml#"
+
+Drop quotes.
+
+> +
+> +title: Qualcomm QMP PHY controller (PCIe)
+> +
+> +maintainers:
+> +  - Vinod Koul <vkoul@kernel.org>
+> +
+> +description:
+> +  QMP PHY controller supports physical layer functionality for a number of
+> +  controllers on Qualcomm chipsets, such as, PCIe, UFS, and USB.
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,ipq6018-qmp-pcie-phy
+> +      - qcom,ipq8074-qmp-pcie-phy
+> +      - qcom,msm8998-qmp-pcie-phy
+> +      - qcom,sc8180x-qmp-pcie-phy
+> +      - qcom,sdm845-qhp-pcie-phy
+> +      - qcom,sdm845-qmp-pcie-phy
+> +      - qcom,sdx55-qmp-pcie-phy
+> +      - qcom,sm8250-qmp-gen3x1-pcie-phy
+> +      - qcom,sm8250-qmp-gen3x2-pcie-phy
+> +      - qcom,sm8250-qmp-modem-pcie-phy
+> +      - qcom,sm8450-qmp-gen3x1-pcie-phy
+> +      - qcom,sm8450-qmp-gen4x2-pcie-phy
+> +
+> +  reg:
+> +    minItems: 1
+> +    items:
+> +      - description: Address and length of PHY's common serdes block.
+> +      - description: Address and length of PHY's DP_COM control block.
+
+All my msm8996-qmp-pcie comments apply.
+
 
 Best regards,
 Krzysztof
