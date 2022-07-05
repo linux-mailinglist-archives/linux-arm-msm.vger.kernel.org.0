@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ECAB356639C
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jul 2022 09:09:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CB95E5663BA
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jul 2022 09:10:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229644AbiGEHDr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Jul 2022 03:03:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37758 "EHLO
+        id S231208AbiGEHGv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Jul 2022 03:06:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39170 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229621AbiGEHDq (ORCPT
+        with ESMTP id S231194AbiGEHGd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Jul 2022 03:03:46 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B48A612AE7;
-        Tue,  5 Jul 2022 00:03:43 -0700 (PDT)
+        Tue, 5 Jul 2022 03:06:33 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A17113D60
+        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Jul 2022 00:06:04 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 00DF361616;
-        Tue,  5 Jul 2022 07:03:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB602C341C7;
-        Tue,  5 Jul 2022 07:03:41 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 7BD39B815D1
+        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Jul 2022 07:06:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79BD5C341C7;
+        Tue,  5 Jul 2022 07:06:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1657004622;
-        bh=MZfYY2zprLDztN1wjBWuIWgVqQUQo1+aoghwhMGFGOY=;
+        s=k20201202; t=1657004762;
+        bh=JuxPHcscnCdhBmCyzUqLY6LtYcRD7zdj6liGaoCfEeA=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=SG4d3d7n4oyST5978bGWa9JR9MpbBX59JivkJoEYUUBM597zMVR9eihd3oTXDrtLO
-         Nq382uTMLOngjp33RZ71UpWmcxkDO4eP5thXMy4lWvSzfeGvlyCaye6EuG96lWTKSu
-         L8dqGc8CxH9HKrCydS+lZSpozWOpJIiv3+viZ7FoiheWDp5PYknYIC5IWT0fvZuhCl
-         6HTzmc9cRsfI26K60+U2c4zur4EZcO08U7VqGqdsFSClhyedinWQs76C2a2KVJJMNb
-         l6mFXQTKjRwpILuBfZm1V4HUjUNSPTI/xJ45KNL+NQ/gUHucwAiErWJn6TEwCY9MPK
-         FzPBr27BaypxQ==
-Date:   Tue, 5 Jul 2022 12:33:38 +0530
+        b=mYCrqfiYj6j9LTbVm48v9QaE7rXnoIzm/SuvR17kK/uUVeuTFW1s+XXnZ6EcJe/jq
+         oNPDP/n9r2FBNQuOpKbiRzzF+GyUCBBxM92RBiBTwrWiDPck2H+9eQ/A1epagOBfnU
+         1hbMdOd8VayqWJmpa1dzC7CR1HVByljcMvKWSSQGCJ++0EY2D2+NWRciV7j4GoHC4u
+         vsgW6KJ1P+6xjmGky1B0lpLpgXEnpfUno6NJFrIKqdLAi6qSP+9XZ9hYiX7UA/JIw5
+         sr/oG1f2jZyC2ySj3uS5WE4LB5eAghG+0gu32HvZkZ9d3pCCZ2Nu6Sabl8Xj57lsXA
+         cClfmPVi3w5VQ==
+Date:   Tue, 5 Jul 2022 12:35:58 +0530
 From:   Vinod Koul <vkoul@kernel.org>
-To:     Johan Hovold <johan+linaro@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Kishon Vijay Abraham I <kishon@ti.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
         linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 0/3] phy: qcom-qmp: pipe clock cleanups
-Message-ID: <YsPiSoIGO+lXNnmV@matsya>
-References: <20220623113314.29761-1-johan+linaro@kernel.org>
+        Johan Hovold <johan@kernel.org>
+Subject: Re: [RFC PATCH 00/28] phy: qcom-qmp: split register tables
+Message-ID: <YsPi1jI2nWfxGOyH@matsya>
+References: <20220610190925.3670081-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220623113314.29761-1-johan+linaro@kernel.org>
+In-Reply-To: <20220610190925.3670081-1-dmitry.baryshkov@linaro.org>
 X-Spam-Status: No, score=-7.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -58,10 +58,13 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23-06-22, 13:33, Johan Hovold wrote:
-> Here are some follow-up cleanups after the recent driver split.
+On 10-06-22, 22:08, Dmitry Baryshkov wrote:
+> As discussed during sc8280xp PHY review, rework and split QMP register
+> tables. Create separate files for most of QMP register kinds. The only
+> things left are various DP registers, which will be handled separately.
 
-Applied, thanks
+This fails for me on patch 2, can you please rebase on my next later
+today and resend. I would like to merge this for current cycle..
 
 -- 
 ~Vinod
