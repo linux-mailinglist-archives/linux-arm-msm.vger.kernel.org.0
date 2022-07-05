@@ -2,82 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3A760566A56
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jul 2022 13:56:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8F9B7566A5E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jul 2022 13:57:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229520AbiGEL4h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Jul 2022 07:56:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38668 "EHLO
+        id S230060AbiGEL5v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Jul 2022 07:57:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39316 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229489AbiGEL4g (ORCPT
+        with ESMTP id S230185AbiGEL5u (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Jul 2022 07:56:36 -0400
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3DFFD17591
-        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Jul 2022 04:56:35 -0700 (PDT)
-Received: by mail-lj1-x232.google.com with SMTP id bx13so14213695ljb.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Jul 2022 04:56:35 -0700 (PDT)
+        Tue, 5 Jul 2022 07:57:50 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EEC7217A8A
+        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Jul 2022 04:57:48 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id e12so20131367lfr.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Jul 2022 04:57:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=Vsyz7Rlb53JTlbHvnnvdRFpkzvwYidG5knYyvTWU2J4=;
-        b=J6Xn7PwhlmRL7Kr9Bf4WitjD0eaEp+S7R2w8kXZs6D9tSVlKBV8mGj12PFb/afjI7P
-         JgcoIl3VgyhipdKeKvV1sIo5+Dks/B7z9qOLzwx7uFR0wEO04pZ53kK/hBAt4XGI6hME
-         sMojGdcXlpLpIJ1OXj8XizfCfLxDv8ALSt4PfnGQOdCVRfoOcV1ThEpIx/Bs/7eTPbBY
-         XpRIam2VUHXzNalRQvG3bOfx/+Im167jX2UDMIX1gFPSwtBIKB8IuZ4cG+KIA+jP6I4z
-         BJ/M93qt1RiKaeG9C5vbSkTqiT/cguYMKFMl5q0AWvaWvhLpGOgEm1r24VnOzX9DNK1l
-         3gdw==
+        bh=qaINgCuKuJ+N1ufby3FpYQHPfvNiLqvgxHa2OLQIWmA=;
+        b=blPdvfpnWXyoiDUEJ9FHfyni319pJqlaWVzo1nq7TQcChhXpSglNj11BGyisTYFms8
+         CBvniqM1PHfW2gzYrI9J8YLf4LCwHz96O8zMB8MflAGuIELaaudTtfbcJzLFdAkawfJt
+         bQN+hPH02uNSb/N/B3xkwLuQbOsRrk8dV+cdpUbX7p1DMnhkcZw5D3YNUvpoEKzLC+o6
+         GD1juKKyGXdSW7/rjn8SAT+TAxOc/EcKi+yqFstvaZo2nyh6bHKGR6Y0cPJTuC16tbNu
+         rXO+jAsswGptF+ICLapCVVqqaDcP/Orv9P2hA/mfeuqakkJsKG1yyanQbna4qr28R+uH
+         EOKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=Vsyz7Rlb53JTlbHvnnvdRFpkzvwYidG5knYyvTWU2J4=;
-        b=WffL1+zmc0Hya9QY3L2Gk5fc79lwJYm5Z97jyPMxlSBEUyitHgKesCJiXWFnCmoOHE
-         1QBcs51E7EjoBFIEcG56pOph85hFcdT5pv4pTt2m5icx/D9FHFZDeXxueW1Fu6qGdYbZ
-         0B7ESEXiB5lKdtRo0uo/wKr/kgUSAS56+W2hW1uV12fVZc/KerB4d9FYgjaj9UjbsQX2
-         WoGHiuHK3mOGJebJTdkds0S5LPRPMWS9z228yRHwwH312Juxizf/C5zLYsRMSB1sM78u
-         wmmJ0Oe8OzbuSe9DIUPtnaqVTiEZ8E1R+RLMnEzb6o2BifbGCjqGuX3SmKZD6SJ0J64o
-         RwPw==
-X-Gm-Message-State: AJIora/YYpo3bCyafZoySwJdajV4voLHw/z4VmV1nn4UhLZRJarM8fAr
-        ZlpVh8wHSDKpeDi5psc2hgcDZA==
-X-Google-Smtp-Source: AGRyM1s8dtYMfQ0WmJojokE+mPEUDR+r4cp5dqxRDFw4fkhs4A6Iya7P4qMDZAfLM9Dp/WYdyBx2Ug==
-X-Received: by 2002:a2e:90f:0:b0:25d:309e:422f with SMTP id 15-20020a2e090f000000b0025d309e422fmr2096329ljj.179.1657022193599;
-        Tue, 05 Jul 2022 04:56:33 -0700 (PDT)
-Received: from [192.168.1.52] ([84.20.121.239])
-        by smtp.gmail.com with ESMTPSA id w16-20020a05651234d000b004815305854bsm2768554lfr.61.2022.07.05.04.56.32
+        bh=qaINgCuKuJ+N1ufby3FpYQHPfvNiLqvgxHa2OLQIWmA=;
+        b=wsrRIoy9uIgqlNwXGyrTsP9TmyDxW+lLykihgatBHBeWukQkNMow+j/STVCDWZI+m9
+         xLKsVuREXw2KlqkGNGbgkbeqKVi8HsfvFgVwkxtwn0Z7uWjKfBECtEX9YmYTHS2ew69l
+         r/GrC8UkwGlYnMGll+Vk6B7syktA+2V42qOQ7Rq1Mh8JZJuxfzJB5H0u9B5gs6cMC5aV
+         EycQrNdDDppU9IeFNo8Mu9rQyRKJg2zsSWNYqmEWrF+ooDKulTIvENTgooTE8cUbnFsj
+         v2N9mYTzAQmiX8op4VHjkbHic2s40ZuJ2118hKwEDLjXoK5PoEWpslZhQpf0MO4zekUy
+         lnNQ==
+X-Gm-Message-State: AJIora+X0KZLR6FQ4i5orQF1ffYxZH/Jyp/eqNrtVdtVgH+tR14bNTEj
+        7l/zRyfy2Mi8d5F/zvu/Yz2r9A==
+X-Google-Smtp-Source: AGRyM1vw8JHN23QBD8OFiC77SIfwW/1Akm5wiorwWgqYv9VlDNfxj97acoUnG0qh8x29vNFdD21hmw==
+X-Received: by 2002:ac2:5f7c:0:b0:47f:993c:49f2 with SMTP id c28-20020ac25f7c000000b0047f993c49f2mr21194682lfc.189.1657022267360;
+        Tue, 05 Jul 2022 04:57:47 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id t6-20020a056512208600b0047f79487758sm5660680lfr.133.2022.07.05.04.57.46
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 05 Jul 2022 04:56:33 -0700 (PDT)
-Message-ID: <963917cf-0f9d-600f-564e-9e687270b1af@linaro.org>
-Date:   Tue, 5 Jul 2022 13:56:32 +0200
+        Tue, 05 Jul 2022 04:57:46 -0700 (PDT)
+Message-ID: <e0433a4a-475c-7a4b-29b6-461d04356084@linaro.org>
+Date:   Tue, 5 Jul 2022 14:57:46 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH 17/43] dt-bindings: phy: qcom,qmp-pcie: add missing child
- node schema
-Content-Language: en-US
-To:     Johan Hovold <johan@kernel.org>
-Cc:     Johan Hovold <johan+linaro@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
+ Thunderbird/91.10.0
+Subject: Re: [PATCH 01/14] arm64: dts: qcom: sc7280: drop PCIe PHY clock index
+Content-Language: en-GB
+To:     Johan Hovold <johan+linaro@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20220705094239.17174-1-johan+linaro@kernel.org>
- <20220705094239.17174-18-johan+linaro@kernel.org>
- <4bc79a1c-66b1-225d-5026-ddf3e6f7d22c@linaro.org>
- <YsQlzr6nyvz761Kz@hovoldconsulting.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <YsQlzr6nyvz761Kz@hovoldconsulting.com>
-Content-Type: text/plain; charset=UTF-8
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20220705114032.22787-1-johan+linaro@kernel.org>
+ <20220705114032.22787-2-johan+linaro@kernel.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220705114032.22787-2-johan+linaro@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -85,78 +78,18 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 05/07/2022 13:51, Johan Hovold wrote:
-> On Tue, Jul 05, 2022 at 12:18:37PM +0200, Krzysztof Kozlowski wrote:
->> On 05/07/2022 11:42, Johan Hovold wrote:
->>> Add the missing the description of the PHY-provider child node which was
->>> ignored when converting to DT schema.
->>>
->>> Also fix up the incorrect description that claimed that one child node
->>> per lane was required.
->>>
->>> Fixes: ccf51c1cedfd ("dt-bindings: phy: qcom,qmp: Convert QMP PHY bindings to yaml")
->>> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
->>> ---
->>>  .../bindings/phy/qcom,qmp-pcie-phy.yaml       | 88 ++++++++++++++++++-
->>>  1 file changed, 85 insertions(+), 3 deletions(-)
->>>
->>> diff --git a/Documentation/devicetree/bindings/phy/qcom,qmp-pcie-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,qmp-pcie-phy.yaml
->>> index ff1577f68a00..5a1ebf874559 100644
->>> --- a/Documentation/devicetree/bindings/phy/qcom,qmp-pcie-phy.yaml
->>> +++ b/Documentation/devicetree/bindings/phy/qcom,qmp-pcie-phy.yaml
->>> @@ -69,9 +69,37 @@ properties:
+On 05/07/2022 14:40, Johan Hovold wrote:
+> The QMP PCIe PHY provides a single clock so drop the redundant clock
+> index.
 > 
->>> +  - if:
->>> +      properties:
->>> +        compatible:
->>> +          contains:
->>> +            enum:
->>> +              - qcom,sm8250-qmp-gen3x2-pcie-phy
->>> +              - qcom,sm8250-qmp-modem-pcie-phy
->>> +              - qcom,sm8450-qmp-gen4x2-pcie-phy
->>> +    then:
->>> +      patternProperties:
->>> +        "^phy@[0-9a-f]+$":
->>> +          properties:
->>> +            reg:
->>> +              items:
->>> +                - description: TX lane 1
->>> +                - description: RX lane 1
->>> +                - description: PCS
->>> +                - description: TX lane 2
->>> +                - description: RX lane 2
->>> +                - description: PCS_MISC
->>> +    else:
->>> +      patternProperties:
->>> +        "^phy@[0-9a-f]+$":
->>> +          properties:
->>> +            reg:
->>> +              minItems: 3
->>> +              maxItems: 4
->>> +              items:
->>> +                - description: TX
->>> +                - description: RX
->>> +                - description: PCS
->>> +                - description: PCS_MISC
->>> +      if:
->>
->> Do not include if within other if. Just split the entire section to its
->> own if:.
-> 
-> That sounds like it would just obfuscate the logic. The else clause
-> specified 3-4 registers and the nested if determines which compatibles
-> use which by further narrowing the range.
-> 
-> If you move it out to the else: this would be really hard understand and
-> verify.
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 
-Every bindings are expected to do that way and most of them are doing
-it: define broad constraints in properties:, then define strict
-constraints per each variant. Easy to follow code. This binding is not
-particularly special to make it different than other ones. Doing
-semi-strict constraints in if: and then additional constrain in nested
-if: is not easy to understand and verify.
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
+> ---
+>   arch/arm64/boot/dts/qcom/sc7280.dtsi | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 
-Best regards,
-Krzysztof
+-- 
+With best wishes
+Dmitry
