@@ -2,65 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3D1C1566A40
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jul 2022 13:53:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3A760566A56
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jul 2022 13:56:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229492AbiGELxv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Jul 2022 07:53:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34612 "EHLO
+        id S229520AbiGEL4h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Jul 2022 07:56:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38668 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231888AbiGELxb (ORCPT
+        with ESMTP id S229489AbiGEL4g (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Jul 2022 07:53:31 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5AD08BF51;
-        Tue,  5 Jul 2022 04:53:30 -0700 (PDT)
+        Tue, 5 Jul 2022 07:56:36 -0400
+Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3DFFD17591
+        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Jul 2022 04:56:35 -0700 (PDT)
+Received: by mail-lj1-x232.google.com with SMTP id bx13so14213695ljb.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Jul 2022 04:56:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1657022010; x=1688558010;
-  h=subject:to:cc:references:from:message-id:date:
-   mime-version:in-reply-to:content-transfer-encoding;
-  bh=t0jdRRxvBRqLaphgAV4C75lY4+jAufKtnXYqkuwxxi8=;
-  b=fFLIzI2kIIoofweoDoz6up5pUKnLdfq0yvJPv+fIW0nOIHBRQQuegEC8
-   3BaKIGe+e9oJUNXjr6fxSIaILtNgsSPG7pNxrNq3dypCAteDcQHGoiYLE
-   lC120GxLobXP6ekMejWTJWJwygHewyXfruTG0zPpdIKyE95ZhLaIiViYm
-   I=;
-Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
-  by alexa-out.qualcomm.com with ESMTP; 05 Jul 2022 04:53:30 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Jul 2022 04:53:30 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Tue, 5 Jul 2022 04:53:29 -0700
-Received: from [10.79.43.230] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Tue, 5 Jul 2022
- 04:53:27 -0700
-Subject: Re: [PATCH] remoteproc: qcom: pas: Add decrypt shutdown support for
- modem
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-CC:     <dmitry.baryshkov@linaro.org>, <agross@kernel.org>,
-        <mathieu.poirier@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <1653031684-14771-1-git-send-email-quic_sibis@quicinc.com>
- <Yr35Q2G8NNvYaI8M@builder.lan>
-From:   Sibi Sankar <quic_sibis@quicinc.com>
-Message-ID: <a4373b5d-fd01-9692-2660-792b5b84d08c@quicinc.com>
-Date:   Tue, 5 Jul 2022 17:23:24 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=Vsyz7Rlb53JTlbHvnnvdRFpkzvwYidG5knYyvTWU2J4=;
+        b=J6Xn7PwhlmRL7Kr9Bf4WitjD0eaEp+S7R2w8kXZs6D9tSVlKBV8mGj12PFb/afjI7P
+         JgcoIl3VgyhipdKeKvV1sIo5+Dks/B7z9qOLzwx7uFR0wEO04pZ53kK/hBAt4XGI6hME
+         sMojGdcXlpLpIJ1OXj8XizfCfLxDv8ALSt4PfnGQOdCVRfoOcV1ThEpIx/Bs/7eTPbBY
+         XpRIam2VUHXzNalRQvG3bOfx/+Im167jX2UDMIX1gFPSwtBIKB8IuZ4cG+KIA+jP6I4z
+         BJ/M93qt1RiKaeG9C5vbSkTqiT/cguYMKFMl5q0AWvaWvhLpGOgEm1r24VnOzX9DNK1l
+         3gdw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=Vsyz7Rlb53JTlbHvnnvdRFpkzvwYidG5knYyvTWU2J4=;
+        b=WffL1+zmc0Hya9QY3L2Gk5fc79lwJYm5Z97jyPMxlSBEUyitHgKesCJiXWFnCmoOHE
+         1QBcs51E7EjoBFIEcG56pOph85hFcdT5pv4pTt2m5icx/D9FHFZDeXxueW1Fu6qGdYbZ
+         0B7ESEXiB5lKdtRo0uo/wKr/kgUSAS56+W2hW1uV12fVZc/KerB4d9FYgjaj9UjbsQX2
+         WoGHiuHK3mOGJebJTdkds0S5LPRPMWS9z228yRHwwH312Juxizf/C5zLYsRMSB1sM78u
+         wmmJ0Oe8OzbuSe9DIUPtnaqVTiEZ8E1R+RLMnEzb6o2BifbGCjqGuX3SmKZD6SJ0J64o
+         RwPw==
+X-Gm-Message-State: AJIora/YYpo3bCyafZoySwJdajV4voLHw/z4VmV1nn4UhLZRJarM8fAr
+        ZlpVh8wHSDKpeDi5psc2hgcDZA==
+X-Google-Smtp-Source: AGRyM1s8dtYMfQ0WmJojokE+mPEUDR+r4cp5dqxRDFw4fkhs4A6Iya7P4qMDZAfLM9Dp/WYdyBx2Ug==
+X-Received: by 2002:a2e:90f:0:b0:25d:309e:422f with SMTP id 15-20020a2e090f000000b0025d309e422fmr2096329ljj.179.1657022193599;
+        Tue, 05 Jul 2022 04:56:33 -0700 (PDT)
+Received: from [192.168.1.52] ([84.20.121.239])
+        by smtp.gmail.com with ESMTPSA id w16-20020a05651234d000b004815305854bsm2768554lfr.61.2022.07.05.04.56.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 05 Jul 2022 04:56:33 -0700 (PDT)
+Message-ID: <963917cf-0f9d-600f-564e-9e687270b1af@linaro.org>
+Date:   Tue, 5 Jul 2022 13:56:32 +0200
 MIME-Version: 1.0
-In-Reply-To: <Yr35Q2G8NNvYaI8M@builder.lan>
-Content-Type: text/plain; charset="utf-8"; format=flowed
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH 17/43] dt-bindings: phy: qcom,qmp-pcie: add missing child
+ node schema
 Content-Language: en-US
+To:     Johan Hovold <johan@kernel.org>
+Cc:     Johan Hovold <johan+linaro@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20220705094239.17174-1-johan+linaro@kernel.org>
+ <20220705094239.17174-18-johan+linaro@kernel.org>
+ <4bc79a1c-66b1-225d-5026-ddf3e6f7d22c@linaro.org>
+ <YsQlzr6nyvz761Kz@hovoldconsulting.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <YsQlzr6nyvz761Kz@hovoldconsulting.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -69,138 +85,78 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hey Bjorn,
-Thanks for taking time to review the series.
-
-On 7/1/22 12:58 AM, Bjorn Andersson wrote:
-> On Fri 20 May 02:28 CDT 2022, Sibi Sankar wrote:
+On 05/07/2022 13:51, Johan Hovold wrote:
+> On Tue, Jul 05, 2022 at 12:18:37PM +0200, Krzysztof Kozlowski wrote:
+>> On 05/07/2022 11:42, Johan Hovold wrote:
+>>> Add the missing the description of the PHY-provider child node which was
+>>> ignored when converting to DT schema.
+>>>
+>>> Also fix up the incorrect description that claimed that one child node
+>>> per lane was required.
+>>>
+>>> Fixes: ccf51c1cedfd ("dt-bindings: phy: qcom,qmp: Convert QMP PHY bindings to yaml")
+>>> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+>>> ---
+>>>  .../bindings/phy/qcom,qmp-pcie-phy.yaml       | 88 ++++++++++++++++++-
+>>>  1 file changed, 85 insertions(+), 3 deletions(-)
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/phy/qcom,qmp-pcie-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,qmp-pcie-phy.yaml
+>>> index ff1577f68a00..5a1ebf874559 100644
+>>> --- a/Documentation/devicetree/bindings/phy/qcom,qmp-pcie-phy.yaml
+>>> +++ b/Documentation/devicetree/bindings/phy/qcom,qmp-pcie-phy.yaml
+>>> @@ -69,9 +69,37 @@ properties:
 > 
->> The initial shutdown request to modem on SM8450 SoCs would start the
->> decryption process and will keep returning errors until the modem shutdown
->> is complete. Fix this by retrying shutdowns in fixed intervals.
+>>> +  - if:
+>>> +      properties:
+>>> +        compatible:
+>>> +          contains:
+>>> +            enum:
+>>> +              - qcom,sm8250-qmp-gen3x2-pcie-phy
+>>> +              - qcom,sm8250-qmp-modem-pcie-phy
+>>> +              - qcom,sm8450-qmp-gen4x2-pcie-phy
+>>> +    then:
+>>> +      patternProperties:
+>>> +        "^phy@[0-9a-f]+$":
+>>> +          properties:
+>>> +            reg:
+>>> +              items:
+>>> +                - description: TX lane 1
+>>> +                - description: RX lane 1
+>>> +                - description: PCS
+>>> +                - description: TX lane 2
+>>> +                - description: RX lane 2
+>>> +                - description: PCS_MISC
+>>> +    else:
+>>> +      patternProperties:
+>>> +        "^phy@[0-9a-f]+$":
+>>> +          properties:
+>>> +            reg:
+>>> +              minItems: 3
+>>> +              maxItems: 4
+>>> +              items:
+>>> +                - description: TX
+>>> +                - description: RX
+>>> +                - description: PCS
+>>> +                - description: PCS_MISC
+>>> +      if:
 >>
->> Err Logs on modem shutdown:
->> qcom_q6v5_pas 4080000.remoteproc: failed to shutdown: -22
->> remoteproc remoteproc3: can't stop rproc: -22
->>
->> Fixes: 5cef9b48458d ("remoteproc: qcom: pas: Add SM8450 remoteproc support")
->> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+>> Do not include if within other if. Just split the entire section to its
+>> own if:.
 > 
-> Looks reasonable, just two inquiries below.
+> That sounds like it would just obfuscate the logic. The else clause
+> specified 3-4 registers and the nested if determines which compatibles
+> use which by further narrowing the range.
 > 
->> ---
->>   drivers/remoteproc/qcom_q6v5_pas.c | 67 +++++++++++++++++++++++++++++++++++++-
->>   1 file changed, 66 insertions(+), 1 deletion(-)
->>
->> diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
->> index 6ae39c5653b1..d04c4b877e12 100644
->> --- a/drivers/remoteproc/qcom_q6v5_pas.c
->> +++ b/drivers/remoteproc/qcom_q6v5_pas.c
->> @@ -8,6 +8,7 @@
->>    */
->>   
->>   #include <linux/clk.h>
->> +#include <linux/delay.h>
->>   #include <linux/firmware.h>
->>   #include <linux/interrupt.h>
->>   #include <linux/kernel.h>
->> @@ -29,6 +30,8 @@
->>   #include "qcom_q6v5.h"
->>   #include "remoteproc_internal.h"
->>   
->> +#define ADSP_DECRYPT_SHUTDOWN_DELAY_MS	100
->> +
->>   struct adsp_data {
->>   	int crash_reason_smem;
->>   	const char *firmware_name;
->> @@ -36,6 +39,7 @@ struct adsp_data {
->>   	unsigned int minidump_id;
->>   	bool has_aggre2_clk;
->>   	bool auto_boot;
->> +	bool decrypt_shutdown;
->>   
->>   	char **proxy_pd_names;
->>   
->> @@ -65,6 +69,7 @@ struct qcom_adsp {
->>   	unsigned int minidump_id;
->>   	int crash_reason_smem;
->>   	bool has_aggre2_clk;
->> +	bool decrypt_shutdown;
->>   	const char *info_name;
->>   
->>   	struct completion start_done;
->> @@ -128,6 +133,20 @@ static void adsp_pds_disable(struct qcom_adsp *adsp, struct device **pds,
->>   	}
->>   }
->>   
->> +static int adsp_decrypt_shutdown(struct qcom_adsp *adsp)
->> +{
->> +	int retry_num = 50;
-> 
-> Seems unsigned to me.
+> If you move it out to the else: this would be really hard understand and
+> verify.
 
-ack
+Every bindings are expected to do that way and most of them are doing
+it: define broad constraints in properties:, then define strict
+constraints per each variant. Easy to follow code. This binding is not
+particularly special to make it different than other ones. Doing
+semi-strict constraints in if: and then additional constrain in nested
+if: is not easy to understand and verify.
 
-> 
->> +	int ret = -EINVAL;
->> +
->> +	while (retry_num && ret) {
->> +		msleep(ADSP_DECRYPT_SHUTDOWN_DELAY_MS);
->> +		ret = qcom_scm_pas_shutdown(adsp->pas_id);
->> +		retry_num--;
->> +	}
-> 
-> Will qcom_scm_pas_shutdown() ever return any other errors than -EINVAL?
-> 
-> Would it make sense to make this:
-> 
-> 	do {
-> 		...;
-> 	} while (ret == -EINVAL && --retry_num);
-> 
 
-Just checking on ret would cover the -EINVAL case as well but like you
-said pas_shutdown() won't return any other error. So I'll just stick
-with your suggestion.
-
->> +
->> +	return ret;
->> +}
->> +
->>   static int adsp_unprepare(struct rproc *rproc)
->>   {
->>   	struct qcom_adsp *adsp = (struct qcom_adsp *)rproc->priv;
->> @@ -249,6 +268,9 @@ static int adsp_stop(struct rproc *rproc)
->>   		dev_err(adsp->dev, "timed out on wait\n");
->>   
->>   	ret = qcom_scm_pas_shutdown(adsp->pas_id);
->> +	if (ret && adsp->decrypt_shutdown)
->> +		ret = adsp_decrypt_shutdown(adsp);
->> +
->>   	if (ret)
->>   		dev_err(adsp->dev, "failed to shutdown: %d\n", ret);
->>   
->> @@ -459,6 +481,7 @@ static int adsp_probe(struct platform_device *pdev)
->>   	adsp->pas_id = desc->pas_id;
->>   	adsp->has_aggre2_clk = desc->has_aggre2_clk;
->>   	adsp->info_name = desc->sysmon_name;
->> +	adsp->decrypt_shutdown = desc->decrypt_shutdown;
->>   	platform_set_drvdata(pdev, adsp);
->>   
->>   	device_wakeup_enable(adsp->dev);
->> @@ -533,6 +556,7 @@ static const struct adsp_data adsp_resource_init = {
->>   		.pas_id = 1,
->>   		.has_aggre2_clk = false,
->>   		.auto_boot = true,
->> +		.decrypt_shutdown = false,
-> 
-> With all these booleans, I would prefer if we cleaned it up to not list
-> the disabled options. That would make it quicker to spot which features
-> are actually enabled for each remoteproc.
-
-ack and ack to the adsp_shutdown_poll_decrypt() as well.
-
-> 
-> Regards,
-> Bjorn
-> 
+Best regards,
+Krzysztof
