@@ -2,96 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A1E68567137
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jul 2022 16:35:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C634D567224
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jul 2022 17:10:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232245AbiGEOfz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Jul 2022 10:35:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32958 "EHLO
+        id S231717AbiGEPKE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Jul 2022 11:10:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35760 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232493AbiGEOfy (ORCPT
+        with ESMTP id S231465AbiGEPJs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Jul 2022 10:35:54 -0400
-Received: from mx.kernkonzept.com (serv1.kernkonzept.com [IPv6:2a01:4f8:1c1c:b490::2])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56EC85F50;
-        Tue,  5 Jul 2022 07:35:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=kernkonzept.com; s=mx1; h=Content-Transfer-Encoding:MIME-Version:References
-        :In-Reply-To:Message-Id:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:
-        Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-        Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-        List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=JUn1jSaPZbSkjB9N0EbRyM0eRkdA0xCVqZoLF19COAg=; b=Uv+bfRko00Z8s5j6zP95+k5ish
-        KiDLtQh6soEkDGe02Vg4Av8stMc3N/6NnW1Za55ENYa3cs35gR0lWA225+aUJ0Qv9QSW5UGWc7/Vq
-        fB+IuLckZSYt6DYq6l6+cPltNA6a68IsidqS6cvwPsDNU3s2LngPXAYN859FdChZa5HhE1lSiD7Nm
-        Qir/Qii0d5dgsI5q+jk3jIUez6D+DEJr/kRzIZcT7uFITNb4fbd1G8Z5TPOechESyTFEoS8+sd/ub
-        Ipdin2MWEZ1/4sOIn9fLVLfrUG34afZykd55KFBt/eEfDHe5PziavTu4MmwvCr+d6QT+HR3TwFadW
-        f0stohQg==;
-Received: from [10.22.3.24] (helo=kernkonzept.com)
-        by mx.kernkonzept.com with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim 4.94.2)
-        id 1o8jeX-007EB6-7h; Tue, 05 Jul 2022 16:35:49 +0200
-From:   Stephan Gerhold <stephan.gerhold@kernkonzept.com>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Stephan Gerhold <stephan.gerhold@kernkonzept.com>
-Subject: [PATCH 8/8] ARM: mach-qcom: Add support for MSM8909
-Date:   Tue,  5 Jul 2022 16:35:23 +0200
-Message-Id: <20220705143523.3390944-9-stephan.gerhold@kernkonzept.com>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20220705143523.3390944-1-stephan.gerhold@kernkonzept.com>
-References: <20220705143523.3390944-1-stephan.gerhold@kernkonzept.com>
+        Tue, 5 Jul 2022 11:09:48 -0400
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF17117A93
+        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Jul 2022 08:06:56 -0700 (PDT)
+Received: by mail-wm1-x330.google.com with SMTP id l40-20020a05600c1d2800b003a18adff308so7629257wms.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Jul 2022 08:06:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=+cVXdg+Brnle8yemDKHWIkEdNxNp1s8TSLsVgVGe5J0=;
+        b=MGwCh4yeqqLnhT0WMeoMr6CScRSYX/1HhkHLkHd4QnnDjSiVs6v9atM7MaOH9RGZDK
+         dGO7qUntVI039HvOKrW3QKVdjI2CczNLcXdb7Dt1Ub7vmntUW/GmQihHPISmn7NdyW6x
+         Oz3bmlZUkboe9bpM7bjhv3VgCAhihHMi8oG80QjJ8o+3hxS3yPiy3Q0+fWBsjDHSC4NT
+         8Fmugcq3HKmqosRHKeCgvK/GzuEf+g62jHkWPXUR0XfqbUFTtkyOv51QXZZEcXaYblgq
+         mTfli3sCq2GSvf3Tlj6JJp/NqJoNlsmSYIDI1XPGIDLvzIbbY6BYNAK6jXh5Tuj2jQsn
+         0f8A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=+cVXdg+Brnle8yemDKHWIkEdNxNp1s8TSLsVgVGe5J0=;
+        b=vA3Ppax62HYKgg9DCWxE9Li1gdBgZ9aYcTJCfWgsCe7ClRhnVSH5n9QIsWK0LHOqG/
+         Q0uAPa9CV0cW58KTxjyUcvYEsvefybLwTcOqXf9RKYd64OepKSp+C0gxKZDglHeWKzXv
+         1kBlbtkuNV94wv+Uv+0yn0OSkvJqbMQO4SNyc3BH/GgnEkllVTxA27/2KDh6pS+9fa5j
+         /KyUAUJF2U/eYRtyndyvRD9knbr9vY5CsZ0OqRD/l4lZrbPY14gPtH+9NFjQiYcWLm75
+         /dbT4OEkjufWawzsaQ2vqsx2DnPLFMM1ao+sYINYIK02oGighSGdPjcefvlSAm71Zqdh
+         DXaQ==
+X-Gm-Message-State: AJIora+4L2lRAuMZuNXXouST26K6jitwHgd6W9JlsVc2Z6zqxkevc1VN
+        9Bj0g6G7gpsbR1Pgd41ivZ9nDwPzt4urmG8eB0OP+Q==
+X-Google-Smtp-Source: AGRyM1sPaHkA/oz0kbKM+58TCz8Bc3vtUDjTnCx3JRdROJ2gHJtU1pj3EzwdjI0I3EXWoLbaZGRMWaQPNjnOe1p6KLo=
+X-Received: by 2002:a05:600c:4e46:b0:3a0:4d54:f206 with SMTP id
+ e6-20020a05600c4e4600b003a04d54f206mr40771971wmq.151.1657033615052; Tue, 05
+ Jul 2022 08:06:55 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20220519073330.7187-1-krzysztof.kozlowski@linaro.org>
+ <640d2a3d-4c38-b921-45c1-048c255b5a9d@linaro.org> <d4972a70-8ddf-a394-3e8f-08fb778622d8@linaro.org>
+ <57aca768-18f4-6b79-9490-c57123d71232@linaro.org>
+In-Reply-To: <57aca768-18f4-6b79-9490-c57123d71232@linaro.org>
+From:   Mathieu Poirier <mathieu.poirier@linaro.org>
+Date:   Tue, 5 Jul 2022 09:06:43 -0600
+Message-ID: <CANLsYkzgG9gAropJVsdCe8PE+EJpQnD+Chc4ncm9otNyzUYZ2g@mail.gmail.com>
+Subject: Re: [PATCH v2 1/3] rpmsg: qcom: glink: replace strncpy() with strscpy_pad()
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Stephen Boyd <sboyd@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add a Kconfig entry for MSM8909 and the "qcom,msm8909-smp" CPU
-enable-method. The ARM Cortex-A7 cores are booted just like on MSM8226.
+On Tue, 5 Jul 2022 at 06:14, Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
+>
+> On 20/06/2022 20:37, Krzysztof Kozlowski wrote:
+> > On 09/06/2022 10:56, Krzysztof Kozlowski wrote:
+> >> On 19/05/2022 09:33, Krzysztof Kozlowski wrote:
+> >>> The use of strncpy() is considered deprecated for NUL-terminated
+> >>> strings[1]. Replace strncpy() with strscpy_pad(), to keep existing
+> >>> pad-behavior of strncpy, similarly to commit 08de420a8014 ("rpmsg:
+> >>> glink: Replace strncpy() with strscpy_pad()").  This fixes W=3D1 warn=
+ing:
+> >>>
+> >>>   In function =E2=80=98qcom_glink_rx_close=E2=80=99,
+> >>>     inlined from =E2=80=98qcom_glink_work=E2=80=99 at ../drivers/rpms=
+g/qcom_glink_native.c:1638:4:
+> >>>   drivers/rpmsg/qcom_glink_native.c:1549:17: warning: =E2=80=98strncp=
+y=E2=80=99 specified bound 32 equals destination size [-Wstringop-truncatio=
+n]
+> >>>    1549 |                 strncpy(chinfo.name, channel->name, sizeof(=
+chinfo.name));
+> >>>
+> >>> [1] https://www.kernel.org/doc/html/latest/process/deprecated.html#st=
+rncpy-on-nul-terminated-strings
+> >>>
+> >>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> >>>
+> >>> ---
+> >>>
+> >>> Changes since v1:
+> >>> 1. Split series per subsystem.
+> >>
+> >> Any comments on these?
+> >
+> > I sent first iteration in May, then on 19th of May. There is review fro=
+m
+> > Stephen.
+> >
+> > On 9th of June I pinged but the patchset is still waiting. Anyone minds
+> > me taking these?
+>
+> Hmmm... These are all fixes but wait for quite a long time. Shall we
+> make the rpmsg subsystem orphaned?
 
-Signed-off-by: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
----
- arch/arm/mach-qcom/Kconfig   | 4 ++++
- arch/arm/mach-qcom/platsmp.c | 1 +
- 2 files changed, 5 insertions(+)
+Bjorn handles all Qcom patches for the remoteproc/rpmsg subsystems.
 
-diff --git a/arch/arm/mach-qcom/Kconfig b/arch/arm/mach-qcom/Kconfig
-index 109e126f7271..12a812e61c16 100644
---- a/arch/arm/mach-qcom/Kconfig
-+++ b/arch/arm/mach-qcom/Kconfig
-@@ -20,6 +20,10 @@ config ARCH_MSM8X60
- 	bool "Enable support for MSM8X60"
- 	select CLKSRC_QCOM
- 
-+config ARCH_MSM8909
-+	bool "Enable support for MSM8909"
-+	select HAVE_ARM_ARCH_TIMER
-+
- config ARCH_MSM8916
- 	bool "Enable support for MSM8916"
- 	select HAVE_ARM_ARCH_TIMER
-diff --git a/arch/arm/mach-qcom/platsmp.c b/arch/arm/mach-qcom/platsmp.c
-index 65a0d5ce2bb3..5d2f386a46d8 100644
---- a/arch/arm/mach-qcom/platsmp.c
-+++ b/arch/arm/mach-qcom/platsmp.c
-@@ -384,6 +384,7 @@ static const struct smp_operations qcom_smp_cortex_a7_ops __initconst = {
- #endif
- };
- CPU_METHOD_OF_DECLARE(qcom_smp_msm8226, "qcom,msm8226-smp", &qcom_smp_cortex_a7_ops);
-+CPU_METHOD_OF_DECLARE(qcom_smp_msm8909, "qcom,msm8909-smp", &qcom_smp_cortex_a7_ops);
- CPU_METHOD_OF_DECLARE(qcom_smp_msm8916, "qcom,msm8916-smp", &qcom_smp_cortex_a7_ops);
- 
- static const struct smp_operations qcom_smp_kpssv1_ops __initconst = {
--- 
-2.30.2
-
+>
+> Best regards,
+> Krzysztof
