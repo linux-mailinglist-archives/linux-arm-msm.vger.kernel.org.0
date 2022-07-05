@@ -2,42 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 910F45667D1
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jul 2022 12:24:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CD6E45667CB
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jul 2022 12:23:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229636AbiGEKY0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Jul 2022 06:24:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45378 "EHLO
+        id S230371AbiGEKXO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Jul 2022 06:23:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46114 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231965AbiGEKWW (ORCPT
+        with ESMTP id S230360AbiGEKXM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Jul 2022 06:22:22 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BABA14D15;
-        Tue,  5 Jul 2022 03:22:20 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id E65E0B81737;
-        Tue,  5 Jul 2022 10:22:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EE68C341C7;
-        Tue,  5 Jul 2022 10:22:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1657016537;
-        bh=e+WVKuABy3B4xWh28IvAUjhEPi40vu/COnqPvOhrMoI=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=ZDtUtxSoYssZ9G/EseASqj9GalQsG0zIeMjglYle0ekV91V4RO7GlrBvlHZ4aRWGN
-         6OytFcdCF91f6rJwujR2muRmGPeqZRE9i7HZrJYuXAl4Hi9AuU/GgPZkWXepkwDUZL
-         XOxy8VJfjAVmBug9ZydUs1AOOIRwbIjuxFpIsK4U/re1lEbIgEmdyGZiDZKpECB/O2
-         VnVvXktULpOC4ZSiE1P/Eq9Dso7mDAanlrECGpvpCtzZoqHb2Jxgn12E2pmsbAPhHx
-         YTB14FCn+Xcu56wRsd8Q1YUyi9LpQx5ZvJYEIGHNjl2E2uZq/0EObUP0Fmrnyoa3W5
-         s7HfRM38xyy9g==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1o8fhC-00056D-2U; Tue, 05 Jul 2022 12:22:18 +0200
-Date:   Tue, 5 Jul 2022 12:22:18 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+        Tue, 5 Jul 2022 06:23:12 -0400
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E2A9140DB
+        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Jul 2022 03:23:11 -0700 (PDT)
+Received: by mail-lj1-x22a.google.com with SMTP id a39so13910125ljq.11
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Jul 2022 03:23:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=hkwPfIALvdSAU2N+QXSkCqGtHG+6iyMXOJOvPCyiJGw=;
+        b=DkaKRWBO09Bt2yF50Bv2PtP2qHgMg2KEOaGzBjYBoFxhX6fe2VO9yY9e34yUmIN/Ri
+         oytrJjsQsF9fhlM5rYSX2RQyWNfu6uXCBCbsErDdTTpvJhgdmTFZ2rfRCw0nS+bS840S
+         h2KMdRVwicolslBHijie/QN9nSpJ2L0+P/pMPiMkbh2xuilR8LLVAOWNGdrVqnF/bKyr
+         IK1v7AzELoGJdsXlsMzH7e03vmBwkrmwfV/ZsH0I3AZRUbfLhFVxTVLhuhvkxm+aT+Jv
+         pPQ8Lz/NSVpUeIU8iGxOpCD8onXdJoHKVcN6+JzHqcJ7hzGalSI28JF1L6YG9fGpdssg
+         JSEA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=hkwPfIALvdSAU2N+QXSkCqGtHG+6iyMXOJOvPCyiJGw=;
+        b=zXrqDM4osTlyUnqsKfeVO/NXCqH3V8AseAqodwej17/4GUIsRJjvCGgfQFGtkx4DTs
+         OEGtAvcAbCC33yQhYTVcbdSk7s0l0nikbylPYQaVtIHUnhqICIfQ0xYDA07vl4sx98Hg
+         VhqH8ihp/pNg6snyIcGo0xIMkNqJq7MQJe70RBX/5k88Cjd8kyRj27MKJ9ohBZKYAXmb
+         r0nFnV7v1cutHHylYlg3YoGs0HLJeAfbigeB7/1cTJoYb/b3ZSg/N4ng16dLjVlSVMwx
+         rNgl1lPSpS2J3kYoP0ZRq19w2AikdZdrv4untevwTFdRUMrdkjcIM3AwQ9RWVKQ9E3XS
+         HsFg==
+X-Gm-Message-State: AJIora/POgCRG5JF59/+pmjbhqtufpHmMQnPjxmQNOI3bdCMfCYiyryQ
+        HbdFvnJkJVo7Knhe5/HPJYgMbw==
+X-Google-Smtp-Source: AGRyM1tK6aV4ED+ArkEi6a0TDdCwN3rOkmF5CvDjTenVKYf3MB0Hfzxm32KYRLOcIqfP845yDk0iEw==
+X-Received: by 2002:a2e:9dcb:0:b0:25d:16eb:2671 with SMTP id x11-20020a2e9dcb000000b0025d16eb2671mr8829879ljj.46.1657016589353;
+        Tue, 05 Jul 2022 03:23:09 -0700 (PDT)
+Received: from [192.168.1.52] ([84.20.121.239])
+        by smtp.gmail.com with ESMTPSA id 11-20020a05651c128b00b0025a725af81csm5479239ljc.39.2022.07.05.03.23.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 05 Jul 2022 03:23:08 -0700 (PDT)
+Message-ID: <1053b27f-37f8-a94d-2868-1e2b200d822a@linaro.org>
+Date:   Tue, 5 Jul 2022 12:23:07 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH 06/43] dt-bindings: phy: qcom,qmp: split out
+ msm8996-qmp-pcie-phy
+Content-Language: en-US
+To:     Johan Hovold <johan@kernel.org>
 Cc:     Johan Hovold <johan+linaro@kernel.org>,
         Vinod Koul <vkoul@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
@@ -47,19 +67,17 @@ Cc:     Johan Hovold <johan+linaro@kernel.org>,
         Kishon Vijay Abraham I <kishon@ti.com>,
         linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 09/43] dt-bindings: phy: qcom,msm8996-qmp-pcie: add
- example node
-Message-ID: <YsQQ2o8aYJnnWuNa@hovoldconsulting.com>
 References: <20220705094239.17174-1-johan+linaro@kernel.org>
- <20220705094239.17174-10-johan+linaro@kernel.org>
- <8271f4d5-e12e-ddf0-46ab-86a39577755a@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <8271f4d5-e12e-ddf0-46ab-86a39577755a@linaro.org>
-X-Spam-Status: No, score=-7.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+ <20220705094239.17174-7-johan+linaro@kernel.org>
+ <46b0cdab-aa94-7f55-5d9f-f79a644f0fec@linaro.org>
+ <YsQQfwqmiQ7O3FdY@hovoldconsulting.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <YsQQfwqmiQ7O3FdY@hovoldconsulting.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -67,14 +85,101 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jul 05, 2022 at 12:10:29PM +0200, Krzysztof Kozlowski wrote:
-> On 05/07/2022 11:42, Johan Hovold wrote:
-> > Add an example node based on a cleaned up version of msm8996.dtsi.
-> > 
-> > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+On 05/07/2022 12:20, Johan Hovold wrote:
+> On Tue, Jul 05, 2022 at 12:08:36PM +0200, Krzysztof Kozlowski wrote:
+>> On 05/07/2022 11:42, Johan Hovold wrote:
+>>> The QMP PHY DT schema is getting unwieldy. Break out the odd-bird
+>>> msm8996-qmp-pcie-phy which is the only QMP PHY that uses separate
+>>> "per-lane" nodes.
+>>>
+>>> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+>>> ---
+>>>  .../phy/qcom,msm8996-qmp-pcie-phy.yaml        | 114 ++++++++++++++++++
+>>>  .../devicetree/bindings/phy/qcom,qmp-phy.yaml |  32 -----
+>>>  2 files changed, 114 insertions(+), 32 deletions(-)
+>>>  create mode 100644 Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-pcie-phy.yaml
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-pcie-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-pcie-phy.yaml
+>>> new file mode 100644
+>>> index 000000000000..14fd86fd91ec
+>>> --- /dev/null
+>>> +++ b/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-pcie-phy.yaml
+>>> @@ -0,0 +1,114 @@
+>>> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+>>> +
+>>
+>> No line break
+>>
+>>> +%YAML 1.2
+>>> +---
+>>> +$id: "http://devicetree.org/schemas/phy/qcom,msm8996-qmp-pcie-phy.yaml#"
+>>> +$schema: "http://devicetree.org/meta-schemas/core.yaml#"
+>>
+>> Drop the quotes from two above.
 > 
-> Squash it, please.
+> This comes from the current binding. I can clean that one up first.
 
-Why? It's a new addition to the schema.
+You now selectively copy pieces from old binding into new one. Copy
+while correcting obvious issues.
 
-Johan
+> 
+>>> +
+>>> +title: Qualcomm QMP PHY controller (MSM8996 PCIe)
+>>> +
+>>> +maintainers:
+>>> +  - Vinod Koul <vkoul@kernel.org>
+>>> +
+>>> +description:
+>>> +  QMP PHY controller supports physical layer functionality for a number of
+>>> +  controllers on Qualcomm chipsets, such as, PCIe, UFS, and USB.
+>>> +
+>>> +properties:
+>>> +  compatible:
+>>> +    const: qcom,msm8996-qmp-pcie-phy
+>>> +
+>>> +  reg:
+>>> +    minItems: 1
+>>> +    items:
+>>> +      - description: Address and length of PHY's common serdes block.
+>>> +      - description: Address and length of PHY's DP_COM control block.
+>>
+>> Are two reg items applicable here?
+> 
+> No, but see below.
+> 
+>>> +
+>>> +  "#address-cells":
+>>> +    enum: [ 1, 2 ]
+>>> +
+>>> +  "#size-cells":
+>>> +    enum: [ 1, 2 ]
+>>> +
+>>> +  ranges: true
+>>> +
+>>> +  clocks:
+>>> +    minItems: 1
+>>> +    maxItems: 4
+>>
+>> Define clocks here, not in allOf:if:then.
+> 
+> To remain sane, and to help reviewers, I decided not to do changes to
+> the binding while splitting it up which would only make them harder
+> to review.
+> 
+> Hence the split followed by cleanup/tightening of constraints.
+
+It's confusing. I look at this commit and it is not correct. How do I
+know that next commits will correct it? I responded in further patches
+that most of them they should be squashed with this copy.
+
+> 
+>> How about an example?
+> 
+> That's also a new addition to the binding and goes in a later separate
+> patch.
+> 
+
+
+
+Best regards,
+Krzysztof
