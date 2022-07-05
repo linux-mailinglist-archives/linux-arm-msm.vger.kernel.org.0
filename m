@@ -2,64 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F1835566CC5
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jul 2022 14:20:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B5A94566EFE
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jul 2022 15:14:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236093AbiGEMUW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Jul 2022 08:20:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36052 "EHLO
+        id S229505AbiGENOi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Jul 2022 09:14:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35370 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237522AbiGEMTS (ORCPT
+        with ESMTP id S234412AbiGENM6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Jul 2022 08:19:18 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BF591D301;
-        Tue,  5 Jul 2022 05:14:57 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 08AB3619A6;
-        Tue,  5 Jul 2022 12:14:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67EB3C341C7;
-        Tue,  5 Jul 2022 12:14:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1657023296;
-        bh=aLQZfrDM31ozGifv0mYlP/DyenjNLWBGnOgZJDGlVT8=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=he/uxbDIQ6fWWKA1hja3r9GYlQ3Lq1c2ri8Pu6het+AFtdNo2nMZol5QV0wTjX9eW
-         flevcHdytpywKNMHJ4F7wkq6+8Bx3rhmd37lmXUnvmZtXC3y1ycBFjlnKK6tkmNho4
-         awonQ27J4vOs34K6Xk7W3kFLifXba6wMif6pdQ5Ew9uWcciUzUUQiIsyyE+gOnecu9
-         VgnOPoXUlmC3YpPnjvxDhsFhONtcxi1ZJS9khqUHhhnGv93Y9rMTw0CFAXn2wNr/Fj
-         y0jigs/3kyAZocJWcgJJIgvDmRDT6jahb/MTt3a0KMB/WQtyDJiHAFUTP+gruO8Yut
-         G98uwK0Uo5o2w==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1o8hSD-0006Dv-Dm; Tue, 05 Jul 2022 14:14:57 +0200
-Date:   Tue, 5 Jul 2022 14:14:57 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Johan Hovold <johan+linaro@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 11/43] dt-bindings: phy: qcom,msm8996-qmp-pcie: deprecate
- reset names
-Message-ID: <YsQrQfvxauIGy6Ug@hovoldconsulting.com>
-References: <20220705094239.17174-1-johan+linaro@kernel.org>
- <20220705094239.17174-12-johan+linaro@kernel.org>
- <2a5fec43-352c-b304-e0c9-761e1d2b67ec@linaro.org>
+        Tue, 5 Jul 2022 09:12:58 -0400
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1209ED6B
+        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Jul 2022 05:38:22 -0700 (PDT)
+Received: by mail-wm1-x329.google.com with SMTP id g39-20020a05600c4ca700b003a03ac7d540so9609592wmp.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Jul 2022 05:38:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=E7MeRem5odn+2v7xFAFXaFY+6IJDYKBYvG4FE0QhOyQ=;
+        b=vWFeyV9dajGOVMuOQxnDMzl4YF98Gql8vg/nJ8o9HUt25XFcCuIcIBzjcfupIP4KLV
+         8t3onhwOEj0gs2j+j4JPU6vmwK3m2kJemL30vFy2cj3cViX+VH+xEXlFAf67FtOvKpqR
+         pa7J7LwBemnVzDWfjs3kMUd4pdRlReKUFYcpMiJH+bw/dZtKnSFVUEuYqo1oDJMVZhQB
+         sqowRWtLxifwKigMNdsqQoJ/SAsuEVTyOCPePCMMzP+hXCqeosW6KxRrXCq6SOY5viRX
+         PnxiqSMasYVo4QDiksKOvOIPWw34MvalTWbcCCINJh1V4Wtux4FYq3ngLZ/QtBEIyRUD
+         SnFg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=E7MeRem5odn+2v7xFAFXaFY+6IJDYKBYvG4FE0QhOyQ=;
+        b=F0d0tiWzDJpQd3Dylns34rmia3R7VYqZdjJxXPEkdpe8BvubwPPirSVnaLVf17o49L
+         S6Ba5PKZLTS30srE7RUXo0AyNP7OiePjAXlJyL9ZPKaIdpplUIz6A3NJnIp8kegiS2tE
+         grm9zbEur3vjbs2Bs9d/7qm7Ry5tfgy4FGdOXnla2aba13BUUKmSwbT+x0jdCw5R0P/Z
+         abic+6xUzn4/TcVB5qnK3qYuQwYkbK8XlIlhYHjvG5rUvtRivIo5389/GizNEKOouT6+
+         3kXJxZfmgcD2IDWLJ+oV7XHojoJ9zzNhw2da4SbaxJz8PGVoDtheF6aiXgaIb5C7EuPg
+         vOnw==
+X-Gm-Message-State: AJIora8jALZj0vPhYI0C+mZ2sc2/acmnmCnxKxApJTH7N1vzgV/h5Wvg
+        t+2dX5PuCf7MEaSIgC4wWPyn9w==
+X-Google-Smtp-Source: AGRyM1uimptZOye5/08vrA44zZMJbSONHOIsORNrVkz9GrQiNZ66c4JeDA9wtV6Asms/bwDtCYuChQ==
+X-Received: by 2002:a05:600c:502c:b0:3a1:a02c:f5c4 with SMTP id n44-20020a05600c502c00b003a1a02cf5c4mr12502912wmr.132.1657024652532;
+        Tue, 05 Jul 2022 05:37:32 -0700 (PDT)
+Received: from google.com ([2.26.241.96])
+        by smtp.gmail.com with ESMTPSA id q8-20020adff508000000b0021d6d9c0bd9sm4276757wro.82.2022.07.05.05.37.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 05 Jul 2022 05:37:31 -0700 (PDT)
+Date:   Tue, 5 Jul 2022 13:37:30 +0100
+From:   Lee Jones <lee.jones@linaro.org>
+To:     Robert Marko <robimarko@gmail.com>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
+        konrad.dybcio@somainline.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linus.walleij@linaro.org,
+        lgirdwood@gmail.com, broonie@kernel.org, jic23@kernel.org,
+        lars@metafoo.de, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-gpio@vger.kernel.org, linux-iio@vger.kernel.org
+Subject: Re: [PATCH v6 02/12] mfd: qcom-spmi-pmic: add support for PMP8074
+Message-ID: <YsQwiqyPZQjd1M+T@google.com>
+References: <20220704212402.1715182-1-robimarko@gmail.com>
+ <20220704212402.1715182-2-robimarko@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <2a5fec43-352c-b304-e0c9-761e1d2b67ec@linaro.org>
-X-Spam-Status: No, score=-7.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20220704212402.1715182-2-robimarko@gmail.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -67,45 +78,22 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jul 05, 2022 at 12:12:25PM +0200, Krzysztof Kozlowski wrote:
-> On 05/07/2022 11:42, Johan Hovold wrote:
-> > Drop the unnecessary "lane" suffix from the PHY reset names and mark the
-> > old names as deprecated.
-> > 
-> > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> > ---
-> >  .../phy/qcom,msm8996-qmp-pcie-phy.yaml        | 20 +++++++++++--------
-> >  1 file changed, 12 insertions(+), 8 deletions(-)
-> > 
-> > diff --git a/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-pcie-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-pcie-phy.yaml
-> > index 7931b1fd1476..0bea8270b37e 100644
-> > --- a/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-pcie-phy.yaml
-> > +++ b/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-pcie-phy.yaml
-> > @@ -94,11 +94,15 @@ patternProperties:
-> >            - description: PHY (lane) reset
-> >  
-> >        reset-names:
-> > -        items:
-> > -          - enum:
-> > -              - lane0
-> > -              - lane1
-> > -              - lane2
-> > +        oneOf:
-> > +          - items:
-> > +              - const: lane
-> > +          - items:
-> > +              - enum:
-> > +                  - lane0
-> > +                  - lane1
-> > +                  - lane2
-> > +            deprecated: true
-> >  
-> 
-> How about just dropping reset-names entirely? Marking entire field
-> deprecated and removing from DTS? The same in the previous patch.
-> 
-> Usually one-item xxx-names do not bring any useful information.
+On Mon, 04 Jul 2022, Robert Marko wrote:
 
-Yeah, I agree, that's better.
+> Add support for PMP8074 PMIC which is a companion PMIC for the Qualcomm
+> IPQ8074 SoC-s.
+> 
+> It shares the same subtype identifier as PM8901.
+> 
+> Signed-off-by: Robert Marko <robimarko@gmail.com>
+> ---
+>  drivers/mfd/qcom-spmi-pmic.c | 1 +
+>  1 file changed, 1 insertion(+)
 
-Johan
+Acked-by: Lee Jones <lee.jones@linaro.org>
+
+-- 
+Lee Jones [李琼斯]
+Principal Technical Lead - Developer Services
+Linaro.org │ Open source software for Arm SoCs
+Follow Linaro: Facebook | Twitter | Blog
