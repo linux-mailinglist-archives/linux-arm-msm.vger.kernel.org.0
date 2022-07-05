@@ -2,57 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3F3995673D2
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jul 2022 18:07:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 70B9D567393
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jul 2022 17:55:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230129AbiGEQHQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Jul 2022 12:07:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37052 "EHLO
+        id S230110AbiGEPzV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Jul 2022 11:55:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53638 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229798AbiGEQHP (ORCPT
+        with ESMTP id S230166AbiGEPzS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Jul 2022 12:07:15 -0400
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D4A32BEF;
-        Tue,  5 Jul 2022 09:07:14 -0700 (PDT)
-Received: by mail-ed1-x52f.google.com with SMTP id e40so15913319eda.2;
-        Tue, 05 Jul 2022 09:07:14 -0700 (PDT)
+        Tue, 5 Jul 2022 11:55:18 -0400
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2689BCED
+        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Jul 2022 08:55:17 -0700 (PDT)
+Received: by mail-lf1-x130.google.com with SMTP id j21so21354590lfe.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Jul 2022 08:55:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:from:to:cc:subject:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=bx/EJggf6KcEWSl78VZFvCZA1bCij/Kz84s+ZwLTqgE=;
-        b=hTAl5+5XREayMO4p+liGgfG2mSJNQTz7Ywte9M4phbuNT5HoVEWvDanjOcRaIUndY9
-         ZlPjrPUjjpMdtA/P2ek1E0WeEF/I0ZV4fRoLEq/eNK1w2YF8gD3CmUfgenpY6jHj1Bor
-         R70nRVOz6pl7SnO9wbri56gFpjoMErMHCpopBTmDi4Fnr90ad+dRzYXep6504hjLqhIr
-         eNSF6BS7dJEFTxDPjepKU/BP/2Ve0GHXlv9NmZeyHIClKGthTFcqHIwAg6rgur6bHBGO
-         fa1iE5lgXj50vCaYtDLq+zf2hsdXuN7bEeaaKhBlbTZ+NCXD7ebQ/bdOhpYhz618GqSM
-         yGsg==
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=jGJB1YsgZctBf3FrtbK+9SX6QzCOA77MpJH1Oeer0Hk=;
+        b=ec37u0hO8yXaGrSBqn1FsCWv5cskb+zfx52OL/Gef1NLfc9cwYqlJbhO8GevcVNhHC
+         GEEvn4ZTuRUOCGpEYCXwKWuhvAEg38suZg/kggjV2CNffhIjwbmofjRiyUk3Wa73KrGY
+         HXxN/1G0KFsvHXjRS1WGeXtFjYegiOXzYxzPpJlEVBl2vNWZDT/xnW30G3+Vkk6Gk01x
+         FVGo1uIw1ZZ45aqWGlW1PdyYDKOVSLl/ojNIy8FMAzLvR5jIFd4UQVKJ0ql5AWXmH6AG
+         Oq63372Rsukxx5JdCQvqw6iiAN9jA+xD5lKyaMuo+c4Md79Yn5sufrCHGU8mB1QvSVFp
+         WBmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:from:to:cc:subject:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=bx/EJggf6KcEWSl78VZFvCZA1bCij/Kz84s+ZwLTqgE=;
-        b=epyasN6hfkYAROsaTALzOHdySeXqzcn3I1W0hHJBuNwG3in2KEwDtWeRGJQuJgolcm
-         ybJHFzusLGpv60BlGTkIs/KtI4QpmBmckhKzYpx/W9+mzamiv9L/X7a3dqf9u0ev024Y
-         V0s7T2sEebisKLjGgQ+pNhWFN5Pms0ReUCuYEO6P/5D4OgGGbinmbrn/ZlU9qmHAP5SR
-         Ky7JRVAZJDPd8HxC+doAdHRJ4tBD9r8tacWwG63s1bnaS/xqZH3Lzn3o6FckORBjrfZe
-         urQfeP7iEk/sNKRe30nDwAUllqnbZjArbh6EON5dgaUoeq76o6ouWadO2OjiG45UhnDk
-         T8Ag==
-X-Gm-Message-State: AJIora8/AUEw80MZJ84yur3Lg6ihzLGW/PvZjZg5Z/KRzXXu3hUOcbrw
-        sChkyaTXtTCF0+ooAc9BPmW05Frxb5Y=
-X-Google-Smtp-Source: AGRyM1t7cwDBFosE8VpWeVc4hDn0LCZDbHk6DVnONl4LNonZMzby2vZMXem4aVvw9BGQej4CtP9y4Q==
-X-Received: by 2002:a05:6402:5299:b0:435:61da:9bb9 with SMTP id en25-20020a056402529900b0043561da9bb9mr48015409edb.21.1657037232545;
-        Tue, 05 Jul 2022 09:07:12 -0700 (PDT)
-Received: from Ansuel-xps. (93-42-70-190.ip85.fastwebnet.it. [93.42.70.190])
-        by smtp.gmail.com with ESMTPSA id t4-20020a17090605c400b00706242d297fsm15813723ejt.212.2022.07.05.09.07.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Jul 2022 09:07:11 -0700 (PDT)
-Message-ID: <62c461af.1c69fb81.25b26.c45e@mx.google.com>
-X-Google-Original-Message-ID: <YsRbYtnp0A4+GZze@Ansuel-xps.>
-Date:   Tue, 5 Jul 2022 17:40:18 +0200
-From:   Christian Marangi <ansuelsmth@gmail.com>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=jGJB1YsgZctBf3FrtbK+9SX6QzCOA77MpJH1Oeer0Hk=;
+        b=o63C6gPVTaU8uA8cZ2HtJiceKgKCkBBNLYZtXyGEGxKELoOKRxFf51iKyVKdgY8W2f
+         rJ1+AUaaDylVO4IkROe5xn27AmbbeMypLi+56ejwDr9Kk/WRtmWBx7n4T0CdFiLD3NB0
+         4KJhkPzfB+Xc6Y9U3EntMYprv/A9V/tn5Y32HeHEQ1stXX5SBbh+RrH6kWKP93Bu3O0S
+         scOtbDAHT7s9HIdafrScgV6eRtCnYi2qTreWS5IrEHZrSgJEaFYTItgknek8rg9dy3Yr
+         Icth8NneShTTxWzePX0p40gEnHwVO2XoYfDpCD1Yy4aysExCK8E1lmEyBRmJcyVspgE4
+         0nhA==
+X-Gm-Message-State: AJIora+V8FA/LvfnHtPLREmMxfg3mhvAfS/wRlOslLcq+hLnZEbDT77D
+        z4MdXXyoxaHFfqUGSM7dRQwndbgldceN+Q==
+X-Google-Smtp-Source: AGRyM1seRurvdSHhFwj77zvAc1mw9Uk0rAAe6ziAgG5H8mpvklgg3S57vH5SfkUCu2rlPPV3WF4w8A==
+X-Received: by 2002:a05:6512:33d4:b0:481:63:69e8 with SMTP id d20-20020a05651233d400b00481006369e8mr22198970lfg.415.1657036515533;
+        Tue, 05 Jul 2022 08:55:15 -0700 (PDT)
+Received: from [192.168.1.52] ([84.20.121.239])
+        by smtp.gmail.com with ESMTPSA id c23-20020a056512325700b0047f70a0b8ffsm5757630lfr.20.2022.07.05.08.55.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 05 Jul 2022 08:55:14 -0700 (PDT)
+Message-ID: <5625666e-a777-c4e6-ad91-5c27ebe3f3b5@linaro.org>
+Date:   Tue, 5 Jul 2022 17:55:14 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH 00/13] Add ipq806x missing bindings
+Content-Language: en-US
+To:     Christian Marangi <ansuelsmth@gmail.com>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
@@ -60,49 +64,42 @@ Cc:     Andy Gross <agross@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 00/13] Add ipq806x missing bindings
 References: <20220705133917.8405-1-ansuelsmth@gmail.com>
  <e84bb14b-a3a5-728d-e3a4-9d2e898a7aca@linaro.org>
  <62c44b32.1c69fb81.c87b7.72ac@mx.google.com>
- <5625666e-a777-c4e6-ad91-5c27ebe3f3b5@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <5625666e-a777-c4e6-ad91-5c27ebe3f3b5@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <62c44b32.1c69fb81.c87b7.72ac@mx.google.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jul 05, 2022 at 05:55:14PM +0200, Krzysztof Kozlowski wrote:
-> On 05/07/2022 16:04, Christian Marangi wrote:
-> > On Tue, Jul 05, 2022 at 04:28:47PM +0200, Krzysztof Kozlowski wrote:
-> >> On 05/07/2022 15:39, Christian Marangi wrote:
-> >>> This series try to add some of the missing bindings for ipq806x.
-> >>>
-> >>> This still lacks of the cpu bindings and all the bindings required
-> >>> to scale cpu clk or L2. These will come later as the driver and
-> >>> documentation require some changes.
-> >>>
-> >>> So for now we try to add bindings that can directly applied without
-> >>> making changes to any drivers.
-> >>
-> >> You mention here and in subject bindings, but your patchset does not
-> >> have any bindings.
-> >>
-> > 
-> > What would be correct word? Node? Compatible?
+On 05/07/2022 16:04, Christian Marangi wrote:
+> On Tue, Jul 05, 2022 at 04:28:47PM +0200, Krzysztof Kozlowski wrote:
+>> On 05/07/2022 15:39, Christian Marangi wrote:
+>>> This series try to add some of the missing bindings for ipq806x.
+>>>
+>>> This still lacks of the cpu bindings and all the bindings required
+>>> to scale cpu clk or L2. These will come later as the driver and
+>>> documentation require some changes.
+>>>
+>>> So for now we try to add bindings that can directly applied without
+>>> making changes to any drivers.
+>>
+>> You mention here and in subject bindings, but your patchset does not
+>> have any bindings.
+>>
 > 
-> "device node" or just "node"
-> 
+> What would be correct word? Node? Compatible?
 
-Ok will fix it in v2 and also in other patch where I used binding
-instead of node.
+"device node" or just "node"
 
--- 
-	Ansuel
+Best regards,
+Krzysztof
