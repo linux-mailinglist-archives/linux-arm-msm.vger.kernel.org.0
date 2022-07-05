@@ -2,73 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 31A4956766C
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jul 2022 20:28:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6688A567685
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jul 2022 20:32:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232591AbiGES2X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Jul 2022 14:28:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35124 "EHLO
+        id S230293AbiGEScF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Jul 2022 14:32:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39164 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231588AbiGES2W (ORCPT
+        with ESMTP id S230013AbiGEScE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Jul 2022 14:28:22 -0400
-Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04A7219C11
-        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Jul 2022 11:28:19 -0700 (PDT)
-Received: by mail-lj1-x22a.google.com with SMTP id s14so15613256ljs.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Jul 2022 11:28:18 -0700 (PDT)
+        Tue, 5 Jul 2022 14:32:04 -0400
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 043F91D330
+        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Jul 2022 11:32:03 -0700 (PDT)
+Received: by mail-lf1-x132.google.com with SMTP id f39so22030011lfv.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Jul 2022 11:32:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=prRY92hm0hYRbQWVcxgM7sRmBRs1AmHNfvSvCM66/jk=;
-        b=wQLnp3ggtVAH9blbKWhUPNKoP8PRrneIiT9WsGQTa8b9UDs8ZBB4GRwBhg+OOdqUXg
-         aUL4ziW6aaHqN+o8e3RZlEUQqBmtbHjnjvnWLNGtPP3Sf4yqIB0jHDQofKw+ZrWj6S6g
-         APw5Ebf7ZXasIS7MCmBgS6v59mbSfl8cFlh6YFasj0Mc5b5we/JpzeEfF9hC5wv1wAoj
-         GSQaOathVQ50KKuEcpWrEAuwCa9/p17KphigTRWuVEcg8TymWOwGq6FqYmp+6gOQn/6a
-         lTLojDg1EgetdQ+sp9cl013CDXGBWFtx8gjI78s+/I8B7RNaod1rQhA/AgY0ppk1lS9m
-         Hi1w==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=D7p/sDYm9E/8XqmiA5LCzNTiG40IUVuc7U3G6pKRMDI=;
+        b=iK/1VeDZGeqhZtaRP8JXyzmjmfKPHoqHsrT3kFEFCYnYSTmFePKupGg5DjzkqiTaOF
+         uhhrlDEcmYe7rnLNNqf1k9mk6rdAdbkP7xUlYfxhzTRORaGKYmZAg8s3Tz/039HYKLMf
+         5i+x4EVBN6SW5hwOoWoS6+35pbe3UMo/uBUgrg+D8RUejpGXAKOUTIu5XtKWaY1ffHHF
+         i8XG5CaR7nwZ3EtN0KrOAqmiwde/y6JQe2QdsrIyT5/aRajsS2MfswSMoUJf+/3ENk36
+         qGixnLcaQJU6sCQ8K1FSCxV70cpki+N42/8BfleRxDePwlLAXpUjmj9pQF9R8BhLdbUi
+         Kw7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=prRY92hm0hYRbQWVcxgM7sRmBRs1AmHNfvSvCM66/jk=;
-        b=1An06FiKnjiYze0u143dDz4BjXh5oja7Xsku46EfYP4dMjGCt1sqRTT9ZU+TtWTi4+
-         OY7xB4Qg2f0QG6HOxCzzib0o3eObiposjVFZjTiEu5N+YpsjphzuKFYd9hfpGlZQUJJ/
-         zo/EZhsQTg2dS8ratGNMmf1veTEc73NgqSeZN303DOqEL8EWynGKYD+58rAS62L1y0i3
-         ogscCT2F0nN7CDjsYDfQI5UH036S4wygi10HdZZwQJ+qMuwvyi8rk2b9fHyOpuunv2MB
-         XN3tpoj06ltmo597NNfLbpZncDx6WG1V15/JBoAYu+UyfqNz/d5XTCsM+ckjdAvUl4cP
-         ER4A==
-X-Gm-Message-State: AJIora8+Hszole8zgU7CvojgdPguE33Fvw8/nEKjApS4clMDefVqAaTY
-        c3WS8d42eZPxH7K6TiC8M2dnag==
-X-Google-Smtp-Source: AGRyM1u/Er3XYhVY+myb3wkrtLYh8GsyMsww+Ez/qmFUdSNQIyw4grD/5GIhumYWMJyFX7ksDb4Zew==
-X-Received: by 2002:a05:651c:a11:b0:25b:ae96:337a with SMTP id k17-20020a05651c0a1100b0025bae96337amr20570810ljq.35.1657045697275;
-        Tue, 05 Jul 2022 11:28:17 -0700 (PDT)
-Received: from krzk-bin.home ([84.20.121.239])
-        by smtp.gmail.com with ESMTPSA id e12-20020ac24e0c000000b00478a311d399sm5823306lfr.0.2022.07.05.11.28.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Jul 2022 11:28:16 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Stephan Gerhold <stephan@gerhold.net>
-Subject: [PATCH v3] ASoC: dt-bindings: qcom,sm8250: add SDM845 sound
-Date:   Tue,  5 Jul 2022 20:28:02 +0200
-Message-Id: <20220705182802.775803-1-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
+        bh=D7p/sDYm9E/8XqmiA5LCzNTiG40IUVuc7U3G6pKRMDI=;
+        b=fsbXIOtRp/4n3wV5hhpgAWhbKlBFHJh56kU6kql4QQDekNPZeTxj6sttrOt0V7fm4E
+         jbgai9nuedwogA2nO7Ue3u2nO3GOEONeJpvz+kxJ2gltbjK+YFVELHNNrEqxi4A7V8PY
+         nEwdhm0F9P4W6rKYg/J5BMSHqCk5KUrdJw9M8TAlecheQ5wk3aap3aQkLoJ91DVq6GX7
+         iDwio8CRWP7hnuotaWH9XPt/0ffe46xiqfh3xwDoaw/09bMGfQV1VLrSL2pHwDB/kvMd
+         LIUqobsmonhpXI0Lwp2Pun/G9O4N4v5DaJX3FZneJ1xEFQbFll8U8ZyvTRzzDjbvcZZu
+         HCuA==
+X-Gm-Message-State: AJIora/esjBT9ng0eC57w6k0rs0iRmhXgtYfpI1bXX88tiVY2Dpon1+C
+        3N1kncYjaHcnnFgh6IYHR7vn9A==
+X-Google-Smtp-Source: AGRyM1t2wLoT1QWk9JTsHRGXDhwZlXzky4+x2+l2qkjQodcPdKTyE9N2H3IJN13d8nRtoTmfHpmg6A==
+X-Received: by 2002:a05:6512:260e:b0:47d:ae43:62b3 with SMTP id bt14-20020a056512260e00b0047dae4362b3mr25369019lfb.77.1657045921399;
+        Tue, 05 Jul 2022 11:32:01 -0700 (PDT)
+Received: from [192.168.1.52] ([84.20.121.239])
+        by smtp.gmail.com with ESMTPSA id h15-20020a2eb0ef000000b00255500154fasm5710910ljl.52.2022.07.05.11.32.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 05 Jul 2022 11:32:00 -0700 (PDT)
+Message-ID: <1413a50e-5966-00f7-30a9-4a6c99536e1e@linaro.org>
+Date:   Tue, 5 Jul 2022 20:31:59 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [V5 0/2] Add support for proxy interconnect bandwidth votes
+Content-Language: en-US
+To:     Sibi Sankar <quic_sibis@quicinc.com>, bjorn.andersson@linaro.org,
+        swboyd@chromium.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org
+Cc:     mathieu.poirier@linaro.org, agross@kernel.org,
+        konrad.dybcio@somainline.org, linux-remoteproc@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, mka@chromium.org
+References: <1657020721-24939-1-git-send-email-quic_sibis@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <1657020721-24939-1-git-send-email-quic_sibis@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -77,141 +78,18 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The Qualcomm SDM845 sound card bindings are almost the same as SM8250,
-except "pin-switches" and "widgets" properties.  These were not
-documented in SDM845 text bindings but are actually valid for SDM845.
+On 05/07/2022 13:31, Sibi Sankar wrote:
+> Add proxy interconnect bandwidth votes during modem bootup on SC7280 SoCs.
+> 
+> V5:
+>  * Improve phandle-array schemas [Stephen/Rob/Krzysztof]
+>  * Add more details to the firmware-name/memory region string array [Stephen/Rob]
+>  * Drop 'items' from label [Rob]
+>  * Drop the patch 1 since Bjorn picked it up
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Stephan Gerhold <stephan@gerhold.net>
+Use proper subject prefixes - you miss here PATCH. The easiest is to use
+`git format-patch -v5`. You can do it other way as well, but just make
+it a correct patch with proper subject elements.
 
----
-
-Changes since v2:
-1. Add missing Lenovo and db845c compatibles (Stephan).
-
-Changes since v1:
-1. Integrate into SM8250 instead of creating new file (Stephan).
-
-Cc: Stephan Gerhold <stephan@gerhold.net>
----
- .../devicetree/bindings/sound/qcom,sdm845.txt | 91 -------------------
- .../bindings/sound/qcom,sm8250.yaml           |  3 +
- 2 files changed, 3 insertions(+), 91 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/sound/qcom,sdm845.txt
-
-diff --git a/Documentation/devicetree/bindings/sound/qcom,sdm845.txt b/Documentation/devicetree/bindings/sound/qcom,sdm845.txt
-deleted file mode 100644
-index de4c604641da..000000000000
---- a/Documentation/devicetree/bindings/sound/qcom,sdm845.txt
-+++ /dev/null
-@@ -1,91 +0,0 @@
--* Qualcomm Technologies Inc. SDM845 ASoC sound card driver
--
--This binding describes the SDM845 sound card, which uses qdsp for audio.
--
--- compatible:
--	Usage: required
--	Value type: <stringlist>
--	Definition: must be one of this
--			"qcom,sdm845-sndcard"
--			"qcom,db845c-sndcard"
--			"lenovo,yoga-c630-sndcard"
--
--- audio-routing:
--	Usage: Optional
--	Value type: <stringlist>
--	Definition:  A list of the connections between audio components.
--		  Each entry is a pair of strings, the first being the
--		  connection's sink, the second being the connection's
--		  source. Valid names could be power supplies, MicBias
--		  of codec and the jacks on the board.
--
--- model:
--	Usage: required
--	Value type: <stringlist>
--	Definition: The user-visible name of this sound card.
--
--- aux-devs
--	Usage: optional
--	Value type: <array of phandles>
--	Definition: A list of phandles for auxiliary devices (e.g. analog
--		    amplifiers) that do not appear directly within the DAI
--		    links. Should be connected to another audio component
--		    using "audio-routing".
--
--= dailinks
--Each subnode of sndcard represents either a dailink, and subnodes of each
--dailinks would be cpu/codec/platform dais.
--
--- link-name:
--	Usage: required
--	Value type: <string>
--	Definition: User friendly name for dai link
--
--= CPU, PLATFORM, CODEC dais subnodes
--- cpu:
--	Usage: required
--	Value type: <subnode>
--	Definition: cpu dai sub-node
--
--- codec:
--	Usage: required
--	Value type: <subnode>
--	Definition: codec dai sub-node
--
--- platform:
--	Usage: Optional
--	Value type: <subnode>
--	Definition: platform dai sub-node
--
--- sound-dai:
--	Usage: required
--	Value type: <phandle>
--	Definition: dai phandle/s and port of CPU/CODEC/PLATFORM node.
--
--Example:
--
--audio {
--	compatible = "qcom,sdm845-sndcard";
--	model = "sdm845-snd-card";
--	pinctrl-names = "default", "sleep";
--	pinctrl-0 = <&pri_mi2s_active &pri_mi2s_ws_active>;
--	pinctrl-1 = <&pri_mi2s_sleep &pri_mi2s_ws_sleep>;
--
--	mm1-dai-link {
--		link-name = "MultiMedia1";
--		cpu {
--			sound-dai = <&q6asmdai MSM_FRONTEND_DAI_MULTIMEDIA1>;
--		};
--	};
--
--	pri-mi2s-dai-link {
--		link-name = "PRI MI2S Playback";
--		cpu {
--			sound-dai = <&q6afedai PRIMARY_MI2S_RX>;
--		};
--
--		platform {
--			sound-dai = <&q6routing>;
--		};
--	};
--};
-diff --git a/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml b/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml
-index 4ecd4080bb96..e6e27d09783e 100644
---- a/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml
-+++ b/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml
-@@ -16,8 +16,11 @@ description:
- properties:
-   compatible:
-     enum:
-+      - lenovo,yoga-c630-sndcard
-       - qcom,apq8016-sbc-sndcard
-+      - qcom,db845c-sndcard
-       - qcom,msm8916-qdsp6-sndcard
-+      - qcom,sdm845-sndcard
-       - qcom,sm8250-sndcard
-       - qcom,qrb5165-rb5-sndcard
- 
--- 
-2.34.1
-
+Best regards,
+Krzysztof
