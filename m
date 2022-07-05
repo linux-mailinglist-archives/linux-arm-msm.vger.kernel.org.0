@@ -2,72 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2B7785673F1
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jul 2022 18:13:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0C3AB56740C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jul 2022 18:19:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229983AbiGEQNI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Jul 2022 12:13:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42404 "EHLO
+        id S232597AbiGEQT1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Jul 2022 12:19:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47634 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229521AbiGEQNH (ORCPT
+        with ESMTP id S229702AbiGEQT0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Jul 2022 12:13:07 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47AC11D0C0
-        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Jul 2022 09:13:06 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id z13so21317581lfj.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Jul 2022 09:13:06 -0700 (PDT)
+        Tue, 5 Jul 2022 12:19:26 -0400
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F0201D0C6
+        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Jul 2022 09:19:25 -0700 (PDT)
+Received: by mail-ed1-x536.google.com with SMTP id y8so10192076eda.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Jul 2022 09:19:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=o+RavR69O/i0XybehkxEWzRL/gE89Dkn/aDhrJuOgt0=;
-        b=oHpGDtseU7FweA4q+RPWEiAYAyp+RdGvnWI7Mj4gQhNX0kRXKfN1SA0ZpupDIV29i+
-         LQJaGBw0iRFgDdnk9BDoFOLAhU8BWQcS+LrogwVrBYWmbGNdkrYQr+9c1XNgIUEmEzjY
-         DTN1Exi11d93P/pbkfQYzlOtsOgTZQZm2icJcN3QS6T34bkB6B8YiIBZ8xSDgv+psWNx
-         6X31WVHizXD7/ZBlqINNwCgMKxowvgElI1APkaSYuvgG90R8M+excM8VcEdRLm2+Vf7h
-         7O1cD9NIjKWwl2hYs0yWt/uBJN2Zt5et/3J/376gdzPmPIISKGtYeLhmVGl1xywmAr6Z
-         5i/w==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=jYZi8rRbHn8tW6ukNBHgDr7LhwZ5zS5lnEhO2Ak2igg=;
+        b=QdHnGJG9DT6rEloPFwd7YvkIKVolkTouLjq7lM8+wlzBwMERfD6toyZW0AOVQ9kJ6y
+         A6k3Tp1xU+pX4IW/wcYcCWYsS8wLqb1HR3gD3CIm7wv2c6PxUokCiMrBLo8PLilvsdzk
+         jyYwJ6OpM/61mtYOvZTLCdPJULcv98E670xeA+W3ZgiiGt4ZfMmJKooScLo4v3HCFtDk
+         9ATpc+IgFXU8mIGzi3XyAyUiXCPREbw/Dhjc1v9hDh873301doPIx2K5A+1q9VSVYk+G
+         2i28wkXV7j7jVi4MiBbv57h/Yt040xIP93Ij/WjDvsobOIJT9aWjYt7EzoHgSo/mQXzn
+         3obg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=o+RavR69O/i0XybehkxEWzRL/gE89Dkn/aDhrJuOgt0=;
-        b=FI+Xc6tEWoEjSgkKdbyWVIB7vt4+TaZfx8D16ymD4DPRB4AkrBxyPWB3WgRewSXlFI
-         2KgEP4x2PdPz0RsGXhAmdeGUHRRhdj0m4b6OntwvNL6Lt0pOzG5i6hIbsJ5vaA6VWHe+
-         r8TOumPDpE8uENMRjwOaVm1g3cGo90/HsZlIoxSgMtWuClZdrPpJYbzZmZL/FoUswLmI
-         zkNJBwpBy8/jOZfkUBWj0+NQ5DFrUfpLGD1m5ViL4Sg7tPLQlOSyoyh46KioV8VIlomJ
-         F6KM+SxSMp6i8PV6O4Yy4DSSVPqk0CnG+Lzus3TI0XzuDMZVfVlgn+/C49jK+WL0SwFF
-         LNdQ==
-X-Gm-Message-State: AJIora/D9B6jx5xbjtLfYSh/TxyDhKUDtybroV/OpapDXNkdKX5GZVG/
-        v08gBlU4tSHhbYwkZo5n74DDFw==
-X-Google-Smtp-Source: AGRyM1u3+EonOLsdNofjXqDUPya18vAH0Z8I0g7+adh3kl8lDdcZ0zdGDCZIkUQjhiOPKOKX4xV3VQ==
-X-Received: by 2002:a05:6512:2623:b0:47d:ace7:c804 with SMTP id bt35-20020a056512262300b0047dace7c804mr23706499lfb.647.1657037584653;
-        Tue, 05 Jul 2022 09:13:04 -0700 (PDT)
-Received: from krzk-bin.home ([84.20.121.239])
-        by smtp.gmail.com with ESMTPSA id e20-20020a2ea554000000b00258eac98baasm5582698ljn.77.2022.07.05.09.13.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Jul 2022 09:13:03 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, Alex Elder <elder@linaro.org>,
-        Robert Foss <robert.foss@linaro.org>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Subject: [PATCH v4] dt-bindings: qcom: document preferred compatible naming
-Date:   Tue,  5 Jul 2022 18:13:01 +0200
-Message-Id: <20220705161301.493364-1-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=jYZi8rRbHn8tW6ukNBHgDr7LhwZ5zS5lnEhO2Ak2igg=;
+        b=CY0rafGqliRbrfTghH5QFfnLhcuis7N7b0yPorrX+AvFgncLTP+Piot4gJjHYqfIuY
+         MNON8LMGbYSJKaku8taz1lkeNzGhrd+YB8qpZbPx8Yd6FbrcuRDa6y0RKiS4FvE3ShWZ
+         avEuu8e7/6d4F17o/OcO9rBtZSWY07xvWsvgvHRYo6B829iCzs40/uhZkoFVy8teJSYg
+         CHnqFYwperAwbSnRLd0g11xedUMJOZW9clCodE7zNFPuDMiPCZZwjBBf63TZABw/ZF1e
+         cWBXzQqfvsr3SUyvGkfGWK4P3vPnEnFpffOFwmrSv5/cw/FsxDOwcx9ki48gaYjU98X/
+         mwhQ==
+X-Gm-Message-State: AJIora+nlE8ayV4yA20lR5C6il4m3YfZIzMdxHcGP9hAZcy0JEkXwWxT
+        DftG7zijWOChRBCC6CDBIR85YC6TybDxmYUP97Vthg==
+X-Google-Smtp-Source: AGRyM1uB27HRZg8W8xYPv7TCcAhKGqKs//KSawcHJS04Mu1OQie7j0MwhR7ZT74oMo0NdgDgHW3BxQMkqVF5lv2at3c=
+X-Received: by 2002:aa7:cdc2:0:b0:43a:7255:5274 with SMTP id
+ h2-20020aa7cdc2000000b0043a72555274mr8914387edw.159.1657037963909; Tue, 05
+ Jul 2022 09:19:23 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20220704220814.629130-1-vladimir.zapolskiy@linaro.org>
+In-Reply-To: <20220704220814.629130-1-vladimir.zapolskiy@linaro.org>
+From:   Robert Foss <robert.foss@linaro.org>
+Date:   Tue, 5 Jul 2022 18:19:12 +0200
+Message-ID: <CAG3jFyvXt1AdJLBU55phM1matF3VRdu8re1tFkJdgtEFrPbVuw@mail.gmail.com>
+Subject: Re: [PATCH v2] media: camss: Do not attach an already attached power
+ domain on MSM8916 platform
+To:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Cc:     Todor Tomov <todor.too@gmail.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Hans Verkuil <hans.verkuil@cisco.com>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -78,108 +71,57 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Compatibles can come in two formats.  Either "vendor,ip-soc" or
-"vendor,soc-ip".  Qualcomm bindings were mixing both of usages, so add a
-DT schema file documenting preferred policy and enforcing it for all new
-compatibles, except few existing patterns.
+On Tue, 5 Jul 2022 at 00:08, Vladimir Zapolskiy
+<vladimir.zapolskiy@linaro.org> wrote:
+>
+> The change to dynamically allocated power domains neglected a case of
+> CAMSS on MSM8916 platform, where a single VFE power domain is neither
+> attached, linked or managed in runtime in any way explicitly.
+>
+> This is a special case and it shall be kept as is, because the power
+> domain management is done outside of the driver, and it's very different
+> in comparison to all other platforms supported by CAMSS.
+>
+> Fixes: 6b1814e26989 ("media: camss: Allocate power domain resources dynamically")
+> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+> ---
+> Changes from v1 to v2:
+> * corrected the fixed commit id, which is found on media/master
+>
+>  drivers/media/platform/qcom/camss/camss.c | 11 +++++++++++
+>  1 file changed, 11 insertions(+)
+>
+> diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
+> index 932968e5f1e5..7a929f19e79b 100644
+> --- a/drivers/media/platform/qcom/camss/camss.c
+> +++ b/drivers/media/platform/qcom/camss/camss.c
+> @@ -1465,6 +1465,14 @@ static int camss_configure_pd(struct camss *camss)
+>                 return camss->genpd_num;
+>         }
+>
+> +       /*
+> +        * If a platform device has just one power domain, then it is attached
+> +        * at platform_probe() level, thus there shall be no need and even no
+> +        * option to attach it again, this is the case for CAMSS on MSM8916.
+> +        */
+> +       if (camss->genpd_num == 1)
+> +               return 0;
+> +
+>         camss->genpd = devm_kmalloc_array(dev, camss->genpd_num,
+>                                           sizeof(*camss->genpd), GFP_KERNEL);
+>         if (!camss->genpd)
+> @@ -1698,6 +1706,9 @@ void camss_delete(struct camss *camss)
+>
+>         pm_runtime_disable(camss->dev);
+>
+> +       if (camss->genpd_num == 1)
+> +               return;
+> +
+>         for (i = 0; i < camss->genpd_num; i++) {
+>                 device_link_del(camss->genpd_link[i]);
+>                 dev_pm_domain_detach(camss->genpd[i], true);
+> --
+> 2.33.0
+>
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
----
-
-Changes since v3:
-1. Add qcom,kpss-wdt-xxx to pattern for exceptions.
-2. Add ipq806x entries to list of exceptions.
-
-Changes since v2:
-1. Narrow the expected pattern to be followed by dash '-' after model
-   number (msm8996-) or by two letters and a dash (sc8280xp-).
-2. Add qcom,apss-wdt-xxx to list of exceptions.
-3. Use comment instead of description in the oneOf list.
-
-Changes since v1:
-1. Add schema instead of readme (Rob).
-
-Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Vinod Koul <vkoul@kernel.org>
-Cc: Alex Elder <elder@linaro.org>
-Cc: Robert Foss <robert.foss@linaro.org>
-Cc: Bhupesh Sharma <bhupesh.sharma@linaro.org>
----
- .../devicetree/bindings/arm/qcom-soc.yaml     | 63 +++++++++++++++++++
- 1 file changed, 63 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/arm/qcom-soc.yaml
-
-diff --git a/Documentation/devicetree/bindings/arm/qcom-soc.yaml b/Documentation/devicetree/bindings/arm/qcom-soc.yaml
-new file mode 100644
-index 000000000000..0be18c1d2961
---- /dev/null
-+++ b/Documentation/devicetree/bindings/arm/qcom-soc.yaml
-@@ -0,0 +1,63 @@
-+# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/arm/qcom-soc.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm SoC compatibles naming convention
-+
-+maintainers:
-+  - Bjorn Andersson <bjorn.andersson@linaro.org>
-+
-+description: |
-+  Guidelines for new compatibles for SoC blocks/components.
-+  When adding new compatibles in new bindings, use the format::
-+    qcom,SoC-IP
-+
-+  For example::
-+   qcom,sdm845-llcc-bwmon
-+
-+  When adding new compatibles to existing bindings, use the format in the
-+  existing binding, even if it contradicts the above.
-+
-+select:
-+  properties:
-+    compatible:
-+      pattern: "^qcom,.*(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$"
-+  required:
-+    - compatible
-+
-+properties:
-+  compatible:
-+    oneOf:
-+      # Preferred naming style for compatibles of SoC components:
-+      - pattern: "^qcom,(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+-.*$"
-+      - pattern: "^qcom,(sa|sc)8[0-9]+[a-z][a-z]?-.*$"
-+
-+      # Legacy namings - variations of existing patterns/compatibles are OK,
-+      # but do not add completely new entries to these:
-+      - pattern: "^qcom,[ak]pss-wdt-(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$"
-+      - pattern: "^qcom,gcc-(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$"
-+      - pattern: "^qcom,mmcc-(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$"
-+      - pattern: "^qcom,pcie-(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$"
-+      - pattern: "^qcom,rpm-(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$"
-+      - pattern: "^qcom,scm-(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$"
-+      - enum:
-+          - qcom,gpucc-sdm630
-+          - qcom,gpucc-sdm660
-+          - qcom,lcc-apq8064
-+          - qcom,lcc-ipq8064
-+          - qcom,lcc-mdm9615
-+          - qcom,lcc-msm8960
-+          - qcom,lpass-cpu-apq8016
-+          - qcom,usb-ss-ipq4019-phy
-+          - qcom,usb-hs-ipq4019-phy
-+          - qcom,vqmmc-ipq4019-regulator
-+
-+      # Legacy compatibles with wild-cards - list cannot grow with new bindings:
-+      - enum:
-+          - qcom,ipq806x-nand
-+          - qcom,ipq806x-usb-phy-ss
-+          - qcom,ipq806x-usb-phy-hs
-+
-+additionalProperties: true
--- 
-2.34.1
-
+Reviewed-by: Robert Foss <robert.foss@linaro.org>
