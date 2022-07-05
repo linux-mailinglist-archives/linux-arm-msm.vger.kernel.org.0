@@ -2,66 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 85867567051
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jul 2022 16:07:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 52FB256705C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jul 2022 16:09:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232922AbiGEOGm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Jul 2022 10:06:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55100 "EHLO
+        id S232877AbiGEOIe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Jul 2022 10:08:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58544 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232568AbiGEOGY (ORCPT
+        with ESMTP id S232607AbiGEOIV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Jul 2022 10:06:24 -0400
-Received: from mail-io1-f41.google.com (mail-io1-f41.google.com [209.85.166.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 549C7237ED;
-        Tue,  5 Jul 2022 06:54:38 -0700 (PDT)
-Received: by mail-io1-f41.google.com with SMTP id d3so11123085ioi.9;
-        Tue, 05 Jul 2022 06:54:38 -0700 (PDT)
+        Tue, 5 Jul 2022 10:08:21 -0400
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A14F2408D
+        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Jul 2022 06:57:01 -0700 (PDT)
+Received: by mail-wm1-x332.google.com with SMTP id f190so7083096wma.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Jul 2022 06:57:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=BjBLo3BZc3i/RrsqwYepC98EZoOUEWdJFyaQ2Y5SkP0=;
+        b=HVTwtZciptDZ08KFzuykH2G4uvbG1AF9IUbGC6tPbew+VkkEep2biH9kqSb2g2WudP
+         k3SAShqWQEBii7o3dGcbIl77ShsFOqF2GBIBbr+934nuyV77fVbDoBzI2EWMySR6qkKA
+         EAomRNCay5OQGrRSiLPGF2kIcHCn9DtJQAYUUDlgYK0WfUUURvvrXitCCYwVBcxpXxJC
+         Ywfj7RmFSvikjNUHDME3fb2Jti/pd3k6cDcPf+AZh2GRCqK56E/69h5fZ/GWWW/QpVQD
+         0oS4VtrmruMf/9nENMSS7m4auTm1KBfEbFCg5Yd8a4tq8Xx97eDhxtRXS84fslUSA+zj
+         9ksA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
-         :message-id;
-        bh=SVsLZEe5BnYjKDdkTWEax2PEfd2hiz0v1bklZx5sOQ4=;
-        b=4lnWkN/nAIYdC9IVupRPD+mhwtlljyHwWGTE/gh75lx0wRLifB/zBQvOenxgGr9JcD
-         sl4+CvLdqVIUGVesiGgG2wxxG+AMFD6gzG2REJAOWfAMtViBbDccbjuQxe0azhWEXuOw
-         o+kbdbDFu5J3q6S+172SDo7YX3XT0CabfiMA7ACXp0ihFBjLZs9tShQLODx3/bRTqXpo
-         C1YoKiFbGXZBgZsrTNYbPA+6dok6r1TfraGAZy5xR4veBeXToOntRfpfolYERdenVR7y
-         uv8GPqeFTNtFoY2shn9A1k3T8qBo8FpM2HZIDl1vprWczs0F+hk7pD+7agPa1ilL/eJm
-         ow3g==
-X-Gm-Message-State: AJIora9esYc76MksskE3Nv0g+2p9nITSCxNI2AUamOFWe5Cqv2p5oXX5
-        gmFKgLYxxWGcVWxigjWIOKglnaHD3w==
-X-Google-Smtp-Source: AGRyM1v/DwWCTKgv+WGdNip5B1iJlh9JTa0R2/Ur7WNceHwzS/Nj4LgZKRe3g6I4PY92bnYE7fI3CQ==
-X-Received: by 2002:a05:6638:34a5:b0:33e:df05:ea29 with SMTP id t37-20020a05663834a500b0033edf05ea29mr4842766jal.167.1657029277531;
-        Tue, 05 Jul 2022 06:54:37 -0700 (PDT)
-Received: from robh.at.kernel.org ([64.188.179.248])
-        by smtp.gmail.com with ESMTPSA id d93-20020a0285e6000000b0033efe01c20esm117097jai.42.2022.07.05.06.54.35
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=BjBLo3BZc3i/RrsqwYepC98EZoOUEWdJFyaQ2Y5SkP0=;
+        b=qedn6KYZ3V/h09WzonaGikMUE5PctVURwtcLEVGGe0HvjfjyTM/IrJjCL1mgU6bQ/C
+         ghUC0MPoXHsRqlHE1pW1sR/gDhrt0KYFCt6szIslw+ItfnP6XbmeSkywiui5/aufZzet
+         uSU3/2YMrAiiphH+pehuTB1bMLfSUpjjD3LhdJ6+RRc3zB/XSwiD23unXeldsAgAHwgW
+         h2hJmx/PPPv1J2tfoeOa4jqmrlLGjWJxJw8pVXb9TUBSCTFuTBS0wldttal36Edxi+W6
+         JQGWf9jtew3GWLpukuIeQZs8RwK6bErqwfZx9kUN0zzxcN7++jrg1+xdWXH0tGuQeLQn
+         biOg==
+X-Gm-Message-State: AJIora+JBIXTgy0k2g9V8UEuq9/SYx02Tk1+pSCtx+iCGQQ/v6VDd5ei
+        V24AiZftItzj2lw99dVH4TkWdw==
+X-Google-Smtp-Source: AGRyM1ta/onHiJ4mcOXFofWIPIfNC6d8zHYsI6fzj5uesjQthvz30oMnsL4Ne07JK1olvzUJKW0PgA==
+X-Received: by 2002:a05:600c:a42:b0:39c:9166:5a55 with SMTP id c2-20020a05600c0a4200b0039c91665a55mr36560873wmq.141.1657029420036;
+        Tue, 05 Jul 2022 06:57:00 -0700 (PDT)
+Received: from linaro.org ([94.52.112.99])
+        by smtp.gmail.com with ESMTPSA id q4-20020a1ce904000000b003a2b433c738sm4799348wmc.26.2022.07.05.06.56.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Jul 2022 06:54:37 -0700 (PDT)
-Received: (nullmailer pid 1999997 invoked by uid 1000);
-        Tue, 05 Jul 2022 13:54:31 -0000
-From:   Rob Herring <robh@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Robert Foss <robert.foss@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        devicetree@vger.kernel.org, Alex Elder <elder@linaro.org>,
-        linux-kernel@vger.kernel.org
-In-Reply-To: <20220705092846.66731-1-krzysztof.kozlowski@linaro.org>
-References: <20220705092846.66731-1-krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH v3] dt-bindings: qcom: document preferred compatible naming
-Date:   Tue, 05 Jul 2022 07:54:31 -0600
-Message-Id: <1657029271.217856.1999993.nullmailer@robh.at.kernel.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
+        Tue, 05 Jul 2022 06:56:59 -0700 (PDT)
+Date:   Tue, 5 Jul 2022 16:56:58 +0300
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        Saravana Kannan <saravanak@google.com>,
+        Thomas Gleixner <tglx@linutronix.de>
+Cc:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [RFC] driver core: Fix repeated device_is_dependent check for
+ same link
+Message-ID: <YsRDKmW1ZSbGN4l0@linaro.org>
+References: <20220705134502.2603795-1-abel.vesa@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220705134502.2603795-1-abel.vesa@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -69,111 +74,88 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 05 Jul 2022 11:28:46 +0200, Krzysztof Kozlowski wrote:
-> Compatibles can come in two formats.  Either "vendor,ip-soc" or
-> "vendor,soc-ip".  Qualcomm bindings were mixing both of usages, so add a
-> DT schema file documenting preferred policy and enforcing it for all new
-> compatibles, except few existing patterns.
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> 
+On 22-07-05 16:45:02, Abel Vesa wrote:
+> In case of a cyclic dependency, if the supplier is not yet available,
+> the parent of the supplier is checked for dependency. But if there are
+> more than one suppliers with the same parent, the first check returns
+> true while the next checks skip that specific link entirely. So add a
+> flag that marks the link for future checks and bail early if it is
+> already marked with that flag.
+>
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 > ---
-> 
-> Changes since v2:
-> 1. Narrow the expected pattern to be followed by dash '-' after model
->    number (msm8996-) or by two letters and a dash (sc8280xp-).
-> 2. Add qcom,apss-wdt-xxx to list of exceptions.
-> 3. Use comment instead of description in the oneOf list.
-> 
-> Changes since v1:
-> 1. Add schema instead of readme (Rob).
-> 
-> Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-> Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Cc: Vinod Koul <vkoul@kernel.org>
-> Cc: Alex Elder <elder@linaro.org>
-> Cc: Robert Foss <robert.foss@linaro.org>
-> Cc: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> ---
->  .../devicetree/bindings/arm/qcom-soc.yaml     | 57 +++++++++++++++++++
->  1 file changed, 57 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/arm/qcom-soc.yaml
-> 
+>
+> For more details about this issue, have a look at this thread:
+> https://lore.kernel.org/all/CAGETcx8F0wP+RA0KpjOJeZfc=DVG-MbM_=SkRHD4UhD2ReL7Kw@mail.gmail.com/
+>
+>  drivers/base/core.c    | 14 +++++++++++---
+>  include/linux/device.h |  2 ++
+>  2 files changed, 13 insertions(+), 3 deletions(-)
+>
+> diff --git a/drivers/base/core.c b/drivers/base/core.c
+> index ccdd5b4295de..38cb478ae400 100644
+> --- a/drivers/base/core.c
+> +++ b/drivers/base/core.c
+> @@ -297,12 +297,18 @@ int device_is_dependent(struct device *dev, void *target)
+>  		return ret;
+>
+>  	list_for_each_entry(link, &dev->links.consumers, s_node) {
+> +		/* if already marked before as dependent, bail early */
+> +		if (link->flags & DL_FLAG_DEVICE_IS_DEPENDENT)
+> +			return 1;
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+On a second thought, this is wrong since it might be a different
+consumer link.
 
-yamllint warnings/errors:
-
-dtschema/dtc warnings/errors:
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/watchdog/qcom-wdt.example.dtb: watchdog@208a038: compatible: 'oneOf' conditional failed, one must be fixed:
-	'qcom,kpss-wdt-ipq8064' does not match '^qcom,(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+-.*$'
-	'qcom,kpss-wdt-ipq8064' does not match '^qcom,(sa|sc)8[0-9]+[a-z][a-z]?-.*$'
-	'qcom,kpss-wdt-ipq8064' does not match '^qcom,apss-wdt-(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$'
-	'qcom,kpss-wdt-ipq8064' does not match '^qcom,gcc-(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$'
-	'qcom,kpss-wdt-ipq8064' does not match '^qcom,mmcc-(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$'
-	'qcom,kpss-wdt-ipq8064' does not match '^qcom,pcie-(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$'
-	'qcom,kpss-wdt-ipq8064' does not match '^qcom,rpm-(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$'
-	'qcom,kpss-wdt-ipq8064' does not match '^qcom,scm-(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$'
-	'qcom,kpss-wdt-ipq8064' is not one of ['qcom,gpucc-sdm630', 'qcom,gpucc-sdm660', 'qcom,lcc-apq8064', 'qcom,lcc-ipq8064', 'qcom,lcc-mdm9615', 'qcom,lcc-msm8960', 'qcom,lpass-cpu-apq8016', 'qcom,usb-ss-ipq4019-phy', 'qcom,usb-hs-ipq4019-phy', 'qcom,vqmmc-ipq4019-regulator']
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/arm/qcom-soc.yaml
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/cpufreq/qcom-cpufreq-nvmem.example.dtb: /: compatible: 'oneOf' conditional failed, one must be fixed:
-	'qcom,qcs404' does not match '^qcom,(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+-.*$'
-	'qcom,qcs404' does not match '^qcom,(sa|sc)8[0-9]+[a-z][a-z]?-.*$'
-	'qcom,qcs404' does not match '^qcom,apss-wdt-(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$'
-	'qcom,qcs404' does not match '^qcom,gcc-(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$'
-	'qcom,qcs404' does not match '^qcom,mmcc-(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$'
-	'qcom,qcs404' does not match '^qcom,pcie-(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$'
-	'qcom,qcs404' does not match '^qcom,rpm-(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$'
-	'qcom,qcs404' does not match '^qcom,scm-(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$'
-	'qcom,qcs404' is not one of ['qcom,gpucc-sdm630', 'qcom,gpucc-sdm660', 'qcom,lcc-apq8064', 'qcom,lcc-ipq8064', 'qcom,lcc-mdm9615', 'qcom,lcc-msm8960', 'qcom,lpass-cpu-apq8016', 'qcom,usb-ss-ipq4019-phy', 'qcom,usb-hs-ipq4019-phy', 'qcom,vqmmc-ipq4019-regulator']
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/arm/qcom-soc.yaml
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/mtd/qcom,nandc.example.dtb: nand-controller@1ac00000: compatible: 'oneOf' conditional failed, one must be fixed:
-	'qcom,ipq806x-nand' does not match '^qcom,(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+-.*$'
-	'qcom,ipq806x-nand' does not match '^qcom,(sa|sc)8[0-9]+[a-z][a-z]?-.*$'
-	'qcom,ipq806x-nand' does not match '^qcom,apss-wdt-(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$'
-	'qcom,ipq806x-nand' does not match '^qcom,gcc-(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$'
-	'qcom,ipq806x-nand' does not match '^qcom,mmcc-(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$'
-	'qcom,ipq806x-nand' does not match '^qcom,pcie-(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$'
-	'qcom,ipq806x-nand' does not match '^qcom,rpm-(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$'
-	'qcom,ipq806x-nand' does not match '^qcom,scm-(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$'
-	'qcom,ipq806x-nand' is not one of ['qcom,gpucc-sdm630', 'qcom,gpucc-sdm660', 'qcom,lcc-apq8064', 'qcom,lcc-ipq8064', 'qcom,lcc-mdm9615', 'qcom,lcc-msm8960', 'qcom,lpass-cpu-apq8016', 'qcom,usb-ss-ipq4019-phy', 'qcom,usb-hs-ipq4019-phy', 'qcom,vqmmc-ipq4019-regulator']
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/arm/qcom-soc.yaml
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/phy/qcom,ipq806x-usb-phy-ss.example.dtb: phy@110f8830: compatible: 'oneOf' conditional failed, one must be fixed:
-	'qcom,ipq806x-usb-phy-ss' does not match '^qcom,(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+-.*$'
-	'qcom,ipq806x-usb-phy-ss' does not match '^qcom,(sa|sc)8[0-9]+[a-z][a-z]?-.*$'
-	'qcom,ipq806x-usb-phy-ss' does not match '^qcom,apss-wdt-(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$'
-	'qcom,ipq806x-usb-phy-ss' does not match '^qcom,gcc-(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$'
-	'qcom,ipq806x-usb-phy-ss' does not match '^qcom,mmcc-(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$'
-	'qcom,ipq806x-usb-phy-ss' does not match '^qcom,pcie-(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$'
-	'qcom,ipq806x-usb-phy-ss' does not match '^qcom,rpm-(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$'
-	'qcom,ipq806x-usb-phy-ss' does not match '^qcom,scm-(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$'
-	'qcom,ipq806x-usb-phy-ss' is not one of ['qcom,gpucc-sdm630', 'qcom,gpucc-sdm660', 'qcom,lcc-apq8064', 'qcom,lcc-ipq8064', 'qcom,lcc-mdm9615', 'qcom,lcc-msm8960', 'qcom,lpass-cpu-apq8016', 'qcom,usb-ss-ipq4019-phy', 'qcom,usb-hs-ipq4019-phy', 'qcom,vqmmc-ipq4019-regulator']
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/arm/qcom-soc.yaml
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/phy/qcom,ipq806x-usb-phy-hs.example.dtb: phy@110f8800: compatible: 'oneOf' conditional failed, one must be fixed:
-	'qcom,ipq806x-usb-phy-hs' does not match '^qcom,(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+-.*$'
-	'qcom,ipq806x-usb-phy-hs' does not match '^qcom,(sa|sc)8[0-9]+[a-z][a-z]?-.*$'
-	'qcom,ipq806x-usb-phy-hs' does not match '^qcom,apss-wdt-(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$'
-	'qcom,ipq806x-usb-phy-hs' does not match '^qcom,gcc-(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$'
-	'qcom,ipq806x-usb-phy-hs' does not match '^qcom,mmcc-(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$'
-	'qcom,ipq806x-usb-phy-hs' does not match '^qcom,pcie-(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$'
-	'qcom,ipq806x-usb-phy-hs' does not match '^qcom,rpm-(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$'
-	'qcom,ipq806x-usb-phy-hs' does not match '^qcom,scm-(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$'
-	'qcom,ipq806x-usb-phy-hs' is not one of ['qcom,gpucc-sdm630', 'qcom,gpucc-sdm660', 'qcom,lcc-apq8064', 'qcom,lcc-ipq8064', 'qcom,lcc-mdm9615', 'qcom,lcc-msm8960', 'qcom,lpass-cpu-apq8016', 'qcom,usb-ss-ipq4019-phy', 'qcom,usb-hs-ipq4019-phy', 'qcom,vqmmc-ipq4019-regulator']
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/arm/qcom-soc.yaml
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/patch/
-
-This check can fail if there are any dependencies. The base for a patch
-series is generally the most recent rc1.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit.
-
+> +
+>  		if ((link->flags & ~DL_FLAG_INFERRED) ==
+>  		    (DL_FLAG_SYNC_STATE_ONLY | DL_FLAG_MANAGED))
+>  			continue;
+>
+> -		if (link->consumer == target)
+> +		if (link->consumer == target) {
+> +			link->flags |= DL_FLAG_DEVICE_IS_DEPENDENT;
+>  			return 1;
+> +		}
+>
+>  		ret = device_is_dependent(link->consumer, target);
+>  		if (ret)
+> @@ -1660,11 +1666,13 @@ static void fw_devlink_relax_link(struct device_link *link)
+>  	if (!(link->flags & DL_FLAG_INFERRED))
+>  		return;
+>
+> -	if (link->flags == (DL_FLAG_MANAGED | FW_DEVLINK_FLAGS_PERMISSIVE))
+> +	if ((link->flags & (DL_FLAG_MANAGED | FW_DEVLINK_FLAGS_PERMISSIVE)) ==
+> +			(DL_FLAG_MANAGED | FW_DEVLINK_FLAGS_PERMISSIVE))
+>  		return;
+>
+>  	pm_runtime_drop_link(link);
+> -	link->flags = DL_FLAG_MANAGED | FW_DEVLINK_FLAGS_PERMISSIVE;
+> +	link->flags &= DL_FLAG_DEVICE_IS_DEPENDENT;
+> +	link->flags |= DL_FLAG_MANAGED | FW_DEVLINK_FLAGS_PERMISSIVE;
+>  	dev_dbg(link->consumer, "Relaxing link with %s\n",
+>  		dev_name(link->supplier));
+>  }
+> diff --git a/include/linux/device.h b/include/linux/device.h
+> index 424b55df0272..3b0c4b777a60 100644
+> --- a/include/linux/device.h
+> +++ b/include/linux/device.h
+> @@ -317,6 +317,7 @@ enum device_link_state {
+>   * MANAGED: The core tracks presence of supplier/consumer drivers (internal).
+>   * SYNC_STATE_ONLY: Link only affects sync_state() behavior.
+>   * INFERRED: Inferred from data (eg: firmware) and not from driver actions.
+> + * DEVICE_IS_DEPENDENT: The consumer is dependent on the supplier
+>   */
+>  #define DL_FLAG_STATELESS		BIT(0)
+>  #define DL_FLAG_AUTOREMOVE_CONSUMER	BIT(1)
+> @@ -327,6 +328,7 @@ enum device_link_state {
+>  #define DL_FLAG_MANAGED			BIT(6)
+>  #define DL_FLAG_SYNC_STATE_ONLY		BIT(7)
+>  #define DL_FLAG_INFERRED		BIT(8)
+> +#define DL_FLAG_DEVICE_IS_DEPENDENT	BIT(9)
+>
+>  /**
+>   * enum dl_dev_state - Device driver presence tracking information.
+> --
+> 2.34.3
+>
