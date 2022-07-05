@@ -2,144 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1CEAE5678FB
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jul 2022 22:58:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3A6FC5679E9
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 00:06:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229494AbiGEU5o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Jul 2022 16:57:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36028 "EHLO
+        id S231637AbiGEWGk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Jul 2022 18:06:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50902 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232671AbiGEU5d (ORCPT
+        with ESMTP id S231782AbiGEWGj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Jul 2022 16:57:33 -0400
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6632140AA;
-        Tue,  5 Jul 2022 13:57:32 -0700 (PDT)
-Received: by mail-ed1-x52d.google.com with SMTP id fd6so16842789edb.5;
-        Tue, 05 Jul 2022 13:57:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=YzeSfz6dKxC0YWd2Gn+465VZcjebb0Kt+/rRxTIo9ME=;
-        b=C8Zmcobf7OdZhkR+lwcMLPSDf8wfeuIbsbSl/ayiMXqOzKJvy6t5qCxGW/eR+qSZQN
-         z7EwCFgfBgd8pVzU4/PO9BpS9o+IipT1L3jCbGV81GusGpTx3vIsmE7M3XP+GMN8GVCl
-         ImlkHPCm6812/XFyDjuvzOdT1mkHgAvYkfKjMditUmIzyWLKMk9L4HDNfv1LjdpM9HPD
-         ZzH/wBV4oHCTafi//2rBeWoC/K0qLTNXV4MZfjwpiJ7wCIe6xwx/IHAunvpeAF832ifI
-         D85EMHkWPrF0tECCeaT8JLkHQv2eFG4sJknYUzovId9wCItFtdJlNh5OtJIyQESjbNk+
-         pyyg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=YzeSfz6dKxC0YWd2Gn+465VZcjebb0Kt+/rRxTIo9ME=;
-        b=QRQfgGUfY19IfXzUP/bbHi6CZg470rTa9rkP8RrbnMkIREObLFYSCIKxumc7oFIgwo
-         meRoewBI1UdhOQEgdmTE12V5gbe1y5mCrpFShIYbA02W6Iq1E7WtG+umYb+AA4cI/hRl
-         mLE3gKDsp26XuDRWyiKu4GOz3Yt+pSElEbKu+XQqSs1U3TjaIxof6OG4BbScTHiJY5IY
-         hN1oCkoM2w7WC0zUx/mu0F0F9iWq61z0MfPHnUaO+ZMtLxTmkJPIpNcI0/leBmDZm8xE
-         IVooKwhuK1txTISfdFFDduAz7InI6h2ho8AUhXdaaZn5Dkl6OPavjzrLRtOnki/ueBzS
-         Z/KA==
-X-Gm-Message-State: AJIora9bU6Z6+yr6xZKW1D7U4QxcHSwLojZmd7JJRf5Zuu9JFt1WpFPL
-        0r2DkcGc/q5UIASwkcc+Wcc=
-X-Google-Smtp-Source: AGRyM1vPjW9CIqm1k+DoMFEPeeyiYyc+BoO3VRXbbGctsaTtnrI1wvbh8j+f6oMXewkCZE5bcq/nqQ==
-X-Received: by 2002:a05:6402:34c8:b0:437:74d5:f8df with SMTP id w8-20020a05640234c800b0043774d5f8dfmr48652572edc.274.1657054651193;
-        Tue, 05 Jul 2022 13:57:31 -0700 (PDT)
-Received: from localhost.localdomain (93-42-70-190.ip85.fastwebnet.it. [93.42.70.190])
-        by smtp.googlemail.com with ESMTPSA id s6-20020a1709062ec600b00711d88ae162sm16249037eji.24.2022.07.05.13.57.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Jul 2022 13:57:30 -0700 (PDT)
-From:   Christian Marangi <ansuelsmth@gmail.com>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Tue, 5 Jul 2022 18:06:39 -0400
+Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6065C19C01;
+        Tue,  5 Jul 2022 15:06:38 -0700 (PDT)
+Received: from g550jk.localnet (31-151-115-246.dynamic.upc.nl [31.151.115.246])
+        by mail.z3ntu.xyz (Postfix) with ESMTPSA id EDDA3D0A87;
+        Tue,  5 Jul 2022 22:06:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
+        t=1657058766; bh=eXM/PactU0SWohQdnU6JM3exuAXvUMJXVlduTn27Kac=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References;
+        b=xzzqXu1cMZG1tQK66TdZI9aRVAxYUEgTNsvM+GA79k0eZ4XXF5ofXN+lpPdBQtf0h
+         HpQtJE+JXT5994OTOrxAimIzpDtuOpz/dM/k+mmUYL0d0bBAlitfWjbY/AQ7QF8qkC
+         PVegjoJGKUrSDulCe5zGGio9HSe8JElT+EzPx21s=
+From:   Luca Weiss <luca@z3ntu.xyz>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Christian Marangi <ansuelsmth@gmail.com>
-Subject: [PATCH 2/2] clk: qcom: kpss-xcc: convert to parent data API
-Date:   Tue,  5 Jul 2022 22:30:33 +0200
-Message-Id: <20220705203033.1862-2-ansuelsmth@gmail.com>
-X-Mailer: git-send-email 2.36.1
-In-Reply-To: <20220705203033.1862-1-ansuelsmth@gmail.com>
-References: <20220705203033.1862-1-ansuelsmth@gmail.com>
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/2] ARM: dts: qcom: msm8974-*: re-add remoteproc supplies
+Date:   Wed, 06 Jul 2022 00:06:05 +0200
+Message-ID: <12009239.O9o76ZdvQC@g550jk>
+In-Reply-To: <Yr5mua6i6WxoAlzB@builder.lan>
+References: <20220606160421.1641778-1-luca@z3ntu.xyz> <20220606160421.1641778-2-luca@z3ntu.xyz> <Yr5mua6i6WxoAlzB@builder.lan>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
+X-Spam-Status: No, score=-1.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FROM_SUSPICIOUS_NTLD,
+        SPF_HELO_NONE,SPF_PASS,T_PDS_OTHER_BAD_TLD,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Convert the driver to parent data API. From the Documentation pll8_vote
-and pxo should be declared in the DTS so fw_name can be used instead of
-parent_names. Name is still used to save regression on old definition.
+Hi Bjorn,
 
-Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
----
- drivers/clk/qcom/kpss-xcc.c | 26 +++++++++-----------------
- 1 file changed, 9 insertions(+), 17 deletions(-)
+On Freitag, 1. Juli 2022 05:15:05 CEST Bjorn Andersson wrote:
+> On Mon 06 Jun 11:04 CDT 2022, Luca Weiss wrote:
+> > As part of a recent cleanup commit, the remoteproc supplies for adsp and
+> > modem were removed from msm8974.dtsi and now need to be set in the
+> > device dts. Do so.
+> > 
+> > Fixes: f300826d27be ("ARM: dts: qcom-msm8974: Sort and clean up nodes")
+> > Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+> > ---
+> > Bjorn, could you please pick this up for -fixes so it lands in an
+> > upcoming 5.19-rc?
+> 
+> As reported by lkp, this doesn't build. Am I missing something?
 
-diff --git a/drivers/clk/qcom/kpss-xcc.c b/drivers/clk/qcom/kpss-xcc.c
-index 88d4b33ac0cc..625f02696eff 100644
---- a/drivers/clk/qcom/kpss-xcc.c
-+++ b/drivers/clk/qcom/kpss-xcc.c
-@@ -12,9 +12,9 @@
- #include <linux/clk.h>
- #include <linux/clk-provider.h>
- 
--static const char *aux_parents[] = {
--	"pll8_vote",
--	"pxo",
-+static const struct clk_parent_data aux_parents[] = {
-+	{ .name = "pll8_vote", .fw_name = "pll8_vote" },
-+	{ .name = "pxo", .fw_name = "pxo" },
- };
- 
- static const u32 aux_parent_map[] = {
-@@ -32,8 +32,8 @@ MODULE_DEVICE_TABLE(of, kpss_xcc_match_table);
- static int kpss_xcc_driver_probe(struct platform_device *pdev)
- {
- 	const struct of_device_id *id;
--	struct clk *clk;
- 	void __iomem *base;
-+	struct clk_hw *hw;
- 	const char *name;
- 
- 	id = of_match_device(kpss_xcc_match_table, &pdev->dev);
-@@ -55,24 +55,16 @@ static int kpss_xcc_driver_probe(struct platform_device *pdev)
- 		base += 0x28;
- 	}
- 
--	clk = clk_register_mux_table(&pdev->dev, name, aux_parents,
--				     ARRAY_SIZE(aux_parents), 0, base, 0, 0x3,
--				     0, aux_parent_map, NULL);
-+	hw = devm_clk_hw_register_mux_parent_data_table(&pdev->dev, name, aux_parents,
-+							ARRAY_SIZE(aux_parents), 0,
-+							base, 0, 0x3,
-+							0, aux_parent_map, NULL);
- 
--	platform_set_drvdata(pdev, clk);
--
--	return PTR_ERR_OR_ZERO(clk);
--}
--
--static int kpss_xcc_driver_remove(struct platform_device *pdev)
--{
--	clk_unregister_mux(platform_get_drvdata(pdev));
--	return 0;
-+	return PTR_ERR_OR_ZERO(hw);
- }
- 
- static struct platform_driver kpss_xcc_driver = {
- 	.probe = kpss_xcc_driver_probe,
--	.remove = kpss_xcc_driver_remove,
- 	.driver = {
- 		.name = "kpss-xcc",
- 		.of_match_table = kpss_xcc_match_table,
--- 
-2.36.1
+I briefly mentioned in IRC, maybe you missed it.
+Castor is actually still missing pm8841 regulators upstream.
+I'll send this old (rebased) commit from you to add them, is that ok with you?
+
+https://github.com/msm8974-mainline/linux/commit/
+d01e20807a00e78570abf3dd91bea555dff06fa9
+
+Otherwise we can just keep castor out of this patch for now and add it later, 
+I don't really mind either way.
+
+Regards
+Luca
+
+> 
+> Regards,
+> Bjorn
+
+
+
 
