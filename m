@@ -2,262 +2,160 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E1B7C56611F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jul 2022 04:22:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9790156619C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jul 2022 04:58:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231748AbiGECWi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Jul 2022 22:22:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49108 "EHLO
+        id S234481AbiGEC6O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Jul 2022 22:58:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40250 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229900AbiGECWh (ORCPT
+        with ESMTP id S234559AbiGEC6N (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Jul 2022 22:22:37 -0400
-Received: from APC01-TYZ-obe.outbound.protection.outlook.com (mail-tyzapc01olkn2083.outbound.protection.outlook.com [40.92.107.83])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5735A65F1;
-        Mon,  4 Jul 2022 19:22:36 -0700 (PDT)
+        Mon, 4 Jul 2022 22:58:13 -0400
+Received: from APC01-PSA-obe.outbound.protection.outlook.com (mail-psaapc01olkn2099.outbound.protection.outlook.com [40.92.52.99])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FAFD12D05;
+        Mon,  4 Jul 2022 19:58:10 -0700 (PDT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=kaGKbc13Jbd0XSE/MPLx3Mnjo/7+P4dfrTOKwPefVxZDPm1zTpMpU79LSa/EUzfnqB6pgVcxVDecGl76E/3hc7SL/zdOns50nYqG5qMk37UYT8a9cPgJx8KCoXHt2pFtn4ZQasn6z6HaEbblqByC6vPxmFYguxjV8DGZCrvyUAKr1JXGUbUm+MWP2mUDfVhg1vkN6LnQp3omR88csbvebO3tWvoOfFYoR0j3eI6C+HedsDnopvix8tNCsnxqFKjXvda7suT+/sWZdhjjcyKlPVGit5t5vYMECXXliBq3aKE169JwfU2SZ6al4P9Ph3+4b6qeIp4VVEZ9UTVi96Qe+w==
+ b=OL/3t1zoB8fYeQ/6Tct4ZMvswBiEFtB2NmOXnwk4Ocu+De17bO5o8hXN44PkgKxClhl32rCH94DEDotzp86mA50cl8V6pzVf9ix3nH5eIQEqBFodDF7jtU0v/66huKZMmO/q06IextZ3D1O9t8v19vmC796rElMf9zxbV1exVbUdXStvFLZbu+mTVvu/P3hHqHg/5jUGgdZ2NHblrS4lt9NbvVKJb67+GEA48pryoXei6xnD18urry4T0ejHrFYt6qxNiA7iyyDRfaepxZVqTjSXY1hzmGJnZ+QW0zrI72S/VEfPysq29Qvj0eVKpa3lm+atqGZtOMVwMlrZ/wE4CQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=/bZvsyru487tBJnaBrKMsNYfaT78UUAlv7JCNqrExR0=;
- b=ei7tLwbjG98fh2aOUg6oeRx2kn6D+3F8F9uetFLXDfl5/lAiXk+buQtzsFh5wMnUWBhNU4B+MV4cMbzBz6WJKDhIxVG26Ck0QTNUhwGg/LXC5Ge0TQcgoew/70mBdO8qjYNdrKm9Q9K2Je9dbDjFP6n2dEFHvj+2PGjPhTZjxUYlfpwFX/SG+Gy+xUn3o1tVk+MOQ9nd6EoYSDEFfqUCflbFc0B6iHKxp8ksNf5lit2uLf00jLO9sOHtE7NTo/g84MqUQoYQ0fZJRbf2lCNrZF5jjrD9CkjLY+h1eN5dpNVAzU7c16C1YNgU36QPcYJ9P6hH08HMn9zpr7IUO+9yCg==
+ bh=xu2QCmmsgYW0wcUH/dSWvo7GOsQf6oQh29SYx0FmU7U=;
+ b=TS2Y76+Sfao8wuxU8hp+hVZvCotylPHCaX8hJYn1Ru9tFQc7O5JjisvRXGGDPOobNRzALMOKonP13XYv+SZ9+uLhKRKI9L2Ot9iU91zjidVvkKo87HQkzz0XPGu2+0jIzDFwlirEwBoOyjroRnImyeBiPzs9yW7qSm+acoGoq01NdQwXYyHD6OySyZ/O/fSe6+5V3JBLiZHpBQd23ErVJrjtr373gg0HkrVa1fIKg4nGU119xYmS/JBV5Yxye20viAex9Kxn0XjyNEAqZ/FWXZqZfDX/MbnYt5qM3InAP430LfuKKfB05xisPb9GxocowwHStHnD2HWg8q/vo1ke7Q==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
  dkim=none; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=/bZvsyru487tBJnaBrKMsNYfaT78UUAlv7JCNqrExR0=;
- b=YVUwFcRU1e5drWn+lmQNmyvA7kC36+0FBnOfz4LNWHyKcxpRrckcFu3irx6dwhd7kt6Lqeq5bV7VVK2xC7I6xi1Be3HsLOnVu9VBcxNQzER7egk8jViEmJAMXQkpQ3FdzUCnOPGz52qRKgQYEbI/LgsyyG4s6idP/dlxMMK8bkd2kFV7or70ofvUmSODz8ZrzmPYfTpdTiqm3hJweqkY9R5Dl8PdSszIbGuk6nXGOnxy65rN7lOGeHOl8E9FjNXr2qzlecxpVPTyeYtxX8CWM1cKlRizcIbCLN/KhPRmo46O2emzN91FrMYvEgidAoyQj3vN1oAfW2oi9VjH/pSzCA==
+ bh=xu2QCmmsgYW0wcUH/dSWvo7GOsQf6oQh29SYx0FmU7U=;
+ b=Y0wZz7bU/V8SVaRQ8J2lqxKz5+XP13mK50KJYdNnA2VqSyPtna92Es/qqe2mOlmqgv97RnJ0fnvvHJPAPwOVwusk1752ZpuajDUFLOdg6X1PdB7yeBQjskISllYlszdsv+kaIJIfL3bMtoIZl8lN+Cufkz2cgT8PHXXzZyX2JD+B5wMiKD0V1HfhzeYy4sDf5T7LJUi5jkIWodSaZilGUadnZsgoorEliyslxQk1iiE0HKKi3oSr6ZlbU7SzYNBa97iAthlUmowaFQL1E0QiEQHn6fnMC4D/4ZquTlcrtn1pYVvA9x9isep0oFlrQNiLJsAn50vUf6DUo9xIwEkYXg==
 Received: from SG2PR03MB5006.apcprd03.prod.outlook.com (2603:1096:4:df::10) by
- KL1PR03MB5063.apcprd03.prod.outlook.com (2603:1096:820:7::11) with Microsoft
+ SI2PR03MB6461.apcprd03.prod.outlook.com (2603:1096:4:1a1::11) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.5417.13; Tue, 5 Jul 2022 02:22:31 +0000
+ 15.20.5417.14; Tue, 5 Jul 2022 02:58:06 +0000
 Received: from SG2PR03MB5006.apcprd03.prod.outlook.com
  ([fe80::b96f:3a3b:5eef:e796]) by SG2PR03MB5006.apcprd03.prod.outlook.com
  ([fe80::b96f:3a3b:5eef:e796%5]) with mapi id 15.20.5417.012; Tue, 5 Jul 2022
- 02:22:31 +0000
+ 02:58:06 +0000
 From:   Jimmy Chen <jinghung.chen3@hotmail.com>
 To:     LKML <linux-kernel@vger.kernel.org>, Andy Gross <agross@kernel.org>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+Cc:     Rob Herring <robh+dt@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Douglas Anderson <dianders@chromium.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Alan Huang <alan-huang@quanta.corp-partner.google.com>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Alan Huang <alan-huang@quanta.corp-partner.google.com>,
         devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: [PATCH 2/2] [PATCH v2 2/2] arm64: dts: qcom: Add LTE SKUs for sc7280-villager family
-Date:   Tue,  5 Jul 2022 10:22:14 +0800
-Message-ID: <SG2PR03MB500697A11DA5D0B45DE41B0ECC819@SG2PR03MB5006.apcprd03.prod.outlook.com>
+Subject: [PATCH 1/2] [v3 1/2] arm64: dts: qcom: Add LTE SKUs for sc7280-villager family
+Date:   Tue,  5 Jul 2022 10:57:47 +0800
+Message-ID: <SG2PR03MB5006CBD49DB3052D57A6ABF0CC819@SG2PR03MB5006.apcprd03.prod.outlook.com>
 X-Mailer: git-send-email 2.25.1
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-TMN:  [I4DxFypmfU1tb9Db35AZKj9sxRGKL5v2]
-X-ClientProxiedBy: TYBP286CA0024.JPNP286.PROD.OUTLOOK.COM
- (2603:1096:404:ce::36) To SG2PR03MB5006.apcprd03.prod.outlook.com
+X-TMN:  [aKfn2yCU3H0Zl0JnNC/6gyhcLRkTHCwg]
+X-ClientProxiedBy: TYAPR03CA0015.apcprd03.prod.outlook.com
+ (2603:1096:404:14::27) To SG2PR03MB5006.apcprd03.prod.outlook.com
  (2603:1096:4:df::10)
-X-Microsoft-Original-Message-ID: <20220705102201.2.I31e05d3184dbcf0578b32593fe5d150b80a46624@changeid>
+X-Microsoft-Original-Message-ID: <20220705105730.1.Ie6e9ee9bf889abfdd1a44d9f7a61b62c0c5c97c3@changeid>
 MIME-Version: 1.0
 X-MS-Exchange-MessageSentRepresentingType: 1
 X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 32951e30-fd67-4b21-ca9c-08da5e2d36f6
-X-MS-TrafficTypeDiagnostic: KL1PR03MB5063:EE_
+X-MS-Office365-Filtering-Correlation-Id: 4a893f8a-b8d2-4040-99f6-08da5e322ee9
+X-MS-TrafficTypeDiagnostic: SI2PR03MB6461:EE_
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: mD+a+0o02VAenL/dmyDfw1YtoZAuzT9SxsZI4HdCPDRlzEhJAy027lcx1oeB8AEgFAXQh9zahOAl70UDMq388l9VnmEjF7aYwkbIrY+qR+lfedHtKCziOvdILVd+W+yl6WrH3Burq2AbGBSBefdLL6yloKCYKVArNALDiOSfGRk/WQ43x9vpZn7V3CIl8mq7dxEHJZi6hC1OlzGdJtihdavnb+2uy/+VKGvRIOO85cmN8z8kPA2V47Wawjxz36XVX3kN55ceY9yJ7lyx636CNmd62amrPTniW/jR/kWXhuCurLM0HScBb0LMQDT/kHs2m59zRItGfpA5HbjICIMHmNEB0nsBBJNb0YWmfQNQquBwwzBPeT5FKfWWcm2RWC2tZK1T//rSqRbM7QFq6O9tU+s8WwoJuR4x0qVcthy8qXV7SDJoMJIQxBp1YzdE7yTVqGUyyknTw2zIwRAJLKCAqj4deuHRYGw4arJMLQKfHcuhCF0AB2n4xEyuECKEViBpwI6Ij8kVDVK1L17AerQA++gFFIH96puPDcn/r8E7cE1GmooeJlHtS2gFhTgsuOPW3J+YZx6b5c2pNfiAae6h+I6MGPk2GDQj+gsUYCbUMy5Zb1KwuY04Sj1hb9lFLGtI9cs9cKNeArjVKfoUY/CyVw==
+X-Microsoft-Antispam-Message-Info: HjC5U5Sc5tqrRNooUF0bKlaNYS375UvaVGYCVfZM84j2n7VqOT1WocdOvJ9H3K5FmtbV+6La6nMfaFl1k2apahTYRwTTSEYoGxvNQjE/nkkDAX97Azs4MNi+DfSSRcTbjSYavS2VsJ5j2fXdIBRW3e8EB36nGhdwsD1KiVYWbD6V2hOMPF0Me+OwQ8s5nLGLHMOG5qjToCYQpJ11KzuZvJsthiMcWIGr9ZSdajGPJ352bQWqGXMiN9DZlFZRYW9dPgZUUBIl53mrTOL0A+ShN2CkzPUrcNOQDQpxAjKdy6SUN5wJpiWb1KClavzmjWRIstO0SHZHIYGhwO0jz+nwcyrlbmbDHvHJE2TYczqZtHpTUJvn/vM/CtZdYs/A/86XkyuQ6A2NcmF9RX4BHmbfHjj7fU51/zomGWZkDBlh8MK1F3oV0qlsVIFKcw+OlsWl+6SOEYy4DcgA8x8GXL+aB2GAV8en5sEyhdAeISYPB3g2gl2xt2RV2DInwifIyGVipoeph1DawtOP0+n5T0zYVZ0h8b9Nw6acgqoOYrZTnTXtNb4jpWc0guksRU2xI5k3UOQE+h5PWjeocmUzjD++zhUIWVVESpjlR+sGg1UQz7r5C9GwDUZfGRWduqqD8vjAsGe6/VmlM47J/KMIc0jgKA==
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?16o/sZcUZP79ZcsC0XjG7IKgAls6T68L8x+H6a+DpGSQDnF0gcq5xXtResME?=
- =?us-ascii?Q?BEmUnk3BfknCV01Sefd5j6hXKEQPhtSkSoRHiH/HLBEvnayJZmI9Ke1tKFkZ?=
- =?us-ascii?Q?al0MNhMhZeJU01PRc+u4GrTFxkBdtFJPmIEdvw9ars9yGHkzqPTlnzPEd9bd?=
- =?us-ascii?Q?jDgsqdpuahbUegT7kcWtNoMRvFODA6jzc91JVp3/zi2cmvnHC65Bwkhq7yc7?=
- =?us-ascii?Q?3pD21/cYKKEllydOi0Z0tusIQKs3vcK5fVqzWkDNv8P7V4zCThPP8KyGcydN?=
- =?us-ascii?Q?MppBkGiYXwhV7NUcjZBZ6JW0VM8VWwUDK7tFP/yyoVfvEWgQnOuXgxtEvHbD?=
- =?us-ascii?Q?XbdpxcHtFhj+mXR/eYWB+nmO7Rh4jZSfChyiFzlZ75Lk6Gf3596IzJl27cmc?=
- =?us-ascii?Q?INrCLCduY+XApD4r8vNqst2eGN7Q0lX+WW5j89zMazNDzGwWa1L9ZKvHtbhy?=
- =?us-ascii?Q?/jBhF/lS7EvNjwdRGvKs3rtY6N1FWYKzhaji+OoEz0twTvJj1Yj6kw4jj1r4?=
- =?us-ascii?Q?YPoxmeC/zMvmjYkln6MylOBs8lmmO7EdncPxRf45yFYjbEo6P8wvL/sbGrkt?=
- =?us-ascii?Q?uDocZgP/ulBVzkOGyJuSOEn13L4+bXsrLpVzc1ITtTk+u7UgGbYnpNefpDKk?=
- =?us-ascii?Q?okBcU+29R082BAVoWX1KLtGbSl3BcuWY3kmvtgY8r6v2iXZu8+t2916VSC1b?=
- =?us-ascii?Q?ksgYnWfFoKELfYl6d50nle1S2VSv1h/mtkEXQ1++FhO82kydQ2cx7Nluwoi5?=
- =?us-ascii?Q?8Gqfc6e4oEHNDqL5ZrSn+Gh8p+H2wRxs5ljrMvm6tOVaot6QE5Fxw0qIPo4I?=
- =?us-ascii?Q?AF7Jw9A5xFH0FA7JaakDaGZvuG98HUMuii3dV5YcGpK2D/38lZdIbfTIYPHd?=
- =?us-ascii?Q?XC7XwvIPF8Gy5KFceDsg3ocnjgFan37F75oChLxoAkIi/g/YTUODa+33Zw11?=
- =?us-ascii?Q?eNGOMZcKrM3/h/xbr2Mrleh/r9Fy0NBwOAsRkv9dkfn0+5CovjIkZYgn0xoO?=
- =?us-ascii?Q?C0r+3pjRVstkx/6Pj7o4QRv68TSlaOfaEZivc8fUjjfK78mGuLWX6pqe0HUP?=
- =?us-ascii?Q?kkLYwQm6NKlM2wLRcjr+GTC2Ov1VxMW/pp3eBySwosgfbfSBbFC3ScWOTsiY?=
- =?us-ascii?Q?O8Ll6IRCc5ltc1uwAgZuiek1Ugz0Ld1O1uQkEyYQDqTqT3cBaHeknzvYWpSf?=
- =?us-ascii?Q?Ex1UKD1ihyXgs5slEVLluErLhc/ymDNbE+qRjsFZ17MlzqzWCKWJqITvG1c0?=
- =?us-ascii?Q?5iWF6ZdGijy6fO0U8kckqtM1vNYqFlWLNbdFCXUCRQ=3D=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?FfXXnG6wsV9t8EvWioToxysd0/ZbRpmwi6WtEa8o8M2aOPfOneWKkiDKk4mx?=
+ =?us-ascii?Q?d4Mj8qxV92UlcuX5YtFqbcVTB7g4DuiwQbt68opiKX7rK9XJVgfvKryY32Dn?=
+ =?us-ascii?Q?qigTx4uGv43rm+R88PHNOBf/YuwPLr7i21Kkvir3AIkS7P7oD/VHQkZtCSJz?=
+ =?us-ascii?Q?oENbRGqf6jl5g0xtqpRgte+wuiUpyHiiwM4ZqQpoTA0oO8HHBSEQdXyP9JKy?=
+ =?us-ascii?Q?8ZFyaowdDBI4eJXcssV3LlAuTzYx1AibZUVYGrAFvNtptN33IqGc7E8bFJQx?=
+ =?us-ascii?Q?wRMo6rqJH58I3y1y27o6FYv+92IrkpCtzqytyzICs3Ex5BRyKp/WyLi23i0O?=
+ =?us-ascii?Q?POsXrOM0BxYAHoIn3iPdvB8NOQXRhkKkcMTLC5sXJYHrs8/KXdP915JKvc/u?=
+ =?us-ascii?Q?0XpNnsCKFLeLgE/+VbVVMs1Gn4vz3dBzsaguA4IWgwxSRRDrKrBtmQkdjlpZ?=
+ =?us-ascii?Q?3b9JHOZUAgIWoTLN7MVwR1rzNL5+y4HH3DRB+sJw5CMw/f1tDVDEY8fOe/Y3?=
+ =?us-ascii?Q?ZzcECDoMHvkTEqytYkWR4fAQTVhgrxkmiYCBJaE4mu26QOvoCofaIHXajZ9V?=
+ =?us-ascii?Q?pWqkzZBwSl3w0wljYgu275uFJIlqtjeXPyUjdSZTAAkDWEVflU6Iy8vt0pn+?=
+ =?us-ascii?Q?FfGX1N1e1pEsQmV0TnryUut64usStss1jGYNhnUKD+Gw2yK/N3g6ATFC/VLj?=
+ =?us-ascii?Q?aC5dEiyBV4Aajf4S2lTVD7XTM1lD0Ric2/Jnt3A6rXacT4HDpbX2S/eedBwT?=
+ =?us-ascii?Q?gk5Gr07zEfUW7MfJ1fYXHwpOjQLDiHuviD7kd4gekZJX78n7NBwWnBtO986r?=
+ =?us-ascii?Q?vrCDZltnmqaXga/OY3QCtKrMZ7Fn1XAUWfXRxCAz9tE6A/WN8+qFd2+kwXEm?=
+ =?us-ascii?Q?i+QmrOnwpwQf63VjCrzTgZbR7O5ZWjU9sBSU/egnSaN7OldIR+uwZKElLToF?=
+ =?us-ascii?Q?eG5dBgYIu5L+f2NoTx0sEY/uJ+4LLSyF/mesL+eaNacrbw8oOWjMXVoGNvKY?=
+ =?us-ascii?Q?Duy5W1OQ0CQ4gCPJiAivrk5psoYKMjcbIoYQBhF/svU6Wh9RILYuWXCgcE+8?=
+ =?us-ascii?Q?rH9efTcEa0RkYZNOGPOPJm73jChQ3AnWGBZxz4yFCf/R+wDzqQoVhh2biHUT?=
+ =?us-ascii?Q?7o6CcRnk1Bkp3KYwqEHDCDDZ8x4DSN4H7cg0p1X4GuoPn8UKIp/rzr3r9mrj?=
+ =?us-ascii?Q?yNyNXro21+pnwaEIA34Q0dR/HFpGGc26YJxmvruBzNZF09EbdKM1mWsx4+3D?=
+ =?us-ascii?Q?I1CdTLdvssJJ2oEvyJRVHNXBpxS9RdNxXRUeRCtOaE/72/RVa9My708a8B9q?=
+ =?us-ascii?Q?hp8=3D?=
 X-OriginatorOrg: sct-15-20-4734-24-msonline-outlook-c0b75.templateTenant
-X-MS-Exchange-CrossTenant-Network-Message-Id: 32951e30-fd67-4b21-ca9c-08da5e2d36f6
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4a893f8a-b8d2-4040-99f6-08da5e322ee9
 X-MS-Exchange-CrossTenant-AuthSource: SG2PR03MB5006.apcprd03.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Jul 2022 02:22:31.7216
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Jul 2022 02:58:05.9470
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
 X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: KL1PR03MB5063
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SI2PR03MB6461
 X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+        FREEMAIL_FROM,SPF_HELO_PASS,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This adds LTE skus for villager device tree files.
+This adds a LTE skus for Chromebook Villager to the yaml.
 
 Signed-off-by: Jimmy Chen <jinghung.chen3@hotmail.com>
 ---
 
- arch/arm64/boot/dts/qcom/Makefile                 |  2 ++
- .../arm64/boot/dts/qcom/sc7280-chrome-common.dtsi | 11 -----------
- arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts |  1 +
- .../dts/qcom/sc7280-herobrine-herobrine-r1.dts    |  1 +
- .../boot/dts/qcom/sc7280-herobrine-lte-sku.dtsi   | 15 +++++++++++++++
- .../dts/qcom/sc7280-herobrine-villager-r0-lte.dts | 14 ++++++++++++++
- .../dts/qcom/sc7280-herobrine-villager-r1-lte.dts | 14 ++++++++++++++
- arch/arm64/boot/dts/qcom/sc7280-idp.dts           |  1 +
- 8 files changed, 48 insertions(+), 11 deletions(-)
- create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-lte-sku.dtsi
- create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r0-lte.dts
- create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1-lte.dts
+The format of the added items is based on the below document.
+Documentation/arm/google/chromebook-boot-flow.rst
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index bb9f4eb3e65a0..6d81ff12f5af2 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -103,6 +103,8 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-r1-lte.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-crd.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-herobrine-r1.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-villager-r0.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-villager-r0-lte.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-villager-r1-lte.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-idp.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-idp2.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-crd-r3.dtb
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi b/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
-index cfe2741456a1a..25f31c81b2b74 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
-@@ -83,17 +83,6 @@ spi_flash: flash@0 {
- 	};
- };
+Changes in v2:
+- Update the patch title and the commit message
+Changes in v3:
+- Update patch title
+
+---
+ Documentation/devicetree/bindings/arm/qcom.yaml | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
+
+diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+index 4dd18fbf20b68..a136b1389c2ac 100644
+--- a/Documentation/devicetree/bindings/arm/qcom.yaml
++++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+@@ -529,11 +529,26 @@ properties:
+           - const: google,herobrine
+           - const: qcom,sc7280
  
--/* Modem setup is different on Chrome setups than typical Qualcomm setup */
--&remoteproc_mpss {
--	status = "okay";
--	compatible = "qcom,sc7280-mss-pil";
--	iommus = <&apps_smmu 0x124 0x0>, <&apps_smmu 0x488 0x7>;
--	interconnects = <&mc_virt MASTER_LLCC 0 &mc_virt SLAVE_EBI1 0>;
--	memory-region = <&mba_mem>, <&mpss_mem>;
--	firmware-name = "qcom/sc7280-herobrine/modem/mba.mbn",
--			"qcom/sc7280-herobrine/modem/qdsp6sw.mbn";
--};
--
- &remoteproc_wpss {
- 	status = "okay";
- 	firmware-name = "ath11k/WCN6750/hw1.0/wpss.mdt";
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts b/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts
-index e9ca6c5d24a16..921eccfec39ae 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts
-@@ -9,6 +9,7 @@
- 
- #include "sc7280-herobrine.dtsi"
- #include "sc7280-herobrine-audio-wcd9385.dtsi"
-+#include "sc7280-herobrine-lte-sku.dtsi"
- 
- / {
- 	model = "Qualcomm Technologies, Inc. sc7280 CRD platform (rev5+)";
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r1.dts b/arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r1.dts
-index c1647a85a371a..c1a6719687252 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r1.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r1.dts
-@@ -8,6 +8,7 @@
- /dts-v1/;
- 
- #include "sc7280-herobrine.dtsi"
-+#include "sc7280-herobrine-lte-sku.dtsi"
- 
- / {
- 	model = "Google Herobrine (rev1+)";
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-lte-sku.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine-lte-sku.dtsi
-new file mode 100644
-index 0000000000000..a4809dd2f4e8a
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-lte-sku.dtsi
-@@ -0,0 +1,15 @@
-+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
-+/*
-+ * Google Herobrine dts fragment for LTE SKUs
-+ *
-+ * Copyright 2022 Google LLC.
-+ */
-+/* Modem setup is different on Chrome setups than typical Qualcomm setup */
-+&remoteproc_mpss {
-+	status = "okay";
-+	compatible = "qcom,sc7280-mss-pil";
-+	iommus = <&apps_smmu 0x124 0x0>, <&apps_smmu 0x488 0x7>;
-+	memory-region = <&mba_mem>, <&mpss_mem>;
-+	firmware-name = "qcom/sc7280-herobrine/modem/mba.mbn",
-+			"qcom/sc7280-herobrine/modem/qdsp6sw.mbn";
-+};
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r0-lte.dts b/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r0-lte.dts
-new file mode 100644
-index 0000000000000..672cb78e3088f
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r0-lte.dts
-@@ -0,0 +1,14 @@
-+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
-+/*
-+ * Google Villager board device tree source
-+ *
-+ * Copyright 2022 Google LLC.
-+ */
++      - description: Google Villager (rev0)
++        items:
++          - const: google,villager-rev0
++          - const: qcom,sc7280
 +
-+#include "sc7280-herobrine-villager-r0.dts"
-+#include "sc7280-herobrine-lte-sku.dtsi"
-+
-+/ {
-+	model = "Google Villager (rev0) with LTE";
-+	compatible = "google,villager-rev0-sku0", "qcom,sc7280";
-+};
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1-lte.dts b/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1-lte.dts
-new file mode 100644
-index 0000000000000..2f05a19cc388e
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1-lte.dts
-@@ -0,0 +1,14 @@
-+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
-+/*
-+ * Google Villager board device tree source
-+ *
-+ * Copyright 2022 Google LLC.
-+ */
-+
-+#include "sc7280-herobrine-villager-r1.dts"
-+#include "sc7280-herobrine-lte-sku.dtsi"
-+
-+/ {
-+	model = "Google Villager (rev1+) with LTE";
-+	compatible = "google,villager-sku0", "qcom,sc7280";
-+};
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dts b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
-index 6d3ff80582ae9..fba7e938ce35a 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-idp.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
-@@ -10,6 +10,7 @@
- #include <dt-bindings/iio/qcom,spmi-adc7-pmr735a.h>
- #include "sc7280-idp.dtsi"
- #include "pmr735a.dtsi"
-+#include "sc7280-herobrine-lte-sku.dtsi"
+       - description: Google Villager (newest rev)
+         items:
+           - const: google,villager
+           - const: qcom,sc7280
  
- / {
- 	model = "Qualcomm Technologies, Inc. sc7280 IDP SKU1 platform";
++      - description: Google Villager with LTE (rev0)
++        items:
++          - const: google,villager-rev0-sku0
++          - const: qcom,sc7280
++
++      - description: Google Villager with LTE (newest rev)
++        items:
++          - const: google,villager-sku0
++          - const: qcom,sc7280
++
+       - items:
+           - enum:
+               - lenovo,flex-5g
 -- 
 2.25.1
 
