@@ -2,110 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1494456777C
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jul 2022 21:13:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 913A1567798
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jul 2022 21:15:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233477AbiGETNg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Jul 2022 15:13:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48554 "EHLO
+        id S233191AbiGETPi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Jul 2022 15:15:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50752 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233426AbiGETNe (ORCPT
+        with ESMTP id S233539AbiGETPh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Jul 2022 15:13:34 -0400
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A6A21C92A;
-        Tue,  5 Jul 2022 12:13:33 -0700 (PDT)
-Received: by mail-ej1-x62d.google.com with SMTP id fi2so23276469ejb.9;
-        Tue, 05 Jul 2022 12:13:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=URUNgyykm+FYXGtKi3BEFInGhuSrvdoaZojpppShAEI=;
-        b=DvZiUoAZIXVYK1lYDINksnqMthpHlDZ+s60K8rIA8ci9iwtTGTxeIsmM3FzHjxnOqR
-         brp9yjgM8GVwIeVdY5zr30DWgJFLWONC7qKEUYbotb6e3N7fRcDcWHM73KgTxoqJRr9y
-         k8byO9pGpV8XQPr+lkFvS9L6wayjc1+cPk5WALNnAUFINmNNkE89fjwLwDqoJgICkXye
-         NlwYbpsaEafKWHmakdF85bNNQiNgIFV1DVovSrea9PDTjCeRnDGhTe9UegS6nemGsgmr
-         U9cgXYPSgnWtnU3DY+4xqs/L9kOtSfmQLTMjXeZba+hvF4ge1Hez/dVRcV3qr9IosTNL
-         oRFw==
+        Tue, 5 Jul 2022 15:15:37 -0400
+Received: from mail-io1-f42.google.com (mail-io1-f42.google.com [209.85.166.42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C17A21825;
+        Tue,  5 Jul 2022 12:15:36 -0700 (PDT)
+Received: by mail-io1-f42.google.com with SMTP id h85so12071382iof.4;
+        Tue, 05 Jul 2022 12:15:36 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=URUNgyykm+FYXGtKi3BEFInGhuSrvdoaZojpppShAEI=;
-        b=PIKk44YSvvANTqlRuPmPDDR9iXGWk0oWnbc6S6UJpvXCmgrWUZJKIWSEOtq0obT20h
-         aAS1A3UpEuCaMAC19Wx1UaEnkVGSfwx2xAsI3VlLYS2dVpYJf/dmvgcJQ5WvstVBDUq4
-         TdRjIwbqUk+i1B1WugJDT7VhWMqGFoPkayzG/bJop2OosuHBSCLMKs4jUxOox2UQKAHG
-         rObbbRl/jTgrF367aEroBhYmwkixWtDDzI24rnWeFV3wm4w9M4qDrubPXrNz8eeCm/sr
-         UID/nbhUktEVaYESnKLEehw8AHjcK4ZonbN95AhomtSJZtsgCCJHEMDGmx8g9/9pyonX
-         mPMQ==
-X-Gm-Message-State: AJIora8oyI4ttDyvWfKoey07z3JuvPfEPdHL1BN+PXpMhMs0UE5aLQZA
-        fU2iIRSxOYYPpCkRJss+9to=
-X-Google-Smtp-Source: AGRyM1tG8ZQMhZx97EC3KCT0ulWN8e1JUVGlJemzWyxj27J1Via61Dmgli9PwCCxVxmb8EDBZRtwhg==
-X-Received: by 2002:a17:907:217b:b0:722:fc5e:326e with SMTP id rl27-20020a170907217b00b00722fc5e326emr36697662ejb.478.1657048412027;
-        Tue, 05 Jul 2022 12:13:32 -0700 (PDT)
-Received: from fedora.robimarko.hr (dh207-99-13.xnet.hr. [88.207.99.13])
-        by smtp.googlemail.com with ESMTPSA id o19-20020aa7c7d3000000b0043a75f62155sm2480365eds.86.2022.07.05.12.13.30
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=kxzYA6KZ8a4zIqx67GnwhuMBCfJafkrQxxi0Ms3fzsM=;
+        b=19wJThwslRmrqLixjdYxhVr10u/EPRHDPrWA+/GdhNTuO/njxXRqTXRmdp7BBih4Zx
+         ASAfGIm9PIdo0Tk4kMErzXmEtsz3dpnow57C7SXVLHvbla7VFAp1Lw5pFT2gizIggVNq
+         hsPmvElgf99SkI27fs9hSKbpmBiCxnx52GSf0zKxrFPM49mWSY2KloGzD6mYkPyQWUvY
+         4AfvBeESDjDnTA+t7XO1d2bv4TYFN+GyQlZ4gI4OF3mLx5IDuJ0XgtOxjCIWn4AxBDT+
+         Ce2/SOLE7S6CBbN5yfWPwi9BiZ0uISdD4vHk9X1o6lLG/m7YmxHX59ZC2K4kOje7ETwQ
+         IXMQ==
+X-Gm-Message-State: AJIora+5Ifn37+eR2Hy8jCBeER40wsy3qdazyvELiY5nqptLG82Sq66x
+        lO1W3iiMNAGTEhRzV9Tzig==
+X-Google-Smtp-Source: AGRyM1tJBq+vZqIhRnBSmnyhF2kTg4Ul3hctlrl7dB8AHGjpQQNhrPX0aVyHJ7t8yIxnOpQtEbE/4A==
+X-Received: by 2002:a05:6638:16cf:b0:33c:8c82:b460 with SMTP id g15-20020a05663816cf00b0033c8c82b460mr22231164jat.32.1657048535710;
+        Tue, 05 Jul 2022 12:15:35 -0700 (PDT)
+Received: from robh.at.kernel.org ([64.188.179.248])
+        by smtp.gmail.com with ESMTPSA id ck22-20020a0566383f1600b0033ef7f3c5f7sm679260jab.90.2022.07.05.12.15.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Jul 2022 12:13:31 -0700 (PDT)
-From:   Robert Marko <robimarko@gmail.com>
-To:     agross@kernel.org, bjorn.andersson@linaro.org,
-        konrad.dybcio@somainline.org, jassisinghbrar@gmail.com,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-Cc:     Robert Marko <robimarko@gmail.com>
-Subject: [PATCH v5 3/3] arm64: dts: ipq8074: add APCS node
-Date:   Tue,  5 Jul 2022 21:13:27 +0200
-Message-Id: <20220705191327.1684277-3-robimarko@gmail.com>
-X-Mailer: git-send-email 2.36.1
-In-Reply-To: <20220705191327.1684277-1-robimarko@gmail.com>
-References: <20220705191327.1684277-1-robimarko@gmail.com>
+        Tue, 05 Jul 2022 12:15:35 -0700 (PDT)
+Received: (nullmailer pid 2465625 invoked by uid 1000);
+        Tue, 05 Jul 2022 19:15:33 -0000
+Date:   Tue, 5 Jul 2022 13:15:33 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Sibi Sankar <quic_sibis@quicinc.com>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, swboyd@chromium.org,
+        robh+dt@kernel.org, devicetree@vger.kernel.org, mka@chromium.org,
+        mathieu.poirier@linaro.org, krzysztof.kozlowski+dt@linaro.org,
+        linux-kernel@vger.kernel.org, konrad.dybcio@somainline.org,
+        linux-remoteproc@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [V5 1/2] dt-bindings: remoteproc: qcom: Convert SC7280 MSS
+ bindings to YAML
+Message-ID: <20220705191533.GA2465521-robh@kernel.org>
+References: <1657020721-24939-1-git-send-email-quic_sibis@quicinc.com>
+ <1657020721-24939-2-git-send-email-quic_sibis@quicinc.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1657020721-24939-2-git-send-email-quic_sibis@quicinc.com>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-APCS now has support for providing the APSS clocks as the child device
-for IPQ8074.
+On Tue, 05 Jul 2022 17:02:00 +0530, Sibi Sankar wrote:
+> Add a separate YAML binding to act as a superset of the PAS and non-PAS
+> compatible for SC7280 MSS PIL. This also serves as a way to increase
+> readability.
+> 
+> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+> ---
+> 
+> Depends on Krzysztof's remoteproc cleanups and improvements:
+> https://patchwork.kernel.org/project/linux-arm-msm/cover/20220517070113.18023-1-krzysztof.kozlowski@linaro.org/
+> 
+> Previous discussions on PAS vs non-PAS bindings:
+> https://lore.kernel.org/lkml/YUps1JfGtf6JdbCx@ripper/ [Bjorn]
+> https://lore.kernel.org/lkml/CAE-0n51KBYjZvwGNy06_okmEWjEfRLQO54CYaY6-JnbBk6kOhA@mail.gmail.com/ [Stephen]
+> 
+> v5:
+>  * Improve phandle-array schemas [Stephen/Rob/Krzysztof]
+>  * Add more details to the firmware-name/memory region string array [Stephen/Rob]
+>  * Drop 'items' from label [Rob]
+> 
+> v4:
+>  * Remove older bindings [Matthias/Krzysztof]
+>  * Misc. Fixes [Krzysztof]
+>  * Rebased on v2 of Krzysztof's bindings cleanups
+> 
+> v3:
+>  * Re-ordered clock list, fixed pdc_sync typo [Rob/Matthias]
+> 
+>  .../devicetree/bindings/remoteproc/qcom,q6v5.txt   |  31 +--
+>  .../bindings/remoteproc/qcom,sc7280-mss-pil.yaml   | 266 +++++++++++++++++++++
+>  2 files changed, 268 insertions(+), 29 deletions(-)
+>  create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,sc7280-mss-pil.yaml
+> 
 
-So, add the required DT node for it as it will later be used as the CPU
-clocksource.
-
-Signed-off-by: Robert Marko <robimarko@gmail.com>
----
-Changes in v3:
-* Node does not currently exist in the upstream kernel, so add it instead
-of modifying.
----
- arch/arm64/boot/dts/qcom/ipq8074.dtsi | 8 ++++++++
- 1 file changed, 8 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-index b4ae13f16398..76707b9f9845 100644
---- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-@@ -886,5 +886,13 @@ IRQ_TYPE_LEVEL_HIGH>, /* int_c */
- 				      "axi_m_sticky";
- 			status = "disabled";
- 		};
-+
-+		apcs_glb: mailbox@b111000 {
-+			compatible = "qcom,ipq8074-apcs-apps-global";
-+			reg = <0x0b111000 0x6000>;
-+
-+			#clock-cells = <1>;
-+			#mbox-cells = <1>;
-+		};
- 	};
- };
--- 
-2.36.1
-
+Reviewed-by: Rob Herring <robh@kernel.org>
