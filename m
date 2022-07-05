@@ -2,59 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D0CB4566748
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jul 2022 12:03:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D074656674C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jul 2022 12:03:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231765AbiGEKDG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Jul 2022 06:03:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56792 "EHLO
+        id S229892AbiGEKDW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Jul 2022 06:03:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57188 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230053AbiGEKDF (ORCPT
+        with ESMTP id S232195AbiGEKDS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Jul 2022 06:03:05 -0400
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AFB3613E16
-        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Jul 2022 03:03:02 -0700 (PDT)
-Received: by mail-lj1-x231.google.com with SMTP id c15so13926611ljr.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Jul 2022 03:03:02 -0700 (PDT)
+        Tue, 5 Jul 2022 06:03:18 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFC7F13F29
+        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Jul 2022 03:03:16 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id z25so2115983lfr.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Jul 2022 03:03:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=w9+SQsY/NLl9h6xMjjbnzFOp0g9U5sIW1EUYanyyw+c=;
-        b=HxGx8j+pPyygvzH4xlqJHqV6m1QNJxV4cPrs2F+AGjML6Y/2hCEL0JqlTSxgBqw1uF
-         ObIdy/JmJaNkNCR0ccJCZXrdwJr5hitpKZHHiabgYKkcfEWr+sFr83PBScyKmcJDNhXF
-         LNuOPmpjJvgTkQ9JS0tBwA0RsodAOTXEvM1w9xEXHzjzZ0gXx/AkzN9HVYGm92vJmUBW
-         0omqDIVJhHeR/O0jgt/X0qDJicb6IGh1H/dTXVw1MYSiwuprvc/8dd3l4KQl1uexv/xf
-         0PKX9REU3os1TA811cdPExcyH/+9RhDzWFOCGVu+IkKoGWTsmtmhnSyDKZmN/C8EKyU7
-         hJyg==
+        bh=isi6a7fVq8cWarGbVpE2RdlMD/1CV/69s/y//iHVXgs=;
+        b=lkTAbTZnFM/J04wdmLCi+WJEQrC9Kdq8gMF+MXDyk+9UAJN/1oRub4OJC3TaQPVMXe
+         V0YpeC9wmJc7NPXdjK1YrsRCMe+XmEQbRX4SDZ2Me5MDOxiiTSJhTjXL+NNTpSGaj7JC
+         DUx866L0jqXOJ9xStlA3wyt9lDDlb6eT5wOMQEOg8VCz3JaTSGy7CyxXgy/kxghmuWWh
+         DoZSLBOKZcaNQHWaF9k2XSBVTvujdCRZOAGWiwmGnpNLYWZcKrhfKTwALDaYsq6haRQn
+         PwEWvzW5kr74bRmASWAlOKHY8dpBQA1Qm4709e2A/VVJfAZh652maYxEWfCxUf7zV+AW
+         S8nA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=w9+SQsY/NLl9h6xMjjbnzFOp0g9U5sIW1EUYanyyw+c=;
-        b=mmY3OaeicIH6grp39g7bB+tIjQqPeDyMDjitGdGOxlAzNcM/me7WkeG77x6ZvLaRgT
-         rcyVsLrgBk4xTSNfy9/RN5+kMvNGdK6ISzUiV3sPUiuklDUKM6jD/mRcz6vxjMKSldQ5
-         6VDy1cSj+dAubmHLwnkB0Lo53j3YH6DFHKtPVXwXQtDJX35sSi7wYR6u5AXyQ80TtWvB
-         hzLlZgyXUcazaw73ABbY5MuaTDYOmjMHMa2sXgaKbN0IH+t9DoD+/w6EzU6+RdEMd6kj
-         GIfPc4FxQOeWNMnYTN3Vuh/0m9uTctgxJ3w2foMyh20VwKsnObZv1Eql4N86dFUW9eDp
-         mh8w==
-X-Gm-Message-State: AJIora8vvSmDuZx86165gvJsTE10OKN3QMJY1nmWr7zeHmBjOXt+26lA
-        ts/5KuAJB0oSjDjrzmHHAT2Clw==
-X-Google-Smtp-Source: AGRyM1uwnvOcoQafM3SLYRmg5cf9HHvDJs0sgnpJ9Zzs28wWHyGPma2Rftkuh+3aPkH5nmdGjaunTA==
-X-Received: by 2002:a2e:8958:0:b0:25a:852a:c302 with SMTP id b24-20020a2e8958000000b0025a852ac302mr19530866ljk.130.1657015381066;
-        Tue, 05 Jul 2022 03:03:01 -0700 (PDT)
+        bh=isi6a7fVq8cWarGbVpE2RdlMD/1CV/69s/y//iHVXgs=;
+        b=nvl1EzCnihY7YsBwKAEWHN1YWdPM3ZOuFfnUWcjKIr9//akvljTsp8i/dop7/jJV22
+         Q4s/Kzc8AXoi7MibwJDFq1saZfa137xczb7C6hrBywDoxQqS8gZW0BA0xeDZPgYBH6mF
+         gUv+tm0ga1T0KPxAuxBX6nC5DwBVvoJpGC12JL3vZotpy+UJCLSosze9YOmfxYdwXPK0
+         pzv6u2+/5OIXK8byXv/TcpApR/kwwr4TdGpx4QsndXUsQGDlN4r2GtQA95uheBwCHurZ
+         Jh3boxkuwAZSnKp7eIIveGa/lnJasX8YTFOa1qjK/GVoN+6QUKjeGrXt4XPnSh/qYLNL
+         1yjQ==
+X-Gm-Message-State: AJIora96lJuShs4TbL81g8T1b7oarBokqe1Op7w5NpD+4otdmRdLylqn
+        jmI8jrWCYfizP8MEtTDggCUA3g==
+X-Google-Smtp-Source: AGRyM1t/CCm8GtXgy4LjtshxePwKKSBsv2Rl+OeKnOAvbq3eR7yiOZ0pCoxKokhIen4sDGJEJr3WCA==
+X-Received: by 2002:a05:6512:281d:b0:47f:ac1c:fcf5 with SMTP id cf29-20020a056512281d00b0047fac1cfcf5mr22921572lfb.197.1657015395138;
+        Tue, 05 Jul 2022 03:03:15 -0700 (PDT)
 Received: from [192.168.1.52] ([84.20.121.239])
-        by smtp.gmail.com with ESMTPSA id u16-20020ac258d0000000b0047f6f675ea1sm5610685lfo.161.2022.07.05.03.02.59
+        by smtp.gmail.com with ESMTPSA id o4-20020a056512050400b004785b66a9a4sm1923266lfb.126.2022.07.05.03.03.13
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 05 Jul 2022 03:03:00 -0700 (PDT)
-Message-ID: <7f418618-a40f-9ada-629a-6d6b08a29fd3@linaro.org>
-Date:   Tue, 5 Jul 2022 12:02:59 +0200
+        Tue, 05 Jul 2022 03:03:14 -0700 (PDT)
+Message-ID: <f8a9e839-4a0c-238b-802e-b289e5a1e9b5@linaro.org>
+Date:   Tue, 5 Jul 2022 12:03:13 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.11.0
-Subject: Re: [PATCH 03/43] dt-bindings: phy: qcom,qmp: clean up descriptions
+Subject: Re: [PATCH 04/43] dt-bindings: phy: qcom,qmp: clean up example
 Content-Language: en-US
 To:     Johan Hovold <johan+linaro@kernel.org>,
         Vinod Koul <vkoul@kernel.org>,
@@ -66,14 +66,14 @@ Cc:     Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20220705094239.17174-1-johan+linaro@kernel.org>
- <20220705094239.17174-4-johan+linaro@kernel.org>
+ <20220705094239.17174-5-johan+linaro@kernel.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220705094239.17174-4-johan+linaro@kernel.org>
+In-Reply-To: <20220705094239.17174-5-johan+linaro@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -81,12 +81,15 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 05/07/2022 11:41, Johan Hovold wrote:
-> Clean up the descriptions somewhat by using uppercase "PHY" consistently
-> and spelling out "clock".
+On 05/07/2022 11:42, Johan Hovold wrote:
+> Clean up the example node somewhat by grouping consumer and provider
+> properties in the child node.
 > 
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> ---
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 
 Best regards,
