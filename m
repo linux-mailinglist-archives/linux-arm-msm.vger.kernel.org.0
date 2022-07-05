@@ -2,68 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 47BD9567023
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jul 2022 16:01:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 96367567046
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jul 2022 16:07:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232496AbiGEOBK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Jul 2022 10:01:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52822 "EHLO
+        id S232614AbiGEOGn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Jul 2022 10:06:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56946 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232591AbiGEOAw (ORCPT
+        with ESMTP id S232633AbiGEOGZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Jul 2022 10:00:52 -0400
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9343C20BDF
-        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Jul 2022 06:45:22 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id v16so6200436wrd.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Jul 2022 06:45:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=7WU85wt75maZ/AzK5oGTPi4CFNSsHv61sFJKv4WZ1Y0=;
-        b=RxiXpcrkgknD4jjo++ZfyQAgggitaIk+6jlabkqZstpElMQaJlj7WCB9WZGrPXSU1e
-         vhknTdnPzCBAtCskAii1CkeT6i/u6wIns5IreDXa/KhP2WaFY4HZ2ZcUbPc8CkU5NsZD
-         0EfAsTQcWIEhC7uKrNPg9YcGlSt5WHanF/aKbjnhZ5TdsyaUM1/abNR7m2AfEI8QLOky
-         9oRdyCCA9rY4LEzCv59/h9RjLM3Nb5Z4iVxynwZIxUmFOeGjO6Wfehyw4yA8XKnik2nc
-         /N+R7EXvR9+o4LZS4QqTzr8N9Q/bpQh0ch7rFmRugndYg21hGQqIyBhnWzHM3L81kco+
-         c0Gw==
+        Tue, 5 Jul 2022 10:06:25 -0400
+Received: from mail-io1-f44.google.com (mail-io1-f44.google.com [209.85.166.44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04139237EF;
+        Tue,  5 Jul 2022 06:54:40 -0700 (PDT)
+Received: by mail-io1-f44.google.com with SMTP id p69so11132696iod.10;
+        Tue, 05 Jul 2022 06:54:39 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=7WU85wt75maZ/AzK5oGTPi4CFNSsHv61sFJKv4WZ1Y0=;
-        b=W4HyvxlTzQ55NjCyJTUaBVtPqVCrgo3i1lg8Df2yO3b2BxqBvSl7KiBRj7pWptX/i8
-         sIL7KvfDjQY7ng+6fojaYIL3l28g2o4/NQCjkw3wm1XaRAyfEmC327msGMltmpYSvtme
-         zCB3g2Ttchwvpg3SYaAMqiB3FJ0W9MNghaYwKHMIInN207MqQKvvjdRnB5sNB2ptdHbu
-         tZY3WbwfkuhbDda2ri+wKsA4aGuFhXbET6o3GPnvUEVVSBPhHsFQ8ORnxT4l+Bo78PBx
-         BaOfMH6fuY18jAX1gfpEVPb2YRLXmcp0SiV6PkcvG9CMHapP/n1kBXDZ6dGc23KONZcB
-         j94A==
-X-Gm-Message-State: AJIora/+5q79jMO1UVNLMCiv47Do9llXvtntQXARI7DTfAEyO+c2Uldj
-        VpodODLYkdy5LDLqXUhUn8h6Cy+IH8Br3A==
-X-Google-Smtp-Source: AGRyM1vHf9aHnIcGqMkM0n4kILpbEuJpe3onES5N1d//akuurbopz8QkeZRhLlGJZdsG/KloV4uXZA==
-X-Received: by 2002:a5d:4c8d:0:b0:21d:75cd:5ae4 with SMTP id z13-20020a5d4c8d000000b0021d75cd5ae4mr2523540wrs.510.1657028721155;
-        Tue, 05 Jul 2022 06:45:21 -0700 (PDT)
-Received: from localhost.localdomain ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id v11-20020adfe28b000000b0021d6ef34b2asm3047860wri.51.2022.07.05.06.45.20
+        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
+         :message-id;
+        bh=C0Erhk9To/7rIjjiO+9MuSp924KsHFPnMjsP3V7msnQ=;
+        b=py5ruxiv5LHEpm1Oq3v+y+btfJf1wI/QCHFEMuaBei11VJeHNVXLeYgLMe8lRLCsYD
+         o9rLyIM0eldgC/K8uKW1jMuK8MjwFHdKGlAfy2jtTnomRlm7YYwyacLo+fDgxwwPkTCZ
+         ynmCh0LrNtAGmu91KNGDb3vHWssKegcNEVSdbN9SMi8VHu3dph8jDkcQ5azu/6xDearr
+         GDP94u0HMunH7MFDAQ3yBukxjjpN11RQdfi7hihAmiLA12+JrfBBlEbK4piykEjPAt00
+         AMg+d4xQJnqYgxmR4Y+IOY2rc5lO2DGMqaWjBGJVK4r73H4cd/HSPVoFLD+dzOu29to6
+         2rTQ==
+X-Gm-Message-State: AJIora/0qk6RKtP8JAq5n3qC3E1LM24Q5gM2OZyRcp4/tdR46xZ8Xq2u
+        huL65NPqrjh75gnkz9YLBQ==
+X-Google-Smtp-Source: AGRyM1seMsK4ptpqLHhWfEoLMLQgP0++6s7fhJZFk+zA/SDMjQenWTm0BiPdQRIK/XyX+gBz4/C5BA==
+X-Received: by 2002:a6b:fb05:0:b0:657:655e:a287 with SMTP id h5-20020a6bfb05000000b00657655ea287mr19384229iog.211.1657029279231;
+        Tue, 05 Jul 2022 06:54:39 -0700 (PDT)
+Received: from robh.at.kernel.org ([64.188.179.248])
+        by smtp.gmail.com with ESMTPSA id o27-20020a02a1db000000b00339ef592279sm14613515jah.127.2022.07.05.06.54.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Jul 2022 06:45:20 -0700 (PDT)
-From:   Abel Vesa <abel.vesa@linaro.org>
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Saravana Kannan <saravanak@google.com>,
-        Thomas Gleixner <tglx@linutronix.de>
-Cc:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>
-Subject: [RFC] driver core: Fix repeated device_is_dependent check for same link
-Date:   Tue,  5 Jul 2022 16:45:02 +0300
-Message-Id: <20220705134502.2603795-1-abel.vesa@linaro.org>
-X-Mailer: git-send-email 2.34.3
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        Tue, 05 Jul 2022 06:54:38 -0700 (PDT)
+Received: (nullmailer pid 1999999 invoked by uid 1000);
+        Tue, 05 Jul 2022 13:54:31 -0000
+From:   Rob Herring <robh@kernel.org>
+To:     Sibi Sankar <quic_sibis@quicinc.com>
+Cc:     linux-remoteproc@vger.kernel.org, konrad.dybcio@somainline.org,
+        mka@chromium.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, bjorn.andersson@linaro.org,
+        robh+dt@kernel.org, swboyd@chromium.org,
+        mathieu.poirier@linaro.org, agross@kernel.org
+In-Reply-To: <1657020721-24939-2-git-send-email-quic_sibis@quicinc.com>
+References: <1657020721-24939-1-git-send-email-quic_sibis@quicinc.com> <1657020721-24939-2-git-send-email-quic_sibis@quicinc.com>
+Subject: Re: [V5 1/2] dt-bindings: remoteproc: qcom: Convert SC7280 MSS bindings to YAML
+Date:   Tue, 05 Jul 2022 07:54:31 -0600
+Message-Id: <1657029271.238790.1999998.nullmailer@robh.at.kernel.org>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -71,83 +63,62 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In case of a cyclic dependency, if the supplier is not yet available,
-the parent of the supplier is checked for dependency. But if there are
-more than one suppliers with the same parent, the first check returns
-true while the next checks skip that specific link entirely. So add a
-flag that marks the link for future checks and bail early if it is
-already marked with that flag.
+On Tue, 05 Jul 2022 17:02:00 +0530, Sibi Sankar wrote:
+> Add a separate YAML binding to act as a superset of the PAS and non-PAS
+> compatible for SC7280 MSS PIL. This also serves as a way to increase
+> readability.
+> 
+> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+> ---
+> 
+> Depends on Krzysztof's remoteproc cleanups and improvements:
+> https://patchwork.kernel.org/project/linux-arm-msm/cover/20220517070113.18023-1-krzysztof.kozlowski@linaro.org/
+> 
+> Previous discussions on PAS vs non-PAS bindings:
+> https://lore.kernel.org/lkml/YUps1JfGtf6JdbCx@ripper/ [Bjorn]
+> https://lore.kernel.org/lkml/CAE-0n51KBYjZvwGNy06_okmEWjEfRLQO54CYaY6-JnbBk6kOhA@mail.gmail.com/ [Stephen]
+> 
+> v5:
+>  * Improve phandle-array schemas [Stephen/Rob/Krzysztof]
+>  * Add more details to the firmware-name/memory region string array [Stephen/Rob]
+>  * Drop 'items' from label [Rob]
+> 
+> v4:
+>  * Remove older bindings [Matthias/Krzysztof]
+>  * Misc. Fixes [Krzysztof]
+>  * Rebased on v2 of Krzysztof's bindings cleanups
+> 
+> v3:
+>  * Re-ordered clock list, fixed pdc_sync typo [Rob/Matthias]
+> 
+>  .../devicetree/bindings/remoteproc/qcom,q6v5.txt   |  31 +--
+>  .../bindings/remoteproc/qcom,sc7280-mss-pil.yaml   | 266 +++++++++++++++++++++
+>  2 files changed, 268 insertions(+), 29 deletions(-)
+>  create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,sc7280-mss-pil.yaml
+> 
 
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
----
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
-For more details about this issue, have a look at this thread:
-https://lore.kernel.org/all/CAGETcx8F0wP+RA0KpjOJeZfc=DVG-MbM_=SkRHD4UhD2ReL7Kw@mail.gmail.com/
+yamllint warnings/errors:
 
- drivers/base/core.c    | 14 +++++++++++---
- include/linux/device.h |  2 ++
- 2 files changed, 13 insertions(+), 3 deletions(-)
+dtschema/dtc warnings/errors:
+./Documentation/devicetree/bindings/remoteproc/qcom,sc7280-mss-pil.yaml: Unable to find schema file matching $id: http://devicetree.org/schemas/remoteproc/qcom,glink-edge.yaml
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/remoteproc/qcom,sc7280-mss-pil.example.dtb: remoteproc@4080000: glink-edge: False schema does not allow {'interrupts-extended': [[4294967295, 2, 0, 1]], 'mboxes': [[4294967295, 2, 0]], 'label': ['modem'], 'qcom,remote-pid': [[1]]}
+	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/remoteproc/qcom,sc7280-mss-pil.yaml
 
-diff --git a/drivers/base/core.c b/drivers/base/core.c
-index ccdd5b4295de..38cb478ae400 100644
---- a/drivers/base/core.c
-+++ b/drivers/base/core.c
-@@ -297,12 +297,18 @@ int device_is_dependent(struct device *dev, void *target)
- 		return ret;
+doc reference errors (make refcheckdocs):
 
- 	list_for_each_entry(link, &dev->links.consumers, s_node) {
-+		/* if already marked before as dependent, bail early */
-+		if (link->flags & DL_FLAG_DEVICE_IS_DEPENDENT)
-+			return 1;
-+
- 		if ((link->flags & ~DL_FLAG_INFERRED) ==
- 		    (DL_FLAG_SYNC_STATE_ONLY | DL_FLAG_MANAGED))
- 			continue;
+See https://patchwork.ozlabs.org/patch/
 
--		if (link->consumer == target)
-+		if (link->consumer == target) {
-+			link->flags |= DL_FLAG_DEVICE_IS_DEPENDENT;
- 			return 1;
-+		}
+This check can fail if there are any dependencies. The base for a patch
+series is generally the most recent rc1.
 
- 		ret = device_is_dependent(link->consumer, target);
- 		if (ret)
-@@ -1660,11 +1666,13 @@ static void fw_devlink_relax_link(struct device_link *link)
- 	if (!(link->flags & DL_FLAG_INFERRED))
- 		return;
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
 
--	if (link->flags == (DL_FLAG_MANAGED | FW_DEVLINK_FLAGS_PERMISSIVE))
-+	if ((link->flags & (DL_FLAG_MANAGED | FW_DEVLINK_FLAGS_PERMISSIVE)) ==
-+			(DL_FLAG_MANAGED | FW_DEVLINK_FLAGS_PERMISSIVE))
- 		return;
+pip3 install dtschema --upgrade
 
- 	pm_runtime_drop_link(link);
--	link->flags = DL_FLAG_MANAGED | FW_DEVLINK_FLAGS_PERMISSIVE;
-+	link->flags &= DL_FLAG_DEVICE_IS_DEPENDENT;
-+	link->flags |= DL_FLAG_MANAGED | FW_DEVLINK_FLAGS_PERMISSIVE;
- 	dev_dbg(link->consumer, "Relaxing link with %s\n",
- 		dev_name(link->supplier));
- }
-diff --git a/include/linux/device.h b/include/linux/device.h
-index 424b55df0272..3b0c4b777a60 100644
---- a/include/linux/device.h
-+++ b/include/linux/device.h
-@@ -317,6 +317,7 @@ enum device_link_state {
-  * MANAGED: The core tracks presence of supplier/consumer drivers (internal).
-  * SYNC_STATE_ONLY: Link only affects sync_state() behavior.
-  * INFERRED: Inferred from data (eg: firmware) and not from driver actions.
-+ * DEVICE_IS_DEPENDENT: The consumer is dependent on the supplier
-  */
- #define DL_FLAG_STATELESS		BIT(0)
- #define DL_FLAG_AUTOREMOVE_CONSUMER	BIT(1)
-@@ -327,6 +328,7 @@ enum device_link_state {
- #define DL_FLAG_MANAGED			BIT(6)
- #define DL_FLAG_SYNC_STATE_ONLY		BIT(7)
- #define DL_FLAG_INFERRED		BIT(8)
-+#define DL_FLAG_DEVICE_IS_DEPENDENT	BIT(9)
-
- /**
-  * enum dl_dev_state - Device driver presence tracking information.
---
-2.34.3
+Please check and re-submit.
 
