@@ -2,75 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 42FBF566627
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jul 2022 11:30:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 07BD55666A6
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jul 2022 11:49:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229575AbiGEJaB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Jul 2022 05:30:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52414 "EHLO
+        id S231308AbiGEJtF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Jul 2022 05:49:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38528 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229925AbiGEJ31 (ORCPT
+        with ESMTP id S230074AbiGEJtE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Jul 2022 05:29:27 -0400
-Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67C2A12D34
-        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Jul 2022 02:28:52 -0700 (PDT)
-Received: by mail-lj1-x235.google.com with SMTP id n15so13750916ljg.8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Jul 2022 02:28:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=6KsRcwBEuUzrOwyM/pW4cN1uOT0jToSb3abL+hcUjTA=;
-        b=L52O7ne+YsZHSQr4O9CTInvLdgqN2P1KiVwtPWECgESIE3KMCako5cycNBEW5CWuQ2
-         r8rc5ACELpd4JWR42AWIFqQt9BAjRgXE/DnF8YvRbq2mVFj7/CdYxiCYzXEaUqZXJfRZ
-         7UXCucsKNNNzXwkgIfQCoAxZiRI7zTxlwBfhJwp3i90i49s0Tt70GuYu4cNt5i9Ljsln
-         Er6qtba/oNMGza0F2vHvrVhTPeUv3Qboc9K1PaCzDQjXG53GHxV9fnB2NdRedqGQgMlP
-         Rr5fielx6JNFVKbZPDzupDmSCfL6KRLbf/1XWFHZ6kBBtgysX1S78vv11dDnih42Hc4x
-         vGRg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=6KsRcwBEuUzrOwyM/pW4cN1uOT0jToSb3abL+hcUjTA=;
-        b=q0yRgUIM7+BQDpsZ5s1veZKv5v1Vu4RMie8g1Koq1OYHvuE6XhgNDNrtsVc/WcaDui
-         qC8bQwwYyQxdYZ7xFNBLIxoS2DDqmfLN42gS7K7fvFQ0k1uvRlphxDavV4LepnfgAEPC
-         EC7mgZGKmw0tfWkSZu/R+YXTllaHWzVQAhRdYA4J69KOcHxhq1OO9DmENSucMO0SADeZ
-         FgtnuPv5iioMjV+lt/LiTIzcR8ldroxeDlDxXZLDfksvJGKlIDaUHVTjNwh5JoFvxLy7
-         D18Aj7Xs6u+73wbC2lshe8ADHUkRQ+xr0LRx1XGOz71EgpLbPm7xh4FqOjY6sKIvdlz3
-         xEZw==
-X-Gm-Message-State: AJIora83PMIPcmyeBCJdJpLdeiEbG8/jV/gP4H84I/mi3VX+uG1NFRT4
-        JKEqYUK1sYU5arHuF5CzxPPmyw==
-X-Google-Smtp-Source: AGRyM1usDWmVbxVfjlaZTBtWCtVGyX0HI5PkRhGau5FDtcBb/Xv5j4yVVZ7Qmirc3OWyh+8T802Ucw==
-X-Received: by 2002:a2e:9657:0:b0:25d:30c3:9ba with SMTP id z23-20020a2e9657000000b0025d30c309bamr1687782ljh.350.1657013330096;
-        Tue, 05 Jul 2022 02:28:50 -0700 (PDT)
-Received: from krzk-bin.home ([84.20.121.239])
-        by smtp.gmail.com with ESMTPSA id v19-20020ac258f3000000b00483f8c40c14sm154249lfo.243.2022.07.05.02.28.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Jul 2022 02:28:49 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+        Tue, 5 Jul 2022 05:49:04 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54186266B;
+        Tue,  5 Jul 2022 02:49:03 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id C855561912;
+        Tue,  5 Jul 2022 09:49:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29831C341D1;
+        Tue,  5 Jul 2022 09:49:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1657014542;
+        bh=PRWF0dxD1eXxpPCxf2RrBgIGlcN0HFetPfQNjqW6hVY=;
+        h=From:To:Cc:Subject:Date:From;
+        b=AID+pfdcyTF9puV9smoekOeujTxZItnvAW8tiIHIpKy5zpbSoSh1TGtKgyuvokq38
+         muyKEZmytORg7XJujwIQ/IUayRyPB0vHyoiBjx64I+1Rap9UeZSmPuC9PSt5vzUm6M
+         70b5MSa1CDT4b+2YovO8NscM0UQRgbstOqh+kdYKTsC8yt8gh3oNdpY/y70lFQmv6w
+         gxP8ZX6+xn/iPtbXKu3JGY8Uav19ohF7IRYKB6YhlodehgqLvX40yHWGdwJwwgZi3v
+         vhTGeWCitD/hQ81aZ1pp32+HX7W3jPXTrYSGl083FaDvyrkHVVUTLPnzAz4OfyGTFk
+         +CkS4e3PVUc0A==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan+linaro@kernel.org>)
+        id 1o8fB0-0004Wr-GB; Tue, 05 Jul 2022 11:49:02 +0200
+From:   Johan Hovold <johan+linaro@kernel.org>
+To:     Vinod Koul <vkoul@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, Alex Elder <elder@linaro.org>,
-        Robert Foss <robert.foss@linaro.org>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Subject: [PATCH v3] dt-bindings: qcom: document preferred compatible naming
-Date:   Tue,  5 Jul 2022 11:28:46 +0200
-Message-Id: <20220705092846.66731-1-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Johan Hovold <johan+linaro@kernel.org>
+Subject: [PATCH 00/43] phy: qcom,qmp: fix dt-bindings and deprecate lane suffix
+Date:   Tue,  5 Jul 2022 11:41:56 +0200
+Message-Id: <20220705094239.17174-1-johan+linaro@kernel.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+X-Spam-Status: No, score=-7.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -78,98 +60,99 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Compatibles can come in two formats.  Either "vendor,ip-soc" or
-"vendor,soc-ip".  Qualcomm bindings were mixing both of usages, so add a
-DT schema file documenting preferred policy and enforcing it for all new
-compatibles, except few existing patterns.
+When adding support for SC8280XP to the QMP PHY driver I noticed that
+the PHY provider child node was not described by the current DT schema.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+The SC8280XP PHYs also need a second fixed-divider PIPE clock
+("pipediv2") and I didn't want to have to add a bogus "lane" suffix to
+the clock name just to match the current "pipe0" name so I decided to
+deprecate the unnecessary suffix in the current binding instead.
 
----
+To be able to add the missing child-node schema and handle device
+specifics like additional PIPE clocks, it quickly became obvious that
+the binding needs to be split up.
 
-Changes since v2:
-1. Narrow the expected pattern to be followed by dash '-' after model
-   number (msm8996-) or by two letters and a dash (sc8280xp-).
-2. Add qcom,apss-wdt-xxx to list of exceptions.
-3. Use comment instead of description in the oneOf list.
+This series fixes some issue with the current schema before splitting
+it up in separate schemas for PCIe, UFS and USB, which are then cleaned
+up further before adding missing parts like the child PHY provider
+nodes and examples.
 
-Changes since v1:
-1. Add schema instead of readme (Rob).
+The MSM8996 PCIe PHY gets its own schema as this is the only non-combo
+PHY that actually provides more than one PHY per IP block. Note that the
+"lane" suffix is still unnecessary and misleading.
 
-Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Vinod Koul <vkoul@kernel.org>
-Cc: Alex Elder <elder@linaro.org>
-Cc: Robert Foss <robert.foss@linaro.org>
-Cc: Bhupesh Sharma <bhupesh.sharma@linaro.org>
----
- .../devicetree/bindings/arm/qcom-soc.yaml     | 57 +++++++++++++++++++
- 1 file changed, 57 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/arm/qcom-soc.yaml
+The final patches adds support for the new resource names to the
+(recently split up) PHY drivers. Included is also a related combo PHY
+cleanup.
 
-diff --git a/Documentation/devicetree/bindings/arm/qcom-soc.yaml b/Documentation/devicetree/bindings/arm/qcom-soc.yaml
-new file mode 100644
-index 000000000000..6307c925335d
---- /dev/null
-+++ b/Documentation/devicetree/bindings/arm/qcom-soc.yaml
-@@ -0,0 +1,57 @@
-+# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/arm/qcom-soc.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm SoC compatibles naming convention
-+
-+maintainers:
-+  - Bjorn Andersson <bjorn.andersson@linaro.org>
-+
-+description: |
-+  Guidelines for new compatibles for SoC blocks/components.
-+  When adding new compatibles in new bindings, use the format::
-+    qcom,SoC-IP
-+
-+  For example::
-+   qcom,sdm845-llcc-bwmon
-+
-+  When adding new compatibles to existing bindings, use the format in the
-+  existing binding, even if it contradicts the above.
-+
-+select:
-+  properties:
-+    compatible:
-+      pattern: "^qcom,.*(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$"
-+  required:
-+    - compatible
-+
-+properties:
-+  compatible:
-+    oneOf:
-+      # Preferred naming style for compatibles of SoC components:
-+      - pattern: "^qcom,(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+-.*$"
-+      - pattern: "^qcom,(sa|sc)8[0-9]+[a-z][a-z]?-.*$"
-+
-+      # Legacy namings - variations of existing patterns/compatibles are OK,
-+      # but do not add completely new entries to these:
-+      - pattern: "^qcom,apss-wdt-(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$"
-+      - pattern: "^qcom,gcc-(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$"
-+      - pattern: "^qcom,mmcc-(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$"
-+      - pattern: "^qcom,pcie-(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$"
-+      - pattern: "^qcom,rpm-(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$"
-+      - pattern: "^qcom,scm-(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$"
-+      - enum:
-+          - qcom,gpucc-sdm630
-+          - qcom,gpucc-sdm660
-+          - qcom,lcc-apq8064
-+          - qcom,lcc-ipq8064
-+          - qcom,lcc-mdm9615
-+          - qcom,lcc-msm8960
-+          - qcom,lpass-cpu-apq8016
-+          - qcom,usb-ss-ipq4019-phy
-+          - qcom,usb-hs-ipq4019-phy
-+          - qcom,vqmmc-ipq4019-regulator
-+
-+additionalProperties: true
+I'll post a separate series with related DTS fixes caught while
+developing this series.
+
+Johan
+
+
+Johan Hovold (43):
+  dt-bindings: phy: qcom,qmp: fix bogus clock-cells property
+  dt-bindings: phy: qcom,qmp: sort compatible strings
+  dt-bindings: phy: qcom,qmp: clean up descriptions
+  dt-bindings: phy: qcom,qmp: clean up example
+  dt-bindings: phy: qcom,qmp: drop child-node comment
+  dt-bindings: phy: qcom,qmp: split out msm8996-qmp-pcie-phy
+  dt-bindings: phy: qcom,msm8996-qmp-pcie: clean up constraints
+  dt-bindings: phy: qcom,msm8996-qmp-pcie: add missing child node schema
+  dt-bindings: phy: qcom,msm8996-qmp-pcie: add example node
+  dt-bindings: phy: qcom,msm8996-qmp-pcie: deprecate PIPE clock names
+  dt-bindings: phy: qcom,msm8996-qmp-pcie: deprecate reset names
+  dt-bindings: phy: qcom,qmp: split out PCIe PHY binding
+  dt-bindings: phy: qcom,qmp-pcie: clean up register constraints
+  dt-bindings: phy: qcom,qmp-pcie: clean up clock constraints
+  dt-bindings: phy: qcom,qmp-pcie: clean up reset constraints
+  dt-bindings: phy: qcom,qmp-pcie: drop unused vddp-ref-clk supply
+  dt-bindings: phy: qcom,qmp-pcie: add missing child node schema
+  dt-bindings: phy: qcom,qmp-pcie: add example node
+  dt-bindings: phy: qcom,qmp-pcie: deprecate PIPE clock name
+  dt-bindings: phy: qcom,qmp: split out UFS PHY binding
+  dt-bindings: phy: qcom,qmp-ufs: clean up supplies
+  dt-bindings: phy: qcom,qmp-ufs: clean up reset providers
+  dt-bindings: phy: qcom,qmp-ufs: clean up clock constraints
+  dt-bindings: phy: qcom,qmp-ufs: clean up register constraints
+  dt-bindings: phy: qcom,qmp-ufs: add missing SM8450 clock
+  dt-bindings: phy: qcom,qmp-ufs: add missing SM8150 power domain
+  dt-bindings: phy: qcom,qmp-ufs: add missing child node schema
+  dt-bindings: phy: qcom,qmp-ufs: add example node
+  dt-bindings: phy: qcom,qmp: split out USB binding
+  dt-bindings: phy: qcom,qmp-usb: clean up clock constraints
+  dt-bindings: phy: qcom,qmp-usb: clean up supplies
+  dt-bindings: phy: qcom,qmp-usb: drop unused vddp-ref-clk supply
+  dt-bindings: phy: qcom,qmp-usb: clean up reset providers
+  dt-bindings: phy: qcom,qmp-usb: add missing child node schema
+  dt-bindings: phy: qcom,qmp-usb: deprecate PIPE clock name
+  dt-bindings: phy: qcom,qmp-usb3-dp: fix bogus clock-cells property
+  dt-bindings: phy: qcom,qmp-usb3-dp: deprecate USB PIPE clock name
+  phy: qcom-qmp-pcie: drop pipe clock lane suffix
+  phy: qcom-qmp-combo: drop unused lane reset
+  phy: qcom-qmp-combo: drop pipe clock lane suffix
+  phy: qcom-qmp-pcie-msm8996: drop pipe clock lane suffix
+  phy: qcom-qmp-pcie-msm8996: drop reset lane suffix
+  phy: qcom-qmp-usb: drop pipe clock lane suffix
+
+ .../phy/qcom,msm8996-qmp-pcie-phy.yaml        | 212 ++++++++
+ .../bindings/phy/qcom,qmp-pcie-phy.yaml       | 309 +++++++++++
+ .../devicetree/bindings/phy/qcom,qmp-phy.yaml | 500 ------------------
+ .../bindings/phy/qcom,qmp-ufs-phy.yaml        | 249 +++++++++
+ .../bindings/phy/qcom,qmp-usb-phy.yaml        | 417 +++++++++++++++
+ .../bindings/phy/qcom,qmp-usb3-dp-phy.yaml    |  15 +-
+ drivers/phy/qualcomm/phy-qcom-qmp-combo.c     |  10 +-
+ .../phy/qualcomm/phy-qcom-qmp-pcie-msm8996.c  |  17 +-
+ drivers/phy/qualcomm/phy-qcom-qmp-pcie.c      |   8 +-
+ drivers/phy/qualcomm/phy-qcom-qmp-usb.c       |   8 +-
+ 10 files changed, 1224 insertions(+), 521 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-pcie-phy.yaml
+ create mode 100644 Documentation/devicetree/bindings/phy/qcom,qmp-pcie-phy.yaml
+ delete mode 100644 Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml
+ create mode 100644 Documentation/devicetree/bindings/phy/qcom,qmp-ufs-phy.yaml
+ create mode 100644 Documentation/devicetree/bindings/phy/qcom,qmp-usb-phy.yaml
+
 -- 
-2.34.1
+2.35.1
 
