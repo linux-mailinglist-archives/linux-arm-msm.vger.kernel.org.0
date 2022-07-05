@@ -2,54 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6E4F0566921
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jul 2022 13:27:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A3BD6566928
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jul 2022 13:28:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229457AbiGEL1l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Jul 2022 07:27:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40276 "EHLO
+        id S230032AbiGEL2k (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Jul 2022 07:28:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41288 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230239AbiGEL1k (ORCPT
+        with ESMTP id S230106AbiGEL2k (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Jul 2022 07:27:40 -0400
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7A5015FE9
-        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Jul 2022 04:27:38 -0700 (PDT)
-Received: by mail-lj1-x229.google.com with SMTP id s14so14132963ljs.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Jul 2022 04:27:38 -0700 (PDT)
+        Tue, 5 Jul 2022 07:28:40 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6BA113E3A
+        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Jul 2022 04:28:38 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id z21so19952172lfb.12
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Jul 2022 04:28:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=DDOZfRd1HTqUfm1HeVAgnUymdGTbLswrOs88vTN4QwU=;
-        b=KnittvwjoD6wTylEJR+FVKmbiJWKBGYF0KtsQR67sEUF6MI5n/As97A1unfRFQVnUy
-         lAzBz2OUD5MtUMhyveONvrNjnhdR453DHLrLRVYbWSdzeGLljfIrkKQRWhvIU8hequFQ
-         hL7Hhf1I0l/WyUn3Tw8e+CLI14yGt13azsEDC7L18cPdh26v4k4y5Z1Z/U3uzq8NfooZ
-         OxiUeIHnKX7mUT3JBmbq15bkFySHG64GALQAj/LBHHqt0YZ7zr2p6MlqcHKW57fNpaUZ
-         iMTekVOSj/ynir2E4UD4bMwCSm4TyTK6a9QvABu7enL9EgwQgyIawdomXiDUACeh43rx
-         hBgw==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=xfr8LBR7Ga+h22q5IX0GbtYA45GVUah3dg/7beJ17vw=;
+        b=qlU6EIgx4+Okfxy1F3Bvt+OsS+X7zoZtjwaLHAoGJKbmgP/27UX4gAIfAZW9k27GUp
+         frGrKSyQ0iZsdduAM+FgIgBKeHBd+KsemEe/X9py0BaUbXp5qnwCiFHpjJY5dRnYB6Tr
+         lzpuDwC7SfWPbXhoWCXALAGeSzqbi2R64AQHvq51OFaIksbFEDUhZNMPgqf+uFU42Gkl
+         nnKL4jjvEHqKk+BGFAKP+77wVIwxEI+7A+yjR/YudGzeYYW5QPaAP+wrbn/4PpTsg9W4
+         2QYYxldq2P5HHekkUHoI+Ns2X+a96vEC6Zs2C8yOItal8JMI03Pz8Zt7HKNWKQqXK86c
+         NAVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=DDOZfRd1HTqUfm1HeVAgnUymdGTbLswrOs88vTN4QwU=;
-        b=ypeTa7GDqwWSIOWOGkvDE8J6SILU9mORTVqoG3RHCnGbp+AwiaozbAZDIibvC7DnZB
-         R/s9m/Zz5NxDeGnvhixH2OdOBceNNQX9o7eSGJLfCGY5xR61qe6S3mnczIedIXE48FKy
-         nAKrXrwmUF3b3uzjyE143Q3ShX6kFCN9Ed9R0kLrOk3gfVeO9cvK0nP1cntwGIPTdreA
-         B4/0n9AHIS0Kj6D0VkP+Grfq4aRe8G+scjJmk0qAOOdbGYQrKkmwELjaBxNb8tfj+QIj
-         hmDkp7bnnimkc/bmihGvch6wS0b8LKQawgxX8CVKlniSuvNMrUfciUjHWHJHTdneYntB
-         EBxg==
-X-Gm-Message-State: AJIora/MiqC0LccovLdtJiwO9EEnG4emFNkxq8XJz22XjrTGegzHgu67
-        H+nDQcEvnNhL/j5qH7WT7zYN6Q==
-X-Google-Smtp-Source: AGRyM1sFuaESAD0zDBaKLRbw6D6wO86fb2NUssGM2f0sC3fhxnRE/GmFYDp1v2FyhaUkJhT4Y9JzIQ==
-X-Received: by 2002:a2e:8888:0:b0:25b:f2f6:ea60 with SMTP id k8-20020a2e8888000000b0025bf2f6ea60mr17799095lji.298.1657020457101;
-        Tue, 05 Jul 2022 04:27:37 -0700 (PDT)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id k26-20020a05651c10ba00b0025a736f5a41sm5525449ljn.9.2022.07.05.04.27.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Jul 2022 04:27:36 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=xfr8LBR7Ga+h22q5IX0GbtYA45GVUah3dg/7beJ17vw=;
+        b=Tj/VkIF4hSy9OebkswK1erQqgSqf0yuvh+VBox1T8gdoIkjeuOW6Ijx0/NsVHawYOA
+         QoEiu6GG44CVl55e6J1LpepZNRpVep+vwdA/BWQkmOIPcbVjmRIExkn93hoauVfzGXBH
+         sYkkEIxtrqPhsAyr2fSIkBT70nrZaTVIBH3ZFm1BAGtF5iJRRaWQUUfZo0WQUf4z8Jk8
+         50/ZW+PYvfNnXgI91hZTBJL1aHrYxlaq+S9uQx3cvf6dOsdqWwqmDwaZl1XGrrarfdKh
+         Olk/2KFKrF6O0bXCBCwUtC2rz5bMjJFBIOn9s1JX5DqYSjJAtcMpFQqCvNgPJspfVcIb
+         Ly8w==
+X-Gm-Message-State: AJIora+PydYX25KXMCTVTbzCFAduJkNuX3zeHT5qcAHQg1SX8t1naTrL
+        YX3u/1gAwUPF4MXadRs/5mTFhQ==
+X-Google-Smtp-Source: AGRyM1tUFLt1X8xNcI/QxsP/gcrLz1V3MJ2grrBBCdJKv17R6Lir7cSu47cPQzRjT78Tq00JPwg/rw==
+X-Received: by 2002:a05:6512:3084:b0:47f:6c9e:952e with SMTP id z4-20020a056512308400b0047f6c9e952emr22100858lfd.332.1657020517269;
+        Tue, 05 Jul 2022 04:28:37 -0700 (PDT)
+Received: from [192.168.1.52] ([84.20.121.239])
+        by smtp.gmail.com with ESMTPSA id k22-20020a05651c10b600b00253ceefb668sm5347303ljn.60.2022.07.05.04.28.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 05 Jul 2022 04:28:36 -0700 (PDT)
+Message-ID: <a5dad8f9-ca96-c176-195b-964a78c2b475@linaro.org>
+Date:   Tue, 5 Jul 2022 13:28:35 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH v2 1/2] dt-bindings: clock: qcom,mmcc: fix
+ clocks/clock-names definitions
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
         Stephen Boyd <sboyd@kernel.org>,
@@ -58,19 +67,16 @@ To:     Andy Gross <agross@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Taniya Das <quic_tdas@quicinc.com>
 Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH v2 2/2] dt-bindings: clock: qcom,mmcc: define clocks/clock-names for MSM8996
-Date:   Tue,  5 Jul 2022 14:27:34 +0300
-Message-Id: <20220705112734.1323355-3-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220705112734.1323355-1-dmitry.baryshkov@linaro.org>
+        devicetree@vger.kernel.org
 References: <20220705112734.1323355-1-dmitry.baryshkov@linaro.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+ <20220705112734.1323355-2-dmitry.baryshkov@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220705112734.1323355-2-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -78,69 +84,18 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Define clock/clock-names properties of the MMCC device node to be used
-on MSM8996 platform.
+On 05/07/2022 13:27, Dmitry Baryshkov wrote:
+> Rather than defining (incorrect) global clocks and clock-names lists,
+> define them per platform using conditionals. Also, while we are at it,
+> mark these properties as required for all platforms for which DT files
+> contained clocks/clock-names for the MMCC nodes from the beginning (in
+> addition to existing MSM8998 this adds MSM8994, SDM630 and SDM660).
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- .../devicetree/bindings/clock/qcom,mmcc.yaml  | 33 +++++++++++++++++--
- 1 file changed, 31 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/clock/qcom,mmcc.yaml b/Documentation/devicetree/bindings/clock/qcom,mmcc.yaml
-index 6b831730a914..ef6736198451 100644
---- a/Documentation/devicetree/bindings/clock/qcom,mmcc.yaml
-+++ b/Documentation/devicetree/bindings/clock/qcom,mmcc.yaml
-@@ -31,11 +31,11 @@ properties:
-       - qcom,mmcc-sdm660
- 
-   clocks:
--    minItems: 9
-+    minItems: 8
-     maxItems: 10
- 
-   clock-names:
--    minItems: 9
-+    minItems: 8
-     maxItems: 10
- 
-   '#clock-cells':
-@@ -113,6 +113,35 @@ allOf:
-             - const: dsi1pllbyte
-             - const: hdmipll
- 
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            const: qcom,mmcc-msm8996
-+    then:
-+      properties:
-+        clocks:
-+          items:
-+            - description: Board XO source
-+            - description: Global PLL 0 clock
-+            - description: MMSS NoC AHB clock
-+            - description: DSI phy instance 0 dsi clock
-+            - description: DSI phy instance 0 byte clock
-+            - description: DSI phy instance 1 dsi clock
-+            - description: DSI phy instance 1 byte clock
-+            - description: HDMI phy PLL clock
-+
-+        clock-names:
-+          items:
-+            - const: xo
-+            - const: gpll0
-+            - const: gcc_mmss_noc_cfg_ahb_clk
-+            - const: dsi0pll
-+            - const: dsi0pllbyte
-+            - const: dsi1pll
-+            - const: dsi1pllbyte
-+            - const: hdmipll
-+
-   - if:
-       properties:
-         compatible:
--- 
-2.35.1
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
+
+Best regards,
+Krzysztof
