@@ -2,59 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DEBDD566A6B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jul 2022 13:58:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E647C566A6E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jul 2022 13:59:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231631AbiGEL6u (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Jul 2022 07:58:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40648 "EHLO
+        id S231586AbiGEL7D (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Jul 2022 07:59:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40886 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231655AbiGEL6s (ORCPT
+        with ESMTP id S231659AbiGEL7B (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Jul 2022 07:58:48 -0400
+        Tue, 5 Jul 2022 07:59:01 -0400
 Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA03610AF
-        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Jul 2022 04:58:42 -0700 (PDT)
-Received: by mail-lj1-x232.google.com with SMTP id bx13so14220120ljb.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Jul 2022 04:58:42 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8EB73265C
+        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Jul 2022 04:59:00 -0700 (PDT)
+Received: by mail-lj1-x232.google.com with SMTP id u14so14235930ljh.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Jul 2022 04:59:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=ixOkSjqSv3S8pEEk/BdvTn/xwH4HKgghg04zBNBUfaQ=;
-        b=Agcpr1EXhYaU9R92S8KGVA8cRs2KrHKFnMXRYHk+knToAcoA2A4mMYJ390qpgFUAV4
-         CO0NXqIagQweDr4Asvm1+RqV9Zm5t30eZMgkE8ZpfONnhIPnm2O1bKryuZmx9ynakqVn
-         MF06UWnYMfO/wxqiMV6EAkaO/dZcJD2XMv3exnO9EbCO2mOY2zdb+D/PpnGLOl5SOGcw
-         kiOqM65gTwaMfssI+T9JQlWJD3IOu/EIdk0dPNDxbqvcoQOVPwi1e1/jS/H3nJZZR7z3
-         BKZmc9gEgQJdRlwy67OHnz9HCPcpklxHHOPCgu4d3zmVfahQXoeMZeGvw87ty6hk9HoJ
-         f9IQ==
+        bh=pJ7EuHzT7tGyPRYJa/JXc5Wvnw7Fpu6vsSqUw7XjkiA=;
+        b=is66VQF0SAirKrEP3O7KWpr8p1KpL/fm9JRmaXj2pUgKwJ031nC9ut0lrdjc4iP5gO
+         vyZaAUmkU4nZkKjxYLMtRb4iLIMu/UmNrvrN8UySsDxSW0/dFODy0uYE8rp8TaaPbQls
+         +20tK4JgrEAjhh8cArQ34/sSMUwGiWVBDgEReEepFdScrOK0a4pH6aCPVKByVO8y5IO7
+         sJLnqXLva1onz6vJRQfXSoLCZqdWwD5EE/gnBMRsk4aWx1pack62Q8zlS62n0iBpeeiT
+         tUv5lF1XzdkLhLmmRNScw37ke6MOr6NXEbw4ieUczAzBNTkRJy/Xwfr4cbHOaI+oqfZW
+         QMlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=ixOkSjqSv3S8pEEk/BdvTn/xwH4HKgghg04zBNBUfaQ=;
-        b=hnptAMfVHytP17xXH+0x8IbEK7Bm0vNVGrcK/g1G+htzgHQdDlBX3SFq3jT1hpG7Ut
-         HLLYJ72hKz4MimgKcXTIdnl5kUyUhveQ2mPganDc8XvBjqgMXkVt8k7xZbdJ14vONkAA
-         yTse4NBiiLAFB6fvLP8SCZJucTr+bhibPPUzFsiziLbStb/aj25kXmCJ5dZJZV1TtDUZ
-         n2fBKIEUMP+wJCedSZF2k3KP58nMc18U0nHFQa8drdnk8ceYiWRPjejCfDevHuM/LFT5
-         zYQQgWBLFj/J/rabCAt4mM1MuateLbN9I8v1IP7qC+Cy4pjvGYmhFaAvB/8AOMzKmJ4P
-         LTUg==
-X-Gm-Message-State: AJIora+t0r5LDUT6RecmfrPYwq+k5fB36LioXG5wGT2daRrf3IoYmCoO
-        KzmT0tOLG5R+4mfX2rLbj1bA/Q==
-X-Google-Smtp-Source: AGRyM1vAgY1pWA4h6fcuceb241vDkPl5k2k0PA6Jo4yGx+M1WHPyyi1KSHv26sJNo5ThgUdQD1Si9g==
-X-Received: by 2002:a2e:8941:0:b0:25d:3887:a4 with SMTP id b1-20020a2e8941000000b0025d388700a4mr1049380ljk.232.1657022321295;
-        Tue, 05 Jul 2022 04:58:41 -0700 (PDT)
+        bh=pJ7EuHzT7tGyPRYJa/JXc5Wvnw7Fpu6vsSqUw7XjkiA=;
+        b=Fmb1cpPkRxByN8B6QcDIVa2RBs6eSaWXFGhPid653kIO1D4dHKNivB3QTTA1AKAj8D
+         OY3u7LofaKutl+EFv/u1tHeyNHpsruVg1o9yE1F8iVdp5ce406FnLWxQE/HJkxgi3G0A
+         7OznI6C5MJJU9PIDJQsi9tiyrR1AV+ZG1+KEWlGBOD594wtBfPQ1Fc7a4aNR3q30594u
+         KiwTYI7iNK7tESbK88D+VZlEgqbX0ypJI7FEydlCH95rPhQfKa4ZxNjGf5mWcvubaXZg
+         GsEhDDTXvfOWygnnYB+wYwNhyYJFpPeusLJfQBuGtyyo6VieCrth1WVq0jwpP2Rwgqdj
+         Px4g==
+X-Gm-Message-State: AJIora8i/31/ySUrCL86hx+MGqQb/waBfLyi7pXLwUBkyDT7P/iZ++Zl
+        58asFxYsJVXyMrFtBZoiTdC2Ug==
+X-Google-Smtp-Source: AGRyM1uWLI/JRV4d0wbhewqt2FTO8w/7lgoffpvuPqNLIj8dqWaQ0fJmfG6BBgn2wuAW+CudwGhXHA==
+X-Received: by 2002:a2e:7012:0:b0:25b:e535:51ed with SMTP id l18-20020a2e7012000000b0025be53551edmr19277289ljc.282.1657022338989;
+        Tue, 05 Jul 2022 04:58:58 -0700 (PDT)
 Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id x19-20020a056512079300b0047f785a3bd5sm5652654lfr.298.2022.07.05.04.58.40
+        by smtp.gmail.com with ESMTPSA id bj11-20020a2eaa8b000000b0025a72db0cf1sm5528243ljb.118.2022.07.05.04.58.58
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 05 Jul 2022 04:58:40 -0700 (PDT)
-Message-ID: <8cc0daa4-35c3-3225-3caf-6ed27f68f77b@linaro.org>
-Date:   Tue, 5 Jul 2022 14:58:39 +0300
+        Tue, 05 Jul 2022 04:58:58 -0700 (PDT)
+Message-ID: <0a94cb9a-822f-e726-6ceb-e6e638f8982c@linaro.org>
+Date:   Tue, 5 Jul 2022 14:58:57 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.10.0
-Subject: Re: [PATCH 03/14] arm64: dts: qcom: ipq6018: drop USB PHY clock index
+Subject: Re: [PATCH 04/14] arm64: dts: qcom: ipq8074: drop USB PHY clock index
 Content-Language: en-GB
 To:     Johan Hovold <johan+linaro@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>
@@ -63,9 +63,9 @@ Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
 References: <20220705114032.22787-1-johan+linaro@kernel.org>
- <20220705114032.22787-4-johan+linaro@kernel.org>
+ <20220705114032.22787-5-johan+linaro@kernel.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20220705114032.22787-4-johan+linaro@kernel.org>
+In-Reply-To: <20220705114032.22787-5-johan+linaro@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -87,8 +87,9 @@ On 05/07/2022 14:40, Johan Hovold wrote:
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
 > ---
->   arch/arm64/boot/dts/qcom/ipq6018.dtsi | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   arch/arm64/boot/dts/qcom/ipq8074.dtsi | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
+
 -- 
 With best wishes
 Dmitry
