@@ -2,78 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1A3D65667B3
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jul 2022 12:20:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B5B015667B6
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jul 2022 12:21:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229941AbiGEKUm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Jul 2022 06:20:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43258 "EHLO
+        id S230356AbiGEKUw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Jul 2022 06:20:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43368 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230169AbiGEKUl (ORCPT
+        with ESMTP id S231491AbiGEKUv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Jul 2022 06:20:41 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 261CC140A8
-        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Jul 2022 03:20:39 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id a4so19828918lfm.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Jul 2022 03:20:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=T2FSykbTV2E4OHdBjXQOKH96xW/Wt4fBDyh12Wd4k0U=;
-        b=wriOUSl810ShuxxSrmpXg72RcW7CIYjuLYB0dvgRwI+U69FYJmuMslaW4rYL3GHg4Z
-         J3zs9cDmjFc9/2FQZ0BU54XJebEjC84K99kAmuZr7EbEBtysf0K4D3ZtHjg80VhwLx6H
-         okKUK0/FI6+s8VSRnxsJmGvWBY2RLGCtWBofMEnzjGyjz2vYmoL36Nb8heAkjiDApg+u
-         T/rcc1sTBs/Dpd7HW54gl52ciTbrxsw5IfH6GeDfDAJ6sVo6H1aK3qt/gm7mfYn5NMf8
-         FGvLDkg7/tMlmIdAzJnlTtWeIxZxCuqlHqgVLhugVIRBqh8nyzNLk3sGdLNuS2cwzbn9
-         eJ9w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=T2FSykbTV2E4OHdBjXQOKH96xW/Wt4fBDyh12Wd4k0U=;
-        b=O+GXMluY1rm8FtXxi9wDRU3UwlZPQi3+O6UZW5aB7LYF097Jtkit4065KKI0FIjUbZ
-         8LNB4NjmAKjIeC01AICNhBT9N0a7oQhGBu9YKXAkAKajYZNktLqr2ORc9jHD84orI539
-         Phv/Y5lb4tpLI1ew8pKvFtFlPyZakMheuzxUDwdd04Kfsu53RbH9ZSrdkKK0qcud3r+I
-         UQvwMeHjyv/D258lJaBwAars2CclO0fNDOvs5M2Sha2juD2G9QOxqwMNz2ekCe1mQtYX
-         OQuDQfiSLnecpAIiyxumv30Xpf0U4PNETrSkIZdRmCzDImYMMmht9QXwzMr8fkBZarKb
-         h/xQ==
-X-Gm-Message-State: AJIora9jSV8Z/gyCdK0kJOSJw5sei+l1Pi2OozhDmcmbGCtuV1TLqqdp
-        gluhiiFTLvROs9XueX3ydgBMnQ==
-X-Google-Smtp-Source: AGRyM1uAPURNjrcuseQ0j/CUQyF5c4qfoAV1p4sqrmYV21cGEiBcc1Zm6ftiO1WnF/1n6HZsiau38A==
-X-Received: by 2002:ac2:5dfb:0:b0:47f:9dac:3bd7 with SMTP id z27-20020ac25dfb000000b0047f9dac3bd7mr21230732lfq.501.1657016437533;
-        Tue, 05 Jul 2022 03:20:37 -0700 (PDT)
-Received: from [192.168.1.52] ([84.20.121.239])
-        by smtp.gmail.com with ESMTPSA id v9-20020a05651203a900b0047f74e4ade2sm5640015lfp.21.2022.07.05.03.20.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 05 Jul 2022 03:20:36 -0700 (PDT)
-Message-ID: <dcff330c-92ec-2302-8e2a-4ac124e72942@linaro.org>
-Date:   Tue, 5 Jul 2022 12:20:35 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH 38/43] phy: qcom-qmp-pcie: drop pipe clock lane suffix
-Content-Language: en-US
-To:     Johan Hovold <johan+linaro@kernel.org>,
+        Tue, 5 Jul 2022 06:20:51 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 121C6140A9;
+        Tue,  5 Jul 2022 03:20:50 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 8F75EB81737;
+        Tue,  5 Jul 2022 10:20:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5629FC341C7;
+        Tue,  5 Jul 2022 10:20:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1657016447;
+        bh=RAkY+wvaF4GTKl/ePFJozpLmUoWkpkz/u3e8jPZsNlo=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=R00oG4MoK+jENJsN8NWEwyAabitOydRAZY5pVC5z1n47uXmbFpC97MmjcrYTNwocE
+         C0cHwv2nwRjBd9vQfF4PKuExDVcufw+rkkerk5ngbDT6ipv52cCTTD216KYP5n3KVd
+         Zq57LM46H3/Zv7UjtguPm42sQqeq/rpZlgJ7wR9UwRZutHARmyPoIpfj/VhCzEAoE6
+         TTG9izVBhvnvqyCbLpBndoRcTSwqLRWxiBeJGuxMM+/d7T4s6siDEmdGXBvrJT+fy7
+         CRjw43Pe7k8IMyZW9W6Ap2GVlqqiS+q0hfD8tCXCi94lzKGes3EzUN66FMQe1wv7sZ
+         owZZ+7QA8t+dw==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1o8ffj-00055H-SU; Tue, 05 Jul 2022 12:20:47 +0200
+Date:   Tue, 5 Jul 2022 12:20:47 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Johan Hovold <johan+linaro@kernel.org>,
         Vinod Koul <vkoul@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Kishon Vijay Abraham I <kishon@ti.com>,
         linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 06/43] dt-bindings: phy: qcom,qmp: split out
+ msm8996-qmp-pcie-phy
+Message-ID: <YsQQfwqmiQ7O3FdY@hovoldconsulting.com>
 References: <20220705094239.17174-1-johan+linaro@kernel.org>
- <20220705094239.17174-39-johan+linaro@kernel.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220705094239.17174-39-johan+linaro@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+ <20220705094239.17174-7-johan+linaro@kernel.org>
+ <46b0cdab-aa94-7f55-5d9f-f79a644f0fec@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <46b0cdab-aa94-7f55-5d9f-f79a644f0fec@linaro.org>
+X-Spam-Status: No, score=-7.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -81,31 +67,87 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 05/07/2022 11:42, Johan Hovold wrote:
-> The pipe clock is defined in the "lane" node so there's no need to keep
-> adding a redundant lane-number suffix to the clock name.
+On Tue, Jul 05, 2022 at 12:08:36PM +0200, Krzysztof Kozlowski wrote:
+> On 05/07/2022 11:42, Johan Hovold wrote:
+> > The QMP PHY DT schema is getting unwieldy. Break out the odd-bird
+> > msm8996-qmp-pcie-phy which is the only QMP PHY that uses separate
+> > "per-lane" nodes.
+> > 
+> > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> > ---
+> >  .../phy/qcom,msm8996-qmp-pcie-phy.yaml        | 114 ++++++++++++++++++
+> >  .../devicetree/bindings/phy/qcom,qmp-phy.yaml |  32 -----
+> >  2 files changed, 114 insertions(+), 32 deletions(-)
+> >  create mode 100644 Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-pcie-phy.yaml
+> > 
+> > diff --git a/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-pcie-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-pcie-phy.yaml
+> > new file mode 100644
+> > index 000000000000..14fd86fd91ec
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-pcie-phy.yaml
+> > @@ -0,0 +1,114 @@
+> > +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> > +
 > 
-> Drop the lane suffix from the pipe clock name, but continue supporting
-> the legacy name as a fall back.
+> No line break
 > 
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> ---
->  drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 8 ++++++--
->  1 file changed, 6 insertions(+), 2 deletions(-)
+> > +%YAML 1.2
+> > +---
+> > +$id: "http://devicetree.org/schemas/phy/qcom,msm8996-qmp-pcie-phy.yaml#"
+> > +$schema: "http://devicetree.org/meta-schemas/core.yaml#"
 > 
-> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-> index 385ea3d8de08..254ad25591b9 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-> @@ -2210,8 +2210,12 @@ int qcom_qmp_phy_pcie_create(struct device *dev, struct device_node *np, int id,
->  	if (!qphy->pcs_misc)
->  		dev_vdbg(dev, "PHY pcs_misc-reg not used\n");
->  
-> -	snprintf(prop_name, sizeof(prop_name), "pipe%d", id);
-> -	qphy->pipe_clk = devm_get_clk_from_child(dev, np, prop_name);
-> +	qphy->pipe_clk = devm_get_clk_from_child(dev, np, "pipe");
+> Drop the quotes from two above.
 
-Just get first clock and no need for handling any deprecation.
+This comes from the current binding. I can clean that one up first.
 
-Best regards,
-Krzysztof
+> > +
+> > +title: Qualcomm QMP PHY controller (MSM8996 PCIe)
+> > +
+> > +maintainers:
+> > +  - Vinod Koul <vkoul@kernel.org>
+> > +
+> > +description:
+> > +  QMP PHY controller supports physical layer functionality for a number of
+> > +  controllers on Qualcomm chipsets, such as, PCIe, UFS, and USB.
+> > +
+> > +properties:
+> > +  compatible:
+> > +    const: qcom,msm8996-qmp-pcie-phy
+> > +
+> > +  reg:
+> > +    minItems: 1
+> > +    items:
+> > +      - description: Address and length of PHY's common serdes block.
+> > +      - description: Address and length of PHY's DP_COM control block.
+> 
+> Are two reg items applicable here?
+
+No, but see below.
+
+> > +
+> > +  "#address-cells":
+> > +    enum: [ 1, 2 ]
+> > +
+> > +  "#size-cells":
+> > +    enum: [ 1, 2 ]
+> > +
+> > +  ranges: true
+> > +
+> > +  clocks:
+> > +    minItems: 1
+> > +    maxItems: 4
+> 
+> Define clocks here, not in allOf:if:then.
+
+To remain sane, and to help reviewers, I decided not to do changes to
+the binding while splitting it up which would only make them harder
+to review.
+
+Hence the split followed by cleanup/tightening of constraints.
+
+> How about an example?
+
+That's also a new addition to the binding and goes in a later separate
+patch.
+
+Johan
