@@ -2,80 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C73FC566422
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jul 2022 09:35:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C5F575665D3
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jul 2022 11:07:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231364AbiGEHcN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Jul 2022 03:32:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58080 "EHLO
+        id S229974AbiGEJHF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Jul 2022 05:07:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39518 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231352AbiGEHcM (ORCPT
+        with ESMTP id S229978AbiGEJHF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Jul 2022 03:32:12 -0400
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3822712D39
-        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Jul 2022 00:32:11 -0700 (PDT)
-Received: by mail-lj1-x231.google.com with SMTP id j13so250114ljo.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Jul 2022 00:32:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=PWneuAJ9+BwtDVWX9EGVrMHRNI896xMJ1kd4ynHr8vA=;
-        b=Bd0hIYTRjsE866WnBumwJ4N178mSBPnEgdW+5z5AbhQXGu6dq4k5hZbq+y/Y4hY2Yi
-         2DoQI6N+fRk3DLZzvywAmL2wMBjPwr4Hl92kX/ASdIlGPKu5TlUtOEyfIbQqbMcI5aIP
-         hHjzvabj7XyymG0+hTc50l0jz9N/GSSE3K8ZAWP72zcrvf0OeYlMVYhkzPZ7jv6luo/8
-         FkIKPGux8uETIZBzf2QAf77IMDYIFxKvi+VUy2IHT3aOTje4PupYS7eLeKGpLD3RCbKe
-         OTA6/oAw/s8tUxn6aMyJLLHGYiKBcAzNaGeihLi/kl7fCSS+9rh2eI3LCocMVu2MwY8E
-         YMNg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=PWneuAJ9+BwtDVWX9EGVrMHRNI896xMJ1kd4ynHr8vA=;
-        b=W+7a0fcR5WKXByx6LYKWm5PbUaC+yimxX4UHoVKty8gHCRZlEELCPQHeM2mSGCuJaf
-         zVA1es7++GmwboAaKaDCRBT/ZzibzkVADImgMxwAWZldpvGc4TMks0/5oZGp0KmEie8t
-         GPgmW0d17Y63nBhRi51jQi4D7A10InaTctX23jMkp89sEoIeQkn/nZXypmn/qg+HAGdW
-         OJHZ1LFeDn8QxvJNvFLdnuZ+piB3vsHUlfFoJ04MTg70i5oB8dGwP2IjKXT5eV4Qk4wn
-         o6Avcp4D6ADwa1/G4isf5BpezpAUqaJrVvS6gko4pHBzrmbCdYZe5pt6ISx2VxsJMjGR
-         Zp6A==
-X-Gm-Message-State: AJIora9RVObftSPGwsWojSY8QlTOeZKqJgtMisIvjS1w+hM80tWLYw1c
-        m+n6gla30PBUdLJM7q/Q2ON58g==
-X-Google-Smtp-Source: AGRyM1tu57jxC+VL6f4xpGAMXs2L40hmkgOX5GUMFpKXSFLtpuT2ISONGdNcPCCxbtLI+XvdQNsG7A==
-X-Received: by 2002:a2e:84c8:0:b0:24b:50bb:de7d with SMTP id q8-20020a2e84c8000000b0024b50bbde7dmr19039347ljh.40.1657006329594;
-        Tue, 05 Jul 2022 00:32:09 -0700 (PDT)
-Received: from [192.168.1.52] ([84.20.121.239])
-        by smtp.gmail.com with ESMTPSA id z18-20020a05651c11d200b0025a9bbe511fsm5406628ljo.70.2022.07.05.00.32.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 05 Jul 2022 00:32:09 -0700 (PDT)
-Message-ID: <61708384-6c29-6bb6-aef0-8bad061c1f7c@linaro.org>
-Date:   Tue, 5 Jul 2022 09:32:07 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH] ASoC: dt-bindings: qcom,sdm845: convert to dtschema
-Content-Language: en-US
-To:     Stephan Gerhold <stephan@gerhold.net>
-Cc:     Andy Gross <agross@kernel.org>,
+        Tue, 5 Jul 2022 05:07:05 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3BDBE6459
+        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Jul 2022 02:07:04 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id C9CC66181B
+        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Jul 2022 09:07:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1242C341C7;
+        Tue,  5 Jul 2022 09:07:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1657012023;
+        bh=3ZpJpRNDhK6kBwRF3RuYIOFq7v3/dbRfERHQO2XKC9s=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=oglNQPqxphZHLSarXFIjRthMAFo/TsafAbm8rCG2BW4lSzJbXrFPGqILs8tdQYVnM
+         GpJzRjgiVgviHw11UOsQ+XRjqjARbK9mbrQKyp9qA+ZoXus6l4+eXvzmbdHZNGS4en
+         mFF3ETc27nnx0OuFnYTify3H+qKlJJahQZNRHh607EXDyNTbkCQ0T/srH2zWFtCvhU
+         smcQ+18wH7JFxBWq9i7pNdjLf3RDI1RFKQt1GKE6C8dSrNMWenenQ1j1WCkg4iHCPJ
+         /6aUKcr/DBCRKrO4RzOzbGdwlkvoJNOxEiCLRt+U1p4DnMwp5hM7rgenEiud91p3BA
+         a863LznbMhSpQ==
+Date:   Tue, 5 Jul 2022 14:36:58 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20220704153824.23226-1-krzysztof.kozlowski@linaro.org>
- <YsMaW6cO2fEfTGPz@gerhold.net>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <YsMaW6cO2fEfTGPz@gerhold.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-phy@lists.infradead.org
+Subject: Re: [PATCH 1/3] dt-bindings: phy: qcom,hdmi-phy-qmp: add clock-cells
+Message-ID: <YsP/MmX96aIYc1p7@matsya>
+References: <20220617103608.605898-1-dmitry.baryshkov@linaro.org>
+ <20220617103608.605898-2-dmitry.baryshkov@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220617103608.605898-2-dmitry.baryshkov@linaro.org>
+X-Spam-Status: No, score=-7.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -83,40 +61,12 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 04/07/2022 18:50, Stephan Gerhold wrote:
-> On Mon, Jul 04, 2022 at 05:38:24PM +0200, Krzysztof Kozlowski wrote:
->> Convert the Samsung SDM845 sound card bindings to DT schema.
->>
-> 
-> Nitpick: s/Samsung/Qualcomm
+On 17-06-22, 13:36, Dmitry Baryshkov wrote:
+> As the QMP HDMI PHY is a clock provider, add constant #clock-cells
+> property. For the compatibility with older DTs the property is not
+> marked as required.
 
-Yes, thanks.
+Acked-By: Vinod Koul <vkoul@kernel.org>
 
-> 
->> Changes during conversion: do not require 'codec' under dai-links - not
->> present in all nodes of examples and DTS; not required by the driver.
->>
->> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->> ---
->>  .../devicetree/bindings/sound/qcom,sdm845.txt |  91 ----------
->>  .../bindings/sound/qcom,sdm845.yaml           | 166 ++++++++++++++++++
->>  2 files changed, 166 insertions(+), 91 deletions(-)
->>  delete mode 100644 Documentation/devicetree/bindings/sound/qcom,sdm845.txt
->>  create mode 100644 Documentation/devicetree/bindings/sound/qcom,sdm845.yaml
->>
-> 
-> Can you check if you can just add the compatibles to the existing
-> qcom,sm8250.yaml? It should be more or less identical given that the DT
-> parsing code in the driver is shared between all these SoCs.
-> I already added the MSM8916 compatibles there a while ago.
-> 
-> It also documents some additional properties ("pin-switches", "widgets")
-> that are supported for SDM845 through the common code but are missing
-> in its binding documentation.
-
-I thought about merging these but then I would have to disallow these
-properties, as I assumed these are not valid for SDM845. Are you saying
-that pin-switches and widgets are actually valid for SDM845?
-
-Best regards,
-Krzysztof
+-- 
+~Vinod
