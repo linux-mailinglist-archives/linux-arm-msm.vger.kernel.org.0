@@ -2,112 +2,176 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AD782566BC6
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jul 2022 14:09:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8F355566C80
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Jul 2022 14:16:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234606AbiGEMJo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Jul 2022 08:09:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53170 "EHLO
+        id S236013AbiGEMP7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Jul 2022 08:15:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54636 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235363AbiGEMJE (ORCPT
+        with ESMTP id S235598AbiGEMOI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Jul 2022 08:09:04 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E0A310AF;
-        Tue,  5 Jul 2022 05:09:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1657022944; x=1688558944;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version;
-  bh=shTB0DnuQEAQMrBnn3hQIHFMKfWKIyiEX/Amn09n/BM=;
-  b=HhwnmPTdLApE9RNsPw/SkvmThpgEmkJsNqxGyygOxtamdYJeoZuq3OZC
-   raB/ct330TJa+xAsZg951Gk+a//bH4KC6BhBjs5AX7J7vWo5qay2+fu21
-   0KpqR8CCNTfwV8U/8zGAVJuh5C/SJcns5fs4eDAztVm7PAJl3oipFqaoj
-   E=;
-Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 05 Jul 2022 05:09:03 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Jul 2022 05:09:03 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Tue, 5 Jul 2022 05:09:03 -0700
-Received: from blr-ubuntu-87.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Tue, 5 Jul 2022 05:09:00 -0700
-From:   Sibi Sankar <quic_sibis@quicinc.com>
-To:     <bjorn.andersson@linaro.org>
-CC:     <agross@kernel.org>, <mathieu.poirier@linaro.org>,
-        <dmitry.baryshkov@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <konrad.dybcio@somainline.org>,
-        Siddharth Gupta <sidgup@codeaurora.org>,
-        Sibi Sankar <quic_sibis@quicinc.com>
-Subject: [V3 7/7] remoteproc: sysmon: Send sysmon state only for running rprocs
-Date:   Tue, 5 Jul 2022 17:38:20 +0530
-Message-ID: <1657022900-2049-8-git-send-email-quic_sibis@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1657022900-2049-1-git-send-email-quic_sibis@quicinc.com>
-References: <1657022900-2049-1-git-send-email-quic_sibis@quicinc.com>
+        Tue, 5 Jul 2022 08:14:08 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC5651AF18;
+        Tue,  5 Jul 2022 05:11:29 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 6F66C61988;
+        Tue,  5 Jul 2022 12:11:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDEA4C341C7;
+        Tue,  5 Jul 2022 12:11:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1657023088;
+        bh=d4W1a6yKks27hWUFb8vUV+fbOsxCFXl1gXeGcs5UT+M=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=TLvfnIQt/Lo/RAV1zKTy+515zB/hDWMgWYocElE7E7mkxmfgUKCbDvEDxKMjGlDjZ
+         Hf3dGNS42Spuy7zq1ERPGdc0+Mp044ree/3q9wfloz3IjHa5jTASK0Rx39VQp71b30
+         XQz4/25knoQUYWV33tTZzWOLUownGgNcIhhjbZsPC/Vt3AYUnwUh0XuH93zOyy1VGE
+         y0m9MU0W3KVerrYOL1ptnsCI6+QODTyqnmzwUKiQwDfYWF8AWqrpp7r3zPyxUensr0
+         eLoDqH7yQjAyLer6NiO3OcpLwp9qJ/UGtptIdfzA0yOlcGO3INuJp2uCdZEKYZkGj9
+         fzGaDv7H+hWIg==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1o8hOq-0006C7-SU; Tue, 05 Jul 2022 14:11:29 +0200
+Date:   Tue, 5 Jul 2022 14:11:28 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Johan Hovold <johan+linaro@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 17/43] dt-bindings: phy: qcom,qmp-pcie: add missing child
+ node schema
+Message-ID: <YsQqcKZAs1xAB9+S@hovoldconsulting.com>
+References: <20220705094239.17174-1-johan+linaro@kernel.org>
+ <20220705094239.17174-18-johan+linaro@kernel.org>
+ <4bc79a1c-66b1-225d-5026-ddf3e6f7d22c@linaro.org>
+ <YsQlzr6nyvz761Kz@hovoldconsulting.com>
+ <963917cf-0f9d-600f-564e-9e687270b1af@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <963917cf-0f9d-600f-564e-9e687270b1af@linaro.org>
+X-Spam-Status: No, score=-7.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Siddharth Gupta <sidgup@codeaurora.org>
+On Tue, Jul 05, 2022 at 01:56:32PM +0200, Krzysztof Kozlowski wrote:
+> On 05/07/2022 13:51, Johan Hovold wrote:
+> > On Tue, Jul 05, 2022 at 12:18:37PM +0200, Krzysztof Kozlowski wrote:
+> >> On 05/07/2022 11:42, Johan Hovold wrote:
+> >>> Add the missing the description of the PHY-provider child node which was
+> >>> ignored when converting to DT schema.
+> >>>
+> >>> Also fix up the incorrect description that claimed that one child node
+> >>> per lane was required.
+> >>>
+> >>> Fixes: ccf51c1cedfd ("dt-bindings: phy: qcom,qmp: Convert QMP PHY bindings to yaml")
+> >>> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> >>> ---
+> >>>  .../bindings/phy/qcom,qmp-pcie-phy.yaml       | 88 ++++++++++++++++++-
+> >>>  1 file changed, 85 insertions(+), 3 deletions(-)
+> >>>
+> >>> diff --git a/Documentation/devicetree/bindings/phy/qcom,qmp-pcie-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,qmp-pcie-phy.yaml
+> >>> index ff1577f68a00..5a1ebf874559 100644
+> >>> --- a/Documentation/devicetree/bindings/phy/qcom,qmp-pcie-phy.yaml
+> >>> +++ b/Documentation/devicetree/bindings/phy/qcom,qmp-pcie-phy.yaml
+> >>> @@ -69,9 +69,37 @@ properties:
+> > 
+> >>> +  - if:
+> >>> +      properties:
+> >>> +        compatible:
+> >>> +          contains:
+> >>> +            enum:
+> >>> +              - qcom,sm8250-qmp-gen3x2-pcie-phy
+> >>> +              - qcom,sm8250-qmp-modem-pcie-phy
+> >>> +              - qcom,sm8450-qmp-gen4x2-pcie-phy
+> >>> +    then:
+> >>> +      patternProperties:
+> >>> +        "^phy@[0-9a-f]+$":
+> >>> +          properties:
+> >>> +            reg:
+> >>> +              items:
+> >>> +                - description: TX lane 1
+> >>> +                - description: RX lane 1
+> >>> +                - description: PCS
+> >>> +                - description: TX lane 2
+> >>> +                - description: RX lane 2
+> >>> +                - description: PCS_MISC
+> >>> +    else:
+> >>> +      patternProperties:
+> >>> +        "^phy@[0-9a-f]+$":
+> >>> +          properties:
+> >>> +            reg:
+> >>> +              minItems: 3
+> >>> +              maxItems: 4
+> >>> +              items:
+> >>> +                - description: TX
+> >>> +                - description: RX
+> >>> +                - description: PCS
+> >>> +                - description: PCS_MISC
+> >>> +      if:
+> >>
+> >> Do not include if within other if. Just split the entire section to its
+> >> own if:.
+> > 
+> > That sounds like it would just obfuscate the logic. The else clause
+> > specified 3-4 registers and the nested if determines which compatibles
+> > use which by further narrowing the range.
+> > 
+> > If you move it out to the else: this would be really hard understand and
+> > verify.
+> 
+> Every bindings are expected to do that way and most of them are doing
+> it: define broad constraints in properties:, then define strict
+> constraints per each variant. Easy to follow code. This binding is not
+> particularly special to make it different than other ones. Doing
+> semi-strict constraints in if: and then additional constrain in nested
+> if: is not easy to understand and verify.
 
-When a new remoteproc boots up, send the sysmon state notification
-of only running remoteprocs. Sending state of remoteprocs booting
-up in parallel can cause a race between SSR clients of the remoteproc
-that is booting up and the sysmon notification for the same remoteproc,
-resulting in an inconsistency between which state the remoteproc that
-is booting up in parallel.
+Ok, so you want to flatten this by repeating also the register
+descriptions?
 
-For example - if remoteproc A and B crash one after the other, after
-remoteproc A boots up, if the remoteproc A tries to get the state of
-remoteproc B before the sysmon subdevice for B is invoked but after
-the ssr subdevice of B has been invoked, clients on remoteproc A
-might get confused when the sysmon notification indicates a different
-state.
+That wouldn't hurt readability as much, but doing so would be more error
+prone as it's easy to miss adding a new compatible in every group of
+conditionals and there's no else clause to catch the mistake.
 
-Signed-off-by: Siddharth Gupta <sidgup@codeaurora.org>
-Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
----
- drivers/remoteproc/qcom_sysmon.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+Right know the logic is
 
-diff --git a/drivers/remoteproc/qcom_sysmon.c b/drivers/remoteproc/qcom_sysmon.c
-index a9f04dd83ab6..57dde2a69b9d 100644
---- a/drivers/remoteproc/qcom_sysmon.c
-+++ b/drivers/remoteproc/qcom_sysmon.c
-@@ -512,10 +512,12 @@ static int sysmon_start(struct rproc_subdev *subdev)
- 
- 	mutex_lock(&sysmon_lock);
- 	list_for_each_entry(target, &sysmon_list, node) {
--		if (target == sysmon)
-+		mutex_lock(&target->state_lock);
-+		if (target == sysmon || target->state != SSCTL_SSR_EVENT_AFTER_POWERUP) {
-+			mutex_unlock(&target->state_lock);
- 			continue;
-+		}
- 
--		mutex_lock(&target->state_lock);
- 		event.subsys_name = target->name;
- 		event.ssr_event = target->state;
- 
--- 
-2.7.4
+	if dual-lane
+		items = 6
+	else
+		items = 3 or 4
+		if single-lane-exception
+			items = 3
+		else
+			items = 4
 
+Flattening this gives
+
+	if dual-lane
+		items = 6
+	if single-lane-normal
+		items = 4
+	if single-lane-exception
+		items = 3
+
+Which means that every compatible must now be listed in one of the
+conditionals.
+
+Fine with me, but please confirm that I understood you correctly.
+
+Johan
