@@ -2,81 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D4252569139
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 19:57:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 599A5569157
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 20:03:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234169AbiGFR5O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Jul 2022 13:57:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44042 "EHLO
+        id S232713AbiGFSDe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Jul 2022 14:03:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48994 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233676AbiGFR5M (ORCPT
+        with ESMTP id S233076AbiGFSDd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Jul 2022 13:57:12 -0400
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3F8928724
-        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Jul 2022 10:57:08 -0700 (PDT)
-Received: by mail-lf1-x134.google.com with SMTP id f39so27207220lfv.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Jul 2022 10:57:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=KyeJu7Pv1QH2NAw8ZXO0O0Q3YavVpXrf7zh8GRdLwvk=;
-        b=kXMlyHPleiim0LxLGGugSxP4isDfWv/bnhuzecQaIHiPxuztzyxy/S2K3FmB64xlhR
-         owXS413HeCskcDKsN4XuwJUjtSG2g5kYyT3UyC2va68oonPJFTAF55058q3HxKwRyEKI
-         OlloJpAFrZ24gdufjItc1pBh2vOjokbhLd4xK2wtDUUPfFWTJOjDq/cLRgF1doksrrM/
-         /wMWbF1RrzMiq+1qEq8yiESVH5MFYMLpgVjvRqBuszC/TuqlGeoOzZoCTpSE4lE+yX2v
-         cSwXP+UyBG58pGVIkloVV8B9WOvLkOYIOdU4kC7AGSWvnZOOxpgrav2WNVy59DAbwhlZ
-         3Uqw==
+        Wed, 6 Jul 2022 14:03:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id CD4B6140AE
+        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Jul 2022 11:03:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1657130610;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=VBlFjIiB9ZC4gvoYyy90cQtMpZILwrGOgeqSFzZ8m1s=;
+        b=W2+30qm6LRxDKb5EdriLGiSA/CyflO8u+BQB5X3bVkT7OUUc0NKLyx4dZEXaE2apbtdNIw
+        O1FO/nhwIRDBfuQRDZsk7xwd/KLqhO1NtlB/x+q0oZRyGl9TEvTydgbxCEbFYeFxSPdtBi
+        e96WT8CnIyhXG8KEAZyTp8UttNaqni4=
+Received: from mail-io1-f70.google.com (mail-io1-f70.google.com
+ [209.85.166.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ us-mta-148-y1FOJrC7NK2f9r56TqysOQ-1; Wed, 06 Jul 2022 14:03:29 -0400
+X-MC-Unique: y1FOJrC7NK2f9r56TqysOQ-1
+Received: by mail-io1-f70.google.com with SMTP id x2-20020a6bda02000000b0067590503c08so8445103iob.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Jul 2022 11:03:28 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=KyeJu7Pv1QH2NAw8ZXO0O0Q3YavVpXrf7zh8GRdLwvk=;
-        b=hKgwMzMsgG2FTPX4tPSsj3tRAeU9drhWI9QkvnGJH94dYufrIy0zrFJfCbHR0363lJ
-         a5LSchK/1fNrJU2CkaeuhSai2cNBx5J0Xw4jYPtpM5gB6DppJ9y+2y4xzhOG228v9eCq
-         UpF+VRjND+1qUR2eoBm/HPucwxXjHBQqLpKjkVSbQCO/cJs1XyZWZjXSH3CySssHLZnC
-         PoQPH5ooF7jR9pdzMWboUQhhrMxZK5UycMIgQA+MMuui5DSxLNdia0XdFznZBIriJ5I7
-         L2NvUKdquQ5YTx1mzkNBd3Gu+QNCnhkP3YhvEOJ5G+sWVJqCy+P2HpblEKcRcOkydMGd
-         tt6A==
-X-Gm-Message-State: AJIora8NDajepOiPNk71ltfvPtY/RXVX+vivekw0F3Emh+MDuvjnAwpb
-        SRET3AeWSc8xhZnVfrBuBuHm5g==
-X-Google-Smtp-Source: AGRyM1vmzrDA/Ula763E/UE8BewNmnYF1s0LMrcmAblE2Z+RDqVJTDgMgsBwplsf/zTfww3H3eqciA==
-X-Received: by 2002:ac2:53a8:0:b0:486:777f:a1b6 with SMTP id j8-20020ac253a8000000b00486777fa1b6mr2653233lfh.298.1657130227110;
-        Wed, 06 Jul 2022 10:57:07 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id p7-20020a05651238c700b0047f66294ff4sm6355064lft.151.2022.07.06.10.57.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 06 Jul 2022 10:57:06 -0700 (PDT)
-Message-ID: <c6b64751-fd37-09d4-9b31-a4aa112c51ef@linaro.org>
-Date:   Wed, 6 Jul 2022 20:57:06 +0300
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
+         :references:organization:mime-version:content-transfer-encoding;
+        bh=VBlFjIiB9ZC4gvoYyy90cQtMpZILwrGOgeqSFzZ8m1s=;
+        b=3DcMlYTuh5LwRsyhCdzRbjoE+hnE6yq00umQdKwiPeBNu02j9rJ9geoBA7ZZWGImKQ
+         k/sqzHvbEuVbpHhP1gafn1egExztwU23raB2hEH1lzsZfnBKQ6pEYxopz0F7OFfHzQWA
+         Qlaa0DH1tpzNN0xrBlZ5IL4PsHYHZc+R1r80iHEwWQZfqgBsEJGAxJJq8B1mjcRmQyyD
+         LRpseQRCoOXwTVzkfL92jcI3RYkXN/YOyK6yw8yZy+1UCkdtsA0S+wU21aTSIjv66oyH
+         unCTFWqpMEg1IrUp9UeitPSBgJYoUY0IlypeIxITiFrADwhKG3FFSrbpGWlr2JVNq8Nb
+         LeVw==
+X-Gm-Message-State: AJIora/nDUo25TlRvY6yFlZhul4eiUaNNZNMv+9HsVnDiQg2RB9T9lJ9
+        IqkQ5y4DLfu8N7q7PpWlhsjNaKeNQKcxqzAjMvXfb6AlwPMwxspUCd5nGs+7Xu7Xa3LV93Gyai/
+        4dIuj9NW35y63nPSHEFywHhcblg==
+X-Received: by 2002:a05:6638:218f:b0:33c:caf0:a61c with SMTP id s15-20020a056638218f00b0033ccaf0a61cmr26531498jaj.198.1657130608164;
+        Wed, 06 Jul 2022 11:03:28 -0700 (PDT)
+X-Google-Smtp-Source: AGRyM1tABH1Ic8RqUAALPXzLJn+RofmhnwMLRPJ18ZPWLjNFSi2aNVbpdWUQPpp6mJB+LAKijjE03g==
+X-Received: by 2002:a05:6638:218f:b0:33c:caf0:a61c with SMTP id s15-20020a056638218f00b0033ccaf0a61cmr26531473jaj.198.1657130607865;
+        Wed, 06 Jul 2022 11:03:27 -0700 (PDT)
+Received: from redhat.com ([38.15.36.239])
+        by smtp.gmail.com with ESMTPSA id co14-20020a0566383e0e00b0033efe711a37sm1538401jab.35.2022.07.06.11.03.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 06 Jul 2022 11:03:27 -0700 (PDT)
+Date:   Wed, 6 Jul 2022 12:03:25 -0600
+From:   Alex Williamson <alex.williamson@redhat.com>
+To:     Nicolin Chen <nicolinc@nvidia.com>
+Cc:     <joro@8bytes.org>, <will@kernel.org>, <marcan@marcan.st>,
+        <sven@svenpeter.dev>, <robin.murphy@arm.com>,
+        <robdclark@gmail.com>, <baolu.lu@linux.intel.com>,
+        <orsonzhai@gmail.com>, <baolin.wang7@gmail.com>,
+        <zhang.lyra@gmail.com>, <jean-philippe@linaro.org>,
+        <jgg@nvidia.com>, <kevin.tian@intel.com>,
+        <suravee.suthikulpanit@amd.com>, <alyssa@rosenzweig.io>,
+        <dwmw2@infradead.org>, <mjrosato@linux.ibm.com>,
+        <gerald.schaefer@linux.ibm.com>, <thierry.reding@gmail.com>,
+        <vdumpa@nvidia.com>, <jonathanh@nvidia.com>, <cohuck@redhat.com>,
+        <thunder.leizhen@huawei.com>, <christophe.jaillet@wanadoo.fr>,
+        <chenxiang66@hisilicon.com>, <john.garry@huawei.com>,
+        <yangyingliang@huawei.com>, <iommu@lists.linux.dev>,
+        <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-s390@vger.kernel.org>,
+        <linux-tegra@vger.kernel.org>,
+        <virtualization@lists.linux-foundation.org>, <kvm@vger.kernel.org>
+Subject: Re: [PATCH v5 0/5] cover-letter: Simplify vfio_iommu_type1
+ attach/detach routine
+Message-ID: <20220706120325.4741ff34.alex.williamson@redhat.com>
+In-Reply-To: <YsXMMCX5LY/3IOtf@Asurada-Nvidia>
+References: <20220701214455.14992-1-nicolinc@nvidia.com>
+        <20220706114217.105f4f61.alex.williamson@redhat.com>
+        <YsXMMCX5LY/3IOtf@Asurada-Nvidia>
+Organization: Red Hat
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: [PATCH v3] drm/msm/dp: make eDP panel as the first connected
- connector
-Content-Language: en-GB
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>, robdclark@gmail.com,
-        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
-        vkoul@kernel.org, daniel@ffwll.ch, airlied@linux.ie,
-        agross@kernel.org, bjorn.andersson@linaro.org
-Cc:     quic_abhinavk@quicinc.com, quic_aravindh@quicinc.com,
-        quic_sbillaka@quicinc.com, freedreno@lists.freedesktop.org,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <1657128246-15929-1-git-send-email-quic_khsieh@quicinc.com>
- <86ee9636-8827-7bad-6bd9-22191b2d293c@linaro.org>
- <949ae061-8191-2497-af56-1df74432272d@quicinc.com>
- <b85a7423-44ec-1f58-7465-e5322bc32cd3@linaro.org>
- <cdbfbad1-83a3-b15d-3000-eec425ae140c@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <cdbfbad1-83a3-b15d-3000-eec425ae140c@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -84,84 +97,46 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 06/07/2022 20:54, Kuogee Hsieh wrote:
-> 
-> On 7/6/2022 10:41 AM, Dmitry Baryshkov wrote:
->> On 06/07/2022 20:38, Kuogee Hsieh wrote:
->>>
->>> On 7/6/2022 10:25 AM, Dmitry Baryshkov wrote:
->>>> On 06/07/2022 20:24, Kuogee Hsieh wrote:
->>>>> Some userspace presumes that the first connected connector is the main
->>>>> display, where it's supposed to display e.g. the login screen. For
->>>>> laptops, this should be the main panel.
->>>>>
->>>>> This patch call drm_helper_move_panel_connectors_to_head() after
->>>>> drm_bridge_connector_init() to make sure eDP stay at head of
->>>>> connected connector list. This fixes unexpected corruption happen
->>>>> at eDP panel if eDP is not placed at head of connected connector
->>>>> list.
->>>>>
->>>>> Changes in v2:
->>>>> -- move drm_helper_move_panel_connectors_to_head() to
->>>>>         dpu_kms_drm_obj_init()
->>>>>
->>>>> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
->>>>> ---
->>>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 2 ++
->>>>>   1 file changed, 2 insertions(+)
->>>>>
->>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c 
->>>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
->>>>> index 2b9d931..50ff666 100644
->>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
->>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
->>>>> @@ -763,6 +763,8 @@ static int _dpu_kms_drm_obj_init(struct dpu_kms 
->>>>> *dpu_kms)
->>>>>       if (ret)
->>>>>           return ret;
->>>>>   +    drm_helper_move_panel_connectors_to_head(dev);
->>>>
->>>> This should be in msm_drv.c unless you have a strong reason to have 
->>>> it here.
->>> Can you please  provide more info why should be in msm_drv.c?
->>
->> Let me quote my message from v1 review:
->>
->> Please move this call to the msm_drm_init(). Calling this function 
->> somewhere after the ->kms_init() would make sure that all panel 
->> connectors are close to the top of the list, whichever MDP/DPU driver 
->> is used and whichever actual interface is bound to this panel.
->>
-> Below are the call flow in timing order, ->kms_init does not create 
-> connectors/interfaces, hw_init does that.
-> 
-> 1) ->kms_init
-> 
-> 2) ->hw_init -> dpu_kms_hw_init --> _dpu_kms_drm_obj_init()  --> 
-> _dpu_kms_setup_displays()--> msm_dp_modeset_init() --> creator 
-> connectors/interfaces
-> 
-> 3) drm_helper_move_panel_connectors_to_head() <== add here??
+On Wed, 6 Jul 2022 10:53:52 -0700
+Nicolin Chen <nicolinc@nvidia.com> wrote:
 
-Yes.
-
+> On Wed, Jul 06, 2022 at 11:42:17AM -0600, Alex Williamson wrote:
 > 
->>>> _dpu_kms_drm_obj_init() create and initialize drm obj one by one and 
->>>> _dpu_kms_setup_displays() had created system wide 
->>>> connectors/interfaces .
->>>
->>> After that should be fine to move edp to head of connector list.
->>>
->>>>> +
->>>>>       num_encoders = 0;
->>>>>       drm_for_each_encoder(encoder, dev)
->>>>>           num_encoders++;
->>>>
->>>>
->>
->>
+> > On Fri, 1 Jul 2022 14:44:50 -0700
+> > Nicolin Chen <nicolinc@nvidia.com> wrote:
+> >   
+> > > This is a preparatory series for IOMMUFD v2 patches. It enforces error
+> > > code -EMEDIUMTYPE in iommu_attach_device() and iommu_attach_group() when
+> > > an IOMMU domain and a device/group are incompatible. It also drops the
+> > > useless domain->ops check since it won't fail in current environment.
+> > >
+> > > These allow VFIO iommu code to simplify its group attachment routine, by
+> > > avoiding the extra IOMMU domain allocations and attach/detach sequences
+> > > of the old code.
+> > >
+> > > Worths mentioning the exact match for enforce_cache_coherency is removed
+> > > with this series, since there's very less value in doing that as KVM will
+> > > not be able to take advantage of it -- this just wastes domain memory.
+> > > Instead, we rely on Intel IOMMU driver taking care of that internally.
+> > >
+> > > This is on github:
+> > > https://github.com/nicolinc/iommufd/commits/vfio_iommu_attach  
+> > 
+> > How do you foresee this going in, I'm imagining Joerg would merge the
+> > first patch via the IOMMU tree and provide a topic branch that I'd
+> > merge into the vfio tree along with the remaining patches.  Sound
+> > right?  Thanks,  
+> 
+> We don't have any build dependency between the IOMMU change and
+> VFIO changes, yet, without the IOMMU one, any iommu_attach_group()
+> failure now would be a hard failure without a chance falling back
+> to a new_domain, which is slightly different from the current flow.
+> 
+> For a potential existing use case that relies on reusing existing
+> domain, I think it'd be safer to have Joerg acking the first change
+> so you merge them all? Thank!
 
+Works for me, I'll look for buy-in + ack from Joerg.  Thanks,
 
--- 
-With best wishes
-Dmitry
+Alex
+
