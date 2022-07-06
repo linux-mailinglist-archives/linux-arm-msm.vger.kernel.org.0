@@ -2,71 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6201F56877F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 13:59:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 324B55687AB
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 14:03:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233420AbiGFL7D (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Jul 2022 07:59:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59990 "EHLO
+        id S230440AbiGFMCI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Jul 2022 08:02:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35878 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233478AbiGFL6x (ORCPT
+        with ESMTP id S233270AbiGFMCE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Jul 2022 07:58:53 -0400
-Received: from mail-qt1-x835.google.com (mail-qt1-x835.google.com [IPv6:2607:f8b0:4864:20::835])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5635324087
-        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Jul 2022 04:58:49 -0700 (PDT)
-Received: by mail-qt1-x835.google.com with SMTP id z13so17806843qts.12
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Jul 2022 04:58:49 -0700 (PDT)
+        Wed, 6 Jul 2022 08:02:04 -0400
+Received: from mail-qt1-x829.google.com (mail-qt1-x829.google.com [IPv6:2607:f8b0:4864:20::829])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08CD829C97
+        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Jul 2022 05:02:03 -0700 (PDT)
+Received: by mail-qt1-x829.google.com with SMTP id ck6so17805818qtb.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Jul 2022 05:02:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=ybb7VuM+EyU7gq2LFgKPhLmRG/OyaMHbxC7umWksKZ8=;
-        b=rZHzmnQi3KfezNYiiRREFmx9m2Me6jF7bZpGa4gZqjCVViRAUtiS/mSJ1oIufaW90C
-         6x7xa0f/TQHDaiaOrcecdpfhsytEd6kL9jWggpW+VDtopIhdCaPCbvuEGFqcUDk3wMFy
-         jZTZ4gpubNGaq6voWJp1Lwjs/drK2JCgpB8QzA96psxbz3+ccMp25fLdBMW5/lIneZPD
-         PXM5XbW0nTBMl/93G1kCj40H7zoQ2b9FuyvTQCeMV3z34IFxcWgksS4RgK68IGfz5RAk
-         nHCHkUi3A6+b1wdySuOW1Y72jUE2sJ72vS1zgTafXBPk20yKltHrvtNsihsI76rrEhD5
-         VW2Q==
+        bh=GS+uFCqn73s3FUnXQGK+mJpwi26ezGNzDSPMuucFva8=;
+        b=C1PEfoHu1JZutIhSBq7xyrTzSwdP6gfzqlbmYagZ6SO614AVCSvZuTG/YcopNih2u0
+         XXZH06tjN/7HwT05MgoOtpKdZc8oBLn7RLDLCt5cjTeM5lb6gpuKj+2d7uLQXMnuvX3i
+         wde7KD1Sv+YJl6PQ/byNoahvr0JX4PqEliAiGIwbso/soQMekhN0iDCes1q2wpwhil4A
+         qWK6iHx1rd7r15nqFvFUJSefPwMIOTum21ZrKCZ3TdAeKdX7xqfXghTIDvA9LHIf/Pur
+         HVAKjbv4je6GQwD13gprqb87kpQq8AjACvJVJSfZtJFwyb3sO7iaVNEoXXSOkX9z/ufc
+         /o4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=ybb7VuM+EyU7gq2LFgKPhLmRG/OyaMHbxC7umWksKZ8=;
-        b=K8soYI8QVX3ESfzTkM3p07vkeY8tAqmVD4npWr6jK0PQ3QrQCIHOvCZQbaDN0DCfar
-         wnMmFVTR/ZES9Mo2kvkWiXJB5xmDvoz9pOhLrF3AljwuA1q8Z1QzT0DyCgQ+7gRYa3YU
-         +YcWX9HgXiIMnNbMIDDlpzbYHqK3bD7oxGMVjP0kuCQjImWHlfnOqzvnPsJHawSRCgoP
-         2SRR0a8lkgZtaSc0dCS4Ky1vzCso+AYkdH6QwWlX/QL9Ye1fPOp/e1+sRzfrlYmnOvZV
-         uv+J+yHonBXaE7kPooNUOsnScsVEZqtVOi163LbOLyuaH2EBxuxT0b64VUfoCe+q/5vq
-         fO2w==
-X-Gm-Message-State: AJIora/Xmv8gF76eypilrSSvqvs0/jTKxGuCLmXr63PBXz+yO98khF7K
-        5dhZ3Pawq7vLkiSDoSSydmvzn1tzH2pZ3oJy0NAqqA==
-X-Google-Smtp-Source: AGRyM1tpqygoo95h06VZ6Q5wy3BGd11IKQKZZYSwcPEJHq3OsTNNYHtH3uXbhLxIK0RsDjRlLemPMxsVoifFDbJWXsg=
-X-Received: by 2002:a05:622a:1981:b0:31a:816f:9d48 with SMTP id
- u1-20020a05622a198100b0031a816f9d48mr33430632qtc.629.1657108728501; Wed, 06
- Jul 2022 04:58:48 -0700 (PDT)
+        bh=GS+uFCqn73s3FUnXQGK+mJpwi26ezGNzDSPMuucFva8=;
+        b=r2l83stKk6a88gyt6ns+qcqEyCzMGFCA9cYYDl3nuOY5gF+fab8uu1Tg/rov+Rl0LA
+         kCnED2O9lrNvzJQRFvUN2X3S/3LkP9M/r7Goz+516BmQHBL/pGagbte5yw4uH4PQQXMf
+         XAaIGnGXg9gMAWU/01aZ8KEuG3vl5Du6QQEZWeqV+WaG3dNIC+6kzHr0IBz9eu7gjSdJ
+         MYjnn6hlpOF5V5iVf2NPXzKhDwMI4Y5Hp/QRjALXih+cHgCTKSXh+GLBwuERcMsRq8Zn
+         OU5MKzBkGlS2rMOdAnI63LqImhcQcpRQicsEs7nMiwjsUVUCZja67ePBeuf0qjGKUc5J
+         FdHw==
+X-Gm-Message-State: AJIora/wEk6e0vKcFCbIBtl5YxtjwoZFXdPy8FxfGuOgkmv+cnj+vQmG
+        m2Ns2rYE95i6uzXCwuD0WN97Gwt2MCZbnyKQrB6Zvg==
+X-Google-Smtp-Source: AGRyM1tF1EnvSFKXQDug6KASOTgwF0P8AMmoLtvHbfrVH6CtHl3jRQNThamLYnI3w6qH79JwwlKN3CNfi8dZU5i5lMU=
+X-Received: by 2002:ad4:5f8a:0:b0:473:2108:7fe0 with SMTP id
+ jp10-20020ad45f8a000000b0047321087fe0mr1081454qvb.115.1657108921700; Wed, 06
+ Jul 2022 05:02:01 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220705202837.667-1-ansuelsmth@gmail.com> <20220705202837.667-2-ansuelsmth@gmail.com>
- <CAA8EJpoXOwooUYic-_G6jG7MBiHo2mfoKfR0jBDmRy0DsmMNEw@mail.gmail.com> <62c5658d.1c69fb81.1dc23.6884@mx.google.com>
-In-Reply-To: <62c5658d.1c69fb81.1dc23.6884@mx.google.com>
+References: <20220705133917.8405-1-ansuelsmth@gmail.com> <20220705133917.8405-10-ansuelsmth@gmail.com>
+ <c5bf6246-a350-8a87-71bc-bc13d502a8af@linaro.org> <62c56477.1c69fb81.8ec4c.f1ac@mx.google.com>
+In-Reply-To: <62c56477.1c69fb81.8ec4c.f1ac@mx.google.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Wed, 6 Jul 2022 14:58:37 +0300
-Message-ID: <CAA8EJpqAyZp8fNO1DOz4XRFvrhBMw0fJMO4cmmTr500CpPtBYA@mail.gmail.com>
-Subject: Re: [PATCH 1/5] dt-bindings: clock: fix wrong clock documentation for qcom,rpmcc
+Date:   Wed, 6 Jul 2022 15:01:50 +0300
+Message-ID: <CAA8EJpoUcSrOU=emcqanUd0PRuToZsSB1x=oGzcvjtMMVjhSvQ@mail.gmail.com>
+Subject: Re: [PATCH 09/13] ARM: dts: qcom: add smem node for ipq8064
 To:     Christian Marangi <ansuelsmth@gmail.com>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Jonathan McDowell <noodles@earth.li>
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -74,71 +73,39 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 6 Jul 2022 at 13:35, Christian Marangi <ansuelsmth@gmail.com> wrote:
+On Wed, 6 Jul 2022 at 13:31, Christian Marangi <ansuelsmth@gmail.com> wrote:
 >
-> On Wed, Jul 06, 2022 at 11:23:46AM +0300, Dmitry Baryshkov wrote:
-> > On Tue, 5 Jul 2022 at 23:56, Christian Marangi <ansuelsmth@gmail.com> wrote:
-> > >
-> > > qcom,rpmcc describe 2 different kind of device.
-> > > Currently we have definition for rpm-smd based device but we lack
-> > > Documentation for simple rpm based device.
-> > >
-> > > Add the missing clk for ipq806x, apq8060, msm8660 and apq8064 and
-> > > provide and additional example.
+> On Wed, Jul 06, 2022 at 10:39:16AM +0200, Krzysztof Kozlowski wrote:
+> > On 05/07/2022 15:39, Christian Marangi wrote:
+> > > Add missing smem node for ipq8064.
 > > >
 > > > Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+> > > Tested-by: Jonathan McDowell <noodles@earth.li>
 > > > ---
-> > >  .../devicetree/bindings/clock/qcom,rpmcc.yaml | 77 ++++++++++++++++++-
-> > >  1 file changed, 73 insertions(+), 4 deletions(-)
+> > >  arch/arm/boot/dts/qcom-ipq8064.dtsi | 18 ++++++++++++++++++
+> > >  1 file changed, 18 insertions(+)
 > > >
-> > > diff --git a/Documentation/devicetree/bindings/clock/qcom,rpmcc.yaml b/Documentation/devicetree/bindings/clock/qcom,rpmcc.yaml
-> > > index 9d296b89a8d0..028eb0277495 100644
-> > > --- a/Documentation/devicetree/bindings/clock/qcom,rpmcc.yaml
-> > > +++ b/Documentation/devicetree/bindings/clock/qcom,rpmcc.yaml
-> > [,,,,]
+> > > diff --git a/arch/arm/boot/dts/qcom-ipq8064.dtsi b/arch/arm/boot/dts/qcom-ipq8064.dtsi
+> > > index b5aede3d7ccf..98527a7d885e 100644
+> > > --- a/arch/arm/boot/dts/qcom-ipq8064.dtsi
+> > > +++ b/arch/arm/boot/dts/qcom-ipq8064.dtsi
+> > > @@ -908,6 +908,11 @@ lcc: clock-controller@28000000 {
+> > >                     #reset-cells = <1>;
+> > >             };
+> > >
+> > > +           sfpb_mutex_block: syscon@1200600 {
+> > > +                   compatible = "syscon";
 > >
-> > > +
-> > > +then:
-> > > +  properties:
-> > > +    clocks:
-> > > +      description: pxo clock
-> > > +
-> > > +    clock-names:
-> > > +      const: pxo
-> > > +
-> > > +  required:
-> > > +    - clocks
-> > > +    - clock-names
-> >
-> > I don't think you can not mark these properties as required, older
-> > schemas do not have them.
+> > syscon alone is not allowed.
 > >
 >
-> Well considering we changed rpmcc to parent_data and rpm clock require
-> pxo clock as parents it seems to be they should be required.
+> Mh... This is problematic. How this should be handled?
+> This should be put in sfpb_mutex and change the driver to use regs if
+> present instead of syscon?
 
-parent_data specifies both the normal flow (.fw_name) and the fallback
-(.name), so they are not required.
-I actually miss 'recommended: true' in YAML for such cases.
-
-> Actually no idea why this wasn't required before. Probably because this
-> schema described only rpm-smd and not old rpm?
->
-> > > +
-> > > +else:
-> > > +  if:
-> > > +    properties:
-> > > +      compatible:
-> > > +        contains:
-> > > +          const: qcom,rpmcc-apq8064
-> > > +  then:
-> > > +    properties:
-> > > +      clocks:
-> > > +        items:
-> > > +          - description: pxo clock
-> > > +          - description: cxo clock
-> > [...]
-
+If nothing else works, you can add two compat strings, for example:
+"qcom,ipq8064-sfpb-mutex", "syscon";
+This way if we add an sfpb driver at some point, we can still use old dts files.
 
 -- 
 With best wishes
