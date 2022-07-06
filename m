@@ -2,81 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A5AFA568E65
+	by mail.lfdr.de (Postfix) with ESMTP id F01DB568E66
 	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 17:54:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234430AbiGFPyM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Jul 2022 11:54:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49972 "EHLO
+        id S232476AbiGFPy0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Jul 2022 11:54:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50500 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232679AbiGFPx6 (ORCPT
+        with ESMTP id S234275AbiGFPyL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Jul 2022 11:53:58 -0400
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F8F418381
-        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Jul 2022 08:53:30 -0700 (PDT)
-Received: by mail-lf1-x12a.google.com with SMTP id e12so26646167lfr.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Jul 2022 08:53:30 -0700 (PDT)
+        Wed, 6 Jul 2022 11:54:11 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B30B9D99
+        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Jul 2022 08:54:02 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id h17so9529038wrx.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Jul 2022 08:54:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=X7T59me0wj8EL8IWcKYPdBXPVV7Xe/PyIIDPA9tAhFM=;
-        b=dl4RsWOOioDPEEZSV8Q6d1C3NeXb2s6TuE2AtCTvg1n2n6/6YwKz2nxQSaM9tjfRx4
-         hayZOC68rIk7ugJTK1DzmSsW6EQJqgtKirrG4qYdZ/XKCjidBQAJt8OVMxX0hOko2Yjw
-         QOEQhj6uQKEJBMR6hkkKGUzYR0dRjysM309Gm6zgtiGXVtHLdPrIsQMf1rJrtyulksaX
-         0hPPbXPYnYCMQqlEtgabfJUdZGrLNLHxfgTzJFo73d+jRerPsesaK7CXHqsLf83WLseU
-         V4VFhxLkQLh5PtSecTxnpY/eHIKb6ZbTuDhAbWf+/BEG8Z+Wx9yCavzKM1Y149j2SZHd
-         mfwQ==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=YsmbA7pbfVVxtCyP75LYleN73l2vnI6otlvz1z0zZeY=;
+        b=GPCeOC8koQUZiomJs5lDS+GJha2vrjljjNaIlHncUy0sx/0Su39G9sAft4iW5/x6hR
+         +lN9KSyacUkEL/xvb45f9EeO4rKXpIeYW4AkYB1BELQtsPDdfIaQmHatTfZZTH1aU7am
+         BCh8/Sa2Lb7UIgswSHvQJp1I+5ZQ6Hh2KV93481v4MzBmdgsppr/5AfJDVbIgmcNTdLG
+         JGIH+0e4klMayUU2tsLpl+XBjGhl4DCOj6+PlP7v/2UhWrJONlVclJnly+s5thxQBo5E
+         tc2qNT/Uk7PB9QIPOiTAPKIgB04GZS3N0H18VseM6vT3RVn0H1Q1bsElJu7LI6z7sS5O
+         qLLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=X7T59me0wj8EL8IWcKYPdBXPVV7Xe/PyIIDPA9tAhFM=;
-        b=GyEe8W6kXRRDRh/VkCRrcT4e+JzjSS8Ag9BXjJcRk64QkH3cqoKnaDIrS3QN3nJBMs
-         WQdrURvf0mihlWn8uHBJWD2ef6A0a1oM9L/GjAEfD3ocy/6/7t9VtMmYv7Dj65eQHAKp
-         BpR3xjpnGJ/i3Qse+/OAXUTOLImiTPmZKQj9hTr/JF35PJFjjkR9f2YMZ2615mnWtMKs
-         Y8YIWYkRIl3gRCRCPu5tVcEsIY3yuWj4qEOMcBFVJSxgrpVazDqz37ILl8nTtV239I1M
-         IJjegrdvD4kfHxp01aol+CQ+szaNIMgxGLawC6UkOXAD81zQJ0+oTirocgv2GWZ99J3r
-         JjhQ==
-X-Gm-Message-State: AJIora/mXhPoeV9Q/xJo3etGfXQR7NVC3JkQI6H8jEjA1oIL6vKK4GfE
-        pmMXVG3mqAVxuuCOAu8pY6adt6YR8nbgENzp
-X-Google-Smtp-Source: AGRyM1v3k7cZraOuJLcFdr4BGuOWAHZA/5OiHqQ5QQb46JslGgrl4Cflu5asFPXT2Tam6Cs/eLAhpw==
-X-Received: by 2002:a05:6512:2210:b0:484:f174:bd51 with SMTP id h16-20020a056512221000b00484f174bd51mr4617778lfu.482.1657122808976;
-        Wed, 06 Jul 2022 08:53:28 -0700 (PDT)
-Received: from [192.168.1.52] ([84.20.121.239])
-        by smtp.gmail.com with ESMTPSA id cf6-20020a056512280600b0048724eb8cffsm211734lfb.255.2022.07.06.08.53.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 06 Jul 2022 08:53:28 -0700 (PDT)
-Message-ID: <c23149f3-9070-8727-e30a-4a7a82794082@linaro.org>
-Date:   Wed, 6 Jul 2022 17:53:27 +0200
+        bh=YsmbA7pbfVVxtCyP75LYleN73l2vnI6otlvz1z0zZeY=;
+        b=3dblMW7TlFocsdCm/iwZ9//8cv59pO+n8kfjbkzCupHopCXt1MhH9inCJRqdFd3WJL
+         cp/57t5S3NMra68e58Ly9OtrBYpzEwETchKkE/bdIBLbkEC3drN6ZkYKwz5vgEz83by3
+         S4xuGJqZfRvtnNJdpucnu7HEwDuTfDIIAkxiEJh7RTFeLFkXraOgKoJyw7zzkabxQor0
+         43ih/hUxlJUBBipL8g118uPYviydjJD8aDETZb9GT1XdmqaLOWmvV921IFfCg5RmikDf
+         n+KjUQgvG6CX7RoQjQ/8xemsoF7QtDK/ycYQJNGjgcet/Zjrc5CNPtuumSu/ljDWR08c
+         YhLw==
+X-Gm-Message-State: AJIora9r5JAUL2AzvdV3Soi4dKumDQuy8DFRpfMqqmZWBKhVns5SvXgW
+        9YI6UGUUSfdvziVvh7VXI2CwCQ==
+X-Google-Smtp-Source: AGRyM1s2OWTvbDmVKuCzd38bJ/J3patbtRXHtzGErxwQIacPhicFHRswI9XIzynZ18h5raFiWJ8miw==
+X-Received: by 2002:a5d:591c:0:b0:21d:7147:a180 with SMTP id v28-20020a5d591c000000b0021d7147a180mr9812053wrd.582.1657122841273;
+        Wed, 06 Jul 2022 08:54:01 -0700 (PDT)
+Received: from localhost.localdomain ([94.52.112.99])
+        by smtp.gmail.com with ESMTPSA id a11-20020a056000100b00b0021b8c554196sm2276788wrx.29.2022.07.06.08.54.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 06 Jul 2022 08:54:00 -0700 (PDT)
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     Saravana Kannan <saravanak@google.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        "Rafael J. Wysocki" <rjw@rjwysocki.net>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Abel Vesa <abel.vesa@linaro.org>
+Subject: [RFC v2] driver core: Fix repeated device_is_dependent check for same link
+Date:   Wed,  6 Jul 2022 18:53:47 +0300
+Message-Id: <20220706155347.778762-1-abel.vesa@linaro.org>
+X-Mailer: git-send-email 2.34.3
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH 4/4] dt-bindings: display/msm/mdp4: require 4 IOMMUs
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-References: <20220706145222.1565238-1-dmitry.baryshkov@linaro.org>
- <20220706145222.1565238-5-dmitry.baryshkov@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220706145222.1565238-5-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -85,16 +71,43 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 06/07/2022 16:52, Dmitry Baryshkov wrote:
-> APQ8064, the only supported mdp4 platform, uses 4 IOMMUs for the MDP4
-> device. Update schema accordingly. When we have other MDP4 platforms,
-> this spec can be updated accordingly.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In case of a cyclic dependency, if the supplier is not yet available,
+the parent of the supplier is checked for dependency. But if there are
+more than one suppliers with the same parent, the first check returns
+true while the next ones skip that specific link entirely because of
+having DL_FLAG_MANAGED and DL_FLAG_SYNC_STATE_ONLY set, which is what
+the relaxing of the link does. But if we check for the target being
+a consumer before the check for those flags, we can check as many
+times as needed the same link and it will always return true, This is
+safe to do, since the relaxing of the link will be done only once
+because those flags will be set and it will bail early.
 
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+---
+ drivers/base/core.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+diff --git a/drivers/base/core.c b/drivers/base/core.c
+index 753e7cca0f40..2c3b860dfe80 100644
+--- a/drivers/base/core.c
++++ b/drivers/base/core.c
+@@ -297,13 +297,13 @@ int device_is_dependent(struct device *dev, void *target)
+ 		return ret;
 
+ 	list_for_each_entry(link, &dev->links.consumers, s_node) {
++		if (link->consumer == target)
++			return 1;
++
+ 		if ((link->flags & ~DL_FLAG_INFERRED) ==
+ 		    (DL_FLAG_SYNC_STATE_ONLY | DL_FLAG_MANAGED))
+ 			continue;
 
-Best regards,
-Krzysztof
+-		if (link->consumer == target)
+-			return 1;
+-
+ 		ret = device_is_dependent(link->consumer, target);
+ 		if (ret)
+ 			break;
+--
+2.34.3
+
