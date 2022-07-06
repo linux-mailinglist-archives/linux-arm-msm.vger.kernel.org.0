@@ -2,141 +2,231 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E572656859C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 12:31:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ED496568509
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 12:18:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232240AbiGFKbX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Jul 2022 06:31:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46266 "EHLO
+        id S233006AbiGFKRP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Jul 2022 06:17:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57966 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230471AbiGFKbW (ORCPT
+        with ESMTP id S232992AbiGFKRO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Jul 2022 06:31:22 -0400
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7BF926541;
-        Wed,  6 Jul 2022 03:31:21 -0700 (PDT)
-Received: by mail-ej1-x62d.google.com with SMTP id u12so26281641eja.8;
-        Wed, 06 Jul 2022 03:31:21 -0700 (PDT)
+        Wed, 6 Jul 2022 06:17:14 -0400
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3EC32528F;
+        Wed,  6 Jul 2022 03:17:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:from:to:cc:subject:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=kZqIs70OTt6jii795NJ0qzTYWchhAv15K9Xbii8uxEY=;
-        b=ojxfvPkFrNi++Sxaxk8fgSMW1Gsz6qhemLuJhcq20+PotSdo3KyBODTIqB6z/LGD+m
-         LX00zjjNlyHPUZ+UL3CjpxyEh6YT5Bsp5hr+fjSYWnHowpi66bN9Z07TPqNfcXBkqqCi
-         O6NaEM3NTTHiR/fuAG4+BDC64QipwU7k9C724rH5ZohdWJprSfYC94IxpfSBtl5DrY4G
-         pBdCTsrBcbZ+sJMQzOEbvAW2r+CaESlQ/5aut/oU8Urn7DE9SKp6drBIpDeNofK9k4uA
-         WAnAIINR8rK0mmzxVkaWVXpWxyf1UG0PswMSjveTc6zGq5r3t8TsZj8SUr70FTv1a1Ok
-         d9kA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:from:to:cc:subject:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=kZqIs70OTt6jii795NJ0qzTYWchhAv15K9Xbii8uxEY=;
-        b=jx4W/mUBB5urdtm+SK40pqkwbiA62f8rj6YiGPKg9bcRuos9o292JkhVZ3qlu+r+GD
-         10kxmGZt/N0czM96ftuXvRcVLjaauu9l6D9lGOxobjKhzEHGoQ8xm5aSQwU6MaSBeHLj
-         gwvjYtX6QQQKQHKYziPWPvQ/YDRv4elWMLrHRrPMxl3utNbgIRWZwDz3lCwqZMcRjifI
-         UX2BVY5/e8rGMZOGf3+VWBvc4MN530CrGjfXiLE7V5QzUnlrNKhivyBkv1Uf8cAjLpPK
-         B0XZI7dIF1UB5LX9D1S2GCqk8eSv4bPf7xIk64YymjPlnhxKZK2Vue412SBqauXHdvrI
-         jdsA==
-X-Gm-Message-State: AJIora9ndDZ+YsF3T75/pk9ptcpnHRzlSZ/83g6iKYzrmbLzFBv+0vMj
-        AG1w+LtQFbLQcwbXI5ZXFnk=
-X-Google-Smtp-Source: AGRyM1v6fxEC2x1zCBi16bwizxaClsgUJu80BMz4g/bFoXggudO0Qbz1kaXsSRWtgQ6ovciwd0/sRg==
-X-Received: by 2002:a17:907:6e01:b0:726:9a7b:59b7 with SMTP id sd1-20020a1709076e0100b007269a7b59b7mr39760566ejc.752.1657103480336;
-        Wed, 06 Jul 2022 03:31:20 -0700 (PDT)
-Received: from Ansuel-xps. (93-42-70-190.ip85.fastwebnet.it. [93.42.70.190])
-        by smtp.gmail.com with ESMTPSA id g1-20020a170906538100b0072a55ebbc77sm9122331ejo.66.2022.07.06.03.31.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 06 Jul 2022 03:31:19 -0700 (PDT)
-Message-ID: <62c56477.1c69fb81.8ec4c.f1ac@mx.google.com>
-X-Google-Original-Message-ID: <YsVgkpprrGAgg5oz@Ansuel-xps.>
-Date:   Wed, 6 Jul 2022 12:14:42 +0200
-From:   Christian Marangi <ansuelsmth@gmail.com>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Jonathan McDowell <noodles@earth.li>
-Subject: Re: [PATCH 09/13] ARM: dts: qcom: add smem node for ipq8064
-References: <20220705133917.8405-1-ansuelsmth@gmail.com>
- <20220705133917.8405-10-ansuelsmth@gmail.com>
- <c5bf6246-a350-8a87-71bc-bc13d502a8af@linaro.org>
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1657102630; x=1688638630;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=VwlfvnG2tSLYTcnCDSEuoyt5q/+OAYIkK+DH0Z8k1qo=;
+  b=HNAjkkO8/6SDDAVdUlzGY9/YtM3SAmzLWu83JnJ1HKHLJDXn43JzGbFB
+   LwCTiOC00O4UC+2e7nmY8stpO/Db0HHHQRtWIYAm9OQQrX3eDLkvknF91
+   o7OTUpFAlWFgGfgVwoR19WUkIgIDeTSoQN42oJe3etdwt8jb8ngulQfld
+   s=;
+Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 06 Jul 2022 03:17:09 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Jul 2022 03:17:09 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Wed, 6 Jul 2022 03:17:08 -0700
+Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Wed, 6 Jul 2022 03:17:04 -0700
+From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
+        <robh+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_rohkumar@quicinc.com>, <srinivas.kandagatla@linaro.org>,
+        <dianders@chromium.org>, <swboyd@chromium.org>,
+        <judyhsiao@chromium.org>
+CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Subject: [PATCH] arm64: dts: qcom: sc7280: Move wcd specific pin conf to common file
+Date:   Wed, 6 Jul 2022 15:46:51 +0530
+Message-ID: <1657102611-20067-1-git-send-email-quic_srivasam@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <c5bf6246-a350-8a87-71bc-bc13d502a8af@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jul 06, 2022 at 10:39:16AM +0200, Krzysztof Kozlowski wrote:
-> On 05/07/2022 15:39, Christian Marangi wrote:
-> > Add missing smem node for ipq8064.
-> > 
-> > Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-> > Tested-by: Jonathan McDowell <noodles@earth.li>
-> > ---
-> >  arch/arm/boot/dts/qcom-ipq8064.dtsi | 18 ++++++++++++++++++
-> >  1 file changed, 18 insertions(+)
-> > 
-> > diff --git a/arch/arm/boot/dts/qcom-ipq8064.dtsi b/arch/arm/boot/dts/qcom-ipq8064.dtsi
-> > index b5aede3d7ccf..98527a7d885e 100644
-> > --- a/arch/arm/boot/dts/qcom-ipq8064.dtsi
-> > +++ b/arch/arm/boot/dts/qcom-ipq8064.dtsi
-> > @@ -908,6 +908,11 @@ lcc: clock-controller@28000000 {
-> >  			#reset-cells = <1>;
-> >  		};
-> >  
-> > +		sfpb_mutex_block: syscon@1200600 {
-> > +			compatible = "syscon";
-> 
-> syscon alone is not allowed.
->
+Move wcd specific pin conf to common file to support various
+herbronie variant boards and to avoid duplicate nodes in dts files.
 
-Mh... This is problematic. How this should be handled?
-This should be put in sfpb_mutex and change the driver to use regs if
-present instead of syscon?
+Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+---
+ .../dts/qcom/sc7280-herobrine-audio-wcd9385.dtsi   | 71 ++++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts  | 61 -------------------
+ 2 files changed, 71 insertions(+), 61 deletions(-)
 
-> > +			reg = <0x01200600 0x100>;
-> > +		};
-> > +
-> >  		pcie0: pci@1b500000 {
-> >  			compatible = "qcom,pcie-ipq8064";
-> >  			reg = <0x1b500000 0x1000
-> > @@ -1332,4 +1337,17 @@ sdcc3: mmc@12180000 {
-> >  			};
-> >  		};
-> >  	};
-> > +
-> > +	sfpb_mutex: sfpb-mutex {
-> 
-> Generic node names, so hwlock
-> 
-> > +		compatible = "qcom,sfpb-mutex";
-> > +		syscon = <&sfpb_mutex_block 4 4>;
-> > +
-> > +		#hwlock-cells = <1>;
-> > +	};
-> > +
-> > +	smem {
-> > +		compatible = "qcom,smem";
-> > +		memory-region = <&smem>;
-> > +		hwlocks = <&sfpb_mutex 3>;
-> > +	};
-> >  };
-> 
-> 
-> Best regards,
-> Krzysztof
-
+diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-audio-wcd9385.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine-audio-wcd9385.dtsi
+index 32a1e78..b04d796 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-audio-wcd9385.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-audio-wcd9385.dtsi
+@@ -5,6 +5,77 @@
+  * Copyright (c) 2022, The Linux Foundation. All rights reserved.
+  */
+ 
++/* PINCTRL - BOARD-SPECIFIC */
++
++/*
++ * Methodology for gpio-line-names:
++ * - If a pin goes to CRD board and is named it gets that name.
++ * - If a pin goes to CRD board and is not named, it gets no name.
++ * - If a pin is totally internal to Qcard then it gets Qcard name.
++ * - If a pin is not hooked up on Qcard, it gets no name.
++ */
++&lpass_dmic01_clk {
++	drive-strength = <8>;
++	bias-disable;
++};
++
++&lpass_dmic01_clk_sleep {
++	drive-strength = <2>;
++};
++
++&lpass_dmic01_data {
++	bias-pull-down;
++};
++
++&lpass_dmic23_clk {
++	drive-strength = <8>;
++	bias-disable;
++};
++
++&lpass_dmic23_clk_sleep {
++	drive-strength = <2>;
++};
++
++&lpass_dmic23_data {
++	bias-pull-down;
++};
++
++&lpass_rx_swr_clk {
++	drive-strength = <2>;
++	slew-rate = <1>;
++	bias-disable;
++};
++
++&lpass_rx_swr_clk_sleep {
++	bias-pull-down;
++};
++
++&lpass_rx_swr_data {
++	drive-strength = <2>;
++	slew-rate = <1>;
++	bias-bus-hold;
++};
++
++&lpass_rx_swr_data_sleep {
++	bias-pull-down;
++};
++
++&lpass_tx_swr_clk {
++	drive-strength = <2>;
++	slew-rate = <1>;
++	bias-disable;
++};
++
++&lpass_tx_swr_clk_sleep {
++	bias-pull-down;
++};
++
++&lpass_tx_swr_data {
++	drive-strength = <2>;
++	slew-rate = <1>;
++	bias-bus-hold;
++};
++
+ &mi2s1_data0 {
+ 	drive-strength = <6>;
+ 	bias-disable;
+diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts b/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts
+index e9ca6c5..7881bbc 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts
++++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts
+@@ -155,67 +155,6 @@ ap_ts_pen_1v8: &i2c13 {
+  * - If a pin is totally internal to Qcard then it gets Qcard name.
+  * - If a pin is not hooked up on Qcard, it gets no name.
+  */
+-&lpass_dmic01_clk {
+-	drive-strength = <8>;
+-	bias-disable;
+-};
+-
+-&lpass_dmic01_clk_sleep {
+-	drive-strength = <2>;
+-};
+-
+-&lpass_dmic01_data {
+-	bias-pull-down;
+-};
+-
+-&lpass_dmic23_clk {
+-	drive-strength = <8>;
+-	bias-disable;
+-};
+-
+-&lpass_dmic23_clk_sleep {
+-	drive-strength = <2>;
+-};
+-
+-&lpass_dmic23_data {
+-	bias-pull-down;
+-};
+-
+-&lpass_rx_swr_clk {
+-	drive-strength = <2>;
+-	slew-rate = <1>;
+-	bias-disable;
+-};
+-
+-&lpass_rx_swr_clk_sleep {
+-	bias-pull-down;
+-};
+-
+-&lpass_rx_swr_data {
+-	drive-strength = <2>;
+-	slew-rate = <1>;
+-	bias-bus-hold;
+-};
+-
+-&lpass_rx_swr_data_sleep {
+-	bias-pull-down;
+-};
+-
+-&lpass_tx_swr_clk {
+-	drive-strength = <2>;
+-	slew-rate = <1>;
+-	bias-disable;
+-};
+-
+-&lpass_tx_swr_clk_sleep {
+-	bias-pull-down;
+-};
+-
+-&lpass_tx_swr_data {
+-	drive-strength = <2>;
+-	slew-rate = <1>;
+-	bias-bus-hold;
+-};
+ 
+ &pm8350c_gpios {
+ 	gpio-line-names = "FLASH_STROBE_1",		/* 1 */
 -- 
-	Ansuel
+2.7.4
+
