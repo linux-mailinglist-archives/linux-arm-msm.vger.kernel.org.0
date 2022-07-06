@@ -2,47 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8741B568889
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 14:44:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 172855688A4
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 14:49:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232688AbiGFMnr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Jul 2022 08:43:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46248 "EHLO
+        id S232746AbiGFMsM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Jul 2022 08:48:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50226 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232647AbiGFMnq (ORCPT
+        with ESMTP id S231162AbiGFMsL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Jul 2022 08:43:46 -0400
-Received: from relay08.th.seeweb.it (relay08.th.seeweb.it [5.144.164.169])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0152F193DE
-        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Jul 2022 05:43:45 -0700 (PDT)
+        Wed, 6 Jul 2022 08:48:11 -0400
+Received: from relay06.th.seeweb.it (relay06.th.seeweb.it [5.144.164.167])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2E7F201AA
+        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Jul 2022 05:48:10 -0700 (PDT)
 Received: from [192.168.1.101] (abxi46.neoplus.adsl.tpnet.pl [83.9.2.46])
         (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 28DEB3F7A6;
-        Wed,  6 Jul 2022 14:43:44 +0200 (CEST)
-Message-ID: <3c6d6d13-0612-e808-d14c-81f9b312664a@somainline.org>
-Date:   Wed, 6 Jul 2022 14:43:43 +0200
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id DC17A3F1E7;
+        Wed,  6 Jul 2022 14:48:08 +0200 (CEST)
+Message-ID: <3a9ee5ba-d89e-0e13-2053-8daf46306b71@somainline.org>
+Date:   Wed, 6 Jul 2022 14:48:08 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.11.0
-Subject: Re: [V3 7/7] remoteproc: sysmon: Send sysmon state only for running
- rprocs
+Subject: Re: [PATCH 01/13] ARM: dts: qcom: add multiple missing pin definition
+ for ipq8064
 Content-Language: en-US
-To:     Sibi Sankar <quic_sibis@quicinc.com>, bjorn.andersson@linaro.org
-Cc:     agross@kernel.org, mathieu.poirier@linaro.org,
-        dmitry.baryshkov@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Siddharth Gupta <sidgup@codeaurora.org>
-References: <1657022900-2049-1-git-send-email-quic_sibis@quicinc.com>
- <1657022900-2049-8-git-send-email-quic_sibis@quicinc.com>
+To:     Christian Marangi <ansuelsmth@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Jonathan McDowell <noodles@earth.li>
+References: <20220705133917.8405-1-ansuelsmth@gmail.com>
+ <20220705133917.8405-2-ansuelsmth@gmail.com>
 From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-In-Reply-To: <1657022900-2049-8-git-send-email-quic_sibis@quicinc.com>
+In-Reply-To: <20220705133917.8405-2-ansuelsmth@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
         RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -51,48 +54,87 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 5.07.2022 14:08, Sibi Sankar wrote:
-> From: Siddharth Gupta <sidgup@codeaurora.org>
+On 5.07.2022 15:39, Christian Marangi wrote:
+> Add missing definition for mdio0 pins used for gpio-bitbang driver,i2c4
+> pins and rgmii2 pins for ipq8064.
 > 
-> When a new remoteproc boots up, send the sysmon state notification
-> of only running remoteprocs. Sending state of remoteprocs booting
-> up in parallel can cause a race between SSR clients of the remoteproc
-> that is booting up and the sysmon notification for the same remoteproc,
-> resulting in an inconsistency between which state the remoteproc that
-> is booting up in parallel.
-> 
-> For example - if remoteproc A and B crash one after the other, after
-> remoteproc A boots up, if the remoteproc A tries to get the state of
-> remoteproc B before the sysmon subdevice for B is invoked but after
-> the ssr subdevice of B has been invoked, clients on remoteproc A
-> might get confused when the sysmon notification indicates a different
-> state.
-> 
-> Signed-off-by: Siddharth Gupta <sidgup@codeaurora.org>
-> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+> Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+> Tested-by: Jonathan McDowell <noodles@earth.li>
 > ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+>  arch/arm/boot/dts/qcom-ipq8064.dtsi | 34 +++++++++++++++++++++++++++++
+>  1 file changed, 34 insertions(+)
+> 
+> diff --git a/arch/arm/boot/dts/qcom-ipq8064.dtsi b/arch/arm/boot/dts/qcom-ipq8064.dtsi
+> index 4b475d98343c..f06a17bd915a 100644
+> --- a/arch/arm/boot/dts/qcom-ipq8064.dtsi
+> +++ b/arch/arm/boot/dts/qcom-ipq8064.dtsi
+> @@ -382,6 +382,15 @@ mux {
+>  				};
+>  			};
+>  
+Hi,
+> +			i2c4_pins: i2c4_pinmux {
+No underscores in node names (use them only in labels), please.
+
+Also, please rename this to something like i2c4-default, for
+example to make it clear which power state it represents (I 
+suppose i2c4-sleep is going to appear sometime in the as well).
+
+
+> +				mux {
+
+Please drop the unnecessary mux{} level.
 
 Konrad
->  drivers/remoteproc/qcom_sysmon.c | 6 ++++--
->  1 file changed, 4 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/remoteproc/qcom_sysmon.c b/drivers/remoteproc/qcom_sysmon.c
-> index a9f04dd83ab6..57dde2a69b9d 100644
-> --- a/drivers/remoteproc/qcom_sysmon.c
-> +++ b/drivers/remoteproc/qcom_sysmon.c
-> @@ -512,10 +512,12 @@ static int sysmon_start(struct rproc_subdev *subdev)
+> +					pins = "gpio12", "gpio13";
+> +					function = "gsbi4";
+> +					drive-strength = <12>;
+> +					bias-disable;
+> +				};
+> +			};
+> +
+>  			spi_pins: spi_pins {
+>  				mux {
+>  					pins = "gpio18", "gpio19", "gpio21";
+> @@ -424,6 +433,8 @@ mux {
 >  
->  	mutex_lock(&sysmon_lock);
->  	list_for_each_entry(target, &sysmon_list, node) {
-> -		if (target == sysmon)
-> +		mutex_lock(&target->state_lock);
-> +		if (target == sysmon || target->state != SSCTL_SSR_EVENT_AFTER_POWERUP) {
-> +			mutex_unlock(&target->state_lock);
->  			continue;
-> +		}
+>  				pullups {
+>  					pins = "gpio39";
+> +					function = "nand";
+> +					drive-strength = <10>;
+>  					bias-pull-up;
+>  				};
 >  
-> -		mutex_lock(&target->state_lock);
->  		event.subsys_name = target->name;
->  		event.ssr_event = target->state;
+> @@ -431,9 +442,32 @@ hold {
+>  					pins = "gpio40", "gpio41", "gpio42",
+>  					       "gpio43", "gpio44", "gpio45",
+>  					       "gpio46", "gpio47";
+> +					function = "nand";
+> +					drive-strength = <10>;
+>  					bias-bus-hold;
+>  				};
+>  			};
+> +
+> +			mdio0_pins: mdio0_pins {
+> +				mux {
+> +					pins = "gpio0", "gpio1";
+> +					function = "mdio";
+> +					drive-strength = <8>;
+> +					bias-disable;
+> +				};
+> +			};
+> +
+> +			rgmii2_pins: rgmii2_pins {
+> +				mux {
+> +					pins = "gpio27", "gpio28", "gpio29",
+> +					       "gpio30", "gpio31", "gpio32",
+> +					       "gpio51", "gpio52", "gpio59",
+> +					       "gpio60", "gpio61", "gpio62";
+> +					function = "rgmii2";
+> +					drive-strength = <8>;
+> +					bias-disable;
+> +				};
+> +			};
+>  		};
 >  
+>  		intc: interrupt-controller@2000000 {
