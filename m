@@ -2,403 +2,157 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6E166569101
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 19:45:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 04D44569125
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 19:54:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234236AbiGFRo5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Jul 2022 13:44:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33194 "EHLO
+        id S234179AbiGFRyC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Jul 2022 13:54:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41308 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234220AbiGFRoj (ORCPT
+        with ESMTP id S234116AbiGFRx7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Jul 2022 13:44:39 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 717B32C133;
-        Wed,  6 Jul 2022 10:44:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1657129450; x=1688665450;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=C21R6YwpZ6S+qazhFSa7FqJfh0q5us7JeiD6mUwqoN8=;
-  b=cH7mHP/OS5MMT+W++9i7U7v9qv3T7cGfYyPE0LtD2qRYQiAVXLtJZCPI
-   2MDBJf1WnP91DsoemcndDIiP+2ba2TsTz2wRMlOdqKMqS0EUARH7brs6H
-   HzjFG+QC1mPb0WA9urmuj6k6w0nyXXhnGA/eRQ5F/jDAULJZl2GysERZI
-   k=;
-Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
-  by alexa-out.qualcomm.com with ESMTP; 06 Jul 2022 10:44:08 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Jul 2022 10:44:07 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 6 Jul 2022 10:44:07 -0700
-Received: from [10.216.39.82] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Wed, 6 Jul 2022
- 10:44:02 -0700
-Message-ID: <69e3fec3-bd49-8877-f1f8-453b09b8c940@quicinc.com>
-Date:   Wed, 6 Jul 2022 23:13:59 +0530
+        Wed, 6 Jul 2022 13:53:59 -0400
+Received: from NAM04-DM6-obe.outbound.protection.outlook.com (mail-dm6nam04on2040.outbound.protection.outlook.com [40.107.102.40])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E57C91F627;
+        Wed,  6 Jul 2022 10:53:58 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=h6dElNbeca8U2EpeecwxtaCw4HJNBVCmldzvbEeSjB1Ef+qtEhBDLVVVkvETuKtwwWS6MKQ/72uGqb+3Z3dRFl5PetcdinvQiiKScgwf/qtSeQk1ggsfpsJ6CwM9zV3Ec7d01litNhO8/ovbNt1FDR+PkYY5nXlWBFpfgWcb/haoxEV29fhM28IneEDb7hACCzmY4T1iJ6EIN21IdGIJsrQIBLpdvABz0tn/xs75c1y8G2fIGdoNbDDHVcQ3ib7rtr/1JCxFeKnvxLYLrUy17w6sXLx0v0oymKrHx2SLuMJipb7ZpQXm34mt6adQ347TtW+6QmkasSr7CRhKpQ01Vw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=YQPVPIuhkcS7tuL1RwC5N21Hr8Gq0dHikBkRvlIB6C8=;
+ b=IPcAWEUdpSKp9YOkFYtGVsIKHYOxu4Hu9Yjqk5yCO6EoM16tCAk2ezfJ0s2iprvS1dQ12PMtTPZWkKIai0GvpD8VqqJOqHlDXPOk5xf9Aopro/oDpXXPjuSjp70okK1gQVfiFK+mTV/pZG3zA7IrSPO1ssVJCRslc6jKvtx05Lq/b87RLS1WDI8dOwI6f1bKbGb97p7sGVpz9SvCgrjBp+Zb7MGMkYoJPQoEV9Z2WOj2aU+Y4pgDajdROXAtSxd+XEq2HiSrKSbmyAYATmzNrBnT4Yf5vEDJIxQEF6TxGEsFkeeWnAQGxWxfYwWTYM/Xw3G2VMC/eVlg29RtVO2HVw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 12.22.5.235) smtp.rcpttodomain=gmail.com smtp.mailfrom=nvidia.com; dmarc=pass
+ (p=reject sp=reject pct=100) action=none header.from=nvidia.com; dkim=none
+ (message not signed); arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=YQPVPIuhkcS7tuL1RwC5N21Hr8Gq0dHikBkRvlIB6C8=;
+ b=ud4Y92zYyTHuoWCV+fCn7SPHgoZWmetAD3+4rBOZln7Em62zPlurbFnRpIS7qU9i3+6ogh97Dam3t2THlaNmwj/i4XS5UUXVj66jSg+sekJXbalOfWQwJwMLRhHZT7XX1tKXHF7xr72NnhZfxRN1Z/5gek+IIPoZsgJmbdlCIbAjfuYn5iHC1lkyJpWckE8wxNzWCXt78sxCyCB6vvSSiCMKk49tYDPmeuvubSG6tFviSvCDRLWl2iT14xEmkSP3UJ5C2UqXNUrOqKjcGLv/WgNb32cFnmS+5YV3dfqV7tgrX0jB8ZyBJ5xAUHnFIedMrcsMr2PbQGA0tofWGPfRNA==
+Received: from MWHPR10CA0050.namprd10.prod.outlook.com (2603:10b6:300:2c::12)
+ by DM4PR12MB5280.namprd12.prod.outlook.com (2603:10b6:5:39d::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5395.15; Wed, 6 Jul
+ 2022 17:53:57 +0000
+Received: from CO1NAM11FT040.eop-nam11.prod.protection.outlook.com
+ (2603:10b6:300:2c:cafe::e0) by MWHPR10CA0050.outlook.office365.com
+ (2603:10b6:300:2c::12) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5417.15 via Frontend
+ Transport; Wed, 6 Jul 2022 17:53:56 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 12.22.5.235)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 12.22.5.235 as permitted sender) receiver=protection.outlook.com;
+ client-ip=12.22.5.235; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (12.22.5.235) by
+ CO1NAM11FT040.mail.protection.outlook.com (10.13.174.140) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
+ 15.20.5417.15 via Frontend Transport; Wed, 6 Jul 2022 17:53:56 +0000
+Received: from rnnvmail204.nvidia.com (10.129.68.6) by DRHQMAIL107.nvidia.com
+ (10.27.9.16) with Microsoft SMTP Server (TLS) id 15.0.1497.32; Wed, 6 Jul
+ 2022 17:53:56 +0000
+Received: from rnnvmail205.nvidia.com (10.129.68.10) by rnnvmail204.nvidia.com
+ (10.129.68.6) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.26; Wed, 6 Jul 2022
+ 10:53:55 -0700
+Received: from Asurada-Nvidia (10.127.8.14) by mail.nvidia.com (10.129.68.10)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.26 via Frontend
+ Transport; Wed, 6 Jul 2022 10:53:53 -0700
+Date:   Wed, 6 Jul 2022 10:53:52 -0700
+From:   Nicolin Chen <nicolinc@nvidia.com>
+To:     Alex Williamson <alex.williamson@redhat.com>
+CC:     <joro@8bytes.org>, <will@kernel.org>, <marcan@marcan.st>,
+        <sven@svenpeter.dev>, <robin.murphy@arm.com>,
+        <robdclark@gmail.com>, <baolu.lu@linux.intel.com>,
+        <orsonzhai@gmail.com>, <baolin.wang7@gmail.com>,
+        <zhang.lyra@gmail.com>, <jean-philippe@linaro.org>,
+        <jgg@nvidia.com>, <kevin.tian@intel.com>,
+        <suravee.suthikulpanit@amd.com>, <alyssa@rosenzweig.io>,
+        <dwmw2@infradead.org>, <mjrosato@linux.ibm.com>,
+        <gerald.schaefer@linux.ibm.com>, <thierry.reding@gmail.com>,
+        <vdumpa@nvidia.com>, <jonathanh@nvidia.com>, <cohuck@redhat.com>,
+        <thunder.leizhen@huawei.com>, <christophe.jaillet@wanadoo.fr>,
+        <chenxiang66@hisilicon.com>, <john.garry@huawei.com>,
+        <yangyingliang@huawei.com>, <iommu@lists.linux.dev>,
+        <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-s390@vger.kernel.org>,
+        <linux-tegra@vger.kernel.org>,
+        <virtualization@lists.linux-foundation.org>, <kvm@vger.kernel.org>
+Subject: Re: [PATCH v5 0/5] cover-letter: Simplify vfio_iommu_type1
+ attach/detach routine
+Message-ID: <YsXMMCX5LY/3IOtf@Asurada-Nvidia>
+References: <20220701214455.14992-1-nicolinc@nvidia.com>
+ <20220706114217.105f4f61.alex.williamson@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: [V2] tty: serial: qcom-geni-serial: Fix get_clk_div_rate() which
- otherwise could return a sub-optimal clock rate.
-Content-Language: en-CA
-To:     Doug Anderson <dianders@chromium.org>,
-        "Vijaya Krishna Nivarthi (Temp)" <vnivarth@qti.qualcomm.com>
-CC:     Andy Gross <agross@kernel.org>,
-        "bjorn.andersson@linaro.org" <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jiri Slaby <jirislaby@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "linux-serial@vger.kernel.org" <linux-serial@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        "Mukesh Savaliya (QUIC)" <quic_msavaliy@quicinc.com>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        "Stephen Boyd" <swboyd@chromium.org>
-References: <1656496841-5853-1-git-send-email-quic_vnivarth@quicinc.com>
- <CAD=FV=UXP+dfYEHpsS_djnWYxNVUS__2Uu5Mmxt2G4T=vfSSQQ@mail.gmail.com>
- <BL0PR02MB4564A1EC37911A464BBEC260FABD9@BL0PR02MB4564.namprd02.prod.outlook.com>
- <CAD=FV=XCgsyTRT-T5jKN6c7tJ=du8gbpkMccm2VZpz+TFWyLsw@mail.gmail.com>
- <BL0PR02MB45643EEB3C1571E0F2364B8FFABE9@BL0PR02MB4564.namprd02.prod.outlook.com>
- <CAD=FV=Up_NNd5RNJ+xLrPOHfPb_YG1ut=BjU=O2yP8w2hG9Ugw@mail.gmail.com>
-From:   Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-In-Reply-To: <CAD=FV=Up_NNd5RNJ+xLrPOHfPb_YG1ut=BjU=O2yP8w2hG9Ugw@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20220706114217.105f4f61.alex.williamson@redhat.com>
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: 2af2284f-cf26-432e-ddd3-08da5f787f9f
+X-MS-TrafficTypeDiagnostic: DM4PR12MB5280:EE_
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: TA6wmf5iv/NwH5LQQ58dPM/DvO5uz7Yh1C0R2KST3NMbv4AQzL90/oeDyL1KpdObs1vpFSknxYoy0S0Tee12I1dqk+RQNkl+nwq77CuK7+gM6J9NSp2v3BGjjB1ryB00PtsmAPmQr8YketWLJc80tKUiPGEEIz4JdPOhmjmZGeoCZ9nnKLmgz5kwEV+S12ESYVkV43VboCtErWvtDZ0ogXjGs1qh67yXyljBTqKxOLofuYbgaKOEpXjTbdrfVd8X0tblRVPOKMRxgOQaxVV9yxRVpWxAkNBDZgNHciiIMETu726AoQK52N2RBrHbfjVCFUXgBA/Z4VX7Yua2VgJ+0xJTm61RPWoQtk5xkP2MLO2I+9SPGL7rHqhcsXIhBpKePcpVZl/pXj+yU28AyQ344H692t0L7w8/oHnzVFknp4Gz+ks4fATr1wqDYxcC5t/pvgf+/9JeAlM9qjbyDGEI2inakiThuMnhMSKvQPDxI4ai8RfemdbmvmpjOd9D0XpGDrhUk7ZZrzRN2fAmhq9AxpXUropc0+KEDDeoRYWYCMSoiDvNzRboFLzX4MqQI88osr0qL/pred/PL663aVoA3ozBAAYpfe1x5J5MHVpTAPBRAGwwxZmeNCeO7XLGnogF2eWlJSqwUxyDFZ1ADQPIbq8MBJ2/wTTSNzTAe75Nvaj72nPbUHjNeuUP6ZIvm82AiMxHxWIZgu9TeK+qRCaiI8OyX/jBXrXVk/BTP2Tl8C85Ojwo3T9Q9rTGq6Zwdg7oPp4KCRYw95r7NGYJU00DMVU5EE0EasoI0mMKSJ74MzyBvafoH2znwtaqH+o6WDfA7DHioabxYaExfmx/TFriXXaXfRFfg0oC48Y2MuHQzIvEi6YGycJbNQl88DXkFtRgpYUaLeZqRBvFn4MhRzguyDsuxapRYRWPX5Vbnw31dKGKdv8kiQYFzRB4Zfsaf2Zu
+X-Forefront-Antispam-Report: CIP:12.22.5.235;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:InfoNoRecords;CAT:NONE;SFS:(13230016)(4636009)(346002)(376002)(39860400002)(396003)(136003)(36840700001)(46966006)(40470700004)(47076005)(336012)(426003)(54906003)(83380400001)(6916009)(36860700001)(40460700003)(186003)(41300700001)(82740400003)(316002)(82310400005)(4326008)(70206006)(5660300002)(7416002)(7406005)(9686003)(8936002)(81166007)(356005)(966005)(478600001)(86362001)(33716001)(26005)(40480700001)(2906002)(70586007)(8676002)(55016003)(36900700001);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Jul 2022 17:53:56.7150
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2af2284f-cf26-432e-ddd3-08da5f787f9f
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[12.22.5.235];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: CO1NAM11FT040.eop-nam11.prod.protection.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB5280
+X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FORGED_SPF_HELO,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Wed, Jul 06, 2022 at 11:42:17AM -0600, Alex Williamson wrote:
 
+> On Fri, 1 Jul 2022 14:44:50 -0700
+> Nicolin Chen <nicolinc@nvidia.com> wrote:
+> 
+> > This is a preparatory series for IOMMUFD v2 patches. It enforces error
+> > code -EMEDIUMTYPE in iommu_attach_device() and iommu_attach_group() when
+> > an IOMMU domain and a device/group are incompatible. It also drops the
+> > useless domain->ops check since it won't fail in current environment.
+> >
+> > These allow VFIO iommu code to simplify its group attachment routine, by
+> > avoiding the extra IOMMU domain allocations and attach/detach sequences
+> > of the old code.
+> >
+> > Worths mentioning the exact match for enforce_cache_coherency is removed
+> > with this series, since there's very less value in doing that as KVM will
+> > not be able to take advantage of it -- this just wastes domain memory.
+> > Instead, we rely on Intel IOMMU driver taking care of that internally.
+> >
+> > This is on github:
+> > https://github.com/nicolinc/iommufd/commits/vfio_iommu_attach
+> 
+> How do you foresee this going in, I'm imagining Joerg would merge the
+> first patch via the IOMMU tree and provide a topic branch that I'd
+> merge into the vfio tree along with the remaining patches.  Sound
+> right?  Thanks,
 
-On 7/6/2022 8:56 PM, Doug Anderson wrote:
-> Hi,
->
-> On Mon, Jul 4, 2022 at 11:57 AM Vijaya Krishna Nivarthi (Temp)
-> <vnivarth@qti.qualcomm.com> wrote:
->> Hi,
->>
->>
->>> -----Original Message-----
->>> From: Doug Anderson <dianders@chromium.org>
->>> Sent: Friday, July 1, 2022 8:38 PM
->>> To: Vijaya Krishna Nivarthi (Temp) (QUIC) <quic_vnivarth@quicinc.com>
->>> Cc: Andy Gross <agross@kernel.org>; bjorn.andersson@linaro.org; Konrad
->>> Dybcio <konrad.dybcio@somainline.org>; Greg Kroah-Hartman
->>> <gregkh@linuxfoundation.org>; Jiri Slaby <jirislaby@kernel.org>; linux-arm-
->>> msm <linux-arm-msm@vger.kernel.org>; linux-serial@vger.kernel.org; LKML
->>> <linux-kernel@vger.kernel.org>; Mukesh Savaliya (QUIC)
->>> <quic_msavaliy@quicinc.com>; Matthias Kaehlcke <mka@chromium.org>;
->>> Stephen Boyd <swboyd@chromium.org>
->>> Subject: Re: [V2] tty: serial: qcom-geni-serial: Fix get_clk_div_rate() which
->>> otherwise could return a sub-optimal clock rate.
->>>
->>> WARNING: This email originated from outside of Qualcomm. Please be wary
->>> of any links or attachments, and do not enable macros.
->>>
->>> Hi,
->>>
->>> On Fri, Jul 1, 2022 at 4:04 AM Vijaya Krishna Nivarthi (Temp) (QUIC)
->>> <quic_vnivarth@quicinc.com> wrote:
->>>> Hi,
->>>>
->>>>
->>>>> -----Original Message-----
->>>>> From: Doug Anderson <dianders@chromium.org>
->>>>> Sent: Thursday, June 30, 2022 4:45 AM
->>>>> To: Vijaya Krishna Nivarthi (Temp) (QUIC)
->>>>> <quic_vnivarth@quicinc.com>
->>>>> Cc: Andy Gross <agross@kernel.org>; bjorn.andersson@linaro.org;
->>>>> Konrad Dybcio <konrad.dybcio@somainline.org>; Greg Kroah-Hartman
->>>>> <gregkh@linuxfoundation.org>; Jiri Slaby <jirislaby@kernel.org>;
->>>>> linux-arm- msm <linux-arm-msm@vger.kernel.org>;
->>>>> linux-serial@vger.kernel.org; LKML <linux-kernel@vger.kernel.org>;
->>>>> Mukesh Savaliya (QUIC) <quic_msavaliy@quicinc.com>; Matthias
->>>>> Kaehlcke <mka@chromium.org>; Stephen Boyd
->>> <swboyd@chromium.org>
->>>>> Subject: Re: [V2] tty: serial: qcom-geni-serial: Fix
->>>>> get_clk_div_rate() which otherwise could return a sub-optimal clock rate.
->>>>>
->>>>>
->>>>>
->>>>>> +                               /* Save the first (lowest freq) within tolerance */
->>>>>> +                               ser_clk = freq;
->>>>>> +                               *clk_div = new_div;
->>>>>> +                               /* no more search for exact match required in 2nd run
->>> */
->>>>>> +                               if (!exact_match)
->>>>>> +                                       break;
->>>>>> +                       }
->>>>>> +               }
->>>>>>
->>>>>> -               prev = freq;
->>>>>> +               div = freq / desired_clk + 1;
->>>>> Can't you infinite loop now?
->>>>>
->>>>> Start with:
->>>>>
->>>>> desired_clk = 10000
->>>>> div = 1
->>>>> percent_tol = 2
->>>>>
->>>>>
->>>>> Now:
->>>>>
->>>>> mult = 10000
->>>>> offset = 200
->>>>> test_freq = 9800
->>>>> freq = 9800
->>>>> div = 9800 / 10000 + 1 = 0 + 1 = 1
->>>>>
->>>>> ...and then you'll loop again with "div = 1", won't you? ...or did I
->>>>> get something wrong in my analysis? This is the reason my proposed
->>>>> algorithm had two loops.
->>>>>
->>>>>
->>>> I went back to your proposed algorithm and made couple of simple
->>> changes, and it seemed like what we need.
->>>> a) look only for exact match once a clock rate within tolerance is
->>>> found
->>>> b) swap test_freq and freq at end of while loops to make it run as
->>>> desired
->>>>
->>>>
->>>>          maxdiv = CLK_DIV_MSK >> CLK_DIV_SHFT;
->>>>          div = 1;
->>>>
->>>>          while (div < maxdiv) {
->>>>                  mult = (unsigned long long)div * desired_clk;
->>>>                  if (mult != (unsigned long)mult)
->>>>                          break;
->>>>
->>>>                  if (ser_clk)
->>>>                          offset = 0;
->>>>                  ===================a=====================
->>>>                  else
->>>>                          offset = div_u64(mult * percent_tol, 100);
->>>>
->>>>                  /*
->>>>                   * Loop requesting (freq - 2%) and possibly (freq).
->>>>                   *
->>>>                   * We'll keep track of the lowest freq inexact match we found
->>>>                   * but always try to find a perfect match. NOTE: this algorithm
->>>>                   * could miss a slightly better freq if there's more than one
->>>>                   * freq between (freq - 2%) and (freq) but (freq) can't be made
->>>>                   * exactly, but that's OK.
->>>>                   *
->>>>                   * This absolutely relies on the fact that the Qualcomm clock
->>>>                   * driver always rounds up.
->>>>                   */
->>>>                  test_freq = mult - offset;
->>>>                  while (test_freq <= mult) {
->>>>                          freq = clk_round_rate(clk, test_freq);
->>>>
->>>>                          /*
->>>>                           * A dead-on freq is an insta-win. This implicitly
->>>>                           * handles when "freq == mult"
->>>>                           */
->>>>                          if (!(freq % desired_clk)) {
->>>>                                  *clk_div = freq / desired_clk;
->>>>                                  return freq;
->>>>                          }
->>>>
->>>>                          /*
->>>>                           * Only time clock framework doesn't round up is if
->>>>                           * we're past the max clock rate. We're done searching
->>>>                           * if that's the case.
->>>>                           */
->>>>                          if (freq < test_freq)
->>>>                                  return ser_clk;
->>>>
->>>>                          /* Save the first (lowest freq) within tolerance */
->>>>                          if (!ser_clk && freq <= mult + offset) {
->>>>                                  ser_clk = freq;
->>>>                                  *clk_div = div;
->>>>                          }
->>>>
->>>>                          /*
->>>>                           * If we already rounded up past mult then this will
->>>>                           * cause the loop to exit. If not then this will run
->>>>                           * the loop a second time with exactly mult.
->>>>                           */
->>>>                          test_freq = max(test_freq + 1, mult);
->>>>                                                       ====b====
->>>>                  }
->>>>
->>>>                  /*
->>>>                   * freq will always be bigger than mult by at least 1.
->>>>                   * That means we can get the next divider with a DIV_ROUND_UP.
->>>>                   * This has the advantage of skipping by a whole bunch of divs
->>>>                   * If the clock framework already bypassed them.
->>>>                   */
->>>>                  div = DIV_ROUND_UP(freq, desired_clk);
->>>>                                                         ===b==
->>>>          }
->>>>
->>>>
->>>> Will also drop exact_match now.
->>>>
->>>> Will upload v3 after testing.
->>> The more I've been thinking about it, the more I wonder if we even need the
->>> special case of looking for an exact match at all. It feels like we should choose
->>> one: we either look for the best match or we look for the one with the
->>> lowest clock source rate. The weird half-half approach that we have right
->>> now feels like over-engineering and complicates things.
->>>
->>> How about this (again, only lightly tested). Worst case if we _truly_ need a
->>> close-to-exact match we could pass a tolerance of 0 in and we'd get
->>> something that's nearly exact, though I'm not suggesting we actually do that.
->>> If we think 2% is good enough then we should just accept the first (and
->>> lowest clock rate) 2% match we find.
->>>
->>>      abs_tol = div_u64((u64)desired_clk * percent_tol, 100);
->>>      maxdiv = CLK_DIV_MSK >> CLK_DIV_SHFT;
->>>      div = 1;
->>>      while (div <= maxdiv) {
->>>          mult = (u64)div * desired_clk;
->>>          if (mult != (unsigned long)mult)
->>>              break;
->>>
->>>          offset = div * abs_tol;
->>>          freq = clk_round_rate(clk, mult - offset);
->>>
->>>          /* Can only get lower if we're done */
->>>          if (freq < mult - offset)
->>>              break;
->>>
->>>          /*
->>>           * Re-calculate div in case rounding skipped rates but we
->>>           * ended up at a good one, then check for a match.
->>>           */
->>>          div = DIV_ROUND_CLOSEST(freq, desired_clk);
->>>          achieved = DIV_ROUND_CLOSEST(freq, div);
->>>          if (achieved <= desired_clk + abs_tol &&
->>>              achieved >= desired_clk - abs_tol) {
->>>              *clk_div = div;
->>>              return freq;
->>>          }
->>>
->>>          /*
->>>           * Always increase div by at least one, but we'll go more than
->>>           * one if clk_round_rate() gave us something higher.
->>>           */
->>>          div = DIV_ROUND_UP(max(freq, (unsigned long)mult) + 1, desired_clk);
->> Wouldn’t DIV_ROUND_UP(freq, desired_clk) suffice here?
->> freq >= mult-offset, else we would have hit break.
-> No. As you say, freq >= "mult-offset". That means that freq could be
-> == "mult-offset", right? If offset > 0 then freq could be < mult. Then
-> your DIV_ROUND_UP() would just take you right back to where you
-> started the loop with and you'd end up with an infinite loop, wouldn't
-> you?
->
-Probably No.
+We don't have any build dependency between the IOMMU change and
+VFIO changes, yet, without the IOMMU one, any iommu_attach_group()
+failure now would be a hard failure without a chance falling back
+to a new_domain, which is slightly different from the current flow.
 
-( (freq >= mult-offset) && (freq <= mult) ) =>
-
-( (freq >= mult-offset) && (freq <= mult+offset) )
-
-would mean that
-
-div = DIV_ROUND_CLOSEST(freq, desired_clk);
-evaluates to original div and we are within tolerance and hence we can return and hence don't even reach DIV_ROUND_UP?
-
-Please note that freq can skip any multiples and land up anywhere.
-
-As long as it has not gone beyond clock rate table, either it lands 
-within tolerance of nearest multiple of desired_clk (in which case we 
-return)
-
-OR
-
-We move on to next div = (freq/desired_clk + 1)
-
-
-I retract div++, I was mistaken to believe that DIV_ROUND_UP(freq, 
-desired_clk) would be same as div++.
-
-Thank you.
-
->> Additionally if freq <= mult we would have hit return.
->> So always freq > mult?
->>
->> And hence div++ would do the same?
-> I thought about it and I decided that it might not if the clock
-> framework skipped a whole bunch. Let's see if I can give an example.
->
-> Let's say
-> * "desired_clk" is 10000
-> * "percent_tol" is 2 (abs_tol = 200)
-> * We can make clocks 17000, 20000, 25000.
->
-> First time through the loop:
->
-> mult = 10000
-> offset = 200
-> freq = 17000
-> div = 2
-> achieved = 8500 (not within tolerance)
->
-> ...at the end of the loop if we do "div++" then we'll end up with
-> div=3 for the next loop and we'll miss finding 20000.
-> ...but if we do my math, we end up with:
->
-> DIV_ROUND_UP(max(17000, 10000) + 1, 10000)
-> DIV_ROUND_UP(17000 + 1, 10000)
-> DIV_ROUND_UP(17000, 10000)
-> 2
->
-> ...and that's exactly what we want.
->
->
-> Here's an example showing why the line "div = DIV_ROUND_CLOSEST(freq,
-> desired_clk)" is important:
->
-> * "desired_clk" is 10000
-> * "percent_tol" is 2 (abs_tol = 200)
-> * We can make clocks 19600, 25000.
->
-> mult = 10000
-> offset = 200
-> freq = 19600
-> div = 2
-> achieved = 9800
->
-> Returns 19600 and div=2
->
->
-> Here's an example showing how the clock framework rounding lets us
-> skip some "div"s without missing anything important:
->
-> * "desired_clk" is 10000
-> * "percent_tol" is 2 (abs_tol = 200)
-> * We can make clocks 24000, 30000.
->
-> mult = 25000
-> offset = 200
-> freq = 24000
-> div = 2
-> achieved = 12000 (not within tolerance)
->
-> div = DIV_ROUND_UP(max(24000, 10000) + 1, 10000)
-> div = 3
->
-> mult = 30000
-> offset = 600
-> freq = 30000
-> div = 3
->
-> -Doug
+For a potential existing use case that relies on reusing existing
+domain, I think it'd be safer to have Joerg acking the first change
+so you merge them all? Thank!
