@@ -2,389 +2,169 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 928865691A1
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 20:22:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0D680569227
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 20:50:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233512AbiGFSWB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Jul 2022 14:22:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34988 "EHLO
+        id S230472AbiGFSt4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Jul 2022 14:49:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60480 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233187AbiGFSV5 (ORCPT
+        with ESMTP id S234525AbiGFStz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Jul 2022 14:21:57 -0400
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0CEE27CF3
-        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Jul 2022 11:21:55 -0700 (PDT)
-Received: by mail-ej1-x62a.google.com with SMTP id h23so28452171ejj.12
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Jul 2022 11:21:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=jTCcnXwrbvC9f2vkYBP1n1zMmWAv12/HjslqX/s4eDw=;
-        b=mJfU2hQC7iIBESYayCWOUCu/+eqdhnay4juHkR2cK3MObVEAgnDTvJg70J3aFQZk4q
-         3eKiqsOAFWoThsdmC3u0rQ2XhTBN/fjYz7oAKrBkoep+Ss8+FV6QjFK3Yt3qsrD1Olwi
-         +AdWNRtfEIafRh3yHV24+bvzLRPwriahB8VK0=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=jTCcnXwrbvC9f2vkYBP1n1zMmWAv12/HjslqX/s4eDw=;
-        b=uisJrFIosKCrcLPHpVmfmyLnzCzdJNCt7FVg1HeD9czBSVyAg5HrAQf7jQuQky4fl6
-         HoguqB6TOwsqNybja3Z4EMcO8R9hUZAWGU4YN2QOix4hy79abI5VPqoOdyIKMGwqdjRB
-         ClHHA0R0UjOlgkO4CZsBqZJ2aWVV6jg1TsskITNcu9D6YKgSgQhAePx8UlH0woEG97cX
-         ++CzWY4Qp1dhudNb17z/NMQjajHZOyqLzcaGi/YDivD1VWSylRQFFM3x4L5lSExXGz7S
-         fRw/wHFMKMaU8tGWAUwXzPTub5b3w+wKxP6IU34DqSGV9pzsksMpU+ka+aZKkPjCUIER
-         8pgA==
-X-Gm-Message-State: AJIora+DV6bWf0RB3++PMmEoa22NT7UH+WHLeywW9p2s6Y9ol+gPh0mO
-        u58AKGQw6X4OBgp6FtkV3j6I6p6pDFzoUX0e
-X-Google-Smtp-Source: AGRyM1s2V/Njjd1ytdKGOmB4L+86FTzcekA3l9R1wmTGEzTP5Tc+1zq1slBN3N4nn33mctUI7E8KRA==
-X-Received: by 2002:a17:907:7f8e:b0:712:f503:1a56 with SMTP id qk14-20020a1709077f8e00b00712f5031a56mr39130934ejc.364.1657131714176;
-        Wed, 06 Jul 2022 11:21:54 -0700 (PDT)
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com. [209.85.221.46])
-        by smtp.gmail.com with ESMTPSA id w2-20020a170906384200b00722f8d02928sm17858549ejc.174.2022.07.06.11.21.50
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 06 Jul 2022 11:21:52 -0700 (PDT)
-Received: by mail-wr1-f46.google.com with SMTP id f2so17829435wrr.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Jul 2022 11:21:50 -0700 (PDT)
-X-Received: by 2002:adf:d1e9:0:b0:21b:c8f8:3c16 with SMTP id
- g9-20020adfd1e9000000b0021bc8f83c16mr37736518wrd.659.1657131710095; Wed, 06
- Jul 2022 11:21:50 -0700 (PDT)
-MIME-Version: 1.0
-References: <1656496841-5853-1-git-send-email-quic_vnivarth@quicinc.com>
- <CAD=FV=UXP+dfYEHpsS_djnWYxNVUS__2Uu5Mmxt2G4T=vfSSQQ@mail.gmail.com>
- <BL0PR02MB4564A1EC37911A464BBEC260FABD9@BL0PR02MB4564.namprd02.prod.outlook.com>
- <CAD=FV=XCgsyTRT-T5jKN6c7tJ=du8gbpkMccm2VZpz+TFWyLsw@mail.gmail.com>
- <BL0PR02MB45643EEB3C1571E0F2364B8FFABE9@BL0PR02MB4564.namprd02.prod.outlook.com>
- <CAD=FV=Up_NNd5RNJ+xLrPOHfPb_YG1ut=BjU=O2yP8w2hG9Ugw@mail.gmail.com> <69e3fec3-bd49-8877-f1f8-453b09b8c940@quicinc.com>
-In-Reply-To: <69e3fec3-bd49-8877-f1f8-453b09b8c940@quicinc.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Wed, 6 Jul 2022 11:21:36 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=VhA=iGnip_DOdNOZn_mjqgC=37o4tWFQXNpTAqf=09sA@mail.gmail.com>
-Message-ID: <CAD=FV=VhA=iGnip_DOdNOZn_mjqgC=37o4tWFQXNpTAqf=09sA@mail.gmail.com>
-Subject: Re: [V2] tty: serial: qcom-geni-serial: Fix get_clk_div_rate() which
- otherwise could return a sub-optimal clock rate.
-To:     Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-Cc:     "Vijaya Krishna Nivarthi (Temp)" <vnivarth@qti.qualcomm.com>,
+        Wed, 6 Jul 2022 14:49:55 -0400
+Received: from mail-0301.mail-europe.com (mail-0301.mail-europe.com [188.165.51.139])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 419DF275E9;
+        Wed,  6 Jul 2022 11:49:54 -0700 (PDT)
+Date:   Wed, 06 Jul 2022 18:49:44 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=connolly.tech;
+        s=protonmail; t=1657133389; x=1657392589;
+        bh=FQD+MMDt/Q8SRTTAfcqxo1U1VL4S1CdzwRULBkrzEs8=;
+        h=Date:To:From:Cc:Reply-To:Subject:Message-ID:In-Reply-To:
+         References:Feedback-ID:From:To:Cc:Date:Subject:Reply-To:
+         Feedback-ID:Message-ID;
+        b=SSodwAqUa6IEewyZfhwUlzSIwB7mAi7o0Tc/QGeKhXjB2Akhlw2pRuB12+A7pixy6
+         xAsI5FDQK8WDXRaYkjfeSR3yyijiP9MY2yLgnEhiWWhoj9weJp+KZo9YZyShXlQPnC
+         B5DsoTiTV825+tQlgOXwfaaM+pjvSniQUo6uyQZo=
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Alexander Martinz <amartinz@shiftphones.com>
+From:   Caleb Connolly <caleb@connolly.tech>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
         Andy Gross <agross@kernel.org>,
-        "bjorn.andersson@linaro.org" <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jiri Slaby <jirislaby@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "linux-serial@vger.kernel.org" <linux-serial@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        "Mukesh Savaliya (QUIC)" <quic_msavaliy@quicinc.com>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Stephen Boyd <swboyd@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Dylan Van Assche <me@dylanvanassche.be>
+Reply-To: Caleb Connolly <caleb@connolly.tech>
+Subject: Re: [PATCH 1/2] arch: arm64: qcom: sdm845-shift-axolotl: fix Bluetooth firmware loading
+Message-ID: <0488a37f-083c-6e8c-eff2-e204b242cbfb@connolly.tech>
+In-Reply-To: <CAA8EJpqz32_LxmBVbcLt0sV=e1JzGtWEmMsKsQNoZzuGgLWbBQ@mail.gmail.com>
+References: <20220609095412.211060-1-amartinz@shiftphones.com> <CAA8EJpqz32_LxmBVbcLt0sV=e1JzGtWEmMsKsQNoZzuGgLWbBQ@mail.gmail.com>
+Feedback-ID: 10753939:user:proton
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
 
-On Wed, Jul 6, 2022 at 10:44 AM Vijaya Krishna Nivarthi
-<quic_vnivarth@quicinc.com> wrote:
->
-> Hi,
->
->
-> On 7/6/2022 8:56 PM, Doug Anderson wrote:
-> > Hi,
-> >
-> > On Mon, Jul 4, 2022 at 11:57 AM Vijaya Krishna Nivarthi (Temp)
-> > <vnivarth@qti.qualcomm.com> wrote:
-> >> Hi,
-> >>
-> >>
-> >>> -----Original Message-----
-> >>> From: Doug Anderson <dianders@chromium.org>
-> >>> Sent: Friday, July 1, 2022 8:38 PM
-> >>> To: Vijaya Krishna Nivarthi (Temp) (QUIC) <quic_vnivarth@quicinc.com>
-> >>> Cc: Andy Gross <agross@kernel.org>; bjorn.andersson@linaro.org; Konra=
-d
-> >>> Dybcio <konrad.dybcio@somainline.org>; Greg Kroah-Hartman
-> >>> <gregkh@linuxfoundation.org>; Jiri Slaby <jirislaby@kernel.org>; linu=
-x-arm-
-> >>> msm <linux-arm-msm@vger.kernel.org>; linux-serial@vger.kernel.org; LK=
-ML
-> >>> <linux-kernel@vger.kernel.org>; Mukesh Savaliya (QUIC)
-> >>> <quic_msavaliy@quicinc.com>; Matthias Kaehlcke <mka@chromium.org>;
-> >>> Stephen Boyd <swboyd@chromium.org>
-> >>> Subject: Re: [V2] tty: serial: qcom-geni-serial: Fix get_clk_div_rate=
-() which
-> >>> otherwise could return a sub-optimal clock rate.
-> >>>
-> >>> WARNING: This email originated from outside of Qualcomm. Please be wa=
-ry
-> >>> of any links or attachments, and do not enable macros.
-> >>>
-> >>> Hi,
-> >>>
-> >>> On Fri, Jul 1, 2022 at 4:04 AM Vijaya Krishna Nivarthi (Temp) (QUIC)
-> >>> <quic_vnivarth@quicinc.com> wrote:
-> >>>> Hi,
-> >>>>
-> >>>>
-> >>>>> -----Original Message-----
-> >>>>> From: Doug Anderson <dianders@chromium.org>
-> >>>>> Sent: Thursday, June 30, 2022 4:45 AM
-> >>>>> To: Vijaya Krishna Nivarthi (Temp) (QUIC)
-> >>>>> <quic_vnivarth@quicinc.com>
-> >>>>> Cc: Andy Gross <agross@kernel.org>; bjorn.andersson@linaro.org;
-> >>>>> Konrad Dybcio <konrad.dybcio@somainline.org>; Greg Kroah-Hartman
-> >>>>> <gregkh@linuxfoundation.org>; Jiri Slaby <jirislaby@kernel.org>;
-> >>>>> linux-arm- msm <linux-arm-msm@vger.kernel.org>;
-> >>>>> linux-serial@vger.kernel.org; LKML <linux-kernel@vger.kernel.org>;
-> >>>>> Mukesh Savaliya (QUIC) <quic_msavaliy@quicinc.com>; Matthias
-> >>>>> Kaehlcke <mka@chromium.org>; Stephen Boyd
-> >>> <swboyd@chromium.org>
-> >>>>> Subject: Re: [V2] tty: serial: qcom-geni-serial: Fix
-> >>>>> get_clk_div_rate() which otherwise could return a sub-optimal clock=
- rate.
-> >>>>>
-> >>>>>
-> >>>>>
-> >>>>>> +                               /* Save the first (lowest freq) wi=
-thin tolerance */
-> >>>>>> +                               ser_clk =3D freq;
-> >>>>>> +                               *clk_div =3D new_div;
-> >>>>>> +                               /* no more search for exact match =
-required in 2nd run
-> >>> */
-> >>>>>> +                               if (!exact_match)
-> >>>>>> +                                       break;
-> >>>>>> +                       }
-> >>>>>> +               }
-> >>>>>>
-> >>>>>> -               prev =3D freq;
-> >>>>>> +               div =3D freq / desired_clk + 1;
-> >>>>> Can't you infinite loop now?
-> >>>>>
-> >>>>> Start with:
-> >>>>>
-> >>>>> desired_clk =3D 10000
-> >>>>> div =3D 1
-> >>>>> percent_tol =3D 2
-> >>>>>
-> >>>>>
-> >>>>> Now:
-> >>>>>
-> >>>>> mult =3D 10000
-> >>>>> offset =3D 200
-> >>>>> test_freq =3D 9800
-> >>>>> freq =3D 9800
-> >>>>> div =3D 9800 / 10000 + 1 =3D 0 + 1 =3D 1
-> >>>>>
-> >>>>> ...and then you'll loop again with "div =3D 1", won't you? ...or di=
-d I
-> >>>>> get something wrong in my analysis? This is the reason my proposed
-> >>>>> algorithm had two loops.
-> >>>>>
-> >>>>>
-> >>>> I went back to your proposed algorithm and made couple of simple
-> >>> changes, and it seemed like what we need.
-> >>>> a) look only for exact match once a clock rate within tolerance is
-> >>>> found
-> >>>> b) swap test_freq and freq at end of while loops to make it run as
-> >>>> desired
-> >>>>
-> >>>>
-> >>>>          maxdiv =3D CLK_DIV_MSK >> CLK_DIV_SHFT;
-> >>>>          div =3D 1;
-> >>>>
-> >>>>          while (div < maxdiv) {
-> >>>>                  mult =3D (unsigned long long)div * desired_clk;
-> >>>>                  if (mult !=3D (unsigned long)mult)
-> >>>>                          break;
-> >>>>
-> >>>>                  if (ser_clk)
-> >>>>                          offset =3D 0;
-> >>>>                  =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3Da=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> >>>>                  else
-> >>>>                          offset =3D div_u64(mult * percent_tol, 100)=
-;
-> >>>>
-> >>>>                  /*
-> >>>>                   * Loop requesting (freq - 2%) and possibly (freq).
-> >>>>                   *
-> >>>>                   * We'll keep track of the lowest freq inexact matc=
-h we found
-> >>>>                   * but always try to find a perfect match. NOTE: th=
-is algorithm
-> >>>>                   * could miss a slightly better freq if there's mor=
-e than one
-> >>>>                   * freq between (freq - 2%) and (freq) but (freq) c=
-an't be made
-> >>>>                   * exactly, but that's OK.
-> >>>>                   *
-> >>>>                   * This absolutely relies on the fact that the Qual=
-comm clock
-> >>>>                   * driver always rounds up.
-> >>>>                   */
-> >>>>                  test_freq =3D mult - offset;
-> >>>>                  while (test_freq <=3D mult) {
-> >>>>                          freq =3D clk_round_rate(clk, test_freq);
-> >>>>
-> >>>>                          /*
-> >>>>                           * A dead-on freq is an insta-win. This imp=
-licitly
-> >>>>                           * handles when "freq =3D=3D mult"
-> >>>>                           */
-> >>>>                          if (!(freq % desired_clk)) {
-> >>>>                                  *clk_div =3D freq / desired_clk;
-> >>>>                                  return freq;
-> >>>>                          }
-> >>>>
-> >>>>                          /*
-> >>>>                           * Only time clock framework doesn't round =
-up is if
-> >>>>                           * we're past the max clock rate. We're don=
-e searching
-> >>>>                           * if that's the case.
-> >>>>                           */
-> >>>>                          if (freq < test_freq)
-> >>>>                                  return ser_clk;
-> >>>>
-> >>>>                          /* Save the first (lowest freq) within tole=
-rance */
-> >>>>                          if (!ser_clk && freq <=3D mult + offset) {
-> >>>>                                  ser_clk =3D freq;
-> >>>>                                  *clk_div =3D div;
-> >>>>                          }
-> >>>>
-> >>>>                          /*
-> >>>>                           * If we already rounded up past mult then =
-this will
-> >>>>                           * cause the loop to exit. If not then this=
- will run
-> >>>>                           * the loop a second time with exactly mult=
-.
-> >>>>                           */
-> >>>>                          test_freq =3D max(test_freq + 1, mult);
-> >>>>                                                       =3D=3D=3D=3Db=
-=3D=3D=3D=3D
-> >>>>                  }
-> >>>>
-> >>>>                  /*
-> >>>>                   * freq will always be bigger than mult by at least=
- 1.
-> >>>>                   * That means we can get the next divider with a DI=
-V_ROUND_UP.
-> >>>>                   * This has the advantage of skipping by a whole bu=
-nch of divs
-> >>>>                   * If the clock framework already bypassed them.
-> >>>>                   */
-> >>>>                  div =3D DIV_ROUND_UP(freq, desired_clk);
-> >>>>                                                         =3D=3D=3Db=
-=3D=3D
-> >>>>          }
-> >>>>
-> >>>>
-> >>>> Will also drop exact_match now.
-> >>>>
-> >>>> Will upload v3 after testing.
-> >>> The more I've been thinking about it, the more I wonder if we even ne=
-ed the
-> >>> special case of looking for an exact match at all. It feels like we s=
-hould choose
-> >>> one: we either look for the best match or we look for the one with th=
-e
-> >>> lowest clock source rate. The weird half-half approach that we have r=
-ight
-> >>> now feels like over-engineering and complicates things.
-> >>>
-> >>> How about this (again, only lightly tested). Worst case if we _truly_=
- need a
-> >>> close-to-exact match we could pass a tolerance of 0 in and we'd get
-> >>> something that's nearly exact, though I'm not suggesting we actually =
-do that.
-> >>> If we think 2% is good enough then we should just accept the first (a=
-nd
-> >>> lowest clock rate) 2% match we find.
-> >>>
-> >>>      abs_tol =3D div_u64((u64)desired_clk * percent_tol, 100);
-> >>>      maxdiv =3D CLK_DIV_MSK >> CLK_DIV_SHFT;
-> >>>      div =3D 1;
-> >>>      while (div <=3D maxdiv) {
-> >>>          mult =3D (u64)div * desired_clk;
-> >>>          if (mult !=3D (unsigned long)mult)
-> >>>              break;
-> >>>
-> >>>          offset =3D div * abs_tol;
-> >>>          freq =3D clk_round_rate(clk, mult - offset);
-> >>>
-> >>>          /* Can only get lower if we're done */
-> >>>          if (freq < mult - offset)
-> >>>              break;
-> >>>
-> >>>          /*
-> >>>           * Re-calculate div in case rounding skipped rates but we
-> >>>           * ended up at a good one, then check for a match.
-> >>>           */
-> >>>          div =3D DIV_ROUND_CLOSEST(freq, desired_clk);
-> >>>          achieved =3D DIV_ROUND_CLOSEST(freq, div);
-> >>>          if (achieved <=3D desired_clk + abs_tol &&
-> >>>              achieved >=3D desired_clk - abs_tol) {
-> >>>              *clk_div =3D div;
-> >>>              return freq;
-> >>>          }
-> >>>
-> >>>          /*
-> >>>           * Always increase div by at least one, but we'll go more th=
-an
-> >>>           * one if clk_round_rate() gave us something higher.
-> >>>           */
-> >>>          div =3D DIV_ROUND_UP(max(freq, (unsigned long)mult) + 1, des=
-ired_clk);
-> >> Wouldn=E2=80=99t DIV_ROUND_UP(freq, desired_clk) suffice here?
-> >> freq >=3D mult-offset, else we would have hit break.
-> > No. As you say, freq >=3D "mult-offset". That means that freq could be
-> > =3D=3D "mult-offset", right? If offset > 0 then freq could be < mult. T=
-hen
-> > your DIV_ROUND_UP() would just take you right back to where you
-> > started the loop with and you'd end up with an infinite loop, wouldn't
-> > you?
-> >
-> Probably No.
->
-> ( (freq >=3D mult-offset) && (freq <=3D mult) ) =3D>
->
-> ( (freq >=3D mult-offset) && (freq <=3D mult+offset) )
->
-> would mean that
->
-> div =3D DIV_ROUND_CLOSEST(freq, desired_clk);
-> evaluates to original div and we are within tolerance and hence we can re=
-turn and hence don't even reach DIV_ROUND_UP?
->
-> Please note that freq can skip any multiples and land up anywhere.
->
-> As long as it has not gone beyond clock rate table, either it lands
-> within tolerance of nearest multiple of desired_clk (in which case we
-> return)
->
-> OR
->
-> We move on to next div =3D (freq/desired_clk + 1)
 
-Ah, you are correct. So just:
+On 09/06/2022 13:47, Dmitry Baryshkov wrote:
+> On Thu, 9 Jun 2022 at 12:54, Alexander Martinz <amartinz@shiftphones.com>=
+ wrote:
+>>
+>> From: Dylan Van Assche <me@dylanvanassche.be>
+>>
+>> Add hsuart0 alias, firmware name and prevent garbage data on Bluetooth U=
+ART lines
+>
+> hsuart aliases are not standard. Please use serialN alias instead.
+>
+>> on the SHIFT 6mq based on the Qualcomm SDM845 chip.
+>> I discovered that these were missing by comparing the DTS with similar
+>> devices such as the Oneplus 6/6T and Dragonboard 845c.
+>>
+>> Signed-of-by: Dylan Van Assche <me@dylanvanassche.be>
+>> Tested-by: Alexander Martinz <amartinz@shiftphones.com>
+>> ---
+>>   .../boot/dts/qcom/sdm845-shift-axolotl.dts    | 33 +++++++++++++++++++
+>>   1 file changed, 33 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts b/arch/ar=
+m64/boot/dts/qcom/sdm845-shift-axolotl.dts
+>> index 103cc40816fd..fa72f23ef0c2 100644
+>> --- a/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
+>> +++ b/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
+>> @@ -20,6 +20,7 @@ / {
+>>
+>>          aliases {
+>>                  display0 =3D &framebuffer0;
+>> +               hsuart0 =3D &uart6;
+>>                  serial0 =3D &uart9;
+>>          };
+>>
+>> @@ -529,6 +530,32 @@ volume_down_resin: resin {
+>>          };
+>>   };
+>>
+>> +/*
+>> + * Prevent garbage data on bluetooth UART lines
+>> + */
+>> +&qup_uart6_default {
+>> +        pinmux {
+>> +                pins =3D "gpio45", "gpio46", "gpio47", "gpio48";
+>> +                function =3D "qup6";
+>> +        };
+>
+> This chunk should probably go into sdm845.dtsi. I'd suggest either
+> adding a separate qup_uart6_4pin or just making qup_uart6_default the
+> 4-pin UART.
+This sounds good
+>
+>> +
+>> +        cts {
+>> +                pins =3D "gpio45";
+>
+> Then the label and 'pins' can go into the dtsi, while keeping just the
+> bias and drive-strength in the platform dtsi.
+>
+>> +                bias-pull-down;
+>> +        };
+>> +
+>> +        rts-tx {
+>> +                pins =3D "gpio46", "gpio47";
+>> +                drive-strength =3D <2>;
+>> +                bias-disable;
+>> +        };
+>> +
+>> +        rx {
+>> +                pins =3D "gpio48";
+>> +                bias-pull-up;
+>> +        };
+>> +};
+>> +
+>>   &qup_uart9_default {
+>>          pinconf-rx {
+>>                  pins =3D "gpio5";
+>> @@ -667,6 +694,12 @@ &uart6 {
+>>          bluetooth {
+>>                  compatible =3D "qcom,wcn3990-bt";
+>>
+>> +               /*
+>> +                * This path is relative to the qca/
+>> +                * subdir under lib/firmware.
+>> +                */
+>> +               firmware-name =3D "axolotl/crnv21.bin";
+>
+> Do you know what is the difference between axolotl's bin and the regular =
+one?
+Just checked in a hex editor and there are some differences. This firmware =
+is
+signed on most devices but given the SHIFT6mq is secureboot off we could in
+theory use upstream firmware here - if it works. This particular device has=
+ some
+very broken wifi firmware - we have to use the firmware from the OnePlus 6 =
+to
+get wifi to work at all...
+>
+>> +
+>>                  vddio-supply =3D <&vreg_s4a_1p8>;
+>>                  vddxo-supply =3D <&vreg_l7a_1p8>;
+>>                  vddrf-supply =3D <&vreg_l17a_1p3>;
+>
+> --
+> With best wishes
+> Dmitry
 
-div =3D DIV_ROUND_UP(freq, desired_clk);
+--
+Kind Regards,
+Caleb
 
-...because freq _has_ to be greater than mult. If it was < "mult -
-offset" we would have ended the loop. If it was between "mult -
-offset" and "mult + offset" (inclusive) then we would have success. So
-freq must be > "mult + offset" at the end of the loop.
-
--Doug
