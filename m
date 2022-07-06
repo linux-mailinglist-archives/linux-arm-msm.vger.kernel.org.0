@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 597D256867A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 13:11:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A1B7A568708
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 13:44:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230070AbiGFLLL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Jul 2022 07:11:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49814 "EHLO
+        id S233028AbiGFLoP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Jul 2022 07:44:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43542 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232458AbiGFLLI (ORCPT
+        with ESMTP id S232922AbiGFLoM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Jul 2022 07:11:08 -0400
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65F9F27CE7
-        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Jul 2022 04:11:05 -0700 (PDT)
-Received: by mail-lj1-x236.google.com with SMTP id s14so18052061ljs.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Jul 2022 04:11:05 -0700 (PDT)
+        Wed, 6 Jul 2022 07:44:12 -0400
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F14E27FD8
+        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Jul 2022 04:44:11 -0700 (PDT)
+Received: by mail-lf1-x132.google.com with SMTP id bf9so2224066lfb.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Jul 2022 04:44:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=DLPkajuMe0XL9xFvAcDgwaTqwHl05fLR3UIhayqJJEo=;
-        b=tA2+mKvEvD3urkdfDJ8B1jO6o6sBdgBUX604+M3abof8COmDMY/nkSOX11z4kBXU2u
-         3zrDRrRVegSpgMZWuXSCcD0J9ctDjz2gpHQRY0KoZAmg+hUTXvtt10m+L988dt9jZAQK
-         Qaqrby9jaAY5+Lx6LfZIZvKx6krK7DPtIw9KqL67FF+i3ipr2OiODfoJPlo3UWdB3cgH
-         fV3k0rmprFph4AUUlrs8bn5Mc7qb8bTqbUGLzs3nwX8tZ0wg/zxKHyL66JE/XQYLjlJ4
-         lgYGuio2HZE4Kfx7MmI8PimtXOo8cvd3SVq9sVa4rMz8JRzItyr9vx4mq1kEF+wKQlJA
-         20/w==
+        bh=rHSpHOlY7myBgAHSZKFgDw9g1de3IWBqHh0r7R/pirQ=;
+        b=mA7nuNZdvT7CPN2iQuIt/bEU9qdmLkMx0CwfhwzSdLgU3jfcloEf897ZgHyT5aRG7+
+         nPGP36yJTW0GHcKr8yq4aGQKyF12AiSoQRRzp+sv+EM60GyIp9hOeVUZNIxPEnsmsAIY
+         oOYYgwsdponpzI6mZtKImM2dJUXAndJ+MzSaE9/OEzbMYV7Uk8QpdGZtCaO3DusNq3XV
+         V4uoHm6W95l0Dk36AZ7OBuOw6rgrIKPVeiHeotmOJ8zVtnRUqDGWI21pmosUTabWKYm2
+         TpZwrn2coSbsMp+cJVMfyeE79uvmKNKi+Mbeq2JpYevXskRX1uXXvM9UJAvhvLkVA5sP
+         MaTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=DLPkajuMe0XL9xFvAcDgwaTqwHl05fLR3UIhayqJJEo=;
-        b=50wy43Qla5EHvQpbcQ9PfSP2ABE4gEed5YfTYIWCjs98u0hwhIQkNVnNPbXqFGYxNG
-         LFwmaprzuO6o9jpjyoFp1rs0+uVWjptgGYSeRSnrnD9xjhuN0EUyamu6qsKdOpK5NAoy
-         6GJ39z24oYyxQR/scoz6uLvONbxlgPNKy47clOE60C6QHUp1ZtLfmwijH+3QSRFuTr4z
-         F62lOkhp4s5Mrksdp/gsFkAvvWF+aTaAYCFfheL7KMD/SggIcZ6AyBJYNpkOdunD4AkH
-         E7nUYjZKjCgVHdktT3ZU+j3hpBJ3YiKXzC9J5N8D6NBtZF5MJJdg6ef69PKLcw81zAjC
-         N7ag==
-X-Gm-Message-State: AJIora+9ALg6vvJ2PDuf0iuTIMESxFEVcA5SHoufIW+q8+yPmraJ2vsb
-        V6m49jdV8tEtnzpJ88xRscH1clogpJeokw==
-X-Google-Smtp-Source: AGRyM1sFoRAMmlchybuRq1n1aaOOHMNW09tIE6d2Vo+I7ROSLMIyMiNltw2qKdKflFAGl5QvGb1L7Q==
-X-Received: by 2002:a2e:9096:0:b0:25b:c51a:2c14 with SMTP id l22-20020a2e9096000000b0025bc51a2c14mr23787258ljg.209.1657105863714;
-        Wed, 06 Jul 2022 04:11:03 -0700 (PDT)
+        bh=rHSpHOlY7myBgAHSZKFgDw9g1de3IWBqHh0r7R/pirQ=;
+        b=rrX0EsvyUJgbKs+PcAPRkdCFiino1jRbeLucpqKZJTNqrCWOTO06saS/7V/i4P2QH7
+         EhT8GJFZuUJh2z6S0V0d5FsqXKttzcXB/xPsmKAk2dkx36LyW1gZ3CNwg/RYgifBPfI0
+         uMtHUnsPHSAjp8o2PHgO6xpPOYVke1lKJQmdApvZbYK2qsKIQAB7lMcTr84IeffBXkH4
+         LJnYdEPrce0/2AZ/j5iz4eiuk73uJ/pSSMavti44pOTr+1Wnl8l3/ZA5mdjyJPdV6E8k
+         vKMpIiFiWw2uavRRs+g2MqB4GpwOlCQmf0l9IXHajem28+uxiwsi/mwkrxEsr70XQJt5
+         LZbA==
+X-Gm-Message-State: AJIora9sbSsGm0JUIWAh/4r25bEHe4nvjRTzxsxwAu1wm0i2UME2Rp7E
+        AXDJBeny3heef67d1uz4YJfJXA==
+X-Google-Smtp-Source: AGRyM1tviyOitKgPBJbpzIyNFMsRmGD80UR044kxqGDAzuOaYFFiwsE3QHRZAt+uvLTk1ZjIS9YtCQ==
+X-Received: by 2002:a05:6512:b09:b0:481:5b19:3ae4 with SMTP id w9-20020a0565120b0900b004815b193ae4mr19994384lfu.293.1657107849487;
+        Wed, 06 Jul 2022 04:44:09 -0700 (PDT)
 Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id v14-20020a2ea44e000000b0025a6dbeababsm6166578ljn.111.2022.07.06.04.11.02
+        by smtp.gmail.com with ESMTPSA id s6-20020a056512214600b0047b0f2d7650sm6232883lfr.271.2022.07.06.04.44.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 06 Jul 2022 04:11:03 -0700 (PDT)
+        Wed, 06 Jul 2022 04:44:08 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -58,9 +58,9 @@ Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         Tom Rini <trini@konsulko.com>,
         Masahiro Yamada <masahiroy@kernel.org>,
         linux-kbuild@vger.kernel.org
-Subject: [PATCH] kbuild: allow validating individual dtb files against schema
-Date:   Wed,  6 Jul 2022 14:11:02 +0300
-Message-Id: <20220706111102.1493812-1-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v2] kbuild: allow validating individual dtb files against schema
+Date:   Wed,  6 Jul 2022 14:44:07 +0300
+Message-Id: <20220706114407.1507412-1-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -90,14 +90,19 @@ Cc: Masahiro Yamada <masahiroy@kernel.org>
 Cc: linux-kbuild@vger.kernel.org
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- Makefile | 18 ++++++++++++++----
- 1 file changed, 14 insertions(+), 4 deletions(-)
+
+Changes since v1:
+- Added dependency to rebuild schema if `make dtbs` was used.
+
+---
+ Makefile | 20 +++++++++++++++-----
+ 1 file changed, 15 insertions(+), 5 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 9aa7de1ca58f..f28507d2ee03 100644
+index 9aa7de1ca58f..5a9858aa4934 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -1464,10 +1464,14 @@ endif
+@@ -1464,14 +1464,18 @@ endif
  
  ifneq ($(dtstree),)
  
@@ -114,6 +119,11 @@ index 9aa7de1ca58f..f28507d2ee03 100644
  	$(Q)$(MAKE) $(build)=$(dtstree) $(dtstree)/$@
  
  PHONY += dtbs dtbs_install dtbs_check
+-dtbs: include/config/kernel.release scripts_dtc
++dtbs: include/config/kernel.release scripts_dtc $(DT_TMP_BINDING)
+ 	$(Q)$(MAKE) $(build)=$(dtstree)
+ 
+ ifneq ($(filter dtbs_check, $(MAKECMDGOALS)),)
 @@ -1498,8 +1502,10 @@ ifneq ($(filter dt_binding_check, $(MAKECMDGOALS)),)
  export CHECK_DT_BINDING=y
  endif
