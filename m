@@ -2,55 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DBB6956866A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 13:08:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 597D256867A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 13:11:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233117AbiGFLIK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Jul 2022 07:08:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46516 "EHLO
+        id S230070AbiGFLLL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Jul 2022 07:11:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49814 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233071AbiGFLIJ (ORCPT
+        with ESMTP id S232458AbiGFLLI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Jul 2022 07:08:09 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2151126AE2;
-        Wed,  6 Jul 2022 04:08:08 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id A98E061E80;
-        Wed,  6 Jul 2022 11:08:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9469CC341CA;
-        Wed,  6 Jul 2022 11:08:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1657105687;
-        bh=tJJ+5MPN/oG82eYpJBXpRDJ/8GpcbhDDoR+MV9YNgrs=;
-        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-        b=klhrRaPFnI9RN+S7/luot2a7VHGRsjzSF3kxGEdUWAFasuw50Ah2kERLVj+AW1XNj
-         oh8RLLzGt2UDszMS9IAq0z97fI1bhswPaEGYw5VTgOwr/fzfGv4YIvgB90aQ3XJmTT
-         vveMtPMvIuju9pE30CPq+xal8/WupA6ztfUfK7MASA+bHyYpzSxEpUfRqs8YhR1JG7
-         tc6l6Eu0dARYWq+8uQw+TVUPhCoPN0ncMWoI7WifIPW5uH5urjzv++LEen5fuNcBo7
-         wWMhMRVMiuLrxkeeAFQluKxkRssDC1aef8q+I1v6YReiU4MN5Y9N8TbtieTebHhdoI
-         KZK6ZUs3MNx4Q==
-From:   Mark Brown <broonie@kernel.org>
-To:     linux-kernel@vger.kernel.org, alsa-devel@alsa-project.org,
-        agross@kernel.org, linux-arm-msm@vger.kernel.org,
-        srinivas.kandagatla@linaro.org, krzysztof.kozlowski+dt@linaro.org,
-        konrad.dybcio@somainline.org, Rob Herring <robh+dt@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        devicetree@vger.kernel.org, krzysztof.kozlowski@linaro.org,
-        bjorn.andersson@linaro.org
-Cc:     stephan@gerhold.net
-In-Reply-To: <20220705182802.775803-1-krzysztof.kozlowski@linaro.org>
-References: <20220705182802.775803-1-krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH v3] ASoC: dt-bindings: qcom,sm8250: add SDM845 sound
-Message-Id: <165710568432.237380.17718065730024815126.b4-ty@kernel.org>
-Date:   Wed, 06 Jul 2022 12:08:04 +0100
+        Wed, 6 Jul 2022 07:11:08 -0400
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65F9F27CE7
+        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Jul 2022 04:11:05 -0700 (PDT)
+Received: by mail-lj1-x236.google.com with SMTP id s14so18052061ljs.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Jul 2022 04:11:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=DLPkajuMe0XL9xFvAcDgwaTqwHl05fLR3UIhayqJJEo=;
+        b=tA2+mKvEvD3urkdfDJ8B1jO6o6sBdgBUX604+M3abof8COmDMY/nkSOX11z4kBXU2u
+         3zrDRrRVegSpgMZWuXSCcD0J9ctDjz2gpHQRY0KoZAmg+hUTXvtt10m+L988dt9jZAQK
+         Qaqrby9jaAY5+Lx6LfZIZvKx6krK7DPtIw9KqL67FF+i3ipr2OiODfoJPlo3UWdB3cgH
+         fV3k0rmprFph4AUUlrs8bn5Mc7qb8bTqbUGLzs3nwX8tZ0wg/zxKHyL66JE/XQYLjlJ4
+         lgYGuio2HZE4Kfx7MmI8PimtXOo8cvd3SVq9sVa4rMz8JRzItyr9vx4mq1kEF+wKQlJA
+         20/w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=DLPkajuMe0XL9xFvAcDgwaTqwHl05fLR3UIhayqJJEo=;
+        b=50wy43Qla5EHvQpbcQ9PfSP2ABE4gEed5YfTYIWCjs98u0hwhIQkNVnNPbXqFGYxNG
+         LFwmaprzuO6o9jpjyoFp1rs0+uVWjptgGYSeRSnrnD9xjhuN0EUyamu6qsKdOpK5NAoy
+         6GJ39z24oYyxQR/scoz6uLvONbxlgPNKy47clOE60C6QHUp1ZtLfmwijH+3QSRFuTr4z
+         F62lOkhp4s5Mrksdp/gsFkAvvWF+aTaAYCFfheL7KMD/SggIcZ6AyBJYNpkOdunD4AkH
+         E7nUYjZKjCgVHdktT3ZU+j3hpBJ3YiKXzC9J5N8D6NBtZF5MJJdg6ef69PKLcw81zAjC
+         N7ag==
+X-Gm-Message-State: AJIora+9ALg6vvJ2PDuf0iuTIMESxFEVcA5SHoufIW+q8+yPmraJ2vsb
+        V6m49jdV8tEtnzpJ88xRscH1clogpJeokw==
+X-Google-Smtp-Source: AGRyM1sFoRAMmlchybuRq1n1aaOOHMNW09tIE6d2Vo+I7ROSLMIyMiNltw2qKdKflFAGl5QvGb1L7Q==
+X-Received: by 2002:a2e:9096:0:b0:25b:c51a:2c14 with SMTP id l22-20020a2e9096000000b0025bc51a2c14mr23787258ljg.209.1657105863714;
+        Wed, 06 Jul 2022 04:11:03 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id v14-20020a2ea44e000000b0025a6dbeababsm6166578ljn.111.2022.07.06.04.11.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 06 Jul 2022 04:11:03 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Tom Rini <trini@konsulko.com>,
+        Masahiro Yamada <masahiroy@kernel.org>,
+        linux-kbuild@vger.kernel.org
+Subject: [PATCH] kbuild: allow validating individual dtb files against schema
+Date:   Wed,  6 Jul 2022 14:11:02 +0300
+Message-Id: <20220706111102.1493812-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -59,37 +74,70 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 5 Jul 2022 20:28:02 +0200, Krzysztof Kozlowski wrote:
-> The Qualcomm SDM845 sound card bindings are almost the same as SM8250,
-> except "pin-switches" and "widgets" properties.  These were not
-> documented in SDM845 text bindings but are actually valid for SDM845.
-> 
-> 
+While it is possible to validate all generated dtb files against the
+schema, it typically results in huge pile of warnings. While working on
+a platform it is quite useful to validate just a single file against
+schema.
 
-Applied to
+Allow specifying CHECK_DTBS=1 on a make command line to enable
+validation while building dtb files. This reuses the infrastructure
+existing for `make dtbs_check`, making dtbs_check a shortcut for
+`make CHECK_DTBS=1 dt_binding_check dtbs`.
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
+Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc: Tom Rini <trini@konsulko.com>
+Cc: Masahiro Yamada <masahiroy@kernel.org>
+Cc: linux-kbuild@vger.kernel.org
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ Makefile | 18 ++++++++++++++----
+ 1 file changed, 14 insertions(+), 4 deletions(-)
 
-Thanks!
+diff --git a/Makefile b/Makefile
+index 9aa7de1ca58f..f28507d2ee03 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1464,10 +1464,14 @@ endif
+ 
+ ifneq ($(dtstree),)
+ 
+-%.dtb: include/config/kernel.release scripts_dtc
++ifneq ($(CHECK_DTBS),)
++DT_TMP_BINDING := dt_binding
++endif
++
++%.dtb: include/config/kernel.release scripts_dtc $(DT_TMP_BINDING)
+ 	$(Q)$(MAKE) $(build)=$(dtstree) $(dtstree)/$@
+ 
+-%.dtbo: include/config/kernel.release scripts_dtc
++%.dtbo: include/config/kernel.release scripts_dtc $(DT_TMP_BINDING)
+ 	$(Q)$(MAKE) $(build)=$(dtstree) $(dtstree)/$@
+ 
+ PHONY += dtbs dtbs_install dtbs_check
+@@ -1498,8 +1502,10 @@ ifneq ($(filter dt_binding_check, $(MAKECMDGOALS)),)
+ export CHECK_DT_BINDING=y
+ endif
+ 
+-PHONY += dt_binding_check
+-dt_binding_check: scripts_dtc
++dt_binding_check: dt_binding
++
++PHONY += dt_binding
++dt_binding: scripts_dtc
+ 	$(Q)$(MAKE) $(build)=Documentation/devicetree/bindings
+ 
+ # ---------------------------------------------------------------------------
+@@ -1774,6 +1780,10 @@ help:
+ 	@echo  '		3: more obscure warnings, can most likely be ignored'
+ 	@echo  '		e: warnings are being treated as errors'
+ 	@echo  '		Multiple levels can be combined with W=12 or W=123'
++	@$(if $(dtstree), \
++		echo '  make CHECK_DTBS=1 [targets] Check all generated dtb files against schema'; \
++		echo '         This can be applied both to "dtbs" and to individual "foo.dtb" targets' ; \
++		)
+ 	@echo  ''
+ 	@echo  'Execute "make" or "make all" to build all targets marked with [*] '
+ 	@echo  'For further info see the ./README file'
+-- 
+2.35.1
 
-[1/1] ASoC: dt-bindings: qcom,sm8250: add SDM845 sound
-      commit: 50791dcb7de32f9f78061f7f460966ac5616b38e
-
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
