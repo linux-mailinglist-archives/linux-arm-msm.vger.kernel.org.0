@@ -2,86 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9636556902A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 18:59:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4E961569062
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 19:13:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233546AbiGFQ7C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Jul 2022 12:59:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49888 "EHLO
+        id S233088AbiGFRNE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Jul 2022 13:13:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35768 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233568AbiGFQ6n (ORCPT
+        with ESMTP id S231175AbiGFRND (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Jul 2022 12:58:43 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D8DA2A958
-        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Jul 2022 09:58:21 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id j21so26997802lfe.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Jul 2022 09:58:21 -0700 (PDT)
+        Wed, 6 Jul 2022 13:13:03 -0400
+Received: from mail-qk1-x732.google.com (mail-qk1-x732.google.com [IPv6:2607:f8b0:4864:20::732])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B49C3286F9
+        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Jul 2022 10:13:02 -0700 (PDT)
+Received: by mail-qk1-x732.google.com with SMTP id b24so11534613qkn.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Jul 2022 10:13:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=WQOxSk1KXA2FtBdi1FmOsR3LGQGiLqiV1G5FGZ4b7/o=;
-        b=f/M72wViTAKDNjwFR+NQ9tO3LqWsoIJIEIkJ7q7xBILoL1gk34XR2hnt2HT8t66QTn
-         JaYaw6c79EhPjZ0/G957bYeSl7U6vYXXPKQDO+lQ8CEhc5fB8nDDvJ7+gNjfxw81uxml
-         K2mYmof4B8MKMX5Oz+Cad4jhD+fz/behN5g692OcMa0kBQUrEoReN3bHbKcSbViYvnBu
-         Xi5AXTzlKvoIlCWQ1JwgmbV4/UW0eE/ILgWb7ZqqcyjnJpSPCMcZR0loOhMdkrpD3WgX
-         PjxD2TRm0ZD5Qh6SvGRDl5lWnkDOqSNbDLh0U+Wlqb6AX5hIbvMppCLSHb7rVhHvLN5s
-         W2Qg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=k571fgeaK+k/31zy+4bBBONuf43p2TWINbGcjpkfNDc=;
+        b=gX42jT2AYWNC7cGaOXGMeyQVMtNb6kCasYmmMrL9KFkEIIs2xt5sy2zzchC93vpHTz
+         v59M7rdb5HcbOUm/cw6snNW3veLXa9nQ/4OOt25hR9nNGpne0qAyUW8245N7bqaVYfj2
+         PssWLrzqWO/ag27nGs2Z0NxMqd7e/UBKiOUmhGkOGZ1vrMLZsmAMIOuACTwc9wOlpuYV
+         XP8x0iru35oYUAPSM4qWwDPuYkF0Eeb1acBHz9B33aS8XmHty+Z8hUnQazIdlE9hJLe+
+         PQ3ldCY0JGmq3J05OVVxEpsF5Cfqdqdbw1q1BkD3VIyTtrL3YBw/iOcwS5dQ1rULVFkL
+         tU2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=WQOxSk1KXA2FtBdi1FmOsR3LGQGiLqiV1G5FGZ4b7/o=;
-        b=HVS2KYparbk3jsFtC/7iF+4QmXI7Xlw+PcVgfio3JrkGWSH3B2StUUv/yBYo26vBOn
-         4IoHhXsyNcsovPS9gZXTito5G9tQzPlMXW8KFfiWxzwNEwm6pfeYkdSI0ZaiGZ+WeQsQ
-         Qj1qQIAnOjc+zgXvlULyFOU/6JwkxbplPIClHWjoh8W6Ew1Nbhvi4T9GEG4cauNf65R0
-         E+RL2PM4Ip7So7zqCEahKbkNb2FwK5EBWRB4OqDg+Zk1qOQ2XunGvLsjGL+sXPYD2cSM
-         ybTcEKmzdVYQ+mrLKftmRvMwRHpoYY1az+WDQYQinhcIxqm96HpLHC6TsEoa/AVt+NVy
-         0yIg==
-X-Gm-Message-State: AJIora+9k6ndJXfqD7eMHXuVVJmZ+J2/12kVtd9X+ujJqCYDHZbSN+IM
-        ywRINgE+yMNDqct49/kU/L8jiw==
-X-Google-Smtp-Source: AGRyM1s/g4VAYvdgBQIZA3q/yKl0xbgGt09KrBAqI396vECZOIwHBUCLENVGCkLA95jiOx5ps+7tpg==
-X-Received: by 2002:a05:6512:158d:b0:47f:718c:28b5 with SMTP id bp13-20020a056512158d00b0047f718c28b5mr27963507lfb.397.1657126699482;
-        Wed, 06 Jul 2022 09:58:19 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id n10-20020a0565120aca00b0047f77c979f3sm6354604lfu.235.2022.07.06.09.58.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 06 Jul 2022 09:58:19 -0700 (PDT)
-Message-ID: <3b3e0543-8802-469e-e0a9-61bbf26d58d7@linaro.org>
-Date:   Wed, 6 Jul 2022 19:58:18 +0300
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=k571fgeaK+k/31zy+4bBBONuf43p2TWINbGcjpkfNDc=;
+        b=BtLqJORuSEiD0oF0xATYn92MYoQ2mY+RHGYc0c7KneZvwtSadWEMf6F3cUiTrKnR/0
+         U+B//fEEDjJGg9wDAQku000mwmE8xOkWdN3zCqiWBIgutxnRW671MdqtTypy4xoUKncY
+         r3tlDBXJN6eoyAfKUCkbjDNzjHnK6X8gC89Xuiv5dgfHgTeQC+1yeJmhTgpePpbXAyPZ
+         3f1oeVxF2XUDEqMxnPvSv3lbdOH4oXvO2c1gTfbHChhrgvj8RuqX+V4IGeOMdYgRNqFl
+         Al5FFk/xf6/zSOK7y0d2AiOBEX12OMEfKagp+TZL/5OE5d1qai5r2PikN0u9TMn04u6l
+         P8BQ==
+X-Gm-Message-State: AJIora8F7cN5YCSzkA10yYO8qOKO7URA7mcjibfNwYlC0H/1NyDC/9Va
+        4pUQadMQJUxdMeg2Enj+b3hh9pQeaAG/6gcSD50Vpw==
+X-Google-Smtp-Source: AGRyM1u3X21Jwan4j95LttRmYI0ORhnnl1BSnKPKeE019vkiDLJpcdFvlA+szPY66CexrkV0lPm7pe6AVsuV3Mi3Ens=
+X-Received: by 2002:ae9:ed56:0:b0:6ae:f7cf:7f5c with SMTP id
+ c83-20020ae9ed56000000b006aef7cf7f5cmr27970088qkg.59.1657127581718; Wed, 06
+ Jul 2022 10:13:01 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: [PATCH 2/4] dt-bindings: display/msm/gpu: document using the
- amd,imageon adreno too
-Content-Language: en-GB
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-References: <20220706145222.1565238-1-dmitry.baryshkov@linaro.org>
- <20220706145222.1565238-3-dmitry.baryshkov@linaro.org>
- <088c1863-ad44-61b6-8757-bc3097369335@linaro.org>
- <c6c06a9e-8b06-cb15-ae81-07053bbf80a7@linaro.org>
- <6c89ee27-43d1-b926-b061-c9f6c1085f24@linaro.org>
+References: <1657123936-2459-1-git-send-email-quic_khsieh@quicinc.com>
+In-Reply-To: <1657123936-2459-1-git-send-email-quic_khsieh@quicinc.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <6c89ee27-43d1-b926-b061-c9f6c1085f24@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Date:   Wed, 6 Jul 2022 20:12:50 +0300
+Message-ID: <CAA8EJpr_u4PEOFE22EkAvDbvECzaY89oGHA+fjvrbZCYYYNK4A@mail.gmail.com>
+Subject: Re: [PATCH v2] drm/msm/dp: make eDP panel as the first connected connector
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>
+Cc:     robdclark@gmail.com, sean@poorly.run, swboyd@chromium.org,
+        dianders@chromium.org, vkoul@kernel.org, daniel@ffwll.ch,
+        airlied@linux.ie, agross@kernel.org, bjorn.andersson@linaro.org,
+        quic_abhinavk@quicinc.com, quic_aravindh@quicinc.com,
+        quic_sbillaka@quicinc.com, freedreno@lists.freedesktop.org,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -89,73 +71,47 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 06/07/2022 19:19, Krzysztof Kozlowski wrote:
-> On 06/07/2022 18:00, Dmitry Baryshkov wrote:
->> On 06/07/2022 18:50, Krzysztof Kozlowski wrote:
->>> On 06/07/2022 16:52, Dmitry Baryshkov wrote:
->>>> The DT binding desribes using amd,imageon only for Imageon 2xx GPUs. We
->>>> have been using amd,imageon with newer (Adreno) GPUs to describe the
->>>> headless setup, when the platform does not (yet) have the display DT
->>>
->>> Does not have "yet"? So later it will have and you drop a compatible?
->>
->> Yes. For example see the arch/arm64/boot/dts/qcom/8150.dtsi, which
->> currently has only GPU node. Once we add MDSS/DPU/DSI/etc. nodes, we are
->> going to drop the compat string.
->>
->>>
->>>> nodes (and no display support). Document this trick in the schema.
->>>>
->>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>>> ---
->>>>    Documentation/devicetree/bindings/display/msm/gpu.yaml | 6 ++++++
->>>>    1 file changed, 6 insertions(+)
->>>>
->>>> diff --git a/Documentation/devicetree/bindings/display/msm/gpu.yaml b/Documentation/devicetree/bindings/display/msm/gpu.yaml
->>>> index 346aabdccf7b..e006da95462c 100644
->>>> --- a/Documentation/devicetree/bindings/display/msm/gpu.yaml
->>>> +++ b/Documentation/devicetree/bindings/display/msm/gpu.yaml
->>>> @@ -16,9 +16,13 @@ properties:
->>>>          - description: |
->>>>              The driver is parsing the compat string for Adreno to
->>>>              figure out the gpu-id and patch level.
->>>> +          Optional amd,imageon compatibility string enables using Adreno
->>>> +          without the display node.
->>>>            items:
->>>>              - pattern: '^qcom,adreno-[3-6][0-9][0-9]\.[0-9]$'
->>>>              - const: qcom,adreno
->>>> +          - const: amd,imageon
->>>> +        minItems: 2
->>>
->>> This is too unspecific. You allow any device to be and not to be
->>> compatible with amd,imageon.
->>
->> Yes, this is expected (kind of). Would you have any
->> alternatives/suggestions?
-> 
-> Using compatible for this kind of breaks the entire idea behind
-> compatibles, because the device does not stop being compatible with
-> amd,imageon. Either it is or it is not. I would understand that drop the
-> compatible per boards which physically do not have display, physically
-> are headless. But the comment in sm8250:
-> "make sure to remove it when display node is added"
-> is just confusing.
-> 
-> The typical solution would be to just check the properties of the device
-> and choose different mode if display is missing (via port graph or some
-> other way how the gpu is actually linked to the display).
+On Wed, 6 Jul 2022 at 19:12, Kuogee Hsieh <quic_khsieh@quicinc.com> wrote:
+>
+> Some userspace presumes that the first connected connector is the main
+> display, where it's supposed to display e.g. the login screen. For
+> laptops, this should be the main panel.
+>
+> This patch call drm_helper_move_panel_connectors_to_head() after
+> drm_bridge_connector_init() to make sure eDP stay at head of
+> connected connector list. This fixes unexpected corruption happen
+> at eDP panel if eDP is not placed at head of connected connector
+> list.
+>
+> Changes in v2:
+> -- move drm_helper_move_panel_connectors_to_head() to
+>                 dpu_kms_drm_obj_init()
+>
+> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+> Tested-by: Douglas Anderson <dianders@chromium.org>
+> Reviewed-by: Douglas Anderson <dianders@chromium.org>
+> Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 
-The problem is that the gpu doesn't get linked to the display per se.
+Technically this patch was neither  Reviewed, nor Tested. Please
+refrain from posting wrong tags.
 
-On imx5 platforms the GPU (compatible with amd,imageon) is a standalone 
-device. On qcom platforms the GPU (qcom,adreno) is used as a component 
-in multi-component device. By enlisting qmd,imageon for newer Adreno 
-devices we just enforce non-standard probing sequence, because all other 
-components just do not exist.
-
-So, yes, this is hack around compatibles. However probably the only 
-viable alternative around it would be to check in probe path if there is 
-any device node compatible with "qcom,foo-mdss".
+> ---
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 2 ++
+>  1 file changed, 2 insertions(+)
+>
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> index 2b9d931..50ff666 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> @@ -763,6 +763,8 @@ static int _dpu_kms_drm_obj_init(struct dpu_kms *dpu_kms)
+>         if (ret)
+>                 return ret;
+>
+> +       drm_helper_move_panel_connectors_to_head(dev);
+> +
+>         num_encoders = 0;
+>         drm_for_each_encoder(encoder, dev)
+>                 num_encoders++;
 
 -- 
 With best wishes
