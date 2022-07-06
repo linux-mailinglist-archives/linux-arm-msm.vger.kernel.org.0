@@ -2,67 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CCD7A56930E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 22:08:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E84AF569312
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 22:09:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231772AbiGFUIk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Jul 2022 16:08:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53792 "EHLO
+        id S234060AbiGFUJL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Jul 2022 16:09:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53998 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233594AbiGFUIj (ORCPT
+        with ESMTP id S233594AbiGFUJK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Jul 2022 16:08:39 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B5AF186E1
-        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Jul 2022 13:08:37 -0700 (PDT)
+        Wed, 6 Jul 2022 16:09:10 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18DB5116A
+        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Jul 2022 13:09:09 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id t24so27743996lfr.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Jul 2022 13:09:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1657138117; x=1688674117;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=74hEYs1yke1EZnN5qpWy3hNyPVx8dSgIj31n5h5sLl8=;
-  b=E28p9Irs50YCNbAHwQpAORUGnpnvW4FB8FnE4/KaPF4Ni5fmODby0dvg
-   RVWt2EBOQJ+wrSWZ2lNhyi4UkCyq1xHnXRAQMwtLC83+c+4l591uLJ8eu
-   HciyG1PaOkq2IvmCynTm1VTPEc5QcxnActgSpQeXkKHnFYHtDiN4lUpKY
-   Y=;
-Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 06 Jul 2022 13:08:36 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Jul 2022 13:08:36 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 6 Jul 2022 13:08:35 -0700
-Received: from [10.111.163.64] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Wed, 6 Jul 2022
- 13:08:33 -0700
-Message-ID: <2c21491a-dd77-82b6-bf72-1aefaf05684a@quicinc.com>
-Date:   Wed, 6 Jul 2022 13:08:31 -0700
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=L8DTfq0A17haA8PrzESImW0A0vAqb2TTX88eAMxkKSs=;
+        b=BaNAZAN8Ey3DxRg4kZ1FW0Knr+92LENOOrVvEW1b7mEpGbZtBjo6ZKoXdgZERe4j2f
+         +EohmvdmnP0KXho1Ux+wHF+zvqgZg/a9DCNbk86vfgrKJ4aYVlqdPvyZaMO5dXerOGL6
+         Jc9P5kacpUNDKRipouaPFFFBigel1xZIkBLvzBmDHkpO6p76cz6HTGVTj37Vr6ke74ob
+         RQr5R5cr+vfWOrYwOUOQCm1ivgcyl4uEu+wJn9ZAxbt8OecFKgIPyhDyH47MVQuxmIfe
+         WX63XPJtz06tRUYg9oOeRICMsOrnKqAbRJi201rfpNWdX6amBUw+tNBHbUIi+avzDl9X
+         AyYQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=L8DTfq0A17haA8PrzESImW0A0vAqb2TTX88eAMxkKSs=;
+        b=slrJ1eNPr9F4hye/C/VITxnwwPFeaMKVjC6hfmgJ1VQZd/zh0AO8uuL+Md7+aRvViS
+         5OZLZbbvA2A+NUd+Z4FB3wOAle3iwn3/cZdxOItkZFNPjOT9hu8gROKEkNQWZpuYh87H
+         83U2VrggMVRArLV/ah8kZZrgjnKM5VeJpQiGCdaAEpLlcdNZrWc4mIp83NLzxO6JtWSi
+         x7FmNFVB96/rQf39bwspfAqvk1JuIzBYiplZ9OOpUrEKWXod8GTkn84LQ5Z2zxkpeg5a
+         LNvMwMcG4mM59GEIGG7fG/uYrFzUbvj5FvytQwFHlIFcHGlktONSxp26VOfbZQHvB6Jk
+         fpEg==
+X-Gm-Message-State: AJIora8eokycNGu7T9/FeCHwqJiGXevkX0KC70m806Jvpa7jtairadTy
+        WLx+pssNPogNKir/FdWaVcKs9g==
+X-Google-Smtp-Source: AGRyM1tJTPfDmRl23fBqdP0m32ujrkJ0ZHgPEbSUIojL6Gcc1siGm1BZ2LGNfZluNXw7Sd4UGqL0Yw==
+X-Received: by 2002:ac2:5b02:0:b0:481:286d:afdc with SMTP id v2-20020ac25b02000000b00481286dafdcmr25785099lfn.24.1657138147418;
+        Wed, 06 Jul 2022 13:09:07 -0700 (PDT)
+Received: from [192.168.1.52] ([84.20.121.239])
+        by smtp.gmail.com with ESMTPSA id 2-20020a05651c00c200b0025bd4ec3ef2sm3472926ljr.81.2022.07.06.13.09.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 06 Jul 2022 13:09:06 -0700 (PDT)
+Message-ID: <e1fed734-8629-5bf2-60ba-ee62243def6f@linaro.org>
+Date:   Wed, 6 Jul 2022 22:09:05 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH v3 1/3] drm/msm/dpu: index dpu_kms->hw_vbif using vbif_idx
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH 2/5] ARM: DTS: qcom: fix dtbs_check warning with new rpmcc
+ clocks
 Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-CC:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20220615125703.24647-1-dmitry.baryshkov@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20220615125703.24647-1-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To:     Christian Marangi <ansuelsmth@gmail.com>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20220705202837.667-1-ansuelsmth@gmail.com>
+ <20220705202837.667-3-ansuelsmth@gmail.com>
+ <18e40247-7151-b50a-97fe-00ee88f47d9b@linaro.org>
+ <62c565dc.1c69fb81.a4566.e9b2@mx.google.com>
+ <bcb64218-2d2b-2f6b-dc79-303bac8c3bd3@linaro.org>
+ <62c5de27.1c69fb81.c73fe.02c5@mx.google.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <62c5de27.1c69fb81.c73fe.02c5@mx.google.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -71,116 +87,46 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 6/15/2022 5:57 AM, Dmitry Baryshkov wrote:
-> Remove loops over hw_vbif. Instead always VBIF's idx as an index in the
-> array. This fixes an error in dpu_kms_hw_init(), where we fill
-> dpu_kms->hw_vbif[i], but check for an error pointer at
-> dpu_kms->hw_vbif[vbif_idx].
+On 06/07/2022 21:10, Christian Marangi wrote:
+> On Wed, Jul 06, 2022 at 05:07:12PM +0200, Krzysztof Kozlowski wrote:
+>> On 06/07/2022 12:20, Christian Marangi wrote:
+>>> On Wed, Jul 06, 2022 at 09:44:04AM +0200, Krzysztof Kozlowski wrote:
+>>>> On 05/07/2022 22:28, Christian Marangi wrote:
+>>>>> Fix dtbs_check warning for new rpmcc Documentation changes and add the
+>>>>> required clocks.
+>>>>
+>>>> There is no warning in the kernel, right? So the commit is not correct.
+>>>>
+>>>
+>>> Oh ok, the warning is generated by the new Documentation.
+>>
+>> Patches, especially DTS, might go via different trees, so the moment DTS
+>> is applied there might be no such warning.
+>>
 > 
-> Fixes: 25fdd5933e4c ("drm/msm: Add SDM845 DPU support")
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c  | 12 ++++------
->   drivers/gpu/drm/msm/disp/dpu1/dpu_vbif.c | 29 +++++++++++-------------
->   2 files changed, 18 insertions(+), 23 deletions(-)
+> I'm still confused about this topic...
+> With this kind of change, I notice I sent Documentation change and then
+> rob bot complain about dtbs_check having warning...
 > 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> index 2b9d931474e0..1255d00c92cf 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> @@ -830,12 +830,10 @@ static void _dpu_kms_hw_destroy(struct dpu_kms *dpu_kms)
->   	_dpu_kms_mmu_destroy(dpu_kms);
->   
->   	if (dpu_kms->catalog) {
-> -		for (i = 0; i < dpu_kms->catalog->vbif_count; i++) {
-> -			u32 vbif_idx = dpu_kms->catalog->vbif[i].id;
-> -
-> -			if ((vbif_idx < VBIF_MAX) && dpu_kms->hw_vbif[vbif_idx]) {
-> -				dpu_hw_vbif_destroy(dpu_kms->hw_vbif[vbif_idx]);
-> -				dpu_kms->hw_vbif[vbif_idx] = NULL;
-> +		for (i = 0; i < ARRAY_SIZE(dpu_kms->hw_vbif); i++) {
-> +			if (dpu_kms->hw_vbif[i]) {
-> +				dpu_hw_vbif_destroy(dpu_kms->hw_vbif[i]);
-> +				dpu_kms->hw_vbif[i] = NULL;
->   			}
->   		}
->   	}
-> @@ -1135,7 +1133,7 @@ static int dpu_kms_hw_init(struct msm_kms *kms)
->   	for (i = 0; i < dpu_kms->catalog->vbif_count; i++) {
->   		u32 vbif_idx = dpu_kms->catalog->vbif[i].id;
->   
-> -		dpu_kms->hw_vbif[i] = dpu_hw_vbif_init(vbif_idx,
-> +		dpu_kms->hw_vbif[vbif_idx] = dpu_hw_vbif_init(vbif_idx,
->   				dpu_kms->vbif[vbif_idx], dpu_kms->catalog);
->   		if (IS_ERR_OR_NULL(dpu_kms->hw_vbif[vbif_idx])) {
->   			rc = PTR_ERR(dpu_kms->hw_vbif[vbif_idx]);
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_vbif.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_vbif.c
-> index 21d20373eb8b..a18fb649301c 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_vbif.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_vbif.c
-> @@ -11,6 +11,14 @@
->   #include "dpu_hw_vbif.h"
->   #include "dpu_trace.h"
->   
-> +static struct dpu_hw_vbif *dpu_get_vbif(struct dpu_kms *dpu_kms, enum dpu_vbif vbif_idx)
-> +{
-> +	if (vbif_idx < ARRAY_SIZE(dpu_kms->hw_vbif))
-> +		return dpu_kms->hw_vbif[vbif_idx];
-> +
-> +	return NULL;
-> +}
-> +
->   /**
->    * _dpu_vbif_wait_for_xin_halt - wait for the xin to halt
->    * @vbif:	Pointer to hardware vbif driver
-> @@ -148,20 +156,15 @@ static u32 _dpu_vbif_get_ot_limit(struct dpu_hw_vbif *vbif,
->   void dpu_vbif_set_ot_limit(struct dpu_kms *dpu_kms,
->   		struct dpu_vbif_set_ot_params *params)
->   {
-> -	struct dpu_hw_vbif *vbif = NULL;
-> +	struct dpu_hw_vbif *vbif;
->   	struct dpu_hw_mdp *mdp;
->   	bool forced_on = false;
->   	u32 ot_lim;
-> -	int ret, i;
-> +	int ret;
->   
->   	mdp = dpu_kms->hw_mdp;
->   
-> -	for (i = 0; i < ARRAY_SIZE(dpu_kms->hw_vbif); i++) {
-> -		if (dpu_kms->hw_vbif[i] &&
-> -				dpu_kms->hw_vbif[i]->idx == params->vbif_idx)
-> -			vbif = dpu_kms->hw_vbif[i];
-> -	}
-> -
-> +	vbif = dpu_get_vbif(dpu_kms, params->vbif_idx);
->   	if (!vbif || !mdp) {
->   		DRM_DEBUG_ATOMIC("invalid arguments vbif %d mdp %d\n",
->   				vbif != NULL, mdp != NULL);
-> @@ -204,7 +207,7 @@ void dpu_vbif_set_ot_limit(struct dpu_kms *dpu_kms,
->   void dpu_vbif_set_qos_remap(struct dpu_kms *dpu_kms,
->   		struct dpu_vbif_set_qos_params *params)
->   {
-> -	struct dpu_hw_vbif *vbif = NULL;
-> +	struct dpu_hw_vbif *vbif;
->   	struct dpu_hw_mdp *mdp;
->   	bool forced_on = false;
->   	const struct dpu_vbif_qos_tbl *qos_tbl;
-> @@ -216,13 +219,7 @@ void dpu_vbif_set_qos_remap(struct dpu_kms *dpu_kms,
->   	}
->   	mdp = dpu_kms->hw_mdp;
->   
-> -	for (i = 0; i < ARRAY_SIZE(dpu_kms->hw_vbif); i++) {
-> -		if (dpu_kms->hw_vbif[i] &&
-> -				dpu_kms->hw_vbif[i]->idx == params->vbif_idx) {
-> -			vbif = dpu_kms->hw_vbif[i];
-> -			break;
-> -		}
-> -	}
-> +	vbif = dpu_get_vbif(dpu_kms, params->vbif_idx);
->   
->   	if (!vbif || !vbif->cap) {
->   		DPU_ERROR("invalid vbif %d\n", params->vbif_idx);
+> So the correct way is to send Documentation change and fix dtbs_check
+> warning in the same commit OR keep what I'm doing with sending
+> Documentation changes and fix DTS in a separate commit?
+
+Binding is almost always separate from DTS and always separate from
+driver. The order depends on what you're doing. If you bring ABI break
+change to bindings, then the order does not matter, because each order
+will be non-bisectable. Because you broke ABI. That's the case in this
+patchset.
+
+For other cases, usually bindings patches should be the first in patchset.
+
+How it goes via maintainer trees is not your problem here. Patches might
+go together or might go separate.
+
+Anyway it was not the topic of my comment. Comment was about not
+specific commit msg which does not fit the Linux kernel process and does
+not fit git history once applied by maintainer. It fits even less when
+backported to stable kernels, which you commit msg encourages to do.
+
+Best regards,
+Krzysztof
