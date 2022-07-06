@@ -2,84 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 534F4567F04
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 08:55:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D4CC9567F75
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 09:06:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230362AbiGFGzZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Jul 2022 02:55:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48646 "EHLO
+        id S231439AbiGFHFk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Jul 2022 03:05:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59464 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230340AbiGFGzX (ORCPT
+        with ESMTP id S231656AbiGFHFY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Jul 2022 02:55:23 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 818781CB38
-        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Jul 2022 23:55:21 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id f39so24319102lfv.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Jul 2022 23:55:21 -0700 (PDT)
+        Wed, 6 Jul 2022 03:05:24 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1799926CF
+        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Jul 2022 00:05:23 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id t19so23695067lfl.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Jul 2022 00:05:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=Qi/HzfCRWKKbzy7uAxJ2wy7Sd2F4DwDWD93n1e7b+Tc=;
-        b=N4r+vDEttCJfEoxvR/u99LGStE2n////g6PJKpqQIKTaIwvLn8AXYs8hqZBlvYpkDl
-         eyOLQBzIW7O0B6T3kT5fKYR+Y8//FFHM/SMIShQqLOzZOPlrXupLlVYUn1VlnLYvmxFZ
-         iNerWocy49Jul7Dkzmj3EZYcRNXcZUWR9RoSmVLomGo+KBEQ/+IXUGbWacbzp4bjQcQA
-         2r+LvnWAUUYmkNj/mpLtvweY84+02vOCr+XbTU9YddzlYy8lpdHH3S6AtI8/vys34Jmi
-         txWa9n2NwOo0wxhrhr9XAERVDe8r6PpcqfiSSXe+H3by/LngaIh54sKx8hGS0l/ZzZ28
-         +tBw==
+        bh=DjJWh0nZiIzVQSxYKq4yhd4wJ+ppDdUOImr4L84iPRA=;
+        b=xO5fKweKllcZX+2MUtldeM5jwT4QinDo+e97vjMvl5RbPLKiQllk/+p4iimxBh+DRu
+         lWZz95YrwzqyWhanulsCMzJSaLadyxX9dIrOa2WP749BX5GV2lp7/wla/G6ohtQMkP/C
+         yv06XL4akgD6w4WiAsMSuTmWN3m/5KEOCJ2NZx2afxLChZjhSPk+So4eCo7A3lY2CO0v
+         cuJiQXWksjTbYIf0pmRQH+ZmcGXoNoqo/TBp4y/zqwCZp37p8AwcNnmM9FxNCIAibaTj
+         xAgDqBby7fCQcTdsBmnVEu8WUBPwjIm69c8uGSrcGc+IpojAO7z2YpgyRZRapJk82RzL
+         dBGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=Qi/HzfCRWKKbzy7uAxJ2wy7Sd2F4DwDWD93n1e7b+Tc=;
-        b=rxLhowLV6WGrljhRWsrC20DuOkLrQpNH98MFkise3u/mfKg0BveWoDouk4wLxT6rUD
-         e8ybBwGKmSqhF7kiK/53VG7xq4CRYcuGG3nX8p6chDiSw74Ux8JZM9hVyFc5hOW3yGmD
-         PCS9I/igVdtNPgOt9ffpDc8Vke6GQM9njzJ/9HQOuY7ZOVnDpefU14FYgieM3SV3YMCI
-         xn7oYETzCfPPwsZz5u85MyshgaZ+AXOVr9Zgxd/3Jnkyx778uxVmQlr+wcMJHXK5xgcg
-         KS3o6RbA5lMta1kfvkznEGMtGgXBPCj/ODPzxdeM933IEsw6xp4M/cbCxTELmWUAUxr1
-         F8dQ==
-X-Gm-Message-State: AJIora++To+r1X0pu42E10bfYLmJCrJ+vOeHE51CP1lq+9hixmfWRJ3U
-        M8hRBM4QnDnroBlGi6OGbq/TaA==
-X-Google-Smtp-Source: AGRyM1tVdXaVsQm7jLPm4SWsUXJ32TvoCX8tMg8AnAhTDvikIGvlqTGiIIAzYYTV6UyDSGye5umtjw==
-X-Received: by 2002:ac2:5a03:0:b0:47f:90ee:4c9 with SMTP id q3-20020ac25a03000000b0047f90ee04c9mr26352628lfn.319.1657090519863;
-        Tue, 05 Jul 2022 23:55:19 -0700 (PDT)
+        bh=DjJWh0nZiIzVQSxYKq4yhd4wJ+ppDdUOImr4L84iPRA=;
+        b=zxCRlTWrUU3uDJ97zEbKfQMzstZzc1KnxiXFdQaKWKRAU1tLVvRsAKdZvRpv7H/DSP
+         oiqKJtsMb1VrrMvLJEwP74O25Skiu/FmctJFU0wxhl2cL2i+rV0K2Zmhzz214DhMWSdR
+         vFdG0jLOqv+e+TcjhjjgBZQPtxTPNixyehP5cjyl9xeNvEaytI50ZUV2wbIqaZ/1yu25
+         RYRxjK5Rt+MPSKyGwmOmISKN9lABAIUOmDq5r3EjmD/eHUHXYn2U3Xd2HlW+EBD75fO0
+         aw13HCnuJNuytcrXnvA1xmuRQncqBjk+ZTmvmLBKyK8J9VTyfbgoLYNlfbrGZUythUx1
+         /+jA==
+X-Gm-Message-State: AJIora/fjjuR5tZWMtjiL30msSyv/vLgGKkD56alMjW434oZ5WIdRpQL
+        kVISj3Zsh6qldZknD6iP3w/eqQ==
+X-Google-Smtp-Source: AGRyM1sczTtMVM/629rXprfOKAwXlLvM6SuOehwWrAwoiNnjNx+FYlhZrV3x5PftKLTUiSSrk01rNg==
+X-Received: by 2002:a05:6512:3e07:b0:482:ba6c:64ae with SMTP id i7-20020a0565123e0700b00482ba6c64aemr7459413lfv.512.1657091121452;
+        Wed, 06 Jul 2022 00:05:21 -0700 (PDT)
 Received: from [192.168.1.52] ([84.20.121.239])
-        by smtp.gmail.com with ESMTPSA id m4-20020a056512114400b00478772eb18esm6127941lfg.92.2022.07.05.23.55.18
+        by smtp.gmail.com with ESMTPSA id u11-20020ac248ab000000b004837dbe7ef2sm781324lfg.120.2022.07.06.00.05.20
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 05 Jul 2022 23:55:19 -0700 (PDT)
-Message-ID: <3f4f62da-302f-c6cb-0c32-73f4e36e5022@linaro.org>
-Date:   Wed, 6 Jul 2022 08:55:18 +0200
+        Wed, 06 Jul 2022 00:05:20 -0700 (PDT)
+Message-ID: <f0f1f652-f219-1e33-47e4-2679315da46c@linaro.org>
+Date:   Wed, 6 Jul 2022 09:05:19 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.11.0
-Subject: Re: [PATCH v4] dt-bindings: qcom: document preferred compatible
- naming
+Subject: Re: [V5 2/2] dt-bindings: remoteproc: qcom: Convert SC7180 MSS
+ bindings to YAML
 Content-Language: en-US
-To:     Rob Herring <robh@kernel.org>
-Cc:     Vinod Koul <vkoul@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
-        Robert Foss <robert.foss@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Alex Elder <elder@linaro.org>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@somainline.org>
-References: <20220705161301.493364-1-krzysztof.kozlowski@linaro.org>
- <1657048737.406960.2471232.nullmailer@robh.at.kernel.org>
+To:     Sibi Sankar <quic_sibis@quicinc.com>, bjorn.andersson@linaro.org,
+        swboyd@chromium.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org
+Cc:     mathieu.poirier@linaro.org, agross@kernel.org,
+        konrad.dybcio@somainline.org, linux-remoteproc@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, mka@chromium.org
+References: <1657020721-24939-1-git-send-email-quic_sibis@quicinc.com>
+ <1657020721-24939-3-git-send-email-quic_sibis@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <1657048737.406960.2471232.nullmailer@robh.at.kernel.org>
+In-Reply-To: <1657020721-24939-3-git-send-email-quic_sibis@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -87,67 +80,30 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 05/07/2022 21:18, Rob Herring wrote:
-> On Tue, 05 Jul 2022 18:13:01 +0200, Krzysztof Kozlowski wrote:
->> Compatibles can come in two formats.  Either "vendor,ip-soc" or
->> "vendor,soc-ip".  Qualcomm bindings were mixing both of usages, so add a
->> DT schema file documenting preferred policy and enforcing it for all new
->> compatibles, except few existing patterns.
->>
->> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->>
->> ---
->>
->> Changes since v3:
->> 1. Add qcom,kpss-wdt-xxx to pattern for exceptions.
->> 2. Add ipq806x entries to list of exceptions.
->>
->> Changes since v2:
->> 1. Narrow the expected pattern to be followed by dash '-' after model
->>    number (msm8996-) or by two letters and a dash (sc8280xp-).
->> 2. Add qcom,apss-wdt-xxx to list of exceptions.
->> 3. Use comment instead of description in the oneOf list.
->>
->> Changes since v1:
->> 1. Add schema instead of readme (Rob).
->>
->> Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
->> Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> Cc: Vinod Koul <vkoul@kernel.org>
->> Cc: Alex Elder <elder@linaro.org>
->> Cc: Robert Foss <robert.foss@linaro.org>
->> Cc: Bhupesh Sharma <bhupesh.sharma@linaro.org>
->> ---
->>  .../devicetree/bindings/arm/qcom-soc.yaml     | 63 +++++++++++++++++++
->>  1 file changed, 63 insertions(+)
->>  create mode 100644 Documentation/devicetree/bindings/arm/qcom-soc.yaml
->>
+On 05/07/2022 13:32, Sibi Sankar wrote:
+> Add a separate YAML binding to act as a superset of the PAS and non-PAS
+> compatible for SC7180 MSS PIL. This also serves as a way to increase
+> readability.
 > 
-> My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-> on your patch (DT_CHECKER_FLAGS is new in v5.13):
+> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+> ---
 > 
-> yamllint warnings/errors:
+> Depends on Krzysztof's remoteproc cleanups and improvements:
+> https://patchwork.kernel.org/project/linux-arm-msm/cover/20220517070113.18023-1-krzysztof.kozlowski@linaro.org/
 > 
-> dtschema/dtc warnings/errors:
-> /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/cpufreq/qcom-cpufreq-nvmem.example.dtb: /: compatible: 'oneOf' conditional failed, one must be fixed:
-> 	'qcom,qcs404' does not match '^qcom,(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+-.*$'
-> 	'qcom,qcs404' does not match '^qcom,(sa|sc)8[0-9]+[a-z][a-z]?-.*$'
-> 	'qcom,qcs404' does not match '^qcom,[ak]pss-wdt-(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$'
-> 	'qcom,qcs404' does not match '^qcom,gcc-(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$'
-> 	'qcom,qcs404' does not match '^qcom,mmcc-(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$'
-> 	'qcom,qcs404' does not match '^qcom,pcie-(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$'
-> 	'qcom,qcs404' does not match '^qcom,rpm-(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$'
-> 	'qcom,qcs404' does not match '^qcom,scm-(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$'
-> 	'qcom,qcs404' is not one of ['qcom,gpucc-sdm630', 'qcom,gpucc-sdm660', 'qcom,lcc-apq8064', 'qcom,lcc-ipq8064', 'qcom,lcc-mdm9615', 'qcom,lcc-msm8960', 'qcom,lpass-cpu-apq8016', 'qcom,usb-ss-ipq4019-phy', 'qcom,usb-hs-ipq4019-phy', 'qcom,vqmmc-ipq4019-regulator']
-> 	'qcom,qcs404' is not one of ['qcom,ipq806x-nand', 'qcom,ipq806x-usb-phy-ss', 'qcom,ipq806x-usb-phy-hs']
-> 	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/arm/qcom-soc.yaml
+> Previous discussion on PAS vs non-PAS bindings:
+> https://lore.kernel.org/lkml/YUps1JfGtf6JdbCx@ripper/ [Bjorn]
+> https://lore.kernel.org/lkml/CAE-0n51KBYjZvwGNy06_okmEWjEfRLQO54CYaY6-JnbBk6kOhA@mail.gmail.com/ [Stephen]
+> 
+> v5:
+>  * Improve phandle-array schemas [Stephen/Rob/Krzysztof]
+>  * Add more details to the firmware-name/memory region string array [Stephen/Rob]
+>  * Drop 'items' from label [Rob]
 > 
 
-This is fixed by:
-https://lore.kernel.org/all/20220627143340.477120-1-krzysztof.kozlowski@linaro.org/
-https://lore.kernel.org/all/20220628092253.21905-1-krzysztof.kozlowski@linaro.org/
+Looks good, thanks!
 
-
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
