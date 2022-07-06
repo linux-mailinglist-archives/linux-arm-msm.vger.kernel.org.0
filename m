@@ -2,50 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 087FE56885A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 14:31:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B054B568874
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 14:36:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233185AbiGFMbD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Jul 2022 08:31:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35344 "EHLO
+        id S232768AbiGFMgB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Jul 2022 08:36:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40384 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233015AbiGFMbD (ORCPT
+        with ESMTP id S231251AbiGFMgA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Jul 2022 08:31:03 -0400
-Received: from m-r2.th.seeweb.it (m-r2.th.seeweb.it [5.144.164.171])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02BCF26579
-        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Jul 2022 05:31:01 -0700 (PDT)
+        Wed, 6 Jul 2022 08:36:00 -0400
+Received: from relay06.th.seeweb.it (relay06.th.seeweb.it [IPv6:2001:4b7a:2000:18::167])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C7A21E3F0
+        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Jul 2022 05:35:58 -0700 (PDT)
 Received: from [192.168.1.101] (abxi46.neoplus.adsl.tpnet.pl [83.9.2.46])
         (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id D06DC3F642;
-        Wed,  6 Jul 2022 14:30:59 +0200 (CEST)
-Message-ID: <3bf68892-9a55-1d6e-fb43-346d9378a866@somainline.org>
-Date:   Wed, 6 Jul 2022 14:30:59 +0200
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 584053F669;
+        Wed,  6 Jul 2022 14:35:56 +0200 (CEST)
+Message-ID: <ebcfa5b0-a416-64c0-3aa4-3ae9487c61ab@somainline.org>
+Date:   Wed, 6 Jul 2022 14:35:55 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.11.0
-Subject: Re: [PATCH 2/2] [PATCH v2 2/2] arm64: dts: qcom: Add LTE SKUs for
- sc7280-villager family
+Subject: Re: [PATCH v3] dt-bindings: qcom: document preferred compatible
+ naming
 Content-Language: en-US
-To:     Jimmy Chen <jinghung.chen3@hotmail.com>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Douglas Anderson <dianders@chromium.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Alan Huang <alan-huang@quanta.corp-partner.google.com>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
-References: <SG2PR03MB500697A11DA5D0B45DE41B0ECC819@SG2PR03MB5006.apcprd03.prod.outlook.com>
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>, Alex Elder <elder@linaro.org>,
+        Robert Foss <robert.foss@linaro.org>,
+        Bhupesh Sharma <bhupesh.sharma@linaro.org>
+References: <20220705092846.66731-1-krzysztof.kozlowski@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-In-Reply-To: <SG2PR03MB500697A11DA5D0B45DE41B0ECC819@SG2PR03MB5006.apcprd03.prod.outlook.com>
+In-Reply-To: <20220705092846.66731-1-krzysztof.kozlowski@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=unavailable autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -54,161 +57,105 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 5.07.2022 04:22, Jimmy Chen wrote:
-> This adds LTE skus for villager device tree files.
+On 5.07.2022 11:28, Krzysztof Kozlowski wrote:
+> Compatibles can come in two formats.  Either "vendor,ip-soc" or
+> "vendor,soc-ip".  Qualcomm bindings were mixing both of usages, so add a
+> DT schema file documenting preferred policy and enforcing it for all new
+> compatibles, except few existing patterns.
 > 
-> Signed-off-by: Jimmy Chen <jinghung.chen3@hotmail.com>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> 
 > ---
 > 
->  arch/arm64/boot/dts/qcom/Makefile                 |  2 ++
->  .../arm64/boot/dts/qcom/sc7280-chrome-common.dtsi | 11 -----------
->  arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts |  1 +
->  .../dts/qcom/sc7280-herobrine-herobrine-r1.dts    |  1 +
->  .../boot/dts/qcom/sc7280-herobrine-lte-sku.dtsi   | 15 +++++++++++++++
->  .../dts/qcom/sc7280-herobrine-villager-r0-lte.dts | 14 ++++++++++++++
->  .../dts/qcom/sc7280-herobrine-villager-r1-lte.dts | 14 ++++++++++++++
->  arch/arm64/boot/dts/qcom/sc7280-idp.dts           |  1 +
->  8 files changed, 48 insertions(+), 11 deletions(-)
->  create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-lte-sku.dtsi
->  create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r0-lte.dts
->  create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1-lte.dts
+> Changes since v2:
+> 1. Narrow the expected pattern to be followed by dash '-' after model
+>    number (msm8996-) or by two letters and a dash (sc8280xp-).
+> 2. Add qcom,apss-wdt-xxx to list of exceptions.
+> 3. Use comment instead of description in the oneOf list.
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index bb9f4eb3e65a0..6d81ff12f5af2 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -103,6 +103,8 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-r1-lte.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-crd.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-herobrine-r1.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-villager-r0.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-villager-r0-lte.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-villager-r1-lte.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-idp.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-idp2.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-crd-r3.dtb
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi b/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
-> index cfe2741456a1a..25f31c81b2b74 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
-> @@ -83,17 +83,6 @@ spi_flash: flash@0 {
->  	};
->  };
->  
-> -/* Modem setup is different on Chrome setups than typical Qualcomm setup */
-> -&remoteproc_mpss {
-> -	status = "okay";
-> -	compatible = "qcom,sc7280-mss-pil";
-> -	iommus = <&apps_smmu 0x124 0x0>, <&apps_smmu 0x488 0x7>;
-> -	interconnects = <&mc_virt MASTER_LLCC 0 &mc_virt SLAVE_EBI1 0>;
-> -	memory-region = <&mba_mem>, <&mpss_mem>;
-> -	firmware-name = "qcom/sc7280-herobrine/modem/mba.mbn",
-> -			"qcom/sc7280-herobrine/modem/qdsp6sw.mbn";
-> -};
-> -
->  &remoteproc_wpss {
->  	status = "okay";
->  	firmware-name = "ath11k/WCN6750/hw1.0/wpss.mdt";
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts b/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts
-> index e9ca6c5d24a16..921eccfec39ae 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts
-> @@ -9,6 +9,7 @@
->  
->  #include "sc7280-herobrine.dtsi"
->  #include "sc7280-herobrine-audio-wcd9385.dtsi"
-> +#include "sc7280-herobrine-lte-sku.dtsi"
->  
->  / {
->  	model = "Qualcomm Technologies, Inc. sc7280 CRD platform (rev5+)";
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r1.dts b/arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r1.dts
-> index c1647a85a371a..c1a6719687252 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r1.dts
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r1.dts
-> @@ -8,6 +8,7 @@
->  /dts-v1/;
->  
->  #include "sc7280-herobrine.dtsi"
-> +#include "sc7280-herobrine-lte-sku.dtsi"
->  
->  / {
->  	model = "Google Herobrine (rev1+)";
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-lte-sku.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine-lte-sku.dtsi
+> Changes since v1:
+> 1. Add schema instead of readme (Rob).
+> 
+> Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+> Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Cc: Vinod Koul <vkoul@kernel.org>
+> Cc: Alex Elder <elder@linaro.org>
+> Cc: Robert Foss <robert.foss@linaro.org>
+> Cc: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+> ---
+>  .../devicetree/bindings/arm/qcom-soc.yaml     | 57 +++++++++++++++++++
+>  1 file changed, 57 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/arm/qcom-soc.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/arm/qcom-soc.yaml b/Documentation/devicetree/bindings/arm/qcom-soc.yaml
 > new file mode 100644
-> index 0000000000000..a4809dd2f4e8a
+> index 000000000000..6307c925335d
 > --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-lte-sku.dtsi
-> @@ -0,0 +1,15 @@
-> +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
-> +/*
-> + * Google Herobrine dts fragment for LTE SKUs
-> + *
-> + * Copyright 2022 Google LLC.
-> + */
-> +/* Modem setup is different on Chrome setups than typical Qualcomm setup */
-> +&remoteproc_mpss {
-Hi, just a minor nit.
+> +++ b/Documentation/devicetree/bindings/arm/qcom-soc.yaml
+> @@ -0,0 +1,57 @@
+> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/arm/qcom-soc.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm SoC compatibles naming convention
+> +
+> +maintainers:
+> +  - Bjorn Andersson <bjorn.andersson@linaro.org>
+> +
+> +description: |
+> +  Guidelines for new compatibles for SoC blocks/components.
+> +  When adding new compatibles in new bindings, use the format::
+> +    qcom,SoC-IP
+> +
+> +  For example::
+> +   qcom,sdm845-llcc-bwmon
+> +
+> +  When adding new compatibles to existing bindings, use the format in the
+> +  existing binding, even if it contradicts the above.
+> +
+> +select:
+> +  properties:
+> +    compatible:
+> +      pattern: "^qcom,.*(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$"
+> +  required:
+> +    - compatible
+> +
+> +properties:
+> +  compatible:
+> +    oneOf:
+> +      # Preferred naming style for compatibles of SoC components:
+> +      - pattern: "^qcom,(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+-.*$"
+> +      - pattern: "^qcom,(sa|sc)8[0-9]+[a-z][a-z]?-.*$"
+> +
+> +      # Legacy namings - variations of existing patterns/compatibles are OK,
+> +      # but do not add completely new entries to these:
+> +      - pattern: "^qcom,apss-wdt-(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$"
+> +      - pattern: "^qcom,gcc-(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$"
+> +      - pattern: "^qcom,mmcc-(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$"
+> +      - pattern: "^qcom,pcie-(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$"
+> +      - pattern: "^qcom,rpm-(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$"
+> +      - pattern: "^qcom,scm-(apq|ipq|mdm|msm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$"
+> +      - enum:
+> +          - qcom,gpucc-sdm630
+> +          - qcom,gpucc-sdm660
+> +          - qcom,lcc-apq8064
+> +          - qcom,lcc-ipq8064
+> +          - qcom,lcc-mdm9615
+> +          - qcom,lcc-msm8960
+> +          - qcom,lpass-cpu-apq8016
+> +          - qcom,usb-ss-ipq4019-phy
+> +          - qcom,usb-hs-ipq4019-phy
+> +          - qcom,vqmmc-ipq4019-regulator
+Maybe we could add new compatibles for these drivers and replace them
+in upstream DTs, but keep the old ones in the drivers with a clear
+indication that they are there only for legacy reasons?
 
-It was recently agreed upon that the status property should go last to
-make things consistent with other DTs (qcom is - as usual - a special
-snowflake :D). Could you please fix that up? The rest looks good.
+In the specific case of gpucc-sdm630/660 I think we could even "break" backwards
+compatibility, as the only users of that driver (Adreno GPU & its SMMU) depend
+on an iommu series to function properly, which has been stuck in the freezer..
 
 Konrad
-> +	status = "okay";
-> +	compatible = "qcom,sc7280-mss-pil";
-> +	iommus = <&apps_smmu 0x124 0x0>, <&apps_smmu 0x488 0x7>;
-> +	memory-region = <&mba_mem>, <&mpss_mem>;
-> +	firmware-name = "qcom/sc7280-herobrine/modem/mba.mbn",
-> +			"qcom/sc7280-herobrine/modem/qdsp6sw.mbn";
-> +};
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r0-lte.dts b/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r0-lte.dts
-> new file mode 100644
-> index 0000000000000..672cb78e3088f
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r0-lte.dts
-> @@ -0,0 +1,14 @@
-> +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
-> +/*
-> + * Google Villager board device tree source
-> + *
-> + * Copyright 2022 Google LLC.
-> + */
 > +
-> +#include "sc7280-herobrine-villager-r0.dts"
-> +#include "sc7280-herobrine-lte-sku.dtsi"
-> +
-> +/ {
-> +	model = "Google Villager (rev0) with LTE";
-> +	compatible = "google,villager-rev0-sku0", "qcom,sc7280";
-> +};
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1-lte.dts b/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1-lte.dts
-> new file mode 100644
-> index 0000000000000..2f05a19cc388e
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1-lte.dts
-> @@ -0,0 +1,14 @@
-> +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
-> +/*
-> + * Google Villager board device tree source
-> + *
-> + * Copyright 2022 Google LLC.
-> + */
-> +
-> +#include "sc7280-herobrine-villager-r1.dts"
-> +#include "sc7280-herobrine-lte-sku.dtsi"
-> +
-> +/ {
-> +	model = "Google Villager (rev1+) with LTE";
-> +	compatible = "google,villager-sku0", "qcom,sc7280";
-> +};
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dts b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
-> index 6d3ff80582ae9..fba7e938ce35a 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dts
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
-> @@ -10,6 +10,7 @@
->  #include <dt-bindings/iio/qcom,spmi-adc7-pmr735a.h>
->  #include "sc7280-idp.dtsi"
->  #include "pmr735a.dtsi"
-> +#include "sc7280-herobrine-lte-sku.dtsi"
->  
->  / {
->  	model = "Qualcomm Technologies, Inc. sc7280 IDP SKU1 platform";
+> +additionalProperties: true
