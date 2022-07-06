@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 07FF5568E5A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 17:54:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 07BC7568E5F
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 17:54:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232911AbiGFPwf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Jul 2022 11:52:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49966 "EHLO
+        id S234376AbiGFPyE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Jul 2022 11:54:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50448 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233496AbiGFPwO (ORCPT
+        with ESMTP id S234212AbiGFPxn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Jul 2022 11:52:14 -0400
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D74726AE3
-        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Jul 2022 08:50:22 -0700 (PDT)
-Received: by mail-lj1-x230.google.com with SMTP id bx13so18993198ljb.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Jul 2022 08:50:22 -0700 (PDT)
+        Wed, 6 Jul 2022 11:53:43 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3C10E02B
+        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Jul 2022 08:53:00 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id y16so26614096lfb.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Jul 2022 08:53:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=kxZ7CQ79CLU2h8rY+LQzy6VR2IcDxMDkX9FxIJFMPHE=;
-        b=bYoctCtq6bYttm296Lg76LeiabYmJjOaPAB6sfacl3pmpVkC+RGrAvwGsjzBW41z1M
-         t1DqdDhQBkjASh9Az3j7neI5rDG20Yks796Gahw+M5dutZa9IYpBgxW2YgKwszHk0SnT
-         dt/M9HhXywNZ3+H1x7jdOy5c37lbDUWgorMH8g8WwX8LuwwlSQS22Wb3GCWEdQ3Qa11n
-         SsZ5Jd2bxDSNOHmGHupWsSfhQ5R27QJv3uIOLFGumn8q04DRNsBx6idHFWf4i1tb4zKR
-         N8Vy9BYXC7M+p1/OtG0YzVXEDw2nVn58cSifU/AsH6s4LHCYvGfe0Rbx3k9rMbYSh5LC
-         h+Jw==
+        bh=3akakfTBgNkS72nT8lwBK+VGmgeYXh2NqN91EsDThbo=;
+        b=hTKI/rqJLNYVySE/UI3KEFDJW/pe3y5dp7t8sqYmPCRy1cKkpphw6NzDiWMY13xNam
+         u19KXrnp8owOW4X3d8OdIxExKLEeLDQ5cLSQEgLmgzJSL7zmrsN7Zez7gv2ZPNh9ZfMg
+         NZtRqUvKfJWjoJHbt6sSXGEAoMYD4HLOsw7RjfmFavLhrk/EJtbBw4s3UnCLpdqdqH/Y
+         s0I3LXH3UryWtb6LVWNcLGu/3C+Qfljpu518uFYpYl9sZnSvtc/3E+mSdSPNaleuzWK3
+         loES3yYJtWPOAcrmvGLbj9cAD/6t03WWN0hCuWXutg/9VOcU+gdhPMNUYAzcKydvn1h5
+         ia4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=kxZ7CQ79CLU2h8rY+LQzy6VR2IcDxMDkX9FxIJFMPHE=;
-        b=B5Kkj2bqOEp1pbUtdQpO0Mv0pWbVbYTlCdTOGoAd1UFFIrcglkBp/xyNPtdeXSur9D
-         8ToPgRmK9mtrZ6mSrwJBARcoQdtmPEdvuBEEB0829ZOaI2pkt1bt7bFr6HuPEShaovoj
-         oKMpb1GJtD/LLqftweOde+ROARoxcEPXkXxNkcckZKlKBds1JDiVyUkWaBQnjXEoqgKK
-         pbCfd9WvWjK0OSgw+B76zzbtCZ1FxL9/nlottFXt9OZSdIIdlxA+klvkG4OAI4bPvhC+
-         TWeJCyiGI5Ug8ESsvGJ9akhh3b9f0UtRz9uG+le1P7ZDIeMXTUEyX3mqDmzqhY6ouNnD
-         m3UQ==
-X-Gm-Message-State: AJIora/aCic4TXW0xSnE3Wj/EhTDvVltj7m7aZofk8S4uvsKpBSv29cI
-        KFltqrmeXfFGaVXNsnf+ar0O2g==
-X-Google-Smtp-Source: AGRyM1tKfsXhje9EIvRBlERA18zql4xonxY4Sb+/ufHUVQ5qxMnvA6//clihVoF72xZaSks6k2khOw==
-X-Received: by 2002:a05:651c:211e:b0:25a:88ca:d766 with SMTP id a30-20020a05651c211e00b0025a88cad766mr24929120ljq.230.1657122621267;
-        Wed, 06 Jul 2022 08:50:21 -0700 (PDT)
+        bh=3akakfTBgNkS72nT8lwBK+VGmgeYXh2NqN91EsDThbo=;
+        b=u6mjmGE7PsW0scZ9TiF3IN6dmhhgfZFmsjy0T7Frb4V1rAw9rZg81zeY0Wji5jzhAW
+         j8ReSb9vpyB2qHcYUQ0xX/0uW2LOpCg7orKUP4jcKh32CYQ5032f733loO1pMI77C1jr
+         U0Z2X2HyyeJqGqPD5K7jfHJCpcfj2276jqweTb9rBbmwaGsxo0Qp6RLZF7VdSggVmGbq
+         AR4QqK4ifRvLR2WXSw7mTMxdoo6C49aRa0sSHO8FMGWHvrsR5Jkn6T2GI1wUkDL4/6gB
+         sVqJKa563x1ytPasjoLHYXlyFVWiZPuSOXaIC2R7rvjRBPDFtXWLT/M/h4tzNxPoSdpj
+         Ieog==
+X-Gm-Message-State: AJIora9Sn1lvVt7OWfSLDNXGVa1iJhSFNb65pQRxQdQicllNKPaHx9xu
+        8ILL5D2zUgGsVGJ9sJ15taheKw==
+X-Google-Smtp-Source: AGRyM1vBMVXGOieLNVK2/2fBOu/0m+ARLkcBs8rvqmVVeg4hr5pNnbxvTWSoYsNBH+ke7FdXkGvkSQ==
+X-Received: by 2002:a05:6512:b1c:b0:481:618f:ec9 with SMTP id w28-20020a0565120b1c00b00481618f0ec9mr19723721lfu.217.1657122779036;
+        Wed, 06 Jul 2022 08:52:59 -0700 (PDT)
 Received: from [192.168.1.52] ([84.20.121.239])
-        by smtp.gmail.com with ESMTPSA id c9-20020a196549000000b0047f9614203esm6321993lfj.173.2022.07.06.08.50.19
+        by smtp.gmail.com with ESMTPSA id v10-20020a2ea60a000000b0025bf92bd024sm3740383ljp.102.2022.07.06.08.52.57
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 06 Jul 2022 08:50:20 -0700 (PDT)
-Message-ID: <088c1863-ad44-61b6-8757-bc3097369335@linaro.org>
-Date:   Wed, 6 Jul 2022 17:50:19 +0200
+        Wed, 06 Jul 2022 08:52:58 -0700 (PDT)
+Message-ID: <7b504ecb-b05a-549e-e2ce-18c539f68655@linaro.org>
+Date:   Wed, 6 Jul 2022 17:52:57 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.11.0
-Subject: Re: [PATCH 2/4] dt-bindings: display/msm/gpu: document using the
- amd,imageon adreno too
+Subject: Re: [PATCH 3/4] dt-bindings: display/msm/gmu: account for different
+ GMU variants
 Content-Language: en-US
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Andy Gross <agross@kernel.org>,
@@ -71,9 +71,9 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
 References: <20220706145222.1565238-1-dmitry.baryshkov@linaro.org>
- <20220706145222.1565238-3-dmitry.baryshkov@linaro.org>
+ <20220706145222.1565238-4-dmitry.baryshkov@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220706145222.1565238-3-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220706145222.1565238-4-dmitry.baryshkov@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -87,52 +87,73 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 06/07/2022 16:52, Dmitry Baryshkov wrote:
-> The DT binding desribes using amd,imageon only for Imageon 2xx GPUs. We
-> have been using amd,imageon with newer (Adreno) GPUs to describe the
-> headless setup, when the platform does not (yet) have the display DT
-
-Does not have "yet"? So later it will have and you drop a compatible?
-
-> nodes (and no display support). Document this trick in the schema.
+> Make display/msm/gmu.yaml describe all existing GMU variants rather than
+> just the 630.2 (SDM845) version of it.
 > 
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->  Documentation/devicetree/bindings/display/msm/gpu.yaml | 6 ++++++
->  1 file changed, 6 insertions(+)
+>  .../devicetree/bindings/display/msm/gmu.yaml  | 166 +++++++++++++++---
+>  1 file changed, 146 insertions(+), 20 deletions(-)
 > 
-> diff --git a/Documentation/devicetree/bindings/display/msm/gpu.yaml b/Documentation/devicetree/bindings/display/msm/gpu.yaml
-> index 346aabdccf7b..e006da95462c 100644
-> --- a/Documentation/devicetree/bindings/display/msm/gpu.yaml
-> +++ b/Documentation/devicetree/bindings/display/msm/gpu.yaml
-> @@ -16,9 +16,13 @@ properties:
->        - description: |
->            The driver is parsing the compat string for Adreno to
->            figure out the gpu-id and patch level.
-> +          Optional amd,imageon compatibility string enables using Adreno
-> +          without the display node.
->          items:
->            - pattern: '^qcom,adreno-[3-6][0-9][0-9]\.[0-9]$'
->            - const: qcom,adreno
-> +          - const: amd,imageon
-> +        minItems: 2
+> diff --git a/Documentation/devicetree/bindings/display/msm/gmu.yaml b/Documentation/devicetree/bindings/display/msm/gmu.yaml
+> index fe55611d2603..67fdeeabae0c 100644
+> --- a/Documentation/devicetree/bindings/display/msm/gmu.yaml
+> +++ b/Documentation/devicetree/bindings/display/msm/gmu.yaml
+> @@ -20,35 +20,24 @@ description: |
+>  properties:
+>    compatible:
+>      items:
+> -      - enum:
+> -          - qcom,adreno-gmu-630.2
+> +      - pattern: '^qcom,adreno-gmu-6[0-9][0-9]\.[0-9]$'
+>        - const: qcom,adreno-gmu
+>  
+>    reg:
+> -    items:
+> -      - description: Core GMU registers
+> -      - description: GMU PDC registers
+> -      - description: GMU PDC sequence registers
+> +    minItems: 3
+> +    maxItems: 4
+>  
+>    reg-names:
+> -    items:
+> -      - const: gmu
+> -      - const: gmu_pdc
+> -      - const: gmu_pdc_seq
+> +    minItems: 3
+> +    maxItems: 4
+>  
+>    clocks:
+> -    items:
+> -      - description: GMU clock
+> -      - description: GPU CX clock
+> -      - description: GPU AXI clock
+> -      - description: GPU MEMNOC clock
+> +    minItems: 4
+> +    maxItems: 7
+>  
+>    clock-names:
+> -    items:
+> -      - const: gmu
+> -      - const: cxo
+> -      - const: axi
+> -      - const: memnoc
+> +    minItems: 4
+> +    maxItems: 7
+>  
+>    interrupts:
+>      items:
+> @@ -76,6 +65,9 @@ properties:
+>  
+>    operating-points-v2: true
+>  
+> +  opp-table:
+> +    type: object
 
-This is too unspecific. You allow any device to be and not to be
-compatible with amd,imageon.
+instead: opp-table:true
 
->        - description: |
->            The driver is parsing the compat string for Imageon to
->            figure out the gpu-id and patch level.
-> @@ -148,6 +152,8 @@ allOf:
->                  description: GPU 3D engine clock
->                - const: rbbmtimer
->                  description: GPU RBBM Timer for Adreno 5xx series
-> +              - const: rbcpr
-> +                description: GPU RB CPR clock
->            minItems: 2
->            maxItems: 7
-
-Do 8 items work with maxItems:7?
-
+> +
 
 Best regards,
 Krzysztof
