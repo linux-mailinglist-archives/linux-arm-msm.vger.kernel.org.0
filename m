@@ -2,77 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BB7B9568C6F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 17:14:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 70C31568CB1
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 17:26:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233342AbiGFPNw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Jul 2022 11:13:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58430 "EHLO
+        id S232648AbiGFP0V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Jul 2022 11:26:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40234 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230268AbiGFPNv (ORCPT
+        with ESMTP id S232014AbiGFP0U (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Jul 2022 11:13:51 -0400
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E843F22539
-        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Jul 2022 08:13:46 -0700 (PDT)
-Received: by mail-lj1-x22b.google.com with SMTP id l7so18101586ljj.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Jul 2022 08:13:46 -0700 (PDT)
+        Wed, 6 Jul 2022 11:26:20 -0400
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB09817E03
+        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Jul 2022 08:26:18 -0700 (PDT)
+Received: by mail-ej1-x633.google.com with SMTP id o25so27738769ejm.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Jul 2022 08:26:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=QPBPWEhV2Vykab+FuRAUO/iMibCW6th1rjVx2QzcAa8=;
-        b=UBbtQKARyXdeKvpy36Jm9Brb7tYCsu9XKOsYXl/ZtvqvVAjIq8VXpxsok1OC1mY2nA
-         6YLnt8juwlycbIx5FPOGcYcwx0EPXnASDpuISFAB2W2ezCsq+r4d0Pj4FvNchlPQfEbk
-         TWpLIDW6JUcN7/zexsDF2KDjsSh7J0SD7G+CC0TuYcn1PDmmwQaD5JiBahL3fYqNEkKW
-         6gULkxdgME0KjGjeQPDevv1RDHFzMdnFhSff58WuP02EMTRkwH2H36/LA2cW6n98exC0
-         voMeuPrAwXFHK9JHTRnLnuTD3v0bm7p+vugqa8MtOFt1vDe6uRc7vbG/6/bIuu7Hbyjk
-         KeQg==
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=N+FbSyALgm9lbOpyIy2v3Y7I0J+XerdtP2UQklPiSpI=;
+        b=LRUZlJxKqdqYRSw/yeFrbKJA0IhDA/PmPs0D7vdmRBAx2GdS7Y8MLTUV5W5sX5FX+M
+         Nx29ts/Ve1YdYOfOKx8vSU5/skbgooKFUwhzjYepC7bTcR3+39gfeAMQ/+9ntMvsKF4Y
+         qlEmgbeT8UGwRKNuVHeeoW9MC6YtYRRNqbw6M=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=QPBPWEhV2Vykab+FuRAUO/iMibCW6th1rjVx2QzcAa8=;
-        b=oOQqsonBi3yvfDoZcrMPic8uqZrK4OOsVKcjyEE2q/tIr/sk4Sg2odvSVLebTbo4lq
-         eHaMkWlVd5fLv0sdG/fgl0fSedMHx+SjYwzgIWnzyUanGgfl/nCOvPu2N25x0fTlJHMb
-         0hmcCHaHXjMPib9Y3ynRxQE+7tRCmrWeqaMX+jV0PgsKGl8400U8UMhzC6Lk9ly1GM2E
-         swZD7WVxPHVJShvazImw1xXadrs+z0x09E9SJjBTlPYU0UTY/MUkKDMObuSZN1sAFdDr
-         OnCCYYdy8Yi7KO+Ln3uB1VnlNBeXE6VABKWUWVDV5Yanic0uc0RV1rHLlXI0wFEWK9cC
-         j2pA==
-X-Gm-Message-State: AJIora+SgyOxTHGzdwzgZl//Ha+MwK3YbXMgviB70b5uNVWmtN6jojHS
-        ZrvuEIkU2XDbqeNTf/U5EZ+87yDIsdOBBA==
-X-Google-Smtp-Source: AGRyM1tH2oqsonL2G0A+++kLBn/3Imc+sqCOv8q++5fgWtIHiQlb9L3zrzfCr7LvxU1WmGk40HbeQg==
-X-Received: by 2002:a2e:b55a:0:b0:25d:485e:5d86 with SMTP id a26-20020a2eb55a000000b0025d485e5d86mr1561320ljn.194.1657120425306;
-        Wed, 06 Jul 2022 08:13:45 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id e18-20020ac25472000000b0047fa941066bsm6313329lfn.96.2022.07.06.08.13.44
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=N+FbSyALgm9lbOpyIy2v3Y7I0J+XerdtP2UQklPiSpI=;
+        b=l7J4GjnbbxrvGKv2CPhfjOINThAK5QMnHFbGBTw1zrWc8ZrtmGaHarGddwcD1OQ9VA
+         g6G/nC/wroM/z6bk7Ty3gu+OrOp4qmLPdgc84IiWxAQeJrIjJK9JNSgq0z7maeCYVg2f
+         dps6KTVKyFr1l/1WX8MLZwn/bJMwKp/bmZ1Gn+dk3bCRliUzrLeYoqGc3cXIiD7205mD
+         2LcswtFcKe9bQ/ahWubMpNYzEOhWWhVtt9JkddCE4GPgRlTYpP9uNyKrlnXfig4FDcQt
+         c0kCqsARoJVB9SKunQSM+BQwxQ383NjIyK0djxQmuFuP7dcRfX+m1OBnBFKi5Dbbj7TE
+         eUnw==
+X-Gm-Message-State: AJIora/36fVrA69ZELcSP66b1JFGMjW0+Kd5kNroccIDganmSqfgT2ss
+        et7KzUh7EyR7QWumADwUjHC9p3RbUVYLVFfC
+X-Google-Smtp-Source: AGRyM1tiqkiKxN+uR5rp3X+9Y3CU1f0l0hzy1s2NeupgySpJ562FRECioW5dDzQvk9y7WZReP4gfSA==
+X-Received: by 2002:a17:907:608b:b0:722:f954:6e3 with SMTP id ht11-20020a170907608b00b00722f95406e3mr40519451ejc.550.1657121177149;
+        Wed, 06 Jul 2022 08:26:17 -0700 (PDT)
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com. [209.85.128.47])
+        by smtp.gmail.com with ESMTPSA id p17-20020a056402501100b0043787ad7cfasm21474631eda.22.2022.07.06.08.26.14
+        for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 06 Jul 2022 08:13:44 -0700 (PDT)
-Message-ID: <ceaca6d7-958d-ade6-9ee5-5e70bc57bbd7@linaro.org>
-Date:   Wed, 6 Jul 2022 18:13:43 +0300
+        Wed, 06 Jul 2022 08:26:15 -0700 (PDT)
+Received: by mail-wm1-f47.google.com with SMTP id c131-20020a1c3589000000b003a19b2bce36so6228333wma.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Jul 2022 08:26:14 -0700 (PDT)
+X-Received: by 2002:a05:600c:3ace:b0:3a0:4ea4:5f77 with SMTP id
+ d14-20020a05600c3ace00b003a04ea45f77mr43144480wms.57.1657121174285; Wed, 06
+ Jul 2022 08:26:14 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: [PATCH v4 0/2] PCI: Restrict pci transactions after pci suspend
-Content-Language: en-GB
-To:     Krishna chaitanya chundru <quic_krichai@quicinc.com>,
-        helgaas@kernel.org
-Cc:     linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, mka@chromium.org,
-        quic_vbadigan@quicinc.com, quic_hemantk@quicinc.com,
-        quic_nitegupt@quicinc.com, quic_skananth@quicinc.com,
-        quic_ramkri@quicinc.com, manivannan.sadhasivam@linaro.org,
-        swboyd@chromium.org
-References: <1656684800-31278-1-git-send-email-quic_krichai@quicinc.com>
- <1657118425-10304-1-git-send-email-quic_krichai@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <1657118425-10304-1-git-send-email-quic_krichai@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+References: <1656496841-5853-1-git-send-email-quic_vnivarth@quicinc.com>
+ <CAD=FV=UXP+dfYEHpsS_djnWYxNVUS__2Uu5Mmxt2G4T=vfSSQQ@mail.gmail.com>
+ <BL0PR02MB4564A1EC37911A464BBEC260FABD9@BL0PR02MB4564.namprd02.prod.outlook.com>
+ <CAD=FV=XCgsyTRT-T5jKN6c7tJ=du8gbpkMccm2VZpz+TFWyLsw@mail.gmail.com> <BL0PR02MB45643EEB3C1571E0F2364B8FFABE9@BL0PR02MB4564.namprd02.prod.outlook.com>
+In-Reply-To: <BL0PR02MB45643EEB3C1571E0F2364B8FFABE9@BL0PR02MB4564.namprd02.prod.outlook.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Wed, 6 Jul 2022 08:26:01 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=Up_NNd5RNJ+xLrPOHfPb_YG1ut=BjU=O2yP8w2hG9Ugw@mail.gmail.com>
+Message-ID: <CAD=FV=Up_NNd5RNJ+xLrPOHfPb_YG1ut=BjU=O2yP8w2hG9Ugw@mail.gmail.com>
+Subject: Re: [V2] tty: serial: qcom-geni-serial: Fix get_clk_div_rate() which
+ otherwise could return a sub-optimal clock rate.
+To:     "Vijaya Krishna Nivarthi (Temp)" <vnivarth@qti.qualcomm.com>
+Cc:     "Vijaya Krishna Nivarthi (Temp) (QUIC)" <quic_vnivarth@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        "bjorn.andersson@linaro.org" <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Jiri Slaby <jirislaby@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "linux-serial@vger.kernel.org" <linux-serial@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        "Mukesh Savaliya (QUIC)" <quic_msavaliy@quicinc.com>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -80,31 +88,331 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 06/07/2022 17:40, Krishna chaitanya chundru wrote:
-> If the endpoint device state is D0 and irq's are not freed, then
-> kernel try to mask interrupts in system suspend path by writing
-> in to the vector table (for MSIX interrupts) and config space (for MSI's).
-> 
-> These transactions are initiated in the pm suspend after pcie clocks got
-> disabled as part of platform driver pm  suspend call. Due to it, these
-> transactions are resulting in un-clocked access and eventually to crashes.
-> 
-> So added a logic in qcom driver to restrict these unclocked access.
-> And updated the logic to check the link state before masking
-> or unmasking the interrupts.
+Hi,
 
-Please do not send new versions as replies to previous ones. This breaks 
-threading for the reviewers.
+On Mon, Jul 4, 2022 at 11:57 AM Vijaya Krishna Nivarthi (Temp)
+<vnivarth@qti.qualcomm.com> wrote:
+>
+> Hi,
+>
+>
+> > -----Original Message-----
+> > From: Doug Anderson <dianders@chromium.org>
+> > Sent: Friday, July 1, 2022 8:38 PM
+> > To: Vijaya Krishna Nivarthi (Temp) (QUIC) <quic_vnivarth@quicinc.com>
+> > Cc: Andy Gross <agross@kernel.org>; bjorn.andersson@linaro.org; Konrad
+> > Dybcio <konrad.dybcio@somainline.org>; Greg Kroah-Hartman
+> > <gregkh@linuxfoundation.org>; Jiri Slaby <jirislaby@kernel.org>; linux-=
+arm-
+> > msm <linux-arm-msm@vger.kernel.org>; linux-serial@vger.kernel.org; LKML
+> > <linux-kernel@vger.kernel.org>; Mukesh Savaliya (QUIC)
+> > <quic_msavaliy@quicinc.com>; Matthias Kaehlcke <mka@chromium.org>;
+> > Stephen Boyd <swboyd@chromium.org>
+> > Subject: Re: [V2] tty: serial: qcom-geni-serial: Fix get_clk_div_rate()=
+ which
+> > otherwise could return a sub-optimal clock rate.
+> >
+> > WARNING: This email originated from outside of Qualcomm. Please be wary
+> > of any links or attachments, and do not enable macros.
+> >
+> > Hi,
+> >
+> > On Fri, Jul 1, 2022 at 4:04 AM Vijaya Krishna Nivarthi (Temp) (QUIC)
+> > <quic_vnivarth@quicinc.com> wrote:
+> > >
+> > > Hi,
+> > >
+> > >
+> > > > -----Original Message-----
+> > > > From: Doug Anderson <dianders@chromium.org>
+> > > > Sent: Thursday, June 30, 2022 4:45 AM
+> > > > To: Vijaya Krishna Nivarthi (Temp) (QUIC)
+> > > > <quic_vnivarth@quicinc.com>
+> > > > Cc: Andy Gross <agross@kernel.org>; bjorn.andersson@linaro.org;
+> > > > Konrad Dybcio <konrad.dybcio@somainline.org>; Greg Kroah-Hartman
+> > > > <gregkh@linuxfoundation.org>; Jiri Slaby <jirislaby@kernel.org>;
+> > > > linux-arm- msm <linux-arm-msm@vger.kernel.org>;
+> > > > linux-serial@vger.kernel.org; LKML <linux-kernel@vger.kernel.org>;
+> > > > Mukesh Savaliya (QUIC) <quic_msavaliy@quicinc.com>; Matthias
+> > > > Kaehlcke <mka@chromium.org>; Stephen Boyd
+> > <swboyd@chromium.org>
+> > > > Subject: Re: [V2] tty: serial: qcom-geni-serial: Fix
+> > > > get_clk_div_rate() which otherwise could return a sub-optimal clock=
+ rate.
+> > > >
+> > > >
+> > > >
+> > > > > +                               /* Save the first (lowest freq) w=
+ithin tolerance */
+> > > > > +                               ser_clk =3D freq;
+> > > > > +                               *clk_div =3D new_div;
+> > > > > +                               /* no more search for exact match=
+ required in 2nd run
+> > */
+> > > > > +                               if (!exact_match)
+> > > > > +                                       break;
+> > > > > +                       }
+> > > > > +               }
+> > > > >
+> > > > > -               prev =3D freq;
+> > > > > +               div =3D freq / desired_clk + 1;
+> > > >
+> > > > Can't you infinite loop now?
+> > > >
+> > > > Start with:
+> > > >
+> > > > desired_clk =3D 10000
+> > > > div =3D 1
+> > > > percent_tol =3D 2
+> > > >
+> > > >
+> > > > Now:
+> > > >
+> > > > mult =3D 10000
+> > > > offset =3D 200
+> > > > test_freq =3D 9800
+> > > > freq =3D 9800
+> > > > div =3D 9800 / 10000 + 1 =3D 0 + 1 =3D 1
+> > > >
+> > > > ...and then you'll loop again with "div =3D 1", won't you? ...or di=
+d I
+> > > > get something wrong in my analysis? This is the reason my proposed
+> > > > algorithm had two loops.
+> > > >
+> > > >
+> > >
+> > > I went back to your proposed algorithm and made couple of simple
+> > changes, and it seemed like what we need.
+> > >
+> > > a) look only for exact match once a clock rate within tolerance is
+> > > found
+> > > b) swap test_freq and freq at end of while loops to make it run as
+> > > desired
+> > >
+> > >
+> > >         maxdiv =3D CLK_DIV_MSK >> CLK_DIV_SHFT;
+> > >         div =3D 1;
+> > >
+> > >         while (div < maxdiv) {
+> > >                 mult =3D (unsigned long long)div * desired_clk;
+> > >                 if (mult !=3D (unsigned long)mult)
+> > >                         break;
+> > >
+> > >                 if (ser_clk)
+> > >                         offset =3D 0;
+> > >                 =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3Da=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> > >                 else
+> > >                         offset =3D div_u64(mult * percent_tol, 100);
+> > >
+> > >                 /*
+> > >                  * Loop requesting (freq - 2%) and possibly (freq).
+> > >                  *
+> > >                  * We'll keep track of the lowest freq inexact match =
+we found
+> > >                  * but always try to find a perfect match. NOTE: this=
+ algorithm
+> > >                  * could miss a slightly better freq if there's more =
+than one
+> > >                  * freq between (freq - 2%) and (freq) but (freq) can=
+'t be made
+> > >                  * exactly, but that's OK.
+> > >                  *
+> > >                  * This absolutely relies on the fact that the Qualco=
+mm clock
+> > >                  * driver always rounds up.
+> > >                  */
+> > >                 test_freq =3D mult - offset;
+> > >                 while (test_freq <=3D mult) {
+> > >                         freq =3D clk_round_rate(clk, test_freq);
+> > >
+> > >                         /*
+> > >                          * A dead-on freq is an insta-win. This impli=
+citly
+> > >                          * handles when "freq =3D=3D mult"
+> > >                          */
+> > >                         if (!(freq % desired_clk)) {
+> > >                                 *clk_div =3D freq / desired_clk;
+> > >                                 return freq;
+> > >                         }
+> > >
+> > >                         /*
+> > >                          * Only time clock framework doesn't round up=
+ is if
+> > >                          * we're past the max clock rate. We're done =
+searching
+> > >                          * if that's the case.
+> > >                          */
+> > >                         if (freq < test_freq)
+> > >                                 return ser_clk;
+> > >
+> > >                         /* Save the first (lowest freq) within tolera=
+nce */
+> > >                         if (!ser_clk && freq <=3D mult + offset) {
+> > >                                 ser_clk =3D freq;
+> > >                                 *clk_div =3D div;
+> > >                         }
+> > >
+> > >                         /*
+> > >                          * If we already rounded up past mult then th=
+is will
+> > >                          * cause the loop to exit. If not then this w=
+ill run
+> > >                          * the loop a second time with exactly mult.
+> > >                          */
+> > >                         test_freq =3D max(test_freq + 1, mult);
+> > >                                                      =3D=3D=3D=3Db=3D=
+=3D=3D=3D
+> > >                 }
+> > >
+> > >                 /*
+> > >                  * freq will always be bigger than mult by at least 1=
+.
+> > >                  * That means we can get the next divider with a DIV_=
+ROUND_UP.
+> > >                  * This has the advantage of skipping by a whole bunc=
+h of divs
+> > >                  * If the clock framework already bypassed them.
+> > >                  */
+> > >                 div =3D DIV_ROUND_UP(freq, desired_clk);
+> > >                                                        =3D=3D=3Db=3D=
+=3D
+> > >         }
+> > >
+> > >
+> > > Will also drop exact_match now.
+> > >
+> > > Will upload v3 after testing.
+> >
+> > The more I've been thinking about it, the more I wonder if we even need=
+ the
+> > special case of looking for an exact match at all. It feels like we sho=
+uld choose
+> > one: we either look for the best match or we look for the one with the
+> > lowest clock source rate. The weird half-half approach that we have rig=
+ht
+> > now feels like over-engineering and complicates things.
+> >
+> > How about this (again, only lightly tested). Worst case if we _truly_ n=
+eed a
+> > close-to-exact match we could pass a tolerance of 0 in and we'd get
+> > something that's nearly exact, though I'm not suggesting we actually do=
+ that.
+> > If we think 2% is good enough then we should just accept the first (and
+> > lowest clock rate) 2% match we find.
+> >
+> >     abs_tol =3D div_u64((u64)desired_clk * percent_tol, 100);
+> >     maxdiv =3D CLK_DIV_MSK >> CLK_DIV_SHFT;
+> >     div =3D 1;
+> >     while (div <=3D maxdiv) {
+> >         mult =3D (u64)div * desired_clk;
+> >         if (mult !=3D (unsigned long)mult)
+> >             break;
+> >
+> >         offset =3D div * abs_tol;
+> >         freq =3D clk_round_rate(clk, mult - offset);
+> >
+> >         /* Can only get lower if we're done */
+> >         if (freq < mult - offset)
+> >             break;
+> >
+> >         /*
+> >          * Re-calculate div in case rounding skipped rates but we
+> >          * ended up at a good one, then check for a match.
+> >          */
+> >         div =3D DIV_ROUND_CLOSEST(freq, desired_clk);
+> >         achieved =3D DIV_ROUND_CLOSEST(freq, div);
+> >         if (achieved <=3D desired_clk + abs_tol &&
+> >             achieved >=3D desired_clk - abs_tol) {
+> >             *clk_div =3D div;
+> >             return freq;
+> >         }
+> >
+> >         /*
+> >          * Always increase div by at least one, but we'll go more than
+> >          * one if clk_round_rate() gave us something higher.
+> >          */
+> >         div =3D DIV_ROUND_UP(max(freq, (unsigned long)mult) + 1, desire=
+d_clk);
+>
+> Wouldn=E2=80=99t DIV_ROUND_UP(freq, desired_clk) suffice here?
+> freq >=3D mult-offset, else we would have hit break.
 
-> Krishna chaitanya chundru (2):
->    PCI: qcom: Add system PM support
->    PCI: qcom: Restrict pci transactions after pci suspend
-> 
->   drivers/pci/controller/dwc/pcie-designware-host.c |  14 ++-
->   drivers/pci/controller/dwc/pcie-qcom.c            | 121 +++++++++++++++++++++-
->   2 files changed, 131 insertions(+), 4 deletions(-)
+No. As you say, freq >=3D "mult-offset". That means that freq could be
+=3D=3D "mult-offset", right? If offset > 0 then freq could be < mult. Then
+your DIV_ROUND_UP() would just take you right back to where you
+started the loop with and you'd end up with an infinite loop, wouldn't
+you?
 
 
--- 
-With best wishes
-Dmitry
+> Additionally if freq <=3D mult we would have hit return.
+> So always freq > mult?
+>
+> And hence div++ would do the same?
+
+I thought about it and I decided that it might not if the clock
+framework skipped a whole bunch. Let's see if I can give an example.
+
+Let's say
+* "desired_clk" is 10000
+* "percent_tol" is 2 (abs_tol =3D 200)
+* We can make clocks 17000, 20000, 25000.
+
+First time through the loop:
+
+mult =3D 10000
+offset =3D 200
+freq =3D 17000
+div =3D 2
+achieved =3D 8500 (not within tolerance)
+
+...at the end of the loop if we do "div++" then we'll end up with
+div=3D3 for the next loop and we'll miss finding 20000.
+...but if we do my math, we end up with:
+
+DIV_ROUND_UP(max(17000, 10000) + 1, 10000)
+DIV_ROUND_UP(17000 + 1, 10000)
+DIV_ROUND_UP(17000, 10000)
+2
+
+...and that's exactly what we want.
+
+
+Here's an example showing why the line "div =3D DIV_ROUND_CLOSEST(freq,
+desired_clk)" is important:
+
+* "desired_clk" is 10000
+* "percent_tol" is 2 (abs_tol =3D 200)
+* We can make clocks 19600, 25000.
+
+mult =3D 10000
+offset =3D 200
+freq =3D 19600
+div =3D 2
+achieved =3D 9800
+
+Returns 19600 and div=3D2
+
+
+Here's an example showing how the clock framework rounding lets us
+skip some "div"s without missing anything important:
+
+* "desired_clk" is 10000
+* "percent_tol" is 2 (abs_tol =3D 200)
+* We can make clocks 24000, 30000.
+
+mult =3D 25000
+offset =3D 200
+freq =3D 24000
+div =3D 2
+achieved =3D 12000 (not within tolerance)
+
+div =3D DIV_ROUND_UP(max(24000, 10000) + 1, 10000)
+div =3D 3
+
+mult =3D 30000
+offset =3D 600
+freq =3D 30000
+div =3D 3
+
+-Doug
