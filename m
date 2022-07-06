@@ -2,34 +2,34 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D40215689CC
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 15:43:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 38FD05689C7
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 15:43:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231328AbiGFNmi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Jul 2022 09:42:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41598 "EHLO
+        id S233180AbiGFNmn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Jul 2022 09:42:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41402 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233152AbiGFNmP (ORCPT
+        with ESMTP id S233617AbiGFNmW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Jul 2022 09:42:15 -0400
+        Wed, 6 Jul 2022 09:42:22 -0400
 Received: from mx.kernkonzept.com (serv1.kernkonzept.com [IPv6:2a01:4f8:1c1c:b490::2])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98225252AB;
-        Wed,  6 Jul 2022 06:42:14 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9514425E85;
+        Wed,  6 Jul 2022 06:42:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
         d=kernkonzept.com; s=mx1; h=Content-Transfer-Encoding:MIME-Version:References
         :In-Reply-To:Message-Id:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:
         Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
         Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
         List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=PC6G8cw2IAjtxswfCppuN5Gom/ioWuRR2SaS/QD40Vs=; b=fwU1sVHabFrEgfedhrwyPqvE9V
-        goamlr//PyZDEHhAjDPW5yyriwqekOVvEYdh+LlBSc/DB/3tqyD28vUvUIb8XQKhiwiPYZXSXmYML
-        zMO3UTdrnmKja/NBAonIxVV+Z2hHvCyGuP9czsuFAYJSyboy2MqopkbttNpshb5vgbNazLWFxXruI
-        n4DLgjKeN8dicdyy7PWqX69MBBXsw1IDmTfiBHBe6Pnx1jFh0yQSFzX5J+sTlRhbJBnAhQrUMpbQ/
-        uHve3X4Wdkq8V1uBkEU6BPpiv+IIq7lecbvY3MqyEGspHxhePTFfpZD12t8/fBgHmvxlrWyJW2CSx
-        lVF5HjrA==;
+        bh=utAtQv4SqbiUynayumHMkkGjOVv7dPJdD+8PTBd8DII=; b=ZzNg/eMhPxg1FEQAwGadfaOjs/
+        KNQtsm1KCXYdNudxnncj9xz0RjGOGktD9Q0ZOQhVdrC/gVnQPIfzmhGPnCQCTLHKX0MDpfpUjjKsI
+        TbsGyliDvmZVqasZx95fIDajYiuFSm+Ja/4SlVFTkiUdpEBAijE6sSAyJxjcUKSS1gVsP3ReebxDy
+        6ZgTG/ahN72qQ2qsOIFtQpUlENgDfYqMYvtOakaf7p/pB2LAdBJCNaMm1ZYvt0q0pujVZlA9FHJ86
+        dmGmiOHRPpTLShObqgxtBCh18Eo43yM7WIY8w/A4n/M/2i1Q8LXVj691ZOcFVExH6zM2FsoQVFc5J
+        I/S42NAQ==;
 Received: from [10.22.3.24] (helo=kernkonzept.com)
         by mx.kernkonzept.com with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim 4.94.2)
-        id 1o95I6-007M5K-Ue; Wed, 06 Jul 2022 15:42:06 +0200
+        id 1o95I9-007M5K-8y; Wed, 06 Jul 2022 15:42:09 +0200
 From:   Stephan Gerhold <stephan.gerhold@kernkonzept.com>
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>,
@@ -43,10 +43,11 @@ Cc:     Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         devicetree@vger.kernel.org,
         Dominik Kobinski <dominikkobinski314@gmail.com>,
-        Stephan Gerhold <stephan.gerhold@kernkonzept.com>
-Subject: [PATCH v2 4/6] clk: qcom: gcc-msm8909: Increase delay for USB PHY reset
-Date:   Wed,  6 Jul 2022 15:41:30 +0200
-Message-Id: <20220706134132.3623415-5-stephan.gerhold@kernkonzept.com>
+        Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v2 5/6] dt-bindings: clock: qcom,rpmcc: Add MSM8909
+Date:   Wed,  6 Jul 2022 15:41:31 +0200
+Message-Id: <20220706134132.3623415-6-stephan.gerhold@kernkonzept.com>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20220706134132.3623415-1-stephan.gerhold@kernkonzept.com>
 References: <20220706134132.3623415-1-stephan.gerhold@kernkonzept.com>
@@ -61,44 +62,29 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The USB PHY on MSM8909 works with the driver used on MSM8916
-(phy-qcom-usb-hs.c). When turning the PHY on/off it is first reset
-using the standard reset controller API. On MSM8916 the reset is
-provided by the USB driver (ci_hdrc_msm_por_reset() in ci_hdrc_msm.c).
-
-While this seems to work on MSM8909 as well, the Qualcomm Linux sources
-suggest that the PHY should be reset using the GCC_USB2_HS_PHY_ONLY_BCR
-register instead. In general this is easy to set up in the device tree,
-thanks to the standard reset controller API.
-
-However, to conform to the specifications of the PHY the reset signal
-should be asserted for at least 10 us. This is handled correctly on
-MSM8916 in ci_hdrc_msm_por_reset(), but not within the GCC driver.
-
-Fix this by making use of the new "udelay" field of qcom_reset_map
-and set a delay of ~15 us between the assertion/deassertion of the
-USB PHY reset signal.
+Document the "qcom,rpmcc-msm8909" compatible for the clocks available
+via the RPM on the MSM8909 SoC.
 
 Signed-off-by: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
-Changes in v2: None.
+Changes in v2: Add Krzysztof's Acked-by
 ---
- drivers/clk/qcom/gcc-msm8909.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/devicetree/bindings/clock/qcom,rpmcc.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/clk/qcom/gcc-msm8909.c b/drivers/clk/qcom/gcc-msm8909.c
-index c551953d3791..2a00b11ce2cd 100644
---- a/drivers/clk/qcom/gcc-msm8909.c
-+++ b/drivers/clk/qcom/gcc-msm8909.c
-@@ -2670,7 +2670,7 @@ static const struct qcom_reset_map gcc_msm8909_resets[] = {
- 	[GCC_SDCC2_BCR] = { 0x43000 },
- 	[GCC_ULT_AUDIO_BCR] = { 0x1c0b4 },
- 	[GCC_USB2A_PHY_BCR] = { 0x41028 },
--	[GCC_USB2_HS_PHY_ONLY_BCR] = { 0x41034 },
-+	[GCC_USB2_HS_PHY_ONLY_BCR] = { .reg = 0x41034, .udelay = 15 },
- 	[GCC_USB_HS_BCR] = { 0x41000 },
- 	[GCC_VENUS0_BCR] = { 0x4c014 },
- 	/* Subsystem Restart */
+diff --git a/Documentation/devicetree/bindings/clock/qcom,rpmcc.yaml b/Documentation/devicetree/bindings/clock/qcom,rpmcc.yaml
+index 9d296b89a8d0..8bbb370198dc 100644
+--- a/Documentation/devicetree/bindings/clock/qcom,rpmcc.yaml
++++ b/Documentation/devicetree/bindings/clock/qcom,rpmcc.yaml
+@@ -29,6 +29,7 @@ properties:
+           - qcom,rpmcc-mdm9607
+           - qcom,rpmcc-msm8226
+           - qcom,rpmcc-msm8660
++          - qcom,rpmcc-msm8909
+           - qcom,rpmcc-msm8916
+           - qcom,rpmcc-msm8936
+           - qcom,rpmcc-msm8953
 -- 
 2.30.2
 
