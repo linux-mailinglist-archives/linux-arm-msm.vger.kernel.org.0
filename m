@@ -2,134 +2,151 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 31FE65683AB
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 11:36:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9518456842E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 11:56:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232226AbiGFJgi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Jul 2022 05:36:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46526 "EHLO
+        id S232771AbiGFJzM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Jul 2022 05:55:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35484 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229647AbiGFJgh (ORCPT
+        with ESMTP id S232034AbiGFJyN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Jul 2022 05:36:37 -0400
-Received: from APC01-TYZ-obe.outbound.protection.outlook.com (mail-tyzapc01olkn2053.outbound.protection.outlook.com [40.92.107.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C09DD23161;
-        Wed,  6 Jul 2022 02:36:36 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=OU9BBYdIAJCjK61XNalH2zJUhh1g4xg2SMkXHF7SWQx+KG2Or3KvgVfSjJAVUAhAquieVsffECFYpK53HwXHZBY4Klxe2uae0Mv+DgiuhKtlHS3w1X5lzS6JrXPn0SJO+5zp8CDJuNkx68XT1LwiHxSqgHKh8zi2D6wR33JWtG+yn3LVYgAr2KobCFBj14YtAy4tYXTUF+FvVThoFjyTZW1KkzplcIRcuGHnhbwrIx31/vMp8/lk4uGvkhkgvM5HCUorQ6SA91xGXf7kNOOYd6eljxlu3zqT97/Gq0dQT+D3DBd/mkdHXWL8YfAoTzhWiIgZo5KkJy66mCaitYBMfA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Ir/z4wi4c+D8aO4po5uZyVmC7RqL1/VRjYElfvSBQTA=;
- b=eTAxRuHUjqhEpqmKJjosqUYtbIwh6gRF09mbq/HSemkcI5gKmHdk1pR28iXqnBBU0VgZ6IrohRZVikqMT3xbUJ4jrKwoIayYE5lqhJTfuTwbNd21GHXnCb5oBCRVTAzWgc63gmAXaRm8GJnaNG86anf4L0HWl5bBIed2ey0SKdlIZJqbt8s8yeSDMpwDyaz1GNri5sH/DbG0M0vaZZJYacPJ710a7O3z1XgARmxm4UcYAbjvkIXFfpy8slIU0zjci8SGmLtryq3A7TUKqSawHpO+UAKMqjvE31eFTqA5duN8wg8trppwm/RLPrLbluLh3ztQ0zFKzgbGKeXA7Nu2iw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Ir/z4wi4c+D8aO4po5uZyVmC7RqL1/VRjYElfvSBQTA=;
- b=iCidgjfpPSrSZIbx4ZW33niGxjQCuT5hAeFsB1rPuBoewBl5Wb2KZz45nNoF8lXsDBOptmVsGL5qM/juQho/dGPOrMJXxu+7pi+M2N9lpf94vQC+P2SrvbW8LZU1J4r4m/LzWqnIbcNouxZ5c9eG7B86/x19OPdQ/yYE96uqKEfR7+e4+1qeAGggh98Fq6cV4JJi3zQHLoh50SjoFvS6xDFv/IG/zyeVO5nsRQIR4uXV6xrf8EvM/HYhh2Ts3PzRrof1r4BJtfodVbfBv6HeZEGprroJK8m6BbquCR5v18yIvijcAjnHNImM2sPI0bwCQboRz1oOXvzWjct19fJ3Xg==
-Received: from SG2PR03MB5006.apcprd03.prod.outlook.com (2603:1096:4:df::10) by
- TYZPR03MB6768.apcprd03.prod.outlook.com (2603:1096:400:200::9) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.5417.13; Wed, 6 Jul 2022 09:36:32 +0000
-Received: from SG2PR03MB5006.apcprd03.prod.outlook.com
- ([fe80::b96f:3a3b:5eef:e796]) by SG2PR03MB5006.apcprd03.prod.outlook.com
- ([fe80::b96f:3a3b:5eef:e796%5]) with mapi id 15.20.5417.015; Wed, 6 Jul 2022
- 09:36:32 +0000
-From:   Jimmy Chen <jinghung.chen3@hotmail.com>
-To:     krzysztof.kozlowski@linaro.org
-Cc:     agross@kernel.org, alan-huang@quanta.corp-partner.google.com,
-        bjorn.andersson@linaro.org, devicetree@vger.kernel.org,
-        dianders@chromium.org, jinghung.chen3@hotmail.com,
-        konrad.dybcio@somainline.org, krzysztof.kozlowski+dt@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        robh+dt@kernel.org
-Subject: Re: [PATCH 1/2] [V1,1/2] arm64: dts: qcom: Add LTE SKUs for sc7280-villager family
-Date:   Wed,  6 Jul 2022 17:36:20 +0800
-Message-ID: <SG2PR03MB5006AB4C7E356CE321F628D9CC809@SG2PR03MB5006.apcprd03.prod.outlook.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <cfc2c27a-444d-8bd8-84a7-b6b1f99258f9@linaro.org>
-References: <cfc2c27a-444d-8bd8-84a7-b6b1f99258f9@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-TMN:  [q8E7AV7uoFSJ56j6/2flkfHMJD362EjT]
-X-ClientProxiedBy: TYCPR01CA0131.jpnprd01.prod.outlook.com
- (2603:1096:400:26d::19) To SG2PR03MB5006.apcprd03.prod.outlook.com
- (2603:1096:4:df::10)
-X-Microsoft-Original-Message-ID: <20220706093620.176723-1-jinghung.chen3@hotmail.com>
+        Wed, 6 Jul 2022 05:54:13 -0400
+Received: from mail-oa1-f52.google.com (mail-oa1-f52.google.com [209.85.160.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CA6725281;
+        Wed,  6 Jul 2022 02:54:10 -0700 (PDT)
+Received: by mail-oa1-f52.google.com with SMTP id 586e51a60fabf-10bf634bc50so11683649fac.3;
+        Wed, 06 Jul 2022 02:54:10 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=o8jOPstF035V3JBIGTjyEra8xnCZ4RAIho4NrHeIzoU=;
+        b=ifKui5S5rFjVMq/DNxGGiZYtnihyrIPz+XgGy+287htk2qPkSPTBDT6zU/bqaW0IAj
+         eEIcUuZm8zNyVqggg0vPkfq5SvWboTygMYut/vI30ZWm7OI6knykq5A50cyUN7yxHwbt
+         x3OJkAQz3rS3Y9MtqJ6NwJrgnwi7+6R6OQArw7NoCvrdzt2fl1u+Op6Sk71Eo0mnk7Kf
+         K4jGzZJ9jl69cTwc5fCZkxMTOGQj3eJLQiDqOz0u70kr/hzsHNPD58iNGRUJ3Qra3PtG
+         IF6KKSoTvxIaCco+8PSMr8pK01Kl4c2wWlCyc/+gJQOyWRzB04t4vTh7uCb3o8arKg4q
+         uq5Q==
+X-Gm-Message-State: AJIora8bNvFpKnAMxBIwdfj9hdkzH+LUCtZi660XXnMILcmdqPyTufKv
+        uEDKcQWoKlpivWccpTeeGBiDcGrSKa967ox8
+X-Google-Smtp-Source: AGRyM1uAKY8ZoN6KGv4/toshO1qHFCf+QFQjTKFAVF+YPn4y9ij2Yrnm8jj6CEE8H4m9dwU7r8nybw==
+X-Received: by 2002:a05:6870:b3a7:b0:10c:224c:a0b6 with SMTP id w39-20020a056870b3a700b0010c224ca0b6mr2265078oap.248.1657101249503;
+        Wed, 06 Jul 2022 02:54:09 -0700 (PDT)
+Received: from mail-oo1-f46.google.com (mail-oo1-f46.google.com. [209.85.161.46])
+        by smtp.gmail.com with ESMTPSA id r81-20020acaf354000000b003359fb6609asm8613210oih.22.2022.07.06.02.54.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 06 Jul 2022 02:54:09 -0700 (PDT)
+Received: by mail-oo1-f46.google.com with SMTP id m26-20020a4abc9a000000b00425cd321033so2843821oop.10;
+        Wed, 06 Jul 2022 02:54:09 -0700 (PDT)
+X-Received: by 2002:a05:6902:50e:b0:66e:7f55:7a66 with SMTP id
+ x14-20020a056902050e00b0066e7f557a66mr6648581ybs.365.1657100796735; Wed, 06
+ Jul 2022 02:46:36 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 3b4c7b2b-36e5-45fa-2eb2-08da5f330273
-X-MS-Exchange-SLBlob-MailProps: 24/Lm41Da9ktIBtCWjIRZYcjG45JR6BduYRU7ox7eO0TbaO/mWwzYzNutIh2Tclm1CviGUjn6sl4bQ+SGXxXLdWiDv2Xqno5z1CerF9F8hJXArKDp3wcNLCoThh0etUWCdRZ8WIOAa4o4T9DDKg2NH5EsrbiDaM79v8cRqz3IJUu4v21UJe7W+n9f62OYsyKkIhEkExHN2V9waSRFmJmxXbpeyJJYjZT2uchtZEB0PBz5K072T4LNR9ZY0vCpVY1gfd8rAt5L8SM69YxnY/YQ0E0qVeYAsFAfiSd84arNvVuMNQ256+iySH399+wJQKlk7nstI34coK5GbxeIFj+FO9X372pdMG7bloQ/uX9uIONDVzkXLapnZfrfZA6EIWD2zD/dscL4dYuNn9W8d40o7OjYsL8TXWRB6QDgKTEbs5pEb4LSvSr2VdG4aY3x+jJ6RTYnbnVPX48dk+KPxtB7Cgu5PZMdDtqgN5h+K1NVntRx4JzJCY7Yd27mOyszlfUAG9VT23+XaQNoity5J3uJSJsxIBjeJt13AlGLLRLiCQ2txHJNVpiOuY1QEEBKUoeE28II1LQKwFQe5F2pzdtHgDbQ2nZNwhDsQ9jsEN8k98IHVx4jQEQSFzpLABbsg5/ytYLyKPttXIGtphc/qM5+W5XoXMQzYbgRTffV3qbofbtKbxEVjqulQCfxCnjA0rDRq+3SEB9KtLYoHt/FYVS8rwSp4O8w5q6auPDkE/RRXdaf0QNR/s5YHi1ZtITKaVI5H5nP4/tBt5YxzujCD5N8iEFZ0pvpd60nk4aKC4fdVPymcmAU2iQkc3hsWbZwY5fp8Z6iBaSLJ0=
-X-MS-TrafficTypeDiagnostic: TYZPR03MB6768:EE_
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: rZ+xTm0TkYzkelw85Df3luEiOdz9oD4XpAsMJVf4APuD7ALSEr1jq2fSQyV1NxvorumW9B6LBqaxz+28KJQcG7oalNQStWovMx6MHJ4lWhUjGDvmVqE7exudOejX02tl/wd98gXyXA3Ad8aGC5bQY6895iHO0Z/XbA7YEUvHPh8AVBPcL/40uP/olLw6tM+bzgqRZoa3GtfUC03fTCWNGtapenTf+U5HKamksvM+ZhMj1gZ6iekVLs734UWebYWG2aZ+YfxuH2NF7sBuLcOQqDQdKbWpZ1SPZUwNdrAN72t2Kw9Ft6aPKMQLI2n/JbzpqLpsFV+vUIezUG2wZFr+PGHwrleSWc/IyhxFdEvmehTJ5jKLtsjNI9hjnJ97yjxh+TFOXEAj7FPJu9NKviUvxofQRs3EUnd1dqFjgKeLl0CqDVKNLygj8ybg1plLu/sHCrDVnFwKge43eS5r1dv0M62mG35gJ2Rykk6nlEcJ7LbogbdLNs+yX7yFIlS7okGGCAM8YtG/WEF5eGQCqr13QcaHa6TMrYIZhJb2enGwnmmY2YfVTTEF8Uv7w/aRSrPQ1CGRJ31oy/TuCXBGbD++Kl8p6h7P7lYiwgcOfTQEOMXgQcttFvW2Ip5wEZpZeTNClX9mS+FQpeDF71JMJkZAUw==
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?T1NMUzlVcXBRYlZ3LzZibU1GbFFZaWdOTnRhM05rTCt4N1VqR2ZlNHd2TWtP?=
- =?utf-8?B?WThDUXZDeUtCaFpFdVdlSUVHVDNOdDRHa0pyKzNFNHdNK0N4aTlDbW82OEl1?=
- =?utf-8?B?OEo4SFdIeGhhMVpycnM4ZVJmNFFsNkNqNDBhNlkzTzlvd0c0MHFCMTl2S01I?=
- =?utf-8?B?QSs4UDMvWEUrekh0Vmd0MDNyQUg4V0FRbmJEalgvU0NYNlZXbVZzZTlRcW9H?=
- =?utf-8?B?MG8zajBIUlRHZG9leUkvSmVpT0UycWt3L1ZaWjlWNFczR0NaL0drdGVoMUtu?=
- =?utf-8?B?eXNjNDUzU1RJTldnNGlRQksyRlIyeU5JL1JTRStETWlhakc5ZStOUExvQVNG?=
- =?utf-8?B?NldVajVGdlRDajlEL2xVbXlRcVFsTytpK3EyT2MxZ1VvRWJjeEJWczBxT09u?=
- =?utf-8?B?Tk5EeGpmelVXS1R3aHhQcHpNT3RQbjEwSVNzcmtIQXdSMGtDVy85WTdoOGpM?=
- =?utf-8?B?M1d5bHVsVFJna1FJSWRGY1hpZ3VZR3BIRXVXSUgzLzZTakZic3c2MjRaUU04?=
- =?utf-8?B?b0pzOHBqblBVK1FWM1hlL2l0VEZxL3ZockVyZG5hTFg3VHlWdVc3ZWlGY1R5?=
- =?utf-8?B?RHBPSXBPYmxnYXJrSGJ2QlRXRndmTG9nOEd5QjRKTEQ1TTA0LzJGejR4RUVZ?=
- =?utf-8?B?elNlbkQvSjhnc2lhSm8vY1VhbGlaQUlVeGh6ZGlxanZDY081bDI1aHc5SWNG?=
- =?utf-8?B?TWZVSi92NW4vUzUya0VXbFYvWkdLODJSTXlUNUtUM2h3bExSS1VaU0Y0Qlgv?=
- =?utf-8?B?KzErSkNEeW5WczNkSmpBZGtkTWlDM28wN3F4SXdtajV0dTlZTXE5aFZrMXpY?=
- =?utf-8?B?anVON0xTK2huajJNYmM0ZWJFVnRpMW9MVHdaelUwaU83cDZZVUZVakZjWUps?=
- =?utf-8?B?ZThpM2V5T09oZ29QYW5rNUJnTFZWSVJTTXUveVZobTJmVm5pMjVSNUluRUJh?=
- =?utf-8?B?dC9nRlR3WDNySWFYRE5PSitweHA1R0YwUnBpSWFxUzc4WndHZU9XL2Q4NGov?=
- =?utf-8?B?YjR3STM1ZE03MGFmYng4KytONnozblI5OFdZdkFhVDhGdVZ6OFVtQm5DbGg4?=
- =?utf-8?B?Sk00d2wvN0xzYzN3dXpjTlFndXYzOEdWc0RDU1hWaDFPVmttYlpFV1lPcEhO?=
- =?utf-8?B?THJZSk1NMUVoK0F4VHg5WlVSaXlYOHI0elFyeUxVNE9nZUJxSk9kRHV3ck5L?=
- =?utf-8?B?aURXVVpvM0RldUdLNDh3MG9TeHJXYjFLbkFKZzZIUHF5UFJOeUdFTDJOU0JE?=
- =?utf-8?B?Mk1NL2E1V2JRaGp3azZmbjZTYVlwZTN1UjBwbVZMUWJUYnFqYkN3b0NqN3R0?=
- =?utf-8?B?Z3JZTmZHcGF2eU9vd094Q25HbjhZZ1lRT3NxWFpTQVlZd2N4ZG5XaVR5UFBN?=
- =?utf-8?B?UllXT1BUSXYvWElaUUFUQmI1MldpdzJ6T1kxdjliRjlqRnhLNHFwcEp4ZXF5?=
- =?utf-8?B?b0pEQnhxMlRXdHRRV0VWRUJ4M3hJanVTcmxLdVhPdHdiNnZFQzVrWmNibXhu?=
- =?utf-8?B?SlpnZHNuRjZqRFcySVFVZW5yNDE1c21sNURTQXMwdG5KNjN3S3BnUDNmVXlL?=
- =?utf-8?B?NkJGZm1RTmVHMDdDK0dJM25tdjVnRmNTaFEzKzV3dkprSjlPcTF3STQvRkR5?=
- =?utf-8?B?a2lpOC96Z3hPQ3lKWjN3aHJXNUU1UEM3Y0krTFd3ZHN0ZlpQUEdxaEh0aGtn?=
- =?utf-8?B?QW1zZU5Ga2svcjJ3VU8xNUt0bGxrSU5kZzdnQzM2MFRaTXJDQjM3NkdRPT0=?=
-X-OriginatorOrg: sct-15-20-4734-24-msonline-outlook-c0b75.templateTenant
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3b4c7b2b-36e5-45fa-2eb2-08da5f330273
-X-MS-Exchange-CrossTenant-AuthSource: SG2PR03MB5006.apcprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Jul 2022 09:36:31.9326
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYZPR03MB6768
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_PASS,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+References: <20220608142723.103523089@infradead.org> <20220608144517.124597382@infradead.org>
+In-Reply-To: <20220608144517.124597382@infradead.org>
+From:   Geert Uytterhoeven <geert@linux-m68k.org>
+Date:   Wed, 6 Jul 2022 11:46:25 +0200
+X-Gmail-Original-Message-ID: <CAMuHMdW4pT+YQfLzLTegFu1M3v9-9vaFDFAama7mc82=x6R__w@mail.gmail.com>
+Message-ID: <CAMuHMdW4pT+YQfLzLTegFu1M3v9-9vaFDFAama7mc82=x6R__w@mail.gmail.com>
+Subject: Re: [PATCH 19/36] objtool/idle: Validate __cpuidle code as noinstr
+To:     Peter Zijlstra <peterz@infradead.org>
+Cc:     Richard Henderson <rth@twiddle.net>,
+        Ivan Kokshaysky <ink@jurassic.park.msu.ru>,
+        Matt Turner <mattst88@gmail.com>,
+        Vineet Gupta <vgupta@kernel.org>,
+        Russell King <linux@armlinux.org.uk>,
+        Hans Ulli Kroll <ulli.kroll@googlemail.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Sascha Hauer <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>, tony@atomide.com,
+        khilman@kernel.org, catalin.marinas@arm.com, will@kernel.org,
+        guoren@kernel.org, bcain@quicinc.com, chenhuacai@kernel.org,
+        kernel@xen0n.name, sammy@sammy.net, monstr@monstr.eu,
+        tsbogend@alpha.franken.de, dinguyen@kernel.org, jonas@southpole.se,
+        stefan.kristiansson@saunalahti.fi, shorne@gmail.com,
+        James.Bottomley@hansenpartnership.com, deller@gmx.de,
+        mpe@ellerman.id.au, benh@kernel.crashing.org, paulus@samba.org,
+        paul.walmsley@sifive.com, palmer@dabbelt.com,
+        aou@eecs.berkeley.edu, hca@linux.ibm.com, gor@linux.ibm.com,
+        agordeev@linux.ibm.com, borntraeger@linux.ibm.com,
+        svens@linux.ibm.com, ysato@users.sourceforge.jp, dalias@libc.org,
+        davem@davemloft.net, richard@nod.at,
+        anton.ivanov@cambridgegreys.com, johannes@sipsolutions.net,
+        tglx@linutronix.de, mingo@redhat.com, bp@alien8.de,
+        dave.hansen@linux.intel.com, x86@kernel.org, hpa@zytor.com,
+        acme@kernel.org, mark.rutland@arm.com,
+        alexander.shishkin@linux.intel.com, jolsa@kernel.org,
+        namhyung@kernel.org, jgross@suse.com, srivatsa@csail.mit.edu,
+        amakhalov@vmware.com, pv-drivers@vmware.com,
+        boris.ostrovsky@oracle.com, chris@zankel.net, jcmvbkbc@gmail.com,
+        rafael@kernel.org, lenb@kernel.org, pavel@ucw.cz,
+        gregkh@linuxfoundation.org, mturquette@baylibre.com,
+        sboyd@kernel.org, daniel.lezcano@linaro.org, lpieralisi@kernel.org,
+        sudeep.holla@arm.com, agross@kernel.org,
+        bjorn.andersson@linaro.org, anup@brainfault.org,
+        thierry.reding@gmail.com, jonathanh@nvidia.com,
+        jacob.jun.pan@linux.intel.com, Arnd Bergmann <arnd@arndb.de>,
+        yury.norov@gmail.com, andriy.shevchenko@linux.intel.com,
+        linux@rasmusvillemoes.dk, rostedt@goodmis.org, pmladek@suse.com,
+        senozhatsky@chromium.org, john.ogness@linutronix.de,
+        paulmck@kernel.org, frederic@kernel.org, quic_neeraju@quicinc.com,
+        josh@joshtriplett.org, mathieu.desnoyers@efficios.com,
+        jiangshanlai@gmail.com, joel@joelfernandes.org,
+        juri.lelli@redhat.com, vincent.guittot@linaro.org,
+        dietmar.eggemann@arm.com, bsegall@google.com, mgorman@suse.de,
+        bristot@redhat.com, vschneid@redhat.com, jpoimboe@kernel.org,
+        linux-alpha@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-snps-arc@lists.infradead.org,
+        linux-arm-kernel@lists.infradead.org, linux-omap@vger.kernel.org,
+        linux-csky@vger.kernel.org, linux-hexagon@vger.kernel.org,
+        linux-ia64@vger.kernel.org, linux-m68k@lists.linux-m68k.org,
+        linux-mips@vger.kernel.org, openrisc@lists.librecores.org,
+        linux-parisc@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
+        linux-riscv@lists.infradead.org, linux-s390@vger.kernel.org,
+        linux-sh@vger.kernel.org, sparclinux@vger.kernel.org,
+        linux-um@lists.infradead.org, linux-perf-users@vger.kernel.org,
+        virtualization@lists.linux-foundation.org,
+        xen-devel@lists.xenproject.org, linux-xtensa@linux-xtensa.org,
+        linux-acpi@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-tegra@vger.kernel.org, linux-arch@vger.kernel.org,
+        rcu@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-To keep the consistency of the format for Chromebook items,
-we basically add these items based on the rules discussed in the previous patch series here
-https://lore.kernel.org/all/20220520143502.v4.1.I71e42c6174f1cec17da3024c9f73ba373263b9b6@changeid/.
+On Wed, Jun 8, 2022 at 4:46 PM Peter Zijlstra <peterz@infradead.org> wrote:
+> Idle code is very like entry code in that RCU isn't available. As
+> such, add a little validation.
+>
+> Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 
-We are little configured with “one entry - one enum “. Do you mean something like below example?
-We suggest keep items separated as it is more readable.
+>  arch/m68k/kernel/vmlinux-nommu.lds   |    1 -
+>  arch/m68k/kernel/vmlinux-std.lds     |    1 -
+>  arch/m68k/kernel/vmlinux-sun3.lds    |    1 -
 
-      - description: Google Villager
-        items:
-          - const: google,villager-rev0
-          - const: google,villager
-          - const: google,villager-rev0-sku0
-          - const: google,villager-sku0
-          - const: qcom,sc7280
+FWIW
+Acked-by: Geert Uytterhoeven <geert@linux-m68k.org>
 
-Best regards,
-Jimmy Chen
+Gr{oetje,eeting}s,
+
+                        Geert
+
+--
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
+
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like that.
+                                -- Linus Torvalds
