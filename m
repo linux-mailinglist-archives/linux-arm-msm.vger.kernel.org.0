@@ -2,78 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 93F2C568B9A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 16:46:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8EB5B568BD5
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 16:53:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233573AbiGFOqU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Jul 2022 10:46:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36872 "EHLO
+        id S232625AbiGFOwr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Jul 2022 10:52:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40664 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233026AbiGFOqU (ORCPT
+        with ESMTP id S233265AbiGFOw0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Jul 2022 10:46:20 -0400
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3963925583
-        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Jul 2022 07:46:19 -0700 (PDT)
-Received: by mail-lj1-x236.google.com with SMTP id c15so18801976ljr.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Jul 2022 07:46:19 -0700 (PDT)
+        Wed, 6 Jul 2022 10:52:26 -0400
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BCCAB25C79
+        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Jul 2022 07:52:25 -0700 (PDT)
+Received: by mail-lf1-x132.google.com with SMTP id z25so8778514lfr.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Jul 2022 07:52:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=IhSxVhqpX3UwoPfQmBLHBbn1hjY46iGBhEtwBN0p8yU=;
-        b=UXf4Y0Lbqeww5heIfP2QQosKVF2kE1LMgupiMapeiJIjdiSfXdzp+t3tVxAL3ggZjj
-         ohonlX7DlRVWaFTfQu5KiaCLKMSukIxnL3l35+omSaUtZG19gfqIKg5Al/3MjWw8Jw0O
-         tLEDMwDp7wEk9nF7dHHQmPCiFymJGOOvmHeydYKirWIEaczi51lX0xOputWjTGMImDcG
-         5T4bGw9m520uLHfhb9AZo35z5874afh2vbZf8/InaiLvFJWxZNePLnESewgen2XXUFuO
-         K4/xYVN8JI0bF9+h7efLY5CTnG74dhNjyvq6qNw38vGIPwT6P0UNzSFV/1MvAkpPIoFk
-         XHIA==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=6HBzK/l93JxPEmhI/JaroF5KDLT4SrwcSehWqsU43NQ=;
+        b=t5eWjH/Dg2AmKlwx139MJxWOxq1jBDfwI9WMSF9SAsITjUshwwbKTHgMGW7RsPmUEL
+         WRjlBA9lYI4N6n9cI/+G6qoCxwnaTGChhWReYDxD7o59MfrLVGgn4kS3kBzwT9QobPUi
+         NvVWvkeRTBQrbidYucWeDo0DhaVmV/lpGwP/2gU6MGUM4NDGG4y3Wv5mlQvQLODFDGvR
+         vAZlDgycFrQfRjJQBrk96/jBs8pBtl/1NHdKuqiXr7kTk0bs0HfVHUTEC9KW2v0BDt/R
+         HzkrRibSmZ2PNYK6/kmlVaBdzaMO0cfX3unVdnk/qwtXt57GyYullp+GmdIhDdMiIAF3
+         z7Dg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=IhSxVhqpX3UwoPfQmBLHBbn1hjY46iGBhEtwBN0p8yU=;
-        b=E0ielx2mbsSNJhasAnvjBxxe75iWK4Bv75cM3OcIribLUqWM+xkZL/jdBxiWyGoyHm
-         y8ngmzDfNp5u3EG2wwmDg1lnylJpvP/s8DpJoOHdedrTQElkIx45ujXXacIuNv07zlB9
-         nxsImwOpURbwiFYJhKb5u3zuc+YSG7mEoAsvHlxeeN4wlFiJTt8vcxSi2G7E9tV4Aw0T
-         +q5dWwhLowNj4E00gk9wQ395mgRsIEU3dxKHPzIUt7BvIQ6pYOHxZgLJoZv7+xXhRGIB
-         km4k+fKjvRrrGORdhBEJxxO9/kx69eAg9mYIg8meUWOnjOia44DDizW2/0oLdJEiKouH
-         /TDA==
-X-Gm-Message-State: AJIora+AuXGNMl+80wf68gt5gTgtZlr/rrC53jwCkH1Q4GeZ4L6ILOKr
-        S+pA91T0y+faBXbgxCy0pCclzg==
-X-Google-Smtp-Source: AGRyM1ucQO0LFc0I0mVG4sFN1EGeDHBo4bM4yN1D4I0bXjHzBjss7dTvUNvmRvoRbxGs0nsqdVaF5Q==
-X-Received: by 2002:a2e:805a:0:b0:25d:3f51:3cac with SMTP id p26-20020a2e805a000000b0025d3f513cacmr3466789ljg.30.1657118777634;
-        Wed, 06 Jul 2022 07:46:17 -0700 (PDT)
-Received: from [192.168.1.52] ([84.20.121.239])
-        by smtp.gmail.com with ESMTPSA id s16-20020a05651c201000b0025d41c09dcdsm610300ljo.96.2022.07.06.07.46.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 06 Jul 2022 07:46:17 -0700 (PDT)
-Message-ID: <6b61116a-0465-9687-33bf-9b36f0ef90cb@linaro.org>
-Date:   Wed, 6 Jul 2022 16:46:16 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH 09/13] ARM: dts: qcom: add smem node for ipq8064
-Content-Language: en-US
-To:     Christian Marangi <ansuelsmth@gmail.com>
-Cc:     Andy Gross <agross@kernel.org>,
+        bh=6HBzK/l93JxPEmhI/JaroF5KDLT4SrwcSehWqsU43NQ=;
+        b=AbyS2ZD9Uj0FH1iWnbAi1vGJSUJACPLIeFZzOvAH2g7PHLoU5V8XEq4Bacd0BBZo3r
+         2ve5ZG+EaJ4T7p7LrrewqZ75VZDrJkngDMhhZWjuPRWTx6RkKw+1Q+1rNYIXcqVdwkrn
+         WulegNHzPn4ALZzrdcOZbNvlwTJEvGh5zLM50tDzcSf8nnYJrB9oYchqa0XM7Wsvmbl2
+         TgaoMqceETQ/5HJr3RBXxfb+ldd10ZM4Yx1ifDhJQkFfxG/Nb0xfmGJY9AALRBv7PhEA
+         od8mhRGNpkeNtYhTIEuPQuho27rMY+7w50ytysMjz0oC4Ck1hFGYAF3GveGUCeplMpwG
+         5KrA==
+X-Gm-Message-State: AJIora9J92tWKV6RFQWwvalA/MLmc6vhHGJmUcWYgnk/8MK1m8aLyZtq
+        FNHGFYj2+++sQnt/EaN7HxO5ig==
+X-Google-Smtp-Source: AGRyM1tFUXYXbeJILL9shHP73Zaabp7CJDJi2SC1ggS6bSdLsSQuPcyJ0S3/TA7y9BPw7jXiyAx3LA==
+X-Received: by 2002:a05:6512:3a91:b0:47f:97fe:fa16 with SMTP id q17-20020a0565123a9100b0047f97fefa16mr25290467lfu.120.1657119144151;
+        Wed, 06 Jul 2022 07:52:24 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id v25-20020a056512049900b004855e979abcsm556617lfq.99.2022.07.06.07.52.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 06 Jul 2022 07:52:23 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Jonathan McDowell <noodles@earth.li>
-References: <20220705133917.8405-1-ansuelsmth@gmail.com>
- <20220705133917.8405-10-ansuelsmth@gmail.com>
- <c5bf6246-a350-8a87-71bc-bc13d502a8af@linaro.org>
- <62c56477.1c69fb81.8ec4c.f1ac@mx.google.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <62c56477.1c69fb81.8ec4c.f1ac@mx.google.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: [PATCH 0/4] dt-bindings: display/msm: schema fixes for gpu, gmu and mdp4
+Date:   Wed,  6 Jul 2022 17:52:18 +0300
+Message-Id: <20220706145222.1565238-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.35.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -82,39 +77,20 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 06/07/2022 12:14, Christian Marangi wrote:
-> On Wed, Jul 06, 2022 at 10:39:16AM +0200, Krzysztof Kozlowski wrote:
->> On 05/07/2022 15:39, Christian Marangi wrote:
->>> Add missing smem node for ipq8064.
->>>
->>> Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
->>> Tested-by: Jonathan McDowell <noodles@earth.li>
->>> ---
->>>  arch/arm/boot/dts/qcom-ipq8064.dtsi | 18 ++++++++++++++++++
->>>  1 file changed, 18 insertions(+)
->>>
->>> diff --git a/arch/arm/boot/dts/qcom-ipq8064.dtsi b/arch/arm/boot/dts/qcom-ipq8064.dtsi
->>> index b5aede3d7ccf..98527a7d885e 100644
->>> --- a/arch/arm/boot/dts/qcom-ipq8064.dtsi
->>> +++ b/arch/arm/boot/dts/qcom-ipq8064.dtsi
->>> @@ -908,6 +908,11 @@ lcc: clock-controller@28000000 {
->>>  			#reset-cells = <1>;
->>>  		};
->>>  
->>> +		sfpb_mutex_block: syscon@1200600 {
->>> +			compatible = "syscon";
->>
->> syscon alone is not allowed.
->>
-> 
-> Mh... This is problematic. How this should be handled?
+Fix several issues in MSM display schema.
 
-As usual - add specific compatible.
+Dmitry Baryshkov (4):
+  dt-bindings: display/msm/gpu: allow specifying several IOMMU nodes
+  dt-bindings: display/msm/gpu: document using the amd,imageon adreno
+    too
+  dt-bindings: display/msm/gmu: account for different GMU variants
+  dt-bindings: display/msm/mdp4: require 4 IOMMUs
 
-Maybe I was not specific enough, but my commit was under compatible, not
-under device node, so it seems obvious. Just in case it is not obvious -
-you cannot have "syscon" compatible alone.
+ .../devicetree/bindings/display/msm/gmu.yaml  | 166 +++++++++++++++---
+ .../devicetree/bindings/display/msm/gpu.yaml  |   9 +-
+ .../devicetree/bindings/display/msm/mdp4.yaml |   2 +-
+ 3 files changed, 155 insertions(+), 22 deletions(-)
 
+-- 
+2.35.1
 
-Best regards,
-Krzysztof
