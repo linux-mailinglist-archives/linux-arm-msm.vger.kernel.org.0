@@ -2,89 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 02D57568C0B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 16:59:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DC571568C2E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 17:04:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233508AbiGFO7H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Jul 2022 10:59:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46052 "EHLO
+        id S232523AbiGFPEl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Jul 2022 11:04:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49862 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233470AbiGFO7F (ORCPT
+        with ESMTP id S229786AbiGFPEl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Jul 2022 10:59:05 -0400
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A982F25E83
-        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Jul 2022 07:59:03 -0700 (PDT)
-Received: by mail-lf1-x134.google.com with SMTP id f39so26402207lfv.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Jul 2022 07:59:03 -0700 (PDT)
+        Wed, 6 Jul 2022 11:04:41 -0400
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDD6115717
+        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Jul 2022 08:04:39 -0700 (PDT)
+Received: by mail-wm1-x32f.google.com with SMTP id t17-20020a1c7711000000b003a0434b0af7so9173149wmi.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Jul 2022 08:04:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=cmKQ1A+SNcVV+xdQAtk9f96FGO9npHWf2vTO1h3im4s=;
-        b=bJ2wmt19f7E1iCV0cGWdHwG61juT9VIkFewxrXGstKTVLXv0jkpZkQy6KxA/5C4qCk
-         Jp3/f2gVaIhNHYyeq8rvmfsLz9PtwYUqeV2kuy4xPxHBteIXHDQaLGKsHvXyB78CBRhO
-         Mko6wPrrUlSKk6yGd6ObodHqj7Kucs5yHvjwp5If/uKb9PILyEzFwUY3Ql3yIl0UjmZI
-         4ichYDbs91f7sSkVOXgKmZM7DWZmVf8I5Ow/GLh+VNIoBbKnJ2pKssLSyol/GOyj/y7h
-         +lIkCKVw7m1OxBhsAZXLvfeINFzlzcpA0J9BaRHgB9QVfHD+DgIaRwbU7pfIlLZIJER9
-         X+zg==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=5MyzPstAwbNGZEWJRgSFYxiR0DFtAmFf/jRZizSuqcw=;
+        b=mj3LRXQXQS6StvqGOZV6yugtZVTIN9JdnhqyAg3ppfci1KsgUElEnrP6nbBHrPtEwH
+         mrP5sMNlNA8NxVxcnRABA1NRUhD6tmmG8o1G8UbZxJrTsmEBs+oVEbKLaRUVKskBQ8Ay
+         T+jEJz0gUQ/D7w/xPBe/QXvhce2vHW7Sd7XIr7QeNt/CGXm9pQRtWamhPjXCToKddyfI
+         uJwVqdYjhOVwW4IJqkP8W14Yxvig09hiY2IGXC8y20OKsLfA2AX4dv1vcLIz55wMYdMI
+         SsMwVU9UoCjCyYe+P/pElj2uQgk8FU03unEzXaFpSaABvNO9suztWV8UXyBNg6t+AbI2
+         T6OA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=cmKQ1A+SNcVV+xdQAtk9f96FGO9npHWf2vTO1h3im4s=;
-        b=RoQwFTw/josJqyI49Dp4agL6z/hhRTcqy094htAsOYsemEwZcP02OT6o/7I+4ihTOK
-         HH0NFibCuixcrdOSKKzXNBmib6u10GGjYeFZjtdyQr2Un+9Wj3w4JXEkilUVz8ogC+Gi
-         XI7mHiXBjWlwyHrFBcKEQXdCvm2LM3Yin2M9xazvvCZAqsKfyeIqyUKpebHRrk3tbEjM
-         GRt5NffG+Dyx0tWqCI0mgAn3Kty3hl/+WzFf2mTQtruOOK0vtDg4ZrMGPtafBLAZjioL
-         HouC5264wOcq5/HDCJ+EYNC6kqkMV8Bdd8SAWxo/G45aAXph593nNQNH5c729bz/IXsS
-         5QNQ==
-X-Gm-Message-State: AJIora+uOw03a8Na835wHmUVg54Qg4i5CWegbOYxrMSkn44I5SgwzvlJ
-        RRXOK+5ZcbGQ/XEywoPHo1fjPQ==
-X-Google-Smtp-Source: AGRyM1vgEuf632zLZr+I1Gp3QidCXy8XtIkAtWyjsW3vgP/zQ1uvi/Tv6A+oTDrNIBJQQDoRMtGnjg==
-X-Received: by 2002:a05:6512:1698:b0:47f:b5a6:6870 with SMTP id bu24-20020a056512169800b0047fb5a66870mr25958708lfb.578.1657119542015;
-        Wed, 06 Jul 2022 07:59:02 -0700 (PDT)
-Received: from [192.168.1.52] ([84.20.121.239])
-        by smtp.gmail.com with ESMTPSA id o14-20020ac25e2e000000b0047f93edb9f5sm6304967lfg.181.2022.07.06.07.59.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 06 Jul 2022 07:59:01 -0700 (PDT)
-Message-ID: <75f8b257-7e0a-d871-ab30-37a72f7da56e@linaro.org>
-Date:   Wed, 6 Jul 2022 16:59:00 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH v2 2/3] dt-bindings: pci: QCOM Adding sc7280 aggre0,
- aggre1 clocks
-Content-Language: en-US
-To:     Krishna Chaitanya Chundru <quic_krichai@quicinc.com>,
-        helgaas@kernel.org
-Cc:     linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, mka@chromium.org,
-        quic_vbadigan@quicinc.com, quic_hemantk@quicinc.com,
-        quic_nitegupt@quicinc.com, quic_skananth@quicinc.com,
-        quic_ramkri@quicinc.com, manivannan.sadhasivam@linaro.org,
-        swboyd@chromium.org, dmitry.baryshkov@linaro.org,
-        Andy Gross <agross@kernel.org>,
+        bh=5MyzPstAwbNGZEWJRgSFYxiR0DFtAmFf/jRZizSuqcw=;
+        b=ZRILik1NtQwO2Iv3w0zA9Kp4V/3enI30LZcmslvi/JsaPiksjtzmtn88zLlZsAb4EH
+         Yt7UvIlqTQIT38Z88QJfLNsiUUtKQGiN3IiRZg9v0BSpw+eJ/NC0pBGjMPRXkfzVGnCa
+         gE6I4gtouCUjjUs+vTjEDL0fVHyyfzIH6uJn4EJvmcykFxxyYIBdyJ69lbiQ66qwDCz+
+         cCxac5wb4HqQjAzs73Dnvxlaf1rQR4HmyzX+KMuwv6v553lAtxKM0L2O57Z4OBG5OrbR
+         Ml4BT9RXxy0eNkIbuJZ7938YD3hT0iap3EXINMdq5KqTbgiUfKsahiCbbwHD/ybkCmZ/
+         BXTA==
+X-Gm-Message-State: AJIora9bUDfHSy2TpYf4pya1+p9ztgW845fOGTrT+09+NM1Uj2kNNPyV
+        U5Mz6zifD+BtmllmLvG1B/DSUA==
+X-Google-Smtp-Source: AGRyM1vRSbxrF6l5s5PgGpt/AcIUpDJ4zfIbM7qgB/EvfxI9fIb1abkeoPHVAf+lAIGKNfOmHV4Yew==
+X-Received: by 2002:a1c:770c:0:b0:3a0:37ec:bbb9 with SMTP id t12-20020a1c770c000000b003a037ecbbb9mr46160208wmi.2.1657119878350;
+        Wed, 06 Jul 2022 08:04:38 -0700 (PDT)
+Received: from localhost.localdomain ([94.52.112.99])
+        by smtp.gmail.com with ESMTPSA id v7-20020a1cac07000000b003a04e6410e0sm22443420wme.33.2022.07.06.08.04.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 06 Jul 2022 08:04:37 -0700 (PDT)
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     Mike Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>
-References: <1656062391-14567-1-git-send-email-quic_krichai@quicinc.com>
- <1656691899-21315-1-git-send-email-quic_krichai@quicinc.com>
- <1656691899-21315-3-git-send-email-quic_krichai@quicinc.com>
- <1fb5f0c6-ff72-b9ba-175a-b5197ed658a7@linaro.org>
- <9de4c3a0-eb95-f4e9-b828-2343241fff41@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <9de4c3a0-eb95-f4e9-b828-2343241fff41@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>
+Cc:     linux-clk@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>
+Subject: [RFC 1/2] clk: Add generic sync_state callback for disabling unused clocks
+Date:   Wed,  6 Jul 2022 18:04:10 +0300
+Message-Id: <20220706150411.708213-1-abel.vesa@linaro.org>
+X-Mailer: git-send-email 2.34.3
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -92,85 +73,169 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 06/07/2022 13:55, Krishna Chaitanya Chundru wrote:
-> 
-> On 7/4/2022 1:54 PM, Krzysztof Kozlowski wrote:
->> On 01/07/2022 18:11, Krishna chaitanya chundru wrote:
->>> Adding aggre0 and aggre1 clock entries to PCIe node.
->>>
->>> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
->>> ---
->>>   Documentation/devicetree/bindings/pci/qcom,pcie.yaml | 6 ++++--
->>>   1 file changed, 4 insertions(+), 2 deletions(-)
->>>
->>> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
->>> index 0b69b12..8f29bdd 100644
->>> --- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
->>> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
->>> @@ -423,8 +423,8 @@ allOf:
->>>       then:
->>>         properties:
->>>           clocks:
->>> -          minItems: 11
->>> -          maxItems: 11
->>> +          minItems: 13
->>> +          maxItems: 13
->>>           clock-names:
->>>             items:
->>>               - const: pipe # PIPE clock
->>> @@ -437,6 +437,8 @@ allOf:
->>>               - const: bus_slave # Slave AXI clock
->>>               - const: slave_q2a # Slave Q2A clock
->>>               - const: tbu # PCIe TBU clock
->>> +            - const: aggre0 # Aggre NoC PCIe CENTER SF AXI clock
->>> +            - const: aggre1 # Aggre NoC PCIe1 AXI clock
->> You ignored my comments from v1 - please don't. This is not accepted.
->>
->> Also, please do not send new versions of patchset as reply to some other
->> threads. It's extremely confusing to find it under something else.
->>
->> Best regards,
->> Krzysztof
-> Hi
-> 
-> Krzysztof,
-> 
-> Sorry for confusion created which replying this patch.
-> 
-> The only comment I got from v1 from you is to run make dtbs_check.
-> 
-> I ran that command I found the errors and fixed them and I ran the make dtbs_check again
-> before on v2 and made sure there are no errors.
-> 
-> Can you please tell me is there any steps I missed.
+There are unused clocks that need to stay enabled on clk_disable_unused,
+but rather should be disabled later on on sync_state. Provide a generic
+sync_state callback for the clock providers that register such clocks.
+Then, use the same mechanism as clk_disable_unused from that generic
+callback, but pass the device to make sure only the clocks belonging to
+the current clock provider get disabled, if unused. Also, during the
+default clk_disable_unused, if the driver that registered the clock has
+the generic clk_sync_state_disable_unused callback set for sync_state,
+leave its clocks enabled.
 
-The comment was:
-"This won't work. You need to update other entry."
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+---
+ drivers/clk/clk.c            | 67 +++++++++++++++++++++++++++---------
+ include/linux/clk-provider.h |  1 +
+ 2 files changed, 52 insertions(+), 16 deletions(-)
 
-and then a conditional: "If you test it with
-`make dtbs_check` you will see the errors."
+diff --git a/drivers/clk/clk.c b/drivers/clk/clk.c
+index 7fc191c15507..ea55806505c0 100644
+--- a/drivers/clk/clk.c
++++ b/drivers/clk/clk.c
+@@ -1218,19 +1218,31 @@ static void clk_core_disable_unprepare(struct clk_core *core)
+ 	clk_core_unprepare_lock(core);
+ }
+ 
+-static void __init clk_unprepare_unused_subtree(struct clk_core *core)
++static void clk_unprepare_unused_subtree(struct clk_core *core,
++						struct device *dev)
+ {
+ 	struct clk_core *child;
+ 
+ 	lockdep_assert_held(&prepare_lock);
+ 
+ 	hlist_for_each_entry(child, &core->children, child_node)
+-		clk_unprepare_unused_subtree(child);
++		clk_unprepare_unused_subtree(child, dev);
++
++	if (dev && core->dev != dev)
++		return;
++
++	/*
++	 * clock will be unprepared on sync_state,
++	 * so leave as is on clk_disable_unused
++	 */
++	if (!dev && dev_has_sync_state(core->dev) &&
++		core->dev->driver->sync_state == clk_sync_state_disable_unused)
++		return;
+ 
+ 	if (core->prepare_count)
+ 		return;
+ 
+-	if (core->flags & CLK_IGNORE_UNUSED)
++	if (!dev && core->flags & CLK_IGNORE_UNUSED)
+ 		return;
+ 
+ 	if (clk_pm_runtime_get(core))
+@@ -1248,7 +1260,8 @@ static void __init clk_unprepare_unused_subtree(struct clk_core *core)
+ 	clk_pm_runtime_put(core);
+ }
+ 
+-static void __init clk_disable_unused_subtree(struct clk_core *core)
++static void clk_disable_unused_subtree(struct clk_core *core,
++					struct device *dev)
+ {
+ 	struct clk_core *child;
+ 	unsigned long flags;
+@@ -1256,7 +1269,18 @@ static void __init clk_disable_unused_subtree(struct clk_core *core)
+ 	lockdep_assert_held(&prepare_lock);
+ 
+ 	hlist_for_each_entry(child, &core->children, child_node)
+-		clk_disable_unused_subtree(child);
++		clk_disable_unused_subtree(child, dev);
++
++	if (dev && core->dev != dev)
++		return;
++
++	/*
++	 * clock will be disabled on sync_state,
++	 * so leave as is on clk_disable_unused
++	 */
++	if (!dev && dev_has_sync_state(core->dev) &&
++		core->dev->driver->sync_state == clk_sync_state_disable_unused)
++		return;
+ 
+ 	if (core->flags & CLK_OPS_PARENT_ENABLE)
+ 		clk_core_prepare_enable(core->parent);
+@@ -1269,7 +1293,7 @@ static void __init clk_disable_unused_subtree(struct clk_core *core)
+ 	if (core->enable_count)
+ 		goto unlock_out;
+ 
+-	if (core->flags & CLK_IGNORE_UNUSED)
++	if (!dev && core->flags & CLK_IGNORE_UNUSED)
+ 		goto unlock_out;
+ 
+ 	/*
+@@ -1302,35 +1326,46 @@ static int __init clk_ignore_unused_setup(char *__unused)
+ }
+ __setup("clk_ignore_unused", clk_ignore_unused_setup);
+ 
+-static int __init clk_disable_unused(void)
++static void __clk_disable_unused(struct device *dev)
+ {
+ 	struct clk_core *core;
+ 
+-	if (clk_ignore_unused) {
+-		pr_warn("clk: Not disabling unused clocks\n");
+-		return 0;
+-	}
+-
+ 	clk_prepare_lock();
+ 
+ 	hlist_for_each_entry(core, &clk_root_list, child_node)
+-		clk_disable_unused_subtree(core);
++		clk_disable_unused_subtree(core, dev);
+ 
+ 	hlist_for_each_entry(core, &clk_orphan_list, child_node)
+-		clk_disable_unused_subtree(core);
++		clk_disable_unused_subtree(core, dev);
+ 
+ 	hlist_for_each_entry(core, &clk_root_list, child_node)
+-		clk_unprepare_unused_subtree(core);
++		clk_unprepare_unused_subtree(core, dev);
+ 
+ 	hlist_for_each_entry(core, &clk_orphan_list, child_node)
+-		clk_unprepare_unused_subtree(core);
++		clk_unprepare_unused_subtree(core, dev);
+ 
+ 	clk_prepare_unlock();
++}
++
++static int __init clk_disable_unused(void)
++{
++	if (clk_ignore_unused) {
++		pr_warn("clk: Not disabling unused clocks\n");
++		return 0;
++	}
++
++	__clk_disable_unused(NULL);
+ 
+ 	return 0;
+ }
+ late_initcall_sync(clk_disable_unused);
+ 
++void clk_sync_state_disable_unused(struct device *dev)
++{
++	__clk_disable_unused(dev);
++}
++EXPORT_SYMBOL_GPL(clk_sync_state_disable_unused);
++
+ static int clk_core_determine_round_nolock(struct clk_core *core,
+ 					   struct clk_rate_request *req)
+ {
+diff --git a/include/linux/clk-provider.h b/include/linux/clk-provider.h
+index 72d937c03a3e..5d3ed2b14f2c 100644
+--- a/include/linux/clk-provider.h
++++ b/include/linux/clk-provider.h
+@@ -679,6 +679,7 @@ struct clk *clk_register_divider_table(struct device *dev, const char *name,
+ 		void __iomem *reg, u8 shift, u8 width,
+ 		u8 clk_divider_flags, const struct clk_div_table *table,
+ 		spinlock_t *lock);
++void clk_sync_state_disable_unused(struct device *dev);
+ /**
+  * clk_register_divider - register a divider clock with the clock framework
+  * @dev: device registering this clock
+-- 
+2.34.3
 
-So let's run it together:
-
-/home/krzk/dev/linux/linux/out/arch/arm64/boot/dts/qcom/sc7280-idp.dtb:
-pci@1c08000: clocks: [[42, 55], [42, 56], [41, 0], [39, 0], [42, 50],
-[42, 52], [42, 53], [42, 57], [42, 58], [42, 177], [42, 178], [42, 8],
-[42, 21]] is too long
-
-	From schema:
-/home/krzk/dev/linux/linux/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-
-/home/krzk/dev/linux/linux/out/arch/arm64/boot/dts/qcom/sc7280-idp.dtb:
-pci@1c08000: clock-names: ['pipe', 'pipe_mux', 'phy_pipe', 'ref', 'aux',
-'cfg', 'bus_master', 'bus_slave', 'slave_q2a', 'tbu', 'aggre0',
-'aggre1', 'ddrss_sf_tbu'] is too long
-
-
-clocks and clock-names can be maximum 12 items, as defined by schema in
-"properties:" section. You cannot extend it in one place to 13 but leave
-12 in other, because both constraints are applicable.
-
-If you test it, you will see the errors.
-
-Best regards,
-Krzysztof
