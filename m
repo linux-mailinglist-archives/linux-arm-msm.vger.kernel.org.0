@@ -2,111 +2,221 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 324B55687AB
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 14:03:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9FF67568846
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 14:27:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230440AbiGFMCI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Jul 2022 08:02:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35878 "EHLO
+        id S233130AbiGFM1d (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Jul 2022 08:27:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60338 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233270AbiGFMCE (ORCPT
+        with ESMTP id S232818AbiGFM1b (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Jul 2022 08:02:04 -0400
-Received: from mail-qt1-x829.google.com (mail-qt1-x829.google.com [IPv6:2607:f8b0:4864:20::829])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08CD829C97
-        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Jul 2022 05:02:03 -0700 (PDT)
-Received: by mail-qt1-x829.google.com with SMTP id ck6so17805818qtb.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Jul 2022 05:02:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=GS+uFCqn73s3FUnXQGK+mJpwi26ezGNzDSPMuucFva8=;
-        b=C1PEfoHu1JZutIhSBq7xyrTzSwdP6gfzqlbmYagZ6SO614AVCSvZuTG/YcopNih2u0
-         XXZH06tjN/7HwT05MgoOtpKdZc8oBLn7RLDLCt5cjTeM5lb6gpuKj+2d7uLQXMnuvX3i
-         wde7KD1Sv+YJl6PQ/byNoahvr0JX4PqEliAiGIwbso/soQMekhN0iDCes1q2wpwhil4A
-         qWK6iHx1rd7r15nqFvFUJSefPwMIOTum21ZrKCZ3TdAeKdX7xqfXghTIDvA9LHIf/Pur
-         HVAKjbv4je6GQwD13gprqb87kpQq8AjACvJVJSfZtJFwyb3sO7iaVNEoXXSOkX9z/ufc
-         /o4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=GS+uFCqn73s3FUnXQGK+mJpwi26ezGNzDSPMuucFva8=;
-        b=r2l83stKk6a88gyt6ns+qcqEyCzMGFCA9cYYDl3nuOY5gF+fab8uu1Tg/rov+Rl0LA
-         kCnED2O9lrNvzJQRFvUN2X3S/3LkP9M/r7Goz+516BmQHBL/pGagbte5yw4uH4PQQXMf
-         XAaIGnGXg9gMAWU/01aZ8KEuG3vl5Du6QQEZWeqV+WaG3dNIC+6kzHr0IBz9eu7gjSdJ
-         MYjnn6hlpOF5V5iVf2NPXzKhDwMI4Y5Hp/QRjALXih+cHgCTKSXh+GLBwuERcMsRq8Zn
-         OU5MKzBkGlS2rMOdAnI63LqImhcQcpRQicsEs7nMiwjsUVUCZja67ePBeuf0qjGKUc5J
-         FdHw==
-X-Gm-Message-State: AJIora/wEk6e0vKcFCbIBtl5YxtjwoZFXdPy8FxfGuOgkmv+cnj+vQmG
-        m2Ns2rYE95i6uzXCwuD0WN97Gwt2MCZbnyKQrB6Zvg==
-X-Google-Smtp-Source: AGRyM1tF1EnvSFKXQDug6KASOTgwF0P8AMmoLtvHbfrVH6CtHl3jRQNThamLYnI3w6qH79JwwlKN3CNfi8dZU5i5lMU=
-X-Received: by 2002:ad4:5f8a:0:b0:473:2108:7fe0 with SMTP id
- jp10-20020ad45f8a000000b0047321087fe0mr1081454qvb.115.1657108921700; Wed, 06
- Jul 2022 05:02:01 -0700 (PDT)
+        Wed, 6 Jul 2022 08:27:31 -0400
+Received: from relay08.th.seeweb.it (relay08.th.seeweb.it [IPv6:2001:4b7a:2000:18::169])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09E5E248CF;
+        Wed,  6 Jul 2022 05:27:27 -0700 (PDT)
+Received: from [192.168.1.101] (abxi46.neoplus.adsl.tpnet.pl [83.9.2.46])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id A886C3F756;
+        Wed,  6 Jul 2022 14:27:24 +0200 (CEST)
+Message-ID: <a443cd40-a1d5-6e17-1c49-d592a590f1f8@somainline.org>
+Date:   Wed, 6 Jul 2022 14:27:23 +0200
 MIME-Version: 1.0
-References: <20220705133917.8405-1-ansuelsmth@gmail.com> <20220705133917.8405-10-ansuelsmth@gmail.com>
- <c5bf6246-a350-8a87-71bc-bc13d502a8af@linaro.org> <62c56477.1c69fb81.8ec4c.f1ac@mx.google.com>
-In-Reply-To: <62c56477.1c69fb81.8ec4c.f1ac@mx.google.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Wed, 6 Jul 2022 15:01:50 +0300
-Message-ID: <CAA8EJpoUcSrOU=emcqanUd0PRuToZsSB1x=oGzcvjtMMVjhSvQ@mail.gmail.com>
-Subject: Re: [PATCH 09/13] ARM: dts: qcom: add smem node for ipq8064
-To:     Christian Marangi <ansuelsmth@gmail.com>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Jonathan McDowell <noodles@earth.li>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH v6 11/12] arm64: dts: qcom: add PMP8074 DTSI
+Content-Language: en-US
+To:     Robert Marko <robimarko@gmail.com>, agross@kernel.org,
+        bjorn.andersson@linaro.org, lee.jones@linaro.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        linus.walleij@linaro.org, lgirdwood@gmail.com, broonie@kernel.org,
+        jic23@kernel.org, lars@metafoo.de, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-gpio@vger.kernel.org, linux-iio@vger.kernel.org
+References: <20220704212402.1715182-1-robimarko@gmail.com>
+ <20220704212402.1715182-11-robimarko@gmail.com>
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+In-Reply-To: <20220704212402.1715182-11-robimarko@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 6 Jul 2022 at 13:31, Christian Marangi <ansuelsmth@gmail.com> wrote:
->
-> On Wed, Jul 06, 2022 at 10:39:16AM +0200, Krzysztof Kozlowski wrote:
-> > On 05/07/2022 15:39, Christian Marangi wrote:
-> > > Add missing smem node for ipq8064.
-> > >
-> > > Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-> > > Tested-by: Jonathan McDowell <noodles@earth.li>
-> > > ---
-> > >  arch/arm/boot/dts/qcom-ipq8064.dtsi | 18 ++++++++++++++++++
-> > >  1 file changed, 18 insertions(+)
-> > >
-> > > diff --git a/arch/arm/boot/dts/qcom-ipq8064.dtsi b/arch/arm/boot/dts/qcom-ipq8064.dtsi
-> > > index b5aede3d7ccf..98527a7d885e 100644
-> > > --- a/arch/arm/boot/dts/qcom-ipq8064.dtsi
-> > > +++ b/arch/arm/boot/dts/qcom-ipq8064.dtsi
-> > > @@ -908,6 +908,11 @@ lcc: clock-controller@28000000 {
-> > >                     #reset-cells = <1>;
-> > >             };
-> > >
-> > > +           sfpb_mutex_block: syscon@1200600 {
-> > > +                   compatible = "syscon";
-> >
-> > syscon alone is not allowed.
-> >
->
-> Mh... This is problematic. How this should be handled?
-> This should be put in sfpb_mutex and change the driver to use regs if
-> present instead of syscon?
 
-If nothing else works, you can add two compat strings, for example:
-"qcom,ipq8064-sfpb-mutex", "syscon";
-This way if we add an sfpb driver at some point, we can still use old dts files.
 
--- 
-With best wishes
-Dmitry
+On 4.07.2022 23:24, Robert Marko wrote:
+> PMP8074 is a companion PMIC to the Qualcomm IPQ8074 series that is
+> controlled via SPMI.
+> 
+> Add DTSI for it providing GPIO, regulator and RTC support.
+> 
+> RTC is disabled by default as there is no built-in battery so it will
+> loose time unless board vendor added a battery, so make it optional.
+> 
+> Signed-off-by: Robert Marko <robimarko@gmail.com>
+> ---
+> Changes in v6:
+> * Add RTC and GPIO nodes
+> 
+> Changes in v5:
+> * Remove #address-cells and #size-cells as they are not required for
+> regulator subnodes
+> ---
+>  arch/arm64/boot/dts/qcom/pmp8074.dtsi | 125 ++++++++++++++++++++++++++
+>  1 file changed, 125 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/pmp8074.dtsi
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/pmp8074.dtsi b/arch/arm64/boot/dts/qcom/pmp8074.dtsi
+> new file mode 100644
+> index 000000000000..a3b395e4d78f
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/pmp8074.dtsi
+> @@ -0,0 +1,125 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+Hi,
+
+Please consider BSD3, or at least dual-licensing with some permissive
+license (so that for example BSDs can re-use these DTs).
+> +
+> +#include <dt-bindings/spmi/spmi.h>
+> +#include <dt-bindings/iio/qcom,spmi-vadc.h>
+> +
+> +&spmi_bus {
+> +	pmic@0 {
+> +		compatible = "qcom,pmp8074", "qcom,spmi-pmic";
+> +		reg = <0x0 SPMI_USID>;
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		pmp8074_adc: adc@3100 {
+> +			compatible = "qcom,spmi-adc-rev2";
+> +			reg = <0x3100>;
+> +			interrupts = <0x0 0x31 0x0 IRQ_TYPE_EDGE_RISING>;
+> +			#address-cells = <1>;
+> +			#size-cells = <0>;
+> +			#io-channel-cells = <1>;
+> +
+> +			ref_gnd@0 {
+No underscores in node names, please change this to ref-gnd (and consequently
+for all other nodes). Note that this only concerns node names and not labels.
+
+> +				reg = <ADC5_REF_GND>;
+> +				qcom,pre-scaling = <1 1>;
+> +			};
+> +
+> +			vref_1p25@1 {
+> +				reg = <ADC5_1P25VREF>;
+> +				qcom,pre-scaling = <1 1>;
+> +			};
+> +
+> +			vref_vadc@2 {
+> +				reg = <ADC5_VREF_VADC>;
+> +				qcom,pre-scaling = <1 1>;
+> +			};
+> +
+> +			pmic_die: die_temp@6 {
+> +				reg = <ADC5_DIE_TEMP>;
+> +				qcom,pre-scaling = <1 1>;
+> +			};
+> +
+> +			xo_therm: xo_temp@76 {
+> +				reg = <ADC5_XO_THERM_100K_PU>;
+> +				qcom,ratiometric;
+> +				qcom,hw-settle-time = <200>;
+> +				qcom,pre-scaling = <1 1>;
+> +			};
+> +
+> +			pa_therm1: thermistor1@77 {
+> +				reg = <ADC5_AMUX_THM1_100K_PU>;
+> +				qcom,ratiometric;
+> +				qcom,hw-settle-time = <200>;
+> +				qcom,pre-scaling = <1 1>;
+> +			};
+> +
+> +			pa_therm2: thermistor2@78 {
+> +				reg = <ADC5_AMUX_THM2_100K_PU>;
+> +				qcom,ratiometric;
+> +				qcom,hw-settle-time = <200>;
+> +				qcom,pre-scaling = <1 1>;
+> +			};
+> +
+> +			pa_therm3: thermistor3@79 {
+> +				reg = <ADC5_AMUX_THM3_100K_PU>;
+> +				qcom,ratiometric;
+> +				qcom,hw-settle-time = <200>;
+> +				qcom,pre-scaling = <1 1>;
+> +			};
+> +
+> +			vph_pwr@131 {
+> +				reg = <ADC5_VPH_PWR>;
+> +				qcom,pre-scaling = <1 3>;
+> +			};
+> +		};
+> +
+> +		pmp8074_rtc: rtc@6000 {
+> +			compatible = "qcom,pm8941-rtc";
+> +			reg = <0x6000>;
+> +			reg-names = "rtc", "alarm";
+> +			interrupts = <0x0 0x61 0x1 IRQ_TYPE_NONE>;
+> +			allow-set-time;
+> +			status = "disabled";
+Isn't this PMIC-internal, aka accessible on all devices using PMP8074?
+
+> +		};
+> +
+> +		pmp8074_gpios: gpio@c000 {
+> +			compatible = "qcom,pmp8074-gpio", "qcom,spmi-gpio";
+> +			reg = <0xc000>;
+> +			gpio-controller;
+> +			#gpio-cells = <2>;
+> +			gpio-ranges = <&pmp8074_gpios 0 0 12>;
+> +			interrupt-controller;
+> +			#interrupt-cells = <2>;
+> +		};
+> +	};
+> +
+> +	pmic@1 {
+> +		compatible = "qcom,pmp8074", "qcom,spmi-pmic";
+> +		reg = <0x1 SPMI_USID>;
+> +
+> +		regulators {
+> +			compatible = "qcom,pmp8074-regulators";
+> +
+> +			s3: s3 {
+> +				regulator-name = "vdd_s3";
+> +				regulator-min-microvolt = <592000>;
+> +				regulator-max-microvolt = <1064000>;
+
+Are you sure no other configurations are supported with this PMIC?
+Otherwise you may accidentally burn somebody's board by setting up
+regulators in a place that's not usually expected to have them..
+
+Konrad
+> +				regulator-always-on;
+> +				regulator-boot-on;
+> +			};
+> +
+> +			s4: s4 {
+> +				regulator-name = "vdd_s4";
+> +				regulator-min-microvolt = <712000>;
+> +				regulator-max-microvolt = <992000>;
+> +				regulator-always-on;
+> +				regulator-boot-on;
+> +			};
+> +
+> +			l11: l11 {
+> +				regulator-name = "l11";
+> +				regulator-min-microvolt = <1800000>;
+> +				regulator-max-microvolt = <3300000>;
+> +			};
+> +		};
+> +	};
+> +};
