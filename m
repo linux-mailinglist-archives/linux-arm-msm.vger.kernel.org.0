@@ -2,169 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0D680569227
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 20:50:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AE3A0569267
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 21:10:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230472AbiGFSt4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Jul 2022 14:49:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60480 "EHLO
+        id S234145AbiGFTKt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Jul 2022 15:10:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45370 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234525AbiGFStz (ORCPT
+        with ESMTP id S233571AbiGFTKk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Jul 2022 14:49:55 -0400
-Received: from mail-0301.mail-europe.com (mail-0301.mail-europe.com [188.165.51.139])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 419DF275E9;
-        Wed,  6 Jul 2022 11:49:54 -0700 (PDT)
-Date:   Wed, 06 Jul 2022 18:49:44 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=connolly.tech;
-        s=protonmail; t=1657133389; x=1657392589;
-        bh=FQD+MMDt/Q8SRTTAfcqxo1U1VL4S1CdzwRULBkrzEs8=;
-        h=Date:To:From:Cc:Reply-To:Subject:Message-ID:In-Reply-To:
-         References:Feedback-ID:From:To:Cc:Date:Subject:Reply-To:
-         Feedback-ID:Message-ID;
-        b=SSodwAqUa6IEewyZfhwUlzSIwB7mAi7o0Tc/QGeKhXjB2Akhlw2pRuB12+A7pixy6
-         xAsI5FDQK8WDXRaYkjfeSR3yyijiP9MY2yLgnEhiWWhoj9weJp+KZo9YZyShXlQPnC
-         B5DsoTiTV825+tQlgOXwfaaM+pjvSniQUo6uyQZo=
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Alexander Martinz <amartinz@shiftphones.com>
-From:   Caleb Connolly <caleb@connolly.tech>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Wed, 6 Jul 2022 15:10:40 -0400
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63BBE28E02;
+        Wed,  6 Jul 2022 12:10:33 -0700 (PDT)
+Received: by mail-ed1-x52f.google.com with SMTP id e40so20462548eda.2;
+        Wed, 06 Jul 2022 12:10:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:from:to:cc:subject:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=RvM6lmNq3SSzc3aGEbKdgdc4KIyTbuPCfQq5iJFL6DE=;
+        b=Zt8eh7L50Fu7i0roonZosxroj3Ch43Npj6aIxsBF6MpQFDboDwSx4h3cqW6BOj8dpA
+         7fkAzh7d2wBWInmVqX4cN8Lb2hwVIRlhGYW1rjUljO72Z4MHbgzDy0ecIaF9TcpTyHSI
+         cOupHDY2O7R2+ZprnBzJ/FKYuuAnzcicPPegdSTEK6y4Ar5nkWcSQcJ6X5o3FYOqECYh
+         hBdRvfHrSO/2AiWYRG1ykBKJB+sPZfGUU99VlPCkOD/cLTFnLa7BdR4yc2Dn2dZ3yNEt
+         fZWOY4fK/PDAM4qLknS1zovzanN1mNno1lwzF0HXJlQzTfj7qWMlgqmlR1n6JPd6pCZa
+         evGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:from:to:cc:subject:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=RvM6lmNq3SSzc3aGEbKdgdc4KIyTbuPCfQq5iJFL6DE=;
+        b=4VUwNGDozBJVKJJ2OKgu3Qg9BY7Dd0R8AE/+lEv2+uttw21qDVMTgzA6xL8khFY5dG
+         bVzfdCIqf+v9dvdsh621MpfeFCCgj6hSJqxOZQ6rhpEkbzJtiUTpBJX+3+ioaZ9EVcKv
+         257/uGEMNQ8NE7PPSW89CLAsyURczJ0d3HHt7S1eVE7y3Qoa1Cb3n3RloeddZLb6zcY1
+         RMOtKHHqrlQZSz0zsD3R1XS+iprnsd6e2QjXo31CWzIsKhWrEpg3gRauNcLJNYAoK7nR
+         7xPPaTjzgG7STrR9JtmD7enNqYNcSlBw4eovGIgBhHCl5h5nLkhrg3VDC+Yxs0TjNoj5
+         2pkA==
+X-Gm-Message-State: AJIora9pmqPLabExmOiqneI9vUw0omEZDuuwejixDJzrU6H3eXfIkKuV
+        Gp05QWUzqmOs2+oWo1+WlaA=
+X-Google-Smtp-Source: AGRyM1u6X5e4/7pDk4okkRp9HMGJjRQJbHr92molPCUrkbATzZ9QPRy/PZCkjNO4Fu6HG8qU70j97Q==
+X-Received: by 2002:a05:6402:2395:b0:43a:6d91:106c with SMTP id j21-20020a056402239500b0043a6d91106cmr21283230eda.299.1657134631884;
+        Wed, 06 Jul 2022 12:10:31 -0700 (PDT)
+Received: from Ansuel-xps. (93-42-70-190.ip85.fastwebnet.it. [93.42.70.190])
+        by smtp.gmail.com with ESMTPSA id zm9-20020a170906994900b006fee7b5dff2sm18134688ejb.143.2022.07.06.12.10.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 06 Jul 2022 12:10:31 -0700 (PDT)
+Message-ID: <62c5de27.1c69fb81.c73fe.02c5@mx.google.com>
+X-Google-Original-Message-ID: <YsXeJnBqicB3Ah4Y@Ansuel-xps.>
+Date:   Wed, 6 Jul 2022 21:10:30 +0200
+From:   Christian Marangi <ansuelsmth@gmail.com>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Dylan Van Assche <me@dylanvanassche.be>
-Reply-To: Caleb Connolly <caleb@connolly.tech>
-Subject: Re: [PATCH 1/2] arch: arm64: qcom: sdm845-shift-axolotl: fix Bluetooth firmware loading
-Message-ID: <0488a37f-083c-6e8c-eff2-e204b242cbfb@connolly.tech>
-In-Reply-To: <CAA8EJpqz32_LxmBVbcLt0sV=e1JzGtWEmMsKsQNoZzuGgLWbBQ@mail.gmail.com>
-References: <20220609095412.211060-1-amartinz@shiftphones.com> <CAA8EJpqz32_LxmBVbcLt0sV=e1JzGtWEmMsKsQNoZzuGgLWbBQ@mail.gmail.com>
-Feedback-ID: 10753939:user:proton
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/5] ARM: DTS: qcom: fix dtbs_check warning with new
+ rpmcc clocks
+References: <20220705202837.667-1-ansuelsmth@gmail.com>
+ <20220705202837.667-3-ansuelsmth@gmail.com>
+ <18e40247-7151-b50a-97fe-00ee88f47d9b@linaro.org>
+ <62c565dc.1c69fb81.a4566.e9b2@mx.google.com>
+ <bcb64218-2d2b-2f6b-dc79-303bac8c3bd3@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <bcb64218-2d2b-2f6b-dc79-303bac8c3bd3@linaro.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Wed, Jul 06, 2022 at 05:07:12PM +0200, Krzysztof Kozlowski wrote:
+> On 06/07/2022 12:20, Christian Marangi wrote:
+> > On Wed, Jul 06, 2022 at 09:44:04AM +0200, Krzysztof Kozlowski wrote:
+> >> On 05/07/2022 22:28, Christian Marangi wrote:
+> >>> Fix dtbs_check warning for new rpmcc Documentation changes and add the
+> >>> required clocks.
+> >>
+> >> There is no warning in the kernel, right? So the commit is not correct.
+> >>
+> > 
+> > Oh ok, the warning is generated by the new Documentation.
+> 
+> Patches, especially DTS, might go via different trees, so the moment DTS
+> is applied there might be no such warning.
+>
 
+I'm still confused about this topic...
+With this kind of change, I notice I sent Documentation change and then
+rob bot complain about dtbs_check having warning...
 
-On 09/06/2022 13:47, Dmitry Baryshkov wrote:
-> On Thu, 9 Jun 2022 at 12:54, Alexander Martinz <amartinz@shiftphones.com>=
- wrote:
->>
->> From: Dylan Van Assche <me@dylanvanassche.be>
->>
->> Add hsuart0 alias, firmware name and prevent garbage data on Bluetooth U=
-ART lines
->
-> hsuart aliases are not standard. Please use serialN alias instead.
->
->> on the SHIFT 6mq based on the Qualcomm SDM845 chip.
->> I discovered that these were missing by comparing the DTS with similar
->> devices such as the Oneplus 6/6T and Dragonboard 845c.
->>
->> Signed-of-by: Dylan Van Assche <me@dylanvanassche.be>
->> Tested-by: Alexander Martinz <amartinz@shiftphones.com>
->> ---
->>   .../boot/dts/qcom/sdm845-shift-axolotl.dts    | 33 +++++++++++++++++++
->>   1 file changed, 33 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts b/arch/ar=
-m64/boot/dts/qcom/sdm845-shift-axolotl.dts
->> index 103cc40816fd..fa72f23ef0c2 100644
->> --- a/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
->> +++ b/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
->> @@ -20,6 +20,7 @@ / {
->>
->>          aliases {
->>                  display0 =3D &framebuffer0;
->> +               hsuart0 =3D &uart6;
->>                  serial0 =3D &uart9;
->>          };
->>
->> @@ -529,6 +530,32 @@ volume_down_resin: resin {
->>          };
->>   };
->>
->> +/*
->> + * Prevent garbage data on bluetooth UART lines
->> + */
->> +&qup_uart6_default {
->> +        pinmux {
->> +                pins =3D "gpio45", "gpio46", "gpio47", "gpio48";
->> +                function =3D "qup6";
->> +        };
->
-> This chunk should probably go into sdm845.dtsi. I'd suggest either
-> adding a separate qup_uart6_4pin or just making qup_uart6_default the
-> 4-pin UART.
-This sounds good
->
->> +
->> +        cts {
->> +                pins =3D "gpio45";
->
-> Then the label and 'pins' can go into the dtsi, while keeping just the
-> bias and drive-strength in the platform dtsi.
->
->> +                bias-pull-down;
->> +        };
->> +
->> +        rts-tx {
->> +                pins =3D "gpio46", "gpio47";
->> +                drive-strength =3D <2>;
->> +                bias-disable;
->> +        };
->> +
->> +        rx {
->> +                pins =3D "gpio48";
->> +                bias-pull-up;
->> +        };
->> +};
->> +
->>   &qup_uart9_default {
->>          pinconf-rx {
->>                  pins =3D "gpio5";
->> @@ -667,6 +694,12 @@ &uart6 {
->>          bluetooth {
->>                  compatible =3D "qcom,wcn3990-bt";
->>
->> +               /*
->> +                * This path is relative to the qca/
->> +                * subdir under lib/firmware.
->> +                */
->> +               firmware-name =3D "axolotl/crnv21.bin";
->
-> Do you know what is the difference between axolotl's bin and the regular =
-one?
-Just checked in a hex editor and there are some differences. This firmware =
-is
-signed on most devices but given the SHIFT6mq is secureboot off we could in
-theory use upstream firmware here - if it works. This particular device has=
- some
-very broken wifi firmware - we have to use the firmware from the OnePlus 6 =
-to
-get wifi to work at all...
->
->> +
->>                  vddio-supply =3D <&vreg_s4a_1p8>;
->>                  vddxo-supply =3D <&vreg_l7a_1p8>;
->>                  vddrf-supply =3D <&vreg_l17a_1p3>;
->
-> --
-> With best wishes
-> Dmitry
+So the correct way is to send Documentation change and fix dtbs_check
+warning in the same commit OR keep what I'm doing with sending
+Documentation changes and fix DTS in a separate commit?
 
---
-Kind Regards,
-Caleb
+I assume separate patch was the way to go but now I'm not sure
+anymore...
 
+> Best regards,
+> Krzysztof
+
+-- 
+	Ansuel
