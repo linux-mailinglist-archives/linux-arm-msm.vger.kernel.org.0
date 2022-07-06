@@ -2,68 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 233E95688B3
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 14:52:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 792EE5688C2
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 14:55:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232771AbiGFMwV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Jul 2022 08:52:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53768 "EHLO
+        id S232441AbiGFMzB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Jul 2022 08:55:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56656 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231816AbiGFMwU (ORCPT
+        with ESMTP id S231584AbiGFMy7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Jul 2022 08:52:20 -0400
-Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD65D205EF
-        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Jul 2022 05:52:19 -0700 (PDT)
-Received: by mail-pl1-x62d.google.com with SMTP id j12so6781419plj.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Jul 2022 05:52:19 -0700 (PDT)
+        Wed, 6 Jul 2022 08:54:59 -0400
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD1E31B9
+        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Jul 2022 05:54:58 -0700 (PDT)
+Received: by mail-wm1-x330.google.com with SMTP id c131-20020a1c3589000000b003a19b2bce36so5963721wma.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Jul 2022 05:54:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=eoGuZazZt/0EeqeMlL7HIZZ5ZS3+Jp4x1OJVaifQZgI=;
-        b=zHye5Lu/f8z+OaiRL7Im0V+Dc4RbC3r3Ahwyi3l2A8ZNQnADz0pU0wek8ogaXYaqk6
-         qGxDOH0UgJ0IDQsGFX4KPf7jXUgPZA2k+sQcj+ktLrNEZCGIT1/Da3tC6mbZNqWCqSEJ
-         ViF9QhGmy0d/7F7ziAOCzav+LOC3po0Ao7CVw4jhtBXWUVSbGrome9ooZkiRGvm+kbnw
-         XbbFL+XGlMVztUsTrtvsafrrghaiyDWc1f3JPxBugWfoIumyAwFuKntF4tF7XMahXZi2
-         dKzLKpWPQwLdoXoGldEi6JQN0PK8TrIQSTKYI6rjJRmhRrpcODutEHOVyXZBFmNyk4EC
-         /wKg==
+        h=message-id:date:mime-version:user-agent:content-language:to:from
+         :subject:content-transfer-encoding;
+        bh=0ZwsMZMEyuVmYUY6BiNm7d/QmUV/8RywgdDZkvjd/Jk=;
+        b=rQ+B62nGB6xChlmZFu1bTH9LmHJjTUoGj4I6bEx1BvCxbRejV01VUmmSmmWdHTEUlH
+         hsZlDlidJou7qij/3V28XMyYrNg/2ARbQqR54RZlv5KAtRPgLXQeplPCpUV9ktDRtSCT
+         XyXzUSMQsIiKuT5djVNxLMY9HHhouao0EvOsETvKsM/4OwFOroAB49XCT64SoTFNjW+7
+         rGHlrhg3+8mvCsx0T9V+5GKArKmWzKV8QVRP6msyTx0YkTKRv1z2fnLjjRkAgZvx0FjO
+         L91S8NjhiTfY2+BLTE3n0pO6GU3Grl+Qz3KbaMI2LgF6w6nzkMrVFwbp/GoNt04RDOXT
+         asUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=eoGuZazZt/0EeqeMlL7HIZZ5ZS3+Jp4x1OJVaifQZgI=;
-        b=IKvx5VI8wXmI5CPl3lAH4S1VrKYO+wSXjEtSK8P54+6KyxbePNjirfn8ZrxwqCaZai
-         0smD6sm8J9OzD/1ujIXDOXD4hvZVBzOCd3iaURb4h383BGNarixO8hrpzaEvRZj1VbzQ
-         jNGHbLKjMOL3kXCRXYI7N85OcVyfm8iPZZ5MOs9TiYnBHoGAc0ta/r8Qnw/5VRfngRd9
-         nKmy+EFL5361uV4tRAeu6vfIqllSpaelBupyqnpbikw18ZkNz8YtKVutoRciqohsUgu2
-         xXmzm4BsB2tzWthnc7yuEaLog19uXxtCr2UIAE+Kbu17sufvuPD6tXRanFI+Xt7h9zDD
-         EjjQ==
-X-Gm-Message-State: AJIora+j/+V6XGONNh7wM6TiDtvn88NAymDs2kKB9h3grr8xhq1X9zda
-        HBQdq6buEYBceuAqAUABs9QO
-X-Google-Smtp-Source: AGRyM1uq7M5HT00nmhH2W5TGieARitgSBzSweDfbxTCHYXb39Vr226B5eNFWAaVhFPTnaaKfToRA9Q==
-X-Received: by 2002:a17:902:8689:b0:14e:f1a4:d894 with SMTP id g9-20020a170902868900b0014ef1a4d894mr47578859plo.65.1657111939398;
-        Wed, 06 Jul 2022 05:52:19 -0700 (PDT)
-Received: from thinkpad ([117.202.190.202])
-        by smtp.gmail.com with ESMTPSA id mm8-20020a17090b358800b001ef79eb5033sm8938047pjb.11.2022.07.06.05.52.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 06 Jul 2022 05:52:18 -0700 (PDT)
-Date:   Wed, 6 Jul 2022 18:22:14 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Chris Lew <quic_clew@quicinc.com>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
-        konrad.dybcio@somainline.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 3/4] soc: qcom: smp2p: Add memory barrier for irq_pending
-Message-ID: <20220706125214.GA2327@thinkpad>
-References: <1657087331-32455-1-git-send-email-quic_clew@quicinc.com>
- <1657087331-32455-4-git-send-email-quic_clew@quicinc.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent
+         :content-language:to:from:subject:content-transfer-encoding;
+        bh=0ZwsMZMEyuVmYUY6BiNm7d/QmUV/8RywgdDZkvjd/Jk=;
+        b=LvJ48p1vBGNVti5443a9iYrGXfRuf5GMMWUPcPtI+xvclRpLUl//CJFyUoC2Z2iC5n
+         npHepmMTaC/6/qNOsQKVzM9cN4ypCM1e/HmNRIK40t7aWL99K9h+/4lbvRvJiSNiaPNW
+         WtSYs6p1P8Ykv4FpeKVPzmlYV71cl00r1M0w3fHNw0wIbAdvsJ7StePY1R15uNS+xJJ+
+         fnS/y+CJ0rF1Md42dhapUAkwTMp9Cj3v4pssrSfnSvALk9srBl10+1Sn0HDpxCJHTh5F
+         bkbrD2oszP7AtGU1ke1jYQFzqui4RY+XFUJNmv20TX9pfLenJEB2GZEBrYwh8KGAJbDA
+         EKVw==
+X-Gm-Message-State: AJIora/EXIbC5RczaVDc+seGeNAxlnQwFtlMMkNRfcTrog7uru/p6nc5
+        YP3dAeOJ3Tx9CHIP1sCJhRepUA==
+X-Google-Smtp-Source: AGRyM1siQSDHkk1KiF3vnPRny8ROLxutov4RTlttoYSVTIzAc0rmtYcm2hvIKKtCaJwVE6TRcCLdxA==
+X-Received: by 2002:a05:600c:5028:b0:3a0:524c:2aa2 with SMTP id n40-20020a05600c502800b003a0524c2aa2mr43303412wmr.66.1657112097293;
+        Wed, 06 Jul 2022 05:54:57 -0700 (PDT)
+Received: from [192.168.1.12] (88-107-17-60.dynamic.dsl.as9105.com. [88.107.17.60])
+        by smtp.gmail.com with ESMTPSA id m10-20020adff38a000000b0021d6de18f68sm6931761wro.22.2022.07.06.05.54.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 06 Jul 2022 05:54:56 -0700 (PDT)
+Message-ID: <164f2458-fb66-f238-7143-bdbe1e200870@linaro.org>
+Date:   Wed, 6 Jul 2022 13:54:55 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <1657087331-32455-4-git-send-email-quic_clew@quicinc.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Content-Language: en-US
+To:     Sebastian Reichel <sre@kernel.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Amit Kucheria <amitk@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+From:   Caleb Connolly <caleb.connolly@linaro.org>
+Subject: power_supply cooling interface
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -74,61 +75,49 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jul 05, 2022 at 11:02:10PM -0700, Chris Lew wrote:
-> There is a very tight race where the irq_retrigger function is run
-> on one cpu and the actual retrigger softirq is running on a second
-> cpu. When this happens, there may be a chance that the second cpu
-> will not see the updated irq_pending value from first cpu.
-> 
-> Add a memory barrier to ensure that irq_pending is read correctly.
-> 
-> Signed-off-by: Chris Lew <quic_clew@quicinc.com>
-> ---
->  drivers/soc/qcom/smp2p.c | 8 ++++++++
->  1 file changed, 8 insertions(+)
-> 
-> diff --git a/drivers/soc/qcom/smp2p.c b/drivers/soc/qcom/smp2p.c
-> index a94cddcb0298..a1ea5f55c228 100644
-> --- a/drivers/soc/qcom/smp2p.c
-> +++ b/drivers/soc/qcom/smp2p.c
-> @@ -249,6 +249,9 @@ static void qcom_smp2p_notify_in(struct qcom_smp2p *smp2p)
->  
->  		status = val ^ entry->last_value;
->  		entry->last_value = val;
-> +
-> +		/* Ensure irq_pending is read correctly */
-> +		mb();
+Hi,
 
-I don't quite understand why you need a barrier here. mb() makes sure all the
-prior instructions gets executed before executing the later one. But why is it
-needed here?
+I've been working on a driver for the charger found in most Snapdragon 845 
+phones (the OnePlus 6, SHIFT6mq, PocoPhone F1, etc). I wanted to include support 
+for the POWER_SUPPLY_PROP_CHARGE_CONTROL_LIMIT property.
 
->  		status |= *entry->irq_pending;
->  
->  		/* No changes of this entry? */
-> @@ -356,6 +359,11 @@ static int smp2p_retrigger_irq(struct irq_data *irqd)
->  
->  	set_bit(irq, entry->irq_pending);
->  
-> +	/* Ensure irq_pending is visible to all cpus that retried interrupt
-> +	 * can run on
-> +	 */
-> +	mb();
-> +
+My understanding is that it exposes the current limit as a cooling device so 
+that userspace (or frameworks like DTPM) can optimise for performance in a 
+thermally constrained device by limiting the input current and thus reducing the 
+heat generated by the charger circuitry, a similar idea was applied on the Pixel C:
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=a4496d52b3430cb3c4c16d03cdd5f4ee97ad1241
 
-Here it makes sense because you want the CPU to set irq_pending before exiting
-from this function. But even then you can use the less strict smp_wmb() that
-serves the exact purpose.
+However, reading through the sysfs docs for cooling devices, and looking at the 
+implementation in power_supply_core.c, it seems like the behavior here is wrong 
+in a few ways:
+  1. The values should scale from 0: no cooling to max_state: max cooling, but 
+the power_supply docs and the only existing implementation (the smbb driver) 
+just export the current_limit, such that increasing cur_state would increase the 
+current limit, not decrease it.
+  2. (unsure?)The scale is completely different to most other cooling devices, 
+most cooling devices don't seem to have a max state much beyond the double 
+digits, but CHARGE_CONTROL_LIMIT is on the scale of uA, so approaches like 
+incrementing the cooling state by 1 don't really work.
+  3. The value exposed is current, not power, making it tricky for something 
+like the DTPM framework to make good use of it, and making it harder to 
+correlate a particular "amount" of cooling with a change in thermal headroom.
 
-Thanks,
-Mani
 
->  	return 0;
->  }
->  
-> -- 
-> 2.7.4
-> 
+I don't really know what the right approach is here, one idea might be to have 
+the power_supply cooling device implementation try and be more intelligent. 
+Scaling based on the power rather than current and exposing some smaller range 
+so that at maximum cooling the device doesn't just stop charging entirely 
+(unless we've hit some thermal trip?).
+
+Maybe a way to determine the amount of thermal headroom you can expect by 
+adjusting the current limit on a particular charger / device like a power 
+efficiency curve might be useful too, although gathering that data might be 
+difficult to do.
+
+I'll include the POWER_SUPPLY_PROP_CHARGE_CONTROL_LIMIT and 
+POWER_SUPPLY_PROP_CHARGE_CONTROL_LIMIT_MAX properties in my driver, as the 
+maximum current allowed and whatever the maximum is right now.
 
 -- 
-மணிவண்ணன் சதாசிவம்
+Kind Regards,
+Caleb (they/he)
