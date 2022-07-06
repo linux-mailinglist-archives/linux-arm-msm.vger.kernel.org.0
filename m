@@ -2,56 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 73B3B56817C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 10:29:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 605C2568185
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 10:30:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232427AbiGFI3A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Jul 2022 04:29:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41346 "EHLO
+        id S231263AbiGFIaD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Jul 2022 04:30:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36072 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232400AbiGFI2p (ORCPT
+        with ESMTP id S232409AbiGFI3x (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Jul 2022 04:28:45 -0400
-Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com [IPv6:2607:f8b0:4864:20::730])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88BE124964
-        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Jul 2022 01:27:46 -0700 (PDT)
-Received: by mail-qk1-x730.google.com with SMTP id c137so10527218qkg.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Jul 2022 01:27:46 -0700 (PDT)
+        Wed, 6 Jul 2022 04:29:53 -0400
+Received: from mail-qt1-x835.google.com (mail-qt1-x835.google.com [IPv6:2607:f8b0:4864:20::835])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE84524965
+        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Jul 2022 01:29:20 -0700 (PDT)
+Received: by mail-qt1-x835.google.com with SMTP id h19so17250931qtp.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Jul 2022 01:29:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=ga7nDnbfUpJ9V6ACUSstOgYZyMVy4dse7zJQzHBX+go=;
-        b=XfFD9/MZI+n41MLBK0E9mJU/XfUSFToIxhHGHSeXX5RSI/HMC32byDNxQ3J8hIknCZ
-         H1YnXYCpyIF3P6+gRcN12sqyL3OrrdgJnHfVFxdBh9A+Fzqh5DsB+jTuO0Kw6oA0fE5k
-         axQXuBptSouPb/ZM8WNzbbnwqwyMb/eHYjuzTCgwAfiAYRez+zIcV41H36FtK0q57/Hb
-         fc7EpvpnjHDme0fS5lPpxHSOFzwBYfK2Y5WX+t1XRpgrRfhw+jx8ZonW5P4JfHQ4TdXh
-         V2lTIgPSLo52tfTCeUtldlg3qV1M4q/4jBkuN275HUv7/2cJ9TA/4BzJ3azwDDq6fmMy
-         vRLQ==
+        bh=TUlB7D0EVtJKLbRYI/VBJaDjLfIkrBDiyc+MBceBNJw=;
+        b=G+4ns2MicHyAnMKWBTswSLk6EMnGCvvVmN7Hh6rIeqhmdPtKQ+sAI9/ywTY/Zses9k
+         VjXIzW37c9Sb540i+Ci+T0zf2G1M7KteiF8/GUeSb9j2DiKZmQOh+huhzdfX+vinM/2x
+         n6KwhOJhqsV2teycqzlsQrzEh3Tx0WLw9Vcgxl3SZV4+pmnKhXZ7q+KnvKulNXrIw4gv
+         HbWR3PHSB+4R1rCvCT20/L7WSZVSe2plyxa/3aFTEGQjnYH2a0Ak9l8hXJhO7kNpBc3+
+         W+ie0qxQ61m9mMby2eyf1/FSUjZdFwpbI1psikXNTgQ+gaZ1M13hV20o/0wT67sFFcLI
+         d1Tg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=ga7nDnbfUpJ9V6ACUSstOgYZyMVy4dse7zJQzHBX+go=;
-        b=O8pYAF2oMappKBfaZMXfwtPbd60U/TbizQ/NQMCR58Oap1TzZ5Z1Gq5C7P1KEXXfaP
-         y/msD8DAfiQ7XeIN3Q9CwbmNQMh+8CXrxGCOqLfu5Mc7LNhkq1XecsWhxFHnYB5DVAPq
-         hl+c7/1n/RYJ5AXaQc1Nc3ClAE+4JvhGkJqJCpwy6KlIlfV+AemnjVjT45Z3ahiul7AL
-         D9ZOAcdb0GA26GBYGygcCqFL9L+usNx8UHt6oouYUucu9THEMtsLwmJ6hlSYBbxnf3bn
-         LMEf6h1ogliftlveUvit7mWaQp+9LPk8qxxG8YsxdjzmiV7USbtJ7ZkuPOhKTL4czkIp
-         EmfQ==
-X-Gm-Message-State: AJIora/kje+PHqsNQ6SBqWUC6+j+ulBkIi00hMKVdfg9g3JREAf1A80Q
-        ElLBSRk0tloa3U4x/rEuxQtgJejkp8LOGyFC3WAvqg==
-X-Google-Smtp-Source: AGRyM1s0dNFUwGjzYQrSacrH+zKZnt3/yN8zb4JMapiqP581z2KtzHaeLpWvpk2in8PzwyIpExyFMQFqXwJMGqb8DEQ=
-X-Received: by 2002:a05:620a:2409:b0:6b1:4464:e401 with SMTP id
- d9-20020a05620a240900b006b14464e401mr26122750qkn.30.1657096065684; Wed, 06
- Jul 2022 01:27:45 -0700 (PDT)
+        bh=TUlB7D0EVtJKLbRYI/VBJaDjLfIkrBDiyc+MBceBNJw=;
+        b=P3AFvHIx2lDBQWAE4t/2D0oLMQ0hIN3YM2q7qeXSz/tGgMaMYEOqna2OvDYYy8/gLs
+         HOdKxzk8aHFUuaaiupk+OKaFLVd8Qdq09PsMpAf3h1D6jvU6HZqorueDRwAT1awU7w4R
+         vb0luSYcsMbeOCIgJQUImkUlxB9rw3b/gDDklthMyxudFoFTCHfiMIxHam99iN/GjoDg
+         BLpaZmtp/nZJVmT1LkBlb+l/92WkO8oI2nyWN+yqVZJplAWiUxyfim8MH2boQhI/2oz2
+         qnc8e/11r2DOjx62LhI4l19roG3Z50JoVAYxblN4NBRQOPxUOA0Rl7IAnWD1U+F+6u/Y
+         b5Rw==
+X-Gm-Message-State: AJIora8dbp+Hh964GecVwVDw1jNcVTPlp/Pl/3HKnv1ygy6gMINdhARR
+        dE42dJ2h24W//hOXgGMa/BcFsf77ARbmMyPEYRuigA==
+X-Google-Smtp-Source: AGRyM1tp6chanGu4lEPBpPBMUDOPfkdef6yQ98JG92tsAoK2RG7slFYHuEBASN7lDE9c44Zpxb2+fBAWjf7GQLGInWE=
+X-Received: by 2002:ac8:5dca:0:b0:31e:85b8:8a18 with SMTP id
+ e10-20020ac85dca000000b0031e85b88a18mr4988874qtx.370.1657096160170; Wed, 06
+ Jul 2022 01:29:20 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220705202837.667-1-ansuelsmth@gmail.com> <20220705202837.667-4-ansuelsmth@gmail.com>
-In-Reply-To: <20220705202837.667-4-ansuelsmth@gmail.com>
+References: <20220705202837.667-1-ansuelsmth@gmail.com> <20220705202837.667-5-ansuelsmth@gmail.com>
+In-Reply-To: <20220705202837.667-5-ansuelsmth@gmail.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Wed, 6 Jul 2022 11:27:34 +0300
-Message-ID: <CAA8EJpry3pJxEVOL7P7gFL4M9yDktCuDE=2KOGfc6DeAUasYGw@mail.gmail.com>
-Subject: Re: [PATCH 3/5] clk: qcom: clk-rpm: convert to parent_data API
+Date:   Wed, 6 Jul 2022 11:29:09 +0300
+Message-ID: <CAA8EJppTCZRpi8EqmRSJQiSmaANr=5+q5Rb5KsMYZROSNGpGqA@mail.gmail.com>
+Subject: Re: [PATCH 4/5] ARM: dts: qcom: add pxo/cxo clock-output-names for ipq8064
 To:     Christian Marangi <ansuelsmth@gmail.com>
 Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Andy Gross <agross@kernel.org>,
@@ -75,40 +75,42 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Tue, 5 Jul 2022 at 23:56, Christian Marangi <ansuelsmth@gmail.com> wrote:
 >
-> Convert clk-rpm driver to parent_data API and change parent names to cxo
-> and pxo instead of the board variant as pxo_board is an ancient name and
-> pxo should be used instead.
+> Drivers expect to call pxo/cxo_board clock as pxo/cxo.
+> Use clock-output-names to set the correct naming for these fixed clock
+> to save drivers that are migrating to parent_data and still use
+> parent_names.
+
+Please no. There is no reason to add these names. Let's follow the
+example of other platforms.
+
 >
 > Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
 > ---
->  drivers/clk/qcom/clk-rpm.c | 24 ++++++++++++++++--------
->  1 file changed, 16 insertions(+), 8 deletions(-)
+>  arch/arm/boot/dts/qcom-ipq8064.dtsi | 2 ++
+>  1 file changed, 2 insertions(+)
 >
-> diff --git a/drivers/clk/qcom/clk-rpm.c b/drivers/clk/qcom/clk-rpm.c
-> index a18811c38018..d45a8b0fc97c 100644
-> --- a/drivers/clk/qcom/clk-rpm.c
-> +++ b/drivers/clk/qcom/clk-rpm.c
-> @@ -23,6 +23,14 @@
->  #define QCOM_RPM_SCALING_ENABLE_ID                     0x2
->  #define QCOM_RPM_XO_MODE_ON                            0x2
+> diff --git a/arch/arm/boot/dts/qcom-ipq8064.dtsi b/arch/arm/boot/dts/qcom-ipq8064.dtsi
+> index 1425a4e4283f..720e27e29627 100644
+> --- a/arch/arm/boot/dts/qcom-ipq8064.dtsi
+> +++ b/arch/arm/boot/dts/qcom-ipq8064.dtsi
+> @@ -302,12 +302,14 @@ cxo_board: cxo_board {
+>                         compatible = "fixed-clock";
+>                         #clock-cells = <0>;
+>                         clock-frequency = <25000000>;
+> +                       clock-output-names = "cxo";
+>                 };
 >
-> +static const struct clk_parent_data gcc_pxo[] = {
-> +       { .fw_name = "pxo", .name = "pxo" },
-
-This means that the core clock would look for the DT clock named 'pxo'
-with the fallback to the global clock named 'pxo'. Fallback is
-required to keep compatibility with older DT files, not having the
-clocks/clock-names properties.
-For all other platforms we were using as a fallback  the 'pxo_board'
-clock (defined in the DT) rather than the 'pxo' (hackily injected by
-the gcc driver).
-I'd suggest following this pattern and using .fw_name = "pxo', .name =
-"pxo_board".
-
-Same applies to the CXO clock.
-
-> +};
-> +
+>                 pxo_board: pxo_board {
+>                         compatible = "fixed-clock";
+>                         #clock-cells = <0>;
+>                         clock-frequency = <25000000>;
+> +                       clock-output-names = "pxo";
+>                 };
+>
+>                 sleep_clk: sleep_clk {
+> --
+> 2.36.1
+>
 
 
 -- 
