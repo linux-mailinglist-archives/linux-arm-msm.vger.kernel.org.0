@@ -2,231 +2,147 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ED496568509
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 12:18:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E8D7D5685B0
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 12:36:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233006AbiGFKRP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Jul 2022 06:17:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57966 "EHLO
+        id S230525AbiGFKgE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Jul 2022 06:36:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49982 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232992AbiGFKRO (ORCPT
+        with ESMTP id S231910AbiGFKgD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Jul 2022 06:17:14 -0400
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3EC32528F;
-        Wed,  6 Jul 2022 03:17:10 -0700 (PDT)
+        Wed, 6 Jul 2022 06:36:03 -0400
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84BA8B1E;
+        Wed,  6 Jul 2022 03:35:59 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id v16so9984771wrd.13;
+        Wed, 06 Jul 2022 03:35:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1657102630; x=1688638630;
-  h=from:to:cc:subject:date:message-id:mime-version;
-  bh=VwlfvnG2tSLYTcnCDSEuoyt5q/+OAYIkK+DH0Z8k1qo=;
-  b=HNAjkkO8/6SDDAVdUlzGY9/YtM3SAmzLWu83JnJ1HKHLJDXn43JzGbFB
-   LwCTiOC00O4UC+2e7nmY8stpO/Db0HHHQRtWIYAm9OQQrX3eDLkvknF91
-   o7OTUpFAlWFgGfgVwoR19WUkIgIDeTSoQN42oJe3etdwt8jb8ngulQfld
-   s=;
-Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 06 Jul 2022 03:17:09 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Jul 2022 03:17:09 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 6 Jul 2022 03:17:08 -0700
-Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 6 Jul 2022 03:17:04 -0700
-From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
-        <robh+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_rohkumar@quicinc.com>, <srinivas.kandagatla@linaro.org>,
-        <dianders@chromium.org>, <swboyd@chromium.org>,
-        <judyhsiao@chromium.org>
-CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Subject: [PATCH] arm64: dts: qcom: sc7280: Move wcd specific pin conf to common file
-Date:   Wed, 6 Jul 2022 15:46:51 +0530
-Message-ID: <1657102611-20067-1-git-send-email-quic_srivasam@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+        d=gmail.com; s=20210112;
+        h=message-id:date:from:to:cc:subject:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=KBBe1sXw+OvOoMBGDgq+/LVehb93MMTHSQ7lhj1tzyc=;
+        b=eWlqEXGgSssDtjj0zt3fmQJU5ZXzuhdVeftxszhTF2XKpjodmgmtiHeMXUMZDHjE1x
+         oNlFlUr0oEwbUqBf0OmGcuQn/gHnqaLCZG1xhyOPKCKDBcsse0N0EWBwVuI+z2HfKWvq
+         108aOW/967Wy8gLLRdrroTtvKkkHMp65LhyL2c/KOGy1mbqHA48fZhmqPL1BtcvHPf2Z
+         Dkayz+dkfK4oS1/0rnhiiCJPD4GerZO5l3dZ+UO7MEY/CqQdkNAdfLo2zONSY6HSKCoH
+         3nKoKe0U5HwAuF028wnmFNzlg20qdOU6mMVd88bmD6ABE6gaIL3lcV/4VbrIwcQieFY4
+         nrdw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:from:to:cc:subject:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=KBBe1sXw+OvOoMBGDgq+/LVehb93MMTHSQ7lhj1tzyc=;
+        b=Jc87qoiJDB/pakIFmvM9oLzBJ08VMNIz1ohS3098/D0G7Rc7PuOwCXDK3t4716o2no
+         umiCQuYcemOPKPwsDjelLqAWSMGlRkxrV+Htw/A1182D1sHuEIFUko3VIyP6mTRqd+1T
+         7hC94LSH05GcAg0VZMzNXDQIJqucdnGHzUu7nT4yk8V3WZHMj+DC2s5jhes91V0JTO2Q
+         qyPXb2FUy11ZmRIdPPSMX+aY527DWhoJkogjVT6tGhOwPzi+F9qQHij36LAskXHp3CuJ
+         nXXvYwTdZdd36/v6zE85xVHc4+FA9NFv3+2/uksUE08/A3xecTCQBeIgGA/anp20Mva1
+         NMQA==
+X-Gm-Message-State: AJIora9Y1ZH6xvnLZN1eQHjYeS4WFxPVbtYfun8cDlVZdl543ikMT+DC
+        Nbt1aLZWNU5EE/GYr+FNs5U=
+X-Google-Smtp-Source: AGRyM1uzMhA/xmuV812rz7IMzLdVhJ4oNCHJPcmFPJSfIZJ8KoE3xQf6AdF2nD/vIlAUbXvrNhmB5A==
+X-Received: by 2002:a05:6000:18d2:b0:21d:6661:60b5 with SMTP id w18-20020a05600018d200b0021d666160b5mr17782534wrq.475.1657103757864;
+        Wed, 06 Jul 2022 03:35:57 -0700 (PDT)
+Received: from Ansuel-xps. (93-42-70-190.ip85.fastwebnet.it. [93.42.70.190])
+        by smtp.gmail.com with ESMTPSA id h15-20020a1ccc0f000000b0039749b01ea7sm33768215wmb.32.2022.07.06.03.35.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 06 Jul 2022 03:35:57 -0700 (PDT)
+Message-ID: <62c5658d.1c69fb81.1dc23.6884@mx.google.com>
+X-Google-Original-Message-ID: <YsVhqBMmy0WZbPon@Ansuel-xps.>
+Date:   Wed, 6 Jul 2022 12:19:20 +0200
+From:   Christian Marangi <ansuelsmth@gmail.com>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/5] dt-bindings: clock: fix wrong clock documentation
+ for qcom,rpmcc
+References: <20220705202837.667-1-ansuelsmth@gmail.com>
+ <20220705202837.667-2-ansuelsmth@gmail.com>
+ <CAA8EJpoXOwooUYic-_G6jG7MBiHo2mfoKfR0jBDmRy0DsmMNEw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAA8EJpoXOwooUYic-_G6jG7MBiHo2mfoKfR0jBDmRy0DsmMNEw@mail.gmail.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Move wcd specific pin conf to common file to support various
-herbronie variant boards and to avoid duplicate nodes in dts files.
+On Wed, Jul 06, 2022 at 11:23:46AM +0300, Dmitry Baryshkov wrote:
+> On Tue, 5 Jul 2022 at 23:56, Christian Marangi <ansuelsmth@gmail.com> wrote:
+> >
+> > qcom,rpmcc describe 2 different kind of device.
+> > Currently we have definition for rpm-smd based device but we lack
+> > Documentation for simple rpm based device.
+> >
+> > Add the missing clk for ipq806x, apq8060, msm8660 and apq8064 and
+> > provide and additional example.
+> >
+> > Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+> > ---
+> >  .../devicetree/bindings/clock/qcom,rpmcc.yaml | 77 ++++++++++++++++++-
+> >  1 file changed, 73 insertions(+), 4 deletions(-)
+> >
+> > diff --git a/Documentation/devicetree/bindings/clock/qcom,rpmcc.yaml b/Documentation/devicetree/bindings/clock/qcom,rpmcc.yaml
+> > index 9d296b89a8d0..028eb0277495 100644
+> > --- a/Documentation/devicetree/bindings/clock/qcom,rpmcc.yaml
+> > +++ b/Documentation/devicetree/bindings/clock/qcom,rpmcc.yaml
+> [,,,,]
+> 
+> > +
+> > +then:
+> > +  properties:
+> > +    clocks:
+> > +      description: pxo clock
+> > +
+> > +    clock-names:
+> > +      const: pxo
+> > +
+> > +  required:
+> > +    - clocks
+> > +    - clock-names
+> 
+> I don't think you can not mark these properties as required, older
+> schemas do not have them.
+>
 
-Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
----
- .../dts/qcom/sc7280-herobrine-audio-wcd9385.dtsi   | 71 ++++++++++++++++++++++
- arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts  | 61 -------------------
- 2 files changed, 71 insertions(+), 61 deletions(-)
+Well considering we changed rpmcc to parent_data and rpm clock require
+pxo clock as parents it seems to be they should be required.
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-audio-wcd9385.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine-audio-wcd9385.dtsi
-index 32a1e78..b04d796 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-audio-wcd9385.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-audio-wcd9385.dtsi
-@@ -5,6 +5,77 @@
-  * Copyright (c) 2022, The Linux Foundation. All rights reserved.
-  */
- 
-+/* PINCTRL - BOARD-SPECIFIC */
-+
-+/*
-+ * Methodology for gpio-line-names:
-+ * - If a pin goes to CRD board and is named it gets that name.
-+ * - If a pin goes to CRD board and is not named, it gets no name.
-+ * - If a pin is totally internal to Qcard then it gets Qcard name.
-+ * - If a pin is not hooked up on Qcard, it gets no name.
-+ */
-+&lpass_dmic01_clk {
-+	drive-strength = <8>;
-+	bias-disable;
-+};
-+
-+&lpass_dmic01_clk_sleep {
-+	drive-strength = <2>;
-+};
-+
-+&lpass_dmic01_data {
-+	bias-pull-down;
-+};
-+
-+&lpass_dmic23_clk {
-+	drive-strength = <8>;
-+	bias-disable;
-+};
-+
-+&lpass_dmic23_clk_sleep {
-+	drive-strength = <2>;
-+};
-+
-+&lpass_dmic23_data {
-+	bias-pull-down;
-+};
-+
-+&lpass_rx_swr_clk {
-+	drive-strength = <2>;
-+	slew-rate = <1>;
-+	bias-disable;
-+};
-+
-+&lpass_rx_swr_clk_sleep {
-+	bias-pull-down;
-+};
-+
-+&lpass_rx_swr_data {
-+	drive-strength = <2>;
-+	slew-rate = <1>;
-+	bias-bus-hold;
-+};
-+
-+&lpass_rx_swr_data_sleep {
-+	bias-pull-down;
-+};
-+
-+&lpass_tx_swr_clk {
-+	drive-strength = <2>;
-+	slew-rate = <1>;
-+	bias-disable;
-+};
-+
-+&lpass_tx_swr_clk_sleep {
-+	bias-pull-down;
-+};
-+
-+&lpass_tx_swr_data {
-+	drive-strength = <2>;
-+	slew-rate = <1>;
-+	bias-bus-hold;
-+};
-+
- &mi2s1_data0 {
- 	drive-strength = <6>;
- 	bias-disable;
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts b/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts
-index e9ca6c5..7881bbc 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts
-@@ -155,67 +155,6 @@ ap_ts_pen_1v8: &i2c13 {
-  * - If a pin is totally internal to Qcard then it gets Qcard name.
-  * - If a pin is not hooked up on Qcard, it gets no name.
-  */
--&lpass_dmic01_clk {
--	drive-strength = <8>;
--	bias-disable;
--};
--
--&lpass_dmic01_clk_sleep {
--	drive-strength = <2>;
--};
--
--&lpass_dmic01_data {
--	bias-pull-down;
--};
--
--&lpass_dmic23_clk {
--	drive-strength = <8>;
--	bias-disable;
--};
--
--&lpass_dmic23_clk_sleep {
--	drive-strength = <2>;
--};
--
--&lpass_dmic23_data {
--	bias-pull-down;
--};
--
--&lpass_rx_swr_clk {
--	drive-strength = <2>;
--	slew-rate = <1>;
--	bias-disable;
--};
--
--&lpass_rx_swr_clk_sleep {
--	bias-pull-down;
--};
--
--&lpass_rx_swr_data {
--	drive-strength = <2>;
--	slew-rate = <1>;
--	bias-bus-hold;
--};
--
--&lpass_rx_swr_data_sleep {
--	bias-pull-down;
--};
--
--&lpass_tx_swr_clk {
--	drive-strength = <2>;
--	slew-rate = <1>;
--	bias-disable;
--};
--
--&lpass_tx_swr_clk_sleep {
--	bias-pull-down;
--};
--
--&lpass_tx_swr_data {
--	drive-strength = <2>;
--	slew-rate = <1>;
--	bias-bus-hold;
--};
- 
- &pm8350c_gpios {
- 	gpio-line-names = "FLASH_STROBE_1",		/* 1 */
+Actually no idea why this wasn't required before. Probably because this
+schema described only rpm-smd and not old rpm?
+
+> > +
+> > +else:
+> > +  if:
+> > +    properties:
+> > +      compatible:
+> > +        contains:
+> > +          const: qcom,rpmcc-apq8064
+> > +  then:
+> > +    properties:
+> > +      clocks:
+> > +        items:
+> > +          - description: pxo clock
+> > +          - description: cxo clock
+> [...]
+> 
+> -- 
+> With best wishes
+> Dmitry
+
 -- 
-2.7.4
-
+	Ansuel
