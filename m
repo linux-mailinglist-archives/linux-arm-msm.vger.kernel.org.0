@@ -2,77 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 236F2568572
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 12:24:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D4C4D56857B
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 12:26:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231954AbiGFKXx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Jul 2022 06:23:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39064 "EHLO
+        id S231251AbiGFK0U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Jul 2022 06:26:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41046 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231867AbiGFKXw (ORCPT
+        with ESMTP id S230115AbiGFK0T (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Jul 2022 06:23:52 -0400
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5AE26248E2;
-        Wed,  6 Jul 2022 03:23:51 -0700 (PDT)
-Received: by mail-ej1-x635.google.com with SMTP id lg18so6489634ejb.0;
-        Wed, 06 Jul 2022 03:23:51 -0700 (PDT)
+        Wed, 6 Jul 2022 06:26:19 -0400
+Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 956B125EA1;
+        Wed,  6 Jul 2022 03:26:18 -0700 (PDT)
+Received: by mail-ed1-x530.google.com with SMTP id r18so18656956edb.9;
+        Wed, 06 Jul 2022 03:26:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:date:from:to:cc:subject:references:mime-version
          :content-disposition:in-reply-to;
-        bh=A9xeNdZDUIjr4l2jLGqq1SJhUmTfqKYqMsJa/JfV6ag=;
-        b=MGaI+JsM9XJwL7VpB7yT/Oaz4A474xJtZQz5NEzLu+9WfWoK4TQlRBDHRfW8qbKSdc
-         GA7/T3yW7vazdXBIpLnKhiU0pLqxuWc8lpHotv9baCvj5Bgwt1WsU5jweCEm25CzchXl
-         2XE6d1IQsFAjT/8LuxxYSv8PrgMyAzlhBDiOPjsIeeegZfLwxBsvZ5DW2WY5on1snlSq
-         LxuSxGOA+TYtKNPD9Dt85W+gKmwIHQw7ct/NT769ISTPlqF6uNhD8M/DXujRgIABePDr
-         VFiq5fXuGBvud8h4T0442F3t94nsT5PcCZ/l0kObS9cNukhRS5yC4tsaft7aqTUg1j1k
-         CWqw==
+        bh=m51M7aOH5FnJwLofP0W607fIK7M775HfSh2WEy0mTWo=;
+        b=JJZXb8nugrU4hB99yEftnyX099Qa8+XsZFeQfNMyE9Js8PCpj07zB1+fVtGZAmj4UW
+         NGRLyoxucyp6S57S5jMPV/IMlUKAeUmI27IAud4oJZce87gRrxXi58dhsMnwRHdivOgp
+         TWokJk6BnRhb2dFySMHHaEDuqFHv6DB2ZvqaOFO/KYMOBJfecwonKssNRMGjgDh4yZUm
+         Km54CjtSPIywNcEFl+hS6wC4BZeCseVERyDgMlPpB08RCJdVr5y0fgoSVb/BpuA4cA7I
+         59RK4YRScLqaSjzZeLG2pSMUWA83CfTchlSs0VNOhP0H/6qeZ0mSo4Mwiq0E3iSwZeMq
+         2GZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:from:to:cc:subject:references
          :mime-version:content-disposition:in-reply-to;
-        bh=A9xeNdZDUIjr4l2jLGqq1SJhUmTfqKYqMsJa/JfV6ag=;
-        b=Ee5hj6VDaM0SOqExC6k7vcVSvgI8KQIwsqBbBM4CPXly9y/oCe6DDn2tLuFo2/cMpd
-         z9oUGkAmqEGTZbCEma+8/SqVZZ3vtJG8lUOaB0ZCnH6/arhtT+0gssAHhBE3d1gELBOp
-         PlHOSlR8NX9Jo3GvJXcErDQnKgI6CfHyZu7ioGo5dOvyJtMFPevMVXah8aXpG5BOIj8v
-         AryU/4VFlOQMyhqhI+eaMvctaPBIf4b0V5OwQfBeBPbKezJKBWzWHMrr5AkEaxifGz0r
-         JIIsAvHygMsi0NKtA0G9QzEIKg9/vqPXv1iho+YINEPwlhiYzErFPMxh8KDtlhrmhfF8
-         i5Ag==
-X-Gm-Message-State: AJIora+CnENvccohGFJTtwo1oQ6Nx5TI+9tGQCaOKDFoxRCH4cUHAEPl
-        RRZL36mm7Tzq4PC1OStUbGk=
-X-Google-Smtp-Source: AGRyM1vG14ChU514xvqFxRVaxYHsajgsNZGdG9Vwh2mJxfoeSO8ko8QGjp0eczHjU6mfpOj75LWtXg==
-X-Received: by 2002:a17:907:16a6:b0:726:574d:d31f with SMTP id hc38-20020a17090716a600b00726574dd31fmr37626967ejc.514.1657103029693;
-        Wed, 06 Jul 2022 03:23:49 -0700 (PDT)
+        bh=m51M7aOH5FnJwLofP0W607fIK7M775HfSh2WEy0mTWo=;
+        b=p3mt8D8Q6G8Dqp6Oq5KzAl5MLa3jWxF9Z00/I+tBOwfDxp7fsrg0M7ce/9CXCXdND0
+         bOG7kjV5Yrzg9G119HqppTuRxcdAKeneVqFBmLXomGp55cwhThbE0rZUiV3XQIij1LDK
+         80BP2seUH8D6aARsN7s9VEiV8sDUawQ9/K9ELQi8BPFKiZovv9+QqnQ9mxMT09tE1FVG
+         DbHwbDN7AamewM+9ii3l3txHZI9JKfmUP90gtro0RWMtYfasDYbZtfCRy1CwByn8B2TR
+         /mYSkQ2pbTlsK432xZ5lkm3aDT7j39svGjJQ4g/82Jd3SOOPuGQ5EjBwvOqYKErOLnRK
+         aImA==
+X-Gm-Message-State: AJIora/LAWzv6NQXF1xvfoNYCQowe3QF1Cb/ya+j5lpUqfvqeUZKWd/n
+        wtDmdeznxA7qOxHURLfihVM=
+X-Google-Smtp-Source: AGRyM1teWvIdZYx1txxcSxtn7EDb6uif4hNEcDyJI+h0PwivdUZtKJ5qLCm8F/LlRHOFsgcI0CojKA==
+X-Received: by 2002:a05:6402:12d8:b0:43a:6a70:9039 with SMTP id k24-20020a05640212d800b0043a6a709039mr18588969edx.379.1657103177039;
+        Wed, 06 Jul 2022 03:26:17 -0700 (PDT)
 Received: from Ansuel-xps. (93-42-70-190.ip85.fastwebnet.it. [93.42.70.190])
-        by smtp.gmail.com with ESMTPSA id p17-20020a056402501100b0043787ad7cfasm20919288eda.22.2022.07.06.03.23.48
+        by smtp.gmail.com with ESMTPSA id y14-20020a170906448e00b0072737733f9asm10563605ejo.106.2022.07.06.03.26.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 06 Jul 2022 03:23:49 -0700 (PDT)
-Message-ID: <62c562b5.1c69fb81.d69fc.4079@mx.google.com>
-X-Google-Original-Message-ID: <YsVe0Pu4FooN5XYt@Ansuel-xps.>
-Date:   Wed, 6 Jul 2022 12:07:12 +0200
+        Wed, 06 Jul 2022 03:26:16 -0700 (PDT)
+Message-ID: <62c56348.1c69fb81.d2cad.2584@mx.google.com>
+X-Google-Original-Message-ID: <YsVfY6MZxOMeahXp@Ansuel-xps.>
+Date:   Wed, 6 Jul 2022 12:09:39 +0200
 From:   Christian Marangi <ansuelsmth@gmail.com>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH v2 3/3] clk: qcom: lcc-ipq806x: convert to parent data
-References: <20220621163326.16858-1-ansuelsmth@gmail.com>
- <20220621163326.16858-3-ansuelsmth@gmail.com>
- <CAA8EJpqQTTevQa4pQg3E+x4_AOjYo8ajOqUrfwGsVtC8N=bpOw@mail.gmail.com>
- <62b228b6.1c69fb81.e4673.34a2@mx.google.com>
- <CAA8EJprb=xV9+gZMANAYrt_JnKAtC89h1RAosL+g517_-Ugd2g@mail.gmail.com>
- <62c4a38b.1c69fb81.4d58e.ce99@mx.google.com>
- <CAA8EJprGf6V9K1gFDCE+bnKwhjVgLvruTRAZ-AOqfPsbmmYRLA@mail.gmail.com>
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Jonathan McDowell <noodles@earth.li>
+Subject: Re: [PATCH 03/13] ARM: dts: qcom: add missing rpm regulators and
+ cells for ipq8064
+References: <20220705133917.8405-1-ansuelsmth@gmail.com>
+ <20220705133917.8405-4-ansuelsmth@gmail.com>
+ <e81344f6-7da5-a209-2785-d540e41f3958@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAA8EJprGf6V9K1gFDCE+bnKwhjVgLvruTRAZ-AOqfPsbmmYRLA@mail.gmail.com>
+In-Reply-To: <e81344f6-7da5-a209-2785-d540e41f3958@linaro.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
         RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
@@ -83,82 +79,90 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jul 06, 2022 at 10:34:04AM +0300, Dmitry Baryshkov wrote:
-> On Tue, 5 Jul 2022 at 23:48, Christian Marangi <ansuelsmth@gmail.com> wrote:
-> >
-> > On Tue, Jun 21, 2022 at 11:43:10PM +0300, Dmitry Baryshkov wrote:
-> > > On Tue, 21 Jun 2022 at 23:23, Christian Marangi <ansuelsmth@gmail.com> wrote:
-> > > >
-> > > > On Tue, Jun 21, 2022 at 08:15:57PM +0300, Dmitry Baryshkov wrote:
-> > > > > On Tue, 21 Jun 2022 at 19:33, Christian Marangi <ansuelsmth@gmail.com> wrote:
-> > > > > >
-> > > > > > Convert lcc-ipq806x driver to parent_data API.
-> > > > > >
-> > > > > > Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-> > > > > > ---
-> > > > > > v2:
-> > > > > > - Fix Sob tag
-> > > > > >
-> > > > > >  drivers/clk/qcom/lcc-ipq806x.c | 79 +++++++++++++++++++---------------
-> > > > > >  1 file changed, 44 insertions(+), 35 deletions(-)
-> > > > > >
-> > > > > > diff --git a/drivers/clk/qcom/lcc-ipq806x.c b/drivers/clk/qcom/lcc-ipq806x.c
-> > > > > > index ba90bebba597..c07ca8dc6e3a 100644
-> > > > > > --- a/drivers/clk/qcom/lcc-ipq806x.c
-> > > > > > +++ b/drivers/clk/qcom/lcc-ipq806x.c
-> > > > > > @@ -24,6 +24,10 @@
-> > > > > >  #include "clk-regmap-mux.h"
-> > > > > >  #include "reset.h"
-> > > > > >
-> > > > > > +static const struct clk_parent_data gcc_pxo[] = {
-> > > > > > +       { .fw_name = "pxo", .name = "pxo" },
-> > > > >
-> > > > > I think you'd use .name = "pxo_board" here. You don't need to use the
-> > > > > interim clock.
-> > > > >
-> > > >
-> > > > In gcc and in the rest of this driver we use pxo. Wonder what is right?
-> > >
-> > > I'd use .fw_name = "pxo", .name = "pxo_board", like the rest of drivers do.
-> > >
-> >
-> > Will do the change, but I need an explaination... Is the use of
-> > pxo_board correct?
-> >
-> > I'm sending a patch that sets the pxo_board fixed clock in dts to output
-> > "pxo". The only clock that still use pxo_board is rpm, everything else
-> > at least for ipq806x use pxo and i'm sending a patch to use pxo for rpm.
-> >
-> > Considering pxo is always present and pxo_board should be dropped
-> > because every ipq806x driver use "pxo".
-> >
-> > What is correct naming pxo or pxo_board? I assume pxo right?
+On Wed, Jul 06, 2022 at 10:34:16AM +0200, Krzysztof Kozlowski wrote:
+> On 05/07/2022 15:39, Christian Marangi wrote:
+> > Add cells definition for rpm node and add missing regulators for the 4
+> > regulator present on ipq8064. There regulators are controlled by rpm and
+> > to correctly works gsbi4_i2c require to be NEVER disabled or rpm will
+> > reject any regulator change request.
+> > 
+> > Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+> > Tested-by: Jonathan McDowell <noodles@earth.li>
+> > ---
+> >  arch/arm/boot/dts/qcom-ipq8064.dtsi | 36 +++++++++++++++++++++++++++++
+> >  1 file changed, 36 insertions(+)
+> > 
+> > diff --git a/arch/arm/boot/dts/qcom-ipq8064.dtsi b/arch/arm/boot/dts/qcom-ipq8064.dtsi
+> > index 1b4b72723ead..c0b05d2a2d6d 100644
+> > --- a/arch/arm/boot/dts/qcom-ipq8064.dtsi
+> > +++ b/arch/arm/boot/dts/qcom-ipq8064.dtsi
+> > @@ -844,10 +844,46 @@ rpm: rpm@108000 {
+> >  			clocks = <&gcc RPM_MSG_RAM_H_CLK>;
+> >  			clock-names = "ram";
+> >  
+> > +			#address-cells = <1>;
+> > +			#size-cells = <0>;
 > 
-> This might be not the case for the ipq806x, but here is the story for
-> all other (old) platforms:
-> - gcc driver manually registered pxo/cxo/xo fixed factor clocks.
-> - Then we started adding *xo_board clocks to the DT, as they represent
-> the external oscillators
-> -  PXO clock consumers receive a clocks entry with clock-names = "pxo"
-> which points to the pxo_board
-> - All clock drivers are now being switched to use .fw_name = "pxo",
-> .name = "pxo_board" to use the DT-defined pxo_board clock.
-> 
-> Hopefully at some point we can then drop the manually registered pxo
-> clock and always use the DT-based one.
+> Why adding these?
 >
 
-Okok. I got confused since looking at the code factor clock is really
-just a hack to handle both driver that use pxo_board and pxo cause from
-what I notice it's the same clock with different naming.
+Fix dt warning, will split and put it in a separate commit.
 
-Sooo keep using pxo_board with the fact that pxo is always present seems
-to be redundant but if that's the pattern then I will just keep
-pxo_board in .name where it's used.
+> > +
+> >  			rpmcc: clock-controller {
+> >  				compatible = "qcom,rpmcc-ipq806x", "qcom,rpmcc";
+> >  				#clock-cells = <1>;
+> >  			};
+> > +
+> > +			smb208_regulators: regulators {
+> > +				compatible = "qcom,rpm-smb208-regulators";
+> > +				status = "okay";
+> 
+> Was the node disabled?
+> 
 
-> -- 
-> With best wishes
-> Dmitry
+smb208 is the normal and advised way to handle regulators on this
+platform. Some device may want to not follow that and implement their
+own regulator bypassing rpm so we add a status and on the current device
+present upstream we set it disabled as it does use different regulators
+implementation.
+
+> > +
+> > +				smb208_s1a: s1a {
+> > +					regulator-min-microvolt = <1050000>;
+> > +					regulator-max-microvolt = <1150000>;
+> > +
+> > +					qcom,switch-mode-frequency = <1200000>;
+> > +				};
+> > +
+> > +				smb208_s1b: s1b {
+> > +					regulator-min-microvolt = <1050000>;
+> > +					regulator-max-microvolt = <1150000>;
+> > +
+> > +					qcom,switch-mode-frequency = <1200000>;
+> > +				};
+> > +
+> > +				smb208_s2a: s2a {
+> > +					regulator-min-microvolt = < 800000>;
+> > +					regulator-max-microvolt = <1250000>;
+> > +
+> > +					qcom,switch-mode-frequency = <1200000>;
+> > +				};
+> > +
+> > +				smb208_s2b: s2b {
+> > +					regulator-min-microvolt = < 800000>;
+> > +					regulator-max-microvolt = <1250000>;
+> > +
+> > +					qcom,switch-mode-frequency = <1200000>;
+> > +				};
+> > +			};
+> >  		};
+> >  
+> >  		tcsr: syscon@1a400000 {
+> 
+> 
+> Best regards,
+> Krzysztof
 
 -- 
 	Ansuel
