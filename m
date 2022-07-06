@@ -2,70 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CB816568BE5
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 16:54:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 02D57568C0B
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 16:59:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233265AbiGFOyY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Jul 2022 10:54:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42854 "EHLO
+        id S233508AbiGFO7H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Jul 2022 10:59:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46052 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233351AbiGFOyW (ORCPT
+        with ESMTP id S233470AbiGFO7F (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Jul 2022 10:54:22 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51B79D58
-        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Jul 2022 07:54:21 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id f14so3638479lfl.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Jul 2022 07:54:21 -0700 (PDT)
+        Wed, 6 Jul 2022 10:59:05 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A982F25E83
+        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Jul 2022 07:59:03 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id f39so26402207lfv.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Jul 2022 07:59:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=+wPtHpmQ6dj+K5CWiVezNSAdoiBjL5sWc+U38WvG1wI=;
-        b=wc++VBw21JceC8bWFFWN7Jzeweix1AL7NNEnG7X7GV0YwOjaDtShVqyE/Jsagu3WWW
-         JEzx59KS3PV3MIeIwtllUC3louIjpnyJXe6OSklM/8JWF4awvR6kDygvqguWGnQnoTWN
-         1JvI+drrlMNmnWg8cqIiKB7Cvr5Nq0bhMiNC1xcRYCxsYJqTT3YHLRpcA90fh3r/4jz/
-         8c6Qw32xyPuVdXrMoCWgjhxVZ23IJeq6tsE0JvoJalVYRAfs1DzJWvcwqWTUoo0MzLVn
-         buutpTZS31iePvx56AkZToXznM/P/lPc/jqNIiSZS0WvDv1PdqFhfl76/ZlMvpTahnfV
-         1ysg==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=cmKQ1A+SNcVV+xdQAtk9f96FGO9npHWf2vTO1h3im4s=;
+        b=bJ2wmt19f7E1iCV0cGWdHwG61juT9VIkFewxrXGstKTVLXv0jkpZkQy6KxA/5C4qCk
+         Jp3/f2gVaIhNHYyeq8rvmfsLz9PtwYUqeV2kuy4xPxHBteIXHDQaLGKsHvXyB78CBRhO
+         Mko6wPrrUlSKk6yGd6ObodHqj7Kucs5yHvjwp5If/uKb9PILyEzFwUY3Ql3yIl0UjmZI
+         4ichYDbs91f7sSkVOXgKmZM7DWZmVf8I5Ow/GLh+VNIoBbKnJ2pKssLSyol/GOyj/y7h
+         +lIkCKVw7m1OxBhsAZXLvfeINFzlzcpA0J9BaRHgB9QVfHD+DgIaRwbU7pfIlLZIJER9
+         X+zg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=+wPtHpmQ6dj+K5CWiVezNSAdoiBjL5sWc+U38WvG1wI=;
-        b=NLvWouvtmVUpAyWotmneyV6xQGHchsFX+HebvZErEvJWvUAofD7BD059ZujXXcUZse
-         n2odL34gEZrxeiRqMmgusD52V9Ahj05RVnILqQfxJqkWaRwY2xV2Yjs7l4E+orcDon7X
-         K129U2W+OxYLKRVkbatbX+XnFbqKcD/uI62MpIUOqkI0JuVcoNevEcgtp3pShxj5wAFf
-         ku+fZ7aFbR50Y10KU+aJHp+oTPZm3ERhlNZTEvrUZBdfXMLgI1DWjAyGaK93ou6Q6tUo
-         Out6FDsZvp/piNmmj/vJsSGdouCcysfvCXTFxlcF6E+jRNlKHmPD60ZdSA1I7A5dNdmR
-         +Vlg==
-X-Gm-Message-State: AJIora94MqE4Hn0ZCTKo7nedrVmSDET6gDWU8p3I8fns3u5ytxV+hRve
-        AQW85z45rdjgqSTBiUVMIO+G9g==
-X-Google-Smtp-Source: AGRyM1u1msA0VrsJLEOY8Dcg8aEY2eEGM5ztbnaWuUfaqlKta5XEvfNDPXIhbNQNBPIbsPb9MKBsoQ==
-X-Received: by 2002:a05:6512:2347:b0:484:8985:f487 with SMTP id p7-20020a056512234700b004848985f487mr4563896lfu.364.1657119260741;
-        Wed, 06 Jul 2022 07:54:20 -0700 (PDT)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id i28-20020a056512007c00b0048650aee2b2sm359374lfo.144.2022.07.06.07.54.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 06 Jul 2022 07:54:19 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: [PATCH 6/6] arm: dts: qcom-msm8974: rename GPU's OPP table node
-Date:   Wed,  6 Jul 2022 17:54:12 +0300
-Message-Id: <20220706145412.1566011-6-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220706145412.1566011-1-dmitry.baryshkov@linaro.org>
-References: <20220706145412.1566011-1-dmitry.baryshkov@linaro.org>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=cmKQ1A+SNcVV+xdQAtk9f96FGO9npHWf2vTO1h3im4s=;
+        b=RoQwFTw/josJqyI49Dp4agL6z/hhRTcqy094htAsOYsemEwZcP02OT6o/7I+4ihTOK
+         HH0NFibCuixcrdOSKKzXNBmib6u10GGjYeFZjtdyQr2Un+9Wj3w4JXEkilUVz8ogC+Gi
+         XI7mHiXBjWlwyHrFBcKEQXdCvm2LM3Yin2M9xazvvCZAqsKfyeIqyUKpebHRrk3tbEjM
+         GRt5NffG+Dyx0tWqCI0mgAn3Kty3hl/+WzFf2mTQtruOOK0vtDg4ZrMGPtafBLAZjioL
+         HouC5264wOcq5/HDCJ+EYNC6kqkMV8Bdd8SAWxo/G45aAXph593nNQNH5c729bz/IXsS
+         5QNQ==
+X-Gm-Message-State: AJIora+uOw03a8Na835wHmUVg54Qg4i5CWegbOYxrMSkn44I5SgwzvlJ
+        RRXOK+5ZcbGQ/XEywoPHo1fjPQ==
+X-Google-Smtp-Source: AGRyM1vgEuf632zLZr+I1Gp3QidCXy8XtIkAtWyjsW3vgP/zQ1uvi/Tv6A+oTDrNIBJQQDoRMtGnjg==
+X-Received: by 2002:a05:6512:1698:b0:47f:b5a6:6870 with SMTP id bu24-20020a056512169800b0047fb5a66870mr25958708lfb.578.1657119542015;
+        Wed, 06 Jul 2022 07:59:02 -0700 (PDT)
+Received: from [192.168.1.52] ([84.20.121.239])
+        by smtp.gmail.com with ESMTPSA id o14-20020ac25e2e000000b0047f93edb9f5sm6304967lfg.181.2022.07.06.07.59.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 06 Jul 2022 07:59:01 -0700 (PDT)
+Message-ID: <75f8b257-7e0a-d871-ab30-37a72f7da56e@linaro.org>
+Date:   Wed, 6 Jul 2022 16:59:00 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH v2 2/3] dt-bindings: pci: QCOM Adding sc7280 aggre0,
+ aggre1 clocks
+Content-Language: en-US
+To:     Krishna Chaitanya Chundru <quic_krichai@quicinc.com>,
+        helgaas@kernel.org
+Cc:     linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, mka@chromium.org,
+        quic_vbadigan@quicinc.com, quic_hemantk@quicinc.com,
+        quic_nitegupt@quicinc.com, quic_skananth@quicinc.com,
+        quic_ramkri@quicinc.com, manivannan.sadhasivam@linaro.org,
+        swboyd@chromium.org, dmitry.baryshkov@linaro.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>
+References: <1656062391-14567-1-git-send-email-quic_krichai@quicinc.com>
+ <1656691899-21315-1-git-send-email-quic_krichai@quicinc.com>
+ <1656691899-21315-3-git-send-email-quic_krichai@quicinc.com>
+ <1fb5f0c6-ff72-b9ba-175a-b5197ed658a7@linaro.org>
+ <9de4c3a0-eb95-f4e9-b828-2343241fff41@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <9de4c3a0-eb95-f4e9-b828-2343241fff41@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -73,27 +92,85 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Rename the GPU's opp table node to make it follow the
-display/msm/gpu.yaml schema.
+On 06/07/2022 13:55, Krishna Chaitanya Chundru wrote:
+> 
+> On 7/4/2022 1:54 PM, Krzysztof Kozlowski wrote:
+>> On 01/07/2022 18:11, Krishna chaitanya chundru wrote:
+>>> Adding aggre0 and aggre1 clock entries to PCIe node.
+>>>
+>>> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+>>> ---
+>>>   Documentation/devicetree/bindings/pci/qcom,pcie.yaml | 6 ++++--
+>>>   1 file changed, 4 insertions(+), 2 deletions(-)
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+>>> index 0b69b12..8f29bdd 100644
+>>> --- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+>>> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+>>> @@ -423,8 +423,8 @@ allOf:
+>>>       then:
+>>>         properties:
+>>>           clocks:
+>>> -          minItems: 11
+>>> -          maxItems: 11
+>>> +          minItems: 13
+>>> +          maxItems: 13
+>>>           clock-names:
+>>>             items:
+>>>               - const: pipe # PIPE clock
+>>> @@ -437,6 +437,8 @@ allOf:
+>>>               - const: bus_slave # Slave AXI clock
+>>>               - const: slave_q2a # Slave Q2A clock
+>>>               - const: tbu # PCIe TBU clock
+>>> +            - const: aggre0 # Aggre NoC PCIe CENTER SF AXI clock
+>>> +            - const: aggre1 # Aggre NoC PCIe1 AXI clock
+>> You ignored my comments from v1 - please don't. This is not accepted.
+>>
+>> Also, please do not send new versions of patchset as reply to some other
+>> threads. It's extremely confusing to find it under something else.
+>>
+>> Best regards,
+>> Krzysztof
+> Hi
+> 
+> Krzysztof,
+> 
+> Sorry for confusion created which replying this patch.
+> 
+> The only comment I got from v1 from you is to run make dtbs_check.
+> 
+> I ran that command I found the errors and fixed them and I ran the make dtbs_check again
+> before on v2 and made sure there are no errors.
+> 
+> Can you please tell me is there any steps I missed.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- arch/arm/boot/dts/qcom-msm8974.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+The comment was:
+"This won't work. You need to update other entry."
 
-diff --git a/arch/arm/boot/dts/qcom-msm8974.dtsi b/arch/arm/boot/dts/qcom-msm8974.dtsi
-index 11b4206036e6..2c323d20a1a2 100644
---- a/arch/arm/boot/dts/qcom-msm8974.dtsi
-+++ b/arch/arm/boot/dts/qcom-msm8974.dtsi
-@@ -1634,7 +1634,7 @@ gpu: adreno@fdb00000 {
- 
- 			status = "disabled";
- 
--			gpu_opp_table: opp_table {
-+			gpu_opp_table: opp-table {
- 				compatible = "operating-points-v2";
- 
- 				opp-320000000 {
--- 
-2.35.1
+and then a conditional: "If you test it with
+`make dtbs_check` you will see the errors."
 
+So let's run it together:
+
+/home/krzk/dev/linux/linux/out/arch/arm64/boot/dts/qcom/sc7280-idp.dtb:
+pci@1c08000: clocks: [[42, 55], [42, 56], [41, 0], [39, 0], [42, 50],
+[42, 52], [42, 53], [42, 57], [42, 58], [42, 177], [42, 178], [42, 8],
+[42, 21]] is too long
+
+	From schema:
+/home/krzk/dev/linux/linux/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+
+/home/krzk/dev/linux/linux/out/arch/arm64/boot/dts/qcom/sc7280-idp.dtb:
+pci@1c08000: clock-names: ['pipe', 'pipe_mux', 'phy_pipe', 'ref', 'aux',
+'cfg', 'bus_master', 'bus_slave', 'slave_q2a', 'tbu', 'aggre0',
+'aggre1', 'ddrss_sf_tbu'] is too long
+
+
+clocks and clock-names can be maximum 12 items, as defined by schema in
+"properties:" section. You cannot extend it in one place to 13 but leave
+12 in other, because both constraints are applicable.
+
+If you test it, you will see the errors.
+
+Best regards,
+Krzysztof
