@@ -2,47 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9FF67568846
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 14:27:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 087FE56885A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 14:31:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233130AbiGFM1d (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Jul 2022 08:27:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60338 "EHLO
+        id S233185AbiGFMbD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Jul 2022 08:31:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35344 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232818AbiGFM1b (ORCPT
+        with ESMTP id S233015AbiGFMbD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Jul 2022 08:27:31 -0400
-Received: from relay08.th.seeweb.it (relay08.th.seeweb.it [IPv6:2001:4b7a:2000:18::169])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09E5E248CF;
-        Wed,  6 Jul 2022 05:27:27 -0700 (PDT)
+        Wed, 6 Jul 2022 08:31:03 -0400
+Received: from m-r2.th.seeweb.it (m-r2.th.seeweb.it [5.144.164.171])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02BCF26579
+        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Jul 2022 05:31:01 -0700 (PDT)
 Received: from [192.168.1.101] (abxi46.neoplus.adsl.tpnet.pl [83.9.2.46])
         (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id A886C3F756;
-        Wed,  6 Jul 2022 14:27:24 +0200 (CEST)
-Message-ID: <a443cd40-a1d5-6e17-1c49-d592a590f1f8@somainline.org>
-Date:   Wed, 6 Jul 2022 14:27:23 +0200
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id D06DC3F642;
+        Wed,  6 Jul 2022 14:30:59 +0200 (CEST)
+Message-ID: <3bf68892-9a55-1d6e-fb43-346d9378a866@somainline.org>
+Date:   Wed, 6 Jul 2022 14:30:59 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.11.0
-Subject: Re: [PATCH v6 11/12] arm64: dts: qcom: add PMP8074 DTSI
+Subject: Re: [PATCH 2/2] [PATCH v2 2/2] arm64: dts: qcom: Add LTE SKUs for
+ sc7280-villager family
 Content-Language: en-US
-To:     Robert Marko <robimarko@gmail.com>, agross@kernel.org,
-        bjorn.andersson@linaro.org, lee.jones@linaro.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        linus.walleij@linaro.org, lgirdwood@gmail.com, broonie@kernel.org,
-        jic23@kernel.org, lars@metafoo.de, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-gpio@vger.kernel.org, linux-iio@vger.kernel.org
-References: <20220704212402.1715182-1-robimarko@gmail.com>
- <20220704212402.1715182-11-robimarko@gmail.com>
+To:     Jimmy Chen <jinghung.chen3@hotmail.com>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Andy Gross <agross@kernel.org>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Alan Huang <alan-huang@quanta.corp-partner.google.com>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <SG2PR03MB500697A11DA5D0B45DE41B0ECC819@SG2PR03MB5006.apcprd03.prod.outlook.com>
 From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-In-Reply-To: <20220704212402.1715182-11-robimarko@gmail.com>
+In-Reply-To: <SG2PR03MB500697A11DA5D0B45DE41B0ECC819@SG2PR03MB5006.apcprd03.prod.outlook.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -52,171 +54,161 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 4.07.2022 23:24, Robert Marko wrote:
-> PMP8074 is a companion PMIC to the Qualcomm IPQ8074 series that is
-> controlled via SPMI.
+On 5.07.2022 04:22, Jimmy Chen wrote:
+> This adds LTE skus for villager device tree files.
 > 
-> Add DTSI for it providing GPIO, regulator and RTC support.
-> 
-> RTC is disabled by default as there is no built-in battery so it will
-> loose time unless board vendor added a battery, so make it optional.
-> 
-> Signed-off-by: Robert Marko <robimarko@gmail.com>
+> Signed-off-by: Jimmy Chen <jinghung.chen3@hotmail.com>
 > ---
-> Changes in v6:
-> * Add RTC and GPIO nodes
 > 
-> Changes in v5:
-> * Remove #address-cells and #size-cells as they are not required for
-> regulator subnodes
-> ---
->  arch/arm64/boot/dts/qcom/pmp8074.dtsi | 125 ++++++++++++++++++++++++++
->  1 file changed, 125 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/pmp8074.dtsi
+>  arch/arm64/boot/dts/qcom/Makefile                 |  2 ++
+>  .../arm64/boot/dts/qcom/sc7280-chrome-common.dtsi | 11 -----------
+>  arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts |  1 +
+>  .../dts/qcom/sc7280-herobrine-herobrine-r1.dts    |  1 +
+>  .../boot/dts/qcom/sc7280-herobrine-lte-sku.dtsi   | 15 +++++++++++++++
+>  .../dts/qcom/sc7280-herobrine-villager-r0-lte.dts | 14 ++++++++++++++
+>  .../dts/qcom/sc7280-herobrine-villager-r1-lte.dts | 14 ++++++++++++++
+>  arch/arm64/boot/dts/qcom/sc7280-idp.dts           |  1 +
+>  8 files changed, 48 insertions(+), 11 deletions(-)
+>  create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-lte-sku.dtsi
+>  create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r0-lte.dts
+>  create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1-lte.dts
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/pmp8074.dtsi b/arch/arm64/boot/dts/qcom/pmp8074.dtsi
+> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> index bb9f4eb3e65a0..6d81ff12f5af2 100644
+> --- a/arch/arm64/boot/dts/qcom/Makefile
+> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> @@ -103,6 +103,8 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-r1-lte.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-crd.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-herobrine-r1.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-villager-r0.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-villager-r0-lte.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-villager-r1-lte.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-idp.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-idp2.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-crd-r3.dtb
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi b/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
+> index cfe2741456a1a..25f31c81b2b74 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
+> @@ -83,17 +83,6 @@ spi_flash: flash@0 {
+>  	};
+>  };
+>  
+> -/* Modem setup is different on Chrome setups than typical Qualcomm setup */
+> -&remoteproc_mpss {
+> -	status = "okay";
+> -	compatible = "qcom,sc7280-mss-pil";
+> -	iommus = <&apps_smmu 0x124 0x0>, <&apps_smmu 0x488 0x7>;
+> -	interconnects = <&mc_virt MASTER_LLCC 0 &mc_virt SLAVE_EBI1 0>;
+> -	memory-region = <&mba_mem>, <&mpss_mem>;
+> -	firmware-name = "qcom/sc7280-herobrine/modem/mba.mbn",
+> -			"qcom/sc7280-herobrine/modem/qdsp6sw.mbn";
+> -};
+> -
+>  &remoteproc_wpss {
+>  	status = "okay";
+>  	firmware-name = "ath11k/WCN6750/hw1.0/wpss.mdt";
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts b/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts
+> index e9ca6c5d24a16..921eccfec39ae 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts
+> @@ -9,6 +9,7 @@
+>  
+>  #include "sc7280-herobrine.dtsi"
+>  #include "sc7280-herobrine-audio-wcd9385.dtsi"
+> +#include "sc7280-herobrine-lte-sku.dtsi"
+>  
+>  / {
+>  	model = "Qualcomm Technologies, Inc. sc7280 CRD platform (rev5+)";
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r1.dts b/arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r1.dts
+> index c1647a85a371a..c1a6719687252 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r1.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r1.dts
+> @@ -8,6 +8,7 @@
+>  /dts-v1/;
+>  
+>  #include "sc7280-herobrine.dtsi"
+> +#include "sc7280-herobrine-lte-sku.dtsi"
+>  
+>  / {
+>  	model = "Google Herobrine (rev1+)";
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-lte-sku.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine-lte-sku.dtsi
 > new file mode 100644
-> index 000000000000..a3b395e4d78f
+> index 0000000000000..a4809dd2f4e8a
 > --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/pmp8074.dtsi
-> @@ -0,0 +1,125 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-Hi,
+> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-lte-sku.dtsi
+> @@ -0,0 +1,15 @@
+> +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+> +/*
+> + * Google Herobrine dts fragment for LTE SKUs
+> + *
+> + * Copyright 2022 Google LLC.
+> + */
+> +/* Modem setup is different on Chrome setups than typical Qualcomm setup */
+> +&remoteproc_mpss {
+Hi, just a minor nit.
 
-Please consider BSD3, or at least dual-licensing with some permissive
-license (so that for example BSDs can re-use these DTs).
-> +
-> +#include <dt-bindings/spmi/spmi.h>
-> +#include <dt-bindings/iio/qcom,spmi-vadc.h>
-> +
-> +&spmi_bus {
-> +	pmic@0 {
-> +		compatible = "qcom,pmp8074", "qcom,spmi-pmic";
-> +		reg = <0x0 SPMI_USID>;
-> +		#address-cells = <1>;
-> +		#size-cells = <0>;
-> +
-> +		pmp8074_adc: adc@3100 {
-> +			compatible = "qcom,spmi-adc-rev2";
-> +			reg = <0x3100>;
-> +			interrupts = <0x0 0x31 0x0 IRQ_TYPE_EDGE_RISING>;
-> +			#address-cells = <1>;
-> +			#size-cells = <0>;
-> +			#io-channel-cells = <1>;
-> +
-> +			ref_gnd@0 {
-No underscores in node names, please change this to ref-gnd (and consequently
-for all other nodes). Note that this only concerns node names and not labels.
-
-> +				reg = <ADC5_REF_GND>;
-> +				qcom,pre-scaling = <1 1>;
-> +			};
-> +
-> +			vref_1p25@1 {
-> +				reg = <ADC5_1P25VREF>;
-> +				qcom,pre-scaling = <1 1>;
-> +			};
-> +
-> +			vref_vadc@2 {
-> +				reg = <ADC5_VREF_VADC>;
-> +				qcom,pre-scaling = <1 1>;
-> +			};
-> +
-> +			pmic_die: die_temp@6 {
-> +				reg = <ADC5_DIE_TEMP>;
-> +				qcom,pre-scaling = <1 1>;
-> +			};
-> +
-> +			xo_therm: xo_temp@76 {
-> +				reg = <ADC5_XO_THERM_100K_PU>;
-> +				qcom,ratiometric;
-> +				qcom,hw-settle-time = <200>;
-> +				qcom,pre-scaling = <1 1>;
-> +			};
-> +
-> +			pa_therm1: thermistor1@77 {
-> +				reg = <ADC5_AMUX_THM1_100K_PU>;
-> +				qcom,ratiometric;
-> +				qcom,hw-settle-time = <200>;
-> +				qcom,pre-scaling = <1 1>;
-> +			};
-> +
-> +			pa_therm2: thermistor2@78 {
-> +				reg = <ADC5_AMUX_THM2_100K_PU>;
-> +				qcom,ratiometric;
-> +				qcom,hw-settle-time = <200>;
-> +				qcom,pre-scaling = <1 1>;
-> +			};
-> +
-> +			pa_therm3: thermistor3@79 {
-> +				reg = <ADC5_AMUX_THM3_100K_PU>;
-> +				qcom,ratiometric;
-> +				qcom,hw-settle-time = <200>;
-> +				qcom,pre-scaling = <1 1>;
-> +			};
-> +
-> +			vph_pwr@131 {
-> +				reg = <ADC5_VPH_PWR>;
-> +				qcom,pre-scaling = <1 3>;
-> +			};
-> +		};
-> +
-> +		pmp8074_rtc: rtc@6000 {
-> +			compatible = "qcom,pm8941-rtc";
-> +			reg = <0x6000>;
-> +			reg-names = "rtc", "alarm";
-> +			interrupts = <0x0 0x61 0x1 IRQ_TYPE_NONE>;
-> +			allow-set-time;
-> +			status = "disabled";
-Isn't this PMIC-internal, aka accessible on all devices using PMP8074?
-
-> +		};
-> +
-> +		pmp8074_gpios: gpio@c000 {
-> +			compatible = "qcom,pmp8074-gpio", "qcom,spmi-gpio";
-> +			reg = <0xc000>;
-> +			gpio-controller;
-> +			#gpio-cells = <2>;
-> +			gpio-ranges = <&pmp8074_gpios 0 0 12>;
-> +			interrupt-controller;
-> +			#interrupt-cells = <2>;
-> +		};
-> +	};
-> +
-> +	pmic@1 {
-> +		compatible = "qcom,pmp8074", "qcom,spmi-pmic";
-> +		reg = <0x1 SPMI_USID>;
-> +
-> +		regulators {
-> +			compatible = "qcom,pmp8074-regulators";
-> +
-> +			s3: s3 {
-> +				regulator-name = "vdd_s3";
-> +				regulator-min-microvolt = <592000>;
-> +				regulator-max-microvolt = <1064000>;
-
-Are you sure no other configurations are supported with this PMIC?
-Otherwise you may accidentally burn somebody's board by setting up
-regulators in a place that's not usually expected to have them..
+It was recently agreed upon that the status property should go last to
+make things consistent with other DTs (qcom is - as usual - a special
+snowflake :D). Could you please fix that up? The rest looks good.
 
 Konrad
-> +				regulator-always-on;
-> +				regulator-boot-on;
-> +			};
-> +
-> +			s4: s4 {
-> +				regulator-name = "vdd_s4";
-> +				regulator-min-microvolt = <712000>;
-> +				regulator-max-microvolt = <992000>;
-> +				regulator-always-on;
-> +				regulator-boot-on;
-> +			};
-> +
-> +			l11: l11 {
-> +				regulator-name = "l11";
-> +				regulator-min-microvolt = <1800000>;
-> +				regulator-max-microvolt = <3300000>;
-> +			};
-> +		};
-> +	};
+> +	status = "okay";
+> +	compatible = "qcom,sc7280-mss-pil";
+> +	iommus = <&apps_smmu 0x124 0x0>, <&apps_smmu 0x488 0x7>;
+> +	memory-region = <&mba_mem>, <&mpss_mem>;
+> +	firmware-name = "qcom/sc7280-herobrine/modem/mba.mbn",
+> +			"qcom/sc7280-herobrine/modem/qdsp6sw.mbn";
 > +};
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r0-lte.dts b/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r0-lte.dts
+> new file mode 100644
+> index 0000000000000..672cb78e3088f
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r0-lte.dts
+> @@ -0,0 +1,14 @@
+> +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+> +/*
+> + * Google Villager board device tree source
+> + *
+> + * Copyright 2022 Google LLC.
+> + */
+> +
+> +#include "sc7280-herobrine-villager-r0.dts"
+> +#include "sc7280-herobrine-lte-sku.dtsi"
+> +
+> +/ {
+> +	model = "Google Villager (rev0) with LTE";
+> +	compatible = "google,villager-rev0-sku0", "qcom,sc7280";
+> +};
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1-lte.dts b/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1-lte.dts
+> new file mode 100644
+> index 0000000000000..2f05a19cc388e
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1-lte.dts
+> @@ -0,0 +1,14 @@
+> +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+> +/*
+> + * Google Villager board device tree source
+> + *
+> + * Copyright 2022 Google LLC.
+> + */
+> +
+> +#include "sc7280-herobrine-villager-r1.dts"
+> +#include "sc7280-herobrine-lte-sku.dtsi"
+> +
+> +/ {
+> +	model = "Google Villager (rev1+) with LTE";
+> +	compatible = "google,villager-sku0", "qcom,sc7280";
+> +};
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dts b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
+> index 6d3ff80582ae9..fba7e938ce35a 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
+> @@ -10,6 +10,7 @@
+>  #include <dt-bindings/iio/qcom,spmi-adc7-pmr735a.h>
+>  #include "sc7280-idp.dtsi"
+>  #include "pmr735a.dtsi"
+> +#include "sc7280-herobrine-lte-sku.dtsi"
+>  
+>  / {
+>  	model = "Qualcomm Technologies, Inc. sc7280 IDP SKU1 platform";
