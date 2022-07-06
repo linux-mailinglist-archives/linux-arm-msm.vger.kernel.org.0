@@ -2,154 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 37310567D8D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 06:58:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1107D567E26
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 08:02:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230083AbiGFE6i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Jul 2022 00:58:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33124 "EHLO
+        id S229565AbiGFGC4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Jul 2022 02:02:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43522 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230080AbiGFE6h (ORCPT
+        with ESMTP id S229469AbiGFGCz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Jul 2022 00:58:37 -0400
+        Wed, 6 Jul 2022 02:02:55 -0400
 Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 227391571D;
-        Tue,  5 Jul 2022 21:58:36 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0842922292;
+        Tue,  5 Jul 2022 23:02:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1657083516; x=1688619516;
-  h=subject:to:cc:references:from:message-id:date:
-   mime-version:in-reply-to:content-transfer-encoding;
-  bh=WXjdQsds+XZxZZX7SRcqQV+eu4pHZKuRykJohRSEZyc=;
-  b=uVd9oFokqqfnlikGBJHDfJWPra9NR9Cp7I3hz8ug144eRRSptSZ4dius
-   voA2sbdfR2sYWU5vUzepStVM74X21JmX2fty8Dhcq+rgImsrLeQpXDyWh
-   J3Rr/Ze84XkEf83IEiuWFhGE0uTLE46fWJPiLMT66+LrvuH5XfU4k1E1x
-   o=;
-Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 05 Jul 2022 21:58:35 -0700
+  t=1657087373; x=1688623373;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=N05CHbczPI9zZVzdDqPThkTIquD1MZLOkgQOD3jseKU=;
+  b=coCxXaRqmQJjHjmkfH0iqcXXFpvkC58ov5BhJcUsAVUvNS+zjn6cBIVz
+   DUVN0eP9+5Q1xy9uc2sFjm3udqRUwpl/1jpu6+LxBnRWgEcx/El1W0bUW
+   mbaswMUCOl1sCA7xsogyUzVjUD0eqqDWp97M6L51nqd3h1zmGv0ROblJ9
+   Y=;
+Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 05 Jul 2022 23:02:52 -0700
 X-QCInternal: smtphost
 Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Jul 2022 21:58:35 -0700
+  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Jul 2022 23:02:52 -0700
 Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
  nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Tue, 5 Jul 2022 21:58:35 -0700
-Received: from [192.168.142.6] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Tue, 5 Jul 2022
- 21:58:34 -0700
-Subject: Re: [PATCH 1/2] remoteproc: core: Introduce rproc_del_carveout
-To:     Arnaud POULIQUEN <arnaud.pouliquen@foss.st.com>,
-        <bjorn.andersson@linaro.org>, <mathieu.poirier@linaro.org>
-CC:     <linux-remoteproc@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <1654888985-3846-1-git-send-email-quic_clew@quicinc.com>
- <1654888985-3846-2-git-send-email-quic_clew@quicinc.com>
- <7881ee36-89f6-3ba9-f4ac-7c4e614728dd@foss.st.com>
+ 15.2.986.22; Tue, 5 Jul 2022 23:02:51 -0700
+Received: from hu-clew-lv.qualcomm.com (10.49.16.6) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Tue, 5 Jul 2022 23:02:51 -0700
 From:   Chris Lew <quic_clew@quicinc.com>
-Message-ID: <42e27ed9-1e31-9943-4e82-84c3b3090383@quicinc.com>
-Date:   Tue, 5 Jul 2022 21:57:25 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.7.1
+To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
+        <konrad.dybcio@somainline.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_clew@quicinc.com>
+Subject: [PATCH 0/4] Add smp2p retrigger support
+Date:   Tue, 5 Jul 2022 23:02:07 -0700
+Message-ID: <1657087331-32455-1-git-send-email-quic_clew@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-In-Reply-To: <7881ee36-89f6-3ba9-f4ac-7c4e614728dd@foss.st.com>
-Content-Type: text/plain; charset="utf-8"; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+Content-Type: text/plain
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+The remoteproc framework keeps interrupts disabled until it powers on a
+remote proc to prevent spurious interrupts. There is a case where the
+remote proc can finish booting before remoteproc enables the interrupt.
+If this happens, the remoteproc framework will miss the notification
+and eventually timeout waiting for the remoteproc to finish "booting".
 
+Add support into smp2p to retrigger an interrupt if it was missed while
+the interrupt was disabled. The interrupt should retrigger once the
+interrupt is enabled. This will make the bootup sequence for remoteproc
+less racy.
 
-On 6/30/2022 9:36 AM, Arnaud POULIQUEN wrote:
-> Hi,
-> 
-> On 6/10/22 21:23, Chris Lew wrote:
->> To mirror the exported rproc_add_carveout(), add a rproc_del_carveout()
->> so memory carveout resources added by devices outside of remoteproc can
->> manage the resource lifetime more accurately.
->>
->> Signed-off-by: Chris Lew <quic_clew@quicinc.com>
->> ---
->>   drivers/remoteproc/remoteproc_core.c | 20 ++++++++++++++++++++
->>   include/linux/remoteproc.h           |  1 +
->>   2 files changed, 21 insertions(+)
->>
->> diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
->> index 02a04ab34a23..ee71fccae970 100644
->> --- a/drivers/remoteproc/remoteproc_core.c
->> +++ b/drivers/remoteproc/remoteproc_core.c
->> @@ -1001,6 +1001,26 @@ void rproc_add_carveout(struct rproc *rproc, struct rproc_mem_entry *mem)
->>   EXPORT_SYMBOL(rproc_add_carveout);
->>   
->>   /**
->> + * rproc_del_carveout() - remove an allocated carveout region
->> + * @rproc: rproc handle
->> + * @mem: memory entry to register
->> + *
->> + * This function removes specified memory entry in @rproc carveouts list.
->> + */
->> +void rproc_del_carveout(struct rproc *rproc, struct rproc_mem_entry *mem)
->> +{
->> +	struct rproc_mem_entry *entry, *tmp;
->> +
->> +	list_for_each_entry_safe(entry, tmp, &rproc->carveouts, node) {
->> +		if (entry == mem) {
->> +			list_del(&mem->node);
->> +			return;
->> +		}
->> +	}
->> +}
->> +EXPORT_SYMBOL(rproc_del_carveout);
-> 
-> This API seems to me quite dangerous because it can be called while carveouts are in use.
-> At least some checks should be added...
-> 
-> What about using rproc_resource_cleanup instead?
-> 
-> Regards,
-> Arnaud
-> 
+Chris Lew (3):
+  soc: qcom: smp2p: Introduce pending state for virtual irq
+  soc: qcom: smp2p: Add proper retrigger detection
+  soc: qcom: smp2p: Add memory barrier for irq_pending
 
-The intended users of this API would be devices who negotiate with the 
-device and know when the carveouts it has added are in use or can be 
-reclaimed. I had looked at rproc_resource_cleanup() and that seemed more 
-like a blanket cleanup rather than being able to cleanup a specific 
-carveout.
+Tao Zhang (1):
+  soc: qcom: smp2p: Add remote_id into irq name
 
-I agree the API seems dangerous, but I wasn't quite sure what kind of 
-checks could be put here since remoteproc itself doesn't have any 
-mechanisms to monitor the carveout state itself. We're relying on the 
-fact that the device who added the carveout shouldn't make any mistakes 
-which is fairly fragile.
+ drivers/soc/qcom/smp2p.c | 42 ++++++++++++++++++++++++++++++++++++------
+ 1 file changed, 36 insertions(+), 6 deletions(-)
 
-Thanks!
-Chris
+-- 
+2.7.4
 
->> +
->> +/**
->>    * rproc_mem_entry_init() - allocate and initialize rproc_mem_entry struct
->>    * @dev: pointer on device struct
->>    * @va: virtual address
->> diff --git a/include/linux/remoteproc.h b/include/linux/remoteproc.h
->> index 7c943f0a2fc4..43112aa78ffe 100644
->> --- a/include/linux/remoteproc.h
->> +++ b/include/linux/remoteproc.h
->> @@ -658,6 +658,7 @@ struct rproc *devm_rproc_alloc(struct device *dev, const char *name,
->>   int devm_rproc_add(struct device *dev, struct rproc *rproc);
->>   
->>   void rproc_add_carveout(struct rproc *rproc, struct rproc_mem_entry *mem);
->> +void rproc_del_carveout(struct rproc *rproc, struct rproc_mem_entry *mem);
->>   
->>   struct rproc_mem_entry *
->>   rproc_mem_entry_init(struct device *dev,
