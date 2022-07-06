@@ -2,55 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3540B56899D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 15:36:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 14D415689A6
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 15:38:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232713AbiGFNgO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Jul 2022 09:36:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36484 "EHLO
+        id S232977AbiGFNhs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Jul 2022 09:37:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37666 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232688AbiGFNgN (ORCPT
+        with ESMTP id S233709AbiGFNhq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Jul 2022 09:36:13 -0400
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9EBABE094;
-        Wed,  6 Jul 2022 06:36:12 -0700 (PDT)
-Received: by mail-ej1-x62e.google.com with SMTP id d2so27210075ejy.1;
-        Wed, 06 Jul 2022 06:36:12 -0700 (PDT)
+        Wed, 6 Jul 2022 09:37:46 -0400
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0276A22B0D;
+        Wed,  6 Jul 2022 06:37:44 -0700 (PDT)
+Received: by mail-ej1-x635.google.com with SMTP id sb34so27110991ejc.11;
+        Wed, 06 Jul 2022 06:37:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:date:from:to:cc:subject:references:mime-version
          :content-disposition:in-reply-to;
-        bh=o+i6UfE6tLbb5A8Bxft/xHMAROfGJh6TRqfobcDmJM4=;
-        b=LSwP/sekDgSqBlvtdFx4fvClrAxxHlYsykzg189tHsYtBAjv9zkpviVg2BTiFMMPhj
-         H/jueqX+epgF+fdRdzWU1IfQxgPohuCmRpp2r/KIxIsG761JoDqVIlb6ZUOV5bZX+G0K
-         4eN4QalNSG8r0H57lOA6rdfoaGU6bF7mFPg7vnG68ftoyH1/m0KSo7p3iX+0knXyRx9a
-         qiHfLyVlbHuY3tKiJIYYyss0u/LnFCPkfrLwFvirUO0pTblggpclamnwnm8ouXzve1D1
-         MdfXhUVqS2EqtB0U7d6CMQ3bQlySbAyn4XKS5wjm90WHNBtb2YCoX6OAxG8lY0ItTmTf
-         N2uQ==
+        bh=dKKydK5tKzNauOSLwuMbV7i2MBJlb9QQ2YCYOCrDsp0=;
+        b=RCOcZ/hoR/jOgEOOmG7sVY3Cwwm5J3af33LdQfjNdAmlIsJKjRu5c+DZyyN/x6vvKr
+         6DkFdOIjKTjWW1hrfSJf91OFXO9fVs71YIg1NkAWTG6muLnHQeRL0vB2VGafhf/0b4eP
+         jRgl6534p614z/2XJ+d08Aa6rJcqnIz0vCOca5xBVJALxjW+Su2osASE2YgSTd6aX9qX
+         XhebzEWfi3DCB/ZVJ1k/aSBPZ0/If5kdmBDg2aVnqOLn9YQHBRdFBz1XG8EOFfY7lBge
+         UnmnLhuVMSxzHhl9F4jHbo10yT2b2NH3tPIaMCHrCCsMkCDzx15cUU8dyEe0iPrwdKKn
+         rbLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:from:to:cc:subject:references
          :mime-version:content-disposition:in-reply-to;
-        bh=o+i6UfE6tLbb5A8Bxft/xHMAROfGJh6TRqfobcDmJM4=;
-        b=iA4Qdq2uk8eEBMtIUSSz9+7+MLo8K+5hW3wPdLkEGuICpn0bTgyqNAa/NMfolK9eDm
-         m7dM/3NigpahKmJWXC1iVNIMgpOnNF5BGutWeibexJ3b6MU3XSJRYbHviSb44G+1a9te
-         T8Cw0t79YkQX5Hjo3rfi/blvZNXK/ja8MOHbq3NF7ALtRWG1J4u8/68nZSAx/3totxhg
-         yRavc5kEk3w64QEhFcKbz5aiajrlewgxUq69I5iwWbjY0QhxdRWNYpLgFleU0f5ckFMD
-         qQknjzx28LyLwHpmxlMIP71szR/QQzoEa8t7eAHu3cbbaAJCDwkwDSvXitKoVo7P4WE7
-         lUxw==
-X-Gm-Message-State: AJIora/QzTqsBsX5vYYjc9nYIf3vn6sfu7t+8li/4+liAvFrBNtQfwuE
-        yK5fIBvQxylDsEhjcNhSB9xC7ZwLRts=
-X-Google-Smtp-Source: AGRyM1uH7h2oOWqie2/AB0J+ZQKdaALUsl5hYNdPSTI72nrmLmEqD0UE913cSUIsfJ9ll00zrxufPQ==
-X-Received: by 2002:a17:907:3e11:b0:726:372b:6c32 with SMTP id hp17-20020a1709073e1100b00726372b6c32mr40255707ejc.157.1657114570858;
-        Wed, 06 Jul 2022 06:36:10 -0700 (PDT)
+        bh=dKKydK5tKzNauOSLwuMbV7i2MBJlb9QQ2YCYOCrDsp0=;
+        b=l+TO3TFqNZObD0ki9LRqGRYiykzUvybX1yLWouAucDDUh5DA+QmlY9VwveoWb3vfUa
+         UH0p5+FuIHblCzqn4nobmec/a+eUlbi+fHYItTTJR3WQBd0oKw2iiW6DlVJWgM6REmyt
+         4VVmWkBsgUITIakngAOhF9pVeY/cekLDfVgObuY+hUl5c/2TaaTU2lAfgje/FsQj821L
+         TdhIbfoJtiLZNAtYBSZxzuYGBVpe56j5a7ExD/3JcdJ9kGo2hUQMvo5aCd2edxoaITJ0
+         Who/4P83NXo14BsIsy9Wrc7CZlVRc6x7LbUeq1RBiJjgP4sROgbhTIvBqk//F0X7XhqG
+         Zp8Q==
+X-Gm-Message-State: AJIora9ykDm41wLtfqcMwmGIxBnpfDptonRr+BWYe6Iu9Ut0nSgbYCco
+        1XmglC2LQnF6npSLSxvwQ94=
+X-Google-Smtp-Source: AGRyM1sZY9e/JHjxCK1nAL99G44PCfL49v1xRwoanY5pRQH9Q23XUfZdE9rTVuYAMi7NFDmhqJB8Gw==
+X-Received: by 2002:a17:907:a428:b0:726:c9f6:cb72 with SMTP id sg40-20020a170907a42800b00726c9f6cb72mr38200703ejc.663.1657114662366;
+        Wed, 06 Jul 2022 06:37:42 -0700 (PDT)
 Received: from Ansuel-xps. (93-42-70-190.ip85.fastwebnet.it. [93.42.70.190])
-        by smtp.gmail.com with ESMTPSA id r2-20020a1709061ba200b0072afb1467desm816949ejg.127.2022.07.06.06.36.09
+        by smtp.gmail.com with ESMTPSA id fi9-20020a170906da0900b00722e5b234basm17492148ejb.179.2022.07.06.06.37.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 06 Jul 2022 06:36:10 -0700 (PDT)
-Message-ID: <62c58fca.1c69fb81.76f6a.15f4@mx.google.com>
-X-Google-Original-Message-ID: <YsWL5Qxb5fxLpYGL@Ansuel-xps.>
-Date:   Wed, 6 Jul 2022 15:19:33 +0200
+        Wed, 06 Jul 2022 06:37:27 -0700 (PDT)
+Message-ID: <62c59017.1c69fb81.a08b4.f18c@mx.google.com>
+X-Google-Original-Message-ID: <YsWMMULRVCaNe9Fe@Ansuel-xps.>
+Date:   Wed, 6 Jul 2022 15:20:49 +0200
 From:   Christian Marangi <ansuelsmth@gmail.com>
 To:     Konrad Dybcio <konrad.dybcio@somainline.org>
 Cc:     Andy Gross <agross@kernel.org>,
@@ -59,17 +59,17 @@ Cc:     Andy Gross <agross@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, Jonathan McDowell <noodles@earth.li>
-Subject: Re: [PATCH 04/13] ARM: dts: qcom: disable smb208 regulators for
- ipq8064-rb3011
+Subject: Re: [PATCH 06/13] ARM: dts: qcom: enable usb phy by default for
+ ipq8064
 References: <20220705133917.8405-1-ansuelsmth@gmail.com>
- <20220705133917.8405-5-ansuelsmth@gmail.com>
- <8a394fa3-92fb-d162-b4ee-df010a09aed0@somainline.org>
- <62c58a60.1c69fb81.25b26.e72a@mx.google.com>
- <36a68a0b-0c18-deb5-609c-2128aa3fc21f@somainline.org>
+ <20220705133917.8405-7-ansuelsmth@gmail.com>
+ <eadf03c4-7e4c-e2a0-b20d-6e2dff3af1e3@somainline.org>
+ <62c58b03.1c69fb81.527d5.ecc6@mx.google.com>
+ <837c6cd8-72d9-e7c8-dfd9-e171d809f0bf@somainline.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <36a68a0b-0c18-deb5-609c-2128aa3fc21f@somainline.org>
+In-Reply-To: <837c6cd8-72d9-e7c8-dfd9-e171d809f0bf@somainline.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
         RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
@@ -80,49 +80,69 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jul 06, 2022 at 03:31:55PM +0200, Konrad Dybcio wrote:
+On Wed, Jul 06, 2022 at 03:33:25PM +0200, Konrad Dybcio wrote:
 > 
 > 
-> On 6.07.2022 14:56, Christian Marangi wrote:
-> > On Wed, Jul 06, 2022 at 03:03:32PM +0200, Konrad Dybcio wrote:
+> On 6.07.2022 14:59, Christian Marangi wrote:
+> > On Wed, Jul 06, 2022 at 03:04:44PM +0200, Konrad Dybcio wrote:
 > >>
 > >>
 > >> On 5.07.2022 15:39, Christian Marangi wrote:
-> >>> Mikrotik RB3011 have a special configuration where the regulators are
-> >>> not the common smb208 controlled by RPM but they use a TPS563900
-> >>> controlled via i2c. Disable the smb208 for this specific device.
-> >> Ok, so that answers my question from the previous email.
-> >> Please define the SMB208 regulators only in the DTs of
-> >> boards that actually use it, as it is not a SoC component as
-> >> far as I can tell.
+> >>> Enable usb phy by default. When the usb phy were pushed, half of them
+> >>> were flagged as disabled by mistake. Fix this to correctly init dwc3
+> >>> node on any ipq8064 based SoC.
+> >> Are you sure they are used on *all* devices? If not, you will
+> >> lose power by enabling unused hw..
 > >>
 > >> Konrad
 > > 
-> > This was already discuessed,
-> Yeah sorry, I didn't notice earlier and started reviewing patches
-> that were already reviewed by others.
->
-
-Np, thanks for the review.
-
+> > Well there could be device that have no usb at all... so honestly
+> > enabling one of them is also wrong. Should I disable the other and
+> > enable it for the upstream device?
+> We generally disable everything that's not obviously being used by the
+> SoC internally or is required for components like these for function
+> (think clock controllers etc) and enable peripherals on a per-device
+> basis.
 > 
-> rb3011 is the exception, qcom for ipq8064
-> > recommends to use smb208 but gives the option to implement it in their
-> > own way. So again we have 28 device with smb208 and 1 device that use
-> > its own special way...
-> > 
-> > Wonder if a separate dtsi can be used for this if we really can't put
-> > smb208 in ipq8064 dtsi?
-> There's msm8916-pm8916.dtsi. You can follow.
 
-Ok, will put the smb208 definition to a separate dtsi, something like
-ipq8064-smb208.dtsi? or ipq8064-rpm-smb208.dtsi? Looks also cleaner that
-way.
+Will change this to disable the other usb and push another commit to
+enable usb on the upstream device.
 
-> 
 > Konrad
-> 
-> [...]
+> > 
+> > Also it's all handled by dummy vbus so i think we can ignore the losing
+> > power thing. (this thing is old)
+> > 
+> >>>
+> >>> Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+> >>> Tested-by: Jonathan McDowell <noodles@earth.li>
+> >>> ---
+> >>>  arch/arm/boot/dts/qcom-ipq8064.dtsi | 4 ----
+> >>>  1 file changed, 4 deletions(-)
+> >>>
+> >>> diff --git a/arch/arm/boot/dts/qcom-ipq8064.dtsi b/arch/arm/boot/dts/qcom-ipq8064.dtsi
+> >>> index b2faa4a067e9..9c32c637ea46 100644
+> >>> --- a/arch/arm/boot/dts/qcom-ipq8064.dtsi
+> >>> +++ b/arch/arm/boot/dts/qcom-ipq8064.dtsi
+> >>> @@ -1177,8 +1177,6 @@ hs_phy_0: phy@100f8800 {
+> >>>  			clocks = <&gcc USB30_0_UTMI_CLK>;
+> >>>  			clock-names = "ref";
+> >>>  			#phy-cells = <0>;
+> >>> -
+> >>> -			status = "disabled";
+> >>>  		};
+> >>>  
+> >>>  		ss_phy_0: phy@100f8830 {
+> >>> @@ -1187,8 +1185,6 @@ ss_phy_0: phy@100f8830 {
+> >>>  			clocks = <&gcc USB30_0_MASTER_CLK>;
+> >>>  			clock-names = "ref";
+> >>>  			#phy-cells = <0>;
+> >>> -
+> >>> -			status = "disabled";
+> >>>  		};
+> >>>  
+> >>>  		usb3_0: usb3@100f8800 {
+> > 
 
 -- 
 	Ansuel
