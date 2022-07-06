@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DC571568C2E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 17:04:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 49FA3568C31
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 17:04:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232523AbiGFPEl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Jul 2022 11:04:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49862 "EHLO
+        id S232031AbiGFPEn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Jul 2022 11:04:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49886 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229786AbiGFPEl (ORCPT
+        with ESMTP id S229786AbiGFPEm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Jul 2022 11:04:41 -0400
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDD6115717
-        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Jul 2022 08:04:39 -0700 (PDT)
-Received: by mail-wm1-x32f.google.com with SMTP id t17-20020a1c7711000000b003a0434b0af7so9173149wmi.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Jul 2022 08:04:39 -0700 (PDT)
+        Wed, 6 Jul 2022 11:04:42 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2272F15FCD
+        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Jul 2022 08:04:41 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id s1so22478468wra.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Jul 2022 08:04:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=5MyzPstAwbNGZEWJRgSFYxiR0DFtAmFf/jRZizSuqcw=;
-        b=mj3LRXQXQS6StvqGOZV6yugtZVTIN9JdnhqyAg3ppfci1KsgUElEnrP6nbBHrPtEwH
-         mrP5sMNlNA8NxVxcnRABA1NRUhD6tmmG8o1G8UbZxJrTsmEBs+oVEbKLaRUVKskBQ8Ay
-         T+jEJz0gUQ/D7w/xPBe/QXvhce2vHW7Sd7XIr7QeNt/CGXm9pQRtWamhPjXCToKddyfI
-         uJwVqdYjhOVwW4IJqkP8W14Yxvig09hiY2IGXC8y20OKsLfA2AX4dv1vcLIz55wMYdMI
-         SsMwVU9UoCjCyYe+P/pElj2uQgk8FU03unEzXaFpSaABvNO9suztWV8UXyBNg6t+AbI2
-         T6OA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=zUHjRI1jr+Yrh9dUueZjZWr58/iaqkxDRzBkA9rclyI=;
+        b=Yl8J/2mhUuzM78REsuhuyap1UbHG6jdWDrIww75VUghGmOO1FjKfKNKXB/9Jp/9baS
+         XXISx1pqBW+IX9dbVVg4tYE1JTNlP7PEE0HUQN7dN7emEZchaX/5dz/gcvFy9Px1w/Jf
+         ofxWJej6Yn+VNo7jevmxhUvjmrWPZAX7Eayn/M9MNecMAKCFbcyPP0bWYTswl/wIZuMz
+         oaAb+dLxOjW/phWNhUD5/2D0SqTFvt7/S3Q9ym15HCDID55+fCYiHs+sMyKjeHliWxD6
+         DghaBfeRDY8lfxK+W6f72lWjdn6uZuGHNH16kWf0nZU4ubnNsRFto1uxHN9N762AOiLs
+         cqxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=5MyzPstAwbNGZEWJRgSFYxiR0DFtAmFf/jRZizSuqcw=;
-        b=ZRILik1NtQwO2Iv3w0zA9Kp4V/3enI30LZcmslvi/JsaPiksjtzmtn88zLlZsAb4EH
-         Yt7UvIlqTQIT38Z88QJfLNsiUUtKQGiN3IiRZg9v0BSpw+eJ/NC0pBGjMPRXkfzVGnCa
-         gE6I4gtouCUjjUs+vTjEDL0fVHyyfzIH6uJn4EJvmcykFxxyYIBdyJ69lbiQ66qwDCz+
-         cCxac5wb4HqQjAzs73Dnvxlaf1rQR4HmyzX+KMuwv6v553lAtxKM0L2O57Z4OBG5OrbR
-         Ml4BT9RXxy0eNkIbuJZ7938YD3hT0iap3EXINMdq5KqTbgiUfKsahiCbbwHD/ybkCmZ/
-         BXTA==
-X-Gm-Message-State: AJIora9bUDfHSy2TpYf4pya1+p9ztgW845fOGTrT+09+NM1Uj2kNNPyV
-        U5Mz6zifD+BtmllmLvG1B/DSUA==
-X-Google-Smtp-Source: AGRyM1vRSbxrF6l5s5PgGpt/AcIUpDJ4zfIbM7qgB/EvfxI9fIb1abkeoPHVAf+lAIGKNfOmHV4Yew==
-X-Received: by 2002:a1c:770c:0:b0:3a0:37ec:bbb9 with SMTP id t12-20020a1c770c000000b003a037ecbbb9mr46160208wmi.2.1657119878350;
-        Wed, 06 Jul 2022 08:04:38 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=zUHjRI1jr+Yrh9dUueZjZWr58/iaqkxDRzBkA9rclyI=;
+        b=QAQAu33wJqbCSgZu/w2z2xKLt7gD1HQi9p9ABDY+Pw+gCuQMGzaakziXsUfAlPF2Fo
+         UkEwXd4ATo0g06j4mOHwI8rrv3dpuKZwV/T1TG56oDsXeImCRRY4cmxUryodUJMWpdxo
+         epvFnz1O1G1PK0KZYCiVAWkHWuOpRHzxRPcBlWrTTDvkhzldPEvi+x3bZAbsAEGqVrEU
+         ukDmqgN3xe9BgdVwGch/oWycq5LYed3ao1q7SoA7Oe5DMEeQ9q9elES2JWQbbpVKnpUS
+         f6EQI8OuRLbLhRUy9+C0z1Z1h9+PkH0OII2LBaOQ4XnbeqBmh8V9Qut4U5oRvTExLPFD
+         kcXw==
+X-Gm-Message-State: AJIora8XMfGuNWzDDywDYHWvon3MqKPVJaDmRS66nSzpPa1+YiE1o5It
+        9fDP+6KI0X51LjxW0FZN9AfOXQ==
+X-Google-Smtp-Source: AGRyM1sTX0EBykUUNSxnDmNCn71gGdN1WibbHuKtCzZndxVWdMyf1gXg/h9NxH+czj+cg9UVEO/qCQ==
+X-Received: by 2002:a05:6000:1446:b0:21d:2245:ab65 with SMTP id v6-20020a056000144600b0021d2245ab65mr37797391wrx.315.1657119879727;
+        Wed, 06 Jul 2022 08:04:39 -0700 (PDT)
 Received: from localhost.localdomain ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id v7-20020a1cac07000000b003a04e6410e0sm22443420wme.33.2022.07.06.08.04.36
+        by smtp.gmail.com with ESMTPSA id v7-20020a1cac07000000b003a04e6410e0sm22443420wme.33.2022.07.06.08.04.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 06 Jul 2022 08:04:37 -0700 (PDT)
+        Wed, 06 Jul 2022 08:04:39 -0700 (PDT)
 From:   Abel Vesa <abel.vesa@linaro.org>
 To:     Mike Turquette <mturquette@baylibre.com>,
         Stephen Boyd <sboyd@kernel.org>,
@@ -57,10 +57,12 @@ To:     Mike Turquette <mturquette@baylibre.com>,
 Cc:     linux-clk@vger.kernel.org,
         Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
         linux-arm-msm@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>
-Subject: [RFC 1/2] clk: Add generic sync_state callback for disabling unused clocks
-Date:   Wed,  6 Jul 2022 18:04:10 +0300
-Message-Id: <20220706150411.708213-1-abel.vesa@linaro.org>
+Subject: [RFC 2/2] clk: qcom: sdm845: Add clk_sync_state_disable_unused as sync_state
+Date:   Wed,  6 Jul 2022 18:04:11 +0300
+Message-Id: <20220706150411.708213-2-abel.vesa@linaro.org>
 X-Mailer: git-send-email 2.34.3
+In-Reply-To: <20220706150411.708213-1-abel.vesa@linaro.org>
+References: <20220706150411.708213-1-abel.vesa@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -73,169 +75,69 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-There are unused clocks that need to stay enabled on clk_disable_unused,
-but rather should be disabled later on on sync_state. Provide a generic
-sync_state callback for the clock providers that register such clocks.
-Then, use the same mechanism as clk_disable_unused from that generic
-callback, but pass the device to make sure only the clocks belonging to
-the current clock provider get disabled, if unused. Also, during the
-default clk_disable_unused, if the driver that registered the clock has
-the generic clk_sync_state_disable_unused callback set for sync_state,
-leave its clocks enabled.
+By adding the newly added clk_sync_state_disable_unused as sync_state
+callback to all sdm845 clock providers, we make sure that no clock
+belonging to these providers gets disabled on clk_disable_unused,
+but rather they are disabled on sync_state, when it is safe, since
+all the consumers build as modules have their chance of enabling
+their own clocks.
 
 Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 ---
- drivers/clk/clk.c            | 67 +++++++++++++++++++++++++++---------
- include/linux/clk-provider.h |  1 +
- 2 files changed, 52 insertions(+), 16 deletions(-)
+ drivers/clk/qcom/camcc-sdm845.c  | 1 +
+ drivers/clk/qcom/dispcc-sdm845.c | 1 +
+ drivers/clk/qcom/gcc-sdm845.c    | 1 +
+ drivers/clk/qcom/gpucc-sdm845.c  | 1 +
+ 4 files changed, 4 insertions(+)
 
-diff --git a/drivers/clk/clk.c b/drivers/clk/clk.c
-index 7fc191c15507..ea55806505c0 100644
---- a/drivers/clk/clk.c
-+++ b/drivers/clk/clk.c
-@@ -1218,19 +1218,31 @@ static void clk_core_disable_unprepare(struct clk_core *core)
- 	clk_core_unprepare_lock(core);
- }
+diff --git a/drivers/clk/qcom/camcc-sdm845.c b/drivers/clk/qcom/camcc-sdm845.c
+index 27d44188a7ab..e5aeb832e47b 100644
+--- a/drivers/clk/qcom/camcc-sdm845.c
++++ b/drivers/clk/qcom/camcc-sdm845.c
+@@ -1743,6 +1743,7 @@ static struct platform_driver cam_cc_sdm845_driver = {
+ 	.driver	= {
+ 		.name = "sdm845-camcc",
+ 		.of_match_table = cam_cc_sdm845_match_table,
++		.sync_state = clk_sync_state_disable_unused,
+ 	},
+ };
  
--static void __init clk_unprepare_unused_subtree(struct clk_core *core)
-+static void clk_unprepare_unused_subtree(struct clk_core *core,
-+						struct device *dev)
- {
- 	struct clk_core *child;
+diff --git a/drivers/clk/qcom/dispcc-sdm845.c b/drivers/clk/qcom/dispcc-sdm845.c
+index 735adfefc379..1810d58bad09 100644
+--- a/drivers/clk/qcom/dispcc-sdm845.c
++++ b/drivers/clk/qcom/dispcc-sdm845.c
+@@ -869,6 +869,7 @@ static struct platform_driver disp_cc_sdm845_driver = {
+ 	.driver		= {
+ 		.name	= "disp_cc-sdm845",
+ 		.of_match_table = disp_cc_sdm845_match_table,
++		.sync_state = clk_sync_state_disable_unused,
+ 	},
+ };
  
- 	lockdep_assert_held(&prepare_lock);
+diff --git a/drivers/clk/qcom/gcc-sdm845.c b/drivers/clk/qcom/gcc-sdm845.c
+index 58aa3ec9a7fc..5db75d5ba584 100644
+--- a/drivers/clk/qcom/gcc-sdm845.c
++++ b/drivers/clk/qcom/gcc-sdm845.c
+@@ -3624,6 +3624,7 @@ static struct platform_driver gcc_sdm845_driver = {
+ 	.driver		= {
+ 		.name	= "gcc-sdm845",
+ 		.of_match_table = gcc_sdm845_match_table,
++		.sync_state = clk_sync_state_disable_unused,
+ 	},
+ };
  
- 	hlist_for_each_entry(child, &core->children, child_node)
--		clk_unprepare_unused_subtree(child);
-+		clk_unprepare_unused_subtree(child, dev);
-+
-+	if (dev && core->dev != dev)
-+		return;
-+
-+	/*
-+	 * clock will be unprepared on sync_state,
-+	 * so leave as is on clk_disable_unused
-+	 */
-+	if (!dev && dev_has_sync_state(core->dev) &&
-+		core->dev->driver->sync_state == clk_sync_state_disable_unused)
-+		return;
+diff --git a/drivers/clk/qcom/gpucc-sdm845.c b/drivers/clk/qcom/gpucc-sdm845.c
+index 110b54401bc6..622a54a67d32 100644
+--- a/drivers/clk/qcom/gpucc-sdm845.c
++++ b/drivers/clk/qcom/gpucc-sdm845.c
+@@ -205,6 +205,7 @@ static struct platform_driver gpu_cc_sdm845_driver = {
+ 	.driver = {
+ 		.name = "sdm845-gpucc",
+ 		.of_match_table = gpu_cc_sdm845_match_table,
++		.sync_state = clk_sync_state_disable_unused,
+ 	},
+ };
  
- 	if (core->prepare_count)
- 		return;
- 
--	if (core->flags & CLK_IGNORE_UNUSED)
-+	if (!dev && core->flags & CLK_IGNORE_UNUSED)
- 		return;
- 
- 	if (clk_pm_runtime_get(core))
-@@ -1248,7 +1260,8 @@ static void __init clk_unprepare_unused_subtree(struct clk_core *core)
- 	clk_pm_runtime_put(core);
- }
- 
--static void __init clk_disable_unused_subtree(struct clk_core *core)
-+static void clk_disable_unused_subtree(struct clk_core *core,
-+					struct device *dev)
- {
- 	struct clk_core *child;
- 	unsigned long flags;
-@@ -1256,7 +1269,18 @@ static void __init clk_disable_unused_subtree(struct clk_core *core)
- 	lockdep_assert_held(&prepare_lock);
- 
- 	hlist_for_each_entry(child, &core->children, child_node)
--		clk_disable_unused_subtree(child);
-+		clk_disable_unused_subtree(child, dev);
-+
-+	if (dev && core->dev != dev)
-+		return;
-+
-+	/*
-+	 * clock will be disabled on sync_state,
-+	 * so leave as is on clk_disable_unused
-+	 */
-+	if (!dev && dev_has_sync_state(core->dev) &&
-+		core->dev->driver->sync_state == clk_sync_state_disable_unused)
-+		return;
- 
- 	if (core->flags & CLK_OPS_PARENT_ENABLE)
- 		clk_core_prepare_enable(core->parent);
-@@ -1269,7 +1293,7 @@ static void __init clk_disable_unused_subtree(struct clk_core *core)
- 	if (core->enable_count)
- 		goto unlock_out;
- 
--	if (core->flags & CLK_IGNORE_UNUSED)
-+	if (!dev && core->flags & CLK_IGNORE_UNUSED)
- 		goto unlock_out;
- 
- 	/*
-@@ -1302,35 +1326,46 @@ static int __init clk_ignore_unused_setup(char *__unused)
- }
- __setup("clk_ignore_unused", clk_ignore_unused_setup);
- 
--static int __init clk_disable_unused(void)
-+static void __clk_disable_unused(struct device *dev)
- {
- 	struct clk_core *core;
- 
--	if (clk_ignore_unused) {
--		pr_warn("clk: Not disabling unused clocks\n");
--		return 0;
--	}
--
- 	clk_prepare_lock();
- 
- 	hlist_for_each_entry(core, &clk_root_list, child_node)
--		clk_disable_unused_subtree(core);
-+		clk_disable_unused_subtree(core, dev);
- 
- 	hlist_for_each_entry(core, &clk_orphan_list, child_node)
--		clk_disable_unused_subtree(core);
-+		clk_disable_unused_subtree(core, dev);
- 
- 	hlist_for_each_entry(core, &clk_root_list, child_node)
--		clk_unprepare_unused_subtree(core);
-+		clk_unprepare_unused_subtree(core, dev);
- 
- 	hlist_for_each_entry(core, &clk_orphan_list, child_node)
--		clk_unprepare_unused_subtree(core);
-+		clk_unprepare_unused_subtree(core, dev);
- 
- 	clk_prepare_unlock();
-+}
-+
-+static int __init clk_disable_unused(void)
-+{
-+	if (clk_ignore_unused) {
-+		pr_warn("clk: Not disabling unused clocks\n");
-+		return 0;
-+	}
-+
-+	__clk_disable_unused(NULL);
- 
- 	return 0;
- }
- late_initcall_sync(clk_disable_unused);
- 
-+void clk_sync_state_disable_unused(struct device *dev)
-+{
-+	__clk_disable_unused(dev);
-+}
-+EXPORT_SYMBOL_GPL(clk_sync_state_disable_unused);
-+
- static int clk_core_determine_round_nolock(struct clk_core *core,
- 					   struct clk_rate_request *req)
- {
-diff --git a/include/linux/clk-provider.h b/include/linux/clk-provider.h
-index 72d937c03a3e..5d3ed2b14f2c 100644
---- a/include/linux/clk-provider.h
-+++ b/include/linux/clk-provider.h
-@@ -679,6 +679,7 @@ struct clk *clk_register_divider_table(struct device *dev, const char *name,
- 		void __iomem *reg, u8 shift, u8 width,
- 		u8 clk_divider_flags, const struct clk_div_table *table,
- 		spinlock_t *lock);
-+void clk_sync_state_disable_unused(struct device *dev);
- /**
-  * clk_register_divider - register a divider clock with the clock framework
-  * @dev: device registering this clock
 -- 
 2.34.3
 
