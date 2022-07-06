@@ -2,213 +2,261 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 833A5568A28
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 15:54:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B3E4F568A3F
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 15:56:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232924AbiGFNys (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Jul 2022 09:54:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53446 "EHLO
+        id S232441AbiGFN4u (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Jul 2022 09:56:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54784 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231347AbiGFNyq (ORCPT
+        with ESMTP id S232246AbiGFN4t (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Jul 2022 09:54:46 -0400
-Received: from mail-yb1-f177.google.com (mail-yb1-f177.google.com [209.85.219.177])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBB8A167C7;
-        Wed,  6 Jul 2022 06:54:43 -0700 (PDT)
-Received: by mail-yb1-f177.google.com with SMTP id r3so27441755ybr.6;
-        Wed, 06 Jul 2022 06:54:43 -0700 (PDT)
+        Wed, 6 Jul 2022 09:56:49 -0400
+Received: from mail-oa1-x2f.google.com (mail-oa1-x2f.google.com [IPv6:2001:4860:4864:20::2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A982F167F3
+        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Jul 2022 06:56:48 -0700 (PDT)
+Received: by mail-oa1-x2f.google.com with SMTP id 586e51a60fabf-10c0119dd16so10498079fac.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Jul 2022 06:56:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=ldH9+gxiVVWoGGSTb1LluVInskYjuLpgVtgP5uhcskw=;
+        b=bJC00Bvj3ejNUIXsfUg/AECgvyrxnSbLDDGaiOye8vB17SdvPDIc7fSNPJKmvxqNm3
+         yvzzS5uK7iqv3u42ihG+RunEW1B/ko4qKFASciootr/aQM9n4ztQG8vLRKJwKJDG0JF4
+         9WkUIsG/bJDJy1ZWTOhecG2zH/RS7jPaNCoyZs2uX3r7Huw8XpZ4l9y8rPSDW7bTBgLi
+         5ZOSffPrtMykQLehOxef3bXhfbP2j2j2NWJ5KF1U710wICyLAgw84mRLLG7I17Nuj95J
+         U9j3SROnq1OxnAB35m7wKAcQEQojeRfEbiGCHuAm0r48hWmI69D1VY1DmwlMdCXShgQm
+         qoNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=nGlq0tAOl9peVDy+2hDU8oij0psSLrDezDLIhvJH3CU=;
-        b=HdbrN4Lu9wdfAWW/JOR8YNMdnCNmLIjXwVbhDcHc7ItRDmcUvvkPlQo8nsYCOB+BD7
-         Ci+WKMmwCG8ghyNbHrmWRl7eGNCI8vddyYG4rDsCKNvnUgZTQod1nPYBoKGDV3NTMzeo
-         HB51OeuCs/CgMsB8WlMpqLIQeUw9m/ohIudxCsjK4tubLh0I7j63RCy8iYJ3xMnd9XXT
-         UcSvGaD0wfxOV8vlvNtTGPAjOPkov3qfSRUfoSiYh/pu4a1TQTsmvGotx4V/HaqGFazc
-         jJWUNQ2qfgLWk0gUjE5pAQZyC1D5UANuEHUUyAI0vkVlOEAdQGvePXJ9PV1geXFOhGEh
-         yc0g==
-X-Gm-Message-State: AJIora/gWHAXX98KR+1+meuFvq4PQs8dsWKM3ctNu9QtCc6ws0uyPAP0
-        l819XjIl71HMxhCc1w3x0RlZH7AKBkLvcbVhB8Q=
-X-Google-Smtp-Source: AGRyM1tDetZqwrRScub6Y4Pn1s0tSkry0FvKlyTlHU1qOUr14WujFHx6NLxGPd7DkQtOavHEbmevSefDFcyAl6P8ZZY=
-X-Received: by 2002:a25:fb02:0:b0:66e:3db9:5d49 with SMTP id
- j2-20020a25fb02000000b0066e3db95d49mr20145358ybe.137.1657115683016; Wed, 06
- Jul 2022 06:54:43 -0700 (PDT)
+        bh=ldH9+gxiVVWoGGSTb1LluVInskYjuLpgVtgP5uhcskw=;
+        b=kE+oSAQKhPgnP0rqWH6SPtpe8e3OBB5ncc8wWXN4qf6ifoxmoGyxi8mfKjBOFZko7N
+         shHdY0TZy6c+tLIDpqVmiI7Tn6BmYamWrZiG9WXJkTIDofbRwpCAjTyUf/pR0KHrvyX/
+         5005VdlcwuteUPZNcUwxWxtrbjPXUG55jmoG7IfC503BocJhPD6vJ+wn/EL5K7W3FxOH
+         IomXGG9CQQO+ZepqfmtcMF7FBzOe/CQ9e3Hb86sV3iPobYN99uYVrvsWjj+cLteuRb9i
+         Y4c2HyCmVHjIBtdYqPm/buZMQ6S7UcWopwiSSiL6jAikAgG10YcjUtTMVmjDcrBB8Onr
+         VUOA==
+X-Gm-Message-State: AJIora/rdz6++/Cwpkb/Um+6+vGZ5jV4X8FOlaFCB+rmKw1KPzLN6g5X
+        lWzp/55J/I1HQ8di0EVdb2RrISYlYbveAdLmEbSZCA==
+X-Google-Smtp-Source: AGRyM1sYeBgdjgB0S8VrA4C6cSRdrEdFOo4rQG4LZyb/WRq2vu4q0pAwO2Yk8hNeo2BKudd9wfmebkmxaoN48GmPI6g=
+X-Received: by 2002:a05:6870:1601:b0:108:2d92:5494 with SMTP id
+ b1-20020a056870160100b001082d925494mr25254953oae.109.1657115807907; Wed, 06
+ Jul 2022 06:56:47 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220608142723.103523089@infradead.org> <20220608144516.235041924@infradead.org>
-In-Reply-To: <20220608144516.235041924@infradead.org>
-From:   "Rafael J. Wysocki" <rafael@kernel.org>
-Date:   Wed, 6 Jul 2022 15:54:32 +0200
-Message-ID: <CAJZ5v0g0fCNxsc1mg9aL+ieQ1uMVS+RWqesHKoZ_zeL7cx655A@mail.gmail.com>
-Subject: Re: [PATCH 05/36] cpuidle: Move IRQ state validation
-To:     Peter Zijlstra <peterz@infradead.org>
-Cc:     rth@twiddle.net, ink@jurassic.park.msu.ru, mattst88@gmail.com,
-        vgupta@kernel.org,
-        Russell King - ARM Linux <linux@armlinux.org.uk>,
-        ulli.kroll@googlemail.com,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Sascha Hauer <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        dl-linux-imx <linux-imx@nxp.com>,
-        Tony Lindgren <tony@atomide.com>,
-        Kevin Hilman <khilman@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, Guo Ren <guoren@kernel.org>,
-        bcain@quicinc.com, Huacai Chen <chenhuacai@kernel.org>,
-        kernel@xen0n.name, Geert Uytterhoeven <geert@linux-m68k.org>,
-        sammy@sammy.net, Michal Simek <monstr@monstr.eu>,
-        Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-        dinguyen@kernel.org, jonas@southpole.se,
-        stefan.kristiansson@saunalahti.fi,
-        Stafford Horne <shorne@gmail.com>,
-        James Bottomley <James.Bottomley@hansenpartnership.com>,
-        Helge Deller <deller@gmx.de>,
-        Michael Ellerman <mpe@ellerman.id.au>,
-        Benjamin Herrenschmidt <benh@kernel.crashing.org>,
-        Paul Mackerras <paulus@samba.org>,
-        Paul Walmsley <paul.walmsley@sifive.com>,
-        Palmer Dabbelt <palmer@dabbelt.com>,
-        Albert Ou <aou@eecs.berkeley.edu>,
-        Heiko Carstens <hca@linux.ibm.com>,
-        Vasily Gorbik <gor@linux.ibm.com>,
-        Alexander Gordeev <agordeev@linux.ibm.com>,
-        Christian Borntraeger <borntraeger@linux.ibm.com>,
-        Sven Schnelle <svens@linux.ibm.com>,
-        Yoshinori Sato <ysato@users.sourceforge.jp>,
-        Rich Felker <dalias@libc.org>,
-        David Miller <davem@davemloft.net>,
-        Richard Weinberger <richard@nod.at>,
-        anton.ivanov@cambridgegreys.com,
-        Johannes Berg <johannes@sipsolutions.net>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>,
-        Dave Hansen <dave.hansen@linux.intel.com>,
-        "the arch/x86 maintainers" <x86@kernel.org>,
-        "H. Peter Anvin" <hpa@zytor.com>, acme@kernel.org,
-        Mark Rutland <mark.rutland@arm.com>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        jolsa@kernel.org, namhyung@kernel.org,
-        Juergen Gross <jgross@suse.com>, srivatsa@csail.mit.edu,
-        amakhalov@vmware.com, pv-drivers@vmware.com,
-        Boris Ostrovsky <boris.ostrovsky@oracle.com>,
-        Chris Zankel <chris@zankel.net>, jcmvbkbc@gmail.com,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Len Brown <lenb@kernel.org>, Pavel Machek <pavel@ucw.cz>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Andy Gross <agross@kernel.org>,
+References: <20220704221548.629302-1-vladimir.zapolskiy@linaro.org> <20220704221548.629302-3-vladimir.zapolskiy@linaro.org>
+In-Reply-To: <20220704221548.629302-3-vladimir.zapolskiy@linaro.org>
+From:   Robert Foss <robert.foss@linaro.org>
+Date:   Wed, 6 Jul 2022 15:56:37 +0200
+Message-ID: <CAG3jFyv4UdeUOq=qtxgv1HEDTeePC8xL=8RWCR_WU8XCHP3=-g@mail.gmail.com>
+Subject: Re: [PATCH 2/2] media: camss: Split power domain management
+To:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Cc:     "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
+        Todor Tomov <todor.too@gmail.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Anup Patel <anup@brainfault.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jon Hunter <jonathanh@nvidia.com>,
-        Jacob Pan <jacob.jun.pan@linux.intel.com>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Yury Norov <yury.norov@gmail.com>,
-        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-        Rasmus Villemoes <linux@rasmusvillemoes.dk>,
-        Steven Rostedt <rostedt@goodmis.org>,
-        Petr Mladek <pmladek@suse.com>, senozhatsky@chromium.org,
-        John Ogness <john.ogness@linutronix.de>,
-        "Paul E. McKenney" <paulmck@kernel.org>,
-        Frederic Weisbecker <frederic@kernel.org>,
-        quic_neeraju@quicinc.com, Josh Triplett <josh@joshtriplett.org>,
-        Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-        Lai Jiangshan <jiangshanlai@gmail.com>,
-        Joel Fernandes <joel@joelfernandes.org>,
-        Juri Lelli <juri.lelli@redhat.com>,
-        Vincent Guittot <vincent.guittot@linaro.org>,
-        Dietmar Eggemann <dietmar.eggemann@arm.com>,
-        Benjamin Segall <bsegall@google.com>,
-        Mel Gorman <mgorman@suse.de>,
-        Daniel Bristot de Oliveira <bristot@redhat.com>,
-        vschneid@redhat.com, jpoimboe@kernel.org,
-        linux-alpha@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-snps-arc@lists.infradead.org,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        Linux OMAP Mailing List <linux-omap@vger.kernel.org>,
-        linux-csky@vger.kernel.org, linux-hexagon@vger.kernel.org,
-        linux-ia64@vger.kernel.org,
-        linux-m68k <linux-m68k@lists.linux-m68k.org>,
-        "open list:BROADCOM NVRAM DRIVER" <linux-mips@vger.kernel.org>,
-        openrisc@lists.librecores.org,
-        Parisc List <linux-parisc@vger.kernel.org>,
-        linuxppc-dev <linuxppc-dev@lists.ozlabs.org>,
-        linux-riscv <linux-riscv@lists.infradead.org>,
-        linux-s390@vger.kernel.org,
-        Linux-sh list <linux-sh@vger.kernel.org>,
-        sparclinux@vger.kernel.org, linux-um@lists.infradead.org,
-        linux-perf-users@vger.kernel.org,
-        virtualization@lists.linux-foundation.org,
-        xen-devel@lists.xenproject.org, linux-xtensa@linux-xtensa.org,
-        ACPI Devel Maling List <linux-acpi@vger.kernel.org>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        linux-clk <linux-clk@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-tegra <linux-tegra@vger.kernel.org>,
-        linux-arch <linux-arch@vger.kernel.org>, rcu@vger.kernel.org
+        Andy Gross <agross@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Hans Verkuil <hans.verkuil@cisco.com>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
-        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jun 8, 2022 at 4:47 PM Peter Zijlstra <peterz@infradead.org> wrote:
+On Tue, 5 Jul 2022 at 00:15, Vladimir Zapolskiy
+<vladimir.zapolskiy@linaro.org> wrote:
 >
-> Make cpuidle_enter_state() consistent with the s2idle variant and
-> verify ->enter() always returns with interrupts disabled.
+> There are three cases of power domain management on supported platforms:
+> 1) CAMSS on MSM8916, where a single VFE power domain is operated outside
+>    of the camss device driver,
+> 2) CAMSS on MSM8996 and SDM630/SDM660, where two VFE power domains are
+>    managed separately by the camss device driver, the power domains are
+>    linked and unlinked on demand by their functions vfe_pm_domain_on()
+>    and vfe_pm_domain_off() respectively,
+> 3) CAMSS on SDM845 and SM8250 platforms, and there are two VFE power
+>    domains and their parent power domain TITAN_TOP, the latter one
+>    shall be turned on prior to turning on any of VFE power domains.
 >
-> Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+> Due to a previously missing link between TITAN_TOP and VFEx power domains
+> in the latter case, which is now fixed by [1], it was decided always to
+> turn on all found VFE power domains and TITAN_TOP power domain, even if
+> just one particular VFE is needed to be enabled or none of VFE power domains
+> are required, for instance the latter case is when vfe_lite is in use.
+> This misusage becomes more incovenient and clumsy, if next generations are
+> to be supported, for instance CAMSS on SM8450 has three VFE power domains.
+>
+> The change splits the power management support for platforms with TITAN_TOP
+> parent power domain, and, since 'power-domain-names' property is not present
+> in camss device tree nodes, the assumption is that the first N power domains
+> from the 'power-domains' list correspond to VFE power domains, and, if the
+> number of power domains is greater than number of non-lite VFEs, then the
+> last power domain from the list is the TITAN_TOP power domain.
+>
+> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 > ---
->  drivers/cpuidle/cpuidle.c |   10 +++++-----
->  1 file changed, 5 insertions(+), 5 deletions(-)
+>  .../media/platform/qcom/camss/camss-vfe-170.c | 20 ++++++++++++-
+>  .../media/platform/qcom/camss/camss-vfe-480.c | 20 ++++++++++++-
+>  drivers/media/platform/qcom/camss/camss.c     | 30 ++++++++++---------
+>  3 files changed, 54 insertions(+), 16 deletions(-)
 >
-> --- a/drivers/cpuidle/cpuidle.c
-> +++ b/drivers/cpuidle/cpuidle.c
-> @@ -234,7 +234,11 @@ int cpuidle_enter_state(struct cpuidle_d
->         stop_critical_timings();
->         if (!(target_state->flags & CPUIDLE_FLAG_RCU_IDLE))
->                 rcu_idle_enter();
+> diff --git a/drivers/media/platform/qcom/camss/camss-vfe-170.c b/drivers/media/platform/qcom/camss/camss-vfe-170.c
+> index 600150cfc4f7..8e506a805d11 100644
+> --- a/drivers/media/platform/qcom/camss/camss-vfe-170.c
+> +++ b/drivers/media/platform/qcom/camss/camss-vfe-170.c
+> @@ -687,7 +687,12 @@ static void vfe_isr_wm_done(struct vfe_device *vfe, u8 wm)
+>   */
+>  static void vfe_pm_domain_off(struct vfe_device *vfe)
+>  {
+> -       /* nop */
+> +       struct camss *camss = vfe->camss;
 > +
->         entered_state = target_state->enter(dev, drv, index);
-> +       if (WARN_ONCE(!irqs_disabled(), "%ps leaked IRQ state", target_state->enter))
-
-I'm not sure if dumping a call trace here is really useful and
-WARN_ON() often gets converted to panic().
-
-I would print an error message with pr_warn_once().
-
-Otherwise LGTM.
-
-> +               raw_local_irq_disable();
+> +       if (vfe->id >= camss->vfe_num)
+> +               return;
 > +
->         if (!(target_state->flags & CPUIDLE_FLAG_RCU_IDLE))
->                 rcu_idle_exit();
->         start_critical_timings();
-> @@ -246,12 +250,8 @@ int cpuidle_enter_state(struct cpuidle_d
->         /* The cpu is no longer idle or about to enter idle. */
->         sched_idle_set_state(NULL);
+> +       device_link_del(camss->genpd_link[vfe->id]);
+>  }
 >
-> -       if (broadcast) {
-> -               if (WARN_ON_ONCE(!irqs_disabled()))
-> -                       local_irq_disable();
+>  /*
+> @@ -696,6 +701,19 @@ static void vfe_pm_domain_off(struct vfe_device *vfe)
+>   */
+>  static int vfe_pm_domain_on(struct vfe_device *vfe)
+>  {
+> +       struct camss *camss = vfe->camss;
+> +       enum vfe_line_id id = vfe->id;
+> +
+> +       if (id >= camss->vfe_num)
+> +               return 0;
+> +
+> +       camss->genpd_link[id] = device_link_add(camss->dev, camss->genpd[id],
+> +                                               DL_FLAG_STATELESS |
+> +                                               DL_FLAG_PM_RUNTIME |
+> +                                               DL_FLAG_RPM_ACTIVE);
+> +       if (!camss->genpd_link[id])
+> +               return -EINVAL;
+> +
+>         return 0;
+>  }
+>
+> diff --git a/drivers/media/platform/qcom/camss/camss-vfe-480.c b/drivers/media/platform/qcom/camss/camss-vfe-480.c
+> index 129585110393..3aa962b5663b 100644
+> --- a/drivers/media/platform/qcom/camss/camss-vfe-480.c
+> +++ b/drivers/media/platform/qcom/camss/camss-vfe-480.c
+> @@ -494,7 +494,12 @@ static void vfe_isr_wm_done(struct vfe_device *vfe, u8 wm)
+>   */
+>  static void vfe_pm_domain_off(struct vfe_device *vfe)
+>  {
+> -       /* nop */
+> +       struct camss *camss = vfe->camss;
+> +
+> +       if (vfe->id >= camss->vfe_num)
+> +               return;
+> +
+> +       device_link_del(camss->genpd_link[vfe->id]);
+>  }
+>
+>  /*
+> @@ -503,6 +508,19 @@ static void vfe_pm_domain_off(struct vfe_device *vfe)
+>   */
+>  static int vfe_pm_domain_on(struct vfe_device *vfe)
+>  {
+> +       struct camss *camss = vfe->camss;
+> +       enum vfe_line_id id = vfe->id;
+> +
+> +       if (id >= camss->vfe_num)
+> +               return 0;
+> +
+> +       camss->genpd_link[id] = device_link_add(camss->dev, camss->genpd[id],
+> +                                               DL_FLAG_STATELESS |
+> +                                               DL_FLAG_PM_RUNTIME |
+> +                                               DL_FLAG_RPM_ACTIVE);
+> +       if (!camss->genpd_link[id])
+> +               return -EINVAL;
+> +
+>         return 0;
+>  }
+>
+> diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
+> index 795eebd9af6c..f009297ba182 100644
+> --- a/drivers/media/platform/qcom/camss/camss.c
+> +++ b/drivers/media/platform/qcom/camss/camss.c
+> @@ -1453,7 +1453,6 @@ static const struct media_device_ops camss_media_ops = {
+>  static int camss_configure_pd(struct camss *camss)
+>  {
+>         struct device *dev = camss->dev;
+> -       int last_pm_domain = 0;
+>         int i;
+>         int ret;
+>
+> @@ -1484,32 +1483,34 @@ static int camss_configure_pd(struct camss *camss)
+>         if (!camss->genpd_link)
+>                 return -ENOMEM;
+>
+> +       /*
+> +        * VFE power domains are in the beginning of the list, and while all
+> +        * power domains should be attached, only if TITAN_TOP power domain is
+> +        * found in the list, it should be linked over here.
+> +        */
+>         for (i = 0; i < camss->genpd_num; i++) {
+>                 camss->genpd[i] = dev_pm_domain_attach_by_id(camss->dev, i);
+>                 if (IS_ERR(camss->genpd[i])) {
+>                         ret = PTR_ERR(camss->genpd[i]);
+>                         goto fail_pm;
+>                 }
+> +       }
+>
+> -               camss->genpd_link[i] = device_link_add(camss->dev, camss->genpd[i],
+> -                                                      DL_FLAG_STATELESS | DL_FLAG_PM_RUNTIME |
+> -                                                      DL_FLAG_RPM_ACTIVE);
+> -               if (!camss->genpd_link[i]) {
+> -                       dev_pm_domain_detach(camss->genpd[i], true);
+> +       if (i > camss->vfe_num) {
+> +               camss->genpd_link[i - 1] = device_link_add(camss->dev, camss->genpd[i - 1],
+> +                                                          DL_FLAG_STATELESS | DL_FLAG_PM_RUNTIME |
+> +                                                          DL_FLAG_RPM_ACTIVE);
+> +               if (!camss->genpd_link[i - 1]) {
+>                         ret = -EINVAL;
+>                         goto fail_pm;
+>                 }
 > -
-> +       if (broadcast)
->                 tick_broadcast_exit();
+> -               last_pm_domain = i;
+>         }
+>
+>         return 0;
+>
+>  fail_pm:
+> -       for (i = 0; i < last_pm_domain; i++) {
+> -               device_link_del(camss->genpd_link[i]);
+> +       for (--i ; i >= 0; i--)
+>                 dev_pm_domain_detach(camss->genpd[i], true);
 > -       }
 >
->         if (!cpuidle_state_is_coupled(drv, index))
->                 local_irq_enable();
+>         return ret;
+>  }
+> @@ -1711,10 +1712,11 @@ void camss_delete(struct camss *camss)
+>         if (camss->genpd_num == 1)
+>                 return;
 >
+> -       for (i = 0; i < camss->genpd_num; i++) {
+> -               device_link_del(camss->genpd_link[i]);
+> +       if (camss->genpd_num > camss->vfe_num)
+> +               device_link_del(camss->genpd_link[camss->genpd_num - 1]);
+> +
+> +       for (i = 0; i < camss->genpd_num; i++)
+>                 dev_pm_domain_detach(camss->genpd[i], true);
+> -       }
+>  }
 >
+>  /*
+> --
+> 2.33.0
+>
+
+Reviewed-by: Robert Foss <robert.foss@linaro.org>
