@@ -2,53 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 875D05689AC
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 15:38:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 70F245689B0
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 15:39:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230420AbiGFNhk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Jul 2022 09:37:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37544 "EHLO
+        id S231531AbiGFNjo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Jul 2022 09:39:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39796 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233563AbiGFNhj (ORCPT
+        with ESMTP id S229716AbiGFNjo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Jul 2022 09:37:39 -0400
-Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [IPv6:2001:4b7a:2000:18::168])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBC9F1DA63;
-        Wed,  6 Jul 2022 06:37:38 -0700 (PDT)
+        Wed, 6 Jul 2022 09:39:44 -0400
+Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [5.144.164.168])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66365248E1
+        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Jul 2022 06:39:43 -0700 (PDT)
 Received: from [192.168.1.101] (abxi46.neoplus.adsl.tpnet.pl [83.9.2.46])
         (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 221B13F715;
-        Wed,  6 Jul 2022 15:37:37 +0200 (CEST)
-Message-ID: <43572937-8505-ddf0-1fe0-99ddfe486c11@somainline.org>
-Date:   Wed, 6 Jul 2022 15:37:36 +0200
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 67DFE3F672;
+        Wed,  6 Jul 2022 15:39:41 +0200 (CEST)
+Message-ID: <42c4fa2b-8ae8-6189-4f00-d44ba0668077@somainline.org>
+Date:   Wed, 6 Jul 2022 15:39:40 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.11.0
-Subject: Re: [PATCH 04/13] ARM: dts: qcom: disable smb208 regulators for
- ipq8064-rb3011
+Subject: Re: [PATCH 8/8] ARM: mach-qcom: Add support for MSM8909
 Content-Language: en-US
-To:     Christian Marangi <ansuelsmth@gmail.com>
+To:     Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Jonathan McDowell <noodles@earth.li>
-References: <20220705133917.8405-1-ansuelsmth@gmail.com>
- <20220705133917.8405-5-ansuelsmth@gmail.com>
- <8a394fa3-92fb-d162-b4ee-df010a09aed0@somainline.org>
- <62c58a60.1c69fb81.25b26.e72a@mx.google.com>
- <36a68a0b-0c18-deb5-609c-2128aa3fc21f@somainline.org>
- <62c58fca.1c69fb81.76f6a.15f4@mx.google.com>
+        linux-arm-kernel@lists.infradead.org,
+        Stephan Gerhold <stephan@gerhold.net>
+References: <20220705143523.3390944-1-stephan.gerhold@kernkonzept.com>
+ <20220705143523.3390944-9-stephan.gerhold@kernkonzept.com>
 From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-In-Reply-To: <62c58fca.1c69fb81.76f6a.15f4@mx.google.com>
+In-Reply-To: <20220705143523.3390944-9-stephan.gerhold@kernkonzept.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -57,52 +53,44 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 6.07.2022 15:19, Christian Marangi wrote:
-> On Wed, Jul 06, 2022 at 03:31:55PM +0200, Konrad Dybcio wrote:
->>
->>
->> On 6.07.2022 14:56, Christian Marangi wrote:
->>> On Wed, Jul 06, 2022 at 03:03:32PM +0200, Konrad Dybcio wrote:
->>>>
->>>>
->>>> On 5.07.2022 15:39, Christian Marangi wrote:
->>>>> Mikrotik RB3011 have a special configuration where the regulators are
->>>>> not the common smb208 controlled by RPM but they use a TPS563900
->>>>> controlled via i2c. Disable the smb208 for this specific device.
->>>> Ok, so that answers my question from the previous email.
->>>> Please define the SMB208 regulators only in the DTs of
->>>> boards that actually use it, as it is not a SoC component as
->>>> far as I can tell.
->>>>
->>>> Konrad
->>>
->>> This was already discuessed,
->> Yeah sorry, I didn't notice earlier and started reviewing patches
->> that were already reviewed by others.
->>
+On 5.07.2022 16:35, Stephan Gerhold wrote:
+> Add a Kconfig entry for MSM8909 and the "qcom,msm8909-smp" CPU
+> enable-method. The ARM Cortex-A7 cores are booted just like on MSM8226.
 > 
-> Np, thanks for the review.
-> 
->>
->> rb3011 is the exception, qcom for ipq8064
->>> recommends to use smb208 but gives the option to implement it in their
->>> own way. So again we have 28 device with smb208 and 1 device that use
->>> its own special way...
->>>
->>> Wonder if a separate dtsi can be used for this if we really can't put
->>> smb208 in ipq8064 dtsi?
->> There's msm8916-pm8916.dtsi. You can follow.
-> 
-> Ok, will put the smb208 definition to a separate dtsi, something like
-> ipq8064-smb208.dtsi? or ipq8064-rpm-smb208.dtsi? Looks also cleaner that
-> way.
-You can create ipq8064-smb208.dtsi that will also contain every ipq8064-plus-smb208-specific
-configuration, such as regulator assignemnts to in-SoC components (like PHYs, SDHCIs etc.).
+> Signed-off-by: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 
 Konrad
+>  arch/arm/mach-qcom/Kconfig   | 4 ++++
+>  arch/arm/mach-qcom/platsmp.c | 1 +
+>  2 files changed, 5 insertions(+)
 > 
->>
->> Konrad
->>
->> [...]
+> diff --git a/arch/arm/mach-qcom/Kconfig b/arch/arm/mach-qcom/Kconfig
+> index 109e126f7271..12a812e61c16 100644
+> --- a/arch/arm/mach-qcom/Kconfig
+> +++ b/arch/arm/mach-qcom/Kconfig
+> @@ -20,6 +20,10 @@ config ARCH_MSM8X60
+>  	bool "Enable support for MSM8X60"
+>  	select CLKSRC_QCOM
+>  
+> +config ARCH_MSM8909
+> +	bool "Enable support for MSM8909"
+> +	select HAVE_ARM_ARCH_TIMER
+> +
+>  config ARCH_MSM8916
+>  	bool "Enable support for MSM8916"
+>  	select HAVE_ARM_ARCH_TIMER
+> diff --git a/arch/arm/mach-qcom/platsmp.c b/arch/arm/mach-qcom/platsmp.c
+> index 65a0d5ce2bb3..5d2f386a46d8 100644
+> --- a/arch/arm/mach-qcom/platsmp.c
+> +++ b/arch/arm/mach-qcom/platsmp.c
+> @@ -384,6 +384,7 @@ static const struct smp_operations qcom_smp_cortex_a7_ops __initconst = {
+>  #endif
+>  };
+>  CPU_METHOD_OF_DECLARE(qcom_smp_msm8226, "qcom,msm8226-smp", &qcom_smp_cortex_a7_ops);
+> +CPU_METHOD_OF_DECLARE(qcom_smp_msm8909, "qcom,msm8909-smp", &qcom_smp_cortex_a7_ops);
+>  CPU_METHOD_OF_DECLARE(qcom_smp_msm8916, "qcom,msm8916-smp", &qcom_smp_cortex_a7_ops);
+>  
+>  static const struct smp_operations qcom_smp_kpssv1_ops __initconst = {
 > 
