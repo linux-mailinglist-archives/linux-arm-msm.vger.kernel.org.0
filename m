@@ -2,68 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BDEA1568C54
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 17:09:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BB7B9568C6F
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 17:14:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233396AbiGFPIe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Jul 2022 11:08:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52504 "EHLO
+        id S233342AbiGFPNw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Jul 2022 11:13:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58430 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233306AbiGFPIU (ORCPT
+        with ESMTP id S230268AbiGFPNv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Jul 2022 11:08:20 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B60312655D
-        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Jul 2022 08:08:18 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id l40-20020a05600c1d2800b003a18adff308so9508465wms.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Jul 2022 08:08:18 -0700 (PDT)
+        Wed, 6 Jul 2022 11:13:51 -0400
+Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E843F22539
+        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Jul 2022 08:13:46 -0700 (PDT)
+Received: by mail-lj1-x22b.google.com with SMTP id l7so18101586ljj.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Jul 2022 08:13:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=TbP0pdHnPrM+ouGZkcA/VEgDW4UJQvTk7vLH9xNZObg=;
-        b=IJq4gEtiTBgqd6KWJWBbKv2TPoHt99rC4NLQtdItczQ1y+MmeEP6fwS5Uh9l9JSj6a
-         R11ojWCiVINF9F0Yl0FOpfLjwb4Bv59VT6JPM5er3Gq1jxsQ3zJ4G5BfjpXX4VO4SN5f
-         +kK4xyhvnDfYmqv25lHwjKXKmPkd5q0b9RQZjfYoLXFIuAJm6YY9mGEhymiV7ioj/bD1
-         dUo1G7Y8YJZQEYQ0xbMOUUbDnsirMAYLYT3DFU56Rc5w90XmF7+TfJTb609EKYhA+pm8
-         e/giTKkwSjfSUT4bzyxhixfJyhFUe3bIvARGCEpme9s2lL2K9UdfdY7trfZK2DTpt8qt
-         e6ow==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=QPBPWEhV2Vykab+FuRAUO/iMibCW6th1rjVx2QzcAa8=;
+        b=UBbtQKARyXdeKvpy36Jm9Brb7tYCsu9XKOsYXl/ZtvqvVAjIq8VXpxsok1OC1mY2nA
+         6YLnt8juwlycbIx5FPOGcYcwx0EPXnASDpuISFAB2W2ezCsq+r4d0Pj4FvNchlPQfEbk
+         TWpLIDW6JUcN7/zexsDF2KDjsSh7J0SD7G+CC0TuYcn1PDmmwQaD5JiBahL3fYqNEkKW
+         6gULkxdgME0KjGjeQPDevv1RDHFzMdnFhSff58WuP02EMTRkwH2H36/LA2cW6n98exC0
+         voMeuPrAwXFHK9JHTRnLnuTD3v0bm7p+vugqa8MtOFt1vDe6uRc7vbG/6/bIuu7Hbyjk
+         KeQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=TbP0pdHnPrM+ouGZkcA/VEgDW4UJQvTk7vLH9xNZObg=;
-        b=2SVxdlPo/ZvrSAg5IKw72X7JSwgLsd8sDqR+jj466ou2aFQZHzfBcNk12SMhP+ls2B
-         ISnwE5DBuH4pycscq1Y7FqZHz8Wz+Tl2r+uuUIar2q6RnXPD+egdWgSR7YIM8hs8Lmp9
-         kp5OKO9v0VGAewVYNdqc1Fx4YQeZpqh6Y+Vwcat0CiBpBpzdmNUj6U86AoPR3IMJpv0U
-         jxS1z1tKsiz52tUnKnXVGNnY1XRoHBAK2hotvho5VBbPx0SKFnUo7epN7dh+KyZNeHmS
-         5YjSV/GPL5nrwOp8EfmOuBUIWBPIzgzFvJF439apX3H0QMIUaqleIyFLHKZRpHSX8LWE
-         C7pw==
-X-Gm-Message-State: AJIora+Uhj19sUP4Q2/e5wBL/RpKgfn/r27h4UNpAlC0bGur+U5BH4iT
-        8MjjbmoTyT56tFVXsFF79hpvHwv/JZhfmg==
-X-Google-Smtp-Source: AGRyM1uGG0ewtPXWfcllw80dByjPMwdwNd8zLJCX7giMogiZUR7jCqN1Olu4VSXFEGiD3ycFpSGtmg==
-X-Received: by 2002:a05:600c:3591:b0:3a0:563a:49d3 with SMTP id p17-20020a05600c359100b003a0563a49d3mr40932058wmq.60.1657120097258;
-        Wed, 06 Jul 2022 08:08:17 -0700 (PDT)
-Received: from linaro.org ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id y15-20020a5d4acf000000b0021b9c520953sm35856542wrs.64.2022.07.06.08.08.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 06 Jul 2022 08:08:16 -0700 (PDT)
-Date:   Wed, 6 Jul 2022 18:08:15 +0300
-From:   Abel Vesa <abel.vesa@linaro.org>
-To:     Mike Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>
-Cc:     linux-clk@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [RFC] clk: Add clk_hw based provider enable/disable API
-Message-ID: <YsWlX0YtKoMkd/Qw@linaro.org>
-References: <20220704185733.1288578-1-abel.vesa@linaro.org>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=QPBPWEhV2Vykab+FuRAUO/iMibCW6th1rjVx2QzcAa8=;
+        b=oOQqsonBi3yvfDoZcrMPic8uqZrK4OOsVKcjyEE2q/tIr/sk4Sg2odvSVLebTbo4lq
+         eHaMkWlVd5fLv0sdG/fgl0fSedMHx+SjYwzgIWnzyUanGgfl/nCOvPu2N25x0fTlJHMb
+         0hmcCHaHXjMPib9Y3ynRxQE+7tRCmrWeqaMX+jV0PgsKGl8400U8UMhzC6Lk9ly1GM2E
+         swZD7WVxPHVJShvazImw1xXadrs+z0x09E9SJjBTlPYU0UTY/MUkKDMObuSZN1sAFdDr
+         OnCCYYdy8Yi7KO+Ln3uB1VnlNBeXE6VABKWUWVDV5Yanic0uc0RV1rHLlXI0wFEWK9cC
+         j2pA==
+X-Gm-Message-State: AJIora+SgyOxTHGzdwzgZl//Ha+MwK3YbXMgviB70b5uNVWmtN6jojHS
+        ZrvuEIkU2XDbqeNTf/U5EZ+87yDIsdOBBA==
+X-Google-Smtp-Source: AGRyM1tH2oqsonL2G0A+++kLBn/3Imc+sqCOv8q++5fgWtIHiQlb9L3zrzfCr7LvxU1WmGk40HbeQg==
+X-Received: by 2002:a2e:b55a:0:b0:25d:485e:5d86 with SMTP id a26-20020a2eb55a000000b0025d485e5d86mr1561320ljn.194.1657120425306;
+        Wed, 06 Jul 2022 08:13:45 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id e18-20020ac25472000000b0047fa941066bsm6313329lfn.96.2022.07.06.08.13.44
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 06 Jul 2022 08:13:44 -0700 (PDT)
+Message-ID: <ceaca6d7-958d-ade6-9ee5-5e70bc57bbd7@linaro.org>
+Date:   Wed, 6 Jul 2022 18:13:43 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220704185733.1288578-1-abel.vesa@linaro.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: Re: [PATCH v4 0/2] PCI: Restrict pci transactions after pci suspend
+Content-Language: en-GB
+To:     Krishna chaitanya chundru <quic_krichai@quicinc.com>,
+        helgaas@kernel.org
+Cc:     linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, mka@chromium.org,
+        quic_vbadigan@quicinc.com, quic_hemantk@quicinc.com,
+        quic_nitegupt@quicinc.com, quic_skananth@quicinc.com,
+        quic_ramkri@quicinc.com, manivannan.sadhasivam@linaro.org,
+        swboyd@chromium.org
+References: <1656684800-31278-1-git-send-email-quic_krichai@quicinc.com>
+ <1657118425-10304-1-git-send-email-quic_krichai@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <1657118425-10304-1-git-send-email-quic_krichai@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -72,83 +80,31 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22-07-04 21:57:33, Abel Vesa wrote:
-> Sometimes, a clock needs to be enabled or disabled by the provider,
-> without actually touching the enable count. For example, a clock
-> provider driver might choose to disable some unused clocks on sync state
-> callback rather than on the default clk_disable_unused. Such clocks are
-> usually enabled by bootloader and need to stay ungated until some driver
-> built as module probes. So add clk_hw enable/disable to allow the clock
-> provider drivers to disable such clocks on sync state callback.
->
+On 06/07/2022 17:40, Krishna chaitanya chundru wrote:
+> If the endpoint device state is D0 and irq's are not freed, then
+> kernel try to mask interrupts in system suspend path by writing
+> in to the vector table (for MSIX interrupts) and config space (for MSI's).
+> 
+> These transactions are initiated in the pm suspend after pcie clocks got
+> disabled as part of platform driver pm  suspend call. Due to it, these
+> transactions are resulting in un-clocked access and eventually to crashes.
+> 
+> So added a logic in qcom driver to restrict these unclocked access.
+> And updated the logic to check the link state before masking
+> or unmasking the interrupts.
 
-Ignore this one please.
+Please do not send new versions as replies to previous ones. This breaks 
+threading for the reviewers.
 
-There is a new RFC here:
-https://lore.kernel.org/lkml/20220706150411.708213-1-abel.vesa@linaro.org/
+> Krishna chaitanya chundru (2):
+>    PCI: qcom: Add system PM support
+>    PCI: qcom: Restrict pci transactions after pci suspend
+> 
+>   drivers/pci/controller/dwc/pcie-designware-host.c |  14 ++-
+>   drivers/pci/controller/dwc/pcie-qcom.c            | 121 +++++++++++++++++++++-
+>   2 files changed, 131 insertions(+), 4 deletions(-)
 
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> ---
->  drivers/clk/clk.c            | 25 +++++++++++++++++++++++++
->  include/linux/clk-provider.h |  2 ++
->  2 files changed, 27 insertions(+)
->
-> diff --git a/drivers/clk/clk.c b/drivers/clk/clk.c
-> index f00d4c1158d7..a727cffb6bba 100644
-> --- a/drivers/clk/clk.c
-> +++ b/drivers/clk/clk.c
-> @@ -1011,6 +1011,17 @@ void clk_disable(struct clk *clk)
->  }
->  EXPORT_SYMBOL_GPL(clk_disable);
->
-> +void clk_hw_disable(const struct clk_hw *hw)
-> +{
-> +	struct clk_core *core = hw->core;
-> +
-> +	trace_clk_disable(core);
-> +	if (core->ops->disable)
-> +		core->ops->disable(core->hw);
-> +	trace_clk_disable_complete(core);
-> +}
-> +EXPORT_SYMBOL_GPL(clk_hw_disable);
-> +
->  static int clk_core_enable(struct clk_core *core)
->  {
->  	int ret = 0;
-> @@ -1176,6 +1187,20 @@ int clk_enable(struct clk *clk)
->  }
->  EXPORT_SYMBOL_GPL(clk_enable);
->
-> +int clk_hw_enable(const struct clk_hw *hw)
-> +{
-> +	struct clk_core *core = hw->core;
-> +	int ret = 0;
-> +
-> +	trace_clk_enable(core);
-> +	if (core->ops->enable)
-> +		ret = core->ops->enable(core->hw);
-> +	trace_clk_enable_complete(core);
-> +
-> +	return ret;
-> +}
-> +EXPORT_SYMBOL_GPL(clk_hw_enable);
-> +
->  /**
->   * clk_is_enabled_when_prepared - indicate if preparing a clock also enables it.
->   * @clk: clock source
-> diff --git a/include/linux/clk-provider.h b/include/linux/clk-provider.h
-> index c10dc4c659e2..0f9968a7a6d2 100644
-> --- a/include/linux/clk-provider.h
-> +++ b/include/linux/clk-provider.h
-> @@ -1212,6 +1212,8 @@ unsigned long clk_hw_get_flags(const struct clk_hw *hw);
->  bool clk_hw_is_prepared(const struct clk_hw *hw);
->  bool clk_hw_rate_is_protected(const struct clk_hw *hw);
->  bool clk_hw_is_enabled(const struct clk_hw *hw);
-> +int clk_hw_enable(const struct clk_hw *hw);
-> +void clk_hw_disable(const struct clk_hw *hw);
->  bool __clk_is_enabled(struct clk *clk);
->  struct clk *__clk_lookup(const char *name);
->  int __clk_mux_determine_rate(struct clk_hw *hw,
-> --
-> 2.34.3
->
+
+-- 
+With best wishes
+Dmitry
