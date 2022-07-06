@@ -2,181 +2,244 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4493D568A44
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 15:57:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 660D1568A64
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 15:59:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232623AbiGFN5h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Jul 2022 09:57:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55172 "EHLO
+        id S233150AbiGFN7l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Jul 2022 09:59:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57006 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233595AbiGFN5a (ORCPT
+        with ESMTP id S232981AbiGFN7i (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Jul 2022 09:57:30 -0400
-Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4DF717048
-        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Jul 2022 06:57:29 -0700 (PDT)
-Received: by mail-oi1-x22a.google.com with SMTP id s128so5255931oie.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Jul 2022 06:57:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=5pcvxPYSCYAj/nTakeIqQbMhqO953IPXXQZS4ttxNlM=;
-        b=T3IAxZjCTEVyP+AvZ1EHEGblZfO6ltkKGsggqJTXASicfK3e0OPUYMG1HLHp5Kzi3m
-         eEZNIDlofIwZcTRTZy4R/qjxmGQtNQHwA8g9Ft1UIRmcFDGQhiAf5bkurlgq3cC+vkdy
-         ezEvys6mcFi3H3f1WepVOdLUpuB5vMJFS9ved3S+wvyaFZSX0vHuC3Dva0vIV8vOpOQb
-         52WekBwi+YNgIVDJJWMaUNk/HI9D6lV/usLUrbM85Xb1uDA/UIFu2kMZT54kbUF0adHP
-         X2bp+l0Zd7aCpe2bGT4T+5hk3DTHtHasMcH6+sMNlfrZrwZxlxERKheOnro3IMXUelbe
-         5row==
+        Wed, 6 Jul 2022 09:59:38 -0400
+Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E4EA18E13;
+        Wed,  6 Jul 2022 06:59:33 -0700 (PDT)
+Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-31cac89d8d6so71276737b3.2;
+        Wed, 06 Jul 2022 06:59:33 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=5pcvxPYSCYAj/nTakeIqQbMhqO953IPXXQZS4ttxNlM=;
-        b=k5biJX+rra4OtWblIqFPRP3pMTAnkIBv1sSWcCruz492HsBvUmswDqwZ5BCnhzz8qG
-         sPa8aPv01JN6w8fRkXtGlIZ7Hp3I6ryhNzwQmIIv5/qB5i4ZOOLKIeUYHPcIR7XNenbi
-         m84w1zsPyssi4AtZI3arGaJMuIj6kCP+hmLRV2dQtxh3aQIedW8gTGsQLzGXPs2QXMnK
-         PVUB/gOMcvAI2Pq5OTAoOT3Bk0yNUOPJ0aVD0Dl6EPhKkcxQsyCbj03i5HeKB7tkEFdd
-         0+clxigp4EcNQ8k9lkO0TrldPdykSDAj3Ttfz4OhHUU04iQWISTKEIoolz8u9yA+OQLl
-         BT3g==
-X-Gm-Message-State: AJIora9hElGtJG1Dov/XbSZe4z0TO8DYkroH7Kniw8n/ES+Y3E5hj1UM
-        Of1ql8d9r4ceZB6CKM7kzWEC4TBqESI7LRNFBRGm5w==
-X-Google-Smtp-Source: AGRyM1sLkpG40GnDIjC56/7gGaEjdYaXQRNgeBE8LiHYYSOX9k70Kwo479vMt10j9j33ixs0ihcpN7pNJCl3WHSngds=
-X-Received: by 2002:a05:6808:2020:b0:335:52b7:d447 with SMTP id
- q32-20020a056808202000b0033552b7d447mr22941752oiw.109.1657115849266; Wed, 06
- Jul 2022 06:57:29 -0700 (PDT)
+        bh=Onduqp6mjVbUTy8onn0jWt/mqpI9kGBQEYh+QUeZcBU=;
+        b=0cMUwTkAAVvw+UNO02IWyceWodYmhCDcBP9pequ0hZ1hN3XzdMVPegHdPc9D/E/CfB
+         L2kWvRP4z5KjqsLuu/fSiyz/ZCU7FEXJUfuVjNJc/Dmdq891LnjpdcUELB4uakW9sl3V
+         nM6urUU7UKgxL8lVgXpHZeUNVyTzGaa9ZQvX3o3AVLOVQnhulI1d+Ok2tTqDwvmeAGKZ
+         v+pR84yNvxLCwk0u+Rh67ibdA5e0LB5Hj6ohbH+/JKUjB7V8KaWU1FP+xwEyuJTfPyQ2
+         vYen9kOzd+zuYvRYze3gjvuzvVo4K4cabXJJryPLyBJfVHc6cnL+Y/guIs1Z2JOLASP4
+         /OdQ==
+X-Gm-Message-State: AJIora/9LuZKkijMpe8AtJ/J1dJrHEjvs2XegfMP5EZtc4AyAydXM3GV
+        G/SE1BZglgSvpfi1JAmXJnCIKUDa6ksQ8LoGIcg=
+X-Google-Smtp-Source: AGRyM1tNbC/Hml4tsQcA7xFkjwPTBe4V9sculTi4g4WqVg8ltnNA+flCFfg0CHpb2ZdV5OvqewQ30xyxgoEo0qXCWHo=
+X-Received: by 2002:a81:1b97:0:b0:2db:640f:49d8 with SMTP id
+ b145-20020a811b97000000b002db640f49d8mr45117410ywb.326.1657115972382; Wed, 06
+ Jul 2022 06:59:32 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220704221548.629302-1-vladimir.zapolskiy@linaro.org> <20220704221548.629302-2-vladimir.zapolskiy@linaro.org>
-In-Reply-To: <20220704221548.629302-2-vladimir.zapolskiy@linaro.org>
-From:   Robert Foss <robert.foss@linaro.org>
-Date:   Wed, 6 Jul 2022 15:57:18 +0200
-Message-ID: <CAG3jFyt8aNBQaVZQnU5b3Efz8p6=Ww2Z0SZqM7NfpdcJwdk=4Q@mail.gmail.com>
-Subject: Re: [PATCH 1/2] media: camss: Collect information about a number of
- lite VFEs
-To:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Cc:     "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
-        Todor Tomov <todor.too@gmail.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+References: <20220608142723.103523089@infradead.org> <20220608144516.998681585@infradead.org>
+In-Reply-To: <20220608144516.998681585@infradead.org>
+From:   "Rafael J. Wysocki" <rafael@kernel.org>
+Date:   Wed, 6 Jul 2022 15:59:21 +0200
+Message-ID: <CAJZ5v0jSfvUoReFHjA5A+brExnnEKidak-GnjTbY0CKoaWpGVQ@mail.gmail.com>
+Subject: Re: [PATCH 17/36] acpi_idle: Remove tracing
+To:     Peter Zijlstra <peterz@infradead.org>
+Cc:     rth@twiddle.net, ink@jurassic.park.msu.ru, mattst88@gmail.com,
+        vgupta@kernel.org,
+        Russell King - ARM Linux <linux@armlinux.org.uk>,
+        ulli.kroll@googlemail.com,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Sascha Hauer <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        dl-linux-imx <linux-imx@nxp.com>,
+        Tony Lindgren <tony@atomide.com>,
+        Kevin Hilman <khilman@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, Guo Ren <guoren@kernel.org>,
+        bcain@quicinc.com, Huacai Chen <chenhuacai@kernel.org>,
+        kernel@xen0n.name, Geert Uytterhoeven <geert@linux-m68k.org>,
+        sammy@sammy.net, Michal Simek <monstr@monstr.eu>,
+        Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+        dinguyen@kernel.org, jonas@southpole.se,
+        stefan.kristiansson@saunalahti.fi,
+        Stafford Horne <shorne@gmail.com>,
+        James Bottomley <James.Bottomley@hansenpartnership.com>,
+        Helge Deller <deller@gmx.de>,
+        Michael Ellerman <mpe@ellerman.id.au>,
+        Benjamin Herrenschmidt <benh@kernel.crashing.org>,
+        Paul Mackerras <paulus@samba.org>,
+        Paul Walmsley <paul.walmsley@sifive.com>,
+        Palmer Dabbelt <palmer@dabbelt.com>,
+        Albert Ou <aou@eecs.berkeley.edu>,
+        Heiko Carstens <hca@linux.ibm.com>,
+        Vasily Gorbik <gor@linux.ibm.com>,
+        Alexander Gordeev <agordeev@linux.ibm.com>,
+        Christian Borntraeger <borntraeger@linux.ibm.com>,
+        Sven Schnelle <svens@linux.ibm.com>,
+        Yoshinori Sato <ysato@users.sourceforge.jp>,
+        Rich Felker <dalias@libc.org>,
+        David Miller <davem@davemloft.net>,
+        Richard Weinberger <richard@nod.at>,
+        anton.ivanov@cambridgegreys.com,
+        Johannes Berg <johannes@sipsolutions.net>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>,
+        Dave Hansen <dave.hansen@linux.intel.com>,
+        "the arch/x86 maintainers" <x86@kernel.org>,
+        "H. Peter Anvin" <hpa@zytor.com>, acme@kernel.org,
+        Mark Rutland <mark.rutland@arm.com>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        jolsa@kernel.org, namhyung@kernel.org,
+        Juergen Gross <jgross@suse.com>, srivatsa@csail.mit.edu,
+        amakhalov@vmware.com, pv-drivers@vmware.com,
+        Boris Ostrovsky <boris.ostrovsky@oracle.com>,
+        Chris Zankel <chris@zankel.net>, jcmvbkbc@gmail.com,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Len Brown <lenb@kernel.org>, Pavel Machek <pavel@ucw.cz>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Sudeep Holla <sudeep.holla@arm.com>,
         Andy Gross <agross@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Hans Verkuil <hans.verkuil@cisco.com>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Anup Patel <anup@brainfault.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jon Hunter <jonathanh@nvidia.com>,
+        Jacob Pan <jacob.jun.pan@linux.intel.com>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Yury Norov <yury.norov@gmail.com>,
+        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+        Rasmus Villemoes <linux@rasmusvillemoes.dk>,
+        Steven Rostedt <rostedt@goodmis.org>,
+        Petr Mladek <pmladek@suse.com>, senozhatsky@chromium.org,
+        John Ogness <john.ogness@linutronix.de>,
+        "Paul E. McKenney" <paulmck@kernel.org>,
+        Frederic Weisbecker <frederic@kernel.org>,
+        quic_neeraju@quicinc.com, Josh Triplett <josh@joshtriplett.org>,
+        Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+        Lai Jiangshan <jiangshanlai@gmail.com>,
+        Joel Fernandes <joel@joelfernandes.org>,
+        Juri Lelli <juri.lelli@redhat.com>,
+        Vincent Guittot <vincent.guittot@linaro.org>,
+        Dietmar Eggemann <dietmar.eggemann@arm.com>,
+        Benjamin Segall <bsegall@google.com>,
+        Mel Gorman <mgorman@suse.de>,
+        Daniel Bristot de Oliveira <bristot@redhat.com>,
+        vschneid@redhat.com, jpoimboe@kernel.org,
+        linux-alpha@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-snps-arc@lists.infradead.org,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        Linux OMAP Mailing List <linux-omap@vger.kernel.org>,
+        linux-csky@vger.kernel.org, linux-hexagon@vger.kernel.org,
+        linux-ia64@vger.kernel.org,
+        linux-m68k <linux-m68k@lists.linux-m68k.org>,
+        "open list:BROADCOM NVRAM DRIVER" <linux-mips@vger.kernel.org>,
+        openrisc@lists.librecores.org,
+        Parisc List <linux-parisc@vger.kernel.org>,
+        linuxppc-dev <linuxppc-dev@lists.ozlabs.org>,
+        linux-riscv <linux-riscv@lists.infradead.org>,
+        linux-s390@vger.kernel.org,
+        Linux-sh list <linux-sh@vger.kernel.org>,
+        sparclinux@vger.kernel.org, linux-um@lists.infradead.org,
+        linux-perf-users@vger.kernel.org,
+        virtualization@lists.linux-foundation.org,
+        xen-devel@lists.xenproject.org, linux-xtensa@linux-xtensa.org,
+        ACPI Devel Maling List <linux-acpi@vger.kernel.org>,
+        Linux PM <linux-pm@vger.kernel.org>,
+        linux-clk <linux-clk@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-tegra <linux-tegra@vger.kernel.org>,
+        linux-arch <linux-arch@vger.kernel.org>, rcu@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 5 Jul 2022 at 00:15, Vladimir Zapolskiy
-<vladimir.zapolskiy@linaro.org> wrote:
+On Wed, Jun 8, 2022 at 4:47 PM Peter Zijlstra <peterz@infradead.org> wrote:
 >
-> VFE lite IPs are found on CAMSS with TITAN_TOP power domains, and in
-> some aspects these types of VFEs are different, in particular there
-> is no need to enable VFE power domains to operate over VFE lite IPs.
+> All the idle routines are called with RCU disabled, as such there must
+> not be any tracing inside.
 >
-> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+> Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+
+This actually does some additional code duplication cleanup which
+would be good to mention in the changelog.  Or even move to a separate
+patch for that matter.
+
+Otherwise LGTM.
+
 > ---
->  drivers/media/platform/qcom/camss/camss.c | 20 +++++++++++---------
->  drivers/media/platform/qcom/camss/camss.h |  1 +
->  2 files changed, 12 insertions(+), 9 deletions(-)
+>  drivers/acpi/processor_idle.c |   24 +++++++++++++-----------
+>  1 file changed, 13 insertions(+), 11 deletions(-)
 >
-> diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
-> index 7a929f19e79b..795eebd9af6c 100644
-> --- a/drivers/media/platform/qcom/camss/camss.c
-> +++ b/drivers/media/platform/qcom/camss/camss.c
-> @@ -1170,7 +1170,7 @@ static int camss_init_subdevices(struct camss *camss)
+> --- a/drivers/acpi/processor_idle.c
+> +++ b/drivers/acpi/processor_idle.c
+> @@ -108,8 +108,8 @@ static const struct dmi_system_id proces
+>  static void __cpuidle acpi_safe_halt(void)
+>  {
+>         if (!tif_need_resched()) {
+> -               safe_halt();
+> -               local_irq_disable();
+> +               raw_safe_halt();
+> +               raw_local_irq_disable();
 >         }
->
->         /* note: SM8250 requires VFE to be initialized before CSID */
-> -       for (i = 0; i < camss->vfe_num; i++) {
-> +       for (i = 0; i < camss->vfe_num + camss->vfe_lite_num; i++) {
->                 ret = msm_vfe_subdev_init(camss, &camss->vfe[i],
->                                           &vfe_res[i], i);
->                 if (ret < 0) {
-> @@ -1242,7 +1242,7 @@ static int camss_register_entities(struct camss *camss)
->                 goto err_reg_ispif;
->         }
->
-> -       for (i = 0; i < camss->vfe_num; i++) {
-> +       for (i = 0; i < camss->vfe_num + camss->vfe_lite_num; i++) {
->                 ret = msm_vfe_register_entities(&camss->vfe[i],
->                                                 &camss->v4l2_dev);
->                 if (ret < 0) {
-> @@ -1314,7 +1314,7 @@ static int camss_register_entities(struct camss *camss)
->                                 }
->         } else {
->                 for (i = 0; i < camss->csid_num; i++)
-> -                       for (k = 0; k < camss->vfe_num; k++)
-> +                       for (k = 0; k < camss->vfe_num + camss->vfe_lite_num; k++)
->                                 for (j = 0; j < camss->vfe[k].line_num; j++) {
->                                         struct v4l2_subdev *csid = &camss->csid[i].subdev;
->                                         struct v4l2_subdev *vfe = &camss->vfe[k].line[j].subdev;
-> @@ -1338,7 +1338,7 @@ static int camss_register_entities(struct camss *camss)
->         return 0;
->
->  err_link:
-> -       i = camss->vfe_num;
-> +       i = camss->vfe_num + camss->vfe_lite_num;
->  err_reg_vfe:
->         for (i--; i >= 0; i--)
->                 msm_vfe_unregister_entities(&camss->vfe[i]);
-> @@ -1377,7 +1377,7 @@ static void camss_unregister_entities(struct camss *camss)
->
->         msm_ispif_unregister_entities(camss->ispif);
->
-> -       for (i = 0; i < camss->vfe_num; i++)
-> +       for (i = 0; i < camss->vfe_num + camss->vfe_lite_num; i++)
->                 msm_vfe_unregister_entities(&camss->vfe[i]);
 >  }
 >
-> @@ -1579,13 +1579,15 @@ static int camss_probe(struct platform_device *pdev)
->                 camss->version = CAMSS_845;
->                 camss->csiphy_num = 4;
->                 camss->csid_num = 3;
-> -               camss->vfe_num = 3;
-> +               camss->vfe_num = 2;
-> +               camss->vfe_lite_num = 1;
->         } else if (of_device_is_compatible(dev->of_node,
->                                            "qcom,sm8250-camss")) {
->                 camss->version = CAMSS_8250;
->                 camss->csiphy_num = 6;
->                 camss->csid_num = 4;
-> -               camss->vfe_num = 4;
-> +               camss->vfe_num = 2;
-> +               camss->vfe_lite_num = 2;
+> @@ -524,16 +524,21 @@ static int acpi_idle_bm_check(void)
+>         return bm_status;
+>  }
+>
+> -static void wait_for_freeze(void)
+> +static __cpuidle void io_idle(unsigned long addr)
+>  {
+> +       /* IO port based C-state */
+> +       inb(addr);
+> +
+>  #ifdef CONFIG_X86
+>         /* No delay is needed if we are in guest */
+>         if (boot_cpu_has(X86_FEATURE_HYPERVISOR))
+>                 return;
+>  #endif
+> -       /* Dummy wait op - must do something useless after P_LVL2 read
+> -          because chipsets cannot guarantee that STPCLK# signal
+> -          gets asserted in time to freeze execution properly. */
+> +       /*
+> +        * Dummy wait op - must do something useless after P_LVL2 read
+> +        * because chipsets cannot guarantee that STPCLK# signal
+> +        * gets asserted in time to freeze execution properly.
+> +        */
+>         inl(acpi_gbl_FADT.xpm_timer_block.address);
+>  }
+>
+> @@ -553,9 +558,7 @@ static void __cpuidle acpi_idle_do_entry
+>         } else if (cx->entry_method == ACPI_CSTATE_HALT) {
+>                 acpi_safe_halt();
 >         } else {
->                 return -EINVAL;
+> -               /* IO port based C-state */
+> -               inb(cx->address);
+> -               wait_for_freeze();
+> +               io_idle(cx->address);
 >         }
-> @@ -1607,8 +1609,8 @@ static int camss_probe(struct platform_device *pdev)
->                         return -ENOMEM;
->         }
 >
-> -       camss->vfe = devm_kcalloc(dev, camss->vfe_num, sizeof(*camss->vfe),
-> -                                 GFP_KERNEL);
-> +       camss->vfe = devm_kcalloc(dev, camss->vfe_num + camss->vfe_lite_num,
-> +                                 sizeof(*camss->vfe), GFP_KERNEL);
->         if (!camss->vfe)
->                 return -ENOMEM;
+>         perf_lopwr_cb(false);
+> @@ -577,8 +580,7 @@ static int acpi_idle_play_dead(struct cp
+>                 if (cx->entry_method == ACPI_CSTATE_HALT)
+>                         safe_halt();
+>                 else if (cx->entry_method == ACPI_CSTATE_SYSTEMIO) {
+> -                       inb(cx->address);
+> -                       wait_for_freeze();
+> +                       io_idle(cx->address);
+>                 } else
+>                         return -ENODEV;
 >
-> diff --git a/drivers/media/platform/qcom/camss/camss.h b/drivers/media/platform/qcom/camss/camss.h
-> index 0db80cadbbaa..3acd2b3403e8 100644
-> --- a/drivers/media/platform/qcom/camss/camss.h
-> +++ b/drivers/media/platform/qcom/camss/camss.h
-> @@ -97,6 +97,7 @@ struct camss {
->         struct csid_device *csid;
->         struct ispif_device *ispif;
->         int vfe_num;
-> +       int vfe_lite_num;
->         struct vfe_device *vfe;
->         atomic_t ref_count;
->         int genpd_num;
-> --
-> 2.33.0
 >
-
-Reviewed-by: Robert Foss <robert.foss@linaro.org>
+>
