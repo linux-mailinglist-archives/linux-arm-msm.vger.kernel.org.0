@@ -2,57 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E8D7D5685B0
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 12:36:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B66DF5685B6
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 12:37:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230525AbiGFKgE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Jul 2022 06:36:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49982 "EHLO
+        id S232422AbiGFKhU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Jul 2022 06:37:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50748 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231910AbiGFKgD (ORCPT
+        with ESMTP id S229898AbiGFKhT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Jul 2022 06:36:03 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84BA8B1E;
-        Wed,  6 Jul 2022 03:35:59 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id v16so9984771wrd.13;
-        Wed, 06 Jul 2022 03:35:59 -0700 (PDT)
+        Wed, 6 Jul 2022 06:37:19 -0400
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFEF82717B;
+        Wed,  6 Jul 2022 03:37:18 -0700 (PDT)
+Received: by mail-ej1-x631.google.com with SMTP id sb34so26289953ejc.11;
+        Wed, 06 Jul 2022 03:37:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:date:from:to:cc:subject:references:mime-version
          :content-disposition:in-reply-to;
-        bh=KBBe1sXw+OvOoMBGDgq+/LVehb93MMTHSQ7lhj1tzyc=;
-        b=eWlqEXGgSssDtjj0zt3fmQJU5ZXzuhdVeftxszhTF2XKpjodmgmtiHeMXUMZDHjE1x
-         oNlFlUr0oEwbUqBf0OmGcuQn/gHnqaLCZG1xhyOPKCKDBcsse0N0EWBwVuI+z2HfKWvq
-         108aOW/967Wy8gLLRdrroTtvKkkHMp65LhyL2c/KOGy1mbqHA48fZhmqPL1BtcvHPf2Z
-         Dkayz+dkfK4oS1/0rnhiiCJPD4GerZO5l3dZ+UO7MEY/CqQdkNAdfLo2zONSY6HSKCoH
-         3nKoKe0U5HwAuF028wnmFNzlg20qdOU6mMVd88bmD6ABE6gaIL3lcV/4VbrIwcQieFY4
-         nrdw==
+        bh=MdRqT9TlKdwtrSOPprK+WxAXXd6G2UIUMtOdNMZWkdg=;
+        b=kUYGi0zyaBVHlWyW2J/RjJbjDeIvRLSOl1zOC96AGnE90aip4WIhWrH3IF+8Ngfa6s
+         m+hVdOWs3loi+YVcBnxcJsSddoM8Ad8FfSiJEjTT1j/LgZ62Syhtxx9GsGdSaSizpUmO
+         YQY1O1D386wLK3mgr7bqOGVABn6kvLYRsjbLk7am351BOTHd7k9wouiHeDZbIdx2aqYd
+         Q+1uPAnYne6cG9i0a6rdbjhK+pwadpBzYVWEkRKpG66NU3D72tCYbQCrLBI8+ju/m6ja
+         +mXn0Hid725+tgu6EG14lS1ThkbyxNckigH3OsStHi9Tyu8p1oYkIlixA5teJY6L1ksW
+         2z8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:from:to:cc:subject:references
          :mime-version:content-disposition:in-reply-to;
-        bh=KBBe1sXw+OvOoMBGDgq+/LVehb93MMTHSQ7lhj1tzyc=;
-        b=Jc87qoiJDB/pakIFmvM9oLzBJ08VMNIz1ohS3098/D0G7Rc7PuOwCXDK3t4716o2no
-         umiCQuYcemOPKPwsDjelLqAWSMGlRkxrV+Htw/A1182D1sHuEIFUko3VIyP6mTRqd+1T
-         7hC94LSH05GcAg0VZMzNXDQIJqucdnGHzUu7nT4yk8V3WZHMj+DC2s5jhes91V0JTO2Q
-         qyPXb2FUy11ZmRIdPPSMX+aY527DWhoJkogjVT6tGhOwPzi+F9qQHij36LAskXHp3CuJ
-         nXXvYwTdZdd36/v6zE85xVHc4+FA9NFv3+2/uksUE08/A3xecTCQBeIgGA/anp20Mva1
-         NMQA==
-X-Gm-Message-State: AJIora9Y1ZH6xvnLZN1eQHjYeS4WFxPVbtYfun8cDlVZdl543ikMT+DC
-        Nbt1aLZWNU5EE/GYr+FNs5U=
-X-Google-Smtp-Source: AGRyM1uzMhA/xmuV812rz7IMzLdVhJ4oNCHJPcmFPJSfIZJ8KoE3xQf6AdF2nD/vIlAUbXvrNhmB5A==
-X-Received: by 2002:a05:6000:18d2:b0:21d:6661:60b5 with SMTP id w18-20020a05600018d200b0021d666160b5mr17782534wrq.475.1657103757864;
-        Wed, 06 Jul 2022 03:35:57 -0700 (PDT)
+        bh=MdRqT9TlKdwtrSOPprK+WxAXXd6G2UIUMtOdNMZWkdg=;
+        b=m7tmm9p+hzgX0RGsgkmSWeLIM//B3mZuDSLmh2mevhXzjMvakFMAYZk5pmL8UybOnb
+         Y5wxEtP75Qy5gwnp3gioBWE7TqZZzcOUwKq8ej7H4h477joi/NFkxYod9ZbpPNk8SZYy
+         uKktt9PsZODz6wxBvIPRjcPxF6XWxpB0ys4WFBf8bJZukm8BeA4gdIZ1LEAoUWJXcWRV
+         k3uvhX375Tb4eKWhqXebJVBg5AmYj4ut6xYrQqYW9sUSAVhe/QZYGJxrrKji24DDrOYF
+         3stilLuB7+MwRH8gCG7bXPShAjROCYY/cPBn3XIl6Vmpb1wauadQpY/66aEwr4tAO/HX
+         zDTQ==
+X-Gm-Message-State: AJIora/wg2W5kspFVKBxpa/P8ppB/kQoPsHGgrjCQVCuT3bm/r2ZZqtQ
+        RCu4EnZKQOQ/2nfcVXW/6r8=
+X-Google-Smtp-Source: AGRyM1tAarnBTiCdC/ZPJSTY7R7C2gOasl5h7rc83XMHrb1C7HWHD3j5JXHa5OWdynIt1UhhJ6BSqA==
+X-Received: by 2002:a17:907:2d9e:b0:726:a03a:16c4 with SMTP id gt30-20020a1709072d9e00b00726a03a16c4mr36829048ejc.742.1657103837343;
+        Wed, 06 Jul 2022 03:37:17 -0700 (PDT)
 Received: from Ansuel-xps. (93-42-70-190.ip85.fastwebnet.it. [93.42.70.190])
-        by smtp.gmail.com with ESMTPSA id h15-20020a1ccc0f000000b0039749b01ea7sm33768215wmb.32.2022.07.06.03.35.56
+        by smtp.gmail.com with ESMTPSA id o19-20020a17090637d300b006ff0b457cdasm17319454ejc.53.2022.07.06.03.37.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 06 Jul 2022 03:35:57 -0700 (PDT)
-Message-ID: <62c5658d.1c69fb81.1dc23.6884@mx.google.com>
-X-Google-Original-Message-ID: <YsVhqBMmy0WZbPon@Ansuel-xps.>
-Date:   Wed, 6 Jul 2022 12:19:20 +0200
+        Wed, 06 Jul 2022 03:37:16 -0700 (PDT)
+Message-ID: <62c565dc.1c69fb81.a4566.e9b2@mx.google.com>
+X-Google-Original-Message-ID: <YsVh+AKZ/ZAshXzt@Ansuel-xps.>
+Date:   Wed, 6 Jul 2022 12:20:40 +0200
 From:   Christian Marangi <ansuelsmth@gmail.com>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
@@ -62,15 +62,15 @@ Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/5] dt-bindings: clock: fix wrong clock documentation
- for qcom,rpmcc
+Subject: Re: [PATCH 2/5] ARM: DTS: qcom: fix dtbs_check warning with new
+ rpmcc clocks
 References: <20220705202837.667-1-ansuelsmth@gmail.com>
- <20220705202837.667-2-ansuelsmth@gmail.com>
- <CAA8EJpoXOwooUYic-_G6jG7MBiHo2mfoKfR0jBDmRy0DsmMNEw@mail.gmail.com>
+ <20220705202837.667-3-ansuelsmth@gmail.com>
+ <18e40247-7151-b50a-97fe-00ee88f47d9b@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAA8EJpoXOwooUYic-_G6jG7MBiHo2mfoKfR0jBDmRy0DsmMNEw@mail.gmail.com>
+In-Reply-To: <18e40247-7151-b50a-97fe-00ee88f47d9b@linaro.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
         RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
@@ -81,68 +81,25 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jul 06, 2022 at 11:23:46AM +0300, Dmitry Baryshkov wrote:
-> On Tue, 5 Jul 2022 at 23:56, Christian Marangi <ansuelsmth@gmail.com> wrote:
-> >
-> > qcom,rpmcc describe 2 different kind of device.
-> > Currently we have definition for rpm-smd based device but we lack
-> > Documentation for simple rpm based device.
-> >
-> > Add the missing clk for ipq806x, apq8060, msm8660 and apq8064 and
-> > provide and additional example.
-> >
-> > Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-> > ---
-> >  .../devicetree/bindings/clock/qcom,rpmcc.yaml | 77 ++++++++++++++++++-
-> >  1 file changed, 73 insertions(+), 4 deletions(-)
-> >
-> > diff --git a/Documentation/devicetree/bindings/clock/qcom,rpmcc.yaml b/Documentation/devicetree/bindings/clock/qcom,rpmcc.yaml
-> > index 9d296b89a8d0..028eb0277495 100644
-> > --- a/Documentation/devicetree/bindings/clock/qcom,rpmcc.yaml
-> > +++ b/Documentation/devicetree/bindings/clock/qcom,rpmcc.yaml
-> [,,,,]
+On Wed, Jul 06, 2022 at 09:44:04AM +0200, Krzysztof Kozlowski wrote:
+> On 05/07/2022 22:28, Christian Marangi wrote:
+> > Fix dtbs_check warning for new rpmcc Documentation changes and add the
+> > required clocks.
 > 
-> > +
-> > +then:
-> > +  properties:
-> > +    clocks:
-> > +      description: pxo clock
-> > +
-> > +    clock-names:
-> > +      const: pxo
-> > +
-> > +  required:
-> > +    - clocks
-> > +    - clock-names
-> 
-> I don't think you can not mark these properties as required, older
-> schemas do not have them.
+> There is no warning in the kernel, right? So the commit is not correct.
 >
 
-Well considering we changed rpmcc to parent_data and rpm clock require
-pxo clock as parents it seems to be they should be required.
+Oh ok, the warning is generated by the new Documentation.
 
-Actually no idea why this wasn't required before. Probably because this
-schema described only rpm-smd and not old rpm?
-
-> > +
-> > +else:
-> > +  if:
-> > +    properties:
-> > +      compatible:
-> > +        contains:
-> > +          const: qcom,rpmcc-apq8064
-> > +  then:
-> > +    properties:
-> > +      clocks:
-> > +        items:
-> > +          - description: pxo clock
-> > +          - description: cxo clock
-> [...]
+> Only the second part of your sentence applies, but you should extend it.
 > 
-> -- 
-> With best wishes
-> Dmitry
+
+Ok will reword this.
+
+> 
+> 
+> Best regards,
+> Krzysztof
 
 -- 
 	Ansuel
