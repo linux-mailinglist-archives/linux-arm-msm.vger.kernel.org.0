@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4FAA9568B8A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 16:42:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 55A42568B96
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Jul 2022 16:45:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232564AbiGFOmg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Jul 2022 10:42:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33146 "EHLO
+        id S231892AbiGFOpR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Jul 2022 10:45:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35884 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233475AbiGFOmf (ORCPT
+        with ESMTP id S233507AbiGFOpQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Jul 2022 10:42:35 -0400
-Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61078237D3
-        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Jul 2022 07:42:33 -0700 (PDT)
-Received: by mail-lj1-x22d.google.com with SMTP id a11so18736491ljb.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Jul 2022 07:42:33 -0700 (PDT)
+        Wed, 6 Jul 2022 10:45:16 -0400
+Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24991255B2
+        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Jul 2022 07:45:15 -0700 (PDT)
+Received: by mail-lj1-x22e.google.com with SMTP id y18so7882627ljj.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Jul 2022 07:45:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=6Xe30gHq1/bKVOvvpUolv/zq7ZNGoEVUN1+qrlGNB7M=;
-        b=dJUCvaARPZnU/5Wz/bruRjeC5zre5Fkd+rHtbW9xlKXjHpxRqKtrRhJcWNIWfV5fzh
-         pg3javD/nGaSKyy0wWmt2m/46hnr7UXcRv6EDjftRg8+jSKVhzttwvOhs+hJrLXa+Zy4
-         orylxwG+eTdCwvOUj7V0UGvV6BOw7ZcFnOjIxY7/zGkI8PL7c7S+ZxwymH7w5dKU4m6M
-         x7uiNd6N5FxbDzKlX3m3MY7tJEsOEPZHOvWZeAnPQ8xtWQcRjk83ZCareMtKaVvKAO8f
-         d9LjUF34CJAHo0ejzxdwalSneiYiZVkXttsijm4HUh/lrIGUPSHKgDW3jflNv1PPQO41
-         hWeg==
+        bh=fqggrorsOMK1/Q3LUERXKOHSnzzVH9VjKHdlcLxDeU8=;
+        b=UfNLXzs0clDz1kFDTuFHM401TPlWx0oEXl4Zy45Pkg6e8i4u2He8PpJj1gbdHcWXTH
+         ITrRZ7pdfMEe2ucnr8u7TZlIYGuHU9BoOF4WquKu00uCRsscYv2rMr9U/UUXt39tvZB4
+         Ath1M8cJJAa3bjfz+DLhUuYZZm1Zal6rwQwQFhfqTkRrJD/cXMnHmDZHKcMC7v8kWrVl
+         OJtUgTqPEe+OslFWI0usaktZOVwUfG1mnZ++TW468AHCgqhnz2Ld4xBSfgYnDCgZGW81
+         lUpdNAKH3j1Wv21f+8N0rZZrI7UbEF0TrrWq4DBHliqjNxVDytprutNVJK/xXu8zmCrt
+         zHBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=6Xe30gHq1/bKVOvvpUolv/zq7ZNGoEVUN1+qrlGNB7M=;
-        b=cRtti3ziKO8Jb+Y/0OqFIren4XfXqpaOYZ8Kyjvs8zro7sPPXzBb+ul12V1UfkmrO+
-         4it2UHqS4VTy0UK/KIf+vks6BP/4viWAXcnCufctVCBGvIgElTSiVK6Lelcdl/MRdFFI
-         PJISEaDnPYO5ZweRzQF0oaWbsFMBLeD1DrpnkcqhtXjhoyRqVIS06KKVZ9/O24SYyWzJ
-         wROzzVbIPoYW8vizq3RYCYl/Sa4IpvconxevAtv/trLXuxW9/acAU65ma7uykNTWfgZG
-         LssdWt1DHLg2ZiOiJS1Nx8QuntfPy7zTqDx7eY7eaeo0RGe21jSStZFsWKdOY5OpZF3S
-         2Qpg==
-X-Gm-Message-State: AJIora91VgceaE3xlDpR7J+/B3W4ssII+ySlBbPxywX+9rK5Mu8v1keT
-        SvJFPmZ4LgTnxGtlrAOWTROGeA==
-X-Google-Smtp-Source: AGRyM1u9DKYFBoJu0fPNHXOP5UXld700MJ8EcMFqpYaPedDBT5bVOHjcVoKn+YYrzqaUozSqcd4nBg==
-X-Received: by 2002:a2e:99d0:0:b0:25d:33e7:2b01 with SMTP id l16-20020a2e99d0000000b0025d33e72b01mr5207636ljj.146.1657118551635;
-        Wed, 06 Jul 2022 07:42:31 -0700 (PDT)
+        bh=fqggrorsOMK1/Q3LUERXKOHSnzzVH9VjKHdlcLxDeU8=;
+        b=Z0RKBnS2cQEEdplB6wN5YUOGRO/Qt4NzxlIbIhKhUGE9Gx4A+n/Ls8TlMqh6okYr4f
+         dnvls2YkDWDifdJ5JxaASZ8xg44yumcahZ1zseOyw7qbfWzKFlTtAx7DizBCu0+GWcWb
+         bHnNK0QCQTF/8G3Yqun+h2Q8bwjhvs+StMGAOsoasxHI85x5Lp6QaqpkNFLgE0CFEPu9
+         0GN9UHRGqYu0wHwPoRYy7MA0U8HAcOhnaVBNhLoj9qmBhiTy+Xu10sFB4RbEhAIZWz3m
+         Lj7SrDx5TPmYYuwqfzXF30YD5OwgjFo8o726yYjJ1NPn2VaNSWqIqxNSEhDg5PnHPPgg
+         vI2A==
+X-Gm-Message-State: AJIora8dUzWFVXsprVMnyc/GZEJU1in2O4doCjQhYNw73D4IqNpbr1NU
+        x63j1DM00hVRsrXqibo35ZFNAw==
+X-Google-Smtp-Source: AGRyM1tFs7JadmbYZAM8ur0wEsMyO4m9qic6SDkHuwKo06yaUIEjfU7a5sI+qBgJGUo1SzK9Os5xYw==
+X-Received: by 2002:a05:651c:a0c:b0:25b:ba85:6db5 with SMTP id k12-20020a05651c0a0c00b0025bba856db5mr24652786ljq.351.1657118713236;
+        Wed, 06 Jul 2022 07:45:13 -0700 (PDT)
 Received: from [192.168.1.52] ([84.20.121.239])
-        by smtp.gmail.com with ESMTPSA id s8-20020a056512202800b0047f750ecd8csm6319194lfs.67.2022.07.06.07.42.30
+        by smtp.gmail.com with ESMTPSA id m10-20020a056512358a00b0047255d21129sm6337867lfr.88.2022.07.06.07.45.12
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 06 Jul 2022 07:42:31 -0700 (PDT)
-Message-ID: <0cbf9425-7fa3-56fa-286e-f9d87424a6f3@linaro.org>
-Date:   Wed, 6 Jul 2022 16:42:30 +0200
+        Wed, 06 Jul 2022 07:45:12 -0700 (PDT)
+Message-ID: <58371fc0-ef6e-dbb4-88bf-221e8e1c93e5@linaro.org>
+Date:   Wed, 6 Jul 2022 16:45:11 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.11.0
-Subject: Re: [PATCH 03/13] ARM: dts: qcom: add missing rpm regulators and
- cells for ipq8064
+Subject: Re: [PATCH 08/13] ARM: dts: qcom: fix dtc warning for missing
+ #address-cells for ipq8064
 Content-Language: en-US
 To:     Christian Marangi <ansuelsmth@gmail.com>
 Cc:     Andy Gross <agross@kernel.org>,
@@ -66,11 +66,11 @@ Cc:     Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, Jonathan McDowell <noodles@earth.li>
 References: <20220705133917.8405-1-ansuelsmth@gmail.com>
- <20220705133917.8405-4-ansuelsmth@gmail.com>
- <e81344f6-7da5-a209-2785-d540e41f3958@linaro.org>
- <62c56348.1c69fb81.d2cad.2584@mx.google.com>
+ <20220705133917.8405-9-ansuelsmth@gmail.com>
+ <7c3ef50a-2a4d-4b75-3aab-3bfbf12e06c4@linaro.org>
+ <62c563dc.1c69fb81.e405a.e7c0@mx.google.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <62c56348.1c69fb81.d2cad.2584@mx.google.com>
+In-Reply-To: <62c563dc.1c69fb81.e405a.e7c0@mx.google.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -83,61 +83,22 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 06/07/2022 12:09, Christian Marangi wrote:
-> On Wed, Jul 06, 2022 at 10:34:16AM +0200, Krzysztof Kozlowski wrote:
+On 06/07/2022 12:12, Christian Marangi wrote:
+> On Wed, Jul 06, 2022 at 10:37:47AM +0200, Krzysztof Kozlowski wrote:
 >> On 05/07/2022 15:39, Christian Marangi wrote:
->>> Add cells definition for rpm node and add missing regulators for the 4
->>> regulator present on ipq8064. There regulators are controlled by rpm and
->>> to correctly works gsbi4_i2c require to be NEVER disabled or rpm will
->>> reject any regulator change request.
+>>> Fix dtc warning for missing #address-cells for ipq8064.
+>>
+>> Paste the applicable part of warning in the commit log.
+>>
 >>>
->>> Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
->>> Tested-by: Jonathan McDowell <noodles@earth.li>
->>> ---
->>>  arch/arm/boot/dts/qcom-ipq8064.dtsi | 36 +++++++++++++++++++++++++++++
->>>  1 file changed, 36 insertions(+)
->>>
->>> diff --git a/arch/arm/boot/dts/qcom-ipq8064.dtsi b/arch/arm/boot/dts/qcom-ipq8064.dtsi
->>> index 1b4b72723ead..c0b05d2a2d6d 100644
->>> --- a/arch/arm/boot/dts/qcom-ipq8064.dtsi
->>> +++ b/arch/arm/boot/dts/qcom-ipq8064.dtsi
->>> @@ -844,10 +844,46 @@ rpm: rpm@108000 {
->>>  			clocks = <&gcc RPM_MSG_RAM_H_CLK>;
->>>  			clock-names = "ram";
->>>  
->>> +			#address-cells = <1>;
->>> +			#size-cells = <0>;
 >>
->> Why adding these?
 >>
+>> Best regards,
+>> Krzysztof
 > 
-> Fix dt warning, will split and put it in a separate commit.
-> 
->>> +
->>>  			rpmcc: clock-controller {
->>>  				compatible = "qcom,rpmcc-ipq806x", "qcom,rpmcc";
->>>  				#clock-cells = <1>;
->>>  			};
->>> +
->>> +			smb208_regulators: regulators {
->>> +				compatible = "qcom,rpm-smb208-regulators";
->>> +				status = "okay";
->>
->> Was the node disabled?
->>
-> 
-> smb208 is the normal and advised way to handle regulators on this
-> platform. Some device may want to not follow that and implement their
-> own regulator bypassing rpm so we add a status and on the current device
-> present upstream we set it disabled as it does use different regulators
-> implementation.
+> Can I squash here the warning from the smb patch?
 
-You just added a new node and say we set it as disabled... so the code
-is not correct, because you enabled it. So again my question is valid -
-was the node already existing and was it disabled?
-
-> 
-
+Do you fix the same stuff in both commits?
 
 Best regards,
 Krzysztof
