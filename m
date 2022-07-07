@@ -2,63 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 159AF569BD9
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Jul 2022 09:43:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A3CED569C9C
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Jul 2022 10:08:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235101AbiGGHjD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Jul 2022 03:39:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55180 "EHLO
+        id S234968AbiGGIEm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Jul 2022 04:04:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49688 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234758AbiGGHip (ORCPT
+        with ESMTP id S234922AbiGGIEk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Jul 2022 03:38:45 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0B1E326F2;
-        Thu,  7 Jul 2022 00:38:36 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 5CDDC61B0C;
-        Thu,  7 Jul 2022 07:38:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2C07C3411E;
-        Thu,  7 Jul 2022 07:38:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1657179515;
-        bh=dEH00sPee+QPLnv4vCT0+HRB/HiN2iqpU4CrPolA87A=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=pr3afQObb2yiXatw9whVzqKy3t1SWArA7c5qdephf6Eu2In0y9jjAc7uJkyHaTtRQ
-         RizEOEFsIZ8ZfYclMF/ClpnGUxwRm+FlHbZmOGit74tSA003KaUDCOvUAkd3O7XGi+
-         RsUVglrGvjxr/xQcv5WoRFoPH58lxw9lFfmKQ97XAb5XKWTooPHvbV6K9nE3Izel7v
-         RnY5El1xSJSDLX6wvLHo0J4wwvFkigGOqHNRrh7mGyxcsLjW7ODwbxoWtWeDX6wzIB
-         tFdHv3k1nKrVDxr3vbskQvBXU11LmmL1A9HeiVBPQxHPuuksR9/L7VlVtWl/b9RdLz
-         NIikfJJ7HAgvQ==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1o9M5s-0004XB-V3; Thu, 07 Jul 2022 09:38:37 +0200
-Date:   Thu, 7 Jul 2022 09:38:36 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        Thu, 7 Jul 2022 04:04:40 -0400
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBC1025C5
+        for <linux-arm-msm@vger.kernel.org>; Thu,  7 Jul 2022 01:04:39 -0700 (PDT)
+Received: by mail-lj1-x236.google.com with SMTP id a39so21252346ljq.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Jul 2022 01:04:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=j6cTL70t81aTnV9x0x+mDaCfTVWwcqwkSWQQpbKRysc=;
+        b=je6ZJ8G24GI5T7f3zVncXY2R3x/GyryMMiZeWydkL5djDwH1y3R7eh9Jq7GZ+VjSmb
+         a+eZLklX94jyOz1YD9eehlDaxgYhFP6qzL8qeUH37Tl8CnuJ36fytFm/LKbEq5ghCWY7
+         52C6lpBA/LauPnoSxudh+wPUKILLcfTJMzWPlgNch+LCoN5IgLz2Ehm9S+caQ5g3MFfv
+         lfFYLqzsKAOcxRUzYSGYFwsSx9YRZZcaNuffd5QCnza1wOsBnwCksWBuR8uwRT0ydprz
+         tl8NMIphq/6HsC8d9JJPNgkNAqR+qMtNZJQSjeh7/RRcJbvchImmlZUiQ7Wr3633/+3q
+         N/ag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=j6cTL70t81aTnV9x0x+mDaCfTVWwcqwkSWQQpbKRysc=;
+        b=IGcWG6VK0wwSog0jPQPak28ot5hiKAPGQZ+yD6aYAbGs5M04+lszhTo+mhcEpmxpdp
+         k4DgOBv4BveRTOELSxwu8/nSOIDB6sHslBJfq36e7RAZ/xP7qd13GB7N9nKfHAyUEVkW
+         E5cv+fti6p1vlXR8wpK9FLyYwHf94gY5J9kGr9MzWGuRL8q5WkiYwjsumwWMdiyEClup
+         fuw8Eh/4rvi5lg4c6TOJMyao80ObLdhoPtVJ89QtHHXh+UZcpoAG6GPuBmbxigKFVWW2
+         /TCOSPf4prH8KsW5B+e6onqf8NDsu/adBpMuhDpGD0BAEJKtAxJ8JripkwXcViHvXzlh
+         rguw==
+X-Gm-Message-State: AJIora9TVB+n3Wg4H4SsLuOrWFIwhBw23oiKo5m3zItzglBKYU2DcwS7
+        RiRYXX6OukQklBoElnx59Thpaw==
+X-Google-Smtp-Source: AGRyM1s/K+WamhzckF/8xnMBEQZ4YAGMlkNm4IeBoow2nLBL8pH0v4jvCtU+LTl5jPsnxiMxi2PgOg==
+X-Received: by 2002:a05:651c:511:b0:25b:f78e:cb30 with SMTP id o17-20020a05651c051100b0025bf78ecb30mr22584914ljp.327.1657181078252;
+        Thu, 07 Jul 2022 01:04:38 -0700 (PDT)
+Received: from krzk-bin.home ([84.20.121.239])
+        by smtp.gmail.com with ESMTPSA id s6-20020a056512214600b0047b0f2d7650sm6697187lfr.271.2022.07.07.01.04.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 07 Jul 2022 01:04:37 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Ulf Hansson <ulf.hansson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-clk@vger.kernel.org
-Subject: Re: [PATCH 2/2] phy: qcom-qmp-ufs: provide symbol clocks
-Message-ID: <YsaNfK64RGNp/ZvT@hovoldconsulting.com>
-References: <20220620153956.1723269-1-dmitry.baryshkov@linaro.org>
- <20220620153956.1723269-2-dmitry.baryshkov@linaro.org>
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Cc:     Douglas Anderson <dianders@chromium.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 0/5] dt-bindings: mmc: / ARM: qcom: correct reg-names and clock entries
+Date:   Thu,  7 Jul 2022 09:51:46 +0200
+Message-Id: <20220707075151.67335-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220620153956.1723269-2-dmitry.baryshkov@linaro.org>
-X-Spam-Status: No, score=-7.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -66,79 +76,37 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jun 20, 2022 at 06:39:56PM +0300, Dmitry Baryshkov wrote:
-> Register three UFS symbol clocks (ufs_rx_symbol_0_clk_src,
-> ufs_rx_symbol_1_clk_src ufs_tx_symbol_0_clk_src). Register OF clock
-> provider to let other devices link these clocks through the DT.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  drivers/phy/qualcomm/phy-qcom-qmp-ufs.c | 55 +++++++++++++++++++++++++
->  1 file changed, 55 insertions(+)
-> 
-> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-> index a2526068232b..0f31d3255897 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-> @@ -1167,6 +1167,54 @@ static int qcom_qmp_phy_ufs_clk_init(struct device *dev, const struct qmp_phy_cf
->  	return devm_clk_bulk_get(dev, num, qmp->clks);
->  }
->  
-> +static void phy_clk_release_provider(void *res)
-> +{
-> +	of_clk_del_provider(res);
-> +}
-> +
-> +#define UFS_SYMBOL_CLOCKS 3
-> +
-> +static int phy_symbols_clk_register(struct qcom_qmp *qmp, struct device_node *np)
-> +{
-> +	struct clk_hw_onecell_data *clk_data;
-> +	struct clk_hw *hw;
-> +	int ret;
-> +
-> +	clk_data = devm_kzalloc(qmp->dev, struct_size(clk_data, hws, UFS_SYMBOL_CLOCKS), GFP_KERNEL);
+Hi,
 
-Missing error handling.
+No dependencies.  DT bindings patches are independent from DTS, so they can go
+via separate tree.
 
-> +	clk_data->num = UFS_SYMBOL_CLOCKS;
-> +
-> +	hw = devm_clk_hw_register_fixed_rate(qmp->dev, "ufs_rx_symbol_0_clk_src",
+Best regards,
+Krzysztof
 
-Don't the clock names need to be globally unique and hence either come
-from the devicetree or encode the device topology some other way?
+Krzysztof Kozlowski (5):
+  dt-bindings: mmc: sdhci-msm: fix reg-names entries
+  dt-bindings: mmc: sdhci-msm: constrain reg-names at least for one
+    variant
+  ARM: dts: qcom: align SDHCI reg-names with DT schema
+  arm64: dts: qcom: align SDHCI reg-names with DT schema
+  ARM: dts: qcom: align SDHCI clocks with DT schema
 
-We have two UFS PHYs on sc8280xp for example.
+ .../devicetree/bindings/mmc/sdhci-msm.yaml    | 40 +++++++++++++------
+ arch/arm/boot/dts/qcom-apq8084.dtsi           | 16 ++++----
+ arch/arm/boot/dts/qcom-ipq4019.dtsi           |  5 ++-
+ arch/arm/boot/dts/qcom-msm8226.dtsi           | 24 +++++------
+ arch/arm/boot/dts/qcom-msm8974.dtsi           | 24 +++++------
+ arch/arm/boot/dts/qcom-msm8974pro.dtsi        |  6 +--
+ arch/arm/boot/dts/qcom-sdx65.dtsi             |  2 +-
+ arch/arm64/boot/dts/qcom/ipq8074.dtsi         |  2 +-
+ arch/arm64/boot/dts/qcom/msm8916.dtsi         |  4 +-
+ arch/arm64/boot/dts/qcom/msm8953.dtsi         |  4 +-
+ arch/arm64/boot/dts/qcom/msm8994.dtsi         |  4 +-
+ arch/arm64/boot/dts/qcom/msm8996.dtsi         |  4 +-
+ arch/arm64/boot/dts/qcom/msm8998.dtsi         |  2 +-
+ 13 files changed, 77 insertions(+), 60 deletions(-)
 
-> +							   NULL, 0, 0);
-> +	if (IS_ERR(hw))
-> +		return PTR_ERR(hw);
-> +
-> +	clk_data->hws[0] = hw;
-> +
-> +	hw = devm_clk_hw_register_fixed_rate(qmp->dev, "ufs_rx_symbol_1_clk_src",
-> +							   NULL, 0, 0);
-> +	if (IS_ERR(hw))
-> +		return PTR_ERR(hw);
-> +
-> +	clk_data->hws[1] = hw;
-> +
-> +	hw = devm_clk_hw_register_fixed_rate(qmp->dev, "ufs_tx_symbol_0_clk_src",
-> +							   NULL, 0, 0);
-> +	if (IS_ERR(hw))
-> +		return PTR_ERR(hw);
-> +
-> +	clk_data->hws[2] = hw;
-> +
-> +	ret = of_clk_add_hw_provider(np, of_clk_hw_onecell_get, clk_data);
-> +	if (ret)
-> +		return ret;
-> +
-> +        /*
-> +         * Roll a devm action because the clock provider is the child node, but
-> +         * the child node is not actually a device.
-> +         */
-> +        return devm_add_action_or_reset(qmp->dev, phy_clk_release_provider, np);
-> +}
+-- 
+2.34.1
 
-Johan
