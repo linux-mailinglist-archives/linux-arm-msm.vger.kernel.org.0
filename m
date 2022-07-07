@@ -2,65 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4BE25569808
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Jul 2022 04:31:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BBE43569802
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Jul 2022 04:31:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234876AbiGGCbf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Jul 2022 22:31:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39974 "EHLO
+        id S234014AbiGGCbh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Jul 2022 22:31:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39976 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234860AbiGGCbc (ORCPT
+        with ESMTP id S234709AbiGGCbc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Wed, 6 Jul 2022 22:31:32 -0400
-Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68A9F2E690
-        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Jul 2022 19:31:31 -0700 (PDT)
-Received: by mail-oi1-x229.google.com with SMTP id be10so21935331oib.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Jul 2022 19:31:31 -0700 (PDT)
+Received: from mail-oo1-xc2f.google.com (mail-oo1-xc2f.google.com [IPv6:2607:f8b0:4864:20::c2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A9C12F3A9
+        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Jul 2022 19:31:32 -0700 (PDT)
+Received: by mail-oo1-xc2f.google.com with SMTP id i19-20020a4ad093000000b004256ad0893fso3248919oor.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Jul 2022 19:31:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=toy7Vh9evhy+pgP1ujT+/9BHMTnFqA/22pVpy0wxf7Y=;
-        b=c0vygMx1bCGolwRhDHRBlO0CoxmAGDm8jm6e5Aiib8nX++0g9aQEi1kjYlOXQIN07D
-         c28WE3Rdb1uqmEJYOd+AexvHuuTls/u9PHAJCpPYF3Kv8DtCZP+Sf+ocotPjSCi3FQKc
-         qr6rdL36Eyo/yFClOUkcqN0UpwKi9tH6V0sF7FgH9R9GOTxWjlMEAmD8RZWkcXvuUNqH
-         1IIfBuRCm2/Qnq0omUx3zHtUuDzJV5ZYYBeOcWMsMnjxNX9sVoVMeTRMNwmlwt62MsfL
-         EbGZWT1IbGfXl+yXsOpmKMdBt5OxxWwlAqwFhsZtjgwB7aJwHV7xyH3LUDA4pZ4H5LO9
-         AHBw==
+        bh=YYAWf1vDUfn+qhF4EbU0apynTp5YyOVUGPAAMYRF5Os=;
+        b=kFGTPVAiO7y8B9+gbjN1lQfUknQZKllmfvvOWGgHYm7mngU3npwDWZ3KxlxBHLRYL9
+         HDkOLjei4Y6PgWGX37FvRkAr7UBWOGCgR78M50tUejmny2TjpQdhG6yJkQYLTAeBKiek
+         2sHFoDgKkbxKBMQsaOj4QWCeGkLVYqOlDi0NBz5lJdFzZR7wwciEvSvjGCoPDV+pc03X
+         ETwcArNpP2IkxdgqivLXFt5OQHf+3vbv8tPCdmVFyNOGZLz1whdKSWp3Elm9ZAAzUkl7
+         1R26QzIQhvr5XK+aLoibMm8mnQ6RwxTr0NN4MTPPRkxso/uDxpf9wYDkDuPAww+pw6cT
+         Cfwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=toy7Vh9evhy+pgP1ujT+/9BHMTnFqA/22pVpy0wxf7Y=;
-        b=cSr+mRb88TCTjlEA1+clzUjNxcs5EsBegI7TwIa807GnS3Vi7cicImWh55k6+Xuv5t
-         ei59wnsLDypHjyBF4ZGMZegi2X0yZ2g01nMNf/76LKdpYBPk2326JXaPI3rdKzm1Whx9
-         +qW0FANjw0NqgvlFqJPVztl098yGSjCMGo0poff6OCNCGylhVXyfYwM0ik+DSI+e9ekd
-         ZvN1cooILwH0ECV/wUz838CuBKaNfeJLg5gEIJ1pY7jRAQ4dhUlH5j6Ecle+otUJXy6a
-         MI5XpMJSYOXRYpjX0+kGAfQuVz9JpmXMdwh02zg8FzuEnbNi71yqT5IIYkBLxNKXXlFX
-         kXDQ==
-X-Gm-Message-State: AJIora9tpBDu9G+DsV2kI9FXkz/9B8OYyjgmh+34oQvzcuVQt3DE+F27
-        vWsKTVW2m0d6kbleqOJGy0Tyrw==
-X-Google-Smtp-Source: AGRyM1tsdwefRGXNO/afKrOxgjNsKCTOA2PNSZsc7wMmOWdIAxgAu5gCKVSjwRIW9K3vEBq1Oz3A3Q==
-X-Received: by 2002:a05:6808:190:b0:335:b34e:87f2 with SMTP id w16-20020a056808019000b00335b34e87f2mr1056071oic.193.1657161090733;
-        Wed, 06 Jul 2022 19:31:30 -0700 (PDT)
+        bh=YYAWf1vDUfn+qhF4EbU0apynTp5YyOVUGPAAMYRF5Os=;
+        b=NVgCAVpz3t1Er6G24NR5+c/OzqPUmxHdh/OPFtyEZqqXDqdLbYSF+ZAGi0Eg344Cyt
+         V3n7Ezev05AjHsgbEag2bjD8botjjFqYE6bhdzzEJTNLg8vw6VB8Zp/Ilpvy0hkewHiK
+         B64yu66blyWtLsckFwDrp4RksEbE5EN+iWy+kX7pnExKN4f/M8JN51aIwulXDA/gs0uB
+         U7TgVnNSgWnB6fmPUkQZT93D6R87feirQNFLOSA9A/K3BnEWCcsZLmrgMf3yY009jHCM
+         aWNATrItOFGAl/37B6wnPNuDyvP46Ra6QzD9XDgXLmFjMwoZJBDJdcly5m5P4OPpjKc/
+         l18w==
+X-Gm-Message-State: AJIora8Etsk3RWoiwODyFgfAGsYx4UE00U4HX50w5f+TOQEqIUXLVMDK
+        xnInclA1V300jcymyeTFj9hVEA==
+X-Google-Smtp-Source: AGRyM1tJ3CfwvID4pMX3J0zja8xUa5LkjynezJaIPR7xGR5GVMJlEJala8g+oXwhZBT9s5yqi88i3w==
+X-Received: by 2002:a4a:b401:0:b0:35e:de93:43a9 with SMTP id y1-20020a4ab401000000b0035ede9343a9mr18013954oon.80.1657161091766;
+        Wed, 06 Jul 2022 19:31:31 -0700 (PDT)
 Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id x48-20020a056830247000b006168c71ca4asm17024469otr.56.2022.07.06.19.31.29
+        by smtp.gmail.com with ESMTPSA id x48-20020a056830247000b006168c71ca4asm17024469otr.56.2022.07.06.19.31.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 06 Jul 2022 19:31:30 -0700 (PDT)
+        Wed, 06 Jul 2022 19:31:31 -0700 (PDT)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
         Andy Gross <agross@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: (subset) [PATCH 1/6] arm64: dts: qcom: msm8996: add missing DSI clock assignments
-Date:   Wed,  6 Jul 2022 21:31:08 -0500
-Message-Id: <165716107315.864223.4625751110199099026.b4-ty@linaro.org>
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <swboyd@chromium.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-clk@vger.kernel.org
+Subject: Re: (subset) [PATCH v6 0/4] arm: qcom: qcom-apq8064: add separate device node for tsens
+Date:   Wed,  6 Jul 2022 21:31:09 -0500
+Message-Id: <165716107313.864223.16495504646338874492.b4-ty@linaro.org>
 X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20220706145412.1566011-1-dmitry.baryshkov@linaro.org>
-References: <20220706145412.1566011-1-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220521151437.1489111-1-dmitry.baryshkov@linaro.org>
+References: <20220521151437.1489111-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -74,20 +76,24 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 6 Jul 2022 17:54:07 +0300, Dmitry Baryshkov wrote:
-> Add missing DSI clock assignments to properly use DSI PHY clocks as DSI
-> byte and pixel clock parents.
+On Sat, 21 May 2022 18:14:33 +0300, Dmitry Baryshkov wrote:
+> Currently gcc-msm8960 driver manually creates tsens device. Instantiate
+> the device using DT node instead. This makes the APQ8064 follow the
+> IPQ8064 device tree schema (which is also closer to the way tsens
+> devices are described on newer Qualcomm platforms).
 > 
+> Compatibility with the previous devices trees is kept intact.
 > 
+> [...]
 
 Applied, thanks!
 
-[4/6] arm: dts: qcom: apq8064: rename DSI PHY iface clock
-      commit: 9c10bb43db82bc9289af50c39cc940aff79b7aed
-[5/6] arm: dts: qcom: apq8064: disable DSI and DSI PHY by default
-      commit: d8e51f13c31c585caf6a9497627ecad14e78211b
-[6/6] arm: dts: qcom-msm8974: rename GPU's OPP table node
-      commit: 864cfdeb76735909a9afcc314416ccaa1ce82a1a
+[1/4] dt-bindings: clock: qcom,gcc-apq8064: move msm8960 compat from gcc-other.yaml
+      commit: 91a4cbf93326f2d27dda7361c43a5bb24cfd93c3
+[2/4] dt-bindings: clock: qcom,gcc-apq8064: split tsens to the child node
+      commit: 621f984840928f0bd14b20c86b70a15590ed2d3e
+[3/4] clk: qcom: gcc-msm8960: create tsens device if there are no child nodes
+      commit: 93b793d88da8b2c7afd63c64772666ec4274efad
 
 Best regards,
 -- 
