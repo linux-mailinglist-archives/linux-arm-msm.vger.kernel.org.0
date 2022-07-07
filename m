@@ -2,42 +2,42 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E05C556A391
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Jul 2022 15:26:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1946C56A386
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Jul 2022 15:26:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235731AbiGGNYH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Jul 2022 09:24:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45616 "EHLO
+        id S235098AbiGGNYI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Jul 2022 09:24:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45686 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235678AbiGGNX7 (ORCPT
+        with ESMTP id S235794AbiGGNYB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Jul 2022 09:23:59 -0400
+        Thu, 7 Jul 2022 09:24:01 -0400
 Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADC9D31936;
-        Thu,  7 Jul 2022 06:23:51 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 029A331923;
+        Thu,  7 Jul 2022 06:23:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1657200231; x=1688736231;
+  t=1657200236; x=1688736236;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version;
-  bh=Ae+CwviggggCeAvUqpYS8IOVDq52MrCxQzlohwRbFb4=;
-  b=XQ4fsRRJt9w/R3rcm5pCXuUOcsB4njnWH9twarqiaXPkhfuFV58FVugO
-   AflAo6UjJ8m09mW8q05VzxHIQVRLkJsw670kPf9gCwWcwNspVupLKPPz7
-   q30vyS/jf6jllNYxPPxnzm2R2lOMQzytzTqWV3Ap3fsX4l8n7a1ujhbGk
-   w=;
-Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 07 Jul 2022 06:23:51 -0700
+  bh=d5Wk7pj5LCC77rVK9593kKhE1VORqcvVb+p48BtlI+A=;
+  b=F3LtRf1EugFSvptcigmT+irfpPiYtHr1zXLPH0kNdlyHWtUMxvVgY2Dq
+   55WSGCVD1opqXSmVqKZU0lZkife9GoRM1QmnbLNWZ2y9s1I/GzTyAQBMM
+   DST7p+XoBYOmBI1vKE7/fxqGByh5UKnaUYKHeTi7R6r4Oqhstn6rTxQwf
+   8=;
+Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 07 Jul 2022 06:23:55 -0700
 X-QCInternal: smtphost
 Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Jul 2022 06:23:51 -0700
+  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Jul 2022 06:23:55 -0700
 Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
  nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Thu, 7 Jul 2022 06:23:50 -0700
+ 15.2.986.22; Thu, 7 Jul 2022 06:23:55 -0700
 Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
  nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Thu, 7 Jul 2022 06:23:46 -0700
+ 15.2.986.22; Thu, 7 Jul 2022 06:23:50 -0700
 From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
 To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
         <robh+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
@@ -47,9 +47,9 @@ To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
         <judyhsiao@chromium.org>
 CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
         "Venkata Prasad Potturu" <quic_potturu@quicinc.com>
-Subject: [PATCH v14 06/12] arm64: dts: qcom: sc7280: Add max98360a codec for CRD 1.0/2.0 and IDP boards
-Date:   Thu, 7 Jul 2022 18:52:58 +0530
-Message-ID: <1657200184-29565-7-git-send-email-quic_srivasam@quicinc.com>
+Subject: [PATCH v14 07/12] arm64: dts: qcom: sc7280: herobrine: Add max98360a codec node
+Date:   Thu, 7 Jul 2022 18:52:59 +0530
+Message-ID: <1657200184-29565-8-git-send-email-quic_srivasam@quicinc.com>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1657200184-29565-1-git-send-email-quic_srivasam@quicinc.com>
 References: <1657200184-29565-1-git-send-email-quic_srivasam@quicinc.com>
@@ -68,25 +68,23 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add max98360a codec node for audio use case on revision 3, 4
-(aka CRD 1.0 and 2.0) and IDP boards.
-Add amp_en node for max98360a codec pin control.
+Add max98360a codec node for audio use case on all herobrine boards.
 
 Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
 Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
 Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
 Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
 ---
- arch/arm64/boot/dts/qcom/sc7280-idp.dtsi | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-index 1fbcb43..e15d78e 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-@@ -20,6 +20,14 @@
- 		serial1 = &uart7;
- 	};
+diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
+index ed80081..c1ca791 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
+@@ -296,6 +296,14 @@
+ 
+ 	/* BOARD-SPECIFIC TOP LEVEL NODES */
  
 +	max98360a: audio-codec-0 {
 +		compatible = "maxim,max98360a";
@@ -96,22 +94,9 @@ index 1fbcb43..e15d78e 100644
 +		#sound-dai-cells = <0>;
 +	};
 +
- 	wcd9385: audio-codec-1 {
- 		compatible = "qcom,wcd9385-codec";
- 		pinctrl-names = "default", "sleep";
-@@ -613,6 +621,12 @@
- };
- 
- &tlmm {
-+	amp_en: amp-en {
-+		pins = "gpio63";
-+		bias-pull-down;
-+		drive-strength = <2>;
-+	};
-+
- 	bt_en: bt-en {
- 		pins = "gpio85";
- 		function = "gpio";
+ 	pwmleds: pwmleds {
+ 		compatible = "pwm-leds";
+ 		status = "disabled";
 -- 
 2.7.4
 
