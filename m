@@ -2,148 +2,154 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B900956A925
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Jul 2022 19:11:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 352AC56A9B9
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Jul 2022 19:36:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235916AbiGGRKQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Jul 2022 13:10:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50700 "EHLO
+        id S236036AbiGGRgN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Jul 2022 13:36:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43092 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232016AbiGGRKQ (ORCPT
+        with ESMTP id S235347AbiGGRgM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Jul 2022 13:10:16 -0400
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 242B82C65E;
-        Thu,  7 Jul 2022 10:10:15 -0700 (PDT)
-Received: by mail-wm1-x332.google.com with SMTP id p4so1740327wms.0;
-        Thu, 07 Jul 2022 10:10:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=VA3SbJt6EBSMC9jnydWIaREGnbjiJhUGWyogd1VBc60=;
-        b=bFUBCIKLe6IQ6qKpFInDA68vnotWBxMQeNgiY+32c5hZkyDPLBon+btxmBjOaT4Y00
-         JEGKosj0QpNEYt24iNH0xhzZFolz6hudOUcUNksNXyUHGLj0VzjJJrQdoICPPCeQAoH0
-         DNvlgcB66YwPwmwNcbRIrvhSVV1O2QMWt3cEd+xRKme9rXjw1u541IIxhfiBT+M0zYzF
-         Mqaras7dlF18CgSZuMfGSCvJ5Z8yuTSqJm/NBEIIdZ0jcHSzXf7rD1600FpqAYDYVz37
-         VcIBDJZVjXEDiihGtQUD991TWP3ma0P3tfhIYqHjumqI0h3Y8MFStDNct6Mqh9AEK/bq
-         I9Dg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=VA3SbJt6EBSMC9jnydWIaREGnbjiJhUGWyogd1VBc60=;
-        b=yotboA+zNabKqkvIrAcpVN69GKoODNhAjSN7Mj8t5se0Z1kTk+6G/FRVSFWEUP0Lho
-         DOxVyty0/cFdjBi9H7lZRUFpSF3JYbFJuUVDcrurMJrPKz4+eAjmDprgYt+PNjTmke85
-         6+Jy3UBlnPbf1ll9qtzU3Ox76QD3r5ic/FvYf0avbt5Min6gWIYGFzh9597FRS625KDV
-         FPQe/YgyQXzb9xW/fWpEi7JbuG4p0FLJ5N3AlC03CuhbqS1sJ2BBcqPFsqsdfhkkLZbZ
-         lIB4W6iA8xIwLf1NeMxIVP1yfH+XcP+5ze4w086BsTd9GBUK2O2XxKJOf1XW5Vw8VEZC
-         KIIg==
-X-Gm-Message-State: AJIora+LMSy0jXCNjT8XayIGcz3UKnZX7xWwRy8/ox7Ta+/NaKQzl0bY
-        K6exh4oncB7mZHX7cvegqm7JISPiB2O4w2+KBV9RIp1LjoQ=
-X-Google-Smtp-Source: AGRyM1uKOuyzI23A8kLJo8W49G7VbTQ+827LPYXQYYmMTeuOaUGs/FqsFT/Z7LFMdUkclpe5ALdeM3qoqjfBfNwZMXk=
-X-Received: by 2002:a05:600c:3593:b0:3a1:8909:b5b2 with SMTP id
- p19-20020a05600c359300b003a18909b5b2mr5728498wmq.77.1657213813592; Thu, 07
- Jul 2022 10:10:13 -0700 (PDT)
-MIME-Version: 1.0
-References: <1657210262-17166-1-git-send-email-quic_akhilpo@quicinc.com> <20220707213950.3.I4ac27a0b34ea796ce0f938bb509e257516bc6f57@changeid>
-In-Reply-To: <20220707213950.3.I4ac27a0b34ea796ce0f938bb509e257516bc6f57@changeid>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Thu, 7 Jul 2022 10:10:01 -0700
-Message-ID: <CAF6AEGudkkUvYjy_7engFGrQy2scdskmc1SRpKN3x0MOxOr1ug@mail.gmail.com>
-Subject: Re: [PATCH 3/7] drm/msm: Fix cx collapse issue during recovery
-To:     Akhil P Oommen <quic_akhilpo@quicinc.com>
-Cc:     freedreno <freedreno@lists.freedesktop.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Thu, 7 Jul 2022 13:36:12 -0400
+Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A65333337C;
+        Thu,  7 Jul 2022 10:36:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1657215371; x=1688751371;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=zRlmYVn9zHQI1IKGlhE4MO06PH0yP+9P4EPGr4unR1E=;
+  b=a3tBzOjgoupnmiJo+uEcv8a5j7AXt5bUt4nS0yKA6WpWqhqRFMUmhyRi
+   DvxVoOjB62OnI6MvbieW28XCSdMT2/UzgPExOI712TlOacOfKkrB8VjC+
+   SjCUB6zeIXMJ7ujC/snX5QwckVB+LTjld/0YiKi+xuRwU0XgQ7Ickuz22
+   VE3w0CJhkG9SgN8Sc394cFLe0S0PEI1e5q7REN/W4sxCw41Clay9isnm8
+   rRYYgQ1Uc/5ZsTlHfdK+yC0HNpnYAjFuAcuqY59s7LRtl0/Aw/tDz7Y1e
+   CUkucHdwwWfk2dmquHCvWSxshmSobkxyEoiMWa1e9vPfyFrBbeEWqwnxR
+   g==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10401"; a="267112800"
+X-IronPort-AV: E=Sophos;i="5.92,253,1650956400"; 
+   d="scan'208";a="267112800"
+Received: from fmsmga003.fm.intel.com ([10.253.24.29])
+  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Jul 2022 10:35:57 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.92,253,1650956400"; 
+   d="scan'208";a="683384996"
+Received: from lkp-server01.sh.intel.com (HELO 68b931ab7ac1) ([10.239.97.150])
+  by FMSMGA003.fm.intel.com with ESMTP; 07 Jul 2022 10:35:54 -0700
+Received: from kbuild by 68b931ab7ac1 with local (Exim 4.95)
+        (envelope-from <lkp@intel.com>)
+        id 1o9VPu-000MGg-51;
+        Thu, 07 Jul 2022 17:35:54 +0000
+Date:   Fri, 8 Jul 2022 01:35:11 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Christian Marangi <ansuelsmth@gmail.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        Douglas Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Chia-I Wu <olvaffe@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+Cc:     kbuild-all@lists.01.org, Christian Marangi <ansuelsmth@gmail.com>
+Subject: Re: [PATCH v4 3/3] clk: qcom: lcc-ipq806x: convert to parent data
+Message-ID: <202207080145.UiRhIFg5-lkp@intel.com>
+References: <20220707101326.30880-3-ansuelsmth@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220707101326.30880-3-ansuelsmth@gmail.com>
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,
+        SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jul 7, 2022 at 9:11 AM Akhil P Oommen <quic_akhilpo@quicinc.com> wrote:
->
-> There are some hardware logic under CX domain. For a successful
-> recovery, we should ensure cx headswitch collapses to ensure all the
-> stale states are cleard out. This is especially true to for a6xx family
-> where we can GMU co-processor.
->
-> Currently, cx doesn't collapse due to a devlink between gpu and its
-> smmu. So the *struct gpu device* needs to be runtime suspended to ensure
-> that the iommu driver removes its vote on cx gdsc.
->
-> Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
-> ---
->
->  drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 16 ++++++++++++++--
->  drivers/gpu/drm/msm/msm_gpu.c         |  2 --
->  2 files changed, 14 insertions(+), 4 deletions(-)
->
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> index 42ed9a3..57a7ad5 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> @@ -1210,8 +1210,20 @@ static void a6xx_recover(struct msm_gpu *gpu)
->          */
->         gmu_write(&a6xx_gpu->gmu, REG_A6XX_GMU_GMU_PWR_COL_KEEPALIVE, 0);
->
-> -       gpu->funcs->pm_suspend(gpu);
-> -       gpu->funcs->pm_resume(gpu);
-> +       /*
-> +        * Now drop all the pm_runtime usage count to allow cx gdsc to collapse.
-> +        * First drop the usage count from all active submits
-> +        */
-> +       for (i = gpu->active_submits; i > 0; i--)
-> +               pm_runtime_put(&gpu->pdev->dev);
+Hi Christian,
 
-Would pm_runtime_force_suspend/resume() work instead?
+Thank you for the patch! Yet something to improve:
 
-BR,
--R
+[auto build test ERROR on clk/clk-next]
+[also build test ERROR on linus/master v5.19-rc5 next-20220707]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-> +
-> +       /* And the final one from recover worker */
-> +       pm_runtime_put_sync(&gpu->pdev->dev);
-> +
-> +       for (i = gpu->active_submits; i > 0; i--)
-> +               pm_runtime_get(&gpu->pdev->dev);
-> +
-> +       pm_runtime_get_sync(&gpu->pdev->dev);
->
->         msm_gpu_hw_init(gpu);
->  }
-> diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
-> index f75ff4b..48171b6 100644
-> --- a/drivers/gpu/drm/msm/msm_gpu.c
-> +++ b/drivers/gpu/drm/msm/msm_gpu.c
-> @@ -444,9 +444,7 @@ static void recover_worker(struct kthread_work *work)
->                 /* retire completed submits, plus the one that hung: */
->                 retire_submits(gpu);
->
-> -               pm_runtime_get_sync(&gpu->pdev->dev);
->                 gpu->funcs->recover(gpu);
-> -               pm_runtime_put_sync(&gpu->pdev->dev);
->
->                 /*
->                  * Replay all remaining submits starting with highest priority
-> --
-> 2.7.4
->
+url:    https://github.com/intel-lab-lkp/linux/commits/Christian-Marangi/dt-bindings-clock-add-pcm-reset-for-ipq806x-lcc/20220707-181546
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git clk-next
+config: nios2-randconfig-r003-20220707 (https://download.01.org/0day-ci/archive/20220708/202207080145.UiRhIFg5-lkp@intel.com/config)
+compiler: nios2-linux-gcc (GCC) 11.3.0
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # https://github.com/intel-lab-lkp/linux/commit/81953f04f08f730affa53b4637cc05f97da50a1d
+        git remote add linux-review https://github.com/intel-lab-lkp/linux
+        git fetch --no-tags linux-review Christian-Marangi/dt-bindings-clock-add-pcm-reset-for-ipq806x-lcc/20220707-181546
+        git checkout 81953f04f08f730affa53b4637cc05f97da50a1d
+        # save the config file
+        mkdir build_dir && cp config build_dir/.config
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.3.0 make.cross W=1 O=build_dir ARCH=nios2 SHELL=/bin/bash drivers/clk/qcom/
+
+If you fix the issue, kindly add following tag where applicable
+Reported-by: kernel test robot <lkp@intel.com>
+
+All errors (new ones prefixed by >>):
+
+   drivers/clk/qcom/lcc-ipq806x.c:38:25: warning: braces around scalar initializer
+      38 |                         { .fw_name = "pxo", .name = "pxo_board" },
+         |                         ^
+   drivers/clk/qcom/lcc-ipq806x.c:38:25: note: (near initialization for '(anonymous)[0]')
+   drivers/clk/qcom/lcc-ipq806x.c:38:27: error: field name not in record or union initializer
+      38 |                         { .fw_name = "pxo", .name = "pxo_board" },
+         |                           ^
+   drivers/clk/qcom/lcc-ipq806x.c:38:27: note: (near initialization for '(anonymous)[0]')
+   drivers/clk/qcom/lcc-ipq806x.c:38:38: error: initialization of 'const struct clk_parent_data *' from incompatible pointer type 'char *' [-Werror=incompatible-pointer-types]
+      38 |                         { .fw_name = "pxo", .name = "pxo_board" },
+         |                                      ^~~~~
+   drivers/clk/qcom/lcc-ipq806x.c:38:38: note: (near initialization for '(anonymous)[0]')
+   drivers/clk/qcom/lcc-ipq806x.c:38:45: error: field name not in record or union initializer
+      38 |                         { .fw_name = "pxo", .name = "pxo_board" },
+         |                                             ^
+   drivers/clk/qcom/lcc-ipq806x.c:38:45: note: (near initialization for '(anonymous)[0]')
+   drivers/clk/qcom/lcc-ipq806x.c:38:53: warning: excess elements in scalar initializer
+      38 |                         { .fw_name = "pxo", .name = "pxo_board" },
+         |                                                     ^~~~~~~~~~~
+   drivers/clk/qcom/lcc-ipq806x.c:38:53: note: (near initialization for '(anonymous)[0]')
+>> drivers/clk/qcom/lcc-ipq806x.c:37:32: error: initialization of 'const struct clk_parent_data *' from incompatible pointer type 'const struct clk_parent_data **' [-Werror=incompatible-pointer-types]
+      37 |                 .parent_data = (const struct clk_parent_data*[]){
+         |                                ^
+   drivers/clk/qcom/lcc-ipq806x.c:37:32: note: (near initialization for '(anonymous).parent_data')
+   cc1: some warnings being treated as errors
+
+
+vim +37 drivers/clk/qcom/lcc-ipq806x.c
+
+    26	
+    27	static struct clk_pll pll4 = {
+    28		.l_reg = 0x4,
+    29		.m_reg = 0x8,
+    30		.n_reg = 0xc,
+    31		.config_reg = 0x14,
+    32		.mode_reg = 0x0,
+    33		.status_reg = 0x18,
+    34		.status_bit = 16,
+    35		.clkr.hw.init = &(struct clk_init_data){
+    36			.name = "pll4",
+  > 37			.parent_data = (const struct clk_parent_data*[]){
+  > 38				{ .fw_name = "pxo", .name = "pxo_board" },
+    39			},
+    40			.num_parents = 1,
+    41			.ops = &clk_pll_ops,
+    42		},
+    43	};
+    44	
+
+-- 
+0-DAY CI Kernel Test Service
+https://01.org/lkp
