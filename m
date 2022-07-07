@@ -2,68 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 58C0D56A6DF
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Jul 2022 17:28:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D59A656A703
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Jul 2022 17:33:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235687AbiGGP2w (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Jul 2022 11:28:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50448 "EHLO
+        id S235730AbiGGPdQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Jul 2022 11:33:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55114 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231897AbiGGP2v (ORCPT
+        with ESMTP id S235303AbiGGPdP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Jul 2022 11:28:51 -0400
-Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2ED617583
-        for <linux-arm-msm@vger.kernel.org>; Thu,  7 Jul 2022 08:28:49 -0700 (PDT)
-Received: by mail-oi1-x22c.google.com with SMTP id p67so343983oih.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Jul 2022 08:28:49 -0700 (PDT)
+        Thu, 7 Jul 2022 11:33:15 -0400
+Received: from mail-qt1-x831.google.com (mail-qt1-x831.google.com [IPv6:2607:f8b0:4864:20::831])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A47D3207D
+        for <linux-arm-msm@vger.kernel.org>; Thu,  7 Jul 2022 08:33:14 -0700 (PDT)
+Received: by mail-qt1-x831.google.com with SMTP id i11so23224257qtr.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Jul 2022 08:33:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=i5AE8o89mnGPcosRIRhrsVkWToKcuuB5h1wqp957T/0=;
-        b=vZnql2KWKVCzhxPaXfTaqmisk8cjDnIVfdnb/TKBxne5cNdOvIpRvrtRcPltQs3kSE
-         3nDfTq3nIRJSDr+cVXgHI4HYtQhiFyr+9qSO/N56ojyRY9YqXxzQmQ6G8yCxnurG/mWe
-         giCosSuT7OCE/WQr9iGKvroqZ4mlgzzhMleGzfhZrbs3dgqKRN/VHzhNK0k2as4XSR76
-         AnO9oN7NYt1p7eSJYxNxfPXZWpERt7voJJfkVsILDXZLJLW4Lx3KX7UqMh9LmkC2VuGH
-         ZWFtgqXmst83bgG6bugZR6FqiDPZCcnk1faNC0Eo5Xkq8yGZP/HTe5Fy9lRNEizKoW0Z
-         AJRg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=fLPqNOuxkhng0+VfusSfgGkkAqcB1Q6iFCv9UoVontQ=;
+        b=BDKkvsKU3sn42yDWiGzbpEF9p5SV1Dz/09dCOmImNJBbAP2CeP8HMOCqAggGGxMP8W
+         0UbRAdgvZA7Eg2wcj6YNM/h7ICwhoANe2veeMegkwrxmqfl+Ocge6dDwjTMN6H3K6BgI
+         YbFYGc/MP2anQkgQeeH8xvKXHG1ndJqEuuLN2Fo56DIW3SYjA8RcHXTKluBhn3vEm0qW
+         TNJvLy/Bvdlanl4tU4dSr2Q2fcn2rBTmuFlJZ7EI3JpzjYGVliasoq/rxodlhmDx0N5m
+         ZYaPVz/wW3jGhqush/vob0PDp70Uk9f/rXPPoriWMM0TEgl9VynMo2OQNmrqz+2JO+yN
+         OIWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=i5AE8o89mnGPcosRIRhrsVkWToKcuuB5h1wqp957T/0=;
-        b=d8ujJS+QXbxsaJy48IGDx9Be8CewEQlgs69Vgt2e7/u5pypfZbrHkfx4pngsfDMIQ/
-         1OYcECNUKRjHHDq3vShs65Pr7fAotPiEO9VzwECFlepsTvOkKwcXqLBE3VBFlAyOR7Lv
-         t2W6OZ18RF7IRlEODJwQpzOAHFWI1RwBnpSwS3XTZ4qkDusNm8ZIklkxuk9D6cdt8nFf
-         YnsyQRtatVcbxfImjHaqAyhsqYCbn8ayED4+1ZVlLqGjAIKrDNduWI7rKUS8PUaZRkeA
-         90+N1GqWybfzZnBN/KQczaiNCyLTsiHUrCJKH2w/BIhs/bSx8PK0FOkOn1Z7jMQZ9hWt
-         HhVw==
-X-Gm-Message-State: AJIora+2W1r1roYhduCjoq65o4MI/QiWChkC2cOAeOdwL8YOsDEIE+1F
-        tge5Pp/LSiA+ENZBB+18J+96sA==
-X-Google-Smtp-Source: AGRyM1v0p45heGfLNOXJAW3K1vcnOUrkm24+ImaKNgVgiVn0QiJINRs1nHObgKf7rHCAOqQAnMw9Ew==
-X-Received: by 2002:a05:6808:1204:b0:325:7ce2:77f6 with SMTP id a4-20020a056808120400b003257ce277f6mr2913189oil.165.1657207727810;
-        Thu, 07 Jul 2022 08:28:47 -0700 (PDT)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id z18-20020a056808065200b0032ba1b363d2sm15593991oih.55.2022.07.07.08.28.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Jul 2022 08:28:47 -0700 (PDT)
-Date:   Thu, 7 Jul 2022 10:28:45 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Cc:     agross@kernel.org, robh+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_rohkumar@quicinc.com,
-        srinivas.kandagatla@linaro.org, dianders@chromium.org,
-        swboyd@chromium.org, judyhsiao@chromium.org
-Subject: Re: [PATCH v14 00/12] Add soundcard support for sc7280 based
- platforms.
-Message-ID: <Ysb7rZ4tIpN9fm8w@builder.lan>
-References: <1657200184-29565-1-git-send-email-quic_srivasam@quicinc.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=fLPqNOuxkhng0+VfusSfgGkkAqcB1Q6iFCv9UoVontQ=;
+        b=jTq/H6Jj0R/P7RTwn4692ibXYTiY5AtWlC62ayJ7K3fnMedcJN+JDHtYLlOrYb5B2Y
+         Wdq5JCtv2IHFkamGSINkERuaCtzrz6iT41LuC0BSPXqsfSIfMKuYqTk6CC2GrpjF4Q4q
+         yMhFBzPHgL7gYDG3NWTHw5OG3kH41eUrdDHTfzfncZuFvJYqTjWRtvS9mRcz0r8/JCoX
+         D5NnhsPv2KBPmgdG7QSKqJlmE4HdpBZCTnxCrPMuGKJR4arjoGfTC1TE98bDjAYKy/ZR
+         78PMiSkLZvsgCpRWXL8BuaxEjnhAeo8Li49oB+lOngtamTntcHCdy35EIsg1xfD7OQly
+         TBWg==
+X-Gm-Message-State: AJIora/bXJcXPdb0++et/Pe+fPMatifTY1FayvEMdQlQ4wIj1ociXIs5
+        NDuwT7/6ncXSVDzvNcTnVeiGyrmTB/OJH6X4WQfPl/XHt0nqew==
+X-Google-Smtp-Source: AGRyM1v2sny/0726HNQOlkXr40uwbBva0ycqSItDJC34DLwjRoq2GI9FOyav66XsWjyidLsuRaZEf1w+PSHx+h2/ceU=
+X-Received: by 2002:ac8:5c96:0:b0:31a:c19a:7da1 with SMTP id
+ r22-20020ac85c96000000b0031ac19a7da1mr38432079qta.62.1657207993411; Thu, 07
+ Jul 2022 08:33:13 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1657200184-29565-1-git-send-email-quic_srivasam@quicinc.com>
+References: <1657040445-13067-1-git-send-email-quic_vpolimer@quicinc.com>
+ <1657040445-13067-2-git-send-email-quic_vpolimer@quicinc.com>
+ <5d469759-0619-eece-902d-df8ac6583f22@linaro.org> <BN0PR02MB8173DF17816659868604A82EE4839@BN0PR02MB8173.namprd02.prod.outlook.com>
+In-Reply-To: <BN0PR02MB8173DF17816659868604A82EE4839@BN0PR02MB8173.namprd02.prod.outlook.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Thu, 7 Jul 2022 18:33:02 +0300
+Message-ID: <CAA8EJpoYj_-bY8CSPdE=mBkZbnffgUXX+LzEXKWHQ3yhS4GmvA@mail.gmail.com>
+Subject: Re: [PATCH v4 1/7] drm/msm/disp/dpu1: clear dpu_assign_crtc and get
+ crtc from drm_enc instead of dpu_enc
+To:     Vinod Polimera <vpolimer@qti.qualcomm.com>
+Cc:     "Vinod Polimera (QUIC)" <quic_vpolimer@quicinc.com>,
+        "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "freedreno@lists.freedesktop.org" <freedreno@lists.freedesktop.org>,
+        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "robdclark@gmail.com" <robdclark@gmail.com>,
+        "dianders@chromium.org" <dianders@chromium.org>,
+        "swboyd@chromium.org" <swboyd@chromium.org>,
+        "Kalyan Thota (QUIC)" <quic_kalyant@quicinc.com>,
+        "Kuogee Hsieh (QUIC)" <quic_khsieh@quicinc.com>,
+        "Vishnuvardhan Prodduturi (QUIC)" <quic_vproddut@quicinc.com>,
+        "bjorn.andersson@linaro.org" <bjorn.andersson@linaro.org>,
+        "Aravind Venkateswaran (QUIC)" <quic_aravindh@quicinc.com>,
+        "Abhinav Kumar (QUIC)" <quic_abhinavk@quicinc.com>,
+        "Sankeerth Billakanti (QUIC)" <quic_sbillaka@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -74,138 +83,175 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 07 Jul 08:22 CDT 2022, Srinivasa Rao Mandadapu wrote:
+On Thu, 7 Jul 2022 at 17:39, Vinod Polimera <vpolimer@qti.qualcomm.com> wrote:
+>
+> > NAK. Quoting the documentation:
+> >
+> > only really meaningful for non-atomic drivers. Atomic drivers should
+> > instead check &drm_connector_state.crtc.
+> >
+> > Please adjust according to the documentation.
+>    drm_enc gets the crtc info already from new connector state as part of drm_atomic_helper_update_legacy_modeset_state.
+>    So drm_enc->crtc will be valid as we access it as part of modeset enable/disable.
+>                          ```connector->encoder->crtc = new_conn_state->crtc;```.
 
-> This patch set is to add bolero digital macros, WCD and maxim codecs nodes
-> for audio on sc7280 based platforms.
-> 
-> This patch set depends on:
->     [LPASS DTS: wcd related pinmux reorg]
->     -- https://patchwork.kernel.org/project/linux-arm-msm/list/?series=657389
->     [Clock DTS: reset control changes]
->     -- https://patchwork.kernel.org/project/linux-arm-msm/list/?series=638002
->     [Clock: External MCLK and reset control driver changes]
->     -- https://patchwork.kernel.org/project/linux-arm-msm/list/?series=650267
+drm_atomic_helper_update_legacy_modeset_state():
 
-As far as I understand I can't apply this series until Taniya's clock
-patches has been picked up?
+ * Since these updates are not synchronized with lockings, only code paths
+ * called from &drm_mode_config_helper_funcs.atomic_commit_tail can look at the
+ * legacy state filled out by this helper. Defacto this means this helper and
+ * the legacy state pointers are only really useful for transitioning an
+ * existing driver to the atomic world.
 
->     [Clock DTS: lpasscc node disable and lpasscore node name changes]
->     -- https://patchwork.kernel.org/project/linux-arm-msm/list/?series=657325
+So please change the code to use drm_connector_state.crtc.
 
-You're the author of these 3 other patch sets, so why are you asking me
-to stitch them together, instead of just sending me one series that I
-can easily apply.
+Dixi.
 
-If you want your patches merged, make it easy for the maintainer to
-merge them!
+>
+> Thanks,
+> Vinod P.
+>
+> > -----Original Message-----
+> > From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > Sent: Wednesday, July 6, 2022 12:34 AM
+> > To: Vinod Polimera (QUIC) <quic_vpolimer@quicinc.com>; dri-
+> > devel@lists.freedesktop.org; linux-arm-msm@vger.kernel.org;
+> > freedreno@lists.freedesktop.org; devicetree@vger.kernel.org
+> > Cc: linux-kernel@vger.kernel.org; robdclark@gmail.com;
+> > dianders@chromium.org; swboyd@chromium.org; Kalyan Thota (QUIC)
+> > <quic_kalyant@quicinc.com>; Kuogee Hsieh (QUIC)
+> > <quic_khsieh@quicinc.com>; Vishnuvardhan Prodduturi (QUIC)
+> > <quic_vproddut@quicinc.com>; bjorn.andersson@linaro.org; Aravind
+> > Venkateswaran (QUIC) <quic_aravindh@quicinc.com>; Abhinav Kumar
+> > (QUIC) <quic_abhinavk@quicinc.com>; Sankeerth Billakanti (QUIC)
+> > <quic_sbillaka@quicinc.com>
+> > Subject: Re: [PATCH v4 1/7] drm/msm/disp/dpu1: clear dpu_assign_crtc and
+> > get crtc from drm_enc instead of dpu_enc
+> >
+> > WARNING: This email originated from outside of Qualcomm. Please be wary
+> > of any links or attachments, and do not enable macros.
+> >
+> > On 05/07/2022 20:00, Vinod Polimera wrote:
+> > > Update crtc retrieval from dpu_enc to drm_enc, since new links get set
+> > > as part of the update legacy mode set. The dpu_enc->crtc cache is no
+> > > more needed, hence cleaning it as part of this change.
+> >
+> > NAK. Quoting the documentation:
+> >
+> > only really meaningful for non-atomic drivers. Atomic drivers should
+> > instead check &drm_connector_state.crtc.
+> >
+> > Please adjust according to the documentation.
+> > >
+> > > Signed-off-by: Vinod Polimera <quic_vpolimer@quicinc.com>
+> > > ---
+> > >   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c    |  4 ----
+> > >   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 18 +++---------------
+> > >   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h |  8 --------
+> > >   3 files changed, 3 insertions(+), 27 deletions(-)
+> > >
+> > > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> > b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> > > index b56f777..f91e3d1 100644
+> > > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> > > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> > > @@ -972,7 +972,6 @@ static void dpu_crtc_disable(struct drm_crtc *crtc,
+> > >                */
+> > >               if (dpu_encoder_get_intf_mode(encoder) == INTF_MODE_VIDEO)
+> > >                       release_bandwidth = true;
+> > > -             dpu_encoder_assign_crtc(encoder, NULL);
+> > >       }
+> > >
+> > >       /* wait for frame_event_done completion */
+> > > @@ -1042,9 +1041,6 @@ static void dpu_crtc_enable(struct drm_crtc *crtc,
+> > >       trace_dpu_crtc_enable(DRMID(crtc), true, dpu_crtc);
+> > >       dpu_crtc->enabled = true;
+> > >
+> > > -     drm_for_each_encoder_mask(encoder, crtc->dev, crtc->state-
+> > >encoder_mask)
+> > > -             dpu_encoder_assign_crtc(encoder, crtc);
+> > > -
+> > >       /* Enable/restore vblank irq handling */
+> > >       drm_crtc_vblank_on(crtc);
+> > >   }
+> > > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> > b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> > > index 52516eb..5629c0b 100644
+> > > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> > > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> > > @@ -1254,8 +1254,8 @@ static void dpu_encoder_vblank_callback(struct
+> > drm_encoder *drm_enc,
+> > >       dpu_enc = to_dpu_encoder_virt(drm_enc);
+> > >
+> > >       spin_lock_irqsave(&dpu_enc->enc_spinlock, lock_flags);
+> > > -     if (dpu_enc->crtc)
+> > > -             dpu_crtc_vblank_callback(dpu_enc->crtc);
+> > > +     if (drm_enc->crtc)
+> > > +             dpu_crtc_vblank_callback(drm_enc->crtc);
+> > >       spin_unlock_irqrestore(&dpu_enc->enc_spinlock, lock_flags);
+> > >
+> > >       atomic_inc(&phy_enc->vsync_cnt);
+> > > @@ -1280,18 +1280,6 @@ static void
+> > dpu_encoder_underrun_callback(struct drm_encoder *drm_enc,
+> > >       DPU_ATRACE_END("encoder_underrun_callback");
+> > >   }
+> > >
+> > > -void dpu_encoder_assign_crtc(struct drm_encoder *drm_enc, struct
+> > drm_crtc *crtc)
+> > > -{
+> > > -     struct dpu_encoder_virt *dpu_enc = to_dpu_encoder_virt(drm_enc);
+> > > -     unsigned long lock_flags;
+> > > -
+> > > -     spin_lock_irqsave(&dpu_enc->enc_spinlock, lock_flags);
+> > > -     /* crtc should always be cleared before re-assigning */
+> > > -     WARN_ON(crtc && dpu_enc->crtc);
+> > > -     dpu_enc->crtc = crtc;
+> > > -     spin_unlock_irqrestore(&dpu_enc->enc_spinlock, lock_flags);
+> > > -}
+> > > -
+> > >   void dpu_encoder_toggle_vblank_for_crtc(struct drm_encoder
+> > *drm_enc,
+> > >                                       struct drm_crtc *crtc, bool enable)
+> > >   {
+> > > @@ -1302,7 +1290,7 @@ void dpu_encoder_toggle_vblank_for_crtc(struct
+> > drm_encoder *drm_enc,
+> > >       trace_dpu_enc_vblank_cb(DRMID(drm_enc), enable);
+> > >
+> > >       spin_lock_irqsave(&dpu_enc->enc_spinlock, lock_flags);
+> > > -     if (dpu_enc->crtc != crtc) {
+> > > +     if (drm_enc->crtc != crtc) {
+> > >               spin_unlock_irqrestore(&dpu_enc->enc_spinlock, lock_flags);
+> > >               return;
+> > >       }
+> > > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
+> > b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
+> > > index 781d41c..edba815 100644
+> > > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
+> > > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
+> > > @@ -39,14 +39,6 @@ struct msm_display_info {
+> > >   };
+> > >
+> > >   /**
+> > > - * dpu_encoder_assign_crtc - Link the encoder to the crtc it's assigned to
+> > > - * @encoder: encoder pointer
+> > > - * @crtc:    crtc pointer
+> > > - */
+> > > -void dpu_encoder_assign_crtc(struct drm_encoder *encoder,
+> > > -                          struct drm_crtc *crtc);
+> > > -
+> > > -/**
+> > >    * dpu_encoder_toggle_vblank_for_crtc - Toggles vblank interrupts on or
+> > off if
+> > >    *  the encoder is assigned to the given crtc
+> > >    * @encoder:        encoder pointer
+> >
+> >
+> > --
+> > With best wishes
+> > Dmitry
 
-Regards,
-Bjorn
 
-> 
-> Changes Since V13:
->     -- Move digital codecs enabling to separate wcd specific dtsi file in CRD 3.0+ patches.
->     -- Remove redundant output high setting in wcd reset node.
->     -- Revert external mclk name.
->     -- Update dependency list.
->     -- Rebase as per latest kernel repository.
-> Changes Since V12:
->     -- Update 'lpasscore' clock node name to lpass_core to match latest clock patches.
->     -- Update external mclk0 name and it's source node.
->     -- Move sound node to separate wcd specific dtsi file.
->     -- Move CRD specific lpass_cpu node Enabling to separate wcd specific dtsi file.
->     -- Update dependency list.
-> Changes Since V11:
->     -- Remove output-low pinconf setting in wcd-reset-n-sleep node.
->     -- Update dependency list.
-> Changes Since V10:
->     -- Modify digital macro codecs pin control labels.
->     -- Updated dependency list.
-> Changes Since V9:
->     -- Move wcd codec and digital codec nodes to sc7280-qcard file.
->     -- Modify the reg property as per link number in sound node.
->     -- Fix the us-euro pin control usage in wcd codec node.
->     -- Move wcd pin control nodes to specific crd board files.
->     -- Sort max98360a codec node in alphabetical order.
->     -- Modify the commit messages.
-> Changes Since V8:
->     -- Split patches as per sc7280 CRD revision 3, 4 and 5 boards.
->     -- Add corresponding dt nodes for herobrine crd boards.
->     -- Update dai-link node names as per dt-bindings in sound node.
->     -- Add reg property in sound node as per dt-bindings which was removed in previous series.
->     -- Fix typo errors.
->     -- Update wcd codec pin control properties in board specific files.
-> Changes Since V7:
->     -- Remove redundant interrupt names in soundwire node.
->     -- Fix typo errors.
->     -- Remove redundant reg property in sound node.
->     -- Rebased on top of latest kernel tip.
-> Changes Since V6:
->     -- Modify link-names and audio routing in a sound node.
->     -- Move amp_en pin control node to appropriate consumer patch.
->     -- Split patches as per digital macro codecs and board specific codecs and sort it.
->     -- Modify label and node names to lpass specific.
-> Changes Since V5:
->     -- Move soc specific bolero digital codec nodes to soc specific file.
->     -- Bring wcd938x codec reset pin control and US/EURO HS selection nodes from other series.
->     -- Change node name and remove redundant status property in sound node.
-> Changes Since V4:
->     -- Update nodes in sorting order.
->     -- Update DTS node names as per dt-bindings.
->     -- Update Node properties in proper order.
->     -- Update missing pinctrl properties like US/EURO HS selection, wcd reset control.
->     -- Remove redundant labels.
->     -- Remove unused size cells and address cells in tx macro node.
->     -- Keep all same nodes at one place, which are defined in same file.
->     -- Add max98360a codec node to herobrine board specific targets.
-> Changes Since V3:
->     -- Move digital codec macro nodes to board specific dtsi file.
->     -- Update pin controls in lpass cpu node.
->     -- Update dependency patch list.
->     -- Create patches on latest kernel.
-> Changes Since V2:
->     -- Add power domains to digital codec macro nodes.
->     -- Change clock node usage in lpass cpu node.
->     -- Add codec mem clock to lpass cpu node.
->     -- Modify the node names to be generic.
->     -- Move sound and codec nodes to root node.
->     -- sort dai links as per reg.
->     -- Fix typo errors.
-> Changes Since V1:
->     -- Update the commit message of cpu node patch.
->     -- Add gpio control property to support Euro headset in wcd938x node.
->     -- Fix clock properties in lpass cpu and digital codec macro node.
-> 
-> Srinivasa Rao Mandadapu (12):
->   arm64: dts: qcom: sc7280: Add nodes for soundwire and va tx rx digital
->     macro codecs
->   arm64: dts: qcom: sc7280: Enable digital codecs and soundwire for CRD
->     1.0/2.0 and IDP boards
->   arm64: dts: qcom: sc7280: Enable digital codecs and soundwire for CRD
->     3.0/3.1
->   arm64: dts: qcom: sc7280: Add wcd9385 codec node for CRD 1.0/2.0 and
->     IDP boards
->   arm64: dts: qcom: sc7280: Add wcd9385 codec node for CRD 3.0/3.1
->   arm64: dts: qcom: sc7280: Add max98360a codec for CRD 1.0/2.0 and IDP
->     boards
->   arm64: dts: qcom: sc7280: herobrine: Add max98360a codec node
->   arm64: dts: qcom: sc7280: Add lpass cpu node
->   arm64: dts: qcom: sc7280: Enable lpass cpu node for CRD 1.0/2.0 and
->     IDP boards.
->   arm64: dts: qcom: sc7280: Enable lpass cpu node for CRD 3.0/3.1
->   arm64: dts: qcom: sc7280: Add sound node for CRD 1.0/2.0 and IDP
->     boards
->   arm64: dts: qcom: sc7280: Add sound node for CRD 3.0/3.1
-> 
->  arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts         |  37 ++++
->  .../dts/qcom/sc7280-herobrine-audio-wcd9385.dtsi   | 155 +++++++++++++++
->  arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi     |   8 +
->  arch/arm64/boot/dts/qcom/sc7280-idp.dtsi           | 216 +++++++++++++++++++++
->  arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi         |  73 +++++++
->  arch/arm64/boot/dts/qcom/sc7280.dtsi               | 190 ++++++++++++++++++
->  6 files changed, 679 insertions(+)
-> 
-> -- 
-> 2.7.4
-> 
+
+-- 
+With best wishes
+Dmitry
