@@ -2,77 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3C76F56ADC0
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Jul 2022 23:35:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9C61B56AE63
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jul 2022 00:28:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236730AbiGGVfP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Jul 2022 17:35:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45966 "EHLO
+        id S236665AbiGGW2O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Jul 2022 18:28:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56088 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236442AbiGGVfN (ORCPT
+        with ESMTP id S236535AbiGGW2N (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Jul 2022 17:35:13 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9687C380
-        for <linux-arm-msm@vger.kernel.org>; Thu,  7 Jul 2022 14:35:12 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id bf9so10076856lfb.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Jul 2022 14:35:12 -0700 (PDT)
+        Thu, 7 Jul 2022 18:28:13 -0400
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B335065D47;
+        Thu,  7 Jul 2022 15:28:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=SD0NxvCJo32HYd+2WD+ONWSoll8afsUSYzd6YC6f2ac=;
-        b=Yd0rw0t7ckAq+3RTm6AZOhVD5TIdiSyr2zkVbGg0YMmzpPjSBZrfpkkLZnKgXan7Pj
-         dEsi8Jpkd1Bhm89Bfp+vTzdZiT2ydU3CAp6VVx64w//Eh2wWBQp3TKdtdYsbJUv1DgfI
-         Uj0311zBVQEtAC0LBOoA+qJcL3woCe1W83n+ASzjW8Lct/UohtvCvqj29Gn+VCbymwff
-         jHKwaTPdJ6M81cT9nFb36WAfYM/e4mqk7q22zULxugh8oqHHe1m+Xwf5N+J2E56JM8/W
-         aY9yYy7zPXWEuStZfNAjd7PfGmXs0NE0AUpKMrE6qPPa1gr6MxPjFu6Kw472nk1jO7cH
-         SgIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=SD0NxvCJo32HYd+2WD+ONWSoll8afsUSYzd6YC6f2ac=;
-        b=Pau4pkzbwOkiq3XE8Z5FusEkXQSFMM1+GUbo3RVhKLFpjwvpAGyQLw8Vpxlg947H3T
-         Irqga92QiWbO0lEIuYT1yJ5ai+ZAOSpNZPHNnjofN4FHSLiBtZm3YarkU0J16g2ykUyP
-         R6ZhXtYN13kAXIpuVajeW+CzHmCTzJYnSG5Y6YxfxLAlZIpk+lVRRTnKtiztq5yUcv+A
-         SOuVxskHSflots5EsQUZnBqBrHolMzmaj9kjEy3LWnJOcJmKfJ0VSPpT1eSiN7ZUrnLh
-         guubu7cCQO8wWEve07aC3C9rb1IoSqOOQWzpIRIOblzHM4LzRqemYoSRHppyWOJyNQjG
-         n8WQ==
-X-Gm-Message-State: AJIora/gdR/MSY6ItXdwEPdfUgvLHx6qp3lm8KtpsphJWoiOwpnc6vn0
-        7h5GGJJTjIEO8GxxLrVrLeGJ5Q==
-X-Google-Smtp-Source: AGRyM1s01Ak2ESoCsiR0hzOAkFb6zGRLzecc9aB/OcMWeyDDvPq67Rf/HR/PYmmWNLqShfF28ejfig==
-X-Received: by 2002:a05:6512:2810:b0:47f:a76c:8770 with SMTP id cf16-20020a056512281000b0047fa76c8770mr182935lfb.116.1657229711019;
-        Thu, 07 Jul 2022 14:35:11 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id u10-20020a05651220ca00b0048957b0c58fsm182205lfr.47.2022.07.07.14.35.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 07 Jul 2022 14:35:10 -0700 (PDT)
-Message-ID: <92483e36-e0bc-3cdb-a9b9-fa354c948c19@linaro.org>
-Date:   Fri, 8 Jul 2022 00:35:09 +0300
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1657232892; x=1688768892;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=bxnC823s2jQTCTW1F00fQ9L9FPUuS6prikA03g2KwGA=;
+  b=eptQZV1e5MDhcuFHnnFT1cN7FmslzPoUBhOd9hgdCJJWgJtZmJlzs/cG
+   YWd1TWgUgfzcXzAxjkcSI+EA+RB8vV1PXrFpJtbCiafy3iKGeRluuO72w
+   zkerOMMUO8aGFHdG5xf0KsI+SIuvRICKUpq3aPWArzZwBM3H9cnOoRAsa
+   Y=;
+Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 07 Jul 2022 15:28:12 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Jul 2022 15:28:12 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Thu, 7 Jul 2022 15:28:11 -0700
+Received: from [10.111.163.64] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Thu, 7 Jul 2022
+ 15:28:09 -0700
+Message-ID: <5112b6fd-32c3-c447-61e1-828d5a0aa7c6@quicinc.com>
+Date:   Thu, 7 Jul 2022 15:28:07 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
 Subject: Re: [PATCH] drm/msm/dpu: Fix for non-visible planes
-Content-Language: en-GB
-To:     Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org
-Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Rob Clark <robdclark@chromium.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
+Content-Language: en-US
+To:     Rob Clark <robdclark@gmail.com>, <dri-devel@lists.freedesktop.org>
+CC:     Rob Clark <robdclark@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        <linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        Sean Paul <sean@poorly.run>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Jessica Zhang <quic_jesszhan@quicinc.com>,
+        <freedreno@lists.freedesktop.org>,
         Fernando Ramos <greenfoo@u92.eu>,
-        Mark Yacoub <markyacoub@google.com>,
-        open list <linux-kernel@vger.kernel.org>
+        Mark Yacoub <markyacoub@google.com>
 References: <20220707212003.1710163-1-robdclark@gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
 In-Reply-To: <20220707212003.1710163-1-robdclark@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -81,7 +74,9 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 08/07/2022 00:20, Rob Clark wrote:
+
+
+On 7/7/2022 2:20 PM, Rob Clark wrote:
 > From: Rob Clark <robdclark@chromium.org>
 > 
 > Fixes `kms_cursor_crc --run-subtest cursor-offscreen`.. when the cursor
@@ -89,10 +84,9 @@ On 08/07/2022 00:20, Rob Clark wrote:
 > it in crtc atomic test and mixer setup.
 > 
 > Signed-off-by: Rob Clark <robdclark@chromium.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 
-Fixes: 25fdd5933e4c ("drm/msm: Add SDM845 DPU support")
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
+Will pick up the fixes tag from Dmitry's r-b.
 > ---
 >   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c | 6 ++++++
 >   1 file changed, 6 insertions(+)
@@ -121,8 +115,3 @@ Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 >   		pstates[cnt].dpu_pstate = dpu_pstate;
 >   		pstates[cnt].drm_pstate = pstate;
 >   		pstates[cnt].stage = pstate->normalized_zpos;
-
-
--- 
-With best wishes
-Dmitry
