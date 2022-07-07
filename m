@@ -2,66 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 52DD2569A32
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Jul 2022 08:02:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 24F00569A63
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Jul 2022 08:20:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234550AbiGGGB5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Jul 2022 02:01:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43846 "EHLO
+        id S233366AbiGGGUY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Jul 2022 02:20:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54490 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234669AbiGGGB4 (ORCPT
+        with ESMTP id S232278AbiGGGUX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Jul 2022 02:01:56 -0400
+        Thu, 7 Jul 2022 02:20:23 -0400
 Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDB6031DC4;
-        Wed,  6 Jul 2022 23:01:55 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 088071EAFD;
+        Wed,  6 Jul 2022 23:20:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1657173716; x=1688709716;
+  t=1657174823; x=1688710823;
   h=message-id:date:mime-version:subject:to:cc:references:
    from:in-reply-to:content-transfer-encoding;
-  bh=5N4sUKD/BH+dt+9G8dMcKSapNUZdUb+xeJxu31OaD90=;
-  b=xhKkMbGcSbCxgKsTRm3ky5mOdTrjj9Eu8/1F1Msw4ADxlZhu9HqpRuhR
-   TbQKBHAu/JwENxcx92gGKyJ1s/M0nK6eoD7Gnw/KtuZtTYl5mblSEFUCP
-   QxKdIeuAsCJ3cG9SlSaaNe27Uq6ErmetOcYfD1GT7DPrC7CCGx4SCVmNk
-   Y=;
-Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 06 Jul 2022 23:01:55 -0700
+  bh=0GncP1lP/UKCHyowwfddoOYDjFybJCdgKqH6YR5zIuI=;
+  b=Q+ArQEtCBFAQYWZtsi+IYgAm2JhhOXiflzsfGxA2sOy9kq4ruiU2Grfw
+   YdcAslJGUAaG9Cefxlb3zix+crkt0DEnxTA+bRemPxlxXo0AlwaR/95pM
+   S/dkiueasYaMi8qpzRYOCoUJ5sFr/M1IyNIbiiV56cXFi+z1BC4+xRL6H
+   U=;
+Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 06 Jul 2022 23:20:22 -0700
 X-QCInternal: smtphost
 Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg02-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Jul 2022 23:01:55 -0700
+  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Jul 2022 23:20:22 -0700
 Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
  nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 6 Jul 2022 23:01:54 -0700
-Received: from [10.216.26.218] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ 15.2.986.22; Wed, 6 Jul 2022 23:20:21 -0700
+Received: from [10.50.36.54] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Wed, 6 Jul 2022
- 23:01:51 -0700
-Message-ID: <382a74b1-5026-55ad-0d78-0d3c42e59d3d@quicinc.com>
-Date:   Thu, 7 Jul 2022 11:31:48 +0530
+ 23:20:18 -0700
+Message-ID: <32306c0d-58cf-b1df-2794-5b1f17e3d062@quicinc.com>
+Date:   Thu, 7 Jul 2022 11:50:15 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Subject: Re: [PATCH v5 1/3] dt-bindings: clock: Add resets for LPASS audio
- clock controller for SC7280
+ Thunderbird/91.6.1
+Subject: Re: [PATCHv2] iommu/arm-smmu-qcom: Add debug support for TLB sync
+ timeouts
 Content-Language: en-US
-To:     Stephen Boyd <sboyd@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>
-CC:     <linux-arm-msm@vger.kernel.org>, <linux-soc@vger.kernel.org>,
-        <linux-clk@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <robh@kernel.org>,
-        <robh+dt@kernel.org>, <mka@chromium.org>
-References: <20220614153306.29339-1-quic_tdas@quicinc.com>
- <20220614153306.29339-2-quic_tdas@quicinc.com>
- <20220615195914.D73B9C3411E@smtp.kernel.org>
-From:   Taniya Das <quic_tdas@quicinc.com>
-In-Reply-To: <20220615195914.D73B9C3411E@smtp.kernel.org>
+To:     Will Deacon <will@kernel.org>
+CC:     Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        <iommu@lists.linux-foundation.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <quic_guptap@quicinc.com>, Rob Clark <robdclark@chromium.org>,
+        "Bjorn Andersson" <bjorn.andersson@linaro.org>
+References: <20220526041403.9984-1-quic_saipraka@quicinc.com>
+ <20220706115638.GD2403@willie-the-truck>
+From:   Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+In-Reply-To: <20220706115638.GD2403@willie-the-truck>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
@@ -73,28 +73,41 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Stephen,
-
-On 6/16/2022 1:29 AM, Stephen Boyd wrote:
-> Quoting Taniya Das (2022-06-14 08:33:04)
->> Add support for LPASS audio clock gating for RX/TX/SWA core bus clocks
->> for SC7280. Update reg property min/max items in YAML schema.
+On 7/6/2022 5:26 PM, Will Deacon wrote:
+> On Thu, May 26, 2022 at 09:44:03AM +0530, Sai Prakash Ranjan wrote:
+>> TLB sync timeouts can be due to various reasons such as TBU power down
+>> or pending TCU/TBU invalidation/sync and so on. Debugging these often
+>> require dumping of some implementation defined registers to know the
+>> status of TBU/TCU operations and some of these registers are not
+>> accessible in non-secure world such as from kernel and requires SMC
+>> calls to read them in the secure world. So, add this debug support
+>> to dump implementation defined registers for TLB sync timeout issues.
 >>
->> Fixes: 4185b27b3bef ("dt-bindings: clock: Add YAML schemas for LPASS clocks on SC7280").
->> Acked-by: Rob Herring <robh@kernel.org>
->> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+>> Signed-off-by: Sai Prakash Ranjan <quic_saipraka@quicinc.com>
 >> ---
->>   .../clock/qcom,sc7280-lpasscorecc.yaml        | 19 ++++++++++++++++---
->>   .../clock/qcom,lpassaudiocc-sc7280.h          |  5 +++++
->>   2 files changed, 21 insertions(+), 3 deletions(-)
-> 
-> I'm still wondering if the binding is correct, given the overlapping reg
-> properties. Should we be removing a compatible or two and adding a DT
-> property like "qcom,adsp-bypass-mode" instead?
+>>
+>> Changes in v2:
+>>   * Use scm call consistently so that it works on older chipsets where
+>>     some of these regs are secure registers.
+>>   * Add device specific data to get the implementation defined register
+>>     offsets.
+>>
+>> ---
+>>   drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 161 ++++++++++++++++++---
+>>   drivers/iommu/arm/arm-smmu/arm-smmu.c      |   2 +
+>>   drivers/iommu/arm/arm-smmu/arm-smmu.h      |   1 +
+>>   3 files changed, 146 insertions(+), 18 deletions(-)
+> If this is useful to you, then I suppose it's something we could support,
+> however I'm pretty worried about our ability to maintain/scale this stuff
+> as it is extended to support additional SoCs and other custom debugging
+> features.
+>
+> Perhaps you could stick it all in arm-smmu-qcom-debug.c and have a new
+> config option for that, so at least it's even further out of the way?
+>
+> Will
 
-I can pick this up as cleanup and send it across for review. If you are 
-fine now please help pick these up.
+Sounds good to me, will do that.
 
--- 
-Thanks & Regards,
-Taniya Das.
+Thanks,
+Sai
