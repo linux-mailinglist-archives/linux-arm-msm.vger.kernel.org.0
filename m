@@ -2,107 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4CCFC569F82
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Jul 2022 12:21:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1E9D156A035
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Jul 2022 12:43:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235185AbiGGKVH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Jul 2022 06:21:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49434 "EHLO
+        id S235144AbiGGKmE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Jul 2022 06:42:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36150 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235072AbiGGKVF (ORCPT
+        with ESMTP id S235349AbiGGKmD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Jul 2022 06:21:05 -0400
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A5D12BFE;
-        Thu,  7 Jul 2022 03:21:04 -0700 (PDT)
-Received: by mail-ej1-x62f.google.com with SMTP id os14so1351393ejb.4;
-        Thu, 07 Jul 2022 03:21:04 -0700 (PDT)
+        Thu, 7 Jul 2022 06:42:03 -0400
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 190414F673
+        for <linux-arm-msm@vger.kernel.org>; Thu,  7 Jul 2022 03:42:00 -0700 (PDT)
+Received: by mail-wm1-x32e.google.com with SMTP id t17-20020a1c7711000000b003a0434b0af7so10482180wmi.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Jul 2022 03:42:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=HrlXbWcFJrYmmGnhnXwnzHQ6nR1vAZ5/Ttv5TKyVVz4=;
-        b=UCj6ApGM3N18S4Dt6+Q/gWKy471ZadLbdHEBNZYY7fAFoj96ja0DQ8peadnrNHhcpj
-         SgKq0gPFfER74+4i9/CVV/ydJR0Nhe05d+1v8qBAW50OLh22cNNJqDwDzKODt9EIZrv8
-         MzJKifym6vd44Tr00zz8PKAYu7c0VgR0Dg22MVYDwGR9RwPpaRhB/IuJZVxnjnis/xxo
-         1Kg3gqw0aW8DaD1qhEd27dqCPUsx3qbNkVlIHReBo6OauksoixspoXUd9yZN338gs7H5
-         6RzNGRoagTdEqOxyr7dOq53ElZhRSC7W6DwYYDbklAUrNiRCJCXvd9gYfp8RrDX7rugi
-         5sFw==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=ZVSYvXmefqE+MfS8n0FJBkX+AkR5IfISwtQFKKh7kvc=;
+        b=L23etO+ocvne9PH19+wfoZuBbhwO+sVAFrxpV2Fb6QzCrdDT8aZYJbXKWwmHB9ZM3/
+         LtFVWOTs/B1/Vx3uWTG5GMS1ib/p/ptp/X8Y34BEehd6eOn1V8EfXiafoFfxF/NSaLLQ
+         +ZEc6MsDPmWbM1WXj4i3/AAHYMx6noyTbboqRXXjh2BVLOb7NcyLkq+rH9RFfTjDh4Wi
+         U136tjV/Gjw9fzkeodZdKXOWgrCQKuauoFM+7dqT+vxxtLMJHT1oAHD605+Vfh3XD7Nq
+         I5iQW55TgsDhthvo5IFdKZYzMTGfs9S+qTX35DMQvQquFY3NN63mw5W7nz/inFVXBG3q
+         MBkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=HrlXbWcFJrYmmGnhnXwnzHQ6nR1vAZ5/Ttv5TKyVVz4=;
-        b=fKgvPKp/1TxG37eHxrMx4gT/Nwas9JetJiDk3ipTbW6GLMWMt6c1D6yS6cLDZwACxf
-         cBP7Jz2Xygl8MABS4ShG0HwF7HLJy9v0oZ67q8qOHzruWfUkXLJgYPTKXEbJsMjfS7qm
-         L+ZeA9RNsbkAb8hnF+gXxIxRDetcYXfUMJcg6tVK+VlsA3vVh6GtDF1zywotkaJ/99wC
-         x9qaDIIUHe2SLnWstcAMZ3/qbe0vCI7rTAFTR6NHGHtXC8NpFKEHeoOoueSQZCHBuqag
-         8TRuY4DUpZn6VPXSznfVy8sBMoM4uN2VqNT2bpQVS9wJzVfoKbG6r6B9+d45jyctlFaH
-         Deqw==
-X-Gm-Message-State: AJIora8YLUkSc3e/Iz7go+gAb1WyfBxoID3wcjpUuSOnDsRXl8ieMADb
-        OzqvCKXJLfxkfMyeA7wG0ng=
-X-Google-Smtp-Source: AGRyM1sq7ZRcrYah2UHhGSyBOrApze7sDmVHy7kME8pHSFycaghvbLni6IQQc4763QMY6dWCY2z0QQ==
-X-Received: by 2002:a17:907:9725:b0:726:c820:7653 with SMTP id jg37-20020a170907972500b00726c8207653mr45191077ejc.633.1657189262747;
-        Thu, 07 Jul 2022 03:21:02 -0700 (PDT)
-Received: from localhost.localdomain (93-42-70-190.ip85.fastwebnet.it. [93.42.70.190])
-        by smtp.googlemail.com with ESMTPSA id s22-20020a170906a19600b0071cef8bafc3sm18701117ejy.1.2022.07.07.03.21.01
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=ZVSYvXmefqE+MfS8n0FJBkX+AkR5IfISwtQFKKh7kvc=;
+        b=GPb1QwgczjItA8hq9/CKYd01Wi7SvCpNQ5z8MqWJ0L/7RHmKREPfhlOYuIWN9eYaoN
+         +ZPM+z59toCCy30P2SO4Pp15pLRBZ1TBpPBAdbIp1pPopQ8H+9IiOQFrQdlk5f5Y9+kk
+         r2qU3LTT8YND91qiH7N5fCJET97odngcNxy+8VixPoRb6zJZrbHUp6XTEFeIUsnPkqrR
+         a6xGpF2d8RK7y+hly0FI8DS2+0aHsSgD85lFkDGF0ypX/IPfdj7D/ARw+bjLpAQK/bST
+         2CKxqVSgP/lo6EBZjaueLP/GB19CPArW9EL00DahuipKsmMGBXJVJPWzh7aHrRq5YLDm
+         bKpA==
+X-Gm-Message-State: AJIora+oYDAfD7usn2xHtENqNlvxExIN+ruBLsh2o+MyEctg8eyURF1p
+        sJy0uKgtEfnVYB6e+liIW2qDBA==
+X-Google-Smtp-Source: AGRyM1sPT+iSrdXpKNV9l2ZR5aSEXqzu1zOGVjiyisaGkoovw7DGeA3cpuGhJkZJXem2fF9/nCRqlQ==
+X-Received: by 2002:a05:600c:600d:b0:3a1:9712:5d31 with SMTP id az13-20020a05600c600d00b003a197125d31mr3618219wmb.67.1657190518617;
+        Thu, 07 Jul 2022 03:41:58 -0700 (PDT)
+Received: from linaro.org ([94.52.112.99])
+        by smtp.gmail.com with ESMTPSA id v17-20020a5d5911000000b0021bbdc3375fsm14265075wrd.68.2022.07.07.03.41.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Jul 2022 03:21:02 -0700 (PDT)
-From:   Christian Marangi <ansuelsmth@gmail.com>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Ohad Ben-Cohen <ohad@wizery.com>,
-        Baolin Wang <baolin.wang7@gmail.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-remoteproc@vger.kernel.org
-Cc:     Christian Marangi <ansuelsmth@gmail.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH v2 3/3] ARM: dts: qcom: add missing smem compatible for ipq8064 dtsi
-Date:   Thu,  7 Jul 2022 12:20:40 +0200
-Message-Id: <20220707102040.1859-3-ansuelsmth@gmail.com>
-X-Mailer: git-send-email 2.36.1
-In-Reply-To: <20220707102040.1859-1-ansuelsmth@gmail.com>
-References: <20220707102040.1859-1-ansuelsmth@gmail.com>
+        Thu, 07 Jul 2022 03:41:58 -0700 (PDT)
+Date:   Thu, 7 Jul 2022 13:41:57 +0300
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     Saravana Kannan <saravanak@google.com>
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        linux-arm-msm@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Subject: Re: [RFC v2] driver core: Fix repeated device_is_dependent check for
+ same link
+Message-ID: <Ysa4dUhSbgz+VDIf@linaro.org>
+References: <20220706155347.778762-1-abel.vesa@linaro.org>
+ <CAGETcx_MV8QsAFC_ztY6CjysshxPSZZ2ZbgpyXhSpH1v2knhzA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAGETcx_MV8QsAFC_ztY6CjysshxPSZZ2ZbgpyXhSpH1v2knhzA@mail.gmail.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add missing smem compatible and hwlocks phandle for ipq8064 dtsi
-smem node.
+On 22-07-06 21:51:34, Saravana Kannan wrote:
+> On Wed, Jul 6, 2022 at 8:54 AM Abel Vesa <abel.vesa@linaro.org> wrote:
+> >
+> > In case of a cyclic dependency, if the supplier is not yet available,
+> > the parent of the supplier is checked for dependency. But if there are
+> > more than one suppliers with the same parent, the first check returns
+> > true while the next ones skip that specific link entirely because of
+> > having DL_FLAG_MANAGED and DL_FLAG_SYNC_STATE_ONLY set, which is what
+> > the relaxing of the link does. But if we check for the target being
+> > a consumer before the check for those flags, we can check as many
+> > times as needed the same link and it will always return true, This is
+> > safe to do, since the relaxing of the link will be done only once
+> > because those flags will be set and it will bail early.
+> >
+> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> > ---
+> >  drivers/base/core.c | 6 +++---
+> >  1 file changed, 3 insertions(+), 3 deletions(-)
+> >
+> > diff --git a/drivers/base/core.c b/drivers/base/core.c
+> > index 753e7cca0f40..2c3b860dfe80 100644
+> > --- a/drivers/base/core.c
+> > +++ b/drivers/base/core.c
+> > @@ -297,13 +297,13 @@ int device_is_dependent(struct device *dev, void *target)
+> >                 return ret;
+> >
+> >         list_for_each_entry(link, &dev->links.consumers, s_node) {
+> > +               if (link->consumer == target)
+> > +                       return 1;
+> > +
+> >                 if ((link->flags & ~DL_FLAG_INFERRED) ==
+> >                     (DL_FLAG_SYNC_STATE_ONLY | DL_FLAG_MANAGED))
+> >                         continue;
+>
+> Thanks for trying to fix this issue, but I'll have to Nack this patch.
+>
+> The whole point of the SYNC_STATE_ONLY flag is to allow cycles. It's
+> needed to maintain correctness of sync_state(). I think I described
+> those in the commit text that added the SYNC_STATE_ONLY flag. Check it
+> out if you are interested. So this change of yours will break
+> sync_state() functionality.
+>
 
-Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- arch/arm/boot/dts/qcom-ipq8064.dtsi | 3 +++
- 1 file changed, 3 insertions(+)
+Fair enough.
 
-diff --git a/arch/arm/boot/dts/qcom-ipq8064.dtsi b/arch/arm/boot/dts/qcom-ipq8064.dtsi
-index cd1b43e2cab4..ff1a2acb1d83 100644
---- a/arch/arm/boot/dts/qcom-ipq8064.dtsi
-+++ b/arch/arm/boot/dts/qcom-ipq8064.dtsi
-@@ -292,8 +292,11 @@ nss@40000000 {
- 		};
- 
- 		smem: smem@41000000 {
-+			compatible = "qcom,smem";
- 			reg = <0x41000000 0x200000>;
- 			no-map;
-+
-+			hwlocks = <&sfpb_mutex 3>;
- 		};
- 	};
- 
--- 
-2.36.1
+> There's a bunch of nuance to fixing the dual cycle issue and I don't
+> mind fixing this myself in a week or two if you can wait.
+>
 
+Please cc me on it.
+
+> Thanks,
+> Saravana
+>
+> >
+> > -               if (link->consumer == target)
+> > -                       return 1;
+> > -
+> >                 ret = device_is_dependent(link->consumer, target);
+> >                 if (ret)
+> >                         break;
+> > --
+> > 2.34.3
+> >
