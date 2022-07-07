@@ -2,104 +2,183 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 86B8956A34C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Jul 2022 15:17:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4165556A371
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Jul 2022 15:26:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235524AbiGGNQg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Jul 2022 09:16:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39488 "EHLO
+        id S235502AbiGGNXb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Jul 2022 09:23:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44284 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235510AbiGGNQe (ORCPT
+        with ESMTP id S235474AbiGGNX2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Jul 2022 09:16:34 -0400
-Received: from mail-qt1-x82a.google.com (mail-qt1-x82a.google.com [IPv6:2607:f8b0:4864:20::82a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 015B22CDFD
-        for <linux-arm-msm@vger.kernel.org>; Thu,  7 Jul 2022 06:16:33 -0700 (PDT)
-Received: by mail-qt1-x82a.google.com with SMTP id c20so327032qtw.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Jul 2022 06:16:32 -0700 (PDT)
+        Thu, 7 Jul 2022 09:23:28 -0400
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A552B32;
+        Thu,  7 Jul 2022 06:23:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=MqlMfZ8fQXOwxTDqrntRkHE3D7MxEI/E5lq6JAfP4jE=;
-        b=WfQtu9rHhospRacVsjlUlb0LkygWfaJnaJaKYCL/TG+u0P+63HS6EvDZhohiyhLVCJ
-         BTZLcvVKMf4pSGEueFQNRTjePXe0vRWOBR7lBUOdX+4Ib+h/m8zte/7AP7d/81+15MSq
-         07tny2LKbipaTDVNGyfxCRcciiO56WQ7aPdpCr31REiLrLVi9zYmmnGeE3yQXEDmiwyj
-         U85JSfCvACZ5RO2nQnGcA8Mn5kvQIv5MI8wtRLBxTtsLJHazAQQi1uvLwxbIVasSxZvD
-         GVy0JZ2lcjCRv4gb5F0hfN3+YAZx4Uq7ZXUSkje+guR/BzCGhAI1a+ty8myJ4xvnZJ95
-         4hQQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=MqlMfZ8fQXOwxTDqrntRkHE3D7MxEI/E5lq6JAfP4jE=;
-        b=RrNkOTumQod+Vb396zImBnAiergMRuy1zRsE/eaZwMJ2pB9W02Kiw+OleAFy/Fb1ig
-         T1lzme5WKMlEkUehqPqjskTlZRmk3wfm2b+JlUGBjAB/wDi+BDdwUdr3N12lscSsiVaf
-         zwjPXYxlB1CeAk+9MxdT3HvCwVED8L07WGBDTnqr75XKR93y8aw8urER5RtsizKoQ/BI
-         V2hzfxA/kc/+pZ+zgnOnBHH6tskOOt6vBDFn3c5QDlCZrvZip9B3697cVRnDRtlE7S97
-         Y0xy5J4hfOLpwN0RiTTHj1os1JXZ9VwXd2me3CubD+B5QCl2CaX7a7loClSOqWRRzG7R
-         3QHw==
-X-Gm-Message-State: AJIora/EyC06q3QYA7GF2SlMyV2+S5E5dpsFWnOFEY9ERayFGvNCycxp
-        KH+B3dLPR0UKTsU3gPcBXsW/nwF3jkyYu6BOIw9mUA==
-X-Google-Smtp-Source: AGRyM1ul3iuz5ajc9yApAncXOGwSRLVhNG/Nr3i0uRHfHk55LX9XPHmvYzBTEwB1AM2+4S/r20SQNdu1vMCLrBeKBFo=
-X-Received: by 2002:a05:6214:2a84:b0:473:2958:2b02 with SMTP id
- jr4-20020a0562142a8400b0047329582b02mr3813815qvb.122.1657199791909; Thu, 07
- Jul 2022 06:16:31 -0700 (PDT)
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1657200205; x=1688736205;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=g/1VMYl1Q4XyxnV0wlEI2ZGlUitTHtYzwWEBz33JMY0=;
+  b=mpqEPg+pwpm++kWwHk9TkKv8aSNQFMwUHbgt5he/BxHosuSigNMRdl28
+   eZVVKqAIs3YDjBT2GMfQHGkPM5gaUMYpXTYgIEKyPk/T1QIEl2Bzrk/0g
+   1eJjAflBSKklo35IO+cJJqTayhQ7f6Toq3LmNJXJY3X3YAyl8i+B7WWPz
+   I=;
+Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 07 Jul 2022 06:23:24 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Jul 2022 06:23:24 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Thu, 7 Jul 2022 06:23:24 -0700
+Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Thu, 7 Jul 2022 06:23:19 -0700
+From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
+        <robh+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_rohkumar@quicinc.com>, <srinivas.kandagatla@linaro.org>,
+        <dianders@chromium.org>, <swboyd@chromium.org>,
+        <judyhsiao@chromium.org>
+CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Subject: [PATCH v14 00/12] Add soundcard support for sc7280 based platforms.
+Date:   Thu, 7 Jul 2022 18:52:52 +0530
+Message-ID: <1657200184-29565-1-git-send-email-quic_srivasam@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-References: <20220707125848.379610-1-sunliming@kylinos.cn>
-In-Reply-To: <20220707125848.379610-1-sunliming@kylinos.cn>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Thu, 7 Jul 2022 16:16:20 +0300
-Message-ID: <CAA8EJpoXaJgU_oGmkHiMjX366+eWLYDBAbaLRCJfOm9ySFb+ig@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm/dsi: fix the inconsistent indenting
-To:     sunliming <sunliming@kylinos.cn>
-Cc:     christian.koenig@amd.com, robdclark@gmail.com,
-        quic_abhinavk@quicinc.com, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        kelulanainsley@gmail.com, kernel test robot <lkp@intel.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 7 Jul 2022 at 15:59, sunliming <sunliming@kylinos.cn> wrote:
->
-> Fix the inconsistent indenting in function msm_dsi_dphy_timing_calc_v3().
->
-> Fix the following smatch warnings:
->
-> drivers/gpu/drm/msm/dsi/phy/dsi_phy.c:350 msm_dsi_dphy_timing_calc_v3() warn: inconsistent indenting
->
-> Reported-by: kernel test robot <lkp@intel.com>
-> Signed-off-by: sunliming <sunliming@kylinos.cn>
-> ---
->  2                                     | 947 ++++++++++++++++++++++++++
->  drivers/gpu/drm/msm/dsi/phy/dsi_phy.c |   2 +-
->  2 files changed, 948 insertions(+), 1 deletion(-)
->  create mode 100644 2
->
-> diff --git a/2 b/2
-> new file mode 100644
-> index 000000000000..56dfa2d24be1
-> --- /dev/null
-> +++ b/2
+This patch set is to add bolero digital macros, WCD and maxim codecs nodes
+for audio on sc7280 based platforms.
 
-Please drop this part & resubmit.
+This patch set depends on:
+    [LPASS DTS: wcd related pinmux reorg]
+    -- https://patchwork.kernel.org/project/linux-arm-msm/list/?series=657389
+    [Clock DTS: reset control changes]
+    -- https://patchwork.kernel.org/project/linux-arm-msm/list/?series=638002
+    [Clock: External MCLK and reset control driver changes]
+    -- https://patchwork.kernel.org/project/linux-arm-msm/list/?series=650267
+    [Clock DTS: lpasscc node disable and lpasscore node name changes]
+    -- https://patchwork.kernel.org/project/linux-arm-msm/list/?series=657325
 
-> @@ -0,0 +1,947 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2015, The Linux Foundation. All rights reserved.
-> + */
+Changes Since V13:
+    -- Move digital codecs enabling to separate wcd specific dtsi file in CRD 3.0+ patches.
+    -- Remove redundant output high setting in wcd reset node.
+    -- Revert external mclk name.
+    -- Update dependency list.
+    -- Rebase as per latest kernel repository.
+Changes Since V12:
+    -- Update 'lpasscore' clock node name to lpass_core to match latest clock patches.
+    -- Update external mclk0 name and it's source node.
+    -- Move sound node to separate wcd specific dtsi file.
+    -- Move CRD specific lpass_cpu node Enabling to separate wcd specific dtsi file.
+    -- Update dependency list.
+Changes Since V11:
+    -- Remove output-low pinconf setting in wcd-reset-n-sleep node.
+    -- Update dependency list.
+Changes Since V10:
+    -- Modify digital macro codecs pin control labels.
+    -- Updated dependency list.
+Changes Since V9:
+    -- Move wcd codec and digital codec nodes to sc7280-qcard file.
+    -- Modify the reg property as per link number in sound node.
+    -- Fix the us-euro pin control usage in wcd codec node.
+    -- Move wcd pin control nodes to specific crd board files.
+    -- Sort max98360a codec node in alphabetical order.
+    -- Modify the commit messages.
+Changes Since V8:
+    -- Split patches as per sc7280 CRD revision 3, 4 and 5 boards.
+    -- Add corresponding dt nodes for herobrine crd boards.
+    -- Update dai-link node names as per dt-bindings in sound node.
+    -- Add reg property in sound node as per dt-bindings which was removed in previous series.
+    -- Fix typo errors.
+    -- Update wcd codec pin control properties in board specific files.
+Changes Since V7:
+    -- Remove redundant interrupt names in soundwire node.
+    -- Fix typo errors.
+    -- Remove redundant reg property in sound node.
+    -- Rebased on top of latest kernel tip.
+Changes Since V6:
+    -- Modify link-names and audio routing in a sound node.
+    -- Move amp_en pin control node to appropriate consumer patch.
+    -- Split patches as per digital macro codecs and board specific codecs and sort it.
+    -- Modify label and node names to lpass specific.
+Changes Since V5:
+    -- Move soc specific bolero digital codec nodes to soc specific file.
+    -- Bring wcd938x codec reset pin control and US/EURO HS selection nodes from other series.
+    -- Change node name and remove redundant status property in sound node.
+Changes Since V4:
+    -- Update nodes in sorting order.
+    -- Update DTS node names as per dt-bindings.
+    -- Update Node properties in proper order.
+    -- Update missing pinctrl properties like US/EURO HS selection, wcd reset control.
+    -- Remove redundant labels.
+    -- Remove unused size cells and address cells in tx macro node.
+    -- Keep all same nodes at one place, which are defined in same file.
+    -- Add max98360a codec node to herobrine board specific targets.
+Changes Since V3:
+    -- Move digital codec macro nodes to board specific dtsi file.
+    -- Update pin controls in lpass cpu node.
+    -- Update dependency patch list.
+    -- Create patches on latest kernel.
+Changes Since V2:
+    -- Add power domains to digital codec macro nodes.
+    -- Change clock node usage in lpass cpu node.
+    -- Add codec mem clock to lpass cpu node.
+    -- Modify the node names to be generic.
+    -- Move sound and codec nodes to root node.
+    -- sort dai links as per reg.
+    -- Fix typo errors.
+Changes Since V1:
+    -- Update the commit message of cpu node patch.
+    -- Add gpio control property to support Euro headset in wcd938x node.
+    -- Fix clock properties in lpass cpu and digital codec macro node.
 
-[skipped the rest]
+Srinivasa Rao Mandadapu (12):
+  arm64: dts: qcom: sc7280: Add nodes for soundwire and va tx rx digital
+    macro codecs
+  arm64: dts: qcom: sc7280: Enable digital codecs and soundwire for CRD
+    1.0/2.0 and IDP boards
+  arm64: dts: qcom: sc7280: Enable digital codecs and soundwire for CRD
+    3.0/3.1
+  arm64: dts: qcom: sc7280: Add wcd9385 codec node for CRD 1.0/2.0 and
+    IDP boards
+  arm64: dts: qcom: sc7280: Add wcd9385 codec node for CRD 3.0/3.1
+  arm64: dts: qcom: sc7280: Add max98360a codec for CRD 1.0/2.0 and IDP
+    boards
+  arm64: dts: qcom: sc7280: herobrine: Add max98360a codec node
+  arm64: dts: qcom: sc7280: Add lpass cpu node
+  arm64: dts: qcom: sc7280: Enable lpass cpu node for CRD 1.0/2.0 and
+    IDP boards.
+  arm64: dts: qcom: sc7280: Enable lpass cpu node for CRD 3.0/3.1
+  arm64: dts: qcom: sc7280: Add sound node for CRD 1.0/2.0 and IDP
+    boards
+  arm64: dts: qcom: sc7280: Add sound node for CRD 3.0/3.1
+
+ arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts         |  37 ++++
+ .../dts/qcom/sc7280-herobrine-audio-wcd9385.dtsi   | 155 +++++++++++++++
+ arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi     |   8 +
+ arch/arm64/boot/dts/qcom/sc7280-idp.dtsi           | 216 +++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi         |  73 +++++++
+ arch/arm64/boot/dts/qcom/sc7280.dtsi               | 190 ++++++++++++++++++
+ 6 files changed, 679 insertions(+)
 
 -- 
-With best wishes
-Dmitry
+2.7.4
+
