@@ -2,69 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2388C569B4A
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Jul 2022 09:08:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 159AF569BD9
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Jul 2022 09:43:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231869AbiGGHHI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Jul 2022 03:07:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33990 "EHLO
+        id S235101AbiGGHjD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Jul 2022 03:39:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55180 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231284AbiGGHHI (ORCPT
+        with ESMTP id S234758AbiGGHip (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Jul 2022 03:07:08 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F8AED64;
-        Thu,  7 Jul 2022 00:07:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1657177627; x=1688713627;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=MVVnthjUDTVnZM9X3riNSKa4dXFwEii4fHlXf9p0rYI=;
-  b=l9dv7GLsMVzAixz2P++iBUt0tnjsQ1a5TT2kLRIVKgcERuk3LMQ21cVh
-   mC2EqVM01geMA7iAKOXrX8wLw4uyZJgT6z4QdW8ZERlg9fFj8eYZTSFfS
-   vvYNGACdkwBdJw2U357XYxSYLKR242hZJVkz4LtvpNlHQYIxZqQUHSL/z
-   w=;
-Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
-  by alexa-out.qualcomm.com with ESMTP; 07 Jul 2022 00:07:07 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Jul 2022 00:07:07 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Thu, 7 Jul 2022 00:07:06 -0700
-Received: from [10.216.26.218] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Thu, 7 Jul 2022
- 00:07:02 -0700
-Message-ID: <ac679a45-9574-7978-860f-1a1bcefb53ec@quicinc.com>
-Date:   Thu, 7 Jul 2022 12:36:59 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Subject: Re: [PATCH v1] arm64: dts: qcom: sc7280: Update lpassaudio clock
- controller for resets
-Content-Language: en-US
-To:     Stephen Boyd <swboyd@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>
-CC:     Rob Herring <robh+dt@kernel.org>,
+        Thu, 7 Jul 2022 03:38:45 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0B1E326F2;
+        Thu,  7 Jul 2022 00:38:36 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 5CDDC61B0C;
+        Thu,  7 Jul 2022 07:38:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2C07C3411E;
+        Thu,  7 Jul 2022 07:38:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1657179515;
+        bh=dEH00sPee+QPLnv4vCT0+HRB/HiN2iqpU4CrPolA87A=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=pr3afQObb2yiXatw9whVzqKy3t1SWArA7c5qdephf6Eu2In0y9jjAc7uJkyHaTtRQ
+         RizEOEFsIZ8ZfYclMF/ClpnGUxwRm+FlHbZmOGit74tSA003KaUDCOvUAkd3O7XGi+
+         RsUVglrGvjxr/xQcv5WoRFoPH58lxw9lFfmKQ97XAb5XKWTooPHvbV6K9nE3Izel7v
+         RnY5El1xSJSDLX6wvLHo0J4wwvFkigGOqHNRrh7mGyxcsLjW7ODwbxoWtWeDX6wzIB
+         tFdHv3k1nKrVDxr3vbskQvBXU11LmmL1A9HeiVBPQxHPuuksR9/L7VlVtWl/b9RdLz
+         NIikfJJ7HAgvQ==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1o9M5s-0004XB-V3; Thu, 07 Jul 2022 09:38:37 +0200
+Date:   Thu, 7 Jul 2022 09:38:36 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        "Andy Gross" <agross@kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20220614161118.12458-1-quic_tdas@quicinc.com>
- <Yqi8rcs95CEEjGY4@google.com>
- <CAE-0n50cqBWpDKsiyDNMZ8GnNtj7xJn930S1hucdAGn7tGXewA@mail.gmail.com>
-From:   Taniya Das <quic_tdas@quicinc.com>
-In-Reply-To: <CAE-0n50cqBWpDKsiyDNMZ8GnNtj7xJn930S1hucdAGn7tGXewA@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        linux-clk@vger.kernel.org
+Subject: Re: [PATCH 2/2] phy: qcom-qmp-ufs: provide symbol clocks
+Message-ID: <YsaNfK64RGNp/ZvT@hovoldconsulting.com>
+References: <20220620153956.1723269-1-dmitry.baryshkov@linaro.org>
+ <20220620153956.1723269-2-dmitry.baryshkov@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220620153956.1723269-2-dmitry.baryshkov@linaro.org>
+X-Spam-Status: No, score=-7.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -73,34 +66,79 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-Hi Stephen,
-
-On 6/15/2022 2:08 AM, Stephen Boyd wrote:
-> Quoting Matthias Kaehlcke (2022-06-14 09:51:57)
->> On Tue, Jun 14, 2022 at 09:41:18PM +0530, Taniya Das wrote:
->>> The lpass audio supports TX/RX/WSA block resets. The LPASS PIL clock
->>> driver is not supported and mark it disabled. Also to keep consistency
->>> update lpasscore to lpass_core.
->>
->> There is a driver for "qcom,sc7280-lpasscc", what does it mean that is
->> isn't supported?
->>
->> IIUC one problem is that 'lpasscc@3000000' and 'lpass_aon / clock-controller@3380000'
->> have overlapping register ranges, so they can't be used together.
->>
->> You could just say 'Disable the LPASS PIL clock by default, boards
->> can enable it if needed'.
+On Mon, Jun 20, 2022 at 06:39:56PM +0300, Dmitry Baryshkov wrote:
+> Register three UFS symbol clocks (ufs_rx_symbol_0_clk_src,
+> ufs_rx_symbol_1_clk_src ufs_tx_symbol_0_clk_src). Register OF clock
+> provider to let other devices link these clocks through the DT.
 > 
-> For the pinctrl driver we added a "qcom,adsp-bypass-mode" property[1] to
-> indicate that the ADSP was being bypassed or not. Can we do the same
-> here and combine the device nodes that have overlapping reg properties?
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  drivers/phy/qualcomm/phy-qcom-qmp-ufs.c | 55 +++++++++++++++++++++++++
+>  1 file changed, 55 insertions(+)
 > 
-> [1] https://lore.kernel.org/r/1654921357-16400-2-git-send-email-quic_srivasam@quicinc.com
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+> index a2526068232b..0f31d3255897 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+> @@ -1167,6 +1167,54 @@ static int qcom_qmp_phy_ufs_clk_init(struct device *dev, const struct qmp_phy_cf
+>  	return devm_clk_bulk_get(dev, num, qmp->clks);
+>  }
+>  
+> +static void phy_clk_release_provider(void *res)
+> +{
+> +	of_clk_del_provider(res);
+> +}
+> +
+> +#define UFS_SYMBOL_CLOCKS 3
+> +
+> +static int phy_symbols_clk_register(struct qcom_qmp *qmp, struct device_node *np)
+> +{
+> +	struct clk_hw_onecell_data *clk_data;
+> +	struct clk_hw *hw;
+> +	int ret;
+> +
+> +	clk_data = devm_kzalloc(qmp->dev, struct_size(clk_data, hws, UFS_SYMBOL_CLOCKS), GFP_KERNEL);
 
-Could we take up as a cleanup and take it forward:
-https://lore.kernel.org/lkml/20220614153306.29339-1-quic_tdas@quicinc.com/T/#t
+Missing error handling.
 
--- 
-Thanks & Regards,
-Taniya Das.
+> +	clk_data->num = UFS_SYMBOL_CLOCKS;
+> +
+> +	hw = devm_clk_hw_register_fixed_rate(qmp->dev, "ufs_rx_symbol_0_clk_src",
+
+Don't the clock names need to be globally unique and hence either come
+from the devicetree or encode the device topology some other way?
+
+We have two UFS PHYs on sc8280xp for example.
+
+> +							   NULL, 0, 0);
+> +	if (IS_ERR(hw))
+> +		return PTR_ERR(hw);
+> +
+> +	clk_data->hws[0] = hw;
+> +
+> +	hw = devm_clk_hw_register_fixed_rate(qmp->dev, "ufs_rx_symbol_1_clk_src",
+> +							   NULL, 0, 0);
+> +	if (IS_ERR(hw))
+> +		return PTR_ERR(hw);
+> +
+> +	clk_data->hws[1] = hw;
+> +
+> +	hw = devm_clk_hw_register_fixed_rate(qmp->dev, "ufs_tx_symbol_0_clk_src",
+> +							   NULL, 0, 0);
+> +	if (IS_ERR(hw))
+> +		return PTR_ERR(hw);
+> +
+> +	clk_data->hws[2] = hw;
+> +
+> +	ret = of_clk_add_hw_provider(np, of_clk_hw_onecell_get, clk_data);
+> +	if (ret)
+> +		return ret;
+> +
+> +        /*
+> +         * Roll a devm action because the clock provider is the child node, but
+> +         * the child node is not actually a device.
+> +         */
+> +        return devm_add_action_or_reset(qmp->dev, phy_clk_release_provider, np);
+> +}
+
+Johan
