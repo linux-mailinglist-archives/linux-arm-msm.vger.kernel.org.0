@@ -2,68 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0F84D56A89D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Jul 2022 18:51:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B670256A91A
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Jul 2022 19:09:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235477AbiGGQvh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Jul 2022 12:51:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59784 "EHLO
+        id S233757AbiGGRJS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Jul 2022 13:09:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49840 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235158AbiGGQvg (ORCPT
+        with ESMTP id S232040AbiGGRJR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Jul 2022 12:51:36 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3550B2E9DE;
-        Thu,  7 Jul 2022 09:51:35 -0700 (PDT)
+        Thu, 7 Jul 2022 13:09:17 -0400
+Received: from mail-qt1-x833.google.com (mail-qt1-x833.google.com [IPv6:2607:f8b0:4864:20::833])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FD8C2C65E
+        for <linux-arm-msm@vger.kernel.org>; Thu,  7 Jul 2022 10:09:16 -0700 (PDT)
+Received: by mail-qt1-x833.google.com with SMTP id ay10so23641469qtb.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Jul 2022 10:09:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1657212695; x=1688748695;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=fzvG9KcXakJp0NGkoS5P9K5pudVXmEkaIJ6d4P/hRKk=;
-  b=K++uit/0nMjxudNkIFR9KAE+Kk+XArduHYuz65IGzhb/jip8md9nCT3u
-   rB7gmbMTEI6TYBNc78Wgh+opUhw83BsbznjlvOs2yoHqUdiFhe9oi5avn
-   tHOpVq1ZZ/Mu0cFAQ9VB0DuzFfRuE56Cwm1fMjhc0fWwM6ZCvdReNXQ5R
-   E=;
-Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 07 Jul 2022 09:51:34 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Jul 2022 09:51:34 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Thu, 7 Jul 2022 09:51:33 -0700
-Received: from [10.111.163.64] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Thu, 7 Jul 2022
- 09:51:31 -0700
-Message-ID: <240422bd-ba5e-d250-d8ac-ef6651a97977@quicinc.com>
-Date:   Thu, 7 Jul 2022 09:51:29 -0700
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=VneEvPWdF6mlYziIcZrj3EYP52YVpTU7ZsL0RJCPJFQ=;
+        b=Uh4Tsuo2YRPF4FwgP4T/50FuolQJl1/GFqd3XzYKDzX365ndqpE3VJAxDAQfjydTV5
+         WlPH+LLLZj1/9g6dONy2x6F9lWHxqRpIobhy7lkcDO/4thfb0F6bTGt50jdTNi0f3HNh
+         Lv4G9qndF0evUiGTCFQJKfRuxZVM39Jz+nw/gboNfYHEWNt+qJsmQIxDMNJTiLKDcZrl
+         Lmla2nFxqpwkDYCzA8ZG+3TdB1KSdRmpqhAm6MhTFR2I0clwqD4Z7hWXEB27S6ieebeY
+         HTsOWW9xa+x+A/738t8cqYlpH0dFAo9vAcgKgyx8ustFqKQP7M/N8u9RR2BahEml2ZC2
+         eVxQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=VneEvPWdF6mlYziIcZrj3EYP52YVpTU7ZsL0RJCPJFQ=;
+        b=zrJ/exXrDLVUPjM/IFnGtetBZ0ojZo6girB/zUutWOQnVR/B/x/pB16Ci9FpPlTpxU
+         vh3zT3HczSvfeGFnziBB+sP9rJehVl2I90HMkNrsvJJ8278/kUKtym8qngMDMjwWwK3Q
+         0bbxqo/LB/ISfO/lKC3Bi73RDwb4z8Ww16tEgB2/Z9/b1PpbaFGcz2joeORdczIbIt1d
+         9ptNK0XuaXVf7IdHTW+I0rdXbh+hkrsROA7Vaw5Wn9KrnKGz8ImjO0fSxiziwdmG2F4r
+         RqKqupVAVSqt6Zp+eAyeg5JKnGZXLE+9VBdkqOPfWfiELfIFXWbX4RnzJtU8e1qpNyCU
+         6Fpw==
+X-Gm-Message-State: AJIora/PqStZIDtsZW/RVfXhUGNPeRX4NVrhe6d5DwmWlY7ifTECSu9G
+        lfRwglw0pDM/fTj80qNAXd9q5vgvquooxXCNkTBvng==
+X-Google-Smtp-Source: AGRyM1uTqIRT81uZlraOmFAY1lNrExbidfEhf+iPZzJKCA6C2WfR0CI6/FXXG2Ugntc6W19Sd7VXAXFsjdZMkU/ayLE=
+X-Received: by 2002:ac8:5c96:0:b0:31a:c19a:7da1 with SMTP id
+ r22-20020ac85c96000000b0031ac19a7da1mr38887460qta.62.1657213755118; Thu, 07
+ Jul 2022 10:09:15 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH] drm/msm/mdp5: Fix global state lock backoff
-Content-Language: en-US
-To:     Rob Clark <robdclark@gmail.com>, <dri-devel@lists.freedesktop.org>
-CC:     Rob Clark <robdclark@chromium.org>,
-        David Airlie <airlied@linux.ie>,
-        <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        Sean Paul <sean@poorly.run>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>,
-        <freedreno@lists.freedesktop.org>
-References: <20220707162040.1594855-1-robdclark@gmail.com>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20220707162040.1594855-1-robdclark@gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+References: <e00b1317-9c2e-0b11-8c0b-1fa4a17e4761@linaro.org> <20220707154020.GA305104@bhelgaas>
+In-Reply-To: <20220707154020.GA305104@bhelgaas>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Thu, 7 Jul 2022 20:09:03 +0300
+Message-ID: <CAA8EJpqoB+iQCJGPK8DXaEFAyaHnfuZjQi6aepvWxYugqAZa8A@mail.gmail.com>
+Subject: Re: [PATCH v11 0/5] PCI: qcom: Rework pipe_clk/pipe_clk_src handling
+To:     Bjorn Helgaas <helgaas@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-pci@vger.kernel.org, Johan Hovold <johan@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -72,78 +75,59 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Thu, 7 Jul 2022 at 18:40, Bjorn Helgaas <helgaas@kernel.org> wrote:
+>
+> On Thu, Jul 07, 2022 at 05:03:48PM +0300, Dmitry Baryshkov wrote:
+> > On 16/06/2022 21:21, Bjorn Helgaas wrote:
+> > > On Wed, Jun 08, 2022 at 01:52:33PM +0300, Dmitry Baryshkov wrote:
+> > > > PCIe pipe clk (and some other clocks) must be parked to the "safe"
+> > > > source (bi_tcxo) when corresponding GDSC is turned off and on again.
+> > > > Currently this is handcoded in the PCIe driver by reparenting the
+> > > > gcc_pipe_N_clk_src clock.
+>
+> > > > Dmitry Baryshkov (5):
+> > > >    clk: qcom: regmap: add PHY clock source implementation
+> > > >    clk: qcom: gcc-sm8450: use new clk_regmap_phy_mux_ops for PCIe pipe
+> > > >      clocks
+> > > >    clk: qcom: gcc-sc7280: use new clk_regmap_phy_mux_ops for PCIe pipe
+> > > >      clocks
+> > > >    PCI: qcom: Remove unnecessary pipe_clk handling
+> > > >    PCI: qcom: Drop manual pipe_clk_src handling
+> > > >
+> > > >
+> > > > Dmitry Baryshkov (5):
+> > > >    clk: qcom: regmap: add PHY clock source implementation
+> > > >    clk: qcom: gcc-sm8450: use new clk_regmap_phy_mux_ops for PCIe pipe
+> > > >      clocks
+> > > >    clk: qcom: gcc-sc7280: use new clk_regmap_phy_mux_ops for PCIe pipe
+> > > >      clocks
+> > > >    PCI: qcom: Remove unnecessary pipe_clk handling
+> > > >    PCI: qcom: Drop manual pipe_clk_src handling
+> > > >
+> > > >   drivers/clk/qcom/Makefile              |  1 +
+> > > >   drivers/clk/qcom/clk-regmap-phy-mux.c  | 62 ++++++++++++++++++++
+> > > >   drivers/clk/qcom/clk-regmap-phy-mux.h  | 33 +++++++++++
+> > > >   drivers/clk/qcom/gcc-sc7280.c          | 49 +++++-----------
+> > > >   drivers/clk/qcom/gcc-sm8450.c          | 49 +++++-----------
+> > > >   drivers/pci/controller/dwc/pcie-qcom.c | 81 +-------------------------
+> > > >   6 files changed, 127 insertions(+), 148 deletions(-)
+> > > >   create mode 100644 drivers/clk/qcom/clk-regmap-phy-mux.c
+> > > >   create mode 100644 drivers/clk/qcom/clk-regmap-phy-mux.h
+> > >
+> > > I applied this to pci/ctrl/qcom for v5.20, thanks!
+> > >
+> > > Clock folks (Bjorn A, Andy, Michael, Stephen), I assume you're OK with
+> > > these being merged via the PCI tree.  Let me know if you prefer
+> > > anything different.
+> >
+> > I noticed that this patchset is not a part of linux-next. Is it still
+> > pending to be merged in 5.20?
+>
+> It's still pending.  I currently have three separate qcom-related
+> branches that need to be reconciled before I put them in -next.
 
+Ok, thank you for the explanation. Please excuse my worries.
 
-On 7/7/2022 9:20 AM, Rob Clark wrote:
-> From: Rob Clark <robdclark@chromium.org>
-> 
-> We need to grab the lock after the early return for !hwpipe case.
-> Otherwise, we could have hit contention yet still returned 0.
-> 
-> Fixes an issue that the new CONFIG_DRM_DEBUG_MODESET_LOCK stuff flagged
-> in CI:
-> 
->     WARNING: CPU: 0 PID: 282 at drivers/gpu/drm/drm_modeset_lock.c:296 drm_modeset_lock+0xf8/0x154
->     Modules linked in:
->     CPU: 0 PID: 282 Comm: kms_cursor_lega Tainted: G        W         5.19.0-rc2-15930-g875cc8bc536a #1
->     Hardware name: Qualcomm Technologies, Inc. DB820c (DT)
->     pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
->     pc : drm_modeset_lock+0xf8/0x154
->     lr : drm_atomic_get_private_obj_state+0x84/0x170
->     sp : ffff80000cfab6a0
->     x29: ffff80000cfab6a0 x28: 0000000000000000 x27: ffff000083bc4d00
->     x26: 0000000000000038 x25: 0000000000000000 x24: ffff80000957ca58
->     x23: 0000000000000000 x22: ffff000081ace080 x21: 0000000000000001
->     x20: ffff000081acec18 x19: ffff80000cfabb80 x18: 0000000000000038
->     x17: 0000000000000000 x16: 0000000000000000 x15: fffffffffffea0d0
->     x14: 0000000000000000 x13: 284e4f5f4e524157 x12: 5f534b434f4c5f47
->     x11: ffff80000a386aa8 x10: 0000000000000029 x9 : ffff80000cfab610
->     x8 : 0000000000000029 x7 : 0000000000000014 x6 : 0000000000000000
->     x5 : 0000000000000001 x4 : ffff8000081ad904 x3 : 0000000000000029
->     x2 : ffff0000801db4c0 x1 : ffff80000cfabb80 x0 : ffff000081aceb58
->     Call trace:
->      drm_modeset_lock+0xf8/0x154
->      drm_atomic_get_private_obj_state+0x84/0x170
->      mdp5_get_global_state+0x54/0x6c
->      mdp5_pipe_release+0x2c/0xd4
->      mdp5_plane_atomic_check+0x2ec/0x414
->      drm_atomic_helper_check_planes+0xd8/0x210
->      drm_atomic_helper_check+0x54/0xb0
->      ...
->     ---[ end trace 0000000000000000 ]---
->     drm_modeset_lock attempting to lock a contended lock without backoff:
->        drm_modeset_lock+0x148/0x154
->        mdp5_get_global_state+0x30/0x6c
->        mdp5_pipe_release+0x2c/0xd4
->        mdp5_plane_atomic_check+0x290/0x414
->        drm_atomic_helper_check_planes+0xd8/0x210
->        drm_atomic_helper_check+0x54/0xb0
->        drm_atomic_check_only+0x4b0/0x8f4
->        drm_atomic_commit+0x68/0xe0
-> 
-> Fixes: d59be579fa93 ("drm/msm/mdp5: Return error code in mdp5_pipe_release when deadlock is detected")
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> ---
->   drivers/gpu/drm/msm/disp/mdp5/mdp5_pipe.c | 3 ++-
->   1 file changed, 2 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_pipe.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_pipe.c
-> index a4f5cb90f3e8..e4b8a789835a 100644
-> --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_pipe.c
-> +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_pipe.c
-> @@ -123,12 +123,13 @@ int mdp5_pipe_release(struct drm_atomic_state *s, struct mdp5_hw_pipe *hwpipe)
->   {
->   	struct msm_drm_private *priv = s->dev->dev_private;
->   	struct mdp5_kms *mdp5_kms = to_mdp5_kms(to_mdp_kms(priv->kms));
-> -	struct mdp5_global_state *state = mdp5_get_global_state(s);
-> +	struct mdp5_global_state *state;
->   	struct mdp5_hw_pipe_state *new_state;
->   
->   	if (!hwpipe)
->   		return 0;
->   
-> +	state = mdp5_get_global_state(s);
->   	if (IS_ERR(state))
->   		return PTR_ERR(state);
->   
+-- 
+With best wishes
+Dmitry
