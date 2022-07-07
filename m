@@ -2,75 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E363856A401
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Jul 2022 15:45:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D99A456A446
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Jul 2022 15:48:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235717AbiGGNp6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Jul 2022 09:45:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39290 "EHLO
+        id S235572AbiGGNsM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Jul 2022 09:48:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40382 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234864AbiGGNp4 (ORCPT
+        with ESMTP id S236099AbiGGNrq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Jul 2022 09:45:56 -0400
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 493D8165BD
-        for <linux-arm-msm@vger.kernel.org>; Thu,  7 Jul 2022 06:45:55 -0700 (PDT)
-Received: by mail-lf1-x135.google.com with SMTP id f39so31219251lfv.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Jul 2022 06:45:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=J84rYJRxyLS+DUjyXjNuhmSfKGBG7TC7QePHLusbdzw=;
-        b=jKkeaRYF23FtZ6HZA6V52In5GCMTZeNH250abFmDRxUhV5M4/kKpjdO+0DVWZQLI2G
-         d8NNfPqp9GiGYKehCUVa9HGbegz7nP09LNFxJu69wPyqkHEaokgwWPJBWT9VXOFb1GhA
-         CXyptjESVF3ot+2kfHGnYFCWhsQlunFqLzCVsY6XIktGa941d/4PkGvW0HD7tAwSV8tV
-         ty3GAzFDeCBfbNNkTFFDdkKOayD/W3HklaCg8pVsZ2TmS5e8XBp1lYKPGWBcIalL4Q+8
-         sKxdwsmHcJFYsG64eDRWgkMe/9OZErKRBlK1VWtChjcQItFez2f26JzblV6itPc7i63Q
-         eq1w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=J84rYJRxyLS+DUjyXjNuhmSfKGBG7TC7QePHLusbdzw=;
-        b=FhAkaYc9MZmU2rOPVGjGfpbN7/RknhVXk93q4BIkIFN3Ans8UWReyxFSQm4ykgyHXI
-         aUJfOvxw2AQsced7JUBDMTTbqiv6lvmgeBhwq7a66hytcBwZizjvQdN16EB/LO/+77dC
-         dZyqqnFDXmkFOUDoGYEyTrEbusfRTRE9O8UrjS2Vm057qmvV9osbM3SXAB0lttL1vUry
-         zLP4nSGHmU7oERW8WRUbXN6z643DQmsYc6+m3ULnUbem2ZalWOKY0mQ2WkF+0mDtPDFj
-         5BSVXqvvr7zMz+U35Cz3+upbBgKjk+YBqW3wgAYAzbiwjoQ/7xO0h+rLTZJ4Wx4NDnPr
-         grMg==
-X-Gm-Message-State: AJIora++OM65M2meV6b+bfQ2Q0WHT0T7LwzRwpMhxK5azYzdwdv4KTwt
-        UgCZB8sqSbkVYMia8cYgfg7snQ==
-X-Google-Smtp-Source: AGRyM1tYRRs62+3BxTdwVevSgyxH22yeW6RRboVvaXprKyowC2dHaOYS/W8Vk9oL8zsZQ2wYPpT8gQ==
-X-Received: by 2002:a05:6512:102a:b0:47f:a442:7178 with SMTP id r10-20020a056512102a00b0047fa4427178mr31602041lfr.30.1657201553667;
-        Thu, 07 Jul 2022 06:45:53 -0700 (PDT)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id k12-20020a2eb74c000000b0024f3d1daee0sm6612652ljo.104.2022.07.07.06.45.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Jul 2022 06:45:53 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+        Thu, 7 Jul 2022 09:47:46 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D22B27B01;
+        Thu,  7 Jul 2022 06:47:42 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id BB5E6B82011;
+        Thu,  7 Jul 2022 13:47:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21CF1C341DA;
+        Thu,  7 Jul 2022 13:47:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1657201659;
+        bh=esDzN8W5rhBneLzn6GNPAOjFrhxGFXz2UJSq0T/MQp0=;
+        h=From:To:Cc:Subject:Date:From;
+        b=rzJV3sy30QlKDCxGIJ1uCrdj9ZTGItbp6hInBLe8wbwaYGvn6cRlVhfAfN4xks9oJ
+         krimXqbTZPaCEsyGRrKlQ76I2GMvTFIKkO9bGmGXPqmNxSw3iKl7pIcxKk4LzkQyY1
+         mBOXd/EzrdwqBW9TCFtcpS1DOIY327xUA12NsEpKY3iRZjZAcLtmyYodFHOrN3twIz
+         vgNT3MFCxvoUyH6/YjzJ15r2N3qwg9V7eZGYw/K9nNHfN3Sbaq1OHwgvK9HiBrunXY
+         9A+xkzjSbI7ymaMXOhJOM1WFr7+/TkS0fuhjd3/bk5UWoNF337HcJPdwqwY1zIf1qx
+         PVM7DItZ+vpqg==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan+linaro@kernel.org>)
+        id 1o9Rr3-0000vo-IG; Thu, 07 Jul 2022 15:47:41 +0200
+From:   Johan Hovold <johan+linaro@kernel.org>
+To:     Vinod Koul <vkoul@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
-        Johan Hovold <johan@kernel.org>
-Subject: [PATCH] dt-bindings: PCI: qcom: fix typo in condition guarding resets
-Date:   Thu,  7 Jul 2022 16:45:52 +0300
-Message-Id: <20220707134552.2436442-1-dmitry.baryshkov@linaro.org>
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Johan Hovold <johan+linaro@kernel.org>
+Subject: [PATCH v2 00/30] phy: qcom,qmp: fix dt-bindings and deprecate lane suffix
+Date:   Thu,  7 Jul 2022 15:46:55 +0200
+Message-Id: <20220707134725.3512-1-johan+linaro@kernel.org>
 X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+X-Spam-Status: No, score=-7.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -79,28 +61,98 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Fix the typo (compatibles vs compatible) in the condition guarding the
-resets being required everywhere except MSM8996.
+When adding support for SC8280XP to the QMP PHY driver I noticed that
+the PHY provider child node was not described by the current DT schema.
 
-Fixes: 6700a9b00f0a ("dt-bindings: PCI: qcom: Do not require resets on msm8996 platforms")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- Documentation/devicetree/bindings/pci/qcom,pcie.yaml | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+The SC8280XP PHYs also need a second fixed-divider PIPE clock
+("pipediv2") and I didn't want to have to add a bogus "lane" suffix to
+the clock name just to match the current "pipe0" name so I decided to
+deprecate the unnecessary suffix in the current binding instead.
 
-diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-index 0b69b12b849e..9b3ebee938e8 100644
---- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-+++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-@@ -614,7 +614,7 @@ allOf:
-   - if:
-       not:
-         properties:
--          compatibles:
-+          compatible:
-             contains:
-               enum:
-                 - qcom,pcie-msm8996
+To be able to add the missing child-node schema and handle device
+specifics like additional PIPE clocks, it quickly became obvious that
+the binding needs to be split up.
+
+This series clean up and fixes some issue with the current schema before
+splitting it up in separate schemas for PCIe, UFS and USB and adding
+missing parts like the child PHY provider nodes.
+
+The MSM8996 PCIe PHY gets its own schema as this is the only non-combo
+PHY that actually provides more than one PHY per IP block. Note that the
+"lane" suffix is still unnecessary and misleading.
+
+The final patches add support for the updated binding to the (recently
+split up) PHY drivers. Included is also a related combo PHY cleanup.
+
+Johan
+
+
+Changes in v2
+ - squash split + cleanup + example patches (Krzysztof)
+ - deprecate clock-names instead of dropping suffix (Krzysztof)
+ - deprecate reset-names instead of dropping suffix (Krzysztof)
+ - flatten child reg if/then schemas (Krzysztof)
+ - add back optional vddp-ref-clk to all bindings even though it likely
+   only applies to MSM8996/98 UFS (Krzysztof)
+ - add missing sc7180 schema to USB binding
+ - misc clean ups
+   - shorten or drop descriptions
+   - drop quotes around $id and $schema (Krzysztof)
+   - use maxItems with clock-output-names
+   - combine two USB clock+reset schemas
+ - add Reviewed-by/Acked-by tags
+
+
+Johan Hovold (30):
+  dt-bindings: phy: qcom,qmp: fix bogus clock-cells property
+  dt-bindings: phy: qcom,qmp: sort compatible strings
+  dt-bindings: phy: qcom,qmp: drop redundant descriptions
+  dt-bindings: phy: qcom,qmp: fix child node description
+  dt-bindings: phy: qcom,qmp: clean up descriptions
+  dt-bindings: phy: qcom,qmp: clean up example
+  dt-bindings: phy: qcom,qmp: drop child-node comment
+  dt-bindings: phy: add qcom,msm8996-qmp-pcie-phy schema
+  dt-bindings: phy: qcom,msm8996-qmp-pcie: add missing child node schema
+  dt-bindings: phy: qcom,msm8996-qmp-pcie: deprecate PIPE clock names
+  dt-bindings: phy: qcom,msm8996-qmp-pcie: deprecate reset names
+  dt-bindings: phy: add QMP PCIe PHY schema
+  dt-bindings: phy: qcom,qmp-pcie: add missing child node schema
+  dt-bindings: phy: qcom,qmp-pcie: deprecate PIPE clock name
+  dt-bindings: phy: add QMP UFS PHY schema
+  dt-bindings: phy: qcom,qmp-ufs: add missing SM8450 clock
+  dt-bindings: phy: qcom,qmp-ufs: add missing SM8150 power domain
+  dt-bindings: phy: qcom,qmp-ufs: add missing child node schema
+  dt-bindings: phy: add QMP USB PHY schema
+  dt-bindings: phy: qcom,qmp-usb: add missing child node schema
+  dt-bindings: phy: qcom,qmp-usb: deprecate PIPE clock name
+  dt-bindings: phy: qcom,qmp-usb: add missing qcom,sc7180-qmp-usb3-phy
+    schema
+  dt-bindings: phy: qcom,qmp-usb3-dp: fix bogus clock-cells property
+  dt-bindings: phy: qcom,qmp-usb3-dp: deprecate USB PIPE clock name
+  phy: qcom-qmp-pcie: drop pipe clock lane suffix
+  phy: qcom-qmp-combo: drop unused lane reset
+  phy: qcom-qmp-combo: drop pipe clock lane suffix
+  phy: qcom-qmp-pcie-msm8996: drop pipe clock lane suffix
+  phy: qcom-qmp-pcie-msm8996: drop reset lane suffix
+  phy: qcom-qmp-usb: drop pipe clock lane suffix
+
+ .../phy/qcom,msm8996-qmp-pcie-phy.yaml        | 189 +++++++
+ .../bindings/phy/qcom,qmp-pcie-phy.yaml       | 294 ++++++++++
+ .../devicetree/bindings/phy/qcom,qmp-phy.yaml | 500 ------------------
+ .../bindings/phy/qcom,qmp-ufs-phy.yaml        | 239 +++++++++
+ .../bindings/phy/qcom,qmp-usb-phy.yaml        | 387 ++++++++++++++
+ .../bindings/phy/qcom,qmp-usb3-dp-phy.yaml    |   8 +-
+ drivers/phy/qualcomm/phy-qcom-qmp-combo.c     |   6 +-
+ .../phy/qualcomm/phy-qcom-qmp-pcie-msm8996.c  |   8 +-
+ drivers/phy/qualcomm/phy-qcom-qmp-pcie.c      |   4 +-
+ drivers/phy/qualcomm/phy-qcom-qmp-usb.c       |   4 +-
+ 10 files changed, 1115 insertions(+), 524 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-pcie-phy.yaml
+ create mode 100644 Documentation/devicetree/bindings/phy/qcom,qmp-pcie-phy.yaml
+ delete mode 100644 Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml
+ create mode 100644 Documentation/devicetree/bindings/phy/qcom,qmp-ufs-phy.yaml
+ create mode 100644 Documentation/devicetree/bindings/phy/qcom,qmp-usb-phy.yaml
+
 -- 
 2.35.1
 
