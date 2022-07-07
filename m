@@ -2,80 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 30442569B2B
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Jul 2022 09:03:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3B3B6569B46
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Jul 2022 09:06:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235132AbiGGHBM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Jul 2022 03:01:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54186 "EHLO
+        id S235073AbiGGHDc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Jul 2022 03:03:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57358 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235148AbiGGHAg (ORCPT
+        with ESMTP id S235070AbiGGHCr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Jul 2022 03:00:36 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E2F831DE3
-        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Jul 2022 23:59:52 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id z25so11989111lfr.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Jul 2022 23:59:52 -0700 (PDT)
+        Thu, 7 Jul 2022 03:02:47 -0400
+Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84DAC31212
+        for <linux-arm-msm@vger.kernel.org>; Thu,  7 Jul 2022 00:02:34 -0700 (PDT)
+Received: by mail-lj1-x235.google.com with SMTP id a11so21094668ljb.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Jul 2022 00:02:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :references:from:in-reply-to:content-transfer-encoding;
-        bh=uudX0qE0EodfyOAtpNxIObBg7BD+vU4kR+vip3L6w9k=;
-        b=XsaW2j2vWBNrkQD0Fkp2Ibp4T8yUX5Vd0jRIPq7pCGZnJUMW/1yeRbtYaC/4RWKbkL
-         fowDz3z3jCu3YlbuSB5fRE8RglF22BzYSMoUWun72K9H9J1hmkk8BDKj/zODSARvMPZ2
-         wrTK/RMs3N0l0XFlAbYzNbW+qreJjh2u4vLBg6qPtbrakn0mKck6vvZoWO6k6tOO1bly
-         51suRCchE8Xzi05t3h8NwHY+XoK/76sJXG0iP+ZQZDiJn56PQFIXvoheT97e34vb+huE
-         5wc8fpGFr2NOf+g0cY+MdlEewqLNrXysmhaMw1+UQ/VoybbIHj8mg3ADwJyxdx+Vs5xT
-         lq5Q==
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=eskG10ne3YWs38KEldudontLzs+ZPvsxgipjdxWifI4=;
+        b=TJI7aGxHDGnIBbTc/xwugkSrZklg9G/ApWT1dIdrcN48L9yIhdb4Q3leMyjBHCoOxy
+         GwEqn2aomlIs4leTEfuxP+XnL17cvw4sMFpGTHMGndmCn70gzJ8Xy1rdQZrWrdyE601C
+         +u7U3woz2MTHADw3lfZEHsUMDrC/9LSeHFWVmbVzHSolc0gg12jllVTs6AIQzO/MSH3l
+         IsLWltQBCNJalbSRIavoW9E12KRy+HMzIH6EasR2YZ7+0DvOpvzqFlol2BVk07fp+2uD
+         649hzaEt3T/NCPqSv7jv9L75v8fSyGD3w85sZWdFej+S91yg9/5eq/dzOMv46w7PcEX7
+         BdmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:references:from:in-reply-to
+         :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=uudX0qE0EodfyOAtpNxIObBg7BD+vU4kR+vip3L6w9k=;
-        b=JwZ7bBJocr2U+SVtWQU1EwiNRIXCgrbYNVhWkVtCbMd4WH0qL+YiF/rlPyzucvnazI
-         +dCEP7EPGCkp8cjuXD3K2asFJ8STyNCrQrGTEvx1ASNyTv+pAd7og0mCCFklNhyp+XRh
-         x6jzvyNQRvznGkkr3myeCqP14FOmHmipfF6aolzSfJBZBra/lafEX1JxCUUyPq5MPVcd
-         /D0ZoSJm+0PmsFCOWzUtb4BqTdFvKvIEWbNpZOor5megL8ftnMluZTmG7pnfoyI2QYBd
-         u7MDVDV7K/TnHkKarSvT8ryUzCG/e/vUeU87axgs0Jv6Z9RV6/f/k54q0k0X9shlFLuA
-         8WJA==
-X-Gm-Message-State: AJIora9XCM2FM/67LpriEtn6mrQ3TQg1a8pXsSvIKhhhrcCijnQhBzw9
-        HQXXFczHl890Vkv+euKgtH7oRA==
-X-Google-Smtp-Source: AGRyM1uDcC2/uLeUv+nYCg4YXUX0JLtGsAJ2rhsItJBnSNg3ojhNi98v7mFkxoLbyJVzOpFG4NQ1lg==
-X-Received: by 2002:a05:6512:1303:b0:482:d0df:280f with SMTP id x3-20020a056512130300b00482d0df280fmr10006946lfu.14.1657177191963;
-        Wed, 06 Jul 2022 23:59:51 -0700 (PDT)
+        bh=eskG10ne3YWs38KEldudontLzs+ZPvsxgipjdxWifI4=;
+        b=zg5cRECAm8Wkef9Uf0oZggZT/bdroeJ346Yx8wVzokp10Ze8VqNAXBLf6TgZ6Tmw+6
+         ZARvHKYk8ZmO0I6QYWlONi4b/mfCqpiIqK3ZRJuk2imgecpqkDoxjSLE39436rvpcoIi
+         GWloZ4ZEhw8IuigD897dRR/YKNbKd43KhDis8Jca693RoX/ngX23MqH8q1KhlX1AWLIp
+         tTXeJUu/AXLHvjGn91yaCKUiG6lQg+Hxjc1aaiKmqAMtkaLu9u+xP38JQ/MhEUVYDSIU
+         o7A1QEieSVHdeT3eFMaPvDe1PPO7jHcT4mVGL4EWKGwEOGQF4kMV8ZCJgV14EP3JGxKY
+         YqoA==
+X-Gm-Message-State: AJIora8gKXw+9/U4wDbfqW5rhOjmIoXLMG/LAOKEhQ/7kejLhnJ6sgkE
+        hA+1bdjTjh2Zejnrgkx+pe4Y/A==
+X-Google-Smtp-Source: AGRyM1vh00Jq/dsU1Ex0hoAH49aA8RnZTGUqhwi+MAYpHBFLG3wACRh+GfJJcXVCSaEH8bn9rleh7A==
+X-Received: by 2002:a05:651c:230a:b0:25a:7556:d865 with SMTP id bi10-20020a05651c230a00b0025a7556d865mr26190591ljb.42.1657177352817;
+        Thu, 07 Jul 2022 00:02:32 -0700 (PDT)
 Received: from [192.168.1.52] ([84.20.121.239])
-        by smtp.gmail.com with ESMTPSA id v27-20020ac258fb000000b00478f739f1fdsm1047602lfo.103.2022.07.06.23.59.50
+        by smtp.gmail.com with ESMTPSA id z25-20020a195059000000b004853028282bsm967104lfj.270.2022.07.07.00.02.30
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 06 Jul 2022 23:59:51 -0700 (PDT)
-Message-ID: <98f7c329-b4b8-f7d6-33b4-b8471f23d174@linaro.org>
-Date:   Thu, 7 Jul 2022 08:59:50 +0200
+        Thu, 07 Jul 2022 00:02:31 -0700 (PDT)
+Message-ID: <f373aeeb-7f8e-5eb4-9230-4cb924032e5e@linaro.org>
+Date:   Thu, 7 Jul 2022 09:02:30 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.11.0
-Subject: Re: [PATCH 3/3] ARM: dts: qcom: add missing smem compatible for
- ipq8064 dtsi
+Subject: Re: [PATCH] Revert "arm64: dts: qcom: Fix 'reg-names' for sdhci
+ nodes"
 Content-Language: en-US
-To:     Christian Marangi <ansuelsmth@gmail.com>,
+To:     Douglas Anderson <dianders@chromium.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     swboyd@chromium.org, Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Ohad Ben-Cohen <ohad@wizery.com>,
-        Baolin Wang <baolin.wang7@gmail.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-remoteproc@vger.kernel.org
-References: <20220707013017.26654-1-ansuelsmth@gmail.com>
- <20220707013017.26654-3-ansuelsmth@gmail.com>
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20220706144706.1.I48f35820bf3670d54940110462555c2d0a6d5eb2@changeid>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220707013017.26654-3-ansuelsmth@gmail.com>
+In-Reply-To: <20220706144706.1.I48f35820bf3670d54940110462555c2d0a6d5eb2@changeid>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -83,11 +81,33 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 07/07/2022 03:30, Christian Marangi wrote:
-> Add missing smem compatible and hwlocks binding for ipq8064 dtsi
+On 06/07/2022 23:47, Douglas Anderson wrote:
+> This reverts commit afcbe252e9c19161e4d4c95f33faaf592f1de086.
+> 
+> The commit in question caused my sc7280-herobrine-herobrine-r1 board
+> not to boot anymore. This shouldn't be too surprising since the driver
+> is relying on the name "cqhci".
 
-s/binding/phandle/
+Thanks for finding the issue.
 
+> 
+> The issue seems to be that someone decided to change the names of
+> things when the binding moved from .txt to .yaml. We should go back to
+> the names that the bindings have historically specified.
+> 
+> For some history, see commit d3392339cae9 ("mmc: cqhci: Update cqhci
+> memory ioresource name") and commit d79100c91ae5 ("dt-bindings: mmc:
+> sdhci-msm: Add CQE reg map").
+> 
+> Fixes: afcbe252e9c1 ("arm64: dts: qcom: Fix 'reg-names' for sdhci nodes")
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> ---
+> This is just a straight revert. That presumably means we'll get some
+> "make dtbs_check" warnings that were fixed by the commit being
+> reverted. I'll leave it to the authors of the original commit to
+> adjust the bindings to fix those.
+
+Thanks for the report. I can help here.
 
 Best regards,
 Krzysztof
