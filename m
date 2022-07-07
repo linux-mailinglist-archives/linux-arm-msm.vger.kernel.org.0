@@ -2,76 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 96D5F56969A
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Jul 2022 01:52:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9E51D5696B1
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Jul 2022 02:03:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234814AbiGFXwQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Jul 2022 19:52:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34314 "EHLO
+        id S234580AbiGGACe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Jul 2022 20:02:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41520 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234827AbiGFXwL (ORCPT
+        with ESMTP id S234691AbiGGAC3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Jul 2022 19:52:11 -0400
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 832EC2D1E1
-        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Jul 2022 16:52:10 -0700 (PDT)
-Received: by mail-ed1-x52c.google.com with SMTP id r18so21127684edb.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Jul 2022 16:52:10 -0700 (PDT)
+        Wed, 6 Jul 2022 20:02:29 -0400
+Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F08EA2D1E1
+        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Jul 2022 17:02:27 -0700 (PDT)
+Received: by mail-oi1-x232.google.com with SMTP id s128so6931463oie.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Jul 2022 17:02:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=MSVkgssPYSMWDFeWt4DymCowPK9l5Ni6+5AEe415dyY=;
-        b=khDwWFqETN807wJmcP7heIB6vCBbpIRCZZOBJSCN7WCuU0U+X4w8wrzrfL6dyLR3Be
-         G8XhJXA53IqqVIO12N8YYW9RktFvK/f+DIdGeyxlh/FDtFDRlr8qc3oocd77ysg7cxKP
-         wGirpXzRIzSK2LD+HZ3cWSm95zWN750w2ocRI=
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=PnPr/1wV1VsDM5AHnYfjPAu3D3lvVU7n3T6uqgg9/R0=;
+        b=cy5YW5oK8azkNdczvWFJwyh++jfARujG2dfBKCYuhU29WcT/XmK1mxCRYPxCTDuzHD
+         S930YX/X6BdzGqHueKcrrFx+425I4eqBGTp0flDBv9boMS5HM7KjVEznIn2TJd0cJpBS
+         pKupIMlhavC4356aVBEbh/9Lt/TaZMJ3fl0C4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=MSVkgssPYSMWDFeWt4DymCowPK9l5Ni6+5AEe415dyY=;
-        b=odiDeGp7IVn+MeCvOYrjhexARB7/xdNphxR3xmhrpCUuBXGHvQ8k+rJGrfXZ/7fnHH
-         3LOhp+X+z1/c8m7M8JdjCa7Hb4K+15LVbHDIpVBQOeVYW+ZCeg5JxP5dlWGKf93HldKJ
-         BUZc7DQPewYaRMLJfCkJ8OD7EIihBlrKJZARSlVoLVygDRhFHAB6eBbNkG2MmHQXki+j
-         9bhQxfIJT+vsBmfkUEqA1vIbYoHY6f83B1HGoKW2b6+bwUoXKZuCH+RQLtIqTNCFDB4U
-         Qtwf0HACMS2GyCs8tbGqumvEBJXaopT71pkzLgPTyZoDuKZ/Y5n8OrAQoMHBEx/krniR
-         PrEA==
-X-Gm-Message-State: AJIora+VO1HNwD1i3MilJkfoCvmQ6ZVZk6bhOCQRqH4ByUTLDvL6b67L
-        Zsqxaqdsi4Ts27up/lfKolKRqzhIBAc9kyL58Og=
-X-Google-Smtp-Source: AGRyM1v9cs6qOKFZF3YynKUxLSGSlCmvzIYj7n0vTvERaeDfKGplCfWWCcMXBjL78pxTyDUYctDzmA==
-X-Received: by 2002:a05:6402:4316:b0:437:8d2e:cf2d with SMTP id m22-20020a056402431600b004378d2ecf2dmr57813094edc.229.1657151528865;
-        Wed, 06 Jul 2022 16:52:08 -0700 (PDT)
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com. [209.85.128.54])
-        by smtp.gmail.com with ESMTPSA id r1-20020a1709067fc100b0070e238ff66fsm17974269ejs.96.2022.07.06.16.52.07
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 06 Jul 2022 16:52:07 -0700 (PDT)
-Received: by mail-wm1-f54.google.com with SMTP id j7so9688204wmp.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Jul 2022 16:52:07 -0700 (PDT)
-X-Received: by 2002:a05:600c:4e8d:b0:3a1:2e4d:1dd2 with SMTP id
- f13-20020a05600c4e8d00b003a12e4d1dd2mr1163259wmq.85.1657151526824; Wed, 06
- Jul 2022 16:52:06 -0700 (PDT)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=PnPr/1wV1VsDM5AHnYfjPAu3D3lvVU7n3T6uqgg9/R0=;
+        b=kHYwAGQ6pZ1QVXG/wexKlh0hWvG47JJZYcaW+0CfwkGXapUX2DbuQ569kyiACiSkfn
+         86AjiSanqC6XCVQIgLCes2ltfenVihXH0m/tqZco9cb7bJbwpGoYw0L8C/pMTm/hSBhl
+         sswEiSMtQXqG1v/bOaaQXHj/SgUkGAwMrIGqaLmZdyQ3KkpitU9QGRI0zRQKnU+kZnxU
+         DxGsOxcqrmjQIv+lQgQSkcVjg+ravqknX/VU0fC7+OY3Zu4hYoY5yQWvVPUggvOiSdeR
+         H0hrD10UpsNDRCSflEdPUoRzGi8W2/PiV8o8WdB/POcuovAuQgnCMlRk+AOXFLFQKxVx
+         MrQA==
+X-Gm-Message-State: AJIora+SJPFZPXNBfojjhGQG49+y+Oz+2qKFoKNG7uC4PTYI41gfBa0U
+        CApAAUun9CSXPEedQLj8X9ESoCRNWjUWhRBpDL7r3A==
+X-Google-Smtp-Source: AGRyM1vW63Yppk8g9ETKCFgydRa/5t3+pkplkfQ29ri3PaE1IB+DZLPNqhEt4I43L+jR0L5u6CSyYIFc3FbBzB2Bd/k=
+X-Received: by 2002:a05:6808:171c:b0:334:9342:63ef with SMTP id
+ bc28-20020a056808171c00b00334934263efmr808946oib.63.1657152147038; Wed, 06
+ Jul 2022 17:02:27 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 6 Jul 2022 20:02:26 -0400
 MIME-Version: 1.0
-References: <SG2PR03MB500697A11DA5D0B45DE41B0ECC819@SG2PR03MB5006.apcprd03.prod.outlook.com>
- <3bf68892-9a55-1d6e-fb43-346d9378a866@somainline.org>
-In-Reply-To: <3bf68892-9a55-1d6e-fb43-346d9378a866@somainline.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Wed, 6 Jul 2022 16:51:54 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=VaCbb1xksYTL=dgDtZOD59nD=dx5hgYY-RFWkRVVo-7Q@mail.gmail.com>
-Message-ID: <CAD=FV=VaCbb1xksYTL=dgDtZOD59nD=dx5hgYY-RFWkRVVo-7Q@mail.gmail.com>
-Subject: Re: [PATCH 2/2] [PATCH v2 2/2] arm64: dts: qcom: Add LTE SKUs for
- sc7280-villager family
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     Jimmy Chen <jinghung.chen3@hotmail.com>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Alan Huang <alan-huang@quanta.corp-partner.google.com>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+In-Reply-To: <Yr5xS/HCrBuNrn9N@builder.lan>
+References: <20220628201340.3981860-1-swboyd@chromium.org> <Yr5xS/HCrBuNrn9N@builder.lan>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date:   Wed, 6 Jul 2022 20:02:26 -0400
+Message-ID: <CAE-0n51Ex7T+B0PwwYmH-o9VAy5PYgzGFb=bOTu8ae4t0sGZKw@mail.gmail.com>
+Subject: Re: [PATCH/RFC] clk: qcom: rpmh: Block system suspend if XO is enabled
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, linux-kernel@vger.kernel.org,
+        linux-clk@vger.kernel.org, patches@lists.linux.dev,
+        linux-arm-msm@vger.kernel.org, Taniya Das <quic_tdas@quicinc.com>,
+        Mike Tipton <quic_mdtipton@quicinc.com>
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
@@ -83,113 +69,50 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
-
-On Wed, Jul 6, 2022 at 5:31 AM Konrad Dybcio
-<konrad.dybcio@somainline.org> wrote:
+Quoting Bjorn Andersson (2022-06-30 21:00:11)
+> On Tue 28 Jun 15:13 CDT 2022, Stephen Boyd wrote:
 >
->
->
-> On 5.07.2022 04:22, Jimmy Chen wrote:
-> > This adds LTE skus for villager device tree files.
+> > Tracking down what RPMh resource is blocking XO shutdown in suspend is
+> > hard. Largely because we need external debug tools to dump the RPMh
+> > internal state to figure out what resource is enabled. Instead of doing
+> > that, let's just block system wide suspend in the kernel if the RPMh XO
+> > resource is enabled by something in the kernel. This will help us narrow
+> > down XO shutdown failures to the XO clk, and not something else like an
+> > interconnect or regulator RPMh resource.
 > >
-> > Signed-off-by: Jimmy Chen <jinghung.chen3@hotmail.com>
+> > I'm sending this as an RFC because it breaks suspend for me on Trogdor
+> > boards. I found out that the XO resource is always enabled on these
+> > devices because the audio driver leaves an audio clk always on. This
+> > means that the XO resource must not be used to determine if XO shutdown
+> > is achievable, or we're leaving power savings on the table.
+> >
+> > Cc: Taniya Das <quic_tdas@quicinc.com>
+> > Cc: Mike Tipton <quic_mdtipton@quicinc.com>
+> > Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+>
+> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+>
 > > ---
 > >
-> >  arch/arm64/boot/dts/qcom/Makefile                 |  2 ++
-> >  .../arm64/boot/dts/qcom/sc7280-chrome-common.dtsi | 11 -----------
-> >  arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts |  1 +
-> >  .../dts/qcom/sc7280-herobrine-herobrine-r1.dts    |  1 +
-> >  .../boot/dts/qcom/sc7280-herobrine-lte-sku.dtsi   | 15 +++++++++++++++
-> >  .../dts/qcom/sc7280-herobrine-villager-r0-lte.dts | 14 ++++++++++++++
-> >  .../dts/qcom/sc7280-herobrine-villager-r1-lte.dts | 14 ++++++++++++++
-> >  arch/arm64/boot/dts/qcom/sc7280-idp.dts           |  1 +
-> >  8 files changed, 48 insertions(+), 11 deletions(-)
-> >  create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-lte-sku.dtsi
-> >  create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r0-lte.dts
-> >  create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1-lte.dts
+> > Please don't apply. It will break suspend on Trogdor boards.
 > >
-> > diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> > index bb9f4eb3e65a0..6d81ff12f5af2 100644
-> > --- a/arch/arm64/boot/dts/qcom/Makefile
-> > +++ b/arch/arm64/boot/dts/qcom/Makefile
-> > @@ -103,6 +103,8 @@ dtb-$(CONFIG_ARCH_QCOM)   += sc7180-trogdor-r1-lte.dtb
-> >  dtb-$(CONFIG_ARCH_QCOM)      += sc7280-herobrine-crd.dtb
-> >  dtb-$(CONFIG_ARCH_QCOM)      += sc7280-herobrine-herobrine-r1.dtb
-> >  dtb-$(CONFIG_ARCH_QCOM)      += sc7280-herobrine-villager-r0.dtb
-> > +dtb-$(CONFIG_ARCH_QCOM)      += sc7280-herobrine-villager-r0-lte.dtb
-> > +dtb-$(CONFIG_ARCH_QCOM)      += sc7280-herobrine-villager-r1-lte.dtb
-> >  dtb-$(CONFIG_ARCH_QCOM)      += sc7280-idp.dtb
-> >  dtb-$(CONFIG_ARCH_QCOM)      += sc7280-idp2.dtb
-> >  dtb-$(CONFIG_ARCH_QCOM)      += sc7280-crd-r3.dtb
-> > diff --git a/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi b/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
-> > index cfe2741456a1a..25f31c81b2b74 100644
-> > --- a/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
-> > @@ -83,17 +83,6 @@ spi_flash: flash@0 {
-> >       };
-> >  };
-> >
-> > -/* Modem setup is different on Chrome setups than typical Qualcomm setup */
-> > -&remoteproc_mpss {
-> > -     status = "okay";
-> > -     compatible = "qcom,sc7280-mss-pil";
-> > -     iommus = <&apps_smmu 0x124 0x0>, <&apps_smmu 0x488 0x7>;
-> > -     interconnects = <&mc_virt MASTER_LLCC 0 &mc_virt SLAVE_EBI1 0>;
-> > -     memory-region = <&mba_mem>, <&mpss_mem>;
-> > -     firmware-name = "qcom/sc7280-herobrine/modem/mba.mbn",
-> > -                     "qcom/sc7280-herobrine/modem/qdsp6sw.mbn";
-> > -};
-> > -
-> >  &remoteproc_wpss {
-> >       status = "okay";
-> >       firmware-name = "ath11k/WCN6750/hw1.0/wpss.mdt";
-> > diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts b/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts
-> > index e9ca6c5d24a16..921eccfec39ae 100644
-> > --- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts
-> > +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts
-> > @@ -9,6 +9,7 @@
-> >
-> >  #include "sc7280-herobrine.dtsi"
-> >  #include "sc7280-herobrine-audio-wcd9385.dtsi"
-> > +#include "sc7280-herobrine-lte-sku.dtsi"
-> >
-> >  / {
-> >       model = "Qualcomm Technologies, Inc. sc7280 CRD platform (rev5+)";
-> > diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r1.dts b/arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r1.dts
-> > index c1647a85a371a..c1a6719687252 100644
-> > --- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r1.dts
-> > +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r1.dts
-> > @@ -8,6 +8,7 @@
-> >  /dts-v1/;
-> >
-> >  #include "sc7280-herobrine.dtsi"
-> > +#include "sc7280-herobrine-lte-sku.dtsi"
-> >
-> >  / {
-> >       model = "Google Herobrine (rev1+)";
-> > diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-lte-sku.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine-lte-sku.dtsi
-> > new file mode 100644
-> > index 0000000000000..a4809dd2f4e8a
-> > --- /dev/null
-> > +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-lte-sku.dtsi
-> > @@ -0,0 +1,15 @@
-> > +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
-> > +/*
-> > + * Google Herobrine dts fragment for LTE SKUs
-> > + *
-> > + * Copyright 2022 Google LLC.
-> > + */
-> > +/* Modem setup is different on Chrome setups than typical Qualcomm setup */
-> > +&remoteproc_mpss {
-> Hi, just a minor nit.
 >
-> It was recently agreed upon that the status property should go last to
-> make things consistent with other DTs (qcom is - as usual - a special
-> snowflake :D). Could you please fix that up? The rest looks good.
+> This seems like a useful debug feature for people outside of Qualcomm,
+> so I assume you're saying that we shouldn't merge it until someone has
+> fixed the audio driver? Or did you post it just as a debug tool?
 >
-> Konrad
 
-I'm not aware of this new convention. Can you please provide a link?
+I mainly posted it to get a response from Qualcomm on what's going on. I
+haven't tried to fix the audio driver so far, but I can certainly look
+into it. The audio clk driver keeping XO on doesn't seem to matter for
+power because we're hitting the deepest of sleeps on Trogdor boards.
 
--Doug
+I also realized that due to clk adoption logic we can't be certain that
+this driver's suspend function will be called after other clk providers
+that consume XO run their suspend functions. We can probably assume clk
+consumers that aren't providers will probe after clk-rpmh, so this check
+is generally safe because we don't have clk providers disabling clks
+during their suspend functions. It's just not totally safe.
+
+Maybe this is a good reason to add some sort of suspend op to clk_ops
+and then call that during system wide suspend.
