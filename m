@@ -2,70 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4DF0956A9E3
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Jul 2022 19:43:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0FCDC56A9EC
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Jul 2022 19:46:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235575AbiGGRmN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Jul 2022 13:42:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48358 "EHLO
+        id S236137AbiGGRpS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Jul 2022 13:45:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51946 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236546AbiGGRmH (ORCPT
+        with ESMTP id S235320AbiGGRpR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Jul 2022 13:42:07 -0400
-Received: from mail-qt1-x829.google.com (mail-qt1-x829.google.com [IPv6:2607:f8b0:4864:20::829])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2B005A46E
-        for <linux-arm-msm@vger.kernel.org>; Thu,  7 Jul 2022 10:42:06 -0700 (PDT)
-Received: by mail-qt1-x829.google.com with SMTP id k14so23791119qtm.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Jul 2022 10:42:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=vv9i38kg+fZeAJ7hqAo2VB2KqkjfsYGrDA3FFmrUc/U=;
-        b=nGJKwqkdu04XUH4SZYsLNK9X56CGdKbgIGS66CcXLzJa5h1VDaa6NBNR6EEL0tYrEx
-         CEbsVouP6BNnKZNyoA9LlFvDGAeAf7hQaVOLKH85tGpxmnyEd3bgjFSBmyMrv193R4id
-         ZO3ld6KEedmqKL+K2xHzeM9tJL6tQ6PPoE2HaIUZphRZgaZMTvW9AGiS5e2EVvwd3HG5
-         yPXQxfJ8yXj5HpceIOpjSOZxZwMbFGRPbh2/mCAmyviOTmEFcEge2CkyJCLzBEURvtcl
-         QKD0teWYqvM7l0xjkKXXU4aiXMe/bnEGmjvSzZcqQQ/Te7K1W89gKAqpXH4x5qjBv+GN
-         37Yg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=vv9i38kg+fZeAJ7hqAo2VB2KqkjfsYGrDA3FFmrUc/U=;
-        b=bD+AkS1lskk8LHNgAMrqfK2KsN/9sdZB2Zz9ZNZPY+EaT7uLnKfY6k2kEjij2XVmrO
-         rvKb9eBEf64AjQcfxHbgpcvalc5SgHH8WtK5ZZqlHaoj5ZAXq8Xo1EcBfs2AlyQPB8uq
-         qj9ppH0BoS2TNRkDnlVZ56mzVDXbNNhRCiVL/OzovCRjox4oaRMG+dcP/S0wN+JTyzB+
-         2ZpzzdC3xfgF1mIQAOP3mqLgwnW5Tr38kg3BQArjpd0N9m0ofdoiSxhcDjC82BXPfA1m
-         cmrSIHCoLx3uepWnniMLq1W23cBGphtXybYasXWR2NVTGnsn1MCnni3VsfaowDxwNRcq
-         My7g==
-X-Gm-Message-State: AJIora8DD0ihV7/x7ZZ+GPPdlq2zRdCXZbcd4gtTOjR02ZvUQl7Po6xy
-        nUm4tY/pPk/eMRWlTf211Mh11iM4PmIgc011pMG2Tw==
-X-Google-Smtp-Source: AGRyM1vi2PU2UFHA1bbJtZ+VIokdk51mrbiey/LFa2NNo25BKlWAnYxx7qnjESNphQN4G90Y+Jk5ZsZ75wSx1ZwA5SQ=
-X-Received: by 2002:ac8:5c96:0:b0:31a:c19a:7da1 with SMTP id
- r22-20020ac85c96000000b0031ac19a7da1mr39039363qta.62.1657215725748; Thu, 07
- Jul 2022 10:42:05 -0700 (PDT)
+        Thu, 7 Jul 2022 13:45:17 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E27275C95A;
+        Thu,  7 Jul 2022 10:45:16 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 7D6AE62091;
+        Thu,  7 Jul 2022 17:45:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC55FC3411E;
+        Thu,  7 Jul 2022 17:45:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1657215915;
+        bh=6utmIEBNmJdH+aR9y6LOhDYh2NSUvaIjv2jcybsXQCc=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=cAyhptaXy+sXh7tJLLUO+9hfDyjRzLENSJ+HBy9X2F4/HeOhUBO8Meizj2dsj48tz
+         2+VupD/n2oX7oFzpv16iq8VNsclGafp+yIWNsiOIFOX2W8H4xvQ3Q6HCgALmEozHL6
+         XTOxP9EBdkL8eUZvR6Bk/6juwd4q+iXJXVPOHNNA8TPzcIhRm2vMZ461Nw/sRDZf88
+         m/b4+3DIOKRlWJ5jWfCQILcqGxpewHxdxLsAKdMD29xuKKWJReWU+qmJkVrMFyzE0q
+         azNUDuTJIrNHopCJpU0ZKAgvGCeREEI34ir7vMV89SbCvKbfA+lN86hFzyoQpRuPFm
+         UY+TA4fWyt11Q==
+Date:   Thu, 7 Jul 2022 18:54:56 +0100
+From:   Jonathan Cameron <jic23@kernel.org>
+To:     Robert Marko <robimarko@gmail.com>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
+        konrad.dybcio@somainline.org, lee.jones@linaro.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        linus.walleij@linaro.org, lgirdwood@gmail.com, broonie@kernel.org,
+        lars@metafoo.de, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-gpio@vger.kernel.org, linux-iio@vger.kernel.org
+Subject: Re: [PATCH v6 10/12] iio: adc: qcom-spmi-adc5: add ADC5_VREF_VADC
+ to rev2 ADC5
+Message-ID: <20220707185456.45ff3958@jic23-huawei>
+In-Reply-To: <20220704212402.1715182-10-robimarko@gmail.com>
+References: <20220704212402.1715182-1-robimarko@gmail.com>
+        <20220704212402.1715182-10-robimarko@gmail.com>
+X-Mailer: Claws Mail 4.1.0 (GTK 3.24.34; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-References: <20220707161014.3178798-1-bjorn.andersson@linaro.org>
-In-Reply-To: <20220707161014.3178798-1-bjorn.andersson@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Thu, 7 Jul 2022 20:41:49 +0300
-Message-ID: <CAA8EJpoZ4WKALrvtCtfHNTJ5FDBk-Qy=Mr4TNr8qfcc8=hSMjQ@mail.gmail.com>
-Subject: Re: [PATCH] arm64: defconfig: Enable Qualcomm SC8280XP providers
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, Shawn Guo <shawnguo@kernel.org>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Marcel Ziswiler <marcel.ziswiler@toradex.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Biju Das <biju.das.jz@bp.renesas.com>,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Johan Hovold <johan+linaro@kernel.org>,
-        manivannan.sadhasivam@linaro.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-7.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -74,54 +62,37 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 7 Jul 2022 at 19:07, Bjorn Andersson <bjorn.andersson@linaro.org> wrote:
->
-> The Qualcomm SC8280XP need the global clock controller, interconnect
-> provider and TLMM pinctrl in order to boot. Enable these as builtin, as
-> they are needed in order to provide e.g. UART.
->
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+On Mon,  4 Jul 2022 23:24:00 +0200
+Robert Marko <robimarko@gmail.com> wrote:
+
+> Add support for ADC5_VREF_VADC channel to rev2 ADC5 channel list.
+> This channel measures the VADC reference LDO output.
+> 
+> Signed-off-by: Robert Marko <robimarko@gmail.com>
+Acked-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+
+I'm assuming this will go in via MFD. Shout if I should pick it up
+directly.
+
+Thanks,
+
+Jonathan
+
 > ---
->  arch/arm64/configs/defconfig | 3 +++
->  1 file changed, 3 insertions(+)
->
-> diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-> index d2615b37d857..8e44f6a2172c 100644
-> --- a/arch/arm64/configs/defconfig
-> +++ b/arch/arm64/configs/defconfig
-> @@ -541,6 +541,7 @@ CONFIG_PINCTRL_QDF2XXX=y
->  CONFIG_PINCTRL_QCOM_SPMI_PMIC=y
->  CONFIG_PINCTRL_SC7180=y
->  CONFIG_PINCTRL_SC7280=y
-> +CONFIG_PINCTRL_SC8280XP=y
->  CONFIG_PINCTRL_SDM845=y
->  CONFIG_PINCTRL_SM8150=y
->  CONFIG_PINCTRL_SM8250=y
-> @@ -1056,6 +1057,7 @@ CONFIG_MSM_GCC_8998=y
->  CONFIG_QCS_GCC_404=y
->  CONFIG_SC_GCC_7180=y
->  CONFIG_SC_GCC_7280=y
-> +CONFIG_SC_GCC_8280XP=y
->  CONFIG_SDM_CAMCC_845=m
->  CONFIG_SDM_GPUCC_845=y
->  CONFIG_SDM_VIDEOCC_845=y
-> @@ -1266,6 +1268,7 @@ CONFIG_INTERCONNECT_QCOM_OSM_L3=m
->  CONFIG_INTERCONNECT_QCOM_QCS404=m
->  CONFIG_INTERCONNECT_QCOM_SC7180=m
->  CONFIG_INTERCONNECT_QCOM_SC7280=y
-> +CONFIG_INTERCONNECT_QCOM_SC8280XP=y
+>  drivers/iio/adc/qcom-spmi-adc5.c | 2 ++
+>  1 file changed, 2 insertions(+)
+> 
+> diff --git a/drivers/iio/adc/qcom-spmi-adc5.c b/drivers/iio/adc/qcom-spmi-adc5.c
+> index 87438d1e5c0b..7bd3745884f0 100644
+> --- a/drivers/iio/adc/qcom-spmi-adc5.c
+> +++ b/drivers/iio/adc/qcom-spmi-adc5.c
+> @@ -589,6 +589,8 @@ static const struct adc5_channels adc5_chans_rev2[ADC5_MAX_CHANNEL] = {
+>  					SCALE_HW_CALIB_DEFAULT)
+>  	[ADC5_1P25VREF]		= ADC5_CHAN_VOLT("vref_1p25", 0,
+>  					SCALE_HW_CALIB_DEFAULT)
+> +	[ADC5_VREF_VADC]	= ADC5_CHAN_VOLT("vref_vadc", 0,
+> +					SCALE_HW_CALIB_DEFAULT)
+>  	[ADC5_VPH_PWR]		= ADC5_CHAN_VOLT("vph_pwr", 1,
+>  					SCALE_HW_CALIB_DEFAULT)
+>  	[ADC5_VBAT_SNS]		= ADC5_CHAN_VOLT("vbat_sns", 1,
 
-= m? I see other SoCs build interconnect drivers as modules (well,
-except sdm845).
-
->  CONFIG_INTERCONNECT_QCOM_SDM845=y
->  CONFIG_INTERCONNECT_QCOM_SM8150=m
->  CONFIG_INTERCONNECT_QCOM_SM8250=m
-> --
-> 2.35.1
->
-
-
--- 
-With best wishes
-Dmitry
