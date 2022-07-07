@@ -2,106 +2,150 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C993A56A7C9
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Jul 2022 18:13:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 470A256A7E7
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Jul 2022 18:21:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236316AbiGGQNK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Jul 2022 12:13:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46926 "EHLO
+        id S236027AbiGGQUZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Jul 2022 12:20:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60098 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236272AbiGGQMh (ORCPT
+        with ESMTP id S235967AbiGGQUY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Jul 2022 12:12:37 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1A3A1D318;
-        Thu,  7 Jul 2022 09:12:09 -0700 (PDT)
+        Thu, 7 Jul 2022 12:20:24 -0400
+Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com [IPv6:2607:f8b0:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8703A25EAF;
+        Thu,  7 Jul 2022 09:20:23 -0700 (PDT)
+Received: by mail-pg1-x530.google.com with SMTP id 23so19394930pgc.8;
+        Thu, 07 Jul 2022 09:20:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1657210330; x=1688746330;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version;
-  bh=KkwelwdXDmhFR4sAJprFChmFv9QPBXU8ZPnRKHLF3Z0=;
-  b=UqHMszEIvHOliG/DuVYGoQp1AU6tU9K1vyeEzB2htc0M61vCkK//9KzY
-   Lo9plmTaMEmZorE8s5uX9oJPRozdlcGfQTh/nLqDIEFhewjmhFyIYKH7f
-   MVtYHunGjt++97MdF5gFaTTVw3rxYcxj8E8lyi1kMOoCk73+rLMMpOCwL
-   I=;
-Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
-  by alexa-out.qualcomm.com with ESMTP; 07 Jul 2022 09:12:10 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Jul 2022 09:12:09 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Thu, 7 Jul 2022 09:12:08 -0700
-Received: from hyd-lnxbld559.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Thu, 7 Jul 2022 09:12:03 -0700
-From:   Akhil P Oommen <quic_akhilpo@quicinc.com>
-To:     freedreno <freedreno@lists.freedesktop.org>,
-        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=TQXT+Vn5CgtfH4Lkw1DN2mXJFuK6qLYy5tuOuFlvcck=;
+        b=ep481detKf6cnRtYgWwYl8Ve2Q20j9MBngIbyhXi+uUiMyNsCkJPVNnqV4+9GEhQMI
+         5r1BEG5VeuXECmy0qa1BEBQ6bsTHw3NZbroX0bjTLLy01n8EJ8mAk5kqew8XKjiFk3cX
+         ppiMuPBWMYfwraZz6UOODNf3GAhRBmy/Assivb9cqXlaSodfiAa5hIapIWjlPEkelT98
+         zVcpWRM4+ZtOZ382zBMtZJumB5PmIIl70vSgkIem6zVa5wnPbw+b+Lqs+D7k+ZnxBRJJ
+         RcwcxN2L9fTv0LJKfZzwj/fnvwPHkHniErWhqoAe6s1/AeXORF3nj9RWw78U2egOuoEk
+         ODqQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=TQXT+Vn5CgtfH4Lkw1DN2mXJFuK6qLYy5tuOuFlvcck=;
+        b=Ys45EREfiu6ntmgkG4aDQQx7MljEQBYLu/wYO7+3gsyhrCIcF3Dz1DRBWD+5SF8e8V
+         6DJ0vkriYrUauEHFkQN924q5ri4nRpP0vtBW/niQhLo/NJRfWhZeQ3YKyk2BJq0qI211
+         52Y3c04jKfX7mE1wlzT8jjRPiI2xHiXvoAnT3emk+wWk16ClyKaoHRnNCngi34J82OND
+         rPeYBUTp8luotiR7cRD5iTidm9ZInLMc/Luib5bgeFxO/BocdNcTl3JsNKRGNN//QWga
+         Q6Tvhct9Ekb/5ynWvG/BQaW+AkAwVoXXeLLZceHWuERGTuFthPPwyUHMdGFM9Wi4qP64
+         CdJA==
+X-Gm-Message-State: AJIora+1yEsTAGjMdfX8LhZD6YkLuRhoS53/oPeVyyEIPj5iVSd1+NG9
+        9M459RlEso70NJaaBb7lMvk=
+X-Google-Smtp-Source: AGRyM1u9SEtnL4jQMZBKg67l2QvltlcdhvaT46D8WMwmZH1uvR/26Gg6+iZyybeAlJ1r2Lx9Ozai7w==
+X-Received: by 2002:a17:902:ea0e:b0:16b:f92b:a3c3 with SMTP id s14-20020a170902ea0e00b0016bf92ba3c3mr13342583plg.10.1657210822934;
+        Thu, 07 Jul 2022 09:20:22 -0700 (PDT)
+Received: from localhost ([2a00:79e1:abd:4a00:2703:3c72:eb1a:cffd])
+        by smtp.gmail.com with ESMTPSA id ik30-20020a170902ab1e00b0016bee668a5asm7138661plb.161.2022.07.07.09.20.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 07 Jul 2022 09:20:21 -0700 (PDT)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Rob Clark <robdclark@chromium.org>,
         Rob Clark <robdclark@gmail.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-CC:     Jordan Crouse <jordan@cosmicpenguin.net>,
-        Douglas Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-        Dan Carpenter <dan.carpenter@oracle.com>,
-        "Daniel Vetter" <daniel@ffwll.ch>, David Airlie <airlied@linux.ie>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, Wang Qing <wangqing@vivo.com>,
-        <linux-kernel@vger.kernel.org>
-Subject: [PATCH 7/7] drm/msm/a6xx: Handle GMU prepare-slumber hfi failure
-Date:   Thu, 7 Jul 2022 21:41:02 +0530
-Message-ID: <20220707213950.7.I54815c7c36b80d4725cd054e536365250454452f@changeid>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1657210262-17166-1-git-send-email-quic_akhilpo@quicinc.com>
-References: <1657210262-17166-1-git-send-email-quic_akhilpo@quicinc.com>
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jessica Zhang <quic_jesszhan@quicinc.com>,
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH] drm/msm/mdp5: Fix global state lock backoff
+Date:   Thu,  7 Jul 2022 09:20:37 -0700
+Message-Id: <20220707162040.1594855-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.36.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-When prepare-slumber hfi fails, we should follow a6xx_gmu_force_off()
-sequence.
+From: Rob Clark <robdclark@chromium.org>
 
-Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+We need to grab the lock after the early return for !hwpipe case.
+Otherwise, we could have hit contention yet still returned 0.
+
+Fixes an issue that the new CONFIG_DRM_DEBUG_MODESET_LOCK stuff flagged
+in CI:
+
+   WARNING: CPU: 0 PID: 282 at drivers/gpu/drm/drm_modeset_lock.c:296 drm_modeset_lock+0xf8/0x154
+   Modules linked in:
+   CPU: 0 PID: 282 Comm: kms_cursor_lega Tainted: G        W         5.19.0-rc2-15930-g875cc8bc536a #1
+   Hardware name: Qualcomm Technologies, Inc. DB820c (DT)
+   pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+   pc : drm_modeset_lock+0xf8/0x154
+   lr : drm_atomic_get_private_obj_state+0x84/0x170
+   sp : ffff80000cfab6a0
+   x29: ffff80000cfab6a0 x28: 0000000000000000 x27: ffff000083bc4d00
+   x26: 0000000000000038 x25: 0000000000000000 x24: ffff80000957ca58
+   x23: 0000000000000000 x22: ffff000081ace080 x21: 0000000000000001
+   x20: ffff000081acec18 x19: ffff80000cfabb80 x18: 0000000000000038
+   x17: 0000000000000000 x16: 0000000000000000 x15: fffffffffffea0d0
+   x14: 0000000000000000 x13: 284e4f5f4e524157 x12: 5f534b434f4c5f47
+   x11: ffff80000a386aa8 x10: 0000000000000029 x9 : ffff80000cfab610
+   x8 : 0000000000000029 x7 : 0000000000000014 x6 : 0000000000000000
+   x5 : 0000000000000001 x4 : ffff8000081ad904 x3 : 0000000000000029
+   x2 : ffff0000801db4c0 x1 : ffff80000cfabb80 x0 : ffff000081aceb58
+   Call trace:
+    drm_modeset_lock+0xf8/0x154
+    drm_atomic_get_private_obj_state+0x84/0x170
+    mdp5_get_global_state+0x54/0x6c
+    mdp5_pipe_release+0x2c/0xd4
+    mdp5_plane_atomic_check+0x2ec/0x414
+    drm_atomic_helper_check_planes+0xd8/0x210
+    drm_atomic_helper_check+0x54/0xb0
+    ...
+   ---[ end trace 0000000000000000 ]---
+   drm_modeset_lock attempting to lock a contended lock without backoff:
+      drm_modeset_lock+0x148/0x154
+      mdp5_get_global_state+0x30/0x6c
+      mdp5_pipe_release+0x2c/0xd4
+      mdp5_plane_atomic_check+0x290/0x414
+      drm_atomic_helper_check_planes+0xd8/0x210
+      drm_atomic_helper_check+0x54/0xb0
+      drm_atomic_check_only+0x4b0/0x8f4
+      drm_atomic_commit+0x68/0xe0
+
+Fixes: d59be579fa93 ("drm/msm/mdp5: Return error code in mdp5_pipe_release when deadlock is detected")
+Signed-off-by: Rob Clark <robdclark@chromium.org>
 ---
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_pipe.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
- drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-index db05942..3d00ef9 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-@@ -1082,7 +1082,11 @@ static void a6xx_gmu_shutdown(struct a6xx_gmu *gmu)
- 		a6xx_bus_clear_pending_transactions(adreno_gpu);
+diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_pipe.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_pipe.c
+index a4f5cb90f3e8..e4b8a789835a 100644
+--- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_pipe.c
++++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_pipe.c
+@@ -123,12 +123,13 @@ int mdp5_pipe_release(struct drm_atomic_state *s, struct mdp5_hw_pipe *hwpipe)
+ {
+ 	struct msm_drm_private *priv = s->dev->dev_private;
+ 	struct mdp5_kms *mdp5_kms = to_mdp5_kms(to_mdp_kms(priv->kms));
+-	struct mdp5_global_state *state = mdp5_get_global_state(s);
++	struct mdp5_global_state *state;
+ 	struct mdp5_hw_pipe_state *new_state;
  
- 		/* tell the GMU we want to slumber */
--		a6xx_gmu_notify_slumber(gmu);
-+		ret = a6xx_gmu_notify_slumber(gmu);
-+		if (ret) {
-+			a6xx_gmu_force_off(gmu);
-+			return;
-+		}
+ 	if (!hwpipe)
+ 		return 0;
  
- 		ret = gmu_poll_timeout(gmu,
- 			REG_A6XX_GPU_GMU_AO_GPU_CX_BUSY_STATUS, val,
++	state = mdp5_get_global_state(s);
+ 	if (IS_ERR(state))
+ 		return PTR_ERR(state);
+ 
 -- 
-2.7.4
+2.36.1
 
