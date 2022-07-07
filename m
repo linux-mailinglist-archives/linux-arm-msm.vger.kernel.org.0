@@ -2,168 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A18BE56A0DF
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Jul 2022 13:07:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CF90356A15D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Jul 2022 13:59:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234968AbiGGLHO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Jul 2022 07:07:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55320 "EHLO
+        id S235300AbiGGL6s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Jul 2022 07:58:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57514 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235339AbiGGLHN (ORCPT
+        with ESMTP id S235490AbiGGL5R (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Jul 2022 07:07:13 -0400
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B73857261;
-        Thu,  7 Jul 2022 04:07:12 -0700 (PDT)
-Received: by mail-ej1-x62b.google.com with SMTP id n4so12506373ejz.10;
-        Thu, 07 Jul 2022 04:07:12 -0700 (PDT)
+        Thu, 7 Jul 2022 07:57:17 -0400
+Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com [IPv6:2607:f8b0:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64431599DF
+        for <linux-arm-msm@vger.kernel.org>; Thu,  7 Jul 2022 04:55:11 -0700 (PDT)
+Received: by mail-pg1-x530.google.com with SMTP id bh13so12115164pgb.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Jul 2022 04:55:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:from:to:cc:subject:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=6ocG0Xck6UFoBCXVcbGriBvJ4wwbkS8brBEBVvGMITw=;
-        b=Q2yYlLuje44TpclVgSV40km5glpOaMJdyo/383PQm3a9IBFllScYiQtCL7SSXU8Kyd
-         SoonSUjN2nsr6pvWv5sR9dTISXyt8c5wrUDfXV9TVI/94QUYjDPsYkZQVuPqBiXLjQlA
-         b3pxn0ZDOh86lp5bLj5AhZsZwDX74rqrij/V7ya5pc8i+s6Em0y5VoZ4i/GAskJ9o5ag
-         ITAcZl+T/8N6Cojoh0l27LwY3A8S6IFRkUGkR5JvvTLhBJjPCt1vTFxoxbBN86jMejWy
-         CQAvKG7J3Nps+X5HoYUVdDrhjU7/zocopakCohb7EaCJkNPeabxr51dUMII7PR3FeJsW
-         w9Zg==
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=AfR9UZtpRGzhv3c4Zln6eGAdbeQgygF+9NKWBtburhs=;
+        b=dYUGx0RODM9RUBv9GQtsRp0MUbiQIBwZzXrjY3qMkDzehnjVBMkGMVf01Kiem1eUmH
+         7363oOVcdC9Rr9JcHhPHaBjAoGO1SyE2sq2QMayqrRnUma11AdTxRcGV8+vCIxKbSg6I
+         2clVMbCzUGt4dJTkVIzZcaNyeY2S85I8EeA+Gq25+C1NYBgBya/GY9IDDuXVV50ncbw7
+         u0jfL7zdVdS9Jvwfn5ON8M5fFBjhskqQ6fX+Kd7ZvwUXGhdhjkNuok8DV1rT31jAFSj3
+         nasAtlWyyArwNradHMhjMPtAA9ZRfLH2O6xJ/JreL+ORPxHbCsVc7JyqEVyY2GgJfTAH
+         Kffg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:from:to:cc:subject:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=6ocG0Xck6UFoBCXVcbGriBvJ4wwbkS8brBEBVvGMITw=;
-        b=V1fQ3CtP/e9cPQmYWoPibOzUhJC9DMxmJ6e4hV8ZQmZRGj7mrTNSZWLbRrR7n1LmPr
-         vcf94+y5UfjFDA2niRCQPlWpIKramudbE4llCePkrvy/YfyfApAOXacxWKFFKk79h3Vp
-         uzQoXvkChW0F66hLaNLrNP1VWRnqMXFjA1kCZmoFUN+IqOcZIvlHxgS4tOlP3tQMLu9E
-         KJT4H7iYdv8PGwxepcjgzNb+6yklUpv50bgYo0ukZ25IXurB2nw1GMgd8sNXg7DnmY+v
-         EBZRgI6Zoj85lt2CxEejAf0JEP4sUiJNf0cHHRegr0fI4JF8LruE0wgw2UIeeF7VFpuH
-         uoSg==
-X-Gm-Message-State: AJIora+xwGA5ddNFhGDizYSq0cHDC7XQhEnmxlRYroI0TmJSxSuly+5i
-        ogJN7WA0v40Bos5UMePD9gKJKOCZi9A=
-X-Google-Smtp-Source: AGRyM1u+zcwcFdgV64NNDm8xDWHGCRn3wAvvjYPPm/7cS6b3PQJu8+Hoee9dgWTuxyznISy6Q/Q4qA==
-X-Received: by 2002:a17:907:75e1:b0:72a:ebee:5f61 with SMTP id jz1-20020a17090775e100b0072aebee5f61mr12017592ejc.171.1657192030969;
-        Thu, 07 Jul 2022 04:07:10 -0700 (PDT)
-Received: from Ansuel-xps. (93-42-70-190.ip85.fastwebnet.it. [93.42.70.190])
-        by smtp.gmail.com with ESMTPSA id g18-20020a17090604d200b006ff0b457cdasm647905eja.53.2022.07.07.04.07.09
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=AfR9UZtpRGzhv3c4Zln6eGAdbeQgygF+9NKWBtburhs=;
+        b=Bh2P5315RYMEeoZb48gHs1Ir5EeM5mejILgJvFjAn6+C94f7iIL1M7E7oa7wysGm5L
+         aklySqFZCE4w39OaCPIc1wBUYlx8Fv8XZzPUMKQ79owklt3kd6MvIHVlyPZ+yaMJvAzN
+         PcfadLKc+88+E9hYbfcSgASRagp3cyFt/gP2NKPMTzivzMzI02jriTMgKZH7glS5WotT
+         kpSjTfKto+Np0RwWhEZivLrk1Spxtl7Cwv13ypbb/NJjjn+aP5ndB/hyAsxS4OpJhcQN
+         eqHrg5noo7UGeF/yhL60v46H/LITLeN2YDLUqYV6Qr1mEJFopWIR+QGfZ2OmZC4vt1BW
+         IJXw==
+X-Gm-Message-State: AJIora+I7V1VJFfJWFzNC36ocC1EHXBH4BSHC8cPqPLw/gns6BqV5c6m
+        AO6i9Eb2qA5WcM7SK/LNJIkc6N45kLZ0KA==
+X-Google-Smtp-Source: AGRyM1uDUmzYdJM5zUMETUsdm5U2WwLBDcjaEaHBiDhpvi9zzTtJzjyWyo/bWlneJdIZMYgFPvIQug==
+X-Received: by 2002:a17:902:b215:b0:168:da4b:c925 with SMTP id t21-20020a170902b21500b00168da4bc925mr50913137plr.155.1657194910692;
+        Thu, 07 Jul 2022 04:55:10 -0700 (PDT)
+Received: from localhost.localdomain ([182.77.21.191])
+        by smtp.gmail.com with ESMTPSA id r10-20020a17090a1bca00b001e2f892b352sm16503936pjr.45.2022.07.07.04.55.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Jul 2022 04:07:10 -0700 (PDT)
-Message-ID: <62c6be5e.1c69fb81.d194f.1258@mx.google.com>
-X-Google-Original-Message-ID: <Ysa+XQPqiwJC7DIV@Ansuel-xps.>
-Date:   Thu, 7 Jul 2022 13:07:09 +0200
-From:   Christian Marangi <ansuelsmth@gmail.com>
-To:     Baolin Wang <baolin.wang7@gmail.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Ohad Ben-Cohen <ohad@wizery.com>,
-        linux-arm-msm@vger.kernel.org,
-        Devicetree List <devicetree@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        linux-remoteproc@vger.kernel.org
-Subject: Re: [PATCH 1/3] hwspinlock: qcom: Add support for mmio usage to
- sfpb-mutex
-References: <20220707013017.26654-1-ansuelsmth@gmail.com>
- <CADBw62o8HfH_MfbLP-=5qra9yjO34bUC__mZU1NDxqFALQZOmw@mail.gmail.com>
+        Thu, 07 Jul 2022 04:55:10 -0700 (PDT)
+From:   Sumit Garg <sumit.garg@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, vkoul@kernel.org,
+        shawn.guo@linaro.org, bryan.odonoghue@linaro.org,
+        nicolas.dechesne@linaro.org, mworsfold@impinj.com,
+        daniel.thompson@linaro.org, andrey.konovalov@linaro.org,
+        Sumit Garg <sumit.garg@linaro.org>
+Subject: [PATCH] arm64: dts: qcom: qcs404: Fix incorrect USB PHYs assignment
+Date:   Thu,  7 Jul 2022 17:24:44 +0530
+Message-Id: <20220707115444.1431367-1-sumit.garg@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CADBw62o8HfH_MfbLP-=5qra9yjO34bUC__mZU1NDxqFALQZOmw@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jul 07, 2022 at 07:00:15PM +0800, Baolin Wang wrote:
-> On Thu, Jul 7, 2022 at 9:30 AM Christian Marangi <ansuelsmth@gmail.com> wrote:
-> >
-> > Allow sfpb-mutex to use mmio in addition to syscon.
-> >
-> > Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-> > ---
-> >  drivers/hwspinlock/qcom_hwspinlock.c | 32 ++++++++++++++++++++++------
-> >  1 file changed, 25 insertions(+), 7 deletions(-)
-> >
-> > diff --git a/drivers/hwspinlock/qcom_hwspinlock.c b/drivers/hwspinlock/qcom_hwspinlock.c
-> > index 364710966665..23c913095bd0 100644
-> > --- a/drivers/hwspinlock/qcom_hwspinlock.c
-> > +++ b/drivers/hwspinlock/qcom_hwspinlock.c
-> > @@ -19,6 +19,11 @@
-> >  #define QCOM_MUTEX_APPS_PROC_ID        1
-> >  #define QCOM_MUTEX_NUM_LOCKS   32
-> >
-> > +struct qcom_hwspinlock_of_data {
-> > +       u32 offset;
-> > +       u32 stride;
-> > +};
-> > +
-> >  static int qcom_hwspinlock_trylock(struct hwspinlock *lock)
-> >  {
-> >         struct regmap_field *field = lock->priv;
-> > @@ -63,9 +68,20 @@ static const struct hwspinlock_ops qcom_hwspinlock_ops = {
-> >         .unlock         = qcom_hwspinlock_unlock,
-> >  };
-> >
-> > +static const struct qcom_hwspinlock_of_data of_sfpb_mutex = {
-> > +       .offset = 0x4,
-> > +       .stride = 0x4,
-> > +};
-> > +
-> > +/* All modern platform has offset 0 and stride of 4k */
-> > +static const struct qcom_hwspinlock_of_data of_tcsr_mutex = {
-> > +       .offset = 0,
-> > +       .stride = 0x1000,
-> > +};
-> > +
-> >  static const struct of_device_id qcom_hwspinlock_of_match[] = {
-> > -       { .compatible = "qcom,sfpb-mutex" },
-> > -       { .compatible = "qcom,tcsr-mutex" },
-> > +       { .compatible = "qcom,sfpb-mutex", .data = &of_sfpb_mutex },
-> > +       { .compatible = "qcom,tcsr-mutex", .data = &of_tcsr_mutex },
-> >         { }
-> >  };
-> >  MODULE_DEVICE_TABLE(of, qcom_hwspinlock_of_match);
-> > @@ -101,7 +117,7 @@ static struct regmap *qcom_hwspinlock_probe_syscon(struct platform_device *pdev,
-> >         return regmap;
-> >  }
-> >
-> > -static const struct regmap_config tcsr_mutex_config = {
-> > +static const struct regmap_config qcom_hwspinlock_mmio_config = {
-> >         .reg_bits               = 32,
-> >         .reg_stride             = 4,
-> >         .val_bits               = 32,
-> > @@ -112,18 +128,20 @@ static const struct regmap_config tcsr_mutex_config = {
-> >  static struct regmap *qcom_hwspinlock_probe_mmio(struct platform_device *pdev,
-> >                                                  u32 *offset, u32 *stride)
-> >  {
-> > +       const struct qcom_hwspinlock_of_data *data;
-> >         struct device *dev = &pdev->dev;
-> >         void __iomem *base;
-> >
-> > -       /* All modern platform has offset 0 and stride of 4k */
-> > -       *offset = 0;
-> > -       *stride = 0x1000;
-> > +       data = of_device_get_match_data(dev);
-> 
-> Nit: better to validate the return value though this is a rare case.
-> 
-> if (!data)
->          return -ENODEV;
-> 
+This was a difficult inconsistency to be caught as both the USB PHYs were
+being enabled in the kernel and USB worked fine. But when I was trying to
+enable USB support in u-boot with all the required drivers ported, I
+couldn't get the same USB storage device enumerated in u-boot which was
+being enumerated fine by the kernel.
 
-Wonder if that can actually happen?
+The root cause of the problem came out that I wasn't enabling USB PHY:
+"usb2_phy_prim" in u-boot. Then I realised that via simply disabling the
+same USB PHY in the kernel disabled enumeration for USB3 host controller
+as well.
 
-Looking at of_device_get_match_data() it can only return the data or
-NULL if the match data is not defined but considering it should ALWAYS
-be defined (or the driver can't work). But yhea should be a value to
-check.
+So fix this inconsistency by correctly assigning USB PHYs.
 
+Fixes: 9375e7d719b3 ("arm64: dts: qcom: qcs404: Add USB devices and PHYs")
+Signed-off-by: Sumit Garg <sumit.garg@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/qcs404.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/qcs404.dtsi b/arch/arm64/boot/dts/qcom/qcs404.dtsi
+index 513bf7343b2c..50edc11a5bb5 100644
+--- a/arch/arm64/boot/dts/qcom/qcs404.dtsi
++++ b/arch/arm64/boot/dts/qcom/qcs404.dtsi
+@@ -557,7 +557,7 @@ usb3_dwc3: usb@7580000 {
+ 				compatible = "snps,dwc3";
+ 				reg = <0x07580000 0xcd00>;
+ 				interrupts = <GIC_SPI 26 IRQ_TYPE_LEVEL_HIGH>;
+-				phys = <&usb2_phy_sec>, <&usb3_phy>;
++				phys = <&usb2_phy_prim>, <&usb3_phy>;
+ 				phy-names = "usb2-phy", "usb3-phy";
+ 				snps,has-lpm-erratum;
+ 				snps,hird-threshold = /bits/ 8 <0x10>;
+@@ -586,7 +586,7 @@ usb@78c0000 {
+ 				compatible = "snps,dwc3";
+ 				reg = <0x078c0000 0xcc00>;
+ 				interrupts = <GIC_SPI 44 IRQ_TYPE_LEVEL_HIGH>;
+-				phys = <&usb2_phy_prim>;
++				phys = <&usb2_phy_sec>;
+ 				phy-names = "usb2-phy";
+ 				snps,has-lpm-erratum;
+ 				snps,hird-threshold = /bits/ 8 <0x10>;
 -- 
-	Ansuel
+2.25.1
+
