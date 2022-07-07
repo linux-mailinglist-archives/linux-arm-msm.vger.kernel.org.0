@@ -2,81 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2905656A3E9
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Jul 2022 15:41:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A25B556A3FD
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Jul 2022 15:45:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234799AbiGGNlI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Jul 2022 09:41:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34224 "EHLO
+        id S235871AbiGGNpC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Jul 2022 09:45:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38364 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235833AbiGGNlH (ORCPT
+        with ESMTP id S235735AbiGGNo7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Jul 2022 09:41:07 -0400
-Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C33D42870C
-        for <linux-arm-msm@vger.kernel.org>; Thu,  7 Jul 2022 06:41:05 -0700 (PDT)
-Received: by mail-lj1-x22d.google.com with SMTP id a11so22285600ljb.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Jul 2022 06:41:05 -0700 (PDT)
+        Thu, 7 Jul 2022 09:44:59 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1EFA2186C5
+        for <linux-arm-msm@vger.kernel.org>; Thu,  7 Jul 2022 06:44:57 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id l23so721513ejr.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Jul 2022 06:44:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language
-         :from:to:cc:references:in-reply-to:content-transfer-encoding;
-        bh=jRAjZXY6+UUMfN9anTAWHy/uwmogMIm8H3PLiHy9OEI=;
-        b=nNBRS+FZwsMAmv+unQDonMckzxWyz51mGvxoj5yAx5CBRCb1ZAlNEP4YGf0HIQB7Jj
-         xzLlWnvMnTQ1LsabcoJH6BEzf6slgc8cjTwSn4KkCm5lOW03zo8juX8AwcwOee9RhnNk
-         8KHlFFAjDimv0YupF2OA6QTJ/yN77Tvq7WkMyQ4J0BCduoT64mvaVfGlog1xQrLUtizz
-         te475qDsuU8gJFcRQMiMsg/dtTOvhJw+7w1YHNyg1Jhn0LA5Wi8LqgxdNRCA5xk47Xqc
-         zJDU7HtTYt9HT6oaIv0wukY83stC9PGpul9zEL08tkFJErE+t1GlpOS5tYIStKOwWzHk
-         oK6Q==
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=UG3BBJeQ9RIjyjrD9MOB3B5ohCStf2aBTETpevs+XUA=;
+        b=X39mUG+jYTlLCiofyr0kiIG3mDhenlIh8E2uip6pT9ESNsQWC+IFZws1LCAOeKhmv2
+         uMZOU76uVeoFJf0TVrVQej/MyqWt41MdhSk3TUzUTlJ/+jsZFtPuXwe/GO9aR4WfUsgy
+         FwL4VdBDHlh1wInQKar1y4jfn6kh8wQDtQXrM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:from:to:cc:references:in-reply-to
-         :content-transfer-encoding;
-        bh=jRAjZXY6+UUMfN9anTAWHy/uwmogMIm8H3PLiHy9OEI=;
-        b=7l3VLUekhsR4u+mICcyFiV4iPgxay4Xe/DWqI06y1XbYMUQM1ZjN+A08kuyOsKY4XO
-         PRoScA8TyItQTtArRDQFb5EHssWpAMlJWV7NaEx6rm+lNI46Cdk4BxbyXYRid7l3Lyii
-         x+SnYPoy5+URFUYjBWZin6aeNkqOIic8b5bZccE6oHjY2hsN4NVIUNiedHiCsRFRBMZC
-         OGIKcuBQfbh+eBVc8kIKTjTFr9Pi9JBhaNulu2JfUnKYEvek6zVXDTsKdv0kCrOU335A
-         jzZHsKHELxOlYHraNCMicCm0vfKuRIG+pjoq961BVyweOr2L74sVGSGLPZED80X1ufkz
-         BtUA==
-X-Gm-Message-State: AJIora8kO9c63Kjo6/w0iIfApN27/CYLOvzGNsCz1HJ2pTdaW1qXPMlt
-        djtPe/HtgiO/vrkHzNDgVF85YA==
-X-Google-Smtp-Source: AGRyM1t4UqVaNKTbjrPlQkcNgoKuyx+oGPkBeDq++hP317Wk1kHIWC4XtoISid7vnJuGGeLqCFO/dQ==
-X-Received: by 2002:a2e:92c6:0:b0:255:84cb:4eea with SMTP id k6-20020a2e92c6000000b0025584cb4eeamr25815297ljh.204.1657201264047;
-        Thu, 07 Jul 2022 06:41:04 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id e20-20020a05651c04d400b0025a64093a9esm6794026lji.117.2022.07.07.06.41.02
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=UG3BBJeQ9RIjyjrD9MOB3B5ohCStf2aBTETpevs+XUA=;
+        b=7dDWI5dIh0kTW8f7DuZfq4Y3ZBOBrMXFyx5BaM4xofTCf4shmnodMMDB78XIm4Cu72
+         yyZOVdFnSpDMTDkdV2iHiQsKGyqdHeVt6nwxJNxprUUM1l0j3d0gxn5kZ203/nGQlMlw
+         caF1JD/7ga9j/Gf4KubbZJ80TH7JqLOY8nPWk2Fw7hnHAt9ThzZTywylE0lHgTGiFSq+
+         iOe9LwBFp+l2N6CBY/UrfHDtRAVLCbOpVWMnxqJh2VNFFbzOmtLsPWS8Su59Ux0+XmGj
+         gLAbB3t/6183vXdV57JtrMZi7mSh6AIhNRgavAstLd8EipEHrw0m6Ym2oj1Ke/4JDYK5
+         2qBg==
+X-Gm-Message-State: AJIora9wF/H1zRcmeF3iznUMYEc7+duiuNjzi4g8Kg/QDH/qdAT3M1Re
+        gpiaMpN0HWmprRmMTFRz80jcJzQxiElY5rrNxgM=
+X-Google-Smtp-Source: AGRyM1scnXNyiRs/B1oLB3NjYyGftREn/kjGHx7wBX/T95dMk8zDgOuS4z8EuZjzewaREUQH+LAWHA==
+X-Received: by 2002:a17:907:7f05:b0:726:9770:77d6 with SMTP id qf5-20020a1709077f0500b00726977077d6mr44568143ejc.464.1657201496134;
+        Thu, 07 Jul 2022 06:44:56 -0700 (PDT)
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com. [209.85.221.47])
+        by smtp.gmail.com with ESMTPSA id d8-20020a056402000800b0043a71c376a2sm7677760edu.33.2022.07.07.06.44.54
+        for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 07 Jul 2022 06:41:03 -0700 (PDT)
-Message-ID: <2fbe9cf7-7ed8-ccc8-b0bc-26d358cec927@linaro.org>
-Date:   Thu, 7 Jul 2022 16:41:02 +0300
+        Thu, 07 Jul 2022 06:44:55 -0700 (PDT)
+Received: by mail-wr1-f47.google.com with SMTP id q9so26391554wrd.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Jul 2022 06:44:54 -0700 (PDT)
+X-Received: by 2002:adf:ead2:0:b0:21d:8b49:6138 with SMTP id
+ o18-20020adfead2000000b0021d8b496138mr959496wrn.138.1657201493566; Thu, 07
+ Jul 2022 06:44:53 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: [PATCH 02/10] dt-bindings: PCI: qcom: Fix msi-interrupt
- conditional
-Content-Language: en-GB
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Johan Hovold <johan+linaro@kernel.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Andy Gross <agross@kernel.org>,
+References: <1657197381-1271-1-git-send-email-quic_srivasam@quicinc.com>
+In-Reply-To: <1657197381-1271-1-git-send-email-quic_srivasam@quicinc.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Thu, 7 Jul 2022 06:44:41 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=XD8vDPqkax1z6cB7ujOv_82YqkzZA1YNaPAGO+by4xJw@mail.gmail.com>
+Message-ID: <CAD=FV=XD8vDPqkax1z6cB7ujOv_82YqkzZA1YNaPAGO+by4xJw@mail.gmail.com>
+Subject: Re: [PATCH v2] arm64: dts: qcom: sc7280: Move wcd specific pin conf
+ to common file
+To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20220629141000.18111-1-johan+linaro@kernel.org>
- <20220629141000.18111-3-johan+linaro@kernel.org>
- <cab173ce-9c7c-9985-277c-3498d82b8400@linaro.org>
-In-Reply-To: <cab173ce-9c7c-9985-277c-3498d82b8400@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+        quic_rohkumar@quicinc.com,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Judy Hsiao <judyhsiao@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -85,44 +82,24 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 07/07/2022 16:34, Dmitry Baryshkov wrote:
-> On 29/06/2022 17:09, Johan Hovold wrote:
->> Fix the msi-interrupt conditional which always evaluated to false due to
->> a misspelled property name ("compatibles" in plural).
->>
->> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> 
-> Fixes: 6700a9b00f0a ("dt-bindings: PCI: qcom: Do not require resets on 
-> msm8996 platforms")
+Hi,
 
-Ugh, I was thinking about a different chunk (which also has this issue), 
-so please ignore the Fixes.
+On Thu, Jul 7, 2022 at 5:36 AM Srinivasa Rao Mandadapu
+<quic_srivasam@quicinc.com> wrote:
+>
+> Move wcd specific pin conf to common file to support various
+> herbronie variant boards and to avoid duplicate nodes in dts files.
+>
+> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+> ---
+> Changes Since V1:
+>     -- Remove redundant documentation.
+>     -- Update the pincontrol header comment.
+>
+>  .../dts/qcom/sc7280-herobrine-audio-wcd9385.dtsi   | 64 ++++++++++++++++++++++
+>  arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts  | 61 ---------------------
+>  2 files changed, 64 insertions(+), 61 deletions(-)
 
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> 
-> 
->> ---
->>   Documentation/devicetree/bindings/pci/qcom,pcie.yaml | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml 
->> b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
->> index ed9f9462a758..a1b4fc70e162 100644
->> --- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
->> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
->> @@ -628,7 +628,7 @@ allOf:
->>       # On older chipsets it's always 1 msi interrupt
->>     - if:
->>         properties:
->> -        compatibles:
->> +        compatible:
->>             contains:
->>               enum:
->>                 - qcom,pcie-msm8996
-> 
-> 
+Looks fine to me now, thanks!
 
-
--- 
-With best wishes
-Dmitry
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
