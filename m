@@ -2,130 +2,179 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B542E56AC6F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Jul 2022 22:05:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 81C6A56ACA2
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Jul 2022 22:21:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236486AbiGGUEK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Jul 2022 16:04:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43604 "EHLO
+        id S236158AbiGGUVO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Jul 2022 16:21:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56438 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232340AbiGGUEJ (ORCPT
+        with ESMTP id S236458AbiGGUVM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Jul 2022 16:04:09 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C61D21804;
-        Thu,  7 Jul 2022 13:04:08 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        Thu, 7 Jul 2022 16:21:12 -0400
+Received: from relay08.th.seeweb.it (relay08.th.seeweb.it [5.144.164.169])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEE9E1EC4A
+        for <linux-arm-msm@vger.kernel.org>; Thu,  7 Jul 2022 13:21:10 -0700 (PDT)
+Received: from [192.168.1.101] (abxi46.neoplus.adsl.tpnet.pl [83.9.2.46])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 28F44623E4;
-        Thu,  7 Jul 2022 20:04:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DBBFC3411E;
-        Thu,  7 Jul 2022 20:04:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1657224247;
-        bh=YPa3BIkZtqvlLnXa9XSQS4ByKHBS3emeXJsmuOZ6STk=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:From;
-        b=EIrTUJr/srlG7CuhYxq2iVHRDxlSmOVa8iOanyptaS5RBKIXsAz5CFuJPosKN8sBa
-         wbzVRXNIHnDvQurlp9Nbl2bJd6khvp5Q24i/n26KUyFaUaAVbR0yyDbGBntaZ1J34v
-         HQpWDcwO9MIYV07oQIHAefPsX3xRv8UWgQ+BZzV94QtO88aFDSDc5Dv9EMW/1hQqfa
-         M1qD8zBYWZOnWMIxbxeCOB6hKm2GcRL70I/63rJGhX3YG+fBDIUYVQowCHqoGujDwP
-         LcSIbBG6tusvttDjxDmcxLaV7IfNZwCCDHfqIxD2FKCnN32oj/nrQPXy0Kia7bstzs
-         4gf8e6BSyGYCA==
-Date:   Thu, 7 Jul 2022 15:04:04 -0500
-From:   Bjorn Helgaas <helgaas@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-pci@vger.kernel.org, Johan Hovold <johan@kernel.org>,
-        Selvam Sathappan Periakaruppan <quic_speriaka@quicinc.com>,
-        Baruch Siach <baruch.siach@siklu.com>,
-        Robert Marko <robimarko@gmail.com>,
-        Krishna chaitanya chundru <quic_krichai@quicinc.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH v11 0/5] PCI: qcom: Rework pipe_clk/pipe_clk_src handling
-Message-ID: <20220707200404.GA330065@bhelgaas>
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 276D93F6A7;
+        Thu,  7 Jul 2022 22:21:07 +0200 (CEST)
+Message-ID: <d294becf-920b-34ee-8ac9-eebd1ea3f1f2@somainline.org>
+Date:   Thu, 7 Jul 2022 22:21:06 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220707154020.GA305104@bhelgaas>
-X-Spam-Status: No, score=-7.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH 2/2] [PATCH v2 2/2] arm64: dts: qcom: Add LTE SKUs for
+ sc7280-villager family
+Content-Language: en-US
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Jimmy Chen <jinghung.chen3@hotmail.com>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Alan Huang <alan-huang@quanta.corp-partner.google.com>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+References: <SG2PR03MB500697A11DA5D0B45DE41B0ECC819@SG2PR03MB5006.apcprd03.prod.outlook.com>
+ <3bf68892-9a55-1d6e-fb43-346d9378a866@somainline.org>
+ <CAD=FV=VaCbb1xksYTL=dgDtZOD59nD=dx5hgYY-RFWkRVVo-7Q@mail.gmail.com>
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+In-Reply-To: <CAD=FV=VaCbb1xksYTL=dgDtZOD59nD=dx5hgYY-RFWkRVVo-7Q@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-[+cc Selvam, Baruch, Robert, Krishna, Krzysztof (other contributors to
-qcom)]
 
-On Thu, Jul 07, 2022 at 10:40:23AM -0500, Bjorn Helgaas wrote:
-> On Thu, Jul 07, 2022 at 05:03:48PM +0300, Dmitry Baryshkov wrote:
-> > On 16/06/2022 21:21, Bjorn Helgaas wrote:
-> > > On Wed, Jun 08, 2022 at 01:52:33PM +0300, Dmitry Baryshkov wrote:
-> > > > PCIe pipe clk (and some other clocks) must be parked to the "safe"
-> > > > source (bi_tcxo) when corresponding GDSC is turned off and on again.
-> > > > Currently this is handcoded in the PCIe driver by reparenting the
-> > > > gcc_pipe_N_clk_src clock.
 
-> > > > Dmitry Baryshkov (5):
-> > > >    clk: qcom: regmap: add PHY clock source implementation
-> > > >    clk: qcom: gcc-sm8450: use new clk_regmap_phy_mux_ops for PCIe pipe
-> > > >      clocks
-> > > >    clk: qcom: gcc-sc7280: use new clk_regmap_phy_mux_ops for PCIe pipe
-> > > >      clocks
-> > > >    PCI: qcom: Remove unnecessary pipe_clk handling
-> > > >    PCI: qcom: Drop manual pipe_clk_src handling
-
-> > > I applied this to pci/ctrl/qcom for v5.20, thanks!
-> > > 
-> > > Clock folks (Bjorn A, Andy, Michael, Stephen), I assume you're OK with
-> > > these being merged via the PCI tree.  Let me know if you prefer
-> > > anything different.
-> > 
-> > I noticed that this patchset is not a part of linux-next. Is it still
-> > pending to be merged in 5.20?
+On 7.07.2022 01:51, Doug Anderson wrote:
+> Hi,
 > 
-> It's still pending.  I currently have three separate qcom-related
-> branches that need to be reconciled before I put them in -next.
+> On Wed, Jul 6, 2022 at 5:31 AM Konrad Dybcio
+> <konrad.dybcio@somainline.org> wrote:
+>>
+>>
+>>
+>> On 5.07.2022 04:22, Jimmy Chen wrote:
+>>> This adds LTE skus for villager device tree files.
+>>>
+>>> Signed-off-by: Jimmy Chen <jinghung.chen3@hotmail.com>
+>>> ---
+>>>
+>>>  arch/arm64/boot/dts/qcom/Makefile                 |  2 ++
+>>>  .../arm64/boot/dts/qcom/sc7280-chrome-common.dtsi | 11 -----------
+>>>  arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts |  1 +
+>>>  .../dts/qcom/sc7280-herobrine-herobrine-r1.dts    |  1 +
+>>>  .../boot/dts/qcom/sc7280-herobrine-lte-sku.dtsi   | 15 +++++++++++++++
+>>>  .../dts/qcom/sc7280-herobrine-villager-r0-lte.dts | 14 ++++++++++++++
+>>>  .../dts/qcom/sc7280-herobrine-villager-r1-lte.dts | 14 ++++++++++++++
+>>>  arch/arm64/boot/dts/qcom/sc7280-idp.dts           |  1 +
+>>>  8 files changed, 48 insertions(+), 11 deletions(-)
+>>>  create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-lte-sku.dtsi
+>>>  create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r0-lte.dts
+>>>  create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1-lte.dts
+>>>
+>>> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+>>> index bb9f4eb3e65a0..6d81ff12f5af2 100644
+>>> --- a/arch/arm64/boot/dts/qcom/Makefile
+>>> +++ b/arch/arm64/boot/dts/qcom/Makefile
+>>> @@ -103,6 +103,8 @@ dtb-$(CONFIG_ARCH_QCOM)   += sc7180-trogdor-r1-lte.dtb
+>>>  dtb-$(CONFIG_ARCH_QCOM)      += sc7280-herobrine-crd.dtb
+>>>  dtb-$(CONFIG_ARCH_QCOM)      += sc7280-herobrine-herobrine-r1.dtb
+>>>  dtb-$(CONFIG_ARCH_QCOM)      += sc7280-herobrine-villager-r0.dtb
+>>> +dtb-$(CONFIG_ARCH_QCOM)      += sc7280-herobrine-villager-r0-lte.dtb
+>>> +dtb-$(CONFIG_ARCH_QCOM)      += sc7280-herobrine-villager-r1-lte.dtb
+>>>  dtb-$(CONFIG_ARCH_QCOM)      += sc7280-idp.dtb
+>>>  dtb-$(CONFIG_ARCH_QCOM)      += sc7280-idp2.dtb
+>>>  dtb-$(CONFIG_ARCH_QCOM)      += sc7280-crd-r3.dtb
+>>> diff --git a/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi b/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
+>>> index cfe2741456a1a..25f31c81b2b74 100644
+>>> --- a/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
+>>> +++ b/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
+>>> @@ -83,17 +83,6 @@ spi_flash: flash@0 {
+>>>       };
+>>>  };
+>>>
+>>> -/* Modem setup is different on Chrome setups than typical Qualcomm setup */
+>>> -&remoteproc_mpss {
+>>> -     status = "okay";
+>>> -     compatible = "qcom,sc7280-mss-pil";
+>>> -     iommus = <&apps_smmu 0x124 0x0>, <&apps_smmu 0x488 0x7>;
+>>> -     interconnects = <&mc_virt MASTER_LLCC 0 &mc_virt SLAVE_EBI1 0>;
+>>> -     memory-region = <&mba_mem>, <&mpss_mem>;
+>>> -     firmware-name = "qcom/sc7280-herobrine/modem/mba.mbn",
+>>> -                     "qcom/sc7280-herobrine/modem/qdsp6sw.mbn";
+>>> -};
+>>> -
+>>>  &remoteproc_wpss {
+>>>       status = "okay";
+>>>       firmware-name = "ath11k/WCN6750/hw1.0/wpss.mdt";
+>>> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts b/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts
+>>> index e9ca6c5d24a16..921eccfec39ae 100644
+>>> --- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts
+>>> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts
+>>> @@ -9,6 +9,7 @@
+>>>
+>>>  #include "sc7280-herobrine.dtsi"
+>>>  #include "sc7280-herobrine-audio-wcd9385.dtsi"
+>>> +#include "sc7280-herobrine-lte-sku.dtsi"
+>>>
+>>>  / {
+>>>       model = "Qualcomm Technologies, Inc. sc7280 CRD platform (rev5+)";
+>>> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r1.dts b/arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r1.dts
+>>> index c1647a85a371a..c1a6719687252 100644
+>>> --- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r1.dts
+>>> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r1.dts
+>>> @@ -8,6 +8,7 @@
+>>>  /dts-v1/;
+>>>
+>>>  #include "sc7280-herobrine.dtsi"
+>>> +#include "sc7280-herobrine-lte-sku.dtsi"
+>>>
+>>>  / {
+>>>       model = "Google Herobrine (rev1+)";
+>>> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-lte-sku.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine-lte-sku.dtsi
+>>> new file mode 100644
+>>> index 0000000000000..a4809dd2f4e8a
+>>> --- /dev/null
+>>> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-lte-sku.dtsi
+>>> @@ -0,0 +1,15 @@
+>>> +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+>>> +/*
+>>> + * Google Herobrine dts fragment for LTE SKUs
+>>> + *
+>>> + * Copyright 2022 Google LLC.
+>>> + */
+>>> +/* Modem setup is different on Chrome setups than typical Qualcomm setup */
+>>> +&remoteproc_mpss {
+>> Hi, just a minor nit.
+>>
+>> It was recently agreed upon that the status property should go last to
+>> make things consistent with other DTs (qcom is - as usual - a special
+>> snowflake :D). Could you please fix that up? The rest looks good.
+>>
+>> Konrad
+> 
+> I'm not aware of this new convention. Can you please provide a link?
+We've discussed it here [1], plus seemingly all other DTs (though I
+did not in fact check *all* other DTs, just a few from different vendors'
+subdirectories) seem to put it last, so I think we concluded that not
+standing out makes sense.. The DT spec itself does not specify where
+it should go, but this could possibly be a good addition to it..
 
-The first three patches are on an immutable branch from the clock
-tree:
+Konrad
 
-  74e4190cdebe ("clk: qcom: regmap: add PHY clock source implementation")
-  7ee9d2e8b9c9 ("clk: qcom: gcc-sm8450: use new clk_regmap_phy_mux_ops for PCIe pipe clocks")
-  553d12b20c10 ("clk: qcom: gcc-sc7280: use new clk_regmap_phy_mux_ops for PCIe pipe clocks")
-
-I added the rest on top of that:
-
-  cbd27d5c2ccf ("PCI: qcom: Move IPQ8074 DBI register accesses after phy_power_on()")
-  633c1fa00ab9 ("PCI: qcom: Move all DBI register accesses after phy_power_on()")
-  e835e9859548 ("dt-bindings: PCI: qcom: Fix description typo")
-  55e8a13ec92f ("PCI: qcom: Remove unnecessary pipe_clk handling")
-  1690864ec3c8 ("PCI: dwc: tegra: move GEN3_RELATED DBI register to common header")
-  39e0a12b484b ("PCI: qcom: Define slot capabilities using PCI_EXP_SLTCAP_*")
-  44d07e984b93 ("PCI: qcom: Add IPQ60xx support")
-
-and pushed it to a pci/ctrl/qcom-pending branch so you can check it
-out.  It's "pending" for now because I really want an ack and some
-testing for 633c1fa00ab9 ("PCI: qcom: Move all DBI register accesses
-after phy_power_on()").
-
-There's a LOT of stuff going on in qcom-land this cycle, and it's
-coming from a lot of different people.  We can deal with that, but it
-does complicate things and slow them down.  I think it would be easier
-and speed things up if we could figure out how to coordinate things on
-the qcom side.
-
-Bjorn
+[1] https://www.spinics.net/lists/linux-arm-msm/msg115444.html
+> 
+> -Doug
