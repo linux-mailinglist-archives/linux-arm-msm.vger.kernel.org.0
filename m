@@ -2,111 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 005D456A9C8
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Jul 2022 19:38:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4DF0956A9E3
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Jul 2022 19:43:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236389AbiGGRhn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Jul 2022 13:37:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44300 "EHLO
+        id S235575AbiGGRmN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Jul 2022 13:42:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48358 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236395AbiGGRhm (ORCPT
+        with ESMTP id S236546AbiGGRmH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Jul 2022 13:37:42 -0400
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BE8433A3E;
-        Thu,  7 Jul 2022 10:37:41 -0700 (PDT)
-Received: by mail-ej1-x632.google.com with SMTP id l23so1873743ejr.5;
-        Thu, 07 Jul 2022 10:37:41 -0700 (PDT)
+        Thu, 7 Jul 2022 13:42:07 -0400
+Received: from mail-qt1-x829.google.com (mail-qt1-x829.google.com [IPv6:2607:f8b0:4864:20::829])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2B005A46E
+        for <linux-arm-msm@vger.kernel.org>; Thu,  7 Jul 2022 10:42:06 -0700 (PDT)
+Received: by mail-qt1-x829.google.com with SMTP id k14so23791119qtm.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Jul 2022 10:42:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Lnir6LgkpdRMbpwiFT3OtePuYtNQt7Z4A5ni5uK8NYM=;
-        b=kblcKqBZdr4sSFcKa1z5P7DrASwYaA8KSy70SbMzV3uOqN6yGWc1nE/REZsP7dbRUp
-         fGHwyAlLxjlsSe1H9QT4SmHVjJvpfDVqAHP6FW6IvkTG4YKirje4EyDB+bjt1VqcViOV
-         FQEDZwkYwj9JeOriw4viuGpD/ExZyT1zl96KfEqJKHr14maPac0+YAbl0od+uVnpmP7Y
-         PxAPpn42rMxMTwb+DdB3a03xSKB9bc5LBGUZWcXYZ8GZi87Sf3h+TScGuec+nEp8kZPe
-         owtsipMfPThPm8v+OBFJhXG2chUhA4nN60/2SqEV0S7bSLQQvWqFdqTEU72xdoUxo9FL
-         kUTA==
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=vv9i38kg+fZeAJ7hqAo2VB2KqkjfsYGrDA3FFmrUc/U=;
+        b=nGJKwqkdu04XUH4SZYsLNK9X56CGdKbgIGS66CcXLzJa5h1VDaa6NBNR6EEL0tYrEx
+         CEbsVouP6BNnKZNyoA9LlFvDGAeAf7hQaVOLKH85tGpxmnyEd3bgjFSBmyMrv193R4id
+         ZO3ld6KEedmqKL+K2xHzeM9tJL6tQ6PPoE2HaIUZphRZgaZMTvW9AGiS5e2EVvwd3HG5
+         yPXQxfJ8yXj5HpceIOpjSOZxZwMbFGRPbh2/mCAmyviOTmEFcEge2CkyJCLzBEURvtcl
+         QKD0teWYqvM7l0xjkKXXU4aiXMe/bnEGmjvSzZcqQQ/Te7K1W89gKAqpXH4x5qjBv+GN
+         37Yg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Lnir6LgkpdRMbpwiFT3OtePuYtNQt7Z4A5ni5uK8NYM=;
-        b=VaExffct+ML6/9Mez9WxNi83tbMbQ1MTjdU4I53BaYwSgjLFS2rUnbJmNJB1/HGOgl
-         5ImsaVEb9d9GtlpVA+x5UmdhgDaCUHCMXBh1zNrV4iHzmWQY5E/KOAIE7z9RpR6Dcw4p
-         JM8zinVWXbrOMZtD/Xsd+Yd5/Gk6nMaxHwYEWZssepPhWICI3+yZm8bgFZsfL1annn++
-         QtXtzJl8unXEhOtCE2IWtp/xJYJx+A2Z0zpfzbG6rpUPGsIKFijb2Y1vxjfQ75G095jx
-         6pg1hUoH8C4LSd49uy4zza7KxhsJFS30WVYy/oaq+onq4h1kw+NwdmUsHY9jsy8mLS+L
-         fpTA==
-X-Gm-Message-State: AJIora/q9hc6xeb42QqIZepxPmo59a/N4muQGxvQU/y3ZtENK/Hz5lWI
-        G1plJukkrwPN29uY5U5tZ/sCW9wQ8fXGJg==
-X-Google-Smtp-Source: AGRyM1tNkqn649mBRfSwZAp/UrqG/OSWPDgkHtChgS5HKqpGsnFpdJtjeRcMkmc6Cx3Cduh86KOAlA==
-X-Received: by 2002:a17:907:2894:b0:72b:145b:af83 with SMTP id em20-20020a170907289400b0072b145baf83mr2853406ejc.234.1657215460099;
-        Thu, 07 Jul 2022 10:37:40 -0700 (PDT)
-Received: from fedora.robimarko.hr (dh207-96-250.xnet.hr. [88.207.96.250])
-        by smtp.googlemail.com with ESMTPSA id l10-20020a1709060cca00b0072b16ea4795sm674715ejh.48.2022.07.07.10.37.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Jul 2022 10:37:39 -0700 (PDT)
-From:   Robert Marko <robimarko@gmail.com>
-To:     agross@kernel.org, bjorn.andersson@linaro.org,
-        konrad.dybcio@somainline.org, jassisinghbrar@gmail.com,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, dmitry.baryshkov@linaro.org
-Cc:     Robert Marko <robimarko@gmail.com>
-Subject: [PATCH v6 4/4] arm64: dts: ipq8074: add APCS node
-Date:   Thu,  7 Jul 2022 19:37:33 +0200
-Message-Id: <20220707173733.404947-4-robimarko@gmail.com>
-X-Mailer: git-send-email 2.36.1
-In-Reply-To: <20220707173733.404947-1-robimarko@gmail.com>
-References: <20220707173733.404947-1-robimarko@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=vv9i38kg+fZeAJ7hqAo2VB2KqkjfsYGrDA3FFmrUc/U=;
+        b=bD+AkS1lskk8LHNgAMrqfK2KsN/9sdZB2Zz9ZNZPY+EaT7uLnKfY6k2kEjij2XVmrO
+         rvKb9eBEf64AjQcfxHbgpcvalc5SgHH8WtK5ZZqlHaoj5ZAXq8Xo1EcBfs2AlyQPB8uq
+         qj9ppH0BoS2TNRkDnlVZ56mzVDXbNNhRCiVL/OzovCRjox4oaRMG+dcP/S0wN+JTyzB+
+         2ZpzzdC3xfgF1mIQAOP3mqLgwnW5Tr38kg3BQArjpd0N9m0ofdoiSxhcDjC82BXPfA1m
+         cmrSIHCoLx3uepWnniMLq1W23cBGphtXybYasXWR2NVTGnsn1MCnni3VsfaowDxwNRcq
+         My7g==
+X-Gm-Message-State: AJIora8DD0ihV7/x7ZZ+GPPdlq2zRdCXZbcd4gtTOjR02ZvUQl7Po6xy
+        nUm4tY/pPk/eMRWlTf211Mh11iM4PmIgc011pMG2Tw==
+X-Google-Smtp-Source: AGRyM1vi2PU2UFHA1bbJtZ+VIokdk51mrbiey/LFa2NNo25BKlWAnYxx7qnjESNphQN4G90Y+Jk5ZsZ75wSx1ZwA5SQ=
+X-Received: by 2002:ac8:5c96:0:b0:31a:c19a:7da1 with SMTP id
+ r22-20020ac85c96000000b0031ac19a7da1mr39039363qta.62.1657215725748; Thu, 07
+ Jul 2022 10:42:05 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20220707161014.3178798-1-bjorn.andersson@linaro.org>
+In-Reply-To: <20220707161014.3178798-1-bjorn.andersson@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Thu, 7 Jul 2022 20:41:49 +0300
+Message-ID: <CAA8EJpoZ4WKALrvtCtfHNTJ5FDBk-Qy=Mr4TNr8qfcc8=hSMjQ@mail.gmail.com>
+Subject: Re: [PATCH] arm64: defconfig: Enable Qualcomm SC8280XP providers
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, Shawn Guo <shawnguo@kernel.org>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        Marcel Ziswiler <marcel.ziswiler@toradex.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Biju Das <biju.das.jz@bp.renesas.com>,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Johan Hovold <johan+linaro@kernel.org>,
+        manivannan.sadhasivam@linaro.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-APCS now has support for providing the APSS clocks as the child device
-for IPQ8074.
+On Thu, 7 Jul 2022 at 19:07, Bjorn Andersson <bjorn.andersson@linaro.org> wrote:
+>
+> The Qualcomm SC8280XP need the global clock controller, interconnect
+> provider and TLMM pinctrl in order to boot. Enable these as builtin, as
+> they are needed in order to provide e.g. UART.
+>
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
+>  arch/arm64/configs/defconfig | 3 +++
+>  1 file changed, 3 insertions(+)
+>
+> diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+> index d2615b37d857..8e44f6a2172c 100644
+> --- a/arch/arm64/configs/defconfig
+> +++ b/arch/arm64/configs/defconfig
+> @@ -541,6 +541,7 @@ CONFIG_PINCTRL_QDF2XXX=y
+>  CONFIG_PINCTRL_QCOM_SPMI_PMIC=y
+>  CONFIG_PINCTRL_SC7180=y
+>  CONFIG_PINCTRL_SC7280=y
+> +CONFIG_PINCTRL_SC8280XP=y
+>  CONFIG_PINCTRL_SDM845=y
+>  CONFIG_PINCTRL_SM8150=y
+>  CONFIG_PINCTRL_SM8250=y
+> @@ -1056,6 +1057,7 @@ CONFIG_MSM_GCC_8998=y
+>  CONFIG_QCS_GCC_404=y
+>  CONFIG_SC_GCC_7180=y
+>  CONFIG_SC_GCC_7280=y
+> +CONFIG_SC_GCC_8280XP=y
+>  CONFIG_SDM_CAMCC_845=m
+>  CONFIG_SDM_GPUCC_845=y
+>  CONFIG_SDM_VIDEOCC_845=y
+> @@ -1266,6 +1268,7 @@ CONFIG_INTERCONNECT_QCOM_OSM_L3=m
+>  CONFIG_INTERCONNECT_QCOM_QCS404=m
+>  CONFIG_INTERCONNECT_QCOM_SC7180=m
+>  CONFIG_INTERCONNECT_QCOM_SC7280=y
+> +CONFIG_INTERCONNECT_QCOM_SC8280XP=y
 
-So, add the required DT node for it as it will later be used as the CPU
-clocksource.
+= m? I see other SoCs build interconnect drivers as modules (well,
+except sdm845).
 
-Signed-off-by: Robert Marko <robimarko@gmail.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
-Changes in v3:
-* Node does not currently exist in the upstream kernel, so add it instead
-of modifying.
----
- arch/arm64/boot/dts/qcom/ipq8074.dtsi | 8 ++++++++
- 1 file changed, 8 insertions(+)
+>  CONFIG_INTERCONNECT_QCOM_SDM845=y
+>  CONFIG_INTERCONNECT_QCOM_SM8150=m
+>  CONFIG_INTERCONNECT_QCOM_SM8250=m
+> --
+> 2.35.1
+>
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-index b4ae13f16398..76707b9f9845 100644
---- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-@@ -886,5 +886,13 @@ IRQ_TYPE_LEVEL_HIGH>, /* int_c */
- 				      "axi_m_sticky";
- 			status = "disabled";
- 		};
-+
-+		apcs_glb: mailbox@b111000 {
-+			compatible = "qcom,ipq8074-apcs-apps-global";
-+			reg = <0x0b111000 0x6000>;
-+
-+			#clock-cells = <1>;
-+			#mbox-cells = <1>;
-+		};
- 	};
- };
+
 -- 
-2.36.1
-
+With best wishes
+Dmitry
