@@ -2,154 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 352AC56A9B9
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Jul 2022 19:36:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C1E9D56A9C4
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Jul 2022 19:38:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236036AbiGGRgN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Jul 2022 13:36:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43092 "EHLO
+        id S236320AbiGGRhk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Jul 2022 13:37:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44274 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235347AbiGGRgM (ORCPT
+        with ESMTP id S236241AbiGGRhj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Jul 2022 13:36:12 -0400
-Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A65333337C;
-        Thu,  7 Jul 2022 10:36:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1657215371; x=1688751371;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=zRlmYVn9zHQI1IKGlhE4MO06PH0yP+9P4EPGr4unR1E=;
-  b=a3tBzOjgoupnmiJo+uEcv8a5j7AXt5bUt4nS0yKA6WpWqhqRFMUmhyRi
-   DvxVoOjB62OnI6MvbieW28XCSdMT2/UzgPExOI712TlOacOfKkrB8VjC+
-   SjCUB6zeIXMJ7ujC/snX5QwckVB+LTjld/0YiKi+xuRwU0XgQ7Ickuz22
-   VE3w0CJhkG9SgN8Sc394cFLe0S0PEI1e5q7REN/W4sxCw41Clay9isnm8
-   rRYYgQ1Uc/5ZsTlHfdK+yC0HNpnYAjFuAcuqY59s7LRtl0/Aw/tDz7Y1e
-   CUkucHdwwWfk2dmquHCvWSxshmSobkxyEoiMWa1e9vPfyFrBbeEWqwnxR
-   g==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10401"; a="267112800"
-X-IronPort-AV: E=Sophos;i="5.92,253,1650956400"; 
-   d="scan'208";a="267112800"
-Received: from fmsmga003.fm.intel.com ([10.253.24.29])
-  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Jul 2022 10:35:57 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.92,253,1650956400"; 
-   d="scan'208";a="683384996"
-Received: from lkp-server01.sh.intel.com (HELO 68b931ab7ac1) ([10.239.97.150])
-  by FMSMGA003.fm.intel.com with ESMTP; 07 Jul 2022 10:35:54 -0700
-Received: from kbuild by 68b931ab7ac1 with local (Exim 4.95)
-        (envelope-from <lkp@intel.com>)
-        id 1o9VPu-000MGg-51;
-        Thu, 07 Jul 2022 17:35:54 +0000
-Date:   Fri, 8 Jul 2022 01:35:11 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Christian Marangi <ansuelsmth@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-Cc:     kbuild-all@lists.01.org, Christian Marangi <ansuelsmth@gmail.com>
-Subject: Re: [PATCH v4 3/3] clk: qcom: lcc-ipq806x: convert to parent data
-Message-ID: <202207080145.UiRhIFg5-lkp@intel.com>
-References: <20220707101326.30880-3-ansuelsmth@gmail.com>
+        Thu, 7 Jul 2022 13:37:39 -0400
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F43D53D38;
+        Thu,  7 Jul 2022 10:37:38 -0700 (PDT)
+Received: by mail-ej1-x62f.google.com with SMTP id r21so4874237eju.0;
+        Thu, 07 Jul 2022 10:37:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=PsjitoP8X4csfgh+EfeOV0/lVCQ3q/lBLUKmsZbTedY=;
+        b=er3DVhP5d2eDhPxQBeGJ6kJM6217Xq/EDxUgvtx2xC2pdQ/cDPdlcThuSxybFC3fV0
+         eWyw0hX1I1SpIbXtjSOX0lg6TdN7Bc7pD4nkRzECWhHqVg6cJ+os8274sPabghd5XTno
+         sX1euRXERpLMW8bcHv8QlR3BnWMis1U+Ag0JF1HAFEfcs8TELLDxTWmhSxDAak4toYiF
+         GSzFvNK51GwxjieFV7r4uTf1H6CRUjOdTeCBKkZ+/v9+sAJvjeO25Or55CyPqqdh0Wmz
+         RkSitlX6lvI+iGs3geZcrHvXy5BqGrCzmJ3nMw7D9PnqWUQuj76rsDyPCxUdUsUh96s0
+         7Iyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=PsjitoP8X4csfgh+EfeOV0/lVCQ3q/lBLUKmsZbTedY=;
+        b=MaMI1nHO8PTAdZSqKQWq+4bw761KAeL+b5x+VL1Cak/YwlIF/elEHy3Ct6eS6TaYOz
+         vI3OkBg8mml2BlDX+ff/uv7/Xum8CG2O55OjwlTBfxqXz4IQr7h6VGkkytXC976rid/9
+         jSXCSZnT9oaWl/K5UcAiDJyQJ8wtCZtcp75Zrbvrj1iEr3Gtj1xF/Izke8y4CWhD+xpw
+         iWoV3XYUI/ynFhOu/EFvljuS+IgY2U0DQJpBoFYZs6DrTV9/RHMuRf8LK7ZnVu+pBlbg
+         dOJGH8fxst7RtGDJcklmXtWDPGj6CGrxmlaHeBbsnw9+PeVzOGSA1YlPHXnniVxJaB7M
+         T5Tg==
+X-Gm-Message-State: AJIora+Ipv86VvIBAnLsYZ60TGyLI/CPWdWdZcjQFM8b8YdNodBzuTY7
+        y97iLJ1K6GlE7Q2PJRB08YM=
+X-Google-Smtp-Source: AGRyM1vuQUcVbv/4yEx/Y2IsTPvKiFjTxTK9IecZiGFAI85ew94nVm2Q7nV3RGRls2/LttaQQY3SLg==
+X-Received: by 2002:a17:907:94ca:b0:726:f4de:535b with SMTP id dn10-20020a17090794ca00b00726f4de535bmr46383722ejc.590.1657215456651;
+        Thu, 07 Jul 2022 10:37:36 -0700 (PDT)
+Received: from fedora.robimarko.hr (dh207-96-250.xnet.hr. [88.207.96.250])
+        by smtp.googlemail.com with ESMTPSA id l10-20020a1709060cca00b0072b16ea4795sm674715ejh.48.2022.07.07.10.37.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 07 Jul 2022 10:37:36 -0700 (PDT)
+From:   Robert Marko <robimarko@gmail.com>
+To:     agross@kernel.org, bjorn.andersson@linaro.org,
+        konrad.dybcio@somainline.org, jassisinghbrar@gmail.com,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, dmitry.baryshkov@linaro.org
+Cc:     Robert Marko <robimarko@gmail.com>
+Subject: [PATCH v6 1/4] mailbox: qcom-apcs-ipc: make regmap max_register configurable
+Date:   Thu,  7 Jul 2022 19:37:30 +0200
+Message-Id: <20220707173733.404947-1-robimarko@gmail.com>
+X-Mailer: git-send-email 2.36.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220707101326.30880-3-ansuelsmth@gmail.com>
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,
-        SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Christian,
+APCS register space in IPQ8074 is 0x6000 so regmap max_register needs to
+be 0x5ffc.
 
-Thank you for the patch! Yet something to improve:
+Instead of making it global, make max_register configurable via match data.
 
-[auto build test ERROR on clk/clk-next]
-[also build test ERROR on linus/master v5.19-rc5 next-20220707]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+Signed-off-by: Robert Marko <robimarko@gmail.com>
+---
+ drivers/mailbox/qcom-apcs-ipc-mailbox.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Christian-Marangi/dt-bindings-clock-add-pcm-reset-for-ipq806x-lcc/20220707-181546
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git clk-next
-config: nios2-randconfig-r003-20220707 (https://download.01.org/0day-ci/archive/20220708/202207080145.UiRhIFg5-lkp@intel.com/config)
-compiler: nios2-linux-gcc (GCC) 11.3.0
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # https://github.com/intel-lab-lkp/linux/commit/81953f04f08f730affa53b4637cc05f97da50a1d
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review Christian-Marangi/dt-bindings-clock-add-pcm-reset-for-ipq806x-lcc/20220707-181546
-        git checkout 81953f04f08f730affa53b4637cc05f97da50a1d
-        # save the config file
-        mkdir build_dir && cp config build_dir/.config
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.3.0 make.cross W=1 O=build_dir ARCH=nios2 SHELL=/bin/bash drivers/clk/qcom/
-
-If you fix the issue, kindly add following tag where applicable
-Reported-by: kernel test robot <lkp@intel.com>
-
-All errors (new ones prefixed by >>):
-
-   drivers/clk/qcom/lcc-ipq806x.c:38:25: warning: braces around scalar initializer
-      38 |                         { .fw_name = "pxo", .name = "pxo_board" },
-         |                         ^
-   drivers/clk/qcom/lcc-ipq806x.c:38:25: note: (near initialization for '(anonymous)[0]')
-   drivers/clk/qcom/lcc-ipq806x.c:38:27: error: field name not in record or union initializer
-      38 |                         { .fw_name = "pxo", .name = "pxo_board" },
-         |                           ^
-   drivers/clk/qcom/lcc-ipq806x.c:38:27: note: (near initialization for '(anonymous)[0]')
-   drivers/clk/qcom/lcc-ipq806x.c:38:38: error: initialization of 'const struct clk_parent_data *' from incompatible pointer type 'char *' [-Werror=incompatible-pointer-types]
-      38 |                         { .fw_name = "pxo", .name = "pxo_board" },
-         |                                      ^~~~~
-   drivers/clk/qcom/lcc-ipq806x.c:38:38: note: (near initialization for '(anonymous)[0]')
-   drivers/clk/qcom/lcc-ipq806x.c:38:45: error: field name not in record or union initializer
-      38 |                         { .fw_name = "pxo", .name = "pxo_board" },
-         |                                             ^
-   drivers/clk/qcom/lcc-ipq806x.c:38:45: note: (near initialization for '(anonymous)[0]')
-   drivers/clk/qcom/lcc-ipq806x.c:38:53: warning: excess elements in scalar initializer
-      38 |                         { .fw_name = "pxo", .name = "pxo_board" },
-         |                                                     ^~~~~~~~~~~
-   drivers/clk/qcom/lcc-ipq806x.c:38:53: note: (near initialization for '(anonymous)[0]')
->> drivers/clk/qcom/lcc-ipq806x.c:37:32: error: initialization of 'const struct clk_parent_data *' from incompatible pointer type 'const struct clk_parent_data **' [-Werror=incompatible-pointer-types]
-      37 |                 .parent_data = (const struct clk_parent_data*[]){
-         |                                ^
-   drivers/clk/qcom/lcc-ipq806x.c:37:32: note: (near initialization for '(anonymous).parent_data')
-   cc1: some warnings being treated as errors
-
-
-vim +37 drivers/clk/qcom/lcc-ipq806x.c
-
-    26	
-    27	static struct clk_pll pll4 = {
-    28		.l_reg = 0x4,
-    29		.m_reg = 0x8,
-    30		.n_reg = 0xc,
-    31		.config_reg = 0x14,
-    32		.mode_reg = 0x0,
-    33		.status_reg = 0x18,
-    34		.status_bit = 16,
-    35		.clkr.hw.init = &(struct clk_init_data){
-    36			.name = "pll4",
-  > 37			.parent_data = (const struct clk_parent_data*[]){
-  > 38				{ .fw_name = "pxo", .name = "pxo_board" },
-    39			},
-    40			.num_parents = 1,
-    41			.ops = &clk_pll_ops,
-    42		},
-    43	};
-    44	
-
+diff --git a/drivers/mailbox/qcom-apcs-ipc-mailbox.c b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
+index 80a54d81412e..c05f3276d02c 100644
+--- a/drivers/mailbox/qcom-apcs-ipc-mailbox.c
++++ b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
+@@ -27,6 +27,7 @@ struct qcom_apcs_ipc {
+ struct qcom_apcs_ipc_data {
+ 	int offset;
+ 	char *clk_name;
++	unsigned int max_register;
+ };
+ 
+ static const struct qcom_apcs_ipc_data ipq6018_apcs_data = {
+@@ -53,7 +54,7 @@ static const struct qcom_apcs_ipc_data sdx55_apcs_data = {
+ 	.offset = 0x1008, .clk_name = "qcom-sdx55-acps-clk"
+ };
+ 
+-static const struct regmap_config apcs_regmap_config = {
++static struct regmap_config apcs_regmap_config = {
+ 	.reg_bits = 32,
+ 	.reg_stride = 4,
+ 	.val_bits = 32,
+@@ -91,12 +92,17 @@ static int qcom_apcs_ipc_probe(struct platform_device *pdev)
+ 	if (IS_ERR(base))
+ 		return PTR_ERR(base);
+ 
++	apcs_data = of_device_get_match_data(&pdev->dev);
++	if (!apcs_data)
++		return -ENODATA;
++
++	if (apcs_data->max_register)
++		apcs_regmap_config.max_register = apcs_data->max_register;
++
+ 	regmap = devm_regmap_init_mmio(&pdev->dev, base, &apcs_regmap_config);
+ 	if (IS_ERR(regmap))
+ 		return PTR_ERR(regmap);
+ 
+-	apcs_data = of_device_get_match_data(&pdev->dev);
+-
+ 	apcs->regmap = regmap;
+ 	apcs->offset = apcs_data->offset;
+ 
 -- 
-0-DAY CI Kernel Test Service
-https://01.org/lkp
+2.36.1
+
