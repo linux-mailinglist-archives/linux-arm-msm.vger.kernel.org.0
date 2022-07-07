@@ -2,80 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D59A656A703
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Jul 2022 17:33:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4FF2356A72C
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Jul 2022 17:41:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235730AbiGGPdQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Jul 2022 11:33:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55114 "EHLO
+        id S235708AbiGGPk4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Jul 2022 11:40:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59886 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235303AbiGGPdP (ORCPT
+        with ESMTP id S231320AbiGGPk4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Jul 2022 11:33:15 -0400
-Received: from mail-qt1-x831.google.com (mail-qt1-x831.google.com [IPv6:2607:f8b0:4864:20::831])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A47D3207D
-        for <linux-arm-msm@vger.kernel.org>; Thu,  7 Jul 2022 08:33:14 -0700 (PDT)
-Received: by mail-qt1-x831.google.com with SMTP id i11so23224257qtr.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Jul 2022 08:33:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=fLPqNOuxkhng0+VfusSfgGkkAqcB1Q6iFCv9UoVontQ=;
-        b=BDKkvsKU3sn42yDWiGzbpEF9p5SV1Dz/09dCOmImNJBbAP2CeP8HMOCqAggGGxMP8W
-         0UbRAdgvZA7Eg2wcj6YNM/h7ICwhoANe2veeMegkwrxmqfl+Ocge6dDwjTMN6H3K6BgI
-         YbFYGc/MP2anQkgQeeH8xvKXHG1ndJqEuuLN2Fo56DIW3SYjA8RcHXTKluBhn3vEm0qW
-         TNJvLy/Bvdlanl4tU4dSr2Q2fcn2rBTmuFlJZ7EI3JpzjYGVliasoq/rxodlhmDx0N5m
-         ZYaPVz/wW3jGhqush/vob0PDp70Uk9f/rXPPoriWMM0TEgl9VynMo2OQNmrqz+2JO+yN
-         OIWQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=fLPqNOuxkhng0+VfusSfgGkkAqcB1Q6iFCv9UoVontQ=;
-        b=jTq/H6Jj0R/P7RTwn4692ibXYTiY5AtWlC62ayJ7K3fnMedcJN+JDHtYLlOrYb5B2Y
-         Wdq5JCtv2IHFkamGSINkERuaCtzrz6iT41LuC0BSPXqsfSIfMKuYqTk6CC2GrpjF4Q4q
-         yMhFBzPHgL7gYDG3NWTHw5OG3kH41eUrdDHTfzfncZuFvJYqTjWRtvS9mRcz0r8/JCoX
-         D5NnhsPv2KBPmgdG7QSKqJlmE4HdpBZCTnxCrPMuGKJR4arjoGfTC1TE98bDjAYKy/ZR
-         78PMiSkLZvsgCpRWXL8BuaxEjnhAeo8Li49oB+lOngtamTntcHCdy35EIsg1xfD7OQly
-         TBWg==
-X-Gm-Message-State: AJIora/bXJcXPdb0++et/Pe+fPMatifTY1FayvEMdQlQ4wIj1ociXIs5
-        NDuwT7/6ncXSVDzvNcTnVeiGyrmTB/OJH6X4WQfPl/XHt0nqew==
-X-Google-Smtp-Source: AGRyM1v2sny/0726HNQOlkXr40uwbBva0ycqSItDJC34DLwjRoq2GI9FOyav66XsWjyidLsuRaZEf1w+PSHx+h2/ceU=
-X-Received: by 2002:ac8:5c96:0:b0:31a:c19a:7da1 with SMTP id
- r22-20020ac85c96000000b0031ac19a7da1mr38432079qta.62.1657207993411; Thu, 07
- Jul 2022 08:33:13 -0700 (PDT)
+        Thu, 7 Jul 2022 11:40:56 -0400
+Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11C2620BCA;
+        Thu,  7 Jul 2022 08:40:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1657208455; x=1688744455;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=K98f2lGesm9VxtLvneIAOHDNuCUd/i45m2bxaKcd7VI=;
+  b=DhMGcYdrk9xazsA4fEVbht71X7Pt9gWJiyvOFkXA7fwaYRFkzwl3XT45
+   1QmR9OJo0aVD9EwBLwREAJ/irT5zBcf361etgwqOrt96zlHRwhwT1wrOC
+   5GpRCixMBi8S0xTYLq4d0XZGSHaTWNlmeg0h/srp2sqBzCNY3v1s9Vwty
+   +RzzzVds0VILnKGqpN0oB/3zqVrnQSLBfPWkj8DjXnqSIFNNdmWjL2UCk
+   tPhxn358BDBHk1ClOwWMrWFWSIgMhHsq+PGVXnTIzu3GlwYnajpsnnogX
+   GP2yjKrpET55JjJOgaRhCnLLwTH8w5RST2/LiR6paOYq1FNpCVsshAD6Y
+   w==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10400"; a="282807844"
+X-IronPort-AV: E=Sophos;i="5.92,253,1650956400"; 
+   d="scan'208";a="282807844"
+Received: from fmsmga004.fm.intel.com ([10.253.24.48])
+  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Jul 2022 08:40:54 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.92,253,1650956400"; 
+   d="scan'208";a="661429543"
+Received: from lkp-server01.sh.intel.com (HELO 68b931ab7ac1) ([10.239.97.150])
+  by fmsmga004.fm.intel.com with ESMTP; 07 Jul 2022 08:40:50 -0700
+Received: from kbuild by 68b931ab7ac1 with local (Exim 4.95)
+        (envelope-from <lkp@intel.com>)
+        id 1o9TcY-000MBC-12;
+        Thu, 07 Jul 2022 15:40:50 +0000
+Date:   Thu, 7 Jul 2022 23:40:11 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Caleb Connolly <caleb.connolly@linaro.org>,
+        Sebastian Reichel <sre@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Nathan Chancellor <nathan@kernel.org>,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        Tom Rix <trix@redhat.com>, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, llvm@lists.linux.dev,
+        phone-devel@vger.kernel.org
+Cc:     llvm@lists.linux.dev, kbuild-all@lists.01.org
+Subject: Re: [PATCH v4 1/2] power: supply: add Qualcomm PMI8998 SMB2 Charger
+ driver
+Message-ID: <202207072358.2odInqXi-lkp@intel.com>
+References: <20220706194125.1861256-2-caleb.connolly@linaro.org>
 MIME-Version: 1.0
-References: <1657040445-13067-1-git-send-email-quic_vpolimer@quicinc.com>
- <1657040445-13067-2-git-send-email-quic_vpolimer@quicinc.com>
- <5d469759-0619-eece-902d-df8ac6583f22@linaro.org> <BN0PR02MB8173DF17816659868604A82EE4839@BN0PR02MB8173.namprd02.prod.outlook.com>
-In-Reply-To: <BN0PR02MB8173DF17816659868604A82EE4839@BN0PR02MB8173.namprd02.prod.outlook.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Thu, 7 Jul 2022 18:33:02 +0300
-Message-ID: <CAA8EJpoYj_-bY8CSPdE=mBkZbnffgUXX+LzEXKWHQ3yhS4GmvA@mail.gmail.com>
-Subject: Re: [PATCH v4 1/7] drm/msm/disp/dpu1: clear dpu_assign_crtc and get
- crtc from drm_enc instead of dpu_enc
-To:     Vinod Polimera <vpolimer@qti.qualcomm.com>
-Cc:     "Vinod Polimera (QUIC)" <quic_vpolimer@quicinc.com>,
-        "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "freedreno@lists.freedesktop.org" <freedreno@lists.freedesktop.org>,
-        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "robdclark@gmail.com" <robdclark@gmail.com>,
-        "dianders@chromium.org" <dianders@chromium.org>,
-        "swboyd@chromium.org" <swboyd@chromium.org>,
-        "Kalyan Thota (QUIC)" <quic_kalyant@quicinc.com>,
-        "Kuogee Hsieh (QUIC)" <quic_khsieh@quicinc.com>,
-        "Vishnuvardhan Prodduturi (QUIC)" <quic_vproddut@quicinc.com>,
-        "bjorn.andersson@linaro.org" <bjorn.andersson@linaro.org>,
-        "Aravind Venkateswaran (QUIC)" <quic_aravindh@quicinc.com>,
-        "Abhinav Kumar (QUIC)" <quic_abhinavk@quicinc.com>,
-        "Sankeerth Billakanti (QUIC)" <quic_sbillaka@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220706194125.1861256-2-caleb.connolly@linaro.org>
+X-Spam-Status: No, score=-5.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -83,175 +75,327 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 7 Jul 2022 at 17:39, Vinod Polimera <vpolimer@qti.qualcomm.com> wrote:
->
-> > NAK. Quoting the documentation:
-> >
-> > only really meaningful for non-atomic drivers. Atomic drivers should
-> > instead check &drm_connector_state.crtc.
-> >
-> > Please adjust according to the documentation.
->    drm_enc gets the crtc info already from new connector state as part of drm_atomic_helper_update_legacy_modeset_state.
->    So drm_enc->crtc will be valid as we access it as part of modeset enable/disable.
->                          ```connector->encoder->crtc = new_conn_state->crtc;```.
+Hi Caleb,
 
-drm_atomic_helper_update_legacy_modeset_state():
+Thank you for the patch! Perhaps something to improve:
 
- * Since these updates are not synchronized with lockings, only code paths
- * called from &drm_mode_config_helper_funcs.atomic_commit_tail can look at the
- * legacy state filled out by this helper. Defacto this means this helper and
- * the legacy state pointers are only really useful for transitioning an
- * existing driver to the atomic world.
+[auto build test WARNING on sre-power-supply/for-next]
+[also build test WARNING on robh/for-next linus/master v5.19-rc5 next-20220707]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-So please change the code to use drm_connector_state.crtc.
+url:    https://github.com/intel-lab-lkp/linux/commits/Caleb-Connolly/power-supply-introduce-support-for-the-Qualcomm-smb2-charger/20220707-034307
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/sre/linux-power-supply.git for-next
+config: arm64-allmodconfig (https://download.01.org/0day-ci/archive/20220707/202207072358.2odInqXi-lkp@intel.com/config)
+compiler: clang version 15.0.0 (https://github.com/llvm/llvm-project f553287b588916de09c66e3e32bf75e5060f967f)
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # install arm64 cross compiling tool for clang build
+        # apt-get install binutils-aarch64-linux-gnu
+        # https://github.com/intel-lab-lkp/linux/commit/a6b315467a158024bb1af7fed00c9a5227c9b293
+        git remote add linux-review https://github.com/intel-lab-lkp/linux
+        git fetch --no-tags linux-review Caleb-Connolly/power-supply-introduce-support-for-the-Qualcomm-smb2-charger/20220707-034307
+        git checkout a6b315467a158024bb1af7fed00c9a5227c9b293
+        # save the config file
+        mkdir build_dir && cp config build_dir/.config
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=arm64 SHELL=/bin/bash drivers/power/supply/
 
-Dixi.
+If you fix the issue, kindly add following tag where applicable
+Reported-by: kernel test robot <lkp@intel.com>
 
->
-> Thanks,
-> Vinod P.
->
-> > -----Original Message-----
-> > From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > Sent: Wednesday, July 6, 2022 12:34 AM
-> > To: Vinod Polimera (QUIC) <quic_vpolimer@quicinc.com>; dri-
-> > devel@lists.freedesktop.org; linux-arm-msm@vger.kernel.org;
-> > freedreno@lists.freedesktop.org; devicetree@vger.kernel.org
-> > Cc: linux-kernel@vger.kernel.org; robdclark@gmail.com;
-> > dianders@chromium.org; swboyd@chromium.org; Kalyan Thota (QUIC)
-> > <quic_kalyant@quicinc.com>; Kuogee Hsieh (QUIC)
-> > <quic_khsieh@quicinc.com>; Vishnuvardhan Prodduturi (QUIC)
-> > <quic_vproddut@quicinc.com>; bjorn.andersson@linaro.org; Aravind
-> > Venkateswaran (QUIC) <quic_aravindh@quicinc.com>; Abhinav Kumar
-> > (QUIC) <quic_abhinavk@quicinc.com>; Sankeerth Billakanti (QUIC)
-> > <quic_sbillaka@quicinc.com>
-> > Subject: Re: [PATCH v4 1/7] drm/msm/disp/dpu1: clear dpu_assign_crtc and
-> > get crtc from drm_enc instead of dpu_enc
-> >
-> > WARNING: This email originated from outside of Qualcomm. Please be wary
-> > of any links or attachments, and do not enable macros.
-> >
-> > On 05/07/2022 20:00, Vinod Polimera wrote:
-> > > Update crtc retrieval from dpu_enc to drm_enc, since new links get set
-> > > as part of the update legacy mode set. The dpu_enc->crtc cache is no
-> > > more needed, hence cleaning it as part of this change.
-> >
-> > NAK. Quoting the documentation:
-> >
-> > only really meaningful for non-atomic drivers. Atomic drivers should
-> > instead check &drm_connector_state.crtc.
-> >
-> > Please adjust according to the documentation.
-> > >
-> > > Signed-off-by: Vinod Polimera <quic_vpolimer@quicinc.com>
-> > > ---
-> > >   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c    |  4 ----
-> > >   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 18 +++---------------
-> > >   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h |  8 --------
-> > >   3 files changed, 3 insertions(+), 27 deletions(-)
-> > >
-> > > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> > b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> > > index b56f777..f91e3d1 100644
-> > > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> > > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> > > @@ -972,7 +972,6 @@ static void dpu_crtc_disable(struct drm_crtc *crtc,
-> > >                */
-> > >               if (dpu_encoder_get_intf_mode(encoder) == INTF_MODE_VIDEO)
-> > >                       release_bandwidth = true;
-> > > -             dpu_encoder_assign_crtc(encoder, NULL);
-> > >       }
-> > >
-> > >       /* wait for frame_event_done completion */
-> > > @@ -1042,9 +1041,6 @@ static void dpu_crtc_enable(struct drm_crtc *crtc,
-> > >       trace_dpu_crtc_enable(DRMID(crtc), true, dpu_crtc);
-> > >       dpu_crtc->enabled = true;
-> > >
-> > > -     drm_for_each_encoder_mask(encoder, crtc->dev, crtc->state-
-> > >encoder_mask)
-> > > -             dpu_encoder_assign_crtc(encoder, crtc);
-> > > -
-> > >       /* Enable/restore vblank irq handling */
-> > >       drm_crtc_vblank_on(crtc);
-> > >   }
-> > > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> > b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> > > index 52516eb..5629c0b 100644
-> > > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> > > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> > > @@ -1254,8 +1254,8 @@ static void dpu_encoder_vblank_callback(struct
-> > drm_encoder *drm_enc,
-> > >       dpu_enc = to_dpu_encoder_virt(drm_enc);
-> > >
-> > >       spin_lock_irqsave(&dpu_enc->enc_spinlock, lock_flags);
-> > > -     if (dpu_enc->crtc)
-> > > -             dpu_crtc_vblank_callback(dpu_enc->crtc);
-> > > +     if (drm_enc->crtc)
-> > > +             dpu_crtc_vblank_callback(drm_enc->crtc);
-> > >       spin_unlock_irqrestore(&dpu_enc->enc_spinlock, lock_flags);
-> > >
-> > >       atomic_inc(&phy_enc->vsync_cnt);
-> > > @@ -1280,18 +1280,6 @@ static void
-> > dpu_encoder_underrun_callback(struct drm_encoder *drm_enc,
-> > >       DPU_ATRACE_END("encoder_underrun_callback");
-> > >   }
-> > >
-> > > -void dpu_encoder_assign_crtc(struct drm_encoder *drm_enc, struct
-> > drm_crtc *crtc)
-> > > -{
-> > > -     struct dpu_encoder_virt *dpu_enc = to_dpu_encoder_virt(drm_enc);
-> > > -     unsigned long lock_flags;
-> > > -
-> > > -     spin_lock_irqsave(&dpu_enc->enc_spinlock, lock_flags);
-> > > -     /* crtc should always be cleared before re-assigning */
-> > > -     WARN_ON(crtc && dpu_enc->crtc);
-> > > -     dpu_enc->crtc = crtc;
-> > > -     spin_unlock_irqrestore(&dpu_enc->enc_spinlock, lock_flags);
-> > > -}
-> > > -
-> > >   void dpu_encoder_toggle_vblank_for_crtc(struct drm_encoder
-> > *drm_enc,
-> > >                                       struct drm_crtc *crtc, bool enable)
-> > >   {
-> > > @@ -1302,7 +1290,7 @@ void dpu_encoder_toggle_vblank_for_crtc(struct
-> > drm_encoder *drm_enc,
-> > >       trace_dpu_enc_vblank_cb(DRMID(drm_enc), enable);
-> > >
-> > >       spin_lock_irqsave(&dpu_enc->enc_spinlock, lock_flags);
-> > > -     if (dpu_enc->crtc != crtc) {
-> > > +     if (drm_enc->crtc != crtc) {
-> > >               spin_unlock_irqrestore(&dpu_enc->enc_spinlock, lock_flags);
-> > >               return;
-> > >       }
-> > > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
-> > b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
-> > > index 781d41c..edba815 100644
-> > > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
-> > > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
-> > > @@ -39,14 +39,6 @@ struct msm_display_info {
-> > >   };
-> > >
-> > >   /**
-> > > - * dpu_encoder_assign_crtc - Link the encoder to the crtc it's assigned to
-> > > - * @encoder: encoder pointer
-> > > - * @crtc:    crtc pointer
-> > > - */
-> > > -void dpu_encoder_assign_crtc(struct drm_encoder *encoder,
-> > > -                          struct drm_crtc *crtc);
-> > > -
-> > > -/**
-> > >    * dpu_encoder_toggle_vblank_for_crtc - Toggles vblank interrupts on or
-> > off if
-> > >    *  the encoder is assigned to the given crtc
-> > >    * @encoder:        encoder pointer
-> >
-> >
-> > --
-> > With best wishes
-> > Dmitry
+All warnings (new ones prefixed by >>):
+
+>> drivers/power/supply/qcom_pmi8998_charger.c:425:5: warning: no previous prototype for function 'smb2_get_prop_usb_online' [-Wmissing-prototypes]
+   int smb2_get_prop_usb_online(struct smb2_chip *chip, int *val)
+       ^
+   drivers/power/supply/qcom_pmi8998_charger.c:425:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+   int smb2_get_prop_usb_online(struct smb2_chip *chip, int *val)
+   ^
+   static 
+>> drivers/power/supply/qcom_pmi8998_charger.c:486:5: warning: no previous prototype for function 'smb2_get_prop_status' [-Wmissing-prototypes]
+   int smb2_get_prop_status(struct smb2_chip *chip, int *val)
+       ^
+   drivers/power/supply/qcom_pmi8998_charger.c:486:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+   int smb2_get_prop_status(struct smb2_chip *chip, int *val)
+   ^
+   static 
+>> drivers/power/supply/qcom_pmi8998_charger.c:565:6: warning: no previous prototype for function 'smb2_status_change_work' [-Wmissing-prototypes]
+   void smb2_status_change_work(struct work_struct *work)
+        ^
+   drivers/power/supply/qcom_pmi8998_charger.c:565:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+   void smb2_status_change_work(struct work_struct *work)
+   ^
+   static 
+>> drivers/power/supply/qcom_pmi8998_charger.c:614:5: warning: no previous prototype for function 'smb2_get_iio_chan' [-Wmissing-prototypes]
+   int smb2_get_iio_chan(struct smb2_chip *chip, struct iio_channel *chan,
+       ^
+   drivers/power/supply/qcom_pmi8998_charger.c:614:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+   int smb2_get_iio_chan(struct smb2_chip *chip, struct iio_channel *chan,
+   ^
+   static 
+>> drivers/power/supply/qcom_pmi8998_charger.c:635:5: warning: no previous prototype for function 'smb2_get_prop_health' [-Wmissing-prototypes]
+   int smb2_get_prop_health(struct smb2_chip *chip, int *val)
+       ^
+   drivers/power/supply/qcom_pmi8998_charger.c:635:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+   int smb2_get_prop_health(struct smb2_chip *chip, int *val)
+   ^
+   static 
+>> drivers/power/supply/qcom_pmi8998_charger.c:736:13: warning: no previous prototype for function 'smb2_handle_batt_overvoltage' [-Wmissing-prototypes]
+   irqreturn_t smb2_handle_batt_overvoltage(int irq, void *data)
+               ^
+   drivers/power/supply/qcom_pmi8998_charger.c:736:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+   irqreturn_t smb2_handle_batt_overvoltage(int irq, void *data)
+   ^
+   static 
+>> drivers/power/supply/qcom_pmi8998_charger.c:754:13: warning: no previous prototype for function 'smb2_handle_usb_plugin' [-Wmissing-prototypes]
+   irqreturn_t smb2_handle_usb_plugin(int irq, void *data)
+               ^
+   drivers/power/supply/qcom_pmi8998_charger.c:754:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+   irqreturn_t smb2_handle_usb_plugin(int irq, void *data)
+   ^
+   static 
+>> drivers/power/supply/qcom_pmi8998_charger.c:766:13: warning: no previous prototype for function 'smb2_handle_usb_icl_change' [-Wmissing-prototypes]
+   irqreturn_t smb2_handle_usb_icl_change(int irq, void *data)
+               ^
+   drivers/power/supply/qcom_pmi8998_charger.c:766:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+   irqreturn_t smb2_handle_usb_icl_change(int irq, void *data)
+   ^
+   static 
+>> drivers/power/supply/qcom_pmi8998_charger.c:775:13: warning: no previous prototype for function 'smb2_handle_wdog_bark' [-Wmissing-prototypes]
+   irqreturn_t smb2_handle_wdog_bark(int irq, void *data)
+               ^
+   drivers/power/supply/qcom_pmi8998_charger.c:775:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+   irqreturn_t smb2_handle_wdog_bark(int irq, void *data)
+   ^
+   static 
+   drivers/power/supply/qcom_pmi8998_charger.c:896:12: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+             .addr = 1950000 / 25000 },
+                     ^~~~~~~~~~~~~~~
+   drivers/power/supply/qcom_pmi8998_charger.c:894:12: note: previous initialization is here
+           { .addr = FAST_CHARGE_CURRENT_CFG,
+                     ^~~~~~~~~~~~~~~~~~~~~~~
+   drivers/power/supply/qcom_pmi8998_charger.c:76:36: note: expanded from macro 'FAST_CHARGE_CURRENT_CFG'
+   #define FAST_CHARGE_CURRENT_CFG                         0x61
+                                                           ^~~~
+   10 warnings generated.
 
 
+vim +/smb2_get_prop_usb_online +425 drivers/power/supply/qcom_pmi8998_charger.c
+
+   424	
+ > 425	int smb2_get_prop_usb_online(struct smb2_chip *chip, int *val)
+   426	{
+   427		unsigned int stat;
+   428		int rc;
+   429	
+   430		rc = regmap_read(chip->regmap, chip->base + POWER_PATH_STATUS, &stat);
+   431		if (rc < 0) {
+   432			dev_err(chip->dev, "Couldn't read POWER_PATH_STATUS! ret=%d\n",
+   433				rc);
+   434			return rc;
+   435		}
+   436	
+   437		*val = (stat & P_PATH_USE_USBIN_BIT) &&
+   438		       (stat & P_PATH_VALID_INPUT_POWER_SOURCE_STS_BIT);
+   439		return 0;
+   440	}
+   441	
+   442	/*
+   443	 * Qualcomm "automatic power source detection" aka APSD
+   444	 * tells us what type of charger we're connected to.
+   445	 */
+   446	static int smb2_apsd_get_charger_type(struct smb2_chip *chip, int *val)
+   447	{
+   448		int rc;
+   449		unsigned int apsd_stat, stat;
+   450		int usb_online;
+   451	
+   452		rc = smb2_get_prop_usb_online(chip, &usb_online);
+   453		if (rc < 0 || !usb_online) {
+   454			*val = POWER_SUPPLY_USB_TYPE_UNKNOWN;
+   455			return 0;
+   456		}
+   457	
+   458		rc = regmap_read(chip->regmap, chip->base + APSD_STATUS, &apsd_stat);
+   459		if (rc < 0) {
+   460			dev_err(chip->dev, "Failed to read apsd status, rc = %d", rc);
+   461			return rc;
+   462		}
+   463		if (!(apsd_stat & APSD_DTC_STATUS_DONE_BIT)) {
+   464			dev_err(chip->dev, "Apsd not ready");
+   465			return -EAGAIN;
+   466		}
+   467	
+   468		rc = regmap_read(chip->regmap, chip->base + APSD_RESULT_STATUS, &stat);
+   469		if (rc < 0) {
+   470			dev_err(chip->dev, "Failed to read apsd result, rc = %d", rc);
+   471			return rc;
+   472		}
+   473	
+   474		stat &= APSD_RESULT_STATUS_MASK;
+   475	
+   476		if (stat & CDP_CHARGER_BIT)
+   477			*val = POWER_SUPPLY_USB_TYPE_CDP;
+   478		else if (stat & (DCP_CHARGER_BIT | OCP_CHARGER_BIT | FLOAT_CHARGER_BIT))
+   479			*val = POWER_SUPPLY_USB_TYPE_DCP;
+   480		else /* SDP_CHARGER_BIT (or others) */
+   481			*val = POWER_SUPPLY_USB_TYPE_SDP;
+   482	
+   483		return 0;
+   484	}
+   485	
+ > 486	int smb2_get_prop_status(struct smb2_chip *chip, int *val)
+   487	{
+   488		int usb_online_val;
+   489		unsigned char stat[2];
+   490		int rc;
+   491	
+   492		rc = smb2_get_prop_usb_online(chip, &usb_online_val);
+   493		if (rc < 0) {
+   494			dev_err(chip->dev, "Couldn't get usb online property rc = %d\n",
+   495				rc);
+   496			return rc;
+   497		}
+   498	
+   499		if (!usb_online_val) {
+   500			*val = POWER_SUPPLY_STATUS_DISCHARGING;
+   501			return rc;
+   502		}
+   503	
+   504		rc = regmap_bulk_read(chip->regmap,
+   505				      chip->base + BATTERY_CHARGER_STATUS_1, &stat, 2);
+   506		if (rc < 0) {
+   507			dev_err(chip->dev, "Failed to read charging status ret=%d\n",
+   508				rc);
+   509			return rc;
+   510		}
+   511	
+   512		if (stat[1] & CHARGER_ERROR_STATUS_BAT_OV_BIT) {
+   513			*val = POWER_SUPPLY_STATUS_NOT_CHARGING;
+   514			return 0;
+   515		}
+   516	
+   517		stat[0] = stat[0] & BATTERY_CHARGER_STATUS_MASK;
+   518	
+   519		switch (stat[0]) {
+   520		case TRICKLE_CHARGE:
+   521		case PRE_CHARGE:
+   522		case FAST_CHARGE:
+   523		case FULLON_CHARGE:
+   524		case TAPER_CHARGE:
+   525			*val = POWER_SUPPLY_STATUS_CHARGING;
+   526			return rc;
+   527		case DISABLE_CHARGE:
+   528			*val = POWER_SUPPLY_STATUS_NOT_CHARGING;
+   529			return rc;
+   530		case TERMINATE_CHARGE:
+   531			*val = POWER_SUPPLY_STATUS_FULL;
+   532			return rc;
+   533		case INHIBIT_CHARGE:
+   534		default:
+   535			*val = POWER_SUPPLY_STATUS_UNKNOWN;
+   536			return rc;
+   537		}
+   538	}
+   539	
+   540	static inline int smb2_get_current_limit(struct smb2_chip *chip,
+   541						 unsigned int *val)
+   542	{
+   543		int rc = regmap_read(chip->regmap, chip->base + ICL_STATUS, val);
+   544	
+   545		if (rc >= 0)
+   546			*val *= 25000;
+   547		return rc;
+   548	}
+   549	
+   550	static int smb2_set_current_limit(struct smb2_chip *chip, unsigned int val)
+   551	{
+   552		unsigned char val_raw;
+   553	
+   554		if (val > 4800000) {
+   555			dev_err(chip->dev,
+   556				"Can't set current limit higher than 4800000uA");
+   557			return -EINVAL;
+   558		}
+   559		val_raw = val / 25000;
+   560	
+   561		return regmap_write(chip->regmap, chip->base + USBIN_CURRENT_LIMIT_CFG,
+   562				    val_raw);
+   563	}
+   564	
+ > 565	void smb2_status_change_work(struct work_struct *work)
+   566	{
+   567		struct smb2_chip *chip =
+   568			container_of(work, struct smb2_chip, status_change_work.work);
+   569		unsigned int charger_type, current_ua;
+   570		int usb_online, count, rc;
+   571	
+   572		smb2_get_prop_usb_online(chip, &usb_online);
+   573		if (usb_online == 0) {
+   574			chip->default_curr_limit = 0;
+   575			return;
+   576		}
+   577	
+   578		for (count = 0; count < 3; count++) {
+   579			dev_dbg(chip->dev, "get charger type retry %d\n", count);
+   580			rc = smb2_apsd_get_charger_type(chip, &charger_type);
+   581			if (rc == 0)
+   582				break;
+   583			msleep(100);
+   584		}
+   585	
+   586		if (rc < 0) {
+   587			rc = regmap_update_bits(chip->regmap, chip->base + CMD_APSD,
+   588						APSD_RERUN_BIT, APSD_RERUN_BIT);
+   589			schedule_delayed_work(&chip->status_change_work,
+   590					      msecs_to_jiffies(1500));
+   591			dev_dbg(chip->dev, "get charger type failed, rerun apsd\n");
+   592			return;
+   593		}
+   594	
+   595		switch (charger_type) {
+   596		case POWER_SUPPLY_USB_TYPE_CDP:
+   597			current_ua = CDP_CURRENT_UA;
+   598			break;
+   599		case POWER_SUPPLY_USB_TYPE_DCP:
+   600			current_ua = DCP_CURRENT_UA;
+   601			break;
+   602		case POWER_SUPPLY_USB_TYPE_SDP:
+   603		default:
+   604			current_ua = SDP_CURRENT_UA;
+   605			break;
+   606		}
+   607	
+   608		chip->default_curr_limit = current_ua;
+   609	
+   610		smb2_set_current_limit(chip, current_ua);
+   611		power_supply_changed(chip->chg_psy);
+   612	}
+   613	
+ > 614	int smb2_get_iio_chan(struct smb2_chip *chip, struct iio_channel *chan,
+   615			      int *val)
+   616	{
+   617		int rc;
+   618		union power_supply_propval status;
+   619	
+   620		rc = power_supply_get_property(chip->chg_psy, POWER_SUPPLY_PROP_STATUS,
+   621					       &status);
+   622		if (rc < 0 || status.intval != POWER_SUPPLY_STATUS_CHARGING) {
+   623			*val = 0;
+   624			return 0;
+   625		}
+   626	
+   627		if (IS_ERR(chan)) {
+   628			dev_err(chip->dev, "Failed to chan, err = %li", PTR_ERR(chan));
+   629			return PTR_ERR(chan);
+   630		}
+   631	
+   632		return iio_read_channel_processed(chan, val);
+   633	}
+   634	
 
 -- 
-With best wishes
-Dmitry
+0-DAY CI Kernel Test Service
+https://01.org/lkp
