@@ -2,67 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C092656B842
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jul 2022 13:17:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 88B3856B8BA
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jul 2022 13:43:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237753AbiGHLQb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Jul 2022 07:16:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46616 "EHLO
+        id S237920AbiGHLku (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Jul 2022 07:40:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37386 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237725AbiGHLQa (ORCPT
+        with ESMTP id S237704AbiGHLkt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Jul 2022 07:16:30 -0400
-Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com [IPv6:2607:f8b0:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95E6188F32
-        for <linux-arm-msm@vger.kernel.org>; Fri,  8 Jul 2022 04:16:29 -0700 (PDT)
-Received: by mail-pl1-x633.google.com with SMTP id c13so12349682pla.6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Jul 2022 04:16:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=9pxRzC16JvI6XrHETjpEsWuC7ZOkDrDDxpQzeVesUkw=;
-        b=eC4c/Yv+vfc5m2n7yrsPt5XRidoT4flrlzisDPBjQ8IkCO0DNvX0S9OEoSIuuF9TEW
-         gAwRA5Rf/QMORx9k0v95txkHD1q6P5ctf5uzWp7Kt3obN85JTqGaN67tKx34gT4/dry/
-         Y7dhtGkw0j3hL/Ja+7jGu9o2fxengVmknMR4DD6lnzCEcqiagmRK/WHeApCXcfBbgKeI
-         xAOyUu2VbIKIVYq941ooyswxj5dcVh+W8cFD9Ocq+JrPB+PHVDFJw9FhgZBtBf5zxBoI
-         CrE0fYsII1Xag7Wu/MFA3BY+UklmhQKOD2ZTihXpytZkhzfNdNefOiP/qFjy+gh96Ztq
-         IlBQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=9pxRzC16JvI6XrHETjpEsWuC7ZOkDrDDxpQzeVesUkw=;
-        b=Be1Ard4UaCwT3LiNrXeLmN7SwRumMNv/61kUubtbvohgrcLwo4rvrMX3OAQGvHxiA1
-         GQp0Dmzp6uU1SrkOMmYokd6ai5Ne0hdfGHhHs6WiZ4GvrepYFW/YPmKp3y8tKTNWoAG9
-         YyedP8PzbP3I0oBbeTGvWpenxO5k5RCK5PqsB5KcUS5diZyhUByq8+dND2gwB+JlTy8u
-         7F1j/OhkTdqfwjQ8CRqdM5FeqBfXMMYfwdOp9zUSFVYXw9Z69oeMVKHT5RNg6AHRnsGN
-         TSlTw973NEknwJMZhb+V5sJolhdjccEe5Edk1uwE6GxFxGPDwyAaZQX7++Dm+7x1hMhW
-         9T1A==
-X-Gm-Message-State: AJIora97t8biojmCd1804r4cMrveMqde6tXnw42lfVhJCTTA2fMY9lbT
-        iFFfFD0RRHUezeuQJUjpS7d8DAdnp3dC53zwExQAMQ==
-X-Google-Smtp-Source: AGRyM1tzpo2mOeF7iKxzvg+zpehl5CoBucS0kIZROW5vNZFZzjO+eWpTiehdFwSn/COt6UL7voTQBULfb/VRjzS3qz4=
-X-Received: by 2002:a17:903:185:b0:16a:6113:c01 with SMTP id
- z5-20020a170903018500b0016a61130c01mr3229508plg.113.1657278989095; Fri, 08
- Jul 2022 04:16:29 -0700 (PDT)
+        Fri, 8 Jul 2022 07:40:49 -0400
+Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C749C20F5A;
+        Fri,  8 Jul 2022 04:40:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1657280448; x=1688816448;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=ZdDYQxLCE/FVW3YmiAHPRARr9uSRhV0hY5cuMuzEJx0=;
+  b=MMTD1AIMtYlwPfte9/38kC20k2FtoXUpaZy+BPdvuVHGYGMoAPoAoujn
+   iD2NWJ/l9ZXMph21xw/zbaNy4HAYL9lWSYYZ1zvDezTIpb0y0bNtNbId+
+   7DgK110b14bvvbnhY7si9xPKA/jk0RbSl+mWGJG+dhkGYtIUpMS5s1xtc
+   ihJugeLXqNGu+nmy1sIRUFboB3NY6g+7i5Zta+U1DeS4qj5mo8TynNBIe
+   OLhSlYzwIAtlNgcp+lse7beIltITi0Ktg/0zI0zIOGZbf+JrHyU4MXcz+
+   4isKtH/Z7nDqZA0HAoowNXRA5oFRe8uETqw4CCBW20Brsslf1MlWjZddJ
+   A==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10401"; a="348246301"
+X-IronPort-AV: E=Sophos;i="5.92,255,1650956400"; 
+   d="scan'208";a="348246301"
+Received: from orsmga001.jf.intel.com ([10.7.209.18])
+  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Jul 2022 04:40:48 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.92,255,1650956400"; 
+   d="scan'208";a="626681120"
+Received: from lkp-server01.sh.intel.com (HELO 68b931ab7ac1) ([10.239.97.150])
+  by orsmga001.jf.intel.com with ESMTP; 08 Jul 2022 04:40:46 -0700
+Received: from kbuild by 68b931ab7ac1 with local (Exim 4.95)
+        (envelope-from <lkp@intel.com>)
+        id 1o9mLl-000NPf-Cc;
+        Fri, 08 Jul 2022 11:40:45 +0000
+Date:   Fri, 8 Jul 2022 19:40:28 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        linux-pm@vger.kernel.org
+Cc:     kbuild-all@lists.01.org, bhupesh.sharma@linaro.org,
+        bhupesh.linux@gmail.com, linux-kernel@vger.kernel.org,
+        bjorn.andersson@linaro.org, Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 3/3] thermal: qcom: tsens: Implement re-initialization
+ workaround quirk
+Message-ID: <202207081955.SXcfKpLo-lkp@intel.com>
+References: <20220701145815.2037993-4-bhupesh.sharma@linaro.org>
 MIME-Version: 1.0
-References: <20220707115444.1431367-1-sumit.garg@linaro.org> <20220707142259.7rqbiuk2yztdt2ox@maple.lan>
-In-Reply-To: <20220707142259.7rqbiuk2yztdt2ox@maple.lan>
-From:   Sumit Garg <sumit.garg@linaro.org>
-Date:   Fri, 8 Jul 2022 16:46:18 +0530
-Message-ID: <CAFA6WYOME6zwDpDuZx1mjkn98K+RoMmKOPo+D8on3jxdr+7M6g@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: qcs404: Fix incorrect USB PHYs assignment
-To:     Daniel Thompson <daniel.thompson@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, vkoul@kernel.org,
-        shawn.guo@linaro.org, bryan.odonoghue@linaro.org,
-        nicolas.dechesne@linaro.org, mworsfold@impinj.com,
-        andrey.konovalov@linaro.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220701145815.2037993-4-bhupesh.sharma@linaro.org>
+X-Spam-Status: No, score=-5.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -70,47 +69,151 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Daniel,
+Hi Bhupesh,
 
-On Thu, 7 Jul 2022 at 19:53, Daniel Thompson <daniel.thompson@linaro.org> wrote:
->
-> On Thu, Jul 07, 2022 at 05:24:44PM +0530, Sumit Garg wrote:
-> > This was a difficult inconsistency to be caught as both the USB PHYs were
-> > being enabled in the kernel and USB worked fine. But when I was trying to
-> > enable USB support in u-boot with all the required drivers ported, I
-> > couldn't get the same USB storage device enumerated in u-boot which was
-> > being enumerated fine by the kernel.
->
-> This is not really a description of the change. It is more like a
-> narrative about how you discovered and tested the problem (making it
-> hard work to read). If I understand correctly the current DT has the
-> PHYs setup backwards. This works but only by luck: as each USB HCI
-> comes up it configures the *other* controllers PHY which is enough
-> to make them happy. If, for any reason, we were disable one of the
-> controllers then both would stop working.
->
-> Perhaps kick off this description using something like the following
-> pattern[1].
->
->   Current code does (A), this has a problem when (B).
->   We can improve this doing (C), because (D).
->
+Thank you for the patch! Yet something to improve:
 
-Thanks for the reminder.
+[auto build test ERROR on rafael-pm/thermal]
+[also build test ERROR on linus/master v5.19-rc5 next-20220707]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-> I think everything in the paragraph above belongs in (D) (e.g. how you
-> know your patch is correct).
->
+url:    https://github.com/intel-lab-lkp/linux/commits/Bhupesh-Sharma/Add-support-for-tsens-controller-reinit-via-trustzone/20220701-230113
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git thermal
+config: arm64-randconfig-r015-20220707 (https://download.01.org/0day-ci/archive/20220708/202207081955.SXcfKpLo-lkp@intel.com/config)
+compiler: aarch64-linux-gcc (GCC) 11.3.0
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # https://github.com/intel-lab-lkp/linux/commit/32929e13eb338e76b714bb8b4805899e2857734f
+        git remote add linux-review https://github.com/intel-lab-lkp/linux
+        git fetch --no-tags linux-review Bhupesh-Sharma/Add-support-for-tsens-controller-reinit-via-trustzone/20220701-230113
+        git checkout 32929e13eb338e76b714bb8b4805899e2857734f
+        # save the config file
+        mkdir build_dir && cp config build_dir/.config
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.3.0 make.cross W=1 O=build_dir ARCH=arm64 SHELL=/bin/bash
 
-I thought that was the most interesting bit while writing patch
-description but I agree with you that adding other bits will make the
-patch description complete.
+If you fix the issue, kindly add following tag where applicable
+Reported-by: kernel test robot <lkp@intel.com>
 
--Sumit
+All errors (new ones prefixed by >>):
 
->
-> Daniel.
->
->
-> [1] For the record, I didn't write this formulation... I stole it:
->     https://lore.kernel.org/all/20131111113218.GF15810@gmail.com/
+   aarch64-linux-ld: Unexpected GOT/PLT entries detected!
+   aarch64-linux-ld: Unexpected run-time procedure linkages detected!
+   aarch64-linux-ld: ID map text too big or misaligned
+   aarch64-linux-ld: drivers/thermal/qcom/tsens.o: in function `tsens_probe':
+>> drivers/thermal/qcom/tsens.c:1337: undefined reference to `qcom_scm_is_available'
+   aarch64-linux-ld: drivers/thermal/qcom/tsens.o: in function `get_temp_tsens_valid':
+>> drivers/thermal/qcom/tsens.c:714: undefined reference to `qcom_scm_tsens_reinit'
+
+
+vim +1337 drivers/thermal/qcom/tsens.c
+
+  1293	
+  1294	static int tsens_probe(struct platform_device *pdev)
+  1295	{
+  1296		int ret, i;
+  1297		struct device *dev;
+  1298		struct device_node *np;
+  1299		struct tsens_priv *priv;
+  1300		const struct tsens_plat_data *data;
+  1301		const struct of_device_id *id;
+  1302		u32 num_sensors;
+  1303	
+  1304		if (pdev->dev.of_node)
+  1305			dev = &pdev->dev;
+  1306		else
+  1307			dev = pdev->dev.parent;
+  1308	
+  1309		np = dev->of_node;
+  1310	
+  1311		id = of_match_node(tsens_table, np);
+  1312		if (id)
+  1313			data = id->data;
+  1314		else
+  1315			data = &data_8960;
+  1316	
+  1317		num_sensors = data->num_sensors;
+  1318	
+  1319		if (np)
+  1320			of_property_read_u32(np, "#qcom,sensors", &num_sensors);
+  1321	
+  1322		if (num_sensors <= 0) {
+  1323			dev_err(dev, "%s: invalid number of sensors\n", __func__);
+  1324			return -EINVAL;
+  1325		}
+  1326	
+  1327		priv = devm_kzalloc(dev,
+  1328				     struct_size(priv, sensor, num_sensors),
+  1329				     GFP_KERNEL);
+  1330		if (!priv)
+  1331			return -ENOMEM;
+  1332	
+  1333		priv->dev = dev;
+  1334		priv->num_sensors = num_sensors;
+  1335		priv->needs_reinit_wa = data->needs_reinit_wa;
+  1336	
+> 1337		if (priv->needs_reinit_wa && !qcom_scm_is_available())
+  1338			return -EPROBE_DEFER;
+  1339	
+  1340		if (priv->needs_reinit_wa) {
+  1341			priv->reinit_wa_worker = alloc_workqueue("tsens_reinit_work",
+  1342								 WQ_HIGHPRI, 0);
+  1343			if (!priv->reinit_wa_worker)
+  1344				return -ENOMEM;
+  1345	
+  1346			INIT_WORK(&priv->reinit_wa_notify, tsens_reinit_worker_notify);
+  1347		}
+  1348	
+  1349		priv->ops = data->ops;
+  1350		for (i = 0;  i < priv->num_sensors; i++) {
+  1351			if (data->hw_ids)
+  1352				priv->sensor[i].hw_id = data->hw_ids[i];
+  1353			else
+  1354				priv->sensor[i].hw_id = i;
+  1355		}
+  1356		priv->feat = data->feat;
+  1357		priv->fields = data->fields;
+  1358	
+  1359		platform_set_drvdata(pdev, priv);
+  1360	
+  1361		if (!priv->ops || !priv->ops->init || !priv->ops->get_temp) {
+  1362			ret = -EINVAL;
+  1363			goto free_wq;
+  1364		}
+  1365	
+  1366		ret = priv->ops->init(priv);
+  1367		if (ret < 0) {
+  1368			dev_err(dev, "%s: init failed\n", __func__);
+  1369			goto free_wq;
+  1370		}
+  1371	
+  1372		if (priv->ops->calibrate) {
+  1373			ret = priv->ops->calibrate(priv);
+  1374			if (ret < 0) {
+  1375				if (ret != -EPROBE_DEFER)
+  1376					dev_err(dev, "%s: calibration failed\n", __func__);
+  1377	
+  1378				goto free_wq;
+  1379			}
+  1380		}
+  1381	
+  1382		ret = tsens_register(priv);
+  1383		if (ret < 0) {
+  1384			dev_err(dev, "%s: registration failed\n", __func__);
+  1385			goto free_wq;
+  1386		}
+  1387	
+  1388		list_add_tail(&priv->list, &tsens_device_list);
+  1389		return 0;
+  1390	
+  1391	free_wq:
+  1392		destroy_workqueue(priv->reinit_wa_worker);
+  1393		return ret;
+  1394	}
+  1395	
+
+-- 
+0-DAY CI Kernel Test Service
+https://01.org/lkp
