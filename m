@@ -2,39 +2,39 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EED7C56B374
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jul 2022 09:25:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0171C56B389
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jul 2022 09:30:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237218AbiGHHYz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Jul 2022 03:24:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37370 "EHLO
+        id S237534AbiGHH0C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Jul 2022 03:26:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37730 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236998AbiGHHYy (ORCPT
+        with ESMTP id S237413AbiGHH0B (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Jul 2022 03:24:54 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90DE81837B;
-        Fri,  8 Jul 2022 00:24:52 -0700 (PDT)
+        Fri, 8 Jul 2022 03:26:01 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10BF9A1B6;
+        Fri,  8 Jul 2022 00:26:01 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 11946621CD;
-        Fri,  8 Jul 2022 07:24:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66F50C341C0;
-        Fri,  8 Jul 2022 07:24:51 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id A176F62570;
+        Fri,  8 Jul 2022 07:26:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09013C341C0;
+        Fri,  8 Jul 2022 07:26:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1657265091;
-        bh=DUtyY1YHWoJv3J3dWpcYBPdrvr1+jh1mszXtpz/A4VE=;
+        s=k20201202; t=1657265160;
+        bh=HgjugEAjKnXuiWUzDEFoDZIQxIti3cWoD34a5DDDhRc=;
         h=From:To:Cc:Subject:Date:From;
-        b=gMr1FArgGErDRnJxe78qkxJm8lOIfcWLxd1aS15NsHN1GAmWE8E0UuEyhUnBV4b/m
-         QQeGdfrJiloWfwrormxh/Xhsw3JQcNfpk+rjBj06HIBIybkVBJk1D78uCPvkA4BNOE
-         u4WFiQqwqviByQQHYQmbnjKzbMB23vmM9J5YammkSwsZXmTA+d50LIUocRsB75c7H1
-         ybKgm3EDMFZVLQ2TTBseP0nGGAEKUzuv3kLM61qoYKknDYNJ1AijjImVGtsj8Qlx9P
-         yu7Q7PU0M7Uu6NBTjggwRczLzMgb1G5zEkj/wsFW5HL0tgegOMBGDTZIzkdVvGbnbX
-         BQ1OTEEOYwABQ==
+        b=m1vanb1pyvTZm2lekW6U9uNKmjaXe0kzYg9evNz4yhX0XCNQ3NgeU29Gu5OLHkLvf
+         xjCWYvorx1gO+lBtH5p0xSOuysRLpCFr9vxi6Myx8+ABCuuImANgpK+joXw1VSlFaW
+         q7iywrjmB84km7YVfBmhcAAESLH3XjIzykdKOxdqG/S6dv5Yr/RxJHsrqBOUFKovNX
+         OXQJ64gxQPOmUg+g7PZTapzsr9FOcolGJhS41OV8x/KzbX4e+Axl/1mToCKNfz4WVk
+         Zw9xNeW/Qedu5loEoOrD+JAwxiVcCDU+gqzN/4mz06gIWQ2shHHNzTPYYoV9idlzWS
+         UaGWoRJk/NpDw==
 Received: from johan by xi.lan with local (Exim 4.94.2)
         (envelope-from <johan+linaro@kernel.org>)
-        id 1o9iM9-0001Ce-BA; Fri, 08 Jul 2022 09:24:54 +0200
+        id 1o9iNG-0001Dm-OJ; Fri, 08 Jul 2022 09:26:02 +0200
 From:   Johan Hovold <johan+linaro@kernel.org>
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
@@ -42,9 +42,9 @@ Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org,
         Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH] arm64: dts: qcom: sc8280xp: fix usb_0 HS PHY ref clock
-Date:   Fri,  8 Jul 2022 09:23:58 +0200
-Message-Id: <20220708072358.4583-1-johan+linaro@kernel.org>
+Subject: [PATCH] arm64: dts: qcom: sc8280xp: fix DP PHY node unit addresses
+Date:   Fri,  8 Jul 2022 09:25:56 +0200
+Message-Id: <20220708072556.4687-1-johan+linaro@kernel.org>
 X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -58,28 +58,26 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Fix the usb_0 HS PHY reference clock which was mistakingly replaced with
-the first usb_2 PHY clock.
+Fix up the DP PHY node which had the wrong unit address.
 
-Fixes: 152d1faf1e2f ("arm64: dts: qcom: add SC8280XP platform")
 Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 ---
  arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-index d0fabbf99ec5..9de6dedb102f 100644
+index 9de6dedb102f..3542bcc34080 100644
 --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
 +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-@@ -985,7 +985,7 @@ usb_0_hsphy: phy@88e5000 {
- 			compatible = "qcom,sc8280xp-usb-hs-phy",
- 				     "qcom,usb-snps-hs-5nm-phy";
- 			reg = <0 0x088e5000 0 0x400>;
--			clocks = <&gcc GCC_USB2_HS0_CLKREF_CLK>;
-+			clocks = <&rpmhcc RPMH_CXO_CLK>;
- 			clock-names = "ref";
- 			resets = <&gcc GCC_QUSB2PHY_PRIM_BCR>;
+@@ -1252,7 +1252,7 @@ usb_1_ssphy: usb3-phy@8903400 {
+ 				clock-output-names = "usb1_phy_pipe_clk_src";
+ 			};
  
+-			usb_1_dpphy: dp-phy@88ed200 {
++			usb_1_dpphy: dp-phy@8904200 {
+ 				reg = <0 0x08904200 0 0x200>,
+ 				      <0 0x08904400 0 0x200>,
+ 				      <0 0x08904a00 0 0x200>,
 -- 
 2.35.1
 
