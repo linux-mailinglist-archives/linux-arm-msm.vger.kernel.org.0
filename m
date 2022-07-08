@@ -2,71 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A3DA056B02F
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jul 2022 03:53:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6D11856B019
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jul 2022 03:53:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236464AbiGHBfC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Jul 2022 21:35:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49460 "EHLO
+        id S237142AbiGHBoZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Jul 2022 21:44:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57476 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236151AbiGHBfC (ORCPT
+        with ESMTP id S237148AbiGHBoZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Jul 2022 21:35:02 -0400
-Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CC6672EF0
-        for <linux-arm-msm@vger.kernel.org>; Thu,  7 Jul 2022 18:35:00 -0700 (PDT)
-Received: by mail-ot1-x331.google.com with SMTP id s13-20020a0568301e0d00b00616ad12fee7so15253089otr.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Jul 2022 18:35:00 -0700 (PDT)
+        Thu, 7 Jul 2022 21:44:25 -0400
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE282248DC
+        for <linux-arm-msm@vger.kernel.org>; Thu,  7 Jul 2022 18:44:23 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id s1so28603120wra.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Jul 2022 18:44:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=NpN+oxcYp29c2mO0RL7bthtMEv81FAHmMW8Fv8F+Pyc=;
-        b=iWl5UTV4BCL2ICWhQCz2OOigRh3v7wY1W8Fo7FiMGGBTj82rY7DdUTOXNCbMbdmr3e
-         fEhHCAyaY7bD+shdmy/Av0dp0/0gcvn1VUZGihTb3Boe0eJQy9sOGQDtViPvgDqEVbSD
-         BxbmWrcRSs83U5+lVau7kyba5MQQLRSk0IPoU=
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=iNWV7Xx4/S+byFZQTV4Y16qHMAWvuFlUAUHfRfVh15A=;
+        b=dsPJKz1lbrnQUyB1E+0nsNWacayIsjrACrFY0w/cxgP4eDNbBHnGINs8xngysLvKLE
+         90lXmh9TIg6w0ObwWA5Vc/dEw9ES3yUJulHh2OmRwq4lAz2zXmgO8NfeBQ3GXr7wbSwS
+         IBs3kywcGCepWz+1/ziJM2r0/VVQpsUqGCLlNIdboOUaphy2K6YLiSTa6kmUuTf9cqNw
+         urKpnHnLGqpMIbPofXGgYmaue2d2JsbMJVb6nbMbtA9yxxtFV9I6rJxvgDbCobvK7ctS
+         QXTCqNLhhUqRECyIfXaYWMgMaJYzNnfe+5QCFMAFH8SP2hwvmrVPLyhbyesrejSIiCfr
+         +tEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=NpN+oxcYp29c2mO0RL7bthtMEv81FAHmMW8Fv8F+Pyc=;
-        b=FURxO77bD1YdDPf/4eKZ4tHMixfO6y7nTIgIreierNYGpKGLjhIoNz0rQgrphJNbtn
-         eCi+4GbEpd4CAQJ+U3f+WCiYzalk8tLZaivuTH+kq82WI7Xc8GPVyz9qTuY8KukDTaqf
-         x7jjDW+k/5wlqv7upKWpoQvBkNZztnHprArq3SyPm/SqfFOEzm1p3n4ZJfG0TCg1cN5E
-         LDkFMkKCG3xbrr0aLMRmfkAYajZOo719dls5mu8nmlH+Qoqx0sjunuLrbGR2rxnVKaB1
-         Ew0iJ1YaOh1RM6+HhWxqs1A/N88k3FW8iWMddVmHOovQKwSn4Igxwrdue/UI4nSK/Y8c
-         J0Yg==
-X-Gm-Message-State: AJIora+CT3pP6UaT8TE68FQ6OaNP2CbW8nZfdrc1lMpIHw1FPKZcrSWJ
-        8MAwhi5lOO2PLQlkTum68kzGgl77qVOrAy/5AONr/Q==
-X-Google-Smtp-Source: AGRyM1s5Z2KtVB89iVu23mBhAyGc7cfqJu2d7j28UxYQ5Kp5MhNC59CD9LiVgGmf7x8MOavnVj4gY38gxJKBcHQjIZ0=
-X-Received: by 2002:a05:6830:d81:b0:616:c424:6f22 with SMTP id
- bv1-20020a0568300d8100b00616c4246f22mr490761otb.77.1657244099764; Thu, 07 Jul
- 2022 18:34:59 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 7 Jul 2022 18:34:59 -0700
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=iNWV7Xx4/S+byFZQTV4Y16qHMAWvuFlUAUHfRfVh15A=;
+        b=rKvzlpJ8n5WBxLaDwtptUMonZWIzx/ktr4dUGzx4ykoNEIYoLI8/cWxEsWqRzZAIdP
+         qL+h+4DLrQ0cPTf9wHNA+CWnPTVeRAb/K89+X3ROtqw2xbLdbakO8BG3V9ADpe2I4+/A
+         rLpwdQUBp03WBNldW4y85qhbly/ai7IDRzK2NTsdcXenRt4i1hj2oQXAkOhGsHaQPdKF
+         a1UeHKCoVN0GUs6HwbVeu7J/hvw4+0WR6hOwZuPU7ZSGkJSi9AU2uX2c/aj1r46yOaso
+         6NElNRUhcZWVQcDleI4npkt3bAKKaH2fJpBVVtKKObWRxVJxvBh7+zutJxI1cpPEnxHs
+         jLVA==
+X-Gm-Message-State: AJIora8YRgfrCrietT5Iw1tMN4Esg/y/mZYHYEzbVDVuetsXPcK+x9Ea
+        qYJZRkaoSM1zfsbWCTcbBHOWRQ==
+X-Google-Smtp-Source: AGRyM1ujJPlNW0U1BoBPmFv1+4MTFcD5eR4iVWSPJO4ERtkLnpxavy+EgbWKpVCiqP7UuYn/tFum/w==
+X-Received: by 2002:a5d:5244:0:b0:21d:866e:2409 with SMTP id k4-20020a5d5244000000b0021d866e2409mr714974wrc.400.1657244662337;
+        Thu, 07 Jul 2022 18:44:22 -0700 (PDT)
+Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id b10-20020a5d4d8a000000b0021d4aca9d1esm22732846wru.99.2022.07.07.18.44.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 07 Jul 2022 18:44:21 -0700 (PDT)
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+To:     ilia.lin@kernel.org, agross@kernel.org, rafael@kernel.org,
+        viresh.kumar@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, stephan@gerhold.net
+Cc:     linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, bryan.odonoghue@linaro.org
+Subject: [PATCH v2 0/4] msm8939 cpufreq preparatory work
+Date:   Fri,  8 Jul 2022 02:44:15 +0100
+Message-Id: <20220708014419.2009018-1-bryan.odonoghue@linaro.org>
+X-Mailer: git-send-email 2.36.1
 MIME-Version: 1.0
-In-Reply-To: <20220707213204.2605816-10-dmitry.baryshkov@linaro.org>
-References: <20220707213204.2605816-1-dmitry.baryshkov@linaro.org> <20220707213204.2605816-10-dmitry.baryshkov@linaro.org>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Thu, 7 Jul 2022 18:34:59 -0700
-Message-ID: <CAE-0n50UePL5x8vJtymaY=i-Eo1PWUxMyLv+DPgY890KpBWaDg@mail.gmail.com>
-Subject: Re: [PATCH 9/9] arm64: dts: qcom: sc7280: drop address/size-cells
- from eDP node
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>, Sean Paul <sean@poorly.run>
-Cc:     David Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -75,13 +70,39 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Dmitry Baryshkov (2022-07-07 14:32:04)
-> Drop #address/#size-cells from eDP device node. For eDP the panels are
-> not described directly under the controller node. They are either
-> present under aux-bus child node, or they are declared separately (e.g.
-> in a /soc node).
->
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
+V2:
+- Previous series title "qcom-cpufreq-nvmem: Add msm8939 with some fixups"
+  https://www.spinics.net/lists/linux-arm-msm/msg116201.html
 
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+- Drops adding msm8939 to the cpufreq-nvmem layer at all.
+  cpufreq and CPR go hand in hand so we need to do the addition to
+  cpufreq-nvmem in tandem with the associated CPR driver update. - Stephan
+
+  We can still add in msm8939 to the cpufreq-dt-platdev block list and
+  fixup the dt binding check errors found doing that.
+
+- Adds a patch to the error reported by Rob's bot.
+  Rob said he thought Krzysztof had a patch for that but, I couldn't find it
+  so I just added a fix as the first patch - bod
+
+- Adds Acked-by Rob to second patch
+- Adds Acked-by Krzysztof to third patch
+
+V1:
+Fix up some missing compat strings for the qcom-cpufreq-nvmem yaml.
+Add in msm8939 as a compatible qcom-cpufreq-nvmem.
+
+Bryan O'Donoghue (4):
+  dt-bindings: opp: opp-v2-kryo-cpu: Fix example binding checks
+  dt-bindings: opp: Add missing compat devices
+  dt-bindings: opp: Add msm8939 to the compatible list
+  cpufreq: blocklist Qualcomm msm8939 in cpufreq-dt-platdev
+
+ .../bindings/cpufreq/qcom-cpufreq-nvmem.yaml      |  7 +++++++
+ .../devicetree/bindings/opp/opp-v2-kryo-cpu.yaml  | 15 +++++++++++++++
+ drivers/cpufreq/cpufreq-dt-platdev.c              |  1 +
+ 3 files changed, 23 insertions(+)
+
+-- 
+2.36.1
+
