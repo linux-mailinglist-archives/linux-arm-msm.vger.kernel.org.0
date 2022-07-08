@@ -2,69 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D75EE56C1D1
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Jul 2022 01:12:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E3D4356C2B1
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Jul 2022 01:13:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238369AbiGHUtA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Jul 2022 16:49:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42162 "EHLO
+        id S240145AbiGHVBp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Jul 2022 17:01:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53396 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238976AbiGHUtA (ORCPT
+        with ESMTP id S240070AbiGHVBo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Jul 2022 16:49:00 -0400
-Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F3AF7B359
-        for <linux-arm-msm@vger.kernel.org>; Fri,  8 Jul 2022 13:48:57 -0700 (PDT)
-Received: by mail-ot1-x332.google.com with SMTP id h19-20020a9d6f93000000b0061c1ad77d5fso5823otq.6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Jul 2022 13:48:57 -0700 (PDT)
+        Fri, 8 Jul 2022 17:01:44 -0400
+Received: from mail-oi1-x22b.google.com (mail-oi1-x22b.google.com [IPv6:2607:f8b0:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5F8772EE2
+        for <linux-arm-msm@vger.kernel.org>; Fri,  8 Jul 2022 14:01:42 -0700 (PDT)
+Received: by mail-oi1-x22b.google.com with SMTP id t189so126956oie.8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Jul 2022 14:01:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=oTRkIHkkNvP0E53VWhSF2X9Yi/sOj2WBCOpKZoAXIu4=;
-        b=MigDeIBYToCrLnSVXo5wEsyN9vgrb0Ai7tzQl4JjezdR+NsMxylX2bslPxBhO0L7Et
-         xCQgyTmwveugyEZZjMmKFU8pf/H24ibg8B+tLycbqfl9QO9ThpmxTN2evdRLrl56SbYk
-         olrNkSc8UA/V+PnmX2eZNcnBPx+qYIs+ldTW0=
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=SQUHR8cqfec6xaCwS1slMaoEVFnhpSwFvJqKIFprcuc=;
+        b=hYaiZ0ZlAM6D9t9CfTzB1qcI0NbhYGcnCJ3VHfnVF5DK2EP6dQDdQ7TFArVXvQ02Lr
+         bdsIQbnTsUYUY88y73MVEmUCtNzrggYb8thic/FQCVb8v4iNrfly8ZmPqFpNvG6nRazL
+         A6Dq+a7S1CrJecd8n/3ydmhRYIgZQ7cfRvmVRz4wx8mw/laLCkEY/Xh1UFdGqMhS/L4D
+         rxoKiFJ4nIQ6lMFEzVDJuQhzfEvSZhGNBilDk3eXMfFAQSXfrZgHQAH3KVyEAz/OK/CW
+         l78Md/Ows7IqBUHuLoiDssv/c8RgSNMZLi1k6SubjSow3j1xqD4Q0OyDiv7RzOX7IyNf
+         aecg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=oTRkIHkkNvP0E53VWhSF2X9Yi/sOj2WBCOpKZoAXIu4=;
-        b=HkYNV9BvP4mPa8s/9qX7gkSPEn1A2fgxBIU0axTbBeX81Chr880TuEGMIYG4USlXZl
-         RiQbTGni/2jxPTqMW4ljRUP2ZUC43ZNd5AE7zFBlagP07/y0+S81oL8z6NIh9RCAwWUQ
-         cwP4aIJAMw+0fal3hkdiZYEnRJUTqljYw8BEo9fSCGFDi5/zDem+QnRiHZDnJfbfMxa/
-         qCditRbfbIkUZUOqSziwDdOgMdgyOlJHgo1S60xz05ZF6NKCS5UHwukLDu2jliLK9NNv
-         re1sQ8e/vSbM2zGtnw4jtKRLbtqVb+/tL/2dWmLUElAs02woKYvAevJCbZFWed5G+Ov1
-         GmSQ==
-X-Gm-Message-State: AJIora+sXk5piVXYDC4NPsPI/YQMJFyzM9CKKX7ci8tg+ODVXbe/6XI4
-        DHnJ8ubbA4u2q++W673u/qE5Y6QCFmU3XXSGXoAI8g==
-X-Google-Smtp-Source: AGRyM1taOliA1drxAbyZku2NYLmp4/EsK31dn6TQJuxKde3Uv1L7lNEiCnBSek/bIMbxUbcnOmOzWSA8kvZdIxxCJv4=
-X-Received: by 2002:a05:6830:d81:b0:616:c424:6f22 with SMTP id
- bv1-20020a0568300d8100b00616c4246f22mr2394204otb.77.1657313336409; Fri, 08
- Jul 2022 13:48:56 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 8 Jul 2022 13:48:55 -0700
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=SQUHR8cqfec6xaCwS1slMaoEVFnhpSwFvJqKIFprcuc=;
+        b=bpNFd+aR52yTMCwiKlxaqbXr2gCL+FccRnxADMvL6fN5V/gu6n5WfQZ2xqo60l5vUM
+         XFb9YMTC/5dMj1BJ2dPplNpu6UZcahWchL9OrlVKU0nFxvRW7p4kkScFe4tvCCGIETMr
+         xd0MFTtobQom9U1Lnkp5OLj8O/N9lQ1ZJtGSBVEeM+C8QyRS/id/qRVfJwDpmpTttErx
+         n3hJY5oTdjYO5UKROVqhEKmHYnSdauwcIsdG5zB4R+zVJWOdJ+vWJfrNtUTT6RwUQyDO
+         EoSZaQ215Dsj2dm6BHAaZJ3vzKFrn6o+yi+iw+OlxeuZEgi5KbMmibwMt/LwN5B5ukBV
+         q11Q==
+X-Gm-Message-State: AJIora/IwaojYIWSROaLdz+1PAc53krxyqbFyKA3+BFWl3o3tQP6AmZj
+        vbcC7EK17MsfMTWHrkd9XG0bco7qGhrk0w==
+X-Google-Smtp-Source: AGRyM1tfDkomylt7OKStARhG3F6XT1w/Ga+GjAvIvazJt53EyhaACMtrmRWw3aqAwn75btHaMat/FQ==
+X-Received: by 2002:a05:6808:1928:b0:335:6073:f96a with SMTP id bf40-20020a056808192800b003356073f96amr924497oib.249.1657314102152;
+        Fri, 08 Jul 2022 14:01:42 -0700 (PDT)
+Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id t11-20020a0568301e2b00b0061c266a1bf8sm11096otr.26.2022.07.08.14.01.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 08 Jul 2022 14:01:41 -0700 (PDT)
+Date:   Fri, 8 Jul 2022 14:04:13 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, Shawn Guo <shawnguo@kernel.org>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        Marcel Ziswiler <marcel.ziswiler@toradex.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Biju Das <biju.das.jz@bp.renesas.com>,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Johan Hovold <johan+linaro@kernel.org>,
+        manivannan.sadhasivam@linaro.org
+Subject: Re: [PATCH] arm64: defconfig: Enable Qualcomm SC8280XP providers
+Message-ID: <YsibzePW58/DKWrI@ripper>
+References: <20220707161014.3178798-1-bjorn.andersson@linaro.org>
+ <CAA8EJpoZ4WKALrvtCtfHNTJ5FDBk-Qy=Mr4TNr8qfcc8=hSMjQ@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <ac679a45-9574-7978-860f-1a1bcefb53ec@quicinc.com>
-References: <20220614161118.12458-1-quic_tdas@quicinc.com> <Yqi8rcs95CEEjGY4@google.com>
- <CAE-0n50cqBWpDKsiyDNMZ8GnNtj7xJn930S1hucdAGn7tGXewA@mail.gmail.com> <ac679a45-9574-7978-860f-1a1bcefb53ec@quicinc.com>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Fri, 8 Jul 2022 13:48:55 -0700
-Message-ID: <CAE-0n51vx8X3+WiOSMx9LnO17uu+5XapYjSG8ybKOS_F_CYAhQ@mail.gmail.com>
-Subject: Re: [PATCH v1] arm64: dts: qcom: sc7280: Update lpassaudio clock
- controller for resets
-To:     Matthias Kaehlcke <mka@chromium.org>,
-        Taniya Das <quic_tdas@quicinc.com>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAA8EJpoZ4WKALrvtCtfHNTJ5FDBk-Qy=Mr4TNr8qfcc8=hSMjQ@mail.gmail.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -72,34 +79,66 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Taniya Das (2022-07-07 00:06:59)
->
-> Hi Stephen,
->
-> On 6/15/2022 2:08 AM, Stephen Boyd wrote:
-> > Quoting Matthias Kaehlcke (2022-06-14 09:51:57)
-> >> On Tue, Jun 14, 2022 at 09:41:18PM +0530, Taniya Das wrote:
-> >>> The lpass audio supports TX/RX/WSA block resets. The LPASS PIL clock
-> >>> driver is not supported and mark it disabled. Also to keep consistency
-> >>> update lpasscore to lpass_core.
-> >>
-> >> There is a driver for "qcom,sc7280-lpasscc", what does it mean that is
-> >> isn't supported?
-> >>
-> >> IIUC one problem is that 'lpasscc@3000000' and 'lpass_aon / clock-controller@3380000'
-> >> have overlapping register ranges, so they can't be used together.
-> >>
-> >> You could just say 'Disable the LPASS PIL clock by default, boards
-> >> can enable it if needed'.
-> >
-> > For the pinctrl driver we added a "qcom,adsp-bypass-mode" property[1] to
-> > indicate that the ADSP was being bypassed or not. Can we do the same
-> > here and combine the device nodes that have overlapping reg properties?
-> >
-> > [1] https://lore.kernel.org/r/1654921357-16400-2-git-send-email-quic_srivasam@quicinc.com
->
-> Could we take up as a cleanup and take it forward:
-> https://lore.kernel.org/lkml/20220614153306.29339-1-quic_tdas@quicinc.com/T/#t
->
+On Thu 07 Jul 10:41 PDT 2022, Dmitry Baryshkov wrote:
 
-I don't think so. The binding would need to change.
+> On Thu, 7 Jul 2022 at 19:07, Bjorn Andersson <bjorn.andersson@linaro.org> wrote:
+> >
+> > The Qualcomm SC8280XP need the global clock controller, interconnect
+> > provider and TLMM pinctrl in order to boot. Enable these as builtin, as
+> > they are needed in order to provide e.g. UART.
+> >
+> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > ---
+> >  arch/arm64/configs/defconfig | 3 +++
+> >  1 file changed, 3 insertions(+)
+> >
+> > diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+> > index d2615b37d857..8e44f6a2172c 100644
+> > --- a/arch/arm64/configs/defconfig
+> > +++ b/arch/arm64/configs/defconfig
+> > @@ -541,6 +541,7 @@ CONFIG_PINCTRL_QDF2XXX=y
+> >  CONFIG_PINCTRL_QCOM_SPMI_PMIC=y
+> >  CONFIG_PINCTRL_SC7180=y
+> >  CONFIG_PINCTRL_SC7280=y
+> > +CONFIG_PINCTRL_SC8280XP=y
+> >  CONFIG_PINCTRL_SDM845=y
+> >  CONFIG_PINCTRL_SM8150=y
+> >  CONFIG_PINCTRL_SM8250=y
+> > @@ -1056,6 +1057,7 @@ CONFIG_MSM_GCC_8998=y
+> >  CONFIG_QCS_GCC_404=y
+> >  CONFIG_SC_GCC_7180=y
+> >  CONFIG_SC_GCC_7280=y
+> > +CONFIG_SC_GCC_8280XP=y
+> >  CONFIG_SDM_CAMCC_845=m
+> >  CONFIG_SDM_GPUCC_845=y
+> >  CONFIG_SDM_VIDEOCC_845=y
+> > @@ -1266,6 +1268,7 @@ CONFIG_INTERCONNECT_QCOM_OSM_L3=m
+> >  CONFIG_INTERCONNECT_QCOM_QCS404=m
+> >  CONFIG_INTERCONNECT_QCOM_SC7180=m
+> >  CONFIG_INTERCONNECT_QCOM_SC7280=y
+> > +CONFIG_INTERCONNECT_QCOM_SC8280XP=y
+> 
+> = m? I see other SoCs build interconnect drivers as modules (well,
+> except sdm845).
+> 
+
+I have interconnects specified for the UART and keeping the interconnect
+provider as module means that the serial  until after late_initcall,
+which in my testing implies that systemd doesn't find a proper console.
+
+Perhaps this is something I'm doing incorrectly?
+
+Regards,
+Bjorn
+
+> >  CONFIG_INTERCONNECT_QCOM_SDM845=y
+> >  CONFIG_INTERCONNECT_QCOM_SM8150=m
+> >  CONFIG_INTERCONNECT_QCOM_SM8250=m
+> > --
+> > 2.35.1
+> >
+> 
+> 
+> -- 
+> With best wishes
+> Dmitry
