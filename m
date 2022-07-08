@@ -2,76 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E3D4356C2B1
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Jul 2022 01:13:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F2CF156C35A
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Jul 2022 01:14:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240145AbiGHVBp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Jul 2022 17:01:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53396 "EHLO
+        id S240499AbiGHVcQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Jul 2022 17:32:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46132 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240070AbiGHVBo (ORCPT
+        with ESMTP id S240487AbiGHVcK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Jul 2022 17:01:44 -0400
-Received: from mail-oi1-x22b.google.com (mail-oi1-x22b.google.com [IPv6:2607:f8b0:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5F8772EE2
-        for <linux-arm-msm@vger.kernel.org>; Fri,  8 Jul 2022 14:01:42 -0700 (PDT)
-Received: by mail-oi1-x22b.google.com with SMTP id t189so126956oie.8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Jul 2022 14:01:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=SQUHR8cqfec6xaCwS1slMaoEVFnhpSwFvJqKIFprcuc=;
-        b=hYaiZ0ZlAM6D9t9CfTzB1qcI0NbhYGcnCJ3VHfnVF5DK2EP6dQDdQ7TFArVXvQ02Lr
-         bdsIQbnTsUYUY88y73MVEmUCtNzrggYb8thic/FQCVb8v4iNrfly8ZmPqFpNvG6nRazL
-         A6Dq+a7S1CrJecd8n/3ydmhRYIgZQ7cfRvmVRz4wx8mw/laLCkEY/Xh1UFdGqMhS/L4D
-         rxoKiFJ4nIQ6lMFEzVDJuQhzfEvSZhGNBilDk3eXMfFAQSXfrZgHQAH3KVyEAz/OK/CW
-         l78Md/Ows7IqBUHuLoiDssv/c8RgSNMZLi1k6SubjSow3j1xqD4Q0OyDiv7RzOX7IyNf
-         aecg==
+        Fri, 8 Jul 2022 17:32:10 -0400
+Received: from mail-io1-f46.google.com (mail-io1-f46.google.com [209.85.166.46])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75F2AA026E;
+        Fri,  8 Jul 2022 14:32:09 -0700 (PDT)
+Received: by mail-io1-f46.google.com with SMTP id h200so149838iof.9;
+        Fri, 08 Jul 2022 14:32:09 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=SQUHR8cqfec6xaCwS1slMaoEVFnhpSwFvJqKIFprcuc=;
-        b=bpNFd+aR52yTMCwiKlxaqbXr2gCL+FccRnxADMvL6fN5V/gu6n5WfQZ2xqo60l5vUM
-         XFb9YMTC/5dMj1BJ2dPplNpu6UZcahWchL9OrlVKU0nFxvRW7p4kkScFe4tvCCGIETMr
-         xd0MFTtobQom9U1Lnkp5OLj8O/N9lQ1ZJtGSBVEeM+C8QyRS/id/qRVfJwDpmpTttErx
-         n3hJY5oTdjYO5UKROVqhEKmHYnSdauwcIsdG5zB4R+zVJWOdJ+vWJfrNtUTT6RwUQyDO
-         EoSZaQ215Dsj2dm6BHAaZJ3vzKFrn6o+yi+iw+OlxeuZEgi5KbMmibwMt/LwN5B5ukBV
-         q11Q==
-X-Gm-Message-State: AJIora/IwaojYIWSROaLdz+1PAc53krxyqbFyKA3+BFWl3o3tQP6AmZj
-        vbcC7EK17MsfMTWHrkd9XG0bco7qGhrk0w==
-X-Google-Smtp-Source: AGRyM1tfDkomylt7OKStARhG3F6XT1w/Ga+GjAvIvazJt53EyhaACMtrmRWw3aqAwn75btHaMat/FQ==
-X-Received: by 2002:a05:6808:1928:b0:335:6073:f96a with SMTP id bf40-20020a056808192800b003356073f96amr924497oib.249.1657314102152;
-        Fri, 08 Jul 2022 14:01:42 -0700 (PDT)
-Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id t11-20020a0568301e2b00b0061c266a1bf8sm11096otr.26.2022.07.08.14.01.40
+        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
+         :message-id;
+        bh=vVYCFAFM3u7M5ctS+8Pi5ElwP8UGTsNsPbFnqh+Srfk=;
+        b=jULTtRkEhcTqAWWr376PtJLwAIaD4d7zDPD/BgEd/WrpOYc9igAW2AW8ftgqhhvwxI
+         xK8jYnzVxvbnwj2D++QpnA4i2IdvrKrBnjMn0DErjNdhc/QiHTRW/GhALuVgUxEq+f8+
+         dA2hmyymB9FHW7d52vxJ+AnRbFkI9d3hLCWam4MGehZINjvV6kymaMFFgMsOjbMnBB6V
+         ZFKRxUrv6wsGdosYmdkEHsAOKFY+bMD8dN8HMTIt8Z0o5oeHEoSCS0QlP3xri/DrBV7P
+         sLgOemAH/ZoptZaDMA89PG5wsM6aziqCusqDz8RAmvv9cXogW0vi2pQmnivxB9tOS/yK
+         ebCA==
+X-Gm-Message-State: AJIora/AyEDJavoTYLNo+5aYqmj9ozVZ0vthz0PH5BbcJx2Z/UqfWmGn
+        y50ihBpC7QFzRKQ+G0O2Ag==
+X-Google-Smtp-Source: AGRyM1sumiMM0+0KfOQZuDKX7asNwIIbBAJhw4KV3PPTXCSZPJWI1RTnSfkQKj91GRcwWUfAc6DP+A==
+X-Received: by 2002:a05:6638:d51:b0:33c:b03e:8035 with SMTP id d17-20020a0566380d5100b0033cb03e8035mr3433812jak.251.1657315928727;
+        Fri, 08 Jul 2022 14:32:08 -0700 (PDT)
+Received: from robh.at.kernel.org ([98.38.210.73])
+        by smtp.gmail.com with ESMTPSA id e24-20020a022118000000b00331d764e5b5sm18707972jaa.97.2022.07.08.14.32.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 Jul 2022 14:01:41 -0700 (PDT)
-Date:   Fri, 8 Jul 2022 14:04:13 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+        Fri, 08 Jul 2022 14:32:08 -0700 (PDT)
+Received: (nullmailer pid 1508201 invoked by uid 1000);
+        Fri, 08 Jul 2022 21:32:02 -0000
+From:   Rob Herring <robh@kernel.org>
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, Shawn Guo <shawnguo@kernel.org>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Marcel Ziswiler <marcel.ziswiler@toradex.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Biju Das <biju.das.jz@bp.renesas.com>,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Johan Hovold <johan+linaro@kernel.org>,
-        manivannan.sadhasivam@linaro.org
-Subject: Re: [PATCH] arm64: defconfig: Enable Qualcomm SC8280XP providers
-Message-ID: <YsibzePW58/DKWrI@ripper>
-References: <20220707161014.3178798-1-bjorn.andersson@linaro.org>
- <CAA8EJpoZ4WKALrvtCtfHNTJ5FDBk-Qy=Mr4TNr8qfcc8=hSMjQ@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAA8EJpoZ4WKALrvtCtfHNTJ5FDBk-Qy=Mr4TNr8qfcc8=hSMjQ@mail.gmail.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        freedreno@lists.freedesktop.org, Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>, dri-devel@lists.freedesktop.org
+In-Reply-To: <20220707213204.2605816-2-dmitry.baryshkov@linaro.org>
+References: <20220707213204.2605816-1-dmitry.baryshkov@linaro.org> <20220707213204.2605816-2-dmitry.baryshkov@linaro.org>
+Subject: Re: [PATCH 1/9] dt-bindings: msm/dp: drop extra p1 region
+Date:   Fri, 08 Jul 2022 15:32:02 -0600
+Message-Id: <1657315922.448144.1508200.nullmailer@robh.at.kernel.org>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -79,66 +68,39 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 07 Jul 10:41 PDT 2022, Dmitry Baryshkov wrote:
-
-> On Thu, 7 Jul 2022 at 19:07, Bjorn Andersson <bjorn.andersson@linaro.org> wrote:
-> >
-> > The Qualcomm SC8280XP need the global clock controller, interconnect
-> > provider and TLMM pinctrl in order to boot. Enable these as builtin, as
-> > they are needed in order to provide e.g. UART.
-> >
-> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > ---
-> >  arch/arm64/configs/defconfig | 3 +++
-> >  1 file changed, 3 insertions(+)
-> >
-> > diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-> > index d2615b37d857..8e44f6a2172c 100644
-> > --- a/arch/arm64/configs/defconfig
-> > +++ b/arch/arm64/configs/defconfig
-> > @@ -541,6 +541,7 @@ CONFIG_PINCTRL_QDF2XXX=y
-> >  CONFIG_PINCTRL_QCOM_SPMI_PMIC=y
-> >  CONFIG_PINCTRL_SC7180=y
-> >  CONFIG_PINCTRL_SC7280=y
-> > +CONFIG_PINCTRL_SC8280XP=y
-> >  CONFIG_PINCTRL_SDM845=y
-> >  CONFIG_PINCTRL_SM8150=y
-> >  CONFIG_PINCTRL_SM8250=y
-> > @@ -1056,6 +1057,7 @@ CONFIG_MSM_GCC_8998=y
-> >  CONFIG_QCS_GCC_404=y
-> >  CONFIG_SC_GCC_7180=y
-> >  CONFIG_SC_GCC_7280=y
-> > +CONFIG_SC_GCC_8280XP=y
-> >  CONFIG_SDM_CAMCC_845=m
-> >  CONFIG_SDM_GPUCC_845=y
-> >  CONFIG_SDM_VIDEOCC_845=y
-> > @@ -1266,6 +1268,7 @@ CONFIG_INTERCONNECT_QCOM_OSM_L3=m
-> >  CONFIG_INTERCONNECT_QCOM_QCS404=m
-> >  CONFIG_INTERCONNECT_QCOM_SC7180=m
-> >  CONFIG_INTERCONNECT_QCOM_SC7280=y
-> > +CONFIG_INTERCONNECT_QCOM_SC8280XP=y
+On Fri, 08 Jul 2022 00:31:56 +0300, Dmitry Baryshkov wrote:
+> The p1 region was probably added by mistake, none of the DTS files
+> provides one (and the driver source code also doesn't use one). Drop it
+> now.
 > 
-> = m? I see other SoCs build interconnect drivers as modules (well,
-> except sdm845).
+> Fixes: 687825c402f1 ("dt-bindings: msm/dp: Change reg definition")
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  Documentation/devicetree/bindings/display/msm/dp-controller.yaml | 1 -
+>  1 file changed, 1 deletion(-)
 > 
 
-I have interconnects specified for the UART and keeping the interconnect
-provider as module means that the serial  until after late_initcall,
-which in my testing implies that systemd doesn't find a proper console.
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
-Perhaps this is something I'm doing incorrectly?
+yamllint warnings/errors:
 
-Regards,
-Bjorn
+dtschema/dtc warnings/errors:
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/display/msm/dp-controller.example.dtb: displayport-controller@ae90000: reg: [[183042048, 512], [183042560, 512], [183043072, 3072], [183046144, 1024], [183047168, 1024]] is too long
+	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
 
-> >  CONFIG_INTERCONNECT_QCOM_SDM845=y
-> >  CONFIG_INTERCONNECT_QCOM_SM8150=m
-> >  CONFIG_INTERCONNECT_QCOM_SM8250=m
-> > --
-> > 2.35.1
-> >
-> 
-> 
-> -- 
-> With best wishes
-> Dmitry
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.ozlabs.org/patch/
+
+This check can fail if there are any dependencies. The base for a patch
+series is generally the most recent rc1.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit.
+
