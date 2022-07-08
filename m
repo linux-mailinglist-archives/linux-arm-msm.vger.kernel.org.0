@@ -2,68 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 596F956B310
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jul 2022 09:04:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EED7C56B374
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jul 2022 09:25:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237058AbiGHHDi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Jul 2022 03:03:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47660 "EHLO
+        id S237218AbiGHHYz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Jul 2022 03:24:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37370 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236733AbiGHHDh (ORCPT
+        with ESMTP id S236998AbiGHHYy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Jul 2022 03:03:37 -0400
-Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1E296B241;
-        Fri,  8 Jul 2022 00:03:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1657263815; x=1688799815;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=sLTf7xui5DUh0UIt7UN4rONb0R9ycQ6xpaAgmLAuY30=;
-  b=DIn7+74MJtv0OoDLRw3CjxBEDjGFAZqqq3WNnnxPvglSJM73a7v1+qPg
-   wB5Qv+Wf+SWV5R7xJ4kQAOfFF507DXgSHVeP3oGs2/o516yx5uS1q0bGG
-   vxCKl2qG7fK9MjKeXvQXsD2Cu+FpG2Y+bJCqC1KSli6UDH2Ws8v6mg1Wg
-   6fFyDiY7B+K7ZjPIWM9ZDoZd4DlcbHgka8yWYLpvqZxZ6dkwUTSwgU41R
-   17H56m/mrrWb82mow/88bIxsXX2AeuQKUX2hLPsVdYfDdmyHGpSCtUiUj
-   GeUA2Zba1c5eyHvezw/pXlaz02QfKQBRGIp1MzLNKZixBjKV876pw1Ahd
-   Q==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10401"; a="281759989"
-X-IronPort-AV: E=Sophos;i="5.92,254,1650956400"; 
-   d="scan'208";a="281759989"
-Received: from fmsmga005.fm.intel.com ([10.253.24.32])
-  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Jul 2022 00:03:35 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.92,254,1650956400"; 
-   d="scan'208";a="920895624"
-Received: from lkp-server01.sh.intel.com (HELO 68b931ab7ac1) ([10.239.97.150])
-  by fmsmga005.fm.intel.com with ESMTP; 08 Jul 2022 00:03:31 -0700
-Received: from kbuild by 68b931ab7ac1 with local (Exim 4.95)
-        (envelope-from <lkp@intel.com>)
-        id 1o9i1S-000N4s-JB;
-        Fri, 08 Jul 2022 07:03:30 +0000
-Date:   Fri, 8 Jul 2022 15:02:33 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>,
-        agross@kernel.org, bjorn.andersson@linaro.org,
-        konrad.dybcio@somainline.org, gregkh@linuxfoundation.org,
-        jirislaby@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-serial@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     llvm@lists.linux.dev, kbuild-all@lists.01.org,
-        quic_msavaliy@quicinc.com, dianders@chromium.org, mka@chromium.org,
-        swboyd@chromium.org,
-        Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-Subject: Re: [V3] tty: serial: qcom-geni-serial: Fix get_clk_div_rate() which
- otherwise could return a sub-optimal clock rate.
-Message-ID: <202207081429.4VXpQCls-lkp@intel.com>
-References: <1657221457-32494-1-git-send-email-quic_vnivarth@quicinc.com>
+        Fri, 8 Jul 2022 03:24:54 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90DE81837B;
+        Fri,  8 Jul 2022 00:24:52 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 11946621CD;
+        Fri,  8 Jul 2022 07:24:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66F50C341C0;
+        Fri,  8 Jul 2022 07:24:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1657265091;
+        bh=DUtyY1YHWoJv3J3dWpcYBPdrvr1+jh1mszXtpz/A4VE=;
+        h=From:To:Cc:Subject:Date:From;
+        b=gMr1FArgGErDRnJxe78qkxJm8lOIfcWLxd1aS15NsHN1GAmWE8E0UuEyhUnBV4b/m
+         QQeGdfrJiloWfwrormxh/Xhsw3JQcNfpk+rjBj06HIBIybkVBJk1D78uCPvkA4BNOE
+         u4WFiQqwqviByQQHYQmbnjKzbMB23vmM9J5YammkSwsZXmTA+d50LIUocRsB75c7H1
+         ybKgm3EDMFZVLQ2TTBseP0nGGAEKUzuv3kLM61qoYKknDYNJ1AijjImVGtsj8Qlx9P
+         yu7Q7PU0M7Uu6NBTjggwRczLzMgb1G5zEkj/wsFW5HL0tgegOMBGDTZIzkdVvGbnbX
+         BQ1OTEEOYwABQ==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan+linaro@kernel.org>)
+        id 1o9iM9-0001Ce-BA; Fri, 08 Jul 2022 09:24:54 +0200
+From:   Johan Hovold <johan+linaro@kernel.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Johan Hovold <johan+linaro@kernel.org>
+Subject: [PATCH] arm64: dts: qcom: sc8280xp: fix usb_0 HS PHY ref clock
+Date:   Fri,  8 Jul 2022 09:23:58 +0200
+Message-Id: <20220708072358.4583-1-johan+linaro@kernel.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1657221457-32494-1-git-send-email-quic_vnivarth@quicinc.com>
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-7.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -71,86 +58,28 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Vijaya,
+Fix the usb_0 HS PHY reference clock which was mistakingly replaced with
+the first usb_2 PHY clock.
 
-Thank you for the patch! Perhaps something to improve:
+Fixes: 152d1faf1e2f ("arm64: dts: qcom: add SC8280XP platform")
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+---
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-[auto build test WARNING on tty/tty-testing]
-[also build test WARNING on linus/master v5.19-rc5 next-20220707]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Vijaya-Krishna-Nivarthi/tty-serial-qcom-geni-serial-Fix-get_clk_div_rate-which-otherwise-could-return-a-sub-optimal-clock-rate/20220708-031921
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/gregkh/tty.git tty-testing
-config: hexagon-randconfig-r023-20220707 (https://download.01.org/0day-ci/archive/20220708/202207081429.4VXpQCls-lkp@intel.com/config)
-compiler: clang version 15.0.0 (https://github.com/llvm/llvm-project 562c3467a6738aa89203f72fc1d1343e5baadf3c)
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # https://github.com/intel-lab-lkp/linux/commit/fbd8a1a4b7d91ea5caa048e4557ab18b0d08ea86
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review Vijaya-Krishna-Nivarthi/tty-serial-qcom-geni-serial-Fix-get_clk_div_rate-which-otherwise-could-return-a-sub-optimal-clock-rate/20220708-031921
-        git checkout fbd8a1a4b7d91ea5caa048e4557ab18b0d08ea86
-        # save the config file
-        mkdir build_dir && cp config build_dir/.config
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=hexagon SHELL=/bin/bash drivers/tty/serial/
-
-If you fix the issue, kindly add following tag where applicable
-Reported-by: kernel test robot <lkp@intel.com>
-
-All warnings (new ones prefixed by >>):
-
->> drivers/tty/serial/qcom_geni_serial.c:1007:26: warning: format specifies type 'unsigned long' but the argument has type 'unsigned int' [-Wformat]
-                           desired_clk, ser_clk, *clk_div);
-                                                 ^~~~~~~~
-   include/linux/printk.h:610:38: note: expanded from macro 'pr_debug'
-           no_printk(KERN_DEBUG pr_fmt(fmt), ##__VA_ARGS__)
-                                       ~~~     ^~~~~~~~~~~
-   include/linux/printk.h:131:17: note: expanded from macro 'no_printk'
-                   printk(fmt, ##__VA_ARGS__);             \
-                          ~~~    ^~~~~~~~~~~
-   include/linux/printk.h:480:60: note: expanded from macro 'printk'
-   #define printk(fmt, ...) printk_index_wrap(_printk, fmt, ##__VA_ARGS__)
-                                                       ~~~    ^~~~~~~~~~~
-   include/linux/printk.h:452:19: note: expanded from macro 'printk_index_wrap'
-                   _p_func(_fmt, ##__VA_ARGS__);                           \
-                           ~~~~    ^~~~~~~~~~~
-   1 warning generated.
-
-
-vim +1007 drivers/tty/serial/qcom_geni_serial.c
-
-   983	
-   984	static unsigned long get_clk_div_rate(struct clk *clk, unsigned int baud,
-   985				unsigned int sampling_rate, unsigned int *clk_div)
-   986	{
-   987		unsigned long ser_clk;
-   988		unsigned long desired_clk;
-   989	
-   990		desired_clk = baud * sampling_rate;
-   991		if (!desired_clk) {
-   992			pr_err("%s: Invalid frequency\n", __func__);
-   993			return 0;
-   994		}
-   995	
-   996		/*
-   997		 * try to find a clock rate within 2% tolerance, then within
-   998		 */
-   999		ser_clk = find_clk_rate_in_tol(clk, desired_clk, clk_div, 2);
-  1000		if (!ser_clk)
-  1001			ser_clk = find_clk_rate_in_tol(clk, desired_clk, clk_div, 5);
-  1002	
-  1003		if (!ser_clk)
-  1004			pr_err("Couldn't find suitable clock rate for %lu\n", desired_clk);
-  1005		else
-  1006			pr_debug("desired_clk-%lu, ser_clk-%lu, clk_div-%lu\n",
-> 1007				desired_clk, ser_clk, *clk_div);
-  1008	
-  1009		return ser_clk;
-  1010	}
-  1011	
-
+diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+index d0fabbf99ec5..9de6dedb102f 100644
+--- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+@@ -985,7 +985,7 @@ usb_0_hsphy: phy@88e5000 {
+ 			compatible = "qcom,sc8280xp-usb-hs-phy",
+ 				     "qcom,usb-snps-hs-5nm-phy";
+ 			reg = <0 0x088e5000 0 0x400>;
+-			clocks = <&gcc GCC_USB2_HS0_CLKREF_CLK>;
++			clocks = <&rpmhcc RPMH_CXO_CLK>;
+ 			clock-names = "ref";
+ 			resets = <&gcc GCC_QUSB2PHY_PRIM_BCR>;
+ 
 -- 
-0-DAY CI Kernel Test Service
-https://01.org/lkp
+2.35.1
+
