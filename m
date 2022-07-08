@@ -2,68 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E52D956BFFC
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jul 2022 20:36:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D253656C005
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jul 2022 20:36:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238504AbiGHQjv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Jul 2022 12:39:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53572 "EHLO
+        id S238365AbiGHQpN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Jul 2022 12:45:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58090 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236791AbiGHQjv (ORCPT
+        with ESMTP id S238234AbiGHQpK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Jul 2022 12:39:51 -0400
-Received: from mail-qk1-x735.google.com (mail-qk1-x735.google.com [IPv6:2607:f8b0:4864:20::735])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B230248DE;
-        Fri,  8 Jul 2022 09:39:49 -0700 (PDT)
-Received: by mail-qk1-x735.google.com with SMTP id p11so16138510qkg.12;
-        Fri, 08 Jul 2022 09:39:49 -0700 (PDT)
+        Fri, 8 Jul 2022 12:45:10 -0400
+Received: from mail-qk1-x733.google.com (mail-qk1-x733.google.com [IPv6:2607:f8b0:4864:20::733])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94BB52DA88;
+        Fri,  8 Jul 2022 09:45:09 -0700 (PDT)
+Received: by mail-qk1-x733.google.com with SMTP id x11so787788qki.1;
+        Fri, 08 Jul 2022 09:45:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=Sb5KiY0qSYlKrjh7q7f8Z2AMm+G071r5Rq+Ft9X/kf4=;
-        b=RiYwC7EnaQAVXiffe0GwzzO0DBTyz2Ix3cMkVs11+eQo0EJtkkKS4y29QXf69FoxeM
-         QO/KqJsvRN9HRqBhkODGbsOYxpEBNGlZoCR2i+tEGaa1xcE2NSKrOQNFCnFyISFpFy5E
-         ENe5FRoKXSrIwAPRceRHHTZ9BDwHm+p3xhXTmNXMtN3msBd47D8dHo8SocU8fY/XUIdJ
-         mSW/9ZnTHz9P+/lXGAjgACTNfhnY5ao3yYsSggNTihRit33N4LcS2mZMMjZDZWTdsrx5
-         c3orsPZf+2V2lDFlln9w9rkReG2oCO4a6pNv1BzJB6LZgMaRFuBgUAw0uoVS0eV/aSlt
-         1u+Q==
+        bh=ZThGptq7h5vtkvYTEqQOjJHDp96c1xA4HJ53tM0Cq7I=;
+        b=XfbYr7nYKQzSjNbhfWTRJv4r2l3M96KbNuUKVdTITaSXakF2uXSfLLyAHUjEKNLcZg
+         6HedJYW9nb9YX7Griof39wAY+Opz+imI7/uR2YytrMGrYJYHWrZ9luLTkRceUfs2c0E5
+         erarSiAZTvw5g+0CrBaDCDe3yPR8R0CFqg7kv35qN/XoYBzyp2or9chTxzbz8J098/pD
+         W1DsFVOO+mowngJfWU8O+z09DCIW6TupjE2HZakzxRhmquD0PXFeLhTo4qGsS7zVAzyA
+         4onzI1AgOPAq5GU5dtqeIfOTsIDmd8iP9AChovXrqY3rHqIiH32Sg/fTqgDW+KcgCY2u
+         GaAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=Sb5KiY0qSYlKrjh7q7f8Z2AMm+G071r5Rq+Ft9X/kf4=;
-        b=l3URgrFQCzCeTOm6KvsVCE+uBnSYqyxOwMJOtsF5MKR9GdqQL/AZLSbEt4PimiXFle
-         gyIlkuXyuh2oN/HpC0olcGiYKtzgn90wSQYxujAlqqv9wOLQdSw2MS3nLPG5otfhWk0N
-         DbAA0F7AXsKHNguHtlirM7cmsOwJwwKEHvzLiNokioJPd3vNPQCnfV5WCMxShL3O8H8o
-         PhCOybqcZ4ojhzMk+z3QMC2Ns4RnuzhojIzUuFN5r5RTczjqr6tPQFIqmAGZarGVwCtT
-         6Jhgn69gcJiJ5PotSjKOIg7q9En+mjr3yBRkPEgIDpiV46GJTf7MaSd2iloyJdvW4xQA
-         yF9w==
-X-Gm-Message-State: AJIora+GGagVE+JOh9Uzsb5OiDt/Nv+0hgxbnw0Mvd9T7H0zZzcb7P6W
-        mAs4CbX1GbizLLrEg4vOufHl5jZGY4hhjHm5/wg=
-X-Google-Smtp-Source: AGRyM1uUEsXfYk7YjzediusJ/SU+Gcpm5/DFw+eU+MO2JzUivOav/S5vd9O6h2H1/KQvmnUwssfzAq2iArMgiFWbpi4=
-X-Received: by 2002:a05:620a:2456:b0:6af:31c6:c1af with SMTP id
- h22-20020a05620a245600b006af31c6c1afmr3002673qkn.25.1657298388416; Fri, 08
- Jul 2022 09:39:48 -0700 (PDT)
+        bh=ZThGptq7h5vtkvYTEqQOjJHDp96c1xA4HJ53tM0Cq7I=;
+        b=rTtzQ8FvbUxDTfgAf7kZ3iz5WFKKZE91/aGNdgv7FV7zOpjaThzZNPODB/P8NC+DGO
+         9pElq0taddWHl40+yFLzpakG3YjdnNL6Xt9R2AkhAF3ghJ96Rws+I001UjGknKJv1tqy
+         CoAy8ZQ3IAFGZMjsHTpIVgtRSSOJ5AZq/M/wVoWukLIFoEepxk+27qPZ+TC4Y7zcm69h
+         H60gBcI5nmXmukMDf2U3GC3nqWdiTbKNFwGnuzV4VQ+1WPnQIxlMUgKVOWTFQbsYOMD4
+         1al9y0ewHSnWQaBzqTnjNwU/0zvxpVaON46BM5cYloJSsMsGyapOfJ8N6utha+SCgx+U
+         94lg==
+X-Gm-Message-State: AJIora8RgCafCIkk3m3upwSzh/FWS3x8tTPV8a63BM5a6yv6++nRGDLG
+        sN0MSMGJrES8owU+JRhidkgYdkFdIlOv1z6hkVM=
+X-Google-Smtp-Source: AGRyM1vm3Sz06iZw23zFJKL4aCV6vtw06v1+bIfXshboOMlt0Qh4zT50XgACo4dXGHfx7M8PQpyxfX8oFEFDnpvpgCk=
+X-Received: by 2002:a05:620a:1a23:b0:6af:6ceb:2ed with SMTP id
+ bk35-20020a05620a1a2300b006af6ceb02edmr3109700qkb.42.1657298708601; Fri, 08
+ Jul 2022 09:45:08 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220624104420.257368-2-robimarko@gmail.com> <20220707194139.GA328930@bhelgaas>
-In-Reply-To: <20220707194139.GA328930@bhelgaas>
+References: <20220705191017.1683716-1-robimarko@gmail.com> <20220705191017.1683716-3-robimarko@gmail.com>
+ <bab08104-8474-0247-6d64-d6335535c37c@somainline.org>
+In-Reply-To: <bab08104-8474-0247-6d64-d6335535c37c@somainline.org>
 From:   Robert Marko <robimarko@gmail.com>
-Date:   Fri, 8 Jul 2022 18:39:37 +0200
-Message-ID: <CAOX2RU6TFDtMW+3_rfqbUOy4AmEJh+8F8wPtLnJEBtpnzeMbdA@mail.gmail.com>
-Subject: Re: [PATCH v4 2/2] PCI: qcom: Move all DBI register accesses after phy_power_on()
-To:     Bjorn Helgaas <helgaas@kernel.org>
-Cc:     Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Andy Gross <agross@kernel.org>,
+Date:   Fri, 8 Jul 2022 18:44:57 +0200
+Message-ID: <CAOX2RU6gmz6AHS2NzaX-duXPW_1U4QsqMH4LeCU-PFLLpVFc9g@mail.gmail.com>
+Subject: Re: [PATCH v5 3/3] clk: qcom: Add IPQ8074 APSS clock controller
+To:     Konrad Dybcio <konrad.dybcio@somainline.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        lpieralisi@kernel.org, Rob Herring <robh@kernel.org>, kw@linux.com,
-        Bjorn Helgaas <bhelgaas@google.com>, p.zabel@pengutronix.de,
-        jingoohan1@gmail.com, linux-pci@vger.kernel.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        krzysztof.kozlowski+dt@linaro.org,
         open list <linux-kernel@vger.kernel.org>,
-        johan+linaro@kernel.org,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Ansuel Smith <ansuelsmth@gmail.com>
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-clk@vger.kernel.org,
+        Devicetree List <devicetree@vger.kernel.org>,
+        Christian Marangi <ansuelsmth@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
@@ -75,379 +76,322 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-CC-ing Christian who did a lot of work on 2.1.0 (IPQ806x).
+On Wed, 6 Jul 2022 at 15:21, Konrad Dybcio <konrad.dybcio@somainline.org> wrote:
+>
+>
+>
+> On 5.07.2022 21:10, Robert Marko wrote:
+> > IPQ8074 APSS clock controller provides the clock for the IPQ8074 CPU
+> > cores, thus also providing support for CPU frequency scaling.
+> >
+> > It looks like they are clocked by the XO and a custom APSS type PLL.
+> >
+> > Co-developed-by: Christian Marangi <ansuelsmth@gmail.com>
+> > Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+> > Signed-off-by: Robert Marko <robimarko@gmail.com>
+> > ---
+> > Changes in v5:
+> > * Drop F define as its already defined in clk-rgc.h
+> > * Correct the driver name to not include commas
+> > * Correct Christian-s SoB
+> > * Add MODULE_ALIAS so it gets loaded if built as a module
+> >
+> > Changes in v2:
+> > * Convert to using parent-data instead of parent-names
+> > ---
+> >  drivers/clk/qcom/Kconfig        |  11 +++
+> >  drivers/clk/qcom/Makefile       |   1 +
+> >  drivers/clk/qcom/apss-ipq8074.c | 169 ++++++++++++++++++++++++++++++++
+> >  3 files changed, 181 insertions(+)
+> >  create mode 100644 drivers/clk/qcom/apss-ipq8074.c
+> >
+> > diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
+> > index fc45d00eec42..a3ba541a9dee 100644
+> > --- a/drivers/clk/qcom/Kconfig
+> > +++ b/drivers/clk/qcom/Kconfig
+> > @@ -134,6 +134,17 @@ config IPQ_APSS_6018
+> >         Say Y if you want to support CPU frequency scaling on
+> >         ipq based devices.
+> >
+> > +config IPQ_APSS_8074
+> > +     tristate "IPQ8074 APSS Clock Controller"
+> > +     select IPQ_GCC_8074
+> > +     depends on QCOM_APCS_IPC || COMPILE_TEST
+> > +     help
+> > +       Support for APSS clock controller on IPQ8074 platforms. The
+> > +       APSS clock controller manages the Mux and enable block that feeds the
+> > +       CPUs.
+> > +       Say Y if you want to support CPU frequency scaling on
+> > +       IPQ8074 based devices.
+> > +
+> >  config IPQ_GCC_4019
+> >       tristate "IPQ4019 Global Clock Controller"
+> >       help
+> > diff --git a/drivers/clk/qcom/Makefile b/drivers/clk/qcom/Makefile
+> > index 08594230c1c1..226f3b5cefde 100644
+> > --- a/drivers/clk/qcom/Makefile
+> > +++ b/drivers/clk/qcom/Makefile
+> > @@ -23,6 +23,7 @@ obj-$(CONFIG_APQ_MMCC_8084) += mmcc-apq8084.o
+> >  obj-$(CONFIG_CLK_GFM_LPASS_SM8250) += lpass-gfm-sm8250.o
+> >  obj-$(CONFIG_IPQ_APSS_PLL) += apss-ipq-pll.o
+> >  obj-$(CONFIG_IPQ_APSS_6018) += apss-ipq6018.o
+> > +obj-$(CONFIG_IPQ_APSS_8074) += apss-ipq8074.o
+> >  obj-$(CONFIG_IPQ_GCC_4019) += gcc-ipq4019.o
+> >  obj-$(CONFIG_IPQ_GCC_6018) += gcc-ipq6018.o
+> >  obj-$(CONFIG_IPQ_GCC_806X) += gcc-ipq806x.o
+> > diff --git a/drivers/clk/qcom/apss-ipq8074.c b/drivers/clk/qcom/apss-ipq8074.c
+> > new file mode 100644
+> > index 000000000000..36fafa71c4ea
+> > --- /dev/null
+> > +++ b/drivers/clk/qcom/apss-ipq8074.c
+> > @@ -0,0 +1,169 @@
+> > +// SPDX-License-Identifier: GPL-2.0
+> > +/*
+> > + * Copyright (c) 2022, The Linux Foundation. All rights reserved.
+> > + */
+> > +
+> > +#include <linux/clk-provider.h>
+> > +#include <linux/err.h>
+> > +#include <linux/kernel.h>
+> > +#include <linux/module.h>
+> > +#include <linux/platform_device.h>
+> > +#include <linux/regmap.h>
+> > +
+> > +#include <dt-bindings/clock/qcom,apss-ipq8074.h>
+> > +
+> > +#include "common.h"
+> > +#include "clk-regmap.h"
+> > +#include "clk-pll.h"
+> > +#include "clk-rcg.h"
+> > +#include "clk-branch.h"
+> > +#include "clk-alpha-pll.h"
+> > +#include "clk-regmap-divider.h"
+> > +#include "clk-regmap-mux.h"
+> > +
+> > +enum {
+> > +     P_XO,
+> > +     P_GPLL0,
+> > +     P_GPLL2,
+> > +     P_GPLL4,
+> > +     P_APSS_PLL_EARLY,
+> > +     P_APSS_PLL
+> > +};
+> > +
+> > +static struct clk_alpha_pll apss_pll_early = {
+> > +     .offset = 0x5000,
+> > +     .regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_APSS],
+> > +     .clkr = {
+> > +             .enable_reg = 0x5000,
+> > +             .enable_mask = BIT(0),
+> > +             .hw.init = &(struct clk_init_data){
+> > +                     .name = "apss_pll_early",
+> > +                     .parent_data = &(const struct clk_parent_data) {
+> > +                             .fw_name = "xo", .name = "xo"
+> Since you're only adding this driver now, no DT uses it an you
+> should drop the .name lookup.
+
+Hi Konrad,
+I will fix it up, also need to update the dtschema and DT node patch for APCS
+node as "xo" is not a valid clock currently for it.
+>
+>
+> > +                     },
+> > +                     .num_parents = 1,
+> > +                     .ops = &clk_alpha_pll_huayra_ops,
+> > +             },
+> > +     },
+> > +};
+> > +
+> > +static struct clk_alpha_pll_postdiv apss_pll = {
+> > +     .offset = 0x5000,
+> > +     .regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_APSS],
+> > +     .width = 2,
+> > +     .clkr.hw.init = &(struct clk_init_data){
+> > +             .name = "apss_pll",
+> > +             .parent_hws = (const struct clk_hw *[]){
+> > +                     &apss_pll_early.clkr.hw },
+> > +             .num_parents = 1,
+> > +             .ops = &clk_alpha_pll_postdiv_ro_ops,
+> > +     },
+> > +};
+> > +
+> > +static const struct clk_parent_data parents_apcs_alias0_clk_src[] = {
+> > +     { .fw_name = "xo", .name = "xo" },
+> > +     { .fw_name = "gpll0", .name = "gpll0" },
+> > +     { .fw_name = "gpll2", .name = "gpll2" },
+> > +     { .fw_name = "gpll4", .name = "gpll4" },
+> > +     { .hw = &apss_pll.clkr.hw },
+> > +     { .hw = &apss_pll_early.clkr.hw },
+> > +};
+> > +
+> > +static const struct parent_map parents_apcs_alias0_clk_src_map[] = {
+> > +     { P_XO, 0 },
+> > +     { P_GPLL0, 4 },
+> > +     { P_GPLL2, 2 },
+> > +     { P_GPLL4, 1 },
+> > +     { P_APSS_PLL, 3 },
+> > +     { P_APSS_PLL_EARLY, 5 },
+> Looks like it only supports frequencies with APSS_PLL_EARLY and XO
+> as parents? Are all of these other PLLs necessary here?
+
+Unfortunately, I dont have any docs on this, this is based on the downstream 5.4
+driver.
+
+I got rid of GPLL-s as parents and it seems to still be able to set
+the correct frequency
+, however, initially the frequency that is read during boot then
+matches the XO frequency
+of 19.2 MHz which is obviously incorrect:
+[    1.632308] cpufreq: cpufreq_online: CPU0: Running at unlisted
+initial frequency: 19200 KHz, changing to: 1017600 KHz
+
+I can then use the userspace governor and go through all OPP points
+without an issue and
+using the mhz [1] tool I can confirm that frequency matches the requested one.
+
+[1] https://github.com/wtarreau/mhz
+>
+> > +};
+> > +
+> > +struct freq_tbl ftbl_apcs_alias0_clk_src[] = {
+> > +     F(19200000, P_XO, 1, 0, 0),
+> > +     F(403200000, P_APSS_PLL_EARLY, 1, 0, 0),
+> > +     F(806400000, P_APSS_PLL_EARLY, 1, 0, 0),
+> > +     F(1017600000, P_APSS_PLL_EARLY, 1, 0, 0),
+> > +     F(1382400000, P_APSS_PLL_EARLY, 1, 0, 0),
+> > +     F(1651200000, P_APSS_PLL_EARLY, 1, 0, 0),
+> > +     F(1843200000, P_APSS_PLL_EARLY, 1, 0, 0),
+> > +     F(1920000000, P_APSS_PLL_EARLY, 1, 0, 0),
+> > +     F(2208000000UL, P_APSS_PLL_EARLY, 1, 0, 0),
+> Every frequency is a div1 and comes from a single clock..
+> is this correct? This sounds like a simple mux that only
+> switches between XO and APSS_PLL_EARLY..
+
+I tested this using the IPQ6018 clk_regmap_mux apcs_alias0_clk_src
+and it appears to work, I am able to switch through all of the OPP-s:
+# cat scaling_available_frequencies
+1017600 1382400 1651200 1843200 1920000 2208000
+# echo 1017600 > scaling_setspeed
+# mhz
+count=413212 us50=20314 us250=101571 diff=81257 cpu_MHz=1017.050
+# echo 1382400 > scaling_setspeed
+# mhz
+count=645643 us50=23381 us250=116811 diff=93430 cpu_MHz=1382.089
+# echo 1651200 > scaling_setspeed
+# mhz
+count=807053 us50=24452 us250=122238 diff=97786 cpu_MHz=1650.651
+# echo 1843200 > scaling_setspeed
+# mhz
+count=807053 us50=21901 us250=109503 diff=87602 cpu_MHz=1842.545
+# echo 1920000 > scaling_setspeed
+# mhz
+count=807053 us50=21023 us250=105125 diff=84102 cpu_MHz=1919.224
+# echo 2208000 > scaling_setspeed
+# mhz
+count=1008816 us50=22857 us250=114255 diff=91398 cpu_MHz=2207.523
+
+Seems like IPQ6018 and IPQ8074 use the same mux, though PLL is different.
+
+>
+> > +     { }
+> > +};
+> > +
+> > +struct clk_rcg2 apcs_alias0_clk_src = {
+> > +     .cmd_rcgr = 0x0050,
+> > +     .freq_tbl = ftbl_apcs_alias0_clk_src,
+> > +     .hid_width = 5,
+> > +     .parent_map = parents_apcs_alias0_clk_src_map,
+> > +     .clkr.hw.init = &(struct clk_init_data){
+> > +             .name = "apcs_alias0_clk_src",
+> > +             .parent_data = parents_apcs_alias0_clk_src,
+> > +             .num_parents = ARRAY_SIZE(parents_apcs_alias0_clk_src),
+> > +             .ops = &clk_rcg2_ops,
+> > +             .flags = CLK_SET_RATE_PARENT,
+> > +     },
+> > +};
+> > +
+> > +static struct clk_branch apcs_alias0_core_clk = {
+> > +     .halt_reg = 0x0058,
+> > +     .halt_bit = 31,
+> > +     .clkr = {
+> > +             .enable_reg = 0x0058,
+> > +             .enable_mask = BIT(0),
+> > +             .hw.init = &(struct clk_init_data){
+> > +                     .name = "apcs_alias0_core_clk",
+> > +                     .parent_hws = (const struct clk_hw *[]){
+> > +                             &apcs_alias0_clk_src.clkr.hw },
+> > +                     .num_parents = 1,
+> > +                     .flags = CLK_SET_RATE_PARENT |
+> > +                             CLK_IS_CRITICAL,
+> This can fit in a single line.
+
+I will fix it in v6.
+>
+> > +                     .ops = &clk_branch2_ops,
+> > +             },
+> > +     },
+> > +};
+> > +
+> > +static struct clk_regmap *apss_ipq8074_clks[] = {
+> > +     [APSS_PLL_EARLY] = &apss_pll_early.clkr,
+> > +     [APSS_PLL] = &apss_pll.clkr,
+> > +     [APCS_ALIAS0_CLK_SRC] = &apcs_alias0_clk_src.clkr,
+> > +     [APCS_ALIAS0_CORE_CLK] = &apcs_alias0_core_clk.clkr,
+> > +};
+> > +
+> > +static const struct regmap_config apss_ipq8074_regmap_config = {
+> > +     .reg_bits       = 32,
+> > +     .reg_stride     = 4,
+> > +     .val_bits       = 32,
+> > +     .max_register   = 0x5ffc,
+> > +     .fast_io        = true,
+> > +};
+> > +
+> > +static const struct qcom_cc_desc apss_ipq8074_desc = {
+> > +     .config = &apss_ipq8074_regmap_config,
+> > +     .clks = apss_ipq8074_clks,
+> > +     .num_clks = ARRAY_SIZE(apss_ipq8074_clks),
+> > +};
+> > +
+> > +static int apss_ipq8074_probe(struct platform_device *pdev)
+> > +{
+> > +     struct regmap *regmap;
+> > +
+> > +     regmap = dev_get_regmap(pdev->dev.parent, NULL);
+> > +     if (!regmap)
+> > +             return -ENODEV;
+> > +
+> > +     return qcom_cc_really_probe(pdev, &apss_ipq8074_desc, regmap);
+> qcom_cc_probe?
+
+qcom_cc_probe would not work as it calls qcom_cc_map which works only on the
+device MMIO resource, and we have to get the regmap from the parent which is
+APCS as they share the same register space.
+
+>
+> > +}
+> > +
+> > +static struct platform_driver apss_ipq8074_driver = {
+> > +     .probe = apss_ipq8074_probe,
+> > +     .driver = {
+> > +             .name   = "qcom-apss-ipq8074-clk",
+> > +     },
+> > +};
+> > +
+> > +module_platform_driver(apss_ipq8074_driver);
+> > +
+> > +MODULE_ALIAS("platform:qcom-apss-ipq8074-clk");
+> > +MODULE_DESCRIPTION("Qualcomm IPQ8074 APSS clock driver");
+> > +MODULE_LICENSE("GPL");
+> "GPL v2"?
+
+Checkpatch now warns on GPL v2 and other variants that GPL is
+preferred since 5.18:
+https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/scripts/checkpatch.pl?h=v5.18.10&id=6e8f42dc9c8548c6b37566f3b8bda1873700c4a6
+
+Originally had "GPL v2" and then checkpatch pointed this out.
 
 Regards,
 Robert
-
-On Thu, 7 Jul 2022 at 21:41, Bjorn Helgaas <helgaas@kernel.org> wrote:
 >
-> On Fri, Jun 24, 2022 at 12:44:20PM +0200, Robert Marko wrote:
-> > IPQ8074 requires the PHY to be powered on before accessing DBI registers.
-> > It's not clear whether other variants have the same dependency, but there
-> > seems to be no reason for them to be different, so move all the DBI
-> > accesses from .init() to .post_init() so they are all after phy_power_on().
-> >
-> > Signed-off-by: Robert Marko <robimarko@gmail.com>
->
-> Would any of the qcom driver folks care to review and ack this?
-> Stanimir, Andy, Bjorn A (from get_maintainer.pl)?
->
-> > ---
-> > Changes in v4:
-> > * Move 2.7.0 accesses as well
-> > * Correct title and description (Bjorn)
-> > ---
-> >  drivers/pci/controller/dwc/pcie-qcom.c | 215 ++++++++++++++-----------
-> >  1 file changed, 119 insertions(+), 96 deletions(-)
-> >
-> > diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> > index 24708d5d817d..f1a156052fe7 100644
-> > --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> > +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> > @@ -348,8 +348,6 @@ static int qcom_pcie_init_2_1_0(struct qcom_pcie *pcie)
-> >       struct qcom_pcie_resources_2_1_0 *res = &pcie->res.v2_1_0;
-> >       struct dw_pcie *pci = pcie->pci;
-> >       struct device *dev = pci->dev;
-> > -     struct device_node *node = dev->of_node;
-> > -     u32 val;
-> >       int ret;
-> >
-> >       /* reset the PCIe interface as uboot can leave it undefined state */
-> > @@ -360,8 +358,6 @@ static int qcom_pcie_init_2_1_0(struct qcom_pcie *pcie)
-> >       reset_control_assert(res->ext_reset);
-> >       reset_control_assert(res->phy_reset);
-> >
-> > -     writel(1, pcie->parf + PCIE20_PARF_PHY_CTRL);
-> > -
-> >       ret = regulator_bulk_enable(ARRAY_SIZE(res->supplies), res->supplies);
-> >       if (ret < 0) {
-> >               dev_err(dev, "cannot enable regulators\n");
-> > @@ -408,6 +404,35 @@ static int qcom_pcie_init_2_1_0(struct qcom_pcie *pcie)
-> >       if (ret)
-> >               goto err_clks;
-> >
-> > +     return 0;
-> > +
-> > +err_clks:
-> > +     reset_control_assert(res->axi_reset);
-> > +err_deassert_axi:
-> > +     reset_control_assert(res->por_reset);
-> > +err_deassert_por:
-> > +     reset_control_assert(res->pci_reset);
-> > +err_deassert_pci:
-> > +     reset_control_assert(res->phy_reset);
-> > +err_deassert_phy:
-> > +     reset_control_assert(res->ext_reset);
-> > +err_deassert_ext:
-> > +     reset_control_assert(res->ahb_reset);
-> > +err_deassert_ahb:
-> > +     regulator_bulk_disable(ARRAY_SIZE(res->supplies), res->supplies);
-> > +
-> > +     return ret;
-> > +}
-> > +
-> > +static int qcom_pcie_post_init_2_1_0(struct qcom_pcie *pcie)
-> > +{
-> > +     struct dw_pcie *pci = pcie->pci;
-> > +     struct device *dev = pci->dev;
-> > +     struct device_node *node = dev->of_node;
-> > +     u32 val;
-> > +
-> > +     writel(1, pcie->parf + PCIE20_PARF_PHY_CTRL);
-> > +
-> >       /* enable PCIe clocks and resets */
-> >       val = readl(pcie->parf + PCIE20_PARF_PHY_CTRL);
-> >       val &= ~BIT(0);
-> > @@ -451,23 +476,6 @@ static int qcom_pcie_init_2_1_0(struct qcom_pcie *pcie)
-> >              pci->dbi_base + PCIE20_AXI_MSTR_RESP_COMP_CTRL1);
-> >
-> >       return 0;
-> > -
-> > -err_clks:
-> > -     reset_control_assert(res->axi_reset);
-> > -err_deassert_axi:
-> > -     reset_control_assert(res->por_reset);
-> > -err_deassert_por:
-> > -     reset_control_assert(res->pci_reset);
-> > -err_deassert_pci:
-> > -     reset_control_assert(res->phy_reset);
-> > -err_deassert_phy:
-> > -     reset_control_assert(res->ext_reset);
-> > -err_deassert_ext:
-> > -     reset_control_assert(res->ahb_reset);
-> > -err_deassert_ahb:
-> > -     regulator_bulk_disable(ARRAY_SIZE(res->supplies), res->supplies);
-> > -
-> > -     return ret;
-> >  }
-> >
-> >  static int qcom_pcie_get_resources_1_0_0(struct qcom_pcie *pcie)
-> > @@ -555,16 +563,6 @@ static int qcom_pcie_init_1_0_0(struct qcom_pcie *pcie)
-> >               goto err_slave;
-> >       }
-> >
-> > -     /* change DBI base address */
-> > -     writel(0, pcie->parf + PCIE20_PARF_DBI_BASE_ADDR);
-> > -
-> > -     if (IS_ENABLED(CONFIG_PCI_MSI)) {
-> > -             u32 val = readl(pcie->parf + PCIE20_PARF_AXI_MSTR_WR_ADDR_HALT);
-> > -
-> > -             val |= BIT(31);
-> > -             writel(val, pcie->parf + PCIE20_PARF_AXI_MSTR_WR_ADDR_HALT);
-> > -     }
-> > -
-> >       return 0;
-> >  err_slave:
-> >       clk_disable_unprepare(res->slave_bus);
-> > @@ -580,6 +578,22 @@ static int qcom_pcie_init_1_0_0(struct qcom_pcie *pcie)
-> >       return ret;
-> >  }
-> >
-> > +static int qcom_pcie_post_init_1_0_0(struct qcom_pcie *pcie)
-> > +{
-> > +
-> > +     /* change DBI base address */
-> > +     writel(0, pcie->parf + PCIE20_PARF_DBI_BASE_ADDR);
-> > +
-> > +     if (IS_ENABLED(CONFIG_PCI_MSI)) {
-> > +             u32 val = readl(pcie->parf + PCIE20_PARF_AXI_MSTR_WR_ADDR_HALT);
-> > +
-> > +             val |= BIT(31);
-> > +             writel(val, pcie->parf + PCIE20_PARF_AXI_MSTR_WR_ADDR_HALT);
-> > +     }
-> > +
-> > +     return 0;
-> > +}
-> > +
-> >  static void qcom_pcie_2_3_2_ltssm_enable(struct qcom_pcie *pcie)
-> >  {
-> >       u32 val;
-> > @@ -648,7 +662,6 @@ static int qcom_pcie_init_2_3_2(struct qcom_pcie *pcie)
-> >       struct qcom_pcie_resources_2_3_2 *res = &pcie->res.v2_3_2;
-> >       struct dw_pcie *pci = pcie->pci;
-> >       struct device *dev = pci->dev;
-> > -     u32 val;
-> >       int ret;
-> >
-> >       ret = regulator_bulk_enable(ARRAY_SIZE(res->supplies), res->supplies);
-> > @@ -681,27 +694,6 @@ static int qcom_pcie_init_2_3_2(struct qcom_pcie *pcie)
-> >               goto err_slave_clk;
-> >       }
-> >
-> > -     /* enable PCIe clocks and resets */
-> > -     val = readl(pcie->parf + PCIE20_PARF_PHY_CTRL);
-> > -     val &= ~BIT(0);
-> > -     writel(val, pcie->parf + PCIE20_PARF_PHY_CTRL);
-> > -
-> > -     /* change DBI base address */
-> > -     writel(0, pcie->parf + PCIE20_PARF_DBI_BASE_ADDR);
-> > -
-> > -     /* MAC PHY_POWERDOWN MUX DISABLE  */
-> > -     val = readl(pcie->parf + PCIE20_PARF_SYS_CTRL);
-> > -     val &= ~BIT(29);
-> > -     writel(val, pcie->parf + PCIE20_PARF_SYS_CTRL);
-> > -
-> > -     val = readl(pcie->parf + PCIE20_PARF_MHI_CLOCK_RESET_CTRL);
-> > -     val |= BIT(4);
-> > -     writel(val, pcie->parf + PCIE20_PARF_MHI_CLOCK_RESET_CTRL);
-> > -
-> > -     val = readl(pcie->parf + PCIE20_PARF_AXI_MSTR_WR_ADDR_HALT_V2);
-> > -     val |= BIT(31);
-> > -     writel(val, pcie->parf + PCIE20_PARF_AXI_MSTR_WR_ADDR_HALT_V2);
-> > -
-> >       return 0;
-> >
-> >  err_slave_clk:
-> > @@ -722,8 +714,30 @@ static int qcom_pcie_post_init_2_3_2(struct qcom_pcie *pcie)
-> >       struct qcom_pcie_resources_2_3_2 *res = &pcie->res.v2_3_2;
-> >       struct dw_pcie *pci = pcie->pci;
-> >       struct device *dev = pci->dev;
-> > +     u32 val;
-> >       int ret;
-> >
-> > +     /* enable PCIe clocks and resets */
-> > +     val = readl(pcie->parf + PCIE20_PARF_PHY_CTRL);
-> > +     val &= ~BIT(0);
-> > +     writel(val, pcie->parf + PCIE20_PARF_PHY_CTRL);
-> > +
-> > +     /* change DBI base address */
-> > +     writel(0, pcie->parf + PCIE20_PARF_DBI_BASE_ADDR);
-> > +
-> > +     /* MAC PHY_POWERDOWN MUX DISABLE  */
-> > +     val = readl(pcie->parf + PCIE20_PARF_SYS_CTRL);
-> > +     val &= ~BIT(29);
-> > +     writel(val, pcie->parf + PCIE20_PARF_SYS_CTRL);
-> > +
-> > +     val = readl(pcie->parf + PCIE20_PARF_MHI_CLOCK_RESET_CTRL);
-> > +     val |= BIT(4);
-> > +     writel(val, pcie->parf + PCIE20_PARF_MHI_CLOCK_RESET_CTRL);
-> > +
-> > +     val = readl(pcie->parf + PCIE20_PARF_AXI_MSTR_WR_ADDR_HALT_V2);
-> > +     val |= BIT(31);
-> > +     writel(val, pcie->parf + PCIE20_PARF_AXI_MSTR_WR_ADDR_HALT_V2);
-> > +
-> >       ret = clk_prepare_enable(res->pipe_clk);
-> >       if (ret) {
-> >               dev_err(dev, "cannot prepare/enable pipe clock\n");
-> > @@ -837,7 +851,6 @@ static int qcom_pcie_init_2_4_0(struct qcom_pcie *pcie)
-> >       struct qcom_pcie_resources_2_4_0 *res = &pcie->res.v2_4_0;
-> >       struct dw_pcie *pci = pcie->pci;
-> >       struct device *dev = pci->dev;
-> > -     u32 val;
-> >       int ret;
-> >
-> >       ret = reset_control_assert(res->axi_m_reset);
-> > @@ -962,6 +975,33 @@ static int qcom_pcie_init_2_4_0(struct qcom_pcie *pcie)
-> >       if (ret)
-> >               goto err_clks;
-> >
-> > +     return 0;
-> > +
-> > +err_clks:
-> > +     reset_control_assert(res->ahb_reset);
-> > +err_rst_ahb:
-> > +     reset_control_assert(res->pwr_reset);
-> > +err_rst_pwr:
-> > +     reset_control_assert(res->axi_s_reset);
-> > +err_rst_axi_s:
-> > +     reset_control_assert(res->axi_m_sticky_reset);
-> > +err_rst_axi_m_sticky:
-> > +     reset_control_assert(res->axi_m_reset);
-> > +err_rst_axi_m:
-> > +     reset_control_assert(res->pipe_sticky_reset);
-> > +err_rst_pipe_sticky:
-> > +     reset_control_assert(res->pipe_reset);
-> > +err_rst_pipe:
-> > +     reset_control_assert(res->phy_reset);
-> > +err_rst_phy:
-> > +     reset_control_assert(res->phy_ahb_reset);
-> > +     return ret;
-> > +}
-> > +
-> > +static int qcom_pcie_post_init_2_4_0(struct qcom_pcie *pcie)
-> > +{
-> > +     u32 val;
-> > +
-> >       /* enable PCIe clocks and resets */
-> >       val = readl(pcie->parf + PCIE20_PARF_PHY_CTRL);
-> >       val &= ~BIT(0);
-> > @@ -984,26 +1024,6 @@ static int qcom_pcie_init_2_4_0(struct qcom_pcie *pcie)
-> >       writel(val, pcie->parf + PCIE20_PARF_AXI_MSTR_WR_ADDR_HALT_V2);
-> >
-> >       return 0;
-> > -
-> > -err_clks:
-> > -     reset_control_assert(res->ahb_reset);
-> > -err_rst_ahb:
-> > -     reset_control_assert(res->pwr_reset);
-> > -err_rst_pwr:
-> > -     reset_control_assert(res->axi_s_reset);
-> > -err_rst_axi_s:
-> > -     reset_control_assert(res->axi_m_sticky_reset);
-> > -err_rst_axi_m_sticky:
-> > -     reset_control_assert(res->axi_m_reset);
-> > -err_rst_axi_m:
-> > -     reset_control_assert(res->pipe_sticky_reset);
-> > -err_rst_pipe_sticky:
-> > -     reset_control_assert(res->pipe_reset);
-> > -err_rst_pipe:
-> > -     reset_control_assert(res->phy_reset);
-> > -err_rst_phy:
-> > -     reset_control_assert(res->phy_ahb_reset);
-> > -     return ret;
-> >  }
-> >
-> >  static int qcom_pcie_get_resources_2_3_3(struct qcom_pcie *pcie)
-> > @@ -1237,7 +1257,6 @@ static int qcom_pcie_init_2_7_0(struct qcom_pcie *pcie)
-> >       struct qcom_pcie_resources_2_7_0 *res = &pcie->res.v2_7_0;
-> >       struct dw_pcie *pci = pcie->pci;
-> >       struct device *dev = pci->dev;
-> > -     u32 val;
-> >       int ret;
-> >
-> >       ret = regulator_bulk_enable(ARRAY_SIZE(res->supplies), res->supplies);
-> > @@ -1271,6 +1290,28 @@ static int qcom_pcie_init_2_7_0(struct qcom_pcie *pcie)
-> >       /* Wait for reset to complete, required on SM8450 */
-> >       usleep_range(1000, 1500);
-> >
-> > +     return 0;
-> > +err_disable_clocks:
-> > +     clk_bulk_disable_unprepare(res->num_clks, res->clks);
-> > +err_disable_regulators:
-> > +     regulator_bulk_disable(ARRAY_SIZE(res->supplies), res->supplies);
-> > +
-> > +     return ret;
-> > +}
-> > +
-> > +static void qcom_pcie_deinit_2_7_0(struct qcom_pcie *pcie)
-> > +{
-> > +     struct qcom_pcie_resources_2_7_0 *res = &pcie->res.v2_7_0;
-> > +
-> > +     clk_bulk_disable_unprepare(res->num_clks, res->clks);
-> > +     regulator_bulk_disable(ARRAY_SIZE(res->supplies), res->supplies);
-> > +}
-> > +
-> > +static int qcom_pcie_post_init_2_7_0(struct qcom_pcie *pcie)
-> > +{
-> > +     struct qcom_pcie_resources_2_7_0 *res = &pcie->res.v2_7_0;
-> > +     u32 val;
-> > +
-> >       /* configure PCIe to RC mode */
-> >       writel(DEVICE_TYPE_RC, pcie->parf + PCIE20_PARF_DEVICE_TYPE);
-> >
-> > @@ -1297,27 +1338,6 @@ static int qcom_pcie_init_2_7_0(struct qcom_pcie *pcie)
-> >               writel(val, pcie->parf + PCIE20_PARF_AXI_MSTR_WR_ADDR_HALT);
-> >       }
-> >
-> > -     return 0;
-> > -err_disable_clocks:
-> > -     clk_bulk_disable_unprepare(res->num_clks, res->clks);
-> > -err_disable_regulators:
-> > -     regulator_bulk_disable(ARRAY_SIZE(res->supplies), res->supplies);
-> > -
-> > -     return ret;
-> > -}
-> > -
-> > -static void qcom_pcie_deinit_2_7_0(struct qcom_pcie *pcie)
-> > -{
-> > -     struct qcom_pcie_resources_2_7_0 *res = &pcie->res.v2_7_0;
-> > -
-> > -     clk_bulk_disable_unprepare(res->num_clks, res->clks);
-> > -     regulator_bulk_disable(ARRAY_SIZE(res->supplies), res->supplies);
-> > -}
-> > -
-> > -static int qcom_pcie_post_init_2_7_0(struct qcom_pcie *pcie)
-> > -{
-> > -     struct qcom_pcie_resources_2_7_0 *res = &pcie->res.v2_7_0;
-> > -
-> >       /* Set pipe clock as clock source for pcie_pipe_clk_src */
-> >       if (pcie->cfg->pipe_clk_need_muxing)
-> >               clk_set_parent(res->pipe_clk_src, res->phy_pipe_clk);
-> > @@ -1569,6 +1589,7 @@ static const struct dw_pcie_host_ops qcom_pcie_dw_ops = {
-> >  static const struct qcom_pcie_ops ops_2_1_0 = {
-> >       .get_resources = qcom_pcie_get_resources_2_1_0,
-> >       .init = qcom_pcie_init_2_1_0,
-> > +     .post_init = qcom_pcie_post_init_2_1_0,
-> >       .deinit = qcom_pcie_deinit_2_1_0,
-> >       .ltssm_enable = qcom_pcie_2_1_0_ltssm_enable,
-> >  };
-> > @@ -1577,6 +1598,7 @@ static const struct qcom_pcie_ops ops_2_1_0 = {
-> >  static const struct qcom_pcie_ops ops_1_0_0 = {
-> >       .get_resources = qcom_pcie_get_resources_1_0_0,
-> >       .init = qcom_pcie_init_1_0_0,
-> > +     .post_init = qcom_pcie_post_init_1_0_0,
-> >       .deinit = qcom_pcie_deinit_1_0_0,
-> >       .ltssm_enable = qcom_pcie_2_1_0_ltssm_enable,
-> >  };
-> > @@ -1595,6 +1617,7 @@ static const struct qcom_pcie_ops ops_2_3_2 = {
-> >  static const struct qcom_pcie_ops ops_2_4_0 = {
-> >       .get_resources = qcom_pcie_get_resources_2_4_0,
-> >       .init = qcom_pcie_init_2_4_0,
-> > +     .post_init = qcom_pcie_post_init_2_4_0,
-> >       .deinit = qcom_pcie_deinit_2_4_0,
-> >       .ltssm_enable = qcom_pcie_2_3_2_ltssm_enable,
-> >  };
-> > --
-> > 2.36.1
-> >
+> Konrad
