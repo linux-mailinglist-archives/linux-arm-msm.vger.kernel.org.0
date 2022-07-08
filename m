@@ -2,175 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1AC9D56C37C
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Jul 2022 01:14:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9C92D56C223
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Jul 2022 01:12:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238002AbiGHW3D (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Jul 2022 18:29:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52336 "EHLO
+        id S237449AbiGHXCD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Jul 2022 19:02:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43080 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238810AbiGHW3C (ORCPT
+        with ESMTP id S232561AbiGHXCC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Jul 2022 18:29:02 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45DB113B456;
-        Fri,  8 Jul 2022 15:29:01 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id h17so166275wrx.0;
-        Fri, 08 Jul 2022 15:29:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:from:to:cc:subject:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=j3LgYrBXb8Xej7w4SzEY3vle6k1E4Iga/2coehYv3mU=;
-        b=Ln0Raqskc43v91bpB69fEl7WCNIqeHpX/pEQzUtNNYhPVNvxd4/dVc68WVbQsB5O5D
-         82Z+lNnDaHqG/j83N8FP8uHvgQoz7KklD45IoBkViMUQn2XSqIujiPP7Cx/QFy+6+8vx
-         NWbhjekgSB4HNecX7eIiqPCAszcPuO2b5M3h9d3gDy97foDANu4ZEWcgqQbN/HRH0HX6
-         KJKDVJrxd6vlRw8VOQrZAH/Q+ASmdn+HXQzoHhnMW9WCqIpMNllwHl+VUbLGUWfNVPXy
-         SQb6DwrjDuBQlUkqCEiZdCP6dY2EQdm7+wO1pOw8CtpCgdpSS6Jy4HY9yq2ZiDv8AFA6
-         Ce0g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:from:to:cc:subject:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=j3LgYrBXb8Xej7w4SzEY3vle6k1E4Iga/2coehYv3mU=;
-        b=wJgJXLrkF5/F/w+nB/Iyum6T/Zkq9Sb3R/l/2qxGL+OiJpOOMFQuDo7N/D0Dje4Hhm
-         dYDi1tCGC8OncuZkudW2TjmhRg3oKeS23kONTGnSGaHoh2I7WUVq7CRTAiJTV0ChPFvz
-         tNagHJ3FCHRRmya7NQ/9egzB/nnCf81zRfjJUT6c2A6qoy+3IfnVh0UrTCTg4RYiyOMX
-         vcmTjoDnfha1fyX3oybvmxPocx1gmnZvt5dzFo3l8YTEs+OOjWid0IA+FmGLuwiug3aK
-         SpcVQEHtflJa1heIjGuM0qasp+FFz/N2QEEJOXFzEdxmwLfFQx3NCXazdX82k8KiirGD
-         cUDQ==
-X-Gm-Message-State: AJIora9pLdSrRIdmmKdbHbjQG1/TC7liLSR8ZjdTRXjh61xeSferwxIV
-        otAWbJXkrAxpV4MVLOs5zZo=
-X-Google-Smtp-Source: AGRyM1vAkR67nTSb5NgAstvrN5dvgXn24dki39JTEbusyg9Ghbd4SkYyt+EwbboDwQfj5vimgNNR2Q==
-X-Received: by 2002:adf:979b:0:b0:21d:868a:7f3b with SMTP id s27-20020adf979b000000b0021d868a7f3bmr5110569wrb.451.1657319339427;
-        Fri, 08 Jul 2022 15:28:59 -0700 (PDT)
-Received: from Ansuel-xps. (93-42-70-190.ip85.fastwebnet.it. [93.42.70.190])
-        by smtp.gmail.com with ESMTPSA id u17-20020adfdb91000000b002185d79dc7fsm30471wri.75.2022.07.08.15.28.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 Jul 2022 15:28:58 -0700 (PDT)
-Message-ID: <62c8afaa.1c69fb81.2a871.00ca@mx.google.com>
-X-Google-Original-Message-ID: <YsivqE9G6CIEhBSm@Ansuel-xps.>
-Date:   Sat, 9 Jul 2022 00:28:56 +0200
-From:   Christian Marangi <ansuelsmth@gmail.com>
-To:     Bjorn Helgaas <helgaas@kernel.org>
-Cc:     Robert Marko <robimarko@gmail.com>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Fri, 8 Jul 2022 19:02:02 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3DA19371BF;
+        Fri,  8 Jul 2022 16:02:00 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id DFB02B82A0E;
+        Fri,  8 Jul 2022 23:01:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B3BDC341C0;
+        Fri,  8 Jul 2022 23:01:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1657321317;
+        bh=wNfnyz3LmMTDakpbo0s1J0PDENVco/YTdTzC4Br7C8c=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:From;
+        b=DkmuRAsiEV3Q3CN2Sac6ar1BgyMVW3WlbCLbQJtwvnSA9QqDLLsNFahsvRXMXrFXQ
+         2R4/bSVavs80cYPoDBpg3Q/XVUuOJobJqMhGkiN3PKogV6vCG42UzEh2CRjwDAio5K
+         eywro1EVoK4n/ntKFsaxAA6HIHlNnsuIlrB7XZk54betDv5NQ0o7pD7zI/f3HqSJrg
+         EwWTpZK6xkDL1hhLdw1+i8DBPQdHp06K294czZS8ZANqm3XaAhsWEgifzXdK31WVJp
+         bfv0jXPHI2BKeDLQ/i1PCedBVT0qmEO4ZcmV/4zD5QGOSCk/crIV8lB00mBBkJukkN
+         nQkuxLZ5AZOqg==
+Date:   Fri, 8 Jul 2022 18:01:55 -0500
+From:   Bjorn Helgaas <helgaas@kernel.org>
+To:     Christian Marangi <ansuelsmth@gmail.com>
+Cc:     Stanimir Varbanov <svarbanov@mm-sol.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        lpieralisi@kernel.org, Rob Herring <robh@kernel.org>, kw@linux.com,
-        Bjorn Helgaas <bhelgaas@google.com>, p.zabel@pengutronix.de,
-        jingoohan1@gmail.com, linux-pci@vger.kernel.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        johan+linaro@kernel.org,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Subject: Re: [PATCH v4 2/2] PCI: qcom: Move all DBI register accesses after
- phy_power_on()
-References: <62c883e3.1c69fb81.45d3d.7d2a@mx.google.com>
- <20220708201125.GA371162@bhelgaas>
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>, linux-pci@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        stable@vger.kernel.org
+Subject: Re: [PATCH] PCI: qcom: Enable clocks only after PARF_PHY setup for
+ rev 2.1.0
+Message-ID: <20220708230155.GA388993@bhelgaas>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220708201125.GA371162@bhelgaas>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <20220708222743.27019-1-ansuelsmth@gmail.com>
+X-Spam-Status: No, score=-7.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jul 08, 2022 at 03:11:25PM -0500, Bjorn Helgaas wrote:
-> On Fri, Jul 08, 2022 at 09:22:09PM +0200, Christian Marangi wrote:
-> > On Fri, Jul 08, 2022 at 02:17:09PM -0500, Bjorn Helgaas wrote:
-> > > On Fri, Jul 08, 2022 at 07:02:48PM +0200, Christian Marangi wrote:
-> > > > On Fri, Jul 08, 2022 at 06:47:57PM +0200, Christian Marangi wrote:
-> > > > > On Fri, Jul 08, 2022 at 06:39:37PM +0200, Robert Marko wrote:
-> > > > > > On Thu, 7 Jul 2022 at 21:41, Bjorn Helgaas <helgaas@kernel.org> wrote:
-> > > > > > > On Fri, Jun 24, 2022 at 12:44:20PM +0200, Robert Marko wrote:
-> > > > > > > > IPQ8074 requires the PHY to be powered on before accessing DBI registers.
-> > > > > > > > It's not clear whether other variants have the same dependency, but there
-> > > > > > > > seems to be no reason for them to be different, so move all the DBI
-> > > > > > > > accesses from .init() to .post_init() so they are all after phy_power_on().
-> > > > > > > >
-> > > > > > > > Signed-off-by: Robert Marko <robimarko@gmail.com>
-> > > > > > >
-> > > > > > > Would any of the qcom driver folks care to review and ack this?
-> > > > > > > Stanimir, Andy, Bjorn A (from get_maintainer.pl)?
-> > > > > 
-> > > > > Hi Bjorn,
-> > > > > I tested this on ipq806x and the current patch cause regression as pci
-> > > > > doesn't work anymore...
-> > > > > This is a before the patch [1] and this is an after [2].
-> > > > > 
-> > > > > As you notice the main problem here is
-> > > > > [    2.559962] qcom-pcie 1b700000.pci: Phy link never came up
-> > > > > 
-> > > > > The cause of this has already been bisected and actually it was a fixup
-> > > > > pushed some time ago for 2_1_0.
-> > > > > 
-> > > > > Uboot can leave the pci in an underfined state and this
-> > > > > writel(1, pcie->parf + PCIE20_PARF_PHY_CTRL);
-> > > > > is never called.
-> > > > > 
-> > > > > This is mandatory to a correct init and MUST be called before regulator
-> > > > > enable and reset deassert or the "Phy link never came up" problem is
-> > > > > triggered.
-> > > > > 
-> > > > > So to fix this we just have to have
-> > > > > writel(1, pcie->parf + PCIE20_PARF_PHY_CTRL);
-> > > > > in qcom_pcie_init_2_1_0 right after the reset_contro_assert.
-> > > > > 
-> > > > > This command is also present in qcom_pcie_init_2_3_2 where the same
-> > > > > exact reg is written so I assume 2_3_2 have the same regression and the
-> > > > > write must be placed in init and can't be moved to post_init.
-> > > > > 
-> > > > > Feel free to tell me how to proceed if I should post an additional patch
-> > > > > or you prefer Robi to respin this with the few lines reverted.
-> > > > > 
-> > > > > [1] https://gist.github.com/Ansuel/ec827319e585630356fc586273db6f0d
-> > > > > [2] https://gist.github.com/Ansuel/63fbcab2681cd28a61ec52d7874fa30d
-> > > > 
-> > > > While testing this I notice something odd...
-> > > > 
-> > > > 2_4_2 prepare the pipe clock only AFTER PCIe clocks and reset are
-> > > > enabled while in 2_1_0... That made me think there could be a problem
-> > > > with the current code of 2_1_0... A quick change made me discover that
-> > > > the problem is actually that we enable prepare_enable clock BEFORE the
-> > > > value is written in PCIE20_PARF_PHY_CTRL.
-> > > > 
-> > > > By moving the clk_bulk_prepare_enable after the "enable PCIe clocks and
-> > > > resets" make the pci work with the current change...
-> > > > 
-> > > > So it could be that the current changes are correct and it's really just
-> > > > a bug in 2_1_0 enabling clock before writing the correct value...
-> > > > 
-> > > > Tell me how to proceed... think at this point a good idea would be to
-> > > > create a separate patch and fix this for good.
-> > > 
-> > > Hmm, I think I made a mistake when I put this patch in the middle and
-> > > applied other stuff on top of it.  I'd like to just postpone this
-> > > patch while we work out these issues, but I think it's not completely
-> > > trivial since it's in the middle.  I'll try to straighten this out
-> > > next week.
-> > 
-> > From my discoveries it really seems just a bug in 2_1_0 with enabling
-> > the phy clk BEFORE setting the require bit...
-> > 
-> > Moving the bulk_prepare_enable after the bit is set makes everything
-> > works as it should... If you want I can send a patch as that is clearly
-> > a bug and currenty we have a workaround in place...
+On Sat, Jul 09, 2022 at 12:27:43AM +0200, Christian Marangi wrote:
+> We currently enable clocks BEFORE we write to PARF_PHY_CTRL reg to
+> enable clocks and resets. This case the driver to never set to a ready
+> state with the error 'Phy link never came up'.
 > 
-> That'd be great!  Since it's an actual bug fix, I think it would be
-> good if it were a separate patch instead of doing in the middle of a
-> patch that also does other things.
+> This in fact is caused by the phy clock getting enabled before setting
+> the required bits in the PARF regs.
 > 
-> Bjorn
+> A workaround for this was set but with this new discovery we can drop
+> the workaround and use a proper solution to the problem by just enabling
+> the clock only AFTER the PARF_PHY_CTRL bit is set.
+> 
+> This correctly setup the pcie line and makes it usable even when a
+> bootloader leave the pcie line to a underfined state.
 
-Just sent the small fix that will indirectly make this series work as it
-should. 
+Is "pcie" here a signal name?  Maybe this refers to the "PCIe link"?
 
--- 
-	Ansuel
+> Fixes: 82a823833f4e ("PCI: qcom: Add Qualcomm PCIe controller driver")
+> Cc: stable@vger.kernel.org # v5.4+
+> Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+
+Thanks, I put this on
+https://git.kernel.org/pub/scm/linux/kernel/git/helgaas/pci.git,
+pci/ctrl/qcom-pending branch (head 47b4ec9d2e60).
+
+Can you take a look and make sure I didn't mess up the conflict
+resolution with the rest of the series?
+
+> ---
+>  drivers/pci/controller/dwc/pcie-qcom.c | 10 ++++------
+>  1 file changed, 4 insertions(+), 6 deletions(-)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index 2ea13750b492..da13a66ced14 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -337,8 +337,6 @@ static int qcom_pcie_init_2_1_0(struct qcom_pcie *pcie)
+>  	reset_control_assert(res->ext_reset);
+>  	reset_control_assert(res->phy_reset);
+>  
+> -	writel(1, pcie->parf + PCIE20_PARF_PHY_CTRL);
+> -
+>  	ret = regulator_bulk_enable(ARRAY_SIZE(res->supplies), res->supplies);
+>  	if (ret < 0) {
+>  		dev_err(dev, "cannot enable regulators\n");
+> @@ -381,15 +379,15 @@ static int qcom_pcie_init_2_1_0(struct qcom_pcie *pcie)
+>  		goto err_deassert_axi;
+>  	}
+>  
+> -	ret = clk_bulk_prepare_enable(ARRAY_SIZE(res->clks), res->clks);
+> -	if (ret)
+> -		goto err_clks;
+> -
+>  	/* enable PCIe clocks and resets */
+>  	val = readl(pcie->parf + PCIE20_PARF_PHY_CTRL);
+>  	val &= ~BIT(0);
+>  	writel(val, pcie->parf + PCIE20_PARF_PHY_CTRL);
+>  
+> +	ret = clk_bulk_prepare_enable(ARRAY_SIZE(res->clks), res->clks);
+> +	if (ret)
+> +		goto err_clks;
+> +
+>  	if (of_device_is_compatible(node, "qcom,pcie-ipq8064") ||
+>  	    of_device_is_compatible(node, "qcom,pcie-ipq8064-v2")) {
+>  		writel(PCS_DEEMPH_TX_DEEMPH_GEN1(24) |
+> -- 
+> 2.36.1
+> 
