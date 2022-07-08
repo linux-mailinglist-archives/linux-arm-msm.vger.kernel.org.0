@@ -2,67 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0413B56BAB3
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jul 2022 15:30:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A516C56BAF9
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jul 2022 15:39:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237865AbiGHN3n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Jul 2022 09:29:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35862 "EHLO
+        id S238381AbiGHNi4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Jul 2022 09:38:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45398 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238111AbiGHN3k (ORCPT
+        with ESMTP id S238385AbiGHNix (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Jul 2022 09:29:40 -0400
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42A8E2CC99;
-        Fri,  8 Jul 2022 06:29:39 -0700 (PDT)
-Received: by mail-ej1-x635.google.com with SMTP id b11so374014eju.10;
-        Fri, 08 Jul 2022 06:29:39 -0700 (PDT)
+        Fri, 8 Jul 2022 09:38:53 -0400
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8DDF275FB;
+        Fri,  8 Jul 2022 06:38:50 -0700 (PDT)
+Received: by mail-ej1-x62f.google.com with SMTP id b11so416007eju.10;
+        Fri, 08 Jul 2022 06:38:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=SitIzPNrykTUBpjOjgqXfttGV3muXZK07qKfzNiff9g=;
-        b=CFueulnM0SOTmW9AMBvEzSiCcP/V3J/9E6QKLzMQbBvlL9NAGQ9w8Xduk8WPIsf8zQ
-         rLan/VyQrdXZouRD1eWkztmeVcRgWAC9+Y9wRPUrW6+vFycoT5VMsxk9ziluu4OdWwhz
-         sbE5iDA/w/RolzziNFT0rooawNH58xu3mpqa28XoIQc/rGhaKASgcOaD4ZzX9OTarXz4
-         YgNjKWB+6heMp2cp7v7PL8HjDhyxPsJ5iZyA+4DJ8tvQcTGGyUuBbRII6xTIEWmkZUMe
-         t3QC1Uwv2pVXDicTHZvo0FieT/2oPowe18XuLeQKUIdVovmZHiAf5aEBU28SS9K5ztkh
-         pu8A==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=PfwS4GGde9mWJV/0ULh/19pUwGMjrZxv0owgG9wqUNk=;
+        b=X5Lw9rsmvSRSWD0YiP1xPs5KDgIX/IOsTpwzeytS4Xfo8HFc38JTK17a9eTiRN+Mux
+         XAVEFe0OXf230oHIKZXEw8bPYMd2Lovovh7BtZR/gZXmaSb+7AYhlyU03pEMN/iwozCL
+         fcSRNERgX5oKg/5ZdZudryEezOiRDVBGz8vns8yISFSOwmCLHmVFUCrd0iy4q/Y8E8rj
+         C753NashyGZIZnCiON7DTmGr/bFpU4bVKZQH1B8QDtBF+oSHJWOV94blOm9IlMKV2ZiN
+         ZCte/HKBeUTlwNPF5XCYIomq0Pq4c3pNCuusSj/HiTKIvb81VZSZETA2LHBeApaUtrfS
+         BP5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=SitIzPNrykTUBpjOjgqXfttGV3muXZK07qKfzNiff9g=;
-        b=Sv5l83agHK5MJZEXZujhKSmPacSbMQ3w4B42Jxh3zvzYnv8of3KNBNTtptxPqdxfw3
-         g1C7ZrvUc6knoSino7lJE4q2WIf7AvzBZS5Xg66L99sQWe+shIn1cpzKf6HbyXuPR02h
-         +XJfXZgWcJyQfXxKFl8MvlOtYPYbqZZ0ekrAJmS6AjCAiVS/f6YUVlUQ9VDHHZCGZ9Uj
-         fWm/Lg19+W6FYsyyHViX83tdBjje+1g2D7lYChh5wYSMYjkEFz/4kg0pTrzvcKAzKWj/
-         h16vwCLOj0i61p28ooZT0xLx+FcDHN6kcNQb33BX2R8Or2asYD2/ELlR352Vu7vjZ1LR
-         luWQ==
-X-Gm-Message-State: AJIora94pOJ7vhnVqUN0vfsgSJG9QOejItPZh5DfltoOlafJ0rzBphwx
-        CGzUFeLttH9HMNMkE6A79uY=
-X-Google-Smtp-Source: AGRyM1sLvVYYfiQq/coGi26gIDJfJWfPAI5lwfuGo71IIZ2PL3ZlCSrfP8F9V69NWGOggV3ZkImVRg==
-X-Received: by 2002:a17:907:9715:b0:726:2a3b:9f84 with SMTP id jg21-20020a170907971500b007262a3b9f84mr3533451ejc.414.1657286977788;
-        Fri, 08 Jul 2022 06:29:37 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=PfwS4GGde9mWJV/0ULh/19pUwGMjrZxv0owgG9wqUNk=;
+        b=QbRgb/1IGOy/1rOMRDWVlszhXgvDEpCjYnwQMHRzQMvg1mpCRxHCcBE1nH7ra1gnfv
+         FkYAZhXMeZBa7COpOaMoyNSuNcCnW5nk3i03+9s2bsiptQFTToH3NQ1Re0BX7vWu0NN1
+         Q/waKLvXXRbDMj1Nb/L6Rn3YtHceQJRymIxqcil81VF63N6jYQv/HEoEQZfuSmFkpNzU
+         drNSI0UKBPfmXOSwZ6oLi+1ypfzqRfS7+hrTDlE5IKHkkRcfH/J/fB7wljqxlFdo2FKT
+         QIZZgEzFX0d4D0AXuF/xfl8zts4/3bntuvl6/XCScHcSYoBlrv4tzJOuK32shyxb63qC
+         6TDw==
+X-Gm-Message-State: AJIora/VF4z5hczwbgPXKH4ApyS+RCTjQqCkDKAsBT/5ux3jGHBpt3xn
+        uFM0FkGWe9ufRF7/jSmV1B4=
+X-Google-Smtp-Source: AGRyM1tVx21c/odUuQlbedhO7DAKKPjC5OODlvkhc4H5byEROgd+PIldd4maYHhM0MHdnlfjFUwpPA==
+X-Received: by 2002:a17:907:75f3:b0:72b:1cde:2a00 with SMTP id jz19-20020a17090775f300b0072b1cde2a00mr3626863ejc.147.1657287528982;
+        Fri, 08 Jul 2022 06:38:48 -0700 (PDT)
 Received: from fedora.robimarko.hr (dh207-96-250.xnet.hr. [88.207.96.250])
-        by smtp.googlemail.com with ESMTPSA id q4-20020a1709064cc400b006fec4ee28d0sm20170398ejt.189.2022.07.08.06.29.36
+        by smtp.googlemail.com with ESMTPSA id d8-20020a056402000800b0043a71c376a2sm9583016edu.33.2022.07.08.06.38.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 Jul 2022 06:29:37 -0700 (PDT)
+        Fri, 08 Jul 2022 06:38:48 -0700 (PDT)
 From:   Robert Marko <robimarko@gmail.com>
 To:     agross@kernel.org, bjorn.andersson@linaro.org,
-        konrad.dybcio@somainline.org, amitk@kernel.org,
-        thara.gopinath@gmail.com, rafael@kernel.org,
-        daniel.lezcano@linaro.org, rui.zhang@intel.com, robh+dt@kernel.org,
+        konrad.dybcio@somainline.org, robh+dt@kernel.org,
         krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 Cc:     Robert Marko <robimarko@gmail.com>
-Subject: [PATCH v5 5/5] arm64: dts: ipq8074: add thermal nodes
-Date:   Fri,  8 Jul 2022 15:29:30 +0200
-Message-Id: <20220708132930.595897-5-robimarko@gmail.com>
+Subject: [PATCH 1/2] arm64: dts: qcom: ipq8074: add #size/address-cells to DTSI
+Date:   Fri,  8 Jul 2022 15:38:45 +0200
+Message-Id: <20220708133846.599735-1-robimarko@gmail.com>
 X-Mailer: git-send-email 2.36.1
-In-Reply-To: <20220708132930.595897-1-robimarko@gmail.com>
-References: <20220708132930.595897-1-robimarko@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -75,134 +70,59 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-IPQ8074 has a tsens v2.3.0 peripheral which monitors
-temperatures around the various subsystems on the
-die.
+Add #size-cells and #address-cells to the SoC DTSI to avoid duplicating
+the same properties in board DTS files.
 
-So lets add the tsens and thermal zone nodes, passive
-CPU cooling will come in later patches after CPU frequency
-scaling is supported.
+Remove the mentioned properties from current board DTS files.
 
 Signed-off-by: Robert Marko <robimarko@gmail.com>
 ---
-Changes in v5:
-* Rebase to apply on next-20220708
----
- arch/arm64/boot/dts/qcom/ipq8074.dtsi | 96 +++++++++++++++++++++++++++
- 1 file changed, 96 insertions(+)
+ arch/arm64/boot/dts/qcom/ipq8074-hk01.dts  | 2 --
+ arch/arm64/boot/dts/qcom/ipq8074-hk10.dtsi | 3 ---
+ arch/arm64/boot/dts/qcom/ipq8074.dtsi      | 3 +++
+ 3 files changed, 3 insertions(+), 5 deletions(-)
 
+diff --git a/arch/arm64/boot/dts/qcom/ipq8074-hk01.dts b/arch/arm64/boot/dts/qcom/ipq8074-hk01.dts
+index a73909a24935..9dfa2eefef29 100644
+--- a/arch/arm64/boot/dts/qcom/ipq8074-hk01.dts
++++ b/arch/arm64/boot/dts/qcom/ipq8074-hk01.dts
+@@ -6,8 +6,6 @@
+ #include "pmp8074.dtsi"
+ 
+ / {
+-	#address-cells = <0x2>;
+-	#size-cells = <0x2>;
+ 	model = "Qualcomm Technologies, Inc. IPQ8074-HK01";
+ 	compatible = "qcom,ipq8074-hk01", "qcom,ipq8074";
+ 	interrupt-parent = <&intc>;
+diff --git a/arch/arm64/boot/dts/qcom/ipq8074-hk10.dtsi b/arch/arm64/boot/dts/qcom/ipq8074-hk10.dtsi
+index ce86d9b10d69..c67181b173ca 100644
+--- a/arch/arm64/boot/dts/qcom/ipq8074-hk10.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq8074-hk10.dtsi
+@@ -7,9 +7,6 @@
+ #include "ipq8074.dtsi"
+ 
+ / {
+-	#address-cells = <0x2>;
+-	#size-cells = <0x2>;
+-
+ 	interrupt-parent = <&intc>;
+ 
+ 	aliases {
 diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-index 2f15a1ec4aae..68197d633271 100644
+index 83f42e21ff43..73e7e9aad194 100644
 --- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
 +++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-@@ -308,6 +308,16 @@ prng: rng@e3000 {
- 			status = "disabled";
- 		};
+@@ -8,6 +8,9 @@
+ #include <dt-bindings/clock/qcom,gcc-ipq8074.h>
  
-+		tsens: thermal-sensor@4a9000 {
-+			compatible = "qcom,ipq8074-tsens";
-+			reg = <0x4a9000 0x1000>, /* TM */
-+			      <0x4a8000 0x1000>; /* SROT */
-+			interrupts = <GIC_SPI 184 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "combined";
-+			#qcom,sensors = <16>;
-+			#thermal-sensor-cells = <1>;
-+		};
+ / {
++	#address-cells = <2>;
++	#size-cells = <2>;
 +
- 		cryptobam: dma-controller@704000 {
- 			compatible = "qcom,bam-v1.7.0";
- 			reg = <0x00704000 0x20000>;
-@@ -909,4 +919,90 @@ timer {
- 			     <GIC_PPI 4 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>,
- 			     <GIC_PPI 1 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>;
- 	};
-+
-+	thermal-zones {
-+		nss-top-thermal {
-+			polling-delay-passive = <250>;
-+			polling-delay = <1000>;
-+
-+			thermal-sensors = <&tsens 4>;
-+		};
-+
-+		nss0-thermal {
-+			polling-delay-passive = <250>;
-+			polling-delay = <1000>;
-+
-+			thermal-sensors = <&tsens 5>;
-+		};
-+
-+		nss1-thermal {
-+			polling-delay-passive = <250>;
-+			polling-delay = <1000>;
-+
-+			thermal-sensors = <&tsens 6>;
-+		};
-+
-+		wcss-phya0-thermal {
-+			polling-delay-passive = <250>;
-+			polling-delay = <1000>;
-+
-+			thermal-sensors = <&tsens 7>;
-+		};
-+
-+		wcss-phya1-thermal {
-+			polling-delay-passive = <250>;
-+			polling-delay = <1000>;
-+
-+			thermal-sensors = <&tsens 8>;
-+		};
-+
-+		cpu0_thermal: cpu0-thermal {
-+			polling-delay-passive = <250>;
-+			polling-delay = <1000>;
-+
-+			thermal-sensors = <&tsens 9>;
-+		};
-+
-+		cpu1_thermal: cpu1-thermal {
-+			polling-delay-passive = <250>;
-+			polling-delay = <1000>;
-+
-+			thermal-sensors = <&tsens 10>;
-+		};
-+
-+		cpu2_thermal: cpu2-thermal {
-+			polling-delay-passive = <250>;
-+			polling-delay = <1000>;
-+
-+			thermal-sensors = <&tsens 11>;
-+		};
-+
-+		cpu3_thermal: cpu3-thermal {
-+			polling-delay-passive = <250>;
-+			polling-delay = <1000>;
-+
-+			thermal-sensors = <&tsens 12>;
-+		};
-+
-+		cluster_thermal: cluster-thermal {
-+			polling-delay-passive = <250>;
-+			polling-delay = <1000>;
-+
-+			thermal-sensors = <&tsens 13>;
-+		};
-+
-+		wcss-phyb0-thermal {
-+			polling-delay-passive = <250>;
-+			polling-delay = <1000>;
-+
-+			thermal-sensors = <&tsens 14>;
-+		};
-+
-+		wcss-phyb1-thermal {
-+			polling-delay-passive = <250>;
-+			polling-delay = <1000>;
-+
-+			thermal-sensors = <&tsens 15>;
-+		};
-+	};
- };
+ 	model = "Qualcomm Technologies, Inc. IPQ8074";
+ 	compatible = "qcom,ipq8074";
+ 
 -- 
 2.36.1
 
