@@ -2,159 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 61EA956C358
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Jul 2022 01:14:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D804456C219
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Jul 2022 01:12:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231845AbiGHWED (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Jul 2022 18:04:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35336 "EHLO
+        id S234480AbiGHWTI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Jul 2022 18:19:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44362 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229749AbiGHWEC (ORCPT
+        with ESMTP id S232561AbiGHWTH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Jul 2022 18:04:02 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 695B2192BA;
-        Fri,  8 Jul 2022 15:04:01 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 1E334B8296F;
-        Fri,  8 Jul 2022 22:04:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCBB7C341C0;
-        Fri,  8 Jul 2022 22:03:57 +0000 (UTC)
-Date:   Fri, 8 Jul 2022 18:03:56 -0400
-From:   Steven Rostedt <rostedt@goodmis.org>
-To:     David Collins <quic_collinsd@quicinc.com>
-Cc:     Stephen Boyd <sboyd@kernel.org>, Ingo Molnar <mingo@redhat.com>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        Ankit Gupta <ankgupta@codeaurora.org>,
-        "Gilad Avidov" <gavidov@codeaurora.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        <stable@vger.kernel.org>
-Subject: Re: [PATCH] spmi: trace: fix stack-out-of-bound access in SPMI
- tracing functions
-Message-ID: <20220708180356.449203f9@gandalf.local.home>
-In-Reply-To: <20220627235512.2272783-1-quic_collinsd@quicinc.com>
-References: <20220627235512.2272783-1-quic_collinsd@quicinc.com>
-X-Mailer: Claws Mail 3.17.8 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
+        Fri, 8 Jul 2022 18:19:07 -0400
+Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9CBFEA2E58
+        for <linux-arm-msm@vger.kernel.org>; Fri,  8 Jul 2022 15:19:06 -0700 (PDT)
+Received: by mail-ot1-x332.google.com with SMTP id y10-20020a9d634a000000b006167f7ce0c5so175161otk.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Jul 2022 15:19:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=Q7GsjyD5ZIUuB9wkT8wQatMbGivKt7bFeoH+S+1Drso=;
+        b=aQtiASxaGDbA6G15nNaIcGm1nMi8rRXy0dSuIoQgU4z5AiPD9Sqidya8BPCcd2J2JR
+         9Hv1FTkQebDPiYBpYIho1CN8H4fKL7q7hnVY/NJzymXqR29FGfgDg4nxVqArokyhs3aY
+         wg9KAzzp/Y8a+393QEbnzdmQI9wi8zcLZj6HGBDcxQrzSrOSpja8WbOaIDlls+qmIlai
+         T3BhabwJ6DDMWRovTDbzNWYYyoJ/56MWStmQIz4ElRwLtSgi4PpuzF+BN8MU9scf3BT1
+         RLrV+z90lq8sSwZ/akcn1xmB/C0ix17gpY1BWM35vOTPc/ELPyqbNF/hkn4INQrBgPmO
+         F9Jg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=Q7GsjyD5ZIUuB9wkT8wQatMbGivKt7bFeoH+S+1Drso=;
+        b=UlEsfUYjNY0DOwxHTKFRtlW1bnAWX23Fa3U+X92k0wnt9BqOn6AD6kiV2KEiDms1ev
+         UZNIBKi2IP1tBV3QkXsavrJFkzcFZLFX7nzuyoFMaGRcUpBcFu9XKpNdyrUfKtX4ywVS
+         Aj2uLRejya/uEYBJ2eb5wbkMAsOH4FeCAZgnYp1OenaBcqFqaNmN6WpNQTPy/gBrYOnX
+         IpJnxTfjlS3W6yGbW6FGQiAuEWO9XyG1jGCY5ojqTMiG7QFuO12pXj63x7XnMlrFDj3k
+         KcTqZzVlPxtj0Ha3g88QDOzlBFqhijnA8BBRYG0KfFQ+wRMMuqIh47ab2/0OHpqMuo5U
+         OuGQ==
+X-Gm-Message-State: AJIora8MC+ySXdCPyAbDhCLS8mQQh95MjNvlHKfkJx8Eytg7dON2XqZB
+        enc1wln0KuFLx1MfJRv42CXw1w==
+X-Google-Smtp-Source: AGRyM1vjNEAD9R+jnkAnxWGD+Mwyymetsx+lLSaxGkwW+QfmWQOFvT1NBkgnA6G9VOIpbVybaTaCVw==
+X-Received: by 2002:a9d:2f42:0:b0:616:eb86:e8b4 with SMTP id h60-20020a9d2f42000000b00616eb86e8b4mr2588486otb.333.1657318745806;
+        Fri, 08 Jul 2022 15:19:05 -0700 (PDT)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id y10-20020a9d518a000000b00616a2aa298asm48907otg.75.2022.07.08.15.19.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 08 Jul 2022 15:19:05 -0700 (PDT)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Johan Hovold <johan+linaro@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org,
+        Rob Herring <robh+dt@kernel.org>
+Subject: Re: [PATCH] arm64: dts: qcom: sc7280: fix PCIe clock reference
+Date:   Fri,  8 Jul 2022 17:19:01 -0500
+Message-Id: <165731872887.1018153.10612611844186430044.b4-ty@linaro.org>
+X-Mailer: git-send-email 2.32.0
+In-Reply-To: <20220707064222.15717-1-johan+linaro@kernel.org>
+References: <20220707064222.15717-1-johan+linaro@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-6.7 required=5.0 tests=BAYES_00,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 27 Jun 2022 16:55:12 -0700
-David Collins <quic_collinsd@quicinc.com> wrote:
+On Thu, 7 Jul 2022 08:42:22 +0200, Johan Hovold wrote:
+> The recent commit that dropped the PCIe PHY clock index failed to update
+> the PCIe node reference.
+> 
+> 
 
-> trace_spmi_write_begin() and trace_spmi_read_end() both call
-> memcpy() with a length of "len + 1".  This leads to one extra
-> byte being read beyond the end of the specified buffer.  Fix
-> this out-of-bound memory access by using a length of "len"
-> instead.
-> 
-> Here is a KASAN log showing the issue:
-> 
-> BUG: KASAN: stack-out-of-bounds in trace_event_raw_event_spmi_read_end+0x1d0/0x234
-> Read of size 2 at addr ffffffc0265b7540 by task thermal@2.0-ser/1314
-> ...
-> Call trace:
->  dump_backtrace+0x0/0x3e8
->  show_stack+0x2c/0x3c
->  dump_stack_lvl+0xdc/0x11c
->  print_address_description+0x74/0x384
->  kasan_report+0x188/0x268
->  kasan_check_range+0x270/0x2b0
->  memcpy+0x90/0xe8
->  trace_event_raw_event_spmi_read_end+0x1d0/0x234
->  spmi_read_cmd+0x294/0x3ac
->  spmi_ext_register_readl+0x84/0x9c
->  regmap_spmi_ext_read+0x144/0x1b0 [regmap_spmi]
->  _regmap_raw_read+0x40c/0x754
->  regmap_raw_read+0x3a0/0x514
->  regmap_bulk_read+0x418/0x494
->  adc5_gen3_poll_wait_hs+0xe8/0x1e0 [qcom_spmi_adc5_gen3]
->  ...
->  __arm64_sys_read+0x4c/0x60
->  invoke_syscall+0x80/0x218
->  el0_svc_common+0xec/0x1c8
->  ...
-> 
-> addr ffffffc0265b7540 is located in stack of task thermal@2.0-ser/1314 at offset 32 in frame:
->  adc5_gen3_poll_wait_hs+0x0/0x1e0 [qcom_spmi_adc5_gen3]
-> 
-> this frame has 1 object:
->  [32, 33) 'status'
-> 
-> Memory state around the buggy address:
->  ffffffc0265b7400: 00 00 00 00 00 00 00 00 00 00 00 00 f1 f1 f1 f1
->  ffffffc0265b7480: 04 f3 f3 f3 00 00 00 00 00 00 00 00 00 00 00 00
-> >ffffffc0265b7500: 00 00 00 00 f1 f1 f1 f1 01 f3 f3 f3 00 00 00 00  
->                                            ^
->  ffffffc0265b7580: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
->  ffffffc0265b7600: f1 f1 f1 f1 01 f2 07 f2 f2 f2 01 f3 00 00 00 00
-> ==================================================================
-> 
-> Fixes: a9fce374815d ("spmi: add command tracepoints for SPMI")
-> Cc: stable@vger.kernel.org
-> Signed-off-by: David Collins <quic_collinsd@quicinc.com>
-> ---
->  include/trace/events/spmi.h | 12 ++++++------
->  1 file changed, 6 insertions(+), 6 deletions(-)
-> 
-> diff --git a/include/trace/events/spmi.h b/include/trace/events/spmi.h
-> index 8b60efe18ba6..a6819fd85cdf 100644
-> --- a/include/trace/events/spmi.h
-> +++ b/include/trace/events/spmi.h
-> @@ -21,15 +21,15 @@ TRACE_EVENT(spmi_write_begin,
->  		__field		( u8,         sid       )
->  		__field		( u16,        addr      )
->  		__field		( u8,         len       )
-> -		__dynamic_array	( u8,   buf,  len + 1   )
-> +		__dynamic_array	( u8,   buf,  len       )
->  	),
->  
->  	TP_fast_assign(
->  		__entry->opcode = opcode;
->  		__entry->sid    = sid;
->  		__entry->addr   = addr;
-> -		__entry->len    = len + 1;
-> -		memcpy(__get_dynamic_array(buf), buf, len + 1);
-> +		__entry->len    = len;
-> +		memcpy(__get_dynamic_array(buf), buf, len);
->  	),
->  
->  	TP_printk("opc=%d sid=%02d addr=0x%04x len=%d buf=0x[%*phD]",
-> @@ -92,7 +92,7 @@ TRACE_EVENT(spmi_read_end,
->  		__field		( u16,        addr      )
->  		__field		( int,        ret       )
->  		__field		( u8,         len       )
-> -		__dynamic_array	( u8,   buf,  len + 1   )
-> +		__dynamic_array	( u8,   buf,  len       )
->  	),
->  
->  	TP_fast_assign(
-> @@ -100,8 +100,8 @@ TRACE_EVENT(spmi_read_end,
->  		__entry->sid    = sid;
->  		__entry->addr   = addr;
->  		__entry->ret    = ret;
-> -		__entry->len    = len + 1;
-> -		memcpy(__get_dynamic_array(buf), buf, len + 1);
-> +		__entry->len    = len;
-> +		memcpy(__get_dynamic_array(buf), buf, len);
->  	),
+Applied, thanks!
 
-Looks legit,
+[1/1] arm64: dts: qcom: sc7280: fix PCIe clock reference
+      commit: 330fc08dbdd913ac37a31f8aec1a88f68e39ae39
 
-Acked-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-
--- Steve
-
->  
->  	TP_printk("opc=%d sid=%02d addr=0x%04x ret=%d len=%02d buf=0x[%*phD]",
-
+Best regards,
+-- 
+Bjorn Andersson <bjorn.andersson@linaro.org>
