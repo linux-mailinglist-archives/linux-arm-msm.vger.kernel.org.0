@@ -2,57 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 345E556BB46
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jul 2022 15:56:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 29F5456BDE5
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jul 2022 18:09:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238157AbiGHN4B (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Jul 2022 09:56:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57002 "EHLO
+        id S238446AbiGHQDu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Jul 2022 12:03:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47724 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237725AbiGHN4B (ORCPT
+        with ESMTP id S238029AbiGHQDt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Jul 2022 09:56:01 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 917282B1B1;
-        Fri,  8 Jul 2022 06:56:00 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 2F0BA62817;
-        Fri,  8 Jul 2022 13:56:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79104C341C0;
-        Fri,  8 Jul 2022 13:55:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1657288559;
-        bh=vUnJeGk6PURBMTNQYZb3D8KGF3E0//wVCAiUeEdZQuA=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=LdhAUE1eiT10VVl+XThRV7BK1mqecq4Uht/fc+RdwjeWRRMg6KxJbVNAl11h7mzxC
-         zsnC4OOlVXla3W/VTgWAvvHs6hp67eeRt8osWH8T0AjfhWUYsBu/iK8Doea25/XFTh
-         Hj43AV8K1ZvZJN3ad/3mLLLWK552cOerDhyPMzRpmM9XOT/UKzUzMV38sIlQ7wT7Sf
-         PECcKLvd1tkxzM4kQF/z3LcKkFXbDTo1FjT27g24OB3m2oon0MltBGSAq3rkL2Fp5P
-         /U1G7yQoknPGTY2/+YeKe34fvKOaTaV99hBrykCjBWMVPsXSUpNi0yZtoSYO88VRSc
-         sgRQYD4EaWk8A==
-From:   Will Deacon <will@kernel.org>
-To:     Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Robin Murphy <robin.murphy@arm.com>
-Cc:     catalin.marinas@arm.com, kernel-team@android.com,
-        Will Deacon <will@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        iommu@lists.linux-foundation.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCHv3] iommu/arm-smmu-qcom: Add debug support for TLB sync timeouts
-Date:   Fri,  8 Jul 2022 14:55:53 +0100
-Message-Id: <165728615303.683968.1528285807329632811.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20220708094230.4349-1-quic_saipraka@quicinc.com>
-References: <20220708094230.4349-1-quic_saipraka@quicinc.com>
+        Fri, 8 Jul 2022 12:03:49 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4EB25E097;
+        Fri,  8 Jul 2022 09:03:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1657296229; x=1688832229;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=Bbltvf1E1n7dEQo4s8VfRTS+CjAivEgSlrXihksGW7Q=;
+  b=VFb4B/Xp/2IkHXUSVv8aXEKnjZr9nLz5yW3bGYxrQd7YgR2Ryo/5HslP
+   UXN/L0Nnkt+/Mg7L6/ftli6IcOaKTj2BCr7Uz1UmmSV0SCWzPwqfnd/EN
+   WQvcdoSXb2sVePhB0kF0uVtH+jM62HHOBSO2CjA6mdL/3E/9NKZVywEGM
+   A=;
+Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
+  by alexa-out.qualcomm.com with ESMTP; 08 Jul 2022 09:03:49 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Jul 2022 09:03:48 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Fri, 8 Jul 2022 09:03:47 -0700
+Received: from [10.111.160.191] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Fri, 8 Jul 2022
+ 09:03:45 -0700
+Message-ID: <57d342b6-6254-9bb0-da80-a2f6b4d5eefe@quicinc.com>
+Date:   Fri, 8 Jul 2022 09:03:43 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [PATCH RESEND] drm/msm/dsi: fix the inconsistent indenting
+Content-Language: en-US
+To:     sunliming <sunliming@kylinos.cn>, <christian.koenig@amd.com>,
+        <robdclark@gmail.com>, <dmitry.baryshkov@linaro.org>
+CC:     <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <kelulanainsley@gmail.com>,
+        "kernel test robot" <lkp@intel.com>
+References: <20220708005832.439722-1-sunliming@kylinos.cn>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20220708005832.439722-1-sunliming@kylinos.cn>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -61,26 +68,32 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 8 Jul 2022 15:12:30 +0530, Sai Prakash Ranjan wrote:
-> TLB sync timeouts can be due to various reasons such as TBU power down
-> or pending TCU/TBU invalidation/sync and so on. Debugging these often
-> require dumping of some implementation defined registers to know the
-> status of TBU/TCU operations and some of these registers are not
-> accessible in non-secure world such as from kernel and requires SMC
-> calls to read them in the secure world. So, add this debug support
-> to dump implementation defined registers for TLB sync timeout issues.
+
+
+On 7/7/2022 5:58 PM, sunliming wrote:
+> Fix the inconsistent indenting in function msm_dsi_dphy_timing_calc_v3().
 > 
-> [...]
-
-Applied to will (for-joerg/arm-smmu/updates), thanks!
-
-[1/1] iommu/arm-smmu-qcom: Add debug support for TLB sync timeouts
-      https://git.kernel.org/will/c/b9b721d117e9
-
-Cheers,
--- 
-Will
-
-https://fixes.arm64.dev
-https://next.arm64.dev
-https://will.arm64.dev
+> Fix the following smatch warnings:
+> 
+> drivers/gpu/drm/msm/dsi/phy/dsi_phy.c:350 msm_dsi_dphy_timing_calc_v3() warn: inconsistent indenting
+> 
+> Reported-by: kernel test robot <lkp@intel.com>
+> Signed-off-by: sunliming <sunliming@kylinos.cn>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> ---
+>   drivers/gpu/drm/msm/dsi/phy/dsi_phy.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
+> index a39de3bdc7fa..56dfa2d24be1 100644
+> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
+> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
+> @@ -347,7 +347,7 @@ int msm_dsi_dphy_timing_calc_v3(struct msm_dsi_dphy_timing *timing,
+>   	} else {
+>   		timing->shared_timings.clk_pre =
+>   			linear_inter(tmax, tmin, pcnt2, 0, false);
+> -			timing->shared_timings.clk_pre_inc_by_2 = 0;
+> +		timing->shared_timings.clk_pre_inc_by_2 = 0;
+>   	}
+>   
+>   	timing->ta_go = 3;
