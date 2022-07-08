@@ -2,66 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 88B3856B8BA
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jul 2022 13:43:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 70CFF56B971
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jul 2022 14:16:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237920AbiGHLku (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Jul 2022 07:40:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37386 "EHLO
+        id S237905AbiGHMMC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Jul 2022 08:12:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39870 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237704AbiGHLkt (ORCPT
+        with ESMTP id S237753AbiGHMMB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Jul 2022 07:40:49 -0400
-Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C749C20F5A;
-        Fri,  8 Jul 2022 04:40:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1657280448; x=1688816448;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=ZdDYQxLCE/FVW3YmiAHPRARr9uSRhV0hY5cuMuzEJx0=;
-  b=MMTD1AIMtYlwPfte9/38kC20k2FtoXUpaZy+BPdvuVHGYGMoAPoAoujn
-   iD2NWJ/l9ZXMph21xw/zbaNy4HAYL9lWSYYZ1zvDezTIpb0y0bNtNbId+
-   7DgK110b14bvvbnhY7si9xPKA/jk0RbSl+mWGJG+dhkGYtIUpMS5s1xtc
-   ihJugeLXqNGu+nmy1sIRUFboB3NY6g+7i5Zta+U1DeS4qj5mo8TynNBIe
-   OLhSlYzwIAtlNgcp+lse7beIltITi0Ktg/0zI0zIOGZbf+JrHyU4MXcz+
-   4isKtH/Z7nDqZA0HAoowNXRA5oFRe8uETqw4CCBW20Brsslf1MlWjZddJ
-   A==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10401"; a="348246301"
-X-IronPort-AV: E=Sophos;i="5.92,255,1650956400"; 
-   d="scan'208";a="348246301"
-Received: from orsmga001.jf.intel.com ([10.7.209.18])
-  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Jul 2022 04:40:48 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.92,255,1650956400"; 
-   d="scan'208";a="626681120"
-Received: from lkp-server01.sh.intel.com (HELO 68b931ab7ac1) ([10.239.97.150])
-  by orsmga001.jf.intel.com with ESMTP; 08 Jul 2022 04:40:46 -0700
-Received: from kbuild by 68b931ab7ac1 with local (Exim 4.95)
-        (envelope-from <lkp@intel.com>)
-        id 1o9mLl-000NPf-Cc;
-        Fri, 08 Jul 2022 11:40:45 +0000
-Date:   Fri, 8 Jul 2022 19:40:28 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        linux-pm@vger.kernel.org
-Cc:     kbuild-all@lists.01.org, bhupesh.sharma@linaro.org,
-        bhupesh.linux@gmail.com, linux-kernel@vger.kernel.org,
-        bjorn.andersson@linaro.org, Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 3/3] thermal: qcom: tsens: Implement re-initialization
- workaround quirk
-Message-ID: <202207081955.SXcfKpLo-lkp@intel.com>
-References: <20220701145815.2037993-4-bhupesh.sharma@linaro.org>
+        Fri, 8 Jul 2022 08:12:01 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56EE59CE38
+        for <linux-arm-msm@vger.kernel.org>; Fri,  8 Jul 2022 05:12:00 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id d16so23953842wrv.10
+        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Jul 2022 05:12:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=8w8iUnO06xpNNTx1uNb/VB35F/Bn/nD/eESgVEkqCWk=;
+        b=rkYLkHFWtyAYhX2gYXIXFR9VqWhIThf8hJGmlpcr5pedzfOUkhZS2FT9jaR87iAWpF
+         LP5mzBIAq0ar7sEnqj7wZjcI/B9OKhA+Dk6kdqVhjjYEza0CNnWrVnGkFqrjmFzZS6/h
+         ltfCKvue/44X/0XjTI/fDHUwUmE1XqIv/Vlv84JH+XopP8PekPB34mbFdEFdLIOfhks4
+         LdDkAoJLrTrRbBHkYXlInHv9P0SDWa4XH5qLWh4U39D0172Kl/qrBLQU8OS9GULiQjVZ
+         xduV/jy0r0DbyoSoay+380Sa1tG2cHODBEWs6SF7TyuDEbI/2yy3xwLBwBGmala40EYA
+         wcBA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=8w8iUnO06xpNNTx1uNb/VB35F/Bn/nD/eESgVEkqCWk=;
+        b=aPaLfLTYojgLO4dHsYbijYaAL+5vhxMnH8R2ILXs7Z2+qLcje+U/8PQ8V93jqSgiG9
+         BIYbJ+2gRtq50l2ngbLJe2kzk9KbPPwtkpHBEjOPt3RaU7AtGDaLSZ/7GiKdFY+IF99W
+         3sf52ZcAkcuVBqwDL8QKLzWNbiEWLdyZFBjLefEAqYtqfsWCm5vmmrSU2QX75k01w4yN
+         CHkWeiT2CGvIcH/1e8W19/22WkbJty5/NJJMmvmvy7g8sqYVDNSyqXmw9JzGCTHe8ZXn
+         BLGW7rbXG14iFusqe4McrCiOvQdwk2gWPf6+45/5wi7KD6TgfsXaePA2cW6mop3I4WU8
+         Ll+w==
+X-Gm-Message-State: AJIora+gC6p9bKrn153I0QqHQxYBQ5PKRMKLPaFCHdu3nMT3+lSJu/0X
+        GEJlFUBVQu5X+IhOhF1te8o6yg==
+X-Google-Smtp-Source: AGRyM1vQuLeTvDT59elqz89G6EwR6xpO739ErCOJg2JIBohiqo5MAy9lHed0BjiYPiw23B54pXDj4w==
+X-Received: by 2002:a5d:6c63:0:b0:21d:2a53:c7a9 with SMTP id r3-20020a5d6c63000000b0021d2a53c7a9mr3180760wrz.34.1657282318803;
+        Fri, 08 Jul 2022 05:11:58 -0700 (PDT)
+Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id l3-20020a05600c1d0300b003a03ae64f57sm2030549wms.8.2022.07.08.05.11.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 08 Jul 2022 05:11:58 -0700 (PDT)
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+To:     ilia.lin@kernel.org, agross@kernel.org, rafael@kernel.org,
+        viresh.kumar@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, stephan@gerhold.net
+Cc:     linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, bryan.odonoghue@linaro.org
+Subject: [PATCH v3 0/3] msm8939 cpufreq preparatory work
+Date:   Fri,  8 Jul 2022 13:11:53 +0100
+Message-Id: <20220708121156.2165250-1-bryan.odonoghue@linaro.org>
+X-Mailer: git-send-email 2.36.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220701145815.2037993-4-bhupesh.sharma@linaro.org>
-X-Spam-Status: No, score=-5.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -69,151 +70,42 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bhupesh,
+V3:
+- Drop the exclusion of msm8939 from cpufreq-dt-platdev.
+  I'm happy enough to bundle this in with CPR. - Stephan
 
-Thank you for the patch! Yet something to improve:
+V2:
+- Previous series title "qcom-cpufreq-nvmem: Add msm8939 with some fixups"
+  https://www.spinics.net/lists/linux-arm-msm/msg116201.html
 
-[auto build test ERROR on rafael-pm/thermal]
-[also build test ERROR on linus/master v5.19-rc5 next-20220707]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+- Drops adding msm8939 to the cpufreq-nvmem layer at all.
+  cpufreq and CPR go hand in hand so we need to do the addition to
+  cpufreq-nvmem in tandem with the associated CPR driver update. - Stephan
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Bhupesh-Sharma/Add-support-for-tsens-controller-reinit-via-trustzone/20220701-230113
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git thermal
-config: arm64-randconfig-r015-20220707 (https://download.01.org/0day-ci/archive/20220708/202207081955.SXcfKpLo-lkp@intel.com/config)
-compiler: aarch64-linux-gcc (GCC) 11.3.0
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # https://github.com/intel-lab-lkp/linux/commit/32929e13eb338e76b714bb8b4805899e2857734f
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review Bhupesh-Sharma/Add-support-for-tsens-controller-reinit-via-trustzone/20220701-230113
-        git checkout 32929e13eb338e76b714bb8b4805899e2857734f
-        # save the config file
-        mkdir build_dir && cp config build_dir/.config
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.3.0 make.cross W=1 O=build_dir ARCH=arm64 SHELL=/bin/bash
+  We can still add in msm8939 to the cpufreq-dt-platdev block list and
+  fixup the dt binding check errors found doing that.
 
-If you fix the issue, kindly add following tag where applicable
-Reported-by: kernel test robot <lkp@intel.com>
+- Adds a patch to the error reported by Rob's bot.
+  Rob said he thought Krzysztof had a patch for that but, I couldn't find it
+  so I just added a fix as the first patch - bod
 
-All errors (new ones prefixed by >>):
+- Adds Acked-by Rob to second patch
+- Adds Acked-by Krzysztof to third patch
 
-   aarch64-linux-ld: Unexpected GOT/PLT entries detected!
-   aarch64-linux-ld: Unexpected run-time procedure linkages detected!
-   aarch64-linux-ld: ID map text too big or misaligned
-   aarch64-linux-ld: drivers/thermal/qcom/tsens.o: in function `tsens_probe':
->> drivers/thermal/qcom/tsens.c:1337: undefined reference to `qcom_scm_is_available'
-   aarch64-linux-ld: drivers/thermal/qcom/tsens.o: in function `get_temp_tsens_valid':
->> drivers/thermal/qcom/tsens.c:714: undefined reference to `qcom_scm_tsens_reinit'
+V1:
+Fix up some missing compat strings for the qcom-cpufreq-nvmem yaml.
+Add in msm8939 as a compatible qcom-cpufreq-nvmem.
 
 
-vim +1337 drivers/thermal/qcom/tsens.c
+Bryan O'Donoghue (3):
+  dt-bindings: opp: opp-v2-kryo-cpu: Fix example binding checks
+  dt-bindings: opp: Add missing compat devices
+  dt-bindings: opp: Add msm8939 to the compatible list
 
-  1293	
-  1294	static int tsens_probe(struct platform_device *pdev)
-  1295	{
-  1296		int ret, i;
-  1297		struct device *dev;
-  1298		struct device_node *np;
-  1299		struct tsens_priv *priv;
-  1300		const struct tsens_plat_data *data;
-  1301		const struct of_device_id *id;
-  1302		u32 num_sensors;
-  1303	
-  1304		if (pdev->dev.of_node)
-  1305			dev = &pdev->dev;
-  1306		else
-  1307			dev = pdev->dev.parent;
-  1308	
-  1309		np = dev->of_node;
-  1310	
-  1311		id = of_match_node(tsens_table, np);
-  1312		if (id)
-  1313			data = id->data;
-  1314		else
-  1315			data = &data_8960;
-  1316	
-  1317		num_sensors = data->num_sensors;
-  1318	
-  1319		if (np)
-  1320			of_property_read_u32(np, "#qcom,sensors", &num_sensors);
-  1321	
-  1322		if (num_sensors <= 0) {
-  1323			dev_err(dev, "%s: invalid number of sensors\n", __func__);
-  1324			return -EINVAL;
-  1325		}
-  1326	
-  1327		priv = devm_kzalloc(dev,
-  1328				     struct_size(priv, sensor, num_sensors),
-  1329				     GFP_KERNEL);
-  1330		if (!priv)
-  1331			return -ENOMEM;
-  1332	
-  1333		priv->dev = dev;
-  1334		priv->num_sensors = num_sensors;
-  1335		priv->needs_reinit_wa = data->needs_reinit_wa;
-  1336	
-> 1337		if (priv->needs_reinit_wa && !qcom_scm_is_available())
-  1338			return -EPROBE_DEFER;
-  1339	
-  1340		if (priv->needs_reinit_wa) {
-  1341			priv->reinit_wa_worker = alloc_workqueue("tsens_reinit_work",
-  1342								 WQ_HIGHPRI, 0);
-  1343			if (!priv->reinit_wa_worker)
-  1344				return -ENOMEM;
-  1345	
-  1346			INIT_WORK(&priv->reinit_wa_notify, tsens_reinit_worker_notify);
-  1347		}
-  1348	
-  1349		priv->ops = data->ops;
-  1350		for (i = 0;  i < priv->num_sensors; i++) {
-  1351			if (data->hw_ids)
-  1352				priv->sensor[i].hw_id = data->hw_ids[i];
-  1353			else
-  1354				priv->sensor[i].hw_id = i;
-  1355		}
-  1356		priv->feat = data->feat;
-  1357		priv->fields = data->fields;
-  1358	
-  1359		platform_set_drvdata(pdev, priv);
-  1360	
-  1361		if (!priv->ops || !priv->ops->init || !priv->ops->get_temp) {
-  1362			ret = -EINVAL;
-  1363			goto free_wq;
-  1364		}
-  1365	
-  1366		ret = priv->ops->init(priv);
-  1367		if (ret < 0) {
-  1368			dev_err(dev, "%s: init failed\n", __func__);
-  1369			goto free_wq;
-  1370		}
-  1371	
-  1372		if (priv->ops->calibrate) {
-  1373			ret = priv->ops->calibrate(priv);
-  1374			if (ret < 0) {
-  1375				if (ret != -EPROBE_DEFER)
-  1376					dev_err(dev, "%s: calibration failed\n", __func__);
-  1377	
-  1378				goto free_wq;
-  1379			}
-  1380		}
-  1381	
-  1382		ret = tsens_register(priv);
-  1383		if (ret < 0) {
-  1384			dev_err(dev, "%s: registration failed\n", __func__);
-  1385			goto free_wq;
-  1386		}
-  1387	
-  1388		list_add_tail(&priv->list, &tsens_device_list);
-  1389		return 0;
-  1390	
-  1391	free_wq:
-  1392		destroy_workqueue(priv->reinit_wa_worker);
-  1393		return ret;
-  1394	}
-  1395	
+ .../bindings/cpufreq/qcom-cpufreq-nvmem.yaml      |  7 +++++++
+ .../devicetree/bindings/opp/opp-v2-kryo-cpu.yaml  | 15 +++++++++++++++
+ 2 files changed, 22 insertions(+)
 
 -- 
-0-DAY CI Kernel Test Service
-https://01.org/lkp
+2.36.1
+
