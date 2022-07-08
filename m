@@ -2,74 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0CB4F56B2CB
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jul 2022 08:33:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 596F956B310
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jul 2022 09:04:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237181AbiGHGdO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Jul 2022 02:33:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57404 "EHLO
+        id S237058AbiGHHDi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Jul 2022 03:03:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47660 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237068AbiGHGdN (ORCPT
+        with ESMTP id S236733AbiGHHDh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Jul 2022 02:33:13 -0400
-Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69D8D24F11
-        for <linux-arm-msm@vger.kernel.org>; Thu,  7 Jul 2022 23:33:12 -0700 (PDT)
-Received: by mail-pj1-x1031.google.com with SMTP id cp18-20020a17090afb9200b001ef79e8484aso848396pjb.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Jul 2022 23:33:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=H1rFqef4sJqptg9wHlXMkGLnOhStTJVvsg+RpqiXZhk=;
-        b=jL0OXwDeT+1BLLHSd6unR57Dv5PwlNfa7iNaZQD2rw94eOeYM08Qqo1iWM+WwQynIT
-         ccvZC1ZZe0k97NHcgxamAatBF+1h5zfI/O3AkZ6VRHfwdU4tdq4TSz2sFYHVcnmTUC8Q
-         Q5kGajtSsJhMh1eycHPlDVZ1HKN0VErfulPmLtwxDqJq+dR0z0+nX7NSK2nFCG8hrXAW
-         o4S7wtCQpJ1NnYmwlUFiTLxnvedE2uDefGtz2IUI3cTimcANvENK2X4UdmBLRIhxAfy7
-         JKPR51kqUFwWhmGMVGhWgP2Eq9xCmYm5hHmrqhTwihyVAUDC6sjqgG7t2/8V3gOQAIvn
-         g+UQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=H1rFqef4sJqptg9wHlXMkGLnOhStTJVvsg+RpqiXZhk=;
-        b=FlOvVa71Cr8ElTJm1plBSoglDgmIdWa4rVgGkIDb7cxTNTRA1f7oMggSRJW6kPAD3q
-         VjCvLU5nl+bK1YyavwH15arleqKnK9CIbxhGxs8Fw6ofzLqA58r4nKj9eHvu1nN5YFXN
-         s0jHBikUQoKQCuKODJu1XXNvPndKx/Sxgp+KLKfIpoxEdm0EUgsmvcD6YPfBBIAUkaLF
-         Yhoh2Mwuu4qJ8rFABo0hJ+NU9m8uJdF0vSkWt9Vj8MdOzous/qWRKzioh6hPrQjKYpHT
-         vYXxv8fAqx8Satj84fHWH+BHDyn+KOiA2w0WzurVaeFvXKRVFYLv/PhNdB/bOMvEtYpq
-         pnoQ==
-X-Gm-Message-State: AJIora9VEepeR5ljTlKJ+p2YqV0u/7ajbrkKyqW92DHjU0kotL9Mgkri
-        Z3/xt8IwUDjHJljmCtrPQbvWCuruWydxQvxO
-X-Google-Smtp-Source: AGRyM1vIiK1fNxbF/3rIjWdLVtB8pM6aA+cUUB9WXd9cJtjH5huqkn6sucKxoGt6HsKsrO5RetOsmQ==
-X-Received: by 2002:a17:903:32c4:b0:16a:4227:cd68 with SMTP id i4-20020a17090332c400b0016a4227cd68mr1996000plr.173.1657261991495;
-        Thu, 07 Jul 2022 23:33:11 -0700 (PDT)
-Received: from leoy-ThinkPad-X240s (n058152077182.netvigator.com. [58.152.77.182])
-        by smtp.gmail.com with ESMTPSA id i11-20020a1709026acb00b001640aad2f71sm28936148plt.180.2022.07.07.23.33.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Jul 2022 23:33:11 -0700 (PDT)
-Date:   Fri, 8 Jul 2022 14:33:07 +0800
-From:   Leo Yan <leo.yan@linaro.org>
-To:     Georgi Djakov <djakov@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 5/5] interconnect: qcom: icc-rpm: Set bandwidth and
- clock for bucket values
-Message-ID: <20220708063307.GB195591@leoy-ThinkPad-X240s>
-References: <20220705072336.742703-1-leo.yan@linaro.org>
- <20220705072336.742703-6-leo.yan@linaro.org>
- <28bf991f-7b4c-0af1-2780-842500b01a0f@kernel.org>
+        Fri, 8 Jul 2022 03:03:37 -0400
+Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1E296B241;
+        Fri,  8 Jul 2022 00:03:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1657263815; x=1688799815;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=sLTf7xui5DUh0UIt7UN4rONb0R9ycQ6xpaAgmLAuY30=;
+  b=DIn7+74MJtv0OoDLRw3CjxBEDjGFAZqqq3WNnnxPvglSJM73a7v1+qPg
+   wB5Qv+Wf+SWV5R7xJ4kQAOfFF507DXgSHVeP3oGs2/o516yx5uS1q0bGG
+   vxCKl2qG7fK9MjKeXvQXsD2Cu+FpG2Y+bJCqC1KSli6UDH2Ws8v6mg1Wg
+   6fFyDiY7B+K7ZjPIWM9ZDoZd4DlcbHgka8yWYLpvqZxZ6dkwUTSwgU41R
+   17H56m/mrrWb82mow/88bIxsXX2AeuQKUX2hLPsVdYfDdmyHGpSCtUiUj
+   GeUA2Zba1c5eyHvezw/pXlaz02QfKQBRGIp1MzLNKZixBjKV876pw1Ahd
+   Q==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10401"; a="281759989"
+X-IronPort-AV: E=Sophos;i="5.92,254,1650956400"; 
+   d="scan'208";a="281759989"
+Received: from fmsmga005.fm.intel.com ([10.253.24.32])
+  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Jul 2022 00:03:35 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.92,254,1650956400"; 
+   d="scan'208";a="920895624"
+Received: from lkp-server01.sh.intel.com (HELO 68b931ab7ac1) ([10.239.97.150])
+  by fmsmga005.fm.intel.com with ESMTP; 08 Jul 2022 00:03:31 -0700
+Received: from kbuild by 68b931ab7ac1 with local (Exim 4.95)
+        (envelope-from <lkp@intel.com>)
+        id 1o9i1S-000N4s-JB;
+        Fri, 08 Jul 2022 07:03:30 +0000
+Date:   Fri, 8 Jul 2022 15:02:33 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>,
+        agross@kernel.org, bjorn.andersson@linaro.org,
+        konrad.dybcio@somainline.org, gregkh@linuxfoundation.org,
+        jirislaby@kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-serial@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     llvm@lists.linux.dev, kbuild-all@lists.01.org,
+        quic_msavaliy@quicinc.com, dianders@chromium.org, mka@chromium.org,
+        swboyd@chromium.org,
+        Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+Subject: Re: [V3] tty: serial: qcom-geni-serial: Fix get_clk_div_rate() which
+ otherwise could return a sub-optimal clock rate.
+Message-ID: <202207081429.4VXpQCls-lkp@intel.com>
+References: <1657221457-32494-1-git-send-email-quic_vnivarth@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <28bf991f-7b4c-0af1-2780-842500b01a0f@kernel.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+In-Reply-To: <1657221457-32494-1-git-send-email-quic_vnivarth@quicinc.com>
+X-Spam-Status: No, score=-7.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -77,33 +71,86 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jul 07, 2022 at 05:33:58PM +0300, Georgi Djakov wrote:
+Hi Vijaya,
 
-[...]
+Thank you for the patch! Perhaps something to improve:
 
-> > @@ -321,12 +365,11 @@ static int qcom_icc_set(struct icc_node *src, struct icc_node *dst)
-> >   	provider = src->provider;
-> >   	qp = to_qcom_provider(provider);
-> > -	list_for_each_entry(n, &provider->nodes, node_list)
-> > -		provider->aggregate(n, 0, n->avg_bw, n->peak_bw,
-> > -				    &agg_avg, &agg_peak);
-> > +	qcom_icc_bus_aggregate(provider, agg_avg, agg_peak, &max_agg_avg,
-> > +			       &max_agg_peak);
-> > -	sum_bw = icc_units_to_bps(agg_avg);
-> > -	max_peak_bw = icc_units_to_bps(agg_peak);
-> > +	sum_bw = icc_units_to_bps(max_agg_avg);
-> > +	max_peak_bw = icc_units_to_bps(max_agg_peak);
-> >   	ret = __qcom_icc_set(src, src_qn, sum_bw);
-> >   	if (ret)
-> > @@ -337,12 +380,23 @@ static int qcom_icc_set(struct icc_node *src, struct icc_node *dst)
-> >   			return ret;
-> >   	}
-> > -	rate = max(sum_bw, max_peak_bw);
-> 
-> Looks like max_peak_bw is unused now?
+[auto build test WARNING on tty/tty-testing]
+[also build test WARNING on linus/master v5.19-rc5 next-20220707]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-Yes, will drop it in next spin.
+url:    https://github.com/intel-lab-lkp/linux/commits/Vijaya-Krishna-Nivarthi/tty-serial-qcom-geni-serial-Fix-get_clk_div_rate-which-otherwise-could-return-a-sub-optimal-clock-rate/20220708-031921
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/gregkh/tty.git tty-testing
+config: hexagon-randconfig-r023-20220707 (https://download.01.org/0day-ci/archive/20220708/202207081429.4VXpQCls-lkp@intel.com/config)
+compiler: clang version 15.0.0 (https://github.com/llvm/llvm-project 562c3467a6738aa89203f72fc1d1343e5baadf3c)
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # https://github.com/intel-lab-lkp/linux/commit/fbd8a1a4b7d91ea5caa048e4557ab18b0d08ea86
+        git remote add linux-review https://github.com/intel-lab-lkp/linux
+        git fetch --no-tags linux-review Vijaya-Krishna-Nivarthi/tty-serial-qcom-geni-serial-Fix-get_clk_div_rate-which-otherwise-could-return-a-sub-optimal-clock-rate/20220708-031921
+        git checkout fbd8a1a4b7d91ea5caa048e4557ab18b0d08ea86
+        # save the config file
+        mkdir build_dir && cp config build_dir/.config
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=hexagon SHELL=/bin/bash drivers/tty/serial/
 
-Thanks for review.
+If you fix the issue, kindly add following tag where applicable
+Reported-by: kernel test robot <lkp@intel.com>
 
-Leo
+All warnings (new ones prefixed by >>):
+
+>> drivers/tty/serial/qcom_geni_serial.c:1007:26: warning: format specifies type 'unsigned long' but the argument has type 'unsigned int' [-Wformat]
+                           desired_clk, ser_clk, *clk_div);
+                                                 ^~~~~~~~
+   include/linux/printk.h:610:38: note: expanded from macro 'pr_debug'
+           no_printk(KERN_DEBUG pr_fmt(fmt), ##__VA_ARGS__)
+                                       ~~~     ^~~~~~~~~~~
+   include/linux/printk.h:131:17: note: expanded from macro 'no_printk'
+                   printk(fmt, ##__VA_ARGS__);             \
+                          ~~~    ^~~~~~~~~~~
+   include/linux/printk.h:480:60: note: expanded from macro 'printk'
+   #define printk(fmt, ...) printk_index_wrap(_printk, fmt, ##__VA_ARGS__)
+                                                       ~~~    ^~~~~~~~~~~
+   include/linux/printk.h:452:19: note: expanded from macro 'printk_index_wrap'
+                   _p_func(_fmt, ##__VA_ARGS__);                           \
+                           ~~~~    ^~~~~~~~~~~
+   1 warning generated.
+
+
+vim +1007 drivers/tty/serial/qcom_geni_serial.c
+
+   983	
+   984	static unsigned long get_clk_div_rate(struct clk *clk, unsigned int baud,
+   985				unsigned int sampling_rate, unsigned int *clk_div)
+   986	{
+   987		unsigned long ser_clk;
+   988		unsigned long desired_clk;
+   989	
+   990		desired_clk = baud * sampling_rate;
+   991		if (!desired_clk) {
+   992			pr_err("%s: Invalid frequency\n", __func__);
+   993			return 0;
+   994		}
+   995	
+   996		/*
+   997		 * try to find a clock rate within 2% tolerance, then within
+   998		 */
+   999		ser_clk = find_clk_rate_in_tol(clk, desired_clk, clk_div, 2);
+  1000		if (!ser_clk)
+  1001			ser_clk = find_clk_rate_in_tol(clk, desired_clk, clk_div, 5);
+  1002	
+  1003		if (!ser_clk)
+  1004			pr_err("Couldn't find suitable clock rate for %lu\n", desired_clk);
+  1005		else
+  1006			pr_debug("desired_clk-%lu, ser_clk-%lu, clk_div-%lu\n",
+> 1007				desired_clk, ser_clk, *clk_div);
+  1008	
+  1009		return ser_clk;
+  1010	}
+  1011	
+
+-- 
+0-DAY CI Kernel Test Service
+https://01.org/lkp
