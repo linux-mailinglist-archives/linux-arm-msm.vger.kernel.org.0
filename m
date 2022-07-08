@@ -2,125 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5FA1256BB01
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jul 2022 15:39:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E07EB56BB45
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jul 2022 15:56:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238390AbiGHNi6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Jul 2022 09:38:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45396 "EHLO
+        id S238191AbiGHNyz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Jul 2022 09:54:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55944 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238374AbiGHNix (ORCPT
+        with ESMTP id S237944AbiGHNyy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Jul 2022 09:38:53 -0400
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B41FA2BB21;
-        Fri,  8 Jul 2022 06:38:51 -0700 (PDT)
-Received: by mail-ed1-x529.google.com with SMTP id k30so18785848edk.8;
-        Fri, 08 Jul 2022 06:38:51 -0700 (PDT)
+        Fri, 8 Jul 2022 09:54:54 -0400
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF6042A435
+        for <linux-arm-msm@vger.kernel.org>; Fri,  8 Jul 2022 06:54:53 -0700 (PDT)
+Received: by mail-lj1-x230.google.com with SMTP id bn33so4628903ljb.13
+        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Jul 2022 06:54:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=oAqZrnSh0jfK0LLUnYpJumK2YJTHAZakB+MOOLiwb1E=;
-        b=qTAkjs0kVjAAymmJCjSX4J2vmljnLyYcmlOXHQVQn2Fxqwt6KKRkteXrNzXATnFfEv
-         m0DTfnS4GK7//pTEZ4KWYcBkBoNNe0hvG78GUlXo20Q84Xrk++zSQiss8o03+De70uAh
-         YaogOiH3wbPpmYVyl++NqI8XY7fL/Y1utlSa2VJaOCzZ3rUshikRvCipT4nuAvvhsdUz
-         Tk0U8Euoxw/MmGakUOoLtrG1EIfBlKGPyreYy9ilZL6gWhcPP664CHfZihEei7u24JOS
-         ZXaXtCjxoG8dMsY0OGvNR1WOKoDSOpqDFlDqEKQ3qN+1F0v1pGxnUHslmsVCftSrG9JV
-         BeLA==
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=oBZ6reeyKLnZu1euC93MTf6+D13zsySYlZ/57ITlSLw=;
+        b=YVBYUoltBc0ykAUny/Jh48Hq+XAvPrz2KTc7ziz9OlLyJjp7QARaZROASWhZzxHBrk
+         4sOQjDNYTYzxlD4fHw2qBPIwm54kh5jrQll5TyAGz0IFAcAGUIcA3Ncyrmp1ioYBmcFE
+         E0g+vJGsxO1UIG/swSjWZ3DMhXwLKObUgtI0H9Cb0BTfLzBm9+fk0afVQabAEniOx7HH
+         arEgE+U7XfhWHbyi182TlBzThTziXq0SgMMxKDCjhLP/1GfnDnhgt2y36I/MkP6Nqqom
+         Em6IBluUT2UmQe3cP+5AjtvX+cH7T3Sq2c0k4tcDffVnV40MUqLgunZuenVuBP9oCaiR
+         RfPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=oAqZrnSh0jfK0LLUnYpJumK2YJTHAZakB+MOOLiwb1E=;
-        b=la7ioUnEmO7oXMX4vzQZx/8ojuQUMW4JrE/r4oVMf8E98p3ywuHPBDh0eR5elesemR
-         n/y0O/d7GpX1DIMEuZ1B43L9pD7iiT0Dzsl+J48szAvxnOLSIqk4DWbk5Osy1dxy70CJ
-         hmW0/BluuIpgvGqtCdwvIY1BEqtwsue8V/8kWQOgTfZf1IBZx1vMII4LDs9uA/b8BcwX
-         m10c5d55V6LzQHSwyMB2owj8uwwMLGgORLBTvILkf1KveapTd86nUSiLonpR0cOQwGF3
-         nLHXhFV74Bj4wNJy0kiLScRTylwaQSpvckGKc5ifeMiJVANQJjxsFJQTtoC2LwYmEFB/
-         19fg==
-X-Gm-Message-State: AJIora9sspAJwIZfUNonorwfxIQ85Ff42+eEBfzpULXoKQpZlq6Zr9YB
-        pvH77w03ezez5ZbT3z+xy3b14ns6ZblzXQ==
-X-Google-Smtp-Source: AGRyM1te1UekoZ265JltFHL8NaJrPkjaM3+R9oxrHh1QBzOxt9jn/M8TJntQ9R2KNhYmrJiBIU2Clg==
-X-Received: by 2002:a05:6402:4144:b0:431:6ef0:bef7 with SMTP id x4-20020a056402414400b004316ef0bef7mr4732556eda.151.1657287530176;
-        Fri, 08 Jul 2022 06:38:50 -0700 (PDT)
-Received: from fedora.robimarko.hr (dh207-96-250.xnet.hr. [88.207.96.250])
-        by smtp.googlemail.com with ESMTPSA id d8-20020a056402000800b0043a71c376a2sm9583016edu.33.2022.07.08.06.38.49
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=oBZ6reeyKLnZu1euC93MTf6+D13zsySYlZ/57ITlSLw=;
+        b=ya47aOwy+Q5ts/iC3fUhtmsfHGnDKXQ6qXn6RWyMZEBvatZk1FCDkdHyHFFVvNxaeU
+         +tDZmk7NMjnHRgV8rR1Jj69zO3cgEHsX3sqTvk5tbyBKaoTBSOxfUWwurXSEvUBKd/ef
+         hFppqoow7bF76gI6BR6UrPwCp5bbiu077ESsFHlu1hLg1EQRewOTMm4xZsJZqNbRCz+3
+         na84TVpA7TJBInNq8fzs6x4M0gnz37oF9U7UjytIpyP+IR84RceGJ7ganjojK4EBSj78
+         y09itAWOQILdQ2TSrcZVEAJFDIiW6b+bJqAe4B9KkIBSyhReL/vo5dWX3l0gwS5ZtJv4
+         MImA==
+X-Gm-Message-State: AJIora9dO9n4J4OSqBp74BO49YKnjj1q5PVDO1ZYjkdgG/ngJnQH+IiA
+        2c6Nvh4jTjwvj1AciIsWhQLfiA==
+X-Google-Smtp-Source: AGRyM1tRjA2agm7R/j2hqY/ugg7NtFbwGbRKg9vte1R7g02DanxIiuE1HpTeHHE3MtjrjBWefUzAog==
+X-Received: by 2002:a05:651c:4c9:b0:25a:9d24:886 with SMTP id e9-20020a05651c04c900b0025a9d240886mr2154645lji.471.1657288492086;
+        Fri, 08 Jul 2022 06:54:52 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id y9-20020ac24e69000000b0047f647414efsm7428352lfs.190.2022.07.08.06.54.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 Jul 2022 06:38:49 -0700 (PDT)
-From:   Robert Marko <robimarko@gmail.com>
-To:     agross@kernel.org, bjorn.andersson@linaro.org,
-        konrad.dybcio@somainline.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Robert Marko <robimarko@gmail.com>
-Subject: [PATCH 2/2] arm64: dts: qcom: ipq8074: add interrupt-parent to DTSI
-Date:   Fri,  8 Jul 2022 15:38:46 +0200
-Message-Id: <20220708133846.599735-2-robimarko@gmail.com>
-X-Mailer: git-send-email 2.36.1
-In-Reply-To: <20220708133846.599735-1-robimarko@gmail.com>
-References: <20220708133846.599735-1-robimarko@gmail.com>
+        Fri, 08 Jul 2022 06:54:51 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>
+Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-phy@lists.infradead.org, Johan Hovold <johan@kernel.org>
+Subject: [PATCH v3 0/3] phy: qcom-qmp-ufs: add symbol clocks support
+Date:   Fri,  8 Jul 2022 16:54:47 +0300
+Message-Id: <20220708135450.2845810-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add interrupt-parent to the SoC DTSI to avoid duplicating it in each board
-DTS file.
+Register UFS symbol clocks in the Qualcomm QMP PHY driver. Some of the
+platforms (msm8996, sc7280, sm8350/sm8450) expect them to be defined (to
+be used as GCC clock parents).
 
-Remove interrupt-parent from existing board DTS files.
+Changes since v2:
+- Added error handling to phy_symbols_clk_register() (requested by
+  Johan).
 
-Signed-off-by: Robert Marko <robimarko@gmail.com>
----
- arch/arm64/boot/dts/qcom/ipq8074-hk01.dts  | 1 -
- arch/arm64/boot/dts/qcom/ipq8074-hk10.dtsi | 2 --
- arch/arm64/boot/dts/qcom/ipq8074.dtsi      | 1 +
- 3 files changed, 1 insertion(+), 3 deletions(-)
+Changes since v1:
+- Added a macro used by clk-asm9260, so that the clk-fixed-rate changes
+  do not affect the driver
+- Changed registered clock names to be unique (as e.g. SC8280XP will
+  have two UFS PHYs).
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq8074-hk01.dts b/arch/arm64/boot/dts/qcom/ipq8074-hk01.dts
-index 9dfa2eefef29..b788e1605476 100644
---- a/arch/arm64/boot/dts/qcom/ipq8074-hk01.dts
-+++ b/arch/arm64/boot/dts/qcom/ipq8074-hk01.dts
-@@ -8,7 +8,6 @@
- / {
- 	model = "Qualcomm Technologies, Inc. IPQ8074-HK01";
- 	compatible = "qcom,ipq8074-hk01", "qcom,ipq8074";
--	interrupt-parent = <&intc>;
- 
- 	aliases {
- 		serial0 = &blsp1_uart5;
-diff --git a/arch/arm64/boot/dts/qcom/ipq8074-hk10.dtsi b/arch/arm64/boot/dts/qcom/ipq8074-hk10.dtsi
-index c67181b173ca..40415d988e4a 100644
---- a/arch/arm64/boot/dts/qcom/ipq8074-hk10.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq8074-hk10.dtsi
-@@ -7,8 +7,6 @@
- #include "ipq8074.dtsi"
- 
- / {
--	interrupt-parent = <&intc>;
--
- 	aliases {
- 		serial0 = &blsp1_uart5;
- 	};
-diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-index 73e7e9aad194..a38b4f21ab9b 100644
---- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-@@ -13,6 +13,7 @@ / {
- 
- 	model = "Qualcomm Technologies, Inc. IPQ8074";
- 	compatible = "qcom,ipq8074";
-+	interrupt-parent = <&intc>;
- 
- 	clocks: clocks {
- 		sleep_clk: sleep_clk {
+Dmitry Baryshkov (3):
+  clk: asm9260: use new helper for fixed rate clock creation
+  clk: fixed-rate: add devm_clk_hw_register_fixed_rate
+  phy: qcom-qmp-ufs: provide symbol clocks
+
+ drivers/clk/clk-asm9260.c               |  6 +--
+ drivers/clk/clk-fixed-rate.c            | 28 ++++++++++--
+ drivers/phy/qualcomm/phy-qcom-qmp-ufs.c | 59 +++++++++++++++++++++++++
+ include/linux/clk-provider.h            | 41 ++++++++++++++---
+ 4 files changed, 119 insertions(+), 15 deletions(-)
+
 -- 
-2.36.1
+2.35.1
 
