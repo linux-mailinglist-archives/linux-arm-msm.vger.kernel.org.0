@@ -2,88 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3177856C30A
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Jul 2022 01:13:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6A94156C232
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Jul 2022 01:12:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237377AbiGHWTN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Jul 2022 18:19:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44410 "EHLO
+        id S239408AbiGHW2M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Jul 2022 18:28:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50896 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237157AbiGHWTJ (ORCPT
+        with ESMTP id S239372AbiGHW2M (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Jul 2022 18:19:09 -0400
-Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C4DCA2E58
-        for <linux-arm-msm@vger.kernel.org>; Fri,  8 Jul 2022 15:19:08 -0700 (PDT)
-Received: by mail-oi1-x229.google.com with SMTP id u9so296644oiv.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Jul 2022 15:19:08 -0700 (PDT)
+        Fri, 8 Jul 2022 18:28:12 -0400
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E99113B458;
+        Fri,  8 Jul 2022 15:28:10 -0700 (PDT)
+Received: by mail-wr1-x436.google.com with SMTP id v16so83507wrd.13;
+        Fri, 08 Jul 2022 15:28:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=9I0SFAT4qZWBXThBg4GWRJ3eliYr1SjPFU1PmBCQKjY=;
-        b=VT5J0T7E4pFKIRAbym9NqBOwcsZ9faKKxl5ZGxvq5TGos2qyJk3LYjB2971J4CVa7q
-         bLPNudve2kGhTXpCa75rp7oBZX35RA8MEt0gya95I2iP05ugUogw4lAvCB4mE1a3NLVP
-         WswMBJFw/By37sp4bLo3fDpEN9PLn7Otw8xGgqRwHs84DrAUVLORg3wNg+jnGhSsUVKc
-         BxXKgLq6zI4HEGoz98/5/3wRkIb7bCTV7DxooKoEeWVwbsDFRp+bw4yxSf5TIw+lsDiO
-         jpew4/bPbnk0SstHbXONoBvkEg6bQpFT/pA5pcNlOOhXHAhOifLyStFbUW7wStyZfjoB
-         Jqpg==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=EIKl0L/6XyzwPBWrn8iMPtQb4hMXI8B9L0xH/4E3HCY=;
+        b=MgDq5RMsQmJt9tw/jQx7WxD1GQkperIilUkq33xlccftDqAO0jIIoVfCwEGcNyijdE
+         BsAMfGSutmB9peyEQZf+hcJzgO5sYT3Khxte88s1AStzx5SX0+znI7sH7hScQRu9SH1y
+         kNOAHEMN6LvqjYrUofYrgZCwhZtbJ27oD20w+O3FXL6jvATCOwJWdTUp+h3YExNK/k+X
+         QzsCqjHPLj8T/qQVJY2HN0Bc3a3dP5e5ey4NJy1U3zNbvzgTn88S/0nD8GXs9fcSAppk
+         s+/tpJEfRGtEpkg3LuFr+UeYqL8IFKYqogUaaIM49gVl8rACQj8BV19rHLVRFVqAdN/e
+         5+ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=9I0SFAT4qZWBXThBg4GWRJ3eliYr1SjPFU1PmBCQKjY=;
-        b=ol+Dxbmj6t2g7bvQdC/OzBcTjbwMjTtJhbljmdiB6csrN4xgTcg7RnF7QeT80UfhTv
-         K6XbZwrApsdJ+VecbrnNpf5R8TVg3tzTdt/nvJ4mevswMldkgr3vPw2rtZYFS8LJpe/e
-         ronxLqwJeysdp+4UbbI4nWP+JxK9DAX44Q/q2nzJ3jss+WYK/Jw2tfm1N+aLhDKDWq8t
-         Ay2GmmlVlnihz/+koyHoVE/4AGQTw6KrR6c8X8AsOpe5hpOD35F+LcGpWrlVNkJsLAp8
-         AbM1bVQsl5peCa3muccdCHZV9jFkP9N8uQQvfHqhOLX9w/49hofs87iXD1cCucmjA9rC
-         sDYg==
-X-Gm-Message-State: AJIora9EcM5l4yivOBb0yXrqbJnO0dqQsNjTLpOmCPV3SlvW9ABAo0qP
-        tSf2/ceTVOk58p58ZVJd+wlq2Q==
-X-Google-Smtp-Source: AGRyM1vY05jMLlDztoin5TcFW2xwx7InCI2TyZLrvhdC2twO+c8imYn4lby5wgw/K6LsnUrNcZ6WIA==
-X-Received: by 2002:a05:6808:16a7:b0:2f9:39c4:c597 with SMTP id bb39-20020a05680816a700b002f939c4c597mr1144426oib.101.1657318747922;
-        Fri, 08 Jul 2022 15:19:07 -0700 (PDT)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id y10-20020a9d518a000000b00616a2aa298asm48907otg.75.2022.07.08.15.19.06
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=EIKl0L/6XyzwPBWrn8iMPtQb4hMXI8B9L0xH/4E3HCY=;
+        b=eoc6cQOtLuR4bkQpDSQqAz9baH+qoGePJzbukhd11VFA8I1+atwBZyCCUhKmDaTe9O
+         fM9hGcpZoXlbpT3n+SxgRxLoTO06l08CcE94nyKn5JTsGkX1XxJVqjsJCKTED4s/PKkP
+         4mLDBVRKF/CgwWF55rTNLPGgRNmi0tZb6BSDg3LrMUiCs/wzH1FciH7krhpXkeuvoISx
+         RHQr7amF49A+UjZLRweU0Wwwn5YNfDuQDwrSkc0eSuhZZ73RzpLQFX6dxDX1iFiI+XLv
+         wYm9aHBEWCabb8rpWEkxvLPBbd04M451gGG2mF3zzv7lndNkT+L2SAPJWdGwpamvdG5k
+         NwOw==
+X-Gm-Message-State: AJIora9P7qvBmYV/RArRnXQSNteZc/sHhavy/iVXUWOtWzjcUa6xc0gH
+        +B2uQsdfOByPS8w9p/gnyNqBChuofKc=
+X-Google-Smtp-Source: AGRyM1sy7iGlWXrLjM6rZEjw7qCKnbPfNyNZ37jI2gkj9+26YLYamSTZGZEsORMFjUilPbc+4UGxQw==
+X-Received: by 2002:a05:6000:114e:b0:21d:6cd1:695d with SMTP id d14-20020a056000114e00b0021d6cd1695dmr5386806wrx.474.1657319288365;
+        Fri, 08 Jul 2022 15:28:08 -0700 (PDT)
+Received: from localhost.localdomain (93-42-70-190.ip85.fastwebnet.it. [93.42.70.190])
+        by smtp.googlemail.com with ESMTPSA id e36-20020a05600c4ba400b0039c54bb28f2sm3031596wmp.36.2022.07.08.15.28.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 Jul 2022 15:19:07 -0700 (PDT)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Johan Hovold <johan+linaro@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: sc8280xp: fix usb_0 HS PHY ref clock
-Date:   Fri,  8 Jul 2022 17:19:03 -0500
-Message-Id: <165731872887.1018153.11340490580715781531.b4-ty@linaro.org>
-X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20220708072358.4583-1-johan+linaro@kernel.org>
-References: <20220708072358.4583-1-johan+linaro@kernel.org>
+        Fri, 08 Jul 2022 15:28:07 -0700 (PDT)
+From:   Christian Marangi <ansuelsmth@gmail.com>
+To:     Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>, linux-pci@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     Christian Marangi <ansuelsmth@gmail.com>, stable@vger.kernel.org
+Subject: [PATCH] PCI: qcom: Enable clocks only after PARF_PHY setup for rev 2.1.0
+Date:   Sat,  9 Jul 2022 00:27:43 +0200
+Message-Id: <20220708222743.27019-1-ansuelsmth@gmail.com>
+X-Mailer: git-send-email 2.36.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 8 Jul 2022 09:23:58 +0200, Johan Hovold wrote:
-> Fix the usb_0 HS PHY reference clock which was mistakingly replaced with
-> the first usb_2 PHY clock.
-> 
-> 
+We currently enable clocks BEFORE we write to PARF_PHY_CTRL reg to
+enable clocks and resets. This case the driver to never set to a ready
+state with the error 'Phy link never came up'.
 
-Applied, thanks!
+This in fact is caused by the phy clock getting enabled before setting
+the required bits in the PARF regs.
 
-[1/1] arm64: dts: qcom: sc8280xp: fix usb_0 HS PHY ref clock
-      commit: 43883cee061f46f47ccfd251a28c879f84832a7c
+A workaround for this was set but with this new discovery we can drop
+the workaround and use a proper solution to the problem by just enabling
+the clock only AFTER the PARF_PHY_CTRL bit is set.
 
-Best regards,
+This correctly setup the pcie line and makes it usable even when a
+bootloader leave the pcie line to a underfined state.
+
+Fixes: 82a823833f4e ("PCI: qcom: Add Qualcomm PCIe controller driver")
+Cc: stable@vger.kernel.org # v5.4+
+Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+---
+ drivers/pci/controller/dwc/pcie-qcom.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
+
+diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+index 2ea13750b492..da13a66ced14 100644
+--- a/drivers/pci/controller/dwc/pcie-qcom.c
++++ b/drivers/pci/controller/dwc/pcie-qcom.c
+@@ -337,8 +337,6 @@ static int qcom_pcie_init_2_1_0(struct qcom_pcie *pcie)
+ 	reset_control_assert(res->ext_reset);
+ 	reset_control_assert(res->phy_reset);
+ 
+-	writel(1, pcie->parf + PCIE20_PARF_PHY_CTRL);
+-
+ 	ret = regulator_bulk_enable(ARRAY_SIZE(res->supplies), res->supplies);
+ 	if (ret < 0) {
+ 		dev_err(dev, "cannot enable regulators\n");
+@@ -381,15 +379,15 @@ static int qcom_pcie_init_2_1_0(struct qcom_pcie *pcie)
+ 		goto err_deassert_axi;
+ 	}
+ 
+-	ret = clk_bulk_prepare_enable(ARRAY_SIZE(res->clks), res->clks);
+-	if (ret)
+-		goto err_clks;
+-
+ 	/* enable PCIe clocks and resets */
+ 	val = readl(pcie->parf + PCIE20_PARF_PHY_CTRL);
+ 	val &= ~BIT(0);
+ 	writel(val, pcie->parf + PCIE20_PARF_PHY_CTRL);
+ 
++	ret = clk_bulk_prepare_enable(ARRAY_SIZE(res->clks), res->clks);
++	if (ret)
++		goto err_clks;
++
+ 	if (of_device_is_compatible(node, "qcom,pcie-ipq8064") ||
+ 	    of_device_is_compatible(node, "qcom,pcie-ipq8064-v2")) {
+ 		writel(PCS_DEEMPH_TX_DEEMPH_GEN1(24) |
 -- 
-Bjorn Andersson <bjorn.andersson@linaro.org>
+2.36.1
+
