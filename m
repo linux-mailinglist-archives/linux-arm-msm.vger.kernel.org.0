@@ -2,68 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3887956BA8B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jul 2022 15:20:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8254D56BAAE
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jul 2022 15:30:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237941AbiGHNTd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Jul 2022 09:19:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57428 "EHLO
+        id S237419AbiGHN3g (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Jul 2022 09:29:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35802 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231287AbiGHNTc (ORCPT
+        with ESMTP id S237813AbiGHN3f (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Jul 2022 09:19:32 -0400
-Received: from mail-qt1-x82f.google.com (mail-qt1-x82f.google.com [IPv6:2607:f8b0:4864:20::82f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8B7F275D7;
-        Fri,  8 Jul 2022 06:19:31 -0700 (PDT)
-Received: by mail-qt1-x82f.google.com with SMTP id e7so1620707qts.1;
-        Fri, 08 Jul 2022 06:19:31 -0700 (PDT)
+        Fri, 8 Jul 2022 09:29:35 -0400
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C7182CC8E;
+        Fri,  8 Jul 2022 06:29:34 -0700 (PDT)
+Received: by mail-ed1-x536.google.com with SMTP id v12so14250741edc.10;
+        Fri, 08 Jul 2022 06:29:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=JtDIuSDJgMHOnSZ7PDsNMgEqGS4IDU10U0hH9sHl3tg=;
-        b=F1TT9/4N2rf2mudIbCeIRjEmhB/dOOSNMlAnJije4cTLlMr+FJ96dYAM3lSjRN82Fn
-         5phQrraQEKfjUbDlb2u08NXgt4TDCjj9vbuvnJ2SyivezzJxr3FYhYouCxzVqIWPYfYW
-         kI8p2+w2VA1XVe0uwwkP2s4Q1+KKicxu7LYfQymp7H4TTECwVWMWpj9lEhEZwX6StSYO
-         0T1M9bS9eY27tmsDZKaHxYY592yn5PkQ57uyQ8Nt0K9DjpU9ZgJDvZ7IsNkafjWiFqf9
-         u/BOHf3LNPoqR548ZyHd3pk9jyMgHaPHVj2fJbw3ZXFJ3BKJqb6dNlng4aH/ZckF+8+b
-         2DZw==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=A5yNT274X8JVIXWHK9IfpidEsdTyKnF8Wkvv4Lr1xrM=;
+        b=T49Dpozw8GmXePIozCQt/BaE/hs09JQQS4VxY2XNYeGltK2ufde6tdkHJ+qV49MBb/
+         cgwtD6o1chIsu+K45lOGnt78rWTmMo8vN1vybAtnydtU+Pk1wXJGbUa4BvPHJvUl6F46
+         0IO+W3gYuGyE74EWOFwblBeMc6VAEVL4ujHWVs5RZIoKT1DyIQXJLnTME3n15/m/I9x1
+         juYtvJDLa9gOAoN8tv9ma5PzIfq8zYzwwPY4SLiPTiCzL4SZ3ZTkIJC6d8T5xif4FN/D
+         40VPwo8Jo2XzQoMVmeWzQDUNSieBneVh12KQgzHI+MWJUjixLMEPHUQ/5wUu8JJsKjaC
+         fv3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=JtDIuSDJgMHOnSZ7PDsNMgEqGS4IDU10U0hH9sHl3tg=;
-        b=XPzMYq3XMRr7QOlMLgNhJysAsm4Pr6ccg50dw0j0eofSAkOCFUqqPjK/1m7bAucdAd
-         i/uyRgrSQiwtNZQdPFetp7TuGh84ZwlU9LycfW8qD/UbpOkFui3LuidjwgRgwIzshylD
-         KWHWvU2ma5dzYOaQGTQeBsRj9hoXr+3EiFuev2lYQbHbzoLpz+7amGWgcYFI0XI0eJQY
-         vz3954YMGUCm7uDV+O2XTh8Ghn19V3OlIhQyKQWpzzMZDTJR63OCJaSF9/vxEc4c7V9o
-         Ndh/0p6neOabYG8v7zwb3C3LG55mEB/hUN5yJHzBdprtRG8jNgC3cM+9dKuVx1xPNTfc
-         f3gg==
-X-Gm-Message-State: AJIora8LJmBdq3bfpmdZxVP39FtudiUnSAkUs31XRrhgYFnVAQLhV6Qz
-        IdyAM5+EuftdhhfME3w6x5fodCVohzucJbD4y7ewy0gGe0E=
-X-Google-Smtp-Source: AGRyM1tOJmb8x3r+oLBvKHiggRAd8q9ZzGU7GGBH5P9GK5C4c87aPPF8+j7O07cl13llleHzkRCaPLfYivNLIdaYh0M=
-X-Received: by 2002:ac8:5dcb:0:b0:31d:42c8:95d7 with SMTP id
- e11-20020ac85dcb000000b0031d42c895d7mr2859884qtx.546.1657286370465; Fri, 08
- Jul 2022 06:19:30 -0700 (PDT)
-MIME-Version: 1.0
-References: <20220705191017.1683716-1-robimarko@gmail.com> <fa748405-ca38-8ec8-0e8d-83a99a0c9c57@somainline.org>
-In-Reply-To: <fa748405-ca38-8ec8-0e8d-83a99a0c9c57@somainline.org>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=A5yNT274X8JVIXWHK9IfpidEsdTyKnF8Wkvv4Lr1xrM=;
+        b=gWXmQuF0onXbp4/7jHrv/6f0D4Xz4UT4Be5dwk3b6M9oC7Pe4uQ3QvZfb6BSDs9h4F
+         NkFbnoKKUAeC9L/rqKpzMuWwokKxpk4ekrhFcXH3IIuJVooBXp37tsyZczTTxFbInfv7
+         wooBsAMp5PBqVzA5v0gkQGrb7VoQf9mpd70w7j0egtQA4gER8Lk5dgDY8JUhpZY2ZoHK
+         s2dZivHef4VwfalEC4NsVY8vuGd/KWJpMt1pBHjT8cGojmSaTRKeAZPs4mJf1v7mccGY
+         1Pm8IomLl09+hz+xGzE2doEvS7BJcgsnV5az0864LorgV3AanJsDS8jyrC8LBFNyXJvV
+         9U/g==
+X-Gm-Message-State: AJIora+7s1mS89rBTPw+4nCFqeN438ho1cgcuspWvzLm+sbVGRfPEBli
+        L7xpw/ega9CZ6pPLWudVjbo=
+X-Google-Smtp-Source: AGRyM1vrAKpKJdOECJLFrVkdBIXOKfAQt31+tD63iuif8bqLLfCeZhXJEam7m9XwSLL0XuoHuXbtQQ==
+X-Received: by 2002:a05:6402:2687:b0:43a:6025:1658 with SMTP id w7-20020a056402268700b0043a60251658mr4658569edd.271.1657286972649;
+        Fri, 08 Jul 2022 06:29:32 -0700 (PDT)
+Received: from fedora.robimarko.hr (dh207-96-250.xnet.hr. [88.207.96.250])
+        by smtp.googlemail.com with ESMTPSA id q4-20020a1709064cc400b006fec4ee28d0sm20170398ejt.189.2022.07.08.06.29.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 08 Jul 2022 06:29:32 -0700 (PDT)
 From:   Robert Marko <robimarko@gmail.com>
-Date:   Fri, 8 Jul 2022 15:19:19 +0200
-Message-ID: <CAOX2RU4bpd5xAMA-2wFWW9iypbqijkhnwkLZ_gqBorCkyuKegQ@mail.gmail.com>
-Subject: Re: [PATCH v5 1/3] clk: qcom: clk-alpha-pll: add support for APSS PLL
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        krzysztof.kozlowski+dt@linaro.org,
-        open list <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-clk@vger.kernel.org,
-        Devicetree List <devicetree@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+To:     agross@kernel.org, bjorn.andersson@linaro.org,
+        konrad.dybcio@somainline.org, amitk@kernel.org,
+        thara.gopinath@gmail.com, rafael@kernel.org,
+        daniel.lezcano@linaro.org, rui.zhang@intel.com, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Robert Marko <robimarko@gmail.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v5 1/5] dt-bindings: thermal: tsens: Add ipq8074 compatible
+Date:   Fri,  8 Jul 2022 15:29:26 +0200
+Message-Id: <20220708132930.595897-1-robimarko@gmail.com>
+X-Mailer: git-send-email 2.36.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
         RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
@@ -74,66 +74,148 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 6 Jul 2022 at 15:14, Konrad Dybcio <konrad.dybcio@somainline.org> wrote:
->
->
->
-> On 5.07.2022 21:10, Robert Marko wrote:
-> > APSS PLL type will be used by the IPQ8074 APSS driver for providing the
-> > CPU core clocks and enabling CPU Frequency scaling.
-> >
-> > This is ported from the downstream 5.4 kernel.
-> >
-> > Signed-off-by: Robert Marko <robimarko@gmail.com>
-> > ---
-> >  drivers/clk/qcom/clk-alpha-pll.c | 12 ++++++++++++
-> >  drivers/clk/qcom/clk-alpha-pll.h |  1 +
-> >  2 files changed, 13 insertions(+)
-> >
-> > diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
-> > index 4406cf609aae..8270363ff98e 100644
-> > --- a/drivers/clk/qcom/clk-alpha-pll.c
-> > +++ b/drivers/clk/qcom/clk-alpha-pll.c
-> > @@ -154,6 +154,18 @@ const u8 clk_alpha_pll_regs[][PLL_OFF_MAX_REGS] = {
-> >               [PLL_OFF_TEST_CTL_U] = 0x30,
-> >               [PLL_OFF_TEST_CTL_U1] = 0x34,
-> >       },
-> > +     [CLK_ALPHA_PLL_TYPE_APSS] = {
-> The name is surely not correct, can somebody from qcom chime in
-> and suggest what it should be?
+Qualcomm IPQ8074 has tsens v2.3.0 block, though unlike existing v2 IP it
+only uses one IRQ, so tsens v2 compatible cannot be used as the fallback.
 
-Hi Konrad,
-That is how Qualcomm refers to the type in the downstream 4.4 and 5.4 kernels.
-I dont have any other reference to the name unless somebody from
-Qualcomm can chime in.
+We also have to make sure that correct interrupts are set according to
+compatibles, so populate interrupt information per compatibles.
 
-Regards,
-Robert
->
-> Konrad
-> > +             [PLL_OFF_L_VAL] = 0x08,
-> > +             [PLL_OFF_ALPHA_VAL] = 0x10,
-> > +             [PLL_OFF_ALPHA_VAL_U] = 0xff,
-> > +             [PLL_OFF_USER_CTL] = 0x18,
-> > +             [PLL_OFF_USER_CTL_U] = 0xff,
-> > +             [PLL_OFF_CONFIG_CTL] = 0x20,
-> > +             [PLL_OFF_CONFIG_CTL_U] = 0x24,
-> > +             [PLL_OFF_TEST_CTL] = 0x30,
-> > +             [PLL_OFF_TEST_CTL_U] = 0x34,
-> > +             [PLL_OFF_STATUS] = 0x28,
-> > +     },
-> >  };
-> >  EXPORT_SYMBOL_GPL(clk_alpha_pll_regs);
-> >
-> > diff --git a/drivers/clk/qcom/clk-alpha-pll.h b/drivers/clk/qcom/clk-alpha-pll.h
-> > index 6e9907deaf30..626fdf80336d 100644
-> > --- a/drivers/clk/qcom/clk-alpha-pll.h
-> > +++ b/drivers/clk/qcom/clk-alpha-pll.h
-> > @@ -18,6 +18,7 @@ enum {
-> >       CLK_ALPHA_PLL_TYPE_AGERA,
-> >       CLK_ALPHA_PLL_TYPE_ZONDA,
-> >       CLK_ALPHA_PLL_TYPE_LUCID_EVO,
-> > +     CLK_ALPHA_PLL_TYPE_APSS,
-> >       CLK_ALPHA_PLL_TYPE_MAX,
-> >  };
-> >
+Signed-off-by: Robert Marko <robimarko@gmail.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+Changes in v4:
+* Add the forgotten Reviewed-by tag from Krzysztof
+
+Changes in v3:
+* Remove implied min/maxItem properties as pointed by Rob
+
+Changes in v2:
+* No need for a list in compatible check
+* Specify minItems and maxItems for interrupt and interrupt-names
+---
+ .../bindings/thermal/qcom-tsens.yaml          | 76 ++++++++++++++++---
+ 1 file changed, 65 insertions(+), 11 deletions(-)
+
+diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+index 038d81338fcf..fee2b6281417 100644
+--- a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
++++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+@@ -59,6 +59,10 @@ properties:
+               - qcom,sm8350-tsens
+           - const: qcom,tsens-v2
+ 
++      - description: v2 of TSENS with combined interrupt
++        enum:
++          - qcom,ipq8074-tsens
++
+   reg:
+     items:
+       - description: TM registers
+@@ -66,15 +70,11 @@ properties:
+ 
+   interrupts:
+     minItems: 1
+-    items:
+-      - description: Combined interrupt if upper or lower threshold crossed
+-      - description: Interrupt if critical threshold crossed
++    maxItems: 2
+ 
+   interrupt-names:
+     minItems: 1
+-    items:
+-      - const: uplow
+-      - const: critical
++    maxItems: 2
+ 
+   nvmem-cells:
+     minItems: 1
+@@ -128,22 +128,61 @@ allOf:
+     then:
+       properties:
+         interrupts:
+-          maxItems: 1
++          items:
++            - description: Combined interrupt if upper or lower threshold crossed
+         interrupt-names:
+-          maxItems: 1
++          items:
++            - const: uplow
+ 
+-    else:
++  - if:
++      properties:
++        compatible:
++          contains:
++            enum:
++              - qcom,msm8953-tsens
++              - qcom,msm8996-tsens
++              - qcom,msm8998-tsens
++              - qcom,sc7180-tsens
++              - qcom,sc7280-tsens
++              - qcom,sc8180x-tsens
++              - qcom,sdm630-tsens
++              - qcom,sdm845-tsens
++              - qcom,sm8150-tsens
++              - qcom,sm8250-tsens
++              - qcom,sm8350-tsens
++              - qcom,tsens-v2
++    then:
++      properties:
++        interrupts:
++          items:
++            - description: Combined interrupt if upper or lower threshold crossed
++            - description: Interrupt if critical threshold crossed
++        interrupt-names:
++          items:
++            - const: uplow
++            - const: critical
++
++  - if:
++      properties:
++        compatible:
++          contains:
++            enum:
++              - qcom,ipq8074-tsens
++    then:
+       properties:
+         interrupts:
+-          minItems: 2
++          items:
++            - description: Combined interrupt if upper, lower or critical thresholds crossed
+         interrupt-names:
+-          minItems: 2
++          items:
++            - const: combined
+ 
+   - if:
+       properties:
+         compatible:
+           contains:
+             enum:
++              - qcom,ipq8074-tsens
+               - qcom,tsens-v0_1
+               - qcom,tsens-v1
+               - qcom,tsens-v2
+@@ -226,4 +265,19 @@ examples:
+            #qcom,sensors = <13>;
+            #thermal-sensor-cells = <1>;
+     };
++
++  - |
++    #include <dt-bindings/interrupt-controller/arm-gic.h>
++    // Example 4 (for any IPQ8074 based SoC-s):
++    tsens4: thermal-sensor@4a9000 {
++           compatible = "qcom,ipq8074-tsens";
++           reg = <0x4a9000 0x1000>,
++                 <0x4a8000 0x1000>;
++
++           interrupts = <GIC_SPI 184 IRQ_TYPE_LEVEL_HIGH>;
++           interrupt-names = "combined";
++
++           #qcom,sensors = <16>;
++           #thermal-sensor-cells = <1>;
++    };
+ ...
+-- 
+2.36.1
+
