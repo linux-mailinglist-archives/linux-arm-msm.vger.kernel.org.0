@@ -2,218 +2,166 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1ACE656B138
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jul 2022 06:03:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0F3F956B20F
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jul 2022 07:01:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232993AbiGHEDw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Jul 2022 00:03:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47896 "EHLO
+        id S237320AbiGHEsp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Jul 2022 00:48:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50472 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230230AbiGHEDv (ORCPT
+        with ESMTP id S237246AbiGHEsa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Jul 2022 00:03:51 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62D2E73596;
-        Thu,  7 Jul 2022 21:03:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1657253030; x=1688789030;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=ieabIjs/1UMKubAGBvSExYnswdhV6Tfe3w0OQQgbOLQ=;
-  b=ajpiSvCQTD8OKih1wqcaVtzPfFh0G1+JsQSEGZ+7Pftz3pLJRO5u6epN
-   jNrmWakpWYAj7DDzeFMmlhpEkC61OX0mh4Mq5AV61aJ7bsWCIhMyj5LVy
-   gKC8XquPIpnIT669caCk+M95n5Y5T8vzn32T5AkrFsJBlPIqh3S6FTvur
-   8=;
-Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 07 Jul 2022 21:03:50 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg02-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Jul 2022 21:03:49 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Thu, 7 Jul 2022 21:03:49 -0700
-Received: from [10.216.11.69] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Thu, 7 Jul 2022
- 21:03:45 -0700
-Message-ID: <33815bdd-3a30-594d-3304-8b81f2774190@quicinc.com>
-Date:   Fri, 8 Jul 2022 09:33:42 +0530
+        Fri, 8 Jul 2022 00:48:30 -0400
+Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B35EDB7C5;
+        Thu,  7 Jul 2022 21:48:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1657255708; x=1688791708;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=JMwN4AOFcj3XnN0nw4WIO8eRYRgOHL+c7NhVdR93iTc=;
+  b=KxwSwRdmmObG689t8WjU2EtDLUK0hTqpj1Gh3CmZ9OdU9fV1XBb4ixEE
+   p/iWA7COYTqKo3qeho+z9t8uSVYjgViahRzAB8bp4/0yAgrBvqCLqtRlv
+   hk5Kw+dAv2ryNhZ4eujmzQaTNWgmm/0pvBwys43QV39Lo4pSB+U/+s9B1
+   4QpPS8Ylg5AI23DlmA6zWnO4Wh4qrSCqpL8jnYxX/SOjySfKF4ziy0KyK
+   7AUslSDkWwbSmt7BzzYaZDKFg7LS2bFciwp1LUagNhRstUUiMMziHMEuJ
+   twmqLLf9JCoSNOc0vN+wg7GL0RGFx2N2TzgbAbQTM3HJ/lBO5lSdfMRQH
+   A==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10401"; a="267220402"
+X-IronPort-AV: E=Sophos;i="5.92,254,1650956400"; 
+   d="scan'208";a="267220402"
+Received: from fmsmga005.fm.intel.com ([10.253.24.32])
+  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Jul 2022 21:48:28 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.92,254,1650956400"; 
+   d="scan'208";a="920860672"
+Received: from lkp-server01.sh.intel.com (HELO 68b931ab7ac1) ([10.239.97.150])
+  by fmsmga005.fm.intel.com with ESMTP; 07 Jul 2022 21:48:25 -0700
+Received: from kbuild by 68b931ab7ac1 with local (Exim 4.95)
+        (envelope-from <lkp@intel.com>)
+        id 1o9fui-000Mvu-B1;
+        Fri, 08 Jul 2022 04:48:24 +0000
+Date:   Fri, 8 Jul 2022 12:48:16 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>,
+        agross@kernel.org, bjorn.andersson@linaro.org,
+        konrad.dybcio@somainline.org, gregkh@linuxfoundation.org,
+        jirislaby@kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-serial@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     kbuild-all@lists.01.org, quic_msavaliy@quicinc.com,
+        dianders@chromium.org, mka@chromium.org, swboyd@chromium.org,
+        Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+Subject: Re: [V3] tty: serial: qcom-geni-serial: Fix get_clk_div_rate() which
+ otherwise could return a sub-optimal clock rate.
+Message-ID: <202207081234.3SPgl4KO-lkp@intel.com>
+References: <1657221457-32494-1-git-send-email-quic_vnivarth@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH v14 00/12] Add soundcard support for sc7280 based
- platforms.
-Content-Language: en-US
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-CC:     <agross@kernel.org>, <robh+dt@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_rohkumar@quicinc.com>,
-        <srinivas.kandagatla@linaro.org>, <dianders@chromium.org>,
-        <swboyd@chromium.org>, <judyhsiao@chromium.org>
-References: <1657200184-29565-1-git-send-email-quic_srivasam@quicinc.com>
- <Ysb7rZ4tIpN9fm8w@builder.lan>
-From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Organization: Qualcomm
-In-Reply-To: <Ysb7rZ4tIpN9fm8w@builder.lan>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1657221457-32494-1-git-send-email-quic_vnivarth@quicinc.com>
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,
+        SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Vijaya,
 
-On 7/7/2022 8:58 PM, Bjorn Andersson wrote:
-Thanks for your time Bjorn!!!
-> On Thu 07 Jul 08:22 CDT 2022, Srinivasa Rao Mandadapu wrote:
->
->> This patch set is to add bolero digital macros, WCD and maxim codecs nodes
->> for audio on sc7280 based platforms.
->>
->> This patch set depends on:
->>      [LPASS DTS: wcd related pinmux reorg]
->>      -- https://patchwork.kernel.org/project/linux-arm-msm/list/?series=657389
->>      [Clock DTS: reset control changes]
->>      -- https://patchwork.kernel.org/project/linux-arm-msm/list/?series=638002
->>      [Clock: External MCLK and reset control driver changes]
->>      -- https://patchwork.kernel.org/project/linux-arm-msm/list/?series=650267
-> As far as I understand I can't apply this series until Taniya's clock
-> patches has been picked up?
-Okay. It seems Taniya's patches also in final stage of review.
->
->>      [Clock DTS: lpasscc node disable and lpasscore node name changes]
->>      -- https://patchwork.kernel.org/project/linux-arm-msm/list/?series=657325
-> You're the author of these 3 other patch sets, so why are you asking me
-> to stitch them together, instead of just sending me one series that I
-> can easily apply.
-Here 3 dependent patch series are of Clock Teams patches.  only patch 
-from me is [
+Thank you for the patch! Perhaps something to improve:
 
-LPASS DTS: wcd related pinmux reorg] patch. Which is not dependent on any
-other patch and can be applied directly as it's reviewed by. Will take care next
-time and will combine patches wherever is possible.
+[auto build test WARNING on tty/tty-testing]
+[also build test WARNING on linus/master v5.19-rc5 next-20220707]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
->
-> If you want your patches merged, make it easy for the maintainer to
-> merge them!
-Sure. Will take care next time.  For Now will keep it as it is, as it's 
-independent patch and only one.
->
-> Regards,
-> Bjorn
->
->> Changes Since V13:
->>      -- Move digital codecs enabling to separate wcd specific dtsi file in CRD 3.0+ patches.
->>      -- Remove redundant output high setting in wcd reset node.
->>      -- Revert external mclk name.
->>      -- Update dependency list.
->>      -- Rebase as per latest kernel repository.
->> Changes Since V12:
->>      -- Update 'lpasscore' clock node name to lpass_core to match latest clock patches.
->>      -- Update external mclk0 name and it's source node.
->>      -- Move sound node to separate wcd specific dtsi file.
->>      -- Move CRD specific lpass_cpu node Enabling to separate wcd specific dtsi file.
->>      -- Update dependency list.
->> Changes Since V11:
->>      -- Remove output-low pinconf setting in wcd-reset-n-sleep node.
->>      -- Update dependency list.
->> Changes Since V10:
->>      -- Modify digital macro codecs pin control labels.
->>      -- Updated dependency list.
->> Changes Since V9:
->>      -- Move wcd codec and digital codec nodes to sc7280-qcard file.
->>      -- Modify the reg property as per link number in sound node.
->>      -- Fix the us-euro pin control usage in wcd codec node.
->>      -- Move wcd pin control nodes to specific crd board files.
->>      -- Sort max98360a codec node in alphabetical order.
->>      -- Modify the commit messages.
->> Changes Since V8:
->>      -- Split patches as per sc7280 CRD revision 3, 4 and 5 boards.
->>      -- Add corresponding dt nodes for herobrine crd boards.
->>      -- Update dai-link node names as per dt-bindings in sound node.
->>      -- Add reg property in sound node as per dt-bindings which was removed in previous series.
->>      -- Fix typo errors.
->>      -- Update wcd codec pin control properties in board specific files.
->> Changes Since V7:
->>      -- Remove redundant interrupt names in soundwire node.
->>      -- Fix typo errors.
->>      -- Remove redundant reg property in sound node.
->>      -- Rebased on top of latest kernel tip.
->> Changes Since V6:
->>      -- Modify link-names and audio routing in a sound node.
->>      -- Move amp_en pin control node to appropriate consumer patch.
->>      -- Split patches as per digital macro codecs and board specific codecs and sort it.
->>      -- Modify label and node names to lpass specific.
->> Changes Since V5:
->>      -- Move soc specific bolero digital codec nodes to soc specific file.
->>      -- Bring wcd938x codec reset pin control and US/EURO HS selection nodes from other series.
->>      -- Change node name and remove redundant status property in sound node.
->> Changes Since V4:
->>      -- Update nodes in sorting order.
->>      -- Update DTS node names as per dt-bindings.
->>      -- Update Node properties in proper order.
->>      -- Update missing pinctrl properties like US/EURO HS selection, wcd reset control.
->>      -- Remove redundant labels.
->>      -- Remove unused size cells and address cells in tx macro node.
->>      -- Keep all same nodes at one place, which are defined in same file.
->>      -- Add max98360a codec node to herobrine board specific targets.
->> Changes Since V3:
->>      -- Move digital codec macro nodes to board specific dtsi file.
->>      -- Update pin controls in lpass cpu node.
->>      -- Update dependency patch list.
->>      -- Create patches on latest kernel.
->> Changes Since V2:
->>      -- Add power domains to digital codec macro nodes.
->>      -- Change clock node usage in lpass cpu node.
->>      -- Add codec mem clock to lpass cpu node.
->>      -- Modify the node names to be generic.
->>      -- Move sound and codec nodes to root node.
->>      -- sort dai links as per reg.
->>      -- Fix typo errors.
->> Changes Since V1:
->>      -- Update the commit message of cpu node patch.
->>      -- Add gpio control property to support Euro headset in wcd938x node.
->>      -- Fix clock properties in lpass cpu and digital codec macro node.
->>
->> Srinivasa Rao Mandadapu (12):
->>    arm64: dts: qcom: sc7280: Add nodes for soundwire and va tx rx digital
->>      macro codecs
->>    arm64: dts: qcom: sc7280: Enable digital codecs and soundwire for CRD
->>      1.0/2.0 and IDP boards
->>    arm64: dts: qcom: sc7280: Enable digital codecs and soundwire for CRD
->>      3.0/3.1
->>    arm64: dts: qcom: sc7280: Add wcd9385 codec node for CRD 1.0/2.0 and
->>      IDP boards
->>    arm64: dts: qcom: sc7280: Add wcd9385 codec node for CRD 3.0/3.1
->>    arm64: dts: qcom: sc7280: Add max98360a codec for CRD 1.0/2.0 and IDP
->>      boards
->>    arm64: dts: qcom: sc7280: herobrine: Add max98360a codec node
->>    arm64: dts: qcom: sc7280: Add lpass cpu node
->>    arm64: dts: qcom: sc7280: Enable lpass cpu node for CRD 1.0/2.0 and
->>      IDP boards.
->>    arm64: dts: qcom: sc7280: Enable lpass cpu node for CRD 3.0/3.1
->>    arm64: dts: qcom: sc7280: Add sound node for CRD 1.0/2.0 and IDP
->>      boards
->>    arm64: dts: qcom: sc7280: Add sound node for CRD 3.0/3.1
->>
->>   arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts         |  37 ++++
->>   .../dts/qcom/sc7280-herobrine-audio-wcd9385.dtsi   | 155 +++++++++++++++
->>   arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi     |   8 +
->>   arch/arm64/boot/dts/qcom/sc7280-idp.dtsi           | 216 +++++++++++++++++++++
->>   arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi         |  73 +++++++
->>   arch/arm64/boot/dts/qcom/sc7280.dtsi               | 190 ++++++++++++++++++
->>   6 files changed, 679 insertions(+)
->>
->> -- 
->> 2.7.4
->>
+url:    https://github.com/intel-lab-lkp/linux/commits/Vijaya-Krishna-Nivarthi/tty-serial-qcom-geni-serial-Fix-get_clk_div_rate-which-otherwise-could-return-a-sub-optimal-clock-rate/20220708-031921
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/gregkh/tty.git tty-testing
+config: nios2-randconfig-r024-20220707 (https://download.01.org/0day-ci/archive/20220708/202207081234.3SPgl4KO-lkp@intel.com/config)
+compiler: nios2-linux-gcc (GCC) 11.3.0
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # https://github.com/intel-lab-lkp/linux/commit/fbd8a1a4b7d91ea5caa048e4557ab18b0d08ea86
+        git remote add linux-review https://github.com/intel-lab-lkp/linux
+        git fetch --no-tags linux-review Vijaya-Krishna-Nivarthi/tty-serial-qcom-geni-serial-Fix-get_clk_div_rate-which-otherwise-could-return-a-sub-optimal-clock-rate/20220708-031921
+        git checkout fbd8a1a4b7d91ea5caa048e4557ab18b0d08ea86
+        # save the config file
+        mkdir build_dir && cp config build_dir/.config
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.3.0 make.cross W=1 O=build_dir ARCH=nios2 SHELL=/bin/bash drivers/tty/serial/
+
+If you fix the issue, kindly add following tag where applicable
+Reported-by: kernel test robot <lkp@intel.com>
+
+All warnings (new ones prefixed by >>):
+
+   In file included from include/linux/kernel.h:29,
+                    from include/linux/clk.h:13,
+                    from drivers/tty/serial/qcom_geni_serial.c:4:
+   drivers/tty/serial/qcom_geni_serial.c: In function 'get_clk_div_rate':
+>> drivers/tty/serial/qcom_geni_serial.c:1006:26: warning: format '%lu' expects argument of type 'long unsigned int', but argument 5 has type 'unsigned int' [-Wformat=]
+    1006 |                 pr_debug("desired_clk-%lu, ser_clk-%lu, clk_div-%lu\n",
+         |                          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   include/linux/printk.h:370:21: note: in definition of macro 'pr_fmt'
+     370 | #define pr_fmt(fmt) fmt
+         |                     ^~~
+   include/linux/dynamic_debug.h:152:9: note: in expansion of macro '__dynamic_func_call'
+     152 |         __dynamic_func_call(__UNIQUE_ID(ddebug), fmt, func, ##__VA_ARGS__)
+         |         ^~~~~~~~~~~~~~~~~~~
+   include/linux/dynamic_debug.h:162:9: note: in expansion of macro '_dynamic_func_call'
+     162 |         _dynamic_func_call(fmt, __dynamic_pr_debug,             \
+         |         ^~~~~~~~~~~~~~~~~~
+   include/linux/printk.h:604:9: note: in expansion of macro 'dynamic_pr_debug'
+     604 |         dynamic_pr_debug(fmt, ##__VA_ARGS__)
+         |         ^~~~~~~~~~~~~~~~
+   drivers/tty/serial/qcom_geni_serial.c:1006:17: note: in expansion of macro 'pr_debug'
+    1006 |                 pr_debug("desired_clk-%lu, ser_clk-%lu, clk_div-%lu\n",
+         |                 ^~~~~~~~
+   drivers/tty/serial/qcom_geni_serial.c:1006:67: note: format string is defined here
+    1006 |                 pr_debug("desired_clk-%lu, ser_clk-%lu, clk_div-%lu\n",
+         |                                                                 ~~^
+         |                                                                   |
+         |                                                                   long unsigned int
+         |                                                                 %u
+
+
+vim +1006 drivers/tty/serial/qcom_geni_serial.c
+
+   983	
+   984	static unsigned long get_clk_div_rate(struct clk *clk, unsigned int baud,
+   985				unsigned int sampling_rate, unsigned int *clk_div)
+   986	{
+   987		unsigned long ser_clk;
+   988		unsigned long desired_clk;
+   989	
+   990		desired_clk = baud * sampling_rate;
+   991		if (!desired_clk) {
+   992			pr_err("%s: Invalid frequency\n", __func__);
+   993			return 0;
+   994		}
+   995	
+   996		/*
+   997		 * try to find a clock rate within 2% tolerance, then within
+   998		 */
+   999		ser_clk = find_clk_rate_in_tol(clk, desired_clk, clk_div, 2);
+  1000		if (!ser_clk)
+  1001			ser_clk = find_clk_rate_in_tol(clk, desired_clk, clk_div, 5);
+  1002	
+  1003		if (!ser_clk)
+  1004			pr_err("Couldn't find suitable clock rate for %lu\n", desired_clk);
+  1005		else
+> 1006			pr_debug("desired_clk-%lu, ser_clk-%lu, clk_div-%lu\n",
+  1007				desired_clk, ser_clk, *clk_div);
+  1008	
+  1009		return ser_clk;
+  1010	}
+  1011	
+
+-- 
+0-DAY CI Kernel Test Service
+https://01.org/lkp
