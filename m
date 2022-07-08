@@ -2,418 +2,208 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1567756B9AB
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jul 2022 14:30:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3E6DA56BA5F
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jul 2022 15:12:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231287AbiGHM0d (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Jul 2022 08:26:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50364 "EHLO
+        id S237969AbiGHNLX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Jul 2022 09:11:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52750 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237735AbiGHM0d (ORCPT
+        with ESMTP id S237918AbiGHNLW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Jul 2022 08:26:33 -0400
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 086A23136B;
-        Fri,  8 Jul 2022 05:26:32 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 1FEF8D6E;
-        Fri,  8 Jul 2022 05:26:32 -0700 (PDT)
-Received: from [10.57.86.102] (unknown [10.57.86.102])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 5A4043F70D;
-        Fri,  8 Jul 2022 05:26:30 -0700 (PDT)
-Message-ID: <c601948c-699b-90da-5563-9aa6ad048363@arm.com>
-Date:   Fri, 8 Jul 2022 13:26:24 +0100
+        Fri, 8 Jul 2022 09:11:22 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE5952A950;
+        Fri,  8 Jul 2022 06:11:21 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 769BCB827B3;
+        Fri,  8 Jul 2022 13:11:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98DBDC341C6;
+        Fri,  8 Jul 2022 13:11:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1657285879;
+        bh=z5Uat0LSTUymLrXfMjnQF7MXtrkHeCBhETdVEQeiIOM=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=oZl+F8em0KnuzARWbL+MAL57Gpb5jRTAOeSNCYJZC4SO9wLHuMabsUEv20gscBmtL
+         XPGu0ThuPm8hByuq4REd1UvwtTt82Hkpf7ulzYsdGA16VYhuBL7KaZjfMDC1s/l6TC
+         L1wkeJd5quCCx1J3GLKKxPMq7xiFBsM2MOh6Ou5o=
+Date:   Fri, 8 Jul 2022 15:11:16 +0200
+From:   Greg KH <gregkh@linuxfoundation.org>
+To:     Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
+        konrad.dybcio@somainline.org, jirislaby@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_msavaliy@quicinc.com,
+        dianders@chromium.org, mka@chromium.org, swboyd@chromium.org
+Subject: Re: [V3] tty: serial: qcom-geni-serial: Fix get_clk_div_rate() which
+ otherwise could return a sub-optimal clock rate.
+Message-ID: <Ysgs9MwCLyqeWgge@kroah.com>
+References: <1657221457-32494-1-git-send-email-quic_vnivarth@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCHv3] iommu/arm-smmu-qcom: Add debug support for TLB sync
- timeouts
-Content-Language: en-GB
-To:     Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
-        Will Deacon <will@kernel.org>, Joerg Roedel <joro@8bytes.org>
-Cc:     iommu@lists.linux-foundation.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-References: <20220708094230.4349-1-quic_saipraka@quicinc.com>
-From:   Robin Murphy <robin.murphy@arm.com>
-In-Reply-To: <20220708094230.4349-1-quic_saipraka@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-6.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1657221457-32494-1-git-send-email-quic_vnivarth@quicinc.com>
+X-Spam-Status: No, score=-7.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2022-07-08 10:42, Sai Prakash Ranjan wrote:
-> TLB sync timeouts can be due to various reasons such as TBU power down
-> or pending TCU/TBU invalidation/sync and so on. Debugging these often
-> require dumping of some implementation defined registers to know the
-> status of TBU/TCU operations and some of these registers are not
-> accessible in non-secure world such as from kernel and requires SMC
-> calls to read them in the secure world. So, add this debug support
-> to dump implementation defined registers for TLB sync timeout issues.
-
-FWIW,
-
-Acked-by: Robin Murphy <robin.murphy@arm.com>
-
-> Signed-off-by: Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+On Fri, Jul 08, 2022 at 12:47:37AM +0530, Vijaya Krishna Nivarthi wrote:
+> In the logic around call to clk_round_rate(), for some corner conditions,
+> get_clk_div_rate() could return an sub-optimal clock rate. Also, if an
+> exact clock rate was not found lowest clock was being returned.
+> 
+> Search for suitable clock rate in 2 steps
+> a) exact match or within 2% tolerance
+> b) within 5% tolerance
+> This also takes care of corner conditions.
+> 
+> Fixes: c2194bc999d4 ("tty: serial: qcom-geni-serial: Remove uart frequency table. Instead, find suitable frequency with call to clk_round_rate")
+> Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
 > ---
-> 
-> Changes in v3:
->   * Move this debug feature to arm-smmu-qcom-debug.c (Will Deacon).
->   * Keep single ratelimit state and remove local variable (Robin).
-> 
-> Changes in v2:
->   * Use scm call consistently so that it works on older chipsets where
->     some of these regs are secure registers.
->   * Add device specific data to get the implementation defined register
->     offsets.
-> 
+> v3: simplified algorithm further, fixed robot compile warnings
+> v2: removed minor optimisations to make more readable
+> v1: intial patch contained slightly complicated logic
 > ---
->   drivers/iommu/Kconfig                         |  10 ++
->   drivers/iommu/arm/arm-smmu/Makefile           |   1 +
->   .../iommu/arm/arm-smmu/arm-smmu-qcom-debug.c  | 142 ++++++++++++++++++
->   drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c    |  32 +++-
->   drivers/iommu/arm/arm-smmu/arm-smmu-qcom.h    |  28 ++++
->   drivers/iommu/arm/arm-smmu/arm-smmu.c         |   6 +-
->   drivers/iommu/arm/arm-smmu/arm-smmu.h         |   1 +
->   7 files changed, 211 insertions(+), 9 deletions(-)
->   create mode 100644 drivers/iommu/arm/arm-smmu/arm-smmu-qcom-debug.c
->   create mode 100644 drivers/iommu/arm/arm-smmu/arm-smmu-qcom.h
+>  drivers/tty/serial/qcom_geni_serial.c | 88 +++++++++++++++++++++--------------
+>  1 file changed, 53 insertions(+), 35 deletions(-)
 > 
-> diff --git a/drivers/iommu/Kconfig b/drivers/iommu/Kconfig
-> index c79a0df090c0..5c5cb5bee8b6 100644
-> --- a/drivers/iommu/Kconfig
-> +++ b/drivers/iommu/Kconfig
-> @@ -363,6 +363,16 @@ config ARM_SMMU_QCOM
->   	  When running on a Qualcomm platform that has the custom variant
->   	  of the ARM SMMU, this needs to be built into the SMMU driver.
->   
-> +config ARM_SMMU_QCOM_DEBUG
-> +	bool "ARM SMMU QCOM implementation defined debug support"
-> +	depends on ARM_SMMU_QCOM
-> +	help
-> +	  Support for implementation specific debug features in ARM SMMU
-> +	  hardware found in QTI platforms.
-> +
-> +	  Say Y here to enable debug for issues such as TLB sync timeouts
-> +	  which requires implementation defined register dumps.
-> +
->   config ARM_SMMU_V3
->   	tristate "ARM Ltd. System MMU Version 3 (SMMUv3) Support"
->   	depends on ARM64
-> diff --git a/drivers/iommu/arm/arm-smmu/Makefile b/drivers/iommu/arm/arm-smmu/Makefile
-> index b0cc01aa20c9..2a5a95e8e3f9 100644
-> --- a/drivers/iommu/arm/arm-smmu/Makefile
-> +++ b/drivers/iommu/arm/arm-smmu/Makefile
-> @@ -3,3 +3,4 @@ obj-$(CONFIG_QCOM_IOMMU) += qcom_iommu.o
->   obj-$(CONFIG_ARM_SMMU) += arm_smmu.o
->   arm_smmu-objs += arm-smmu.o arm-smmu-impl.o arm-smmu-nvidia.o
->   arm_smmu-$(CONFIG_ARM_SMMU_QCOM) += arm-smmu-qcom.o
-> +arm_smmu-$(CONFIG_ARM_SMMU_QCOM_DEBUG) += arm-smmu-qcom-debug.o
-> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom-debug.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom-debug.c
-> new file mode 100644
-> index 000000000000..6eed8e67a0ca
-> --- /dev/null
-> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom-debug.c
-> @@ -0,0 +1,142 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +#include <linux/of_device.h>
-> +#include <linux/qcom_scm.h>
-> +#include <linux/ratelimit.h>
-> +
-> +#include "arm-smmu.h"
-> +#include "arm-smmu-qcom.h"
-> +
-> +enum qcom_smmu_impl_reg_offset {
-> +	QCOM_SMMU_TBU_PWR_STATUS,
-> +	QCOM_SMMU_STATS_SYNC_INV_TBU_ACK,
-> +	QCOM_SMMU_MMU2QSS_AND_SAFE_WAIT_CNTR,
-> +};
-> +
-> +struct qcom_smmu_config {
-> +	const u32 *reg_offset;
-> +};
-> +
-> +void qcom_smmu_tlb_sync_debug(struct arm_smmu_device *smmu)
-> +{
-> +	int ret;
-> +	u32 tbu_pwr_status, sync_inv_ack, sync_inv_progress;
-> +	struct qcom_smmu *qsmmu = container_of(smmu, struct qcom_smmu, smmu);
-> +	const struct qcom_smmu_config *cfg;
-> +	static DEFINE_RATELIMIT_STATE(rs, DEFAULT_RATELIMIT_INTERVAL,
-> +				      DEFAULT_RATELIMIT_BURST);
-> +
-> +	if (__ratelimit(&rs)) {
-> +		dev_err(smmu->dev, "TLB sync timed out -- SMMU may be deadlocked\n");
-> +
-> +		cfg = qsmmu->cfg;
-> +		if (!cfg)
-> +			return;
-> +
-> +		ret = qcom_scm_io_readl(smmu->ioaddr + cfg->reg_offset[QCOM_SMMU_TBU_PWR_STATUS],
-> +					&tbu_pwr_status);
-> +		if (ret)
-> +			dev_err(smmu->dev,
-> +				"Failed to read TBU power status: %d\n", ret);
-> +
-> +		ret = qcom_scm_io_readl(smmu->ioaddr + cfg->reg_offset[QCOM_SMMU_STATS_SYNC_INV_TBU_ACK],
-> +					&sync_inv_ack);
-> +		if (ret)
-> +			dev_err(smmu->dev,
-> +				"Failed to read TBU sync/inv ack status: %d\n", ret);
-> +
-> +		ret = qcom_scm_io_readl(smmu->ioaddr + cfg->reg_offset[QCOM_SMMU_MMU2QSS_AND_SAFE_WAIT_CNTR],
-> +					&sync_inv_progress);
-> +		if (ret)
-> +			dev_err(smmu->dev,
-> +				"Failed to read TCU syn/inv progress: %d\n", ret);
-> +
-> +		dev_err(smmu->dev,
-> +			"TBU: power_status %#x sync_inv_ack %#x sync_inv_progress %#x\n",
-> +			tbu_pwr_status, sync_inv_ack, sync_inv_progress);
-> +	}
-> +}
-> +
-> +/* Implementation Defined Register Space 0 register offsets */
-> +static const u32 qcom_smmu_impl0_reg_offset[] = {
-> +	[QCOM_SMMU_TBU_PWR_STATUS]		= 0x2204,
-> +	[QCOM_SMMU_STATS_SYNC_INV_TBU_ACK]	= 0x25dc,
-> +	[QCOM_SMMU_MMU2QSS_AND_SAFE_WAIT_CNTR]	= 0x2670,
-> +};
-> +
-> +static const struct qcom_smmu_config qcm2290_smmu_cfg = {
-> +	.reg_offset = qcom_smmu_impl0_reg_offset,
-> +};
-> +
-> +static const struct qcom_smmu_config sc7180_smmu_cfg = {
-> +	.reg_offset = qcom_smmu_impl0_reg_offset,
-> +};
-> +
-> +static const struct qcom_smmu_config sc7280_smmu_cfg = {
-> +	.reg_offset = qcom_smmu_impl0_reg_offset,
-> +};
-> +
-> +static const struct qcom_smmu_config sc8180x_smmu_cfg = {
-> +	.reg_offset = qcom_smmu_impl0_reg_offset,
-> +};
-> +
-> +static const struct qcom_smmu_config sc8280xp_smmu_cfg = {
-> +	.reg_offset = qcom_smmu_impl0_reg_offset,
-> +};
-> +
-> +static const struct qcom_smmu_config sm6125_smmu_cfg = {
-> +	.reg_offset = qcom_smmu_impl0_reg_offset,
-> +};
-> +
-> +static const struct qcom_smmu_config sm6350_smmu_cfg = {
-> +	.reg_offset = qcom_smmu_impl0_reg_offset,
-> +};
-> +
-> +static const struct qcom_smmu_config sm8150_smmu_cfg = {
-> +	.reg_offset = qcom_smmu_impl0_reg_offset,
-> +};
-> +
-> +static const struct qcom_smmu_config sm8250_smmu_cfg = {
-> +	.reg_offset = qcom_smmu_impl0_reg_offset,
-> +};
-> +
-> +static const struct qcom_smmu_config sm8350_smmu_cfg = {
-> +	.reg_offset = qcom_smmu_impl0_reg_offset,
-> +};
-> +
-> +static const struct qcom_smmu_config sm8450_smmu_cfg = {
-> +	.reg_offset = qcom_smmu_impl0_reg_offset,
-> +};
-> +
-> +static const struct of_device_id __maybe_unused qcom_smmu_impl_debug_match[] = {
-> +	{ .compatible = "qcom,msm8998-smmu-v2" },
-> +	{ .compatible = "qcom,qcm2290-smmu-500", .data = &qcm2290_smmu_cfg },
-> +	{ .compatible = "qcom,sc7180-smmu-500", .data = &sc7180_smmu_cfg },
-> +	{ .compatible = "qcom,sc7280-smmu-500", .data = &sc7280_smmu_cfg},
-> +	{ .compatible = "qcom,sc8180x-smmu-500", .data = &sc8180x_smmu_cfg },
-> +	{ .compatible = "qcom,sc8280xp-smmu-500", .data = &sc8280xp_smmu_cfg },
-> +	{ .compatible = "qcom,sdm630-smmu-v2" },
-> +	{ .compatible = "qcom,sdm845-smmu-500" },
-> +	{ .compatible = "qcom,sm6125-smmu-500", .data = &sm6125_smmu_cfg},
-> +	{ .compatible = "qcom,sm6350-smmu-500", .data = &sm6350_smmu_cfg},
-> +	{ .compatible = "qcom,sm8150-smmu-500", .data = &sm8150_smmu_cfg },
-> +	{ .compatible = "qcom,sm8250-smmu-500", .data = &sm8250_smmu_cfg },
-> +	{ .compatible = "qcom,sm8350-smmu-500", .data = &sm8350_smmu_cfg },
-> +	{ .compatible = "qcom,sm8450-smmu-500", .data = &sm8450_smmu_cfg },
-> +	{ }
-> +};
-> +
-> +const void *qcom_smmu_impl_data(struct arm_smmu_device *smmu)
-> +{
-> +	const struct of_device_id *match;
-> +	const struct device_node *np = smmu->dev->of_node;
-> +
-> +	match = of_match_node(qcom_smmu_impl_debug_match, np);
-> +	if (!match)
-> +		return NULL;
-> +
-> +	return match->data;
-> +}
-> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> index 2d470d867887..de25071e33ab 100644
-> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> @@ -5,23 +5,40 @@
->   
->   #include <linux/acpi.h>
->   #include <linux/adreno-smmu-priv.h>
-> +#include <linux/delay.h>
->   #include <linux/of_device.h>
->   #include <linux/qcom_scm.h>
->   
->   #include "arm-smmu.h"
-> +#include "arm-smmu-qcom.h"
->   
-> -struct qcom_smmu {
-> -	struct arm_smmu_device smmu;
-> -	bool bypass_quirk;
-> -	u8 bypass_cbndx;
-> -	u32 stall_enabled;
-> -};
-> +#define QCOM_DUMMY_VAL	-1
->   
->   static struct qcom_smmu *to_qcom_smmu(struct arm_smmu_device *smmu)
->   {
->   	return container_of(smmu, struct qcom_smmu, smmu);
->   }
->   
-> +static void qcom_smmu_tlb_sync(struct arm_smmu_device *smmu, int page,
-> +				int sync, int status)
-> +{
-> +	unsigned int spin_cnt, delay;
-> +	u32 reg;
-> +
-> +	arm_smmu_writel(smmu, page, sync, QCOM_DUMMY_VAL);
-> +	for (delay = 1; delay < TLB_LOOP_TIMEOUT; delay *= 2) {
-> +		for (spin_cnt = TLB_SPIN_COUNT; spin_cnt > 0; spin_cnt--) {
-> +			reg = arm_smmu_readl(smmu, page, status);
-> +			if (!(reg & ARM_SMMU_sTLBGSTATUS_GSACTIVE))
-> +				return;
-> +			cpu_relax();
+> diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
+> index 2e23b65..ac2df1c 100644
+> --- a/drivers/tty/serial/qcom_geni_serial.c
+> +++ b/drivers/tty/serial/qcom_geni_serial.c
+> @@ -943,52 +943,71 @@ static int qcom_geni_serial_startup(struct uart_port *uport)
+>  	return 0;
+>  }
+>  
+> -static unsigned long get_clk_div_rate(struct clk *clk, unsigned int baud,
+> -			unsigned int sampling_rate, unsigned int *clk_div)
+> +static unsigned long find_clk_rate_in_tol(struct clk *clk, unsigned int desired_clk,
+> +			unsigned int *clk_div, unsigned int percent_tol)
+>  {
+> -	unsigned long ser_clk;
+> -	unsigned long desired_clk;
+> -	unsigned long freq, prev;
+> +	unsigned long freq;
+>  	unsigned long div, maxdiv;
+> -	int64_t mult;
+> -
+> -	desired_clk = baud * sampling_rate;
+> -	if (!desired_clk) {
+> -		pr_err("%s: Invalid frequency\n", __func__);
+> -		return 0;
+> -	}
+> +	u64 mult;
+> +	unsigned long offset, abs_tol, achieved;
+>  
+> +	abs_tol = div_u64((u64)desired_clk * percent_tol, 100);
+>  	maxdiv = CLK_DIV_MSK >> CLK_DIV_SHFT;
+> -	prev = 0;
+> -
+> -	for (div = 1; div <= maxdiv; div++) {
+> -		mult = div * desired_clk;
+> -		if (mult > ULONG_MAX)
+> +	div = 1;
+> +	while (div <= maxdiv) {
+> +		mult = (u64)div * desired_clk;
+> +		if (mult != (unsigned long)mult)
+>  			break;
+>  
+> -		freq = clk_round_rate(clk, (unsigned long)mult);
+> -		if (!(freq % desired_clk)) {
+> -			ser_clk = freq;
+> -			break;
+> -		}
+> +		offset = div * abs_tol;
+> +		freq = clk_round_rate(clk, mult - offset);
+>  
+> -		if (!prev)
+> -			ser_clk = freq;
+> -		else if (prev == freq)
+> +		/* Can only get lower if we're done */
+> +		if (freq < mult - offset)
+>  			break;
+>  
+> -		prev = freq;
+> +		/*
+> +		 * Re-calculate div in case rounding skipped rates but we
+> +		 * ended up at a good one, then check for a match.
+> +		 */
+> +		div = DIV_ROUND_CLOSEST(freq, desired_clk);
+> +		achieved = DIV_ROUND_CLOSEST(freq, div);
+> +		if (achieved <= desired_clk + abs_tol &&
+> +			achieved >= desired_clk - abs_tol) {
+> +			*clk_div = div;
+> +			return freq;
 > +		}
-> +		udelay(delay);
-> +	}
 > +
-> +	qcom_smmu_tlb_sync_debug(smmu);
+> +		div = DIV_ROUND_UP(freq, desired_clk);
+>  	}
+>  
+> -	if (!ser_clk) {
+> -		pr_err("%s: Can't find matching DFS entry for baud %d\n",
+> -								__func__, baud);
+> -		return ser_clk;
+> +	return 0;
 > +}
 > +
->   static void qcom_adreno_smmu_write_sctlr(struct arm_smmu_device *smmu, int idx,
->   		u32 reg)
->   {
-> @@ -375,6 +392,7 @@ static const struct arm_smmu_impl qcom_smmu_impl = {
->   	.def_domain_type = qcom_smmu_def_domain_type,
->   	.reset = qcom_smmu500_reset,
->   	.write_s2cr = qcom_smmu_write_s2cr,
-> +	.tlb_sync = qcom_smmu_tlb_sync,
->   };
->   
->   static const struct arm_smmu_impl qcom_adreno_smmu_impl = {
-> @@ -383,6 +401,7 @@ static const struct arm_smmu_impl qcom_adreno_smmu_impl = {
->   	.reset = qcom_smmu500_reset,
->   	.alloc_context_bank = qcom_adreno_smmu_alloc_context_bank,
->   	.write_sctlr = qcom_adreno_smmu_write_sctlr,
-> +	.tlb_sync = qcom_smmu_tlb_sync,
->   };
->   
->   static struct arm_smmu_device *qcom_smmu_create(struct arm_smmu_device *smmu,
-> @@ -399,6 +418,7 @@ static struct arm_smmu_device *qcom_smmu_create(struct arm_smmu_device *smmu,
->   		return ERR_PTR(-ENOMEM);
->   
->   	qsmmu->smmu.impl = impl;
-> +	qsmmu->cfg = qcom_smmu_impl_data(smmu);
->   
->   	return &qsmmu->smmu;
->   }
-> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.h b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.h
-> new file mode 100644
-> index 000000000000..99ec8f8629a0
-> --- /dev/null
-> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.h
-> @@ -0,0 +1,28 @@
-> +/* SPDX-License-Identifier: GPL-2.0-only */
-> +/*
-> + * Copyright (c) 2022, Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +#ifndef _ARM_SMMU_QCOM_H
-> +#define _ARM_SMMU_QCOM_H
-> +
-> +struct qcom_smmu {
-> +	struct arm_smmu_device smmu;
-> +	const struct qcom_smmu_config *cfg;
-> +	bool bypass_quirk;
-> +	u8 bypass_cbndx;
-> +	u32 stall_enabled;
-> +};
-> +
-> +#ifdef CONFIG_ARM_SMMU_QCOM_DEBUG
-> +void qcom_smmu_tlb_sync_debug(struct arm_smmu_device *smmu);
-> +const void *qcom_smmu_impl_data(struct arm_smmu_device *smmu);
-> +#else
-> +static inline void qcom_smmu_tlb_sync_debug(struct arm_smmu_device *smmu) { }
-> +static inline const void *qcom_smmu_impl_data(struct arm_smmu_device *smmu)
+> +static unsigned long get_clk_div_rate(struct clk *clk, unsigned int baud,
+> +			unsigned int sampling_rate, unsigned int *clk_div)
 > +{
-> +	return NULL;
-> +}
-> +#endif
+> +	unsigned long ser_clk;
+> +	unsigned long desired_clk;
 > +
-> +#endif /* _ARM_SMMU_QCOM_H */
-> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c b/drivers/iommu/arm/arm-smmu/arm-smmu.c
-> index 2ed3594f384e..41633e5484f8 100644
-> --- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
-> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
-> @@ -2074,7 +2074,6 @@ err_reset_platform_ops: __maybe_unused;
->   static int arm_smmu_device_probe(struct platform_device *pdev)
->   {
->   	struct resource *res;
-> -	resource_size_t ioaddr;
->   	struct arm_smmu_device *smmu;
->   	struct device *dev = &pdev->dev;
->   	int num_irqs, i, err;
-> @@ -2098,7 +2097,8 @@ static int arm_smmu_device_probe(struct platform_device *pdev)
->   	smmu->base = devm_platform_get_and_ioremap_resource(pdev, 0, &res);
->   	if (IS_ERR(smmu->base))
->   		return PTR_ERR(smmu->base);
-> -	ioaddr = res->start;
-> +	smmu->ioaddr = res->start;
+> +	desired_clk = baud * sampling_rate;
+> +	if (!desired_clk) {
+> +		pr_err("%s: Invalid frequency\n", __func__);
+
+Note, this is a driver, ALWAYS use dev_err() and friends instead.
+
+Also do not allow userspace to flood the kernel logs like this looks is
+possible, this should just be dev_dbg().
+
+And of course, never use __func__, it's not needed anymore for
+dev_dbg().
+
+
+> +		return 0;
+
+Why if you have a error, are you returning 0?
+
+>  	}
+>  
+> -	*clk_div = ser_clk / desired_clk;
+> -	if (!(*clk_div))
+> -		*clk_div = 1;
+> +	/*
+> +	 * try to find a clock rate within 2% tolerance, then within
+> +	 */
+> +	ser_clk = find_clk_rate_in_tol(clk, desired_clk, clk_div, 2);
+> +	if (!ser_clk)
+> +		ser_clk = find_clk_rate_in_tol(clk, desired_clk, clk_div, 5);
 > +
->   	/*
->   	 * The resource size should effectively match the value of SMMU_TOP;
->   	 * stash that temporarily until we know PAGESIZE to validate it with.
-> @@ -2178,7 +2178,7 @@ static int arm_smmu_device_probe(struct platform_device *pdev)
->   	}
->   
->   	err = iommu_device_sysfs_add(&smmu->iommu, smmu->dev, NULL,
-> -				     "smmu.%pa", &ioaddr);
-> +				     "smmu.%pa", &smmu->ioaddr);
->   	if (err) {
->   		dev_err(dev, "Failed to register iommu in sysfs\n");
->   		return err;
-> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.h b/drivers/iommu/arm/arm-smmu/arm-smmu.h
-> index 2b9b42fb6f30..703fd5817ec1 100644
-> --- a/drivers/iommu/arm/arm-smmu/arm-smmu.h
-> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.h
-> @@ -278,6 +278,7 @@ struct arm_smmu_device {
->   	struct device			*dev;
->   
->   	void __iomem			*base;
-> +	phys_addr_t			ioaddr;
->   	unsigned int			numpage;
->   	unsigned int			pgshift;
->   
+> +	if (!ser_clk)
+> +		pr_err("Couldn't find suitable clock rate for %lu\n", desired_clk);
+
+return an error?
+
+dev_err().
+
+> +	else
+> +		pr_debug("desired_clk-%lu, ser_clk-%lu, clk_div-%lu\n",
+> +			desired_clk, ser_clk, *clk_div);
+
+dev_dbg()?
+
+Also, as the kernel test robot says, this does not build cleanly :(
+
+thanks,
+
+greg k-h
