@@ -2,316 +2,173 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1D11756B509
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jul 2022 11:06:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1E52556B529
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jul 2022 11:15:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237406AbiGHJFk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Jul 2022 05:05:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59446 "EHLO
+        id S236587AbiGHJOu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Jul 2022 05:14:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38186 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230230AbiGHJFj (ORCPT
+        with ESMTP id S237312AbiGHJOu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Jul 2022 05:05:39 -0400
-Received: from ixit.cz (ip-94-112-206-30.bb.vodafone.cz [94.112.206.30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF7821F62C;
-        Fri,  8 Jul 2022 02:05:35 -0700 (PDT)
-Received: from newone.lan (_gateway [10.0.0.1])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by ixit.cz (Postfix) with ESMTPSA id 14CF92007F;
-        Fri,  8 Jul 2022 11:05:32 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-        t=1657271132;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding;
-        bh=2cGXUPiakn1ZaffBgtmDGpCRG1NODkxKQEmT9hQ+1SY=;
-        b=mpAbdggiXyuIS0sNoVDjnjUwhHeXvISksNYBU4wmP22jqTtz9W6Gj80ir777quQ/Vw1Uxa
-        6SotLqAagvMFC3Fn0aGu2UJDOtFl/N5DutNIBKbGfgpxQgMz+AzaLOF3w+tB1HMmikhnFx
-        CHLHaWKmJRh0UfLpCb9cTspLBDRRgRE=
-From:   David Heidelberg <david@ixit.cz>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Robert Marko <robimarko@gmail.com>,
-        Das Srinagesh <quic_gurus@quicinc.com>
-Cc:     ~okias/devicetree@lists.sr.ht, David Heidelberg <david@ixit.cz>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH v5] dt-bindings: firmware: convert Qualcomm SCM binding to the yaml
-Date:   Fri,  8 Jul 2022 11:04:31 +0200
-Message-Id: <20220708090431.30437-1-david@ixit.cz>
-X-Mailer: git-send-email 2.35.1
+        Fri, 8 Jul 2022 05:14:50 -0400
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D74F322B2C
+        for <linux-arm-msm@vger.kernel.org>; Fri,  8 Jul 2022 02:14:47 -0700 (PDT)
+Received: by mail-lf1-x136.google.com with SMTP id t19so34702713lfl.5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Jul 2022 02:14:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=SHTvpmESn76bjS5b3QfhxAC0LvT7ZTcK/A9d/vWMLAw=;
+        b=g9DwsYT2A2JJlwvpYrkv6uNxvCH2uDbYs6yMHTuxsCgf+Z3Hz3Hj3ty7wIUQLFEAEY
+         k8iI+IXTfkJ/Pd2lOfnJGd+T2jus6XtWyb52mTBvSmiYiaBrJN8KAzBqicN1MqOqqW0v
+         9NswK2sdfkQVdCmJtNxqZJZWttE/jC0f4vRCu0GG5EpAyd0H+4NmfXDZeGY+KA+RaBIc
+         /sofIKcHm66WWcYVLYxBqzmL25c/2kGF/bPMJIvPn26lIBAKV93608XpqBJeEg46s7OV
+         7NGoyQYeSxz5Cq4cEuoPmPj7HEM/1Alz/kbvMaVZ+EF6pfm8pRSvAIGMx8mUKI5xeerc
+         d/2A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=SHTvpmESn76bjS5b3QfhxAC0LvT7ZTcK/A9d/vWMLAw=;
+        b=eYEvrdr6wqD4BziNZXkohyHV3GlusUng+IM1C+DIHfZeS8hVBzsPLloEK1FIv3HP9n
+         KxxCw02TC9Jutta3HX7+ZGEyigBBfHVXGswXUO+C4haKEGWfGviT/eH9q8mAb2yuv+0Z
+         I0CHt/ocFSuyyFSOoz+iuyJjvzOSgpLsrvUZvv4mmOL/LfiM5/iV099QvH7l0woYxIZ4
+         SqufnuCpMkdR/0rq5208ErHXSOWz9QFm34Tsdmxh3nB+WJ3xn1o1BzkQKnAoygxkdF3K
+         vCXceFgc4M7ltTCQJthH2huMBpKU6E+Fqxw54XJfNz5K/eWayEcqn74FnuxlRsXEYCSC
+         RikA==
+X-Gm-Message-State: AJIora89E0oUFB6JeVtwfg+rxTFf6OC01+2bQUNZEsdRKCeAp1Xq6cR6
+        oS68A5rf0Il331BYOQhXcTuwPJbTURLeIg==
+X-Google-Smtp-Source: AGRyM1uLlnlUdhuQXUD8hsavNV/4JN88hKCaU/imVeFNQUzYDJPWmLnx3unSrxSQbXMy8+ER076l8Q==
+X-Received: by 2002:a05:6512:ba7:b0:47f:657c:95e5 with SMTP id b39-20020a0565120ba700b0047f657c95e5mr1685988lfv.184.1657271686090;
+        Fri, 08 Jul 2022 02:14:46 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id g6-20020a056512118600b0047fac765f39sm7300477lfr.219.2022.07.08.02.14.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 08 Jul 2022 02:14:45 -0700 (PDT)
+Message-ID: <3cc60a06-6bdf-e9f4-ba8a-7aa83f57fd43@linaro.org>
+Date:   Fri, 8 Jul 2022 12:14:45 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam: Yes
-X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RDNS_DYNAMIC,SPF_HELO_PASS,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: Re: [PATCH 11/11] dt-bindings: display/msm: move common DPU
+ properties to dpu-common.yaml
+Content-Language: en-GB
+To:     Rob Herring <robh@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Krishna Manikandan <quic_mkrishn@quicinc.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>
+References: <20220625232513.522599-1-dmitry.baryshkov@linaro.org>
+ <20220625232513.522599-12-dmitry.baryshkov@linaro.org>
+ <20220630231159.GA3497845-robh@kernel.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220630231159.GA3497845-robh@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Convert Qualcomm SCM firmware binding to the yaml format.
+On 01/07/2022 02:11, Rob Herring wrote:
+> On Sun, Jun 26, 2022 at 02:25:13AM +0300, Dmitry Baryshkov wrote:
+>> Move properties common to all DPU DT nodes to the dpu-common.yaml
+>>
+>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> ---
+>>   .../bindings/display/msm/dpu-common.yaml      | 47 +++++++++++++++++++
+>>   .../bindings/display/msm/dpu-msm8998.yaml     | 28 ++---------
+>>   .../bindings/display/msm/dpu-qcm2290.yaml     | 29 ++----------
+>>   .../bindings/display/msm/dpu-sc7180.yaml      | 32 ++-----------
+>>   .../bindings/display/msm/dpu-sc7280.yaml      | 32 ++-----------
+>>   .../bindings/display/msm/dpu-sdm845.yaml      | 32 ++-----------
+>>   6 files changed, 67 insertions(+), 133 deletions(-)
+>>   create mode 100644 Documentation/devicetree/bindings/display/msm/dpu-common.yaml
+>>
+>> diff --git a/Documentation/devicetree/bindings/display/msm/dpu-common.yaml b/Documentation/devicetree/bindings/display/msm/dpu-common.yaml
+>> new file mode 100644
+>> index 000000000000..f3465ee3a4ab
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/display/msm/dpu-common.yaml
+>> @@ -0,0 +1,47 @@
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/display/msm/dpu-common.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: Qualcomm Display DPU dt properties (common properties)
+>> +
+>> +maintainers:
+>> +  - Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> +  - Krishna Manikandan <quic_mkrishn@quicinc.com>
+>> +  - Rob Clark <robdclark@gmail.com>
+>> +
+>> +description: |
+>> +  Device tree bindings for the DPU display controller, common properties.
+> 
+> Common properties for QCom DPU display controller
+> 
+>> +
+>> +properties:
+>> +  interrupts:
+>> +    maxItems: 1
+>> +
+>> +  power-domains:
+>> +    maxItems: 1
+>> +
+>> +  operating-points-v2: true
+>> +
+>> +  ports:
+>> +    $ref: /schemas/graph.yaml#/properties/ports
+> 
+> Now this schema is applied twice.
+> 
+>> +    description: |
+>> +      Contains the list of output ports from DPU device. These ports
+>> +      connect to interfaces that are external to the DPU hardware,
+>> +      such as DSI, DP etc. Each output port contains an endpoint that
+>> +      describes how it is connected to an external interface.
+> 
+> This description is marginally useful. Each port will say it is an
+> output to X. So you could just remove.
 
-This commit also:
- - adds qcom,scm-mdm9607 into list which has only core clock
- - adds qcom,scm-sm6125, qcom,scm-ipq6018
- - #reset-cells, because the property is already used
+I think I will go the other way around. It is not really useful to 
+describe individual ports, so I will leave just this piece, slightly 
+rephrased and drop individual /ports, /ports/port@N from dpu-foo.yaml.
 
-Signed-off-by: David Heidelberg <david@ixit.cz>
---
-v5:
- - add qcom,scm-sdx65 from new commit to txt binding
- - add freshly merged qcom,scm-sc8280xp
- - add interconnects
- - add accidentally removed # from #include directive
- - move mdm9607 to 3 clocks (thx @Guru)
- - fix compatible string in example
-v4:
- - added clocks minItems and maxItems
- - removed quotes from $id and $schema
- - adjusted description of TCSR HW block
-v3:
- - add preceding patches for ARM and arm64 adding missing compatible strings
- - extended with missing compatible strings
- - added two additional maintainers, see https://lkml.org/lkml/2022/6/23/1969
-v2:
- - changed maintainer to Bjorn
- - document #reset-cells
+This will also remove the duplicate application of ports schema.
 
- .../devicetree/bindings/firmware/qcom,scm.txt |  61 --------
- .../bindings/firmware/qcom,scm.yaml           | 147 ++++++++++++++++++
- 2 files changed, 147 insertions(+), 61 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/firmware/qcom,scm.txt
- create mode 100644 Documentation/devicetree/bindings/firmware/qcom,scm.yaml
+> 
+>> +
+>> +patternProperties:
+>> +  (mdp-)?opp-table:
+>> +    $ref: /schemas/opp/opp-v2.yaml#
+>> +
+>> +required:
+>> +  - compatible
+>> +  - reg
+>> +  - reg-names
+>> +  - clocks
+>> +  - interrupts
+>> +  - power-domains
+>> +  - operating-points-v2
+>> +  - ports
+>> +
+>> +additionalProperties: true
 
-diff --git a/Documentation/devicetree/bindings/firmware/qcom,scm.txt b/Documentation/devicetree/bindings/firmware/qcom,scm.txt
-deleted file mode 100644
-index b3f702cbed87..000000000000
---- a/Documentation/devicetree/bindings/firmware/qcom,scm.txt
-+++ /dev/null
-@@ -1,61 +0,0 @@
--QCOM Secure Channel Manager (SCM)
--
--Qualcomm processors include an interface to communicate to the secure firmware.
--This interface allows for clients to request different types of actions.  These
--can include CPU power up/down, HDCP requests, loading of firmware, and other
--assorted actions.
--
--Required properties:
--- compatible: must contain one of the following:
-- * "qcom,scm-apq8064"
-- * "qcom,scm-apq8084"
-- * "qcom,scm-ipq4019"
-- * "qcom,scm-ipq806x"
-- * "qcom,scm-ipq8074"
-- * "qcom,scm-mdm9607"
-- * "qcom,scm-msm8226"
-- * "qcom,scm-msm8660"
-- * "qcom,scm-msm8916"
-- * "qcom,scm-msm8953"
-- * "qcom,scm-msm8960"
-- * "qcom,scm-msm8974"
-- * "qcom,scm-msm8976"
-- * "qcom,scm-msm8994"
-- * "qcom,scm-msm8996"
-- * "qcom,scm-msm8998"
-- * "qcom,scm-qcs404"
-- * "qcom,scm-sc7180"
-- * "qcom,scm-sc7280"
-- * "qcom,scm-sm6125"
-- * "qcom,scm-sdm845"
-- * "qcom,scm-sdx55"
-- * "qcom,scm-sdx65"
-- * "qcom,scm-sm6350"
-- * "qcom,scm-sm8150"
-- * "qcom,scm-sm8250"
-- * "qcom,scm-sm8350"
-- * "qcom,scm-sm8450"
-- and:
-- * "qcom,scm"
--- clocks: Specifies clocks needed by the SCM interface, if any:
-- * core clock required for "qcom,scm-apq8064", "qcom,scm-msm8660" and
--   "qcom,scm-msm8960"
-- * core, iface and bus clocks required for "qcom,scm-apq8084",
--   "qcom,scm-msm8916", "qcom,scm-msm8953", "qcom,scm-msm8974" and "qcom,scm-msm8976"
--- clock-names: Must contain "core" for the core clock, "iface" for the interface
--  clock and "bus" for the bus clock per the requirements of the compatible.
--- qcom,dload-mode: phandle to the TCSR hardware block and offset of the
--		   download mode control register (optional)
--- interconnects: Specifies the bandwidth requirements of the SCM interface (optional)
--
--Example for MSM8916:
--
--	firmware {
--		scm {
--			compatible = "qcom,msm8916", "qcom,scm";
--			clocks = <&gcc GCC_CRYPTO_CLK> ,
--				 <&gcc GCC_CRYPTO_AXI_CLK>,
--				 <&gcc GCC_CRYPTO_AHB_CLK>;
--			clock-names = "core", "bus", "iface";
--		};
--	};
-diff --git a/Documentation/devicetree/bindings/firmware/qcom,scm.yaml b/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
-new file mode 100644
-index 000000000000..9fdeee07702f
---- /dev/null
-+++ b/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
-@@ -0,0 +1,147 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/firmware/qcom,scm.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: QCOM Secure Channel Manager (SCM)
-+
-+description: |
-+  Qualcomm processors include an interface to communicate to the secure firmware.
-+  This interface allows for clients to request different types of actions.
-+  These can include CPU power up/down, HDCP requests, loading of firmware,
-+  and other assorted actions.
-+
-+maintainers:
-+  - Bjorn Andersson <bjorn.andersson@linaro.org>
-+  - Robert Marko <robimarko@gmail.com>
-+  - Guru Das Srinagesh <quic_gurus@quicinc.com>
-+
-+properties:
-+  compatible:
-+    items:
-+      - enum:
-+          - qcom,scm-apq8064
-+          - qcom,scm-apq8084
-+          - qcom,scm-ipq4019
-+          - qcom,scm-ipq6018
-+          - qcom,scm-ipq806x
-+          - qcom,scm-ipq8074
-+          - qcom,scm-mdm9607
-+          - qcom,scm-msm8226
-+          - qcom,scm-msm8660
-+          - qcom,scm-msm8916
-+          - qcom,scm-msm8953
-+          - qcom,scm-msm8960
-+          - qcom,scm-msm8974
-+          - qcom,scm-msm8976
-+          - qcom,scm-msm8994
-+          - qcom,scm-msm8996
-+          - qcom,scm-msm8998
-+          - qcom,scm-sc7180
-+          - qcom,scm-sc7280
-+          - qcom,scm-sc8280xp
-+          - qcom,scm-sdm845
-+          - qcom,scm-sdx55
-+          - qcom,scm-sdx65
-+          - qcom,scm-sm6125
-+          - qcom,scm-sm6350
-+          - qcom,scm-sm8150
-+          - qcom,scm-sm8250
-+          - qcom,scm-sm8350
-+          - qcom,scm-sm8450
-+          - qcom,scm-qcs404
-+      - const: qcom,scm
-+
-+  clocks:
-+    minItems: 1
-+    maxItems: 3
-+
-+  clock-names:
-+    minItems: 1
-+    maxItems: 3
-+
-+  interconnects:
-+    maxItems: 1
-+
-+  interconnect-names:
-+    maxItems: 1
-+
-+  '#reset-cells':
-+    const: 1
-+
-+  qcom,dload-mode:
-+    $ref: /schemas/types.yaml#/definitions/phandle-array
-+    items:
-+      - items:
-+          - description: phandle to TCSR hardware block
-+          - description: offset of the download mode control register
-+    description: TCSR hardware block
-+
-+allOf:
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            enum:
-+              - qcom,scm-apq8064
-+              - qcom,scm-msm8660
-+              - qcom,scm-msm8960
-+    then:
-+      properties:
-+        clock-names:
-+          items:
-+            - const: core
-+
-+        clocks:
-+          maxItems: 1
-+
-+      required:
-+        - clocks
-+        - clock-names
-+
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            enum:
-+              - qcom,scm-apq8084
-+              - qcom,scm-mdm9607
-+              - qcom,scm-msm8916
-+              - qcom,scm-msm8953
-+              - qcom,scm-msm8974
-+              - qcom,scm-msm8976
-+    then:
-+      properties:
-+        clock-names:
-+          items:
-+            - const: core
-+            - const: bus
-+            - const: iface
-+
-+        clocks:
-+          minItems: 3
-+          maxItems: 3
-+
-+      required:
-+        - clocks
-+        - clock-names
-+
-+required:
-+  - compatible
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/clock/qcom,gcc-msm8916.h>
-+
-+    firmware {
-+        scm {
-+            compatible = "qcom,scm-msm8916", "qcom,scm";
-+            clocks = <&gcc GCC_CRYPTO_CLK>,
-+                     <&gcc GCC_CRYPTO_AXI_CLK>,
-+                     <&gcc GCC_CRYPTO_AHB_CLK>;
-+            clock-names = "core", "bus", "iface";
-+        };
-+    };
+
 -- 
-2.35.1
-
+With best wishes
+Dmitry
