@@ -2,68 +2,42 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 09D0F56B018
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jul 2022 03:53:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6C70056B053
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jul 2022 04:00:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236909AbiGHBo3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Jul 2022 21:44:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57586 "EHLO
+        id S236501AbiGHCAA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Jul 2022 22:00:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37290 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237173AbiGHBo2 (ORCPT
+        with ESMTP id S236471AbiGHB77 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Jul 2022 21:44:28 -0400
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AC0F29821
-        for <linux-arm-msm@vger.kernel.org>; Thu,  7 Jul 2022 18:44:27 -0700 (PDT)
-Received: by mail-wr1-x433.google.com with SMTP id s1so28603268wra.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Jul 2022 18:44:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=tA1T69NTAu2GrtW3MQqMLxs934MrKxAEy6GEq/EFFiY=;
-        b=rL6nHlsKVSr8t/NeupTRp5VCJb2s6NGVgLM6ymWbs4RYw5bRx2N55bdlSTgs0Bn/yI
-         +AcogrlsCRRpi6nBab/KaAKa+zMu07Tal9YN46za2g0V8gk4b2p5aQGM5dWgUoURoJ/k
-         gtHfASQ2+KecMgRMCw3xqnCdcJxjn6+mCbON91+alKA2xW+kbYNRC+hJm4HlIVV0ku4S
-         BpjCxwZRcEsexID53XZvyaLDTF80s1h3PXOIf7QEoL3s1QEm++Aeg+bk3MbWNlPtqlzo
-         H8wUiB/xq6YyskEw5Mp61w7SpY4qGhkWurus2SX/ETajJY0XLZv6D4jm4Chf9Zutn/D/
-         ZEUQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=tA1T69NTAu2GrtW3MQqMLxs934MrKxAEy6GEq/EFFiY=;
-        b=ocfU0wWp0OZTCjwATHH/4+lXecwqT9TphvNNi4zpJ71tVDV2sAmlerBXqM96VLVSSt
-         D1NAXSuRP0HMtRB0q4aM4opbRWV4FfE2QpbIO9iEe1Yre5qSsBSXUswnllL3pgwdjLjZ
-         TwJDS3vfwdg94oCM+vME7g486M6WzRi5+ea61xknG/hhaYJYoP7YB51bE5omhTiTQsAR
-         iwtnxKMhSsYKFN+qwZyQI6K1VHCylLkujAS2au5MXcyrjeXyvxh8sNWrm8w68WXsYo/c
-         ijKJDWujupcmF9WR0Tz002xyHZCDMgerKcLASKf2RQI8GDB4I/gMlur6hGGvI6M1rm7X
-         u+rw==
-X-Gm-Message-State: AJIora97gmGD4GZCMk1weTrrT6SoJmpxyDopwaM/GfzT615zEYde2YPB
-        rVIVYmiz2nmKJmQiHPzNPKtb8nSKCJsXww==
-X-Google-Smtp-Source: AGRyM1sb0xTEO1GlKvD6kKmv1jDxMZTw1qjGgB6EkBag2vAnOG3nALiC408OE+fGUNqXvfPaxKwasg==
-X-Received: by 2002:a5d:4e04:0:b0:21d:6ec3:38a2 with SMTP id p4-20020a5d4e04000000b0021d6ec338a2mr753962wrt.362.1657244666788;
-        Thu, 07 Jul 2022 18:44:26 -0700 (PDT)
-Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id b10-20020a5d4d8a000000b0021d4aca9d1esm22732846wru.99.2022.07.07.18.44.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Jul 2022 18:44:26 -0700 (PDT)
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-To:     ilia.lin@kernel.org, agross@kernel.org, rafael@kernel.org,
-        viresh.kumar@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, stephan@gerhold.net
-Cc:     linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, bryan.odonoghue@linaro.org
-Subject: [PATCH v2 4/4] cpufreq: blocklist Qualcomm msm8939 in cpufreq-dt-platdev
-Date:   Fri,  8 Jul 2022 02:44:19 +0100
-Message-Id: <20220708014419.2009018-5-bryan.odonoghue@linaro.org>
-X-Mailer: git-send-email 2.36.1
-In-Reply-To: <20220708014419.2009018-1-bryan.odonoghue@linaro.org>
-References: <20220708014419.2009018-1-bryan.odonoghue@linaro.org>
+        Thu, 7 Jul 2022 21:59:59 -0400
+Received: from unicom146.biz-email.net (unicom146.biz-email.net [210.51.26.146])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADEB073905;
+        Thu,  7 Jul 2022 18:59:56 -0700 (PDT)
+Received: from ([60.208.111.195])
+        by unicom146.biz-email.net ((D)) with ASMTP (SSL) id CYP00149;
+        Fri, 08 Jul 2022 09:59:49 +0800
+Received: from localhost.localdomain (10.200.104.97) by
+ jtjnmail201612.home.langchao.com (10.100.2.12) with Microsoft SMTP Server id
+ 15.1.2507.9; Fri, 8 Jul 2022 09:59:50 +0800
+From:   Bo Liu <liubo03@inspur.com>
+To:     <mani@kernel.org>, <quic_hemantk@quicinc.com>
+CC:     <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, Bo Liu <liubo03@inspur.com>
+Subject: [PATCH] bus: mhi: ep: Check dev_set_name() return value
+Date:   Thu, 7 Jul 2022 21:59:48 -0400
+Message-ID: <20220708015948.4091-1-liubo03@inspur.com>
+X-Mailer: git-send-email 2.18.2
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain
+X-Originating-IP: [10.200.104.97]
+tUid:   2022708095950ed6942c3ae8fce442d2f8adff4aa7a25
+X-Abuse-Reports-To: service@corp-email.com
+Abuse-Reports-To: service@corp-email.com
+X-Complaints-To: service@corp-email.com
+X-Report-Abuse-To: service@corp-email.com
+X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -72,26 +46,44 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-msm8939 will use qcom-cpufreq-nvmem. Block it on the generic cpufreq-dt
-list.
+It's possible that dev_set_name() returns -ENOMEM, catch and handle this.
 
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Signed-off-by: Bo Liu <liubo03@inspur.com>
 ---
- drivers/cpufreq/cpufreq-dt-platdev.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/bus/mhi/ep/main.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/cpufreq/cpufreq-dt-platdev.c b/drivers/cpufreq/cpufreq-dt-platdev.c
-index 2c96de3f2d83c..26c97ab778974 100644
---- a/drivers/cpufreq/cpufreq-dt-platdev.c
-+++ b/drivers/cpufreq/cpufreq-dt-platdev.c
-@@ -137,6 +137,7 @@ static const struct of_device_id blocklist[] __initconst = {
- 	{ .compatible = "nvidia,tegra210", },
+diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
+index 40109a79017a..1dc8a3557a46 100644
+--- a/drivers/bus/mhi/ep/main.c
++++ b/drivers/bus/mhi/ep/main.c
+@@ -1242,9 +1242,13 @@ static int mhi_ep_create_device(struct mhi_ep_cntrl *mhi_cntrl, u32 ch_id)
  
- 	{ .compatible = "qcom,apq8096", },
-+	{ .compatible = "qcom,msm8939", },
- 	{ .compatible = "qcom,msm8996", },
- 	{ .compatible = "qcom,qcs404", },
- 	{ .compatible = "qcom,sa8155p" },
+ 	/* Channel name is same for both UL and DL */
+ 	mhi_dev->name = mhi_chan->name;
+-	dev_set_name(&mhi_dev->dev, "%s_%s",
++	ret = dev_set_name(&mhi_dev->dev, "%s_%s",
+ 		     dev_name(&mhi_cntrl->mhi_dev->dev),
+ 		     mhi_dev->name);
++	if (ret) {
++		put_device(&mhi_dev->dev);
++		return ret;
++	}
+ 
+ 	ret = device_add(&mhi_dev->dev);
+ 	if (ret)
+@@ -1408,7 +1412,10 @@ int mhi_ep_register_controller(struct mhi_ep_cntrl *mhi_cntrl,
+ 		goto err_free_irq;
+ 	}
+ 
+-	dev_set_name(&mhi_dev->dev, "mhi_ep%u", mhi_cntrl->index);
++	ret = dev_set_name(&mhi_dev->dev, "mhi_ep%u", mhi_cntrl->index);
++	if (ret)
++		goto err_put_dev;
++
+ 	mhi_dev->name = dev_name(&mhi_dev->dev);
+ 	mhi_cntrl->mhi_dev = mhi_dev;
+ 
 -- 
-2.36.1
+2.27.0
 
