@@ -2,104 +2,152 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 66F4956C29C
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Jul 2022 01:13:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A6C6856C28C
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Jul 2022 01:13:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238532AbiGHTnr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Jul 2022 15:43:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51828 "EHLO
+        id S238358AbiGHTrQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Jul 2022 15:47:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54554 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239896AbiGHTnq (ORCPT
+        with ESMTP id S236500AbiGHTrP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Jul 2022 15:43:46 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1A79617E;
-        Fri,  8 Jul 2022 12:43:44 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id e12so37949289lfr.6;
-        Fri, 08 Jul 2022 12:43:44 -0700 (PDT)
+        Fri, 8 Jul 2022 15:47:15 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F35A4904C5;
+        Fri,  8 Jul 2022 12:47:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=BHFGKFejsr5X03hcfdP6B3GzZdhUa/GbrDRD409NVG0=;
-        b=RPymnQZpGvFyqmFQ+7I7f6bbjZTxw5dJDK183PAqgcVfOipGvS9nyMwovUZmo8TA13
-         uJWSV8itByJIvkZTOz+f5sPAhz+m01YiwUqmz574+8LlwujjK1FC8wQQCSSETgN6VbT4
-         DIwWPzul5uiujNBpcehgntKrwoYCwOmRTFzgEoooSV/35K84ZWM4nihpdQclcwTmDIHF
-         kLFFXyuxUFFIdUtEsePpgnPJ1R/qqt9ZkbZfuIL7iNsqDQQ8lxs0GT6VIAiXIPlhNROH
-         TR5RBs0lzIsQXqofk2agGMI8TUI5PlgdM0/2PaoEfhwT0a/5b2eLgAEDv8WQRDK4PQID
-         NgGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=BHFGKFejsr5X03hcfdP6B3GzZdhUa/GbrDRD409NVG0=;
-        b=YJygxxV0MK61dntAJFwwykyOyO0mAfwKBKbT70p6o1LksmdyZN/cFoRzgLc8x5Uj5K
-         h5sA7bg/UjhFgh4uuCJB/smpNFa9EoHrq4a2I9pojvgcOcfem4wEN5uKc4knrzLcTQV5
-         RjWJ1dbvhV5Ld+e7DnbeCatX1qbkkwUkLyE1sRZN6CzRlQ3jMdga8Jpd+wKu0391+1Ac
-         +BFF/dg9hOHwBlyafpdieUqpnIiyh4hVJEvzTFLy5LItzkn09eenmcnH5GsDnP+Qcd/d
-         K9hopbPJrtPTxRuRJKU5kVCkj4RwICXDOdvdohBW/snvj4cdm7/wZT4Krt2t4Z7ESCC2
-         KR+w==
-X-Gm-Message-State: AJIora8eE4EiM6jp1STOXTdJVAn9SLwK0qxk6FzRMf4LMK1Ytuo2c8Ww
-        kvul/bp9Szp9sHHiOQusi5U=
-X-Google-Smtp-Source: AGRyM1sjwX3r5gjS5tg353B+hub3z95RPDfQo0yr1WwutP31zSJbDOR2bF+pknGYdiCO+CP0hwQpyg==
-X-Received: by 2002:a05:6512:1195:b0:481:1675:f358 with SMTP id g21-20020a056512119500b004811675f358mr3615071lfr.235.1657309423217;
-        Fri, 08 Jul 2022 12:43:43 -0700 (PDT)
-Received: from [192.168.0.251] (dsl-hkibng42-5673c7-93.dhcp.inet.fi. [86.115.199.93])
-        by smtp.gmail.com with ESMTPSA id v20-20020a05651203b400b0047255d210e4sm7592506lfp.19.2022.07.08.12.43.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 08 Jul 2022 12:43:42 -0700 (PDT)
-Message-ID: <9a925f87-a78b-0164-bdaf-99e14dc943cd@gmail.com>
-Date:   Fri, 8 Jul 2022 22:43:41 +0300
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1657309634; x=1688845634;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=y8svXHFAGBhEoIgUxuvGzQVF++l56a0jj2PjO4kDLlU=;
+  b=KEFHDKjXgTD6wtusei4l90dV2o6kNH8nQQmPIKu+WvyAp43D5PSNZqbp
+   VnGJpMuRc9g8tnaMtS8Hp/aGL6PMN3ILeGb0iahxhuI7qW3H2JDNvMowx
+   jciTGpXTYjI2uKQvFw50BPDBNbrUKD3BomvEU9SxwvGDWDmrYs+/wcjzY
+   E=;
+Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
+  by alexa-out.qualcomm.com with ESMTP; 08 Jul 2022 12:47:13 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Jul 2022 12:47:13 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Fri, 8 Jul 2022 12:47:12 -0700
+Received: from [10.110.5.247] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Fri, 8 Jul 2022
+ 12:47:11 -0700
+Message-ID: <a7f2e673-a732-d06c-e17e-746cedf42c7a@quicinc.com>
+Date:   Fri, 8 Jul 2022 12:47:10 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Subject: Re: [PATCH v2,1/5] pinctrl: qcom: spmi-gpio: Add pm8226 compatibility
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: Re: [PATCH 1/9] dt-bindings: msm/dp: drop extra p1 region
 Content-Language: en-US
-To:     Linus Walleij <linus.walleij@linaro.org>,
-        Dominik Kobinski <dominikkobinski314@gmail.com>
-Cc:     bjorn.andersson@linaro.org, agross@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
-References: <20211125213451.62010-1-dominikkobinski314@gmail.com>
- <20211125215310.62371-1-dominikkobinski314@gmail.com>
- <CACRpkdau+wHpoWa1JrLt35dnCHJejs8HZkkzZCrrcnRCx3SinQ@mail.gmail.com>
-From:   =?UTF-8?Q?Matti_Lehtim=c3=a4ki?= <matti.lehtimaki@gmail.com>
-In-Reply-To: <CACRpkdau+wHpoWa1JrLt35dnCHJejs8HZkkzZCrrcnRCx3SinQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Clark <robdclark@gmail.com>,
+        "Rob Herring" <robh+dt@kernel.org>, Sean Paul <sean@poorly.run>
+CC:     David Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20220707213204.2605816-1-dmitry.baryshkov@linaro.org>
+ <20220707213204.2605816-2-dmitry.baryshkov@linaro.org>
+ <CAE-0n53zV2OjXxjJ_AwCDcAZvOY+BU0-xipxQkup3muHMRCPXA@mail.gmail.com>
+ <b8ee5a03-1168-d5ca-97fe-f82a9d7e453e@linaro.org>
+ <CAE-0n52YGDOSZpL+3d=_APsOwVvrJG7uR-x1AcsBej5KrDct5w@mail.gmail.com>
+ <eb22ae44-b347-1566-939a-4ca840688f07@quicinc.com>
+From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
+In-Reply-To: <eb22ae44-b347-1566-939a-4ca840688f07@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26.11.2021 2.49, Linus Walleij wrote:
-> On Thu, Nov 25, 2021 at 10:53 PM Dominik Kobinski
-> <dominikkobinski314@gmail.com> wrote:
-> 
->> Add support for pm8226 SPMI GPIOs. The PMIC features
->> 8 GPIOs, with no holes inbetween.
+
+On 7/8/2022 12:38 PM, Abhinav Kumar wrote:
+> + kuogee
+>
+> On 7/8/2022 12:27 PM, Stephen Boyd wrote:
+>> Quoting Dmitry Baryshkov (2022-07-07 20:46:43)
+>>> On 08/07/2022 04:28, Stephen Boyd wrote:
+>>>> Quoting Dmitry Baryshkov (2022-07-07 14:31:56)
+>>>>> The p1 region was probably added by mistake, none of the DTS files
+>>>>> provides one (and the driver source code also doesn't use one). 
+>>>>> Drop it
+>>>>> now.
+>>>>
+>>>> Yes, looks like the driver doesn't use it.
+>>>>
+>>>>>
+>>>>> Fixes: 687825c402f1 ("dt-bindings: msm/dp: Change reg definition")
+>>>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>>>> ---
+>>>>> Documentation/devicetree/bindings/display/msm/dp-controller.yaml | 
+>>>>> 1 -
+>>>>>    1 file changed, 1 deletion(-)
+>>>>>
+>>>>> diff --git 
+>>>>> a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml 
+>>>>> b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
+>>>>> index 94bc6e1b6451..d6bbe58ef9e8 100644
+>>>>> --- 
+>>>>> a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
+>>>>> +++ 
+>>>>> b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
+>>>>> @@ -29,7 +29,6 @@ properties:
+>>>>>          - description: aux register block
+>>>>>          - description: link register block
+>>>>>          - description: p0 register block
+>>>>> -      - description: p1 register block
+>>>>
+>>>> The p1 registers exist on sc7180. They start where the example starts,
+>>>> at 0xae91400.
+>>>
+>>> Do they exist on e.g. sc7280? In other words, should we add the region
+>>> to the DTS? For now I'm going to mark it as optional.
+>>>
 >>
->> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
->> Suggested-by: Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
->> Signed-off-by: Dominik Kobinski <dominikkobinski314@gmail.com>
-> 
-> I applied this to the pinctrl tree.
-> 
-> Is there anything else I should be applying?
-> 
-> Yours,
-> Linus Walleij
+>> Yes I see the same address for P1 on sc7280. Maybe it's a typo? Abhinav,
+>> can you confirm?
+>
+> P1 block does exist on sc7280 and yes its address is same as the 
+> address mentioned in sc7180. So its not a typo.
+>
+> Yes, we are not programming this today but I would prefer to keep this 
+> as optional.
+>
+> I did sync up with Kuogee on this change this morning, we will check a 
+> few things internally on the P1 block's usage as to which use-cases we 
+> need to program it for and update here.
+>
+P1 block is for dp MST application.  This allow two dp streams can be 
+mux into same DP phy.
 
-I noticed that this patch was never applied into kernel while the other 
-patches such as the device tree documentation were applied. Maybe it was 
-missed accidentally? I checked also the pinctrl tree and didn't find the 
-commit there either in the branches for the upcoming releases.
+We should keep it since we may support MST later.
 
--Matti
+> The idea behind having this register space listed in the yaml is thats 
+> how the software documents have the blocks listed so dropping P1 block 
+> just because its unused seemed wrong to me. Optional seems more 
+> appropriate.
+>
+> Thanks
+>
+> Abhinav
