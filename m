@@ -2,67 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 42AA056BF7B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jul 2022 20:35:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2F0BF56C2BC
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Jul 2022 01:13:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238749AbiGHR7O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Jul 2022 13:59:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55606 "EHLO
+        id S238184AbiGHTRP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Jul 2022 15:17:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58886 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237887AbiGHR7N (ORCPT
+        with ESMTP id S238580AbiGHTRP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Jul 2022 13:59:13 -0400
-Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C7911EAEA
-        for <linux-arm-msm@vger.kernel.org>; Fri,  8 Jul 2022 10:59:12 -0700 (PDT)
-Received: by mail-oi1-x233.google.com with SMTP id r82so27920330oig.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Jul 2022 10:59:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to;
-        bh=YHV2Cc5LaBeGv/AExh1dctdQCQcN3cDdvTIsITOZX7o=;
-        b=SldvymO6Yx3hvrPoQMk0aRKOPOW/TDdG0xvoqwq2gjl3jQDewEQNxT7IZ2n4Y6Gu4l
-         1xcyHRkCgBMAuyc9PpJUug4dwDal14CECAA7tgXkyHs4GcEPkOxnJ2O2ak6sdWhta0wq
-         q6WxCmt02sZKcOWwAvCuLlMjiru2aylxIdRlo=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to;
-        bh=YHV2Cc5LaBeGv/AExh1dctdQCQcN3cDdvTIsITOZX7o=;
-        b=MphTg2ZcwHedzRud3bN4R09aG4R9UQGeSDTR9RaTE01rh8zHNj5Vh1Ox7FM0mgnvpj
-         htpoeWwEQ2WjlQpQycbUjLc8OMA2acdcp4ZbpkJ7JfD++tChJ/1/mWEGAN2MVDkqIhZr
-         tVbFDwVQzSaAQicU+nhWlx6VpQUzKrJzjySDJOcEjUoKZYj0Tb6JE0cciLHFUSsZ5sv/
-         qNP41/oLONyqCkKi0HtQ30HWIYl+NMH7mx00qdpmgdu4Kg4Fgyh+D4K/cpldHIHj4uh4
-         ti8gdJefwLSLrEu+mL7vKmfwQIDViIm3GEwCJNOhfqVWZznC9yEc/cazx6G2ktbkDqK7
-         XepA==
-X-Gm-Message-State: AJIora+GUzU8u8RfDNgc6iNIbixEvO8rxd2B8Y++9MptAZIZ67xCwhyD
-        8SZdRTxvqWCj+38C0xSPQmTTNfrL1EuinroGfIAg3Q==
-X-Google-Smtp-Source: AGRyM1uArgMx4SavTqMDhwhs03SUm2moqY8zMl1EvGjoPdvbyFKjlJ+ON6yeDAIwwIeg6LPbcSDqSg6//DxGeB4CkAs=
-X-Received: by 2002:a05:6808:e87:b0:32e:4789:d2c with SMTP id
- k7-20020a0568080e8700b0032e47890d2cmr578880oil.193.1657303151889; Fri, 08 Jul
- 2022 10:59:11 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 8 Jul 2022 10:59:11 -0700
+        Fri, 8 Jul 2022 15:17:15 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E3324507A;
+        Fri,  8 Jul 2022 12:17:14 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id E978CB8255E;
+        Fri,  8 Jul 2022 19:17:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65CEEC341C0;
+        Fri,  8 Jul 2022 19:17:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1657307831;
+        bh=l3Y3r4p91RvlsmChqf3cvYoERKlAt+sLJ7TNwSXS2xI=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:From;
+        b=BWkTEjeKkO347NySYO+yG6WGWBQTQiVbOigvS0rcvG0DLo7j0bA9clUB/zuDtuPqY
+         F77KHHSXCUIe+4kgxA0Boxp21gucL/fxnIrhnSrVM6QfNh7TyacweQ2q8HZapJ/naa
+         fX4ISXpXt6CwSA5GPrghF48/NvsyQfyp3YeX/U46vAhiAzDxGQ3HHMA6FJx4qkcZ92
+         V79IMi0655vqA6cLaVaXIJYFez+ZqecgiHt8DLH5vnh08nZwDZlfqQqAoKx2pPHGFF
+         oZ/QfDaVQt2vMnl8+GIEcbaBpb9EEAdOgF2saP5WDMVXGyjyux0I/BfjRDS8oSPBQO
+         sWCooRiYuD4kw==
+Date:   Fri, 8 Jul 2022 14:17:09 -0500
+From:   Bjorn Helgaas <helgaas@kernel.org>
+To:     Christian Marangi <ansuelsmth@gmail.com>
+Cc:     Robert Marko <robimarko@gmail.com>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        lpieralisi@kernel.org, Rob Herring <robh@kernel.org>, kw@linux.com,
+        Bjorn Helgaas <bhelgaas@google.com>, p.zabel@pengutronix.de,
+        jingoohan1@gmail.com, linux-pci@vger.kernel.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        johan+linaro@kernel.org,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: Re: [PATCH v4 2/2] PCI: qcom: Move all DBI register accesses after
+ phy_power_on()
+Message-ID: <20220708191709.GA366918@bhelgaas>
 MIME-Version: 1.0
-In-Reply-To: <1657197381-1271-1-git-send-email-quic_srivasam@quicinc.com>
-References: <1657197381-1271-1-git-send-email-quic_srivasam@quicinc.com>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Fri, 8 Jul 2022 10:59:11 -0700
-Message-ID: <CAE-0n53X8yyWr+Q+3RpciCeZcW+t+jgZs3eqNF9O8hJcw0cq0Q@mail.gmail.com>
-Subject: Re: [PATCH v2] arm64: dts: qcom: sc7280: Move wcd specific pin conf
- to common file
-To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-        agross@kernel.org, bjorn.andersson@linaro.org,
-        devicetree@vger.kernel.org, dianders@chromium.org,
-        judyhsiao@chromium.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_rohkumar@quicinc.com,
-        robh+dt@kernel.org, srinivas.kandagatla@linaro.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <62c8633a.1c69fb81.f15e3.fbd0@mx.google.com>
+X-Spam-Status: No, score=-7.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -70,84 +63,84 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Srinivasa Rao Mandadapu (2022-07-07 05:36:21)
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-audio-wcd9385.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine-audio-wcd9385.dtsi
-> index 32a1e78..859faaa 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-audio-wcd9385.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-audio-wcd9385.dtsi
-> @@ -5,6 +5,70 @@
->   * Copyright (c) 2022, The Linux Foundation. All rights reserved.
->   */
->
-> +/* PINCTRL */
-> +
-> +&lpass_dmic01_clk {
-> +       drive-strength = <8>;
-> +       bias-disable;
-> +};
-> +
-> +&lpass_dmic01_clk_sleep {
-> +       drive-strength = <2>;
-> +};
-> +
-> +&lpass_dmic01_data {
-> +       bias-pull-down;
-> +};
-> +
-> +&lpass_dmic23_clk {
-> +       drive-strength = <8>;
-> +       bias-disable;
-> +};
-> +
-> +&lpass_dmic23_clk_sleep {
-> +       drive-strength = <2>;
-> +};
-> +
-> +&lpass_dmic23_data {
-> +       bias-pull-down;
-> +};
-> +
-> +&lpass_rx_swr_clk {
-> +       drive-strength = <2>;
-> +       slew-rate = <1>;
-> +       bias-disable;
-> +};
-> +
-> +&lpass_rx_swr_clk_sleep {
-> +       bias-pull-down;
-> +};
-> +
-> +&lpass_rx_swr_data {
-> +       drive-strength = <2>;
+On Fri, Jul 08, 2022 at 07:02:48PM +0200, Christian Marangi wrote:
+> On Fri, Jul 08, 2022 at 06:47:57PM +0200, Christian Marangi wrote:
+> > On Fri, Jul 08, 2022 at 06:39:37PM +0200, Robert Marko wrote:
+> > > On Thu, 7 Jul 2022 at 21:41, Bjorn Helgaas <helgaas@kernel.org> wrote:
+> > > > On Fri, Jun 24, 2022 at 12:44:20PM +0200, Robert Marko wrote:
+> > > > > IPQ8074 requires the PHY to be powered on before accessing DBI registers.
+> > > > > It's not clear whether other variants have the same dependency, but there
+> > > > > seems to be no reason for them to be different, so move all the DBI
+> > > > > accesses from .init() to .post_init() so they are all after phy_power_on().
+> > > > >
+> > > > > Signed-off-by: Robert Marko <robimarko@gmail.com>
+> > > >
+> > > > Would any of the qcom driver folks care to review and ack this?
+> > > > Stanimir, Andy, Bjorn A (from get_maintainer.pl)?
+> > 
+> > Hi Bjorn,
+> > I tested this on ipq806x and the current patch cause regression as pci
+> > doesn't work anymore...
+> > This is a before the patch [1] and this is an after [2].
+> > 
+> > As you notice the main problem here is
+> > [    2.559962] qcom-pcie 1b700000.pci: Phy link never came up
+> > 
+> > The cause of this has already been bisected and actually it was a fixup
+> > pushed some time ago for 2_1_0.
+> > 
+> > Uboot can leave the pci in an underfined state and this
+> > writel(1, pcie->parf + PCIE20_PARF_PHY_CTRL);
+> > is never called.
+> > 
+> > This is mandatory to a correct init and MUST be called before regulator
+> > enable and reset deassert or the "Phy link never came up" problem is
+> > triggered.
+> > 
+> > So to fix this we just have to have
+> > writel(1, pcie->parf + PCIE20_PARF_PHY_CTRL);
+> > in qcom_pcie_init_2_1_0 right after the reset_contro_assert.
+> > 
+> > This command is also present in qcom_pcie_init_2_3_2 where the same
+> > exact reg is written so I assume 2_3_2 have the same regression and the
+> > write must be placed in init and can't be moved to post_init.
+> > 
+> > Feel free to tell me how to proceed if I should post an additional patch
+> > or you prefer Robi to respin this with the few lines reverted.
+> > 
+> > [1] https://gist.github.com/Ansuel/ec827319e585630356fc586273db6f0d
+> > [2] https://gist.github.com/Ansuel/63fbcab2681cd28a61ec52d7874fa30d
+> 
+> While testing this I notice something odd...
+> 
+> 2_4_2 prepare the pipe clock only AFTER PCIe clocks and reset are
+> enabled while in 2_1_0... That made me think there could be a problem
+> with the current code of 2_1_0... A quick change made me discover that
+> the problem is actually that we enable prepare_enable clock BEFORE the
+> value is written in PCIE20_PARF_PHY_CTRL.
+> 
+> By moving the clk_bulk_prepare_enable after the "enable PCIe clocks and
+> resets" make the pci work with the current change...
+> 
+> So it could be that the current changes are correct and it's really just
+> a bug in 2_1_0 enabling clock before writing the correct value...
+> 
+> Tell me how to proceed... think at this point a good idea would be to
+> create a separate patch and fix this for good.
 
-I suspect this was discussed before, but why do we need to modify drive
-strengths on pins that aren't in output mode? I assume either rx_swr or
-tx_swr is unidirectional.
+Hmm, I think I made a mistake when I put this patch in the middle and
+applied other stuff on top of it.  I'd like to just postpone this
+patch while we work out these issues, but I think it's not completely
+trivial since it's in the middle.  I'll try to straighten this out
+next week.
 
-> +       slew-rate = <1>;
-> +       bias-bus-hold;
-> +};
-> +
-> +&lpass_rx_swr_data_sleep {
-> +       bias-pull-down;
-> +};
-> +
-> +&lpass_tx_swr_clk {
-> +       drive-strength = <2>;
-> +       slew-rate = <1>;
-> +       bias-disable;
-> +};
-> +
-> +&lpass_tx_swr_clk_sleep {
-> +       bias-pull-down;
-> +};
-> +
-> +&lpass_tx_swr_data {
-> +       drive-strength = <2>;
-> +       slew-rate = <1>;
-> +       bias-bus-hold;
-> +};
-> +
->  &mi2s1_data0 {
->         drive-strength = <6>;
->         bias-disable;
+> Also bonus question, should I drop the bulk_prepare_enable and follow
+> the pattern of 2_3_2 and enable aux, cfg, master and slave in init and
+> pipe in post init or I can keep it? (still have to test but I assume
+> that it will work.)
+
+I haven't looked at the code again, but will just offer the opinion
+that unnecessary differences in structure often hide bugs, and they're
+always minor speed bumps for readers.
+
+Bjorn
