@@ -2,118 +2,146 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9EE9356B7B1
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jul 2022 12:52:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D1F8056B831
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jul 2022 13:14:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237983AbiGHKr6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Jul 2022 06:47:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53450 "EHLO
+        id S237695AbiGHLMc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Jul 2022 07:12:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42180 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237947AbiGHKr6 (ORCPT
+        with ESMTP id S237157AbiGHLMb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Jul 2022 06:47:58 -0400
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB6B524091
-        for <linux-arm-msm@vger.kernel.org>; Fri,  8 Jul 2022 03:47:56 -0700 (PDT)
-Received: by mail-wr1-x433.google.com with SMTP id r14so24210172wrg.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Jul 2022 03:47:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=xluwZ9y3zdmAPfcT1yYXDD9KZroOpceJIZ4q+RRr1oU=;
-        b=JPtEmO4trG7s6aC0J9ygjQlOCrt7aZxW4zQWOL3LYOBjAeYpBRPDb6+tO3McP54lf9
-         iKP27VpYJP9FFXqEVGefhLGNOEVZcXePzkp5qaytOID3uUF3nTsPzw/NjZ6p06b8PovV
-         joEjnoJ0qcQ5BMlZk006adTqPyp7TYLSNO6LX6jllBGN7bg5rccHpoF/Pk198DrTtkN3
-         /WeVTPniOizjNDT04kTwZIwCv7//GRyefmpP6im3meVPzUaR1XC4U4msgdm1YPJ8z1bc
-         Cm6YMjj0N4pPIeOUhP3VsiOnyKYEivqNkGkclUlN3cBTtPNkztWhwRH7Mfn2Xvyw7uUh
-         8ZHQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=xluwZ9y3zdmAPfcT1yYXDD9KZroOpceJIZ4q+RRr1oU=;
-        b=DgJgHjud7VgJlEX0bPrNNa/TOjLE4HXRip1TdxZT8IbtskqKy9fZAW+pHNxhTynPju
-         I6mAzcBABHioDS/NkkV/Clp5a4eCzuoH8vIqVDMqyf+rUPC1onjvwq49Bop7HUuVSRic
-         7x2yIK73jg5OBWDyg1g5WuUJCZ2XhAoSltkSi6awWSM9gttVD5g8h5UAZXIdt+ay6tGB
-         yR1QAwLVuLGASfN1jQ/ZY9Az9xsLV42bNgiUq6UJBctIf+p3Y69a2pNr3z/PPjHlNuv7
-         l7vvRc07GoSxV7I8MyakiD9ayLi2Z07S5Om1/UvinJ1DKSIiVHvCc51R4vYZ2gEd1D4Y
-         nSyw==
-X-Gm-Message-State: AJIora9MTYprtNJnbMHkvtvuVAvJS1VAmoxrn8iPKm43585I/7+dqaMl
-        XYw0NbQ9MCjzU0Ppha+ctXUdOg==
-X-Google-Smtp-Source: AGRyM1tT9rQIlM4HXj5Tbwcts2dErI6OHFaa52hqrQ9CstIDKYjsLpQenpYPtpMOAPh6+QIHiep/6g==
-X-Received: by 2002:a05:6000:15c1:b0:21b:ad5e:2798 with SMTP id y1-20020a05600015c100b0021bad5e2798mr2636491wry.237.1657277275444;
-        Fri, 08 Jul 2022 03:47:55 -0700 (PDT)
-Received: from srini-hackbase.lan (cpc90716-aztw32-2-0-cust825.18-1.cable.virginm.net. [86.26.103.58])
-        by smtp.gmail.com with ESMTPSA id z19-20020a1c4c13000000b003a2da6b2cbesm1251621wmf.33.2022.07.08.03.47.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 Jul 2022 03:47:54 -0700 (PDT)
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-To:     vkoul@kernel.org
-Cc:     yung-chuan.liao@linux.intel.com,
-        pierre-louis.bossart@linux.intel.com, alsa-devel@alsa-project.org,
-        linux-arm-msm@vger.kernel.org, dan.carpenter@oracle.com,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH v2] soundwire: qcom: fix device status array range
-Date:   Fri,  8 Jul 2022 11:47:47 +0100
-Message-Id: <20220708104747.8722-1-srinivas.kandagatla@linaro.org>
-X-Mailer: git-send-email 2.25.1
+        Fri, 8 Jul 2022 07:12:31 -0400
+Received: from NAM11-BN8-obe.outbound.protection.outlook.com (mail-bn8nam11olkn2010.outbound.protection.outlook.com [40.92.20.10])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E347A81490;
+        Fri,  8 Jul 2022 04:12:29 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=O4sx+AKml8XuvlIAnhPO//+Ra/Cn5jb87snrutr0u6FnOZlAX1ACSdFzCiAw/6OvlLxfM4qE1NSyseQpKcE7SmCy1HppG3WGoWIXr9X22eXUGcYgafw8MhfalRvky/BX9onsmIYqdkJes2A8Cu/Kps5r79u6d/59h4PZe+NgZfQLGHonTQzzpL5KETpLkk+fLruLczjQDh/RIbRJjCDhh/L6I2AKHa4xIK2NNmcWlZxNzdpzJtCphb+WmGbNwjyex23WxgXH9f/ayFj0GSXMobrkoINCEEjqx4F1E+HOW+WVDE9pUy08TFaH/rT5yvXoWDFk/TAM18e2wHd74fJEjg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=26v5y3Qipq5N1HBy2yjP0zBQQBTEIIrvKisDK1XzNgQ=;
+ b=lKfMN9lm8HeWHUp0GGKC7uwgpJLL0q50p29c1NrT6otuq0zxjESGcv/54BblCDunygzjkP8dmj+VuTGjD8jbFI1VWM0Z6vIXaQE1/L4dnOsHX1SYe8fENY2QUkiE6IXYRNXukRkzarw+3TejNiNj9Yjcn5lMoTih6FO5Y4ItqXTCVIWkzlgYWu1iftsoNWtuT0I3tldHa8bpyhWzPIfoffgSUHnzLK2rwIGw5XXwWivj+zZvnksKop5SGF+C748c7gKQ2QKGZMun+43NALCqiIH5xZNQQkg7PJQRVMlSUJ3MWOgJ3nlvHU7L6k0CrHiZljgACL+ogZ8g5/DtUtaNXw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+Received: from MN2PR02MB7024.namprd02.prod.outlook.com (2603:10b6:208:205::23)
+ by DM5PR02MB3879.namprd02.prod.outlook.com (2603:10b6:4:ba::35) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5417.20; Fri, 8 Jul
+ 2022 11:12:28 +0000
+Received: from MN2PR02MB7024.namprd02.prod.outlook.com
+ ([fe80::6c6e:45bb:b4cd:6d63]) by MN2PR02MB7024.namprd02.prod.outlook.com
+ ([fe80::6c6e:45bb:b4cd:6d63%6]) with mapi id 15.20.5417.016; Fri, 8 Jul 2022
+ 11:12:28 +0000
+From:   Joel Selvaraj <jo@jsfamily.in>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Joel Selvaraj <jo@jsfamily.in>
+Subject: [PATCH 0/5] Add support for Xiaomi Poco F1 EBBG variant
+Date:   Fri,  8 Jul 2022 16:42:02 +0530
+Message-ID: <MN2PR02MB702415D7BF12B7B7A41B2D38D9829@MN2PR02MB7024.namprd02.prod.outlook.com>
+X-Mailer: git-send-email 2.36.1
+Content-Transfer-Encoding: 7BIT
+Content-Type:   text/plain; charset=US-ASCII
+X-TMN:  [f5ZlqpMiNBqLf4yC7ptIf04HUKvUWTcjeFbOy+1owsIT0nz9kkVrTHQ7Lg8RGSwG]
+X-ClientProxiedBy: PN2PR01CA0236.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:c01:eb::20) To MN2PR02MB7024.namprd02.prod.outlook.com
+ (2603:10b6:208:205::23)
+X-Microsoft-Original-Message-ID: <20220708111207.85249-1-jo@jsfamily.in>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: 1a3e509a-ee20-4ce0-a520-08da60d2bdd9
+X-MS-TrafficTypeDiagnostic: DM5PR02MB3879:EE_
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: 7rZYYPfS7BoQ5WDlfsYv1IlLaTd92ryuOUFvunmJodmu60/ZuuGAET7deWDypZ/at47HLqGmFoAiR0cGQWWAMEP9SSgI7Irei9X6clNaUgigfULNkKz/VtKhyxmHPq/BNnweEUbYlhwVly/K0h8KCpDn8tQbAXggsmXuwPQnlSi8ys6sCXS9/MQT48dJROacVA1HiAOvDJisZDjddMbg9rV0mrCGRdDYTxFqKhCzq56hL6dplijWi3sqalo91NGQtxB1hzhL1WVm0iObGtVqWyqZHP0L7tPdSQmW8gk0/jeYQZ0443Dcsb2Ao4r8/P57rY46DWK1Wt8jXSIP33duklYWQYGOhBgndw7omNqw5hecaoXFOEjbo9fbhVynTaMD6NeEVWAt6Y/fpMwRTMnvEs5pIs9eSmKac4KkYspfpio8czuComqM6T8Zxna38R6WuVVgKHMXi+SSkdAhtFBrN0p6+Ude/bXaWCtGgSCRDnyYLg+5uoT7NSFXsgNLaZKJW8bxVPJC5loOj+Spq6R7ssRwWAdGD1UM1lqAhca6iBnR/3UVZCwFiLDyFFyRqitUx843iESCTwSi2pIMUiT3Y6nvaZS24vMa1RPvbNdQNIqMpjItk1LDQcFu26paR8LBhmGAYTI12VxurYzsqJHGeBVgARPqteL9Sl/sZTO0tqgu3hyHFOQYWCLvGWJNyr8m5R0WskfeYCl4obHxX5roMA==
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?bOWQbASxt8JRCSDbWEvXwtwpNLqgNDfJIivpG/RB8LbgxHteB4NpREadf65Z?=
+ =?us-ascii?Q?FMuXjSsEk3U4wHXETFKyM/KSbMxNK0G9iCjOVMpqKzObb8n2C4WzcxEzE3VG?=
+ =?us-ascii?Q?C/h4xYo4ev0koKlY2aaXTTpbZx4b917Q2UJHEJ+qD2GLEcIETtkcTBB05vSK?=
+ =?us-ascii?Q?nZk9k7KtoXjvgonildacnhh+7Omo3azOnxQ83fZ17Lw6kad/MhBsHa54OG6+?=
+ =?us-ascii?Q?ld46ABl7eUxaAArte5aUAD3sz7z4OjCpnJ2cgr8zNRA7o6mRsioZIyw9voAg?=
+ =?us-ascii?Q?sXffJianEwxiPGwb/V2LB5BjwBRSdHcm8hd+RC62Hr7AZbGKq06qDbBJlGcY?=
+ =?us-ascii?Q?zZr54cdlrBgBl9OlAznXnh4FnrKs1U2HxWmpTERhUYWHEyQv0FTF3oxfP8gg?=
+ =?us-ascii?Q?+poddFYUR4hjfpca82qAl71S5oUwDONPWTWW1QyY/FG10BDfV+CiJAecvoTU?=
+ =?us-ascii?Q?/jYFgOEgTPo2hHRS//a3lfNPLgtTDqsGYyd0swRQ58cQaiJLwsFN0i1FWgZD?=
+ =?us-ascii?Q?W22oLJ02bzr09WXQeBssSumn8MatX6cTuBDzcg7TmpP6VSNjqFzyJeUxMjqh?=
+ =?us-ascii?Q?+xvIF7HQ1983OwLcwYnYTIVr2UUa113qwACDxmxRIaaGCBACOMNyAjbj1z8S?=
+ =?us-ascii?Q?qEZiGPKS+TMcMXVKcA5kzyhmNL0p2XVMG4CX81d7xml5Fr22qUaK4WH4Qop1?=
+ =?us-ascii?Q?WEb4jnIrI+UfCBuI27uefIqfYoccqOV7n8RseYJ4ksa001+1GspSWR+BkIDb?=
+ =?us-ascii?Q?PtjCS0HotZlJTKG6LVBiYCaGoRiFyW/p5ZLDcqHaPUZacslBrZuuHXLcbOrS?=
+ =?us-ascii?Q?TKhgv/iBc59Kbu1bcNVwQTW1HFjWYt8QlMtjonQxoxXSs+c7KGlHDDbX/tzz?=
+ =?us-ascii?Q?G4s1Txr0Qu88oEFqIpg9pEb+Z82Acrq1mnfifjnm0liUOXa6FbuAKmGC/zl2?=
+ =?us-ascii?Q?SOH4E5mSjciCT6yVkvT4/hM8mlbMkdl4JVcAVD+FI+3UXfJ/Os49P4dtfysB?=
+ =?us-ascii?Q?rLtS4h2TxDgmWyMHxKS0XfYru52bJjvLMhD3kM1C+Ibx5ia2I/hjOr0dCqHV?=
+ =?us-ascii?Q?SY+mK3vffs5VrbX5Y2qiScZIwnAXpVFFek51a3IX5VoQJgYR4N7Sb1uygPpm?=
+ =?us-ascii?Q?63cdauKTJF32ZIJpQZmyjUbxHCiw/QlqOQUY/j5wUs74ngH91so9ofzxNvL7?=
+ =?us-ascii?Q?qGizcMtjx/lXJjdrRvGMsryFM0AuXiJ3w/d6B4ocqxU0HjfFWgrMa7LkU1w0?=
+ =?us-ascii?Q?a5zkBOz2jdLnZ1V7MjOntkV71aRDHyHT6dBIdGXPFBvYDm1k3CfRYG8GXZkF?=
+ =?us-ascii?Q?0BPeP1d7VlGKpHtDdKVfGwLK?=
+X-OriginatorOrg: sct-15-20-4755-11-msonline-outlook-99c3d.templateTenant
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1a3e509a-ee20-4ce0-a520-08da60d2bdd9
+X-MS-Exchange-CrossTenant-AuthSource: MN2PR02MB7024.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Jul 2022 11:12:27.9834
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM5PR02MB3879
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This patch updates device status array range from 11 to 12 as we will
-be reading status from device number 0 to device number 11 inclusive.
+There are two variants of Xiaomi Poco F1.
+- Tianma variant with NOVATEK NT36672A panel + touchscreen manufactured
+  by Tianma
+- EBBG variant with Focaltech FT8719 panel + touchscreen manufactured
+  by EBBG
 
-Without this patch we can potentially access status array out of range
-during auto-enumeration.
+The current sdm845-xiaomi-beryllium.dts represents tianma panel variant.
 
-Fixes: aa1262ca6695 ("soundwire: qcom: Check device status before reading devid")
-Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
----
- drivers/soundwire/qcom.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+To add support for the EBBG variant, let's split this into 3 files,
+- sdm845-xiaomi-beryllium-common.dtsi which contains all the common nodes
+- sdm845-xiaomi-beryllium-tianma.dts for the tianma variant
+- sdm845-xiaomi-beryllium-ebbg.dts for the ebbg variant
 
-diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
-index 9df970eeca45..16a4a51978ca 100644
---- a/drivers/soundwire/qcom.c
-+++ b/drivers/soundwire/qcom.c
-@@ -169,7 +169,7 @@ struct qcom_swrm_ctrl {
- 	u8 wcmd_id;
- 	struct qcom_swrm_port_config pconfig[QCOM_SDW_MAX_PORTS];
- 	struct sdw_stream_runtime *sruntime[SWRM_MAX_DAIS];
--	enum sdw_slave_status status[SDW_MAX_DEVICES];
-+	enum sdw_slave_status status[SDW_MAX_DEVICES + 1];
- 	int (*reg_read)(struct qcom_swrm_ctrl *ctrl, int reg, u32 *val);
- 	int (*reg_write)(struct qcom_swrm_ctrl *ctrl, int reg, int val);
- 	u32 slave_status;
-@@ -420,7 +420,7 @@ static int qcom_swrm_get_alert_slave_dev_num(struct qcom_swrm_ctrl *ctrl)
- 
- 	ctrl->reg_read(ctrl, SWRM_MCP_SLV_STATUS, &val);
- 
--	for (dev_num = 0; dev_num < SDW_MAX_DEVICES; dev_num++) {
-+	for (dev_num = 0; dev_num <= SDW_MAX_DEVICES; dev_num++) {
- 		status = (val >> (dev_num * SWRM_MCP_SLV_STATUS_SZ));
- 
- 		if ((status & SWRM_MCP_SLV_STATUS_MASK) == SDW_SLAVE_ALERT) {
-@@ -440,7 +440,7 @@ static void qcom_swrm_get_device_status(struct qcom_swrm_ctrl *ctrl)
- 	ctrl->reg_read(ctrl, SWRM_MCP_SLV_STATUS, &val);
- 	ctrl->slave_status = val;
- 
--	for (i = 0; i < SDW_MAX_DEVICES; i++) {
-+	for (i = 0; i <= SDW_MAX_DEVICES; i++) {
- 		u32 s;
- 
- 		s = (val >> (i * 2));
+Note:
+-----
+Both the panels are already upstreamed and the split is based on them.
+There were patches earlier for both the touchscreens, but they are not
+accepted upstream yet. Once they are accepted, we will add them to
+respective variants.
+
+Joel Selvaraj (5):
+  arm64: dts: sdm845-xiaomi-beryllium: rename beryllium.dts into
+    beryllium-common.dtsi
+  arm64: dts: qcom: sdm845-xiaomi-beryllium-common: generalize the
+    display panel node
+  arm64: dts: qcom: sdm845-xiaomi-beryllium: introduce tianma variant
+  arm64: dts: qcom: sdm845-xiaomi-beryllium: introduce ebbg variant
+  arm64: dts: qcom: Makefile: split beryllium into tianma and ebbg
+    variant
+
+ arch/arm64/boot/dts/qcom/Makefile                      |  3 ++-
+ ...ryllium.dts => sdm845-xiaomi-beryllium-common.dtsi} |  8 ++++----
+ .../boot/dts/qcom/sdm845-xiaomi-beryllium-ebbg.dts     | 10 ++++++++++
+ .../boot/dts/qcom/sdm845-xiaomi-beryllium-tianma.dts   | 10 ++++++++++
+ 4 files changed, 26 insertions(+), 5 deletions(-)
+ rename arch/arm64/boot/dts/qcom/{sdm845-xiaomi-beryllium.dts => sdm845-xiaomi-beryllium-common.dtsi} (98%)
+ create mode 100644 arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-ebbg.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-tianma.dts
+
 -- 
-2.25.1
+2.36.1
 
