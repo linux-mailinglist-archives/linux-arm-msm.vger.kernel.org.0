@@ -2,73 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9A0CB56B700
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jul 2022 12:16:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9EE9356B7B1
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jul 2022 12:52:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237901AbiGHKMA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Jul 2022 06:12:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56564 "EHLO
+        id S237983AbiGHKr6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Jul 2022 06:47:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53450 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237553AbiGHKL5 (ORCPT
+        with ESMTP id S237947AbiGHKr6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Jul 2022 06:11:57 -0400
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F214784EDB
-        for <linux-arm-msm@vger.kernel.org>; Fri,  8 Jul 2022 03:11:47 -0700 (PDT)
-Received: by mail-wm1-x330.google.com with SMTP id v67-20020a1cac46000000b003a1888b9d36so887318wme.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Jul 2022 03:11:47 -0700 (PDT)
+        Fri, 8 Jul 2022 06:47:58 -0400
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB6B524091
+        for <linux-arm-msm@vger.kernel.org>; Fri,  8 Jul 2022 03:47:56 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id r14so24210172wrg.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Jul 2022 03:47:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=81okasB3g0ekpD8niaqxxgdkdfiBn6Pr7NqUFt5DBEo=;
-        b=GG2oup2rv/ga/OnSyutUz+S+rBqREaqHTkx+gB+ADu7sa0SBu42CvT0CSElqsSFWhZ
-         Lr+Q+l6DrU4UfBc4bH621yyvfTEU4ylv+RH1Qh6aYwDQLAT7A12x2AvYvn1Y/mZi8lCc
-         ZgMh604fWqZ1iW9+KCdZhf7fgB0+R2ZUU8QivYy9x1NeN7j2K7nYu+dAmgiMXpxsorOk
-         2xwOdjbOJb7p9A6g6OG88iO66uVe81StH6gcxVck63+H2Hec41b86vbLy5uy6DQk06ji
-         x6PwtSvJU7OHxBxCehyjzcRmW0ftH/T6m9vqDIIyfLsqRUzMCMGBtGulWCzeKTegq8mB
-         mTFA==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=xluwZ9y3zdmAPfcT1yYXDD9KZroOpceJIZ4q+RRr1oU=;
+        b=JPtEmO4trG7s6aC0J9ygjQlOCrt7aZxW4zQWOL3LYOBjAeYpBRPDb6+tO3McP54lf9
+         iKP27VpYJP9FFXqEVGefhLGNOEVZcXePzkp5qaytOID3uUF3nTsPzw/NjZ6p06b8PovV
+         joEjnoJ0qcQ5BMlZk006adTqPyp7TYLSNO6LX6jllBGN7bg5rccHpoF/Pk198DrTtkN3
+         /WeVTPniOizjNDT04kTwZIwCv7//GRyefmpP6im3meVPzUaR1XC4U4msgdm1YPJ8z1bc
+         Cm6YMjj0N4pPIeOUhP3VsiOnyKYEivqNkGkclUlN3cBTtPNkztWhwRH7Mfn2Xvyw7uUh
+         8ZHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=81okasB3g0ekpD8niaqxxgdkdfiBn6Pr7NqUFt5DBEo=;
-        b=mH0cZGHVn6BYuTP0CrDI3/UNb82zisLn+HqH9vK1idKvLs+pTWXiWHfrW+S0RezE31
-         GDuggUVVifo1c+oGaLhnhf6W2nOg9pDn7peUm/JRT5xZGiVCxBIW+MvDOnGHSPhOB98d
-         Vl18PF07i3wlWD9mtqIkztQXO0WSTSN2s14uohBTKW49AS8xD0gJzXZKymkftxc0nPyG
-         SBUj7D183IkaRMXUk+Lzn5JHgpq8bAxG85LMR7tUeMpumsC2v6XPsjuPxMo8MWPeBtDb
-         EBexf1LKXxY8bR6N9AQ0QSwMrOAqHB8/2aIUB7sKdRw7VJNgse1+JspdnMQHko0JnDB9
-         TiAQ==
-X-Gm-Message-State: AJIora/i93cRiH2noKQmcEfgcpWJQYuT+AxcMJtOqFAJAyZWNXq07azG
-        59okSf2X1jhGnzSyf6/N9ngVpw==
-X-Google-Smtp-Source: AGRyM1vDkPE98jrS2Me8n5r7/R9H34mgmtL+Fc/cv224985Zm6C1y8NPkd/Aw90Ph3on7smNzjvWCA==
-X-Received: by 2002:a05:600c:4243:b0:3a2:db2d:ebdc with SMTP id r3-20020a05600c424300b003a2db2debdcmr1786084wmm.41.1657275106530;
-        Fri, 08 Jul 2022 03:11:46 -0700 (PDT)
-Received: from [192.168.86.238] (cpc90716-aztw32-2-0-cust825.18-1.cable.virginm.net. [86.26.103.58])
-        by smtp.googlemail.com with ESMTPSA id bk12-20020a0560001d8c00b0021d7050ace4sm327428wrb.77.2022.07.08.03.11.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 08 Jul 2022 03:11:45 -0700 (PDT)
-Message-ID: <42056cab-237c-3f3a-da43-5138be64243b@linaro.org>
-Date:   Fri, 8 Jul 2022 11:11:44 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Subject: Re: [PATCH] soundwire: qcom: fix max auto-enumeration devices
-Content-Language: en-US
-To:     Dan Carpenter <dan.carpenter@oracle.com>
-Cc:     vkoul@kernel.org, yung-chuan.liao@linux.intel.com,
-        pierre-louis.bossart@linux.intel.com, alsa-devel@alsa-project.org,
-        linux-arm-msm@vger.kernel.org, stable@vger.kernel.org
-References: <20220708091947.5610-1-srinivas.kandagatla@linaro.org>
- <20220708100453.GM2316@kadam>
+        bh=xluwZ9y3zdmAPfcT1yYXDD9KZroOpceJIZ4q+RRr1oU=;
+        b=DgJgHjud7VgJlEX0bPrNNa/TOjLE4HXRip1TdxZT8IbtskqKy9fZAW+pHNxhTynPju
+         I6mAzcBABHioDS/NkkV/Clp5a4eCzuoH8vIqVDMqyf+rUPC1onjvwq49Bop7HUuVSRic
+         7x2yIK73jg5OBWDyg1g5WuUJCZ2XhAoSltkSi6awWSM9gttVD5g8h5UAZXIdt+ay6tGB
+         yR1QAwLVuLGASfN1jQ/ZY9Az9xsLV42bNgiUq6UJBctIf+p3Y69a2pNr3z/PPjHlNuv7
+         l7vvRc07GoSxV7I8MyakiD9ayLi2Z07S5Om1/UvinJ1DKSIiVHvCc51R4vYZ2gEd1D4Y
+         nSyw==
+X-Gm-Message-State: AJIora9MTYprtNJnbMHkvtvuVAvJS1VAmoxrn8iPKm43585I/7+dqaMl
+        XYw0NbQ9MCjzU0Ppha+ctXUdOg==
+X-Google-Smtp-Source: AGRyM1tT9rQIlM4HXj5Tbwcts2dErI6OHFaa52hqrQ9CstIDKYjsLpQenpYPtpMOAPh6+QIHiep/6g==
+X-Received: by 2002:a05:6000:15c1:b0:21b:ad5e:2798 with SMTP id y1-20020a05600015c100b0021bad5e2798mr2636491wry.237.1657277275444;
+        Fri, 08 Jul 2022 03:47:55 -0700 (PDT)
+Received: from srini-hackbase.lan (cpc90716-aztw32-2-0-cust825.18-1.cable.virginm.net. [86.26.103.58])
+        by smtp.gmail.com with ESMTPSA id z19-20020a1c4c13000000b003a2da6b2cbesm1251621wmf.33.2022.07.08.03.47.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 08 Jul 2022 03:47:54 -0700 (PDT)
 From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-In-Reply-To: <20220708100453.GM2316@kadam>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+To:     vkoul@kernel.org
+Cc:     yung-chuan.liao@linux.intel.com,
+        pierre-louis.bossart@linux.intel.com, alsa-devel@alsa-project.org,
+        linux-arm-msm@vger.kernel.org, dan.carpenter@oracle.com,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: [PATCH v2] soundwire: qcom: fix device status array range
+Date:   Fri,  8 Jul 2022 11:47:47 +0100
+Message-Id: <20220708104747.8722-1-srinivas.kandagatla@linaro.org>
+X-Mailer: git-send-email 2.25.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -76,67 +70,50 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+This patch updates device status array range from 11 to 12 as we will
+be reading status from device number 0 to device number 11 inclusive.
 
+Without this patch we can potentially access status array out of range
+during auto-enumeration.
 
-On 08/07/2022 11:04, Dan Carpenter wrote:
-> On Fri, Jul 08, 2022 at 10:19:47AM +0100, Srinivas Kandagatla wrote:
->> Controller only supports up to max of 1-11 device ids via auto-enumeration,
->> and it has only those many registers.
->>
->> In the existing code, we can protentially cross this boundary and read incorrect
->> registers.
->>
->> Cc: stable@vger.kernel.org
->> Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
->> Fixes: a6e6581942ca ("soundwire: qcom: add auto enumeration support")
->> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
->> ---
->> Thanks to Dan for reporting an overflow issue, which turned out to be
->> another issue, where we could read registers that do not belong to
->> auto-enumeration devid.
->> Either way this fixes both issues, one reported by Dan and other
->> incorrect register access.
->>
->> Thanks,
->> Srini
->>
->>   drivers/soundwire/qcom.c | 4 +++-
->>   1 file changed, 3 insertions(+), 1 deletion(-)
->>
->> diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
->> index 9df970eeca45..dd1365a44458 100644
->> --- a/drivers/soundwire/qcom.c
->> +++ b/drivers/soundwire/qcom.c
->> @@ -119,6 +119,8 @@
->>   #define MAX_FIFO_RD_RETRY 3
->>   #define SWR_OVERFLOW_RETRY_COUNT 30
->>   #define SWRM_LINK_STATUS_RETRY_CNT 100
->> +/* devid 1 - 11 */
->> +#define SWRM_MAX_AUTO_ENUM_DEVICES	11
->>   
->>   enum {
->>   	MASTER_ID_WSA = 1,
->> @@ -479,7 +481,7 @@ static int qcom_swrm_enumerate(struct sdw_bus *bus)
->>   	int i;
->>   	char *buf1 = (char *)&val1, *buf2 = (char *)&val2;
->>   
->> -	for (i = 1; i <= SDW_MAX_DEVICES; i++) {
->> +	for (i = 1; i <= SWRM_MAX_AUTO_ENUM_DEVICES; i++) {
-> 
-> I'm sorry, I don't understand.  Both of these defines are 11 so this
-> doesn't change anything?
-> 
-My bad, I thought this was 15...
+Fixes: aa1262ca6695 ("soundwire: qcom: Check device status before reading devid")
+Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+---
+ drivers/soundwire/qcom.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
+diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
+index 9df970eeca45..16a4a51978ca 100644
+--- a/drivers/soundwire/qcom.c
++++ b/drivers/soundwire/qcom.c
+@@ -169,7 +169,7 @@ struct qcom_swrm_ctrl {
+ 	u8 wcmd_id;
+ 	struct qcom_swrm_port_config pconfig[QCOM_SDW_MAX_PORTS];
+ 	struct sdw_stream_runtime *sruntime[SWRM_MAX_DAIS];
+-	enum sdw_slave_status status[SDW_MAX_DEVICES];
++	enum sdw_slave_status status[SDW_MAX_DEVICES + 1];
+ 	int (*reg_read)(struct qcom_swrm_ctrl *ctrl, int reg, u32 *val);
+ 	int (*reg_write)(struct qcom_swrm_ctrl *ctrl, int reg, int val);
+ 	u32 slave_status;
+@@ -420,7 +420,7 @@ static int qcom_swrm_get_alert_slave_dev_num(struct qcom_swrm_ctrl *ctrl)
+ 
+ 	ctrl->reg_read(ctrl, SWRM_MCP_SLV_STATUS, &val);
+ 
+-	for (dev_num = 0; dev_num < SDW_MAX_DEVICES; dev_num++) {
++	for (dev_num = 0; dev_num <= SDW_MAX_DEVICES; dev_num++) {
+ 		status = (val >> (dev_num * SWRM_MCP_SLV_STATUS_SZ));
+ 
+ 		if ((status & SWRM_MCP_SLV_STATUS_MASK) == SDW_SLAVE_ALERT) {
+@@ -440,7 +440,7 @@ static void qcom_swrm_get_device_status(struct qcom_swrm_ctrl *ctrl)
+ 	ctrl->reg_read(ctrl, SWRM_MCP_SLV_STATUS, &val);
+ 	ctrl->slave_status = val;
+ 
+-	for (i = 0; i < SDW_MAX_DEVICES; i++) {
++	for (i = 0; i <= SDW_MAX_DEVICES; i++) {
+ 		u32 s;
+ 
+ 		s = (val >> (i * 2));
+-- 
+2.25.1
 
---srini
-
-
-> regards,
-> dan carpenter
-> 
->>   		/* do not continue if the status is Not Present  */
->>   		if (!ctrl->status[i])
->>   			continue;
->> -- 
->> 2.25.1
