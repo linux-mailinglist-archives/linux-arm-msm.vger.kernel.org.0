@@ -2,94 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B883456AF2E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jul 2022 02:00:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E646D56AF49
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jul 2022 02:12:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236756AbiGGXzI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Jul 2022 19:55:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51830 "EHLO
+        id S236985AbiGHADt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Jul 2022 20:03:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55936 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236449AbiGGXzH (ORCPT
+        with ESMTP id S236937AbiGHADs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Jul 2022 19:55:07 -0400
-Received: from mail-oo1-xc33.google.com (mail-oo1-xc33.google.com [IPv6:2607:f8b0:4864:20::c33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C11DC6D56C
-        for <linux-arm-msm@vger.kernel.org>; Thu,  7 Jul 2022 16:55:06 -0700 (PDT)
-Received: by mail-oo1-xc33.google.com with SMTP id g8-20020a4ac4c8000000b00425a0f2b493so3765382ooq.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Jul 2022 16:55:06 -0700 (PDT)
+        Thu, 7 Jul 2022 20:03:48 -0400
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C552255AB;
+        Thu,  7 Jul 2022 17:03:45 -0700 (PDT)
+Received: by mail-ed1-x533.google.com with SMTP id y8so19299658eda.3;
+        Thu, 07 Jul 2022 17:03:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=9ntP1WDLnC6Yx7jFk7jZStLEDziwDqk+ZlwPsvE1xWs=;
-        b=bXuaYmps3SO/5Gg3nxuV379NqM1hoHcyQbvWn/KnsI4akOLpYz+plOpnE5dn9mRH7Z
-         Ba4pUy+ktATqZI/NUhKueHyeRHspJaPiUIEewUlCm9RQVmwSizU1Qt7YSZVn+1svIEIs
-         iVy1O+bxNmKs1ULMXdsz6tbhueBjHT39Ggtcs=
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=JSxzmKxjlNqM9TSDpV5dH/r3annlSczSnTdVT/KLPhw=;
+        b=Y4xpKzWJ150rdoYLQkrNCVmTdbKT+opqIncuCi6XAAQWCf/O9CqPuHaiV/GH9sYmpX
+         7/o1ysUs3g1mFlmliPj7H6uZiCuEkqcSCYIj685Bn00iffibCxTS6NPTmlWpLrVU7XfA
+         Qfxh+KK7MOitA+9cP++ujDWPtft20wECs0lUTdT1AXhqhN5I3Ly6eMYXcRSxkjfWR77w
+         hnWscmSh0JFutTEAzJePwoOlh0Jz6sbhp3SpDQ6pjum652/JaIecgFMgetCNSsqmfgwx
+         yUM2visa+WAPJZqYwO/lDn0pne2DPKc+OuX5KxWyFJ+8JjNvE1sVS6xVu3m0J1RKmKsh
+         nWcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=9ntP1WDLnC6Yx7jFk7jZStLEDziwDqk+ZlwPsvE1xWs=;
-        b=lMvYRoy6u9c5PxijKJczysr2CTMfQ/tJjxPS0KsFerdH0RKo3jwSjN+UwO5YNvsOdR
-         PHxNzNjYIKovfKgN+4CdHjGU6UgpQqbOGeUFwRNGe3lCoVrlJEX5dJvp8IuZA3EzmURB
-         lnNNlHrwJjHPAiQbGLzkeyReI9fjOZ7AGa1zKy3x5tNoxqOSGlRnGmcBFcL72jfxRy1a
-         MAQ5TYCm1Y8CD2TjWTWYBEylA4oj+oUNeFunTozik5BGrFNBrGyTy4pTe+Ncvxek/G7q
-         szZxoJxzmDPSIUxmU8e4GTRwWS9V7zw/uCxCLwSD0Ag2WBsYHcHXDvPSce1oC7hxLnLX
-         S/jQ==
-X-Gm-Message-State: AJIora9T6CXmVKRTvIlH/tUqIu1H55IPewNAYeqjsn3OCcjiwIxmgHs6
-        QHxG/USPFbO+3tWmuzBw0OBlckH2vGhs/6kkdUeoqg==
-X-Google-Smtp-Source: AGRyM1s5aRJwu3pF2TR9+JflN9Xt6rSHUQxPIdyIsKnn5I3uBjzRJFONFzrC6JiOmFqLVKBgHodXNbkvtUIvE0e4ebU=
-X-Received: by 2002:a4a:81c1:0:b0:425:b01b:f757 with SMTP id
- s1-20020a4a81c1000000b00425b01bf757mr305054oog.1.1657238106090; Thu, 07 Jul
- 2022 16:55:06 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 7 Jul 2022 16:55:05 -0700
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=JSxzmKxjlNqM9TSDpV5dH/r3annlSczSnTdVT/KLPhw=;
+        b=rwSgGMn4fq5tHJ+ZjppFQzHP7zvQZaRpa7fajhb6k82W+BF9xrJINwH4kno18PgweS
+         +0tbhgJtt2VbFJBUPdyviU1A4qe0RW+D4jB7GsD3pciUszYMPpilufWbeoqAwqN0F0RC
+         UEnPD5sh8wkrBZ2FxNRB7koIxl3j/GrY96/zSPJNsd/1GygldkBUpxsit62QlW5X/1Hc
+         57GMK/rcneOBa2L4HSZvcvKxbDeFxodL5BucE9hldvMimMErJR2OhGAuDh/B5WrFFKWZ
+         0DlRF8MFnvlAWFRzkefkSWrDQg6RebQrVsoV+mmvlCe+Lq/CVhLHkVmKclHnWWKixqW6
+         bDwQ==
+X-Gm-Message-State: AJIora/lRWASEuqEoJPMa+3lJMX6vWBGqM2X8DGkcvzg0umniGobG2n3
+        iiYez0AxZc06EB3KlTP4RAUQCMZ312A=
+X-Google-Smtp-Source: AGRyM1tyhJphCEF8w4d79Ik+3ixfdLIFmyh8AIaaYU7qjHqT1+YKFbaBEt5XfA8VMEUZZ7Z6FvnZCQ==
+X-Received: by 2002:a05:6402:2985:b0:439:651b:c1f4 with SMTP id eq5-20020a056402298500b00439651bc1f4mr954113edb.276.1657238623466;
+        Thu, 07 Jul 2022 17:03:43 -0700 (PDT)
+Received: from localhost.localdomain (93-42-70-190.ip85.fastwebnet.it. [93.42.70.190])
+        by smtp.googlemail.com with ESMTPSA id f22-20020a056402069600b0043a7404314csm8093974edy.8.2022.07.07.17.03.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 07 Jul 2022 17:03:43 -0700 (PDT)
+From:   Christian Marangi <ansuelsmth@gmail.com>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+Cc:     Christian Marangi <ansuelsmth@gmail.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Herring <robh@kernel.org>
+Subject: [PATCH v5 1/3] dt-bindings: clock: add pcm reset for ipq806x lcc
+Date:   Fri,  8 Jul 2022 02:03:36 +0200
+Message-Id: <20220708000338.26572-1-ansuelsmth@gmail.com>
+X-Mailer: git-send-email 2.36.1
 MIME-Version: 1.0
-In-Reply-To: <1657135928-31195-1-git-send-email-quic_khsieh@quicinc.com>
-References: <1657135928-31195-1-git-send-email-quic_khsieh@quicinc.com>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Thu, 7 Jul 2022 16:55:05 -0700
-Message-ID: <CAE-0n506RwOi8xqVEAaLjfhb3vey7R2FF_72_F-nmgrXrP6RWQ@mail.gmail.com>
-Subject: Re: [PATCH v4] drm/msm/dp: make eDP panel as the first connected connector
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>, agross@kernel.org,
-        airlied@linux.ie, bjorn.andersson@linaro.org, daniel@ffwll.ch,
-        dianders@chromium.org, dmitry.baryshkov@linaro.org,
-        robdclark@gmail.com, sean@poorly.run, vkoul@kernel.org
-Cc:     quic_abhinavk@quicinc.com, quic_aravindh@quicinc.com,
-        quic_sbillaka@quicinc.com, freedreno@lists.freedesktop.org,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Kuogee Hsieh (2022-07-06 12:32:08)
-> Some userspace presumes that the first connected connector is the main
-> display, where it's supposed to display e.g. the login screen. For
-> laptops, this should be the main panel.
->
-> This patch call drm_helper_move_panel_connectors_to_head() after
-> drm_bridge_connector_init() to make sure eDP stay at head of
-> connected connector list. This fixes unexpected corruption happen
-> at eDP panel if eDP is not placed at head of connected connector
-> list.
->
-> Changes in v2:
-> -- move drm_helper_move_panel_connectors_to_head() to
->                 dpu_kms_drm_obj_init()
->
-> Changes in v4:
-> -- move drm_helper_move_panel_connectors_to_head() to msm_drm_init()
->
-> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-> ---
+Add pcm reset define for ipq806x lcc.
 
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Acked-by: Rob Herring <robh@kernel.org>
+---
+v3:
+ - Added review tag
+ - Added ack tag
+v2:
+ - Fix Sob tag
+
+ include/dt-bindings/clock/qcom,lcc-ipq806x.h | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/include/dt-bindings/clock/qcom,lcc-ipq806x.h b/include/dt-bindings/clock/qcom,lcc-ipq806x.h
+index 25b92bbf0ab4..e0fb4acf4ba8 100644
+--- a/include/dt-bindings/clock/qcom,lcc-ipq806x.h
++++ b/include/dt-bindings/clock/qcom,lcc-ipq806x.h
+@@ -19,4 +19,6 @@
+ #define SPDIF_CLK			10
+ #define AHBIX_CLK			11
+ 
++#define LCC_PCM_RESET			0
++
+ #endif
+-- 
+2.36.1
+
