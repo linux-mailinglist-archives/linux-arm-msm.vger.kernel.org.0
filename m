@@ -2,79 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1E52556B529
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jul 2022 11:15:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A21C356B532
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Jul 2022 11:17:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236587AbiGHJOu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Jul 2022 05:14:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38186 "EHLO
+        id S237407AbiGHJRB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Jul 2022 05:17:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39012 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237312AbiGHJOu (ORCPT
+        with ESMTP id S237475AbiGHJRA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Jul 2022 05:14:50 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D74F322B2C
-        for <linux-arm-msm@vger.kernel.org>; Fri,  8 Jul 2022 02:14:47 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id t19so34702713lfl.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Jul 2022 02:14:47 -0700 (PDT)
+        Fri, 8 Jul 2022 05:17:00 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 851DD26127
+        for <linux-arm-msm@vger.kernel.org>; Fri,  8 Jul 2022 02:16:59 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id bf9so12100743lfb.13
+        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Jul 2022 02:16:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=SHTvpmESn76bjS5b3QfhxAC0LvT7ZTcK/A9d/vWMLAw=;
-        b=g9DwsYT2A2JJlwvpYrkv6uNxvCH2uDbYs6yMHTuxsCgf+Z3Hz3Hj3ty7wIUQLFEAEY
-         k8iI+IXTfkJ/Pd2lOfnJGd+T2jus6XtWyb52mTBvSmiYiaBrJN8KAzBqicN1MqOqqW0v
-         9NswK2sdfkQVdCmJtNxqZJZWttE/jC0f4vRCu0GG5EpAyd0H+4NmfXDZeGY+KA+RaBIc
-         /sofIKcHm66WWcYVLYxBqzmL25c/2kGF/bPMJIvPn26lIBAKV93608XpqBJeEg46s7OV
-         7NGoyQYeSxz5Cq4cEuoPmPj7HEM/1Alz/kbvMaVZ+EF6pfm8pRSvAIGMx8mUKI5xeerc
-         d/2A==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Bs8QcdQy1djDK+VwdSiBURhhZ88rl9ZJFN4yb8iwpTk=;
+        b=Qvbd6yifiD7/ct9rnP+XdYq/mCCl99B+aJHaeAXhKaEnxENrBeFJRLC02SYLV/leWs
+         cbScdHHFfiea7RDco4fPwsq4v02gsxFeLRQzzzKBLMddg3ObtAWluWX5in9K9w4P6SAD
+         p6Z+ixeeoQ2ALZdHjP4CKmNVpvTBbm+c1YlplTMePi8wn4B1JsCTyqpOtCw1IMeA3F0J
+         cC5EAm/eX336EjRlTPenQxlRXmOzl9mBUnzL3LduU2aCC+hIU7zm8o3BIwwiPMhgEqdA
+         5zO8aAMNAguydT+kBtt95EU4OHknpqgi0AUoMJSWg1m56L+8XpzPsJ0oOQOQLCTxgCXV
+         x4uQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=SHTvpmESn76bjS5b3QfhxAC0LvT7ZTcK/A9d/vWMLAw=;
-        b=eYEvrdr6wqD4BziNZXkohyHV3GlusUng+IM1C+DIHfZeS8hVBzsPLloEK1FIv3HP9n
-         KxxCw02TC9Jutta3HX7+ZGEyigBBfHVXGswXUO+C4haKEGWfGviT/eH9q8mAb2yuv+0Z
-         I0CHt/ocFSuyyFSOoz+iuyJjvzOSgpLsrvUZvv4mmOL/LfiM5/iV099QvH7l0woYxIZ4
-         SqufnuCpMkdR/0rq5208ErHXSOWz9QFm34Tsdmxh3nB+WJ3xn1o1BzkQKnAoygxkdF3K
-         vCXceFgc4M7ltTCQJthH2huMBpKU6E+Fqxw54XJfNz5K/eWayEcqn74FnuxlRsXEYCSC
-         RikA==
-X-Gm-Message-State: AJIora89E0oUFB6JeVtwfg+rxTFf6OC01+2bQUNZEsdRKCeAp1Xq6cR6
-        oS68A5rf0Il331BYOQhXcTuwPJbTURLeIg==
-X-Google-Smtp-Source: AGRyM1uLlnlUdhuQXUD8hsavNV/4JN88hKCaU/imVeFNQUzYDJPWmLnx3unSrxSQbXMy8+ER076l8Q==
-X-Received: by 2002:a05:6512:ba7:b0:47f:657c:95e5 with SMTP id b39-20020a0565120ba700b0047f657c95e5mr1685988lfv.184.1657271686090;
-        Fri, 08 Jul 2022 02:14:46 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id g6-20020a056512118600b0047fac765f39sm7300477lfr.219.2022.07.08.02.14.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 08 Jul 2022 02:14:45 -0700 (PDT)
-Message-ID: <3cc60a06-6bdf-e9f4-ba8a-7aa83f57fd43@linaro.org>
-Date:   Fri, 8 Jul 2022 12:14:45 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: [PATCH 11/11] dt-bindings: display/msm: move common DPU
- properties to dpu-common.yaml
-Content-Language: en-GB
-To:     Rob Herring <robh@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>
-References: <20220625232513.522599-1-dmitry.baryshkov@linaro.org>
- <20220625232513.522599-12-dmitry.baryshkov@linaro.org>
- <20220630231159.GA3497845-robh@kernel.org>
+        bh=Bs8QcdQy1djDK+VwdSiBURhhZ88rl9ZJFN4yb8iwpTk=;
+        b=60tJhVwbfLDqjFqfSIbF73KkVsAWRwr2alEwx9tkV6cM+KrvXycEE7pU0PZ7IAZ/6R
+         NYWWyetBt6vnoUrlAwncrAe4O9hJOsStnbOqR1tpG9Yvx/Z6D4wMGaNqZckpHAq0jwVW
+         i7bYvUvDJIlaEGkmglc7BvIgNqRhZsfYnTMAoMNIfOO9R6b+UIHsjXNVCeXQCBjdb4e6
+         /Oi9Uet/e986w0AE4lgFwlQIZNTfRbj4yl4EFSroGe4M/klX7W/XDAIyal8gUnVZtfSK
+         0lGcldpbXJEcsvAm7hNHzytUU0uGtdZZhCdYVrnCNsCXbOKoWzYWNTR2FH3cBnidnuTj
+         WcQg==
+X-Gm-Message-State: AJIora91yYTjNzwUHt/GV+vfgO9Q7ZJS5Ty7iJRYkRop+m5Sw7pQZ8lq
+        63GhtPMJYwgLf1nJF1If+yJABA==
+X-Google-Smtp-Source: AGRyM1t/QzqWmwODLVYImGVEVUthKacqI1k2aDlIHhTOB68dInKfp5ZLKvXgoZMB7YCcJT9zNR++3w==
+X-Received: by 2002:a05:6512:2213:b0:481:7d:5aab with SMTP id h19-20020a056512221300b00481007d5aabmr1814580lfu.320.1657271817910;
+        Fri, 08 Jul 2022 02:16:57 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id d12-20020a05651c004c00b0025d52cb8c0csm567651ljd.31.2022.07.08.02.16.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 08 Jul 2022 02:16:57 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20220630231159.GA3497845-robh@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Subject: [PATCH 1/3] arm64: dts: qcom: sdm845: rename DPU device node
+Date:   Fri,  8 Jul 2022 12:16:54 +0300
+Message-Id: <20220708091656.2769390-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.35.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -82,93 +71,27 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 01/07/2022 02:11, Rob Herring wrote:
-> On Sun, Jun 26, 2022 at 02:25:13AM +0300, Dmitry Baryshkov wrote:
->> Move properties common to all DPU DT nodes to the dpu-common.yaml
->>
->> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> ---
->>   .../bindings/display/msm/dpu-common.yaml      | 47 +++++++++++++++++++
->>   .../bindings/display/msm/dpu-msm8998.yaml     | 28 ++---------
->>   .../bindings/display/msm/dpu-qcm2290.yaml     | 29 ++----------
->>   .../bindings/display/msm/dpu-sc7180.yaml      | 32 ++-----------
->>   .../bindings/display/msm/dpu-sc7280.yaml      | 32 ++-----------
->>   .../bindings/display/msm/dpu-sdm845.yaml      | 32 ++-----------
->>   6 files changed, 67 insertions(+), 133 deletions(-)
->>   create mode 100644 Documentation/devicetree/bindings/display/msm/dpu-common.yaml
->>
->> diff --git a/Documentation/devicetree/bindings/display/msm/dpu-common.yaml b/Documentation/devicetree/bindings/display/msm/dpu-common.yaml
->> new file mode 100644
->> index 000000000000..f3465ee3a4ab
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/display/msm/dpu-common.yaml
->> @@ -0,0 +1,47 @@
->> +%YAML 1.2
->> +---
->> +$id: http://devicetree.org/schemas/display/msm/dpu-common.yaml#
->> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->> +
->> +title: Qualcomm Display DPU dt properties (common properties)
->> +
->> +maintainers:
->> +  - Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> +  - Krishna Manikandan <quic_mkrishn@quicinc.com>
->> +  - Rob Clark <robdclark@gmail.com>
->> +
->> +description: |
->> +  Device tree bindings for the DPU display controller, common properties.
-> 
-> Common properties for QCom DPU display controller
-> 
->> +
->> +properties:
->> +  interrupts:
->> +    maxItems: 1
->> +
->> +  power-domains:
->> +    maxItems: 1
->> +
->> +  operating-points-v2: true
->> +
->> +  ports:
->> +    $ref: /schemas/graph.yaml#/properties/ports
-> 
-> Now this schema is applied twice.
-> 
->> +    description: |
->> +      Contains the list of output ports from DPU device. These ports
->> +      connect to interfaces that are external to the DPU hardware,
->> +      such as DSI, DP etc. Each output port contains an endpoint that
->> +      describes how it is connected to an external interface.
-> 
-> This description is marginally useful. Each port will say it is an
-> output to X. So you could just remove.
+Rename DPU device node to display-controller@ae01000 to follow the
+DPU schema.
 
-I think I will go the other way around. It is not really useful to 
-describe individual ports, so I will leave just this piece, slightly 
-rephrased and drop individual /ports, /ports/port@N from dpu-foo.yaml.
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/sdm845.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-This will also remove the duplicate application of ports schema.
-
-> 
->> +
->> +patternProperties:
->> +  (mdp-)?opp-table:
->> +    $ref: /schemas/opp/opp-v2.yaml#
->> +
->> +required:
->> +  - compatible
->> +  - reg
->> +  - reg-names
->> +  - clocks
->> +  - interrupts
->> +  - power-domains
->> +  - operating-points-v2
->> +  - ports
->> +
->> +additionalProperties: true
-
-
+diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+index 32ad5972a642..7c66f490e822 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+@@ -4265,7 +4265,7 @@ mdss: mdss@ae00000 {
+ 			#size-cells = <2>;
+ 			ranges;
+ 
+-			mdss_mdp: mdp@ae01000 {
++			mdss_mdp: display-controller@ae01000 {
+ 				compatible = "qcom,sdm845-dpu";
+ 				reg = <0 0x0ae01000 0 0x8f000>,
+ 				      <0 0x0aeb0000 0 0x2008>;
 -- 
-With best wishes
-Dmitry
+2.35.1
+
