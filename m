@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7342956C7D0
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Jul 2022 10:02:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D278E56C7EC
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Jul 2022 10:18:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229573AbiGIICS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 9 Jul 2022 04:02:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49528 "EHLO
+        id S229613AbiGIISp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 9 Jul 2022 04:18:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57186 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229558AbiGIICR (ORCPT
+        with ESMTP id S229606AbiGIISo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 9 Jul 2022 04:02:17 -0400
-Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com [IPv6:2607:f8b0:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 392AC709A4
-        for <linux-arm-msm@vger.kernel.org>; Sat,  9 Jul 2022 01:02:16 -0700 (PDT)
-Received: by mail-pf1-x42e.google.com with SMTP id y9so845381pff.12
-        for <linux-arm-msm@vger.kernel.org>; Sat, 09 Jul 2022 01:02:16 -0700 (PDT)
+        Sat, 9 Jul 2022 04:18:44 -0400
+Received: from mail-pg1-x52d.google.com (mail-pg1-x52d.google.com [IPv6:2607:f8b0:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CBCB21FCF1
+        for <linux-arm-msm@vger.kernel.org>; Sat,  9 Jul 2022 01:18:42 -0700 (PDT)
+Received: by mail-pg1-x52d.google.com with SMTP id s206so783710pgs.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 09 Jul 2022 01:18:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=1LvIk6cTreIksV1+554QjuQj/Z56N830zZ3HcrbhmJ8=;
-        b=iK839jPA0ee/NDlgGSNMk3CfEMb5iiG/k6trAWJmFJ9F5viM42OicX/uxr+G/gvdY9
-         78C8vs7JlyEkbFzf/K9mwfPvU2LeNIvNTeT7eVjsnR+4b5vbMEoL4i67EoRec95ikhbY
-         QevioK66sYcElRiu/XMMYp0cYoRQr+vTPZLR0WFfCmAFsOyCXih5+XbcMqPzKo7iLJH/
-         mcIh9uMS70yZJlzjuZP+oK1I5VlESskqTmO3a+AA32dUvjulCJbJHN2dOf/BNYrQUNem
-         39JWBOEm2XiF9Q2FvH2dBL/rTzxGjzSiHXPppjWhKfa830TTQJr1j9oDQ0qvVwzjZVBM
-         taEA==
+        bh=lo5qSW9ZcTBTZWvGTZJ0zL849GtjejbOaEBQBDMz6f8=;
+        b=fHOJQIjBVaw67g+k2a+N6+6+/mIs3rAdzTSi8iOwafN7ABxy6fqZRsFlcBQXXlHVrR
+         0UIFYYgbmeAvRXyp2MaXBHSSTBaDgw7RWcXCgAxEwHN5EwD4dQs71ji0A6iUJcY+A1W7
+         cYSyBFQ8nwuwZs4KweZDnPq2AYHMLxohbDsbCzLuYys2jrpI5hiBOre2FOjqMMgxuVfv
+         YX7ghkpgUwZOLPPeWL8xUzi5eCnIaxVfvkezp0alIDb7+SEh4exGJ/rKAdXZjMjn29V2
+         iyYZuTJwsCbpQWh2nD7KHCAspV9JSWvG2WtHMDYbjBTMrAEhqPW9ARfklCRvE0uZM7F/
+         mcqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:content-transfer-encoding
          :in-reply-to;
-        bh=1LvIk6cTreIksV1+554QjuQj/Z56N830zZ3HcrbhmJ8=;
-        b=FOCibYD/uk+dE/KwNV6QbsBIj+c1oJrr7EzB9qfdl+kkb7HiisJZxi4064UDTSa4fA
-         amTGuz45ppkZF3MofI031/sQ1AVPa1MEw391OHicG5lEJx3YEEqwSHK6TT0xffP9UgvU
-         AkXX009+FSNF9atYUptqtMa2VT9tvE5uoi0jWHD4cQzO0QDjRHYxCK4NEOqJRJOS804z
-         BfXhKJCzqs6Cs4/9DdtdFHhFYYw1/msB9tClxO+QwmvTdIuEPZgn29SuDySFdSaLiDFC
-         SLyyUfmnc4cVimhDX1emWDytYjsKGlNHv/jUmNoMWEX4Bgm3FnIq56S6OnYWQ9IZqyml
-         oFJg==
-X-Gm-Message-State: AJIora+jppcGT/xOdW5O8uZ2Yy/pmbUDAQk0TZfjtqHLwYiaDrLulgdy
-        U38GM37T5GTEIKlfHvCxi9NV
-X-Google-Smtp-Source: AGRyM1tGTy3DTZXBtPorHiVELfYxch7JhUKQaVRjoVbPbNa5mkwRHMzp+8j0Hbq40sGlrc2K23ggvg==
-X-Received: by 2002:a63:e446:0:b0:412:937b:5a3c with SMTP id i6-20020a63e446000000b00412937b5a3cmr6781523pgk.316.1657353735753;
-        Sat, 09 Jul 2022 01:02:15 -0700 (PDT)
+        bh=lo5qSW9ZcTBTZWvGTZJ0zL849GtjejbOaEBQBDMz6f8=;
+        b=Tq3bL5LDqnjMdze71V2JccTH2niJDRHTrv7TawRroVQdNNb359xm5eGsPFmPQZnADs
+         6LOvVItrrlTE+23Br/xXULop5GBcx4F/iFio9vEz5VYc5Bpcr5CixEbSDZ3TqgA13+a5
+         q8OyZJvj/n+nGx9rRcfBOpUKPJqxLW/ddgNdNHXfefmAAnOU7wWm5Vrw8ZvJlC1XWU99
+         lY9j2iKuolJFZ09c82T4B2s4XaRiYir5msw2ngH+AoUbbb+iNbzmm0IcbGRGGctIG3y3
+         IBItesaplY7FwfkCONktFRKEEiYvG27XXcjnpn9REA/kz9OXwFohiOowfMsFhGuX/Wbh
+         Dj/A==
+X-Gm-Message-State: AJIora984Yo8w+rXdHXw3eIByQk5qMOHYzjOgBoizIEYQNvORObOor/I
+        ZI73flZFdYQ+P2Bgp36fDIHx
+X-Google-Smtp-Source: AGRyM1u/7JAK7eq81T8Bre1OXsxdl6IhUPQxzfPJuLtOUUGSsLHdKGfWtdDoiytRH4GgiYEXmrqDXg==
+X-Received: by 2002:a63:cc53:0:b0:40d:bf0e:21a4 with SMTP id q19-20020a63cc53000000b0040dbf0e21a4mr6592489pgi.162.1657354722265;
+        Sat, 09 Jul 2022 01:18:42 -0700 (PDT)
 Received: from thinkpad ([117.207.26.140])
-        by smtp.gmail.com with ESMTPSA id e3-20020a170902784300b001641b2d61d4sm770685pln.30.2022.07.09.01.02.09
+        by smtp.gmail.com with ESMTPSA id g21-20020a170902d5d500b0016b8bec1ed9sm791976plh.93.2022.07.09.01.18.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 09 Jul 2022 01:02:15 -0700 (PDT)
-Date:   Sat, 9 Jul 2022 13:32:03 +0530
+        Sat, 09 Jul 2022 01:18:42 -0700 (PDT)
+Date:   Sat, 9 Jul 2022 13:48:34 +0530
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     Johan Hovold <johan+linaro@kernel.org>
 Cc:     Bjorn Helgaas <bhelgaas@google.com>,
@@ -63,18 +63,18 @@ Cc:     Bjorn Helgaas <bhelgaas@google.com>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 05/10] dt-bindings: PCI: qcom: Add SA8540P to binding
-Message-ID: <20220709080203.GL5063@thinkpad>
+Subject: Re: [PATCH 06/10] PCI: qcom: Add support for SC8280XP
+Message-ID: <20220709081834.GM5063@thinkpad>
 References: <20220629141000.18111-1-johan+linaro@kernel.org>
- <20220629141000.18111-6-johan+linaro@kernel.org>
+ <20220629141000.18111-7-johan+linaro@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20220629141000.18111-6-johan+linaro@kernel.org>
+In-Reply-To: <20220629141000.18111-7-johan+linaro@kernel.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -82,49 +82,101 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jun 29, 2022 at 04:09:55PM +0200, Johan Hovold wrote:
-> SA8540P is a new platform related to SC8280XP but which uses a single
-> host interrupt for MSI routing.
+On Wed, Jun 29, 2022 at 04:09:56PM +0200, Johan Hovold wrote:
+> The SC8280XP platform has seven PCIe controllers: two used with USB4,
+> two 4-lane, two 2-lane and one 1-lane.
+> 
+> Add a new "qcom,pcie-sc8280xp" compatible string and reuse the 1.9.0
+> ops.
+> 
+> Note that the SC8280XP controllers need two or three interconnect
+> clocks to be enabled. Model these as optional clocks to avoid encoding
+> devicetree data in the PCIe driver.
 > 
 
-The newer chipsets are supposed to use 8 MSI's. How come this one uses only 1?
+There isn't much info available for these clocks. Since some of these types of
+clocks are already present in bindings, I think this patch is fine by itself.
+
+I will also try to find how these clocks are laid out. But that shouldn't stop
+this patch IMO.
+
+> Note that the same could be done for the SM8450 interconnect clocks and
+> possibly also for the TBU clocks.
+> 
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
 Thanks,
 Mani
 
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 > ---
->  Documentation/devicetree/bindings/pci/qcom,pcie.yaml | 3 +++
->  1 file changed, 3 insertions(+)
+>  drivers/pci/controller/dwc/pcie-qcom.c | 22 ++++++++++++++++++++--
+>  1 file changed, 20 insertions(+), 2 deletions(-)
 > 
-> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> index a039f6110322..e9a7c8c783e7 100644
-> --- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> @@ -25,6 +25,7 @@ properties:
->        - qcom,pcie-ipq4019
->        - qcom,pcie-ipq8074
->        - qcom,pcie-qcs404
-> +      - qcom,pcie-sa8540p
->        - qcom,pcie-sc7280
->        - qcom,pcie-sc8180x
->        - qcom,pcie-sc8280xp
-> @@ -603,6 +604,7 @@ allOf:
->          compatible:
->            contains:
->              enum:
-> +              - qcom,pcie-sa8540p
->                - qcom,pcie-sc8280xp
->      then:
->        properties:
-> @@ -720,6 +722,7 @@ allOf:
->                - qcom,pcie-ipq8064
->                - qcom,pcie-ipq8064-v2
->                - qcom,pcie-ipq8074
-> +              - qcom,pcie-sa8540p
->                - qcom,pcie-qcs404
->      then:
->        properties:
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index ff1b40f213c1..da3f1cdc4ba6 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -160,7 +160,7 @@ struct qcom_pcie_resources_2_3_3 {
+>  
+>  /* 6 clocks typically, 7 for sm8250 */
+>  struct qcom_pcie_resources_2_7_0 {
+> -	struct clk_bulk_data clks[9];
+> +	struct clk_bulk_data clks[12];
+>  	int num_clks;
+>  	struct regulator_bulk_data supplies[2];
+>  	struct reset_control *pci_reset;
+> @@ -1119,6 +1119,7 @@ static int qcom_pcie_get_resources_2_7_0(struct qcom_pcie *pcie)
+>  	struct qcom_pcie_resources_2_7_0 *res = &pcie->res.v2_7_0;
+>  	struct dw_pcie *pci = pcie->pci;
+>  	struct device *dev = pci->dev;
+> +	unsigned int num_clks, num_opt_clks;
+>  	unsigned int idx;
+>  	int ret;
+>  
+> @@ -1148,9 +1149,20 @@ static int qcom_pcie_get_resources_2_7_0(struct qcom_pcie *pcie)
+>  	if (pcie->cfg->has_aggre1_clk)
+>  		res->clks[idx++].id = "aggre1";
+>  
+> +	num_clks = idx;
+> +
+> +	ret = devm_clk_bulk_get(dev, num_clks, res->clks);
+> +	if (ret < 0)
+> +		return ret;
+> +
+> +	res->clks[idx++].id = "noc_aggr_4";
+> +	res->clks[idx++].id = "noc_aggr_south_sf";
+> +	res->clks[idx++].id = "cnoc_qx";
+> +
+> +	num_opt_clks = idx - num_clks;
+>  	res->num_clks = idx;
+>  
+> -	ret = devm_clk_bulk_get(dev, res->num_clks, res->clks);
+> +	ret = devm_clk_bulk_get_optional(dev, num_opt_clks, res->clks + num_clks);
+>  	if (ret < 0)
+>  		return ret;
+>  
+> @@ -1449,6 +1461,11 @@ static const struct qcom_pcie_cfg ipq4019_cfg = {
+>  	.ops = &ops_2_4_0,
+>  };
+>  
+> +static const struct qcom_pcie_cfg sc8280xp_cfg = {
+> +	.ops = &ops_1_9_0,
+> +	.has_ddrss_sf_tbu_clk = true,
+> +};
+> +
+>  static const struct qcom_pcie_cfg sdm845_cfg = {
+>  	.ops = &ops_2_7_0,
+>  	.has_tbu_clk = true,
+> @@ -1613,6 +1630,7 @@ static const struct of_device_id qcom_pcie_match[] = {
+>  	{ .compatible = "qcom,pcie-sm8150", .data = &sm8150_cfg },
+>  	{ .compatible = "qcom,pcie-sm8250", .data = &sm8250_cfg },
+>  	{ .compatible = "qcom,pcie-sc8180x", .data = &sc8180x_cfg },
+> +	{ .compatible = "qcom,pcie-sc8280xp", .data = &sc8280xp_cfg },
+>  	{ .compatible = "qcom,pcie-sm8450-pcie0", .data = &sm8450_pcie0_cfg },
+>  	{ .compatible = "qcom,pcie-sm8450-pcie1", .data = &sm8450_pcie1_cfg },
+>  	{ .compatible = "qcom,pcie-sc7280", .data = &sc7280_cfg },
 > -- 
 > 2.35.1
 > 
