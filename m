@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2F97956C7F0
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Jul 2022 10:19:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DD0A356C7FC
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Jul 2022 10:24:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229567AbiGIITU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 9 Jul 2022 04:19:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57838 "EHLO
+        id S229518AbiGIIYG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 9 Jul 2022 04:24:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60242 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229492AbiGIITT (ORCPT
+        with ESMTP id S229463AbiGIIYF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 9 Jul 2022 04:19:19 -0400
-Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB1923ED63
-        for <linux-arm-msm@vger.kernel.org>; Sat,  9 Jul 2022 01:19:18 -0700 (PDT)
-Received: by mail-pj1-x1035.google.com with SMTP id a15so932080pjs.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 09 Jul 2022 01:19:18 -0700 (PDT)
+        Sat, 9 Jul 2022 04:24:05 -0400
+Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8CB9E13E16
+        for <linux-arm-msm@vger.kernel.org>; Sat,  9 Jul 2022 01:24:04 -0700 (PDT)
+Received: by mail-pg1-x535.google.com with SMTP id bh13so786033pgb.4
+        for <linux-arm-msm@vger.kernel.org>; Sat, 09 Jul 2022 01:24:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=XYytBhjFDte4ukeddP8GL3eEazUdm96Q+RTOUDhx6WI=;
-        b=sfuy1IOjvtSoFBnaR5YiWXaxQZRMe9TzSYs8Tqd1is2Dh8fmNZHYJ9B1osPTXYhVUj
-         TsVKA/F24UiGa0UXQK43ZLXsz93/9PjFXaoV3GNt2nc/9CqJF/D50sFt+3uiubqAx3Ix
-         XkwsTtqvuqVhr67bJ1/i+zZAv227o6aBdB/owBfX6u6njLODuO4rkVfIMYDdZpLJGmo+
-         oRNyTS0I/sBOI8XH2aAJDWVgGWQvvWHu9bzS3hcff4IBSKpPbnECpWHifcmH9JR56Xki
-         gO2EzWQJWY0Ee0gm+GdISwken0hAS8wh002lvdyczNTjNfTfp3p/44P5pl8un4EJjX9Z
-         bsrA==
+        bh=3gp/nn7TzypARR1HY0tBDLC61zrtXrd5JCPdj/Mvc70=;
+        b=N/wwmsDdHpBDq0ftVTPt2g3Ij7VOBdzqX6RjoaQ+IMnMtRM9VtucOQtXhCBGlTnte8
+         HyLOEYaZlJnVhxvjto8ctXriUTIaM4U5mqSzZ+Z5IL2/gInNq9W2biYoGGFgMw7U/mFZ
+         tPfWqT8uYmGyv7Gje48QCNywm9ype7+w02OVWFkECxf5q0B6y0A7dJaVKmMKesr9BBNV
+         fOjNkCkXlpRV8YPZ180ndSaLVNkNNo61Es3M1zLfZ2ojb8tWj4Fm4qCS/yh2Ac/sTQzS
+         PZbJ0PI52lWDFSTMP2GQyDi1EHw05hc1jpvFl26/pJyj4PB/MUXEXkIVfKPOton0xelR
+         uV1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:content-transfer-encoding
          :in-reply-to;
-        bh=XYytBhjFDte4ukeddP8GL3eEazUdm96Q+RTOUDhx6WI=;
-        b=Xq2OJcS3vkaXq4KJTiPSEF0O/m0tPgzIBRo//LfmabMVTD5j1LMGoTGba9AdC9cQ/b
-         J15zuM4HgnYnymHY6WSOmdpApGn4lau0dldzuUnP4TBYFu1QK9EvXLHHx0OMetI/BTk/
-         Srrj2Ne53tKnkNniMaDLepnL4zVsPx+eKOH0Py0gKzPqEVdGqP3AfRqB7e5RvwZ/tf0/
-         ZsLzvFlYBT7l7QxQfYkxhVaOkK/V5+TYaBNIodEnYTT9W3xhgwqPotiGFELEzjJzdhJ2
-         lDoeC1UUr7p6XvO3XMvZwVu/pEtN8wOBtFK9K67bt5wSEjdITddF4RHHYFUGqgyFZThE
-         W9hw==
-X-Gm-Message-State: AJIora9eDIU9IMhpesnSk8LXYhRBB++IU4ovw5bLHDVJGRKWpTZ8oLTo
-        Whx13PqF2FpYwK+C7NrhtrCk
-X-Google-Smtp-Source: AGRyM1vNlPDz9NAYWfXTtW0pwGQeLJSMgUs89J5AozN9cA3Zay4iiv+XhYQJukyb+eKY/R43djKrwQ==
-X-Received: by 2002:a17:902:d292:b0:16b:e6a4:5768 with SMTP id t18-20020a170902d29200b0016be6a45768mr7904280plc.128.1657354758213;
-        Sat, 09 Jul 2022 01:19:18 -0700 (PDT)
+        bh=3gp/nn7TzypARR1HY0tBDLC61zrtXrd5JCPdj/Mvc70=;
+        b=l8ydU8aZvaDFs8RWB70RYC4/XLyg1MrwvF9kg7PCJPoJPdhjvIuKBktX0w9oaUa94I
+         Vj/N8YoRfKrZ1BMydtXSk8sarUcZsQstWU/6SXoo2CqCr/lqio07HbUuVXd8r3i+gPq9
+         Lf/R7K++suJ+ol2O3louVXvvLTsf4TuRn0nSstn1qPoUE01DChJod/iytWrcm8X9ufJR
+         odjNJQu4+z9+X8KGH+A40waZ8jq71UWPockakZJnEf/QrwlGdCbPQadz/5WkTdGsk7oq
+         /kHh1OVQ0Vt209CQV0sq2oG4hXXpY3i/rW817aMS+uJj0n5hUpAMUW+QEJULwow4XQEt
+         pByw==
+X-Gm-Message-State: AJIora/lfwzz1Ah8HGI5Wkxr0UPj8I+KoXK6Gm3VPeuaTIUui8/LJYt0
+        vnzz5/7J9Q5iVO2jLlHarujA
+X-Google-Smtp-Source: AGRyM1vqFf1rz87+sr/2LMoPEXsknQv/uxV1HdkMlDUXB9PAQ/6oLtUzUZGwiSibD6yYNSKxXTcBVw==
+X-Received: by 2002:a65:6e04:0:b0:40d:26eb:8225 with SMTP id bd4-20020a656e04000000b0040d26eb8225mr7026485pgb.138.1657355044065;
+        Sat, 09 Jul 2022 01:24:04 -0700 (PDT)
 Received: from thinkpad ([117.207.26.140])
-        by smtp.gmail.com with ESMTPSA id ka19-20020a17090b475300b001ec798b0dc4sm651647pjb.38.2022.07.09.01.19.12
+        by smtp.gmail.com with ESMTPSA id l2-20020a17090a150200b001ef307e1deesm2898666pja.18.2022.07.09.01.23.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 09 Jul 2022 01:19:17 -0700 (PDT)
-Date:   Sat, 9 Jul 2022 13:49:08 +0530
+        Sat, 09 Jul 2022 01:24:03 -0700 (PDT)
+Date:   Sat, 9 Jul 2022 13:53:53 +0530
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     Johan Hovold <johan+linaro@kernel.org>
 Cc:     Bjorn Helgaas <bhelgaas@google.com>,
@@ -63,15 +63,15 @@ Cc:     Bjorn Helgaas <bhelgaas@google.com>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 07/10] PCI: qcom: Add support for SA8540P
-Message-ID: <20220709081908.GN5063@thinkpad>
+Subject: Re: [PATCH 08/10] PCI: qcom: Make all optional clocks optional
+Message-ID: <20220709082353.GO5063@thinkpad>
 References: <20220629141000.18111-1-johan+linaro@kernel.org>
- <20220629141000.18111-8-johan+linaro@kernel.org>
+ <20220629141000.18111-9-johan+linaro@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20220629141000.18111-8-johan+linaro@kernel.org>
+In-Reply-To: <20220629141000.18111-9-johan+linaro@kernel.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -82,14 +82,17 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jun 29, 2022 at 04:09:57PM +0200, Johan Hovold wrote:
-> The SA8540P platform has five PCIe controllers: two 4-lane, two 2-lane
-> and one 1-lane.
+On Wed, Jun 29, 2022 at 04:09:58PM +0200, Johan Hovold wrote:
+> The kernel is not a devicetree validator and does not need to re-encode
+> information which is already available in the devicetree.
 > 
-> Add a new "qcom,pcie-sa8540p" compatible string and reuse the 1.9.0 ops.
+> This is specifically true for the optional PCIe clocks, some of which
+> are really interconnect clocks.
 > 
-> Note that like for SC8280XP, the SA8540 controllers need two or three
-> interconnect clocks to be enabled.
+> Treat also the 2.7.0 optional clocks as truly optional instead of
+> maintaining a list of clocks per compatible (including two compatible
+> strings for the two identical controllers on sm8450) just to validate
+> the devicetree.
 > 
 > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 
@@ -99,33 +102,100 @@ Thanks,
 Mani
 
 > ---
->  drivers/pci/controller/dwc/pcie-qcom.c | 6 ++++++
->  1 file changed, 6 insertions(+)
+>  drivers/pci/controller/dwc/pcie-qcom.c | 28 ++++----------------------
+>  1 file changed, 4 insertions(+), 24 deletions(-)
 > 
 > diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> index da3f1cdc4ba6..8ab88e5743da 100644
+> index 8ab88e5743da..1a564f624bb1 100644
 > --- a/drivers/pci/controller/dwc/pcie-qcom.c
 > +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> @@ -1461,6 +1461,11 @@ static const struct qcom_pcie_cfg ipq4019_cfg = {
->  	.ops = &ops_2_4_0,
+> @@ -189,10 +189,6 @@ struct qcom_pcie_ops {
+>  
+>  struct qcom_pcie_cfg {
+>  	const struct qcom_pcie_ops *ops;
+> -	unsigned int has_tbu_clk:1;
+> -	unsigned int has_ddrss_sf_tbu_clk:1;
+> -	unsigned int has_aggre0_clk:1;
+> -	unsigned int has_aggre1_clk:1;
 >  };
 >  
-> +static const struct qcom_pcie_cfg sa8540p_cfg = {
-> +	.ops = &ops_1_9_0,
-> +	.has_ddrss_sf_tbu_clk = true,
-> +};
-> +
+>  struct qcom_pcie {
+> @@ -1140,14 +1136,6 @@ static int qcom_pcie_get_resources_2_7_0(struct qcom_pcie *pcie)
+>  	res->clks[idx++].id = "bus_master";
+>  	res->clks[idx++].id = "bus_slave";
+>  	res->clks[idx++].id = "slave_q2a";
+> -	if (pcie->cfg->has_tbu_clk)
+> -		res->clks[idx++].id = "tbu";
+> -	if (pcie->cfg->has_ddrss_sf_tbu_clk)
+> -		res->clks[idx++].id = "ddrss_sf_tbu";
+> -	if (pcie->cfg->has_aggre0_clk)
+> -		res->clks[idx++].id = "aggre0";
+> -	if (pcie->cfg->has_aggre1_clk)
+> -		res->clks[idx++].id = "aggre1";
+>  
+>  	num_clks = idx;
+>  
+> @@ -1155,6 +1143,10 @@ static int qcom_pcie_get_resources_2_7_0(struct qcom_pcie *pcie)
+>  	if (ret < 0)
+>  		return ret;
+>  
+> +	res->clks[idx++].id = "tbu";
+> +	res->clks[idx++].id = "ddrss_sf_tbu";
+> +	res->clks[idx++].id = "aggre0";
+> +	res->clks[idx++].id = "aggre1";
+>  	res->clks[idx++].id = "noc_aggr_4";
+>  	res->clks[idx++].id = "noc_aggr_south_sf";
+>  	res->clks[idx++].id = "cnoc_qx";
+> @@ -1463,17 +1455,14 @@ static const struct qcom_pcie_cfg ipq4019_cfg = {
+>  
+>  static const struct qcom_pcie_cfg sa8540p_cfg = {
+>  	.ops = &ops_1_9_0,
+> -	.has_ddrss_sf_tbu_clk = true,
+>  };
+>  
 >  static const struct qcom_pcie_cfg sc8280xp_cfg = {
 >  	.ops = &ops_1_9_0,
->  	.has_ddrss_sf_tbu_clk = true,
-> @@ -1626,6 +1631,7 @@ static const struct of_device_id qcom_pcie_match[] = {
->  	{ .compatible = "qcom,pcie-ipq8074", .data = &ipq8074_cfg },
->  	{ .compatible = "qcom,pcie-ipq4019", .data = &ipq4019_cfg },
->  	{ .compatible = "qcom,pcie-qcs404", .data = &ipq4019_cfg },
-> +	{ .compatible = "qcom,pcie-sa8540p", .data = &sa8540p_cfg },
->  	{ .compatible = "qcom,pcie-sdm845", .data = &sdm845_cfg },
->  	{ .compatible = "qcom,pcie-sm8150", .data = &sm8150_cfg },
->  	{ .compatible = "qcom,pcie-sm8250", .data = &sm8250_cfg },
+> -	.has_ddrss_sf_tbu_clk = true,
+>  };
+>  
+>  static const struct qcom_pcie_cfg sdm845_cfg = {
+>  	.ops = &ops_2_7_0,
+> -	.has_tbu_clk = true,
+>  };
+>  
+>  static const struct qcom_pcie_cfg sm8150_cfg = {
+> @@ -1485,31 +1474,22 @@ static const struct qcom_pcie_cfg sm8150_cfg = {
+>  
+>  static const struct qcom_pcie_cfg sm8250_cfg = {
+>  	.ops = &ops_1_9_0,
+> -	.has_tbu_clk = true,
+> -	.has_ddrss_sf_tbu_clk = true,
+>  };
+>  
+>  static const struct qcom_pcie_cfg sm8450_pcie0_cfg = {
+>  	.ops = &ops_1_9_0,
+> -	.has_ddrss_sf_tbu_clk = true,
+> -	.has_aggre0_clk = true,
+> -	.has_aggre1_clk = true,
+>  };
+>  
+>  static const struct qcom_pcie_cfg sm8450_pcie1_cfg = {
+>  	.ops = &ops_1_9_0,
+> -	.has_ddrss_sf_tbu_clk = true,
+> -	.has_aggre1_clk = true,
+>  };
+>  
+>  static const struct qcom_pcie_cfg sc7280_cfg = {
+>  	.ops = &ops_1_9_0,
+> -	.has_tbu_clk = true,
+>  };
+>  
+>  static const struct qcom_pcie_cfg sc8180x_cfg = {
+>  	.ops = &ops_1_9_0,
+> -	.has_tbu_clk = true,
+>  };
+>  
+>  static const struct dw_pcie_ops dw_pcie_ops = {
 > -- 
 > 2.35.1
 > 
