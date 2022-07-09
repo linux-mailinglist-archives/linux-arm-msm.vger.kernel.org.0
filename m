@@ -2,67 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6B64F56CB1B
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Jul 2022 20:47:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8046E56CB6E
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Jul 2022 22:47:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229522AbiGISrO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 9 Jul 2022 14:47:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57278 "EHLO
+        id S229448AbiGIUrd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 9 Jul 2022 16:47:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46886 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229448AbiGISrN (ORCPT
+        with ESMTP id S229495AbiGIUrd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 9 Jul 2022 14:47:13 -0400
-Received: from mga06.intel.com (mga06b.intel.com [134.134.136.31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FE2711479;
-        Sat,  9 Jul 2022 11:47:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1657392429; x=1688928429;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=+GNIdhGdPyFqFyXPD803B6BFm3amZVvwqmycIbMsB08=;
-  b=lmOVBU4uE3dwIY6g04Ax/lwrDMHQ+vKAaS7ZUNCBbzRc72DIigujbAdW
-   NwFCqLHleuWAPbv3GDDy4wInrSRwcC0jJgPKJfEYcGQWLA2eGgkKrdrjK
-   a8K2QgF2+HV7KxMvdn1ICoouoLpDgGI2mfH9su6GtpZCQ/+x9og00rOk5
-   7gMiDxpRXpSzPU6KvwPNvwVbWubXkQsAmqXYlyENhrn5uGaRu4qm7OE6I
-   5JnPbIjBJ+opCywfkPJu4h/3USPAoXHbrpwqJMTqjAsclcBvuhJ5sf3K0
-   tChHm8svYEye/iOfqQiVpWBATd8nsZkKphcU9DZYE245IK0UAQPw0VI/q
-   w==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10403"; a="346139135"
-X-IronPort-AV: E=Sophos;i="5.92,259,1650956400"; 
-   d="scan'208";a="346139135"
-Received: from fmsmga004.fm.intel.com ([10.253.24.48])
-  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jul 2022 11:47:08 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.92,259,1650956400"; 
-   d="scan'208";a="662109631"
-Received: from lkp-server01.sh.intel.com (HELO 68b931ab7ac1) ([10.239.97.150])
-  by fmsmga004.fm.intel.com with ESMTP; 09 Jul 2022 11:47:05 -0700
-Received: from kbuild by 68b931ab7ac1 with local (Exim 4.95)
-        (envelope-from <lkp@intel.com>)
-        id 1oAFTs-000P20-IV;
-        Sat, 09 Jul 2022 18:47:04 +0000
-Date:   Sun, 10 Jul 2022 02:46:10 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>,
-        agross@kernel.org, bjorn.andersson@linaro.org,
-        konrad.dybcio@somainline.org, gregkh@linuxfoundation.org,
-        jirislaby@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-serial@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     kbuild-all@lists.01.org, quic_msavaliy@quicinc.com,
-        dianders@chromium.org, mka@chromium.org, swboyd@chromium.org,
-        Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-Subject: Re: [V3] tty: serial: qcom-geni-serial: Fix get_clk_div_rate() which
- otherwise could return a sub-optimal clock rate.
-Message-ID: <202207100234.kIBTfg5O-lkp@intel.com>
-References: <1657221457-32494-1-git-send-email-quic_vnivarth@quicinc.com>
+        Sat, 9 Jul 2022 16:47:33 -0400
+Received: from mailrelay3-1.pub.mailoutpod1-cph3.one.com (mailrelay3-1.pub.mailoutpod1-cph3.one.com [46.30.210.184])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB9CE120B3
+        for <linux-arm-msm@vger.kernel.org>; Sat,  9 Jul 2022 13:47:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ravnborg.org; s=rsa1;
+        h=in-reply-to:content-type:mime-version:references:message-id:subject:cc:to:
+         from:date:from;
+        bh=sUNoqOKr3Tu/6aqk6b9hgMDsaxDWvMdhP4oY4f5l4lw=;
+        b=rdfHxxh4Lo4znjQzElJHofxDTwWXE/d3oU8CmDWIF4YnmaVyge33Y2U2x1xCPVuSGAIt9TKqn2wDL
+         pz0/3WbmNVqAxqh4c/eVdT3YbcK0oebcYMlJtsku7zisuhP936eFt3uCxk4PWgs2pz6YDk7pR9vd7f
+         AMVp1DrpGBz2tNdGyF/tW6uayTEccFU9oabFaBQv5YQEMckusOvScCz29UKkQZQ9LMULtR9B7TsVQR
+         0bYOGxaSxIMsxYD4yi0rP2OjY8dY9/QJR3xkRpB5QBk9vZK23DVkO+Fd8VkLtL4dSyQRf88DBOX+PG
+         Kn7k2110suOcLLDjB1E/nhqhRCwXQPQ==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed;
+        d=ravnborg.org; s=ed1;
+        h=in-reply-to:content-type:mime-version:references:message-id:subject:cc:to:
+         from:date:from;
+        bh=sUNoqOKr3Tu/6aqk6b9hgMDsaxDWvMdhP4oY4f5l4lw=;
+        b=id6bzscFnVGcmv4gdOzXpl+0kNM4KtuVsKgc8pCSEwZCHjv8gTkR8nPLVXmEPnZLODdz07lecbBkd
+         VMo2icjBQ==
+X-HalOne-Cookie: f2222cbad2f8d91fdb9fea67c5ad6a212aff1d89
+X-HalOne-ID: 57456efd-ffc8-11ec-be7e-d0431ea8bb03
+Received: from mailproxy2.cst.dirpod4-cph3.one.com (2-105-2-98-cable.dk.customer.tdc.net [2.105.2.98])
+        by mailrelay3.pub.mailoutpod1-cph3.one.com (Halon) with ESMTPSA
+        id 57456efd-ffc8-11ec-be7e-d0431ea8bb03;
+        Sat, 09 Jul 2022 20:47:26 +0000 (UTC)
+Date:   Sat, 9 Jul 2022 22:47:25 +0200
+From:   Sam Ravnborg <sam@ravnborg.org>
+To:     MollySophia <mollysophia379@gmail.com>
+Cc:     Thierry Reding <thierry.reding@gmail.com>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2 1/2] dt-bindings: display: panel: Add Novatek NT35596S
+ panel bindings
+Message-ID: <YsnpXU2w1wsXiGrs@ravnborg.org>
+References: <20220709141136.58298-1-mollysophia379@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1657221457-32494-1-git-send-email-quic_vnivarth@quicinc.com>
-X-Spam-Status: No, score=-5.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
+In-Reply-To: <20220709141136.58298-1-mollysophia379@gmail.com>
+X-Spam-Status: No, score=-0.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_PASS,SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLACK autolearn=no
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -70,70 +68,193 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Vijaya,
+Hi Molly,
 
-Thank you for the patch! Perhaps something to improve:
+thanks for the quick response to the review comments.
 
-[auto build test WARNING on tty/tty-testing]
-[also build test WARNING on linus/master v5.19-rc5 next-20220708]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+On Sat, Jul 09, 2022 at 10:11:35PM +0800, MollySophia wrote:
+> Add documentation for "novatek,nt35596s" panel.
+> 
+> Signed-off-by: MollySophia <mollysophia379@gmail.com>
+The s-o-b needs your real name - guess the above is a concatenation of
+first name and surname.
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Vijaya-Krishna-Nivarthi/tty-serial-qcom-geni-serial-Fix-get_clk_div_rate-which-otherwise-could-return-a-sub-optimal-clock-rate/20220708-031921
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/gregkh/tty.git tty-testing
-config: arc-randconfig-r004-20220707 (https://download.01.org/0day-ci/archive/20220710/202207100234.kIBTfg5O-lkp@intel.com/config)
-compiler: arc-elf-gcc (GCC) 11.3.0
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # https://github.com/intel-lab-lkp/linux/commit/fbd8a1a4b7d91ea5caa048e4557ab18b0d08ea86
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review Vijaya-Krishna-Nivarthi/tty-serial-qcom-geni-serial-Fix-get_clk_div_rate-which-otherwise-could-return-a-sub-optimal-clock-rate/20220708-031921
-        git checkout fbd8a1a4b7d91ea5caa048e4557ab18b0d08ea86
-        # save the config file
-        mkdir build_dir && cp config build_dir/.config
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.3.0 make.cross W=1 O=build_dir ARCH=arc SHELL=/bin/bash drivers/tty/serial/
+The binding included in this patch fails the check:
+$ make DT_CHECKER_FLAGS=-m dt_binding_check
 
-If you fix the issue, kindly add following tag where applicable
-Reported-by: kernel test robot <lkp@intel.com>
+You may need to run:
+$ pip3 install dtschema --upgrade
 
-All warnings (new ones prefixed by >>):
+Or you may have to install some dependencies first.
+The problem is that the patch is missing a "reset-gpios: true"
 
-   In file included from include/linux/kernel.h:29,
-                    from include/linux/clk.h:13,
-                    from drivers/tty/serial/qcom_geni_serial.c:4:
-   drivers/tty/serial/qcom_geni_serial.c: In function 'get_clk_div_rate':
->> include/linux/kern_levels.h:5:25: warning: format '%lu' expects argument of type 'long unsigned int', but argument 4 has type 'unsigned int' [-Wformat=]
-       5 | #define KERN_SOH        "\001"          /* ASCII Start Of Header */
-         |                         ^~~~~~
-   include/linux/printk.h:452:25: note: in definition of macro 'printk_index_wrap'
-     452 |                 _p_func(_fmt, ##__VA_ARGS__);                           \
-         |                         ^~~~
-   include/linux/printk.h:131:17: note: in expansion of macro 'printk'
-     131 |                 printk(fmt, ##__VA_ARGS__);             \
-         |                 ^~~~~~
-   include/linux/printk.h:610:9: note: in expansion of macro 'no_printk'
-     610 |         no_printk(KERN_DEBUG pr_fmt(fmt), ##__VA_ARGS__)
-         |         ^~~~~~~~~
-   include/linux/kern_levels.h:15:25: note: in expansion of macro 'KERN_SOH'
-      15 | #define KERN_DEBUG      KERN_SOH "7"    /* debug-level messages */
-         |                         ^~~~~~~~
-   include/linux/printk.h:610:19: note: in expansion of macro 'KERN_DEBUG'
-     610 |         no_printk(KERN_DEBUG pr_fmt(fmt), ##__VA_ARGS__)
-         |                   ^~~~~~~~~~
-   drivers/tty/serial/qcom_geni_serial.c:1006:17: note: in expansion of macro 'pr_debug'
-    1006 |                 pr_debug("desired_clk-%lu, ser_clk-%lu, clk_div-%lu\n",
-         |                 ^~~~~~~~
+On top of this I looked at the binding - and the description
+this is copied from is almost identical.
+So another approach would be to extend the existing binding like
+in the following.
 
+And this also gives a good hint that maybe this can be embedded in
+the existing driver - and there is no need for a new driver.
+Could you try to give this a spin and get back on this.
 
-vim +5 include/linux/kern_levels.h
+Sorry for not seeing this in the first place.
 
-314ba3520e513a Joe Perches 2012-07-30  4  
-04d2c8c83d0e3a Joe Perches 2012-07-30 @5  #define KERN_SOH	"\001"		/* ASCII Start Of Header */
-04d2c8c83d0e3a Joe Perches 2012-07-30  6  #define KERN_SOH_ASCII	'\001'
-04d2c8c83d0e3a Joe Perches 2012-07-30  7  
+	Sam
 
--- 
-0-DAY CI Kernel Test Service
-https://01.org/lkp
+diff --git a/Documentation/devicetree/bindings/display/panel/novatek,nt36672a.yaml b/Documentation/devicetree/bindings/display/panel/novatek,nt36672a.yaml
+index 41ee3157a1cd..913bb81ae93d 100644
+--- a/Documentation/devicetree/bindings/display/panel/novatek,nt36672a.yaml
++++ b/Documentation/devicetree/bindings/display/panel/novatek,nt36672a.yaml
+@@ -20,14 +20,20 @@ allOf:
+ 
+ properties:
+   compatible:
+-    items:
+-      - enum:
+-          - tianma,fhd-video
+-      - const: novatek,nt36672a
++    oneOf:
++      - items:
++          - enum:
++              - tianma,fhd-video
++          - const: novatek,nt36672a
++
++      - items:
++          - enum:
++              - jdi,fhd-nt35596s
++          - const: novatek,nt35596s
++
+     description: This indicates the panel manufacturer of the panel that is
+-      in turn using the NT36672A panel driver. This compatible string
+-      determines how the NT36672A panel driver is configured for the indicated
+-      panel. The novatek,nt36672a compatible shall always be provided as a fallback.
++       in turn using the NT36672A or the NT35596S panel driver. This compatible string
++       determines how the panel driver is configured for the indicated panel.
+ 
+   reset-gpios:
+     maxItems: 1
+@@ -85,4 +91,27 @@ examples:
+         };
+     };
+ 
++    dsi1 {
++        #address-cells = <1>;
++        #size-cells = <0>;
++
++        panel@0 {
++            compatible = "jdi,fhd-nt35596s", "novatek,nt35596s";
++            reg = <0>;
++            vddi0-supply = <&vreg_l14a_1p88>;
++            vddpos-supply = <&lab>;
++            vddneg-supply = <&ibb>;
++
++            backlight = <&pmi8998_wled>;
++            reset-gpios = <&tlmm 6 GPIO_ACTIVE_HIGH>;
++
++            port {
++                jdi_nt35596s_in_1: endpoint {
++                    remote-endpoint = <&dsi1_out>;
++                };
++            };
++        };
++    };
++
++
+ ...
+
+> ---
+>  .../display/panel/novatek,nt35596s.yaml       | 83 +++++++++++++++++++
+>  1 file changed, 83 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/display/panel/novatek,nt35596s.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/display/panel/novatek,nt35596s.yaml b/Documentation/devicetree/bindings/display/panel/novatek,nt35596s.yaml
+> new file mode 100644
+> index 000000000000..f724f101a6fd
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/display/panel/novatek,nt35596s.yaml
+> @@ -0,0 +1,83 @@
+> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/display/panel/novatek,nt35596s.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Novatek NT35596S based DSI display Panels
+> +
+> +maintainers:
+> +  - Molly Sophia <mollysophia379@gmail.com>
+> +
+> +description: |
+> +  The nt35596s IC from Novatek is a generic DSI Panel IC used to drive dsi
+> +  panels.
+> +  Right now, support is added only for a JDI FHD+ LCD display panel with a
+> +  resolution of 1080x2160. It is a video mode DSI panel.
+> +
+> +allOf:
+> +  - $ref: panel-common.yaml#
+> +
+> +properties:
+> +  compatible:
+> +    items:
+> +      - enum:
+> +          - jdi,fhd-nt35596s
+> +      - const: novatek,nt35596s
+> +    description: This indicates the panel manufacturer of the panel that is
+> +      in turn using the NT35596S panel driver. This compatible string
+> +      determines how the NT35596S panel driver is configured for the indicated
+> +      panel. The novatek,nt35596s compatible shall always be provided as a fallback.
+> +
+> +  vddi0-supply:
+> +    description: regulator that provides the supply voltage
+> +      Power IC supply
+> +
+> +  vddpos-supply:
+> +    description: positive boost supply regulator
+> +
+> +  vddneg-supply:
+> +    description: negative boost supply regulator
+> +
+> +  reg: true
+> +  port: true
+> +  backlight: true
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - vddi0-supply
+> +  - vddpos-supply
+> +  - vddneg-supply
+> +  - reset-gpios
+> +  - port
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/gpio/gpio.h>
+> +
+> +    dsi {
+> +        #address-cells = <1>;
+> +        #size-cells = <0>;
+> +
+> +        panel@0 {
+> +            compatible = "jdi,fhd-nt35596s", "novatek,nt35596s";
+> +            reg = <0>;
+> +            vddi0-supply = <&vreg_l14a_1p88>;
+> +            vddpos-supply = <&lab>;
+> +            vddneg-supply = <&ibb>;
+> +
+> +            backlight = <&pmi8998_wled>;
+> +            reset-gpios = <&tlmm 6 GPIO_ACTIVE_HIGH>;
+> +
+> +            port {
+> +                jdi_nt35596s_in_0: endpoint {
+> +                    remote-endpoint = <&dsi0_out>;
+> +                };
+> +            };
+> +        };
+> +    };
+> +
+> +...
+> -- 
+> 2.37.0
