@@ -2,67 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5470856C97E
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Jul 2022 15:20:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0995656C9C8
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Jul 2022 16:05:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229579AbiGINUH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 9 Jul 2022 09:20:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41128 "EHLO
+        id S229693AbiGIOFV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 9 Jul 2022 10:05:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39802 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229568AbiGINUG (ORCPT
+        with ESMTP id S229568AbiGIOFV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 9 Jul 2022 09:20:06 -0400
-Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 757E03719B;
-        Sat,  9 Jul 2022 06:20:05 -0700 (PDT)
-Received: by mail-pj1-x1032.google.com with SMTP id o31-20020a17090a0a2200b001ef7bd037bbso1033197pjo.0;
-        Sat, 09 Jul 2022 06:20:05 -0700 (PDT)
+        Sat, 9 Jul 2022 10:05:21 -0400
+Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3774E11A16;
+        Sat,  9 Jul 2022 07:05:20 -0700 (PDT)
+Received: by mail-pl1-x62f.google.com with SMTP id m14so1023541plg.5;
+        Sat, 09 Jul 2022 07:05:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=o6qXHBRggPv7WVxROCph+0wgkDdSGgA4sRqXZcZDbr8=;
-        b=n/r1AVuD30RF1iz6AXcR1BaoKdV2rraUMnl5BOxZmCBreenRtmVnnuupWpZ1io/N0k
-         4apC8n5DfO8A9PQi3lyA1I9FR0HcZSQCVEEJrTJk/jufk5bTj4NC4blHdPdpAh+miNE1
-         5J2dlQLLx/cdv1Ev/9TWQWmJFFHesMVOY88vsvDHE3oWAJo9nVuW8AZ64tREELOau+Hv
-         qmjjqvLHXi4nSXQULBGuo5UxlG1BTl9WgUEOg3+6D+ER+qOcRg2dngvh2b63oc2xJMBA
-         lj5SMCyoH/VGdiu5h2XI1hp0jyeMR8i8TbEkW5NgVvLozpSM8yxu+NNlbNwiu6mRYaSY
-         GUVw==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=KllOWvu7e5SrcZMDE7g9T24hEywTIkk+v5p3DscJSVk=;
+        b=JsA5x/iG8WfSdh0tZ4dxUU7FBSlqz7y9N+fyrUGvUx1PBpFtSnrEp4ERs6Jaoa66S/
+         hUIz8pj5tFx8yO/37gDbwdggYTyQ5tFV9Do27iGNssX/cH4aTnns1acqDloV30TZmVJL
+         6QaeC6PvgTvfBCO4YCi0Cqt/rF0TVlUkoM9w/+dwgKMTLQrbEbI5sI85CwZbJbvFVFRn
+         TbsnCoizLml9geh0H2VCtLar2IYNEID6BdEZTQCxb/0mMRIJfaiRxsfG480bCaN2iMBm
+         W4HvAAR/r3yv+FsCX1IIoCqTgDUYtvHs9/4+p8GqI43OtkyEeaVDs5Bkrza/zL6Ag0VL
+         HMrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=o6qXHBRggPv7WVxROCph+0wgkDdSGgA4sRqXZcZDbr8=;
-        b=dSP6/83JSzmpOpdHQXnsBZ0Ym//M6GD4zjB24SJCx2M78QU36XEtWK+o2LbqhRzCRH
-         DGW1iqjTkMmhTS4oozSzwpRBQVIj8ITBAvu6R6w9QigrRcWx0a5ltcUbR2NIifLugrCM
-         jyy9lRYU/v0eWYOEbMgyLMeqv+DT06nU2dnOVCmADlxy7rP30aPHwKasaFDQB/GHOo+7
-         Nydmcc0gogu7/2At37NScNCUg1M6rPCTI3OefOH7gDc0bUpKvG1qM3WaxFy22NgVBk4K
-         TYQzswZjeH4SjgbA5JsboTF9dm37rb36K2ukif11toDkmRP0cOQM3aaFq2NrzVlEZSnO
-         qYCg==
-X-Gm-Message-State: AJIora/O2D3y7bGo7f4x2YChdsSELEnOJ9Tjs7i48w9RQ+BfvfGxdors
-        8PLuiBIgwSQPnIgugT+1JmU=
-X-Google-Smtp-Source: AGRyM1v+eEPdr+JOT2lzFx4XLVpLP3VQIMI/CEbnh4u9yr1Ef/HUoj94OhBaGhzsTqv1U6YIHtk66Q==
-X-Received: by 2002:a17:902:7d96:b0:16c:2f71:7809 with SMTP id a22-20020a1709027d9600b0016c2f717809mr4072750plm.149.1657372804934;
-        Sat, 09 Jul 2022 06:20:04 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=KllOWvu7e5SrcZMDE7g9T24hEywTIkk+v5p3DscJSVk=;
+        b=FAWMVObRkfOso9Nf7ChFtL0YSvAr6rxpqKg8zBoiOJcfmLWtbpSf0ZdT/4tGOYXU2D
+         geL5vf0dkqs+pqRxMFfd5Td/0r0zWgjXdPd4G/jNpXJO4Tf2lPTAuDA32ue5cfAcU/ZM
+         HyhGjzrARgbq6km6Hjp36yxgBGsaOarDmllKCXhhAA78T7Lx1QLNESTY8Hcnf3WrIVqK
+         MWmCbjzQG91Eyhct1fAMoojenIeQF/cCtm4MmILuea2H+vUVkzYjhlleCkLa1fNgGIz8
+         7FWpBk1GaSqV0UV0EvRBLfjYupeJZlsEJghLqdjOoXcjt4A9Zw9oJpwuP11N7VtFb1i7
+         8c+g==
+X-Gm-Message-State: AJIora+nwmLlhqY9SmITaLxpBELxFFYDNnC/FATil4IKzRyTJbVdpNk6
+        vLA4G6z4dI9SlqcfCxnZd17Hoal+NdJNWA==
+X-Google-Smtp-Source: AGRyM1t3NFjlPMMPhXryFmJ501+/qhG0UUibtr/WTQTP0ZMNGP5yM8uq3vKteLhBZfDmJf5cX7/JGQ==
+X-Received: by 2002:a17:90b:1c07:b0:1f0:2077:6a9 with SMTP id oc7-20020a17090b1c0700b001f0207706a9mr1014621pjb.90.1657375519336;
+        Sat, 09 Jul 2022 07:05:19 -0700 (PDT)
 Received: from localhost.localdomain ([112.0.189.16])
-        by smtp.gmail.com with ESMTPSA id y7-20020a17090abd0700b001ec71be4145sm1151950pjr.2.2022.07.09.06.19.53
+        by smtp.gmail.com with ESMTPSA id x16-20020aa79a50000000b00528baea5dacsm1496163pfj.201.2022.07.09.07.05.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 09 Jul 2022 06:20:04 -0700 (PDT)
+        Sat, 09 Jul 2022 07:05:18 -0700 (PDT)
 From:   MollySophia <mollysophia379@gmail.com>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+To:     Thierry Reding <thierry.reding@gmail.com>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Molly Sophia <mollysophia379@gmail.com>,
+        dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
 Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        MollySophia <mollysophia379@gmail.com>
-Subject: [PATCH v5 2/2] dt-bindings: arm: qcom: Add Xiaomi Mi Mix2s bindings
-Date:   Sat,  9 Jul 2022 21:19:35 +0800
-Message-Id: <20220709131935.50708-2-mollysophia379@gmail.com>
+        linux-arm-msm@vger.kernel.org
+Subject: [PATCH 1/2] dt-bindings: display: panel: Add Novatek NT35596S panel bindings
+Date:   Sat,  9 Jul 2022 22:04:22 +0800
+Message-Id: <20220709140422.56851-1-mollysophia379@gmail.com>
 X-Mailer: git-send-email 2.37.0
-In-Reply-To: <20220709131935.50708-1-mollysophia379@gmail.com>
-References: <20220709131935.50708-1-mollysophia379@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -75,29 +76,103 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add documentation for "xiaomi,polaris" device.
+Add documentation for "novatek,nt35596s" panel.
 
 Signed-off-by: MollySophia <mollysophia379@gmail.com>
 ---
- Documentation/devicetree/bindings/arm/qcom.yaml | 5 +++++
- 1 file changed, 5 insertions(+)
+ .../display/panel/novatek,nt35596s.yaml       | 83 +++++++++++++++++++
+ 1 file changed, 83 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/display/panel/novatek,nt35596s.yaml
 
-diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
-index 129cdd246223..80dff09bdc83 100644
---- a/Documentation/devicetree/bindings/arm/qcom.yaml
-+++ b/Documentation/devicetree/bindings/arm/qcom.yaml
-@@ -235,6 +235,11 @@ properties:
-               - xiaomi,lavender
-           - const: qcom,sdm660
- 
-+      - items:
-+          - enum:
-+              - xiaomi,polaris
-+          - const: qcom,sdm845
+diff --git a/Documentation/devicetree/bindings/display/panel/novatek,nt35596s.yaml b/Documentation/devicetree/bindings/display/panel/novatek,nt35596s.yaml
+new file mode 100644
+index 000000000000..f724f101a6fd
+--- /dev/null
++++ b/Documentation/devicetree/bindings/display/panel/novatek,nt35596s.yaml
+@@ -0,0 +1,83 @@
++# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/display/panel/novatek,nt35596s.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
 +
-       - items:
-           - enum:
-               - qcom,sdx55-mtp
++title: Novatek NT35596S based DSI display Panels
++
++maintainers:
++  - Molly Sophia <mollysophia379@gmail.com>
++
++description: |
++  The nt35596s IC from Novatek is a generic DSI Panel IC used to drive dsi
++  panels.
++  Right now, support is added only for a JDI FHD+ LCD display panel with a
++  resolution of 1080x2160. It is a video mode DSI panel.
++
++allOf:
++  - $ref: panel-common.yaml#
++
++properties:
++  compatible:
++    items:
++      - enum:
++          - jdi,fhd-nt35596s
++      - const: novatek,nt35596s
++    description: This indicates the panel manufacturer of the panel that is
++      in turn using the NT35596S panel driver. This compatible string
++      determines how the NT35596S panel driver is configured for the indicated
++      panel. The novatek,nt35596s compatible shall always be provided as a fallback.
++
++  vddi0-supply:
++    description: regulator that provides the supply voltage
++      Power IC supply
++
++  vddpos-supply:
++    description: positive boost supply regulator
++
++  vddneg-supply:
++    description: negative boost supply regulator
++
++  reg: true
++  port: true
++  backlight: true
++
++required:
++  - compatible
++  - reg
++  - vddi0-supply
++  - vddpos-supply
++  - vddneg-supply
++  - reset-gpios
++  - port
++
++additionalProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/gpio/gpio.h>
++
++    dsi {
++        #address-cells = <1>;
++        #size-cells = <0>;
++
++        panel@0 {
++            compatible = "jdi,fhd-nt35596s", "novatek,nt35596s";
++            reg = <0>;
++            vddi0-supply = <&vreg_l14a_1p88>;
++            vddpos-supply = <&lab>;
++            vddneg-supply = <&ibb>;
++
++            backlight = <&pmi8998_wled>;
++            reset-gpios = <&tlmm 6 GPIO_ACTIVE_HIGH>;
++
++            port {
++                jdi_nt35596s_in_0: endpoint {
++                    remote-endpoint = <&dsi0_out>;
++                };
++            };
++        };
++    };
++
++...
 -- 
 2.37.0
 
