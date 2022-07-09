@@ -2,108 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 60E9056C771
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Jul 2022 08:01:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 95B4056C776
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Jul 2022 08:08:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229685AbiGIGBA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 9 Jul 2022 02:01:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49158 "EHLO
+        id S229477AbiGIGIC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 9 Jul 2022 02:08:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52968 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229656AbiGIGAw (ORCPT
+        with ESMTP id S229454AbiGIGIC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 9 Jul 2022 02:00:52 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 701295B057;
-        Fri,  8 Jul 2022 23:00:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1657346442; x=1688882442;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version;
-  bh=NR9iNRPQAa66fCPpIPSZS3+ID1qCvirnJLJqeYPK8yo=;
-  b=HGOXaK6yQ8qGrhGoOv4aTa7SzBxWSVwKqvqbt9i2B/TbpfBe8nJArNc1
-   Au52gur83BeHpo3IjDMk9p/dTbhgt9CoXJz2uGKz+sbhYO7vSx8dTHb/U
-   FnuOjfb4iTjKooXMG8eBXU4lo0cGY4LNGdcVC9v6RAa7Iwug6TnvbWKdt
-   8=;
-Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 08 Jul 2022 23:00:42 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Jul 2022 23:00:41 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Fri, 8 Jul 2022 23:00:41 -0700
-Received: from hyd-lnxbld559.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Fri, 8 Jul 2022 23:00:36 -0700
-From:   Akhil P Oommen <quic_akhilpo@quicinc.com>
-To:     freedreno <freedreno@lists.freedesktop.org>,
-        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-CC:     Jonathan Marek <jonathan@marek.ca>,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        "Douglas Anderson" <dianders@chromium.org>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Geert Uytterhoeven <geert@linux-m68k.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Sean Paul <sean@poorly.run>, <linux-kernel@vger.kernel.org>
-Subject: [PATCH v2 7/7] drm/msm/a6xx: Handle GMU prepare-slumber hfi failure
-Date:   Sat, 9 Jul 2022 11:29:35 +0530
-Message-ID: <20220709112837.v2.7.I54815c7c36b80d4725cd054e536365250454452f@changeid>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1657346375-1461-1-git-send-email-quic_akhilpo@quicinc.com>
-References: <1657346375-1461-1-git-send-email-quic_akhilpo@quicinc.com>
+        Sat, 9 Jul 2022 02:08:02 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEE5614099;
+        Fri,  8 Jul 2022 23:08:01 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 26BF860C34;
+        Sat,  9 Jul 2022 06:08:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 186A6C3411C;
+        Sat,  9 Jul 2022 06:07:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1657346880;
+        bh=vmb51TA7agNZ9Oxx2u8lZxkAmvViGJooTKdRirJS8UY=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=TKPBEYO1++gFz84IcM+gPuaixDVDAksUkdSSmYOICPc6V7bEN9BgK5aMiFtsOYCaI
+         h87WL0V9orAb3+Ytv9AWCE2GzxUVrD21zpGe58PeuWrg1A+cnQhN1K7g8MhD9uHIvC
+         9oi+h/rCco2X5XHkELQsbW4YHzfPyAuqFBN+FCqd47+YWpgfR7Arkk5AlHLT0o7gVL
+         NuRnjL6JCV8sDfihVGZr/8Z54UIipOhvn0CvGQQddarCAaG6DUYRmz33F8h+CYqDix
+         WeROnQe9bXVcsEFP4LXxMUyqM3wEPkI7LMx5IKCGy5pOGwfH5GXVxeWe19qaWzaL2x
+         omT4FbkLXJ+NQ==
+Date:   Sat, 9 Jul 2022 11:37:49 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Bo Liu <liubo03@inspur.com>
+Cc:     mani@kernel.org, quic_hemantk@quicinc.com, mhi@lists.linux.dev,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] bus: mhi: ep: Check dev_set_name() return value
+Message-ID: <20220709060749.GB5063@thinkpad>
+References: <20220708015948.4091-1-liubo03@inspur.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20220708015948.4091-1-liubo03@inspur.com>
+X-Spam-Status: No, score=-7.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-When prepare-slumber hfi fails, we should follow a6xx_gmu_force_off()
-sequence.
+On Thu, Jul 07, 2022 at 09:59:48PM -0400, Bo Liu wrote:
+> It's possible that dev_set_name() returns -ENOMEM, catch and handle this.
+> 
+> Signed-off-by: Bo Liu <liubo03@inspur.com>
 
-Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
----
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
 
-(no changes since v1)
+Thanks,
+Mani
 
- drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+> ---
+>  drivers/bus/mhi/ep/main.c | 11 +++++++++--
+>  1 file changed, 9 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
+> index 40109a79017a..1dc8a3557a46 100644
+> --- a/drivers/bus/mhi/ep/main.c
+> +++ b/drivers/bus/mhi/ep/main.c
+> @@ -1242,9 +1242,13 @@ static int mhi_ep_create_device(struct mhi_ep_cntrl *mhi_cntrl, u32 ch_id)
+>  
+>  	/* Channel name is same for both UL and DL */
+>  	mhi_dev->name = mhi_chan->name;
+> -	dev_set_name(&mhi_dev->dev, "%s_%s",
+> +	ret = dev_set_name(&mhi_dev->dev, "%s_%s",
+>  		     dev_name(&mhi_cntrl->mhi_dev->dev),
+>  		     mhi_dev->name);
+> +	if (ret) {
+> +		put_device(&mhi_dev->dev);
+> +		return ret;
+> +	}
+>  
+>  	ret = device_add(&mhi_dev->dev);
+>  	if (ret)
+> @@ -1408,7 +1412,10 @@ int mhi_ep_register_controller(struct mhi_ep_cntrl *mhi_cntrl,
+>  		goto err_free_irq;
+>  	}
+>  
+> -	dev_set_name(&mhi_dev->dev, "mhi_ep%u", mhi_cntrl->index);
+> +	ret = dev_set_name(&mhi_dev->dev, "mhi_ep%u", mhi_cntrl->index);
+> +	if (ret)
+> +		goto err_put_dev;
+> +
+>  	mhi_dev->name = dev_name(&mhi_dev->dev);
+>  	mhi_cntrl->mhi_dev = mhi_dev;
+>  
+> -- 
+> 2.27.0
+> 
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-index ec25f19..e033d6a 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-@@ -1086,7 +1086,11 @@ static void a6xx_gmu_shutdown(struct a6xx_gmu *gmu)
- 		a6xx_bus_clear_pending_transactions(adreno_gpu);
- 
- 		/* tell the GMU we want to slumber */
--		a6xx_gmu_notify_slumber(gmu);
-+		ret = a6xx_gmu_notify_slumber(gmu);
-+		if (ret) {
-+			a6xx_gmu_force_off(gmu);
-+			return;
-+		}
- 
- 		ret = gmu_poll_timeout(gmu,
- 			REG_A6XX_GPU_GMU_AO_GPU_CX_BUSY_STATUS, val,
 -- 
-2.7.4
-
+மணிவண்ணன் சதாசிவம்
