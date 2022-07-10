@@ -2,72 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0835256D105
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Jul 2022 21:12:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4EC6956D15B
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Jul 2022 23:24:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229521AbiGJTMh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 10 Jul 2022 15:12:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55316 "EHLO
+        id S229523AbiGJVYP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 10 Jul 2022 17:24:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45654 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229517AbiGJTMg (ORCPT
+        with ESMTP id S229450AbiGJVYO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 10 Jul 2022 15:12:36 -0400
-Received: from mailrelay4-1.pub.mailoutpod1-cph3.one.com (mailrelay4-1.pub.mailoutpod1-cph3.one.com [46.30.210.185])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 107F414D0C
-        for <linux-arm-msm@vger.kernel.org>; Sun, 10 Jul 2022 12:12:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ravnborg.org; s=rsa1;
-        h=in-reply-to:content-type:mime-version:references:message-id:subject:cc:to:
-         from:date:from;
-        bh=mhy9fguw7oNBUNA4++MQTJEkbokGyq0g3XiuEESLdIU=;
-        b=OE/o8T4ZCwPIeBTZ+7m0wqq2yrjnsgLQ6XsiyKPe8osdC1dOE32nKZ1aBZcSLxCmPZeaglZ7oERO5
-         8AleqM+Vyd6lITxE/74YOi/jJNbhrt3Tbfqc2fqxrxdVcnSE7dmh0HcbVx9jIIzjRzZgajQaIJBEPM
-         lt1SEPAmSthSC13ss1Z6iCV8GQMrQyhNQaHSPUVxnwoF2ZwdNbNkAzoBq+zNvjL9TLRyZniffw6f9C
-         L837DfmFJlDEBjZMUHrzPSxNHXyeOytbg3pWNrhvfiKH+HlV1oWBuNqxK74DMPg4X2nFhq0wdAJOY5
-         rrFuasOqDHP0fIEx+3gZngJyaIb9siw==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed;
-        d=ravnborg.org; s=ed1;
-        h=in-reply-to:content-type:mime-version:references:message-id:subject:cc:to:
-         from:date:from;
-        bh=mhy9fguw7oNBUNA4++MQTJEkbokGyq0g3XiuEESLdIU=;
-        b=RnA47xY/feXtfjBaI/zXv59+eR6HvtjUGxqoWU/9C2bZ133QpDO+vgby3a0dfvnP8nYReJODysnIp
-         MWK/7moAw==
-X-HalOne-Cookie: bbd82aec0b2170f761b40db99c68fcbf359bab34
-X-HalOne-ID: 3fbbe948-0084-11ed-823d-d0431ea8bb10
-Received: from mailproxy3.cst.dirpod4-cph3.one.com (2-105-2-98-cable.dk.customer.tdc.net [2.105.2.98])
-        by mailrelay4.pub.mailoutpod1-cph3.one.com (Halon) with ESMTPSA
-        id 3fbbe948-0084-11ed-823d-d0431ea8bb10;
-        Sun, 10 Jul 2022 19:12:32 +0000 (UTC)
-Date:   Sun, 10 Jul 2022 21:12:31 +0200
-From:   Sam Ravnborg <sam@ravnborg.org>
+        Sun, 10 Jul 2022 17:24:14 -0400
+Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1F5A638B
+        for <linux-arm-msm@vger.kernel.org>; Sun, 10 Jul 2022 14:24:12 -0700 (PDT)
+Received: from pendragon.ideasonboard.com (62-78-145-57.bb.dnainternet.fi [62.78.145.57])
+        by perceval.ideasonboard.com (Postfix) with ESMTPSA id 2B9924F7;
+        Sun, 10 Jul 2022 23:24:10 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
+        s=mail; t=1657488250;
+        bh=TzVKvIMA7E2NoY6B3hNoUQMONOMEeLEAj+rjS7UPfSc=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=v8uew0eaokfqgyh15ODJYKomfImlIHDo9cD11UEL0VPj9rzm2vCzvd4vcFlKIurjb
+         gutvH7x4N9qzgmkPwiWE94xx1uJFvVxnelQ5SjFspwiVyK+kgdmB5XD3sdD1+yaEVO
+         XxHJ6bwK+7oGNFglmG/dhZTVpn+z06iNNjmo9Pqw=
+Date:   Mon, 11 Jul 2022 00:23:43 +0300
+From:   Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Cc:     Douglas Anderson <dianders@chromium.org>,
         Andrzej Hajda <andrzej.hajda@intel.com>,
         Neil Armstrong <narmstrong@baylibre.com>,
         Robert Foss <robert.foss@linaro.org>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
         Jonas Karlman <jonas@kwiboo.se>,
         Jernej Skrabec <jernej.skrabec@gmail.com>,
         Stephen Boyd <swboyd@chromium.org>,
-        freedreno@lists.freedesktop.org, David Airlie <airlied@linux.ie>,
-        linux-arm-msm@vger.kernel.org,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        dri-devel@lists.freedesktop.org,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Sean Paul <sean@poorly.run>
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
 Subject: Re: [RFC PATCH 3/3] drm/bridge: ti-sn65dsi86: support
  DRM_BRIDGE_ATTACH_NO_CONNECTOR
-Message-ID: <Ysskn7pd+HxujsGN@ravnborg.org>
+Message-ID: <YstDX/7Xguzxrp21@pendragon.ideasonboard.com>
 References: <20220710184536.172705-1-dmitry.baryshkov@linaro.org>
  <20220710184536.172705-4-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <20220710184536.172705-4-dmitry.baryshkov@linaro.org>
-X-Spam-Status: No, score=-0.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_PASS,SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLACK autolearn=no
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -76,11 +62,63 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hi Dmitry,
 
+Thank you for the patch.
+
 On Sun, Jul 10, 2022 at 09:45:36PM +0300, Dmitry Baryshkov wrote:
 > Now as the driver does not depend on pdata->connector, add support for
 > attaching the bridge with DRM_BRIDGE_ATTACH_NO_CONNECTOR.
 > 
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  drivers/gpu/drm/bridge/ti-sn65dsi86.c | 15 +++++----------
+>  1 file changed, 5 insertions(+), 10 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+> index df08207d6223..9bca4615f71b 100644
+> --- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+> +++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+> @@ -698,11 +698,6 @@ static int ti_sn_bridge_attach(struct drm_bridge *bridge,
+>  	struct ti_sn65dsi86 *pdata = bridge_to_ti_sn65dsi86(bridge);
+>  	int ret;
+>  
+> -	if (flags & DRM_BRIDGE_ATTACH_NO_CONNECTOR) {
+> -		DRM_ERROR("Fix bridge driver to make connector optional!");
+> -		return -EINVAL;
+> -	}
+> -
+>  	pdata->aux.drm_dev = bridge->dev;
+>  	ret = drm_dp_aux_register(&pdata->aux);
+>  	if (ret < 0) {
+> @@ -710,15 +705,15 @@ static int ti_sn_bridge_attach(struct drm_bridge *bridge,
+>  		return ret;
+>  	}
+>  
+> -	/* We never want the next bridge to *also* create a connector: */
+> -	flags |= DRM_BRIDGE_ATTACH_NO_CONNECTOR;
+> -
+> -	/* Attach the next bridge */
+> +	/* Attach the next bridge, We never want the next bridge to *also* create a connector. */
 
-Looks good,
-Reviewed-by: Sam Ravnborg <sam@ravnborg.org>
+s/bridge,/bridge./
+
+I also would have wrapped this line.
+
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+
+>  	ret = drm_bridge_attach(bridge->encoder, pdata->next_bridge,
+> -				&pdata->bridge, flags);
+> +				&pdata->bridge, flags | DRM_BRIDGE_ATTACH_NO_CONNECTOR);
+>  	if (ret < 0)
+>  		goto err_initted_aux;
+>  
+> +	if (flags & DRM_BRIDGE_ATTACH_NO_CONNECTOR)
+> +		return 0;
+> +
+>  	pdata->connector = drm_bridge_connector_init(pdata->bridge.dev,
+>  						     pdata->bridge.encoder);
+>  	if (IS_ERR(pdata->connector)) {
+
+-- 
+Regards,
+
+Laurent Pinchart
