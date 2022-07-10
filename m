@@ -2,317 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8ADF156CC54
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Jul 2022 04:12:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8954A56CDDB
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Jul 2022 10:41:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229751AbiGJCME (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 9 Jul 2022 22:12:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53548 "EHLO
+        id S229601AbiGJIlk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 10 Jul 2022 04:41:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53368 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229711AbiGJCLq (ORCPT
+        with ESMTP id S229594AbiGJIlj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 9 Jul 2022 22:11:46 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4F5A2A732;
-        Sat,  9 Jul 2022 19:11:29 -0700 (PDT)
+        Sun, 10 Jul 2022 04:41:39 -0400
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20DF119008
+        for <linux-arm-msm@vger.kernel.org>; Sun, 10 Jul 2022 01:41:37 -0700 (PDT)
+Received: by mail-lj1-x22a.google.com with SMTP id w2so3019221ljj.7
+        for <linux-arm-msm@vger.kernel.org>; Sun, 10 Jul 2022 01:41:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1657419089; x=1688955089;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version;
-  bh=yRsUxplAh+liuWiIlItSCta7JojlVcoCyfRjGG8Oef8=;
-  b=smRcAYNJ8nAnlGsTKdz1K2cMqBZGAz9yMMwTcTVoVCRsK2TEWyI63H+Y
-   YklWINPJ+5L+n3HS/gFiQ0m7uhDEfz+95BW8WY4n5LoNgXe1ob7OVrRw2
-   MLyYOcFtJ9UJEiHQkTcEmlQrtAn02dZMCTXrYTw3l2WaZyHHLv9lRiBix
-   w=;
-Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 09 Jul 2022 19:11:29 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jul 2022 19:11:29 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Sat, 9 Jul 2022 19:11:28 -0700
-Received: from jinlmao-gv.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Sat, 9 Jul 2022 19:11:24 -0700
-From:   Mao Jinlong <quic_jinlmao@quicinc.com>
-To:     Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        "Bjorn Andersson" <bjorn.andersson@linaro.org>,
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Ng9sE96WrnIx3xQqutYhfh5XLKWJitjlsYB4zzGeV8U=;
+        b=Qsn4LaHSwTMU51F04OesvPJNbPxXD4oMQFLWl/7JxiEGaAJEzqpHUT5+EnoOOlvzMf
+         HREx4aWfGryUUkow99r0JpcNX68syExzCcnhjj2pjpA6h7O4J0tfGX6+DF0Axs4xaW24
+         FxOCj6FxUww5Ya4dk9IyY+qjhItSIoZgeUnCBKFjSu8Qe9PwOFXTjWGbupmsXfXz+MTL
+         9J15KATd74EpxXmcmb/iS5ucRzjm7Fta7y9nGJVkKYz19rtzHMP/HkiIABQSS6g+JAGE
+         tQmsgqku0gZk4r8lScKAKNv8pClXqNxccvr80e9QE6CEevcKCXIrSCeHHzlzLq1mIBHR
+         /BJg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Ng9sE96WrnIx3xQqutYhfh5XLKWJitjlsYB4zzGeV8U=;
+        b=Eu1p7kPClh3vkdbYC8mLEdsEH7TVYO7YSJLY0AL7mvF+q/9bPaXYSOkrOLLA48UmCU
+         4ZtiUu6z7zE6CPiwg0epipYfYUuP82X3C0CdHJJrjM9R1Wiq4oB+KzIReIQP8nFXVUPu
+         J5meCUH2/YZTfhvKLXid7+/HSbfHVO9HrtRgQxrES9a6bVQQlVkkJfx+kq1PQiYEc4E9
+         aSPA0HvZxuRmkQC7eYrL5sCOd4QIPVhUvYnVTiz79FPne3bNnY7pXpGeyPUiH4elzbnJ
+         FoRGupmVPNJupu8gqNvrjjcdspuTqYFqnWws8kaJ/CrJNRmGKEi7dwMHZRLNSZKR9d8e
+         G8+w==
+X-Gm-Message-State: AJIora+iuv7jNcRx0inJJSHsyU1Ks+Fbpm9a+4bUqmGNTtL61/sYaCPl
+        flV2b+nEUmSugNc2+oSWDtnzig==
+X-Google-Smtp-Source: AGRyM1v08aU8P5seYjw/3JLFPxv2a3nAdhwSLebTrqOgrKbenfnMH+mgaHO46Ye5C47bl9zpxFySzQ==
+X-Received: by 2002:a2e:b0d3:0:b0:25d:6888:7c70 with SMTP id g19-20020a2eb0d3000000b0025d68887c70mr913658ljl.244.1657442495285;
+        Sun, 10 Jul 2022 01:41:35 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id i21-20020a2ea235000000b0025d4addbad4sm912536ljm.91.2022.07.10.01.41.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 10 Jul 2022 01:41:34 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-CC:     Mao Jinlong <quic_jinlmao@quicinc.com>,
-        Leo Yan <leo.yan@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        <coresight@lists.linaro.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        "Tao Zhang" <quic_taozha@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        "Hao Zhang" <quic_hazha@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>
-Subject: [PATCH v12 9/9] arm64: dts: qcom: sm8250: Add tpdm mm/prng
-Date:   Sun, 10 Jul 2022 10:10:32 +0800
-Message-ID: <20220710021032.27455-10-quic_jinlmao@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20220710021032.27455-1-quic_jinlmao@quicinc.com>
-References: <20220710021032.27455-1-quic_jinlmao@quicinc.com>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>
+Subject: [PATCH v2 0/9] dt-bindings: msm/dp: cleanup Qualcomm DP and eDP bidndings
+Date:   Sun, 10 Jul 2022 11:41:24 +0300
+Message-Id: <20220710084133.30976-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add tpdm mm and tpdm prng for sm8250.
+Fix several issues with the DP and eDP bindings on the Qualcomm
+platforms. While we are at it, fix several small issues with platform
+files declaring these controllers.
 
-+---------------+                +-------------+
-|  tpdm@6c08000 |                |tpdm@684C000 |
-+-------|-------+                +------|------+
-        |                               |
-+-------|-------+                       |
-| funnel@6c0b000|                       |
-+-------|-------+                       |
-        |                               |
-+-------|-------+                       |
-|funnel@6c2d000 |                       |
-+-------|-------+                       |
-        |                               |
-        |    +---------------+          |
-        +----- tpda@6004000  -----------+
-             +-------|-------+
-                     |
-             +-------|-------+
-             |funnel@6005000 |
-             +---------------+
+Changes since v1:
+ - Reordered patches to cleanup dts first, to remove warnings from DP
+   schema
+ - Split DP register blocks in sc7180.dtsi and sc7280.dtsi
+ - Cleaned up the p1 register block handling: marked it as required for DP
+   and absent for eDP controllers
+ - Dropped unused xo and ref clocks from sc7280-edp node, they belong to
+   eDP PHY.
 
-Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
----
- arch/arm64/boot/dts/qcom/sm8250.dtsi | 173 +++++++++++++++++++++++++++
- 1 file changed, 173 insertions(+)
+Dmitry Baryshkov (9):
+  arm64: dts: qcom: sc7180: split register block for DP controller
+  arm64: dts: qcom: sc7180: drop #clock-cells from
+    displayport-controller
+  arm64: dts: qcom: sc7280: split register block for DP controller
+  arm64: dts: qcom: sc7280: drop #clock-cells from
+    displayport-controller
+  arm64: dts: qcom: sc7280: drop address/size-cells from eDP node
+  arm64: dts: qcom: sc7280: drop unused clocks from eDP node
+  dt-bindings: msm/dp: mark vdda supplies as deprecated
+  dt-bindings: msm/dp: add missing properties
+  dt-bindings: msm/dp: handle DP vs eDP difference
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index d6bcbf7667b6..9c1aed51ce81 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -2730,6 +2730,76 @@
- 			};
- 		};
- 
-+		tpda@6004000 {
-+			compatible = "arm,primecell";
-+			reg = <0 0x06004000 0 0x1000>;
-+			reg-names = "tpda-base";
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+
-+			out-ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@0 {
-+					reg = <0>;
-+					tpda_out_funnel_qatb: endpoint {
-+						remote-endpoint = <&funnel_qatb_in_tpda>;
-+					};
-+				};
-+			};
-+
-+			in-ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@9 {
-+					reg = <9>;
-+					tpda_9_in_tpdm_mm: endpoint {
-+						remote-endpoint = <&tpdm_mm_out_tpda9>;
-+					};
-+				};
-+
-+				port@17 {
-+					reg = <23>;
-+					tpda_23_in_tpdm_prng: endpoint {
-+						remote-endpoint = <&tpdm_prng_out_tpda_23>;
-+					};
-+				};
-+			};
-+		};
-+
-+		funnel@6005000 {
-+			compatible = "arm,primecell";
-+
-+			reg = <0 0x06005000 0 0x1000>;
-+			reg-names = "funnel-base";
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+
-+			out-ports {
-+				port {
-+					funnel_qatb_out_funnel_in0: endpoint {
-+						remote-endpoint = <&funnel_in0_in_funnel_qatb>;
-+					};
-+				};
-+			};
-+
-+			in-ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@0 {
-+					reg = <0>;
-+					funnel_qatb_in_tpda: endpoint {
-+						remote-endpoint = <&tpda_out_funnel_qatb>;
-+					};
-+				};
-+			};
-+		};
-+
- 		funnel@6041000 {
- 			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
- 			reg = <0 0x06041000 0 0x1000>;
-@@ -2749,6 +2819,13 @@
- 				#address-cells = <1>;
- 				#size-cells = <0>;
- 
-+				port@6 {
-+					reg = <6>;
-+					funnel_in0_in_funnel_qatb: endpoint {
-+						remote-endpoint = <&funnel_qatb_out_funnel_in0>;
-+					};
-+				};
-+
- 				port@7 {
- 					reg = <7>;
- 					funnel0_in7: endpoint {
-@@ -2867,6 +2944,23 @@
- 			};
- 		};
- 
-+		tpdm@684c000 {
-+			compatible = "arm,primecell";
-+			reg = <0 0x0684c000 0 0x1000>;
-+			reg-names = "tpdm-base";
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+
-+			out-ports {
-+				port {
-+					tpdm_prng_out_tpda_23: endpoint {
-+						remote-endpoint = <&tpda_23_in_tpdm_prng>;
-+					};
-+				};
-+			};
-+		};
-+
- 		funnel@6b04000 {
- 			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
- 			arm,primecell-periphid = <0x000bb908>;
-@@ -2951,6 +3045,85 @@
- 			};
- 		};
- 
-+		tpdm@6c08000 {
-+			compatible = "arm,primecell";
-+			reg = <0 0x06c08000 0 0x1000>;
-+			reg-names = "tpdm-base";
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+
-+			out-ports {
-+				port {
-+					tpdm_mm_out_funnel_dl_mm: endpoint {
-+						remote-endpoint = <&funnel_dl_mm_in_tpdm_mm>;
-+					};
-+				};
-+			};
-+		};
-+
-+		funnel@6c0b000 {
-+			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
-+
-+			reg = <0 0x06c0b000 0 0x1000>;
-+			reg-names = "funnel-base";
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+
-+			out-ports {
-+				port {
-+					funnel_dl_mm_out_funnel_dl_center: endpoint {
-+					remote-endpoint = <&funnel_dl_center_in_funnel_dl_mm>;
-+					};
-+				};
-+			};
-+
-+			in-ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@3 {
-+					reg = <3>;
-+					funnel_dl_mm_in_tpdm_mm: endpoint {
-+						remote-endpoint = <&tpdm_mm_out_funnel_dl_mm>;
-+					};
-+				};
-+			};
-+		};
-+
-+		funnel@6c2d000 {
-+			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
-+
-+			reg = <0 0x06c2d000 0 0x1000>;
-+			reg-names = "funnel-base";
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+
-+			out-ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				port {
-+					tpdm_mm_out_tpda9: endpoint {
-+						remote-endpoint = <&tpda_9_in_tpdm_mm>;
-+					};
-+				};
-+			};
-+
-+			in-ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@2 {
-+					reg = <2>;
-+					funnel_dl_center_in_funnel_dl_mm: endpoint {
-+					remote-endpoint = <&funnel_dl_mm_out_funnel_dl_center>;
-+					};
-+				};
-+			};
-+		};
-+
- 		etm@7040000 {
- 			compatible = "arm,coresight-etm4x", "arm,primecell";
- 			reg = <0 0x07040000 0 0x1000>;
+ .../bindings/display/msm/dp-controller.yaml   | 47 ++++++++++++++++---
+ arch/arm64/boot/dts/qcom/sc7180.dtsi          |  7 ++-
+ arch/arm64/boot/dts/qcom/sc7280.dtsi          | 19 +++-----
+ 3 files changed, 53 insertions(+), 20 deletions(-)
+
 -- 
-2.17.1
+2.35.1
 
