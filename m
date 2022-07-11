@@ -2,67 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DC24C570570
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Jul 2022 16:22:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E20725705C6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Jul 2022 16:38:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229699AbiGKOW3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Jul 2022 10:22:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44352 "EHLO
+        id S230072AbiGKOi1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Jul 2022 10:38:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58420 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229795AbiGKOW2 (ORCPT
+        with ESMTP id S229607AbiGKOi0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Jul 2022 10:22:28 -0400
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D4CA61DBB;
-        Mon, 11 Jul 2022 07:22:27 -0700 (PDT)
+        Mon, 11 Jul 2022 10:38:26 -0400
+Received: from mail-qk1-x72e.google.com (mail-qk1-x72e.google.com [IPv6:2607:f8b0:4864:20::72e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C502767170
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 07:38:25 -0700 (PDT)
+Received: by mail-qk1-x72e.google.com with SMTP id 20so3950289qky.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 07:38:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1657549347; x=1689085347;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=sfjIT/djBYVbzdx1PLoXfSGzu5iNZ9VhjYTlVYVGdrQ=;
-  b=DXFpkpagTuOhPFtznQ8sniDGoLT8ZAj/eY9yIFFYNvTCy6ixRlCaGwXj
-   MIgtGEjOhgjf2e31xwIJ6nFE17Pu4R1o14LkSdvfR/Xf6IoYl0C9K3TCt
-   YbnEvcEjOhn16+T/32DUNaZrgRkm0LURAB41qlhm2VJdmF+JjFmeNLfPX
-   4=;
-Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 11 Jul 2022 07:22:26 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2022 07:22:26 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Mon, 11 Jul 2022 07:22:25 -0700
-Received: from [10.216.22.118] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Mon, 11 Jul
- 2022 07:22:21 -0700
-Message-ID: <c91aab06-4263-8a96-3943-948cc64cdca6@quicinc.com>
-Date:   Mon, 11 Jul 2022 19:52:18 +0530
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Blomt85uNlJFKRzFdDf6WPS4oNZcEoc+RW9ZvBV0BXg=;
+        b=PBfGUiXs+SZ0whqRgpSkB35i7Kyk9ocwf5YAgyfirVzthaeICJgeKznJOPyJyBmG/R
+         ZKtfM3reD7LONy8l0sJG9Np2HSqnyB1wjLvdUBeHJ9hlhz3I5aHVTfDX14oDd+U8cjJu
+         EhK54M0hUX1HZ83JmtE8dJE2UXaly3crWcgprO11Im9awTY7mGV0qHi3/7N1zBbEqhMz
+         k3uYfpHFmgQ+aT1NTchgWgMthV1cBsdX4G5s/absXbmSOLZUBlNWuvUL/eZfnF34d/6G
+         NaytaRMtirJejZZXdje9HE2lZ3fLh2H9MSXQJR8YTOULbnZ/nbTx0I1f6b0Z1zpsPEsK
+         3KFg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Blomt85uNlJFKRzFdDf6WPS4oNZcEoc+RW9ZvBV0BXg=;
+        b=pbj/lnZTrWX7f9XworOHKdY2Rw4oG7Y4eYcJZ4WbbZs23LXGoKhe6ZFI1sr9uOnteW
+         NQ46oveYfIQkFPIFHuqQlRRDREsIhp24l0Z4z6EJdMQVVrtlvMnrj9mMGhwPK0R4777a
+         G4RXo6HTC19ivi09pCz+AqMw1/HEQBWbPYfm2CJJ8RttsrYywEMSRYRssGooCRIGUhdE
+         4rERaQK4DMlffGos6HLOMfNlA6nFiGywYlkM0GOn2EkHacj6lhVUY4NTT/lF92ZpPxYs
+         gGD4fzmpRs73pcXzbeRr+cmUsX7OhFXLhAIX0lKjzveSFgzc2Co8pD4BDVuTvnG/ufrz
+         trSQ==
+X-Gm-Message-State: AJIora+WSwylXQNQBNvO+6+ViyVS0xeG1LLR8KCu5pAHTtBgqLT+RJi3
+        XKL516N+EbKjDy9htoS7dSmt9Ja5V6ww5mz1Hb8xEA==
+X-Google-Smtp-Source: AGRyM1vdLvsBn8IiFeoJegAqtKMkOsN5CIRJpKTXMiY3nMKIb78gvTnAc6NmUCQKDRI0YFdwgeQ6h+bKM96WL/ueQ74=
+X-Received: by 2002:a05:620a:288c:b0:6b3:9d1:dbf1 with SMTP id
+ j12-20020a05620a288c00b006b309d1dbf1mr11330803qkp.593.1657550304850; Mon, 11
+ Jul 2022 07:38:24 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: [V3] tty: serial: qcom-geni-serial: Fix get_clk_div_rate() which
- otherwise could return a sub-optimal clock rate.
-Content-Language: en-CA
-To:     Greg KH <gregkh@linuxfoundation.org>
-CC:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
-        <konrad.dybcio@somainline.org>, <jirislaby@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-serial@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_msavaliy@quicinc.com>,
-        <dianders@chromium.org>, <mka@chromium.org>, <swboyd@chromium.org>
-References: <1657221457-32494-1-git-send-email-quic_vnivarth@quicinc.com>
- <Ysgs9MwCLyqeWgge@kroah.com>
-From:   Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-In-Reply-To: <Ysgs9MwCLyqeWgge@kroah.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+References: <20220711104719.40939-1-robimarko@gmail.com> <20220711104719.40939-2-robimarko@gmail.com>
+ <CAA8EJprfAW7kFSPxs7=LEHLmAVrWhV8KRbUseg8jXyiUbyZuRQ@mail.gmail.com> <CAOX2RU7+f3vXdOmMNi6Dt=9jadrgVFhrU56vm=6dYKkhnPUJwQ@mail.gmail.com>
+In-Reply-To: <CAOX2RU7+f3vXdOmMNi6Dt=9jadrgVFhrU56vm=6dYKkhnPUJwQ@mail.gmail.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Mon, 11 Jul 2022 17:38:13 +0300
+Message-ID: <CAA8EJpr8b+UxmCjuXVj+DMrvsHkgEk=ZKw8Ktj_vRT4oRZRutQ@mail.gmail.com>
+Subject: Re: [PATCH 2/6] clk: qcom: apss-ipq6018: fix apcs_alias0_clk_src
+To:     Robert Marko <robimarko@gmail.com>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        krzysztof.kozlowski+dt@linaro.org, sivaprak@codeaurora.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-clk@vger.kernel.org,
+        Devicetree List <devicetree@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -71,173 +76,125 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On 7/8/2022 6:41 PM, Greg KH wrote:
-> On Fri, Jul 08, 2022 at 12:47:37AM +0530, Vijaya Krishna Nivarthi wrote:
->> In the logic around call to clk_round_rate(), for some corner conditions,
->> get_clk_div_rate() could return an sub-optimal clock rate. Also, if an
->> exact clock rate was not found lowest clock was being returned.
->>
->> Search for suitable clock rate in 2 steps
->> a) exact match or within 2% tolerance
->> b) within 5% tolerance
->> This also takes care of corner conditions.
->>
->> Fixes: c2194bc999d4 ("tty: serial: qcom-geni-serial: Remove uart frequency table. Instead, find suitable frequency with call to clk_round_rate")
->> Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
->> ---
->> v3: simplified algorithm further, fixed robot compile warnings
->> v2: removed minor optimisations to make more readable
->> v1: intial patch contained slightly complicated logic
->> ---
->>   drivers/tty/serial/qcom_geni_serial.c | 88 +++++++++++++++++++++--------------
->>   1 file changed, 53 insertions(+), 35 deletions(-)
->>
->> diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
->> index 2e23b65..ac2df1c 100644
->> --- a/drivers/tty/serial/qcom_geni_serial.c
->> +++ b/drivers/tty/serial/qcom_geni_serial.c
->> @@ -943,52 +943,71 @@ static int qcom_geni_serial_startup(struct uart_port *uport)
->>   	return 0;
->>   }
->>   
->> -static unsigned long get_clk_div_rate(struct clk *clk, unsigned int baud,
->> -			unsigned int sampling_rate, unsigned int *clk_div)
->> +static unsigned long find_clk_rate_in_tol(struct clk *clk, unsigned int desired_clk,
->> +			unsigned int *clk_div, unsigned int percent_tol)
->>   {
->> -	unsigned long ser_clk;
->> -	unsigned long desired_clk;
->> -	unsigned long freq, prev;
->> +	unsigned long freq;
->>   	unsigned long div, maxdiv;
->> -	int64_t mult;
->> -
->> -	desired_clk = baud * sampling_rate;
->> -	if (!desired_clk) {
->> -		pr_err("%s: Invalid frequency\n", __func__);
->> -		return 0;
->> -	}
->> +	u64 mult;
->> +	unsigned long offset, abs_tol, achieved;
->>   
->> +	abs_tol = div_u64((u64)desired_clk * percent_tol, 100);
->>   	maxdiv = CLK_DIV_MSK >> CLK_DIV_SHFT;
->> -	prev = 0;
->> -
->> -	for (div = 1; div <= maxdiv; div++) {
->> -		mult = div * desired_clk;
->> -		if (mult > ULONG_MAX)
->> +	div = 1;
->> +	while (div <= maxdiv) {
->> +		mult = (u64)div * desired_clk;
->> +		if (mult != (unsigned long)mult)
->>   			break;
->>   
->> -		freq = clk_round_rate(clk, (unsigned long)mult);
->> -		if (!(freq % desired_clk)) {
->> -			ser_clk = freq;
->> -			break;
->> -		}
->> +		offset = div * abs_tol;
->> +		freq = clk_round_rate(clk, mult - offset);
->>   
->> -		if (!prev)
->> -			ser_clk = freq;
->> -		else if (prev == freq)
->> +		/* Can only get lower if we're done */
->> +		if (freq < mult - offset)
->>   			break;
->>   
->> -		prev = freq;
->> +		/*
->> +		 * Re-calculate div in case rounding skipped rates but we
->> +		 * ended up at a good one, then check for a match.
->> +		 */
->> +		div = DIV_ROUND_CLOSEST(freq, desired_clk);
->> +		achieved = DIV_ROUND_CLOSEST(freq, div);
->> +		if (achieved <= desired_clk + abs_tol &&
->> +			achieved >= desired_clk - abs_tol) {
->> +			*clk_div = div;
->> +			return freq;
->> +		}
->> +
->> +		div = DIV_ROUND_UP(freq, desired_clk);
->>   	}
->>   
->> -	if (!ser_clk) {
->> -		pr_err("%s: Can't find matching DFS entry for baud %d\n",
->> -								__func__, baud);
->> -		return ser_clk;
->> +	return 0;
->> +}
->> +
->> +static unsigned long get_clk_div_rate(struct clk *clk, unsigned int baud,
->> +			unsigned int sampling_rate, unsigned int *clk_div)
->> +{
->> +	unsigned long ser_clk;
->> +	unsigned long desired_clk;
->> +
->> +	desired_clk = baud * sampling_rate;
->> +	if (!desired_clk) {
->> +		pr_err("%s: Invalid frequency\n", __func__);
-> Note, this is a driver, ALWAYS use dev_err() and friends instead.
+On Mon, 11 Jul 2022 at 16:23, Robert Marko <robimarko@gmail.com> wrote:
 >
-> Also do not allow userspace to flood the kernel logs like this looks is
-> possible, this should just be dev_dbg().
+> On Mon, 11 Jul 2022 at 14:48, Dmitry Baryshkov
+> <dmitry.baryshkov@linaro.org> wrote:
+> >
+> > On Mon, 11 Jul 2022 at 14:22, Robert Marko <robimarko@gmail.com> wrote:
+> > >
+> > > While working on IPQ8074 APSS driver it was discovered that IPQ6018 and
+> > > IPQ8074 use almost the same PLL and APSS clocks, however APSS driver is
+> > > currently broken.
+> > >
+> > > More precisely apcs_alias0_clk_src is broken, it was added as regmap_mux
+> > > clock.
+> > > However after debugging why it was always stuck at 800Mhz, it was figured
+> > > out that its not regmap_mux compatible at all.
+> > > It is a simple mux but it uses RCG2 register layout and control bits, so
+> >
+> > To utilize control bits, you probably should also use
 >
-> And of course, never use __func__, it's not needed anymore for
-> dev_dbg().
+> Hi,
+> I am not really sure what you mean here?
 
-Ok.
+Ugh, excuse me. Sent the message too early.
+I mean that to utilize RCG2 control bits, you probably also need to
+use clk_rcg2_is_enabled, etc.
 
 >
->> +		return 0;
-> Why if you have a error, are you returning 0?
-
-Yes, and it has been so earlier too.
-
-0 is an invalid clock rate and will be handled accordingly by caller.
-
->>   	}
->>   
->> -	*clk_div = ser_clk / desired_clk;
->> -	if (!(*clk_div))
->> -		*clk_div = 1;
->> +	/*
->> +	 * try to find a clock rate within 2% tolerance, then within
->> +	 */
->> +	ser_clk = find_clk_rate_in_tol(clk, desired_clk, clk_div, 2);
->> +	if (!ser_clk)
->> +		ser_clk = find_clk_rate_in_tol(clk, desired_clk, clk_div, 5);
->> +
->> +	if (!ser_clk)
->> +		pr_err("Couldn't find suitable clock rate for %lu\n", desired_clk);
-> return an error?
+> >
+> > > utilize the new clk_rcg2_mux_closest_ops to correctly drive it while not
+> > > having to provide a dummy frequency table.
+> >
+> > Could you please clarify this. Your new rcg2 ops seems to be literally
+> > equivalent to the clk_regmap_mux_closest_ops provided the shift and
+> > width are set correctly..
 >
-> dev_err().
-
-As mentioned, we didn't (and don't) return error from here but 0.
-
+> Well, I have tried playing with the clk_regmap_mux_closest_ops but I
+> just cannot get it
+> to work.
 >
->> +	else
->> +		pr_debug("desired_clk-%lu, ser_clk-%lu, clk_div-%lu\n",
->> +			desired_clk, ser_clk, *clk_div);
-> dev_dbg()?
-Ok.
+> The width like you pointed out should be 8, register offset is
+> currently pointing at the RCG control
+> register and not the CFG one, so it obviously does not work.
 >
-> Also, as the kernel test robot says, this does not build cleanly :(
+> Setting the register to 0x54 and shift to 8 will just fail silently,
+> leaving the shift at 7 and correcting
+> the register won't work as RCG control bits are not utilized at all
+> with regmap_mux and DIRTY_CFG
+> is active when I manually look at the register.
 
-change to dev_dbg should take care of these.
+Ok, I missed the update_cfg part. So, yes, this looks correct.
 
-Will do.
-
-Thank you.
-
-Vijay/
-
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
 >
-> thanks,
+> So, I am really not sure how clk_regmap_mux_closest_ops are supposed
+> to work here at all.
 >
-> greg k-h
+> Regards,
+> Robert
+> >
+> > > While we are here, use ARRAY_SIZE for number of parents.
+> > >
+> > > Tested on IPQ6018-CP01-C1 reference board and multiple IPQ8074 boards.
+> > >
+> > > Fixes: 5e77b4ef1b19 ("clk: qcom: Add ipq6018 apss clock controller")
+> > > Signed-off-by: Robert Marko <robimarko@gmail.com>
+> > > ---
+> > >  drivers/clk/qcom/apss-ipq6018.c | 13 ++++++-------
+> > >  1 file changed, 6 insertions(+), 7 deletions(-)
+> > >
+> > > diff --git a/drivers/clk/qcom/apss-ipq6018.c b/drivers/clk/qcom/apss-ipq6018.c
+> > > index d78ff2f310bf..be952d417ded 100644
+> > > --- a/drivers/clk/qcom/apss-ipq6018.c
+> > > +++ b/drivers/clk/qcom/apss-ipq6018.c
+> > > @@ -16,7 +16,7 @@
+> > >  #include "clk-regmap.h"
+> > >  #include "clk-branch.h"
+> > >  #include "clk-alpha-pll.h"
+> > > -#include "clk-regmap-mux.h"
+> > > +#include "clk-rcg.h"
+> > >
+> > >  enum {
+> > >         P_XO,
+> > > @@ -33,16 +33,15 @@ static const struct parent_map parents_apcs_alias0_clk_src_map[] = {
+> > >         { P_APSS_PLL_EARLY, 5 },
+> > >  };
+> > >
+> > > -static struct clk_regmap_mux apcs_alias0_clk_src = {
+> > > -       .reg = 0x0050,
+> > > -       .width = 3,
+> > > -       .shift = 7,
+> >
+> > Judging from rcg2 ops, .shift should be set to 8.
+> >
+> > > +static struct clk_rcg2 apcs_alias0_clk_src = {
+> > > +       .cmd_rcgr = 0x0050,
+> > > +       .hid_width = 5,
+> > >         .parent_map = parents_apcs_alias0_clk_src_map,
+> > >         .clkr.hw.init = &(struct clk_init_data){
+> > >                 .name = "apcs_alias0_clk_src",
+> > >                 .parent_data = parents_apcs_alias0_clk_src,
+> > > -               .num_parents = 2,
+> > > -               .ops = &clk_regmap_mux_closest_ops,
+> > > +               .num_parents = ARRAY_SIZE(parents_apcs_alias0_clk_src),
+> > > +               .ops = &clk_rcg2_mux_closest_ops,
+> > >                 .flags = CLK_SET_RATE_PARENT,
+> > >         },
+> > >  };
+> > > --
+> > > 2.36.1
+> > >
+> >
+> >
+> > --
+> > With best wishes
+> > Dmitry
+
+
+
+-- 
+With best wishes
+Dmitry
