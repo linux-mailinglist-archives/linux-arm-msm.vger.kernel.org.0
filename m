@@ -2,62 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5E5A1570DB1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Jul 2022 00:57:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 01C52570E03
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Jul 2022 01:13:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229676AbiGKW5K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Jul 2022 18:57:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51020 "EHLO
+        id S230282AbiGKXNX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Jul 2022 19:13:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36906 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229622AbiGKW5J (ORCPT
+        with ESMTP id S229754AbiGKXNV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Jul 2022 18:57:09 -0400
-Received: from mail-io1-f46.google.com (mail-io1-f46.google.com [209.85.166.46])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A93D8252A4;
-        Mon, 11 Jul 2022 15:57:08 -0700 (PDT)
-Received: by mail-io1-f46.google.com with SMTP id n68so6343086iod.3;
-        Mon, 11 Jul 2022 15:57:08 -0700 (PDT)
+        Mon, 11 Jul 2022 19:13:21 -0400
+Received: from mail-io1-f52.google.com (mail-io1-f52.google.com [209.85.166.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0830509EB;
+        Mon, 11 Jul 2022 16:13:20 -0700 (PDT)
+Received: by mail-io1-f52.google.com with SMTP id n68so6372897iod.3;
+        Mon, 11 Jul 2022 16:13:20 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=nkB1LobiQA6NccntvHF5Qv0wX7FCiVqXUkIF4H0VLgA=;
-        b=6WpHXJfHvRvNFBp5FTCa+WTfeAucfOHTl28bbx6FI0nQlaqGTGJ0g5aHUeNAyP/FJw
-         CwzmLo40XdnTlXxIDwpkkZmAC23eRxt586uB09P9GDAEmUWncxgdEgR3wat/pCU0Dncq
-         J5QBr5natNdVkVG59eM2pMneAMOY0gJwoXJsOqIl/1wAEG25J2TjqOw/HRYNohoPnb0c
-         Hw7/7S2Olsywo7iTqMEnBJ9tN9CalJzEHuPq06ZiW4x2hNXJMFkeKy9SyZ65fy3wduD8
-         rfNc5FY18F14qv2U3uq1PPLuGVT4jIgFKkVucaQCpu+vwW4TFcjvKq9zcD9zbgjg2Gf8
-         xY/A==
-X-Gm-Message-State: AJIora+1XXemFmyzAY+K8t5vP8Um6HIqs6ecDpgiN/8y6rVttv9Rx3R6
-        UEVvxWyFK5pjevqPhMeaDNq+xF093A==
-X-Google-Smtp-Source: AGRyM1vX/8+PDDhf0f+QHpvSfhNzgqMs8567A/5TH4WA3ncvtyaETEfARInjSczaw0kMVaD9wvB4IQ==
-X-Received: by 2002:a05:6602:2586:b0:675:9050:4651 with SMTP id p6-20020a056602258600b0067590504651mr11049758ioo.192.1657580227931;
-        Mon, 11 Jul 2022 15:57:07 -0700 (PDT)
+        bh=s+xsXrHKbwgwRMOBC5ueCPd6m6uJqEs8A2pHdJgDMG0=;
+        b=Ou78mne9/ZXnw7A7sdH8KFsgtz2KpZKR5AohaLJRS0JYYu3PCiyt1e5TdJ7TpN8Go2
+         S46bT9htu3xANMrVzxPdO69UV0JORnKerFr1GwoYKfmuw77ItHCSpHeCwZP9AgKtaqWy
+         E8sOv0bTmrKEq/a27pmRUQuMD9ytch/WeXapK3HmF/eLlMBhPvgvygAzt3N/I1+FpIZp
+         ZlrtRNNRm6HCYKowYpags/U/QTtUOLlM8VinZEueJ0pGp8EDBiPKc6r1IHiX1g96tq4N
+         Zc+qQKnW+tvUUz49xusjVobnaToo6yF/MJ0tUhMDQjcOMQG66qBOkWfbuI6qdopLD/al
+         8F9Q==
+X-Gm-Message-State: AJIora+riZ49mGas9fHpO6Jx/Rdnlt1aGd7JSjPHGA/KNKx+FOTMHFBk
+        6skZnvOMHU1I0qVlsP3ocw==
+X-Google-Smtp-Source: AGRyM1smXQuLdxE0NR8tRcT+paGMEY5ZJBKF79o1+ztxVmzVmSeS4W5jT4PHCTvnuAeWHdotl+T2LQ==
+X-Received: by 2002:a05:6638:4511:b0:33f:4ccb:3139 with SMTP id bs17-20020a056638451100b0033f4ccb3139mr5647828jab.20.1657581199999;
+        Mon, 11 Jul 2022 16:13:19 -0700 (PDT)
 Received: from robh.at.kernel.org ([64.188.179.248])
-        by smtp.gmail.com with ESMTPSA id q4-20020a02b044000000b00339c1f7130csm3452121jah.84.2022.07.11.15.57.06
+        by smtp.gmail.com with ESMTPSA id a26-20020a029f9a000000b00331a3909e46sm3504613jam.68.2022.07.11.16.13.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Jul 2022 15:57:07 -0700 (PDT)
-Received: (nullmailer pid 424684 invoked by uid 1000);
-        Mon, 11 Jul 2022 22:57:05 -0000
-Date:   Mon, 11 Jul 2022 16:57:05 -0600
+        Mon, 11 Jul 2022 16:13:19 -0700 (PDT)
+Received: (nullmailer pid 448337 invoked by uid 1000);
+        Mon, 11 Jul 2022 23:13:18 -0000
+Date:   Mon, 11 Jul 2022 17:13:18 -0600
 From:   Rob Herring <robh@kernel.org>
-To:     David Heidelberg <david@ixit.cz>
+To:     MollySophia <mollysophia379@gmail.com>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Robert Marko <robimarko@gmail.com>,
-        Das Srinagesh <quic_gurus@quicinc.com>,
-        ~okias/devicetree@lists.sr.ht, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v5] dt-bindings: firmware: convert Qualcomm SCM binding
- to the yaml
-Message-ID: <20220711225705.GA422079-robh@kernel.org>
-References: <20220708090431.30437-1-david@ixit.cz>
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
+Subject: Re: [PATCH v5 2/2] dt-bindings: arm: qcom: Add Xiaomi Mi Mix2s
+ bindings
+Message-ID: <20220711231318.GA442599-robh@kernel.org>
+References: <20220709131935.50708-1-mollysophia379@gmail.com>
+ <20220709131935.50708-2-mollysophia379@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220708090431.30437-1-david@ixit.cz>
+In-Reply-To: <20220709131935.50708-2-mollysophia379@gmail.com>
 X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
         FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
         HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
@@ -69,44 +68,29 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jul 08, 2022 at 11:04:31AM +0200, David Heidelberg wrote:
-> Convert Qualcomm SCM firmware binding to the yaml format.
+On Sat, Jul 09, 2022 at 09:19:35PM +0800, MollySophia wrote:
+> Add documentation for "xiaomi,polaris" device.
 > 
-> This commit also:
->  - adds qcom,scm-mdm9607 into list which has only core clock
->  - adds qcom,scm-sm6125, qcom,scm-ipq6018
->  - #reset-cells, because the property is already used
+> Signed-off-by: MollySophia <mollysophia379@gmail.com>
+> ---
+>  Documentation/devicetree/bindings/arm/qcom.yaml | 5 +++++
+>  1 file changed, 5 insertions(+)
 > 
-> Signed-off-by: David Heidelberg <david@ixit.cz>
-> --
+> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+> index 129cdd246223..80dff09bdc83 100644
+> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
+> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+> @@ -235,6 +235,11 @@ properties:
+>                - xiaomi,lavender
+>            - const: qcom,sdm660
+>  
+> +      - items:
+> +          - enum:
+> +              - xiaomi,polaris
+> +          - const: qcom,sdm845
 
-Should be '---' in order to be removed automatically when applying.
+I think there is now an entry for this as a bunch of missing 
+compatibles have been added, so you will need to rebase on the qcom 
+tree.
 
-> v5:
->  - add qcom,scm-sdx65 from new commit to txt binding
->  - add freshly merged qcom,scm-sc8280xp
->  - add interconnects
->  - add accidentally removed # from #include directive
->  - move mdm9607 to 3 clocks (thx @Guru)
->  - fix compatible string in example
-> v4:
->  - added clocks minItems and maxItems
->  - removed quotes from $id and $schema
->  - adjusted description of TCSR HW block
-> v3:
->  - add preceding patches for ARM and arm64 adding missing compatible strings
->  - extended with missing compatible strings
->  - added two additional maintainers, see https://lkml.org/lkml/2022/6/23/1969
-> v2:
->  - changed maintainer to Bjorn
->  - document #reset-cells
-> 
->  .../devicetree/bindings/firmware/qcom,scm.txt |  61 --------
->  .../bindings/firmware/qcom,scm.yaml           | 147 ++++++++++++++++++
->  2 files changed, 147 insertions(+), 61 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/firmware/qcom,scm.txt
->  create mode 100644 Documentation/devicetree/bindings/firmware/qcom,scm.yaml
-
-Doesn't apply for me, so I'm assuming this will go via QCom tree.
-
-Reviewed-by: Rob Herring <robh@kernel.org>
+Rob
