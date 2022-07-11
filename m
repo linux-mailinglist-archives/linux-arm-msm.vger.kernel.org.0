@@ -2,70 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0C1DD56D800
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Jul 2022 10:30:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 42E0556D803
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Jul 2022 10:31:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230145AbiGKIaQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Jul 2022 04:30:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36890 "EHLO
+        id S230002AbiGKIb1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Jul 2022 04:31:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37390 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230094AbiGKIaN (ORCPT
+        with ESMTP id S230108AbiGKIbA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Jul 2022 04:30:13 -0400
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44C111F2E6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 01:30:00 -0700 (PDT)
-Received: by mail-lj1-x229.google.com with SMTP id c15so5374261ljr.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 01:30:00 -0700 (PDT)
+        Mon, 11 Jul 2022 04:31:00 -0400
+Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64DB31F2D8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 01:30:52 -0700 (PDT)
+Received: by mail-pf1-x434.google.com with SMTP id v7so2127894pfb.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 01:30:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=c3iEWvXk42qlaQ1qEYi2t2qktg9E0Gqje32kNcC/AaE=;
-        b=pSCTwj3BO8/QQi3rTpFWMZX4j/6gmQu+IR9lgQU3FP8SLiVVOuFdKpHIIkBgIvfNu9
-         XbH218ZQiapHGrOrhkpRp1BBlccrpyNIuyl4NM7pZ+Ut2aSnZg7nHERtm+xrZ+Bu1YlA
-         mywWuJ1KcSKTcG8l68C99iH+1nzOQ3ID5PgAzvxNAfSs/tBPMZ8Fi8wXgDogySvF3Z1y
-         caEwWc2gb3aWJHO8n+WaDC4DRG4Xp7gFTC7bVwHX3+OxgeD4BLjzZvRWSbwyOB0vmG2d
-         hzrmuqkv4+qXZv/koFxtVf7+SSkPtQG8ZecuhzdriQpSESrXrY6NBa+H/jOBcmKkrJnQ
-         Dbvg==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=+Xc6Xh3o4q11+QtmcpjwpXfbGTOkena0cZoEMXbSHLw=;
+        b=Fze5rPjfeIGk/niSbM0yaVUZm+dGq3XQi7PJ1fBajKrvWL0BS/GBXD/G7GtUxI2FIZ
+         nQZab7PbfmcxbZHzdcMIbVQXH8SYDoRZwHmlTrelQDo/EJdaOMPkEFM9bDg2CN7ehBxk
+         83g9ppMQcxmy/wRrT6xCUFWU5eVVopGO2DvB/306nrjH+yTaXClI3R5tjjTyo8n6Z6uX
+         AOhlQDzU02BEsSU03ddEah/SFtKNf2NDevUzoZJp5IAvsQ7+Xpr5GRj6tDlbTVwZr78A
+         dwrJ9VxgeYYecsJXHe//yOEpun52w8bewpa+DZnPOV1+kG2EFO/BR0e9BFNyNK089cDi
+         uN1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=c3iEWvXk42qlaQ1qEYi2t2qktg9E0Gqje32kNcC/AaE=;
-        b=G6L4yEslgX5Ybpf7B4UL3QKrEQbmMvL8hsLlqR2CZVsR+Ra9x3agY4gTnmQk/pd+LF
-         HUwC2JyFbbXlZBVnIKNf1ctO/pyUbgfBft/IIf+p+5HbdG/YlHecGft4egJ5QTsMkqta
-         F/FoCNEpO8Uy2p2aDCDcptOQKD7HRfHjzsRh40r8D9ABIiLTQKilPv5Kv6Fdan7xy6P8
-         +FnrI6xgx8fcTZXMP5r2NRL2mqqbPvSokI7Y4u5vTzktCNKs+se1TsDHx5tW1jPTm8sA
-         7yKpIyIUbfjPUMsSuqmqcFvPPT3uFDKC0DktS/gZEUzC9s3fXmBwyQo2wss3hF5DyEC2
-         qCng==
-X-Gm-Message-State: AJIora9XlPGLSGgsoWbt+Lwlgo3QfTxpfF/XsAN6jv8Ro0YiEukJIkEx
-        +PStuFr203IrHOrjdEFuMCGlcg==
-X-Google-Smtp-Source: AGRyM1udjxHDIpCgvVnZJqTIKtWPOgZDEO+WOSsQI0b7Af+dV3w8qhzoHvlXStC2q8l2PaJx4+OuYA==
-X-Received: by 2002:a2e:8710:0:b0:25d:4d99:4f0e with SMTP id m16-20020a2e8710000000b0025d4d994f0emr2892655lji.448.1657528198445;
-        Mon, 11 Jul 2022 01:29:58 -0700 (PDT)
-Received: from krzk-bin.. (fwa5cab-55.bb.online.no. [88.92.171.55])
-        by smtp.gmail.com with ESMTPSA id u2-20020a05651206c200b00488ab8914b5sm1401504lff.213.2022.07.11.01.29.56
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=+Xc6Xh3o4q11+QtmcpjwpXfbGTOkena0cZoEMXbSHLw=;
+        b=JF5qKaBhYUiL1n2HPXN1d8KIJiXdN4boPc2JHFY6HYU/gzcKaJjvtnBJgGN8fD044b
+         7eiyBWi6+ht7ujibyaN821+42QJ8dC8x7i5LOgDzNL8yTeMvIbrxhyyDARbOEVn6pMYx
+         KhgnSu9DcS0VWiFUgculV7BSzibukO4V0ZERJY2gHBcjXz5lKP8dnUxTvio84IjvtziG
+         x52aGyWLaomfk7GVEdkBvgkflYj9WmRfeAWEDV2EQ7y2ZCW75vr4wZSn1Q7mqNLzwiDr
+         zbwxoXbSX393AMHcc6bC2cGsCNy4Rhkbv3HV4TnbRvrQD9Z0QypIrbCzd7Aa3VVMXdgm
+         RPQg==
+X-Gm-Message-State: AJIora/F49Gus0euKgxnFocA1mrzbP2jS5ptqBY1Va3pGxkH0A09ZVxp
+        6J9zeWSn9pwTRv4AC1P/H06Sm7Slbt5s3A==
+X-Google-Smtp-Source: AGRyM1vK5m4AuFpwElO7081SMHDCqMErC3BDjHKiTOEKoDA2tpoeF1r0TmZ2VXVXz/9MzRvCaRtGfA==
+X-Received: by 2002:a63:194c:0:b0:408:a9d1:400c with SMTP id 12-20020a63194c000000b00408a9d1400cmr15232455pgz.559.1657528251757;
+        Mon, 11 Jul 2022 01:30:51 -0700 (PDT)
+Received: from localhost.localdomain ([182.77.21.191])
+        by smtp.gmail.com with ESMTPSA id w14-20020a1709027b8e00b0016a4db13435sm4067118pll.191.2022.07.11.01.30.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Jul 2022 01:29:57 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Ulf Hansson <ulf.hansson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Cc:     Douglas Anderson <dianders@chromium.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH v2 5/5] ARM: dts: qcom: align SDHCI clocks with DT schema
-Date:   Mon, 11 Jul 2022 10:29:40 +0200
-Message-Id: <20220711082940.39539-6-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220711082940.39539-1-krzysztof.kozlowski@linaro.org>
-References: <20220711082940.39539-1-krzysztof.kozlowski@linaro.org>
+        Mon, 11 Jul 2022 01:30:51 -0700 (PDT)
+From:   Sumit Garg <sumit.garg@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, vkoul@kernel.org,
+        shawn.guo@linaro.org, bryan.odonoghue@linaro.org,
+        nicolas.dechesne@linaro.org, mworsfold@impinj.com,
+        daniel.thompson@linaro.org, andrey.konovalov@linaro.org,
+        Sumit Garg <sumit.garg@linaro.org>
+Subject: [PATCH v2] arm64: dts: qcom: qcs404: Fix incorrect USB2 PHYs assignment
+Date:   Mon, 11 Jul 2022 14:00:38 +0530
+Message-Id: <20220711083038.1518529-1-sumit.garg@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -78,176 +72,57 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The DT schema expects clocks iface-core order.  No functional change.
+Currently the DT for QCS404 SoC has setup for 2 USB2 PHYs with one each
+assigned to USB3 controller and USB2 controller. This assignment is
+incorrect which only works by luck: as when each USB HCI comes up it
+configures the *other* controllers PHY which is enough to make them
+happy. If, for any reason, we were to disable one of the controllers then
+both would stop working.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+This was a difficult inconsistency to be caught which was found while
+trying to enable USB support in u-boot. So with all the required drivers
+ported to u-boot, I couldn't get the same USB storage device enumerated
+in u-boot which was being enumerated fine by the kernel.
+
+The root cause of the problem came out to be that I wasn't enabling USB2
+PHY: "usb2_phy_prim" in u-boot. Then I realised that via simply disabling
+the same USB2 PHY currently assigned to USB2 host controller in the
+kernel disabled enumeration for USB3 host controller as well.
+
+So fix this inconsistency by correctly assigning USB2 PHYs.
+
+Fixes: 9375e7d719b3 ("arm64: dts: qcom: qcs404: Add USB devices and PHYs")
+Signed-off-by: Sumit Garg <sumit.garg@linaro.org>
 ---
- arch/arm/boot/dts/qcom-apq8084.dtsi    | 12 ++++++------
- arch/arm/boot/dts/qcom-ipq4019.dtsi    |  4 ++--
- arch/arm/boot/dts/qcom-msm8226.dtsi    | 18 +++++++++---------
- arch/arm/boot/dts/qcom-msm8974.dtsi    | 18 +++++++++---------
- arch/arm/boot/dts/qcom-msm8974pro.dtsi |  6 +++---
- 5 files changed, 29 insertions(+), 29 deletions(-)
 
-diff --git a/arch/arm/boot/dts/qcom-apq8084.dtsi b/arch/arm/boot/dts/qcom-apq8084.dtsi
-index 45f3cbcf6238..c887ac5cdd7d 100644
---- a/arch/arm/boot/dts/qcom-apq8084.dtsi
-+++ b/arch/arm/boot/dts/qcom-apq8084.dtsi
-@@ -425,10 +425,10 @@ mmc@f9824900 {
- 			reg-names = "hc", "core";
- 			interrupts = <GIC_SPI 123 IRQ_TYPE_LEVEL_HIGH>, <GIC_SPI 138 IRQ_TYPE_LEVEL_HIGH>;
- 			interrupt-names = "hc_irq", "pwr_irq";
--			clocks = <&gcc GCC_SDCC1_APPS_CLK>,
--				 <&gcc GCC_SDCC1_AHB_CLK>,
-+			clocks = <&gcc GCC_SDCC1_AHB_CLK>,
-+				 <&gcc GCC_SDCC1_APPS_CLK>,
- 				 <&xo_board>;
--			clock-names = "core", "iface", "xo";
-+			clock-names = "iface", "core", "xo";
- 			status = "disabled";
- 		};
- 
-@@ -438,10 +438,10 @@ mmc@f98a4900 {
- 			reg-names = "hc", "core";
- 			interrupts = <GIC_SPI 125 IRQ_TYPE_LEVEL_HIGH>, <GIC_SPI 221 IRQ_TYPE_LEVEL_HIGH>;
- 			interrupt-names = "hc_irq", "pwr_irq";
--			clocks = <&gcc GCC_SDCC2_APPS_CLK>,
--				 <&gcc GCC_SDCC2_AHB_CLK>,
-+			clocks = <&gcc GCC_SDCC2_AHB_CLK>,
-+				 <&gcc GCC_SDCC2_APPS_CLK>,
- 				 <&xo_board>;
--			clock-names = "core", "iface", "xo";
-+			clock-names = "iface", "core", "xo";
- 			status = "disabled";
- 		};
- 
-diff --git a/arch/arm/boot/dts/qcom-ipq4019.dtsi b/arch/arm/boot/dts/qcom-ipq4019.dtsi
-index 1b98764bab7a..a8a32a5e7e5d 100644
---- a/arch/arm/boot/dts/qcom-ipq4019.dtsi
-+++ b/arch/arm/boot/dts/qcom-ipq4019.dtsi
-@@ -228,9 +228,9 @@ sdhci: mmc@7824900 {
- 			interrupts = <GIC_SPI 123 IRQ_TYPE_LEVEL_HIGH>, <GIC_SPI 138 IRQ_TYPE_LEVEL_HIGH>;
- 			interrupt-names = "hc_irq", "pwr_irq";
- 			bus-width = <8>;
--			clocks = <&gcc GCC_SDCC1_APPS_CLK>, <&gcc GCC_SDCC1_AHB_CLK>,
-+			clocks = <&gcc GCC_SDCC1_AHB_CLK>, <&gcc GCC_SDCC1_APPS_CLK>,
- 				 <&gcc GCC_DCD_XO_CLK>;
--			clock-names = "core", "iface", "xo";
-+			clock-names = "iface", "core", "xo";
- 			status = "disabled";
- 		};
- 
-diff --git a/arch/arm/boot/dts/qcom-msm8226.dtsi b/arch/arm/boot/dts/qcom-msm8226.dtsi
-index f711463d22dc..9d4223bf8fc1 100644
---- a/arch/arm/boot/dts/qcom-msm8226.dtsi
-+++ b/arch/arm/boot/dts/qcom-msm8226.dtsi
-@@ -141,10 +141,10 @@ sdhc_1: mmc@f9824900 {
- 			interrupts = <GIC_SPI 123 IRQ_TYPE_LEVEL_HIGH>,
- 				     <GIC_SPI 138 IRQ_TYPE_LEVEL_HIGH>;
- 			interrupt-names = "hc_irq", "pwr_irq";
--			clocks = <&gcc GCC_SDCC1_APPS_CLK>,
--				 <&gcc GCC_SDCC1_AHB_CLK>,
-+			clocks = <&gcc GCC_SDCC1_AHB_CLK>,
-+				 <&gcc GCC_SDCC1_APPS_CLK>,
- 				 <&xo_board>;
--			clock-names = "core", "iface", "xo";
-+			clock-names = "iface", "core", "xo";
- 			pinctrl-names = "default";
- 			pinctrl-0 = <&sdhc1_default_state>;
- 			status = "disabled";
-@@ -157,10 +157,10 @@ sdhc_2: mmc@f98a4900 {
- 			interrupts = <GIC_SPI 125 IRQ_TYPE_LEVEL_HIGH>,
- 				     <GIC_SPI 221 IRQ_TYPE_LEVEL_HIGH>;
- 			interrupt-names = "hc_irq", "pwr_irq";
--			clocks = <&gcc GCC_SDCC2_APPS_CLK>,
--				 <&gcc GCC_SDCC2_AHB_CLK>,
-+			clocks = <&gcc GCC_SDCC2_AHB_CLK>,
-+				 <&gcc GCC_SDCC2_APPS_CLK>,
- 				 <&xo_board>;
--			clock-names = "core", "iface", "xo";
-+			clock-names = "iface", "core", "xo";
- 			pinctrl-names = "default";
- 			pinctrl-0 = <&sdhc2_default_state>;
- 			status = "disabled";
-@@ -173,10 +173,10 @@ sdhc_3: mmc@f9864900 {
- 			interrupts = <GIC_SPI 127 IRQ_TYPE_LEVEL_HIGH>,
- 				     <GIC_SPI 224 IRQ_TYPE_LEVEL_HIGH>;
- 			interrupt-names = "hc_irq", "pwr_irq";
--			clocks = <&gcc GCC_SDCC3_APPS_CLK>,
--				 <&gcc GCC_SDCC3_AHB_CLK>,
-+			clocks = <&gcc GCC_SDCC3_AHB_CLK>,
-+				 <&gcc GCC_SDCC3_APPS_CLK>,
- 				 <&xo_board>;
--			clock-names = "core", "iface", "xo";
-+			clock-names = "iface", "core", "xo";
- 			pinctrl-names = "default";
- 			pinctrl-0 = <&sdhc3_default_state>;
- 			status = "disabled";
-diff --git a/arch/arm/boot/dts/qcom-msm8974.dtsi b/arch/arm/boot/dts/qcom-msm8974.dtsi
-index 971eceaef3d1..1f4baa6ac64d 100644
---- a/arch/arm/boot/dts/qcom-msm8974.dtsi
-+++ b/arch/arm/boot/dts/qcom-msm8974.dtsi
-@@ -443,10 +443,10 @@ sdhc_1: mmc@f9824900 {
- 			interrupts = <GIC_SPI 123 IRQ_TYPE_LEVEL_HIGH>,
- 				     <GIC_SPI 138 IRQ_TYPE_LEVEL_HIGH>;
- 			interrupt-names = "hc_irq", "pwr_irq";
--			clocks = <&gcc GCC_SDCC1_APPS_CLK>,
--				 <&gcc GCC_SDCC1_AHB_CLK>,
-+			clocks = <&gcc GCC_SDCC1_AHB_CLK>,
-+				 <&gcc GCC_SDCC1_APPS_CLK>,
- 				 <&xo_board>;
--			clock-names = "core", "iface", "xo";
-+			clock-names = "iface", "core", "xo";
- 			bus-width = <8>;
- 			non-removable;
- 
-@@ -460,10 +460,10 @@ sdhc_3: mmc@f9864900 {
- 			interrupts = <GIC_SPI 127 IRQ_TYPE_LEVEL_HIGH>,
- 				     <GIC_SPI 224 IRQ_TYPE_LEVEL_HIGH>;
- 			interrupt-names = "hc_irq", "pwr_irq";
--			clocks = <&gcc GCC_SDCC3_APPS_CLK>,
--				 <&gcc GCC_SDCC3_AHB_CLK>,
-+			clocks = <&gcc GCC_SDCC3_AHB_CLK>,
-+				 <&gcc GCC_SDCC3_APPS_CLK>,
- 				 <&xo_board>;
--			clock-names = "core", "iface", "xo";
-+			clock-names = "iface", "core", "xo";
- 			bus-width = <4>;
- 
- 			#address-cells = <1>;
-@@ -479,10 +479,10 @@ sdhc_2: mmc@f98a4900 {
- 			interrupts = <GIC_SPI 125 IRQ_TYPE_LEVEL_HIGH>,
- 				     <GIC_SPI 221 IRQ_TYPE_LEVEL_HIGH>;
- 			interrupt-names = "hc_irq", "pwr_irq";
--			clocks = <&gcc GCC_SDCC2_APPS_CLK>,
--				 <&gcc GCC_SDCC2_AHB_CLK>,
-+			clocks = <&gcc GCC_SDCC2_AHB_CLK>,
-+				 <&gcc GCC_SDCC2_APPS_CLK>,
- 				 <&xo_board>;
--			clock-names = "core", "iface", "xo";
-+			clock-names = "iface", "core", "xo";
- 			bus-width = <4>;
- 
- 			#address-cells = <1>;
-diff --git a/arch/arm/boot/dts/qcom-msm8974pro.dtsi b/arch/arm/boot/dts/qcom-msm8974pro.dtsi
-index 1e882e16a221..58df6e75ab6d 100644
---- a/arch/arm/boot/dts/qcom-msm8974pro.dtsi
-+++ b/arch/arm/boot/dts/qcom-msm8974pro.dtsi
-@@ -10,10 +10,10 @@ &gpu {
- };
- 
- &sdhc_1 {
--	clocks = <&gcc GCC_SDCC1_APPS_CLK>,
--		 <&gcc GCC_SDCC1_AHB_CLK>,
-+	clocks = <&gcc GCC_SDCC1_AHB_CLK>,
-+		 <&gcc GCC_SDCC1_APPS_CLK>,
- 		 <&xo_board>,
- 		 <&gcc GCC_SDCC1_CDCCAL_FF_CLK>,
- 		 <&gcc GCC_SDCC1_CDCCAL_SLEEP_CLK>;
--	clock-names = "core", "iface", "xo", "cal", "sleep";
-+	clock-names = "iface", "core", "xo", "cal", "sleep";
- };
+Changes in v2:
+- Update commit message description.
+
+ arch/arm64/boot/dts/qcom/qcs404.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/qcs404.dtsi b/arch/arm64/boot/dts/qcom/qcs404.dtsi
+index 513bf7343b2c..50edc11a5bb5 100644
+--- a/arch/arm64/boot/dts/qcom/qcs404.dtsi
++++ b/arch/arm64/boot/dts/qcom/qcs404.dtsi
+@@ -557,7 +557,7 @@ usb3_dwc3: usb@7580000 {
+ 				compatible = "snps,dwc3";
+ 				reg = <0x07580000 0xcd00>;
+ 				interrupts = <GIC_SPI 26 IRQ_TYPE_LEVEL_HIGH>;
+-				phys = <&usb2_phy_sec>, <&usb3_phy>;
++				phys = <&usb2_phy_prim>, <&usb3_phy>;
+ 				phy-names = "usb2-phy", "usb3-phy";
+ 				snps,has-lpm-erratum;
+ 				snps,hird-threshold = /bits/ 8 <0x10>;
+@@ -586,7 +586,7 @@ usb@78c0000 {
+ 				compatible = "snps,dwc3";
+ 				reg = <0x078c0000 0xcc00>;
+ 				interrupts = <GIC_SPI 44 IRQ_TYPE_LEVEL_HIGH>;
+-				phys = <&usb2_phy_prim>;
++				phys = <&usb2_phy_sec>;
+ 				phy-names = "usb2-phy";
+ 				snps,has-lpm-erratum;
+ 				snps,hird-threshold = /bits/ 8 <0x10>;
 -- 
-2.34.1
+2.25.1
 
