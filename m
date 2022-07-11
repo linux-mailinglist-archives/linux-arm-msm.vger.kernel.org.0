@@ -2,164 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2788256D1AC
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Jul 2022 23:30:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5A52756D241
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Jul 2022 02:46:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229522AbiGJVaw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 10 Jul 2022 17:30:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55234 "EHLO
+        id S229684AbiGKAqv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 10 Jul 2022 20:46:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44678 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229757AbiGJVah (ORCPT
+        with ESMTP id S229667AbiGKAqu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 10 Jul 2022 17:30:37 -0400
-Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E778E12625
-        for <linux-arm-msm@vger.kernel.org>; Sun, 10 Jul 2022 14:29:13 -0700 (PDT)
-Received: from pendragon.ideasonboard.com (62-78-145-57.bb.dnainternet.fi [62.78.145.57])
-        by perceval.ideasonboard.com (Postfix) with ESMTPSA id CFF9B4F7;
-        Sun, 10 Jul 2022 23:29:11 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-        s=mail; t=1657488552;
-        bh=ZNRmaHC5alSI5DfkA+wNlu4+XmdJG4Qv4Rbv1EPifLA=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Qnkz7vqaHVpWVecV2jK0ScAKxdqfJGY4bqYaMrnsG49RQXDcmPEBp9hmAga79vMIq
-         2yV2kU/t+2GLKZ5xkFWKak5gQIrm7lRX9Q9+TjMBJnkd/IhPUOV+LC4QeONOZRnij0
-         A1a/T9YSEjIzkSZH8PAu3smjaWVNpk4w45M+hCzU=
-Date:   Mon, 11 Jul 2022 00:28:44 +0300
-From:   Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Douglas Anderson <dianders@chromium.org>,
-        Andrzej Hajda <andrzej.hajda@intel.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Robert Foss <robert.foss@linaro.org>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
+        Sun, 10 Jul 2022 20:46:50 -0400
+Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1EE2BB7CB
+        for <linux-arm-msm@vger.kernel.org>; Sun, 10 Jul 2022 17:46:49 -0700 (PDT)
+Received: by mail-pj1-x102d.google.com with SMTP id 89-20020a17090a09e200b001ef7638e536so6842553pjo.3
+        for <linux-arm-msm@vger.kernel.org>; Sun, 10 Jul 2022 17:46:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=jy+u2/Orkw5KmxP7WWAAr+h35zqqzgNFiJmE5176PKs=;
+        b=FKr76hKbqTHdXaZzcQk1JcbTd4xuSqOxQDHNWsg9ayDudMqqReoSZ9z5QmGGwMFK6S
+         dlFfuOyqGl71Bl5zPoaiYh/JYKPihW/xDoCmV0Up3twQrSU6cLI9zOefwxA9dSMbxhf0
+         kZ5NObhrk1+w6DieyXHAGPwqI95jn+lqRn34dPf+571/gtjAxv2l+RnoeOe1TmqaS6cq
+         701Se9xvjjzjHCEAMytfoLPCUhjaeF6YQ95sji2Aa41KGdmnX+rlXhVqWJTw/UQKC6Bw
+         q18kqUPqiLKJG4VA8SyuGe2jEKBO/BAB6QS5HZY3WEaFIv6UxxJu1UNvLixrRep5TMSh
+         TtSw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=jy+u2/Orkw5KmxP7WWAAr+h35zqqzgNFiJmE5176PKs=;
+        b=enyNxF3T/+4PbxSjP/AOU/U/1w6DEbsC3aDMBC3CwuHgjA1NxHTlPP/cr7Vh4lzdSc
+         aitn469XjSzGPMDVJJrzehoIcsggDgZZTjHohxzQ+5v239MV9F4nR7fXkfUWykMdhEi0
+         +V8pxRAuXRpc4LZxZxIJA6RMt+irrnbzbp31kPmk1a++XqbtbxQ5tLx+eyMpa6kzqxb4
+         a1Qwn+0vUCqKjtnZJu9I0noIiteHN2US6uXCxnLl13xf8FmsKWUhxkaaFqcVLOV+tveC
+         VM8Dnem+Ywv9bP1ixNAb7dlFpcRi4SBQUqtbXdSgAagTwGcVglUu9LQ3q0E9QbklT8H7
+         ptqw==
+X-Gm-Message-State: AJIora8uLJY+YJVwf/Vm+0/tL46zYF5sUAainTYFqSb225xuxCu0/pZa
+        qLOlaEdaHSqTpqnzX9f808E2SQ==
+X-Google-Smtp-Source: AGRyM1uNhy5evo7SwlchejT3g9GtNUWQV4wZlNyCE2q8RGYdxI34ybn5w9nncvXTYD1BAA5bxfIXQg==
+X-Received: by 2002:a17:902:da88:b0:16c:27f9:8762 with SMTP id j8-20020a170902da8800b0016c27f98762mr13845419plx.85.1657500408674;
+        Sun, 10 Jul 2022 17:46:48 -0700 (PDT)
+Received: from localhost ([122.171.18.80])
+        by smtp.gmail.com with ESMTPSA id y12-20020a17090322cc00b0016bd16f8acbsm2490732plg.114.2022.07.10.17.46.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 10 Jul 2022 17:46:48 -0700 (PDT)
+Date:   Mon, 11 Jul 2022 06:16:39 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Pierre Gondois <pierre.gondois@arm.com>
+Cc:     linux-kernel@vger.kernel.org, Ionela.Voinescu@arm.com,
+        Dietmar.Eggemann@arm.com, "Rafael J. Wysocki" <rafael@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: Re: [RFC PATCH 2/3] drm/bridge: ti-sn65dsi86: fetch bpc using
- drm_atomic_state
-Message-ID: <YstEjNY5hY52E4Gm@pendragon.ideasonboard.com>
-References: <20220710184536.172705-1-dmitry.baryshkov@linaro.org>
- <20220710184536.172705-3-dmitry.baryshkov@linaro.org>
+        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2 0/4] qcom-cpufreq-hw LMH irq/hotplug interractions
+Message-ID: <20220711004639.fpppw7gcv5lkyghs@vireshk-i7>
+References: <20220704112739.3020516-1-pierre.gondois@arm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220710184536.172705-3-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220704112739.3020516-1-pierre.gondois@arm.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Dmitry,
-
-Thank you for the patch.
-
-On Sun, Jul 10, 2022 at 09:45:35PM +0300, Dmitry Baryshkov wrote:
-> Rather than reading the pdata->connector directly, fetch the connector
-> using drm_atomic_state. This allows us to make pdata->connector optional
-> (and thus supporting DRM_BRIDGE_ATTACH_NO_CONNECTOR).
+On 04-07-22, 13:27, Pierre Gondois wrote:
+> v2:
+> - Rebased on v5.19-rc5
+> - Changed irq checks from '< 0' to '<= 0' to be aligned
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  drivers/gpu/drm/bridge/ti-sn65dsi86.c | 20 ++++++++++++++------
->  1 file changed, 14 insertions(+), 6 deletions(-)
+> The patch-set was tested on a rb5 with an old firmware version:
+> UEFI Ver    : 5.0.210817.BOOT.XF.3.2-00354-SM8250-1
+> Build Info  : 64b Aug 17 2021 23:35:39
 > 
-> diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-> index 01171547f638..df08207d6223 100644
-> --- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-> +++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-> @@ -779,9 +779,9 @@ static void ti_sn_bridge_set_dsi_rate(struct ti_sn65dsi86 *pdata)
->  	regmap_write(pdata->regmap, SN_DSIA_CLK_FREQ_REG, val);
->  }
->  
-> -static unsigned int ti_sn_bridge_get_bpp(struct ti_sn65dsi86 *pdata)
-> +static unsigned int ti_sn_bridge_get_bpp(struct drm_connector *connector)
->  {
-> -	if (pdata->connector->display_info.bpc <= 6)
-> +	if (connector->display_info.bpc <= 6)
->  		return 18;
->  	else
->  		return 24;
-> @@ -796,7 +796,7 @@ static const unsigned int ti_sn_bridge_dp_rate_lut[] = {
->  	0, 1620, 2160, 2430, 2700, 3240, 4320, 5400
->  };
->  
-> -static int ti_sn_bridge_calc_min_dp_rate_idx(struct ti_sn65dsi86 *pdata)
-> +static int ti_sn_bridge_calc_min_dp_rate_idx(struct ti_sn65dsi86 *pdata, unsigned int bpp)
->  {
->  	unsigned int bit_rate_khz, dp_rate_mhz;
->  	unsigned int i;
-> @@ -804,7 +804,7 @@ static int ti_sn_bridge_calc_min_dp_rate_idx(struct ti_sn65dsi86 *pdata)
->  		&pdata->bridge.encoder->crtc->state->adjusted_mode;
->  
->  	/* Calculate minimum bit rate based on our pixel clock. */
-> -	bit_rate_khz = mode->clock * ti_sn_bridge_get_bpp(pdata);
-> +	bit_rate_khz = mode->clock * bpp;
->  
->  	/* Calculate minimum DP data rate, taking 80% as per DP spec */
->  	dp_rate_mhz = DIV_ROUND_UP(bit_rate_khz * DP_CLK_FUDGE_NUM,
-> @@ -1016,12 +1016,19 @@ static void ti_sn_bridge_atomic_enable(struct drm_bridge *bridge,
->  				       struct drm_bridge_state *old_bridge_state)
->  {
->  	struct ti_sn65dsi86 *pdata = bridge_to_ti_sn65dsi86(bridge);
-> +	struct drm_connector *connector;
->  	const char *last_err_str = "No supported DP rate";
->  	unsigned int valid_rates;
->  	int dp_rate_idx;
->  	unsigned int val;
->  	int ret = -EINVAL;
->  	int max_dp_lanes;
-> +	unsigned int bpp;
-> +
-> +	connector = drm_atomic_get_new_connector_for_encoder(old_bridge_state->base.state,
-> +							     bridge->encoder);
-> +	if (!connector)
+> commit ffd6cc92ab9c ("arm64: dts: qcom: sm8250: add description of dcvsh
+> interrupts")
+> enables DCVS (Dynamic Clock and Voltage Scaling) for sm8250 chips
+> (so rb5 included). As no LMH (Limits Management Hardware) interrupts
+> were seen, the firmware used for testing should not be able support
+> them.
+> 
+> This patch-set should still contain relevant modifications regarding
+> LMH interrupts and CPU hotplug. Still, it would be good to test
+> it on a platform which actually uses LMH interrupts.
+> 
+> Pierre Gondois (4):
+>   cpufreq: qcom-hw: Reset cancel_throttle when policy is re-enabled
+>   cpufreq: qcom-hw: Disable LMH irq when disabling policy
+>   cpufreq: qcom-hw: Remove deprecated irq_set_affinity_hint() call
+>   cpufreq: Change order of online() CB and policy->cpus modification
+> 
+>  drivers/cpufreq/cpufreq.c         |  6 +++---
+>  drivers/cpufreq/qcom-cpufreq-hw.c | 11 ++++++++---
+>  2 files changed, 11 insertions(+), 6 deletions(-)
 
-As Sam mentioned, a dev_err() would be good here if you think this can
-happen. If there's no risk that connector will be null, you could drop
-the check.
-
-> +		return;
->  
->  	max_dp_lanes = ti_sn_get_max_lanes(pdata);
->  	pdata->dp_lanes = min(pdata->dp_lanes, max_dp_lanes);
-> @@ -1047,8 +1054,9 @@ static void ti_sn_bridge_atomic_enable(struct drm_bridge *bridge,
->  	drm_dp_dpcd_writeb(&pdata->aux, DP_EDP_CONFIGURATION_SET,
->  			   DP_ALTERNATE_SCRAMBLER_RESET_ENABLE);
->  
-> +	bpp = ti_sn_bridge_get_bpp(connector);
->  	/* Set the DP output format (18 bpp or 24 bpp) */
-> -	val = (ti_sn_bridge_get_bpp(pdata) == 18) ? BPP_18_RGB : 0;
-> +	val = (bpp == 18) ? BPP_18_RGB : 0;
-
-You can drop the parentheses.
-
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-
->  	regmap_update_bits(pdata->regmap, SN_DATA_FORMAT_REG, BPP_18_RGB, val);
->  
->  	/* DP lane config */
-> @@ -1059,7 +1067,7 @@ static void ti_sn_bridge_atomic_enable(struct drm_bridge *bridge,
->  	valid_rates = ti_sn_bridge_read_valid_rates(pdata);
->  
->  	/* Train until we run out of rates */
-> -	for (dp_rate_idx = ti_sn_bridge_calc_min_dp_rate_idx(pdata);
-> +	for (dp_rate_idx = ti_sn_bridge_calc_min_dp_rate_idx(pdata, bpp);
->  	     dp_rate_idx < ARRAY_SIZE(ti_sn_bridge_dp_rate_lut);
->  	     dp_rate_idx++) {
->  		if (!(valid_rates & BIT(dp_rate_idx)))
+Applied. Thanks.
 
 -- 
-Regards,
-
-Laurent Pinchart
+viresh
