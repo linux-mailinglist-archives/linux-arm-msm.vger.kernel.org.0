@@ -2,230 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F3EF656D892
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Jul 2022 10:44:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DD09856F963
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Jul 2022 10:56:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231166AbiGKIo2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Jul 2022 04:44:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53898 "EHLO
+        id S229899AbiGKI4Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Jul 2022 04:56:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37742 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229983AbiGKInv (ORCPT
+        with ESMTP id S229526AbiGKI4P (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Jul 2022 04:43:51 -0400
-Received: from relay03.th.seeweb.it (relay03.th.seeweb.it [5.144.164.164])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 415D5E1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 01:43:30 -0700 (PDT)
-Received: from [192.168.1.101] (abxi46.neoplus.adsl.tpnet.pl [83.9.2.46])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        Mon, 11 Jul 2022 04:56:15 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE54D12D06;
+        Mon, 11 Jul 2022 01:56:14 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 107EA1F53F;
-        Mon, 11 Jul 2022 10:43:28 +0200 (CEST)
-Message-ID: <0004504d-d009-1eb7-d544-5f8a28aa565a@somainline.org>
-Date:   Mon, 11 Jul 2022 10:43:27 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH v2 5/5] ARM: dts: qcom: align SDHCI clocks with DT schema
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
+        by ams.source.kernel.org (Postfix) with ESMTPS id 886CDB80E76;
+        Mon, 11 Jul 2022 08:56:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 347F0C34115;
+        Mon, 11 Jul 2022 08:56:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1657529772;
+        bh=PpEE8mf3vOUTI7HZ52uDTZOLGpTTVD3SMaD4DBZ+kP4=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=iSNh0heq6z34LhARLgJLa9EHN+GWO1LwgtkBQj+4zD1t4Wd4LEUe1WlBQfiutwlY/
+         URg/uKFZPgKE1Hb9WV9PoRFKmzRwD5e+JSQdOCjM2kpoBGJ1meOtT9ksmcW5Ilf1U2
+         UoyPH+JcPNA9LJtcTk3cLhOgZ4V3PSs+6k9Tpy4z0HksOGJXlZGkrm1l22KuZgcHhZ
+         nHyAats6pfk/6wZ1KUroIYsxQT1fTvAinfT/ngj3DPSKIEFGfNfl9AaAplFJXL8h3o
+         NMmVMS7BclYWCoDjMvfwrSEUO60NZ0SeYNvU05/oI5R8jvTrL4B3tF0HAG7ZDi+SPh
+         KQfqfmEdx5+OA==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1oApD9-00069W-TU; Mon, 11 Jul 2022 10:56:12 +0200
+Date:   Mon, 11 Jul 2022 10:56:11 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Johan Hovold <johan+linaro@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Cc:     Douglas Anderson <dianders@chromium.org>
-References: <20220711082940.39539-1-krzysztof.kozlowski@linaro.org>
- <20220711082940.39539-6-krzysztof.kozlowski@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-In-Reply-To: <20220711082940.39539-6-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        manivannan.sadhasivam@linaro.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: sc8280xp: Add lost ranges for timer
+Message-ID: <Ysvlqw/+eMk5XLRY@hovoldconsulting.com>
+References: <20220707160858.3178771-1-bjorn.andersson@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220707160858.3178771-1-bjorn.andersson@linaro.org>
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 11.07.2022 10:29, Krzysztof Kozlowski wrote:
-> The DT schema expects clocks iface-core order.  No functional change.
+On Thu, Jul 07, 2022 at 09:08:58AM -0700, Bjorn Andersson wrote:
+> The timer node needs ranges specified to map the 1-cell children to the
+> 2-cell address range used in /soc. This addition never made it into the
+> patch that was posted and merged, so add it now.
 > 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Reviewed-by: Douglas Anderson <dianders@chromium.org>
+> Fixes: 152d1faf1e2f ("arm64: dts: qcom: add SC8280XP platform")
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 > ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-
-Konrad
->  arch/arm/boot/dts/qcom-apq8084.dtsi    | 12 ++++++------
->  arch/arm/boot/dts/qcom-ipq4019.dtsi    |  4 ++--
->  arch/arm/boot/dts/qcom-msm8226.dtsi    | 18 +++++++++---------
->  arch/arm/boot/dts/qcom-msm8974.dtsi    | 18 +++++++++---------
->  arch/arm/boot/dts/qcom-msm8974pro.dtsi |  6 +++---
->  5 files changed, 29 insertions(+), 29 deletions(-)
+>  arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 1 +
+>  1 file changed, 1 insertion(+)
 > 
-> diff --git a/arch/arm/boot/dts/qcom-apq8084.dtsi b/arch/arm/boot/dts/qcom-apq8084.dtsi
-> index 45f3cbcf6238..c887ac5cdd7d 100644
-> --- a/arch/arm/boot/dts/qcom-apq8084.dtsi
-> +++ b/arch/arm/boot/dts/qcom-apq8084.dtsi
-> @@ -425,10 +425,10 @@ mmc@f9824900 {
->  			reg-names = "hc", "core";
->  			interrupts = <GIC_SPI 123 IRQ_TYPE_LEVEL_HIGH>, <GIC_SPI 138 IRQ_TYPE_LEVEL_HIGH>;
->  			interrupt-names = "hc_irq", "pwr_irq";
-> -			clocks = <&gcc GCC_SDCC1_APPS_CLK>,
-> -				 <&gcc GCC_SDCC1_AHB_CLK>,
-> +			clocks = <&gcc GCC_SDCC1_AHB_CLK>,
-> +				 <&gcc GCC_SDCC1_APPS_CLK>,
->  				 <&xo_board>;
-> -			clock-names = "core", "iface", "xo";
-> +			clock-names = "iface", "core", "xo";
->  			status = "disabled";
->  		};
->  
-> @@ -438,10 +438,10 @@ mmc@f98a4900 {
->  			reg-names = "hc", "core";
->  			interrupts = <GIC_SPI 125 IRQ_TYPE_LEVEL_HIGH>, <GIC_SPI 221 IRQ_TYPE_LEVEL_HIGH>;
->  			interrupt-names = "hc_irq", "pwr_irq";
-> -			clocks = <&gcc GCC_SDCC2_APPS_CLK>,
-> -				 <&gcc GCC_SDCC2_AHB_CLK>,
-> +			clocks = <&gcc GCC_SDCC2_AHB_CLK>,
-> +				 <&gcc GCC_SDCC2_APPS_CLK>,
->  				 <&xo_board>;
-> -			clock-names = "core", "iface", "xo";
-> +			clock-names = "iface", "core", "xo";
->  			status = "disabled";
->  		};
->  
-> diff --git a/arch/arm/boot/dts/qcom-ipq4019.dtsi b/arch/arm/boot/dts/qcom-ipq4019.dtsi
-> index 1b98764bab7a..a8a32a5e7e5d 100644
-> --- a/arch/arm/boot/dts/qcom-ipq4019.dtsi
-> +++ b/arch/arm/boot/dts/qcom-ipq4019.dtsi
-> @@ -228,9 +228,9 @@ sdhci: mmc@7824900 {
->  			interrupts = <GIC_SPI 123 IRQ_TYPE_LEVEL_HIGH>, <GIC_SPI 138 IRQ_TYPE_LEVEL_HIGH>;
->  			interrupt-names = "hc_irq", "pwr_irq";
->  			bus-width = <8>;
-> -			clocks = <&gcc GCC_SDCC1_APPS_CLK>, <&gcc GCC_SDCC1_AHB_CLK>,
-> +			clocks = <&gcc GCC_SDCC1_AHB_CLK>, <&gcc GCC_SDCC1_APPS_CLK>,
->  				 <&gcc GCC_DCD_XO_CLK>;
-> -			clock-names = "core", "iface", "xo";
-> +			clock-names = "iface", "core", "xo";
->  			status = "disabled";
->  		};
->  
-> diff --git a/arch/arm/boot/dts/qcom-msm8226.dtsi b/arch/arm/boot/dts/qcom-msm8226.dtsi
-> index f711463d22dc..9d4223bf8fc1 100644
-> --- a/arch/arm/boot/dts/qcom-msm8226.dtsi
-> +++ b/arch/arm/boot/dts/qcom-msm8226.dtsi
-> @@ -141,10 +141,10 @@ sdhc_1: mmc@f9824900 {
->  			interrupts = <GIC_SPI 123 IRQ_TYPE_LEVEL_HIGH>,
->  				     <GIC_SPI 138 IRQ_TYPE_LEVEL_HIGH>;
->  			interrupt-names = "hc_irq", "pwr_irq";
-> -			clocks = <&gcc GCC_SDCC1_APPS_CLK>,
-> -				 <&gcc GCC_SDCC1_AHB_CLK>,
-> +			clocks = <&gcc GCC_SDCC1_AHB_CLK>,
-> +				 <&gcc GCC_SDCC1_APPS_CLK>,
->  				 <&xo_board>;
-> -			clock-names = "core", "iface", "xo";
-> +			clock-names = "iface", "core", "xo";
->  			pinctrl-names = "default";
->  			pinctrl-0 = <&sdhc1_default_state>;
->  			status = "disabled";
-> @@ -157,10 +157,10 @@ sdhc_2: mmc@f98a4900 {
->  			interrupts = <GIC_SPI 125 IRQ_TYPE_LEVEL_HIGH>,
->  				     <GIC_SPI 221 IRQ_TYPE_LEVEL_HIGH>;
->  			interrupt-names = "hc_irq", "pwr_irq";
-> -			clocks = <&gcc GCC_SDCC2_APPS_CLK>,
-> -				 <&gcc GCC_SDCC2_AHB_CLK>,
-> +			clocks = <&gcc GCC_SDCC2_AHB_CLK>,
-> +				 <&gcc GCC_SDCC2_APPS_CLK>,
->  				 <&xo_board>;
-> -			clock-names = "core", "iface", "xo";
-> +			clock-names = "iface", "core", "xo";
->  			pinctrl-names = "default";
->  			pinctrl-0 = <&sdhc2_default_state>;
->  			status = "disabled";
-> @@ -173,10 +173,10 @@ sdhc_3: mmc@f9864900 {
->  			interrupts = <GIC_SPI 127 IRQ_TYPE_LEVEL_HIGH>,
->  				     <GIC_SPI 224 IRQ_TYPE_LEVEL_HIGH>;
->  			interrupt-names = "hc_irq", "pwr_irq";
-> -			clocks = <&gcc GCC_SDCC3_APPS_CLK>,
-> -				 <&gcc GCC_SDCC3_AHB_CLK>,
-> +			clocks = <&gcc GCC_SDCC3_AHB_CLK>,
-> +				 <&gcc GCC_SDCC3_APPS_CLK>,
->  				 <&xo_board>;
-> -			clock-names = "core", "iface", "xo";
-> +			clock-names = "iface", "core", "xo";
->  			pinctrl-names = "default";
->  			pinctrl-0 = <&sdhc3_default_state>;
->  			status = "disabled";
-> diff --git a/arch/arm/boot/dts/qcom-msm8974.dtsi b/arch/arm/boot/dts/qcom-msm8974.dtsi
-> index 971eceaef3d1..1f4baa6ac64d 100644
-> --- a/arch/arm/boot/dts/qcom-msm8974.dtsi
-> +++ b/arch/arm/boot/dts/qcom-msm8974.dtsi
-> @@ -443,10 +443,10 @@ sdhc_1: mmc@f9824900 {
->  			interrupts = <GIC_SPI 123 IRQ_TYPE_LEVEL_HIGH>,
->  				     <GIC_SPI 138 IRQ_TYPE_LEVEL_HIGH>;
->  			interrupt-names = "hc_irq", "pwr_irq";
-> -			clocks = <&gcc GCC_SDCC1_APPS_CLK>,
-> -				 <&gcc GCC_SDCC1_AHB_CLK>,
-> +			clocks = <&gcc GCC_SDCC1_AHB_CLK>,
-> +				 <&gcc GCC_SDCC1_APPS_CLK>,
->  				 <&xo_board>;
-> -			clock-names = "core", "iface", "xo";
-> +			clock-names = "iface", "core", "xo";
->  			bus-width = <8>;
->  			non-removable;
->  
-> @@ -460,10 +460,10 @@ sdhc_3: mmc@f9864900 {
->  			interrupts = <GIC_SPI 127 IRQ_TYPE_LEVEL_HIGH>,
->  				     <GIC_SPI 224 IRQ_TYPE_LEVEL_HIGH>;
->  			interrupt-names = "hc_irq", "pwr_irq";
-> -			clocks = <&gcc GCC_SDCC3_APPS_CLK>,
-> -				 <&gcc GCC_SDCC3_AHB_CLK>,
-> +			clocks = <&gcc GCC_SDCC3_AHB_CLK>,
-> +				 <&gcc GCC_SDCC3_APPS_CLK>,
->  				 <&xo_board>;
-> -			clock-names = "core", "iface", "xo";
-> +			clock-names = "iface", "core", "xo";
->  			bus-width = <4>;
->  
+> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> index 2bdb42c88311..37a4cd6f85b6 100644
+> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> @@ -1667,6 +1667,7 @@ timer@17c20000 {
+>  			reg = <0x0 0x17c20000 0x0 0x1000>;
 >  			#address-cells = <1>;
-> @@ -479,10 +479,10 @@ sdhc_2: mmc@f98a4900 {
->  			interrupts = <GIC_SPI 125 IRQ_TYPE_LEVEL_HIGH>,
->  				     <GIC_SPI 221 IRQ_TYPE_LEVEL_HIGH>;
->  			interrupt-names = "hc_irq", "pwr_irq";
-> -			clocks = <&gcc GCC_SDCC2_APPS_CLK>,
-> -				 <&gcc GCC_SDCC2_AHB_CLK>,
-> +			clocks = <&gcc GCC_SDCC2_AHB_CLK>,
-> +				 <&gcc GCC_SDCC2_APPS_CLK>,
->  				 <&xo_board>;
-> -			clock-names = "core", "iface", "xo";
-> +			clock-names = "iface", "core", "xo";
->  			bus-width = <4>;
+>  			#size-cells = <1>;
+> +			ranges = <0 0 0 0x20000000>;
+
+While addressing the current issue, this looks odd to me. Why not use a
+non-zero parent bus address here instead?
+
+And please use hex notation consistently for the addresses.
+
 >  
->  			#address-cells = <1>;
-> diff --git a/arch/arm/boot/dts/qcom-msm8974pro.dtsi b/arch/arm/boot/dts/qcom-msm8974pro.dtsi
-> index 1e882e16a221..58df6e75ab6d 100644
-> --- a/arch/arm/boot/dts/qcom-msm8974pro.dtsi
-> +++ b/arch/arm/boot/dts/qcom-msm8974pro.dtsi
-> @@ -10,10 +10,10 @@ &gpu {
->  };
->  
->  &sdhc_1 {
-> -	clocks = <&gcc GCC_SDCC1_APPS_CLK>,
-> -		 <&gcc GCC_SDCC1_AHB_CLK>,
-> +	clocks = <&gcc GCC_SDCC1_AHB_CLK>,
-> +		 <&gcc GCC_SDCC1_APPS_CLK>,
->  		 <&xo_board>,
->  		 <&gcc GCC_SDCC1_CDCCAL_FF_CLK>,
->  		 <&gcc GCC_SDCC1_CDCCAL_SLEEP_CLK>;
-> -	clock-names = "core", "iface", "xo", "cal", "sleep";
-> +	clock-names = "iface", "core", "xo", "cal", "sleep";
->  };
+>  			frame@17c21000 {
+>  				frame-number = <0>;
+
+Johan
