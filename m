@@ -2,116 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0390D570112
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Jul 2022 13:47:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 618D257013B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Jul 2022 13:53:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229607AbiGKLr5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Jul 2022 07:47:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36112 "EHLO
+        id S230335AbiGKLxA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Jul 2022 07:53:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45030 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230376AbiGKLrl (ORCPT
+        with ESMTP id S230498AbiGKLwy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Jul 2022 07:47:41 -0400
-Received: from mail-qk1-x72e.google.com (mail-qk1-x72e.google.com [IPv6:2607:f8b0:4864:20::72e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0360EFDC;
-        Mon, 11 Jul 2022 04:46:47 -0700 (PDT)
-Received: by mail-qk1-x72e.google.com with SMTP id v6so3588654qkh.2;
-        Mon, 11 Jul 2022 04:46:46 -0700 (PDT)
+        Mon, 11 Jul 2022 07:52:54 -0400
+Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C87B26AF2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 04:52:52 -0700 (PDT)
+Received: by mail-pf1-x431.google.com with SMTP id a15so4531823pfv.13
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 04:52:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=MhYRHiDSTXDwT6ErnpOS8yP7S6qbhKStQYvpDyuemqI=;
-        b=dGjeC2fXH5blEI872lq666Le0oz8iaHLUZmiFKX9wDSH7fLWrxlWdfH+8adrBI3Q5s
-         IRVPAgSST87GbE80+saboGZdMsv/MNaaW5bfDbNLJhlf8sxh9ql/fRJCZahLq43XND1q
-         hc19xeUfN8w0cgrNTRMVqMs2AbQs4vqx2L/PmxGnkdwM9oqeRjbGygcUOBjukAyaLp7q
-         TFEK5BUZZ6f4eInkvaT8U5MRuOV8WRLhavGXKNJOmB2rHDNluRiNnaaN9ydWgmCSvFNX
-         9ooB8xiItMwCpPdjQ+/LSItFmWrNusgBAG5hjkR45WSvndPYtxDjvSQwe9W7d1H0h9DA
-         oLFg==
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=IT6bnfMyBorw+49wZozfoU6MUehJRZf9hememagooxg=;
+        b=m9fKb8SOEPmRpvJUEaFB8Bp6mooUCxzh1kDecueyx/hGEXEMe4FQgGHJ/av4sCGRWk
+         hVGwapeMF3Ayxf1liMcuSiOOSf7VrCAnisII7KXiRdgOLbMW5KfWR6+uGqa7PqY0NLbt
+         PE3Obqve1rOR5CxZaQpaWYqZlaUK9FNO7D6+RCEIEEovHlKga84TgEF/4fE3/IYLYwwo
+         TK6Lngw/ujtxVxdALIwTWbCSbgRC5O7L1LzK/MQa9a0l+M0gO+RaD6MT7ji0axnNSoqY
+         tD5CZcHifnRbsKtWl/J2HVsVt85JTgQDtwXswXcVUYq6KfoB0ykdnCvJ0LykDmO4it7f
+         NH0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=MhYRHiDSTXDwT6ErnpOS8yP7S6qbhKStQYvpDyuemqI=;
-        b=pseZTIdBpAFj2CP7L/enibYpJ93eoQoUZL6OlB5XRtziKzHzjbIMVvEydlPXchW1tk
-         tfNRJoEtoQ4cARCbyim11HwfKjJwGG1P88k0GHU4ZhKDECCgM4t1fq8GuU3rcyzCqm8O
-         cb43WQf7fv80facBiuN2p1aXelPQiELxYvtyG0SnNFPufuNsrLzG1WyT7swxslHU6DT2
-         wXWUCZK+27vgU7vjBPGNLCXeN+i4DsrhZEKT5H3WN2/EmFRtIYtli94v750BIznZ++5Z
-         Ib2YbTI72woVdvYgWFfKl0ioBeUvtV+quCeSZaT9qU+5AjafrbUpHIYofsuCZ7s3y+nD
-         psXQ==
-X-Gm-Message-State: AJIora9X7GIQrkXb4kjuxqLQIGPWFpWyD1wrMWurmYqVXcsjeC/5g2nV
-        MmAMhP9T0uP8aQoCFGStaNo4auXKuAtMiP9XjeM=
-X-Google-Smtp-Source: AGRyM1twIJiwkbgBu5OURP7EKSSAQTFE8Ds3WWfTIStHxi+02nK/lWUPngC21gL7tmUeX8U0v2sDoYPiDxUtz971IDk=
-X-Received: by 2002:a05:620a:1a2a:b0:6b5:93bd:b662 with SMTP id
- bk42-20020a05620a1a2a00b006b593bdb662mr823482qkb.522.1657540006101; Mon, 11
- Jul 2022 04:46:46 -0700 (PDT)
-MIME-Version: 1.0
-References: <20220711104719.40939-1-robimarko@gmail.com> <20220711104719.40939-4-robimarko@gmail.com>
- <4de38d90-0020-c2db-b283-319b4a0e2ce5@linaro.org>
-In-Reply-To: <4de38d90-0020-c2db-b283-319b4a0e2ce5@linaro.org>
-From:   Robert Marko <robimarko@gmail.com>
-Date:   Mon, 11 Jul 2022 13:46:35 +0200
-Message-ID: <CAOX2RU6X=JiV1As+_N6c_=VaHfVYpke_deQmmNPMMDxfnz5i8g@mail.gmail.com>
-Subject: Re: [PATCH 4/6] clk: qcom: apss-ipq6018: add MODULE_ALIAS
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=IT6bnfMyBorw+49wZozfoU6MUehJRZf9hememagooxg=;
+        b=wTwoZTivI6qVfjpnpn85B3B/+VF29dHGNlYscUOtm+iMdmaDDHnO7QVLkIN4ogvVzG
+         S8pPC3AeZSeflpOStbCzlv5gRH8N7iSKzZ3Oa0bIcl0ugyuTML0op/tHnvSRNtzQNPj3
+         OEYpndKK3aE3LTsbPDL/qttjsVK4roeV5Psbb+f8qp/DoMeQO2fLSZd+VVftDt3MEk49
+         2fkJ/FPNseaJiltfi8Two3pYjZ1JQO7TfA8Y2QiIFXlxeIIe0RkskeOsz9mZBQYH+C85
+         hMXHNWluvtOrVMcWZqFRFeR3ubJJ3BLwaly9SgVKZKkoQT01fT1jTkVMHS/aPLLclYna
+         +FNA==
+X-Gm-Message-State: AJIora9BffQY1/AhqkBZTgy4DUSIxEJOfW6vNQTeU7RqdkHIqHM8hr86
+        yKy1GffaIuEEzbKE92CxFMw1tQ==
+X-Google-Smtp-Source: AGRyM1v1eihj78aPHcT9tIZ0bs0xq5JvJcgQfTJHIDOgqGyxrt23hFKUSIltMelH/gN9b7lieOudTQ==
+X-Received: by 2002:aa7:954a:0:b0:52a:bd44:d15a with SMTP id w10-20020aa7954a000000b0052abd44d15amr10936464pfq.35.1657540372026;
+        Mon, 11 Jul 2022 04:52:52 -0700 (PDT)
+Received: from leo-build-box.lan (n058152077182.netvigator.com. [58.152.77.182])
+        by smtp.gmail.com with ESMTPSA id h14-20020a17090a648e00b001eaec8cea55sm4586502pjj.57.2022.07.11.04.52.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 11 Jul 2022 04:52:51 -0700 (PDT)
+From:   Leo Yan <leo.yan@linaro.org>
+To:     Georgi Djakov <djakov@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        krzysztof.kozlowski+dt@linaro.org, sivaprak@codeaurora.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-clk@vger.kernel.org,
-        Devicetree List <devicetree@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     Leo Yan <leo.yan@linaro.org>
+Subject: [PATCH v5 0/5] interconnect: qcom: icc-rpm: Support bucket
+Date:   Mon, 11 Jul 2022 19:52:35 +0800
+Message-Id: <20220711115240.806236-1-leo.yan@linaro.org>
+X-Mailer: git-send-email 2.25.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 11 Jul 2022 at 13:05, Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
->
-> On 11/07/2022 12:47, Robert Marko wrote:
-> > Add MODULE_ALIAS so that driver will be autoloaded if built as a module.
-> >
-> > Signed-off-by: Robert Marko <robimarko@gmail.com>
-> > ---
-> >  drivers/clk/qcom/apss-ipq6018.c | 1 +
-> >  1 file changed, 1 insertion(+)
-> >
-> > diff --git a/drivers/clk/qcom/apss-ipq6018.c b/drivers/clk/qcom/apss-ipq6018.c
-> > index f2f502e2d5a4..963c69f2c0c2 100644
-> > --- a/drivers/clk/qcom/apss-ipq6018.c
-> > +++ b/drivers/clk/qcom/apss-ipq6018.c
-> > @@ -101,5 +101,6 @@ static struct platform_driver apss_ipq6018_driver = {
-> >
-> >  module_platform_driver(apss_ipq6018_driver);
-> >
-> > +MODULE_ALIAS("platform:qcom,apss-ipq6018-clk");
->
-> That's not correct alias (no commas) and usually alias is not needed at
-> all. If you need one, please explain why it is needed. Module
-> autoloading works fine without aliases...
+This patch set is to support bucket in icc-rpm driver, so it implements
+the similar mechanism in the icc-rpmh driver.
 
-Hi Krzysztof,
-alias is required here as the driver does not use a DT compatible but
-is registered
-by the APCS driver, if built as a module, it won't get autoloaded
-without an alias.
+We can use interconnect path tag to indicate the bandwidth voting is for
+which buckets, and there have three kinds of buckets: AWC, WAKE and
+SLEEP, finally the wake and sleep bucket values are used to set the
+corresponding clock (active and sleep clocks).  So far, we keep the AWC
+bucket but doesn't really use it.
 
-I can only fix up the driver name here and in APCS first to have an
-alias without commas.
+Patches 01, 02, 03 enable interconnect path tag and update the DT
+binding document; patches 04 and 05 support bucket and use bucket values
+to set the bandwidth and clock rates.
 
-Regards,
-Robert
->
-> Best regards,
-> Krzysztof
+Note, this patch set is dependent on an out of tree patch "interconnect:
+icc-rpm: Set destination bandwidth as well as source bandwidth" [1].
+With the dependent patch, this patch set can be cleanly applied on the
+Linux kernel master branch with the latest commit 32346491ddf2
+("Linux 5.19-rc6").
+
+[1] https://lore.kernel.org/linux-pm/20220707093823.1691870-1-bryan.odonoghue@linaro.org/T/#r304f7b103c806e1570d555a0f5aaf83ae3990ac0
+
+
+Changes from v4:
+- Added Krzysztof's Acked tag for DT binding document patch;
+- Fixed the unalignment between function qcom_icc_pre_bw_aggregate() and
+  its comment (Georgi);
+- Simplified qcom_icc_bus_aggregate() with removing unused parameter
+  'max_agg_peak';
+- Removed unsed local variable 'max_peak_bw' in qcom_icc_set() (Georgi).
+
+Changes from v3:
+- Removed $ref and redundant sentence in DT binding document for
+  '#interconnect-cells' (Krzysztof Kozlowski).
+
+Changes from v2:
+- Fixed for DT checker error for command ''make DT_CHECKER_FLAGS=-m
+  dt_binding_check' (Rob Herring).
+
+Changes from v1:
+- Added description for property "#interconnect-cells" (Rob Herring);
+- Added Dimtry's reviewed tags for patches 02 and 03 (Dmitry Baryshkov);
+- Rebased on the latest mainline kernel and resolved conflict.
+
+
+Leo Yan (5):
+  dt-bindings: interconnect: Update property for icc-rpm path tag
+  interconnect: qcom: Move qcom_icc_xlate_extended() to a common file
+  interconnect: qcom: icc-rpm: Change to use qcom_icc_xlate_extended()
+  interconnect: qcom: icc-rpm: Support multiple buckets
+  interconnect: qcom: icc-rpm: Set bandwidth and clock for bucket values
+
+ .../bindings/interconnect/qcom,rpm.yaml       |   6 +-
+ drivers/interconnect/qcom/Makefile            |   3 +
+ drivers/interconnect/qcom/icc-common.c        |  34 +++++
+ drivers/interconnect/qcom/icc-common.h        |  13 ++
+ drivers/interconnect/qcom/icc-rpm.c           | 129 +++++++++++++++---
+ drivers/interconnect/qcom/icc-rpm.h           |   6 +
+ drivers/interconnect/qcom/icc-rpmh.c          |  26 +---
+ drivers/interconnect/qcom/icc-rpmh.h          |   1 -
+ drivers/interconnect/qcom/sm8450.c            |   1 +
+ 9 files changed, 176 insertions(+), 43 deletions(-)
+ create mode 100644 drivers/interconnect/qcom/icc-common.c
+ create mode 100644 drivers/interconnect/qcom/icc-common.h
+
+-- 
+2.25.1
+
