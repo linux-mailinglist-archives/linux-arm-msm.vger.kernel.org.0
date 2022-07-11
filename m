@@ -2,73 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D491056D7DB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Jul 2022 10:27:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C632856D7E7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Jul 2022 10:29:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229977AbiGKI1Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Jul 2022 04:27:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33334 "EHLO
+        id S230003AbiGKI3C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Jul 2022 04:29:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35358 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229894AbiGKI1W (ORCPT
+        with ESMTP id S229745AbiGKI27 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Jul 2022 04:27:22 -0400
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E8751ADB6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 01:27:21 -0700 (PDT)
-Received: by mail-lj1-x236.google.com with SMTP id r9so5306351ljp.9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 01:27:21 -0700 (PDT)
+        Mon, 11 Jul 2022 04:28:59 -0400
+Received: from mail-yw1-x112f.google.com (mail-yw1-x112f.google.com [IPv6:2607:f8b0:4864:20::112f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC18EB849
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 01:28:57 -0700 (PDT)
+Received: by mail-yw1-x112f.google.com with SMTP id 00721157ae682-31cac89d8d6so41624777b3.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 01:28:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=4rYTa3JGM6IeieDSa7LDtG3vHNWLhIAb8Q7HiOVEvC8=;
-        b=zinFVnq9fQpbCQuwb8BHCAEowVRjH36LHQTHxp5OnTlr8AXGzG+c4lQBsUvi6dPqVP
-         p+m3H9SksCgQr5AHTzo9OMgGCiP9QJMiffClQ8E1wkLAMyvXguBdqo+wP4AGSHFwY+NA
-         7ee2xPiK/4naKDcwxtsKeiRoiAd2IrE7zQrz0UiAmsICBc+W1ZDj0WkXtp2rW6JGvTau
-         VjiZP1GwjwgiAdNoH1K63Tcp0GYIFlazw041c8HEVOuPOkwNm6P4QTYOjzRbvpGk5moO
-         5x4tq7mb+YJeuGETn92KXLWJvsBjk9g14aPJdGMDHSXQQPqtqqH3w0bdtPOagwpOWhSP
-         ucAg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Sq0T3pmYrggKzaAZQ525vBiaqhos/ZjofwdiLff4/10=;
+        b=Ow1XJzi2yxTb2BhtBRN+iLQASh5PRfLYD9bkD4DJe3TJqjNVgEjKoNb7olcFNXpANH
+         MouRa7zQ4IoiEIFKbZFpCEESG6nouNLQubGWGNpL+hI9n2DicNPf4/AsoY+OplxGKKJz
+         l3RlakAp02549mB2RdWKo/a44AuOcwZezC29ioyUqXB+ZFbULnBV5RM15wXof2eVyAQo
+         Yf5c3n44k6nYvIIDchJY/rThsYfaEDdKdPcUCjNKZkiTF677NHfvGCRfm8eyQ8kQoDTp
+         +Nz2RUg0cmNc6VXTZ6t3Ls42Ju4e+S7T+F30pnvtKmSZi26W1olnHAa9CU7hzXFZEKBN
+         wupQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=4rYTa3JGM6IeieDSa7LDtG3vHNWLhIAb8Q7HiOVEvC8=;
-        b=X5P7xsUYUwGJV5hHo665CbE/h92x6KnqChjyf7DpcpJqAwtsd6KnN6KibDkC4bRw8q
-         yGN7oLp0lyUcPzbWAxCIwXU8/XfVv2yQxrJ3dZS+jcupeOeezslovg4zXRWhIqRGx5qs
-         tgk6fGUhIhaoA7idL4ijHkxoXDSbFMxAobPrQIyGp/H+TilfZe0ybfnvDy7yRVsk3vzj
-         TZnA/8/ssJwn2Mb0t031Dfl28WazIIsqmUy2cYmLjaJNiSsTrKydWMT11k17CoChyC/v
-         BAi0SBr/pvKU+3tqbM0q3ZepkQeTqS572LWiToSqR2yYO7BPiexlizs8VtGleKalDeLh
-         YTCQ==
-X-Gm-Message-State: AJIora8xxKGVozanFHD23coyOJZT47MilkMwEas7HsJxZb4LgirKCy7b
-        TY5MMUUAu8uj7uSYjNobXxoGfw==
-X-Google-Smtp-Source: AGRyM1stMqKlh8JH5aONT4GAIuHzSJe0Ju8dVYUNNWTNDrM2QWxZpOJRQVYJo/uTieqlDxsE/6ILFg==
-X-Received: by 2002:a05:651c:1061:b0:25d:6302:68a2 with SMTP id y1-20020a05651c106100b0025d630268a2mr5368868ljm.212.1657528040761;
-        Mon, 11 Jul 2022 01:27:20 -0700 (PDT)
-Received: from krzk-bin.. (fwa5cab-55.bb.online.no. [88.92.171.55])
-        by smtp.gmail.com with ESMTPSA id c30-20020a05651200de00b00473c87152bcsm1408994lfp.127.2022.07.11.01.27.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Jul 2022 01:27:19 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Ulf Hansson <ulf.hansson@linaro.org>,
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Sq0T3pmYrggKzaAZQ525vBiaqhos/ZjofwdiLff4/10=;
+        b=2M1SVrW35rx8ds/OqzX5eGy8yJOodImyMLGnH6RUiVfgNthLX4AUj6IRKEroNRsTlE
+         mPhZiyzFzNo6su1Zgc564BHYQme9332DTNZ2tZDItya7SVjbea2A9kk1dHwoHFBL47o/
+         3C5Z7ss4FrYIstaLLg7D9y7Xb9giYxXG+9cY0DBmJDcmd7KuM4PrgpqoyOXeX6gqrrMk
+         PSg5TwNVTyWz2roK09odDAu/XgirPwoCvLGT1ss45Ii9QYmiTQMrrbpiSrkqBsONa3jU
+         zoS/CRyNVYDTF1JQTDR7Z9smd4mYwUXq5Opzg9Ke3CVmc2QNH74ZJoPmrkzrfUtpryk4
+         GXdw==
+X-Gm-Message-State: AJIora/C1sFcSRCyjYLPLQ0kHZ53gbI4dYKTT7sQ3WFHmIfH4g1NyRTP
+        iUCsQS3mSpdRP3Naznf1/Qc59ZFViB2mWtwGo05Omg==
+X-Google-Smtp-Source: AGRyM1sNtoCySgFWemY3HN32rjWfOR08gEjoVoKY6pgX03sL435RclFbyXFLrjPoyyIrEUst9cT/adWsEkKpY3X3gWU=
+X-Received: by 2002:a81:71c6:0:b0:318:38d5:37f3 with SMTP id
+ m189-20020a8171c6000000b0031838d537f3mr18041709ywc.268.1657528136964; Mon, 11
+ Jul 2022 01:28:56 -0700 (PDT)
+MIME-Version: 1.0
+References: <20220628145502.4158234-1-stephan.gerhold@kernkonzept.com>
+In-Reply-To: <20220628145502.4158234-1-stephan.gerhold@kernkonzept.com>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Mon, 11 Jul 2022 10:28:45 +0200
+Message-ID: <CACRpkdaQSvE_ANtt_A+rsbK8CT_Bn4v1Z6wm-21_RTyAh9G2DA@mail.gmail.com>
+Subject: Re: [PATCH 0/2] pinctrl: qcom: Add pinctrl driver for MSM8909
+To:     Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Adrian Hunter <adrian.hunter@intel.com>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Cc:     Douglas Anderson <dianders@chromium.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 3/3] arm64: dts: qcom: msm8998: add MSM8998 SDCC specific compatible
-Date:   Mon, 11 Jul 2022 10:27:09 +0200
-Message-Id: <20220711082709.39102-3-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220711082709.39102-1-krzysztof.kozlowski@linaro.org>
-References: <20220711082709.39102-1-krzysztof.kozlowski@linaro.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Stephan Gerhold <stephan@gerhold.net>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -79,27 +71,18 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add a MSM8998-specific SDCC compatible, because using only a generic
-qcom,sdhci-msm-v4 fallback is deprecated.
+On Tue, Jun 28, 2022 at 4:55 PM Stephan Gerhold
+<stephan.gerhold@kernkonzept.com> wrote:
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- arch/arm64/boot/dts/qcom/msm8998.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> Make it possible to control GPIOs/pins on the MSM8909 SoC by adding
+> the necessary definitions for the existing Qualcomm TLMM driver.
+>
+> Stephan Gerhold (2):
+>   dt-bindings: pinctrl: Add DT schema for qcom,msm8909-tlmm
+>   pinctrl: qcom: Add pinctrl driver for MSM8909
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-index 91153a0234f5..c98f36f95f3c 100644
---- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-@@ -2076,7 +2076,7 @@ qusb2phy: phy@c012000 {
- 		};
- 
- 		sdhc2: mmc@c0a4900 {
--			compatible = "qcom,sdhci-msm-v4";
-+			compatible = "qcom,msm8998-sdhci", "qcom,sdhci-msm-v4";
- 			reg = <0x0c0a4900 0x314>, <0x0c0a4000 0x800>;
- 			reg-names = "hc", "core";
- 
--- 
-2.34.1
+Patches applied with Krzysztof's review tags, will stay in unless
+Bjorn gets upset.
 
+Yours,
+Linus Walleij
