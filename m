@@ -2,71 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7ECDD56FF9D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Jul 2022 12:59:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 605AB56FFA2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Jul 2022 13:02:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229652AbiGKK7x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Jul 2022 06:59:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43144 "EHLO
+        id S229959AbiGKLCf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Jul 2022 07:02:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45334 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229591AbiGKK7j (ORCPT
+        with ESMTP id S229827AbiGKLCX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Jul 2022 06:59:39 -0400
-Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 088EE6E882
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 03:04:37 -0700 (PDT)
-Received: by mail-lj1-x22d.google.com with SMTP id u14so5595154ljh.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 03:04:36 -0700 (PDT)
+        Mon, 11 Jul 2022 07:02:23 -0400
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3C428CC8C
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 03:07:17 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id m18so7834172lfg.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 03:07:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=rkcgHk2NAVn7wF87zct59ERFHaqHncReok/tEG464pM=;
-        b=H6ip8EFcqqO3NHMxG6iETjg5BpNNgPxuDyfz0iLw9orvJdH+y+i5PMq7gaT1YgZJRW
-         ii25KP5z4ivuKpI7WZPRjJZEhN3FItgfYUepHvyWFKwZ3d/WgWZ3CD+LgQ5UyvU55/Db
-         QjjcWGmIrNY4nZ2tosKElRDTBtQzyELEsp7nNjmwBZcrrfkLZs42k07CdXdIgjmIHTA9
-         qeouqLJji23LWf0IEoQWW7BGKuKxZdbd8JSjS+ywHGv/6G9ybHBWyrWUnzrMHhoe0+v/
-         2NPlhpGG5l24LkHGMJjuB1QzrXg/lJWT+n9DBIX/XllUzf8S5K48WfgryCbGRF/Vr1aL
-         /anA==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=A+12PiH2LqD12N0givzbYnxs7pL3Ommy49WfEm1JYnE=;
+        b=u4u2wM60nmFPaBP48IHMmOf4RAZVAMPW1ftGly4/jaB2DyJOofAeu95LMFy+PBaWgc
+         EQgGhwi0FFG1df3Jdb2Lavml7SWfSsb5rbOZq0hJTf394fqrzbP8OOemUEFW00W833F6
+         4XMDF4XUsxnr2AKX6clAEdoAbJ2XO0oJ9ym/+FWSgmgOGV26lhQ9tahA6EKFUuDxvXp1
+         oxYfB1OOhcHPHDabMAW3zUNemaSUB3+QbGfM7OidbyoGNHu0z/H8BgYnccOPKBnv22oT
+         4Hr+KXpvhvg5jBVjQP7WWps0dgWz1P+MH/X256VDdJAy/6a+NB1HBOwPiW4aeyw3BOo6
+         KC6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=rkcgHk2NAVn7wF87zct59ERFHaqHncReok/tEG464pM=;
-        b=YkJZ5ZH5++kJfkoRqwt4aXFzTTzYpNT8t2svHZ107wSfmPtO1UrX92dkDfpKk8lgs+
-         54CzDvjAyDVzFhuYiy3TMaDHcPCxVQwjhoQpVwOiWXcF9PWgSs2J3l+gqxCVXxDrm+F0
-         VZSBn6ufBI9I8pKZFhwkpY4TQXjWB8UIi5VaPqZSzAQeXwDDf/jm/igy96oeZRfqrVvH
-         UvETwjHtrD1dQtWVu0tMPkdRyAVsKvhDU3pVO4VMCNvkGX7Rv8RT7FjL/tNQrcLh+pDQ
-         uiB+9iusS+Puh+F9GPkvK7K1zg4Dmy6PqArwlEiEQlblFc67oBiNhZsLZShRUL37F2wc
-         qMkg==
-X-Gm-Message-State: AJIora8MN7nQw9NEvSfuQ7RRvQfxwhY0zD1BUarNaTELqgUy6sGE0SBb
-        S9CoDumlopDd6V1tqcoJ4LYJqJ4Ppm6V+g==
-X-Google-Smtp-Source: AGRyM1vAOVleeqJCo0xYAiqPV70Jd/31zDjMPg2OATc2JCAkA4qbltNDvwx8EN26lA9nRPjlNu8PTw==
-X-Received: by 2002:a2e:aa8e:0:b0:25d:5ac8:854d with SMTP id bj14-20020a2eaa8e000000b0025d5ac8854dmr8762508ljb.324.1657533875313;
-        Mon, 11 Jul 2022 03:04:35 -0700 (PDT)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id o11-20020ac24e8b000000b0047faab456cesm1442882lfr.237.2022.07.11.03.04.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Jul 2022 03:04:34 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: [PATCH 2/2] drm/msm/dsi: use drm_dsc_config instead of msm_display_dsc_config
-Date:   Mon, 11 Jul 2022 13:04:32 +0300
-Message-Id: <20220711100432.455268-3-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220711100432.455268-1-dmitry.baryshkov@linaro.org>
-References: <20220711100432.455268-1-dmitry.baryshkov@linaro.org>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=A+12PiH2LqD12N0givzbYnxs7pL3Ommy49WfEm1JYnE=;
+        b=ykw/PXiKZ4SzWOR5iVUL8xVsTJMKRe+Q/o62/LU94ZYUbJPTix2bIKRlpEitt46dM2
+         brNPByWV6IDWX4cjfNWSOLqpXw1FlKK2KxD8sjGLe1/FCKssMDi89REuCrqr24YZ9Sdh
+         AHYorbkfLg7ne4p8gRcYf+xWQLeSLiUxQfSEF5P5sXS/vYeCdTVn50ei8wSrzWVMBLQf
+         cD/2P3SAQsPacNVWyokFeSCZieyMtgQT6RYkpe9/0kG4I3+JmDt1YDwX0EZ4l07AuXL4
+         KA0QalxhF9jr9t+HBtlZk81zv3LxlWEssOY/tBZbEbz3o1BTxCnahM6YqlD6pYAwvrdz
+         Ux5w==
+X-Gm-Message-State: AJIora/eTVp4jUKA+2lPEJ0kEb0ZGum6pycoXGQFoFSTCaWP3v5YzFT7
+        1NYT9WA2um4st+pVTcuBxhhMsQ==
+X-Google-Smtp-Source: AGRyM1tk4TMiXWJl6aRFHyOzmk4vE4/OL/FVkCrUJAh1h7Q05lZHaEHkJKgxW1odUY9+DupbYyWUWQ==
+X-Received: by 2002:a05:6512:b0d:b0:481:5cb4:cf1e with SMTP id w13-20020a0565120b0d00b004815cb4cf1emr10827054lfu.442.1657534036167;
+        Mon, 11 Jul 2022 03:07:16 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id b9-20020a056512070900b00489b1876923sm1446922lfs.298.2022.07.11.03.07.15
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 11 Jul 2022 03:07:15 -0700 (PDT)
+Message-ID: <77b0daf0-1467-b663-05e4-13130826c32e@linaro.org>
+Date:   Mon, 11 Jul 2022 13:07:15 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: Re: [PATCH v5 01/10] drm/msm/disp/dpu1: clear dpu_assign_crtc and get
+ crtc from connector state instead of dpu_enc
+Content-Language: en-GB
+To:     Vinod Polimera <quic_vpolimer@quicinc.com>,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
+Cc:     linux-kernel@vger.kernel.org, robdclark@gmail.com,
+        dianders@chromium.org, swboyd@chromium.org,
+        quic_kalyant@quicinc.com, quic_khsieh@quicinc.com,
+        quic_vproddut@quicinc.com, bjorn.andersson@linaro.org,
+        quic_aravindh@quicinc.com, quic_abhinavk@quicinc.com,
+        quic_sbillaka@quicinc.com
+References: <1657532880-12897-1-git-send-email-quic_vpolimer@quicinc.com>
+ <1657532880-12897-2-git-send-email-quic_vpolimer@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <1657532880-12897-2-git-send-email-quic_vpolimer@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -75,392 +82,133 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-There is no need to use the struct msm_display_dsc_config wrapper inside
-the dsi driver, use the struct drm_dsc_config directly to pass pps data.
+On 11/07/2022 12:47, Vinod Polimera wrote:
+> Update crtc retrieval from dpu_enc to dpu_enc connector state,
+> since new links get set as part of the dpu enc virt mode set.
+> The dpu_enc->crtc cache is no more needed, hence cleaning it as
+> part of this change.
+> 
+> Signed-off-by: Vinod Polimera <quic_vpolimer@quicinc.com>
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c    |  4 ----
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 29 ++++++++++++++---------------
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h |  8 --------
+>   3 files changed, 14 insertions(+), 27 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> index b56f777..f91e3d1 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> @@ -972,7 +972,6 @@ static void dpu_crtc_disable(struct drm_crtc *crtc,
+>   		 */
+>   		if (dpu_encoder_get_intf_mode(encoder) == INTF_MODE_VIDEO)
+>   			release_bandwidth = true;
+> -		dpu_encoder_assign_crtc(encoder, NULL);
+>   	}
+>   
+>   	/* wait for frame_event_done completion */
+> @@ -1042,9 +1041,6 @@ static void dpu_crtc_enable(struct drm_crtc *crtc,
+>   	trace_dpu_crtc_enable(DRMID(crtc), true, dpu_crtc);
+>   	dpu_crtc->enabled = true;
+>   
+> -	drm_for_each_encoder_mask(encoder, crtc->dev, crtc->state->encoder_mask)
+> -		dpu_encoder_assign_crtc(encoder, crtc);
+> -
+>   	/* Enable/restore vblank irq handling */
+>   	drm_crtc_vblank_on(crtc);
+>   }
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> index 52516eb..8fb3e15 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> @@ -1245,6 +1245,7 @@ static void dpu_encoder_vblank_callback(struct drm_encoder *drm_enc,
+>   		struct dpu_encoder_phys *phy_enc)
+>   {
+>   	struct dpu_encoder_virt *dpu_enc = NULL;
+> +	struct drm_crtc *crtc;
+>   	unsigned long lock_flags;
+>   
+>   	if (!drm_enc || !phy_enc)
+> @@ -1253,9 +1254,14 @@ static void dpu_encoder_vblank_callback(struct drm_encoder *drm_enc,
+>   	DPU_ATRACE_BEGIN("encoder_vblank_callback");
+>   	dpu_enc = to_dpu_encoder_virt(drm_enc);
+>   
+> +	if (!dpu_enc->connector || !dpu_enc->connector->state)
+> +		return;
+> +
+> +	crtc = dpu_enc->connector->state->crtc;
+> +
+>   	spin_lock_irqsave(&dpu_enc->enc_spinlock, lock_flags);
+> -	if (dpu_enc->crtc)
+> -		dpu_crtc_vblank_callback(dpu_enc->crtc);
+> +	if (crtc)
+> +		dpu_crtc_vblank_callback(crtc);
+>   	spin_unlock_irqrestore(&dpu_enc->enc_spinlock, lock_flags);
+>   
+>   	atomic_inc(&phy_enc->vsync_cnt);
+> @@ -1280,29 +1286,22 @@ static void dpu_encoder_underrun_callback(struct drm_encoder *drm_enc,
+>   	DPU_ATRACE_END("encoder_underrun_callback");
+>   }
+>   
+> -void dpu_encoder_assign_crtc(struct drm_encoder *drm_enc, struct drm_crtc *crtc)
+> -{
+> -	struct dpu_encoder_virt *dpu_enc = to_dpu_encoder_virt(drm_enc);
+> -	unsigned long lock_flags;
+> -
+> -	spin_lock_irqsave(&dpu_enc->enc_spinlock, lock_flags);
+> -	/* crtc should always be cleared before re-assigning */
+> -	WARN_ON(crtc && dpu_enc->crtc);
+> -	dpu_enc->crtc = crtc;
+> -	spin_unlock_irqrestore(&dpu_enc->enc_spinlock, lock_flags);
+> -}
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c |   2 +-
- drivers/gpu/drm/msm/dsi/dsi.c           |   2 +-
- drivers/gpu/drm/msm/dsi/dsi.h           |   2 +-
- drivers/gpu/drm/msm/dsi/dsi_host.c      | 157 +++++++++++-------------
- drivers/gpu/drm/msm/msm_drv.h           |   9 +-
- 5 files changed, 79 insertions(+), 93 deletions(-)
+Please also remove the dpu_encoder_virt::crtc pointer.
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-index 8016d0a3aade..75ed2b36e1b3 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-@@ -585,7 +585,7 @@ static int _dpu_kms_initialize_dsi(struct drm_device *dev,
- 		info.h_tile_instance[info.num_of_h_tiles++] = i;
- 		info.is_cmd_mode = msm_dsi_is_cmd_mode(priv->dsi[i]);
- 
--		info.dsc = msm_dsi_get_dsc_config(priv->dsi[i])->drm;
-+		info.dsc = msm_dsi_get_dsc_config(priv->dsi[i]);
- 
- 		if (msm_dsi_is_bonded_dsi(priv->dsi[i]) && priv->dsi[other]) {
- 			rc = msm_dsi_modeset_init(priv->dsi[other], dev, encoder);
-diff --git a/drivers/gpu/drm/msm/dsi/dsi.c b/drivers/gpu/drm/msm/dsi/dsi.c
-index 1625328fa430..8f1ed31b048a 100644
---- a/drivers/gpu/drm/msm/dsi/dsi.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi.c
-@@ -21,7 +21,7 @@ bool msm_dsi_is_cmd_mode(struct msm_dsi *msm_dsi)
- 	return !(host_flags & MIPI_DSI_MODE_VIDEO);
- }
- 
--struct msm_display_dsc_config *msm_dsi_get_dsc_config(struct msm_dsi *msm_dsi)
-+struct drm_dsc_config *msm_dsi_get_dsc_config(struct msm_dsi *msm_dsi)
- {
- 	return msm_dsi_host_get_dsc_config(msm_dsi->host);
- }
-diff --git a/drivers/gpu/drm/msm/dsi/dsi.h b/drivers/gpu/drm/msm/dsi/dsi.h
-index 580a1e6358bf..df46cdda1b43 100644
---- a/drivers/gpu/drm/msm/dsi/dsi.h
-+++ b/drivers/gpu/drm/msm/dsi/dsi.h
-@@ -154,7 +154,7 @@ int dsi_calc_clk_rate_v2(struct msm_dsi_host *msm_host, bool is_bonded_dsi);
- int dsi_calc_clk_rate_6g(struct msm_dsi_host *msm_host, bool is_bonded_dsi);
- void msm_dsi_host_snapshot(struct msm_disp_state *disp_state, struct mipi_dsi_host *host);
- void msm_dsi_host_test_pattern_en(struct mipi_dsi_host *host);
--struct msm_display_dsc_config *msm_dsi_host_get_dsc_config(struct mipi_dsi_host *host);
-+struct drm_dsc_config *msm_dsi_host_get_dsc_config(struct mipi_dsi_host *host);
- 
- /* dsi phy */
- struct msm_dsi_phy;
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-index a34078497af1..15e108be1901 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -33,7 +33,7 @@
- 
- #define DSI_RESET_TOGGLE_DELAY_MS 20
- 
--static int dsi_populate_dsc_params(struct msm_display_dsc_config *dsc);
-+static int dsi_populate_dsc_params(struct drm_dsc_config *dsc);
- 
- static int dsi_get_version(const void __iomem *base, u32 *major, u32 *minor)
- {
-@@ -161,7 +161,7 @@ struct msm_dsi_host {
- 	struct regmap *sfpb;
- 
- 	struct drm_display_mode *mode;
--	struct msm_display_dsc_config *dsc;
-+	struct drm_dsc_config *dsc;
- 
- 	/* connected device info */
- 	struct device_node *device_node;
-@@ -916,7 +916,7 @@ static void dsi_ctrl_config(struct msm_dsi_host *msm_host, bool enable,
- 
- static void dsi_update_dsc_timing(struct msm_dsi_host *msm_host, bool is_cmd_mode, u32 hdisplay)
- {
--	struct msm_display_dsc_config *dsc = msm_host->dsc;
-+	struct drm_dsc_config *dsc = msm_host->dsc;
- 	u32 reg, intf_width, reg_ctrl, reg_ctrl2;
- 	u32 slice_per_intf, total_bytes_per_intf;
- 	u32 pkt_per_line;
-@@ -927,24 +927,24 @@ static void dsi_update_dsc_timing(struct msm_dsi_host *msm_host, bool is_cmd_mod
- 	 * compress mode registers
- 	 */
- 	intf_width = hdisplay;
--	slice_per_intf = DIV_ROUND_UP(intf_width, dsc->drm->slice_width);
-+	slice_per_intf = DIV_ROUND_UP(intf_width, dsc->slice_width);
- 
- 	/* If slice_per_pkt is greater than slice_per_intf
- 	 * then default to 1. This can happen during partial
- 	 * update.
- 	 */
--	if (slice_per_intf > dsc->drm->slice_count)
--		dsc->drm->slice_count = 1;
-+	if (slice_per_intf > dsc->slice_count)
-+		dsc->slice_count = 1;
- 
--	slice_per_intf = DIV_ROUND_UP(hdisplay, dsc->drm->slice_width);
--	bytes_in_slice = DIV_ROUND_UP(dsc->drm->slice_width * dsc->drm->bits_per_pixel, 8);
-+	slice_per_intf = DIV_ROUND_UP(hdisplay, dsc->slice_width);
-+	bytes_in_slice = DIV_ROUND_UP(dsc->slice_width * dsc->bits_per_pixel, 8);
- 
--	dsc->drm->slice_chunk_size = bytes_in_slice;
-+	dsc->slice_chunk_size = bytes_in_slice;
- 
- 	total_bytes_per_intf = bytes_in_slice * slice_per_intf;
- 
- 	eol_byte_num = total_bytes_per_intf % 3;
--	pkt_per_line = slice_per_intf / dsc->drm->slice_count;
-+	pkt_per_line = slice_per_intf / dsc->slice_count;
- 
- 	if (is_cmd_mode) /* packet data type */
- 		reg = DSI_COMMAND_COMPRESSION_MODE_CTRL_STREAM0_DATATYPE(MIPI_DSI_DCS_LONG_WRITE);
-@@ -1009,7 +1009,7 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
- 	}
- 
- 	if (msm_host->dsc) {
--		struct msm_display_dsc_config *dsc = msm_host->dsc;
-+		struct drm_dsc_config *dsc = msm_host->dsc;
- 
- 		/* update dsc params with timing params */
- 		if (!dsc || !mode->hdisplay || !mode->vdisplay) {
-@@ -1018,9 +1018,9 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
- 			return;
- 		}
- 
--		dsc->drm->pic_width = mode->hdisplay;
--		dsc->drm->pic_height = mode->vdisplay;
--		DBG("Mode %dx%d\n", dsc->drm->pic_width, dsc->drm->pic_height);
-+		dsc->pic_width = mode->hdisplay;
-+		dsc->pic_height = mode->vdisplay;
-+		DBG("Mode %dx%d\n", dsc->pic_width, dsc->pic_height);
- 
- 		/* we do the calculations for dsc parameters here so that
- 		 * panel can use these parameters
-@@ -1841,7 +1841,7 @@ static char bpg_offset[DSC_NUM_BUF_RANGES] = {
- 	2, 0, 0, -2, -4, -6, -8, -8, -8, -10, -10, -12, -12, -12, -12
- };
- 
--static int dsi_populate_dsc_params(struct msm_display_dsc_config *dsc)
-+static int dsi_populate_dsc_params(struct drm_dsc_config *dsc)
- {
- 	int mux_words_size;
- 	int groups_per_line, groups_total;
-@@ -1854,98 +1854,98 @@ static int dsi_populate_dsc_params(struct msm_display_dsc_config *dsc)
- 	int final_value, final_scale;
- 	int i;
- 
--	dsc->drm->rc_model_size = 8192;
--	dsc->drm->first_line_bpg_offset = 12;
--	dsc->drm->rc_edge_factor = 6;
--	dsc->drm->rc_tgt_offset_high = 3;
--	dsc->drm->rc_tgt_offset_low = 3;
--	dsc->drm->simple_422 = 0;
--	dsc->drm->convert_rgb = 1;
--	dsc->drm->vbr_enable = 0;
-+	dsc->rc_model_size = 8192;
-+	dsc->first_line_bpg_offset = 12;
-+	dsc->rc_edge_factor = 6;
-+	dsc->rc_tgt_offset_high = 3;
-+	dsc->rc_tgt_offset_low = 3;
-+	dsc->simple_422 = 0;
-+	dsc->convert_rgb = 1;
-+	dsc->vbr_enable = 0;
- 
- 	/* handle only bpp = bpc = 8 */
- 	for (i = 0; i < DSC_NUM_BUF_RANGES - 1 ; i++)
--		dsc->drm->rc_buf_thresh[i] = dsi_dsc_rc_buf_thresh[i];
-+		dsc->rc_buf_thresh[i] = dsi_dsc_rc_buf_thresh[i];
- 
- 	for (i = 0; i < DSC_NUM_BUF_RANGES; i++) {
--		dsc->drm->rc_range_params[i].range_min_qp = min_qp[i];
--		dsc->drm->rc_range_params[i].range_max_qp = max_qp[i];
--		dsc->drm->rc_range_params[i].range_bpg_offset = bpg_offset[i];
-+		dsc->rc_range_params[i].range_min_qp = min_qp[i];
-+		dsc->rc_range_params[i].range_max_qp = max_qp[i];
-+		dsc->rc_range_params[i].range_bpg_offset = bpg_offset[i];
- 	}
- 
--	dsc->drm->initial_offset = 6144; /* Not bpp 12 */
--	if (dsc->drm->bits_per_pixel != 8)
--		dsc->drm->initial_offset = 2048;	/* bpp = 12 */
-+	dsc->initial_offset = 6144; /* Not bpp 12 */
-+	if (dsc->bits_per_pixel != 8)
-+		dsc->initial_offset = 2048;	/* bpp = 12 */
- 
- 	mux_words_size = 48;		/* bpc == 8/10 */
--	if (dsc->drm->bits_per_component == 12)
-+	if (dsc->bits_per_component == 12)
- 		mux_words_size = 64;
- 
--	dsc->drm->initial_xmit_delay = 512;
--	dsc->drm->initial_scale_value = 32;
--	dsc->drm->first_line_bpg_offset = 12;
--	dsc->drm->line_buf_depth = dsc->drm->bits_per_component + 1;
-+	dsc->initial_xmit_delay = 512;
-+	dsc->initial_scale_value = 32;
-+	dsc->first_line_bpg_offset = 12;
-+	dsc->line_buf_depth = dsc->bits_per_component + 1;
- 
- 	/* bpc 8 */
--	dsc->drm->flatness_min_qp = 3;
--	dsc->drm->flatness_max_qp = 12;
--	dsc->drm->rc_quant_incr_limit0 = 11;
--	dsc->drm->rc_quant_incr_limit1 = 11;
--	dsc->drm->mux_word_size = DSC_MUX_WORD_SIZE_8_10_BPC;
-+	dsc->flatness_min_qp = 3;
-+	dsc->flatness_max_qp = 12;
-+	dsc->rc_quant_incr_limit0 = 11;
-+	dsc->rc_quant_incr_limit1 = 11;
-+	dsc->mux_word_size = DSC_MUX_WORD_SIZE_8_10_BPC;
- 
- 	/* FIXME: need to call drm_dsc_compute_rc_parameters() so that rest of
- 	 * params are calculated
- 	 */
--	groups_per_line = DIV_ROUND_UP(dsc->drm->slice_width, 3);
--	dsc->drm->slice_chunk_size = dsc->drm->slice_width * dsc->drm->bits_per_pixel / 8;
--	if ((dsc->drm->slice_width * dsc->drm->bits_per_pixel) % 8)
--		dsc->drm->slice_chunk_size++;
-+	groups_per_line = DIV_ROUND_UP(dsc->slice_width, 3);
-+	dsc->slice_chunk_size = dsc->slice_width * dsc->bits_per_pixel / 8;
-+	if ((dsc->slice_width * dsc->bits_per_pixel) % 8)
-+		dsc->slice_chunk_size++;
- 
- 	/* rbs-min */
--	min_rate_buffer_size =  dsc->drm->rc_model_size - dsc->drm->initial_offset +
--				dsc->drm->initial_xmit_delay * dsc->drm->bits_per_pixel +
--				groups_per_line * dsc->drm->first_line_bpg_offset;
-+	min_rate_buffer_size =  dsc->rc_model_size - dsc->initial_offset +
-+				dsc->initial_xmit_delay * dsc->bits_per_pixel +
-+				groups_per_line * dsc->first_line_bpg_offset;
- 
--	hrd_delay = DIV_ROUND_UP(min_rate_buffer_size, dsc->drm->bits_per_pixel);
-+	hrd_delay = DIV_ROUND_UP(min_rate_buffer_size, dsc->bits_per_pixel);
- 
--	dsc->drm->initial_dec_delay = hrd_delay - dsc->drm->initial_xmit_delay;
-+	dsc->initial_dec_delay = hrd_delay - dsc->initial_xmit_delay;
- 
--	dsc->drm->initial_scale_value = 8 * dsc->drm->rc_model_size /
--				       (dsc->drm->rc_model_size - dsc->drm->initial_offset);
-+	dsc->initial_scale_value = 8 * dsc->rc_model_size /
-+				       (dsc->rc_model_size - dsc->initial_offset);
- 
--	slice_bits = 8 * dsc->drm->slice_chunk_size * dsc->drm->slice_height;
-+	slice_bits = 8 * dsc->slice_chunk_size * dsc->slice_height;
- 
--	groups_total = groups_per_line * dsc->drm->slice_height;
-+	groups_total = groups_per_line * dsc->slice_height;
- 
--	data = dsc->drm->first_line_bpg_offset * 2048;
-+	data = dsc->first_line_bpg_offset * 2048;
- 
--	dsc->drm->nfl_bpg_offset = DIV_ROUND_UP(data, (dsc->drm->slice_height - 1));
-+	dsc->nfl_bpg_offset = DIV_ROUND_UP(data, (dsc->slice_height - 1));
- 
--	pre_num_extra_mux_bits = 3 * (mux_words_size + (4 * dsc->drm->bits_per_component + 4) - 2);
-+	pre_num_extra_mux_bits = 3 * (mux_words_size + (4 * dsc->bits_per_component + 4) - 2);
- 
- 	num_extra_mux_bits = pre_num_extra_mux_bits - (mux_words_size -
- 			     ((slice_bits - pre_num_extra_mux_bits) % mux_words_size));
- 
--	data = 2048 * (dsc->drm->rc_model_size - dsc->drm->initial_offset + num_extra_mux_bits);
--	dsc->drm->slice_bpg_offset = DIV_ROUND_UP(data, groups_total);
-+	data = 2048 * (dsc->rc_model_size - dsc->initial_offset + num_extra_mux_bits);
-+	dsc->slice_bpg_offset = DIV_ROUND_UP(data, groups_total);
- 
- 	/* bpp * 16 + 0.5 */
--	data = dsc->drm->bits_per_pixel * 16;
-+	data = dsc->bits_per_pixel * 16;
- 	data *= 2;
- 	data++;
- 	data /= 2;
- 	target_bpp_x16 = data;
- 
--	data = (dsc->drm->initial_xmit_delay * target_bpp_x16) / 16;
--	final_value =  dsc->drm->rc_model_size - data + num_extra_mux_bits;
--	dsc->drm->final_offset = final_value;
-+	data = (dsc->initial_xmit_delay * target_bpp_x16) / 16;
-+	final_value =  dsc->rc_model_size - data + num_extra_mux_bits;
-+	dsc->final_offset = final_value;
- 
--	final_scale = 8 * dsc->drm->rc_model_size / (dsc->drm->rc_model_size - final_value);
-+	final_scale = 8 * dsc->rc_model_size / (dsc->rc_model_size - final_value);
- 
--	data = (final_scale - 9) * (dsc->drm->nfl_bpg_offset + dsc->drm->slice_bpg_offset);
--	dsc->drm->scale_increment_interval = (2048 * dsc->drm->final_offset) / data;
-+	data = (final_scale - 9) * (dsc->nfl_bpg_offset + dsc->slice_bpg_offset);
-+	dsc->scale_increment_interval = (2048 * dsc->final_offset) / data;
- 
--	dsc->drm->scale_decrement_interval = groups_per_line / (dsc->drm->initial_scale_value - 8);
-+	dsc->scale_decrement_interval = groups_per_line / (dsc->initial_scale_value - 8);
- 
- 	return 0;
- }
-@@ -2165,17 +2165,8 @@ int msm_dsi_host_modeset_init(struct mipi_dsi_host *host,
- 	msm_host->dev = dev;
- 	panel = msm_dsi_host_get_panel(&msm_host->base);
- 
--	if (!IS_ERR(panel) && panel->dsc) {
--		struct msm_display_dsc_config *dsc = msm_host->dsc;
--
--		if (!dsc) {
--			dsc = devm_kzalloc(&msm_host->pdev->dev, sizeof(*dsc), GFP_KERNEL);
--			if (!dsc)
--				return -ENOMEM;
--			dsc->drm = panel->dsc;
--			msm_host->dsc = dsc;
--		}
--	}
-+	if (!IS_ERR(panel) && panel->dsc)
-+		msm_host->dsc = panel->dsc;
- 
- 	ret = cfg_hnd->ops->tx_buf_alloc(msm_host, SZ_4K);
- 	if (ret) {
-@@ -2659,22 +2650,22 @@ enum drm_mode_status msm_dsi_host_check_dsc(struct mipi_dsi_host *host,
- 					    const struct drm_display_mode *mode)
- {
- 	struct msm_dsi_host *msm_host = to_msm_dsi_host(host);
--	struct msm_display_dsc_config *dsc = msm_host->dsc;
-+	struct drm_dsc_config *dsc = msm_host->dsc;
- 	int pic_width = mode->hdisplay;
- 	int pic_height = mode->vdisplay;
- 
- 	if (!msm_host->dsc)
- 		return MODE_OK;
- 
--	if (pic_width % dsc->drm->slice_width) {
-+	if (pic_width % dsc->slice_width) {
- 		pr_err("DSI: pic_width %d has to be multiple of slice %d\n",
--		       pic_width, dsc->drm->slice_width);
-+		       pic_width, dsc->slice_width);
- 		return MODE_H_ILLEGAL;
- 	}
- 
--	if (pic_height % dsc->drm->slice_height) {
-+	if (pic_height % dsc->slice_height) {
- 		pr_err("DSI: pic_height %d has to be multiple of slice %d\n",
--		       pic_height, dsc->drm->slice_height);
-+		       pic_height, dsc->slice_height);
- 		return MODE_V_ILLEGAL;
- 	}
- 
-@@ -2771,7 +2762,7 @@ void msm_dsi_host_test_pattern_en(struct mipi_dsi_host *host)
- 				DSI_TEST_PATTERN_GEN_CMD_STREAM0_TRIGGER_SW_TRIGGER);
- }
- 
--struct msm_display_dsc_config *msm_dsi_host_get_dsc_config(struct mipi_dsi_host *host)
-+struct drm_dsc_config *msm_dsi_host_get_dsc_config(struct mipi_dsi_host *host)
- {
- 	struct msm_dsi_host *msm_host = to_msm_dsi_host(host);
- 
-diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
-index ae49e56ac026..8075a0e010a5 100644
---- a/drivers/gpu/drm/msm/msm_drv.h
-+++ b/drivers/gpu/drm/msm/msm_drv.h
-@@ -96,11 +96,6 @@ struct msm_drm_thread {
- 	struct kthread_worker *worker;
- };
- 
--/* DSC config */
--struct msm_display_dsc_config {
--	struct drm_dsc_config *drm;
--};
--
- struct msm_drm_private {
- 
- 	struct drm_device *dev;
-@@ -289,7 +284,7 @@ void msm_dsi_snapshot(struct msm_disp_state *disp_state, struct msm_dsi *msm_dsi
- bool msm_dsi_is_cmd_mode(struct msm_dsi *msm_dsi);
- bool msm_dsi_is_bonded_dsi(struct msm_dsi *msm_dsi);
- bool msm_dsi_is_master_dsi(struct msm_dsi *msm_dsi);
--struct msm_display_dsc_config *msm_dsi_get_dsc_config(struct msm_dsi *msm_dsi);
-+struct drm_dsc_config *msm_dsi_get_dsc_config(struct msm_dsi *msm_dsi);
- #else
- static inline void __init msm_dsi_register(void)
- {
-@@ -319,7 +314,7 @@ static inline bool msm_dsi_is_master_dsi(struct msm_dsi *msm_dsi)
- 	return false;
- }
- 
--static inline struct msm_display_dsc_config *msm_dsi_get_dsc_config(struct msm_dsi *msm_dsi)
-+static inline struct drm_dsc_config *msm_dsi_get_dsc_config(struct msm_dsi *msm_dsi)
- {
- 	return NULL;
- }
+> -
+>   void dpu_encoder_toggle_vblank_for_crtc(struct drm_encoder *drm_enc,
+>   					struct drm_crtc *crtc, bool enable)
+>   {
+>   	struct dpu_encoder_virt *dpu_enc = to_dpu_encoder_virt(drm_enc);
+> +	struct drm_crtc *new_crtc;
+>   	unsigned long lock_flags;
+>   	int i;
+>   
+>   	trace_dpu_enc_vblank_cb(DRMID(drm_enc), enable);
+>   
+> +	if (!dpu_enc->connector || !dpu_enc->connector->state)
+> +		return;
+> +
+> +	new_crtc = dpu_enc->connector->state->crtc;
+>   	spin_lock_irqsave(&dpu_enc->enc_spinlock, lock_flags);
+> -	if (dpu_enc->crtc != crtc) {
+> +	if (!new_crtc || crtc != crtc) {
+
+Second condition is always false.
+
+>   		spin_unlock_irqrestore(&dpu_enc->enc_spinlock, lock_flags);
+>   		return;
+>   	}
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
+> index 781d41c..edba815 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
+> @@ -39,14 +39,6 @@ struct msm_display_info {
+>   };
+>   
+>   /**
+> - * dpu_encoder_assign_crtc - Link the encoder to the crtc it's assigned to
+> - * @encoder:	encoder pointer
+> - * @crtc:	crtc pointer
+> - */
+> -void dpu_encoder_assign_crtc(struct drm_encoder *encoder,
+> -			     struct drm_crtc *crtc);
+> -
+> -/**
+>    * dpu_encoder_toggle_vblank_for_crtc - Toggles vblank interrupts on or off if
+>    *	the encoder is assigned to the given crtc
+>    * @encoder:	encoder pointer
+
+
 -- 
-2.35.1
-
+With best wishes
+Dmitry
