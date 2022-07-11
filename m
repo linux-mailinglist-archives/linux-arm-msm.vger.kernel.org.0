@@ -2,69 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BF978570C87
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Jul 2022 23:13:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C2C32570C8F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Jul 2022 23:14:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229606AbiGKVNa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Jul 2022 17:13:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33238 "EHLO
+        id S231800AbiGKVOx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Jul 2022 17:14:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34972 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229622AbiGKVN3 (ORCPT
+        with ESMTP id S230055AbiGKVOv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Jul 2022 17:13:29 -0400
-Received: from mail-qk1-x733.google.com (mail-qk1-x733.google.com [IPv6:2607:f8b0:4864:20::733])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C662E804AE;
-        Mon, 11 Jul 2022 14:13:27 -0700 (PDT)
-Received: by mail-qk1-x733.google.com with SMTP id p22so4867367qkj.4;
-        Mon, 11 Jul 2022 14:13:27 -0700 (PDT)
+        Mon, 11 Jul 2022 17:14:51 -0400
+Received: from mail-qk1-x734.google.com (mail-qk1-x734.google.com [IPv6:2607:f8b0:4864:20::734])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C168804AE;
+        Mon, 11 Jul 2022 14:14:50 -0700 (PDT)
+Received: by mail-qk1-x734.google.com with SMTP id o26so4864986qkl.6;
+        Mon, 11 Jul 2022 14:14:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=N5YRuTB5MYa3nbG8lCPemrZYrkhyGUXIRY7YTJn3UJI=;
-        b=KkEAKuvCwlihbCqH52qxZhTQfjrKb1t9ydLos5qqmCRFzfJM35qZdJaxnqOYfVKl5J
-         jnwWRee3uoiDVHlenzYQzabO9t79JtPJdqyns6M4OO9zL8/zj9VC8gmPcQIYZQfDf1Vj
-         meW5ioYcgJjiu3HYWluL2B2KUIF9cVS4sJqGXnMl+8N92XshkIYBpSLbF/saTtyyW1XC
-         J23Gfm1lzun4nkgvj5Ywp9iN4bQpuPd9vdu5vbMXrPANCbIg9CsCs5fJ1VPd0H2WkaNq
-         s62op9zmZaDy+LT2jITTXIdjEI1Yhdi8KLMAm3QUclydCEOJlggWykdw9Lv8q2JIRLZf
-         SBAw==
+        bh=m+tiAbR5ipokPOI4Uv53O9dfcW8Zht66rbKGm1GTYpo=;
+        b=d83Mzj9ZZK65lmwWYYeI6vy06BxRU06v3My3PdoLtgOcYputPgxrscy/rjd5CZqllT
+         63zziwo3mkE7LawXf/TDzDPl87omfufHFMXKQ2W0jXGvgbq59LKT/Jydr28jZEw6bpGN
+         P0CyUBQlEjfqo5eQ7ZHRi+6rXLUAlrJxK4LF+AjT2KxUbwvi8kWgWlwwuk3T3Wuz/TV2
+         MgZoTCcsgDQNp1iUsBz3Q64twGH04LT4FOliwpWQWR+WHy0KuOLBA6UXd0jgE+B2/zeZ
+         ipzXBII1wbEub1slH+D7ezKAKCmvGprPTj5G+h0Q4aOB+gIHKizTCb+weJCXVCzT337G
+         7rnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=N5YRuTB5MYa3nbG8lCPemrZYrkhyGUXIRY7YTJn3UJI=;
-        b=jPvq4/UXo/OtGcv8TCbryusroWPYSi7XMfAHq+GcgK/loYmQeCOKgRXLqUfsAYaH+w
-         jteXc8ozJpnUqN46HBC/GXQKZ/qD4Ha4EsDNOVFGiI4iEHj9+k+S4sTsAcFKQJ0ACNZI
-         m55jm4qKKar3N1x3/gcyESgEukf47QScV5nquRjmOp1jjDqNhryoauuU6ap+qhC5miNs
-         3WuUfdcisHQb2LlKGKQ4BttE8vZO+cPbo+i3938Jsi3MbRaSuUlzixsarLfjfJ32NDjD
-         m8zI3RQWTpVdp1YNSGcoVowPmIMTSGABFpfuBWKQtOEv+7M1UAg4fTx5IU8Iz2BNNXpp
-         G2GQ==
-X-Gm-Message-State: AJIora8WUt5CWn3VX/821TbcISD7zaeL4mdDXihsYiG9jFWqMFGDMkcf
-        hGctMmPeEbox0NN2MgElBJUl7VQrY8j0FitbP38s6ZfywA4=
-X-Google-Smtp-Source: AGRyM1v6iC7cQ8Eaq8NUKqwSLK7fQXPg6pPLltynOQoFb7RtxNOP0mrSa5CNksyZpDPBfzZOCT0x3SN2QzrTkfcFUPc=
-X-Received: by 2002:a05:620a:2996:b0:6af:2c34:423f with SMTP id
- r22-20020a05620a299600b006af2c34423fmr12774984qkp.679.1657574006935; Mon, 11
- Jul 2022 14:13:26 -0700 (PDT)
+        bh=m+tiAbR5ipokPOI4Uv53O9dfcW8Zht66rbKGm1GTYpo=;
+        b=Zq0weeWawfMP2dlexEze8cceNH4Y/lMYroJ88Xe6QrVrIdDH1jega1ZVx1sOmaVeVS
+         pTE9yCddAMGbUrdo7j2Ov1GsRuGMfVWM47CFtPtn5HuyyX9FkupW8gZlmc0orSSP7iq/
+         kdAdczse6on1B/K6ruS/mju4gnlYff9S2aSoh9wlrgR7SPHvqfdeBENkIO9TwK6imcK9
+         roKUM9tPUoypKyFtHcodCUBPzqHRUkawAI4GJnKwG2ZTdczmu9BNkK4gMywvnzF44qCX
+         C1euIfCSEFGu45wbtWwbI+hdCFR7SyBkpdIKibwlPIwKZLp4Wc70OGtrDV9Aa+8Y+e7z
+         OMYw==
+X-Gm-Message-State: AJIora9YIlF93aiY7cEsJQAHZp5dR7WgNYsUFJ5Uqe4gT1dQCd/rxptl
+        sydOsx7n5HjGCaezp5GJBRbkMAPeeIPXNt5Eo4w=
+X-Google-Smtp-Source: AGRyM1tsfk66MvgLGjjCS8tQrgRs7OzckX8WV9p0YXE4enpC7rdc8e4wOi1C3YnZhIIOYJQZ8EscKFmLYbw1Llnf9HI=
+X-Received: by 2002:a05:620a:c8e:b0:6b5:91da:9b04 with SMTP id
+ q14-20020a05620a0c8e00b006b591da9b04mr2886309qki.25.1657574089779; Mon, 11
+ Jul 2022 14:14:49 -0700 (PDT)
 MIME-Version: 1.0
-References: <62c8d3e8.1c69fb81.26eee.0249@mx.google.com> <20220711192229.GA678639@bhelgaas>
-In-Reply-To: <20220711192229.GA678639@bhelgaas>
+References: <20220515210048.483898-1-robimarko@gmail.com> <20220515210048.483898-10-robimarko@gmail.com>
+ <20220711211047.952F4C34115@smtp.kernel.org>
+In-Reply-To: <20220711211047.952F4C34115@smtp.kernel.org>
 From:   Robert Marko <robimarko@gmail.com>
-Date:   Mon, 11 Jul 2022 23:13:16 +0200
-Message-ID: <CAOX2RU6VYpsML62zCaEhdu5YPEqy8u2DVXB=5hpok5MHmXk3fw@mail.gmail.com>
-Subject: Re: [PATCH] PCI: qcom: Enable clocks only after PARF_PHY setup for
- rev 2.1.0
-To:     Bjorn Helgaas <helgaas@kernel.org>
-Cc:     Christian Marangi <ansuelsmth@gmail.com>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
+Date:   Mon, 11 Jul 2022 23:14:38 +0200
+Message-ID: <CAOX2RU7NaJL5dTrjz26oiz0psvXKV8C-7HGMmJ-rfNJ3r=y2qg@mail.gmail.com>
+Subject: Re: [PATCH v4 10/11] clk: qcom: ipq8074: dont disable gcc_sleep_clk_src
+To:     Stephen Boyd <sboyd@kernel.org>
+Cc:     Abhishek Sahu <absahu@codeaurora.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>, linux-pci@vger.kernel.org,
+        Devicetree List <devicetree@vger.kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        krzysztof.kozlowski+dt@linaro.org,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
+        linux-clk@vger.kernel.org,
+        open list <linux-kernel@vger.kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>, tdas@codeaurora.org
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
@@ -76,61 +76,23 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 11 Jul 2022 at 21:22, Bjorn Helgaas <helgaas@kernel.org> wrote:
+On Mon, 11 Jul 2022 at 23:10, Stephen Boyd <sboyd@kernel.org> wrote:
 >
-> [+cc Robert since I resolved a conflict in his patch, -cc stable]
+> Quoting Robert Marko (2022-05-15 14:00:47)
+> > diff --git a/drivers/clk/qcom/gcc-ipq8074.c b/drivers/clk/qcom/gcc-ipq8074.c
+> > index 3204d550ff76..42d185fe19c8 100644
+> > --- a/drivers/clk/qcom/gcc-ipq8074.c
+> > +++ b/drivers/clk/qcom/gcc-ipq8074.c
+> > @@ -663,6 +663,7 @@ static struct clk_branch gcc_sleep_clk_src = {
+> >                         },
+> >                         .num_parents = 1,
+> >                         .ops = &clk_branch2_ops,
+> > +                       .flags = CLK_IS_CRITICAL,
+> >                 },
 >
-> On Sat, Jul 09, 2022 at 03:03:34AM +0200, Christian Marangi wrote:
-> > On Fri, Jul 08, 2022 at 06:01:55PM -0500, Bjorn Helgaas wrote:
-> > > On Sat, Jul 09, 2022 at 12:27:43AM +0200, Christian Marangi wrote:
-> > > > We currently enable clocks BEFORE we write to PARF_PHY_CTRL reg to
-> > > > enable clocks and resets. This case the driver to never set to a ready
-> > > > state with the error 'Phy link never came up'.
-> > > >
-> > > > This in fact is caused by the phy clock getting enabled before setting
-> > > > the required bits in the PARF regs.
-> > > >
-> > > > A workaround for this was set but with this new discovery we can drop
-> > > > the workaround and use a proper solution to the problem by just enabling
-> > > > the clock only AFTER the PARF_PHY_CTRL bit is set.
-> > > >
-> > > > This correctly setup the pcie line and makes it usable even when a
-> > > > bootloader leave the pcie line to a underfined state.
-> > >
-> > > Is "pcie" here a signal name?  Maybe this refers to the "PCIe link"?
-> >
-> > no i was referring to PCIe link. Fell free to fix it if it's not a
-> > problem (or if you want i can just resend)
->
-> I fixed it.
->
-> > Think something went wrong in the rebase as the patch fixup is reverted.
-> >
-> > 11946f8b6e77a6794c111aafef7772e9967d9a54 is still wrong.
-> >
-> > clk_bulk_prepare_enable must be after
-> > writel(val, pcie->parf + PCIE20_PARF_PHY_CTRL);
-> > so in the post init.
->
-> My error, sorry.  I updated it, current head:
->
->   1a88605a3efd ("dt-bindings: PCI: qcom: Fix description typo")
->
-> Robert, your patch that I updated is:
->
-> https://git.kernel.org/pub/scm/linux/kernel/git/helgaas/pci.git/commit/?h=pci/ctrl/qcom-pending&id=cdb32283bcf202d0db512abb80794056d44e7e9f
->
-> It would still be nice to get an ack from one of the maintainers for
-> this.
+> Why not just remove the clk from the driver? Is anything using it?
 
-Hi,
-Thanks, everybody for working on sorting this out.
-I understand, hopefully, somebody can take a look at it.
-
-BTW, happy to see IPQ60xx support made it in as IPQ807x
-can use it for Gen3.
+Hi Stephen, USB sleep clocks are derived from it so it cant be dropped.
 
 Regards,
 Robert
->
-> Bjorn
