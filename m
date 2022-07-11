@@ -2,63 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 87BF357065E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Jul 2022 16:58:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 72FEB5706A0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Jul 2022 17:09:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231464AbiGKO61 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Jul 2022 10:58:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52984 "EHLO
+        id S232062AbiGKPJU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Jul 2022 11:09:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36800 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230435AbiGKO60 (ORCPT
+        with ESMTP id S232109AbiGKPJM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Jul 2022 10:58:26 -0400
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4790B72ECB
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 07:58:25 -0700 (PDT)
-Received: by mail-ej1-x629.google.com with SMTP id b11so9262326eju.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 07:58:25 -0700 (PDT)
+        Mon, 11 Jul 2022 11:09:12 -0400
+Received: from mail-io1-xd31.google.com (mail-io1-xd31.google.com [IPv6:2607:f8b0:4864:20::d31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7ABE825E90
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 08:09:11 -0700 (PDT)
+Received: by mail-io1-xd31.google.com with SMTP id v185so5143953ioe.11
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 08:09:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=JK/h8I3TwzYyU8YTkNwIUL4+D9uJ1XU+DQgA/bhS4DQ=;
-        b=X4wjMIEABz8noT1eAHb/RNu6qhp+hTqzGdaPiYYKviKYRh30CyC85AQZdVus+ckBr3
-         XislwfMrvQ7Q3cEq6Ovn79KBtWs/U5wn6/d1XIJUxXnq0G3p1rp4j+Y1/twzmIQWXY8m
-         v4Q8KmF9dFlq0dtRRxacW0DfVcf/S0JAjxyn8=
+        bh=tjJyUrv/9KeAF4uwLYY03FcyF3s57OWw5tLe/ipLqOA=;
+        b=ZgMqfivM/ulF9/76btxe6b02wCo/5qZWqIUWWwrSRzFcU6xI4UUMRgLgzZTgQ3xOTl
+         TAxvsLCJ4AcY5KWdYyxsWoVb/zmhDp2kgVRPbcEkOuOdCuaN9d+7NKwAXlKE6XN9djX9
+         qRu82BLQgsvTR6iC/z53I4Jf9lk4h6s6vL0fM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=JK/h8I3TwzYyU8YTkNwIUL4+D9uJ1XU+DQgA/bhS4DQ=;
-        b=nWaN8xK16rQWgOhkxyKtBi97OTl04R0jQFMs7ZCQ547Ugi31yPh0I+Saw0urpI6SU3
-         ENf9X5J2xEdoa/OmEy23gQHWV6m5Ls0pLICul8V5//1y66PPuU4goPr8vhcF2bEA8ZJR
-         otAoZwVo8u9hDrlJbL+7I/hlQz/0XjPqWlN2dlCZ636AgjqbQhw2TGJ2QmgHhQgfT25e
-         Q5Xl4/rQjPWr+8jNH0kJCdM0iumguuaLLYrH0JiVDsF+ZFMq0Qbj9xpxZfe7fhV+SHQC
-         t+2pKzC6soD+MX7WVUya6dPiIkF0ATMMszXG+n+AV5e3n91x8j6YhkAc0La4dMcFdxWA
-         JUAg==
-X-Gm-Message-State: AJIora87ER2NwKFAGedqNecSfTvzDAvpGJBa2yvdkPs327LuMffSPKyc
-        hcsOsIgrlcfxdv8JxiFO9ACe4pJnP/zjIOKD
-X-Google-Smtp-Source: AGRyM1u4uKteyYUwStMifKwC7nSdRFPkO6444+kJatkGNf1mNPLCJEQLmJcEE0QhA5Uq6RlWWqAbFQ==
-X-Received: by 2002:a17:907:7781:b0:6fe:4398:47b3 with SMTP id ky1-20020a170907778100b006fe439847b3mr19095691ejc.513.1657551503685;
-        Mon, 11 Jul 2022 07:58:23 -0700 (PDT)
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com. [209.85.221.46])
-        by smtp.gmail.com with ESMTPSA id d4-20020a1709063ec400b0072b56098fc6sm1114368ejj.127.2022.07.11.07.58.21
+        bh=tjJyUrv/9KeAF4uwLYY03FcyF3s57OWw5tLe/ipLqOA=;
+        b=WlE217+2LtX/eNPF8Az0jutKgyjJ+zI3tleiqNn5cX6Mnb0VNAh+tI2L/KiywqAYyb
+         KCYPsI0T4yp9jWdJ2DvV8RuTgBcxxucTcXVHhG5f6NXvl9E/HR14nXloptwce+LUuGcx
+         HH6h6a3m8ChDulKZY8SCSK/FGHMkMy7Mq59yDdZMxWylp5m1SP50v1f9XDhNahqOSGdL
+         vXVI1ogvbYfCiYHBJAdpQiQyjKgXxjutA1srkUiW4zuBgluz+hdXGmJkl0KDHvLmRV3Q
+         FlhHrxPl4ho33spuoPCCNFBMmah+Rghnq6/79WGR3VVj9/xCxe4Y5b8zl1aC+rBKkklJ
+         P00g==
+X-Gm-Message-State: AJIora8QBfpKuIu6lqXsNsIBfahS0amh8WrM78Xi9M4HHmqbL7cUsrAN
+        Rl6FUPMIId5jHb995BflvzvMArSlcJRq0LJnBXE=
+X-Google-Smtp-Source: AGRyM1u19Pwac8CAtwLl3ssECSBtVyXI5YK3XDwbLm/DLFZiq8+lLYP0Ix/fqju41UIEfVSKE5Wquw==
+X-Received: by 2002:a05:6602:3306:b0:67b:7e5f:52cb with SMTP id b6-20020a056602330600b0067b7e5f52cbmr6172551ioz.51.1657552150814;
+        Mon, 11 Jul 2022 08:09:10 -0700 (PDT)
+Received: from mail-il1-f172.google.com (mail-il1-f172.google.com. [209.85.166.172])
+        by smtp.gmail.com with ESMTPSA id q29-20020a027b1d000000b0033f3605653asm2983535jac.165.2022.07.11.08.09.09
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 11 Jul 2022 07:58:22 -0700 (PDT)
-Received: by mail-wr1-f46.google.com with SMTP id r10so1213744wrv.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 07:58:21 -0700 (PDT)
-X-Received: by 2002:adf:fb12:0:b0:20c:79b2:a200 with SMTP id
- c18-20020adffb12000000b0020c79b2a200mr17662599wrr.617.1657551501186; Mon, 11
- Jul 2022 07:58:21 -0700 (PDT)
+        Mon, 11 Jul 2022 08:09:09 -0700 (PDT)
+Received: by mail-il1-f172.google.com with SMTP id v2so3173180ilo.7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 08:09:09 -0700 (PDT)
+X-Received: by 2002:a05:6e02:174a:b0:2dc:7bc5:f810 with SMTP id
+ y10-20020a056e02174a00b002dc7bc5f810mr3279673ill.254.1657552149101; Mon, 11
+ Jul 2022 08:09:09 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220711082709.39102-1-krzysztof.kozlowski@linaro.org> <20220711082709.39102-3-krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220711082709.39102-3-krzysztof.kozlowski@linaro.org>
+References: <20220711082709.39102-1-krzysztof.kozlowski@linaro.org> <20220711082709.39102-2-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220711082709.39102-2-krzysztof.kozlowski@linaro.org>
 From:   Doug Anderson <dianders@chromium.org>
-Date:   Mon, 11 Jul 2022 07:58:08 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=Uvc+d8v4UCMLhcEydt-RVf+94NTUWrMgORv8bw0kDNUQ@mail.gmail.com>
-Message-ID: <CAD=FV=Uvc+d8v4UCMLhcEydt-RVf+94NTUWrMgORv8bw0kDNUQ@mail.gmail.com>
-Subject: Re: [PATCH 3/3] arm64: dts: qcom: msm8998: add MSM8998 SDCC specific compatible
+Date:   Mon, 11 Jul 2022 08:08:53 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=W7BCMTByC9xn2iRsxoB9RzRENz5zuTy1Sgmhjbw3aQMw@mail.gmail.com>
+Message-ID: <CAD=FV=W7BCMTByC9xn2iRsxoB9RzRENz5zuTy1Sgmhjbw3aQMw@mail.gmail.com>
+Subject: Re: [PATCH 2/3] mmc: sdhci-msm: add MSM8998 SDCC specific compatible
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Cc:     Ulf Hansson <ulf.hansson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
@@ -93,7 +93,28 @@ On Mon, Jul 11, 2022 at 1:27 AM Krzysztof Kozlowski
 >
 > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > ---
->  arch/arm64/boot/dts/qcom/msm8998.dtsi | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  drivers/mmc/host/sdhci-msm.c | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+> index e395411fb6fd..bb169c1c2b5e 100644
+> --- a/drivers/mmc/host/sdhci-msm.c
+> +++ b/drivers/mmc/host/sdhci-msm.c
+> @@ -2447,6 +2447,7 @@ static const struct of_device_id sdhci_msm_dt_match[] = {
+>         {.compatible = "qcom,msm8992-sdhci", .data = &sdhci_msm_mci_var},
+>         {.compatible = "qcom,msm8994-sdhci", .data = &sdhci_msm_mci_var},
+>         {.compatible = "qcom,msm8996-sdhci", .data = &sdhci_msm_mci_var},
+> +       {.compatible = "qcom,msm8998-sdhci", .data = &sdhci_msm_mci_var},
 
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+FWIW I'm _against_ this change.
+
+In my mind while it is correct to specify both the specific and
+generic compatible string in the device tree, the driver itself should
+rely on just the generic compatible string until there is a reason to
+use the specific one (like we needed to for sdm845 and sc7180).
+
+I think I pointed that out before, but somehow all of the specific
+device tree strings have snuck their way into the driver without me
+paying attention. :(
+
+-Doug
