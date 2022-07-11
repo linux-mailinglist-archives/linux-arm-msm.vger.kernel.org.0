@@ -2,63 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 72FEB5706A0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Jul 2022 17:09:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 604D65706B7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Jul 2022 17:11:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232062AbiGKPJU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Jul 2022 11:09:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36800 "EHLO
+        id S232183AbiGKPLs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Jul 2022 11:11:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40110 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232109AbiGKPJM (ORCPT
+        with ESMTP id S232180AbiGKPLr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Jul 2022 11:09:12 -0400
-Received: from mail-io1-xd31.google.com (mail-io1-xd31.google.com [IPv6:2607:f8b0:4864:20::d31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7ABE825E90
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 08:09:11 -0700 (PDT)
-Received: by mail-io1-xd31.google.com with SMTP id v185so5143953ioe.11
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 08:09:11 -0700 (PDT)
+        Mon, 11 Jul 2022 11:11:47 -0400
+Received: from mail-io1-xd33.google.com (mail-io1-xd33.google.com [IPv6:2607:f8b0:4864:20::d33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3EC3074E06
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 08:11:46 -0700 (PDT)
+Received: by mail-io1-xd33.google.com with SMTP id u6so5011381iop.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 08:11:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=tjJyUrv/9KeAF4uwLYY03FcyF3s57OWw5tLe/ipLqOA=;
-        b=ZgMqfivM/ulF9/76btxe6b02wCo/5qZWqIUWWwrSRzFcU6xI4UUMRgLgzZTgQ3xOTl
-         TAxvsLCJ4AcY5KWdYyxsWoVb/zmhDp2kgVRPbcEkOuOdCuaN9d+7NKwAXlKE6XN9djX9
-         qRu82BLQgsvTR6iC/z53I4Jf9lk4h6s6vL0fM=
+        bh=xninKA70EtexcdYCbdfuTinCaP7pxcUur1I8bK0NPTw=;
+        b=OKNN2Re5+g4wHUiVyzepFDVWZOXbvcZGQio3rTb0i4xibe7JSuEzbHrs4S05ZN6i78
+         sgkq6ZFhZVQQkc5t3f0VvdAB31FviPnkCYj3b5bH0gdYLrYCm00hqvh4HCRUj2dy9Ap5
+         Q02/02O/jxHXt17YhY2tvweobdiXpz005KJ8w=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=tjJyUrv/9KeAF4uwLYY03FcyF3s57OWw5tLe/ipLqOA=;
-        b=WlE217+2LtX/eNPF8Az0jutKgyjJ+zI3tleiqNn5cX6Mnb0VNAh+tI2L/KiywqAYyb
-         KCYPsI0T4yp9jWdJ2DvV8RuTgBcxxucTcXVHhG5f6NXvl9E/HR14nXloptwce+LUuGcx
-         HH6h6a3m8ChDulKZY8SCSK/FGHMkMy7Mq59yDdZMxWylp5m1SP50v1f9XDhNahqOSGdL
-         vXVI1ogvbYfCiYHBJAdpQiQyjKgXxjutA1srkUiW4zuBgluz+hdXGmJkl0KDHvLmRV3Q
-         FlhHrxPl4ho33spuoPCCNFBMmah+Rghnq6/79WGR3VVj9/xCxe4Y5b8zl1aC+rBKkklJ
-         P00g==
-X-Gm-Message-State: AJIora8QBfpKuIu6lqXsNsIBfahS0amh8WrM78Xi9M4HHmqbL7cUsrAN
-        Rl6FUPMIId5jHb995BflvzvMArSlcJRq0LJnBXE=
-X-Google-Smtp-Source: AGRyM1u19Pwac8CAtwLl3ssECSBtVyXI5YK3XDwbLm/DLFZiq8+lLYP0Ix/fqju41UIEfVSKE5Wquw==
-X-Received: by 2002:a05:6602:3306:b0:67b:7e5f:52cb with SMTP id b6-20020a056602330600b0067b7e5f52cbmr6172551ioz.51.1657552150814;
-        Mon, 11 Jul 2022 08:09:10 -0700 (PDT)
-Received: from mail-il1-f172.google.com (mail-il1-f172.google.com. [209.85.166.172])
-        by smtp.gmail.com with ESMTPSA id q29-20020a027b1d000000b0033f3605653asm2983535jac.165.2022.07.11.08.09.09
+        bh=xninKA70EtexcdYCbdfuTinCaP7pxcUur1I8bK0NPTw=;
+        b=6w4MdfxiVmQxQZ1EdOOJ3DkoQ/3BtonMEVYdNk53c43CXgHQV2JYAwzxu7YD6yoOtM
+         w4XdtsukB5ePojcaWsMmJWInsSJm6ltpys6ZZ7/oYnpGkrgoOnOjb2vuPBRWbkQ97yJr
+         wnwBgnNFWehV2M6f87Yfu/1quSomAX6yFd9cax5NqinPkjmF1Fqh6O0Z3jHgeni2yaTg
+         +foc+rFO9ydi+i67MpN609WEI+zrs2K3u/DW+RaUaxicuEjKJel6m3KCAsH7IBtrr4d2
+         +BL1FJ32ZJLFI4Ul74QJIpFlu0JUtml20IbkQfz6yn3BWiTUY31nQNGOunzrVV4Nhcce
+         Ns8A==
+X-Gm-Message-State: AJIora9+BBHkPAUKwpvGYWA8wbUsowyQmVhccyY+R9w7MUPVPheEbLGC
+        yVCA/O6Rco2fsiXcCwEVf0aed36J7htONc31PJs=
+X-Google-Smtp-Source: AGRyM1vWbY0XIxjD/eBOGjhOrZxbBRyBFWup6YzswHnPcTHsVxONJLPOWXD+Rl0JXOgirHAs0EWGlg==
+X-Received: by 2002:a6b:ba56:0:b0:678:e98d:b769 with SMTP id k83-20020a6bba56000000b00678e98db769mr9567498iof.183.1657552305503;
+        Mon, 11 Jul 2022 08:11:45 -0700 (PDT)
+Received: from mail-io1-f49.google.com (mail-io1-f49.google.com. [209.85.166.49])
+        by smtp.gmail.com with ESMTPSA id 126-20020a021184000000b0033f3782eccfsm3054079jaf.89.2022.07.11.08.11.43
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 11 Jul 2022 08:09:09 -0700 (PDT)
-Received: by mail-il1-f172.google.com with SMTP id v2so3173180ilo.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 08:09:09 -0700 (PDT)
-X-Received: by 2002:a05:6e02:174a:b0:2dc:7bc5:f810 with SMTP id
- y10-20020a056e02174a00b002dc7bc5f810mr3279673ill.254.1657552149101; Mon, 11
- Jul 2022 08:09:09 -0700 (PDT)
+        Mon, 11 Jul 2022 08:11:44 -0700 (PDT)
+Received: by mail-io1-f49.google.com with SMTP id 190so5187698iou.6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 08:11:43 -0700 (PDT)
+X-Received: by 2002:a05:6602:2d48:b0:67b:73f5:7e74 with SMTP id
+ d8-20020a0566022d4800b0067b73f57e74mr8746907iow.154.1657552303271; Mon, 11
+ Jul 2022 08:11:43 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220711082709.39102-1-krzysztof.kozlowski@linaro.org> <20220711082709.39102-2-krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220711082709.39102-2-krzysztof.kozlowski@linaro.org>
+References: <20220711082940.39539-1-krzysztof.kozlowski@linaro.org>
+ <20220711082940.39539-3-krzysztof.kozlowski@linaro.org> <CAD=FV=WUCPzzZHAPqoz-vhmcVxzYDxkKQs=+1tLZvsQjWe4q3Q@mail.gmail.com>
+ <f8744ff8-15a0-bf31-c49f-b1bb35ba5cdd@linaro.org>
+In-Reply-To: <f8744ff8-15a0-bf31-c49f-b1bb35ba5cdd@linaro.org>
 From:   Doug Anderson <dianders@chromium.org>
-Date:   Mon, 11 Jul 2022 08:08:53 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=W7BCMTByC9xn2iRsxoB9RzRENz5zuTy1Sgmhjbw3aQMw@mail.gmail.com>
-Message-ID: <CAD=FV=W7BCMTByC9xn2iRsxoB9RzRENz5zuTy1Sgmhjbw3aQMw@mail.gmail.com>
-Subject: Re: [PATCH 2/3] mmc: sdhci-msm: add MSM8998 SDCC specific compatible
+Date:   Mon, 11 Jul 2022 08:11:29 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=X2ZfwwDO_hSSN35ObfvBbBbPjMoSB4GvS7m0yJieNg3Q@mail.gmail.com>
+Message-ID: <CAD=FV=X2ZfwwDO_hSSN35ObfvBbBbPjMoSB4GvS7m0yJieNg3Q@mail.gmail.com>
+Subject: Re: [PATCH v2 2/5] dt-bindings: mmc: sdhci-msm: constrain reg-names
+ perp variants
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Cc:     Ulf Hansson <ulf.hansson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
@@ -66,7 +69,6 @@ Cc:     Ulf Hansson <ulf.hansson@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Adrian Hunter <adrian.hunter@intel.com>,
         Bhupesh Sharma <bhupesh.sharma@linaro.org>,
         Linux MMC List <linux-mmc@vger.kernel.org>,
         "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
@@ -85,36 +87,129 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hi,
 
-On Mon, Jul 11, 2022 at 1:27 AM Krzysztof Kozlowski
+On Mon, Jul 11, 2022 at 7:53 AM Krzysztof Kozlowski
 <krzysztof.kozlowski@linaro.org> wrote:
 >
-> Add a MSM8998-specific SDCC compatible, because using only a generic
-> qcom,sdhci-msm-v4 fallback is deprecated.
+> On 11/07/2022 16:52, Doug Anderson wrote:
+> > Hi
+> >
+> > On Mon, Jul 11, 2022 at 1:29 AM Krzysztof Kozlowski
+> > <krzysztof.kozlowski@linaro.org> wrote:
+> >>
+> >> The entries in arrays must have fixed order, so the bindings and Linux
+> >> driver expecting various combinations of 'reg' addresses was never
+> >> actually conforming to guidelines.
+> >>
+> >> The 'core' reg entry is valid only for SDCC v4 and lower, so disallow it
+> >> in SDCC v5.  SDCC v4 supports CQE and ICE, so allow them, even though
+> >> the qcom,sdhci-msm-v4 compatible is used also for earlier SoCs with SDCC
+> >> v2 or v3, so it is not entirely accurate.
+> >>
+> >> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> >>
+> >> ---
+> >>
+> >> Changes since v1:
+> >> 1. Rework the patch based on Doug's feedback.
+> >> ---
+> >>  .../devicetree/bindings/mmc/sdhci-msm.yaml    | 61 ++++++++++++-------
+> >>  1 file changed, 38 insertions(+), 23 deletions(-)
+> >
+> > In the ${SUBJECT} I'm not sure what a "perp variant" is. Is that a
+> > typo or just a phrase I'm not aware of?
 >
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->  drivers/mmc/host/sdhci-msm.c | 1 +
->  1 file changed, 1 insertion(+)
+> Should be:
+> "per variants"
 >
-> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-> index e395411fb6fd..bb169c1c2b5e 100644
-> --- a/drivers/mmc/host/sdhci-msm.c
-> +++ b/drivers/mmc/host/sdhci-msm.c
-> @@ -2447,6 +2447,7 @@ static const struct of_device_id sdhci_msm_dt_match[] = {
->         {.compatible = "qcom,msm8992-sdhci", .data = &sdhci_msm_mci_var},
->         {.compatible = "qcom,msm8994-sdhci", .data = &sdhci_msm_mci_var},
->         {.compatible = "qcom,msm8996-sdhci", .data = &sdhci_msm_mci_var},
-> +       {.compatible = "qcom,msm8998-sdhci", .data = &sdhci_msm_mci_var},
+> >
+> >
+> >> diff --git a/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml b/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
+> >> index fc6e5221985a..2f0fdd65e908 100644
+> >> --- a/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
+> >> +++ b/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
+> >> @@ -49,33 +49,11 @@ properties:
+> >>
+> >>    reg:
+> >>      minItems: 1
+> >> -    items:
+> >> -      - description: Host controller register map
+> >> -      - description: SD Core register map
+> >> -      - description: CQE register map
+> >> -      - description: Inline Crypto Engine register map
+> >> +    maxItems: 4
+> >>
+> >>    reg-names:
+> >>      minItems: 1
+> >>      maxItems: 4
+> >> -    oneOf:
+> >> -      - items:
+> >> -          - const: hc
+> >> -      - items:
+> >> -          - const: hc
+> >> -          - const: core
+> >> -      - items:
+> >> -          - const: hc
+> >> -          - const: cqhci
+> >> -      - items:
+> >> -          - const: hc
+> >> -          - const: cqhci
+> >> -          - const: ice
+> >> -      - items:
+> >> -          - const: hc
+> >> -          - const: core
+> >> -          - const: cqhci
+> >> -          - const: ice
+> >>
+> >>    clocks:
+> >>      minItems: 3
+> >> @@ -177,6 +155,43 @@ required:
+> >>  allOf:
+> >>    - $ref: mmc-controller.yaml#
+> >>
+> >> +  - if:
+> >> +      properties:
+> >> +        compatible:
+> >> +          contains:
+> >> +            enum:
+> >> +              - qcom,sdhci-msm-v4
+> >> +    then:
+> >> +      properties:
+> >> +        reg:
+> >> +          minItems: 2
+> >> +          items:
+> >> +            - description: Host controller register map
+> >> +            - description: SD Core register map
+> >> +            - description: CQE register map
+> >> +            - description: Inline Crypto Engine register map
+> >> +        reg-names:
+> >> +          minItems: 2
+> >> +          items:
+> >> +            - const: hc
+> >> +            - const: core
+> >> +            - const: cqhci
+> >> +            - const: ice
+> >> +    else:
+> >> +      properties:
+> >> +        reg:
+> >> +          minItems: 1
+> >> +          items:
+> >> +            - description: Host controller register map
+> >> +            - description: CQE register map
+> >> +            - description: Inline Crypto Engine register map
+> >> +        reg-names:
+> >> +          minItems: 1
+> >> +          items:
+> >> +            - const: hc
+> >> +            - const: cqhci
+> >> +            - const: ice
+> >
+> > Do you need to set "maxItems" here? If you don't then will it inherit
+> > the maxItems of 4 from above?
+>
+> No, items determine the size instead.
 
-FWIW I'm _against_ this change.
+Can you just remove the "maxItems" from above then? Does it buy us anything?
 
-In my mind while it is correct to specify both the specific and
-generic compatible string in the device tree, the driver itself should
-rely on just the generic compatible string until there is a reason to
-use the specific one (like we needed to for sdm845 and sc7180).
+In any case, with the ${SUBJECT} fixed:
 
-I think I pointed that out before, but somehow all of the specific
-device tree strings have snuck their way into the driver without me
-paying attention. :(
-
--Doug
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
