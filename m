@@ -2,82 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C19E0570886
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Jul 2022 18:47:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C46B15708A6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Jul 2022 19:08:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229618AbiGKQry (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Jul 2022 12:47:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35984 "EHLO
+        id S230494AbiGKRIC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Jul 2022 13:08:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47104 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229621AbiGKQrx (ORCPT
+        with ESMTP id S230036AbiGKRIB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Jul 2022 12:47:53 -0400
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 513FF3CBFC
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 09:47:52 -0700 (PDT)
-Received: by mail-ed1-x535.google.com with SMTP id v12so6973876edc.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 09:47:52 -0700 (PDT)
+        Mon, 11 Jul 2022 13:08:01 -0400
+Received: from mail-qv1-xf36.google.com (mail-qv1-xf36.google.com [IPv6:2607:f8b0:4864:20::f36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 942572C134
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 10:08:00 -0700 (PDT)
+Received: by mail-qv1-xf36.google.com with SMTP id d17so806040qvs.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 10:08:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
+        d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=CgkIi7fMPRr2AoUFqLpQX7xH/fNuy4VUkp8cy7sE2D4=;
-        b=V3/+Rch1ns/j5gS9Z+XimMOBxyslbkPIkGNRpBpOz0bsiaJNcIunGHgZ3wYeuNJ5KB
-         iiojbeFMZBZKTs54MZfAuQo8noiaVjkbPCw+VGJd7zq3ffX2k/PYiJbk2Lf2ec74x8vX
-         oOjelTn9RDQbi834Br05L23PNacDs9h+toRZ8=
+        bh=wWcvYvacvD8N8pcx60t/vSUQTr5iBONKiVXdnTKPElY=;
+        b=hOeLS2jTOqNMJXllVkjPxyOh9QyOBElTgjCJz0L+yC+3W9UQDw8rHggLAS/L/KpdEJ
+         34DVd5BpJCtkVJI8v++Lf7DyZRgtfa06CQNG+M4EwmoXt32j5BkWrm5gIeCav30Zn6Qa
+         6zYxBqPJdX04We78iNWuy2RsaNUkrufURHdUt+o0XvMwJqsIE0MxTf8ljHFHQ702zo3f
+         KLdpFnSxgXyLN5T9kEhmOBiIzmtG4XKYK5TciFi3fK0ObdQviFwC61EmtiyhoZG7yLXP
+         1ZzYXfpsNZTWOExzoBfT4At3hlklIPtsMr3kYfgsUSgi5jsQdkEB5O2eujgzjeaMN7n+
+         BNAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=CgkIi7fMPRr2AoUFqLpQX7xH/fNuy4VUkp8cy7sE2D4=;
-        b=AbCsG/Xo7Ns36BxGDhLDUj6bsuTtfX3+/zi9ytc3bCwbnE7ktcQeP/1EflEthx/CxZ
-         ubfPKBEsYaBsUldqrQQKO9y6ZF4Fz/XInPr6NZSIXvEOHej6AknZBMdLBDLaX+1ulOH8
-         rNxC1MdnXwWpa9WgwmTXZ1xWG9kxFkpWrd5+Q3OR5wRS1aUXE4726iHcnu5MIpvp3VLO
-         5AnwgKidWjzehpBEXyjjhU+iTfg5jpe+rBOpNYXtXo/QuC75kuwBDryoL8mI+MQIj47B
-         dtk6/bUT4yD9X9b22rWSgsdc09CKinbx2lXiSEPeoZ9ELXl0Ke89CwQu7zPSPEQLJ5DV
-         J/Dw==
-X-Gm-Message-State: AJIora+BnOJztZ05r6GUUhQCSg9q2D/mpno32j4W3UJXIJ4n7VzXQx4u
-        +oz9CAA3v/QVCosKlZMPiJT/i0bTUYb0enp/TGw=
-X-Google-Smtp-Source: AGRyM1tqQC1uPe2DZcoVmTY6UCEPZHH1x+wLUj9r4XgllCZQEpUQiMOCfpe78e1Q5dHcaQVK7Hw1Hw==
-X-Received: by 2002:a50:fb81:0:b0:43a:7975:c721 with SMTP id e1-20020a50fb81000000b0043a7975c721mr26336815edq.381.1657558070745;
-        Mon, 11 Jul 2022 09:47:50 -0700 (PDT)
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com. [209.85.128.45])
-        by smtp.gmail.com with ESMTPSA id i8-20020a170906a28800b0072b13fa5e4csm2871148ejz.58.2022.07.11.09.47.49
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 11 Jul 2022 09:47:49 -0700 (PDT)
-Received: by mail-wm1-f45.google.com with SMTP id n185so3363402wmn.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 09:47:49 -0700 (PDT)
-X-Received: by 2002:a05:600c:3d95:b0:3a2:e97b:f3ae with SMTP id
- bi21-20020a05600c3d9500b003a2e97bf3aemr3975351wmb.188.1657558069021; Mon, 11
- Jul 2022 09:47:49 -0700 (PDT)
+        bh=wWcvYvacvD8N8pcx60t/vSUQTr5iBONKiVXdnTKPElY=;
+        b=40c0/tPCVSYP2UrSwZWxZWTfhcvLXMZ1e98MNpkllaO68YX3VggWMQQ2oj6QerrvmV
+         3BnU2ngTbEUHn9+54j4PyTwBlDGv2RHdzFq3+1sl/j2igkGMsN6++xv06uTAX0jD9l6K
+         CDLyl1Sotlp04XjwmujeQKbsu/UMCmGXQx8+UTHO9/aU7ks7t7F35NdBUKwJBFvF5S0s
+         HsuMKoydm3D2eVB00pFRD7BP9oEUP3THFzsaDFcHwiwCwH+2fTXwIqacUIK03lLuHzoH
+         xJOZqF+1SzrX5MdslgS1P7tBMsji66o6he8fgmI7iB7DFjnbLTIK4iS+8aLyjR7gQoup
+         /xfA==
+X-Gm-Message-State: AJIora9U8fKZ4UiUIa3XdMPEW01EUozdABharZBK3/Sw5iVs+fz2ZIjl
+        W6QevhJWRnJ7Y1a/B9M+4I8E/AnEG0TNGTooTaWwtA==
+X-Google-Smtp-Source: AGRyM1tuHzXpJtx7yTkOQUhvNHpR+JwZ1+CpX+7GCj/1c16E9RRHBJO8NTioymnSxwYptVpdWinnRIR491eHxiEZsXA=
+X-Received: by 2002:a05:6214:d03:b0:473:7764:2ab with SMTP id
+ 3-20020a0562140d0300b00473776402abmr2519187qvh.119.1657559279665; Mon, 11 Jul
+ 2022 10:07:59 -0700 (PDT)
 MIME-Version: 1.0
-References: <1657556603-15024-1-git-send-email-quic_khsieh@quicinc.com>
-In-Reply-To: <1657556603-15024-1-git-send-email-quic_khsieh@quicinc.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Mon, 11 Jul 2022 09:47:37 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=X0Fh_p4TnA3c=SadVKCDVFaWnT9Cj1zydQWqZdYL8eSQ@mail.gmail.com>
-Message-ID: <CAD=FV=X0Fh_p4TnA3c=SadVKCDVFaWnT9Cj1zydQWqZdYL8eSQ@mail.gmail.com>
-Subject: Re: [PATCH v2] arm64: dta: qcom: sc7280: delete vdda-1p2 and vdda-0p9
- from both dp and edp
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
+References: <20220711163021.152578-1-nathan@kernel.org>
+In-Reply-To: <20220711163021.152578-1-nathan@kernel.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Mon, 11 Jul 2022 20:07:48 +0300
+Message-ID: <CAA8EJpoDe5-_jd-zDRsPV06QVah1266YT2fBSWYT7GSTR2K9wA@mail.gmail.com>
+Subject: Re: [PATCH] clk: qcom: gpucc-sm8350: Fix "initializer element is not
+ constant" error
+To:     Nathan Chancellor <nathan@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        "Abhinav Kumar (QUIC)" <quic_abhinavk@quicinc.com>,
-        "Aravind Venkateswaran (QUIC)" <quic_aravindh@quicinc.com>,
-        Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
-        quic_mkrishn@quicinc.com, quic_kalyant@quicinc.coml,
-        freedreno <freedreno@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        Tom Rix <trix@redhat.com>,
+        Robert Foss <robert.foss@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, llvm@lists.linux.dev,
+        kernel test robot <lkp@intel.com>
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -86,17 +76,78 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
-
-On Mon, Jul 11, 2022 at 9:23 AM Kuogee Hsieh <quic_khsieh@quicinc.com> wrote:
+On Mon, 11 Jul 2022 at 19:30, Nathan Chancellor <nathan@kernel.org> wrote:
 >
-> Both vdda-1p2-supply and vdda-0p9-supply regulators are controlled
-> by dp combo phy. Therefore remove them from dp controller.
+> When building with clang or GCC older than 8, errors along the following
+> lines occur:
 >
-> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+>   drivers/clk/qcom/gpucc-sm8350.c:111:2: error: initializer element is not a compile-time constant
+>           gpu_cc_parent,
+>           ^~~~~~~~~~~~~
+>   drivers/clk/qcom/gpucc-sm8350.c:126:2: error: initializer element is not a compile-time constant
+>           gpu_cc_parent,
+>           ^~~~~~~~~~~~~
+>   2 errors generated.
+>
+> The C standard allows an implementation to accept other forms of
+> constant expressions, which GCC 8+ has chosen to do, but it is not
+> required. To fix this error with clang and older supported versions of
+> GCC, use a macro so that the expression can be used in a designated
+> initializer.
+>
+> Fixes: 160758b05ab1 ("clk: qcom: add support for SM8350 GPUCC")
+> Link: https://github.com/ClangBuiltLinux/linux/issues/1660
+> Reported-by: kernel test robot <lkp@intel.com>
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 > ---
->  arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi | 2 --
->  arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi     | 3 ---
->  2 files changed, 5 deletions(-)
+>  drivers/clk/qcom/gpucc-sm8350.c | 10 +++++-----
+>  1 file changed, 5 insertions(+), 5 deletions(-)
+>
+> diff --git a/drivers/clk/qcom/gpucc-sm8350.c b/drivers/clk/qcom/gpucc-sm8350.c
+> index d13fa813d190..9390723f6e40 100644
+> --- a/drivers/clk/qcom/gpucc-sm8350.c
+> +++ b/drivers/clk/qcom/gpucc-sm8350.c
+> @@ -51,9 +51,9 @@ static const struct alpha_pll_config gpu_cc_pll0_config = {
+>         .user_ctl_hi1_val = 0x00000000,
+>  };
+>
+> -static const struct clk_parent_data gpu_cc_parent = {
+> -       .fw_name = "bi_tcxo",
+> -};
+> +#define GPU_CC_PARENT_INIT { .fw_name = "bi_txco", }
 
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Please inline this macro. It adds no additional value in my opinion
+
+> +
+> +static const struct clk_parent_data gpu_cc_parent = GPU_CC_PARENT_INIT;
+>
+>  static struct clk_alpha_pll gpu_cc_pll0 = {
+>         .offset = 0x0,
+> @@ -108,7 +108,7 @@ static const struct parent_map gpu_cc_parent_map_0[] = {
+>  };
+>
+>  static const struct clk_parent_data gpu_cc_parent_data_0[] = {
+> -       gpu_cc_parent,
+> +       GPU_CC_PARENT_INIT,
+>         { .hw = &gpu_cc_pll0.clkr.hw },
+>         { .hw = &gpu_cc_pll1.clkr.hw },
+>         { .fw_name = "gcc_gpu_gpll0_clk_src" },
+> @@ -123,7 +123,7 @@ static const struct parent_map gpu_cc_parent_map_1[] = {
+>  };
+>
+>  static const struct clk_parent_data gpu_cc_parent_data_1[] = {
+> -       gpu_cc_parent,
+> +       GPU_CC_PARENT_INIT,
+>         { .hw = &gpu_cc_pll1.clkr.hw },
+>         { .fw_name = "gcc_gpu_gpll0_clk_src" },
+>         { .fw_name = "gcc_gpu_gpll0_div_clk_src" },
+>
+> base-commit: 0dd8e16bfbc003b009f843e75fae4046daa08fe9
+> --
+> 2.37.0
+>
+
+
+-- 
+With best wishes
+Dmitry
