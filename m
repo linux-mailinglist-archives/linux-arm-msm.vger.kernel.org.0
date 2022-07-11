@@ -2,68 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1C46B570158
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Jul 2022 13:56:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E2800570186
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Jul 2022 14:02:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229690AbiGKL4S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Jul 2022 07:56:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49662 "EHLO
+        id S231186AbiGKMCS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Jul 2022 08:02:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56022 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229581AbiGKL4R (ORCPT
+        with ESMTP id S231138AbiGKMCO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Jul 2022 07:56:17 -0400
-Received: from mail-yb1-xb36.google.com (mail-yb1-xb36.google.com [IPv6:2607:f8b0:4864:20::b36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DBAF3247E
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 04:56:16 -0700 (PDT)
-Received: by mail-yb1-xb36.google.com with SMTP id h62so5663721ybb.11
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 04:56:16 -0700 (PDT)
+        Mon, 11 Jul 2022 08:02:14 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F7A83C14E
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 05:02:06 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id r9so278244lfp.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 05:02:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ASd7dm6lYrZdAzK3N6daMmc+CWirepg6OyYYSdtPBtQ=;
-        b=zHlbUAwwapxF0MLHHEdAUgC30UDRWwnmS4vWTffZbOif1EEJuaKGsHMyFKMaHRVznO
-         wPDPGav91x3qQXQWMV961AiC0MaN6ftXSo9GLdhSM7sU+DS7KZx05CPvL7TM3mp94Qtg
-         n7TpdkJwZxF3XZegob+8sngX6WiLYZExfCCR3smH131STPnOCJCjALZhH34nfL7ebw/H
-         B4xiKKGBsN9200igRrKqn1QfUWJLrck3SgRhJcg3NdFEhQmWHHvEXU9U/NxFVC2PncJ0
-         Cjx5HdHf+VjIknNmNKTYpkBKGAULzRObXs1wHI5fABmFmyMtSytDvpoYEFSKNC+1Mk9z
-         1Hzg==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=QVqxg0dp3wEYOZpL9v9ilM2FSVRUoonO6i41pxiTzI8=;
+        b=hFlw6gC8Q7phUNCtcoZ+mnhDG3DT2Icr9ctPW9MH8XjMtD29CbFUV/+EqObdE85V3+
+         84TFY8D/cPCLDmxM+Yjze8C5OqepE/+Jks3xTPjY8bvxWBK6PIcNzNssTM1CFhs9LtEk
+         jwd7bOEnaXnycO0NG4YXMJQxd0/Iydvchv52ywJ4QVSlfLFKenAy31lHszz6+D8Fiwtu
+         0PxvFQZMrFg2Ig2iOO7St7bU6PIywmAR7oIdOA8wSFtGZNMLW2Wx+fOS0U4T/Sc9xrDA
+         yiqr7V7dxkxre7p2jDbyB8gkHTM4L7MGLh1bGnShicdj+usImIZHWFNsR4CLEWZT0lgl
+         /CIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ASd7dm6lYrZdAzK3N6daMmc+CWirepg6OyYYSdtPBtQ=;
-        b=lXWmtTZctefKL6/+aLUdUwDRNF3a7GxSNjt2sC2eVUNg0AKjM3p3wZOGTvE0uBWKae
-         OcBWJuWKpVNvYvBRt+dlNxzxiCL0nZp9NWO3LDWTtro69+YUD8XfQiW0vedX+t731oq+
-         5ckO26ixCvBZ6nIvqIvOl6lJ6HWiZSm1MyxLll7XQvnWilDz8arj5bvmg8IY5sJ0Pspw
-         g2rlnqe9rMkStWYq7SX+FNCScv+pHFIiwa7qEiMsMMPqcByf7UK0F6E+xKWyYOFHH//f
-         2KnmwkXvX3FInsECNk2mEYYE6hWm79YhqGE+Hv7WYWgFazAcfZHW7N9LsKL1RD0dqEwg
-         dVHg==
-X-Gm-Message-State: AJIora8L6etuGZf/+5TXhXwYY1tPF7+puZJruhpdee+Nqp7k6PVdAQsQ
-        CDdDY6YxxEeMzVznP0c75CLDXLZzkkoe5jUtZF8XKA==
-X-Google-Smtp-Source: AGRyM1v5CLjNTsjcq5fYn7SA01Pi7mP2T5BVXZXBSbQVgj46pIJy/5zI+faxrUyGQR4WPVtKoUIQ5lemEHunE6+RpE4=
-X-Received: by 2002:a25:d07:0:b0:66e:6c0e:a2d1 with SMTP id
- 7-20020a250d07000000b0066e6c0ea2d1mr15127181ybn.369.1657540575867; Mon, 11
- Jul 2022 04:56:15 -0700 (PDT)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=QVqxg0dp3wEYOZpL9v9ilM2FSVRUoonO6i41pxiTzI8=;
+        b=jedf3ODMkHoFYPh48eEcw2slJkB2pkLEpPPC1Xsdl/L6DdDolfy6zKz9xvVp/p2jx9
+         BW7c/+d0lMjLzSqlOiQbA/FH+X0vmWlLFiAQmbI4kym3tBpWKbhSN9Nx74lgKDthKLiw
+         HzqmtWaeo+CNG+zQQYRVXCdsRhq+IpE2Ka6ZZj2k6Zze6U6GmuV5gPtswUaLEZ7p2a7W
+         JSi2foPEumaFZUnhAZIviH5EQMki17ie5bZIgZXcOybJ+LkUI9XrLctnPEdNJjn8vZNa
+         k1gxcuLc+G1TdLOVF8vj3+iYY/0yhjG8evh71bHNbiYpoJG76ll6h/fCi/+XPM7cc4O6
+         dKUQ==
+X-Gm-Message-State: AJIora+ZueSL/YhJHweGykyuBnxM6D+zFGNej75YujfHq5cygPS6tLfs
+        RSHPqWB4EJfFYbY/vtT4j1IGUw==
+X-Google-Smtp-Source: AGRyM1tPFsxY/xB1ICxsLpx4b0d9lJislbMty935ePwpSxLaNm08XHOXHHUPjHR/WWsfjwVIeBOlQg==
+X-Received: by 2002:a05:6512:398c:b0:488:f524:b7e9 with SMTP id j12-20020a056512398c00b00488f524b7e9mr10868068lfu.259.1657540924386;
+        Mon, 11 Jul 2022 05:02:04 -0700 (PDT)
+Received: from [10.0.0.8] (fwa5cab-55.bb.online.no. [88.92.171.55])
+        by smtp.gmail.com with ESMTPSA id d28-20020ac25edc000000b00489c719b809sm1492196lfq.284.2022.07.11.05.02.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 11 Jul 2022 05:02:03 -0700 (PDT)
+Message-ID: <9e1ff864-3952-6442-13db-a3d8e18f86c3@linaro.org>
+Date:   Mon, 11 Jul 2022 14:02:01 +0200
 MIME-Version: 1.0
-References: <20220704212402.1715182-1-robimarko@gmail.com> <20220704212402.1715182-9-robimarko@gmail.com>
-In-Reply-To: <20220704212402.1715182-9-robimarko@gmail.com>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Mon, 11 Jul 2022 13:56:04 +0200
-Message-ID: <CACRpkdaAb14TGF0atvbB8NHygsRGNCKJCf_S2gOzvvTxxDEeRA@mail.gmail.com>
-Subject: Re: [PATCH v6 09/12] pinctrl: qcom-pmic-gpio: add support for PMP8074
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH 4/6] clk: qcom: apss-ipq6018: add MODULE_ALIAS
+Content-Language: en-US
 To:     Robert Marko <robimarko@gmail.com>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
-        konrad.dybcio@somainline.org, lee.jones@linaro.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        lgirdwood@gmail.com, broonie@kernel.org, jic23@kernel.org,
-        lars@metafoo.de, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-gpio@vger.kernel.org, linux-iio@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        krzysztof.kozlowski+dt@linaro.org, sivaprak@codeaurora.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-clk@vger.kernel.org,
+        Devicetree List <devicetree@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
+References: <20220711104719.40939-1-robimarko@gmail.com>
+ <20220711104719.40939-4-robimarko@gmail.com>
+ <4de38d90-0020-c2db-b283-319b4a0e2ce5@linaro.org>
+ <CAOX2RU6X=JiV1As+_N6c_=VaHfVYpke_deQmmNPMMDxfnz5i8g@mail.gmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <CAOX2RU6X=JiV1As+_N6c_=VaHfVYpke_deQmmNPMMDxfnz5i8g@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -71,15 +86,48 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jul 4, 2022 at 11:24 PM Robert Marko <robimarko@gmail.com> wrote:
+On 11/07/2022 13:46, Robert Marko wrote:
+> On Mon, 11 Jul 2022 at 13:05, Krzysztof Kozlowski
+> <krzysztof.kozlowski@linaro.org> wrote:
+>>
+>> On 11/07/2022 12:47, Robert Marko wrote:
+>>> Add MODULE_ALIAS so that driver will be autoloaded if built as a module.
+>>>
+>>> Signed-off-by: Robert Marko <robimarko@gmail.com>
+>>> ---
+>>>  drivers/clk/qcom/apss-ipq6018.c | 1 +
+>>>  1 file changed, 1 insertion(+)
+>>>
+>>> diff --git a/drivers/clk/qcom/apss-ipq6018.c b/drivers/clk/qcom/apss-ipq6018.c
+>>> index f2f502e2d5a4..963c69f2c0c2 100644
+>>> --- a/drivers/clk/qcom/apss-ipq6018.c
+>>> +++ b/drivers/clk/qcom/apss-ipq6018.c
+>>> @@ -101,5 +101,6 @@ static struct platform_driver apss_ipq6018_driver = {
+>>>
+>>>  module_platform_driver(apss_ipq6018_driver);
+>>>
+>>> +MODULE_ALIAS("platform:qcom,apss-ipq6018-clk");
+>>
+>> That's not correct alias (no commas) and usually alias is not needed at
+>> all. If you need one, please explain why it is needed. Module
+>> autoloading works fine without aliases...
+> 
+> Hi Krzysztof,
+> alias is required here as the driver does not use a DT compatible but
+> is registered
+> by the APCS driver, if built as a module, it won't get autoloaded
+> without an alias.
 
-> PMP8074 has 12 GPIO-s with holes on GPIO1 and GPIO12.
->
-> Signed-off-by: Robert Marko <robimarko@gmail.com>
+Instead you need device ID table. Aliases are not a workaround for
+missing core driver elements.
 
-Since there are no compile-time dependencies I expect to pick
-the pinctrl-related patches separately to the pinctrl tree on next
-v7 iteration.
+> 
+> I can only fix up the driver name here and in APCS first to have an
+> alias without commas.
 
-Yours,
-Linus Walleij
+I see that the comma is used in driver name, so this is an independent
+issue. Maybe change it to '-' in separate commit?
+
+
+Best regards,
+Krzysztof
