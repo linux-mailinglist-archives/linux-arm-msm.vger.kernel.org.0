@@ -2,132 +2,193 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E2800570186
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Jul 2022 14:02:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 65C055702B9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Jul 2022 14:40:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231186AbiGKMCS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Jul 2022 08:02:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56022 "EHLO
+        id S231917AbiGKMkU convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Jul 2022 08:40:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60232 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231138AbiGKMCO (ORCPT
+        with ESMTP id S231796AbiGKMkD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Jul 2022 08:02:14 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F7A83C14E
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 05:02:06 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id r9so278244lfp.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 05:02:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=QVqxg0dp3wEYOZpL9v9ilM2FSVRUoonO6i41pxiTzI8=;
-        b=hFlw6gC8Q7phUNCtcoZ+mnhDG3DT2Icr9ctPW9MH8XjMtD29CbFUV/+EqObdE85V3+
-         84TFY8D/cPCLDmxM+Yjze8C5OqepE/+Jks3xTPjY8bvxWBK6PIcNzNssTM1CFhs9LtEk
-         jwd7bOEnaXnycO0NG4YXMJQxd0/Iydvchv52ywJ4QVSlfLFKenAy31lHszz6+D8Fiwtu
-         0PxvFQZMrFg2Ig2iOO7St7bU6PIywmAR7oIdOA8wSFtGZNMLW2Wx+fOS0U4T/Sc9xrDA
-         yiqr7V7dxkxre7p2jDbyB8gkHTM4L7MGLh1bGnShicdj+usImIZHWFNsR4CLEWZT0lgl
-         /CIQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=QVqxg0dp3wEYOZpL9v9ilM2FSVRUoonO6i41pxiTzI8=;
-        b=jedf3ODMkHoFYPh48eEcw2slJkB2pkLEpPPC1Xsdl/L6DdDolfy6zKz9xvVp/p2jx9
-         BW7c/+d0lMjLzSqlOiQbA/FH+X0vmWlLFiAQmbI4kym3tBpWKbhSN9Nx74lgKDthKLiw
-         HzqmtWaeo+CNG+zQQYRVXCdsRhq+IpE2Ka6ZZj2k6Zze6U6GmuV5gPtswUaLEZ7p2a7W
-         JSi2foPEumaFZUnhAZIviH5EQMki17ie5bZIgZXcOybJ+LkUI9XrLctnPEdNJjn8vZNa
-         k1gxcuLc+G1TdLOVF8vj3+iYY/0yhjG8evh71bHNbiYpoJG76ll6h/fCi/+XPM7cc4O6
-         dKUQ==
-X-Gm-Message-State: AJIora+ZueSL/YhJHweGykyuBnxM6D+zFGNej75YujfHq5cygPS6tLfs
-        RSHPqWB4EJfFYbY/vtT4j1IGUw==
-X-Google-Smtp-Source: AGRyM1tPFsxY/xB1ICxsLpx4b0d9lJislbMty935ePwpSxLaNm08XHOXHHUPjHR/WWsfjwVIeBOlQg==
-X-Received: by 2002:a05:6512:398c:b0:488:f524:b7e9 with SMTP id j12-20020a056512398c00b00488f524b7e9mr10868068lfu.259.1657540924386;
-        Mon, 11 Jul 2022 05:02:04 -0700 (PDT)
-Received: from [10.0.0.8] (fwa5cab-55.bb.online.no. [88.92.171.55])
-        by smtp.gmail.com with ESMTPSA id d28-20020ac25edc000000b00489c719b809sm1492196lfq.284.2022.07.11.05.02.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 11 Jul 2022 05:02:03 -0700 (PDT)
-Message-ID: <9e1ff864-3952-6442-13db-a3d8e18f86c3@linaro.org>
-Date:   Mon, 11 Jul 2022 14:02:01 +0200
+        Mon, 11 Jul 2022 08:40:03 -0400
+Received: from mx0a-00128a01.pphosted.com (mx0a-00128a01.pphosted.com [148.163.135.77])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36FF765566
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 05:39:36 -0700 (PDT)
+Received: from pps.filterd (m0167089.ppops.net [127.0.0.1])
+        by mx0a-00128a01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 26BBf38I026647;
+        Mon, 11 Jul 2022 08:38:16 -0400
+Received: from nwd2mta4.analog.com ([137.71.173.58])
+        by mx0a-00128a01.pphosted.com (PPS) with ESMTPS id 3h76k6bhuv-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 11 Jul 2022 08:38:15 -0400
+Received: from ASHBMBX9.ad.analog.com (ASHBMBX9.ad.analog.com [10.64.17.10])
+        by nwd2mta4.analog.com (8.14.7/8.14.7) with ESMTP id 26BCcEaW000398
+        (version=TLSv1/SSLv3 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL);
+        Mon, 11 Jul 2022 08:38:14 -0400
+Received: from ASHBMBX8.ad.analog.com (10.64.17.5) by ASHBMBX9.ad.analog.com
+ (10.64.17.10) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.14; Mon, 11 Jul
+ 2022 08:38:13 -0400
+Received: from zeus.spd.analog.com (10.66.68.11) by ashbmbx8.ad.analog.com
+ (10.64.17.5) with Microsoft SMTP Server id 15.2.986.14 via Frontend
+ Transport; Mon, 11 Jul 2022 08:38:13 -0400
+Received: from nsa.ad.analog.com ([10.44.3.53])
+        by zeus.spd.analog.com (8.15.1/8.15.1) with ESMTP id 26BCbVE5011687;
+        Mon, 11 Jul 2022 08:37:33 -0400
+From:   =?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>
+To:     <linux-arm-msm@vger.kernel.org>, <openbmc@lists.ozlabs.org>,
+        <linux-renesas-soc@vger.kernel.org>,
+        <linux-mediatek@lists.infradead.org>, <linux-imx@nxp.com>,
+        <linux-mips@vger.kernel.org>,
+        Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+        <linux-iio@vger.kernel.org>, <chrome-platform@lists.linux.dev>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-stm32@st-md-mailman.stormreply.com>
+CC:     Andy Gross <agross@kernel.org>,
+        Nicolas Ferre <nicolas.ferre@microchip.com>,
+        Benson Leung <bleung@chromium.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Tomer Maimon <tmaimon77@gmail.com>,
+        Zhang Rui <rui.zhang@intel.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Eugen Hristev <eugen.hristev@microchip.com>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Benjamin Fair <benjaminfair@google.com>,
+        Nancy Yuen <yuenn@google.com>,
+        Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
+        Jishnu Prakash <quic_jprakash@quicinc.com>,
+        Christophe Branchereau <cbranchereau@gmail.com>,
+        Avi Fishman <avifishman70@gmail.com>,
+        Tali Perry <tali.perry1@gmail.com>,
+        Michael Hennerich <Michael.Hennerich@analog.com>,
+        Miquel Raynal <miquel.raynal@bootlin.com>,
+        Claudiu Beznea <claudiu.beznea@microchip.com>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Thara Gopinath <thara.gopinath@linaro.org>,
+        Cai Huoqing <cai.huoqing@linux.dev>,
+        Fabio Estevam <festevam@gmail.com>,
+        Olivier Moysan <olivier.moysan@foss.st.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Haibo Chen <haibo.chen@nxp.com>, Arnd Bergmann <arnd@arndb.de>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Patrick Venture <venture@google.com>,
+        Amit Kucheria <amitk@kernel.org>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Lorenzo Bianconi <lorenzo@kernel.org>,
+        Paul Cercueil <paul@crapouillou.net>,
+        Andy Shevchenko <andy.shevchenko@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Gwendal Grignou <gwendal@chromium.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Saravanan Sekar <sravanhome@gmail.com>,
+        Guenter Roeck <groeck@chromium.org>,
+        Jonathan Cameron <jic23@kernel.org>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Linus Walleij <linus.walleij@linaro.org>
+Subject: [PATCH v2 00/15] make iio inkern interface firmware agnostic
+Date:   Mon, 11 Jul 2022 14:38:20 +0200
+Message-ID: <20220711123835.811358-1-nuno.sa@analog.com>
+X-Mailer: git-send-email 2.37.0
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH 4/6] clk: qcom: apss-ipq6018: add MODULE_ALIAS
-Content-Language: en-US
-To:     Robert Marko <robimarko@gmail.com>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        krzysztof.kozlowski+dt@linaro.org, sivaprak@codeaurora.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-clk@vger.kernel.org,
-        Devicetree List <devicetree@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-References: <20220711104719.40939-1-robimarko@gmail.com>
- <20220711104719.40939-4-robimarko@gmail.com>
- <4de38d90-0020-c2db-b283-319b4a0e2ce5@linaro.org>
- <CAOX2RU6X=JiV1As+_N6c_=VaHfVYpke_deQmmNPMMDxfnz5i8g@mail.gmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <CAOX2RU6X=JiV1As+_N6c_=VaHfVYpke_deQmmNPMMDxfnz5i8g@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8BIT
+X-ADIRuleOP-NewSCL: Rule Triggered
+X-Proofpoint-ORIG-GUID: WcE9hls-TN6poatnPpXjvAc08Rg5Ey-4
+X-Proofpoint-GUID: WcE9hls-TN6poatnPpXjvAc08Rg5Ey-4
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.883,Hydra:6.0.517,FMLib:17.11.122.1
+ definitions=2022-07-11_18,2022-07-08_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 adultscore=0
+ mlxlogscore=921 malwarescore=0 spamscore=0 impostorscore=0
+ priorityscore=1501 suspectscore=0 mlxscore=0 lowpriorityscore=0
+ bulkscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2206140000 definitions=main-2207110054
+X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_LOW,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/07/2022 13:46, Robert Marko wrote:
-> On Mon, 11 Jul 2022 at 13:05, Krzysztof Kozlowski
-> <krzysztof.kozlowski@linaro.org> wrote:
->>
->> On 11/07/2022 12:47, Robert Marko wrote:
->>> Add MODULE_ALIAS so that driver will be autoloaded if built as a module.
->>>
->>> Signed-off-by: Robert Marko <robimarko@gmail.com>
->>> ---
->>>  drivers/clk/qcom/apss-ipq6018.c | 1 +
->>>  1 file changed, 1 insertion(+)
->>>
->>> diff --git a/drivers/clk/qcom/apss-ipq6018.c b/drivers/clk/qcom/apss-ipq6018.c
->>> index f2f502e2d5a4..963c69f2c0c2 100644
->>> --- a/drivers/clk/qcom/apss-ipq6018.c
->>> +++ b/drivers/clk/qcom/apss-ipq6018.c
->>> @@ -101,5 +101,6 @@ static struct platform_driver apss_ipq6018_driver = {
->>>
->>>  module_platform_driver(apss_ipq6018_driver);
->>>
->>> +MODULE_ALIAS("platform:qcom,apss-ipq6018-clk");
->>
->> That's not correct alias (no commas) and usually alias is not needed at
->> all. If you need one, please explain why it is needed. Module
->> autoloading works fine without aliases...
-> 
-> Hi Krzysztof,
-> alias is required here as the driver does not use a DT compatible but
-> is registered
-> by the APCS driver, if built as a module, it won't get autoloaded
-> without an alias.
+First version of the series can be found here:
 
-Instead you need device ID table. Aliases are not a workaround for
-missing core driver elements.
+https://lore.kernel.org/linux-iio/20220610084545.547700-1-nuno.sa@analog.com/
 
-> 
-> I can only fix up the driver name here and in APCS first to have an
-> alias without commas.
+v2 changes:
 
-I see that the comma is used in driver name, so this is an independent
-issue. Maybe change it to '-' in separate commit?
+[1/15]
+  * Fix typo and added more description in the commit message.
 
+[3/15]
+  * Remove superfluous code;
+  * Commit message spell fixes and added more details;
+  * Improved error handling (this is the most significant change in this
+version. More details on the commit message).
 
-Best regards,
-Krzysztof
+[4/15]
+  * Drop the 'ugly' parent_lookup flag. With the new error handling,
+    we can use -ENODEV to infer if we should proceed or not with the
+    lookup.
+
+[5/15]:
+  * Moved some local declarations up so long lines first;
+  * Use 'bus_find_device_by_fwnode()';
+  * Proper ordering in includes.
+  * Adapted error handling in '__fwnode_iio_channel_get_by_name()' taking
+ACPI into account and when 'name' is given but index < 0. It seems that
+ACPI code can actually return -ENOENT with index < 0 for which case we
+should continue the search. Not sure if a check  in ACPI ('if (index < 0)
+return -EINVAL;) like is done in OF would make sense...
+
+[12/15]:
+  * Use 'device_property_count_u64()' to get the number of diff channels.
+So no need for 'magic' divisions by 2 (no idea why I haven't done like
+this in the first place).
+
+[15/15]
+  * Fix wrong conversion of 'if (ptr != NULL)' to 'if (!ptr)'.
+
+Special note for patch 3/15 where -ENODEV is still used despite some talks
+about using -ENOENT and hence, be more in line with firmware code. The
+reason I kept it was to be consistent with the rest of the file. I'd say
+that if we want to move to -ENOENT we should do it in a separate patch
+and for the complete file.
+
+Nuno Sá (15):
+  iio: inkern: only release the device node when done with it
+  iio: inkern: fix return value in devm_of_iio_channel_get_by_name()
+  iio: inkern: only return error codes in iio_channel_get_*() APIs
+  iio: inkern: split of_iio_channel_get_by_name()
+  iio: inkern: move to fwnode properties
+  thermal: qcom: qcom-spmi-adc-tm5: convert to IIO fwnode API
+  iio: adc: ingenic-adc: convert to IIO fwnode interface
+  iio: adc: ab8500-gpadc: convert to device properties
+  iio: adc: at91-sama5d2_adc: convert to device properties
+  iio: adc: qcom-pm8xxx-xoadc: convert to device properties
+  iio: adc: qcom-spmi-vadc: convert to device properties
+  iio: adc: qcom-spmi-adc5: convert to device properties
+  iio: adc: stm32-adc: convert to device properties
+  iio: inkern: remove OF dependencies
+  iio: inkern: fix coding style warnings
+
+ drivers/iio/adc/ab8500-gpadc.c           |  27 +--
+ drivers/iio/adc/at91-sama5d2_adc.c       |  30 +--
+ drivers/iio/adc/ingenic-adc.c            |   8 +-
+ drivers/iio/adc/qcom-pm8xxx-xoadc.c      |  58 +++--
+ drivers/iio/adc/qcom-spmi-adc5.c         |  63 +++---
+ drivers/iio/adc/qcom-spmi-vadc.c         |  44 ++--
+ drivers/iio/adc/stm32-adc.c              | 121 +++++-----
+ drivers/iio/inkern.c                     | 271 +++++++++++++----------
+ drivers/thermal/qcom/qcom-spmi-adc-tm5.c |   3 +-
+ include/linux/iio/consumer.h             |  28 +--
+ include/linux/iio/iio.h                  |   8 +-
+ 11 files changed, 347 insertions(+), 314 deletions(-)
+
+-- 
+2.37.0
+
