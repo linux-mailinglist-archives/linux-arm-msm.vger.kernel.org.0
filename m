@@ -2,86 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F413F570D34
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Jul 2022 00:11:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4078A570D5C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Jul 2022 00:32:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229935AbiGKWLR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Jul 2022 18:11:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47136 "EHLO
+        id S231926AbiGKWcM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Jul 2022 18:32:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59472 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229617AbiGKWLQ (ORCPT
+        with ESMTP id S229707AbiGKWb6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Jul 2022 18:11:16 -0400
-Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B95F13EA7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 15:11:15 -0700 (PDT)
-Received: by mail-oi1-x22c.google.com with SMTP id o133so8341778oig.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 15:11:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kali.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=bqF37v1wc4vdtH986+POZwfFAWH4aibHxP0JNk7OS00=;
-        b=aeDvSik4AaD4uloL26ZCHzQiqGK019nqdEcTtt2zoO9vfYkrlw735sbPVvOahsKl7U
-         B4CxOkIFU+wL+Wp3CLBdGzKSqcYOARSrjCUDr2eFbolgjLUDEnYYE64tkMI0xj7ohX04
-         P9SwvWRTtBmiSvbDBQWPrQvmPb1lis6/Mu/eyKRSj3Cdm72777CtB4maHVPqt0oj8wNX
-         LNo2ZIqlHxqr6okRJQQ5vZIH74OQpShiZDvh6bZz9TfHum0coMXBdCihEXG3KjoVNeTX
-         vI4bmbECbFEpkZSFjJH+Psa1fq52c3SJH+0PSDko5W6gFtVT64i1lGEDoLQswHMqX5go
-         sX2g==
+        Mon, 11 Jul 2022 18:31:58 -0400
+Received: from mail-io1-f54.google.com (mail-io1-f54.google.com [209.85.166.54])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B735D5508E;
+        Mon, 11 Jul 2022 15:31:56 -0700 (PDT)
+Received: by mail-io1-f54.google.com with SMTP id p128so6315871iof.1;
+        Mon, 11 Jul 2022 15:31:56 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=bqF37v1wc4vdtH986+POZwfFAWH4aibHxP0JNk7OS00=;
-        b=PH0pfDqapTr3hI83ploQzBo0/q7TeGlD6npRbuCi8b5A7dA4qJkVImbJwbv5W0+kgi
-         HsH0yTaOS5zZ/5QpeMM55tZgz0+CTJuvg0IJUAmANd3jiDi15xWLwVmEBL3dLvKYN9p6
-         btuJBkeA7fxYnoLe+5T0GcjGunc3yq1PuB+AzJDdYmPR1WtPimw+8R3HQhfqe/F0AP1r
-         9YIKNacQ3RdlYS5uZZgQKLAqPtzSDAOxcouok1l+VcUW1NpP4B3AQM8T8KJIrs0XFIrb
-         MZkhy0nqkw3QxcSBjGmt45KIBZmCC0QVNROqwu9NG3Q2pDlhSgXTo9MnyDq8fjAVdfA3
-         3YHw==
-X-Gm-Message-State: AJIora/qQChXpRk49PTajhoNflKP9z3irx7Ppv47HhEiN768cQXelYgs
-        6ZyoFeNXA8grgVvv4M3IqYlRjg==
-X-Google-Smtp-Source: AGRyM1vK35Lb7yI3VV+fOB2Y9Ai+cSgHMs+KxRjlEzzKYmw2Z9KVy4cnIf1W/xCeFz5Yc7Vbf6AI8g==
-X-Received: by 2002:a05:6808:1412:b0:339:b55c:24f8 with SMTP id w18-20020a056808141200b00339b55c24f8mr331604oiv.106.1657577474826;
-        Mon, 11 Jul 2022 15:11:14 -0700 (PDT)
-Received: from [192.168.11.16] (cpe-173-173-107-246.satx.res.rr.com. [173.173.107.246])
-        by smtp.gmail.com with ESMTPSA id f13-20020a056830204d00b00616dfd2c859sm3024549otp.59.2022.07.11.15.11.12
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 11 Jul 2022 15:11:14 -0700 (PDT)
-Message-ID: <c2774352-030f-196d-c3f8-6cfd370d048d@kali.org>
-Date:   Mon, 11 Jul 2022 17:11:11 -0500
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=2HDZ/g/L4L8Mu4j/+/gfX6YW3AXyQsXVB04cFj4sl5o=;
+        b=yjQ9Zxdv6AEmmmFllao2vzW+CqESC4z479cNqFvm0vjrVnjeO2RA/bmxnZhoBe2Jym
+         dhMRWjyyWNpp3+lMzCCQPSLx4KaYtrWM2oKCCVG671Eafnd0edS5sDoEqotTQCPUP+Ti
+         A1skfsviKrnB0bHffb1SneUQbc5lvJgno/ZK542aSJ9TzC5cwW3CIm7KPDEHoTuJmdMD
+         Xwp5cQefCvTAyrU6LkFYWHIMYD4vS1QZ/dtggp4ocuuwQIB+uIn6ipAUKPb8wq3Pk6CB
+         KgVzj2dg9/d6RjDUBRhGLnETTSqozs3pKWcbRqkV03p03Q6RDMy8M1tXF5HhM32pI6WA
+         k8eQ==
+X-Gm-Message-State: AJIora9sFmxKI2wIEyLg2p/umc+fAE46NlO7USsgk+uck7uXN/mtETHn
+        Tj2pNXn5FMzyj5SXe9dhZA==
+X-Google-Smtp-Source: AGRyM1tX5qfUNZQKNMwx106ge/8+5UKVYFsgg1ju7nkV5Mfw8Bo3q35gV95KdTYFp3jb71VB/RMWHQ==
+X-Received: by 2002:a02:c984:0:b0:33f:3c79:8918 with SMTP id b4-20020a02c984000000b0033f3c798918mr8589407jap.270.1657578716011;
+        Mon, 11 Jul 2022 15:31:56 -0700 (PDT)
+Received: from robh.at.kernel.org ([64.188.179.248])
+        by smtp.gmail.com with ESMTPSA id j10-20020a02cc6a000000b0033158c4a312sm3318225jaq.55.2022.07.11.15.31.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 11 Jul 2022 15:31:55 -0700 (PDT)
+Received: (nullmailer pid 388681 invoked by uid 1000);
+        Mon, 11 Jul 2022 22:31:52 -0000
+Date:   Mon, 11 Jul 2022 16:31:52 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc:     konrad.dybcio@somainline.org, linux-arm-msm@vger.kernel.org,
+        agross@kernel.org, bjorn.andersson@linaro.org,
+        devicetree@vger.kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        robh+dt@kernel.org, shawn.guo@linaro.org, jassisinghbrar@gmail.com
+Subject: Re: [PATCH v2 1/2] dt-bindings: mailbox: qcom,apcs-kpss-global: Add
+ syscon const for relevant entries
+Message-ID: <20220711223152.GA388648-robh@kernel.org>
+References: <20220707150933.1889371-1-bryan.odonoghue@linaro.org>
+ <20220707150933.1889371-2-bryan.odonoghue@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.11.0
-Subject: Re: [RFC PATCH v3 2/2] drm/bridge: ti-sn65dsi86: support
- DRM_BRIDGE_ATTACH_NO_CONNECTOR
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Andrzej Hajda <andrzej.hajda@intel.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Robert Foss <robert.foss@linaro.org>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Stephen Boyd <swboyd@chromium.org>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, Sam Ravnborg <sam@ravnborg.org>
-References: <20220711092117.360797-1-dmitry.baryshkov@linaro.org>
- <20220711092117.360797-3-dmitry.baryshkov@linaro.org>
-From:   Steev Klimaszewski <steev@kali.org>
-In-Reply-To: <20220711092117.360797-3-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220707150933.1889371-2-bryan.odonoghue@linaro.org>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -89,60 +66,20 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On 7/11/22 4:21 AM, Dmitry Baryshkov wrote:
-> Now as the driver does not depend on pdata->connector, add support for
-> attaching the bridge with DRM_BRIDGE_ATTACH_NO_CONNECTOR.
->
-> Reviewed-by: Sam Ravnborg <sam@ravnborg.org>
-> Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+On Thu, 07 Jul 2022 16:09:32 +0100, Bryan O'Donoghue wrote:
+> msm8916, msm8939, msm8953, msm8994 and qcs404 already declare or should
+> declare syscon as they have drivers that use syscon inside of the apcs-kpss
+> block.
+> 
+> grep apcs arch/arm64/boot/dts/qcom/* | grep syscon
+> 
+> Add in the additional syscon in the documentation for the above mentioned
+> parts.
+> 
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 > ---
->   drivers/gpu/drm/bridge/ti-sn65dsi86.c | 18 ++++++++----------
->   1 file changed, 8 insertions(+), 10 deletions(-)
->
-> diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-> index b362a7bf4d97..369bf72717f6 100644
-> --- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-> +++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-> @@ -698,11 +698,6 @@ static int ti_sn_bridge_attach(struct drm_bridge *bridge,
->   	struct ti_sn65dsi86 *pdata = bridge_to_ti_sn65dsi86(bridge);
->   	int ret;
->   
-> -	if (flags & DRM_BRIDGE_ATTACH_NO_CONNECTOR) {
-> -		DRM_ERROR("Fix bridge driver to make connector optional!");
-> -		return -EINVAL;
-> -	}
-> -
->   	pdata->aux.drm_dev = bridge->dev;
->   	ret = drm_dp_aux_register(&pdata->aux);
->   	if (ret < 0) {
-> @@ -710,15 +705,18 @@ static int ti_sn_bridge_attach(struct drm_bridge *bridge,
->   		return ret;
->   	}
->   
-> -	/* We never want the next bridge to *also* create a connector: */
-> -	flags |= DRM_BRIDGE_ATTACH_NO_CONNECTOR;
-> -
-> -	/* Attach the next bridge */
-> +	/*
-> +	 * Attach the next bridge.
-> +	 * We never want the next bridge to *also* create a connector.
-> +	 */
->   	ret = drm_bridge_attach(bridge->encoder, pdata->next_bridge,
-> -				&pdata->bridge, flags);
-> +				&pdata->bridge, flags | DRM_BRIDGE_ATTACH_NO_CONNECTOR);
->   	if (ret < 0)
->   		goto err_initted_aux;
->   
-> +	if (flags & DRM_BRIDGE_ATTACH_NO_CONNECTOR)
-> +		return 0;
-> +
->   	pdata->connector = drm_bridge_connector_init(pdata->bridge.dev,
->   						     pdata->bridge.encoder);
->   	if (IS_ERR(pdata->connector)) {
+>  .../mailbox/qcom,apcs-kpss-global.yaml        | 46 ++++++++++---------
+>  1 file changed, 25 insertions(+), 21 deletions(-)
+> 
 
-Tested on Lenovo Yoga C630
-
-Tested-by: Steev Klimaszewski <steev@kali.org>
-
+Reviewed-by: Rob Herring <robh@kernel.org>
