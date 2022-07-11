@@ -2,50 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 37FA756FEF1
+	by mail.lfdr.de (Postfix) with ESMTP id 8019956FEF2
 	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Jul 2022 12:33:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230223AbiGKKdO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Jul 2022 06:33:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46160 "EHLO
+        id S229724AbiGKKdP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Jul 2022 06:33:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46168 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230009AbiGKKc7 (ORCPT
+        with ESMTP id S229680AbiGKKdB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Jul 2022 06:32:59 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A51FA6F27
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 02:43:24 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id t25so7760811lfg.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 02:43:24 -0700 (PDT)
+        Mon, 11 Jul 2022 06:33:01 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2337EA6F2E
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 02:43:25 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id m18so7741854lfg.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 02:43:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=3w/z7/yo1sMupnazTL2mg22uvPZzsFuBbBmtMlymg9c=;
-        b=Ng2f/hBKqNH4SZPKxtojLEnsrfKMfYZ2xQ3NAq2xCE5RUmz4fN6WOWrSfP3hu19RpA
-         DmoEZN5+wQYgixvMub4pFkdDUEATuX4HXC6zondZxvvwu+YWNjTNI0BvMcoMCKfhnaHG
-         u6UnQGlY3RG3lRfUWkKU+CZnznZ2BnaMFrDbvj4Buet9AOWyCSOu6ccbmMcMUHkqhvkA
-         h4BAlz5lBogL71ZSfk/56DsDs6fg1J6+1J/tNdew4YMBnCzdFqjAZijH54bJH8S6YOSm
-         jhv/KJ+XuQK0aJPeFz17XJs+NaZR8NnebH9wMn5iWPdQMCoJGLVZksOSi9F1yrDKsCgS
-         0WJw==
+        bh=5BhJejINWwh7igibs6sM5aWPhcjFoJdMPx606pg8Vrg=;
+        b=LCAi1vbpocJFiqf2SJcm0Jg5cpuE38KR8lj42wPJK2onhcZQotcqClusC74RdEdnDn
+         cZMG+70nM4oUl6Gcm+9P9f4UfgIr33vkZtYfh5iESv/EVWKVn0/A6mi1i4HBS4+m6vS4
+         v2Xyqva7hf6WPQDF0QI95qxsvznXKfokTIiRz3/e5kgscxdblDbKII5uM6AyW2s7bJJJ
+         pv2kohB8utmV+kH/2Vt2C3q5mEmIbxbOx/SHKSCcUEGOBsg+ZheNXu7I/jHlX8vfJs+E
+         kDPNBzAlrM1tgp+7fJkVFx4sCN6x4tEUTwXhhUeUZDtxSM+5nayVypcoqhD/WmOJsFgq
+         Lk0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=3w/z7/yo1sMupnazTL2mg22uvPZzsFuBbBmtMlymg9c=;
-        b=xiCcGE0pVSTjts4hIG0x+F8OcRrWcy03mV99BGTC7VJSts6kM9qGNrkho1fF65G5K5
-         4lGL2k5dKe75CuA4woP3Hr3GhEwuab1y1gIF2qDxCeS+TDip2dbcYIQZYFWE91N7iFJD
-         M+Ib9QQZcV8c7XeMX1GUVkBwBPwqHanlJ/yThtGyNuVJUNJ73RnbDwkF5MxZgNsU6NWx
-         mM0wm8SanRluFk0xRhufZ700MfkTmbeBQtHCkJrv10jJODinCfjoo0u2M76q5Sy1lgeo
-         F7MLPC1H5HtyXN5KHdsE6Z8tsPykLKwWQ6hqklPVGMY/9vF3bIXd4ftTLndCvtCfHD7v
-         NBKw==
-X-Gm-Message-State: AJIora9D4uBMsIh6EdVeEwAWkTb4vYXggzG7Kvk/TqZCanEfOQ6nLAxI
-        iGkfZ08i5FrVKMvnMUwbmZ5Ktg==
-X-Google-Smtp-Source: AGRyM1sPuurhLUwDbttEQfO8DD9DFTxC3crqNs+DZCIhaj9yoTBBJU59LHNoY1B+aj22dg50mS6fzA==
-X-Received: by 2002:a19:500c:0:b0:489:e7fc:cdfc with SMTP id e12-20020a19500c000000b00489e7fccdfcmr147455lfb.455.1657532602428;
-        Mon, 11 Jul 2022 02:43:22 -0700 (PDT)
+        bh=5BhJejINWwh7igibs6sM5aWPhcjFoJdMPx606pg8Vrg=;
+        b=ASt/wUzV2AT+w5U/Eq+21MNOpRjfeNmJqnsgLtGrTGrHFdganf6ALoSR2s7qWnVnIj
+         1grW+jC7E6lKe2k/Nvki1PZ9UESrdMoew5yj72bQWRm19Evij049pY9EeQeKmm4cYY4x
+         RfYplxKIqeEay7IBNA154MAc+T+xp/Y/JDIYJeh5gSYlsfdmCnbTTSk5UuxUFdj/kcyC
+         idXJ4Pjh2Ccc2UOk9Hq07IM5cbfdtAyO5SAwha7v0JczeRHdILBaQ9oBIrAITcyO0V6W
+         qbYFHSg/93tKUOgJ+g2AtDl44cmpZIg0BVSfZKa7a2k34wC1ZR7HxXsn94Gte4nUXNtT
+         wUGA==
+X-Gm-Message-State: AJIora88UWOMl9jz8DU7VR6Eni/ciCB4p9K6RKj2DTKWTzFBKLccf8Ae
+        WtuU00u9c+ypG+pLPV0RACVJGg==
+X-Google-Smtp-Source: AGRyM1voHKmiRqOs7ekptvAXypasXW4zChRytC8zL8ERd15Ooq0xd1pjw65PLpvFFaTw/+x6nq4jpA==
+X-Received: by 2002:a05:6512:1028:b0:47f:a07e:6e85 with SMTP id r8-20020a056512102800b0047fa07e6e85mr10983746lfr.294.1657532603366;
+        Mon, 11 Jul 2022 02:43:23 -0700 (PDT)
 Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id i27-20020a2ea37b000000b0025d4974a12asm1639490ljn.26.2022.07.11.02.43.21
+        by smtp.gmail.com with ESMTPSA id i27-20020a2ea37b000000b0025d4974a12asm1639490ljn.26.2022.07.11.02.43.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Mon, 11 Jul 2022 02:43:22 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
@@ -62,9 +62,9 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
-Subject: [PATCH v2 1/4] drm/mipi-dsi: pass DSC data through the struct mipi_dsi_device
-Date:   Mon, 11 Jul 2022 12:43:17 +0300
-Message-Id: <20220711094320.368062-2-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v2 2/4] drm/msm/dsi: fetch DSC pps payload from struct mipi_dsi_device
+Date:   Mon, 11 Jul 2022 12:43:18 +0300
+Message-Id: <20220711094320.368062-3-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220711094320.368062-1-dmitry.baryshkov@linaro.org>
 References: <20220711094320.368062-1-dmitry.baryshkov@linaro.org>
@@ -80,37 +80,62 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The commit 0f40ba48de3b ("drm/msm/dsi: Pass DSC params to drm_panel")
-added a pointer to the DSC data to the struct drm_panel. However DSC
-support is not limited to the DSI panels. MIPI DSI bridges can also
-consume DSC command streams. Thus add struct drm_dsc_config pointer to
-the struct mipi_dsi_device.
+Now that struct mipi_dsi_device provides DSC data, fetch it from the
+mentioned struct rather than from the struct drm_panel itself. This
+would allow supporting MIPI DSI bridges handling DSC on their input
+side.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- include/drm/drm_mipi_dsi.h | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/msm/dsi/dsi_host.c | 25 +++++++++++--------------
+ 1 file changed, 11 insertions(+), 14 deletions(-)
 
-diff --git a/include/drm/drm_mipi_dsi.h b/include/drm/drm_mipi_dsi.h
-index 91a164bdd8f3..bb20bc27ce87 100644
---- a/include/drm/drm_mipi_dsi.h
-+++ b/include/drm/drm_mipi_dsi.h
-@@ -179,6 +179,7 @@ struct mipi_dsi_device_info {
-  * @lp_rate: maximum lane frequency for low power mode in hertz, this should
-  * be set to the real limits of the hardware, zero is only accepted for
-  * legacy drivers
-+ * @dsc: panel/bridge DSC pps payload to be sent
-  */
- struct mipi_dsi_device {
- 	struct mipi_dsi_host *host;
-@@ -191,6 +192,7 @@ struct mipi_dsi_device {
- 	unsigned long mode_flags;
- 	unsigned long hs_rate;
- 	unsigned long lp_rate;
-+	struct drm_dsc_config *dsc;
- };
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+index a34078497af1..fb5ab6c718c8 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_host.c
++++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+@@ -1686,6 +1686,17 @@ static int dsi_host_attach(struct mipi_dsi_host *host,
+ 	msm_host->lanes = dsi->lanes;
+ 	msm_host->format = dsi->format;
+ 	msm_host->mode_flags = dsi->mode_flags;
++	if (dsi->dsc) {
++		struct msm_display_dsc_config *dsc = msm_host->dsc;
++
++		if (!dsc) {
++			dsc = devm_kzalloc(&msm_host->pdev->dev, sizeof(*dsc), GFP_KERNEL);
++			if (!dsc)
++				return -ENOMEM;
++			dsc->drm = dsi->dsc;
++			msm_host->dsc = dsc;
++		}
++	}
  
- #define MIPI_DSI_MODULE_PREFIX "mipi-dsi:"
+ 	/* Some gpios defined in panel DT need to be controlled by host */
+ 	ret = dsi_host_init_panel_gpios(msm_host, &dsi->dev);
+@@ -2159,23 +2170,9 @@ int msm_dsi_host_modeset_init(struct mipi_dsi_host *host,
+ {
+ 	struct msm_dsi_host *msm_host = to_msm_dsi_host(host);
+ 	const struct msm_dsi_cfg_handler *cfg_hnd = msm_host->cfg_hnd;
+-	struct drm_panel *panel;
+ 	int ret;
+ 
+ 	msm_host->dev = dev;
+-	panel = msm_dsi_host_get_panel(&msm_host->base);
+-
+-	if (!IS_ERR(panel) && panel->dsc) {
+-		struct msm_display_dsc_config *dsc = msm_host->dsc;
+-
+-		if (!dsc) {
+-			dsc = devm_kzalloc(&msm_host->pdev->dev, sizeof(*dsc), GFP_KERNEL);
+-			if (!dsc)
+-				return -ENOMEM;
+-			dsc->drm = panel->dsc;
+-			msm_host->dsc = dsc;
+-		}
+-	}
+ 
+ 	ret = cfg_hnd->ops->tx_buf_alloc(msm_host, SZ_4K);
+ 	if (ret) {
 -- 
 2.35.1
 
