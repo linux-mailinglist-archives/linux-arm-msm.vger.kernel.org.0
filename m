@@ -2,200 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D36A05708ED
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Jul 2022 19:34:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8AD6C570923
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Jul 2022 19:41:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230228AbiGKReA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Jul 2022 13:34:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37816 "EHLO
+        id S231530AbiGKRlL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Jul 2022 13:41:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42596 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229654AbiGKRdz (ORCPT
+        with ESMTP id S229660AbiGKRlK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Jul 2022 13:33:55 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BDF0B64D5;
-        Mon, 11 Jul 2022 10:33:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1657560831; x=1689096831;
-  h=from:to:cc:subject:date:message-id;
-  bh=Kc4cDivDUaBoL2zBqpgtHP8w9cqA4NEFOrZFebj4Rs4=;
-  b=ryon+qW5rYr+gJJg43+E9fpvI02dncxxxMDj5TrYt0G2UU6IcSzOK0rR
-   wZmnVDqKlJu7/dg41+kdGw9hUVyVD/WCqtmTLXkmgp61+tLxcPbQB+eSJ
-   4gyCR0rff4/ruy609hgxkSYbEx0wZPtE48q0GYz7zHHZhhUSMnKArXYxF
-   c=;
-Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
-  by alexa-out.qualcomm.com with ESMTP; 11 Jul 2022 10:33:51 -0700
-X-QCInternal: smtphost
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 11 Jul 2022 10:33:50 -0700
-X-QCInternal: smtphost
-Received: from hu-vnivarth-hyd.qualcomm.com (HELO hu-sgudaval-hyd.qualcomm.com) ([10.213.111.166])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 11 Jul 2022 23:03:33 +0530
-Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 3994820)
-        id D832B40EF; Mon, 11 Jul 2022 23:03:32 +0530 (+0530)
-From:   Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-To:     agross@kernel.org, bjorn.andersson@linaro.org,
-        konrad.dybcio@somainline.org, gregkh@linuxfoundation.org,
-        jirislaby@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-serial@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     quic_msavaliy@quicinc.com, dianders@chromium.org, mka@chromium.org,
-        swboyd@chromium.org,
-        Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-Subject: [V4] tty: serial: qcom-geni-serial: Fix get_clk_div_rate() which otherwise could return a sub-optimal clock rate.
-Date:   Mon, 11 Jul 2022 23:03:28 +0530
-Message-Id: <1657560808-9795-1-git-send-email-quic_vnivarth@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-X-Spam-Status: No, score=-4.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        Mon, 11 Jul 2022 13:41:10 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D33176715D;
+        Mon, 11 Jul 2022 10:41:09 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 6FA8F61457;
+        Mon, 11 Jul 2022 17:41:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07FC0C341C8;
+        Mon, 11 Jul 2022 17:41:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1657561268;
+        bh=HaO+adNqd/9v4OcEiOAcWiu0KwhpZERuHu5pfrlo9Jw=;
+        h=From:To:Cc:Subject:Date:From;
+        b=R9Bgdoqt9BspDfwjIavckyu4YL063PwroK8RXQNtZJWM4uAFQhNi2Eb4dyohqiRYm
+         hAWoL1Fre6ZE+gnnplQE6zgw8Kz49PnSjQozBXUcXgMbCREC9aPJKepF0K8lghZ/It
+         woZFo/OLk2arcHMSOnz6/VE5+ZLVgaWNRxQoeemS90FdvknaLTvoT7jYe00ZhPNbFu
+         45ylM454dRVCtGp4xQCjh6+3bmpmuxn9bn+sA4g2ElZGpc5CQ1B9Z1xHlLxrfLOnAl
+         meGBENv4KIMdWW9+cac3UuOO/u7gsfkkQocXVwA/31Xp8I3N4YSo1rGlfdevQcCdpS
+         9axZQ/yUQHR2A==
+From:   Nathan Chancellor <nathan@kernel.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        Tom Rix <trix@redhat.com>,
+        Robert Foss <robert.foss@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, llvm@lists.linux.dev,
+        Nathan Chancellor <nathan@kernel.org>,
+        kernel test robot <lkp@intel.com>
+Subject: [PATCH v2] clk: qcom: gpucc-sm8350: Fix "initializer element is not constant" error
+Date:   Mon, 11 Jul 2022 10:40:05 -0700
+Message-Id: <20220711174004.3047516-1-nathan@kernel.org>
+X-Mailer: git-send-email 2.37.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In the logic around call to clk_round_rate(), for some corner conditions,
-get_clk_div_rate() could return an sub-optimal clock rate. Also, if an
-exact clock rate was not found lowest clock was being returned.
+When building with clang or GCC older than 8, errors along the following
+lines occur:
 
-Search for suitable clock rate in 2 steps
-a) exact match or within 2% tolerance
-b) within 5% tolerance
-This also takes care of corner conditions.
+  drivers/clk/qcom/gpucc-sm8350.c:111:2: error: initializer element is not a compile-time constant
+          gpu_cc_parent,
+          ^~~~~~~~~~~~~
+  drivers/clk/qcom/gpucc-sm8350.c:126:2: error: initializer element is not a compile-time constant
+          gpu_cc_parent,
+          ^~~~~~~~~~~~~
+  2 errors generated.
 
-Fixes: c2194bc999d4 ("tty: serial: qcom-geni-serial: Remove uart frequency table. Instead, find suitable frequency with call to clk_round_rate")
-Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+The C standard allows an implementation to accept other forms of
+constant expressions, which GCC 8+ has chosen to do, but it is not
+required. Just inline the initializer to resolve the error.
+
+Fixes: 160758b05ab1 ("clk: qcom: add support for SM8350 GPUCC")
+Link: https://github.com/ClangBuiltLinux/linux/issues/1660
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
-v4: replaced pr_dbg calls with dev_dbg
-v3: simplified algorithm further, fixed robot compile warnings
-v2: removed minor optimisations to make more readable
-v1: intial patch contained slightly complicated logic
----
- drivers/tty/serial/qcom_geni_serial.c | 89 +++++++++++++++++++++--------------
- 1 file changed, 54 insertions(+), 35 deletions(-)
 
-diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
-index 2e23b65..f88b042 100644
---- a/drivers/tty/serial/qcom_geni_serial.c
-+++ b/drivers/tty/serial/qcom_geni_serial.c
-@@ -943,52 +943,71 @@ static int qcom_geni_serial_startup(struct uart_port *uport)
- 	return 0;
- }
+v1 -> v2: https://lore.kernel.org/20220711163021.152578-1-nathan@kernel.org/
+
+* Just inline the initializer, rather than using a macro (Dmitry).
+
+ drivers/clk/qcom/gpucc-sm8350.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/clk/qcom/gpucc-sm8350.c b/drivers/clk/qcom/gpucc-sm8350.c
+index d13fa813d190..5367ce654ac9 100644
+--- a/drivers/clk/qcom/gpucc-sm8350.c
++++ b/drivers/clk/qcom/gpucc-sm8350.c
+@@ -108,7 +108,7 @@ static const struct parent_map gpu_cc_parent_map_0[] = {
+ };
  
--static unsigned long get_clk_div_rate(struct clk *clk, unsigned int baud,
--			unsigned int sampling_rate, unsigned int *clk_div)
-+static unsigned long find_clk_rate_in_tol(struct clk *clk, unsigned int desired_clk,
-+			unsigned int *clk_div, unsigned int percent_tol)
- {
--	unsigned long ser_clk;
--	unsigned long desired_clk;
--	unsigned long freq, prev;
-+	unsigned long freq;
- 	unsigned long div, maxdiv;
--	int64_t mult;
--
--	desired_clk = baud * sampling_rate;
--	if (!desired_clk) {
--		pr_err("%s: Invalid frequency\n", __func__);
--		return 0;
--	}
-+	u64 mult;
-+	unsigned long offset, abs_tol, achieved;
+ static const struct clk_parent_data gpu_cc_parent_data_0[] = {
+-	gpu_cc_parent,
++	{ .fw_name = "bi_tcxo" },
+ 	{ .hw = &gpu_cc_pll0.clkr.hw },
+ 	{ .hw = &gpu_cc_pll1.clkr.hw },
+ 	{ .fw_name = "gcc_gpu_gpll0_clk_src" },
+@@ -123,7 +123,7 @@ static const struct parent_map gpu_cc_parent_map_1[] = {
+ };
  
-+	abs_tol = div_u64((u64)desired_clk * percent_tol, 100);
- 	maxdiv = CLK_DIV_MSK >> CLK_DIV_SHFT;
--	prev = 0;
--
--	for (div = 1; div <= maxdiv; div++) {
--		mult = div * desired_clk;
--		if (mult > ULONG_MAX)
-+	div = 1;
-+	while (div <= maxdiv) {
-+		mult = (u64)div * desired_clk;
-+		if (mult != (unsigned long)mult)
- 			break;
- 
--		freq = clk_round_rate(clk, (unsigned long)mult);
--		if (!(freq % desired_clk)) {
--			ser_clk = freq;
--			break;
--		}
-+		offset = div * abs_tol;
-+		freq = clk_round_rate(clk, mult - offset);
- 
--		if (!prev)
--			ser_clk = freq;
--		else if (prev == freq)
-+		/* Can only get lower if we're done */
-+		if (freq < mult - offset)
- 			break;
- 
--		prev = freq;
-+		/*
-+		 * Re-calculate div in case rounding skipped rates but we
-+		 * ended up at a good one, then check for a match.
-+		 */
-+		div = DIV_ROUND_CLOSEST(freq, desired_clk);
-+		achieved = DIV_ROUND_CLOSEST(freq, div);
-+		if (achieved <= desired_clk + abs_tol &&
-+		    achieved >= desired_clk - abs_tol) {
-+			*clk_div = div;
-+			return freq;
-+		}
-+
-+		div = DIV_ROUND_UP(freq, desired_clk);
- 	}
- 
--	if (!ser_clk) {
--		pr_err("%s: Can't find matching DFS entry for baud %d\n",
--								__func__, baud);
--		return ser_clk;
-+	return 0;
-+}
-+
-+static unsigned long get_clk_div_rate(struct clk *clk, struct device *dev,
-+		unsigned int baud, unsigned int sampling_rate, unsigned int *clk_div)
-+{
-+	unsigned long ser_clk;
-+	unsigned long desired_clk;
-+
-+	desired_clk = baud * sampling_rate;
-+	if (!desired_clk) {
-+		dev_dbg(dev, "Invalid frequency\n");
-+		return 0;
- 	}
- 
--	*clk_div = ser_clk / desired_clk;
--	if (!(*clk_div))
--		*clk_div = 1;
-+	/*
-+	 * try to find a clock rate within 2% tolerance, then within
-+	 */
-+	ser_clk = find_clk_rate_in_tol(clk, desired_clk, clk_div, 2);
-+	if (!ser_clk)
-+		ser_clk = find_clk_rate_in_tol(clk, desired_clk, clk_div, 5);
-+
-+	if (!ser_clk)
-+		dev_err(dev, "Couldn't find suitable clock rate for %d\n", desired_clk);
-+	else
-+		dev_dbg(dev, "desired_clk-%d, ser_clk-%d, clk_div-%d\n",
-+				desired_clk, ser_clk, *clk_div);
- 
- 	return ser_clk;
- }
-@@ -1021,8 +1040,8 @@ static void qcom_geni_serial_set_termios(struct uart_port *uport,
- 	if (ver >= QUP_SE_VERSION_2_5)
- 		sampling_rate /= 2;
- 
--	clk_rate = get_clk_div_rate(port->se.clk, baud,
--		sampling_rate, &clk_div);
-+	clk_rate = get_clk_div_rate(port->se.clk, port->se.dev, baud,
-+					sampling_rate, &clk_div);
- 	if (!clk_rate)
- 		goto out_restart_rx;
- 
+ static const struct clk_parent_data gpu_cc_parent_data_1[] = {
+-	gpu_cc_parent,
++	{ .fw_name = "bi_tcxo" },
+ 	{ .hw = &gpu_cc_pll1.clkr.hw },
+ 	{ .fw_name = "gcc_gpu_gpll0_clk_src" },
+ 	{ .fw_name = "gcc_gpu_gpll0_div_clk_src" },
+
+base-commit: 0dd8e16bfbc003b009f843e75fae4046daa08fe9
 -- 
-Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, hosted by the Linux Foundation.
+2.37.0
 
