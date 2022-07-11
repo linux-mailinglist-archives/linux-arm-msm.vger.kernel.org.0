@@ -2,68 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CB3DE5705D8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Jul 2022 16:39:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0510E570637
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Jul 2022 16:52:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231434AbiGKOjV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Jul 2022 10:39:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59636 "EHLO
+        id S231174AbiGKOwV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Jul 2022 10:52:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46660 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231402AbiGKOi5 (ORCPT
+        with ESMTP id S229687AbiGKOwU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Jul 2022 10:38:57 -0400
-Received: from mail-qk1-x731.google.com (mail-qk1-x731.google.com [IPv6:2607:f8b0:4864:20::731])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD38610CB
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 07:38:56 -0700 (PDT)
-Received: by mail-qk1-x731.google.com with SMTP id f14so3978300qkm.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 07:38:56 -0700 (PDT)
+        Mon, 11 Jul 2022 10:52:20 -0400
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A09036F7E0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 07:52:19 -0700 (PDT)
+Received: by mail-ed1-x533.google.com with SMTP id w12so5837996edd.13
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 07:52:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
+        d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=7XItuS7mxG3PZJmkt2lhJ3OfdyNaqBYJhSMEwOH7X7w=;
-        b=PGyjfvKcWdQwelKW6M8EqUThfSKyzL47vHKiHrDemhJsneuC3ixvwPZpeXfEyG1cyR
-         8KPrFdjBv/Zo/II3/JPlKy7mGsa/Q39PbpljtC0/8lm35MvZ59axYT/uPaRIMgX9amIJ
-         29LaT0QCehH9Gf75ZQ8XofHL0rVkoyfgT6kbmYyLplJ+ehLCi7JEgTL1PUAkKsne9olR
-         57KCROb94QPPQ0c5q70I3lEHA3Bg024JIZk74fnO2fy/HCGafLSK6XsKQLJpcd84ExE3
-         YZKXT6W3Ajosz5UBCZitdo0YHcT8u+cFy+WCGW2YlQr9to7dOQd96GGGA54qbzgrtpXh
-         lB/Q==
+        bh=SGTevPUwkzc81+3xxS7RaXwvxQl65M4pwfdwK/mf7M8=;
+        b=Z4XNDNccxkqkkO69BxWuxx6IsFvM9Iy0/pO+RqiO8BrUoiKcx1R1xBCQ13TE/3t9Bw
+         onK38E1qGpBYWskQ0GBgkh6x2n4S3k9KaSM3oMUWRo9sVHRiL40eS9WhzYfitS6df7IE
+         vjbiZz9yu5MdyHrK0cs75bFs7cpF22uzW2PaA=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=7XItuS7mxG3PZJmkt2lhJ3OfdyNaqBYJhSMEwOH7X7w=;
-        b=vubjJxhtWTG43VI5c5yWBJZOmZzVJ1ImTuTzYa0227HJE5a7+5M+yrR5sJaMjQK4Pj
-         C9AI8Dz5K3oPZTZXnkms5MEEFXTXkpe4B9oTx4QfB++di5Whczez5cCi0Z5A3Wkmlrd3
-         Bl4Sdg/aZ9N1mFEBuPD9Q5dI7MD3mqiUMuypi+az+2/IUUHee+rX2ioBjdgYZ74XNJfF
-         xjEZfWFzpQw0iwOBBtns6nd8yUfcsouiALqfdD7ij5+qfwB4pRWvwFP5NCHel5qP9vw2
-         6N25hcT0xMKSRGfHrKmhxniKLMraRsCd+SMDg/i+m1pvQHSBBzGoo6W+Pfi0AP6E9a5X
-         LdbQ==
-X-Gm-Message-State: AJIora+DCMizULViHfc6J6iFBeol0HUdfX4/w7aBg2fN43q7EkbmoBxK
-        NrSkAkvdZRsbnVIRJgciqhAxkua/DbkSQX5M4exeXA==
-X-Google-Smtp-Source: AGRyM1v7KwvPv0nm/D8OzJicPsfijYOWEzwiJQg1F3Z9hxTc1QBfSx++f0Z1WbfPChzH+yJTRZEFC3fssklptShCyNk=
-X-Received: by 2002:a05:620a:d5b:b0:6b5:660b:2939 with SMTP id
- o27-20020a05620a0d5b00b006b5660b2939mr10691619qkl.30.1657550336362; Mon, 11
- Jul 2022 07:38:56 -0700 (PDT)
+        bh=SGTevPUwkzc81+3xxS7RaXwvxQl65M4pwfdwK/mf7M8=;
+        b=B35cHMWaLwqyKnVnDVplS7dni9al41O8kOM4pDqiY11OlEVi+XRjwY1IjssOVn9kNR
+         yZi9dXYSDv2y4Jy3/gfWFyB3Svl0LQP68e5UXNNxV0b1mv+a+j1MNcDcQqEesMhQ8V1d
+         XuR7u2g3OkQP0qrMHOAhuylv36SKFRDa0dEMhcyDpeDH7sc2fssvqvvuAfAHZssyvqmz
+         OB6B+faGBAqC59/LzIlOSELaBKS04ro3IZlRsgmFHykIMn7uO9umGpwddtIPZhOrsnFd
+         hOT1qhlm/2P3INVZT2ce2xTI9FM1G0Cmk5YhhjZFhWzeGxb/6gzgDFUQB0jv0lDu3+bc
+         1D3Q==
+X-Gm-Message-State: AJIora8CKrAVGAv1Ks5H2wIsseGzc81k7uawQI+SRhFcZ5YxTjEOUEh0
+        wgEd6g1BNm9HDSAnLRpAU6DeeSH8elNTAQTS
+X-Google-Smtp-Source: AGRyM1s1Sp5X2Hcra4FNONWay2XtgkBeLCpYLv51WfMyMNQ8MtDEFgyIVG/cxB/HiwaQvyvj7MZQVg==
+X-Received: by 2002:a05:6402:1006:b0:43a:d397:68c3 with SMTP id c6-20020a056402100600b0043ad39768c3mr8070287edu.170.1657551137980;
+        Mon, 11 Jul 2022 07:52:17 -0700 (PDT)
+Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com. [209.85.221.50])
+        by smtp.gmail.com with ESMTPSA id d26-20020a170906345a00b00726e51b6d7dsm2726781ejb.195.2022.07.11.07.52.16
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 11 Jul 2022 07:52:17 -0700 (PDT)
+Received: by mail-wr1-f50.google.com with SMTP id v14so7351459wra.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 07:52:16 -0700 (PDT)
+X-Received: by 2002:adf:fb12:0:b0:20c:79b2:a200 with SMTP id
+ c18-20020adffb12000000b0020c79b2a200mr17639861wrr.617.1657551136373; Mon, 11
+ Jul 2022 07:52:16 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220711104719.40939-1-robimarko@gmail.com>
-In-Reply-To: <20220711104719.40939-1-robimarko@gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Mon, 11 Jul 2022 17:38:45 +0300
-Message-ID: <CAA8EJpo-83y=z_uRePLg0upUuhWc439FKBq_sy_Z=5kriD7unw@mail.gmail.com>
-Subject: Re: [PATCH 1/6] clk: qcom: clk-rcg2: add rcg2 mux ops
-To:     Robert Marko <robimarko@gmail.com>
-Cc:     bjorn.andersson@linaro.org, agross@kernel.org,
-        konrad.dybcio@somainline.org, mturquette@baylibre.com,
-        sboyd@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, sivaprak@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Christian Marangi <ansuelsmth@gmail.com>
+References: <20220711082940.39539-1-krzysztof.kozlowski@linaro.org> <20220711082940.39539-3-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220711082940.39539-3-krzysztof.kozlowski@linaro.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Mon, 11 Jul 2022 07:52:03 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=WUCPzzZHAPqoz-vhmcVxzYDxkKQs=+1tLZvsQjWe4q3Q@mail.gmail.com>
+Message-ID: <CAD=FV=WUCPzzZHAPqoz-vhmcVxzYDxkKQs=+1tLZvsQjWe4q3Q@mail.gmail.com>
+Subject: Re: [PATCH v2 2/5] dt-bindings: mmc: sdhci-msm: constrain reg-names
+ perp variants
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Ulf Hansson <ulf.hansson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        Linux MMC List <linux-mmc@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -71,65 +83,115 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 11 Jul 2022 at 14:22, Robert Marko <robimarko@gmail.com> wrote:
->
-> From: Christian Marangi <ansuelsmth@gmail.com>
->
-> An RCG may act as a mux that switch between 2 parents.
-> This is the case on IPQ6018 and IPQ8074 where the APCS core clk that feeds
-> the CPU cluster clock just switches between XO and the PLL that feeds it.
->
-> Add the required ops to add support for this special configuration and use
-> the generic mux function to determine the rate.
->
-> This way we dont have to keep a essentially dummy frequency table to use
-> RCG2 as a mux.
->
-> Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-> Signed-off-by: Robert Marko <robimarko@gmail.com>
+Hi
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
+On Mon, Jul 11, 2022 at 1:29 AM Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
+>
+> The entries in arrays must have fixed order, so the bindings and Linux
+> driver expecting various combinations of 'reg' addresses was never
+> actually conforming to guidelines.
+>
+> The 'core' reg entry is valid only for SDCC v4 and lower, so disallow it
+> in SDCC v5.  SDCC v4 supports CQE and ICE, so allow them, even though
+> the qcom,sdhci-msm-v4 compatible is used also for earlier SoCs with SDCC
+> v2 or v3, so it is not entirely accurate.
+>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>
 > ---
->  drivers/clk/qcom/clk-rcg.h  | 1 +
->  drivers/clk/qcom/clk-rcg2.c | 7 +++++++
->  2 files changed, 8 insertions(+)
 >
-> diff --git a/drivers/clk/qcom/clk-rcg.h b/drivers/clk/qcom/clk-rcg.h
-> index 012e745794fd..01581f4d2c39 100644
-> --- a/drivers/clk/qcom/clk-rcg.h
-> +++ b/drivers/clk/qcom/clk-rcg.h
-> @@ -167,6 +167,7 @@ struct clk_rcg2_gfx3d {
->
->  extern const struct clk_ops clk_rcg2_ops;
->  extern const struct clk_ops clk_rcg2_floor_ops;
-> +extern const struct clk_ops clk_rcg2_mux_closest_ops;
->  extern const struct clk_ops clk_edp_pixel_ops;
->  extern const struct clk_ops clk_byte_ops;
->  extern const struct clk_ops clk_byte2_ops;
-> diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
-> index 28019edd2a50..609c10f8d0d9 100644
-> --- a/drivers/clk/qcom/clk-rcg2.c
-> +++ b/drivers/clk/qcom/clk-rcg2.c
-> @@ -509,6 +509,13 @@ const struct clk_ops clk_rcg2_floor_ops = {
->  };
->  EXPORT_SYMBOL_GPL(clk_rcg2_floor_ops);
->
-> +const struct clk_ops clk_rcg2_mux_closest_ops = {
-> +       .determine_rate = __clk_mux_determine_rate_closest,
-> +       .get_parent = clk_rcg2_get_parent,
-> +       .set_parent = clk_rcg2_set_parent,
-> +};
-> +EXPORT_SYMBOL_GPL(clk_rcg2_mux_closest_ops);
-> +
->  struct frac_entry {
->         int num;
->         int den;
-> --
-> 2.36.1
->
+> Changes since v1:
+> 1. Rework the patch based on Doug's feedback.
+> ---
+>  .../devicetree/bindings/mmc/sdhci-msm.yaml    | 61 ++++++++++++-------
+>  1 file changed, 38 insertions(+), 23 deletions(-)
+
+In the ${SUBJECT} I'm not sure what a "perp variant" is. Is that a
+typo or just a phrase I'm not aware of?
 
 
--- 
-With best wishes
-Dmitry
+> diff --git a/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml b/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
+> index fc6e5221985a..2f0fdd65e908 100644
+> --- a/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
+> +++ b/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
+> @@ -49,33 +49,11 @@ properties:
+>
+>    reg:
+>      minItems: 1
+> -    items:
+> -      - description: Host controller register map
+> -      - description: SD Core register map
+> -      - description: CQE register map
+> -      - description: Inline Crypto Engine register map
+> +    maxItems: 4
+>
+>    reg-names:
+>      minItems: 1
+>      maxItems: 4
+> -    oneOf:
+> -      - items:
+> -          - const: hc
+> -      - items:
+> -          - const: hc
+> -          - const: core
+> -      - items:
+> -          - const: hc
+> -          - const: cqhci
+> -      - items:
+> -          - const: hc
+> -          - const: cqhci
+> -          - const: ice
+> -      - items:
+> -          - const: hc
+> -          - const: core
+> -          - const: cqhci
+> -          - const: ice
+>
+>    clocks:
+>      minItems: 3
+> @@ -177,6 +155,43 @@ required:
+>  allOf:
+>    - $ref: mmc-controller.yaml#
+>
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            enum:
+> +              - qcom,sdhci-msm-v4
+> +    then:
+> +      properties:
+> +        reg:
+> +          minItems: 2
+> +          items:
+> +            - description: Host controller register map
+> +            - description: SD Core register map
+> +            - description: CQE register map
+> +            - description: Inline Crypto Engine register map
+> +        reg-names:
+> +          minItems: 2
+> +          items:
+> +            - const: hc
+> +            - const: core
+> +            - const: cqhci
+> +            - const: ice
+> +    else:
+> +      properties:
+> +        reg:
+> +          minItems: 1
+> +          items:
+> +            - description: Host controller register map
+> +            - description: CQE register map
+> +            - description: Inline Crypto Engine register map
+> +        reg-names:
+> +          minItems: 1
+> +          items:
+> +            - const: hc
+> +            - const: cqhci
+> +            - const: ice
+
+Do you need to set "maxItems" here? If you don't then will it inherit
+the maxItems of 4 from above?
+
+-Doug
