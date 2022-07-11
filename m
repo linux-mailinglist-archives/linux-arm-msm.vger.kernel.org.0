@@ -2,137 +2,148 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 75FBC570339
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Jul 2022 14:46:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9C958570344
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Jul 2022 14:48:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232014AbiGKMqi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Jul 2022 08:46:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45142 "EHLO
+        id S231891AbiGKMs0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Jul 2022 08:48:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50708 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232035AbiGKMqV (ORCPT
+        with ESMTP id S230077AbiGKMsZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Jul 2022 08:46:21 -0400
-Received: from mail-qt1-x832.google.com (mail-qt1-x832.google.com [IPv6:2607:f8b0:4864:20::832])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8BD621267;
-        Mon, 11 Jul 2022 05:45:57 -0700 (PDT)
-Received: by mail-qt1-x832.google.com with SMTP id cf13so5140219qtb.13;
-        Mon, 11 Jul 2022 05:45:57 -0700 (PDT)
+        Mon, 11 Jul 2022 08:48:25 -0400
+Received: from mail-qv1-xf33.google.com (mail-qv1-xf33.google.com [IPv6:2607:f8b0:4864:20::f33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8749D114B
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 05:48:24 -0700 (PDT)
+Received: by mail-qv1-xf33.google.com with SMTP id nd6so261432qvb.6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 05:48:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
+        d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=EOHtYs+PqgFv2+4RKD8qT8cMKZM9sv42lV+Bo9Bs7bk=;
-        b=Q3KKt/Hjj7Ag3ycSs+G82xktAOKbdeZEzHkKvSjOCwY1Zi34CXGCQriRhbX7I39SSA
-         UvH2j2FFNiLOeqAJyAdosP/uFjiQq3aQ27NEeQGRj0zFEEwyPNKLJKIBD7HCUyTtrMY4
-         igCRf0KnapJff3dol3HMchhMF/7pi1I0LLUTAkmoniltoqcEjmHQNI2/9ttVnarwuEtp
-         m6Z2693Mp3QbVoCPBRup//P8hCM8uMHbGsc/pAqFr8SOdVqakXA/yxHgTBHWnEUmikH+
-         H+8pUy8AcCFAqznNhwbp9sj9vHSAP6HSI47Gj1Ym1DNa/i39wIqocswpa7YtQs2nKO77
-         j7zA==
+        bh=Aj5HYfV9IYuvXZkZCAwaX1PAJPYJ/AoOyrDvesXSwwk=;
+        b=Zb3apUha9cAq1BA9hOtWwSlz+RNHmL1UmJQtiygdDmAPGZvHHvAfE27SrmK0miiC7Q
+         andYqvbNd0aTSAN3/ET96Oa4c804ys5EVr4c52PePfihHYooV7GfN2InysP9crwfz8Ki
+         BIXIKmP+Q2PCpeBEMCmoJNMBRE8AOvEL47plrTiLTNMXI2+55rsVZI7LL93/t75iFzLi
+         CqwoA2naVYrlOY/r43BSvMzYdfzSnKKJ3OwB97YNsT2/co3QzvWaEtyRqgN4itlp2Up6
+         C9h729eiQH8BaNNliXzcOiZZkX2u7mIUWEd3uJUU2cPCFDaPDC/KNgkgCXymWO9T+M2g
+         GmDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=EOHtYs+PqgFv2+4RKD8qT8cMKZM9sv42lV+Bo9Bs7bk=;
-        b=BlE+ZyrxNXtfjBdNuYUP5lHILb3tP3pEjHxvhDRW8npVGpG3rvw5qcmYrZ3u04PQay
-         AMaK4ZpUTiSuggLBHP3sOZKHG35bp6njM6k3q/d4tGO6DkOFXfb6mb3rVN4/J1FvnK26
-         HTitdAW8CZqcePKl4ThvpJsyOZUR3RnHvypNv1TYQIza8/gRIwUpX6LlEA/P4ylk3xmM
-         27Du2u72CPv1LwPE05L+xNNFVvTL3vcZ+M7uZFPNpG9Y3kwWMyXEU1VbjELTtu2PpIq0
-         GPBmWWaga39xoAtzWSvpInDaB8qmFj7a66/aVzN5JLNq+4gAP/sZAGOyTUTN+fregu8+
-         WnxQ==
-X-Gm-Message-State: AJIora/jN5r0bBczwoKv0DI5/95XuT+IjIvAm7UBoLhMjO+kL+mvirR2
-        ITEUTClmNrZ6tUbj+R+oXzPk0gqPmTWTR8q7EyQ=
-X-Google-Smtp-Source: AGRyM1vl04Nhe0vqvpLu28eAB166+vwE6nGvpkxPI1PoNmo/h+9bcIRPtvXmTT74Kwnt7PFaz0cfPvho2f4YXNcsOas=
-X-Received: by 2002:a05:622a:1787:b0:31e:af75:edaa with SMTP id
- s7-20020a05622a178700b0031eaf75edaamr7471795qtk.82.1657543556896; Mon, 11 Jul
- 2022 05:45:56 -0700 (PDT)
+        bh=Aj5HYfV9IYuvXZkZCAwaX1PAJPYJ/AoOyrDvesXSwwk=;
+        b=14GTQ4VxVxmqSEF04kCMvPwD1bGeKQABJCpH0R8p3bpCgsxrXgH2BwwRo7IUKpejFj
+         sKEO8oEbdLsGmPQ09xpPjigvZqradz8987FldWsg2zOBiHMe5rqX83/6BO6oiQ/0+FgG
+         BDeNLuHLAJEPynELAJgu6IMkrD4H6yVcbSUaGT3Z9kohpi/VRpbWPT7q4KdFH5fWQ5RF
+         /7H3voTl2v4AI3yYQ3/sqFKpAo5U/mHQDuSZIPXcc6YwEPuBAJTEgQc/ssRQGaUTSOFo
+         XSJfdZRH/IIqDdI7MWWySZ8JlhzPwE0NPnHHkW6LDRM3lgmpxeLyOHTGRSEum8cp7uWx
+         fSbQ==
+X-Gm-Message-State: AJIora/AjE1YCM7WJa5jMRKWtO6EgvcLRnuqVcsHNGMb/NTXs/seTa5P
+        wvZLXKIGiGd73+bgZRqBEfreDwHmxoBf/aSQs1tw6ss9Y1gg/w==
+X-Google-Smtp-Source: AGRyM1vp3EX05aP+CFsoAhrmsKkFCZqcqJxAjvKik9ouv5Cvl0PexmP8BE1v33MWwg0xIXzf9g6uHdWprBgVGk8l7ps=
+X-Received: by 2002:a05:6214:d03:b0:473:7764:2ab with SMTP id
+ 3-20020a0562140d0300b00473776402abmr1504864qvh.119.1657543703638; Mon, 11 Jul
+ 2022 05:48:23 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220711104719.40939-1-robimarko@gmail.com> <20220711104719.40939-4-robimarko@gmail.com>
- <4de38d90-0020-c2db-b283-319b4a0e2ce5@linaro.org> <CAOX2RU6X=JiV1As+_N6c_=VaHfVYpke_deQmmNPMMDxfnz5i8g@mail.gmail.com>
- <9e1ff864-3952-6442-13db-a3d8e18f86c3@linaro.org>
-In-Reply-To: <9e1ff864-3952-6442-13db-a3d8e18f86c3@linaro.org>
-From:   Robert Marko <robimarko@gmail.com>
-Date:   Mon, 11 Jul 2022 14:45:46 +0200
-Message-ID: <CAOX2RU6uQw15Xd5gox41ZxZqrcYQy5HcrAAnWQ=U0bNP-UB+kw@mail.gmail.com>
-Subject: Re: [PATCH 4/6] clk: qcom: apss-ipq6018: add MODULE_ALIAS
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
+References: <20220711104719.40939-1-robimarko@gmail.com> <20220711104719.40939-2-robimarko@gmail.com>
+In-Reply-To: <20220711104719.40939-2-robimarko@gmail.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Mon, 11 Jul 2022 15:48:12 +0300
+Message-ID: <CAA8EJprfAW7kFSPxs7=LEHLmAVrWhV8KRbUseg8jXyiUbyZuRQ@mail.gmail.com>
+Subject: Re: [PATCH 2/6] clk: qcom: apss-ipq6018: fix apcs_alias0_clk_src
+To:     Robert Marko <robimarko@gmail.com>
+Cc:     bjorn.andersson@linaro.org, agross@kernel.org,
+        konrad.dybcio@somainline.org, mturquette@baylibre.com,
+        sboyd@kernel.org, robh+dt@kernel.org,
         krzysztof.kozlowski+dt@linaro.org, sivaprak@codeaurora.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-clk@vger.kernel.org,
-        Devicetree List <devicetree@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 11 Jul 2022 at 14:02, Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
+On Mon, 11 Jul 2022 at 14:22, Robert Marko <robimarko@gmail.com> wrote:
 >
-> On 11/07/2022 13:46, Robert Marko wrote:
-> > On Mon, 11 Jul 2022 at 13:05, Krzysztof Kozlowski
-> > <krzysztof.kozlowski@linaro.org> wrote:
-> >>
-> >> On 11/07/2022 12:47, Robert Marko wrote:
-> >>> Add MODULE_ALIAS so that driver will be autoloaded if built as a module.
-> >>>
-> >>> Signed-off-by: Robert Marko <robimarko@gmail.com>
-> >>> ---
-> >>>  drivers/clk/qcom/apss-ipq6018.c | 1 +
-> >>>  1 file changed, 1 insertion(+)
-> >>>
-> >>> diff --git a/drivers/clk/qcom/apss-ipq6018.c b/drivers/clk/qcom/apss-ipq6018.c
-> >>> index f2f502e2d5a4..963c69f2c0c2 100644
-> >>> --- a/drivers/clk/qcom/apss-ipq6018.c
-> >>> +++ b/drivers/clk/qcom/apss-ipq6018.c
-> >>> @@ -101,5 +101,6 @@ static struct platform_driver apss_ipq6018_driver = {
-> >>>
-> >>>  module_platform_driver(apss_ipq6018_driver);
-> >>>
-> >>> +MODULE_ALIAS("platform:qcom,apss-ipq6018-clk");
-> >>
-> >> That's not correct alias (no commas) and usually alias is not needed at
-> >> all. If you need one, please explain why it is needed. Module
-> >> autoloading works fine without aliases...
-> >
-> > Hi Krzysztof,
-> > alias is required here as the driver does not use a DT compatible but
-> > is registered
-> > by the APCS driver, if built as a module, it won't get autoloaded
-> > without an alias.
+> While working on IPQ8074 APSS driver it was discovered that IPQ6018 and
+> IPQ8074 use almost the same PLL and APSS clocks, however APSS driver is
+> currently broken.
 >
-> Instead you need device ID table. Aliases are not a workaround for
-> missing core driver elements.
+> More precisely apcs_alias0_clk_src is broken, it was added as regmap_mux
+> clock.
+> However after debugging why it was always stuck at 800Mhz, it was figured
+> out that its not regmap_mux compatible at all.
+> It is a simple mux but it uses RCG2 register layout and control bits, so
 
-Thanks for pointing this out, it looks like a proper solution for this.
-I will drop this patch and fix up autoloading after this series gets merged
-as APCS also requires a fixup, especially since the name in the platform
-table is limited to 20 characters and the current name does not fit.
->
-> >
-> > I can only fix up the driver name here and in APCS first to have an
-> > alias without commas.
->
-> I see that the comma is used in driver name, so this is an independent
-> issue. Maybe change it to '-' in separate commit?
+To utilize control bits, you probably should also use
 
-Like with the previous point, I will drop this patch and fix it after
-this series gets merged.
+> utilize the new clk_rcg2_mux_closest_ops to correctly drive it while not
+> having to provide a dummy frequency table.
 
-Regards,
-Robert
+Could you please clarify this. Your new rcg2 ops seems to be literally
+equivalent to the clk_regmap_mux_closest_ops provided the shift and
+width are set correctly..
+
+> While we are here, use ARRAY_SIZE for number of parents.
 >
+> Tested on IPQ6018-CP01-C1 reference board and multiple IPQ8074 boards.
 >
-> Best regards,
-> Krzysztof
+> Fixes: 5e77b4ef1b19 ("clk: qcom: Add ipq6018 apss clock controller")
+> Signed-off-by: Robert Marko <robimarko@gmail.com>
+> ---
+>  drivers/clk/qcom/apss-ipq6018.c | 13 ++++++-------
+>  1 file changed, 6 insertions(+), 7 deletions(-)
+>
+> diff --git a/drivers/clk/qcom/apss-ipq6018.c b/drivers/clk/qcom/apss-ipq6018.c
+> index d78ff2f310bf..be952d417ded 100644
+> --- a/drivers/clk/qcom/apss-ipq6018.c
+> +++ b/drivers/clk/qcom/apss-ipq6018.c
+> @@ -16,7 +16,7 @@
+>  #include "clk-regmap.h"
+>  #include "clk-branch.h"
+>  #include "clk-alpha-pll.h"
+> -#include "clk-regmap-mux.h"
+> +#include "clk-rcg.h"
+>
+>  enum {
+>         P_XO,
+> @@ -33,16 +33,15 @@ static const struct parent_map parents_apcs_alias0_clk_src_map[] = {
+>         { P_APSS_PLL_EARLY, 5 },
+>  };
+>
+> -static struct clk_regmap_mux apcs_alias0_clk_src = {
+> -       .reg = 0x0050,
+> -       .width = 3,
+> -       .shift = 7,
+
+Judging from rcg2 ops, .shift should be set to 8.
+
+> +static struct clk_rcg2 apcs_alias0_clk_src = {
+> +       .cmd_rcgr = 0x0050,
+> +       .hid_width = 5,
+>         .parent_map = parents_apcs_alias0_clk_src_map,
+>         .clkr.hw.init = &(struct clk_init_data){
+>                 .name = "apcs_alias0_clk_src",
+>                 .parent_data = parents_apcs_alias0_clk_src,
+> -               .num_parents = 2,
+> -               .ops = &clk_regmap_mux_closest_ops,
+> +               .num_parents = ARRAY_SIZE(parents_apcs_alias0_clk_src),
+> +               .ops = &clk_rcg2_mux_closest_ops,
+>                 .flags = CLK_SET_RATE_PARENT,
+>         },
+>  };
+> --
+> 2.36.1
+>
+
+
+--
+With best wishes
+Dmitry
