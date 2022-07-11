@@ -2,181 +2,175 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 37E0557050B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Jul 2022 16:06:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E7468570545
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Jul 2022 16:18:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230369AbiGKOF7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Jul 2022 10:05:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59130 "EHLO
+        id S229478AbiGKOSu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Jul 2022 10:18:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39520 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230425AbiGKOFw (ORCPT
+        with ESMTP id S229607AbiGKOSp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Jul 2022 10:05:52 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2374619C18;
-        Mon, 11 Jul 2022 07:05:51 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id bk26so7137321wrb.11;
-        Mon, 11 Jul 2022 07:05:51 -0700 (PDT)
+        Mon, 11 Jul 2022 10:18:45 -0400
+Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD349AE5F
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 07:18:42 -0700 (PDT)
+Received: by mail-lj1-x22b.google.com with SMTP id w17so4826313ljh.6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 07:18:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :content-transfer-encoding:user-agent:mime-version;
-        bh=OpuAbJzOZmkFVUVRYRfhJb2EZ79ErPrcazI4dJRRIZw=;
-        b=AxqKn1jFCUvR9r8eF6G9LQNJai0j26cooZSTaW/y5LjqtvcEM/8McIf/+yQzlzaUFd
-         LwcEnbV3x0T98SP3+BJlr0dZ/4NoEFEHYkvinYuvlXRJ/rScOUvz84TzCH0CqciB5xr3
-         70JCY+zxyG19vqUL7fnu7cTlKI0FIx088QGgbn+DUglz7JpgcVQ5PpQGbQcOhaZFlPbl
-         Sj/1dCgEulNZFTYu6gtOT+azXEODMFcBsZXMw1Holn5VdIjBppSACDRDbXOOwlKV+GrT
-         gUqBD8ESK3VZeUfDigHKr2IQSaYpAIV6HBehOLe57cJG8VwM+8e6vaZ86/RiS+6W3xCR
-         PgeQ==
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=b7SdKMYg4SycbRSH1mMmTVYESP88FDzn0X5ZB9E+lyY=;
+        b=kVbTSc+CYmzNm6oox7k33Ru8QpP56OKO/76x+uEbG+KMsOVUxMZTdqnnkavvwQvnbg
+         wSXQ9O22gYvP/TGdptZFJ8WlXHmgKOyLaj5MWc0NZCgHBLxDMHkPpH2PfD/w6o+JERtb
+         Y+39KDrNkqZZ/3y5Rxg8FbfsVjSUldB5qf3k1awmm4yjmJHViFndEA8D5oqhdp1GoaFq
+         yPH5qedGvjQ3wIs4eE/N51uoyqbRsdPjG5I1e4PCWQXS6GAC1tNuF2akyOT5A3WYB3H1
+         6lNuczaq+KYoYkmMtaG49tX+N3AwjxG9CCCYpBl1ERwYzCgnKGGdBz92DTeT3gtjaD5b
+         Dc7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:content-transfer-encoding:user-agent:mime-version;
-        bh=OpuAbJzOZmkFVUVRYRfhJb2EZ79ErPrcazI4dJRRIZw=;
-        b=ZMKjKFUhvDxJG9iP/+hczR7gvSLbX0J95VEG/AdojdXnC197ssMwdL8875JcdedDt3
-         ITGxVW4ToaLXe0B7dwaCFsd9h3yz3uB9PTnVQzoVBmqeyk9bfqji8kYhPWAA01ZID38K
-         nAjOfa6CzjXHFGQ17mpzMEtyorG0trZcdq6bjH4AP5Vpz0GCFt2QE/H5s5ntMnFL3idM
-         VdV5MZazC1B+jl5niOKPmLTBrRETwFprh29D2vvnRmZUeBUSlaSd/1ktHSpjWVs0hZAo
-         hhrLvDAkbs6eutuV1IuafU4RD8iVRap1rWWk1KnWbynlbayFvRYXbvAFayHTdaMcUbuL
-         +NcQ==
-X-Gm-Message-State: AJIora+TRv2ABGcHFbpqHyzbky85zLSK3KzJLzxkLe3bgfmGpLuNI+ID
-        uiR/z/QO2ohcIFqmls8vSI8=
-X-Google-Smtp-Source: AGRyM1vjxZ3LaYt2iroYaYC6yqBPM5QdYtXuGkJjk8H9N1njA0MUYRP5ggIbz4O4J7Zmd/vjCEw/YA==
-X-Received: by 2002:adf:f581:0:b0:21d:1e01:e9b7 with SMTP id f1-20020adff581000000b0021d1e01e9b7mr16555540wro.529.1657548349537;
-        Mon, 11 Jul 2022 07:05:49 -0700 (PDT)
-Received: from p200300f6ef036f005de6a4d0d791ed01.dip0.t-ipconnect.de (p200300f6ef036f005de6a4d0d791ed01.dip0.t-ipconnect.de. [2003:f6:ef03:6f00:5de6:a4d0:d791:ed01])
-        by smtp.gmail.com with ESMTPSA id g1-20020a05600c000100b00397623ff335sm6700494wmc.10.2022.07.11.07.05.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Jul 2022 07:05:49 -0700 (PDT)
-Message-ID: <bb0aaee46261295e333c02d771a627d3695fdba2.camel@gmail.com>
-Subject: Re: [PATCH v2 03/15] iio: inkern: only return error codes in
- iio_channel_get_*() APIs
-From:   Nuno =?ISO-8859-1?Q?S=E1?= <noname.nuno@gmail.com>
-To:     Andy Shevchenko <andy.shevchenko@gmail.com>,
-        Nuno =?ISO-8859-1?Q?S=E1?= <nuno.sa@analog.com>
-Cc:     linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        OpenBMC Maillist <openbmc@lists.ozlabs.org>,
-        Linux-Renesas <linux-renesas-soc@vger.kernel.org>,
-        "moderated list:ARM/Mediatek SoC support" 
-        <linux-mediatek@lists.infradead.org>,
-        dl-linux-imx <linux-imx@nxp.com>,
-        "open list:BROADCOM NVRAM DRIVER" <linux-mips@vger.kernel.org>,
-        Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-        linux-iio <linux-iio@vger.kernel.org>,
-        chrome-platform@lists.linux.dev,
-        linux-arm Mailing List <linux-arm-kernel@lists.infradead.org>,
-        linux-stm32@st-md-mailman.stormreply.com,
-        Andy Gross <agross@kernel.org>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        Benson Leung <bleung@chromium.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Tomer Maimon <tmaimon77@gmail.com>,
-        Zhang Rui <rui.zhang@intel.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Eugen Hristev <eugen.hristev@microchip.com>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Benjamin Fair <benjaminfair@google.com>,
-        Nancy Yuen <yuenn@google.com>,
-        Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
-        Jishnu Prakash <quic_jprakash@quicinc.com>,
-        Christophe Branchereau <cbranchereau@gmail.com>,
-        Avi Fishman <avifishman70@gmail.com>,
-        Tali Perry <tali.perry1@gmail.com>,
-        Michael Hennerich <Michael.Hennerich@analog.com>,
-        Miquel Raynal <miquel.raynal@bootlin.com>,
-        Claudiu Beznea <claudiu.beznea@microchip.com>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Thara Gopinath <thara.gopinath@linaro.org>,
-        Cai Huoqing <cai.huoqing@linux.dev>,
-        Fabio Estevam <festevam@gmail.com>,
-        Olivier Moysan <olivier.moysan@foss.st.com>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Haibo Chen <haibo.chen@nxp.com>, Arnd Bergmann <arnd@arndb.de>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Patrick Venture <venture@google.com>,
-        Amit Kucheria <amitk@kernel.org>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Lorenzo Bianconi <lorenzo@kernel.org>,
-        Paul Cercueil <paul@crapouillou.net>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Gwendal Grignou <gwendal@chromium.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Saravanan Sekar <sravanhome@gmail.com>,
-        Guenter Roeck <groeck@chromium.org>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Linus Walleij <linus.walleij@linaro.org>
-Date:   Mon, 11 Jul 2022 16:06:50 +0200
-In-Reply-To: <CAHp75VcxcmH5QoheyERAXrUeqMtJidKLBYH1T6dr6vb7yGKqWg@mail.gmail.com>
-References: <20220711123835.811358-1-nuno.sa@analog.com>
-         <20220711123835.811358-4-nuno.sa@analog.com>
-         <CAHp75VcxcmH5QoheyERAXrUeqMtJidKLBYH1T6dr6vb7yGKqWg@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.44.3 
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=b7SdKMYg4SycbRSH1mMmTVYESP88FDzn0X5ZB9E+lyY=;
+        b=ieLI9jIGZF50HJ50kgzrb4FAw/1KD1GWvl7GKuJwIo1F9VSrAvTH8emC5apD7fHuEe
+         M9lgpEZx5XBbPSacwfdaJW0bvPTn2DJcMdXUB2mzXq5vOb0Qt+8l03EVz17aZx7jXaSC
+         vYTSbw/56VtFhKYHQkyoG/mXGKc6Hq6YVJVSBKiW8nWowZCOY6ans19FhuioXe25kQQG
+         ra0BkLBtqfMf88D9G+zii8lGQuipKYiQ5kzsPtIwnQIhS6xetEz1KKKFKzRH6SqE7i3T
+         /x4BVp0/lc4bcooq4SGbwYk289ZLu/F8JyA09CR6tYehM6piXwykIsY9pPUAGrlMXRWf
+         qA9g==
+X-Gm-Message-State: AJIora8kajtJyg6Hr+aZYo9ecFX17AKvuipRuAhT1CIIp1ECFCI5uPcu
+        c3joye6F+Oi9J7COuOIRMxs5/A==
+X-Google-Smtp-Source: AGRyM1t+rcO7zLukhnTeAtr9wIv+TuBRN1t7cwF6Uf/ZBblf78k0lNSJjmUIwhyMfpXMCyvCTeD9Ig==
+X-Received: by 2002:a2e:240e:0:b0:25d:71af:f9b5 with SMTP id k14-20020a2e240e000000b0025d71aff9b5mr1582330ljk.253.1657549120884;
+        Mon, 11 Jul 2022 07:18:40 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id n1-20020a05651203e100b0047255d21124sm1573863lfq.83.2022.07.11.07.18.39
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 11 Jul 2022 07:18:40 -0700 (PDT)
+Message-ID: <ef5d82ec-22ab-298f-740d-e86cb7fe3046@linaro.org>
+Date:   Mon, 11 Jul 2022 17:18:39 +0300
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: Re: [PATCH v6 05/10] drm/msm/dp: use the eDP bridge ops to validate
+ eDP modes
+Content-Language: en-GB
+To:     Vinod Polimera <quic_vpolimer@quicinc.com>,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
+Cc:     linux-kernel@vger.kernel.org, robdclark@gmail.com,
+        dianders@chromium.org, swboyd@chromium.org,
+        quic_kalyant@quicinc.com, quic_khsieh@quicinc.com,
+        quic_vproddut@quicinc.com, bjorn.andersson@linaro.org,
+        quic_aravindh@quicinc.com, quic_abhinavk@quicinc.com,
+        quic_sbillaka@quicinc.com
+References: <1657544224-10680-1-git-send-email-quic_vpolimer@quicinc.com>
+ <1657544224-10680-6-git-send-email-quic_vpolimer@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <1657544224-10680-6-git-send-email-quic_vpolimer@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 2022-07-11 at 15:29 +0200, Andy Shevchenko wrote:
-> On Mon, Jul 11, 2022 at 2:38 PM Nuno S=C3=A1 <nuno.sa@analog.com> wrote:
-> >=20
-> > APIs like of_iio_channel_get_by_name() and of_iio_channel_get_all()
-> > were
-> > returning a mix of NULL and pointers with NULL being the way to
-> > "notify" that we should do a "system" lookup for channels. This
-> > make
-> > it very confusing and prone to errors as commit 9f63cc0921ec
-> > ("iio: inkern: fix return value in
-> > devm_of_iio_channel_get_by_name()")
-> > proves. On top of this, patterns like 'if (channel !=3D NULL) return
-> > channel' were being used where channel could actually be an error
-> > code
-> > which makes the code hard to read.
-> >=20
-> > This change also makes some functional changes on how errors were
-> > being
-> > handled. In the original behavior, even if we get an error like '-
-> > ENOMEM',
-> > we still continue with the search. We should only continue to
-> > lookup for
-> > the channel when it makes sense to do so. Hence, the main error
-> > handling
-> > in 'of_iio_channel_get_by_name()' is changed to the following
-> > logic:
-> >=20
-> > =C2=A0* If a channel 'name' is provided and we do find it via
-> > 'io-channel-names', we should be able to get it. If we get any
-> > error,
-> > we should not proceed with the lookup. Moreover, we should return
-> > an error
-> > so that callers won't proceed with a system lookup.
-> > =C2=A0* If a channel 'name' is provided and we cannot find it ('index <
-> > 0'),
-> > 'of_parse_phandle_with_args()' is expected to fail with '-EINVAL'.
-> > Hence,
-> > we should only continue if we get that error.
-> > =C2=A0* If a channel 'name' is not provided we should only carry on wit=
-h
-> > the
-> > search if 'of_parse_phandle_with_args()' returns '-ENOENT'.
-> >=20
-> > Also note that a system channel lookup is only done if the returned
-> > error code (from 'of_iio_channel_get_by_name()' or
-> > 'of_iio_channel_get_all()' is -ENODEV.
->=20
-> LGTM (but I might miss something, it's a bit too many conditionals),
-> Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
->=20
+On 11/07/2022 15:56, Vinod Polimera wrote:
+> The eDP and DP interfaces shared the bridge operations and
+> the eDP specific changes were implemented under is_edp check.
+> To add psr support for eDP, we started using a new set of eDP
+> bridge ops. We are moving the eDP specific code in the
+> dp_bridge_mode_valid function to a new eDP function,
+> edp_bridge_mode_valid under the eDP bridge ops.
+> 
+> Signed-off-by: Sankeerth Billakanti <quic_sbillaka@quicinc.com>
+> Signed-off-by: Vinod Polimera <quic_vpolimer@quicinc.com>
 
-Agreed. It ended up being more complicated than I thought...
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-- Nuno S=C3=A1
+> ---
+>   drivers/gpu/drm/msm/dp/dp_display.c |  8 --------
+>   drivers/gpu/drm/msm/dp/dp_drm.c     | 34 +++++++++++++++++++++++++++++++++-
+>   2 files changed, 33 insertions(+), 9 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+> index 64a6254..2b3ec6b 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> @@ -986,14 +986,6 @@ enum drm_mode_status dp_bridge_mode_valid(struct drm_bridge *bridge,
+>   		return -EINVAL;
+>   	}
+>   
+> -	/*
+> -	 * The eDP controller currently does not have a reliable way of
+> -	 * enabling panel power to read sink capabilities. So, we rely
+> -	 * on the panel driver to populate only supported modes for now.
+> -	 */
+> -	if (dp->is_edp)
+> -		return MODE_OK;
+> -
+>   	if (mode->clock > DP_MAX_PIXEL_CLK_KHZ)
+>   		return MODE_BAD;
+>   
+> diff --git a/drivers/gpu/drm/msm/dp/dp_drm.c b/drivers/gpu/drm/msm/dp/dp_drm.c
+> index 8ca0b37..2bf8c8d 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_drm.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_drm.c
+> @@ -181,12 +181,44 @@ static void edp_bridge_atomic_post_disable(struct drm_bridge *drm_bridge,
+>   	dp_bridge_atomic_post_disable(drm_bridge, old_bridge_state);
+>   }
+>   
+> +/**
+> + * edp_bridge_mode_valid - callback to determine if specified mode is valid
+> + * @bridge: Pointer to drm bridge structure
+> + * @info: display info
+> + * @mode: Pointer to drm mode structure
+> + * Returns: Validity status for specified mode
+> + */
+> +static enum drm_mode_status edp_bridge_mode_valid(struct drm_bridge *bridge,
+> +					  const struct drm_display_info *info,
+> +					  const struct drm_display_mode *mode)
+> +{
+> +	struct msm_dp *dp;
+> +	int mode_pclk_khz = mode->clock;
+> +
+> +	dp = to_dp_bridge(bridge)->dp_display;
+> +
+> +	if (!dp || !mode_pclk_khz || !dp->connector) {
+> +		DRM_ERROR("invalid params\n");
+> +		return -EINVAL;
+> +	}
+> +
+> +	if (mode->clock > DP_MAX_PIXEL_CLK_KHZ)
+> +		return MODE_CLOCK_HIGH;
+> +
+> +	/*
+> +	 * The eDP controller currently does not have a reliable way of
+> +	 * enabling panel power to read sink capabilities. So, we rely
+> +	 * on the panel driver to populate only supported modes for now.
+> +	 */
+> +	return MODE_OK;
+> +}
+> +
+>   static const struct drm_bridge_funcs edp_bridge_ops = {
+>   	.atomic_enable = edp_bridge_atomic_enable,
+>   	.atomic_disable = edp_bridge_atomic_disable,
+>   	.atomic_post_disable = edp_bridge_atomic_post_disable,
+>   	.mode_set = dp_bridge_mode_set,
+> -	.mode_valid = dp_bridge_mode_valid,
+> +	.mode_valid = edp_bridge_mode_valid,
+>   	.atomic_reset = drm_atomic_helper_bridge_reset,
+>   	.atomic_duplicate_state = drm_atomic_helper_bridge_duplicate_state,
+>   	.atomic_destroy_state = drm_atomic_helper_bridge_destroy_state,
+
+
+-- 
+With best wishes
+Dmitry
