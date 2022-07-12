@@ -2,69 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B31345710AF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Jul 2022 05:15:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3F6A35711AD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Jul 2022 07:05:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229837AbiGLDPz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Jul 2022 23:15:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36234 "EHLO
+        id S229476AbiGLFFJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Jul 2022 01:05:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35224 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229572AbiGLDPy (ORCPT
+        with ESMTP id S229677AbiGLFFI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Jul 2022 23:15:54 -0400
-Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com [IPv6:2607:f8b0:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C76642DA94
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 20:15:53 -0700 (PDT)
-Received: by mail-ot1-x32c.google.com with SMTP id s16-20020a056830149000b0061c47ed7755so3833449otq.9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 20:15:53 -0700 (PDT)
+        Tue, 12 Jul 2022 01:05:08 -0400
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CCA5D2A947;
+        Mon, 11 Jul 2022 22:05:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=UVDIcINsQJnKJYIRtkCuzxiTw7KBm8Z9B1RHvtk5i8c=;
-        b=i7xpI24WNCDADdLCeL/TvU5A44AH+8W00ReHGgyKsUoakbiBPqmYfEVurhRlWBhVHH
-         CTDFf7PPvZ7sJBtUDZwBM2is0s4AP+UtCYWbOLH3eUQqbe43YgwKCVn24JlxGqmtJ6La
-         Jz5HNuBiRRescpgLyMuYFKTT7r1Ywxt+9AMpyJoERwj33pBweFHd35280CecSzZ+QB5U
-         6I+qQlfZbm6yo7pWfzAiMwilT6TCx8wntuQy70gxD8ZfS8MiP1Vc0RZPnWAZzDxcO13d
-         I4RlklpWFKEXReO0mbOL+ul7cdu4pQOVbOFYwJxoP6Gka3pKphDbbyGBQjgRrhHJuCHa
-         MHFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=UVDIcINsQJnKJYIRtkCuzxiTw7KBm8Z9B1RHvtk5i8c=;
-        b=XT4AhBy2C2CydfKD2p5boPEsp8ORQJpzZJD4gzZxzqTl0XJ3akNh9aElgt0G+VviZz
-         egaWhIoVkrNZwkqcQgf2WLeOnlsF2APcBo41Qzt8Ec4yyoRfStzKFa/qk4evjbNsyVfS
-         aYzLbNCACjW/BIEeqXDa1Q1HPbPyU6J/L9mqF4FuUqSq02iVfemh3Jk8zrouOoxEApbo
-         a68HHLJqVCFiXaczRyW0my1Q9uVpMSwNn71OQfv0Zy3uM6t7DHVEteecQ7bouZwJUlf+
-         phjse5tpMULbJ29gf0EY5Ang/wWm3lXN+JiP96TpuY86Av8mv/+rjzYbvJ8A3YW9C+Wz
-         Jj5w==
-X-Gm-Message-State: AJIora+lao6/Ny5aCi2FyWB6eMG0pD2S5jYKKBap2WPMkODCkXIu3vJ4
-        54BYqBsnrMr5hqUpuP28rzYm9g==
-X-Google-Smtp-Source: AGRyM1vVstm/QF12x/kk9cleXO/AFfCPa0MpB3OnAy7UeKAAd2M9UY6MrETdiam/5aZrZsD7NivCDQ==
-X-Received: by 2002:a05:6830:9c9:b0:60b:b628:3ed2 with SMTP id y9-20020a05683009c900b0060bb6283ed2mr8405899ott.122.1657595753120;
-        Mon, 11 Jul 2022 20:15:53 -0700 (PDT)
-Received: from ripper.. (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id k17-20020a056870149100b0010c60ec553esm3987539oab.44.2022.07.11.20.15.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Jul 2022 20:15:52 -0700 (PDT)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>
-Cc:     Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH] arm64: defconfig: Demote Qualcomm USB PHYs to modules
-Date:   Mon, 11 Jul 2022 20:18:21 -0700
-Message-Id: <20220712031821.4134712-1-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.35.1
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1657602304; x=1689138304;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=17Z3xulwqXW1QfY/QEzxXBPkNTk6rcH+8iLrHGYb9Gc=;
+  b=nMKl+JYsmhP0fxQaA5vxiY+CMDMyvebMO7iTgHsCX76WHfWxV5jIhAVb
+   UFBfMDLto7dtxqhE+pHoQo1CokouS0K9b55rHxss/5au/LNy9L5WrvPks
+   3spVHFCz9z5XKGp/C1JtYMIweRobtZ0yUKrLB9kRqSQyGKz+jMYKmpFKJ
+   E=;
+Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 11 Jul 2022 22:05:04 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2022 22:05:03 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Mon, 11 Jul 2022 22:05:02 -0700
+Received: from [10.216.10.34] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Mon, 11 Jul
+ 2022 22:04:56 -0700
+Message-ID: <1299312f-e614-e4e2-72cb-fd7fb99922ce@quicinc.com>
+Date:   Tue, 12 Jul 2022 10:34:54 +0530
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.2
+Subject: Re: [Freedreno] [PATCH v2 3/7] drm/msm: Fix cx collapse issue during
+ recovery
+Content-Language: en-US
+To:     Doug Anderson <dianders@chromium.org>
+CC:     Sean Paul <sean@poorly.run>, Jonathan Marek <jonathan@marek.ca>,
+        "David Airlie" <airlied@linux.ie>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        "Jordan Crouse" <jordan@cosmicpenguin.net>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Chia-I Wu <olvaffe@gmail.com>,
+        LKML <linux-kernel@vger.kernel.org>
+References: <1657346375-1461-1-git-send-email-quic_akhilpo@quicinc.com>
+ <20220709112837.v2.3.I4ac27a0b34ea796ce0f938bb509e257516bc6f57@changeid>
+ <CAD=FV=U=J+yf6Qu0VgJ8A5Lhs_s8Fszw=Oa0XUny5XT-5z56xQ@mail.gmail.com>
+From:   Akhil P Oommen <quic_akhilpo@quicinc.com>
+In-Reply-To: <CAD=FV=U=J+yf6Qu0VgJ8A5Lhs_s8Fszw=Oa0XUny5XT-5z56xQ@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -72,33 +82,59 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The Qualcomm USB PHYs are not critical for reaching the ramdisk to load
-modules, so they can be demoted to be built as such instead of builtin.
+On 7/12/2022 4:52 AM, Doug Anderson wrote:
+> Hi,
+>
+> On Fri, Jul 8, 2022 at 11:00 PM Akhil P Oommen <quic_akhilpo@quicinc.com> wrote:
+>> There are some hardware logic under CX domain. For a successful
+>> recovery, we should ensure cx headswitch collapses to ensure all the
+>> stale states are cleard out. This is especially true to for a6xx family
+>> where we can GMU co-processor.
+>>
+>> Currently, cx doesn't collapse due to a devlink between gpu and its
+>> smmu. So the *struct gpu device* needs to be runtime suspended to ensure
+>> that the iommu driver removes its vote on cx gdsc.
+>>
+>> Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+>> ---
+>>
+>> (no changes since v1)
+>>
+>>   drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 16 ++++++++++++++--
+>>   drivers/gpu/drm/msm/msm_gpu.c         |  2 --
+>>   2 files changed, 14 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+>> index 4d50110..7ed347c 100644
+>> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+>> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+>> @@ -1278,8 +1278,20 @@ static void a6xx_recover(struct msm_gpu *gpu)
+>>           */
+>>          gmu_write(&a6xx_gpu->gmu, REG_A6XX_GMU_GMU_PWR_COL_KEEPALIVE, 0);
+>>
+>> -       gpu->funcs->pm_suspend(gpu);
+>> -       gpu->funcs->pm_resume(gpu);
+>> +       /*
+>> +        * Now drop all the pm_runtime usage count to allow cx gdsc to collapse.
+>> +        * First drop the usage count from all active submits
+>> +        */
+>> +       for (i = gpu->active_submits; i > 0; i--)
+>> +               pm_runtime_put(&gpu->pdev->dev);
+>> +
+>> +       /* And the final one from recover worker */
+>> +       pm_runtime_put_sync(&gpu->pdev->dev);
+>> +
+>> +       for (i = gpu->active_submits; i > 0; i--)
+>> +               pm_runtime_get(&gpu->pdev->dev);
+>> +
+>> +       pm_runtime_get_sync(&gpu->pdev->dev);
+> In response to v1, Rob suggested pm_runtime_force_suspend/resume().
+> Those seem like they would work to me, too. Why not use them?
+Quoting my previous response which I seem to have sent only to Freedreno 
+list:
 
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
- arch/arm64/configs/defconfig | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+"I believe it is supposed to be used only during system sleep state 
+transitions. Btw, we don't want pm_runtime_get() calls from elsewhere to 
+fail by disabling RPM here."
 
-diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index d3ad1cb2f5eb..7424c19dd1c3 100644
---- a/arch/arm64/configs/defconfig
-+++ b/arch/arm64/configs/defconfig
-@@ -1208,10 +1208,10 @@ CONFIG_PHY_MTK_TPHY=y
- CONFIG_PHY_QCOM_PCIE2=m
- CONFIG_PHY_QCOM_QMP=m
- CONFIG_PHY_QCOM_QUSB2=m
--CONFIG_PHY_QCOM_USB_HS=y
--CONFIG_PHY_QCOM_USB_SNPS_FEMTO_V2=y
--CONFIG_PHY_QCOM_USB_HS_28NM=y
--CONFIG_PHY_QCOM_USB_SS=y
-+CONFIG_PHY_QCOM_USB_HS=m
-+CONFIG_PHY_QCOM_USB_SNPS_FEMTO_V2=m
-+CONFIG_PHY_QCOM_USB_HS_28NM=m
-+CONFIG_PHY_QCOM_USB_SS=m
- CONFIG_PHY_RCAR_GEN3_PCIE=y
- CONFIG_PHY_RCAR_GEN3_USB2=y
- CONFIG_PHY_RCAR_GEN3_USB3=m
--- 
-2.35.1
-
+-Akhil
