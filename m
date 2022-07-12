@@ -2,75 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 007E457128E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Jul 2022 08:54:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 36FCF5712AB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Jul 2022 09:03:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229762AbiGLGyC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Jul 2022 02:54:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38936 "EHLO
+        id S232237AbiGLHDB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Jul 2022 03:03:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44736 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230198AbiGLGyB (ORCPT
+        with ESMTP id S231522AbiGLHDA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Jul 2022 02:54:01 -0400
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FA3217AA2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 23:54:00 -0700 (PDT)
-Received: by mail-lf1-x135.google.com with SMTP id y11so5833424lfs.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 23:54:00 -0700 (PDT)
+        Tue, 12 Jul 2022 03:03:00 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4B5D8CC91
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Jul 2022 00:02:57 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id n18so10689369lfq.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Jul 2022 00:02:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=NE5DifUufxxjJStpUUwi3w02nZ87Fe1eRpENnObacD4=;
-        b=ASwsWNviNK/+Vl2rC/IwRIMQt2142cJyJVBT+fQWpfzaTYP1RCZhbBWXVnnQWBQfFI
-         gkMzbHLCEFMaFR3RRjAELkNwo3sN40A1V3+KTWFrO6B8IBBJV5epmD79LqxH2hP00prG
-         nrG2SxcJCKWDdPtYhWIMIE3ax+bXVnv6RFAcvIBsG+TeAFv7WEOwBF9Pz57pFkba8xt7
-         mtvTkIBwy+Fni2JIBzDuYGXLjZf4p6wFfeeY1DfLA+eQTaILoQv0PZmk+aSaHBgLJK0X
-         oBSX688ZDSQNkYYB+ZTaXtLSb3/pElJfqHEl0ysUnZfMow3ACPjauO3WqAVMStCSJaWO
-         Dkxg==
+        bh=h6vjT/+13UEo3taiLb0JZhbnEJD4OKWdgkoVYLaG7U4=;
+        b=AteyLzo/29Sra+G1JJSzU6YanwduZHPrxRI1IXt+jbIdDv+m7a5wxF/zLl91+FCjWc
+         tjnme78FxZIQ5y0qWauUXSXL8gk5dVZOqX/WLbCf5XyzA/CcXsPa0w+ERPju3jMjLMy2
+         z12f8KkWwJl1qY9oXVFyu/lFWu3ZAucF+1ZRiPXbsXMDTQVudCm9cxl6vELtfGAqM0WZ
+         /WYcftS0wmZR/doOtTFMUQdyGbzjJQVHWdp4Dk7dJVbCa7SdJFJmxCQXGjea8NNhh0nh
+         Mx/vU4aWZLUY58tuSpNBex4D8+llI9Y9YZBCA3z2+Q4nBgpZOekdJ2M+596M69fZbMOB
+         ZsPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=NE5DifUufxxjJStpUUwi3w02nZ87Fe1eRpENnObacD4=;
-        b=amrSzmjoS9oTGGA4EE6FxMAur6SgIe4CPLOO38PwDeEQXN9KSnk7c4bRvKUD7VQ53O
-         jijS7fei+hM3MwzM6C/MVVw5iUMUL+QcPewAJpeCD/PmYWH1COw932nYkqUqdzHsSLHv
-         7vwvWtI1b+WpASYLSHdU6rNf5vnOk35MKyH9JHIMMB858FrQyzBnE0ONnYfEv/IdlPtZ
-         VDDq9RhyjYy00Hr/BVN9y8oa4Bb7e2kfTsfhdnRbI4bOwDei/KRwB8lby5vfF3BWlvVz
-         qCvzYznJUbto6pf/ABqgpd8kE0jAQCsmfAodzivGO3bmFP3DV4tHxjtReIhoVITWScW1
-         vJwQ==
-X-Gm-Message-State: AJIora/7NoKBiw2wFlnCdBqn79RO5tv/WPCGF4oz/1MLi49xqKI3lgas
-        kYPXcBnxS8uTW84agwdujLhFIA==
-X-Google-Smtp-Source: AGRyM1sQCvT/DEL8W10OJPxgCdo4/+cU3BwL4V/dSUB1scb2vrHR6Uzbw7NKlIkMimSWjzFdZG2lmA==
-X-Received: by 2002:a05:6512:2803:b0:481:126b:7eaf with SMTP id cf3-20020a056512280300b00481126b7eafmr13385403lfb.286.1657608838444;
-        Mon, 11 Jul 2022 23:53:58 -0700 (PDT)
+        bh=h6vjT/+13UEo3taiLb0JZhbnEJD4OKWdgkoVYLaG7U4=;
+        b=tPjb8l4LdLuMU07WfysyoGyv0P8m5QwXanGZt2MG9Ao6grfdBLKu+WC5no/PrvtVbC
+         dhAhIF3elH39I2xVf6h9V/YgugPJlXpGJnR54VQ/TjDC44bFxpn+akXBgDUg2fTyTAij
+         ZlJxp4maf9ALGLd6Yh55W8MlNcvp5uBxVAAUefwII+voK5aX3k+QQ5jat0Jxqqy+THps
+         sYkH99/Lzl7StDJ364+ztMLaPstdVMR69PODy+W1mHSkvpLg+cpf46XHlZPuKaY53FVh
+         A63Ij7QLGTJ4qv/qtjD4M8Ita/WSetj3clkNRBjbAEQRJLFT3gpsUP+2WGf+z5lebS7k
+         Eh4A==
+X-Gm-Message-State: AJIora9X/C+xe7z3uaZd+BrqXnqLdpLxYU4gNKWOZnFZ46r5C27aCasJ
+        ypBbK3KvOxaEUvM/SAdaZEMiAQ==
+X-Google-Smtp-Source: AGRyM1vkArgZCtCXerr2SI10QhpZQudBGhHUD/0jvs3TtC3hTTXrSQFgWaQhd2FYGnYc3OxFmZ+jpg==
+X-Received: by 2002:a05:6512:13a4:b0:479:3b9f:f13c with SMTP id p36-20020a05651213a400b004793b9ff13cmr13939823lfa.380.1657609376176;
+        Tue, 12 Jul 2022 00:02:56 -0700 (PDT)
 Received: from [10.0.0.8] (fwa5cab-55.bb.online.no. [88.92.171.55])
-        by smtp.gmail.com with ESMTPSA id bu19-20020a056512169300b004786eb19049sm2012711lfb.24.2022.07.11.23.53.56
+        by smtp.gmail.com with ESMTPSA id y14-20020a05651c154e00b0025d680fbd89sm1688767ljp.8.2022.07.12.00.02.54
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 11 Jul 2022 23:53:57 -0700 (PDT)
-Message-ID: <ab0e97a3-ec83-78f2-921a-813a647855f5@linaro.org>
-Date:   Tue, 12 Jul 2022 08:53:50 +0200
+        Tue, 12 Jul 2022 00:02:55 -0700 (PDT)
+Message-ID: <629ede41-326b-9c84-4bb8-2f7e695ca928@linaro.org>
+Date:   Tue, 12 Jul 2022 09:02:53 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.11.0
-Subject: Re: [PATCH RFT] arm64: dts: qcom: sm6125: fix SDHCI CQE reg names
+Subject: Re: [PATCH v2 2/5] dt-bindings: mmc: sdhci-msm: constrain reg-names
+ perp variants
 Content-Language: en-US
 To:     Doug Anderson <dianders@chromium.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
+Cc:     Ulf Hansson <ulf.hansson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        Linux MMC List <linux-mmc@vger.kernel.org>,
         "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
         <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>
-References: <20220711082648.38987-1-krzysztof.kozlowski@linaro.org>
- <CAD=FV=WMJ1BX-uA4eavocbAGjpSsEYhoYGSha9gBYsqAXhHX-g@mail.gmail.com>
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+References: <20220711082940.39539-1-krzysztof.kozlowski@linaro.org>
+ <20220711082940.39539-3-krzysztof.kozlowski@linaro.org>
+ <CAD=FV=WUCPzzZHAPqoz-vhmcVxzYDxkKQs=+1tLZvsQjWe4q3Q@mail.gmail.com>
+ <f8744ff8-15a0-bf31-c49f-b1bb35ba5cdd@linaro.org>
+ <CAD=FV=X2ZfwwDO_hSSN35ObfvBbBbPjMoSB4GvS7m0yJieNg3Q@mail.gmail.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <CAD=FV=WMJ1BX-uA4eavocbAGjpSsEYhoYGSha9gBYsqAXhHX-g@mail.gmail.com>
+In-Reply-To: <CAD=FV=X2ZfwwDO_hSSN35ObfvBbBbPjMoSB4GvS7m0yJieNg3Q@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -83,52 +88,138 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/07/2022 16:57, Doug Anderson wrote:
+On 11/07/2022 17:11, Doug Anderson wrote:
 > Hi,
 > 
-> On Mon, Jul 11, 2022 at 1:26 AM Krzysztof Kozlowski
+> On Mon, Jul 11, 2022 at 7:53 AM Krzysztof Kozlowski
 > <krzysztof.kozlowski@linaro.org> wrote:
 >>
->> SM6125 comes with SDCC (SDHCI controller) v5, so the second range of
->> registers is cqhci, not core.
+>> On 11/07/2022 16:52, Doug Anderson wrote:
+>>> Hi
+>>>
+>>> On Mon, Jul 11, 2022 at 1:29 AM Krzysztof Kozlowski
+>>> <krzysztof.kozlowski@linaro.org> wrote:
+>>>>
+>>>> The entries in arrays must have fixed order, so the bindings and Linux
+>>>> driver expecting various combinations of 'reg' addresses was never
+>>>> actually conforming to guidelines.
+>>>>
+>>>> The 'core' reg entry is valid only for SDCC v4 and lower, so disallow it
+>>>> in SDCC v5.  SDCC v4 supports CQE and ICE, so allow them, even though
+>>>> the qcom,sdhci-msm-v4 compatible is used also for earlier SoCs with SDCC
+>>>> v2 or v3, so it is not entirely accurate.
+>>>>
+>>>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>>>>
+>>>> ---
+>>>>
+>>>> Changes since v1:
+>>>> 1. Rework the patch based on Doug's feedback.
+>>>> ---
+>>>>  .../devicetree/bindings/mmc/sdhci-msm.yaml    | 61 ++++++++++++-------
+>>>>  1 file changed, 38 insertions(+), 23 deletions(-)
+>>>
+>>> In the ${SUBJECT} I'm not sure what a "perp variant" is. Is that a
+>>> typo or just a phrase I'm not aware of?
 >>
->> Fixes: cff4bbaf2a2d ("arm64: dts: qcom: Add support for SM6125")
->> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> Should be:
+>> "per variants"
 >>
->> ---
+>>>
+>>>
+>>>> diff --git a/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml b/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
+>>>> index fc6e5221985a..2f0fdd65e908 100644
+>>>> --- a/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
+>>>> +++ b/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
+>>>> @@ -49,33 +49,11 @@ properties:
+>>>>
+>>>>    reg:
+>>>>      minItems: 1
+>>>> -    items:
+>>>> -      - description: Host controller register map
+>>>> -      - description: SD Core register map
+>>>> -      - description: CQE register map
+>>>> -      - description: Inline Crypto Engine register map
+>>>> +    maxItems: 4
+>>>>
+>>>>    reg-names:
+>>>>      minItems: 1
+>>>>      maxItems: 4
+>>>> -    oneOf:
+>>>> -      - items:
+>>>> -          - const: hc
+>>>> -      - items:
+>>>> -          - const: hc
+>>>> -          - const: core
+>>>> -      - items:
+>>>> -          - const: hc
+>>>> -          - const: cqhci
+>>>> -      - items:
+>>>> -          - const: hc
+>>>> -          - const: cqhci
+>>>> -          - const: ice
+>>>> -      - items:
+>>>> -          - const: hc
+>>>> -          - const: core
+>>>> -          - const: cqhci
+>>>> -          - const: ice
+>>>>
+>>>>    clocks:
+>>>>      minItems: 3
+>>>> @@ -177,6 +155,43 @@ required:
+>>>>  allOf:
+>>>>    - $ref: mmc-controller.yaml#
+>>>>
+>>>> +  - if:
+>>>> +      properties:
+>>>> +        compatible:
+>>>> +          contains:
+>>>> +            enum:
+>>>> +              - qcom,sdhci-msm-v4
+>>>> +    then:
+>>>> +      properties:
+>>>> +        reg:
+>>>> +          minItems: 2
+>>>> +          items:
+>>>> +            - description: Host controller register map
+>>>> +            - description: SD Core register map
+>>>> +            - description: CQE register map
+>>>> +            - description: Inline Crypto Engine register map
+>>>> +        reg-names:
+>>>> +          minItems: 2
+>>>> +          items:
+>>>> +            - const: hc
+>>>> +            - const: core
+>>>> +            - const: cqhci
+>>>> +            - const: ice
+>>>> +    else:
+>>>> +      properties:
+>>>> +        reg:
+>>>> +          minItems: 1
+>>>> +          items:
+>>>> +            - description: Host controller register map
+>>>> +            - description: CQE register map
+>>>> +            - description: Inline Crypto Engine register map
+>>>> +        reg-names:
+>>>> +          minItems: 1
+>>>> +          items:
+>>>> +            - const: hc
+>>>> +            - const: cqhci
+>>>> +            - const: ice
+>>>
+>>> Do you need to set "maxItems" here? If you don't then will it inherit
+>>> the maxItems of 4 from above?
 >>
->> Not tested on hardware, but no practical impact is expected, because
->> supports-cqe is not defined.
+>> No, items determine the size instead.
 > 
-> Maybe the schema should enforce this? If "cqhci" is in reg-names then
-> you must have supports-cqe and vice versa?
+> Can you just remove the "maxItems" from above then? Does it buy us anything?
 
-I have mixed feelings about this. First, I don't know why support-cqe
-was not enabled on all devices but only in some DTS (this does not look
-like a property of a board but SoC). Second, cqhci address space might
-be present in all devices, even if they do not use CQE.
-> 
-> 
->> ---
->>  arch/arm64/boot/dts/qcom/sm6125.dtsi | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sm6125.dtsi b/arch/arm64/boot/dts/qcom/sm6125.dtsi
->> index 77bff81af433..7664ef7e4da9 100644
->> --- a/arch/arm64/boot/dts/qcom/sm6125.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sm6125.dtsi
->> @@ -438,7 +438,7 @@ rpm_msg_ram: sram@45f0000 {
->>                 sdhc_1: mmc@4744000 {
->>                         compatible = "qcom,sm6125-sdhci", "qcom,sdhci-msm-v5";
->>                         reg = <0x04744000 0x1000>, <0x04745000 0x1000>;
->> -                       reg-names = "hc", "core";
->> +                       reg-names = "hc", "cqhci";
-> 
-> Another possible fix would be to just delete the second register
-> range. Then it could be added back in once "supports-cqe" was added.
+There is no maxItems directly here...
 
-True, but I assume that second address range is there for complete
-hardware description.
+> 
+> In any case, with the ${SUBJECT} fixed:
+> 
+> Reviewed-by: Douglas Anderson <dianders@chromium.org>
 
 
 Best regards,
