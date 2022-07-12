@@ -2,253 +2,137 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 274E7571A5B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Jul 2022 14:46:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EBC37571A3B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Jul 2022 14:44:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233130AbiGLMqM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Jul 2022 08:46:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33526 "EHLO
+        id S231852AbiGLMoz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Jul 2022 08:44:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59856 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233216AbiGLMqL (ORCPT
+        with ESMTP id S229526AbiGLMox (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Jul 2022 08:46:11 -0400
-Received: from mx.kernkonzept.com (serv1.kernkonzept.com [IPv6:2a01:4f8:1c1c:b490::2])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A3B99D516;
-        Tue, 12 Jul 2022 05:46:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=kernkonzept.com; s=mx1; h=Content-Transfer-Encoding:MIME-Version:References
-        :In-Reply-To:Message-Id:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:
-        Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-        Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-        List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=C7DbLRbpXMyCj1Q5o2dItOE2QtxA2TFViSasGpGNT8A=; b=noMebIsnOHWlnAj3FbV8akvwMT
-        g1cZJw8JwiG/Xa3vUZlAqzDO3Aph2IAeawfKPlgqM6YS8lMFtlBgqm5Z2A5cRmug9du7OOwGbqdE2
-        UDyQBhpe5rgxF98hyEgcUGcvs8NM0eA/R7dJupZzhzdC+36NOl3OArm7/03tGhXxS1pNwpeaz/0+F
-        cHyOW8flGwdgxbTBvYW5MJNMJnsa5DJLTnibbrRzHraBHG2dDujFx4CLA4Gs5wwIbevEF8nDRIqV+
-        1+2MxphWY4xU9SFYUPTcmBdjQagOqG7e0lTejGnSB4d355z3QBiX881Y4Q1vfzoBsNc3xBqnrP6fN
-        YEBz5ccQ==;
-Received: from [10.22.3.24] (helo=kernkonzept.com)
-        by mx.kernkonzept.com with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim 4.94.2)
-        id 1oBFH8-0087Gb-6S; Tue, 12 Jul 2022 14:46:02 +0200
-From:   Stephan Gerhold <stephan.gerhold@kernkonzept.com>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Sireesh Kodali <sireeshkodali1@gmail.com>,
-        Luca Weiss <luca@z3ntu.xyz>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        Stephan Gerhold <stephan.gerhold@kernkonzept.com>
-Subject: [PATCH 6/6] remoteproc: qcom_q6v5_mss: Add support for MSM8909
-Date:   Tue, 12 Jul 2022 14:44:21 +0200
-Message-Id: <20220712124421.3129206-7-stephan.gerhold@kernkonzept.com>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20220712124421.3129206-1-stephan.gerhold@kernkonzept.com>
-References: <20220712124421.3129206-1-stephan.gerhold@kernkonzept.com>
+        Tue, 12 Jul 2022 08:44:53 -0400
+Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE11632EE3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Jul 2022 05:44:52 -0700 (PDT)
+Received: by mail-pj1-x102e.google.com with SMTP id j1-20020a17090aeb0100b001ef777a7befso1449158pjz.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Jul 2022 05:44:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=QYL0SRgLUmg8BnK5Yo3lzlJ4c0o1vhFy27q1BHms55E=;
+        b=M9ZOyqVnnUe1kQ1lYFItGrYNc078kUr6Am55NLN0d1kC3kIbA+ABERmQoje+GHES78
+         AlnIcs/g2MpFEwNW6yLzuJipMD3yEPQs7stbk8+q8MBWP02Qgz+ZyINb8gTS8mPiiW+m
+         duREQLrPy3kHmKzqDU3zfNEvKbJwvVnnsGCMPiDOxTfzNysdXYCWGhpyXyi+cj8nRbhS
+         SzNwVQ+n5xTqUPo/Caxl7D/FnnVPEa5lZm5c0RCZPkpiLQzPrSkKKmwFsr3OIqRJcCxm
+         nxPO1jpXd+n4kbNBbR+9KmnWfeiV3c+vEbi313WP3dPYB2DZO0tGPYywVH3wS1NsXIpi
+         fjlg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=QYL0SRgLUmg8BnK5Yo3lzlJ4c0o1vhFy27q1BHms55E=;
+        b=tCPpQ2Em2SHP9ts5Yq1HxmkY7QsghJ1Q7hyDXeqjWoMC+Hq1NHPEhEf4AD0oUR/cBg
+         ZEZs4Rt2pTQrNVENjYa2hjB+KESK7WP/Nevp8mK3r3EDku8u5nBEeWJcmCqAdKLFZUpo
+         dAJH77pyjPUL8LOVEy2nDr9cKDJmMn7vUJsCBCcpafrXGGJ6qSo+toKzg0g2VlGZ/h+9
+         UxxXa7egjdOzjrIJytIivrLInwsswuYf5q0JBVXEUjMIc4z0iTiUdFUd5jG0JhxZPJPS
+         A9onGWQnsI/brp2ZhHUIrHkPzzEG9XhNBa/Bn5aEh92x6jeEaCKRGlzgov/SzCZSTXCJ
+         nOaQ==
+X-Gm-Message-State: AJIora8qj0SbBynGnz4Kd+3H3whEaj7pCpSK5lklirD48oxnTKTqXufS
+        NgIkpC1L91N9Ft5DrOhrl263
+X-Google-Smtp-Source: AGRyM1v+M5lV7lgNVXXA7ep5lugVxUMn5AWgMFlKRyd/tc8Cbi7QwigHgSxgIwlOdFq966IerhvE4g==
+X-Received: by 2002:a17:90b:4c91:b0:1ef:f85b:6342 with SMTP id my17-20020a17090b4c9100b001eff85b6342mr4254301pjb.75.1657629892302;
+        Tue, 12 Jul 2022 05:44:52 -0700 (PDT)
+Received: from workstation ([117.207.31.14])
+        by smtp.gmail.com with ESMTPSA id pi4-20020a17090b1e4400b001df264610c4sm3212648pjb.0.2022.07.12.05.44.48
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 12 Jul 2022 05:44:51 -0700 (PDT)
+Date:   Tue, 12 Jul 2022 18:14:45 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Marc Zyngier <maz@kernel.org>
+Cc:     Robert Marko <robimarko@gmail.com>, bjorn.andersson@linaro.org,
+        agross@kernel.org, linus.walleij@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] pinctrl: qcom: spmi-gpio: make the irqchip immutable
+Message-ID: <20220712124445.GC21746@workstation>
+References: <20220624195112.894916-1-robimarko@gmail.com>
+ <87edyq1ujr.wl-maz@kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <87edyq1ujr.wl-maz@kernel.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Port the initialization sequence necessary for booting the modem remote
-processor on the MSM8909 SoC from Qualcomm's msm-3.10 release [1].
-The sequence is actually similar to the existing one for MSM8996 and
-MSM8998 except that there is no separate QDSP6SS_MEM_PWR_CTL register
-and most of the "memories" are enabled at once instead of sequentially.
+On Tue, Jul 12, 2022 at 11:42:32AM +0100, Marc Zyngier wrote:
+> On Fri, 24 Jun 2022 20:51:12 +0100,
+> Robert Marko <robimarko@gmail.com> wrote:
+> > 
+> > Commit 6c846d026d49 ("gpio: Don't fiddle with irqchips marked as
+> > immutable") added a warning to indicate if the gpiolib is altering the
+> > internals of irqchips.
+> > 
+> > Following this change the following warning is now observed for the SPMI
+> > PMIC pinctrl driver:
+> > gpio gpiochip1: (200f000.spmi:pmic@0:gpio@c000): not an immutable chip, please consider fixing it!
+> > 
+> > Fix this by making the irqchip in the SPMI PMIC pinctrl driver immutable.
+> > 
+> > Signed-off-by: Robert Marko <robimarko@gmail.com>
+> > ---
+> >  drivers/pinctrl/qcom/pinctrl-spmi-gpio.c | 22 ++++++++++++----------
+> >  1 file changed, 12 insertions(+), 10 deletions(-)
+> > 
+> > diff --git a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
+> > index c3255b0bece4..406ee0933d0b 100644
+> > --- a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
+> > +++ b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
+> > @@ -171,7 +171,6 @@ struct pmic_gpio_state {
+> >  	struct regmap	*map;
+> >  	struct pinctrl_dev *ctrl;
+> >  	struct gpio_chip chip;
+> > -	struct irq_chip irq;
+> >  	u8 usid;
+> >  	u8 pid_base;
+> >  };
+> > @@ -988,6 +987,17 @@ static void *pmic_gpio_populate_parent_fwspec(struct gpio_chip *chip,
+> >  	return fwspec;
+> >  }
+> >  
+> > +static const struct irq_chip spmi_gpio_irq_chip = {
+> > +	.name		= "spmi-gpio",
+> > +	.irq_ack	= irq_chip_ack_parent,
+> > +	.irq_mask	= irq_chip_mask_parent,
+> > +	.irq_unmask	= irq_chip_unmask_parent,
+> 
+> No, this is wrong. Please look at the documentation to see how you
+> must now directly call into the gpiolib helpers for these two
+> callbacks.
+> 
 
-To reuse the existing code just insert some if statements where needed
-and add a configuration similar to the one from MSM8916.
+IIUC, you are referring to gpiochip_disable_irq() and
+gpiochip_enable_irq() APIs. These APIs are supposed to let the gpiolib
+know about that the IRQ usage of these GPIOs. But for the case of hierarchial
+IRQ domain, isn't the parent is going to do that?
 
-[1]: https://git.codelinaro.org/clo/la/kernel/msm-3.10/-/commit/56dcedc8dac8abff6b007f76a29430b2d0a44704
+Please correct me if I'm wrong.
 
-Signed-off-by: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
----
- drivers/remoteproc/qcom_q6v5_mss.c | 123 +++++++++++++++++++++--------
- 1 file changed, 90 insertions(+), 33 deletions(-)
+Thanks,
+Mani
 
-diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
-index af217de75e4d..31f561619b19 100644
---- a/drivers/remoteproc/qcom_q6v5_mss.c
-+++ b/drivers/remoteproc/qcom_q6v5_mss.c
-@@ -110,6 +110,9 @@
- #define QDSS_BHS_ON			BIT(21)
- #define QDSS_LDO_BYP			BIT(22)
- 
-+/* QDSP6v55 parameters */
-+#define QDSP6V55_MEM_BITS		GENMASK(16, 8)
-+
- /* QDSP6v56 parameters */
- #define QDSP6v56_LDO_BYP		BIT(25)
- #define QDSP6v56_BHS_ON		BIT(24)
-@@ -233,6 +236,7 @@ struct q6v5 {
- };
- 
- enum {
-+	MSS_MSM8909,
- 	MSS_MSM8916,
- 	MSS_MSM8974,
- 	MSS_MSM8996,
-@@ -686,13 +690,14 @@ static int q6v5proc_reset(struct q6v5 *qproc)
- 			return ret;
- 		}
- 		goto pbl_wait;
--	} else if (qproc->version == MSS_MSM8996 ||
-+	} else if (qproc->version == MSS_MSM8909 ||
-+		   qproc->version == MSS_MSM8996 ||
- 		   qproc->version == MSS_MSM8998) {
--		int mem_pwr_ctl;
- 
--		/* Override the ACC value if required */
--		writel(QDSP6SS_ACC_OVERRIDE_VAL,
--		       qproc->reg_base + QDSP6SS_STRAP_ACC);
-+		if (qproc->version != MSS_MSM8909)
-+			/* Override the ACC value if required */
-+			writel(QDSP6SS_ACC_OVERRIDE_VAL,
-+			       qproc->reg_base + QDSP6SS_STRAP_ACC);
- 
- 		/* Assert resets, stop core */
- 		val = readl(qproc->reg_base + QDSP6SS_RESET_REG);
-@@ -724,36 +729,53 @@ static int q6v5proc_reset(struct q6v5 *qproc)
- 		val |= QDSP6v56_LDO_BYP;
- 		writel(val, qproc->reg_base + QDSP6SS_PWR_CTL_REG);
- 
--		/* Deassert QDSP6 compiler memory clamp */
--		val = readl(qproc->reg_base + QDSP6SS_PWR_CTL_REG);
--		val &= ~QDSP6v56_CLAMP_QMC_MEM;
--		writel(val, qproc->reg_base + QDSP6SS_PWR_CTL_REG);
--
--		/* Deassert memory peripheral sleep and L2 memory standby */
--		val |= Q6SS_L2DATA_STBY_N | Q6SS_SLP_RET_N;
--		writel(val, qproc->reg_base + QDSP6SS_PWR_CTL_REG);
--
--		/* Turn on L1, L2, ETB and JU memories 1 at a time */
--		if (qproc->version == MSS_MSM8996) {
--			mem_pwr_ctl = QDSP6SS_MEM_PWR_CTL;
--			i = 19;
-+		if (qproc->version != MSS_MSM8909) {
-+			int mem_pwr_ctl;
-+
-+			/* Deassert QDSP6 compiler memory clamp */
-+			val = readl(qproc->reg_base + QDSP6SS_PWR_CTL_REG);
-+			val &= ~QDSP6v56_CLAMP_QMC_MEM;
-+			writel(val, qproc->reg_base + QDSP6SS_PWR_CTL_REG);
-+
-+			/* Deassert memory peripheral sleep and L2 memory standby */
-+			val |= Q6SS_L2DATA_STBY_N | Q6SS_SLP_RET_N;
-+			writel(val, qproc->reg_base + QDSP6SS_PWR_CTL_REG);
-+
-+			/* Turn on L1, L2, ETB and JU memories 1 at a time */
-+			if (qproc->version == MSS_MSM8996) {
-+				mem_pwr_ctl = QDSP6SS_MEM_PWR_CTL;
-+				i = 19;
-+			} else {
-+				/* MSS_MSM8998 */
-+				mem_pwr_ctl = QDSP6V6SS_MEM_PWR_CTL;
-+				i = 28;
-+			}
-+			val = readl(qproc->reg_base + mem_pwr_ctl);
-+			for (; i >= 0; i--) {
-+				val |= BIT(i);
-+				writel(val, qproc->reg_base + mem_pwr_ctl);
-+				/*
-+				 * Read back value to ensure the write is done then
-+				 * wait for 1us for both memory peripheral and data
-+				 * array to turn on.
-+				 */
-+				val |= readl(qproc->reg_base + mem_pwr_ctl);
-+				udelay(1);
-+			}
- 		} else {
--			/* MSS_MSM8998 */
--			mem_pwr_ctl = QDSP6V6SS_MEM_PWR_CTL;
--			i = 28;
--		}
--		val = readl(qproc->reg_base + mem_pwr_ctl);
--		for (; i >= 0; i--) {
--			val |= BIT(i);
--			writel(val, qproc->reg_base + mem_pwr_ctl);
--			/*
--			 * Read back value to ensure the write is done then
--			 * wait for 1us for both memory peripheral and data
--			 * array to turn on.
--			 */
--			val |= readl(qproc->reg_base + mem_pwr_ctl);
--			udelay(1);
-+			/* Turn on memories */
-+			val = readl(qproc->reg_base + QDSP6SS_PWR_CTL_REG);
-+			val |= Q6SS_SLP_RET_N | Q6SS_L2DATA_STBY_N |
-+			       Q6SS_ETB_SLP_NRET_N | QDSP6V55_MEM_BITS;
-+			writel(val, qproc->reg_base + QDSP6SS_PWR_CTL_REG);
-+
-+			/* Turn on L2 banks 1 at a time */
-+			for (i = 0; i <= 7; i++) {
-+				val |= BIT(i);
-+				writel(val, qproc->reg_base + QDSP6SS_PWR_CTL_REG);
-+			}
- 		}
-+
- 		/* Remove word line clamp */
- 		val = readl(qproc->reg_base + QDSP6SS_PWR_CTL_REG);
- 		val &= ~QDSP6v56_CLAMP_WL;
-@@ -2198,6 +2220,40 @@ static const struct rproc_hexagon_res msm8996_mss = {
- 	.version = MSS_MSM8996,
- };
- 
-+static const struct rproc_hexagon_res msm8909_mss = {
-+	.hexagon_mba_image = "mba.mbn",
-+	.proxy_supply = (struct qcom_mss_reg_res[]) {
-+		{
-+			.supply = "pll",
-+			.uA = 100000,
-+		},
-+		{}
-+	},
-+	.proxy_clk_names = (char*[]){
-+		"xo",
-+		NULL
-+	},
-+	.active_clk_names = (char*[]){
-+		"iface",
-+		"bus",
-+		"mem",
-+		NULL
-+	},
-+	.proxy_pd_names = (char*[]){
-+		"mx",
-+		"cx",
-+		NULL
-+	},
-+	.need_mem_protection = false,
-+	.has_alt_reset = false,
-+	.has_mba_logs = false,
-+	.has_spare_reg = false,
-+	.has_qaccept_regs = false,
-+	.has_ext_cntl_regs = false,
-+	.has_vq6 = false,
-+	.version = MSS_MSM8909,
-+};
-+
- static const struct rproc_hexagon_res msm8916_mss = {
- 	.hexagon_mba_image = "mba.mbn",
- 	.proxy_supply = (struct qcom_mss_reg_res[]) {
-@@ -2298,6 +2354,7 @@ static const struct rproc_hexagon_res msm8974_mss = {
- 
- static const struct of_device_id q6v5_of_match[] = {
- 	{ .compatible = "qcom,q6v5-pil", .data = &msm8916_mss},
-+	{ .compatible = "qcom,msm8909-mss-pil", .data = &msm8909_mss},
- 	{ .compatible = "qcom,msm8916-mss-pil", .data = &msm8916_mss},
- 	{ .compatible = "qcom,msm8974-mss-pil", .data = &msm8974_mss},
- 	{ .compatible = "qcom,msm8996-mss-pil", .data = &msm8996_mss},
--- 
-2.30.2
-
+> Thanks,
+> 
+> 	M.
+> 
+> -- 
+> Without deviation from the norm, progress is not possible.
