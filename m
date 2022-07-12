@@ -2,68 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8C0EF57279B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Jul 2022 22:47:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4F369572830
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Jul 2022 23:03:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232387AbiGLUrW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Jul 2022 16:47:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50474 "EHLO
+        id S230198AbiGLVDF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Jul 2022 17:03:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40412 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229700AbiGLUrV (ORCPT
+        with ESMTP id S232013AbiGLVCw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Jul 2022 16:47:21 -0400
-Received: from mail-il1-f172.google.com (mail-il1-f172.google.com [209.85.166.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A30F1C902;
-        Tue, 12 Jul 2022 13:47:21 -0700 (PDT)
-Received: by mail-il1-f172.google.com with SMTP id a20so5578146ilk.9;
-        Tue, 12 Jul 2022 13:47:21 -0700 (PDT)
+        Tue, 12 Jul 2022 17:02:52 -0400
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 606642C66A
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Jul 2022 14:02:51 -0700 (PDT)
+Received: by mail-lj1-x22d.google.com with SMTP id 19so11318712ljz.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Jul 2022 14:02:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=wYfMN1U2Pe3jpUIv6aB3aQPgJskkEEj7WPI7YhpZ+iM=;
+        b=iZXAjAw4olgV0sdKbWutYFhrJLkIBmMclGHtIompGla2ei8+ABHriBhI3sAyRBwQyj
+         Nw2uJ1ShRyvRClLPSTGtOg4VPZ0yWWO/bu2LK5ACyTY3P3Vxd2OqnEglT6D73HK8ZBiL
+         y3KWoycp98U2TrSmE6EyY1dsNCf6O7S/5QV3IptfC+BBb/UBl7G0TeSgRUwA7N41wYt0
+         6baOu7/yvywfkoVIsP7t18eTdmHY/3OFsh7hxDRf41UBd539R56ut+rL+60/+Ino0JEk
+         Zeb4/cZRkx3zlM6qSBHpmHhErgzjbrmO4U0hXW3/GdsV3lsL/V95Cn57P5SYMCn5vCvV
+         +uJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=m5+deZ9oGKStPdZ+5eXb53vocsz+Gl6wdIq+vUcKVZA=;
-        b=cWEedQGgNeShu0M1psdeVrZqv99MgdWH+1G4rwhhNO3f4UPxABQoYlKjWRlSfK/qWi
-         jdC8kwWOGaQ8R4t/PLOJvDv8hpHDE4F49VMlUnogGgLnnn50EwXNKS3zhndZ70KVv5qo
-         wVdeIdqCcSs7Emw652SSxm8tufi+nJe6CJGdeMN2SV3kHN+GG+9qyojd/XjRvZmjvVAD
-         S8ihryMKT3Y54QiqauinIE64kJXksLwn0phtuwZV7RPuteOl0xyotNm01i9QsBupBvBu
-         M485vt6wfdEuPIxTvDyhdrqlYA5PhDmipMkKvF4jvRzVmuzF6598CBIfyyD0zjHM5gs6
-         MbwA==
-X-Gm-Message-State: AJIora8vd/X08lOVt0DHqx2leoreIEqerlzbxYcUzspIuCt3r+viawuQ
-        9hsqFGo2kppM9H2bLBPPcg==
-X-Google-Smtp-Source: AGRyM1tUqLhW2MmKcSnnx3FJIFDeZgBr5SnD+zUi/RysVYAY4hbq4jsYCubHi5F9itYZweMAQBmeVw==
-X-Received: by 2002:a05:6e02:1ba4:b0:2dc:2b41:4052 with SMTP id n4-20020a056e021ba400b002dc2b414052mr22923ili.200.1657658840443;
-        Tue, 12 Jul 2022 13:47:20 -0700 (PDT)
-Received: from robh.at.kernel.org ([64.188.179.248])
-        by smtp.gmail.com with ESMTPSA id y8-20020a056602178800b00665770bcec5sm5437937iox.49.2022.07.12.13.47.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Jul 2022 13:47:19 -0700 (PDT)
-Received: (nullmailer pid 2335525 invoked by uid 1000);
-        Tue, 12 Jul 2022 20:47:18 -0000
-Date:   Tue, 12 Jul 2022 14:47:18 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>
-Subject: Re: [PATCH 11/11] dt-bindings: display/msm: move common DPU
- properties to dpu-common.yaml
-Message-ID: <20220712204718.GO1823936-robh@kernel.org>
-References: <20220625232513.522599-1-dmitry.baryshkov@linaro.org>
- <20220625232513.522599-12-dmitry.baryshkov@linaro.org>
- <20220630231159.GA3497845-robh@kernel.org>
- <3cc60a06-6bdf-e9f4-ba8a-7aa83f57fd43@linaro.org>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=wYfMN1U2Pe3jpUIv6aB3aQPgJskkEEj7WPI7YhpZ+iM=;
+        b=fqhb7cvIH5rtPvc60ohRx4YXLdZm/WY5KgvfonkppUSTrRr+xxM+WqQeyVtPJt6XJg
+         8Tng5kClk24oL1JzNREPJpzPGMJ4VLUDSkp9xHeJ14Y8SHitVNeiIrih85SBDQ4uJD1i
+         lOCJyoF/8vS7etNQo6GYiExiKAZ0YTKEIOoqFzF2Zwdg1Xnnm4HIch/kvmFFO/9lX80P
+         HEw76SoEtViCv8ixDYUgr51wfobX36uEME9pfFcGwczGQGgRRgBEAwuOYBrKnIvfGw/f
+         XH1g6kFr7YyeNC7Ix8IUi8RexQ+a2+PHDtnRSciKtTFaO/wbQVOCROsLdWqcPf5KbE8L
+         X5fA==
+X-Gm-Message-State: AJIora+ygX+mIbSPxejjMdPfQD5jIr+7NHJZhGwjM/uqnCq1mdyBYAn6
+        56EJIDupQaAyUU3rj529PWOw6w==
+X-Google-Smtp-Source: AGRyM1v+9fnhivd68F9zNYLDGadJBtEWyFQcWpvtuIzRBBdhrlhiHwQ4slZrz/esjHrNn6MtFsgZPg==
+X-Received: by 2002:a2e:888e:0:b0:25d:8112:dfc7 with SMTP id k14-20020a2e888e000000b0025d8112dfc7mr2100485lji.270.1657659769611;
+        Tue, 12 Jul 2022 14:02:49 -0700 (PDT)
+Received: from [10.0.0.8] (fwa5da9-171.bb.online.no. [88.93.169.171])
+        by smtp.gmail.com with ESMTPSA id v12-20020ac258ec000000b00489dfb5d622sm1390518lfo.257.2022.07.12.14.02.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 12 Jul 2022 14:02:49 -0700 (PDT)
+Message-ID: <db31ded1-d240-e5a0-c4ec-03ad7aef6af8@linaro.org>
+Date:   Tue, 12 Jul 2022 23:02:46 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <3cc60a06-6bdf-e9f4-ba8a-7aa83f57fd43@linaro.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH V2] arm64: dts: qcom: sc7280: Update lpassaudio clock
+ controller for resets
+Content-Language: en-US
+To:     Satya Priya <quic_c_skakit@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Taniya Das <tdas@codeaurora.org>, mka@chromium.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Taniya Das <quic_tdas@quicinc.com>
+References: <1657181739-32052-1-git-send-email-quic_c_skakit@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <1657181739-32052-1-git-send-email-quic_c_skakit@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -71,74 +82,41 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jul 08, 2022 at 12:14:45PM +0300, Dmitry Baryshkov wrote:
-> On 01/07/2022 02:11, Rob Herring wrote:
-> > On Sun, Jun 26, 2022 at 02:25:13AM +0300, Dmitry Baryshkov wrote:
-> > > Move properties common to all DPU DT nodes to the dpu-common.yaml
-> > > 
-> > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > ---
-> > >   .../bindings/display/msm/dpu-common.yaml      | 47 +++++++++++++++++++
-> > >   .../bindings/display/msm/dpu-msm8998.yaml     | 28 ++---------
-> > >   .../bindings/display/msm/dpu-qcm2290.yaml     | 29 ++----------
-> > >   .../bindings/display/msm/dpu-sc7180.yaml      | 32 ++-----------
-> > >   .../bindings/display/msm/dpu-sc7280.yaml      | 32 ++-----------
-> > >   .../bindings/display/msm/dpu-sdm845.yaml      | 32 ++-----------
-> > >   6 files changed, 67 insertions(+), 133 deletions(-)
-> > >   create mode 100644 Documentation/devicetree/bindings/display/msm/dpu-common.yaml
-> > > 
-> > > diff --git a/Documentation/devicetree/bindings/display/msm/dpu-common.yaml b/Documentation/devicetree/bindings/display/msm/dpu-common.yaml
-> > > new file mode 100644
-> > > index 000000000000..f3465ee3a4ab
-> > > --- /dev/null
-> > > +++ b/Documentation/devicetree/bindings/display/msm/dpu-common.yaml
-> > > @@ -0,0 +1,47 @@
-> > > +%YAML 1.2
-> > > +---
-> > > +$id: http://devicetree.org/schemas/display/msm/dpu-common.yaml#
-> > > +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> > > +
-> > > +title: Qualcomm Display DPU dt properties (common properties)
-> > > +
-> > > +maintainers:
-> > > +  - Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > +  - Krishna Manikandan <quic_mkrishn@quicinc.com>
-> > > +  - Rob Clark <robdclark@gmail.com>
-> > > +
-> > > +description: |
-> > > +  Device tree bindings for the DPU display controller, common properties.
-> > 
-> > Common properties for QCom DPU display controller
-> > 
-> > > +
-> > > +properties:
-> > > +  interrupts:
-> > > +    maxItems: 1
-> > > +
-> > > +  power-domains:
-> > > +    maxItems: 1
-> > > +
-> > > +  operating-points-v2: true
-> > > +
-> > > +  ports:
-> > > +    $ref: /schemas/graph.yaml#/properties/ports
-> > 
-> > Now this schema is applied twice.
-> > 
-> > > +    description: |
-> > > +      Contains the list of output ports from DPU device. These ports
-> > > +      connect to interfaces that are external to the DPU hardware,
-> > > +      such as DSI, DP etc. Each output port contains an endpoint that
-> > > +      describes how it is connected to an external interface.
-> > 
-> > This description is marginally useful. Each port will say it is an
-> > output to X. So you could just remove.
+On 07/07/2022 10:15, Satya Priya wrote:
+> From: Taniya Das <quic_tdas@quicinc.com>
 > 
-> I think I will go the other way around. It is not really useful to describe
-> individual ports, so I will leave just this piece, slightly rephrased and
-> drop individual /ports, /ports/port@N from dpu-foo.yaml.
+> The lpass audio supports TX/RX/WSA block resets. Disable the LPASS PIL
+> clock by default, boards can enable it if needed.
 
-How is describing individual port not useful? You must define what each 
-port is. Input or output. Type of data. Are they all the same?
+You made here few different changes at once but I fail to see why. The
+most important message in commit msg is "why?". Why are you disabling
+LPASS PIL by default?
 
-Rob
+> 
+> Also to keep consistency update lpasscore to lpass_core.
+
+This definitely should not be backported to stable.
+
+> 
+> Fixes: 9499240d15f2 ("arm64: dts: qcom: sc7280: Add lpasscore & lpassaudio clock controllers")
+
+This does not look right or I did not understand where the bug is.
+Please describe what is the error/issue/bug being fixed (which would
+explain the need of backporting).
+
+More over, the patch alone brings regression - disables the LPASS PIL
+while before it was enabled. For sure it should not be backported.
+
+> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+> Signed-off-by: Satya Priya <quic_c_skakit@quicinc.com>
+> ---
+> Changes since V1:
+>  - Updated the phandle reference in lpass_aon node.
+>  - As per Matthias' comment updated the commit text.
+> 
+>  arch/arm64/boot/dts/qcom/sc7280.dtsi | 6 ++++--
+>  1 file changed, 4 insertions(+), 2 deletions(-)
+
+
+Best regards,
+Krzysztof
