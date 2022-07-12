@@ -2,74 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8D8BA571528
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Jul 2022 10:56:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7DE505715F9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Jul 2022 11:43:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232070AbiGLI4J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Jul 2022 04:56:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55420 "EHLO
+        id S232329AbiGLJnE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Jul 2022 05:43:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35816 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229809AbiGLI4I (ORCPT
+        with ESMTP id S232316AbiGLJnD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Jul 2022 04:56:08 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B46CAA9E44
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Jul 2022 01:56:07 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id u13so12823041lfn.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Jul 2022 01:56:07 -0700 (PDT)
+        Tue, 12 Jul 2022 05:43:03 -0400
+Received: from mail-qv1-xf2e.google.com (mail-qv1-xf2e.google.com [IPv6:2607:f8b0:4864:20::f2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B831A4391
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Jul 2022 02:43:00 -0700 (PDT)
+Received: by mail-qv1-xf2e.google.com with SMTP id d17so2171917qvs.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Jul 2022 02:42:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :references:from:in-reply-to:content-transfer-encoding;
-        bh=cPj9MTsK1QXN/Iovblt90lj8En5FjLfhaWRro/VdiFw=;
-        b=YCBAMTot/cYovGazfhpGKpUF5Ea9mggII3+fFTLnNxGYVXkCU4erD15c2AteOJVV/b
-         RLzvm6S8U6+orKFUNhrSe3lODa3/1FirokDfNzB1pEwmtvgDXv20UYDNh0FyMNLiFf4N
-         P2mF0jSgzao3vOWRq1kjDsNHWPIQBVPHLAgs+YxNqmhKY3UUP/UkQ4aU+0ktzTPi8GyP
-         Qh1ejTFkbGayT4LwIoJMzGQDem3M+jBKHFWnH2mJGHr4AKTKCGunBiV5nw+g0C8qxrEB
-         cn0iTVy3+l1ic9ghEJlNt107jevSSTTupTwTF3uO6WbzBcEuqrW/j+gepDW26KVVPrCa
-         3KkA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=YoZBYZy41JFnQOGO3Hk17+jt5jdA+Ko/TmjpBwiSidA=;
+        b=Mp56ho49ONCB9YdoaKjrcHN9VWBBj/JQHylIy8Y66ZDWzu6613aEVMlt4rXLr4xbnT
+         /EAd5UzTDUYiryhZdDscI62gJ5lqGH6tOEoClYAJwYKjdWHqTtnEzRM7gY5AfpO6KvfJ
+         IdcWdko+YQZQjfCIa7XmsgynjbgkayMyaVnVEybhLgR0nwoUN9uHpzAa61o2YvQAROu9
+         9XKte3wpeBCxjHFQ+HRDKFbY2VKQMtC6xLwMlqGrDUVx79hrhUrjEhCjDMhlgFb5d3EE
+         hPb+EZyqgDTxqoG8689V7XSNtZ2AbdDG+swssRacz8vsQ3qM+byfPSmjl+zwRPTsES5T
+         C5BQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=cPj9MTsK1QXN/Iovblt90lj8En5FjLfhaWRro/VdiFw=;
-        b=WXsi5JQrfi0HXCCbb8HwGanCDzlEFOgdtJ9ShICbABwhweZa1dvPmkQiEYTskN54cs
-         8Xua5SleR1xOkfn+k7D8XkmHJ6aWDT6Ku5xr73YNaK9az1VjvfLH7w079VAigz/qHSn7
-         OltP+L+EWKuOj/CWAArDFMVnvGnsPUWpWMLPpPx7F8qut/scDTSIEy9sKIWvD8GU/tfP
-         Sx6GEYwciYyBLdgkn9zrw1+InV0Jm3S5c+AFjdCkU5ODWL1vM89xgjdRYa2nI3VG4wGh
-         1uNIouLjZHB9KFZ7i0+h8Gb8Fds98vdUC6k5dvDZZuMLjTrSHODA8TprnRsGBpk6NOFZ
-         PuXg==
-X-Gm-Message-State: AJIora+QgqTgzScT9enyU2sWfkmtZYezQgoE+j9LdTOs+No03idGz9ug
-        WZ9d6YVD56RTxnLc/MFO4J1mRtR85xzeTID1
-X-Google-Smtp-Source: AGRyM1tU6nmMrgLNu9squdgDq1hdAkpsHdK3LDTR4p70bozyzAhc5eBWHuXLCEc9Fh6s/suOKxdrjw==
-X-Received: by 2002:ac2:568a:0:b0:489:dd50:bfc9 with SMTP id 10-20020ac2568a000000b00489dd50bfc9mr6257755lfr.487.1657616166108;
-        Tue, 12 Jul 2022 01:56:06 -0700 (PDT)
-Received: from [10.0.0.8] (fwa5cab-55.bb.online.no. [88.92.171.55])
-        by smtp.gmail.com with ESMTPSA id 8-20020ac25f08000000b0047fac765f39sm2051069lfq.219.2022.07.12.01.56.04
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 12 Jul 2022 01:56:05 -0700 (PDT)
-Message-ID: <94667ee2-3b5f-37f9-49f6-a28ecd69e709@linaro.org>
-Date:   Tue, 12 Jul 2022 10:56:03 +0200
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=YoZBYZy41JFnQOGO3Hk17+jt5jdA+Ko/TmjpBwiSidA=;
+        b=ctnKr0+WMNKNDqY0gzX3p8OX+Nx2lzMbWhbl7SPQOvhiS30i/BSdTF167ejBEQIysE
+         2efKYGDK7RUfaO4WQZ/gKmElYUY9PFJTZJTVNLzf3mSBy19YQq79voHTBs2BQmv2vh4h
+         GyzPGuGW2AtvwtuN8Xe8boo8FrO5ar9Wz3kSUhKyyp58kSWlieYHF+HT1bOOzduqhhe5
+         z6799SbFZnVzv3fP7jts8ddZKnFVz7yl/s5PImkWGRNo591XDSyw4lY4K7XXrwdOELNc
+         487sdiA4NzzvuKUMzIs2rPOZXwOvvsXWg/2Ympei2CXGRa2Mkp0qSrhRFZvFGiUQ5tz+
+         deew==
+X-Gm-Message-State: AJIora9H/0VaR+GwFFmTEUxueic6iGb1opOeMKLTvv8octj7K/Ecd+Pv
+        izOMBDn7qHgLqvkz3vNpWxvnENAPMqoKgprPoYp0QoF5kyk=
+X-Google-Smtp-Source: AGRyM1tHoH02JA0eu1BvlGmolAYocWBMRLvOM+ZDeFF0Ju9sWVnKd2I++G5vKn9D8D1RhgOguQYeeGDqDOcrYk768oM=
+X-Received: by 2002:a0c:8ecc:0:b0:473:2fa4:df7c with SMTP id
+ y12-20020a0c8ecc000000b004732fa4df7cmr16692462qvb.55.1657618979170; Tue, 12
+ Jul 2022 02:42:59 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH v7 2/4] dt-bindings: mailbox: qcom: correct clocks for
- IPQ6018 and IPQ8074
-Content-Language: en-US
-To:     Robert Marko <robimarko@gmail.com>, agross@kernel.org,
-        bjorn.andersson@linaro.org, konrad.dybcio@somainline.org,
-        jassisinghbrar@gmail.com, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-References: <20220711105931.43164-1-robimarko@gmail.com>
- <20220711105931.43164-2-robimarko@gmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220711105931.43164-2-robimarko@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20220710084133.30976-1-dmitry.baryshkov@linaro.org>
+ <20220710084133.30976-9-dmitry.baryshkov@linaro.org> <20220711231638.GA449827-robh@kernel.org>
+In-Reply-To: <20220711231638.GA449827-robh@kernel.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Tue, 12 Jul 2022 12:42:48 +0300
+Message-ID: <CAA8EJpoHKewcM3upa9GvNhUyKNC3sjqYa2rA-zQk5m1TpZmAtg@mail.gmail.com>
+Subject: Re: [PATCH v2 8/9] dt-bindings: msm/dp: add missing properties
+To:     Rob Herring <robh@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -78,47 +77,58 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/07/2022 12:59, Robert Marko wrote:
-> IPQ6018 APSS driver is registered by APCS as they share the same register
-> space, and it uses "pll" and "xo" as inputs.
-> 
-> Correct the allowed clocks for IPQ6018 and IPQ8074 as they share the same
-> driver to allow "pll" and "xo" as clock-names.
-> 
-> Signed-off-by: Robert Marko <robimarko@gmail.com>
-> ---
->  .../mailbox/qcom,apcs-kpss-global.yaml        | 44 ++++++++++++++-----
->  1 file changed, 32 insertions(+), 12 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml b/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml
-> index 95ecb84e3278..939ce63fa824 100644
-> --- a/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml
-> +++ b/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml
-> @@ -41,10 +41,6 @@ properties:
->    clocks:
->      description: phandles to the parent clocks of the clock driver
->      minItems: 2
+On Tue, 12 Jul 2022 at 02:16, Rob Herring <robh@kernel.org> wrote:
+>
+> On Sun, Jul 10, 2022 at 11:41:32AM +0300, Dmitry Baryshkov wrote:
+> > Document missing definitions for opp-table (DP controller OPPs), aux-bus
+> > (DP AUX BUS) and data-lanes (DP/eDP lanes mapping) properties.
+> >
+> > Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> >  .../bindings/display/msm/dp-controller.yaml          | 12 ++++++++++++
+> >  1 file changed, 12 insertions(+)
+> >
+> > diff --git a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
+> > index 391910d91e43..52cbf00df0ba 100644
+> > --- a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
+> > +++ b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
+> > @@ -70,9 +70,21 @@ properties:
+> >    operating-points-v2:
+> >      maxItems: 1
+> >
+> > +  opp-table: true
+> > +
+> >    power-domains:
+> >      maxItems: 1
+> >
+> > +  aux-bus:
+> > +    $ref: /schemas/display/dp-aux-bus.yaml#
+> > +
+> > +  data-lanes:
+>
+> But this is the wrong location for 'data-lanes'. It belongs in an
+> endpoint node.
 
-You need maxItems (widest) as well.
+Ack. Then I'll drop this for v3.
 
-> -    items:
-> -      - description: primary pll parent of the clock driver
-> -      - description: auxiliary parent
-> -      - description: reference clock
->  
->    '#mbox-cells':
->      const: 1
-> @@ -54,10 +50,6 @@ properties:
->  
->    clock-names:
->      minItems: 2
+>
+> > +    $ref: /schemas/types.yaml#/definitions/uint32-array
+> > +    minItems: 1
+> > +    maxItems: 4
+> > +    items:
+> > +      maximum: 3
+> > +
+> >    "#sound-dai-cells":
+> >      const: 0
+> >
+> > --
+> > 2.35.1
+> >
+> >
 
-You need maxItems as well.
 
-> -    items:
-> -      - const: pll
-> -      - const: aux
-> -      - const: ref
 
-Best regards,
-Krzysztof
+-- 
+With best wishes
+Dmitry
