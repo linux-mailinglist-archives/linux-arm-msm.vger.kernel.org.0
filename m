@@ -2,34 +2,34 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A3FA1571A51
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Jul 2022 14:46:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CD9B7571A55
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Jul 2022 14:46:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233186AbiGLMqJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Jul 2022 08:46:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33438 "EHLO
+        id S233201AbiGLMqK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Jul 2022 08:46:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33436 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233086AbiGLMqH (ORCPT
+        with ESMTP id S229762AbiGLMqI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Jul 2022 08:46:07 -0400
+        Tue, 12 Jul 2022 08:46:08 -0400
 Received: from mx.kernkonzept.com (serv1.kernkonzept.com [IPv6:2a01:4f8:1c1c:b490::2])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BDA23AEF71;
-        Tue, 12 Jul 2022 05:46:04 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6ECA99C250;
+        Tue, 12 Jul 2022 05:46:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
         d=kernkonzept.com; s=mx1; h=Content-Transfer-Encoding:MIME-Version:References
         :In-Reply-To:Message-Id:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:
         Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
         Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
         List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=+7dkK/pDud7VFmBz87gdVKEZhqtJamWBLWakUNW4Tso=; b=UuclXiH6qfp1RGZZGUx9NWxyMW
-        pRHkY8+bmzXSoMMJDeiidmW0/U8x7ytqDKdzUFCJjjgTy2ndWs5YfUvyIfRk+nFplBYGKN4946pZE
-        JMST5jSGqEkCJKNqPiIoYV3VzBIDBjMS0e2ia9MYy5yMJkRQoLaY3iP5aNJlqFIPIPCYZ/ARQMZ3Z
-        Ucz0pqzljrvkYcTNFGNGTPehQxosbOzZJeDPyhxItdaC1/dJBjEwwDRbFGb7RUw1e7OBhEHmw5es/
-        Cj6++On3tDK22hqnGy1UHPaA+DSYoEJevzpk+YTIAOBFWhrEoJpIETA4JoL2AT9vpVC4uZTArW/Od
-        TRUzVsxQ==;
+        bh=50u/Rkp/D2+dT5sPpwLdkTr0yPgzVeHiCIXbZseKunI=; b=IEsMU316jyFfuWAIkR5Xy2wBRV
+        9fNS7+d9fPVJP/etT4nwDJjwXJlIKhRdUKZUJ5+BJcJOP3BbqMc66f0+8lJEEaYz0UMo8dkHxtPZy
+        Pk3NdTj47ArFlsmoOltRoVxPZgt+qUQmmh43vX9F1xkNHUbemMl+fELrICFXplnOoB79v5n/O4epm
+        uRqb9xQ0hQO4roNqA0DdoLw5BmlnvJuAO3EGogBGRcvIBRXV4pWDujKTYyWJDMSBVVmPOzQNqeWwT
+        KM4mWdcKZ6fvc855v2ZFTcWEN0Lk1G99FzFWdr8ojoA7u6wdBX6cinimcyeyUb369vsOGbRguwqGz
+        fz9fxp2A==;
 Received: from [10.22.3.24] (helo=kernkonzept.com)
         by mx.kernkonzept.com with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim 4.94.2)
-        id 1oBFH2-0087Gb-Ab; Tue, 12 Jul 2022 14:45:56 +0200
+        id 1oBFH4-0087Gb-8k; Tue, 12 Jul 2022 14:45:58 +0200
 From:   Stephan Gerhold <stephan.gerhold@kernkonzept.com>
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>,
@@ -43,9 +43,9 @@ Cc:     Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
         devicetree@vger.kernel.org,
         Stephan Gerhold <stephan.gerhold@kernkonzept.com>
-Subject: [PATCH 3/6] ARM: dts: qcom: msm8974: Disable remoteprocs by default
-Date:   Tue, 12 Jul 2022 14:44:18 +0200
-Message-Id: <20220712124421.3129206-4-stephan.gerhold@kernkonzept.com>
+Subject: [PATCH 4/6] dt-bindings: remoteproc: qcom,msm8916-mss-pil: Add MSM8974
+Date:   Tue, 12 Jul 2022 14:44:19 +0200
+Message-Id: <20220712124421.3129206-5-stephan.gerhold@kernkonzept.com>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20220712124421.3129206-1-stephan.gerhold@kernkonzept.com>
 References: <20220712124421.3129206-1-stephan.gerhold@kernkonzept.com>
@@ -60,93 +60,118 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The remoteproc configuration in qcom-msm8974.dtsi is incomplete because
-it lacks the regulator supplies that should be added in the board DT
-files. Some of the msm8974 boards are currently missing the regulator
-supplies and should have the remoteprocs disabled to avoid making use
-of the incomplete configuration.
+The "qcom,msm8974-mss-pil" binding is still similar enough to MSM8916
+to be covered by the same DT schema. The only difference is the
+additional "mss-supply", which can be easily handled using a single
+if statement.
 
-This also fixes dtbs_check warnings after moving "qcom,msm8974-mss-pil"
-to DT schema, which rightfully complains that the -supply properties
-are missing for some boards:
-
-qcom-apq8074-dragonboard.dtb:
-remoteproc@fc880000: 'pll-supply' is a required property
-        From schema: remoteproc/qcom,msm8916-mss-pil.yaml
-remoteproc@fc880000: 'mss-supply' is a required property
-        From schema: remoteproc/qcom,msm8916-mss-pil.yaml
-remoteproc@fc880000: 'oneOf' conditional failed, one must be fixed:
-        'power-domains' is a required property
-        'power-domain-names' is a required property, or
-        'cx-supply' is a required property
-        'mx-supply' is a required property
-
-Cc: Luca Weiss <luca@z3ntu.xyz>
-Cc: Konrad Dybcio <konrad.dybcio@somainline.org>
-Fixes: f300826d27be ("ARM: dts: qcom-msm8974: Sort and clean up nodes")
 Signed-off-by: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
 ---
- arch/arm/boot/dts/qcom-msm8974.dtsi                 | 4 ++++
- arch/arm/boot/dts/qcom-msm8974pro-fairphone-fp2.dts | 2 ++
- arch/arm/boot/dts/qcom-msm8974pro-samsung-klte.dts  | 2 ++
- 3 files changed, 8 insertions(+)
+Note: I generated this patch on top of Sibi's series [1] to avoid
+conflicts later (I expect it will be picked up first).
 
-diff --git a/arch/arm/boot/dts/qcom-msm8974.dtsi b/arch/arm/boot/dts/qcom-msm8974.dtsi
-index 814ad0b46232..35246bd02132 100644
---- a/arch/arm/boot/dts/qcom-msm8974.dtsi
-+++ b/arch/arm/boot/dts/qcom-msm8974.dtsi
-@@ -1172,6 +1172,8 @@ remoteproc_mss: remoteproc@fc880000 {
- 			qcom,smem-states = <&modem_smp2p_out 0>;
- 			qcom,smem-state-names = "stop";
+[1]: https://lore.kernel.org/linux-arm-msm/1657020721-24939-1-git-send-email-quic_sibis@quicinc.com/
+---
+ .../remoteproc/qcom,msm8916-mss-pil.yaml         | 16 ++++++++++++++++
+ .../devicetree/bindings/remoteproc/qcom,q6v5.txt | 16 ----------------
+ 2 files changed, 16 insertions(+), 16 deletions(-)
+
+diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,msm8916-mss-pil.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,msm8916-mss-pil.yaml
+index 3968348dc982..ca7146551ba9 100644
+--- a/Documentation/devicetree/bindings/remoteproc/qcom,msm8916-mss-pil.yaml
++++ b/Documentation/devicetree/bindings/remoteproc/qcom,msm8916-mss-pil.yaml
+@@ -18,6 +18,7 @@ properties:
+     oneOf:
+       - enum:
+           - qcom,msm8916-mss-pil
++          - qcom,msm8974-mss-pil
  
-+			status = "disabled";
+       - const: qcom,q6v5-pil
+         description: Deprecated, prefer using qcom,msm8916-mss-pil
+@@ -76,6 +77,9 @@ properties:
+   pll-supply:
+     description: PLL proxy supply (control handed over after startup)
+ 
++  mss-supply:
++    description: MSS power domain supply (only valid for qcom,msm8974-mss-pil)
 +
- 			mba {
- 				memory-region = <&mba_region>;
- 			};
-@@ -1639,6 +1641,8 @@ remoteproc_adsp: remoteproc@fe200000 {
- 			qcom,smem-states = <&adsp_smp2p_out 0>;
- 			qcom,smem-state-names = "stop";
+   resets:
+     items:
+       - description: MSS restart control
+@@ -177,6 +181,18 @@ required:
+   - qcom,smem-state-names
+   - smd-edge
  
-+			status = "disabled";
++# mss-supply is only valid (and required) for MSM8974
++if:
++  properties:
++    compatible:
++      const: qcom,msm8974-mss-pil
++then:
++  required:
++    - mss-supply
++else:
++  properties:
++    mss-supply: false
 +
- 			smd-edge {
- 				interrupts = <GIC_SPI 156 IRQ_TYPE_EDGE_RISING>;
+ # Fallbacks for deprecated properties
+ allOf:
+   - oneOf:
+diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,q6v5.txt b/Documentation/devicetree/bindings/remoteproc/qcom,q6v5.txt
+index 3beb01da134b..9366ef087209 100644
+--- a/Documentation/devicetree/bindings/remoteproc/qcom,q6v5.txt
++++ b/Documentation/devicetree/bindings/remoteproc/qcom,q6v5.txt
+@@ -9,7 +9,6 @@ on the Qualcomm Hexagon core.
+ 	Definition: must be one of:
+ 		    "qcom,ipq8074-wcss-pil"
+ 		    "qcom,qcs404-wcss-pil"
+-		    "qcom,msm8974-mss-pil"
+ 		    "qcom,msm8996-mss-pil"
+ 		    "qcom,msm8998-mss-pil"
+ 		    "qcom,sdm845-mss-pil"
+@@ -37,7 +36,6 @@ on the Qualcomm Hexagon core.
+ 		    string:
+ 	qcom,ipq8074-wcss-pil:
+ 	qcom,qcs404-wcss-pil:
+-	qcom,msm8974-mss-pil:
+ 		    must be "wdog", "fatal", "ready", "handover", "stop-ack"
+ 	qcom,msm8996-mss-pil:
+ 	qcom,msm8998-mss-pil:
+@@ -68,8 +66,6 @@ on the Qualcomm Hexagon core.
+ 		    "gcc_axim_cbcr", "lcc_ahbfabric_cbc", "tcsr_lcc_cbc",
+ 		    "lcc_abhs_cbc", "lcc_tcm_slave_cbc", "lcc_abhm_cbc",
+ 		    "lcc_axim_cbc", "lcc_bcr_sleep"
+-	qcom,msm8974-mss-pil:
+-		    must be "iface", "bus", "mem", "xo"
+ 	qcom,msm8996-mss-pil:
+ 		    must be "iface", "bus", "mem", "xo", "gpll0_mss",
+ 		    "snoc_axi", "mnoc_axi", "pnoc", "qdss"
+@@ -106,17 +102,6 @@ should be referenced as follows:
+ 	Definition: reference to the reserved-memory for the mba region followed
+ 		    by the mpss region
  
-diff --git a/arch/arm/boot/dts/qcom-msm8974pro-fairphone-fp2.dts b/arch/arm/boot/dts/qcom-msm8974pro-fairphone-fp2.dts
-index 58cb2ce1e4df..8a6b8e4de887 100644
---- a/arch/arm/boot/dts/qcom-msm8974pro-fairphone-fp2.dts
-+++ b/arch/arm/boot/dts/qcom-msm8974pro-fairphone-fp2.dts
-@@ -147,10 +147,12 @@ wcnss {
- };
- 
- &remoteproc_adsp {
-+	status = "okay";
- 	cx-supply = <&pm8841_s2>;
- };
- 
- &remoteproc_mss {
-+	status = "okay";
- 	cx-supply = <&pm8841_s2>;
- 	mss-supply = <&pm8841_s3>;
- 	mx-supply = <&pm8841_s1>;
-diff --git a/arch/arm/boot/dts/qcom-msm8974pro-samsung-klte.dts b/arch/arm/boot/dts/qcom-msm8974pro-samsung-klte.dts
-index d6b2300a8223..577cbffad010 100644
---- a/arch/arm/boot/dts/qcom-msm8974pro-samsung-klte.dts
-+++ b/arch/arm/boot/dts/qcom-msm8974pro-samsung-klte.dts
-@@ -457,10 +457,12 @@ fuelgauge_pin: fuelgauge-int-pin {
- };
- 
- &remoteproc_adsp {
-+	status = "okay";
- 	cx-supply = <&pma8084_s2>;
- };
- 
- &remoteproc_mss {
-+	status = "okay";
- 	cx-supply = <&pma8084_s2>;
- 	mss-supply = <&pma8084_s6>;
- 	mx-supply = <&pma8084_s1>;
+-For the compatible string below the following supplies are required:
+-  "qcom,msm8974-mss-pil"
+-- cx-supply: (deprecated, use power domain instead)
+-- mss-supply:
+-- mx-supply: (deprecated, use power domain instead)
+-- pll-supply:
+-	Usage: required
+-	Value type: <phandle>
+-	Definition: reference to the regulators to be held on behalf of the
+-		    booting of the Hexagon core
+-
+ For the compatible string below the following supplies are required:
+   "qcom,qcs404-wcss-pil"
+ - cx-supply:
+@@ -144,7 +129,6 @@ For the compatible string below the following supplies are required:
+ 	Definition: The power-domains needed depend on the compatible string:
+ 	qcom,ipq8074-wcss-pil:
+ 		    no power-domain names required
+-	qcom,msm8974-mss-pil:
+ 	qcom,msm8996-mss-pil:
+ 	qcom,msm8998-mss-pil:
+ 		    must be "cx", "mx"
 -- 
 2.30.2
 
