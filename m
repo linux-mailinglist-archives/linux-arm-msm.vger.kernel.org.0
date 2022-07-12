@@ -2,27 +2,27 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C2890572083
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Jul 2022 18:14:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AB501572096
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Jul 2022 18:17:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232838AbiGLQOD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Jul 2022 12:14:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58092 "EHLO
+        id S234290AbiGLQRR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Jul 2022 12:17:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32802 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234247AbiGLQOA (ORCPT
+        with ESMTP id S234300AbiGLQRR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Jul 2022 12:14:00 -0400
-Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [5.144.164.168])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A386D2182F
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Jul 2022 09:13:59 -0700 (PDT)
+        Tue, 12 Jul 2022 12:17:17 -0400
+Received: from m-r2.th.seeweb.it (m-r2.th.seeweb.it [5.144.164.171])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE0E3CA6D5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Jul 2022 09:17:15 -0700 (PDT)
 Received: from [192.168.1.101] (abxj14.neoplus.adsl.tpnet.pl [83.9.3.14])
         (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 0C8253F696;
-        Tue, 12 Jul 2022 18:13:53 +0200 (CEST)
-Message-ID: <92b87d0b-82bc-3530-58af-e4188d13bfb7@somainline.org>
-Date:   Tue, 12 Jul 2022 18:13:49 +0200
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id CA8B23EED0;
+        Tue, 12 Jul 2022 18:17:11 +0200 (CEST)
+Message-ID: <d4b34c4a-51d3-b76c-6ce6-555b32e65bb6@somainline.org>
+Date:   Tue, 12 Jul 2022 18:17:08 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.11.0
@@ -39,8 +39,8 @@ From:   Konrad Dybcio <konrad.dybcio@somainline.org>
 In-Reply-To: <20220712125922.3461675-5-bryan.odonoghue@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
