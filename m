@@ -2,73 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CBB6B57101E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Jul 2022 04:26:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CD0F1571034
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Jul 2022 04:29:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229608AbiGLC0B (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Jul 2022 22:26:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59816 "EHLO
+        id S229952AbiGLC3c (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Jul 2022 22:29:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35646 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229523AbiGLC0B (ORCPT
+        with ESMTP id S229883AbiGLC3b (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Jul 2022 22:26:01 -0400
-Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B81432BB8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 19:26:00 -0700 (PDT)
-Received: by mail-oi1-x235.google.com with SMTP id u9so8904619oiv.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 19:26:00 -0700 (PDT)
+        Mon, 11 Jul 2022 22:29:31 -0400
+Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com [IPv6:2607:f8b0:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 755BA326E3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 19:29:30 -0700 (PDT)
+Received: by mail-ot1-x334.google.com with SMTP id h19-20020a9d6f93000000b0061c1ad77d5fso5254638otq.6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 19:29:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=I0de4wabST6gWpJe4bl9FhiTG19f2KboMVUf/03W2w0=;
-        b=mraQedEo53DaR20MLo/XD9DrgTYhhYat0NLG5gsVAVCUelBl4IzXidM28mWJ6N3mPn
-         sO8nhuF2eGMkgaaK+eAvoUn5mu9cAUSbrlfLsRFYkqyw4lRIWdGKX7Y0MI3NnSQ452za
-         hHJ3EEau+/9Do9yM7LbY7ohz0luiZTGJnAhjntkwo0Zbnoa+ghNx63duZ7UdSf9w7quB
-         Z7QeBSLTdVS8nRj+dnnAwchZAvVoEXkUQ1QMF0sGz7hT1ReozJkpqRfdx4E+K0y5gURj
-         9i4XToAngTm4uExrYuFg3P+67OuIw54aPas74adFfnz+SbqjGPl1nsV1Gcu10ZBRrYDs
-         lewA==
+        bh=bVUeMOT6CxdYKQvRRpgploiMAFLvvgb73Ly7V1pXLtk=;
+        b=w5ImoHPEOa/orzfpbfnqn4nL6QRHkFGjjNQZYmkUBkWlQWVHk+DWOP6XqkSi6t1KB7
+         oV3KAKH8llKXrEeE02drFReEMOKZfAPbgdso7aLtE5CW6Tzeu+wJMs1QJMi4gpCRnk8Z
+         FmwYm1x8aNDd8Xa5JszYSJ5+ccl8QwZ5W/AEhQqCoJjAT1j+dMoU7ImlJyYR7b+ldiWn
+         S7GWPKzQN6Q3YHuKvGXFQ1RG7xy7EeZzXVgN7cwP6ou0DFjie/FVcgA4TV+JU/jKV2pC
+         LUC4uOKaiG5H40npL04prEQO0rx9gX0o/2LI+t1/0Hob/qmCb+in1KwYpwKp8M1yWs2d
+         8ljQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=I0de4wabST6gWpJe4bl9FhiTG19f2KboMVUf/03W2w0=;
-        b=2BdwqkTEej23Wc5F2v9xSDF+J4rQNQ/Ik5F+K+pBM3KW+A5looVDmKFFATw8Q6c9tZ
-         4SXWD2BN3zi57ovMrxyWhKhUigkUnMUsJq9SRn+aeP2Qp6M60Rs1khhh/LF0L/KFKKGm
-         N6NOSS2wlmVFWrX11v7/++VqNXXuT4ZoDfrYPff50tH0wf/fE1m4LXioJUJzJkj6HCyN
-         zgjbPqHfC3VouthhdnbL6QG2jcVkAvcp27t9xuMVTblBsElF0UwXPxTvjPeDcX8EyOgV
-         IyyTow2oN010Vj3u5nAW5roBNKEcUU+t96r9Xo1N1Js/m7DbtWEQF7RKJUawOTWEnIPI
-         f97Q==
-X-Gm-Message-State: AJIora+aS39y1ovMJM+i0is2dbwMk78sT9IqKcW3LART5AZjKhPba1FP
-        EWJVzVQ0wuymZ6+whrW83zrtxQ==
-X-Google-Smtp-Source: AGRyM1sUnWyKKpqKOCAUzmjP+LImn3c2NF8v1If++//vIw8Dp+7FY1nDpxC+6kiS9NJrt0tL8qi0ug==
-X-Received: by 2002:a05:6808:1184:b0:322:4c18:2f7e with SMTP id j4-20020a056808118400b003224c182f7emr795922oil.109.1657592759573;
-        Mon, 11 Jul 2022 19:25:59 -0700 (PDT)
+        bh=bVUeMOT6CxdYKQvRRpgploiMAFLvvgb73Ly7V1pXLtk=;
+        b=JZgSfAhQ7PnU8tMY+DczCX1zFtLpaRQx8cXQAV4smEJuLsMO1OTUe3bxhAWcBbyyfS
+         38BV9dbblKmjHDp8TPqFNCMM4gorJZhRfVjla0I+63iV1fu6GmyTzyQncdvOQIzkv8wX
+         3jI3KWVjTvlM/pPt+L6vfareZ7JXDA6nG2Lj/NcPsbHGw9ozRyuTc1c4QLDN9BtcjVdj
+         cGRM/M2uDIWlZ7s6so9S84bQmKHYCKNS4HDDUEeAnGMfYpElddIFPdILmxP+g7JAE7d6
+         WAtwQHrbcrVT/TFAv3Wnhal7pRPNiH1hGj92Sa6pBIYG45SMDqWC2AHNZcmL8C9bnXEN
+         aPRA==
+X-Gm-Message-State: AJIora+XTGsJlhbSbozesadsd4X4inzpxm2YGEnFK8zLTMUHbHnh0bhh
+        02zo5wz99hcJqz0Ynm5x2uSSry2tM4vNvg==
+X-Google-Smtp-Source: AGRyM1vYCldoBiX82cDLOxQEYA7mJU1VsMRs9GX5SixmhPO1n9olIa7E47iMVVuAsmvScqtcp0HjtQ==
+X-Received: by 2002:a05:6830:314b:b0:61c:148c:4f34 with SMTP id c11-20020a056830314b00b0061c148c4f34mr8352234ots.283.1657592969782;
+        Mon, 11 Jul 2022 19:29:29 -0700 (PDT)
 Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id p2-20020a056870830200b0010be09dc797sm3985546oae.18.2022.07.11.19.25.58
+        by smtp.gmail.com with ESMTPSA id k18-20020a056870819200b0010c5005d427sm3998996oae.33.2022.07.11.19.29.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Jul 2022 19:25:58 -0700 (PDT)
-Date:   Mon, 11 Jul 2022 19:28:26 -0700
+        Mon, 11 Jul 2022 19:29:29 -0700 (PDT)
+Date:   Mon, 11 Jul 2022 19:31:56 -0700
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Johan Hovold <johan@kernel.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
         Johan Hovold <johan+linaro@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        manivannan.sadhasivam@linaro.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
 Subject: Re: [PATCH] arm64: dts: qcom: sc8280xp: Add lost ranges for timer
-Message-ID: <YszcSgnSrbsncw0J@ripper>
+Message-ID: <YszdHHms/0yOzKCf@ripper>
 References: <20220707160858.3178771-1-bjorn.andersson@linaro.org>
- <Ysvlqw/+eMk5XLRY@hovoldconsulting.com>
+ <20220709065915.GG5063@thinkpad>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <Ysvlqw/+eMk5XLRY@hovoldconsulting.com>
+In-Reply-To: <20220709065915.GG5063@thinkpad>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -76,7 +76,7 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 11 Jul 01:56 PDT 2022, Johan Hovold wrote:
+On Fri 08 Jul 23:59 PDT 2022, Manivannan Sadhasivam wrote:
 
 > On Thu, Jul 07, 2022 at 09:08:58AM -0700, Bjorn Andersson wrote:
 > > The timer node needs ranges specified to map the 1-cell children to the
@@ -99,33 +99,36 @@ On Mon 11 Jul 01:56 PDT 2022, Johan Hovold wrote:
 > >  			#size-cells = <1>;
 > > +			ranges = <0 0 0 0x20000000>;
 > 
-> While addressing the current issue, this looks odd to me. Why not use a
-> non-zero parent bus address here instead?
+> Even though this looks correct, I'm wondering why other SoCs are defining the
+> child addresses in 2 cells. I don't think the timer frames can go beyond 32bit
+> address space. Should we fix them too?
 > 
 
-I guess we could express the frames relative the timer range, but that
-would imply that anyone porting downstream dts snippets would have to
-translate these addresses - or more likely would end up just copying the
-existing cases.
+Neither addresses nor sizes used for mmio need more than 32 bits, but
+ranges and dma-ranges are expressed in #size-cells. So unless these
+cells are 2 there's no way for us to express the fact that (most of) our
+busses uses 36 address bits.
 
-> And please use hex notation consistently for the addresses.
-
-That seems like a reasonable ask, I can fix that up. But on both
-accounts this matches what I merged for all the other platforms in:
-
-458ebdbb8e5d ("arm64: dts: qcom: timer should use only 32-bit size")
-
-
-So I guess we'll also need to go back and fix up the style of all the
-other platforms - just because we're not allowed to express the frames
-in 64-bits according to the binding...
+And we need to be able to do this, because the SMMU on multiple
+platforms claims that the bus is 40 address bits, so we end up running
+into issues with the upper 4 bits of IOVAs being truncated.
 
 Regards,
 Bjorn
 
+> But for this patch,
+> 
+> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> 
+> Thanks,
+> Mani
 > 
 > >  
 > >  			frame@17c21000 {
 > >  				frame-number = <0>;
+> > -- 
+> > 2.35.1
+> > 
 > 
-> Johan
+> -- 
+> ??????????????????????????? ????????????????????????
