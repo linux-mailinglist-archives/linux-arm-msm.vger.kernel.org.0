@@ -2,72 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1DDD2570FDD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Jul 2022 04:00:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DBEEE571015
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Jul 2022 04:18:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232080AbiGLCAd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Jul 2022 22:00:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44810 "EHLO
+        id S230097AbiGLCSs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Jul 2022 22:18:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57100 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231382AbiGLCAW (ORCPT
+        with ESMTP id S231484AbiGLCSh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Jul 2022 22:00:22 -0400
-Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2852C8E1F9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 19:00:17 -0700 (PDT)
-Received: by mail-pf1-x435.google.com with SMTP id v7so4206242pfb.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 19:00:16 -0700 (PDT)
+        Mon, 11 Jul 2022 22:18:37 -0400
+Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5880EC2A
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 19:18:33 -0700 (PDT)
+Received: by mail-ot1-x32d.google.com with SMTP id l9-20020a056830268900b006054381dd35so5248177otu.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 19:18:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=JrLh+9lwzn/hVK+x3i4SIxhqvOdLJGufkP7mGEFOm9c=;
-        b=JyNI/FbvGc5ZUsCcMu6of1CIJXsDPu4qESFa1L5GYZGcSmZSGD8HmF22chR05DLpNR
-         IwQQMOPJil0jwSX2iHcKnJ3iSxEYyRuknAPgeLLG+j2fHk9ZexDrMQ/XNY4hF7QLAtMg
-         Kc3IPFq3PPIYubiXI8KZjFtz33sD55mf++AVbQPYU9y9Su/kRVTpr+H6kPLBSZ/owavj
-         JmyCUWr9oqqYOK8yVHEcoI+dEgjMzxaqTnjaUCJ5/E4wvrRLMhcI1JQApHRZj7G1E7lZ
-         oTLUus32jmtgFUQkaDf3Wt4+nVFSKLzuCu+y6hHUOpx24WdzxWfRYgj1d3NriUnmOJMB
-         xNow==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=emByWjbQoqud23XK8P6B7AoXGAPFJzuBuFTm+2tiWB4=;
+        b=cWl/t1aOV1TQ05HVXLQoXEGM25sY6G/zgfTfA8Y4iM/XeS8mkYsq1ZU2JKLf5MahkK
+         eqAA/m2cNtXBbubAPhMJfeyI7oHWMGlVBeoQDGE1n8XJYYtTvG9q9gpqOeQczOUq5LBz
+         L0Qu3PcJ30zfYUm+c07PuYLZxpEwRO2XtGTdwcG7yUrvYdoC6nUVrgAoQDOxlEuCsJk4
+         Yb+t39CUaXzlmJK7WuXBnc5gVxM20qlRtOpP0oeKL5gKfn0t2G1R6CvNRrAzA/Kztppa
+         CaQMv655wbIPOhVhEk/ibaofBVsHrAteLl3GqBHfWjKEgV/yIzlrz319zSAyr5ROAcNK
+         UmFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=JrLh+9lwzn/hVK+x3i4SIxhqvOdLJGufkP7mGEFOm9c=;
-        b=m2HEAXg8grmJuzp18cG6i3fibjxtDQvviJ5d+o14RRGlOgJFRCDyLz2G6nGyfXD7hz
-         5OyWbvNOWjl20WV1c0NLBcJmmncyN62uQ53wNcNG0iwQfTJpyiYZofZudADTQ2fzc1U8
-         fpN99FvUbQos1vA0lyPBPZI5SPoiI9Q8YT/0qwf6VC8UGgmjdpV8E9EmXB57WV1m5dVB
-         PKj/97EhuWItkR3ProJlU0awHFdQcPNbuDZFuLlKFRvJ40Sba4gRAds+fZxemVc+QDod
-         YYo4dhsoNeGbFhqGSrAQnPn9h6BcJnWUbFBceO0nO28IxeOB4gkxQgpA8o1a90AicL5W
-         QHFA==
-X-Gm-Message-State: AJIora+PgdPMTvoxLOQD9XXFmGNxjiXtiUuqry/ehoK4qQihmuQ3nGLQ
-        XyN840DAd1MUiUFI0FxL77LmCQ==
-X-Google-Smtp-Source: AGRyM1vvGyt5VystS+i0DJ7EvZGc01AZoMkAN3JlckCOtoxswxdxThw9EmkygDkwOIo8HzjlAeHQuA==
-X-Received: by 2002:a62:5bc5:0:b0:528:c346:9632 with SMTP id p188-20020a625bc5000000b00528c3469632mr21427527pfb.48.1657591216051;
-        Mon, 11 Jul 2022 19:00:16 -0700 (PDT)
-Received: from leo-build-box.lan (n058152077182.netvigator.com. [58.152.77.182])
-        by smtp.gmail.com with ESMTPSA id x5-20020a17090a6b4500b001ef76dbae28sm5425821pjl.36.2022.07.11.19.00.12
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=emByWjbQoqud23XK8P6B7AoXGAPFJzuBuFTm+2tiWB4=;
+        b=GWjZdNsPuPP815XETt6Za6P5YeVppoY2Eg+ctvy3cgdk6rwt3XVgCEajfzMyIB95yL
+         /v8dFmiBePO6CwCyxZ0bsuOKslNez8mJ4nY1AX/kzAdt/fyyqgngXLQ42/9cFHkBiJmD
+         HPuip3EqEQ6Xr/H+HkjtVQ+bIXjQjYCgZUwENjydyxKS2+1wjri2g+xPOOKW3KU5gyHh
+         O4f4JWxIHEKILt9nB7PitQE4Gb3Go2Vzn6ldbiLKfT1YGMCL7Y406wS/9NMEBqSKcPy8
+         vq+ZnSau3kQeCMa6uPbjFHukE4vO8ZJK7uuoxO9IfbCknmbRtchy3s62xXx6NzwbNZlG
+         m4Iw==
+X-Gm-Message-State: AJIora/VsqBq2g2IIyGtFVoi7HTxVvtGi4PlI4dq6OBnEGeoNU6IVjs2
+        9cS420Tk4IW1xFAXmTOtpNoIZw==
+X-Google-Smtp-Source: AGRyM1vtKEPOJdQqpPB0C3TxwcCYMGXA+6ldK99qt54xFY7Xz5WoR1dYBM1Yh0stZUXqSP84yliR/Q==
+X-Received: by 2002:a05:6830:6004:b0:616:ecd9:129b with SMTP id bx4-20020a056830600400b00616ecd9129bmr8187582otb.232.1657592312452;
+        Mon, 11 Jul 2022 19:18:32 -0700 (PDT)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id s3-20020acadb03000000b0032e442f6a72sm3469573oig.40.2022.07.11.19.18.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Jul 2022 19:00:15 -0700 (PDT)
-From:   Leo Yan <leo.yan@linaro.org>
-To:     Georgi Djakov <djakov@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mon, 11 Jul 2022 19:18:31 -0700 (PDT)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     arm@kernel.org, soc@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        Andy Gross <agross@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
+        Olof Johansson <olof@lixom.net>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Miaoqian Lin <linmq006@gmail.com>,
+        Sibi Sankar <quic_sibis@quicinc.com>,
+        Jiang Jian <jiangjian@cdjrlc.com>,
+        Julia Lawall <Julia.Lawall@inria.fr>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Leo Yan <leo.yan@linaro.org>
-Subject: [PATCH v6 5/5] interconnect: qcom: icc-rpm: Set bandwidth and clock for bucket values
-Date:   Tue, 12 Jul 2022 09:59:29 +0800
-Message-Id: <20220712015929.2789881-6-leo.yan@linaro.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20220712015929.2789881-1-leo.yan@linaro.org>
-References: <20220712015929.2789881-1-leo.yan@linaro.org>
+        Rohit Agarwal <quic_rohiagar@quicinc.com>,
+        =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>,
+        Xiang wangx <wangxiang@cdjrlc.com>
+Subject: [GIT PULL] Qualcomm driver updates for v5.20
+Date:   Mon, 11 Jul 2022 21:18:30 -0500
+Message-Id: <20220712021830.1271398-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.32.0
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -75,133 +83,102 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This commit uses buckets for support bandwidth and clock rates.  It
-introduces a new function qcom_icc_bus_aggregate() to calculate the
-aggregate average and peak bandwidths for every bucket, and also it
-calculates the maximum value of aggregated average bandwidth across all
-buckets.
+The following changes since commit f2906aa863381afb0015a9eb7fefad885d4e5a56:
 
-The maximum aggregated average is used to calculate the final bandwidth
-requests.  And we can set the clock rate per bucket, we use SLEEP bucket
-as default bucket if a platform doesn't enable the interconnect path
-tags in DT binding; otherwise, we use WAKE bucket to set active clock
-and use SLEEP bucket for other clocks.  So far we don't use AMC bucket.
+  Linux 5.19-rc1 (2022-06-05 17:18:54 -0700)
 
-Signed-off-by: Leo Yan <leo.yan@linaro.org>
----
- drivers/interconnect/qcom/icc-rpm.c | 75 +++++++++++++++++++++++------
- 1 file changed, 61 insertions(+), 14 deletions(-)
+are available in the Git repository at:
 
-diff --git a/drivers/interconnect/qcom/icc-rpm.c b/drivers/interconnect/qcom/icc-rpm.c
-index d27b1582521f..7f6a70e0256a 100644
---- a/drivers/interconnect/qcom/icc-rpm.c
-+++ b/drivers/interconnect/qcom/icc-rpm.c
-@@ -302,18 +302,57 @@ static int qcom_icc_bw_aggregate(struct icc_node *node, u32 tag, u32 avg_bw,
- 	return 0;
- }
- 
-+/**
-+ * qcom_icc_bus_aggregate - aggregate bandwidth by traversing all nodes
-+ * @provider: generic interconnect provider
-+ * @agg_avg: an array for aggregated average bandwidth of buckets
-+ * @agg_peak: an array for aggregated peak bandwidth of buckets
-+ * @max_agg_avg: pointer to max value of aggregated average bandwidth
-+ */
-+static void qcom_icc_bus_aggregate(struct icc_provider *provider,
-+				   u64 *agg_avg, u64 *agg_peak,
-+				   u64 *max_agg_avg)
-+{
-+	struct icc_node *node;
-+	struct qcom_icc_node *qn;
-+	int i;
-+
-+	/* Initialise aggregate values */
-+	for (i = 0; i < QCOM_ICC_NUM_BUCKETS; i++) {
-+		agg_avg[i] = 0;
-+		agg_peak[i] = 0;
-+	}
-+
-+	*max_agg_avg = 0;
-+
-+	/*
-+	 * Iterate nodes on the interconnect and aggregate bandwidth
-+	 * requests for every bucket.
-+	 */
-+	list_for_each_entry(node, &provider->nodes, node_list) {
-+		qn = node->data;
-+		for (i = 0; i < QCOM_ICC_NUM_BUCKETS; i++) {
-+			agg_avg[i] += qn->sum_avg[i];
-+			agg_peak[i] = max_t(u64, agg_peak[i], qn->max_peak[i]);
-+		}
-+	}
-+
-+	/* Find maximum values across all buckets */
-+	for (i = 0; i < QCOM_ICC_NUM_BUCKETS; i++)
-+		*max_agg_avg = max_t(u64, *max_agg_avg, agg_avg[i]);
-+}
-+
- static int qcom_icc_set(struct icc_node *src, struct icc_node *dst)
- {
- 	struct qcom_icc_provider *qp;
- 	struct qcom_icc_node *src_qn = NULL, *dst_qn = NULL;
- 	struct icc_provider *provider;
--	struct icc_node *n;
- 	u64 sum_bw;
--	u64 max_peak_bw;
- 	u64 rate;
--	u32 agg_avg = 0;
--	u32 agg_peak = 0;
-+	u64 agg_avg[QCOM_ICC_NUM_BUCKETS], agg_peak[QCOM_ICC_NUM_BUCKETS];
-+	u64 max_agg_avg;
- 	int ret, i;
-+	int bucket;
- 
- 	src_qn = src->data;
- 	if (dst)
-@@ -321,12 +360,9 @@ static int qcom_icc_set(struct icc_node *src, struct icc_node *dst)
- 	provider = src->provider;
- 	qp = to_qcom_provider(provider);
- 
--	list_for_each_entry(n, &provider->nodes, node_list)
--		provider->aggregate(n, 0, n->avg_bw, n->peak_bw,
--				    &agg_avg, &agg_peak);
-+	qcom_icc_bus_aggregate(provider, agg_avg, agg_peak, &max_agg_avg);
- 
--	sum_bw = icc_units_to_bps(agg_avg);
--	max_peak_bw = icc_units_to_bps(agg_peak);
-+	sum_bw = icc_units_to_bps(max_agg_avg);
- 
- 	ret = __qcom_icc_set(src, src_qn, sum_bw);
- 	if (ret)
-@@ -337,12 +373,23 @@ static int qcom_icc_set(struct icc_node *src, struct icc_node *dst)
- 			return ret;
- 	}
- 
--	rate = max(sum_bw, max_peak_bw);
--
--	do_div(rate, src_qn->buswidth);
--	rate = min_t(u64, rate, LONG_MAX);
--
- 	for (i = 0; i < qp->num_clks; i++) {
-+		/*
-+		 * Use WAKE bucket for active clock, otherwise, use SLEEP bucket
-+		 * for other clocks.  If a platform doesn't set interconnect
-+		 * path tags, by default use sleep bucket for all clocks.
-+		 *
-+		 * Note, AMC bucket is not supported yet.
-+		 */
-+		if (!strcmp(qp->bus_clks[i].id, "bus_a"))
-+			bucket = QCOM_ICC_BUCKET_WAKE;
-+		else
-+			bucket = QCOM_ICC_BUCKET_SLEEP;
-+
-+		rate = icc_units_to_bps(max(agg_avg[bucket], agg_peak[bucket]));
-+		do_div(rate, src_qn->buswidth);
-+		rate = min_t(u64, rate, LONG_MAX);
-+
- 		if (qp->bus_clk_rate[i] == rate)
- 			continue;
- 
--- 
-2.25.1
+  https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-drivers-for-5.20
 
+for you to fetch changes up to b9c2ae6cac403dee3195fda9eb28d8ee733b225b:
+
+  soc: qcom: icc-bwmon: Add bandwidth monitoring driver (2022-07-06 15:57:51 -0500)
+
+----------------------------------------------------------------
+Qualcomm driver updates for v5.20
+
+This introduces a new driver that requests interconnect bandwidth based
+on throughput measurements of the bwmon hardware blocks found associated
+with, among other things, the CPU subsystem on many Qualcomm platforms.
+
+It introduces support for the SCM wrapper driver to vote for
+interconnect bandwidth for operations that needs bandwidth to the crypto
+engine. This ensures both performance and guards against issues caused
+by lacking votes for this path.
+
+The socinfo driver gains knowledge about the SC7180P SoC.
+
+It contains a range of fixes for spelling mistakes, refcount leaks in
+various drivers and removes some redundant code from the apr remove
+path.
+
+The SCM DT bindings are updated to declare support for QCS404, SM6125
+and SDX65.
+
+The command db driver has a strncpy() converted to strscpy_pad() and
+then back again with proper documentation to why this was the right API.
+
+----------------------------------------------------------------
+Douglas Anderson (2):
+      soc: qcom: socinfo: Add an ID for sc7180P
+      soc: qcom: cmd-db: replace strscpy_pad() with strncpy()
+
+Jiang Jian (1):
+      firmware: qcom_scm: drop unexpected word "the"
+
+Julia Lawall (1):
+      soc: qcom: rpmhpd: fix typos in comment
+
+Konrad Dybcio (1):
+      soc/qcom: Make QCOM_RPMPD select PM_GENERIC_DOMAINS/_OF
+
+Krzysztof Kozlowski (8):
+      dt-bindings: firmware: document Qualcomm QCS404 and SM6125 SCM
+      firmware: qcom_scm-legacy: correct kerneldoc
+      soc: qcom: cmd-db: replace strncpy() with strscpy_pad()
+      soc: qcom: correct kerneldoc
+      dt-bindings: arm: qcom: switch maintainer to Bjorn
+      dt-bindings: soc: qcom,wcnss: remove unneeded ref for names
+      dt-bindings: interconnect: qcom,msm8998-cpu-bwmon: add BWMON device
+      soc: qcom: icc-bwmon: Add bandwidth monitoring driver
+
+Miaoqian Lin (2):
+      soc: qcom: ocmem: Fix refcount leak in of_get_ocmem
+      soc: qcom: aoss: Fix refcount leak in qmp_cooling_devices_register
+
+Rohit Agarwal (1):
+      dt-bindings: firmware: scm: Add compatible for SDX65
+
+Sibi Sankar (2):
+      dt-bindings: firmware: qcom-scm: Add interconnects property
+      firmware: qcom_scm: Add bw voting support to the SCM interface
+
+Uwe Kleine-König (1):
+      soc: qcom: apr: Drop redundant check in .remove()
+
+Xiang wangx (1):
+      soc: qcom: llcc: Fix syntax errors in comments
+
+ Documentation/devicetree/bindings/arm/qcom.yaml    |   2 +-
+ .../devicetree/bindings/firmware/qcom,scm.txt      |   4 +
+ .../bindings/interconnect/qcom,msm8998-bwmon.yaml  |  86 +++++
+ .../devicetree/bindings/soc/qcom/qcom,wcnss.yaml   |   1 -
+ MAINTAINERS                                        |   7 +
+ drivers/firmware/qcom_scm-legacy.c                 |   4 +
+ drivers/firmware/qcom_scm.c                        |  71 +++-
+ drivers/soc/qcom/Kconfig                           |  17 +
+ drivers/soc/qcom/Makefile                          |   1 +
+ drivers/soc/qcom/apr.c                             |  15 +-
+ drivers/soc/qcom/cmd-db.c                          |   8 +-
+ drivers/soc/qcom/icc-bwmon.c                       | 421 +++++++++++++++++++++
+ drivers/soc/qcom/llcc-qcom.c                       |   2 +-
+ drivers/soc/qcom/mdt_loader.c                      |   4 +-
+ drivers/soc/qcom/ocmem.c                           |   3 +
+ drivers/soc/qcom/qcom_aoss.c                       |   4 +-
+ drivers/soc/qcom/rpmhpd.c                          |   4 +-
+ drivers/soc/qcom/smp2p.c                           |   3 +
+ drivers/soc/qcom/socinfo.c                         |   1 +
+ 19 files changed, 639 insertions(+), 19 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/interconnect/qcom,msm8998-bwmon.yaml
+ create mode 100644 drivers/soc/qcom/icc-bwmon.c
