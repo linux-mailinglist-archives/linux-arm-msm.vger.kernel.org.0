@@ -2,74 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 21D565720A5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Jul 2022 18:19:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EA5ED5720AD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Jul 2022 18:22:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234298AbiGLQTV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Jul 2022 12:19:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35814 "EHLO
+        id S234079AbiGLQWc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Jul 2022 12:22:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38590 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234300AbiGLQTT (ORCPT
+        with ESMTP id S232987AbiGLQWb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Jul 2022 12:19:19 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 645DCBA393
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Jul 2022 09:19:18 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id o4so11899969wrh.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Jul 2022 09:19:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=GZfmtwO5xp8XYrI1ZpNa7TvK/ZoGTb9zTcPdC4xJZKg=;
-        b=S+7xsgDSShRxdP8JwihIriQtJKhXKxQdsj8gMocDneY+v2SNx0WSxazzcxvgM8LrrH
-         E9ZGGk/sZaQDR+ogtXcLke54kE1BtGnbQeZ/D0c0XK/F8MiMaJlQGg73FJ9T3BzrD3jb
-         NwZoOIqXV0/MG0XsTwXTykl4DWvaf/VLRNESicOcMr1XUfoPYw4bCxP70Cv8HNflzbvx
-         lZ520w2GvzbXt8uY7SkQSZMpI1AdNC5g7fj3hEy5c5gwLp7MkWmFaOM194WieNQeY7UC
-         zNejpBCt+301zw1jNbDO172ELzhtuC0sXUGV3LdttxTV/bvTJ8XaADCu4T7ONs1kBPix
-         ZfNQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=GZfmtwO5xp8XYrI1ZpNa7TvK/ZoGTb9zTcPdC4xJZKg=;
-        b=0k5aKONaMej6LquDy7Tb2dA+reXmzbWP1C6WI1CJdj9rSvQ5KwfkQpj3fRGiapNNH4
-         Y9bAKBxejhJOSftkxaH54UQWZyO2M2Dr23d5rC7TPtEJsQx+x4U3wPQbCC24TUoxpqN6
-         UGNliBZHg1OOgmFxhGERyJJRwDs8swSzyO7t7UuT2LCBJnsQEwkEsf0tzNpfbUrWQ07O
-         gdHoIpklP9YiICErJJhQteGFea/8j4LPac0XXb4Nmp3Qj6GZ1mgQpRcUnjcAsVjWIw1S
-         RTi2nCLIACUTqZ/hCznMfmP3RVXxA+oOq2L7G6mPoJSGRbs2V/UvZFV9gjuCcUT1Rr/c
-         5jBA==
-X-Gm-Message-State: AJIora/8Mx1ZIbMIJRYfe45Zdcs4E4/wfI/c7NlSeP9PVNlm8VQQSi2V
-        D3XPqqRwcEYRfW4cqrnV4xbh7Q==
-X-Google-Smtp-Source: AGRyM1spbtpqG/e0M2sYjZXsHKuiLRC7JqJh/x3h1BwkxVt5b+IaK4trUUtqLil+c9aRvJhYSBf39w==
-X-Received: by 2002:a5d:4304:0:b0:21b:9b2c:be34 with SMTP id h4-20020a5d4304000000b0021b9b2cbe34mr23544053wrq.577.1657642757017;
-        Tue, 12 Jul 2022 09:19:17 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id f19-20020a05600c155300b003a2f2bb72d5sm498565wmg.45.2022.07.12.09.19.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 12 Jul 2022 09:19:16 -0700 (PDT)
-Message-ID: <ec9d1ff1-0b74-d2b2-0fcb-5555443c2447@linaro.org>
-Date:   Tue, 12 Jul 2022 17:19:15 +0100
+        Tue, 12 Jul 2022 12:22:31 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3A21CA6F6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Jul 2022 09:22:30 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 55DEBB816AA
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Jul 2022 16:22:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01B34C3411E;
+        Tue, 12 Jul 2022 16:22:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1657642948;
+        bh=RHus7zUVV6kdbvQ05m7eCv4BdgCiLhzwvBmLHSeMxF4=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Z8I7FFdj1qV3iCQpK0J9uBA/IBfBvmhOkX4UBHumw00HIigkDVbH682PCDJmdYRZ2
+         0x0LtCL7d1m9OYhkm1HsltEEccoy0d0ywls/rq2mvHit1cwMhUK4B9544JkRJW8wp4
+         d9FDxyAFx+4Q5TeUFEojMkZL3A0WH5rkDtTx8gxH5qht65cF4c8ZqFi7e79M9Xxc//
+         3iY2La5gYPHhQl0XA3Fz6nG4Du2AvLZiplQgzzBrQxXDDwvzbCRuHiZQ5tZ3TIBHIy
+         GaW1ysaLi9PL28W1SDzsKmbBcczQPEHCZpDFwbVV+XVF35VaXkDiy49R33je3bif2h
+         PtruJ2VmjWBdw==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1oBIec-0005VO-KY; Tue, 12 Jul 2022 18:22:30 +0200
+Date:   Tue, 12 Jul 2022 18:22:30 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Parikshit Pareek <quic_ppareek@quicinc.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>,
+        Prasanna Kumar <quic_kprasan@quicinc.com>,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2] arm64: dts: qcom: sc8280xp: fix apps_smmu irq
+Message-ID: <Ys2fxjVLOCnkWp9u@hovoldconsulting.com>
+References: <20220712140009.20765-1-quic_ppareek@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.0
-Subject: Re: [PATCH 6/6] clk: qcom: gcc-msm8939: Add missing USB HS system
- clock frequencies
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>,
-        bjorn.andersson@linaro.org, agross@kernel.org,
-        mturquette@baylibre.com, sboyd@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
-References: <20220712125922.3461675-1-bryan.odonoghue@linaro.org>
- <20220712125922.3461675-7-bryan.odonoghue@linaro.org>
- <72dd6541-a14f-d1d4-97cf-6c05bd4b14c5@somainline.org>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <72dd6541-a14f-d1d4-97cf-6c05bd4b14c5@somainline.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220712140009.20765-1-quic_ppareek@quicinc.com>
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -78,26 +61,39 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12/07/2022 17:18, Konrad Dybcio wrote:
+On Tue, Jul 12, 2022 at 07:30:09PM +0530, Parikshit Pareek wrote:
+> Wrong values have been introduced for interrupts property. Fix those
+> ones, and correct the mapping of context banks to irq number.
 > 
+> Fixes: 152d1faf1e2f ("arm64: dts: qcom: add SC8280XP platform")
+> Signed-off-by: Parikshit Pareek <quic_ppareek@quicinc.com>
+> ---
+>  arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> On 12.07.2022 14:59, Bryan O'Donoghue wrote:
->> The shipped qcom driver defines:
->> static struct clk_freq_tbl ftbl_gcc_usb_hs_system_clk[] = {
->>          F(  57140000,      gpll0_out_main,  14,    0,    0),
->>          F(  80000000,      gpll0_out_main,  10,   0,    0),
->>          F( 100000000,      gpll0_out_main,   8,   0,    0),
->>          F_END
->> };
->> In the upstream code we omit 57.14 MHz and 100 MHz.
->>
->> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->> ---
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-> 
-> Konrad
+> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> index 7945cbb57bb4..1276a833251e 100644
+> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> @@ -1580,7 +1580,6 @@
+>  				     <GIC_SPI 412 IRQ_TYPE_LEVEL_HIGH>,
+>  				     <GIC_SPI 421 IRQ_TYPE_LEVEL_HIGH>,
+>  				     <GIC_SPI 706 IRQ_TYPE_LEVEL_HIGH>,
+> -				     <GIC_SPI 424 IRQ_TYPE_LEVEL_HIGH>,
+>  				     <GIC_SPI 423 IRQ_TYPE_LEVEL_HIGH>,
+>  				     <GIC_SPI 424 IRQ_TYPE_LEVEL_HIGH>,
+>  				     <GIC_SPI 425 IRQ_TYPE_LEVEL_HIGH>,
+> @@ -1591,6 +1590,7 @@
+>  				     <GIC_SPI 693 IRQ_TYPE_LEVEL_HIGH>,
+>  				     <GIC_SPI 694 IRQ_TYPE_LEVEL_HIGH>,
+>  				     <GIC_SPI 695 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 696 IRQ_TYPE_LEVEL_HIGH>,
+>  				     <GIC_SPI 410 IRQ_TYPE_LEVEL_HIGH>,
+>  				     <GIC_SPI 411 IRQ_TYPE_LEVEL_HIGH>,
+>  				     <GIC_SPI 420 IRQ_TYPE_LEVEL_HIGH>,
 
-Thx for the review, appreciated.
+Not sure how that happened. Looks correct now, thanks.
 
----
-bod
+Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+
+Johan
