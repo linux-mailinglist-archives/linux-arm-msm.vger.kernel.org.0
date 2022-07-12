@@ -2,129 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D38EE571A20
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Jul 2022 14:35:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D599D571A4C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Jul 2022 14:46:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233214AbiGLMfv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Jul 2022 08:35:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52576 "EHLO
+        id S233195AbiGLMqI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Jul 2022 08:46:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33414 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233115AbiGLMfg (ORCPT
+        with ESMTP id S233075AbiGLMqH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Jul 2022 08:35:36 -0400
-Received: from mail-pg1-x531.google.com (mail-pg1-x531.google.com [IPv6:2607:f8b0:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD7149B18C
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Jul 2022 05:35:30 -0700 (PDT)
-Received: by mail-pg1-x531.google.com with SMTP id 23so7433771pgc.8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Jul 2022 05:35:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=wq+tRz/z60AyYxjlzSCjqpr8slf2ieYOF7qhQfnM49w=;
-        b=H7aoz2BpPuEiEjmhyWBfJsMEhSVEJ/rTVYib1b7q9DOiC4teWsd+G6HwpyuShZ1F/q
-         rP1sNegFzzkgJkGZkZUmdTXqgltyvjaVd7NH2nhGMv1CjPgXPn4A+yDUs83MZmL1Re+j
-         L9DYd/aJLVzQKy1RHs3Frol6AIvAKdAwu562xBeTU1OLiYQBs0a1PDTMC+auuGR9Zezi
-         cm3Tac4itdtGJFqYNO0wxu71eCNaeGjwJPanP3fzNbtz8UuG6AYtBcwG1H5VCiYReFg5
-         ZeX5jxDW7OR6k9mw97GR6j/ZKmI2j9UQhGAF2EdtUpNZOdirIg6poUvwhGQYECPCG4qW
-         lFyA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=wq+tRz/z60AyYxjlzSCjqpr8slf2ieYOF7qhQfnM49w=;
-        b=1t5X+kXhoAQ+k7BxPp5qXnUqTrJIRgqn+5sUMgS/Cr14xUt4ZIOkAYy5AihSrq2uJ9
-         tqtsufV9/ZukAtbU/jDWp41hjjj8HBXYhEhLfo4kboFtaJJC0fNyWZdk38cMrrygVlYg
-         78GGEZ5yTc+04cD0Gd2+QMKDTZfifix4vvClN+p1Zk7PRxSt75D14okxXLuj8+MAvP8p
-         /0LsFx4sXFO5eUoffGWXFMnGP9ewlgWBDxPsA6aLVcnKdkozAvX1TghPhH3mbS0dOS8K
-         jVkW/G+Vm9tw1fAtQkV7Mz9qPW+pNn9Q/CG3xsyrWlZhqMrqwAIeFXp0qCo1/JmLvDvV
-         3gVg==
-X-Gm-Message-State: AJIora89j/MhpJktOnpikU/SO1+gErpg0hJRM1wQU4NqhyEZrrTmvIFE
-        cNWdRoM+J0bs+U0TDnyXIYqS
-X-Google-Smtp-Source: AGRyM1sNZHFIMY4Dzq9RBL0SS7eXXoxMnPCyucvyemVSa8WvgtCAFI+9AQjDuC4cCaXKbC3U0nM6pw==
-X-Received: by 2002:a63:560d:0:b0:419:759a:6653 with SMTP id k13-20020a63560d000000b00419759a6653mr1280622pgb.219.1657629330227;
-        Tue, 12 Jul 2022 05:35:30 -0700 (PDT)
-Received: from workstation ([117.207.31.14])
-        by smtp.gmail.com with ESMTPSA id k8-20020a170902c40800b00163ffbc4f74sm6802074plk.49.2022.07.12.05.35.26
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 12 Jul 2022 05:35:29 -0700 (PDT)
-Date:   Tue, 12 Jul 2022 18:05:23 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Viswanath Boma <quic_vboma@quicinc.com>
-Cc:     video.upstream.external@qti.qualcomm.com,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/7] venus : Add default values for the control
- V4L2_CID_COLORIMETRY_HDR10_MASTERING_DISPLAY
-Message-ID: <20220712123523.GB21746@workstation>
-References: <20220712122347.6781-1-quic_vboma@quicinc.com>
+        Tue, 12 Jul 2022 08:46:07 -0400
+Received: from mx.kernkonzept.com (serv1.kernkonzept.com [IPv6:2a01:4f8:1c1c:b490::2])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0CCB9D516;
+        Tue, 12 Jul 2022 05:46:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=kernkonzept.com; s=mx1; h=Content-Transfer-Encoding:MIME-Version:Message-Id
+        :Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+        List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=aD2rbECvCO3gom0r7Pj4MC38seHQ0mbymFuuRLMPlIo=; b=MrF4glDWczhmvuAlDEYa2TOySF
+        Fk+5TX0JvW0fGI46gFW4crMjuPhvv7JZlD6CChwFGs2qWQ3qqktRtK/tofhfy/ETnRAphXt2zssHu
+        /R+yW0KcxQPUaj1aM6JzBneXX1idKxxGvMhH7W667j124bMaLbHBvxZoKaJuKjWtJR5dR4a6faQJW
+        tNrPV7pXfHkFXvUiVofnF5amuhjRLHvKQRmA4WRULOZS4DuLPZr6pItlm4WpBHGZq4sigUXOW8ko5
+        9/9AxPR5Qn3BaPkNI7FTobwX05fFTF0biPzxbhGx4ftc7EoOmAJbquPU5hcYQA3MaxENH4Q6QRLwa
+        PnTQk07w==;
+Received: from [10.22.3.24] (helo=kernkonzept.com)
+        by mx.kernkonzept.com with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim 4.94.2)
+        id 1oBFGw-0087Gb-BK; Tue, 12 Jul 2022 14:45:50 +0200
+From:   Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Sireesh Kodali <sireeshkodali1@gmail.com>,
+        Luca Weiss <luca@z3ntu.xyz>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        devicetree@vger.kernel.org,
+        Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+Subject: [PATCH 0/6] remoteproc: qcom_q6v5_mss: Add MSM8909
+Date:   Tue, 12 Jul 2022 14:44:15 +0200
+Message-Id: <20220712124421.3129206-1-stephan.gerhold@kernkonzept.com>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220712122347.6781-1-quic_vboma@quicinc.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jul 12, 2022 at 05:53:41PM +0530, Viswanath Boma wrote:
-> From: Stanimir Varbanov <stanimir.varbanov@linaro.org>
-> 
->  V4l2 encoder compliance expecting default values of colormetry for the control.
-> 
-> Change-Id: I1db0d4940b54e033d646ce39d60dc488afba8d58
+Convert parts of the qcom,q6v5.txt binding documentation to a DT schema
+(together with some DT fixes) in preparation of adding a new
+"qcom,msm8909-mss-pil" compatible. The schema can be easily shared
+between MSM8916, MSM8974 and MSM8909 because they have almost the same
+requirements. The other SoCs are quite different and would be better
+described in a separate DT schema to avoid a lot of complicated if
+statements.
 
-What does this represent here? I'm pretty sure it is meaningless to the
-upstream kernel, so please get rid of it.
+Finally, add support for MSM8909 to the qcom_q6v5_mss driver by reusing
+the initialization sequence for MSM8996/8, with some minor if statements
+to handle the differences for MSM8909.
 
-> Signed-off-by: Viswanath Boma <quic_vboma@quicinc.com>
+Stephan Gerhold (6):
+  arm64: dts: qcom: msm8916: Drop MSS fallback compatible
+  dt-bindings: remoteproc: qcom,q6v5: Move MSM8916 to schema
+  ARM: dts: qcom: msm8974: Disable remoteprocs by default
+  dt-bindings: remoteproc: qcom,msm8916-mss-pil: Add MSM8974
+  dt-bindings: remoteproc: qcom,q6v5-pil: Add MSM8909
+  remoteproc: qcom_q6v5_mss: Add support for MSM8909
 
-Since Stan is the original author of this and following patches, there
-should be a s-o-b tag from him. After that you should add yours
-indicating that you are carrying the patches from Stan.
+ .../remoteproc/qcom,msm8916-mss-pil.yaml      | 263 ++++++++++++++++++
+ .../bindings/remoteproc/qcom,q6v5.txt         |  35 ---
+ arch/arm/boot/dts/qcom-msm8974.dtsi           |   4 +
+ .../dts/qcom-msm8974pro-fairphone-fp2.dts     |   2 +
+ .../boot/dts/qcom-msm8974pro-samsung-klte.dts |   2 +
+ arch/arm64/boot/dts/qcom/msm8916.dtsi         |   2 +-
+ drivers/remoteproc/qcom_q6v5_mss.c            | 123 +++++---
+ 7 files changed, 362 insertions(+), 69 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,msm8916-mss-pil.yaml
 
-Also, please add a cover letter stating the purpose of this series, how
-it is tested, and with any other relevant information.
+-- 
+2.30.2
 
-Thanks,
-Mani
-
-> ---
->  drivers/media/platform/qcom/venus/venc_ctrls.c | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/media/platform/qcom/venus/venc_ctrls.c b/drivers/media/platform/qcom/venus/venc_ctrls.c
-> index ea5805e71c143..37ba7d97f99b2 100644
-> --- a/drivers/media/platform/qcom/venus/venc_ctrls.c
-> +++ b/drivers/media/platform/qcom/venus/venc_ctrls.c
-> @@ -352,6 +352,8 @@ static const struct v4l2_ctrl_ops venc_ctrl_ops = {
->  int venc_ctrl_init(struct venus_inst *inst)
->  {
->  	int ret;
-> +	struct v4l2_ctrl_hdr10_mastering_display p_hdr10_mastering = { {34000, 13250, 7500 },
-> +	{ 16000, 34500, 3000 }, 15635,	16450, 10000000, 500 };
->  
->  	ret = v4l2_ctrl_handler_init(&inst->ctrl_handler, 58);
->  	if (ret)
-> @@ -580,7 +582,7 @@ int venc_ctrl_init(struct venus_inst *inst)
->  
->  	v4l2_ctrl_new_std_compound(&inst->ctrl_handler, &venc_ctrl_ops,
->  				   V4L2_CID_COLORIMETRY_HDR10_MASTERING_DISPLAY,
-> -				   v4l2_ctrl_ptr_create(NULL));
-> +				   v4l2_ctrl_ptr_create((void *)&p_hdr10_mastering));
->  
->  	v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
->  			  V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_PERIOD, 0,
-> -- 
-> 2.17.1
-> 
