@@ -2,115 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 78723571B29
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Jul 2022 15:27:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7BA62571B60
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Jul 2022 15:34:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230294AbiGLN1I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Jul 2022 09:27:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40500 "EHLO
+        id S232871AbiGLNeQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Jul 2022 09:34:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49200 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230127AbiGLN1H (ORCPT
+        with ESMTP id S233092AbiGLNeN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Jul 2022 09:27:07 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24448A9E66
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Jul 2022 06:27:06 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id d12so13909230lfq.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Jul 2022 06:27:06 -0700 (PDT)
+        Tue, 12 Jul 2022 09:34:13 -0400
+Received: from mail-qv1-xf2c.google.com (mail-qv1-xf2c.google.com [IPv6:2607:f8b0:4864:20::f2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 034A09B9D8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Jul 2022 06:34:10 -0700 (PDT)
+Received: by mail-qv1-xf2c.google.com with SMTP id r12so2536694qvm.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Jul 2022 06:34:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=gq0wH5vmV1ZhzQHv6wskPp+9rbt497AshKhkdFthSS0=;
-        b=i1cZitI/qU/uF8X/S6ILySXGVoa8rPF1QiqE8qJ2k7Px78NE2xf59hOcFwr2cpi+Qj
-         uzZmHhup+VOOjaWZfIsBVADPtwZaKD5wFvJm5CXmQUcJwcgy7AjK+06HKfBuOcLSBTgp
-         J0WyMoC1eEn7GDaUixgZub2AqdSQAC9CDKzFIAI6JufOu+YBxo8VtcleIeIcXjLzfIkM
-         7W8FBDtA+I2c9sBz9J9yJwDt/+s5aPz7N216da+j7m+f8SGs4wEgvkLNnhV+rR8H/kWD
-         NvzydLUL0eTXpNd346BwTU3OvupYjWrnngDw6YQ8ThFywTW491e4L1qXVCwYe62y7AXm
-         yHMw==
+        d=ndufresne-ca.20210112.gappssmtp.com; s=20210112;
+        h=message-id:subject:from:to:date:in-reply-to:references
+         :content-transfer-encoding:user-agent:mime-version;
+        bh=ACcVEjWAl0l8BCPeGNEBMR96Vi6sSgqEYdNkLpYgsf0=;
+        b=xb8y8B0q4vFneb5wFxkhbTICKHFpaId6bsu7EZunPzwvjN9/LBwV+lPsydD5Eup8/h
+         Dc5K0R2CZA/NVLTSUrnTQ0Qkpj61Q+aZvVZsI3RRq/d7o1EOS4w8mqlWpqv4N6+1RO43
+         JziY3aVKbKZsF90XTDGFL1B3gyi07L3sYO2jzy04MbLdYtB3m08o1ZU9HCTYVS8DvGS5
+         ljgMNkIuxbJWs6lvwRx5NWv6vKsZY+B8D7LxuZZNLgTbCl7Li3YO8QHcXkXC9k5Yzc2Q
+         JUWu5eXkMFyraSVFKSQQ8DApGZlPNiqOq9iePUdnCCca3csa69dzwRDQF03OzC11abb5
+         sjiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=gq0wH5vmV1ZhzQHv6wskPp+9rbt497AshKhkdFthSS0=;
-        b=Ysb7zCcwDh7iLSi0k5icBJ7IP0PmgN9uuI9zYs/YtT+SA9YsffI1vsJTLQI43g16nd
-         SNGacQTDLXFJS2/WORCZvtjeQJsgRhLYJcLvanaKkNAWNXeXty4uJ0t14wSCr5NIJeCc
-         WQ+pTvDKAEcH5QfNAu3dSEFhnwtjTqsQ18N4HAT2YhvDIZWoMYeGDSKeWZyAAgZM4gPt
-         xBdeGxJWVKNKDRLRCoyFC24rWf6/hCjgfE0TgTFH4gJRuLit3wOwyRNqmmkAVAICKj2V
-         4fokITp/LCeUYXub4WwRUiSSrgbgpl4bAzeUoXLiBJ2ol7GYVrM8aWPC8ay00kxUiuu/
-         E1Gg==
-X-Gm-Message-State: AJIora/2G6H4QjDX4L+3rdgfYwZHYoKT72Q2fMHym+K3JT1sUABVbzG8
-        oxBW7PXYnXOjRUS6LKCoIUPsxw==
-X-Google-Smtp-Source: AGRyM1sWm1BNKGI6GSzhbgEXcdu1G7LjnBhmE8T3/83bialcpt43Sgg+e1hc5ScPFpCXCi3CfVdO1A==
-X-Received: by 2002:a05:6512:3125:b0:489:f4ba:d5a9 with SMTP id p5-20020a056512312500b00489f4bad5a9mr1800051lfd.348.1657632424490;
-        Tue, 12 Jul 2022 06:27:04 -0700 (PDT)
-Received: from [10.0.0.8] (fwa5da9-171.bb.online.no. [88.93.169.171])
-        by smtp.gmail.com with ESMTPSA id h23-20020a2ea497000000b0025d5889d19csm2448568lji.38.2022.07.12.06.27.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 12 Jul 2022 06:27:04 -0700 (PDT)
-Message-ID: <b1829902-c271-a677-f423-99dbc85cba89@linaro.org>
-Date:   Tue, 12 Jul 2022 15:27:01 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH 0/5] Add support for Xiaomi Poco F1 EBBG variant
-Content-Language: en-US
-To:     Joel Selvaraj <jo@jsfamily.in>, Andy Gross <agross@kernel.org>,
+        h=x-gm-message-state:message-id:subject:from:to:date:in-reply-to
+         :references:content-transfer-encoding:user-agent:mime-version;
+        bh=ACcVEjWAl0l8BCPeGNEBMR96Vi6sSgqEYdNkLpYgsf0=;
+        b=KhgiT/zplDHTUCi3+GVpCmoti/9afqHnAu7NstySQkSOFAI7A0XkDXFqX/CPYSJ7Aq
+         SH2OBbXGwcUqJ9W/7Hwf1DvMzelgSM0q63CxwrDQlNZB5MbpH9p04bn61anraZvqfQRu
+         BzbSCWCRzwfg2EPpnPjMsRJLopYyAYm9Lj4/WyAz+/OKU6BQGX7PZzaATPSF9v4SgGq/
+         3haLAVHUHn5NqUHJhL/awuO65PyihSYcqlc72ynTuX/TJODnUNzcXsKRJ6NgJw+YYsHg
+         rUhUSBH1l9UBSZcLRFedOnsqRxP79saQpH/J+GQ99934/NpF8Oguzjl4hhshvIBYjg17
+         ANMw==
+X-Gm-Message-State: AJIora8CLQXIy/QHOADWr4Murp098cRFct9yVKl+JfJNM2pldb2Nqng0
+        ZXFW+Zk5YPgYq+EEb1N3n9qr/Q==
+X-Google-Smtp-Source: AGRyM1tR9QQjMICvEvriS3rUrQeRvEnCkxrSDR9p9b3QC/NKJyXkOuzupjLq2xmjuWFbvpwWCe4AvA==
+X-Received: by 2002:a0c:f3ce:0:b0:473:3c5:d378 with SMTP id f14-20020a0cf3ce000000b0047303c5d378mr17519526qvm.48.1657632848339;
+        Tue, 12 Jul 2022 06:34:08 -0700 (PDT)
+Received: from nicolas-tpx395.localdomain (192-222-136-102.qc.cable.ebox.net. [192.222.136.102])
+        by smtp.gmail.com with ESMTPSA id g7-20020a05620a40c700b006b1490619cdsm9354056qko.99.2022.07.12.06.34.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 12 Jul 2022 06:34:07 -0700 (PDT)
+Message-ID: <b06c71d090ae7eaa3cd047bb0067f566371bac3a.camel@ndufresne.ca>
+Subject: Re: [PATCH 1/7] venus : Add default values for the control
+ V4L2_CID_COLORIMETRY_HDR10_MASTERING_DISPLAY
+From:   Nicolas Dufresne <nicolas@ndufresne.ca>
+To:     Viswanath Boma <quic_vboma@quicinc.com>,
+        video.upstream.external@qti.qualcomm.com,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
-References: <MN2PR02MB702415D7BF12B7B7A41B2D38D9829@MN2PR02MB7024.namprd02.prod.outlook.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <MN2PR02MB702415D7BF12B7B7A41B2D38D9829@MN2PR02MB7024.namprd02.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Date:   Tue, 12 Jul 2022 09:34:06 -0400
+In-Reply-To: <20220712122347.6781-1-quic_vboma@quicinc.com>
+References: <20220712122347.6781-1-quic_vboma@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.44.2 (3.44.2-1.fc36) 
+MIME-Version: 1.0
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 08/07/2022 13:12, Joel Selvaraj wrote:
-> There are two variants of Xiaomi Poco F1.
-> - Tianma variant with NOVATEK NT36672A panel + touchscreen manufactured
->   by Tianma
-> - EBBG variant with Focaltech FT8719 panel + touchscreen manufactured
->   by EBBG
-> 
-> The current sdm845-xiaomi-beryllium.dts represents tianma panel variant.
-> 
-> To add support for the EBBG variant, let's split this into 3 files,
-> - sdm845-xiaomi-beryllium-common.dtsi which contains all the common nodes
-> - sdm845-xiaomi-beryllium-tianma.dts for the tianma variant
-> - sdm845-xiaomi-beryllium-ebbg.dts for the ebbg variant
-> 
-> Note:
-> -----
-> Both the panels are already upstreamed and the split is based on them.
-> There were patches earlier for both the touchscreens, but they are not
-> accepted upstream yet. Once they are accepted, we will add them to
-> respective variants.
-> 
-> Joel Selvaraj (5):
->   arm64: dts: sdm845-xiaomi-beryllium: rename beryllium.dts into
->     beryllium-common.dtsi
->   arm64: dts: qcom: sdm845-xiaomi-beryllium-common: generalize the
->     display panel node
->   arm64: dts: qcom: sdm845-xiaomi-beryllium: introduce tianma variant
->   arm64: dts: qcom: sdm845-xiaomi-beryllium: introduce ebbg variant
->   arm64: dts: qcom: Makefile: split beryllium into tianma and ebbg
->     variant
+Le mardi 12 juillet 2022 =C3=A0 17:53 +0530, Viswanath Boma a =C3=A9crit=C2=
+=A0:
+> From: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+>=20
+>  V4l2 encoder compliance expecting default values of colormetry for the c=
+ontrol.
 
+nit: colormetry -> colorimetry
 
-None of your patches reached recipients and mailing lists.
+>=20
+> Change-Id: I1db0d4940b54e033d646ce39d60dc488afba8d58
+> Signed-off-by: Viswanath Boma <quic_vboma@quicinc.com>
+> ---
+>  drivers/media/platform/qcom/venus/venc_ctrls.c | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
+>=20
+> diff --git a/drivers/media/platform/qcom/venus/venc_ctrls.c b/drivers/med=
+ia/platform/qcom/venus/venc_ctrls.c
+> index ea5805e71c143..37ba7d97f99b2 100644
+> --- a/drivers/media/platform/qcom/venus/venc_ctrls.c
+> +++ b/drivers/media/platform/qcom/venus/venc_ctrls.c
+> @@ -352,6 +352,8 @@ static const struct v4l2_ctrl_ops venc_ctrl_ops =3D {
+>  int venc_ctrl_init(struct venus_inst *inst)
+>  {
+>  	int ret;
+> +	struct v4l2_ctrl_hdr10_mastering_display p_hdr10_mastering =3D { {34000=
+, 13250, 7500 },
+> +	{ 16000, 34500, 3000 }, 15635,	16450, 10000000, 500 };
 
-Best regards,
-Krzysztof
+What is the origin of these values ? Should this be done in the control
+framework instead ?
+
+> =20
+>  	ret =3D v4l2_ctrl_handler_init(&inst->ctrl_handler, 58);
+>  	if (ret)
+> @@ -580,7 +582,7 @@ int venc_ctrl_init(struct venus_inst *inst)
+> =20
+>  	v4l2_ctrl_new_std_compound(&inst->ctrl_handler, &venc_ctrl_ops,
+>  				   V4L2_CID_COLORIMETRY_HDR10_MASTERING_DISPLAY,
+> -				   v4l2_ctrl_ptr_create(NULL));
+> +				   v4l2_ctrl_ptr_create((void *)&p_hdr10_mastering));
+> =20
+>  	v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
+>  			  V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_PERIOD, 0,
+
