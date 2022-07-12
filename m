@@ -2,82 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2F290570E44
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Jul 2022 01:28:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8A291570EF5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Jul 2022 02:34:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229629AbiGKX2C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Jul 2022 19:28:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47604 "EHLO
+        id S231403AbiGLAef (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Jul 2022 20:34:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41472 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229752AbiGKX2B (ORCPT
+        with ESMTP id S231502AbiGLAed (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Jul 2022 19:28:01 -0400
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98F658876C
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 16:28:00 -0700 (PDT)
-Received: by mail-ej1-x635.google.com with SMTP id va17so11458864ejb.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 16:28:00 -0700 (PDT)
+        Mon, 11 Jul 2022 20:34:33 -0400
+Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D19329C95
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 17:34:32 -0700 (PDT)
+Received: by mail-pl1-x632.google.com with SMTP id d5so5840070plo.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 17:34:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=tT3i3PdSWIbZI2/jQXTr2ht9FWXt0v5w3WnrwY7zOxE=;
-        b=Ldn5e/XdivqNGq4Wo2DSw9vOq5ICFZFMjEsGK5qXKUBqT+RZBBTBUQUrgowVxl9abf
-         IZvV6AFjiDL62G8G5+bfNOR9kg81XWRLWcfzrZg1n3q+TAcpqNtW0Qm6u4XsGNXO02KB
-         w0cKuHUwdeLDMcYS59ah5rxS1gcxsji/tG4DA=
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=YEGCW3L9w6vpD4jzjiiKJZWjsQc0N/LncnKW15mwrD0=;
+        b=aCgI0u564Jh00d8jVz1QrOfS995n8O1pprP0kz/EU2rdaXzIKwoLh/5VucQQzNlXf7
+         0bYpIsU4//SgTm3R0BFfIzlZvCVeWA7MQzpxBpntb9KkKtzSnuX4oM9bpd6a32OqgjNY
+         nih+bQgeacWqEBXTEsboMmi29jHeuDbvI8+Kk=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=tT3i3PdSWIbZI2/jQXTr2ht9FWXt0v5w3WnrwY7zOxE=;
-        b=TUmBVHiAWJgbHr7fzZD7LHpD5HShRO0YMByOV+HQq+pwSCEIWPPGLdTmsP6fR4F4J9
-         QkTledvnQS5k+0nCBaiHb4ulB4V3YLFx/i8jRHF73cUQwNBjjWLh9U/qqVYR1L0GQjmw
-         8NnkdyFWrC9y8TdPj21MsZP8RTDVYMEojE13Rq4HIBPlQ9JrsY4u6n7QoAoIjCW8mrdb
-         Y1luBxwo9zMVT0xEsiBdz7W68jr0NUuBvkT9jmeilPqPSbB3ead5dV5P5iAsxBQg1adH
-         npyhFM9CW2bE0LSJOmVPQyT4XX4yevWbTK6kA+NVD+uZ8fCwbnYfG3nZXmE2CLqj0a+h
-         494A==
-X-Gm-Message-State: AJIora+m/qKGaBBrMCBweI7d1WyIDk4RJYj40T2v+c4+8Snsr9+hVEmq
-        g6q6YjiQq9Kqwb1Ru8iRkmGcS6bQoy9e4qosvPI=
-X-Google-Smtp-Source: AGRyM1v3LPPtnQfUCdB/GLhNk8c1qhHWQMDg0BqQdv/KaurnkcxdVxuDVxxHvhz0v+sugLlj5T6PPw==
-X-Received: by 2002:a17:907:a072:b0:72b:57dc:e84c with SMTP id ia18-20020a170907a07200b0072b57dce84cmr6709181ejc.579.1657582078967;
-        Mon, 11 Jul 2022 16:27:58 -0700 (PDT)
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com. [209.85.128.46])
-        by smtp.gmail.com with ESMTPSA id f19-20020a170906139300b00722e52d043dsm3163259ejc.114.2022.07.11.16.27.57
-        for <linux-arm-msm@vger.kernel.org>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=YEGCW3L9w6vpD4jzjiiKJZWjsQc0N/LncnKW15mwrD0=;
+        b=1RPi7OoXDqnBJgn3ZDKAWcND1NImBTMRH6O8vee2WSGjcw2bHE4wKlWTF9HK9qtpFs
+         NbpvwGoVERMGmIimkBHJh+tgHuLcrLb8lV6d24vyMDvln8WfDNfvPAwSrA4c2FpbOPCG
+         Nvz2ur6ThEmwc8SqE3qtQw3rdB4qeFk5B/+ysWKu4VPOMsdkCqcfgPA4P/WF9cvmnzaH
+         jNkeMJwObkcAX+mTUlgF38y4jgpkaGcTIMJbbKY8a1pJIzhoi/6kceTkPuXno63BPX6P
+         D4rSAjVON/WXRa70mvjS3fcOXkCYWQYQJLsPIaeLi6girZgJNsy4qHsU7Zymh7Oir2G1
+         tdtA==
+X-Gm-Message-State: AJIora8JFrHMlxrT8ygwQFJDJaEAHs3vuXizLmLVKc3G4r3J1Wr51TFk
+        ZS5VohAVCGMOY3MQRi0GleSGUA==
+X-Google-Smtp-Source: AGRyM1u59Vu859pze58RyVUtWiruDXKRMBn08hKepU6kCfuz9ViyELgLctATU4O7kdQ8cGpeZjzQEA==
+X-Received: by 2002:a17:90a:408f:b0:1d1:d1ba:2abb with SMTP id l15-20020a17090a408f00b001d1d1ba2abbmr1157511pjg.152.1657586071764;
+        Mon, 11 Jul 2022 17:34:31 -0700 (PDT)
+Received: from localhost ([2620:15c:11a:202:7b75:79f4:3be2:2c65])
+        by smtp.gmail.com with UTF8SMTPSA id p2-20020a170902e74200b0016c57657977sm706817plf.41.2022.07.11.17.34.30
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 11 Jul 2022 16:27:58 -0700 (PDT)
-Received: by mail-wm1-f46.google.com with SMTP id o8so3811271wms.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 16:27:57 -0700 (PDT)
-X-Received: by 2002:a05:600c:3d95:b0:3a2:e97b:f3ae with SMTP id
- bi21-20020a05600c3d9500b003a2e97bf3aemr728744wmb.188.1657582077548; Mon, 11
- Jul 2022 16:27:57 -0700 (PDT)
-MIME-Version: 1.0
-References: <1657346375-1461-1-git-send-email-quic_akhilpo@quicinc.com> <20220709112837.v2.5.I7291c830ace04fce07e6bd95a11de4ba91410f7b@changeid>
-In-Reply-To: <20220709112837.v2.5.I7291c830ace04fce07e6bd95a11de4ba91410f7b@changeid>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Mon, 11 Jul 2022 16:27:45 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=XzvcjS51q78BZ=FPCEVUDMD+VKJ70ksCm5V4qwHN_wRg@mail.gmail.com>
-Message-ID: <CAD=FV=XzvcjS51q78BZ=FPCEVUDMD+VKJ70ksCm5V4qwHN_wRg@mail.gmail.com>
-Subject: Re: [PATCH v2 5/7] arm64: dts: qcom: sc7280: Update gpu register list
-To:     Akhil P Oommen <quic_akhilpo@quicinc.com>
-Cc:     freedreno <freedreno@lists.freedesktop.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        Matthias Kaehlcke <mka@chromium.org>,
+        Mon, 11 Jul 2022 17:34:31 -0700 (PDT)
+Date:   Mon, 11 Jul 2022 17:34:29 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Cc:     helgaas@kernel.org, linux-pci@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_vbadigan@quicinc.com, quic_hemantk@quicinc.com,
+        quic_nitegupt@quicinc.com, quic_skananth@quicinc.com,
+        quic_ramkri@quicinc.com, manivannan.sadhasivam@linaro.org,
+        swboyd@chromium.org, dmitry.baryshkov@linaro.org,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
         Andy Gross <agross@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Subject: Re: [PATCH v4 2/2] PCI: qcom: Restrict pci transactions after pci
+ suspend
+Message-ID: <YszBlUbQ6KSwOkWV@google.com>
+References: <1656684800-31278-1-git-send-email-quic_krichai@quicinc.com>
+ <1657118425-10304-1-git-send-email-quic_krichai@quicinc.com>
+ <1657118425-10304-3-git-send-email-quic_krichai@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1657118425-10304-3-git-send-email-quic_krichai@quicinc.com>
 X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -85,38 +83,118 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
-
-On Fri, Jul 8, 2022 at 11:00 PM Akhil P Oommen <quic_akhilpo@quicinc.com> wrote:
->
-> Update gpu register array with gpucc memory region.
->
-> Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+On Wed, Jul 06, 2022 at 08:10:25PM +0530, Krishna chaitanya chundru wrote:
+> If the endpoint device state is D0 and irq's are not freed, then
+> kernel try to mask interrupts in system suspend path by writing
+> in to the vector table (for MSIX interrupts) and config space (for MSI's).
+> 
+> These transactions are initiated in the pm suspend after pcie clocks got
+> disabled as part of platform driver pm  suspend call. Due to it, these
+> transactions are resulting in un-clocked access and eventually to crashes.
+> 
+> So added a logic in qcom driver to restrict these unclocked access.
+> And updated the logic to check the link state before masking
+> or unmasking the interrupts.
+> 
+> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
 > ---
->
-> (no changes since v1)
->
->  arch/arm64/boot/dts/qcom/sc7280.dtsi | 6 ++++--
->  1 file changed, 4 insertions(+), 2 deletions(-)
->
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> index e66fc67..defdb25 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> @@ -2228,10 +2228,12 @@
->                         compatible = "qcom,adreno-635.0", "qcom,adreno";
->                         reg = <0 0x03d00000 0 0x40000>,
->                               <0 0x03d9e000 0 0x1000>,
-> -                             <0 0x03d61000 0 0x800>;
-> +                             <0 0x03d61000 0 0x800>,
-> +                             <0 0x03d90000 0 0x2000>;
->                         reg-names = "kgsl_3d0_reg_memory",
->                                     "cx_mem",
-> -                                   "cx_dbgc";
-> +                                   "cx_dbgc",
-> +                                   "gpucc";
+>  drivers/pci/controller/dwc/pcie-designware-host.c | 14 +++++++--
+>  drivers/pci/controller/dwc/pcie-qcom.c            | 36 +++++++++++++++++++++--
+>  2 files changed, 46 insertions(+), 4 deletions(-)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
+> index 2fa86f3..2a46b40 100644
+> --- a/drivers/pci/controller/dwc/pcie-designware-host.c
+> +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
+> @@ -29,13 +29,23 @@ static void dw_msi_ack_irq(struct irq_data *d)
+>  
+>  static void dw_msi_mask_irq(struct irq_data *d)
+>  {
+> -	pci_msi_mask_irq(d);
+> +	struct pcie_port *pp = irq_data_get_irq_chip_data(d->parent_data);
+> +	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+> +
+> +	if (dw_pcie_link_up(pci))
+> +		pci_msi_mask_irq(d);
+> +
+>  	irq_chip_mask_parent(d);
+>  }
+>  
+>  static void dw_msi_unmask_irq(struct irq_data *d)
+>  {
+> -	pci_msi_unmask_irq(d);
+> +	struct pcie_port *pp = irq_data_get_irq_chip_data(d->parent_data);
+> +	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+> +
+> +	if (dw_pcie_link_up(pci))
+> +		pci_msi_unmask_irq(d);
+> +
+>  	irq_chip_unmask_parent(d);
+>  }
+>  
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index 0a9d1ee..78bc463 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -1342,11 +1342,41 @@ static int qcom_pcie_suspend_2_7_0(struct qcom_pcie *pcie)
+>  	return 0;
+>  }
+>  
+> +static u32 qcom_pcie_read_dbi(struct dw_pcie *pci, void __iomem *base,
+> +				u32 reg, size_t size)
+> +{
+> +	struct qcom_pcie *pcie = to_qcom_pcie(pci);
+> +	u32 val;
+> +
+> +	if (pcie->is_suspended)
+> +		return PCIBIOS_BAD_REGISTER_NUMBER;
+> +
+> +	dw_pcie_read(base + reg, size, &val);
+> +	return val;
+> +}
+> +
+> +static void qcom_pcie_write_dbi(struct dw_pcie *pci, void __iomem *base,
+> +				u32 reg, size_t size, u32 val)
+> +{
+> +	struct qcom_pcie *pcie = to_qcom_pcie(pci);
+> +
+> +	if (pcie->is_suspended)
+> +		return;
+> +
+> +	dw_pcie_write(base + reg, size, val);
+> +}
+> +
+>  static int qcom_pcie_link_up(struct dw_pcie *pci)
+>  {
+> -	u16 offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
+> -	u16 val = readw(pci->dbi_base + offset + PCI_EXP_LNKSTA);
+> +	struct qcom_pcie *pcie = to_qcom_pcie(pci);
+> +	u16 offset;
+> +	u16 val;
+> +
+> +	if (pcie->is_suspended)
+> +		return false;
+>  
+> +	offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
+> +	val = readw(pci->dbi_base + offset + PCI_EXP_LNKSTA);
+>  	return !!(val & PCI_EXP_LNKSTA_DLLLA);
+>  }
+>  
+> @@ -1590,6 +1620,8 @@ static const struct qcom_pcie_cfg sc7280_cfg = {
+>  static const struct dw_pcie_ops dw_pcie_ops = {
+>  	.link_up = qcom_pcie_link_up,
+>  	.start_link = qcom_pcie_start_link,
+> +	.read_dbi = qcom_pcie_read_dbi,
+> +	.write_dbi = qcom_pcie_write_dbi,
+>  };
+>  
+>  static int qcom_pcie_probe(struct platform_device *pdev)
 
-This doesn't seem right. Shouldn't you be coordinating with the
-existing gpucc instead of reaching into its registers?
+This patch fixes an issue that is introduced by the previous patch of the
+series, i.e. the first patch can not be applied by itself without breaking
+things. This is generally avoided as it complicates bisecting.
 
--Doug
+This patch should be before 'PCI: qcom: Add system PM support' in the series
+(which obviously requires shuffling where the 'is_suspended' flag is added).
+With that the series can be applied partially without introducing unclocked
+reads or writes.
