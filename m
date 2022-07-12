@@ -2,79 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3F6A35711AD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Jul 2022 07:05:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 35713571271
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Jul 2022 08:47:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229476AbiGLFFJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Jul 2022 01:05:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35224 "EHLO
+        id S232060AbiGLGrU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Jul 2022 02:47:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60670 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229677AbiGLFFI (ORCPT
+        with ESMTP id S229621AbiGLGrT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Jul 2022 01:05:08 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CCA5D2A947;
-        Mon, 11 Jul 2022 22:05:04 -0700 (PDT)
+        Tue, 12 Jul 2022 02:47:19 -0400
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB86079EC8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 23:47:15 -0700 (PDT)
+Received: by mail-lf1-x12d.google.com with SMTP id bf9so12309185lfb.13
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Jul 2022 23:47:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1657602304; x=1689138304;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=17Z3xulwqXW1QfY/QEzxXBPkNTk6rcH+8iLrHGYb9Gc=;
-  b=nMKl+JYsmhP0fxQaA5vxiY+CMDMyvebMO7iTgHsCX76WHfWxV5jIhAVb
-   UFBfMDLto7dtxqhE+pHoQo1CokouS0K9b55rHxss/5au/LNy9L5WrvPks
-   3spVHFCz9z5XKGp/C1JtYMIweRobtZ0yUKrLB9kRqSQyGKz+jMYKmpFKJ
-   E=;
-Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 11 Jul 2022 22:05:04 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2022 22:05:03 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Mon, 11 Jul 2022 22:05:02 -0700
-Received: from [10.216.10.34] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Mon, 11 Jul
- 2022 22:04:56 -0700
-Message-ID: <1299312f-e614-e4e2-72cb-fd7fb99922ce@quicinc.com>
-Date:   Tue, 12 Jul 2022 10:34:54 +0530
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=jMuRcrjE7BdyitlsbzjBTLs0XHaQgX+9YW3636oyPpA=;
+        b=rGaxi11FZcV17/AmY/XXSQakC2aoNyn09A4wYTzxBLTuUk6SH4pZMO4LLGabGqoVxa
+         3SlJ8hsmjq+OoPUJAjPO6JjfoOrfsi79JwY2UcDs3q66EL/LH2EnRqgfn1Zg/jK1cB9i
+         ckRieC3iYDCruJaoCbuIw3bmoEIFDFa0G+Y6s5luIaB0mMHEPXr4KJd7Rcsagz+4LmEk
+         q/PeUa1vCV/uHj98uvIJCx2+t7FnkzXQdrzAZtJu1TQCODz4TlBshN5xUfHApQuG4o5f
+         UYuOFsFb/QqURLQpMP7sjKwA2ZFJFkC9WPyS5n/4QwblS5WfJV2FmUyAcVgE9vIM86fV
+         uR+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=jMuRcrjE7BdyitlsbzjBTLs0XHaQgX+9YW3636oyPpA=;
+        b=7Vsy85Gi6WqHx4edv1Fj5iUdlnIhEgPzOx6T/BT3SugpBqvAL69YYKlIsDgcf6Y9kG
+         UR7raqsuVB+FiQuwoX9ljpt5n2N2pQMd8tC98p97DpJBQ0divK3kDkTxDAxlgZCxhyIj
+         LwLWYXUwK4t7CDehPgc35N1rxqVICdTWbGDUvSHtPoG6KFNeaYpn49gwFgacT0F2W1hN
+         FikX3Zu8vaaNliTw/4w8TQHGMm1nhOGOLg/DVO9xPmGCn2B4ynvJMwtlHJF64ns69Zp9
+         4HKbCgZ2wmLqZilw6BdvuioRnogjUXFQPqSIR8SJ0rs5tmzCvUPhZOEM1buc6octKv+7
+         99Fw==
+X-Gm-Message-State: AJIora8eUmIfANcBGRoP6UoRqE7aBxAwDEJJQCZTWvlxUhTheoa4uxhV
+        mxXD3z+dU2J5FHsfbGuqaGCgmA==
+X-Google-Smtp-Source: AGRyM1u/RLfflARYY940Xxjm3/t52ojyKVUi1YPU8bjt5W5WTYcRfzbQy2HB2eCLRiMk5r4kkF9oqw==
+X-Received: by 2002:a05:6512:3b0a:b0:489:da13:180a with SMTP id f10-20020a0565123b0a00b00489da13180amr7313675lfv.489.1657608433934;
+        Mon, 11 Jul 2022 23:47:13 -0700 (PDT)
+Received: from [10.0.0.8] (fwa5cab-55.bb.online.no. [88.92.171.55])
+        by smtp.gmail.com with ESMTPSA id l18-20020ac24312000000b004785b0dfba4sm1993959lfh.195.2022.07.11.23.47.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 11 Jul 2022 23:47:13 -0700 (PDT)
+Message-ID: <6ebdb95a-6458-b77e-e14c-e89539c51b3f@linaro.org>
+Date:   Tue, 12 Jul 2022 08:47:11 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.2
-Subject: Re: [Freedreno] [PATCH v2 3/7] drm/msm: Fix cx collapse issue during
- recovery
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH 2/3] mmc: sdhci-msm: add MSM8998 SDCC specific compatible
 Content-Language: en-US
 To:     Doug Anderson <dianders@chromium.org>
-CC:     Sean Paul <sean@poorly.run>, Jonathan Marek <jonathan@marek.ca>,
-        "David Airlie" <airlied@linux.ie>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
+Cc:     Ulf Hansson <ulf.hansson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        "Jordan Crouse" <jordan@cosmicpenguin.net>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Chia-I Wu <olvaffe@gmail.com>,
-        LKML <linux-kernel@vger.kernel.org>
-References: <1657346375-1461-1-git-send-email-quic_akhilpo@quicinc.com>
- <20220709112837.v2.3.I4ac27a0b34ea796ce0f938bb509e257516bc6f57@changeid>
- <CAD=FV=U=J+yf6Qu0VgJ8A5Lhs_s8Fszw=Oa0XUny5XT-5z56xQ@mail.gmail.com>
-From:   Akhil P Oommen <quic_akhilpo@quicinc.com>
-In-Reply-To: <CAD=FV=U=J+yf6Qu0VgJ8A5Lhs_s8Fszw=Oa0XUny5XT-5z56xQ@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        Linux MMC List <linux-mmc@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+References: <20220711082709.39102-1-krzysztof.kozlowski@linaro.org>
+ <20220711082709.39102-2-krzysztof.kozlowski@linaro.org>
+ <CAD=FV=W7BCMTByC9xn2iRsxoB9RzRENz5zuTy1Sgmhjbw3aQMw@mail.gmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <CAD=FV=W7BCMTByC9xn2iRsxoB9RzRENz5zuTy1Sgmhjbw3aQMw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -82,59 +86,45 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 7/12/2022 4:52 AM, Doug Anderson wrote:
+On 11/07/2022 17:08, Doug Anderson wrote:
 > Hi,
->
-> On Fri, Jul 8, 2022 at 11:00 PM Akhil P Oommen <quic_akhilpo@quicinc.com> wrote:
->> There are some hardware logic under CX domain. For a successful
->> recovery, we should ensure cx headswitch collapses to ensure all the
->> stale states are cleard out. This is especially true to for a6xx family
->> where we can GMU co-processor.
+> 
+> On Mon, Jul 11, 2022 at 1:27 AM Krzysztof Kozlowski
+> <krzysztof.kozlowski@linaro.org> wrote:
 >>
->> Currently, cx doesn't collapse due to a devlink between gpu and its
->> smmu. So the *struct gpu device* needs to be runtime suspended to ensure
->> that the iommu driver removes its vote on cx gdsc.
+>> Add a MSM8998-specific SDCC compatible, because using only a generic
+>> qcom,sdhci-msm-v4 fallback is deprecated.
 >>
->> Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 >> ---
+>>  drivers/mmc/host/sdhci-msm.c | 1 +
+>>  1 file changed, 1 insertion(+)
 >>
->> (no changes since v1)
->>
->>   drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 16 ++++++++++++++--
->>   drivers/gpu/drm/msm/msm_gpu.c         |  2 --
->>   2 files changed, 14 insertions(+), 4 deletions(-)
->>
->> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
->> index 4d50110..7ed347c 100644
->> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
->> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
->> @@ -1278,8 +1278,20 @@ static void a6xx_recover(struct msm_gpu *gpu)
->>           */
->>          gmu_write(&a6xx_gpu->gmu, REG_A6XX_GMU_GMU_PWR_COL_KEEPALIVE, 0);
->>
->> -       gpu->funcs->pm_suspend(gpu);
->> -       gpu->funcs->pm_resume(gpu);
->> +       /*
->> +        * Now drop all the pm_runtime usage count to allow cx gdsc to collapse.
->> +        * First drop the usage count from all active submits
->> +        */
->> +       for (i = gpu->active_submits; i > 0; i--)
->> +               pm_runtime_put(&gpu->pdev->dev);
->> +
->> +       /* And the final one from recover worker */
->> +       pm_runtime_put_sync(&gpu->pdev->dev);
->> +
->> +       for (i = gpu->active_submits; i > 0; i--)
->> +               pm_runtime_get(&gpu->pdev->dev);
->> +
->> +       pm_runtime_get_sync(&gpu->pdev->dev);
-> In response to v1, Rob suggested pm_runtime_force_suspend/resume().
-> Those seem like they would work to me, too. Why not use them?
-Quoting my previous response which I seem to have sent only to Freedreno 
-list:
+>> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+>> index e395411fb6fd..bb169c1c2b5e 100644
+>> --- a/drivers/mmc/host/sdhci-msm.c
+>> +++ b/drivers/mmc/host/sdhci-msm.c
+>> @@ -2447,6 +2447,7 @@ static const struct of_device_id sdhci_msm_dt_match[] = {
+>>         {.compatible = "qcom,msm8992-sdhci", .data = &sdhci_msm_mci_var},
+>>         {.compatible = "qcom,msm8994-sdhci", .data = &sdhci_msm_mci_var},
+>>         {.compatible = "qcom,msm8996-sdhci", .data = &sdhci_msm_mci_var},
+>> +       {.compatible = "qcom,msm8998-sdhci", .data = &sdhci_msm_mci_var},
+> 
+> FWIW I'm _against_ this change.
+> 
+> In my mind while it is correct to specify both the specific and
+> generic compatible string in the device tree, the driver itself should
+> rely on just the generic compatible string until there is a reason to
+> use the specific one (like we needed to for sdm845 and sc7180).
+> 
+> I think I pointed that out before, but somehow all of the specific
+> device tree strings have snuck their way into the driver without me
+> paying attention. :(
 
-"I believe it is supposed to be used only during system sleep state 
-transitions. Btw, we don't want pm_runtime_get() calls from elsewhere to 
-fail by disabling RPM here."
+I thought it's existing practice for some time, but it's a fresh commit
+466614a9765c ("mmc: sdhci-msm: Add SoC specific compatibles"). I agree
+that it does not make much sense to add each compatible to the driver,
+so how about reverting 466614a9765c?
 
--Akhil
+Best regards,
+Krzysztof
