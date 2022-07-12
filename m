@@ -2,80 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 36FCF5712AB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Jul 2022 09:03:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 775AE571373
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Jul 2022 09:51:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232237AbiGLHDB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Jul 2022 03:03:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44736 "EHLO
+        id S232458AbiGLHva (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Jul 2022 03:51:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52864 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231522AbiGLHDA (ORCPT
+        with ESMTP id S232455AbiGLHv3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Jul 2022 03:03:00 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4B5D8CC91
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Jul 2022 00:02:57 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id n18so10689369lfq.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Jul 2022 00:02:57 -0700 (PDT)
+        Tue, 12 Jul 2022 03:51:29 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC2389CE0E
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Jul 2022 00:51:25 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id t1so9034061lft.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Jul 2022 00:51:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=h6vjT/+13UEo3taiLb0JZhbnEJD4OKWdgkoVYLaG7U4=;
-        b=AteyLzo/29Sra+G1JJSzU6YanwduZHPrxRI1IXt+jbIdDv+m7a5wxF/zLl91+FCjWc
-         tjnme78FxZIQ5y0qWauUXSXL8gk5dVZOqX/WLbCf5XyzA/CcXsPa0w+ERPju3jMjLMy2
-         z12f8KkWwJl1qY9oXVFyu/lFWu3ZAucF+1ZRiPXbsXMDTQVudCm9cxl6vELtfGAqM0WZ
-         /WYcftS0wmZR/doOtTFMUQdyGbzjJQVHWdp4Dk7dJVbCa7SdJFJmxCQXGjea8NNhh0nh
-         Mx/vU4aWZLUY58tuSpNBex4D8+llI9Y9YZBCA3z2+Q4nBgpZOekdJ2M+596M69fZbMOB
-         ZsPQ==
+        bh=ZrFIt8F9N1X4RMbtLQXEkQDymA1m5MwO6fwtCs+pTX4=;
+        b=Pylb32qF3GILfB+lcn/tDTMiqu5neaXiJd+TjKPouepYd8WxRXX8JpC9EBGwA4UFq9
+         DUagA01g8oamdd+u1ceBFohbpjco9W0aFbpOVGkKkmXAQF6MW/gUR3vXZzUO9Jvll0pX
+         UeqjyPTC6k12R0J/0Qpt+SuY0+Hk4wBdXqyPxz4Ohuor6rR9Q1DzIUsQTNT5v/89oTGx
+         VnbVkxVCEx6Xy5Zrw7ZC2vTb0fJ1xhV1lWrd98KRKoa0z+R6kft+KU3llIfw0LA6tFPd
+         rIUt7Cmcgh2/sWAiQlnSxSGLN01cGXHk6ve+pEn/JA5UyE8LdJefxw+Gt9/AjYrnL42/
+         /w3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=h6vjT/+13UEo3taiLb0JZhbnEJD4OKWdgkoVYLaG7U4=;
-        b=tPjb8l4LdLuMU07WfysyoGyv0P8m5QwXanGZt2MG9Ao6grfdBLKu+WC5no/PrvtVbC
-         dhAhIF3elH39I2xVf6h9V/YgugPJlXpGJnR54VQ/TjDC44bFxpn+akXBgDUg2fTyTAij
-         ZlJxp4maf9ALGLd6Yh55W8MlNcvp5uBxVAAUefwII+voK5aX3k+QQ5jat0Jxqqy+THps
-         sYkH99/Lzl7StDJ364+ztMLaPstdVMR69PODy+W1mHSkvpLg+cpf46XHlZPuKaY53FVh
-         A63Ij7QLGTJ4qv/qtjD4M8Ita/WSetj3clkNRBjbAEQRJLFT3gpsUP+2WGf+z5lebS7k
-         Eh4A==
-X-Gm-Message-State: AJIora9X/C+xe7z3uaZd+BrqXnqLdpLxYU4gNKWOZnFZ46r5C27aCasJ
-        ypBbK3KvOxaEUvM/SAdaZEMiAQ==
-X-Google-Smtp-Source: AGRyM1vkArgZCtCXerr2SI10QhpZQudBGhHUD/0jvs3TtC3hTTXrSQFgWaQhd2FYGnYc3OxFmZ+jpg==
-X-Received: by 2002:a05:6512:13a4:b0:479:3b9f:f13c with SMTP id p36-20020a05651213a400b004793b9ff13cmr13939823lfa.380.1657609376176;
-        Tue, 12 Jul 2022 00:02:56 -0700 (PDT)
+        bh=ZrFIt8F9N1X4RMbtLQXEkQDymA1m5MwO6fwtCs+pTX4=;
+        b=3KLKf+nwLp10Zd5bsiGu/EfO8nY/WKqvE7fZauHsLJd0RAJVzwrzLfV7/vwLIfFcHP
+         aL7ksLEXKW9dWip6L1le7/OOQKJWTzQhPuiI6wG+qCIT4OphKmaJ8zOk/VcQ4KTAiz1Z
+         H/6S0I+Z63uIEcWeW71P4+ydHw0K+KN+pgwny1f2bYpI0bqRhi2CwzKA/LySYifP4wNj
+         ook4KAHf+0JnBbXO99fB7rXnhUni7UxI76AEAiCxDtBsv/l416sCTFbS9dLmxPyYj6kY
+         J68Ocl9gSpA0JKGxAIYQw0j7MM22hyJidMRNZeoWLir8rIJ1vJfTU9s8NFl6JbTc6aFz
+         mUag==
+X-Gm-Message-State: AJIora9r/Y1u/naUwWWY8m2eBm7ibGyPeunn0mUVa057DbSbK9gFtPQe
+        Ye/JKU2qPQVhVvHm4T3OjqJjnITYFkBfqzwD
+X-Google-Smtp-Source: AGRyM1tYy/NNy4lhCjH90yu62C6nKh4qLFcJwq/30YuIninxYAiD5F+EuvrofzBlQW3iPC7Ege9GLg==
+X-Received: by 2002:a05:6512:2210:b0:484:f174:bd51 with SMTP id h16-20020a056512221000b00484f174bd51mr14689892lfu.482.1657612284305;
+        Tue, 12 Jul 2022 00:51:24 -0700 (PDT)
 Received: from [10.0.0.8] (fwa5cab-55.bb.online.no. [88.92.171.55])
-        by smtp.gmail.com with ESMTPSA id y14-20020a05651c154e00b0025d680fbd89sm1688767ljp.8.2022.07.12.00.02.54
+        by smtp.gmail.com with ESMTPSA id g7-20020a056512118700b0047f647414efsm2034115lfr.190.2022.07.12.00.51.22
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 12 Jul 2022 00:02:55 -0700 (PDT)
-Message-ID: <629ede41-326b-9c84-4bb8-2f7e695ca928@linaro.org>
-Date:   Tue, 12 Jul 2022 09:02:53 +0200
+        Tue, 12 Jul 2022 00:51:23 -0700 (PDT)
+Message-ID: <fe4dd875-c223-e70f-c935-064b0574fae2@linaro.org>
+Date:   Tue, 12 Jul 2022 09:51:22 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.11.0
-Subject: Re: [PATCH v2 2/5] dt-bindings: mmc: sdhci-msm: constrain reg-names
- perp variants
+Subject: Re: [PATCH v5 2/2] dt-bindings: arm: qcom: Add Xiaomi Mi Mix2s
+ bindings
 Content-Language: en-US
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Ulf Hansson <ulf.hansson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+To:     MollySophia <mollysophia379@gmail.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        Linux MMC List <linux-mmc@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-References: <20220711082940.39539-1-krzysztof.kozlowski@linaro.org>
- <20220711082940.39539-3-krzysztof.kozlowski@linaro.org>
- <CAD=FV=WUCPzzZHAPqoz-vhmcVxzYDxkKQs=+1tLZvsQjWe4q3Q@mail.gmail.com>
- <f8744ff8-15a0-bf31-c49f-b1bb35ba5cdd@linaro.org>
- <CAD=FV=X2ZfwwDO_hSSN35ObfvBbBbPjMoSB4GvS7m0yJieNg3Q@mail.gmail.com>
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
+References: <20220709131935.50708-1-mollysophia379@gmail.com>
+ <20220709131935.50708-2-mollysophia379@gmail.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <CAD=FV=X2ZfwwDO_hSSN35ObfvBbBbPjMoSB4GvS7m0yJieNg3Q@mail.gmail.com>
+In-Reply-To: <20220709131935.50708-2-mollysophia379@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -88,138 +81,31 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/07/2022 17:11, Doug Anderson wrote:
-> Hi,
+On 09/07/2022 15:19, MollySophia wrote:
+> Add documentation for "xiaomi,polaris" device.
 > 
-> On Mon, Jul 11, 2022 at 7:53 AM Krzysztof Kozlowski
-> <krzysztof.kozlowski@linaro.org> wrote:
->>
->> On 11/07/2022 16:52, Doug Anderson wrote:
->>> Hi
->>>
->>> On Mon, Jul 11, 2022 at 1:29 AM Krzysztof Kozlowski
->>> <krzysztof.kozlowski@linaro.org> wrote:
->>>>
->>>> The entries in arrays must have fixed order, so the bindings and Linux
->>>> driver expecting various combinations of 'reg' addresses was never
->>>> actually conforming to guidelines.
->>>>
->>>> The 'core' reg entry is valid only for SDCC v4 and lower, so disallow it
->>>> in SDCC v5.  SDCC v4 supports CQE and ICE, so allow them, even though
->>>> the qcom,sdhci-msm-v4 compatible is used also for earlier SoCs with SDCC
->>>> v2 or v3, so it is not entirely accurate.
->>>>
->>>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->>>>
->>>> ---
->>>>
->>>> Changes since v1:
->>>> 1. Rework the patch based on Doug's feedback.
->>>> ---
->>>>  .../devicetree/bindings/mmc/sdhci-msm.yaml    | 61 ++++++++++++-------
->>>>  1 file changed, 38 insertions(+), 23 deletions(-)
->>>
->>> In the ${SUBJECT} I'm not sure what a "perp variant" is. Is that a
->>> typo or just a phrase I'm not aware of?
->>
->> Should be:
->> "per variants"
->>
->>>
->>>
->>>> diff --git a/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml b/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
->>>> index fc6e5221985a..2f0fdd65e908 100644
->>>> --- a/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
->>>> +++ b/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
->>>> @@ -49,33 +49,11 @@ properties:
->>>>
->>>>    reg:
->>>>      minItems: 1
->>>> -    items:
->>>> -      - description: Host controller register map
->>>> -      - description: SD Core register map
->>>> -      - description: CQE register map
->>>> -      - description: Inline Crypto Engine register map
->>>> +    maxItems: 4
->>>>
->>>>    reg-names:
->>>>      minItems: 1
->>>>      maxItems: 4
->>>> -    oneOf:
->>>> -      - items:
->>>> -          - const: hc
->>>> -      - items:
->>>> -          - const: hc
->>>> -          - const: core
->>>> -      - items:
->>>> -          - const: hc
->>>> -          - const: cqhci
->>>> -      - items:
->>>> -          - const: hc
->>>> -          - const: cqhci
->>>> -          - const: ice
->>>> -      - items:
->>>> -          - const: hc
->>>> -          - const: core
->>>> -          - const: cqhci
->>>> -          - const: ice
->>>>
->>>>    clocks:
->>>>      minItems: 3
->>>> @@ -177,6 +155,43 @@ required:
->>>>  allOf:
->>>>    - $ref: mmc-controller.yaml#
->>>>
->>>> +  - if:
->>>> +      properties:
->>>> +        compatible:
->>>> +          contains:
->>>> +            enum:
->>>> +              - qcom,sdhci-msm-v4
->>>> +    then:
->>>> +      properties:
->>>> +        reg:
->>>> +          minItems: 2
->>>> +          items:
->>>> +            - description: Host controller register map
->>>> +            - description: SD Core register map
->>>> +            - description: CQE register map
->>>> +            - description: Inline Crypto Engine register map
->>>> +        reg-names:
->>>> +          minItems: 2
->>>> +          items:
->>>> +            - const: hc
->>>> +            - const: core
->>>> +            - const: cqhci
->>>> +            - const: ice
->>>> +    else:
->>>> +      properties:
->>>> +        reg:
->>>> +          minItems: 1
->>>> +          items:
->>>> +            - description: Host controller register map
->>>> +            - description: CQE register map
->>>> +            - description: Inline Crypto Engine register map
->>>> +        reg-names:
->>>> +          minItems: 1
->>>> +          items:
->>>> +            - const: hc
->>>> +            - const: cqhci
->>>> +            - const: ice
->>>
->>> Do you need to set "maxItems" here? If you don't then will it inherit
->>> the maxItems of 4 from above?
->>
->> No, items determine the size instead.
+> Signed-off-by: MollySophia <mollysophia379@gmail.com>
+> ---
+>  Documentation/devicetree/bindings/arm/qcom.yaml | 5 +++++
+>  1 file changed, 5 insertions(+)
 > 
-> Can you just remove the "maxItems" from above then? Does it buy us anything?
+> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+> index 129cdd246223..80dff09bdc83 100644
+> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
+> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+> @@ -235,6 +235,11 @@ properties:
+>                - xiaomi,lavender
+>            - const: qcom,sdm660
+>  
+> +      - items:
+> +          - enum:
+> +              - xiaomi,polaris
+> +          - const: qcom,sdm845
 
-There is no maxItems directly here...
-
-> 
-> In any case, with the ${SUBJECT} fixed:
-> 
-> Reviewed-by: Douglas Anderson <dianders@chromium.org>
+I propose to rebase on:
+https://lore.kernel.org/all/20220524020411.GA2602849-robh@kernel.org/
+or:
+https://lore.kernel.org/all/20220628092253.21905-1-krzysztof.kozlowski@linaro.org/
 
 
 Best regards,
