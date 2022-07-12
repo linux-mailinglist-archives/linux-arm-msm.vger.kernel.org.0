@@ -2,73 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0334C571A80
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Jul 2022 14:52:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1679B571AAA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Jul 2022 14:59:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232294AbiGLMwK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Jul 2022 08:52:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39570 "EHLO
+        id S229862AbiGLM71 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Jul 2022 08:59:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46532 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233286AbiGLMwJ (ORCPT
+        with ESMTP id S229656AbiGLM71 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Jul 2022 08:52:09 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BDE5F32EF0;
-        Tue, 12 Jul 2022 05:52:07 -0700 (PDT)
+        Tue, 12 Jul 2022 08:59:27 -0400
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F26E1EC63
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Jul 2022 05:59:26 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id z12so11059594wrq.7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Jul 2022 05:59:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1657630328; x=1689166328;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=U2Un04XVTmq4xkp4/4A5znANGKPLAF6CfLJmOF8T2vQ=;
-  b=WUh62GntfmIVriD0qG3ScSCnQmITP8wbNooeI9m0WWvX5RQ4vWPelNDP
-   fjPAHPCC+oahxRlU68MefjN2073MOcWYwP78zF5n+X2+rb9fOiefW8ImI
-   mFiJxFRPVDT4uMR1HdY9Bty6FXa65Ufoi1JIFePhUtLBuTOPqc32DuPe8
-   U=;
-Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
-  by alexa-out.qualcomm.com with ESMTP; 12 Jul 2022 05:52:07 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Jul 2022 05:52:07 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Tue, 12 Jul 2022 05:52:07 -0700
-Received: from [10.216.22.118] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Tue, 12 Jul
- 2022 05:52:03 -0700
-Message-ID: <78aeec99-60d4-c495-0623-c9450621d23b@quicinc.com>
-Date:   Tue, 12 Jul 2022 18:21:59 +0530
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=j8VZ0clunUQBnjW7zf8qlAsvO8C64gVCnbbBGVGcFgM=;
+        b=adoif1L1XNbykYk33LLvb+mM60dhPvmSPTDnTCV126MZgphD6iYn/L6Ii4+YDOqPxP
+         JUVSllPZrOCAkRXSr4svr+6htFgZUUZ82NZtA304fvl8TDdguchQcGRvxYTsSsg0E3Mn
+         auXf1pWBYCMwqYU8zkfxNZ7/CrNcGAQUkOuIbiXuKdY5264sH/yc5EbmpWRlcF8Ex6kz
+         kF1OD6xRlbiBqDu660bD6DD0NfsnAC6NWSnnJihG0+s1poYgIP7fyjI5bxX1xWtMq+r3
+         niTsXGrFgzORTDsI2aBwfmIzjrLz1uUFCLXI16wd7whjBUAZvVac0JleFRhX51Tj2Yb8
+         WvUQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=j8VZ0clunUQBnjW7zf8qlAsvO8C64gVCnbbBGVGcFgM=;
+        b=IygJRZ/LEohaEY+ayrkEOJhZXAwcAFNtbXUYK464/Q0sFVvU4DylzDWsxvH95W2caF
+         9Xs2MvGf0Osfo6KnnFezE6bccjwcud6sxlwPkwlleP8Ncg8/+9gW6wZYG93EkuIOqXXS
+         jVuB8IzQokgW2dSPULU+fu5umaeCgitlp0x1w8F0AFEg2juI6SrkXQN2BMhGJJ+/OX4z
+         5zSBjOQMsjwyza6GKgYnOz4Jb1lBGUTBqUztwHb9TrrRTA5LHU7oM+6JdJItHfrs5zmA
+         20w/hqVvqzRoD+ApT9ry/LCxyLTf/fSicIS5zzn++ULot2Gu77WvnGuxkOyPnHQpXKP5
+         kq5w==
+X-Gm-Message-State: AJIora/je50rmoXCm9Dr9pPyk+X7pL4dniloKRmm3rr1F46ebRLOT7cW
+        5QBRo7dwOlARYhqoCzJalUA/pQthuLAMvw==
+X-Google-Smtp-Source: AGRyM1s7EwNMlAWio5Kd772TWMYptjSJsAawCToYB/HjbL9ipwCIOivSTMTo516tbxYyGVQD1ns4Dg==
+X-Received: by 2002:adf:f345:0:b0:21d:6927:ec8f with SMTP id e5-20020adff345000000b0021d6927ec8fmr22258111wrp.490.1657630764806;
+        Tue, 12 Jul 2022 05:59:24 -0700 (PDT)
+Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id t123-20020a1c4681000000b003973c54bd69sm13008627wma.1.2022.07.12.05.59.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 12 Jul 2022 05:59:24 -0700 (PDT)
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+To:     bjorn.andersson@linaro.org, agross@kernel.org,
+        konrad.dybcio@somainline.org, mturquette@baylibre.com,
+        sboyd@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Subject: [PATCH 0/6] clk: qcom: gcc-msm8939: Align clock frequencies with downstream driver
+Date:   Tue, 12 Jul 2022 13:59:16 +0100
+Message-Id: <20220712125922.3461675-1-bryan.odonoghue@linaro.org>
+X-Mailer: git-send-email 2.36.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: [V4] tty: serial: qcom-geni-serial: Fix get_clk_div_rate() which
- otherwise could return a sub-optimal clock rate.
-Content-Language: en-CA
-To:     Doug Anderson <dianders@chromium.org>
-CC:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jiri Slaby <jirislaby@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        <linux-serial@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        "Mukesh Savaliya (QUIC)" <quic_msavaliy@quicinc.com>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Stephen Boyd <swboyd@chromium.org>
-References: <1657560808-9795-1-git-send-email-quic_vnivarth@quicinc.com>
- <CAD=FV=U20bzea7qzuMCgrAApFqBZ_sc9QsRdUZ_xX4ptRas-0w@mail.gmail.com>
-From:   Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-In-Reply-To: <CAD=FV=U20bzea7qzuMCgrAApFqBZ_sc9QsRdUZ_xX4ptRas-0w@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -77,179 +70,26 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+The gcc-msm8939 driver is a copy/paste of the gcc-msm8916 for the good
+reason that msm8936/msm8939 are an expanded version of msm8916. Reviewing
+the qcom driver though there are some obvious missing/wrong frequencies
+which a simple side-by-side comparison can show up.
 
-On 7/11/2022 11:35 PM, Doug Anderson wrote:
-> Hi,
->
-> On Mon, Jul 11, 2022 at 10:33 AM Vijaya Krishna Nivarthi
-> <quic_vnivarth@quicinc.com> wrote:
->> In the logic around call to clk_round_rate(), for some corner conditions,
->> get_clk_div_rate() could return an sub-optimal clock rate. Also, if an
->> exact clock rate was not found lowest clock was being returned.
->>
->> Search for suitable clock rate in 2 steps
->> a) exact match or within 2% tolerance
->> b) within 5% tolerance
->> This also takes care of corner conditions.
->>
->> Fixes: c2194bc999d4 ("tty: serial: qcom-geni-serial: Remove uart frequency table. Instead, find suitable frequency with call to clk_round_rate")
->> Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
->> ---
->> v4: replaced pr_dbg calls with dev_dbg
->> v3: simplified algorithm further, fixed robot compile warnings
->> v2: removed minor optimisations to make more readable
->> v1: intial patch contained slightly complicated logic
->> ---
->>   drivers/tty/serial/qcom_geni_serial.c | 89 +++++++++++++++++++++--------------
->>   1 file changed, 54 insertions(+), 35 deletions(-)
->>
->> diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
->> index 2e23b65..f88b042 100644
->> --- a/drivers/tty/serial/qcom_geni_serial.c
->> +++ b/drivers/tty/serial/qcom_geni_serial.c
->> @@ -943,52 +943,71 @@ static int qcom_geni_serial_startup(struct uart_port *uport)
->>          return 0;
->>   }
->>
->> -static unsigned long get_clk_div_rate(struct clk *clk, unsigned int baud,
->> -                       unsigned int sampling_rate, unsigned int *clk_div)
->> +static unsigned long find_clk_rate_in_tol(struct clk *clk, unsigned int desired_clk,
->> +                       unsigned int *clk_div, unsigned int percent_tol)
->>   {
->> -       unsigned long ser_clk;
->> -       unsigned long desired_clk;
->> -       unsigned long freq, prev;
->> +       unsigned long freq;
->>          unsigned long div, maxdiv;
->> -       int64_t mult;
->> -
->> -       desired_clk = baud * sampling_rate;
->> -       if (!desired_clk) {
->> -               pr_err("%s: Invalid frequency\n", __func__);
->> -               return 0;
->> -       }
->> +       u64 mult;
->> +       unsigned long offset, abs_tol, achieved;
->>
->> +       abs_tol = div_u64((u64)desired_clk * percent_tol, 100);
->>          maxdiv = CLK_DIV_MSK >> CLK_DIV_SHFT;
->> -       prev = 0;
->> -
->> -       for (div = 1; div <= maxdiv; div++) {
->> -               mult = div * desired_clk;
->> -               if (mult > ULONG_MAX)
->> +       div = 1;
->> +       while (div <= maxdiv) {
->> +               mult = (u64)div * desired_clk;
->> +               if (mult != (unsigned long)mult)
->>                          break;
->>
->> -               freq = clk_round_rate(clk, (unsigned long)mult);
->> -               if (!(freq % desired_clk)) {
->> -                       ser_clk = freq;
->> -                       break;
->> -               }
->> +               offset = div * abs_tol;
->> +               freq = clk_round_rate(clk, mult - offset);
->>
->> -               if (!prev)
->> -                       ser_clk = freq;
->> -               else if (prev == freq)
->> +               /* Can only get lower if we're done */
->> +               if (freq < mult - offset)
->>                          break;
->>
->> -               prev = freq;
->> +               /*
->> +                * Re-calculate div in case rounding skipped rates but we
->> +                * ended up at a good one, then check for a match.
->> +                */
->> +               div = DIV_ROUND_CLOSEST(freq, desired_clk);
->> +               achieved = DIV_ROUND_CLOSEST(freq, div);
->> +               if (achieved <= desired_clk + abs_tol &&
->> +                   achieved >= desired_clk - abs_tol) {
->> +                       *clk_div = div;
->> +                       return freq;
->> +               }
->> +
->> +               div = DIV_ROUND_UP(freq, desired_clk);
->>          }
->>
->> -       if (!ser_clk) {
->> -               pr_err("%s: Can't find matching DFS entry for baud %d\n",
->> -                                                               __func__, baud);
->> -               return ser_clk;
->> +       return 0;
->> +}
->> +
->> +static unsigned long get_clk_div_rate(struct clk *clk, struct device *dev,
->> +               unsigned int baud, unsigned int sampling_rate, unsigned int *clk_div)
->> +{
->> +       unsigned long ser_clk;
->> +       unsigned long desired_clk;
->> +
->> +       desired_clk = baud * sampling_rate;
->> +       if (!desired_clk) {
->> +               dev_dbg(dev, "Invalid frequency\n");
->> +               return 0;
->>          }
->>
->> -       *clk_div = ser_clk / desired_clk;
->> -       if (!(*clk_div))
->> -               *clk_div = 1;
->> +       /*
->> +        * try to find a clock rate within 2% tolerance, then within
->> +        */
->> +       ser_clk = find_clk_rate_in_tol(clk, desired_clk, clk_div, 2);
->> +       if (!ser_clk)
->> +               ser_clk = find_clk_rate_in_tol(clk, desired_clk, clk_div, 5);
->> +
->> +       if (!ser_clk)
->> +               dev_err(dev, "Couldn't find suitable clock rate for %d\n", desired_clk);
->> +       else
->> +               dev_dbg(dev, "desired_clk-%d, ser_clk-%d, clk_div-%d\n",
->> +                               desired_clk, ser_clk, *clk_div);
-> Pretty sure the robot is going to yell at you again here. Here is my
-> analysis in detail:
->
-> desired_clk
-> * type: unsigned long
-> * proper format code: %lu
-> * marginally acceptable code: %ld
-> * format code you used in v3: %lu
-> * did robot yell at you about this in v3: no
-> * format code you used in v4: %d
-> * will robot yell at you in v4: YES
->
-> ser_clk:
-> * type: unsigned long
-> * proper format code: %lu
-> * marginally acceptable code: %ld
-> * format code you used in v3: %lu
-> * did robot yell at you about this in v3: no
-> * format code you used in v4: %d
-> * will robot yell at you in v4: YES
->
-> *clk_div:
-> * type: unsigned int
-> * proper format code: %u
-> * marginally acceptable code: %d
-> * format code you used in v3: %lu
-> * did robot yell at you about this in v3: YES
-> * format code you used in v4: %d
-> * will robot yell at you in v4: no
-> * should you change it to %u: yes
->
->
-> -Doug
-Thank you very much.
-For some reason robot seems to be more forgiving towards dev_funcs than 
-pr_funcs, at least it did not yell at v4.
+This series captures that side-by-side and transmits into updated frequency
+tables.
 
-Also I found usage of %d for uls at many locations.
+Bryan O'Donoghue (6):
+  clk: qcom: gcc-msm8939: Fix weird field spacing in
+    ftbl_gcc_camss_cci_clk
+  clk: qcom: gcc-msm8939: Add missing CAMSS CCI bus clock
+  clk: qcom: gcc-msm8939: Fix venus0_vcodec0_clk frequency definitions
+  clk: qcom: gcc-msm8939: Add missing CAMSS CPP clock frequencies
+  clk: qcom: gcc-msm8939: Add missing MDSS MDP clock frequencies
+  clk: qcom: gcc-msm8939: Add missing USB HS system clock frequencies
 
-Made the changes and uploaded V5.
+ drivers/clk/qcom/gcc-msm8939.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
--Vijay/
-
+-- 
+2.36.1
 
