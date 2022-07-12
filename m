@@ -2,123 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7BA62571B60
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Jul 2022 15:34:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D4648571BB6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Jul 2022 15:51:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232871AbiGLNeQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Jul 2022 09:34:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49200 "EHLO
+        id S233366AbiGLNve (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Jul 2022 09:51:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40690 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233092AbiGLNeN (ORCPT
+        with ESMTP id S233348AbiGLNv3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Jul 2022 09:34:13 -0400
-Received: from mail-qv1-xf2c.google.com (mail-qv1-xf2c.google.com [IPv6:2607:f8b0:4864:20::f2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 034A09B9D8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Jul 2022 06:34:10 -0700 (PDT)
-Received: by mail-qv1-xf2c.google.com with SMTP id r12so2536694qvm.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Jul 2022 06:34:09 -0700 (PDT)
+        Tue, 12 Jul 2022 09:51:29 -0400
+Received: from mail-oa1-x2a.google.com (mail-oa1-x2a.google.com [IPv6:2001:4860:4864:20::2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DAD2B6DB9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Jul 2022 06:51:28 -0700 (PDT)
+Received: by mail-oa1-x2a.google.com with SMTP id 586e51a60fabf-10bec750eedso10372602fac.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Jul 2022 06:51:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ndufresne-ca.20210112.gappssmtp.com; s=20210112;
-        h=message-id:subject:from:to:date:in-reply-to:references
-         :content-transfer-encoding:user-agent:mime-version;
-        bh=ACcVEjWAl0l8BCPeGNEBMR96Vi6sSgqEYdNkLpYgsf0=;
-        b=xb8y8B0q4vFneb5wFxkhbTICKHFpaId6bsu7EZunPzwvjN9/LBwV+lPsydD5Eup8/h
-         Dc5K0R2CZA/NVLTSUrnTQ0Qkpj61Q+aZvVZsI3RRq/d7o1EOS4w8mqlWpqv4N6+1RO43
-         JziY3aVKbKZsF90XTDGFL1B3gyi07L3sYO2jzy04MbLdYtB3m08o1ZU9HCTYVS8DvGS5
-         ljgMNkIuxbJWs6lvwRx5NWv6vKsZY+B8D7LxuZZNLgTbCl7Li3YO8QHcXkXC9k5Yzc2Q
-         JUWu5eXkMFyraSVFKSQQ8DApGZlPNiqOq9iePUdnCCca3csa69dzwRDQF03OzC11abb5
-         sjiw==
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=VDXOKs+rDKNhOk/fRlBZN127C3FnyD72OM/nCMUbmuI=;
+        b=X0EtsBvh4iBszyVbE+GcYOSIqIxi7vtNSGCHkFf0YpFAXQeBPwHlJdXzstPJvFjdE0
+         LgQrqxonEP3sTOCIbUXXop6jInx1WgAFwBA7/wAprPFnLqv+xJapsE6F7bcyq/jjJAT+
+         +5NDYojoqtgbgjWb+d00s5B16wMVbiXmdaXPeBw7wWXcAVQZqwwGs93zwoUjfLcyiatM
+         DZ7TsVM53JvqkjfwUKqqQhNA8asgu9/zDCO+AtaTkHfBcWrozm2jtbn3mmSeMKLm1oQ/
+         kvds33LmSFtPjxz0IwpRjWXDSpHYELmOswhSQte/d+KIjLxrVswWygDpgBPPsjMGn5MN
+         6RGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:subject:from:to:date:in-reply-to
-         :references:content-transfer-encoding:user-agent:mime-version;
-        bh=ACcVEjWAl0l8BCPeGNEBMR96Vi6sSgqEYdNkLpYgsf0=;
-        b=KhgiT/zplDHTUCi3+GVpCmoti/9afqHnAu7NstySQkSOFAI7A0XkDXFqX/CPYSJ7Aq
-         SH2OBbXGwcUqJ9W/7Hwf1DvMzelgSM0q63CxwrDQlNZB5MbpH9p04bn61anraZvqfQRu
-         BzbSCWCRzwfg2EPpnPjMsRJLopYyAYm9Lj4/WyAz+/OKU6BQGX7PZzaATPSF9v4SgGq/
-         3haLAVHUHn5NqUHJhL/awuO65PyihSYcqlc72ynTuX/TJODnUNzcXsKRJ6NgJw+YYsHg
-         rUhUSBH1l9UBSZcLRFedOnsqRxP79saQpH/J+GQ99934/NpF8Oguzjl4hhshvIBYjg17
-         ANMw==
-X-Gm-Message-State: AJIora8CLQXIy/QHOADWr4Murp098cRFct9yVKl+JfJNM2pldb2Nqng0
-        ZXFW+Zk5YPgYq+EEb1N3n9qr/Q==
-X-Google-Smtp-Source: AGRyM1tR9QQjMICvEvriS3rUrQeRvEnCkxrSDR9p9b3QC/NKJyXkOuzupjLq2xmjuWFbvpwWCe4AvA==
-X-Received: by 2002:a0c:f3ce:0:b0:473:3c5:d378 with SMTP id f14-20020a0cf3ce000000b0047303c5d378mr17519526qvm.48.1657632848339;
-        Tue, 12 Jul 2022 06:34:08 -0700 (PDT)
-Received: from nicolas-tpx395.localdomain (192-222-136-102.qc.cable.ebox.net. [192.222.136.102])
-        by smtp.gmail.com with ESMTPSA id g7-20020a05620a40c700b006b1490619cdsm9354056qko.99.2022.07.12.06.34.07
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=VDXOKs+rDKNhOk/fRlBZN127C3FnyD72OM/nCMUbmuI=;
+        b=4smK0f0m4VzS82dnDWqo/UnzRYJqZcp3Z97ofU4HI7i87NpddNZu1iLDa0r4Ftxmn1
+         IDjm4h4LYsepXg9J98qlENCH+ht9lbMT/HFOTBeCjNETLCOOgYPJDqQngAZwLuMUrxvl
+         GFLzh3cR5FCeK+jqXAy88MMbh65nGeqTBIfzr3wArbM5RoD4dxlNp9noSKlLN/SCDFR5
+         /iX9O68nm+7hWAqwz2cTAv+b7XjiVlgmYhqDB2k7kPvxjh8zTbXBKKK5m3CgQjujsHSm
+         tuiUgkpMIW7JjdvaxfeF1dE331l132RB/PyNdXFGlOYaAzUEPZs6a0W01xEJoRmasdK/
+         Tvcw==
+X-Gm-Message-State: AJIora+aj/p3LCl/Ebd7KRcQLOO+PtXO+d0m7ZGTFMPpn5xQDAIpQ1ZD
+        nlQlO6K9TZZmCr2+R428wqDXUCEOBDVamA==
+X-Google-Smtp-Source: AGRyM1sP7hraMf/flqdnMvfurGaJaF7hyOmgHdDcJibfC7e4rwMFS9Ohm5cPaZdV0APMAixOgEh77w==
+X-Received: by 2002:a05:6870:a786:b0:fe:3c4d:6cd7 with SMTP id x6-20020a056870a78600b000fe3c4d6cd7mr1894639oao.118.1657633887145;
+        Tue, 12 Jul 2022 06:51:27 -0700 (PDT)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id q31-20020a056871081f00b0010c2d339ea6sm4508756oap.23.2022.07.12.06.51.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Jul 2022 06:34:07 -0700 (PDT)
-Message-ID: <b06c71d090ae7eaa3cd047bb0067f566371bac3a.camel@ndufresne.ca>
-Subject: Re: [PATCH 1/7] venus : Add default values for the control
- V4L2_CID_COLORIMETRY_HDR10_MASTERING_DISPLAY
-From:   Nicolas Dufresne <nicolas@ndufresne.ca>
-To:     Viswanath Boma <quic_vboma@quicinc.com>,
-        video.upstream.external@qti.qualcomm.com,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Date:   Tue, 12 Jul 2022 09:34:06 -0400
-In-Reply-To: <20220712122347.6781-1-quic_vboma@quicinc.com>
-References: <20220712122347.6781-1-quic_vboma@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.44.2 (3.44.2-1.fc36) 
+        Tue, 12 Jul 2022 06:51:26 -0700 (PDT)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     ~postmarketos/upstreaming@lists.sr.ht,
+        Konrad Dybcio <konrad.dybcio@somainline.org>
+Cc:     marijn.suijten@somainline.org, Andy Gross <agross@kernel.org>,
+        angelogioacchino.delregno@somainline.org,
+        jamipkettunen@somainline.org, kernel test robot <lkp@intel.com>,
+        martin.botka@somainline.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] soc/qcom: Make QCOM_RPMPD depend on PM
+Date:   Tue, 12 Jul 2022 08:51:25 -0500
+Message-Id: <165763387938.1310772.9037592874634681812.b4-ty@linaro.org>
+X-Mailer: git-send-email 2.32.0
+In-Reply-To: <20220707212158.32684-1-konrad.dybcio@somainline.org>
+References: <20220707212158.32684-1-konrad.dybcio@somainline.org>
 MIME-Version: 1.0
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Le mardi 12 juillet 2022 =C3=A0 17:53 +0530, Viswanath Boma a =C3=A9crit=C2=
-=A0:
-> From: Stanimir Varbanov <stanimir.varbanov@linaro.org>
->=20
->  V4l2 encoder compliance expecting default values of colormetry for the c=
-ontrol.
+On Thu, 7 Jul 2022 23:21:58 +0200, Konrad Dybcio wrote:
+> QCOM_RPMPD requires PM_GENERIC_DOMAINS/_OF, which in turns requires
+> CONFIG_PM. I forgot about the latter in my earlier patch (it's still
+> in -next as of the time of committing, hence no Fixes: tag). Fix it.
+> 
+> 
 
-nit: colormetry -> colorimetry
+Applied, thanks!
 
->=20
-> Change-Id: I1db0d4940b54e033d646ce39d60dc488afba8d58
-> Signed-off-by: Viswanath Boma <quic_vboma@quicinc.com>
-> ---
->  drivers/media/platform/qcom/venus/venc_ctrls.c | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
->=20
-> diff --git a/drivers/media/platform/qcom/venus/venc_ctrls.c b/drivers/med=
-ia/platform/qcom/venus/venc_ctrls.c
-> index ea5805e71c143..37ba7d97f99b2 100644
-> --- a/drivers/media/platform/qcom/venus/venc_ctrls.c
-> +++ b/drivers/media/platform/qcom/venus/venc_ctrls.c
-> @@ -352,6 +352,8 @@ static const struct v4l2_ctrl_ops venc_ctrl_ops =3D {
->  int venc_ctrl_init(struct venus_inst *inst)
->  {
->  	int ret;
-> +	struct v4l2_ctrl_hdr10_mastering_display p_hdr10_mastering =3D { {34000=
-, 13250, 7500 },
-> +	{ 16000, 34500, 3000 }, 15635,	16450, 10000000, 500 };
+[1/1] soc/qcom: Make QCOM_RPMPD depend on PM
+      commit: c2d17574ae1b631a81aa88af6846c5b70df403e9
 
-What is the origin of these values ? Should this be done in the control
-framework instead ?
-
-> =20
->  	ret =3D v4l2_ctrl_handler_init(&inst->ctrl_handler, 58);
->  	if (ret)
-> @@ -580,7 +582,7 @@ int venc_ctrl_init(struct venus_inst *inst)
-> =20
->  	v4l2_ctrl_new_std_compound(&inst->ctrl_handler, &venc_ctrl_ops,
->  				   V4L2_CID_COLORIMETRY_HDR10_MASTERING_DISPLAY,
-> -				   v4l2_ctrl_ptr_create(NULL));
-> +				   v4l2_ctrl_ptr_create((void *)&p_hdr10_mastering));
-> =20
->  	v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
->  			  V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_PERIOD, 0,
-
+Best regards,
+-- 
+Bjorn Andersson <bjorn.andersson@linaro.org>
