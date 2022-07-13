@@ -2,237 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 20DD8572A30
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Jul 2022 02:20:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4FFCF572AC7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Jul 2022 03:26:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230000AbiGMAUN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Jul 2022 20:20:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50290 "EHLO
+        id S233435AbiGMBZp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Jul 2022 21:25:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60794 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229671AbiGMAUN (ORCPT
+        with ESMTP id S233270AbiGMBZm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Jul 2022 20:20:13 -0400
-Received: from relay08.th.seeweb.it (relay08.th.seeweb.it [5.144.164.169])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AFA2951E5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Jul 2022 17:20:10 -0700 (PDT)
-Received: from [192.168.1.101] (abxj14.neoplus.adsl.tpnet.pl [83.9.3.14])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 17BE23F479;
-        Wed, 13 Jul 2022 02:20:08 +0200 (CEST)
-Message-ID: <be04f034-5aa9-f931-3992-b0fb08fcd202@somainline.org>
-Date:   Wed, 13 Jul 2022 02:20:07 +0200
+        Tue, 12 Jul 2022 21:25:42 -0400
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DAABAF740;
+        Tue, 12 Jul 2022 18:25:40 -0700 (PDT)
+Received: by mail-lf1-x136.google.com with SMTP id n18so15053011lfq.1;
+        Tue, 12 Jul 2022 18:25:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=kWrmSNqw7RNUpJXET/KeaD+M/fKJ2fs4iPsVi56Xzlc=;
+        b=KJ3WTtZWy/gaqWn5D68477Fqo5MTFflVAPExDGJhWAAeEJMYFNc2SyuM0LGzFB/cLO
+         0vjPZ6x6LzBaY/dZgdEMDDqbsdh9TAmR+HpPDzdZ1NqUlbKJF7lsDIDe3LSKpzg6ahXI
+         exkNkhZxFM8EiZCBA0+pbOXL3XiG/3FiJFdZH1ZBuoot1+osh5ZOUoMa42Q8i1JL5GPg
+         yufCSzOk7sgthAFQERz2yIRBc7ta1U3r9a1XpfY9AUruOk1PWPgTAcHCKQaHEbNhd8JA
+         MGC+lPnA9pSD5g4B6Nkp61nZ7+8MJ4cjp05K2I4tv2I/JyZkrzsf+ALiCZJjJAd24lvo
+         ygow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=kWrmSNqw7RNUpJXET/KeaD+M/fKJ2fs4iPsVi56Xzlc=;
+        b=MNuwSCDAFB5xC+LpbntzfFyV6wN9z6BrYTn9eb8SHZkf0rShsMibl1wO6+hrtJXbR1
+         Nw+yJ+5UzOMxkZpsBwfgEv3owO4519IDR4+SfNSvDNDr+XkVl7+TGw6zQ8LLngmVAdCM
+         Dg1N9mBEg6pzYQe2JIOH3fiaeM36zylnjkN8c1Cm2l29zrjE6+xI9u1l+4GHab8E0ISz
+         D8FOs984bn6w23mgT55wvDgw09gcirnr0/vuZ0QfkU4AaS9AJSqjhHCRK3KscP6TLDtQ
+         wL2C1CbBH0fKABYRqZpYJirMhWH3YchTXPVTRBW42inBOiGEx4C2z7bhBu+tmAfamWL1
+         VaUQ==
+X-Gm-Message-State: AJIora8WWiOm4Bq+DAaPNnFs6PyAExtKmx9vlQi5flI0XrlrseGVHt2S
+        CeINbsvd4WhuxZYGz+LDheyieuqp/KF1ey13Pjt5n+/NAQWxuAaU
+X-Google-Smtp-Source: AGRyM1v5acsNboqgbK0uyTTlYszlcwZd4ryktxElVqCtXMMl6OJMeNv1mTDGlBeanoLf1mqWAwLyRJRsTHm2/WJJWQw=
+X-Received: by 2002:a05:6512:398e:b0:481:154b:a92 with SMTP id
+ j14-20020a056512398e00b00481154b0a92mr564768lfu.110.1657675538590; Tue, 12
+ Jul 2022 18:25:38 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH] thermal/drivers/qcom: Code refactoring
-Content-Language: en-US
-To:     Carlos Bilbao <carlos.bilbao@amd.com>, amitk@kernel.org,
-        thara.gopinath@gmail.com, agross@kernel.org,
-        david.brown@linaro.org, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        bilbao@vt.edu
-References: <20220712173127.3677491-1-carlos.bilbao@amd.com>
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-In-Reply-To: <20220712173127.3677491-1-carlos.bilbao@amd.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+References: <20220712145139.9473-1-mollysophia379@gmail.com> <3a0d3e52-a403-36c5-fc39-f45dce94c1f8@linaro.org>
+In-Reply-To: <3a0d3e52-a403-36c5-fc39-f45dce94c1f8@linaro.org>
+From:   Molly Sophia <mollysophia379@gmail.com>
+Date:   Wed, 13 Jul 2022 09:25:26 +0800
+Message-ID: <CAK0UmJAdiSER0qUj3162ys4nxnni+6onY9-uVaq_=EdSnaC=CA@mail.gmail.com>
+Subject: Re: [PATCH v6 1/2] dt-bindings: arm: qcom: Add Xiaomi Mi Mix2s bindings
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Stephen Boyd <sboyd@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Krzysztof,
+I will read that carefully. Sincerely apologize for the mistakes I have made.
 
+Molly
 
-On 12.07.2022 19:31, Carlos Bilbao wrote:
-> Some functions in tsens-8960.c can directly return ret instead of doing an
-> extra check. In function calibrate_8960(), a second check for IS_ERR(data)
-> can also be avoided in some cases. A constant could be used to represent
-> the maximum number of sensors (11). Finally, function code_to_degc() can be
-> simplified, avoiding using an extra variable.
-> 
-> Include these small refactoring changes.
-> 
-> Signed-off-by: Carlos Bilbao <carlos.bilbao@amd.com>
-> ---
->  drivers/thermal/qcom/tsens-8960.c   | 25 +++++++++----------------
->  drivers/thermal/qcom/tsens-common.c | 18 ++++++++----------
->  drivers/thermal/qcom/tsens-v0_1.c   |  6 +++---
->  drivers/thermal/qcom/tsens-v1.c     |  2 +-
->  drivers/thermal/qcom/tsens.h        |  1 +
->  5 files changed, 22 insertions(+), 30 deletions(-)
-> 
-> diff --git a/drivers/thermal/qcom/tsens-8960.c b/drivers/thermal/qcom/tsens-8960.c
-> index 8d9b721dadb6..576bca871655 100644
-> --- a/drivers/thermal/qcom/tsens-8960.c
-> +++ b/drivers/thermal/qcom/tsens-8960.c
-> @@ -76,10 +76,8 @@ static int suspend_8960(struct tsens_priv *priv)
->  		mask = SLP_CLK_ENA_8660 | EN;
->  
->  	ret = regmap_update_bits(map, CNTL_ADDR, mask, 0);
-> -	if (ret)
-> -		return ret;
->  
-> -	return 0;
-> +	return ret;
->  }
->  
->  static int resume_8960(struct tsens_priv *priv)
-> @@ -106,10 +104,8 @@ static int resume_8960(struct tsens_priv *priv)
->  		return ret;
->  
->  	ret = regmap_write(map, CNTL_ADDR, priv->ctx.control);
-> -	if (ret)
-> -		return ret;
->  
-> -	return 0;
-> +	return ret;
->  }
->  
->  static int enable_8960(struct tsens_priv *priv, int id)
-> @@ -132,10 +128,8 @@ static int enable_8960(struct tsens_priv *priv, int id)
->  		reg |= mask | SLP_CLK_ENA_8660 | EN;
->  
->  	ret = regmap_write(priv->tm_map, CNTL_ADDR, reg);
-> -	if (ret)
-> -		return ret;
->  
-> -	return 0;
-> +	return ret;
->  }
->  
->  static void disable_8960(struct tsens_priv *priv)
-> @@ -206,10 +200,8 @@ static int init_8960(struct tsens_priv *priv)
->  
->  	reg_cntl |= EN;
->  	ret = regmap_write(priv->tm_map, CNTL_ADDR, reg_cntl);
-> -	if (ret)
-> -		return ret;
->  
-> -	return 0;
-> +	return ret;
->  }
->  
->  static int calibrate_8960(struct tsens_priv *priv)
-> @@ -221,10 +213,11 @@ static int calibrate_8960(struct tsens_priv *priv)
->  	struct tsens_sensor *s = priv->sensor;
->  
->  	data = qfprom_read(priv->dev, "calib");
-> -	if (IS_ERR(data))
-> +	if (IS_ERR(data)) {
->  		data = qfprom_read(priv->dev, "calib_backup");
-> -	if (IS_ERR(data))
-> -		return PTR_ERR(data);
-> +		if (IS_ERR(data))
-> +			return PTR_ERR(data);
-> +	}
->  
->  	for (i = 0; i < num_read; i++, s++)
->  		s->offset = data[i];
-> @@ -278,6 +271,6 @@ static const struct tsens_ops ops_8960 = {
->  };
->  
->  const struct tsens_plat_data data_8960 = {
-> -	.num_sensors	= 11,
-> +	.num_sensors	= MAX_NUM_SENSORS,
->  	.ops		= &ops_8960,
->  };
-> diff --git a/drivers/thermal/qcom/tsens-common.c b/drivers/thermal/qcom/tsens-common.c
-> index 528df8801254..fe5f4459e1cc 100644
-> --- a/drivers/thermal/qcom/tsens-common.c
-> +++ b/drivers/thermal/qcom/tsens-common.c
-> @@ -66,19 +66,17 @@ void compute_intercept_slope(struct tsens_priv *priv, u32 *p1,
->  
->  static inline int code_to_degc(u32 adc_code, const struct tsens_sensor *s)
->  {
-> -	int degc, num, den;
-> +	int degc, den;
->  
-> -	num = (adc_code * SLOPE_FACTOR) - s->offset;
-> +	degc = (adc_code * SLOPE_FACTOR) - s->offset;
->  	den = s->slope;
->  
-> -	if (num > 0)
-> -		degc = num + (den / 2);
-> -	else if (num < 0)
-> -		degc = num - (den / 2);
-> -	else
-> -		degc = num;
-> -
-> -	degc /= den;
-> +	if (degc != 0) {
-> +		if (degc > 0)
-> +			degc = (degc + (den / 2)) / den;
-> +		else
-> +			degc = (degc - (den / 2)) / den;
-> +	}
->  
->  	return degc;
->  }
-> diff --git a/drivers/thermal/qcom/tsens-v0_1.c b/drivers/thermal/qcom/tsens-v0_1.c
-> index 6f26fadf4c27..42e897526345 100644
-> --- a/drivers/thermal/qcom/tsens-v0_1.c
-> +++ b/drivers/thermal/qcom/tsens-v0_1.c
-> @@ -188,7 +188,7 @@ static int calibrate_8916(struct tsens_priv *priv)
->  static int calibrate_8974(struct tsens_priv *priv)
->  {
->  	int base1 = 0, base2 = 0, i;
-> -	u32 p1[11], p2[11];
-> +	u32 p1[MAX_NUM_SENSORS], p2[MAX_NUM_SENSORS];
->  	int mode = 0;
->  	u32 *calib, *bkp;
->  	u32 calib_redun_sel;
-> @@ -324,7 +324,7 @@ static const struct tsens_features tsens_v0_1_feat = {
->  	.crit_int	= 0,
->  	.adc		= 1,
->  	.srot_split	= 1,
-> -	.max_sensors	= 11,
-> +	.max_sensors	= MAX_NUM_SENSORS,
->  };
->  
->  static const struct reg_field tsens_v0_1_regfields[MAX_REGFIELDS] = {
-> @@ -374,7 +374,7 @@ static const struct tsens_ops ops_8974 = {
->  };
->  
->  const struct tsens_plat_data data_8974 = {
-> -	.num_sensors	= 11,
-> +	.num_sensors	= MAX_NUM_SENSORS,
->  	.ops		= &ops_8974,
->  	.feat		= &tsens_v0_1_feat,
->  	.fields	= tsens_v0_1_regfields,
-> diff --git a/drivers/thermal/qcom/tsens-v1.c b/drivers/thermal/qcom/tsens-v1.c
-> index 10b595d4f619..98acc9b64555 100644
-> --- a/drivers/thermal/qcom/tsens-v1.c
-> +++ b/drivers/thermal/qcom/tsens-v1.c
-> @@ -149,7 +149,7 @@ static const struct tsens_features tsens_v1_feat = {
->  	.crit_int	= 0,
->  	.adc		= 1,
->  	.srot_split	= 1,
-> -	.max_sensors	= 11,
-> +	.max_sensors	= MAX_NUM_SENSORS,
->  };
->  
->  static const struct reg_field tsens_v1_regfields[MAX_REGFIELDS] = {
-> diff --git a/drivers/thermal/qcom/tsens.h b/drivers/thermal/qcom/tsens.h
-> index 2fd94997245b..d2d78c7e20c8 100644
-> --- a/drivers/thermal/qcom/tsens.h
-> +++ b/drivers/thermal/qcom/tsens.h
-> @@ -6,6 +6,7 @@
->  #ifndef __QCOM_TSENS_H__
->  #define __QCOM_TSENS_H__
->  
-> +#define MAX_NUM_SENSORS		11
-Hi, this number matching up for v0.1 and v1 is purely coincidental
-and will change when more platforms are added. Please keep them
-separate to avoid confusion in the future.
-
-Konrad
->  #define ONE_PT_CALIB		0x1
->  #define ONE_PT_CALIB2		0x2
->  #define TWO_PT_CALIB		0x3
-> 
+On Tue, Jul 12, 2022 at 11:05 PM Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
+>
+> On 12/07/2022 16:51, Molly Sophia wrote:
+> > Add documentation for "xiaomi,polaris" device.
+> >
+> > Signed-off-by: Molly Sophia <mollysophia379@gmail.com>
+>
+> This is v6 and still not changelog. No cover letter either, which would
+>  describe any dependencies.
+>
+> Sorry, you need to follow our process:
+> https://elixir.bootlin.com/linux/v5.18-rc4/source/Documentation/process/submitting-patches.rst
+>
+>
+> Best regards,
+> Krzysztof
