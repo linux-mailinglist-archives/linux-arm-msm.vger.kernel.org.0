@@ -2,165 +2,237 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EBED75728AF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Jul 2022 23:41:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 20DD8572A30
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Jul 2022 02:20:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231577AbiGLVlO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Jul 2022 17:41:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41816 "EHLO
+        id S230000AbiGMAUN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Jul 2022 20:20:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50290 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231402AbiGLVlN (ORCPT
+        with ESMTP id S229671AbiGMAUN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Jul 2022 17:41:13 -0400
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0AEE6CE380
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Jul 2022 14:41:12 -0700 (PDT)
-Received: by mail-lj1-x232.google.com with SMTP id a39so11403235ljq.11
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Jul 2022 14:41:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=she1seoiq+a+dJ96WQSzchxq98Bjp465dPctwMAzpg0=;
-        b=u1fO0xryy2jM2Lpj8sShNv83wwrV0k9HMgZqBak5fVAFgXcfGpo3CnZk0iRK/ePERC
-         ICgQj+Bi+pYniRTBn8ynbj+9YqPO8bpfcIOUhu9nVpeqCyolSpGmUixgub1TGxSwnLxK
-         JIEd6o+14f4K0uon0tPSPzz3aJ/rzsZZUHYd++MaK29xkXWz3GGCsoFeGFwny0vD6Sa4
-         mg42Uv1gc5EoPUfFAKPE5vrJ78GbZ2S+1GoBNlIwDfjjLb0xPffUXDoxA53PxDdUVlZ8
-         C0GxXb0zep4GrMOu3B8Z8RN7X5U+JO3yy+bRRHNWsKmFLrSaYqpMq9ngMJ0qDP7Eu+EE
-         5NiQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=she1seoiq+a+dJ96WQSzchxq98Bjp465dPctwMAzpg0=;
-        b=Pi201EGsPRmSsolOdsMmSYc7DY9n7BI/LoFV9az1Tm9JoUHvSSfGPHjiTM25Op2y4X
-         LYmLq11FDgGIge4/d3/HKAnEWWofWecZgB13gVAJzkK3SLnJWMjp6Djddm6XRj3wJO7M
-         Jbh7aEs9153nnyKen8Vas+gxDiWdJwvxT1h/61N4cfg8GYMSHxpodF9xD8mFLzK9s2ze
-         3QxiHnQ74rJ1evLdiFNVypvX/nBF94C0z0T8Scqp2dzdq2LzRWTeEDnzenlPmcpibbsp
-         /kGc/owOXcCigZTjLa5dDapNfpQ/wrawN0pzD5mX1POz2SE0rOYIpjFaF0IUHzu/vv2+
-         +Vdg==
-X-Gm-Message-State: AJIora+MdXx5GmEe9fNFzPUkdGjyQPc0ZZKENED28nEzcy/hz062FE7v
-        4Ar2TIPf4sjKHWs0tENK0WoADA==
-X-Google-Smtp-Source: AGRyM1u0QH8JSSnsKLz13O26TZWPbY+gE8wNGhEL13Ky1MTtr4gqBLPup5WeetA6v6ctaQPxyCWZfA==
-X-Received: by 2002:a2e:bf27:0:b0:246:7ed6:33b0 with SMTP id c39-20020a2ebf27000000b002467ed633b0mr28341ljr.167.1657662070335;
-        Tue, 12 Jul 2022 14:41:10 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id v12-20020ac258ec000000b00489dfb5d622sm1406068lfo.257.2022.07.12.14.41.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 12 Jul 2022 14:41:09 -0700 (PDT)
-Message-ID: <e9a5f2de-27ff-59f3-d91e-4391afef0704@linaro.org>
-Date:   Wed, 13 Jul 2022 00:41:09 +0300
+        Tue, 12 Jul 2022 20:20:13 -0400
+Received: from relay08.th.seeweb.it (relay08.th.seeweb.it [5.144.164.169])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AFA2951E5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Jul 2022 17:20:10 -0700 (PDT)
+Received: from [192.168.1.101] (abxj14.neoplus.adsl.tpnet.pl [83.9.3.14])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 17BE23F479;
+        Wed, 13 Jul 2022 02:20:08 +0200 (CEST)
+Message-ID: <be04f034-5aa9-f931-3992-b0fb08fcd202@somainline.org>
+Date:   Wed, 13 Jul 2022 02:20:07 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: [PATCH 11/11] dt-bindings: display/msm: move common DPU
- properties to dpu-common.yaml
-Content-Language: en-GB
-To:     Rob Herring <robh@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>
-References: <20220625232513.522599-1-dmitry.baryshkov@linaro.org>
- <20220625232513.522599-12-dmitry.baryshkov@linaro.org>
- <20220630231159.GA3497845-robh@kernel.org>
- <3cc60a06-6bdf-e9f4-ba8a-7aa83f57fd43@linaro.org>
- <20220712204718.GO1823936-robh@kernel.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20220712204718.GO1823936-robh@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ Thunderbird/91.11.0
+Subject: Re: [PATCH] thermal/drivers/qcom: Code refactoring
+Content-Language: en-US
+To:     Carlos Bilbao <carlos.bilbao@amd.com>, amitk@kernel.org,
+        thara.gopinath@gmail.com, agross@kernel.org,
+        david.brown@linaro.org, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        bilbao@vt.edu
+References: <20220712173127.3677491-1-carlos.bilbao@amd.com>
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+In-Reply-To: <20220712173127.3677491-1-carlos.bilbao@amd.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12/07/2022 23:47, Rob Herring wrote:
-> On Fri, Jul 08, 2022 at 12:14:45PM +0300, Dmitry Baryshkov wrote:
->> On 01/07/2022 02:11, Rob Herring wrote:
->>> On Sun, Jun 26, 2022 at 02:25:13AM +0300, Dmitry Baryshkov wrote:
->>>> Move properties common to all DPU DT nodes to the dpu-common.yaml
->>>>
->>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>>> ---
->>>>    .../bindings/display/msm/dpu-common.yaml      | 47 +++++++++++++++++++
->>>>    .../bindings/display/msm/dpu-msm8998.yaml     | 28 ++---------
->>>>    .../bindings/display/msm/dpu-qcm2290.yaml     | 29 ++----------
->>>>    .../bindings/display/msm/dpu-sc7180.yaml      | 32 ++-----------
->>>>    .../bindings/display/msm/dpu-sc7280.yaml      | 32 ++-----------
->>>>    .../bindings/display/msm/dpu-sdm845.yaml      | 32 ++-----------
->>>>    6 files changed, 67 insertions(+), 133 deletions(-)
->>>>    create mode 100644 Documentation/devicetree/bindings/display/msm/dpu-common.yaml
->>>>
->>>> diff --git a/Documentation/devicetree/bindings/display/msm/dpu-common.yaml b/Documentation/devicetree/bindings/display/msm/dpu-common.yaml
->>>> new file mode 100644
->>>> index 000000000000..f3465ee3a4ab
->>>> --- /dev/null
->>>> +++ b/Documentation/devicetree/bindings/display/msm/dpu-common.yaml
->>>> @@ -0,0 +1,47 @@
->>>> +%YAML 1.2
->>>> +---
->>>> +$id: http://devicetree.org/schemas/display/msm/dpu-common.yaml#
->>>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->>>> +
->>>> +title: Qualcomm Display DPU dt properties (common properties)
->>>> +
->>>> +maintainers:
->>>> +  - Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>>> +  - Krishna Manikandan <quic_mkrishn@quicinc.com>
->>>> +  - Rob Clark <robdclark@gmail.com>
->>>> +
->>>> +description: |
->>>> +  Device tree bindings for the DPU display controller, common properties.
->>>
->>> Common properties for QCom DPU display controller
->>>
->>>> +
->>>> +properties:
->>>> +  interrupts:
->>>> +    maxItems: 1
->>>> +
->>>> +  power-domains:
->>>> +    maxItems: 1
->>>> +
->>>> +  operating-points-v2: true
->>>> +
->>>> +  ports:
->>>> +    $ref: /schemas/graph.yaml#/properties/ports
->>>
->>> Now this schema is applied twice.
->>>
->>>> +    description: |
->>>> +      Contains the list of output ports from DPU device. These ports
->>>> +      connect to interfaces that are external to the DPU hardware,
->>>> +      such as DSI, DP etc. Each output port contains an endpoint that
->>>> +      describes how it is connected to an external interface.
->>>
->>> This description is marginally useful. Each port will say it is an
->>> output to X. So you could just remove.
->>
->> I think I will go the other way around. It is not really useful to describe
->> individual ports, so I will leave just this piece, slightly rephrased and
->> drop individual /ports, /ports/port@N from dpu-foo.yaml.
+
+
+On 12.07.2022 19:31, Carlos Bilbao wrote:
+> Some functions in tsens-8960.c can directly return ret instead of doing an
+> extra check. In function calibrate_8960(), a second check for IS_ERR(data)
+> can also be avoided in some cases. A constant could be used to represent
+> the maximum number of sensors (11). Finally, function code_to_degc() can be
+> simplified, avoiding using an extra variable.
 > 
-> How is describing individual port not useful? You must define what each
-> port is. Input or output. Type of data. Are they all the same?
+> Include these small refactoring changes.
+> 
+> Signed-off-by: Carlos Bilbao <carlos.bilbao@amd.com>
+> ---
+>  drivers/thermal/qcom/tsens-8960.c   | 25 +++++++++----------------
+>  drivers/thermal/qcom/tsens-common.c | 18 ++++++++----------
+>  drivers/thermal/qcom/tsens-v0_1.c   |  6 +++---
+>  drivers/thermal/qcom/tsens-v1.c     |  2 +-
+>  drivers/thermal/qcom/tsens.h        |  1 +
+>  5 files changed, 22 insertions(+), 30 deletions(-)
+> 
+> diff --git a/drivers/thermal/qcom/tsens-8960.c b/drivers/thermal/qcom/tsens-8960.c
+> index 8d9b721dadb6..576bca871655 100644
+> --- a/drivers/thermal/qcom/tsens-8960.c
+> +++ b/drivers/thermal/qcom/tsens-8960.c
+> @@ -76,10 +76,8 @@ static int suspend_8960(struct tsens_priv *priv)
+>  		mask = SLP_CLK_ENA_8660 | EN;
+>  
+>  	ret = regmap_update_bits(map, CNTL_ADDR, mask, 0);
+> -	if (ret)
+> -		return ret;
+>  
+> -	return 0;
+> +	return ret;
+>  }
+>  
+>  static int resume_8960(struct tsens_priv *priv)
+> @@ -106,10 +104,8 @@ static int resume_8960(struct tsens_priv *priv)
+>  		return ret;
+>  
+>  	ret = regmap_write(map, CNTL_ADDR, priv->ctx.control);
+> -	if (ret)
+> -		return ret;
+>  
+> -	return 0;
+> +	return ret;
+>  }
+>  
+>  static int enable_8960(struct tsens_priv *priv, int id)
+> @@ -132,10 +128,8 @@ static int enable_8960(struct tsens_priv *priv, int id)
+>  		reg |= mask | SLP_CLK_ENA_8660 | EN;
+>  
+>  	ret = regmap_write(priv->tm_map, CNTL_ADDR, reg);
+> -	if (ret)
+> -		return ret;
+>  
+> -	return 0;
+> +	return ret;
+>  }
+>  
+>  static void disable_8960(struct tsens_priv *priv)
+> @@ -206,10 +200,8 @@ static int init_8960(struct tsens_priv *priv)
+>  
+>  	reg_cntl |= EN;
+>  	ret = regmap_write(priv->tm_map, CNTL_ADDR, reg_cntl);
+> -	if (ret)
+> -		return ret;
+>  
+> -	return 0;
+> +	return ret;
+>  }
+>  
+>  static int calibrate_8960(struct tsens_priv *priv)
+> @@ -221,10 +213,11 @@ static int calibrate_8960(struct tsens_priv *priv)
+>  	struct tsens_sensor *s = priv->sensor;
+>  
+>  	data = qfprom_read(priv->dev, "calib");
+> -	if (IS_ERR(data))
+> +	if (IS_ERR(data)) {
+>  		data = qfprom_read(priv->dev, "calib_backup");
+> -	if (IS_ERR(data))
+> -		return PTR_ERR(data);
+> +		if (IS_ERR(data))
+> +			return PTR_ERR(data);
+> +	}
+>  
+>  	for (i = 0; i < num_read; i++, s++)
+>  		s->offset = data[i];
+> @@ -278,6 +271,6 @@ static const struct tsens_ops ops_8960 = {
+>  };
+>  
+>  const struct tsens_plat_data data_8960 = {
+> -	.num_sensors	= 11,
+> +	.num_sensors	= MAX_NUM_SENSORS,
+>  	.ops		= &ops_8960,
+>  };
+> diff --git a/drivers/thermal/qcom/tsens-common.c b/drivers/thermal/qcom/tsens-common.c
+> index 528df8801254..fe5f4459e1cc 100644
+> --- a/drivers/thermal/qcom/tsens-common.c
+> +++ b/drivers/thermal/qcom/tsens-common.c
+> @@ -66,19 +66,17 @@ void compute_intercept_slope(struct tsens_priv *priv, u32 *p1,
+>  
+>  static inline int code_to_degc(u32 adc_code, const struct tsens_sensor *s)
+>  {
+> -	int degc, num, den;
+> +	int degc, den;
+>  
+> -	num = (adc_code * SLOPE_FACTOR) - s->offset;
+> +	degc = (adc_code * SLOPE_FACTOR) - s->offset;
+>  	den = s->slope;
+>  
+> -	if (num > 0)
+> -		degc = num + (den / 2);
+> -	else if (num < 0)
+> -		degc = num - (den / 2);
+> -	else
+> -		degc = num;
+> -
+> -	degc /= den;
+> +	if (degc != 0) {
+> +		if (degc > 0)
+> +			degc = (degc + (den / 2)) / den;
+> +		else
+> +			degc = (degc - (den / 2)) / den;
+> +	}
+>  
+>  	return degc;
+>  }
+> diff --git a/drivers/thermal/qcom/tsens-v0_1.c b/drivers/thermal/qcom/tsens-v0_1.c
+> index 6f26fadf4c27..42e897526345 100644
+> --- a/drivers/thermal/qcom/tsens-v0_1.c
+> +++ b/drivers/thermal/qcom/tsens-v0_1.c
+> @@ -188,7 +188,7 @@ static int calibrate_8916(struct tsens_priv *priv)
+>  static int calibrate_8974(struct tsens_priv *priv)
+>  {
+>  	int base1 = 0, base2 = 0, i;
+> -	u32 p1[11], p2[11];
+> +	u32 p1[MAX_NUM_SENSORS], p2[MAX_NUM_SENSORS];
+>  	int mode = 0;
+>  	u32 *calib, *bkp;
+>  	u32 calib_redun_sel;
+> @@ -324,7 +324,7 @@ static const struct tsens_features tsens_v0_1_feat = {
+>  	.crit_int	= 0,
+>  	.adc		= 1,
+>  	.srot_split	= 1,
+> -	.max_sensors	= 11,
+> +	.max_sensors	= MAX_NUM_SENSORS,
+>  };
+>  
+>  static const struct reg_field tsens_v0_1_regfields[MAX_REGFIELDS] = {
+> @@ -374,7 +374,7 @@ static const struct tsens_ops ops_8974 = {
+>  };
+>  
+>  const struct tsens_plat_data data_8974 = {
+> -	.num_sensors	= 11,
+> +	.num_sensors	= MAX_NUM_SENSORS,
+>  	.ops		= &ops_8974,
+>  	.feat		= &tsens_v0_1_feat,
+>  	.fields	= tsens_v0_1_regfields,
+> diff --git a/drivers/thermal/qcom/tsens-v1.c b/drivers/thermal/qcom/tsens-v1.c
+> index 10b595d4f619..98acc9b64555 100644
+> --- a/drivers/thermal/qcom/tsens-v1.c
+> +++ b/drivers/thermal/qcom/tsens-v1.c
+> @@ -149,7 +149,7 @@ static const struct tsens_features tsens_v1_feat = {
+>  	.crit_int	= 0,
+>  	.adc		= 1,
+>  	.srot_split	= 1,
+> -	.max_sensors	= 11,
+> +	.max_sensors	= MAX_NUM_SENSORS,
+>  };
+>  
+>  static const struct reg_field tsens_v1_regfields[MAX_REGFIELDS] = {
+> diff --git a/drivers/thermal/qcom/tsens.h b/drivers/thermal/qcom/tsens.h
+> index 2fd94997245b..d2d78c7e20c8 100644
+> --- a/drivers/thermal/qcom/tsens.h
+> +++ b/drivers/thermal/qcom/tsens.h
+> @@ -6,6 +6,7 @@
+>  #ifndef __QCOM_TSENS_H__
+>  #define __QCOM_TSENS_H__
+>  
+> +#define MAX_NUM_SENSORS		11
+Hi, this number matching up for v0.1 and v1 is purely coincidental
+and will change when more platforms are added. Please keep them
+separate to avoid confusion in the future.
 
-In case of MDSS all ports are output, they are connected to the external 
-interfaces (DSI, DP, HDMI, etc). The driver uses them to bind available 
-interfaces (using components framework). The reg property of the port is 
-completely ignored.
-
-
--- 
-With best wishes
-Dmitry
+Konrad
+>  #define ONE_PT_CALIB		0x1
+>  #define ONE_PT_CALIB2		0x2
+>  #define TWO_PT_CALIB		0x3
+> 
