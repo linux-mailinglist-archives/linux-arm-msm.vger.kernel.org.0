@@ -2,93 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9D36C572E17
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Jul 2022 08:24:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AA47E572E6F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Jul 2022 08:51:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230218AbiGMGYa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Jul 2022 02:24:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55522 "EHLO
+        id S231732AbiGMGvv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Jul 2022 02:51:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48068 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229456AbiGMGY3 (ORCPT
+        with ESMTP id S229854AbiGMGvu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Jul 2022 02:24:29 -0400
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8EE7CB46E
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Jul 2022 23:24:28 -0700 (PDT)
+        Wed, 13 Jul 2022 02:51:50 -0400
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0FF9C3AED
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Jul 2022 23:51:49 -0700 (PDT)
+Received: by mail-lj1-x233.google.com with SMTP id bn33so12390366ljb.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Jul 2022 23:51:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1657693468; x=1689229468;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=GpgJm2w11HDT9HLV7pwaUKNml2YdL/gwGxII+D3gRSU=;
-  b=mgFr1EjUcPfwnxAqCnviz/8jB4TZfJpO1vnCgAXJ0lSyXZTeyCWW2o2/
-   UBDFsogshDoVQjpTr+n0hBekYMixDQ8F0Z4ZKp++tR6N/xu5n4Nf26U38
-   gfr6coH8L6tBz0XKGf2QDR/BsUSyJkuyEJUgXpWefGP/qE41KnObnM6J5
-   s=;
-Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 12 Jul 2022 23:24:28 -0700
-X-QCInternal: smtphost
-Received: from unknown (HELO nasanex01a.na.qualcomm.com) ([10.52.223.231])
-  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Jul 2022 23:24:28 -0700
-Received: from hu-ddhamara-hyd.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Tue, 12 Jul 2022 23:24:26 -0700
-From:   <quic_ddhamara@quicinc.com>
-To:     <freedreno@lists.freedesktop.org>
-CC:     <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <robclark@gmail.com>, <quic_akhilpo@quicinc.com>,
-        ddhamara <ddhamara@quicinc.com>
-Subject: [PATCH 1/1] drm/msm/a6xx: Fix null pointer access in a6xx_get_indexed_registers
-Date:   Wed, 13 Jul 2022 11:53:55 +0530
-Message-ID: <20220713062355.6846-2-quic_ddhamara@quicinc.com>
-X-Mailer: git-send-email 2.37.0
-In-Reply-To: <20220713062355.6846-1-quic_ddhamara@quicinc.com>
-References: <20220713062355.6846-1-quic_ddhamara@quicinc.com>
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=h+uct/42Q8M6Hz8PpnusIGnQ/q1XqpsJvX0E6hd4PoA=;
+        b=D5oHkdR48+vS3Om/EyDHPKxoqu2leWD6lqgxKuWpJonXrwEj85+HDq9Kd3mmAXrwDg
+         FnFY6PQGFjWsTAkf6+5cphIlxrymVJr+t0eg6+gY9n/3mhNrvSRuiQg2cs+mS8SVn9OQ
+         wcOG2PEl3kJb1HdqlTEKBhtTIxezc7Ub2fTXUsam850ynui27elsUyPG7u1Yc5LdWSUN
+         Vwg9tV5mF5XctRpgN7sAGsy59Harx9nY8l6IjAsvfHpIag/AqA3F+Pe7qd1ohOeXbvrH
+         NaRFoIj0MNcf9O6zViNH/Kvxn63AhnSfvK3EFbWWQAO1y4OHRo/UlAbCOt0NkWACrt/b
+         l3JQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=h+uct/42Q8M6Hz8PpnusIGnQ/q1XqpsJvX0E6hd4PoA=;
+        b=cUIXlwbgEktoBIrND0fWHUQP9I1eqDD5s5OGe1YbiyKiltMcHorcDzImSMLUxj8sQx
+         RMdud2/d7DUpPVhTtW5ZFUDKXPYcyLsCmM/Z4Ptwc/CFjCMsWUfdJETMfsLPjVNtOqIF
+         oGpUVV6PPsTHQn4o1pfQbYfWFE658NhD13mXrP9CbIhJLwrKwPXxbJCOFHxR38tFzGK/
+         aezFlHFFUK/GDV9bAc6ib5Q0HKt6hm4plkYGETmxmQX5OD7TSoMYOaewIaYinnRFMKGX
+         TkhXv1kLgpdgtZpXO56xpdN/p9xvs48jMoCcJ6w/EsnVvK7S2pSPxqj4nJxW9Yq7dikP
+         arqA==
+X-Gm-Message-State: AJIora+irj8dzZvnP6wm7HzVjyZMdgR9SJEs7npXJypLJtiTRVS2ccmL
+        txJG1I84k5xAbNR9qPyZGM7H5w==
+X-Google-Smtp-Source: AGRyM1uaJ4J3MO1KmIouHLS+USEPJTlTXorStkT7p9tkjJEXg7tnQjXa8+W5Dr/66Y5NkqHYYbDyXA==
+X-Received: by 2002:a2e:b889:0:b0:25d:38ce:976 with SMTP id r9-20020a2eb889000000b0025d38ce0976mr943413ljp.357.1657695108134;
+        Tue, 12 Jul 2022 23:51:48 -0700 (PDT)
+Received: from [10.0.0.8] (fwa5da9-171.bb.online.no. [88.93.169.171])
+        by smtp.gmail.com with ESMTPSA id v1-20020a05651203a100b0047f7419de4asm2625735lfp.180.2022.07.12.23.51.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 12 Jul 2022 23:51:47 -0700 (PDT)
+Message-ID: <3184e602-33ea-14fb-485c-5f54d020cd8b@linaro.org>
+Date:   Wed, 13 Jul 2022 08:51:44 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH 0/5] Add support for Xiaomi Poco F1 EBBG variant
+Content-Language: en-US
+To:     Joel Selvaraj <jo@jsfamily.in>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
+References: <MN2PR02MB702415D7BF12B7B7A41B2D38D9829@MN2PR02MB7024.namprd02.prod.outlook.com>
+ <b1829902-c271-a677-f423-99dbc85cba89@linaro.org>
+ <BY5PR02MB700920503721C0C490BDAE2FD9899@BY5PR02MB7009.namprd02.prod.outlook.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <BY5PR02MB700920503721C0C490BDAE2FD9899@BY5PR02MB7009.namprd02.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Akhil P Oommen <quic_akhilpo@quicinc.com>
+On 13/07/2022 06:35, Joel Selvaraj wrote:
+> Hi Krzysztof Kozlowski
+> 
+> On 12/07/22 18:57, Krzysztof Kozlowski wrote:
+>> None of your patches reached recipients and mailing lists.
+> 
+> Thanks for letting me know. I didnt notice. It was shown in patchwork
+> website and I thought it reached the mailing list too. I have RESEND the
+> patches. This time, the cover letter (0/5) seems to be in a different
+> thread and the rest of the patches (1 to 5/5) seems to be in a different
+> thread. But all of them reached the mailing list though. I am not sure
+> what is causing the issue though. Can this accepted? or do I need to
+> resend them again?
 
-Fix a null pointer access when memory allocation fails in
-a6xx_get_indexed_registers().
+I saw your patches but not connected to cover letter. As you said, lore
+also misses them from cover letter:
+https://lore.kernel.org/all/BY5PR02MB700954C6003BC5D5B6AAB1B7D9899@BY5PR02MB7009.namprd02.prod.outlook.com/
+but they are on the lists:
+https://lore.kernel.org/all/BY5PR02MB7009A49AD394747ACB80F746D9899@BY5PR02MB7009.namprd02.prod.outlook.com/
 
-Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
-Signed-off-by: ddhamara <ddhamara@quicinc.com>
----
- drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+It's fine, but you should fix your setup. You can use whatever tools you
+prefer as long as you create proper result. The easiest is however to
+use git format-patch --cover-letter -5 && git send-email ....
+(and useful also git branch --edit-description && git git format-patch
+--cover-letter --cover-from-description=subject).
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-index 55f443328d8e..507074f6222c 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-@@ -952,6 +952,12 @@ static void a6xx_get_indexed_registers(struct msm_gpu *gpu,
- 	a6xx_get_indexed_regs(gpu, a6xx_state, &a6xx_cp_mempool_indexed,
- 		&a6xx_state->indexed_regs[i]);
- 
-+	if (!a6xx_state->indexed_regs[i].data) {
-+		gpu_write(gpu, REG_A6XX_CP_MEM_POOL_SIZE, mempool_size);
-+		a6xx_state->nr_indexed_regs = count - 1;
-+		return;
-+	}
-+
- 	/*
- 	 * Offset 0x2000 in the mempool is the size - copy the saved size over
- 	 * so the data is consistent
--- 
-2.37.0
-
+Best regards,
+Krzysztof
