@@ -2,115 +2,168 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8E1FB573F07
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Jul 2022 23:32:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3CF47573F5F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Jul 2022 00:05:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237499AbiGMVcv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Jul 2022 17:32:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53298 "EHLO
+        id S231377AbiGMWF3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Jul 2022 18:05:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45718 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237539AbiGMVcr (ORCPT
+        with ESMTP id S236181AbiGMWF2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Jul 2022 17:32:47 -0400
-Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5AFF225E93
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Jul 2022 14:32:46 -0700 (PDT)
-Received: by mail-ot1-x331.google.com with SMTP id n12-20020a9d64cc000000b00616ebd87fc4so9285613otl.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Jul 2022 14:32:46 -0700 (PDT)
+        Wed, 13 Jul 2022 18:05:28 -0400
+Received: from mail-pg1-x532.google.com (mail-pg1-x532.google.com [IPv6:2607:f8b0:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D37F845049;
+        Wed, 13 Jul 2022 15:05:27 -0700 (PDT)
+Received: by mail-pg1-x532.google.com with SMTP id f11so10779507pgj.7;
+        Wed, 13 Jul 2022 15:05:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=KMcZaOI1pkMPzYIua3VuB4fL4UqUR3gQmB+xGyPu7QM=;
-        b=EgJHs96mxk4tNDPUW3eCN/fvFCRBhPOzRXy6DAY0v+0GdsJseQ8CgMTxM7fCZYt73w
-         BOI38G2Dn+JUoNK8C+UshRHgMS09ajx3F+gCN1kLJCot8clpn+7B/D9mKFFHeWj6gVyf
-         vkJRPIcEZUfVDWBuZzRIHyd0neo6xM5XFYBXPn7slT7yXMyZJp1RaslAeoY+/Hp1/5JO
-         Z5nI9TSKNxnzpo4+3oxuSUFfQsJZYgly2IUp9sPm1a6tDJZqG8oGp4KzOVrdDbIx09TQ
-         TeiSBJ4ZsB10pY41WmA+t0accVkpA3iPhTZ4vSka+f2Q6MppAyjc1JQffSUY9TEW/ty5
-         AVeQ==
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=uOBKq9yzkPX8ihcF5QdXtzsKbLEa/eP+OCHtDKfv5N0=;
+        b=hk176+zLssVNRft8dirHFUQSzDMI0whOu6+6yXw9L8L7d0wLw7U16maq1hJRXPZTq/
+         Gz/tk/9k5ncT0FkQbbwWFHn+Pbt8O7O5TawARP5Ey5PdgOfYEEgoTvfNvjwaKlC2Fp+u
+         /yc6TfI2wpFGrTa7ELUtOTilQC8x/WO/N5T2D8R57dpFGws1xuiH5hYBGa0wwi3eo4hN
+         f5S77L0OFyouEIHVUdo1qtgyMETHSDVdDO9i7srid340U9uCEKObdUPpsjKnJGrtF46J
+         gnb7/zaBOGh40U273oDZM0oA/ohc98tEWGZ+o/mSmHyWI2/5r6+mUVZip7FZc9yew0w6
+         weVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=KMcZaOI1pkMPzYIua3VuB4fL4UqUR3gQmB+xGyPu7QM=;
-        b=zGOVi+17mlwNWj78ecQXFLdkudrc7t/Lac3Rw47t4L1TZkT2PWi5jSX4+G6F2saCYC
-         c4txZq0bcbHuRS8FCfpRI2Lzfv43sfK6G2AcTvYDrlg5HQlOEtcMr6Rn9bkrmLNnX2m9
-         Bqc+iSC6bg10WpXT8KkMUs7acEMqo4kbkZAt0JWxLW+CFVJWPCSvKB1Ur4d/C5BTTsXk
-         iwseKMeFenBNIv4OTCAbbsD6jTanHEhBdnLLD4MNG++3mGfwK2sTzMAnYrMTT6GkzzPP
-         wEt0cz+nlBAMOe2EwPG93ooUJ2OtXhLPYbZX1VIh3AaEF3pUwB0BZ9vbHb2q9DA4r/qh
-         IyiQ==
-X-Gm-Message-State: AJIora9GOIITHxOFPLOIpYDh1xSGCyEO1AUMQOnFChSkAFxA8o2SA+jV
-        t758B1e+cO1aQ7k7HvZkhMjvxw==
-X-Google-Smtp-Source: AGRyM1tdI/BVkfAWRhAGpOWIOiePCL5uX9PVHFsgBKsefi693i/n4CRhg9lEq6x/dmREF/ZscHgi1w==
-X-Received: by 2002:a9d:19c9:0:b0:618:ce28:bcf7 with SMTP id k67-20020a9d19c9000000b00618ce28bcf7mr2108300otk.285.1657747965648;
-        Wed, 13 Jul 2022 14:32:45 -0700 (PDT)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id v37-20020a05687070a500b000f342119f41sm6559223oae.42.2022.07.13.14.32.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Jul 2022 14:32:45 -0700 (PDT)
-Date:   Wed, 13 Jul 2022 16:32:43 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Yassine Oudjana <yassine.oudjana@gmail.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Yassine Oudjana <y.oudjana@protonmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 0/6] clk: qcom: msm8996-cpu: Cleanup and migrate to
- parent_data
-Message-ID: <Ys85+7rYjQOSPvD/@builder.lan>
-References: <20220621160621.24415-1-y.oudjana@protonmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=uOBKq9yzkPX8ihcF5QdXtzsKbLEa/eP+OCHtDKfv5N0=;
+        b=lIIJth0Ot2coM+RxAyU0K5xL6fAmHxVkdgzZleB7HvdEJCV4ZV+xRf6j9lw3E37tFa
+         qlkeJNmledY5FEPCuTgBwMkx0XmWFEk0EH2OrIdzCyqUj/m6jHBlSsWWecsnVEwWFkVB
+         zIQ7FUygsq4mGLcm8j8Hnb/1Dmc8QU4IF+hOE+8QB/qLgyNXxE3DaPr9rm+FTb4gXz7a
+         UdRUADvTxLpQ07JG2+nqVJO6laZyB3CLhJPzjFGPU2hg0z2P5dzkmymGSC/O11tI+nJF
+         vhiBot9yAJSK+sB9wgHPe9LURPq4z9/f4cfeO5iks7VWyoCrg24aSZVCNrDllPqofgos
+         QxXA==
+X-Gm-Message-State: AJIora+P3UwtVRVK3V2hP2EHIEl2FEiWBHS3OKiADIba1tBZ8HTStdkE
+        0wa4m3yOsyr6uVn7wWBtjMY=
+X-Google-Smtp-Source: AGRyM1uFY5sq0uRq7vOEVCZc6Mt9dWUHaZVFaEt9VTaYlh+WdsLMFRrjoUXRSVp/xtwuLE8Bc1hpsw==
+X-Received: by 2002:a65:4501:0:b0:3fc:4895:283b with SMTP id n1-20020a654501000000b003fc4895283bmr4726104pgq.231.1657749927276;
+        Wed, 13 Jul 2022 15:05:27 -0700 (PDT)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.googlemail.com with ESMTPSA id x7-20020a634847000000b0040c97f0057dsm7946127pgk.17.2022.07.13.15.05.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 13 Jul 2022 15:05:26 -0700 (PDT)
+Message-ID: <fb4f4444-20c2-0e35-bb83-79a419ec87a7@gmail.com>
+Date:   Wed, 13 Jul 2022 15:05:23 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220621160621.24415-1-y.oudjana@protonmail.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Subject: Re: [PATCH] arm64: Kconfig.platforms: Re-organized Broadcom menu
+Content-Language: en-US
+To:     Geert Uytterhoeven <geert@linux-m68k.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Arnd Bergmann <arnd@arndb.de>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        SoC Team <soc@kernel.org>,
+        bcm-kernel-feedback-list <bcm-kernel-feedback-list@broadcom.com>,
+        william.zhang@broadcom.com, anand.gore@broadcom.com,
+        Olof Johansson <olof@lixom.net>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        Shawn Guo <shawnguo@kernel.org>, Li Yang <leoyang.li@nxp.com>,
+        Wei Xu <xuwei5@hisilicon.com>, Andrew Lunn <andrew@lunn.ch>,
+        Gregory Clement <gregory.clement@bootlin.com>,
+        "moderated list:ARM/Mediatek SoC..." 
+        <linux-mediatek@lists.infradead.org>,
+        Microchip Linux Driver Support <UNGLinuxDriver@microchip.com>,
+        Matthias Brugger <mbrugger@suse.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        "moderated list:ARM/SAMSUNG EXYNOS ARM ARCHITECTURES" 
+        <linux-samsung-soc@vger.kernel.org>,
+        Dinh Nguyen <dinguyen@kernel.org>
+References: <20220712164235.40293-1-f.fainelli@gmail.com>
+ <CAK8P3a2QrYbWOqV+CG-W0ZkzW6ORgw8R6Dv-L3o2ZAtJs-B3Kw@mail.gmail.com>
+ <0131e1d6-09c0-31a4-5b9d-0e2fc49d61ac@linaro.org>
+ <CAMuHMdWDDY_72y3WYt401hG122xg1s7_VRCG9Vyhhkzco-nBYw@mail.gmail.com>
+From:   Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <CAMuHMdWDDY_72y3WYt401hG122xg1s7_VRCG9Vyhhkzco-nBYw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 21 Jun 11:06 CDT 2022, Yassine Oudjana wrote:
-
-> This series includes some cleanup of the MSM8996 CPU clock driver, as well as
-> migration from parent_names to parent_data for all of its clocks. The DT schema
-> is also fixed in this series to show the actual clocks consumed by the clock
-> controller and pass checks.
-
-This series looks almost ready to be merged, could you (or Dmitry?)
-update the two outstanding items?
-
-Thanks,
-Bjorn
-
+On 7/13/22 02:17, Geert Uytterhoeven wrote:
+> Hi Krzysztof,
 > 
-> Yassine Oudjana (6):
->   clk: qcom: msm8996-cpu: Rename DIV_2_INDEX to SMUX_INDEX
->   clk: qcom: msm8996-cpu: Statically define PLL dividers
->   clk: qcom: msm8996-cpu: Unify cluster order
->   clk: qcom: msm8996-cpu: Convert secondary muxes to clk_regmap_mux
->   dt-bindings: clock: qcom,msm8996-apcc: Fix clocks
->   clk: qcom: msm8996-cpu: Use parent_data for all clocks
+> On Wed, Jul 13, 2022 at 10:40 AM Krzysztof Kozlowski
+> <krzysztof.kozlowski@linaro.org> wrote:
+>> On 13/07/2022 10:25, Arnd Bergmann wrote:
+>>> On Tue, Jul 12, 2022 at 6:42 PM Florian Fainelli <f.fainelli@gmail.com> wrote:
+>>>> There are now multiple Broadcom SoCs supported so group them under their
+>>>> own menu such that the selection is visually more appealing and we can
+>>>> easily add new platforms there in the future. This allows us to move
+>>>> ARCH_BRCMSTB back to its siblings.
+>>>>
+>>>> No functional changes introduced.
+>>>>
+>>>> Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
+>>>> ---
+>>>>
+>>>> Note this is based on "arm64: bcmbca: add arch bcmbca machine entry"
+>>>
+>>> Hi Florian,
+>>>
+>>> So far, we have tried to keep the Kconfig.platforms file rather coarse-grained,
+>>> mainly limiting it to company names and high-level families, but avoiding
+>>> sub-menus or adding too many sub-families.
+>>>
+>>> If we add per-vendor submenus, we should probably first decide how we
+>>> want to structure this across vendors. I've added maintainers and lists to
+>>> Cc for a couple of the ones that are in a similar situation.
+>>>
+>>> I can see a couple of ways we can do this:
+>>>
+>>> a) keep the list of platforms as short as possible, combining related
+>>>    SoC families from a single vendor wherever possible, but no sub-menus
+>>>    (same as today)
+>>>
+>>> b) Always use sub-menus when there is more than one family, but
+>>>     keep relatively coarse platform selection.
+>>>
+>>> c) Use sub-menus and also move to a more fine-grained SoC
+>>>      selection, similar to what we have on 32-bit arm.
+>>>
+>>> I would not really want to go to c), but a) and b) both make sense to
+>>> me as long as do it consistently across all platforms.
+>>>
+>>> Any other ideas or opinions?
+>>
+>> Whatever we decide here, the SoC can override in drivers/soc, just like
+>> Renesas did. I think Renesas chose option c), but made it in
+>> drivers/soc. I would vote to have consistent policy, so if arch/arm64 is
+>> a) or b), sub-archs should not redefine it in drivers/soc.
 > 
->  .../bindings/clock/qcom,msm8996-apcc.yaml     |  15 +-
->  drivers/clk/qcom/clk-cpu-8996.c               | 235 ++++++++++--------
->  2 files changed, 140 insertions(+), 110 deletions(-)
-> 
-> -- 
-> 2.36.1
-> 
+> We did so because of the "only a single symbol in
+> arch/arm64/Kconfig.platforms"-policy.
+
+I was not aware of that rule.
+
+It is a bit of a mixed situation with Broadcom SoCs but in essence, each 
+Kconfig entry denotes a deeply different SoC architecture at the memory 
+subsystem, bus, security or product space that you might not want to 
+enable in your kernel. There is definitively sharing of drivers between 
+all of the platforms and a lot of cross pollination too but usually 
+these are deeply different that different kernel images do make sense.
+
+The itch that I wanted to calm was that ARCH_BRCMSTB was after the other 
+Broadcom platforms separated by ARCH_BERLIN. if you prefer a pair of 
+KConfig comments to delineate them and flatten the platform selection, 
+that works for me, too.
+-- 
+Florian
