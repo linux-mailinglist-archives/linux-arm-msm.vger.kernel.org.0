@@ -2,134 +2,150 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 81ACF572CA5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Jul 2022 06:35:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 26F06572D7C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Jul 2022 07:42:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230249AbiGMEfl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Jul 2022 00:35:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37404 "EHLO
+        id S234092AbiGMFly (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Jul 2022 01:41:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54990 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230116AbiGMEfj (ORCPT
+        with ESMTP id S233769AbiGMFlc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Jul 2022 00:35:39 -0400
-Received: from NAM11-DM6-obe.outbound.protection.outlook.com (mail-dm6nam11olkn2011.outbound.protection.outlook.com [40.92.19.11])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A28AC444D;
-        Tue, 12 Jul 2022 21:35:38 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Os5v8jzSKTe+m4D1GbfIXxaG8XbCflxTR/xIV+lxwfuqmb9Q3XlMrLqMPJLqEwP7KwaQ7U62I3n4V4IIUYMUDyBT6OJnr5QpbvHWQ7Wbi8gF7rJqu4T6C6pnEuuoASlaOSVJUqPUsJex252KE5fZ6VXPEQ9+95ei/EM/1Ju2os2UClfNLapeuRBNI4owRb6WEFZ5+z6l4rGApl4l8fT6njRGG11Yx3NofkAm2ARqjMA1mLK00f4fHemjxkAPj7exaDATijEGNJ3b+LrXECRU2ZDMpK71FRY1NOMXI4iqrmw+/EDIuRx3cgxUl2U0VvXaGb5za/kbcYEvvzypksiWBQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=cXJFM4ijzj/+JMc4a9SojL4x1PCVIVCFObGWDp0G1bk=;
- b=H08vqa4GSqNb1mW094DaytiwIoflQC8cpNDJrNKgMGG83Bv2JUX/knFaFhAEEDOGyxtcbpb6xzXfbFDtiaZ0fzlznP+LHOL/3DfU/XBtGfoL6rDtqO+magl3hcQjNQPO6tISzDwf1GLEIYmaHUUfytrH6tkMopzQk+ZflUchc30WYIrKvg2lNZvoIMyXUEotJ6uvYmll+OFKWP/dVMYctSMPIA6PBCc+9Co4Kz7WkTOp+48T3uJcoIcy391VobcOIuUsQ/+oRuN7njsxwuxWnRWi0Qc+GnK7IDg/Ia72i0NGWxhvwgx4BNSFa48u3MN+eiEPC6Ac+KUgVGBqZ5+w5Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-Received: from BY5PR02MB7009.namprd02.prod.outlook.com (2603:10b6:a03:236::13)
- by CH2PR02MB6101.namprd02.prod.outlook.com (2603:10b6:610:b::27) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5417.25; Wed, 13 Jul
- 2022 04:35:36 +0000
-Received: from BY5PR02MB7009.namprd02.prod.outlook.com
- ([fe80::e080:d670:29c7:9180]) by BY5PR02MB7009.namprd02.prod.outlook.com
- ([fe80::e080:d670:29c7:9180%7]) with mapi id 15.20.5417.026; Wed, 13 Jul 2022
- 04:35:36 +0000
-Message-ID: <BY5PR02MB700920503721C0C490BDAE2FD9899@BY5PR02MB7009.namprd02.prod.outlook.com>
-Date:   Wed, 13 Jul 2022 10:05:26 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.0.1
-Subject: Re: [PATCH 0/5] Add support for Xiaomi Poco F1 EBBG variant
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
-References: <MN2PR02MB702415D7BF12B7B7A41B2D38D9829@MN2PR02MB7024.namprd02.prod.outlook.com>
- <b1829902-c271-a677-f423-99dbc85cba89@linaro.org>
-From:   Joel Selvaraj <jo@jsfamily.in>
-In-Reply-To: <b1829902-c271-a677-f423-99dbc85cba89@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-TMN:  [crJma6yO/0pKuP9j1J+wSu4LpbpfNtm3ylj5Bl6OlfipFi7aIx1BLCjrxrulQpUy]
-X-ClientProxiedBy: PN2PR01CA0154.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:c01:26::9) To BY5PR02MB7009.namprd02.prod.outlook.com
- (2603:10b6:a03:236::13)
-X-Microsoft-Original-Message-ID: <87ff8464-8776-baf9-508e-d14661919b82@jsfamily.in>
+        Wed, 13 Jul 2022 01:41:32 -0400
+Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 416E0E0276
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Jul 2022 22:36:41 -0700 (PDT)
+Received: by mail-pf1-x430.google.com with SMTP id o12so9314966pfp.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Jul 2022 22:36:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=swDuaVEjfQDSnt/+tLhKNmCVtI0rCsf/yOtGg4uNukA=;
+        b=ZIZsba5lOfVNSIR+fGjHmKHj0TvHo9laX90QNLTSyrxN6e214SoIGjyE9Z5zc7FCtG
+         LNHhRJy4jDxm2B491oqDssgMiOC+YkWDC8L/+0qhxuQkylHV8uNkp3B82iAKmpKICHT2
+         lPGK7XRngwRT1qadAKw2swJL7q6K99rV9Pp+FVasEelkaQF8baGQQMeS3DYxICPS63E5
+         81XkxoPed6FvFdrwPXX57Gb8KVMvDcnRsx34MZ6R26jcwQAcyVwIaJBzNbDfk/XT57no
+         6wVo2GkrbwrrNQ+7zxY0+GykpLeGXhec+9zV0w3LfqN65aL2T9QGTPevNByG9rNnGKGt
+         6UEQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=swDuaVEjfQDSnt/+tLhKNmCVtI0rCsf/yOtGg4uNukA=;
+        b=obSWY5adKzmKVYuXJ939+vI2Yq33zKyvFLGuw6BCvJEGjL52jwBNg6H/hr40OOTq5R
+         FB7q8w8oaxZQaW5hY9L3e0kZdnSoGms9/wAe8M6loxnAAMVy+guRxa5WM9nnLZcIQBCS
+         0+6CBid4tCXTuVHzEAf4TxUn1M/06r8ztRsPmnZABcAOW4Uorf3gIXWbOpO/zPD7PfQw
+         WGENPvmPwzryXcHhQNFZM68/UMROvRpjO3fDwa08Hf8/SQWQ3Wjb6dpje94QKdVgbjob
+         cch4T1lP31sbjx2/KVbxU0whyZ9u1cjWbCYb/Jt03Kg92rZWZV6+ysLqqe+I6lUOxW7d
+         DETQ==
+X-Gm-Message-State: AJIora/fjfTtJpPUkQEpB7Q6cS2Jqw3KkAM/IWJpdTLuUdbDQkO9Ude9
+        V7VfNNt8dE8xJQ8pgalpl4Dj0V+J50Q2U9/qpkjkmw==
+X-Google-Smtp-Source: AGRyM1sSE5OwbigkvwdXNQB+YSapvmZiwKYoaR+srwTKyTTfPrGJx5Wklbs1Mcl4LR1XIVd4DObLnb3M0TINGh4dVlY=
+X-Received: by 2002:a05:6a00:140a:b0:4e0:54d5:d01 with SMTP id
+ l10-20020a056a00140a00b004e054d50d01mr1481729pfu.20.1657690600733; Tue, 12
+ Jul 2022 22:36:40 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: faed5a97-3c2b-42d3-390e-08da6489218a
-X-MS-TrafficTypeDiagnostic: CH2PR02MB6101:EE_
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 3f5pY+0cUxTI0QeaUOuHKhPSdG2tqxBYY4eYmFGwKenXWXteLRWSsmaP0gugYi6qVsCBWqs5z5g949HAj5xyltY4gpcALE0eE80AEutG+7s9VagP8I3Fi0Xvm71Yi1YJfhqpaMa1pC4H/8ReR+NZaYbw5zBGY8kIZo/Xl10HOXXDgRkZvv2r1BU5mfJX9G9ZBr6QJAbpAM0WxMOH/M9suYeMW/00tu0tbqE+qW/j2QUob7cOjGmyBIxTELM0XX/3nV/xoK5MctQa03MxkdplliGAAVBcLqF7sg2TA8x9tjbwE/s2EB3Dyrd3CX8qvfg/iffUH5OOE7bqpP3d/QqxLjFl3PX0kU548pESH1xpcfEo3+3Aa0pg5TM/dQhI6Fc7Rq+5DhGYqPqHKxOkvP4gpyzZ7V5oMWw2jS5t5IEDgmbFSTyRa+d22tOlSjF2X42O1uMzMGI17Qg6eHqNnZAoBQJ+asXCSysHld2YiXyMpt1PupI8vJn0F0t2ec569ip/fSfOSOmrEa4HmAvdD0sEQAwiCEsLDZz5Ot38VE8IDI1EnpTUEvZfHpEOM5kZutuvNQMWhq5pK3xZ4Ont2AwPSW7tzee+pNjznjOURe+kY4iFXydr3HHsdyD9B63nDFWgEqZz/fybVXHn7qNwtzAIXMQP2fZS7gFsTivC4W50l+vJxvHN4ezzkQutz1mWHDOJJ7TrJAc2xmHVJwKZscPFGxEmhZCbDOe5Jt7jC9lSM3g=
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?REtyb091SFVvR1NSQ1B4cUpzWTBHWHhVVTllVUVOK1ZjekR3WGVyenpTd3FV?=
- =?utf-8?B?V1lVSU9McG5NQTRjNVlFZVVCVFFhY1laajVaSysrN2o1YXNmQXBqMUtCNnFo?=
- =?utf-8?B?SnlvSXpqd21HL2FlVCtpejNlU01xTE9lbk1rblFMRCs4aXBZa2RjN3ZKVHlH?=
- =?utf-8?B?dngwTGt1ZmtMcWVQNnNWUmZCc3BWNldReVJCbmJsRDZUcGVRZ2dmc1l2Unkr?=
- =?utf-8?B?ZzBHekFaSVlFLzVCRjI3ek9PTi9wVlp4bWcxNjRjbU5tNzVOa1R3ZStHZXpB?=
- =?utf-8?B?MUM0OVl5Y2pySXhDTmtST0FRZUh2ZXZidzZCcXlhSmF6cHBrMGY5YmZtZjZX?=
- =?utf-8?B?U2xjLzY0aTRGUXJDYTU3TWJUNklObkYyck9FNml0NjcrL2I5VHA3a3lIMUdV?=
- =?utf-8?B?ZGZ5SEU4d1g3dEtqVGtGN3pBdGFiRG9EcjcwVlRKbXRRQktLV3c2a3pYanMx?=
- =?utf-8?B?cVI1bUNVK001cE55VDRFODBtQVpwUXFWUTJFUGpTOTRDSTFIWmc3VWJtR3dH?=
- =?utf-8?B?eU9lMkJTUGtFcFZBWnVqZVg2Yk9ncnhKMUdBTnA4TFJHYkFCWjYvU2ZrbWhw?=
- =?utf-8?B?MGtIdGdNandUWmlZd1NiZkZ5RGRacEhwaDhEc0VCMWFWdWUvd3FqajZjdFdI?=
- =?utf-8?B?RlhrbG11Ui9Nb1JMRnhYNElhRHNJT21ESEx0TmtlcFFqTVdTTnVUbnBXdElV?=
- =?utf-8?B?ekF4RmtMYjlHQ1UyYkVwRy91bHBiNFEzK1VaVTE5VGJhditIcGFwNTJQd3Vh?=
- =?utf-8?B?QUdpUWdGcnhwMG05TkZWb3VOWUhZM0lSZWFqQzcxaXA2enZjRkZVSks4MFBM?=
- =?utf-8?B?TlgvVWEzcnJ0MU5nVkxPelBKdnFScnB3Q3QvWGFla1A2ODZlR3VydkdEc1I0?=
- =?utf-8?B?emFMMmd0eFU2d2ZYaXo2UkdNemQ5eFJoMFAvOU4zS2dyeWJVc05qdENlM0lk?=
- =?utf-8?B?RFFNZy8vaE5JVmwvdlJEL1FDRFJvOFlXdmVjdzNIYkRzZTBpZnRscGhqclhz?=
- =?utf-8?B?NGs2KzIxamNBVFRHTzVURVp2bTdBL21WaUZrcEVGQ2RIdnRDOGRVZHNuM0lU?=
- =?utf-8?B?WERYUXhhSWJRR1c0SWJrZzlQUWxPUTJzWmFtMjZISWRncDhLUFVZNkw0cXRD?=
- =?utf-8?B?SWdXVFVMeGNXRkhQbGpLR3ZFOHlUeU1rN0ljTEdFNFAvWGU1SHFJUWViVktk?=
- =?utf-8?B?dCtuTGN1SVBPRFZnZWtVd25mcVBZR1pVa1Y4NVFCQTgzQ2dCZHhXUlQrV09a?=
- =?utf-8?B?Nm1pYllJQmFibkZGTDlKYVMxM2o2QXVUSHM4bnBmbjZZQWlPd2RjWmRvZi9i?=
- =?utf-8?B?UGNOcWhyNmc1b2Y0bmgzWHdQaitvbStXQjIwZ2VQL2VOU05DVWxIUjVaVmpo?=
- =?utf-8?B?OUpyNWt0dUQvTk9XY20vd1o0cE00VUQzYnl6OHBzMndId3VlK3dIY3RGQjRQ?=
- =?utf-8?B?M0JnTVl4NXh3M0lCZEhuZGt5dHg3OEhKSkRqY0tIY1Q4UnkvNzdsMDRvTXZl?=
- =?utf-8?B?RG9uZ3NieWVPdmZqS3NuQUVLSVlwWnl6ZVZsN2ZYMmdEckhDYWI5ZXRQeGty?=
- =?utf-8?B?SkJvQlhhTTY3WU01VTh1d051QStoZzRRaWU0RUk4U3lISXlMQTVDZk1sd1Jv?=
- =?utf-8?B?VXlhRWpkRTRQSmtCOEtJZkVyMHpmS0RrYkFWUlZIOHNFNVVHb1R3Nkw0SXh2?=
- =?utf-8?B?K3Rud212N3VXamFpeUJpM05USUpwaVBFN3E5cURVTklWYldZTTBIMXRBaGUy?=
- =?utf-8?Q?Pwv/BVBsCCdIiqtyd+engdywdABCdLwWAHkTW14?=
-X-OriginatorOrg: sct-15-20-4755-11-msonline-outlook-99c3d.templateTenant
-X-MS-Exchange-CrossTenant-Network-Message-Id: faed5a97-3c2b-42d3-390e-08da6489218a
-X-MS-Exchange-CrossTenant-AuthSource: BY5PR02MB7009.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Jul 2022 04:35:36.5943
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH2PR02MB6101
-X-Spam-Status: No, score=0.4 required=5.0 tests=BAYES_00,FORGED_MUA_MOZILLA,
-        NICE_REPLY_A,RCVD_IN_DNSWL_NONE,SPF_HELO_PASS,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
+References: <20220711083038.1518529-1-sumit.garg@linaro.org>
+ <20220711154632.w5qtmroc22qc7yqq@maple.lan> <CAFA6WYPUX8aLGScx7er=3-iqEU9Vp+TsQAck_BnLz1RNMbr9cQ@mail.gmail.com>
+ <20220712140512.y7fezq2kjnuyq33b@maple.lan>
+In-Reply-To: <20220712140512.y7fezq2kjnuyq33b@maple.lan>
+From:   Sumit Garg <sumit.garg@linaro.org>
+Date:   Wed, 13 Jul 2022 11:06:28 +0530
+Message-ID: <CAFA6WYOs2CZ3Z6CDJEUhvf_nXW4fSeORnOHgQxE_vL82amV5XA@mail.gmail.com>
+Subject: Re: [PATCH v2] arm64: dts: qcom: qcs404: Fix incorrect USB2 PHYs assignment
+To:     Daniel Thompson <daniel.thompson@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, vkoul@kernel.org,
+        shawn.guo@linaro.org, bryan.odonoghue@linaro.org,
+        nicolas.dechesne@linaro.org, mworsfold@impinj.com,
+        andrey.konovalov@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Krzysztof Kozlowski
+On Tue, 12 Jul 2022 at 19:35, Daniel Thompson
+<daniel.thompson@linaro.org> wrote:
+>
+> On Tue, Jul 12, 2022 at 06:02:22PM +0530, Sumit Garg wrote:
+> > On Mon, 11 Jul 2022 at 21:16, Daniel Thompson
+> > <daniel.thompson@linaro.org> wrote:
+> > >
+> > > On Mon, Jul 11, 2022 at 02:00:38PM +0530, Sumit Garg wrote:
+> > > > Currently the DT for QCS404 SoC has setup for 2 USB2 PHYs with one =
+each
+> > > > assigned to USB3 controller and USB2 controller. This assignment is
+> > > > incorrect which only works by luck: as when each USB HCI comes up i=
+t
+> > > > configures the *other* controllers PHY which is enough to make them
+> > > > happy. If, for any reason, we were to disable one of the controller=
+s then
+> > > > both would stop working.
+> > > >
+> > > > This was a difficult inconsistency to be caught which was found whi=
+le
+> > > > trying to enable USB support in u-boot. So with all the required dr=
+ivers
+> > > > ported to u-boot, I couldn't get the same USB storage device enumer=
+ated
+> > > > in u-boot which was being enumerated fine by the kernel.
+> > > >
+> > > > The root cause of the problem came out to be that I wasn't enabling=
+ USB2
+> > > > PHY: "usb2_phy_prim" in u-boot. Then I realised that via simply dis=
+abling
+> > > > the same USB2 PHY currently assigned to USB2 host controller in the
+> > > > kernel disabled enumeration for USB3 host controller as well.
+> > > >
+> > > > So fix this inconsistency by correctly assigning USB2 PHYs.
+> > > >
+> > > > Fixes: 9375e7d719b3 ("arm64: dts: qcom: qcs404: Add USB devices and=
+ PHYs")
+> > > > Signed-off-by: Sumit Garg <sumit.garg@linaro.org>
+> > >
+> > > I've not got one of these board (nor any documentation for them) but =
+the
+> > > description and change look OK. Thus FWIW:
+> > >
+> > > Reviewed-by: Daniel Thompson <daniel.thompson@linaro.org>
+> > >
+> >
+> > Thanks Daniel for the review.
+>
+> No worries.
+>
+>
+> > BTW, I did confirmed that this fix is correct with respect to
+> > documentation (SA2150P LINUX USB TECHNICAL OVERVIEW) as well:
+> >
+> > 2.1 USB memory addresses
+> > =E2=96=A0 USB3.0 core address starts with 0x7580000. USB3.0 is connecte=
+d to:
+> >  =E2=96=A1 SS PHY with start address as 0x78000
+> >  =E2=96=A1 HS PHY with start address as 0x7a000.
+> > =E2=96=A0 USB2.0 core address starts with 0x78c0000; it is connected on=
+ly to
+> > HS PHY with the start address as 0x7c000.
+>
+> I didn't mean to imply the patch was in any way deficient (the patch
+> description showed your experimental method pretty clearly).  I just
+> wanted to be clear that I hadn't double checked anything outside of the
+> patch itself!
+>
 
-On 12/07/22 18:57, Krzysztof Kozlowski wrote:
-> None of your patches reached recipients and mailing lists.
+No worries, I see your point. I just wanted to put out this
+information for maintainers which I was able to find yesterday.
 
-Thanks for letting me know. I didnt notice. It was shown in patchwork
-website and I thought it reached the mailing list too. I have RESEND the
-patches. This time, the cover letter (0/5) seems to be in a different
-thread and the rest of the patches (1 to 5/5) seems to be in a different
-thread. But all of them reached the mailing list though. I am not sure
-what is causing the issue though. Can this accepted? or do I need to
-resend them again?
+-Sumit
 
-> Best regards,
-> Krzysztof
-
-Best Regards,
-Joel Selvaraj
+>
+> Daniel.
