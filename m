@@ -2,126 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D2B99573AB1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Jul 2022 17:58:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CF2F9573AD4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Jul 2022 18:09:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237082AbiGMP6E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Jul 2022 11:58:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34314 "EHLO
+        id S234652AbiGMQJo convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Jul 2022 12:09:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45346 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230392AbiGMP6C (ORCPT
+        with ESMTP id S229490AbiGMQJm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Jul 2022 11:58:02 -0400
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3B434F6AB
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Jul 2022 08:58:00 -0700 (PDT)
-Received: by mail-ej1-x62d.google.com with SMTP id os14so20648667ejb.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Jul 2022 08:58:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=5/Vj1VhdY5NW6ohPgoVwI8+jslVLxU7aofSuN+zvekk=;
-        b=oUXldJ8ZPFnIrUN6j4zP6t/M60/eQCX1n+2O4QAs8x351TwUOianbZzOD/qVR5Xbc1
-         VgSyE5rPJF83VQ4d0XEI/Dg0M49+YbqXCJDEM1JqYcaQBRedJVat7BoSiFToqHh60rwm
-         6mQxbKhfNx7JevSsNTK0eoU3OPJfhmJvL0syA=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=5/Vj1VhdY5NW6ohPgoVwI8+jslVLxU7aofSuN+zvekk=;
-        b=jIEQxnUpzx88pFSxVGVDq0jCLogH5MZpa5mJX2++pRUxUAHZycmhrn8CZdvsMgAp2t
-         vpTAgLoSVnYelZZlrfwKnQbsGtgvCrRkPuvrhdL4LkvY9eDR1KleGy5j94eF+3RR51aV
-         DULynd7ITM9s8sgB4obr6X6QTnarVQF+PYxKZwH7SRS22n8RiIvPbIBne+aRWKcA/bbm
-         lZoowhzca6PvhzNEAjcgy5E/bYja5hM2Qas4rVnmfcO9Mu7BzJ3S9+v2e5Fg0LoBDoyt
-         D8ggjd5yCEE1qSO0FOxkRPMsR/Z+0SDKTuP8jYHMUPCHhEUP2ieTUJg3g6bLUTP5fpYd
-         4SFQ==
-X-Gm-Message-State: AJIora8GQgppE/NswzC3L7qmdKj6Db4OXv2UkUCZiPpJPggsPwqaHw0S
-        O+m9D+cHwVHfWeVcOepbIunTtmAkgvmRlrcj
-X-Google-Smtp-Source: AGRyM1vnnMzLd4vqN2pivvQhunvAN5pwfBZaGHtIJomxzdO3loml1SyEBiHLr5SSMr+99UYsuS5l+A==
-X-Received: by 2002:a17:906:3989:b0:70c:2090:b498 with SMTP id h9-20020a170906398900b0070c2090b498mr4212321eje.56.1657727879024;
-        Wed, 13 Jul 2022 08:57:59 -0700 (PDT)
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com. [209.85.221.54])
-        by smtp.gmail.com with ESMTPSA id r11-20020a170906a20b00b0072b2378027csm5048609ejy.26.2022.07.13.08.57.57
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 13 Jul 2022 08:57:58 -0700 (PDT)
-Received: by mail-wr1-f54.google.com with SMTP id z12so16127525wrq.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Jul 2022 08:57:57 -0700 (PDT)
-X-Received: by 2002:adf:fb12:0:b0:20c:79b2:a200 with SMTP id
- c18-20020adffb12000000b0020c79b2a200mr4002688wrr.617.1657727877212; Wed, 13
- Jul 2022 08:57:57 -0700 (PDT)
+        Wed, 13 Jul 2022 12:09:42 -0400
+Received: from relay3.hostedemail.com (smtprelay0010.hostedemail.com [216.40.44.10])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4DA082315D;
+        Wed, 13 Jul 2022 09:09:40 -0700 (PDT)
+Received: from omf18.hostedemail.com (a10.router.float.18 [10.200.18.1])
+        by unirelay06.hostedemail.com (Postfix) with ESMTP id CFEA934F0C;
+        Wed, 13 Jul 2022 16:01:22 +0000 (UTC)
+Received: from [HIDDEN] (Authenticated sender: joe@perches.com) by omf18.hostedemail.com (Postfix) with ESMTPA id 16A9E34;
+        Wed, 13 Jul 2022 16:01:16 +0000 (UTC)
+Message-ID: <75404573094d1c46172fcd51dad6a4e564da1542.camel@perches.com>
+Subject: Re: [PATCH] soundwire: qcom: Update error prints to debug prints
+From:   Joe Perches <joe@perches.com>
+To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
+        Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+        vkoul@kernel.org, agross@kernel.org, bjorn.andersson@linaro.org,
+        lgirdwood@gmail.com, broonie@kernel.org, robh+dt@kernel.org,
+        quic_plai@quicinc.com, bgoswami@quicinc.com, perex@perex.cz,
+        tiwai@suse.com, srinivas.kandagatla@linaro.org,
+        quic_rohkumar@quicinc.com, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, swboyd@chromium.org,
+        judyhsiao@chromium.org
+Date:   Wed, 13 Jul 2022 09:01:16 -0700
+In-Reply-To: <8cde58d2-3b10-b88b-2d10-88e76fbcac06@quicinc.com>
+References: <1657714921-28072-1-git-send-email-quic_srivasam@quicinc.com>
+         <75e9b775-3bbe-0b34-2bd6-b4ac74620672@linux.intel.com>
+         <8cde58d2-3b10-b88b-2d10-88e76fbcac06@quicinc.com>
+Content-Type: text/plain; charset="ISO-8859-1"
+Content-Transfer-Encoding: 8BIT
+User-Agent: Evolution 3.44.1-0ubuntu1 
 MIME-Version: 1.0
-References: <20220712150219.20539-1-krzysztof.kozlowski@linaro.org> <20220712150219.20539-4-krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220712150219.20539-4-krzysztof.kozlowski@linaro.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Wed, 13 Jul 2022 08:57:45 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=VPHwkKUjanLtaM+cXdp+VGPExJ_XDe=-O8j=ayGNtnVQ@mail.gmail.com>
-Message-ID: <CAD=FV=VPHwkKUjanLtaM+cXdp+VGPExJ_XDe=-O8j=ayGNtnVQ@mail.gmail.com>
-Subject: Re: [PATCH v2 3/3] mmc: sdhci-msm: drop redundant of_device_id entries
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Ulf Hansson <ulf.hansson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Adrian Hunter <adrian.hunter@intel.com>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        Linux MMC List <linux-mmc@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+X-Rspamd-Server: rspamout06
+X-Rspamd-Queue-Id: 16A9E34
+X-Spam-Status: No, score=-0.9 required=5.0 tests=BAYES_00,FORGED_SPF_HELO,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,
+        SPF_NONE,T_SCC_BODY_TEXT_LINE,UNPARSEABLE_RELAY autolearn=no
         autolearn_force=no version=3.4.6
+X-Stat-Signature: oamptbghkx51eutk1cq8n1rajg7frenc
+X-Session-Marker: 6A6F6540706572636865732E636F6D
+X-Session-ID: U2FsdGVkX1/ELQpropLow+VPSUREm5LEbTNOk8SYDOE=
+X-HE-Tag: 1657728076-660807
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Wed, 2022-07-13 at 20:22 +0530, Srinivasa Rao Mandadapu wrote:
+> On 7/13/2022 7:53 PM, Pierre-Louis Bossart wrote:
+> Thanks for your time Pierre-Louis!!!
+> > 
+> > On 7/13/22 07:22, Srinivasa Rao Mandadapu wrote:
+> > > Upadte error prints to debug prints to avoid redundant logging in kernel
+> > update
+[]
+> > > diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
+[]
+> > > @@ -573,11 +573,10 @@ static irqreturn_t qcom_swrm_irq_handler(int irq, void *dev_id)
+> > >   				break;
+> > >   			case SWRM_INTERRUPT_STATUS_NEW_SLAVE_ATTACHED:
+> > >   			case SWRM_INTERRUPT_STATUS_CHANGE_ENUM_SLAVE_STATUS:
+> > > -				dev_err_ratelimited(swrm->dev, "%s: SWR new slave attached\n",
+> > > -					__func__);
+> > > +				dev_dbg(swrm->dev, "%s: SWR new slave attached\n", __func__);
 
-On Tue, Jul 12, 2022 at 8:02 AM Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
->
-> This reverts three commits:
-> 1. Revert "mmc: sdhci-msm: Add compatible string check for sdx65"
->    This reverts commit 953706844f0f2fd4dc6984cc010fe6cf51c041f2.
->
-> 2. Revert "mmc: sdhci-msm: Add compatible string check for sm8150"
->    This reverts commit 5acd6adb65802cc6f9986be3750179a820580d37.
->
-> 3. Revert "mmc: sdhci-msm: Add SoC specific compatibles"
->    This reverts commit 466614a9765c6fb67e1464d0a3f1261db903834b.
->
-> The oldest commit 466614a9765c ("mmc: sdhci-msm: Add SoC specific
-> compatibles") did not specify what benefits such multiple compatibles
-> bring, therefore assume there is none.  On the other hand such approach
-> brings a lot of churn to driver maintenance by expecting commit for
-> every new compatible, even though it is already covered by the fallback.
->
-> There is really no sense in duplicating of_device_id for each
-> variant, which is already covered by generic compatible fallback
-> qcom,sdhci-msm-v4 or qcom,sdhci-msm-v5.
->
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Could also drop the "%s: ", __func__ as it's already a unique message
+and dynamic debug could add it back if really desired.
 
-Personally, I would have taken the extra step and added a comment in
-the code to prevent someone from doing this again. Maybe like this:
-
-/*
- * In the device tree, all boards are required to have _two_ compatible
- * strings listed: a SoC-specific one followed by a more generic one.
- * Normally we can just rely on the generic string, but we always
- * include both so that if we ever find a bug on a specific SoC that
- * we need to workaround (like in sdm845/sc7180) that we can quickly
- * work around it without any changes to the dts.
- */
-
-In any case:
-
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
