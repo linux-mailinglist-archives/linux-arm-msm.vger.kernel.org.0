@@ -2,117 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 064EE573942
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Jul 2022 16:52:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D8F0E573951
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Jul 2022 16:54:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231646AbiGMOwy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Jul 2022 10:52:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55874 "EHLO
+        id S230487AbiGMOyu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Jul 2022 10:54:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58228 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229654AbiGMOwy (ORCPT
+        with ESMTP id S230093AbiGMOyu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Jul 2022 10:52:54 -0400
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A16A3C14D
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Jul 2022 07:52:53 -0700 (PDT)
-Received: by mail-wm1-x32f.google.com with SMTP id ay25so6671643wmb.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Jul 2022 07:52:53 -0700 (PDT)
+        Wed, 13 Jul 2022 10:54:50 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0CB3B2C135;
+        Wed, 13 Jul 2022 07:54:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=EGhT6oQLUBa+W/fyk6df1q5eONVnZeGwxski/kFteZ4=;
-        b=pSgcyEdw0OMPfVzZ7hiuBQyBxbiO6YQHB2bIzLkBznHKWZN4EhLPZRbkheBwgecffS
-         y6o8ok3k0AS+LxOIouzTFYnUgcr7U+cxElQI6CGLFnF01wFGbVlz6aqsFeI+m2TYw0Zj
-         /Bi5IalvL1Bx+FI8RpLH7xMPMBFiEjzVsz1SSRJLD41378cgiBFXKJtu2GPELRYYXj+o
-         XiDHAQYMzOMQX425adgDCdgUKQ6uNAumZEY8hgFtckWtoUPJXWHqZ/UIJRcviyYM1RLZ
-         TnsypqIv7164hUxOH7N8VxHkSuRX5fTUvRUA5pDnPxZ9JsBuzTfGdXFg3WxKELRPXHsj
-         SicQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=EGhT6oQLUBa+W/fyk6df1q5eONVnZeGwxski/kFteZ4=;
-        b=OJw/26TfDL7ivBw63Jk+4cgspFsZcXx5BuHk2Zw9nDKFY+JAspI+6y3gmXhx065muI
-         2jiKufJHmFOpuiZ0hfCmqw5GoJ1LY6nPtUJzidzqDr08/xjf1fJ2+ZUwjZhdMP3Kf4pg
-         QFU2IO6lOrYrCpqrAwXyKFDwYhCj2qk5UWhPcL51ueBDOcTFixBJtWbSjSsCVdbOEL6J
-         /5NC+Qbjyzioa5DZgyR6ePWxa6u6kOhtQWuRaNO+mMIAONgZqBMmr029TUng0fzwxdxW
-         EyBJbKgPW/0yYjaBl9EW3uNmbuK/qOQtb0/W9pI/pxg9CsT042IL3TaIraDmHbSTya/o
-         MwKw==
-X-Gm-Message-State: AJIora8rsg0NwWvtPhjEMyD0g9Jw6WBOM69dh2KJtishEVWIU1N7xTb8
-        rNKvJdUPDV20JmX3PpnLabTV6w==
-X-Google-Smtp-Source: AGRyM1t9d1sJ+OIQ8vqqOHKXJXvMUn1FrgqN+sm2nQFxkb6mskex0F72PB+c+DGmeQjKW9EjKpVOTg==
-X-Received: by 2002:a05:600c:1c0e:b0:3a1:9a4b:28ee with SMTP id j14-20020a05600c1c0e00b003a19a4b28eemr9744187wms.203.1657723971679;
-        Wed, 13 Jul 2022 07:52:51 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id bg11-20020a05600c3c8b00b003a1980d55c4sm2657615wmb.47.2022.07.13.07.52.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 13 Jul 2022 07:52:51 -0700 (PDT)
-Message-ID: <ded0065e-0315-ce1f-01da-bdf3b83adf66@linaro.org>
-Date:   Wed, 13 Jul 2022 15:52:50 +0100
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1657724089; x=1689260089;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=oo2Tg2dP3TBQ1rxacXFBYQoxBxf0O9buVeEXcXigr34=;
+  b=eDGD4eBuAOKmC2OUtskNwMskTPz9xgE7MpuaDejieUj/YL9YqOECz2E7
+   pr9VAB+qf6nAU10USgghzG01kfKweI9XVH1AW1MVHi3Kv0KxfreCXGYBf
+   CuWQX+tBEQUxJwa/YTlmBYFcf6jNXbdP1Jut1BQlT9yaKNcxPVw19fGW7
+   U=;
+Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
+  by alexa-out.qualcomm.com with ESMTP; 13 Jul 2022 07:54:49 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Jul 2022 07:54:48 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Wed, 13 Jul 2022 07:54:47 -0700
+Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Wed, 13 Jul 2022 07:54:41 -0700
+From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+To:     <vkoul@kernel.org>, <agross@kernel.org>,
+        <bjorn.andersson@linaro.org>, <lgirdwood@gmail.com>,
+        <broonie@kernel.org>, <robh+dt@kernel.org>,
+        <quic_plai@quicinc.com>, <bgoswami@quicinc.com>, <perex@perex.cz>,
+        <tiwai@suse.com>, <srinivas.kandagatla@linaro.org>,
+        <quic_rohkumar@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <alsa-devel@alsa-project.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <swboyd@chromium.org>,
+        <judyhsiao@chromium.org>
+CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Subject: [PATCH v2] soundwire: qcom: Update error prints to debug prints
+Date:   Wed, 13 Jul 2022 20:24:27 +0530
+Message-ID: <1657724067-19004-1-git-send-email-quic_srivasam@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.0
-Subject: Re: [RESEND PATCH 4/5] cpufreq: qcom-cpufreq-nvmem: Rename qcs404
- data to cpr_genpd
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        ilia.lin@kernel.org, agross@kernel.org, bjorn.andersson@linaro.org,
-        rafael@kernel.org, viresh.kumar@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org
-Cc:     linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org
-References: <20220629130303.3288306-1-bryan.odonoghue@linaro.org>
- <20220629130303.3288306-5-bryan.odonoghue@linaro.org>
- <e160364f-68b9-2ab6-e48d-86d12e4a2f0c@linaro.org>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <e160364f-68b9-2ab6-e48d-86d12e4a2f0c@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 13/07/2022 14:50, Dmitry Baryshkov wrote:
-> On 29/06/2022 16:03, Bryan O'Donoghue wrote:
->> At the moment the CPR genpd based code is named after the qcs404 however
->> msm8936, msm8939 and other antecedent processors of the qcs404 can also
->> make use of this data.
->>
->> Rename it to reflect a more generic use.
->>
->> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->> ---
->>   drivers/cpufreq/qcom-cpufreq-nvmem.c | 8 ++++----
->>   1 file changed, 4 insertions(+), 4 deletions(-)
->>
->> diff --git a/drivers/cpufreq/qcom-cpufreq-nvmem.c 
->> b/drivers/cpufreq/qcom-cpufreq-nvmem.c
->> index 6dfa86971a757..355c8b99e974a 100644
->> --- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
->> +++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
->> @@ -252,10 +252,10 @@ static const struct qcom_cpufreq_match_data 
->> match_data_krait = {
->>       .get_version = qcom_cpufreq_krait_name_version,
->>   };
->> -static const char *qcs404_genpd_names[] = { "cpr", NULL };
->> +static const char *cpr_genpd_names[] = { "cpr", NULL };
-> 
-> As a generic comment, as you are touching this piece of code, code you 
-> please move cpr_genpd_names above match_data_kryo? So that all 
-> match_data instances can use it.
+Update error prints to debug prints to avoid redundant logging in kernel
+boot time, as these prints are informative prints in irq handler.
 
-NP.
-
-This has been dropped in V3 per Stephan's preference to not touch 
-anything CPR related until doing the whole thing for 8939.
-
+Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
 ---
-bod
+Changes since v1:
+    -- Remove redundant __func__ argument.
+    -- Replace dev_dbg with dev_dbg_ratelimited.
+
+ drivers/soundwire/qcom.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
+index 9df970e..976ae75 100644
+--- a/drivers/soundwire/qcom.c
++++ b/drivers/soundwire/qcom.c
+@@ -573,11 +573,10 @@ static irqreturn_t qcom_swrm_irq_handler(int irq, void *dev_id)
+ 				break;
+ 			case SWRM_INTERRUPT_STATUS_NEW_SLAVE_ATTACHED:
+ 			case SWRM_INTERRUPT_STATUS_CHANGE_ENUM_SLAVE_STATUS:
+-				dev_err_ratelimited(swrm->dev, "%s: SWR new slave attached\n",
+-					__func__);
++				dev_dbg_ratelimited(swrm->dev, "SWR new slave attached\n");
+ 				swrm->reg_read(swrm, SWRM_MCP_SLV_STATUS, &slave_status);
+ 				if (swrm->slave_status == slave_status) {
+-					dev_err(swrm->dev, "Slave status not changed %x\n",
++					dev_dbg(swrm->dev, "Slave status not changed %x\n",
+ 						slave_status);
+ 				} else {
+ 					qcom_swrm_get_device_status(swrm);
+-- 
+2.7.4
 
