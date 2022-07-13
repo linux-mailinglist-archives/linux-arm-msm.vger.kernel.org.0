@@ -2,95 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2B27F572E8A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Jul 2022 08:54:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 83922573106
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Jul 2022 10:26:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234488AbiGMGxp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Jul 2022 02:53:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49348 "EHLO
+        id S235681AbiGMI0q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Jul 2022 04:26:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59528 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234412AbiGMGxX (ORCPT
+        with ESMTP id S235626AbiGMI03 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Jul 2022 02:53:23 -0400
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E442AE0F45;
-        Tue, 12 Jul 2022 23:53:22 -0700 (PDT)
+        Wed, 13 Jul 2022 04:26:29 -0400
+Received: from mail-qt1-x82d.google.com (mail-qt1-x82d.google.com [IPv6:2607:f8b0:4864:20::82d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 911109FE1D;
+        Wed, 13 Jul 2022 01:25:03 -0700 (PDT)
+Received: by mail-qt1-x82d.google.com with SMTP id g6so11315202qtu.2;
+        Wed, 13 Jul 2022 01:25:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1657695203; x=1689231203;
-  h=from:to:cc:subject:date:message-id:mime-version;
-  bh=8n8+PO3A95/qKneSFHtNBTYCjF+JHU9XIFkvb+rLAQ8=;
-  b=uPq9DHAsMbPbm87n+OZip+1/u9dmsK3nj53IvftZlE2uj4BdP+9/FOFD
-   V2u5BCQY/lzi38vaGYLbCWEM3TMfqwZA4ah24JUyLk7CZnTRafs8iQui8
-   nMj6moLFz3AM2T+WYj1/hMTbN7n9h5k1fyM7XIMgOAGwi8Iq/sDPkwRjR
-   s=;
-Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 12 Jul 2022 23:53:22 -0700
-X-QCInternal: smtphost
-Received: from unknown (HELO nasanex01a.na.qualcomm.com) ([10.52.223.231])
-  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Jul 2022 23:53:22 -0700
-Received: from zijuhu-gv.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Tue, 12 Jul 2022 23:53:19 -0700
-From:   Zijun Hu <quic_zijuhu@quicinc.com>
-To:     <marcel@holtmann.org>, <johan.hedberg@gmail.com>,
-        <luiz.dentz@gmail.com>, <davem@davemloft.net>,
-        <edumazet@google.com>, <kuba@kernel.org>, <pabeni@redhat.com>,
-        <luiz.von.dentz@intel.com>, <quic_zijuhu@quicinc.com>
-CC:     <linux-kernel@vger.kernel.org>, <linux-bluetooth@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <netdev@vger.kernel.org>
-Subject: [PATCH v1] Bluetooth: hci_sync: Correct hci_set_event_mask_page_2_sync() event mask
-Date:   Wed, 13 Jul 2022 14:53:14 +0800
-Message-ID: <1657695194-25801-1-git-send-email-quic_zijuhu@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=aSPbs5jGfLTZctvd5nbr966YtO4x5hSc1Gz30C4v3cA=;
+        b=HiJ/y+GNuYUzwt2HnUqRwSRWUatDURDJknYaE9V2CvwhTd8ND6InA6EFP7baAeIEtI
+         mi/b2Syk0DqAGKgAVpSGFb2tXWhywxT0+MtWXsk8xGf77IPZ4l4H90xAjKPbJPiNDfbx
+         xEW6HUYjS2b3mXVD1anijEvRq7xSBD9UxaiAM9fd79ZurjLcG34v1l8bA22UAvnQX5C6
+         p58LpcTKybMjirqwQTZ0Qv5cROyD0NJ2pHGNQ0lAi2UYSOAQ2U4KfwIrqY0dILXf0xKk
+         TdooFTKzDIJ1wIDf4kSQkFPGq/x+IemBUSuV+e36fBOJexqTMoMJA1QmUL8zmVQ1ZNPN
+         zprg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=aSPbs5jGfLTZctvd5nbr966YtO4x5hSc1Gz30C4v3cA=;
+        b=GKQeAqh2VgL9B4VO8+IfdNLpRo6aoEjXp6VtQf+ybrfBFfytLcVACKVtVwpOn8JAs6
+         Rhgy1SyuK8gkYT6968uel9kZDNfPjYgCs+Afd5oSP/Ro+DGwoUU6buHOP2gJqwk5SQd4
+         vQHJgwDuyN+Exk19iD7GTzcmS7gF3BzYP16w6/+ncJ3f1BULEdoqk/xSENqHMjjz9Zg2
+         zWoa00spih4ru7l9xARO3hk8kVgM+8czmGW652n1E91USHKwB8Yq0NIiRVTOAYj88LP/
+         QD0VdPahD1vyCWoQnUokcsZr+9PdaVxrK4oxy6nr3MbjvuG5ksM1mQmS/4AbHW1fDwIP
+         pt6A==
+X-Gm-Message-State: AJIora+oNKqD0LuX1xewdDGLGQCiT9eJZ65dU/5rWkHcwrrlYZrvUTvL
+        O3LD46OFvcXXhBDy+BlCqBRJqe+i6Qeihmi22CM68FnL
+X-Google-Smtp-Source: AGRyM1sEzdqXq/1mgwSZSo2VnWb3RUhBjvBFgMyKxI3yId74xi6MmqySKCLqmxMb5QyIN4478qIRXzcgzqkZNJ/vjU0=
+X-Received: by 2002:ac8:5bcd:0:b0:31e:b0c5:4298 with SMTP id
+ b13-20020ac85bcd000000b0031eb0c54298mr1811791qtb.318.1657700701299; Wed, 13
+ Jul 2022 01:25:01 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+References: <20220711203408.2949888-1-robimarko@gmail.com> <20220711203408.2949888-3-robimarko@gmail.com>
+ <CACRpkdbLKXrVu9q3m1BRfRMT5q4gtrtuSNw0PmTsZBraeytVFw@mail.gmail.com>
+In-Reply-To: <CACRpkdbLKXrVu9q3m1BRfRMT5q4gtrtuSNw0PmTsZBraeytVFw@mail.gmail.com>
+From:   Robert Marko <robimarko@gmail.com>
+Date:   Wed, 13 Jul 2022 10:24:50 +0200
+Message-ID: <CAOX2RU6uRbkU3VCZRuNQewndEGiJweRbr0PehARyHGjhq6-5FA@mail.gmail.com>
+Subject: Re: [PATCH v7 3/7] dt-bindings: pinctrl: qcom,pmic-gpio: add PMP8074
+To:     Linus Walleij <linus.walleij@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        lee.jones@linaro.org, Rob Herring <robh+dt@kernel.org>,
+        krzysztof.kozlowski+dt@linaro.org, jic23@kernel.org,
+        lars@metafoo.de, linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Devicetree List <devicetree@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        linux-gpio@vger.kernel.org, linux-iio@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Event HCI_Truncated_Page_Complete should belong to central
-and HCI_Peripheral_Page_Response_Timeout should belong to
-peripheral, but hci_set_event_mask_page_2_sync() take these
-two events for wrong roles, so correct it by this change.
+On Tue, 12 Jul 2022 at 10:39, Linus Walleij <linus.walleij@linaro.org> wrote:
+>
+> On Mon, Jul 11, 2022 at 10:34 PM Robert Marko <robimarko@gmail.com> wrote:
+>
+> > Document the compatible for PMP8074 which has 12 GPIO-s with holes at
+> > GPIO1 and GPIO12.
+> >
+> > Signed-off-by: Robert Marko <robimarko@gmail.com>
+> > Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>
+> Patch applied to the pinctrl tree.
 
-Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
----
- net/bluetooth/hci_sync.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Hi Linus,
+Dont want to bother you, but I am not seeing this and the GPIO patch
+in the pinctrl tree.
 
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index 7cb310051879..c72533bb9834 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -3602,7 +3602,7 @@ static int hci_set_event_mask_page_2_sync(struct hci_dev *hdev)
- 	if (lmp_cpb_central_capable(hdev)) {
- 		events[1] |= 0x40;	/* Triggered Clock Capture */
- 		events[1] |= 0x80;	/* Synchronization Train Complete */
--		events[2] |= 0x10;	/* Peripheral Page Response Timeout */
-+		events[2] |= 0x08;	/* Truncated Page Complete */
- 		events[2] |= 0x20;	/* CPB Channel Map Change */
- 		changed = true;
- 	}
-@@ -3614,7 +3614,7 @@ static int hci_set_event_mask_page_2_sync(struct hci_dev *hdev)
- 		events[2] |= 0x01;	/* Synchronization Train Received */
- 		events[2] |= 0x02;	/* CPB Receive */
- 		events[2] |= 0x04;	/* CPB Timeout */
--		events[2] |= 0x08;	/* Truncated Page Complete */
-+		events[2] |= 0x10;	/* Peripheral Page Response Timeout */
- 		changed = true;
- 	}
- 
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, a Linux Foundation Collaborative Project
-
+Regards,
+Robert
+>
+> Yours,
+> Linus Walleij
