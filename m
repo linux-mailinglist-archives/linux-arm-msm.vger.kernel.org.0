@@ -2,169 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EA303573245
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Jul 2022 11:17:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 967E55734B4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Jul 2022 12:55:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235163AbiGMJRT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Jul 2022 05:17:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33304 "EHLO
+        id S229941AbiGMKzm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Jul 2022 06:55:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48206 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235255AbiGMJRS (ORCPT
+        with ESMTP id S235313AbiGMKzl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Jul 2022 05:17:18 -0400
-Received: from mail-qv1-f44.google.com (mail-qv1-f44.google.com [209.85.219.44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A50FE4F0D;
-        Wed, 13 Jul 2022 02:17:17 -0700 (PDT)
-Received: by mail-qv1-f44.google.com with SMTP id p14so4404021qvo.9;
-        Wed, 13 Jul 2022 02:17:17 -0700 (PDT)
+        Wed, 13 Jul 2022 06:55:41 -0400
+Received: from mail-il1-x135.google.com (mail-il1-x135.google.com [IPv6:2607:f8b0:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DC3BFF591
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Jul 2022 03:55:40 -0700 (PDT)
+Received: by mail-il1-x135.google.com with SMTP id z3so6433772ilz.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Jul 2022 03:55:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=plZSlH+I5O8PlpsjQVgP55GuUwpIHXkHnkPiVS3vYiY=;
+        b=B5OeBVGlVuvH+a4ow6PdXZ4coDwTfkRH0D5Zbh0wAKomf3JxsCXnRYmEb7MNyDOuKr
+         YTMelfs6dC/HuIm8EcBpVA1rFGiKYD/7NgYfaBAc3M9KUXuf1ZM7USxuNwS+YQZCluSw
+         mvX67g56k4vXLNaDzu8WDcsp3kuFHMkLcosF1x+YpDTNYK3OIr7SRQSrhPL+s7+YFCiP
+         djQ1Kcim6noT9sttX4cPkoleoZC9tN7T4cgNi/H5zxLh/Qwf3hRFZwxzGTDIT6oiFgn4
+         hAqJSHpA5wGNVK5kyKGWr3pDO+AkIU20rAdJQrgGRwC+MYSy1b3EWPCxJG6SAMVAjp0/
+         7Srg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=Zby97TNc1ghpjXRqZzrsX3Uiwj/4uwx2MsSKfbl6g7E=;
-        b=u5CPOFktHPDoBx0+1PEVf4b5eS/AEEDoa5fAZucWF8UAspytg0asKGIDYNU5xX/25A
-         ZdndZqfeFshpZCWXjZ0qoDJQ3+vRBTJBd+eacmVGYMYienQya6K84rf5uyWQlrxSyTey
-         EkeSCiyScl+bul9yy7VYg9UOpXdld+zUwUCJSqiYeW1FViEs79aLcTX2zqHF+mEod9mY
-         5vyYs27sVVavFmOesgoGeJIUeXkJ4cQA/+mu8l1KW9zInoGWsK2j7ptZp6F4o0N4kRUg
-         5NEkuUj36U3t/fiXA2e97ZcNEDtP++uTRqRtzgBnfQzNutfl2ZQSn5RfaFJ9YecYwqEm
-         PFAw==
-X-Gm-Message-State: AJIora9GF/51kq0zZfRgKcnYOU2eKa/VG+UPfWVxf4cbhqcaIf116Ya2
-        WMtXqYlv01dY/8Dsz8+mgaAykoal97ddog==
-X-Google-Smtp-Source: AGRyM1vExN4xusyHHPvUVXKPu3A04mwXo+bSfaFOyCZGSr+d6fdvfVFoTiI9EG3ZsX+tE1/XVJLjOg==
-X-Received: by 2002:a05:6214:29c4:b0:472:fb62:3a03 with SMTP id gh4-20020a05621429c400b00472fb623a03mr1846804qvb.93.1657703836439;
-        Wed, 13 Jul 2022 02:17:16 -0700 (PDT)
-Received: from mail-yb1-f172.google.com (mail-yb1-f172.google.com. [209.85.219.172])
-        by smtp.gmail.com with ESMTPSA id d9-20020ac85ac9000000b0031eb3af3ffesm1535185qtd.52.2022.07.13.02.17.15
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 13 Jul 2022 02:17:15 -0700 (PDT)
-Received: by mail-yb1-f172.google.com with SMTP id p129so18267155yba.7;
-        Wed, 13 Jul 2022 02:17:15 -0700 (PDT)
-X-Received: by 2002:a25:bc8e:0:b0:66e:fe43:645c with SMTP id
- e14-20020a25bc8e000000b0066efe43645cmr2777562ybk.202.1657703835228; Wed, 13
- Jul 2022 02:17:15 -0700 (PDT)
+        bh=plZSlH+I5O8PlpsjQVgP55GuUwpIHXkHnkPiVS3vYiY=;
+        b=i/hr6SayKBmqY4wTFIwRHg9fDpalYeuk+GXRKRu2k3NT+RHHl5aQhTb9xT1V/cTy0W
+         I8jVcRg7BPVgG4p9YZVz4TIspedi59gdO1teX0cGlg9QccnEbUYRG3aFk01FWCszP99K
+         3rGkFJWp311LGYJnvstAK5P+a/NBxA4M/3OIzyDs2sRFo4t6suoHW2/e0JEuHkdhJPKu
+         DXrCMB7GrNmCZbbr8eJVPSgNeU/djR8riYQcEYiV6qXKvcq/0+YMes/dqHvF/KLcIbyd
+         3ORhGXrI0aaEgXvnr/NphFUDA/Pg1WC/7XW7qXZgQwKmhdj5+Y4KGXgM+xllIQghOKYN
+         V8JQ==
+X-Gm-Message-State: AJIora9+MJ8K6Dk/s4902BQeQ46zKiSVjng5YKTK1fHIlb6FS5x/CW8b
+        ClorMajqRwvG5yL2MdFF9ySNjVikKUYj5UMOq2w6RQ==
+X-Google-Smtp-Source: AGRyM1s9qYzsNvLD7gjbAFuTD/fV+NMhJpSkzOyRbmOcv8lTos3rKA267x/OYE4INghDUQXXPlc6Lk3HuREo6AEl6/I=
+X-Received: by 2002:a05:6e02:20e9:b0:2dc:734b:d52b with SMTP id
+ q9-20020a056e0220e900b002dc734bd52bmr1505139ilv.261.1657709739577; Wed, 13
+ Jul 2022 03:55:39 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220712164235.40293-1-f.fainelli@gmail.com> <CAK8P3a2QrYbWOqV+CG-W0ZkzW6ORgw8R6Dv-L3o2ZAtJs-B3Kw@mail.gmail.com>
- <0131e1d6-09c0-31a4-5b9d-0e2fc49d61ac@linaro.org>
-In-Reply-To: <0131e1d6-09c0-31a4-5b9d-0e2fc49d61ac@linaro.org>
-From:   Geert Uytterhoeven <geert@linux-m68k.org>
-Date:   Wed, 13 Jul 2022 11:17:03 +0200
-X-Gmail-Original-Message-ID: <CAMuHMdWDDY_72y3WYt401hG122xg1s7_VRCG9Vyhhkzco-nBYw@mail.gmail.com>
-Message-ID: <CAMuHMdWDDY_72y3WYt401hG122xg1s7_VRCG9Vyhhkzco-nBYw@mail.gmail.com>
-Subject: Re: [PATCH] arm64: Kconfig.platforms: Re-organized Broadcom menu
+References: <20220712144245.17417-1-krzysztof.kozlowski@linaro.org> <20220712144245.17417-2-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220712144245.17417-2-krzysztof.kozlowski@linaro.org>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Wed, 13 Jul 2022 12:55:03 +0200
+Message-ID: <CAPDyKFodOTRavzy=+9WM0d9=UJQ2DTc2K+6iN531tRdFN=Rv9w@mail.gmail.com>
+Subject: Re: [PATCH v3 1/5] dt-bindings: mmc: sdhci-msm: fix reg-names entries
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Arnd Bergmann <arnd@arndb.de>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        SoC Team <soc@kernel.org>,
-        bcm-kernel-feedback-list <bcm-kernel-feedback-list@broadcom.com>,
-        william.zhang@broadcom.com, anand.gore@broadcom.com,
-        Olof Johansson <olof@lixom.net>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        Shawn Guo <shawnguo@kernel.org>, Li Yang <leoyang.li@nxp.com>,
-        Wei Xu <xuwei5@hisilicon.com>, Andrew Lunn <andrew@lunn.ch>,
-        Gregory Clement <gregory.clement@bootlin.com>,
-        "moderated list:ARM/Mediatek SoC..." 
-        <linux-mediatek@lists.infradead.org>,
-        Microchip Linux Driver Support <UNGLinuxDriver@microchip.com>,
-        Matthias Brugger <mbrugger@suse.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        "moderated list:ARM/SAMSUNG EXYNOS ARM ARCHITECTURES" 
-        <linux-samsung-soc@vger.kernel.org>,
-        Dinh Nguyen <dinguyen@kernel.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Douglas Anderson <dianders@chromium.org>
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
-        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Krzysztof,
-
-On Wed, Jul 13, 2022 at 10:40 AM Krzysztof Kozlowski
+On Tue, 12 Jul 2022 at 16:42, Krzysztof Kozlowski
 <krzysztof.kozlowski@linaro.org> wrote:
-> On 13/07/2022 10:25, Arnd Bergmann wrote:
-> > On Tue, Jul 12, 2022 at 6:42 PM Florian Fainelli <f.fainelli@gmail.com> wrote:
-> >> There are now multiple Broadcom SoCs supported so group them under their
-> >> own menu such that the selection is visually more appealing and we can
-> >> easily add new platforms there in the future. This allows us to move
-> >> ARCH_BRCMSTB back to its siblings.
-> >>
-> >> No functional changes introduced.
-> >>
-> >> Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
-> >> ---
-> >>
-> >> Note this is based on "arm64: bcmbca: add arch bcmbca machine entry"
-> >
-> > Hi Florian,
-> >
-> > So far, we have tried to keep the Kconfig.platforms file rather coarse-grained,
-> > mainly limiting it to company names and high-level families, but avoiding
-> > sub-menus or adding too many sub-families.
-> >
-> > If we add per-vendor submenus, we should probably first decide how we
-> > want to structure this across vendors. I've added maintainers and lists to
-> > Cc for a couple of the ones that are in a similar situation.
-> >
-> > I can see a couple of ways we can do this:
-> >
-> > a) keep the list of platforms as short as possible, combining related
-> >   SoC families from a single vendor wherever possible, but no sub-menus
-> >   (same as today)
-> >
-> > b) Always use sub-menus when there is more than one family, but
-> >    keep relatively coarse platform selection.
-> >
-> > c) Use sub-menus and also move to a more fine-grained SoC
-> >     selection, similar to what we have on 32-bit arm.
-> >
-> > I would not really want to go to c), but a) and b) both make sense to
-> > me as long as do it consistently across all platforms.
-> >
-> > Any other ideas or opinions?
 >
-> Whatever we decide here, the SoC can override in drivers/soc, just like
-> Renesas did. I think Renesas chose option c), but made it in
-> drivers/soc. I would vote to have consistent policy, so if arch/arm64 is
-> a) or b), sub-archs should not redefine it in drivers/soc.
-
-We did so because of the "only a single symbol in
-arch/arm64/Kconfig.platforms"-policy.
-
-> Or we could choose d)
-> d) keep arch/arm64 list of platforms as short as possible, but sub-archs
-> can do whatever they like on drivers/soc.
+> Bindings before conversion to DT schema expected reg-names without
+> "_mem" suffix.  This was used by older DTS files and by the MSM SDHCI
+> driver.
 >
-> Personally, I find fine-grained SoC selection a bit ridiculous
-> optimization, like compiling kernel, Glibc and userspace with -O3,
-> -funroll-loops and many other flags. One gets smaller size but looses
-> multi-platform and ability to test one kernel on different boards.
-> Therefore I would vote for b) with disallowing drivers/soc defining more
-> ARCH_ and more SOC_.
+> Reported-by: Douglas Anderson <dianders@chromium.org>
+> Fixes: edfbf8c307ff ("dt-bindings: mmc: sdhci-msm: Fix issues in yaml bindings")
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Reviewed-by: Douglas Anderson <dianders@chromium.org>
 
-No one prevents you from selecting multiple SoCs, they are not
-mutually-exclusive...
+Applied for next, thanks!
 
-With arm64 (or risc-v ;-) instead of arm32 being used for all new
-SoCs,  I expect the real small ones (with a few MiB of embedded
-SRAM) to enter the arm64 realm soon.  No point in including e.g. all
-pinctrl drivers from the vendor if you have barely enough RAM to run
-Linux and your app...
+Kind regards
+Uffe
 
-Gr{oetje,eeting}s,
 
-                        Geert
-
---
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
-
-In personal conversations with technical people, I call myself a hacker. But
-when I'm talking to journalists I just say "programmer" or something like that.
-                                -- Linus Torvalds
+> ---
+>  .../devicetree/bindings/mmc/sdhci-msm.yaml    | 24 +++++++++----------
+>  1 file changed, 12 insertions(+), 12 deletions(-)
+>
+> diff --git a/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml b/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
+> index 0853d0c32dc7..fc6e5221985a 100644
+> --- a/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
+> +++ b/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
+> @@ -60,22 +60,22 @@ properties:
+>      maxItems: 4
+>      oneOf:
+>        - items:
+> -          - const: hc_mem
+> +          - const: hc
+>        - items:
+> -          - const: hc_mem
+> -          - const: core_mem
+> +          - const: hc
+> +          - const: core
+>        - items:
+> -          - const: hc_mem
+> -          - const: cqe_mem
+> +          - const: hc
+> +          - const: cqhci
+>        - items:
+> -          - const: hc_mem
+> -          - const: cqe_mem
+> -          - const: ice_mem
+> +          - const: hc
+> +          - const: cqhci
+> +          - const: ice
+>        - items:
+> -          - const: hc_mem
+> -          - const: core_mem
+> -          - const: cqe_mem
+> -          - const: ice_mem
+> +          - const: hc
+> +          - const: core
+> +          - const: cqhci
+> +          - const: ice
+>
+>    clocks:
+>      minItems: 3
+> --
+> 2.34.1
+>
