@@ -2,168 +2,173 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3CF47573F5F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Jul 2022 00:05:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 05B03574049
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Jul 2022 01:57:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231377AbiGMWF3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Jul 2022 18:05:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45718 "EHLO
+        id S230269AbiGMX5m (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Jul 2022 19:57:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34778 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236181AbiGMWF2 (ORCPT
+        with ESMTP id S229495AbiGMX5k (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Jul 2022 18:05:28 -0400
-Received: from mail-pg1-x532.google.com (mail-pg1-x532.google.com [IPv6:2607:f8b0:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D37F845049;
-        Wed, 13 Jul 2022 15:05:27 -0700 (PDT)
-Received: by mail-pg1-x532.google.com with SMTP id f11so10779507pgj.7;
-        Wed, 13 Jul 2022 15:05:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=uOBKq9yzkPX8ihcF5QdXtzsKbLEa/eP+OCHtDKfv5N0=;
-        b=hk176+zLssVNRft8dirHFUQSzDMI0whOu6+6yXw9L8L7d0wLw7U16maq1hJRXPZTq/
-         Gz/tk/9k5ncT0FkQbbwWFHn+Pbt8O7O5TawARP5Ey5PdgOfYEEgoTvfNvjwaKlC2Fp+u
-         /yc6TfI2wpFGrTa7ELUtOTilQC8x/WO/N5T2D8R57dpFGws1xuiH5hYBGa0wwi3eo4hN
-         f5S77L0OFyouEIHVUdo1qtgyMETHSDVdDO9i7srid340U9uCEKObdUPpsjKnJGrtF46J
-         gnb7/zaBOGh40U273oDZM0oA/ohc98tEWGZ+o/mSmHyWI2/5r6+mUVZip7FZc9yew0w6
-         weVQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=uOBKq9yzkPX8ihcF5QdXtzsKbLEa/eP+OCHtDKfv5N0=;
-        b=lIIJth0Ot2coM+RxAyU0K5xL6fAmHxVkdgzZleB7HvdEJCV4ZV+xRf6j9lw3E37tFa
-         qlkeJNmledY5FEPCuTgBwMkx0XmWFEk0EH2OrIdzCyqUj/m6jHBlSsWWecsnVEwWFkVB
-         zIQ7FUygsq4mGLcm8j8Hnb/1Dmc8QU4IF+hOE+8QB/qLgyNXxE3DaPr9rm+FTb4gXz7a
-         UdRUADvTxLpQ07JG2+nqVJO6laZyB3CLhJPzjFGPU2hg0z2P5dzkmymGSC/O11tI+nJF
-         vhiBot9yAJSK+sB9wgHPe9LURPq4z9/f4cfeO5iks7VWyoCrg24aSZVCNrDllPqofgos
-         QxXA==
-X-Gm-Message-State: AJIora+P3UwtVRVK3V2hP2EHIEl2FEiWBHS3OKiADIba1tBZ8HTStdkE
-        0wa4m3yOsyr6uVn7wWBtjMY=
-X-Google-Smtp-Source: AGRyM1uFY5sq0uRq7vOEVCZc6Mt9dWUHaZVFaEt9VTaYlh+WdsLMFRrjoUXRSVp/xtwuLE8Bc1hpsw==
-X-Received: by 2002:a65:4501:0:b0:3fc:4895:283b with SMTP id n1-20020a654501000000b003fc4895283bmr4726104pgq.231.1657749927276;
-        Wed, 13 Jul 2022 15:05:27 -0700 (PDT)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.googlemail.com with ESMTPSA id x7-20020a634847000000b0040c97f0057dsm7946127pgk.17.2022.07.13.15.05.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 13 Jul 2022 15:05:26 -0700 (PDT)
-Message-ID: <fb4f4444-20c2-0e35-bb83-79a419ec87a7@gmail.com>
-Date:   Wed, 13 Jul 2022 15:05:23 -0700
+        Wed, 13 Jul 2022 19:57:40 -0400
+Received: from NAM10-DM6-obe.outbound.protection.outlook.com (mail-dm6nam10on2065.outbound.protection.outlook.com [40.107.93.65])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4C6E53D16;
+        Wed, 13 Jul 2022 16:57:39 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=F2FT1kk1/BdPiQpn8wJ0On0/QkqFa32x7QWB3/EfcF4l2/1/+XRPhkt6aYfLPctjvRPPwJzsaWk3SUL8w7H5EwaoGLbigWl6zx+LWbP9kb/V0UJS1AVHuy2WP2dLIQKTnrfkbkn0Rz6gE5inyEqx6m02mmPfY3K/qaNHR1GBPiAM4H1/CPRpIBBTxWKY/WgmdXpQv/1kfNBWShE2DhLHk1iR8P/IWCQOPJbrWObJzuCqyCbfK/GOWKF62pwhcKpH4Nj0dC2dmWHeAyX4Hlyu2SxgorCncjEAj3HE1VTkSi/3Xosvox7qtU44SnM2eCIh0MVgrcCcJVIy3MJuS6ci5g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=J7z8LWlPotPhYXvrQ6ceYiFG0tG3FYUbgZXWcDIauRw=;
+ b=XUxPhtdBl0SUkNc4pDUx6rEYarIeIrAVm/bIGynsfn5UJv/DxgNjz6IzFFJajNYRciJZBROYAW4k8b2suiBzV1/2lv2GoHQsn/RvQndNbEvc5lwF554eDh5mFyPl6qCEkY8PfhfpNea5uMZ5Kot3Kj7ZtYNkuYhJlSskHGb5ofdOjnfXwmAgcNU9dDEWdLWfJyVwvcafUTQQ4Xi1DHD06IWn7JmqKe87DONGNs2MOcaHKklkRm92bBHaBmkIVw+vVvGQAuWUXF5gAJesn8RhElZMld+TwZ6W9+fl5CB0Sc/I+m9VD0xGDLzGIZQsg+vyf4KIQ0ycaX4NG/MwGOhdgg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 12.22.5.238) smtp.rcpttodomain=gmail.com smtp.mailfrom=nvidia.com; dmarc=pass
+ (p=reject sp=reject pct=100) action=none header.from=nvidia.com; dkim=none
+ (message not signed); arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=J7z8LWlPotPhYXvrQ6ceYiFG0tG3FYUbgZXWcDIauRw=;
+ b=U4ITf6oa3UcnRBkWu6LO/zYrlPrgMyOZDCvcXnH0wl00AeBSLgnujHPRADLrsIxaleQ2s36gEWt+WgbhOAm0RyIAREJG5wPFy3zO9+RJ+pdSVKFAwNbMLUM6JpgRbP80wSf+kgtEn0Wg51hSSu/bN3nwqoAAkIwsRyYVnbs2J6sINTsoZ33/8C+B7OBf/l4IboWHi2hY+EIIOo3OiDRpqP0KQ2XjaI/cvLqjHvBee6fU3RXDGStvdGFvQEV84Nk3FIJ99Yz5KDsP1IIKlHGxkBQoi2yyfJtSG8JR8sJAZ5fIBNov1V55jaYuPmvwW8VueCYu48JJt3hW+m2CoBmX3Q==
+Received: from BN9PR03CA0095.namprd03.prod.outlook.com (2603:10b6:408:fd::10)
+ by SA1PR12MB5638.namprd12.prod.outlook.com (2603:10b6:806:229::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5417.21; Wed, 13 Jul
+ 2022 23:57:37 +0000
+Received: from BN8NAM11FT040.eop-nam11.prod.protection.outlook.com
+ (2603:10b6:408:fd:cafe::71) by BN9PR03CA0095.outlook.office365.com
+ (2603:10b6:408:fd::10) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5417.26 via Frontend
+ Transport; Wed, 13 Jul 2022 23:57:37 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 12.22.5.238)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 12.22.5.238 as permitted sender) receiver=protection.outlook.com;
+ client-ip=12.22.5.238; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (12.22.5.238) by
+ BN8NAM11FT040.mail.protection.outlook.com (10.13.177.166) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
+ 15.20.5438.12 via Frontend Transport; Wed, 13 Jul 2022 23:57:37 +0000
+Received: from rnnvmail205.nvidia.com (10.129.68.10) by DRHQMAIL105.nvidia.com
+ (10.27.9.14) with Microsoft SMTP Server (TLS) id 15.0.1497.32; Wed, 13 Jul
+ 2022 23:57:36 +0000
+Received: from rnnvmail204.nvidia.com (10.129.68.6) by rnnvmail205.nvidia.com
+ (10.129.68.10) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.26; Wed, 13 Jul
+ 2022 16:57:35 -0700
+Received: from Asurada-Nvidia (10.127.8.13) by mail.nvidia.com (10.129.68.6)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.26 via Frontend
+ Transport; Wed, 13 Jul 2022 16:57:34 -0700
+Date:   Wed, 13 Jul 2022 16:57:32 -0700
+From:   Nicolin Chen <nicolinc@nvidia.com>
+To:     <joro@8bytes.org>, Alex Williamson <alex.williamson@redhat.com>
+CC:     <will@kernel.org>, <marcan@marcan.st>, <sven@svenpeter.dev>,
+        <robin.murphy@arm.com>, <robdclark@gmail.com>,
+        <baolu.lu@linux.intel.com>, <orsonzhai@gmail.com>,
+        <baolin.wang7@gmail.com>, <zhang.lyra@gmail.com>,
+        <jean-philippe@linaro.org>, <jgg@nvidia.com>,
+        <kevin.tian@intel.com>, <suravee.suthikulpanit@amd.com>,
+        <alyssa@rosenzweig.io>, <dwmw2@infradead.org>,
+        <mjrosato@linux.ibm.com>, <gerald.schaefer@linux.ibm.com>,
+        <thierry.reding@gmail.com>, <vdumpa@nvidia.com>,
+        <jonathanh@nvidia.com>, <cohuck@redhat.com>,
+        <thunder.leizhen@huawei.com>, <christophe.jaillet@wanadoo.fr>,
+        <chenxiang66@hisilicon.com>, <john.garry@huawei.com>,
+        <yangyingliang@huawei.com>, <iommu@lists.linux.dev>,
+        <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-s390@vger.kernel.org>,
+        <linux-tegra@vger.kernel.org>,
+        <virtualization@lists.linux-foundation.org>, <kvm@vger.kernel.org>
+Subject: Re: [PATCH v5 0/5] cover-letter: Simplify vfio_iommu_type1
+ attach/detach routine
+Message-ID: <Ys9b7GSImp/sHair@Asurada-Nvidia>
+References: <20220701214455.14992-1-nicolinc@nvidia.com>
+ <20220706114217.105f4f61.alex.williamson@redhat.com>
+ <YsXMMCX5LY/3IOtf@Asurada-Nvidia>
+ <20220706120325.4741ff34.alex.williamson@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Subject: Re: [PATCH] arm64: Kconfig.platforms: Re-organized Broadcom menu
-Content-Language: en-US
-To:     Geert Uytterhoeven <geert@linux-m68k.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Arnd Bergmann <arnd@arndb.de>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        SoC Team <soc@kernel.org>,
-        bcm-kernel-feedback-list <bcm-kernel-feedback-list@broadcom.com>,
-        william.zhang@broadcom.com, anand.gore@broadcom.com,
-        Olof Johansson <olof@lixom.net>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        Shawn Guo <shawnguo@kernel.org>, Li Yang <leoyang.li@nxp.com>,
-        Wei Xu <xuwei5@hisilicon.com>, Andrew Lunn <andrew@lunn.ch>,
-        Gregory Clement <gregory.clement@bootlin.com>,
-        "moderated list:ARM/Mediatek SoC..." 
-        <linux-mediatek@lists.infradead.org>,
-        Microchip Linux Driver Support <UNGLinuxDriver@microchip.com>,
-        Matthias Brugger <mbrugger@suse.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        "moderated list:ARM/SAMSUNG EXYNOS ARM ARCHITECTURES" 
-        <linux-samsung-soc@vger.kernel.org>,
-        Dinh Nguyen <dinguyen@kernel.org>
-References: <20220712164235.40293-1-f.fainelli@gmail.com>
- <CAK8P3a2QrYbWOqV+CG-W0ZkzW6ORgw8R6Dv-L3o2ZAtJs-B3Kw@mail.gmail.com>
- <0131e1d6-09c0-31a4-5b9d-0e2fc49d61ac@linaro.org>
- <CAMuHMdWDDY_72y3WYt401hG122xg1s7_VRCG9Vyhhkzco-nBYw@mail.gmail.com>
-From:   Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <CAMuHMdWDDY_72y3WYt401hG122xg1s7_VRCG9Vyhhkzco-nBYw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20220706120325.4741ff34.alex.williamson@redhat.com>
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: e132a6f9-c9a7-4f8e-9a24-08da652b7689
+X-MS-TrafficTypeDiagnostic: SA1PR12MB5638:EE_
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: aa8p8HShc//3A7rH7/TM0CGDp72gv84y1x2PNdYVcx+3D5f/eyPlyydxMpUEQ5QgSldZTWoUDUw3KQAF5pFD5cngfIVMKrnGX4hAyhCJV0KFuC9vyJZ4+ccoW46NQCn9P/v41nXyDpbE8mBgTARYj+UOlPsSn9XVkLsoHsdyd5B5RVf+YhGeK/h15tYgLTNHredsVwoTQqOnaOYz8IwO9B5rMHk+HjgBoU746w4HcWZvkAd2eCU+KlnR1nilhbRJlRkk20soZiDlBALHy0nuWo1iDepNS9SGdHWR4vVN7zBhXUmgSP2lAIwxArGBGxRxCQ+Noga1SWqJN/q0xDoY82BEEUaDsF/ZrXPVSFrTHrsUo3AeJWjOL4FYx9Y0x+egLoNbOwH+4YZP+GMZdxNTh3gs7uDY+NE9hwZHkEDLzQ8TiBZdtYZCMQTz7vSbGqWL0OGdquM199MbvzMqZIIqvAygKhUmvixdcRhx0sxJI1zQFEsutsXbTx29KYtp19f60FHyEBJbPLftCnnqqZhEx7hu9yH+4KtGr9d35/TmJJ5sJtl4sXceFsgbuiKO5KWDoEkv1e8EfFRSI8Q4HOqRJAEwzPMJYXHsQ3k+mni5ZzIzPdL13EORm0JGdfwvtmR8edVUNDVIyJq5KMnYRjx23f9uIWWCSbHtI7i8QKF9R6bGUTr9xHck8JcX974po0vedlVhVhaCj4UaL5o9I2/F8xFL8Kr3s6jaBDO9erhT7cZHfQyEAi4c8hFlAUawiVZAJ02UwW+3TQBkuxUchUJmYshejBGMTj59bgDvho32bF37FyV1ynDXP/kFiS/n6Rbrwypv6X2YwCMbfwroEsOY3J3SEP4DNQM1beG+3FjIBmAd8M1vF3nboXGBgomxvhonpqS+s1g2hFAdvRaYYHZEpZfvLPD2KIdpH0oXaTP2cxyzU2NWLGThAEswn3SQbT92
+X-Forefront-Antispam-Report: CIP:12.22.5.238;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:InfoNoRecords;CAT:NONE;SFS:(13230016)(4636009)(136003)(346002)(376002)(39860400002)(396003)(36840700001)(46966006)(40470700004)(8936002)(7416002)(9686003)(7406005)(110136005)(83380400001)(26005)(55016003)(54906003)(186003)(5660300002)(47076005)(478600001)(336012)(316002)(426003)(966005)(8676002)(2906002)(41300700001)(36860700001)(40480700001)(81166007)(33716001)(82740400003)(40460700003)(82310400005)(356005)(4326008)(86362001)(70206006)(70586007)(36900700001);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Jul 2022 23:57:37.1356
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: e132a6f9-c9a7-4f8e-9a24-08da652b7689
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[12.22.5.238];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: BN8NAM11FT040.eop-nam11.prod.protection.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR12MB5638
+X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FORGED_SPF_HELO,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 7/13/22 02:17, Geert Uytterhoeven wrote:
-> Hi Krzysztof,
+On Wed, Jul 06, 2022 at 12:03:25PM -0600, Alex Williamson wrote:
+
+> On Wed, 6 Jul 2022 10:53:52 -0700
+> Nicolin Chen <nicolinc@nvidia.com> wrote:
 > 
-> On Wed, Jul 13, 2022 at 10:40 AM Krzysztof Kozlowski
-> <krzysztof.kozlowski@linaro.org> wrote:
->> On 13/07/2022 10:25, Arnd Bergmann wrote:
->>> On Tue, Jul 12, 2022 at 6:42 PM Florian Fainelli <f.fainelli@gmail.com> wrote:
->>>> There are now multiple Broadcom SoCs supported so group them under their
->>>> own menu such that the selection is visually more appealing and we can
->>>> easily add new platforms there in the future. This allows us to move
->>>> ARCH_BRCMSTB back to its siblings.
->>>>
->>>> No functional changes introduced.
->>>>
->>>> Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
->>>> ---
->>>>
->>>> Note this is based on "arm64: bcmbca: add arch bcmbca machine entry"
->>>
->>> Hi Florian,
->>>
->>> So far, we have tried to keep the Kconfig.platforms file rather coarse-grained,
->>> mainly limiting it to company names and high-level families, but avoiding
->>> sub-menus or adding too many sub-families.
->>>
->>> If we add per-vendor submenus, we should probably first decide how we
->>> want to structure this across vendors. I've added maintainers and lists to
->>> Cc for a couple of the ones that are in a similar situation.
->>>
->>> I can see a couple of ways we can do this:
->>>
->>> a) keep the list of platforms as short as possible, combining related
->>>    SoC families from a single vendor wherever possible, but no sub-menus
->>>    (same as today)
->>>
->>> b) Always use sub-menus when there is more than one family, but
->>>     keep relatively coarse platform selection.
->>>
->>> c) Use sub-menus and also move to a more fine-grained SoC
->>>      selection, similar to what we have on 32-bit arm.
->>>
->>> I would not really want to go to c), but a) and b) both make sense to
->>> me as long as do it consistently across all platforms.
->>>
->>> Any other ideas or opinions?
->>
->> Whatever we decide here, the SoC can override in drivers/soc, just like
->> Renesas did. I think Renesas chose option c), but made it in
->> drivers/soc. I would vote to have consistent policy, so if arch/arm64 is
->> a) or b), sub-archs should not redefine it in drivers/soc.
+> > On Wed, Jul 06, 2022 at 11:42:17AM -0600, Alex Williamson wrote:
+> >
+> > > On Fri, 1 Jul 2022 14:44:50 -0700
+> > > Nicolin Chen <nicolinc@nvidia.com> wrote:
+> > >
+> > > > This is a preparatory series for IOMMUFD v2 patches. It enforces error
+> > > > code -EMEDIUMTYPE in iommu_attach_device() and iommu_attach_group() when
+> > > > an IOMMU domain and a device/group are incompatible. It also drops the
+> > > > useless domain->ops check since it won't fail in current environment.
+> > > >
+> > > > These allow VFIO iommu code to simplify its group attachment routine, by
+> > > > avoiding the extra IOMMU domain allocations and attach/detach sequences
+> > > > of the old code.
+> > > >
+> > > > Worths mentioning the exact match for enforce_cache_coherency is removed
+> > > > with this series, since there's very less value in doing that as KVM will
+> > > > not be able to take advantage of it -- this just wastes domain memory.
+> > > > Instead, we rely on Intel IOMMU driver taking care of that internally.
+> > > >
+> > > > This is on github:
+> > > > https://github.com/nicolinc/iommufd/commits/vfio_iommu_attach
+> > >
+> > > How do you foresee this going in, I'm imagining Joerg would merge the
+> > > first patch via the IOMMU tree and provide a topic branch that I'd
+> > > merge into the vfio tree along with the remaining patches.  Sound
+> > > right?  Thanks,
+> >
+> > We don't have any build dependency between the IOMMU change and
+> > VFIO changes, yet, without the IOMMU one, any iommu_attach_group()
+> > failure now would be a hard failure without a chance falling back
+> > to a new_domain, which is slightly different from the current flow.
+> >
+> > For a potential existing use case that relies on reusing existing
+> > domain, I think it'd be safer to have Joerg acking the first change
+> > so you merge them all? Thank!
 > 
-> We did so because of the "only a single symbol in
-> arch/arm64/Kconfig.platforms"-policy.
+> Works for me, I'll look for buy-in + ack from Joerg.  Thanks,
+> 
+> Alex
 
-I was not aware of that rule.
+Joerg, would it be possible for you to ack at the IOMMU patch?
 
-It is a bit of a mixed situation with Broadcom SoCs but in essence, each 
-Kconfig entry denotes a deeply different SoC architecture at the memory 
-subsystem, bus, security or product space that you might not want to 
-enable in your kernel. There is definitively sharing of drivers between 
-all of the platforms and a lot of cross pollination too but usually 
-these are deeply different that different kernel images do make sense.
-
-The itch that I wanted to calm was that ARCH_BRCMSTB was after the other 
-Broadcom platforms separated by ARCH_BERLIN. if you prefer a pair of 
-KConfig comments to delineate them and flatten the platform selection, 
-that works for me, too.
--- 
-Florian
+Thanks!
+Nic
