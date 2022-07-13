@@ -2,59 +2,46 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6672B57366F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Jul 2022 14:33:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E00225736EE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Jul 2022 15:10:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235740AbiGMMdz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Jul 2022 08:33:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52004 "EHLO
+        id S235925AbiGMNKr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Jul 2022 09:10:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59818 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235386AbiGMMdy (ORCPT
+        with ESMTP id S235769AbiGMNKn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Jul 2022 08:33:54 -0400
-Received: from mail-qt1-x829.google.com (mail-qt1-x829.google.com [IPv6:2607:f8b0:4864:20::829])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2659B1F625;
-        Wed, 13 Jul 2022 05:33:44 -0700 (PDT)
-Received: by mail-qt1-x829.google.com with SMTP id r2so11713961qta.0;
-        Wed, 13 Jul 2022 05:33:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ii72F0mdoIuYImy599wVYhiswv+BSl02KUUpq2menZs=;
-        b=jWO+y1pUPs33hxx0NY5dypZXuzg7lSSrAX+hLiFEpTZuKM6FKIRAorLSyThtvlHyPi
-         ML2NKHHOUw5bKT6GmhfcP1pIC2vjVWZm6741b3Gjeo3TcQ+0T9PaW4n6jzOxS8L0QvUn
-         cgHgHNnncbGVAXt1P+tiqXe83keqvwQcpjR79KikF68nW424pExtIWDB9q/StsqhNgfR
-         1iEfG4sYIBQMIhUJbZYxlnDyhdVDfi7ABDOwjgKK0no6T8TWuRFyK3JZ7AaLAyz/vdE1
-         ExsbsFrbFYR4ctPglZjgSub71xKoUTwWG0PPuOjIL3Qfg3rMClwSj4mPH3m5n/q3V+J4
-         BEfQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ii72F0mdoIuYImy599wVYhiswv+BSl02KUUpq2menZs=;
-        b=42wXAHhXVFZmWOnZVOcc/fd0teajr5brDUHc77gotSjP24hKfsj3IbAf0M2KlF3+1x
-         0UAbX6E/oTtdBQNfatLenIs/49dmrm1IM5/6IqaA2DG34Wx7H74WxRx2i6O4FqpBM6Ul
-         Ae+PJDMjbP0PFp80HS9tJ8rbdIBN7yS9QN3mewE0hkf0Gx1VJcs33w7PCooTbpMawj+4
-         DUziq2e6dqTLNo8+rz11TcnI1wzZ6CRUwnQWxanx8FhSZK7tzw+vN9tTbEhEs66vIC3X
-         jFF6GZV7OnYT8s2JO5PBd45jH3earw8WcYKTrL1NTShxUeFXMBuCeQHOiNOp/w6ujCkP
-         a0MA==
-X-Gm-Message-State: AJIora/kP+ciFaeobVBo++sqnXWaqId+A5Xp1Y4N4qHOqLDtIZXmp9I2
-        H1lt/JqKvkjWXSU/916m8RTOU/wwvtVgpNsQ/Uo=
-X-Google-Smtp-Source: AGRyM1uU0lS6rwylGqW9OmKky1vKPBQIKsof2U8Kv/Mmu+hxwGmDl0hw2Sx3uAw5D4MitFBZrxoBChZlbjRxmOB+eAY=
-X-Received: by 2002:a05:622a:178d:b0:31e:c386:510e with SMTP id
- s13-20020a05622a178d00b0031ec386510emr2795794qtk.82.1657715623148; Wed, 13
- Jul 2022 05:33:43 -0700 (PDT)
-MIME-Version: 1.0
-References: <20220624195112.894916-1-robimarko@gmail.com> <87edyq1ujr.wl-maz@kernel.org>
- <20220712124445.GC21746@workstation> <87czea1i2f.wl-maz@kernel.org>
- <CAOX2RU5RX+H=omuKGye2fBy9dOFmfC9HC_3pekeGMxDJuReCUw@mail.gmail.com> <d8912a0d811b5eb924b8c4136b099f72@kernel.org>
-In-Reply-To: <d8912a0d811b5eb924b8c4136b099f72@kernel.org>
-From:   Robert Marko <robimarko@gmail.com>
-Date:   Wed, 13 Jul 2022 14:33:32 +0200
-Message-ID: <CAOX2RU4MpyEQ0RtcrZ07VXRbB+SWWU=1zWfYUXhQFtvh=MCiDw@mail.gmail.com>
-Subject: Re: [PATCH] pinctrl: qcom: spmi-gpio: make the irqchip immutable
-To:     Marc Zyngier <maz@kernel.org>
+        Wed, 13 Jul 2022 09:10:43 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF89DDEC6;
+        Wed, 13 Jul 2022 06:10:42 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 6A0E061C44;
+        Wed, 13 Jul 2022 13:10:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6D90C34114;
+        Wed, 13 Jul 2022 13:10:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1657717841;
+        bh=grGkUc3D+IG+DZrJbKuNKawjh32B2s20ZjA++y40M1k=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=qRkyDkrvAUpQmZqGueeCpxzDaKUXet2jxabh06alBveQOw2Pjqyw1VgdM2X9ymlVC
+         Mr0SJCEHHPhivTdLPh/efvnNYLeTX686lp+n7GwXRfYq5ULzSxH2sLutBv0Ddrdxbo
+         l/d+d08/wl+eYJYHpmp3nFl4dfApssvDdGbeofa+g6by3Mv9p9wilmES9T2sp/JCKg
+         2U5erzg0g8ds3MZFZHqRRNbXuQXBZ1JylpzVr8jrjZloiJtNGso6X+elevPDARYtw8
+         EuX9BTVM5EmM1pOfD/yB7G+h0br2ozWI3ytIlXRQ3xQTaBBoX/hxSjdxNYPrJ2IGlp
+         nqU32Juzk/SCw==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=why.misterjones.org)
+        by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.95)
+        (envelope-from <maz@kernel.org>)
+        id 1oBc8V-007Dgp-Iz;
+        Wed, 13 Jul 2022 14:10:39 +0100
+Date:   Wed, 13 Jul 2022 14:10:39 +0100
+Message-ID: <874jzl17lc.wl-maz@kernel.org>
+From:   Marc Zyngier <maz@kernel.org>
+To:     Robert Marko <robimarko@gmail.com>
 Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Andy Gross <agross@kernel.org>,
@@ -62,119 +49,63 @@ Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
         linux-gpio@vger.kernel.org,
         open list <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Subject: Re: [PATCH] pinctrl: qcom: spmi-gpio: make the irqchip immutable
+In-Reply-To: <CAOX2RU4MpyEQ0RtcrZ07VXRbB+SWWU=1zWfYUXhQFtvh=MCiDw@mail.gmail.com>
+References: <20220624195112.894916-1-robimarko@gmail.com>
+        <87edyq1ujr.wl-maz@kernel.org>
+        <20220712124445.GC21746@workstation>
+        <87czea1i2f.wl-maz@kernel.org>
+        <CAOX2RU5RX+H=omuKGye2fBy9dOFmfC9HC_3pekeGMxDJuReCUw@mail.gmail.com>
+        <d8912a0d811b5eb924b8c4136b099f72@kernel.org>
+        <CAOX2RU4MpyEQ0RtcrZ07VXRbB+SWWU=1zWfYUXhQFtvh=MCiDw@mail.gmail.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/27.1
+ (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: robimarko@gmail.com, manivannan.sadhasivam@linaro.org, bjorn.andersson@linaro.org, agross@kernel.org, linus.walleij@linaro.org, linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 13 Jul 2022 at 13:47, Marc Zyngier <maz@kernel.org> wrote:
->
-> On 2022-07-13 12:08, Robert Marko wrote:
-> > On Tue, 12 Jul 2022 at 17:12, Marc Zyngier <maz@kernel.org> wrote:
-> >>
-> >> On Tue, 12 Jul 2022 13:44:45 +0100,
-> >> Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> wrote:
-> >> >
-> >> > On Tue, Jul 12, 2022 at 11:42:32AM +0100, Marc Zyngier wrote:
-> >> > > On Fri, 24 Jun 2022 20:51:12 +0100,
-> >> > > Robert Marko <robimarko@gmail.com> wrote:
-> >> > > >
-> >> > > > Commit 6c846d026d49 ("gpio: Don't fiddle with irqchips marked as
-> >> > > > immutable") added a warning to indicate if the gpiolib is altering the
-> >> > > > internals of irqchips.
-> >> > > >
-> >> > > > Following this change the following warning is now observed for the SPMI
-> >> > > > PMIC pinctrl driver:
-> >> > > > gpio gpiochip1: (200f000.spmi:pmic@0:gpio@c000): not an immutable chip, please consider fixing it!
-> >> > > >
-> >> > > > Fix this by making the irqchip in the SPMI PMIC pinctrl driver immutable.
-> >> > > >
-> >> > > > Signed-off-by: Robert Marko <robimarko@gmail.com>
-> >> > > > ---
-> >> > > >  drivers/pinctrl/qcom/pinctrl-spmi-gpio.c | 22 ++++++++++++----------
-> >> > > >  1 file changed, 12 insertions(+), 10 deletions(-)
-> >> > > >
-> >> > > > diff --git a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
-> >> > > > index c3255b0bece4..406ee0933d0b 100644
-> >> > > > --- a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
-> >> > > > +++ b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
-> >> > > > @@ -171,7 +171,6 @@ struct pmic_gpio_state {
-> >> > > >   struct regmap   *map;
-> >> > > >   struct pinctrl_dev *ctrl;
-> >> > > >   struct gpio_chip chip;
-> >> > > > - struct irq_chip irq;
-> >> > > >   u8 usid;
-> >> > > >   u8 pid_base;
-> >> > > >  };
-> >> > > > @@ -988,6 +987,17 @@ static void *pmic_gpio_populate_parent_fwspec(struct gpio_chip *chip,
-> >> > > >   return fwspec;
-> >> > > >  }
-> >> > > >
-> >> > > > +static const struct irq_chip spmi_gpio_irq_chip = {
-> >> > > > + .name           = "spmi-gpio",
-> >> > > > + .irq_ack        = irq_chip_ack_parent,
-> >> > > > + .irq_mask       = irq_chip_mask_parent,
-> >> > > > + .irq_unmask     = irq_chip_unmask_parent,
-> >> > >
-> >> > > No, this is wrong. Please look at the documentation to see how you
-> >> > > must now directly call into the gpiolib helpers for these two
-> >> > > callbacks.
-> >> > >
-> >> >
-> >> > IIUC, you are referring to gpiochip_disable_irq() and
-> >> > gpiochip_enable_irq() APIs.
-> >>
-> >> I am indeed.
-> >>
-> >> > These APIs are supposed to let the gpiolib know about that the IRQ
-> >> > usage of these GPIOs. But for the case of hierarchial IRQ domain,
-> >> > isn't the parent is going to do that?
-> >>
-> >> Why would it? The parent has no clue about what sits above it. In a
-> >> hierarchical configuration, each level is responsible for its own
-> >> level, and the GPIO layer should be responsible for its own
-> >> management.
-> >>
-> >> > Please correct me if I'm wrong.
-> >>
-> >> I'm afraid you are, and this patch is a fairly obvious change in
-> >> behaviour, as the callbacks you mention above are not called anymore,
-> >> while they were before.
-> >>
-> >> If they are not necessary (for reasons I can't fathom), then this
-> >> should be clearly explained.
+On Wed, 13 Jul 2022 13:33:32 +0100,
+Robert Marko <robimarko@gmail.com> wrote:
+> 
+> On Wed, 13 Jul 2022 at 13:47, Marc Zyngier <maz@kernel.org> wrote:
 > >
-> > Hi Marc,
-> > I will look at IRQ GPIO docs, but in this case, then we have more
-> > conversions that
-> > are not correct.
->
-> Then please point them out.
+> > On 2022-07-13 12:08, Robert Marko wrote:
+> > > I will look at IRQ GPIO docs, but in this case, then we have more
+> > > conversions that
+> > > are not correct.
+> >
+> > Then please point them out.
+> 
+> Oh, now I get the issue, I was misunderstanding it completely.
+> gpiochip_enable_irq and gpiochip_disable_irq are not being called
+> at all.
+> 
+> However, I dont see them being called before the conversion as well.
+> I am not really familiar with the PMIC IRQ-s, looked like an easy conversion
+> to get rid of the warning.
 
-Oh, now I get the issue, I was misunderstanding it completely.
-gpiochip_enable_irq and gpiochip_disable_irq are not being called
-at all.
+They definitely were. Look at how gpiochip_add_data() eventually ends
+up calling gpiochip_set_irq_hooks((), which hijacks the irq_chip
+function pointers to insert the calls to these helpers.
 
-However, I dont see them being called before the conversion as well.
-I am not really familiar with the PMIC IRQ-s, looked like an easy conversion
-to get rid of the warning.
+This is what this conversion process is all about, and you absolutely
+need to understand that code before blindly changing drivers to squash
+a run-time warning.
 
-Manivannan can you shed some light on this?
+	M.
 
-Regards,
-Robert
-
-
-
-
-
->
->          M.
-> --
-> Jazz is not dead. It just smells funny...
+-- 
+Without deviation from the norm, progress is not possible.
