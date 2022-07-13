@@ -2,102 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 22F5B572C47
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Jul 2022 06:24:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 30E3B572C9A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Jul 2022 06:30:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233528AbiGMEYa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Jul 2022 00:24:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55740 "EHLO
+        id S233330AbiGMEau (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Jul 2022 00:30:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34434 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233269AbiGMEYX (ORCPT
+        with ESMTP id S233297AbiGMEat (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Jul 2022 00:24:23 -0400
-Received: from NAM10-MW2-obe.outbound.protection.outlook.com (mail-mw2nam10olkn2055.outbound.protection.outlook.com [40.92.42.55])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF3D261D71;
-        Tue, 12 Jul 2022 21:24:20 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=iiMEh5jOebWey0vPFbsgL4tzll7UDapm5ZVr0cX7TN1zO8UESfOOKrOQ1FYqEHlsPRuawLtPJ2QGil7b1jc+vKr0nBD0D5ui7GAnjwO3ZBZ8o8Ca327iL7jY9rr+hsSdKGzkARmrdQimkUnlAykWCaw3Y1pWQCzn7lHslwjkHQLjfm3F5fZvgiD7FyEHZ0ahCN5qGZ8tasCYp4WjSsmiiH7oIkbs9Xst4w6HYou6VR0M3eTuTCsi2iRy+bqDD6JE9Z/S12D8nI4XWqwF5vZqFoYkhiMfHzV3nU0W+Y1TORI8HdWPaWEebmMkLIWoBiToRrQOK4FrRaWM6MCJQ883nA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=k1IXg/zNiqmj4k6zzOycq3rG76MvSt1UXRXBkHBhFlA=;
- b=bNoBfWusYvS1AKHAnHb9IvHgkHTHzwIKhDGatiOA4UyhccxJgEcYQVPjLDF3qHm8N08pDX4uOtaeSBs8sbjOYFtJreMJw/A+n4vW5dK4IBhZEPQDc6dChBohdMBpz7s+96PDJu2/VIWWkqPr3tUVF6fA2BLscDCF7YovT74iH20oq5Y2n57gY2DrVBODpP+Ry9vkYDsAbgqKaTXlv2TzCcsUNMGCJjNzNBYjcE3AejJSjlv92x40FJN4yV5wrXET8RnVPKZdPgdwr1uck7lyNNMYpDEsbifuijxCIF6w5Nvu5C+739VWbEZqiX1UXhnX2dRluoOp+xGTfqc/lguFFA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-Received: from BY5PR02MB7009.namprd02.prod.outlook.com (2603:10b6:a03:236::13)
- by DM5PR02MB3895.namprd02.prod.outlook.com (2603:10b6:4:b9::26) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5417.16; Wed, 13 Jul
- 2022 04:24:19 +0000
-Received: from BY5PR02MB7009.namprd02.prod.outlook.com
- ([fe80::e080:d670:29c7:9180]) by BY5PR02MB7009.namprd02.prod.outlook.com
- ([fe80::e080:d670:29c7:9180%7]) with mapi id 15.20.5417.026; Wed, 13 Jul 2022
- 04:24:19 +0000
-From:   Joel Selvaraj <jo@jsfamily.in>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Joel Selvaraj <jo@jsfamily.in>
-Subject: [PATCH 5/5 RESEND] arm64: dts: qcom: Makefile: split beryllium into tianma and ebbg variant
-Date:   Wed, 13 Jul 2022 09:52:49 +0530
-Message-ID: <BY5PR02MB7009E1905A1DA82EDCF07F3ED9899@BY5PR02MB7009.namprd02.prod.outlook.com>
-X-Mailer: git-send-email 2.36.1
-In-Reply-To: <20220713042249.31421-1-jo@jsfamily.in>
-References: <20220713042249.31421-1-jo@jsfamily.in>
-Content-Transfer-Encoding: 7BIT
-Content-Type:   text/plain; charset=US-ASCII
-X-TMN:  [4D7qTAnLbar5hdrcU34i+G/Vk7Qz8Hptr6W7K032ZUl8zqmS8trApm/ZljF3rjYr]
-X-ClientProxiedBy: PN2PR01CA0097.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:c01:27::12) To BY5PR02MB7009.namprd02.prod.outlook.com
- (2603:10b6:a03:236::13)
-X-Microsoft-Original-Message-ID: <20220713042249.31421-6-jo@jsfamily.in>
+        Wed, 13 Jul 2022 00:30:49 -0400
+Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94C742617
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Jul 2022 21:30:48 -0700 (PDT)
+Received: by mail-ot1-x330.google.com with SMTP id a14-20020a0568300b8e00b0061c4e3eb52aso5158893otv.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Jul 2022 21:30:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=6N8ChIQx6pex81y/6RbqslzOiu4f4qETiQ5M4m/U06o=;
+        b=ndBc7G7nHdfY9KsFXFOIc14lB0MciSnICKLcYwkT7Yxg7a7iZ5+wTHd7UlW0Vmafyp
+         o48cUGAzBq6PyQ197/tEnmvHsxYXf2JTYGTxJw1PdywLdeS2QnFdZAvFu4KYEIdeCPyM
+         VUoIgG4/s4xZNycYVEDBqBVNsQzj/EXEV+KnyZKRg/gdjeJAOE+XEvKsVPQUb6fysAwi
+         VoelG78Hn72TqBqhRGiC+5yFloeUELMoLIZnxvuD0FWXRPKuTYkXL3y+FeR6gHH67ob4
+         QHCFG69XcPK63cJM8u6x7xRTsV2HvN4If8G2+g9BgdxeicdqDdUVF1BnNimzgk2OEFDU
+         27WA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=6N8ChIQx6pex81y/6RbqslzOiu4f4qETiQ5M4m/U06o=;
+        b=TrYnq4LuADhwG+WnrE5kAPZD1RyPZ4KQ6TUep4UBlQUTtWP08GJ8pQwlYwNr3UrotI
+         fCYIUq3WKIY721eISSkxCLLtpe3IkdADu89rjcCjTD9WgP7kTftYX80EFcbbGlSr40da
+         Nrads2QHuPI60qdIKiZqpfr3VQGfiWxQm/w3ToaH/03XDPczXZ3ffRRra5BLE8zAT3ad
+         Mq8aL1BwoQ51uWxZn92twCk42+FHsR774PpVyASWWONs7nGWeLr+iOrK5KMalfCs/SAO
+         gp1kUU9yESUd01UYIb8LDf/e458rsw945bA5akFuYEKa2tlCsKO+5dFbNk/xP1dMzVhW
+         3Y2Q==
+X-Gm-Message-State: AJIora9cDWmRFXJtGvbNO85s19LgmoWVKvmlonw2Y1w3sMyVacvYOP2R
+        qX5Jn0VMU34wvSO7728c4FrbODgO9reCXg==
+X-Google-Smtp-Source: AGRyM1uCPT3DbFnOwTexzPekAoU8MyeLpj7KIV0wLNIHENFle2jyFGffI0fzdIBQZb7goZ/namEHlw==
+X-Received: by 2002:a9d:664a:0:b0:61c:312f:27d2 with SMTP id q10-20020a9d664a000000b0061c312f27d2mr584900otm.147.1657686647878;
+        Tue, 12 Jul 2022 21:30:47 -0700 (PDT)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id t67-20020a4a5446000000b0042bd87fd123sm4497755ooa.19.2022.07.12.21.30.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 12 Jul 2022 21:30:47 -0700 (PDT)
+Date:   Tue, 12 Jul 2022 23:30:45 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Carlos Bilbao <carlos.bilbao@amd.com>
+Cc:     amitk@kernel.org, thara.gopinath@gmail.com, agross@kernel.org,
+        david.brown@linaro.org, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        bilbao@vt.edu
+Subject: Re: [PATCH] thermal/drivers/qcom: Code refactoring
+Message-ID: <Ys5KdVQmA9YTmfCT@builder.lan>
+References: <20220712173127.3677491-1-carlos.bilbao@amd.com>
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 69757746-ac97-450b-2980-08da64878e0a
-X-MS-TrafficTypeDiagnostic: DM5PR02MB3895:EE_
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: mtr0SrtYoaNivYO/jbhhKEubxvHYLHVCl0HKhl3Zx2Vx3NpiCVelksOa1dOk8AscweLDme/RlRzWglgFJ+rbBgdAdO12OP7ICNz9/QCOl2d1egloI5yqn+RszubdmQltlAys/OYyseaJa5CRwWzDVGSmMy/e0y2jo4+t4PiI6MrfBy8iBXfbABDQkhHfFQbZM7DFaBPzaB22zZWQqTBwTzlLfs37locLeWa+yyuQS0MP+Tgn1CPHG+LgCz6fcBhFzbpuQDvrl7keiQv/cHfAN7z8pVKXn+H10F1fCruot9k57uM1lxosRORFAWlbVmqmzi0k/vBtFlXtPCyEOAbJxKw2WY6SxiuiKGS+ogSeLwPCKPU62WEc/P4Uq4INCLS4hj5rQuSXtGuYxBxzIaAzSZ+h2Io4EYgB+civdMtwtEEvGP7yf3mWsq5tI+NWqdf7QJThNYX1qjE4Oideacuo25vayr/hyhORc/jPdNJQgXNh7SFcLnELBiZPPZ4QP3IShkz4Z/XRorIJCE+gm4jZrAHBok+nBoQyK+RHVcavTbvLELC3y45+eJqKmvxxD0jgM4iO0zeqdIfSZ+7m+r4k8DLAjK50IBcadxcYuAST3riX1wQwN7ZLxBcRG11P5ihZMImTCDF8F9NgblqfPQl61FMeRnZyjtcDumrhtRyF34ybO7wdxa5Wtw+PtvXApVUCyK5pAwdd7kMnCj5iE1oClA==
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?DyxHmrfUFaS8EC4poHJJtpnehy4mTRActcVYWZ1bc6S034kJzezQwE636grd?=
- =?us-ascii?Q?G58FOeoD6Oqo15wt++cyrKngxoPTEr63+0sTNFQhrMdzvsgBQrqLOGomWAqp?=
- =?us-ascii?Q?8LWmLXqxx64ayjNJZvL73Q2yzHhBBZnPs6JT3FctSx3fXqG/yO9koblLZtt+?=
- =?us-ascii?Q?EAKI//rgAl6uZbswhCwNuQpOY7pMh7f8bwQMybWLifXo18TGeve2QSjF99Xi?=
- =?us-ascii?Q?2w41iyeqKtbAD0qUP61i1knDwCwCSJwP83sOLV/EGIPnTIvN8vUcKJpLcobg?=
- =?us-ascii?Q?OTRfdoi5muikPLtsGGQT8GvLM8jfkqmJ+Y2tEIJB2x+PVwlHCzdH5ff9kq/D?=
- =?us-ascii?Q?lJsUNvGs/HBCl6RH3XMN5fd6xv0dXAuQfboszbc6mwot/CDJkKxel1x7uboD?=
- =?us-ascii?Q?uGNs49n/pB+hrWCZOXz6EF9uIUrgItB7+VLW64tWxkcR1NrEW/dTLXsoPEo0?=
- =?us-ascii?Q?OqY4OboGZTofIGhLw8XeRj0pd3TV6XWLyTT4wYntumArigE0dpgr/9cbGT4S?=
- =?us-ascii?Q?tCX9pGhxgryp3hmx4l49iG0kYNgIfb+FjV5s/olNBWtE2fIc+nGOoqqsZeMB?=
- =?us-ascii?Q?S5q3aYsJX4Myq0+YHhsjXtFG1d7VvlsnhqiO9+8/pUPr1jx/9NKqsX3tOCrO?=
- =?us-ascii?Q?ZvCjBXaSUVRLtSls7xyMpm1m7Eyg9lbSgnJAmxpg5peRk8+VxCEyMMEnlvzO?=
- =?us-ascii?Q?IWGAtj0IDApx4tNPDo7koGZRc8au31Pu72OkWTKynMQdQjAQ8e+6VQTd0KJ2?=
- =?us-ascii?Q?YWQpz0b7Q/x+2NWbfH2BcgoVhWUWAVj2nR/Oufg/Vla4OngEBJmreCfHcMkE?=
- =?us-ascii?Q?zZvI9+TaTFG5DAqhQHcHysXpg1LYzjUb6k3D6KYWR5BTaJi2fpVeQCIF2Lfl?=
- =?us-ascii?Q?7Q8gnUe2MN8s4tPXHFrjsaKOIXJu1PZhSrmEa9NXutQHjHXvjLCqA7vtbtIl?=
- =?us-ascii?Q?zpsPDatc/IpwI+wCWE0RgVkBPgAV5+VuvL59SDRRxGO1/3qmovn6WrHg0+bF?=
- =?us-ascii?Q?ow4meC1pgwuUHgCBhjrd9kkybN9X2opqK8nqeCAQ2xG4sSL0+YPuaFgI1hmF?=
- =?us-ascii?Q?inkg8x+SaFzn7ikFLi6BKS5HVp5XIje+Qqwn1oU1M6Sh/PIz1mxR80kPZPLF?=
- =?us-ascii?Q?inNoTVRRSd6X+RY1PpFZtNj5M6T76swOdbuSQwxSV9nrogVKZxNTxDUMNTJS?=
- =?us-ascii?Q?LO6Ji6EvJ8tz3vQPJepc1bix/y+e/30vNYI8FC7Digi4a3HPPqqd2lhzB+U+?=
- =?us-ascii?Q?X5CwSZ+OiEm8pVkgy10xRvYHkoxOASAKxM+cog9TC5c3MC4XSFU8uX+JtW3+?=
- =?us-ascii?Q?dPhDy/VeOUxL+XfikR6yKOZL?=
-X-OriginatorOrg: sct-15-20-4755-11-msonline-outlook-99c3d.templateTenant
-X-MS-Exchange-CrossTenant-Network-Message-Id: 69757746-ac97-450b-2980-08da64878e0a
-X-MS-Exchange-CrossTenant-AuthSource: BY5PR02MB7009.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Jul 2022 04:24:19.6801
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM5PR02MB3895
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_PASS,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220712173127.3677491-1-carlos.bilbao@amd.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -105,27 +72,217 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Remove old beryllium dtb and compile the new tianma and ebbg variant dts.
+On Tue 12 Jul 12:31 CDT 2022, Carlos Bilbao wrote:
 
-Signed-off-by: Joel Selvaraj <jo@jsfamily.in>
----
- arch/arm64/boot/dts/qcom/Makefile | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+> Some functions in tsens-8960.c can directly return ret instead of doing an
+> extra check. In function calibrate_8960(), a second check for IS_ERR(data)
+> can also be avoided in some cases. A constant could be used to represent
+> the maximum number of sensors (11). Finally, function code_to_degc() can be
+> simplified, avoiding using an extra variable.
+> 
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 2f8aec2cc6db..5cc165dfbc94 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -106,7 +106,8 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-oneplus-fajita.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-sony-xperia-tama-akari.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-sony-xperia-tama-akatsuki.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-sony-xperia-tama-apollo.dtb
--dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-xiaomi-beryllium.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-xiaomi-beryllium-tianma.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-xiaomi-beryllium-ebbg.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-shift-axolotl.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm850-lenovo-yoga-c630.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm850-samsung-w737.dtb
--- 
-2.36.1
+Thanks for the patch Carlos. These are rather small fixes, but it would
+still be nice to keep them separate, so that in the even of there being
+some unforseen regression it would be easy to track down and fix the
+relevant patch.
 
+> Include these small refactoring changes.
+> 
+> Signed-off-by: Carlos Bilbao <carlos.bilbao@amd.com>
+> ---
+>  drivers/thermal/qcom/tsens-8960.c   | 25 +++++++++----------------
+>  drivers/thermal/qcom/tsens-common.c | 18 ++++++++----------
+>  drivers/thermal/qcom/tsens-v0_1.c   |  6 +++---
+>  drivers/thermal/qcom/tsens-v1.c     |  2 +-
+>  drivers/thermal/qcom/tsens.h        |  1 +
+>  5 files changed, 22 insertions(+), 30 deletions(-)
+> 
+> diff --git a/drivers/thermal/qcom/tsens-8960.c b/drivers/thermal/qcom/tsens-8960.c
+> index 8d9b721dadb6..576bca871655 100644
+> --- a/drivers/thermal/qcom/tsens-8960.c
+> +++ b/drivers/thermal/qcom/tsens-8960.c
+> @@ -76,10 +76,8 @@ static int suspend_8960(struct tsens_priv *priv)
+>  		mask = SLP_CLK_ENA_8660 | EN;
+>  
+>  	ret = regmap_update_bits(map, CNTL_ADDR, mask, 0);
+
+Why not just do:
+
+	return regmap_writen(...);
+
+> -	if (ret)
+> -		return ret;
+>  
+> -	return 0;
+> +	return ret;
+>  }
+>  
+>  static int resume_8960(struct tsens_priv *priv)
+> @@ -106,10 +104,8 @@ static int resume_8960(struct tsens_priv *priv)
+>  		return ret;
+>  
+>  	ret = regmap_write(map, CNTL_ADDR, priv->ctx.control);
+> -	if (ret)
+> -		return ret;
+>  
+> -	return 0;
+> +	return ret;
+>  }
+>  
+>  static int enable_8960(struct tsens_priv *priv, int id)
+> @@ -132,10 +128,8 @@ static int enable_8960(struct tsens_priv *priv, int id)
+>  		reg |= mask | SLP_CLK_ENA_8660 | EN;
+>  
+>  	ret = regmap_write(priv->tm_map, CNTL_ADDR, reg);
+> -	if (ret)
+> -		return ret;
+>  
+> -	return 0;
+> +	return ret;
+>  }
+>  
+>  static void disable_8960(struct tsens_priv *priv)
+> @@ -206,10 +200,8 @@ static int init_8960(struct tsens_priv *priv)
+>  
+>  	reg_cntl |= EN;
+>  	ret = regmap_write(priv->tm_map, CNTL_ADDR, reg_cntl);
+> -	if (ret)
+> -		return ret;
+>  
+> -	return 0;
+> +	return ret;
+>  }
+>  
+>  static int calibrate_8960(struct tsens_priv *priv)
+> @@ -221,10 +213,11 @@ static int calibrate_8960(struct tsens_priv *priv)
+>  	struct tsens_sensor *s = priv->sensor;
+>  
+>  	data = qfprom_read(priv->dev, "calib");
+> -	if (IS_ERR(data))
+> +	if (IS_ERR(data)) {
+>  		data = qfprom_read(priv->dev, "calib_backup");
+> -	if (IS_ERR(data))
+> -		return PTR_ERR(data);
+> +		if (IS_ERR(data))
+> +			return PTR_ERR(data);
+> +	}
+>  
+>  	for (i = 0; i < num_read; i++, s++)
+>  		s->offset = data[i];
+> @@ -278,6 +271,6 @@ static const struct tsens_ops ops_8960 = {
+>  };
+>  
+>  const struct tsens_plat_data data_8960 = {
+> -	.num_sensors	= 11,
+> +	.num_sensors	= MAX_NUM_SENSORS,
+>  	.ops		= &ops_8960,
+>  };
+> diff --git a/drivers/thermal/qcom/tsens-common.c b/drivers/thermal/qcom/tsens-common.c
+> index 528df8801254..fe5f4459e1cc 100644
+> --- a/drivers/thermal/qcom/tsens-common.c
+> +++ b/drivers/thermal/qcom/tsens-common.c
+> @@ -66,19 +66,17 @@ void compute_intercept_slope(struct tsens_priv *priv, u32 *p1,
+>  
+>  static inline int code_to_degc(u32 adc_code, const struct tsens_sensor *s)
+>  {
+> -	int degc, num, den;
+> +	int degc, den;
+>  
+> -	num = (adc_code * SLOPE_FACTOR) - s->offset;
+> +	degc = (adc_code * SLOPE_FACTOR) - s->offset;
+
+At this point the variable name is misleading, it's not until you have
+reassigned degc below that it's value represent the temperature.
+
+>  	den = s->slope;
+>  
+> -	if (num > 0)
+> -		degc = num + (den / 2);
+> -	else if (num < 0)
+> -		degc = num - (den / 2);
+> -	else
+> -		degc = num;
+
+So the main part of this change is to rework the else case, how about
+just starting with:
+
+	if (!num)
+		return 0;
+
+> -
+> -	degc /= den;
+> +	if (degc != 0) {
+> +		if (degc > 0)
+> +			degc = (degc + (den / 2)) / den;
+> +		else
+> +			degc = (degc - (den / 2)) / den;
+> +	}
+>  
+>  	return degc;
+>  }
+> diff --git a/drivers/thermal/qcom/tsens-v0_1.c b/drivers/thermal/qcom/tsens-v0_1.c
+> index 6f26fadf4c27..42e897526345 100644
+> --- a/drivers/thermal/qcom/tsens-v0_1.c
+> +++ b/drivers/thermal/qcom/tsens-v0_1.c
+> @@ -188,7 +188,7 @@ static int calibrate_8916(struct tsens_priv *priv)
+>  static int calibrate_8974(struct tsens_priv *priv)
+>  {
+>  	int base1 = 0, base2 = 0, i;
+> -	u32 p1[11], p2[11];
+> +	u32 p1[MAX_NUM_SENSORS], p2[MAX_NUM_SENSORS];
+>  	int mode = 0;
+>  	u32 *calib, *bkp;
+>  	u32 calib_redun_sel;
+> @@ -324,7 +324,7 @@ static const struct tsens_features tsens_v0_1_feat = {
+>  	.crit_int	= 0,
+>  	.adc		= 1,
+>  	.srot_split	= 1,
+> -	.max_sensors	= 11,
+> +	.max_sensors	= MAX_NUM_SENSORS,
+>  };
+>  
+>  static const struct reg_field tsens_v0_1_regfields[MAX_REGFIELDS] = {
+> @@ -374,7 +374,7 @@ static const struct tsens_ops ops_8974 = {
+>  };
+>  
+>  const struct tsens_plat_data data_8974 = {
+> -	.num_sensors	= 11,
+> +	.num_sensors	= MAX_NUM_SENSORS,
+>  	.ops		= &ops_8974,
+>  	.feat		= &tsens_v0_1_feat,
+>  	.fields	= tsens_v0_1_regfields,
+> diff --git a/drivers/thermal/qcom/tsens-v1.c b/drivers/thermal/qcom/tsens-v1.c
+> index 10b595d4f619..98acc9b64555 100644
+> --- a/drivers/thermal/qcom/tsens-v1.c
+> +++ b/drivers/thermal/qcom/tsens-v1.c
+> @@ -149,7 +149,7 @@ static const struct tsens_features tsens_v1_feat = {
+>  	.crit_int	= 0,
+>  	.adc		= 1,
+>  	.srot_split	= 1,
+> -	.max_sensors	= 11,
+> +	.max_sensors	= MAX_NUM_SENSORS,
+>  };
+>  
+>  static const struct reg_field tsens_v1_regfields[MAX_REGFIELDS] = {
+> diff --git a/drivers/thermal/qcom/tsens.h b/drivers/thermal/qcom/tsens.h
+> index 2fd94997245b..d2d78c7e20c8 100644
+> --- a/drivers/thermal/qcom/tsens.h
+> +++ b/drivers/thermal/qcom/tsens.h
+> @@ -6,6 +6,7 @@
+>  #ifndef __QCOM_TSENS_H__
+>  #define __QCOM_TSENS_H__
+>  
+> +#define MAX_NUM_SENSORS		11
+
+This only seems to apply for the three cases you have listed here, e.g.
+tsens-v2 (which also includes tsens.h) has max_sensors = 16.
+
+Regards,
+Bjorn
+
+>  #define ONE_PT_CALIB		0x1
+>  #define ONE_PT_CALIB2		0x2
+>  #define TWO_PT_CALIB		0x3
+> -- 
+> 2.31.1
+> 
