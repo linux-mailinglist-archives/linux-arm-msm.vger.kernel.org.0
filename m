@@ -2,66 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 42645572DE1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Jul 2022 08:07:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C4D1F572E07
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Jul 2022 08:15:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229951AbiGMGHl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Jul 2022 02:07:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44466 "EHLO
+        id S230249AbiGMGPw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Jul 2022 02:15:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51210 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229568AbiGMGHl (ORCPT
+        with ESMTP id S230052AbiGMGPv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Jul 2022 02:07:41 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6848E9FE14;
-        Tue, 12 Jul 2022 23:07:40 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 13B0DB81C13;
-        Wed, 13 Jul 2022 06:07:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC7C9C341C6;
-        Wed, 13 Jul 2022 06:07:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1657692457;
-        bh=PGjtPrJEPTf/72LLV3qAcGcGsp8I6w2AwRMY1DZJTyQ=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=jyASqPhDBB+76WOVuFljq3hv03BsQlkA3rh8uS2mAyt+3kqKZmrjTVcdeQkYIsUkt
-         5WsA8QYkLKdkKD3bepCpQjaABIxWU9ddv1z6NIoDyM6XJVxFqf66xm8CF763IehB/Y
-         6LslmGA/738L1rqMSydw8dDHdNzrZX5Ic1GvNYX2b7xJ4+KJxMLB+p1bq8jPLxV61Z
-         st3uwK2/ikysnh8ECBCbzTPJr/DNkRbSNde+zooY+1UezXsxgZfcaVkX+TaXeBT/H7
-         orgfiicgwIpWCyKDg0Dze6YyFivYyiP737h9fTzJ10t6qV56S0Jen18wN+rDmRT/3b
-         lGzaJnpbm+jvA==
-Date:   Wed, 13 Jul 2022 11:37:33 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] arm64: defconfig: Demote Qualcomm USB PHYs to modules
-Message-ID: <Ys5hJSRqRGWm27xg@matsya>
-References: <20220712031821.4134712-1-bjorn.andersson@linaro.org>
+        Wed, 13 Jul 2022 02:15:51 -0400
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F20B3C08FA
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Jul 2022 23:15:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1657692950; x=1689228950;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=l3O8bpPbmlCj5ClVjdMOYaBIcJZfMAtXaOax1aoCalM=;
+  b=u9TCb/vrvEBt0ij/k/LTOR+Y12imrQ5nM/k6z+zeAxDIPWZW0G/TXvgK
+   EfkUtSJigs4KbYS+DPVSKCQRfXF0R7yCUIgzoBmrUI4TqsCXJEHiF82LN
+   5E4mCJuDmUyzAvmCw3UjiRAmhp6PXIQ/wy6T5VMlVj+rbzs+dvicQDqp2
+   w=;
+Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 12 Jul 2022 23:15:50 -0700
+X-QCInternal: smtphost
+Received: from unknown (HELO nasanex01a.na.qualcomm.com) ([10.52.223.231])
+  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Jul 2022 23:15:50 -0700
+Received: from hu-ddhamara-hyd.qualcomm.com (10.80.80.8) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Tue, 12 Jul 2022 23:15:48 -0700
+From:   <quic_ddhamara@quicinc.com>
+To:     <freedreno@lists.freedesktop.org>
+CC:     <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <robclark@gmail.com>, <quic_akhilpo@quicinc.com>,
+        ddhamara <ddhamara@quicinc.com>
+Subject: [PATCH 0/1] drm/msm/a6xx: Fix null pointer access in
+Date:   Wed, 13 Jul 2022 11:45:27 +0530
+Message-ID: <20220713061528.32256-1-quic_ddhamara@quicinc.com>
+X-Mailer: git-send-email 2.37.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220712031821.4134712-1-bjorn.andersson@linaro.org>
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11-07-22, 20:18, Bjorn Andersson wrote:
-> The Qualcomm USB PHYs are not critical for reaching the ramdisk to load
-> modules, so they can be demoted to be built as such instead of builtin.
+From: ddhamara <ddhamara@quicinc.com>
 
-Reviewed-by: Vinod Koul <vkoul@kernel.org>
+Fix a null pointer access when memory allocation fails in
+a6xx_get_indexed_registers().
+
+Akhil P Oommen (1):
+  drm/msm/a6xx: Fix null pointer access in a6xx_get_indexed_registers
+
+ drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
 -- 
-~Vinod
+2.37.0
+
