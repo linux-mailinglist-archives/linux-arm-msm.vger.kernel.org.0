@@ -2,60 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7595D572DC8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Jul 2022 07:58:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4FB7D572DD9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Jul 2022 08:04:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230490AbiGMF6Z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Jul 2022 01:58:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37820 "EHLO
+        id S233877AbiGMGEO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Jul 2022 02:04:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43104 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233669AbiGMF6N (ORCPT
+        with ESMTP id S229826AbiGMGED (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Jul 2022 01:58:13 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71414735BF;
-        Tue, 12 Jul 2022 22:58:10 -0700 (PDT)
+        Wed, 13 Jul 2022 02:04:03 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7DB32317A;
+        Tue, 12 Jul 2022 23:04:01 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id B7F09B81D05;
-        Wed, 13 Jul 2022 05:58:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B401C34114;
-        Wed, 13 Jul 2022 05:58:07 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id C35E161C28;
+        Wed, 13 Jul 2022 06:04:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22A08C3411E;
+        Wed, 13 Jul 2022 06:04:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1657691887;
-        bh=+TFecpe9VYqNJy3cLeqbEtIOTbGwOcH+jyHof4F95ls=;
+        s=k20201202; t=1657692240;
+        bh=clshhfy1J+TLRTFrz2aXf8/1oU1ARgiSNdbXmyDmDwU=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=IsYLPU1Bjagy0Wep8RytHKxRpNtS30kzPubfzlikEyjPw/ExMjGxAGav4P+/99i36
-         OaQOrrzkM2yQPa58rSwFx57FHmxUpG+VEarOKajzEv9kPTBvkIZeAjiuf3mIUPUsnM
-         zTDKVhyWMekJyQYgETZGZ2Xivd69UjLMgRa7yDqrEMsD/6RLet6aX9AaZOZg95LwHN
-         GZWmFZAKu4zfIJJ74KREfuKVr5Dil0UFdETQbDLNfPVVBCWOJj920BJ7jbQaAXHXog
-         VL/gUZv+YVTVcNPrf7EebY0W9Bax8aHtRJVumxqomKF8JExBPOKDM6sKM1yP6r5lnv
-         HFIoC4PoOkfJA==
+        b=EElNlRrHnK9cL9IIdHUgX/zk+YTjhG1txHxdK+jYdHWl48jS0p4GVKQ3EuXD54kpP
+         CY6+nFn4tw2DugWBYjk3cn6KDLozCT0UQmqRSS+31ichOF2nb0I0MfhgXpUgthYRc/
+         XDLHM2NYbTpZexkRoayUrvF7z8GaWzdMVFXkTAdE67i5xc+g1NXQwaC289ZcBaaq0I
+         g3xyWWq+8F1xtBPwYXCDsGDLzlJsfRdu0ZfKL0jdjTKzEnB6zeeW6REXkKuYG95nsz
+         RFXG5NJftanZxDLcKhgtvvlhxi5a5mSsdwfcHgDEG9/NNE/806Qbaw6yAmxKq8qhxT
+         Drs7ISq1pA4KQ==
 Received: from johan by xi.lan with local (Exim 4.94.2)
         (envelope-from <johan@kernel.org>)
-        id 1oBVNx-0000Cp-2E; Wed, 13 Jul 2022 07:58:09 +0200
-Date:   Wed, 13 Jul 2022 07:58:09 +0200
+        id 1oBVTe-0000Fn-Db; Wed, 13 Jul 2022 08:04:02 +0200
+Date:   Wed, 13 Jul 2022 08:04:02 +0200
 From:   Johan Hovold <johan@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+To:     Bjorn Helgaas <helgaas@kernel.org>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Johan Hovold <johan+linaro@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        manivannan.sadhasivam@linaro.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: sc8280xp: Add lost ranges for timer
-Message-ID: <Ys5e8StvLMj5LBLm@hovoldconsulting.com>
-References: <20220707160858.3178771-1-bjorn.andersson@linaro.org>
- <Ysvlqw/+eMk5XLRY@hovoldconsulting.com>
- <YszcSgnSrbsncw0J@ripper>
- <Ys2K/BH/kAeTBz5t@hovoldconsulting.com>
- <Ys4lnuVncPiWkjbH@builder.lan>
+        Jingoo Han <jingoohan1@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH] dt-bindings: PCI: qcom: fix typo in condition guarding
+ resets
+Message-ID: <Ys5gUulbU++HvRPC@hovoldconsulting.com>
+References: <20220707134552.2436442-1-dmitry.baryshkov@linaro.org>
+ <20220712195137.GA790567@bhelgaas>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <Ys4lnuVncPiWkjbH@builder.lan>
+In-Reply-To: <20220712195137.GA790567@bhelgaas>
 X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -66,54 +71,43 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jul 12, 2022 at 08:53:34PM -0500, Bjorn Andersson wrote:
-> On Tue 12 Jul 09:53 CDT 2022, Johan Hovold wrote:
-> > On Mon, Jul 11, 2022 at 07:28:26PM -0700, Bjorn Andersson wrote:
-> > > On Mon 11 Jul 01:56 PDT 2022, Johan Hovold wrote:
-
-> > > > While addressing the current issue, this looks odd to me. Why not use a
-> > > > non-zero parent bus address here instead?
-> > > > 
-> > > 
-> > > I guess we could express the frames relative the timer range, but that
-> > > would imply that anyone porting downstream dts snippets would have to
-> > > translate these addresses - or more likely would end up just copying the
-> > > existing cases.
-> > > 
-> > > > And please use hex notation consistently for the addresses.
-> > > 
-> > > That seems like a reasonable ask, I can fix that up. But on both
-> > > accounts this matches what I merged for all the other platforms in:
-> > > 
-> > > 458ebdbb8e5d ("arm64: dts: qcom: timer should use only 32-bit size")
-> > > 
-> > > 
-> > > So I guess we'll also need to go back and fix up the style of all the
-> > > other platforms - just because we're not allowed to express the frames
-> > > in 64-bits according to the binding...
+On Tue, Jul 12, 2022 at 02:51:37PM -0500, Bjorn Helgaas wrote:
+> On Thu, Jul 07, 2022 at 04:45:52PM +0300, Dmitry Baryshkov wrote:
+> > Fix the typo (compatibles vs compatible) in the condition guarding the
+> > resets being required everywhere except MSM8996.
 > > 
-> > Would have been easier to just amend the binding. I don't think that
-> > #size-cells = 1 constraint is set in stone as it was added when
-> > converting to DT schema.
+> > Fixes: 6700a9b00f0a ("dt-bindings: PCI: qcom: Do not require resets on msm8996 platforms")
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > 
-> Rob disagrees with this idea:
-> https://lore.kernel.org/all/CAL_JsqJMMCBnukFZLJ8X14s1PwqT=VEwKjDVj8mm4h55pZpcuw@mail.gmail.com/
+> Applied for v5.20, thanks!
 
-Ok, thanks for the link. I'd still prefer a non-zero parent-bus address
-in that ranges, but we can change that later too.
+Glad to see this fixed, Bjorn H, but was there any particular reason why
+you picked this version over the patch I submitted a week earlier when
+reporting the issue?
 
-> > But you probably should amend the commit message and mention that this
-> > fixes time keeping. I had recently noticed that something was off
-> > (journals rotating, and erratic cursor blinking) but didn't realise that
-> > timers were broken until you posted this.
+I posted a link to it earlier in this thread:
+
+	https://lore.kernel.org/lkml/20220629141000.18111-2-johan+linaro@kernel.org/
+
+> > ---
+> >  Documentation/devicetree/bindings/pci/qcom,pcie.yaml | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
 > > 
-> 
-> That sounds like a good idea, thanks for the suggestion.
-
-I guess you're posting a v2, but otherwise feel free to add my 
-
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-
-when applying.
+> > diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> > index 0b69b12b849e..9b3ebee938e8 100644
+> > --- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> > +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> > @@ -614,7 +614,7 @@ allOf:
+> >    - if:
+> >        not:
+> >          properties:
+> > -          compatibles:
+> > +          compatible:
+> >              contains:
+> >                enum:
+> >                  - qcom,pcie-msm8996
+> > -- 
+> > 2.35.1
+> > 
 
 Johan
