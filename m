@@ -2,85 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AFC78573913
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Jul 2022 16:43:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B2D8A573935
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Jul 2022 16:51:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236584AbiGMOnX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Jul 2022 10:43:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47258 "EHLO
+        id S236609AbiGMOvT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Jul 2022 10:51:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54374 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236499AbiGMOnW (ORCPT
+        with ESMTP id S234652AbiGMOvS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Jul 2022 10:43:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 381372ED73
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Jul 2022 07:43:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1657723399;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=H4v+SMT4YyFBFqIk3h1YXOzJcv6SHCw5As/1u7zBjaA=;
-        b=LKMXwz6t+bXlOs+f3FjAGEtlxyCU/R5qSUTsWkDW6r4+bJFwFWX/CCe8+EgIbG8j9m4hl4
-        RWE8H0V/C4du/neHGPSYtKi+se7xi7D42bY0No5e79O8y7kw11M72IknuJeN0tLdwhOCoe
-        S7K4SuwjI9sycJ+c5aX5A6AjbUwvLKw=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- us-mta-629-oSp1kxVpNYuX-pJqZ3suJQ-1; Wed, 13 Jul 2022 10:43:18 -0400
-X-MC-Unique: oSp1kxVpNYuX-pJqZ3suJQ-1
-Received: by mail-qv1-f71.google.com with SMTP id mh1-20020a056214564100b00472fcc5ae9eso3856791qvb.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Jul 2022 07:43:18 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=H4v+SMT4YyFBFqIk3h1YXOzJcv6SHCw5As/1u7zBjaA=;
-        b=hhMUoldH3ZYGJYHegv4cwSrdFJWv815nRk8EGNST4sV8sibzVRncf8r8mS6oAAeiuG
-         QhyweDBKEGOqOP9KEiVkDXpZzdSqO7hGKvesrvivxrAPHStfSC6JJlFPHE7SNGoEmzqM
-         VWZIXkVD/3WOPmTdfC1NetwUD3jQarrPHYRGkXmkie5w+b0ofD/bUAKNUJ+mTq/LNmni
-         MIU/Uyy1v/IEAEmr3SzwEUuss+MD+vBB63QCVz4uMs9XAYWvImQteF0MpXPCXL9zRS3m
-         UATKn9pGIqnCP8wE6R21H7PkH0LeCadkF3DjKmhkZFPYnSIn4F+mSI/8LqMKPfM8iaVE
-         rMvQ==
-X-Gm-Message-State: AJIora+793um/Y3IZ++xDc9nAlAtsAhRiuFqsNYvaFRWFkkCTwAe0Few
-        STAzUbGKi/2MzFoZrJlgFxfdazwEIr1FA9ekgqDRemZu2N4HykOPwcxT1YG9mDxBgY2GBxSYnJ1
-        pgBgxF4iwclMwLOjNEqT7lt1tIQ==
-X-Received: by 2002:a05:6214:d0a:b0:473:584f:273d with SMTP id 10-20020a0562140d0a00b00473584f273dmr3178901qvh.127.1657723398348;
-        Wed, 13 Jul 2022 07:43:18 -0700 (PDT)
-X-Google-Smtp-Source: AGRyM1vVehCzGhVquOdqnAhdxWfZLL8LwuEOx6uq5tz/bi4ruQ+Vc8Bgb4U7OGBQUaph9+ojKaRgbw==
-X-Received: by 2002:a05:6214:d0a:b0:473:584f:273d with SMTP id 10-20020a0562140d0a00b00473584f273dmr3178858qvh.127.1657723397983;
-        Wed, 13 Jul 2022 07:43:17 -0700 (PDT)
-Received: from halaneylaptop ([2600:1700:1ff0:d0e0::2e])
-        by smtp.gmail.com with ESMTPSA id s7-20020a05620a254700b006a6b374d8bbsm12386760qko.69.2022.07.13.07.43.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Jul 2022 07:43:17 -0700 (PDT)
-Date:   Wed, 13 Jul 2022 09:43:10 -0500
-From:   Andrew Halaney <ahalaney@redhat.com>
-To:     Johan Hovold <johan@kernel.org>
-Cc:     Johan Hovold <johan+linaro@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 5/7] arm64: dts: qcom: sc8280xp: fix USB interrupts
-Message-ID: <20220713144310.kehfuqvfhsjb36ri@halaneylaptop>
-References: <20220713131340.29401-1-johan+linaro@kernel.org>
- <20220713131340.29401-6-johan+linaro@kernel.org>
- <20220713141228.5z5rmgepj6mepjyp@halaneylaptop>
- <Ys7YKkRAAI0Vbseh@hovoldconsulting.com>
+        Wed, 13 Jul 2022 10:51:18 -0400
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4BB443C142;
+        Wed, 13 Jul 2022 07:51:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1657723878; x=1689259878;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=usEfZWG3K+DfGjkb7INoXNmqgT2ynC9Rk8m0pztykNE=;
+  b=G3bBANNsQFl/6rkTep8Od1gu3IbsEY8UjhpdGqkFi3imoB1sngbcRHOR
+   xLGr80hS2SV0pFguyCmF7mu31IeWLVjTsJuLlInCS+DvHgQdedTYtya6Q
+   1ABFILm7IJVgJmSdNVE1bbGYf2ZAlyz6KoHszH9oQEAHaFd99shj8DxPb
+   o=;
+Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 13 Jul 2022 07:51:18 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Jul 2022 07:51:17 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Wed, 13 Jul 2022 07:51:17 -0700
+Received: from [10.216.22.132] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Wed, 13 Jul
+ 2022 07:51:10 -0700
+Message-ID: <b5776efd-4d30-3dbf-796d-4f29ed1e3a92@quicinc.com>
+Date:   Wed, 13 Jul 2022 20:21:07 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Ys7YKkRAAI0Vbseh@hovoldconsulting.com>
-X-Spam-Status: No, score=-3.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH] soundwire: qcom: Update error prints to debug prints
+Content-Language: en-US
+To:     Andrew Halaney <ahalaney@redhat.com>
+CC:     <vkoul@kernel.org>, <agross@kernel.org>,
+        <bjorn.andersson@linaro.org>, <lgirdwood@gmail.com>,
+        <broonie@kernel.org>, <robh+dt@kernel.org>,
+        <quic_plai@quicinc.com>, <bgoswami@quicinc.com>, <perex@perex.cz>,
+        <tiwai@suse.com>, <srinivas.kandagatla@linaro.org>,
+        <quic_rohkumar@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <alsa-devel@alsa-project.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <swboyd@chromium.org>,
+        <judyhsiao@chromium.org>
+References: <1657714921-28072-1-git-send-email-quic_srivasam@quicinc.com>
+ <20220713135603.4vkyofw6x4mldxzp@halaneylaptop>
+From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Organization: Qualcomm
+In-Reply-To: <20220713135603.4vkyofw6x4mldxzp@halaneylaptop>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -88,85 +75,51 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jul 13, 2022 at 04:35:22PM +0200, Johan Hovold wrote:
-> On Wed, Jul 13, 2022 at 09:12:28AM -0500, Andrew Halaney wrote:
-> > On Wed, Jul 13, 2022 at 03:13:38PM +0200, Johan Hovold wrote:
-> > > The two single-port SC8280XP USB controllers do not have an hs_phy_irq
-> > > interrupt. Instead they have a pwr_event interrupt which is distinct
-> > > from the former and not yet supported by the driver.
-> > > 
-> > > Fix the USB node interrupt names so that they match the devicetree
-> > > binding.
-> > > 
-> > > Fixes: 152d1faf1e2f ("arm64: dts: qcom: add SC8280XP platform")
-> > > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> > > ---
-> > >  arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 12 ++++++++----
-> > >  1 file changed, 8 insertions(+), 4 deletions(-)
-> > > 
-> > > diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> > > index 45cc7d714fd2..4a7aa9992f3a 100644
-> > > --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> > > +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> > > @@ -1875,8 +1875,10 @@ usb_0: usb@a6f8800 {
-> > >  					      <&pdc 14 IRQ_TYPE_EDGE_BOTH>,
-> > >  					      <&pdc 15 IRQ_TYPE_EDGE_BOTH>,
-> > >  					      <&pdc 138 IRQ_TYPE_LEVEL_HIGH>;
-> > > -			interrupt-names = "hs_phy_irq", "dp_hs_phy_irq",
-> > > -					  "dm_hs_phy_irq", "ss_phy_irq";
-> > > +			interrupt-names = "pwr_event",
-> > > +					  "dp_hs_phy_irq",
-> > > +					  "dm_hs_phy_irq",
-> > > +					  "ss_phy_irq";
-> > >  
-> > >  			power-domains = <&gcc USB30_PRIM_GDSC>;
-> > >  
-> > > @@ -1925,8 +1927,10 @@ usb_1: usb@a8f8800 {
-> > >  					      <&pdc 12 IRQ_TYPE_EDGE_BOTH>,
-> > >  					      <&pdc 13 IRQ_TYPE_EDGE_BOTH>,
-> > >  					      <&pdc 136 IRQ_TYPE_LEVEL_HIGH>;
-> > > -			interrupt-names = "hs_phy_irq", "dp_hs_phy_irq",
-> > > -					  "dm_hs_phy_irq", "ss_phy_irq";
-> > > +			interrupt-names = "pwr_event",
-> > > +					  "dp_hs_phy_irq",
-> > > +					  "dm_hs_phy_irq",
-> > > +					  "ss_phy_irq";
-> > 
-> > For this specific change to pwr_event:
-> > 
-> >     Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
-> > 
-> > That being said, I was reviewing this against the (fairly old)
-> > downstream release I have, and the IRQs defined there look like this:
-> > 
-> > 		interrupts-extended = <&pdc 12 IRQ_TYPE_EDGE_RISING>,
-> > 				<&intc GIC_SPI 811 IRQ_TYPE_LEVEL_HIGH>,
-> > 				<&pdc 136 IRQ_TYPE_LEVEL_HIGH>,
-> > 				<&pdc 13 IRQ_TYPE_EDGE_RISING>;
-> > 		interrupt-names = "dp_hs_phy_irq", "pwr_event_irq",
-> > 				"ss_phy_irq", "dm_hs_phy_irq";
-> > 
-> > The part I want to highlight is that the "pwr_event" irq downstream maps
-> > to <&intc GIC_SPI 811 IRQ_TYPE_LEVEL_HIGH>, but the current upstream
-> > devicetree I'm looking at has it mapped to <&intc GIC_SPI 136 IRQ_TYPE_LEVEL_HIGH>
-> > 
-> > Do you happen to have any source you can also check to confirm if this
-> > is a bug or not?
-> 
-> Good catch! I believe this is another copy-paste error when creating
-> base dtsi based on some vendor source (or perhaps an error carried over
-> from an earlier version).
-> 
-> The vendor devicetree I have access to also has 811 here, which matches
-> the pattern for usb_0 (dwc3 interrupt + 1).
-> 
-> Do you mind if I fold a fix for that into a v2 of this patch?
-> 
-> Thanks for reviewing!
 
-Sounds good, feel free to add my R-B with that change as well!
-
-> 
-> Johan
-> 
-
+On 7/13/2022 7:26 PM, Andrew Halaney wrote:
+Thanks for your time Andrew.
+> A couple of drive by nits:
+>
+> On Wed, Jul 13, 2022 at 05:52:01PM +0530, Srinivasa Rao Mandadapu wrote:
+>> Upadte error prints to debug prints to avoid redundant logging in kernel
+>> boot time, as these prints are informative prints in irq handler.
+> s/Upadte/Update/
+Okay. Will fix it.
+>
+>> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+>> ---
+>>   drivers/soundwire/qcom.c | 5 ++---
+>>   1 file changed, 2 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
+>> index 9df970e..a4293d0 100644
+>> --- a/drivers/soundwire/qcom.c
+>> +++ b/drivers/soundwire/qcom.c
+>> @@ -573,11 +573,10 @@ static irqreturn_t qcom_swrm_irq_handler(int irq, void *dev_id)
+>>   				break;
+>>   			case SWRM_INTERRUPT_STATUS_NEW_SLAVE_ATTACHED:
+>>   			case SWRM_INTERRUPT_STATUS_CHANGE_ENUM_SLAVE_STATUS:
+>> -				dev_err_ratelimited(swrm->dev, "%s: SWR new slave attached\n",
+>> -					__func__);
+>> +				dev_dbg(swrm->dev, "%s: SWR new slave attached\n", __func__);
+> There's no need for __func__ usage with dev_dbg() when giving +f flag
+> when enabling adds this for you!
+Okay. Will remove __func__ and change dev_dbg() to dev_dbg_ratelimited().
+>
+> With those changes feel free to add:
+>
+>      Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
+>
+> Thanks,
+> Andrew
+>
+>>   				swrm->reg_read(swrm, SWRM_MCP_SLV_STATUS, &slave_status);
+>>   				if (swrm->slave_status == slave_status) {
+>> -					dev_err(swrm->dev, "Slave status not changed %x\n",
+>> +					dev_dbg(swrm->dev, "Slave status not changed %x\n",
+>>   						slave_status);
+>>   				} else {
+>>   					qcom_swrm_get_device_status(swrm);
+>> -- 
+>> 2.7.4
+>>
