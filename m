@@ -2,72 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A8D8C573B78
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Jul 2022 18:45:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CECFC573B85
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Jul 2022 18:46:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236539AbiGMQpx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Jul 2022 12:45:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51990 "EHLO
+        id S237004AbiGMQqn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Jul 2022 12:46:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53006 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236169AbiGMQpq (ORCPT
+        with ESMTP id S236826AbiGMQqb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Jul 2022 12:45:46 -0400
-Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 829A32FFC7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Jul 2022 09:45:31 -0700 (PDT)
-Received: by mail-pj1-x1030.google.com with SMTP id a15so12895493pjs.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Jul 2022 09:45:31 -0700 (PDT)
+        Wed, 13 Jul 2022 12:46:31 -0400
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C21F52FFE3;
+        Wed, 13 Jul 2022 09:46:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=/iQtm6Kux/xWroeqwCGf2oSrpyEqZ4z/EH3B3RJO+Zo=;
-        b=Joha79Wraj0RM+cNfu3SLTwfR7k4tiDA9n7XxadX3uG3w0zYyxHrPOtXzh8dM3yFtA
-         FF2ylCS4LuB5M/us7A/MHNY98bLJE1mRjrjc3RpAHNtMmQWGPT3ztvVb8X2ySQf9WyHm
-         OSe3MmIRa4sR1Mub2jw6fK4W9IfwsKKvHoApKaQ8eFykY1qNF2EQtNfFx5k9DofsGOgc
-         Xt6AxlIOQbdyCFWgBWXsI+VkRYcg1r143YeWJP3ikSoe6BgtPxbBcCGaCuAYoWM/djmU
-         EEWqJrzaycQVS0zFdsIKKSti0JSLZCbm46H8xrVrLio68hqOaGS3WpuW/yiGHEF3PjFJ
-         VhsA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=/iQtm6Kux/xWroeqwCGf2oSrpyEqZ4z/EH3B3RJO+Zo=;
-        b=sptD5LxSkyBJV82OAxkABQt8nX/VapZoyDIoY5CkP0B20YjGX5qWYYV8OARTZ51D3V
-         T9mNOnwB1oVoV2jzetpCa81zMjhgPIJgx+KnazCQAurM2aOWJT4PD6oVty6XMSMTtroe
-         BcelzYSUabWStekiA/YJBSHRgoo6NzbdwZJBZo5hT7asWWUBdj1w1XqLwk0dG6kK5gtC
-         Jz+AeF4IYKOivLYj9ENujeyeF2ebBxQLxG2kTxM7Uja51EluNh2cd9kVkK96q8oGcc/p
-         67xZXtWkQMxHoz6kcKnrVhy9FhPfjtDTgGYu+Qlmq93eqjzWv3z4IZ5ZPjI4BdU/dbSQ
-         WcUg==
-X-Gm-Message-State: AJIora+8nIIq5OZ0J9KevZYEG++wmyzumfSfzNEHWJ6Ahd+PjZog0fS+
-        Snnux64tC8Be/f5+3EDuofem
-X-Google-Smtp-Source: AGRyM1vpxsjXKe7Cp4HLhTBdF09rD64pUIPfu6lFoXvKGOvtaOsFtN9vtggHGNXvZdPImb8Oe6tBgw==
-X-Received: by 2002:a17:90a:7c05:b0:1ee:e40c:589b with SMTP id v5-20020a17090a7c0500b001eee40c589bmr4764943pjf.78.1657730730820;
-        Wed, 13 Jul 2022 09:45:30 -0700 (PDT)
-Received: from workstation ([117.248.1.226])
-        by smtp.gmail.com with ESMTPSA id f1-20020a170902ce8100b0016beceac426sm9045079plg.138.2022.07.13.09.45.27
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 13 Jul 2022 09:45:30 -0700 (PDT)
-Date:   Wed, 13 Jul 2022 22:15:25 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Abel Vesa <abel.vesa@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH] remoteproc: qcom_q6v5_pas: Deal silently with optional
- px and cx regulators
-Message-ID: <20220713164525.GB4591@workstation>
-References: <20220713152835.3848875-1-abel.vesa@linaro.org>
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1657730783; x=1689266783;
+  h=message-id:date:mime-version:subject:to:references:from:
+   in-reply-to:content-transfer-encoding;
+  bh=kqLgUdZi53D6drYvYhKcGz92QsRtwzVgO8AAS9UQ2q0=;
+  b=y21v731/ufUxDI49JyraQWlz4OhYm+dpXUZTDEBK2aFDqXh2agnNXmCx
+   hHpwyIO3FqaP9bDi6aV6W8i4ysYZ/EV+TyuhqjQSzesFyD+riNF8Afddj
+   5GR/RcTeAsOMTm8onCYQxqDsMp1SqlYLRxOqDq7hyPPLkxA8LEIdwDiUA
+   c=;
+Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 13 Jul 2022 09:46:23 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Jul 2022 09:46:22 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Wed, 13 Jul 2022 09:46:22 -0700
+Received: from [10.216.11.138] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Wed, 13 Jul
+ 2022 09:46:05 -0700
+Message-ID: <3def0f92-6784-df60-9533-e2902cda0185@quicinc.com>
+Date:   Wed, 13 Jul 2022 22:15:59 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220713152835.3848875-1-abel.vesa@linaro.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH] soundwire: qcom: Update error prints to debug prints
+Content-Language: en-US
+To:     Joe Perches <joe@perches.com>,
+        Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+        <vkoul@kernel.org>, <agross@kernel.org>,
+        <bjorn.andersson@linaro.org>, <lgirdwood@gmail.com>,
+        <broonie@kernel.org>, <robh+dt@kernel.org>,
+        <quic_plai@quicinc.com>, <bgoswami@quicinc.com>, <perex@perex.cz>,
+        <tiwai@suse.com>, <srinivas.kandagatla@linaro.org>,
+        <quic_rohkumar@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <alsa-devel@alsa-project.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <swboyd@chromium.org>,
+        <judyhsiao@chromium.org>
+References: <1657714921-28072-1-git-send-email-quic_srivasam@quicinc.com>
+ <75e9b775-3bbe-0b34-2bd6-b4ac74620672@linux.intel.com>
+ <8cde58d2-3b10-b88b-2d10-88e76fbcac06@quicinc.com>
+ <75404573094d1c46172fcd51dad6a4e564da1542.camel@perches.com>
+From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Organization: Qualcomm
+In-Reply-To: <75404573094d1c46172fcd51dad6a4e564da1542.camel@perches.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -76,106 +78,26 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jul 13, 2022 at 06:28:35PM +0300, Abel Vesa wrote:
-> Use _get_optional as some platforms might not provide the px
-> and cx regulators.
 
-But this makes no failure for platforms that really needs these regulators and
-not defined in devicetree. But at the same time, the driver should trust
-the devicetree anyway and not try to validate it.
-
-So I think this is fine.
-
-> This avoids printing the following for each
-> unavailable regulator:
-> 
-> [    4.350229] qcom_q6v5_pas 5c00000.remoteproc: supply cx not found,
-> using dummy regulator
-> [    4.374224] qcom_q6v5_pas 5c00000.remoteproc: supply px not found,
-> using dummy regulator
-> 
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-
-Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-
-Thanks,
-Mani
-
-> ---
->  drivers/remoteproc/qcom_q6v5_pas.c | 32 +++++++++++++++++++-----------
->  1 file changed, 20 insertions(+), 12 deletions(-)
-> 
-> diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
-> index 6ae39c5653b1..3c3affaff7ac 100644
-> --- a/drivers/remoteproc/qcom_q6v5_pas.c
-> +++ b/drivers/remoteproc/qcom_q6v5_pas.c
-> @@ -185,13 +185,17 @@ static int adsp_start(struct rproc *rproc)
->  	if (ret)
->  		goto disable_xo_clk;
->  
-> -	ret = regulator_enable(adsp->cx_supply);
-> -	if (ret)
-> -		goto disable_aggre2_clk;
-> +	if (adsp->cx_supply) {
-> +		ret = regulator_enable(adsp->cx_supply);
-> +		if (ret)
-> +			goto disable_aggre2_clk;
-> +	}
->  
-> -	ret = regulator_enable(adsp->px_supply);
-> -	if (ret)
-> -		goto disable_cx_supply;
-> +	if (adsp->px_supply) {
-> +		ret = regulator_enable(adsp->px_supply);
-> +		if (ret)
-> +			goto disable_cx_supply;
-> +	}
->  
->  	ret = qcom_scm_pas_auth_and_reset(adsp->pas_id);
->  	if (ret) {
-> @@ -212,9 +216,11 @@ static int adsp_start(struct rproc *rproc)
->  	return 0;
->  
->  disable_px_supply:
-> -	regulator_disable(adsp->px_supply);
-> +	if (adsp->px_supply)
-> +		regulator_disable(adsp->px_supply);
->  disable_cx_supply:
-> -	regulator_disable(adsp->cx_supply);
-> +	if (adsp->cx_supply)
-> +		regulator_disable(adsp->cx_supply);
->  disable_aggre2_clk:
->  	clk_disable_unprepare(adsp->aggre2_clk);
->  disable_xo_clk:
-> @@ -231,8 +237,10 @@ static void qcom_pas_handover(struct qcom_q6v5 *q6v5)
->  {
->  	struct qcom_adsp *adsp = container_of(q6v5, struct qcom_adsp, q6v5);
->  
-> -	regulator_disable(adsp->px_supply);
-> -	regulator_disable(adsp->cx_supply);
-> +	if (adsp->px_supply)
-> +		regulator_disable(adsp->px_supply);
-> +	if (adsp->cx_supply)
-> +		regulator_disable(adsp->cx_supply);
->  	clk_disable_unprepare(adsp->aggre2_clk);
->  	clk_disable_unprepare(adsp->xo);
->  	adsp_pds_disable(adsp, adsp->proxy_pds, adsp->proxy_pd_count);
-> @@ -326,13 +334,13 @@ static int adsp_init_clock(struct qcom_adsp *adsp)
->  
->  static int adsp_init_regulator(struct qcom_adsp *adsp)
->  {
-> -	adsp->cx_supply = devm_regulator_get(adsp->dev, "cx");
-> +	adsp->cx_supply = devm_regulator_get_optional(adsp->dev, "cx");
->  	if (IS_ERR(adsp->cx_supply))
->  		return PTR_ERR(adsp->cx_supply);
->  
->  	regulator_set_load(adsp->cx_supply, 100000);
->  
-> -	adsp->px_supply = devm_regulator_get(adsp->dev, "px");
-> +	adsp->px_supply = devm_regulator_get_optional(adsp->dev, "px");
->  	return PTR_ERR_OR_ZERO(adsp->px_supply);
->  }
->  
-> -- 
-> 2.34.3
-> 
+On 7/13/2022 9:31 PM, Joe Perches wrote:
+Thanks for your time Joe!!!
+> On Wed, 2022-07-13 at 20:22 +0530, Srinivasa Rao Mandadapu wrote:
+>> On 7/13/2022 7:53 PM, Pierre-Louis Bossart wrote:
+>> Thanks for your time Pierre-Louis!!!
+>>> On 7/13/22 07:22, Srinivasa Rao Mandadapu wrote:
+>>>> Upadte error prints to debug prints to avoid redundant logging in kernel
+>>> update
+> []
+>>>> diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
+> []
+>>>> @@ -573,11 +573,10 @@ static irqreturn_t qcom_swrm_irq_handler(int irq, void *dev_id)
+>>>>    				break;
+>>>>    			case SWRM_INTERRUPT_STATUS_NEW_SLAVE_ATTACHED:
+>>>>    			case SWRM_INTERRUPT_STATUS_CHANGE_ENUM_SLAVE_STATUS:
+>>>> -				dev_err_ratelimited(swrm->dev, "%s: SWR new slave attached\n",
+>>>> -					__func__);
+>>>> +				dev_dbg(swrm->dev, "%s: SWR new slave attached\n", __func__);
+> Could also drop the "%s: ", __func__ as it's already a unique message
+> and dynamic debug could add it back if really desired.
+Okay. It's removed and posted v2 patch.
+>
