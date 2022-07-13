@@ -2,60 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2226C57397B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Jul 2022 16:59:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 039A757398A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Jul 2022 17:03:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236657AbiGMO7k (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Jul 2022 10:59:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35618 "EHLO
+        id S236540AbiGMPDL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Jul 2022 11:03:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38392 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236608AbiGMO7k (ORCPT
+        with ESMTP id S236720AbiGMPDK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Jul 2022 10:59:40 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D24F1031;
-        Wed, 13 Jul 2022 07:59:39 -0700 (PDT)
+        Wed, 13 Jul 2022 11:03:10 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 949683E75F;
+        Wed, 13 Jul 2022 08:03:08 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 31A8261E2D;
-        Wed, 13 Jul 2022 14:59:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ED0BC34114;
-        Wed, 13 Jul 2022 14:59:37 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 39E03B82025;
+        Wed, 13 Jul 2022 15:03:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB238C34114;
+        Wed, 13 Jul 2022 15:03:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1657724378;
-        bh=ea3eb/QIQfOUewT0mimlbNr1tOOqoDalSZngk8wxy/M=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:From;
-        b=KfhfkFhoRoy8kDeEw5OuiMLXU9o4L8V4FDg8QI0CXzjFaRA0jn2vi0PToz4Ts3ULJ
-         t8NrWNzf/df7Xt8CcLVoYp6SaQ5OxDOuTVDrKJuZEQQ8FCSSh9C29RmjXDOAjyX1+C
-         ycLSIMXJ3zyjjTp0+XUJaA7zMIokr4aUgtPk+RCVgk5BjZZESCR6gjqicrSB1tGHop
-         Pd92hBMeaY18XA3ziAaEs0uAFqhOo7KaB/Q37OFLBHpvZsgo3vge+dYAy+QxAYTL9b
-         h0WLHVJ+akOb1t1ucVsWs4+uvo57rCIknOo9qrKNFkDyeOXKsRbQM5lxLFI1WjSSni
-         ub9L/nD3HZw/w==
-Date:   Wed, 13 Jul 2022 09:59:35 -0500
-From:   Bjorn Helgaas <helgaas@kernel.org>
-To:     Johan Hovold <johan@kernel.org>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        s=k20201202; t=1657724585;
+        bh=wsIdfHIG7F2tnroKm1i5VUPbK8CQs4fRT2cEONpz1T4=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=b/rJW8Pfre4Q9JN0Jnqo33d4lqnajvsL6J8Pni/Hux2OPtNt+YiEqpigBdqi5UYG4
+         3BV0vEExnz1iTWzkgHxS5UenP5DLkbbABNJ9mrGlgup6K1Qlsae1Xow4ibzIbpDK5H
+         j0mDspbQ5j205vjJiAjHlYzU7A96Rn9tQB2edRsnKRb9VlomGluaE11F3OpYS1lw9E
+         mSZxHB5+dJouGYT00bmK51zf11pH7/a3hyihMqjDAX8QeqGn/8Lp0YUmJ81/TZH6vx
+         dAAtOtTpA8NIHl1G7ZxFarhOJag9ms48K4Hsa9VK3QjFqHTThlDpT2IfupjcaNgWGN
+         6qap4R7lMiGhA==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1oBdtN-0001SX-GJ; Wed, 13 Jul 2022 17:03:09 +0200
+Date:   Wed, 13 Jul 2022 17:03:09 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Andrew Halaney <ahalaney@redhat.com>
+Cc:     Johan Hovold <johan+linaro@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH] dt-bindings: PCI: qcom: fix typo in condition guarding
- resets
-Message-ID: <20220713145935.GA823122@bhelgaas>
+        Felipe Balbi <balbi@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 5/7] arm64: dts: qcom: sc8280xp: fix USB interrupts
+Message-ID: <Ys7erer+lLaHqLqe@hovoldconsulting.com>
+References: <20220713131340.29401-1-johan+linaro@kernel.org>
+ <20220713131340.29401-6-johan+linaro@kernel.org>
+ <20220713141228.5z5rmgepj6mepjyp@halaneylaptop>
+ <Ys7YKkRAAI0Vbseh@hovoldconsulting.com>
+ <20220713144310.kehfuqvfhsjb36ri@halaneylaptop>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <Ys5gUulbU++HvRPC@hovoldconsulting.com>
+In-Reply-To: <20220713144310.kehfuqvfhsjb36ri@halaneylaptop>
 X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -66,46 +70,15 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jul 13, 2022 at 08:04:02AM +0200, Johan Hovold wrote:
-> On Tue, Jul 12, 2022 at 02:51:37PM -0500, Bjorn Helgaas wrote:
-> > On Thu, Jul 07, 2022 at 04:45:52PM +0300, Dmitry Baryshkov wrote:
-> > > Fix the typo (compatibles vs compatible) in the condition guarding the
-> > > resets being required everywhere except MSM8996.
-> > > 
-> > > Fixes: 6700a9b00f0a ("dt-bindings: PCI: qcom: Do not require resets on msm8996 platforms")
-> > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > 
-> > Applied for v5.20, thanks!
-> 
-> Glad to see this fixed, Bjorn H, but was there any particular reason why
-> you picked this version over the patch I submitted a week earlier when
-> reporting the issue?
+On Wed, Jul 13, 2022 at 09:43:10AM -0500, Andrew Halaney wrote:
+> On Wed, Jul 13, 2022 at 04:35:22PM +0200, Johan Hovold wrote:
 
-Sorry, my mistake.  I'll drop this and replace with your patch.
+> > Do you mind if I fold a fix for that into a v2 of this patch?
 
-> I posted a link to it earlier in this thread:
-> 
-> 	https://lore.kernel.org/lkml/20220629141000.18111-2-johan+linaro@kernel.org/
-> 
-> > > ---
-> > >  Documentation/devicetree/bindings/pci/qcom,pcie.yaml | 2 +-
-> > >  1 file changed, 1 insertion(+), 1 deletion(-)
-> > > 
-> > > diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> > > index 0b69b12b849e..9b3ebee938e8 100644
-> > > --- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> > > +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> > > @@ -614,7 +614,7 @@ allOf:
-> > >    - if:
-> > >        not:
-> > >          properties:
-> > > -          compatibles:
-> > > +          compatible:
-> > >              contains:
-> > >                enum:
-> > >                  - qcom,pcie-msm8996
-> > > -- 
-> > > 2.35.1
-> > > 
-> 
-> Johan
+> Sounds good, feel free to add my R-B with that change as well!
+
+Done. I'll wait a bit for any further comments before reposting.
+
+Thanks again.
+
+Johan
