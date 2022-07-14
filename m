@@ -2,207 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E7DEA574A51
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Jul 2022 12:15:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DF095574A59
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Jul 2022 12:16:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238225AbiGNKPE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Jul 2022 06:15:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54120 "EHLO
+        id S238310AbiGNKP6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Jul 2022 06:15:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55384 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238210AbiGNKPD (ORCPT
+        with ESMTP id S237452AbiGNKPn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Jul 2022 06:15:03 -0400
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DEC24120A5;
-        Thu, 14 Jul 2022 03:15:01 -0700 (PDT)
-Received: by mail-ej1-x631.google.com with SMTP id fy29so1417231ejc.12;
-        Thu, 14 Jul 2022 03:15:01 -0700 (PDT)
+        Thu, 14 Jul 2022 06:15:43 -0400
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 071335244A
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Jul 2022 03:15:33 -0700 (PDT)
+Received: by mail-lf1-x12d.google.com with SMTP id n18so2034824lfq.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Jul 2022 03:15:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=kyJ4qGj8eHBHJuHHdzCBMz1BsQHdmCZcZqOIQgAVkk4=;
-        b=cHZ8AriwRJyRwM6j+nXYNdxol6uzs1KKZHoYC8KX7f6/tjQjzY6YMa8WZJM/8ULjcL
-         G6mYw8GAhzY500Gql1Wn4yNE2S6cbpPPBZUcS8f6WWMO7VPaEgiHbu2OzW/+6HsAk7Yj
-         X3saYD7mZpXzObIICgRHUCWw3VgJtr1TCF6/EeowjOX6huIWltDLlTaQVq1VaaxEjPxk
-         OaV+W2mJYumSkUjjopWL7M/zt7IzNt1YfErBNIs/laZMrkEmhX7v3isX212jO5MPIKYg
-         lT/qD0fJRjojkoen/XoiqUMEuabM8iyINzZhAxH9baWTJZvYjpUbT9Jr6BelI9wbkoTe
-         mYAg==
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=kZy7eak2tgSmF/ML1yqzjltWCPwtqthXqM78zNDO+OI=;
+        b=eMSSra1OPQfu7qXpz6L3saU1JxVj07p/HHh/qXvdSMrvPrpI9qzcyriFOtEcrm9xsq
+         hetCcxkb3c2U8abIkPdW++76prqun/Vd24FxpWfWpCdXT3DP1bPcplIo2B3ULIAFXyN0
+         RJBbYXxuWRYFJej6+xS6qXa9hkMoclJM97KGsgSY6KXBlG2c6tiB3t23uDbTCEfQeGJt
+         2bj5bT6Xs4/8eGC5UjkA2K5J6iOIYjIA1PW/4r1LCIRP3fxMmFj1HOkDxOoyKib9R6ot
+         tLm8NLit0aZHhCsBUusz9vadcvFZJBDpI6Fdc2ijF4xNhGgYBpjQ84xeYuUXehixkcx+
+         IXRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=kyJ4qGj8eHBHJuHHdzCBMz1BsQHdmCZcZqOIQgAVkk4=;
-        b=EtZOvTdk7VnPVm+kTpYuL0hkz3UDkRI7Zn8fMC9ifTM6bRfaKjVHM1XGUzDouYk9MJ
-         zWGNhxCgr0suNNvCbu5HP+BzhsayE5hRpFXFH1J60egWxEOhRnSO/K+3wjZqH8ANGrYo
-         wLa2IkMidUwcTSoQ1ZiL6roRYXNmhNhQ049hSPStN56JanHKlEgqPpr6/e0j39cqkO6Z
-         zy88mEHmP8+NIVq7eRsM9edZWHZIE5nw/+QO30+H+g7t7dzehvpTIwB+9KpSczpmDB+l
-         XfkUYzc6+7v4Q9/V9vlNtTXIdUO9WukgfovG3+eSRE6oVePEristRjLWAbqpWBuwfBg3
-         tHsQ==
-X-Gm-Message-State: AJIora880HsqSaho9wh1o0p/aIBBnqbX8rqnyCv3rNk9yz5EPVhS5HF5
-        7rlRH7+5j9Dg+zvgHpHAmNQ=
-X-Google-Smtp-Source: AGRyM1s68591pQ9y4rEecbAi3VFSuElDTfxlsdXA7PNvIDIud1gAERS4RRgrOotgD/ISrFNP3x+TLg==
-X-Received: by 2002:a17:907:6ea4:b0:72b:8550:90db with SMTP id sh36-20020a1709076ea400b0072b855090dbmr7981114ejc.135.1657793700352;
-        Thu, 14 Jul 2022 03:15:00 -0700 (PDT)
-Received: from fedora.robimarko.hr (dh207-98-197.xnet.hr. [88.207.98.197])
-        by smtp.googlemail.com with ESMTPSA id gr19-20020a170906e2d300b0072b592ee073sm535313ejb.147.2022.07.14.03.14.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Jul 2022 03:15:00 -0700 (PDT)
-From:   Robert Marko <robimarko@gmail.com>
-To:     agross@kernel.org, bjorn.andersson@linaro.org,
-        konrad.dybcio@somainline.org, amitk@kernel.org,
-        thara.gopinath@gmail.com, rafael@kernel.org,
-        daniel.lezcano@linaro.org, rui.zhang@intel.com, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Robert Marko <robimarko@gmail.com>
-Subject: [PATCH v6 5/5] arm64: dts: ipq8074: add thermal nodes
-Date:   Thu, 14 Jul 2022 12:14:51 +0200
-Message-Id: <20220714101451.198211-5-robimarko@gmail.com>
-X-Mailer: git-send-email 2.36.1
-In-Reply-To: <20220714101451.198211-1-robimarko@gmail.com>
-References: <20220714101451.198211-1-robimarko@gmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=kZy7eak2tgSmF/ML1yqzjltWCPwtqthXqM78zNDO+OI=;
+        b=OScEsA4k1xHr2x/SLtcOlbs6L1PdCFZKfeBZoNuzi0lY4RN9Cdu0OH90k49YPmmvYS
+         ZDwXR/gn3bVS6D/F/61ly5AcJpES23MdZyU6CXbJKx/dHK9ysvCS43ornFLq5f23+Wti
+         ll9k6CVMmR0gHmwGVT0oF2GMjALmOK6h2CjCeHVzNqp1P22j5vfIcpimqbDDzJtnbhlv
+         9R3sqyEHP/acuWNsiVjoRZ9KuwarpSNBmkMndst0rm3DlRCnKQQbB3c+aXWTEEuy/BBH
+         tyLwxhny27ws9Z2rytqsfRECRtxPRGY3efDJNbK2MzWDkI9huKUYJBMcY/PgmKj3F+Bd
+         IeEQ==
+X-Gm-Message-State: AJIora/WXRRLaSoby3VFDk6JTZRiphDXW2ZtZl+h+sreA4ZKk8BjUgm1
+        HA9IVI4Z9DTNK6U8V+LEB82Ffw==
+X-Google-Smtp-Source: AGRyM1v1V9ZiyZF7bonIiq2DwpF3Map16xUjhG7MRlmoFvEpyTCgjb4sm6OM4dfGd+xpxCSIJBPwUA==
+X-Received: by 2002:a05:6512:1399:b0:486:2ae5:be71 with SMTP id p25-20020a056512139900b004862ae5be71mr4640937lfa.246.1657793731321;
+        Thu, 14 Jul 2022 03:15:31 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id i15-20020a2e808f000000b0025a968f4ffesm205854ljg.19.2022.07.14.03.15.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 14 Jul 2022 03:15:30 -0700 (PDT)
+Message-ID: <35cbf2d1-f851-fb6b-309a-8d7499b4abb3@linaro.org>
+Date:   Thu, 14 Jul 2022 13:15:30 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: Re: [PATCH v2 7/9] dt-bindings: msm/dp: mark vdda supplies as
+ deprecated
+Content-Language: en-GB
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>
+References: <20220710084133.30976-1-dmitry.baryshkov@linaro.org>
+ <20220710084133.30976-8-dmitry.baryshkov@linaro.org>
+ <bd84ef20-e6e1-74e5-5681-7aa273d5255c@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <bd84ef20-e6e1-74e5-5681-7aa273d5255c@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-IPQ8074 has a tsens v2.3.0 peripheral which monitors
-temperatures around the various subsystems on the
-die.
+On 14/07/2022 12:38, Krzysztof Kozlowski wrote:
+> On 10/07/2022 10:41, Dmitry Baryshkov wrote:
+>> The commit fa384dd8b9b8 ("drm/msm/dp: delete vdda regulator related
+>> functions from eDP/DP controller") removed support for VDDA supplies
+> 
+> No such commit exists in next. Do not reference unpublished commits. If
+> this is your tree, be sure that it is in next.
 
-So lets add the tsens and thermal zone nodes, passive
-CPU cooling will come in later patches after CPU frequency
-scaling is supported.
+Excuse me. It might have changed at some point. I will update the patch 
+description in the next revision. The commit in question is 7516351bebc1 
+("drm/msm/dp: delete vdda regulator related functions from eDP/DP 
+controller")
 
-Signed-off-by: Robert Marko <robimarko@gmail.com>
----
-Changes in v5:
-* Rebase to apply on next-20220708
----
- arch/arm64/boot/dts/qcom/ipq8074.dtsi | 96 +++++++++++++++++++++++++++
- 1 file changed, 96 insertions(+)
+> 
+>> from the DP controller driver. These supplies are now handled by the eDP
+>> or QMP PHYs. Mark these properties as deprecated and drop them from the
+>> example.
+> 
+> Right now I cannot judge whether this is correct or not. I don't know
+> what's in that commit, but in general driver implementation changes do
+> not warrant changes in the binding.
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-index c1c608728d4e..64f3f0d18cf9 100644
---- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-@@ -308,6 +308,16 @@ prng: rng@e3000 {
- 			status = "disabled";
- 		};
- 
-+		tsens: thermal-sensor@4a9000 {
-+			compatible = "qcom,ipq8074-tsens";
-+			reg = <0x4a9000 0x1000>, /* TM */
-+			      <0x4a8000 0x1000>; /* SROT */
-+			interrupts = <GIC_SPI 184 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "combined";
-+			#qcom,sensors = <16>;
-+			#thermal-sensor-cells = <1>;
-+		};
-+
- 		cryptobam: dma-controller@704000 {
- 			compatible = "qcom,bam-v1.7.0";
- 			reg = <0x00704000 0x20000>;
-@@ -918,4 +928,90 @@ timer {
- 			     <GIC_PPI 4 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>,
- 			     <GIC_PPI 1 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>;
- 	};
-+
-+	thermal-zones {
-+		nss-top-thermal {
-+			polling-delay-passive = <250>;
-+			polling-delay = <1000>;
-+
-+			thermal-sensors = <&tsens 4>;
-+		};
-+
-+		nss0-thermal {
-+			polling-delay-passive = <250>;
-+			polling-delay = <1000>;
-+
-+			thermal-sensors = <&tsens 5>;
-+		};
-+
-+		nss1-thermal {
-+			polling-delay-passive = <250>;
-+			polling-delay = <1000>;
-+
-+			thermal-sensors = <&tsens 6>;
-+		};
-+
-+		wcss-phya0-thermal {
-+			polling-delay-passive = <250>;
-+			polling-delay = <1000>;
-+
-+			thermal-sensors = <&tsens 7>;
-+		};
-+
-+		wcss-phya1-thermal {
-+			polling-delay-passive = <250>;
-+			polling-delay = <1000>;
-+
-+			thermal-sensors = <&tsens 8>;
-+		};
-+
-+		cpu0_thermal: cpu0-thermal {
-+			polling-delay-passive = <250>;
-+			polling-delay = <1000>;
-+
-+			thermal-sensors = <&tsens 9>;
-+		};
-+
-+		cpu1_thermal: cpu1-thermal {
-+			polling-delay-passive = <250>;
-+			polling-delay = <1000>;
-+
-+			thermal-sensors = <&tsens 10>;
-+		};
-+
-+		cpu2_thermal: cpu2-thermal {
-+			polling-delay-passive = <250>;
-+			polling-delay = <1000>;
-+
-+			thermal-sensors = <&tsens 11>;
-+		};
-+
-+		cpu3_thermal: cpu3-thermal {
-+			polling-delay-passive = <250>;
-+			polling-delay = <1000>;
-+
-+			thermal-sensors = <&tsens 12>;
-+		};
-+
-+		cluster_thermal: cluster-thermal {
-+			polling-delay-passive = <250>;
-+			polling-delay = <1000>;
-+
-+			thermal-sensors = <&tsens 13>;
-+		};
-+
-+		wcss-phyb0-thermal {
-+			polling-delay-passive = <250>;
-+			polling-delay = <1000>;
-+
-+			thermal-sensors = <&tsens 14>;
-+		};
-+
-+		wcss-phyb1-thermal {
-+			polling-delay-passive = <250>;
-+			polling-delay = <1000>;
-+
-+			thermal-sensors = <&tsens 15>;
-+		};
-+	};
- };
+The vdda supplies were initially made a part of DP controller binding, 
+however lately they were moved to be a part of eDP/DP PHY binding (as 
+this better reflects the hardware). DP driver dropped support for these 
+supplies too. Thus I wanted to mark these supplies as deprecated to 
+discourage using them in the DTS files.
+
+
 -- 
-2.36.1
-
+With best wishes
+Dmitry
