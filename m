@@ -2,81 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C109A5749CD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Jul 2022 11:57:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0AD365749E8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Jul 2022 12:00:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237917AbiGNJ5N (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Jul 2022 05:57:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36418 "EHLO
+        id S231356AbiGNKAl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Jul 2022 06:00:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40920 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237551AbiGNJ5J (ORCPT
+        with ESMTP id S235898AbiGNKAc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Jul 2022 05:57:09 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B76AE4D4C1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Jul 2022 02:57:08 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id u13so1944342lfn.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Jul 2022 02:57:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=Cf1LF8Vab+dY7VJTWbcxgMq68LX/pXHt6XyBNLlSZ8U=;
-        b=Zb+ZYytslFRk9Zr/NvbIJxzu/w3Exst/RffVqjj9MPRI7aDfMvWHir5kElHWKgSfta
-         BeAZadh4Hi+EgjC7tJpiP5f0YQcN/aQH0mFjvb5J9ky6Ry9UlbfzQdcxzeDVZnYgMk0T
-         g76ats43ESyYlnDN801CWNbSOYkFiEKTILXWMXBwIm3NtbWnxvEfAJYXyqaqTDi0Ly2a
-         kNSwG6Gdf5eKorC80TGpmkAfFMBWEO60KwPTKsrMJn7lN1PGI6Fcalu52j3qLmsiDwg6
-         Eg0YEt1ztoJoqbtVPWU0CubnBulP0H7MH/i3bQmYBMbpFbjM3ij/gYjaSRqtKRJxPyt3
-         3ZGw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=Cf1LF8Vab+dY7VJTWbcxgMq68LX/pXHt6XyBNLlSZ8U=;
-        b=ie/WTp1yrxhaxgjG3VeCyZ6my541Ga/8dWoDzu/sWrIGFmhutlK0nGO2xi0urWT3wy
-         xi3ZBbVcfp7jzlzr9+2L84taGa/CX8dh7PRAC0oy/ZmpWCtTmNH3G6dPRk70jSQCKsy+
-         DXHQlMoo4O2Q4C2OArrT8XLjtD1RVa/cQcuBnT4LWHDzXX87WRHwZdHaYwOLZF8nnLMb
-         hFrTmC7DQQQ7oTNJZUeebb/pmCDMwn9kLXxWmmuI3Nw3Ac0T0y7Qhhy+uPtF1fBysZ5t
-         9Xp5slydgj7qQOfy08FQIfZAFu/CK2uzfWUjL674KG8hmO9AQp3nyHFYK+/jKtpoO0AF
-         oFqA==
-X-Gm-Message-State: AJIora8y9fvFt4kH/nMwSAWBW0upEi+KHXQpXECcgI1rLSV9AvRVpcgk
-        ymSu6fpEORtypNklo/0yjT7MRQ==
-X-Google-Smtp-Source: AGRyM1v35gjXIcUm58O+nImSrhqGlswJBjf195y+1fpEpk1WmKtj68FJRzAPGkL6NpdoqEo5R28NDw==
-X-Received: by 2002:a05:6512:261f:b0:480:fd2b:23c8 with SMTP id bt31-20020a056512261f00b00480fd2b23c8mr4867180lfb.434.1657792626898;
-        Thu, 14 Jul 2022 02:57:06 -0700 (PDT)
-Received: from [10.0.0.8] (fwa5da9-171.bb.online.no. [88.93.169.171])
-        by smtp.gmail.com with ESMTPSA id p4-20020a2ea4c4000000b0025d6c8cfafcsm195766ljm.93.2022.07.14.02.57.04
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 14 Jul 2022 02:57:06 -0700 (PDT)
-Message-ID: <52aa5027-6cf0-34dc-8583-2623f08dcf19@linaro.org>
-Date:   Thu, 14 Jul 2022 11:57:04 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH 5/6] dt-bindings: remoteproc: qcom,q6v5-pil: Add MSM8909
-Content-Language: en-US
-To:     Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Thu, 14 Jul 2022 06:00:32 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E63261A396;
+        Thu, 14 Jul 2022 03:00:31 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 826E361FB5;
+        Thu, 14 Jul 2022 10:00:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D54E1C34114;
+        Thu, 14 Jul 2022 10:00:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1657792830;
+        bh=HoH9YJdc2U+sb80GLj9TQU8IV2cMXr3qp2pjDocp0xk=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=fVqvxHdjm5/kh1jkEfizpjQRdnJujKLLlp5S3PCueFNHbC8MaYDAA5hqlLM0n+Kyv
+         bXtxrqAtMzmWPx7ucIcuMGB9XGHeyyfRYL/Q1C7XJ2JirDWXaCtWz0eUGtL62SGJYf
+         O0JZ3e7PMxZZrp9XQn3FT+SbWSjVmWsOsOL7EJXUsizrQpXmfAR6gdfGFleyFZi531
+         uEwHRMbafssOa0u5dfeAEm02KI/Z/t32ajV4gQMk48CmWdRDMHZHCjJM+8twTIgrw8
+         MrL5UTZ1wITIT57aWE7v1gOf8nFn0K9BXGo1tHh9BhXuhyRbf2bpUOSq1f2t9nju9N
+         fnaJhm3Uv0YVg==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1oBve7-0008NT-GR; Thu, 14 Jul 2022 12:00:35 +0200
+Date:   Thu, 14 Jul 2022 12:00:35 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Johan Hovold <johan+linaro@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Sireesh Kodali <sireeshkodali1@gmail.com>,
-        Luca Weiss <luca@z3ntu.xyz>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20220712124421.3129206-1-stephan.gerhold@kernkonzept.com>
- <20220712124421.3129206-6-stephan.gerhold@kernkonzept.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220712124421.3129206-6-stephan.gerhold@kernkonzept.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 03/30] dt-bindings: phy: qcom,qmp: drop redundant
+ descriptions
+Message-ID: <Ys/pQw3e0HPhLZUg@hovoldconsulting.com>
+References: <20220707134725.3512-1-johan+linaro@kernel.org>
+ <20220707134725.3512-4-johan+linaro@kernel.org>
+ <26916d41-f398-8527-96f4-9a28f4f4e789@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <26916d41-f398-8527-96f4-9a28f4f4e789@linaro.org>
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -84,16 +68,41 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12/07/2022 14:44, Stephan Gerhold wrote:
-> Document the "qcom,msm8909-mss-pil" compatible for the modem remote
-> processor on MSM8909. It is used pretty much exactly like the existing
-> one for MSM8916.
+On Thu, Jul 14, 2022 at 11:07:21AM +0200, Krzysztof Kozlowski wrote:
+> On 07/07/2022 15:46, Johan Hovold wrote:
+> > Drop the redundant supply and clock descriptions which did not add much
+> > information beyond what can be inferred from the corresponding resource
+> > names.
+> > 
+> > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 > 
-> Signed-off-by: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+> 
+> (...)
+> 
+> >              - const: ref
+> >              - const: refgen
+> >          resets:
+> > -          items:
+> > -            - description: reset of phy block.
+> > +          maxItems: 1
+> >          reset-names:
+> >            items:
+> >              - const: phy
+> > @@ -376,11 +334,7 @@ allOf:
+> >      then:
+> >        properties:
+> >          clocks:
+> > -          items:
+> > -            - description: Phy aux clock.
+> > -            - description: 19.2 MHz ref clk source.
+> > -            - description: 19.2 MHz ref clk.
+> 
+> Here and in other places - I think you loose information, because the
+> frequency is not mentioned in clock name.
 
+Right, but it is also arguable redundant information for the binding
+(similar for the vdda-pll voltage).
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+I can add a comment after the name if you prefer that?
 
-
-Best regards,
-Krzysztof
+Johan
