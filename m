@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1C4935748C8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Jul 2022 11:26:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 332F85748CF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Jul 2022 11:27:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237349AbiGNJ0g (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Jul 2022 05:26:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56422 "EHLO
+        id S235862AbiGNJ07 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Jul 2022 05:26:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57202 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238035AbiGNJ0V (ORCPT
+        with ESMTP id S237970AbiGNJ0c (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Jul 2022 05:26:21 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15C6B28704
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Jul 2022 02:25:04 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id n18so1843719lfq.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Jul 2022 02:25:03 -0700 (PDT)
+        Thu, 14 Jul 2022 05:26:32 -0400
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A9596404
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Jul 2022 02:25:34 -0700 (PDT)
+Received: by mail-lf1-x130.google.com with SMTP id u13so1824930lfn.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Jul 2022 02:25:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=NNwnWPeD5mRbFNqIkyD+pTqqMFhALyWUWBLa+q1m/vk=;
-        b=w/U2Ib08cu6VWEhiJkRblQLMSvBTtDz7j4qlNQtZxMc+Mi3OrHuTc+Mskpl49Se6eY
-         p9yzf8xWYTkF5SayKsMSxNjdC1SWIsyyby9Vp2g3+hvBp/GQFAoEaE0J3fB2BlJD2Zta
-         A/f2gxZrhGA5QFhQqi7X+H0h6tSYAefV4CFxdVNSqf1eXD7UFuUGGeYaRkoAQtbBEZ1x
-         1uWnWnBWnvuZSpzeTDS6tVbbvHMGqOLVKoQlE8SYdEyqWWQHvu6S8rzd2o4EDA82PvDM
-         CS/UQznDA6APOivjdgs4xO+nW5gSpON9MthZc5U1ev+Me+yPtvAj980LUsDyGZ/bp4Hz
-         2KSg==
+        bh=G4SHg0v0UTb3/wETQ9utchWc9oSi737vagHnYZzNcEw=;
+        b=UJosXSDIOCQA7CkfHPIk2bFFsaniJh806Rdc+4td/6efm/F2x6bc3R55hxcASp6xE3
+         dssT7wZsAC7leRWDQccu9BJzy7qRRpTat5Yd0n57bc/IeHc2dY1eh/EYztXAyeQ4HJVb
+         HG4t7yhI0gWLcZJzQf1fwWoubI+NisWFwBvJhzcdA49YL4WAN8nlqwFJftVqjrlW652O
+         yovL8Bppc6/qJzzH/O6rzCntep+1VbeYhRWaKmjVWXRqLN5SjF5e/cwRMC31XZJKVWxE
+         h17p0U+6GgnDHT/4EFr8TWcAu+4gFFePea91v55PVpyg0fgT95pHkUzAzQaWD8XjOLyB
+         vogQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=NNwnWPeD5mRbFNqIkyD+pTqqMFhALyWUWBLa+q1m/vk=;
-        b=FhmumX57lOmp2KUKL0YmPD9DSxs0wvZWHYPJftrNMXMAJScDWze1QjZ4jnjMD1xfUz
-         0jtkhDdFWR+04/48fAreh1qhfezl2S40oXFNDF3B3oKLM0KtF6lmY6FjjLElmU+Byhc3
-         MivhWDUVI9+V3a3DEzMntcryMTv/rgKIGM+qI6/rOf1ywcvKNT3S0w/VZfuNX7kV6zhJ
-         mzgcTc6ggCt9ogJmkHp22tJTK5rn0F3WF2+QT8KcAH2VeHbM50VxemnPLAByugUpWL4Y
-         aIukFSaTLxdtnx4AR3KLIC0e5Sc9zUKxtyv+2YkVSfC9CfcHUOJ8cfxsvP6vp7aulZ89
-         lxyQ==
-X-Gm-Message-State: AJIora8T7f4AJIiO45DdLVI3f3JlNK8pg12vkj77QWbQ7BSOnGIYAkC3
-        r+UMYp9oCX7AEPhgNcF3AfyTlw==
-X-Google-Smtp-Source: AGRyM1uWrgChUqWYOMuYeJaQIptSFkQDwvmHHhgzJG6FWsn+s+0B3XZyI9ve6trSThI6ZgQIVZmfAg==
-X-Received: by 2002:a05:6512:224a:b0:489:db85:53c6 with SMTP id i10-20020a056512224a00b00489db8553c6mr4476143lfu.383.1657790702471;
-        Thu, 14 Jul 2022 02:25:02 -0700 (PDT)
+        bh=G4SHg0v0UTb3/wETQ9utchWc9oSi737vagHnYZzNcEw=;
+        b=tNSFz0pjSzypXLImyyaaaBqsNXbyXc7GvZMzgM7o1hEOtRPHE/1zvJZsjc+sVu3kSn
+         gQo6fvUXvepXDkR9hvXvkZ4/Ji24oooXQg6hMpO9QyenuYRVfE8L/PtPg9wFCB+Hs0sf
+         /DnTJXiTVimWIjWIv/PVuHxkUuMazPJYTiZ98bT6Dr75xJJdgH2n0f8GlxFrjByt967C
+         dQHSK4CUbKp2DXY8ZrdcJTYV71ap2nJWibjG6OM5A/KGyFmR4KfLO4BCR2OulZ1qxllD
+         0GT4nzk08XN5jVZWEubbjjynpidjW5/PPuOeSF4T1BowDetiYF5r5i1BUDP0C7lRi4fI
+         ymyQ==
+X-Gm-Message-State: AJIora9iio1pTYvM3oS3Y+FP+bpV+wQ3Iy1bu2ApuvDg1nnwBMV6X+7r
+        X3HDblFEXqSu+859nIPEdmX0Wg==
+X-Google-Smtp-Source: AGRyM1ua6lLzYbEzTJQNV0u3KzfC8NiZH61p3CYrMfOwp61n3WD6zdS8uA7jQ6LgHPcEUmLg9bK8Bw==
+X-Received: by 2002:ac2:5590:0:b0:489:f4a2:5526 with SMTP id v16-20020ac25590000000b00489f4a25526mr5095824lfg.116.1657790732574;
+        Thu, 14 Jul 2022 02:25:32 -0700 (PDT)
 Received: from [10.0.0.8] (fwa5da9-171.bb.online.no. [88.93.169.171])
-        by smtp.gmail.com with ESMTPSA id u14-20020a19790e000000b0047fab4c3651sm259673lfc.85.2022.07.14.02.24.59
+        by smtp.gmail.com with ESMTPSA id s10-20020a2e2c0a000000b0025d70efeaaasm184639ljs.75.2022.07.14.02.25.30
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 14 Jul 2022 02:25:01 -0700 (PDT)
-Message-ID: <9f226d8b-f5b9-2978-991b-69a37907ab2f@linaro.org>
-Date:   Thu, 14 Jul 2022 11:24:58 +0200
+        Thu, 14 Jul 2022 02:25:32 -0700 (PDT)
+Message-ID: <8e564b29-50e2-aa83-7a21-f28d37b384d3@linaro.org>
+Date:   Thu, 14 Jul 2022 11:25:29 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.11.0
-Subject: Re: [PATCH v2 21/30] dt-bindings: phy: qcom,qmp-usb: deprecate PIPE
- clock name
+Subject: Re: [PATCH v2 22/30] dt-bindings: phy: qcom,qmp-usb: add missing
+ qcom,sc7180-qmp-usb3-phy schema
 Content-Language: en-US
 To:     Johan Hovold <johan+linaro@kernel.org>,
         Vinod Koul <vkoul@kernel.org>,
@@ -68,9 +68,9 @@ Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20220707134725.3512-1-johan+linaro@kernel.org>
- <20220707134725.3512-22-johan+linaro@kernel.org>
+ <20220707134725.3512-23-johan+linaro@kernel.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220707134725.3512-22-johan+linaro@kernel.org>
+In-Reply-To: <20220707134725.3512-23-johan+linaro@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -84,12 +84,14 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 07/07/2022 15:47, Johan Hovold wrote:
-> Deprecate the PHY node 'clock-names' property which specified that the
-> PIPE clock name should have a bogus "lane" suffix.
+> The "qcom,sc7180-qmp-usb3-phy" compatible is apparently used to describe
+> a combo PHY where only the USB part is used. Specifically, only a single
+> reset is used.
 > 
+> 4ad7d7eeed3a ("dt-bindings: phy: qcom,qmp-usb3-dp: Add support for SC7180")
+> 94c34600b617 ("dt-bindings: phy: qcom,qmp-usb3-dp-phy: move usb3 compatibles back to qcom,qmp-phy.yaml")
 > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 > ---
->  Documentation/devicetree/bindings/phy/qcom,qmp-usb-phy.yaml | 3 +--
 
 
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
