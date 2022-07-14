@@ -2,136 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8963057562C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Jul 2022 22:06:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B3C42575640
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Jul 2022 22:17:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236175AbiGNUGJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Jul 2022 16:06:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60228 "EHLO
+        id S239841AbiGNURW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Jul 2022 16:17:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38808 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234258AbiGNUGH (ORCPT
+        with ESMTP id S232357AbiGNURU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Jul 2022 16:06:07 -0400
-Received: from mail-0201.mail-europe.com (mail-0201.mail-europe.com [51.77.79.158])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B656675AA
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Jul 2022 13:06:05 -0700 (PDT)
-Date:   Thu, 14 Jul 2022 20:05:58 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-        s=protonmail3; t=1657829161; x=1658088361;
-        bh=zPqdR+HafcwDy1W0JQxmXtHI+hMl6rra+AYRnvrWqpM=;
-        h=Date:To:From:Cc:Reply-To:Subject:Message-ID:Feedback-ID:From:To:
-         Cc:Date:Subject:Reply-To:Feedback-ID:Message-ID;
-        b=A+ubgogu0ck5VijC32MYvvCe8jqWQWMc4W9lI3uxPxkEoCw4oeUMc6Qfc0+JALO7+
-         kqfRcLLxm6YIpAVSqztu7QcMIigRQIPSXuEEaXZtqMWqN1tUTAP4KLo9nyOi79nj5s
-         yiNg/aemKe2BENFM4dfPSE1OL07xURIr7wWLH7+l/mGhBsM1f47t9d73PUKs6/gRQ9
-         suhWJUwhy29oLNuthM0MZrmcJfpXF2U60FG5+oY0gn7/CLOxCphbMKzuT0wHBZvukU
-         xQeCztlnhid9eTdv0hTlnY0y8HdpU9GC90QhhEqvKHWMTWlAzL639N+1oHV1MCGMW3
-         8h0r0sugOY3Sw==
-To:     devicetree@vger.kernel.org
-From:   "Lin, Meng-Bo" <linmengbo0689@protonmail.com>
-Cc:     Andy Gross <agross@kernel.org>,
+        Thu, 14 Jul 2022 16:17:20 -0400
+Received: from relay04.th.seeweb.it (relay04.th.seeweb.it [IPv6:2001:4b7a:2000:18::165])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 979A065583
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Jul 2022 13:17:19 -0700 (PDT)
+Received: from SoMainline.org (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 758A51F986;
+        Thu, 14 Jul 2022 22:17:16 +0200 (CEST)
+Date:   Thu, 14 Jul 2022 22:17:08 +0200
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Rob Herring <robh@kernel.org>,
+        Masahiro Yamada <masahiroy@kernel.org>,
+        Michal Marek <michal.lkml@markovi.net>,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Nikita Travkin <nikita@trvn.ru>,
-        ~postmarketos/upstreaming@lists.sr.ht
-Reply-To: "Lin, Meng-Bo" <linmengbo0689@protonmail.com>
-Subject: [PATCH 3/3] arm64: dts: qcom: msm8916-samsung-e2015: Add touchkey
-Message-ID: <20220714200346.22263-1-linmengbo0689@protonmail.com>
-Feedback-ID: 40467236:user:proton
+        Tom Rini <trini@konsulko.com>, linux-kbuild@vger.kernel.org
+Subject: Re: [PATCH v3] kbuild: Enable DT schema checks for %.dtb targets
+Message-ID: <20220714201708.snbd4uhaeythe4ct@SoMainline.org>
+References: <20220623144357.297252-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-1.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,FREEMAIL_REPLYTO_END_DIGIT,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220623144357.297252-1-dmitry.baryshkov@linaro.org>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On the Samsung Galaxy E5 and E7 the touch key is supplied by a single
-fixed regulator (enabled via GPIO 97) that supplies both MCU and LED.
-Add it to the device tree.
+On 2022-06-23 17:43:57, Dmitry Baryshkov wrote:
+> It is possible to build a single dtb, but not with DT schema validation
+> enabled. Enable the schema validation to run for %.dtb and %.dtbo
+> targets. Anyone building a dtb for a specific platform *should* pay
+> attention to schema warnings.
+> 
+> This could be supported with a separate %.dt.yaml target instead.
+> However, the .dt.yaml format is considered an intermediate format and
+> could possibly go away at some point if schema checking is integrated
+> into dtc. Also, the plan is to enable the schema checks by default once
+> platforms are free of warnings, and this is a move in that direction.
+> 
+> This patch differs from the previous one ([1]) in the fact that it
+> requires specifying VALIDATE_DT=1 to run the checks while doing the
+> build. Thus default build procedures would not obtain additional build
+> dependency, while maintainers can still build a single DTB file an get
+> only corresponding warnings.
+> 
+> [1] https://lore.kernel.org/all/20210913145146.766080-1-robh@kernel.org/
+> 
+> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Cc: Tom Rini <trini@konsulko.com>
+> Cc: Masahiro Yamada <masahiroy@kernel.org>
+> Cc: linux-kbuild@vger.kernel.org
+> Co-developed-by: Rob Herring <robh@kernel.org>
+> Signed-off-by: Rob Herring <robh@kernel.org>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Signed-off-by: Lin, Meng-Bo <linmengbo0689@protonmail.com>
----
- .../qcom/msm8916-samsung-e2015-common.dtsi    | 26 +++++++++++++++++++
- .../dts/qcom/msm8916-samsung-grandmax.dts     |  4 +++
- 2 files changed, 30 insertions(+)
+Thanks, glad to see this back rather than having to resort to reverting
+75e895343d5a ("Revert "kbuild: Enable DT schema checks for %.dtb
+targets"") locally.
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-e2015-common.dtsi b/a=
-rch/arm64/boot/dts/qcom/msm8916-samsung-e2015-common.dtsi
-index 373154ee2643..9f3aca17130d 100644
---- a/arch/arm64/boot/dts/qcom/msm8916-samsung-e2015-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-e2015-common.dtsi
-@@ -19,6 +19,19 @@ muic: extcon@14 {
- =09=09};
- =09};
+Tested-by: Marijn Suijten <marijn.suijten@somainline.org>
 
-+=09reg_touch_key: regulator-touch-key {
-+=09=09compatible =3D "regulator-fixed";
-+=09=09regulator-name =3D "touch_key";
-+=09=09regulator-min-microvolt =3D <3300000>;
-+=09=09regulator-max-microvolt =3D <3300000>;
-+
-+=09=09gpio =3D <&msmgpio 97 GPIO_ACTIVE_HIGH>;
-+=09=09enable-active-high;
-+
-+=09=09pinctrl-names =3D "default";
-+=09=09pinctrl-0 =3D <&tkey_en_default>;
-+=09};
-+
- =09vibrator: vibrator {
- =09=09compatible =3D "gpio-vibrator";
- =09=09enable-gpios =3D <&msmgpio 76 GPIO_ACTIVE_HIGH>;
-@@ -28,6 +41,11 @@ vibrator: vibrator {
- =09};
- };
-
-+&touchkey {
-+=09vcc-supply =3D <&reg_touch_key>;
-+=09vdd-supply =3D <&reg_touch_key>;
-+};
-+
- &msmgpio {
- =09motor_en_default: motor-en-default {
- =09=09pins =3D "gpio76";
-@@ -36,4 +54,12 @@ motor_en_default: motor-en-default {
- =09=09drive-strength =3D <2>;
- =09=09bias-disable;
- =09};
-+
-+=09tkey_en_default: tkey-en-default {
-+=09=09pins =3D "gpio97";
-+=09=09function =3D "gpio";
-+
-+=09=09drive-strength =3D <2>;
-+=09=09bias-disable;
-+=09};
- };
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-grandmax.dts b/arch/a=
-rm64/boot/dts/qcom/msm8916-samsung-grandmax.dts
-index 41aada4bfb80..f68dd3d69a33 100644
---- a/arch/arm64/boot/dts/qcom/msm8916-samsung-grandmax.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-grandmax.dts
-@@ -27,6 +27,10 @@ / {
- =09/delete-node/ i2c-tkey;
- };
-
-+&reg_touch_key {
-+=09status =3D "disabled";
-+};
-+
- &vibrator {
- =09enable-gpios =3D <&msmgpio 72 GPIO_ACTIVE_HIGH>;
- };
---
-2.30.2
-
-
+> ---
+>  Makefile | 18 ++++++++++++++----
+>  1 file changed, 14 insertions(+), 4 deletions(-)
+> 
+> diff --git a/Makefile b/Makefile
+> index c43d825a3c4c..0942922384c4 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -1365,11 +1365,17 @@ endif
+>  
+>  ifneq ($(dtstree),)
+>  
+> -%.dtb: include/config/kernel.release scripts_dtc
+> -	$(Q)$(MAKE) $(build)=$(dtstree) $(dtstree)/$@
+> +ifneq ($(VALIDATE_DT),)
+> +DT_YAML = $(dtstree)/$*.dt.yaml
+> +DT_CHECK = dt_binding_check
+> +export CHECK_DTBS=y
+> +endif
+>  
+> -%.dtbo: include/config/kernel.release scripts_dtc
+> -	$(Q)$(MAKE) $(build)=$(dtstree) $(dtstree)/$@
+> +%.dtb: include/config/kernel.release scripts_dtc $(DT_CHECK)
+> +	$(Q)$(MAKE) $(build)=$(dtstree) $(dtstree)/$@ $(DT_YAML)
+> +
+> +%.dtbo: include/config/kernel.release scripts_dtc $(DT_CHECK)
+> +	$(Q)$(MAKE) $(build)=$(dtstree) $(dtstree)/$@ $(DT_YAML)
+>  
+>  PHONY += dtbs dtbs_install dtbs_check
+>  dtbs: include/config/kernel.release scripts_dtc
+> @@ -1654,6 +1660,10 @@ help:
+>  	@echo  '		3: more obscure warnings, can most likely be ignored'
+>  	@echo  '		e: warnings are being treated as errors'
+>  	@echo  '		Multiple levels can be combined with W=12 or W=123'
+> +	@$(if $(dtstree), \
+> +		echo '  make VALIDATE_DT=y [targets] Validate all DT processsed during the build'; \
+> +		echo '         This can be applied both to "dtbs" and to individual "foo.dtb" targets' ; \
+> +		)
+>  	@echo  ''
+>  	@echo  'Execute "make" or "make all" to build all targets marked with [*] '
+>  	@echo  'For further info see the ./README file'
+> -- 
+> 2.35.1
+> 
