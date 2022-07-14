@@ -2,85 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C2832574AC8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Jul 2022 12:37:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9EC3B574AEE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Jul 2022 12:41:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237435AbiGNKhY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Jul 2022 06:37:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45760 "EHLO
+        id S237359AbiGNKl3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Jul 2022 06:41:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49908 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231150AbiGNKhX (ORCPT
+        with ESMTP id S237845AbiGNKl1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Jul 2022 06:37:23 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 121254BD25
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Jul 2022 03:37:22 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id n18so2117805lfq.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Jul 2022 03:37:21 -0700 (PDT)
+        Thu, 14 Jul 2022 06:41:27 -0400
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E9AA4AD62;
+        Thu, 14 Jul 2022 03:41:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=uaEFO5hsaLFOuZUt6jv+BOAU4jn79YFWKdkb/288PyQ=;
-        b=R2ZI+qVyNbDDND0je3vBpsX+whHW04w068WNIxvhb21zT9Yl6mNklU1yX6mnEzRuQe
-         D9rZ0fWwMQut75SIEgZK31MGeW1Gnn5WW71LRvZd1a6sJXpOIEMvX3j8T9u4ZZGcJ0rD
-         XP5QV366XN1eMvJwp1NdjgUmeE6l0tizHxphnC6ZkaHzcolt19mdkvqoNL70EF3zXIxR
-         kgUWNfgzv4A+AjVhScdW7KjxCvDeu/bg/V0DTTCQlY1dx7kd8EAvxT2BrqQGoB9TUzvO
-         4oyWa2EpxzY93k/um3j6qRzPCCnRTBctTNBmFj3wOHKV+8w+ziaPxRxJ+TkPvHIZ2EMT
-         cUjQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=uaEFO5hsaLFOuZUt6jv+BOAU4jn79YFWKdkb/288PyQ=;
-        b=QXJLJnvMecxC2DCnD1WOREVP8oj+rFvEGyKuScdIcDKUeEw5cDq48H/H4DQUgCeSs2
-         uMCvc5JqP+LbmWdQp8YVvHZiaOT+4W79L/l1W533haVs1rQEGgbaCUxzR1t9YpxveqO5
-         IzBk/eF3K2BsoQ29QNVS3B/prL++7KUIAXjp3Fm2CvTIusGmW3FOV7OoNb5UuJDHZ3Wp
-         0CsVgmNn6pC+5sAO/ka/CDqANfuJArPjDKL9EbGXRmHL+I3o7JkpScYleZWJn0vBL0sw
-         D/ESKz+FA4LzVJY/NY3LiS7b+1RpOkmv/WxNZK1gxOvI+VBoKQlSAu5gPwCWW920dHJu
-         Mhog==
-X-Gm-Message-State: AJIora91M6BAlxJXrcNa4g5+g1aJ5GECqD1RJCCTcPeyFnFRwklj3Ytm
-        vwCdeQlJ1ZPFV5yLFPJ+z4Vy5g==
-X-Google-Smtp-Source: AGRyM1utxf3jocJYTmp4lOuPbooaWLQuu8+R22i2G4eb4lV2hNEFPxG8ZtPUZxVm2Iolc9dcifvbbw==
-X-Received: by 2002:a05:6512:3503:b0:481:4470:4134 with SMTP id h3-20020a056512350300b0048144704134mr4704424lfs.42.1657795040467;
-        Thu, 14 Jul 2022 03:37:20 -0700 (PDT)
-Received: from [10.0.0.8] (fwa5da9-171.bb.online.no. [88.93.169.171])
-        by smtp.gmail.com with ESMTPSA id be6-20020a056512250600b00478f174c598sm288201lfb.95.2022.07.14.03.37.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 14 Jul 2022 03:37:20 -0700 (PDT)
-Message-ID: <8d31e36d-5cdb-fd5b-b807-a31e65e57d8f@linaro.org>
-Date:   Thu, 14 Jul 2022 12:37:17 +0200
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1657795286; x=1689331286;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=4m0nVoik1JDg6vMtfsVmoRpjewhXoiEOBS1XwgEx6VI=;
+  b=TtJs3E0JtNNEuWmbhFS1TiDxCknP0UEaRcCytg5M95eP2hfZat6elnUW
+   irSFUQcs9Zt7ve/YrWVVJdAYeqDf6Fm1RgDMmJYv2sbXwNB/InjdYF8+4
+   07VsbJlVCucyjFVkq0pDoaR0Ezh3VCKVoh+cERzW6sLCRtq60l8CzC6cR
+   M=;
+Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 14 Jul 2022 03:41:26 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Jul 2022 03:41:25 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Thu, 14 Jul 2022 03:41:25 -0700
+Received: from [10.216.15.238] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Thu, 14 Jul
+ 2022 03:41:17 -0700
+Message-ID: <fda73692-8733-50b0-938b-56b3ff4855a7@quicinc.com>
+Date:   Thu, 14 Jul 2022 16:11:12 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH v2 7/9] dt-bindings: msm/dp: mark vdda supplies as
- deprecated
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Subject: Re: [PATCH v4 1/2] PCI: qcom: Add system PM support
 Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+To:     Matthias Kaehlcke <mka@chromium.org>
+CC:     <helgaas@kernel.org>, <linux-pci@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_vbadigan@quicinc.com>, <quic_hemantk@quicinc.com>,
+        <quic_nitegupt@quicinc.com>, <quic_skananth@quicinc.com>,
+        <quic_ramkri@quicinc.com>, <manivannan.sadhasivam@linaro.org>,
+        <swboyd@chromium.org>, <dmitry.baryshkov@linaro.org>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>
-References: <20220710084133.30976-1-dmitry.baryshkov@linaro.org>
- <20220710084133.30976-8-dmitry.baryshkov@linaro.org>
- <bd84ef20-e6e1-74e5-5681-7aa273d5255c@linaro.org>
- <35cbf2d1-f851-fb6b-309a-8d7499b4abb3@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <35cbf2d1-f851-fb6b-309a-8d7499b4abb3@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Rob Herring <robh@kernel.org>,
+        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>
+References: <1656684800-31278-1-git-send-email-quic_krichai@quicinc.com>
+ <1657118425-10304-1-git-send-email-quic_krichai@quicinc.com>
+ <1657118425-10304-2-git-send-email-quic_krichai@quicinc.com>
+ <Ysyb24TidwWFH0Dm@google.com>
+From:   Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
+In-Reply-To: <Ysyb24TidwWFH0Dm@google.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -89,36 +80,200 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14/07/2022 12:15, Dmitry Baryshkov wrote:
-> On 14/07/2022 12:38, Krzysztof Kozlowski wrote:
->> On 10/07/2022 10:41, Dmitry Baryshkov wrote:
->>> The commit fa384dd8b9b8 ("drm/msm/dp: delete vdda regulator related
->>> functions from eDP/DP controller") removed support for VDDA supplies
->>
->> No such commit exists in next. Do not reference unpublished commits. If
->> this is your tree, be sure that it is in next.
-> 
-> Excuse me. It might have changed at some point. I will update the patch 
-> description in the next revision. The commit in question is 7516351bebc1 
-> ("drm/msm/dp: delete vdda regulator related functions from eDP/DP 
-> controller")
-> 
->>
->>> from the DP controller driver. These supplies are now handled by the eDP
->>> or QMP PHYs. Mark these properties as deprecated and drop them from the
->>> example.
->>
->> Right now I cannot judge whether this is correct or not. I don't know
->> what's in that commit, but in general driver implementation changes do
->> not warrant changes in the binding.
-> 
-> The vdda supplies were initially made a part of DP controller binding, 
-> however lately they were moved to be a part of eDP/DP PHY binding (as 
-> this better reflects the hardware). DP driver dropped support for these 
-> supplies too. Thus I wanted to mark these supplies as deprecated to 
-> discourage using them in the DTS files.
 
-OK. Just better to reference the commit which adds them to PHY binding.
-
-Best regards,
-Krzysztof
+On 7/12/2022 3:23 AM, Matthias Kaehlcke wrote:
+> On Wed, Jul 06, 2022 at 08:10:24PM +0530, Krishna chaitanya chundru wrote:
+>> Add suspend and resume pm callbacks.
+>>
+>> When system suspends, and if the link is in L1ss, disable the clocks
+>> and power down the phy so that system enters into low power state to
+>> save the maximum power. And when the system resumes, enable the clocks
+>> back and power on phy if they are disabled in the suspend path.
+>>
+>> we are doing this only when link is in l1ss but not in L2/L3 as
+>> no where we are forcing link to L2/L3 by sending PME turn off.
+>>
+>> is_suspended flag indicates if the clocks are disabled in the suspend
+>> path or not. And this flag is being used to restrict the access to
+>> config space, dbi etc when clock are turned-off.
+>>
+>> Changes since v3:
+>> 	- Powering down the phy in suspend and powering it on resume to
+>> 	  acheive maximum power savings.
+>> Changes since v2:
+>> 	- Replaced the enable, disable clks ops with suspend and resume
+>> 	- Renamed support_pm_opsi flag  with supports_system_suspend.
+>> Changes since v1:
+>> 	- Fixed compilation errors.
+>>
+>> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+>> ---
+>>   drivers/pci/controller/dwc/pcie-qcom.c | 85 ++++++++++++++++++++++++++++++++++
+>>   1 file changed, 85 insertions(+)
+>>
+>> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+>> index 6ab9089..0a9d1ee 100644
+>> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+>> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+>> @@ -41,6 +41,9 @@
+>>   #define L23_CLK_RMV_DIS				BIT(2)
+>>   #define L1_CLK_RMV_DIS				BIT(1)
+>>   
+>> +#define PCIE20_PARF_PM_STTS                     0x24
+>> +#define PCIE20_PARF_PM_STTS_LINKST_IN_L1SUB    BIT(8)
+>> +
+>>   #define PCIE20_PARF_PHY_CTRL			0x40
+>>   #define PHY_CTRL_PHY_TX0_TERM_OFFSET_MASK	GENMASK(20, 16)
+>>   #define PHY_CTRL_PHY_TX0_TERM_OFFSET(x)		((x) << 16)
+>> @@ -190,6 +193,8 @@ struct qcom_pcie_ops {
+>>   	void (*post_deinit)(struct qcom_pcie *pcie);
+>>   	void (*ltssm_enable)(struct qcom_pcie *pcie);
+>>   	int (*config_sid)(struct qcom_pcie *pcie);
+>> +	int (*suspend)(struct qcom_pcie *pcie);
+>> +	int (*resume)(struct qcom_pcie *pcie);
+>>   };
+>>   
+>>   struct qcom_pcie_cfg {
+>> @@ -199,6 +204,7 @@ struct qcom_pcie_cfg {
+>>   	unsigned int has_ddrss_sf_tbu_clk:1;
+>>   	unsigned int has_aggre0_clk:1;
+>>   	unsigned int has_aggre1_clk:1;
+>> +	unsigned int supports_system_suspend:1;
+>>   };
+>>   
+>>   struct qcom_pcie {
+>> @@ -209,6 +215,7 @@ struct qcom_pcie {
+>>   	struct phy *phy;
+>>   	struct gpio_desc *reset;
+>>   	const struct qcom_pcie_cfg *cfg;
+>> +	unsigned int is_suspended:1;
+>>   };
+>>   
+>>   #define to_qcom_pcie(x)		dev_get_drvdata((x)->dev)
+>> @@ -1308,6 +1315,33 @@ static void qcom_pcie_post_deinit_2_7_0(struct qcom_pcie *pcie)
+>>   	clk_disable_unprepare(res->pipe_clk);
+>>   }
+>>   
+>> +static int qcom_pcie_resume_2_7_0(struct qcom_pcie *pcie)
+>> +{
+>> +	struct qcom_pcie_resources_2_7_0 *res = &pcie->res.v2_7_0;
+>> +	int ret;
+>> +
+>> +	clk_prepare_enable(res->pipe_clk);
+>> +
+>> +	ret = clk_bulk_prepare_enable(res->num_clks, res->clks);
+>> +
+>> +	phy_power_on(pcie->phy);
+>> +
+>> +	return ret;
+>> +}
+>> +
+>> +static int qcom_pcie_suspend_2_7_0(struct qcom_pcie *pcie)
+>> +{
+>> +	struct qcom_pcie_resources_2_7_0 *res = &pcie->res.v2_7_0;
+>> +
+>> +	phy_power_off(pcie->phy);
+>> +
+>> +	clk_bulk_disable_unprepare(res->num_clks, res->clks);
+>> +
+>> +	clk_disable_unprepare(res->pipe_clk);
+>> +
+>> +	return 0;
+>> +}
+>> +
+>>   static int qcom_pcie_link_up(struct dw_pcie *pci)
+>>   {
+>>   	u16 offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
+>> @@ -1496,6 +1530,8 @@ static const struct qcom_pcie_ops ops_1_9_0 = {
+>>   	.post_init = qcom_pcie_post_init_2_7_0,
+>>   	.post_deinit = qcom_pcie_post_deinit_2_7_0,
+>>   	.config_sid = qcom_pcie_config_sid_sm8250,
+>> +	.suspend = qcom_pcie_suspend_2_7_0,
+>> +	.resume = qcom_pcie_resume_2_7_0,
+>>   };
+>>   
+>>   static const struct qcom_pcie_cfg apq8084_cfg = {
+>> @@ -1548,6 +1584,7 @@ static const struct qcom_pcie_cfg sc7280_cfg = {
+>>   	.ops = &ops_1_9_0,
+>>   	.has_tbu_clk = true,
+>>   	.pipe_clk_need_muxing = true,
+>> +	.supports_system_suspend = true,
+>>   };
+>>   
+>>   static const struct dw_pcie_ops dw_pcie_ops = {
+>> @@ -1591,6 +1628,8 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+>>   
+>>   	pcie->cfg = pcie_cfg;
+>>   
+>> +	pcie->is_suspended = false;
+>> +
+>>   	pcie->reset = devm_gpiod_get_optional(dev, "perst", GPIOD_OUT_HIGH);
+>>   	if (IS_ERR(pcie->reset)) {
+>>   		ret = PTR_ERR(pcie->reset);
+>> @@ -1645,6 +1684,51 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+>>   	return ret;
+>>   }
+>>   
+>> +static int __maybe_unused qcom_pcie_pm_suspend(struct device *dev)
+>> +{
+>> +	struct qcom_pcie *pcie = dev_get_drvdata(dev);
+>> +	u32 val;
+>> +
+>> +	if (!pcie->cfg->supports_system_suspend)
+>> +		return 0;
+>> +
+>> +	/* if the link is not in l1ss don't turn off clocks */
+>> +	val = readl(pcie->parf + PCIE20_PARF_PM_STTS);
+>> +	if (!(val & PCIE20_PARF_PM_STTS_LINKST_IN_L1SUB)) {
+>> +		dev_warn(dev, "Link is not in L1ss\n");
+>> +		return 0;
+>> +	}
+>> +
+>> +	if (pcie->cfg->ops->suspend)
+>> +		pcie->cfg->ops->suspend(pcie);
+>> +
+>> +	pcie->is_suspended = true;
+>> +
+>> +	return 0;
+>> +}
+>> +
+>> +static int __maybe_unused qcom_pcie_pm_resume(struct device *dev)
+>> +{
+>> +	struct qcom_pcie *pcie = dev_get_drvdata(dev);
+>> +
+>> +	if (!pcie->cfg->supports_system_suspend)
+>> +		return 0;
+> The above check can be omitted, it is implied by the next one.
+> 'is_suspended' can only be true when system suspend is supported.
+Sure will remove in the next patch.
+>
+>> +
+>> +	if (!pcie->is_suspended)
+>> +		return 0;
+>> +
+>> +	if (pcie->cfg->ops->resume)
+>> +		pcie->cfg->ops->resume(pcie);
+>> +
+>> +	pcie->is_suspended = false;
+>> +
+>> +	return 0;
+>> +}
+>> +
+>> +static const struct dev_pm_ops qcom_pcie_pm_ops = {
+>> +	NOIRQ_SYSTEM_SLEEP_PM_OPS(qcom_pcie_pm_suspend, qcom_pcie_pm_resume)
+>> +};
+>> +
+>>   static const struct of_device_id qcom_pcie_match[] = {
+>>   	{ .compatible = "qcom,pcie-apq8084", .data = &apq8084_cfg },
+>>   	{ .compatible = "qcom,pcie-ipq8064", .data = &ipq8064_cfg },
+>> @@ -1679,6 +1763,7 @@ static struct platform_driver qcom_pcie_driver = {
+>>   	.probe = qcom_pcie_probe,
+>>   	.driver = {
+>>   		.name = "qcom-pcie",
+>> +		.pm = pm_sleep_ptr(&qcom_pcie_pm_ops),
+>>   		.suppress_bind_attrs = true,
+>>   		.of_match_table = qcom_pcie_match,
+>>   	},
+>> -- 
+>> 2.7.4
+>>
