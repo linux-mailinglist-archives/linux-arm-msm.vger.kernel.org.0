@@ -2,81 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6FAAA574CA2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Jul 2022 13:58:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 67C8B574D37
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Jul 2022 14:13:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238993AbiGNL6w (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Jul 2022 07:58:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42764 "EHLO
+        id S238764AbiGNMNw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Jul 2022 08:13:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59820 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231293AbiGNL6v (ORCPT
+        with ESMTP id S238644AbiGNMNt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Jul 2022 07:58:51 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28A3B248C9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Jul 2022 04:58:50 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id z25so2435768lfr.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Jul 2022 04:58:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language
-         :from:to:cc:references:in-reply-to:content-transfer-encoding;
-        bh=XZ6zcs78xTBMoBW41xhfPl8mgcyOXJXlS8VDvhn/FaA=;
-        b=QrW+48G78oGpbq+WOxe6wyGen22tAhMqgzvsIpr++kA0ByojlU4fVPCdDnQM0h9hl4
-         LQ8hPvkqA22lIusPYp7JldtRnZQU3bAu9eVTUIyQryhgafMImP1lqWyA+9PaEYwvSpuF
-         sZZ3ohSyWVgw9OARxWuTc6ImU9RaGlvBKGtXRVIIBE+M44PueNU4GpT/4TFRUJX3fOES
-         kKwGa8tzpP1zbB1hCrjAHZOyx3vLzgnmOHU9WtriEMtnrrAhQu/K/6WCckEBTkESZIG9
-         3064EiIuaGNXX/pOEB0l9eDPtem/rCaQlcBrhsVdvNJXbyrExvFF267xCchAIDQIXilq
-         ou+Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:from:to:cc:references:in-reply-to
-         :content-transfer-encoding;
-        bh=XZ6zcs78xTBMoBW41xhfPl8mgcyOXJXlS8VDvhn/FaA=;
-        b=RfnX8PXp5w9VFXjcSPXDxgbUf4bm6IpAFXYOI7iy5EP5NcAaUgXiytkDpgQ0oeTkcN
-         ZOjnvhfx0Ieg3xM9mPI8Aq/u7l06WOeQsoimOfxHYezddn27tYdCb//tAaI+afiqhiEi
-         T8DSqx0b51bWPNI0Dy0My7wVPp4J8NKaMmnWtVnaF6mhfCOq0xz3Lomq9D3BmjkHHwXo
-         P3xn3tL+/j0oD7ugG3lsEY2tXFi/onH+4qMkR1eDsjAnbKciGg8ReoHWW6sFBHqB5c7i
-         DQmA8mL/uKT8X0U7OGqZBD0ElqKg6/SeHAoaqtvXiPxhhgNNK0k870nl8jdChg+iVz7f
-         iRcg==
-X-Gm-Message-State: AJIora9Xixj2XHXV8giZkdF75YEWc9eXoV+cs8b/BC+x6lgec4bTE7ZK
-        PmnnjvcOCejni2EO3WWEoGUMyw==
-X-Google-Smtp-Source: AGRyM1tMzHQzW7BqLoNxHkx2+lnmWwhQ1bMGpdOMMs2Qr7nWdRusNUS6b3tyiC3Kycct0IxRGRnr8w==
-X-Received: by 2002:a05:6512:21d2:b0:47f:9f53:f729 with SMTP id d18-20020a05651221d200b0047f9f53f729mr5178922lft.378.1657799928521;
-        Thu, 14 Jul 2022 04:58:48 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id w9-20020a05651c118900b0025d620892cdsm240170ljo.107.2022.07.14.04.58.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 14 Jul 2022 04:58:48 -0700 (PDT)
-Message-ID: <84004850-026a-980d-6c9c-3668182fc458@linaro.org>
-Date:   Thu, 14 Jul 2022 14:58:47 +0300
+        Thu, 14 Jul 2022 08:13:49 -0400
+Received: from szxga03-in.huawei.com (szxga03-in.huawei.com [45.249.212.189])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4993FDFCE;
+        Thu, 14 Jul 2022 05:13:45 -0700 (PDT)
+Received: from dggpeml500020.china.huawei.com (unknown [172.30.72.56])
+        by szxga03-in.huawei.com (SkyGuard) with ESMTP id 4LkCzy3k91zFq24;
+        Thu, 14 Jul 2022 20:12:46 +0800 (CST)
+Received: from dggpeml500008.china.huawei.com (7.185.36.147) by
+ dggpeml500020.china.huawei.com (7.185.36.88) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2375.24; Thu, 14 Jul 2022 20:13:43 +0800
+Received: from huawei.com (10.67.175.34) by dggpeml500008.china.huawei.com
+ (7.185.36.147) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2375.24; Thu, 14 Jul
+ 2022 20:13:42 +0800
+From:   Ren Zhijie <renzhijie2@huawei.com>
+To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
+        <konrad.dybcio@somainline.org>, <mturquette@baylibre.com>,
+        <sboyd@kernel.org>, <jonathan@marek.ca>, <robert.foss@linaro.org>,
+        <vkoul@kernel.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, Ren Zhijie <renzhijie2@huawei.com>
+Subject: [PATCH -next] clk: qcom: fix build error initializer element is not constant
+Date:   Thu, 14 Jul 2022 20:11:44 +0800
+Message-ID: <20220714121144.71062-1-renzhijie2@huawei.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: [PATCH v17 0/6] PCI: dwc: Fix higher MSI vectors handling
-Content-Language: en-GB
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
-        Johan Hovold <johan@kernel.org>
-References: <20220707134733.2436629-1-dmitry.baryshkov@linaro.org>
-In-Reply-To: <20220707134733.2436629-1-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.67.175.34]
+X-ClientProxiedBy: dggems704-chm.china.huawei.com (10.3.19.181) To
+ dggpeml500008.china.huawei.com (7.185.36.147)
+X-CFilter-Loop: Reflected
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -85,44 +53,50 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 07/07/2022 16:47, Dmitry Baryshkov wrote:
-> I have replied with my Tested-by to the patch at [2], which has landed
-> in the linux-next as the commit 20f1bfb8dd62 ("PCI: qcom:
-> Add support for handling MSIs from 8 endpoints"). However lately I
-> noticed that during the tests I still had 'pcie_pme=nomsi', so the
-> device was not forced to use higher MSI vectors.
-> 
-> After removing this option I noticed that hight MSI vectors are not
-> delivered on tested platforms. After additional research I stumbled upon
-> a patch in msm-4.14 ([1]), which describes that each group of MSI
-> vectors is mapped to the separate interrupt. Implement corresponding
-> mapping.
+CONFIG_CC_VERSION_TEXT="x86_64-linux-gnu-gcc (Ubuntu 7.4.0-1ubuntu1~18.04.1) 7.4.0"
+make ARCH=x86_64 CROSS_COMPILE=x86_64-linux-gnu-, will be failed, like this:
 
-[skipped]
+drivers/clk/qcom/gpucc-sm8350.c:111:2: error: initializer element is not constant
+  gpu_cc_parent,
+  ^~~~~~~~~~~~~
+drivers/clk/qcom/gpucc-sm8350.c:111:2: note: (near initialization for ‘gpu_cc_parent_data_0[0]’)
+drivers/clk/qcom/gpucc-sm8350.c:126:2: error: initializer element is not constant
+  gpu_cc_parent,
+  ^~~~~~~~~~~~~
+drivers/clk/qcom/gpucc-sm8350.c:126:2: note: (near initialization for ‘gpu_cc_parent_data_1[0]’)
+make[3]: *** [drivers/clk/qcom/gpucc-sm8350.o] Error 1
 
-Gracious ping. Does this series stand a chance of getting into 5.20?
+It seems that nested constant initializer is not supported in GCC 7.4.0. For portability resons, we should fix it.
 
-> Dmitry Baryshkov (6):
->    PCI: dwc: Correct msi_irq condition in dw_pcie_free_msi()
->    PCI: dwc: Convert msi_irq to the array
->    PCI: dwc: split MSI IRQ parsing/allocation to a separate function
->    PCI: dwc: Handle MSIs routed to multiple GIC interrupts
->    dt-bindings: PCI: qcom: Support additional MSI interrupts
->    arm64: dts: qcom: sm8250: provide additional MSI interrupts
-> 
->   .../devicetree/bindings/pci/qcom,pcie.yaml    |  51 +++++-
->   arch/arm64/boot/dts/qcom/sm8250.dtsi          |  12 +-
->   drivers/pci/controller/dwc/pci-dra7xx.c       |   2 +-
->   drivers/pci/controller/dwc/pci-exynos.c       |   2 +-
->   .../pci/controller/dwc/pcie-designware-host.c | 164 +++++++++++++-----
->   drivers/pci/controller/dwc/pcie-designware.h  |   2 +-
->   drivers/pci/controller/dwc/pcie-keembay.c     |   2 +-
->   drivers/pci/controller/dwc/pcie-spear13xx.c   |   2 +-
->   drivers/pci/controller/dwc/pcie-tegra194.c    |   2 +-
->   9 files changed, 185 insertions(+), 54 deletions(-)
-> 
-	
+Reported-by: Hulk Robot <hulkci@huawei.com>
+Fixes: 160758b05ab1 ("clk: qcom: add support for SM8350 GPUCC")
+Signed-off-by: Ren Zhijie <renzhijie2@huawei.com>
+---
+ drivers/clk/qcom/gpucc-sm8350.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
+diff --git a/drivers/clk/qcom/gpucc-sm8350.c b/drivers/clk/qcom/gpucc-sm8350.c
+index d13fa813d190..5367ce654ac9 100644
+--- a/drivers/clk/qcom/gpucc-sm8350.c
++++ b/drivers/clk/qcom/gpucc-sm8350.c
+@@ -108,7 +108,7 @@ static const struct parent_map gpu_cc_parent_map_0[] = {
+ };
+ 
+ static const struct clk_parent_data gpu_cc_parent_data_0[] = {
+-	gpu_cc_parent,
++	{ .fw_name = "bi_tcxo" },
+ 	{ .hw = &gpu_cc_pll0.clkr.hw },
+ 	{ .hw = &gpu_cc_pll1.clkr.hw },
+ 	{ .fw_name = "gcc_gpu_gpll0_clk_src" },
+@@ -123,7 +123,7 @@ static const struct parent_map gpu_cc_parent_map_1[] = {
+ };
+ 
+ static const struct clk_parent_data gpu_cc_parent_data_1[] = {
+-	gpu_cc_parent,
++	{ .fw_name = "bi_tcxo" },
+ 	{ .hw = &gpu_cc_pll1.clkr.hw },
+ 	{ .fw_name = "gcc_gpu_gpll0_clk_src" },
+ 	{ .fw_name = "gcc_gpu_gpll0_div_clk_src" },
 -- 
-With best wishes
-Dmitry
+2.17.1
+
