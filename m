@@ -2,79 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A388A5744A3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Jul 2022 07:41:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5A8635744E5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Jul 2022 08:12:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230024AbiGNFko (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Jul 2022 01:40:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47254 "EHLO
+        id S233111AbiGNGMK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Jul 2022 02:12:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38720 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234088AbiGNFkn (ORCPT
+        with ESMTP id S233065AbiGNGMK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Jul 2022 01:40:43 -0400
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12B8528E36;
-        Wed, 13 Jul 2022 22:40:42 -0700 (PDT)
+        Thu, 14 Jul 2022 02:12:10 -0400
+Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E50120F70
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Jul 2022 23:12:05 -0700 (PDT)
+Received: by mail-pf1-x436.google.com with SMTP id 70so989996pfx.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Jul 2022 23:12:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1657777242; x=1689313242;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=4NKbmXxhlXJ2EzhZYmyUNHWWphemE+rKL52FLwRy3ew=;
-  b=B9BO8JKy4MYh7EajcJwVG53Vgt9H5q0xNzltg4RttQMH30rtjuLqsA/l
-   9P/eyppEMyKArReYE7dKNaSLnmcp8qM/NK7xpYivLe0h6ZU+yjReWDBtH
-   eHdQ/50nQijVxVsgzrMU7W8cKQN+TyRW4b4qdIBowcyEmlWwxiAJMm9dr
-   8=;
-Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 13 Jul 2022 22:40:41 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Jul 2022 22:40:41 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 13 Jul 2022 22:40:41 -0700
-Received: from [10.216.13.53] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Wed, 13 Jul
- 2022 22:40:33 -0700
-Message-ID: <c022538d-c616-8f1a-e1c2-c11b5f0de670@quicinc.com>
-Date:   Thu, 14 Jul 2022 11:10:29 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.2
-Subject: Re: [PATCH v2 5/7] arm64: dts: qcom: sc7280: Update gpu register list
-Content-Language: en-US
-To:     Doug Anderson <dianders@chromium.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Taniya Das <quic_tdas@quicinc.com>, <quic_rjendra@quicinc.com>
-CC:     freedreno <freedreno@lists.freedesktop.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        "Bjorn Andersson" <bjorn.andersson@linaro.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Andy Gross <agross@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=0JQX6/cIgCdb7Mg76sUFpOl71mtDqdXfnF0wcsBKWsM=;
+        b=MSniBgnOLurkJBS/hE33Ycon1qF3cNBocVhNzr3LgMuamK6dYjUdoDVt336IyjBgSt
+         BeY843VST6NEyYyLyhBxUdsiOMrMGUTqFNoWCydnQE5x0XOnWxYO5HWaWxOfp8NimnmZ
+         wRkQenr9JHGsORs7BzTst6zb+ahj4rDAsc2L4=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=0JQX6/cIgCdb7Mg76sUFpOl71mtDqdXfnF0wcsBKWsM=;
+        b=zhBS7hC0yQ3tny9vrWv3FMDqDzY+543Z5Sy8E+lnxtk4eMKtaU0i3M9AYxKuigeuSr
+         e6/U7zsNJx6xLXZf+x9Jbr0/aoEQ1dm0qQj4aroZ+LQzKJ7BRp2OQj2ZJgre8JeB6eD2
+         6xbCLn3WJnWVSd9anuoDZ+hyl4f4U3ZrPxDJijv9pxtOBzDfCqjpb6lGbnZEgIaqqMKd
+         +ujiQKNk02kk6ESuQYeJ+G87LOvyI3gGjNDr/feme4VMAdj8EYy3U/h3nNbIylcTA3hi
+         DxtsuNa/jvCwW8w2vwHb2ZBm5N6oUUc3AYORkNOiGCLW3wsecUeXD7xElD1BQeRL5N39
+         X8BQ==
+X-Gm-Message-State: AJIora8Pd8yZR33o7i1hYI9Wn1zYhKhHv9CUsfXjmM628yWjrnY/QW1a
+        PsWa7uaTwNNxVUAv5ieixCzfvg==
+X-Google-Smtp-Source: AGRyM1taVQ9qHJJchRWXeqZw9zn67tFuwEXQj2+SbtcE1e1jgkp3bIJq+Jc2EaYDxH5GTEm/hoPC9g==
+X-Received: by 2002:a63:2a8f:0:b0:412:5278:b90 with SMTP id q137-20020a632a8f000000b0041252780b90mr6214516pgq.363.1657779124714;
+        Wed, 13 Jul 2022 23:12:04 -0700 (PDT)
+Received: from judyhsiao0523.c.googlers.com.com (0.223.81.34.bc.googleusercontent.com. [34.81.223.0])
+        by smtp.gmail.com with ESMTPSA id j10-20020a170902690a00b0016a17da4ad4sm509683plk.39.2022.07.13.23.12.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 13 Jul 2022 23:12:04 -0700 (PDT)
+From:   Judy Hsiao <judyhsiao@chromium.org>
+To:     Andy Gross <agross@kernel.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
-        "Stephen Boyd" <swboyd@chromium.org>
-References: <1657346375-1461-1-git-send-email-quic_akhilpo@quicinc.com>
- <20220709112837.v2.5.I7291c830ace04fce07e6bd95a11de4ba91410f7b@changeid>
- <CAD=FV=XzvcjS51q78BZ=FPCEVUDMD+VKJ70ksCm5V4qwHN_wRg@mail.gmail.com>
-From:   Akhil P Oommen <quic_akhilpo@quicinc.com>
-In-Reply-To: <CAD=FV=XzvcjS51q78BZ=FPCEVUDMD+VKJ70ksCm5V4qwHN_wRg@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+        dianders@chromium.org, mka@chromium.org, cychiang@google.com,
+        judyhsiao@google.com, swboyd@chromium.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Judy Hsiao <judyhsiao@chromium.org>
+Subject: [PATCH v1 0/3] Add dtsi for sc7280 herobrine boards that using
+Date:   Thu, 14 Jul 2022 06:11:48 +0000
+Message-Id: <20220714061151.2126288-1-judyhsiao@chromium.org>
+X-Mailer: git-send-email 2.37.0.144.g8ac04bfd2-goog
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -82,52 +71,24 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 7/12/2022 4:57 AM, Doug Anderson wrote:
-> Hi,
->
-> On Fri, Jul 8, 2022 at 11:00 PM Akhil P Oommen <quic_akhilpo@quicinc.com> wrote:
->> Update gpu register array with gpucc memory region.
->>
->> Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
->> ---
->>
->> (no changes since v1)
->>
->>   arch/arm64/boot/dts/qcom/sc7280.dtsi | 6 ++++--
->>   1 file changed, 4 insertions(+), 2 deletions(-)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> index e66fc67..defdb25 100644
->> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> @@ -2228,10 +2228,12 @@
->>                          compatible = "qcom,adreno-635.0", "qcom,adreno";
->>                          reg = <0 0x03d00000 0 0x40000>,
->>                                <0 0x03d9e000 0 0x1000>,
->> -                             <0 0x03d61000 0 0x800>;
->> +                             <0 0x03d61000 0 0x800>,
->> +                             <0 0x03d90000 0 0x2000>;
->>                          reg-names = "kgsl_3d0_reg_memory",
->>                                      "cx_mem",
->> -                                   "cx_dbgc";
->> +                                   "cx_dbgc",
->> +                                   "gpucc";
-> This doesn't seem right. Shouldn't you be coordinating with the
-> existing gpucc instead of reaching into its registers?
->
-> -Doug
-IIUC, qcom gdsc driver doesn't ensure hardware is collapsed since they 
-are vote-able switches. Ideally, we should ensure that the hw has 
-collapsed for gpu recovery because there could be transient votes from 
-other subsystems like hypervisor using their vote register.
+Put sound node and lpass_cpu node settings for boards that use rt5682
+codec in the sc7280-herobrine-audio-rt5682.dtsi as there are different
+choices of headset codec for herobrine projects. Common audio setting
+for the internal speaker is in sc7280-herobrine.dtsi.
 
-I am not sure how complex the plumbing to gpucc driver would be to allow 
-gpu driver to check hw status. OTOH, with this patch, gpu driver does a 
-read operation on a gpucc register which is in always-on domain. That 
-means we don't need to vote any resource to access this register.
+Judy Hsiao (3):
+  arm64: dts: qcom: sc7280: herobrine: Add pinconf settings for mi2s1
+  arm64: dts: qcom: sc7280: Add sc7280-herobrine-audio-rt5682.dtsi
+  arm64: dts: qcom: sc7280: include sc7280-herobrine-audio-rt5682.dtsi
+    in villager and herobrine-r1
 
-Stephen/Rajendra/Taniya, any suggestion?
+ .../qcom/sc7280-herobrine-audio-rt5682.dtsi   | 121 ++++++++++++++++++
+ .../qcom/sc7280-herobrine-herobrine-r1.dts    |   1 +
+ .../dts/qcom/sc7280-herobrine-villager-r0.dts |   1 +
+ .../arm64/boot/dts/qcom/sc7280-herobrine.dtsi |  15 +++
+ 4 files changed, 138 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-audio-rt5682.dtsi
 
--Akhil.
-
+-- 
+2.37.0.144.g8ac04bfd2-goog
 
