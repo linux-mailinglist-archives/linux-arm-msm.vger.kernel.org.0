@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BB3B95747E4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Jul 2022 11:11:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D1F525747E8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Jul 2022 11:11:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235728AbiGNJK5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Jul 2022 05:10:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60714 "EHLO
+        id S237698AbiGNJK6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Jul 2022 05:10:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60830 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237664AbiGNJKv (ORCPT
+        with ESMTP id S237672AbiGNJKy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Jul 2022 05:10:51 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB5EA23BDB
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Jul 2022 02:10:50 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id a9so1733776lfk.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Jul 2022 02:10:50 -0700 (PDT)
+        Thu, 14 Jul 2022 05:10:54 -0400
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62D4123BC5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Jul 2022 02:10:53 -0700 (PDT)
+Received: by mail-lf1-x136.google.com with SMTP id bp17so1776433lfb.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Jul 2022 02:10:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=QeR3DFLgzM8qo6wNayqmpjIsz3WLvihoJpHEg++lMwQ=;
-        b=M7BhE574Me+yvLXZ6Xij24gXgaXCtQq3v67mXre6GxQ8vC/RVAcZDmOv/be+cOTi/+
-         ksEM6bRwNQaDvDTrSTfrJc7hgZLZJXtLji886bzG70FCKn6hZh7Nw/f6+AH7MHF0laWS
-         G2+D+Rsa2xdOJoYQT/o4955QBbLfA1LOG5FMItuoZPmObuLjiYm6a0SYrQTczzTLNvFV
-         GoltiqMoBEk3p27P5ZUHAcO3irtOnGVlfZgA3KVvc+9i8K/+27vUnsxtdqCMZz6XBtDm
-         zfqUQr/Xfckd0mBvAYjqpWuuI2md7/n76QNciMgvb2BPwuB8Q3tBxRRgAv6aFB/qbCkU
-         P9Fg==
+        bh=2x572kTW28ZwxF7SkDqo2Pgfax0p5nEhs9ONN4/XetI=;
+        b=CLH1FzwjyJ4pmTHbuWqH5403hryL88/aa4JMFAOal47Ch7yeojUBszf8t6oR1ZIHMX
+         1w9qrTNDP91qC2lkLz8qdiuhF9q2sZ547S7uo0QEX4+Cepop/Rtl6r+jNtRMQWzc061R
+         /eYH6LWobnSVyYuoAORZ8seCFEyto0X8E8ytDKG9bAnkipMM4ecYHCbrQbbzUEXyveXD
+         +8UZuGXQ3sXGYXwKTaGzzuHqIqk+a7F1tKJTmUZRDdKDy3TN258rYqukGk34qsDyrYei
+         0cVq3lfGEiY55NfAhk3lArBeWde0WfJwAd7KomizIe/jzmqV8k0dBOVIqiA2QoW0IW+1
+         gaRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=QeR3DFLgzM8qo6wNayqmpjIsz3WLvihoJpHEg++lMwQ=;
-        b=nvRTGgX9RVCCwMCzGxIJ50MJUiJAlZUw7S5KaqbqJN0ndaK6s24c6CJdUMJSqWKjOF
-         /mBNz6iDa+dYP+QND2mN88Dl9GrJa5xQVlOmrIKeSvZLLwqAa0wFXShrvjWczQkXRWbS
-         SCjJpwidV0jnMxMGF7oACFrrlo938wjWRVIhmCWIj+IVD9nHdJsE4iM2NsWLBj9kEiEv
-         olOWZxEmF2xb3sVnpwJ68AHB90mnw3wDrbtmunGcGnhWarMTqo+qyBuz9M15sDTS9mea
-         pO2/C0Le1AQN9r8Tbzl1B964ySvISzU22DCS6KSi7qBTIev+Bnj85ecDxG8+VXO0EkSo
-         EIPQ==
-X-Gm-Message-State: AJIora9uSuZ0NqeNXJACDn5/nkUzodORsBo4ZfDiZpRN3av7n8L9Zx02
-        xmLo9XoyaMiucI0g4EJxtQgDDg==
-X-Google-Smtp-Source: AGRyM1t8330HgtAwWfP+SD3hrM0LmatOLtfN60is05O//2BlvyszFHD5/EgfOJja6qrNjWZ5aU5Pjg==
-X-Received: by 2002:a05:6512:2241:b0:479:6426:15af with SMTP id i1-20020a056512224100b00479642615afmr4548835lfu.631.1657789849190;
-        Thu, 14 Jul 2022 02:10:49 -0700 (PDT)
+        bh=2x572kTW28ZwxF7SkDqo2Pgfax0p5nEhs9ONN4/XetI=;
+        b=GQ9oQtbaqCUjlEIoFNeVUbiGm0PlMSKd4JM0HL3JbdQotMwJBh4IFC1QQPwnS9tpxp
+         gpTJlzu7UQlIPFJY5i/KiZiTinr+QVZW0fxBlgpqg9E5WqbtsgKPMklk/9ad2M1ElNQg
+         kKtKH97TewYYIMNVb5g1+OMHlVDma7WIxubTfqSxn2R2nd/31MWtRVGdDTqqJFpoe4oj
+         7P6VGk5ZF+vEy4020bGuGxZpEBZ7M2tluzBF6BbEVRHquvjMmUQf9Z2VZ52IqrpOwPYu
+         sWTA8lP0ZP1gISXHY/z0d3oPmlx+YEwkRYigNzaPG6clzTSWj0KWjeXS8MkjqEIE9Jar
+         izNg==
+X-Gm-Message-State: AJIora+00uilyFx9uBDX/sNUssR+oHg1j3/KCQXTlP4e/xWHdDzyPWH8
+        F+6TlD7d84AxEIEoVcekQuRqZg==
+X-Google-Smtp-Source: AGRyM1s+3qiNZ15HG5d2PH4s1iZLuiE2VWhiHT8fecPh3CdN6vbvO+FbbSsDbvSrpwI4NK0f1aRNUA==
+X-Received: by 2002:a05:6512:ad3:b0:489:ec0d:761e with SMTP id n19-20020a0565120ad300b00489ec0d761emr4841296lfu.2.1657789852970;
+        Thu, 14 Jul 2022 02:10:52 -0700 (PDT)
 Received: from krzk-bin.. (fwa5da9-171.bb.online.no. [88.93.169.171])
-        by smtp.gmail.com with ESMTPSA id d8-20020a056512368800b004790ef191e3sm250006lfs.216.2022.07.14.02.10.46
+        by smtp.gmail.com with ESMTPSA id d8-20020a056512368800b004790ef191e3sm250006lfs.216.2022.07.14.02.10.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Jul 2022 02:10:48 -0700 (PDT)
+        Thu, 14 Jul 2022 02:10:52 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Ulf Hansson <ulf.hansson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
@@ -61,9 +61,9 @@ To:     Ulf Hansson <ulf.hansson@linaro.org>,
         linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Douglas Anderson <dianders@chromium.org>
-Subject: [PATCH v3 1/3] dt-bindings: mmc: sdhci-msm: add MSM8998
-Date:   Thu, 14 Jul 2022 11:10:40 +0200
-Message-Id: <20220714091042.22287-2-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v3 2/3] arm64: dts: qcom: msm8998: add MSM8998 SDCC specific compatible
+Date:   Thu, 14 Jul 2022 11:10:41 +0200
+Message-Id: <20220714091042.22287-3-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20220714091042.22287-1-krzysztof.kozlowski@linaro.org>
 References: <20220714091042.22287-1-krzysztof.kozlowski@linaro.org>
@@ -83,6 +83,7 @@ Add a MSM8998-specific SDCC compatible, because using only a generic
 qcom,sdhci-msm-v4 fallback is deprecated.
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 Reviewed-by: Douglas Anderson <dianders@chromium.org>
 
 ---
@@ -91,21 +92,22 @@ Cc: Konrad Dybcio <konrad.dybcio@somainline.org>
 Cc: Bhupesh Sharma <bhupesh.sharma@linaro.org>
 Cc: Doug Anderson <dianders@chromium.org>
 ---
- Documentation/devicetree/bindings/mmc/sdhci-msm.yaml | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/qcom/msm8998.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml b/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
-index 31a3ce208e1a..0853d0c32dc7 100644
---- a/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
-+++ b/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
-@@ -30,6 +30,7 @@ properties:
-               - qcom,msm8992-sdhci
-               - qcom,msm8994-sdhci
-               - qcom,msm8996-sdhci
-+              - qcom,msm8998-sdhci
-           - const: qcom,sdhci-msm-v4 # for sdcc versions less than 5.0
-       - items:
-           - enum:
+diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+index 85bbd4f7306d..e263a59d84b0 100644
+--- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+@@ -2076,7 +2076,7 @@ qusb2phy: phy@c012000 {
+ 		};
+ 
+ 		sdhc2: mmc@c0a4900 {
+-			compatible = "qcom,sdhci-msm-v4";
++			compatible = "qcom,msm8998-sdhci", "qcom,sdhci-msm-v4";
+ 			reg = <0x0c0a4900 0x314>, <0x0c0a4000 0x800>;
+ 			reg-names = "hc_mem", "core_mem";
+ 
 -- 
 2.34.1
 
