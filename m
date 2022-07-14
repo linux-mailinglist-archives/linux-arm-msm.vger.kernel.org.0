@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9420E5749FE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Jul 2022 12:04:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EE955574A00
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Jul 2022 12:04:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237840AbiGNKEA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Jul 2022 06:04:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44092 "EHLO
+        id S237903AbiGNKEC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Jul 2022 06:04:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43256 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237725AbiGNKD5 (ORCPT
+        with ESMTP id S237612AbiGNKD7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Jul 2022 06:03:57 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5595E6259
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Jul 2022 03:03:56 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id u13so1971790lfn.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Jul 2022 03:03:56 -0700 (PDT)
+        Thu, 14 Jul 2022 06:03:59 -0400
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E5B1BC8B
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Jul 2022 03:03:57 -0700 (PDT)
+Received: by mail-lj1-x236.google.com with SMTP id x10so1102004ljj.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Jul 2022 03:03:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=JTKBL6Aor4zd0gi9+YpsM0tS+Wh8c3Pxgu/O7VusGAc=;
-        b=XSP18C8zz0oix63kSQznFfQcyuoXYYWwuSlLN7U2taqc6gNNJA2Akk295PvVJrUFLI
-         PvF5aU+Ardnwb0jXkCd26K062PKDvC/MhXCWuGfr3HQ3dZY0Ny9oe/2jHvNxZ3xRY/ry
-         nfhn+eSKy77dIO+TrXCvq8Fj6txV4LIJMkSeIvv9H54vWSPHvoPXd084ISjTn555DS6k
-         w/74DnRfX7RSicmZiadRQ5bDq1c+5prRL3rt+tGzA8egyHB5UNvAd44Fud1N0TfkhDSf
-         K0ID+CAXsRNZ6Zsx/8TuuNSyP6rk6JGEwVnk+M0UFPwRMJA8tx5wwAnUqOD5aS2c0YLp
-         P7eQ==
+        bh=4+ZXhanq0yeTnNAKNTjduoC20FlvSPFcgOLSol78gzo=;
+        b=IN6kbsCNGAOFbD1Rtu5j0AY/OxDKSFTPYEFKSxnHgREsFXjjcUVec8ewD0KfnY4TOG
+         +hJeGFMRnbCerIHwMQ60ysHvWEsPFVQwikzlGWk116cthricZGpynfR+YnMemQeibAE2
+         msWvEC0PR56jSxpvbcj/UxozKiUaRVD8oKV31MN0bkFbnc9vM10FM3D/HUBX/oZdm61v
+         +tXvVIuGPYKXrb9hmdqIjsPkVtjZUnOffdI15qcDiaWk0/AhGhp1sSYOpGodOisSVJl+
+         g+PJEERAHBwV56CocR1g5JXhXDNdheebOxh4gAHyigO5pNLzrCMrDicvE+UhK2Wirv6F
+         j4Og==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=JTKBL6Aor4zd0gi9+YpsM0tS+Wh8c3Pxgu/O7VusGAc=;
-        b=cwFEZHh1z86x7QZqQ7hjSxF52BMqnWjuVHvF5DJQCfrP1/GyrovmtvNWGmNtwUFZOT
-         MaPq2qx5yGD8cvVidB6/ZWEaN4p20JY7Y4pd4xMv9eW7DqwDUPWSHMsTIPI1McrJ0HEu
-         5j70iPyJBYUC+GSEcyUqTyBpdqu3z2lihoVChvDGfHdNd5FUWfoHVA+/XKII6tKcnrV7
-         gL/vbTSCEGI2B7iwdtWNns+EgY8IuHEIz6so3aFpW0p4jILFeDiRlNCH2pEbTyCuMNnl
-         MZuvvCQcFS1hBNN0ReOVH6jbVvI07NI+vOuWuBdBjnN0/jzSVJ7fA5c8WssJmWWf5YO2
-         q+rA==
-X-Gm-Message-State: AJIora8W3FXNHz1n3PPvZM06sHUS8Sn08DXMk7uO9pyvAQdqA5D09YwD
-        4J+55AYp/L0tKjWMhhAxd9/VlQ==
-X-Google-Smtp-Source: AGRyM1uxX9d1GQ16nOwzfxzni70OBrd8AJiy3hVmto0DyaAUNXDchl1mlionWd+uV2qy9epbN9i60g==
-X-Received: by 2002:a05:6512:2610:b0:47f:74dc:3205 with SMTP id bt16-20020a056512261000b0047f74dc3205mr4497506lfb.429.1657793034742;
-        Thu, 14 Jul 2022 03:03:54 -0700 (PDT)
+        bh=4+ZXhanq0yeTnNAKNTjduoC20FlvSPFcgOLSol78gzo=;
+        b=lz7C4kHTHE110u1Mt5WW++dB93FpJc7sa/VppCZ3v1YdnE4jIyFd3NOp4PeBFGkDiB
+         umDXsK5XCiDKASKyUxq+2THoRP3QQrMjzV6CrNlrjebMeC1IRwlPTrf7Ko50Ft/mR/p1
+         phO5wvutg3KzIfBlIMFnfcc2LhWF+rC6k6WNsoYdsP0QwAHsAsn8kuJyiovWp8IeIHTe
+         pBle68BqxBfd/3QING0nLoDLi/OciV4TWxyiU+s0QAAtnBGKI2to2/ffE+tTc1OWNIHE
+         8E3ZF4dHqFmuA+3wSZE+HSJfQ8do98b6LGnc2kNQ4wqTJiEoJvSmz4qyjPwUY/LXEkkm
+         R3Ew==
+X-Gm-Message-State: AJIora8AVwTP1Cf/dbYsiNwb7VqtAJ/QJ8adxLsQiHTzrdDqjfx4UaEI
+        PuXTgeFINLowKNLl1qDaQQru3w==
+X-Google-Smtp-Source: AGRyM1uIitr7ZeSJL1fQkE+RMwrBHC2Lspr+3bc8UHiopY1PbSKeRcs/Woz7En+4X/w4LCyqksSyrw==
+X-Received: by 2002:a2e:2a41:0:b0:25d:832d:2af9 with SMTP id q62-20020a2e2a41000000b0025d832d2af9mr3983587ljq.429.1657793035621;
+        Thu, 14 Jul 2022 03:03:55 -0700 (PDT)
 Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id c9-20020a056512074900b00489c92779f8sm273355lfs.184.2022.07.14.03.03.53
+        by smtp.gmail.com with ESMTPSA id c9-20020a056512074900b00489c92779f8sm273355lfs.184.2022.07.14.03.03.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Jul 2022 03:03:54 -0700 (PDT)
+        Thu, 14 Jul 2022 03:03:55 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -60,9 +60,9 @@ To:     Andy Gross <agross@kernel.org>,
 Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         devicetree@vger.kernel.org,
         Yassine Oudjana <yassine.oudjana@gmail.com>
-Subject: [PATCH 2/6] clk: qcom: cpu-8996: switch to devm_clk_notifier_register
-Date:   Thu, 14 Jul 2022 13:03:47 +0300
-Message-Id: <20220714100351.1834711-3-dmitry.baryshkov@linaro.org>
+Subject: [PATCH 3/6] clk: qcom: cpu-8996: declare ACD clocks
+Date:   Thu, 14 Jul 2022 13:03:48 +0300
+Message-Id: <20220714100351.1834711-4-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220714100351.1834711-1-dmitry.baryshkov@linaro.org>
 References: <20220714100351.1834711-1-dmitry.baryshkov@linaro.org>
@@ -78,68 +78,105 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Switch to using devres-managed version of clk_notifier_register(). This
-allows us to drop driver's remove() callback.
+To simplify the code, define 1:1 fixed factor clocks to represent the
+ACD pmux parent.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/clk/qcom/clk-cpu-8996.c | 25 ++-----------------------
- 1 file changed, 2 insertions(+), 23 deletions(-)
+ drivers/clk/qcom/clk-cpu-8996.c | 53 +++++++++++++++++++++++++--------
+ 1 file changed, 41 insertions(+), 12 deletions(-)
 
 diff --git a/drivers/clk/qcom/clk-cpu-8996.c b/drivers/clk/qcom/clk-cpu-8996.c
-index 708a8ad0c933..ff90cd5b4fba 100644
+index ff90cd5b4fba..3dd6efdef82d 100644
 --- a/drivers/clk/qcom/clk-cpu-8996.c
 +++ b/drivers/clk/qcom/clk-cpu-8996.c
-@@ -425,27 +425,12 @@ static int qcom_cpu_clk_msm8996_register_clks(struct device *dev,
- 	clk_prepare_enable(pwrcl_alt_pll.clkr.hw.clk);
- 	clk_prepare_enable(perfcl_alt_pll.clkr.hw.clk);
+@@ -168,6 +168,34 @@ static struct clk_fixed_factor perfcl_pll_postdiv = {
+ 	},
+ };
  
--	clk_notifier_register(pwrcl_pmux.clkr.hw.clk, &pwrcl_pmux.nb);
--	clk_notifier_register(perfcl_pmux.clkr.hw.clk, &perfcl_pmux.nb);
-+	devm_clk_notifier_register(dev, pwrcl_pmux.clkr.hw.clk, &pwrcl_pmux.nb);
-+	devm_clk_notifier_register(dev, perfcl_pmux.clkr.hw.clk, &perfcl_pmux.nb);
++static struct clk_fixed_factor perfcl_pll_acd = {
++	.mult = 1,
++	.div = 1,
++	.hw.init = &(struct clk_init_data){
++		.name = "perfcl_pll_acd",
++		.parent_data = &(const struct clk_parent_data){
++			.hw = &perfcl_pll.clkr.hw
++		},
++		.num_parents = 1,
++		.ops = &clk_fixed_factor_ops,
++		.flags = CLK_SET_RATE_PARENT,
++	},
++};
++
++static struct clk_fixed_factor pwrcl_pll_acd = {
++	.mult = 1,
++	.div = 1,
++	.hw.init = &(struct clk_init_data){
++		.name = "pwrcl_pll_acd",
++		.parent_data = &(const struct clk_parent_data){
++			.hw = &pwrcl_pll.clkr.hw
++		},
++		.num_parents = 1,
++		.ops = &clk_fixed_factor_ops,
++		.flags = CLK_SET_RATE_PARENT,
++	},
++};
++
+ static const struct pll_vco alt_pll_vco_modes[] = {
+ 	VCO(3,  250000000,  500000000),
+ 	VCO(2,  500000000,  750000000),
+@@ -328,14 +356,14 @@ static struct clk_regmap_mux perfcl_smux = {
+ static const struct clk_hw *pwrcl_pmux_parents[] = {
+ 	[SMUX_INDEX] = &pwrcl_smux.clkr.hw,
+ 	[PLL_INDEX] = &pwrcl_pll.clkr.hw,
+-	[ACD_INDEX] = &pwrcl_pll.clkr.hw,
++	[ACD_INDEX] = &pwrcl_pll_acd.hw,
+ 	[ALT_INDEX] = &pwrcl_alt_pll.clkr.hw,
+ };
  
- 	return ret;
- }
+ static const struct clk_hw *perfcl_pmux_parents[] = {
+ 	[SMUX_INDEX] = &perfcl_smux.clkr.hw,
+ 	[PLL_INDEX] = &perfcl_pll.clkr.hw,
+-	[ACD_INDEX] = &perfcl_pll.clkr.hw,
++	[ACD_INDEX] = &perfcl_pll_acd.hw,
+ 	[ALT_INDEX] = &perfcl_alt_pll.clkr.hw,
+ };
  
--static int qcom_cpu_clk_msm8996_unregister_clks(void)
--{
--	int ret = 0;
--
--	ret = clk_notifier_unregister(pwrcl_pmux.clkr.hw.clk, &pwrcl_pmux.nb);
--	if (ret)
+@@ -382,6 +410,13 @@ static const struct regmap_config cpu_msm8996_regmap_config = {
+ 	.val_format_endian	= REGMAP_ENDIAN_LITTLE,
+ };
+ 
++static struct clk_hw *cpu_msm8996_hw_clks[] = {
++	&pwrcl_pll_postdiv.hw,
++	&perfcl_pll_postdiv.hw,
++	&pwrcl_pll_acd.hw,
++	&perfcl_pll_acd.hw,
++};
++
+ static struct clk_regmap *cpu_msm8996_clks[] = {
+ 	&pwrcl_pll.clkr,
+ 	&perfcl_pll.clkr,
+@@ -398,16 +433,10 @@ static int qcom_cpu_clk_msm8996_register_clks(struct device *dev,
+ {
+ 	int i, ret;
+ 
+-	ret = devm_clk_hw_register(dev, &pwrcl_pll_postdiv.hw);
+-	if (ret) {
+-		dev_err(dev, "Failed to register pwrcl_pll_postdiv: %d", ret);
 -		return ret;
+-	}
 -
--	ret = clk_notifier_unregister(perfcl_pmux.clkr.hw.clk, &perfcl_pmux.nb);
--	if (ret)
+-	ret = devm_clk_hw_register(dev, &perfcl_pll_postdiv.hw);
+-	if (ret) {
+-		dev_err(dev, "Failed to register perfcl_pll_postdiv: %d", ret);
 -		return ret;
--
--	return 0;
--}
--
- #define CPU_AFINITY_MASK 0xFFF
- #define PWRCL_CPU_REG_MASK 0x3
- #define PERFCL_CPU_REG_MASK 0x103
-@@ -544,11 +529,6 @@ static int qcom_cpu_clk_msm8996_driver_probe(struct platform_device *pdev)
- 	return devm_of_clk_add_hw_provider(dev, of_clk_hw_onecell_get, data);
- }
++	for (i = 0; i < ARRAY_SIZE(cpu_msm8996_hw_clks); i++) {
++		ret = devm_clk_hw_register(dev, cpu_msm8996_hw_clks[i]);
++		if (ret)
++			return ret;
+ 	}
  
--static int qcom_cpu_clk_msm8996_driver_remove(struct platform_device *pdev)
--{
--	return qcom_cpu_clk_msm8996_unregister_clks();
--}
--
- static const struct of_device_id qcom_cpu_clk_msm8996_match_table[] = {
- 	{ .compatible = "qcom,msm8996-apcc" },
- 	{}
-@@ -557,7 +537,6 @@ MODULE_DEVICE_TABLE(of, qcom_cpu_clk_msm8996_match_table);
- 
- static struct platform_driver qcom_cpu_clk_msm8996_driver = {
- 	.probe = qcom_cpu_clk_msm8996_driver_probe,
--	.remove = qcom_cpu_clk_msm8996_driver_remove,
- 	.driver = {
- 		.name = "qcom-msm8996-apcc",
- 		.of_match_table = qcom_cpu_clk_msm8996_match_table,
+ 	for (i = 0; i < ARRAY_SIZE(cpu_msm8996_clks); i++) {
 -- 
 2.35.1
 
