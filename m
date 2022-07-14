@@ -2,286 +2,147 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9E9B8574E61
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Jul 2022 14:51:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 85141574E6B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Jul 2022 14:55:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238087AbiGNMvo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Jul 2022 08:51:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48100 "EHLO
+        id S239176AbiGNMzM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Jul 2022 08:55:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52096 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239585AbiGNMvm (ORCPT
+        with ESMTP id S231347AbiGNMzL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Jul 2022 08:51:42 -0400
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6022427CC3;
-        Thu, 14 Jul 2022 05:51:41 -0700 (PDT)
-Received: from [192.168.1.100] (2-237-20-237.ip236.fastwebnet.it [2.237.20.237])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits))
-        (No client certificate requested)
-        (Authenticated sender: kholk11)
-        by madras.collabora.co.uk (Postfix) with ESMTPSA id 32FB56601A18;
-        Thu, 14 Jul 2022 13:51:39 +0100 (BST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1657803100;
-        bh=/qRsaiAgLbzGHG/6WO0k1pR3txmkbfbYsKKPfsVfxDY=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=K5ZCojJY9+IgZigrYxxRVXd1B0oPGlmzaTgndBKrwfb/7yGNbclqNPlC2qyNnokN0
-         6Kye+CdGZwEtRn0gKtGBGnaJqQN9/XSTju9OOw/3/5vP9h95GMD+JMf7+pUXymnJB2
-         rEFtYb9L5pGgNjU3sJXNmuY1dNF5qcDpOREHfM46isRcvTrIt9mJnyCXu8dEcDgI2+
-         z079De/tXFGh4SQTMG7eYXXKRNdsbIneAeOF1euzD40hPG9pUcFI4hbQ9/z8SQxiDC
-         zF+D8GhORS9o1mHYi6zvQsBKK5dkQUIEub3gOeQCgZy7vQYP0Vq7F078kh9DhPVAgD
-         brRF0v3eHJvNw==
-Message-ID: <ef935a6f-77a2-5c9a-2cbc-0b0192aee56b@collabora.com>
-Date:   Thu, 14 Jul 2022 14:51:36 +0200
+        Thu, 14 Jul 2022 08:55:11 -0400
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2916481F9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Jul 2022 05:55:09 -0700 (PDT)
+Received: by mail-lf1-x130.google.com with SMTP id r9so2630767lfp.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Jul 2022 05:55:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=htN8c5e/clHdwV/pWm6QotC7JCLAfymyLpwHsXpBxmk=;
+        b=tywqxw4y2sqVdVvdCQmJ5CKbw0PBTJgqdNBPxC2b2ACQ41Ei7YYBZVE1G1OwGkPhcF
+         wmFRjHM9GqNZEvomGQNDB+50mROUbUmL2Ek5H8KV2aVEQwT49dbzcvJc5eegLD4FK850
+         mjF3LozalrWPctG13HOLFTfPpbJxrl1xUUHs1OJt62mZRuxDjvY9x2lLwSjjzfr6QUeS
+         B4iUC96DYGF+8qZLHyJc8RrIQB747y48SAIO0pdaH4/4KqDNxst0UidOJiPNVKJYd9C6
+         rvQJ77x+KCN7K0ffjght3eSaB03ZRQCaruJxJy1jjq0wekY6VfgYLWUMLbgoQtPCrYlw
+         dghg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=htN8c5e/clHdwV/pWm6QotC7JCLAfymyLpwHsXpBxmk=;
+        b=C6PpUVgCmZZTQwrU49ljW/HAK0pDGSRbeQkjwYISyrHQOB+OhAFFFA+BgBBIGRFgah
+         p1sh8Vmpu/RoY8TxLIUxSxpgvVhh1uoTLNEoYmQ4DI3/8Y+dnAIrRLCHPn1g3Ikr3vAX
+         InFqcroA6EB5Y5335qchps6kO9K6gyAgUWV8N+eVYxn1vaC1PPynkXayt4WuaNazZ64I
+         AvYK4TUCXqGp8AkOFtLbRouFZOndwkp88AzZTJn88p1cJn7u/A9nt2G7SdLzpg+tmNGY
+         Neau8FCKKP1iDmaCfuF04/s4gcUkchc+Ck0TZRu47YUNRFcjsZWB+vbfjRo9ZloR6Mbg
+         A/tg==
+X-Gm-Message-State: AJIora+w7yuWF00IoGDHUDq8A4x4mktlmW2kwdJSgdVrz6TEM4VTTbhA
+        GR8Yqev9yuzGjXFNH0vOLQiBRw==
+X-Google-Smtp-Source: AGRyM1tE+kix12/jjaJK26eAoX32moOOAR1WjGNwla6iNBAsn0fbYTT0OYBcTTkOddsITmqZk2M5Tg==
+X-Received: by 2002:a05:6512:2812:b0:489:e611:5546 with SMTP id cf18-20020a056512281200b00489e6115546mr5309482lfb.638.1657803308260;
+        Thu, 14 Jul 2022 05:55:08 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id u20-20020a05651220d400b0047255d21132sm347067lfr.97.2022.07.14.05.55.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 14 Jul 2022 05:55:07 -0700 (PDT)
+Message-ID: <7f555901-da65-59d5-9997-b93baab20ce9@linaro.org>
+Date:   Thu, 14 Jul 2022 15:55:06 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH v2 5/5] arm64: dts: qcom: Add device tree for Sony Xperia
- 1 IV
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>,
-        ~postmarketos/upstreaming@lists.sr.ht
-Cc:     martin.botka@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+ Thunderbird/91.10.0
+Subject: Re: [PATCH v1 1/4] dt-bindings: clock: qcom: add bindings for dispcc
+ on SM8450
+Content-Language: en-GB
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, Stephen Boyd <swboyd@chromium.org>,
+        Michael Turquette <mturquette@baylibre.com>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Kees Cook <keescook@chromium.org>,
-        Anton Vorontsov <anton@enomsg.org>,
-        Colin Cross <ccross@android.com>,
-        Tony Luck <tony.luck@intel.com>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20220714123406.1919836-1-konrad.dybcio@somainline.org>
- <20220714123406.1919836-5-konrad.dybcio@somainline.org>
-From:   AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>
-In-Reply-To: <20220714123406.1919836-5-konrad.dybcio@somainline.org>
+        Taniya Das <quic_tdas@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <20220623114737.247703-1-dmitry.baryshkov@linaro.org>
+ <20220623114737.247703-2-dmitry.baryshkov@linaro.org>
+ <YsX0YdV40Zp55wz8@builder.lan>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <YsX0YdV40Zp55wz8@builder.lan>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Il 14/07/22 14:34, Konrad Dybcio ha scritto:
-> Add support for Sony Xperia 1 IV, a.k.a PDX223. This device is a part
-> of the SoMC SM8450 Nagara platform and currently it is the only
-> device based on that board, so no -common DTSI is created until (if?)
-> other Nagara devices appear.
+On 06/07/2022 23:45, Bjorn Andersson wrote:
+> On Thu 23 Jun 06:47 CDT 2022, Dmitry Baryshkov wrote:
 > 
-> This commit brings support for:
-> * SD Card
-> * USB (*including SuperSpeed*)
-> * ADSP/CDSP/SLPI (modem remains untested for now)
-> * Most regulators (some GPIO-enabled ones require PMIC GPIOs but
-> trying to access any SPMI device crashes the device..)
-> * Part of I2C-connected peripherals (notably no touch due to a
-> driver bug)
-> * PCIe0 (PCIe1 is unused)
+>> Add device tree bindings for the display clock controller on Qualcomm
+>> SM8450 platform.
+>>
+>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> ---
+>>   .../bindings/clock/qcom,dispcc-sm8450.yaml    | 132 ++++++++++++++++++
+>>   1 file changed, 132 insertions(+)
+>>   create mode 100644 Documentation/devicetree/bindings/clock/qcom,dispcc-sm8450.yaml
+>>
+>> diff --git a/Documentation/devicetree/bindings/clock/qcom,dispcc-sm8450.yaml b/Documentation/devicetree/bindings/clock/qcom,dispcc-sm8450.yaml
+>> new file mode 100644
+>> index 000000000000..953d20a25cfb
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/clock/qcom,dispcc-sm8450.yaml
+>> @@ -0,0 +1,132 @@
+>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/clock/qcom,dispcc-sm8450.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: Qualcomm Display Clock & Reset Controller Binding for SM8450
+>> +
+>> +maintainers:
+>> +  - Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> +
+>> +description: |
+>> +  Qualcomm display clock control module which supports the clocks, resets and
+>> +  power domains on SM8450.
+>> +
+>> +  See also:
+>> +    dt-bindings/clock/qcom,dispcc-sm8450.h
 > 
-> Do note display via simplefb is not supported, as the display is blanked
-> upon exiting XBL.
+> Please prefix this with include/
 > 
-> To create a working boot image, you need to run:
-> cat arch/arm64/boot/Image.gz arch/arm64/boot/dts/qcom/sm8450-sony-xperia-\
-> nagara-pdx223.dtb > .Image.gz-dtb
+>> +
+>> +properties:
+>> +  compatible:
+>> +    enum:
+>> +      - qcom,sm8450-dispcc
+>> +
+>> +  clocks:
+>> +    items:
 > 
-> mkbootimg \
-> --kernel .Image.gz-dtb \
-> --ramdisk some_initrd.img \
-> --pagesize 4096 \
-> --base 0x0 \
-> --kernel_offset 0x8000 \
-> --ramdisk_offset 0x1000000 \
-> --tags_offset 0x100 \
-> --cmdline "SOME_CMDLINE" \
-> --dtb_offset 0x1f00000 \
-> --header_version 1 \
-> --os_version 12 \
-> --os_patch_level 2022-06 \ # or newer
-> -o boot.img-sony-xperia-pdx223
+> I really think we should include a reference to GCC_DISP_AHB_CLK here.
 > 
-> Then, you need to flash it on the device and get rid of all the
-> vendor_boot/dtbo mess:
+> There are two cases here, either the implementation does what we do in
+> Linux and just always-on the clock from gcc, in which case there's
+> nothing in here to ensure probe order and that the clock is actually on
+> before dispcc probes.
 > 
-> // You have to either pull vbmeta{"","_system"} from
-> // /dev/block/bootdevice/by-name/ or build one as a part of AOSP build process
-> fastboot --disable-verity --disable-verification flash vbmeta vbmeta.img
-> fastboot --disable-verity --disable-verification flash vbmeta_system \
-> vbmeta_system.img
-> 
-> fastboot flash boot boot.img-sony-xperia-pdx223
-> fastboot erase vendor_boot
-> fastboot erase recovery
-> fastboot flash dtbo emptydtbo.img
-> fastboot reboot
-> 
-> Where emptydtbo.img is a tiny file that consists of 2 bytes (all zeroes), doing
-> a "fastboot erase" won't cut it, the bootloader will go crazy and things will
-> fall apart when it tries to overlay random bytes from an empty partition onto a
-> perfectly good appended DTB.
-> 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-> ---
-> Changes since v1:
-> - remove a stray blank line
-> - use generic node names for CS35L41
-> - fix up indentation for sdhci-caps-mask
-> 
->   arch/arm64/boot/dts/qcom/Makefile             |   1 +
->   .../qcom/sm8450-sony-xperia-nagara-pdx223.dts | 634 ++++++++++++++++++
->   2 files changed, 635 insertions(+)
->   create mode 100644 arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara-pdx223.dts
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index 01773f3ce57f..157ef6958e1f 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -126,3 +126,4 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sm8350-sony-xperia-sagami-pdx214.dtb
->   dtb-$(CONFIG_ARCH_QCOM)	+= sm8350-sony-xperia-sagami-pdx215.dtb
->   dtb-$(CONFIG_ARCH_QCOM)	+= sm8450-hdk.dtb
->   dtb-$(CONFIG_ARCH_QCOM)	+= sm8450-qrd.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= sm8450-sony-xperia-nagara-pdx223.dtb
-> diff --git a/arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara-pdx223.dts b/arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara-pdx223.dts
-> new file mode 100644
-> index 000000000000..7fe582b92a61
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara-pdx223.dts
-> @@ -0,0 +1,634 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/*
-> + * Copyright (c) 2022, Konrad Dybcio <konrad.dybcio@somainline.org>
-> + */
-> +
-> +/dts-v1/;
-> +
-> +#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
-> +#include "sm8450.dtsi"
-> +
-> +/delete-node/ &adsp_mem;
-> +/delete-node/ &rmtfs_mem;
-> +/delete-node/ &video_mem;
-> +
-> +/ {
-> +	model = "Sony Xperia 1 IV";
-> +	compatible = "sony,pdx223", "qcom,sm8450";
-> +	chassis-type = "handset";
-> +
+> The other case would be that the implementation doesn't always-on the
+> gcc clock, in which case we need the reference.
 
-..snip..
+Let me check how does this work on earlier platforms. We might want to 
+update them too. Or even better, we can make actual use of DISP_AHB_CLK.
 
-> +
-> +&gpi_dma0 {
-> +	status = "okay";
-> +};
-> +
-> +&gpi_dma1 {
-> +	status = "okay";
-> +};
-> +
-> +&gpi_dma2 {
-> +	status = "okay";
-> +};
-> +
-> +/* I2C4 is used, it hosts a Samsung touchscreen, but GPI DMA is broken.. */
 
-Why aren't you enabling i2c4 like you did with i2c 5/9/13?
-
-If enabling that produces any side effect you should advertise that.
-
-> +
-> +&i2c5 {
-> +	clock-frequency = <400000>;
-> +	status = "okay";
-> +
-> +	/* Dialog SLG51000 CMIC @ 75 */
-> +};
-> +
-> +&i2c9 {
-> +	clock-frequency = <400000>;
-> +	status = "okay";
-> +
-> +	/* NXP SN1X0 NFC @ 28 */
-> +};
-> +
-> +&i2c13 {
-> +	clock-frequency = <400000>;
-> +	status = "okay";
-> +
-> +	/* Richwave RTC6226 FM Radio Receiver @ 64 */
-> +};
-> +
-> +&i2c14 {
-> +	clock-frequency = <1000000>;
-> +	status = "okay";
-> +
-> +	cs35l41_l: speaker-amp@40 {
-
-What about an even more generic audio-amplifier@40 ?
-
-> +		compatible = "cirrus,cs35l41";
-> +		reg = <0x40>;
-> +		interrupt-parent = <&tlmm>;
-> +		interrupts = <182 IRQ_TYPE_LEVEL_LOW>;
-> +		reset-gpios = <&tlmm 183 GPIO_ACTIVE_HIGH>;
-> +		cirrus,boost-peak-milliamp = <4000>;
-> +		cirrus,boost-ind-nanohenry = <1000>;
-> +		cirrus,boost-cap-microfarad = <15>;
-> +		cirrus,gpio2-src-select = <2>;
-> +		cirrus,gpio2-output-enable;
-> +		cirrus,asp-sdout-hiz = <3>;
-> +		#sound-dai-cells = <1>;
-> +	};
-> +
-> +	cs35l41_r: speaker-amp@41 {
-> +		compatible = "cirrus,cs35l41";
-> +		reg = <0x41>;
-> +		interrupt-parent = <&tlmm>;
-> +		interrupts = <182 IRQ_TYPE_LEVEL_LOW>;
-> +		reset-gpios = <&tlmm 183 GPIO_ACTIVE_HIGH>;
-> +		cirrus,boost-peak-milliamp = <4000>;
-> +		cirrus,boost-ind-nanohenry = <1000>;
-> +		cirrus,boost-cap-microfarad = <15>;
-> +		cirrus,gpio2-src-select = <2>;
-> +		cirrus,gpio2-output-enable;
-> +		cirrus,asp-sdout-hiz = <3>;
-> +		#sound-dai-cells = <1>;
-> +	};
-> +};
-> +
-
-..snip..
-
-> +
-> +&sdhc_2 {
-> +	cd-gpios = <&tlmm 92 GPIO_ACTIVE_HIGH>;
-> +	pinctrl-names = "default", "sleep";
-> +	pinctrl-0 = <&sdc2_default_state &sdc2_card_det_n>;
-> +	pinctrl-1 = <&sdc2_sleep_state &sdc2_card_det_n>;
-> +	vmmc-supply = <&pm8350c_l9>;
-> +	vqmmc-supply = <&pm8350c_l6>;
-
-> +	/* Forbid SDR104/SDR50 - broken hw! */
-> +	sdhci-caps-mask = <0x3 0x0>;
-
-Is this a device-specific quirk? Is Sony hardware broken, or is it a SoC
-(or SoC version-specific) issue?
-
-If this is a SoC-specific issue, that should be rectified in sdhci-msm instead.
-
-> +	no-sdio;
-> +	no-mmc;
-> +	status = "okay";
-> +};
-> +
-
-Regards,
-Angelo
+-- 
+With best wishes
+Dmitry
