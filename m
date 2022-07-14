@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 89BE55749BC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Jul 2022 11:55:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AA2B85749C1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Jul 2022 11:56:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230233AbiGNJzw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Jul 2022 05:55:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35858 "EHLO
+        id S230073AbiGNJ4w (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Jul 2022 05:56:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36192 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234453AbiGNJzu (ORCPT
+        with ESMTP id S231151AbiGNJ4v (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Jul 2022 05:55:50 -0400
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F3024C606
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Jul 2022 02:55:49 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id bu42so2001575lfb.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Jul 2022 02:55:49 -0700 (PDT)
+        Thu, 14 Jul 2022 05:56:51 -0400
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 920FA4C607
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Jul 2022 02:56:49 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id u13so1943144lfn.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Jul 2022 02:56:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=Ex1g5I3eoUQJiOv3dD/PtghCfWhfsmio59xIVAgsJyY=;
-        b=bmzEn0AeCHc/TY+avf9KtSU84quEoJL6dmZlyUsuE0l2pZ6iCM/BC8laeeCstgT9pF
-         6SuM+wf7pbB7EHkdZTxAJSQW3EDljFcfoY0XrO3BL+1WsFbqMBJ1pXgBrSIw0KbMKPBo
-         eOVjl7b0vbvcAnWL/6RJ7nuK2yoiNr2FiwPo5KoXj4p1VGeUMgkYdQiuez71ryLmW8sU
-         p7z+1mi7ap9rqEngJm0sdJLZPAU1RnOzVKLqr5aD1l20eYaeKKV3rzHFUbQVP4ZdFEat
-         RbVn0mwzV4zuhaPcXwN6ds/oRg/V566TJIkgcxPRYO6fJ2NOv8QxCswHrsRW684j9zU1
-         QacQ==
+        bh=gIE2z4Ff5AC2EfDWiZb4g0c5VgVN1/oUZLfEG5XVMy0=;
+        b=IE99WmuK1hII6yRK+kzrFISACmY/7Y1xnKb20BU9zpedj18v2h0cbLJayP5bf/eRXD
+         B5uPjU0MXPOqm+Gd/mkzAy2oEjm2bS4lGSpNEQkOZkpMbt3mJ8CeYrTgMAqP2eV3V3am
+         UA11c/fzCOLrouhAFHmZa5E4hePs5ygAD2nO8yEG6Kr1EoGOWscCTbMZjPNV8xR4mj14
+         5hVX7TnmmMQvokfYi6akmKmNZDktUknWmyUrcMgwsDXBTqOf8MgkEWABAZl/I6GYopAT
+         cBXx8BAK2bXXdwUBeAfb2TFQNQCTHtZUloTL2mhRG8vwoqHAwt6tJSPOc1r4M4Ac4Y3W
+         d6Ng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=Ex1g5I3eoUQJiOv3dD/PtghCfWhfsmio59xIVAgsJyY=;
-        b=sUDAubGdFNyllbqD2mXIBFNKEQ0IGw4ZUxleRIb/HgK0yzHrF95ubvVX2pHiC2euHv
-         11YK8BBRif610JABudD5r+X6u5JWE9xGKkIm+yTAbPC07fOHnEsT4+3/f4itT5RxU6x+
-         xaoNFkJXtcCS2Gv5KpgD3y6k+kCQpIESFxX7tafMaorrQ7comgCT1QlhafgDGYUADURU
-         P4rDWbfKC0hoP/y2KibStq69wTTGCqd3iSgAOKsYlI5G8HYG7WUFMRzmIgFBu6ENHG/2
-         uUHgGIslovQFkZpSD7IcZryydQM5btwa1GEYljWSRHJ4UIGeTL8gaKVk9M9azTYZhU4y
-         282Q==
-X-Gm-Message-State: AJIora/K6VhMxJkTmx9RnLV40uwNVqgKc55GzwTOCeNcZYPEp/Z059dO
-        RQdoCrwHb+hQO19uImh0Yv6+cQ==
-X-Google-Smtp-Source: AGRyM1v6vyxwV1p3JiIAymxRsWpbXrpoNMXbQ26YuOQ8MllzgRe7lttKQ9LdNJ2m25DT//EHrOx7+w==
-X-Received: by 2002:a05:6512:3f27:b0:47f:a079:eeec with SMTP id y39-20020a0565123f2700b0047fa079eeecmr4530678lfa.46.1657792547841;
-        Thu, 14 Jul 2022 02:55:47 -0700 (PDT)
+        bh=gIE2z4Ff5AC2EfDWiZb4g0c5VgVN1/oUZLfEG5XVMy0=;
+        b=veJKVjkeF8an+HkoPlIqrfo4hImKuv7udyuHg8TQCmn6cZ28B2UbVd0i9GPsKlz2ez
+         yo/p8Y9a5LtBqV24jsAE2wYFpNDTRcrfIRZQGhD3PmRdCHbrslhtaV0UB8ObR5A0qvVq
+         CHMCPs5r7m7QhFxKToy3W2ri8QcxFa3Rmtr5hh5YJ+wh8Rz2xRnrvTYsbJlt+7NxNZqQ
+         fSbVkq0/GR9hqBeVjAGU/y6+vqFTPRWV2/25NwDGEXCoIlw7hA3vkj7kIxxw2w19khjK
+         pXGqUTJqGzC878VXc/kJwYeSNdQeA2b1nDXP77XZN7te4cpgofxSELSWZ6nvV5edWwkt
+         1OjQ==
+X-Gm-Message-State: AJIora9qG1D0+v3tjgngn6TLDwFofQMuTDL+Qb1CQsofLnn2R1KQaEWP
+        i0lyXirPvo52SZJvb6ohognzmw==
+X-Google-Smtp-Source: AGRyM1vpyadcwRCtiylu0eEk6Vq+yXDkj28btN8Uc4rmOVK/bwRRODSK7ozYr0UFqtnAMu2wPe4Ptw==
+X-Received: by 2002:ac2:4e0b:0:b0:489:d4dd:20cb with SMTP id e11-20020ac24e0b000000b00489d4dd20cbmr4753516lfr.83.1657792607964;
+        Thu, 14 Jul 2022 02:56:47 -0700 (PDT)
 Received: from [10.0.0.8] (fwa5da9-171.bb.online.no. [88.93.169.171])
-        by smtp.gmail.com with ESMTPSA id s13-20020a056512214d00b0048110fd06c4sm272282lfr.53.2022.07.14.02.55.45
+        by smtp.gmail.com with ESMTPSA id g4-20020a05651222c400b0047f6277db4csm268615lfu.300.2022.07.14.02.56.45
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 14 Jul 2022 02:55:46 -0700 (PDT)
-Message-ID: <bcb1e0ec-f0b7-ce45-a63f-7272c1f398c9@linaro.org>
-Date:   Thu, 14 Jul 2022 11:55:44 +0200
+        Thu, 14 Jul 2022 02:56:47 -0700 (PDT)
+Message-ID: <a6e18f65-e818-15f1-ba8c-94d6c97fc31d@linaro.org>
+Date:   Thu, 14 Jul 2022 11:56:45 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.11.0
-Subject: Re: [PATCH 3/6] ARM: dts: qcom: msm8974: Disable remoteprocs by
- default
+Subject: Re: [PATCH 4/6] dt-bindings: remoteproc: qcom,msm8916-mss-pil: Add
+ MSM8974
 Content-Language: en-US
 To:     Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>
@@ -70,14 +70,14 @@ Cc:     Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
         devicetree@vger.kernel.org
 References: <20220712124421.3129206-1-stephan.gerhold@kernkonzept.com>
- <20220712124421.3129206-4-stephan.gerhold@kernkonzept.com>
+ <20220712124421.3129206-5-stephan.gerhold@kernkonzept.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220712124421.3129206-4-stephan.gerhold@kernkonzept.com>
+In-Reply-To: <20220712124421.3129206-5-stephan.gerhold@kernkonzept.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -86,74 +86,63 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 12/07/2022 14:44, Stephan Gerhold wrote:
-> The remoteproc configuration in qcom-msm8974.dtsi is incomplete because
+> The "qcom,msm8974-mss-pil" binding is still similar enough to MSM8916
+> to be covered by the same DT schema. The only difference is the
+> additional "mss-supply", which can be easily handled using a single
+> if statement.
 > 
-> diff --git a/arch/arm/boot/dts/qcom-msm8974.dtsi b/arch/arm/boot/dts/qcom-msm8974.dtsi
-> index 814ad0b46232..35246bd02132 100644
-> --- a/arch/arm/boot/dts/qcom-msm8974.dtsi
-> +++ b/arch/arm/boot/dts/qcom-msm8974.dtsi
-> @@ -1172,6 +1172,8 @@ remoteproc_mss: remoteproc@fc880000 {
->  			qcom,smem-states = <&modem_smp2p_out 0>;
->  			qcom,smem-state-names = "stop";
+> Signed-off-by: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+> ---
+> Note: I generated this patch on top of Sibi's series [1] to avoid
+> conflicts later (I expect it will be picked up first).
+> 
+> [1]: https://lore.kernel.org/linux-arm-msm/1657020721-24939-1-git-send-email-quic_sibis@quicinc.com/
+> ---
+>  .../remoteproc/qcom,msm8916-mss-pil.yaml         | 16 ++++++++++++++++
+>  .../devicetree/bindings/remoteproc/qcom,q6v5.txt | 16 ----------------
+>  2 files changed, 16 insertions(+), 16 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,msm8916-mss-pil.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,msm8916-mss-pil.yaml
+> index 3968348dc982..ca7146551ba9 100644
+> --- a/Documentation/devicetree/bindings/remoteproc/qcom,msm8916-mss-pil.yaml
+> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,msm8916-mss-pil.yaml
+> @@ -18,6 +18,7 @@ properties:
+>      oneOf:
+>        - enum:
+>            - qcom,msm8916-mss-pil
+> +          - qcom,msm8974-mss-pil
 >  
-> +			status = "disabled";
+>        - const: qcom,q6v5-pil
+>          description: Deprecated, prefer using qcom,msm8916-mss-pil
+> @@ -76,6 +77,9 @@ properties:
+>    pll-supply:
+>      description: PLL proxy supply (control handed over after startup)
+>  
+> +  mss-supply:
+> +    description: MSS power domain supply (only valid for qcom,msm8974-mss-pil)
 > +
->  			mba {
->  				memory-region = <&mba_region>;
->  			};
-> @@ -1639,6 +1641,8 @@ remoteproc_adsp: remoteproc@fe200000 {
->  			qcom,smem-states = <&adsp_smp2p_out 0>;
->  			qcom,smem-state-names = "stop";
+>    resets:
+>      items:
+>        - description: MSS restart control
+> @@ -177,6 +181,18 @@ required:
+>    - qcom,smem-state-names
+>    - smd-edge
 >  
-> +			status = "disabled";
+> +# mss-supply is only valid (and required) for MSM8974
+> +if:
+
+Put it under allOf. This makes it prepared for growing.
+
+> +  properties:
+> +    compatible:
+> +      const: qcom,msm8974-mss-pil
+> +then:
+> +  required:
+> +    - mss-supply
+> +else:
+> +  properties:
+> +    mss-supply: false
 > +
->  			smd-edge {
->  				interrupts = <GIC_SPI 156 IRQ_TYPE_EDGE_RISING>;
->  
-> diff --git a/arch/arm/boot/dts/qcom-msm8974pro-fairphone-fp2.dts b/arch/arm/boot/dts/qcom-msm8974pro-fairphone-fp2.dts
-> index 58cb2ce1e4df..8a6b8e4de887 100644
-> --- a/arch/arm/boot/dts/qcom-msm8974pro-fairphone-fp2.dts
-> +++ b/arch/arm/boot/dts/qcom-msm8974pro-fairphone-fp2.dts
-> @@ -147,10 +147,12 @@ wcnss {
->  };
->  
->  &remoteproc_adsp {
-> +	status = "okay";
-
-These go to the end of properties.
-
->  	cx-supply = <&pm8841_s2>;
->  };
->  
->  &remoteproc_mss {
-> +	status = "okay";
-
-Ditto
-
->  	cx-supply = <&pm8841_s2>;
->  	mss-supply = <&pm8841_s3>;
->  	mx-supply = <&pm8841_s1>;
-> diff --git a/arch/arm/boot/dts/qcom-msm8974pro-samsung-klte.dts b/arch/arm/boot/dts/qcom-msm8974pro-samsung-klte.dts
-> index d6b2300a8223..577cbffad010 100644
-> --- a/arch/arm/boot/dts/qcom-msm8974pro-samsung-klte.dts
-> +++ b/arch/arm/boot/dts/qcom-msm8974pro-samsung-klte.dts
-> @@ -457,10 +457,12 @@ fuelgauge_pin: fuelgauge-int-pin {
->  };
->  
->  &remoteproc_adsp {
-> +	status = "okay";
-
-Ditto
-
->  	cx-supply = <&pma8084_s2>;
->  };
->  
->  &remoteproc_mss {
-> +	status = "okay";
->  	cx-supply = <&pma8084_s2>;
->  	mss-supply = <&pma8084_s6>;
->  	mx-supply = <&pma8084_s1>;
-
 
 Best regards,
 Krzysztof
