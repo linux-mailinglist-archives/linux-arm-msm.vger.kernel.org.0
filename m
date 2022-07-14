@@ -2,75 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A4FF9574B44
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Jul 2022 12:54:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 13A97574B94
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Jul 2022 13:12:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237851AbiGNKy2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Jul 2022 06:54:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35766 "EHLO
+        id S238309AbiGNLM2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Jul 2022 07:12:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51402 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237860AbiGNKy0 (ORCPT
+        with ESMTP id S234487AbiGNLM2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Jul 2022 06:54:26 -0400
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B271558F2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Jul 2022 03:54:25 -0700 (PDT)
-Received: by mail-lj1-x234.google.com with SMTP id w17so1706299ljh.6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Jul 2022 03:54:24 -0700 (PDT)
+        Thu, 14 Jul 2022 07:12:28 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 808264BD00
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Jul 2022 04:12:25 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id n18so2250051lfq.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Jul 2022 04:12:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=CPKYqpuFvHRszzFqa95UUli/KqXiV5SOOqK4tNwAYvA=;
-        b=OId8LCKXz+O5hCqtF5v+RRRr962G3A6iut6QY+JYHVXnSYAHS3skUAwLv446k/B9SK
-         odLtrv9BI3HZ7xgQ0EJedfE39V+7m/pQDjkXZKkhK7BBaudswj7MC2ABuEvHkHp5WMhB
-         s6pxQWBEDXniDqvErev0SQZ1ey+EQj/KxY6SNZRZAFkNvHwOJneWEJFX7mmkZNtWeuM0
-         wG8bgh7Boe1C287SdA9SwC1lKp0KEbvevzPm44V/2NZCidAVBO4TAM7b+Lmn8NHSYqNA
-         G972I0QzGfTcJ6IKjZO5mciDd44zcJp2YyTqxVWKmhA+kjvJ0GiLxepx/7z+SQ7tGyOT
-         j/tg==
+        bh=fvqr8DzCB5Ms/ndKd51yog97G935KCQIcJUMeAgMVno=;
+        b=jH3QiWlHtlfoa285UHBE/VcWeZvy+mWv8ej2r09+geEqhtysnIcqJrPxFqiPyj7+DW
+         vmc8luVf2oe5ikO9Gmt7Wt2fXfEHhb4ZaEpnDXvSxzIF0iHpFVdwK8NtKk1JQdVFwVT5
+         ALl/1n6s/i+qewLXz99/tweY9Jyt3H4ls1fGcieaPiLer3hhqkInYN//KZE71wL+fRUy
+         iSfKCQWhzC8zEitfq7SXfguxh8eh4fUHjIz4XC8uHs369oxkfLstSKAtqVMqoJE7pNbF
+         MyTK+43wR1oFaz2kChl4uHiubD3ozhysHVhUZJTsiEnxBf3vs0nl0Pl/U9loIanBW7XY
+         qTBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=CPKYqpuFvHRszzFqa95UUli/KqXiV5SOOqK4tNwAYvA=;
-        b=MrPRtOrNtRDXaTdcY4bm7wVAUgTgruJW9eRTWYXGhvXVW07ubw9WS1sHVsELim3Bwt
-         Z1ZAEjkFDHOGprgEprq2raHmYI5e69GaNXlpF8z+kQn+fAQXBaRKcF5ogKLDsD8ZOOyo
-         WcCxWIwLOuqHsWV0DAoCO9HUQsTox1VyKzyBQu/H/ZOs812BjtjboaWWOkYnvwGKW5es
-         zfZswtZO5/l5mMJiftIGlXBD1E/wSNOC4Wp8o2Xk7fVXIAGvaKN8PB8zrsNwYQqrB4mv
-         J3ubpYYurYJJOQ2IX+Bdrt6OWoMFZguxQz/l1G0gknB4cNiMoUoVQ8jCZUuO4ZXJJL60
-         vHmw==
-X-Gm-Message-State: AJIora+uiSldWs2Eu2brNuhoPTMp6HrNdpdvCR3CfvoLIPE+9eMSOvpM
-        dJMRxJJ5f/p5KQgBE+75+hfwlG3qSVz8vQ==
-X-Google-Smtp-Source: AGRyM1vAaFTljkVenFoiEylvoyDOn1bVo6ye+4NYa5NDhv+80tJTuhGHBi1jYJLx8gwDwVMrGyNRIw==
-X-Received: by 2002:a2e:a58e:0:b0:25d:7113:7f30 with SMTP id m14-20020a2ea58e000000b0025d71137f30mr4220600ljp.74.1657796058965;
-        Thu, 14 Jul 2022 03:54:18 -0700 (PDT)
+        bh=fvqr8DzCB5Ms/ndKd51yog97G935KCQIcJUMeAgMVno=;
+        b=kMjhPyg1zji4qE9br3CCHTd20JBQ1/GNLoXbuiYPoahc/V7GEFhXbU82dpIzvIqcY/
+         zG6RfgxkcKFne/bCbgGAnYk+YVHB8rrRLlpqRztuZUm4Sq7UvdljJGMfy6R+27SsxJ7F
+         kwm2ov7CjaEVF0wxSVRo1NKy/4DeS00bXYVSfhYG4WMeAiTJ8WJLa5iReMC3vW4LzeOf
+         lO9+Hjz1JPeTSP0IqWqMDJo7GR8Wny9+GIeuLCXe8Aw8W1ZqVr+DNRcigMwMUtS9BqXi
+         tJmMzC+MAjkZQsxdZAqVKYAp2pE0ZW/zCja4pJHc/8KShgnEKG4/9Myv7R9ChJFNs3p+
+         694w==
+X-Gm-Message-State: AJIora9L8Q/DvRpQMgTzbTj7jqm3tFxvYiuVBtcDy0t2zY7ZE3IUH7Qs
+        AvN1BQdq63T5lNtEBsmE4PgSDg==
+X-Google-Smtp-Source: AGRyM1uCyLRMhFXry/qiHNx5qI9aOJ2I8WKRtkBiIN8tzefGYlhoUNhVFIVYj/Kq0zEZDXj+B2Eawg==
+X-Received: by 2002:a05:6512:3342:b0:489:e367:ac with SMTP id y2-20020a056512334200b00489e36700acmr5231044lfd.191.1657797143883;
+        Thu, 14 Jul 2022 04:12:23 -0700 (PDT)
 Received: from [10.0.0.8] (fwa5da9-171.bb.online.no. [88.93.169.171])
-        by smtp.gmail.com with ESMTPSA id q2-20020a056512210200b0047f6c7542f6sm294138lfr.279.2022.07.14.03.54.16
+        by smtp.gmail.com with ESMTPSA id f8-20020a05651232c800b004894b6df9e2sm302327lfg.114.2022.07.14.04.12.21
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 14 Jul 2022 03:54:17 -0700 (PDT)
-Message-ID: <7ff46f76-e465-27c6-29b2-1e8dcdf7545f@linaro.org>
-Date:   Thu, 14 Jul 2022 12:54:14 +0200
+        Thu, 14 Jul 2022 04:12:23 -0700 (PDT)
+Message-ID: <63c2f4a0-e2f7-cf86-50de-dbbac074c26e@linaro.org>
+Date:   Thu, 14 Jul 2022 13:12:20 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.11.0
-Subject: Re: [PATCH 7/7] arm64: dts: qcom: reorder USB interrupts
+Subject: Re: [PATCH 1/4] dt-bindings: arm: qcom: Document Sony Xperia 1 IV
+ (PDX223)
 Content-Language: en-US
-To:     Johan Hovold <johan+linaro@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+To:     Konrad Dybcio <konrad.dybcio@somainline.org>,
+        ~postmarketos/upstreaming@lists.sr.ht
+Cc:     martin.botka@somainline.org,
+        angelogioacchino.delregno@somainline.org,
+        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20220713131340.29401-1-johan+linaro@kernel.org>
- <20220713131340.29401-8-johan+linaro@kernel.org>
+        Stephen Boyd <sboyd@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20220713201047.1449786-1-konrad.dybcio@somainline.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220713131340.29401-8-johan+linaro@kernel.org>
+In-Reply-To: <20220713201047.1449786-1-konrad.dybcio@somainline.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -83,14 +84,10 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 13/07/2022 15:13, Johan Hovold wrote:
-> Three SoCs did not follow the interrupt order specified by the USB
-> controller binding.
+On 13/07/2022 22:10, Konrad Dybcio wrote:
+> Document the compatible for the PDX223 device.
 > 
-> While keeping the non-SuperSpeed interrupts together seems natural,
-> reorder the interrupts to match the binding.
-> 
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 
 
 Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
