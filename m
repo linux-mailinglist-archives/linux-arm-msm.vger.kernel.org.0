@@ -2,69 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3D93C575249
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Jul 2022 17:57:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8466357538D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Jul 2022 18:57:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240086AbiGNP46 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Jul 2022 11:56:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58052 "EHLO
+        id S232348AbiGNQ5T (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Jul 2022 12:57:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58264 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237959AbiGNP46 (ORCPT
+        with ESMTP id S240043AbiGNQ5F (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Jul 2022 11:56:58 -0400
-Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE9CF599E4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Jul 2022 08:56:56 -0700 (PDT)
-Received: by mail-pf1-x433.google.com with SMTP id 70so2254356pfx.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Jul 2022 08:56:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=lLviYBi0EEVTEK9OZBXA1Mtdyl9BBuGrQsiJWIffSLo=;
-        b=L3oAEpzX0IX2pH4VwwwjyTXoosibanseQN4CDqsjA6Bu4+C/xlawuV4emkuBaqsH0n
-         n6BkBG4l0rDXU3BA2GEmNtU4B0c5mLs9hBJ1VZVjnydtMVITrjAUI2SH8RqtCzt4NnZd
-         F9wGpE2vTbfRscRHmyyRN4/BoDOBIhu2kr5MA=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=lLviYBi0EEVTEK9OZBXA1Mtdyl9BBuGrQsiJWIffSLo=;
-        b=Lf1D2ChYXZGcH5Oaiz5QzQx3uxVQ3T2HHk75nOIC8a/NO8GGWkHTQ9SifWCMlsQg5v
-         1YQrV12npaqKqdW+HWSghn0zsml+xBfCyqgKc6gc42uYzPyWHvTUBeNjirorkqSqpbAx
-         9C95WCE9FozZ1UnXGiLo5bsdTlfXMfAVTdL0MNU3EberxH9JUwNfPLvXgns1gFP35f6O
-         SD1YFZg6yl6r3Eaq7CtxZG6l3UIvcs3iEek5mr2ccG4GHpBCY+ALPY/UiwKjLqeasdzg
-         hljtjXcWXDgE48VPUrNIcfs9Hk7fS8QX6gQTKuk4kenXLu73DY/A9l+pxbDQETpJMk7e
-         jmRg==
-X-Gm-Message-State: AJIora+HXxNKEwl1MAVbiktgceBVwnqjzoFit/xz0GprkGXNEogfMvTB
-        WFwHnEIsKpm54fXhTbr2jlp8Y8rUH75RDQ==
-X-Google-Smtp-Source: AGRyM1sLnOFPl4fG2U3W3rTEG+gJwQIwhQlBSRnWe/bWEdGj5rCxCF00oDCEdis+edha90DBwp7vMw==
-X-Received: by 2002:a05:6a00:1812:b0:52a:c171:7cc5 with SMTP id y18-20020a056a00181200b0052ac1717cc5mr9018198pfa.81.1657814216173;
-        Thu, 14 Jul 2022 08:56:56 -0700 (PDT)
-Received: from localhost ([2620:15c:11a:202:f9cb:38e0:c8f1:abe1])
-        by smtp.gmail.com with UTF8SMTPSA id b3-20020a170902d50300b0016bedcced2fsm1719648plg.35.2022.07.14.08.56.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 14 Jul 2022 08:56:55 -0700 (PDT)
-Date:   Thu, 14 Jul 2022 08:56:54 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Krishna Kurapati <quic_kriskura@quicinc.com>
-Cc:     Andy Gross <agross@kernel.org>,
+        Thu, 14 Jul 2022 12:57:05 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E95254CBD;
+        Thu, 14 Jul 2022 09:56:53 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id C3054B82750;
+        Thu, 14 Jul 2022 16:56:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09324C34115;
+        Thu, 14 Jul 2022 16:56:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1657817810;
+        bh=BK72IdLo+uV0vANGvG41enZ8wflciKo/ZGWbE5eG9xQ=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:From;
+        b=A1ar2hCOOyNRX3gTgads1I75OA03ZMPHHe8xjxrvqomDv7jAwHKKCWTck1gqoQhpz
+         KFrnO7aYLk8d9VnY0Gb0PgQ7QWyyKEQm4X5WJzBRWJ2cRXUY6nzhaKKD4P4jKcyINa
+         qhUlP8ijgLgztYK7j2zCvZ9+rL4wqx3kxYr37W96WJ+nqJGPUDubUvYBfDW7UKjq/z
+         7NqLtET1TEgfk0pNMCif/ci1YmLy81Isw933mQHd4SOQDAYdE/1lUddsPTkSmjkK7U
+         3jOL8UJXTI6L2OwJmC17WgqwoB6r9n+nBiGjI2lF+TAh/vTBngaJVk6INsELAZ3SpM
+         4Embo6Oqef50w==
+Date:   Thu, 14 Jul 2022 11:56:48 -0500
+From:   Bjorn Helgaas <helgaas@kernel.org>
+To:     Stanimir Varbanov <svarbanov@mm-sol.com>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] usb: dwc3: qcom: Defer dwc3-qcom probe if dwc3 isn't
- probed properly
-Message-ID: <YtA8xloSXtZfBr51@google.com>
-References: <1657810516-31143-1-git-send-email-quic_kriskura@quicinc.com>
+        Stephen Boyd <swboyd@chromium.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-pci@vger.kernel.org, Johan Hovold <johan@kernel.org>
+Subject: Re: [PATCH v11 5/5] PCI: qcom: Drop manual pipe_clk_src handling
+Message-ID: <20220714165648.GA1023269@bhelgaas>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1657810516-31143-1-git-send-email-quic_kriskura@quicinc.com>
-X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+In-Reply-To: <f8763d03-c491-70f3-bb47-b3dbf68b4ad2@mm-sol.com>
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -73,56 +63,28 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jul 14, 2022 at 08:25:16PM +0530, Krishna Kurapati wrote:
-> On SC7180 devices, it is observed that dwc3 probing is deferred
-> because device_links_check_suppliers() finds that '88e3000.phy'
-> isn't ready yet.
+On Thu, Jul 14, 2022 at 04:08:06AM +0300, Stanimir Varbanov wrote:
+> Hi Dmitry,
 > 
-> As a part of its probe call, dwc3-qcom driver checks if dwc3 core
-> is wakeup capable or not. If the dwc3 core is wakeup capable, driver
-> configures dwc-qcom's power domain to be always ON. Also it configures
-> dp/dm interrupts accordingly to support wakeup from system suspend.
+> On 6/8/22 13:52, Dmitry Baryshkov wrote:
+> > Manual reparenting of pipe_clk_src is being replaced with the parking of
+> > the clock with clk_disable()/clk_enable() in the phy driver. Drop
+> > redundant code switching of the pipe clock between the PHY clock source
+> > and the safe bi_tcxo.
+> > 
+> > Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+> > Tested-by: Johan Hovold <johan+linaro@kernel.org>
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> >  drivers/pci/controller/dwc/pcie-qcom.c | 39 +-------------------------
+> >  1 file changed, 1 insertion(+), 38 deletions(-)
 > 
-> More info regarding the same can be found at:
-> commit d9be8d5c5b03 ("usb: dwc3: qcom: Keep power domain on to retain controller status"
-> commit 6895ea55c385 ("usb: dwc3: qcom: Configure wakeup interrupts during suspend")
+> Cool!
 > 
-> In the event, dwc3 probe gets deferred and is processed after dwc3-qcom
-> probe, driver ends up reading the wakeup capability of dwc3 core as false
-> leading to instability in suspend/resume path.
-> 
-> To avoid this scenario, ensure dwc3_probe is successful by checking
-> if appropriate driver is assigned to it or not after the of_platform_populate
-> call. If it isn't then defer dwc3-qcom probe as well.
-> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+> Acked-by: Stanimir Varbanov <svarbanov@mm-sol.com>
 
-Fixes: 649f5c842ba3 ("usb: dwc3: core: Host wake up support from system suspend")
+Thanks, Stan.  Somehow I had applied 4/5 but not 5/5.  I added 5/5 and
+your acks to both on my pci/ctrl/qcom branch for v5.20.
 
-> ---
->  drivers/usb/dwc3/dwc3-qcom.c | 3 +++
->  1 file changed, 3 insertions(+)
-> 
-> diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-> index 7703655..096d1414 100644
-> --- a/drivers/usb/dwc3/dwc3-qcom.c
-> +++ b/drivers/usb/dwc3/dwc3-qcom.c
-> @@ -722,6 +722,9 @@ static int dwc3_qcom_of_register_core(struct platform_device *pdev)
->  		dev_err(dev, "failed to get dwc3 platform device\n");
->  	}
->  
-> +	if (!qcom->dwc3->dev.driver)
-> +		return -EPROBE_DEFER;
-
-change this to:
-
-		ret = -EPROBE_DEFER;
-
-to put 'dwc3_np'
-
-> +
->  node_put:
->  	of_node_put(dwc3_np);
->  
-> -- 
-> 2.7.4
-> 
+Bjorn
