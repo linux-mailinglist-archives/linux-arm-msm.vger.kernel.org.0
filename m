@@ -2,100 +2,292 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D5BA5574EB7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Jul 2022 15:10:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2C484574F54
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Jul 2022 15:38:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238858AbiGNNK3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Jul 2022 09:10:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37526 "EHLO
+        id S239412AbiGNNiP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Jul 2022 09:38:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34928 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231486AbiGNNK1 (ORCPT
+        with ESMTP id S239430AbiGNNiL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Jul 2022 09:10:27 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8008A3C8C2;
-        Thu, 14 Jul 2022 06:10:26 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        Thu, 14 Jul 2022 09:38:11 -0400
+Received: from relay03.th.seeweb.it (relay03.th.seeweb.it [5.144.164.164])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30A3154CAE
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Jul 2022 06:38:10 -0700 (PDT)
+Received: from [192.168.1.101] (abxj14.neoplus.adsl.tpnet.pl [83.9.3.14])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 1B61E62032;
-        Thu, 14 Jul 2022 13:10:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76882C34114;
-        Thu, 14 Jul 2022 13:10:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1657804225;
-        bh=zLp/AR4ZE0g1bNDhIi5HWc7Co5fEvx2EAIPW5r/y1/Y=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=bYaSDUY7Q+EFv6QVqj6S7nMY1JZGln25rYUefKCE2wHaj2APKXdckenaSG19kvi1b
-         h1SB13pSbU1RtrIA2Cn3h7dkBB9dHhZnN+T5yzwJ8ViRUTibsJ6S68Wy49BduMOnkl
-         B2LadR3JRmNFQFkKVlBSn6nYTpfegRGCUhu4u+tawUiDd/AOz2CxsFD2D7SHW7HY1L
-         mYOLyqcZF/fD6LYtMd9Gk0vJayAxJN9vuJg82YywMdffflEBHBSSQbJ/OyHJP32zO4
-         Ays0rindN21Qti++XyY3Ayhl8KAmoEm8VPJWRkkzEynATagP7IDHyXFcoWMOhTubzA
-         pQjbMDE4BKhHw==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1oBybt-0007Zh-T9; Thu, 14 Jul 2022 15:10:30 +0200
-Date:   Thu, 14 Jul 2022 15:10:29 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Stanimir Varbanov <svarbanov@mm-sol.com>
-Cc:     Johan Hovold <johan+linaro@kernel.org>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id E05CD1F68B;
+        Thu, 14 Jul 2022 15:38:06 +0200 (CEST)
+Message-ID: <8d738cad-e6c8-90e0-ffa2-ecf3fbe8dd59@somainline.org>
+Date:   Thu, 14 Jul 2022 15:38:06 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH v2 5/5] arm64: dts: qcom: Add device tree for Sony Xperia
+ 1 IV
+Content-Language: en-US
+To:     AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        ~postmarketos/upstreaming@lists.sr.ht
+Cc:     martin.botka@somainline.org,
+        angelogioacchino.delregno@somainline.org,
+        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] PCI: qcom: Add support for modular builds
-Message-ID: <YtAVxZJZmsxjytNp@hovoldconsulting.com>
-References: <20220519094646.23009-1-johan+linaro@kernel.org>
- <cc7c90aa-6705-7493-2f58-5112f7d663a3@mm-sol.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cc7c90aa-6705-7493-2f58-5112f7d663a3@mm-sol.com>
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Kees Cook <keescook@chromium.org>,
+        Anton Vorontsov <anton@enomsg.org>,
+        Colin Cross <ccross@android.com>,
+        Tony Luck <tony.luck@intel.com>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20220714123406.1919836-1-konrad.dybcio@somainline.org>
+ <20220714123406.1919836-5-konrad.dybcio@somainline.org>
+ <ef935a6f-77a2-5c9a-2cbc-0b0192aee56b@collabora.com>
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+In-Reply-To: <ef935a6f-77a2-5c9a-2cbc-0b0192aee56b@collabora.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jul 14, 2022 at 03:19:49PM +0300, Stanimir Varbanov wrote:
-> Hi Johan,
+
+
+On 14.07.2022 14:51, AngeloGioacchino Del Regno wrote:
+> Il 14/07/22 14:34, Konrad Dybcio ha scritto:
+>> Add support for Sony Xperia 1 IV, a.k.a PDX223. This device is a part
+>> of the SoMC SM8450 Nagara platform and currently it is the only
+>> device based on that board, so no -common DTSI is created until (if?)
+>> other Nagara devices appear.
+>>
+>> This commit brings support for:
+>> * SD Card
+>> * USB (*including SuperSpeed*)
+>> * ADSP/CDSP/SLPI (modem remains untested for now)
+>> * Most regulators (some GPIO-enabled ones require PMIC GPIOs but
+>> trying to access any SPMI device crashes the device..)
+>> * Part of I2C-connected peripherals (notably no touch due to a
+>> driver bug)
+>> * PCIe0 (PCIe1 is unused)
+>>
+>> Do note display via simplefb is not supported, as the display is blanked
+>> upon exiting XBL.
+>>
+>> To create a working boot image, you need to run:
+>> cat arch/arm64/boot/Image.gz arch/arm64/boot/dts/qcom/sm8450-sony-xperia-\
+>> nagara-pdx223.dtb > .Image.gz-dtb
+>>
+>> mkbootimg \
+>> --kernel .Image.gz-dtb \
+>> --ramdisk some_initrd.img \
+>> --pagesize 4096 \
+>> --base 0x0 \
+>> --kernel_offset 0x8000 \
+>> --ramdisk_offset 0x1000000 \
+>> --tags_offset 0x100 \
+>> --cmdline "SOME_CMDLINE" \
+>> --dtb_offset 0x1f00000 \
+>> --header_version 1 \
+>> --os_version 12 \
+>> --os_patch_level 2022-06 \ # or newer
+>> -o boot.img-sony-xperia-pdx223
+>>
+>> Then, you need to flash it on the device and get rid of all the
+>> vendor_boot/dtbo mess:
+>>
+>> // You have to either pull vbmeta{"","_system"} from
+>> // /dev/block/bootdevice/by-name/ or build one as a part of AOSP build process
+>> fastboot --disable-verity --disable-verification flash vbmeta vbmeta.img
+>> fastboot --disable-verity --disable-verification flash vbmeta_system \
+>> vbmeta_system.img
+>>
+>> fastboot flash boot boot.img-sony-xperia-pdx223
+>> fastboot erase vendor_boot
+>> fastboot erase recovery
+>> fastboot flash dtbo emptydtbo.img
+>> fastboot reboot
+>>
+>> Where emptydtbo.img is a tiny file that consists of 2 bytes (all zeroes), doing
+>> a "fastboot erase" won't cut it, the bootloader will go crazy and things will
+>> fall apart when it tries to overlay random bytes from an empty partition onto a
+>> perfectly good appended DTB.
+>>
+>> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+>> ---
+>> Changes since v1:
+>> - remove a stray blank line
+>> - use generic node names for CS35L41
+>> - fix up indentation for sdhci-caps-mask
+>>
+>>   arch/arm64/boot/dts/qcom/Makefile             |   1 +
+>>   .../qcom/sm8450-sony-xperia-nagara-pdx223.dts | 634 ++++++++++++++++++
+>>   2 files changed, 635 insertions(+)
+>>   create mode 100644 arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara-pdx223.dts
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+>> index 01773f3ce57f..157ef6958e1f 100644
+>> --- a/arch/arm64/boot/dts/qcom/Makefile
+>> +++ b/arch/arm64/boot/dts/qcom/Makefile
+>> @@ -126,3 +126,4 @@ dtb-$(CONFIG_ARCH_QCOM)    += sm8350-sony-xperia-sagami-pdx214.dtb
+>>   dtb-$(CONFIG_ARCH_QCOM)    += sm8350-sony-xperia-sagami-pdx215.dtb
+>>   dtb-$(CONFIG_ARCH_QCOM)    += sm8450-hdk.dtb
+>>   dtb-$(CONFIG_ARCH_QCOM)    += sm8450-qrd.dtb
+>> +dtb-$(CONFIG_ARCH_QCOM)    += sm8450-sony-xperia-nagara-pdx223.dtb
+>> diff --git a/arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara-pdx223.dts b/arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara-pdx223.dts
+>> new file mode 100644
+>> index 000000000000..7fe582b92a61
+>> --- /dev/null
+>> +++ b/arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara-pdx223.dts
+>> @@ -0,0 +1,634 @@
+>> +// SPDX-License-Identifier: BSD-3-Clause
+>> +/*
+>> + * Copyright (c) 2022, Konrad Dybcio <konrad.dybcio@somainline.org>
+>> + */
+>> +
+>> +/dts-v1/;
+>> +
+>> +#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+>> +#include "sm8450.dtsi"
+>> +
+>> +/delete-node/ &adsp_mem;
+>> +/delete-node/ &rmtfs_mem;
+>> +/delete-node/ &video_mem;
+>> +
+>> +/ {
+>> +    model = "Sony Xperia 1 IV";
+>> +    compatible = "sony,pdx223", "qcom,sm8450";
+>> +    chassis-type = "handset";
+>> +
 > 
-> Please take a look why we made it built-in first [1].
+> ..snip..
 > 
-> If arguments there are still valid I don't see why to make it a module
-> again.
-
-Yeah, I've seen that patch, and many just like that one by the same
-author, and I don't think the arguments spelled out there are valid.
-
-Sure, the Kconfig symbol for this driver was bool at the time so the
-remove() code could not have received much testing, but the patch
-ignores the fact that preventing drivers to be built as modules is
-detrimental to multi-platform builds (e.g. Android GKI).
-
-As I mention in passing below, being able to build a driver as a module
-is also really useful during development. Not least to be able to test
-power-sequencing and making sure that you're not unknowingly relying on
-boot firmware to have set things up for you.
-
-> [1] https://lkml.org/lkml/2016/8/24/694
+>> +
+>> +&gpi_dma0 {
+>> +    status = "okay";
+>> +};
+>> +
+>> +&gpi_dma1 {
+>> +    status = "okay";
+>> +};
+>> +
+>> +&gpi_dma2 {
+>> +    status = "okay";
+>> +};
+>> +
+>> +/* I2C4 is used, it hosts a Samsung touchscreen, but GPI DMA is broken.. */
 > 
-> On 5/19/22 12:46, Johan Hovold wrote:
-> > Allow the Qualcomm PCIe controller driver to be built as a module, which
-> > is useful for multi-platform kernels as well as during development.
-> > 
-> > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> > ---
-> >  drivers/pci/controller/dwc/Kconfig     |  2 +-
-> >  drivers/pci/controller/dwc/pcie-qcom.c | 36 +++++++++++++++++++++++---
-> >  2 files changed, 34 insertions(+), 4 deletions(-)
+> Why aren't you enabling i2c4 like you did with i2c 5/9/13?
+> 
+> If enabling that produces any side effect you should advertise that.
+The comment explains it, no point in enabling it if not even the dma engine
+behind it is functioning properly and you can't interact with the bus, waste
+of power and cpu cycles.
 
-Johan
+
+> 
+>> +
+>> +&i2c5 {
+>> +    clock-frequency = <400000>;
+>> +    status = "okay";
+>> +
+>> +    /* Dialog SLG51000 CMIC @ 75 */
+>> +};
+>> +
+>> +&i2c9 {
+>> +    clock-frequency = <400000>;
+>> +    status = "okay";
+>> +
+>> +    /* NXP SN1X0 NFC @ 28 */
+>> +};
+>> +
+>> +&i2c13 {
+>> +    clock-frequency = <400000>;
+>> +    status = "okay";
+>> +
+>> +    /* Richwave RTC6226 FM Radio Receiver @ 64 */
+>> +};
+>> +
+>> +&i2c14 {
+>> +    clock-frequency = <1000000>;
+>> +    status = "okay";
+>> +
+>> +    cs35l41_l: speaker-amp@40 {
+> 
+> What about an even more generic audio-amplifier@40 ?
+That's really an arbitrary barrier to decide when it's "generic enough", I'll
+leave that up to the maintainers to decide.
+
+
+> 
+>> +        compatible = "cirrus,cs35l41";
+>> +        reg = <0x40>;
+>> +        interrupt-parent = <&tlmm>;
+>> +        interrupts = <182 IRQ_TYPE_LEVEL_LOW>;
+>> +        reset-gpios = <&tlmm 183 GPIO_ACTIVE_HIGH>;
+>> +        cirrus,boost-peak-milliamp = <4000>;
+>> +        cirrus,boost-ind-nanohenry = <1000>;
+>> +        cirrus,boost-cap-microfarad = <15>;
+>> +        cirrus,gpio2-src-select = <2>;
+>> +        cirrus,gpio2-output-enable;
+>> +        cirrus,asp-sdout-hiz = <3>;
+>> +        #sound-dai-cells = <1>;
+>> +    };
+>> +
+>> +    cs35l41_r: speaker-amp@41 {
+>> +        compatible = "cirrus,cs35l41";
+>> +        reg = <0x41>;
+>> +        interrupt-parent = <&tlmm>;
+>> +        interrupts = <182 IRQ_TYPE_LEVEL_LOW>;
+>> +        reset-gpios = <&tlmm 183 GPIO_ACTIVE_HIGH>;
+>> +        cirrus,boost-peak-milliamp = <4000>;
+>> +        cirrus,boost-ind-nanohenry = <1000>;
+>> +        cirrus,boost-cap-microfarad = <15>;
+>> +        cirrus,gpio2-src-select = <2>;
+>> +        cirrus,gpio2-output-enable;
+>> +        cirrus,asp-sdout-hiz = <3>;
+>> +        #sound-dai-cells = <1>;
+>> +    };
+>> +};
+>> +
+> 
+> ..snip..
+> 
+>> +
+>> +&sdhc_2 {
+>> +    cd-gpios = <&tlmm 92 GPIO_ACTIVE_HIGH>;
+>> +    pinctrl-names = "default", "sleep";
+>> +    pinctrl-0 = <&sdc2_default_state &sdc2_card_det_n>;
+>> +    pinctrl-1 = <&sdc2_sleep_state &sdc2_card_det_n>;
+>> +    vmmc-supply = <&pm8350c_l9>;
+>> +    vqmmc-supply = <&pm8350c_l6>;
+> 
+>> +    /* Forbid SDR104/SDR50 - broken hw! */
+>> +    sdhci-caps-mask = <0x3 0x0>;
+> 
+> Is this a device-specific quirk? Is Sony hardware broken, or is it a SoC
+> (or SoC version-specific) issue?
+> 
+> If this is a SoC-specific issue, that should be rectified in sdhci-msm instead.
+If it was a SoC-specific issue, it would land in the SoC-specific DTSI. This is the
+PDX223-specific DTSI, so I think it's pretty clear..
+
+
+Konrad
+> 
+>> +    no-sdio;
+>> +    no-mmc;
+>> +    status = "okay";
+>> +};
+>> +
+> 
+> Regards,
+> Angelo
