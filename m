@@ -2,121 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 02698576913
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Jul 2022 23:40:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 60C635769F9
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Jul 2022 00:37:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231761AbiGOVkU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Jul 2022 17:40:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44838 "EHLO
+        id S230482AbiGOWhf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Jul 2022 18:37:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40702 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231347AbiGOVkT (ORCPT
+        with ESMTP id S230341AbiGOWhe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Jul 2022 17:40:19 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CDFD87215
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Jul 2022 14:40:17 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id h17so8486477wrx.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Jul 2022 14:40:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=J6BSJtpNWZ2Z1cUANVaPa8k/01zDYr+V4xutkYf54NQ=;
-        b=EiZ/Jmkz5DdkNRwJGtK9gVoZ3BcJ8ejMk3yeeSneUGJiCM2csICY8AdW61vGapRVcY
-         UVEs2lvDUtUmSWhTy5Riy+DiODr1rNBvvUK4wbrRLT25XjOXefr0/051txgAy4PBorpi
-         GKNcSgswr6pLYwYHFSVzvB34JMrg+jT1ikpzno4L0ZOP0gQXJvWnMhCAGwkPbk+zk4T6
-         NHUHFy/WsEuLp1Gd3GTwIoolQEUdfvT1tqqUGbfp80W8fFmVfSTmouc1u2k89r7uyeR9
-         nYK4zK2wqlmEsLRHEwqRtcub6mC9oo2ROYXHqnHla+d+LumXFIkgFPThdJfozfzXSQFb
-         VGhA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=J6BSJtpNWZ2Z1cUANVaPa8k/01zDYr+V4xutkYf54NQ=;
-        b=yBIepqRSDV2gXuV3IxIG1LNTEqOaWIABJFO1OmkP8eqhOKfDnmQHATLy6xM9rGrZtX
-         mtoEFLYFSCyzrIVQGyk2inok5/4ZAwJSDA0PLQj5uKnvTEbVUZAJZcPruscekIOnXeHP
-         +whhKR15BJIjV9lemTNVsDrLRlILy+miaSNX693wGBdtU87tFSxO79uEuFFubGMynO/e
-         MpDTr8Nuie5/fEZKHGYbpRCYzIP5guhCz5wfKWs5kWC/9bPovP/pP0wmpbomQ6ZVtr3l
-         +kngAaE3PtAbXkkub9oi5y+fJWgeEAiMweGWPVaSneurifMHxKUp18L8OSMPj0Qvt0IO
-         HQnw==
-X-Gm-Message-State: AJIora/JQruZMEjSCXDWQ4BBIaE/nt58Qs25eis3sCIh2xdH1yssP+Ep
-        s40mxj/N1lhuuY8BE5kmc0Bw9IU7rOoJVA==
-X-Google-Smtp-Source: AGRyM1vl55wMLC6v4FE7361A1EgLL5IjuxGDiU+pOGyn8ZoWrdHGmzM+ZMQkW7lv66vojAGIB7e/MQ==
-X-Received: by 2002:a5d:4e04:0:b0:21d:6ec3:38a2 with SMTP id p4-20020a5d4e04000000b0021d6ec338a2mr14182586wrt.362.1657921215858;
-        Fri, 15 Jul 2022 14:40:15 -0700 (PDT)
-Received: from ?IPV6:2a05:6e02:1041:c10:a223:f4b3:40c9:43fa? ([2a05:6e02:1041:c10:a223:f4b3:40c9:43fa])
-        by smtp.googlemail.com with ESMTPSA id j27-20020a05600c1c1b00b0039c4ba160absm17678280wms.2.2022.07.15.14.40.12
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 15 Jul 2022 14:40:15 -0700 (PDT)
-Message-ID: <563e92de-68aa-7382-2564-c1ccc270c571@linaro.org>
-Date:   Fri, 15 Jul 2022 23:40:11 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Subject: Re: [PATCH v3 06/15] thermal: qcom: qcom-spmi-adc-tm5: convert to IIO
- fwnode API
-Content-Language: en-US
-To:     =?UTF-8?Q?Nuno_S=c3=a1?= <nuno.sa@analog.com>,
-        openbmc@lists.ozlabs.org, linux-imx@nxp.com,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-iio@vger.kernel.org, linux-mips@vger.kernel.org,
-        linux-renesas-soc@vger.kernel.org,
-        linux-mediatek@lists.infradead.org,
-        chrome-platform@lists.linux.dev,
-        linux-arm-kernel@lists.infradead.org,
-        Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-        linux-arm-msm@vger.kernel.org
-Cc:     Gwendal Grignou <gwendal@chromium.org>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Saravanan Sekar <sravanhome@gmail.com>,
-        Tomer Maimon <tmaimon77@gmail.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Lorenzo Bianconi <lorenzo@kernel.org>,
-        Fabio Estevam <festevam@gmail.com>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Olivier Moysan <olivier.moysan@foss.st.com>,
-        Tali Perry <tali.perry1@gmail.com>,
-        Thara Gopinath <thara.gopinath@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Benjamin Fair <benjaminfair@google.com>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Patrick Venture <venture@google.com>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
-        Benson Leung <bleung@chromium.org>,
-        Nancy Yuen <yuenn@google.com>,
-        Miquel Raynal <miquel.raynal@bootlin.com>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Christophe Branchereau <cbranchereau@gmail.com>,
-        Cai Huoqing <cai.huoqing@linux.dev>,
-        Avi Fishman <avifishman70@gmail.com>,
-        Eugen Hristev <eugen.hristev@microchip.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Andy Shevchenko <andy.shevchenko@gmail.com>,
-        Guenter Roeck <groeck@chromium.org>,
-        Paul Cercueil <paul@crapouillou.net>,
-        Claudiu Beznea <claudiu.beznea@microchip.com>,
+        Fri, 15 Jul 2022 18:37:34 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 658B06BC19;
+        Fri, 15 Jul 2022 15:37:31 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id DE43F619AC;
+        Fri, 15 Jul 2022 22:37:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BA07C3411E;
+        Fri, 15 Jul 2022 22:37:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1657924650;
+        bh=d/azbyEVdFZlo7JV/C9g5tOBZLmX1z3s/YUXa/PuKxg=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:From;
+        b=EYNFuHu/nuAFHUbcicDmnFwVtZjpid/FQXLaVvQol6ZUzJuSAY5uglpeAlu/YKr51
+         Mey5XkLZjK2v5/RwjIaMwVGrrGIEoLHchS6CUKJdMrqOVkklP/ItJierO7zjNpYQR0
+         r2M9y77+P1xEHmLeZMV2NugDzZBe1Xv4CO2QudaKafM26LfUML4QWhjvQo4kfcP3Yq
+         mX9vv854mV6rfNDii5Zwc9CzPtgO7hSn/gFpt7VVWA+szJDYvLJ40AH+X6skhsqoxV
+         7XL5eytton3eCo0og498WyCopjfJoLlanCd5xHrYx8mJHoh1ADVTO+LyjL2PrXOAVj
+         +9sXoPAkFFmhA==
+Date:   Fri, 15 Jul 2022 17:37:28 -0500
+From:   Bjorn Helgaas <helgaas@kernel.org>
+To:     Johan Hovold <johan+linaro@kernel.org>
+Cc:     Bjorn Helgaas <bhelgaas@google.com>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Andy Gross <agross@kernel.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Michael Hennerich <Michael.Hennerich@analog.com>,
-        Haibo Chen <haibo.chen@nxp.com>,
-        Jishnu Prakash <quic_jprakash@quicinc.com>
-References: <20220715122903.332535-1-nuno.sa@analog.com>
- <20220715122903.332535-7-nuno.sa@analog.com>
-From:   Daniel Lezcano <daniel.lezcano@linaro.org>
-In-Reply-To: <20220715122903.332535-7-nuno.sa@analog.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 0/8] PCI: qcom: Add support for SC8280XP and SA8540P
+Message-ID: <20220715223728.GA1205880@bhelgaas>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220714071348.6792-1-johan+linaro@kernel.org>
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -124,38 +63,65 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 15/07/2022 14:28, Nuno Sá wrote:
-> Make usage of the new firmware agnostic API
-> 'devm_of_iio_channel_get_by_name()' to get the IIO channel.
+On Thu, Jul 14, 2022 at 09:13:40AM +0200, Johan Hovold wrote:
+> This series adds support for the PCIe controllers found on SC8280XP and
+> SA8540P.
+
+These look fairly straightforward, and I don't mind doing minor tweaks
+and conflict resolution, but given that we've got four or five cooks
+in the qcom kitchen, I'm looking for an ack from Stan before spending
+too much time on this.
+
+> Included are also three patches that clean up the way the driver handles
+> different IP revisions (e.g. by modelling optional clocks as being truly
+> optional).
 > 
-> Signed-off-by: Nuno Sá <nuno.sa@analog.com>
-> Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
-
-Acked-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-
-> ---
->   drivers/thermal/qcom/qcom-spmi-adc-tm5.c | 3 ++-
->   1 file changed, 2 insertions(+), 1 deletion(-)
+> These patches depend on the recently merged (but currently held off?)
+> PIPE clock series:
 > 
-> diff --git a/drivers/thermal/qcom/qcom-spmi-adc-tm5.c b/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
-> index d9c9c975f931..0b8543c627f0 100644
-> --- a/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
-> +++ b/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
-> @@ -825,7 +825,8 @@ static int adc_tm5_get_dt_channel_data(struct adc_tm5_chip *adc_tm,
->   	}
->   	channel->adc_channel = args.args[0];
->   
-> -	channel->iio = devm_of_iio_channel_get_by_name(adc_tm->dev, node, NULL);
-> +	channel->iio = devm_fwnode_iio_channel_get_by_name(adc_tm->dev,
-> +							   of_fwnode_handle(node), NULL);
->   	if (IS_ERR(channel->iio)) {
->   		ret = PTR_ERR(channel->iio);
->   		if (ret != -EPROBE_DEFER)
+> 	https://lore.kernel.org/all/20220608105238.2973600-1-dmitry.baryshkov@linaro.org/
 
+As far as I know it's on pci/ctrl/qcom [1], in -next, and ready to go.
+It's based on Bjorn A's immutable branch [2].
 
--- 
-<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
+> as well as the about-to-be-merged MSI series (v17):
+> 
+> 	https://lore.kernel.org/all/20220707134733.2436629-6-dmitry.baryshkov@linaro.org/
+> 
+> Note that the final patch in the PIPE clock series is currently missing
+> from the pci/ctrl/qcom-pending branch:
+> 
+> 	https://lore.kernel.org/all/20220608105238.2973600-6-dmitry.baryshkov@linaro.org/
 
-Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
-<http://twitter.com/#!/linaroorg> Twitter |
-<http://www.linaro.org/linaro-blog/> Blog
+I think I fixed that, let me know if not; see [1].
+
+[1] https://git.kernel.org/pub/scm/linux/kernel/git/helgaas/pci.git/log/?h=839fbdee4c08
+[2] https://lore.kernel.org/linux-pci/YroMyWNO8ZLk1bTe@builder.lan/
+
+> Changes in v2
+>  - drop the two DT schema fixes which have been applied by Bjorn H and
+>    squashed into the MSI v17 series by Dmitry, respectively
+>  - rebase on pci/ctrl/qcom-pending (2022-07-14)
+>  - fix compatible sort order (Krzysztof)
+>  - amend commit message for first patch to clarify motivation
+>    (Krzysztof)
+>  - add acks and reviewed-by tags from Dmitry, Krzysztof, Mani and Rob
+> 
+> 
+> Johan Hovold (8):
+>   dt-bindings: PCI: qcom: Enumerate platforms with single msi interrupt
+>   dt-bindings: PCI: qcom: Add SC8280XP to binding
+>   dt-bindings: PCI: qcom: Add SA8540P to binding
+>   PCI: qcom: Add support for SC8280XP
+>   PCI: qcom: Add support for SA8540P
+>   PCI: qcom: Make all optional clocks optional
+>   PCI: qcom: Clean up IP configurations
+>   PCI: qcom: Sort device-id table
+> 
+>  .../devicetree/bindings/pci/qcom,pcie.yaml    |  70 +++++++++-
+>  drivers/pci/controller/dwc/pcie-qcom.c        | 121 +++++++-----------
+>  2 files changed, 114 insertions(+), 77 deletions(-)
+> 
+> -- 
+> 2.35.1
+> 
