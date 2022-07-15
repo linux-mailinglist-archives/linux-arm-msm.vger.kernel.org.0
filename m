@@ -2,56 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 40C0157657F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Jul 2022 19:02:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0AE54576588
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Jul 2022 19:02:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234734AbiGOQ5T (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Jul 2022 12:57:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39826 "EHLO
+        id S234567AbiGOQ4J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Jul 2022 12:56:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39188 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234986AbiGOQ5S (ORCPT
+        with ESMTP id S234399AbiGOQ4I (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Jul 2022 12:57:18 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 324E07AB3F;
-        Fri, 15 Jul 2022 09:57:17 -0700 (PDT)
+        Fri, 15 Jul 2022 12:56:08 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CB9479EF7;
+        Fri, 15 Jul 2022 09:56:07 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id B6C8C6221F;
-        Fri, 15 Jul 2022 16:57:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1399BC34115;
-        Fri, 15 Jul 2022 16:57:16 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 0E392B82D61;
+        Fri, 15 Jul 2022 16:56:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BFD6C34115;
+        Fri, 15 Jul 2022 16:56:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1657904236;
-        bh=lTXY5Gcc+Y7ick0QSIPmtVgKN3YWDrJFLRIIWMaoFj0=;
-        h=From:To:Cc:Subject:Date:From;
-        b=kTp24Ltg2XWxJiXYdG9XYpFHTTqgCUqwgMMfL6BYpuQSq26ew5b8oZ2x/IghY71/b
-         XwcEJmNXHQETPLW3PQYySu5z+ozk8eQWtKRbGqT52xY24ZSnY6xxyR5f0MzmcfNW2R
-         HW6rt3Ox1sFJHsOw4suNBbGdmg+XJmG5EGzeLC14QmT252240mhJHjDJAhM/CWc7uq
-         Ay0CfdCLJkWPQQeCppM/UjXGhlq+Ac9IPq0clb8YDm2uLLhnfQTf+y/5vGLyRMFfVG
-         76LlP05DgmuaMwfkrgzY06xhdZIKDqNrgXpiBzVuo4CPa7pC/MD/kw9Zdf6cxgS5a0
-         st4AVTEwyHkmg==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan+linaro@kernel.org>)
-        id 1oCOcz-0007XA-KN; Fri, 15 Jul 2022 18:57:22 +0200
-From:   Johan Hovold <johan+linaro@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andrew Halaney <ahalaney@redhat.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH] arm64: dts: qcom: sc8280xp: fix usb_1 ssphy irq
-Date:   Fri, 15 Jul 2022 18:53:44 +0200
-Message-Id: <20220715165344.28822-1-johan+linaro@kernel.org>
-X-Mailer: git-send-email 2.35.1
+        s=k20201202; t=1657904164;
+        bh=nElAzVIAv0nLtGkLSpnk4sOMhdMwLfbRx9XjW5h8H4M=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:From;
+        b=raha1B32W4+ZrSGPi+rMQqE1vCSRzVr95GlL6ZOL7TWkdUwO6kNztk8j1xBSrYFxE
+         cgxYyveCQu3xsRiD8tVpMOUmfSd7srNQDXDSEkQLJwVCDZArTqjBT4vGKLo9yz/7PS
+         XFQJyG89a+DuNaA5QASqdmpGZSP2OcZsGtOMIlhKUTvMQH53nYHQ9SWjPoDOiYJing
+         Vd0X03m+WFJ4aTdlD/Z/aAzPvo0MoU9qwA9RjAXLJnJ5Oa06UBkmWxIWQGsuoYUBrM
+         9A1al3M41cZ1btJQr+GAAi7PRq7psCN1ZPCKom11veCBksJ1W0XJJpMjwVBXjL9GVs
+         8+tbTj6T3oT1Q==
+Date:   Fri, 15 Jul 2022 11:56:01 -0500
+From:   Bjorn Helgaas <helgaas@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] PCI: qcom: Add support for modular builds
+Message-ID: <20220715165601.GA1139849@bhelgaas>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <9ef036db-2ac8-2723-93de-ac841d94ba51@linaro.org>
 X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -61,42 +60,33 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Fix the usb_1 SS PHY interrupt, which was mistakingly replaced with one
-of the usb_2 PHY interrupts.
+On Thu, Jul 14, 2022 at 04:05:41PM +0300, Dmitry Baryshkov wrote:
+> On 14/07/2022 15:19, Stanimir Varbanov wrote:
+> > Please take a look why we made it built-in first [1].
+> > 
+> > If arguments there are still valid I don't see why to make it a module
+> > again.
+> > 
+> > [1] https://lkml.org/lkml/2016/8/24/694
+> 
+> It looks like there is a move to make all non-essential drivers buildable as
+> modules. For example, the Kirin, dra7xx, Meson PCI controllers are now
+> buildable as modules. So I think we can follow that and allow building the
+> pcie-qcom as a module.
 
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
----
- arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+IIUC the arguments in [1] are that:
 
-Hi Bjorn,
+  - Kconfig is bool, so it can't be built as a module
+  - there's no sensible use case for unbind
 
-I pointed this one out during the review of the base dtsi:
+Those described the situation at the time, and there's no point in
+having .remove() and using module_platform_driver() if Kconfig is
+bool.
 
-	https://lore.kernel.org/lkml/YqDHjTkD%2FQZFS2Ub@hovoldconsulting.com/
+But they don't seem like arguments for why the driver couldn't be
+*made* modular.
 
-but it never made it into the final submission.
+I think drivers *should* be modular unless there's a technical reason
+they can't be.
 
-This patch should be applied before the series I posted this morning:
-
-	https://lore.kernel.org/lkml/20220715070248.19078-1-johan+linaro@kernel.org/
-
-Johan
-
-
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-index a10af542942b..ee62556a1481 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-@@ -1384,7 +1384,7 @@ usb_1: usb@a8f8800 {
- 			interrupts-extended = <&intc GIC_SPI 136 IRQ_TYPE_LEVEL_HIGH>,
- 					      <&pdc 12 IRQ_TYPE_EDGE_BOTH>,
- 					      <&pdc 13 IRQ_TYPE_EDGE_BOTH>,
--					      <&pdc 16 IRQ_TYPE_LEVEL_HIGH>;
-+					      <&pdc 136 IRQ_TYPE_LEVEL_HIGH>;
- 			interrupt-names = "hs_phy_irq", "dp_hs_phy_irq",
- 					  "dm_hs_phy_irq", "ss_phy_irq";
- 
--- 
-2.35.1
-
+Bjorn
