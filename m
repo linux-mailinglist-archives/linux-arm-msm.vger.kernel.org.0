@@ -2,128 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EC1C0575CE4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Jul 2022 10:01:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0EEFE575D10
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Jul 2022 10:09:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232438AbiGOIAn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Jul 2022 04:00:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58816 "EHLO
+        id S232135AbiGOIJI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Jul 2022 04:09:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36962 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229782AbiGOIAm (ORCPT
+        with ESMTP id S232132AbiGOIJI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Jul 2022 04:00:42 -0400
-Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [85.215.255.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 601D87E00E;
-        Fri, 15 Jul 2022 01:00:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1657872039;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=OqjGwFmaNWkrx1u1GRDpZGcyuPpD51t2IUwteZ5MuqY=;
-    b=mSi3fmHDSI2ZViyITi6N7Ro1zg5ewmjI66nvjtknQwldVUyqOJ0e5V3LNaArAM9cLx
-    04eWGT95H5sj5Ok3hodAwTFbHovM7k42voW4xJ0Wk325y3oQhY1t35zpSNPIpRUgC5wm
-    /Klhw2M0Dcnm4oH5UoXKX/RRCWzQHLmYMwOmueDBKqUpfJHamiLVO5JL+l0SdZ+qOd6W
-    SVevAhwYHozWHEgw+RQDkT3fefs21xKakwh56Y/NrJgkyioqowLvWKDzJUhY7llqX6J5
-    aH50nCeyQi2T155idHa9V34uoqfc3GwWjinCSQBeDPJ5g3MslXOgvIjlM7FWCxolkZSq
-    aZww==
-Authentication-Results: strato.com;
-    dkim=none
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u267FZF9PwpcNKLUrKw5+aY="
-X-RZG-CLASS-ID: mo00
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 47.47.0 SBL|AUTH)
-    with ESMTPSA id he04d0y6F80c9Jp
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Fri, 15 Jul 2022 10:00:38 +0200 (CEST)
-Date:   Fri, 15 Jul 2022 10:00:20 +0200
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Sireesh Kodali <sireeshkodali1@gmail.com>,
-        Luca Weiss <luca@z3ntu.xyz>, linux-arm-msm@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH 2/6] dt-bindings: remoteproc: qcom,q6v5: Move MSM8916 to
- schema
-Message-ID: <YtEeay9JCaG2NMdT@gerhold.net>
-References: <20220712124421.3129206-1-stephan.gerhold@kernkonzept.com>
- <20220712124421.3129206-3-stephan.gerhold@kernkonzept.com>
- <434cbf73-c62d-7d5c-fe60-7d98a84bc7fe@linaro.org>
- <YtBlGJ+lQFQg+l+I@gerhold.net>
- <cd8a2b66-ba7c-768c-f5b0-2728f0a8be99@linaro.org>
+        Fri, 15 Jul 2022 04:09:08 -0400
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8CE0B1C10A;
+        Fri, 15 Jul 2022 01:09:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1657872547; x=1689408547;
+  h=message-id:date:mime-version:subject:from:to:cc:
+   references:in-reply-to:content-transfer-encoding;
+  bh=QiWXCDd+tr7X4ZNAanKz+iHUgbLxFw3inBwRa85x5wI=;
+  b=cNN+S0PS98HU7iEK6wxhWxYmrvRF2jxeuHoDYOhoVEJBRPIyQq3wD69o
+   k8i39zjeM+gCDq8hhXIkwKAmz97+tSPwFul5b8nlj4Zj5sa7Z06YFZ2wW
+   bav0XC59Epf9ttigj+DFLA2sMHg7RjTUb9z7uxb2mV26jvZ7vuu5EGT7d
+   o=;
+Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 15 Jul 2022 01:09:07 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Jul 2022 01:09:06 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Fri, 15 Jul 2022 01:09:06 -0700
+Received: from [10.50.55.40] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Fri, 15 Jul
+ 2022 01:09:01 -0700
+Message-ID: <2faae901-0539-2467-5984-fa476a94968c@quicinc.com>
+Date:   Fri, 15 Jul 2022 13:38:58 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cd8a2b66-ba7c-768c-f5b0-2728f0a8be99@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_PASS,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.1
+Subject: Re: [PATCH v2] arm64: dts: qcom: sc8280xp: fix apps_smmu irq
+Content-Language: en-US
+From:   Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+To:     Parikshit Pareek <quic_ppareek@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+CC:     Rajendra Nayak <quic_rjendra@quicinc.com>,
+        Prasanna Kumar <quic_kprasan@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>,
+        "Manivannan Sadhasivam" <manivannan.sadhasivam@linaro.org>,
+        Johan Hovold <johan@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        "Linux Kernel Mailing List" <linux-kernel@vger.kernel.org>
+References: <20220712140009.20765-1-quic_ppareek@quicinc.com>
+ <27007c45-1dbb-2c35-b1a8-eb2b2a6c9512@quicinc.com>
+In-Reply-To: <27007c45-1dbb-2c35-b1a8-eb2b2a6c9512@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jul 15, 2022 at 08:33:53AM +0200, Krzysztof Kozlowski wrote:
-> On 14/07/2022 20:48, Stephan Gerhold wrote:
-> > On Thu, Jul 14, 2022 at 11:50:30AM +0200, Krzysztof Kozlowski wrote:
-> >> On 12/07/2022 14:44, Stephan Gerhold wrote:
-> >>> [...]
-> >>> +properties:
-> >>> +  compatible:
-> >>> +    oneOf:
-> >>> +      - enum:
-> >>> +          - qcom,msm8916-mss-pil
-> >>> +
-> >>> +      - const: qcom,q6v5-pil
-> >>> +        description: Deprecated, prefer using qcom,msm8916-mss-pil
-> >>> +        deprecated: true
-> >>
-> >> The last compatible does not seem applicable here. Aren't you moving
-> >> only MSM8916 to new schema?
-> >>
-> > 
-> > "qcom,q6v5-pil" is exactly the same as "qcom,msm8916-mss-pil". It's just
-> > a deprecated quite unfortunately chosen old name for the same thing. :)
-> > 
-> > See these lines in the driver:
-> > 
-> > 	{ .compatible = "qcom,q6v5-pil", .data = &msm8916_mss},
-> > 	{ .compatible = "qcom,msm8916-mss-pil", .data = &msm8916_mss},
-> 
-> Yeah, but previous bindings were not mentioning it alone, so this would
-> not be a direct conversion.
-> 
+On 7/14/2022 12:47 PM, Sai Prakash Ranjan wrote:
+> Hi Parikshit,
+>
+> On 7/12/2022 7:30 PM, Parikshit Pareek wrote:
+>> Wrong values have been introduced for interrupts property. Fix those
+>> ones, and correct the mapping of context banks to irq number.
+>>
+>> Fixes: 152d1faf1e2f ("arm64: dts: qcom: add SC8280XP platform")
+>> Signed-off-by: Parikshit Pareek <quic_ppareek@quicinc.com>
+>> ---
+>>   arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+>> index 7945cbb57bb4..1276a833251e 100644
+>> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+>> @@ -1580,7 +1580,6 @@
+>>                        <GIC_SPI 412 IRQ_TYPE_LEVEL_HIGH>,
+>>                        <GIC_SPI 421 IRQ_TYPE_LEVEL_HIGH>,
+>>                        <GIC_SPI 706 IRQ_TYPE_LEVEL_HIGH>,
+>> -                     <GIC_SPI 424 IRQ_TYPE_LEVEL_HIGH>,
+>>                        <GIC_SPI 423 IRQ_TYPE_LEVEL_HIGH>,
+>>                        <GIC_SPI 424 IRQ_TYPE_LEVEL_HIGH>,
+>>                        <GIC_SPI 425 IRQ_TYPE_LEVEL_HIGH>,
+>> @@ -1591,6 +1590,7 @@
+>>                        <GIC_SPI 693 IRQ_TYPE_LEVEL_HIGH>,
+>>                        <GIC_SPI 694 IRQ_TYPE_LEVEL_HIGH>,
+>>                        <GIC_SPI 695 IRQ_TYPE_LEVEL_HIGH>,
+>> +                     <GIC_SPI 696 IRQ_TYPE_LEVEL_HIGH>,
+>>                        <GIC_SPI 410 IRQ_TYPE_LEVEL_HIGH>,
+>>                        <GIC_SPI 411 IRQ_TYPE_LEVEL_HIGH>,
+>>                        <GIC_SPI 420 IRQ_TYPE_LEVEL_HIGH>,
+>
+> Cross checking with the IP doc, 696 is not the only one missing, couple of other interrupts are also missing, below is the list.
+>
+> Interrupt 689 and 706 are not present in the IP doc, remove it.
+> Interrupts 696, 697, 716, 913 are missing, I see this patch adds 696, add 697 as well.
+> Interrupt 890 is not a context interrupt, remove it.
+>
+>
 
-Sorry, I'm not sure I understand you correctly: What do you mean with
-"the previous bindings were not mentioning it alone"? "qcom,q6v5-pil"
-was listed as standalone compatible just like all the other compatibles:
-
-- compatible:
-	Usage: required
-	Value type: <string>
-	Definition: must be one of:
-		    "qcom,q6v5-pil",         <----
-		    "qcom,ipq8074-wcss-pil"
-		    "qcom,qcs404-wcss-pil"
-		    "qcom,msm8916-mss-pil",  <----
-		    "qcom,msm8974-mss-pil"
-		    "qcom,msm8996-mss-pil"
-		    "qcom,msm8998-mss-pil"
-		    "qcom,sc7180-mss-pil"
-		    "qcom,sc7280-mss-pil"
-		    "qcom,sdm845-mss-pil"
-
-The only non-conversion steps I did was to mark some of the redundant
-bindings as deprecated (e.g. "memory-region" with 2 items vs "mba" and
-"mpss" subnode, "qcom,msm8916-mss-pil" vs "qcom,q6v5-pil"). I can put
-the deprecations in a separate patch if that clarifies the situation.
+Checking offline with Parikshit, looks like adding all these entries results in interrupt selftest failures.
+So for now, we can just have the original patch merged till these failures are debugged further with internal teams.
 
 Thanks,
-Stephan
+Sai
