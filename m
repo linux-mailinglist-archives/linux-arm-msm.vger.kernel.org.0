@@ -2,71 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 14C4D5767A3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Jul 2022 21:45:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A618257683B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Jul 2022 22:37:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230241AbiGOTpE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Jul 2022 15:45:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46258 "EHLO
+        id S231463AbiGOUhZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Jul 2022 16:37:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53052 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229749AbiGOTpD (ORCPT
+        with ESMTP id S231447AbiGOUhW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Jul 2022 15:45:03 -0400
-Received: from mail-oa1-x36.google.com (mail-oa1-x36.google.com [IPv6:2001:4860:4864:20::36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4C3F61103
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Jul 2022 12:45:01 -0700 (PDT)
-Received: by mail-oa1-x36.google.com with SMTP id 586e51a60fabf-10c0430e27dso8348978fac.4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Jul 2022 12:45:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=j7iV5fZyqzBzONfFQXTxDBvEEIXYMTwYFhpV/bb8XwM=;
-        b=xoKRsOEjKyeuf+T3RWfA08s4IkprbGLQoDcQWPvQJKwl2hsiVr5HDdIOvVbfNinDRd
-         LRnYVyJVcJxeH8WJHznR3H7vb7WuyHs4F/p0bAlGnNRWhqNbh+5h8EwYP2IrKsBpY9VA
-         TLQjcl2xc/cSU92U3CSSG74vuksh3l47MDKFqr3AWMAlv3dXaY2vmj81YcJbQUgOVJph
-         9MXzMcTw9BRUcm2IYBt3qLYA51wIDC7DyMKWB6qhazfW5u0xv4cUfdRrbsQNiPXIfk73
-         qCAS1fN3hHGBeVfMldztpkngbpox996y/PopP3EcjHq6/3NV5iameRw1kXM4gI5MWdBT
-         TWdA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=j7iV5fZyqzBzONfFQXTxDBvEEIXYMTwYFhpV/bb8XwM=;
-        b=Md5/C8P9+EJdHfQbyDkXthZhSxvnSQtPt+hBGHTUjy6HTj7M0wzmVbAJlsHkyaomvi
-         WgHhQB69Ri1fz+3+2xUotHuE/8R58WD5em7r7Tq7CkS5TrOwHR1VZVSRDp+F6qPvCxK/
-         c5GRqgca0jqfRNOYQopYj2aPVwPvopZjLbwdeFzz37Ddd5zKjGj5RL0f6ZRCK1RbaUpt
-         YUFqCTNKrWwGP1EmS1T3u2Kx7GlpngLDAOhuI2MuS7PQTq3zVA8lyXI+k0B/zpveNZ16
-         PbybfXMPun0l0A9f8JseeOtm/T4j7GnoH2rC7c6+UbTx3DRRW+Lc633pcGTrmMVhMwkX
-         h9RA==
-X-Gm-Message-State: AJIora/7M6I0vf2ja9+GD/UEwICZnjfEMKJAJIaW6HSnC1VGHmimhpB7
-        VBkN6y+VpT1IJFIHEYWIjUuMRQ==
-X-Google-Smtp-Source: AGRyM1sskKQ0hJm78u735uQuGOkhmNrWDPCf9RI2vIXZ2XPg/ePj60Ym3aKl6BYA95MoLNx2ET8bHQ==
-X-Received: by 2002:a05:6870:96a7:b0:10c:712:58c4 with SMTP id o39-20020a05687096a700b0010c071258c4mr8551462oaq.198.1657914300183;
-        Fri, 15 Jul 2022 12:45:00 -0700 (PDT)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id r8-20020a056870e98800b00101bd4914f9sm2779380oao.43.2022.07.15.12.44.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 15 Jul 2022 12:44:59 -0700 (PDT)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Sibi Sankar <quic_sibis@quicinc.com>,
-        krzysztof.kozlowski+dt@linaro.org, swboyd@chromium.org,
-        robh+dt@kernel.org
-Cc:     linux-kernel@vger.kernel.org, mka@chromium.org,
-        linux-arm-msm@vger.kernel.org, mathieu.poirier@linaro.org,
-        agross@kernel.org, konrad.dybcio@somainline.org,
-        linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [V5 0/2] Add support for proxy interconnect bandwidth votes
-Date:   Fri, 15 Jul 2022 14:44:58 -0500
-Message-Id: <165791429375.1604685.12160759168768291168.b4-ty@linaro.org>
-X-Mailer: git-send-email 2.32.0
-In-Reply-To: <1657020721-24939-1-git-send-email-quic_sibis@quicinc.com>
-References: <1657020721-24939-1-git-send-email-quic_sibis@quicinc.com>
+        Fri, 15 Jul 2022 16:37:22 -0400
+Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DAF6F7E82B
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Jul 2022 13:37:21 -0700 (PDT)
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1oCS3Z-0004t4-Jc; Fri, 15 Jul 2022 22:37:01 +0200
+Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
+        by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1oCS3X-001BFO-Du; Fri, 15 Jul 2022 22:36:59 +0200
+Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1oCS3W-005Py7-JW; Fri, 15 Jul 2022 22:36:58 +0200
+From:   =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>
+To:     Georgi Djakov <djakov@kernel.org>, Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     kernel@pengutronix.de, Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>, linux-pm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: [PATCH 0/8] interconnect: Prepare making platform remove callbacks return void
+Date:   Fri, 15 Jul 2022 22:36:44 +0200
+Message-Id: <20220715203652.89912-1-u.kleine-koenig@pengutronix.de>
+X-Mailer: git-send-email 2.36.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1932; h=from:subject; bh=30zNokyf8YZwSDZQy06W7iHbrLyu4dV/qd1gRi70Sj4=; b=owEBbQGS/pANAwAKAcH8FHityuwJAcsmYgBi0c+Qsn7Xi1xjD4vKuEnIUbi32DWFn6eT2LpOtDIY +ZSGdXCJATMEAAEKAB0WIQR+cioWkBis/z50pAvB/BR4rcrsCQUCYtHPkAAKCRDB/BR4rcrsCRZkB/ 9/w/c2Vn2dLfjlz8s0HbijZiKGzYnXhAcfRV12GhRtIJNguQ6J45oGG8Ew0EfRIJXcFACSR7G7PDT5 F5dcYMy+vB0xFytQQC0UB53LPfS5ueMW4z+8yFpBm7ieUo4VUH7GCTAihPOoRVSP+hcMO2rst9SiAd LaHB/4dpx5OJWId4FlzlWDjo6JhrfD3M/5i9WIGzm7ugu5HoJaRcpJvQFKlWkWf3hZckJvYJDOyYyt 589QBqb2cfYagzeY3q+2roA8J8XoVJeVEMoeqd+OppFEnFBh8KLVOZ8RoGecMGNCT2xiVANfUBBXsf ppacJQ82G9nOQJrUvqQUUZWIwWWgY9
+X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -75,24 +59,53 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 5 Jul 2022 17:01:59 +0530, Sibi Sankar wrote:
-> Add proxy interconnect bandwidth votes during modem bootup on SC7280 SoCs.
-> 
-> V5:
->  * Improve phandle-array schemas [Stephen/Rob/Krzysztof]
->  * Add more details to the firmware-name/memory region string array [Stephen/Rob]
->  * Drop 'items' from label [Rob]
->  * Drop the patch 1 since Bjorn picked it up
-> 
-> [...]
+Hello,
 
-Applied, thanks!
+today remove callbacks of platform devices return an int. This is unfortunate
+because the device core ignores the return value and so the platform code only
+emits a warning (and still removes the device).
 
-[1/2] dt-bindings: remoteproc: qcom: Convert SC7280 MSS bindings to YAML
-      commit: 3abe6d654288553de0bf41da1491cfeee83777b7
-[2/2] dt-bindings: remoteproc: qcom: Convert SC7180 MSS bindings to YAML
-      commit: 5eb1c7def66349a5c3a80b7d450d0ed1f56141eb
+My longterm quest is to make these remove callbacks return void instead.
+This series is a preparation for that, with the goal to make the remove
+callbacks obviously always return 0. This way when the prototype of
+these functions is changed to return void, the change is straigt forward
+and easy to review.
 
-Best regards,
+Best regards
+Uwe
+
+Uwe Kleine-König (8):
+  interconnect: imx: Ignore return value of icc_provider_del() in
+    .remove()
+  interconnect: icc-rpm: Ignore return value of icc_provider_del() in
+    .remove()
+  interconnect: icc-rpmh: Ignore return value of icc_provider_del() in
+    .remove()
+  interconnect: msm8974: Ignore return value of icc_provider_del() in
+    .remove()
+  interconnect: osm-l3: Ignore return value of icc_provider_del() in
+    .remove()
+  interconnect: sm8450: Ignore return value of icc_provider_del() in
+    .remove()
+  interconnect: Make icc_provider_del() return void
+  interconnect: imx: Make imx_icc_unregister() return void
+
+ drivers/interconnect/core.c           | 10 +++-------
+ drivers/interconnect/imx/imx.c        |  4 ++--
+ drivers/interconnect/imx/imx.h        |  2 +-
+ drivers/interconnect/imx/imx8mm.c     |  4 +++-
+ drivers/interconnect/imx/imx8mn.c     |  4 +++-
+ drivers/interconnect/imx/imx8mq.c     |  4 +++-
+ drivers/interconnect/qcom/icc-rpm.c   |  4 +++-
+ drivers/interconnect/qcom/icc-rpmh.c  |  4 +++-
+ drivers/interconnect/qcom/msm8974.c   |  4 +++-
+ drivers/interconnect/qcom/osm-l3.c    |  4 +++-
+ drivers/interconnect/qcom/sm8450.c    |  4 +++-
+ include/linux/interconnect-provider.h |  2 +-
+ 12 files changed, 31 insertions(+), 19 deletions(-)
+
+
+base-commit: f2906aa863381afb0015a9eb7fefad885d4e5a56
 -- 
-Bjorn Andersson <bjorn.andersson@linaro.org>
+2.36.1
+
