@@ -2,139 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9B489575F4F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Jul 2022 12:25:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 37C88575F94
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Jul 2022 12:58:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234074AbiGOKZP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Jul 2022 06:25:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59088 "EHLO
+        id S231511AbiGOK6M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Jul 2022 06:58:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52066 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233258AbiGOKZJ (ORCPT
+        with ESMTP id S229704AbiGOK6L (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Jul 2022 06:25:09 -0400
-Received: from mail-4319.protonmail.ch (mail-4319.protonmail.ch [185.70.43.19])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C44282F95;
-        Fri, 15 Jul 2022 03:25:08 -0700 (PDT)
-Date:   Fri, 15 Jul 2022 10:25:03 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-        s=protonmail3; t=1657880706; x=1658139906;
-        bh=zPqdR+HafcwDy1W0JQxmXtHI+hMl6rra+AYRnvrWqpM=;
-        h=Date:To:From:Cc:Reply-To:Subject:Message-ID:In-Reply-To:
-         References:Feedback-ID:From:To:Cc:Date:Subject:Reply-To:
-         Feedback-ID:Message-ID;
-        b=Z7MD4Xjv8hln3g+8ABCao0ivtjTYtaLMuOFSS9XlNcVo3KA2qKxSxYz+ZY+eUjvNy
-         YR1wYfIFFBPPb4zRqdrHSMrp9YSar7pVR3/yjmWOYpy8jg9p6cFaXoYzDvds8Q8i9Z
-         Ag75usy/AB765k564FuAOBaGuD/Z+MYflB5r1zC8KRkhjB/6cNnuwPGF/QdRH+jX0v
-         kvnNK0CcciB+fZykVRuPh4FrNdqWQ7aFXuYu8v6Re3tpr18TiZnDtWS6Vhv5QOEaED
-         fUmLN73Dp2Fk9FyvLL5iePPcE1iYpuwuN4X9OjvjAQ2DKFVatqICLUvH9rBtZdbqNY
-         07jtbaavddqug==
-To:     devicetree@vger.kernel.org
-From:   "Lin, Meng-Bo" <linmengbo0689@protonmail.com>
-Cc:     Andy Gross <agross@kernel.org>,
+        Fri, 15 Jul 2022 06:58:11 -0400
+Received: from mail-qv1-xf35.google.com (mail-qv1-xf35.google.com [IPv6:2607:f8b0:4864:20::f35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0AB6B85F88
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Jul 2022 03:58:09 -0700 (PDT)
+Received: by mail-qv1-xf35.google.com with SMTP id m10so3435250qvu.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Jul 2022 03:58:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=QjXJYU8Ca6zEedr5pwyFGi7gqZxYyLWinYBmJNfXr0o=;
+        b=yAw42Riqh9SF51Nq5en1JtNN5JqGWpNDiFFBWdqthtOO6QqwS7YFrGQbaAz2+Zb8Wp
+         +SPhcKkvb7k6thRa8q1b4AwjO1cONFF7jzbaUB5ORBH157jtnvfhqu540iBT2uplwl9t
+         wS7RqwZM+qu0t653Wtxhm103zENWmn7UfYY6u3Twwvv5rz9lTt26V4nBq2vajfDPK3A7
+         72W5ulCD4P3D3as3Q/iI02PAWRe0sZVUsXxo34gx4i3XU0KpLMvE63gY1S2E6w0vHmYo
+         Djsca5v/eNyBaYLkUcEMPmiitWoPjDNMwd7kRb3TRr2FUVgkMj9DMV1G5fVjBsUeWf7X
+         LuGQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=QjXJYU8Ca6zEedr5pwyFGi7gqZxYyLWinYBmJNfXr0o=;
+        b=JgBNzDYuuFBvgNbRUiFeKFHL8i8Ogl0FhBt+KDVg3VKodnedLLXeftEDqun4dSXR4c
+         CmSee70Legb7Cq7q0jrSBOAN9isT7RozKmg8Cjm6gE0FaYsJHMRZcAolumq8tXwIq96E
+         WX0TJG+1gVkoYruKt39GURENBP3dkQv4hUMvM0iXKdfRU+SaM5Rlw7WkYI4PfWY5SQCT
+         gHx2iJJvI9/+mKjyagipKlRmycMhNZ0brk40TqSizQXnnM7qJR/K3zvDqE+QMhTRRLJt
+         CjuLr6ri2BUodi3LMWxOJIw5sxfzJf4KHYC9y5ghTCRzNzO9UWO/nDXhPBLFb1+FApwO
+         6gtQ==
+X-Gm-Message-State: AJIora8SYor/0U7nDr7xP3wWC95tCLHF+MWPHTss8j2SoiPAMstaaazT
+        ICIIAELdOmq/uKJjLmydKx40mc1fEvhhmRXzxpoVPVf1PeY=
+X-Google-Smtp-Source: AGRyM1tEIsAaCJg+HSR8qR8BS2VnxOA/YbkmYpyTrN1q01vkMCdJKkz8yJ46Jcn4M8eui61Owe5WqQlEXDnqA4fUe78=
+X-Received: by 2002:ad4:5f8a:0:b0:473:2108:7fe0 with SMTP id
+ jp10-20020ad45f8a000000b0047321087fe0mr11229869qvb.115.1657882688188; Fri, 15
+ Jul 2022 03:58:08 -0700 (PDT)
+MIME-Version: 1.0
+References: <20220714124333.27643-1-johan+linaro@kernel.org> <20220714124333.27643-29-johan+linaro@kernel.org>
+In-Reply-To: <20220714124333.27643-29-johan+linaro@kernel.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Fri, 15 Jul 2022 13:57:57 +0300
+Message-ID: <CAA8EJpoBhFyoUrUYM3+gYk4hvORvp_3hLYJCF82-LR3_YxLFsA@mail.gmail.com>
+Subject: Re: [PATCH v3 28/30] phy: qcom-qmp-pcie-msm8996: drop pipe clock lane suffix
+To:     Johan Hovold <johan+linaro@kernel.org>
+Cc:     Vinod Koul <vkoul@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Nikita Travkin <nikita@trvn.ru>,
-        ~postmarketos/upstreaming@lists.sr.ht
-Reply-To: "Lin, Meng-Bo" <linmengbo0689@protonmail.com>
-Subject: [RESEND PATCH 4/4] arm64: dts: qcom: msm8916-samsung-e2015: Add touchkey
-Message-ID: <20220715102413.4119-1-linmengbo0689@protonmail.com>
-In-Reply-To: <20220715102055.3844-1-linmengbo0689@protonmail.com>
-References: <20220715102055.3844-1-linmengbo0689@protonmail.com>
-Feedback-ID: 40467236:user:proton
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-1.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,FREEMAIL_REPLYTO_END_DIGIT,SPF_HELO_PASS,SPF_PASS
-        autolearn=no autolearn_force=no version=3.4.6
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On the Samsung Galaxy E5 and E7 the touch key is supplied by a single
-fixed regulator (enabled via GPIO 97) that supplies both MCU and LED.
-Add it to the device tree.
+On Thu, 14 Jul 2022 at 15:44, Johan Hovold <johan+linaro@kernel.org> wrote:
+>
+> The pipe clock is defined in the "lane" node so there's no need to keep
+> adding a redundant lane-number suffix to the clock name.
+>
+> Update driver to support the new binding where the pipe clock name has
+> been deprecated by instead requesting the clock by index.
+>
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 
-Signed-off-by: Lin, Meng-Bo <linmengbo0689@protonmail.com>
----
- .../qcom/msm8916-samsung-e2015-common.dtsi    | 26 +++++++++++++++++++
- .../dts/qcom/msm8916-samsung-grandmax.dts     |  4 +++
- 2 files changed, 30 insertions(+)
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-e2015-common.dtsi b/a=
-rch/arm64/boot/dts/qcom/msm8916-samsung-e2015-common.dtsi
-index 373154ee2643..9f3aca17130d 100644
---- a/arch/arm64/boot/dts/qcom/msm8916-samsung-e2015-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-e2015-common.dtsi
-@@ -19,6 +19,19 @@ muic: extcon@14 {
- =09=09};
- =09};
+> ---
+>  drivers/phy/qualcomm/phy-qcom-qmp-pcie-msm8996.c | 3 +--
+>  1 file changed, 1 insertion(+), 2 deletions(-)
+>
 
-+=09reg_touch_key: regulator-touch-key {
-+=09=09compatible =3D "regulator-fixed";
-+=09=09regulator-name =3D "touch_key";
-+=09=09regulator-min-microvolt =3D <3300000>;
-+=09=09regulator-max-microvolt =3D <3300000>;
-+
-+=09=09gpio =3D <&msmgpio 97 GPIO_ACTIVE_HIGH>;
-+=09=09enable-active-high;
-+
-+=09=09pinctrl-names =3D "default";
-+=09=09pinctrl-0 =3D <&tkey_en_default>;
-+=09};
-+
- =09vibrator: vibrator {
- =09=09compatible =3D "gpio-vibrator";
- =09=09enable-gpios =3D <&msmgpio 76 GPIO_ACTIVE_HIGH>;
-@@ -28,6 +41,11 @@ vibrator: vibrator {
- =09};
- };
-
-+&touchkey {
-+=09vcc-supply =3D <&reg_touch_key>;
-+=09vdd-supply =3D <&reg_touch_key>;
-+};
-+
- &msmgpio {
- =09motor_en_default: motor-en-default {
- =09=09pins =3D "gpio76";
-@@ -36,4 +54,12 @@ motor_en_default: motor-en-default {
- =09=09drive-strength =3D <2>;
- =09=09bias-disable;
- =09};
-+
-+=09tkey_en_default: tkey-en-default {
-+=09=09pins =3D "gpio97";
-+=09=09function =3D "gpio";
-+
-+=09=09drive-strength =3D <2>;
-+=09=09bias-disable;
-+=09};
- };
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-grandmax.dts b/arch/a=
-rm64/boot/dts/qcom/msm8916-samsung-grandmax.dts
-index 41aada4bfb80..f68dd3d69a33 100644
---- a/arch/arm64/boot/dts/qcom/msm8916-samsung-grandmax.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-grandmax.dts
-@@ -27,6 +27,10 @@ / {
- =09/delete-node/ i2c-tkey;
- };
-
-+&reg_touch_key {
-+=09status =3D "disabled";
-+};
-+
- &vibrator {
- =09enable-gpios =3D <&msmgpio 72 GPIO_ACTIVE_HIGH>;
- };
---
-2.30.2
-
-
+-- 
+With best wishes
+Dmitry
