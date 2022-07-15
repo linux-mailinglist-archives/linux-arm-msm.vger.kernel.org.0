@@ -2,69 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 821C657684A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Jul 2022 22:42:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 02698576913
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Jul 2022 23:40:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229721AbiGOUmA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Jul 2022 16:42:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57312 "EHLO
+        id S231761AbiGOVkU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Jul 2022 17:40:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44838 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229471AbiGOUmA (ORCPT
+        with ESMTP id S231347AbiGOVkT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Jul 2022 16:42:00 -0400
-Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 684F85B04F
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Jul 2022 13:41:59 -0700 (PDT)
-Received: by mail-pg1-x535.google.com with SMTP id q16so2293530pgq.6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Jul 2022 13:41:59 -0700 (PDT)
+        Fri, 15 Jul 2022 17:40:19 -0400
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CDFD87215
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Jul 2022 14:40:17 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id h17so8486477wrx.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Jul 2022 14:40:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=WtZRDzM8YJ97S/1Li5D/D44YAKcdEwJfblvdKCPMsAc=;
-        b=h9mO28BVHHbGShv1uBCtq7ZZifV3OOTDANCsGvtddURVoUa57Ouy0cRfb8h/UxuZUn
-         wHWtFVlfeAly/PSS/772SluwtFygGQYZrM+pSzu07xnsKlX06xwKk3lXfQqTnzgpPYgs
-         vG9B137tWetNmkSVx/6ucFo/nv10tm0kBnsjc=
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=J6BSJtpNWZ2Z1cUANVaPa8k/01zDYr+V4xutkYf54NQ=;
+        b=EiZ/Jmkz5DdkNRwJGtK9gVoZ3BcJ8ejMk3yeeSneUGJiCM2csICY8AdW61vGapRVcY
+         UVEs2lvDUtUmSWhTy5Riy+DiODr1rNBvvUK4wbrRLT25XjOXefr0/051txgAy4PBorpi
+         GKNcSgswr6pLYwYHFSVzvB34JMrg+jT1ikpzno4L0ZOP0gQXJvWnMhCAGwkPbk+zk4T6
+         NHUHFy/WsEuLp1Gd3GTwIoolQEUdfvT1tqqUGbfp80W8fFmVfSTmouc1u2k89r7uyeR9
+         nYK4zK2wqlmEsLRHEwqRtcub6mC9oo2ROYXHqnHla+d+LumXFIkgFPThdJfozfzXSQFb
+         VGhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=WtZRDzM8YJ97S/1Li5D/D44YAKcdEwJfblvdKCPMsAc=;
-        b=PZWJf0GXMZdxA4p8ByptJWCyecZsD7s2hT+P6m3TX6LgY/k3Kk0x6rZdgTSAqQCaTE
-         iykmKJYRnCvdf7vGubk00TULjtc9iUvnYGzDGHwRKbkbdsmCorB8GULKMUaRF9wBx5A0
-         I9XPptPUFpEEX98KAljDfO3cCACS9YVvkJomveM0b8wL+yYSvayb9uVq/mReGkrcoE8T
-         0YuRSCgup669lY+M1m990VYIaPtAr1i4i3SB/19WYX14O/dHIHugnXl/spfv9TdwwkRO
-         Oyk0S2md6NqPfxnRO/dy5gyyJq4Mx+MAjoa2u54glucxKPSTHHhHrsYokfxhWoXKXqpy
-         x/gg==
-X-Gm-Message-State: AJIora/cOKceXAYGd9+79+j9ykBq2GpzZ8W2XQb5N8AH5DyVQtXL2660
-        8DPhHoyGnp06eaI2X2SEdgbm1A==
-X-Google-Smtp-Source: AGRyM1vr9Gi++zE+26ugt96VQljO9f6LQq5uJA99uXorvAUYnr7XDA1roHUKlradhlJytAU1JAbaOQ==
-X-Received: by 2002:a63:2486:0:b0:412:9de2:eb49 with SMTP id k128-20020a632486000000b004129de2eb49mr13912375pgk.224.1657917718974;
-        Fri, 15 Jul 2022 13:41:58 -0700 (PDT)
-Received: from localhost ([2620:15c:11a:202:835b:7656:818:a69a])
-        by smtp.gmail.com with UTF8SMTPSA id 187-20020a6205c4000000b0051c4f6d2d95sm4309705pff.106.2022.07.15.13.41.57
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=J6BSJtpNWZ2Z1cUANVaPa8k/01zDYr+V4xutkYf54NQ=;
+        b=yBIepqRSDV2gXuV3IxIG1LNTEqOaWIABJFO1OmkP8eqhOKfDnmQHATLy6xM9rGrZtX
+         mtoEFLYFSCyzrIVQGyk2inok5/4ZAwJSDA0PLQj5uKnvTEbVUZAJZcPruscekIOnXeHP
+         +whhKR15BJIjV9lemTNVsDrLRlILy+miaSNX693wGBdtU87tFSxO79uEuFFubGMynO/e
+         MpDTr8Nuie5/fEZKHGYbpRCYzIP5guhCz5wfKWs5kWC/9bPovP/pP0wmpbomQ6ZVtr3l
+         +kngAaE3PtAbXkkub9oi5y+fJWgeEAiMweGWPVaSneurifMHxKUp18L8OSMPj0Qvt0IO
+         HQnw==
+X-Gm-Message-State: AJIora/JQruZMEjSCXDWQ4BBIaE/nt58Qs25eis3sCIh2xdH1yssP+Ep
+        s40mxj/N1lhuuY8BE5kmc0Bw9IU7rOoJVA==
+X-Google-Smtp-Source: AGRyM1vl55wMLC6v4FE7361A1EgLL5IjuxGDiU+pOGyn8ZoWrdHGmzM+ZMQkW7lv66vojAGIB7e/MQ==
+X-Received: by 2002:a5d:4e04:0:b0:21d:6ec3:38a2 with SMTP id p4-20020a5d4e04000000b0021d6ec338a2mr14182586wrt.362.1657921215858;
+        Fri, 15 Jul 2022 14:40:15 -0700 (PDT)
+Received: from ?IPV6:2a05:6e02:1041:c10:a223:f4b3:40c9:43fa? ([2a05:6e02:1041:c10:a223:f4b3:40c9:43fa])
+        by smtp.googlemail.com with ESMTPSA id j27-20020a05600c1c1b00b0039c4ba160absm17678280wms.2.2022.07.15.14.40.12
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 15 Jul 2022 13:41:58 -0700 (PDT)
-Date:   Fri, 15 Jul 2022 13:41:57 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Krishna Kurapati <quic_kriskura@quicinc.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] usb: dwc3: qcom: Defer dwc3-qcom probe if dwc3 isn't
- probed properly
-Message-ID: <YtHRFcol5uslEel1@google.com>
-References: <1657891312-21748-1-git-send-email-quic_kriskura@quicinc.com>
+        Fri, 15 Jul 2022 14:40:15 -0700 (PDT)
+Message-ID: <563e92de-68aa-7382-2564-c1ccc270c571@linaro.org>
+Date:   Fri, 15 Jul 2022 23:40:11 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1657891312-21748-1-git-send-email-quic_kriskura@quicinc.com>
-X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Subject: Re: [PATCH v3 06/15] thermal: qcom: qcom-spmi-adc-tm5: convert to IIO
+ fwnode API
+Content-Language: en-US
+To:     =?UTF-8?Q?Nuno_S=c3=a1?= <nuno.sa@analog.com>,
+        openbmc@lists.ozlabs.org, linux-imx@nxp.com,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-iio@vger.kernel.org, linux-mips@vger.kernel.org,
+        linux-renesas-soc@vger.kernel.org,
+        linux-mediatek@lists.infradead.org,
+        chrome-platform@lists.linux.dev,
+        linux-arm-kernel@lists.infradead.org,
+        Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+        linux-arm-msm@vger.kernel.org
+Cc:     Gwendal Grignou <gwendal@chromium.org>,
+        Jonathan Cameron <jic23@kernel.org>,
+        Saravanan Sekar <sravanhome@gmail.com>,
+        Tomer Maimon <tmaimon77@gmail.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Lorenzo Bianconi <lorenzo@kernel.org>,
+        Fabio Estevam <festevam@gmail.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Olivier Moysan <olivier.moysan@foss.st.com>,
+        Tali Perry <tali.perry1@gmail.com>,
+        Thara Gopinath <thara.gopinath@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Benjamin Fair <benjaminfair@google.com>,
+        Nicolas Ferre <nicolas.ferre@microchip.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Patrick Venture <venture@google.com>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
+        Benson Leung <bleung@chromium.org>,
+        Nancy Yuen <yuenn@google.com>,
+        Miquel Raynal <miquel.raynal@bootlin.com>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Christophe Branchereau <cbranchereau@gmail.com>,
+        Cai Huoqing <cai.huoqing@linux.dev>,
+        Avi Fishman <avifishman70@gmail.com>,
+        Eugen Hristev <eugen.hristev@microchip.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Andy Shevchenko <andy.shevchenko@gmail.com>,
+        Guenter Roeck <groeck@chromium.org>,
+        Paul Cercueil <paul@crapouillou.net>,
+        Claudiu Beznea <claudiu.beznea@microchip.com>,
+        Andy Gross <agross@kernel.org>,
+        Amit Kucheria <amitk@kernel.org>,
+        Michael Hennerich <Michael.Hennerich@analog.com>,
+        Haibo Chen <haibo.chen@nxp.com>,
+        Jishnu Prakash <quic_jprakash@quicinc.com>
+References: <20220715122903.332535-1-nuno.sa@analog.com>
+ <20220715122903.332535-7-nuno.sa@analog.com>
+From:   Daniel Lezcano <daniel.lezcano@linaro.org>
+In-Reply-To: <20220715122903.332535-7-nuno.sa@analog.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -72,41 +124,38 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jul 15, 2022 at 06:51:52PM +0530, Krishna Kurapati wrote:
-
-> Subject: usb: dwc3: qcom: Defer dwc3-qcom probe if dwc3 isn't probed properly
-
-nit: "isn't probed properly" sounds like a bug or HW issue. In case
-you re-spin maybe change it to "hasn't probed yet" or similar.
-
-> On SC7180 devices, it is observed that dwc3 probing is deferred
-> because device_links_check_suppliers() finds that '88e3000.phy'
-> isn't ready yet.
+On 15/07/2022 14:28, Nuno Sá wrote:
+> Make usage of the new firmware agnostic API
+> 'devm_of_iio_channel_get_by_name()' to get the IIO channel.
 > 
-> As a part of its probe call, dwc3-qcom driver checks if dwc3 core
-> is wakeup capable or not. If the dwc3 core is wakeup capable, driver
-> configures dwc-qcom's power domain to be always ON. Also it configures
-> dp/dm interrupts accordingly to support wakeup from system suspend.
-> 
-> More info regarding the same can be found at:
-> commit d9be8d5c5b03 ("usb: dwc3: qcom: Keep power domain on to retain controller status")
-> commit 6895ea55c385 ("usb: dwc3: qcom: Configure wakeup interrupts during suspend")
-> 
-> In the event, dwc3 probe gets deferred and is processed after dwc3-qcom
-> probe, driver ends up reading the wakeup capability of dwc3 core as false
-> leading to instability in suspend/resume path.
-> 
-> To avoid this scenario, ensure dwc3_probe is successful by checking
-> if appropriate driver is assigned to it or not after the of_platform_populate
-> call. If it isn't then defer dwc3-qcom probe as well.
-> 
-> Fixes: 649f5c842ba3 ("usb: dwc3: core: Host wake up support from system suspend")
-> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+> Signed-off-by: Nuno Sá <nuno.sa@analog.com>
+> Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
 
-Reported-by: Matthias Kaehlcke <mka@chromium.org>
-Tested-by: Matthias Kaehlcke <mka@chromium.org>
-Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+Acked-by: Daniel Lezcano <daniel.lezcano@linaro.org>
 
-Please make sure to add reviewers of previous versions or other folks you
-would like to review your patches in cc. I found v2 accidentally while
-looking for something else.
+> ---
+>   drivers/thermal/qcom/qcom-spmi-adc-tm5.c | 3 ++-
+>   1 file changed, 2 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/thermal/qcom/qcom-spmi-adc-tm5.c b/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
+> index d9c9c975f931..0b8543c627f0 100644
+> --- a/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
+> +++ b/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
+> @@ -825,7 +825,8 @@ static int adc_tm5_get_dt_channel_data(struct adc_tm5_chip *adc_tm,
+>   	}
+>   	channel->adc_channel = args.args[0];
+>   
+> -	channel->iio = devm_of_iio_channel_get_by_name(adc_tm->dev, node, NULL);
+> +	channel->iio = devm_fwnode_iio_channel_get_by_name(adc_tm->dev,
+> +							   of_fwnode_handle(node), NULL);
+>   	if (IS_ERR(channel->iio)) {
+>   		ret = PTR_ERR(channel->iio);
+>   		if (ret != -EPROBE_DEFER)
+
+
+-- 
+<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
+
+Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
+<http://twitter.com/#!/linaroorg> Twitter |
+<http://www.linaro.org/linaro-blog/> Blog
