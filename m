@@ -2,58 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 60C635769F9
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Jul 2022 00:37:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D207F576A51
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Jul 2022 01:02:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230482AbiGOWhf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Jul 2022 18:37:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40702 "EHLO
+        id S229648AbiGOXC0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Jul 2022 19:02:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33598 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230341AbiGOWhe (ORCPT
+        with ESMTP id S231462AbiGOXCL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Jul 2022 18:37:34 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 658B06BC19;
-        Fri, 15 Jul 2022 15:37:31 -0700 (PDT)
+        Fri, 15 Jul 2022 19:02:11 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 604BC52FDD;
+        Fri, 15 Jul 2022 16:02:10 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id DE43F619AC;
-        Fri, 15 Jul 2022 22:37:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BA07C3411E;
-        Fri, 15 Jul 2022 22:37:29 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id EDFEE61E4C;
+        Fri, 15 Jul 2022 23:02:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54C08C3411E;
+        Fri, 15 Jul 2022 23:02:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1657924650;
-        bh=d/azbyEVdFZlo7JV/C9g5tOBZLmX1z3s/YUXa/PuKxg=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:From;
-        b=EYNFuHu/nuAFHUbcicDmnFwVtZjpid/FQXLaVvQol6ZUzJuSAY5uglpeAlu/YKr51
-         Mey5XkLZjK2v5/RwjIaMwVGrrGIEoLHchS6CUKJdMrqOVkklP/ItJierO7zjNpYQR0
-         r2M9y77+P1xEHmLeZMV2NugDzZBe1Xv4CO2QudaKafM26LfUML4QWhjvQo4kfcP3Yq
-         mX9vv854mV6rfNDii5Zwc9CzPtgO7hSn/gFpt7VVWA+szJDYvLJ40AH+X6skhsqoxV
-         7XL5eytton3eCo0og498WyCopjfJoLlanCd5xHrYx8mJHoh1ADVTO+LyjL2PrXOAVj
-         +9sXoPAkFFmhA==
-Date:   Fri, 15 Jul 2022 17:37:28 -0500
-From:   Bjorn Helgaas <helgaas@kernel.org>
-To:     Johan Hovold <johan+linaro@kernel.org>
-Cc:     Bjorn Helgaas <bhelgaas@google.com>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 0/8] PCI: qcom: Add support for SC8280XP and SA8540P
-Message-ID: <20220715223728.GA1205880@bhelgaas>
+        s=k20201202; t=1657926129;
+        bh=EKzIF14lKdREt9dKPXCkZcQ1LZ5Kt1BUS7VzPXQVbbU=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=m+bYhIOkq5XrOzytDNT64tEz8fTSk90GWooU/HYAAwNKJABnt/EUhBwl6pjASCszr
+         087fEOubPu8C9QPRI2Cpy36NxU+/tKkkmAni/lwKoXgF1up+ZzH439an8hdMH91Qo3
+         sh6BnJxeoQPgpp/uw9eMiKR8jRkWNWI4N9+Cj9rKuyDQC0xa1m7P6m+T57N9AST5jl
+         0QJZPA2DcgzlQZDKy53EVZw7ioLu/UJmQ52lsJv7mKnLdLY9/gX/8FlFTg3FP4nPYx
+         wgTSMZdChZjWteQGXQd+p7NKrSfycbRYzv6ycSPrsSI5jkiS85SM1rIkT82v/175Pu
+         zKhh2Y9fG1rUA==
+Received: by mail-ua1-f41.google.com with SMTP id s3so2983427uaq.2;
+        Fri, 15 Jul 2022 16:02:09 -0700 (PDT)
+X-Gm-Message-State: AJIora8+czrX6go6cEAff0B3SK5Z+OQPEzgI5mEVt33cndCQlet7WyCh
+        nrM87RLrJ3pPez/jK8VGNTHLOa1cLri+tOSVuA==
+X-Google-Smtp-Source: AGRyM1ssXJTc3E14BnWkkD+VwK/VlT14tabaHM7d86SXd4B99OmSLHerTOBhI1fA6sEz666mOPdG44UUVuGBObKH95k=
+X-Received: by 2002:ab0:298e:0:b0:382:982e:9ba8 with SMTP id
+ u14-20020ab0298e000000b00382982e9ba8mr6338928uap.36.1657926128193; Fri, 15
+ Jul 2022 16:02:08 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220714071348.6792-1-johan+linaro@kernel.org>
+References: <20220623144357.297252-1-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220623144357.297252-1-dmitry.baryshkov@linaro.org>
+From:   Rob Herring <robh@kernel.org>
+Date:   Fri, 15 Jul 2022 17:01:57 -0600
+X-Gmail-Original-Message-ID: <CAL_JsqLi31FPBdYPzEW__UmfMTur-0428okopFYVaCbwm045gg@mail.gmail.com>
+Message-ID: <CAL_JsqLi31FPBdYPzEW__UmfMTur-0428okopFYVaCbwm045gg@mail.gmail.com>
+Subject: Re: [PATCH v3] kbuild: Enable DT schema checks for %.dtb targets
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Masahiro Yamada <masahiroy@kernel.org>,
+        Michal Marek <michal.lkml@markovi.net>,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Tom Rini <trini@konsulko.com>,
+        Linux Kbuild mailing list <linux-kbuild@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -63,65 +67,89 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jul 14, 2022 at 09:13:40AM +0200, Johan Hovold wrote:
-> This series adds support for the PCIe controllers found on SC8280XP and
-> SA8540P.
+On Thu, Jun 23, 2022 at 8:44 AM Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
+>
+> It is possible to build a single dtb, but not with DT schema validation
+> enabled. Enable the schema validation to run for %.dtb and %.dtbo
+> targets. Anyone building a dtb for a specific platform *should* pay
+> attention to schema warnings.
+>
+> This could be supported with a separate %.dt.yaml target instead.
+> However, the .dt.yaml format is considered an intermediate format and
+> could possibly go away at some point if schema checking is integrated
+> into dtc. Also, the plan is to enable the schema checks by default once
+> platforms are free of warnings, and this is a move in that direction.
+>
+> This patch differs from the previous one ([1]) in the fact that it
+> requires specifying VALIDATE_DT=1 to run the checks while doing the
+> build. Thus default build procedures would not obtain additional build
+> dependency, while maintainers can still build a single DTB file an get
+> only corresponding warnings.
 
-These look fairly straightforward, and I don't mind doing minor tweaks
-and conflict resolution, but given that we've got four or five cooks
-in the qcom kitchen, I'm looking for an ack from Stan before spending
-too much time on this.
+I'd rather this be a kconfig option, so that eventually 'make
+allmodconfig; make dtbs' also runs the schema checks. If something can
+be enabled for allmodconfig, then builders will automatically start
+testing it. Though the extra dependency is a problem here.
 
-> Included are also three patches that clean up the way the driver handles
-> different IP revisions (e.g. by modelling optional clocks as being truly
-> optional).
-> 
-> These patches depend on the recently merged (but currently held off?)
-> PIPE clock series:
-> 
-> 	https://lore.kernel.org/all/20220608105238.2973600-1-dmitry.baryshkov@linaro.org/
+>
+> [1] https://lore.kernel.org/all/20210913145146.766080-1-robh@kernel.org/
+>
+> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Cc: Tom Rini <trini@konsulko.com>
+> Cc: Masahiro Yamada <masahiroy@kernel.org>
+> Cc: linux-kbuild@vger.kernel.org
+> Co-developed-by: Rob Herring <robh@kernel.org>
+> Signed-off-by: Rob Herring <robh@kernel.org>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  Makefile | 18 ++++++++++++++----
+>  1 file changed, 14 insertions(+), 4 deletions(-)
+>
+> diff --git a/Makefile b/Makefile
+> index c43d825a3c4c..0942922384c4 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -1365,11 +1365,17 @@ endif
+>
+>  ifneq ($(dtstree),)
+>
+> -%.dtb: include/config/kernel.release scripts_dtc
+> -       $(Q)$(MAKE) $(build)=$(dtstree) $(dtstree)/$@
+> +ifneq ($(VALIDATE_DT),)
+> +DT_YAML = $(dtstree)/$*.dt.yaml
 
-As far as I know it's on pci/ctrl/qcom [1], in -next, and ready to go.
-It's based on Bjorn A's immutable branch [2].
+.dt.yaml files are deprecated now. This probably doesn't do anything.
 
-> as well as the about-to-be-merged MSI series (v17):
-> 
-> 	https://lore.kernel.org/all/20220707134733.2436629-6-dmitry.baryshkov@linaro.org/
-> 
-> Note that the final patch in the PIPE clock series is currently missing
-> from the pci/ctrl/qcom-pending branch:
-> 
-> 	https://lore.kernel.org/all/20220608105238.2973600-6-dmitry.baryshkov@linaro.org/
+> +DT_CHECK = dt_binding_check
+> +export CHECK_DTBS=y
+> +endif
+>
+> -%.dtbo: include/config/kernel.release scripts_dtc
+> -       $(Q)$(MAKE) $(build)=$(dtstree) $(dtstree)/$@
+> +%.dtb: include/config/kernel.release scripts_dtc $(DT_CHECK)
+> +       $(Q)$(MAKE) $(build)=$(dtstree) $(dtstree)/$@ $(DT_YAML)
+> +
+> +%.dtbo: include/config/kernel.release scripts_dtc $(DT_CHECK)
+> +       $(Q)$(MAKE) $(build)=$(dtstree) $(dtstree)/$@ $(DT_YAML)
+>
+>  PHONY += dtbs dtbs_install dtbs_check
+>  dtbs: include/config/kernel.release scripts_dtc
+> @@ -1654,6 +1660,10 @@ help:
+>         @echo  '                3: more obscure warnings, can most likely be ignored'
+>         @echo  '                e: warnings are being treated as errors'
+>         @echo  '                Multiple levels can be combined with W=12 or W=123'
+> +       @$(if $(dtstree), \
+> +               echo '  make VALIDATE_DT=y [targets] Validate all DT processsed during the build'; \
 
-I think I fixed that, let me know if not; see [1].
+Typo.
 
-[1] https://git.kernel.org/pub/scm/linux/kernel/git/helgaas/pci.git/log/?h=839fbdee4c08
-[2] https://lore.kernel.org/linux-pci/YroMyWNO8ZLk1bTe@builder.lan/
 
-> Changes in v2
->  - drop the two DT schema fixes which have been applied by Bjorn H and
->    squashed into the MSI v17 series by Dmitry, respectively
->  - rebase on pci/ctrl/qcom-pending (2022-07-14)
->  - fix compatible sort order (Krzysztof)
->  - amend commit message for first patch to clarify motivation
->    (Krzysztof)
->  - add acks and reviewed-by tags from Dmitry, Krzysztof, Mani and Rob
-> 
-> 
-> Johan Hovold (8):
->   dt-bindings: PCI: qcom: Enumerate platforms with single msi interrupt
->   dt-bindings: PCI: qcom: Add SC8280XP to binding
->   dt-bindings: PCI: qcom: Add SA8540P to binding
->   PCI: qcom: Add support for SC8280XP
->   PCI: qcom: Add support for SA8540P
->   PCI: qcom: Make all optional clocks optional
->   PCI: qcom: Clean up IP configurations
->   PCI: qcom: Sort device-id table
-> 
->  .../devicetree/bindings/pci/qcom,pcie.yaml    |  70 +++++++++-
->  drivers/pci/controller/dwc/pcie-qcom.c        | 121 +++++++-----------
->  2 files changed, 114 insertions(+), 77 deletions(-)
-> 
-> -- 
+> +               echo '         This can be applied both to "dtbs" and to individual "foo.dtb" targets' ; \
+> +               )
+>         @echo  ''
+>         @echo  'Execute "make" or "make all" to build all targets marked with [*] '
+>         @echo  'For further info see the ./README file'
+> --
 > 2.35.1
-> 
+>
