@@ -2,92 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 44CD7576840
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Jul 2022 22:37:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 821C657684A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Jul 2022 22:42:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231347AbiGOUhP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Jul 2022 16:37:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52868 "EHLO
+        id S229721AbiGOUmA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Jul 2022 16:42:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57312 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231351AbiGOUhO (ORCPT
+        with ESMTP id S229471AbiGOUmA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Jul 2022 16:37:14 -0400
-Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 754B07E82B
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Jul 2022 13:37:13 -0700 (PDT)
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1oCS3Z-0004tP-AE; Fri, 15 Jul 2022 22:37:01 +0200
-Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
-        by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1oCS3Y-001BFl-Ix; Fri, 15 Jul 2022 22:37:00 +0200
-Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1oCS3X-005PyR-OE; Fri, 15 Jul 2022 22:36:59 +0200
-From:   =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
-        <u.kleine-koenig@pengutronix.de>
-To:     Andy Gross <agross@kernel.org>,
+        Fri, 15 Jul 2022 16:42:00 -0400
+Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 684F85B04F
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Jul 2022 13:41:59 -0700 (PDT)
+Received: by mail-pg1-x535.google.com with SMTP id q16so2293530pgq.6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Jul 2022 13:41:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=WtZRDzM8YJ97S/1Li5D/D44YAKcdEwJfblvdKCPMsAc=;
+        b=h9mO28BVHHbGShv1uBCtq7ZZifV3OOTDANCsGvtddURVoUa57Ouy0cRfb8h/UxuZUn
+         wHWtFVlfeAly/PSS/772SluwtFygGQYZrM+pSzu07xnsKlX06xwKk3lXfQqTnzgpPYgs
+         vG9B137tWetNmkSVx/6ucFo/nv10tm0kBnsjc=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=WtZRDzM8YJ97S/1Li5D/D44YAKcdEwJfblvdKCPMsAc=;
+        b=PZWJf0GXMZdxA4p8ByptJWCyecZsD7s2hT+P6m3TX6LgY/k3Kk0x6rZdgTSAqQCaTE
+         iykmKJYRnCvdf7vGubk00TULjtc9iUvnYGzDGHwRKbkbdsmCorB8GULKMUaRF9wBx5A0
+         I9XPptPUFpEEX98KAljDfO3cCACS9YVvkJomveM0b8wL+yYSvayb9uVq/mReGkrcoE8T
+         0YuRSCgup669lY+M1m990VYIaPtAr1i4i3SB/19WYX14O/dHIHugnXl/spfv9TdwwkRO
+         Oyk0S2md6NqPfxnRO/dy5gyyJq4Mx+MAjoa2u54glucxKPSTHHhHrsYokfxhWoXKXqpy
+         x/gg==
+X-Gm-Message-State: AJIora/cOKceXAYGd9+79+j9ykBq2GpzZ8W2XQb5N8AH5DyVQtXL2660
+        8DPhHoyGnp06eaI2X2SEdgbm1A==
+X-Google-Smtp-Source: AGRyM1vr9Gi++zE+26ugt96VQljO9f6LQq5uJA99uXorvAUYnr7XDA1roHUKlradhlJytAU1JAbaOQ==
+X-Received: by 2002:a63:2486:0:b0:412:9de2:eb49 with SMTP id k128-20020a632486000000b004129de2eb49mr13912375pgk.224.1657917718974;
+        Fri, 15 Jul 2022 13:41:58 -0700 (PDT)
+Received: from localhost ([2620:15c:11a:202:835b:7656:818:a69a])
+        by smtp.gmail.com with UTF8SMTPSA id 187-20020a6205c4000000b0051c4f6d2d95sm4309705pff.106.2022.07.15.13.41.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 15 Jul 2022 13:41:58 -0700 (PDT)
+Date:   Fri, 15 Jul 2022 13:41:57 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Krishna Kurapati <quic_kriskura@quicinc.com>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Georgi Djakov <djakov@kernel.org>
-Cc:     kernel@pengutronix.de, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 6/8] interconnect: sm8450: Ignore return value of icc_provider_del() in .remove()
-Date:   Fri, 15 Jul 2022 22:36:50 +0200
-Message-Id: <20220715203652.89912-7-u.kleine-koenig@pengutronix.de>
-X-Mailer: git-send-email 2.36.1
-In-Reply-To: <20220715203652.89912-1-u.kleine-koenig@pengutronix.de>
-References: <20220715203652.89912-1-u.kleine-koenig@pengutronix.de>
+        Felipe Balbi <balbi@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] usb: dwc3: qcom: Defer dwc3-qcom probe if dwc3 isn't
+ probed properly
+Message-ID: <YtHRFcol5uslEel1@google.com>
+References: <1657891312-21748-1-git-send-email-quic_kriskura@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1112; h=from:subject; bh=GTV9eacUuhiHphB1ypMvxTcWIkrDqL5+D9Tl8L+fq6I=; b=owEBbQGS/pANAwAKAcH8FHityuwJAcsmYgBi0c+m29UXnz0ELiAJQvsDnkKmb8upQWpXG/+7/St7 UnUmpwaJATMEAAEKAB0WIQR+cioWkBis/z50pAvB/BR4rcrsCQUCYtHPpgAKCRDB/BR4rcrsCZdxCA CheZG90mzmYQbdtED2vTpZEiO2obu3kUkFcEyQsReov/OCFDIAWlgge9QVZxzBAIeyH40ms+1MB0OR 0gMYej9PPYdxoQKwnvSc1B8uIBX4R5I40voGFEe3/iLqCgCa5CeodX37QTcT6HoPbPI4sYTbKLaeDy P5N2/zpHgJ/zeFHBIEmgFI7Ra6DaPvuEsf88APbhV7pZ3SUxB5yhAslX5xmk7ej6BBHeNaYyQoP0uU JeBXPqTgmC23IW58fGE9NxppjCVcOvaAXmKTUvsDGCwxNx0UOQ/QEn2PtIByT6SRDfHpdq9+NnaGx5 NW9EXyf67gP92Vufz8GZhAFOZAPs3S
-X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1657891312-21748-1-git-send-email-quic_kriskura@quicinc.com>
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-icc_provider_del() already emits an error message on failure. In this
-case letting .remove() return the corresponding error code results in
-another error message and the device is removed anyhow. (See
-platform_remove().)
+On Fri, Jul 15, 2022 at 06:51:52PM +0530, Krishna Kurapati wrote:
 
-So ignore the return value of icc_provider_del() and return 0
-unconditionally.
+> Subject: usb: dwc3: qcom: Defer dwc3-qcom probe if dwc3 isn't probed properly
 
-This is a preparation for making platform remove callbacks return void.
+nit: "isn't probed properly" sounds like a bug or HW issue. In case
+you re-spin maybe change it to "hasn't probed yet" or similar.
 
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
----
- drivers/interconnect/qcom/sm8450.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+> On SC7180 devices, it is observed that dwc3 probing is deferred
+> because device_links_check_suppliers() finds that '88e3000.phy'
+> isn't ready yet.
+> 
+> As a part of its probe call, dwc3-qcom driver checks if dwc3 core
+> is wakeup capable or not. If the dwc3 core is wakeup capable, driver
+> configures dwc-qcom's power domain to be always ON. Also it configures
+> dp/dm interrupts accordingly to support wakeup from system suspend.
+> 
+> More info regarding the same can be found at:
+> commit d9be8d5c5b03 ("usb: dwc3: qcom: Keep power domain on to retain controller status")
+> commit 6895ea55c385 ("usb: dwc3: qcom: Configure wakeup interrupts during suspend")
+> 
+> In the event, dwc3 probe gets deferred and is processed after dwc3-qcom
+> probe, driver ends up reading the wakeup capability of dwc3 core as false
+> leading to instability in suspend/resume path.
+> 
+> To avoid this scenario, ensure dwc3_probe is successful by checking
+> if appropriate driver is assigned to it or not after the of_platform_populate
+> call. If it isn't then defer dwc3-qcom probe as well.
+> 
+> Fixes: 649f5c842ba3 ("usb: dwc3: core: Host wake up support from system suspend")
+> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
 
-diff --git a/drivers/interconnect/qcom/sm8450.c b/drivers/interconnect/qcom/sm8450.c
-index 7e3d372b712f..613c30df8aed 100644
---- a/drivers/interconnect/qcom/sm8450.c
-+++ b/drivers/interconnect/qcom/sm8450.c
-@@ -1932,7 +1932,9 @@ static int qnoc_remove(struct platform_device *pdev)
- 	struct qcom_icc_provider *qp = platform_get_drvdata(pdev);
- 
- 	icc_nodes_remove(&qp->provider);
--	return icc_provider_del(&qp->provider);
-+	icc_provider_del(&qp->provider);
-+
-+	return 0;
- }
- 
- static const struct of_device_id qnoc_of_match[] = {
--- 
-2.36.1
+Reported-by: Matthias Kaehlcke <mka@chromium.org>
+Tested-by: Matthias Kaehlcke <mka@chromium.org>
+Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
 
+Please make sure to add reviewers of previous versions or other folks you
+would like to review your patches in cc. I found v2 accidentally while
+looking for something else.
