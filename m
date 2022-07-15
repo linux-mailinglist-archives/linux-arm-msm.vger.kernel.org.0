@@ -2,75 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3DBAC575D35
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Jul 2022 10:21:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0E913575D54
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Jul 2022 10:25:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231251AbiGOIUm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Jul 2022 04:20:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45724 "EHLO
+        id S231265AbiGOIYt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Jul 2022 04:24:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48904 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229685AbiGOIUl (ORCPT
+        with ESMTP id S229608AbiGOIYs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Jul 2022 04:20:41 -0400
-Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C9D43AE6E
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Jul 2022 01:20:41 -0700 (PDT)
-Received: by mail-pg1-x535.google.com with SMTP id g4so3818158pgc.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Jul 2022 01:20:41 -0700 (PDT)
+        Fri, 15 Jul 2022 04:24:48 -0400
+Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5AC2224969
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Jul 2022 01:24:47 -0700 (PDT)
+Received: by mail-pf1-x430.google.com with SMTP id l124so4056940pfl.8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Jul 2022 01:24:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=vAkweYtGWawn+nrfC5G5aLmi9f3fxYHqq+9XF6X0vcM=;
-        b=zOYQApFE5da5FGAEpiMld9uBRRRXhO/k9UXGcH2WQcqXVG6gAIsBCco5T8L5Iy1xnn
-         e0ycEdRHVJc24vi3DQ4WVu4beu9X4O87k1MNfsT6190YIjblhM0McfrgdPvJ8otyKCMV
-         Ezws5XiUikpGIjPghEdAVfhpOC47WTd97CDpUlxoAX707s0N4Nr6v+lORSbRfk2LzA1o
-         V/LP290Al7dKbx23EY9VhE57aqjQASw1JR4o+uVLby2pzj/ESEz0fF3O3eMSI9F7JunK
-         jpUQPQ49Wr8kc3hy98qU1p2bXhpn+h2yPSIw0JH1a9hv2xAYgqRA1u0FJYyc7ROvpn3/
-         c7ew==
+        bh=Zq/ENRoQXla91PhPgglndMgEOmTX2K4lBPbsP0r9Ao8=;
+        b=WV3I9/g+DoBl2rKdJzZIOZnex1O3fMhDD02zypuxlqAoAYyeFOCIm1mMiXJ5sH9Q6c
+         QfrkveEcQg27Fw80Ym55wh9PdHckQS6Ju+hIolFG+wuAvbXl4D5+Kz1rXRg176uKikkv
+         dvZAKadJysOVZckODLGocL0Rh5tW/egnDLlTLmKN1a3xUnrKa/pESEC5lT4Z9pQt0tRv
+         C8iSvXCiU5qVkSLGnIqbSjj0N4QgDgtjzoIiGTzi/6Ta1My4QCSTRiFLfVzen1o0++IY
+         QvIa5jujS1DV7VgKj7d1nkBxNfNPw6U9Vmse8k0ko5LmItAMbU0jYEh1kIbPpgC8HSss
+         rPdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=vAkweYtGWawn+nrfC5G5aLmi9f3fxYHqq+9XF6X0vcM=;
-        b=6lbJ30G22F2Apw0ACDm7cAfWD210lmOtLn/3GgO8CqomsFeTQgnxTIq07ICIZHFLVP
-         SU2xTsEPNG6Qjo/r8VCktuwrOuTZd4fy8X0S3rAc6Fj67GBfW4uEPIF4v+Dg3P2IXUqo
-         yKhyYQKX3vx2WBRx99bB2juWVxNGbD/SJM1Q6Rw0lsudeA6Hfz3F8Mn7ck8CT85kACc3
-         t0TjNTu6gy+ccGyUBtyJTonJpJ02+EkwjCx70K33UbrmxdBUQjrhuc7okckmnp0SDsQR
-         1Np/IWH/ga6zTpW6JdHZ3/8jwrjaeQDBGnQ+ckGpvO4iLHY7wOYtYUZqvB+LXIrENnwH
-         QwIg==
-X-Gm-Message-State: AJIora++l7tT7gQdACDhOYiGdUvaJNu0MBBMXpd/rINiCtVN3xpEWVsc
-        aycoldHL2eSVyRUg6rtTuYA0
-X-Google-Smtp-Source: AGRyM1vFGJS/miySv2tX/qr7uZNAkW7WgRIIhjT8PZf6LrCAixhSmUHRMir+sO7yv+Myn2jpKVUDoQ==
-X-Received: by 2002:a63:7c49:0:b0:40c:b3f9:18c5 with SMTP id l9-20020a637c49000000b0040cb3f918c5mr10764560pgn.588.1657873240491;
-        Fri, 15 Jul 2022 01:20:40 -0700 (PDT)
+        bh=Zq/ENRoQXla91PhPgglndMgEOmTX2K4lBPbsP0r9Ao8=;
+        b=brN1reU7WkL54Z4TQdfLRXRErCJVfrU1sWAMc2FKIFqL3ZyCHPKaCL0l5TC5Pwv6qC
+         tafvvka3u4WVNqX2CHUYKPSNos7h2loED8sDyCZ3ZIrjSAvFyRLpHMF8WJNSBbEk0PMh
+         XLsqXnZZQPzMLK73rZMn6JJ9nH/QyF0k02HOplaxjv/vEvp1kk6rnIV4GVKUIsSgrAhR
+         Qr2aEm/Oh5RpXuOFZXUd2OVphXu8ec7tpps671DyJIA1Jr5xv6qmSfcPtXIoqo80Ge2d
+         fRabzsnBj+7Mj/zaDHzNmL+bQtwYWbAxBDzf3h/LjSldpv7Ua8HiXt7LpbksaEtNaoZ9
+         qZZQ==
+X-Gm-Message-State: AJIora9D+UnZUf12Q0QFpKyzxNcGjvhSc5WoPsNLlVgC7uYpWJhogfkl
+        7wsgVYkf/1sXv0679Xr6qcuY
+X-Google-Smtp-Source: AGRyM1vPh8pjtPYU81D/m9wIV5jmZRQ48TYfalrYpXHP1pXUAWlQTonOCipMZ3zFW80/A7ekVCcZWg==
+X-Received: by 2002:a63:190b:0:b0:416:10ee:3c7a with SMTP id z11-20020a63190b000000b0041610ee3c7amr11156440pgl.490.1657873486699;
+        Fri, 15 Jul 2022 01:24:46 -0700 (PDT)
 Received: from workstation ([117.248.1.85])
-        by smtp.gmail.com with ESMTPSA id n8-20020a170902968800b0015e8d4eb1d3sm2880222plp.29.2022.07.15.01.20.37
+        by smtp.gmail.com with ESMTPSA id g1-20020a17090a708100b001ef3cec7f47sm2828835pjk.52.2022.07.15.01.24.41
         (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 15 Jul 2022 01:20:40 -0700 (PDT)
-Date:   Fri, 15 Jul 2022 13:50:36 +0530
+        Fri, 15 Jul 2022 01:24:46 -0700 (PDT)
+Date:   Fri, 15 Jul 2022 13:54:40 +0530
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Sai Prakash Ranjan <quic_saipraka@quicinc.com>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Parikshit Pareek <quic_ppareek@quicinc.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Johan Hovold <johan@kernel.org>,
+To:     Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Cc:     helgaas@kernel.org, linux-pci@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_vbadigan@quicinc.com, quic_hemantk@quicinc.com,
+        quic_nitegupt@quicinc.com, quic_skananth@quicinc.com,
+        quic_ramkri@quicinc.com, swboyd@chromium.org,
         Andy Gross <agross@kernel.org>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>,
-        Prasanna Kumar <quic_kprasan@quicinc.com>,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2] arm64: dts: qcom: sc8280xp: fix apps_smmu irq
-Message-ID: <20220715082036.GA12197@workstation>
-References: <20220712140009.20765-1-quic_ppareek@quicinc.com>
- <20220712144044.GD21746@workstation>
- <Ys2gSWpColgPW17+@hovoldconsulting.com>
- <CAA8EJprN-Y2cFR=9TSCw6Db8GAJC8eh08FgFBmxumEKt0iGPBw@mail.gmail.com>
- <20220712182627.GA7766@thinkpad>
- <7290abc3-8ec7-8128-9d29-651e9b8aa861@quicinc.com>
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>
+Subject: Re: [PATCH v2] PCI: qcom: Allow L1 and its sub states
+Message-ID: <20220715082440.GB12197@workstation>
+References: <1654240730-31322-1-git-send-email-quic_krichai@quicinc.com>
+ <1655298939-392-1-git-send-email-quic_krichai@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <7290abc3-8ec7-8128-9d29-651e9b8aa861@quicinc.com>
+In-Reply-To: <1655298939-392-1-git-send-email-quic_krichai@quicinc.com>
 User-Agent: Mutt/1.9.4 (2018-02-28)
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
@@ -81,47 +81,52 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jul 14, 2022 at 12:37:45PM +0530, Sai Prakash Ranjan wrote:
-> Hi Mani,
-> 
-> On 7/12/2022 11:56 PM, Manivannan Sadhasivam wrote:
-> > On Tue, Jul 12, 2022 at 07:41:14PM +0300, Dmitry Baryshkov wrote:
-> > > On Tue, 12 Jul 2022 at 19:24, Johan Hovold <johan@kernel.org> wrote:
-> > > > On Tue, Jul 12, 2022 at 08:10:44PM +0530, Manivannan Sadhasivam wrote:
-> > > > > On Tue, Jul 12, 2022 at 07:30:09PM +0530, Parikshit Pareek wrote:
-> > > > > > Wrong values have been introduced for interrupts property. Fix those
-> > > > > > ones, and correct the mapping of context banks to irq number.
-> > > > > > 
-> > > > > And you ignored my comment about sorting the IRQs...
-> > > > Isn't the order significant here? Either way, that would be a separate
-> > > > change that shouldn't be merged with the fix.
-> > > I'd tend to agree here. Let's get the fix in first and sort the IRQs
-> > > in a separate commit. The order of them is strange indeed.
-> > > 
-> 
-> As per "arm,smmu.yaml" devicetree documentation, context interrupts are specified in order of their indexing by the SMMU
-> and not the IRQ numbers, quoting relevant part below.
-> 
-> "Interrupt list, with the first #global-interrupts entries corresponding to the global interrupts
-> and any following entries corresponding to context interrupts, specified in order of their indexing by the SMMU."
-> 
-> And the current order in DT without sorting by IRQ number matches with the SMMU IP interrupt document,
-> 
-> For example, in the current DT order, you see 409 and then 418 instead of 410. Here 409 is app_tcu_cxt_irpt_vec[73],
-> 418 is app_tcu_cxt_irpt_vec[74] and 410 is app_tcu_cxt_irpt_vec[90] and hence the ordering of 409, 418 .... 410.
-> Also the reverse ordering at the end from 913 to 891 is also as per this indexing.
-> 
-> So the current ordering is proper and do not require sorting.
+On Wed, Jun 15, 2022 at 06:45:39PM +0530, Krishna chaitanya chundru wrote:
+> Allow L1 and its sub-states in the qcom pcie driver.
+> By default this is disabled in the hardware. So enabling it explicitly.
 > 
 
-Ah, I missed reading the binding. Sorry for the noise.
+You are enabling L1ss for controllers belonging to 2_7_0, so this should
+be mentioned in the commit message. Otherwise, it will imply that the
+L1ss is added for all controller versions.
 
-> As for the missing IRQs and duplicate ones, I will reply on the patch, looks like there are some other misconfigurations as well.
-> 
+> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> ---
+
+Change log should be added here for versions > 1.
 
 Thanks,
 Mani
 
-> Thanks,
-> Sai
+>  drivers/pci/controller/dwc/pcie-qcom.c | 8 ++++++++
+>  1 file changed, 8 insertions(+)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index 6ab9089..0d8efcc 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -41,6 +41,9 @@
+>  #define L23_CLK_RMV_DIS				BIT(2)
+>  #define L1_CLK_RMV_DIS				BIT(1)
+>  
+> +#define PCIE20_PARF_PM_CTRL			0x20
+> +#define REQ_NOT_ENTR_L1				BIT(5)
+> +
+>  #define PCIE20_PARF_PHY_CTRL			0x40
+>  #define PHY_CTRL_PHY_TX0_TERM_OFFSET_MASK	GENMASK(20, 16)
+>  #define PHY_CTRL_PHY_TX0_TERM_OFFSET(x)		((x) << 16)
+> @@ -1267,6 +1270,11 @@ static int qcom_pcie_init_2_7_0(struct qcom_pcie *pcie)
+>  	val |= BIT(4);
+>  	writel(val, pcie->parf + PCIE20_PARF_MHI_CLOCK_RESET_CTRL);
+>  
+> +	/* Enable L1 and L1ss */
+> +	val = readl(pcie->parf + PCIE20_PARF_PM_CTRL);
+> +	val &= ~REQ_NOT_ENTR_L1;
+> +	writel(val, pcie->parf + PCIE20_PARF_PM_CTRL);
+> +
+>  	if (IS_ENABLED(CONFIG_PCI_MSI)) {
+>  		val = readl(pcie->parf + PCIE20_PARF_AXI_MSTR_WR_ADDR_HALT);
+>  		val |= BIT(31);
+> -- 
+> 2.7.4
 > 
