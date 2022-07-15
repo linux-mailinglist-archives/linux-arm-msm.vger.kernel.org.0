@@ -2,116 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B33B9576587
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Jul 2022 19:02:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 67C7F5766FA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Jul 2022 20:56:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235057AbiGOQ6p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Jul 2022 12:58:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41856 "EHLO
+        id S230076AbiGOS42 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Jul 2022 14:56:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37178 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235098AbiGOQ6n (ORCPT
+        with ESMTP id S229538AbiGOS42 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Jul 2022 12:58:43 -0400
-Received: from mail-yb1-xb2f.google.com (mail-yb1-xb2f.google.com [IPv6:2607:f8b0:4864:20::b2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A232DE0;
-        Fri, 15 Jul 2022 09:58:41 -0700 (PDT)
-Received: by mail-yb1-xb2f.google.com with SMTP id r3so9407735ybr.6;
-        Fri, 15 Jul 2022 09:58:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=6TdTlfwy3VaOHhzh3w0gNaUggIvchfGZQp8YCLWV7oY=;
-        b=BeFoKvyI8i2XygR6nvzh7zbxCtLGryeU7dNvVGH7jDZ1PJIBE83e3+PSNvY6ICgEUU
-         q58JAMYx/pm5PMQl4T8enDXIFWvqkymuoPwDcRRpW+OKwyxDlvr3n55AMW3xIbVHVKoC
-         8NanGry13JZTTag8itRIZr767/KfR//ctoGU3qzM7oTXayebuoVcPUn7s3Sp577DPiz6
-         qi48Fa7d6TVSPC8kxFPnxxN8uP5eK/jzPHexK8fxuMloHOSpedJqLcFd2agQd1WYL7Ik
-         DK0FLWqVYDZZb4lwlzcpy9kPNGX7EqvUn99mW8HHZv4YREmATxb/iaO1SXUUPYKdtszu
-         Pghg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=6TdTlfwy3VaOHhzh3w0gNaUggIvchfGZQp8YCLWV7oY=;
-        b=xrqQKWR6v9L07VP6ohjBsuLvIJsu8XGc/U9S4Avq0DG9ICYdp2XCD37D+A4iVio1bF
-         cU8GdBn85zH/UNysCC1MGi7ssWw63iBGwfmE7taqGUi9ggQFweMX7tM7+AV6zhOry++N
-         3vBz7lPX/QQLQV1eOemWMkH6SmWow4wWxs6rYyKhCh2JtJRZhxClp/3vpIpTj5+qoz8K
-         T34ow275YP8H59C1IV2KLwb4Elqa6W3nFmBn/Qk8/AArwIgFClZ0hae/fBoQVvUpB5Ij
-         gCm5Vn/xvgjY2r1qFdWwA4Qg2bn4wCiApNbrFVQ+PQTt+uvkejFaTB1ebf6swCgDGhp9
-         E6aQ==
-X-Gm-Message-State: AJIora/AMjaT7HLRfbXg5FYXgcZdFc58UvNbDFBzbViyBhvyM1OaGe5I
-        IGpf5oUnSpc+LMMkNmAMTaYVdZXlVJmfXww2sxI=
-X-Google-Smtp-Source: AGRyM1vz/6TKfh7SokVQwLtVlkAQ04xf3jyr6vlrHNLFud++94euqeWrbXjYuq+FWKtOVT/MHqSlYgTvyTdVSt/zQ4w=
-X-Received: by 2002:a5b:44d:0:b0:66f:ad5a:9d0b with SMTP id
- s13-20020a5b044d000000b0066fad5a9d0bmr13586144ybp.79.1657904320602; Fri, 15
- Jul 2022 09:58:40 -0700 (PDT)
-MIME-Version: 1.0
-References: <20220715122903.332535-1-nuno.sa@analog.com> <20220715122903.332535-16-nuno.sa@analog.com>
-In-Reply-To: <20220715122903.332535-16-nuno.sa@analog.com>
-From:   Andy Shevchenko <andy.shevchenko@gmail.com>
-Date:   Fri, 15 Jul 2022 18:58:04 +0200
-Message-ID: <CAHp75Vdxa1MvzQ07abNL1LHB8e88tpBW0qmGx7_gY=CxvVxqkA@mail.gmail.com>
-Subject: Re: [PATCH v3 15/15] iio: inkern: fix coding style warnings
-To:     =?UTF-8?B?TnVubyBTw6E=?= <nuno.sa@analog.com>
-Cc:     OpenBMC Maillist <openbmc@lists.ozlabs.org>,
-        dl-linux-imx <linux-imx@nxp.com>,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-iio <linux-iio@vger.kernel.org>,
-        "open list:BROADCOM NVRAM DRIVER" <linux-mips@vger.kernel.org>,
-        Linux-Renesas <linux-renesas-soc@vger.kernel.org>,
-        "moderated list:ARM/Mediatek SoC support" 
-        <linux-mediatek@lists.infradead.org>,
-        chrome-platform@lists.linux.dev,
-        linux-arm Mailing List <linux-arm-kernel@lists.infradead.org>,
-        Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Gwendal Grignou <gwendal@chromium.org>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Saravanan Sekar <sravanhome@gmail.com>,
-        Tomer Maimon <tmaimon77@gmail.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Lorenzo Bianconi <lorenzo@kernel.org>,
-        Fabio Estevam <festevam@gmail.com>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Olivier Moysan <olivier.moysan@foss.st.com>,
-        Tali Perry <tali.perry1@gmail.com>,
-        Thara Gopinath <thara.gopinath@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Benjamin Fair <benjaminfair@google.com>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Patrick Venture <venture@google.com>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Benson Leung <bleung@chromium.org>,
-        Nancy Yuen <yuenn@google.com>,
-        Miquel Raynal <miquel.raynal@bootlin.com>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Christophe Branchereau <cbranchereau@gmail.com>,
-        Cai Huoqing <cai.huoqing@linux.dev>,
-        Avi Fishman <avifishman70@gmail.com>,
-        Eugen Hristev <eugen.hristev@microchip.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Guenter Roeck <groeck@chromium.org>,
-        Paul Cercueil <paul@crapouillou.net>,
-        Claudiu Beznea <claudiu.beznea@microchip.com>,
-        Andy Gross <agross@kernel.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Michael Hennerich <Michael.Hennerich@analog.com>,
-        Haibo Chen <haibo.chen@nxp.com>,
-        Jishnu Prakash <quic_jprakash@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        Fri, 15 Jul 2022 14:56:28 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 590102DAA2;
+        Fri, 15 Jul 2022 11:56:27 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 26FEs6KC031633;
+        Fri, 15 Jul 2022 18:55:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id; s=qcppdkim1;
+ bh=9wiYGNZN6tmOdPV5LNB6z205KdtgihGjwpgjz9fRBbk=;
+ b=jFD7Hkisz/gPy41HLTpPLMM5U77kczSFF3ZFB79T5ucz2iQz1QwBy7FifKXHP0+2mjvA
+ SvQthBAWzbHnJUwsdhF1OUVoqLG0N/F6XlFU/8ZrLs0P2Ym4pkDQg8Bgqv3P/wlqMnLj
+ nf6mHWQhP55Cfi9J3H3bH1Y/2VMbm8Kv5EknSQgbX32zoHmSgqKfffAtGU3UWInqjso3
+ lAQ2+pv5nIucn9jVkOwCwU4AXT1k1yv1dcfoGlZ8eLxh1TsInX8v60COR+0vvKiPOXbH
+ IiT6NUaicyx/a0ctE80OqJRkBvaqtKHH2GMJW9Teg6tabEbvwHGf4rdwBav4568fFbes uQ== 
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3hawhwjt6t-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 15 Jul 2022 18:55:52 +0000
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+        by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 26FItmTU001945;
+        Fri, 15 Jul 2022 18:55:48 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 3h72rjjuc2-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Fri, 15 Jul 2022 18:55:48 +0000
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 26FItmW8001940;
+        Fri, 15 Jul 2022 18:55:48 GMT
+Received: from hu-sgudaval-hyd.qualcomm.com (hu-vnivarth-hyd.qualcomm.com [10.213.111.166])
+        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 26FItmej001939;
+        Fri, 15 Jul 2022 18:55:48 +0000
+Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 3994820)
+        id 6992C410F; Sat, 16 Jul 2022 00:25:47 +0530 (+0530)
+From:   Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+To:     agross@kernel.org, bjorn.andersson@linaro.org,
+        konrad.dybcio@somainline.org, gregkh@linuxfoundation.org,
+        jirislaby@kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-serial@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     quic_msavaliy@quicinc.com, dianders@chromium.org, mka@chromium.org,
+        swboyd@chromium.org,
+        Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+Subject: [V6] tty: serial: qcom-geni-serial: Fix get_clk_div_rate() which otherwise could return a sub-optimal clock rate.
+Date:   Sat, 16 Jul 2022 00:25:43 +0530
+Message-Id: <1657911343-1909-1-git-send-email-quic_vnivarth@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: b5i3boycqfCgB3ZPaLuNrhL0z4vbzPI6
+X-Proofpoint-ORIG-GUID: b5i3boycqfCgB3ZPaLuNrhL0z4vbzPI6
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.883,Hydra:6.0.517,FMLib:17.11.122.1
+ definitions=2022-07-15_10,2022-07-15_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 mlxscore=0
+ phishscore=0 priorityscore=1501 spamscore=0 malwarescore=0 mlxlogscore=999
+ adultscore=0 bulkscore=0 lowpriorityscore=0 suspectscore=0 impostorscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2206140000
+ definitions=main-2207150084
+X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_NONE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -119,317 +79,148 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jul 15, 2022 at 2:30 PM Nuno S=C3=A1 <nuno.sa@analog.com> wrote:
->
-> Just cosmetics. No functional change intended...
+In the logic around call to clk_round_rate(), for some corner conditions,
+get_clk_div_rate() could return an sub-optimal clock rate. Also, if an
+exact clock rate was not found lowest clock was being returned.
 
-Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Search for suitable clock rate in 2 steps
+a) exact match or within 2% tolerance
+b) within 5% tolerance
+This also takes care of corner conditions.
 
-> Signed-off-by: Nuno S=C3=A1 <nuno.sa@analog.com>
-> ---
->  drivers/iio/inkern.c | 64 ++++++++++++++++++++++----------------------
->  1 file changed, 32 insertions(+), 32 deletions(-)
->
-> diff --git a/drivers/iio/inkern.c b/drivers/iio/inkern.c
-> index fab951546086..0c9b1561af31 100644
-> --- a/drivers/iio/inkern.c
-> +++ b/drivers/iio/inkern.c
-> @@ -45,13 +45,13 @@ int iio_map_array_register(struct iio_dev *indio_dev,=
- struct iio_map *maps)
->         int i =3D 0, ret =3D 0;
->         struct iio_map_internal *mapi;
->
-> -       if (maps =3D=3D NULL)
-> +       if (!maps)
->                 return 0;
->
->         mutex_lock(&iio_map_list_lock);
-> -       while (maps[i].consumer_dev_name !=3D NULL) {
-> +       while (maps[i].consumer_dev_name) {
->                 mapi =3D kzalloc(sizeof(*mapi), GFP_KERNEL);
-> -               if (mapi =3D=3D NULL) {
-> +               if (!mapi) {
->                         ret =3D -ENOMEM;
->                         goto error_ret;
->                 }
-> @@ -69,7 +69,6 @@ int iio_map_array_register(struct iio_dev *indio_dev, s=
-truct iio_map *maps)
->  }
->  EXPORT_SYMBOL_GPL(iio_map_array_register);
->
-> -
->  /*
->   * Remove all map entries associated with the given iio device
->   */
-> @@ -157,7 +156,7 @@ static int __fwnode_iio_channel_get(struct iio_channe=
-l *channel,
->                 return err;
->
->         idev =3D bus_find_device_by_fwnode(&iio_bus_type, iiospec.fwnode)=
-;
-> -       if (idev =3D=3D NULL) {
-> +       if (!idev) {
->                 fwnode_handle_put(iiospec.fwnode);
->                 return -EPROBE_DEFER;
->         }
-> @@ -190,7 +189,7 @@ static struct iio_channel *fwnode_iio_channel_get(str=
-uct fwnode_handle *fwnode,
->                 return ERR_PTR(-EINVAL);
->
->         channel =3D kzalloc(sizeof(*channel), GFP_KERNEL);
-> -       if (channel =3D=3D NULL)
-> +       if (!channel)
->                 return ERR_PTR(-ENOMEM);
->
->         err =3D __fwnode_iio_channel_get(channel, fwnode, index);
-> @@ -307,7 +306,7 @@ static struct iio_channel *fwnode_iio_channel_get_all=
-(struct device *dev)
->
->         /* NULL terminated array to save passing size */
->         chans =3D kcalloc(nummaps + 1, sizeof(*chans), GFP_KERNEL);
-> -       if (chans =3D=3D NULL)
-> +       if (!chans)
->                 return ERR_PTR(-ENOMEM);
->
->         /* Search for FW matches */
-> @@ -332,7 +331,7 @@ static struct iio_channel *iio_channel_get_sys(const =
-char *name,
->         struct iio_channel *channel;
->         int err;
->
-> -       if (name =3D=3D NULL && channel_name =3D=3D NULL)
-> +       if (!(name || channel_name))
->                 return ERR_PTR(-ENODEV);
->
->         /* first find matching entry the channel map */
-> @@ -347,11 +346,11 @@ static struct iio_channel *iio_channel_get_sys(cons=
-t char *name,
->                 break;
->         }
->         mutex_unlock(&iio_map_list_lock);
-> -       if (c =3D=3D NULL)
-> +       if (!c)
->                 return ERR_PTR(-ENODEV);
->
->         channel =3D kzalloc(sizeof(*channel), GFP_KERNEL);
-> -       if (channel =3D=3D NULL) {
-> +       if (!channel) {
->                 err =3D -ENOMEM;
->                 goto error_no_mem;
->         }
-> @@ -363,7 +362,7 @@ static struct iio_channel *iio_channel_get_sys(const =
-char *name,
->                         iio_chan_spec_from_name(channel->indio_dev,
->                                                 c->map->adc_channel_label=
-);
->
-> -               if (channel->channel =3D=3D NULL) {
-> +               if (!channel->channel) {
->                         err =3D -EINVAL;
->                         goto error_no_chan;
->                 }
-> @@ -455,7 +454,7 @@ struct iio_channel *iio_channel_get_all(struct device=
- *dev)
->         int mapind =3D 0;
->         int i, ret;
->
-> -       if (dev =3D=3D NULL)
-> +       if (!dev)
->                 return ERR_PTR(-EINVAL);
->
->         chans =3D fwnode_iio_channel_get_all(dev);
-> @@ -483,7 +482,7 @@ struct iio_channel *iio_channel_get_all(struct device=
- *dev)
->
->         /* NULL terminated array to save passing size */
->         chans =3D kcalloc(nummaps + 1, sizeof(*chans), GFP_KERNEL);
-> -       if (chans =3D=3D NULL) {
-> +       if (!chans) {
->                 ret =3D -ENOMEM;
->                 goto error_ret;
->         }
-> @@ -497,7 +496,7 @@ struct iio_channel *iio_channel_get_all(struct device=
- *dev)
->                 chans[mapind].channel =3D
->                         iio_chan_spec_from_name(chans[mapind].indio_dev,
->                                                 c->map->adc_channel_label=
-);
-> -               if (chans[mapind].channel =3D=3D NULL) {
-> +               if (!chans[mapind].channel) {
->                         ret =3D -EINVAL;
->                         goto error_free_chans;
->                 }
-> @@ -559,14 +558,14 @@ struct iio_channel *devm_iio_channel_get_all(struct=
- device *dev)
->  EXPORT_SYMBOL_GPL(devm_iio_channel_get_all);
->
->  static int iio_channel_read(struct iio_channel *chan, int *val, int *val=
-2,
-> -       enum iio_chan_info_enum info)
-> +                           enum iio_chan_info_enum info)
->  {
->         int unused;
->         int vals[INDIO_MAX_RAW_ELEMENTS];
->         int ret;
->         int val_len =3D 2;
->
-> -       if (val2 =3D=3D NULL)
-> +       if (!val2)
->                 val2 =3D &unused;
->
->         if (!iio_channel_has_info(chan->channel, info))
-> @@ -578,9 +577,10 @@ static int iio_channel_read(struct iio_channel *chan=
-, int *val, int *val2,
->                                         vals, &val_len, info);
->                 *val =3D vals[0];
->                 *val2 =3D vals[1];
-> -       } else
-> +       } else {
->                 ret =3D chan->indio_dev->info->read_raw(chan->indio_dev,
->                                         chan->channel, val, val2, info);
-> +       }
->
->         return ret;
->  }
-> @@ -591,7 +591,7 @@ int iio_read_channel_raw(struct iio_channel *chan, in=
-t *val)
->         int ret;
->
->         mutex_lock(&iio_dev_opaque->info_exist_lock);
-> -       if (chan->indio_dev->info =3D=3D NULL) {
-> +       if (!chan->indio_dev->info) {
->                 ret =3D -ENODEV;
->                 goto err_unlock;
->         }
-> @@ -610,7 +610,7 @@ int iio_read_channel_average_raw(struct iio_channel *=
-chan, int *val)
->         int ret;
->
->         mutex_lock(&iio_dev_opaque->info_exist_lock);
-> -       if (chan->indio_dev->info =3D=3D NULL) {
-> +       if (!chan->indio_dev->info) {
->                 ret =3D -ENODEV;
->                 goto err_unlock;
->         }
-> @@ -624,7 +624,8 @@ int iio_read_channel_average_raw(struct iio_channel *=
-chan, int *val)
->  EXPORT_SYMBOL_GPL(iio_read_channel_average_raw);
->
->  static int iio_convert_raw_to_processed_unlocked(struct iio_channel *cha=
-n,
-> -       int raw, int *processed, unsigned int scale)
-> +                                                int raw, int *processed,
-> +                                                unsigned int scale)
->  {
->         int scale_type, scale_val, scale_val2;
->         int offset_type, offset_val, offset_val2;
-> @@ -657,7 +658,7 @@ static int iio_convert_raw_to_processed_unlocked(stru=
-ct iio_channel *chan,
->         }
->
->         scale_type =3D iio_channel_read(chan, &scale_val, &scale_val2,
-> -                                       IIO_CHAN_INFO_SCALE);
-> +                                     IIO_CHAN_INFO_SCALE);
->         if (scale_type < 0) {
->                 /*
->                  * If no channel scaling is available apply consumer scal=
-e to
-> @@ -702,19 +703,19 @@ static int iio_convert_raw_to_processed_unlocked(st=
-ruct iio_channel *chan,
->  }
->
->  int iio_convert_raw_to_processed(struct iio_channel *chan, int raw,
-> -       int *processed, unsigned int scale)
-> +                                int *processed, unsigned int scale)
->  {
->         struct iio_dev_opaque *iio_dev_opaque =3D to_iio_dev_opaque(chan-=
->indio_dev);
->         int ret;
->
->         mutex_lock(&iio_dev_opaque->info_exist_lock);
-> -       if (chan->indio_dev->info =3D=3D NULL) {
-> +       if (!chan->indio_dev->info) {
->                 ret =3D -ENODEV;
->                 goto err_unlock;
->         }
->
->         ret =3D iio_convert_raw_to_processed_unlocked(chan, raw, processe=
-d,
-> -                                                       scale);
-> +                                                   scale);
->  err_unlock:
->         mutex_unlock(&iio_dev_opaque->info_exist_lock);
->
-> @@ -729,7 +730,7 @@ int iio_read_channel_attribute(struct iio_channel *ch=
-an, int *val, int *val2,
->         int ret;
->
->         mutex_lock(&iio_dev_opaque->info_exist_lock);
-> -       if (chan->indio_dev->info =3D=3D NULL) {
-> +       if (!chan->indio_dev->info) {
->                 ret =3D -ENODEV;
->                 goto err_unlock;
->         }
-> @@ -755,7 +756,7 @@ int iio_read_channel_processed_scale(struct iio_chann=
-el *chan, int *val,
->         int ret;
->
->         mutex_lock(&iio_dev_opaque->info_exist_lock);
-> -       if (chan->indio_dev->info =3D=3D NULL) {
-> +       if (!chan->indio_dev->info) {
->                 ret =3D -ENODEV;
->                 goto err_unlock;
->         }
-> @@ -833,7 +834,7 @@ int iio_read_avail_channel_raw(struct iio_channel *ch=
-an,
->         int type;
->
->         ret =3D iio_read_avail_channel_attribute(chan, vals, &type, lengt=
-h,
-> -                                        IIO_CHAN_INFO_RAW);
-> +                                              IIO_CHAN_INFO_RAW);
->
->         if (ret >=3D 0 && type !=3D IIO_VAL_INT)
->                 /* raw values are assumed to be IIO_VAL_INT */
-> @@ -917,7 +918,7 @@ int iio_get_channel_type(struct iio_channel *chan, en=
-um iio_chan_type *type)
->         /* Need to verify underlying driver has not gone away */
->
->         mutex_lock(&iio_dev_opaque->info_exist_lock);
-> -       if (chan->indio_dev->info =3D=3D NULL) {
-> +       if (!chan->indio_dev->info) {
->                 ret =3D -ENODEV;
->                 goto err_unlock;
->         }
-> @@ -944,7 +945,7 @@ int iio_write_channel_attribute(struct iio_channel *c=
-han, int val, int val2,
->         int ret;
->
->         mutex_lock(&iio_dev_opaque->info_exist_lock);
-> -       if (chan->indio_dev->info =3D=3D NULL) {
-> +       if (!chan->indio_dev->info) {
->                 ret =3D -ENODEV;
->                 goto err_unlock;
->         }
-> @@ -978,9 +979,8 @@ unsigned int iio_get_channel_ext_info_count(struct ii=
-o_channel *chan)
->  }
->  EXPORT_SYMBOL_GPL(iio_get_channel_ext_info_count);
->
-> -static const struct iio_chan_spec_ext_info *iio_lookup_ext_info(
-> -                                               const struct iio_channel =
-*chan,
-> -                                               const char *attr)
-> +static const struct iio_chan_spec_ext_info *
-> +iio_lookup_ext_info(const struct iio_channel *chan, const char *attr)
->  {
->         const struct iio_chan_spec_ext_info *ext_info;
->
-> --
-> 2.37.1
->
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Fixes: c2194bc999d4 ("tty: serial: qcom-geni-serial: Remove uart frequency table. Instead, find suitable frequency with call to clk_round_rate")
+Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+---
+v6: moved logging to caller function
+v5: corrected format specifiers for logs
+v4: replaced pr_dbg calls with dev_dbg
+v3: simplified algorithm further, fixed robot compile warnings
+v2: removed minor optimisations to make more readable
+v1: intial patch contained slightly complicated logic
+---
+ drivers/tty/serial/qcom_geni_serial.c | 88 +++++++++++++++++++++--------------
+ 1 file changed, 53 insertions(+), 35 deletions(-)
 
+diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
+index 2e23b65..624ffe1 100644
+--- a/drivers/tty/serial/qcom_geni_serial.c
++++ b/drivers/tty/serial/qcom_geni_serial.c
+@@ -943,52 +943,63 @@ static int qcom_geni_serial_startup(struct uart_port *uport)
+ 	return 0;
+ }
+ 
+-static unsigned long get_clk_div_rate(struct clk *clk, unsigned int baud,
+-			unsigned int sampling_rate, unsigned int *clk_div)
++static unsigned long find_clk_rate_in_tol(struct clk *clk, unsigned int desired_clk,
++			unsigned int *clk_div, unsigned int percent_tol)
+ {
+-	unsigned long ser_clk;
+-	unsigned long desired_clk;
+-	unsigned long freq, prev;
++	unsigned long freq;
+ 	unsigned long div, maxdiv;
+-	int64_t mult;
+-
+-	desired_clk = baud * sampling_rate;
+-	if (!desired_clk) {
+-		pr_err("%s: Invalid frequency\n", __func__);
+-		return 0;
+-	}
++	u64 mult;
++	unsigned long offset, abs_tol, achieved;
+ 
++	abs_tol = div_u64((u64)desired_clk * percent_tol, 100);
+ 	maxdiv = CLK_DIV_MSK >> CLK_DIV_SHFT;
+-	prev = 0;
+-
+-	for (div = 1; div <= maxdiv; div++) {
+-		mult = div * desired_clk;
+-		if (mult > ULONG_MAX)
++	div = 1;
++	while (div <= maxdiv) {
++		mult = (u64)div * desired_clk;
++		if (mult != (unsigned long)mult)
+ 			break;
+ 
+-		freq = clk_round_rate(clk, (unsigned long)mult);
+-		if (!(freq % desired_clk)) {
+-			ser_clk = freq;
+-			break;
+-		}
++		offset = div * abs_tol;
++		freq = clk_round_rate(clk, mult - offset);
+ 
+-		if (!prev)
+-			ser_clk = freq;
+-		else if (prev == freq)
++		/* Can only get lower if we're done */
++		if (freq < mult - offset)
+ 			break;
+ 
+-		prev = freq;
+-	}
++		/*
++		 * Re-calculate div in case rounding skipped rates but we
++		 * ended up at a good one, then check for a match.
++		 */
++		div = DIV_ROUND_CLOSEST(freq, desired_clk);
++		achieved = DIV_ROUND_CLOSEST(freq, div);
++		if (achieved <= desired_clk + abs_tol &&
++		    achieved >= desired_clk - abs_tol) {
++			*clk_div = div;
++			return freq;
++		}
+ 
+-	if (!ser_clk) {
+-		pr_err("%s: Can't find matching DFS entry for baud %d\n",
+-								__func__, baud);
+-		return ser_clk;
++		div = DIV_ROUND_UP(freq, desired_clk);
+ 	}
+ 
+-	*clk_div = ser_clk / desired_clk;
+-	if (!(*clk_div))
+-		*clk_div = 1;
++	return 0;
++}
++
++static unsigned long get_clk_div_rate(struct clk *clk, unsigned int baud,
++			unsigned int sampling_rate, unsigned int *clk_div)
++{
++	unsigned long ser_clk;
++	unsigned long desired_clk;
++
++	desired_clk = baud * sampling_rate;
++	if (!desired_clk)
++		return 0;
++
++	/*
++	 * try to find a clock rate within 2% tolerance, then within 5%
++	 */
++	ser_clk = find_clk_rate_in_tol(clk, desired_clk, clk_div, 2);
++	if (!ser_clk)
++		ser_clk = find_clk_rate_in_tol(clk, desired_clk, clk_div, 5);
+ 
+ 	return ser_clk;
+ }
+@@ -1023,8 +1034,15 @@ static void qcom_geni_serial_set_termios(struct uart_port *uport,
+ 
+ 	clk_rate = get_clk_div_rate(port->se.clk, baud,
+ 		sampling_rate, &clk_div);
+-	if (!clk_rate)
++	if (!clk_rate) {
++		dev_err(port->se.dev,
++			"Couldn't find suitable clock rate for %lu\n",
++			baud * sampling_rate);
+ 		goto out_restart_rx;
++	}
++
++	dev_dbg(port->se.dev, "desired_rate-%lu, clk_rate-%lu, clk_div-%u\n",
++			baud * sampling_rate, clk_rate, clk_div);
+ 
+ 	uport->uartclk = clk_rate;
+ 	dev_pm_opp_set_rate(uport->dev, clk_rate);
+-- 
+Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, hosted by the Linux Foundation.
 
---=20
-With Best Regards,
-Andy Shevchenko
