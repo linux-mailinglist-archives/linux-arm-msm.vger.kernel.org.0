@@ -2,328 +2,181 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ECF91575FEC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Jul 2022 13:21:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2C442576071
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Jul 2022 13:29:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231148AbiGOLV0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Jul 2022 07:21:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42822 "EHLO
+        id S229820AbiGOL3i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Jul 2022 07:29:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46906 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229452AbiGOLVZ (ORCPT
+        with ESMTP id S234462AbiGOL3U (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Jul 2022 07:21:25 -0400
-Received: from mail-qt1-x82e.google.com (mail-qt1-x82e.google.com [IPv6:2607:f8b0:4864:20::82e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2267B87C1C;
-        Fri, 15 Jul 2022 04:21:24 -0700 (PDT)
-Received: by mail-qt1-x82e.google.com with SMTP id r17so3490944qtx.6;
-        Fri, 15 Jul 2022 04:21:24 -0700 (PDT)
+        Fri, 15 Jul 2022 07:29:20 -0400
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8668B8AB12;
+        Fri, 15 Jul 2022 04:28:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :content-transfer-encoding:user-agent:mime-version;
-        bh=7aAwPpbyNhMgBtXYplVX7e+e1ZXjzCZEFZQ0/Qp+rZs=;
-        b=XdinAxILUx5V4/TMUwVnHjrF2YH64IZZFeCyINRd3Uc2T7zK5jdlBkPARxgAUQPknQ
-         jCfx0227x6mZ/nJvyEdEOP0X2HcETQpjzcvpoVctcPe8hpu24084l6+Zfq6C9Yp+Pe19
-         LGKjBB+xZcEbyihQC5Jva22iuE9RvoR1T1A0aT5gZbbl2uX8Yfn+4VkAcRNJ2oRqIyBp
-         hvqhsHzhzq2ZXGWh4u48/NdYzataIRkzPk7S3WkMEcPz42YtmZsCcrQ4fU8zYMkCmEb3
-         CBLLe2wOl7idYi+SWFz4xCdXZ1vxsiFpcZo/yuvmbHWMT7smdxKunQKgJNVUdlfCfqdO
-         L3zw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:content-transfer-encoding:user-agent:mime-version;
-        bh=7aAwPpbyNhMgBtXYplVX7e+e1ZXjzCZEFZQ0/Qp+rZs=;
-        b=C32l/yvn3gn5zO6KUh/FKMf6/PfjQKJcyyG1FRiIjYeMrRB/pPLfLYrogpaKzZs6hz
-         F9Kop2gErdrdSGoX78NlIMSEsORVBVOuu6FfJHTzYuGY+e3UDLoHNx5J48Ssm/A5SuO+
-         K76YvZv/VGaXzXJLBUwAVmOMmyFmy4c+gCKp0loZZC1tPw9a+9R2y86DCepmFW7UYU1V
-         YMmcHwsrgck1CUhc53UERSb3YtE1VE/3O1BAQ5FK53xdXqeqSsUxtgCLEdk2tFQmNXhq
-         ri/Q/oRJe2Gh+pi5BC36yQVwoyyo3G9Ei/lCaXHnVtBoqSbRyadHrr0pYqYKLr0JxykK
-         4O3g==
-X-Gm-Message-State: AJIora8PeeNWzLKO/6GHVfsZX4CW1T2u3HxtYjIX48xMB38wkPD9+O+k
-        qeqssOuRx6oYALiUUgbr7Yk=
-X-Google-Smtp-Source: AGRyM1uAV6CcmfwBUiFodYja+YAI93swdvRkjmOrj/G87DJHG1tvUago8AS2lP01zuUI+2pKWO0gZQ==
-X-Received: by 2002:a05:622a:20f:b0:31e:de95:3cd3 with SMTP id b15-20020a05622a020f00b0031ede953cd3mr944896qtx.458.1657884082996;
-        Fri, 15 Jul 2022 04:21:22 -0700 (PDT)
-Received: from p200300f6ef036f005de6a4d0d791ed01.dip0.t-ipconnect.de (p200300f6ef036f005de6a4d0d791ed01.dip0.t-ipconnect.de. [2003:f6:ef03:6f00:5de6:a4d0:d791:ed01])
-        by smtp.gmail.com with ESMTPSA id ay7-20020a05620a178700b006b578ff5dfasm3767112qkb.41.2022.07.15.04.21.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 15 Jul 2022 04:21:22 -0700 (PDT)
-Message-ID: <83d816f52b3d4194b51b20f31b875055f63cd718.camel@gmail.com>
-Subject: Re: [PATCH v2 13/15] iio: adc: stm32-adc: convert to device
- properties
-From:   Nuno =?ISO-8859-1?Q?S=E1?= <noname.nuno@gmail.com>
-To:     Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
-        Nuno =?ISO-8859-1?Q?S=E1?= <nuno.sa@analog.com>,
-        linux-arm-msm@vger.kernel.org, openbmc@lists.ozlabs.org,
-        linux-renesas-soc@vger.kernel.org,
-        linux-mediatek@lists.infradead.org, linux-imx@nxp.com,
-        linux-mips@vger.kernel.org,
-        Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-        linux-iio@vger.kernel.org, chrome-platform@lists.linux.dev,
-        linux-arm-kernel@lists.infradead.org,
-        linux-stm32@st-md-mailman.stormreply.com
-Cc:     Andy Gross <agross@kernel.org>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        Benson Leung <bleung@chromium.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Tomer Maimon <tmaimon77@gmail.com>,
-        Zhang Rui <rui.zhang@intel.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Eugen Hristev <eugen.hristev@microchip.com>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Benjamin Fair <benjaminfair@google.com>,
-        Nancy Yuen <yuenn@google.com>,
-        Jishnu Prakash <quic_jprakash@quicinc.com>,
-        Christophe Branchereau <cbranchereau@gmail.com>,
-        Avi Fishman <avifishman70@gmail.com>,
-        Tali Perry <tali.perry1@gmail.com>,
-        Michael Hennerich <Michael.Hennerich@analog.com>,
-        Miquel Raynal <miquel.raynal@bootlin.com>,
-        Claudiu Beznea <claudiu.beznea@microchip.com>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Thara Gopinath <thara.gopinath@linaro.org>,
-        Cai Huoqing <cai.huoqing@linux.dev>,
-        Fabio Estevam <festevam@gmail.com>,
-        Olivier Moysan <olivier.moysan@foss.st.com>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Haibo Chen <haibo.chen@nxp.com>, Arnd Bergmann <arnd@arndb.de>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Patrick Venture <venture@google.com>,
-        Amit Kucheria <amitk@kernel.org>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Lorenzo Bianconi <lorenzo@kernel.org>,
-        Paul Cercueil <paul@crapouillou.net>,
-        Andy Shevchenko <andy.shevchenko@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Gwendal Grignou <gwendal@chromium.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Saravanan Sekar <sravanhome@gmail.com>,
-        Guenter Roeck <groeck@chromium.org>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Linus Walleij <linus.walleij@linaro.org>
-Date:   Fri, 15 Jul 2022 13:22:18 +0200
-In-Reply-To: <c4385216-1d9e-34b3-58ea-edf8d9ed4cd8@foss.st.com>
-References: <20220711123835.811358-1-nuno.sa@analog.com>
-         <20220711123835.811358-14-nuno.sa@analog.com>
-         <f0f150cf-586f-9f13-81b0-cb95bd0d8f23@foss.st.com>
-         <ca7dc3801e29ddaa59f868c20d491d15541522d8.camel@gmail.com>
-         <c4385216-1d9e-34b3-58ea-edf8d9ed4cd8@foss.st.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.44.3 
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1657884499; x=1689420499;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=7ZB7lqxV4Y4LrAA0zUOAfQ/EcK4SUphXxPGyRWxI6Ec=;
+  b=yKJdX73YDUC15zUgdh/23BxB12J04EOWTqmEKU/nLZJLUUCnzlkMNi7M
+   o1ocTVNk+/rPVFsWsrhsG3+fnOF3zXcC2aoGW9ZyFhLFBWNN6NHPjbklM
+   hhzvc3s5izKBtpD6doV+58/jQsSClRnVScBaOsBvnRUmONIFwGzaipaa4
+   I=;
+Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 15 Jul 2022 04:28:19 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Jul 2022 04:28:18 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Fri, 15 Jul 2022 04:28:18 -0700
+Received: from [10.216.15.238] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Fri, 15 Jul
+ 2022 04:28:09 -0700
+Message-ID: <d7827b02-fa9c-ee16-734c-168c12516006@quicinc.com>
+Date:   Fri, 15 Jul 2022 16:58:04 +0530
 MIME-Version: 1.0
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Subject: Re: [PATCH v5] PCI/ASPM: Update LTR threshold based upon reported max
+ latencies
+Content-Language: en-US
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+CC:     Bjorn Helgaas <bhelgaas@google.com>, <linux-pci@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_vbadigan@quicinc.com>, <quic_hemantk@quicinc.com>,
+        <quic_nitegupt@quicinc.com>, <quic_skananth@quicinc.com>,
+        <quic_ramkri@quicinc.com>, <swboyd@chromium.org>,
+        Prasad Malisetty <quic_pmaliset@quicinc.com>,
+        "Saheed O. Bolarinwa" <refactormyself@gmail.com>,
+        Rajat Jain <rajatja@google.com>,
+        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
+        <helgaas@kernel.org>
+References: <1654242861-15695-1-git-send-email-quic_krichai@quicinc.com>
+ <1654837710-30561-1-git-send-email-quic_krichai@quicinc.com>
+ <20f88022-e9b1-53b3-8832-85edc713ef6a@quicinc.com>
+ <20220715082852.GC12197@workstation>
+From:   Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
+In-Reply-To: <20220715082852.GC12197@workstation>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 2022-07-13 at 17:48 +0200, Fabrice Gasnier wrote:
-> On 7/12/22 12:33, Nuno S=C3=A1 wrote:
-> > Hi Fabrice,
-> >=20
-> > Nice that someone in ST is looking at this one :)
->=20
-> Hi Nuno,
->=20
-> Thank you for taking care of converting all these drivers to device
-> properties, including this one :-).
->=20
-> >=20
-> > On Mon, 2022-07-11 at 16:04 +0200, Fabrice Gasnier wrote:
-> > > On 7/11/22 14:38, Nuno S=C3=A1 wrote:
-> > > > Make the conversion to firmware agnostic device properties. As
-> > > > part
-> > > > of
-> > > > the conversion the IIO inkern interface 'of_xlate()' is also
-> > > > converted to
-> > > > 'fwnode_xlate()'. The goal is to completely drop 'of_xlate' and
-> > > > hence OF
-> > > > dependencies from IIO.
-> > > >=20
-> > > > Signed-off-by: Nuno S=C3=A1 <nuno.sa@analog.com>
-> > > > ---
-> > > > =C2=A0drivers/iio/adc/stm32-adc.c | 121 ++++++++++++++++++++-------=
--
-> > > > ----
-> > > > ----
-> > > > =C2=A01 file changed, 67 insertions(+), 54 deletions(-)
-> > > >=20
-> > > > diff --git a/drivers/iio/adc/stm32-adc.c
-> > > > b/drivers/iio/adc/stm32-
-> > > > adc.c
-> > > > index 3985fe972892..e55859113df8 100644
-> > > > --- a/drivers/iio/adc/stm32-adc.c
-> > > > +++ b/drivers/iio/adc/stm32-adc.c
-> > > > @@ -21,11 +21,11 @@
-> > > > =C2=A0#include <linux/io.h>
-> > > > =C2=A0#include <linux/iopoll.h>
-> > > > =C2=A0#include <linux/module.h>
-> > > > +#include <linux/mod_devicetable.h>
-> > > > =C2=A0#include <linux/nvmem-consumer.h>
-> > > > =C2=A0#include <linux/platform_device.h>
-> > > > =C2=A0#include <linux/pm_runtime.h>
-> > > > -#include <linux/of.h>
-> > > > -#include <linux/of_device.h>
-> > > > +#include <linux/property.h>
-> > > > =C2=A0
-> > > > =C2=A0#include "stm32-adc-core.h"
-> > > > =C2=A0
-> > > > @@ -1530,8 +1530,8 @@ static int
-> > > > stm32_adc_update_scan_mode(struct
-> > > > iio_dev *indio_dev,
-> > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0return ret;
-> > > > =C2=A0}
-> > > > =C2=A0
-> > > > -static int stm32_adc_of_xlate(struct iio_dev *indio_dev,
-> > > > -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0 const struct of_phandle_args
-> > > > *iiospec)
-> > > > +static int stm32_adc_fwnode_xlate(struct iio_dev *indio_dev,
-> > > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 const struct
-> > > > fwnode_reference_args *iiospec)
-> > > > =C2=A0{
-> > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0int i;
-> > > > =C2=A0
-> > > > @@ -1585,7 +1585,7 @@ static const struct iio_info
-> > > > stm32_adc_iio_info =3D {
-> > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0.hwfifo_set_waterma=
-rk =3D stm32_adc_set_watermark,
-> > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0.update_scan_mode =
-=3D stm32_adc_update_scan_mode,
-> > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0.debugfs_reg_access=
- =3D stm32_adc_debugfs_reg_access,
-> > > > -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0.of_xlate =3D stm32_adc_=
-of_xlate,
-> > > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0.fwnode_xlate =3D stm32_=
-adc_fwnode_xlate,
-> > > > =C2=A0};
-> > > > =C2=A0
-> > > > =C2=A0static unsigned int stm32_adc_dma_residue(struct stm32_adc
-> > > > *adc)
-> > > > @@ -1782,14 +1782,14 @@ static const struct
-> > > > iio_chan_spec_ext_info
-> > > > stm32_adc_ext_info[] =3D {
-> > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0{},
-> > > > =C2=A0};
-> > > > =C2=A0
-> > > > -static int stm32_adc_of_get_resolution(struct iio_dev
-> > > > *indio_dev)
-> > > > +static int stm32_adc_fw_get_resolution(struct iio_dev
-> > > > *indio_dev)
-> > > > =C2=A0{
-> > > > -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0struct device_node *node=
- =3D indio_dev->dev.of_node;
-> > > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0struct device *dev =3D &=
-indio_dev->dev;
-> > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0struct stm32_adc *a=
-dc =3D iio_priv(indio_dev);
-> > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0unsigned int i;
-> > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0u32 res;
-> > > > =C2=A0
-> > > > -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0if (of_property_read_u32=
-(node, "assigned-resolution-
-> > > > bits",
-> > > > &res))
-> > > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0if (device_property_read=
-_u32(dev, "assigned-resolution-
-> > > > bits", &res))
-> > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0res =3D adc->cfg->adc_info->resolutions[0];
-> > > > =C2=A0
-> > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0for (i =3D 0; i < a=
-dc->cfg->adc_info->num_res; i++)
-> > > > @@ -1873,11 +1873,11 @@ static void
-> > > > stm32_adc_chan_init_one(struct
-> > > > iio_dev *indio_dev,
-> > > > =C2=A0
-> > > > =C2=A0static int stm32_adc_get_legacy_chan_count(struct iio_dev
-> > > > *indio_dev, struct stm32_adc *adc)
-> > > > =C2=A0{
-> > > > -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0struct device_node *node=
- =3D indio_dev->dev.of_node;
-> > > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0struct device *dev =3D &=
-indio_dev->dev;
-> > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0const struct stm32_=
-adc_info *adc_info =3D adc->cfg-
-> > > > >adc_info;
-> > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0int num_channels =
-=3D 0, ret;
-> > > > =C2=A0
-> > > > -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0ret =3D of_property_coun=
-t_u32_elems(node, "st,adc-
-> > > > channels");
-> > > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0ret =3D device_property_=
-count_u32(dev, "st,adc-
-> > > > channels");
-> > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0if (ret > adc_info-=
->max_channels) {
-> > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0dev_err(&indio_dev->dev, "Bad st,adc-
-> > > > channels?\n");
-> > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0return -EINVAL;
-> > > > @@ -1885,8 +1885,8 @@ static int
-> > > > stm32_adc_get_legacy_chan_count(struct iio_dev *indio_dev,
-> > > > struct
-> > > > stm
-> > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0num_channels +=3D ret;
-> > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0}
-> > > > =C2=A0
-> > > > -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0ret =3D of_property_coun=
-t_elems_of_size(node, "st,adc-
-> > > > diff-
-> > > > channels",
-> > > > -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 sizeof(struct
-> > > > stm32_adc_diff_channel));
-> > > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0/* each st,adc-diff-chan=
-nels is a group of 2 u32 */
-> > > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0ret =3D device_property_=
-count_u64(dev, "st,adc-diff-
-> > > > channels");
-> >=20
-> > Are you fine with this change (still does not have any reference to
-> > the
-> > target struct but the comment might be helpful and there's no magic
-> > 2)?
->=20
->=20
-> Since you added that comment, this sounds better. IMHO, This still
-> looks
-> a bit weird. I'd feel more comfortable by using u32 API for a
-> 'uint32-matrix' as defined in dt-bindings.
-> Strictly speaking, something like
-> sizeof(struct stm32_adc_diff_channel) / sizeof(u32) could be used,
-> along
-> with this comment and device_property_count_u32() to make it clear ?
->=20
 
-No strong option so I can do as you prefer:
+On 7/15/2022 1:58 PM, Manivannan Sadhasivam wrote:
+> On Wed, Jun 15, 2022 at 06:53:18PM +0530, Krishna Chaitanya Chundru wrote:
+>> A Gentle remainder please review it.
+>>
+>> On 6/10/2022 10:38 AM, Krishna chaitanya chundru wrote:
+>>> From: Prasad Malisetty <quic_pmaliset@quicinc.com>
+>>>
+>>> In ASPM driver, LTR threshold scale and value are updated based on
+>>> tcommon_mode and t_poweron values. In kioxia NVMe L1.2 is failing due to
+>>> LTR threshold scale and value are greater values than max snoop/non-snoop
+>>> value.
+>>>
+>>> Based on PCIe r4.1, sec 5.5.1, L1.2 substate must be entered when
+>>> reported snoop/no-snoop values is greather than or equal to
+>>> LTR_L1.2_THRESHOLD value.
+>>>
+>>> Signed-off-by: Prasad Malisetty  <quic_pmaliset@quicinc.com>
+>>> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> As Stephen noted in previous verison, you should sent the newer versions
+> separately and not as a reply to previous ones. So please sent v6 with
+> my tag as well.
+>
+> Thanks,
+> Mani
 
-	ret =3D device_property_count_u32();
-	if (ret /=C2=A0
-(sizeof(struct stm32_adc_diff_channel) / sizeof(u32)) > max_chan) {
-		...
-	}
-	...
+ok mani I will send the v6 as you suggested.
 
-Probably it's a good idea to store that sizeof() division in a local
-variable :)
 
-- Nuno S=C3=A1
+Thanks
 
-> > >=20
->=20
+Krishna chaitanya.
+
+>
+>>> ---
+>>>
+>>> I am taking this patch forward as prasad is no more working with our org.
+>>> Changes since v4:
+>>> 	- Replaced conditional statements with min and max.
+>>> changes since v3:
+>>> 	- Changed the logic to include this condition "snoop/nosnoop
+>>> 	  latencies are not equal to zero and lower than LTR_L1.2_THRESHOLD"
+>>> Changes since v2:
+>>> 	- Replaced LTRME logic with max snoop/no-snoop latencies check.
+>>> Changes since v1:
+>>> 	- Added missing variable declaration in v1 patch
+>>> ---
+>>>    drivers/pci/pcie/aspm.c | 30 ++++++++++++++++++++++++++++++
+>>>    1 file changed, 30 insertions(+)
+>>>
+>>> diff --git a/drivers/pci/pcie/aspm.c b/drivers/pci/pcie/aspm.c
+>>> index a96b742..676c03e 100644
+>>> --- a/drivers/pci/pcie/aspm.c
+>>> +++ b/drivers/pci/pcie/aspm.c
+>>> @@ -461,14 +461,36 @@ static void aspm_calc_l1ss_info(struct pcie_link_state *link,
+>>>    {
+>>>    	struct pci_dev *child = link->downstream, *parent = link->pdev;
+>>>    	u32 val1, val2, scale1, scale2;
+>>> +	u32 max_val, max_scale, max_snp_scale, max_snp_val, max_nsnp_scale, max_nsnp_val;
+>>>    	u32 t_common_mode, t_power_on, l1_2_threshold, scale, value;
+>>>    	u32 ctl1 = 0, ctl2 = 0;
+>>>    	u32 pctl1, pctl2, cctl1, cctl2;
+>>>    	u32 pl1_2_enables, cl1_2_enables;
+>>> +	u16 ltr;
+>>> +	u16 max_snoop_lat, max_nosnoop_lat;
+>>>    	if (!(link->aspm_support & ASPM_STATE_L1_2_MASK))
+>>>    		return;
+>>> +	ltr = pci_find_ext_capability(child, PCI_EXT_CAP_ID_LTR);
+>>> +	if (!ltr)
+>>> +		return;
+>>> +
+>>> +	pci_read_config_word(child, ltr + PCI_LTR_MAX_SNOOP_LAT, &max_snoop_lat);
+>>> +	pci_read_config_word(child, ltr + PCI_LTR_MAX_NOSNOOP_LAT, &max_nosnoop_lat);
+>>> +
+>>> +	max_snp_scale = (max_snoop_lat & PCI_LTR_SCALE_MASK) >> PCI_LTR_SCALE_SHIFT;
+>>> +	max_snp_val = max_snoop_lat & PCI_LTR_VALUE_MASK;
+>>> +
+>>> +	max_nsnp_scale = (max_nosnoop_lat & PCI_LTR_SCALE_MASK) >> PCI_LTR_SCALE_SHIFT;
+>>> +	max_nsnp_val = max_nosnoop_lat & PCI_LTR_VALUE_MASK;
+>>> +
+>>> +	/* choose the greater max scale value between snoop and no snoop value*/
+>>> +	max_scale = max(max_snp_scale, max_nsnp_scale);
+>>> +
+>>> +	/* choose the greater max value between snoop and no snoop scales */
+>>> +	max_val = max(max_snp_val, max_nsnp_val);
+>>> +
+>>>    	/* Choose the greater of the two Port Common_Mode_Restore_Times */
+>>>    	val1 = (parent_l1ss_cap & PCI_L1SS_CAP_CM_RESTORE_TIME) >> 8;
+>>>    	val2 = (child_l1ss_cap & PCI_L1SS_CAP_CM_RESTORE_TIME) >> 8;
+>>> @@ -501,6 +523,14 @@ static void aspm_calc_l1ss_info(struct pcie_link_state *link,
+>>>    	 */
+>>>    	l1_2_threshold = 2 + 4 + t_common_mode + t_power_on;
+>>>    	encode_l12_threshold(l1_2_threshold, &scale, &value);
+>>> +
+>>> +	/*
+>>> +	 * Based on PCIe r4.1, sec 5.5.1, L1.2 substate must be entered when reported
+>>> +	 * snoop/no-snoop values are greather than or equal to LTR_L1.2_THRESHOLD value.
+>>> +	 */
+>>> +	scale = min(scale, max_scale);
+>>> +	value = min(value, max_val);
+>>> +
+>>>    	ctl1 |= t_common_mode << 8 | scale << 29 | value << 16;
+>>>    	/* Some broken devices only support dword access to L1 SS */
