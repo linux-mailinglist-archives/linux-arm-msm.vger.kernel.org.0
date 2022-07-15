@@ -2,107 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DD44D576437
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Jul 2022 17:12:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6778557651F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Jul 2022 18:09:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233428AbiGOPMv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Jul 2022 11:12:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51008 "EHLO
+        id S232388AbiGOQJv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Jul 2022 12:09:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39760 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233383AbiGOPMu (ORCPT
+        with ESMTP id S229778AbiGOQJu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Jul 2022 11:12:50 -0400
-Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1BFB7CB56
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Jul 2022 08:12:48 -0700 (PDT)
-Received: by mail-lj1-x22a.google.com with SMTP id v15so2303445ljc.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Jul 2022 08:12:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=76oZtBS/foVZEkUC9OiorabaBtf3lSNeNe99cdZLStA=;
-        b=v5v5inoEi6PQuOUkPu6nO36nLN/ZY8ivrBX1AUTWy6RGRCdAv0Ptwd8yobv7HhXrys
-         7yg9wYXKmTfUI4Imf3ZNtTzCKu+O77avrHbvOblPAd7AgOfyKE2g/1TdeuNXuV1sZnND
-         iQweLAJ8iDH6b/wPddg7lvKXZSiT+nsMiScCwT2I7mhhwfTNn2VcKYxjIlUfap8Yfkbu
-         QZrD20fpVrCsfaJDjvOhuQyButVlqV60wqfW34xg3zdAHXH9zIcS+dgQThlwGwmRySDc
-         prUM3kOpIkdDVup+YY+sPRYqBWbMpaUeFL/zdgEF16zZMQsdZ5XVvlNvU9ILX5U+XrzI
-         lcyw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=76oZtBS/foVZEkUC9OiorabaBtf3lSNeNe99cdZLStA=;
-        b=1VrL8Bj7/NRVqraGFg+pfR9HJ+MY11pWEARjoRymZyAdGRPa1rMEAfKJqPQWpepRGD
-         XlsSL1/84zYH4wCZnCxQdkc5R06n4RFwRr+/v/4KB76tMhbtSq0CIhTd8DlbBQWG+p5k
-         /spkbPNIoWtfnnBHLCJGK3ms736PXEb8Jdb7cDG/hY0ljqypNSeYvEBBYKxKZZiOMqnl
-         Q6Uy8a9QIeJkbtLayQAfMq1DU1M1Tkp1rBOdgwqOM8KiDQaGXkmoRj0QqXeAP8uneR+M
-         PQxVc+qY+nbNuyFmCad2kw+dfPyphd4T7SOkam7hTC5New/AkbLdqmHrYKfSs75XxbBT
-         n2FA==
-X-Gm-Message-State: AJIora9+A0vLmiW/Rr76cnpftMqZCyOI+MQTh9n3rshukyEM9oe5fqOH
-        YPaZ9YDV/fk6Rteed7UTrlrDAg==
-X-Google-Smtp-Source: AGRyM1ts3yMPaVarrKM2ncpHF2S97FKxw1xuAlGlSpaA7rSqLRt4K5FbQ1crX4P4is8LeEATejkiMA==
-X-Received: by 2002:a2e:594:0:b0:25d:47ee:85ff with SMTP id 142-20020a2e0594000000b0025d47ee85ffmr7479924ljf.435.1657897966980;
-        Fri, 15 Jul 2022 08:12:46 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id s5-20020a056512214500b0047255d2111csm940406lfr.75.2022.07.15.08.12.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 15 Jul 2022 08:12:46 -0700 (PDT)
-Message-ID: <c5251107-33f5-d5e9-7977-eccb1c6e1130@linaro.org>
-Date:   Fri, 15 Jul 2022 18:12:45 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: (subset) [PATCH v6 0/4] arm: qcom: qcom-apq8064: add separate
- device node for tsens
-Content-Language: en-GB
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
+        Fri, 15 Jul 2022 12:09:50 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0C613ED47;
+        Fri, 15 Jul 2022 09:09:49 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 6A8B7B82D2C;
+        Fri, 15 Jul 2022 16:09:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 331FFC34115;
+        Fri, 15 Jul 2022 16:09:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1657901387;
+        bh=BjSbIr+2Nq9y04Bvcith1dzZyRMQ2BPB5HQmV40tK+M=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=IONll5Bl8RuRVB5WgFNBRujgBOHSRrA7LH+JNiXzk27U+8RZEzQpKokOWinstWW1U
+         kC+iHFPIkI3Us1AjnpHNh2bIfNPm6dhg6ICGUoWjMirxoTBA1fBwjHUZXPezlEj9AA
+         78+KT0xlfJgzgwOPWVGoyY1R/5rPpuSQ1/Fc803Ac9eKPUMAUUjl0m4I6qCLq+AVmc
+         GC6SuM1/9uGb3b3w0HYulz5Xw8J8meMUAZl/PWKNNEKMP0rY9N1MP5vcFRgnaOdBfg
+         5QM1gLHlIpVTsI2IZ+6TM4Kp3qoOv7F1k6u/j6EvWc60jebWqP2bHVUwowxwmAinxr
+         e4M1JPNZnzt/Q==
+Date:   Fri, 15 Jul 2022 21:39:33 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Viresh Kumar <viresh.kumar@linaro.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Andy Gross <agross@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <swboyd@chromium.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-clk@vger.kernel.org
-References: <20220521151437.1489111-1-dmitry.baryshkov@linaro.org>
- <165716107313.864223.16495504646338874492.b4-ty@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <165716107313.864223.16495504646338874492.b4-ty@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Vincent Guittot <vincent.guittot@linaro.org>,
+        Johan Hovold <johan@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org
+Subject: Re: [RFC PATCH 0/4] cpufreq: qcom-hw: Move clocks to CPU node
+Message-ID: <20220715160933.GD12197@workstation>
+References: <cover.1657695140.git.viresh.kumar@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <cover.1657695140.git.viresh.kumar@linaro.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 07/07/2022 05:31, Bjorn Andersson wrote:
-> On Sat, 21 May 2022 18:14:33 +0300, Dmitry Baryshkov wrote:
->> Currently gcc-msm8960 driver manually creates tsens device. Instantiate
->> the device using DT node instead. This makes the APQ8064 follow the
->> IPQ8064 device tree schema (which is also closer to the way tsens
->> devices are described on newer Qualcomm platforms).
->>
->> Compatibility with the previous devices trees is kept intact.
->>
->> [...]
+On Wed, Jul 13, 2022 at 12:22:55PM +0530, Viresh Kumar wrote:
+> Hi,
 > 
-> Applied, thanks!
+> A recent patch series, targeting enhancements in the OPP core, ended up breaking
+> cpufreq on some of the Qualcomm platforms [1]. Necessary adjustments are made in
+> the OPP core, a bit hacky though, to get it working for now but it would be
+> better to solve the problem at hand in a cleaner way. And this patchset is an
+> attempt towards the same.
 > 
-> [1/4] dt-bindings: clock: qcom,gcc-apq8064: move msm8960 compat from gcc-other.yaml
->        commit: 91a4cbf93326f2d27dda7361c43a5bb24cfd93c3
-> [2/4] dt-bindings: clock: qcom,gcc-apq8064: split tsens to the child node
->        commit: 621f984840928f0bd14b20c86b70a15590ed2d3e
-> [3/4] clk: qcom: gcc-msm8960: create tsens device if there are no child nodes
->        commit: 93b793d88da8b2c7afd63c64772666ec4274efad
+> cpufreq-hw is a hardware engine, which takes care of frequency
+> management for CPUs. The engine manages the clocks for CPU devices, but
+> it isn't the end consumer of the clocks, which are the CPUs in this
+> case.
+> 
+> For this reason, it looks incorrect to keep the clock related properties
+> in the cpufreq-hw node. They should really be present at the end user,
+> i.e. the CPUs.
+> 
+> The case was simple currently as all the devices, i.e. the CPUs, that
+> the engine manages share the same clock names. What if the clock names
+> are different for different CPUs or clusters ? How will keeping the
+> clock properties in the cpufreq-hw node work in that case ?
+> 
+> This design creates further problems for frameworks like OPP, which
+> expects all such details (clocks) to be present in the end device node
+> itself, instead of another related node.
+> 
+> This patchset moves the clock properties to the node that uses them instead,
+> i.e. the CPU nodes and makes necessary adjustments at other places.
+> 
+> After this is applied, I can drop the unnecessary change from the OPP core, but
+> I wanted to discuss if this is a step in the right direction or not first and so
+> the RFC.
+> 
 
-I hope to see patch 4/4 to be also picked up at some point...
+The clocks defined in the devicetree currently (CXO, GPLL) are the source
+clocks of the EPSS block (cpufreq-hw). And EPSS will supply clock and
+voltage through other blocks to the CPU domains. Even though the end
+consumer of the source clocks are the CPUs, those clocks are not
+directly reachign the CPUs but instead through some other blocks in EPSS.
 
--- 
-With best wishes
-Dmitry
+Initially I was temped to add cpufreq-hw as the clock provider and have
+it source clocks to the individual CPUs. This somehow models the clock
+topology also, but after having a discussion with Bjorn we concluded that
+it is best to leave it as it is.
+
+The main issue that Bjorn pointed out was the fact that the clocks coming
+out of EPSS are not exactly of the same frequency that was requested.
+EPSS will do its own logic to generate the clocks to the CPUs based on
+the input frequency vote and limits.
+
+Thanks,
+Mani
+
+> --
+> Viresh
+> 
+> [1] https://lore.kernel.org/lkml/YsxSkswzsqgMOc0l@hovoldconsulting.com/
+> 
+> Viresh Kumar (4):
+>   dt-bindings: cpufreq-qcom-hw: Move clocks to CPU nodes
+>   arm64: dts: qcom: Move clocks to CPU nodes
+>   cpufreq: qcom-cpufreq-hw: Clocks are moved to CPU nodes
+>   cpufreq: qcom-cpufreq-hw: Register config_clks helper
+> 
+>  .../bindings/cpufreq/cpufreq-qcom-hw.yaml     | 31 ++++----
+>  arch/arm64/boot/dts/qcom/sc7180.dtsi          | 19 ++++-
+>  arch/arm64/boot/dts/qcom/sc7280.dtsi          | 18 ++++-
+>  arch/arm64/boot/dts/qcom/sdm845.dtsi          | 19 ++++-
+>  arch/arm64/boot/dts/qcom/sm6350.dtsi          | 18 ++++-
+>  arch/arm64/boot/dts/qcom/sm8150.dtsi          | 19 ++++-
+>  arch/arm64/boot/dts/qcom/sm8250.dtsi          | 18 ++++-
+>  arch/arm64/boot/dts/qcom/sm8350.dtsi          | 19 ++++-
+>  arch/arm64/boot/dts/qcom/sm8450.dtsi          | 18 ++++-
+>  drivers/cpufreq/qcom-cpufreq-hw.c             | 75 ++++++++++++++-----
+>  10 files changed, 199 insertions(+), 55 deletions(-)
+> 
+> -- 
+> 2.31.1.272.g89b43f80a514
+> 
