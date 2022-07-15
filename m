@@ -2,155 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 36BCC575FB4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Jul 2022 13:04:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ECF91575FEC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Jul 2022 13:21:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232296AbiGOLEi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Jul 2022 07:04:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58680 "EHLO
+        id S231148AbiGOLV0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Jul 2022 07:21:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42822 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229771AbiGOLEg (ORCPT
+        with ESMTP id S229452AbiGOLVZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Jul 2022 07:04:36 -0400
-Received: from NAM12-BN8-obe.outbound.protection.outlook.com (mail-bn8nam12on2067.outbound.protection.outlook.com [40.107.237.67])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2E722A26A;
-        Fri, 15 Jul 2022 04:04:33 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=JAaFaLPZsF/vPwiHDX3dYoY0O7lwOazI8mFAwEJ9D/tYkiM5Xrz4MKlF3gpLeJY0YwNwrj64tVn8x/faEi+rmLtxQpem8dbswzqcaQmJGD/1j06gcTpzfuNWNOCedlkvK2VlAVr7D2Jh5r9YIjm5rC+nWwujwP8vEv+lukDRTBoTuU7FXyISyOWfcwO4jTRvdW/6WOpT8PBSnZKhVXz6X5hueN8KnggeGrYryLl+vMzO5uo3zGgXDZXxqjZiS7YH147FSHljeKxidZt2TXuBiZ+MSH11zG/UMmiSvIKkE20yNhQdgRsG6+Lnbt+JEUVQZk+DmsTXJhUe04EM8W5+uw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=x6nwuZk6jxCDh5cJ3kvuPX4Ekl6Mq2DMQkBCuVkfDGw=;
- b=mGiwZC2SHJLNUX8F6K0JwbiLII7mBk40S1auc9jb9jCu6HEB5TMwS8riId1N/Y83RPOeflfal4lH0oM7EPYxOdhzL3Gse1fCskWJRh6V+pPiCfbJ1Frhf0iFJcp3kPoBBpPRjdo2v0MbA2YbozY3lUJGPlh68MifY5I8kAAfjsPPeTcQSnvch0emAh8/VK3FY8H4gEY+eNt+I5woguAgBJ9cjW7YDXTRO/vMCe13LIuvlOHDv+oqNrIJVQIuAc6jYiJ+/Piy2KJJR6GudvpbQ1ZIwDO7V34W3xnitaONzqcXNYOmc397OZ0p23iI/ZAIGlUPmCJhZ61baa/YOsAuzg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=x6nwuZk6jxCDh5cJ3kvuPX4Ekl6Mq2DMQkBCuVkfDGw=;
- b=Zchzez7v9oX/JvKQOPe0idy21fo84o0VffIT8B+g0Rp1cgXPlJG1CdYYERUueoyVJSUh1jfw9bzkisacu/mTeWu6VylAihCl92XCebzmMWHC0vQebpJaORnxcU0ecOua3uAoi4IBNd1uKN/2Nnmxhm4JqxEsD9q7cBZsbH2owDI=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from BN8PR12MB3587.namprd12.prod.outlook.com (2603:10b6:408:43::13)
- by DM6PR12MB4187.namprd12.prod.outlook.com (2603:10b6:5:212::11) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5417.23; Fri, 15 Jul
- 2022 11:04:31 +0000
-Received: from BN8PR12MB3587.namprd12.prod.outlook.com
- ([fe80::905:1701:3b51:7e39]) by BN8PR12MB3587.namprd12.prod.outlook.com
- ([fe80::905:1701:3b51:7e39%2]) with mapi id 15.20.5438.013; Fri, 15 Jul 2022
- 11:04:31 +0000
-Message-ID: <c6024ebb-4b3d-60c8-f0e7-006f994c9fae@amd.com>
-Date:   Fri, 15 Jul 2022 13:04:21 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Subject: Re: [PATCH v1 1/6] dma-buf: Add _unlocked postfix to function names
-Content-Language: en-US
-To:     Dmitry Osipenko <dmitry.osipenko@collabora.com>,
-        David Airlie <airlied@linux.ie>,
-        Gerd Hoffmann <kraxel@redhat.com>,
-        Gurchetan Singh <gurchetansingh@chromium.org>,
-        Chia-I Wu <olvaffe@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-        Daniel Almeida <daniel.almeida@collabora.com>,
-        Gert Wollny <gert.wollny@collabora.com>,
-        Gustavo Padovan <gustavo.padovan@collabora.com>,
-        Daniel Stone <daniel@fooishbar.org>,
-        Tomeu Vizoso <tomeu.vizoso@collabora.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Rob Clark <robdclark@gmail.com>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        "Pan, Xinhui" <Xinhui.Pan@amd.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Tomasz Figa <tfiga@chromium.org>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Alex Deucher <alexander.deucher@amd.com>,
-        Jani Nikula <jani.nikula@linux.intel.com>,
-        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-        =?UTF-8?Q?Thomas_Hellstr=c3=b6m?= <thomas_os@shipmail.org>
-Cc:     dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Dmitry Osipenko <digetx@gmail.com>,
-        linux-media@vger.kernel.org, linaro-mm-sig@lists.linaro.org,
-        amd-gfx@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
-        kernel@collabora.com, virtualization@lists.linux-foundation.org,
-        spice-devel@lists.freedesktop.org, linux-rdma@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-References: <20220715005244.42198-1-dmitry.osipenko@collabora.com>
- <20220715005244.42198-2-dmitry.osipenko@collabora.com>
- <43c06f53-bad8-af99-0b57-781dbf716768@amd.com>
- <5c98385b-f154-0128-6f4b-5fac89529201@collabora.com>
-From:   =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>
-In-Reply-To: <5c98385b-f154-0128-6f4b-5fac89529201@collabora.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: AS9PR07CA0009.eurprd07.prod.outlook.com
- (2603:10a6:20b:46c::9) To BN8PR12MB3587.namprd12.prod.outlook.com
- (2603:10b6:408:43::13)
+        Fri, 15 Jul 2022 07:21:25 -0400
+Received: from mail-qt1-x82e.google.com (mail-qt1-x82e.google.com [IPv6:2607:f8b0:4864:20::82e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2267B87C1C;
+        Fri, 15 Jul 2022 04:21:24 -0700 (PDT)
+Received: by mail-qt1-x82e.google.com with SMTP id r17so3490944qtx.6;
+        Fri, 15 Jul 2022 04:21:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :content-transfer-encoding:user-agent:mime-version;
+        bh=7aAwPpbyNhMgBtXYplVX7e+e1ZXjzCZEFZQ0/Qp+rZs=;
+        b=XdinAxILUx5V4/TMUwVnHjrF2YH64IZZFeCyINRd3Uc2T7zK5jdlBkPARxgAUQPknQ
+         jCfx0227x6mZ/nJvyEdEOP0X2HcETQpjzcvpoVctcPe8hpu24084l6+Zfq6C9Yp+Pe19
+         LGKjBB+xZcEbyihQC5Jva22iuE9RvoR1T1A0aT5gZbbl2uX8Yfn+4VkAcRNJ2oRqIyBp
+         hvqhsHzhzq2ZXGWh4u48/NdYzataIRkzPk7S3WkMEcPz42YtmZsCcrQ4fU8zYMkCmEb3
+         CBLLe2wOl7idYi+SWFz4xCdXZ1vxsiFpcZo/yuvmbHWMT7smdxKunQKgJNVUdlfCfqdO
+         L3zw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:content-transfer-encoding:user-agent:mime-version;
+        bh=7aAwPpbyNhMgBtXYplVX7e+e1ZXjzCZEFZQ0/Qp+rZs=;
+        b=C32l/yvn3gn5zO6KUh/FKMf6/PfjQKJcyyG1FRiIjYeMrRB/pPLfLYrogpaKzZs6hz
+         F9Kop2gErdrdSGoX78NlIMSEsORVBVOuu6FfJHTzYuGY+e3UDLoHNx5J48Ssm/A5SuO+
+         K76YvZv/VGaXzXJLBUwAVmOMmyFmy4c+gCKp0loZZC1tPw9a+9R2y86DCepmFW7UYU1V
+         YMmcHwsrgck1CUhc53UERSb3YtE1VE/3O1BAQ5FK53xdXqeqSsUxtgCLEdk2tFQmNXhq
+         ri/Q/oRJe2Gh+pi5BC36yQVwoyyo3G9Ei/lCaXHnVtBoqSbRyadHrr0pYqYKLr0JxykK
+         4O3g==
+X-Gm-Message-State: AJIora8PeeNWzLKO/6GHVfsZX4CW1T2u3HxtYjIX48xMB38wkPD9+O+k
+        qeqssOuRx6oYALiUUgbr7Yk=
+X-Google-Smtp-Source: AGRyM1uAV6CcmfwBUiFodYja+YAI93swdvRkjmOrj/G87DJHG1tvUago8AS2lP01zuUI+2pKWO0gZQ==
+X-Received: by 2002:a05:622a:20f:b0:31e:de95:3cd3 with SMTP id b15-20020a05622a020f00b0031ede953cd3mr944896qtx.458.1657884082996;
+        Fri, 15 Jul 2022 04:21:22 -0700 (PDT)
+Received: from p200300f6ef036f005de6a4d0d791ed01.dip0.t-ipconnect.de (p200300f6ef036f005de6a4d0d791ed01.dip0.t-ipconnect.de. [2003:f6:ef03:6f00:5de6:a4d0:d791:ed01])
+        by smtp.gmail.com with ESMTPSA id ay7-20020a05620a178700b006b578ff5dfasm3767112qkb.41.2022.07.15.04.21.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 15 Jul 2022 04:21:22 -0700 (PDT)
+Message-ID: <83d816f52b3d4194b51b20f31b875055f63cd718.camel@gmail.com>
+Subject: Re: [PATCH v2 13/15] iio: adc: stm32-adc: convert to device
+ properties
+From:   Nuno =?ISO-8859-1?Q?S=E1?= <noname.nuno@gmail.com>
+To:     Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
+        Nuno =?ISO-8859-1?Q?S=E1?= <nuno.sa@analog.com>,
+        linux-arm-msm@vger.kernel.org, openbmc@lists.ozlabs.org,
+        linux-renesas-soc@vger.kernel.org,
+        linux-mediatek@lists.infradead.org, linux-imx@nxp.com,
+        linux-mips@vger.kernel.org,
+        Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+        linux-iio@vger.kernel.org, chrome-platform@lists.linux.dev,
+        linux-arm-kernel@lists.infradead.org,
+        linux-stm32@st-md-mailman.stormreply.com
+Cc:     Andy Gross <agross@kernel.org>,
+        Nicolas Ferre <nicolas.ferre@microchip.com>,
+        Benson Leung <bleung@chromium.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Tomer Maimon <tmaimon77@gmail.com>,
+        Zhang Rui <rui.zhang@intel.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Eugen Hristev <eugen.hristev@microchip.com>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Benjamin Fair <benjaminfair@google.com>,
+        Nancy Yuen <yuenn@google.com>,
+        Jishnu Prakash <quic_jprakash@quicinc.com>,
+        Christophe Branchereau <cbranchereau@gmail.com>,
+        Avi Fishman <avifishman70@gmail.com>,
+        Tali Perry <tali.perry1@gmail.com>,
+        Michael Hennerich <Michael.Hennerich@analog.com>,
+        Miquel Raynal <miquel.raynal@bootlin.com>,
+        Claudiu Beznea <claudiu.beznea@microchip.com>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Thara Gopinath <thara.gopinath@linaro.org>,
+        Cai Huoqing <cai.huoqing@linux.dev>,
+        Fabio Estevam <festevam@gmail.com>,
+        Olivier Moysan <olivier.moysan@foss.st.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Haibo Chen <haibo.chen@nxp.com>, Arnd Bergmann <arnd@arndb.de>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Patrick Venture <venture@google.com>,
+        Amit Kucheria <amitk@kernel.org>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Lorenzo Bianconi <lorenzo@kernel.org>,
+        Paul Cercueil <paul@crapouillou.net>,
+        Andy Shevchenko <andy.shevchenko@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Gwendal Grignou <gwendal@chromium.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Saravanan Sekar <sravanhome@gmail.com>,
+        Guenter Roeck <groeck@chromium.org>,
+        Jonathan Cameron <jic23@kernel.org>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Linus Walleij <linus.walleij@linaro.org>
+Date:   Fri, 15 Jul 2022 13:22:18 +0200
+In-Reply-To: <c4385216-1d9e-34b3-58ea-edf8d9ed4cd8@foss.st.com>
+References: <20220711123835.811358-1-nuno.sa@analog.com>
+         <20220711123835.811358-14-nuno.sa@analog.com>
+         <f0f150cf-586f-9f13-81b0-cb95bd0d8f23@foss.st.com>
+         <ca7dc3801e29ddaa59f868c20d491d15541522d8.camel@gmail.com>
+         <c4385216-1d9e-34b3-58ea-edf8d9ed4cd8@foss.st.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.44.3 
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 03ca3e4b-87ad-47c4-1e3a-08da6651cb0d
-X-MS-TrafficTypeDiagnostic: DM6PR12MB4187:EE_
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: hwu9HL1s/vpEK9NNLUhFqEEFCwwT70yFJas+vVnygSr4WcdgQzdpStTtgLb1JrNKmLg9YO/hpENuI58uOiWv4vOVfLml04yEZFOX0CoScjqEqWtHVvDTToBBxQ5IWgcWXhcV89ErwmP6+YlJmfvnc5+ckUwywNdZ1NMcgjDgpBFq2+6nBSVJ3c3CW9Soo9yUGVGNtyF24TIoHEAm0LwuiLnd7CCilm2C0GcAQ4EkiBckt5Z/v7i80R4zeiv7XfPuH0lAoeonRufwfbmtePUQhmbiNrusR/Wt1xN90thdj29JbUXBQZjKiPk4Las8q+t45Z3zidJHYvdQdGAbb2X2pXsdAT5EC94HaqXuMWADzYeeNuMafjiSWvFleiwegUTckXVitA0GvkBERs3IxBLSj4VwjW7QtsoR6DJnPEPoQyOuYTDe4/u5oiyHMuTyQzPJd+1hIfLbxB53o7Wrb8LdupY8u6ncPUC2SotNIXmNL1HUcciB/UNnJsIWfCUQJEJO780bTU4I+YgzeY7FRCkEe+A7zJoAELbVhqVnirroiVLOrzoESUzHfJgyjADk40Nrsu7MQTmY9v6mkgxfHLbVbbL4tZZPvuBPXW2UI1yGrkIOSZBb3pVsQOH9apkG5PDfYpNMqIVKQXiLPzUBA3MTp+WZzafAwfz34Zeb3GZBQlhyC2WlXNlgoR1KvwMbcRQStnR/u7SQz7QmIMJZRGjoqJymidjsXIF1EYH2WEO6QJR0fs2pncZArPbOeQtrnhl+FISOTxwRVJqok7xUY1ZK9FcVroWUnpRZZ0NYnXJNI5aldEzVZBj7VxUvEpxRHd5aBv7w7zUjIu1WBJ+p9LZQow6x2aEXiK9bDq4SCOuw3p8=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BN8PR12MB3587.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230016)(4636009)(366004)(39860400002)(396003)(376002)(346002)(136003)(66556008)(316002)(66476007)(7416002)(4326008)(38100700002)(41300700001)(31696002)(5660300002)(2906002)(7406005)(186003)(6486002)(8676002)(6666004)(921005)(36756003)(66574015)(83380400001)(110136005)(66946007)(6512007)(8936002)(6506007)(31686004)(2616005)(478600001)(53546011)(86362001)(43740500002)(45980500001);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?UTFtR1A5a0NlWEI0R3pudjErN3hvWGxHbGdZYlUzU2tYUy9uY1ZOeHVxZGw2?=
- =?utf-8?B?eHlRWk9GKzZGRm9BVk85Q3h0aWFaY2VzVVo0anNXTzNEVmpGcXBVa01vZUFk?=
- =?utf-8?B?Q2V4K1NSNlM3ZFlkMjdkeUJHeHY4b0ZDWGdDVFZqb0JheGVPZjMvUnhCeHNp?=
- =?utf-8?B?K3dJMDU5Z2ozcFFrdVp3L1RWNS9ESzVLRjFzTXR1R2J2R2xLVTA5SHBGVVA2?=
- =?utf-8?B?OGZDcnc5dEl6a1JPOVZLMFpKdXRGYjQ3S3pxMlRRVDJWeUQ0M0ZjNkVQOGFh?=
- =?utf-8?B?RDVFUTM5SmNhVVhFcERUNjZITjQyRWNWbGpYODUySm9RdE9Ub2hyQU1FU0Rh?=
- =?utf-8?B?NDhTbWxQWmo2ZVJrNFYrMEpEOHFEaE1WTXJvaUtxd3hKYzlNVnVJMy9ieWQ0?=
- =?utf-8?B?Y2l2T216Zmx3cEY5SWhNdCtyNFBhejFRZ2kwazhabTNud1A3RisxTWJaaXVE?=
- =?utf-8?B?OEplQVExMHhpY2ZYc1g4bU9sYUdDYU5rU3RkcGxVRi96dXNXOUNQWXpmQUwx?=
- =?utf-8?B?TnBBcXZ2UGp3KzBxRWxuak1hZzNDd2N2eitINzIwTWdiU3F5Wmp3d2RadDFM?=
- =?utf-8?B?YzJsZ2xZdHFQUUpCK1RmanMrUWlyWXNCRzJlWU5obmxNY2hGdEhaUjRuelhi?=
- =?utf-8?B?M0xOdTRMQ2JWS3RQRHZxTlYxeUdNek9jUFZMM1Q2S0o3K3BFRUtITTlCdXp2?=
- =?utf-8?B?aWJzaElEYjhKbVhzWUllUWVTeTkrNit4STlhRzVGa1dnOWxxVDdKTkpKRGNP?=
- =?utf-8?B?ZHJ5L0c4M05iYkZzTTArUWVleFUyU2xYMXhHd0Jyank5eEJHcnpyYVhBU21R?=
- =?utf-8?B?enE5ZkxISm9IaXNMaUZVWC9CVk1GZFJha1l3YnVTQ1VZQ0RhT0ZkSm9hVzlH?=
- =?utf-8?B?akg1Y1JvUms3aHUrczdzQU52YmkzWnNsSmZuWmhIcnBla0JTN1JiaVpsVGRr?=
- =?utf-8?B?Z3c4S0V6d0xVTnl2Q2tUK1hqUU9pNVU3WGEwZ1BGN0FXSEx0aXRBUC9meksv?=
- =?utf-8?B?TkRUU3JHR09HeFRXYVRuMUtVakpwRFhNdFBvcmtCaGFzb2pNc0JHMDBKd3Ft?=
- =?utf-8?B?OWdvT0NEMUphdC9leEVqa1Brbk9qRmJFM3hCNUNDSDN0YURTdnVTMlM2elFG?=
- =?utf-8?B?RUd3ZU1JWldEaWh6aDAwT2pwamFQYU8xVHo5aWwwR0xvbUQvUEtudWxxcVRF?=
- =?utf-8?B?Z0dEc1RDZDdMMzZ2NzV5SEpaeHFsOVpiWjg2Y3pzS0RreDJCYUdIcVpqOWh1?=
- =?utf-8?B?TWFIQVB1MExOOGdIaXVNRk9Sa1pRKy9ZNHpBYkpRVDhyUUZNNSsrTVpsMGVG?=
- =?utf-8?B?TXM0NDg1QUhTU1J1anRaeFRLU1dtNVdneXQ4Q09GbWlUWTBFbDYzOWxKVHkr?=
- =?utf-8?B?eWxTWG5ZT1ZjNzJhb1Z6MGd4Q1FhWExweXdabzdhYjl0WmpNZzY2d1dkR2Iv?=
- =?utf-8?B?ZkxiTmpXWFI0ZU5OL2NVU24yNnpVT0VTODRTS3J0aUU5U2hLSE5QVmF6VTE3?=
- =?utf-8?B?U1Exd2FHVGJkT0p0eWlRQ21VK1VHQU9Ta3VzUGFxcGwxWmdPVFp1emd0RGRE?=
- =?utf-8?B?S0M1VU1sVHpITXhFd3YzbXFaMk9lNmZpZ3V4WjZrYjRuY2gyTXhlWG9rSVBZ?=
- =?utf-8?B?N2Jzazl4a1hha3FMZlZpTEFKS3NFQlpqYmh0SG5YWmN3bUtuWS9HekpWeGcr?=
- =?utf-8?B?L2JkTjRlTEJSTDN2NGhsblgzQys3cXNiWnJ1MGNXRmNoT0tCR3pQRVJESnEr?=
- =?utf-8?B?Rjhwd1NNK3FpZndMT0JpVlZTL2liQ0cxaEdHNUc0aGU5UVdPaWlJdmNQd01n?=
- =?utf-8?B?QjJzcit0elZoYmJFUitBMDFaQVU1NVNqcTE3bUpIajFSR2MzYmdzc3hhMmVN?=
- =?utf-8?B?UXZDYWhDd1N5aklWREV3ZUt3SzdWMW1sdEZQY3lnTk9pcmpxQTJYQjViTnMw?=
- =?utf-8?B?QnY1ZURxL0krUUYyYjh2OU9zMi9YWk5sVjdFbU9lUXNnczRMa05xS25EQmNM?=
- =?utf-8?B?ekJjU2tQQTViMWxrNno5ZERDaGlHb0hHcnZoRFZTZXkzM3JsaS80SFVROEFh?=
- =?utf-8?B?WkVXeE9vdHorWTFPWHE0ZUF4RUZqZmdjNTFxQml1ajl4aHcxZnpVWHlJRFBO?=
- =?utf-8?B?M0hjUkdsdW8zelR4UEpLTUlSM051bTVmRDVnbW1iWmJUVTFOcmtIa2hsQ2xJ?=
- =?utf-8?Q?LWO7z7gqcMc42JltizS1LALtTgwy7F4gZqPlkLSw+xqP?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 03ca3e4b-87ad-47c4-1e3a-08da6651cb0d
-X-MS-Exchange-CrossTenant-AuthSource: BN8PR12MB3587.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Jul 2022 11:04:31.3083
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: SWxf0JIvQSgFVOsGvL1oEJcveYBkNOLQpZ8Rst9LCvm3O7Qk5VVgUud1oOBUuQWa
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR12MB4187
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS autolearn=ham
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -158,30 +124,206 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Am 15.07.22 um 11:31 schrieb Dmitry Osipenko:
-> On 7/15/22 10:19, Christian König wrote:
->>> -struct sg_table *dma_buf_map_attachment(struct dma_buf_attachment
->>> *attach,
->>> -                    enum dma_data_direction direction)
->>> +struct sg_table *
->>> +dma_buf_map_attachment_unlocked(struct dma_buf_attachment *attach,
->>> +                enum dma_data_direction direction)
->> The locking state of mapping and unmapping operations depend on if the
->> attachment is dynamic or not.
->>
->> So this here is not a good idea at all since it suggests that the
->> function is always called without holding the lock.
-> I had the same thought while was working on this patch and initially was
-> thinking about adding an "unlocked" alias to dma_buf_map_attachment().
-> In the end I decided that it will create even more confusion and it's
-> simpler just to rename this func here since there are only two drivers
-> using the dynamic mapping.
->
-> Do you have suggestions how to improve it?
+On Wed, 2022-07-13 at 17:48 +0200, Fabrice Gasnier wrote:
+> On 7/12/22 12:33, Nuno S=C3=A1 wrote:
+> > Hi Fabrice,
+> >=20
+> > Nice that someone in ST is looking at this one :)
+>=20
+> Hi Nuno,
+>=20
+> Thank you for taking care of converting all these drivers to device
+> properties, including this one :-).
+>=20
+> >=20
+> > On Mon, 2022-07-11 at 16:04 +0200, Fabrice Gasnier wrote:
+> > > On 7/11/22 14:38, Nuno S=C3=A1 wrote:
+> > > > Make the conversion to firmware agnostic device properties. As
+> > > > part
+> > > > of
+> > > > the conversion the IIO inkern interface 'of_xlate()' is also
+> > > > converted to
+> > > > 'fwnode_xlate()'. The goal is to completely drop 'of_xlate' and
+> > > > hence OF
+> > > > dependencies from IIO.
+> > > >=20
+> > > > Signed-off-by: Nuno S=C3=A1 <nuno.sa@analog.com>
+> > > > ---
+> > > > =C2=A0drivers/iio/adc/stm32-adc.c | 121 ++++++++++++++++++++-------=
+-
+> > > > ----
+> > > > ----
+> > > > =C2=A01 file changed, 67 insertions(+), 54 deletions(-)
+> > > >=20
+> > > > diff --git a/drivers/iio/adc/stm32-adc.c
+> > > > b/drivers/iio/adc/stm32-
+> > > > adc.c
+> > > > index 3985fe972892..e55859113df8 100644
+> > > > --- a/drivers/iio/adc/stm32-adc.c
+> > > > +++ b/drivers/iio/adc/stm32-adc.c
+> > > > @@ -21,11 +21,11 @@
+> > > > =C2=A0#include <linux/io.h>
+> > > > =C2=A0#include <linux/iopoll.h>
+> > > > =C2=A0#include <linux/module.h>
+> > > > +#include <linux/mod_devicetable.h>
+> > > > =C2=A0#include <linux/nvmem-consumer.h>
+> > > > =C2=A0#include <linux/platform_device.h>
+> > > > =C2=A0#include <linux/pm_runtime.h>
+> > > > -#include <linux/of.h>
+> > > > -#include <linux/of_device.h>
+> > > > +#include <linux/property.h>
+> > > > =C2=A0
+> > > > =C2=A0#include "stm32-adc-core.h"
+> > > > =C2=A0
+> > > > @@ -1530,8 +1530,8 @@ static int
+> > > > stm32_adc_update_scan_mode(struct
+> > > > iio_dev *indio_dev,
+> > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0return ret;
+> > > > =C2=A0}
+> > > > =C2=A0
+> > > > -static int stm32_adc_of_xlate(struct iio_dev *indio_dev,
+> > > > -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0 const struct of_phandle_args
+> > > > *iiospec)
+> > > > +static int stm32_adc_fwnode_xlate(struct iio_dev *indio_dev,
+> > > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 const struct
+> > > > fwnode_reference_args *iiospec)
+> > > > =C2=A0{
+> > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0int i;
+> > > > =C2=A0
+> > > > @@ -1585,7 +1585,7 @@ static const struct iio_info
+> > > > stm32_adc_iio_info =3D {
+> > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0.hwfifo_set_waterma=
+rk =3D stm32_adc_set_watermark,
+> > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0.update_scan_mode =
+=3D stm32_adc_update_scan_mode,
+> > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0.debugfs_reg_access=
+ =3D stm32_adc_debugfs_reg_access,
+> > > > -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0.of_xlate =3D stm32_adc_=
+of_xlate,
+> > > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0.fwnode_xlate =3D stm32_=
+adc_fwnode_xlate,
+> > > > =C2=A0};
+> > > > =C2=A0
+> > > > =C2=A0static unsigned int stm32_adc_dma_residue(struct stm32_adc
+> > > > *adc)
+> > > > @@ -1782,14 +1782,14 @@ static const struct
+> > > > iio_chan_spec_ext_info
+> > > > stm32_adc_ext_info[] =3D {
+> > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0{},
+> > > > =C2=A0};
+> > > > =C2=A0
+> > > > -static int stm32_adc_of_get_resolution(struct iio_dev
+> > > > *indio_dev)
+> > > > +static int stm32_adc_fw_get_resolution(struct iio_dev
+> > > > *indio_dev)
+> > > > =C2=A0{
+> > > > -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0struct device_node *node=
+ =3D indio_dev->dev.of_node;
+> > > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0struct device *dev =3D &=
+indio_dev->dev;
+> > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0struct stm32_adc *a=
+dc =3D iio_priv(indio_dev);
+> > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0unsigned int i;
+> > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0u32 res;
+> > > > =C2=A0
+> > > > -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0if (of_property_read_u32=
+(node, "assigned-resolution-
+> > > > bits",
+> > > > &res))
+> > > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0if (device_property_read=
+_u32(dev, "assigned-resolution-
+> > > > bits", &res))
+> > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0res =3D adc->cfg->adc_info->resolutions[0];
+> > > > =C2=A0
+> > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0for (i =3D 0; i < a=
+dc->cfg->adc_info->num_res; i++)
+> > > > @@ -1873,11 +1873,11 @@ static void
+> > > > stm32_adc_chan_init_one(struct
+> > > > iio_dev *indio_dev,
+> > > > =C2=A0
+> > > > =C2=A0static int stm32_adc_get_legacy_chan_count(struct iio_dev
+> > > > *indio_dev, struct stm32_adc *adc)
+> > > > =C2=A0{
+> > > > -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0struct device_node *node=
+ =3D indio_dev->dev.of_node;
+> > > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0struct device *dev =3D &=
+indio_dev->dev;
+> > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0const struct stm32_=
+adc_info *adc_info =3D adc->cfg-
+> > > > >adc_info;
+> > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0int num_channels =
+=3D 0, ret;
+> > > > =C2=A0
+> > > > -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0ret =3D of_property_coun=
+t_u32_elems(node, "st,adc-
+> > > > channels");
+> > > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0ret =3D device_property_=
+count_u32(dev, "st,adc-
+> > > > channels");
+> > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0if (ret > adc_info-=
+>max_channels) {
+> > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0dev_err(&indio_dev->dev, "Bad st,adc-
+> > > > channels?\n");
+> > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0return -EINVAL;
+> > > > @@ -1885,8 +1885,8 @@ static int
+> > > > stm32_adc_get_legacy_chan_count(struct iio_dev *indio_dev,
+> > > > struct
+> > > > stm
+> > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0num_channels +=3D ret;
+> > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0}
+> > > > =C2=A0
+> > > > -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0ret =3D of_property_coun=
+t_elems_of_size(node, "st,adc-
+> > > > diff-
+> > > > channels",
+> > > > -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 sizeof(struct
+> > > > stm32_adc_diff_channel));
+> > > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0/* each st,adc-diff-chan=
+nels is a group of 2 u32 */
+> > > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0ret =3D device_property_=
+count_u64(dev, "st,adc-diff-
+> > > > channels");
+> >=20
+> > Are you fine with this change (still does not have any reference to
+> > the
+> > target struct but the comment might be helpful and there's no magic
+> > 2)?
+>=20
+>=20
+> Since you added that comment, this sounds better. IMHO, This still
+> looks
+> a bit weird. I'd feel more comfortable by using u32 API for a
+> 'uint32-matrix' as defined in dt-bindings.
+> Strictly speaking, something like
+> sizeof(struct stm32_adc_diff_channel) / sizeof(u32) could be used,
+> along
+> with this comment and device_property_count_u32() to make it clear ?
+>=20
 
-Just keep it as it is. The ultimative goal is to switch all drivers over 
-to the dynamic mapping or at least over to assume that the map/unmap 
-callbacks are called with the lock held.
+No strong option so I can do as you prefer:
 
-Regards,
-Christian.
+	ret =3D device_property_count_u32();
+	if (ret /=C2=A0
+(sizeof(struct stm32_adc_diff_channel) / sizeof(u32)) > max_chan) {
+		...
+	}
+	...
+
+Probably it's a good idea to store that sizeof() division in a local
+variable :)
+
+- Nuno S=C3=A1
+
+> > >=20
+>=20
