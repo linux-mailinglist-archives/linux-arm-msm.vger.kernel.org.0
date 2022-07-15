@@ -2,169 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B2807575CBC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Jul 2022 09:50:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EC1C0575CE4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Jul 2022 10:01:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232356AbiGOHtz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Jul 2022 03:49:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49532 "EHLO
+        id S232438AbiGOIAn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Jul 2022 04:00:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58816 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231480AbiGOHty (ORCPT
+        with ESMTP id S229782AbiGOIAm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Jul 2022 03:49:54 -0400
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFDCF7968E;
-        Fri, 15 Jul 2022 00:49:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1657871392; x=1689407392;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=h3VlnLcwsYVJ7E4+bLRWXMsZNEeSuy72jwB0bstzWBc=;
-  b=RGjrqBPE4pvlhubIygHvFdY4hDWF9AvUrxZXFv1lxJsmOAyDu4lyn7kr
-   +hb3qi7Kq9d/8ELTdD6cl4Pjrzr/H2OgPNKnjYM4Y0FRA3XeB0TytLAyZ
-   ao4rh8kG3EYK1Z9czIxuL/5rabYCk6b6+LjnBcCtCETXhp+F1yzSP355w
-   I=;
-Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 15 Jul 2022 00:49:52 -0700
-X-QCInternal: smtphost
-Received: from unknown (HELO nasanex01a.na.qualcomm.com) ([10.52.223.231])
-  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Jul 2022 00:49:52 -0700
-Received: from [10.253.39.163] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Fri, 15 Jul
- 2022 00:49:47 -0700
-Message-ID: <c79f9e5f-dbd9-8cd6-1289-188dfa7ddcb9@quicinc.com>
-Date:   Fri, 15 Jul 2022 15:49:45 +0800
+        Fri, 15 Jul 2022 04:00:42 -0400
+Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [85.215.255.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 601D87E00E;
+        Fri, 15 Jul 2022 01:00:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1657872039;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=OqjGwFmaNWkrx1u1GRDpZGcyuPpD51t2IUwteZ5MuqY=;
+    b=mSi3fmHDSI2ZViyITi6N7Ro1zg5ewmjI66nvjtknQwldVUyqOJ0e5V3LNaArAM9cLx
+    04eWGT95H5sj5Ok3hodAwTFbHovM7k42voW4xJ0Wk325y3oQhY1t35zpSNPIpRUgC5wm
+    /Klhw2M0Dcnm4oH5UoXKX/RRCWzQHLmYMwOmueDBKqUpfJHamiLVO5JL+l0SdZ+qOd6W
+    SVevAhwYHozWHEgw+RQDkT3fefs21xKakwh56Y/NrJgkyioqowLvWKDzJUhY7llqX6J5
+    aH50nCeyQi2T155idHa9V34uoqfc3GwWjinCSQBeDPJ5g3MslXOgvIjlM7FWCxolkZSq
+    aZww==
+Authentication-Results: strato.com;
+    dkim=none
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u267FZF9PwpcNKLUrKw5+aY="
+X-RZG-CLASS-ID: mo00
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 47.47.0 SBL|AUTH)
+    with ESMTPSA id he04d0y6F80c9Jp
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Fri, 15 Jul 2022 10:00:38 +0200 (CEST)
+Date:   Fri, 15 Jul 2022 10:00:20 +0200
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Sireesh Kodali <sireeshkodali1@gmail.com>,
+        Luca Weiss <luca@z3ntu.xyz>, linux-arm-msm@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH 2/6] dt-bindings: remoteproc: qcom,q6v5: Move MSM8916 to
+ schema
+Message-ID: <YtEeay9JCaG2NMdT@gerhold.net>
+References: <20220712124421.3129206-1-stephan.gerhold@kernkonzept.com>
+ <20220712124421.3129206-3-stephan.gerhold@kernkonzept.com>
+ <434cbf73-c62d-7d5c-fe60-7d98a84bc7fe@linaro.org>
+ <YtBlGJ+lQFQg+l+I@gerhold.net>
+ <cd8a2b66-ba7c-768c-f5b0-2728f0a8be99@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH v1] Bluetooth: hci_sync: Remove redundant func definition
-Content-Language: en-US
-To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-CC:     Marcel Holtmann <marcel@holtmann.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        David Miller <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Luiz Augusto Von Dentz <luiz.von.dentz@intel.com>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        "open list:NETWORKING [GENERAL]" <netdev@vger.kernel.org>
-References: <1657774452-4497-1-git-send-email-quic_zijuhu@quicinc.com>
- <CABBYNZJG8uKv-270u1P4NTr-gML5=uR2Syhjs=x4LMhJOnqSxA@mail.gmail.com>
- <2cb4f711-5e7c-6fc7-263f-0ed6437f0edb@quicinc.com>
- <CABBYNZJso0QxYhnuaYxu0SYimm7vGvUOPGmuRAYf8LnnHOYxRQ@mail.gmail.com>
-From:   quic_zijuhu <quic_zijuhu@quicinc.com>
-In-Reply-To: <CABBYNZJso0QxYhnuaYxu0SYimm7vGvUOPGmuRAYf8LnnHOYxRQ@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <cd8a2b66-ba7c-768c-f5b0-2728f0a8be99@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_PASS,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 7/15/2022 12:03 PM, Luiz Augusto von Dentz wrote:
-> Hi Quic_zijuhu,
+On Fri, Jul 15, 2022 at 08:33:53AM +0200, Krzysztof Kozlowski wrote:
+> On 14/07/2022 20:48, Stephan Gerhold wrote:
+> > On Thu, Jul 14, 2022 at 11:50:30AM +0200, Krzysztof Kozlowski wrote:
+> >> On 12/07/2022 14:44, Stephan Gerhold wrote:
+> >>> [...]
+> >>> +properties:
+> >>> +  compatible:
+> >>> +    oneOf:
+> >>> +      - enum:
+> >>> +          - qcom,msm8916-mss-pil
+> >>> +
+> >>> +      - const: qcom,q6v5-pil
+> >>> +        description: Deprecated, prefer using qcom,msm8916-mss-pil
+> >>> +        deprecated: true
+> >>
+> >> The last compatible does not seem applicable here. Aren't you moving
+> >> only MSM8916 to new schema?
+> >>
+> > 
+> > "qcom,q6v5-pil" is exactly the same as "qcom,msm8916-mss-pil". It's just
+> > a deprecated quite unfortunately chosen old name for the same thing. :)
+> > 
+> > See these lines in the driver:
+> > 
+> > 	{ .compatible = "qcom,q6v5-pil", .data = &msm8916_mss},
+> > 	{ .compatible = "qcom,msm8916-mss-pil", .data = &msm8916_mss},
 > 
-> On Thu, Jul 14, 2022 at 7:12 PM quic_zijuhu <quic_zijuhu@quicinc.com> wrote:
->>
->> On 7/15/2022 4:52 AM, Luiz Augusto von Dentz wrote:
->>> Hi Zijun,
->>>
->>> On Wed, Jul 13, 2022 at 9:54 PM Zijun Hu <quic_zijuhu@quicinc.com> wrote:
->>>>
->>>> both hci_request.c and hci_sync.c have the same definition
->>>> for disconnected_accept_list_entries(), so remove a redundant
->>>> copy.
->>>>
->>>> Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
->>>> ---
->>>>  net/bluetooth/hci_request.c |  2 +-
->>>>  net/bluetooth/hci_request.h |  2 ++
->>>>  net/bluetooth/hci_sync.c    | 18 ------------------
->>>>  3 files changed, 3 insertions(+), 19 deletions(-)
->>>
->>> We are actually deprecating hci_request functions in favor of hci_sync
->>> ones so this is going in the opposite direction.
->>>
->> should remove disconnected_accept_list_entries() definition within hci_request.c instead of
->> hci_sync.c, right?
-> 
-> Correct
-> 
-thank you for your suggestion, correct within v4 sent, could you have a code review again?
->>>> diff --git a/net/bluetooth/hci_request.c b/net/bluetooth/hci_request.c
->>>> index 635cc5fb451e..38e6c66a3327 100644
->>>> --- a/net/bluetooth/hci_request.c
->>>> +++ b/net/bluetooth/hci_request.c
->>>> @@ -1784,7 +1784,7 @@ int hci_update_random_address(struct hci_request *req, bool require_privacy,
->>>>         return 0;
->>>>  }
->>>>
->>>> -static bool disconnected_accept_list_entries(struct hci_dev *hdev)
->>>> +bool disconnected_accept_list_entries(struct hci_dev *hdev)
->>>>  {
->>>>         struct bdaddr_list *b;
->>>>
->>>> diff --git a/net/bluetooth/hci_request.h b/net/bluetooth/hci_request.h
->>>> index 7f8df258e295..e80b500878d9 100644
->>>> --- a/net/bluetooth/hci_request.h
->>>> +++ b/net/bluetooth/hci_request.h
->>>> @@ -120,6 +120,8 @@ void __hci_req_update_scan(struct hci_request *req);
->>>>  int hci_update_random_address(struct hci_request *req, bool require_privacy,
->>>>                               bool use_rpa, u8 *own_addr_type);
->>>>
->>>> +bool disconnected_accept_list_entries(struct hci_dev *hdev);
->>>> +
->>>>  int hci_abort_conn(struct hci_conn *conn, u8 reason);
->>>>  void __hci_abort_conn(struct hci_request *req, struct hci_conn *conn,
->>>>                       u8 reason);
->>>> diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
->>>> index 212b0cdb25f5..99ffac6c5e8c 100644
->>>> --- a/net/bluetooth/hci_sync.c
->>>> +++ b/net/bluetooth/hci_sync.c
->>>> @@ -2419,24 +2419,6 @@ int hci_write_fast_connectable_sync(struct hci_dev *hdev, bool enable)
->>>>         return err;
->>>>  }
->>>>
->>>> -static bool disconnected_accept_list_entries(struct hci_dev *hdev)
->>>> -{
->>>> -       struct bdaddr_list *b;
->>>> -
->>>> -       list_for_each_entry(b, &hdev->accept_list, list) {
->>>> -               struct hci_conn *conn;
->>>> -
->>>> -               conn = hci_conn_hash_lookup_ba(hdev, ACL_LINK, &b->bdaddr);
->>>> -               if (!conn)
->>>> -                       return true;
->>>> -
->>>> -               if (conn->state != BT_CONNECTED && conn->state != BT_CONFIG)
->>>> -                       return true;
->>>> -       }
->>>> -
->>>> -       return false;
->>>> -}
->>>> -
->>>>  static int hci_write_scan_enable_sync(struct hci_dev *hdev, u8 val)
->>>>  {
->>>>         return __hci_cmd_sync_status(hdev, HCI_OP_WRITE_SCAN_ENABLE,
->>>> --
->>>> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, a Linux Foundation Collaborative Project
->>>>
->>>
->>>
->>
-> 
+> Yeah, but previous bindings were not mentioning it alone, so this would
+> not be a direct conversion.
 > 
 
+Sorry, I'm not sure I understand you correctly: What do you mean with
+"the previous bindings were not mentioning it alone"? "qcom,q6v5-pil"
+was listed as standalone compatible just like all the other compatibles:
+
+- compatible:
+	Usage: required
+	Value type: <string>
+	Definition: must be one of:
+		    "qcom,q6v5-pil",         <----
+		    "qcom,ipq8074-wcss-pil"
+		    "qcom,qcs404-wcss-pil"
+		    "qcom,msm8916-mss-pil",  <----
+		    "qcom,msm8974-mss-pil"
+		    "qcom,msm8996-mss-pil"
+		    "qcom,msm8998-mss-pil"
+		    "qcom,sc7180-mss-pil"
+		    "qcom,sc7280-mss-pil"
+		    "qcom,sdm845-mss-pil"
+
+The only non-conversion steps I did was to mark some of the redundant
+bindings as deprecated (e.g. "memory-region" with 2 items vs "mba" and
+"mpss" subnode, "qcom,msm8916-mss-pil" vs "qcom,q6v5-pil"). I can put
+the deprecations in a separate patch if that clarifies the situation.
+
+Thanks,
+Stephan
