@@ -2,109 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C0296576317
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Jul 2022 15:51:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5240F57634B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Jul 2022 16:00:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231371AbiGONvv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Jul 2022 09:51:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51194 "EHLO
+        id S235070AbiGOOAa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Jul 2022 10:00:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59524 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229671AbiGONvu (ORCPT
+        with ESMTP id S235088AbiGOOAM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Jul 2022 09:51:50 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C93A7FE5B;
-        Fri, 15 Jul 2022 06:51:50 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id C0422B82C6E;
-        Fri, 15 Jul 2022 13:51:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6864EC34115;
-        Fri, 15 Jul 2022 13:51:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1657893107;
-        bh=xYedmqGMctnUXEDc/PAZZ+61FbVfXucK13vS2m5RINU=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Rvf7FizhpDT2XZSqEN2uAHDeuyFCsC+9OcDI2hKMYDPbYWekFCNT1Y4QJjn687HrY
-         UPMF9qHyUqkL+Pi/adJ1D1UowiGO7Ou85JS1c08bEV83Ypf/kgP+BcPULTudScSOFz
-         9iRevHEUvG6zR4xEU8NsM8bdyEZZY/4q0+Y2T8rjvbzofsIAjvofb5BlAiNjo8gVmD
-         Ja4lRfAzc51LUBGzY5Na+L1AZ9O7sjV9/dmL4PZSGQhMcNfnvZwjExTZ6B3dcIu6rN
-         77Awg9WDU+HwYs/Shuy4t1k8vz6v0nVLXKh9YkQAvDspR4zzkThQWyoDvAslH4Jk2O
-         0g9jQkCdQvy3w==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1oCLjV-0006Qo-0S; Fri, 15 Jul 2022 15:51:53 +0200
-Date:   Fri, 15 Jul 2022 15:51:53 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Krishna chaitanya chundru <quic_krichai@quicinc.com>
-Cc:     helgaas@kernel.org, linux-pci@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        mka@chromium.org, quic_vbadigan@quicinc.com,
-        quic_hemantk@quicinc.com, quic_nitegupt@quicinc.com,
-        quic_skananth@quicinc.com, quic_ramkri@quicinc.com,
-        manivannan.sadhasivam@linaro.org, swboyd@chromium.org,
-        dmitry.baryshkov@linaro.org, Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Subject: Re: [PATCH v4 2/2] PCI: qcom: Restrict pci transactions after pci
- suspend
-Message-ID: <YtFw+ezt6s/yXaLY@hovoldconsulting.com>
-References: <1656684800-31278-1-git-send-email-quic_krichai@quicinc.com>
- <1657118425-10304-1-git-send-email-quic_krichai@quicinc.com>
- <1657118425-10304-3-git-send-email-quic_krichai@quicinc.com>
+        Fri, 15 Jul 2022 10:00:12 -0400
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05DFD459AB
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Jul 2022 07:00:07 -0700 (PDT)
+Received: by mail-ej1-x635.google.com with SMTP id dn9so9112940ejc.7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Jul 2022 07:00:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=0HJhff+E4NeHVlDobtIdZgmKxifRHzjFEik47oKvdx8=;
+        b=Y7wIv9EckNkZ7nGMnE3ATuKJzVp4UCn2jU15kLgbDPjftMPmAMsnamKn1JkD9RzZfi
+         jfUutLahgtHSoxCIkCtyXgjCg6LH7guNoIJN7+UvmIOHZTqKXb8x8Zp6MQ+iDHfAIhgF
+         0gtZZkF3HWFGMSam6Iq8JeycOTackA+6F5q+Q=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=0HJhff+E4NeHVlDobtIdZgmKxifRHzjFEik47oKvdx8=;
+        b=Ghk1lZa9DQQsiFzTZ+NJW90og5aM6EZoeafxE2BrjSuQZ8V8tE8WQksbyz9BlqXBal
+         wEbdxlFVcO1hR0xx/1p+6ra7AhtRaloOdI3QToGGW+n0cMW/Oa4l7kwBJN+P1yz3h5MN
+         fI+fQzFQBs7a2aPoXfW+WJWW0UPZCxbmiXmy6fMv0zNi1JC8IhjmBreLAY9+SUPkCr0m
+         JMBN6FLZBPZUdQ6osATHWl5oYI+2acEisRCCkGQEEny7QuPB8soH5nSL84osXJdaq4TV
+         5pyxwZOWT587gd1y8VRjtKpnzW2RSVyEzF3rbStPSrPswJiyQYaUUKkMI9oKAfc/THnV
+         1BMQ==
+X-Gm-Message-State: AJIora+Yw2kGh2bLqMWpp274r+A1A0j4iZ8Npq+B+CFYFact6QOWbMkb
+        WWFTqIn71msg36BILmSiCvSeO66jil5zASu6
+X-Google-Smtp-Source: AGRyM1u61ItGq+yyIdKuvWCPQeoTRsuUf6+EgTWEdmI9Lhj2Ny/sE7ihDPlRdkrlcjL9rMnM1G/YQg==
+X-Received: by 2002:a17:907:a218:b0:72b:8aae:3f8c with SMTP id qp24-20020a170907a21800b0072b8aae3f8cmr13999591ejc.191.1657893605388;
+        Fri, 15 Jul 2022 07:00:05 -0700 (PDT)
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com. [209.85.221.42])
+        by smtp.gmail.com with ESMTPSA id fs4-20020a170907600400b0072af3deb944sm2061136ejc.223.2022.07.15.07.00.04
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 15 Jul 2022 07:00:04 -0700 (PDT)
+Received: by mail-wr1-f42.google.com with SMTP id r2so5838366wrs.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Jul 2022 07:00:04 -0700 (PDT)
+X-Received: by 2002:adf:f90d:0:b0:20c:de32:4d35 with SMTP id
+ b13-20020adff90d000000b0020cde324d35mr12761948wrr.583.1657893603592; Fri, 15
+ Jul 2022 07:00:03 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1657118425-10304-3-git-send-email-quic_krichai@quicinc.com>
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+References: <20220715084442.115021-1-jinghung.chen3@hotmail.com> <SG2PR03MB5006667607216338081A723FCC8B9@SG2PR03MB5006.apcprd03.prod.outlook.com>
+In-Reply-To: <SG2PR03MB5006667607216338081A723FCC8B9@SG2PR03MB5006.apcprd03.prod.outlook.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Fri, 15 Jul 2022 06:59:51 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=U+2oiWOO5=eDZNbsHMgFEb5500tfcO+-m=24WaNiTCRg@mail.gmail.com>
+Message-ID: <CAD=FV=U+2oiWOO5=eDZNbsHMgFEb5500tfcO+-m=24WaNiTCRg@mail.gmail.com>
+Subject: Re: [PATCH v5 1/3] dt-bindings: arm: qcom: document sc7280 and
+ villager board
+To:     Jimmy Chen <jinghung.chen3@hotmail.com>
+Cc:     LKML <linux-kernel@vger.kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Alan Huang <alan-huang@quanta.corp-partner.google.com>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jul 06, 2022 at 08:10:25PM +0530, Krishna chaitanya chundru wrote:
-> If the endpoint device state is D0 and irq's are not freed, then
-> kernel try to mask interrupts in system suspend path by writing
-> in to the vector table (for MSIX interrupts) and config space (for MSI's).
-> 
-> These transactions are initiated in the pm suspend after pcie clocks got
-> disabled as part of platform driver pm  suspend call. Due to it, these
-> transactions are resulting in un-clocked access and eventually to crashes.
-> 
-> So added a logic in qcom driver to restrict these unclocked access.
-> And updated the logic to check the link state before masking
-> or unmasking the interrupts.
-> 
-> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Hi,
+
+On Fri, Jul 15, 2022 at 1:45 AM Jimmy Chen <jinghung.chen3@hotmail.com> wrote:
+>
+> This adds a LTE skus for Chromebook Villager to the yaml.
+>
+> Signed-off-by: Jimmy Chen <jinghung.chen3@hotmail.com>
 > ---
->  drivers/pci/controller/dwc/pcie-designware-host.c | 14 +++++++--
->  drivers/pci/controller/dwc/pcie-qcom.c            | 36 +++++++++++++++++++++--
->  2 files changed, 46 insertions(+), 4 deletions(-)
-> 
-> diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
-> index 2fa86f3..2a46b40 100644
-> --- a/drivers/pci/controller/dwc/pcie-designware-host.c
-> +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
-> @@ -29,13 +29,23 @@ static void dw_msi_ack_irq(struct irq_data *d)
->  
->  static void dw_msi_mask_irq(struct irq_data *d)
->  {
-> -	pci_msi_mask_irq(d);
-> +	struct pcie_port *pp = irq_data_get_irq_chip_data(d->parent_data);
-> +	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+>
+> (no changes since v2)
+>
+> Changes in v2:
+> -Add this patch
+>
+>  Documentation/devicetree/bindings/arm/qcom.yaml | 15 +++++++++++++++
+>  1 file changed, 15 insertions(+)
 
-When rebasing you'll notice that struct pcie_port has now been renamed:
+There were no changes between v4 and v5 and I gave my Reviewed-by tag
+on v4. That means you should carry my tag forward to your v5. In any
+case:
 
-	60b3c27fb9b9 ("PCI: dwc: Rename struct pcie_port to dw_pcie_rp")
-
-Johan
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
