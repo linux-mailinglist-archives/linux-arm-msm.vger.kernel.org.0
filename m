@@ -2,168 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 260F2576C8F
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Jul 2022 10:22:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A6337576CC1
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Jul 2022 11:27:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229497AbiGPIWJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 16 Jul 2022 04:22:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48798 "EHLO
+        id S229779AbiGPJ1D (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 16 Jul 2022 05:27:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50044 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229448AbiGPIWJ (ORCPT
+        with ESMTP id S229521AbiGPJ1C (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 16 Jul 2022 04:22:09 -0400
-X-Greylist: delayed 263 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sat, 16 Jul 2022 01:22:07 PDT
-Received: from condef-08.nifty.com (condef-08.nifty.com [202.248.20.73])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E53FB3718C
-        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Jul 2022 01:22:07 -0700 (PDT)
-Received: from conssluserg-03.nifty.com ([10.126.8.82])by condef-08.nifty.com with ESMTP id 26G8Dhmd032011
-        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Jul 2022 17:13:43 +0900
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43]) (authenticated)
-        by conssluserg-03.nifty.com with ESMTP id 26G8DIfZ029242;
-        Sat, 16 Jul 2022 17:13:18 +0900
-DKIM-Filter: OpenDKIM Filter v2.10.3 conssluserg-03.nifty.com 26G8DIfZ029242
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nifty.com;
-        s=dec2015msa; t=1657959199;
-        bh=+v1uQMo3ZvSGLmyQ08/uYCDWhLeGHbb+CTN6DjFWfno=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=TQsEstghDthg8mhcEQtKay7sVd894ZCIceJqFvoWrKxe6AC9W0MtETPaSXseMru3j
-         PFdGCMyIXx9zPJXZkvHPOAoQ2obIAV/WMApJ7NxL2tR1hMd8FujR/npYL6n8fPOkG9
-         Womk1TLl4zyWNU4TkvIVzqPqABSjlRtC7MiBsLxRUFt6peiZQKiX4XKoAzBwekDxbO
-         Cb0oXNozlWWcrkPPZp1sqP7X5HUtvOSW7gbXDJl0k1qaq6WRQ58MJmC8jq8pAu81uz
-         zkoVZgxzqYv3tgRZUSAZ51KqBT+8NEbPhgnHbEr0u9gKzIVu7areR8iEd9Bhgw4BCm
-         o98n+53YN7epg==
-X-Nifty-SrcIP: [209.85.221.43]
-Received: by mail-wr1-f43.google.com with SMTP id r14so9675602wrg.1;
-        Sat, 16 Jul 2022 01:13:18 -0700 (PDT)
-X-Gm-Message-State: AJIora95OyzQnn7TwwA/4XNfygwGAcXdnbJWpUe45qtF/pLey904OM8B
-        rFtH68d7r7YTcNeIipa1IN6owLwt1P8/UAQ+874=
-X-Google-Smtp-Source: AGRyM1tFDgDUOKrocw3ze5eE6GIC91t1YbhGR1tyjE4wXbjW08NtqHFzsdP4Fgnwub89UXf8TNq75evk0g5D5iJJUiA=
-X-Received: by 2002:a05:6000:104c:b0:21d:87bf:63a2 with SMTP id
- c12-20020a056000104c00b0021d87bf63a2mr15224596wrx.461.1657959197095; Sat, 16
- Jul 2022 01:13:17 -0700 (PDT)
+        Sat, 16 Jul 2022 05:27:02 -0400
+Received: from qproxy5-pub.mail.unifiedlayer.com (qproxy5-pub.mail.unifiedlayer.com [69.89.21.30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43DDF22BE6
+        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Jul 2022 02:27:01 -0700 (PDT)
+Received: from gproxy4-pub.mail.unifiedlayer.com (gproxy4-pub.mail.unifiedlayer.com [69.89.23.142])
+        by qproxy5.mail.unifiedlayer.com (Postfix) with ESMTP id 96C37803229E
+        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Jul 2022 09:26:50 +0000 (UTC)
+Received: from cmgw10.mail.unifiedlayer.com (unknown [10.0.90.125])
+        by progateway6.mail.pro1.eigbox.com (Postfix) with ESMTP id 2F35110043446
+        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Jul 2022 09:26:24 +0000 (UTC)
+Received: from host2021.hostmonster.com ([67.20.76.169])
+        by cmsmtp with ESMTP
+        id Ce48oFxdzCokGCe48o073L; Sat, 16 Jul 2022 09:26:24 +0000
+X-Authority-Reason: nr=8
+X-Authority-Analysis: v=2.4 cv=d+QwdTvE c=1 sm=1 tr=0 ts=62d28440
+ a=WsSq2E3o8pL9pU24QVnP+g==:117 a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19
+ a=IkcTkHD0fZMA:10:nop_charset_1 a=nqWwzPSLAoUA:10:x_php_script_1
+ a=96GJKQGblXAA:10:x_php_script_2 a=RgO8CyIxsXoA:10:nop_rcvd_month_year
+ a=C7W8tc3HtJcA:10:ip_php_script_1
+ a=PCPXSsrKi8oA:10:endurance_base64_authed_username_1 a=kMF6tg4kAAAA:8
+ a=VwQbUJbxAAAA:8 a=zcIMiNlmAAAA:8 a=RFj5cbzKgbXeMOUgROkA:9
+ a=QEXdDO2ut3YA:10:nop_charset_2 a=8kQ_f1rJiAEA:10:unanchored_sms_domain1
+ a=-FEs8UIgK8oA:10:nop_fastflux_domain_1
+ a=VxAk22fqlfwA:10:nop_delegated_string_gtld_1 a=tWpsG8_5hk2-Qd6Hdv2S:22
+ a=AjGcO6oz07-iQ99wixmX:22 a=qolbaNdFR-K4-d0P-1Ve:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=emcertification.com; s=default; h=Content-Transfer-Encoding:Content-Type:
+        MIME-Version:Message-ID:From:Date:Subject:To:Sender:Reply-To:Cc:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+        List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=EMPo+JPUnrjeq1KkDu+7ur98e3X/AMpjIo0hG8UwdNk=; b=eC83tmOh8N18buuWZp7OSEhO00
+        GLNHLWChLj9tuI0lwRFwPI3qhUzdyRRM6zEf8uvPpCZ00+kAowcafVPwCaBdSMaK+dk384P6U0JPB
+        DbOv4UAG3Cq/joWYFg8ljplMT;
+Received: from emcertif by host2021.hostmonster.com with local (Exim 4.95)
+        (envelope-from <emcertif@host2021.hostmonster.com>)
+        id 1oCe47-003phM-VP
+        for linux-arm-msm@vger.kernel.org;
+        Sat, 16 Jul 2022 03:26:24 -0600
+To:     linux-arm-msm@vger.kernel.org
+Subject: Thank you for your inquiry:q5iy5q
+X-PHP-Script: emx-gold.com/index.php for 109.70.100.34
+X-PHP-Originating-Script: 2159:PHPMailer.php
+Date:   Sat, 16 Jul 2022 09:26:23 +0000
+From:   EMRO Japan <contact_emrojapan1994@emro.co.jp>
+Message-ID: <eFDqvsZVcTOnABbypr2wAFYt5BUoL77BE7CaQHG9o8@emx-gold.com>
+X-Mailer: PHPMailer 6.1.6 (https://github.com/PHPMailer/PHPMailer)
 MIME-Version: 1.0
-References: <20220623144357.297252-1-dmitry.baryshkov@linaro.org> <CAL_JsqLi31FPBdYPzEW__UmfMTur-0428okopFYVaCbwm045gg@mail.gmail.com>
-In-Reply-To: <CAL_JsqLi31FPBdYPzEW__UmfMTur-0428okopFYVaCbwm045gg@mail.gmail.com>
-From:   Masahiro Yamada <masahiroy@kernel.org>
-Date:   Sat, 16 Jul 2022 17:12:38 +0900
-X-Gmail-Original-Message-ID: <CAK7LNASMUoPh8sBWWjenf8p6R1kv80ar17-qN-wH9zjNMtnfrQ@mail.gmail.com>
-Message-ID: <CAK7LNASMUoPh8sBWWjenf8p6R1kv80ar17-qN-wH9zjNMtnfrQ@mail.gmail.com>
-Subject: Re: [PATCH v3] kbuild: Enable DT schema checks for %.dtb targets
-To:     Rob Herring <robh@kernel.org>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Michal Marek <michal.lkml@markovi.net>,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Tom Rini <trini@konsulko.com>,
-        Linux Kbuild mailing list <linux-kbuild@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_SOFTFAIL autolearn=no
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - host2021.hostmonster.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [2159 991] / [47 12]
+X-AntiAbuse: Sender Address Domain - host2021.hostmonster.com
+X-BWhitelist: no
+X-Source-IP: 
+X-Source-L: No
+X-Exim-ID: 1oCe47-003phM-VP
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: emcertification.com:/public_html/en
+X-Source-Sender: 
+X-Source-Auth: emcertif
+X-Email-Count: 76
+X-Source-Cap: ZW1jZXJ0aWY7ZW1jZXJ0aWY7aG9zdDIwMjEuaG9zdG1vbnN0ZXIuY29t
+X-Local-Domain: yes
+X-Spam-Status: No, score=3.2 required=5.0 tests=BAYES_50,DKIM_INVALID,
+        DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SHORT_SHORTNER,SPF_HELO_NONE,
+        SPF_NONE autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Level: ***
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Jul 16, 2022 at 8:02 AM Rob Herring <robh@kernel.org> wrote:
->
-> On Thu, Jun 23, 2022 at 8:44 AM Dmitry Baryshkov
-> <dmitry.baryshkov@linaro.org> wrote:
-> >
-> > It is possible to build a single dtb, but not with DT schema validation
-> > enabled. Enable the schema validation to run for %.dtb and %.dtbo
-> > targets. Anyone building a dtb for a specific platform *should* pay
-> > attention to schema warnings.
-> >
-> > This could be supported with a separate %.dt.yaml target instead.
-> > However, the .dt.yaml format is considered an intermediate format and
-> > could possibly go away at some point if schema checking is integrated
-> > into dtc. Also, the plan is to enable the schema checks by default once
-> > platforms are free of warnings, and this is a move in that direction.
-> >
-> > This patch differs from the previous one ([1]) in the fact that it
-> > requires specifying VALIDATE_DT=1 to run the checks while doing the
-> > build. Thus default build procedures would not obtain additional build
-> > dependency, while maintainers can still build a single DTB file an get
-> > only corresponding warnings.
->
-> I'd rather this be a kconfig option, so that eventually 'make
-> allmodconfig; make dtbs' also runs the schema checks. If something can
-> be enabled for allmodconfig, then builders will automatically start
-> testing it. Though the extra dependency is a problem here.
+Dear 💋 Veronica sent you a private message! View Message: https://letsg0dancing.page.link/go?3ywb 💋 <linux-arm-msm@vger.kernel.org>
+Thank you for contacting us.
+We have received your inquiry and we will contact you soon.
 
-
-The dependency on libyaml is gone.
-
-As for the dependency on dt-schema, is it a good idea to
-pull it into the kernel tree somewhere,
-like we periodically sync scripts/dtc/ with its upstream?
-
-Any other problematic tool dependency?
-
-
-
-
-
->
-> >
-> > [1] https://lore.kernel.org/all/20210913145146.766080-1-robh@kernel.org/
-> >
-> > Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > Cc: Tom Rini <trini@konsulko.com>
-> > Cc: Masahiro Yamada <masahiroy@kernel.org>
-> > Cc: linux-kbuild@vger.kernel.org
-> > Co-developed-by: Rob Herring <robh@kernel.org>
-> > Signed-off-by: Rob Herring <robh@kernel.org>
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> >  Makefile | 18 ++++++++++++++----
-> >  1 file changed, 14 insertions(+), 4 deletions(-)
-> >
-> > diff --git a/Makefile b/Makefile
-> > index c43d825a3c4c..0942922384c4 100644
-> > --- a/Makefile
-> > +++ b/Makefile
-> > @@ -1365,11 +1365,17 @@ endif
-> >
-> >  ifneq ($(dtstree),)
-> >
-> > -%.dtb: include/config/kernel.release scripts_dtc
-> > -       $(Q)$(MAKE) $(build)=$(dtstree) $(dtstree)/$@
-> > +ifneq ($(VALIDATE_DT),)
-> > +DT_YAML = $(dtstree)/$*.dt.yaml
->
-> .dt.yaml files are deprecated now. This probably doesn't do anything.
-
-Right, this causes a build error.
-
-
-masahiro@grover:~/ref/linux$ make ARCH=arm64 VALIDATE_DT=1
-arm/foundation-v8.dtb
-arch/arm64/Makefile:36: Detected assembler with broken .inst;
-disassembly will be unreliable
-  DTC     arch/arm64/boot/dts/arm/foundation-v8.dtb
-  CHECK   arch/arm64/boot/dts/arm/foundation-v8.dtb
-/home/masahiro/ref/linux/arch/arm64/boot/dts/arm/foundation-v8.dtb:
-sysreg@10000: '#address-cells' is a required property
-From schema: /home/masahiro/ref/linux/Documentation/devicetree/bindings/arm/vexpress-sysreg.yaml
-/home/masahiro/ref/linux/arch/arm64/boot/dts/arm/foundation-v8.dtb:
-sysreg@10000: '#size-cells' is a required property
-From schema: /home/masahiro/ref/linux/Documentation/devicetree/bindings/arm/vexpress-sysreg.yaml
-make[1]: *** No rule to make target
-'arch/arm64/boot/dts/arm/foundation-v8.dt.yaml'.  Stop.
-make: *** [Makefile:1379: arm/foundation-v8.dtb] Error 2
-
-
-
-
-
-
+Message Body:
+xqrhrn
 
 --
-Best Regards
+This e-mail was sent from a contact form on the website (http://emx-gold.com).
 
-Masahiro Yamada
