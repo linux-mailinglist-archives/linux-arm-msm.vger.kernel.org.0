@@ -2,115 +2,168 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 34A53576B93
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Jul 2022 06:13:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 260F2576C8F
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Jul 2022 10:22:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229497AbiGPENk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 16 Jul 2022 00:13:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45986 "EHLO
+        id S229497AbiGPIWJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 16 Jul 2022 04:22:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48798 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231466AbiGPENi (ORCPT
+        with ESMTP id S229448AbiGPIWJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 16 Jul 2022 00:13:38 -0400
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE3F23719A;
-        Fri, 15 Jul 2022 21:13:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1657944815; x=1689480815;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=9SlA60LqRPWaHVi9Kb6IIB6MVQAG5blEyQBdXFBEvj0=;
-  b=Mx8O7o4jZd/+INjsVkfxvRSZ/k/bO0uHvGlvLujFfJErpPIuUHbj/XEV
-   9eaeRvYyAFCcORxXynQCnkU5i4OkLUYNp/YcuYvx5oxr2y/7QT6nqTQN5
-   B3fgIW7QLqpeHMbgkJRaJSTnvcksQ1PUaJq4+hFu1ecEj262Yp1e/tl0L
-   Q=;
-Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 15 Jul 2022 21:13:34 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Jul 2022 21:13:34 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Fri, 15 Jul 2022 21:13:34 -0700
-Received: from [10.216.24.96] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Fri, 15 Jul
- 2022 21:13:30 -0700
-Message-ID: <0093ce1a-51fd-0f02-27dd-9067d7c67569@quicinc.com>
-Date:   Sat, 16 Jul 2022 09:43:27 +0530
+        Sat, 16 Jul 2022 04:22:09 -0400
+X-Greylist: delayed 263 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sat, 16 Jul 2022 01:22:07 PDT
+Received: from condef-08.nifty.com (condef-08.nifty.com [202.248.20.73])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E53FB3718C
+        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Jul 2022 01:22:07 -0700 (PDT)
+Received: from conssluserg-03.nifty.com ([10.126.8.82])by condef-08.nifty.com with ESMTP id 26G8Dhmd032011
+        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Jul 2022 17:13:43 +0900
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43]) (authenticated)
+        by conssluserg-03.nifty.com with ESMTP id 26G8DIfZ029242;
+        Sat, 16 Jul 2022 17:13:18 +0900
+DKIM-Filter: OpenDKIM Filter v2.10.3 conssluserg-03.nifty.com 26G8DIfZ029242
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nifty.com;
+        s=dec2015msa; t=1657959199;
+        bh=+v1uQMo3ZvSGLmyQ08/uYCDWhLeGHbb+CTN6DjFWfno=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=TQsEstghDthg8mhcEQtKay7sVd894ZCIceJqFvoWrKxe6AC9W0MtETPaSXseMru3j
+         PFdGCMyIXx9zPJXZkvHPOAoQ2obIAV/WMApJ7NxL2tR1hMd8FujR/npYL6n8fPOkG9
+         Womk1TLl4zyWNU4TkvIVzqPqABSjlRtC7MiBsLxRUFt6peiZQKiX4XKoAzBwekDxbO
+         Cb0oXNozlWWcrkPPZp1sqP7X5HUtvOSW7gbXDJl0k1qaq6WRQ58MJmC8jq8pAu81uz
+         zkoVZgxzqYv3tgRZUSAZ51KqBT+8NEbPhgnHbEr0u9gKzIVu7areR8iEd9Bhgw4BCm
+         o98n+53YN7epg==
+X-Nifty-SrcIP: [209.85.221.43]
+Received: by mail-wr1-f43.google.com with SMTP id r14so9675602wrg.1;
+        Sat, 16 Jul 2022 01:13:18 -0700 (PDT)
+X-Gm-Message-State: AJIora95OyzQnn7TwwA/4XNfygwGAcXdnbJWpUe45qtF/pLey904OM8B
+        rFtH68d7r7YTcNeIipa1IN6owLwt1P8/UAQ+874=
+X-Google-Smtp-Source: AGRyM1tFDgDUOKrocw3ze5eE6GIC91t1YbhGR1tyjE4wXbjW08NtqHFzsdP4Fgnwub89UXf8TNq75evk0g5D5iJJUiA=
+X-Received: by 2002:a05:6000:104c:b0:21d:87bf:63a2 with SMTP id
+ c12-20020a056000104c00b0021d87bf63a2mr15224596wrx.461.1657959197095; Sat, 16
+ Jul 2022 01:13:17 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Subject: Re: [PATCH v2] usb: dwc3: qcom: Defer dwc3-qcom probe if dwc3 isn't
- probed properly
-Content-Language: en-US
-To:     Matthias Kaehlcke <mka@chromium.org>
-CC:     Andy Gross <agross@kernel.org>,
+References: <20220623144357.297252-1-dmitry.baryshkov@linaro.org> <CAL_JsqLi31FPBdYPzEW__UmfMTur-0428okopFYVaCbwm045gg@mail.gmail.com>
+In-Reply-To: <CAL_JsqLi31FPBdYPzEW__UmfMTur-0428okopFYVaCbwm045gg@mail.gmail.com>
+From:   Masahiro Yamada <masahiroy@kernel.org>
+Date:   Sat, 16 Jul 2022 17:12:38 +0900
+X-Gmail-Original-Message-ID: <CAK7LNASMUoPh8sBWWjenf8p6R1kv80ar17-qN-wH9zjNMtnfrQ@mail.gmail.com>
+Message-ID: <CAK7LNASMUoPh8sBWWjenf8p6R1kv80ar17-qN-wH9zjNMtnfrQ@mail.gmail.com>
+Subject: Re: [PATCH v3] kbuild: Enable DT schema checks for %.dtb targets
+To:     Rob Herring <robh@kernel.org>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Michal Marek <michal.lkml@markovi.net>,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        <linux-arm-msm@vger.kernel.org>, <linux-usb@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        Pavan Kondeti <quic_pkondeti@quicinc.com>,
-        Matthias Kaehlcke <mka@chromium.org>
-References: <1657891312-21748-1-git-send-email-quic_kriskura@quicinc.com>
- <YtHRFcol5uslEel1@google.com>
-From:   Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-In-Reply-To: <YtHRFcol5uslEel1@google.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Tom Rini <trini@konsulko.com>,
+        Linux Kbuild mailing list <linux-kbuild@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_SOFTFAIL autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Sat, Jul 16, 2022 at 8:02 AM Rob Herring <robh@kernel.org> wrote:
+>
+> On Thu, Jun 23, 2022 at 8:44 AM Dmitry Baryshkov
+> <dmitry.baryshkov@linaro.org> wrote:
+> >
+> > It is possible to build a single dtb, but not with DT schema validation
+> > enabled. Enable the schema validation to run for %.dtb and %.dtbo
+> > targets. Anyone building a dtb for a specific platform *should* pay
+> > attention to schema warnings.
+> >
+> > This could be supported with a separate %.dt.yaml target instead.
+> > However, the .dt.yaml format is considered an intermediate format and
+> > could possibly go away at some point if schema checking is integrated
+> > into dtc. Also, the plan is to enable the schema checks by default once
+> > platforms are free of warnings, and this is a move in that direction.
+> >
+> > This patch differs from the previous one ([1]) in the fact that it
+> > requires specifying VALIDATE_DT=1 to run the checks while doing the
+> > build. Thus default build procedures would not obtain additional build
+> > dependency, while maintainers can still build a single DTB file an get
+> > only corresponding warnings.
+>
+> I'd rather this be a kconfig option, so that eventually 'make
+> allmodconfig; make dtbs' also runs the schema checks. If something can
+> be enabled for allmodconfig, then builders will automatically start
+> testing it. Though the extra dependency is a problem here.
 
-On 7/16/2022 2:11 AM, Matthias Kaehlcke wrote:
-> On Fri, Jul 15, 2022 at 06:51:52PM +0530, Krishna Kurapati wrote:
+
+The dependency on libyaml is gone.
+
+As for the dependency on dt-schema, is it a good idea to
+pull it into the kernel tree somewhere,
+like we periodically sync scripts/dtc/ with its upstream?
+
+Any other problematic tool dependency?
+
+
+
+
+
 >
->> Subject: usb: dwc3: qcom: Defer dwc3-qcom probe if dwc3 isn't probed properly
-> nit: "isn't probed properly" sounds like a bug or HW issue. In case
-> you re-spin maybe change it to "hasn't probed yet" or similar.
+> >
+> > [1] https://lore.kernel.org/all/20210913145146.766080-1-robh@kernel.org/
+> >
+> > Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > Cc: Tom Rini <trini@konsulko.com>
+> > Cc: Masahiro Yamada <masahiroy@kernel.org>
+> > Cc: linux-kbuild@vger.kernel.org
+> > Co-developed-by: Rob Herring <robh@kernel.org>
+> > Signed-off-by: Rob Herring <robh@kernel.org>
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> >  Makefile | 18 ++++++++++++++----
+> >  1 file changed, 14 insertions(+), 4 deletions(-)
+> >
+> > diff --git a/Makefile b/Makefile
+> > index c43d825a3c4c..0942922384c4 100644
+> > --- a/Makefile
+> > +++ b/Makefile
+> > @@ -1365,11 +1365,17 @@ endif
+> >
+> >  ifneq ($(dtstree),)
+> >
+> > -%.dtb: include/config/kernel.release scripts_dtc
+> > -       $(Q)$(MAKE) $(build)=$(dtstree) $(dtstree)/$@
+> > +ifneq ($(VALIDATE_DT),)
+> > +DT_YAML = $(dtstree)/$*.dt.yaml
 >
->> On SC7180 devices, it is observed that dwc3 probing is deferred
->> because device_links_check_suppliers() finds that '88e3000.phy'
->> isn't ready yet.
->>
->> As a part of its probe call, dwc3-qcom driver checks if dwc3 core
->> is wakeup capable or not. If the dwc3 core is wakeup capable, driver
->> configures dwc-qcom's power domain to be always ON. Also it configures
->> dp/dm interrupts accordingly to support wakeup from system suspend.
->>
->> More info regarding the same can be found at:
->> commit d9be8d5c5b03 ("usb: dwc3: qcom: Keep power domain on to retain controller status")
->> commit 6895ea55c385 ("usb: dwc3: qcom: Configure wakeup interrupts during suspend")
->>
->> In the event, dwc3 probe gets deferred and is processed after dwc3-qcom
->> probe, driver ends up reading the wakeup capability of dwc3 core as false
->> leading to instability in suspend/resume path.
->>
->> To avoid this scenario, ensure dwc3_probe is successful by checking
->> if appropriate driver is assigned to it or not after the of_platform_populate
->> call. If it isn't then defer dwc3-qcom probe as well.
->>
->> Fixes: 649f5c842ba3 ("usb: dwc3: core: Host wake up support from system suspend")
->> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-> Reported-by: Matthias Kaehlcke <mka@chromium.org>
-> Tested-by: Matthias Kaehlcke <mka@chromium.org>
-> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
->
-> Please make sure to add reviewers of previous versions or other folks you
-> would like to review your patches in cc. I found v2 accidentally while
-> looking for something else.
-Hi Mathias,
-     Sure, Thanks for the review.
+> .dt.yaml files are deprecated now. This probably doesn't do anything.
+
+Right, this causes a build error.
+
+
+masahiro@grover:~/ref/linux$ make ARCH=arm64 VALIDATE_DT=1
+arm/foundation-v8.dtb
+arch/arm64/Makefile:36: Detected assembler with broken .inst;
+disassembly will be unreliable
+  DTC     arch/arm64/boot/dts/arm/foundation-v8.dtb
+  CHECK   arch/arm64/boot/dts/arm/foundation-v8.dtb
+/home/masahiro/ref/linux/arch/arm64/boot/dts/arm/foundation-v8.dtb:
+sysreg@10000: '#address-cells' is a required property
+From schema: /home/masahiro/ref/linux/Documentation/devicetree/bindings/arm/vexpress-sysreg.yaml
+/home/masahiro/ref/linux/arch/arm64/boot/dts/arm/foundation-v8.dtb:
+sysreg@10000: '#size-cells' is a required property
+From schema: /home/masahiro/ref/linux/Documentation/devicetree/bindings/arm/vexpress-sysreg.yaml
+make[1]: *** No rule to make target
+'arch/arm64/boot/dts/arm/foundation-v8.dt.yaml'.  Stop.
+make: *** [Makefile:1379: arm/foundation-v8.dtb] Error 2
+
+
+
+
+
+
+
+--
+Best Regards
+
+Masahiro Yamada
