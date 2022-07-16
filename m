@@ -2,100 +2,192 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A6337576CC1
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Jul 2022 11:27:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 04BC2576D25
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Jul 2022 11:39:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229779AbiGPJ1D (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 16 Jul 2022 05:27:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50044 "EHLO
+        id S232723AbiGPJi7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 16 Jul 2022 05:38:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35406 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229521AbiGPJ1C (ORCPT
+        with ESMTP id S232747AbiGPJiw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 16 Jul 2022 05:27:02 -0400
-Received: from qproxy5-pub.mail.unifiedlayer.com (qproxy5-pub.mail.unifiedlayer.com [69.89.21.30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43DDF22BE6
-        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Jul 2022 02:27:01 -0700 (PDT)
-Received: from gproxy4-pub.mail.unifiedlayer.com (gproxy4-pub.mail.unifiedlayer.com [69.89.23.142])
-        by qproxy5.mail.unifiedlayer.com (Postfix) with ESMTP id 96C37803229E
-        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Jul 2022 09:26:50 +0000 (UTC)
-Received: from cmgw10.mail.unifiedlayer.com (unknown [10.0.90.125])
-        by progateway6.mail.pro1.eigbox.com (Postfix) with ESMTP id 2F35110043446
-        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Jul 2022 09:26:24 +0000 (UTC)
-Received: from host2021.hostmonster.com ([67.20.76.169])
-        by cmsmtp with ESMTP
-        id Ce48oFxdzCokGCe48o073L; Sat, 16 Jul 2022 09:26:24 +0000
-X-Authority-Reason: nr=8
-X-Authority-Analysis: v=2.4 cv=d+QwdTvE c=1 sm=1 tr=0 ts=62d28440
- a=WsSq2E3o8pL9pU24QVnP+g==:117 a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19
- a=IkcTkHD0fZMA:10:nop_charset_1 a=nqWwzPSLAoUA:10:x_php_script_1
- a=96GJKQGblXAA:10:x_php_script_2 a=RgO8CyIxsXoA:10:nop_rcvd_month_year
- a=C7W8tc3HtJcA:10:ip_php_script_1
- a=PCPXSsrKi8oA:10:endurance_base64_authed_username_1 a=kMF6tg4kAAAA:8
- a=VwQbUJbxAAAA:8 a=zcIMiNlmAAAA:8 a=RFj5cbzKgbXeMOUgROkA:9
- a=QEXdDO2ut3YA:10:nop_charset_2 a=8kQ_f1rJiAEA:10:unanchored_sms_domain1
- a=-FEs8UIgK8oA:10:nop_fastflux_domain_1
- a=VxAk22fqlfwA:10:nop_delegated_string_gtld_1 a=tWpsG8_5hk2-Qd6Hdv2S:22
- a=AjGcO6oz07-iQ99wixmX:22 a=qolbaNdFR-K4-d0P-1Ve:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=emcertification.com; s=default; h=Content-Transfer-Encoding:Content-Type:
-        MIME-Version:Message-ID:From:Date:Subject:To:Sender:Reply-To:Cc:Content-ID:
-        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
-        List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=EMPo+JPUnrjeq1KkDu+7ur98e3X/AMpjIo0hG8UwdNk=; b=eC83tmOh8N18buuWZp7OSEhO00
-        GLNHLWChLj9tuI0lwRFwPI3qhUzdyRRM6zEf8uvPpCZ00+kAowcafVPwCaBdSMaK+dk384P6U0JPB
-        DbOv4UAG3Cq/joWYFg8ljplMT;
-Received: from emcertif by host2021.hostmonster.com with local (Exim 4.95)
-        (envelope-from <emcertif@host2021.hostmonster.com>)
-        id 1oCe47-003phM-VP
-        for linux-arm-msm@vger.kernel.org;
-        Sat, 16 Jul 2022 03:26:24 -0600
-To:     linux-arm-msm@vger.kernel.org
-Subject: Thank you for your inquiry:q5iy5q
-X-PHP-Script: emx-gold.com/index.php for 109.70.100.34
-X-PHP-Originating-Script: 2159:PHPMailer.php
-Date:   Sat, 16 Jul 2022 09:26:23 +0000
-From:   EMRO Japan <contact_emrojapan1994@emro.co.jp>
-Message-ID: <eFDqvsZVcTOnABbypr2wAFYt5BUoL77BE7CaQHG9o8@emx-gold.com>
-X-Mailer: PHPMailer 6.1.6 (https://github.com/PHPMailer/PHPMailer)
+        Sat, 16 Jul 2022 05:38:52 -0400
+X-Greylist: delayed 343 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sat, 16 Jul 2022 02:38:42 PDT
+Received: from conssluserg-06.nifty.com (conssluserg-06.nifty.com [210.131.2.91])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55128F58;
+        Sat, 16 Jul 2022 02:38:41 -0700 (PDT)
+Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51]) (authenticated)
+        by conssluserg-06.nifty.com with ESMTP id 26G9cMi1009565;
+        Sat, 16 Jul 2022 18:38:23 +0900
+DKIM-Filter: OpenDKIM Filter v2.10.3 conssluserg-06.nifty.com 26G9cMi1009565
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nifty.com;
+        s=dec2015msa; t=1657964304;
+        bh=+piROnj9mLzn9Znc44Hr/EP2LS2kMptLJort+MxCcoE=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=0zCJXA3ZFbeXeWSGWc1BpuDqw8OQO1g8YbwuXq/pxSz1AEQQJ2I+G3GiXuIu4tb9O
+         GSA9r/3KmZ2htvyUB5oWgefNbA+sZQv/iqAnz0kb4oO1UjXYlXM1Wt9iHOXb2Dk+Mf
+         bsKUYtMmIPrCVK+iXGIYr1nC8pRsUeX7Eyz8kyr1LEYBrNmBe84NAOisMtLQXuKN7G
+         Vdis5umY/C7mF75Z9emLKC2z4sFVnWVePv5UQjAWK8E0SWvZsl9wc3QC+aeXEfxCW8
+         zinpvZmeI5EgVX+t5nAng4qi2gewMvwi6p5PR65NosPsZFtbuMCCBhSJbQhBWeaK9d
+         ZxEoJtvjQQYmw==
+X-Nifty-SrcIP: [209.85.221.51]
+Received: by mail-wr1-f51.google.com with SMTP id f2so9795684wrr.6;
+        Sat, 16 Jul 2022 02:38:23 -0700 (PDT)
+X-Gm-Message-State: AJIora9+iWICOULqY+CbcfA59PaMwUfHZT5AwRahNp7pajlzEjo4K3A3
+        oqPYE9lciovtGrRDSpkkD6W/2JIJpqVFf8kzNRg=
+X-Google-Smtp-Source: AGRyM1uXXoYzn2ED5DqKQOCpe4iWzIt1brPfXQM/ByBpjRgvccY6cDJD4uEHMhD/L9qT7xCC9J5p6J4GwE36DcXvo3Y=
+X-Received: by 2002:adf:979b:0:b0:21d:868a:7f2f with SMTP id
+ s27-20020adf979b000000b0021d868a7f2fmr15570076wrb.409.1657964302181; Sat, 16
+ Jul 2022 02:38:22 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - host2021.hostmonster.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [2159 991] / [47 12]
-X-AntiAbuse: Sender Address Domain - host2021.hostmonster.com
-X-BWhitelist: no
-X-Source-IP: 
-X-Source-L: No
-X-Exim-ID: 1oCe47-003phM-VP
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: emcertification.com:/public_html/en
-X-Source-Sender: 
-X-Source-Auth: emcertif
-X-Email-Count: 76
-X-Source-Cap: ZW1jZXJ0aWY7ZW1jZXJ0aWY7aG9zdDIwMjEuaG9zdG1vbnN0ZXIuY29t
-X-Local-Domain: yes
-X-Spam-Status: No, score=3.2 required=5.0 tests=BAYES_50,DKIM_INVALID,
-        DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SHORT_SHORTNER,SPF_HELO_NONE,
-        SPF_NONE autolearn=no autolearn_force=no version=3.4.6
-X-Spam-Level: ***
+References: <20220706114407.1507412-1-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220706114407.1507412-1-dmitry.baryshkov@linaro.org>
+From:   Masahiro Yamada <masahiroy@kernel.org>
+Date:   Sat, 16 Jul 2022 18:37:42 +0900
+X-Gmail-Original-Message-ID: <CAK7LNAQPS+U1qq4K+7Rao9P7p94bMU3Y6g0+ALUd3t=ioZqSnw@mail.gmail.com>
+Message-ID: <CAK7LNAQPS+U1qq4K+7Rao9P7p94bMU3Y6g0+ALUd3t=ioZqSnw@mail.gmail.com>
+Subject: Re: [PATCH v2] kbuild: allow validating individual dtb files against schema
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        DTML <devicetree@vger.kernel.org>, Tom Rini <trini@konsulko.com>,
+        Linux Kbuild mailing list <linux-kbuild@vger.kernel.org>
+Content-Type: multipart/mixed; boundary="0000000000004845d005e3e8e52c"
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_SOFTFAIL autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Dear 💋 Veronica sent you a private message! View Message: https://letsg0dancing.page.link/go?3ywb 💋 <linux-arm-msm@vger.kernel.org>
-Thank you for contacting us.
-We have received your inquiry and we will contact you soon.
+--0000000000004845d005e3e8e52c
+Content-Type: text/plain; charset="UTF-8"
 
-Message Body:
-xqrhrn
+On Wed, Jul 6, 2022 at 8:44 PM Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
+>
+> While it is possible to validate all generated dtb files against the
+> schema, it typically results in huge pile of warnings. While working on
+> a platform it is quite useful to validate just a single file against
+> schema.
+>
+> Allow specifying CHECK_DTBS=1 on a make command line to enable
+> validation while building dtb files. This reuses the infrastructure
+> existing for `make dtbs_check`, making dtbs_check a shortcut for
+> `make CHECK_DTBS=1 dt_binding_check dtbs`.
+>
+> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Cc: Tom Rini <trini@konsulko.com>
+> Cc: Masahiro Yamada <masahiroy@kernel.org>
+> Cc: linux-kbuild@vger.kernel.org
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>
+> Changes since v1:
+> - Added dependency to rebuild schema if `make dtbs` was used.
+>
+> ---
+>  Makefile | 20 +++++++++++++++-----
+>  1 file changed, 15 insertions(+), 5 deletions(-)
+>
+> diff --git a/Makefile b/Makefile
+> index 9aa7de1ca58f..5a9858aa4934 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -1464,14 +1464,18 @@ endif
+>
+>  ifneq ($(dtstree),)
+>
+> -%.dtb: include/config/kernel.release scripts_dtc
+> +ifneq ($(CHECK_DTBS),)
+> +DT_TMP_BINDING := dt_binding
+> +endif
+> +
+> +%.dtb: include/config/kernel.release scripts_dtc $(DT_TMP_BINDING)
+>         $(Q)$(MAKE) $(build)=$(dtstree) $(dtstree)/$@
+>
+> -%.dtbo: include/config/kernel.release scripts_dtc
+> +%.dtbo: include/config/kernel.release scripts_dtc $(DT_TMP_BINDING)
+>         $(Q)$(MAKE) $(build)=$(dtstree) $(dtstree)/$@
+>
+>  PHONY += dtbs dtbs_install dtbs_check
+> -dtbs: include/config/kernel.release scripts_dtc
+> +dtbs: include/config/kernel.release scripts_dtc $(DT_TMP_BINDING)
+>         $(Q)$(MAKE) $(build)=$(dtstree)
+>
+>  ifneq ($(filter dtbs_check, $(MAKECMDGOALS)),)
+> @@ -1498,8 +1502,10 @@ ifneq ($(filter dt_binding_check, $(MAKECMDGOALS)),)
+>  export CHECK_DT_BINDING=y
+>  endif
+>
+> -PHONY += dt_binding_check
+> -dt_binding_check: scripts_dtc
+> +dt_binding_check: dt_binding
+> +
+> +PHONY += dt_binding
+> +dt_binding: scripts_dtc
+>         $(Q)$(MAKE) $(build)=Documentation/devicetree/bindings
+>
+>  # ---------------------------------------------------------------------------
+> @@ -1774,6 +1780,10 @@ help:
+>         @echo  '                3: more obscure warnings, can most likely be ignored'
+>         @echo  '                e: warnings are being treated as errors'
+>         @echo  '                Multiple levels can be combined with W=12 or W=123'
+> +       @$(if $(dtstree), \
+> +               echo '  make CHECK_DTBS=1 [targets] Check all generated dtb files against schema'; \
+> +               echo '         This can be applied both to "dtbs" and to individual "foo.dtb" targets' ; \
+> +               )
+>         @echo  ''
+>         @echo  'Execute "make" or "make all" to build all targets marked with [*] '
+>         @echo  'For further info see the ./README file'
+> --
+> 2.35.1
+>
 
---
-This e-mail was sent from a contact form on the website (http://emx-gold.com).
 
+I think the idea seems OK to me, but we can make it simpler.
+
+
+First, apply the following clean-up patch to reduce the code duplication.
+https://lore.kernel.org/all/20220716093122.137494-1-masahiroy@kernel.org/T/#u
+
+
+Then, apply the attached patch.diff
+
+Please try it.
+
+
+
+
+
+
+
+-- 
+Best Regards
+Masahiro Yamada
+
+--0000000000004845d005e3e8e52c
+Content-Type: text/x-patch; charset="US-ASCII"; name="patch.diff"
+Content-Disposition: attachment; filename="patch.diff"
+Content-Transfer-Encoding: base64
+Content-ID: <f_l5np37ne0>
+X-Attachment-Id: f_l5np37ne0
+
+ZGlmZiAtLWdpdCBhL01ha2VmaWxlIGIvTWFrZWZpbGUKaW5kZXggOGFhNGRiYjhmODc4Li5jYzgw
+YjZiOGQ1ZjggMTAwNjQ0Ci0tLSBhL01ha2VmaWxlCisrKyBiL01ha2VmaWxlCkBAIC0xMzgzLDEz
+ICsxMzgzLDE2IEBAIGR0YnM6IGR0YnNfcHJlcGFyZQogIyB0YXJnZXRzICgsIHdoaWNoIG1heSBy
+dW4gYXMgcm9vdCkgbXVzdCBub3QgbW9kaWZ5IHRoZSB0cmVlLgogZHRic19wcmVwYXJlOiBpbmNs
+dWRlL2NvbmZpZy9rZXJuZWwucmVsZWFzZSBzY3JpcHRzX2R0YwogCisjICdtYWtlIGR0YnNfY2hl
+Y2snIGlzIGEgc2hvcnRoYW5kIG9mICdtYWtlIENIRUNLX0RUQlM9eSBkdGJzJwogaWZuZXEgKCQo
+ZmlsdGVyIGR0YnNfY2hlY2ssICQoTUFLRUNNREdPQUxTKSksKQogZXhwb3J0IENIRUNLX0RUQlM9
+eQotZHRiczogZHRfYmluZGluZ19jaGVjawogZW5kaWYKLQogZHRic19jaGVjazogZHRicwogCitp
+Zm5lcSAoJChDSEVDS19EVEJTKSwpCitkdGJzX3ByZXBhcmU6IGR0X2JpbmRpbmdfY2hlY2sKK2Vu
+ZGlmCisKIGR0YnNfaW5zdGFsbDoKIAkkKFEpJChNQUtFKSAkKGR0Ymluc3QpPSQoZHRzdHJlZSkg
+ZHN0PSQoSU5TVEFMTF9EVEJTX1BBVEgpCiAK
+--0000000000004845d005e3e8e52c--
