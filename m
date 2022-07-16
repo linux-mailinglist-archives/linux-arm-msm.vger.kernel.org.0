@@ -2,65 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3E6DF576FC2
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Jul 2022 17:19:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 256AA576FBF
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Jul 2022 17:19:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232036AbiGPPTZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 16 Jul 2022 11:19:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37868 "EHLO
+        id S232127AbiGPPT0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 16 Jul 2022 11:19:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37658 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232038AbiGPPTV (ORCPT
+        with ESMTP id S232050AbiGPPTV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Sat, 16 Jul 2022 11:19:21 -0400
-Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DEC91CFC4
+Received: from mail-oa1-x2f.google.com (mail-oa1-x2f.google.com [IPv6:2001:4860:4864:20::2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF1D81CB3A
         for <linux-arm-msm@vger.kernel.org>; Sat, 16 Jul 2022 08:19:20 -0700 (PDT)
-Received: by mail-ot1-x330.google.com with SMTP id k25-20020a056830169900b0061c6f68f451so5646156otr.9
+Received: by mail-oa1-x2f.google.com with SMTP id 586e51a60fabf-10c8e8d973eso12859087fac.5
         for <linux-arm-msm@vger.kernel.org>; Sat, 16 Jul 2022 08:19:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Yr9AcP6Q9m+AFtN5e8B4KVnxj2haGWiQApKKEeYW7EM=;
-        b=YY6N4hZmSUhhQmS94vIOqkjfJl3rP36QV7Zy8V4onsW5KE1l+YOINu0tbQ5lBbW6f9
-         IHFqPMP1Q7mtEUjqnMd5TD+yfPIohQwhOzRSXienIUExTHEPPS05PAc1xCpprBnd3Lb8
-         o4oFuMp+KAMGGNCwdizYzZpEsyjJDW9q+JhaQhxcICUZIoU0kc93ApXWeqsZVu3PmsLH
-         JdyUPg/ttn39+7w1UAxjDoOlsO1+auUV/+nmWGZB3/EgDy+kIS9QpPe2yF9Q26yG5nfS
-         3essKaqqptma6lj5umOnxeDZCMW6J+aBTuqvZslzU2GqErN4csnHcDeXbJft7YvMLUVL
-         U2fA==
+        bh=H4bNtu45Rd/4YI++rhxOkuyGqhRNOVd4xFK6Iso8tDE=;
+        b=ATfdRj+6jYcWrbarTIYXWUJkKwSK7sM2XiU6W2J/8YbrwSwLqni4Vmi50pH8qJOAVE
+         riblqoskYx8F3QXcilQKnQ90kaJefQOnPOrkdKZHM7MwQFycmQrRnRAIk7Q++9KnQwma
+         mkXFrG05It98uGT8dBoneVBITaqrrgD9lLUJwhhrRO2MMKofnyKXICtO+PQDzp6Lx5Ti
+         TukYUWJoZSAHb/bwQUnepvnwy+2T9iZ+as4O2jbOyK0yfavht943D8XzBo5+CjUz4tmb
+         YwBDF6JREM9qPKgMpuiIeswdZb9UGG6eK7aTdgEM9ED8y7YN8ViKac5vhRzOStod3cuT
+         k2gw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Yr9AcP6Q9m+AFtN5e8B4KVnxj2haGWiQApKKEeYW7EM=;
-        b=0TpJBCYfyy7gzqd9NdHW/IGKr/iEDDdbWDZmVQCBDj2pubWFbGHfQz2vUIxFU/L8sA
-         4NrLzHGOKrK/uuemw+iZ/58XTqrD8n0lRTD7KA6jrtV5qBKlVkgDf6c69X0Zv7Sh0sZA
-         ANAm6yTW2RzrMVkG/+7X0fKmqs2ZOT5U7nchprSZcSYLd4sIcHi3YMQ+cz2fbQeNUEyf
-         9DCb/fh4aZxaYTjmLVRYaplOGAyOkZhYcbnyQx3RBD5GhMGTSbyd7jqkgc6Y/yf8qfQa
-         QItXWF+eyBaNDt0FLr1nJTkw9Fe0GkaemwzgoX+PraIgSghzGkIHxLA+btmU9yO6uyvU
-         E5hA==
-X-Gm-Message-State: AJIora+QG0sUe9M5LTXaQKpxhtkFcxshTZRLW1XCHZhepNpGwziKqTfe
-        Fi4cdIsQPHnA0WBahb/FXsPLMw==
-X-Google-Smtp-Source: AGRyM1s0VzvkawhZuWLi8ZYiH6UyOJOtEn2aRv40f543AAAZvwKvYegURJ5TMhvo1I/FRidcnibY7Q==
-X-Received: by 2002:a05:6830:628c:b0:616:b704:344d with SMTP id ce12-20020a056830628c00b00616b704344dmr7676983otb.209.1657984759636;
-        Sat, 16 Jul 2022 08:19:19 -0700 (PDT)
+        bh=H4bNtu45Rd/4YI++rhxOkuyGqhRNOVd4xFK6Iso8tDE=;
+        b=PcRXjHPz/nn7WNr48tVNwB/xUyG5RkvpB/k1IhAYGrQsSAZxPP4IUlE8Vb5MiqeY+/
+         YXabIDauIcaVGYzFl28qOJ5J6+IaxVwc3v5jj9FJmovk41wOt5Ob82LeVsHC3UwQAI5l
+         HMnzpdwH7QyL8HpOniygKhi57Ql9ok9eiRad29ucb2DbcLMIQsTEClCqWWAuJ2U2iPVe
+         uVFgHHxDBxs3um/qWAFQbX+yNgmDmE5K18HTvHpjGfTkq2l89L/ylJP7wHkjhi32swQP
+         fWL78K0RPJjXPlt+bQlfdqhgDDNcfT43/P00o2c5CxXNHIwOScE8Qv5IEhat53VjUPjr
+         TEgw==
+X-Gm-Message-State: AJIora8kHkqkeMNVA2nmVWrAEZLfMATC8T1/bpsxK5B2w+l+xRUjN/Zg
+        yggik5JZvFSPGaOMhGzQOL26RA==
+X-Google-Smtp-Source: AGRyM1uSEZaFwEvPd0FDgBN8nIrdDXBgGgxRTQFolNs/kEwmFdkLRiS1dlyizgPnGLrdwCD9Ji2L+Q==
+X-Received: by 2002:a05:6870:218c:b0:10c:2898:a3ed with SMTP id l12-20020a056870218c00b0010c2898a3edmr13587904oae.168.1657984760590;
+        Sat, 16 Jul 2022 08:19:20 -0700 (PDT)
 Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id m21-20020a4ad515000000b00425beedad70sm3035254oos.32.2022.07.16.08.19.18
+        by smtp.gmail.com with ESMTPSA id m21-20020a4ad515000000b00425beedad70sm3035254oos.32.2022.07.16.08.19.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 16 Jul 2022 08:19:19 -0700 (PDT)
+        Sat, 16 Jul 2022 08:19:20 -0700 (PDT)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Parikshit Pareek <quic_ppareek@quicinc.com>,
         Andy Gross <agross@kernel.org>
 Cc:     Rajendra Nayak <quic_rjendra@quicinc.com>,
-        Prasanna Kumar <quic_kprasan@quicinc.com>,
         Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
+        Prasanna Kumar <quic_kprasan@quicinc.com>,
         linux-arm-msm@vger.kernel.org
-Subject: Re: (subset) [PATCH] arm64: dts: qcom: fix the smmu interrupt values
-Date:   Sat, 16 Jul 2022 10:19:02 -0500
-Message-Id: <165798474064.1679948.9455837410937483640.b4-ty@linaro.org>
+Subject: Re: (subset) [PATCH v4] soc: qcom: Fix the id of SA8540P SoC
+Date:   Sat, 16 Jul 2022 10:19:03 -0500
+Message-Id: <165798474064.1679948.1336326968983760142.b4-ty@linaro.org>
 X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20220711174133.28882-1-quic_ppareek@quicinc.com>
-References: <20220711174133.28882-1-quic_ppareek@quicinc.com>
+In-Reply-To: <20220711083957.12091-1-quic_ppareek@quicinc.com>
+References: <20220711083957.12091-1-quic_ppareek@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -73,16 +73,16 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 11 Jul 2022 23:11:33 +0530, Parikshit Pareek wrote:
-> There has been wrong values introduced for context interrupt for
-> smu node apps_smmu. Fix those ones with due correction.
+On Mon, 11 Jul 2022 14:09:57 +0530, Parikshit Pareek wrote:
+> Change the id of SA8540P to its correct value, i.e., 461.
+> Also, map the id 460 to its correct values, i.e. SA8295P.
 > 
 > 
 
 Applied, thanks!
 
-[1/1] arm64: dts: qcom: fix the smmu interrupt values
-      commit: 1189a9cf144a745e4b98ff4f6cf5f79ab0b56cfb
+[1/1] soc: qcom: Fix the id of SA8540P SoC
+      commit: 5bed21af0005cc7d8bb05d2c4a63afbcede23382
 
 Best regards,
 -- 
