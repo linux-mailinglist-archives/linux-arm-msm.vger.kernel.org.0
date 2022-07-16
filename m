@@ -2,63 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 730D4576FCB
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Jul 2022 17:20:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0414B576FD0
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Jul 2022 17:20:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231934AbiGPPTm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 16 Jul 2022 11:19:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37880 "EHLO
+        id S231799AbiGPPTo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 16 Jul 2022 11:19:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37526 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232201AbiGPPTb (ORCPT
+        with ESMTP id S232236AbiGPPTh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 16 Jul 2022 11:19:31 -0400
-Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FBAE1EEC2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Jul 2022 08:19:23 -0700 (PDT)
-Received: by mail-ot1-x330.google.com with SMTP id k25-20020a056830169900b0061c6f68f451so5646240otr.9
-        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Jul 2022 08:19:23 -0700 (PDT)
+        Sat, 16 Jul 2022 11:19:37 -0400
+Received: from mail-oa1-x2a.google.com (mail-oa1-x2a.google.com [IPv6:2001:4860:4864:20::2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6940E1F2E1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Jul 2022 08:19:24 -0700 (PDT)
+Received: by mail-oa1-x2a.google.com with SMTP id 586e51a60fabf-f2a4c51c45so12811402fac.9
+        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Jul 2022 08:19:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:subject:date:message-id:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=gPncMlKnvritH6I5NxApVd3JtLbhLIFTG9kvE5x6jgA=;
-        b=W6QeaqofLuSShShIzPCe9zmixex52LZteK/EIB9qM7c6tKfr4pRO/ZgzxJziAxa8Kc
-         IbNYLzGkU9/+6GG6QNywF8qSE2CWpxHdn5shPrSaI8Hzf3rkti8Jhx/oFKFP1O2vFJwL
-         MgBHYSG7bi+zZ1U7idd89QBxEHqLtqh7V4lkwBbHNuvOqB3j0frjVZyqAiK7KXz2LmcM
-         aeoBPywsd2gINKViJloaUZqJrXe3FOTOowM7r1UciTizxrHYARrNmZli0bjjtU3jBcWh
-         9tKU0ucUchKPZHM9Pg+X6a4e9tlhHY9jCzITyDtE6iT3fHz5lKUZViQQS9QXX4CG1zJL
-         HRPA==
+        bh=UQMyqlnOl2ShQfxqO/F3cpteR/9EvTP4YzP6gZhE16Y=;
+        b=UpGj6MMOpOqt27f839h3qVkzEniiwd1if/gzWBauVzKGY/e+vLRBDeEgp7daw7DTU+
+         gT9TEAefkth7hBHefuQFpEG45OF7Studd6+ehMIDwEOQ1eoziEuWd9aB4bbfXIIxCpnr
+         2jJ0jxnZwBF5uKS/Mq2efpLppEfiuHQ1ynlbIj0qLoCF3KNKQVX974vI6YLbKHRnswmC
+         Bi23FIxMIO1Odcp3BJNsGgWgxG1DBRd0aaI/vEJ8YuWejmCjyFxKmZojVkKthQp+RuLB
+         FQVWQPz7LJKNcs2dtc8ct4H08tn68k4v3FPqN4Mi34Ujz3CF66zhh8iYAgewrsWrSLyn
+         5ZSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=gPncMlKnvritH6I5NxApVd3JtLbhLIFTG9kvE5x6jgA=;
-        b=kQhrN/MZ5qXK3MYjBx5lR7Q17wjlvu0FozqjKcdrq/+Ue8r/zwbQNQyQTyq/1M/IGq
-         NMVY2eKz6bnqaX+Zd4x9o2VoT755k0ug8Wxab2Ndon0/V3E/o1UCLfQBPvmdW5/ur7UQ
-         amhuy4SmalN2x5kOweD9yx3qSjM/eZVBvRkYmOxQZRLrqI4Ho02qGLW0mnFk9LxIQBne
-         ys2VxtxsHkvl20jawWnzasocTitmS/YWxqmYmgqmPk7QU0ffKzPA7b4czdRgIcUZgAFV
-         kEShHCerAwTD1Ipt7mh+tu23yqIMiHporDkfxeAhfS9HrZYBdpZLoEAe0W9111sppLSE
-         TVMA==
-X-Gm-Message-State: AJIora911sV0+jKql+S/KhoUa34sov2QnYiUaHYTlvhiRVHokMqBSeEM
-        UEzXevuuK31nzU8Ucnsi25qszg==
-X-Google-Smtp-Source: AGRyM1s/P48Dsno24IGjRdsxor642xgqDDF36u5yJkb2tW+ixZ+1+SyB5FhkZuO4zwcG0tdbEX4WbQ==
-X-Received: by 2002:a9d:2941:0:b0:61c:7216:e3ee with SMTP id d59-20020a9d2941000000b0061c7216e3eemr6893389otb.280.1657984762793;
-        Sat, 16 Jul 2022 08:19:22 -0700 (PDT)
+        bh=UQMyqlnOl2ShQfxqO/F3cpteR/9EvTP4YzP6gZhE16Y=;
+        b=XccGK0uvlcExhO5vZkVfc5PW0XyvdcN2KUTwIa5qMv4wPRGMkW4qMuORNm0bUoO/e6
+         hvLjd3hjy/kJV/haxWVCwlIOuqWWWSsSXNXdC0wGlbrCTqeelSgf9TvSX4PCu3rpfb1m
+         q7vA+zkFnCLJWSspZFTlIVle37iYDRIUu3mRUp5JpHU4jv3vaH6k5xAXw9Pv8a/YXciG
+         /5CcFhtwZj5BBqOYFeJaZxX7KsXK83FAj1gO9j6tqK5ZmSQ4uQ0XYdGFsxRJaqOe70R9
+         H08j1n8gjkxazgbM6GASCHfW5aJhxnjdI3jKBVV86M2Py9/g8TqEkSL/5UV2YrhoRZAF
+         gZqw==
+X-Gm-Message-State: AJIora8VZgjGAdldf/ESFo1fdm13vUYA3Aclfk8HrqkERAfeYlskwOxR
+        G/CupN4uQw6SlZEf2p5C4us7Uw==
+X-Google-Smtp-Source: AGRyM1uwLUc3Mp5ZYc1Fm9wocfJF1ddieqythIKz57AodEVi2SSycAN/W31rBeV0rkAisuHJTtv96Q==
+X-Received: by 2002:a05:6870:b3a0:b0:10b:760b:c4c9 with SMTP id w32-20020a056870b3a000b0010b760bc4c9mr13729166oap.84.1657984763899;
+        Sat, 16 Jul 2022 08:19:23 -0700 (PDT)
 Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id m21-20020a4ad515000000b00425beedad70sm3035254oos.32.2022.07.16.08.19.21
+        by smtp.gmail.com with ESMTPSA id m21-20020a4ad515000000b00425beedad70sm3035254oos.32.2022.07.16.08.19.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 16 Jul 2022 08:19:22 -0700 (PDT)
+        Sat, 16 Jul 2022 08:19:23 -0700 (PDT)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Robert Marko <robimarko@gmail.com>, linux-arm-msm@vger.kernel.org,
-        robh+dt@kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, konrad.dybcio@somainline.org,
-        krzysztof.kozlowski+dt@linaro.org, agross@kernel.org
-Subject: Re: [PATCH 1/2] arm64: dts: qcom: ipq8074: add #size/address-cells to DTSI
-Date:   Sat, 16 Jul 2022 10:19:05 -0500
-Message-Id: <165798474063.1679948.1326747085211639094.b4-ty@linaro.org>
+        robh+dt@kernel.org, dmitry.baryshkov@linaro.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        jassisinghbrar@gmail.com, krzysztof.kozlowski+dt@linaro.org,
+        konrad.dybcio@somainline.org, agross@kernel.org
+Subject: Re: (subset) [PATCH v6 4/4] arm64: dts: ipq8074: add APCS node
+Date:   Sat, 16 Jul 2022 10:19:06 -0500
+Message-Id: <165798474063.1679948.3824406237045424067.b4-ty@linaro.org>
 X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20220708133846.599735-1-robimarko@gmail.com>
-References: <20220708133846.599735-1-robimarko@gmail.com>
+In-Reply-To: <20220707173733.404947-4-robimarko@gmail.com>
+References: <20220707173733.404947-1-robimarko@gmail.com> <20220707173733.404947-4-robimarko@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -72,20 +73,20 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 8 Jul 2022 15:38:45 +0200, Robert Marko wrote:
-> Add #size-cells and #address-cells to the SoC DTSI to avoid duplicating
-> the same properties in board DTS files.
+On Thu, 7 Jul 2022 19:37:33 +0200, Robert Marko wrote:
+> APCS now has support for providing the APSS clocks as the child device
+> for IPQ8074.
 > 
-> Remove the mentioned properties from current board DTS files.
+> So, add the required DT node for it as it will later be used as the CPU
+> clocksource.
 > 
 > 
+> [...]
 
 Applied, thanks!
 
-[1/2] arm64: dts: qcom: ipq8074: add #size/address-cells to DTSI
-      commit: f32660459d12ad4ce54d0f0c226b3e1f34949a3a
-[2/2] arm64: dts: qcom: ipq8074: add interrupt-parent to DTSI
-      commit: b97e6ffa7c75ab30e1994997d44220fbe2799906
+[4/4] arm64: dts: ipq8074: add APCS node
+      commit: 50ed9fffec3aed88bc1ffed277d291f81153bd5d
 
 Best regards,
 -- 
