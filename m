@@ -2,64 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D207F576A51
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Jul 2022 01:02:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A4606576B1A
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Jul 2022 02:22:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229648AbiGOXC0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Jul 2022 19:02:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33598 "EHLO
+        id S229597AbiGPAWf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Jul 2022 20:22:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59724 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231462AbiGOXCL (ORCPT
+        with ESMTP id S229627AbiGPAWf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Jul 2022 19:02:11 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 604BC52FDD;
-        Fri, 15 Jul 2022 16:02:10 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id EDFEE61E4C;
-        Fri, 15 Jul 2022 23:02:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54C08C3411E;
-        Fri, 15 Jul 2022 23:02:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1657926129;
-        bh=EKzIF14lKdREt9dKPXCkZcQ1LZ5Kt1BUS7VzPXQVbbU=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=m+bYhIOkq5XrOzytDNT64tEz8fTSk90GWooU/HYAAwNKJABnt/EUhBwl6pjASCszr
-         087fEOubPu8C9QPRI2Cpy36NxU+/tKkkmAni/lwKoXgF1up+ZzH439an8hdMH91Qo3
-         sh6BnJxeoQPgpp/uw9eMiKR8jRkWNWI4N9+Cj9rKuyDQC0xa1m7P6m+T57N9AST5jl
-         0QJZPA2DcgzlQZDKy53EVZw7ioLu/UJmQ52lsJv7mKnLdLY9/gX/8FlFTg3FP4nPYx
-         wgTSMZdChZjWteQGXQd+p7NKrSfycbRYzv6ycSPrsSI5jkiS85SM1rIkT82v/175Pu
-         zKhh2Y9fG1rUA==
-Received: by mail-ua1-f41.google.com with SMTP id s3so2983427uaq.2;
-        Fri, 15 Jul 2022 16:02:09 -0700 (PDT)
-X-Gm-Message-State: AJIora8+czrX6go6cEAff0B3SK5Z+OQPEzgI5mEVt33cndCQlet7WyCh
-        nrM87RLrJ3pPez/jK8VGNTHLOa1cLri+tOSVuA==
-X-Google-Smtp-Source: AGRyM1ssXJTc3E14BnWkkD+VwK/VlT14tabaHM7d86SXd4B99OmSLHerTOBhI1fA6sEz666mOPdG44UUVuGBObKH95k=
-X-Received: by 2002:ab0:298e:0:b0:382:982e:9ba8 with SMTP id
- u14-20020ab0298e000000b00382982e9ba8mr6338928uap.36.1657926128193; Fri, 15
- Jul 2022 16:02:08 -0700 (PDT)
+        Fri, 15 Jul 2022 20:22:35 -0400
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01B934E851
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Jul 2022 17:22:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1657930953; x=1689466953;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=mpJNKvz8Sa0EWVAACiWtluqVuiWx48oooR90qT5XARc=;
+  b=OMkGkVxhD677yLcGevaLyPR0PH6UmWKjXzLWKV3AkM2vOvY99sicWbaO
+   dhpiuj36e/R4kEu/UuQ9gIgT1nvn9gZcjkdL2L7a4AhAW2vUN/KMqNaFI
+   o0ChJqRwKINKKYYo+UrcIF+5bdHFlFzxXQ0Q7EFo7oPAtRYE7Ld6U1fc1
+   E=;
+Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 15 Jul 2022 17:22:33 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Jul 2022 17:22:33 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Fri, 15 Jul 2022 17:22:33 -0700
+Received: from [10.38.244.84] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Fri, 15 Jul
+ 2022 17:22:30 -0700
+Message-ID: <9e7131bc-f6e5-2756-7038-fc9ed01d2837@quicinc.com>
+Date:   Fri, 15 Jul 2022 17:22:28 -0700
 MIME-Version: 1.0
-References: <20220623144357.297252-1-dmitry.baryshkov@linaro.org>
-In-Reply-To: <20220623144357.297252-1-dmitry.baryshkov@linaro.org>
-From:   Rob Herring <robh@kernel.org>
-Date:   Fri, 15 Jul 2022 17:01:57 -0600
-X-Gmail-Original-Message-ID: <CAL_JsqLi31FPBdYPzEW__UmfMTur-0428okopFYVaCbwm045gg@mail.gmail.com>
-Message-ID: <CAL_JsqLi31FPBdYPzEW__UmfMTur-0428okopFYVaCbwm045gg@mail.gmail.com>
-Subject: Re: [PATCH v3] kbuild: Enable DT schema checks for %.dtb targets
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Masahiro Yamada <masahiroy@kernel.org>,
-        Michal Marek <michal.lkml@markovi.net>,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [PATCH 1/2] drm/msm/dpu: use drm_dsc_config instead of
+ msm_display_dsc_config
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+CC:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Tom Rini <trini@konsulko.com>,
-        Linux Kbuild mailing list <linux-kbuild@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20220711100432.455268-1-dmitry.baryshkov@linaro.org>
+ <20220711100432.455268-2-dmitry.baryshkov@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20220711100432.455268-2-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -67,89 +72,294 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jun 23, 2022 at 8:44 AM Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
->
-> It is possible to build a single dtb, but not with DT schema validation
-> enabled. Enable the schema validation to run for %.dtb and %.dtbo
-> targets. Anyone building a dtb for a specific platform *should* pay
-> attention to schema warnings.
->
-> This could be supported with a separate %.dt.yaml target instead.
-> However, the .dt.yaml format is considered an intermediate format and
-> could possibly go away at some point if schema checking is integrated
-> into dtc. Also, the plan is to enable the schema checks by default once
-> platforms are free of warnings, and this is a move in that direction.
->
-> This patch differs from the previous one ([1]) in the fact that it
-> requires specifying VALIDATE_DT=1 to run the checks while doing the
-> build. Thus default build procedures would not obtain additional build
-> dependency, while maintainers can still build a single DTB file an get
-> only corresponding warnings.
 
-I'd rather this be a kconfig option, so that eventually 'make
-allmodconfig; make dtbs' also runs the schema checks. If something can
-be enabled for allmodconfig, then builders will automatically start
-testing it. Though the extra dependency is a problem here.
 
->
-> [1] https://lore.kernel.org/all/20210913145146.766080-1-robh@kernel.org/
->
-> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Cc: Tom Rini <trini@konsulko.com>
-> Cc: Masahiro Yamada <masahiroy@kernel.org>
-> Cc: linux-kbuild@vger.kernel.org
-> Co-developed-by: Rob Herring <robh@kernel.org>
-> Signed-off-by: Rob Herring <robh@kernel.org>
+On 7/11/2022 3:04 AM, Dmitry Baryshkov wrote:
+> There is no need to use the struct msm_display_dsc_config wrapper inside
+> the dpu driver, use the struct drm_dsc_config directly to pass pps data.
+> 
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+This is a nice cleanup!
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 > ---
->  Makefile | 18 ++++++++++++++----
->  1 file changed, 14 insertions(+), 4 deletions(-)
->
-> diff --git a/Makefile b/Makefile
-> index c43d825a3c4c..0942922384c4 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -1365,11 +1365,17 @@ endif
->
->  ifneq ($(dtstree),)
->
-> -%.dtb: include/config/kernel.release scripts_dtc
-> -       $(Q)$(MAKE) $(build)=$(dtstree) $(dtstree)/$@
-> +ifneq ($(VALIDATE_DT),)
-> +DT_YAML = $(dtstree)/$*.dt.yaml
-
-.dt.yaml files are deprecated now. This probably doesn't do anything.
-
-> +DT_CHECK = dt_binding_check
-> +export CHECK_DTBS=y
-> +endif
->
-> -%.dtbo: include/config/kernel.release scripts_dtc
-> -       $(Q)$(MAKE) $(build)=$(dtstree) $(dtstree)/$@
-> +%.dtb: include/config/kernel.release scripts_dtc $(DT_CHECK)
-> +       $(Q)$(MAKE) $(build)=$(dtstree) $(dtstree)/$@ $(DT_YAML)
-> +
-> +%.dtbo: include/config/kernel.release scripts_dtc $(DT_CHECK)
-> +       $(Q)$(MAKE) $(build)=$(dtstree) $(dtstree)/$@ $(DT_YAML)
->
->  PHONY += dtbs dtbs_install dtbs_check
->  dtbs: include/config/kernel.release scripts_dtc
-> @@ -1654,6 +1660,10 @@ help:
->         @echo  '                3: more obscure warnings, can most likely be ignored'
->         @echo  '                e: warnings are being treated as errors'
->         @echo  '                Multiple levels can be combined with W=12 or W=123'
-> +       @$(if $(dtstree), \
-> +               echo '  make VALIDATE_DT=y [targets] Validate all DT processsed during the build'; \
-
-Typo.
-
-
-> +               echo '         This can be applied both to "dtbs" and to individual "foo.dtb" targets' ; \
-> +               )
->         @echo  ''
->         @echo  'Execute "make" or "make all" to build all targets marked with [*] '
->         @echo  'For further info see the ./README file'
-> --
-> 2.35.1
->
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 25 +++----
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h |  2 +-
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c  | 74 ++++++++++-----------
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.h  |  4 +-
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c     |  2 +-
+>   5 files changed, 54 insertions(+), 53 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> index c682d4e02d1b..07b22b7df2e9 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> @@ -162,7 +162,7 @@ enum dpu_enc_rc_states {
+>    * @vsync_event_work:		worker to handle vsync event for autorefresh
+>    * @topology:                   topology of the display
+>    * @idle_timeout:		idle timeout duration in milliseconds
+> - * @dsc:			msm_display_dsc_config pointer, for DSC-enabled encoders
+> + * @dsc:			drm_dsc_config pointer, for DSC-enabled encoders
+>    */
+>   struct dpu_encoder_virt {
+>   	struct drm_encoder base;
+> @@ -208,7 +208,7 @@ struct dpu_encoder_virt {
+>   	bool wide_bus_en;
+>   
+>   	/* DSC configuration */
+> -	struct msm_display_dsc_config *dsc;
+> +	struct drm_dsc_config *dsc;
+>   };
+>   
+>   #define to_dpu_encoder_virt(x) container_of(x, struct dpu_encoder_virt, base)
+> @@ -1791,12 +1791,12 @@ static void dpu_encoder_vsync_event_work_handler(struct kthread_work *work)
+>   }
+>   
+>   static u32
+> -dpu_encoder_dsc_initial_line_calc(struct msm_display_dsc_config *dsc,
+> +dpu_encoder_dsc_initial_line_calc(struct drm_dsc_config *dsc,
+>   				  u32 enc_ip_width)
+>   {
+>   	int ssm_delay, total_pixels, soft_slice_per_enc;
+>   
+> -	soft_slice_per_enc = enc_ip_width / dsc->drm->slice_width;
+> +	soft_slice_per_enc = enc_ip_width / dsc->slice_width;
+>   
+>   	/*
+>   	 * minimum number of initial line pixels is a sum of:
+> @@ -1808,16 +1808,16 @@ dpu_encoder_dsc_initial_line_calc(struct msm_display_dsc_config *dsc,
+>   	 * 5. 6 additional pixels as the output of the rate buffer is
+>   	 *    48 bits wide
+>   	 */
+> -	ssm_delay = ((dsc->drm->bits_per_component < 10) ? 84 : 92);
+> -	total_pixels = ssm_delay * 3 + dsc->drm->initial_xmit_delay + 47;
+> +	ssm_delay = ((dsc->bits_per_component < 10) ? 84 : 92);
+> +	total_pixels = ssm_delay * 3 + dsc->initial_xmit_delay + 47;
+>   	if (soft_slice_per_enc > 1)
+>   		total_pixels += (ssm_delay * 3);
+> -	return DIV_ROUND_UP(total_pixels, dsc->drm->slice_width);
+> +	return DIV_ROUND_UP(total_pixels, dsc->slice_width);
+>   }
+>   
+>   static void dpu_encoder_dsc_pipe_cfg(struct dpu_hw_dsc *hw_dsc,
+>   				     struct dpu_hw_pingpong *hw_pp,
+> -				     struct msm_display_dsc_config *dsc,
+> +				     struct drm_dsc_config *dsc,
+>   				     u32 common_mode,
+>   				     u32 initial_lines)
+>   {
+> @@ -1835,7 +1835,7 @@ static void dpu_encoder_dsc_pipe_cfg(struct dpu_hw_dsc *hw_dsc,
+>   }
+>   
+>   static void dpu_encoder_prep_dsc(struct dpu_encoder_virt *dpu_enc,
+> -				 struct msm_display_dsc_config *dsc)
+> +				 struct drm_dsc_config *dsc)
+>   {
+>   	/* coding only for 2LM, 2enc, 1 dsc config */
+>   	struct dpu_encoder_phys *enc_master = dpu_enc->cur_master;
+> @@ -1858,14 +1858,15 @@ static void dpu_encoder_prep_dsc(struct dpu_encoder_virt *dpu_enc,
+>   		}
+>   	}
+>   
+> -	pic_width = dsc->drm->pic_width;
+> +	dsc_common_mode = 0;
+> +	pic_width = dsc->pic_width;
+>   
+>   	dsc_common_mode = DSC_MODE_MULTIPLEX | DSC_MODE_SPLIT_PANEL;
+>   	if (enc_master->intf_mode == INTF_MODE_VIDEO)
+>   		dsc_common_mode |= DSC_MODE_VIDEO;
+>   
+> -	this_frame_slices = pic_width / dsc->drm->slice_width;
+> -	intf_ip_w = this_frame_slices * dsc->drm->slice_width;
+> +	this_frame_slices = pic_width / dsc->slice_width;
+> +	intf_ip_w = this_frame_slices * dsc->slice_width;
+>   
+>   	/*
+>   	 * dsc merge case: when using 2 encoders for the same stream,
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
+> index d4d1ecd416e3..9e7236ef34e6 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
+> @@ -36,7 +36,7 @@ struct msm_display_info {
+>   	uint32_t h_tile_instance[MAX_H_TILES_PER_DISPLAY];
+>   	bool is_cmd_mode;
+>   	bool is_te_using_watchdog_timer;
+> -	struct msm_display_dsc_config *dsc;
+> +	struct drm_dsc_config *dsc;
+>   };
+>   
+>   /**
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c
+> index 184a1b27b13d..20a033cd323d 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c
+> @@ -37,7 +37,7 @@ static void dpu_hw_dsc_disable(struct dpu_hw_dsc *dsc)
+>   }
+>   
+>   static void dpu_hw_dsc_config(struct dpu_hw_dsc *hw_dsc,
+> -			      struct msm_display_dsc_config *dsc,
+> +			      struct drm_dsc_config *dsc,
+>   			      u32 mode,
+>   			      u32 initial_lines)
+>   {
+> @@ -52,89 +52,89 @@ static void dpu_hw_dsc_config(struct dpu_hw_dsc *hw_dsc,
+>   	if (is_cmd_mode)
+>   		initial_lines += 1;
+>   
+> -	slice_last_group_size = 3 - (dsc->drm->slice_width % 3);
+> +	slice_last_group_size = 3 - (dsc->slice_width % 3);
+>   	data = (initial_lines << 20);
+>   	data |= ((slice_last_group_size - 1) << 18);
+>   	/* bpp is 6.4 format, 4 LSBs bits are for fractional part */
+> -	data |= dsc->drm->bits_per_pixel << 12;
+> -	lsb = dsc->drm->bits_per_pixel % 4;
+> -	bpp = dsc->drm->bits_per_pixel / 4;
+> +	data |= dsc->bits_per_pixel << 12;
+> +	lsb = dsc->bits_per_pixel % 4;
+> +	bpp = dsc->bits_per_pixel / 4;
+>   	bpp *= 4;
+>   	bpp <<= 4;
+>   	bpp |= lsb;
+>   
+>   	data |= bpp << 8;
+> -	data |= (dsc->drm->block_pred_enable << 7);
+> -	data |= (dsc->drm->line_buf_depth << 3);
+> -	data |= (dsc->drm->simple_422 << 2);
+> -	data |= (dsc->drm->convert_rgb << 1);
+> -	data |= dsc->drm->bits_per_component;
+> +	data |= (dsc->block_pred_enable << 7);
+> +	data |= (dsc->line_buf_depth << 3);
+> +	data |= (dsc->simple_422 << 2);
+> +	data |= (dsc->convert_rgb << 1);
+> +	data |= dsc->bits_per_component;
+>   
+>   	DPU_REG_WRITE(c, DSC_ENC, data);
+>   
+> -	data = dsc->drm->pic_width << 16;
+> -	data |= dsc->drm->pic_height;
+> +	data = dsc->pic_width << 16;
+> +	data |= dsc->pic_height;
+>   	DPU_REG_WRITE(c, DSC_PICTURE, data);
+>   
+> -	data = dsc->drm->slice_width << 16;
+> -	data |= dsc->drm->slice_height;
+> +	data = dsc->slice_width << 16;
+> +	data |= dsc->slice_height;
+>   	DPU_REG_WRITE(c, DSC_SLICE, data);
+>   
+> -	data = dsc->drm->slice_chunk_size << 16;
+> +	data = dsc->slice_chunk_size << 16;
+>   	DPU_REG_WRITE(c, DSC_CHUNK_SIZE, data);
+>   
+> -	data = dsc->drm->initial_dec_delay << 16;
+> -	data |= dsc->drm->initial_xmit_delay;
+> +	data = dsc->initial_dec_delay << 16;
+> +	data |= dsc->initial_xmit_delay;
+>   	DPU_REG_WRITE(c, DSC_DELAY, data);
+>   
+> -	data = dsc->drm->initial_scale_value;
+> +	data = dsc->initial_scale_value;
+>   	DPU_REG_WRITE(c, DSC_SCALE_INITIAL, data);
+>   
+> -	data = dsc->drm->scale_decrement_interval;
+> +	data = dsc->scale_decrement_interval;
+>   	DPU_REG_WRITE(c, DSC_SCALE_DEC_INTERVAL, data);
+>   
+> -	data = dsc->drm->scale_increment_interval;
+> +	data = dsc->scale_increment_interval;
+>   	DPU_REG_WRITE(c, DSC_SCALE_INC_INTERVAL, data);
+>   
+> -	data = dsc->drm->first_line_bpg_offset;
+> +	data = dsc->first_line_bpg_offset;
+>   	DPU_REG_WRITE(c, DSC_FIRST_LINE_BPG_OFFSET, data);
+>   
+> -	data = dsc->drm->nfl_bpg_offset << 16;
+> -	data |= dsc->drm->slice_bpg_offset;
+> +	data = dsc->nfl_bpg_offset << 16;
+> +	data |= dsc->slice_bpg_offset;
+>   	DPU_REG_WRITE(c, DSC_BPG_OFFSET, data);
+>   
+> -	data = dsc->drm->initial_offset << 16;
+> -	data |= dsc->drm->final_offset;
+> +	data = dsc->initial_offset << 16;
+> +	data |= dsc->final_offset;
+>   	DPU_REG_WRITE(c, DSC_DSC_OFFSET, data);
+>   
+> -	det_thresh_flatness = 7 + 2 * (dsc->drm->bits_per_component - 8);
+> +	det_thresh_flatness = 7 + 2 * (dsc->bits_per_component - 8);
+>   	data = det_thresh_flatness << 10;
+> -	data |= dsc->drm->flatness_max_qp << 5;
+> -	data |= dsc->drm->flatness_min_qp;
+> +	data |= dsc->flatness_max_qp << 5;
+> +	data |= dsc->flatness_min_qp;
+>   	DPU_REG_WRITE(c, DSC_FLATNESS, data);
+>   
+> -	data = dsc->drm->rc_model_size;
+> +	data = dsc->rc_model_size;
+>   	DPU_REG_WRITE(c, DSC_RC_MODEL_SIZE, data);
+>   
+> -	data = dsc->drm->rc_tgt_offset_low << 18;
+> -	data |= dsc->drm->rc_tgt_offset_high << 14;
+> -	data |= dsc->drm->rc_quant_incr_limit1 << 9;
+> -	data |= dsc->drm->rc_quant_incr_limit0 << 4;
+> -	data |= dsc->drm->rc_edge_factor;
+> +	data = dsc->rc_tgt_offset_low << 18;
+> +	data |= dsc->rc_tgt_offset_high << 14;
+> +	data |= dsc->rc_quant_incr_limit1 << 9;
+> +	data |= dsc->rc_quant_incr_limit0 << 4;
+> +	data |= dsc->rc_edge_factor;
+>   	DPU_REG_WRITE(c, DSC_RC, data);
+>   }
+>   
+>   static void dpu_hw_dsc_config_thresh(struct dpu_hw_dsc *hw_dsc,
+> -				     struct msm_display_dsc_config *dsc)
+> +				     struct drm_dsc_config *dsc)
+>   {
+> -	struct drm_dsc_rc_range_parameters *rc = dsc->drm->rc_range_params;
+> +	struct drm_dsc_rc_range_parameters *rc = dsc->rc_range_params;
+>   	struct dpu_hw_blk_reg_map *c = &hw_dsc->hw;
+>   	u32 off;
+>   	int i;
+>   
+>   	off = DSC_RC_BUF_THRESH;
+>   	for (i = 0; i < DSC_NUM_BUF_RANGES - 1 ; i++) {
+> -		DPU_REG_WRITE(c, off, dsc->drm->rc_buf_thresh[i]);
+> +		DPU_REG_WRITE(c, off, dsc->rc_buf_thresh[i]);
+>   		off += 4;
+>   	}
+>   
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.h
+> index 45e4118f1fa2..c0b77fe1a696 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.h
+> @@ -31,7 +31,7 @@ struct dpu_hw_dsc_ops {
+>   	 * @initial_lines: amount of initial lines to be used
+>   	 */
+>   	void (*dsc_config)(struct dpu_hw_dsc *hw_dsc,
+> -			   struct msm_display_dsc_config *dsc,
+> +			   struct drm_dsc_config *dsc,
+>   			   u32 mode,
+>   			   u32 initial_lines);
+>   
+> @@ -41,7 +41,7 @@ struct dpu_hw_dsc_ops {
+>   	 * @dsc: panel dsc parameters
+>   	 */
+>   	void (*dsc_config_thresh)(struct dpu_hw_dsc *hw_dsc,
+> -				  struct msm_display_dsc_config *dsc);
+> +				  struct drm_dsc_config *dsc);
+>   };
+>   
+>   struct dpu_hw_dsc {
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> index 75ed2b36e1b3..8016d0a3aade 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> @@ -585,7 +585,7 @@ static int _dpu_kms_initialize_dsi(struct drm_device *dev,
+>   		info.h_tile_instance[info.num_of_h_tiles++] = i;
+>   		info.is_cmd_mode = msm_dsi_is_cmd_mode(priv->dsi[i]);
+>   
+> -		info.dsc = msm_dsi_get_dsc_config(priv->dsi[i]);
+> +		info.dsc = msm_dsi_get_dsc_config(priv->dsi[i])->drm;
+>   
+>   		if (msm_dsi_is_bonded_dsi(priv->dsi[i]) && priv->dsi[other]) {
+>   			rc = msm_dsi_modeset_init(priv->dsi[other], dev, encoder);
