@@ -2,165 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A8F44576F87
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Jul 2022 16:54:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3A292576F90
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Jul 2022 17:00:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229926AbiGPOys (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 16 Jul 2022 10:54:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54606 "EHLO
+        id S229779AbiGPPAu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 16 Jul 2022 11:00:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57700 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230501AbiGPOys (ORCPT
+        with ESMTP id S229606AbiGPPAu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 16 Jul 2022 10:54:48 -0400
-Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14A0E1AD8E
-        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Jul 2022 07:54:46 -0700 (PDT)
-Received: by mail-ot1-x32d.google.com with SMTP id r6-20020a056830134600b0061c862abbdeso2784510otq.6
-        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Jul 2022 07:54:46 -0700 (PDT)
+        Sat, 16 Jul 2022 11:00:50 -0400
+Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B38917A85
+        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Jul 2022 08:00:49 -0700 (PDT)
+Received: by mail-ot1-x32e.google.com with SMTP id g20-20020a9d6a14000000b0061c84e679f5so2956163otn.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Jul 2022 08:00:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=ekPldm2A1SVt6kxU75sPPup61vgqjjJ2DCb2TpRe0gk=;
-        b=JxEpfrwSqIHzHrXzQybnp31riyX3iEKfds8el+eDvc50Y1ubQe5s99VwZHKfkLpxF4
-         cLs6sCd3TU41ZSbDShuqCsEyIJYi6YVjESGIM5Ofz82vcfijHM8VT7mNxro5FNEQ6kIH
-         jXzRcAjo7+ZjxU0yHFPJBp8H0TRiUj9NMkcNkO+ViAj6z+A4PSf+TdW1upV+CcOTTPJu
-         dm4Tcgp8ez816zkS7wzt8YdTe2/2W7Eaos5uo3FUYTFSzsoa27KEIL2yQxow8Pf32+eO
-         rOorFTHeEDDys7GOPDgKe+WTh8VbBpuGsHadOe/2qY/7b+6Ls58Q5eIH0SjBYJK+a3pD
-         Oi9Q==
+        bh=OCzu8o65jRXe8kPCqql1dkNy/KOHUusXq9Qq20UZz6c=;
+        b=jByed41fI6hFQz2xdF/cZBTRCTWtuNRpqfrzM4D+IZWUez7IXqMrYxyVT2I8UjNexH
+         zodo3jqlUMaE/1Zk96unWmzq35cPuROjwHnFo8pNHCmlCr5P5lOz2HMAiiVztod4gA5z
+         3mnF/oK0KHg2toiZoqdO6yJHd3TJSW+q8o6PGAgoSGS0rhqFz3IyxagddxIbGb8MSZcx
+         Zo7z3EhOewZTZZ4ZLi5fUO5D6BpDPsXyLFPdLfi9o3pepa5WM6YWRaJef/N5UMx+KhCp
+         U+kXGkV9/4Dnp8fpeVMUmYuPH7mlQ9Xv9Bnqk2Cw1L3nscgk6F56I57tD4xPMRw0Bf9d
+         Y+2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=ekPldm2A1SVt6kxU75sPPup61vgqjjJ2DCb2TpRe0gk=;
-        b=0BFL0CrtGVxULFAlFP9gieOx0IoqOlwatjpDA5hzBH8bY5NREKYa9grTN20JkmofqZ
-         c8zmi+80ge87YCtdcXy7WiwAT4Jm+HAiMzni+bG7H0QmLM+TljPqiGn2g5q0DAWzwZqx
-         8RYkLDrPPSZ/pl9uIFdS7g6VjMohIChwaMxf2ipSgeUbg0HW78ym9Zbrh5B2rVtYrPGz
-         ZlJU6awvSyO77C/s5P/iwjuW+4P9a7gHDo/XmcvtxdOaiK+3Ycj2Ti6XCsPsVlsjYF9m
-         frl2Y9Mm5Ine2vUHmzq2CVY1ytSGqOy6O5/MPi4WNKyW5h1o0z0orChxa4aqVtxqT9LZ
-         kOIg==
-X-Gm-Message-State: AJIora9MFVIYXgkqMWThsWH8/k5FLsMCsDSyFpWVXBPNTkqpVvR86rvY
-        nx1tqNQ6xhvLFT4bztQpNnSaY5911j/LoA==
-X-Google-Smtp-Source: AGRyM1sEFBcpxDdFdR1gAwvBYtPyOEd03azO1l5+Cj57kze/T0j64sULneyVIZwM4Xof3Vnn1TjOTQ==
-X-Received: by 2002:a05:6830:2465:b0:61c:8d2e:215 with SMTP id x37-20020a056830246500b0061c8d2e0215mr1957724otr.116.1657983285360;
-        Sat, 16 Jul 2022 07:54:45 -0700 (PDT)
+        bh=OCzu8o65jRXe8kPCqql1dkNy/KOHUusXq9Qq20UZz6c=;
+        b=wFO/AeowMRsx9dfWgrTET9MmbyYUst67iq/CRgrlKVJ4ECyaKIOxW3tDIbHmiuGlAe
+         0Hi2E1nTCeGWr+pyKunADXztYItG7VqGznvmfMD5vz5TNU9vSBRG0YmIKeRuYJgKZftT
+         M9KlAtqGIHncOBwAEnMffaSf6cF9APXKyy4rQR+d4agMQv4WvM0EOIo/x77vMuWo+n8Z
+         ZkS/GvdQQWuXvx72oGvdFXZBneNwIeH5lOnkY0Ip1tPdwptnojykxuBHtJkAMzSDgebq
+         uIKw1X8+dwm1XVyB7CRzFIK9BddRkBbGl1E1e9GcB/r16JEHrm0ISDYG5zxl2BVrWLrN
+         sX2A==
+X-Gm-Message-State: AJIora9f4SJdp1vPRhTS9zr/Q6SQQSr+i5j+QbzQgYVumncT7IRr0kaP
+        H5KvwISu0VLqO4WM0HlVimk01A==
+X-Google-Smtp-Source: AGRyM1svToWbvX0jHGW2fdza8Lv63PzW2QBjLT84JxmK5lubx1xwBrqWz5tlH1ij8hv06lzx3HJqbA==
+X-Received: by 2002:a9d:6443:0:b0:61c:7f6b:fef8 with SMTP id m3-20020a9d6443000000b0061c7f6bfef8mr4573896otl.319.1657983648466;
+        Sat, 16 Jul 2022 08:00:48 -0700 (PDT)
 Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id t4-20020a4a96c4000000b004356bc04240sm3044445ooi.5.2022.07.16.07.54.44
+        by smtp.gmail.com with ESMTPSA id d8-20020a9d51c8000000b0061c7ce09091sm2684336oth.67.2022.07.16.08.00.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 16 Jul 2022 07:54:44 -0700 (PDT)
-Date:   Sat, 16 Jul 2022 09:54:43 -0500
+        Sat, 16 Jul 2022 08:00:47 -0700 (PDT)
+Date:   Sat, 16 Jul 2022 10:00:46 -0500
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Brian Masney <bmasney@redhat.com>
-Cc:     linux-arm-msm@vger.kernel.org, agross@kernel.org,
-        mturquette@baylibre.com, sboyd@kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        ahalaney@redhat.com, echanude@redhat.com
-Subject: Re: [PATCH] clk: qcom: sc8280xp: add parent to gcc_ufs_phy_axi_clk
- for sa8540p
-Message-ID: <YtLRM7vQhimGFimN@builder.lan>
-References: <20220623142837.3140680-1-bmasney@redhat.com>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>
+Subject: Re: [PATCH v2 1/9] arm64: dts: qcom: sc7180: split register block
+ for DP controller
+Message-ID: <YtLSnj9UjLBBZGFK@builder.lan>
+References: <20220710084133.30976-1-dmitry.baryshkov@linaro.org>
+ <20220710084133.30976-2-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220623142837.3140680-1-bmasney@redhat.com>
+In-Reply-To: <20220710084133.30976-2-dmitry.baryshkov@linaro.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 23 Jun 09:28 CDT 2022, Brian Masney wrote:
+On Sun 10 Jul 03:41 CDT 2022, Dmitry Baryshkov wrote:
 
-> The sa8540p automotive board has the same SOC as the sc8280xp. In order
-> to get the first UFS controller working on the sa8540p,
-> GCC_UFS_REF_CLKREF_CLK needs to be setup as a parent to
-> GCC_UFS_PHY_AXI_CLK.
+> Follow the schema for the DP controller and declare 5 register regions
+> instead of using a single region for all the registers. Note, this
+> extends the dts by adding p1 region to the DP node (to be used for DP
+> MST).
 > 
-> This clock name came from the DTS for the downstream MSM 5.4 kernel
-> sources for the sa8540p. It also references GCC_UFS_CARD_CLKREF_CLK,
-> however that wasn't needed to get the first UFS controller working.
-> 
-> Signed-off-by: Brian Masney <bmasney@redhat.com>
+
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
-> I originally added this under GCC_UFS_PHY_PHY_AUX_CLK since that's
-> what's in the downstream DTS. I was getting errors about
-> GCC_UFS_PHY_AXI_CLK being stuck at off so I moved it there.
+>  arch/arm64/boot/dts/qcom/sc7180.dtsi | 6 +++++-
+>  1 file changed, 5 insertions(+), 1 deletion(-)
 > 
-> Also I don't have access to any documentation for this board so I'm
-> hoping that someone with docs access can verify that this is the
-> appropriate place to put this.
-> 
->  drivers/clk/qcom/gcc-sc8280xp.c | 27 ++++++++++++++-------------
->  1 file changed, 14 insertions(+), 13 deletions(-)
-> 
-> diff --git a/drivers/clk/qcom/gcc-sc8280xp.c b/drivers/clk/qcom/gcc-sc8280xp.c
-> index 4b894442fdf5..4639b50da418 100644
-> --- a/drivers/clk/qcom/gcc-sc8280xp.c
-> +++ b/drivers/clk/qcom/gcc-sc8280xp.c
-> @@ -5685,6 +5685,19 @@ static struct clk_branch gcc_ufs_phy_ahb_clk = {
->  	},
->  };
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> index 47ce5787ed5b..875808cf0614 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> @@ -3080,7 +3080,11 @@ mdss_dp: displayport-controller@ae90000 {
+>  				compatible = "qcom,sc7180-dp";
+>  				status = "disabled";
 >  
-> +static struct clk_branch gcc_ufs_ref_clkref_clk = {
-> +	.halt_reg = 0x8c058,
-> +	.halt_check = BRANCH_HALT,
-> +	.clkr = {
-> +		.enable_reg = 0x8c058,
-> +		.enable_mask = BIT(0),
-> +		.hw.init = &(const struct clk_init_data) {
-> +			.name = "gcc_ufs_ref_clkref_clk",
-> +			.ops = &clk_branch2_ops,
-> +		},
-> +	},
-> +};
-> +
->  static struct clk_branch gcc_ufs_phy_axi_clk = {
->  	.halt_reg = 0x77010,
->  	.halt_check = BRANCH_HALT_VOTED,
-> @@ -5696,6 +5709,7 @@ static struct clk_branch gcc_ufs_phy_axi_clk = {
->  		.hw.init = &(const struct clk_init_data) {
->  			.name = "gcc_ufs_phy_axi_clk",
->  			.parent_hws = (const struct clk_hw*[]){
-> +				&gcc_ufs_ref_clkref_clk.clkr.hw,
-
-gcc_ufs_ref_clkref_clk isn't the parent of gcc_ufs_phy_axi_clk.
-
-But I presume that if this works, then you're just enabling the ufs
-clkref clock, indirectly. Seems reasonable that you should be specifying
-gcc_ufs_ref_clkref_clk as "ref_clk" instead.
-
-Could you please give that a go?
-
-Regards,
-Bjorn
-
->  				&gcc_ufs_phy_axi_clk_src.clkr.hw,
->  			},
->  			.num_parents = 1,
-> @@ -5899,19 +5913,6 @@ static struct clk_branch gcc_ufs_phy_unipro_core_hw_ctl_clk = {
->  	},
->  };
+> -				reg = <0 0x0ae90000 0 0x1400>;
+> +				reg = <0 0xae90000 0 0x200>,
+> +				      <0 0xae90200 0 0x200>,
+> +				      <0 0xae90400 0 0xc00>,
+> +				      <0 0xae91000 0 0x400>,
+> +				      <0 0xae91400 0 0x400>;
 >  
-> -static struct clk_branch gcc_ufs_ref_clkref_clk = {
-> -	.halt_reg = 0x8c058,
-> -	.halt_check = BRANCH_HALT,
-> -	.clkr = {
-> -		.enable_reg = 0x8c058,
-> -		.enable_mask = BIT(0),
-> -		.hw.init = &(const struct clk_init_data) {
-> -			.name = "gcc_ufs_ref_clkref_clk",
-> -			.ops = &clk_branch2_ops,
-> -		},
-> -	},
-> -};
-> -
->  static struct clk_branch gcc_usb2_hs0_clkref_clk = {
->  	.halt_reg = 0x8c044,
->  	.halt_check = BRANCH_HALT,
+>  				interrupt-parent = <&mdss>;
+>  				interrupts = <12>;
 > -- 
-> 2.36.1
+> 2.35.1
 > 
