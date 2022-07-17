@@ -2,155 +2,153 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D50C55773FD
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Jul 2022 06:22:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3771D577581
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Jul 2022 11:20:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232486AbiGQEV7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 17 Jul 2022 00:21:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44954 "EHLO
+        id S232822AbiGQJUn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 17 Jul 2022 05:20:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40908 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232050AbiGQEV7 (ORCPT
+        with ESMTP id S229476AbiGQJUm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 17 Jul 2022 00:21:59 -0400
-Received: from mail-oa1-x2e.google.com (mail-oa1-x2e.google.com [IPv6:2001:4860:4864:20::2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0A5E205FC
-        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Jul 2022 21:21:57 -0700 (PDT)
-Received: by mail-oa1-x2e.google.com with SMTP id 586e51a60fabf-10c0119dd16so15862561fac.6
-        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Jul 2022 21:21:57 -0700 (PDT)
+        Sun, 17 Jul 2022 05:20:42 -0400
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3F1AC1;
+        Sun, 17 Jul 2022 02:20:41 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id v16so12848506wrd.13;
+        Sun, 17 Jul 2022 02:20:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
+        d=gmail.com; s=20210112;
+        h=message-id:date:from:to:cc:subject:references:mime-version
          :content-disposition:in-reply-to;
-        bh=mbkGo6dIU+6JizS/LMQKqNHdhjR1NYxgpojkIHzM3/I=;
-        b=wc4RvCjMQ//ADy8CdSvfCkTGkoqlMX67ESkQun7lswtrvxwftYseljH5n/Lai966yH
-         hAh8l9gfW+zduy3yERfocA1q7KHJ3/73KMEmzNQ07pVScHbnmKy65jpd7y9zq3Innzkx
-         QasRgok/GBzDyQ/2PzwIsEzoRt8k+wcXfpYlQjoueszG/0nN0OW1EEiLUOiEEF1Y6eiH
-         bK5ZE72ztSolaglfpNKHImxFxy3bm3t7in6DmauZcR8PsVtVuH4y6Fld5hOWDRq+xXNs
-         ngXHTZNx+Gmb5eTQaqYyS7oIJQOT5R+VM46eN0B20ZdDdvuTf1k7lDb+48kMO/xEdNes
-         m+BQ==
+        bh=r99CdT1PzVk6pdobY2R7Np2RplJVZgM0dg4GVhWWAAw=;
+        b=IohY1BZ5m9i4q7LqwaNwUFM/RlgDdu8YnXhJThZoBUomEtGuDfd7Bdq1u5mdN3Mp2K
+         Eth4F1WF5Q2CDkGt9ETihUvIYMA6hmo7xLxjYc6LXRajZgIplsl4PUnm+VNV3QG3D1sh
+         yyk1kz7dWM13AJbfCRsn7qcUtLT3yzerOn2UEsf1sKX/8YoDQMQAg39FKtTChAQWev5Y
+         5DEepa4g+PaFBcGkV6zdOBIbRg9S/UbS8rWhm/xOv1b0oFfOw98YQttN2+tMTzvqc3HH
+         avPwA1rPCs2gWJa3ox6szmV+YRxQ1d7WpiSlCYYr/SiBCLzdvcGLdGjsUBcUq+RW6bfN
+         NlaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+        h=x-gm-message-state:message-id:date:from:to:cc:subject:references
          :mime-version:content-disposition:in-reply-to;
-        bh=mbkGo6dIU+6JizS/LMQKqNHdhjR1NYxgpojkIHzM3/I=;
-        b=BtpTdSfaPHeUIVcNQ9P/RMBYgSg2gQUQg3uZP/Kl1M6WHq0xPInbRqYbttu9YOIBWx
-         +v3PHCi+wWk4MZorADsFDCjVCtus+VG243mGxfkKOVT4ismzK+VjWQQah96f4SFgd2Ej
-         X4zNWqHunyWSq5/+8UyHiUBVHCt0KDZ4ACsew72amHEAYGB9wzjDH0T/8kIhQ6vwiIdq
-         7e83KbqCQ3Ut9V8tQhppIhIZWSwcBQjI0D0tK0J2hlQO881m6bioOLeeqgbmIx6xiPjn
-         gRGCRpoM9fWww9DhiKQYIxgFb8J0s/EcrJJbqHF7JLpqljQWTiqQs76wooH4yYz9DqBm
-         NaeA==
-X-Gm-Message-State: AJIora8OOofoEN4OEljzFRHdlX0btUHxLXjbJ9S52YQ8qjyGRDx6WDPf
-        JRXz/rDDMEumJ+Fa7HVsIQxv+g==
-X-Google-Smtp-Source: AGRyM1ucLkz2KJ66sQM7quJWp24YqVAxDsCpWFcWV/Ff/w1BOHmeZACg+ZpKvY2eA76oE7R3/ucCZg==
-X-Received: by 2002:a05:6808:2215:b0:33a:3acb:ef78 with SMTP id bd21-20020a056808221500b0033a3acbef78mr7929603oib.177.1658031716983;
-        Sat, 16 Jul 2022 21:21:56 -0700 (PDT)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id u15-20020a056870304f00b0010be09dc797sm4432333oau.18.2022.07.16.21.21.55
+        bh=r99CdT1PzVk6pdobY2R7Np2RplJVZgM0dg4GVhWWAAw=;
+        b=Wuj9/+pJrbv/EKOC3h8KfN3t3QFbvXp0urvdTNYC03kY9ah3jhMAVwBazLnO0mESE2
+         rypWVTOXFrn+Y+zr9sOjRi4mv6ViR8HA+kPkUvBxHopxbgO7hxCiPuLyOcsDtFihYcBr
+         o729W4p5Yuk9ZUBlXLlFxivpo5PmEqRZfLU5KrU27UNObVID0Anu4oQkB7o5F2H9nDQn
+         yR9Rx0j7dBSdb9/Aj82VP8ShDIaN6mLI7jDDIrgoxiakR4jaftxB8Kuf0YnFf0DePtE3
+         i7c6RvHL7fkrM/Moc3Gg/9+WcevzXjVbNG2p5NpR1pPQvoxWR8YwFvOm9gh3i2GSYf9C
+         WLlA==
+X-Gm-Message-State: AJIora9jV9jpQpcFQjTcBTy3W3ZC0qLtFX1Dxt2AtQolxGpdzQYgTjKu
+        ICVE3dvzPeWoy4H7QLuBFv0=
+X-Google-Smtp-Source: AGRyM1sDoOnrWRnbbuSVgNasWg26N0yAF0DmpPFLksHtx/LOrUgIzgFzRHuRK4fXDNSaXZBOsAOoAQ==
+X-Received: by 2002:adf:e28a:0:b0:210:b31:722 with SMTP id v10-20020adfe28a000000b002100b310722mr19054605wri.65.1658049639999;
+        Sun, 17 Jul 2022 02:20:39 -0700 (PDT)
+Received: from Ansuel-xps. (93-42-70-190.ip85.fastwebnet.it. [93.42.70.190])
+        by smtp.gmail.com with ESMTPSA id t64-20020a1c4643000000b003a30c3d0c9csm8211385wma.8.2022.07.17.02.20.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 16 Jul 2022 21:21:56 -0700 (PDT)
-Date:   Sat, 16 Jul 2022 23:21:54 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Abel Vesa <abel.vesa@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+        Sun, 17 Jul 2022 02:20:39 -0700 (PDT)
+Message-ID: <62d3d467.1c69fb81.5f14.0dce@mx.google.com>
+X-Google-Original-Message-ID: <YtPUZcE5x+CGKzhq@Ansuel-xps.>
+Date:   Sun, 17 Jul 2022 11:20:37 +0200
+From:   Christian Marangi <ansuelsmth@gmail.com>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Mike Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH] clk: qcom: Drop mmcx gdsc supply for dispcc and videocc
-Message-ID: <YtOOYryxh9oEJXyg@builder.lan>
-References: <20220713143200.3686765-1-abel.vesa@linaro.org>
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 0/8] Add ipq806x missing bindings
+References: <20220707010943.20857-1-ansuelsmth@gmail.com>
+ <YtN3/wYKFeAZEsX8@builder.lan>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220713143200.3686765-1-abel.vesa@linaro.org>
+In-Reply-To: <YtN3/wYKFeAZEsX8@builder.lan>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 13 Jul 09:32 CDT 2022, Abel Vesa wrote:
-
-> Both dispcc and videocc use mmcx power domain now.
-> Lets drop the supply mmcx from every gdsc.
+On Sat, Jul 16, 2022 at 09:46:23PM -0500, Bjorn Andersson wrote:
+> On Wed 06 Jul 20:09 CDT 2022, Christian Marangi wrote:
 > 
-> Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Fixes: 266e5cf39a0f ("arm64: dts: qcom: sm8250: remove mmcx regulator")
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-
-This would break backwards compatibility with dtbs that used
-mmcx-supply. We only ever used mmcx-supply in sm8250.dtsi upstream and
-given that we only boot sm8250 off Android boot images it's unlikely
-that anyone would use a new kernel with that old of a dtb...
-
-So:
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-
-Dmitry, what do you think?
-
-Regards,
-Bjorn
-
-> ---
->  drivers/clk/qcom/dispcc-sm8250.c  | 1 -
->  drivers/clk/qcom/videocc-sm8250.c | 4 ----
->  2 files changed, 5 deletions(-)
+> > This is a respin of "Multiple addition to ipq8064 dtsi" series
+> > with major changes and some commit removed.
+> > 
+> > This series try to add some of the missing bindings for ipq806x.
+> > 
+> > This still lacks of the cpu bindings and all the bindings required
+> > to scale cpu clk or L2. These will come later as the driver and
+> > documentation require some changes.
+> > 
+> > So for now we try to add bindings that can directly applied without
+> > making changes to any drivers.
+> > 
+> > Changes:
+> > v2:
+> > - Dropped "add sic non secure node for ipq8064" (no user found)
+> > - Dropped "add smem node for ipq8064" (require changes to the driver
+> >   to remove syscon node and use regs directly, will be added in a
+> >   different series)
+> > - Dropped "fix dtc warning for missing #address-cells for ipq8064" (
+> >   doesn't actually fix any warning)
+> > - Changed "enable usb phy by default for ipq8064" to disable usb phy
+> >   by default
+> > - Reworked rpm smb208 declaration to a saparate dtsi
+> > - Fixed order with compatible-reg-status
+> > - Squashed "remove redundant binding from ipq8064 rb3011 dts" with
+> >   "add multiple missing pin definition for ipq8064" to prevent dtc
+> >   error.
+> > - Add review tag for snps patch
+> > 
+> > Changes from "Multiple addition to ipq8064 dtsi":
+> > v3:
+> > - Fix error in rb3011 dts
+> > - Add tested-by tag on the entire series
+> > v2:
+> > - Added missing patch
+> > - Added additional gsbi6 spi
+> > - Added extra description for L2 cache opp
+> > - Fxied smb208 enabled by default that is problematic for rb3011 devices
+> > 
+> > Christian Marangi (8):
+> >   ARM: dts: qcom: add multiple missing pin definition for ipq8064
+> >   ARM: dts: qcom: add gsbi6 missing definition for ipq8064
+> >   ARM: dts: qcom: add specific ipq8064 dtsi with smb208 rpm regulators
+> >   ARM: dts: qcom: add missing snps,dwmac compatible for gmac ipq8064
+> >   ARM: dts: qcom: disable usb phy by default for ipq8064
+> >   ARM: dts: qcom: reduce pci IO size to 64K for ipq8064
+> >   ARM: dts: qcom: fix and add some missing gsbi node for ipq8064
+> >   ARM: dts: qcom: add speedbin efuse nvmem node
 > 
-> diff --git a/drivers/clk/qcom/dispcc-sm8250.c b/drivers/clk/qcom/dispcc-sm8250.c
-> index 39b344ebb049..709076f0f9d7 100644
-> --- a/drivers/clk/qcom/dispcc-sm8250.c
-> +++ b/drivers/clk/qcom/dispcc-sm8250.c
-> @@ -1138,7 +1138,6 @@ static struct gdsc mdss_gdsc = {
->  	},
->  	.pwrsts = PWRSTS_OFF_ON,
->  	.flags = HW_CTRL,
-> -	.supply = "mmcx",
->  };
->  
->  static struct clk_regmap *disp_cc_sm8250_clocks[] = {
-> diff --git a/drivers/clk/qcom/videocc-sm8250.c b/drivers/clk/qcom/videocc-sm8250.c
-> index 8617454e4a77..f28f2cb051d7 100644
-> --- a/drivers/clk/qcom/videocc-sm8250.c
-> +++ b/drivers/clk/qcom/videocc-sm8250.c
-> @@ -277,7 +277,6 @@ static struct gdsc mvs0c_gdsc = {
->  	},
->  	.flags = 0,
->  	.pwrsts = PWRSTS_OFF_ON,
-> -	.supply = "mmcx",
->  };
->  
->  static struct gdsc mvs1c_gdsc = {
-> @@ -287,7 +286,6 @@ static struct gdsc mvs1c_gdsc = {
->  	},
->  	.flags = 0,
->  	.pwrsts = PWRSTS_OFF_ON,
-> -	.supply = "mmcx",
->  };
->  
->  static struct gdsc mvs0_gdsc = {
-> @@ -297,7 +295,6 @@ static struct gdsc mvs0_gdsc = {
->  	},
->  	.flags = HW_CTRL,
->  	.pwrsts = PWRSTS_OFF_ON,
-> -	.supply = "mmcx",
->  };
->  
->  static struct gdsc mvs1_gdsc = {
-> @@ -307,7 +304,6 @@ static struct gdsc mvs1_gdsc = {
->  	},
->  	.flags = HW_CTRL,
->  	.pwrsts = PWRSTS_OFF_ON,
-> -	.supply = "mmcx",
->  };
->  
->  static struct clk_regmap *video_cc_sm8250_clocks[] = {
-> -- 
-> 2.34.3
+> Please prefix your ipa8064-specific patches with
+>   "ARM: dts: qcom: ipq8064: ..."
 > 
+> It makes the git history easier to read, so I fixed it up while applying
+> these.
+>
+
+Oh ok! I wasn't aware of this tag looking at the old commits. Will do
+that in the next commits.
+
+> > 
+> >  arch/arm/boot/dts/qcom-ipq8064-ap148.dts   |   6 -
+> >  arch/arm/boot/dts/qcom-ipq8064-rb3011.dts  |   9 --
+> >  arch/arm/boot/dts/qcom-ipq8064-smb208.dtsi |  37 +++++
+> >  arch/arm/boot/dts/qcom-ipq8064.dtsi        | 150 +++++++++++++++++++--
+> >  4 files changed, 179 insertions(+), 23 deletions(-)
+> >  create mode 100644 arch/arm/boot/dts/qcom-ipq8064-smb208.dtsi
+> > 
+> > -- 
+> > 2.36.1
+> > 
+
+-- 
+	Ansuel
