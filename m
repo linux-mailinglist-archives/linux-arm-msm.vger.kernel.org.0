@@ -2,117 +2,164 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E1317577627
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Jul 2022 14:33:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6A6F5577824
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Jul 2022 22:11:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229621AbiGQMdS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 17 Jul 2022 08:33:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58760 "EHLO
+        id S230264AbiGQULQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 17 Jul 2022 16:11:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51682 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232136AbiGQMdR (ORCPT
+        with ESMTP id S229462AbiGQULQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 17 Jul 2022 08:33:17 -0400
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9077614D29
-        for <linux-arm-msm@vger.kernel.org>; Sun, 17 Jul 2022 05:33:16 -0700 (PDT)
-Received: by mail-wr1-x432.google.com with SMTP id bk26so13239518wrb.11
-        for <linux-arm-msm@vger.kernel.org>; Sun, 17 Jul 2022 05:33:16 -0700 (PDT)
+        Sun, 17 Jul 2022 16:11:16 -0400
+Received: from mail-qv1-xf2c.google.com (mail-qv1-xf2c.google.com [IPv6:2607:f8b0:4864:20::f2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2603FF6D
+        for <linux-arm-msm@vger.kernel.org>; Sun, 17 Jul 2022 13:11:13 -0700 (PDT)
+Received: by mail-qv1-xf2c.google.com with SMTP id l2so7546806qvt.2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 17 Jul 2022 13:11:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=j2BR3h16Mhy5gM4KsP6TulbAM/2F99pvBCc7QlwzcZ4=;
-        b=ZbBiwnWJNKIr+NR37XpR7bSyqYBFbDrUDPWbNlxfXdnHWQXDVq5CxgdOJ2DGKUn/oa
-         WYxvBFZWZC6ja2EyLW2VpjNJpx2FOVobl0NvrD2nX1gDIHmmqOTzJ8PVgtyVOVWXjAxi
-         pJ/M+i1IomOyh8qmq7hHDgUE8pf2nJGcHJJPt38ZjFtRQSte4lfn7rkFXWLOgkC3Og5I
-         sPg612k6g8V0OAbkMGdlaXT7+h3MXpSCrmsdFILk1d7hzJV80OBdZ0AYlH+TkObC1i2O
-         1WAEWsI9AyVq3lIgQasMJ6eAjXIevem2cUa7OOlcspp57I+10sr/TbQD6SMcSXKmdlIG
-         Ghig==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=PigXQwKM0HFVf977KpJSmEmDxCSJ/94yMR8JWMEuSKA=;
+        b=XGsblwnKyTOHGD+NCSzwrCwIrW3uo8gEMmxRfTEImmCf4UQf281/Iz8nE8qoeVSISh
+         g+Urw2+uGfabP/rwLmK3GsIcpTA78qLbgkLHbKaK/LZ6xv/cu2Ddxck8u2Jpo2Dj/Y1I
+         IPEfYA8rTP4FQqePDLXMqCfUm+bUSwpEZxu/128HJE1l5rX6HXVyi/qok9pWd/d3Wj3o
+         suhRcEWruo5GX40SxMGAXHJjJigoKFO5xM6it10VDCNYpw+CH6nsIJ172cn3e3JJ6y56
+         Vo3FJggCPBFqx1L8BJ9LuX5QbbqVsMI7RjkmPfWJHKK5yEbPOnGcG6lGnnYMgzqLw4pt
+         W7cA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=j2BR3h16Mhy5gM4KsP6TulbAM/2F99pvBCc7QlwzcZ4=;
-        b=IzVE6OSrcFunU5ZzRYy9S/bsV1dwQsBPJaxKwIk4CWRiUBb4V+VvSakHcbchg+LEu9
-         p/FZIaI4bHGm1eSnWO6yiswepB0qyWjm6koaizkQSJeIgv8WKkh4dLlp/Eus/pGnSBwW
-         0oYfZDJOqIwVJ6Xgx4p/tY+5ZZCM9diqkjMOlon7DBwG9KcLORfBthJW9kdujdsoXS/l
-         i2kRlC14VppykpPTvPd2TyGqIcrOlZpGCz6UuDZbyz5D80Y3BybPZkRXetDX1qydxogU
-         R6UWlpHoad1RMVBu/C9R/yl+Hmi+KV29vXimB4t+nnAC5MaOoOKlConF0A6yeQuATh6E
-         yESA==
-X-Gm-Message-State: AJIora8tL+0vwf2XjVq0SeakpmDwhi+p7NAq5YaXZmRB94BR7f/yMCxs
-        6mCM8xrx1wLpMXHM+iJMzAohdw==
-X-Google-Smtp-Source: AGRyM1tK90tcONCCmwdcbnUBnjLYo/lZl+KlirKq1g/sxB3t+rAkHO/ZgXor1/8R6Ulss4TnZXfVUg==
-X-Received: by 2002:a05:6000:250:b0:21d:b3b5:3438 with SMTP id m16-20020a056000025000b0021db3b53438mr18010565wrz.203.1658061195148;
-        Sun, 17 Jul 2022 05:33:15 -0700 (PDT)
-Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id m9-20020adfe949000000b0021d4694fcaesm8146790wrn.107.2022.07.17.05.33.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 17 Jul 2022 05:33:14 -0700 (PDT)
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-To:     agross@kernel.org, bjorn.andersson@linaro.org,
-        konrad.dybcio@somainline.org, myungjoo.ham@samsung.com,
-        cw00.choi@samsung.com, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        marijn.suijten@somainline.org, bryan.odonoghue@linaro.org
-Subject: [PATCH v4 2/2] extcon: qcom-spmi: Switch to platform_get_irq_byname_optional
-Date:   Sun, 17 Jul 2022 13:33:04 +0100
-Message-Id: <20220717123304.938259-3-bryan.odonoghue@linaro.org>
-X-Mailer: git-send-email 2.36.1
-In-Reply-To: <20220717123304.938259-1-bryan.odonoghue@linaro.org>
-References: <20220717123304.938259-1-bryan.odonoghue@linaro.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=PigXQwKM0HFVf977KpJSmEmDxCSJ/94yMR8JWMEuSKA=;
+        b=kPAL0BNQFem48wfCstgz7bU73jNNGY04ccTadRaur/oDbE/zPavTtcnTB+mtTVxnFE
+         zgRYCWdc6QS8BelHJN3+7uF+FtfV6wv7oJ4amknesahGtfggnlZQOSfXfvISTjaiukBE
+         vHw6ZAkCdHXc/e8kzFT5vpNvJD0WE7pipLi3emrJjntT+koivE0koDp+gw8AtPQdFqVP
+         9kbMOItvU3OVCx0ajeaQfamkhlgEyYE5+OWH3rMvE44wmvZjgf5UjCD7x+fwiwsPphhM
+         dN/P5ueaVVWqlyDyEBWPsTSRhKLt4oPi+74smK8xV/Mayy5e1+zRI4wQnc6QDBkgj6rg
+         XLdQ==
+X-Gm-Message-State: AJIora+Wg76/H3js4PpE+o4Y+pS99Wsd+DV4SsGSOQX0Xnvk92ypMUh9
+        uCv9hCPnZAWYRdFW+4jOemgSJnifnKjnbjLZtYa69PtigQU=
+X-Google-Smtp-Source: AGRyM1u8+W8I9UXM+TPZAI1GxZM+CKGG6bJ3LlrO8Ax0BlTKV10aRJr+uq4nd8moWqlfrW1Oc5tOU0uygG/Skot3HUA=
+X-Received: by 2002:a05:6214:d03:b0:473:7764:2ab with SMTP id
+ 3-20020a0562140d0300b00473776402abmr18366070qvh.119.1658088672281; Sun, 17
+ Jul 2022 13:11:12 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20220713143200.3686765-1-abel.vesa@linaro.org> <YtOOYryxh9oEJXyg@builder.lan>
+In-Reply-To: <YtOOYryxh9oEJXyg@builder.lan>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Sun, 17 Jul 2022 23:11:01 +0300
+Message-ID: <CAA8EJprbnckZSR7v172x0CAKRTieG6JHdC+Xc-12xM=kBfa0EA@mail.gmail.com>
+Subject: Re: [PATCH] clk: qcom: Drop mmcx gdsc supply for dispcc and videocc
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Abel Vesa <abel.vesa@linaro.org>, Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Mike Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Valid configurations for the extcon interrupt declarations are
+On Sun, 17 Jul 2022 at 07:21, Bjorn Andersson
+<bjorn.andersson@linaro.org> wrote:
+>
+> On Wed 13 Jul 09:32 CDT 2022, Abel Vesa wrote:
+>
+> > Both dispcc and videocc use mmcx power domain now.
+> > Lets drop the supply mmcx from every gdsc.
+> >
+> > Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > Fixes: 266e5cf39a0f ("arm64: dts: qcom: sm8250: remove mmcx regulator")
+> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+>
+> This would break backwards compatibility with dtbs that used
+> mmcx-supply. We only ever used mmcx-supply in sm8250.dtsi upstream and
+> given that we only boot sm8250 off Android boot images it's unlikely
+> that anyone would use a new kernel with that old of a dtb...
+>
+> So:
+> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+>
+> Dmitry, what do you think?
 
-- usb_id
-- usb_vbus
-- (usb_id | usb_vbus)
+I think it's fine.
 
-In the case of a standalone usb_id or usb_vbus failure to find one of the
-interrupts shouldn't generate a warning message. A warning is already in
-place if both IRQs are missing.
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Switch to using platform_get_irq_byname_optional() in order to facilitate
-this behaviour.
+>
+> Regards,
+> Bjorn
+>
+> > ---
+> >  drivers/clk/qcom/dispcc-sm8250.c  | 1 -
+> >  drivers/clk/qcom/videocc-sm8250.c | 4 ----
+> >  2 files changed, 5 deletions(-)
+> >
+> > diff --git a/drivers/clk/qcom/dispcc-sm8250.c b/drivers/clk/qcom/dispcc-sm8250.c
+> > index 39b344ebb049..709076f0f9d7 100644
+> > --- a/drivers/clk/qcom/dispcc-sm8250.c
+> > +++ b/drivers/clk/qcom/dispcc-sm8250.c
+> > @@ -1138,7 +1138,6 @@ static struct gdsc mdss_gdsc = {
+> >       },
+> >       .pwrsts = PWRSTS_OFF_ON,
+> >       .flags = HW_CTRL,
+> > -     .supply = "mmcx",
+> >  };
+> >
+> >  static struct clk_regmap *disp_cc_sm8250_clocks[] = {
+> > diff --git a/drivers/clk/qcom/videocc-sm8250.c b/drivers/clk/qcom/videocc-sm8250.c
+> > index 8617454e4a77..f28f2cb051d7 100644
+> > --- a/drivers/clk/qcom/videocc-sm8250.c
+> > +++ b/drivers/clk/qcom/videocc-sm8250.c
+> > @@ -277,7 +277,6 @@ static struct gdsc mvs0c_gdsc = {
+> >       },
+> >       .flags = 0,
+> >       .pwrsts = PWRSTS_OFF_ON,
+> > -     .supply = "mmcx",
+> >  };
+> >
+> >  static struct gdsc mvs1c_gdsc = {
+> > @@ -287,7 +286,6 @@ static struct gdsc mvs1c_gdsc = {
+> >       },
+> >       .flags = 0,
+> >       .pwrsts = PWRSTS_OFF_ON,
+> > -     .supply = "mmcx",
+> >  };
+> >
+> >  static struct gdsc mvs0_gdsc = {
+> > @@ -297,7 +295,6 @@ static struct gdsc mvs0_gdsc = {
+> >       },
+> >       .flags = HW_CTRL,
+> >       .pwrsts = PWRSTS_OFF_ON,
+> > -     .supply = "mmcx",
+> >  };
+> >
+> >  static struct gdsc mvs1_gdsc = {
+> > @@ -307,7 +304,6 @@ static struct gdsc mvs1_gdsc = {
+> >       },
+> >       .flags = HW_CTRL,
+> >       .pwrsts = PWRSTS_OFF_ON,
+> > -     .supply = "mmcx",
+> >  };
+> >
+> >  static struct clk_regmap *video_cc_sm8250_clocks[] = {
+> > --
+> > 2.34.3
+> >
 
-Suggested-by: Marijn Suijten <marijn.suijten@somainline.org>
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
----
- drivers/extcon/extcon-qcom-spmi-misc.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/extcon/extcon-qcom-spmi-misc.c b/drivers/extcon/extcon-qcom-spmi-misc.c
-index eb02cb962b5e1..f72e90ceca53d 100644
---- a/drivers/extcon/extcon-qcom-spmi-misc.c
-+++ b/drivers/extcon/extcon-qcom-spmi-misc.c
-@@ -123,7 +123,7 @@ static int qcom_usb_extcon_probe(struct platform_device *pdev)
- 	if (ret)
- 		return ret;
- 
--	info->id_irq = platform_get_irq_byname(pdev, "usb_id");
-+	info->id_irq = platform_get_irq_byname_optional(pdev, "usb_id");
- 	if (info->id_irq > 0) {
- 		ret = devm_request_threaded_irq(dev, info->id_irq, NULL,
- 					qcom_usb_irq_handler,
-@@ -136,7 +136,7 @@ static int qcom_usb_extcon_probe(struct platform_device *pdev)
- 		}
- 	}
- 
--	info->vbus_irq = platform_get_irq_byname(pdev, "usb_vbus");
-+	info->vbus_irq = platform_get_irq_byname_optional(pdev, "usb_vbus");
- 	if (info->vbus_irq > 0) {
- 		ret = devm_request_threaded_irq(dev, info->vbus_irq, NULL,
- 					qcom_usb_irq_handler,
+
 -- 
-2.36.1
-
+With best wishes
+Dmitry
