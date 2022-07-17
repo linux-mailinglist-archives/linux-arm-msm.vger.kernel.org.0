@@ -2,108 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 57E6C577609
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Jul 2022 14:02:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E0335577624
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Jul 2022 14:33:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231970AbiGQMCo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 17 Jul 2022 08:02:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46500 "EHLO
+        id S229696AbiGQMdQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 17 Jul 2022 08:33:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58732 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231911AbiGQMCo (ORCPT
+        with ESMTP id S229621AbiGQMdP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 17 Jul 2022 08:02:44 -0400
-Received: from mail-qv1-xf31.google.com (mail-qv1-xf31.google.com [IPv6:2607:f8b0:4864:20::f31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92937140F1;
-        Sun, 17 Jul 2022 05:02:43 -0700 (PDT)
-Received: by mail-qv1-xf31.google.com with SMTP id l2so6981994qvt.2;
-        Sun, 17 Jul 2022 05:02:43 -0700 (PDT)
+        Sun, 17 Jul 2022 08:33:15 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2C9F1572F
+        for <linux-arm-msm@vger.kernel.org>; Sun, 17 Jul 2022 05:33:14 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id d16so13230448wrv.10
+        for <linux-arm-msm@vger.kernel.org>; Sun, 17 Jul 2022 05:33:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=rHjViDcG19nS2v6Pk4XSV3A4LQsUZw5sRXj1ES5xELM=;
-        b=RBYkPgOReA/ncSIusSlg/GESvpRLCL+a90i48n8n902vK3lQWCKmsSC6OfKAb55j8A
-         D1a1MGhcpZoTCPyX7dn9gjGsKmKfgzKL2pgD5Yx0Hk1gQ5G/kTOcG1Oe9ZiY1P7xW4bd
-         rwiTLGzIzZ1ML6hkBRx+vToHtS2KHxFh2FtfjSWFbsrRwXMvqf0B+o2Z2iRwLi3Glynz
-         3ueSMPW06llj8Nvk9Ms3scQGFuCUBupvaQwDuvlKw8+6gf38/32ob9v3+a+5/Ex1u0c2
-         tMXoh0FPMJ0tH7lgHZXC5CXkJo9goiRbkkgABbeJpIkvWX7B1ufAI1i7CthYEXvO4efx
-         ULRA==
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=BltwYbntlLYN/FN8uiEra+3WKSK9lYLxa1C0HrhOCnE=;
+        b=NTtOnIxy22YlP9LTHK3DHdIzjo1LvTaJQmj2nQjsE2ItrHwhXzFDwN2E26JblW1NNA
+         DCi8fK8I+UgLddFzn/YeAHQv7zhRmYBUpNc/jUSc2jFUy6Ia8rNh8zgdQOzroHfk0Agd
+         AmpGV7JFf4w8emEnFPjez2HglYTz7cKfXi20MltXgRnlEfWgKUvBOiSmJCnP6kOVbn87
+         qXTPfYUTRFQfDufsD4MY9c/6+HAkhdqTK3097VCz0jrjihOc1VB3tpVE65PUAMVOT9mK
+         z+4QSrSuE2Z8pnKyCsyq2eyirF/4yq2bEmH5trqW/DpVeLSM/K7ufOuW1WUJiuluQral
+         kCDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=rHjViDcG19nS2v6Pk4XSV3A4LQsUZw5sRXj1ES5xELM=;
-        b=1tnMu0fprjf9IDnLw9ePpUAqj7T1QXBPhJFhLvGfskw4Y2gUgGG9ClUpNqnXyLL0II
-         XKalvjeIsdfE1uTf/mAOrjqpT/8nQSHo7siQP/5IAIrLWbqv2eJ/3bMhmhq5SuzcRxdj
-         hRpC9sJ/gNT01jHb5klwasrSJs+/EG4t7MmnE7aQ1aBD+lwtxYFIZemogQWOo+RQ7J2g
-         w0BwDlpqUXoGhGkK2+9hx8lqdAclgUH7YADRazJSLLzRU6KZtdyKB0cIYp1S/vQEPzO9
-         aQqnbBQeVB4WMHoJtxV01/nxyUC5dHcvtyVF57xy1noqmZ+9CBnNQ2bjFNm+6sFmDkGO
-         aAfw==
-X-Gm-Message-State: AJIora9PEwfdurZiFNXSOXNEPRhHyNLY+NtDggjONrzamUdVmNYjpJTr
-        tc9syC3n4r+tZNlTwaVZVJH1Zmrq4VmNtUbe7im9rYxOX0c=
-X-Google-Smtp-Source: AGRyM1sXxE4UwrVwgtOVJD5djOBq9v3b8Ndl5YS71faupar7eTOdYwgrkBIRmcjomOfrqst66O1q/hxyLojPIyTNWgk=
-X-Received: by 2002:a0c:eb4a:0:b0:472:f936:3ea0 with SMTP id
- c10-20020a0ceb4a000000b00472f9363ea0mr18456835qvq.43.1658059362518; Sun, 17
- Jul 2022 05:02:42 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=BltwYbntlLYN/FN8uiEra+3WKSK9lYLxa1C0HrhOCnE=;
+        b=AHvdoKtQtFvQcr10JHo9foKtb/u0MYCFVF8qwnImhTR0Mgbz3duKu4kh7feReZdTOQ
+         BR8ZnsiId3biHYJFdk/iKSSSsc9VxDiKnnDXRoW9NOzUeocSJ0JjQXZ2rQPK/iIUeoLd
+         tS+tDFkhHmqlopR/Ad8xHhRCjJswWf9R1OvEaSoovfHETXWTetQpqEPTCJYuTPB7dxDS
+         jPrg9JxUCEQuNnLK6OsXmCEC5aT9KYXkmpzgfRVNEH9wqlwkGjidvSnisQNAnnbgUc5Q
+         yU85AvfVZMztSW3dYFYwCTMwDsWH2aPa6/QijqmGBZnjETYeyaAvwZlxIzIT8hAIUx72
+         GGpg==
+X-Gm-Message-State: AJIora/pwWY6laLyv1vo8le5t+53bbJEzjy32xtHu8T6YnC+DGzy1aTc
+        VeDLDhtvAUX/yeGAQwCGIt22QQ==
+X-Google-Smtp-Source: AGRyM1tkZtNN0snz0vuu5u1QBiHoiEOdwxJWwjVnvVvCadM/bjgQqmDF/DHtzq5HPO7Yi2MRAMkj6g==
+X-Received: by 2002:adf:ec07:0:b0:21d:669c:6a78 with SMTP id x7-20020adfec07000000b0021d669c6a78mr19187241wrn.401.1658061193303;
+        Sun, 17 Jul 2022 05:33:13 -0700 (PDT)
+Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id m9-20020adfe949000000b0021d4694fcaesm8146790wrn.107.2022.07.17.05.33.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 17 Jul 2022 05:33:12 -0700 (PDT)
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org,
+        konrad.dybcio@somainline.org, myungjoo.ham@samsung.com,
+        cw00.choi@samsung.com, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        marijn.suijten@somainline.org, bryan.odonoghue@linaro.org
+Subject: [PATCH v4 0/2] Fix pm8941-misc extcon interrupt dependency assumptions
+Date:   Sun, 17 Jul 2022 13:33:02 +0100
+Message-Id: <20220717123304.938259-1-bryan.odonoghue@linaro.org>
+X-Mailer: git-send-email 2.36.1
 MIME-Version: 1.0
-References: <20220707173733.404947-1-robimarko@gmail.com> <20220707173733.404947-4-robimarko@gmail.com>
- <165798474063.1679948.3824406237045424067.b4-ty@linaro.org>
-In-Reply-To: <165798474063.1679948.3824406237045424067.b4-ty@linaro.org>
-From:   Robert Marko <robimarko@gmail.com>
-Date:   Sun, 17 Jul 2022 14:02:29 +0200
-Message-ID: <CAOX2RU7myXLcJ4S3p=kyeugczTEikoTjpyLDaZ45=btR-M95pQ@mail.gmail.com>
-Subject: Re: (subset) [PATCH v6 4/4] arm64: dts: ipq8074: add APCS node
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        Devicetree List <devicetree@vger.kernel.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        krzysztof.kozlowski+dt@linaro.org,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Andy Gross <agross@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 16 Jul 2022 at 17:19, Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
->
-> On Thu, 7 Jul 2022 19:37:33 +0200, Robert Marko wrote:
-> > APCS now has support for providing the APSS clocks as the child device
-> > for IPQ8074.
-> >
-> > So, add the required DT node for it as it will later be used as the CPU
-> > clocksource.
-> >
-> >
-> > [...]
->
-> Applied, thanks!
->
-> [4/4] arm64: dts: ipq8074: add APCS node
->       commit: 50ed9fffec3aed88bc1ffed277d291f81153bd5d
+V4:
+- Added suggested extra log text from Marjin to extcon patch
 
-Bjorn,
-can you please apply the v8 series instead which superseded the v6
-series, DTS is different
-as it relies on PLL being separate and is much simpler.
+V3:
+- Adds a cover-letter since we are now doing two patches a dt-bindings fix and
+  platform_get_irq_byname_optional fix.
+- Add Review-by -> Rob Herring, Marijn Suijten
+- Add additional patch to negate warning when one of usb_id or usb_vbus
+  is not declared in the platform DTS.
 
-v6 is superseded and should be ignored.
+Bryan O'Donoghue (2):
+  dt-bindings: pm8941-misc: Fix usb_id and usb_vbus definitions
+  extcon: qcom-spmi: Switch to platform_get_irq_byname_optional
 
-https://patchwork.kernel.org/project/linux-arm-msm/patch/20220712100733.34261-4-robimarko@gmail.com/
+ .../devicetree/bindings/extcon/qcom,pm8941-misc.yaml | 12 ++++++++----
+ drivers/extcon/extcon-qcom-spmi-misc.c               |  4 ++--
+ 2 files changed, 10 insertions(+), 6 deletions(-)
 
-Regards,
-Robert
->
-> Best regards,
-> --
-> Bjorn Andersson <bjorn.andersson@linaro.org>
+-- 
+2.36.1
+
