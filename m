@@ -2,74 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DDA425775D8
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Jul 2022 13:02:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 57E6C577609
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Jul 2022 14:02:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230003AbiGQLCD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 17 Jul 2022 07:02:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52052 "EHLO
+        id S231970AbiGQMCo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 17 Jul 2022 08:02:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46500 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229463AbiGQLCC (ORCPT
+        with ESMTP id S231911AbiGQMCo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 17 Jul 2022 07:02:02 -0400
-Received: from mail-4325.protonmail.ch (mail-4325.protonmail.ch [185.70.43.25])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4482B17047
-        for <linux-arm-msm@vger.kernel.org>; Sun, 17 Jul 2022 04:02:01 -0700 (PDT)
-Date:   Sun, 17 Jul 2022 11:01:54 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-        s=protonmail3; t=1658055719; x=1658314919;
-        bh=gAVUIwHW6HFaxqYl2aNftxgq+8/oofJDopJ5uC21t/s=;
-        h=Date:To:From:Cc:Reply-To:Subject:Message-ID:In-Reply-To:
-         References:Feedback-ID:From:To:Cc:Date:Subject:Reply-To:
-         Feedback-ID:Message-ID;
-        b=J99HcnXitoeHd0YR3kuTe0cMNLR3HE4SFofgkZecCNs6Ckh9zxLGNItP0THSwR7cA
-         IlTu9tW69nhF95mnpTXCtfeVGdFZ+irF0rKBem6dxn37B9PjLVayMztIgbI3g1U59z
-         NsV7clEcPsPdNxq1TKhdDt+OaSuIehRDXjgynSsn0wZ/+2q/D7YAo69x8q7OBEgdnb
-         DQI1m8R5CiF7Gukjdn+woy8/w6zKpst9RxGBaOjhygNiV0IaOHiD09UsdbGKnR3u4y
-         zMxL44WlVbAOCOTFJw+GA0U5Ahe76HJPguxIkgZlnUs9iJbVN/S5o61WogDu+Fayty
-         iVNl7pZqsN8BQ==
-To:     krzysztof.kozlowski+dt@linaro.org
-From:   "Lin, Meng-Bo" <linmengbo0689@protonmail.com>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
-        devicetree@vger.kernel.org, konrad.dybcio@somainline.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        nikita@trvn.ru, robh+dt@kernel.org, stephan@gerhold.net,
-        ~postmarketos/upstreaming@lists.sr.ht
-Reply-To: "Lin, Meng-Bo" <linmengbo0689@protonmail.com>
-Subject: Re: [RESEND PATCH 1/4] dt-bindings: qcom: Document bindings for new msm8916-samsung-e2015 devices
-Message-ID: <20220717110020.6186-1-linmengbo0689@protonmail.com>
-In-Reply-To: <20220715102055.3844-1-linmengbo0689@protonmail.com>
-References: <20220715102055.3844-1-linmengbo0689@protonmail.com>
-Feedback-ID: 40467236:user:proton
+        Sun, 17 Jul 2022 08:02:44 -0400
+Received: from mail-qv1-xf31.google.com (mail-qv1-xf31.google.com [IPv6:2607:f8b0:4864:20::f31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92937140F1;
+        Sun, 17 Jul 2022 05:02:43 -0700 (PDT)
+Received: by mail-qv1-xf31.google.com with SMTP id l2so6981994qvt.2;
+        Sun, 17 Jul 2022 05:02:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=rHjViDcG19nS2v6Pk4XSV3A4LQsUZw5sRXj1ES5xELM=;
+        b=RBYkPgOReA/ncSIusSlg/GESvpRLCL+a90i48n8n902vK3lQWCKmsSC6OfKAb55j8A
+         D1a1MGhcpZoTCPyX7dn9gjGsKmKfgzKL2pgD5Yx0Hk1gQ5G/kTOcG1Oe9ZiY1P7xW4bd
+         rwiTLGzIzZ1ML6hkBRx+vToHtS2KHxFh2FtfjSWFbsrRwXMvqf0B+o2Z2iRwLi3Glynz
+         3ueSMPW06llj8Nvk9Ms3scQGFuCUBupvaQwDuvlKw8+6gf38/32ob9v3+a+5/Ex1u0c2
+         tMXoh0FPMJ0tH7lgHZXC5CXkJo9goiRbkkgABbeJpIkvWX7B1ufAI1i7CthYEXvO4efx
+         ULRA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=rHjViDcG19nS2v6Pk4XSV3A4LQsUZw5sRXj1ES5xELM=;
+        b=1tnMu0fprjf9IDnLw9ePpUAqj7T1QXBPhJFhLvGfskw4Y2gUgGG9ClUpNqnXyLL0II
+         XKalvjeIsdfE1uTf/mAOrjqpT/8nQSHo7siQP/5IAIrLWbqv2eJ/3bMhmhq5SuzcRxdj
+         hRpC9sJ/gNT01jHb5klwasrSJs+/EG4t7MmnE7aQ1aBD+lwtxYFIZemogQWOo+RQ7J2g
+         w0BwDlpqUXoGhGkK2+9hx8lqdAclgUH7YADRazJSLLzRU6KZtdyKB0cIYp1S/vQEPzO9
+         aQqnbBQeVB4WMHoJtxV01/nxyUC5dHcvtyVF57xy1noqmZ+9CBnNQ2bjFNm+6sFmDkGO
+         aAfw==
+X-Gm-Message-State: AJIora9PEwfdurZiFNXSOXNEPRhHyNLY+NtDggjONrzamUdVmNYjpJTr
+        tc9syC3n4r+tZNlTwaVZVJH1Zmrq4VmNtUbe7im9rYxOX0c=
+X-Google-Smtp-Source: AGRyM1sXxE4UwrVwgtOVJD5djOBq9v3b8Ndl5YS71faupar7eTOdYwgrkBIRmcjomOfrqst66O1q/hxyLojPIyTNWgk=
+X-Received: by 2002:a0c:eb4a:0:b0:472:f936:3ea0 with SMTP id
+ c10-20020a0ceb4a000000b00472f9363ea0mr18456835qvq.43.1658059362518; Sun, 17
+ Jul 2022 05:02:42 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-1.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,FREEMAIL_REPLYTO_END_DIGIT,SPF_HELO_PASS,SPF_PASS
-        autolearn=no autolearn_force=no version=3.4.6
+References: <20220707173733.404947-1-robimarko@gmail.com> <20220707173733.404947-4-robimarko@gmail.com>
+ <165798474063.1679948.3824406237045424067.b4-ty@linaro.org>
+In-Reply-To: <165798474063.1679948.3824406237045424067.b4-ty@linaro.org>
+From:   Robert Marko <robimarko@gmail.com>
+Date:   Sun, 17 Jul 2022 14:02:29 +0200
+Message-ID: <CAOX2RU7myXLcJ4S3p=kyeugczTEikoTjpyLDaZ45=btR-M95pQ@mail.gmail.com>
+Subject: Re: (subset) [PATCH v6 4/4] arm64: dts: ipq8074: add APCS node
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        Devicetree List <devicetree@vger.kernel.org>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        krzysztof.kozlowski+dt@linaro.org,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Andy Gross <agross@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Friday, July 15th, 2022 at 10:00 AM, Krzysztof Kozlowski <krzysztof.kozl=
-owski@linaro.org> wrote:
-> I just received one patch, no cover letter, no threading (I asked for),
-> no changelog against v1, no binding updates (I asked for).
-
-I have had them all in a thread in latest resend. The v2 was accident.
-There is nothing changed except dt-binding added in new commit.
-
-> Sorry, the process does not work like that.
+On Sat, 16 Jul 2022 at 17:19, Bjorn Andersson
+<bjorn.andersson@linaro.org> wrote:
 >
-> You receive comments, so either you apply them or you keep discussing
-> with reviewer.
+> On Thu, 7 Jul 2022 19:37:33 +0200, Robert Marko wrote:
+> > APCS now has support for providing the APSS clocks as the child device
+> > for IPQ8074.
+> >
+> > So, add the required DT node for it as it will later be used as the CPU
+> > clocksource.
+> >
+> >
+> > [...]
+>
+> Applied, thanks!
+>
+> [4/4] arm64: dts: ipq8074: add APCS node
+>       commit: 50ed9fffec3aed88bc1ffed277d291f81153bd5d
 
-Sorry for the confusing and inconvenience. Please have another look at my p=
-atch.
-Thank you for your patience.
+Bjorn,
+can you please apply the v8 series instead which superseded the v6
+series, DTS is different
+as it relies on PLL being separate and is much simpler.
 
-Best regards,
-Lin
+v6 is superseded and should be ignored.
+
+https://patchwork.kernel.org/project/linux-arm-msm/patch/20220712100733.34261-4-robimarko@gmail.com/
+
+Regards,
+Robert
+>
+> Best regards,
+> --
+> Bjorn Andersson <bjorn.andersson@linaro.org>
