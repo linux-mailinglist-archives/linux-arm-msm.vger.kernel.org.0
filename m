@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9E8A25773CA
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Jul 2022 05:41:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 488225773CC
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Jul 2022 05:41:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232057AbiGQDlo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 16 Jul 2022 23:41:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55308 "EHLO
+        id S232254AbiGQDlp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 16 Jul 2022 23:41:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55344 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229688AbiGQDln (ORCPT
+        with ESMTP id S229980AbiGQDlp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 16 Jul 2022 23:41:43 -0400
-Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com [IPv6:2607:f8b0:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9145D17E06
-        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Jul 2022 20:41:42 -0700 (PDT)
-Received: by mail-ot1-x32c.google.com with SMTP id g19-20020a9d1293000000b0061c7bfda5dfso6316708otg.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Jul 2022 20:41:42 -0700 (PDT)
+        Sat, 16 Jul 2022 23:41:45 -0400
+Received: from mail-oo1-xc35.google.com (mail-oo1-xc35.google.com [IPv6:2607:f8b0:4864:20::c35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B5D917E0B
+        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Jul 2022 20:41:43 -0700 (PDT)
+Received: by mail-oo1-xc35.google.com with SMTP id e2-20020a4ab982000000b004354ba9a591so1677624oop.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Jul 2022 20:41:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=/JOrR1/M+i6rGhgWi4WxqILV1OdRgnXn1zMgwXAIeTc=;
-        b=NylzmEc3fiKWfYcEFOLLP7EbLMjz04vnLqKONw+cUWw9wQqSO112+2pJUIyYR0/1Cp
-         vGwv7igOtIoOT4vH2CvghUEJxaq8jp8sCpWICPk4Aqu/Ug+nTyV7XMqJ/CQGEtPOsR8Q
-         Nu0b/WQ4KPCvgLCfJUWLNDOdYAuScvpovsy/3la8Wg+szbzo8IKrDwDiIORD/IsmZasD
-         4Mjj6Vks8LRS3jwe04OZZLm2C0dI/xHSb72ZlKQoY9JuxELbOrF5dgjOp5/CzlYI95bs
-         A3Wf+jtRho4ZO2cqdOd+QE0u9XKhlHusAiQrtfSTHSm1h/j8Q95Y9+pCuLPfnRt5JXC3
-         jbuA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=Kr0qGAzm8HBBVFxNB4kybcwM4ZEQ9sSljeQXpuGlPaI=;
+        b=ODTfDk0hpjDwRIXQj2Lx0qet0bex/33ZfrclGkb9RVs4eCYslDj2gohhJyI6vR6e5p
+         GzJ3Iy/2/9ky+VNYUKWvCESj2w4IK6zJPo1w8hpHGMLWukuGBrM6vzzr6ZSIgf8joJMP
+         JCBMJZ3BaBF5GniJ9pWF8wXySfhMxgYYeC0J3g8jIldhGVkeiESkCE37MJwRjki091bj
+         J0l1OB77xJb94ViokueacnfqR85DstGNwYiwvADsg/IHD+PStpoJTCyIKuM50iiwCjTr
+         wQP0Xsmj/tVwLAeVQc1TM9tkUY3lsA+Bow3gR+cPr7+P3O2LUZvcTVY64tsDly9f9dkh
+         xcaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=/JOrR1/M+i6rGhgWi4WxqILV1OdRgnXn1zMgwXAIeTc=;
-        b=GMsCreBRsdXQo6ToGjE7WajL+RoXEIOMQKUzAuOHBfNhtlocXjCHqbkqYJjfzZmsVt
-         5228XTtCZ8ad2U+CQxG506Im0TE91RjTJrV2X5gsM+ZZdmC+vXpuDlktEcmsuWzMAbfz
-         9bmO3b+0DVFtEEnxWtd/Ybz78A/7t5MR/JjB8RfONvEaxXIOt6a3fVT4kcekKUTcOU9Z
-         YCrnHDj1qdPkJJMI+PZSuuOfmgbZ39WG3kx8u0K48giGVb0t22OiHpB1hAjh18jj/Ry/
-         QT3yUQuSsi9RLaut7AexBFZyj44LY1//4Na2TrKTbmASGy9/3ORqZc05TtMcRuRuoY+u
-         N2pg==
-X-Gm-Message-State: AJIora+CEbEGh9+FktRzRlW4E9cD0BfpFj6I3BL1teI7+PC16J5EJVi5
-        yy2W6jJUQmR8Ln6zvdO/iHImWA==
-X-Google-Smtp-Source: AGRyM1urzjSQucayh8NCJZv3JprA/A3+73wLFE1N1Njobpt6/w1An+z2F0y8NwYofXs/BQkb/exTzA==
-X-Received: by 2002:a9d:630f:0:b0:618:da60:4c62 with SMTP id q15-20020a9d630f000000b00618da604c62mr8404491otk.296.1658029301931;
-        Sat, 16 Jul 2022 20:41:41 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=Kr0qGAzm8HBBVFxNB4kybcwM4ZEQ9sSljeQXpuGlPaI=;
+        b=ThRCR+dnXDLinzUhHHyP5MVr/r1T54/qLkQaKIHkf3CaH41x8k7OgjmhSxeNWnqu8m
+         YVTgUJX4MCHbXyTT0KeHmMhqlEsqeSC8Ww5xStvTjccq+4GLqxB2YGMoie2YZA6tcxQn
+         f7umyqHFRF3qtp+x5gK8jpKtoz1bnKUXIbLat3M9E3U2DzNgcgA0rIF2keaJKtFgVmhx
+         TiXnc20QD9l26XaryctXgBsCkHbG+whHO1HT9+s0TeYUhSY/5RqUEfqIvnk/NSS8omI3
+         7EA3n5lhw3Btbv8C87TihBkQgXZmulog1Fa9G1HEzkJjL4l3q073+m3YAoQVM5QDuwg9
+         4umg==
+X-Gm-Message-State: AJIora+xWuLOnZ8E1OJVohds6X19pJco93c4vuZkxW5dJvF0utjNWDvE
+        SJULahRZOUnOXfn0fnH7bdnPkA==
+X-Google-Smtp-Source: AGRyM1vuhjY/pty6OdhIa9rVreiJV2Lat6EJmugCZW/DSbxrH5c2+FatYmQq0ZIA7iwv2G//VYFo3g==
+X-Received: by 2002:a4a:d032:0:b0:435:7d2e:7093 with SMTP id w18-20020a4ad032000000b004357d2e7093mr3565409oor.34.1658029302939;
+        Sat, 16 Jul 2022 20:41:42 -0700 (PDT)
 Received: from ripper.. (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id p4-20020a544604000000b00326cb6225f8sm3218010oip.44.2022.07.16.20.41.40
+        by smtp.gmail.com with ESMTPSA id p4-20020a544604000000b00326cb6225f8sm3218010oip.44.2022.07.16.20.41.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 16 Jul 2022 20:41:41 -0700 (PDT)
+        Sat, 16 Jul 2022 20:41:42 -0700 (PDT)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>
@@ -55,10 +55,12 @@ Cc:     Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, vinod.koul@linaro.org
-Subject: [PATCH 0/3] arm64: dts: qcom: sdm845-db845: Some i2c fixes
-Date:   Sat, 16 Jul 2022 20:44:00 -0700
-Message-Id: <20220717034403.2135027-1-bjorn.andersson@linaro.org>
+Subject: [PATCH 1/3] arm64: dts: qcom: sdm845: Fill in GENI DMA references
+Date:   Sat, 16 Jul 2022 20:44:01 -0700
+Message-Id: <20220717034403.2135027-2-bjorn.andersson@linaro.org>
 X-Mailer: git-send-email 2.35.1
+In-Reply-To: <20220717034403.2135027-1-bjorn.andersson@linaro.org>
+References: <20220717034403.2135027-1-bjorn.andersson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -70,20 +72,318 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On my db845c (perhaps old firmware?) i2c14 is using GPI, so this enables that.
-And while I'm touching it I added dma properties to all the geni i2c and spi
-nodes and specified a default clock to avoid two warnings in the log during
-boot.
+The I2C and SPI might be configured in GPI DMA mode, fill in the
+properties needed for this.
 
-Bjorn Andersson (3):
-  arm64: dts: qcom: sdm845: Fill in GENI DMA references
-  arm64: dts: qcom: sdm845-db845c: Enable gpi_dma1
-  arm64: dts: qcom: sdm845-db845c: Specify a i2c bus clocks
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/sdm845.dtsi | 90 ++++++++++++++++++++++++++++
+ 1 file changed, 90 insertions(+)
 
- arch/arm64/boot/dts/qcom/sdm845-db845c.dts |  6 ++
- arch/arm64/boot/dts/qcom/sdm845.dtsi       | 90 ++++++++++++++++++++++
- 2 files changed, 96 insertions(+)
-
+diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+index 7fb10c2ef2fb..7735efd233e4 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+@@ -1208,6 +1208,9 @@ i2c0: i2c@880000 {
+ 						<&gladiator_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_BLSP_1 0>,
+ 						<&aggre1_noc MASTER_QUP_1 0 &mem_noc SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config", "qup-memory";
++				dmas = <&gpi_dma0 0 0 QCOM_GPI_I2C>,
++				       <&gpi_dma0 1 0 QCOM_GPI_I2C>;
++				dma-names = "tx", "rx";
+ 				status = "disabled";
+ 			};
+ 
+@@ -1262,6 +1265,9 @@ i2c1: i2c@884000 {
+ 						<&gladiator_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_BLSP_1 0>,
+ 						<&aggre1_noc MASTER_QUP_1 0 &mem_noc SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config", "qup-memory";
++				dmas = <&gpi_dma0 0 1 QCOM_GPI_I2C>,
++				       <&gpi_dma0 1 1 QCOM_GPI_I2C>;
++				dma-names = "tx", "rx";
+ 				status = "disabled";
+ 			};
+ 
+@@ -1278,6 +1284,9 @@ spi1: spi@884000 {
+ 				interconnects = <&aggre1_noc MASTER_QUP_1 0 &config_noc SLAVE_BLSP_1 0>,
+ 						<&gladiator_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_BLSP_1 0>;
+ 				interconnect-names = "qup-core", "qup-config";
++				dmas = <&gpi_dma0 0 1 QCOM_GPI_SPI>,
++				       <&gpi_dma0 1 1 QCOM_GPI_SPI>;
++				dma-names = "tx", "rx";
+ 				status = "disabled";
+ 			};
+ 
+@@ -1313,6 +1322,9 @@ i2c2: i2c@888000 {
+ 						<&gladiator_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_BLSP_1 0>,
+ 						<&aggre1_noc MASTER_QUP_1 0 &mem_noc SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config", "qup-memory";
++				dmas = <&gpi_dma0 0 2 QCOM_GPI_I2C>,
++				       <&gpi_dma0 1 2 QCOM_GPI_I2C>;
++				dma-names = "tx", "rx";
+ 				status = "disabled";
+ 			};
+ 
+@@ -1329,6 +1341,9 @@ spi2: spi@888000 {
+ 				interconnects = <&aggre1_noc MASTER_QUP_1 0 &config_noc SLAVE_BLSP_1 0>,
+ 						<&gladiator_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_BLSP_1 0>;
+ 				interconnect-names = "qup-core", "qup-config";
++				dmas = <&gpi_dma0 0 2 QCOM_GPI_SPI>,
++				       <&gpi_dma0 1 2 QCOM_GPI_SPI>;
++				dma-names = "tx", "rx";
+ 				status = "disabled";
+ 			};
+ 
+@@ -1364,6 +1379,9 @@ i2c3: i2c@88c000 {
+ 						<&gladiator_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_BLSP_1 0>,
+ 						<&aggre1_noc MASTER_QUP_1 0 &mem_noc SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config", "qup-memory";
++				dmas = <&gpi_dma0 0 3 QCOM_GPI_I2C>,
++				       <&gpi_dma0 1 3 QCOM_GPI_I2C>;
++				dma-names = "tx", "rx";
+ 				status = "disabled";
+ 			};
+ 
+@@ -1380,6 +1398,9 @@ spi3: spi@88c000 {
+ 				interconnects = <&aggre1_noc MASTER_QUP_1 0 &config_noc SLAVE_BLSP_1 0>,
+ 						<&gladiator_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_BLSP_1 0>;
+ 				interconnect-names = "qup-core", "qup-config";
++				dmas = <&gpi_dma0 0 3 QCOM_GPI_SPI>,
++				       <&gpi_dma0 1 3 QCOM_GPI_SPI>;
++				dma-names = "tx", "rx";
+ 				status = "disabled";
+ 			};
+ 
+@@ -1415,6 +1436,9 @@ i2c4: i2c@890000 {
+ 						<&gladiator_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_BLSP_1 0>,
+ 						<&aggre1_noc MASTER_QUP_1 0 &mem_noc SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config", "qup-memory";
++				dmas = <&gpi_dma0 0 4 QCOM_GPI_I2C>,
++				       <&gpi_dma0 1 4 QCOM_GPI_I2C>;
++				dma-names = "tx", "rx";
+ 				status = "disabled";
+ 			};
+ 
+@@ -1431,6 +1455,9 @@ spi4: spi@890000 {
+ 				interconnects = <&aggre1_noc MASTER_QUP_1 0 &config_noc SLAVE_BLSP_1 0>,
+ 						<&gladiator_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_BLSP_1 0>;
+ 				interconnect-names = "qup-core", "qup-config";
++				dmas = <&gpi_dma0 0 4 QCOM_GPI_SPI>,
++				       <&gpi_dma0 1 4 QCOM_GPI_SPI>;
++				dma-names = "tx", "rx";
+ 				status = "disabled";
+ 			};
+ 
+@@ -1466,6 +1493,9 @@ i2c5: i2c@894000 {
+ 						<&gladiator_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_BLSP_1 0>,
+ 						<&aggre1_noc MASTER_QUP_1 0 &mem_noc SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config", "qup-memory";
++				dmas = <&gpi_dma0 0 5 QCOM_GPI_I2C>,
++				       <&gpi_dma0 1 5 QCOM_GPI_I2C>;
++				dma-names = "tx", "rx";
+ 				status = "disabled";
+ 			};
+ 
+@@ -1482,6 +1512,9 @@ spi5: spi@894000 {
+ 				interconnects = <&aggre1_noc MASTER_QUP_1 0 &config_noc SLAVE_BLSP_1 0>,
+ 						<&gladiator_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_BLSP_1 0>;
+ 				interconnect-names = "qup-core", "qup-config";
++				dmas = <&gpi_dma0 0 5 QCOM_GPI_SPI>,
++				       <&gpi_dma0 1 5 QCOM_GPI_SPI>;
++				dma-names = "tx", "rx";
+ 				status = "disabled";
+ 			};
+ 
+@@ -1517,6 +1550,9 @@ i2c6: i2c@898000 {
+ 						<&gladiator_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_BLSP_1 0>,
+ 						<&aggre1_noc MASTER_QUP_1 0 &mem_noc SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config", "qup-memory";
++				dmas = <&gpi_dma0 0 6 QCOM_GPI_I2C>,
++				       <&gpi_dma0 1 6 QCOM_GPI_I2C>;
++				dma-names = "tx", "rx";
+ 				status = "disabled";
+ 			};
+ 
+@@ -1533,6 +1569,9 @@ spi6: spi@898000 {
+ 				interconnects = <&aggre1_noc MASTER_QUP_1 0 &config_noc SLAVE_BLSP_1 0>,
+ 						<&gladiator_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_BLSP_1 0>;
+ 				interconnect-names = "qup-core", "qup-config";
++				dmas = <&gpi_dma0 0 6 QCOM_GPI_SPI>,
++				       <&gpi_dma0 1 6 QCOM_GPI_SPI>;
++				dma-names = "tx", "rx";
+ 				status = "disabled";
+ 			};
+ 
+@@ -1580,6 +1619,9 @@ spi7: spi@89c000 {
+ 				interconnects = <&aggre1_noc MASTER_QUP_1 0 &config_noc SLAVE_BLSP_1 0>,
+ 						<&gladiator_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_BLSP_1 0>;
+ 				interconnect-names = "qup-core", "qup-config";
++				dmas = <&gpi_dma0 0 7 QCOM_GPI_SPI>,
++				       <&gpi_dma0 1 7 QCOM_GPI_SPI>;
++				dma-names = "tx", "rx";
+ 				status = "disabled";
+ 			};
+ 
+@@ -1653,6 +1695,9 @@ i2c8: i2c@a80000 {
+ 						<&gladiator_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_BLSP_2 0>,
+ 						<&aggre2_noc MASTER_QUP_2 0 &mem_noc SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config", "qup-memory";
++				dmas = <&gpi_dma1 0 0 QCOM_GPI_I2C>,
++				       <&gpi_dma1 1 0 QCOM_GPI_I2C>;
++				dma-names = "tx", "rx";
+ 				status = "disabled";
+ 			};
+ 
+@@ -1669,6 +1714,9 @@ spi8: spi@a80000 {
+ 				interconnects = <&aggre2_noc MASTER_QUP_2 0 &config_noc SLAVE_BLSP_2 0>,
+ 						<&gladiator_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_BLSP_2 0>;
+ 				interconnect-names = "qup-core", "qup-config";
++				dmas = <&gpi_dma1 0 0 QCOM_GPI_SPI>,
++				       <&gpi_dma1 1 0 QCOM_GPI_SPI>;
++				dma-names = "tx", "rx";
+ 				status = "disabled";
+ 			};
+ 
+@@ -1704,6 +1752,9 @@ i2c9: i2c@a84000 {
+ 						<&gladiator_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_BLSP_2 0>,
+ 						<&aggre2_noc MASTER_QUP_2 0 &mem_noc SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config", "qup-memory";
++				dmas = <&gpi_dma1 0 1 QCOM_GPI_I2C>,
++				       <&gpi_dma1 1 1 QCOM_GPI_I2C>;
++				dma-names = "tx", "rx";
+ 				status = "disabled";
+ 			};
+ 
+@@ -1720,6 +1771,9 @@ spi9: spi@a84000 {
+ 				interconnects = <&aggre2_noc MASTER_QUP_2 0 &config_noc SLAVE_BLSP_2 0>,
+ 						<&gladiator_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_BLSP_2 0>;
+ 				interconnect-names = "qup-core", "qup-config";
++				dmas = <&gpi_dma1 0 1 QCOM_GPI_SPI>,
++				       <&gpi_dma1 1 1 QCOM_GPI_SPI>;
++				dma-names = "tx", "rx";
+ 				status = "disabled";
+ 			};
+ 
+@@ -1755,6 +1809,9 @@ i2c10: i2c@a88000 {
+ 						<&gladiator_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_BLSP_2 0>,
+ 						<&aggre2_noc MASTER_QUP_2 0 &mem_noc SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config", "qup-memory";
++				dmas = <&gpi_dma1 0 2 QCOM_GPI_I2C>,
++				       <&gpi_dma1 1 2 QCOM_GPI_I2C>;
++				dma-names = "tx", "rx";
+ 				status = "disabled";
+ 			};
+ 
+@@ -1771,6 +1828,9 @@ spi10: spi@a88000 {
+ 				interconnects = <&aggre2_noc MASTER_QUP_2 0 &config_noc SLAVE_BLSP_2 0>,
+ 						<&gladiator_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_BLSP_2 0>;
+ 				interconnect-names = "qup-core", "qup-config";
++				dmas = <&gpi_dma1 0 2 QCOM_GPI_SPI>,
++				       <&gpi_dma1 1 2 QCOM_GPI_SPI>;
++				dma-names = "tx", "rx";
+ 				status = "disabled";
+ 			};
+ 
+@@ -1806,6 +1866,9 @@ i2c11: i2c@a8c000 {
+ 						<&gladiator_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_BLSP_2 0>,
+ 						<&aggre2_noc MASTER_QUP_2 0 &mem_noc SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config", "qup-memory";
++				dmas = <&gpi_dma1 0 3 QCOM_GPI_I2C>,
++				       <&gpi_dma1 1 3 QCOM_GPI_I2C>;
++				dma-names = "tx", "rx";
+ 				status = "disabled";
+ 			};
+ 
+@@ -1822,6 +1885,9 @@ spi11: spi@a8c000 {
+ 				interconnects = <&aggre2_noc MASTER_QUP_2 0 &config_noc SLAVE_BLSP_2 0>,
+ 						<&gladiator_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_BLSP_2 0>;
+ 				interconnect-names = "qup-core", "qup-config";
++				dmas = <&gpi_dma1 0 3 QCOM_GPI_SPI>,
++				       <&gpi_dma1 1 3 QCOM_GPI_SPI>;
++				dma-names = "tx", "rx";
+ 				status = "disabled";
+ 			};
+ 
+@@ -1857,6 +1923,9 @@ i2c12: i2c@a90000 {
+ 						<&gladiator_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_BLSP_2 0>,
+ 						<&aggre2_noc MASTER_QUP_2 0 &mem_noc SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config", "qup-memory";
++				dmas = <&gpi_dma1 0 4 QCOM_GPI_I2C>,
++				       <&gpi_dma1 1 4 QCOM_GPI_I2C>;
++				dma-names = "tx", "rx";
+ 				status = "disabled";
+ 			};
+ 
+@@ -1873,6 +1942,9 @@ spi12: spi@a90000 {
+ 				interconnects = <&aggre2_noc MASTER_QUP_2 0 &config_noc SLAVE_BLSP_2 0>,
+ 						<&gladiator_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_BLSP_2 0>;
+ 				interconnect-names = "qup-core", "qup-config";
++				dmas = <&gpi_dma1 0 4 QCOM_GPI_SPI>,
++				       <&gpi_dma1 1 4 QCOM_GPI_SPI>;
++				dma-names = "tx", "rx";
+ 				status = "disabled";
+ 			};
+ 
+@@ -1908,6 +1980,9 @@ i2c13: i2c@a94000 {
+ 						<&gladiator_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_BLSP_2 0>,
+ 						<&aggre2_noc MASTER_QUP_2 0 &mem_noc SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config", "qup-memory";
++				dmas = <&gpi_dma1 0 5 QCOM_GPI_I2C>,
++				       <&gpi_dma1 1 5 QCOM_GPI_I2C>;
++				dma-names = "tx", "rx";
+ 				status = "disabled";
+ 			};
+ 
+@@ -1924,6 +1999,9 @@ spi13: spi@a94000 {
+ 				interconnects = <&aggre2_noc MASTER_QUP_2 0 &config_noc SLAVE_BLSP_2 0>,
+ 						<&gladiator_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_BLSP_2 0>;
+ 				interconnect-names = "qup-core", "qup-config";
++				dmas = <&gpi_dma1 0 5 QCOM_GPI_SPI>,
++				       <&gpi_dma1 1 5 QCOM_GPI_SPI>;
++				dma-names = "tx", "rx";
+ 				status = "disabled";
+ 			};
+ 
+@@ -1959,6 +2037,9 @@ i2c14: i2c@a98000 {
+ 						<&gladiator_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_BLSP_2 0>,
+ 						<&aggre2_noc MASTER_QUP_2 0 &mem_noc SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config", "qup-memory";
++				dmas = <&gpi_dma1 0 6 QCOM_GPI_I2C>,
++				       <&gpi_dma1 1 6 QCOM_GPI_I2C>;
++				dma-names = "tx", "rx";
+ 				status = "disabled";
+ 			};
+ 
+@@ -1975,6 +2056,9 @@ spi14: spi@a98000 {
+ 				interconnects = <&aggre2_noc MASTER_QUP_2 0 &config_noc SLAVE_BLSP_2 0>,
+ 						<&gladiator_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_BLSP_2 0>;
+ 				interconnect-names = "qup-core", "qup-config";
++				dmas = <&gpi_dma1 0 6 QCOM_GPI_SPI>,
++				       <&gpi_dma1 1 6 QCOM_GPI_SPI>;
++				dma-names = "tx", "rx";
+ 				status = "disabled";
+ 			};
+ 
+@@ -2011,6 +2095,9 @@ i2c15: i2c@a9c000 {
+ 						<&gladiator_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_BLSP_2 0>,
+ 						<&aggre2_noc MASTER_QUP_2 0 &mem_noc SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config", "qup-memory";
++				dmas = <&gpi_dma1 0 7 QCOM_GPI_I2C>,
++				       <&gpi_dma1 1 7 QCOM_GPI_I2C>;
++				dma-names = "tx", "rx";
+ 			};
+ 
+ 			spi15: spi@a9c000 {
+@@ -2026,6 +2113,9 @@ spi15: spi@a9c000 {
+ 				interconnects = <&aggre2_noc MASTER_QUP_2 0 &config_noc SLAVE_BLSP_2 0>,
+ 						<&gladiator_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_BLSP_2 0>;
+ 				interconnect-names = "qup-core", "qup-config";
++				dmas = <&gpi_dma1 0 7 QCOM_GPI_SPI>,
++				       <&gpi_dma1 1 7 QCOM_GPI_SPI>;
++				dma-names = "tx", "rx";
+ 				status = "disabled";
+ 			};
+ 
 -- 
 2.35.1
 
