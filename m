@@ -2,66 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B97E05773E3
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Jul 2022 05:48:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CB94A5773EC
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Jul 2022 05:51:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232920AbiGQDsR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 16 Jul 2022 23:48:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58946 "EHLO
+        id S233068AbiGQDv2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 16 Jul 2022 23:51:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33414 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232831AbiGQDsK (ORCPT
+        with ESMTP id S231700AbiGQDv1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 16 Jul 2022 23:48:10 -0400
-Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com [IPv6:2607:f8b0:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED6F117E3F
-        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Jul 2022 20:48:09 -0700 (PDT)
-Received: by mail-ot1-x334.google.com with SMTP id v19-20020a9d69d3000000b0061c78772699so6651172oto.11
-        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Jul 2022 20:48:09 -0700 (PDT)
+        Sat, 16 Jul 2022 23:51:27 -0400
+Received: from mail-oa1-x30.google.com (mail-oa1-x30.google.com [IPv6:2001:4860:4864:20::30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69C4338AF
+        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Jul 2022 20:51:25 -0700 (PDT)
+Received: by mail-oa1-x30.google.com with SMTP id 586e51a60fabf-10c0052da61so15741949fac.12
+        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Jul 2022 20:51:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=9yMrdTNz9TTOLl7s7jHHhG7B/YYZk6CJYXUwzk1dI3M=;
-        b=ojxV7iM7RNRpmnF4Ddf3tRMA1d3afYJgBfK4CQcHVm151J/5qSdRUhgeia5Y37HgpO
-         7C8Ut3XvMa80UdS9jOM/9WM9KRJJCoA+YI3PM0vZMlQYLlci1exQS9pwLtXnaeZFimk3
-         6xd6MDz/nFA84xmZSZdxKqp0diYVF48+bxdLeUgnXowp/Z4w1N6CG9DxlL3Z1MYyXRhp
-         zEtsOYro6cjT06H6vLkzKlTdvzK/Bm1qVXjcbrwGJi4mZVQDh3QO6euzx2TDkJ+zzNtz
-         F8snJuW98CVRqUzXcM67xfDmQmN0yoptX29ZSRDZyENwXsOrWnl2EOsJdtowtXw4HoZP
-         QriQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=GfIEvDMkb7XLpCU/9p565Kmb1QT30uo9MIf3FpLBdtI=;
+        b=ja+nd/8X+GwVF8cnOSwQ15sfaWTcxB8mK715Q9w9U5vLPgtqikY6+80bdbElNW/7Ks
+         lK91eBhxfUmBoJJxGVFVS+vvVZGmFP8X1fAE0US2KR+rssilciWhtU6ixKLU0qzMvt3K
+         PGqRvZC1BlizJYXNkp3tj+JtsDmqBUxfu33AP7Hb03ayY7kJBIQyZUqKMCOR9/6rVtpE
+         A9BhDbDohsH2tnZMF8UJOtHfVN4OR8fdEoSm88Mx9brTd8BGTbonjwW9tvYzo3t7y1zC
+         yy6pL13A4bA7m67E7vJzI0riHUn5tY0iG1HBUxyECDjy70tHRQMK1LBh/czawHS0DpHV
+         ybvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=9yMrdTNz9TTOLl7s7jHHhG7B/YYZk6CJYXUwzk1dI3M=;
-        b=HPc0zA7e7XUUJyIJ/t1cIjCvnS3OxEEkDKWZdZ5dacRb2mJcJgrIqTFfvLzQVmhpYK
-         4TjxESax1OG7m+9yI0sUiikfEx5QZqrh2o07qtv6WfVWhAARyJt5CXnvSaHWAI7tMtIP
-         rPb/X+fP0eMMqmUa6jvEMDXyALJkpHnDpVeTx3N0ymPmXOTGev2mh0Ch+vmLu8FRZ+p9
-         HdvlSK15MtFGJWms9Lmbn2MdrH+tkmdftCmjSF5e+/Y6dqx1QIwZy3GpOqYz5S6Mhp8A
-         5RQXu4mXeEhu4iK+0lkj+qXmt2jNydpzndaV7PHpixwOhxnln3JmbTFsYFoVjg+EDXkf
-         U0zA==
-X-Gm-Message-State: AJIora9trzdNnQu2i4RliKTQdG0/H5XBM12HJVo3H3+fRaGGDa5LQ9cd
-        MjlMoLleCJ/bG+NemVXy7gapaw==
-X-Google-Smtp-Source: AGRyM1sgyhUmhZEF6CCSDj84K5hnyMkfRoi9L85LXbJYYnWZwIhGZwDNCqTTANv1CNtXtXju7yL0iw==
-X-Received: by 2002:a9d:2602:0:b0:61c:30c1:fa03 with SMTP id a2-20020a9d2602000000b0061c30c1fa03mr8841527otb.86.1658029689329;
-        Sat, 16 Jul 2022 20:48:09 -0700 (PDT)
-Received: from ripper.. (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id e65-20020aca3744000000b0033a169f9282sm3004515oia.52.2022.07.16.20.48.08
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=GfIEvDMkb7XLpCU/9p565Kmb1QT30uo9MIf3FpLBdtI=;
+        b=pCj6oEqA59qOqa1WUE3SDc5JH4YSdkYwqbFRIb5DF2aF8sNXYrdtytIDaEJlD9X8MW
+         HNYphDtk1lSQxrUF60ETeYRuMikmROtA+eUHHQDSjK/znYmglB37bFwPknyEvvKDgJVh
+         0NGgzLbb2xMA8J5BWaDBv5xEZDF7abudL5fJU3QEhjqudy8o5mQ2TbAuZ9rvi/28ZStQ
+         Qg6tPbctNQlTovciId64hvaIfCmRqYtq68M/NG0Uc0jdwAhioyyH2kvErbO/l0ob/I8j
+         LACnkHFL59zeJHhDk1dyaGxrxXMI5dWrEFoKDMa2ghtlUzrJqQoGviIgjRgL14BAVMQ5
+         Lwzg==
+X-Gm-Message-State: AJIora+ftVWFmooMQgHkWhTX/eMHsdUFukPY3ihCsf9QUYXuZIdYD8Th
+        GgDMai64w+phlxyWB+w59ix62g==
+X-Google-Smtp-Source: AGRyM1t1OUXZ94OyJPeuAUJFh1mweFpvH5VWgyHg0BN16WW7oxSRgGlLoVbIz5RaPbvkUsjNVEa4qQ==
+X-Received: by 2002:a05:6870:d68e:b0:e2:af08:6cc3 with SMTP id z14-20020a056870d68e00b000e2af086cc3mr13144534oap.189.1658029884774;
+        Sat, 16 Jul 2022 20:51:24 -0700 (PDT)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id j4-20020a9d1784000000b0061c4a7a37fasm3816880otj.41.2022.07.16.20.51.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 16 Jul 2022 20:48:08 -0700 (PDT)
+        Sat, 16 Jul 2022 20:51:24 -0700 (PDT)
+Date:   Sat, 16 Jul 2022 22:51:22 -0500
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+To:     Abel Vesa <abel.vesa@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Vinod Koul <vkoul@kernel.org>, Wolfram Sang <wsa@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH 3/3] i2c: qcom-geni: Silence NACK and GENI_TIMEOUT
-Date:   Sat, 16 Jul 2022 20:50:27 -0700
-Message-Id: <20220717035027.2135106-4-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220717035027.2135106-1-bjorn.andersson@linaro.org>
-References: <20220717035027.2135106-1-bjorn.andersson@linaro.org>
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH] remoteproc: qcom: q6v5: Use _clk_get_optional for
+ aggre2_clk
+Message-ID: <YtOHOptMSAzHfm7a@builder.lan>
+References: <20220714104309.4111334-1-abel.vesa@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220714104309.4111334-1-abel.vesa@linaro.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
@@ -72,29 +74,250 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Turn NACK and GENI_TIMEOUT into debug prints to silence the kernel log
-when running things such as i2cdetect to scan the bus.
+On Thu 14 Jul 05:43 CDT 2022, Abel Vesa wrote:
 
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
- drivers/i2c/busses/i2c-qcom-geni.c | 4 ++++
- 1 file changed, 4 insertions(+)
+> There is devm_clk_get_optional now, so lets drop the has_aggre2_clk
+> from adsp_data.
 
-diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
-index e212e7ae7ad2..6ac179a373ff 100644
---- a/drivers/i2c/busses/i2c-qcom-geni.c
-+++ b/drivers/i2c/busses/i2c-qcom-geni.c
-@@ -208,6 +208,10 @@ static void geni_i2c_err(struct geni_i2c_dev *gi2c, int err)
- 	case GENI_ABORT_DONE:
- 		gi2c->abort_done = true;
- 		break;
-+	case NACK:
-+	case GENI_TIMEOUT:
-+		dev_dbg(gi2c->se.dev, "%s\n", gi2c_log[err].msg);
-+		break;
- 	default:
- 		dev_err(gi2c->se.dev, "%s\n", gi2c_log[err].msg);
- 		geni_i2c_err_misc(gi2c);
--- 
-2.35.1
+I like this patch, but for the history, could you please provide a
+reason why you would like to do this?
 
+Regards,
+Bjorn
+
+> 
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> ---
+>  drivers/remoteproc/qcom_q6v5_pas.c | 41 +++++-------------------------
+>  1 file changed, 7 insertions(+), 34 deletions(-)
+> 
+> diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
+> index 6ae39c5653b1..beef7a09c380 100644
+> --- a/drivers/remoteproc/qcom_q6v5_pas.c
+> +++ b/drivers/remoteproc/qcom_q6v5_pas.c
+> @@ -34,7 +34,6 @@ struct adsp_data {
+>  	const char *firmware_name;
+>  	int pas_id;
+>  	unsigned int minidump_id;
+> -	bool has_aggre2_clk;
+>  	bool auto_boot;
+>  
+>  	char **proxy_pd_names;
+> @@ -64,7 +63,6 @@ struct qcom_adsp {
+>  	int pas_id;
+>  	unsigned int minidump_id;
+>  	int crash_reason_smem;
+> -	bool has_aggre2_clk;
+>  	const char *info_name;
+>  
+>  	struct completion start_done;
+> @@ -310,15 +308,13 @@ static int adsp_init_clock(struct qcom_adsp *adsp)
+>  		return ret;
+>  	}
+>  
+> -	if (adsp->has_aggre2_clk) {
+> -		adsp->aggre2_clk = devm_clk_get(adsp->dev, "aggre2");
+> -		if (IS_ERR(adsp->aggre2_clk)) {
+> -			ret = PTR_ERR(adsp->aggre2_clk);
+> -			if (ret != -EPROBE_DEFER)
+> -				dev_err(adsp->dev,
+> -					"failed to get aggre2 clock");
+> -			return ret;
+> -		}
+> +	adsp->aggre2_clk = devm_clk_get_optional(adsp->dev, "aggre2");
+> +	if (IS_ERR(adsp->aggre2_clk)) {
+> +		ret = PTR_ERR(adsp->aggre2_clk);
+> +		if (ret != -EPROBE_DEFER)
+> +			dev_err(adsp->dev,
+> +				"failed to get aggre2 clock");
+> +		return ret;
+>  	}
+>  
+>  	return 0;
+> @@ -457,7 +453,6 @@ static int adsp_probe(struct platform_device *pdev)
+>  	adsp->rproc = rproc;
+>  	adsp->minidump_id = desc->minidump_id;
+>  	adsp->pas_id = desc->pas_id;
+> -	adsp->has_aggre2_clk = desc->has_aggre2_clk;
+>  	adsp->info_name = desc->sysmon_name;
+>  	platform_set_drvdata(pdev, adsp);
+>  
+> @@ -531,7 +526,6 @@ static const struct adsp_data adsp_resource_init = {
+>  		.crash_reason_smem = 423,
+>  		.firmware_name = "adsp.mdt",
+>  		.pas_id = 1,
+> -		.has_aggre2_clk = false,
+>  		.auto_boot = true,
+>  		.ssr_name = "lpass",
+>  		.sysmon_name = "adsp",
+> @@ -542,7 +536,6 @@ static const struct adsp_data sdm845_adsp_resource_init = {
+>  		.crash_reason_smem = 423,
+>  		.firmware_name = "adsp.mdt",
+>  		.pas_id = 1,
+> -		.has_aggre2_clk = false,
+>  		.auto_boot = true,
+>  		.load_state = "adsp",
+>  		.ssr_name = "lpass",
+> @@ -554,7 +547,6 @@ static const struct adsp_data sm6350_adsp_resource = {
+>  	.crash_reason_smem = 423,
+>  	.firmware_name = "adsp.mdt",
+>  	.pas_id = 1,
+> -	.has_aggre2_clk = false,
+>  	.auto_boot = true,
+>  	.proxy_pd_names = (char*[]){
+>  		"lcx",
+> @@ -571,7 +563,6 @@ static const struct adsp_data sm8150_adsp_resource = {
+>  		.crash_reason_smem = 423,
+>  		.firmware_name = "adsp.mdt",
+>  		.pas_id = 1,
+> -		.has_aggre2_clk = false,
+>  		.auto_boot = true,
+>  		.proxy_pd_names = (char*[]){
+>  			"cx",
+> @@ -587,7 +578,6 @@ static const struct adsp_data sm8250_adsp_resource = {
+>  	.crash_reason_smem = 423,
+>  	.firmware_name = "adsp.mdt",
+>  	.pas_id = 1,
+> -	.has_aggre2_clk = false,
+>  	.auto_boot = true,
+>  	.proxy_pd_names = (char*[]){
+>  		"lcx",
+> @@ -604,7 +594,6 @@ static const struct adsp_data sm8350_adsp_resource = {
+>  	.crash_reason_smem = 423,
+>  	.firmware_name = "adsp.mdt",
+>  	.pas_id = 1,
+> -	.has_aggre2_clk = false,
+>  	.auto_boot = true,
+>  	.proxy_pd_names = (char*[]){
+>  		"lcx",
+> @@ -621,7 +610,6 @@ static const struct adsp_data msm8996_adsp_resource = {
+>  		.crash_reason_smem = 423,
+>  		.firmware_name = "adsp.mdt",
+>  		.pas_id = 1,
+> -		.has_aggre2_clk = false,
+>  		.auto_boot = true,
+>  		.proxy_pd_names = (char*[]){
+>  			"cx",
+> @@ -636,7 +624,6 @@ static const struct adsp_data cdsp_resource_init = {
+>  	.crash_reason_smem = 601,
+>  	.firmware_name = "cdsp.mdt",
+>  	.pas_id = 18,
+> -	.has_aggre2_clk = false,
+>  	.auto_boot = true,
+>  	.ssr_name = "cdsp",
+>  	.sysmon_name = "cdsp",
+> @@ -647,7 +634,6 @@ static const struct adsp_data sdm845_cdsp_resource_init = {
+>  	.crash_reason_smem = 601,
+>  	.firmware_name = "cdsp.mdt",
+>  	.pas_id = 18,
+> -	.has_aggre2_clk = false,
+>  	.auto_boot = true,
+>  	.load_state = "cdsp",
+>  	.ssr_name = "cdsp",
+> @@ -659,7 +645,6 @@ static const struct adsp_data sm6350_cdsp_resource = {
+>  	.crash_reason_smem = 601,
+>  	.firmware_name = "cdsp.mdt",
+>  	.pas_id = 18,
+> -	.has_aggre2_clk = false,
+>  	.auto_boot = true,
+>  	.proxy_pd_names = (char*[]){
+>  		"cx",
+> @@ -676,7 +661,6 @@ static const struct adsp_data sm8150_cdsp_resource = {
+>  	.crash_reason_smem = 601,
+>  	.firmware_name = "cdsp.mdt",
+>  	.pas_id = 18,
+> -	.has_aggre2_clk = false,
+>  	.auto_boot = true,
+>  	.proxy_pd_names = (char*[]){
+>  		"cx",
+> @@ -692,7 +676,6 @@ static const struct adsp_data sm8250_cdsp_resource = {
+>  	.crash_reason_smem = 601,
+>  	.firmware_name = "cdsp.mdt",
+>  	.pas_id = 18,
+> -	.has_aggre2_clk = false,
+>  	.auto_boot = true,
+>  	.proxy_pd_names = (char*[]){
+>  		"cx",
+> @@ -708,7 +691,6 @@ static const struct adsp_data sc8280xp_nsp0_resource = {
+>  	.crash_reason_smem = 601,
+>  	.firmware_name = "cdsp.mdt",
+>  	.pas_id = 18,
+> -	.has_aggre2_clk = false,
+>  	.auto_boot = true,
+>  	.proxy_pd_names = (char*[]){
+>  		"nsp",
+> @@ -723,7 +705,6 @@ static const struct adsp_data sc8280xp_nsp1_resource = {
+>  	.crash_reason_smem = 633,
+>  	.firmware_name = "cdsp.mdt",
+>  	.pas_id = 30,
+> -	.has_aggre2_clk = false,
+>  	.auto_boot = true,
+>  	.proxy_pd_names = (char*[]){
+>  		"nsp",
+> @@ -738,7 +719,6 @@ static const struct adsp_data sm8350_cdsp_resource = {
+>  	.crash_reason_smem = 601,
+>  	.firmware_name = "cdsp.mdt",
+>  	.pas_id = 18,
+> -	.has_aggre2_clk = false,
+>  	.auto_boot = true,
+>  	.proxy_pd_names = (char*[]){
+>  		"cx",
+> @@ -756,7 +736,6 @@ static const struct adsp_data mpss_resource_init = {
+>  	.firmware_name = "modem.mdt",
+>  	.pas_id = 4,
+>  	.minidump_id = 3,
+> -	.has_aggre2_clk = false,
+>  	.auto_boot = false,
+>  	.proxy_pd_names = (char*[]){
+>  		"cx",
+> @@ -773,7 +752,6 @@ static const struct adsp_data sc8180x_mpss_resource = {
+>  	.crash_reason_smem = 421,
+>  	.firmware_name = "modem.mdt",
+>  	.pas_id = 4,
+> -	.has_aggre2_clk = false,
+>  	.auto_boot = false,
+>  	.proxy_pd_names = (char*[]){
+>  		"cx",
+> @@ -789,7 +767,6 @@ static const struct adsp_data slpi_resource_init = {
+>  		.crash_reason_smem = 424,
+>  		.firmware_name = "slpi.mdt",
+>  		.pas_id = 12,
+> -		.has_aggre2_clk = true,
+>  		.auto_boot = true,
+>  		.proxy_pd_names = (char*[]){
+>  			"ssc_cx",
+> @@ -804,7 +781,6 @@ static const struct adsp_data sm8150_slpi_resource = {
+>  		.crash_reason_smem = 424,
+>  		.firmware_name = "slpi.mdt",
+>  		.pas_id = 12,
+> -		.has_aggre2_clk = false,
+>  		.auto_boot = true,
+>  		.proxy_pd_names = (char*[]){
+>  			"lcx",
+> @@ -821,7 +797,6 @@ static const struct adsp_data sm8250_slpi_resource = {
+>  	.crash_reason_smem = 424,
+>  	.firmware_name = "slpi.mdt",
+>  	.pas_id = 12,
+> -	.has_aggre2_clk = false,
+>  	.auto_boot = true,
+>  	.proxy_pd_names = (char*[]){
+>  		"lcx",
+> @@ -838,7 +813,6 @@ static const struct adsp_data sm8350_slpi_resource = {
+>  	.crash_reason_smem = 424,
+>  	.firmware_name = "slpi.mdt",
+>  	.pas_id = 12,
+> -	.has_aggre2_clk = false,
+>  	.auto_boot = true,
+>  	.proxy_pd_names = (char*[]){
+>  		"lcx",
+> @@ -865,7 +839,6 @@ static const struct adsp_data sdx55_mpss_resource = {
+>  	.crash_reason_smem = 421,
+>  	.firmware_name = "modem.mdt",
+>  	.pas_id = 4,
+> -	.has_aggre2_clk = false,
+>  	.auto_boot = true,
+>  	.proxy_pd_names = (char*[]){
+>  		"cx",
+> -- 
+> 2.34.3
+> 
