@@ -2,68 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CB94A5773EC
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Jul 2022 05:51:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D50C55773FD
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Jul 2022 06:22:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233068AbiGQDv2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 16 Jul 2022 23:51:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33414 "EHLO
+        id S232486AbiGQEV7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 17 Jul 2022 00:21:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44954 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231700AbiGQDv1 (ORCPT
+        with ESMTP id S232050AbiGQEV7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 16 Jul 2022 23:51:27 -0400
-Received: from mail-oa1-x30.google.com (mail-oa1-x30.google.com [IPv6:2001:4860:4864:20::30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69C4338AF
-        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Jul 2022 20:51:25 -0700 (PDT)
-Received: by mail-oa1-x30.google.com with SMTP id 586e51a60fabf-10c0052da61so15741949fac.12
-        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Jul 2022 20:51:25 -0700 (PDT)
+        Sun, 17 Jul 2022 00:21:59 -0400
+Received: from mail-oa1-x2e.google.com (mail-oa1-x2e.google.com [IPv6:2001:4860:4864:20::2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0A5E205FC
+        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Jul 2022 21:21:57 -0700 (PDT)
+Received: by mail-oa1-x2e.google.com with SMTP id 586e51a60fabf-10c0119dd16so15862561fac.6
+        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Jul 2022 21:21:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=GfIEvDMkb7XLpCU/9p565Kmb1QT30uo9MIf3FpLBdtI=;
-        b=ja+nd/8X+GwVF8cnOSwQ15sfaWTcxB8mK715Q9w9U5vLPgtqikY6+80bdbElNW/7Ks
-         lK91eBhxfUmBoJJxGVFVS+vvVZGmFP8X1fAE0US2KR+rssilciWhtU6ixKLU0qzMvt3K
-         PGqRvZC1BlizJYXNkp3tj+JtsDmqBUxfu33AP7Hb03ayY7kJBIQyZUqKMCOR9/6rVtpE
-         A9BhDbDohsH2tnZMF8UJOtHfVN4OR8fdEoSm88Mx9brTd8BGTbonjwW9tvYzo3t7y1zC
-         yy6pL13A4bA7m67E7vJzI0riHUn5tY0iG1HBUxyECDjy70tHRQMK1LBh/czawHS0DpHV
-         ybvQ==
+        bh=mbkGo6dIU+6JizS/LMQKqNHdhjR1NYxgpojkIHzM3/I=;
+        b=wc4RvCjMQ//ADy8CdSvfCkTGkoqlMX67ESkQun7lswtrvxwftYseljH5n/Lai966yH
+         hAh8l9gfW+zduy3yERfocA1q7KHJ3/73KMEmzNQ07pVScHbnmKy65jpd7y9zq3Innzkx
+         QasRgok/GBzDyQ/2PzwIsEzoRt8k+wcXfpYlQjoueszG/0nN0OW1EEiLUOiEEF1Y6eiH
+         bK5ZE72ztSolaglfpNKHImxFxy3bm3t7in6DmauZcR8PsVtVuH4y6Fld5hOWDRq+xXNs
+         ngXHTZNx+Gmb5eTQaqYyS7oIJQOT5R+VM46eN0B20ZdDdvuTf1k7lDb+48kMO/xEdNes
+         m+BQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=GfIEvDMkb7XLpCU/9p565Kmb1QT30uo9MIf3FpLBdtI=;
-        b=pCj6oEqA59qOqa1WUE3SDc5JH4YSdkYwqbFRIb5DF2aF8sNXYrdtytIDaEJlD9X8MW
-         HNYphDtk1lSQxrUF60ETeYRuMikmROtA+eUHHQDSjK/znYmglB37bFwPknyEvvKDgJVh
-         0NGgzLbb2xMA8J5BWaDBv5xEZDF7abudL5fJU3QEhjqudy8o5mQ2TbAuZ9rvi/28ZStQ
-         Qg6tPbctNQlTovciId64hvaIfCmRqYtq68M/NG0Uc0jdwAhioyyH2kvErbO/l0ob/I8j
-         LACnkHFL59zeJHhDk1dyaGxrxXMI5dWrEFoKDMa2ghtlUzrJqQoGviIgjRgL14BAVMQ5
-         Lwzg==
-X-Gm-Message-State: AJIora+ftVWFmooMQgHkWhTX/eMHsdUFukPY3ihCsf9QUYXuZIdYD8Th
-        GgDMai64w+phlxyWB+w59ix62g==
-X-Google-Smtp-Source: AGRyM1t1OUXZ94OyJPeuAUJFh1mweFpvH5VWgyHg0BN16WW7oxSRgGlLoVbIz5RaPbvkUsjNVEa4qQ==
-X-Received: by 2002:a05:6870:d68e:b0:e2:af08:6cc3 with SMTP id z14-20020a056870d68e00b000e2af086cc3mr13144534oap.189.1658029884774;
-        Sat, 16 Jul 2022 20:51:24 -0700 (PDT)
+        bh=mbkGo6dIU+6JizS/LMQKqNHdhjR1NYxgpojkIHzM3/I=;
+        b=BtpTdSfaPHeUIVcNQ9P/RMBYgSg2gQUQg3uZP/Kl1M6WHq0xPInbRqYbttu9YOIBWx
+         +v3PHCi+wWk4MZorADsFDCjVCtus+VG243mGxfkKOVT4ismzK+VjWQQah96f4SFgd2Ej
+         X4zNWqHunyWSq5/+8UyHiUBVHCt0KDZ4ACsew72amHEAYGB9wzjDH0T/8kIhQ6vwiIdq
+         7e83KbqCQ3Ut9V8tQhppIhIZWSwcBQjI0D0tK0J2hlQO881m6bioOLeeqgbmIx6xiPjn
+         gRGCRpoM9fWww9DhiKQYIxgFb8J0s/EcrJJbqHF7JLpqljQWTiqQs76wooH4yYz9DqBm
+         NaeA==
+X-Gm-Message-State: AJIora8OOofoEN4OEljzFRHdlX0btUHxLXjbJ9S52YQ8qjyGRDx6WDPf
+        JRXz/rDDMEumJ+Fa7HVsIQxv+g==
+X-Google-Smtp-Source: AGRyM1ucLkz2KJ66sQM7quJWp24YqVAxDsCpWFcWV/Ff/w1BOHmeZACg+ZpKvY2eA76oE7R3/ucCZg==
+X-Received: by 2002:a05:6808:2215:b0:33a:3acb:ef78 with SMTP id bd21-20020a056808221500b0033a3acbef78mr7929603oib.177.1658031716983;
+        Sat, 16 Jul 2022 21:21:56 -0700 (PDT)
 Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id j4-20020a9d1784000000b0061c4a7a37fasm3816880otj.41.2022.07.16.20.51.23
+        by smtp.gmail.com with ESMTPSA id u15-20020a056870304f00b0010be09dc797sm4432333oau.18.2022.07.16.21.21.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 16 Jul 2022 20:51:24 -0700 (PDT)
-Date:   Sat, 16 Jul 2022 22:51:22 -0500
+        Sat, 16 Jul 2022 21:21:56 -0700 (PDT)
+Date:   Sat, 16 Jul 2022 23:21:54 -0500
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Abel Vesa <abel.vesa@linaro.org>
+To:     Abel Vesa <abel.vesa@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        Mike Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH] remoteproc: qcom: q6v5: Use _clk_get_optional for
- aggre2_clk
-Message-ID: <YtOHOptMSAzHfm7a@builder.lan>
-References: <20220714104309.4111334-1-abel.vesa@linaro.org>
+Subject: Re: [PATCH] clk: qcom: Drop mmcx gdsc supply for dispcc and videocc
+Message-ID: <YtOOYryxh9oEJXyg@builder.lan>
+References: <20220713143200.3686765-1-abel.vesa@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220714104309.4111334-1-abel.vesa@linaro.org>
+In-Reply-To: <20220713143200.3686765-1-abel.vesa@linaro.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
@@ -74,250 +76,81 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 14 Jul 05:43 CDT 2022, Abel Vesa wrote:
+On Wed 13 Jul 09:32 CDT 2022, Abel Vesa wrote:
 
-> There is devm_clk_get_optional now, so lets drop the has_aggre2_clk
-> from adsp_data.
+> Both dispcc and videocc use mmcx power domain now.
+> Lets drop the supply mmcx from every gdsc.
+> 
+> Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Fixes: 266e5cf39a0f ("arm64: dts: qcom: sm8250: remove mmcx regulator")
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 
-I like this patch, but for the history, could you please provide a
-reason why you would like to do this?
+This would break backwards compatibility with dtbs that used
+mmcx-supply. We only ever used mmcx-supply in sm8250.dtsi upstream and
+given that we only boot sm8250 off Android boot images it's unlikely
+that anyone would use a new kernel with that old of a dtb...
+
+So:
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+
+Dmitry, what do you think?
 
 Regards,
 Bjorn
 
-> 
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 > ---
->  drivers/remoteproc/qcom_q6v5_pas.c | 41 +++++-------------------------
->  1 file changed, 7 insertions(+), 34 deletions(-)
+>  drivers/clk/qcom/dispcc-sm8250.c  | 1 -
+>  drivers/clk/qcom/videocc-sm8250.c | 4 ----
+>  2 files changed, 5 deletions(-)
 > 
-> diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
-> index 6ae39c5653b1..beef7a09c380 100644
-> --- a/drivers/remoteproc/qcom_q6v5_pas.c
-> +++ b/drivers/remoteproc/qcom_q6v5_pas.c
-> @@ -34,7 +34,6 @@ struct adsp_data {
->  	const char *firmware_name;
->  	int pas_id;
->  	unsigned int minidump_id;
-> -	bool has_aggre2_clk;
->  	bool auto_boot;
+> diff --git a/drivers/clk/qcom/dispcc-sm8250.c b/drivers/clk/qcom/dispcc-sm8250.c
+> index 39b344ebb049..709076f0f9d7 100644
+> --- a/drivers/clk/qcom/dispcc-sm8250.c
+> +++ b/drivers/clk/qcom/dispcc-sm8250.c
+> @@ -1138,7 +1138,6 @@ static struct gdsc mdss_gdsc = {
+>  	},
+>  	.pwrsts = PWRSTS_OFF_ON,
+>  	.flags = HW_CTRL,
+> -	.supply = "mmcx",
+>  };
 >  
->  	char **proxy_pd_names;
-> @@ -64,7 +63,6 @@ struct qcom_adsp {
->  	int pas_id;
->  	unsigned int minidump_id;
->  	int crash_reason_smem;
-> -	bool has_aggre2_clk;
->  	const char *info_name;
+>  static struct clk_regmap *disp_cc_sm8250_clocks[] = {
+> diff --git a/drivers/clk/qcom/videocc-sm8250.c b/drivers/clk/qcom/videocc-sm8250.c
+> index 8617454e4a77..f28f2cb051d7 100644
+> --- a/drivers/clk/qcom/videocc-sm8250.c
+> +++ b/drivers/clk/qcom/videocc-sm8250.c
+> @@ -277,7 +277,6 @@ static struct gdsc mvs0c_gdsc = {
+>  	},
+>  	.flags = 0,
+>  	.pwrsts = PWRSTS_OFF_ON,
+> -	.supply = "mmcx",
+>  };
 >  
->  	struct completion start_done;
-> @@ -310,15 +308,13 @@ static int adsp_init_clock(struct qcom_adsp *adsp)
->  		return ret;
->  	}
+>  static struct gdsc mvs1c_gdsc = {
+> @@ -287,7 +286,6 @@ static struct gdsc mvs1c_gdsc = {
+>  	},
+>  	.flags = 0,
+>  	.pwrsts = PWRSTS_OFF_ON,
+> -	.supply = "mmcx",
+>  };
 >  
-> -	if (adsp->has_aggre2_clk) {
-> -		adsp->aggre2_clk = devm_clk_get(adsp->dev, "aggre2");
-> -		if (IS_ERR(adsp->aggre2_clk)) {
-> -			ret = PTR_ERR(adsp->aggre2_clk);
-> -			if (ret != -EPROBE_DEFER)
-> -				dev_err(adsp->dev,
-> -					"failed to get aggre2 clock");
-> -			return ret;
-> -		}
-> +	adsp->aggre2_clk = devm_clk_get_optional(adsp->dev, "aggre2");
-> +	if (IS_ERR(adsp->aggre2_clk)) {
-> +		ret = PTR_ERR(adsp->aggre2_clk);
-> +		if (ret != -EPROBE_DEFER)
-> +			dev_err(adsp->dev,
-> +				"failed to get aggre2 clock");
-> +		return ret;
->  	}
+>  static struct gdsc mvs0_gdsc = {
+> @@ -297,7 +295,6 @@ static struct gdsc mvs0_gdsc = {
+>  	},
+>  	.flags = HW_CTRL,
+>  	.pwrsts = PWRSTS_OFF_ON,
+> -	.supply = "mmcx",
+>  };
 >  
->  	return 0;
-> @@ -457,7 +453,6 @@ static int adsp_probe(struct platform_device *pdev)
->  	adsp->rproc = rproc;
->  	adsp->minidump_id = desc->minidump_id;
->  	adsp->pas_id = desc->pas_id;
-> -	adsp->has_aggre2_clk = desc->has_aggre2_clk;
->  	adsp->info_name = desc->sysmon_name;
->  	platform_set_drvdata(pdev, adsp);
+>  static struct gdsc mvs1_gdsc = {
+> @@ -307,7 +304,6 @@ static struct gdsc mvs1_gdsc = {
+>  	},
+>  	.flags = HW_CTRL,
+>  	.pwrsts = PWRSTS_OFF_ON,
+> -	.supply = "mmcx",
+>  };
 >  
-> @@ -531,7 +526,6 @@ static const struct adsp_data adsp_resource_init = {
->  		.crash_reason_smem = 423,
->  		.firmware_name = "adsp.mdt",
->  		.pas_id = 1,
-> -		.has_aggre2_clk = false,
->  		.auto_boot = true,
->  		.ssr_name = "lpass",
->  		.sysmon_name = "adsp",
-> @@ -542,7 +536,6 @@ static const struct adsp_data sdm845_adsp_resource_init = {
->  		.crash_reason_smem = 423,
->  		.firmware_name = "adsp.mdt",
->  		.pas_id = 1,
-> -		.has_aggre2_clk = false,
->  		.auto_boot = true,
->  		.load_state = "adsp",
->  		.ssr_name = "lpass",
-> @@ -554,7 +547,6 @@ static const struct adsp_data sm6350_adsp_resource = {
->  	.crash_reason_smem = 423,
->  	.firmware_name = "adsp.mdt",
->  	.pas_id = 1,
-> -	.has_aggre2_clk = false,
->  	.auto_boot = true,
->  	.proxy_pd_names = (char*[]){
->  		"lcx",
-> @@ -571,7 +563,6 @@ static const struct adsp_data sm8150_adsp_resource = {
->  		.crash_reason_smem = 423,
->  		.firmware_name = "adsp.mdt",
->  		.pas_id = 1,
-> -		.has_aggre2_clk = false,
->  		.auto_boot = true,
->  		.proxy_pd_names = (char*[]){
->  			"cx",
-> @@ -587,7 +578,6 @@ static const struct adsp_data sm8250_adsp_resource = {
->  	.crash_reason_smem = 423,
->  	.firmware_name = "adsp.mdt",
->  	.pas_id = 1,
-> -	.has_aggre2_clk = false,
->  	.auto_boot = true,
->  	.proxy_pd_names = (char*[]){
->  		"lcx",
-> @@ -604,7 +594,6 @@ static const struct adsp_data sm8350_adsp_resource = {
->  	.crash_reason_smem = 423,
->  	.firmware_name = "adsp.mdt",
->  	.pas_id = 1,
-> -	.has_aggre2_clk = false,
->  	.auto_boot = true,
->  	.proxy_pd_names = (char*[]){
->  		"lcx",
-> @@ -621,7 +610,6 @@ static const struct adsp_data msm8996_adsp_resource = {
->  		.crash_reason_smem = 423,
->  		.firmware_name = "adsp.mdt",
->  		.pas_id = 1,
-> -		.has_aggre2_clk = false,
->  		.auto_boot = true,
->  		.proxy_pd_names = (char*[]){
->  			"cx",
-> @@ -636,7 +624,6 @@ static const struct adsp_data cdsp_resource_init = {
->  	.crash_reason_smem = 601,
->  	.firmware_name = "cdsp.mdt",
->  	.pas_id = 18,
-> -	.has_aggre2_clk = false,
->  	.auto_boot = true,
->  	.ssr_name = "cdsp",
->  	.sysmon_name = "cdsp",
-> @@ -647,7 +634,6 @@ static const struct adsp_data sdm845_cdsp_resource_init = {
->  	.crash_reason_smem = 601,
->  	.firmware_name = "cdsp.mdt",
->  	.pas_id = 18,
-> -	.has_aggre2_clk = false,
->  	.auto_boot = true,
->  	.load_state = "cdsp",
->  	.ssr_name = "cdsp",
-> @@ -659,7 +645,6 @@ static const struct adsp_data sm6350_cdsp_resource = {
->  	.crash_reason_smem = 601,
->  	.firmware_name = "cdsp.mdt",
->  	.pas_id = 18,
-> -	.has_aggre2_clk = false,
->  	.auto_boot = true,
->  	.proxy_pd_names = (char*[]){
->  		"cx",
-> @@ -676,7 +661,6 @@ static const struct adsp_data sm8150_cdsp_resource = {
->  	.crash_reason_smem = 601,
->  	.firmware_name = "cdsp.mdt",
->  	.pas_id = 18,
-> -	.has_aggre2_clk = false,
->  	.auto_boot = true,
->  	.proxy_pd_names = (char*[]){
->  		"cx",
-> @@ -692,7 +676,6 @@ static const struct adsp_data sm8250_cdsp_resource = {
->  	.crash_reason_smem = 601,
->  	.firmware_name = "cdsp.mdt",
->  	.pas_id = 18,
-> -	.has_aggre2_clk = false,
->  	.auto_boot = true,
->  	.proxy_pd_names = (char*[]){
->  		"cx",
-> @@ -708,7 +691,6 @@ static const struct adsp_data sc8280xp_nsp0_resource = {
->  	.crash_reason_smem = 601,
->  	.firmware_name = "cdsp.mdt",
->  	.pas_id = 18,
-> -	.has_aggre2_clk = false,
->  	.auto_boot = true,
->  	.proxy_pd_names = (char*[]){
->  		"nsp",
-> @@ -723,7 +705,6 @@ static const struct adsp_data sc8280xp_nsp1_resource = {
->  	.crash_reason_smem = 633,
->  	.firmware_name = "cdsp.mdt",
->  	.pas_id = 30,
-> -	.has_aggre2_clk = false,
->  	.auto_boot = true,
->  	.proxy_pd_names = (char*[]){
->  		"nsp",
-> @@ -738,7 +719,6 @@ static const struct adsp_data sm8350_cdsp_resource = {
->  	.crash_reason_smem = 601,
->  	.firmware_name = "cdsp.mdt",
->  	.pas_id = 18,
-> -	.has_aggre2_clk = false,
->  	.auto_boot = true,
->  	.proxy_pd_names = (char*[]){
->  		"cx",
-> @@ -756,7 +736,6 @@ static const struct adsp_data mpss_resource_init = {
->  	.firmware_name = "modem.mdt",
->  	.pas_id = 4,
->  	.minidump_id = 3,
-> -	.has_aggre2_clk = false,
->  	.auto_boot = false,
->  	.proxy_pd_names = (char*[]){
->  		"cx",
-> @@ -773,7 +752,6 @@ static const struct adsp_data sc8180x_mpss_resource = {
->  	.crash_reason_smem = 421,
->  	.firmware_name = "modem.mdt",
->  	.pas_id = 4,
-> -	.has_aggre2_clk = false,
->  	.auto_boot = false,
->  	.proxy_pd_names = (char*[]){
->  		"cx",
-> @@ -789,7 +767,6 @@ static const struct adsp_data slpi_resource_init = {
->  		.crash_reason_smem = 424,
->  		.firmware_name = "slpi.mdt",
->  		.pas_id = 12,
-> -		.has_aggre2_clk = true,
->  		.auto_boot = true,
->  		.proxy_pd_names = (char*[]){
->  			"ssc_cx",
-> @@ -804,7 +781,6 @@ static const struct adsp_data sm8150_slpi_resource = {
->  		.crash_reason_smem = 424,
->  		.firmware_name = "slpi.mdt",
->  		.pas_id = 12,
-> -		.has_aggre2_clk = false,
->  		.auto_boot = true,
->  		.proxy_pd_names = (char*[]){
->  			"lcx",
-> @@ -821,7 +797,6 @@ static const struct adsp_data sm8250_slpi_resource = {
->  	.crash_reason_smem = 424,
->  	.firmware_name = "slpi.mdt",
->  	.pas_id = 12,
-> -	.has_aggre2_clk = false,
->  	.auto_boot = true,
->  	.proxy_pd_names = (char*[]){
->  		"lcx",
-> @@ -838,7 +813,6 @@ static const struct adsp_data sm8350_slpi_resource = {
->  	.crash_reason_smem = 424,
->  	.firmware_name = "slpi.mdt",
->  	.pas_id = 12,
-> -	.has_aggre2_clk = false,
->  	.auto_boot = true,
->  	.proxy_pd_names = (char*[]){
->  		"lcx",
-> @@ -865,7 +839,6 @@ static const struct adsp_data sdx55_mpss_resource = {
->  	.crash_reason_smem = 421,
->  	.firmware_name = "modem.mdt",
->  	.pas_id = 4,
-> -	.has_aggre2_clk = false,
->  	.auto_boot = true,
->  	.proxy_pd_names = (char*[]){
->  		"cx",
+>  static struct clk_regmap *video_cc_sm8250_clocks[] = {
 > -- 
 > 2.34.3
 > 
