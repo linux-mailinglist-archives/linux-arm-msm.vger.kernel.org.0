@@ -2,91 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7F7C95781E2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Jul 2022 14:14:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 483F85781F3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Jul 2022 14:15:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234950AbiGRMOY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 Jul 2022 08:14:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34814 "EHLO
+        id S235004AbiGRMPR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 Jul 2022 08:15:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36216 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234943AbiGRMOX (ORCPT
+        with ESMTP id S235045AbiGRMPC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 Jul 2022 08:14:23 -0400
-Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3CFD19C2C
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Jul 2022 05:14:22 -0700 (PDT)
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1oDPdg-0005dD-Gf; Mon, 18 Jul 2022 14:14:16 +0200
-Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
-        by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1oDPdf-001i49-Oz; Mon, 18 Jul 2022 14:14:15 +0200
-Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1oDPde-005xVc-WA; Mon, 18 Jul 2022 14:14:14 +0200
-From:   =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
-        <u.kleine-koenig@pengutronix.de>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Georgi Djakov <djakov@kernel.org>
-Cc:     kernel@pengutronix.de, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v2 6/8] interconnect: sm8450: Ignore return value of icc_provider_del() in .remove()
-Date:   Mon, 18 Jul 2022 14:14:07 +0200
-Message-Id: <20220718121409.171773-7-u.kleine-koenig@pengutronix.de>
-X-Mailer: git-send-email 2.36.1
-In-Reply-To: <20220718121409.171773-1-u.kleine-koenig@pengutronix.de>
-References: <20220718121409.171773-1-u.kleine-koenig@pengutronix.de>
+        Mon, 18 Jul 2022 08:15:02 -0400
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80F7F255B8;
+        Mon, 18 Jul 2022 05:14:53 -0700 (PDT)
+Received: by mail-lj1-x236.google.com with SMTP id 19so13360753ljz.4;
+        Mon, 18 Jul 2022 05:14:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=zzP5O2UmgIk3Drx0H4MSnDfz0Rp3ps9TJkdV4JO2R7A=;
+        b=k5lJvTj75rH5lRKTzC/JAHyfjGsr14xTRDcoHCgEcTV4AQGrX8eFw3FOfF4xGf2PUz
+         GCADOTVObBuWMnlgaXeaVF1dqwMtGESu3hTv+M26TO+9cIS1lyu4M0odsGdKQlD9+7ut
+         gFQBBFbdwPYVbn/gjSujfZBM2f728agNEQfl3mKPtWp10sm8buT9AlXG29ggOL7hHi3h
+         C4EH0rGOBQr4N4G61LEJyTy1OyypnaLIDQxSvRda9A1IAx5tAx41Hi5M2T/W08OROahM
+         OGN+4/hy7EKVlrVJi4A2SjLF9pVebYJR30ltq5FPKlIsFy9cCcr0CnsDyAwm3KL8OqpO
+         SfXQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=zzP5O2UmgIk3Drx0H4MSnDfz0Rp3ps9TJkdV4JO2R7A=;
+        b=bQfGiFs1B4ZRgzHFx5J/mBUG8FzA74tJZqM8jIdJ7rl0TRt85h2VGqQLgLf+smhI6G
+         32HSH/jYeeFAjtjHxmCVd30NtWkkO04CLf5xfRZ5fkN69FVE2n6AXLvT4sEV8IhQvlLx
+         4BxaCo/z7NPiu22CaedpoSap24+7AuO50ba5Khs5/7iZ0OHDNBZURN78xsHxq9v8Shij
+         LzE1dRxD0OwuDJZZGsYe+LVjvGZO5deTPF0Tl9sDxCp8Nc8sC4VVhLS5bBYvyWu0i8Ur
+         Qjqm5F0livCIbEpyw0Dr8mkRuXWytA9YVIrVMWeP+xBeHfD3DmeoGHBHRS7h4gQdglLq
+         kcJw==
+X-Gm-Message-State: AJIora8rWXUelBsFjF7TF+dFOn2vVP468dOj/wiU9k+mWsDohRD8X7NA
+        5g8L1Pw6srh5yEnwW33Nxbd+Cp3Ef0LnYgwN8jAdNA==
+X-Google-Smtp-Source: AGRyM1ufnTrLK16zGnHGSVDYgn6Qdqwl+qyM635WSkuiGCCWe3WaxlO6iYTzbk1LrpRwb59JMef4hg==
+X-Received: by 2002:a2e:6819:0:b0:25d:63ec:7954 with SMTP id c25-20020a2e6819000000b0025d63ec7954mr12048608lja.389.1658146491305;
+        Mon, 18 Jul 2022 05:14:51 -0700 (PDT)
+Received: from [192.168.0.251] (dsl-hkibng42-5673c7-93.dhcp.inet.fi. [86.115.199.93])
+        by smtp.gmail.com with ESMTPSA id c1-20020a05651200c100b0047f9dca3708sm2572788lfp.51.2022.07.18.05.14.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 18 Jul 2022 05:14:50 -0700 (PDT)
+Message-ID: <48656998-7b7e-29ac-3f94-c05dc705c166@gmail.com>
+Date:   Mon, 18 Jul 2022 15:14:49 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1112; h=from:subject; bh=GTV9eacUuhiHphB1ypMvxTcWIkrDqL5+D9Tl8L+fq6I=; b=owGbwMvMwMV48I9IxdpTbzgZT6slMSRd9Wu5fVV8vi2LngKn02/meU7L8k+vdMwKl/6/+692dVCp 2nK2TkZjFgZGLgZZMUWWuiItsQkSa/7blSzhhhnEygQyhYGLUwAm4jWb/b+z3bwCKQ7bpoIP+7KU9W 77OOX1SMV+Vr5VrfjbtknyIl94w4MtsSsP38wySp0lt2CWqGQuo+drW5GZhVwr7rnbn9o39cc5xp7J pf13eU4W8f2s/lStGfturQXDOy5VFcai906PWMq6uH62tLIkJ2lqJW1bIbHr0tckq1ZGkYuNopcztr hGZnMEGRWkTj+/PFk/z8Z/+qFnqx/UdU166L9H/ZZ6omP4NiubsLibu24/zHNVMIs2vPtc+JbQyehd XNyzzvEYxO8te9w6b/vtxYpxKdOfZf/2LI/09fg9P5mrrF50g/yXOvWgbDZRmV1Nax/pLOJcf1fKMf JozsSOWMsFjI2TXs98FHUvM9ARAA==
-X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH 1/3] ARM: dts: qcom: pm8226: Add node for the GPIOs
+Content-Language: en-US
+To:     linux-arm-msm@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20220717213432.134486-1-matti.lehtimaki@gmail.com>
+ <20220717213432.134486-2-matti.lehtimaki@gmail.com>
+From:   =?UTF-8?Q?Matti_Lehtim=c3=a4ki?= <matti.lehtimaki@gmail.com>
+In-Reply-To: <20220717213432.134486-2-matti.lehtimaki@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-icc_provider_del() already emits an error message on failure. In this
-case letting .remove() return the corresponding error code results in
-another error message and the device is removed anyhow. (See
-platform_remove().)
+On 18.7.2022 0.34, Matti Lehtimäki wrote:
+> The PM8226 provides 8 GPIOs. Add a node to support them.
+> 
+> Signed-off-by: Matti LehtimÃ¤ki <matti.lehtimaki@gmail.com>
 
-So ignore the return value of icc_provider_del() and return 0
-unconditionally.
+I will fix the UTF-8 issue in the Signed-off-by lines in all of the 
+patches in v2.
 
-This is a preparation for making platform remove callbacks return void.
-
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
----
- drivers/interconnect/qcom/sm8450.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/interconnect/qcom/sm8450.c b/drivers/interconnect/qcom/sm8450.c
-index 7e3d372b712f..613c30df8aed 100644
---- a/drivers/interconnect/qcom/sm8450.c
-+++ b/drivers/interconnect/qcom/sm8450.c
-@@ -1932,7 +1932,9 @@ static int qnoc_remove(struct platform_device *pdev)
- 	struct qcom_icc_provider *qp = platform_get_drvdata(pdev);
- 
- 	icc_nodes_remove(&qp->provider);
--	return icc_provider_del(&qp->provider);
-+	icc_provider_del(&qp->provider);
-+
-+	return 0;
- }
- 
- static const struct of_device_id qnoc_of_match[] = {
--- 
-2.36.1
-
+-Matti
