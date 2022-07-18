@@ -2,104 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 25C1157816C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Jul 2022 14:00:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6A50E5781E5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Jul 2022 14:14:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234163AbiGRMAh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 Jul 2022 08:00:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47846 "EHLO
+        id S234974AbiGRMOb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 Jul 2022 08:14:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34952 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229535AbiGRMAg (ORCPT
+        with ESMTP id S234962AbiGRMOa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 Jul 2022 08:00:36 -0400
-Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D17E717A90;
-        Mon, 18 Jul 2022 05:00:32 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id A57EACE1698;
-        Mon, 18 Jul 2022 12:00:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D434FC341C0;
-        Mon, 18 Jul 2022 12:00:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1658145628;
-        bh=sGRj1qXf7qH5c/aqUGJ+GwJ1LMbx6Qsg9ex7gdrUBwo=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=OQgmnlFhri8bnNZ9apf6ajfwayJZs6d0jduCqLy416gCkGxwlzEIuRCW8/ijcbHi3
-         LC9D7dbN+k17NgLmA1FfRDdJJYfaypy4xQ796q5BuvBvacfFSTjovZADvQP3Kt/j3i
-         vVgF1boG9KxikUckzn+LMvrZOuqAcFZjVxscs9eD22+oQWPcO7FQJSJOoiCJb9BSwp
-         ch0sraky8bo9tK0llp15vtIFHumTkMO7hn6jnAsvaRzujI5O3p3JKKPqzWU3fTHKGk
-         ixN72HCbLSq+SK+82TKMzvBIDzUFqSWI2Wm6oHKA65sTg73Bo3AyROgEcv4eUo7pTe
-         iBmCfqaa67/8A==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1oDPQE-0005hU-8V; Mon, 18 Jul 2022 14:00:22 +0200
-Date:   Mon, 18 Jul 2022 14:00:22 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Johan Hovold <johan+linaro@kernel.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Mon, 18 Jul 2022 08:14:30 -0400
+Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FA781A04A
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Jul 2022 05:14:29 -0700 (PDT)
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1oDPdh-0005d9-6f; Mon, 18 Jul 2022 14:14:17 +0200
+Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
+        by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1oDPde-001i3t-V6; Mon, 18 Jul 2022 14:14:14 +0200
+Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1oDPdd-005xVJ-Tg; Mon, 18 Jul 2022 14:14:13 +0200
+From:   =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>
+To:     Georgi Djakov <djakov@kernel.org>, Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Rob Herring <robh@kernel.org>
-Subject: Re: [PATCH v2 7/8] PCI: qcom: Clean up IP configurations
-Message-ID: <YtVLVkluQHiyf1dp@hovoldconsulting.com>
-References: <20220714071348.6792-1-johan+linaro@kernel.org>
- <20220714071348.6792-8-johan+linaro@kernel.org>
- <91edff9a-53f2-647b-04a8-76d15f22a8f2@linaro.org>
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     kernel@pengutronix.de, Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>, linux-pm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: [PATCH v2 0/8] interconnect: Prepare making platform remove callbacks return void
+Date:   Mon, 18 Jul 2022 14:14:01 +0200
+Message-Id: <20220718121409.171773-1-u.kleine-koenig@pengutronix.de>
+X-Mailer: git-send-email 2.36.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <91edff9a-53f2-647b-04a8-76d15f22a8f2@linaro.org>
-X-Spam-Status: No, score=-7.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=UTF-8
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2079; h=from:subject; bh=A1o6I6OVHVljeru//hO3heJNwTEoskPv4jVq/tRtPrU=; b=owEBbQGS/pANAwAKAcH8FHityuwJAcsmYgBi1U5yX+wocJskVFzESoSjYSC+vn/AZDq7N/GEq/7P iSSPhf2JATMEAAEKAB0WIQR+cioWkBis/z50pAvB/BR4rcrsCQUCYtVOcgAKCRDB/BR4rcrsCUibB/ 47wzVcYBIAkJNgLQcmiGSY2Q/hmyILxPtnC8l3I6ItMfwGWDNsSGrU85nv3M+eyZwJmM6m5OY69WKd Fa7l2eVvJqtGd67ruxhY62HcsWi4vIfRgPxBXGpbCEYO8ciL6F39a283INNAj5Ji5vdR61fP1bPWHK Fdb1XoLU1+RZiabYBX9CVHqw9iTlcigkzF5sSXVx/4HbECAwxn4+H83YHh0v8Kp+RQer7uuWm9cYh6 Pu03j5zzEzG9lNwaWokGEWqQ2/NNxzALHxANDZzVVavN/FpBGOjqeLNd7xBy3bjGUToV71XC1Mw3so mS6a+jj9zfFlaHrhT/3p5UxJT65Vnz
+X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jul 18, 2022 at 01:39:32PM +0300, Dmitry Baryshkov wrote:
-> On 14/07/2022 10:13, Johan Hovold wrote:
-> > The various IP versions have different configurations that are encoded
-> > in separate sets of operation callbacks. Currently, there is no need for
-> > also maintaining corresponding sets of data parameters, but it is
-> > conceivable that these may again be found useful (e.g. to implement
-> > minor variations of the operation callbacks).
-> > 
-> > Rename the default configuration structures after the IP version they
-> > apply to so that they can more easily be reused by different SoCs.
-> > 
-> > Note that SoC specific configurations can be added later if need arises
-> > (e.g. cfg_sc8280xp).
-> > 
-> > Reviewed-by: Rob Herring <robh@kernel.org>
-> > Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> 
-> 
-> If we have nothing left in the qcom_pcie_cfg other than the .ops, what 
-> about dropping the qcom_pcie_cfg completely and using the qcom_pcie_ops 
-> as match data?
+Hello,
 
-As I mention above I decided to keep the config structures as they can
-be used to implement minor variations of the ops.
- 
-> This patch is nevertheless:
-> 
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+today remove callbacks of platform devices return an int. This is unfortunate
+because the device core ignores the return value and so the platform code only
+emits a warning (and still removes the device).
 
-Thanks for reviewing.
+My longterm quest is to make these remove callbacks return void instead.
+This series is a preparation for that, with the goal to make the remove
+callbacks obviously always return 0. This way when the prototype of
+these functions is changed to return void, the change is straight
+forward and easy to review.
 
-Johan
+Changes since (implict) v1:
+
+ - Also make the icc_provider_del() stub for the CONFIG_INTERCONNECT=n
+   case void. Found by Georgi Djakov
+
+Best regards
+Uwe
+
+Uwe Kleine-König (8):
+  interconnect: imx: Ignore return value of icc_provider_del() in
+    .remove()
+  interconnect: icc-rpm: Ignore return value of icc_provider_del() in
+    .remove()
+  interconnect: icc-rpmh: Ignore return value of icc_provider_del() in
+    .remove()
+  interconnect: msm8974: Ignore return value of icc_provider_del() in
+    .remove()
+  interconnect: osm-l3: Ignore return value of icc_provider_del() in
+    .remove()
+  interconnect: sm8450: Ignore return value of icc_provider_del() in
+    .remove()
+  interconnect: Make icc_provider_del() return void
+  interconnect: imx: Make imx_icc_unregister() return void
+
+ drivers/interconnect/core.c           | 10 +++-------
+ drivers/interconnect/imx/imx.c        |  4 ++--
+ drivers/interconnect/imx/imx.h        |  2 +-
+ drivers/interconnect/imx/imx8mm.c     |  4 +++-
+ drivers/interconnect/imx/imx8mn.c     |  4 +++-
+ drivers/interconnect/imx/imx8mq.c     |  4 +++-
+ drivers/interconnect/qcom/icc-rpm.c   |  4 +++-
+ drivers/interconnect/qcom/icc-rpmh.c  |  4 +++-
+ drivers/interconnect/qcom/msm8974.c   |  4 +++-
+ drivers/interconnect/qcom/osm-l3.c    |  4 +++-
+ drivers/interconnect/qcom/sm8450.c    |  4 +++-
+ include/linux/interconnect-provider.h |  5 ++---
+ 12 files changed, 32 insertions(+), 21 deletions(-)
+
+
+base-commit: f2906aa863381afb0015a9eb7fefad885d4e5a56
+-- 
+2.36.1
+
