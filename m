@@ -2,214 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EC818578C30
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Jul 2022 22:56:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 09C19578C69
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Jul 2022 23:06:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234684AbiGRU4d (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 Jul 2022 16:56:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55056 "EHLO
+        id S229742AbiGRVF7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 Jul 2022 17:05:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36210 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231673AbiGRU4c (ORCPT
+        with ESMTP id S236250AbiGRVF5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 Jul 2022 16:56:32 -0400
-Received: from mail-il1-f171.google.com (mail-il1-f171.google.com [209.85.166.171])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1AAD32D1C9;
-        Mon, 18 Jul 2022 13:56:32 -0700 (PDT)
-Received: by mail-il1-f171.google.com with SMTP id h16so6694282ila.2;
-        Mon, 18 Jul 2022 13:56:32 -0700 (PDT)
+        Mon, 18 Jul 2022 17:05:57 -0400
+Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 722DC31388
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Jul 2022 14:05:56 -0700 (PDT)
+Received: by mail-pl1-x634.google.com with SMTP id y15so5432811plp.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Jul 2022 14:05:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=tejSmNJ8tu3mfi3c3x2mnRbBUB+Mt1F/BieKNs2TvDI=;
+        b=kvsFWUi5QVF9B6vzu7BqfIgA76hLUz+zfy05wTP1ymRs1tWPsDXPBay39e+W3ZInbw
+         yLn1USBTdc8Qy3bn1f2BGKZvWsbXLRwavGCvpPYJXjnp3G8Eu0gXfZkktymqVMwqGWxv
+         VOz9hCY0jO2KOY+QGHIwNuqNQH+ArBitalk+obzkGidtH916Ig9JF11T143BNIjHezU6
+         bQYoLP54cyYATTyQimY4sNvfGtsPFPuO/aeIlqDSWdygVT5EGFTTqL/aqB93jX3dnNvz
+         vAe9d9K2b+YMqmXOe1SwGBdCQFTewagGoxfyXc1ZY5jZ5izHxM48WDV0A97b26woP0WB
+         t3yw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=w+SGKaM5PYTsp4dhMAWOhMPFfu9JfJuU7ytqSJNiIms=;
-        b=5TPnRoEzSr838C4NPVwGBRquPX8VJZW0P7Fy3FrLhuYEGan4DZTOiBGtOWcts8n+bN
-         d/CRR35YV5+5SzxIXzrTg8CfvO5VOXuKbci2jDTrbPV9CHM1qtXAmVz99Cym488wTvOw
-         cOPaqoc3h6RzIhD4fe7LPM4wZvuM+9AOPMe5opF/UclyqhOCop2+H2U+ISCDI+9/zB9x
-         +lDVWgVqCVBAeosQAebfVpmcQ7Kq38CC8bERkS3wdcrL0+/wo+mDgjZvLF39T69caUj0
-         YKiEpnOS4przGuOwuNiJ4vXEJTIynpr5lMWg/i70Cos5zyRyZWxl9OIbjsW4AL3/dxh8
-         HO3A==
-X-Gm-Message-State: AJIora8akNrTXShGObzknVBaQpz3bOKrpLgl5RcoaC9d1ergyNwpB5nw
-        ledptN1MXPG7FsHCu826uA==
-X-Google-Smtp-Source: AGRyM1uPgmdQ612VJUv7DoaDaQzxx0K/+K4/OCALhKicgiTopdQ9Q9lnfZD+zIBNMNlHcAaLbS8awA==
-X-Received: by 2002:a92:7f12:0:b0:2d9:1e05:6310 with SMTP id a18-20020a927f12000000b002d91e056310mr14135053ild.317.1658177791313;
-        Mon, 18 Jul 2022 13:56:31 -0700 (PDT)
-Received: from robh.at.kernel.org ([64.188.179.248])
-        by smtp.gmail.com with ESMTPSA id c10-20020a02a60a000000b0033ebf04f624sm5970875jam.152.2022.07.18.13.56.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 Jul 2022 13:56:30 -0700 (PDT)
-Received: (nullmailer pid 3538882 invoked by uid 1000);
-        Mon, 18 Jul 2022 20:56:27 -0000
-Date:   Mon, 18 Jul 2022 14:56:27 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Anjelique Melendez <quic_amelende@quicinc.com>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        corbet@lwn.net, sre@kernel.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, krzysztof.kozlowski+dt@linaro.org,
-        vkoul@kernel.org, linux-doc@vger.kernel.org,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        David Collins <quic_collinsd@quicinc.com>
-Subject: Re: [PATCH v3 1/2] dt-bindings: power: reset: qcom-pon: update "reg"
- property details
-Message-ID: <20220718205627.GA3535152-robh@kernel.org>
-References: <20220713193350.29796-1-quic_amelende@quicinc.com>
- <20220713193350.29796-2-quic_amelende@quicinc.com>
- <c129c748-4306-da64-fc18-2d224b2fc97c@linaro.org>
- <ffb31b6f-8ed3-e890-976d-64a48478d404@quicinc.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=tejSmNJ8tu3mfi3c3x2mnRbBUB+Mt1F/BieKNs2TvDI=;
+        b=CquuA+fr6IB8ygNiFvA85Zc3if8TfbYCaBILOhDqma96qCprUTMHUWfdgXdkUG63BS
+         ZPm3taYvFbfogXjGqtScdfLtMw8gbKx4bbTDr593SyoBWZpmGJxaeKCa3CBaX7pq9Mqn
+         ichVeb79K1+y2CAHEg+82qDO5dR5u6I5X9dk9kGBwXYLwYEyT0OPG26dlfkWPcZS9T2O
+         YAeTVn0911eWr3dipQOX4DI+HINKQqi6w81LT45GFjjy8txJ+Ysl0UnldLueXKco7RCB
+         2FTXYltWhpNVXq9wB252QWazJgDXOGZekYyxeJIH8b0NFxBgPyuvDkJCV+ZINVxBCtfd
+         2DOA==
+X-Gm-Message-State: AJIora+E0Cln82mkgLJHWt/NXLbpw/cY7o496z6Z4XxvzfcBTTx7/UVL
+        Ca8lBVvmm81IAe5d6c/ph2+x+g==
+X-Google-Smtp-Source: AGRyM1tidyuJCOv8Uj1BQeFWMBbMfOUWZX4rihIsipS5RQyymofgyi9C9s3ST1Lt141G6PI29UmMTQ==
+X-Received: by 2002:a17:903:22d0:b0:16b:f798:1cff with SMTP id y16-20020a17090322d000b0016bf7981cffmr29238976plg.23.1658178355875;
+        Mon, 18 Jul 2022 14:05:55 -0700 (PDT)
+Received: from ?IPV6:2401:4900:1f3b:709e:6fec:df37:6562:5a80? ([2401:4900:1f3b:709e:6fec:df37:6562:5a80])
+        by smtp.gmail.com with ESMTPSA id c17-20020aa79531000000b0051bbe085f16sm9692272pfp.104.2022.07.18.14.05.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 18 Jul 2022 14:05:55 -0700 (PDT)
+Message-ID: <056cc963-4cf4-8588-f75c-e4530aeb6220@linaro.org>
+Date:   Tue, 19 Jul 2022 02:35:50 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ffb31b6f-8ed3-e890-976d-64a48478d404@quicinc.com>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH v3 1/4] dt-bindings: leds: qcom-lpg: Add compatible for
+ PM660L LPG block
+Content-Language: en-US
+To:     Marijn Suijten <marijn.suijten@somainline.org>,
+        phone-devel@vger.kernel.org, Pavel Machek <pavel@ucw.cz>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-leds@vger.kernel.org,
+        Rob Herring <robh@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20220511190718.764445-1-marijn.suijten@somainline.org>
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+In-Reply-To: <20220511190718.764445-1-marijn.suijten@somainline.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jul 18, 2022 at 12:57:09PM -0700, Anjelique Melendez wrote:
-> 
-> 
-> On 7/14/2022 4:48 AM, Krzysztof Kozlowski wrote:
-> > On 13/07/2022 21:33, Anjelique Melendez wrote:
-> >> From: David Collins <quic_collinsd@quicinc.com>
-> >>
-> >> Update the description of "reg" property to add the PON_PBS base
-> >> address along with PON_HLOS base address.  Also add "reg-names"
-> >> property description.
-> >>
-> >> Signed-off-by: David Collins <quic_collinsd@quicinc.com>
-> >> Signed-off-by: Anjelique Melendez <quic_amelende@quicinc.com>
-> >> ---
-> >>  Documentation/devicetree/bindings/power/reset/qcom,pon.yaml | 73 ++++++++++++++++++++++++++++--
-> >>  1 file changed, 69 insertions(+), 4 deletions(-)
-> >>
-> >> diff --git a/Documentation/devicetree/bindings/power/reset/qcom,pon.yaml b/Documentation/devicetree/bindings/power/reset/qcom,pon.yaml
-> >> index 353f155d..562fe308 100644
-> >> --- a/Documentation/devicetree/bindings/power/reset/qcom,pon.yaml
-> >> +++ b/Documentation/devicetree/bindings/power/reset/qcom,pon.yaml
-> >> @@ -15,18 +15,26 @@ description: |
-> >>  
-> >>    This DT node has pwrkey and resin as sub nodes.
-> >>  
-> >> -allOf:
-> >> -  - $ref: reboot-mode.yaml#
-> >> -
-> >>  properties:
-> >>    compatible:
-> >>      enum:
-> >>        - qcom,pm8916-pon
-> >>        - qcom,pms405-pon
-> >>        - qcom,pm8998-pon
-> >> +      - qcom,pmk8350-pon
-> >>  
-> >>    reg:
-> >> -    maxItems: 1
-> >> +    description: |
-> >> +      Specifies the SPMI base address for the PON (power-on) peripheral.  For
-> >> +      PMICs that have the PON peripheral (GEN3) split into PON_HLOS and PON_PBS
-> >> +      (e.g. PMK8350), this can hold addresses of both PON_HLOS and PON_PBS
-> >> +      peripherals.  In that case, the PON_PBS address needs to be specified to
-> >> +      facilitate software debouncing on some PMIC.
-> > 
-> > You miss here min and maxItems
-> ACK
-> > 
-> >> +
-> >> +  reg-names:
-> >> +    description: |
-> >> +      For PON GEN1 and GEN2, it should be "pon". For PON GEN3 it should include
-> >> +      "hlos" and optionally "pbs".
-> > 
-> > Skip description. You miss here min and maxItems.
-> > 
-> > See
-> > https://elixir.bootlin.com/linux/v5.19-rc6/source/Documentation/devicetree/bindings/clock/samsung,exynos7-clock.yaml#L57
-> > for examples.
-> ACK
-> > 
-> > 
-> >>  
-> >>    pwrkey:
-> >>      type: object
-> >> @@ -42,6 +50,63 @@ required:
-> >>  
-> >>  unevaluatedProperties: false
-> >>  
-> >> +allOf:
-> >> +  - $ref: reboot-mode.yaml#
-> >> +  - if:
-> >> +      properties:
-> >> +        compatible:
-> >> +          contains:
-> >> +            const: qcom,pm8916-pon
-> >> +    then:
-> >> +      properties:
-> >> +        reg:
-> >> +          maxItems: 1
-> >> +        reg-names:
-> >> +          items:
-> >> +            - const: pon
-> >> +
-> >> +  - if:
-> >> +      properties:
-> >> +        compatible:
-> >> +          contains:
-> >> +            const: qcom,pms405-pon
-> >> +    then:
-> >> +      properties:
-> >> +        reg:
-> >> +          maxItems: 1
-> >> +        reg-names:
-> >> +          items:
-> >> +            - const: pon
-> >> +
-> >> +  - if:
-> >> +      properties:
-> >> +        compatible:
-> >> +          contains:
-> >> +            const: qcom,pm8998-pon
-> >> +    then:
-> >> +      properties:
-> >> +        reg:
-> >> +          maxItems: 1
-> >> +        reg-names:
-> >> +          items:
-> >> +            - const: pon
-> > 
-> > No clue why you made three if statements. This is one if for all three
-> > variants.
-> > 
-> Sorry about that was not sure how to combine the if statements originally.
-> Found that you could do:
-> 
-> - if:
->       properties:
->         compatible:
->           contains:
->             enum:
->               - qcom,pm8916-pon
->               - qcom,pms405-pon
->               - qcom,pm8998-pon
->     then:
->      ...
-> 
-> I was wondering if for the "qcom,pmk8350-pon" compatible would you rather
-> have the if statement the way it is or have it follow the same pattern as
-> above i.e.
-> 
-> contains:
->   const: qcom,pmk8350-pon
-> 
-> vs
-> 
-> contains:
->   enum:
->     - qcom,pmk8350-pon
 
-The former. If only 1 possibility, use 'const'.
+On 5/12/22 12:37 AM, Marijn Suijten wrote:
+> Document the availability of an LPG configuration for the PM660L PMIC in
+> the Qualcomm Light Pulse Generator driver.
+>
+> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+> Acked-by: Rob Herring <robh@kernel.org>
+> ---
+>   Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml | 1 +
+>   1 file changed, 1 insertion(+)
+>
+> diff --git a/Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml b/Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml
+> index 409a4c7298e1..cd02811583ec 100644
+> --- a/Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml
+> +++ b/Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml
+> @@ -17,6 +17,7 @@ description: >
+>   properties:
+>     compatible:
+>       enum:
+> +      - qcom,pm660l-lpg
+>         - qcom,pm8150b-lpg
+>         - qcom,pm8150l-lpg
+>         - qcom,pm8350c-pwm
 
-Rob
+
+This patch seems to have slipped through the cracks, as running a
+
+'make dtbs_check' currently on linux-next tip causes the following issue:
+
+arch/arm64/boot/dts/qcom/sdm630-sony-xperia-ganges-kirin.dtb:0:0: 
+/soc/spmi@800f000/pmic@3/lpg@b100:
+   failed to match any schema with compatible: ['qcom,pm660l-lpg']
+
+If it helps:
+
+Reviewed-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+
+
+Thanks.
+
