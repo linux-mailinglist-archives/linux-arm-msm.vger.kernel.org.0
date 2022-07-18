@@ -2,137 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4201A5782C1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Jul 2022 14:51:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9DD49578333
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Jul 2022 15:09:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232986AbiGRMvx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 Jul 2022 08:51:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42570 "EHLO
+        id S235325AbiGRNJT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 Jul 2022 09:09:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33388 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234520AbiGRMvw (ORCPT
+        with ESMTP id S235411AbiGRNJN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 Jul 2022 08:51:52 -0400
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1477222AD
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Jul 2022 05:51:51 -0700 (PDT)
-Received: by mail-lj1-x22b.google.com with SMTP id a10so13461428ljj.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Jul 2022 05:51:51 -0700 (PDT)
+        Mon, 18 Jul 2022 09:09:13 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E87C12ACF
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Jul 2022 06:09:07 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id u19so10386752lfs.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Jul 2022 06:09:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=OJXhbwSqMRATHVRajJolwvgYLJ2CSrmgUASy2N9nxn8=;
-        b=mqmAkpdliFx1VG4eVEkqivQ0O5+4lFFFY6ty+unhLqXCJd+T2+xPCH/MP/2yp37gCn
-         DUvLrM+auHbrDLN7eNYRRDRma9wrZkzYakm/1lB2UqljPpO4uncp72NdAFdXXZSoZk4D
-         LCz4M6BHiFr5j/Q5TOsiGo5GDC0dHwnBv88pfuGZQK/+iUb64N0W8B9O8sgpht772JUm
-         482uB14eVYQYCoNrShwliyCX0ReprSHm9dVVkoPIeLI47lPM3rudeUT9fhfnb1gdCd+I
-         90R/qQI4U0rzdQ6NztPYUFnMeSUlTqSo1lZ5MXs4w+U869QB3lgG+DHHqWwQceAh6Ruz
-         UajQ==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=BOiXRJ89xuD3QarsVl3RRpR7eGEZVIxWI2G1dcCUd2E=;
+        b=a6pHOAo7dTkZI8LBo4pVDo9fnnDq9z0Hu87RvPLGN6RQBbXW8JHX8ipc612pGM5UeJ
+         9ZS9Xjx2blc/9QoWcyWzKSB8fd537aKctk6dJHumx44WxPk7ncljqMYxrT4t5XYipuvl
+         oBRjiEMxx+us9dO1qKpD5QxSLDTWLbQS/xIZI/sixyjaJZoMVzt46HOvnKlQpYBtvvHb
+         +29om5kre7KopOB9FUbJ4oVp5JFExnjg8edzv9h3Rem8am/n+npC220koLFB7zwcQ1au
+         vTAxedzz6J5SPqL2VVGfc3DMLWYp4dyTp4sw+S+LVtX5T4lc3sp665NHmiV3tXE27oVS
+         5+Iw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=OJXhbwSqMRATHVRajJolwvgYLJ2CSrmgUASy2N9nxn8=;
-        b=hkXN08IR2zB0sH4TDV56pRvbIuQe04IxwTh2jwYXQHQsT+knZQptisYcuYVBdZUNyA
-         oCSHQxy1lo60+S8F7vKMMkdbkhHI24Qnc5ZzG5BE3N681A0qEVFmAK5hXVVnb6Ss8Vac
-         Sst43le4Gb2uQsfFAiYnMZQOIlzAztU+SKo5zbYIBsOmsSHkQpKh7dqL6erhJEKkcvCk
-         uEeAM21hvaDtXLtiCI0Lh/i0aNc9Kq3uBd8CbWu60pdqH76gBrsBCb4z1SZ1MiWcFDgr
-         OftuLS+NeH780VuAfd21SWNnCgjoAmSbVkQ9yrm81xViWOSz7BeTO2Mim3e11PIOoNIo
-         qiUw==
-X-Gm-Message-State: AJIora+cADOooTN3Rvi9tkZBnzZVi4HBlwrAgB3Ku7Y/LgCxhbZX0+qi
-        18j+++7bPeRB5BskTU0IN6V4BeulQctyaMxOa0g7Ew==
-X-Google-Smtp-Source: AGRyM1vCGpXByC4iMeBNORjehfb1nd7xOZbX1LOKXrEjLaS4H1ppLA2vxAfTsdoR7d0IDMEgaopM9fKiNux+UCagSPE=
-X-Received: by 2002:a2e:968c:0:b0:25d:b5b1:9c8c with SMTP id
- q12-20020a2e968c000000b0025db5b19c8cmr2865910lji.300.1658148710042; Mon, 18
- Jul 2022 05:51:50 -0700 (PDT)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=BOiXRJ89xuD3QarsVl3RRpR7eGEZVIxWI2G1dcCUd2E=;
+        b=QlNTDN/vB+Qc8cbw+HbKEBCpmJd8IS0Lv+ZlTHKO86qvahOYQiCpPtmBM3vT73Yfix
+         DCHTAl3AE1/uQpQS5u1M0KnUVBmD1SxOJECfk5qjmftVOsaq2dzo02VrloTQX3MidyTJ
+         bCaxVz/jy78Wwt/S+YwTwTxGgFS4yLRMzwdV5iHzATmWSG53ux+RhRyABX98HDbr5jbF
+         FFMXtBLO9+oSxYPmUp04sDqPQ4i16isUy2zlz1biQTI63aHRZXLQhUu7pG55HmMAIa7N
+         HtRBLJGSyeVmy1xzeyMd4zO125LdmA+u7Yt+hB5kSj0qV9t9TZejV5L2cXierLoai6pB
+         LBAg==
+X-Gm-Message-State: AJIora9QPGn8DYQeZn2u6YtvapJzCYCXTa4iIAfd113NtDMvCE/vqqTd
+        Crpn8Ch/i4theG3BocS3TtheYA==
+X-Google-Smtp-Source: AGRyM1tpw4Sy5WpV1Ji1GnRm8jRqr6MFhp+pAk2JslLmag6yX1UfOOwWyNNTnIFCQPWnBF6wuZzQFA==
+X-Received: by 2002:a05:6512:3a8d:b0:489:da0d:df25 with SMTP id q13-20020a0565123a8d00b00489da0ddf25mr15865071lfu.453.1658149745920;
+        Mon, 18 Jul 2022 06:09:05 -0700 (PDT)
+Received: from [192.168.115.193] (89-162-31-138.fiber.signal.no. [89.162.31.138])
+        by smtp.gmail.com with ESMTPSA id be39-20020a05651c172700b0025c04962b5dsm2098864ljb.139.2022.07.18.06.09.04
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 18 Jul 2022 06:09:05 -0700 (PDT)
+Message-ID: <abf9d787-d7a8-d202-560e-6c424f6a63f7@linaro.org>
+Date:   Mon, 18 Jul 2022 15:09:04 +0200
 MIME-Version: 1.0
-References: <20220514215424.1007718-1-bhupesh.sharma@linaro.org>
- <20220514215424.1007718-7-bhupesh.sharma@linaro.org> <Yr4psYiCCbi15RMe@builder.lan>
- <772dc5d2-c3b2-685b-3a38-b86e8877424a@linaro.org>
-In-Reply-To: <772dc5d2-c3b2-685b-3a38-b86e8877424a@linaro.org>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Mon, 18 Jul 2022 14:51:13 +0200
-Message-ID: <CAPDyKFpUpvHWMZmU0RxLAoFQG7RzOnqvTQPQBOm0s5MkkMHChw@mail.gmail.com>
-Subject: Re: [PATCH v2 6/6] arm64: dts: qcom: ipq8074: Fix 'max-frequency'
- value for sdhci node
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, bhupesh.linux@gmail.com,
-        linux-kernel@vger.kernel.org, robh@kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [RESEND PATCH 1/4] dt-bindings: qcom: Document bindings for new
+ msm8916-samsung-e2015 devices
+Content-Language: en-US
+To:     "Lin, Meng-Bo" <linmengbo0689@protonmail.com>,
+        devicetree@vger.kernel.org
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Nikita Travkin <nikita@trvn.ru>,
+        ~postmarketos/upstreaming@lists.sr.ht
+References: <20220715102055.3844-1-linmengbo0689@protonmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220715102055.3844-1-linmengbo0689@protonmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 18 Jul 2022 at 10:47, Bhupesh Sharma <bhupesh.sharma@linaro.org> wrote:
->
-> On 7/1/22 4:24 AM, Bjorn Andersson wrote:
-> > On Sat 14 May 16:54 CDT 2022, Bhupesh Sharma wrote:
-> >
-> >> Since the Qualcomm sdhci-msm device-tree binding has been converted
-> >> to yaml format, 'make dtbs_check' reports issues with
-> >> 'max-frequency' value for ipq8074 sdhci node:
-> >>
-> >>   arch/arm64/boot/dts/qcom/ipq8074-hk01.dtb: mmc@7824900:
-> >>    max-frequency:0:0: 384000000 is greater than the maximum of 200000000
-> >>
-> >> Fix the same.
-> >>
-> >> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> >> Cc: Rob Herring <robh@kernel.org>
-> >> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> >> ---
-> >>   arch/arm64/boot/dts/qcom/ipq8074.dtsi | 2 +-
-> >>   1 file changed, 1 insertion(+), 1 deletion(-)
-> >>
-> >> diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-> >> index ab2a1e7955b5..b2d71af9b419 100644
-> >> --- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-> >> +++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-> >> @@ -388,7 +388,7 @@ sdhc_1: mmc@7824900 {
-> >>                               <&gcc GCC_SDCC1_APPS_CLK>,
-> >>                               <&xo>;
-> >>                      clock-names = "iface", "core", "xo";
-> >> -                    max-frequency = <384000000>;
-> >> +                    max-frequency = <200000000>;
-> > This might match the binding, but someone put 384000000 there for a
-> > reason. Perhaps the binding needs to be updated instead?
->
-> I was waiting for getting access to ipq8074 reference manual / documentation.
-> I double-checked and it seems SDCC1 on this SoC does support a max frequency
-> of 384 MHz which is strange as the SDCC2 supports 200 MHz as max frequency
-> instead.
+On 15/07/2022 12:21, Lin, Meng-Bo wrote:
+> Document the new samsung,e5/e7/grandmax device tree bindings used in their
+> device trees.
+> 
+> Signed-off-by: Lin, Meng-Bo <linmengbo0689@protonmail.com>
 
-I guess it depends on what the property is being used for from the mmc
-host driver perspective. So, to answer the question, we probably need
-to look at the code in the host driver to best understand what to do
-here.
+Sorry, it's confusing. There was a v1. I asked for changes Then there
+was a v2.
 
->
-> Also the eMMC and MMC controllers on other SoCs (i.MX etx( usually support only
-> a max frequency of 200 MHz, so may be we need an exceptional addition to the
-> binding documentation here.
->
-> @Ulf - what's your view on updating the binding documentation here? I can
-> send a v3 accordingly.
+...and now is resend of v1, so you decided not to implement changes.
 
-The point with the property is to let host controllers specify whether
-there is an upper limit of the frequency that it can support. No
-matter what, the mmc core will not use a frequency greater than stated
-by the eMMC/SD/SDIO specs.
+Send v3, with all changes applied or keep discussion going.
 
-For eMMC, 200MHz is the maximum frequency.
-
-For SD/SDIO cards, the SDR104 mode has 208MHz. So it seems like we
-need an update to the binding, no matter what. :-)
-
-I have no strong opinions around this, but perhaps just raising the
-limit of the binding to cover the qcom case makes best sense.
-
-Kind regards
-Uffe
+Best regards,
+Krzysztof
