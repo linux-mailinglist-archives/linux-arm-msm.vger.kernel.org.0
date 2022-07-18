@@ -2,71 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 831E6577C28
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Jul 2022 09:06:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9D5E3577C3B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Jul 2022 09:15:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233736AbiGRHGh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 Jul 2022 03:06:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42776 "EHLO
+        id S230033AbiGRHPv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 Jul 2022 03:15:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47128 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233059AbiGRHGe (ORCPT
+        with ESMTP id S229826AbiGRHPv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 Jul 2022 03:06:34 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D19DD101EF
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Jul 2022 00:06:33 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id p4so6568386wms.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Jul 2022 00:06:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=ZI+psl62KRHu+/xwUEa944NIpr8bwJMp0OVmnA0Tjtw=;
-        b=iVQrWs3MRYym3WpQlxcZbyUTbB9NgDt540mGZaeASrif4xJJL0ZP16Gs+toxe7etRI
-         elH6zhBeYGG0nIgbpXOGPXQpHNTxrE5ylPKniMAJduz9p3niY2iqxrc+r2rHmA1QUoJx
-         AsQ5F8jh9xxgn+fJFqhKThhEh/XpE78Z4mWKFskKXGhogvOxOM67Sf8qFCgjgJgLPey9
-         Adlz81DQt6k/g1/kfkp5VkC5KczOL8/CTFOlFVihAO8ijGM88Wo9zDoqu2t8IAVUAP9u
-         YJiGmHmOqAnlo+R+8m4PL/UvAxoOykmx29qCuJsjKlK9bIZ9Z5AQKuvnJPAjFbAR5NKa
-         cxkg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=ZI+psl62KRHu+/xwUEa944NIpr8bwJMp0OVmnA0Tjtw=;
-        b=QuUJEI7r8lJdTs45Pa+YKGceHJniGFWRPHY3phCXG97VcGb3lXX0uuqr0OXjpbx1U8
-         oFd4ecgw8QDqcIbgYaqHfyiYD1bZGa5GETMG3B6b4W9QSbCitT5i1xx0uhpQSKSJFcYJ
-         1PFeGzJTcUmMkaUAw2Peo32bnzi/Op/OVDII+1eEzgxW/ydLKDl+VXbrvZM/p9lFJJ5/
-         h4WWAZKisPeaxHzD+2OKZeI/H5Bx7uycu0eixAhHxxiIYItDAkI0semahXMlt5TVkMP0
-         QuHJIaIC44x6RHGBf9EWXICbKbDgNW42+g/Dn8nGBqqtrGwc8K8k2GhER2FyYDMVrGe4
-         av2A==
-X-Gm-Message-State: AJIora+9ChzHv9lhJAy8Ne1Fo6RFBU1HWNVDuXLn9GF56v3xRXL09GAl
-        YMA4aZPHXkLp9QScoyN9SMgFMg==
-X-Google-Smtp-Source: AGRyM1saJthbQ+1R+t0bpM3h/3M+zTnIoBp23gV23NDFQGiwJecHu1D+2hA54oDOtG4e1bYSU71yoQ==
-X-Received: by 2002:a05:600c:1c88:b0:3a3:10b6:e844 with SMTP id k8-20020a05600c1c8800b003a310b6e844mr10970188wms.155.1658127992443;
-        Mon, 18 Jul 2022 00:06:32 -0700 (PDT)
-Received: from linaro.org ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id z5-20020a5d6405000000b0021b966abc19sm9914954wru.19.2022.07.18.00.06.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 Jul 2022 00:06:31 -0700 (PDT)
-Date:   Mon, 18 Jul 2022 10:06:30 +0300
-From:   Abel Vesa <abel.vesa@linaro.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH] remoteproc: qcom: q6v5: Use _clk_get_optional for
- aggre2_clk
-Message-ID: <YtUGdmyUoMc3Hro1@linaro.org>
-References: <20220714104309.4111334-1-abel.vesa@linaro.org>
- <YtOHOptMSAzHfm7a@builder.lan>
+        Mon, 18 Jul 2022 03:15:51 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC8C111804;
+        Mon, 18 Jul 2022 00:15:50 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 5C9A66134B;
+        Mon, 18 Jul 2022 07:15:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E24B4C341C0;
+        Mon, 18 Jul 2022 07:15:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1658128549;
+        bh=Z2cmY8+eKqIV7mFoiE72EWO95/pjIwP9a1crVM1liS8=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+        b=NaY8xlRcwPnM+zohaXrpoBcxanhOI1nvQuSyg/VK+e4A0wZ2Nuias53yuUxB4xNrH
+         fj5dbm3zxoTXbY4W2y0yHDRABf2GvRwOdtFCy4P9swUIFMlsqCNBPKfrQLcbla6wNX
+         PgOJ8V3L9ruzZEQV6HBrVre7SJBPUFj39+IboOS/Z7Cikn67hJ0RtNb/ZP3BWpfHBb
+         9gDrX23ky5OSKysC3qrmbS0mG2LrKslm1MrvvdCUUjfOCFKFfA89bV9i0ae/0jwBVP
+         VGVWxSVsOxBzJl7p34+Yt4R1F3mXPIE6Pa1Sv8+ReOrPVXxGqwm03kVL5kzuXv83px
+         5NHGKmKA0qsdA==
+Message-ID: <91613bc8-8a9e-00ed-71c9-ebf4eabed396@kernel.org>
+Date:   Mon, 18 Jul 2022 10:15:44 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <YtOHOptMSAzHfm7a@builder.lan>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+Subject: Re: [PATCH v3 0/5] Add interconnect support for SM6350
+Content-Language: en-US
+To:     Luca Weiss <luca.weiss@fairphone.com>,
+        linux-arm-msm@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, Odelu Kukatla <okukatla@codeaurora.org>
+References: <20220525144404.200390-1-luca.weiss@fairphone.com>
+ <CLG9OKW0OMLX.2XWU1ZHFRR9RQ@otso>
+From:   Georgi Djakov <djakov@kernel.org>
+In-Reply-To: <CLG9OKW0OMLX.2XWU1ZHFRR9RQ@otso>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -74,29 +58,22 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22-07-16 22:51:22, Bjorn Andersson wrote:
-> On Thu 14 Jul 05:43 CDT 2022, Abel Vesa wrote:
->
-> > There is devm_clk_get_optional now, so lets drop the has_aggre2_clk
-> > from adsp_data.
->
-> I like this patch, but for the history, could you please provide a
-> reason why you would like to do this?
 
-Sure, I'll reword it and resend.
+On 15.07.22 16:34, Luca Weiss wrote:
+> Hi all,
+> 
+> On Wed May 25, 2022 at 4:43 PM CEST, Luca Weiss wrote:
+>> This series adds interconnect support for the various NoCs found on
+>> sm6350.
+>>
+>> A more special modification is allowing child NoC devices, like done for
+>> rpm-based qcm2290 which was already merged, but now for rpmh-based
+>> interconnect.
+> 
+> any feedback on the two interconnect patches and the dts patch?
+> Georgi? Bjorn?
+
+I merged the interconnect patches.
 
 Thanks,
-Abel
-
->
-> Regards,
-> Bjorn
->
-> >
-> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> > ---
-> >  drivers/remoteproc/qcom_q6v5_pas.c | 41 +++++-------------------------
-> >  1 file changed, 7 insertions(+), 34 deletions(-)
-> >
-
-...
+Georgi
