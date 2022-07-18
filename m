@@ -2,127 +2,299 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B9877577CCB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Jul 2022 09:49:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0E147577CF2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Jul 2022 09:58:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231937AbiGRHtq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 Jul 2022 03:49:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40012 "EHLO
+        id S233315AbiGRH61 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 Jul 2022 03:58:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44618 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229815AbiGRHtq (ORCPT
+        with ESMTP id S232898AbiGRH60 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 Jul 2022 03:49:46 -0400
-Received: from extserv.mm-sol.com (ns.mm-sol.com [37.157.136.199])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0BD2C1209B;
-        Mon, 18 Jul 2022 00:49:45 -0700 (PDT)
-Received: from [192.168.1.7] (unknown [195.24.90.54])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
-        (Client did not present a certificate)
-        (Authenticated sender: svarbanov@mm-sol.com)
-        by extserv.mm-sol.com (Postfix) with ESMTPSA id D7E08D2E3;
-        Mon, 18 Jul 2022 10:49:42 +0300 (EEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mm-sol.com; s=201706;
-        t=1658130583; bh=xf8vuKL8G7ik7cebVncZ887DV9yRiKhEp9uMoJOL7mo=;
-        h=Date:Subject:To:Cc:From:From;
-        b=qVNX5bIxsn/TWs9nKnIXMetNespY3j9sEPFdb8ev/CfTHM6Fr0N06oHLECN8woVLA
-         PLnt1wUcdVAfyHKgPJt8XwMMIUS0ucWT7efK2CDa1AaNvpQrIH4mwfGk2FiH7UMu2d
-         DtBYD+ni9LJl16dvcWetjMMVt8RrBbmRRd428NEV7pLCT4IPNwFwU47XQyCitpYekP
-         DrGXhCtnFW4jhm7NzyJeHW2e3oW/8z4RMzDQ1fVA0Rp29ZIqDIPkK5M9vN+N1Cv3Wr
-         jxKtJvjUF8SQwcnrAXWMdMD0DcjagGloo6fAhxMrwQMNGhSais0ulbtRjFtEdLS6hh
-         jA5fpMtfnOK4w==
-Message-ID: <aa11b2ec-7196-7423-151c-1797966d0cd2@mm-sol.com>
-Date:   Mon, 18 Jul 2022 10:49:40 +0300
+        Mon, 18 Jul 2022 03:58:26 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71F19186C8;
+        Mon, 18 Jul 2022 00:58:25 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 023FBB80860;
+        Mon, 18 Jul 2022 07:58:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FF40C341C8;
+        Mon, 18 Jul 2022 07:58:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1658131102;
+        bh=9VkCz/bfnf/qGq2/1Oq0qquI0jn6/NXBPsVwJD7f5nI=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+        b=qoFOIwraAytdTjsX1H90InvZK44DZvKpq4U2Nq1XWousJUEXvVlG/5C9bJQUZjdiy
+         r5ebGrArIVD7qCjVS7hnUKj4H427U7b7HVkZPJeKoFm22l1V1IgaSXU7J88BqxjM2O
+         uOLG2z1UfZZb5tQoFO+cuzFtk4LvLQeMW6OBmHzehlRidUu3AnTUoSb9Coxgwfamzv
+         XKWMXngIbmjOFUPjTMWeQ6oJ61hwE7j/z/RIjg8RuP1zNHGfN1NCr9KKZ+1VK8LwDT
+         DPwEEjFLUs5AA2DDG4cXENnMOEvtXTKvl20pSqtvuKapiYxe16L7jgvT5vLzS4Xpbe
+         tpnJimxUPfilw==
+Message-ID: <22495dc6-0d55-70d0-d9f3-bcfafcae62d1@kernel.org>
+Date:   Mon, 18 Jul 2022 10:58:16 +0300
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Subject: Re: [PATCH v2 0/8] PCI: qcom: Add support for SC8280XP and SA8540P
+Subject: Re: [PATCH v3 5/5] arm64: dts: qcom: sm6350: Add interconnect support
 Content-Language: en-US
-To:     Johan Hovold <johan+linaro@kernel.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+To:     Luca Weiss <luca.weiss@fairphone.com>,
+        linux-arm-msm@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20220714071348.6792-1-johan+linaro@kernel.org>
-From:   Stanimir Varbanov <svarbanov@mm-sol.com>
-In-Reply-To: <20220714071348.6792-1-johan+linaro@kernel.org>
-Content-Type: text/plain; charset=UTF-8
+References: <20220525144404.200390-1-luca.weiss@fairphone.com>
+ <20220525144404.200390-6-luca.weiss@fairphone.com>
+From:   Georgi Djakov <djakov@kernel.org>
+In-Reply-To: <20220525144404.200390-6-luca.weiss@fairphone.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Johan,
+On 25.05.22 17:44, Luca Weiss wrote:
+> Add all the different NoC providers that are found in SM6350 and
+> populate different nodes that use the interconnect properties.
+> 
+> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> ---
+> Changes since v2:
+> * none
+> 
+>   arch/arm64/boot/dts/qcom/sm6350.dtsi | 109 +++++++++++++++++++++++++++
+>   1 file changed, 109 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm6350.dtsi b/arch/arm64/boot/dts/qcom/sm6350.dtsi
+> index fb1a0f662575..119073f19285 100644
+> --- a/arch/arm64/boot/dts/qcom/sm6350.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm6350.dtsi
+> @@ -1,11 +1,13 @@
+>   // SPDX-License-Identifier: BSD-3-Clause
+>   /*
+>    * Copyright (c) 2021, Konrad Dybcio <konrad.dybcio@somainline.org>
+> + * Copyright (c) 2022, Luca Weiss <luca.weiss@fairphone.com>
+>    */
+>   
+>   #include <dt-bindings/clock/qcom,gcc-sm6350.h>
+>   #include <dt-bindings/clock/qcom,rpmh.h>
+>   #include <dt-bindings/gpio/gpio.h>
+> +#include <dt-bindings/interconnect/qcom,sm6350.h>
+>   #include <dt-bindings/interrupt-controller/arm-gic.h>
+>   #include <dt-bindings/mailbox/qcom-ipcc.h>
+>   #include <dt-bindings/power/qcom-rpmpd.h>
+> @@ -539,6 +541,10 @@ i2c0: i2c@880000 {
+>   				interrupts = <GIC_SPI 601 IRQ_TYPE_LEVEL_HIGH>;
+>   				#address-cells = <1>;
+>   				#size-cells = <0>;
+> +				interconnects = <&clk_virt MASTER_QUP_CORE_0 0 &clk_virt SLAVE_QUP_CORE_0 0>,
+> +						<&gem_noc MASTER_AMPSS_M0 0 &config_noc SLAVE_QUP_0 0>,
+> +						<&aggre1_noc MASTER_QUP_0 0 &clk_virt SLAVE_EBI_CH0 0>;
+> +				interconnect-names = "qup-core", "qup-config", "qup-memory";
+>   				status = "disabled";
+>   			};
+>   
+> @@ -552,6 +558,10 @@ i2c2: i2c@888000 {
+>   				interrupts = <GIC_SPI 603 IRQ_TYPE_LEVEL_HIGH>;
+>   				#address-cells = <1>;
+>   				#size-cells = <0>;
+> +				interconnects = <&clk_virt MASTER_QUP_CORE_0 0 &clk_virt SLAVE_QUP_CORE_0 0>,
+> +						<&gem_noc MASTER_AMPSS_M0 0 &config_noc SLAVE_QUP_0 0>,
+> +						<&aggre1_noc MASTER_QUP_0 0 &clk_virt SLAVE_EBI_CH0 0>;
+> +				interconnect-names = "qup-core", "qup-config", "qup-memory";
+>   				status = "disabled";
+>   			};
+>   		};
+> @@ -578,6 +588,10 @@ i2c6: i2c@980000 {
+>   				interrupts = <GIC_SPI 353 IRQ_TYPE_LEVEL_HIGH>;
+>   				#address-cells = <1>;
+>   				#size-cells = <0>;
+> +				interconnects = <&clk_virt MASTER_QUP_CORE_1 0 &clk_virt SLAVE_QUP_CORE_1 0>,
+> +						<&gem_noc MASTER_AMPSS_M0 0 &config_noc SLAVE_QUP_1 0>,
+> +						<&aggre2_noc MASTER_QUP_1 0 &clk_virt SLAVE_EBI_CH0 0>;
+> +				interconnect-names = "qup-core", "qup-config", "qup-memory";
+>   				status = "disabled";
+>   			};
+>   
+> @@ -591,6 +605,10 @@ i2c7: i2c@984000 {
+>   				interrupts = <GIC_SPI 354 IRQ_TYPE_LEVEL_HIGH>;
+>   				#address-cells = <1>;
+>   				#size-cells = <0>;
+> +				interconnects = <&clk_virt MASTER_QUP_CORE_1 0 &clk_virt SLAVE_QUP_CORE_1 0>,
+> +						<&gem_noc MASTER_AMPSS_M0 0 &config_noc SLAVE_QUP_1 0>,
+> +						<&aggre2_noc MASTER_QUP_1 0 &clk_virt SLAVE_EBI_CH0 0>;
+> +				interconnect-names = "qup-core", "qup-config", "qup-memory";
+>   				status = "disabled";
+>   			};
+>   
+> @@ -604,6 +622,10 @@ i2c8: i2c@988000 {
+>   				interrupts = <GIC_SPI 355 IRQ_TYPE_LEVEL_HIGH>;
+>   				#address-cells = <1>;
+>   				#size-cells = <0>;
+> +				interconnects = <&clk_virt MASTER_QUP_CORE_1 0 &clk_virt SLAVE_QUP_CORE_1 0>,
+> +						<&gem_noc MASTER_AMPSS_M0 0 &config_noc SLAVE_QUP_1 0>,
+> +						<&aggre2_noc MASTER_QUP_1 0 &clk_virt SLAVE_EBI_CH0 0>;
+> +				interconnect-names = "qup-core", "qup-config", "qup-memory";
+>   				status = "disabled";
+>   			};
+>   
+> @@ -615,6 +637,9 @@ uart9: serial@98c000 {
+>   				pinctrl-names = "default";
+>   				pinctrl-0 = <&qup_uart9_default>;
+>   				interrupts = <GIC_SPI 356 IRQ_TYPE_LEVEL_HIGH>;
+> +				interconnects = <&clk_virt MASTER_QUP_CORE_1 0 &clk_virt SLAVE_QUP_CORE_1 0>,
+> +						<&gem_noc MASTER_AMPSS_M0 0 &config_noc SLAVE_QUP_1 0>;
+> +				interconnect-names = "qup-core", "qup-config";
+>   				status = "disabled";
+>   			};
+>   
+> @@ -628,11 +653,62 @@ i2c10: i2c@990000 {
+>   				interrupts = <GIC_SPI 357 IRQ_TYPE_LEVEL_HIGH>;
+>   				#address-cells = <1>;
+>   				#size-cells = <0>;
+> +				interconnects = <&clk_virt MASTER_QUP_CORE_1 0 &clk_virt SLAVE_QUP_CORE_1 0>,
+> +						<&gem_noc MASTER_AMPSS_M0 0 &config_noc SLAVE_QUP_1 0>,
+> +						<&aggre2_noc MASTER_QUP_1 0 &clk_virt SLAVE_EBI_CH0 0>;
+> +				interconnect-names = "qup-core", "qup-config", "qup-memory";
+>   				status = "disabled";
+>   			};
+>   
+>   		};
+>   
+> +		config_noc: interconnect@1500000 {
+> +			compatible = "qcom,sm6350-config-noc";
+> +			reg = <0 0x01500000 0 0x28000>;
+> +			#interconnect-cells = <2>;
+> +			qcom,bcm-voters = <&apps_bcm_voter>;
+> +		};
+> +
+> +		system_noc: interconnect@1620000 {
+> +			compatible = "qcom,sm6350-system-noc";
+> +			reg = <0 0x01620000 0 0x17080>;
+> +			#interconnect-cells = <2>;
+> +			qcom,bcm-voters = <&apps_bcm_voter>;
+> +
+> +			clk_virt: interconnect-clk-virt {
+> +				compatible = "qcom,sm6350-clk-virt";
+> +				#interconnect-cells = <2>;
+> +				qcom,bcm-voters = <&apps_bcm_voter>;
+> +			};
+> +		};
+> +
+> +		aggre1_noc: interconnect@16e0000 {
+> +			compatible = "qcom,sm6350-aggre1-noc";
+> +			reg = <0 0x016e0000 0 0x15080>;
+> +			#interconnect-cells = <2>;
+> +			qcom,bcm-voters = <&apps_bcm_voter>;
+> +		};
+> +
+> +		aggre2_noc: interconnect@1700000 {
+> +			compatible = "qcom,sm6350-aggre2-noc";
+> +			reg = <0 0x01700000 0 0x1f880>;
+> +			#interconnect-cells = <2>;
+> +			qcom,bcm-voters = <&apps_bcm_voter>;
+> +
+> +			compute_noc: interconnect-compute-noc {
+> +				compatible = "qcom,sm6350-compute-noc";
+> +				#interconnect-cells = <2>;
+> +				qcom,bcm-voters = <&apps_bcm_voter>;
+> +			};
+> +		};
+> +
+> +		mmss_noc: interconnect@1740000 {
+> +			compatible = "qcom,sm6350-mmss-noc";
+> +			reg = <0 0x01740000 0 0x1c100>;
+> +			#interconnect-cells = <2>;
+> +			qcom,bcm-voters = <&apps_bcm_voter>;
+> +		};
+> +
+>   		ufs_mem_hc: ufs@1d84000 {
+>   			compatible = "qcom,sm6350-ufshc", "qcom,ufshc",
+>   				     "jedec,ufs-2.0";
+> @@ -933,6 +1009,10 @@ sdhc_2: sdhci@8804000 {
+>   				 <&gcc GCC_SDCC2_APPS_CLK>,
+>   				 <&rpmhcc RPMH_CXO_CLK>;
+>   			clock-names = "iface", "core", "xo";
+> +			interconnects = <&aggre2_noc MASTER_SDCC_2 0 &clk_virt SLAVE_EBI_CH0 0>,
+> +					<&gem_noc MASTER_AMPSS_M0 0 &config_noc SLAVE_SDCC_2 0>;
+> +			interconnect-names = "sdhc-ddr", "cpu-sdhc";
+> +
+>   			qcom,dll-config = <0x0007642c>;
+>   			qcom,ddr-config = <0x80040868>;
+>   			power-domains = <&rpmhpd 0>;
+> @@ -947,11 +1027,15 @@ sdhc2_opp_table: sdhc2-opp-table {
+>   				opp-100000000 {
+>   					opp-hz = /bits/ 64 <100000000>;
+>   					required-opps = <&rpmhpd_opp_svs_l1>;
+> +					opp-peak-kBps = <790000 131000>;
+> +					opp-avg-kBps = <50000 50000>;
+>   				};
+>   
+>   				opp-202000000 {
+>   					opp-hz = /bits/ 64 <202000000>;
+>   					required-opps = <&rpmhpd_opp_nom>;
+> +					opp-peak-kBps = <3190000 294000>;
+> +					opp-avg-kBps = <261438 300000>;
 
-Thank you for your work, especially for for the last three patches ;-)
+Just wondering where do these values come from? Are they from the downstream DT?
+The rest looks good to me.
 
-On 7/14/22 10:13, Johan Hovold wrote:
-> This series adds support for the PCIe controllers found on SC8280XP and
-> SA8540P.
-> 
-> Included are also three patches that clean up the way the driver handles
-> different IP revisions (e.g. by modelling optional clocks as being truly
-> optional).
-> 
-> These patches depend on the recently merged (but currently held off?)
-> PIPE clock series:
-> 
-> 	https://lore.kernel.org/all/20220608105238.2973600-1-dmitry.baryshkov@linaro.org/
-> 
-> as well as the about-to-be-merged MSI series (v17):
-> 
-> 	https://lore.kernel.org/all/20220707134733.2436629-6-dmitry.baryshkov@linaro.org/
-> 
-> Note that the final patch in the PIPE clock series is currently missing
-> from the pci/ctrl/qcom-pending branch:
-> 
-> 	https://lore.kernel.org/all/20220608105238.2973600-6-dmitry.baryshkov@linaro.org/
-> 
-> Johan
-> 
-> 
-> Changes in v2
->  - drop the two DT schema fixes which have been applied by Bjorn H and
->    squashed into the MSI v17 series by Dmitry, respectively
->  - rebase on pci/ctrl/qcom-pending (2022-07-14)
->  - fix compatible sort order (Krzysztof)
->  - amend commit message for first patch to clarify motivation
->    (Krzysztof)
->  - add acks and reviewed-by tags from Dmitry, Krzysztof, Mani and Rob
-> 
-> 
-> Johan Hovold (8):
->   dt-bindings: PCI: qcom: Enumerate platforms with single msi interrupt
->   dt-bindings: PCI: qcom: Add SC8280XP to binding
->   dt-bindings: PCI: qcom: Add SA8540P to binding
->   PCI: qcom: Add support for SC8280XP
->   PCI: qcom: Add support for SA8540P
->   PCI: qcom: Make all optional clocks optional
->   PCI: qcom: Clean up IP configurations
->   PCI: qcom: Sort device-id table
-> 
->  .../devicetree/bindings/pci/qcom,pcie.yaml    |  70 +++++++++-
->  drivers/pci/controller/dwc/pcie-qcom.c        | 121 +++++++-----------
->  2 files changed, 114 insertions(+), 77 deletions(-)
-> 
+Thanks,
+Georgi
 
-For the whole set:
+>   				};
+>   			};
+>   		};
+> @@ -1017,12 +1101,33 @@ dp_phy: dp-phy@88ea200 {
+>   			};
+>   		};
+>   
+> +		dc_noc: interconnect@9160000 {
+> +			compatible = "qcom,sm6350-dc-noc";
+> +			reg = <0 0x09160000 0 0x3200>;
+> +			#interconnect-cells = <2>;
+> +			qcom,bcm-voters = <&apps_bcm_voter>;
+> +		};
+> +
+>   		system-cache-controller@9200000 {
+>   			compatible = "qcom,sm6350-llcc";
+>   			reg = <0 0x09200000 0 0x50000>, <0 0x09600000 0 0x50000>;
+>   			reg-names = "llcc_base", "llcc_broadcast_base";
+>   		};
+>   
+> +		gem_noc: interconnect@9680000 {
+> +			compatible = "qcom,sm6350-gem-noc";
+> +			reg = <0 0x09680000 0 0x3e200>;
+> +			#interconnect-cells = <2>;
+> +			qcom,bcm-voters = <&apps_bcm_voter>;
+> +		};
+> +
+> +		npu_noc: interconnect@9990000 {
+> +			compatible = "qcom,sm6350-npu-noc";
+> +			reg = <0 0x09990000 0 0x1600>;
+> +			#interconnect-cells = <2>;
+> +			qcom,bcm-voters = <&apps_bcm_voter>;
+> +		};
+> +
+>   		usb_1: usb@a6f8800 {
+>   			compatible = "qcom,sm6350-dwc3", "qcom,dwc3";
+>   			reg = <0 0x0a6f8800 0 0x400>;
+> @@ -1051,6 +1156,10 @@ usb_1: usb@a6f8800 {
+>   
+>   			resets = <&gcc GCC_USB30_PRIM_BCR>;
+>   
+> +			interconnects = <&aggre2_noc MASTER_USB3 0 &clk_virt SLAVE_EBI_CH0 0>,
+> +					<&gem_noc MASTER_AMPSS_M0 0 &config_noc SLAVE_USB3 0>;
+> +			interconnect-names = "usb-ddr", "apps-usb";
+> +
+>   			usb_1_dwc3: usb@a600000 {
+>   				compatible = "snps,dwc3";
+>   				reg = <0 0x0a600000 0 0xcd00>;
 
-Acked-by: Stanimir Varbanov <svarbanov@mm-sol.com>
-
-
--- 
-regards,
-Stan
