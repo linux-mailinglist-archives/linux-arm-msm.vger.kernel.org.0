@@ -2,68 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1F0385788E1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Jul 2022 19:53:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 087CE5788F6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Jul 2022 19:56:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233607AbiGRRxm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 Jul 2022 13:53:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38652 "EHLO
+        id S234387AbiGRR4J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 Jul 2022 13:56:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40810 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233552AbiGRRxm (ORCPT
+        with ESMTP id S233435AbiGRR4I (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 Jul 2022 13:53:42 -0400
-Received: from mail-il1-f178.google.com (mail-il1-f178.google.com [209.85.166.178])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8ACE2D1F5;
-        Mon, 18 Jul 2022 10:53:40 -0700 (PDT)
-Received: by mail-il1-f178.google.com with SMTP id l11so4263725ilf.11;
-        Mon, 18 Jul 2022 10:53:40 -0700 (PDT)
+        Mon, 18 Jul 2022 13:56:08 -0400
+Received: from mail-il1-f170.google.com (mail-il1-f170.google.com [209.85.166.170])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A07327B31;
+        Mon, 18 Jul 2022 10:56:07 -0700 (PDT)
+Received: by mail-il1-f170.google.com with SMTP id o2so4982134ill.6;
+        Mon, 18 Jul 2022 10:56:07 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=lQmLMSCkQ0ST4dExxhb7qEHg2NYQluOVHKi1mQiZUuM=;
-        b=sWAKeaTyG+luA/eu3CTYEcci5gZ7P/Lm5EpZbnyaRGCleclAHc5LWPConjxY83CSN2
-         vFF/SE99JBMMbVvFo0UpZ/p86d0xt69XavwSztPfPhC2T3wIvoz2GFmtCbsgjhiLVs0H
-         sTywfWRq1PG65Qz3YuavmtTIPOugXbQ7KNAqbB8iuVQpB7zLnmKlTUuw0iy5dTpNr9vX
-         rZ3hp0r16Iai7DnVj2ImtUjS/pYi8uiu9Wfp2fFqhllJDhayXbeKzL656uEreiLejxJ0
-         hxSZ/9u/IH0qiV6maTTrz8wgfIoDqPDyYG55v6vXlz+oJ7alqp0sGUMBW0rj98ENB2r6
-         dx6A==
-X-Gm-Message-State: AJIora8Q1dvzRDVCmi88mX0lda+/Na3PZV2AVPbUwfUTnGOKszqUsK8D
-        sr6NTlUSrLIhWjRjMuR/KqEez8vvUw==
-X-Google-Smtp-Source: AGRyM1vSqLAowZJkSZ+cqSUI1FU1wlTg1E3QUAjAr/2girRrGXj9BFdQm0Pb/A1QWEvDZCk9KF7iSw==
-X-Received: by 2002:a05:6e02:1605:b0:2dc:6f75:3c0a with SMTP id t5-20020a056e02160500b002dc6f753c0amr13589558ilu.257.1658166820013;
-        Mon, 18 Jul 2022 10:53:40 -0700 (PDT)
+        bh=I/MwKhACUJLQ65w/8jKbJC5ad8kKFA2yw8hzpGalkIY=;
+        b=yff6hEhbFvwnF2RHv78RELxqSXj3qnILOacdyvO9k118Qve5GJCCnnfNIN6HbJ2b4T
+         Xr0TZKz2xhffLnNPEQh7poabhp/HADs2MFbJ8G174kb+rb4iDndSdqWzqfFFYVlGHeTx
+         Xuu4MQyDJiLwzzD6Tn9+wKu1Iq7NGinexpKT/cqb2URMMx/9lwTdnmOkOuuyT8jU0Xqb
+         UREbCu1iRGFQAU9lvOpvcxP3ZOMX8UNLb72xOQb8MOcMI8newXCocmgOSccHdzdBJuuG
+         MDmNVN+m3hb3s5y18FgyU9yneDIWyuF2erh6JqsixW3iIJTZPXnL4jGckE7fPIi+AHZw
+         gTow==
+X-Gm-Message-State: AJIora9IzJGqmXtmzAfRAS1MAp6yx/2lFpLJUHlqbjsGTe0HgoDlcW+p
+        /FxcE7Aze+8XkEYD37zvsckPiPLHqg==
+X-Google-Smtp-Source: AGRyM1tJ+f0CvbcrUje9rTcnR7svY3bdB2y2kaIvrbLzEehGWhODRuZe/y+ZBNT7p6Y19UZcaPyAUA==
+X-Received: by 2002:a92:b706:0:b0:2dc:c7e3:63fb with SMTP id k6-20020a92b706000000b002dcc7e363fbmr7913615ili.170.1658166966737;
+        Mon, 18 Jul 2022 10:56:06 -0700 (PDT)
 Received: from robh.at.kernel.org ([64.188.179.248])
-        by smtp.gmail.com with ESMTPSA id d8-20020a0566022be800b0067bc7ab0d9esm5595633ioy.53.2022.07.18.10.53.38
+        by smtp.gmail.com with ESMTPSA id q204-20020a6b2ad5000000b0067b876ed5e2sm6254416ioq.23.2022.07.18.10.56.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 Jul 2022 10:53:39 -0700 (PDT)
-Received: (nullmailer pid 3244030 invoked by uid 1000);
-        Mon, 18 Jul 2022 17:53:38 -0000
-Date:   Mon, 18 Jul 2022 11:53:38 -0600
+        Mon, 18 Jul 2022 10:56:06 -0700 (PDT)
+Received: (nullmailer pid 3248238 invoked by uid 1000);
+        Mon, 18 Jul 2022 17:56:04 -0000
+Date:   Mon, 18 Jul 2022 11:56:04 -0600
 From:   Rob Herring <robh@kernel.org>
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     freedreno@lists.freedesktop.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        devicetree@vger.kernel.org, Stephen Boyd <swboyd@chromium.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
+Cc:     Rob Herring <robh+dt@kernel.org>, Sean Paul <sean@poorly.run>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Sean Paul <sean@poorly.run>,
+        Stephen Boyd <swboyd@chromium.org>, devicetree@vger.kernel.org,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org
-Subject: Re: [PATCH v2 05/11] dt-bindings: display/msm: move qcom,sdm845-mdss
+        Daniel Vetter <daniel@ffwll.ch>,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, David Airlie <airlied@linux.ie>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>
+Subject: Re: [PATCH v2 06/11] dt-bindings: display/msm: move qcom,sc7180-mdss
  schema to mdss.yaml
-Message-ID: <20220718175338.GA3243949-robh@kernel.org>
+Message-ID: <20220718175604.GA3248180-robh@kernel.org>
 References: <20220710090040.35193-1-dmitry.baryshkov@linaro.org>
- <20220710090040.35193-6-dmitry.baryshkov@linaro.org>
+ <20220710090040.35193-7-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220710090040.35193-6-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220710090040.35193-7-dmitry.baryshkov@linaro.org>
 X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
         FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
         HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
@@ -74,15 +72,15 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, 10 Jul 2022 12:00:34 +0300, Dmitry Baryshkov wrote:
-> Move schema for qcom,sdm845-mdss from dpu-sdm845.yaml to mdss.yaml so
+On Sun, 10 Jul 2022 12:00:35 +0300, Dmitry Baryshkov wrote:
+> Move schema for qcom,sc7180-mdss from dpu-sc7180.yaml to mdss.yaml so
 > that the dpu file describes only the DPU schema.
 > 
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->  .../bindings/display/msm/dpu-sdm845.yaml      | 135 ++++-----------
->  .../devicetree/bindings/display/msm/mdss.yaml | 156 ++++++++++++++----
->  2 files changed, 160 insertions(+), 131 deletions(-)
+>  .../bindings/display/msm/dpu-sc7180.yaml      | 149 +++++-------------
+>  .../devicetree/bindings/display/msm/mdss.yaml |  45 +++++-
+>  2 files changed, 80 insertions(+), 114 deletions(-)
 > 
 
 Reviewed-by: Rob Herring <robh@kernel.org>
