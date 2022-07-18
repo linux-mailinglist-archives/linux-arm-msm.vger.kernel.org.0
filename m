@@ -2,255 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 49E8D5784C3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Jul 2022 16:05:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 271B8578565
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Jul 2022 16:29:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235701AbiGROFv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 Jul 2022 10:05:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33088 "EHLO
+        id S235392AbiGRO34 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 Jul 2022 10:29:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55248 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235257AbiGROFu (ORCPT
+        with ESMTP id S233050AbiGRO3z (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 Jul 2022 10:05:50 -0400
-Received: from mx.kernkonzept.com (serv1.kernkonzept.com [IPv6:2a01:4f8:1c1c:b490::2])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B34A3DF2A;
-        Mon, 18 Jul 2022 07:05:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=kernkonzept.com; s=mx1; h=Content-Transfer-Encoding:MIME-Version:References
-        :In-Reply-To:Message-Id:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:
-        Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-        Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-        List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=Xs7wzf2rdkIl6A79wivxfhKpQiSvS3qbi/7VpAMI+GM=; b=A+1D2R3BsYvLCh1qriPVhfKLw2
-        O9TvzgNHKn7j40ew1cjUhqZ1L1zcPV5i3d9ZfoM5Cu+B3SGCq2rSGvIPZD942u5u0ep8jIZeYvZ9K
-        vqm/hKDTXGr4sC4TaMxmYPgL216XBgzZD3L+PxGNB4lZgy8Y0BkPJqFqc27imCfKAILvwGBgJqABn
-        96KyZjfu0U0Qy5+zNdMO12UhyOsqladVEfYJ18PJsHhyjAIaSwhmh49MgXypWRLYLjQAaevIxV4MD
-        x4a7ugrMlJSPRhm+3bhPTi0BRK2/o6le7Zw4N1NbXMFTQsDviuJriAGg56HKvisekZrcZ0gRkUcEI
-        n+4YP+8w==;
-Received: from [10.22.3.24] (helo=kernkonzept.com)
-        by mx.kernkonzept.com with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim 4.94.2)
-        id 1oDRNV-008iC6-Ic; Mon, 18 Jul 2022 16:05:41 +0200
-From:   Stephan Gerhold <stephan.gerhold@kernkonzept.com>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Mon, 18 Jul 2022 10:29:55 -0400
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A7E612D37
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Jul 2022 07:29:54 -0700 (PDT)
+Received: by mail-lf1-x136.google.com with SMTP id a9so19617495lfk.11
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Jul 2022 07:29:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=SdZehk1n210f9GCoo82W/BVMyzaROr2Bk7Vfpvw3H0E=;
+        b=ZWTdX5+Xj99i0kA8aKH+lNbTrQyErYnNjwPptJZx3s2pNcc5ujAO8+ymVPt2x4sn94
+         HMKBteBSlfoRNvG8Z5rmCxll9ApdrommFssEoaVkhpF0IyBZt7GKJx/G/J7iohhzzKI5
+         xXYuUllSg8oecZ1RCOfwGI8O//nDW4HvR43CGGNFEVQUiXrntRO/eoYMCQU2XyOsOidJ
+         EHUVUl17uWhOmVjdngUPQnHiFYV1dKlv55fKXVcyLkIyvAZ3nlatqPDYoWARYCo1XkvI
+         gXSpcLB07Ut4v0IRkHZIS+Vxo9N9zGEdDalaVdxrESZh5/6ri25KCPx2JUstmeefPaNg
+         S2fQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=SdZehk1n210f9GCoo82W/BVMyzaROr2Bk7Vfpvw3H0E=;
+        b=0i4Gr+D2pwIgPdIDQYU1Kcq7cac9/R7mZEUyIVSlr38Z2EMo10Nztc09bFfcZNf0Tw
+         N9PfnGR5p+u0B+cEpBUpxP++ZAcGjH9MwwOLP/M6NqtN/DxqmoAcxT2P2j3RdEpgB/nM
+         A45LPMMIlgdNi33TiZIVSg3rqQXawOFhTVEZSu2Go6FMMyteGBPvTrlXrr+UE5FfzpEv
+         M04ACE7T9QyoaDUcOWp2oNXluMUjfe595Lq7O3pikqun2lZaopjiVzepRgSb24hFbFvN
+         QdGdYKnHPOFN9IqO+SPYrayRXjSemN+/AxjDGdh8Zs6oBfdbeCee3SBzBCBqu/CKlxaz
+         nJmA==
+X-Gm-Message-State: AJIora/FnyqR5THzZyfjzaGf+0VVtTFqYklaasZMAzscfO1pfPt7RRQi
+        Js8ZzKqVxuhPYvzCivilRmmRzg==
+X-Google-Smtp-Source: AGRyM1tnxT7Ovv7LRi1KIvF32ujsCio4cKwCpCdExcZ9yvypn5JB1oPrP+lU2Va9mOxYbVCc9qK0Dg==
+X-Received: by 2002:a05:6512:2606:b0:48a:27ab:cc10 with SMTP id bt6-20020a056512260600b0048a27abcc10mr8588957lfb.198.1658154592731;
+        Mon, 18 Jul 2022 07:29:52 -0700 (PDT)
+Received: from [192.168.115.193] (89-162-31-138.fiber.signal.no. [89.162.31.138])
+        by smtp.gmail.com with ESMTPSA id w8-20020a05651234c800b00489dedf1dcfsm2621269lfr.289.2022.07.18.07.29.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 18 Jul 2022 07:29:52 -0700 (PDT)
+Message-ID: <53d57eb3-c859-6f56-c104-4c05ebe737b8@linaro.org>
+Date:   Mon, 18 Jul 2022 16:29:51 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH 2/6] dt-bindings: firmware: scm: Add compatible for SM6375
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@somainline.org>,
+        ~postmarketos/upstreaming@lists.sr.ht
+Cc:     martin.botka@somainline.org,
+        angelogioacchino.delregno@somainline.org,
+        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Sireesh Kodali <sireeshkodali1@gmail.com>,
-        Luca Weiss <luca@z3ntu.xyz>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        Stephan Gerhold <stephan.gerhold@kernkonzept.com>
-Subject: [PATCH v2 5/5] remoteproc: qcom_q6v5_mss: Add support for MSM8909
-Date:   Mon, 18 Jul 2022 16:03:44 +0200
-Message-Id: <20220718140344.1831731-6-stephan.gerhold@kernkonzept.com>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20220718140344.1831731-1-stephan.gerhold@kernkonzept.com>
-References: <20220718140344.1831731-1-stephan.gerhold@kernkonzept.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20220716193257.456023-1-konrad.dybcio@somainline.org>
+ <20220716193257.456023-2-konrad.dybcio@somainline.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220716193257.456023-2-konrad.dybcio@somainline.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Port the initialization sequence necessary for booting the modem remote
-processor on the MSM8909 SoC from Qualcomm's msm-3.10 release [1].
-The sequence is actually similar to the existing one for MSM8996 and
-MSM8998 except that there is no separate QDSP6SS_MEM_PWR_CTL register
-and most of the "memories" are enabled at once instead of sequentially.
+On 16/07/2022 21:32, Konrad Dybcio wrote:
+> Add a SCM compatible for SM6375.
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+> ---
+>  Documentation/devicetree/bindings/firmware/qcom,scm.txt | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/firmware/qcom,scm.txt b/Documentation/devicetree/bindings/firmware/qcom,scm.txt
+> index b3f702cbed87..de7bb8b8d85e 100644
+> --- a/Documentation/devicetree/bindings/firmware/qcom,scm.txt
+> +++ b/Documentation/devicetree/bindings/firmware/qcom,scm.txt
+> @@ -35,6 +35,7 @@ Required properties:
+>   * "qcom,scm-sm8250"
+>   * "qcom,scm-sm8350"
+>   * "qcom,scm-sm8450"
+> + * "qcom,sm6375-scm"
 
-To reuse the existing code just insert some if statements where needed
-and add a configuration similar to the one from MSM8916.
+Uh, I think we wanted to keep it consistent with existing ones, didn't we?
 
-[1]: https://git.codelinaro.org/clo/la/kernel/msm-3.10/-/commit/56dcedc8dac8abff6b007f76a29430b2d0a44704
 
-Signed-off-by: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
----
-Changes in v2: None.
----
- drivers/remoteproc/qcom_q6v5_mss.c | 123 +++++++++++++++++++++--------
- 1 file changed, 90 insertions(+), 33 deletions(-)
-
-diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
-index af217de75e4d..31f561619b19 100644
---- a/drivers/remoteproc/qcom_q6v5_mss.c
-+++ b/drivers/remoteproc/qcom_q6v5_mss.c
-@@ -110,6 +110,9 @@
- #define QDSS_BHS_ON			BIT(21)
- #define QDSS_LDO_BYP			BIT(22)
- 
-+/* QDSP6v55 parameters */
-+#define QDSP6V55_MEM_BITS		GENMASK(16, 8)
-+
- /* QDSP6v56 parameters */
- #define QDSP6v56_LDO_BYP		BIT(25)
- #define QDSP6v56_BHS_ON		BIT(24)
-@@ -233,6 +236,7 @@ struct q6v5 {
- };
- 
- enum {
-+	MSS_MSM8909,
- 	MSS_MSM8916,
- 	MSS_MSM8974,
- 	MSS_MSM8996,
-@@ -686,13 +690,14 @@ static int q6v5proc_reset(struct q6v5 *qproc)
- 			return ret;
- 		}
- 		goto pbl_wait;
--	} else if (qproc->version == MSS_MSM8996 ||
-+	} else if (qproc->version == MSS_MSM8909 ||
-+		   qproc->version == MSS_MSM8996 ||
- 		   qproc->version == MSS_MSM8998) {
--		int mem_pwr_ctl;
- 
--		/* Override the ACC value if required */
--		writel(QDSP6SS_ACC_OVERRIDE_VAL,
--		       qproc->reg_base + QDSP6SS_STRAP_ACC);
-+		if (qproc->version != MSS_MSM8909)
-+			/* Override the ACC value if required */
-+			writel(QDSP6SS_ACC_OVERRIDE_VAL,
-+			       qproc->reg_base + QDSP6SS_STRAP_ACC);
- 
- 		/* Assert resets, stop core */
- 		val = readl(qproc->reg_base + QDSP6SS_RESET_REG);
-@@ -724,36 +729,53 @@ static int q6v5proc_reset(struct q6v5 *qproc)
- 		val |= QDSP6v56_LDO_BYP;
- 		writel(val, qproc->reg_base + QDSP6SS_PWR_CTL_REG);
- 
--		/* Deassert QDSP6 compiler memory clamp */
--		val = readl(qproc->reg_base + QDSP6SS_PWR_CTL_REG);
--		val &= ~QDSP6v56_CLAMP_QMC_MEM;
--		writel(val, qproc->reg_base + QDSP6SS_PWR_CTL_REG);
--
--		/* Deassert memory peripheral sleep and L2 memory standby */
--		val |= Q6SS_L2DATA_STBY_N | Q6SS_SLP_RET_N;
--		writel(val, qproc->reg_base + QDSP6SS_PWR_CTL_REG);
--
--		/* Turn on L1, L2, ETB and JU memories 1 at a time */
--		if (qproc->version == MSS_MSM8996) {
--			mem_pwr_ctl = QDSP6SS_MEM_PWR_CTL;
--			i = 19;
-+		if (qproc->version != MSS_MSM8909) {
-+			int mem_pwr_ctl;
-+
-+			/* Deassert QDSP6 compiler memory clamp */
-+			val = readl(qproc->reg_base + QDSP6SS_PWR_CTL_REG);
-+			val &= ~QDSP6v56_CLAMP_QMC_MEM;
-+			writel(val, qproc->reg_base + QDSP6SS_PWR_CTL_REG);
-+
-+			/* Deassert memory peripheral sleep and L2 memory standby */
-+			val |= Q6SS_L2DATA_STBY_N | Q6SS_SLP_RET_N;
-+			writel(val, qproc->reg_base + QDSP6SS_PWR_CTL_REG);
-+
-+			/* Turn on L1, L2, ETB and JU memories 1 at a time */
-+			if (qproc->version == MSS_MSM8996) {
-+				mem_pwr_ctl = QDSP6SS_MEM_PWR_CTL;
-+				i = 19;
-+			} else {
-+				/* MSS_MSM8998 */
-+				mem_pwr_ctl = QDSP6V6SS_MEM_PWR_CTL;
-+				i = 28;
-+			}
-+			val = readl(qproc->reg_base + mem_pwr_ctl);
-+			for (; i >= 0; i--) {
-+				val |= BIT(i);
-+				writel(val, qproc->reg_base + mem_pwr_ctl);
-+				/*
-+				 * Read back value to ensure the write is done then
-+				 * wait for 1us for both memory peripheral and data
-+				 * array to turn on.
-+				 */
-+				val |= readl(qproc->reg_base + mem_pwr_ctl);
-+				udelay(1);
-+			}
- 		} else {
--			/* MSS_MSM8998 */
--			mem_pwr_ctl = QDSP6V6SS_MEM_PWR_CTL;
--			i = 28;
--		}
--		val = readl(qproc->reg_base + mem_pwr_ctl);
--		for (; i >= 0; i--) {
--			val |= BIT(i);
--			writel(val, qproc->reg_base + mem_pwr_ctl);
--			/*
--			 * Read back value to ensure the write is done then
--			 * wait for 1us for both memory peripheral and data
--			 * array to turn on.
--			 */
--			val |= readl(qproc->reg_base + mem_pwr_ctl);
--			udelay(1);
-+			/* Turn on memories */
-+			val = readl(qproc->reg_base + QDSP6SS_PWR_CTL_REG);
-+			val |= Q6SS_SLP_RET_N | Q6SS_L2DATA_STBY_N |
-+			       Q6SS_ETB_SLP_NRET_N | QDSP6V55_MEM_BITS;
-+			writel(val, qproc->reg_base + QDSP6SS_PWR_CTL_REG);
-+
-+			/* Turn on L2 banks 1 at a time */
-+			for (i = 0; i <= 7; i++) {
-+				val |= BIT(i);
-+				writel(val, qproc->reg_base + QDSP6SS_PWR_CTL_REG);
-+			}
- 		}
-+
- 		/* Remove word line clamp */
- 		val = readl(qproc->reg_base + QDSP6SS_PWR_CTL_REG);
- 		val &= ~QDSP6v56_CLAMP_WL;
-@@ -2198,6 +2220,40 @@ static const struct rproc_hexagon_res msm8996_mss = {
- 	.version = MSS_MSM8996,
- };
- 
-+static const struct rproc_hexagon_res msm8909_mss = {
-+	.hexagon_mba_image = "mba.mbn",
-+	.proxy_supply = (struct qcom_mss_reg_res[]) {
-+		{
-+			.supply = "pll",
-+			.uA = 100000,
-+		},
-+		{}
-+	},
-+	.proxy_clk_names = (char*[]){
-+		"xo",
-+		NULL
-+	},
-+	.active_clk_names = (char*[]){
-+		"iface",
-+		"bus",
-+		"mem",
-+		NULL
-+	},
-+	.proxy_pd_names = (char*[]){
-+		"mx",
-+		"cx",
-+		NULL
-+	},
-+	.need_mem_protection = false,
-+	.has_alt_reset = false,
-+	.has_mba_logs = false,
-+	.has_spare_reg = false,
-+	.has_qaccept_regs = false,
-+	.has_ext_cntl_regs = false,
-+	.has_vq6 = false,
-+	.version = MSS_MSM8909,
-+};
-+
- static const struct rproc_hexagon_res msm8916_mss = {
- 	.hexagon_mba_image = "mba.mbn",
- 	.proxy_supply = (struct qcom_mss_reg_res[]) {
-@@ -2298,6 +2354,7 @@ static const struct rproc_hexagon_res msm8974_mss = {
- 
- static const struct of_device_id q6v5_of_match[] = {
- 	{ .compatible = "qcom,q6v5-pil", .data = &msm8916_mss},
-+	{ .compatible = "qcom,msm8909-mss-pil", .data = &msm8909_mss},
- 	{ .compatible = "qcom,msm8916-mss-pil", .data = &msm8916_mss},
- 	{ .compatible = "qcom,msm8974-mss-pil", .data = &msm8974_mss},
- 	{ .compatible = "qcom,msm8996-mss-pil", .data = &msm8996_mss},
--- 
-2.30.2
-
+Best regards,
+Krzysztof
