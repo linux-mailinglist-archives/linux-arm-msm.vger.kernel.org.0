@@ -2,76 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 30D9D578066
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Jul 2022 13:04:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 40563578076
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Jul 2022 13:16:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233438AbiGRLEv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 Jul 2022 07:04:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37786 "EHLO
+        id S234171AbiGRLPd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 Jul 2022 07:15:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42854 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233110AbiGRLEu (ORCPT
+        with ESMTP id S234380AbiGRLPc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 Jul 2022 07:04:50 -0400
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7CB6D135
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Jul 2022 04:04:49 -0700 (PDT)
-Received: by mail-wm1-x332.google.com with SMTP id h14-20020a1ccc0e000000b0039eff745c53so7088798wmb.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Jul 2022 04:04:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=s3SRUTT91L1y7t5GEOjZj8HDPa0Q/SNBknuFzvo8kak=;
-        b=cC7xMYRTsj14RSQCXLyHwxZPnpL6BxrHiH6twSi57FxGc7wGXhagNBYZAu5tD4T23k
-         PauuGEDwNAMPP5SEoUh/fSddrTS9NwEWE0B2NP4VCbExQwNz9VqOvcSaJv8bbO19gGV7
-         qAANXIPZdbyyQfX+t8JThNxh6ls/Djboy5KwZhJjLQ4XZOVCAKEik8PQFOh3nkSbZin5
-         CkeyJ7pfl4CYg2l4NyN8UxYx2pIjovHdOyxqKLrorsPCt8mVgWRK0C0CAT6owczL7Kx3
-         VDIA/r23OfGzWH7ZH/pD3SkNmwgu28GBTcn52xpsAcGCuarbBAPmEgXC1+4904thPPNd
-         d1oA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=s3SRUTT91L1y7t5GEOjZj8HDPa0Q/SNBknuFzvo8kak=;
-        b=v//JMrecFlSRxfeOICrzVg5mwT3HRGkAEMa1Xl6esK6B/tkmtmx9dB5p1m8FWTqQ7K
-         oyE2WAyI3itl3tiY2SM0OjrOByy4eOMmKQxPVUkn3jsGDQu6/H8tNJ8xHlf/r7T3P2e4
-         lIuzekZRmg1pWcL2HyHIr/NAll5Pd2b5yO9wkAkBtnayDLkCymFdifVHl1FFWxoiBVtk
-         XYTlus4eO990utRtcFa7nSM7sCJXkyJDEIkJr5vNIJFvPd24Zv6JSxxG5rNIuxZY/BEA
-         jusKs/7+/dEfJoL1iaISiMDccSTJ1EEuI4gepr3wt8ogfru3nRd3gVyHivllh/HO/fLn
-         xSgA==
-X-Gm-Message-State: AJIora+wMTUxbTPOQ4MNerREM4k//xjanFEN5Ub5G8ZN2Op7wElYRbQK
-        qleBzqkYM3l7wQsQG35ALsFw6A==
-X-Google-Smtp-Source: AGRyM1vsLPYI0d/Lf4ZAHX1xyAY0P59hAVrEnm/Pw31rXNSNR4XdvSMazEhHS4wXHN7XU4vI8v0y+w==
-X-Received: by 2002:a05:600c:22c2:b0:3a3:19e3:a55 with SMTP id 2-20020a05600c22c200b003a319e30a55mr5008777wmg.53.1658142288482;
-        Mon, 18 Jul 2022 04:04:48 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id v1-20020adfebc1000000b0021b98d73a4esm10639826wrn.114.2022.07.18.04.04.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 18 Jul 2022 04:04:48 -0700 (PDT)
-Message-ID: <f7cbe267-b8c4-7b4d-ef31-22fd863bda1e@linaro.org>
-Date:   Mon, 18 Jul 2022 12:04:46 +0100
+        Mon, 18 Jul 2022 07:15:32 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A265520189;
+        Mon, 18 Jul 2022 04:15:31 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 24C6561254;
+        Mon, 18 Jul 2022 11:15:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C6C4C341C0;
+        Mon, 18 Jul 2022 11:15:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1658142930;
+        bh=j6BIBslIcdbSSvcTjI9y5KeEti/16HJAFmDAP1Pa50w=;
+        h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
+        b=Ains+1nJmVItxqBF2ZqmkWO/+aabe47PlSbW36Nb30+fW94XlziWNe9yK4sZCeKtS
+         OAJN4OIdaREePVMttK3RUbNxmUtlOsivQ5yNCp3/p4DBjq9HDvk8McZTYKxDHjwavD
+         w2EOx7aTV/2olxpQ2udu7GMup9V/4K6TQCsNJk7vijsnhRPwE6r3Glx/hq+jfXrkcw
+         y1ySlvFxOzRZ7UAy1FkyxkHrg9eEB4Sa6kAbRq2yg+Uh+wldhF7nAlE2zUwofGb4m8
+         OApnWnz0mWpoRdK4R7kCG8/IbD9O5Rk7ezAc+QMdwncEYTwh2BdpdgdiJ5PDgip40P
+         j8xMI8RVW0fWg==
+From:   Kalle Valo <kvalo@kernel.org>
+To:     Manivannan Sadhasivam <mani@kernel.org>
+Cc:     Qiang Yu <quic_qianyu@quicinc.com>, quic_hemantk@quicinc.com,
+        loic.poulain@linaro.org, quic_jhugo@quicinc.com,
+        mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_cang@quicinc.com,
+        ath11k@lists.infradead.org
+Subject: Re: [PATCH v4 1/1] bus: mhi: host: Move IRQ allocation to controller registration phase
+References: <1655952183-66792-1-git-send-email-quic_qianyu@quicinc.com>
+        <20220624072740.GA12171@thinkpad>
+Date:   Mon, 18 Jul 2022 14:15:23 +0300
+In-Reply-To: <20220624072740.GA12171@thinkpad> (Manivannan Sadhasivam's
+        message of "Fri, 24 Jun 2022 12:57:40 +0530")
+Message-ID: <87k08an038.fsf@kernel.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.0
-Subject: Re: [PATCH v3 2/2] dt-bindings: mailbox: qcom,apcs-kpss-global: Add
- clock-output-names
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
-        konrad.dybcio@somainline.org, jassisinghbrar@gmail.com,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        shawn.guo@linaro.org
-References: <20220717213645.1147342-1-bryan.odonoghue@linaro.org>
- <20220717213645.1147342-3-bryan.odonoghue@linaro.org>
- <CAA8EJppnnjphLJC2fFW9Lz06fUZTw8kxS6L+s0kP0+i+1Yh+_A@mail.gmail.com>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <CAA8EJppnnjphLJC2fFW9Lz06fUZTw8kxS6L+s0kP0+i+1Yh+_A@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain
+X-Spam-Status: No, score=-7.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -79,54 +58,135 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 18/07/2022 11:33, Dmitry Baryshkov wrote:
-> On Mon, 18 Jul 2022 at 00:37, Bryan O'Donoghue
-> <bryan.odonoghue@linaro.org> wrote:
->>
->> Add clock-output-names as optional so that SoCs such as the msm8939 which
->> have multiple a53 PLLs can latch the appropriate output name in
->> drivers/clk/qcom/apcs-msm8916.c.
->>
->> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->> ---
->>   .../devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml | 7 +++++++
->>   1 file changed, 7 insertions(+)
->>
->> diff --git a/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml b/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml
->> index f504652fc0ea2..7497e4c930ae7 100644
->> --- a/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml
->> +++ b/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml
->> @@ -63,6 +63,13 @@ properties:
->>         - const: aux
->>         - const: ref
->>
->> +  clock-output-names:
->> +    maxItems: 1
->> +    items:
->> +      - const: a53mux_c0
->> +      - const: a53mux_c1
->> +      - const: a53mux_cci
-> 
-> You have probably meant to use enum here.
++ ath11k list
 
-I do mean enum ...
+Manivannan Sadhasivam <mani@kernel.org> writes:
 
-  However, is there any reason
-> why you would like to use fixed output names here? You are going to
-> use clocks DT properties (with clock-names or using indices) anyway,
-> so there is no dependency on system clock name.
-> Compare this with apcs-msm8916.c, which uses a53mux@unit_address.
-> 
+> On Thu, Jun 23, 2022 at 10:43:03AM +0800, Qiang Yu wrote:
+>> During runtime, the MHI endpoint may be powered up/down several times.
+>> So instead of allocating and destroying the IRQs all the time, let's just
+>> enable/disable IRQs during power up/down.
+>> 
+>> The IRQs will be allocated during mhi_register_controller() and freed
+>> during mhi_unregister_controller(). This works well for things like PCI
+>> hotplug also as once the PCI device gets removed, the controller will
+>> get unregistered. And once it comes back, it will get registered back
+>> and even if the IRQ configuration changes (MSI), that will get accounted.
+>> 
+>> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
+>
+> Applied to mhi-next!
 
-The answer is because I have this in the dtsi forwarded ported from 4.19 
-and like an idiot I didn't check the clock names
+I did a bisect and this patch breaks ath11k during rmmod. I'm on
+vacation right now so I can't investigate in detail but more info below.
 
-a53pll@b016000
-a53pll@b116000
-a53pll@b1d0000
+[   66.939878] rmmod ath11k_pci
+[   67.606269] general protection fault, probably for non-canonical
+address 0xdffffc0000000000: 0000 [#1] PREEMPT SMP DEBUG_PAGEALLOC KASAN
+PTI
+[   67.606328] KASAN: null-ptr-deref in range
+[0x0000000000000000-0x0000000000000007]
+[   67.606387] CPU: 3 PID: 1463 Comm: rmmod Not tainted 5.19.0-rc1+ #669
+[   67.606456] Hardware name: Intel(R) Client Systems
+NUC8i7HVK/NUC8i7HVB, BIOS HNKBLi70.86A.0067.2021.0528.1339 05/28/2021
+[   67.606492] RIP: 0010:mhi_irq_handler+0x61/0x370 [mhi]
+[   67.606565] Code: 00 48 89 fa 48 c1 ea 03 80 3c 02 00 0f 85 9b 02 00
+00 49 8b ad 20 01 00 00 48 b8 00 00 00 00 00 fc ff df 48 89 ea 48 c1 ea
+03 <80> 3c 02 00 0f 85 bd 02 00 00 48 8d 7b 10 48 8b 6d 00 48 b8 00 00
+[   67.606639] RSP: 0018:ffffc900042ffba8 EFLAGS: 00010046
+[   67.606706] RAX: dffffc0000000000 RBX: ffff88812e1e2800 RCX:
+0000000000000001
+[   67.606742] RDX: 0000000000000000 RSI: ffff88812e1e2800 RDI:
+ffff888110e8d120
+[   67.606776] RBP: 0000000000000000 R08: 0000000000000001 R09:
+ffffffff86ac17af
+[   67.606810] R10: fffffbfff0d582f5 R11: 0000000000000001 R12:
+ffff88812c3afb80
+[   67.606845] R13: ffff888110e8d000 R14: ffff88811ddba800 R15:
+ffff88812e1e2800
+[   67.606880] FS:  00007fef00794740(0000) GS:ffff888234200000(0000)
+knlGS:0000000000000000
+[   67.606915] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[   67.606950] CR2: 000055df2323b788 CR3: 0000000109844001 CR4:
+00000000003706e0
+[   67.606987] Call Trace:
+[   67.607021]  <TASK>
+[   67.607056]  __free_irq+0x590/0x9d0
+[   67.607099]  ? slab_free_freelist_hook+0xf0/0x1a0
+[   67.607136]  free_irq+0x7b/0x110
+[   67.607171]  mhi_deinit_free_irq+0x14e/0x260 [mhi]
+[   67.607210]  mhi_unregister_controller+0x69/0x290 [mhi]
+[   67.607249]  ath11k_mhi_unregister+0x2b/0x70 [ath11k_pci]
+[   67.607284]  ath11k_pci_remove+0x107/0x2a0 [ath11k_pci]
+[   67.607321]  pci_device_remove+0x89/0x1b0
+[   67.607359]  device_release_driver_internal+0x3bc/0x600
+[   67.607400]  driver_detach+0xbc/0x180
+[   67.607439]  bus_remove_driver+0xe2/0x2d0
+[   67.607476]  pci_unregister_driver+0x21/0x250
+[   67.607512]  __do_sys_delete_module+0x307/0x4b0
+[   67.607548]  ? free_module+0x4e0/0x4e0
+[   67.607584]  ? lockdep_hardirqs_on_prepare.part.0+0x18c/0x370
+[   67.607618]  ? syscall_enter_from_user_mode+0x1d/0x50
+[   67.607653]  ? lockdep_hardirqs_on+0x79/0x100
+[   67.607688]  do_syscall_64+0x35/0x80
+[   67.607723]  entry_SYSCALL_64_after_hwframe+0x46/0xb0
+[   67.607758] RIP: 0033:0x7fef008e1a6b
+[   67.607794] Code: 73 01 c3 48 8b 0d 25 c4 0c 00 f7 d8 64 89 01 48 83
+c8 ff c3 66 2e 0f 1f 84 00 00 00 00 00 90 f3 0f 1e fa b8 b0 00 00 00 0f
+05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d f5 c3 0c 00 f7 d8 64 89 01 48
+[   67.607836] RSP: 002b:00007ffdd5803a38 EFLAGS: 00000206 ORIG_RAX:
+00000000000000b0
+[   67.607873] RAX: ffffffffffffffda RBX: 000055c0d3f107a0 RCX:
+00007fef008e1a6b
+[   67.607961] RDX: 000000000000000a RSI: 0000000000000800 RDI:
+000055c0d3f10808
+[   67.607995] RBP: 00007ffdd5803a98 R08: 0000000000000000 R09:
+0000000000000000
+[   67.608029] R10: 00007fef0095dac0 R11: 0000000000000206 R12:
+00007ffdd5803c70
+[   67.608063] R13: 00007ffdd5804eb7 R14: 000055c0d3f0f2a0 R15:
+000055c0d3f107a0
+[   67.608100]  </TASK>
+[   67.608134] Modules linked in: ath11k_pci(-) ath11k mac80211 libarc4
+cfg80211 qmi_helpers qrtr_mhi mhi qrtr nvme nvme_core
+[   67.608185] ---[ end trace 0000000000000000 ]---
+[   67.608186] RIP: 0010:mhi_irq_handler+0x61/0x370 [mhi]
+[   67.608192] Code: 00 48 89 fa 48 c1 ea 03 80 3c 02 00 0f 85 9b 02 00
+00 49 8b ad 20 01 00 00 48 b8 00 00 00 00 00 fc ff df 48 89 ea 48 c1 ea
+03 <80> 3c 02 00 0f 85 bd 02 00 00 48 8d 7b 10 48 8b 6d 00 48 b8 00 00
+[   67.608194] RSP: 0018:ffffc900042ffba8 EFLAGS: 00010046
+[   67.608196] RAX: dffffc0000000000 RBX: ffff88812e1e2800 RCX:
+0000000000000001
+[   67.608197] RDX: 0000000000000000 RSI: ffff88812e1e2800 RDI:
+ffff888110e8d120
+[   67.608198] RBP: 0000000000000000 R08: 0000000000000001 R09:
+ffffffff86ac17af
+[   67.608199] R10: fffffbfff0d582f5 R11: 0000000000000001 R12:
+ffff88812c3afb80
+[   67.608200] R13: ffff888110e8d000 R14: ffff88811ddba800 R15:
+ffff88812e1e2800
+[   67.608201] FS:  00007fef00794740(0000) GS:ffff888234200000(0000)
+knlGS:0000000000000000
+[   67.608203] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[   67.608204] CR2: 000055df2323b788 CR3: 0000000109844001 CR4:
+00000000003706e0
+[   67.608206] Kernel panic - not syncing: Fatal exception
+[   67.608665] Kernel Offset: 0xa00000 from 0xffffffff81000000
+(relocation range: 0xffffffff80000000-0xffffffffbfffffff)
+[   67.608704] Rebooting in 10 seconds..
 
-a53mux@b1d1000
-a53mux@b011000
-a53mux@b111000
+git bisect start
+# bad: [9df125af0822d3e2bde7508e9536d67ab541a166] bus: mhi: ep: Check dev_set_name() return value
+git bisect bad 9df125af0822d3e2bde7508e9536d67ab541a166
+# good: [178329d4d635fb1848cc7ca1803dee5a634cde0d] bus: mhi: host: pci_generic: Add support for Quectel EM120 FCCL modem
+git bisect good 178329d4d635fb1848cc7ca1803dee5a634cde0d
+# bad: [1227d2a20cd7319fb45c62fab4b252600e0308bf] bus: mhi: host: Move IRQ allocation to controller registration phase
+git bisect bad 1227d2a20cd7319fb45c62fab4b252600e0308bf
+# good: [b7ce716254315dffcfce60e149ddd022c8a60345] bus: mhi: host: pci_generic: Add Cinterion MV31-W with new baseline
+git bisect good b7ce716254315dffcfce60e149ddd022c8a60345
+# first bad commit: [1227d2a20cd7319fb45c62fab4b252600e0308bf] bus: mhi: host: Move IRQ allocation to controller registration phase
 
-you're right this is old/dead code I don't need it.
+-- 
+https://patchwork.kernel.org/project/linux-wireless/list/
+
+https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
