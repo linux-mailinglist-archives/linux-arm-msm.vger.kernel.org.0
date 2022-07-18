@@ -2,147 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2ADF557873D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Jul 2022 18:24:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 874EC5787DC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Jul 2022 18:54:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230298AbiGRQYG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 Jul 2022 12:24:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55150 "EHLO
+        id S234146AbiGRQyq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 Jul 2022 12:54:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49020 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234944AbiGRQYD (ORCPT
+        with ESMTP id S233747AbiGRQyp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 Jul 2022 12:24:03 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F334DF79;
-        Mon, 18 Jul 2022 09:24:02 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id v16so2000636wrr.6;
-        Mon, 18 Jul 2022 09:24:02 -0700 (PDT)
+        Mon, 18 Jul 2022 12:54:45 -0400
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40E6828E28
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Jul 2022 09:54:43 -0700 (PDT)
+Received: by mail-ed1-x52a.google.com with SMTP id y4so16158999edc.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Jul 2022 09:54:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=nTuKiW+NEzqVP6Zl8LDwB5peMSvo60+Ram+tJ6Y05DI=;
-        b=KVdXvgqm89PHHATuLfHJBXQjSlaJg2b45TnP4lQ49H3b7w0xfNnKHmSL+ncPanyoqE
-         xkmO5zvTfvRgzQ3OQQXOJsLDdLVMmKbuPdec1ESnvLBm7EV9LghUpMEOm/12tTc6skrX
-         3jOur5sWHWm6JZiClL20+rTCWfzz3DatzPNSDdO6FWrDa+G59C2xVvZeWtHwiTF8RTfm
-         KcZQihURNLcoUElrmfxLTpd+dMhAR2oK8MwM5FfCmy0qxDriDD5cjMv0aYHo45cgq7FL
-         aZTGoxYsBlWSXGRRRcD5hQjxLL9CA5JFD1s/ZeorM1HO8zDx1oNJ36mjwdTLOxj1DL28
-         OZWg==
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=gfpNnbv9YOemTBAvBMvhdh6XDEmFRn+jVc5Sgvldw+c=;
+        b=YIUJz0+n5d+MRgeE8Kggy7XaBMiqg9MnEjo0j7YMzPJYtH+Alg1O4ymKE42Z3IKh8q
+         CxHTP8fHRuyW1dviJIgkn/4suGtCaaNT3qo/CGesBmoKK3PSiBlk6RHX+n/t+kUoiPoT
+         k0G+McbVBQ+YkIJdowKGhQWEFRIb15jfHhgAWgGXCVhS1G3UHIQ1FKnl7kIeBbfnl8+m
+         A3K6w2y+CDIvDFweCJJ+9bvBReSF6l/TYXyO2YTlCVXiNKFhO2QQ5k7JhpSnnNChCq0O
+         qL7v5XVPRwIu3iiveTk2YtcapolY9zaZDcb/3ocmub/aF/+BYBFSyUHuyL1PsrMFjn3r
+         B2pg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=nTuKiW+NEzqVP6Zl8LDwB5peMSvo60+Ram+tJ6Y05DI=;
-        b=i31w1XiRIet9pkz5/t2JTNW+i1/Hnfow23DtTrf4navlMrM2+3cGyuUtx7PpJDNgVy
-         k5fXdwuPzVXD1dfDtvDOFOFe0C7Sm+cuwj7MZ2HG7aga74Lq9gdRZCOLZP/DvKGOAYfr
-         3fkt3u8A6JDiCTNVYDpub7ze/qjl8sqMKtuo3JnAFIfsv8IUO8pdy8GqWFkYVqkyN2jw
-         glRGvDwHUc72VI6QTO2KXhcwU/E14VVRvf/8fQYVvAhgcFUdW7FWtNXOl+lkyuoNEBmI
-         TIXtcInCV0F8JgiAHVOSIswvuBSE52pbm6BSkeaeDxcypYfjVF6ZQFBaDGlZgjBVriS5
-         cSgg==
-X-Gm-Message-State: AJIora/ZeXYewkcP3J10Q/5tcPcAojcsyNzF+ot9rsRfDiFpQsqfpP4z
-        KrQH/upMwVvZSwRNyezBDw0=
-X-Google-Smtp-Source: AGRyM1u/TPPPuglxmceIjz+V7UnT6FIlHw/IgtoQi0ZhumjIII6EjGfurB5hlUjahVYhCO2GYh5uqg==
-X-Received: by 2002:adf:fe81:0:b0:21b:88ea:6981 with SMTP id l1-20020adffe81000000b0021b88ea6981mr24744679wrr.616.1658161440708;
-        Mon, 18 Jul 2022 09:24:00 -0700 (PDT)
-Received: from localhost.localdomain (93-42-70-190.ip85.fastwebnet.it. [93.42.70.190])
-        by smtp.googlemail.com with ESMTPSA id q6-20020a1cf306000000b003a2e92edeccsm19150824wmq.46.2022.07.18.09.23.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 Jul 2022 09:24:00 -0700 (PDT)
-From:   Christian Marangi <ansuelsmth@gmail.com>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Christian Marangi <ansuelsmth@gmail.com>
-Subject: [PATCH 3/3] ARM: dts: qcom: ipq8064: add ipq8065 variant
-Date:   Mon, 18 Jul 2022 18:18:26 +0200
-Message-Id: <20220718161826.4943-3-ansuelsmth@gmail.com>
-X-Mailer: git-send-email 2.36.1
-In-Reply-To: <20220718161826.4943-1-ansuelsmth@gmail.com>
-References: <20220718161826.4943-1-ansuelsmth@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=gfpNnbv9YOemTBAvBMvhdh6XDEmFRn+jVc5Sgvldw+c=;
+        b=a6h3WHj9q7+4mM3i4P+5ymGgZu5w+W5b65aIPeW3lTIA+5P5XEa+LyNYf2Jxde3cX5
+         F70ptWWRUjpMJgx3d2bxcRlUlgZX5y1FxLJPGafaPNZFzC3e4TBeii6ewCLSxPNssolK
+         +RI2ZnIxpNkXMhjBiz4+APzZxrMVF+7NRZ03CbQvHffSC8nOs0dVYuIzvKurD/sQ3EqD
+         06/UXRVr+FCulkvKjtKUmnvf7nI2pbB1YRA1+bVQNAy+6aH4za9ZT0SpcWrOz5Xso62c
+         pDf0K4J2D2vrlPUCjbWdsGDi3IP/sZVV2u+3dD2G1FoOYAaAiVZFu81qFEgPG7V2i2Ta
+         L94w==
+X-Gm-Message-State: AJIora9SLA06rzX9jO8SqbFnwsMpaeY04Dtohr3k+65ANOOKXF0xcUl1
+        knVpD0yunxMDyqEpPIGip94y/Rgn70TUeIUeBi8L2Q==
+X-Google-Smtp-Source: AGRyM1uuQTfolK7IZXwrLw43B2IEgqnbRr3TMqufL5pVAuJ8GJwGEAlIsCHfQBLshR8K/V80YP6eU5UeCGY9Oho6mXg=
+X-Received: by 2002:a05:6402:35cf:b0:43a:d139:ea2b with SMTP id
+ z15-20020a05640235cf00b0043ad139ea2bmr38300885edc.415.1658163281692; Mon, 18
+ Jul 2022 09:54:41 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <1654651005-15475-1-git-send-email-quic_clew@quicinc.com> <0eaabd6c-07bd-eb83-da9d-6195b350bc9a@foss.st.com>
+In-Reply-To: <0eaabd6c-07bd-eb83-da9d-6195b350bc9a@foss.st.com>
+From:   Mathieu Poirier <mathieu.poirier@linaro.org>
+Date:   Mon, 18 Jul 2022 10:54:30 -0600
+Message-ID: <CANLsYkxBZ+4its5sUPJExnenU8dgttcUwdsBApwC_nYMLmsmHg@mail.gmail.com>
+Subject: Re: [PATCH 0/4] Introduction of rpmsg_rx_done
+To:     Arnaud POULIQUEN <arnaud.pouliquen@foss.st.com>
+Cc:     Chris Lew <quic_clew@quicinc.com>, bjorn.andersson@linaro.org,
+        linux-remoteproc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-ipq8065 SoC is based on ipq8064-v2.0 with a more clocked CPU and
-an increased voltage output with the smb208 regulators.
+On Mon, 18 Jul 2022 at 02:26, Arnaud POULIQUEN
+<arnaud.pouliquen@foss.st.com> wrote:
+>
+> Hello Chris,
+>
+> On 6/8/22 03:16, Chris Lew wrote:
+> > This series proposes an implementation for the rpmsg framework to do
+> > deferred cleanup of buffers provided in the rx callback. The current
+> > implementation assumes that the client is done with the buffer after
+> > returning from the rx callback.
+> >
+> > In some cases where the data size is large, the client may want to
+> > avoid copying the data in the rx callback for later processing. This
+> > series proposes two new facilities for signaling that they want to
+> > hold on to a buffer after the rx callback.
+> > They are:
+> >  - New API rpmsg_rx_done() to tell the rpmsg framework the client is
+> >    done with the buffer
+> >  - New return codes for the rx callback to signal that the client will
+> >    hold onto a buffer and later call rpmsg_rx_done()
+> >
+> > This series implements the qcom_glink_native backend for these new
+> > facilities.
+>
+> The API you proposed seems to me quite smart and adaptable to the rpmsg
+> virtio backend.
+>
+> My main concern is about the release of the buffer when the endpoint
+> is destroyed.
+>
+> Does the buffer release should be handled by each services or by the
+> core?
+>
+> I wonder if the buffer list could be managed by the core part by adding
+> the list in the rpmsg_endpoint structure. On destroy the core could call
+> the rx_done for each remaining buffers in list...
+>
+> I let Bjorn and Mathieu advise on this...
 
-Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
----
- arch/arm/boot/dts/qcom-ipq8065-smb208.dtsi | 37 ++++++++++++++++++++++
- arch/arm/boot/dts/qcom-ipq8065.dtsi        |  8 +++++
- 2 files changed, 45 insertions(+)
- create mode 100644 arch/arm/boot/dts/qcom-ipq8065-smb208.dtsi
- create mode 100644 arch/arm/boot/dts/qcom-ipq8065.dtsi
+Thanks for taking a look Arnaud.  I'll get to this sortly.
 
-diff --git a/arch/arm/boot/dts/qcom-ipq8065-smb208.dtsi b/arch/arm/boot/dts/qcom-ipq8065-smb208.dtsi
-new file mode 100644
-index 000000000000..803e6ff99ef8
---- /dev/null
-+++ b/arch/arm/boot/dts/qcom-ipq8065-smb208.dtsi
-@@ -0,0 +1,37 @@
-+// SPDX-License-Identifier: GPL-2.0
-+
-+#include "qcom-ipq8065.dtsi"
-+
-+&rpm {
-+	smb208_regulators: regulators {
-+		compatible = "qcom,rpm-smb208-regulators";
-+
-+		smb208_s1a: s1a {
-+			regulator-min-microvolt = <1050000>;
-+			regulator-max-microvolt = <1150000>;
-+
-+			qcom,switch-mode-frequency = <1200000>;
-+		};
-+
-+		smb208_s1b: s1b {
-+			regulator-min-microvolt = <1050000>;
-+			regulator-max-microvolt = <1150000>;
-+
-+			qcom,switch-mode-frequency = <1200000>;
-+		};
-+
-+		smb208_s2a: s2a {
-+			regulator-min-microvolt = <775000>;
-+			regulator-max-microvolt = <1275000>;
-+
-+			qcom,switch-mode-frequency = <1200000>;
-+		};
-+
-+		smb208_s2b: s2b {
-+			regulator-min-microvolt = <775000>;
-+			regulator-max-microvolt = <1275000>;
-+
-+			qcom,switch-mode-frequency = <1200000>;
-+		};
-+	};
-+};
-diff --git a/arch/arm/boot/dts/qcom-ipq8065.dtsi b/arch/arm/boot/dts/qcom-ipq8065.dtsi
-new file mode 100644
-index 000000000000..ea49f6cc416d
---- /dev/null
-+++ b/arch/arm/boot/dts/qcom-ipq8065.dtsi
-@@ -0,0 +1,8 @@
-+// SPDX-License-Identifier: GPL-2.0
-+
-+#include "qcom-ipq8064-v2.0.dtsi"
-+
-+/ {
-+	model = "Qualcomm Technologies, Inc. IPQ8065";
-+	compatible = "qcom,ipq8065", "qcom,ipq8064";
-+};
--- 
-2.36.1
-
+>
+> Thanks,
+> Arnaud
+>
+> >
+> > Chris Lew (4):
+> >   rpmsg: core: Add rx done hooks
+> >   rpmsg: char: Add support to use rpmsg_rx_done
+> >   rpmsg: glink: Try to send rx done in irq
+> >   rpmsg: glink: Add support for rpmsg_rx_done
+> >
+> >  drivers/rpmsg/qcom_glink_native.c | 112 ++++++++++++++++++++++++++++++--------
+> >  drivers/rpmsg/rpmsg_char.c        |  50 ++++++++++++++++-
+> >  drivers/rpmsg/rpmsg_core.c        |  20 +++++++
+> >  drivers/rpmsg/rpmsg_internal.h    |   1 +
+> >  include/linux/rpmsg.h             |  24 ++++++++
+> >  5 files changed, 183 insertions(+), 24 deletions(-)
+> >
