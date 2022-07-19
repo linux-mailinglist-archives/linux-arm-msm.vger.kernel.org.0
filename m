@@ -2,81 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6D67F579FBF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Jul 2022 15:35:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ABC2B579FF8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Jul 2022 15:48:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236677AbiGSNfz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Jul 2022 09:35:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35696 "EHLO
+        id S237561AbiGSNsA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Jul 2022 09:48:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50860 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238011AbiGSNfn (ORCPT
+        with ESMTP id S238341AbiGSNrt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Jul 2022 09:35:43 -0400
-Received: from m15111.mail.126.com (m15111.mail.126.com [220.181.15.111])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 6243D9E2B9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Jul 2022 05:50:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=126.com;
-        s=s110527; h=From:Subject:Date:Message-Id:MIME-Version; bh=GCVlq
-        LoEaaIgAALjbS95tP2uNkJvDM2J9R7TYDiUAHM=; b=DgXYyyJwDAVoxegiTiwUR
-        q6HsVsQCT2IEQpzQbusA8oO5pWr0i3m2KXTey2NZ+a4QlgeyifmD+JFLq+yxXR1a
-        dEk/9EQn11o8PW24Im8yPs2VFAAvI6lRanbsHMisUvsqrXF6TvhDnqNZTQVpmWca
-        bLwyYqegGUn9GQupNMk+8E=
-Received: from localhost.localdomain (unknown [124.16.139.61])
-        by smtp1 (Coremail) with SMTP id C8mowAB3fzdzqNZiREBlHA--.30928S2;
-        Tue, 19 Jul 2022 20:49:56 +0800 (CST)
-From:   Liang He <windhl@126.com>
-To:     robdclark@gmail.com, will@kernel.org, robin.murphy@arm.com,
-        joro@8bytes.org, iommu@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org, windhl@126.com
-Subject: [PATCH] iommu/arm-smmu: qcom_iommu: Add of_node_put() when breaking out of loop
-Date:   Tue, 19 Jul 2022 20:49:55 +0800
-Message-Id: <20220719124955.1242171-1-windhl@126.com>
-X-Mailer: git-send-email 2.25.1
+        Tue, 19 Jul 2022 09:47:49 -0400
+Received: from mail-40137.protonmail.ch (mail-40137.protonmail.ch [185.70.40.137])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A721106AD7;
+        Tue, 19 Jul 2022 06:01:42 -0700 (PDT)
+Date:   Tue, 19 Jul 2022 13:01:34 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+        s=protonmail3; t=1658235700; x=1658494900;
+        bh=7P+TRSgZQQ3LvaC8qZN5cB0Oyl/wz/+ack6RXmvW2zI=;
+        h=Date:To:From:Cc:Reply-To:Subject:Message-ID:In-Reply-To:
+         References:Feedback-ID:From:To:Cc:Date:Subject:Reply-To:
+         Feedback-ID:Message-ID;
+        b=aNHvgozLv1aFm+xkPmI6Vrdwq8bkriactujmDXE3yfL8P7rfqKH6i5GVhRuIHp5U0
+         i8CBCnEP8Rjx/BqGYeyFfiOtUQI1PWNx7R4mwJM8ho+WOmCOQXJMAr0yq9awR9GuGi
+         6UEDwVtMQgPvwBnV1wmpaGpdZdm9W5lSGOWQvP0ktJmRgZX96FL8ch46lZHRcXNKGt
+         Pd960bAoSU4EU6nO4JLBn9xv5JVi9Hibrh6VyhWCzPFumiGCUoxf/eeSZMe1WUuyHP
+         vOPpeQ1lQi0GWtFLSdvrmATatIi0c2S/KqcvwaMZR+JEjI/PEnEP2vw3vqSSQgl0hQ
+         S44dvTOBW5r+g==
+To:     devicetree@vger.kernel.org
+From:   "Lin, Meng-Bo" <linmengbo0689@protonmail.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Nikita Travkin <nikita@trvn.ru>,
+        ~postmarketos/upstreaming@lists.sr.ht
+Reply-To: "Lin, Meng-Bo" <linmengbo0689@protonmail.com>
+Subject: [PATCH v3 0/4] Add Samsung Galaxy E5/E7/Grand Max device trees
+Message-ID: <20220719125851.54571-1-linmengbo0689@protonmail.com>
+In-Reply-To: <20220715102055.3844-1-linmengbo0689@protonmail.com>
+References: <20220715102055.3844-1-linmengbo0689@protonmail.com>
+Feedback-ID: 40467236:user:proton
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: C8mowAB3fzdzqNZiREBlHA--.30928S2
-X-Coremail-Antispam: 1Uf129KBjvdXoW7Gr4rZFWkKrWUJF1kCw1fXrb_yoWkGFbEkF
-        18Xas3Gr10yrZrAr9FqF43ZrykKws5ZrZxGay8WryrJr17Xr1kJanFqFW8X3yxua1jyFyU
-        G3sxAFZ5ArWUXjkaLaAFLSUrUUUUUb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
-        9fnUUvcSsGvfC2KfnxnUUI43ZEXa7xRMMa0JUUUUU==
-X-Originating-IP: [124.16.139.61]
-X-CM-SenderInfo: hzlqvxbo6rjloofrz/1tbi3BVDF1pED8wxpQAAsU
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-1.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,FREEMAIL_REPLYTO_END_DIGIT,SPF_HELO_PASS,SPF_PASS
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In qcom_iommu_has_secure_context(), we should call of_node_put()
-for the reference 'child' when breaking out of for_each_child_of_node()
-which will automatically increase and decrease the refcount.
+v3: Add a cover letter and changelog
+v2: Add dt-bindings documentation
 
-Fixes: d051f28c8807 ("iommu/qcom: Initialize secure page table")
-Signed-off-by: Liang He <windhl@126.com>
----
- drivers/iommu/arm/arm-smmu/qcom_iommu.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+Samsung Galaxy E5, E7 and Grand Max are smartphones using the MSM8916 SoC
+released in 2015.
 
-diff --git a/drivers/iommu/arm/arm-smmu/qcom_iommu.c b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-index 4a922c7b69ee..b6f90d5b7541 100644
---- a/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-+++ b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-@@ -740,8 +740,10 @@ static bool qcom_iommu_has_secure_context(struct qcom_iommu_dev *qcom_iommu)
- 	struct device_node *child;
- 
- 	for_each_child_of_node(qcom_iommu->dev->of_node, child)
--		if (of_device_is_compatible(child, "qcom,msm-iommu-v1-sec"))
-+		if (of_device_is_compatible(child, "qcom,msm-iommu-v1-sec")) {
-+			of_node_put(child);
- 			return true;
-+		}
- 
- 	return false;
- }
--- 
-2.25.1
+e2015 and a2015 are similar, with some differences in accelerometer,
+MUIC and Vibrator. The common parts are shared in
+msm8916-samsung-a2015-common.dtsi to reduce duplication.
+
+The three devices (and all other variants of E5/E7/Grand Max released in
+2015) are very similar, with some differences in display, touchscreen,
+sensors and NFC. The common parts are shared in
+msm8916-samsung-e2015-common.dtsi to reduce duplication.
+
+Unfortunately, some E5/E7/Grand Max were released with outdated 32-bit
+only firmware and never received any update from Samsung. Since the 32-bit
+TrustZone firmware is signed there seems to be no way currently to
+actually boot this device tree on arm64 Linux on those variants at the
+moment.
+
+However, it is possible to use this device tree by compiling an ARM32
+kernel instead. The device tree can be easily built on ARM32 with
+an #include and it works really well there. To avoid confusion for others
+it is still better to add this device tree on arm64. Otherwise it's easy
+to forget to update this one when making some changes that affect all
+MSM8916 devices.
+
+Maybe someone finds a way to boot ARM64 Linux on those device at some
+point. In this case I expect that this device tree can be simply used
+as-is.
 
