@@ -2,62 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E1A915796D0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Jul 2022 11:56:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 15D645796F8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Jul 2022 11:59:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237039AbiGSJ4Z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Jul 2022 05:56:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51844 "EHLO
+        id S236940AbiGSJ7z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Jul 2022 05:59:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54452 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237228AbiGSJ4Z (ORCPT
+        with ESMTP id S234628AbiGSJ7y (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Jul 2022 05:56:25 -0400
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57BCD27FEE
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Jul 2022 02:56:24 -0700 (PDT)
-Received: by mail-lf1-x12a.google.com with SMTP id bf9so23815316lfb.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Jul 2022 02:56:24 -0700 (PDT)
+        Tue, 19 Jul 2022 05:59:54 -0400
+Received: from mail-qk1-x72d.google.com (mail-qk1-x72d.google.com [IPv6:2607:f8b0:4864:20::72d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 497A131377
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Jul 2022 02:59:53 -0700 (PDT)
+Received: by mail-qk1-x72d.google.com with SMTP id g1so9958162qki.7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Jul 2022 02:59:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :references:from:in-reply-to:content-transfer-encoding;
-        bh=EFk86uRdewz20VUPRQoIRx5Kk1NiNLCImIzNnjafFSw=;
-        b=NaEFPoUIoFBZewiWjqCiOipe2laBUlv8dhgR/MiPD0lhGWVW5G6q+Xcks8lKbu6TYi
-         52gJeMIctRvHSAAIoa1XlCU+fLNf9sjKiJcvbj471F/Uo2Gb1eRDRePSmzppxhbNdDMs
-         NIIsE2UL5FJ99T+GWfuXENJtkQlTortap7a9sNbvpKXq/3HhIrNo155OttfR5hYoO+t/
-         3NEiA9HQbbm7Oy/tUGFZs4DQgkDXJnDELmJokiXk1OEc7nvwuLRQ61WY7MBI87atPt7E
-         qXsQ2s00PsjS5vjkoWawQIef4tbig+2CApWdp3zYqJe0Ef8s6Dz4FmcVHSF8wPsVDdS+
-         tzoA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=HQXArWqN03DD+E6UdPTQJfJ1IjxcXg1RfJYRzgq3uVY=;
+        b=D7GDZIQ3qS90bxEQ/HFpcjKEbo9R/8epY00XAu4kDLGHcZStkjfl94KPoyLRTTUl5O
+         cKqOAGfnYNxgUV4L9bi1smdNhszvr23eiNdBUvhS/M3A656gpFZswyDuF9nTiOlP1ILg
+         jnmtjAnz9KO6jPzoJCfAWsUBVOw+n9hH99DHOzNZ9J0J/0XJWP3YErTHRTNCI8S44tDq
+         N0PH1pIOjsQ45UbPvWc5f9hoYxnvdcFdkCv97iCf811BM+CldfA+UHIII46jWjGJ6iGc
+         II4X59em+FL1R/yYNK/4SPlBgZQ4xmY1ooCUSqg28QMUYZ9h+2NvJA/Ry9ZRVkFMhaD8
+         QHig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=EFk86uRdewz20VUPRQoIRx5Kk1NiNLCImIzNnjafFSw=;
-        b=dFIlrmCJakm+K7P/lF56r33TLpvuiILZ/wJKbyCRG0htpgphdchGLaD3mqByopZoxK
-         fbE5Nd712S0UdZblefOR8pf7R9FAYisdXziaBu/fFCnhTpmrzE0qe+1lxj/FJjhEY4sG
-         pg1nwn7daZThGAij1LJPYtUzMOETfo8DLHNkKcNpYbLK88bIo+yEnCDVk/vVWxWhHq64
-         fbMOU4FfSB/RB57Jyxi93E30Oux4ruWc84jFQr4Bq5xxk2aRefyB/bJjppHhmCfAGGE/
-         Fx5Dp04lgXSliQsTBNkBEcWUAgoKOQ0/vSoCljJAwDMj/XzW0Kr6IFwQAHOIN48RBC7T
-         jsHQ==
-X-Gm-Message-State: AJIora9A7hUDG9LcQwFeS1nyeyfWcA3VRJ+bD7IGZYVx7WLV4ujLYXdY
-        KY42oF8TfieW0RSUkNJK2wr5XA==
-X-Google-Smtp-Source: AGRyM1sba1t9L/GuBtsauW7d+8roMzRXpt0qdqU8mEVQ7dVaiHZev8zFGCXhF0HwZQzr8cIbmpgr6g==
-X-Received: by 2002:a05:6512:344e:b0:489:f4ad:88d8 with SMTP id j14-20020a056512344e00b00489f4ad88d8mr18715016lfr.297.1658224582722;
-        Tue, 19 Jul 2022 02:56:22 -0700 (PDT)
-Received: from [192.168.115.193] (89-162-31-138.fiber.signal.no. [89.162.31.138])
-        by smtp.gmail.com with ESMTPSA id j18-20020a056512345200b0047f67dbb533sm3098436lfr.70.2022.07.19.02.56.21
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 19 Jul 2022 02:56:22 -0700 (PDT)
-Message-ID: <7f2a4f21-5e07-9320-8f7b-573ccc562f43@linaro.org>
-Date:   Tue, 19 Jul 2022 11:56:20 +0200
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=HQXArWqN03DD+E6UdPTQJfJ1IjxcXg1RfJYRzgq3uVY=;
+        b=CCv7hzd4cxZEfv6myhd0HBii8U8v0FZ9QbbNMHMgTB8T+S68+H76x245wQAFC+p5q5
+         0g+jHG8NTs+ehG5k0PhW/Xb/HjtC3yWgK0X19hgS1PqILzKrzUqbvpZSXFPpmMHHcQ60
+         mfI+b/g8OIFNtHHsYoqYTyLnhRbdC8IDDADhfW7RdyION5vPwX+0nXtCJTSqSK75Q9uC
+         /Qqb4NEhqPV1RYW9t6EXlLLfe65stuaXhQZcRP3meK+BdXwIGMhCWxqleQLAeIfQ+u6i
+         CZ0go7isv09jzeoULTD9g4efjQ4Gm5ihPWPLasD5Bnc2VneRgFKCjiMTNPh0cr3Ifn66
+         sP+w==
+X-Gm-Message-State: AJIora/ccqKvk1odERp7tIsaovIXtii3nBOUY57+nieDhezb+Sj+BPtI
+        gTDxuc78I8FgXoPBXJZ8w0WI/GkHMx4cu7JZDz127w==
+X-Google-Smtp-Source: AGRyM1tCcBXMV7OQF3X3/OlWbFEk9/SJrMrAlp9TVMQy7Rh79gPpTC8yfeZRttnnQwrF1X5wYHLEQxA7LNhhzeXFwc8=
+X-Received: by 2002:a05:620a:d5b:b0:6b5:660b:2939 with SMTP id
+ o27-20020a05620a0d5b00b006b5660b2939mr19781431qkl.30.1658224792408; Tue, 19
+ Jul 2022 02:59:52 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
+References: <20220718153815.29414-1-ansuelsmth@gmail.com> <7f2a4f21-5e07-9320-8f7b-573ccc562f43@linaro.org>
+In-Reply-To: <7f2a4f21-5e07-9320-8f7b-573ccc562f43@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Tue, 19 Jul 2022 12:59:41 +0300
+Message-ID: <CAA8EJppCxrcQOtCDZvUX-CThGV7aZXYv__gz3KRBf28TCRTBEg@mail.gmail.com>
 Subject: Re: [PATCH 1/2] ARM: dts: qcom: ipq8064: reorganize node order and
  sort them
-Content-Language: en-US
-To:     Christian Marangi <ansuelsmth@gmail.com>,
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Christian Marangi <ansuelsmth@gmail.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
@@ -65,13 +62,9 @@ To:     Christian Marangi <ansuelsmth@gmail.com>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-References: <20220718153815.29414-1-ansuelsmth@gmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220718153815.29414-1-ansuelsmth@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -80,22 +73,27 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 18/07/2022 17:38, Christian Marangi wrote:
-> Reorganize node order and sort them by address.
-> 
-> Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-> ---
-> 
-> This was picked from for-next qcom branch [1]. Reorganize dtsi as requested.
-> 
-> [1] https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git/?h=for-next
+On Tue, 19 Jul 2022 at 12:56, Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
+>
+> On 18/07/2022 17:38, Christian Marangi wrote:
+> > Reorganize node order and sort them by address.
+> >
+> > Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+> > ---
+> >
+> > This was picked from for-next qcom branch [1]. Reorganize dtsi as requested.
+> >
+> > [1] https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git/?h=for-next
+>
+> If this is picked by qcom branch, no need to resend it.
+>
+> I don't see value in such reshuffle. Reviewing is not possible and you
+> did not mention tests (results should be equal).
 
-If this is picked by qcom branch, no need to resend it.
+The value is usual for all the cleanups: make it follow the
+established practice.
 
-I don't see value in such reshuffle. Reviewing is not possible and you
-did not mention tests (results should be equal).
-
-
-
-Best regards,
-Krzysztof
+-- 
+With best wishes
+Dmitry
