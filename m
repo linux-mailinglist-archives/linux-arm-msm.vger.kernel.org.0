@@ -2,111 +2,298 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 834F357A166
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Jul 2022 16:26:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 69C6557A177
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Jul 2022 16:28:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237590AbiGSO0Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Jul 2022 10:26:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41714 "EHLO
+        id S237490AbiGSO2L (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Jul 2022 10:28:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46334 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237906AbiGSO0F (ORCPT
+        with ESMTP id S233540AbiGSO1p (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Jul 2022 10:26:05 -0400
-Received: from mail-io1-f52.google.com (mail-io1-f52.google.com [209.85.166.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68F442727;
-        Tue, 19 Jul 2022 07:11:03 -0700 (PDT)
-Received: by mail-io1-f52.google.com with SMTP id z132so11893096iof.0;
-        Tue, 19 Jul 2022 07:11:03 -0700 (PDT)
+        Tue, 19 Jul 2022 10:27:45 -0400
+Received: from mail-io1-xd32.google.com (mail-io1-xd32.google.com [IPv6:2607:f8b0:4864:20::d32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4FA464AD66
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Jul 2022 07:14:32 -0700 (PDT)
+Received: by mail-io1-xd32.google.com with SMTP id p81so11903082iod.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Jul 2022 07:14:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=pkt2mZa+r6CsVBvHdxfl9ZtYgfYBiGtwJR0TyBmBn2k=;
+        b=SlzhZyt9l+GNXk4dk//RRG6m0fZZEzA7Cl4rmeOvfS+69bthJYXVogYlM3UbfRFlGJ
+         FpW3W361WFdTPhlrtyjkLorAsasxSCrmJMdm4eIvabjLg+adPIAhC4lCzyJ5/RygPjQ5
+         BOtavsMGUl4fiP7eIe6BpaIXPhje757ZYr2pqHzz6Lw62+qvOihvU0hbg/uvSW1QaBE1
+         5wEggFBvpbLJZ5VmG6iAhZsoCMb/2oS1yZGMdcdUMoYrJfyA0iFykIGZBz7RPy4oj/KK
+         O7T6PBOCXChw5yAzd0b7MYzo2xAt6r6aLu65XR59PvTL3a+Q83cg+rXA8975vw32XSkm
+         0bmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
-         :message-id;
-        bh=Y5OqVVuKuyGM5tSfFefSufSVX//uNjIb8bTox4lv9B4=;
-        b=sbVLlffOvKsk9zAPDc5VDE7WHWprmWzqgPNrasC78yRrWgBjQsuv2OMYWrIePeJaKb
-         N/Rh5iiG57EtSelIeuoIsYeCsi21iFrHnSbZICper1hli/Lzy1o9kaXWLTZxFaSpCpcL
-         icFS/QFChlbncuXuv6zjEsmfo11IKvNArMMpHrjOsFQEIiRRl+5a+386YbB8H7wO0KJ0
-         /deaDxgJzzqmOgEu9ZzReQu2QIHDxDDKrVJ9A1MbciIGUCemKQX1IupYK8EqjrRI5Kd2
-         5CGEAm5xCYyuJ4w+OsV2AWHdbD+axZx1+92lCl6v6m4z+dH52HjQbtGuVhAfbua2gr7P
-         ze5A==
-X-Gm-Message-State: AJIora8ODp6IIgg8RB/zQFrLj4bMO/uLtBX7FafsywimdNFKuvFyN0Gc
-        CP1wYirq965SNh+TUnOn55skWhWgfg==
-X-Google-Smtp-Source: AGRyM1tmPybaNriO5iuTlCMQP3qIIAb3WcIZg9dLpekVyr22JqnJHiC9sY3jNqs/TtBNJeyAOdtU7A==
-X-Received: by 2002:a05:6638:264d:b0:33f:5cb4:935f with SMTP id n13-20020a056638264d00b0033f5cb4935fmr16848739jat.98.1658239862483;
-        Tue, 19 Jul 2022 07:11:02 -0700 (PDT)
-Received: from robh.at.kernel.org ([64.188.179.248])
-        by smtp.gmail.com with ESMTPSA id g16-20020a926b10000000b002dc1f1a7cc2sm5853691ilc.31.2022.07.19.07.11.01
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=pkt2mZa+r6CsVBvHdxfl9ZtYgfYBiGtwJR0TyBmBn2k=;
+        b=gQDkVXouG5EU5pxy/vwQ9ev+457kiMQRPhJdoIdmsCHTVcZjOMcDeghrgbV1nxDP7G
+         uIh7a0JTBuDG3+KwDTgyDTc704k/+Pay5dEDOVFU7U2MwqSnao9QK3TtHgy4jI29DBu7
+         AeT4F3nIFul0eQyCYeYqlCXeA34QXK3OWdIVGlIJN4C1PwOlz1d4KX2wcNwsTriRL1KK
+         8gZMRMpfC5JpVH7nxTBuj8fpS7mbMbXE6Y3PG/1x5BQszrBy0lisiffQ/pcoQXfeeJgd
+         qKG8LHpG/kMD90hjwsZni8nmLl+n9T9eTMapHJSgVDG3fEJ/fGBtP88hR7Tmvp2TMxSj
+         HA9Q==
+X-Gm-Message-State: AJIora9Kd/T1GJYolKZ07KmM0PQECSF96aN7WdaJCx/JoU2+MwInqFZN
+        4ulsijdnBzXfZhczKERX2PALSw==
+X-Google-Smtp-Source: AGRyM1ssez9DZVLlBwQkrRccXEisCNfk4Fizssx9NwajhOtCz64G7Q7uywGs7C+r27zJgLBtjQQU0Q==
+X-Received: by 2002:a05:6602:2e8e:b0:669:d5b1:3fc9 with SMTP id m14-20020a0566022e8e00b00669d5b13fc9mr15406444iow.210.1658240071485;
+        Tue, 19 Jul 2022 07:14:31 -0700 (PDT)
+Received: from localhost.localdomain (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
+        by smtp.gmail.com with ESMTPSA id g7-20020a05663816c700b00335d7c314b1sm6727565jat.53.2022.07.19.07.14.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Jul 2022 07:11:02 -0700 (PDT)
-Received: (nullmailer pid 1153345 invoked by uid 1000);
-        Tue, 19 Jul 2022 14:11:00 -0000
-From:   Rob Herring <robh@kernel.org>
-To:     Caleb Connolly <caleb@connolly.tech>
-Cc:     Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Vinod Koul <vkoul@kernel.org>, David Airlie <airlied@linux.ie>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        Thierry Reding <thierry.reding@gmail.com>
-In-Reply-To: <20220718213051.1475108-4-caleb@connolly.tech>
-References: <20220718213051.1475108-1-caleb@connolly.tech> <20220718213051.1475108-4-caleb@connolly.tech>
-Subject: Re: [PATCH 3/4] dt-bindings: panel: Add LG SW43408 MIPI-DSI panel
-Date:   Tue, 19 Jul 2022 08:11:00 -0600
-Message-Id: <1658239860.441333.1153344.nullmailer@robh.at.kernel.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+        Tue, 19 Jul 2022 07:14:30 -0700 (PDT)
+From:   Alex Elder <elder@linaro.org>
+To:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+        pabeni@redhat.com
+Cc:     mka@chromium.org, evgreen@chromium.org, bjorn.andersson@linaro.org,
+        quic_cpratapa@quicinc.com, quic_avuyyuru@quicinc.com,
+        quic_jponduru@quicinc.com, quic_subashab@quicinc.com,
+        elder@kernel.org, netdev@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH net-next] net: ipa: add an endpoint device attribute group
+Date:   Tue, 19 Jul 2022 09:14:28 -0500
+Message-Id: <20220719141428.233047-1-elder@linaro.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 18 Jul 2022 22:30:50 +0100, Caleb Connolly wrote:
-> From: Sumit Semwal <sumit.semwal@linaro.org>
-> 
-> LG SW43408 is 1080x2160, 4-lane MIPI-DSI panel.
-> 
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> Signed-off-by: Sumit Semwal <sumit.semwal@linaro.org>
-> [caleb: convert to yaml]
-> Signed-off-by: Caleb Connolly <caleb@connolly.tech>
-> ---
->  .../bindings/display/panel/lg,43408.yaml      | 41 +++++++++++++++++++
->  .../display/panel/panel-simple-dsi.yaml       |  2 +
->  2 files changed, 43 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/display/panel/lg,43408.yaml
-> 
+Create a new attribute group meant to provide a single place that
+defines endpoint IDs that might be needed by user space.  Not all
+defined endpoints are presented, and only those that are defined
+will be made visible.
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+The new attributes use "extended" device attributes to hold endpoint
+IDs, which is a little more compact and efficient.  Reimplement the
+existing modem endpoint ID attribute files using common code.
 
-yamllint warnings/errors:
+Signed-off-by: Alex Elder <elder@linaro.org>
+---
+ .../testing/sysfs-devices-platform-soc-ipa    | 62 +++++++++++++----
+ drivers/net/ipa/ipa_main.c                    |  1 +
+ drivers/net/ipa/ipa_sysfs.c                   | 69 ++++++++++++++-----
+ drivers/net/ipa/ipa_sysfs.h                   |  1 +
+ 4 files changed, 102 insertions(+), 31 deletions(-)
 
-dtschema/dtc warnings/errors:
-./Documentation/devicetree/bindings/display/panel/lg,43408.yaml: $id: relative path/filename doesn't match actual path or filename
-	expected: http://devicetree.org/schemas/display/panel/lg,43408.yaml#
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/display/panel/lg,43408.yaml: duplicate '$id' value 'http://devicetree.org/schemas/display/panel/panel-lvds.yaml#'
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/patch/
-
-This check can fail if there are any dependencies. The base for a patch
-series is generally the most recent rc1.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit.
+diff --git a/Documentation/ABI/testing/sysfs-devices-platform-soc-ipa b/Documentation/ABI/testing/sysfs-devices-platform-soc-ipa
+index c56dcf15bf29d..364b1ba412427 100644
+--- a/Documentation/ABI/testing/sysfs-devices-platform-soc-ipa
++++ b/Documentation/ABI/testing/sysfs-devices-platform-soc-ipa
+@@ -46,33 +46,69 @@ Description:
+ 		that is supported by the hardware.  The possible values
+ 		are "MAPv4" or "MAPv5".
+ 
++What:		.../XXXXXXX.ipa/endpoint_id/
++Date:		July 2022
++KernelVersion:	v5.19
++Contact:	Alex Elder <elder@kernel.org>
++Description:
++		The .../XXXXXXX.ipa/endpoint_id/ directory contains
++		attributes that define IDs associated with IPA
++		endpoints.  The "rx" or "tx" in an endpoint name is
++		from the perspective of the AP.  An endpoint ID is a
++		small unsigned integer.
++
++What:		.../XXXXXXX.ipa/endpoint_id/modem_rx
++Date:		July 2022
++KernelVersion:	v5.19
++Contact:	Alex Elder <elder@kernel.org>
++Description:
++		The .../XXXXXXX.ipa/endpoint_id/modem_rx file contains
++		the ID of the AP endpoint on which packets originating
++		from the embedded modem are received.
++
++What:		.../XXXXXXX.ipa/endpoint_id/modem_tx
++Date:		July 2022
++KernelVersion:	v5.19
++Contact:	Alex Elder <elder@kernel.org>
++Description:
++		The .../XXXXXXX.ipa/endpoint_id/modem_tx file contains
++		the ID of the AP endpoint on which packets destined
++		for the embedded modem are sent.
++
++What:		.../XXXXXXX.ipa/endpoint_id/monitor_rx
++Date:		July 2022
++KernelVersion:	v5.19
++Contact:	Alex Elder <elder@kernel.org>
++Description:
++		The .../XXXXXXX.ipa/endpoint_id/monitor_rx file contains
++		the ID of the AP endpoint on which IPA "monitor" data is
++		received.  The monitor endpoint supplies replicas of
++		packets that enter the IPA hardware for processing.
++		Each replicated packet is preceded by a fixed-size "ODL"
++		header (see .../XXXXXXX.ipa/feature/monitor, above).
++		Large packets are truncated, to reduce the bandwidth
++		required to provide the monitor function.
++
+ What:		.../XXXXXXX.ipa/modem/
+ Date:		June 2021
+ KernelVersion:	v5.14
+ Contact:	Alex Elder <elder@kernel.org>
+ Description:
+-		The .../XXXXXXX.ipa/modem/ directory contains a set of
+-		attributes describing properties of the modem execution
+-		environment reachable by the IPA hardware.
++		The .../XXXXXXX.ipa/modem/ directory contains attributes
++		describing properties of the modem embedded in the SoC.
+ 
+ What:		.../XXXXXXX.ipa/modem/rx_endpoint_id
+ Date:		June 2021
+ KernelVersion:	v5.14
+ Contact:	Alex Elder <elder@kernel.org>
+ Description:
+-		The .../XXXXXXX.ipa/feature/rx_endpoint_id file contains
+-		the AP endpoint ID that receives packets originating from
+-		the modem execution environment.  The "rx" is from the
+-		perspective of the AP; this endpoint is considered an "IPA
+-		producer".  An endpoint ID is a small unsigned integer.
++		The .../XXXXXXX.ipa/modem/rx_endpoint_id file duplicates
++		the value found in .../XXXXXXX.ipa/endpoint_id/modem_rx.
+ 
+ What:		.../XXXXXXX.ipa/modem/tx_endpoint_id
+ Date:		June 2021
+ KernelVersion:	v5.14
+ Contact:	Alex Elder <elder@kernel.org>
+ Description:
+-		The .../XXXXXXX.ipa/feature/tx_endpoint_id file contains
+-		the AP endpoint ID used to transmit packets destined for
+-		the modem execution environment.  The "tx" is from the
+-		perspective of the AP; this endpoint is considered an "IPA
+-		consumer".  An endpoint ID is a small unsigned integer.
++		The .../XXXXXXX.ipa/modem/tx_endpoint_id file duplicates
++		the value found in .../XXXXXXX.ipa/endpoint_id/modem_tx.
+diff --git a/drivers/net/ipa/ipa_main.c b/drivers/net/ipa/ipa_main.c
+index 3757ce3de2c59..b989259b02047 100644
+--- a/drivers/net/ipa/ipa_main.c
++++ b/drivers/net/ipa/ipa_main.c
+@@ -851,6 +851,7 @@ static void ipa_shutdown(struct platform_device *pdev)
+ static const struct attribute_group *ipa_attribute_groups[] = {
+ 	&ipa_attribute_group,
+ 	&ipa_feature_attribute_group,
++	&ipa_endpoint_id_attribute_group,
+ 	&ipa_modem_attribute_group,
+ 	NULL,
+ };
+diff --git a/drivers/net/ipa/ipa_sysfs.c b/drivers/net/ipa/ipa_sysfs.c
+index ff61dbdd70d8c..747920a23b2b7 100644
+--- a/drivers/net/ipa/ipa_sysfs.c
++++ b/drivers/net/ipa/ipa_sysfs.c
+@@ -96,38 +96,71 @@ const struct attribute_group ipa_feature_attribute_group = {
+ 	.attrs		= ipa_feature_attrs,
+ };
+ 
+-static ssize_t
+-ipa_endpoint_id_show(struct ipa *ipa, char *buf, enum ipa_endpoint_name name)
++static umode_t ipa_endpoint_id_is_visible(struct kobject *kobj,
++					  struct attribute *attr, int n)
+ {
+-	u32 endpoint_id = ipa->name_map[name]->endpoint_id;
++	struct ipa *ipa = dev_get_drvdata(kobj_to_dev(kobj));
++	struct device_attribute *dev_attr;
++	struct dev_ext_attribute *ea;
++	bool visible;
+ 
+-	return scnprintf(buf, PAGE_SIZE, "%u\n", endpoint_id);
++	/* An endpoint id attribute is only visible if it's defined */
++	dev_attr = container_of(attr, struct device_attribute, attr);
++	ea = container_of(dev_attr, struct dev_ext_attribute, attr);
++
++	visible = !!ipa->name_map[(enum ipa_endpoint_name)ea->var];
++
++	return visible ? attr->mode : 0;
+ }
+ 
+-static ssize_t rx_endpoint_id_show(struct device *dev,
+-				   struct device_attribute *attr, char *buf)
++static ssize_t endpoint_id_attr_show(struct device *dev,
++				     struct device_attribute *attr, char *buf)
+ {
+ 	struct ipa *ipa = dev_get_drvdata(dev);
++	struct ipa_endpoint *endpoint;
++	struct dev_ext_attribute *ea;
+ 
+-	return ipa_endpoint_id_show(ipa, buf, IPA_ENDPOINT_AP_MODEM_RX);
++	ea = container_of(attr, struct dev_ext_attribute, attr);
++	endpoint = ipa->name_map[(enum ipa_endpoint_name)ea->var];
++
++	return sysfs_emit(buf, "%u\n", endpoint->endpoint_id);
+ }
+ 
+-static DEVICE_ATTR_RO(rx_endpoint_id);
++#define ENDPOINT_ID_ATTR(_n, _endpoint_name)				    \
++	static struct dev_ext_attribute dev_attr_endpoint_id_ ## _n = {	    \
++		.attr	= __ATTR(_n, 0444, endpoint_id_attr_show, NULL),    \
++		.var	= (void *)(_endpoint_name),			    \
++	}
+ 
+-static ssize_t tx_endpoint_id_show(struct device *dev,
+-				   struct device_attribute *attr, char *buf)
+-{
+-	struct ipa *ipa = dev_get_drvdata(dev);
++ENDPOINT_ID_ATTR(modem_rx, IPA_ENDPOINT_AP_MODEM_RX);
++ENDPOINT_ID_ATTR(modem_tx, IPA_ENDPOINT_AP_MODEM_TX);
+ 
+-	return ipa_endpoint_id_show(ipa, buf, IPA_ENDPOINT_AP_MODEM_TX);
+-}
++static struct attribute *ipa_endpoint_id_attrs[] = {
++	&dev_attr_endpoint_id_modem_rx.attr.attr,
++	&dev_attr_endpoint_id_modem_tx.attr.attr,
++	NULL
++};
++
++const struct attribute_group ipa_endpoint_id_attribute_group = {
++	.name		= "endpoint_id",
++	.is_visible	= ipa_endpoint_id_is_visible,
++	.attrs		= ipa_endpoint_id_attrs,
++};
++
++/* Reuse endpoint ID attributes for the legacy modem endpoint IDs */
++#define MODEM_ATTR(_n, _endpoint_name)					    \
++	static struct dev_ext_attribute dev_attr_modem_ ## _n = {	    \
++		.attr	= __ATTR(_n, 0444, endpoint_id_attr_show, NULL),    \
++		.var	= (void *)(_endpoint_name),			    \
++	}
+ 
+-static DEVICE_ATTR_RO(tx_endpoint_id);
++MODEM_ATTR(rx_endpoint_id, IPA_ENDPOINT_AP_MODEM_RX);
++MODEM_ATTR(tx_endpoint_id, IPA_ENDPOINT_AP_MODEM_TX);
+ 
+ static struct attribute *ipa_modem_attrs[] = {
+-	&dev_attr_rx_endpoint_id.attr,
+-	&dev_attr_tx_endpoint_id.attr,
+-	NULL
++	&dev_attr_modem_rx_endpoint_id.attr.attr,
++	&dev_attr_modem_tx_endpoint_id.attr.attr,
++	NULL,
+ };
+ 
+ const struct attribute_group ipa_modem_attribute_group = {
+diff --git a/drivers/net/ipa/ipa_sysfs.h b/drivers/net/ipa/ipa_sysfs.h
+index b34e5650bf8cd..4a3ffd1e4e3fb 100644
+--- a/drivers/net/ipa/ipa_sysfs.h
++++ b/drivers/net/ipa/ipa_sysfs.h
+@@ -10,6 +10,7 @@ struct attribute_group;
+ 
+ extern const struct attribute_group ipa_attribute_group;
+ extern const struct attribute_group ipa_feature_attribute_group;
++extern const struct attribute_group ipa_endpoint_id_attribute_group;
+ extern const struct attribute_group ipa_modem_attribute_group;
+ 
+ #endif /* _IPA_SYSFS_H_ */
+-- 
+2.34.1
 
