@@ -2,101 +2,194 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2249557A630
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Jul 2022 20:11:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3235457A660
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Jul 2022 20:21:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239968AbiGSSKw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Jul 2022 14:10:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40940 "EHLO
+        id S233730AbiGSSVh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Jul 2022 14:21:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52126 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239926AbiGSSKs (ORCPT
+        with ESMTP id S240069AbiGSSVh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Jul 2022 14:10:48 -0400
-Received: from mail-il1-x131.google.com (mail-il1-x131.google.com [IPv6:2607:f8b0:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F36F501B3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Jul 2022 11:10:31 -0700 (PDT)
-Received: by mail-il1-x131.google.com with SMTP id i5so706467ila.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Jul 2022 11:10:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=KhaRQXijU7X7QmaQEbJg0rB5xqhYmbZCHiU1aLyghl0=;
-        b=cT/qMGKV+2myXeCJjPngGGYo3SfWAsIwPQiV98pzR666eLHS2DZ1mIOf/LqGePwL9u
-         f0Jw/BuoJ6IHMNucTxjuXvy/hK4RiHqRBZsLDyijKnahK+zA+/drlkyy3YHg+jhP6Z0N
-         Jzx9xWY/AIfpjGmqaDRosNihj5xylH1VulSciNlJ03QpLd0DonYFFKbnsgDnJmW79Dm7
-         0iol8fJxSaqIzTx/lk4iXcCm1kF4Iy4FPud87c60LEyl6k91fHVLUrHla4KPAc3cPLvh
-         Pd1PWLcDYONQDLvdRnAPEhYTZBi/NYZ45BGETu3MQrpwcvavFL9xno15lPJycmJCjSty
-         JEpg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=KhaRQXijU7X7QmaQEbJg0rB5xqhYmbZCHiU1aLyghl0=;
-        b=nqWFIU3aIA8lDMlE0PqlHR2n22H2oD+wjiRGMCD7qe2eghX+42Ij1eb6DWT0btL2q9
-         OfxXs3jZMFChWXT3mi+Ubwh72aPTrg+cMBXUkaL+B/tCj++vQJV+Mm4XCTsh6s6rZMrC
-         1gcbV/TwszXDF6UfKmo/cqKEHMkDZz0io+zKISBAqlmbYDcbYM4yMzDwZdLKgXMwcmmR
-         pUI5aYzmQRS1OuKXip4rL0OGbJAi4yVTC/DF+LRjTlUif/SjWDxG+q2jHsGeebSMCDSc
-         jbQ7beQ4kX0/cUgr/HFvlJMAIjJap/l6qajmx4oqD9AfAuXM+m+MX89Lup2NqnvK3pMp
-         GeBg==
-X-Gm-Message-State: AJIora8nDXH5zLFHuRGv/TULYR50PeLzJXMBQgjKTP7GkVBrqVvwLIdo
-        dVb6msm6PrOhjEZbl8bL0ZFDEA==
-X-Google-Smtp-Source: AGRyM1vYRI0fYrM4kBMueIGB2JLVtJZhd6JKwFFAqUc9U/AgZgLvNp8rhQeoRIsu6T+MJGc9oI7i5Q==
-X-Received: by 2002:a05:6e02:c86:b0:2dc:e139:444a with SMTP id b6-20020a056e020c8600b002dce139444amr6984067ile.96.1658254231231;
-        Tue, 19 Jul 2022 11:10:31 -0700 (PDT)
-Received: from localhost.localdomain (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
-        by smtp.gmail.com with ESMTPSA id f6-20020a056e020b4600b002dae42fa5f2sm6089552ilu.56.2022.07.19.11.10.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Jul 2022 11:10:30 -0700 (PDT)
-From:   Alex Elder <elder@linaro.org>
-To:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-        pabeni@redhat.com
-Cc:     mka@chromium.org, evgreen@chromium.org, bjorn.andersson@linaro.org,
-        quic_cpratapa@quicinc.com, quic_avuyyuru@quicinc.com,
-        quic_jponduru@quicinc.com, quic_subashab@quicinc.com,
-        elder@kernel.org, netdev@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH net-next v2 5/5] net: ipa: fix an outdated comment
-Date:   Tue, 19 Jul 2022 13:10:20 -0500
-Message-Id: <20220719181020.372697-6-elder@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220719181020.372697-1-elder@linaro.org>
-References: <20220719181020.372697-1-elder@linaro.org>
+        Tue, 19 Jul 2022 14:21:37 -0400
+Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EEE8E5C373;
+        Tue, 19 Jul 2022 11:21:34 -0700 (PDT)
+Received: from g550jk.localnet (31-151-115-246.dynamic.upc.nl [31.151.115.246])
+        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 7B200D0A4C;
+        Tue, 19 Jul 2022 18:21:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
+        t=1658254888; bh=yNpsCPGDUanSFxi0uyJcAWJyGtglJmc0S7f/ELPIoUk=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References;
+        b=SGvBzu96ITlnxBYX6kUI+U8prandMG9rscf8d7l5wjMVaF7PsttY7X1BfLiuTD9cP
+         S6Hy9SdoOQ7gChezP8YwiBL2qYGk9injAu/VTxO3tZSTBlbrbJ9MntM3wYKz7fEQpb
+         Zeu+OuxhGMFflUIWNhLljSxHFuRU/+ucrxkeu2DY=
+From:   Luca Weiss <luca@z3ntu.xyz>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 3/5] ARM: dts: qcom: msm8226: Add ADSP node
+Date:   Tue, 19 Jul 2022 20:21:26 +0200
+Message-ID: <2683836.mvXUDI8C0e@g550jk>
+In-Reply-To: <20220423155059.660387-3-luca@z3ntu.xyz>
+References: <20220423155059.660387-1-luca@z3ntu.xyz> <20220423155059.660387-3-luca@z3ntu.xyz>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
+X-Spam-Status: No, score=-0.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FROM_SUSPICIOUS_NTLD,
+        PDS_OTHER_BAD_TLD,SPF_HELO_NONE,SPF_PASS autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Since commit 8797972afff3d ("net: ipa: remove command info pool"),
-we don't allocate "command info" entries for command channel
-transactions.  Fix a comment that seems to suggest we still do.
-(Even before that commit, the comment was out of place.)
+Hi Bjorn,
 
-Signed-off-by: Alex Elder <elder@linaro.org>
----
- drivers/net/ipa/gsi_trans.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+On Samstag, 23. April 2022 17:50:57 CEST Luca Weiss wrote:
+> Add a node for the adsp found on msm8226.
+> 
 
-diff --git a/drivers/net/ipa/gsi_trans.c b/drivers/net/ipa/gsi_trans.c
-index 55987e35af2dd..18e7e8c405bea 100644
---- a/drivers/net/ipa/gsi_trans.c
-+++ b/drivers/net/ipa/gsi_trans.c
-@@ -362,7 +362,7 @@ struct gsi_trans *gsi_channel_trans_alloc(struct gsi *gsi, u32 channel_id,
- 	trans->rsvd_count = tre_count;
- 	init_completion(&trans->completion);
- 
--	/* Allocate the scatterlist and (if requested) info entries. */
-+	/* Allocate the scatterlist */
- 	trans->sgl = gsi_trans_pool_alloc(&trans_info->sg_pool, tre_count);
- 	sg_init_marker(trans->sgl, tre_count);
- 
--- 
-2.34.1
+it seems the dt-bindings and driver patch has landed in 5.19 but I don't think 
+the 3 dts(i) patches are applied yet.
+
+Could you please check and maybe apply them?
+
+Regards
+Luca
+
+> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+> ---
+>  .../boot/dts/qcom-apq8026-asus-sparrow.dts    |  2 +
+>  arch/arm/boot/dts/qcom-msm8226.dtsi           | 65 +++++++++++++++++++
+>  2 files changed, 67 insertions(+)
+> 
+> diff --git a/arch/arm/boot/dts/qcom-apq8026-asus-sparrow.dts
+> b/arch/arm/boot/dts/qcom-apq8026-asus-sparrow.dts index
+> ace8cea27949..818c1a201227 100644
+> --- a/arch/arm/boot/dts/qcom-apq8026-asus-sparrow.dts
+> +++ b/arch/arm/boot/dts/qcom-apq8026-asus-sparrow.dts
+> @@ -8,6 +8,8 @@
+>  #include "qcom-msm8226.dtsi"
+>  #include "qcom-pm8226.dtsi"
+> 
+> +/delete-node/ &adsp_region;
+> +
+>  / {
+>  	model = "ASUS ZenWatch 2";
+>  	compatible = "asus,sparrow", "qcom,apq8026";
+> diff --git a/arch/arm/boot/dts/qcom-msm8226.dtsi
+> b/arch/arm/boot/dts/qcom-msm8226.dtsi index 28eca15b5712..3016035d5e21
+> 100644
+> --- a/arch/arm/boot/dts/qcom-msm8226.dtsi
+> +++ b/arch/arm/boot/dts/qcom-msm8226.dtsi
+> @@ -8,6 +8,7 @@
+>  #include <dt-bindings/interrupt-controller/arm-gic.h>
+>  #include <dt-bindings/clock/qcom,gcc-msm8974.h>
+>  #include <dt-bindings/gpio/gpio.h>
+> +#include <dt-bindings/power/qcom-rpmpd.h>
+>  #include <dt-bindings/reset/qcom,gcc-msm8974.h>
+> 
+>  / {
+> @@ -60,6 +61,11 @@ smem_region: smem@3000000 {
+>  			reg = <0x3000000 0x100000>;
+>  			no-map;
+>  		};
+> +
+> +		adsp_region: adsp@dc00000 {
+> +			reg = <0x0dc00000 0x1900000>;
+> +			no-map;
+> +		};
+>  	};
+> 
+>  	smd {
+> @@ -115,6 +121,31 @@ smem {
+>  		hwlocks = <&tcsr_mutex 3>;
+>  	};
+> 
+> +	smp2p-adsp {
+> +		compatible = "qcom,smp2p";
+> +		qcom,smem = <443>, <429>;
+> +
+> +		interrupt-parent = <&intc>;
+> +		interrupts = <GIC_SPI 158 IRQ_TYPE_EDGE_RISING>;
+> +
+> +		qcom,ipc = <&apcs 8 10>;
+> +
+> +		qcom,local-pid = <0>;
+> +		qcom,remote-pid = <2>;
+> +
+> +		adsp_smp2p_out: master-kernel {
+> +			qcom,entry-name = "master-kernel";
+> +			#qcom,smem-state-cells = <1>;
+> +		};
+> +
+> +		adsp_smp2p_in: slave-kernel {
+> +			qcom,entry-name = "slave-kernel";
+> +
+> +			interrupt-controller;
+> +			#interrupt-cells = <2>;
+> +		};
+> +	};
+> +
+>  	soc: soc {
+>  		compatible = "simple-bus";
+>  		#address-cells = <1>;
+> @@ -512,6 +543,40 @@ tcsr_mutex_block: syscon@fd484000 {
+>  			compatible = "syscon";
+>  			reg = <0xfd484000 0x2000>;
+>  		};
+> +
+> +		adsp: remoteproc@fe200000 {
+> +			compatible = "qcom,msm8226-adsp-pil";
+> +			reg = <0xfe200000 0x100>;
+> +
+> +			interrupts-extended = <&intc GIC_SPI 162 
+IRQ_TYPE_EDGE_RISING>,
+> +					      <&adsp_smp2p_in 
+0 IRQ_TYPE_EDGE_RISING>,
+> +					      <&adsp_smp2p_in 
+1 IRQ_TYPE_EDGE_RISING>,
+> +					      <&adsp_smp2p_in 
+2 IRQ_TYPE_EDGE_RISING>,
+> +					      <&adsp_smp2p_in 
+3 IRQ_TYPE_EDGE_RISING>;
+> +			interrupt-names = "wdog", "fatal", "ready", 
+"handover", "stop-ack";
+> +
+> +			power-domains = <&rpmpd MSM8226_VDDCX>;
+> +			power-domain-names = "cx";
+> +
+> +			clocks = <&xo_board>;
+> +			clock-names = "xo";
+> +
+> +			memory-region = <&adsp_region>;
+> +
+> +			qcom,smem-states = <&adsp_smp2p_out 0>;
+> +			qcom,smem-state-names = "stop";
+> +
+> +			status = "disabled";
+> +
+> +			smd-edge {
+> +				interrupts = <GIC_SPI 156 
+IRQ_TYPE_EDGE_RISING>;
+> +
+> +				qcom,ipc = <&apcs 8 8>;
+> +				qcom,smd-edge = <1>;
+> +
+> +				label = "lpass";
+> +			};
+> +		};
+>  	};
+> 
+>  	timer {
+
+
+
 
