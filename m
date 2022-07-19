@@ -2,123 +2,204 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D6E7B579400
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Jul 2022 09:19:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F271E57947F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Jul 2022 09:47:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235826AbiGSHTw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Jul 2022 03:19:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47826 "EHLO
+        id S234738AbiGSHr5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Jul 2022 03:47:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38616 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235807AbiGSHTu (ORCPT
+        with ESMTP id S233580AbiGSHr5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Jul 2022 03:19:50 -0400
-Received: from mail-oa1-x2b.google.com (mail-oa1-x2b.google.com [IPv6:2001:4860:4864:20::2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4BD6332BA1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Jul 2022 00:19:49 -0700 (PDT)
-Received: by mail-oa1-x2b.google.com with SMTP id 586e51a60fabf-1013ecaf7e0so29867074fac.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Jul 2022 00:19:49 -0700 (PDT)
+        Tue, 19 Jul 2022 03:47:57 -0400
+Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C1C9DEE0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Jul 2022 00:47:56 -0700 (PDT)
+Received: by mail-pj1-x102c.google.com with SMTP id d7-20020a17090a564700b001f209736b89so367884pji.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Jul 2022 00:47:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=sbnnlm1/PjMSPmudPPg+00uf3vfTognMn8oMjSHYKvA=;
-        b=YvreDaoClCfLMVh0kuegRr5Tb20TtMuxjFsoBfeQ/aKfhGhBmftcSgjY4V2Eg+zSgl
-         FfyMhei9a9x1UwCOdq2HcUOaccXm4XzQ0NnNDXOcLgmYZL+zL3GQAn7DDfRiicse28f1
-         RN5kaIQCf4Z4fi199iVfV3TpzhhwXflVj8guQ=
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=fZvYFTQVWADi8JgqnZ6cTCBLOf5nfyb++I9Q8W9P3TU=;
+        b=rS3eNboYNUbV5YTV7UweX1aBei0pk0eAjbMBOoeSTOyva/8H3/zLSPn56ETr1wTuSC
+         X6rxYkItGvztKmfuGsmTzcYEDWNfGqixq3CQ4N0QbotHVpvxiFu/rPgxCrXEcpcshs4q
+         A8lTmLGOfiwyxGIn6FYXNON0KE2dGL9DeXq+cGUz0j3vo/iaz5Ok+4k5yrVMmI0Iiprr
+         24mr6evwQ83HD1Z96mKhNqki/Gv9N0HMvI+dRdN3FEDQO+sZG9WfIOp480/W+j4uwjhB
+         UMxWHpd9BJnLQq5ukuFaHU0RqnZhIAJ5cDZYwTDELtxIi8coKNigJCVYhkaXpuR2oorY
+         GaOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=sbnnlm1/PjMSPmudPPg+00uf3vfTognMn8oMjSHYKvA=;
-        b=4gNPp/I99ZfN4pT5iBR79FZ/cz+Qx/kyttj0JZCSoW4aQ2PdXpADOpCZvJjXRU6WxZ
-         QlclVxfe/cEXE7/p2ESOvvpKBXrryh/aQeq+Zi14wdjo0OYatezSeO2UKrJhkY9UR3IF
-         GkAbA8KnncUyIfzPwmeebchmy6RCVLmmgWJ0ZzQ1qtDiDNKkSlvfxQWS1bRLvHoUqBbJ
-         6z9HIYtLAy8xsQHC58vRiBOpoJ0L7lCHIw50SsSy+Vr2vGSYLaoAyDAtWaguEG2Bt8uU
-         jOmU1bcWvwsOCtiX6gl0oqwBDHFJ5Zmf+DR0yJT+PzKzzOMRPJlVTxypm47q6chRhLCm
-         dFYw==
-X-Gm-Message-State: AJIora+G20T9eYo9u/fMtsq1at/8vlC84UWUn+oL7Z7YFK44yBIgmN8L
-        i9KIv/wxf62e59DEpQrtDU2hnP1eLFnzS7svy4uatg==
-X-Google-Smtp-Source: AGRyM1tdmvnEmkKpCicr8GGagWVe2Y/bXDhFisbQ7fpg4AqrDBUi60mDeIFUloIr9xJ8nhMLsB/zEqXvdphhfCcaqo4=
-X-Received: by 2002:aca:db56:0:b0:33a:3dd5:86ed with SMTP id
- s83-20020acadb56000000b0033a3dd586edmr11336531oig.0.1658215188633; Tue, 19
- Jul 2022 00:19:48 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 19 Jul 2022 03:19:48 -0400
-MIME-Version: 1.0
-In-Reply-To: <0c050434-27ca-1099-d93d-8ad6ace3396e@quicinc.com>
-References: <1657346375-1461-1-git-send-email-quic_akhilpo@quicinc.com>
- <20220709112837.v2.5.I7291c830ace04fce07e6bd95a11de4ba91410f7b@changeid>
- <CAD=FV=XzvcjS51q78BZ=FPCEVUDMD+VKJ70ksCm5V4qwHN_wRg@mail.gmail.com>
- <c022538d-c616-8f1a-e1c2-c11b5f0de670@quicinc.com> <e4dcdd8d-18a9-8da3-7ac3-6cc792139f70@quicinc.com>
- <CAE-0n52TG3hsytN5nRU7W=S6PffSj8yQDmuicN0-qxoW-jxiZQ@mail.gmail.com> <0c050434-27ca-1099-d93d-8ad6ace3396e@quicinc.com>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Tue, 19 Jul 2022 03:19:48 -0400
-Message-ID: <CAE-0n53J=dADDTrydVuNZzw38dW_-+Baf8cfn0Q6DSVX_6cLNg@mail.gmail.com>
-Subject: Re: [Freedreno] [PATCH v2 5/7] arm64: dts: qcom: sc7280: Update gpu
- register list
-To:     Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        Doug Anderson <dianders@chromium.org>,
-        Taniya Das <quic_tdas@quicinc.com>, quic_rjendra@quicinc.com
-Cc:     devicetree@vger.kernel.org, Jonathan Marek <jonathan@marek.ca>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=fZvYFTQVWADi8JgqnZ6cTCBLOf5nfyb++I9Q8W9P3TU=;
+        b=OiJj/SyLyWkNx3V72v/YGtO5TH7Eipz0xe3c94nYhMSaHIAhuyikLDSkwDMYWduHOx
+         HnTJOg41VblJoT+vy3ut/GAu5sd6ZSlAdiVoX8j9UZNqrlLoQppu85SbmyGBRC4VElrc
+         Dk8ddZY4KDBFV9kXThpJkHMJ5OF3Cxd4/W0pwvy4xa+yRjTjJcHEKK9SnvvOX3b9sAPG
+         PvfxR82eJ2+u9cpu5d/2jtvgmTmIe8RVgY3Fdr9Y1c3IPrU0qNGEC3fdXOrdPSyoZ1Rw
+         wN7RS2iWOei7SNDPpBvqyS/+dAEn6whPfAlJ7l2mlLHbTTh4XwgMjYGdeEyhgn8aoIQa
+         863g==
+X-Gm-Message-State: AJIora99yF6BHbifnqbWeBCKwzo3+Sv9gXmuvYVNE/VAJLyg+83fxJYT
+        C7XX3z60HnNu0rs4VEkSs1CIwkNKliel
+X-Google-Smtp-Source: AGRyM1vhGsYy0ZCs7uCK5IyNM/JATxHm5llih9735ndNReIUaUR4bNWVTvb8U7jYVVeY4XEkNie0Ug==
+X-Received: by 2002:a17:90a:590e:b0:1f1:afeb:996 with SMTP id k14-20020a17090a590e00b001f1afeb0996mr14350841pji.205.1658216875538;
+        Tue, 19 Jul 2022 00:47:55 -0700 (PDT)
+Received: from thinkpad ([117.217.180.99])
+        by smtp.gmail.com with ESMTPSA id y6-20020aa79e06000000b00528655cd6a6sm10697477pfq.53.2022.07.19.00.47.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 19 Jul 2022 00:47:55 -0700 (PDT)
+Date:   Tue, 19 Jul 2022 13:17:51 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Robert Marko <robimarko@gmail.com>
+Cc:     Marc Zyngier <maz@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Andy Gross <agross@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-gpio@vger.kernel.org,
+        open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH] pinctrl: qcom: spmi-gpio: make the irqchip immutable
+Message-ID: <20220719074751.GA25065@thinkpad>
+References: <20220624195112.894916-1-robimarko@gmail.com>
+ <87edyq1ujr.wl-maz@kernel.org>
+ <20220712124445.GC21746@workstation>
+ <87czea1i2f.wl-maz@kernel.org>
+ <CAOX2RU5RX+H=omuKGye2fBy9dOFmfC9HC_3pekeGMxDJuReCUw@mail.gmail.com>
+ <d8912a0d811b5eb924b8c4136b099f72@kernel.org>
+ <CAOX2RU4MpyEQ0RtcrZ07VXRbB+SWWU=1zWfYUXhQFtvh=MCiDw@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAOX2RU4MpyEQ0RtcrZ07VXRbB+SWWU=1zWfYUXhQFtvh=MCiDw@mail.gmail.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Akhil P Oommen (2022-07-18 23:37:16)
-> On 7/19/2022 11:19 AM, Stephen Boyd wrote:
-> > Quoting Akhil P Oommen (2022-07-18 21:07:05)
-> >> On 7/14/2022 11:10 AM, Akhil P Oommen wrote:
-> >>> IIUC, qcom gdsc driver doesn't ensure hardware is collapsed since they
-> >>> are vote-able switches. Ideally, we should ensure that the hw has
-> >>> collapsed for gpu recovery because there could be transient votes from
-> >>> other subsystems like hypervisor using their vote register.
-> >>>
-> >>> I am not sure how complex the plumbing to gpucc driver would be to allow
-> >>> gpu driver to check hw status. OTOH, with this patch, gpu driver does a
-> >>> read operation on a gpucc register which is in always-on domain. That
-> >>> means we don't need to vote any resource to access this register.
+On Wed, Jul 13, 2022 at 02:33:32PM +0200, Robert Marko wrote:
+> On Wed, 13 Jul 2022 at 13:47, Marc Zyngier <maz@kernel.org> wrote:
+> >
+> > On 2022-07-13 12:08, Robert Marko wrote:
+> > > On Tue, 12 Jul 2022 at 17:12, Marc Zyngier <maz@kernel.org> wrote:
+> > >>
+> > >> On Tue, 12 Jul 2022 13:44:45 +0100,
+> > >> Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> wrote:
+> > >> >
+> > >> > On Tue, Jul 12, 2022 at 11:42:32AM +0100, Marc Zyngier wrote:
+> > >> > > On Fri, 24 Jun 2022 20:51:12 +0100,
+> > >> > > Robert Marko <robimarko@gmail.com> wrote:
+> > >> > > >
+> > >> > > > Commit 6c846d026d49 ("gpio: Don't fiddle with irqchips marked as
+> > >> > > > immutable") added a warning to indicate if the gpiolib is altering the
+> > >> > > > internals of irqchips.
+> > >> > > >
+> > >> > > > Following this change the following warning is now observed for the SPMI
+> > >> > > > PMIC pinctrl driver:
+> > >> > > > gpio gpiochip1: (200f000.spmi:pmic@0:gpio@c000): not an immutable chip, please consider fixing it!
+> > >> > > >
+> > >> > > > Fix this by making the irqchip in the SPMI PMIC pinctrl driver immutable.
+> > >> > > >
+> > >> > > > Signed-off-by: Robert Marko <robimarko@gmail.com>
+> > >> > > > ---
+> > >> > > >  drivers/pinctrl/qcom/pinctrl-spmi-gpio.c | 22 ++++++++++++----------
+> > >> > > >  1 file changed, 12 insertions(+), 10 deletions(-)
+> > >> > > >
+> > >> > > > diff --git a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
+> > >> > > > index c3255b0bece4..406ee0933d0b 100644
+> > >> > > > --- a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
+> > >> > > > +++ b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
+> > >> > > > @@ -171,7 +171,6 @@ struct pmic_gpio_state {
+> > >> > > >   struct regmap   *map;
+> > >> > > >   struct pinctrl_dev *ctrl;
+> > >> > > >   struct gpio_chip chip;
+> > >> > > > - struct irq_chip irq;
+> > >> > > >   u8 usid;
+> > >> > > >   u8 pid_base;
+> > >> > > >  };
+> > >> > > > @@ -988,6 +987,17 @@ static void *pmic_gpio_populate_parent_fwspec(struct gpio_chip *chip,
+> > >> > > >   return fwspec;
+> > >> > > >  }
+> > >> > > >
+> > >> > > > +static const struct irq_chip spmi_gpio_irq_chip = {
+> > >> > > > + .name           = "spmi-gpio",
+> > >> > > > + .irq_ack        = irq_chip_ack_parent,
+> > >> > > > + .irq_mask       = irq_chip_mask_parent,
+> > >> > > > + .irq_unmask     = irq_chip_unmask_parent,
+> > >> > >
+> > >> > > No, this is wrong. Please look at the documentation to see how you
+> > >> > > must now directly call into the gpiolib helpers for these two
+> > >> > > callbacks.
+> > >> > >
+> > >> >
+> > >> > IIUC, you are referring to gpiochip_disable_irq() and
+> > >> > gpiochip_enable_irq() APIs.
+> > >>
+> > >> I am indeed.
+> > >>
+> > >> > These APIs are supposed to let the gpiolib know about that the IRQ
+> > >> > usage of these GPIOs. But for the case of hierarchial IRQ domain,
+> > >> > isn't the parent is going to do that?
+> > >>
+> > >> Why would it? The parent has no clue about what sits above it. In a
+> > >> hierarchical configuration, each level is responsible for its own
+> > >> level, and the GPIO layer should be responsible for its own
+> > >> management.
+> > >>
+> > >> > Please correct me if I'm wrong.
+> > >>
+> > >> I'm afraid you are, and this patch is a fairly obvious change in
+> > >> behaviour, as the callbacks you mention above are not called anymore,
+> > >> while they were before.
+> > >>
+> > >> If they are not necessary (for reasons I can't fathom), then this
+> > >> should be clearly explained.
+> > >
+> > > Hi Marc,
+> > > I will look at IRQ GPIO docs, but in this case, then we have more
+> > > conversions that
+> > > are not correct.
+> >
+> > Then please point them out.
+> 
+> Oh, now I get the issue, I was misunderstanding it completely.
+> gpiochip_enable_irq and gpiochip_disable_irq are not being called
+> at all.
+> 
+> However, I dont see them being called before the conversion as well.
+> I am not really familiar with the PMIC IRQ-s, looked like an easy conversion
+> to get rid of the warning.
+> 
+> Manivannan can you shed some light on this?
+> 
 
-Reading between the lines here, you're saying that you have to read the
-gdsc register to make sure that the gdsc is in some state? Can you
-clarify exactly what you're doing? And how do you know that something
-else in the kernel can't cause the register to change after it is read?
-It certainly seems like we can't be certain because there is voting
-involved.
+I hope you got the answer by now. When I looked into the conversion I saw that
+there were missing calls to gpiochip_{enable/disable}_irq APIs. But at that
+time I blindly assumed (yeah very bad of myself) that the parent irqchip will
+handle that :(
 
-> >>>
-> >>> Stephen/Rajendra/Taniya, any suggestion?
-> > Why can't you assert a gpu reset signal with the reset APIs? This series
-> > seems to jump through a bunch of hoops to get the gdsc and power domain
-> > to "reset" when I don't know why any of that is necessary. Can't we
-> > simply assert a reset to the hardware after recovery completes so the
-> > device is back into a good known POR (power on reset) state?
-> That is because there is no register interface to reset GPU CX domain.
-> The recommended sequence from HW design folks is to collapse both cx and
-> gx gdsc to properly reset gpu/gmu.
->
+Anyway, you should call these helpers from the mask/unmask callbacks as a part
+of the conversion patch. Let me know if you are onto it or not!
 
-Ok. One knee jerk reaction is to treat the gdsc as a reset then and
-possibly mux that request along with any power domain on/off so that if
-the reset is requested and the power domain is off nothing happens.
-Otherwise if the power domain is on then it manually sequences and
-controls the two gdscs so that the GPU is reset and then restores the
-enable state of the power domain.
+Thanks,
+Mani
+
+> Regards,
+> Robert
+> 
+> 
+> 
+> 
+> 
+> >
+> >          M.
+> > --
+> > Jazz is not dead. It just smells funny...
+
+-- 
+மணிவண்ணன் சதாசிவம்
