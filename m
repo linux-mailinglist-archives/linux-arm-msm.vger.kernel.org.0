@@ -2,242 +2,169 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E115B579577
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Jul 2022 10:46:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1A3CF5795E2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Jul 2022 11:14:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235160AbiGSIpc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Jul 2022 04:45:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51920 "EHLO
+        id S236335AbiGSJOK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Jul 2022 05:14:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43638 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237095AbiGSIpZ (ORCPT
+        with ESMTP id S236122AbiGSJOD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Jul 2022 04:45:25 -0400
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 801963719D
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Jul 2022 01:45:23 -0700 (PDT)
-Received: by mail-lj1-x22e.google.com with SMTP id u14so8569619lju.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Jul 2022 01:45:23 -0700 (PDT)
+        Tue, 19 Jul 2022 05:14:03 -0400
+Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E44924BCE
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Jul 2022 02:14:02 -0700 (PDT)
+Received: by mail-ot1-x32e.google.com with SMTP id g19-20020a9d1293000000b0061c7bfda5dfso10889052otg.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Jul 2022 02:14:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=LHAH2NUYMzb+gHfcEBuvD4gwfDzYc08nLpdMrmdwOds=;
-        b=Hf9qT2AJbfpICrSD29yZqmB+mj74t94EVQm/cDU27MwXePgAv60Zqe/IGKC6QfaHqX
-         oPGp6p7bAzCk4E/G1lVcQd6453VNPIKBNsqjEZZq/bo3SzpoiX1fxUOzeFZ/PH8otp0u
-         fpt/WgEL4QCLjfcYItFky4eNh6+nv35duK4nHl1hTqxWtKJxZWM9GEpKtMXELx9z78FM
-         C1GQ3bcMHwmSv8UOdrEq99obVrhfqtYf61BU+tNzMGRsH6g+xYebpdsrZa1YVpwTBKoW
-         KHoYvup0QCKtBKXnfOQoNRrm3mmDAzoYNuC6SURvQYbeLhxCDLGd8Y6bXICw+jHnL727
-         aljg==
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=USiHEWO3jenD+4D67wgYkGKlAcIRmi0lfoN5PdFyKzQ=;
+        b=dFYdzZzeGTwRc0FPEgBG5fRwMWNVjXZzxLxwtIHOW4IyAUtC1iJhL8ze0h/ntk8Iq4
+         lKlrAFaVxT4/pV4802tsmPOfXqrd/5krNwAeme2Ty0hfRzSXMQ2O+C/Kf1izAeM/mOcz
+         8LysLHAdaCtPPppxeQNBi2EL1ZGV/VNGij1I4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=LHAH2NUYMzb+gHfcEBuvD4gwfDzYc08nLpdMrmdwOds=;
-        b=3sTw/v+4p8J0S2zI+oRfpBkFmjx9/sOmy9QDHtVkYkqsJ5ucycAGyEmeT+awGLsWOo
-         WaQzwdSesiSzVPxTanyFr4yXralqhjiuHXIFVkpKkavBJbxgbJWJMZdHbrjFhSJc7jD3
-         7pmlCzJcpCrFAk3U0THOHs3r0vT7S4OzOP0rtkIYoqTvX032L4thhHN33ZD+Ww2OWNwQ
-         EhmRo6bIqY3aXwA3vI6z0fjemD3wUMjBVQ+xM0d7divfbRYT0dCb4JBHEhOrFNA/hclK
-         PkJprYzIIVj5stYpS8wToDB8CBoVIeuKUzi1YWPUynaXZnVtU0BGAaHFYo75U0EVXgcZ
-         TbHQ==
-X-Gm-Message-State: AJIora9e2aCkmC8LpD4t04F4p//zmgAEDlYb4dEmDBMorlBw7zYrnGnn
-        o41KJfjDA7mvDPGZ+9KP503xUg==
-X-Google-Smtp-Source: AGRyM1vKeOohI6tFEuXQpGxF2ieOs2+QyZ+WNG0CgTqglEypV3aVfrKO6JATeAaSINVOUSbnRvz2qA==
-X-Received: by 2002:a2e:bc19:0:b0:25d:9c9e:d13a with SMTP id b25-20020a2ebc19000000b0025d9c9ed13amr10597512ljf.91.1658220321753;
-        Tue, 19 Jul 2022 01:45:21 -0700 (PDT)
-Received: from [192.168.115.193] (89-162-31-138.fiber.signal.no. [89.162.31.138])
-        by smtp.gmail.com with ESMTPSA id d42-20020a0565123d2a00b004795d64f37dsm3081322lfv.105.2022.07.19.01.45.20
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=USiHEWO3jenD+4D67wgYkGKlAcIRmi0lfoN5PdFyKzQ=;
+        b=XuyCxYro4DLRlOMYU4nHJOcH7r4Qa1Po9vM+d4TDnb93go9rh9pjJ4CqDdWSYiy910
+         zupN5/EtIyHRi6R8Xddc/lzC1XIaBQckpMECpm9LEwBiO+ARnz+MsZ2qQleR/ifRqyjQ
+         juRbACu7GRW/BvkOtzBAf2wTQLz8kWwrEyOhd8K0VypoQVQMB0sXxyHnBfDxTtGvbvH8
+         z7VXIlNmqg0Zo7iHrIlFWc6KGu+3Sa+Dy3LWPyuwmaRTULVjbopGdjaiRm/+Vjayhzwz
+         6KgqT9okppTV9RRe1kEbQym//l+CSDqWgcJZH9P39ESHYfRzfcGrL+/1OLk+zyI/2/vI
+         FH0g==
+X-Gm-Message-State: AJIora9KVSOkaRRI+pwJ3/YxUoJBwwyz0RSdPTxOUn4LqvGJ87U4bWQy
+        CFYBivGqhzcOqatMwNDFToJE5iEwIIEXRw==
+X-Google-Smtp-Source: AGRyM1tkjVwV2eqD6Xw6T7Bhk1xdmw8uZQqT7fnl/fQsnUXPxJs8ruLkyaSBztC20SBXIv7aoF0eqg==
+X-Received: by 2002:a05:6830:6183:b0:616:a125:1f84 with SMTP id cb3-20020a056830618300b00616a1251f84mr12343169otb.350.1658222041363;
+        Tue, 19 Jul 2022 02:14:01 -0700 (PDT)
+Received: from mail-oo1-f51.google.com (mail-oo1-f51.google.com. [209.85.161.51])
+        by smtp.gmail.com with ESMTPSA id e4-20020a4ab144000000b004359f3e36e2sm1755011ooo.37.2022.07.19.02.14.00
+        for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 19 Jul 2022 01:45:21 -0700 (PDT)
-Message-ID: <f988df59-d56f-51ae-dc64-a09db305ce1c@linaro.org>
-Date:   Tue, 19 Jul 2022 10:45:19 +0200
+        Tue, 19 Jul 2022 02:14:01 -0700 (PDT)
+Received: by mail-oo1-f51.google.com with SMTP id p5-20020a4a4805000000b0043548dba757so2771085ooa.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Jul 2022 02:14:00 -0700 (PDT)
+X-Received: by 2002:a81:6ccd:0:b0:31d:c77:73e5 with SMTP id
+ h196-20020a816ccd000000b0031d0c7773e5mr33706265ywc.314.1658222030025; Tue, 19
+ Jul 2022 02:13:50 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH 2/4] arm64: dts: qcom: add sdm845-google-blueline (Pixel
- 3)
-Content-Language: en-US
-To:     Caleb Connolly <caleb@connolly.tech>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
+References: <20220715005244.42198-1-dmitry.osipenko@collabora.com>
+In-Reply-To: <20220715005244.42198-1-dmitry.osipenko@collabora.com>
+From:   Tomasz Figa <tfiga@chromium.org>
+Date:   Tue, 19 Jul 2022 18:13:39 +0900
+X-Gmail-Original-Message-ID: <CAAFQd5C0dx5X=VEqXDyj22fbxs1jhOQLLid3vSNfAc9vataPhg@mail.gmail.com>
+Message-ID: <CAAFQd5C0dx5X=VEqXDyj22fbxs1jhOQLLid3vSNfAc9vataPhg@mail.gmail.com>
+Subject: Re: [PATCH v1 0/6] Move all drivers to a common dma-buf locking convention
+To:     Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Cc:     David Airlie <airlied@linux.ie>, Gerd Hoffmann <kraxel@redhat.com>,
+        Gurchetan Singh <gurchetansingh@chromium.org>,
+        Chia-I Wu <olvaffe@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+        Daniel Almeida <daniel.almeida@collabora.com>,
+        Gert Wollny <gert.wollny@collabora.com>,
+        Gustavo Padovan <gustavo.padovan@collabora.com>,
+        Daniel Stone <daniel@fooishbar.org>,
+        Tomeu Vizoso <tomeu.vizoso@collabora.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Rob Clark <robdclark@gmail.com>,
         Sumit Semwal <sumit.semwal@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
-Cc:     Amit Pundir <amit.pundir@linaro.org>, Vinod Koul <vkoul@kernel.org>
-References: <20220718213051.1475108-1-caleb@connolly.tech>
- <20220718213051.1475108-3-caleb@connolly.tech>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220718213051.1475108-3-caleb@connolly.tech>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+        "Pan, Xinhui" <Xinhui.Pan@amd.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Alex Deucher <alexander.deucher@amd.com>,
+        Jani Nikula <jani.nikula@linux.intel.com>,
+        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+        Rodrigo Vivi <rodrigo.vivi@intel.com>,
+        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+        =?UTF-8?Q?Thomas_Hellstr=C3=B6m?= <thomas_os@shipmail.org>,
+        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        Dmitry Osipenko <digetx@gmail.com>,
+        linux-media@vger.kernel.org, linaro-mm-sig@lists.linaro.org,
+        amd-gfx@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
+        kernel@collabora.com, virtualization@lists.linux-foundation.org,
+        spice-devel@lists.freedesktop.org, linux-rdma@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 18/07/2022 23:30, Caleb Connolly wrote:
-> From: Amit Pundir <amit.pundir@linaro.org>
-> 
-> This adds an initial dts for the Blueline (Pixel 3). Supported
-> functionality includes display, Debug UART, UFS, USB-C (peripheral), WiFi,
-> Bluetooth and modem.
-> 
+On Fri, Jul 15, 2022 at 9:53 AM Dmitry Osipenko
+<dmitry.osipenko@collabora.com> wrote:
+>
+> Hello,
+>
+> This series moves all drivers to a dynamic dma-buf locking specification.
+> From now on all dma-buf importers are made responsible for holding
+> dma-buf's reservation lock around all operations performed over dma-bufs.
+> This common locking convention allows us to utilize reservation lock more
+> broadly around kernel without fearing of potential dead locks.
+>
+> This patchset passes all i915 selftests. It was also tested using VirtIO,
+> Panfrost, Lima and Tegra drivers. I tested cases of display+GPU,
+> display+V4L and GPU+V4L dma-buf sharing, which covers majority of kernel
+> drivers since rest of the drivers share same or similar code paths.
+>
+> This is a continuation of [1] where Christian K=C3=B6nig asked to factor =
+out
+> the dma-buf locking changes into separate series.
+>
+> [1] https://lore.kernel.org/dri-devel/20220526235040.678984-1-dmitry.osip=
+enko@collabora.com/
+>
+> Dmitry Osipenko (6):
+>   dma-buf: Add _unlocked postfix to function names
+>   drm/gem: Take reservation lock for vmap/vunmap operations
+>   dma-buf: Move all dma-bufs to dynamic locking specification
+>   dma-buf: Acquire wait-wound context on attachment
+>   media: videobuf2: Stop using internal dma-buf lock
+>   dma-buf: Remove internal lock
+>
+>  drivers/dma-buf/dma-buf.c                     | 198 +++++++++++-------
+>  drivers/gpu/drm/amd/amdgpu/amdgpu_dma_buf.c   |   4 +-
+>  drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c       |   4 +-
+>  drivers/gpu/drm/armada/armada_gem.c           |  14 +-
+>  drivers/gpu/drm/drm_client.c                  |   4 +-
+>  drivers/gpu/drm/drm_gem.c                     |  28 +++
+>  drivers/gpu/drm/drm_gem_cma_helper.c          |   6 +-
+>  drivers/gpu/drm/drm_gem_framebuffer_helper.c  |   6 +-
+>  drivers/gpu/drm/drm_gem_shmem_helper.c        |   6 +-
+>  drivers/gpu/drm/drm_prime.c                   |  12 +-
+>  drivers/gpu/drm/etnaviv/etnaviv_gem_prime.c   |   6 +-
+>  drivers/gpu/drm/exynos/exynos_drm_gem.c       |   2 +-
+>  drivers/gpu/drm/i915/gem/i915_gem_dmabuf.c    |  20 +-
+>  .../gpu/drm/i915/gem/i915_gem_execbuffer.c    |   2 +-
+>  drivers/gpu/drm/i915/gem/i915_gem_object.h    |   6 +-
+>  .../drm/i915/gem/selftests/i915_gem_dmabuf.c  |  20 +-
+>  drivers/gpu/drm/i915/i915_gem_evict.c         |   2 +-
+>  drivers/gpu/drm/i915/i915_gem_ww.c            |  26 ++-
+>  drivers/gpu/drm/i915/i915_gem_ww.h            |  15 +-
+>  drivers/gpu/drm/omapdrm/omap_gem_dmabuf.c     |   8 +-
+>  drivers/gpu/drm/qxl/qxl_object.c              |  17 +-
+>  drivers/gpu/drm/qxl/qxl_prime.c               |   4 +-
+>  drivers/gpu/drm/tegra/gem.c                   |  27 +--
+>  drivers/infiniband/core/umem_dmabuf.c         |  11 +-
+>  .../common/videobuf2/videobuf2-dma-contig.c   |  26 +--
+>  .../media/common/videobuf2/videobuf2-dma-sg.c |  23 +-
+>  .../common/videobuf2/videobuf2-vmalloc.c      |  17 +-
 
-Thank you for your patch. There is something to discuss/improve.
+For the videobuf2 changes:
 
-(...)
+Acked-by: Tomasz Figa <tfiga@chromium.org>
 
-> +	volume-keys {
-> +		compatible = "gpio-keys";
-> +		label = "Volume keys";
-> +		autorepeat;
-> +
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&volume_up_gpio>;
-> +
-> +		vol-up {
-
-key-vol-up
-(DT schema requires it now)
-
-> +			label = "Volume Up";
-> +			linux,code = <KEY_VOLUMEUP>;
-> +			gpios = <&pm8998_gpio 6 GPIO_ACTIVE_LOW>;
-> +			debounce-interval = <15>;
-> +		};
-> +	};
-> +
-> +	reserved-memory {
-> +		#address-cells = <2>;
-> +		#size-cells = <2>;
-> +		ranges;
-> +
-> +		mpss_region: memory@8e000000 {
-> +			reg = <0 0x8e000000 0 0x9800000>;
-> +			no-map;
-> +		};
-> +
-> +		venus_mem: venus@97800000 {
-> +			reg = <0 0x97800000 0 0x500000>;
-> +			no-map;
-> +		};
-> +
-> +		cdsp_mem: cdsp-mem@97D00000 {
-> +			reg = <0 0x97D00000 0 0x800000>;
-> +			no-map;
-> +		};
-> +
-> +		mba_region: mba@98500000 {
-> +			reg = <0 0x98500000 0 0x200000>;
-> +			no-map;
-> +		};
-> +
-> +		slpi_mem: slpi@98700000 {
-> +			reg = <0 0x98700000 0 0x1400000>;
-> +			no-map;
-> +		};
-> +
-> +		spss_mem: spss@99B00000 {
-> +			reg = <0 0x99B00000 0 0x100000>;
-> +			no-map;
-> +		};
-> +
-> +		/* rmtfs lower guard */
-> +		memory@f2700000 {
-> +			reg = <0 0xf2700000 0 0x1000>;
-> +			no-map;
-> +		};
-> +
-> +		rmtfs_mem: memory@f2701000 {
-> +			compatible = "qcom,rmtfs-mem";
-> +			reg = <0 0xf2701000 0 0x200000>;
-> +			no-map;
-> +
-> +			qcom,client-id = <1>;
-> +			qcom,vmid = <15>;
-> +		};
-> +
-> +		/* rmtfs upper guard */
-> +		memory@f2901000 {
-> +			reg = <0 0xf2901000 0 0x1000>;
-> +			no-map;
-> +		};
-> +	};
-> +
-> +	vph_pwr: vph-pwr-regulator {
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "vph_pwr";
-> +		regulator-min-microvolt = <3700000>;
-> +		regulator-max-microvolt = <3700000>;
-> +	};
-> +
-> +	vreg_s4a_1p8: vreg-s4a-1p8 {
-
-Please use consistent naming, so if previous was "xxx-regulator", keep
-similar pattern here.
-
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "vreg_s4a_1p8";
-> +
-> +		regulator-min-microvolt = <1800000>;
-> +		regulator-max-microvolt = <1800000>;
-> +		regulator-always-on;
-> +		regulator-boot-on;
-> +
-> +		vin-supply = <&vph_pwr>;
-> +	};
-> +};
-> +
-> +&adsp_pas {
-
-(...)
-
-> +
-> +&pm8998_gpio {
-> +	volume_up_gpio: vol-up-active {
-
-The bindings require node name to finish with "-state"
-
-> +		pins = "gpio6";
-> +		function = "normal";
-> +		input-enable;
-> +		bias-pull-up;
-> +		qcom,drive-strength = <0>;
-> +	};
-> +
-> +	panel_pmgpio_pins: panel-pmgpio-active {
-
-Ditto.
-
-> +		pins = "gpio2", "gpio5";
-> +		function = "normal";
-> +		input-enable;
-> +		bias-disable;
-> +		power-source = <0>;
-> +	};
-> +};
-> +
-> +&pm8998_pon {
-> +	resin {
-> +		compatible = "qcom,pm8941-resin";
-> +		interrupts = <0x0 0x8 1 IRQ_TYPE_EDGE_BOTH>;
-> +		debounce = <15625>;
-> +		bias-pull-up;
-> +		linux,code = <KEY_VOLUMEDOWN>;
-> +	};
-> +};
-> +
 Best regards,
-Krzysztof
+Tomasz
