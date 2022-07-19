@@ -2,164 +2,436 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 036D7579144
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Jul 2022 05:23:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D0D23579154
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Jul 2022 05:31:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234616AbiGSDX2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 Jul 2022 23:23:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59762 "EHLO
+        id S236584AbiGSDbD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 Jul 2022 23:31:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36558 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230182AbiGSDX1 (ORCPT
+        with ESMTP id S236194AbiGSDbC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 Jul 2022 23:23:27 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3F75183A5;
-        Mon, 18 Jul 2022 20:23:25 -0700 (PDT)
+        Mon, 18 Jul 2022 23:31:02 -0400
+Received: from mail-oa1-x35.google.com (mail-oa1-x35.google.com [IPv6:2001:4860:4864:20::35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29D542A400
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Jul 2022 20:31:00 -0700 (PDT)
+Received: by mail-oa1-x35.google.com with SMTP id 586e51a60fabf-f2a4c51c45so29012952fac.9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Jul 2022 20:31:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1658201005; x=1689737005;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=HIDhUUPfxUeeF5NaAdzQDRStS26/WnQNQwjtuPgjHlY=;
-  b=AGXoYJvYuo5E5sh/I0IFRmScpb6I187MmsfI27QpEYXkjm5Yc658x2oR
-   4ds+K2koWyYv/IPkm2CUApMqiERedwJt7c1qz6o8Xpn2YcUFy+H8z7lcx
-   kY/H9t4jiUTHOFqjHiqLMW087LgkgtfoZl+qNzXnPpgxvAIGGjs1FxkrH
-   Q=;
-Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 18 Jul 2022 20:23:25 -0700
-X-QCInternal: smtphost
-Received: from unknown (HELO nasanex01a.na.qualcomm.com) ([10.52.223.231])
-  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2022 20:23:25 -0700
-Received: from [10.253.14.208] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Mon, 18 Jul
- 2022 20:23:22 -0700
-Message-ID: <aae8b240-ecd8-64d0-6f33-86372417e899@quicinc.com>
-Date:   Tue, 19 Jul 2022 11:23:19 +0800
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=P5is4NjKHM1UFSqVwB+YvCigKvkW6SGK2TZ159/AxVw=;
+        b=JwL5YJcoAWAVxlIxY7sFl8YahyiEilwnZB+s/vNaLZLAGy+c/XA00uSwes87Sg6dp/
+         ItRnCNDRSIbtYYuJhkucQiHjXXHHJ847gFDSskloRbsbP0JJfBHi02A+Sd2siUZXrISb
+         1Hks/8bFTk6pMM0t/r61ukJa/n5LJbeDcJPqsSCP4Np5FxHQmuxvgasRmqxrRlZsaqcF
+         6MymeDyxntlu0NJGwHeY7F7Ko47VXOJi5Vsqwc0pfxLemXDab149Km/QaK+AAliiJLzn
+         nvF5fpbRrCLL1D2pqJl2h8gRrlYFazWoo0iog7kLbcHBHPHR1QqPEFC/2v9jiu7p285x
+         q41A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=P5is4NjKHM1UFSqVwB+YvCigKvkW6SGK2TZ159/AxVw=;
+        b=QchTeO5Znu6EsFDSkGT7qaXspeggjHaM7rV97HOOkWIgbgwQOCGuYD8h6FnzKS4I1B
+         GpU+YMD6bbQmgl7qCoTrKkKwgKkC/OvN9RIJsVn8OmHn0abK+L/3bQ1Ete7Kc00zsobD
+         57GQuLhurSk3ZmR8ymobBZsYky9np7Rp+44izE+SjkDxAnhkYGPVvzV5r8F6lwa6EI6k
+         oAqWsDRZPlVycIlQ05ivq0X/SkkZwf8d4Mqi0/7YzwTwhW+BTmYhUv7h6K1hlgomlZdf
+         kSkWBKU6jyNcMYKExt9bXQ3LnFkAuiRiL7UpSXpmiXyp5WA1HFMsrIdH9LX3mwavqLRc
+         EePQ==
+X-Gm-Message-State: AJIora+pV550DCYJLsO4BxDj3ffoqX8F+JIreEqaSCwUxFJelInXKQ/w
+        377trZTaorXBs1tKmtdXksWM1w==
+X-Google-Smtp-Source: AGRyM1tbm/DUEQTI1PIWe0TNvopZaXQtiRMQYYbq22SgocmhssYli7zFFB4yf1eX1RzaoD8HzMBRWA==
+X-Received: by 2002:a05:6808:e8a:b0:32e:493b:1d8 with SMTP id k10-20020a0568080e8a00b0032e493b01d8mr18031586oil.124.1658201459418;
+        Mon, 18 Jul 2022 20:30:59 -0700 (PDT)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id q133-20020acaf28b000000b0032e548d96e0sm4910973oih.23.2022.07.18.20.30.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 18 Jul 2022 20:30:58 -0700 (PDT)
+Date:   Mon, 18 Jul 2022 22:30:56 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Cc:     linux-pm@vger.kernel.org, bhupesh.linux@gmail.com,
+        linux-kernel@vger.kernel.org, Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 3/3] thermal: qcom: tsens: Implement re-initialization
+ workaround quirk
+Message-ID: <YtYlcEBszITSZ5on@builder.lan>
+References: <20220701145815.2037993-1-bhupesh.sharma@linaro.org>
+ <20220701145815.2037993-4-bhupesh.sharma@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH v4] Bluetooth: hci_sync: Remove redundant func definition
-Content-Language: en-US
-To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-CC:     Marcel Holtmann <marcel@holtmann.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        David Miller <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Luiz Augusto Von Dentz <luiz.von.dentz@intel.com>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        "open list:NETWORKING [GENERAL]" <netdev@vger.kernel.org>
-References: <1657871102-26907-1-git-send-email-quic_zijuhu@quicinc.com>
- <CABBYNZ+YcrGn09hxB9t7rn1ccY4xtv1WCLQrOLvyUXdQNA_usw@mail.gmail.com>
-From:   quic_zijuhu <quic_zijuhu@quicinc.com>
-In-Reply-To: <CABBYNZ+YcrGn09hxB9t7rn1ccY4xtv1WCLQrOLvyUXdQNA_usw@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220701145815.2037993-4-bhupesh.sharma@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 7/19/2022 7:12 AM, Luiz Augusto von Dentz wrote:
-> Hi Zijun,
-> 
-> On Fri, Jul 15, 2022 at 12:45 AM Zijun Hu <quic_zijuhu@quicinc.com> wrote:
->>
->> both hci_request.c and hci_sync.c have the same definition for
->> disconnected_accept_list_entries(), so remove a redundant copy.
->>
->> Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
->> ---
->> v3->v4
->>  -use 75 characters per line for Linux commit message bodies
->> v2->v3
->>  -remove table char to solve gitlint checking failure
->> v1->v2
->>  -remove the func copy within hci_request.c instead of hci_sync.c
->>  net/bluetooth/hci_request.c | 18 ------------------
->>  net/bluetooth/hci_request.h |  2 ++
->>  net/bluetooth/hci_sync.c    |  2 +-
->>  3 files changed, 3 insertions(+), 19 deletions(-)
->>
->> diff --git a/net/bluetooth/hci_request.c b/net/bluetooth/hci_request.c
->> index 635cc5fb451e..edec0447aaa7 100644
->> --- a/net/bluetooth/hci_request.c
->> +++ b/net/bluetooth/hci_request.c
->> @@ -1784,24 +1784,6 @@ int hci_update_random_address(struct hci_request *req, bool require_privacy,
->>         return 0;
->>  }
->>
->> -static bool disconnected_accept_list_entries(struct hci_dev *hdev)
->> -{
->> -       struct bdaddr_list *b;
->> -
->> -       list_for_each_entry(b, &hdev->accept_list, list) {
->> -               struct hci_conn *conn;
->> -
->> -               conn = hci_conn_hash_lookup_ba(hdev, ACL_LINK, &b->bdaddr);
->> -               if (!conn)
->> -                       return true;
->> -
->> -               if (conn->state != BT_CONNECTED && conn->state != BT_CONFIG)
->> -                       return true;
->> -       }
->> -
->> -       return false;
->> -}
->> -
->>  void __hci_req_update_scan(struct hci_request *req)
->>  {
->>         struct hci_dev *hdev = req->hdev;
->> diff --git a/net/bluetooth/hci_request.h b/net/bluetooth/hci_request.h
->> index 7f8df258e295..e80b500878d9 100644
->> --- a/net/bluetooth/hci_request.h
->> +++ b/net/bluetooth/hci_request.h
->> @@ -120,6 +120,8 @@ void __hci_req_update_scan(struct hci_request *req);
->>  int hci_update_random_address(struct hci_request *req, bool require_privacy,
->>                               bool use_rpa, u8 *own_addr_type);
->>
->> +bool disconnected_accept_list_entries(struct hci_dev *hdev);
-> 
-> I rather not add anything to hci_request.h since we want to deprecate
-> its functions, in fact we might as well try to start removing the code
-> paths that attempt to access things like
-> disconnected_accept_list_entries since I think most of the code is
-> already in place in hci_sync.c things like __hci_req_update_scan if it
-> is no longer used anywhere else.
-> 
-so A: move extern disconnected_accept_list_entries() from hci_request.h to hci_request.c
-   B: discard this change
-what is your suggestion? A or B
->>  int hci_abort_conn(struct hci_conn *conn, u8 reason);
->>  void __hci_abort_conn(struct hci_request *req, struct hci_conn *conn,
->>                       u8 reason);
->> diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
->> index 212b0cdb25f5..48a262f0ae49 100644
->> --- a/net/bluetooth/hci_sync.c
->> +++ b/net/bluetooth/hci_sync.c
->> @@ -2419,7 +2419,7 @@ int hci_write_fast_connectable_sync(struct hci_dev *hdev, bool enable)
->>         return err;
->>  }
->>
->> -static bool disconnected_accept_list_entries(struct hci_dev *hdev)
->> +bool disconnected_accept_list_entries(struct hci_dev *hdev)
->>  {
->>         struct bdaddr_list *b;
->>
->> --
->> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, a Linux Foundation Collaborative Project
->>
-> 
-> 
+On Fri 01 Jul 09:58 CDT 2022, Bhupesh Sharma wrote:
 
+> Since for some QCoM tsens controllers, its suggested to
+> monitor the controller health periodically and in case an
+> issue is detected, to re-initialize the tsens controller
+> via trustzone, add the support for the same in the
+> qcom tsens driver.
+> 
+> Note that Once the tsens controller is reset using scm call,
+> all SROT and TM region registers will enter the reset mode.
+> 
+> While all the SROT registers will be re-programmed and
+> re-enabled in trustzone prior to the scm call exit, the TM
+> region registers will not re-initialized in trustzone and thus
+> need to be handled by the tsens driver.
+> 
+> Cc: Amit Kucheria <amitk@kernel.org>
+> Cc: Thara Gopinath <thara.gopinath@gmail.com>
+> Cc: linux-pm@vger.kernel.org
+> Cc: linux-arm-msm@vger.kernel.org
+> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+> ---
+>  drivers/thermal/qcom/tsens-v2.c |   3 +
+>  drivers/thermal/qcom/tsens.c    | 237 +++++++++++++++++++++++++++++++-
+>  drivers/thermal/qcom/tsens.h    |   6 +
+>  3 files changed, 239 insertions(+), 7 deletions(-)
+> 
+> diff --git a/drivers/thermal/qcom/tsens-v2.c b/drivers/thermal/qcom/tsens-v2.c
+> index 61d38a56d29a..9bb542f16482 100644
+> --- a/drivers/thermal/qcom/tsens-v2.c
+> +++ b/drivers/thermal/qcom/tsens-v2.c
+> @@ -88,6 +88,9 @@ static const struct reg_field tsens_v2_regfields[MAX_REGFIELDS] = {
+>  
+>  	/* TRDY: 1=ready, 0=in progress */
+>  	[TRDY] = REG_FIELD(TM_TRDY_OFF, 0, 0),
+> +
+> +	/* FIRST_ROUND_COMPLETE: 1=complete, 0=not complete */
+> +	[FIRST_ROUND_COMPLETE] = REG_FIELD(TM_TRDY_OFF, 3, 3),
+>  };
+>  
+>  static const struct tsens_ops ops_generic_v2 = {
+> diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
+> index 97f4d4454f20..28d42ae0eb47 100644
+> --- a/drivers/thermal/qcom/tsens.c
+> +++ b/drivers/thermal/qcom/tsens.c
+> @@ -7,6 +7,7 @@
+>  #include <linux/debugfs.h>
+>  #include <linux/err.h>
+>  #include <linux/io.h>
+> +#include <linux/qcom_scm.h>
+>  #include <linux/module.h>
+>  #include <linux/nvmem-consumer.h>
+>  #include <linux/of.h>
+> @@ -21,6 +22,8 @@
+>  #include "../thermal_hwmon.h"
+>  #include "tsens.h"
+>  
+> +LIST_HEAD(tsens_device_list);
+> +
+>  /**
+>   * struct tsens_irq_data - IRQ status and temperature violations
+>   * @up_viol:        upper threshold violated
+> @@ -594,19 +597,159 @@ static void tsens_disable_irq(struct tsens_priv *priv)
+>  	regmap_field_write(priv->rf[INT_EN], 0);
+>  }
+>  
+> +static int tsens_reenable_hw_after_scm(struct tsens_priv *priv)
+> +{
+> +	unsigned long flags;
+> +
+> +	spin_lock_irqsave(&priv->ul_lock, flags);
+> +
+> +	/* Re-enable watchdog, unmask the bark and
+> +	 * disable cycle completion monitoring.
+> +	 */
+> +	regmap_field_write(priv->rf[WDOG_BARK_CLEAR], 1);
+> +	regmap_field_write(priv->rf[WDOG_BARK_CLEAR], 0);
+> +	regmap_field_write(priv->rf[WDOG_BARK_MASK], 0);
+> +	regmap_field_write(priv->rf[CC_MON_MASK], 1);
+> +
+> +	/* Re-enable interrupts */
+> +	tsens_enable_irq(priv);
+> +
+> +	spin_unlock_irqrestore(&priv->ul_lock, flags);
+> +
+> +	return 0;
+> +}
+> +
+>  int get_temp_tsens_valid(const struct tsens_sensor *s, int *temp)
+>  {
+> -	struct tsens_priv *priv = s->priv;
+> +	struct tsens_priv *priv = s->priv, *priv_reinit;
+>  	int hw_id = s->hw_id;
+>  	u32 temp_idx = LAST_TEMP_0 + hw_id;
+>  	u32 valid_idx = VALID_0 + hw_id;
+>  	u32 valid;
+> -	int ret;
+> +	int ret, trdy, first_round, tsens_ret, sw_reg;
+> +	unsigned long timeout;
+> +	static atomic_t in_tsens_reinit;
+
+This is a global state, I suggest you move it to the top of the file to
+make that obvious.
+
+>  
+>  	/* VER_0 doesn't have VALID bit */
+>  	if (tsens_version(priv) == VER_0)
+>  		goto get_temp;
+>  
+> +	/* For some tsens controllers, its suggested to
+> +	 * monitor the controller health periodically
+> +	 * and in case an issue is detected to reinit
+> +	 * tsens controller via trustzone.
+> +	 */
+> +	if (priv->needs_reinit_wa) {
+
+I would suggest that you move all this entire block to a separate
+function, maybe something:
+
+int tsens_health_check_and_reinit()
+
+> +		/* First check if TRDY is SET */
+> +		timeout = jiffies + usecs_to_jiffies(TIMEOUT_US);
+> +		do {
+> +			ret = regmap_field_read(priv->rf[TRDY], &trdy);
+> +			if (ret)
+> +				goto err;
+> +			if (!trdy)
+> +				continue;
+> +		} while (time_before(jiffies, timeout));
+
+This looks like a regmap_field_read()
+
+> +
+> +		if (!trdy) {
+> +			ret = regmap_field_read(priv->rf[FIRST_ROUND_COMPLETE], &first_round);
+> +			if (ret)
+> +				goto err;
+> +
+> +			if (!first_round) {
+> +				if (atomic_read(&in_tsens_reinit)) {
+> +					dev_dbg(priv->dev, "tsens re-init is in progress\n");
+> +					ret = -EAGAIN;
+
+Is it preferred to return -EAGAIN here, over just serializing this whole
+thing using a mutex?
+
+> +					goto err;
+> +				}
+> +
+> +				/* Wait for 2 ms for tsens controller to recover */
+> +				timeout = jiffies + msecs_to_jiffies(RESET_TIMEOUT_MS);
+> +				do {
+> +					ret = regmap_field_read(priv->rf[FIRST_ROUND_COMPLETE],
+> +								&first_round);
+> +					if (ret)
+> +						goto err;
+> +
+> +					if (first_round) {
+> +						dev_dbg(priv->dev, "tsens controller recovered\n");
+> +						goto sensor_read;
+> +					}
+> +				} while (time_before(jiffies, timeout));
+> +
+> +				/*
+> +				 * tsens controller did not recover,
+> +				 * proceed with SCM call to re-init it
+> +				 */
+> +				if (atomic_read(&in_tsens_reinit)) {
+> +					dev_dbg(priv->dev, "tsens re-init is in progress\n");
+> +					ret = -EAGAIN;
+> +					goto err;
+> +				}
+> +
+> +				atomic_set(&in_tsens_reinit, 1);
+
+Afaict nothing prevents two different processes to run the remainder of
+the recovery in parallel. I think you need some locking here.
+
+> +
+> +				/*
+> +				 * Invoke scm call only if SW register write is
+> +				 * reflecting in controller. Try it for 2 ms.
+> +				 */
+> +				timeout = jiffies + msecs_to_jiffies(RESET_TIMEOUT_MS);
+> +				do {
+> +					ret = regmap_field_write(priv->rf[INT_EN], BIT(2));
+
+Do we know what BIT(2) is and would we be allowed to give it a define?
+
+> +					if (ret)
+> +						goto err_unset;
+> +
+> +					ret = regmap_field_read(priv->rf[INT_EN], &sw_reg);
+> +					if (ret)
+> +						goto err_unset;
+> +
+> +					if (!(sw_reg & BIT(2)))
+> +						continue;
+
+Why not:
+
+} while (sw_reg & BIT(2) && time_before(jiffies, timeout));
+
+> +				} while (time_before(jiffies, timeout));
+> +
+> +				if (!(sw_reg & BIT(2))) {
+> +					ret = -ENOTRECOVERABLE;
+> +					goto err_unset;
+> +				}
+> +
+> +				ret = qcom_scm_tsens_reinit(&tsens_ret);
+> +				if (ret || tsens_ret) {
+> +					dev_err(priv->dev, "tsens reinit scm call failed (%d : %d)\n",
+> +							ret, tsens_ret);
+> +					if (tsens_ret)
+> +						ret = -ENOTRECOVERABLE;
+
+If that's the api for the SCM, feel free to move the -ENOTRECOVERABLE to
+the scm function.
+
+> +
+> +					goto err_unset;
+> +				}
+> +
+> +				/* After the SCM call, we need to re-enable
+> +				 * the interrupts and also set active threshold
+> +				 * for each sensor.
+> +				 */
+> +				list_for_each_entry(priv_reinit,
+> +						&tsens_device_list, list) {
+> +					ret = tsens_reenable_hw_after_scm(priv_reinit);
+> +					if (ret) {
+> +						dev_err(priv->dev,
+> +							"tsens re-enable after scm call failed (%d)\n",
+> +							ret);
+> +						ret = -ENOTRECOVERABLE;
+> +						goto err_unset;
+> +					}
+> +				}
+> +
+> +				atomic_set(&in_tsens_reinit, 0);
+> +
+> +				/* Notify reinit wa worker */
+> +				list_for_each_entry(priv_reinit,
+
+Do you need to loop twice over the tsens instances?
+
+> +						&tsens_device_list, list) {
+> +					queue_work(priv_reinit->reinit_wa_worker,
+> +							&priv_reinit->reinit_wa_notify);
+> +				}
+> +			}
+> +		}
+> +	}
+> +
+> +sensor_read:
+>  	/* Valid bit is 0 for 6 AHB clock cycles.
+>  	 * At 19.2MHz, 1 AHB clock is ~60ns.
+>  	 * We should enter this loop very, very rarely.
+> @@ -623,6 +766,12 @@ int get_temp_tsens_valid(const struct tsens_sensor *s, int *temp)
+>  	*temp = tsens_hw_to_mC(s, temp_idx);
+>  
+>  	return 0;
+> +
+> +err_unset:
+> +	atomic_set(&in_tsens_reinit, 0);
+> +
+> +err:
+> +	return ret;
+>  }
+>  
+>  int get_temp_common(const struct tsens_sensor *s, int *temp)
+> @@ -860,6 +1009,14 @@ int __init init_common(struct tsens_priv *priv)
+>  		goto err_put_device;
+>  	}
+>  
+> +	priv->rf[FIRST_ROUND_COMPLETE] = devm_regmap_field_alloc(dev,
+> +								priv->tm_map,
+> +								priv->fields[FIRST_ROUND_COMPLETE]);
+> +	if (IS_ERR(priv->rf[FIRST_ROUND_COMPLETE])) {
+> +		ret = PTR_ERR(priv->rf[FIRST_ROUND_COMPLETE]);
+> +		goto err_put_device;
+> +	}
+> +
+>  	/* This loop might need changes if enum regfield_ids is reordered */
+>  	for (j = LAST_TEMP_0; j <= UP_THRESH_15; j += 16) {
+>  		for (i = 0; i < priv->feat->max_sensors; i++) {
+> @@ -1097,6 +1254,43 @@ static int tsens_register(struct tsens_priv *priv)
+>  	return ret;
+>  }
+>  
+> +static void tsens_reinit_worker_notify(struct work_struct *work)
+> +{
+> +	int i, ret, temp;
+
+priv->num_sensors is unsigned, so i could be too.
+
+> +	struct tsens_irq_data d;
+> +	struct tsens_priv *priv = container_of(work, struct tsens_priv,
+> +					       reinit_wa_notify);
+> +
+> +	for (i = 0; i < priv->num_sensors; i++) {
+> +		const struct tsens_sensor *s = &priv->sensor[i];
+> +		u32 hw_id = s->hw_id;
+> +
+> +		if (!s->tzd)
+> +			continue;
+> +		if (!tsens_threshold_violated(priv, hw_id, &d))
+> +			continue;
+> +
+> +		ret = get_temp_tsens_valid(s, &temp);
+> +		if (ret) {
+> +			dev_err(priv->dev, "[%u] %s: error reading sensor\n",
+> +				hw_id, __func__);
+
+Please express yourself in the message, instead of using __func__.
+
+> +			continue;
+> +		}
+> +
+> +		tsens_read_irq_state(priv, hw_id, s, &d);
+> +
+> +		if ((d.up_thresh < temp) || (d.low_thresh > temp)) {
+> +			dev_dbg(priv->dev, "[%u] %s: TZ update trigger (%d mC)\n",
+> +				hw_id, __func__, temp);
+> +			thermal_zone_device_update(s->tzd,
+> +						   THERMAL_EVENT_UNSPECIFIED);
+
+This is just 86 chars long, no need to wrap the line.
+
+> +		} else {
+> +			dev_dbg(priv->dev, "[%u] %s: no violation:  %d\n",
+
+Double space after ':'
+
+> +				hw_id, __func__, temp);
+> +		}
+> +	}
+> +}
+> +
+>  static int tsens_probe(struct platform_device *pdev)
+>  {
+>  	int ret, i;
+> @@ -1139,6 +1333,19 @@ static int tsens_probe(struct platform_device *pdev)
+>  	priv->dev = dev;
+>  	priv->num_sensors = num_sensors;
+>  	priv->needs_reinit_wa = data->needs_reinit_wa;
+> +
+> +	if (priv->needs_reinit_wa && !qcom_scm_is_available())
+> +		return -EPROBE_DEFER;
+> +
+> +	if (priv->needs_reinit_wa) {
+> +		priv->reinit_wa_worker = alloc_workqueue("tsens_reinit_work",
+> +							 WQ_HIGHPRI, 0);
+
+Do you really need your own work queue for this, how about just
+scheduling the work on system_highpri_wq?
+
+Regards,
+Bjorn
