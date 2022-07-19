@@ -2,436 +2,364 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D0D23579154
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Jul 2022 05:31:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 76B6F579160
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Jul 2022 05:37:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236584AbiGSDbD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 Jul 2022 23:31:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36558 "EHLO
+        id S231407AbiGSDhU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 Jul 2022 23:37:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39806 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236194AbiGSDbC (ORCPT
+        with ESMTP id S229916AbiGSDhT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 Jul 2022 23:31:02 -0400
-Received: from mail-oa1-x35.google.com (mail-oa1-x35.google.com [IPv6:2001:4860:4864:20::35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29D542A400
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Jul 2022 20:31:00 -0700 (PDT)
-Received: by mail-oa1-x35.google.com with SMTP id 586e51a60fabf-f2a4c51c45so29012952fac.9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Jul 2022 20:31:00 -0700 (PDT)
+        Mon, 18 Jul 2022 23:37:19 -0400
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBD8933A32;
+        Mon, 18 Jul 2022 20:37:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=P5is4NjKHM1UFSqVwB+YvCigKvkW6SGK2TZ159/AxVw=;
-        b=JwL5YJcoAWAVxlIxY7sFl8YahyiEilwnZB+s/vNaLZLAGy+c/XA00uSwes87Sg6dp/
-         ItRnCNDRSIbtYYuJhkucQiHjXXHHJ847gFDSskloRbsbP0JJfBHi02A+Sd2siUZXrISb
-         1Hks/8bFTk6pMM0t/r61ukJa/n5LJbeDcJPqsSCP4Np5FxHQmuxvgasRmqxrRlZsaqcF
-         6MymeDyxntlu0NJGwHeY7F7Ko47VXOJi5Vsqwc0pfxLemXDab149Km/QaK+AAliiJLzn
-         nvF5fpbRrCLL1D2pqJl2h8gRrlYFazWoo0iog7kLbcHBHPHR1QqPEFC/2v9jiu7p285x
-         q41A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=P5is4NjKHM1UFSqVwB+YvCigKvkW6SGK2TZ159/AxVw=;
-        b=QchTeO5Znu6EsFDSkGT7qaXspeggjHaM7rV97HOOkWIgbgwQOCGuYD8h6FnzKS4I1B
-         GpU+YMD6bbQmgl7qCoTrKkKwgKkC/OvN9RIJsVn8OmHn0abK+L/3bQ1Ete7Kc00zsobD
-         57GQuLhurSk3ZmR8ymobBZsYky9np7Rp+44izE+SjkDxAnhkYGPVvzV5r8F6lwa6EI6k
-         oAqWsDRZPlVycIlQ05ivq0X/SkkZwf8d4Mqi0/7YzwTwhW+BTmYhUv7h6K1hlgomlZdf
-         kSkWBKU6jyNcMYKExt9bXQ3LnFkAuiRiL7UpSXpmiXyp5WA1HFMsrIdH9LX3mwavqLRc
-         EePQ==
-X-Gm-Message-State: AJIora+pV550DCYJLsO4BxDj3ffoqX8F+JIreEqaSCwUxFJelInXKQ/w
-        377trZTaorXBs1tKmtdXksWM1w==
-X-Google-Smtp-Source: AGRyM1tbm/DUEQTI1PIWe0TNvopZaXQtiRMQYYbq22SgocmhssYli7zFFB4yf1eX1RzaoD8HzMBRWA==
-X-Received: by 2002:a05:6808:e8a:b0:32e:493b:1d8 with SMTP id k10-20020a0568080e8a00b0032e493b01d8mr18031586oil.124.1658201459418;
-        Mon, 18 Jul 2022 20:30:59 -0700 (PDT)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id q133-20020acaf28b000000b0032e548d96e0sm4910973oih.23.2022.07.18.20.30.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 Jul 2022 20:30:58 -0700 (PDT)
-Date:   Mon, 18 Jul 2022 22:30:56 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Cc:     linux-pm@vger.kernel.org, bhupesh.linux@gmail.com,
-        linux-kernel@vger.kernel.org, Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 3/3] thermal: qcom: tsens: Implement re-initialization
- workaround quirk
-Message-ID: <YtYlcEBszITSZ5on@builder.lan>
-References: <20220701145815.2037993-1-bhupesh.sharma@linaro.org>
- <20220701145815.2037993-4-bhupesh.sharma@linaro.org>
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1658201837; x=1689737837;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=foA+fi5XaKLhI49SopAzObKUhpz3jgzivpOKnpvwMA8=;
+  b=RF8galaCDi5530r5mZJiUzbNSZ6RO/DzEKv0ls1NwxFkn7QBLtPzzLx0
+   kdewNjGyBznLqt6YPhVcwRdaja6QRMgv1kx08EHHGH0cifM1CrUTtjlSX
+   dxOYHz0zHWhRQM+1d8Urbxcq4f2O4anxuCHW4Scx/eks+CsPMCKOoNJYM
+   c=;
+Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 18 Jul 2022 20:37:17 -0700
+X-QCInternal: smtphost
+Received: from unknown (HELO nasanex01a.na.qualcomm.com) ([10.52.223.231])
+  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2022 20:37:17 -0700
+Received: from [10.253.14.208] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Mon, 18 Jul
+ 2022 20:37:14 -0700
+Message-ID: <5f25455c-1801-66d6-578c-49e59cbb5d7b@quicinc.com>
+Date:   Tue, 19 Jul 2022 11:37:12 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220701145815.2037993-4-bhupesh.sharma@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH v1] Bluetooth: Fix cvsd sco setup failure
+Content-Language: en-US
+To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+CC:     Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        David Miller <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Luiz Augusto Von Dentz <luiz.von.dentz@intel.com>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>,
+        "open list:NETWORKING [GENERAL]" <netdev@vger.kernel.org>
+References: <1657782880-28234-1-git-send-email-quic_zijuhu@quicinc.com>
+ <CABBYNZKn6NUJdtdOASSDs4+h_rZVvamcVPW1KZdmXkALEpCEmg@mail.gmail.com>
+ <e1c55f9f-1615-d9a9-a4b4-40416708e69b@quicinc.com>
+ <CABBYNZKqEQoN+_iLd=+4n3_D6zULKytiNhPOLQp1HvBTSOravw@mail.gmail.com>
+ <f9d263c6-d95a-1deb-0503-4c1b3ddbebbf@quicinc.com>
+ <CABBYNZJCosedxedP+hgVS=4JzmDOBUc1jjp+5f9vq6estPAfsA@mail.gmail.com>
+From:   quic_zijuhu <quic_zijuhu@quicinc.com>
+In-Reply-To: <CABBYNZJCosedxedP+hgVS=4JzmDOBUc1jjp+5f9vq6estPAfsA@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri 01 Jul 09:58 CDT 2022, Bhupesh Sharma wrote:
-
-> Since for some QCoM tsens controllers, its suggested to
-> monitor the controller health periodically and in case an
-> issue is detected, to re-initialize the tsens controller
-> via trustzone, add the support for the same in the
-> qcom tsens driver.
+On 7/19/2022 7:59 AM, Luiz Augusto von Dentz wrote:
+> Hi Quic_zijuhu,
 > 
-> Note that Once the tsens controller is reset using scm call,
-> all SROT and TM region registers will enter the reset mode.
+> On Thu, Jul 14, 2022 at 10:25 PM quic_zijuhu <quic_zijuhu@quicinc.com> wrote:
+>>
+>> On 7/15/2022 12:21 PM, Luiz Augusto von Dentz wrote:
+>>> Hi,
+>>>
+>>> On Thu, Jul 14, 2022 at 8:31 PM quic_zijuhu <quic_zijuhu@quicinc.com> wrote:
+>>>>
+>>>> On 7/15/2022 5:24 AM, Luiz Augusto von Dentz wrote:
+>>>>> Hi Zijun,
+>>>>>
+>>>>> On Thu, Jul 14, 2022 at 12:14 AM Zijun Hu <quic_zijuhu@quicinc.com> wrote:
+>>>>>>
+>>>>>> A cvsd sco setup failure issue is reported as shown by
+>>>>>> below btmon log, it firstly tries to set up cvsd esco with
+>>>>>> S3/S2/S1 configs sequentially, but these attempts are all
+>>>>>> failed with error code "Unspecified Error (0x1f)", then it
+>>>>>> tries to set up cvsd sco with D1 config, unfortunately, it
+>>>>>> still fails to set up sco with error code
+>>>>>> "Invalid HCI Command Parameters (0x12)", this error code
+>>>>>> terminates attempt with remaining D0 config and marks overall
+>>>>>> sco/esco setup failure.
+>>>>>>
+>>>>>> It is wrong D1/D0 @retrans_effort 0x01 within @esco_param_cvsd
+>>>>>> that causes D1 config failure with error code
+>>>>>> "Invalid HCI Command Parameters (0x12)", D1/D0 sco @retrans_effort
+>>>>>> must not be 0x01 based on spec, so fix this issue by changing D1/D0
+>>>>>> @retrans_effort from 0x01 to 0xff as present @sco_param_cvsd.
+>>>>>
+>>>>> Please quote the spec regarding the invalid parameters:
+>>>>>
+>>>> BLUETOOTH CORE SPECIFICATION Version 5.3 | Vol 1, Part F
+>>>> page 375
+>>>>
+>>>> 2.18 INVALID HCI COMMAND PARAMETERS (0x12)
+>>>> The Invalid HCI Command Parameters error code indicates that at least one of
+>>>> the HCI command parameters is invalid.
+>>>> This shall be used when:
+>>>> • the parameter total length is invalid.
+>>>> • a command parameter is an invalid type.
+>>>> • a connection identifier does not match the corresponding event.
+>>>> • a parameter is odd when it is required to be even.
+>>>> • a parameter is outside of the specified range.
+>>>> • two or more parameter values have inconsistent values.
+>>>> Note: An invalid type can be, for example, when a SCO Connection_Handle is
+>>>> used where an ACL Connection_Handle is required.
+>>>>
+>>>>> BLUETOOTH CORE SPECIFICATION Version 5.3 | Vol 4, Part E
+>>>>> page 1891
+>>>>>
+>>>>> 0x01 At least one retransmission, optimize for power consumption (eSCO con-
+>>>>> nection required).
+>>>>>
+>>>>>> < HCI Command: Setup Synchrono.. (0x01|0x0028) plen 17  #3405 [hci0]
+>>>>>>         Handle: 3
+>>>>>>         Transmit bandwidth: 8000
+>>>>>>         Receive bandwidth: 8000
+>>>>>>         Max latency: 10
+>>>>>>         Setting: 0x0060
+>>>>>>           Input Coding: Linear
+>>>>>>           Input Data Format: 2's complement
+>>>>>>           Input Sample Size: 16-bit
+>>>>>>           # of bits padding at MSB: 0
+>>>>>>           Air Coding Format: CVSD
+>>>>>>         Retransmission effort: Optimize for power consumption (0x01)
+>>>>>>         Packet type: 0x0380
+>>>>>>           3-EV3 may not be used
+>>>>>>           2-EV5 may not be used
+>>>>>>           3-EV5 may not be used
+>>>>>>> HCI Event: Command Status (0x0f) plen 4               #3406 [hci0]
+>>>>>>       Setup Synchronous Connection (0x01|0x0028) ncmd 1
+>>>>>>         Status: Success (0x00)
+>>>>>>> HCI Event: Synchronous Connect Comp.. (0x2c) plen 17  #3408 [hci0]
+>>>>>>         Status: Unspecified Error (0x1f)
+>>>>>>         Handle: 4
+>>>>>>         Address: 14:3F:A6:47:56:15 (OUI 14-3F-A6)
+>>>>>>         Link type: eSCO (0x02)
+>>>>>>         Transmission interval: 0x00
+>>>>>>         Retransmission window: 0x00
+>>>>>>         RX packet length: 0
+>>>>>>         TX packet length: 0
+>>>>>>         Air mode: CVSD (0x02)
+>>>>>> < HCI Command: Setup Synchrono.. (0x01|0x0028) plen 17  #3409 [hci0]
+>>>>>>         Handle: 3
+>>>>>>         Transmit bandwidth: 8000
+>>>>>>         Receive bandwidth: 8000
+>>>>>>         Max latency: 7
+>>>>>>         Setting: 0x0060
+>>>>>>           Input Coding: Linear
+>>>>>>           Input Data Format: 2's complement
+>>>>>>           Input Sample Size: 16-bit
+>>>>>>           # of bits padding at MSB: 0
+>>>>>>           Air Coding Format: CVSD
+>>>>>>         Retransmission effort: Optimize for power consumption (0x01)
+>>>>>>         Packet type: 0x0380
+>>>>>>           3-EV3 may not be used
+>>>>>>           2-EV5 may not be used
+>>>>>>           3-EV5 may not be used
+>>>>>>> HCI Event: Command Status (0x0f) plen 4               #3410 [hci0]
+>>>>>>       Setup Synchronous Connection (0x01|0x0028) ncmd 1
+>>>>>>         Status: Success (0x00)
+>>>>>>> HCI Event: Synchronous Connect Comp.. (0x2c) plen 17  #3416 [hci0]
+>>>>>>         Status: Unspecified Error (0x1f)
+>>>>>>         Handle: 4
+>>>>>>         Address: 14:3F:A6:47:56:15 (OUI 14-3F-A6)
+>>>>>>         Link type: eSCO (0x02)
+>>>>>>         Transmission interval: 0x00
+>>>>>>         Retransmission window: 0x00
+>>>>>>         RX packet length: 0
+>>>>>>         TX packet length: 0
+>>>>>>         Air mode: CVSD (0x02)
+>>>>>> < HCI Command: Setup Synchrono.. (0x01|0x0028) plen 17  #3417 [hci0]
+>>>>>>         Handle: 3
+>>>>>>         Transmit bandwidth: 8000
+>>>>>>         Receive bandwidth: 8000
+>>>>>>         Max latency: 7
+>>>>>>         Setting: 0x0060
+>>>>>>           Input Coding: Linear
+>>>>>>           Input Data Format: 2's complement
+>>>>>>           Input Sample Size: 16-bit
+>>>>>>           # of bits padding at MSB: 0
+>>>>>>           Air Coding Format: CVSD
+>>>>>>         Retransmission effort: Optimize for power consumption (0x01)
+>>>>>>         Packet type: 0x03c8
+>>>>>>           EV3 may be used
+>>>>>>           2-EV3 may not be used
+>>>>>>           3-EV3 may not be used
+>>>>>>           2-EV5 may not be used
+>>>>>>           3-EV5 may not be used
+>>>>>>> HCI Event: Command Status (0x0f) plen 4               #3419 [hci0]
+>>>>>>       Setup Synchronous Connection (0x01|0x0028) ncmd 1
+>>>>>>         Status: Success (0x00)
+>>>>>>> HCI Event: Synchronous Connect Comp.. (0x2c) plen 17  #3426 [hci0]
+>>>>>>         Status: Unspecified Error (0x1f)
+>>>>>>         Handle: 4
+>>>>>>         Address: 14:3F:A6:47:56:15 (OUI 14-3F-A6)
+>>>>>>         Link type: eSCO (0x02)
+>>>>>>         Transmission interval: 0x00
+>>>>>>         Retransmission window: 0x00
+>>>>>>         RX packet length: 0
+>>>>>>         TX packet length: 0
+>>>>>>         Air mode: CVSD (0x02)
+>>>>>> < HCI Command: Setup Synchrono.. (0x01|0x0028) plen 17  #3427 [hci0]
+>>>>>>         Handle: 3
+>>>>>>         Transmit bandwidth: 8000
+>>>>>>         Receive bandwidth: 8000
+>>>>>>         Max latency: 65535
+>>>>>>         Setting: 0x0060
+>>>>>>           Input Coding: Linear
+>>>>>>           Input Data Format: 2's complement
+>>>>>>           Input Sample Size: 16-bit
+>>>>>>           # of bits padding at MSB: 0
+>>>>>>           Air Coding Format: CVSD
+>>>>>>         Retransmission effort: Optimize for power consumption (0x01)
+>>>>>>         Packet type: 0x03c4
+>>>>>>           HV3 may be used
+>>>>>>           2-EV3 may not be used
+>>>>>>           3-EV3 may not be used
+>>>>>>           2-EV5 may not be used
+>>>>>>           3-EV5 may not be used
+>>>>>>> HCI Event: Command Status (0x0f) plen 4               #3428 [hci0]
+>>>>>>       Setup Synchronous Connection (0x01|0x0028) ncmd 1
+>>>>>>         Status: Success (0x00)
+>>>>>>> HCI Event: Synchronous Connect Comp.. (0x2c) plen 17  #3429 [hci0]
+>>>>>>         Status: Invalid HCI Command Parameters (0x12)
+>>>>>>         Handle: 0
+>>>>>>         Address: 14:3F:A6:47:56:15 (OUI 14-3F-A6)
+>>>>>>         Link type: SCO (0x00)
+>>>>>>         Transmission interval: 0x00
+>>>>>>         Retransmission window: 0x00
+>>>>>>         RX packet length: 0
+>>>>>>         TX packet length: 0
+>>>>>>         Air mode: u-law log (0x00)
+>>>>>
+>>>>> This really sounds like the controller fault, it seem to be picking up
+>>>>> SCO based on packet type alone instead of checking if retransmission
+>>>>> is suggesting to use eSCO instead, otherwise there is no use to define
+>>>>> D1/D0 for both eSCO and SCO since the controller will always pick SCO
+>>>>> instead.
+>>>>>
+>>>> i don't agree with you about above opinion:
+>>>> S3/S2/S1 here is for eSCO but D1/D0 is for SCO, it should try to set up
+>>>> SCO after all eSCO setup failures based HFP_v1.8 spec, so it is reasonable to
+>>>> return "Invalid HCI Command Parameters" for SCO setup with retransmission parameter
+>>>> 0x01 since SCO doesn't need retransmission.
+>>>>
+>>>> the spec doesn't say it is available for D1/D0 on eSCO.
+>>>>
+>>>> Hands-Free Profile V1.8 | page 133
+>>>>
+>>>> 5.7.1.1 Selection of Synchronous Transport
+>>>> To select the type of synchronous transport (eSCO or SCO) to use, devices shall adhere to the following
+>>>> logic:
+>>>> • If eSCO is supported by the responder, the synchronous connection shall first be attempted on an
+>>>> eSCO logical transport. See section 5.7.1.2
+>>>> • If eSCO is unavailable for use (e.g., not supported by the Responder or link establishment fails),
+>>>> and SCO is not currently forbidden because a BR/EDR secure connection is being used, the
+>>>> Initiator shall open a SCO logical connection. See section 5.7.1.3.
+>>>>
+>>>> Hands-Free Profile V1.8 | page 115
+>>>> 5.7.1.3 Negotiation of SCO Configuration Parameters
+>>>> Requirements related to the use of SCO links, under the conditions when the use of a SCO logical
+>>>> transport is permitted, are covered by the parameter sets D0-D1.
+>>>>
+>>>> Hands-Free Profile V1.8 | page 24
+>>>> shows a summary of the mapping of codec requirements on link features for this profile.
+>>>> Feature Support in HF Support in AG
+>>>> 1. D0 – CVSD on SCO link (HV1) M M
+>>>> 2. D1 – CVSD on SCO link (HV3) M M
+>>>> 3. S1 – CVSD eSCO link (EV3) M M
+>>>> 4. S2 – CVSD on EDR eSCO link (2-EV3) M M
+>>>> 5. S3 – CVSD on EDR eSCO link (2-EV3) M M
+>>>
+>>> If D0-D1 are SCO only, then yes but then they should not even be part
+>>> of the eSCO table, still I don't think the controller should be
+>>> looking just to packet type or these types are not supported in eSCO?
+>>>
+>> Per BT 5.3 errata, BT controller will not retry SCO connection if eSCO connection failure. Instead, host shall retry sco connection with retransmission effort =0
+>> you are right in theory, but it maybe be the simplest fix to correct D1/D0 retransmission parameter within the table in practice
+>> the table esco_param_cvsd maybe be regarded as eSCO entry table.
+>>
+>> the failure reason is shown below based on F/W team explanation:
+>> we set retransmission parameter with 0x01 to request controller to setup eSCO but the peer only accept SCO within
+>> suggested retransmission parameter is 0x00.
 > 
-> While all the SROT registers will be re-programmed and
-> re-enabled in trustzone prior to the scm call exit, the TM
-> region registers will not re-initialized in trustzone and thus
-> need to be handled by the tsens driver.
+> I guess it must be some LL message then since I don't see anything in
+> the traces that would indicate the peer only accept SCO within
+> suggested retransmission.
 > 
-> Cc: Amit Kucheria <amitk@kernel.org>
-> Cc: Thara Gopinath <thara.gopinath@gmail.com>
-> Cc: linux-pm@vger.kernel.org
-> Cc: linux-arm-msm@vger.kernel.org
-> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> ---
->  drivers/thermal/qcom/tsens-v2.c |   3 +
->  drivers/thermal/qcom/tsens.c    | 237 +++++++++++++++++++++++++++++++-
->  drivers/thermal/qcom/tsens.h    |   6 +
->  3 files changed, 239 insertions(+), 7 deletions(-)
+yes, your are right.
+so i need to remove D1/D0 from @esco_param_cvsd based on discussion.
+right?
+>> so the failure reason is "choice between SCO and eSCO" not "packet type is not supported over eSCO"
+>>
+>>>>>> Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
+>>>>>> Tested-by: Zijun Hu <quic_zijuhu@quicinc.com>
+>>>>>> ---
+>>>>>>  net/bluetooth/hci_conn.c | 4 ++--
+>>>>>>  1 file changed, 2 insertions(+), 2 deletions(-)
+>>>>>>
+>>>>>> diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
+>>>>>> index 7829433d54c1..2627d5ac15d6 100644
+>>>>>> --- a/net/bluetooth/hci_conn.c
+>>>>>> +++ b/net/bluetooth/hci_conn.c
+>>>>>> @@ -45,8 +45,8 @@ static const struct sco_param esco_param_cvsd[] = {
+>>>>>>         { EDR_ESCO_MASK & ~ESCO_2EV3, 0x000a,   0x01 }, /* S3 */
+>>>>>>         { EDR_ESCO_MASK & ~ESCO_2EV3, 0x0007,   0x01 }, /* S2 */
+>>>>>>         { EDR_ESCO_MASK | ESCO_EV3,   0x0007,   0x01 }, /* S1 */
+>>>>>> -       { EDR_ESCO_MASK | ESCO_HV3,   0xffff,   0x01 }, /* D1 */
+>>>>>> -       { EDR_ESCO_MASK | ESCO_HV1,   0xffff,   0x01 }, /* D0 */
+>>>>>> +       { EDR_ESCO_MASK | ESCO_HV3,   0xffff,   0xff }, /* D1 */
+>>>>>> +       { EDR_ESCO_MASK | ESCO_HV1,   0xffff,   0xff }, /* D0 */
+>>>>>>  };
+>>>>>
+>>>>> This doesn't seem right, you are changing the parameters for eSCO
+>>>>> table not SCO, which further reinforce this is probably the controller
+>>>>> not really doing its job and checking if retransmission is actually
+>>>>> meant for eSCO rather than SCO.
+>>>>>
+>>>> here it is D1/D0 SCO setup after S3/S2/S1 eSCO attempts failure as above my comments.
+>>>
+>>> Well then all we need to do is to remove the last 2 lines since they
+>>> are already handled by the table below.
+>>>
+>>   if so, we must handle the fallback requirement with more complex logic.
 > 
-> diff --git a/drivers/thermal/qcom/tsens-v2.c b/drivers/thermal/qcom/tsens-v2.c
-> index 61d38a56d29a..9bb542f16482 100644
-> --- a/drivers/thermal/qcom/tsens-v2.c
-> +++ b/drivers/thermal/qcom/tsens-v2.c
-> @@ -88,6 +88,9 @@ static const struct reg_field tsens_v2_regfields[MAX_REGFIELDS] = {
->  
->  	/* TRDY: 1=ready, 0=in progress */
->  	[TRDY] = REG_FIELD(TM_TRDY_OFF, 0, 0),
-> +
-> +	/* FIRST_ROUND_COMPLETE: 1=complete, 0=not complete */
-> +	[FIRST_ROUND_COMPLETE] = REG_FIELD(TM_TRDY_OFF, 3, 3),
->  };
->  
->  static const struct tsens_ops ops_generic_v2 = {
-> diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
-> index 97f4d4454f20..28d42ae0eb47 100644
-> --- a/drivers/thermal/qcom/tsens.c
-> +++ b/drivers/thermal/qcom/tsens.c
-> @@ -7,6 +7,7 @@
->  #include <linux/debugfs.h>
->  #include <linux/err.h>
->  #include <linux/io.h>
-> +#include <linux/qcom_scm.h>
->  #include <linux/module.h>
->  #include <linux/nvmem-consumer.h>
->  #include <linux/of.h>
-> @@ -21,6 +22,8 @@
->  #include "../thermal_hwmon.h"
->  #include "tsens.h"
->  
-> +LIST_HEAD(tsens_device_list);
-> +
->  /**
->   * struct tsens_irq_data - IRQ status and temperature violations
->   * @up_viol:        upper threshold violated
-> @@ -594,19 +597,159 @@ static void tsens_disable_irq(struct tsens_priv *priv)
->  	regmap_field_write(priv->rf[INT_EN], 0);
->  }
->  
-> +static int tsens_reenable_hw_after_scm(struct tsens_priv *priv)
-> +{
-> +	unsigned long flags;
-> +
-> +	spin_lock_irqsave(&priv->ul_lock, flags);
-> +
-> +	/* Re-enable watchdog, unmask the bark and
-> +	 * disable cycle completion monitoring.
-> +	 */
-> +	regmap_field_write(priv->rf[WDOG_BARK_CLEAR], 1);
-> +	regmap_field_write(priv->rf[WDOG_BARK_CLEAR], 0);
-> +	regmap_field_write(priv->rf[WDOG_BARK_MASK], 0);
-> +	regmap_field_write(priv->rf[CC_MON_MASK], 1);
-> +
-> +	/* Re-enable interrupts */
-> +	tsens_enable_irq(priv);
-> +
-> +	spin_unlock_irqrestore(&priv->ul_lock, flags);
-> +
-> +	return 0;
-> +}
-> +
->  int get_temp_tsens_valid(const struct tsens_sensor *s, int *temp)
->  {
-> -	struct tsens_priv *priv = s->priv;
-> +	struct tsens_priv *priv = s->priv, *priv_reinit;
->  	int hw_id = s->hw_id;
->  	u32 temp_idx = LAST_TEMP_0 + hw_id;
->  	u32 valid_idx = VALID_0 + hw_id;
->  	u32 valid;
-> -	int ret;
-> +	int ret, trdy, first_round, tsens_ret, sw_reg;
-> +	unsigned long timeout;
-> +	static atomic_t in_tsens_reinit;
+> Yeah it sounds like we didn't think about adding a fallback but
+> perhaps it is as simple as changing find_next_esco_param to start
+> returning the entry itself instead of an index, that would IMO have
+> made this issue more visible.
+> 
+we maybe take the fallback requirements as another requirement to develop.
+it is a good idea to have fallback you suggest.
+>>>>>>  static const struct sco_param sco_param_cvsd[] = {
+>>>>>> --
+>>>>>> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, a Linux Foundation Collaborative Project
+>>>>>>
+>>>>>
+>>>>>
+>>>>
+>>>
+>>>
+>>
+> 
+> 
 
-This is a global state, I suggest you move it to the top of the file to
-make that obvious.
-
->  
->  	/* VER_0 doesn't have VALID bit */
->  	if (tsens_version(priv) == VER_0)
->  		goto get_temp;
->  
-> +	/* For some tsens controllers, its suggested to
-> +	 * monitor the controller health periodically
-> +	 * and in case an issue is detected to reinit
-> +	 * tsens controller via trustzone.
-> +	 */
-> +	if (priv->needs_reinit_wa) {
-
-I would suggest that you move all this entire block to a separate
-function, maybe something:
-
-int tsens_health_check_and_reinit()
-
-> +		/* First check if TRDY is SET */
-> +		timeout = jiffies + usecs_to_jiffies(TIMEOUT_US);
-> +		do {
-> +			ret = regmap_field_read(priv->rf[TRDY], &trdy);
-> +			if (ret)
-> +				goto err;
-> +			if (!trdy)
-> +				continue;
-> +		} while (time_before(jiffies, timeout));
-
-This looks like a regmap_field_read()
-
-> +
-> +		if (!trdy) {
-> +			ret = regmap_field_read(priv->rf[FIRST_ROUND_COMPLETE], &first_round);
-> +			if (ret)
-> +				goto err;
-> +
-> +			if (!first_round) {
-> +				if (atomic_read(&in_tsens_reinit)) {
-> +					dev_dbg(priv->dev, "tsens re-init is in progress\n");
-> +					ret = -EAGAIN;
-
-Is it preferred to return -EAGAIN here, over just serializing this whole
-thing using a mutex?
-
-> +					goto err;
-> +				}
-> +
-> +				/* Wait for 2 ms for tsens controller to recover */
-> +				timeout = jiffies + msecs_to_jiffies(RESET_TIMEOUT_MS);
-> +				do {
-> +					ret = regmap_field_read(priv->rf[FIRST_ROUND_COMPLETE],
-> +								&first_round);
-> +					if (ret)
-> +						goto err;
-> +
-> +					if (first_round) {
-> +						dev_dbg(priv->dev, "tsens controller recovered\n");
-> +						goto sensor_read;
-> +					}
-> +				} while (time_before(jiffies, timeout));
-> +
-> +				/*
-> +				 * tsens controller did not recover,
-> +				 * proceed with SCM call to re-init it
-> +				 */
-> +				if (atomic_read(&in_tsens_reinit)) {
-> +					dev_dbg(priv->dev, "tsens re-init is in progress\n");
-> +					ret = -EAGAIN;
-> +					goto err;
-> +				}
-> +
-> +				atomic_set(&in_tsens_reinit, 1);
-
-Afaict nothing prevents two different processes to run the remainder of
-the recovery in parallel. I think you need some locking here.
-
-> +
-> +				/*
-> +				 * Invoke scm call only if SW register write is
-> +				 * reflecting in controller. Try it for 2 ms.
-> +				 */
-> +				timeout = jiffies + msecs_to_jiffies(RESET_TIMEOUT_MS);
-> +				do {
-> +					ret = regmap_field_write(priv->rf[INT_EN], BIT(2));
-
-Do we know what BIT(2) is and would we be allowed to give it a define?
-
-> +					if (ret)
-> +						goto err_unset;
-> +
-> +					ret = regmap_field_read(priv->rf[INT_EN], &sw_reg);
-> +					if (ret)
-> +						goto err_unset;
-> +
-> +					if (!(sw_reg & BIT(2)))
-> +						continue;
-
-Why not:
-
-} while (sw_reg & BIT(2) && time_before(jiffies, timeout));
-
-> +				} while (time_before(jiffies, timeout));
-> +
-> +				if (!(sw_reg & BIT(2))) {
-> +					ret = -ENOTRECOVERABLE;
-> +					goto err_unset;
-> +				}
-> +
-> +				ret = qcom_scm_tsens_reinit(&tsens_ret);
-> +				if (ret || tsens_ret) {
-> +					dev_err(priv->dev, "tsens reinit scm call failed (%d : %d)\n",
-> +							ret, tsens_ret);
-> +					if (tsens_ret)
-> +						ret = -ENOTRECOVERABLE;
-
-If that's the api for the SCM, feel free to move the -ENOTRECOVERABLE to
-the scm function.
-
-> +
-> +					goto err_unset;
-> +				}
-> +
-> +				/* After the SCM call, we need to re-enable
-> +				 * the interrupts and also set active threshold
-> +				 * for each sensor.
-> +				 */
-> +				list_for_each_entry(priv_reinit,
-> +						&tsens_device_list, list) {
-> +					ret = tsens_reenable_hw_after_scm(priv_reinit);
-> +					if (ret) {
-> +						dev_err(priv->dev,
-> +							"tsens re-enable after scm call failed (%d)\n",
-> +							ret);
-> +						ret = -ENOTRECOVERABLE;
-> +						goto err_unset;
-> +					}
-> +				}
-> +
-> +				atomic_set(&in_tsens_reinit, 0);
-> +
-> +				/* Notify reinit wa worker */
-> +				list_for_each_entry(priv_reinit,
-
-Do you need to loop twice over the tsens instances?
-
-> +						&tsens_device_list, list) {
-> +					queue_work(priv_reinit->reinit_wa_worker,
-> +							&priv_reinit->reinit_wa_notify);
-> +				}
-> +			}
-> +		}
-> +	}
-> +
-> +sensor_read:
->  	/* Valid bit is 0 for 6 AHB clock cycles.
->  	 * At 19.2MHz, 1 AHB clock is ~60ns.
->  	 * We should enter this loop very, very rarely.
-> @@ -623,6 +766,12 @@ int get_temp_tsens_valid(const struct tsens_sensor *s, int *temp)
->  	*temp = tsens_hw_to_mC(s, temp_idx);
->  
->  	return 0;
-> +
-> +err_unset:
-> +	atomic_set(&in_tsens_reinit, 0);
-> +
-> +err:
-> +	return ret;
->  }
->  
->  int get_temp_common(const struct tsens_sensor *s, int *temp)
-> @@ -860,6 +1009,14 @@ int __init init_common(struct tsens_priv *priv)
->  		goto err_put_device;
->  	}
->  
-> +	priv->rf[FIRST_ROUND_COMPLETE] = devm_regmap_field_alloc(dev,
-> +								priv->tm_map,
-> +								priv->fields[FIRST_ROUND_COMPLETE]);
-> +	if (IS_ERR(priv->rf[FIRST_ROUND_COMPLETE])) {
-> +		ret = PTR_ERR(priv->rf[FIRST_ROUND_COMPLETE]);
-> +		goto err_put_device;
-> +	}
-> +
->  	/* This loop might need changes if enum regfield_ids is reordered */
->  	for (j = LAST_TEMP_0; j <= UP_THRESH_15; j += 16) {
->  		for (i = 0; i < priv->feat->max_sensors; i++) {
-> @@ -1097,6 +1254,43 @@ static int tsens_register(struct tsens_priv *priv)
->  	return ret;
->  }
->  
-> +static void tsens_reinit_worker_notify(struct work_struct *work)
-> +{
-> +	int i, ret, temp;
-
-priv->num_sensors is unsigned, so i could be too.
-
-> +	struct tsens_irq_data d;
-> +	struct tsens_priv *priv = container_of(work, struct tsens_priv,
-> +					       reinit_wa_notify);
-> +
-> +	for (i = 0; i < priv->num_sensors; i++) {
-> +		const struct tsens_sensor *s = &priv->sensor[i];
-> +		u32 hw_id = s->hw_id;
-> +
-> +		if (!s->tzd)
-> +			continue;
-> +		if (!tsens_threshold_violated(priv, hw_id, &d))
-> +			continue;
-> +
-> +		ret = get_temp_tsens_valid(s, &temp);
-> +		if (ret) {
-> +			dev_err(priv->dev, "[%u] %s: error reading sensor\n",
-> +				hw_id, __func__);
-
-Please express yourself in the message, instead of using __func__.
-
-> +			continue;
-> +		}
-> +
-> +		tsens_read_irq_state(priv, hw_id, s, &d);
-> +
-> +		if ((d.up_thresh < temp) || (d.low_thresh > temp)) {
-> +			dev_dbg(priv->dev, "[%u] %s: TZ update trigger (%d mC)\n",
-> +				hw_id, __func__, temp);
-> +			thermal_zone_device_update(s->tzd,
-> +						   THERMAL_EVENT_UNSPECIFIED);
-
-This is just 86 chars long, no need to wrap the line.
-
-> +		} else {
-> +			dev_dbg(priv->dev, "[%u] %s: no violation:  %d\n",
-
-Double space after ':'
-
-> +				hw_id, __func__, temp);
-> +		}
-> +	}
-> +}
-> +
->  static int tsens_probe(struct platform_device *pdev)
->  {
->  	int ret, i;
-> @@ -1139,6 +1333,19 @@ static int tsens_probe(struct platform_device *pdev)
->  	priv->dev = dev;
->  	priv->num_sensors = num_sensors;
->  	priv->needs_reinit_wa = data->needs_reinit_wa;
-> +
-> +	if (priv->needs_reinit_wa && !qcom_scm_is_available())
-> +		return -EPROBE_DEFER;
-> +
-> +	if (priv->needs_reinit_wa) {
-> +		priv->reinit_wa_worker = alloc_workqueue("tsens_reinit_work",
-> +							 WQ_HIGHPRI, 0);
-
-Do you really need your own work queue for this, how about just
-scheduling the work on system_highpri_wq?
-
-Regards,
-Bjorn
