@@ -2,67 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1B6B65790ED
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Jul 2022 04:39:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1FD1B57910E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Jul 2022 04:56:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235207AbiGSCjL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 Jul 2022 22:39:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36812 "EHLO
+        id S235120AbiGSC4B (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 Jul 2022 22:56:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45602 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234271AbiGSCjH (ORCPT
+        with ESMTP id S229763AbiGSC4A (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 Jul 2022 22:39:07 -0400
-Received: from mail-oa1-x35.google.com (mail-oa1-x35.google.com [IPv6:2001:4860:4864:20::35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A46312528F
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Jul 2022 19:39:06 -0700 (PDT)
-Received: by mail-oa1-x35.google.com with SMTP id 586e51a60fabf-10c0430e27dso28855539fac.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Jul 2022 19:39:06 -0700 (PDT)
+        Mon, 18 Jul 2022 22:56:00 -0400
+Received: from mail-oo1-xc32.google.com (mail-oo1-xc32.google.com [IPv6:2607:f8b0:4864:20::c32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E2FCB7E0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Jul 2022 19:55:59 -0700 (PDT)
+Received: by mail-oo1-xc32.google.com with SMTP id d12-20020a4aeb8c000000b004214e709b72so2670917ooj.6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Jul 2022 19:55:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=wm/d7g9+Kn3JB5OGUKlcMYsTmYkIW1B3SgCJ+oJ3vPY=;
-        b=qj+zm++BHUM19KuCYUWWGC9VksbbnkAY2Yoll9PG/f71LMcHVsVacpzH+ZJ8/rLpcx
-         PcbhY+WSU6tmQCXl6m4z9IZcvrzlpUhVHZSuq8JhaMOSm7Ah+q+v52xxyx9BiQRbTcRN
-         qzCFOwxpPNMqHX0dURrkwnM6OHvSJBSzVqR3u5yPRufyidgGW8QKucaqvvPJsjE/TF/L
-         /d9vxXX9w++niTY41HYrIMTKAr1ocB7COLldmtw50NA8ijMPCwD+w3dOwNb9C9DnTHH2
-         mkOa/AGa6wb6o1YNNEJNi+tu02kVBmMeU2RJWt5UwRNIK50wkYJ4naM0PqYMyl5fgPgl
-         ZaYQ==
+        bh=JZenFhv1aOXYTh2/Bv9f0vJQurXwBe6cV14Ssoc5sEo=;
+        b=ge+hSvVFk+3D3Rb63qtTAhGplDhTkFq2PDa9yCKqZUwiqsugKAU6ffdnBeOp0E8gB1
+         Hvcm6Z2NZALFLidPJWmzpZ8o3IPEp4AfedPvh5YFfKaZHSDQkTwgzT5qKaQw3VLFCEjs
+         Yq4H1LCy434GO9IcuMDfVdo2hzKfS4vipEWP9kDPsD8/iQtVBmFxxvk9FZqiC8bH6A6e
+         dP1/nLDF98YEw+ZBEgOxw64seHitmBjwvg+iyJoa7vNWPGZvsuJn01+xyTIWteSNv4Eu
+         qrH4AqR3pctGcyIWLOpcA0a5euJ+ckrlG/CKOiZBWufI3n5w1BleWVrd2sWlqfQceIs2
+         69ZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=wm/d7g9+Kn3JB5OGUKlcMYsTmYkIW1B3SgCJ+oJ3vPY=;
-        b=WmV9tkM8yh+wVaId2IKNoYtMC92cd8c9Q4LGgLGlFPBaKSpFeQq29QUNOJv1/Y08jJ
-         pT9pGPcoS1Zvi/83sbRpcbKa7JZC5X0HOO1dqQnAlxURFjvMyebDIOV6P/s9bz8Gdr/n
-         nk0jTPryCIw9XowQzcvtrCLvDD7BB5hn2O8vTMXtj13aCJoM/sX8hejGMZEXBaUYsw+r
-         K0IpHcA4harivx8c2+2WnPT5PfQemBndihYuON+zB1iZD10FcNhtOMJSM+fuIVbTYZny
-         8z4thyPvBAKZcV81YRwMhQiTfqPau95BKMciCgSbFwYYSB6lQESxb04UeSjLWVrtsDQU
-         +fxA==
-X-Gm-Message-State: AJIora9jc3BkmHlsuJEtPd94MlcZA/GZ+Sxt7M+9coF7Og0BZUzNc0Us
-        SqomFUb2mI6AxYhmk0XdI0qFDw==
-X-Google-Smtp-Source: AGRyM1v9rzKtUFZreXzWZUMZg6qf4gz5UAJnvdDhJcDD7UtLWZLNDCLDmHphVGWEwgqoLgSXjbs7kw==
-X-Received: by 2002:a05:6808:654:b0:33a:66b8:a7ef with SMTP id z20-20020a056808065400b0033a66b8a7efmr6406262oih.108.1658198346055;
-        Mon, 18 Jul 2022 19:39:06 -0700 (PDT)
+        bh=JZenFhv1aOXYTh2/Bv9f0vJQurXwBe6cV14Ssoc5sEo=;
+        b=raEOIpm6d4qm0g9/U90dISpntCqwPxQFqqgN7flD92p6cjeIRAqU939DaSSi02LDCj
+         ggm6ZsbmvqX5lF/EMXikeI9yYLh/m7hSU3Fvmc97S399gzNgqrbqKOCmeJKztoWBFyLw
+         7cvSnRqwYiZuJo0mY46ow+2xfYJgmvi3awNQ/0Cfl/IKoBRX/v5Xi6Vc2ceDG0YXYLRx
+         mLVCFUs+ksM/WZsUjtigUEKg4vw4rROZRzy/Ac99SRK3LCGys1eHNk6uyVgNEwa2Mtb3
+         z5uklHgopFsY0iIXl1ryL4bzG+7SsDW1jHK7SrHdQlFfQSALEj7x7YyRfgDoJqO7DvW9
+         RlFA==
+X-Gm-Message-State: AJIora8FChgjz4ySCU7vnQNR1C6q30TEDKndDn6jxVkAAe8XEE7YEmHz
+        wKvWJzyz4aBJhNLIbVmOBAzHEm+HrLx/Gw==
+X-Google-Smtp-Source: AGRyM1vDFv9tVXUuo+9gtJ1ugmQxWjgC0LSkd6ELQ1+Z5hjk1L/Wy1vDcnaS6h3U/EgI2cTWKth0Ig==
+X-Received: by 2002:a4a:d482:0:b0:435:4bf9:3f30 with SMTP id o2-20020a4ad482000000b004354bf93f30mr10570666oos.64.1658199358625;
+        Mon, 18 Jul 2022 19:55:58 -0700 (PDT)
 Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id m3-20020a9d4003000000b0061c34f86b31sm5765168ote.5.2022.07.18.19.39.04
+        by smtp.gmail.com with ESMTPSA id n45-20020a4a9570000000b0042313f42b26sm5577231ooi.39.2022.07.18.19.55.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 Jul 2022 19:39:05 -0700 (PDT)
-Date:   Mon, 18 Jul 2022 21:39:03 -0500
+        Mon, 18 Jul 2022 19:55:58 -0700 (PDT)
+Date:   Mon, 18 Jul 2022 21:55:56 -0500
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Stephen Boyd <swboyd@chromium.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
-Subject: Re: [PATCH] clk: qcom: a53-pll: convert to use parent_data rather
- than parent_names
-Message-ID: <YtYZR9tsfNw8OwvO@builder.lan>
-References: <20220620010643.1533531-1-dmitry.baryshkov@linaro.org>
+To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Cc:     linux-pm@vger.kernel.org, bhupesh.linux@gmail.com,
+        linux-kernel@vger.kernel.org, Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 2/3] thermal: qcom: tsens: Add support for
+ 'needs_reinit_wa' for sm8150
+Message-ID: <YtYdPG8ofmmiVe4P@builder.lan>
+References: <20220701145815.2037993-1-bhupesh.sharma@linaro.org>
+ <20220701145815.2037993-3-bhupesh.sharma@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220620010643.1533531-1-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220701145815.2037993-3-bhupesh.sharma@linaro.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -72,39 +73,137 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun 19 Jun 20:06 CDT 2022, Dmitry Baryshkov wrote:
+On Fri 01 Jul 09:58 CDT 2022, Bhupesh Sharma wrote:
 
-> Change a53-pll driver to use clk_parent_data rather than always looking
-> up the xo clock in the system clock list.
+> QCoM sm8150 tsens controller might require re-initialization
+
+Please spell out Qualcomm.
+
+> via trustzone [via scm call(s)] when it enters a 'bad state'
+> causing sensor temperatures/interrupts status to be in an
+> 'invalid' state.
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Add hooks for the same in the qcom tsens driver which
+> can be used by followup patch(es).
+> 
+
+This patch enables needs_reinit_wa, which is actually implemented in
+patch 3, wouldn't it make more sense to flip them around; to first
+implement the feature and then enable it in this patch?
+
+> Cc: Amit Kucheria <amitk@kernel.org>
+> Cc: Thara Gopinath <thara.gopinath@gmail.com>
+> Cc: linux-pm@vger.kernel.org
+> Cc: linux-arm-msm@vger.kernel.org
+> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
 > ---
->  drivers/clk/qcom/a53-pll.c | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
+>  drivers/thermal/qcom/tsens-v2.c | 11 +++++++++++
+>  drivers/thermal/qcom/tsens.c    |  4 ++++
+>  drivers/thermal/qcom/tsens.h    |  6 +++++-
+>  3 files changed, 20 insertions(+), 1 deletion(-)
 > 
-> diff --git a/drivers/clk/qcom/a53-pll.c b/drivers/clk/qcom/a53-pll.c
-> index 329d2c5356d8..f9c5e296dba2 100644
-> --- a/drivers/clk/qcom/a53-pll.c
-> +++ b/drivers/clk/qcom/a53-pll.c
-> @@ -127,7 +127,9 @@ static int qcom_a53pll_probe(struct platform_device *pdev)
->  	if (!init.name)
->  		return -ENOMEM;
+> diff --git a/drivers/thermal/qcom/tsens-v2.c b/drivers/thermal/qcom/tsens-v2.c
+> index b293ed32174b..61d38a56d29a 100644
+> --- a/drivers/thermal/qcom/tsens-v2.c
+> +++ b/drivers/thermal/qcom/tsens-v2.c
+> @@ -101,6 +101,17 @@ struct tsens_plat_data data_tsens_v2 = {
+>  	.fields	= tsens_v2_regfields,
+>  };
 >  
-> -	init.parent_names = (const char *[]){ "xo" };
-> +	init.parent_data = &(const struct clk_parent_data){
-> +		.fw_name = "xo", .name = "xo_board",
+> +/* For sm8150 tsens, its suggested to monitor the controller health
 
-This used to look up the globally named clock "xo", now it picked up
-"xo_board". If this is intentional, could you please update the commit
-message to cover this part?
+/*
+ * Outside the network stack, the first line should be left empty in
+ * multiline comments.
+ */
 
-Thanks,
+> + * periodically and in case an issue is detected to reinit tsens
+> + * controller via trustzone.
+> + */
+> +struct tsens_plat_data data_tsens_sm8150 = {
+
+I doubt this is sm8150-specific, so the first question is if this should
+be attempted on all data_tsens_v2 platforms. Otherwise, how about naming
+this data_tsens_v2_reinit?
+
+Regards,
 Bjorn
 
-> +	};
->  	init.num_parents = 1;
->  	init.ops = &clk_pll_sr2_ops;
->  	pll->clkr.hw.init = &init;
+> +	.ops		= &ops_generic_v2,
+> +	.feat		= &tsens_v2_feat,
+> +	.needs_reinit_wa = true,
+> +	.fields	= tsens_v2_regfields,
+> +};
+> +
+>  /* Kept around for backward compatibility with old msm8996.dtsi */
+>  struct tsens_plat_data data_8996 = {
+>  	.num_sensors	= 13,
+> diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
+> index 7963ee33bf75..97f4d4454f20 100644
+> --- a/drivers/thermal/qcom/tsens.c
+> +++ b/drivers/thermal/qcom/tsens.c
+> @@ -991,6 +991,9 @@ static const struct of_device_id tsens_table[] = {
+>  	}, {
+>  		.compatible = "qcom,msm8996-tsens",
+>  		.data = &data_8996,
+> +	}, {
+> +		.compatible = "qcom,sm8150-tsens",
+> +		.data = &data_tsens_sm8150,
+>  	}, {
+>  		.compatible = "qcom,tsens-v1",
+>  		.data = &data_tsens_v1,
+> @@ -1135,6 +1138,7 @@ static int tsens_probe(struct platform_device *pdev)
+>  
+>  	priv->dev = dev;
+>  	priv->num_sensors = num_sensors;
+> +	priv->needs_reinit_wa = data->needs_reinit_wa;
+>  	priv->ops = data->ops;
+>  	for (i = 0;  i < priv->num_sensors; i++) {
+>  		if (data->hw_ids)
+> diff --git a/drivers/thermal/qcom/tsens.h b/drivers/thermal/qcom/tsens.h
+> index 1471a2c00f15..48a7bda902c1 100644
+> --- a/drivers/thermal/qcom/tsens.h
+> +++ b/drivers/thermal/qcom/tsens.h
+> @@ -515,6 +515,7 @@ struct tsens_features {
+>   * @num_sensors: Number of sensors supported by platform
+>   * @ops: operations the tsens instance supports
+>   * @hw_ids: Subset of sensors ids supported by platform, if not the first n
+> + * @needs_reinit_wa: tsens controller might need reinit via trustzone
+>   * @feat: features of the IP
+>   * @fields: bitfield locations
+>   */
+> @@ -522,6 +523,7 @@ struct tsens_plat_data {
+>  	const u32		num_sensors;
+>  	const struct tsens_ops	*ops;
+>  	unsigned int		*hw_ids;
+> +	bool			needs_reinit_wa;
+>  	struct tsens_features	*feat;
+>  	const struct reg_field		*fields;
+>  };
+> @@ -544,6 +546,7 @@ struct tsens_context {
+>   * @srot_map: pointer to SROT register address space
+>   * @tm_offset: deal with old device trees that don't address TM and SROT
+>   *             address space separately
+> + * @needs_reinit_wa: tsens controller might need reinit via trustzone
+>   * @ul_lock: lock while processing upper/lower threshold interrupts
+>   * @crit_lock: lock while processing critical threshold interrupts
+>   * @rf: array of regmap_fields used to store value of the field
+> @@ -561,6 +564,7 @@ struct tsens_priv {
+>  	struct regmap			*tm_map;
+>  	struct regmap			*srot_map;
+>  	u32				tm_offset;
+> +	bool				needs_reinit_wa;
+>  
+>  	/* lock for upper/lower threshold interrupts */
+>  	spinlock_t			ul_lock;
+> @@ -593,6 +597,6 @@ extern struct tsens_plat_data data_8916, data_8939, data_8974, data_9607;
+>  extern struct tsens_plat_data data_tsens_v1, data_8976;
+>  
+>  /* TSENS v2 targets */
+> -extern struct tsens_plat_data data_8996, data_tsens_v2;
+> +extern struct tsens_plat_data data_8996, data_tsens_sm8150, data_tsens_v2;
+>  
+>  #endif /* __QCOM_TSENS_H__ */
 > -- 
-> 2.35.1
+> 2.35.3
 > 
