@@ -2,63 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D14CD57A4B5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Jul 2022 19:12:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9235457A4BB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Jul 2022 19:13:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238375AbiGSRMW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Jul 2022 13:12:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37670 "EHLO
+        id S238311AbiGSRNB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Jul 2022 13:13:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38994 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238246AbiGSRMT (ORCPT
+        with ESMTP id S238391AbiGSRNA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Jul 2022 13:12:19 -0400
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18ED74F186
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Jul 2022 10:12:19 -0700 (PDT)
-Received: by mail-ed1-x530.google.com with SMTP id e15so20528825edj.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Jul 2022 10:12:19 -0700 (PDT)
+        Tue, 19 Jul 2022 13:13:00 -0400
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F31874F1A3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Jul 2022 10:12:59 -0700 (PDT)
+Received: by mail-ej1-x62f.google.com with SMTP id ez10so28378397ejc.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Jul 2022 10:12:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=IH9J1HkJUDinkHiBrN0EE6fhsRqqhDII0J61LnPPg94=;
-        b=ZQAX4R3A2RP5ePI8X1wnZBz/yY9Fp4N+5ElluUKxbZOSaqGLZi45cpgYwxewdTyBjy
-         AtH3jrlwrayMjKxZMhtnAc4zgKV0KMlAX86PQ6qAz0sCIUIfKuP0ghevIzpbzJB2z2+g
-         MeKjSieefdGX983+e3xeaMqLcqpDFdtvWZJvc=
+        bh=5MNb0V6j3qPMABdJqAwbj58qIBpWCdI7aPTD3FNarXk=;
+        b=BuVirQTZTwxHB7H87FJWiywTqDnGatrkPQzw5UHbCPG2g8CTgDMoTYPzdXmc1KYSZA
+         zTy3rNxK9hcEWlZ37iUIdgAYI3gp5P0kewuDync6JAXMK25mV3f/+c+smo9PEExXg/f5
+         x+Il1343dGqjFsDeOlWvHyG+n+V8E0fgXrD8A=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=IH9J1HkJUDinkHiBrN0EE6fhsRqqhDII0J61LnPPg94=;
-        b=rpDnWtMQyzpibGzLSq1wWKpcsq2WlhbG0V5aoZ071cXkC6S6usU/6RNoSIlIdkYc0u
-         zMNNGxL2xlmFjlB9f5TT82RAI9gK5nCRknAxhEtcoXo1I/vWcUpFLIW9E8y+Q/GV+Cv1
-         g0UdWaEMgZ7lREfYcjzGnaLc1Y5+TBYubDbPEwzoYu03Hkoo1WxFL7arOG2oPFYIsRHA
-         rc1Ewp/r1QgoMl2GaucenxH7RBEpYH1Gw7l/3wcABY3ux2T5N7yb7n+DX4/JUOz6p4ML
-         OdHSk/cGAlsUSMXphHxh49rmBuCsGVfvDvjWZ9baqoL7KjnJ7Xrhszhvfuj+wldRqsHc
-         i5qw==
-X-Gm-Message-State: AJIora+je1a39Yl7fLCLda+lFE3xoqKa0NO+QZicbNIEvjCC0d+/4XY9
-        BsNyXRYY5DD5nz9gUcNDOSGwOw1QADZi003h
-X-Google-Smtp-Source: AGRyM1u9lqNPHuo5gzFIUOPD1zD0wTDGDWy+M0/FQpK6pRjoDBSZJx3e7FLPMjbTJCx9U+k5kztLpQ==
-X-Received: by 2002:a05:6402:2788:b0:43a:e0aa:97f4 with SMTP id b8-20020a056402278800b0043ae0aa97f4mr44337405ede.329.1658250737513;
-        Tue, 19 Jul 2022 10:12:17 -0700 (PDT)
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com. [209.85.128.52])
-        by smtp.gmail.com with ESMTPSA id b18-20020a1709063cb200b00722f069fd40sm6854661ejh.159.2022.07.19.10.12.15
+        bh=5MNb0V6j3qPMABdJqAwbj58qIBpWCdI7aPTD3FNarXk=;
+        b=1+nMje1rIQ2rgNV1JnQS3YlwTLMeqYERZlYAbucE39WSRzxPnwxwp2fUl0ZXL9zSgW
+         7Rb7B78BACOZ78FMPOK3WUxwBIp6VBbaDqOFac+Wxnk10LPwJzlQ9bKy2lRRRAwHmQF/
+         vScKXWzkJu6Aa8kLgpBhQs7n4lPRlPnJTg4pQ2RGCDFRlT8eooedFEFIT/r7pc2Qe7K5
+         COJqQgyQ5BAi1rmgsCVJG1cVuvdIeapWpJnOwfBIUoL437jbAeTmrWWUkkUb97S0Mk3Y
+         bC36lQXGYFd2UOq6u++jqiIqa6Q/mSOJONuIUtX3B/5efnl4m18E8wFnArU91mC/xbKJ
+         WkEw==
+X-Gm-Message-State: AJIora+CIkpohTYwvkQ6+iOStPM215N/NYzJEtUJkn+6zduk8f33sLGr
+        8R6XzYyO5R5/S0mvI2C1ckor8f5+/Xf471e0
+X-Google-Smtp-Source: AGRyM1u73KBLJHAhRElDx5c3ng/3wOT1qLCpEPu2kWiJEh5KVjFI8k/K0nRYCd98EPxGnGUTQdUF3A==
+X-Received: by 2002:a17:906:7308:b0:72f:3294:8001 with SMTP id di8-20020a170906730800b0072f32948001mr10163470ejc.254.1658250778420;
+        Tue, 19 Jul 2022 10:12:58 -0700 (PDT)
+Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com. [209.85.221.45])
+        by smtp.gmail.com with ESMTPSA id le20-20020a170906ae1400b00724261b592esm6808864ejb.186.2022.07.19.10.12.55
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 19 Jul 2022 10:12:16 -0700 (PDT)
-Received: by mail-wm1-f52.google.com with SMTP id r1-20020a05600c35c100b003a326685e7cso812421wmq.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Jul 2022 10:12:15 -0700 (PDT)
-X-Received: by 2002:a05:600c:3ace:b0:3a0:4ea4:5f77 with SMTP id
- d14-20020a05600c3ace00b003a04ea45f77mr277678wms.57.1658250734635; Tue, 19 Jul
- 2022 10:12:14 -0700 (PDT)
+        Tue, 19 Jul 2022 10:12:56 -0700 (PDT)
+Received: by mail-wr1-f45.google.com with SMTP id d16so22560195wrv.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Jul 2022 10:12:55 -0700 (PDT)
+X-Received: by 2002:adf:f90d:0:b0:20c:de32:4d35 with SMTP id
+ b13-20020adff90d000000b0020cde324d35mr27615443wrr.583.1658250775011; Tue, 19
+ Jul 2022 10:12:55 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220711092117.360797-1-dmitry.baryshkov@linaro.org> <20220711092117.360797-2-dmitry.baryshkov@linaro.org>
-In-Reply-To: <20220711092117.360797-2-dmitry.baryshkov@linaro.org>
+References: <20220711092117.360797-1-dmitry.baryshkov@linaro.org>
+ <20220711092117.360797-3-dmitry.baryshkov@linaro.org> <CAD=FV=XQbP2OSf6vtPOQtuXajUOuQ9Vz7t7pmcSraSzcBJD2ig@mail.gmail.com>
+In-Reply-To: <CAD=FV=XQbP2OSf6vtPOQtuXajUOuQ9Vz7t7pmcSraSzcBJD2ig@mail.gmail.com>
 From:   Doug Anderson <dianders@chromium.org>
-Date:   Tue, 19 Jul 2022 10:12:01 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=WmGDS8sBq-3snuukFOUY+HKq_veoL2tgWf1-TbdUHzLg@mail.gmail.com>
-Message-ID: <CAD=FV=WmGDS8sBq-3snuukFOUY+HKq_veoL2tgWf1-TbdUHzLg@mail.gmail.com>
-Subject: Re: [RFC PATCH v3 1/2] drm/bridge: ti-sn65dsi86: fetch bpc using drm_atomic_state
+Date:   Tue, 19 Jul 2022 10:12:42 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=UZN6SrybRt3_DRHsRYg=-yi9w++NPAtjtGHvzuyW6y7A@mail.gmail.com>
+Message-ID: <CAD=FV=UZN6SrybRt3_DRHsRYg=-yi9w++NPAtjtGHvzuyW6y7A@mail.gmail.com>
+Subject: Re: [RFC PATCH v3 2/2] drm/bridge: ti-sn65dsi86: support DRM_BRIDGE_ATTACH_NO_CONNECTOR
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Cc:     Andrzej Hajda <andrzej.hajda@intel.com>,
         Neil Armstrong <narmstrong@baylibre.com>,
@@ -88,20 +89,36 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hi,
 
-On Mon, Jul 11, 2022 at 2:21 AM Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
+On Mon, Jul 11, 2022 at 10:23 AM Doug Anderson <dianders@chromium.org> wrote:
 >
-> Rather than reading the pdata->connector directly, fetch the connector
-> using drm_atomic_state. This allows us to make pdata->connector optional
-> (and thus supporting DRM_BRIDGE_ATTACH_NO_CONNECTOR).
+> Hi,
 >
-> Reviewed-by: Sam Ravnborg <sam@ravnborg.org>
-> Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  drivers/gpu/drm/bridge/ti-sn65dsi86.c | 22 ++++++++++++++++------
->  1 file changed, 16 insertions(+), 6 deletions(-)
+> On Mon, Jul 11, 2022 at 2:21 AM Dmitry Baryshkov
+> <dmitry.baryshkov@linaro.org> wrote:
+> >
+> > Now as the driver does not depend on pdata->connector, add support for
+> > attaching the bridge with DRM_BRIDGE_ATTACH_NO_CONNECTOR.
+> >
+> > Reviewed-by: Sam Ravnborg <sam@ravnborg.org>
+> > Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> >  drivers/gpu/drm/bridge/ti-sn65dsi86.c | 18 ++++++++----------
+> >  1 file changed, 8 insertions(+), 10 deletions(-)
+>
+>  This has been on my list of annoyances for quite some time now. Most
+> excellent to have it fixed, thanks!
+>
+> Reviewed-by: Douglas Anderson <dianders@chromium.org>
+>
+> Tested together with patch #1.
+>
+> Tested-by: Douglas Anderson <dianders@chromium.org>
+>
+>
+> Unless someone yells that there's a problem or someone beats me to it,
+> I'll plan to land in drm-misc-next sometime next week.
 
 Landed on drm-misc-next:
 
-2dbeef82d14f drm/bridge: ti-sn65dsi86: fetch bpc using drm_atomic_state
+6e2dc7ac7141 drm/bridge: ti-sn65dsi86: support DRM_BRIDGE_ATTACH_NO_CONNECTOR
