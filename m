@@ -2,123 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9235457A4BB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Jul 2022 19:13:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E7F3657A4CE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Jul 2022 19:18:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238311AbiGSRNB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Jul 2022 13:13:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38994 "EHLO
+        id S236303AbiGSRSl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Jul 2022 13:18:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42650 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238391AbiGSRNA (ORCPT
+        with ESMTP id S229869AbiGSRSk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Jul 2022 13:13:00 -0400
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F31874F1A3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Jul 2022 10:12:59 -0700 (PDT)
-Received: by mail-ej1-x62f.google.com with SMTP id ez10so28378397ejc.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Jul 2022 10:12:59 -0700 (PDT)
+        Tue, 19 Jul 2022 13:18:40 -0400
+Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 493FA45F7A;
+        Tue, 19 Jul 2022 10:18:39 -0700 (PDT)
+Received: by mail-pj1-x102e.google.com with SMTP id o5-20020a17090a3d4500b001ef76490983so16408888pjf.2;
+        Tue, 19 Jul 2022 10:18:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=5MNb0V6j3qPMABdJqAwbj58qIBpWCdI7aPTD3FNarXk=;
-        b=BuVirQTZTwxHB7H87FJWiywTqDnGatrkPQzw5UHbCPG2g8CTgDMoTYPzdXmc1KYSZA
-         zTy3rNxK9hcEWlZ37iUIdgAYI3gp5P0kewuDync6JAXMK25mV3f/+c+smo9PEExXg/f5
-         x+Il1343dGqjFsDeOlWvHyG+n+V8E0fgXrD8A=
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=wgjlxY2vwEbbQYsymCaoGbyx7Qj5nQdz14BXeMbJhaU=;
+        b=p4ebQ4x0Es+yVhm5HbrlBJIuofxFuJNJ5oU8LI9n1tczXrvXmtO3qAKCKDxkGi0W/i
+         o3gLj5uG6j884yw/HhZktPPXikTr1ONquivno9qlPTYgbIf9QqUKQxx/+x9BmEM6OIya
+         myPyER21Y0uFH44HARRLyb0MfU3qw2VD+RBpZ+zthxaOraRhsoo+YeQx47nG2Y8bxqaP
+         b153dVsRW78UAua4re115PJ++Gd3al/roKZZBVd/n5JoMIgIsQYcFvMZgjnhQaX/sIQP
+         xS11hKrxHDUnGm+ctazTNAUV94CypiPZ7cofGKf/4h88Dks88wWu8BTKDKL5IjfI0MGV
+         2LMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=5MNb0V6j3qPMABdJqAwbj58qIBpWCdI7aPTD3FNarXk=;
-        b=1+nMje1rIQ2rgNV1JnQS3YlwTLMeqYERZlYAbucE39WSRzxPnwxwp2fUl0ZXL9zSgW
-         7Rb7B78BACOZ78FMPOK3WUxwBIp6VBbaDqOFac+Wxnk10LPwJzlQ9bKy2lRRRAwHmQF/
-         vScKXWzkJu6Aa8kLgpBhQs7n4lPRlPnJTg4pQ2RGCDFRlT8eooedFEFIT/r7pc2Qe7K5
-         COJqQgyQ5BAi1rmgsCVJG1cVuvdIeapWpJnOwfBIUoL437jbAeTmrWWUkkUb97S0Mk3Y
-         bC36lQXGYFd2UOq6u++jqiIqa6Q/mSOJONuIUtX3B/5efnl4m18E8wFnArU91mC/xbKJ
-         WkEw==
-X-Gm-Message-State: AJIora+CIkpohTYwvkQ6+iOStPM215N/NYzJEtUJkn+6zduk8f33sLGr
-        8R6XzYyO5R5/S0mvI2C1ckor8f5+/Xf471e0
-X-Google-Smtp-Source: AGRyM1u73KBLJHAhRElDx5c3ng/3wOT1qLCpEPu2kWiJEh5KVjFI8k/K0nRYCd98EPxGnGUTQdUF3A==
-X-Received: by 2002:a17:906:7308:b0:72f:3294:8001 with SMTP id di8-20020a170906730800b0072f32948001mr10163470ejc.254.1658250778420;
-        Tue, 19 Jul 2022 10:12:58 -0700 (PDT)
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com. [209.85.221.45])
-        by smtp.gmail.com with ESMTPSA id le20-20020a170906ae1400b00724261b592esm6808864ejb.186.2022.07.19.10.12.55
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 19 Jul 2022 10:12:56 -0700 (PDT)
-Received: by mail-wr1-f45.google.com with SMTP id d16so22560195wrv.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Jul 2022 10:12:55 -0700 (PDT)
-X-Received: by 2002:adf:f90d:0:b0:20c:de32:4d35 with SMTP id
- b13-20020adff90d000000b0020cde324d35mr27615443wrr.583.1658250775011; Tue, 19
- Jul 2022 10:12:55 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=wgjlxY2vwEbbQYsymCaoGbyx7Qj5nQdz14BXeMbJhaU=;
+        b=uki1JtqqOXOtJZJPgKPJMlndsqcia8GMHnVk3a1Nah/oha2tPKdspVEo4Nr/Eqau5t
+         UlKPf00DjMeGTy/StMXeDi8DH1zNf21ywx01NfOfv4rY075Q9sonKBCH1MC0rLciY8JE
+         X1mSqGvVjx0Xr/JC7fvVlMxWiVwpnKPKztgkGup2HNZcQeYUj/vZLNC8bX2DoXr6rvb4
+         0ph/pABErKVBuBJVKDQz7MtnXU1jfzPCz3d9jg7fQQxrO0+hlCST/1muVqWTZlgEGJbS
+         YnVpZ9ETFVRqTknkGDVACLwG/g+OvJIMPCMKnzntYIxT1IY3ZwWv+UMkAzpCjpxO4mvB
+         x1IA==
+X-Gm-Message-State: AJIora9lUv5Cxw2/LxpMXba2TncrQ9lpaogHA+USN2dBXjmcpxqI0Zak
+        mVuV8IOaZ/nS55uyMx4FAss=
+X-Google-Smtp-Source: AGRyM1tiIGFdkSIYREuKSjwYhFDnYD5jN1rCGiePbxyhzgQNo3Q1PYnMml4qKU9sYeo6X8ydRXwkpQ==
+X-Received: by 2002:a17:902:ebcb:b0:168:e3ba:4b5a with SMTP id p11-20020a170902ebcb00b00168e3ba4b5amr34258744plg.11.1658251118481;
+        Tue, 19 Jul 2022 10:18:38 -0700 (PDT)
+Received: from localhost ([2a00:79e1:abd:4a00:2703:3c72:eb1a:cffd])
+        by smtp.gmail.com with ESMTPSA id ij19-20020a170902ab5300b0016b865ea2ddsm11892850plb.85.2022.07.19.10.18.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 19 Jul 2022 10:18:37 -0700 (PDT)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Rob Clark <robdclark@chromium.org>,
+        linux-kernel@vger.kernel.org (open list),
+        Sean Paul <sean@poorly.run>
+Subject: [PATCH v2 00/13] drm+msm: Shrinker and LRU rework
+Date:   Tue, 19 Jul 2022 10:18:44 -0700
+Message-Id: <20220719171900.289265-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.36.1
 MIME-Version: 1.0
-References: <20220711092117.360797-1-dmitry.baryshkov@linaro.org>
- <20220711092117.360797-3-dmitry.baryshkov@linaro.org> <CAD=FV=XQbP2OSf6vtPOQtuXajUOuQ9Vz7t7pmcSraSzcBJD2ig@mail.gmail.com>
-In-Reply-To: <CAD=FV=XQbP2OSf6vtPOQtuXajUOuQ9Vz7t7pmcSraSzcBJD2ig@mail.gmail.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Tue, 19 Jul 2022 10:12:42 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=UZN6SrybRt3_DRHsRYg=-yi9w++NPAtjtGHvzuyW6y7A@mail.gmail.com>
-Message-ID: <CAD=FV=UZN6SrybRt3_DRHsRYg=-yi9w++NPAtjtGHvzuyW6y7A@mail.gmail.com>
-Subject: Re: [RFC PATCH v3 2/2] drm/bridge: ti-sn65dsi86: support DRM_BRIDGE_ATTACH_NO_CONNECTOR
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andrzej Hajda <andrzej.hajda@intel.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Robert Foss <robert.foss@linaro.org>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Sam Ravnborg <sam@ravnborg.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+From: Rob Clark <robdclark@chromium.org>
 
-On Mon, Jul 11, 2022 at 10:23 AM Doug Anderson <dianders@chromium.org> wrote:
->
-> Hi,
->
-> On Mon, Jul 11, 2022 at 2:21 AM Dmitry Baryshkov
-> <dmitry.baryshkov@linaro.org> wrote:
-> >
-> > Now as the driver does not depend on pdata->connector, add support for
-> > attaching the bridge with DRM_BRIDGE_ATTACH_NO_CONNECTOR.
-> >
-> > Reviewed-by: Sam Ravnborg <sam@ravnborg.org>
-> > Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> >  drivers/gpu/drm/bridge/ti-sn65dsi86.c | 18 ++++++++----------
-> >  1 file changed, 8 insertions(+), 10 deletions(-)
->
->  This has been on my list of annoyances for quite some time now. Most
-> excellent to have it fixed, thanks!
->
-> Reviewed-by: Douglas Anderson <dianders@chromium.org>
->
-> Tested together with patch #1.
->
-> Tested-by: Douglas Anderson <dianders@chromium.org>
->
->
-> Unless someone yells that there's a problem or someone beats me to it,
-> I'll plan to land in drm-misc-next sometime next week.
+Mostly a resend with a small fix in the last patch (and a couple early
+patches drop out when rebasing).
 
-Landed on drm-misc-next:
+original description below:
 
-6e2dc7ac7141 drm/bridge: ti-sn65dsi86: support DRM_BRIDGE_ATTACH_NO_CONNECTOR
+This is mostly motivated by getting drm/msm to pass an i-g-t shrinker
+test that I've been working on.  In particular the test creates and
+cycles between more GEM buffers than what will fit in RAM to force
+eviction and re-pin.  (There are sub-tests that cover this case both
+single threaded and with many child processes in parallel.)
+
+Getting this test to pass necessitated a few improvements:
+
+1. Re-ordering submit path to get rid of __GFP_NORETRY (in the common
+   case, doing this for syncobjs is still TODO)
+2. Decoupling locks needed in the retire path from locks that could
+   be held while hitting reclaim in the submit path
+3. If necessary, allow stalling on active BOs for reclaim.
+
+The latter point is because we pin objects in the synchronous part of
+the submit path (before queuing on the drm gpu-scheduler), which means
+in the parallel variant of the i-g-t test, we need to be able to block
+in the reclaim path until some queued work has completed/retired.
+
+In the process of re-working how drm/msm tracks buffer state in it's
+various LRU lists, I refactored out a drm_gem_lru helper which, in
+theory, should be usable by other drivers and drm shmem helpers for
+implementing LRU tracking and shrinker.
+
+Rob Clark (13):
+  drm/msm: Reorder lock vs submit alloc
+  drm/msm: Small submit cleanup
+  drm/msm: Split out idr_lock
+  drm/msm/gem: Check for active in shrinker path
+  drm/msm/gem: Rename update_inactive
+  drm/msm/gem: Rename to pin/unpin_pages
+  drm/msm/gem: Consolidate pin/unpin paths
+  drm/msm/gem: Remove active refcnt
+  drm/gem: Add LRU/shrinker helper
+  drm/msm/gem: Convert to using drm_gem_lru
+  drm/msm/gem: Unpin buffers earlier
+  drm/msm/gem: Consolidate shrinker trace
+  drm/msm/gem: Evict active GEM objects when necessary
+
+ drivers/gpu/drm/drm_gem.c              | 183 +++++++++++++++++++++++++
+ drivers/gpu/drm/msm/msm_drv.c          |  18 ++-
+ drivers/gpu/drm/msm/msm_drv.h          |  70 +++++++---
+ drivers/gpu/drm/msm/msm_gem.c          | 149 +++++++-------------
+ drivers/gpu/drm/msm/msm_gem.h          | 112 +--------------
+ drivers/gpu/drm/msm/msm_gem_prime.c    |   4 +-
+ drivers/gpu/drm/msm/msm_gem_shrinker.c | 164 ++++++++++------------
+ drivers/gpu/drm/msm/msm_gem_submit.c   |  78 ++++-------
+ drivers/gpu/drm/msm/msm_gpu.c          |   3 -
+ drivers/gpu/drm/msm/msm_gpu.h          |  10 +-
+ drivers/gpu/drm/msm/msm_gpu_trace.h    |  36 +++--
+ drivers/gpu/drm/msm/msm_submitqueue.c  |   1 +
+ include/drm/drm_gem.h                  |  56 ++++++++
+ 13 files changed, 483 insertions(+), 401 deletions(-)
+
+-- 
+2.36.1
+
