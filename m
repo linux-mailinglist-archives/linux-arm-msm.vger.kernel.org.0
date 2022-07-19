@@ -2,137 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A41265792AC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Jul 2022 07:49:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8B74E5792BD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Jul 2022 07:50:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236869AbiGSFt2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Jul 2022 01:49:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50148 "EHLO
+        id S236926AbiGSFtq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Jul 2022 01:49:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50542 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236867AbiGSFt0 (ORCPT
+        with ESMTP id S235807AbiGSFtp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Jul 2022 01:49:26 -0400
-Received: from mail-oa1-x35.google.com (mail-oa1-x35.google.com [IPv6:2001:4860:4864:20::35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7980330F7E
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Jul 2022 22:49:25 -0700 (PDT)
-Received: by mail-oa1-x35.google.com with SMTP id 586e51a60fabf-10d7170b2fcso904909fac.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Jul 2022 22:49:25 -0700 (PDT)
+        Tue, 19 Jul 2022 01:49:45 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 040972F3A1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Jul 2022 22:49:44 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id bp17so23014474lfb.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Jul 2022 22:49:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc:content-transfer-encoding;
-        bh=yW4sxd/rSfY0mjBvxj6NVim/qvTzr2TopHALi6gFszU=;
-        b=NAxY5QN4hAKJwVowqc9LH6lFKLz5HnjlPC9tcgg2oorLto+Ons5jzv8gUBiJkL55Au
-         Hseeh/SZEYf9W+bZdts2RRH1Lgr3ev7kfyrSj7vIAzI04R4HzAo8R1SCuZdKh67PjBNi
-         T+xuS2ruT06MwvcL82x3Wv+AGbFBXSv/O0kBM=
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=EV7J2evjbv3FZUZN1eeFth4oNvs49+wln9t6xNZ58P4=;
+        b=BVePoaWkGV7zZKFou3iA9JV9G1g1TzYhf2PN1ioevNsOvkF+DwdLQdWbZbHLzDd31w
+         Fl1hcDZi15cFUVjMl8CD1d+oMSf7W9T0Ly86gs35Nzps5xuqvn1k2D0yJ/TytoNnbZGO
+         9qLR0Rmn6V3PQTbYroplo0aY53Fzhbv2EtdmrCWr2JLx3eOlHEEe3LJjrjgeEn++khy0
+         z2AMYIJEhCxZgCD1lpS51rGnBXdkH0XsXyfe2m1gU16ExC9njyGzQqESF6ex/Bzm1JmI
+         1XO+pDMJ7Hhe/7QXfmznMJhUNLYXeKgo/3OyEvsmTyr4agBe0FCsXsyGHlIYQFRL+XkC
+         HglA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=yW4sxd/rSfY0mjBvxj6NVim/qvTzr2TopHALi6gFszU=;
-        b=oiFUFUXLTMBMHzhUm6Lx4O2mo60BCvQEcHO+7Ns6bs6bf8PxDg7u3ZxYidMjJ/37BE
-         n47sity9PtjvEbMVS2/W7ghCpGaV3ls8WO9AIB0X6oJydy9Ommbwzh5gW5CdFNUVaQdx
-         4C5bLNYqM9NrJC6ea+bMMjr55H/hfUbRFfM3DO3YGNtMndDDYAwFBFrT2h/CbK8MJexp
-         uWIydGfbrgLXfumMzJnU6bD//zfQhQIGy0zUkx/KvGTRaFc+Px/lMx3acY8TBwI4W0kt
-         rf/N+TEQqahQrAUrQKWZ8h22HqR+0dY5vken2I2ECyd1hyAMCzyBezGo0bz5be8PUlGb
-         jnJg==
-X-Gm-Message-State: AJIora/tXI9IXIhQJH2R7R1Kdj9jagZ1o/a3D/ClcjcPa+yFpVgCL6N2
-        sqWuNl2kkyZ6CMAYFqYjXkJuFjmM6oygDP1hV2eWgA==
-X-Google-Smtp-Source: AGRyM1vIxz8QjHUizNOQmAPd15ZPPBtKVcbtcagMWpaB45V9j3SYDpkwdeou7jUf4qcYiU8TW7NHWBtxz4iJD0ZRX8I=
-X-Received: by 2002:a05:6870:41c3:b0:10c:529c:3844 with SMTP id
- z3-20020a05687041c300b0010c529c3844mr15985898oac.0.1658209764467; Mon, 18 Jul
- 2022 22:49:24 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 19 Jul 2022 01:49:23 -0400
-MIME-Version: 1.0
-In-Reply-To: <e4dcdd8d-18a9-8da3-7ac3-6cc792139f70@quicinc.com>
-References: <1657346375-1461-1-git-send-email-quic_akhilpo@quicinc.com>
- <20220709112837.v2.5.I7291c830ace04fce07e6bd95a11de4ba91410f7b@changeid>
- <CAD=FV=XzvcjS51q78BZ=FPCEVUDMD+VKJ70ksCm5V4qwHN_wRg@mail.gmail.com>
- <c022538d-c616-8f1a-e1c2-c11b5f0de670@quicinc.com> <e4dcdd8d-18a9-8da3-7ac3-6cc792139f70@quicinc.com>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Tue, 19 Jul 2022 01:49:23 -0400
-Message-ID: <CAE-0n52TG3hsytN5nRU7W=S6PffSj8yQDmuicN0-qxoW-jxiZQ@mail.gmail.com>
-Subject: Re: [Freedreno] [PATCH v2 5/7] arm64: dts: qcom: sc7280: Update gpu
- register list
-To:     Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        Doug Anderson <dianders@chromium.org>,
-        Taniya Das <quic_tdas@quicinc.com>, quic_rjendra@quicinc.com
-Cc:     devicetree@vger.kernel.org, Jonathan Marek <jonathan@marek.ca>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=EV7J2evjbv3FZUZN1eeFth4oNvs49+wln9t6xNZ58P4=;
+        b=KMQtTBZx1EGBZnPZd8lOsdP3q9D68cPRHd3mfHlHBenc0NvJRzetQy3Fk70ZT6t8+G
+         2ti5Bv2+pAMmtlr28Jo7l/+DE7Bz1luBs9BOagQWQLWRXAVMysLYuBRgnL/zv+/Vi6QB
+         ghD1RwSyaXNWwV7mXXkk7WvUI6UiP8PlAWO2Ih5Aq1ktDRZrToSeWMM8jaIL2ivZG9bS
+         Cp6bI+SnOSVfL/uwoY7EPDKqeUkd2MNTeVo1ZTpQ9hMlQT5HpwrvaEJACwpy1GjLoJar
+         FqWpeI3Ew/lM5ltAzdHi9K5sJbUBymB4JJB2gaSsKaRGom4FIC163l/kX9M5HANrpkzW
+         DsCg==
+X-Gm-Message-State: AJIora/8SISUQOr26EF8T2TEWDQ4ZYWhx3UKWylkNOZrfEo3tgxTGCLw
+        S8Nh6e+grTkgYPOiZBcyTPlHYw==
+X-Google-Smtp-Source: AGRyM1s50HLvXHw1o/rk7nFQkMWxClg3l9vwg65DaAkfly0jvgRlJkvYI3Gdo8qek7W02gBo68lTDg==
+X-Received: by 2002:ac2:51a6:0:b0:489:c578:cf75 with SMTP id f6-20020ac251a6000000b00489c578cf75mr15931550lfk.24.1658209782349;
+        Mon, 18 Jul 2022 22:49:42 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id s10-20020a195e0a000000b0048137a6486bsm3005120lfb.228.2022.07.18.22.49.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 18 Jul 2022 22:49:41 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: base64
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Zhang Rui <rui.zhang@intel.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org
+Subject: [PATCH 1/2] thermal/drivers/qcom/temp-alarm: register thermal zones as hwmon sensors
+Date:   Tue, 19 Jul 2022 08:49:39 +0300
+Message-Id: <20220719054940.755907-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.35.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-UXVvdGluZyBBa2hpbCBQIE9vbW1lbiAoMjAyMi0wNy0xOCAyMTowNzowNSkNCj4gT24gNy8xNC8y
-MDIyIDExOjEwIEFNLCBBa2hpbCBQIE9vbW1lbiB3cm90ZToNCj4gPiBPbiA3LzEyLzIwMjIgNDo1
-NyBBTSwgRG91ZyBBbmRlcnNvbiB3cm90ZToNCj4gPj4gSGksDQo+ID4+DQo+ID4+IE9uIEZyaSwg
-SnVsIDgsIDIwMjIgYXQgMTE6MDAgUE0gQWtoaWwgUCBPb21tZW4NCj4gPj4gPHF1aWNfYWtoaWxw
-b0BxdWljaW5jLmNvbT4gd3JvdGU6DQo+ID4+PiBVcGRhdGUgZ3B1IHJlZ2lzdGVyIGFycmF5IHdp
-dGggZ3B1Y2MgbWVtb3J5IHJlZ2lvbi4NCj4gPj4+DQo+ID4+PiBTaWduZWQtb2ZmLWJ5OiBBa2hp
-bCBQIE9vbW1lbiA8cXVpY19ha2hpbHBvQHF1aWNpbmMuY29tPg0KPiA+Pj4gLS0tDQo+ID4+Pg0K
-PiA+Pj4gKG5vIGNoYW5nZXMgc2luY2UgdjEpDQo+ID4+Pg0KPiA+Pj4gwqAgYXJjaC9hcm02NC9i
-b290L2R0cy9xY29tL3NjNzI4MC5kdHNpIHwgNiArKysrLS0NCj4gPj4+IMKgIDEgZmlsZSBjaGFu
-Z2VkLCA0IGluc2VydGlvbnMoKyksIDIgZGVsZXRpb25zKC0pDQo+ID4+Pg0KPiA+Pj4gZGlmZiAt
-LWdpdCBhL2FyY2gvYXJtNjQvYm9vdC9kdHMvcWNvbS9zYzcyODAuZHRzaQ0KPiA+Pj4gYi9hcmNo
-L2FybTY0L2Jvb3QvZHRzL3Fjb20vc2M3MjgwLmR0c2kNCj4gPj4+IGluZGV4IGU2NmZjNjcuLmRl
-ZmRiMjUgMTAwNjQ0DQo+ID4+PiAtLS0gYS9hcmNoL2FybTY0L2Jvb3QvZHRzL3Fjb20vc2M3Mjgw
-LmR0c2kNCj4gPj4+ICsrKyBiL2FyY2gvYXJtNjQvYm9vdC9kdHMvcWNvbS9zYzcyODAuZHRzaQ0K
-PiA+Pj4gQEAgLTIyMjgsMTAgKzIyMjgsMTIgQEANCj4gPj4+IMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBjb21wYXRpYmxlID0gInFjb20sYWRyZW5vLTYz
-NS4wIiwNCj4gPj4+ICJxY29tLGFkcmVubyI7DQo+ID4+PiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgcmVnID0gPDAgMHgwM2QwMDAwMCAwIDB4NDAwMDA+
-LA0KPiA+Pj4gwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgIDwwIDB4MDNkOWUwMDAgMCAweDEwMDA+LA0KPiA+Pj4gLcKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIDwwIDB4MDNkNjEw
-MDAgMCAweDgwMD47DQo+ID4+PiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqAgPDAgMHgwM2Q2MTAwMCAwIDB4ODAwPiwNCj4gPj4+ICvCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCA8MCAw
-eDAzZDkwMDAwIDAgMHgyMDAwPjsNCj4gPj4+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoCByZWctbmFtZXMgPSAia2dzbF8zZDBfcmVnX21lbW9yeSIsDQo+
-ID4+PiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqAgImN4X21lbSIsDQo+ID4+PiAtwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgImN4X2Ri
-Z2MiOw0KPiA+Pj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgICJjeF9kYmdjIiwNCj4gPj4+ICvCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCAi
-Z3B1Y2MiOw0KPiA+PiBUaGlzIGRvZXNuJ3Qgc2VlbSByaWdodC4gU2hvdWxkbid0IHlvdSBiZSBj
-b29yZGluYXRpbmcgd2l0aCB0aGUNCj4gPj4gZXhpc3RpbmcgZ3B1Y2MgaW5zdGVhZCBvZiByZWFj
-aGluZyBpbnRvIGl0cyByZWdpc3RlcnM/DQo+ID4+DQo+ID4gSUlVQywgcWNvbSBnZHNjIGRyaXZl
-ciBkb2Vzbid0IGVuc3VyZSBoYXJkd2FyZSBpcyBjb2xsYXBzZWQgc2luY2UgdGhleQ0KPiA+IGFy
-ZSB2b3RlLWFibGUgc3dpdGNoZXMuIElkZWFsbHksIHdlIHNob3VsZCBlbnN1cmUgdGhhdCB0aGUg
-aHcgaGFzDQo+ID4gY29sbGFwc2VkIGZvciBncHUgcmVjb3ZlcnkgYmVjYXVzZSB0aGVyZSBjb3Vs
-ZCBiZSB0cmFuc2llbnQgdm90ZXMgZnJvbQ0KPiA+IG90aGVyIHN1YnN5c3RlbXMgbGlrZSBoeXBl
-cnZpc29yIHVzaW5nIHRoZWlyIHZvdGUgcmVnaXN0ZXIuDQo+ID4NCj4gPiBJIGFtIG5vdCBzdXJl
-IGhvdyBjb21wbGV4IHRoZSBwbHVtYmluZyB0byBncHVjYyBkcml2ZXIgd291bGQgYmUgdG8gYWxs
-b3cNCj4gPiBncHUgZHJpdmVyIHRvIGNoZWNrIGh3IHN0YXR1cy4gT1RPSCwgd2l0aCB0aGlzIHBh
-dGNoLCBncHUgZHJpdmVyIGRvZXMgYQ0KPiA+IHJlYWQgb3BlcmF0aW9uIG9uIGEgZ3B1Y2MgcmVn
-aXN0ZXIgd2hpY2ggaXMgaW4gYWx3YXlzLW9uIGRvbWFpbi4gVGhhdA0KPiA+IG1lYW5zIHdlIGRv
-bid0IG5lZWQgdG8gdm90ZSBhbnkgcmVzb3VyY2UgdG8gYWNjZXNzIHRoaXMgcmVnaXN0ZXIuDQo+
-ID4NCj4gPiBTdGVwaGVuL1JhamVuZHJhL1Rhbml5YSwgYW55IHN1Z2dlc3Rpb24/DQoNCldoeSBj
-YW4ndCB5b3UgYXNzZXJ0IGEgZ3B1IHJlc2V0IHNpZ25hbCB3aXRoIHRoZSByZXNldCBBUElzPyBU
-aGlzIHNlcmllcw0Kc2VlbXMgdG8ganVtcCB0aHJvdWdoIGEgYnVuY2ggb2YgaG9vcHMgdG8gZ2V0
-IHRoZSBnZHNjIGFuZCBwb3dlciBkb21haW4NCnRvICJyZXNldCIgd2hlbiBJIGRvbid0IGtub3cg
-d2h5IGFueSBvZiB0aGF0IGlzIG5lY2Vzc2FyeS4gQ2FuJ3Qgd2UNCnNpbXBseSBhc3NlcnQgYSBy
-ZXNldCB0byB0aGUgaGFyZHdhcmUgYWZ0ZXIgcmVjb3ZlcnkgY29tcGxldGVzIHNvIHRoZQ0KZGV2
-aWNlIGlzIGJhY2sgaW50byBhIGdvb2Qga25vd24gUE9SIChwb3dlciBvbiByZXNldCkgc3RhdGU/
-DQo=
+Register thermal zones as hwmon sensors to let userspace read
+temperatures using standard hwmon interface.
+
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ drivers/thermal/qcom/qcom-spmi-temp-alarm.c | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/drivers/thermal/qcom/qcom-spmi-temp-alarm.c b/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
+index 7419e196dbb0..770f82cc9bca 100644
+--- a/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
++++ b/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
+@@ -16,6 +16,7 @@
+ #include <linux/thermal.h>
+ 
+ #include "../thermal_core.h"
++#include "../thermal_hwmon.h"
+ 
+ #define QPNP_TM_REG_DIG_MAJOR		0x01
+ #define QPNP_TM_REG_TYPE		0x04
+@@ -458,6 +459,10 @@ static int qpnp_tm_probe(struct platform_device *pdev)
+ 		return ret;
+ 	}
+ 
++	if (devm_thermal_add_hwmon_sysfs(chip->tz_dev))
++		dev_warn(&pdev->dev,
++			 "Failed to add hwmon sysfs attributes\n");
++
+ 	ret = devm_request_threaded_irq(&pdev->dev, irq, NULL, qpnp_tm_isr,
+ 					IRQF_ONESHOT, node->name, chip);
+ 	if (ret < 0)
+-- 
+2.35.1
+
