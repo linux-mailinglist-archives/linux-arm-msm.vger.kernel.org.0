@@ -2,70 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A0379579112
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Jul 2022 04:58:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 036D7579144
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Jul 2022 05:23:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236631AbiGSC6S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 Jul 2022 22:58:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46468 "EHLO
+        id S234616AbiGSDX2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 Jul 2022 23:23:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59762 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229726AbiGSC6S (ORCPT
+        with ESMTP id S230182AbiGSDX1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 Jul 2022 22:58:18 -0400
-Received: from mail-oa1-x36.google.com (mail-oa1-x36.google.com [IPv6:2001:4860:4864:20::36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3683B2C13E
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Jul 2022 19:58:17 -0700 (PDT)
-Received: by mail-oa1-x36.google.com with SMTP id 586e51a60fabf-10d6cdf829aso1272692fac.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Jul 2022 19:58:17 -0700 (PDT)
+        Mon, 18 Jul 2022 23:23:27 -0400
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3F75183A5;
+        Mon, 18 Jul 2022 20:23:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Eey/mlcn0iZn7YvUPtdPvc+GsjTEbI3FrOyrwI+lxmE=;
-        b=ZMXp3m+VNVa8SBxaN189tL1hyrusPfPOQYV/vZUiyFQf2gjECZ9i8zYImHSZV/4ocN
-         o5h6k3MiJ1L5DR+iPVg7mFdfFdc9g2MfIAwSx9no9unNVIaHi0chNA/UVCwmMGquRhsh
-         vzkKxhtbWiZoNt6rcnllLxnlQU5EMCGCJP1vxgj+t3QwtWJ4G5IewuJrnAUNiHu2EYxv
-         2qe09+O4z9Mzv1ku/cYg4RjeNIAjNqU6b6sSmL4W3GP4W9B5FpjZ09SOzfKj8a2LDWmR
-         Hvo/4I1Rwes4PsscS96teKhus1GkgA3QJtyhjuxWs81pJtuIJD5elicTewhr6q7TZtKw
-         jUGw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Eey/mlcn0iZn7YvUPtdPvc+GsjTEbI3FrOyrwI+lxmE=;
-        b=fy9hF7iDXYBBQTzsmmLP65itRTWdUq+HnJfaTAe9lfMVjN5XyMh5Ju1v+W2LzdYkyC
-         ZHCn269WFJ7WcfeNnTo4kHmSsCVM/N8aBKU1TAihBcFXdfHnE8xoRKIHV/912/vUgzN+
-         HT/0eCLT6L0noDZL16oz7FzJJFDZXi7jfYZJmnsFxLB+YN46jFZ4XS76cUvqS1qLzj0w
-         romCUtibf/O41jvx5Su/8i0ZPH2IsPHd9QGCTFIYo16OvZNmtx0ckBYx/73Wm2eXxXRD
-         FiKROhBd3x5O0olckYkdvHYHbqCdX35rAy6nHsZiuPJITo5nFIky0Q6p1DxFFoDUoJqH
-         ykSg==
-X-Gm-Message-State: AJIora/zickgmCjUBUlf6aqhCMafcZaWn3GmaZaUU3y1ovcZI/pVE5E+
-        hzZvUl+RePsIKLB6c/PGhssvVQ==
-X-Google-Smtp-Source: AGRyM1u4/Mww72cHaz85JtwsrJHw6H11b/VYu7bFd0tgYs6OhXAqCxjrjp+hypUrMABUPoovelVaJw==
-X-Received: by 2002:a05:6870:73d3:b0:10c:2c40:2ead with SMTP id a19-20020a05687073d300b0010c2c402eadmr19995793oan.160.1658199496509;
-        Mon, 18 Jul 2022 19:58:16 -0700 (PDT)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id e65-20020aca3744000000b0033a169f9282sm4759834oia.52.2022.07.18.19.58.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 Jul 2022 19:58:15 -0700 (PDT)
-Date:   Mon, 18 Jul 2022 21:58:14 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Cc:     linux-pm@vger.kernel.org, bhupesh.linux@gmail.com,
-        linux-kernel@vger.kernel.org, Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 1/3] firmware: qcom_scm: Add support for tsens reinit
- workaround
-Message-ID: <YtYdxlbLvgimN2MQ@builder.lan>
-References: <20220701145815.2037993-1-bhupesh.sharma@linaro.org>
- <20220701145815.2037993-2-bhupesh.sharma@linaro.org>
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1658201005; x=1689737005;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=HIDhUUPfxUeeF5NaAdzQDRStS26/WnQNQwjtuPgjHlY=;
+  b=AGXoYJvYuo5E5sh/I0IFRmScpb6I187MmsfI27QpEYXkjm5Yc658x2oR
+   4ds+K2koWyYv/IPkm2CUApMqiERedwJt7c1qz6o8Xpn2YcUFy+H8z7lcx
+   kY/H9t4jiUTHOFqjHiqLMW087LgkgtfoZl+qNzXnPpgxvAIGGjs1FxkrH
+   Q=;
+Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 18 Jul 2022 20:23:25 -0700
+X-QCInternal: smtphost
+Received: from unknown (HELO nasanex01a.na.qualcomm.com) ([10.52.223.231])
+  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2022 20:23:25 -0700
+Received: from [10.253.14.208] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Mon, 18 Jul
+ 2022 20:23:22 -0700
+Message-ID: <aae8b240-ecd8-64d0-6f33-86372417e899@quicinc.com>
+Date:   Tue, 19 Jul 2022 11:23:19 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220701145815.2037993-2-bhupesh.sharma@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH v4] Bluetooth: hci_sync: Remove redundant func definition
+Content-Language: en-US
+To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+CC:     Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        David Miller <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Luiz Augusto Von Dentz <luiz.von.dentz@intel.com>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>,
+        "open list:NETWORKING [GENERAL]" <netdev@vger.kernel.org>
+References: <1657871102-26907-1-git-send-email-quic_zijuhu@quicinc.com>
+ <CABBYNZ+YcrGn09hxB9t7rn1ccY4xtv1WCLQrOLvyUXdQNA_usw@mail.gmail.com>
+From:   quic_zijuhu <quic_zijuhu@quicinc.com>
+In-Reply-To: <CABBYNZ+YcrGn09hxB9t7rn1ccY4xtv1WCLQrOLvyUXdQNA_usw@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -73,107 +71,95 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri 01 Jul 09:58 CDT 2022, Bhupesh Sharma wrote:
-
-Please update $subject to match the most uses prefix for the qcom_scm
-driver.
-
-> Some versions of QCoM tsens controller might enter a
-
-s/QCoM/Qualcomm/ please.
-
-> 'bad state' while running stability tests causing sensor
-> temperatures/interrupts status to be in an 'invalid' state.
+On 7/19/2022 7:12 AM, Luiz Augusto von Dentz wrote:
+> Hi Zijun,
 > 
-> It is recommended to re-initialize the tsens controller
-> via trustzone (secure registers) using scm call(s) when that
-> happens.
+> On Fri, Jul 15, 2022 at 12:45 AM Zijun Hu <quic_zijuhu@quicinc.com> wrote:
+>>
+>> both hci_request.c and hci_sync.c have the same definition for
+>> disconnected_accept_list_entries(), so remove a redundant copy.
+>>
+>> Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
+>> ---
+>> v3->v4
+>>  -use 75 characters per line for Linux commit message bodies
+>> v2->v3
+>>  -remove table char to solve gitlint checking failure
+>> v1->v2
+>>  -remove the func copy within hci_request.c instead of hci_sync.c
+>>  net/bluetooth/hci_request.c | 18 ------------------
+>>  net/bluetooth/hci_request.h |  2 ++
+>>  net/bluetooth/hci_sync.c    |  2 +-
+>>  3 files changed, 3 insertions(+), 19 deletions(-)
+>>
+>> diff --git a/net/bluetooth/hci_request.c b/net/bluetooth/hci_request.c
+>> index 635cc5fb451e..edec0447aaa7 100644
+>> --- a/net/bluetooth/hci_request.c
+>> +++ b/net/bluetooth/hci_request.c
+>> @@ -1784,24 +1784,6 @@ int hci_update_random_address(struct hci_request *req, bool require_privacy,
+>>         return 0;
+>>  }
+>>
+>> -static bool disconnected_accept_list_entries(struct hci_dev *hdev)
+>> -{
+>> -       struct bdaddr_list *b;
+>> -
+>> -       list_for_each_entry(b, &hdev->accept_list, list) {
+>> -               struct hci_conn *conn;
+>> -
+>> -               conn = hci_conn_hash_lookup_ba(hdev, ACL_LINK, &b->bdaddr);
+>> -               if (!conn)
+>> -                       return true;
+>> -
+>> -               if (conn->state != BT_CONNECTED && conn->state != BT_CONFIG)
+>> -                       return true;
+>> -       }
+>> -
+>> -       return false;
+>> -}
+>> -
+>>  void __hci_req_update_scan(struct hci_request *req)
+>>  {
+>>         struct hci_dev *hdev = req->hdev;
+>> diff --git a/net/bluetooth/hci_request.h b/net/bluetooth/hci_request.h
+>> index 7f8df258e295..e80b500878d9 100644
+>> --- a/net/bluetooth/hci_request.h
+>> +++ b/net/bluetooth/hci_request.h
+>> @@ -120,6 +120,8 @@ void __hci_req_update_scan(struct hci_request *req);
+>>  int hci_update_random_address(struct hci_request *req, bool require_privacy,
+>>                               bool use_rpa, u8 *own_addr_type);
+>>
+>> +bool disconnected_accept_list_entries(struct hci_dev *hdev);
 > 
-> Add support for the same in the qcom_scm driver.
+> I rather not add anything to hci_request.h since we want to deprecate
+> its functions, in fact we might as well try to start removing the code
+> paths that attempt to access things like
+> disconnected_accept_list_entries since I think most of the code is
+> already in place in hci_sync.c things like __hci_req_update_scan if it
+> is no longer used anywhere else.
 > 
-> Cc: Amit Kucheria <amitk@kernel.org>
-> Cc: Thara Gopinath <thara.gopinath@gmail.com>
-> Cc: linux-pm@vger.kernel.org
-> Cc: linux-arm-msm@vger.kernel.org
-> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> ---
->  drivers/firmware/qcom_scm.c | 17 +++++++++++++++++
->  drivers/firmware/qcom_scm.h |  4 ++++
->  include/linux/qcom_scm.h    |  2 ++
->  3 files changed, 23 insertions(+)
+so A: move extern disconnected_accept_list_entries() from hci_request.h to hci_request.c
+   B: discard this change
+what is your suggestion? A or B
+>>  int hci_abort_conn(struct hci_conn *conn, u8 reason);
+>>  void __hci_abort_conn(struct hci_request *req, struct hci_conn *conn,
+>>                       u8 reason);
+>> diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+>> index 212b0cdb25f5..48a262f0ae49 100644
+>> --- a/net/bluetooth/hci_sync.c
+>> +++ b/net/bluetooth/hci_sync.c
+>> @@ -2419,7 +2419,7 @@ int hci_write_fast_connectable_sync(struct hci_dev *hdev, bool enable)
+>>         return err;
+>>  }
+>>
+>> -static bool disconnected_accept_list_entries(struct hci_dev *hdev)
+>> +bool disconnected_accept_list_entries(struct hci_dev *hdev)
+>>  {
+>>         struct bdaddr_list *b;
+>>
+>> --
+>> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, a Linux Foundation Collaborative Project
+>>
 > 
-> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
-> index 3163660fa8e2..0bc7cc466218 100644
-> --- a/drivers/firmware/qcom_scm.c
-> +++ b/drivers/firmware/qcom_scm.c
-> @@ -796,6 +796,23 @@ int qcom_scm_mem_protect_video_var(u32 cp_start, u32 cp_size,
->  }
->  EXPORT_SYMBOL(qcom_scm_mem_protect_video_var);
->  
-> +int qcom_scm_tsens_reinit(int *tsens_ret)
-> +{
-> +	unsigned int ret;
-
-qcom_scm_call() returns negative numbers on error, so this should be
-signed.
-
-> +	struct qcom_scm_desc desc = {
-
-const?
-
-> +		.svc = QCOM_SCM_SVC_TSENS,
-> +		.cmd = QCOM_SCM_TSENS_INIT_ID,
-> +	};
-> +	struct qcom_scm_res res;
-> +
-> +	ret = qcom_scm_call(__scm->dev, &desc, &res);
-> +	if (tsens_ret)
-> +		*tsens_ret = res.result[0];
-
-Most similar qcom_scm functions use negative return value for errors and
-positive (including 0) values for the returned data.
-
-Looking at patch 3, the only thing you seem to care about is tsens_ret
-being 0 or not, so I do think you would be fine returning both using the
-return value.
-
-Regards,
-Bjorn
-
-> +
-> +	return ret;
-> +}
-> +EXPORT_SYMBOL(qcom_scm_tsens_reinit);
-> +
->  static int __qcom_scm_assign_mem(struct device *dev, phys_addr_t mem_region,
->  				 size_t mem_sz, phys_addr_t src, size_t src_sz,
->  				 phys_addr_t dest, size_t dest_sz)
-> diff --git a/drivers/firmware/qcom_scm.h b/drivers/firmware/qcom_scm.h
-> index 0d51eef2472f..495fa00230c7 100644
-> --- a/drivers/firmware/qcom_scm.h
-> +++ b/drivers/firmware/qcom_scm.h
-> @@ -94,6 +94,10 @@ extern int scm_legacy_call(struct device *dev, const struct qcom_scm_desc *desc,
->  #define QCOM_SCM_PIL_PAS_IS_SUPPORTED	0x07
->  #define QCOM_SCM_PIL_PAS_MSS_RESET	0x0a
->  
-> +/* TSENS Services and Function IDs */
-> +#define QCOM_SCM_SVC_TSENS		0x1E
-> +#define QCOM_SCM_TSENS_INIT_ID		0x5
-> +
->  #define QCOM_SCM_SVC_IO			0x05
->  #define QCOM_SCM_IO_READ		0x01
->  #define QCOM_SCM_IO_WRITE		0x02
-> diff --git a/include/linux/qcom_scm.h b/include/linux/qcom_scm.h
-> index f8335644a01a..f8c9eb739df1 100644
-> --- a/include/linux/qcom_scm.h
-> +++ b/include/linux/qcom_scm.h
-> @@ -124,4 +124,6 @@ extern int qcom_scm_lmh_dcvsh(u32 payload_fn, u32 payload_reg, u32 payload_val,
->  extern int qcom_scm_lmh_profile_change(u32 profile_id);
->  extern bool qcom_scm_lmh_dcvsh_available(void);
->  
-> +extern int qcom_scm_tsens_reinit(int *tsens_ret);
-> +
->  #endif
-> -- 
-> 2.35.3
 > 
+
