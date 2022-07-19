@@ -2,64 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 71E76579802
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Jul 2022 12:56:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C5D89579837
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Jul 2022 13:14:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233852AbiGSK4Z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Jul 2022 06:56:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42920 "EHLO
+        id S237509AbiGSLOV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Jul 2022 07:14:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54464 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231379AbiGSK4X (ORCPT
+        with ESMTP id S237454AbiGSLOM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Jul 2022 06:56:23 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04A1628718
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Jul 2022 03:56:22 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id bf9so24053308lfb.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Jul 2022 03:56:21 -0700 (PDT)
+        Tue, 19 Jul 2022 07:14:12 -0400
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27DF533E1D
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Jul 2022 04:14:11 -0700 (PDT)
+Received: by mail-lf1-x12d.google.com with SMTP id n18so24208993lfq.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Jul 2022 04:14:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=yvwWC/1xI0PKc7UydaS3qZ6eoT7HDp85IkqzAsVAV0g=;
-        b=R0YL4IkpCMp8oBg5NAxSeO3KHGdPg647wnxW2Y2dHtElW58bG7xo4SZyc3ju9OB/nO
-         5Y4VLAIKPlH+wIv1nbxeKomW4w4Y1wd8dw8e3cGAG8Veq/NtQZtdLLjX28lsK01n8L4v
-         ACdW44xj9oTS8EVBOE83RJN49nmvRVPOQNEnp5nLh7IFQNUSBkATDRypIZgizK3dOYV1
-         q5l64uxLnufyw8y+dxGcXZZ+vOHF7DSaA8wQ+aNlZ/A/kheuiXpsl8tjywrUlIE/2bfG
-         CAgh9tLo21eXgpUazwdEhtidtxbDLaD/quxyc8/zCUCMdBWVpfVrMeytNpHa8Uod3lAu
-         V/1g==
+        bh=2tmlRUOer+5uD8E7QKBbOsn8zb38YDFbOxptCSAWlTc=;
+        b=BlXTXeEoo4FnvTv/A8kKIiWvTBxDAojagFcMFd8UHcHa8rjbeoXSoVVEYswSucmWUx
+         gSG48UwFXn+/jgdviLDakFMQXREX311eNkWe2H7zNDC7rtcePp7TCW1C0M/jwMv6a5d8
+         pyj9shfjD0x1mQTe6tnQKXl939xB0NItJXPjaIuArNlALu1Go68yNgE1pf2tT9ngqA7I
+         jZ1ye4LSWTavExIQHE8FQzsYaxTl7lfQGHGE+WciUi8yAqwqsqeU8t2QGWRbG7cphXD5
+         43+XGX9H1doxvFi097bcHXEE0bcmiZ1/xhWzbaWj9Uv+jtp7ivdZFEVOrmA9Xe0Zc4O3
+         Nhmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=yvwWC/1xI0PKc7UydaS3qZ6eoT7HDp85IkqzAsVAV0g=;
-        b=RiOAOSReE9tWoj7EftXmghAt0eYtAdUEHd4TOr4ShXlvW2Nxz9Qn1/gWXkztQ5iBtK
-         FAXkyBnd3lhJoEy4hU9afdvg1HQI1VsfJzK9RVSmkvN9yeKgneiiotXGlXEjMuVQ2Q6v
-         tKJEq8D8nNnts13L1Qm9Dv/H7UepYwuu82abgqqJqsh0iejSr0kBvlFNHKCp64cUH4xR
-         grSOG9UZHftnTIEXrP3XehhRmwOo57NDYR/Sd74e4RU1F23CRXBcqp336Io50zUD9uKi
-         /3PbQWQ045733ndhEMBD8y5f9/fhXVMqObtSTsv9hYfOSNS+N6m0nCzMf/umEWQGTjkw
-         iMuQ==
-X-Gm-Message-State: AJIora8gVUYL5AvnIj6GFeQTrui/lyVDpTFCmhBdkcBrZ0/lFHrcLy6x
-        WHOl6SUfDlX7kKvIiBeW7QNeNA==
-X-Google-Smtp-Source: AGRyM1vwh2JlxuSjHJHU+c5df5vHUluFLzBwNMqhJCoM0g/mo433drcSZjNw8y2L536TzSKQ5mC9Hw==
-X-Received: by 2002:a05:6512:1587:b0:481:1946:8e1c with SMTP id bp7-20020a056512158700b0048119468e1cmr18106372lfb.163.1658228180332;
-        Tue, 19 Jul 2022 03:56:20 -0700 (PDT)
+        bh=2tmlRUOer+5uD8E7QKBbOsn8zb38YDFbOxptCSAWlTc=;
+        b=lVIKCkf6dJpxsl6MpHldmm8RwSWcrUpxn846XmDlULf8fHpZ+WrUf64LK6iVdgUY8A
+         B5/Gj+uuI34z8faKy3oZ0xzTMXrgxlvkHV0JPT/sMVEcBF/Kv0VCd334dg9EMG8n8ECp
+         kR8OBbUoFFBWH+zsz/AjBSgi7QFmI/dPIPSYgRZBOmOVJEryfTtWWE0hYOYSfadgbqU5
+         xPq+BZqC9+wUDAYNyfw5njRuMgITPQP0tBYoAK981Lu7+qvpBUy6gN6lge1VQtJJnPOK
+         wYWjxVJ/La8vsxV3IB/V2rdt2tx/IsJcsBjUkd8y6C06MoTXB0MEeM1OtzVU4SsJEMvS
+         RDzw==
+X-Gm-Message-State: AJIora86R19rKZ7cUwZajSlUeG7j5Q6PCSyUf8/pPVAgHO7Kiy4xtDUB
+        hLyF/UmWxuwMlA5kyqEOc2Bcdw==
+X-Google-Smtp-Source: AGRyM1vMUqYGcARhAIve+Hi0JLXWKy1Vojq0VCr7pnTk+pl5uC/AtOLHRpMVdW9tjEo62ITuAmYrYw==
+X-Received: by 2002:a05:6512:3b24:b0:489:e6b5:162f with SMTP id f36-20020a0565123b2400b00489e6b5162fmr15828649lfv.260.1658229249504;
+        Tue, 19 Jul 2022 04:14:09 -0700 (PDT)
 Received: from [192.168.115.193] (89-162-31-138.fiber.signal.no. [89.162.31.138])
-        by smtp.gmail.com with ESMTPSA id r11-20020a2e80cb000000b0025d5a9e4f77sm2606551ljg.72.2022.07.19.03.56.19
+        by smtp.gmail.com with ESMTPSA id d25-20020a19e619000000b00489c7fb668dsm3139699lfh.182.2022.07.19.04.14.08
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 19 Jul 2022 03:56:19 -0700 (PDT)
-Message-ID: <26b43f6d-2b35-aab7-f906-31458c1b824b@linaro.org>
-Date:   Tue, 19 Jul 2022 12:56:18 +0200
+        Tue, 19 Jul 2022 04:14:08 -0700 (PDT)
+Message-ID: <a4c805c3-8d78-98bd-40be-204fe98e6153@linaro.org>
+Date:   Tue, 19 Jul 2022 13:14:07 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.11.0
 Subject: Re: [PATCH 1/2] ARM: dts: qcom: ipq8064: reorganize node order and
  sort them
 Content-Language: en-US
-To:     Christian Marangi <ansuelsmth@gmail.com>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+To:     Christian Marangi <ansuelsmth@gmail.com>
+Cc:     Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
@@ -72,81 +72,94 @@ References: <20220718153815.29414-1-ansuelsmth@gmail.com>
  <78230095-6b45-4536-f41d-12bb23308d34@linaro.org>
  <f625ccde-8ecd-c06d-e8b2-ecb51c9ac9b8@somainline.org>
  <62d686c0.1c69fb81.4a957.bf03@mx.google.com>
+ <26b43f6d-2b35-aab7-f906-31458c1b824b@linaro.org>
+ <62d68f9e.1c69fb81.985fb.30aa@mx.google.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <62d686c0.1c69fb81.4a957.bf03@mx.google.com>
+In-Reply-To: <62d68f9e.1c69fb81.985fb.30aa@mx.google.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 19/07/2022 10:19, Christian Marangi wrote:
-> On Tue, Jul 19, 2022 at 12:22:24PM +0200, Konrad Dybcio wrote:
->>
->>
->> On 19.07.2022 12:16, Krzysztof Kozlowski wrote:
->>> On 19/07/2022 11:59, Dmitry Baryshkov wrote:
->>>> On Tue, 19 Jul 2022 at 12:56, Krzysztof Kozlowski
->>>> <krzysztof.kozlowski@linaro.org> wrote:
->>>>>
->>>>> On 18/07/2022 17:38, Christian Marangi wrote:
->>>>>> Reorganize node order and sort them by address.
->>>>>>
->>>>>> Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
->>>>>> ---
->>>>>>
->>>>>> This was picked from for-next qcom branch [1]. Reorganize dtsi as requested.
->>>>>>
->>>>>> [1] https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git/?h=for-next
->>>>>
->>>>> If this is picked by qcom branch, no need to resend it.
->>>>>
->>>>> I don't see value in such reshuffle. Reviewing is not possible and you
->>>>> did not mention tests (results should be equal).
+On 19/07/2022 10:57, Christian Marangi wrote:
+> On Tue, Jul 19, 2022 at 12:56:18PM +0200, Krzysztof Kozlowski wrote:
+>> On 19/07/2022 10:19, Christian Marangi wrote:
+>>> On Tue, Jul 19, 2022 at 12:22:24PM +0200, Konrad Dybcio wrote:
 >>>>
->>>> The value is usual for all the cleanups: make it follow the
->>>> established practice.
+>>>>
+>>>> On 19.07.2022 12:16, Krzysztof Kozlowski wrote:
+>>>>> On 19/07/2022 11:59, Dmitry Baryshkov wrote:
+>>>>>> On Tue, 19 Jul 2022 at 12:56, Krzysztof Kozlowski
+>>>>>> <krzysztof.kozlowski@linaro.org> wrote:
+>>>>>>>
+>>>>>>> On 18/07/2022 17:38, Christian Marangi wrote:
+>>>>>>>> Reorganize node order and sort them by address.
+>>>>>>>>
+>>>>>>>> Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+>>>>>>>> ---
+>>>>>>>>
+>>>>>>>> This was picked from for-next qcom branch [1]. Reorganize dtsi as requested.
+>>>>>>>>
+>>>>>>>> [1] https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git/?h=for-next
+>>>>>>>
+>>>>>>> If this is picked by qcom branch, no need to resend it.
+>>>>>>>
+>>>>>>> I don't see value in such reshuffle. Reviewing is not possible and you
+>>>>>>> did not mention tests (results should be equal).
+>>>>>>
+>>>>>> The value is usual for all the cleanups: make it follow the
+>>>>>> established practice.
+>>>>>
+>>>>> Are you sure this is established practice?
+>>>> Yes.
+>>>>
+>>>>  New DTSI files (see SC8280XP,
+>>>>> sm8450 although sc7280 looked ordered) do not always follow it, so why
+>>>>> imposing it for existing code?
+>>>> Perhaps it slipped through review.. Partially my bad.
+>>>>
+>>>>
+>>>> Such reshuffle can cause conflicts thus
+>>>>> stops parallel development. Review is close to impossible...
+>>>> Almost any addition or removal also causes conflicts, because git is
+>>>> not as smart as we would like it to be. If the commit is structured
+>>>> properly (i.e. it *only* changes the order and nothing else),
+>>>> decompiling the dtbs before and after applying it and using a tool
+>>>> like meld that can find similar chunks of text at different offsets
+>>>> review is definitely possible, though not very pleasant (you can't
+>>>> just diff them, as order is preserved & phandles change due to that)
+>>>> as you have to look at it manually and can't tell much by just taking
+>>>> a look at the email.
+>>>>
 >>>
->>> Are you sure this is established practice?
->> Yes.
+>>> Can you give me an example of such tool? So I can put these data in the
+>>> commit description. I have to rebase this anyway as more changes got
+>>> merged so it might be a good idea to add more info about how this won't
+>>> make actualy changes.
+>>>
 >>
->>  New DTSI files (see SC8280XP,
->>> sm8450 although sc7280 looked ordered) do not always follow it, so why
->>> imposing it for existing code?
->> Perhaps it slipped through review.. Partially my bad.
+>> scripts/dtc/dtx_diff
+>> fdtdump + diff
+>>
+>> There should be an empty diff from at least one of methods above. If you
+>> have a difference, I am not sure how can we verify this.
 >>
 >>
->> Such reshuffle can cause conflicts thus
->>> stops parallel development. Review is close to impossible...
->> Almost any addition or removal also causes conflicts, because git is
->> not as smart as we would like it to be. If the commit is structured
->> properly (i.e. it *only* changes the order and nothing else),
->> decompiling the dtbs before and after applying it and using a tool
->> like meld that can find similar chunks of text at different offsets
->> review is definitely possible, though not very pleasant (you can't
->> just diff them, as order is preserved & phandles change due to that)
->> as you have to look at it manually and can't tell much by just taking
->> a look at the email.
->>
+>> Best regards,
+>> Krzysztof
 > 
-> Can you give me an example of such tool? So I can put these data in the
-> commit description. I have to rebase this anyway as more changes got
-> merged so it might be a good idea to add more info about how this won't
-> make actualy changes.
+> This [1] is the output of dtx_diff.
+> The file diff is just phanle change that are related to the node order.
 > 
+> Seems a nice way to verify if the shuffle didn't drop any node.
 
-scripts/dtc/dtx_diff
-fdtdump + diff
-
-There should be an empty diff from at least one of methods above. If you
-have a difference, I am not sure how can we verify this.
-
+Therefore run the second method - fdtdump.
 
 Best regards,
 Krzysztof
