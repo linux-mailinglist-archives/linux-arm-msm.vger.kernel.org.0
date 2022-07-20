@@ -2,39 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7930057BB8A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Jul 2022 18:40:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1C50557BB9D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Jul 2022 18:43:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230301AbiGTQkb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Jul 2022 12:40:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39798 "EHLO
+        id S232891AbiGTQn5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Jul 2022 12:43:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42162 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229784AbiGTQka (ORCPT
+        with ESMTP id S231816AbiGTQnr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 Jul 2022 12:40:30 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6834B4D4E9;
-        Wed, 20 Jul 2022 09:40:28 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id EA90A61DB6;
-        Wed, 20 Jul 2022 16:40:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C73D6C3411E;
-        Wed, 20 Jul 2022 16:40:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1658335227;
-        bh=b+4Mdy+zaQWf0sfSJ+jn3b1Brb1gCaAlNd6VwPCny14=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=cxaA4Dnj5IA/8JIgvhcTsZhKqn6ay/yxmhOMsq/TGe5J4cXtwq0wEwQxsmPP435P2
-         uuj9d3ZASh9idF0IdicDKmZbUkv+8gfcG7U/nux0csjgdaoKq2KwbhvrUhytDkD8Q0
-         ULh2hOqSu9A+cHbCgT8sTjjO1o4lfpWMnFLLf3MohvYU5VSduSdFAaz+VaYdADhMTd
-         4z+/jnenTc6cltH/6e67nQv7XcwqkOe5XUTE0VR81G1HzXTLnGOSuyzM04V90D70Z/
-         z5O6XVrDdC1NtMPu34Euki9WWw95Mrp5GKM1MqBHNnTFuHWYxGaN+xLsRBdY9yiXuu
-         UfavxWMNB4pYg==
-Date:   Wed, 20 Jul 2022 17:40:21 +0100
-From:   Mark Brown <broonie@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+        Wed, 20 Jul 2022 12:43:47 -0400
+Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 277E464E16
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jul 2022 09:43:45 -0700 (PDT)
+Received: by mail-lj1-x235.google.com with SMTP id p6so21772155ljc.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jul 2022 09:43:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=t55C1XFbWIhH1E3uo69pdnvGfBCTN1U6gyLTc72uBSE=;
+        b=cNwVQM9/qzCyD2IKuo1xDl4MCgiOMOtK9saoWRgvboxGgf3aefT2299HywHocJdFCS
+         xobwsWcr8OJHf1Ank3M5TzaQsZ3MG3g0qwx/fTCz1wwjK5HGK41fB4d4fY1zGSJL8ban
+         MVCMprXIeRbTNo7u7ZUNpqfBJBucu1SlL1Ih5Myao0M3k081ey65bWCQGNYUijrOVJIv
+         w9RnJz0KT4WJOoX8A8Y9BlU+riVOIYfvB/mH7hr4URwpunnqr5mj4ZQ0gpT6+SvnQoI2
+         JEvT2D634RdR/cQ7hxBcl+GRwD1iNEzdkVIo+pMGpNY5saOYXIREGsw2H7HRS2YqqQWy
+         vBKQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=t55C1XFbWIhH1E3uo69pdnvGfBCTN1U6gyLTc72uBSE=;
+        b=Ty3JLAN7AkZHv+JA9oELr4ufPwvy3bXH8KzxzBmK/rmYHoy2TbeLigDrxB1d+xUlfV
+         HzBIw2/uu3mKaHBqLQsmdz0qKFXK2Ivvax4rKHF4Disq6xKkPA42UAZ+xTQ7YT43ETNt
+         1CZpQBkm0c782civAqX+tSuhS4y0l3dZWYPmE67PXXFyE21Na4EXosCD9FTJ6aoC1l94
+         +7wA3yfOjjLcR5Cv+2SNPhLyiacqL7xacTO9y0PMOtGLHlDhXgLLuEAz3HKPfOw2GFsF
+         cpgZNrBv/xNZaCXn7kjHyroKJSksIJxT1CSPt1n4KV3nL60rBSavpyTKk/1L35Q7GiQF
+         7zuA==
+X-Gm-Message-State: AJIora/Ad7g5YKx4Av8HNtdnzoBW9BJu/xHWWOk68F2LgIIhFQT+pFFD
+        anGZOSRzihp/d7y4cDsf/bTibA==
+X-Google-Smtp-Source: AGRyM1u7K/8V0unyfLWjleyBDtR1Lmb0itlTD+sQyKskV23cTShVVobCpw0TWfpowsjHukv/yOtk+A==
+X-Received: by 2002:a05:651c:1587:b0:25d:7844:5910 with SMTP id h7-20020a05651c158700b0025d78445910mr18644605ljq.325.1658335422174;
+        Wed, 20 Jul 2022 09:43:42 -0700 (PDT)
+Received: from [192.168.115.193] (89-162-31-138.fiber.signal.no. [89.162.31.138])
+        by smtp.gmail.com with ESMTPSA id o20-20020a056512231400b00478772eb18esm3911500lfu.92.2022.07.20.09.43.40
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 20 Jul 2022 09:43:41 -0700 (PDT)
+Message-ID: <13607b6c-83a9-4688-aa5b-934319a01f5b@linaro.org>
+Date:   Wed, 20 Jul 2022 18:43:40 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH RESEND v2] spi: dt-bindings: qcom,spi-geni-qcom: allow
+ three interconnects
+Content-Language: en-US
+To:     Mark Brown <broonie@kernel.org>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
@@ -43,62 +66,41 @@ Cc:     Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         Rob Herring <robh@kernel.org>
-Subject: Re: [PATCH RESEND v2] spi: dt-bindings: qcom,spi-geni-qcom: allow
- three interconnects
-Message-ID: <Ytgv9R3/hmxql0Lz@sirena.org.uk>
 References: <20220720163841.7283-1-krzysztof.kozlowski@linaro.org>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="6aPVaFpJBAl/A05J"
-Content-Disposition: inline
-In-Reply-To: <20220720163841.7283-1-krzysztof.kozlowski@linaro.org>
-X-Cookie: I exist, therefore I am paid.
-X-Spam-Status: No, score=-7.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+ <Ytgv9R3/hmxql0Lz@sirena.org.uk>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <Ytgv9R3/hmxql0Lz@sirena.org.uk>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 20/07/2022 18:40, Mark Brown wrote:
+> On Wed, Jul 20, 2022 at 06:38:41PM +0200, Krzysztof Kozlowski wrote:
+>> Recent Qualcomm Geni SPI nodes, e.g. on SM8450, come also with three
+>> interconnects.  This fixes dtbs_check warnings like:
+>>
+>>   sm8450-qrd.dtb: spi@a98000: interconnects: [[46, 1, 0, 46, 4, 0], [47, 2, 0, 48, 12, 0], [49, 1, 0, 50, 1, 0]] is too long
+>>   sm8450-qrd.dtb: spi@a98000: interconnect-names: ['qup-core', 'qup-config', 'qup-memory'] is too long
+>>
+>> Fixes: 5bdcae1fe1c5 ("spi: dt-bindings: qcom,spi-geni-qcom: convert to dtschema")
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> Acked-by: Mark Brown <broonie@kernel.org>
+>> Reviewed-by: Rob Herring <robh@kernel.org>
+> 
+> I'm assuming from the fact that I acked this that there's some sort of
+> dependency here which means I can't apply it?
 
---6aPVaFpJBAl/A05J
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Sorry, I did not drop your ack. Intention is that you pick it up. No
+dependencies. Fixed commit was in v5.19-rc1 so it could be considered
+for fixes, but it is not urgent fix so could wait till v5.20.
 
-On Wed, Jul 20, 2022 at 06:38:41PM +0200, Krzysztof Kozlowski wrote:
-> Recent Qualcomm Geni SPI nodes, e.g. on SM8450, come also with three
-> interconnects.  This fixes dtbs_check warnings like:
->=20
->   sm8450-qrd.dtb: spi@a98000: interconnects: [[46, 1, 0, 46, 4, 0], [47, =
-2, 0, 48, 12, 0], [49, 1, 0, 50, 1, 0]] is too long
->   sm8450-qrd.dtb: spi@a98000: interconnect-names: ['qup-core', 'qup-confi=
-g', 'qup-memory'] is too long
->=20
-> Fixes: 5bdcae1fe1c5 ("spi: dt-bindings: qcom,spi-geni-qcom: convert to dt=
-schema")
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Acked-by: Mark Brown <broonie@kernel.org>
-> Reviewed-by: Rob Herring <robh@kernel.org>
-
-I'm assuming from the fact that I acked this that there's some sort of
-dependency here which means I can't apply it?
-
---6aPVaFpJBAl/A05J
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmLYL/QACgkQJNaLcl1U
-h9DoBQf8DkvrsLBykQ6d8Emjnz3J2rawA8+zPlrJDwoJCUjlJfQJQqu2ht1xPyZT
-fzQBr5WWgEEFG4zBfuZEiM1HnK9pSbbnXL4+m6Y2i++YIhi557uirpQms42NCGP1
-6RQP2KRe4X5vx8VdLPx2LRftBL1I4gj7orSTvi+BWwLXthxlxdRKZsgyWVni1p4R
-ScbDhImVCr/+/PXDE6EPW+uPJ0NsVvAdNRSOEq/76Umb4dH7L6jZm2Oz4CqMerR7
-V3ABWr/diYEjBrT4y1Poh34cTwJMe1GefDqcbB15+MYXFNCcZ3hdKtJBvuxNi25n
-I2FYvlZ4/6as4+g6lfagmn2n1w9G1Q==
-=kCy+
------END PGP SIGNATURE-----
-
---6aPVaFpJBAl/A05J--
+Best regards,
+Krzysztof
