@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1C16157B259
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Jul 2022 10:10:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B9E7157B29B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Jul 2022 10:13:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229689AbiGTIJ5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Jul 2022 04:09:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49408 "EHLO
+        id S240604AbiGTINm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Jul 2022 04:13:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52732 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238874AbiGTIJ0 (ORCPT
+        with ESMTP id S240552AbiGTINb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 Jul 2022 04:09:26 -0400
-Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F21AA675BE
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jul 2022 01:09:24 -0700 (PDT)
-Received: by mail-pj1-x102e.google.com with SMTP id gq7so895328pjb.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jul 2022 01:09:24 -0700 (PDT)
+        Wed, 20 Jul 2022 04:13:31 -0400
+Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38FBE6E8B7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jul 2022 01:12:26 -0700 (PDT)
+Received: by mail-pf1-x42b.google.com with SMTP id b133so12081947pfb.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jul 2022 01:12:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=Vjmj1e5ilZcHzSooiVXEelOD0/GPuv/+UYY6S2crjho=;
-        b=Dh/g9kBBDMqVx5ZQJKzdmPQxju8VIfV+7OtnNU7UZ688mgBItp/7drGha8nZQL7iRG
-         TMzI9mLhcuWQ6poeV1p8tuG5NY6TjirXtpPQqZP6xu+Om+RRTBgXsgEw6jzhUR34k7tl
-         MbtJaqDe1s1VwggvF69/LGKhJeJJ/SF6ipBVcOUTZFUyEtUxmeUAcHzyo98hGHiczJ3p
-         XuI+1+6TtrhbLhHNTOc86779nvmxuS2MI834rBCPoqBr4fD68ve/xc4eSmXTN2GF4gxm
-         2yEbQrbVlkssAbP31nBkRA1bFfnYIGPg0ERIjzbYCGH/bNLx2szEX9IWufRpyw19VRml
-         jdvA==
+        bh=U7IBtEsWEANNBn2uVDz/KgXAATJ+X6e2srPCnq8910M=;
+        b=GWU2+SXjA8jIcaelEQcEAI3kCwuQSxb3Bt9GwiX1G/TAtoBjFhIx9gIfYdDAJJohMx
+         yKQEaqSCH8Sfix99LDDP6Dp/cLKlgKzZETMilycZf4X23ttr+pWai9uHAMYC8olm8Crr
+         zNYcfR9Ta6UK5Kz95c2g7GCAdllNp5RRCTyT1eW1mMScZsAWpj/E8tbMeOhiDG9V1/5v
+         2UyWYHlxgOMGU1iGuAQv1d/4JLwtV41rEnt8JWmjrCSr2vKOTrNeXUAU0eAmArByapHX
+         eUqDi/LCAKRMDNIz/aHbliKaj8dibsHVs8kGSgsOH/jSyyrIEjwD5pqyoT/0yMj0b7gk
+         N5zg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=Vjmj1e5ilZcHzSooiVXEelOD0/GPuv/+UYY6S2crjho=;
-        b=2dil296JqskDgP1GgOZ3+QK52J0bFTjFSUrHGn7iWdkp1rtVPo1mT1pj6jmKwb+73U
-         EOV9cW3YoYNaG0BeFRtn6iMEhGUjGtITH4Bvah9M31H/R3lvITUXVsynjEoPurLN7RN2
-         o+WcBzsVEgp8yjsWPfr5shozL5nHpj1tDK3kG3n72Jn52KCnYkOz47ql+VpN5T6OFjHO
-         abHkxUkTx0DiyBq64+AUD1BQWxhlI8jgzRU5bAhtgCShkLgxTnvtF8ACKwGp/4MA10c+
-         cIVxPWu0PmIaLL+TVTlPhb9HBU2ctVAibjjPp6b9bxourY9y6szodTDHfL1fZ3F0hQ3q
-         4wWg==
-X-Gm-Message-State: AJIora9ANGMGmxhLEmTgylTzGfWjFQLLezaTM8aO5UspZYSgL0PNke/5
-        mImkJfclb2QbEh77+tXlwGM0NQ==
-X-Google-Smtp-Source: AGRyM1sVwohh0bM9m4mMkOvgMH8V+/8FfdM5gU1oqT8RRazle84Lm9koabhiRV9BxMroh0zPZorBiw==
-X-Received: by 2002:a17:903:4094:b0:16b:df0e:6312 with SMTP id z20-20020a170903409400b0016bdf0e6312mr39531338plc.61.1658304564419;
-        Wed, 20 Jul 2022 01:09:24 -0700 (PDT)
+        bh=U7IBtEsWEANNBn2uVDz/KgXAATJ+X6e2srPCnq8910M=;
+        b=QUa5FCVO47UsPPeChL3fL4zNEn+weKV4z2VBFlo/E8kBK+GgruwyJL66z0O9PrDPXa
+         zeUbSQj3TP+sSq2x0wGa64wkE6cPBYxmyGFfp//5QwSdDn/m7BVf2C+cD7MYlmmJIxK1
+         qly84zF9s5frINN3wSY/VOtaBjfjltF9W0yka3y/8znTV/jzrQJXlR/jYFDM/E5xi4mf
+         0edz2a+LULvEKppILuG3++vTPZDLkDv6+DZPEJZeyWBepBxrr5HbZg/0hcjx353rjWsq
+         9TCnSgZsUV4UGr7gvEggow0qKQH2z8h/jAPORvWSS4gZLw4Xm6V5PA8n9NdlwcrLfHa8
+         Bvvw==
+X-Gm-Message-State: AJIora/G4akCG2NDk6rotQ8wnVyMuRbdIkYmqL1kWC1dssYCeURpzxz5
+        UT6x+EhjufZc1nb7OMclGVJEQA==
+X-Google-Smtp-Source: AGRyM1thDBY42HWj78s+WNa+OGNoXxQajpgRcWha8Mo87hwgmKpx0L81LChYX/PwmYJQ+aX1PZwm+w==
+X-Received: by 2002:a62:140e:0:b0:52b:780d:fb9d with SMTP id 14-20020a62140e000000b0052b780dfb9dmr12604772pfu.65.1658304745247;
+        Wed, 20 Jul 2022 01:12:25 -0700 (PDT)
 Received: from ?IPV6:2401:4900:1f3b:709e:6fec:df37:6562:5a80? ([2401:4900:1f3b:709e:6fec:df37:6562:5a80])
-        by smtp.gmail.com with ESMTPSA id q7-20020a17090311c700b0016cf195eb16sm6086244plh.185.2022.07.20.01.09.21
+        by smtp.gmail.com with ESMTPSA id u13-20020a17090341cd00b00163e06e1a99sm13313172ple.120.2022.07.20.01.12.22
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 20 Jul 2022 01:09:23 -0700 (PDT)
-Message-ID: <e0637b5f-572f-5db8-e546-22f69d7c1e09@linaro.org>
-Date:   Wed, 20 Jul 2022 13:39:19 +0530
+        Wed, 20 Jul 2022 01:12:24 -0700 (PDT)
+Message-ID: <2cc90e5a-172f-3c94-0e57-79c725d45819@linaro.org>
+Date:   Wed, 20 Jul 2022 13:42:21 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.11.0
-Subject: Re: [PATCH 2/3] thermal: qcom: tsens: Add support for
- 'needs_reinit_wa' for sm8150
+Subject: Re: [PATCH 1/3] firmware: qcom_scm: Add support for tsens reinit
+ workaround
 Content-Language: en-US
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc:     linux-pm@vger.kernel.org, bhupesh.linux@gmail.com,
@@ -63,10 +63,10 @@ Cc:     linux-pm@vger.kernel.org, bhupesh.linux@gmail.com,
         Thara Gopinath <thara.gopinath@gmail.com>,
         linux-arm-msm@vger.kernel.org
 References: <20220701145815.2037993-1-bhupesh.sharma@linaro.org>
- <20220701145815.2037993-3-bhupesh.sharma@linaro.org>
- <YtYdPG8ofmmiVe4P@builder.lan>
+ <20220701145815.2037993-2-bhupesh.sharma@linaro.org>
+ <YtYdxlbLvgimN2MQ@builder.lan>
 From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-In-Reply-To: <YtYdPG8ofmmiVe4P@builder.lan>
+In-Reply-To: <YtYdxlbLvgimN2MQ@builder.lan>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -82,150 +82,117 @@ Hi Bjorn,
 
 Thanks for your review.
 
-On 7/19/22 8:25 AM, Bjorn Andersson wrote:
+On 7/19/22 8:28 AM, Bjorn Andersson wrote:
 > On Fri 01 Jul 09:58 CDT 2022, Bhupesh Sharma wrote:
 > 
->> QCoM sm8150 tsens controller might require re-initialization
+> Please update $subject to match the most uses prefix for the qcom_scm
+> driver.
 > 
-> Please spell out Qualcomm.
+>> Some versions of QCoM tsens controller might enter a
+> 
+> s/QCoM/Qualcomm/ please.
 
 Ok.
 
->> via trustzone [via scm call(s)] when it enters a 'bad state'
->> causing sensor temperatures/interrupts status to be in an
->> 'invalid' state.
+>> 'bad state' while running stability tests causing sensor
+>> temperatures/interrupts status to be in an 'invalid' state.
 >>
->> Add hooks for the same in the qcom tsens driver which
->> can be used by followup patch(es).
+>> It is recommended to re-initialize the tsens controller
+>> via trustzone (secure registers) using scm call(s) when that
+>> happens.
 >>
-> 
-> This patch enables needs_reinit_wa, which is actually implemented in
-> patch 3, wouldn't it make more sense to flip them around; to first
-> implement the feature and then enable it in this patch?
-
-Yes, this was reported by the kernel test bot as well.
-I will address this in v2.
-
+>> Add support for the same in the qcom_scm driver.
+>>
 >> Cc: Amit Kucheria <amitk@kernel.org>
 >> Cc: Thara Gopinath <thara.gopinath@gmail.com>
 >> Cc: linux-pm@vger.kernel.org
 >> Cc: linux-arm-msm@vger.kernel.org
 >> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
 >> ---
->>   drivers/thermal/qcom/tsens-v2.c | 11 +++++++++++
->>   drivers/thermal/qcom/tsens.c    |  4 ++++
->>   drivers/thermal/qcom/tsens.h    |  6 +++++-
->>   3 files changed, 20 insertions(+), 1 deletion(-)
+>>   drivers/firmware/qcom_scm.c | 17 +++++++++++++++++
+>>   drivers/firmware/qcom_scm.h |  4 ++++
+>>   include/linux/qcom_scm.h    |  2 ++
+>>   3 files changed, 23 insertions(+)
 >>
->> diff --git a/drivers/thermal/qcom/tsens-v2.c b/drivers/thermal/qcom/tsens-v2.c
->> index b293ed32174b..61d38a56d29a 100644
->> --- a/drivers/thermal/qcom/tsens-v2.c
->> +++ b/drivers/thermal/qcom/tsens-v2.c
->> @@ -101,6 +101,17 @@ struct tsens_plat_data data_tsens_v2 = {
->>   	.fields	= tsens_v2_regfields,
->>   };
+>> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
+>> index 3163660fa8e2..0bc7cc466218 100644
+>> --- a/drivers/firmware/qcom_scm.c
+>> +++ b/drivers/firmware/qcom_scm.c
+>> @@ -796,6 +796,23 @@ int qcom_scm_mem_protect_video_var(u32 cp_start, u32 cp_size,
+>>   }
+>>   EXPORT_SYMBOL(qcom_scm_mem_protect_video_var);
 >>   
->> +/* For sm8150 tsens, its suggested to monitor the controller health
+>> +int qcom_scm_tsens_reinit(int *tsens_ret)
+>> +{
+>> +	unsigned int ret;
 > 
-> /*
->   * Outside the network stack, the first line should be left empty in
->   * multiline comments.
->   */
+> qcom_scm_call() returns negative numbers on error, so this should be
+> signed.
 
 Ok.
 
->> + * periodically and in case an issue is detected to reinit tsens
->> + * controller via trustzone.
->> + */
->> +struct tsens_plat_data data_tsens_sm8150 = {
+>> +	struct qcom_scm_desc desc = {
 > 
-> I doubt this is sm8150-specific, so the first question is if this should
-> be attempted on all data_tsens_v2 platforms. Otherwise, how about naming
-> this data_tsens_v2_reinit?
+> const?
 
-I agree. Konrad reported one more use case of the same.
-So, I will take care of the same in v2.
+Sure.
 
-'data_tsens_v2_reinit' makes sense to me.
+>> +		.svc = QCOM_SCM_SVC_TSENS,
+>> +		.cmd = QCOM_SCM_TSENS_INIT_ID,
+>> +	};
+>> +	struct qcom_scm_res res;
+>> +
+>> +	ret = qcom_scm_call(__scm->dev, &desc, &res);
+>> +	if (tsens_ret)
+>> +		*tsens_ret = res.result[0];
+> 
+> Most similar qcom_scm functions use negative return value for errors and
+> positive (including 0) values for the returned data.
+> 
+> Looking at patch 3, the only thing you seem to care about is tsens_ret
+> being 0 or not, so I do think you would be fine returning both using the
+> return value.
+
+Ok, let me double check the same and fix the same in v2.
 
 Regards,
 Bhupesh
 
->> +	.ops		= &ops_generic_v2,
->> +	.feat		= &tsens_v2_feat,
->> +	.needs_reinit_wa = true,
->> +	.fields	= tsens_v2_regfields,
->> +};
+
 >> +
->>   /* Kept around for backward compatibility with old msm8996.dtsi */
->>   struct tsens_plat_data data_8996 = {
->>   	.num_sensors	= 13,
->> diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
->> index 7963ee33bf75..97f4d4454f20 100644
->> --- a/drivers/thermal/qcom/tsens.c
->> +++ b/drivers/thermal/qcom/tsens.c
->> @@ -991,6 +991,9 @@ static const struct of_device_id tsens_table[] = {
->>   	}, {
->>   		.compatible = "qcom,msm8996-tsens",
->>   		.data = &data_8996,
->> +	}, {
->> +		.compatible = "qcom,sm8150-tsens",
->> +		.data = &data_tsens_sm8150,
->>   	}, {
->>   		.compatible = "qcom,tsens-v1",
->>   		.data = &data_tsens_v1,
->> @@ -1135,6 +1138,7 @@ static int tsens_probe(struct platform_device *pdev)
+>> +	return ret;
+>> +}
+>> +EXPORT_SYMBOL(qcom_scm_tsens_reinit);
+>> +
+>>   static int __qcom_scm_assign_mem(struct device *dev, phys_addr_t mem_region,
+>>   				 size_t mem_sz, phys_addr_t src, size_t src_sz,
+>>   				 phys_addr_t dest, size_t dest_sz)
+>> diff --git a/drivers/firmware/qcom_scm.h b/drivers/firmware/qcom_scm.h
+>> index 0d51eef2472f..495fa00230c7 100644
+>> --- a/drivers/firmware/qcom_scm.h
+>> +++ b/drivers/firmware/qcom_scm.h
+>> @@ -94,6 +94,10 @@ extern int scm_legacy_call(struct device *dev, const struct qcom_scm_desc *desc,
+>>   #define QCOM_SCM_PIL_PAS_IS_SUPPORTED	0x07
+>>   #define QCOM_SCM_PIL_PAS_MSS_RESET	0x0a
 >>   
->>   	priv->dev = dev;
->>   	priv->num_sensors = num_sensors;
->> +	priv->needs_reinit_wa = data->needs_reinit_wa;
->>   	priv->ops = data->ops;
->>   	for (i = 0;  i < priv->num_sensors; i++) {
->>   		if (data->hw_ids)
->> diff --git a/drivers/thermal/qcom/tsens.h b/drivers/thermal/qcom/tsens.h
->> index 1471a2c00f15..48a7bda902c1 100644
->> --- a/drivers/thermal/qcom/tsens.h
->> +++ b/drivers/thermal/qcom/tsens.h
->> @@ -515,6 +515,7 @@ struct tsens_features {
->>    * @num_sensors: Number of sensors supported by platform
->>    * @ops: operations the tsens instance supports
->>    * @hw_ids: Subset of sensors ids supported by platform, if not the first n
->> + * @needs_reinit_wa: tsens controller might need reinit via trustzone
->>    * @feat: features of the IP
->>    * @fields: bitfield locations
->>    */
->> @@ -522,6 +523,7 @@ struct tsens_plat_data {
->>   	const u32		num_sensors;
->>   	const struct tsens_ops	*ops;
->>   	unsigned int		*hw_ids;
->> +	bool			needs_reinit_wa;
->>   	struct tsens_features	*feat;
->>   	const struct reg_field		*fields;
->>   };
->> @@ -544,6 +546,7 @@ struct tsens_context {
->>    * @srot_map: pointer to SROT register address space
->>    * @tm_offset: deal with old device trees that don't address TM and SROT
->>    *             address space separately
->> + * @needs_reinit_wa: tsens controller might need reinit via trustzone
->>    * @ul_lock: lock while processing upper/lower threshold interrupts
->>    * @crit_lock: lock while processing critical threshold interrupts
->>    * @rf: array of regmap_fields used to store value of the field
->> @@ -561,6 +564,7 @@ struct tsens_priv {
->>   	struct regmap			*tm_map;
->>   	struct regmap			*srot_map;
->>   	u32				tm_offset;
->> +	bool				needs_reinit_wa;
+>> +/* TSENS Services and Function IDs */
+>> +#define QCOM_SCM_SVC_TSENS		0x1E
+>> +#define QCOM_SCM_TSENS_INIT_ID		0x5
+>> +
+>>   #define QCOM_SCM_SVC_IO			0x05
+>>   #define QCOM_SCM_IO_READ		0x01
+>>   #define QCOM_SCM_IO_WRITE		0x02
+>> diff --git a/include/linux/qcom_scm.h b/include/linux/qcom_scm.h
+>> index f8335644a01a..f8c9eb739df1 100644
+>> --- a/include/linux/qcom_scm.h
+>> +++ b/include/linux/qcom_scm.h
+>> @@ -124,4 +124,6 @@ extern int qcom_scm_lmh_dcvsh(u32 payload_fn, u32 payload_reg, u32 payload_val,
+>>   extern int qcom_scm_lmh_profile_change(u32 profile_id);
+>>   extern bool qcom_scm_lmh_dcvsh_available(void);
 >>   
->>   	/* lock for upper/lower threshold interrupts */
->>   	spinlock_t			ul_lock;
->> @@ -593,6 +597,6 @@ extern struct tsens_plat_data data_8916, data_8939, data_8974, data_9607;
->>   extern struct tsens_plat_data data_tsens_v1, data_8976;
->>   
->>   /* TSENS v2 targets */
->> -extern struct tsens_plat_data data_8996, data_tsens_v2;
->> +extern struct tsens_plat_data data_8996, data_tsens_sm8150, data_tsens_v2;
->>   
->>   #endif /* __QCOM_TSENS_H__ */
+>> +extern int qcom_scm_tsens_reinit(int *tsens_ret);
+>> +
+>>   #endif
 >> -- 
 >> 2.35.3
 >>
