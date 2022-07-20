@@ -2,112 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3C08657C03D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jul 2022 00:46:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AB7E957C065
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jul 2022 01:01:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229616AbiGTWqM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Jul 2022 18:46:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41814 "EHLO
+        id S229504AbiGTXBo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Jul 2022 19:01:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52218 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229592AbiGTWqL (ORCPT
+        with ESMTP id S229441AbiGTXBo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 Jul 2022 18:46:11 -0400
-Received: from mail-io1-f53.google.com (mail-io1-f53.google.com [209.85.166.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8761F13CF6;
-        Wed, 20 Jul 2022 15:46:10 -0700 (PDT)
-Received: by mail-io1-f53.google.com with SMTP id 125so57124iou.6;
-        Wed, 20 Jul 2022 15:46:10 -0700 (PDT)
+        Wed, 20 Jul 2022 19:01:44 -0400
+Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A638EE1C
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jul 2022 16:01:43 -0700 (PDT)
+Received: by mail-oi1-x233.google.com with SMTP id s204so12772154oif.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jul 2022 16:01:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=o25Onl7W5ZVNjrmImxnkBTSvgWGk4UAcWc7YmpIZ6r4=;
+        b=mK5F3e7LiNs/0CGm0JGzLchWjmGhAIkq+4IoVOpqXb6n3cpHI7cd57MntcGc0IyaXa
+         a6WZI55Oj0lMwEvyP6VaRk649bnkQpGFppp5x18APUYhqL52SpQCHjLe/+9wMfeXPiIS
+         O1L9S2XXzilDA41aVPJeUPIEPxeRLNHoEYsPF6XC2eMJKPex0yalZJhy4AkfZAUFZf8G
+         KHabkEcGxM+dJlUAJmm6IqgmRxLLAm0N7CDCnthNkwp6nYFGue7oQuGFhNC4QuUbmwqh
+         YyteQR2qhvJeoLabnPpahbVoMlEOG8oPtlVV8SP0OK+eo9uCOJMngLBA4aMa5PTVyv5R
+         5N6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=7fJqAHYv/e5MRGfwQS2QwxmL0W6+8ciRB/YwHGWHQFk=;
-        b=VMM8r+XSwoUERuLHe3pAgYxHM7zsr851aE8TNrwfstEOMkDcXB9ARFBRSY1JCI1Q4J
-         q8VeNQ0z56Fe7RC2tWioMkwbPT7mu3+Apo1HlrS73ugfODnlvLR0SkTlp1YV3DbYT4xw
-         III54UGyPpR/fFcaW64A7IjXOBf8+l66fcsmffNG0tPROyZCSn44uYAPqHY97gsTdukL
-         RpzGs0RPPbUbaNM9jqSvoaKtlB+ZGAKyGrjwphJ/ypo019bR1lfX7EQ3v2FKjdRsyEyB
-         GPuM9+CQyxPTv2ExzJqk2lDMr/p1cbHZvpkB8TCIXXlKSiH2q4krF1DMAnyFPGjBtrOp
-         CZvQ==
-X-Gm-Message-State: AJIora+oS0gFGwuhXLLvKCj+WwLwo7IH+JuesNiqMICoPG8NgL/JwODl
-        lIO99LeP0D/FqmAJxeNybA==
-X-Google-Smtp-Source: AGRyM1sMJiRBS/KvsrXJPU6XhiUJ7qH5dRdaof9vxE2dzv6IVnCLk1o/OGzQuanFv/qLBna90S6X1g==
-X-Received: by 2002:a05:6602:2d4f:b0:67b:f7c9:a3e with SMTP id d15-20020a0566022d4f00b0067bf7c90a3emr9887172iow.77.1658357169768;
-        Wed, 20 Jul 2022 15:46:09 -0700 (PDT)
-Received: from robh.at.kernel.org ([64.188.179.248])
-        by smtp.gmail.com with ESMTPSA id i20-20020a023b54000000b0033f4b1c2151sm53341jaf.154.2022.07.20.15.46.08
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=o25Onl7W5ZVNjrmImxnkBTSvgWGk4UAcWc7YmpIZ6r4=;
+        b=3jSJzQixzdeslZ3SnhFRFElJmd5Ci4ui4gToj08kXVxS4AWpW2z94N4jl1a6QtXae2
+         58sg5UYhErXKOMcGhhHTrvUyl7ZI77zX8sWHPTihKh0xz6pAnY8gG4pkOjgFLW7dVlz7
+         rqChT/LcHANnBiLkTB2B0BVJeTbx1JL9Pfb7ehVxNznsHtnZKwlrEE1P8FcoTEogAASx
+         brvA6xVADmPAickmhgpYemlCuZcW7Szq4+aJl5ywbEBKPX3nxDKSWnSQM9eWzTyNCxTd
+         PClPeXiIrXtW6nq+kynofbV9WGsFKpc+OwHh2T+VWu59tYXCSbXkoouiH/v6bXLLiXWk
+         +OFw==
+X-Gm-Message-State: AJIora+YOwa7LwiUAIi1iiaqX+6UZ+hHBnz1tA580ibeWn1ip1YxiSN4
+        sQwkhptw3tIcrsApKgiKlTdZKL0wo6DX4A==
+X-Google-Smtp-Source: AGRyM1ujUZBy++05futBPsAGLy0FI7423+W5FtvCMDAHJrVczv5Pc7TTBRPdPlzwE/C4lPbsRInXRg==
+X-Received: by 2002:a05:6808:1c06:b0:33a:9b3b:b3ce with SMTP id ch6-20020a0568081c0600b0033a9b3bb3cemr3414012oib.53.1658358102405;
+        Wed, 20 Jul 2022 16:01:42 -0700 (PDT)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id b16-20020a4ae210000000b00435a4c8e3c2sm121321oot.40.2022.07.20.16.01.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Jul 2022 15:46:09 -0700 (PDT)
-Received: (nullmailer pid 4120175 invoked by uid 1000);
-        Wed, 20 Jul 2022 22:46:08 -0000
-Date:   Wed, 20 Jul 2022 16:46:08 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Stephan Gerhold <stephan.gerhold@kernkonzept.com>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Sireesh Kodali <sireeshkodali1@gmail.com>,
-        Luca Weiss <luca@z3ntu.xyz>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH v2 2/5] dt-bindings: remoteproc: qcom,q6v5: Move MSM8916
- to schema
-Message-ID: <20220720224608.GA4107504-robh@kernel.org>
-References: <20220718140344.1831731-1-stephan.gerhold@kernkonzept.com>
- <20220718140344.1831731-3-stephan.gerhold@kernkonzept.com>
+        Wed, 20 Jul 2022 16:01:41 -0700 (PDT)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     arm@kernel.org, soc@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        Andy Gross <agross@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
+        Olof Johansson <olof@lixom.net>,
+        Kevin Hilman <khilman@baylibre.com>
+Subject: [GIT PULL] Qualcomm ARM64 defconfig more updates for v5.20
+Date:   Wed, 20 Jul 2022 18:01:40 -0500
+Message-Id: <20220720230140.2113129-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.37.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220718140344.1831731-3-stephan.gerhold@kernkonzept.com>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jul 18, 2022 at 04:03:41PM +0200, Stephan Gerhold wrote:
-> qcom,q6v5.txt covers multiple SoCs with quite different binding
-> requirements. Converting this into one DT schema would require
-> several if statements, making the DT schema overall harder to
-> read and understand.
-> 
-> To avoid this, follow the example of SC7180/SC7280 and split
-> "qcom,msm8916-mss-pil" (and the equivalent deprecated "qcom,q6v5-pil"
-> compatible) into a separate DT schema. The schema is somewhat based
-> on the one for SC7180/SC7280 but adjusted for the old platforms.
-> 
-> Compared to the old plain text bindings, add missing documentation for
-> the "bam-dmux" subnode and recommend one particular approach to specify
-> the MBA/MPSS "memory-region" (the other one is marked as deprecated).
-> 
-> Cc: Sireesh Kodali <sireeshkodali1@gmail.com>
-> Signed-off-by: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
-> ---
-> Changes in v2:
->   - Add blank lines between top-level properties
->   - Drop "deprecated" in "oneOf" list, it is not clear if this is valid
->     and it should be redundant since the properties itself are already
->     marked as "deprecated"
-> ---
-> Like Sibi's patch series for SC7180/SC7820 [1] this is somewhat related
-> to Sireesh's series that converts all of qcom,q6v5.txt [2] (with a lot
-> of if statements). However, this series focuses on MSM8916/MSM8974 (or
-> actually MSM8909) only.
-> 
-> [1]: https://lore.kernel.org/linux-arm-msm/1657020721-24939-1-git-send-email-quic_sibis@quicinc.com/
-> [2]: https://lore.kernel.org/linux-arm-msm/20220511161602.117772-7-sireeshkodali1@gmail.com/
+The following changes since commit 76f11e77f919397f31198354cd0e0bd8e76f8748:
 
-Is that one abandoned or do we just get to review both approaches 
-without coordination?
+  arm64: defconfig: enable Qualcomm Bandwidth Monitor (2022-07-06 15:58:13 -0500)
 
-I think you need a common q6v5 schema here with all the common 
-properties. Having the same property name with the type defined multiple 
-times is not great. In fact, I'm working on a check for finding those.
+are available in the Git repository at:
 
-Rob
+  https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-arm64-defconfig-for-5.20-2
+
+for you to fetch changes up to 01579b88a03a90af73b584fed70d171c73c2c540:
+
+  arm64: defconfig: Demote Qualcomm USB PHYs to modules (2022-07-18 18:56:02 -0500)
+
+----------------------------------------------------------------
+Qualcomm ARM64 defconfig more updates for v5.20
+
+This enables a few of the core drivers needed to boot the 8cx Gen 3
+platform and demotes the Qualcomm USB PHY drivers to modules, as they
+don't need to be builtin.
+
+----------------------------------------------------------------
+Bjorn Andersson (2):
+      arm64: defconfig: Enable Qualcomm SC8280XP providers
+      arm64: defconfig: Demote Qualcomm USB PHYs to modules
+
+ arch/arm64/configs/defconfig | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
