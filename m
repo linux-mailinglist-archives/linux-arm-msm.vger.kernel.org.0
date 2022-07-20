@@ -2,95 +2,154 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 806BE57B1DB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Jul 2022 09:38:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BA90757B1E2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Jul 2022 09:40:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229524AbiGTHiZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Jul 2022 03:38:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55438 "EHLO
+        id S231877AbiGTHkd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Jul 2022 03:40:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57674 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231506AbiGTHiZ (ORCPT
+        with ESMTP id S231771AbiGTHkd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 Jul 2022 03:38:25 -0400
-Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D9CE51A03
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jul 2022 00:38:24 -0700 (PDT)
-Received: by mail-pg1-x535.google.com with SMTP id e132so15663967pgc.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jul 2022 00:38:24 -0700 (PDT)
+        Wed, 20 Jul 2022 03:40:33 -0400
+Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com [IPv6:2607:f8b0:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D5134506D
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jul 2022 00:40:31 -0700 (PDT)
+Received: by mail-pg1-x530.google.com with SMTP id q16so12563393pgq.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jul 2022 00:40:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ecs-corp-partner-google-com.20210112.gappssmtp.com; s=20210112;
-        h=from:to:cc:subject:date:message-id;
-        bh=Xc6fgEvmDOLfBjoXIj0m1oyh4sYver0cQuxKyhaoxJM=;
-        b=EM3raoSZqNAjsRgHvZ0SU1ze7cgNCDQhvSAlUHFHiki6V7TymxfB2xJX21OA1+Dx/N
-         TK5N2I5Qg8gPZcRkasQk66SAnwHpOGwa5ZOEijnsNUM69PHPe0mmIwScg2W4w+1L3zT8
-         pGLqqxZAKYEMtdtSFE1A90nk+eGvlfx7TMV/ruIq4581zOjb8n0+oZjQ1XZwoq5mcRRm
-         Ke1OU9leiWGyo5ndLh7Nooco2Uu1nNxK+K+YmsWgRRWmDLPi4rwSAj0TrsJibxYwulRi
-         vbeI/8O10trz90ZnzunPmJ5UNasNuScp+N9rbKI3IiorRjLpHNymd3x61gThDUGqpgYH
-         WnzA==
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=/uorVJjayDp26n5/7TH/fkLv17qD1Lr/KLk9s+h90+0=;
+        b=Ts9NhKBm4+5EfTgPBR18LYv9VuF55ILpwh49nw9HQrOBr34uZshzvvZ09DZRgHF7pr
+         UK8hDTPPsZBQlvW5tyjwWzEOesHwGW8DXBJYB+xZVg+5xjD2y+GSFdyvDbovpThr7fWV
+         2NeQhF6bUmc5bWXrx1XVZk9i2JDlmGo3ui6C52gUpdfCzY0b19lGr8QxmK6RUbTsd55x
+         h8ZCvSBXZ53e2daxdHA4s4mnyaWfZWgcnk9Um8olBTBLkEheFyIKKP4O0yJCVCBR7Ufg
+         5KdDDHd+okbiPyWcBXvLqLfXLXhRMV937LpSiTc3G4ihdJzY/F6pOKKkXME/fhRjTyWY
+         BOkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=Xc6fgEvmDOLfBjoXIj0m1oyh4sYver0cQuxKyhaoxJM=;
-        b=FwBM3X+MxFRXyW7Bz6ilbcNJY5OE0G0alwWqWo9vUQ1Je2zCBv3oJwi9rYAQYGo5QM
-         nGPE8zxpPD9T5RVFXf4+yTcpstYq98IQPaecl6uOq3PAJvWN/sG3iYfnymOx5NVjqjox
-         H+0K6QX+9l3jJVmdx+a0ut7Vud9eQrOmNM6xM0QdVrQT035yBXl0/694LrTjxPv5W+xW
-         rsVK0fIPbtmXQusf14ehmCYuVuSSfaU+M/XyMJ86aywhAiEwwjY1ryzT2tCz21ZBItWN
-         DXdNGfC+vSan+U+P/IDj39jlF24PumzAN4xzEIZUuoHTWAbwwqa8ZuE+Al30WnDOE64+
-         CeWQ==
-X-Gm-Message-State: AJIora+e4OjquEg/f2TWS0j38+gdvghckt55mAEUKtqWzAsk2OKztcij
-        mbyau6ubgSm4yEKRfVUmhI4u2w==
-X-Google-Smtp-Source: AGRyM1uit8I0cHYFIviOVNQ8VWwD3Ep/WPdp05cI6kC1jOq2rPP7+nZ99LB3y8C760QG7rY0ucwQEw==
-X-Received: by 2002:a05:6a00:1745:b0:52a:f0d3:ae7 with SMTP id j5-20020a056a00174500b0052af0d30ae7mr38283892pfc.72.1658302703844;
-        Wed, 20 Jul 2022 00:38:23 -0700 (PDT)
-Received: from localhost.localdomain ([103.104.171.43])
-        by smtp.gmail.com with ESMTPSA id u5-20020a655c05000000b0041296135280sm11216243pgr.88.2022.07.20.00.38.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Jul 2022 00:38:23 -0700 (PDT)
-From:   Yunlong Jia <yunlong.jia@ecs.corp-partner.google.com>
-To:     LKML <linux-kernel@vger.kernel.org>
-Cc:     Henry Sun <henrysun@google.com>,
-        Douglas Anderson <dianders@chromium.org>,
-        Bob Moragues <moragues@chromium.org>,
-        Yunlong Jia <yunlong.jia@ecs.corp-partner.google.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH] dt-bindings: arm: qcom: Document additional sku6 for sc7180 pazquel
-Date:   Wed, 20 Jul 2022 07:38:16 +0000
-Message-Id: <20220720073755.1.Ifab936517646b3876dd31b6e9b1b58a858529e57@changeid>
-X-Mailer: git-send-email 2.17.1
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=/uorVJjayDp26n5/7TH/fkLv17qD1Lr/KLk9s+h90+0=;
+        b=vg9vysiIdI2cCIQN8L2M9Ev4ElU2ZJ8PnA6/QQG5wFm7hAzXM72bccN1vrn/G5rPd0
+         J1ezS1i9Z3BXEw5g3iegKxBXX/0XuYQkKuh2bMRsKpVzfTi/RO/SrRVsWWacm1qAfzkb
+         aawLtmnoldLFBmNDdaEo0kVK7wEBmMjpBaDe0M+AdIOZljHENrxOnhSoK8MsoZw+zWjm
+         JfSoiFDc/tt6tT3cYezfPt1IESm8OYGrvHVDHxYI6cfUW0PA1GxiXSjzkwoT4qoamhgT
+         LpjKjoL+ctfgFj21IW2zDBwpjxL1bmhC3F4jm8xtsM1sEyvGPw9nTstMVU304P/r3LQh
+         nYNQ==
+X-Gm-Message-State: AJIora8JC/cBCQNkA5wmTfybtyKatPJvTNaPe125B7Ho5wbPPM1CvxxU
+        qDjXjGPTiq4HXXboFZcOsae6DA==
+X-Google-Smtp-Source: AGRyM1uvWY8UYC1O0aM9uxm8tQ5KpzBVbvqjfd4qOjmrkdR6XIfTKDcLYwkiSoACsGbb1gRJ6BosjQ==
+X-Received: by 2002:a63:4a12:0:b0:419:9ede:b7a0 with SMTP id x18-20020a634a12000000b004199edeb7a0mr30064067pga.167.1658302830924;
+        Wed, 20 Jul 2022 00:40:30 -0700 (PDT)
+Received: from ?IPV6:2401:4900:1f3b:709e:6fec:df37:6562:5a80? ([2401:4900:1f3b:709e:6fec:df37:6562:5a80])
+        by smtp.gmail.com with ESMTPSA id y20-20020aa79434000000b005289f594326sm6408369pfo.69.2022.07.20.00.40.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 20 Jul 2022 00:40:30 -0700 (PDT)
+Message-ID: <edb7bb13-0e34-dab2-d3a4-51bd73e38174@linaro.org>
+Date:   Wed, 20 Jul 2022 13:10:26 +0530
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH v2 6/6] arm64: dts: qcom: ipq8074: Fix 'max-frequency'
+ value for sdhci node
+Content-Language: en-US
+To:     Ulf Hansson <ulf.hansson@linaro.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org, bhupesh.linux@gmail.com,
+        linux-kernel@vger.kernel.org, robh@kernel.org
+References: <20220514215424.1007718-1-bhupesh.sharma@linaro.org>
+ <20220514215424.1007718-7-bhupesh.sharma@linaro.org>
+ <Yr4psYiCCbi15RMe@builder.lan>
+ <772dc5d2-c3b2-685b-3a38-b86e8877424a@linaro.org>
+ <CAPDyKFpUpvHWMZmU0RxLAoFQG7RzOnqvTQPQBOm0s5MkkMHChw@mail.gmail.com>
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+In-Reply-To: <CAPDyKFpUpvHWMZmU0RxLAoFQG7RzOnqvTQPQBOm0s5MkkMHChw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The difference between sku6 and sku4 is that there is no esim
+Hi Ulf,
 
-Signed-off-by: Yunlong Jia <yunlong.jia@ecs.corp-partner.google.com>
----
 
- Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
- 1 file changed, 1 insertion(+)
+On 7/18/22 6:21 PM, Ulf Hansson wrote:
+> On Mon, 18 Jul 2022 at 10:47, Bhupesh Sharma <bhupesh.sharma@linaro.org> wrote:
+>>
+>> On 7/1/22 4:24 AM, Bjorn Andersson wrote:
+>>> On Sat 14 May 16:54 CDT 2022, Bhupesh Sharma wrote:
+>>>
+>>>> Since the Qualcomm sdhci-msm device-tree binding has been converted
+>>>> to yaml format, 'make dtbs_check' reports issues with
+>>>> 'max-frequency' value for ipq8074 sdhci node:
+>>>>
+>>>>    arch/arm64/boot/dts/qcom/ipq8074-hk01.dtb: mmc@7824900:
+>>>>     max-frequency:0:0: 384000000 is greater than the maximum of 200000000
+>>>>
+>>>> Fix the same.
+>>>>
+>>>> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+>>>> Cc: Rob Herring <robh@kernel.org>
+>>>> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+>>>> ---
+>>>>    arch/arm64/boot/dts/qcom/ipq8074.dtsi | 2 +-
+>>>>    1 file changed, 1 insertion(+), 1 deletion(-)
+>>>>
+>>>> diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
+>>>> index ab2a1e7955b5..b2d71af9b419 100644
+>>>> --- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
+>>>> +++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
+>>>> @@ -388,7 +388,7 @@ sdhc_1: mmc@7824900 {
+>>>>                                <&gcc GCC_SDCC1_APPS_CLK>,
+>>>>                                <&xo>;
+>>>>                       clock-names = "iface", "core", "xo";
+>>>> -                    max-frequency = <384000000>;
+>>>> +                    max-frequency = <200000000>;
+>>> This might match the binding, but someone put 384000000 there for a
+>>> reason. Perhaps the binding needs to be updated instead?
+>>
+>> I was waiting for getting access to ipq8074 reference manual / documentation.
+>> I double-checked and it seems SDCC1 on this SoC does support a max frequency
+>> of 384 MHz which is strange as the SDCC2 supports 200 MHz as max frequency
+>> instead.
+> 
+> I guess it depends on what the property is being used for from the mmc
+> host driver perspective. So, to answer the question, we probably need
+> to look at the code in the host driver to best understand what to do
+> here.
+> 
+>>
+>> Also the eMMC and MMC controllers on other SoCs (i.MX etx( usually support only
+>> a max frequency of 200 MHz, so may be we need an exceptional addition to the
+>> binding documentation here.
+>>
+>> @Ulf - what's your view on updating the binding documentation here? I can
+>> send a v3 accordingly.
+> 
+> The point with the property is to let host controllers specify whether
+> there is an upper limit of the frequency that it can support. No
+> matter what, the mmc core will not use a frequency greater than stated
+> by the eMMC/SD/SDIO specs.
+> 
+> For eMMC, 200MHz is the maximum frequency.
+> 
+> For SD/SDIO cards, the SDR104 mode has 208MHz. So it seems like we
+> need an update to the binding, no matter what. :-)
+> 
+> I have no strong opinions around this, but perhaps just raising the
+> limit of the binding to cover the qcom case makes best sense.
 
-diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
-index 4dd18fbf20b6..aebeefdab27f 100644
---- a/Documentation/devicetree/bindings/arm/qcom.yaml
-+++ b/Documentation/devicetree/bindings/arm/qcom.yaml
-@@ -410,6 +410,7 @@ properties:
-       - description: Google Pazquel with LTE and Parade (newest rev)
-         items:
-           - const: google,pazquel-sku4
-+          - const: google,pazquel-sku6
-           - const: qcom,sc7180
- 
-       - description: Google Pazquel with LTE and TI (newest rev)
--- 
-2.17.1
+Thanks for your inputs. I will send a v3 version with the udpated
+binding soon.
 
+Regards,
+Bhupesh
