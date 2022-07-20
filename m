@@ -2,63 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 269EE57C010
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jul 2022 00:28:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 257D157C01A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jul 2022 00:35:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230091AbiGTW2O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Jul 2022 18:28:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59702 "EHLO
+        id S229773AbiGTWfg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Jul 2022 18:35:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35656 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229449AbiGTW2N (ORCPT
+        with ESMTP id S229441AbiGTWff (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 Jul 2022 18:28:13 -0400
-Received: from mail-io1-f48.google.com (mail-io1-f48.google.com [209.85.166.48])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 012554BD14;
-        Wed, 20 Jul 2022 15:28:12 -0700 (PDT)
-Received: by mail-io1-f48.google.com with SMTP id z132so62634iof.0;
-        Wed, 20 Jul 2022 15:28:12 -0700 (PDT)
+        Wed, 20 Jul 2022 18:35:35 -0400
+Received: from mail-il1-f169.google.com (mail-il1-f169.google.com [209.85.166.169])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB25CBC28;
+        Wed, 20 Jul 2022 15:35:30 -0700 (PDT)
+Received: by mail-il1-f169.google.com with SMTP id v1so6443985ilg.4;
+        Wed, 20 Jul 2022 15:35:30 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=4rzQbnpdxz2yFvCxUaYCCAZD5++ab0VAymDUWQTY+nk=;
-        b=OozsZYWvnYYXBtTeYwIqUN1kjLv7VAwnKHaxwjq76uvNbI0YBt71q6ad/rqjRua0E8
-         rPNf3nw6dgiKfWMbLWECPV9QXwgGZA8p5MQyh83+vJT/5+ZAK91QXMjhTqtbS2Y9+ro2
-         J4kpcgPue4lu77Gyc644/wCvaaA7bam3U1LMxzOmyj4TtlUpQor98bJ9BRltI919Jy6k
-         nl7LuWxa9DSOlzOQrOA/w8FYESYuLDLXGJnZxFy8dSMBxqcq5TL1wzNscAIBrUniXzLx
-         vNmkDhLc4SWkPyJxAEaz9xluDjH/DPP/3aCgMOgZJxzGWso2YyXiuzSopYSnlPR7894l
-         iVOQ==
-X-Gm-Message-State: AJIora96SvR5LrLG/Y70vY+6dmydVCvQcl72Qc+Frj58bT5JSbFBlhvG
-        3fEIINmK4chhsOQQIIUcsw==
-X-Google-Smtp-Source: AGRyM1t2IoeCfHfFHtUk+JjKhVpCWmc+jhkhWRB9KKdKZQMSd21CfuqHvyEbuih7zVwbn8Qwn96YdA==
-X-Received: by 2002:a05:6602:1355:b0:669:40a5:9c26 with SMTP id i21-20020a056602135500b0066940a59c26mr19336553iov.105.1658356092216;
-        Wed, 20 Jul 2022 15:28:12 -0700 (PDT)
+        bh=q+JNTXrCvUZCWvrUEjoeK4DEdUzmVuvIzqvtnyaBDYs=;
+        b=wlnvWMHqbjoMB91q0sgPs+vj5gAouno5Dajkl7USDNsSlBFkasZOam5ZRpAJRQSCIz
+         H0+dNeN9HqZ76lkMzW2WAcrcEKafH0JCKepTUjNSacXqGUJdQM3sn8V16a6N5z8YhBwj
+         VvHSs7CDYTP1aMZOFTaI3TUPrh90Vw7a7ZvdzNi7XdkNccTeHbusqUUxWnNbajN7x62O
+         z6V+w9DcdnVlmG/pXLYOzPBwbqkz7T88qM9DNPUpG3zvdl4E852Il7/aC+xACRpXxVAP
+         EPRoJhXQ+SS6LzcMFEVcKsAZsqvV3DqAKPy/rp6yh5/88wmZ5krn5Mk5bMGBDYzUTZNI
+         rsvw==
+X-Gm-Message-State: AJIora+KT3LAYC3SmcKYw4xE5mdEJfNlRFSo02MCjbt1+FggXsY4uuKM
+        sjEUmTR8/Gg/KWCoJaHQ8Q==
+X-Google-Smtp-Source: AGRyM1tRpZp9dVUYdPELLOlKs2qE/RdCpVCQkIQGG3pKo3QvhAnpDuvWJJn465cgxkvC9AGn/XqQLw==
+X-Received: by 2002:a92:ddd1:0:b0:2d5:4877:65c8 with SMTP id d17-20020a92ddd1000000b002d5487765c8mr20608139ilr.267.1658356530116;
+        Wed, 20 Jul 2022 15:35:30 -0700 (PDT)
 Received: from robh.at.kernel.org ([64.188.179.248])
-        by smtp.gmail.com with ESMTPSA id d21-20020a026055000000b0033f1d348b80sm34386jaf.163.2022.07.20.15.28.11
+        by smtp.gmail.com with ESMTPSA id n42-20020a02712a000000b0033f3d432a2asm40170jac.174.2022.07.20.15.35.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Jul 2022 15:28:11 -0700 (PDT)
-Received: (nullmailer pid 4094609 invoked by uid 1000);
-        Wed, 20 Jul 2022 22:28:10 -0000
-Date:   Wed, 20 Jul 2022 16:28:10 -0600
+        Wed, 20 Jul 2022 15:35:29 -0700 (PDT)
+Received: (nullmailer pid 4105171 invoked by uid 1000);
+        Wed, 20 Jul 2022 22:35:28 -0000
+Date:   Wed, 20 Jul 2022 16:35:28 -0600
 From:   Rob Herring <robh@kernel.org>
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org,
+To:     Jimmy Chen <jinghung.chen3@hotmail.com>
+Cc:     Douglas Anderson <dianders@chromium.org>,
+        devicetree@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        Alan Huang <alan-huang@quanta.corp-partner.google.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        martin.botka@somainline.org, Rob Herring <robh+dt@kernel.org>,
-        jamipkettunen@somainline.org, devicetree@vger.kernel.org,
-        marijn.suijten@somainline.org, Andy Gross <agross@kernel.org>,
-        linux-kernel@vger.kernel.org,
-        angelogioacchino.delregno@somainline.org,
-        ~postmarketos/upstreaming@lists.sr.ht
-Subject: Re: [PATCH 1/2] dt-bindings: power: rpmpd: Add SM6375 power domains
-Message-ID: <20220720222810.GA4094558-robh@kernel.org>
-References: <20220716193201.455728-1-konrad.dybcio@somainline.org>
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Andy Gross <agross@kernel.org>
+Subject: Re: [PATCH v6 1/3] dt-bindings: arm: qcom: document sc7280 and
+ villager board
+Message-ID: <20220720223528.GA4105117-robh@kernel.org>
+References: <20220718073104.146985-1-jinghung.chen3@hotmail.com>
+ <SG2PR03MB500654EF43123FBDF5F35C05CC8C9@SG2PR03MB5006.apcprd03.prod.outlook.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220716193201.455728-1-konrad.dybcio@somainline.org>
+In-Reply-To: <SG2PR03MB500654EF43123FBDF5F35C05CC8C9@SG2PR03MB5006.apcprd03.prod.outlook.com>
 X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
         FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
         HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
@@ -69,14 +70,20 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 16 Jul 2022 21:32:00 +0200, Konrad Dybcio wrote:
-> Add the bindings for SM6375 RPMPDs.
+On Mon, 18 Jul 2022 15:31:02 +0800, Jimmy Chen wrote:
+> This adds a LTE skus for Chromebook Villager to the yaml.
 > 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+> Signed-off-by: Jimmy Chen <jinghung.chen3@hotmail.com>
+> Reviewed-by: Douglas Anderson <dianders@chromium.org>
 > ---
->  .../devicetree/bindings/power/qcom,rpmpd.yaml        |  1 +
->  include/dt-bindings/power/qcom-rpmpd.h               | 12 ++++++++++++
->  2 files changed, 13 insertions(+)
+> 
+> (no changes since v2)
+> 
+> Changes in v2:
+> -Add this patch
+> 
+>  Documentation/devicetree/bindings/arm/qcom.yaml | 15 +++++++++++++++
+>  1 file changed, 15 insertions(+)
 > 
 
 Acked-by: Rob Herring <robh@kernel.org>
