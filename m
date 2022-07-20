@@ -2,58 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 51B4057B463
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Jul 2022 12:20:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ACDFA57B470
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Jul 2022 12:25:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230087AbiGTKUW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Jul 2022 06:20:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38420 "EHLO
+        id S234284AbiGTKZB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Jul 2022 06:25:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41220 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232415AbiGTKUS (ORCPT
+        with ESMTP id S229618AbiGTKZA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 Jul 2022 06:20:18 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 164B5DB9;
-        Wed, 20 Jul 2022 03:20:16 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id D0B0BB81EDB;
-        Wed, 20 Jul 2022 10:20:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 71FDCC341D1;
-        Wed, 20 Jul 2022 10:20:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1658312413;
-        bh=wGgZaOceTr23WAeD4swIODS5yUIifdbxS7SQ1RgbDfQ=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=X88gFFBXwz24sx/eiQHpL1sWTr+yU3NbIrbqyav56Sk6JcuPYsklduwl9gup1aTXF
-         QJ76+fydw6s1LkKMOHMjXoQC/Clbg0X0bKuSxgbfxFdZfS3eITgx9tOxYJPAoQfu2z
-         PH4EsxI5NI/D11jtvcq7f12DpHW2jIH7OwFv3trfiPpTKYSCA7RHGIcmyDwpGT56tz
-         XY+2G/KhVBTmavwJIKnEr+s/obdZaAptAaI0PsoR0ITJq3QAWL7v5s2j4q1igdVHq8
-         euaQAefDLrClXsXtvUNlPxJ/ayxY5ZQMsN/vvhAKCnA5drch61N6xJI+x71J84aJ+N
-         3u4+g4U01wPoQ==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 5C5CAE451BC;
-        Wed, 20 Jul 2022 10:20:13 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+        Wed, 20 Jul 2022 06:25:00 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58B7E6559A
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jul 2022 03:24:59 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id d8so5513827wrp.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jul 2022 03:24:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=9T8+kdIQXxmPiX39517lARW6zkwqa89pynqnDRsRmf0=;
+        b=N+0gIgwEQd4FcjqQ1uoXMZEbHrIZMiXI+6DBvNo+docJlzysY83l6riZ1Kmxx3ZXQD
+         ADXh2vPciR7o8b7/JmjrsmEXT8h+rhOqXcYcqnZMJROvTa6XEYDKUD0xTkH9amaOt0cV
+         v6saU+IU2ZOKuC+T0dNI3tIGIvzrGR9FpzNuZIHq5tCG+CRFh0JrxFvFre24ZKsRIyQ+
+         hR2d7fqmIOCSEr+gSd930LOm14SHlayAyUucEWZ9Ep+iwO09uVmv5GGSi/q4k+4YQ5WV
+         uNYqMdi9dDqtFgFXasYM6qNhiPZ9l326p5WRfiRV6RRFpqZT7ba+yKNHru/c8O0M25H+
+         JBGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=9T8+kdIQXxmPiX39517lARW6zkwqa89pynqnDRsRmf0=;
+        b=bUfm4v3RKgBu1f5oLIoa36cHyDL0qfPQDsxMwyr4H4Zx2sD3/z530Ep+gs4RplVyT+
+         f2g9Uh7LkP/NgtqJUrtX4ToO7qIUR6/bPNGxM8NNn4sALDI/ySKo8W5FPxSc7Nbl8fHg
+         z+u47zY7zkga8P/d91Vak0QXDyWtwogXZj7nt+Jdn1I8u77m9LzdzGf2IG0yajZWH5zA
+         GMQilckWP/m8ZrbpzUTGhK9c9EfyGx505VMHXIDzFZsaOGtAQMv7ITreYIPDAPB4b4Sh
+         mUkPwi0g5Gx+jEc2bhYn4e6zblgzo7rSErUxmfZHYnrch3TTiRU01O7pqhGmg45D8KGq
+         eZZw==
+X-Gm-Message-State: AJIora/lVCrMnb8SokrFn89HVdnie3eDk75uJn99BvxFU708HnXHPNVS
+        qMs5j/0IO56Bwb+GjuBDts2oGg==
+X-Google-Smtp-Source: AGRyM1v+e9KUYvA0k9l1OlNkGQmrVJVfrCM1qy3sWjo+5Gk5jRM48+pE9mMJB7oeG5kGPKvEEuj8CQ==
+X-Received: by 2002:a05:6000:783:b0:21d:a4b1:e1f7 with SMTP id bu3-20020a056000078300b0021da4b1e1f7mr30291213wrb.157.1658312697823;
+        Wed, 20 Jul 2022 03:24:57 -0700 (PDT)
+Received: from ?IPV6:2a05:6e02:1041:c10:b579:e7b5:219d:267c? ([2a05:6e02:1041:c10:b579:e7b5:219d:267c])
+        by smtp.googlemail.com with ESMTPSA id l7-20020a05600c4f0700b003a310fe1d75sm2201501wmq.38.2022.07.20.03.24.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 20 Jul 2022 03:24:57 -0700 (PDT)
+Message-ID: <2c34a4e7-1c33-1a02-f956-7478629ebdb5@linaro.org>
+Date:   Wed, 20 Jul 2022 12:24:55 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Subject: Re: [PATCH 1/2] thermal/drivers/qcom/temp-alarm: register thermal
+ zones as hwmon sensors
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org
+References: <20220719054940.755907-1-dmitry.baryshkov@linaro.org>
+From:   Daniel Lezcano <daniel.lezcano@linaro.org>
+In-Reply-To: <20220719054940.755907-1-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH net-next] net: ipa: initialize ring indexes to 0
-From:   patchwork-bot+netdevbpf@kernel.org
-Message-Id: <165831241337.14288.12233136434309116921.git-patchwork-notify@kernel.org>
-Date:   Wed, 20 Jul 2022 10:20:13 +0000
-References: <20220719141855.245994-1-elder@linaro.org>
-In-Reply-To: <20220719141855.245994-1-elder@linaro.org>
-To:     Alex Elder <elder@linaro.org>
-Cc:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-        pabeni@redhat.com, mka@chromium.org, evgreen@chromium.org,
-        bjorn.andersson@linaro.org, quic_cpratapa@quicinc.com,
-        quic_avuyyuru@quicinc.com, quic_jponduru@quicinc.com,
-        quic_subashab@quicinc.com, elder@kernel.org,
-        netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-X-Spam-Status: No, score=-7.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -61,30 +80,18 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello:
-
-This patch was applied to netdev/net-next.git (master)
-by David S. Miller <davem@davemloft.net>:
-
-On Tue, 19 Jul 2022 09:18:55 -0500 you wrote:
-> When a GSI channel is initially allocated, and after it has been
-> reset, the hardware assumes its ring index is 0.  And although we
-> do initialize channels this way, the comments in the IPA code don't
-> really explain this.  For event rings, it doesn't matter what value
-> we use initially, so using 0 is just fine.
+On 19/07/2022 07:49, Dmitry Baryshkov wrote:
+> Register thermal zones as hwmon sensors to let userspace read
+> temperatures using standard hwmon interface.
 > 
-> Add some information about the assumptions made by hardware above
-> the definition of the gsi_ring structure in "gsi.h".
-> 
-> [...]
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
 
-Here is the summary with links:
-  - [net-next] net: ipa: initialize ring indexes to 0
-    https://git.kernel.org/netdev/net-next/c/5fb859f79f4f
+Both applied, thx
 
-You are awesome, thank you!
 -- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
 
-
+Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
+<http://twitter.com/#!/linaroorg> Twitter |
+<http://www.linaro.org/linaro-blog/> Blog
