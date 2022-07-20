@@ -2,76 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 519EF57B201
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Jul 2022 09:46:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1C16157B259
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Jul 2022 10:10:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232196AbiGTHqt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Jul 2022 03:46:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33584 "EHLO
+        id S229689AbiGTIJ5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Jul 2022 04:09:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49408 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240203AbiGTHqe (ORCPT
+        with ESMTP id S238874AbiGTIJ0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 Jul 2022 03:46:34 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FD6068DFC
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jul 2022 00:46:30 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id e28so28819020lfj.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jul 2022 00:46:30 -0700 (PDT)
+        Wed, 20 Jul 2022 04:09:26 -0400
+Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F21AA675BE
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jul 2022 01:09:24 -0700 (PDT)
+Received: by mail-pj1-x102e.google.com with SMTP id gq7so895328pjb.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jul 2022 01:09:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=yDflIxoarjB5o8BktCyGSkrFxpci5KW41k5dQXOh/OM=;
-        b=F/g5Mnv5Fn54CNkdIskc5A1G8ON5CauuUvtrWNo43pDn9FibqAnLuNDsO8LDpOJug6
-         lA+F8nqDtIGwr2NK2M9Ff3DkixcwpqVCST+6aL9qSJKVGHjhrxWzwBdvObmdTg4MS7B9
-         8xLStuvcJP5X8pKS/I6ewgdheN9BeCyuJDcjCJg7dCuH9adQDRSB5qo20IazBG+Lt3Jq
-         kcEghAtC51KkqZTrvKmor3gsExW40GKuEGpKjPrNZNfEePoxMIoXdrllD1H/Jvd28iyU
-         xjIupL+wCFLPPmZ6tPekONz2/D2pBSWBLxWwPmsXgsB7/khhYd1w2FEI7eKL7hLzFb3w
-         vAlQ==
+        bh=Vjmj1e5ilZcHzSooiVXEelOD0/GPuv/+UYY6S2crjho=;
+        b=Dh/g9kBBDMqVx5ZQJKzdmPQxju8VIfV+7OtnNU7UZ688mgBItp/7drGha8nZQL7iRG
+         TMzI9mLhcuWQ6poeV1p8tuG5NY6TjirXtpPQqZP6xu+Om+RRTBgXsgEw6jzhUR34k7tl
+         MbtJaqDe1s1VwggvF69/LGKhJeJJ/SF6ipBVcOUTZFUyEtUxmeUAcHzyo98hGHiczJ3p
+         XuI+1+6TtrhbLhHNTOc86779nvmxuS2MI834rBCPoqBr4fD68ve/xc4eSmXTN2GF4gxm
+         2yEbQrbVlkssAbP31nBkRA1bFfnYIGPg0ERIjzbYCGH/bNLx2szEX9IWufRpyw19VRml
+         jdvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=yDflIxoarjB5o8BktCyGSkrFxpci5KW41k5dQXOh/OM=;
-        b=OcBYcNAJamhI15Xlb8w82ITTeulIi78L56YKJNYDQuip+bcCf8HeycWTihaQe7In8w
-         XcNANjISg9U+f/xQHciggZnUfTe/8SC703NmVL3vBAVAGT6fBUXAz4/f7XleoAtIxJkM
-         iAovi8pHFdMAhGp5wtY+k8VTVzrTiw5T2kBT3eYoDSD3VneyOBbFco5N1UoKFYnY3HNl
-         PXVP5AEArhas6bW29IpQXk4iyb3GEoVoHbufEwOu0p+PYqvZ1UAJW1WUhwmCQwGd8Xbn
-         uAXzpD8XeK3Ll7T7ddS6S+bQkZdNGzlObY3NvcOhRGg+Igsf/v99mGKd4nHgSp8N5x4r
-         w34g==
-X-Gm-Message-State: AJIora9roTDh4MO7AdqdM+snMak6jzP68AFCyNAbuySPqjecav2nrxqx
-        PZwFnArkS09/txmPhYS9gNRrAA==
-X-Google-Smtp-Source: AGRyM1sT5bgHDxy8DSYTlUWHlh221BK9GLwPQVyzaqyJP5TiqJi8GlzJc1JuCB1ahJiW5hFyfMImjw==
-X-Received: by 2002:a05:6512:3b0a:b0:489:da13:180a with SMTP id f10-20020a0565123b0a00b00489da13180amr19808084lfv.489.1658303188829;
-        Wed, 20 Jul 2022 00:46:28 -0700 (PDT)
-Received: from [192.168.115.193] (89-162-31-138.fiber.signal.no. [89.162.31.138])
-        by smtp.gmail.com with ESMTPSA id c11-20020a056512074b00b004866226ea34sm3635722lfs.215.2022.07.20.00.46.27
+        bh=Vjmj1e5ilZcHzSooiVXEelOD0/GPuv/+UYY6S2crjho=;
+        b=2dil296JqskDgP1GgOZ3+QK52J0bFTjFSUrHGn7iWdkp1rtVPo1mT1pj6jmKwb+73U
+         EOV9cW3YoYNaG0BeFRtn6iMEhGUjGtITH4Bvah9M31H/R3lvITUXVsynjEoPurLN7RN2
+         o+WcBzsVEgp8yjsWPfr5shozL5nHpj1tDK3kG3n72Jn52KCnYkOz47ql+VpN5T6OFjHO
+         abHkxUkTx0DiyBq64+AUD1BQWxhlI8jgzRU5bAhtgCShkLgxTnvtF8ACKwGp/4MA10c+
+         cIVxPWu0PmIaLL+TVTlPhb9HBU2ctVAibjjPp6b9bxourY9y6szodTDHfL1fZ3F0hQ3q
+         4wWg==
+X-Gm-Message-State: AJIora9ANGMGmxhLEmTgylTzGfWjFQLLezaTM8aO5UspZYSgL0PNke/5
+        mImkJfclb2QbEh77+tXlwGM0NQ==
+X-Google-Smtp-Source: AGRyM1sVwohh0bM9m4mMkOvgMH8V+/8FfdM5gU1oqT8RRazle84Lm9koabhiRV9BxMroh0zPZorBiw==
+X-Received: by 2002:a17:903:4094:b0:16b:df0e:6312 with SMTP id z20-20020a170903409400b0016bdf0e6312mr39531338plc.61.1658304564419;
+        Wed, 20 Jul 2022 01:09:24 -0700 (PDT)
+Received: from ?IPV6:2401:4900:1f3b:709e:6fec:df37:6562:5a80? ([2401:4900:1f3b:709e:6fec:df37:6562:5a80])
+        by smtp.gmail.com with ESMTPSA id q7-20020a17090311c700b0016cf195eb16sm6086244plh.185.2022.07.20.01.09.21
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 20 Jul 2022 00:46:28 -0700 (PDT)
-Message-ID: <4cc6a276-4cbe-506a-6425-677c56469645@linaro.org>
-Date:   Wed, 20 Jul 2022 09:46:27 +0200
+        Wed, 20 Jul 2022 01:09:23 -0700 (PDT)
+Message-ID: <e0637b5f-572f-5db8-e546-22f69d7c1e09@linaro.org>
+Date:   Wed, 20 Jul 2022 13:39:19 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.11.0
-Subject: Re: [PATCH] dt-bindings: arm: qcom: Document additional sku6 for
- sc7180 pazquel
+Subject: Re: [PATCH 2/3] thermal: qcom: tsens: Add support for
+ 'needs_reinit_wa' for sm8150
 Content-Language: en-US
-To:     Yunlong Jia <yunlong.jia@ecs.corp-partner.google.com>,
-        LKML <linux-kernel@vger.kernel.org>
-Cc:     Henry Sun <henrysun@google.com>,
-        Douglas Anderson <dianders@chromium.org>,
-        Bob Moragues <moragues@chromium.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-pm@vger.kernel.org, bhupesh.linux@gmail.com,
+        linux-kernel@vger.kernel.org, Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
         linux-arm-msm@vger.kernel.org
-References: <20220720073755.1.Ifab936517646b3876dd31b6e9b1b58a858529e57@changeid>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220720073755.1.Ifab936517646b3876dd31b6e9b1b58a858529e57@changeid>
-Content-Type: text/plain; charset=UTF-8
+References: <20220701145815.2037993-1-bhupesh.sharma@linaro.org>
+ <20220701145815.2037993-3-bhupesh.sharma@linaro.org>
+ <YtYdPG8ofmmiVe4P@builder.lan>
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+In-Reply-To: <YtYdPG8ofmmiVe4P@builder.lan>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
@@ -82,26 +78,154 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 20/07/2022 09:38, Yunlong Jia wrote:
-> The difference between sku6 and sku4 is that there is no esim
-> 
-> Signed-off-by: Yunlong Jia <yunlong.jia@ecs.corp-partner.google.com>
-> ---
-> 
->  Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
-> index 4dd18fbf20b6..aebeefdab27f 100644
-> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
-> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
-> @@ -410,6 +410,7 @@ properties:
->        - description: Google Pazquel with LTE and Parade (newest rev)
->          items:
->            - const: google,pazquel-sku4
-> +          - const: google,pazquel-sku6
+Hi Bjorn,
 
-This looks wrong, did you test it?
+Thanks for your review.
 
-Best regards,
-Krzysztof
+On 7/19/22 8:25 AM, Bjorn Andersson wrote:
+> On Fri 01 Jul 09:58 CDT 2022, Bhupesh Sharma wrote:
+> 
+>> QCoM sm8150 tsens controller might require re-initialization
+> 
+> Please spell out Qualcomm.
+
+Ok.
+
+>> via trustzone [via scm call(s)] when it enters a 'bad state'
+>> causing sensor temperatures/interrupts status to be in an
+>> 'invalid' state.
+>>
+>> Add hooks for the same in the qcom tsens driver which
+>> can be used by followup patch(es).
+>>
+> 
+> This patch enables needs_reinit_wa, which is actually implemented in
+> patch 3, wouldn't it make more sense to flip them around; to first
+> implement the feature and then enable it in this patch?
+
+Yes, this was reported by the kernel test bot as well.
+I will address this in v2.
+
+>> Cc: Amit Kucheria <amitk@kernel.org>
+>> Cc: Thara Gopinath <thara.gopinath@gmail.com>
+>> Cc: linux-pm@vger.kernel.org
+>> Cc: linux-arm-msm@vger.kernel.org
+>> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+>> ---
+>>   drivers/thermal/qcom/tsens-v2.c | 11 +++++++++++
+>>   drivers/thermal/qcom/tsens.c    |  4 ++++
+>>   drivers/thermal/qcom/tsens.h    |  6 +++++-
+>>   3 files changed, 20 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/thermal/qcom/tsens-v2.c b/drivers/thermal/qcom/tsens-v2.c
+>> index b293ed32174b..61d38a56d29a 100644
+>> --- a/drivers/thermal/qcom/tsens-v2.c
+>> +++ b/drivers/thermal/qcom/tsens-v2.c
+>> @@ -101,6 +101,17 @@ struct tsens_plat_data data_tsens_v2 = {
+>>   	.fields	= tsens_v2_regfields,
+>>   };
+>>   
+>> +/* For sm8150 tsens, its suggested to monitor the controller health
+> 
+> /*
+>   * Outside the network stack, the first line should be left empty in
+>   * multiline comments.
+>   */
+
+Ok.
+
+>> + * periodically and in case an issue is detected to reinit tsens
+>> + * controller via trustzone.
+>> + */
+>> +struct tsens_plat_data data_tsens_sm8150 = {
+> 
+> I doubt this is sm8150-specific, so the first question is if this should
+> be attempted on all data_tsens_v2 platforms. Otherwise, how about naming
+> this data_tsens_v2_reinit?
+
+I agree. Konrad reported one more use case of the same.
+So, I will take care of the same in v2.
+
+'data_tsens_v2_reinit' makes sense to me.
+
+Regards,
+Bhupesh
+
+>> +	.ops		= &ops_generic_v2,
+>> +	.feat		= &tsens_v2_feat,
+>> +	.needs_reinit_wa = true,
+>> +	.fields	= tsens_v2_regfields,
+>> +};
+>> +
+>>   /* Kept around for backward compatibility with old msm8996.dtsi */
+>>   struct tsens_plat_data data_8996 = {
+>>   	.num_sensors	= 13,
+>> diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
+>> index 7963ee33bf75..97f4d4454f20 100644
+>> --- a/drivers/thermal/qcom/tsens.c
+>> +++ b/drivers/thermal/qcom/tsens.c
+>> @@ -991,6 +991,9 @@ static const struct of_device_id tsens_table[] = {
+>>   	}, {
+>>   		.compatible = "qcom,msm8996-tsens",
+>>   		.data = &data_8996,
+>> +	}, {
+>> +		.compatible = "qcom,sm8150-tsens",
+>> +		.data = &data_tsens_sm8150,
+>>   	}, {
+>>   		.compatible = "qcom,tsens-v1",
+>>   		.data = &data_tsens_v1,
+>> @@ -1135,6 +1138,7 @@ static int tsens_probe(struct platform_device *pdev)
+>>   
+>>   	priv->dev = dev;
+>>   	priv->num_sensors = num_sensors;
+>> +	priv->needs_reinit_wa = data->needs_reinit_wa;
+>>   	priv->ops = data->ops;
+>>   	for (i = 0;  i < priv->num_sensors; i++) {
+>>   		if (data->hw_ids)
+>> diff --git a/drivers/thermal/qcom/tsens.h b/drivers/thermal/qcom/tsens.h
+>> index 1471a2c00f15..48a7bda902c1 100644
+>> --- a/drivers/thermal/qcom/tsens.h
+>> +++ b/drivers/thermal/qcom/tsens.h
+>> @@ -515,6 +515,7 @@ struct tsens_features {
+>>    * @num_sensors: Number of sensors supported by platform
+>>    * @ops: operations the tsens instance supports
+>>    * @hw_ids: Subset of sensors ids supported by platform, if not the first n
+>> + * @needs_reinit_wa: tsens controller might need reinit via trustzone
+>>    * @feat: features of the IP
+>>    * @fields: bitfield locations
+>>    */
+>> @@ -522,6 +523,7 @@ struct tsens_plat_data {
+>>   	const u32		num_sensors;
+>>   	const struct tsens_ops	*ops;
+>>   	unsigned int		*hw_ids;
+>> +	bool			needs_reinit_wa;
+>>   	struct tsens_features	*feat;
+>>   	const struct reg_field		*fields;
+>>   };
+>> @@ -544,6 +546,7 @@ struct tsens_context {
+>>    * @srot_map: pointer to SROT register address space
+>>    * @tm_offset: deal with old device trees that don't address TM and SROT
+>>    *             address space separately
+>> + * @needs_reinit_wa: tsens controller might need reinit via trustzone
+>>    * @ul_lock: lock while processing upper/lower threshold interrupts
+>>    * @crit_lock: lock while processing critical threshold interrupts
+>>    * @rf: array of regmap_fields used to store value of the field
+>> @@ -561,6 +564,7 @@ struct tsens_priv {
+>>   	struct regmap			*tm_map;
+>>   	struct regmap			*srot_map;
+>>   	u32				tm_offset;
+>> +	bool				needs_reinit_wa;
+>>   
+>>   	/* lock for upper/lower threshold interrupts */
+>>   	spinlock_t			ul_lock;
+>> @@ -593,6 +597,6 @@ extern struct tsens_plat_data data_8916, data_8939, data_8974, data_9607;
+>>   extern struct tsens_plat_data data_tsens_v1, data_8976;
+>>   
+>>   /* TSENS v2 targets */
+>> -extern struct tsens_plat_data data_8996, data_tsens_v2;
+>> +extern struct tsens_plat_data data_8996, data_tsens_sm8150, data_tsens_v2;
+>>   
+>>   #endif /* __QCOM_TSENS_H__ */
+>> -- 
+>> 2.35.3
+>>
